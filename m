@@ -1,157 +1,131 @@
-Received: from www3579.sakura.ne.jp (www3579.sakura.ne.jp [49.212.243.89])
+Received: from mail-24430.protonmail.ch (mail-24430.protonmail.ch [109.224.244.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42163B3C05;
-	Sat, 19 Sep 2026 08:01:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.212.243.89
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C79A3F5BE3
+	for <sashiko-reviews@lists.linux.dev>; Sat, 19 Sep 2026 11:12:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.30
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789804866; cv=none; b=HMxtfye3VXKAbjxCoqoGuMd6D3ptXpI+YEnqDDg5G1RUBANc3yrgVfO3BiDeeNaidIYweouZpJABNW55gLMoPrQYBJH1hooUR9SeEl98zI989n0IaDp4RKWd7avq824TQpCySxO7O7oThWP3mmmAIzDLy5/CF/O3pc1JYT8BjIw=
+	t=1789816346; cv=none; b=nRxd5DWaCTOgWt7l1uj3Sn2hX4x/DOp3oPPuFeZop3u+n3rYRTOa16OtS+7twwSq9tdSn7WDu5hpURmgOkuzoQBH0CwKjlKqeI+PubA+XJLEGnVkZWTy2TK8O31cR7Npwo/uxfnazg4fP53k4oaStQ8qqd6v/qN/l+FnGlpZUQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789804866; c=relaxed/simple;
-	bh=UgN7N6JMldNefvy9Knxsqci8DW0w0dio4CtB6cjhUpc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nCq9Zm75znegbQkor6FNreFtYI8nYt9ofETM8Kb1dP0W5xvs3DP6W/Qz4dn59jOLA41wtAuFEGevSTVO4dH/PHL4DiniDitcZTchpzBms3MB+NW5bDAYJmi2tYhfBQk+kbqdvJ5z1hW/fyb+busLNS4DyFN9V1cp1smjIf1W5hE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rsg.ci.i.u-tokyo.ac.jp; spf=pass smtp.mailfrom=rsg.ci.i.u-tokyo.ac.jp; dkim=pass (2048-bit key) header.d=rsg.ci.i.u-tokyo.ac.jp header.i=@rsg.ci.i.u-tokyo.ac.jp header.b=XLEFoVOu; arc=none smtp.client-ip=49.212.243.89
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rsg.ci.i.u-tokyo.ac.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rsg.ci.i.u-tokyo.ac.jp
+	s=arc-20240116; t=1789816346; c=relaxed/simple;
+	bh=i3xVMxWyB/JSXXPTkUwQx0reZOtQuy3afJVOp1vI68U=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Pd2sKV/iVNMMmMdOBNaSgJICfAdDydg0SVi7P7XVESzfmsGfkBAa1RqznXS6Mk07Fk06oSSzDh0TM+/DiwZ5B4dlvJVa+gapzCkbv2z9C1NUE5awMc9Bml126z+OSTshGLbgmcH23OS7+kLWoHpIFHG6oKK1aOGX5e16mS8acoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=IRChKcRO; arc=none smtp.client-ip=109.224.244.30
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rsg.ci.i.u-tokyo.ac.jp header.i=@rsg.ci.i.u-tokyo.ac.jp header.b="XLEFoVOu"
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
-	(authenticated bits=0)
-	by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 68J80pdf081376
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Sat, 19 Sep 2026 17:00:51 +0900 (JST)
-	(envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=mw6u70djCGiwpB17jPa/69aiMtBcQKLs7biIosnqhEs=;
-        c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
-        h=From:Message-ID:To:Subject:Date;
-        s=rs20250326; t=1789804852; v=1;
-        b=XLEFoVOue+PPPFfmRvvj5P7mEPBfZ60Tul7XsbuwG0A3TPJKnwUFqJxWM8/m4nNr
-         7iDuGRECKXQwaD+sw2lm/v0BIuMFn+sOIlgq3lYGdYpjSRaTqRBzxe3tilrAljmo
-         8uKf2rnwuJaTlro7GxWvBLDYzCoYrKoHhLFxKcbiPbu21n8URogNUzR8RdxwYwzi
-         RXGtfI4Teox1FxLhX0xTF2NeG3ASNKg7TCvthidkWqqUVBJJluCqbD0H9i4H03/j
-         wCahN+DQbmnOeO0qneo+M5jjYKhjxG3O5/IA+mTWPqg5kAfqfu61c72c56XsLviR
-         d/SaesRZ4kV8TrKjbgK2yQ==
-Message-ID: <de906373-8359-43b3-8786-f6a657743f7b@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 19 Sep 2026 17:00:51 +0900
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="IRChKcRO"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=uafqjtnu75hqtnbyybjhq6zr7a.protonmail; t=1789816323; x=1790075523;
+	bh=OupkCXI+i+c/SIn0RgYOZeNwtNF1rm1X6C0RHgZqaaI=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=IRChKcRO+w+X8jHOhSmXfSUVqNYyYvXYQRNMlX6N2RJAYuvjFSMntqxXSzootSEde
+	 LsS5Z7U8slEB9L4t69n/pAIQpoYZVI/pWENl3yqSJF+RO9NtMATzebMnlU+uVO1TiT
+	 9HNHvFIbv9iE9zzolneame4gquKlg/14pAcH5nIF9f79Ib3zu8JzCJsqP8I9fgIVeA
+	 m3NATgFfhsjm8lNyfedH1Ev5/PBA6Lq/k45jnpAqUk4CdCjWzOQSzomlIU2yPLs3rh
+	 P8TDIvWYhlF8m0WrCTpfrZNWC1aNfYso1b+MdTmOCa0d1jbq828cFpOj5leIi6Fva6
+	 q3GKxC6UBEFdQ==
+Date: Sat, 19 Sep 2026 11:12:00 +0000
+To: sashiko-reviews@lists.linux.dev
+From: =?utf-8?B?5a6J5a65?= <HystericalDragons@proton.me>
+Subject: Re: [PATCH v7 3/3] arm64: dts: rockchip: Add devicetree for the FriendlyElec NanoPi R28S
+Message-ID: <xdOa_u4x7ARXZaHLYCC6xLXrXlIzJOs8m6NhGIMGyg016PeQOBJ1y9-gl_9S-Q05GhALsVMGtqor-gM9ikh9pLjJWbp9FHGBIP3EJDCNIqs=@proton.me>
+In-Reply-To: <20260919103602.E84DA1F000FF@smtp.kernel.org>
+References: <20260919-r28s-upstream-v7-0-e80a6f8ef521@proton.me> <20260919-r28s-upstream-v7-3-e80a6f8ef521@proton.me> <20260919103602.E84DA1F000FF@smtp.kernel.org>
+Feedback-ID: 91982645:user:proton
+X-Pm-Message-ID: 6631b7ebac044e6070e1ee009d6731b9419fac0e
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 1/4] drm/virtio-gpu: Add VIRTIO_GPU_CAPSET_ROCM
- capability
-To: "Huang, Honglei" <honghuan@amd.com>, sashiko-reviews@lists.linux.dev
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, virtualization@lists.linux.dev,
-        Eugenio Perez <eperezma@redhat.com>, dri-devel@lists.freedesktop.org
-References: <20260918095940.2253018-1-honghuan@amd.com>
- <20260918095940.2253018-2-honghuan@amd.com>
- <20260918100746.2BB741F000FF@smtp.kernel.org>
- <9fcb3203-63f4-4332-a47e-916774e11eb3@amd.com>
- <0e644466-8b4e-48bb-9322-e47c59c5c77c@rsg.ci.i.u-tokyo.ac.jp>
- <52c825a5-1b47-47c7-8717-d194953e2986@amd.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <52c825a5-1b47-47c7-8717-d194953e2986@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 2026/09/19 0:46, Huang, Honglei wrote:
-> 
-> 
-> On 9/18/2026 7:27 PM, Akihiko Odaki wrote:
->> On 2026/09/18 19:13, Huang, Honglei wrote:
->>>
->>>
->>> This patch is for adding ROCm capset only, can be spited into another 
->>> thread if it is needed.
->>>
->>> Regards,
->>> Honglei
->>>
->>> On 9/18/2026 6:07 PM, sashiko-bot@kernel.org wrote:
->>>> Thank you for your contribution! Sashiko AI review found 2 potential 
->>>> issue(s) to consider:
->>>> - [Medium] virtio-gpu: premature UAPI exposure of unfinalized 
->>>> capability ID
->>>> - [Low] virtio-gpu: missing DRM UAPI alias for ROCM capability set
->>>> -- 
->>>>
->>>> commit a394228d77eeafc9f1dcc36150380f8561f1ee49
->>>> Author: Honglei Huang <honghuan@amd.com>
->>>>
->>>> drm/virtio-gpu: Add VIRTIO_GPU_CAPSET_ROCM capability
->>>>
->>>> This commit adds a new GPU capability set VIRTIO_GPU_CAPSET_ROCM 
->>>> with ID 8
->>>> to support ROCm compute workloads. The commit message notes that the
->>>> matching virtio-gpu specification change is currently in progress.
->>>>
->>>>> diff --git a/include/uapi/linux/virtio_gpu.h b/include/uapi/linux/ 
->>>>> virtio_gpu.h
->>>>> index 4f530d90058c7..3d4dfadc9d789 100644
->>>>> --- a/include/uapi/linux/virtio_gpu.h
->>>>> +++ b/include/uapi/linux/virtio_gpu.h
->>>>> @@ -321,6 +321,7 @@ struct virtio_gpu_cmd_submit {
->>>>>   #define VIRTIO_GPU_CAPSET_VENUS 4
->>>>>   #define VIRTIO_GPU_CAPSET_CROSS_DOMAIN 5
->>>>>   #define VIRTIO_GPU_CAPSET_DRM 6
->>>>> +#define VIRTIO_GPU_CAPSET_ROCM 8
->>>>
->>>> [Severity: Medium]
->>>> Is it safe to expose this speculative capability ID to userspace 
->>>> before the
->>>> virtio-gpu specification is finalized?
->>>>
->>>> The commit message states the specification change for ID 8 is in 
->>>> progress.
->>>> Because the Linux UAPI is frozen once released, exposing this ID now 
->>>> could
->>>> permanently commit the kernel to ID 8 for ROCm. If the OASIS virtio
->>>> technical committee assigns a different ID or rejects the proposal, 
->>>> would
->>>> this leave the Linux UAPI permanently incompatible with the standard?
->>
->> It is actually somewhat common to introduce a capset before updating 
->> the virtio specification, as capsets remain opaque to both the spec 
->> and the kernel without strict interface stability enforcement (for 
->> example, VIRTIO_GPU_CAPSET_DRM is still not in the spec). However, we 
->> must at least wait until the virglrenderer developers agree to 
->> implement it.
->>
->> An unfortunate complication is that gfxstream has already claimed 
->> capsets 7–9 prior to updating the spec or kernel headers:
->>
->> https://github.com/magma-gpu/rutabaga_gfx/blob/v0.1.85/ffi/src/ 
->> include/ rutabaga_gfx_ffi.h#L41-L43
->>
->> You could target capset 10 instead, but I advise coordinating with the 
->> VCL developers first to avoid further collisions.
-> 
-> Got it, will use 10 or 11 in next version.
-> 
->>
->> Additionally, "[PATCH v8 2/4] drm/virtgpu api: add blob userptr 
->> resource" poses a more critical issue: it adds 
->> VIRTIO_GPU_F_BLOB_READONLY and VIRTIO_GPU_BLOB_FLAG_USE_READONLY, 
->> directly altering semantics explicitly defined in the spec. We should 
->> see at least a draft spec patch posted before moving forward, so this 
->> series should remain an RFC until then.
-> 
-> Will change to RFC in next version.
-> 
-> the VIRTIO_GPU_F_BLOB_READONLY  flag is for ensure host side will handle
-> the readonly flag instead of ignoring that. Actually I think 
-> VIRTIO_GPU_BLOB_FLAG_USE_READONLY is enough, but AI review requests 
-> needs a VIRTIO_GPU_F_BLOB_READONLY  feature flag, maybe can remove it.
+These four pins are the WiFi/BT wake lines of the onboard AIC8800D80, which=
+ has no upstream driver yet, so nothing references them today. They were ad=
+ded on review request, since the connections are known from the schematics;=
+ once a driver lands, the WiFi and Bluetooth nodes will reference them with=
+ their own pinctrl-0. Making them hogs would be wrong: that would claim the=
+ pins permanently and keep a future driver from using them as interrupt and=
+ reset lines.
 
-The AI review makes a valid point: we have to ensure the host actually 
-handles the readonly flag rather than silently ignoring it. 
-VIRTIO_GPU_F_BLOB_READONLY may or may not be the best solution, but 
-whichever approach you choose, please ensure the patch explicitly 
-explains how this host-side compatibility is handled.
+On Saturday, September 19th, 2026 at 6:36 PM, sashiko-bot@kernel.org <sashi=
+ko-bot@kernel.org> wrote:
 
-Regards,
-Akihiko Odaki
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] dts: unused pinctrl definitions for wifi and bluetooth pins
+> --
+>=20
+> commit 745cf672aded254ac32cf444a084e38df95384e1
+> Author: =E5=AE=89=E5=AE=B9 <HystericalDragons@proton.me>
+>=20
+> arm64: dts: rockchip: Add devicetree for the FriendlyElec NanoPi R28S
+>=20
+> This commit adds devicetree support for the NanoPi R28S router board base=
+d on
+> the RK3528 SoC. It shares most of its design with the NanoPi Zero2 and en=
+ables
+> various peripherals including SDIO, UART, and networking interfaces.
+>=20
+> > diff --git a/arch/arm64/boot/dts/rockchip/rk3528-nanopi-r28s.dts b/arch=
+/arm64/boot/dts/rockchip/rk3528-nanopi-r28s.dts
+> > new file mode 100644
+> > index 0000000000000..294b66f60e47b
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/rockchip/rk3528-nanopi-r28s.dts
+> [ ... ]
+> > +&pinctrl {
+> > +=09bluetooth {
+> > +=09=09bt_wake_host: bt-wake-host {
+> > +=09=09=09rockchip,pins =3D <1 RK_PB5 RK_FUNC_GPIO &pcfg_pull_down>;
+> > +=09=09};
+> > +
+> > +=09=09host_wake_bt: host-wake-bt {
+> > +=09=09=09rockchip,pins =3D <1 RK_PB4 RK_FUNC_GPIO &pcfg_pull_none>;
+> > +=09=09};
+> > +=09};
+>=20
+> [Severity: Low]
+> Are these bluetooth pinctrl nodes intended to be used or configured as ho=
+gs?
+> They are defined here but appear to never be referenced by any device nod=
+e.
+> Without an explicit reference, such as a pinctrl-0 property on a device o=
+r
+> a hog definition, the configured pull states will not be applied.
+>=20
+> [ ... ]
+> > +=09wifi {
+> > +=09=09host_wake_wl: host-wake-wl {
+> > +=09=09=09rockchip,pins =3D <1 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
+> > +=09=09};
+> > +
+> > +=09=09pwr_wf: pwr-wf {
+> > +=09=09=09rockchip,pins =3D <1 RK_PC2 RK_FUNC_GPIO &pcfg_pull_none>;
+> > +=09=09};
+> > +
+> > +=09=09wl_wake_host: wl-wake-host {
+> > +=09=09=09rockchip,pins =3D <1 RK_PA7 RK_FUNC_GPIO &pcfg_pull_down>;
+> > +=09=09};
+> > +=09};
+> > +};
+>=20
+> [Severity: Low]
+> Similarly, are the host_wake_wl and wl_wake_host nodes meant to be refere=
+nced
+> somewhere? Like the bluetooth pins, they are defined but do not seem to b=
+e
+> used by any device or set up as a hog, meaning their pull states will not=
+ take
+> effect.
+>=20
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260919-r28s-ups=
+tream-v7-0-e80a6f8ef521@proton.me?part=3D3
+> 
