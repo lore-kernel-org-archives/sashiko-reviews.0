@@ -1,104 +1,129 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-18.mta0.migadu.com [91.218.175.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60EA0313293;
-	Sat, 19 Sep 2026 20:30:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F128378D89
+	for <sashiko-reviews@lists.linux.dev>; Sat, 19 Sep 2026 20:31:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789849818; cv=none; b=mwPo0BOostStx6xnpYLNGdEGlnSt2ASs6ZHFtEI5tq1NyFkdEb/Wb/1k//KqLB6JWxzbB8AF5l6OS5YUU+Q8MpPaFpNQzyebIIsyNxhVyQLyG+xQWeJIZ2l3n5XpYQQvhw3JSgbkM06khbT4J+yXr9yKqoQdIMIJBwy+GNMrG3g=
+	t=1789849922; cv=none; b=Qep0b7qWjFNnJvsN7quNAEk7Bb+iHoR5QA3H/Aj4onrbV3cfVS8d6x8SwsdGBUT8ro6BtrQYlVQr6dhxTs9tdk69QiKfmIrYsbYvFB9XP56SzPQ8PxxfM1y1Boa57dckJ2DBo6kR1PP9JbrA+FZCL0XZ4ruVp0Xm0OImVCDkNTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789849818; c=relaxed/simple;
-	bh=5vm+uamHoD2yOfgVchiqFhSUMYUi+r/HxRgP2p0+h9I=;
+	s=arc-20240116; t=1789849922; c=relaxed/simple;
+	bh=Mp3del96KvT7420sQkxabhcS2uwsOS/FHnorOTpOHik=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TyJ7f5SnLY3y8srcmp9yzIqFgAarPL+UrKbi77l8Iok+cUQz7PfxRrdckJQIUIM5DO16hcYarYKHTW1j+mHOg4TCQrJzhXLMnaBThtmBwPlcG089HqJ2l4awNQZTiJIoJH94teUQPPHZQK7RFMVFerKomsfu81wd/HQAqkQDmB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AmuIrgXy; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=iIKlegdso+CdiCA5FW2v3wQ6lSahsxCs3Pcw8gqWyg0hlTtEXUxV1XMQXEByNnLOVBLA2dnQdeOiq2/RVKUKwMlMpt98A4D/94vAbzuLLsGSQ5l5eghGckyjcDNnl2mZuXkQfy4wePOyRY9Ulkl49yUhrOUiv08QGZTlRTLxxKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=RLKukzmD; arc=none smtp.client-ip=91.218.175.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AmuIrgXy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F8651F000FF;
-	Sat, 19 Sep 2026 20:30:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789849817;
-	bh=LRmZ9trRqQMjRA/bi4sS2nuMLIkXINAO4Q1zOtsmj30=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=AmuIrgXyEHsqtavAxLU1rlAuSLBY7dDaWO0HTSH89pcmKB4dFNlKP0lgUQH7uvWQs
-	 p/uO8I8D3PLfjLF+6HlOKzzhtvD0tPDATDApqSR4INNhfbCskaonXoWpOGmExyNg9Y
-	 D67qeMB/GhgIcfAQpDSb5GxonSWk7/Jv5QIoYnUuC7ODOuYfYI2TvSoo5GuKpqw0An
-	 cJ5YD626JUqXV1soON1tWFUO8UeVuujEzXZUQFj85Jw3spRQLKJgJd77MFbCWh2P/Y
-	 X9GRysR+Zy6h/Az5erk/ndRRUtsdhe4+kCBB8LECCiFqo4+72+Xr9TMSzyNVqpfkSw
-	 xhBoqdcTR098A==
-Message-ID: <798483f3-55c1-4489-b584-80ad6ebcaedf@kernel.org>
-Date: Sat, 19 Sep 2026 22:30:14 +0200
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="RLKukzmD"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=Mp3del96KvT7420sQkxabhcS2uwsOS/FHnorOTpOHik=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1789849916; v=1; x=1790454716;
+ b=RLKukzmDKz7/oLV9YR1DLeRmuJAcbd9u2grlLhyD+dmratyy447gi9OOn0tG94lG2EOOWpqj
+ 6WDlbL5iq6DK16ds8jmmsVXqH21UKZpENCCnyO2r7OXgjMwOJ9rTP7v82nJWnKp1AoF5GlzDEM5
+ XjA0lu25VkV+ZFbgNf7Xa8nY=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id a0210bcd3dbcc526;
+	Sat, 19 Sep 2026 20:31:56 +0000
+X-Mizu-Trace-ID: a0210bcd3dbcc526
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <7ef6f566-f5b7-4a38-a824-5666fabe5c21@linux.dev>
+Date: Sat, 19 Sep 2026 13:31:53 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH 6.1.y 1/3] mptcp: consolidate subflow cleanup
-Content-Language: fr
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v2 17/20] libbpf: Let the static linker carry
+ .bpf_cleanup relocations
+Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
-Cc: mptcp@lists.linux.dev
-References: <20260919201252.2025112-5-matttbe@kernel.org>
- <20260919201252.2025112-6-matttbe@kernel.org>
- <20260919202324.50DC81F000FF@smtp.kernel.org>
-From: Matthieu Baerts <matttbe@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- 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
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <20260919202324.50DC81F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Cc: bpf@vger.kernel.org
+References: <20260918044156.3283973-1-yonghong.song@linux.dev>
+ <20260918044327.3292986-1-yonghong.song@linux.dev>
+ <20260918050136.2A6DA1F000FF@smtp.kernel.org>
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <20260918050136.2A6DA1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 19/09/2026 22:23, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] mptcp: socket hang in fallback teardown due to restrictive state checks
 
-I guess I would have quickly seen that in the mptcp_connect*.sh tests.
 
-Cheers,
-Matt
--- 
-Sponsored by the NGI0 Core fund.
+On 9/17/26 10:01 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] bpf/linker: NULL pointer deref in linker_append_elf_relos()
+> - [Medium] bpf/linker: unaligned memory access in data relocations
+> - [Low] bpf/linker: multi-line comment style violation
+> --
+>
+> commit 2eadf13e135621b2e34d8946fe67664cd72e0e3d
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> libbpf: Let the static linker carry .bpf_cleanup relocations
+>
+> This commit updates the BPF static linker to support .bpf_cleanup relocations.
+> It specifically adds handling for R_BPF_64_NODYLD32 and R_BPF_64_ABS32 to
+> process compiler-emitted exception cleanup tables.
+>
+>> diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
+>> index 78f92c39290af..e5c06023cb5b1 100644
+>> --- a/tools/lib/bpf/linker.c
+>> +++ b/tools/lib/bpf/linker.c
+> [ ... ]
+>
+>> @@ -2274,6 +2275,22 @@ static int linker_append_elf_relos(struct bpf_linker *linker, struct src_obj *ob
+>>   						insn->imm += sec->dst_off / sizeof(struct bpf_insn);
+>>   					else
+>>   						insn->imm += sec->dst_off;
+>> +				} else if (sym_type == R_BPF_64_NODYLD32 ||
+>> +					   sym_type == R_BPF_64_ABS32) {
+>> +					__u32 *val;
+>> +
+>> +					/* Two spellings of the one thing: LLVM
+> [Severity: Low]
+> This isn't a bug, but does this violate the BPF subsystem multi-line comment
+> style? The preferred kernel style is to have the opening /* on its own line
+> rather than putting text on the same line as the marker.
+>
+>> +					 * emits NODYLD32 for a .long against a
+>> +					 * section symbol, GNU as emits ABS32
+>> +					 * (bpf_reloc_type_lookup() maps
+>> +					 * BFD_RELOC_32 to it), and the value
+>> +					 * they describe is the same.
+>> +					 */
+>> +					val = dst_linked_sec->raw_data + dst_rel->r_offset;
+> [Severity: High]
+> Could this lead to a NULL pointer dereference? Looking at
+> linker_sanity_check_elf_relos(), SHT_NOBITS sections are explicitly allowed
+> as relocatable sections.
+>
+> For SHT_NOBITS sections (like .bss), extend_sec() typically skips allocating
+> raw_data, leaving it as NULL. If we process a relocation against such a
+> section here, we might compute val = NULL + dst_rel->r_offset and then
+> dereference it on the next line when handling sec->dst_off.
+>
+> [Severity: Medium]
+> Is it also possible to hit an unaligned memory access here?
+>
+> While executable sections enforce alignment checks in
+> linker_sanity_check_elf_relos(), there doesn't seem to be an equivalent
+> alignment check for data section offsets. If an ELF provides an unaligned
+> r_offset, the direct dereference of the unaligned val pointer might
+> cause a crash on architectures with strict memory alignment requirements.
+
+Okay, I will add a guard to check NULL pointer and unaligned memory access.
+If this is true, will return an error.
+
+>
+>> +					if (linker->swapped_endian)
+>> +						*val = bswap_32(bswap_32(*val) + sec->dst_off);
+>> +					else
+>> +						*val += sec->dst_off;
+>>   				} else {
+>>   					pr_warn("relocation against STT_SECTION in non-exec section is not supported!\n");
+>>   					return -EINVAL;
 
