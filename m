@@ -1,124 +1,104 @@
-Received: from mta0.migadu.com (out-239.mta0.migadu.com [91.218.175.239])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2BD34040D
-	for <sashiko-reviews@lists.linux.dev>; Sat, 19 Sep 2026 20:27:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.239
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60EA0313293;
+	Sat, 19 Sep 2026 20:30:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789849630; cv=none; b=sisU4H14/L9uNzDOwojjDbJtUrIeJcpogYqO1DNepepkXCaDzU89TSpfme6EcMbWlLI5Oxa96WecUqVZIoj0kIO7q7dwJAJRLycuX8d6sFDH8NszZTa2L0F08426L1qtKMCcMGyKYsWv5hs/hjnLOnoVRJUNxV4+VBtIWjz6Q84=
+	t=1789849818; cv=none; b=mwPo0BOostStx6xnpYLNGdEGlnSt2ASs6ZHFtEI5tq1NyFkdEb/Wb/1k//KqLB6JWxzbB8AF5l6OS5YUU+Q8MpPaFpNQzyebIIsyNxhVyQLyG+xQWeJIZ2l3n5XpYQQvhw3JSgbkM06khbT4J+yXr9yKqoQdIMIJBwy+GNMrG3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789849630; c=relaxed/simple;
-	bh=O2l+KgxSHzLRaaKI95s07XnoTMBwmg9M7/+OF5kLzNE=;
+	s=arc-20240116; t=1789849818; c=relaxed/simple;
+	bh=5vm+uamHoD2yOfgVchiqFhSUMYUi+r/HxRgP2p0+h9I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qJnkzIOyG/NO4Ci+YH3R59cyctEQhYfmIRbwYWAYGcyTdCXWVfq1u7Kgp/0IB3Sm4N6Z0fZA4sqqeb8KSvXNL/qDBKD1vx/8iJ7jwqHSTQf5NmPTrVh6icDrcpXRXEOsFT8BdRf6eWs9A51lyLqXX9k2g86KHxZWsdISVZPLFrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=GNzWTXDa; arc=none smtp.client-ip=91.218.175.239
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	 In-Reply-To:Content-Type; b=TyJ7f5SnLY3y8srcmp9yzIqFgAarPL+UrKbi77l8Iok+cUQz7PfxRrdckJQIUIM5DO16hcYarYKHTW1j+mHOg4TCQrJzhXLMnaBThtmBwPlcG089HqJ2l4awNQZTiJIoJH94teUQPPHZQK7RFMVFerKomsfu81wd/HQAqkQDmB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AmuIrgXy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="GNzWTXDa"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=O2l+KgxSHzLRaaKI95s07XnoTMBwmg9M7/+OF5kLzNE=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789849626; v=1; x=1790454426;
- b=GNzWTXDajiBSuR7nbpL2m+mvIyi+7n7ImryFjBHh6/wGkjQG1sJHR1N9afad+oGjsNeZjd88
- 8GgNmF63OviS6oQXs5cxiPKis2DMq2mwfpOLTlPg/1hVh0dq+WyLo4PQ7oHkvowkZ4u+Jnj6pBg
- s4auT0FHZRXv4Sqlg1QRGOls=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id faf54840bab87a35;
-	Sat, 19 Sep 2026 20:27:06 +0000
-X-Mizu-Trace-ID: faf54840bab87a35
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <bb5e5965-45c3-4402-9c35-5c8e9226755f@linux.dev>
-Date: Sat, 19 Sep 2026 13:27:00 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AmuIrgXy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F8651F000FF;
+	Sat, 19 Sep 2026 20:30:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789849817;
+	bh=LRmZ9trRqQMjRA/bi4sS2nuMLIkXINAO4Q1zOtsmj30=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=AmuIrgXyEHsqtavAxLU1rlAuSLBY7dDaWO0HTSH89pcmKB4dFNlKP0lgUQH7uvWQs
+	 p/uO8I8D3PLfjLF+6HlOKzzhtvD0tPDATDApqSR4INNhfbCskaonXoWpOGmExyNg9Y
+	 D67qeMB/GhgIcfAQpDSb5GxonSWk7/Jv5QIoYnUuC7ODOuYfYI2TvSoo5GuKpqw0An
+	 cJ5YD626JUqXV1soON1tWFUO8UeVuujEzXZUQFj85Jw3spRQLKJgJd77MFbCWh2P/Y
+	 X9GRysR+Zy6h/Az5erk/ndRRUtsdhe4+kCBB8LECCiFqo4+72+Xr9TMSzyNVqpfkSw
+	 xhBoqdcTR098A==
+Message-ID: <798483f3-55c1-4489-b584-80ad6ebcaedf@kernel.org>
+Date: Sat, 19 Sep 2026 22:30:14 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v2 16/20] libbpf: Carry the exception cleanup
- table through the light skeleton
-Content-Language: en-GB
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH 6.1.y 1/3] mptcp: consolidate subflow cleanup
+Content-Language: fr
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260918044156.3283973-1-yonghong.song@linux.dev>
- <20260918044322.3292575-1-yonghong.song@linux.dev>
- <20260918050217.599711F000FF@smtp.kernel.org>
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260918050217.599711F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Cc: mptcp@lists.linux.dev
+References: <20260919201252.2025112-5-matttbe@kernel.org>
+ <20260919201252.2025112-6-matttbe@kernel.org>
+ <20260919202324.50DC81F000FF@smtp.kernel.org>
+From: Matthieu Baerts <matttbe@kernel.org>
+Autocrypt: addr=matttbe@kernel.org; keydata=
+ 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
+ lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
+Organization: NGI0 Core
+In-Reply-To: <20260919202324.50DC81F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-
-On 9/17/26 10:02 PM, sashiko-bot@kernel.org wrote:
+On 19/09/2026 22:23, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] libbpf: integer overflow in cleanup_info_tot_sz leads to heap OOB read/write
-> --
->
-> commit b9300a1f6022da2aa8b343e05882b46e9f329c64
-> Author: Yonghong Song <yonghong.song@linux.dev>
->
-> libbpf: Carry the exception cleanup table through the light skeleton
->
-> This patch modifies the light skeleton generation to carry the exception
-> cleanup table (cleanup_info), similar to func_info and line_info. It updates
-> bpf_gen__prog_load() to allocate space for the records, set up union bpf_attr,
-> and perform endianness swapping for cross-compiled cases.
->
->> diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
->> index af3a04f161ac1..2345fbdd46f56 100644
->> --- a/tools/lib/bpf/gen_loader.c
->> +++ b/tools/lib/bpf/gen_loader.c
-> [ ... ]
->> @@ -998,6 +1000,9 @@ static void info_blob_bswap(struct bpf_gen *gen, int func_info, int line_info,
->>   
->>   	for (i = 0; i < gen->core_relo_cnt; i++)
->>   		bpf_core_relo_bswap(cr++);
->> +
->> +	for (i = 0; i < load_attr->cleanup_info_cnt; i++)
->> +		bpf_cleanup_info_bswap(ci++);
-> [Severity: High]
-> Could this loop result in an out-of-bounds heap read and write?
->
-> If an attacker crafts a BPF ELF object with an extremely large .bpf_cleanup
-> section, load_attr->cleanup_info_cnt can be very large. If the allocation
-> size calculated in bpf_gen__prog_load() overflowed, this loop will process
-> hundreds of millions of elements in an undersized buffer.
->
-> This could cause memory corruption when cross-compiling (gen->swapped_endian
-> is true).
+> - [High] mptcp: socket hang in fallback teardown due to restrictive state checks
 
-It is user's problem if they intentionally want to have of lots and lots of
-.bpf_cleanup section.
+I guess I would have quickly seen that in the mptcp_connect*.sh tests.
 
->
->>   }
->>   
->>   void bpf_gen__prog_load(struct bpf_gen *gen,
->> @@ -1011,8 +1016,11 @@ void bpf_gen__prog_load(struct bpf_gen *gen,
->>   			       load_attr->line_info_rec_size;
->>   	int core_relo_tot_sz = gen->core_relo_cnt *
->>   			       sizeof(struct bpf_core_relo);
->> +	int cleanup_info_tot_sz = load_attr->cleanup_info_cnt *
->> +				  load_attr->cleanup_info_rec_size;
-> [Severity: High]
-> Does this unbounded 32-bit integer multiplication risk an overflow?
->
-> If load_attr->cleanup_info_cnt is excessively large, multiplying it by
-> cleanup_info_rec_size could wrap around modulo 2^32 to a small positive
-> integer. This would result in add_data() allocating an undersized heap
-> buffer for the cleanup info blob.
->
-> Combined with the loop in info_blob_bswap(), this could lead to crashes
-> or potentially arbitrary code execution when processing untrusted files
-> using the light skeleton generator.
-
-We should be okay. Similar to line_info, core_relo, etc., all of them
-(including cleanup_info) will have a guard in add_data which ensures
-the total size must be smaller than INT32_MAX.
-
->
+Cheers,
+Matt
+-- 
+Sponsored by the NGI0 Core fund.
 
