@@ -1,36 +1,36 @@
-Received: from mta1.migadu.com (out-159.mta1.migadu.com [95.215.58.159])
+Received: from mta0.migadu.com (out-192.mta0.migadu.com [91.218.175.192])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766BF2EEE83
-	for <sashiko-reviews@lists.linux.dev>; Sat, 19 Sep 2026 20:00:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37C82DEA68
+	for <sashiko-reviews@lists.linux.dev>; Sat, 19 Sep 2026 20:18:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.192
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789848059; cv=none; b=P1l4sWIpwIOH+/8jgJWhqit/59nw5OxJOBygGLiq3/9vG/kSM+qMw/Z4j5z1Mm47p0oWSNRdvBjUtyQyG8ebQYsKI07CnfQ0uMo5nLixk/k4ax8HCb1mDFXIwaqebYqDs2Kq/05gbY+KiXbWouwTlGR3k7JvhMsAwNEvJjrOfE8=
+	t=1789849098; cv=none; b=XZpS+lJr0iqYFCF3qqVChsW9YWGx3uKTb3IGYleYnyU9DX7o/5iV2+4Ob9KoUoKrFOsQ7ykNOOXKc7FJgte8IHTkc9DCiF68KMPKH7xtwC//gCMS7ocYoYPSo4GKAxJcAkogZC1pJq54rqFLR+FnUvhk3+gq7Tc+xwfA0pmD9qI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789848059; c=relaxed/simple;
-	bh=LKS8Jmw+s7q1zJLYx3MSCn1eYJhzAI8W4+0dN/qN5Xk=;
+	s=arc-20240116; t=1789849098; c=relaxed/simple;
+	bh=lJucHcGuLAZsC3uuNEk4X9N1B5r3ZoMMwc468PxnFHc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fHlPMZMIOMTCl62yVk9hxd4HeLFaGgz56YIz7dCZFSu7LQ7teIeTxUBWT+023o337+HemkEcdbdJHuPe747Qw1mXtJsweojG+ddK+UnWfJNR6eDRJABV50NIU/tyIvnY2PWFix/1p+7lud6rRaZwWGqlsmgdqCbN9GvSHIDasHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=sXPkaRsZ; arc=none smtp.client-ip=95.215.58.159
+	 In-Reply-To:Content-Type; b=IDqtt5Q0fhko73P2DO/AvOhsyMactwmbjlG8bMJEj7zNH6CYt7f6N8NdJfJ0vzvgAtK4cUTbK2xhqgR95St6pY+MyaOGjeCSwFXAsDe6YPUk/PhgWhtvSbdyEacVvcp0o+lL9f//aZKFCQX24m7U6Zc82qXDTrC392TweyI2X+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=C5Iup6C3; arc=none smtp.client-ip=91.218.175.192
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="sXPkaRsZ"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="C5Iup6C3"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=LKS8Jmw+s7q1zJLYx3MSCn1eYJhzAI8W4+0dN/qN5Xk=;
+DKIM-Signature: a=rsa-sha256; bh=lJucHcGuLAZsC3uuNEk4X9N1B5r3ZoMMwc468PxnFHc=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789848055; v=1; x=1790452855;
- b=sXPkaRsZDNlkTSQ3Kzlu8vJo1RbdchO+K/DWwh//GlpGVtAXAJYhVAIpvBXB0DKp2vkiuvcB
- 5BOx0Ka4MBYkob96sC0J2yUYJJ8yIUK2rfn5vPNs2OkMAYX8TqkK/sJg+3LKJxpFImptkk4s7pF
- Rra4JuaeNTO2Ma40p0ViJxvc=
+ t=1789849093; v=1; x=1790453893;
+ b=C5Iup6C3hohA7w4fZmMmr6eKz+PLHstP+yfUggBQ6MmdpMxmjcWgesO5hKV868k7BTECuwNn
+ k0XLREm8Of2LRn9/MyR+0IOxximDssyiB81z/OzR4SN0caJnRwpmNBWjUp6uxe22IlS+igVteH1
+ nQ45RY2dS7yGd71Rb1dIreF0=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 57d71d9abb75c589;
-	Sat, 19 Sep 2026 20:00:55 +0000
-X-Mizu-Trace-ID: 57d71d9abb75c589
+Received: by smtp.migadu.com with ESMTPS id 5e1a89ceafcf4eaf;
+	Sat, 19 Sep 2026 20:18:13 +0000
+X-Mizu-Trace-ID: 5e1a89ceafcf4eaf
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <b278f3e2-a000-4b9a-af16-806eb75b03fc@linux.dev>
-Date: Sat, 19 Sep 2026 13:00:52 -0700
+Message-ID: <2d855468-6fa5-4c68-b752-71647fc57bf4@linux.dev>
+Date: Sat, 19 Sep 2026 13:18:10 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,103 +38,76 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v2 11/20] bpf, x86: Dispatch exception cleanup
- pads at run time
+Subject: Re: [PATCH bpf-next v2 14/20] libbpf: Add cleanup_info to
+ bpf_prog_load_opts
 Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260918044156.3283973-1-yonghong.song@linux.dev>
- <20260918044253.3289522-1-yonghong.song@linux.dev>
- <20260918050339.415601F000FF@smtp.kernel.org>
+ <20260918044311.3291504-1-yonghong.song@linux.dev>
+ <20260918045721.2DFA01F000FF@smtp.kernel.org>
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260918050339.415601F000FF@smtp.kernel.org>
+In-Reply-To: <20260918045721.2DFA01F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
 
 
-On 9/17/26 10:03 PM, sashiko-bot@kernel.org wrote:
+On 9/17/26 9:57 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] bpf, x86: garbage kfunc stack arguments in exception cleanup pads
+> - [Medium] libbpf: missing E2BIG fallback for cleanup_info breaks forward compatibility
 > --
 >
-> commit 1e32297a3c2c4f6bbc4d458bc25563bed8167f6c
+> commit d67b69538e39a329708fcc9fa943f0ad05afaa05
 > Author: Yonghong Song <yonghong.song@linux.dev>
 >
-> bpf, x86: Dispatch exception cleanup pads at run time
+> libbpf: Add cleanup_info to bpf_prog_load_opts
 >
-> This commit provides the architecture-specific support for x86-64 exception
-> cleanup pads. It forces a full callee-saved spill for programs with a cleanup
-> table and introduces arch_bpf_run_cleanup_pad to execute the pads.
+> Let a caller hand the kernel an exception cleanup table. Extend struct
+> bpf_prog_load_opts with cleanup_info, cleanup_info_cnt and
+> cleanup_info_rec_size, pass them through to BPF_PROG_LOAD, and grow the
+> attr size bpf_prog_load() computes to cover the new fields.
 >
->> diff --git a/arch/x86/net/bpf_cleanup_pad.S b/arch/x86/net/bpf_cleanup_pad.S
->> new file mode 100644
->> index 0000000000000..da4b448ecf095
->> --- /dev/null
->> +++ b/arch/x86/net/bpf_cleanup_pad.S
+>> diff --git a/tools/lib/bpf/bpf.c b/tools/lib/bpf/bpf.c
+>> index 96819c082c772..bcf490570961c 100644
+>> --- a/tools/lib/bpf/bpf.c
+>> +++ b/tools/lib/bpf/bpf.c
 > [ ... ]
+>> @@ -370,6 +370,10 @@ int bpf_prog_load(enum bpf_prog_type prog_type,
+>>   	attr.fd_array = ptr_to_u64(OPTS_GET(opts, fd_array, NULL));
+>>   	attr.fd_array_cnt = OPTS_GET(opts, fd_array_cnt, 0);
+>>   
+>> +	attr.cleanup_info = ptr_to_u64(OPTS_GET(opts, cleanup_info, NULL));
+>> +	attr.cleanup_info_cnt = OPTS_GET(opts, cleanup_info_cnt, 0);
+>> +	attr.cleanup_info_rec_size = OPTS_GET(opts, cleanup_info_rec_size, 0);
+> [Severity: Medium]
+> Will this break forward compatibility for bpf_prog_load() if cleanup_info
+> triggers an -E2BIG error?
 >
->> +SYM_FUNC_START(arch_bpf_run_cleanup_pad)
->> +	ANNOTATE_NOENDBR
->> +
->> +	pushq %rbp
->> +	pushq %rbx
->> +	pushq %r12
->> +	pushq %r13
->> +	pushq %r14
->> +	pushq %r15
->> +	/* Keep the pad's entry rsp congruent to a normal call's. */
->> +	subq $8, %rsp
->> +
->> +	movq 0(%rdx), %r15
->> +	movq 8(%rdx), %r14
->> +	movq 16(%rdx), %r13
->> +	movq 24(%rdx), %rbx
->> +	movq 32(%rdx), %r12
->> +	/* rbp is BPF r10, so this is the whole of the pad's frame setup. */
->> +	movq %rsi, %rbp
->> +
->> +	/* CALL_NOSPEC needs the target in a register; rcx is BPF r4, dead. */
->> +	movq %rdi, %rcx
->> +
->> +	/* BPF r0 on the way into a pad, not whatever the kernel left in rax. */
->> +	movl $BPF_PAD_ENTRY_R0, %eax
->> +
->> +	CALL_NOSPEC rcx
-> [Severity: High]
-> Does this execution environment cause kfuncs with more than 5 arguments
-> to read uninitialized garbage stack arguments?
+> Later in bpf_prog_load(), there is a retry loop to handle -E2BIG when the
+> userspace-provided record size is larger than what the kernel supports:
+>
+> 	while (errno == E2BIG && (!finfo || !linfo)) {
+> 		if (!finfo && attr.func_info_cnt &&
+> 		    attr.func_info_rec_size < func_info_rec_size) {
+>              /* try with corrected func info records */
+>              ...
+>
+> The loop condition and body don't seem to include checks for cleanup_info.
+>
+> If the kernel returns -E2BIG because of a larger cleanup_info_rec_size,
+> won't this hit the else { break; } block or skip the loop entirely, causing
+> the load to fail instead of retrying with truncated records?
 
-We should be okay since we already have:
-
-+       if (bpf_pseudo_kfunc_call(insn)) {
-+               struct bpf_call_summary cs;
-+
-+               if (bpf_get_call_summary(env, insn, &cs) &&
-+                   cs.arg_slot_cnt > MAX_BPF_FUNC_REG_ARGS) {
-+                       verbose(env,
-+                               "insn %u passes an on-stack call argument in an exception cleanup landing pad\n",
-+                               i);
-+                       return -EINVAL;
-+               }
-+       }
+This is the first version to support .bpf_cleanup. It is too early to
+talk about the future extension for .bpf_cleanup although we do have some
+room to grow struct size if needed:
+   #define MAX_FUNCINFO_REC_SIZE   252
+   #define MAX_CLEANUP_INFO_REC_SIZE       MAX_FUNCINFO_REC_SIZE
 
 >
-> In arch_bpf_run_cleanup_pad, the pad is executed on the unwinder's
-> stack (rsp), while rbp is set to the original BPF frame.
->
-> However, the JIT unconditionally writes outgoing kfunc stack arguments
-> relative to BPF_REG_FP (rbp), as seen in emit_kfunc_arg_moves in
-> arch/x86/net/bpf_jit_comp.c:
->
->                  else if (dst_mem)
->                          emit_stx(&prog, BPF_DW, BPF_REG_FP, reg,
->                                   stack_base + (dst - nreg) * 8);
->
-> Because rbp and rsp are desynchronized in the pad, the arguments are
-> written to the old frame. When the kfunc is called, the C calling
-> convention requires it to read stack arguments from [rsp], which points
-> to the unwinder's stack instead of the original frame, leading to
-> garbage reads.
->
+>> +
+>>   	if (log_level) {
+>>   		attr.log_buf = ptr_to_u64(log_buf);
+>>   		attr.log_size = log_size;
 
