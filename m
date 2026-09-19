@@ -1,195 +1,152 @@
-Received: from mail-yx2-f43.google.com (mail-yx2-f43.google.com [74.125.224.171])
+Received: from mail-wr2-f11.google.com (mail-wr2-f11.google.com [74.125.225.75])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC002E62A9
-	for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 23:39:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991ED248896
+	for <sashiko-reviews@lists.linux.dev>; Sat, 19 Sep 2026 01:26:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.75
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789774744; cv=none; b=uTWj4vckCTkCG4Bi3iK664W15vQ3n8szZiFZ0QI3HkV9aqvtj2gbe4JldlN2z5/D61LTI7laZ3hYVcE/FXh6QJNiiPWeJ+kF+mzEf2vOC+u370bz6hfouFtu7yeVCTNWEGBuy7fyyOLN9et7fZJs5I66NyZ4UxqIAIsLGFrSxA8=
+	t=1789781174; cv=none; b=gAc1Lh3GupqKeSK7qukGG2dtBMeM7n19RRhXccCQ78vCx6IVNTHZb2aQISnY6Y8i+03Ms8szGKk2nrgA1rc6qLxZmiGOO+2x5u3A+enjhuxosYAr4CTNlMyhDkh+inz7F7/+Qyi8fepes0H5gHiNUuFVyxjE/vfKY2VWP55mpO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789774744; c=relaxed/simple;
-	bh=+GbvnoXlY6z0/CWeAbuTV9SRZnV1I/IG5We8XpcaB5Y=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NmBAE0isPfMhr/bJfwbVyBFMgv5XJSYro1GieJwgN7OFARpBJnS+LGaXR4rera5+oUwmY3BlIrJ1i9i1NZ1+HRLq5dPIoI4iTnflryeu94R4hUd+Istb5eLVr1tCN4BVYJNuLdxvyf6/q8H7iRVRNoXNHPtOM6tyVCl3LKtCpu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rIZVn5gK; arc=none smtp.client-ip=74.125.224.171
+	s=arc-20240116; t=1789781174; c=relaxed/simple;
+	bh=pw0xVBSJMGSqUzehos+pMIH+RXRHeVNDafs64hQjF6I=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=qDM5y+nhB9Jmul0bPnym05gBTllosC9xRvIVMPP52cVBdgWyjo25A4CjKjwECD3y4wvcExiCPsggthKGuuy04GvUB6vi/6oExs2nX3ICY8R0jygGwHh87LUgUyeQT6Pk/7E2dFYxWY4Dp54fKfSdvTwbB9G3uJy0F7/lUyjG3YA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZlUwvSrY; arc=none smtp.client-ip=74.125.225.75
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rIZVn5gK"
-Received: by mail-yx2-f43.google.com with SMTP id 956f58d0204a3-66f7f72a284so1236839d50.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 16:39:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZlUwvSrY"
+Received: by mail-wr2-f11.google.com with SMTP id ffacd0b85a97d-486e4e15deaso314914f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 18 Sep 2026 18:26:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789774742; x=1790379542; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:date
-         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ZGEupli9b96SIb011q5IBfF/vCVL9Kbgj58l6jXVGLc=;
-        b=rIZVn5gKIyi/P7qyEfuiV2mWySo0Q2OGvzVt35SiiU24YII7RLqtPGnTk3jvZzxSUh
-         sspWCxn5HFi2dzx6/Ic5jClkfVgr2l5Go8sbHPYWIlLhIum9AEIBdQS8kMNSN792N9Z5
-         NJiZaXQqUu22iu1sfQNsgdxlCrv8SLjJSh0uNDuhXDNrcqK5xoaHwYNE3DDupreLUu93
-         NXf6Owyc4glvZr1eH2TDy7p70Wl38ZKf+3qLCkeGTysgnmEOtIlbCJQPh3mv/aBC1SiH
-         Gdgv0JP/kfJEnpH+PX9q4H0IyOSSJ6zl43aO3CpYR350CsHQB+ORk8GQHnOwQxGUaqyd
-         1rXA==
+        d=gmail.com; s=20251104; t=1789781171; x=1790385971; darn=lists.linux.dev;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=AzYIXAlKfxIW6Tyqomxe2Cchgk0IVoHHDbzwuQj/rqg=;
+        b=ZlUwvSrYzCNBG349RuJTdqg45xtR/pazyDEOFPJjkH1UekgbM4o5eTy8XsfCENaA1Q
+         0CCMZuClm5JY6+moRYq3VbMbZwof3TR9QvcyMSDIRz0RtQppk7DCFpuc7Srr34ghrjfi
+         cvNYNYYvbZxeOisDDQFLIq5MwubV6wmRBjX/KGei5XNIL14v+MWverG7EHc1nbNWozWv
+         kY/XxbXuPyZoRjCWICBRL0FDuqRgglWKXoqeI3lS5hVnLpPNZHf85jbcCZ38hoWn5zqS
+         w8s20FL44Vy9m5hgF68ODTJlnSSXq2w0a2+mGAoT5EAipq7OdRDsLWiEptSrpEW7V54t
+         fAVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789774742; x=1790379542;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:date
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=ZGEupli9b96SIb011q5IBfF/vCVL9Kbgj58l6jXVGLc=;
-        b=q748BIzKVM327ZU+j/95/JIEcw6KUgCe5pRvFl7qlBBFtUOlWbBDt1Jh8oKYD3gbm9
-         YkpGBuOmnj3xcnPojeygpivo5wiiG6INC7LQOcxP4t9JKIHYArGtMDufKVAoE0jsgSz/
-         rN+BJj9Cj5v9X/ryvxMMvidUcebauNAhLEbS6IeRHDaX3OfZspzn5+2yP4BToC5WKNwJ
-         P6+iowiNz1i9FTLRG+CD/9JJqkMMe27SmBJbIYhn5BlNHTMVELba3n2e7eYVrIUYS3p+
-         js7PxSSgBamQb24KwmEckRi6+cETqdyWw17/fFev3qLEHhuNC8XioUjZbcnvgq3lA9QV
-         AIXw==
-X-Gm-Message-State: AFuF++nEhWO8uZWOzjbwW1IKoMQjos6np4/o161JW03msaIcXK4lu45V
-	L1HDzUJOGIhsV76vXA6VEmMde0VWhdq2PWvqLkLw1Ec/qQvGQgWrkurb7Y+sSw==
-X-Gm-Gg: AYBFou0DfNAns+8D1jnKFvtNKco4SjnidvQRc9UUJhd7EvDYD9nL/YjH+x+/SbYt7XB
-	FCP7vlSxKlKcFewbaR/cFTw1QEtYxPNgSntCGIU5PFXEyblgRPVjmvVxJ0X2j8FSuYrrB/RdBx1
-	8p6X9dlJOCcnAAPF3gRa0Kjw2O8opgWNDhNdn8ZiKs8FKrf4XFDZsKsAw7W6TyrOlbVVTJV2QT9
-	Zp/DJGizBHLQer9NbGcEnM8aakqS37tTTRdQd7SHSRobkmcSczazukpAnLR+omvMPsQQGly+2Sy
-	kjgcD4W9anWRXszhScMLYSXgvxs2NjiDaNstSEINdvvfnnoUJ0SlCY5+LGwSUWFLdZaEU+Gc62Q
-	JQnZJXrPuxnaSp/fGxG6IQkCd29zb/RPyX95oV6ejzfNoKjqKSIBuqXS0xY9hguWxXiEb96g2P2
-	+8AxXyi+ss5w8Elmft624Y/1JJ/c9t72ri8kKg5aetb7Gh+7BjEnOYdDtgEYpW33VG9GYXWxHzC
-	HVjS6rE2qkvUa8CdtO2d1JhodudsNRbPhQFW5SohaUuFHvKpvwc+6y6HZJT
-X-Received: by 2002:a05:690e:130e:b0:671:23de:14d9 with SMTP id 956f58d0204a3-6717fcacb69mr1447072d50.31.1789774741774;
-        Fri, 18 Sep 2026 16:39:01 -0700 (PDT)
-Received: from 4470NRD-ASU.ssi.samsung.com ([50.205.20.42])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67299071d4dsm593207d50.4.2026.09.18.16.39.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Sep 2026 16:39:01 -0700 (PDT)
-From: Anisa Su <anisa.su887@gmail.com>
-X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
-Date: Fri, 18 Sep 2026 16:38:59 -0700
-To: sashiko-reviews@lists.linux.dev
-Cc: Anisa Su <anisa.su887@gmail.com>, linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v14 6/8] cxl/mem: Configure dynamic capacity interrupts
-Message-ID: <aq3LkzNk5zOjn-5U@4470NRD-ASU.ssi.samsung.com>
-References: <20260918203049.7273-1-anisa.su@samsung.com>
- <20260918203049.7273-7-anisa.su@samsung.com>
- <20260918204302.F17761F000FF@smtp.kernel.org>
+        d=1e100.net; s=20260707; t=1789781171; x=1790385971;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=AzYIXAlKfxIW6Tyqomxe2Cchgk0IVoHHDbzwuQj/rqg=;
+        b=rcNb2D36AR4OqrcNqHkqTBTXxPZsWRfnpVUIFUael7y/QM7hThEi85w16ENNeDBovz
+         46OTgtKQheR4EAkOvs4QIk6VbZh7WE3lAPulfEzpSttSdVfEp+7vVBQ2IT8jjIDBLux8
+         xGMtvnO1VP4cTwTQZJpQk/OHbxkstn9jdarSQFGla9hxzIH9ezC7dloXRgR2zqMocTTy
+         fsxdGcicJPBN3Dba5oMh58nD7vY312sAC+4qTYMSq1UcKwwyS8ODjPIZo/N/uHELjqtx
+         aIZrrLszOwdSlNBIfZ7Y9itV4egNmd2JloXr7oG8UEIZSHfWqwNxYznyF9UCsndwkok1
+         dEYA==
+X-Gm-Message-State: AFuF++lxIdQIlJQnU06ZjDbsgbwvPyNXx+FJ59kbGjgN6t4jWdy3Jb2C
+	6PsAwrnKhFPkdgQOxEW1gLOnR/v1EUpS0Su5jxFs3x/94Xa1qYG5jtEmXuVqv75e
+X-Gm-Gg: AYBFou36629O2D0cQ2PQqj26ECmgZ75ztdZ6wP11xYh/AxafIxw7iRXT5zq9ROAit6X
+	91Yc2S7qQJPxpTBy6IsR0PlIX0cHpKxPGuCOO/2zUzVkg7oNgGFsx205qwA+GuhlWYaFD10MO7y
+	UlJHRcfZ+ObP0WY2FT21gQpLOjeZjsI02wgcKzkjgrI8f6bARmBdeLj3xThXuaMPLcmT7z1KHfj
+	TRQUTiZJBM4gpL2pouZp1+LspWSYibrlD+inSQ5T8dWQuWq5axzOqF9nGdATv4GX2UrWp7+KWoh
+	PTvNieCQg8g8OK4z5K6gkSVnW6+4pQL1wAUVuaMZqeuM+IZXKsgY9CG4rY7MWrglxHVWsnoucdP
+	cqxkSqZQWxQaTRgKOuyA4fXT0K4PIbxoT8cra7HOnlvEXDHtQRIqd+guObN/0SuQ7EKgx8OI5oA
+	Dt5pPhy0aJyE+q93JAWi6sdODnzOmhg6tpe6QhGZMxgoSsnseoEQpU5jpvpGC55O3g2FY+JPmzA
+	/QJKHNw/b2fbh+juQqtAA8CuYJPMCQuyNVaru37aVJspsb4FJhzbVJbo+LyvFd3gPDoOUCYpsaA
+	XTgIcrFKwF4ozLUNJrGA7TttYgWqwMH/gi8zeadOXehOLC7s
+X-Received: by 2002:a05:6000:2304:b0:484:3200:b7a1 with SMTP id ffacd0b85a97d-4871e25d894mr10867826f8f.13.1789781170725;
+        Fri, 18 Sep 2026 18:26:10 -0700 (PDT)
+Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-487245a869asm2825832f8f.37.2026.09.18.18.26.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Sep 2026 18:26:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260918204302.F17761F000FF@smtp.kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sat, 19 Sep 2026 03:26:10 +0200
+Message-Id: <DLIWH2PDV8ZI.3NEWOCLKS37IM@gmail.com>
+From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf v3 1/2] bpf: Compare stack frames in regs_exact()
+X-Mailer: aerc 0.21.0
+References: <20260919004327.1403382-1-memxor@gmail.com>
+ <20260919004327.1403382-2-memxor@gmail.com>
+ <20260919010829.EE9211F00898@smtp.kernel.org>
+In-Reply-To: <20260919010829.EE9211F00898@smtp.kernel.org>
 
-On Fri, Sep 18, 2026 at 08:43:02PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] cxl: probe fails on non-native CXL systems if DCD event config fails
+On Sat Sep 19, 2026 at 3:08 AM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] bpf: Out-of-bounds array read in bpf_func() due to frameno alias=
+ing
 > --
-> 
-> commit 7a8483673c7e3c3849faf44e013fead5e793c1b6
-> Author: Ira Weiny <iweiny@kernel.org>
-> 
-> cxl/mem: Configure dynamic capacity interrupts
-> 
-> Configure DCD event log interrupts on devices supporting dynamic capacity.
-> Disable DCD if interrupts are not supported. Care is taken to preserve the
-> interrupt policy set by the FW if FW first has been selected by the BIOS.
-> 
-> > diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
-> > index 7b754af2168d0..fee3a704b73ba 100644
-> > --- a/drivers/cxl/pci.c
-> > +++ b/drivers/cxl/pci.c
-> 
-> [ ... ]
-> 
-> > @@ -651,32 +707,57 @@ static bool cxl_event_fw_owns_mem_logs(struct cxl_event_interrupt_policy *policy
-> >  static int cxl_event_config(struct pci_host_bridge *host_bridge,
-> >  			    struct cxl_memdev_state *mds, bool irq_avail)
-> >  {
-> > -	struct cxl_event_interrupt_policy policy;
-> > +	struct cxl_event_interrupt_policy policy = { 0 };
-> > +	bool native_cxl = host_bridge->native_cxl_error;
-> > +	size_t policy_size;
-> > +	u32 mask;
-> >  	int rc;
-> >  
-> >  	/*
-> >  	 * When BIOS maintains CXL error reporting control, it will process
-> >  	 * event records.  Only one agent can do so.
-> > +	 *
-> > +	 * If BIOS has control of events and DCD is not supported skip event
-> > +	 * configuration.
-> >  	 */
-> > -	if (!host_bridge->native_cxl_error)
-> > +	if (!native_cxl && !cxl_dcd_supported(mds))
-> >  		return 0;
-> >  
-> >  	if (!irq_avail) {
-> >  		dev_info(mds->cxlds.dev, "No interrupt support, disable event processing.\n");
-> > +		if (cxl_dcd_supported(mds)) {
-> > +			dev_info(mds->cxlds.dev, "DCD requires interrupts, disable DCD\n");
-> > +			cxl_disable_dcd(mds);
-> > +		}
-> >  		return 0;
-> >  	}
-> >  
-> > -	rc = cxl_event_get_int_policy(mds, &policy);
-> > +	rc = cxl_event_get_int_policy(mds, &policy, &policy_size);
-> >  	if (rc)
-> >  		return rc;
-> 
-> [Severity: High]
-> If native_cxl is false and cxl_dcd_supported(mds) is true, does this early
-> return abort the entire device probe instead of gracefully degrading?
-> 
-> If the firmware rejects the mailbox command, it looks like this will propagate
-> the error and fail the probe instead of calling cxl_disable_dcd(mds) and
-> returning 0 like before.
 >
-Mailbox errors in other spots already fail probe (Identify, Get Partition Info,
-Set Timestamp, etc.).
-
-Also the other places where we disable DCD and move on are for scenarios where the
-device is otherwise healthy but missing the DCD IRQ capability (we couldn't get
-the IRQ vector for DCD, the interrupt policy doesn't hold the DCD bit, etc.). A
-mailbox error isn't the same and maybe better to just fail fast here.
-
-But I'm not against changing this part to turn off DCD and let probe
-continue either. Just lazy...
-
-> >  
-> > -	if (cxl_event_fw_owns_mem_logs(&policy)) {
-> > +	/*
-> > +	 * dcd_settings cannot be sent to a device whose policy is too short
-> > +	 * to hold it, so the device would never accept the setting
-> > +	 * cxl_irqsetup() arms the DCD interrupt with.
-> > +	 */
-> > +	if (cxl_dcd_supported(mds) && policy_size < sizeof(policy)) {
-> > +		dev_warn(mds->cxlds.dev,
-> > +			 "DCD supported but interrupt policy is only %zu bytes\n",
-> > +			 policy_size);
-> > +		cxl_disable_dcd(mds);
-> > +		/* DCD was the only reason to be here */
-> > +		if (!native_cxl)
-> > +			return 0;
-> > +	}
-> > +
-> > +	if (native_cxl && cxl_event_fw_owns_mem_logs(&policy)) {
-> >  		dev_err(mds->cxlds.dev,
-> >  			"FW still in control of Event Logs despite _OSC settings\n");
-> >  		return -EBUSY;
-> >  	}
-> >  
-> > -	rc = cxl_event_config_msgnums(mds, &policy);
-> > +	rc = cxl_event_config_msgnums(mds, &policy, native_cxl, policy_size);
-> >  	if (rc)
-> >  		return rc;
-> 
+> commit e17b850ba98b74f1dac193b96d8c0646c06a22d0
+> Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+>
+> bpf: Compare stack frames in regs_exact()
+>
+> This commit moves frameno into the type-specific metadata union, ahead of
+> id, to compare stack frames in regs_exact(). It also moves the
+> states_maybe_looping() boundary from frameno to precise.
+>
+>> diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
+>> index a7202b44ab105..17be5f7df35af 100644
+>> --- a/include/linux/bpf_verifier.h
+>> +++ b/include/linux/bpf_verifier.h
+>> @@ -45,6 +45,14 @@ struct bpf_reg_state {
+>>  	union {
+>>  		/* valid when type =3D=3D PTR_TO_PACKET */
+>>  		int range;
+>> +		/*
+>> +		 * Inside the callee two registers can be both PTR_TO_STACK like
+>> +		 * R1=3Dfp-8 and R2=3Dfp-8, but one of them points to this function s=
+tack
+>> +		 * while another to the caller's stack. To differentiate them 'framen=
+o'
+>> +		 * is used which is an index in bpf_verifier_state->frame[] array
+>> +		 * pointing to bpf_func_state.
+>> +		 */
+>> +		u8 frameno;
+>
 > [Severity: High]
-> Similarly here, if the SET command fails on a non-native CXL system, does
-> this propagate the error and abort the probe?
-> 
-> Should it also disable DCD and return 0 in that scenario?
-> 
-Same as above for Get.
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260918203049.7273-1-anisa.su@samsung.com?part=6
+> Does moving frameno into this union cause an out-of-bounds array read in
+> bpf_func()?
+>
+> For non-stack registers (like PTR_TO_MAP_VALUE), frameno will now contain
+> arbitrary aliased bytes (such as the lowest byte of a map address).
+>
+> In kernel/bpf/verifier.c, functions like get_constant_map_key() and
+> process_iter_arg() call bpf_func() unconditionally before verifying the
+> register is a stack pointer:
+>
+> kernel/bpf/verifier.c:get_constant_map_key() {
+>     ...
+> 	struct bpf_func_state *state =3D bpf_func(env, key);
+>     ...
+> 	if (key->type !=3D PTR_TO_STACK)
+> 		return -EOPNOTSUPP;
+>     ...
+> }
+>
+> bpf_func() evaluates env->cur_state->frame[reg->frameno]:
+>
+> include/linux/bpf_verifier.h:bpf_func() {
+> 	struct bpf_verifier_state *cur =3D env->cur_state;
+>
+> 	return cur->frame[reg->frameno];
+> }
+>
+> If a BPF program passes a non-stack register as an argument, and frameno
+> evaluates to a large value (e.g. 255) due to aliasing, it indexes far
+> outside the frame array, causing an out-of-bounds read and potential KASA=
+N
+> panics during program verification.
+
+This seems correct, will fix.
