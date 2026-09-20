@@ -1,36 +1,30 @@
-Received: from mta0.migadu.com (out-18.mta0.migadu.com [91.218.175.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F128378D89
-	for <sashiko-reviews@lists.linux.dev>; Sat, 19 Sep 2026 20:31:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A514315A
+	for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 01:43:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789849922; cv=none; b=Qep0b7qWjFNnJvsN7quNAEk7Bb+iHoR5QA3H/Aj4onrbV3cfVS8d6x8SwsdGBUT8ro6BtrQYlVQr6dhxTs9tdk69QiKfmIrYsbYvFB9XP56SzPQ8PxxfM1y1Boa57dckJ2DBo6kR1PP9JbrA+FZCL0XZ4ruVp0Xm0OImVCDkNTQ=
+	t=1789868625; cv=none; b=Y8e9qmkS/CInaj24DUo5ZHrn1txdwibTsdbnNqzO0df8wQWr08D9l0iKdl8033k8qwMxH/SsOVBzX5CNSYbsrj5Hn7SgilDMBrjQZLmolbprdZLo1YB8TWo8g/JzBr2rM+xMYf++WXdDX8nRrj8I5nJGPWtgugI6XtF+6UsaPjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789849922; c=relaxed/simple;
-	bh=Mp3del96KvT7420sQkxabhcS2uwsOS/FHnorOTpOHik=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iIKlegdso+CdiCA5FW2v3wQ6lSahsxCs3Pcw8gqWyg0hlTtEXUxV1XMQXEByNnLOVBLA2dnQdeOiq2/RVKUKwMlMpt98A4D/94vAbzuLLsGSQ5l5eghGckyjcDNnl2mZuXkQfy4wePOyRY9Ulkl49yUhrOUiv08QGZTlRTLxxKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=RLKukzmD; arc=none smtp.client-ip=91.218.175.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="RLKukzmD"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=Mp3del96KvT7420sQkxabhcS2uwsOS/FHnorOTpOHik=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789849916; v=1; x=1790454716;
- b=RLKukzmDKz7/oLV9YR1DLeRmuJAcbd9u2grlLhyD+dmratyy447gi9OOn0tG94lG2EOOWpqj
- 6WDlbL5iq6DK16ds8jmmsVXqH21UKZpENCCnyO2r7OXgjMwOJ9rTP7v82nJWnKp1AoF5GlzDEM5
- XjA0lu25VkV+ZFbgNf7Xa8nY=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id a0210bcd3dbcc526;
-	Sat, 19 Sep 2026 20:31:56 +0000
-X-Mizu-Trace-ID: a0210bcd3dbcc526
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <7ef6f566-f5b7-4a38-a824-5666fabe5c21@linux.dev>
-Date: Sat, 19 Sep 2026 13:31:53 -0700
+	s=arc-20240116; t=1789868625; c=relaxed/simple;
+	bh=JcLZFNI3VGRMF6PwrCtxFSiJyl1RlJD9oq+0wkj1+2M=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Em1FW+6DMaJ2b7sW7d2UhuAkanIdrOfoloCjqcAs9O4VNPCvONUqVF3zCOlImJ1+0gTJqktO80jXhuC/KZTTphw1ArFY/SwpiXRI6brGoXcAbY9Fu1Go8RDPAWPhfM4u/lmv5w5EnYoinUGdkX9xN811oY+gTu3YYzL04yQIW18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.198])
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hnTf22hnDzYQv6C
+	for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 09:43:22 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id 649D940574
+	for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 09:43:33 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP2 (Coremail) with UTF8SMTPA id Syh0CgD3KhJEOq9qRdrNAw--.56231S2;
+	Sun, 20 Sep 2026 09:43:33 +0800 (CST)
+Message-ID: <d63b72f8-0953-455a-b296-9eb599f00f25@huaweicloud.com>
+Date: Sun, 20 Sep 2026 09:43:32 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,92 +32,145 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v2 17/20] libbpf: Let the static linker carry
- .bpf_cleanup relocations
-Content-Language: en-GB
+Subject: Re: [PATCH v6 21/26] perf annotate-arm64: Support stack variable
+ tracking
+From: Tengda Wu <wutengda@huaweicloud.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260918044156.3283973-1-yonghong.song@linux.dev>
- <20260918044327.3292986-1-yonghong.song@linux.dev>
- <20260918050136.2A6DA1F000FF@smtp.kernel.org>
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260918050136.2A6DA1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: linux-perf-users@vger.kernel.org
+References: <cover.1789521520.git.wutengda@huaweicloud.com>
+ <11bcde1a75d96b524cc5a7f6fa442025680e56a0.1789521520.git.wutengda@huaweicloud.com>
+ <20260916014905.D44C91F000FF@smtp.kernel.org>
+ <e1021204-6e4a-4767-889e-fd677409df1e@huaweicloud.com>
+Content-Language: en-US
+In-Reply-To: <e1021204-6e4a-4767-889e-fd677409df1e@huaweicloud.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:Syh0CgD3KhJEOq9qRdrNAw--.56231S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxGr48Wr4kXFy5tF13Cw13twb_yoWrJw45pF
+	WDCa45Wrs7Jr109FnrXr4xXr98uw1xKF1S9r98Xan7tFnFyrnIka93Kayj9FWUGrWkCw12
+	yw4v9rs8XFZakaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
+	0267AKxVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
+	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
+	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
+	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
+	AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
+	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
+	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2
+	KfnxnUUI43ZEXa7IU1CPfJUUUUU==
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
 
 
-On 9/17/26 10:01 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] bpf/linker: NULL pointer deref in linker_append_elf_relos()
-> - [Medium] bpf/linker: unaligned memory access in data relocations
-> - [Low] bpf/linker: multi-line comment style violation
-> --
->
-> commit 2eadf13e135621b2e34d8946fe67664cd72e0e3d
-> Author: Yonghong Song <yonghong.song@linux.dev>
->
-> libbpf: Let the static linker carry .bpf_cleanup relocations
->
-> This commit updates the BPF static linker to support .bpf_cleanup relocations.
-> It specifically adds handling for R_BPF_64_NODYLD32 and R_BPF_64_ABS32 to
-> process compiler-emitted exception cleanup tables.
->
->> diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
->> index 78f92c39290af..e5c06023cb5b1 100644
->> --- a/tools/lib/bpf/linker.c
->> +++ b/tools/lib/bpf/linker.c
-> [ ... ]
->
->> @@ -2274,6 +2275,22 @@ static int linker_append_elf_relos(struct bpf_linker *linker, struct src_obj *ob
->>   						insn->imm += sec->dst_off / sizeof(struct bpf_insn);
->>   					else
->>   						insn->imm += sec->dst_off;
->> +				} else if (sym_type == R_BPF_64_NODYLD32 ||
->> +					   sym_type == R_BPF_64_ABS32) {
->> +					__u32 *val;
->> +
->> +					/* Two spellings of the one thing: LLVM
-> [Severity: Low]
-> This isn't a bug, but does this violate the BPF subsystem multi-line comment
-> style? The preferred kernel style is to have the opening /* on its own line
-> rather than putting text on the same line as the marker.
->
->> +					 * emits NODYLD32 for a .long against a
->> +					 * section symbol, GNU as emits ABS32
->> +					 * (bpf_reloc_type_lookup() maps
->> +					 * BFD_RELOC_32 to it), and the value
->> +					 * they describe is the same.
->> +					 */
->> +					val = dst_linked_sec->raw_data + dst_rel->r_offset;
-> [Severity: High]
-> Could this lead to a NULL pointer dereference? Looking at
-> linker_sanity_check_elf_relos(), SHT_NOBITS sections are explicitly allowed
-> as relocatable sections.
->
-> For SHT_NOBITS sections (like .bss), extend_sec() typically skips allocating
-> raw_data, leaving it as NULL. If we process a relocation against such a
-> section here, we might compute val = NULL + dst_rel->r_offset and then
-> dereference it on the next line when handling sec->dst_off.
->
-> [Severity: Medium]
-> Is it also possible to hit an unaligned memory access here?
->
-> While executable sections enforce alignment checks in
-> linker_sanity_check_elf_relos(), there doesn't seem to be an equivalent
-> alignment check for data section offsets. If an ELF provides an unaligned
-> r_offset, the direct dereference of the unaligned val pointer might
-> cause a crash on architectures with strict memory alignment requirements.
+On 2026/9/16 19:55, Tengda Wu wrote:
+> 
+> 
+> On 2026/9/16 9:49, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [Medium] perf: stale stack state due to bypassed invalidation in update_store_insn_state
+>> --
+>>
+>> commit 2ddb0f384d44eeb70844d8c3adc06f8d55101f68
+>> Author: Tengda Wu <wutengda@huaweicloud.com>
+>>
+>> perf annotate-arm64: Support stack variable tracking
+>>
+>> Extend update_insn_state_arm64() to track data types stored on the stack. The
+>> implementation handles stack loads and stores to follow data types as they
+>> move between registers and memory.
+>>
+>>> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
+>>> index a72c7703dd6b3..8339aab0d314f 100644
+>>> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
+>>> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
+>> [ ... ]
+>>> +/*
+>>> + * For store insns: propagate type from @sreg to the memory location referenced
+>>> + * by @dst, applying @mem_spacing to account for multi-regs stores (e.g. stp).
+>>> + */
+>>> +static void propagate_store_reg_state(struct type_state *state,
+>>> +				      struct data_loc_info *dloc,
+>>> +				      struct disasm_line *dl, int sreg,
+>>> +				      struct annotated_op_loc *dst,
+>>> +				      int mem_spacing)
+>>> +{
+>> [ ... ]
+>>> +		if (!has_reg_type(state, sreg) || !state->regs[sreg].ok) {
+>>> +			stack = find_stack_state(state, offset);
+>>> +			/* Preserve compound states when only a member is overwritten. */
+>>> +			if (stack && !stack->compound)
+>>> +				delete_stack_state(state, offset);
+>>> +
+>>> +			return;
+>>> +		}
+>> [ ... ]
+>>> +static void update_store_insn_state(struct type_state *state,
+>>> +				    struct data_loc_info *dloc,
+>>> +				    struct disasm_line *dl,
+>>> +				    struct annotated_op_loc *src,
+>>> +				    struct annotated_op_loc *dst)
+>>> +{
+>>> +	int mem_spacing = 0;
+>>> +
+>>> +	if (!has_reg_type(state, dst->reg1))
+>>> +		return;
+>>> +
+>>> +	/* Handle the first source register */
+>>> +	if (has_reg_type(state, src->reg1))
+>>> +		propagate_store_reg_state(state, dloc, dl, src->reg1,
+>>> +					  dst, mem_spacing);
+>>> +
+>>> +	if (!src->multi_regs || !has_reg_type(state, src->reg2))
+>>> +		goto out_adjust;
+>>
+>> [Severity: Medium]
+>> Does the has_reg_type() guard here inadvertently skip the stack state
+>> invalidation logic?
+>>
+>> Looking at propagate_store_reg_state() above, there is logic to delete the
+>> stack state if the source register is untracked. However, because
+>> update_store_insn_state() completely bypasses the call to
+>> propagate_store_reg_state() when the source register is untracked, this
+>> cleanup is never reached.
+>>
+>> If an untracked register is stored into a stack slot previously used for a
+>> tracked variable, could this leave stale tracking state on the stack, causing
+>> subsequent loads from that slot to inherit the wrong type?
+>>
+> 
+> Agreed.
 
-Okay, I will add a guard to check NULL pointer and unaligned memory access.
-If this is true, will return an error.
+I might change it to something like this:
 
->
->> +					if (linker->swapped_endian)
->> +						*val = bswap_32(bswap_32(*val) + sec->dst_off);
->> +					else
->> +						*val += sec->dst_off;
->>   				} else {
->>   					pr_warn("relocation against STT_SECTION in non-exec section is not supported!\n");
->>   					return -EINVAL;
++static void update_store_insn_state(struct type_state *state,
++				    struct data_loc_info *dloc,
++				    struct disasm_line *dl,
++				    struct annotated_op_loc *src,
++				    struct annotated_op_loc *dst)
++{
++	int mem_spacing = 0;
++
++	if (!has_reg_type(state, dst->reg1))
++		return;
++
++	/* Handle the first source register */
++	propagate_store_reg_state(state, dloc, dl, src->reg1, dst, mem_spacing);
++
++	/* Handle the second source register (if any) */
++	if (src->multi_regs) {
++		mem_spacing = arm64__reg_size(dl->ops.source.raw);
++
++		if (mem_spacing >= 0)
++			propagate_store_reg_state(state, dloc, dl, src->reg2,
++						  dst, mem_spacing);
++	}
++
++	adjust_reg_index_state(state, dloc, dl, dst);
++}
+
+Thanks,
+Tengda
 
