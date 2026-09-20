@@ -1,81 +1,81 @@
 Received: from mail-yx2-f13.google.com (mail-yx2-f13.google.com [74.125.224.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BE737BE63
-	for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 17:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB132244667
+	for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 20:26:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.141
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789925153; cv=pass; b=G/pvkBXWz6OpyxO9hA4eVk/f7UguFPlq2sJA+JbTGP7QbY4/jRgGeyHX0+YEmVumVQ6tIOYJAGaMAbWj5L9UerrRXV/bHQeGPhxwEOwxh40Ba8AjX5+XGX5qsuy8EJquxeZjCbKzAmlNUKnm3u1RXmSzA5k9vmiOkaFiMf/CeoA=
+	t=1789936005; cv=pass; b=g7AvQoDMkSx23FM5ZiiRm+OvtNWYUbTfo2k2mv6obbsxgdxbrFGGRmcMG1nYlb/zZji5cj5rUpCImh45WMaM0a595GpSZL8aozoJkvjzDSMnSZG0xp8K9Cuf4VrN7ByWRtvHStyUofmYlfWGkw3acu3H//NPtNDV++W6GP3cmH0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789925153; c=relaxed/simple;
-	bh=UfUPUMvGuoO9T8NbtoMUnIBUq7sjsNXSSIXwRVTqF64=;
+	s=arc-20240116; t=1789936005; c=relaxed/simple;
+	bh=E2iEBO8dOpu0/0Lr+dW8J7NY49JLrf9mwt5f8hTpVW4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ResmwHChoIzYfecNX82tua7VSTtz6V5ZrPuNm/wiYaZe/DQKjRqZvgJX78ii5Gxme2TBTEFaQBFaPYy5pMvtLSo9hS6E1sXKCqLaezs/qzrrp847tRR0DbXZrmyzFOysEuVfhkxaGymmcn+O6+6fJjgZWiYWrbeTZ3K6ePWgNlU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k3mFDHeL; arc=pass smtp.client-ip=74.125.224.141
+	 To:Cc:Content-Type; b=fpdMzunn6J7FPx0m8g22Gcq31FCKEYDTlimg+FClICr1sav7SbVSWTyryVnSz2gDyhOYm/PevzNDdOQ6nYiA54/pAObELtPF+NOQX6vlDlAHrpEyVnh28P0sVTEZ+PmisyLv2Cemvf2zjdLOKCYly//WZoiddBFhUmb888DKzVw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y7L7FbuQ; arc=pass smtp.client-ip=74.125.224.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k3mFDHeL"
-Received: by mail-yx2-f13.google.com with SMTP id 956f58d0204a3-66e4ab201ecso1860328d50.2
-        for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 10:25:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789925151; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y7L7FbuQ"
+Received: by mail-yx2-f13.google.com with SMTP id 956f58d0204a3-66e56a1fe3fso2060392d50.3
+        for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 13:26:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789936003; cv=none;
         d=google.com; s=arc-20260327;
-        b=aTZdFqb03ms48GH11zCkPSTx/KN6lioLIqxG9VASkvoB48aqL25SGdd0n1M6UJv7NK
-         s4lCpvDwsdzoDTbHlpagdZ6ZP1/n4MuNypiBog/FMoruw5KKyq+66HrRhb/g6M3glzBT
-         BtQhkInOFf3WExY4DjP3xoqDkYzVXZTLkb06aAy44GvBgOKy9yTUJ+l+XFOHNHiRFYso
-         i3S40ER2nuJVxBOmNxQRxFafc48kUe7CWl9WiZT3rS51F6B1o2UCtpNnM1teHorSwCkg
-         vhe+Cc12WADeVlvsUXbrtxmiAIW/v0lzGVp8Zkr2k3vtSEi4uqqKRxk+zue9kLbfZ/3X
-         hReA==
+        b=Xr3f3Cxu+yvhVH3husSGo/aOaJSDzw9qFVmGTjRc4zbHoPYMylLBvtvgO0VjmOdKtz
+         SxJ80joe0MMWjQh+a/SWrzaxiNmcPCpSc96JBPbrlJVgzkEMdO1FUa/2hOvM20ui0kaW
+         8CsE7T+aDBpFayiwGOUORaBplEYBlR004q1wMndhZMjTNjb39gamMrP9V/sQBD0tRD/I
+         S2J319wTrrAaTA2jZ8Iti3/fstcy0jtMd0PZhbqFF2mRXB4Uf0FAfEJ7MrlDvxEGU26e
+         D9JtwoKFeEXq7OPDMRIfo2ccO0VpgyPY7zXFT6rZiTbnlm5Ylcu/b+Vsn6HtsuhJHJE2
+         RlBw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=3OfbjdZ7JhnmWB3SFJinxtG8xu+EcVyQidKsmmu69Ws=;
-        fh=5cs6b6d7Xpq2ANmcE1sW6J73OLOoOdfaXy4E0BsYxz0=;
-        b=PvASQr+kHvkZ7Pkcy6AmE0FiY8kJ7pnhx6aB11eMu0h/9XulwMtYbVFWvOEpjkdYh+
-         hXH/+qvTu0U5qTbQHaw2EbCQLEUALVU/cY8Wb0NqcGDEVGjnir5XLYmhC3+OlHebS1wA
-         qPbCJXnGGUk7v9Hl7UrL7xl55u7hKaQu8YF4SzSAHiR0bx8x0Ts6oRvzkh96NQfUWwdK
-         Mq28nx+ai9CwPxeZLGT0oS13s//cxAaeDbyPcIf13FZvqTq6VhKBEM1kmpijusOVZDYB
-         dsj4jj61/V2rUNILlQMlztpyhZd7Hg0mKLI18IircGUFFldq+0UGWEreTM3udtGXTtnx
-         LoQA==;
+        bh=M5Inp0dUK9mWGDzU51sPdtRsOeEciT1UFPFVj3DOFnI=;
+        fh=kAGRFKDN7aRGd6VO33HQbsOy3CoTfL4nr4GTMsDqfhg=;
+        b=jJHYjyiUj123q0pSFZj4pPCQabhOIbqNf/OLBmT7rsyuxVFFhhh9RRxOMq0BfI+xQE
+         MaC8zWxzUod9vf3Mn0cDLgKM5gwc2uVAR6cJ85ceBRzS9Ywm5zqZcFdBAIywLhj2fUh5
+         XhtL8+BrrUF53vrqJVTtGkHUiT/CGAmk/fgZKChzXp07/8PhM8NmXs7h5adMn3bcDWLC
+         N45LLbP1A/kcmV5qRL4aTUapN0OIhcf1AnSg3plOvuXXPIKtXRpWy0QzpiE4x78Vht+H
+         XESROfMV+BszGd1Puat12bS7k8LZYpUEYf/f7eeXQSlXjgAMhzMZ0x6yWCsDgrGCbCMY
+         bCOw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789925151; x=1790529951; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1789936003; x=1790540803; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=3OfbjdZ7JhnmWB3SFJinxtG8xu+EcVyQidKsmmu69Ws=;
-        b=k3mFDHeLqG5fO/uRaXGYh8NkyAbLZWQobkC7TWaSrpY4sefE37Bqza9tzVrCakDm4u
-         COZz8tsW9ZWT1Zw0In8QcNi8iQXN9k/YWRqvuvQUc2XR9WEvbrYRBF49H9753z5FeCUD
-         GgxckdD+l3G7BghP6g1OLn4A+K/ChXyA8Vp+orv3gliHTSZR2zm/B0cWdRv737GoMUrD
-         jQd2/8CtXIMJgCL1HnTxxkb2COjcUtPQn5tbFP8u8ouItXPoLPKmG2WhYx+o+SEwj4WE
-         ibXja4VcNzDXW9nZshm4n9KsWrmShfj6H4pTIyme3W+ImS8nr6l4bpttMXRKtAH2+lG8
-         NcTw==
+        bh=M5Inp0dUK9mWGDzU51sPdtRsOeEciT1UFPFVj3DOFnI=;
+        b=Y7L7FbuQgdUfpz5s2+5udwfKDlEmmnixHVI3J87hOR6oEzy4zTcOjDljqUeeF4rQmb
+         0q2HjILe0iCYSVIJN0ZHzRz17pi6ZQgwFx8mdqQ9oJ0mM1XGJzQ8ETBddIet4BDt2Wik
+         mkvvVKRTXyDGukpMUsmCeRprnINgZ1Nac5eHTzU8Rb2apbsIh4QEOf3aUjYB9E9G/U7b
+         +2I2nudABRVKQqxZNSUB6lfLXUIyhYcfVAx/9xgjqF2jDs/w4yb5J9l8gv2ByEBGaP1U
+         8uxN5b42gaXmZwC0TXPDXAkABDixJZb6WJVKnMoFW3M0Qn62BWpJGdDu9RXG12K5KnpC
+         UoEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789925151; x=1790529951;
+        d=1e100.net; s=20260707; t=1789936003; x=1790540803;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=3OfbjdZ7JhnmWB3SFJinxtG8xu+EcVyQidKsmmu69Ws=;
-        b=CpGLpFVotdwjT3LfO6UKmexLjMx/PF3m/NGQ2UC6CDzhXdmsLfpjvlLgvbSYpY27Hf
-         7ifgEPfBz70jQNdtNppRSZCi5TKRQoFODJTxri1Mw4+fVnSzYf3qceUFzONKoOUdCOZp
-         Tqbi7WRj/azV/Pxn1b6IFyo7t2oIhuXUQIRtycRU9RN/DHToVNtstksGTfbbpJAZVM+v
-         p3gsJtYmrWGijDBBJqkZUBAxmqtKTMw6JdG0ezkg0ASDrSHjsZPfVQVRiNIMnug7PoSS
-         e7cXM7fV/WCOwMQfX+0J/lbnUTY+AmOjA9tL2HxVY9LGZaviAMeMqDnbUQf2nweLIGSp
-         DdhA==
-X-Gm-Message-State: AFuF++kslfDhkTU68o3fJUqMjhGQiZ3Q7qVVE5DuCOnMKbOKWlQhtkdI
-	3z9ysXTpemnb3pnnV5O+OeqwYRVn17o8dGDtPSSGOSErhbLJhk3riUrpVjXzF0wUWpk6Lv9s2aK
-	TXxrnZ+tS5OnhoEGcrSmIQMPGKXxKoHeblA==
-X-Gm-Gg: AYBFou2IfyDdxeL2gDpQ3xucc6XqdVgqefp1xmAJnUjpQpHvL4bSOVGJDDv4Q2KBTo2
-	KjZKC34wKw6q3Mi8QT2W1GWDFMnC2CciqZJBOjfK2poPXYGtbSvuNpRiqY3J+xVoCXsWk8bDAlA
-	yFkuuj08BXfZnyeNPbX4gWEjv0FgUStQjQlRZJSSqedoLi8QOV1ykk8QbrEWe0RonayYw0kx9Rx
-	No7pm89THHnkdDvReSS16jpXKHPLTFUn9EV2tb/xOikpESvD+RGIqxtrIBvEJjVqlJMxXy6VdeH
-	0jC2CD6F22TbRQf3Nwf/9BgLQmpFTbGLhh9gNWEcybarHLOb93yVqk7jIDdz/iOzEiDaM0APQV9
-	ym0aIjGdOfNyqwRfvVFKFlVXwyGkyCi4Krw==
-X-Received: by 2002:a05:690e:bc9:b0:66e:45c8:fc92 with SMTP id
- 956f58d0204a3-6717fcac9f3mr2366498d50.23.1789925151025; Sun, 20 Sep 2026
- 10:25:51 -0700 (PDT)
+        bh=M5Inp0dUK9mWGDzU51sPdtRsOeEciT1UFPFVj3DOFnI=;
+        b=l9LOVSXg1+I3D66Yf59iDsrw+iDRY4/6vG08d9Yk+qp0b1TMMmTVXke0zh533bBXYg
+         PxC7dZTSQq5b05iQPNlCxBsUhd++BwasMC/dEErB2CrG5ljk23AnI6cBVaSUcgVmv9ro
+         GfGMg9Ekv604WAetH7D73mhXbfJXeEn3sjQ8ITSFNWQ35YsrW1ObD/3Ho0QX/F9ox60U
+         owBJPGpBe2BO64fUDPWAGOEf48oJx/1RTFbYZmg6/Zo8XC3J/GkGzIKx/GpRLjpMgZA4
+         8t91LK8tfhKDKiz6sO+mjg/m/puXEwn6x0hrmYl0XZh6YsfsbWi7Jrd3MEqK+t1JC4jb
+         dEFw==
+X-Gm-Message-State: AFuF++mt1gUwSsTIkmODsJw8sKUQFkbjcuGKlt0xPkMl58MY2EgOs8d2
+	XMPTj2HdQfTtDfAcjxL8ri2k3lsiYoGGCGDXqSN8kuFXLjm3CZUl/0fLjBSyj3d0QR0/kFlrbG7
+	TAgX7ZSgOykw1F6I8cdqftThF2r4vzQv/qAyN
+X-Gm-Gg: AYBFou1rBaKqmM5e8MCWCcAjAWOvQIR9EQVv6EOOU4iGAlClxwjATCr8hPewJVZ5jNC
+	ayo0L6kAPfh/u/3GnU2lkcZPZH/jXR7KV2wHuFik/yo0SD9ej4X9q++GQ4emlkkQNHnkwRwPsBt
+	us4zl5Zg2ZV3CWvh0sHXVThlVcGgA46rbtXfWFLLUs4eIDLLkLz+6NTjYk6fgbhIjQzUxhNpJCm
+	XRW6d1PKsjQhIhj4saODFg3oEJ3vhFQfUaff5zUbxgcCDFTTHC+KUmE60IuXYf2uMhoCyNoJQLM
+	2Aw7PV9IkXI34T46Qp/ksJ0ozxHk4VCTTt8RvnS1w3XPHxfL+lKZNVocCut3ckjBH02SjEmTz5b
+	VoMpn8iZwPQTd9XLHuRprHaRgK+m28joJn0JkrMJ1VP1A
+X-Received: by 2002:a05:690e:4807:b0:671:4f24:2126 with SMTP id
+ 956f58d0204a3-6717fdb0489mr1682517d50.59.1789936002636; Sun, 20 Sep 2026
+ 13:26:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -83,113 +83,148 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260916-dd-cmap-part2-clean-v10-0-af4cf4767707@gmail.com>
- <20260916-dd-cmap-part2-clean-v10-24-af4cf4767707@gmail.com> <20260916162426.BF6241F000FF@smtp.kernel.org>
-In-Reply-To: <20260916162426.BF6241F000FF@smtp.kernel.org>
+ <20260916-dd-cmap-part2-clean-v10-23-af4cf4767707@gmail.com> <20260916162814.434551F000FF@smtp.kernel.org>
+In-Reply-To: <20260916162814.434551F000FF@smtp.kernel.org>
 From: jim.cromie@gmail.com
-Date: Sun, 20 Sep 2026 11:25:24 -0600
-X-Gm-Features: AcwNN1U4PdC2-ak_eLI6nDpyzmI74MRgcM2U5SRdaLHhoM3APxQAdxw6Wk6ZIJ0
-Message-ID: <CAJfuBxxGEYMZxChjRzG02tPM-WtVnjWM5mMCcfaJN9yX1vNTUA@mail.gmail.com>
-Subject: Re: [PATCH v10 24/38] selftests/dyndbg: Enable FT_classmap_inheritance
+Date: Sun, 20 Sep 2026 14:26:16 -0600
+X-Gm-Features: AcwNN1V9f_cj4KFvVBI7cRGxNTARDn_RhISbjMBAMFhOdAADIUHjfDsp-6ULVao
+Message-ID: <CAJfuBxwqBqTWavDX2t1dNx7BkpwrRj67WGcRp4P9ktXig6t3SQ@mail.gmail.com>
+Subject: Re: [PATCH v10 23/38] dyndbg-API: replace DECLARE_DYNDBG_CLASSMAP
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-modules@vger.kernel.org, dri-devel@lists.freedesktop.org
+Cc: dri-devel@lists.freedesktop.org, linux-modules@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 16, 2026 at 10:24=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+On Wed, Sep 16, 2026 at 10:28=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Medium] selftests: dyndbg: load-time parameters truncated due to shell=
- quoting bug
+> - [High] dyndbg: init_bits relies on _DPRINTK_FLAGS_DEFAULT evaluated in =
+wrong translation unit
+> - [Medium] dyndbg: TOCTOU race in ddebug_sync_classbits() causes out-of-s=
+ync debug state
 > --
 >
-> commit f2f3cad7addd566a67a218932463053f35d4d782
+> commit 3b29729057e8a4b4e0401fd7f3a74205f701c129
 > Author: Jim Cromie <jim.cromie@gmail.com>
 >
-> selftests/dyndbg: Enable FT_classmap_inheritance
+> dyndbg-API: replace DECLARE_DYNDBG_CLASSMAP
 >
-> Exercise classmap state inheritance between supermod and submod,
-> verifying that class settings and controlling parameter states propagate
-> from parent classmap definitions to dependent class users upon module
-> load and during runtime reconfiguration.
+> This commit replaces DECLARE_DYNDBG_CLASSMAP with an explicit client-serv=
+er
+> model using DYNAMIC_DEBUG_CLASSMAP_DEFINE and DYNAMIC_DEBUG_CLASSMAP_USE.
+> At module load time, it resolves reference records and automatically appl=
+ies
+> the initial bitmap to the module.
 >
-> > diff --git a/tools/testing/selftests/dynamic_debug/dyndbg_selftest.sh b=
-/tools/testing/selftests/dynamic_debug/dyndbg_selftest.sh
-> > index 09a8dbf239dcf..51338ebc74bf8 100755
-> > --- a/tools/testing/selftests/dynamic_debug/dyndbg_selftest.sh
-> > +++ b/tools/testing/selftests/dynamic_debug/dyndbg_selftest.sh
+> Cc: linux-doc@vger.kernel.org
+>
+> > diff --git a/lib/dynamic_debug.c b/lib/dynamic_debug.c
+> > index 03dc35af4faa1..566c3860d7bfb 100644
+> > --- a/lib/dynamic_debug.c
+> > +++ b/lib/dynamic_debug.c
 > [ ... ]
-> > @@ -298,6 +299,78 @@ function FT_basic_queries {
-> >      ddcmd "file $f =3D_" "$f"
-> >  }
+> > +static void ddebug_sync_classbits(const struct kernel_param *kp, const=
+ char *modname)
+> > +{
+> > +     const struct ddebug_class_param *dcp =3D kp->arg;
+> > +     u32 val, new_bits, init_bits;
+> > +
+> > +     if (!dcp || !dcp->map)
+> > +             return;
+> > +
+> > +     init_bits =3D (_DPRINTK_FLAGS_DEFAULT & _DPRINTK_FLAGS_PRINT) ?
+> > +             CLASSMAP_BITMASK(dcp->map->length) : 0;
+>
+> [Severity: High]
+> Does this evaluate _DPRINTK_FLAGS_DEFAULT in the context of the dynamic
+> debug library rather than the target module's translation unit? Since
+> dynamic_debug.c is not compiled with -DDEBUG, init_bits will always be
+> evaluated as 0 here. Could this prevent the system from properly disablin=
+g
+> callsites for modules that are loaded and compiled with -DDEBUG?
+>
+
+yes. this code is misleading and has been removed.
+
+what needs to be said ( Im looking for the place to say it once) is:
+
+DEBUG is a local override  (1 file, or even 1 func,line )
+to a param, which cannot possibly express its full range of behaviors
+
+when DEBUG is used, it is honored.
+In this case, to truly turn off the enabled sites, toggle them on,
+then off again.
+
+something like that..
+
+
+> > +
+> > +     switch (dcp->map->map_type) {
+> > +     case DD_CLASS_TYPE_DISJOINT_BITS:
+> > +             val =3D READ_ONCE(*dcp->bits);
+> > +             new_bits =3D val;
+> > +             v2pr_info("  %s: classbits: 0x%x\n", KP_NAME(kp), new_bit=
+s);
+> > +             ddebug_apply_class_bitmap(dcp, &new_bits, init_bits, modn=
+ame);
+> > +             break;
+> [ ... ]
+> > @@ -1238,12 +1410,17 @@ static int ddebug_add_module(struct _ddebug_inf=
+o *di)
+> [ ... ]
+> >       mutex_lock(&ddebug_lock);
+> >       list_add_tail(&dt->link, &ddebug_tables);
+> >       mutex_unlock(&ddebug_lock);
 > >
-> > +function FT_classmap_inheritance {
-> > +    v_echo "${GREEN}# TEST_MOD_SUBMOD ${NC}"
-> > +
-> > +    ifrmmod test_dynamic_debug_submod
-> > +    ifrmmod test_dynamic_debug
-> > +
-> > +    # modprobe with plain-old +p & 3 class enablements
-> > +    my_modprobe test_dynamic_debug \
-> > +     "dyndbg=3D+p;class D2_CORE +pf;class D2_KMS +pt;class D2_ATOMIC +=
-pm"
+> > -     vpr_info("%3u debug prints in module %s\n", di->descs.len, di->mo=
+d_name);
+> > +     if (dt->info.users.len)
+> > +             ddebug_apply_class_users(&dt->info);
 >
 > [Severity: Medium]
-> Are these load-time parameters truncated during module load due to how th=
-e
-> shell handles quotes?
+> Could this introduce a time-of-check to time-of-use (TOCTOU) race conditi=
+on
+> between module loading and concurrent sysfs updates?
+>
+> Once ddebug_add_module() adds the module to ddebug_tables and drops the
+> ddebug_lock, it proceeds to call ddebug_apply_class_users() (which then
+> calls ddebug_sync_classbits()).
 >
 
-yes, Ive seen it locally.
-it is the reason for comma-terminator patch later in series.
-next rev adds 2nd level of quoting here,
-then switches to comma-terminator once that patch is added.
+ In ddebug_add_module(), linking dt to the global ddebug_tables list
+  and releasing ddebug_lock before calling ddebug_apply_class_maps() and
+  ddebug_apply_class_users() is structurally required.
+
+any changes to be made by apply-class-* only work cuz the module is on
+the list scanned by ddebug-change() - which takes the lock, so we cannot.
 
 
-> When bash evaluates and strips the double quotes before executing modprob=
-e,
-> modprobe constructs the kernel options string without adding quotes aroun=
-d
-> the parameters. The kernel's parse_args() function (using next_arg() in
-> lib/cmdline.c) splits module parameters at unquoted spaces.
+Publishing dt on ddebug_tables is sufficient for both definers (maps)
+  and users (users). The kernel module loader guarantees that definers
+  load before users via ELF symbol dependencies on the exported classmap
+  struct. Once linked, ddebug_find_valid_class() symmetrically resolves
+  class_ids across di->maps and di->users, ddebug_apply_params()
+  binds controlling_param and synchronizes initial bits, and the module
+  is automatically included in all subsequent runtime sysfs writes and
+  ">control" queries without requiring secondary registration.
+
+
+> In ddebug_sync_classbits(), the parameter value is read via
+> READ_ONCE(*dcp->bits) without holding the lock. If a concurrent sysfs wri=
+te
+> updates the parameter and applies it to all modules in ddebug_tables
+> (including this newly added one), could the module load thread subsequent=
+ly
+> resume and apply the stale value it just read, leaving this module's debu=
+g
+> state out-of-sync with the global parameter?
 >
-> This means it treats D2_CORE and +pf as separate unknown parameters. The
-> dyndbg parsing logic executes +p but fails on the truncated class command=
-,
-> completely ignoring the actual class configurations.
->
-> Does this defeat the test's intent to verify load-time classmap inheritan=
-ce,
-> allowing it to pass only because the golden hash recorded the incorrectly
-> applied +p state?
->
-> It appears this space-splitting flaw persists through the end of the patc=
-h
-> series, and the newly added FT_test_classes also replicates it.
->
-> > +    verify_control_slice '\[test_dynamic_debug\]'
-> > +
-> > +    set_param 5 /sys/module/test_dynamic_debug/parameters/p_level_num
-> > +    verify_control_slice '\[test_dynamic_debug\]'
-> > +
-> > +    my_modprobe test_dynamic_debug_submod
-> > +    verify_control_slice 'test_dynamic_debug_submod'
-> > +
-> > +    # fresh start, to clear all above flags (test-fn limits)
-> > +    ifrmmod test_dynamic_debug_submod
-> > +    ifrmmod test_dynamic_debug
-> > +
-> > +    # load submod, which loads supermod
-> > +    my_modprobe test_dynamic_debug_submod \
-> > +     "dyndbg=3D+p;class D2_CORE +pfs;class D2_KMS +pts;class D2_ATOMIC=
- +pmf"
->
-> [Severity: Medium]
-> Does this submod load suffer from the same space-splitting issue?
->
-> > +    verify_control_slice 'test_dynamic_debug'
-> > +
->
+
+since the effect of a param change is to call ddebug_change() which
+takes the lock.
+taking it around the param ingestion also sounds like a bad idea.
+
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260916-dd-cmap-=
-part2-clean-v10-0-af4cf4767707@gmail.com?part=3D24
+part2-clean-v10-0-af4cf4767707@gmail.com?part=3D23
