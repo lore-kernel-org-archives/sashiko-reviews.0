@@ -1,118 +1,219 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41B83EA955
-	for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 10:21:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789899673; cv=none; b=N0LBx99ot2Ug1+fD6rsisZOPLbIt7yMvNTRDQTnvtJPyekWM3eIkYEaVfThCLtduhryOt8pYH5n2HQcgw3WgF4BwsFFbMENa1K2ENI9c2X6I4Hud3sO2uMEr8XRl74fsRnom01hH4N99UD24ni+MOUN1V8R83qaNvBqfcfMHESE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789899673; c=relaxed/simple;
-	bh=DXs70q+uj0fOTubAL/yj2nRY1q+Sd8JFHOY3sHHBGhE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IKQN4uR8Oc+WN5E1XTNGSN+nl5gjeVpVzEheNNRzEPghKGvtrkQa3IVinnljQZfYnzEkBU9gB4DHQsBp/n9tXjeVzEG/SV1bBFKqFHS290YAjlMkv0ezFSte7GDYQAnq9iQdqu48Ak8NpBFdIz7wSNgzdfv3mXJGP4B++pCSkHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tF5eCQxb; arc=none smtp.client-ip=74.125.227.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D903BBFD6
+	for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 13:10:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789909838; cv=fail; b=IKLqA+WiafrGBb14kZFBPAqdUEspaDd+peYjutmr1IFu9q9lQouz/Uf53qp9kytX6j5BkQ52anYTvBsDRAZke4sHui4XHnpZKRsCERo9k9ojH6O2bIfdqqaS5i624V/MIJ/lLx6uIKf2YBwEz64AfSrwlywzLIELTEfb4nRT7wU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789909838; c=relaxed/simple;
+	bh=9haxWzXFQ97V2oWPJrwN6hzulthkUf9Go54h2YWeeBg=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=k4CJynBpw28kCCbRdjlEb4oEFoHvrS0ilIz7cYC2Qm8y7Uy9BR1loSgqqdiTFoCC8NDDAFklTJMH9nZ6p2dy4rTU7xf45R2SpasSw3LS15pWusm7V47UKeNYinwQyUIqwdhU4jWRd/Hc18KJFUPxJ/X4HpfL1gRRG5CbS2sAjb4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jQH8DD5A; arc=fail smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tF5eCQxb"
-Received: by mail-pj2-f12.google.com with SMTP id d9443c01a7336-2d90ba1d807so25465865ad.3
-        for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 03:21:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789899671; x=1790504471; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=DXs70q+uj0fOTubAL/yj2nRY1q+Sd8JFHOY3sHHBGhE=;
-        b=tF5eCQxbSuC0+Gaq8Y4eHIy3Jt3Y9RWofgqczixuf4XDZrbV7Em27upImxGnXSBp8r
-         h4VqKDweonf6Nyh24JMaIbkizhXJZARr4iwfKosU4uvF/VSc0t15K5tPz3S6bAmeQiJy
-         XqDFupt3ysv9v7WFYKByJmC2XBVVyafSvXRdKsbHcZq3qtacG/d+nR+kV+Nm1Y/nynxo
-         lLXnwndHo7Aws43ZEVy5t4UslPqbQQc9uPdN4X2ZNjS9G+UIzURKJMqsjdhGwVSbBh2z
-         wCH4HGXNopGiuM2Bhl/i8nlgsIct5klA7OlNMLedg2d05IEQEWGBdmlnPNtb2O74PbFs
-         Svjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789899671; x=1790504471;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=DXs70q+uj0fOTubAL/yj2nRY1q+Sd8JFHOY3sHHBGhE=;
-        b=yN8Fgy3xfbqz2RDbxWC2VzqQavaBxPq213R3oSLowuvs5BM6HdR8EER3nnvWhLLz/M
-         4UcpBTLd3o/CRhp8yWB7MOY+sIKYQ0KNiUxdjkb8q5T6R4unfWIDNYmmJ28lDWBPofgZ
-         vaAWl9yq5S0ct3D2RXHOe+AmCRumu//pRBwlhYikYyp7vKFuS3aKRA1eh+tLIt2T+l71
-         lpK+AcGGrfg+HYzOZ2v4xdIMDEnshsfg2L+XbmkLZ/rvAFlb8SoPnRJ1/29It4SXS97v
-         Bh5iYeX/JdBz0M+WY7973gRHmD8P424/uTifvV9PLC6Nfj4BdbycF06lEa0j7BLYCHS9
-         HVUQ==
-X-Gm-Message-State: AFuF++mT0Lx4Ps1DctLaqfASFBLjHxvFC4+/nHtqNe0gHnG+LowuCnkW
-	T1hPldHLBkpQ39iaFljRgx74bQ7dTZxAC+OrSlVpgq4hUtGLTby0qitlh0ld270=
-X-Gm-Gg: AYBFou03CzezAJAmAx5BYawHeg0wPBSOsZ2ZHaOgv6C/ZzEU9mcb7ECW8XoTSGDvOwW
-	72aQ0uw09X+j3IzBeix+ysnGaXFwcLnH+/d66JvwdiVTsm4y6yaQqHfwIDJZckUsKsC6Ldb3SSG
-	azuhGiG5I2qE+PBYBVls/kBg80YAtFH++Uxk46dUpHinUFyLPWcceZWOYWfLLsVuZgsaPDgyQli
-	s8HEi/mAMOB7Ogk3M/+H8UYsIL96BZ4ji7v8r0ZIz2uqMcj6ixvn25Sy6dz7jIYPe0FEGRJvkMI
-	5ge+4QxabTHBxrCHYe9jrVADR22r3iwxmrhy7qrXNT0LNOxhh1H08vSS9tcY3SBnbolwUAc5nJ2
-	u71nSV8tLg2Qxd+WqHGomVsJqkyW1WKZ5C1w5IL888cA5yxtakLHCVGt0gJsFmf+qTsLst5EXnm
-	cS+h+L5Bci1espWZokX2HdfKuZQ0Hk9B1sA4W86Nsvv7MxxD5gccmWGsZYC3elfOLH9XZdvdOwy
-	4HE4ZUl7e5gAcyFRruaLrYbUMM=
-X-Received: by 2002:a17:90b:3a43:b0:39e:6c68:c778 with SMTP id 98e67ed59e1d1-39e6c68ca12mr6544339a91.46.1789899671224;
-        Sun, 20 Sep 2026 03:21:11 -0700 (PDT)
-Received: from ydg-Zenbook-14-UM3406GA ([2001:2d8:7f00:8c85:e0d6:4b87:c472:c9ae])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e6c37a88csm8550850a91.8.2026.09.20.03.21.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Sep 2026 03:21:10 -0700 (PDT)
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-To: sashiko-reviews@lists.linux.dev,
-	bpf@vger.kernel.org
-Cc: ast@kernel.org,
-	daniel@iogearbox.net,
-	andrii@kernel.org,
-	eddyz87@gmail.com,
-	memxor@gmail.com,
-	martin.lau@linux.dev,
-	song@kernel.org,
-	yonghong.song@linux.dev,
-	jolsa@kernel.org,
-	emil@etsalapatis.com,
-	ihor.solodrai@linux.dev,
-	linux-kselftest@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	donggeunyoo.kernel@gmail.com
-Subject: Re: [PATCH bpf 2/2] selftests/bpf: Test per-cpu initialization of a BPF_F_CPU created element
-Date: Sun, 20 Sep 2026 19:21:05 +0900
-Message-ID: <20260920102105.445051-1-donggeunyoo.kernel@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260920095859.635921F000FF@smtp.kernel.org>
-References: <20260920093153.439743-1-donggeunyoo.kernel@gmail.com> <20260920093153.439743-3-donggeunyoo.kernel@gmail.com> <20260920095859.635921F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jQH8DD5A"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1789909834; x=1821445834;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=9haxWzXFQ97V2oWPJrwN6hzulthkUf9Go54h2YWeeBg=;
+  b=jQH8DD5A7Z73ml88dwDBPdDC3pQ7y/s+liGyBj7eI0yhfqGGvEG6Kw7a
+   NuaZRtvRXaW3cxm0WPm2vaBGRwT+dGMSCpjUlKSfbj+9Ya0c76JRJ8xsD
+   PXy60zch6R0k9skLYo/VSlf4378bKMv1tJUvtwMuLfhEvJ2xb5UvwW/u2
+   yR86hrEAnHVkasqJi1zlm7GfgK6f9kbJoH2oGY+GIhu9QxPbKB4lBhzrI
+   PYliht5JkS9cKbVU1x15MLgC7W96CdJcNHn+i4MwrWj3PoV5efYq7fvlH
+   eDVtLDHO6f8ZEdRw6eK5IlqOlW1JpDXVfh/IFTZ+JJXnWYFo2ZXOy784f
+   g==;
+X-CSE-ConnectionGUID: zm8ymo65QQ+2KrIaT7ChOg==
+X-CSE-MsgGUID: 0y5dPC42RUidiMs9WJ6LUg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11910"; a="94235737"
+X-IronPort-AV: E=Sophos;i="6.27,111,1787036400"; 
+   d="scan'208";a="94235737"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2026 06:10:29 -0700
+X-CSE-ConnectionGUID: nMfFdIlPSIicXHdec0WIAg==
+X-CSE-MsgGUID: KSerhDIZQyWwqPWxSdOPow==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,111,1787036400"; 
+   d="scan'208";a="268825107"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2026 06:10:30 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Sun, 20 Sep 2026 06:10:29 -0700
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46 via Frontend Transport; Sun, 20 Sep 2026 06:10:29 -0700
+Received: from CH1PR05CU001.outbound.protection.outlook.com (52.101.193.49) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Sun, 20 Sep 2026 06:10:29 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YPPfBL0tkPeAcd6Dv/czPwyxcEfc8JvAWAm/icWHniTQ/GpbwyAptwnx536V+5FR7XDZC+K9fvPHkY0KkWV2/3Teuep+JJE862TbeRuaTPXpeOMu2KcyobZyHuW+mkasvY/6VnzSMLmG8Y1lN/KvymfpHAy/QZAsELgthTypSIteiFooWBlggnEDQW99UwvVYUcT+vcIMm+SGM3PTIIhz0tOTeweugqKgWmvIPLCF5yvXVnsk2GoZuKZtnS55RcsL2PpRLO9viuNyQdHTprPyjkVWQ5LjlJlf+5Ib2omHUdRf2JDcXlW3NSD4Xy9OG1YMaXTIsid7esubPKS8bmcqQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=l22tuQ1lqyUE7gcIhVLIeSmudMNkjJUb2GEj4NHU20w=;
+ b=lV9hcgKGHLGkNLHvjQyEtpk2CEb82eLY7oxgAYnjiLueWjGtcnhYoA4QXYwiL/L2HlneZtDwZy57K4j/cBOOcG1yswIx1dPJyQbk/MLuNOOdwa1Y/qj2vUtRzezRnN9DoRPpvTN7lrAefOIRDrkCYtVLIs4XskBvpopMCoSx2IG1yDhfPYYHqA6zzZtwWp4CVjzif8S6bTXEszMEds8hWQQXaSKUeb3ieQqV9nGxclGajcRijKHgKCaF1oLRtJBMiBh8lFCj4wrJn96clA0bCCsPNr82OLQPd9OOu23oKnUegCQoIg5jQDXl2eZTmraMVnHduPTU8ZH2XT5OaSDDUQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from IA1PR11MB7198.namprd11.prod.outlook.com (2603:10b6:208:419::15)
+ by PH0PR11MB9701.namprd11.prod.outlook.com (2603:10b6:510:396::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.16; Sun, 20 Sep
+ 2026 13:10:27 +0000
+Received: from IA1PR11MB7198.namprd11.prod.outlook.com
+ ([fe80::2c4e:e92a:4fa:a456]) by IA1PR11MB7198.namprd11.prod.outlook.com
+ ([fe80::2c4e:e92a:4fa:a456%3]) with mapi id 15.21.0428.014; Sun, 20 Sep 2026
+ 13:10:26 +0000
+Message-ID: <1314f399-161a-4315-9628-8004ad260345@intel.com>
+Date: Sun, 20 Sep 2026 16:10:22 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 05/17] i3c: master: Remove stale GETSTATUS length check
+To: <sashiko-reviews@lists.linux.dev>
+CC: Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	<linux-i3c@lists.infradead.org>, <Frank.Li@kernel.org>
+References: <20260917191356.133242-1-adrian.hunter@intel.com>
+ <20260917191356.133242-6-adrian.hunter@intel.com>
+ <20260917192630.41F6F1F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: c/o Alberga Business Park,
+ 6 krs, Bertel Jungin Aukio 5, 02600 Espoo, Business Identity Code: 0357606 -
+ 4, Domiciled in Helsinki
+In-Reply-To: <20260917192630.41F6F1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: DB9PR05CA0010.eurprd05.prod.outlook.com
+ (2603:10a6:10:1da::15) To IA1PR11MB7198.namprd11.prod.outlook.com
+ (2603:10b6:208:419::15)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR11MB7198:EE_|PH0PR11MB9701:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3ad9123b-7e6d-4056-3577-08df1718895e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|10067099003|18002099003|22082099003|56012099006|11063799006|4143699003;
+X-Microsoft-Antispam-Message-Info: aj/KcXBuFi9NnZHchxLTU9BXeD/KvdYowniP7Vg5yXYaD6UwhzL4S5nvOgq7f8YfISsLXJ8BUaEuWUQFLYpeg1Pk9c3Lv0vTSmjS4xmg2hkID8OfOwNWGTJkHBMOjbzgkwY898UqeoDNbqknKo8+K9rj6U1vRTFPNQzm7bJhVWOT7EvJpLVmUoBI+DBzj3YTK5DHkillodA80RxTK6X+4crMwOx7OEAUcpN9OJnCUunOV+xbIc8Ecb45ghLjnf9+wWKOZAr1e8JCA0MasRKNUipMi4XaZjaAgV77MzQb/jc8dgRCH+t7eRWJ8CfMSlWVZFksbJzgXocMsTMSxuQHmRELmEHcRojCGd/ocRiUdw3lZQWOP2x3lQfSYzycdvzncvx/ZZM9Xeq9Tz5IrBM2NfDC0CW3fP+PhTsz95VmRPtJrD2NuKsiFwzYXFTKW7VMEC+IxzDAKrBC/1bg3jCs2aqaldB3XMTiob3K9SbJETnorGDfY+xSuWmJoRJTJLHUOjatPU8lRNt3jkW7iEEQ/3cHb0T+FYErGoZS4/CodDCG0SiE8IiBXMpuKDjmIof7zDp08DfTc1fugsVM0jt/8S1MK+j0+0y5zntOvVCeC34xmG7H2nB/AasEgErSx+f626lbGGKgsNDkWtHYUQVf0pqLuW0cBFZ9RWlQMkqsZmE=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR11MB7198.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(10067099003)(18002099003)(22082099003)(56012099006)(11063799006)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RG1uWmtSR3JHWVBrVzg0VW0rUG1kVDd4UHFzOGc3TXVoT2VYaHlsVTZpK3d2?=
+ =?utf-8?B?em41NzhJckkrZWhiZ1c5NGtieExjby9HYUExSEMxTE5oT2FxbVI0dW8wcVQ0?=
+ =?utf-8?B?b2VqZHNNZnZ2c1VvUlhMK1gvVWtPYlBNNDJmS3dIaWlwSXhFbjYxa2Nxdktv?=
+ =?utf-8?B?dDdBbmp4aDI3TVU5MUVodG5CWGlkVUlrLzRVWFVOK2ZrcHF3OFYzb0c3QW9X?=
+ =?utf-8?B?d1NNOXA0QnVLYWNxbzNJOXlFNXNmRVpBV09IYTQ3RzBudGRqOTgzR2xCTHFt?=
+ =?utf-8?B?WDNCcFdaa3d0OW9hODRHWkVncFZ0RDhHYjVLN205WktncGs4dktIV2xBRUNS?=
+ =?utf-8?B?T3BMUmppTzhudlM3am5OUmdnMU5qVnhHbWhXTEtqdVdXM2NyaUFxTmNhUUg0?=
+ =?utf-8?B?a3JERnFjbHN0TGhTa2dXN2J2TW44ZVk0NUIzQm1vQXQ2b2czN3BUbWozOTRs?=
+ =?utf-8?B?amxqZ1g5em1FRzFGNi9sZ1l4RUdWajdGWFpVckdIOU9pRDU5cWcrRlZsQWlD?=
+ =?utf-8?B?RjByWFJpN0pvbDFjeUJtS2V3cTlpMUw5YUlWWUdITGo3NGFSbXROeXIyeEs3?=
+ =?utf-8?B?YUFWc2ExVElSMWNIMmNnQnh3ek8rNFhOdzJ4aDFScGhlbEhaRWh5RFpXNjJG?=
+ =?utf-8?B?c3dPRWYzNHlZS0ZscmJxOWpKSU9LU21IMzJKQ3I4S3NoTkJGMnZGNHdnMFgv?=
+ =?utf-8?B?MEluT1JWL25sZzJXZk9wRzgxTVVsL1ZnWnVpVTlYY2RUSTM0aStOWU1mY204?=
+ =?utf-8?B?NE4veXpsOWNaWWoxVHJENmdjVWJuZVh3R1Q1ZlhjZDRRdUQ1ZG5YWmlyQ3Ja?=
+ =?utf-8?B?MjJJWGMxMVF5S1JsMjhUZ3lseHkweHUydmFxVm9LOGcvcHhVQkptdzhHZDhH?=
+ =?utf-8?B?SlBXRWF3dWhrNXpISmgwelBKUEpiamtIOEl1N25JSzFQUW9PVGpubWhRTlVx?=
+ =?utf-8?B?MWQ5YjlJOWR5SGt1dDM2TmVKRUxmeUV5NWJyc1J4VS9hTVRFVUZNMTljUzdU?=
+ =?utf-8?B?TjlGSGlmaFptMURtZEZ6TG11VURpY0RlV0djOGJtb2tJRWdNZWJBYVdlR09Y?=
+ =?utf-8?B?ZzV6VS9ZVWR4UkUxWm1ZeVJFNDNWTWtrMVh4SUgwRWRFS29wQWxHdjNtclNU?=
+ =?utf-8?B?K1hSa2lDbUJ6d05Vb2V5Z2pQaHo1cS9xZS9lSkdmdmdvbkZMcDV0M215YUdx?=
+ =?utf-8?B?aXRnb0VtRVVQK2FDTjk2MzFEb0g5MjZkUnBEdTlJR0xuQWhRcHNSQUFvdUM3?=
+ =?utf-8?B?SFE0UHo0MmtyZUpkZHpUd2hOMWJvWFg0NWQ2MnpGK0QxNnY5VVJTRE9YTjBI?=
+ =?utf-8?B?SlR2eUZWeitRa0lkem05eHRJSHlkR3IwYllrZjZ3ZWxOUzBBbnNmSjA4WVdp?=
+ =?utf-8?B?VWpFMG0ydDZsSFVIT3pBMW1ZUW9XOHBjZWw2T1Nmd2U5Qm16K2grSzVaYmhW?=
+ =?utf-8?B?YXJGSXdhOXYwQ2l0MDR4b0xITWU1a2VZcE4zVk5BM0x2MXluOE02aUZKeXJE?=
+ =?utf-8?B?VUpsSzl5ZWVVa24xZGRmWlVGRUlhaUZFTVh2RmNSM2pkaTY0em16bGsrcnRK?=
+ =?utf-8?B?V2VVUGh4Z3VrcXJhbHRLN3dyaW15R1p1SnR6QWlWRDBpbU5rLzd2TFkyL2x0?=
+ =?utf-8?B?NFpUbG5oSWJLRlZGc0dtYW1UcDhjcGMrcHJ0Q0JxRTBIZmExQ1BrYjA4TkJH?=
+ =?utf-8?B?MVN1SStiSTFhNXBRRWRObEdBRUpzWnNvbFVpSytYamZCbmJhNXdWWHJ5LzRs?=
+ =?utf-8?B?ekRiaWQvZjFMNy94bGZySWpvSTQzbXdzVmVBdEp0dnZhNHoxbDc5OHBIOElH?=
+ =?utf-8?B?Y09teUpJbjYwdUtDV1hTZVlRS1NUbm9DcWdvRVFJMzR1ejJzWHlsZHAyMnRa?=
+ =?utf-8?B?dFNCc25zR1UzdFdBZkdFRXdTTitnZ2YrUHpZSnVuQmJNZFMzaW94dmVnL0pF?=
+ =?utf-8?B?RjJrUHduTDRaYWpuZWVoRkt2RG42SVh3Wlc5eXY1MkFNcHVKWDQyTmM4dFg5?=
+ =?utf-8?B?SG1ZNWNhOUEvK3VJSnhJWC82WEgvRDZGNUNkN21Sb21rTmZDaW82RnVrSlVs?=
+ =?utf-8?B?SnJxMmRjd25PT0RHeHYveHo1bjdPT0ZETkU2ajJPY0hPdWNUWFlhNWFkdC9q?=
+ =?utf-8?B?dHN4eHk0WVFRQS9wSUpLaVlhNFJ0RlI3ejdnM2lhV0FWTGJ6Sk0yczgxTklL?=
+ =?utf-8?B?ZkFjdUIxK1dKaTl1Q2NOMEErckZraGEyVHg1RDYzSVJDaFNTSjM2eTAwNjk4?=
+ =?utf-8?B?WEw1VEg2ZGo2ZFphSWYxQjM1R1ZOSVphQjc3b1ZBL2psaGlsbllZZDJ0SVVM?=
+ =?utf-8?B?K1RUdzNOQU92TldLRlpUWGlwUFBWVHRMczlhckVLTU9meDRhd3A4YnA0cDhZ?=
+ =?utf-8?Q?Wig2LOY3adO7tiqM=3D?=
+X-Exchange-RoutingPolicyChecked: XmvbD5+mp2QnsfD0BZKD3RJB+tRcykC231pVEsn26qzn+CameNfuBLwU1nwd+G4hzoklaGTVjasfMd1xpeS1X0OMcNVjd6qz86RjUqAK4qXYVt/pgULWw2VEn+4uoOckfIVcZmvmnqacZyIrSWPHypanFHB2+8fdkdo5k64I35NDlDABaQgeX4j6Cg/IWV9P1IIs5pFnE3DJuL5TrKeDpmJwbecr4GVMfuUvH5Ghj8GWYzpBAqC3/S+gHugklHy4lHJQxKNZ9mtRxz2eJ9ABfX0/sXIM9QYuLqsZvgfR3vf0rJ1vveXsgclzymqqgHSnYO7X6XrERoeULCEvBO+sFQ==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3ad9123b-7e6d-4056-3577-08df1718895e
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR11MB7198.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Sep 2026 13:10:26.4602
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1Mp/GAUHsqvHp4kGlUwBaURQgCZxw74az1xZDEJKkMr5J4EsIhnyYXQ21rdE0WaM+vcKEifZ5SuPXNU/eY8m/g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB9701
+X-OriginatorOrg: intel.com
 
-On Sun, 20 Sep 2026 09:58:58 +0000, sashiko-bot@kernel.org wrote:
+On 17/09/2026 22:26, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] i3c: GETSTATUS silent success on 0-byte read with amd-i3c-master
+> --
+> 
+> commit f719c6d08e31060f2440ad1b34f948657af68459
+> Author: Adrian Hunter <adrian.hunter@intel.com>
+> 
+>     i3c: master: Remove stale GETSTATUS length check
+> 
+> This commit removes an explicit length check in i3c_master_getstatus_locked(),
+> relying instead on the generic CCC response length validation.
+> 
+>> diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+>> index 425b98e6efaaa..c50887b0b37d0 100644
+>> --- a/drivers/i3c/master.c
+>> +++ b/drivers/i3c/master.c
+>> @@ -1777,11 +1777,6 @@ static int i3c_master_getstatus_locked(struct i3c_master_controller *master,
+>>  	if (ret)
+>>  		goto out;
+>>  
+>> -	if (dest.payload.len != sizeof(*getstatus)) {
+>> -		ret = -EIO;
+>> -		goto out;
+>> -	}
+>> -
+>>  	if (status)
+>>  		*status = be16_to_cpu(getstatus->status);
+> 
 > [Severity: Medium]
-> Does this force a hard failure on uniprocessor systems instead of correctly
-> skipping the test?
->
-> Since UP is a valid hardware configuration for running selftests, if a test
-> requires multiple CPUs, shouldn't it gracefully skip using test__skip()
-> rather than asserting a failure?
+> Does removing this explicit length check introduce a silent failure on systems
+> using the amd-i3c-master controller?
+> 
+> When an I3C device terminates a GETSTATUS read with 0 bytes on the
+> amd-i3c-master controller, the driver incorrectly mutates payload.len to 0
+> instead of setting actual_len.
 
-Right, that is a bug in the test. With one possible CPU there is no second
-CPU that could hold a stale value, so the case this subtest exists for
-cannot occur; booted with -smp 1, all three of the new subtests fail rather
-than skip. I will use test__skip() in v2.
+FWIW, already fixed:
 
-> [Severity: Low]
-> This isn't a bug, but the BPF subsystem strictly requires multi-line comments
-> to have the opening /* on its own line. Could this be reformatted to match
-> the required style?
+	https://lore.kernel.org/all/20260908111207.3274407-1-shubhamsanjay.patil@amd.com/
 
-It is not a requirement, but it is the documented preference, so I will
-follow it. Commit 82b8000c28b5 ("net: drop special comment style") removed
-the netdev comment rule, which leaves the general preference in
-Documentation/process/coding-style.rst, and that is the form you describe.
-checkpatch checks neither form. I will reformat the comment in v2.
+> 
+> The generic validation in i3c_ccc_validate_payload_len() explicitly skips
+> validation if !p->len, incorrectly returning success. Before this patch, the
+> explicit length check here safely caught the driver's mutated 0-length and
+> correctly returned -EIO.
+> 
+> Without this check, the function silently succeeds and reads the zeroed
+> getstatus->status structure. Can this lead to incorrect behavior on these
+> systems?
+> 
 
-Thanks,
-Donggeun
