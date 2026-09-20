@@ -1,115 +1,118 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C8523BCF7;
-	Sun, 20 Sep 2026 09:33:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41B83EA955
+	for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 10:21:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789896831; cv=none; b=Ermzy+dFSpRWidMoiXJ7GLFE29w2jtERh8crsqYoCuseAS/Xabyg1Lu1OwM5RfIa2bJKuN3Z0RXTQfdj204mnnKudmb0EkWLvwqZTr6VP7mRrh5YcBnB17DwvKsA96nE4Z5lgER8+QCEngW+Ah7I1L8tkwOiMcqr0AyWarLvlVM=
+	t=1789899673; cv=none; b=N0LBx99ot2Ug1+fD6rsisZOPLbIt7yMvNTRDQTnvtJPyekWM3eIkYEaVfThCLtduhryOt8pYH5n2HQcgw3WgF4BwsFFbMENa1K2ENI9c2X6I4Hud3sO2uMEr8XRl74fsRnom01hH4N99UD24ni+MOUN1V8R83qaNvBqfcfMHESE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789896831; c=relaxed/simple;
-	bh=cfhj0d9m42AsJOxteswgbyfm9euTSn6516UitbsGW+Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l03/jbldAFQ4EUXHtBfgL614MIq3RG2Xn8EiQlBPo8QRW5af6TdjGklW5LZDbR2xwkgdAGSgQguBIhTP7UK8pDJ2NLb51u3ITKqP7IXE2g4ybG0D8G8Q3LdQO6UngZnItfC5SjF3KeYK/KTdgTNhol+yZkkFXpWssAZp2vdd4gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cXjIRkgA; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789899673; c=relaxed/simple;
+	bh=DXs70q+uj0fOTubAL/yj2nRY1q+Sd8JFHOY3sHHBGhE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IKQN4uR8Oc+WN5E1XTNGSN+nl5gjeVpVzEheNNRzEPghKGvtrkQa3IVinnljQZfYnzEkBU9gB4DHQsBp/n9tXjeVzEG/SV1bBFKqFHS290YAjlMkv0ezFSte7GDYQAnq9iQdqu48Ak8NpBFdIz7wSNgzdfv3mXJGP4B++pCSkHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tF5eCQxb; arc=none smtp.client-ip=74.125.227.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cXjIRkgA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A93C1F000FF;
-	Sun, 20 Sep 2026 09:33:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789896830;
-	bh=PY/8/ZsmJMMTTdpV1wAuuC6zfM59W3i4Cm8k9QPO1D8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=cXjIRkgA3jcDC5QtnMIEPsrzvOLfyxdHa0Z4TRNBnHSBkl8RflNjfzpCHcYP8PqqB
-	 a6/z/DLGpwaagCsg2glc1THaH1sWZP22qtZNVNPLNx4y0PIHEb/PKv3SBNIslYtf5l
-	 NFjUquezlq59lFMduCFhYRn1RYJpnCGK5vMtapDf8F23tiUoira1xc5Xuj+xbo9CKB
-	 mTHysdpdHDDMqXYnNITdIgBlwMgT+cxN2wLkDkK6alT/zgXtzDB/vcGaHApcWhs3LI
-	 36VaeZ7xBkxa2U9vkzaZLdu9pXiMSCNz2PcCCrsIxsW/HabXXitnbdWPCkoBikJcj2
-	 SOKQ/YaeBCbTw==
-Message-ID: <3b729163-10e6-44ad-bcde-24da5e8a11c1@kernel.org>
-Date: Sun, 20 Sep 2026 11:33:47 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tF5eCQxb"
+Received: by mail-pj2-f12.google.com with SMTP id d9443c01a7336-2d90ba1d807so25465865ad.3
+        for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 03:21:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789899671; x=1790504471; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=DXs70q+uj0fOTubAL/yj2nRY1q+Sd8JFHOY3sHHBGhE=;
+        b=tF5eCQxbSuC0+Gaq8Y4eHIy3Jt3Y9RWofgqczixuf4XDZrbV7Em27upImxGnXSBp8r
+         h4VqKDweonf6Nyh24JMaIbkizhXJZARr4iwfKosU4uvF/VSc0t15K5tPz3S6bAmeQiJy
+         XqDFupt3ysv9v7WFYKByJmC2XBVVyafSvXRdKsbHcZq3qtacG/d+nR+kV+Nm1Y/nynxo
+         lLXnwndHo7Aws43ZEVy5t4UslPqbQQc9uPdN4X2ZNjS9G+UIzURKJMqsjdhGwVSbBh2z
+         wCH4HGXNopGiuM2Bhl/i8nlgsIct5klA7OlNMLedg2d05IEQEWGBdmlnPNtb2O74PbFs
+         Svjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789899671; x=1790504471;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=DXs70q+uj0fOTubAL/yj2nRY1q+Sd8JFHOY3sHHBGhE=;
+        b=yN8Fgy3xfbqz2RDbxWC2VzqQavaBxPq213R3oSLowuvs5BM6HdR8EER3nnvWhLLz/M
+         4UcpBTLd3o/CRhp8yWB7MOY+sIKYQ0KNiUxdjkb8q5T6R4unfWIDNYmmJ28lDWBPofgZ
+         vaAWl9yq5S0ct3D2RXHOe+AmCRumu//pRBwlhYikYyp7vKFuS3aKRA1eh+tLIt2T+l71
+         lpK+AcGGrfg+HYzOZ2v4xdIMDEnshsfg2L+XbmkLZ/rvAFlb8SoPnRJ1/29It4SXS97v
+         Bh5iYeX/JdBz0M+WY7973gRHmD8P424/uTifvV9PLC6Nfj4BdbycF06lEa0j7BLYCHS9
+         HVUQ==
+X-Gm-Message-State: AFuF++mT0Lx4Ps1DctLaqfASFBLjHxvFC4+/nHtqNe0gHnG+LowuCnkW
+	T1hPldHLBkpQ39iaFljRgx74bQ7dTZxAC+OrSlVpgq4hUtGLTby0qitlh0ld270=
+X-Gm-Gg: AYBFou03CzezAJAmAx5BYawHeg0wPBSOsZ2ZHaOgv6C/ZzEU9mcb7ECW8XoTSGDvOwW
+	72aQ0uw09X+j3IzBeix+ysnGaXFwcLnH+/d66JvwdiVTsm4y6yaQqHfwIDJZckUsKsC6Ldb3SSG
+	azuhGiG5I2qE+PBYBVls/kBg80YAtFH++Uxk46dUpHinUFyLPWcceZWOYWfLLsVuZgsaPDgyQli
+	s8HEi/mAMOB7Ogk3M/+H8UYsIL96BZ4ji7v8r0ZIz2uqMcj6ixvn25Sy6dz7jIYPe0FEGRJvkMI
+	5ge+4QxabTHBxrCHYe9jrVADR22r3iwxmrhy7qrXNT0LNOxhh1H08vSS9tcY3SBnbolwUAc5nJ2
+	u71nSV8tLg2Qxd+WqHGomVsJqkyW1WKZ5C1w5IL888cA5yxtakLHCVGt0gJsFmf+qTsLst5EXnm
+	cS+h+L5Bci1espWZokX2HdfKuZQ0Hk9B1sA4W86Nsvv7MxxD5gccmWGsZYC3elfOLH9XZdvdOwy
+	4HE4ZUl7e5gAcyFRruaLrYbUMM=
+X-Received: by 2002:a17:90b:3a43:b0:39e:6c68:c778 with SMTP id 98e67ed59e1d1-39e6c68ca12mr6544339a91.46.1789899671224;
+        Sun, 20 Sep 2026 03:21:11 -0700 (PDT)
+Received: from ydg-Zenbook-14-UM3406GA ([2001:2d8:7f00:8c85:e0d6:4b87:c472:c9ae])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e6c37a88csm8550850a91.8.2026.09.20.03.21.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 20 Sep 2026 03:21:10 -0700 (PDT)
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+To: sashiko-reviews@lists.linux.dev,
+	bpf@vger.kernel.org
+Cc: ast@kernel.org,
+	daniel@iogearbox.net,
+	andrii@kernel.org,
+	eddyz87@gmail.com,
+	memxor@gmail.com,
+	martin.lau@linux.dev,
+	song@kernel.org,
+	yonghong.song@linux.dev,
+	jolsa@kernel.org,
+	emil@etsalapatis.com,
+	ihor.solodrai@linux.dev,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	donggeunyoo.kernel@gmail.com
+Subject: Re: [PATCH bpf 2/2] selftests/bpf: Test per-cpu initialization of a BPF_F_CPU created element
+Date: Sun, 20 Sep 2026 19:21:05 +0900
+Message-ID: <20260920102105.445051-1-donggeunyoo.kernel@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260920095859.635921F000FF@smtp.kernel.org>
+References: <20260920093153.439743-1-donggeunyoo.kernel@gmail.com> <20260920093153.439743-3-donggeunyoo.kernel@gmail.com> <20260920095859.635921F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: Patch "mptcp: annotate data-races around
- subflow->fully_established" has been added to the 6.12-stable tree
-Content-Language: fr
-To: sashiko-reviews@lists.linux.dev, gregkh@linuxfoundation.org
-Cc: mptcp@lists.linux.dev
-References: <2026092037-islamic-default-0aca@gregkh>
- <20260920074855.D7DFF1F000FF@smtp.kernel.org>
-From: Matthieu Baerts <matttbe@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- xsFNBFXj+ekBEADxVr99p2guPcqHFeI/JcFxls6KibzyZD5TQTyfuYlzEp7C7A9swoK5iCvf
- YBNdx5Xl74NLSgx6y/1NiMQGuKeu+2BmtnkiGxBNanfXcnl4L4Lzz+iXBvvbtCbynnnqDDqU
- c7SPFMpMesgpcu1xFt0F6bcxE+0ojRtSCZ5HDElKlHJNYtD1uwY4UYVGWUGCF/+cY1YLmtfb
- WdNb/SFo+Mp0HItfBC12qtDIXYvbfNUGVnA5jXeWMEyYhSNktLnpDL2gBUCsdbkov5VjiOX7
- CRTkX0UgNWRjyFZwThaZADEvAOo12M5uSBk7h07yJ97gqvBtcx45IsJwfUJE4hy8qZqsA62A
- nTRflBvp647IXAiCcwWsEgE5AXKwA3aL6dcpVR17JXJ6nwHHnslVi8WesiqzUI9sbO/hXeXw
- TDSB+YhErbNOxvHqCzZEnGAAFf6ges26fRVyuU119AzO40sjdLV0l6LE7GshddyazWZf0iac
- nEhX9NKxGnuhMu5SXmo2poIQttJuYAvTVUNwQVEx/0yY5xmiuyqvXa+XT7NKJkOZSiAPlNt6
- VffjgOP62S7M9wDShUghN3F7CPOrrRsOHWO/l6I/qJdUMW+MHSFYPfYiFXoLUZyPvNVCYSgs
- 3oQaFhHapq1f345XBtfG3fOYp1K2wTXd4ThFraTLl8PHxCn4ywARAQABzSRNYXR0aGlldSBC
- YWVydHMgPG1hdHR0YmVAa2VybmVsLm9yZz7CwZEEEwEIADsCGwMFCwkIBwIGFQoJCAsCBBYC
- AwECHgECF4AWIQToy4X3aHcFem4n93r2t4JPQmmgcwUCZUDpDAIZAQAKCRD2t4JPQmmgcz33
- EACjROM3nj9FGclR5AlyPUbAq/txEX7E0EFQCDtdLPrjBcLAoaYJIQUV8IDCcPjZMJy2ADp7
- /zSwYba2rE2C9vRgjXZJNt21mySvKnnkPbNQGkNRl3TZAinO1Ddq3fp2c/GmYaW1NWFSfOmw
- MvB5CJaN0UK5l0/drnaA6Hxsu62V5UnpvxWgexqDuo0wfpEeP1PEqMNzyiVPvJ8bJxgM8qoC
- cpXLp1Rq/jq7pbUycY8GeYw2j+FVZJHlhL0w0Zm9CFHThHxRAm1tsIPc+oTorx7haXP+nN0J
- iqBXVAxLK2KxrHtMygim50xk2QpUotWYfZpRRv8dMygEPIB3f1Vi5JMwP4M47NZNdpqVkHrm
- jvcNuLfDgf/vqUvuXs2eA2/BkIHcOuAAbsvreX1WX1rTHmx5ud3OhsWQQRVL2rt+0p1DpROI
- 3Ob8F78W5rKr4HYvjX2Inpy3WahAm7FzUY184OyfPO/2zadKCqg8n01mWA9PXxs84bFEV2mP
- VzC5j6K8U3RNA6cb9bpE5bzXut6T2gxj6j+7TsgMQFhbyH/tZgpDjWvAiPZHb3sV29t8XaOF
- BwzqiI2AEkiWMySiHwCCMsIH9WUH7r7vpwROko89Tk+InpEbiphPjd7qAkyJ+tNIEWd1+MlX
- ZPtOaFLVHhLQ3PLFLkrU3+Yi3tXqpvLE3gO3LM7BTQRV4/npARAA5+u/Sx1n9anIqcgHpA7l
- 5SUCP1e/qF7n5DK8LiM10gYglgY0XHOBi0S7vHppH8hrtpizx+7t5DBdPJgVtR6SilyK0/mp
- 9nWHDhc9rwU3KmHYgFFsnX58eEmZxz2qsIY8juFor5r7kpcM5dRR9aB+HjlOOJJgyDxcJTwM
- 1ey4L/79P72wuXRhMibN14SX6TZzf+/XIOrM6TsULVJEIv1+NdczQbs6pBTpEK/G2apME7vf
- mjTsZU26Ezn+LDMX16lHTmIJi7Hlh7eifCGGM+g/AlDV6aWKFS+sBbwy+YoS0Zc3Yz8zrdbi
- Kzn3kbKd+99//mysSVsHaekQYyVvO0KD2KPKBs1S/ImrBb6XecqxGy/y/3HWHdngGEY2v2IP
- Qox7mAPznyKyXEfG+0rrVseZSEssKmY01IsgwwbmN9ZcqUKYNhjv67WMX7tNwiVbSrGLZoqf
- Xlgw4aAdnIMQyTW8nE6hH/Iwqay4S2str4HZtWwyWLitk7N+e+vxuK5qto4AxtB7VdimvKUs
- x6kQO5F3YWcC3vCXCgPwyV8133+fIR2L81R1L1q3swaEuh95vWj6iskxeNWSTyFAVKYYVskG
- V+OTtB71P1XCnb6AJCW9cKpC25+zxQqD2Zy0dK3u2RuKErajKBa/YWzuSaKAOkneFxG3LJIv
- Hl7iqPF+JDCjB5sAEQEAAcLBXwQYAQIACQUCVeP56QIbDAAKCRD2t4JPQmmgc5VnD/9YgbCr
- HR1FbMbm7td54UrYvZV/i7m3dIQNXK2e+Cbv5PXf19ce3XluaE+wA8D+vnIW5mbAAiojt3Mb
- 6p0WJS3QzbObzHNgAp3zy/L4lXwc6WW5vnpWAzqXFHP8D9PTpqvBALbXqL06smP47JqbyQxj
- Xf7D2rrPeIqbYmVY9da1KzMOVf3gReazYa89zZSdVkMojfWsbq05zwYU+SCWS3NiyF6QghbW
- voxbFwX1i/0xRwJiX9NNbRj1huVKQuS4W7rbWA87TrVQPXUAdkyd7FRYICNW+0gddysIwPoa
- KrLfx3Ba6Rpx0JznbrVOtXlihjl4KV8mtOPjYDY9u+8x412xXnlGl6AC4HLu2F3ECkamY4G6
- UxejX+E6vW6Xe4n7H+rEX5UFgPRdYkS1TA/X3nMen9bouxNsvIJv7C6adZmMHqu/2azX7S7I
- vrxxySzOw9GxjoVTuzWMKWpDGP8n71IFeOot8JuPZtJ8omz+DZel+WCNZMVdVNLPOd5frqOv
- mpz0VhFAlNTjU1Vy0CnuxX3AM51J8dpdNyG0S8rADh6C8AKCDOfUstpq28/6oTaQv7QZdge0
- JY6dglzGKnCi/zsmp2+1w559frz4+IC7j/igvJGX4KDDKUs0mlld8J2u2sBXv7CGxdzQoHaz
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <20260920074855.D7DFF1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hello,
+On Sun, 20 Sep 2026 09:58:58 +0000, sashiko-bot@kernel.org wrote:
+> [Severity: Medium]
+> Does this force a hard failure on uniprocessor systems instead of correctly
+> skipping the test?
+>
+> Since UP is a valid hardware configuration for running selftests, if a test
+> requires multiple CPUs, shouldn't it gracefully skip using test__skip()
+> rather than asserting a failure?
 
-On 20/09/2026 09:48, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] mptcp: build failure due to READ_ONCE() on bit-field
+Right, that is a bug in the test. With one possible CPU there is no second
+CPU that could hold a stale value, so the case this subtest exists for
+cannot occur; booted with -smp 1, all three of the new subtests fail rather
+than skip. I will use test__skip() in v2.
 
-Mmh, I missed the fact this commit has already been backported in commit
-477aa7116a76 ("mptcp: annotate data-races around subflow
-->fully_established"), but mostly reverted by caa4a79f74f3 ("mptcp:
-remove unneeded READ_ONCE() annotation").
+> [Severity: Low]
+> This isn't a bug, but the BPF subsystem strictly requires multi-line comments
+> to have the opening /* on its own line. Could this be reformatted to match
+> the required style?
 
-I don't know what's better here: either we leave it like that, and I can
-fix the size of the bit-field. Or we drop patch 1 and 2, and I resolve
-the small conflict on patch 3/5: commit 2b0f561f21b2 ("mptcp: avoid
-unneeded actions on subflow reset"). I can send a v2, and we can drop it
-if the other solution has been preferred.
+It is not a requirement, but it is the documented preference, so I will
+follow it. Commit 82b8000c28b5 ("net: drop special comment style") removed
+the netdev comment rule, which leaves the general preference in
+Documentation/process/coding-style.rst, and that is the form you describe.
+checkpatch checks neither form. I will reformat the comment in v2.
 
-Cheers,
-Matt
--- 
-Sponsored by the NGI0 Core fund.
-
+Thanks,
+Donggeun
