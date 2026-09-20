@@ -1,172 +1,207 @@
-Received: from mail-ed2-f12.google.com (mail-ed2-f12.google.com [74.125.228.76])
+Received: from mail-ed2-f35.google.com (mail-ed2-f35.google.com [74.125.228.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9CA3E1CE8
-	for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 21:06:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A62C3E49F2
+	for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 21:09:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.99
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789938364; cv=pass; b=lPKVPO9cazmBu5tS6rnZUgVBwNrdKRHr2aYgVmtEIJsNmLlKMxZUP44PjLRZAwemU9Tg9+K/SrPvMj0DT/ZSf9WHB2t03p01mosNT9kOpzkKskjcFGYw3mPsikU4m0OprsCnL9P1QoFfX04QUeky4dD3OHHEXXHcoOl+Oio4w+I=
+	t=1789938566; cv=pass; b=Etxe0CmvCXpLcDA50nSLirUR2iKEz52gYuS/Q9LAg5OD8prXzbElGxMh8R8WUIozF5YkiRjGgVl45r5wd2+dHvr7Aed/PD63N73KVWsMwnaQ1pnpSTvV+vCyDLNhkI4iLh2XyPpZg4L2w1D8IXMfgZ/9xVPMCnVC35BaJXUrVFU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789938364; c=relaxed/simple;
-	bh=ezRCTTrs6uvQwF5UbpYaqGjiPx6ukx27ZxH2gOL/sak=;
+	s=arc-20240116; t=1789938566; c=relaxed/simple;
+	bh=kt+rv5k3eLDWYabDgymlVriZ9r09FN0YWounlJrDsaE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X0b5idSu0pT7rqP6cZ8jwcFdpp6Ej0PIECneUDQ15z3WDSWfTKf+dB3XNgZJh/APq5jPME3aHuZn4Rg4u6f3KzvSmSVGCmIwcyD68W9xmte1iUkS+wKEfnVCiO+Z9w4uQ51N/UHruPIAxyXewFZKrY2gGKOM5mShqMKCGt0UU3o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=kXgwRJX9; arc=pass smtp.client-ip=74.125.228.76
+	 To:Cc:Content-Type; b=IgjyPHIXMjHMDGO3MIOiZXD0r32s9NOzK0jMzHlQubmkD0GDzrxQsZKzGSVwS9kCV+d/SVdbRIpRmUFoPVta4HdVyNRJDraeeE7OxlroEGp1alnJpKQaGG3pAKuILIUJdFnEmOAOB5RLHzsK8C+CvORUqn9fce7AvWLyBj+N/CA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=l9I+fTpJ; arc=pass smtp.client-ip=74.125.228.99
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kXgwRJX9"
-Received: by mail-ed2-f12.google.com with SMTP id 4fb4d7f45d1cf-6a6056ac81fso3848342a12.2
-        for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 14:06:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789938361; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="l9I+fTpJ"
+Received: by mail-ed2-f35.google.com with SMTP id 4fb4d7f45d1cf-6a985e8fcddso2787241a12.3
+        for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 14:09:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789938563; cv=none;
         d=google.com; s=arc-20260327;
-        b=k22zQhaMdStfNXYrK1l6KbtY7fXtM+9J540rsyzJ55e7evFX1fF/IPPcvIvR4cfNim
-         mJH4erlVR2dfnS1BdIO/IeDqujU29iGTlkg0LNyLIlso9ka3h6f87q8pc5qAS+lC8Tdu
-         Pq6nDoziOdhWvNcNmWNHICZXlrAmXwk+LRqt/lcVtGlzH6wjDnY1PFxSo30z7UFLJeXh
-         8Ud3CEHeKgR9+woHK3KIRwWoN2TLIEG7Xs57kl/YSJIaFAGIm4TG6TsO36I2giDX6kZw
-         97TYDLAMN++12MLtIAqERchK8g3NiQvCgkTBLWMjCmNpOlJoPkFuwD63Cfd10C2Nh/EN
-         /7sQ==
+        b=qTf/fs1O3+C98wbmgcTcw/h2PbhBQbnwXkG//R7eTxtIA/ToKZnNBOFXzNkcj14IsO
+         gZ2Fldp+MhmOCcRFNI+gltxfyKRSbJgGFRtLDjuZYgPwKIlHh7HQ19LmrCXEdM9nmhUm
+         5ybA0kCO7lwDurpAn6FvDCd7v79zQtK30ViUJkDQk+llOC4apbSXdWTI3xFw7h5XV4s0
+         LjLKjwP2u/lZhMt37ONTLNkV3vGPtZAVd2+sLDZbfdGldZkx7fo0vUamn8OXEfB3LyUA
+         kiC5P9zYDFLo8zMdkVhFNeW4LN2iKpbX3TAztESLbUbzLDasmSMRgXxuNxXkuisQX37g
+         nR7g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=yTysyvua/pHRkgj+3i2IdhzgN1OTX4ZBg0dHDR1pdSM=;
+        bh=aG9IMXzuXxs35bjhn377gOMi4c4fmeb2RQf/8lDCjFs=;
         fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=QgfBUjemF+xX16R5sdycdYbkyFl80PKJUqympkYzrsBDM+V+Su8JvQO4JwxCwhWbx2
-         Dmsvg5ptMtLq+5bosnpr0Pvn09HG8mQ0JVpZtMyyupp17hDJW0hi/wgFYUHlU1daWHUD
-         /OsifxzTDrhNoaFTKra3/MaVtcJZdxheToAk0pB0A33g4zFut1rJ+WgHDtz/mPyHaYId
-         jeISnXvXS8Hmwk0WEsTfqj/dQAsZ3C5i7GIUmRakvL6N4qVbjk6TQOZqwVYiWFwqgVQ6
-         FP694es+tKGrPTOKome2hDrxDBNVuD7OPdv0sCw3deykI6fhJa4oDV//HX/2tfg3Es3n
-         V9Dw==;
+        b=WLpVg3Fn06J680faZTJkfDXwX0MLNO/WlaK0HR96ewXbp3LLewE3ih0Rvq6R1FDdKE
+         AIEXmtcAtLudA5+ty/CBg2+JePmYZFTb4O4KuoP5oUMzOZ7oKLw30xQQZt6WOVqz+Nd6
+         ocrRwixZHBhKVx3xaDdqnR8kCfrY9/ua4FaMe2P68Flwx77JnhQNu+XDrJxWVn/fpWiC
+         pf9LG/ZKl5kmm/c2BfJLqXbiA/5t+qWqhRRXmgrLsTh/7YLTe6guM5XYdW0ewsTFZt3n
+         n+v5+uOpyEc2PeYJf85zYopOaCH0Y//hVFjunTejdmsuMrLiECE+fvYNnyx4+g+QGXRL
+         8lhw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1789938361; x=1790543161; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1789938563; x=1790543363; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=yTysyvua/pHRkgj+3i2IdhzgN1OTX4ZBg0dHDR1pdSM=;
-        b=kXgwRJX96rREDCnOAI1VUNw9SlJQlfvz//7Ov7BiERFRD9DG3Dr3kwv/rdqHD82nhk
-         bi2uUMHfStyb7DG14twaPs/GCRE6bLc/S7AAn4qAKX3tHIQp+EUyFnk3vbhZO1kl0ssL
-         DB01uzicMaWUtVa9BzKYvpzrwmfwpphCGCnfLwoABxjzEVkuQvwkkbvzklvw6XcTi+ZY
-         loL2HhDT/qsVkgoz6IsIwv1OAty9Y5QqaXNkGTeHdCCiPO6XIubaVlZv7W2h1yTzG7vc
-         wHD3ZAvkxaQa1fCGLQC05zBMduE1Dk2EIwPW2hJX8sEYfg6ciTGNsTU6Cogyrhc1izR5
-         7gTw==
+        bh=aG9IMXzuXxs35bjhn377gOMi4c4fmeb2RQf/8lDCjFs=;
+        b=l9I+fTpJx2z6BQS+vKlBexHR0PKwKQtk4bkGrtOZkMjHSxbubz8uQx5Ob3WCYzz532
+         rpS5OLVEmgzwBfPPnWhgo3xJjkQdyZbuHed9oy9TnnCEGrGtrTqKU+bElAbdD88niuln
+         86dkKEBOEKyKzPRO2DWtQFLfaHEAo00h5LXxMKERvflR1jYa3mF88C1wYNj7L7STRszE
+         Uv1XB7mU0VyLo0WQh11dXzi3YELbR2UwW3cjX31AZtirEFnS322qe+3gvDVM9etLRzH9
+         Vt/WVCZS9xWR6bEom2QwRLeaLvZ6X8y+MJcfQeWfRUaIUdL+b/+Fq8Zd0xSYLaPSqMLE
+         U4cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789938361; x=1790543161;
+        d=1e100.net; s=20260707; t=1789938563; x=1790543363;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=yTysyvua/pHRkgj+3i2IdhzgN1OTX4ZBg0dHDR1pdSM=;
-        b=g5p2AV0IoGxwNYZb8skTcc+Q1ZeP0PQSecGiT1VqcDRy51MYEigOJc9II3jCHN5K/N
-         mRkuFlRNQvnt0HbspfsZdCYhahI7D09DJI3eTp/4Lrkrc2+wA8/2sLNfjrAoaeWeHc1R
-         woiKtqvknTI0B4E0p2V/Bi/9Rc1qrka6IvX2TbW7nDuRO15f9HmhYP61vaLKkvzMk3/F
-         Cgx8BCcFh2QqOqc5uvn118d4cgMmP5pMDXyrztROErr0lgjAm2QyVqcMYNFFJb3xo7WD
-         DwNaz82/n5LDFegwrodJ9uKHFQqSZ3RiRzxUDowjUlR/ysKo7yIBtGBcPj2VmZZ2wSmU
-         MV0A==
-X-Gm-Message-State: AFuF++kAsLtpwCBQ/4ei0lRjAPH2iE3PcDomX496innE3baMq0FNuAvZ
-	ujORluTc2ppgZoa+7LVwzPN4r+JRSFbalWiVkb92UlBIE54YfJ2DMnRzk6BEwkQBkMT473HNJrK
-	wD3SSuCRrvHgpDDvL6GMxp+qwA+b1IgVrcU4+czxvo0dv1z+mosdUPXw0MM4=
-X-Gm-Gg: AYBFou2nr1KmSPH6Y9d98W+2L3A8sWrYrjTIuMfMRwcgeE5siYHr59rzyuKh/x4JBdv
-	oOGohTUKj+VXPnrn/niqd07rpKjQP2lQXgtN/CJbOjER/RDKVrbF1jAecfB1HozrL44wL78Unfy
-	fk5coLqqEjic+Q9YxKJjxMKX1u3yPOLd4Mo2Oj65mw9O6k3C0WQVM1R82swMbOiE/OfbbcBKa3j
-	JmOk3H8ZdWsj0HHicaSlM/kNqHT7REMtGriZk3SIk28tui+MCbKiVZCktxqsscrMXQ/HLtAIuMN
-	iCtOPi56crA2IXVt+C3cgasZ7jMo7W3y2b+e6fTkCw8SJL4PutEb3DABUborNhe7f40Gq8yJ+3W
-	lcifrGZtEDx+eGhM6UugI5JFpDUKvLn2UHX022lF1VrFqH4F7etPoBLJNpHOCnbBWPHs=
-X-Received: by 2002:a05:6402:23c7:b0:6aa:4529:4cb7 with SMTP id
- 4fb4d7f45d1cf-6aa53135128mr6241277a12.16.1789938360721; Sun, 20 Sep 2026
- 14:06:00 -0700 (PDT)
+        bh=aG9IMXzuXxs35bjhn377gOMi4c4fmeb2RQf/8lDCjFs=;
+        b=kpIphcVTS9L0bFx+thfsTTT2pqZuU4MT+Upxm9+Ghh4ig4UitJlt80YAcBxGxplh/a
+         ANxLQlXft+9avuhOJWJOU3bR85IOCaNG8GXjBDyNJ6Q1sI9DLik2rLWJhXrMR8O4lEKH
+         bOALpUl2UlzZrwoOOSiu3rHbXmBx7agHWOh9+OLMRKeV4w4GaVx/ygfJjUnliztJVPnf
+         XrhKIDCkOqwv5G7onM3Ae5W58Sg9Odx2k0iYHQ0thMWKUPx6EFj4NJRt9xMyBABAW27d
+         b3Zn5E4Bw/0ir5TOQJiMV2TNx8sF3V/X6D8dqKm7Vqp9moZnzQG5k0e0hgvPKSGtABYV
+         J70w==
+X-Gm-Message-State: AFuF++mGAREFUSer8eFVX73vumCtFwhQQGmbBsfAomEb6EHedVGVrD0M
+	rSpK2GFxlVA5i0ytr+roo6ddZyrHgju7wY8gT+l1k3dYh7CeN71iqzuqJxxqnTgunUA/uCu2ILB
+	lTJ8lDCDv0c3A42hU+CS8DG/a2txNveOOCd8Y30LjkQ7/bWEz7qTUXzE68oc=
+X-Gm-Gg: AYBFou1LSXD3w4dhFiP85fl57GihOsMvM+heVOk1AGIvHiCMMkTgnG16pUOb9ii+RCb
+	2h+jCOS1aog0DwOHWG3uinXiyxW6xH03ApPZiAx0VYBAtBCS/orJZgmA+n+rtKe/NloUktOvcrY
+	hDBL850xcfoytmuJz1t6hP1jvzbypxda+HTk35MxKMR7rqG7MkqWYIwEnDzn/DlULw+Qtajs8xP
+	yGiERg9mMEjPbWSZ6EX+r6nN+M4plfJ39PAuzwQd3C7FgttuMqLA3PoFrFocd11osfr29Yu2fu8
+	9uKNXnq6hYu3q6HEgGTjZKTqesr1QbE/Vct1f+1MDy29ejckBi6T1Zo6sZszn6pNWNhVZZGNqw9
+	4RIMe/er9GcCyOvWaWw+SVsewueTNahgJegHK0zpye3oO1wH4ta9IWmwnGtLLfePur28=
+X-Received: by 2002:a05:6402:52d7:b0:6a9:8dad:f351 with SMTP id
+ 4fb4d7f45d1cf-6aa564cf5a3mr5500843a12.39.1789938562315; Sun, 20 Sep 2026
+ 14:09:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260920195633.3033620-1-kuniyu@google.com> <20260920195633.3033620-4-kuniyu@google.com>
- <20260920201152.8CED21F000FF@smtp.kernel.org>
-In-Reply-To: <20260920201152.8CED21F000FF@smtp.kernel.org>
+References: <20260920195633.3033620-1-kuniyu@google.com> <20260920195633.3033620-6-kuniyu@google.com>
+ <20260920200548.E18441F000FF@smtp.kernel.org>
+In-Reply-To: <20260920200548.E18441F000FF@smtp.kernel.org>
 From: Kuniyuki Iwashima <kuniyu@google.com>
-Date: Sun, 20 Sep 2026 14:05:44 -0700
-X-Gm-Features: AcwNN1VEogJIW5LP6aFMhmS47H4x3mFx-fob5a_vGfNv5ifJJNAKN1ium1p3ZmE
-Message-ID: <CAAVpQUCXjzvPo868ygwA8-xzyYG8woDqSHpHctTB86i9WR_QSA@mail.gmail.com>
-Subject: Re: [PATCH bpf-next 3/7] bpf: tcp: Support bpf_sock_ops_cb_flags_set()
- for bpf_tcp_ops.
+Date: Sun, 20 Sep 2026 14:09:06 -0700
+X-Gm-Features: AcwNN1W8dHp7vjuLuHw_rdApVjuYf5gpqSkoLbV1SL_ByL7U_KaMKWGKzwIk-RY
+Message-ID: <CAAVpQUCyt8XuxET6eYhOKbkHitkb15yYUaRQHdXAx_EBZMr3QQ@mail.gmail.com>
+Subject: Re: [PATCH bpf-next 5/7] bpf: mptcp: Don't support BPF_SOCK_OPS_RCVQ_CB_FLAG.
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Sep 20, 2026 at 1:11=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Sun, Sep 20, 2026 at 1:05=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] bpf: data race in bpf_tcp_ops_cb_flags_set() on unlocked sockets
+> - [Medium] bpf: tcp_set_sock_ops_cb_flags breaks ALL_CB_FLAGS for MPTCP
 > --
 >
-> commit 56d7f542a8c499237807954e17f2fae35e5e276b
+> commit 578335638acc4a540df534d791edf9c63d563e32
 > Author: Kuniyuki Iwashima <kuniyu@google.com>
+> Subject: bpf: mptcp: Don't support BPF_SOCK_OPS_RCVQ_CB_FLAG.
 >
-> bpf: tcp: Support bpf_sock_ops_cb_flags_set() for bpf_tcp_ops.
+> This patch prepares for a new kfunc by disabling BPF_SOCK_OPS_RCVQ_CB_FLA=
+G
+> for MPTCP subflows. It returns -EOPNOTSUPP if this flag is used on an MPT=
+CP
+> socket.
 >
-> This patch allows clearing or setting bpf_sock_ops_cb_flags via the
-> bpf_sock_ops_cb_flags_set() helper within various bpf_tcp_ops callbacks.
->
-> > diff --git a/net/ipv4/bpf_tcp_ops.c b/net/ipv4/bpf_tcp_ops.c
-> > index c68d1fa323058..6d0452441b6c5 100644
-> > --- a/net/ipv4/bpf_tcp_ops.c
-> > +++ b/net/ipv4/bpf_tcp_ops.c
-> [ ... ]
-> > @@ -220,6 +220,24 @@ const struct bpf_func_proto bpf_tcp_ops_get_retval=
-_proto =3D {
-> >       .ret_type       =3D RET_INTEGER,
-> >  };
+> > diff --git a/include/net/tcp.h b/include/net/tcp.h
+> > index 07426e8641b7e..d3cf655da9ecd 100644
+> > --- a/include/net/tcp.h
+> > +++ b/include/net/tcp.h
+> > @@ -2932,6 +2932,16 @@ static inline int tcp_call_bpf_3arg(struct sock =
+*sk, int op, u32 arg1, u32 arg2,
+> >       return tcp_call_bpf(sk, op, 3, args);
+> >  }
 > >
-> > +BPF_CALL_2(bpf_tcp_ops_cb_flags_set, struct sock *, sk, int, argval)
+> > +static inline int tcp_set_sock_ops_cb_flags(struct sock *sk, int val)
 > > +{
-> > +     int val =3D argval & BPF_SOCK_OPS_ALL_CB_FLAGS;
+> > +     if (sk_is_mptcp(sk) &&
+> > +         (val & BPF_SOCK_OPS_RCVQ_CB_FLAG))
+> > +             return -EOPNOTSUPP;
 > > +
+>
+> [Severity: Medium]
+> Will this check unintentionally break existing BPF programs that use
+> BPF_SOCK_OPS_ALL_CB_FLAGS to enable all callbacks?
+
+This is rather a userspace problem.
+
+BPF_SOCK_OPS_ALL_CB_FLAGS should not be used in such a way.
+The flag is to be used to opt-in hooks.
+
+
+
+>
+> If a program passes BPF_SOCK_OPS_ALL_CB_FLAGS (which is expanded in this
+> patch series to include the new BPF_SOCK_OPS_RCVQ_CB_FLAG bit), this rigi=
+d
+> check evaluates to true for MPTCP subflows and rejects the entire multi-f=
+lag
+> request instead of ignoring the unsupported bit.
+>
 > > +     tcp_sk(sk)->bpf_sock_ops_cb_flags =3D val;
->         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->
-> [Severity: High]
-> If an unlocked socket is passed to bpf_tcp_ops_cb_flags_set(),
-
-This should not happen.
-
-The hook is only supported on hooks under sock_owned_by_me(),
-and bpf_tcp_ops does not support socket lookup helpers.
-
-
-> it looks like
-> concurrent updates to the flags from other CPUs could be clobbered, causi=
-ng
-> BPF TCP callbacks to fail to invoke when expected.
->
-> Does this code modify the socket flags without acquiring the socket lock
-> or asserting that the socket is currently owned by the caller?
->
-> > +
-> > +     return argval & ~BPF_SOCK_OPS_ALL_CB_FLAGS;
+> > +     return 0;
 > > +}
 > > +
-> > +static const struct bpf_func_proto bpf_tcp_ops_cb_flags_set_proto =3D =
-{
-> > +     .func           =3D bpf_tcp_ops_cb_flags_set,
-> > +     .gpl_only       =3D false,
-> > +     .ret_type       =3D RET_INTEGER,
-> > +     .arg1_type      =3D ARG_PTR_TO_BTF_ID,
-> > +     .arg1_btf_id    =3D &btf_sock_ids[BTF_SOCK_TYPE_TCP],
->         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 >
-> [Severity: High]
-> Since the verifier accepts any PTR_TO_BTF_ID of type TCP here, it seems
-> privileged BPF programs could pass refcounted but unlocked sockets, leadi=
-ng
-> to the data race mentioned above.
+> [ ... ]
 >
-> Could the use of ARG_PTR_TO_BTF_ID allow a BPF program to pass an unlocke=
-d
-> socket obtained via helpers like bpf_sk_lookup_tcp() and bpf_skc_to_tcp_s=
-ock()?
+> > diff --git a/net/core/filter.c b/net/core/filter.c
+> > index 5feb998846825..f29c061bb0664 100644
+> > --- a/net/core/filter.c
+> > +++ b/net/core/filter.c
+>
+> [ ... ]
+>
+> > @@ -6178,8 +6177,9 @@ static const struct bpf_func_proto bpf_sock_ops_g=
+etsockopt_proto =3D {
+> >  BPF_CALL_2(bpf_sock_ops_cb_flags_set, struct bpf_sock_ops_kern *, bpf_=
+sock,
+> >          int, argval)
+> >  {
+> > -     struct sock *sk =3D bpf_sock->sk;
+> >       int val =3D argval & BPF_SOCK_OPS_ALL_CB_FLAGS;
+> > +     struct sock *sk =3D bpf_sock->sk;
+> > +     int err;
+> >
+> >       if (!is_locked_tcp_sock_ops(bpf_sock))
+> >               return -EOPNOTSUPP;
+> > @@ -6187,7 +6187,9 @@ BPF_CALL_2(bpf_sock_ops_cb_flags_set, struct bpf_=
+sock_ops_kern *, bpf_sock,
+> >       if (!IS_ENABLED(CONFIG_INET) || !sk_fullsock(sk))
+> >               return -EINVAL;
+> >
+> > -     tcp_sk(sk)->bpf_sock_ops_cb_flags =3D val;
+> > +     err =3D tcp_set_sock_ops_cb_flags(sk, val);
+> > +     if (err)
+> > +             return err;
+>
+> [Severity: Medium]
+> Does returning early here prevent any of the other valid callbacks reques=
+ted
+> in val from being enabled?
 
-Same false-positive.  bpf_tcp_ops does not support such lookup helpers.
+Same, this is intentional.
+
+>
+> Because tcp_set_sock_ops_cb_flags() returns -EOPNOTSUPP when the new flag=
+ is
+> present, the BPF helper propagates the error without applying any of the
+> previously supported flags. This effectively turns a wildcard request for
+> "all supported flags" into a total failure on MPTCP subflows.
+>
+> >
+> >       return argval & (~BPF_SOCK_OPS_ALL_CB_FLAGS);
+> >  }
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260920195633.30=
+33620-1-kuniyu@google.com?part=3D5
