@@ -1,36 +1,40 @@
-Received: from mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from canpmsgout12.his.huawei.com (canpmsgout12.his.huawei.com [113.46.200.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14813C4168
-	for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 03:09:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4228930D3E5;
+	Sun, 20 Sep 2026 03:52:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789873755; cv=none; b=Y4Dg4aPCgs0AOmcjluwS+dTqin/q4xOptwGv1LJRRPofLXonlto2S93UA9KC2xi5Nuwt6dICbVNKEs+9syBQkU/EUXZUWyb0+RULPBpz4vQELOkzx/mYiNc6P0wIznCpf6+IVFyqdiStkJDao6mUK6UN5jQy8b0j1ptP9wq5bM8=
+	t=1789876344; cv=none; b=c6UnzKDsuUnPp7pwelaZe/yk93zDEY8S2StyLitdmemTl2XmemqG7EKOS8Ee7J6ssjPIHXDFFg0xj8iW3Jeu11K0yWh6nz2cWjkH94T+9FVdKK1rsxoO78q4KLAy45S7+iqCPPNZLSKP4gzs6oXVTye5yqkxfjV3YbzbHiFLks4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789873755; c=relaxed/simple;
-	bh=Z1NUSGFe+rOrfPsK7KriuBpOdZ3sxhpc5TTsyNkXk0k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qV6Pkl167lPgHIVn8mjJr23lqKz4Xgd2XFM6Yiil3p/Iy7PAUa8ug4XYv2VjHrN9gnsJC/nNK65OLJeKnT69MZTlnGbjK9vEbHUioQTtJCfsmSF2Ql2285m6wIoI2IPipF+rXPcNJHUMoykkoWeQZffgL/lSNvA3lMt3h8gaVA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=QXIrsnX0; arc=none smtp.client-ip=95.215.58.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1789876344; c=relaxed/simple;
+	bh=i3tTCUA4ovQ3aCdQxPQ3H4+jhspA2/L1cA4he4nyBBg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Rjv7grRRcFTWEMz5g9frEdgFKrM3tARFfeHjo4JwO2PMg19vkfggIVHwNj7I4C0om98tKMqttIe2xbIrOk+1uZqOiFj7qU0fSQrIwwDqh/3GS5wrasVnWcIDiqpG9nNCOP01nyX50V2NhzDCLakR7UvEl08MESG925jYszK+DTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=1lkRrGqD; arc=none smtp.client-ip=113.46.200.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="QXIrsnX0"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=Z1NUSGFe+rOrfPsK7KriuBpOdZ3sxhpc5TTsyNkXk0k=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1789873750; v=1; x=1790478550;
- b=QXIrsnX0MCo/hM0dq+FMMMbkpoAz2Q5QEkdUgdknQJMpoM3KFopXzQTY1EJX5Zr2f4c5J0vy
- OUchITbjBVSwlxKuMnyp4It3y3Uz/zBV5c2f+6KOWfZc3OB+NLoVhCDt4XNm0gqddvGFrrgaexw
- x+8xiB17XHIZpgsimPbxXSZk=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 8484f6b53dd9d7aa;
-	Sun, 20 Sep 2026 03:09:10 +0000
-X-Mizu-Trace-ID: 8484f6b53dd9d7aa
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <ac00f803-bc13-40f7-8493-1d7b24010c75@linux.dev>
-Date: Sun, 20 Sep 2026 11:09:03 +0800
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="1lkRrGqD"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=4CXJGmKHG01Cx5WADm45ZnwIf+yzPgsSp4LXsSCGK8w=;
+	b=1lkRrGqDddig7anIp5WuNHAm+CuT3FvIsggB6VBKbwEF2UUvgcG9HIXey+Zr7ZvRIoY0aGqG4
+	b1NaWsV+IYNc9zNPu7OWgW8LLxF5UL3Hg51zBkUv0TQ316qIuIhBTx2h1CSpbZOxa4mSd/F9cTt
+	FP44s2lWygtUjNf1ecHgMFI=
+Received: from mail.maildlp.com (unknown [172.19.163.127])
+	by canpmsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4hnXG031FSznTZk;
+	Sun, 20 Sep 2026 11:41:12 +0800 (CST)
+Received: from kwepemk200008.china.huawei.com (unknown [7.202.194.74])
+	by mail.maildlp.com (Postfix) with ESMTPS id 4E14F40572;
+	Sun, 20 Sep 2026 11:52:15 +0800 (CST)
+Received: from [10.67.109.254] (10.67.109.254) by
+ kwepemk200008.china.huawei.com (7.202.194.74) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Sun, 20 Sep 2026 11:52:12 +0800
+Message-ID: <7e624b9b-b759-44c6-b1b8-810c36a066c5@huawei.com>
+Date: Sun, 20 Sep 2026 11:52:12 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,94 +42,99 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] docs: cgroup-v2: Describe boot-isolated CPUs in
- cpuset.cpus.isolated
-To: sashiko-reviews@lists.linux.dev
-Cc: tj@kernel.org, hannes@cmpxchg.org, mkoutny@suse.com
-References: <20260918102359.71826-1-guopeng.zhang@linux.dev>
- <20260918102359.71826-2-guopeng.zhang@linux.dev>
- <20260918105023.646B71F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Guopeng Zhang <guopeng.zhang@linux.dev>
-In-Reply-To: <20260918105023.646B71F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v5 11/17] crash: Normalize the kexec_load elfcorehdr at
+ load time
+To: <sashiko-reviews@lists.linux.dev>, <baoquan.he@linux.dev>,
+	<gregkh@linuxfoundation.org>, <ruirui.yang@linux.dev>, <npiggin@gmail.com>,
+	<liukexin@kylinos.cn>, <dave.hansen@linux.intel.com>,
+	<mclapinski@google.com>, <ritesh.list@gmail.com>,
+	<takahiro.akashi@linaro.org>, <x86@kernel.org>,
+	<linux-kernel@vger.kernel.org>, <will@kernel.org>, <pratyush@kernel.org>,
+	<coxu@redhat.com>, <mingo@redhat.com>, <zhangtianyang@loongson.cn>,
+	<linux-fsdevel@vger.kernel.org>, <sourabhjain@linux.ibm.com>,
+	<hpa@zytor.com>, <rafael@kernel.org>, <graf@amazon.com>,
+	<jbouron@amazon.com>, <yeoreum.yun@arm.com>, <hbathini@linux.ibm.com>,
+	<chenhuacai@kernel.org>, <akpm@linux-foundation.org>,
+	<lizhengyu3@huawei.com>, <chleroy@kernel.org>, <adityag@linux.ibm.com>,
+	<dakr@kernel.org>, <piliu@redhat.com>, <pasha.tatashin@soleen.com>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-mm@kvack.org>,
+	<ardb@kernel.org>, <leitao@debian.org>, <catalin.marinas@arm.com>,
+	<kees@kernel.org>, <thuth@redhat.com>, <blum@kernel.org>, <kas@kernel.org>,
+	<maddy@linux.ibm.com>, <james.morse@arm.com>, <tglx@kernel.org>,
+	<bp@alien8.d>, <e@domain.invalid>, <mark.rutland@arm.com>,
+	<driver-core@lists.linux.dev>, <kernel@xen0n.name>, <chao.gao@intel.com>,
+	<eric.devolder@oracle.com>, <tangyouling@kylinos.cn>, <palmer@rivosinc.com>,
+	<loongarch@lists.linux.dev>, <bgwin@google.com>, <guodongtai@kylinos.cn>,
+	<rppt@kernel.org>, <linuxppc-dev@lists.ozlabs.org>, <maqianga@uniontech.com>,
+	<seanjc@google.com>, <vishal.l.verma@intel.com>, <robh@kernel.org>,
+	<gshan@redhat.com>, <me@linux.beauty>, <sshegde@linux.ibm.com>,
+	<mpe@ellerman.id.au>
+CC: <kexec@lists.infradead.org>
+References: <20260918100442.3841135-1-ruanjinjie@huawei.com>
+ <20260918100442.3841135-12-ruanjinjie@huawei.com>
+ <20260918102742.414E21F000FF@smtp.kernel.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+In-Reply-To: <20260918102742.414E21F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
+ kwepemk200008.china.huawei.com (7.202.194.74)
 
 
 
-在 2026/9/18 18:50, sashiko-bot@kernel.org 写道:
+在 2026/9/18 18:27, sashiko-bot@kernel.org 写道:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] cgroup/cpuset: boot-isolated CPUs lost from cpuset.cpus.isolated on partition release
+> - [Low] kexec: elfcorehdr_updated in struct kimage is write-only and unused
 > --
 > 
-> commit e1e9b698bdf04aebf82c92a40588b3e308527a2f
-> Author: Guopeng Zhang <zhangguopeng@kylinos.cn>
+> commit 463b7b7692d8e96dc1be8ffaed1b6d0c8d298c9f
+> Author: Jinjie Ruan <ruanjinjie@huawei.com>
 > 
-> docs: cgroup-v2: Describe boot-isolated CPUs in cpuset.cpus.isolated
+> crash: Normalize the kexec_load elfcorehdr at load time
 > 
-> cpuset.cpus.isolated is documented as empty when no isolated partition
-> exists. This is not true when CPUs are isolated at boot with
-> isolcpus=domain. cpuset_init() adds those CPUs to the isolated mask,
-> and isolcpus=<cpu-list> uses domain isolation by default. They remain
-> listed after a partition using them is released.
+> This commit changes kexec_load to normalize the elfcorehdr at load time
+> instead of waiting for the first crash hotplug event. By doing this while
+> the device_hotplug_lock can be safely taken, it allows hotplug paths to
+> skip CPU events safely and avoid racing with memory hotplug.
 > 
-> Document the boot-isolated CPUs as well.
+>> diff --git a/arch/x86/kernel/crash.c b/arch/x86/kernel/crash.c
+>> index 3c9f4fbbe7ff0..f34fa8dba0288 100644
+>> --- a/arch/x86/kernel/crash.c
+>> +++ b/arch/x86/kernel/crash.c
+>> @@ -457,9 +457,8 @@ void arch_crash_handle_hotplug_event(struct kimage *image, void *arg)
+>>  	 * possible CPUs, there is no need to update the elfcorehdr
+>>  	 * for additional CPU changes.
+>>  	 */
+>> -	if ((image->file_mode || image->elfcorehdr_updated) &&
+>> -		((image->hp_action == KEXEC_CRASH_HP_ADD_CPU) ||
+>> -		(image->hp_action == KEXEC_CRASH_HP_REMOVE_CPU)))
+>> +	if (image->hp_action == KEXEC_CRASH_HP_ADD_CPU ||
+>> +	    image->hp_action == KEXEC_CRASH_HP_REMOVE_CPU)
+>>  		return;
 > 
->> diff --git a/Documentation/admin-guide/cgroup-v2.rst b/Documentation/admin-guide/cgroup-v2.rst
->> index ebc683070521c..e666b9e15e1c1 100644
->> --- a/Documentation/admin-guide/cgroup-v2.rst
->> +++ b/Documentation/admin-guide/cgroup-v2.rst
->> @@ -2650,9 +2650,11 @@ Cpuset Interface Files
->>    cpuset.cpus.isolated
->>  	A read-only and root cgroup only multiple values file.
->>  
->> -	This file shows the set of all isolated CPUs used in existing
->> -	isolated partitions. It will be empty if no isolated partition
->> -	is created.
->> +	This file shows CPUs isolated from scheduler domains by
->> +	isolated cpuset partitions or at boot with "isolcpus=domain"
->> +	(including the default "isolcpus=<cpu-list>" form).  CPUs
->> +	isolated at boot remain listed after any partition using them
->> +	is released.
+> [Severity: Low]
+> Does this leave elfcorehdr_updated as a write-only and unused field?
 > 
-> [Severity: Medium]
-> Does the code actually behave as described here?
+> Since this patch removes the last reader of image->elfcorehdr_updated,
+> the field is now only written to in crash_handle_hotplug_event() and
+> initialized in kernel/kexec_core.c:
+
+Will remove unused  elfcorehdr_updated in v6.
+
 > 
-> Looking at isolated_cpus_update() in kernel/cgroup/cpuset.c, when a
-> partition is deactivated, it appears to unconditionally remove the released
-> CPUs from the isolated_cpus mask:
-> 
-> kernel/cgroup/cpuset.c:isolated_cpus_update() {
+> kernel/crash_core.c:crash_handle_hotplug_event() {
 >     ...
-> 	} else {
-> 		if (!cpumask_intersects(xcpus, isolated_cpus))
-> 			return;
-> 		cpumask_andnot(isolated_cpus, isolated_cpus, xcpus);
-> 	}
+>     image->hp_action = KEXEC_CRASH_HP_NONE;
+>     image->elfcorehdr_updated = true;
 >     ...
 > }
 > 
-> Because there is no logic to check if those CPUs were originally part of
-> the boot-isolated set (i.e., outside HK_TYPE_DOMAIN_BOOT), they seem to be
-> permanently purged from the isolated_cpus mask and thus disappear from
-> cpuset.cpus.isolated.
-> 
-> If a user boots with isolcpus=domain for CPU 2, creates an isolated cpuset
-> partition containing CPU 2, and then deactivates the partition, wouldn't
-> CPU 2 be lost from cpuset.cpus.isolated? This appears to contradict the
-> behavior explicitly promised by this documentation update.
+> Should the elfcorehdr_updated field be completely removed from struct kimage
+> in include/linux/kexec.h along with its assignments to avoid dead code and
+> structure overhead?
 > 
 
-The code quoted here is the old implementation. This was fixed by commit
-6c37d7e074a4 ("cgroup/cpuset: Preserve boot-isolated CPUs on partition release") [1].
-
-The current code checks HK_TYPE_DOMAIN_BOOT before clearing a CPU from
-isolated_cpus, so boot-isolated CPUs remain in cpuset.cpus.isolated after
-the partition is released.
-
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6c37d7e074a4be1ba8da59f4ed5df8977b3daa43
-
-Thanks,
-Guopeng
-
+-- 
+Best regards,
+Jinjie
 
