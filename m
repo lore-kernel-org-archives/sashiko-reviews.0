@@ -1,124 +1,166 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx2-f42.google.com (mail-yx2-f42.google.com [74.125.224.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0679331283E;
-	Sun, 20 Sep 2026 13:23:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789910605; cv=none; b=I5cayunWgBptZbjJsEprr8fXNU2lrhCCOR0QO8IGHJBDT85Xiq4v4uAcUdxzAbP3RBqfx/s1/gFD54EZfStpfsStADL/UUKQOi5WYzjIK5BJKkHvvXU5Meteq31EFYHCYKjCpNft9dIXYglAj0p7dg3aKC1nDobB3CbIUNAK1Ho=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789910605; c=relaxed/simple;
-	bh=LPs5+KVrHeXql0wVMEXg3Co932Me3ydgtrSASjkENHM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VJa4LzRGSNpu4wV+DKVjVzsS4XNJ1hc0jHS0yuuh0NXRSQ2lvFVfgZAt37dozn5wz34fd8oiClyOSrih7CqFOQH2guKc7S3/gEGNCsROx01/wuIxsevjFS4OQrIXCwtd5/6ra7WJVJV7y/ycX3axvdjiFQLTL04SfHJRTJfFZn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TvSpGVEG; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6636A438470
+	for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 13:49:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789912165; cv=pass; b=hgCE726PL4GGUXso7dZMDvca0uZHFqW/rzij9xqHuTw7t5J5Amozjt8xvM2kkKXrSaFTr6Fazyg437aWIXItVA+mU/zgsdrvMNa5vXWXI/sd5nA1vEVCbXgXZ+GS3jt+iZUmI0f8Omv7XVtm5DU7kvYMLMOTsNldfR+H3k2L4Zk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789912165; c=relaxed/simple;
+	bh=s3lTFp6lURx7MrRYn18AT3Pe7UpgcN21QfCy8Gku6t4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GYpaAe27OHfaEBuMVdWI7/2+9wrk7EboYBitmDg+rHIuP4lSKzwYB2FvSWoRMHvssaBCB6Ql5it8Es2NQxyazmQZ0YhZYgN6M6D7/lXEtrpitEJWvRmp3RXHzzdfsfOi7d9/8CJkTxJ5C80JsB0tYiWM+qMUeSOTu77ouA11xVQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=uber.com; spf=fail smtp.mailfrom=uber.com; dkim=pass (1024-bit key) header.d=uber.com header.i=@uber.com header.b=6QgUFINh; arc=pass smtp.client-ip=74.125.224.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=uber.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=uber.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TvSpGVEG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666BE1F000FF;
-	Sun, 20 Sep 2026 13:23:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789910600;
-	bh=N+SJB59efTNWriZjAvB+lv91ZwuRuI+NtKSbofZN+JY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=TvSpGVEG1tkgMO9fB3dUOSY0AH1m3vHWndGreuxngk147iBykcIB8h032Df0nrs8A
-	 mAO+i5MDW3rGRFeOavaR9CiH8SUtqIdWzOf3QC+GfwuNCGiKltZx0UtnONDT+xFEg/
-	 y0z/r+khyEWtsiu8n8WhNOJNczbyBjsewxjPPRQ27iRmGU26yBt/aB2M2i1jE410zB
-	 6mtvQMX9gABRCRGg/HQyOOZjzUK+wOlrrLQfyXgIPWtufsidux/jnzaHG/2LQYFtbU
-	 GuzRDJKqnl/qTu6wtfE8NdVuguyyHZaqwgQ7DrzA4Q3rJ9C46/8ZZheEdS8PhdLcqX
-	 D+ZU+gLTFR1vA==
-Message-ID: <569ae222-2073-4565-a445-bcfcd7059a06@kernel.org>
-Date: Sun, 20 Sep 2026 15:23:17 +0200
+	dkim=pass (1024-bit key) header.d=uber.com header.i=@uber.com header.b="6QgUFINh"
+Received: by mail-yx2-f42.google.com with SMTP id 956f58d0204a3-66e4ab2029eso1929062d50.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 06:49:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1789912162; cv=none;
+        d=google.com; s=arc-20260327;
+        b=qfnEMJa7pGOrtnFV2HgJg0VLYTB5RMG+L0S5y38rBhgS/SVOOPHD3dlxuAxZJ9tX0b
+         NWJ6yomOTl/NHQa+0SHMmHgPtmxvpsgHgMQVKj253cI14Ut7WpKP2ak4RCt96wGER4v8
+         w9jM2Et38q1GSeg3KiibYqfibYWzFBCQeqyU+/nzULR3YFOa60W6UvuqDuJcs18McIMf
+         vVXcb1mOCvoYXFZuLWcWN8nZ7X9yhbQBy12xcmbLsT0SEZrgHJV/3MfDHv70SZa3TKNo
+         94Zuhi3r2Q6Kx2zEsthEMrjS7Cw1WKU6dCIlwbb5BNTa4kNysfRLlZhik865K7Tohxsf
+         eKrQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=s3lTFp6lURx7MrRYn18AT3Pe7UpgcN21QfCy8Gku6t4=;
+        fh=0zVHGC//SC94CWFKHtFt4lnskmkXkJNNy7lE0FDd3Ck=;
+        b=j5qF4Ii8z2t7sCHMXLBQeGx94BM56XpL2Or+lyQ4bKPK5TCPpC4myq4UmnRcU75ath
+         knruS6cRGCC3QgZKK2AuYU5Q4FCfaeEmIuN3k3iC8wS20fhHLORrF/KpUz0adi/shCpK
+         YiMdVQYxkmr0gap8waiFP48tflfagfIs5bbFWLRFwxX62kM6JhY1veRH9+4C9HqttLFn
+         TJ32sELGCv/lU3fo0anvEU1nnxUHYW42RjJ8s+/iAtbGqOrCpsuS7a1vithjWhaFEnJJ
+         aGkOJURHL7I1oiBIGSJx2qiUb4uhcJCKaKzXQZn/O8QwfnSSi7ijq5qLD5EcciH9bh1T
+         5ERg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=uber.com; s=google; t=1789912162; x=1790516962; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=s3lTFp6lURx7MrRYn18AT3Pe7UpgcN21QfCy8Gku6t4=;
+        b=6QgUFINhoUuP7U6HApNGG/fiBVlZwTkB8eZeoS+F28iKuJLSoHovHOIwXTxmfukqoK
+         8zLisgnLHq9K05zH8FNOk089bu5GHHT3lV8mG+g/NIo0UgPMVDmpxJo9Va9Vq00adeOC
+         5IisbR8mpGu4BrpM8ay08H7+xt+y+4odsWDWY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789912162; x=1790516962;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=s3lTFp6lURx7MrRYn18AT3Pe7UpgcN21QfCy8Gku6t4=;
+        b=jZQw/nP0/USUL3t2XkalWBvK6688iR7MY2znDJJI28JLEp4shKMT9KoVLh4T/uj/rK
+         tWIO4SO3HHDWKUzY/8Yz423bvF+dJKrnpKeFp1GlJnxD45fv/XUvj0dDHVGlhrEoUPNM
+         ELLGCpX6LhJSAjXWZiYd5Tu27pnw8xhKAmdQFTFBE3+oBKDx7p0fXXpPrvpyQlzcYXdg
+         +LJ3cSFwV5mDOmMCA3NhUQwDvGlLBts6YBn9ltMSm5LZdPjq/RP5BIi5eW394X4L88G7
+         MqRxcHQ2MAJACMWwt2cJZYdWkmhAK82SdRXLTMeD43C1vdA1njWY2VnpO/XvSGk01TAM
+         eTGA==
+X-Gm-Message-State: AFuF++l3SXQQZcrqcJfwF+R4eUcH7I82ZmoqJE9xYACiDy6EaI7GM16r
+	UxSukJURoC0eYNkdo6gbmnC6I8CsxpCtZM8V6V7R6uJH+dRApkNi8oKSQTmLXw/0ealLaiu/4Z4
+	/qHYUy4u5ijykGQSPI0FqAluikl5S02Hi2BmknZxbrzaTIQJrxjwO6zOHXw==
+X-Gm-Gg: AYBFou0n+hX8UBxLg2YpO7X1LJAlrx+IJXKnIDvNoIO7aX6sFV/B2DZ3bqI8erjuPRC
+	Y+/M1pedvtn/LoMWAP74NlLi8W3yvqv5pX+BTDGXafAWnCeANQWTmxKDJaQ0ByYii74qQ2ZV5oL
+	shAB7XHs8j1AZrpSbD6YIPRWdhAtIJH6Cr4jq0Mug4WCRO7Bv0RktaKoUuvCCZ2QVrY/fhrYNW6
+	v+zxYWXeOT8Bea3XSad2h+ezlC6AEaocYGuAxthtOj7LRL3j5J+i9vdaSHfpGLj1Gtt72XqDNHf
+	7HEOTaXFkUb1cKgYOufBwBWbCcYoM6gWe0oixWPvnXoe7xrs4ecfQqQWoFdoAjs3tZvfxcgF7Re
+	58HxTsqlQZ2xO
+X-Received: by 2002:a05:690e:4393:b0:672:99e1:11f8 with SMTP id
+ 956f58d0204a3-67299e1175emr912062d50.149.1789912161654; Sun, 20 Sep 2026
+ 06:49:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: Patch "mptcp: annotate data-races around
- subflow->fully_established" has been added to the 6.12-stable tree
-Content-Language: fr
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: sashiko-reviews@lists.linux.dev, mptcp@lists.linux.dev
-References: <2026092037-islamic-default-0aca@gregkh>
- <20260920074855.D7DFF1F000FF@smtp.kernel.org>
- <3b729163-10e6-44ad-bcde-24da5e8a11c1@kernel.org>
- <2026092026-throwback-iron-bdce@gregkh>
-From: Matthieu Baerts <matttbe@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- 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
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <2026092026-throwback-iron-bdce@gregkh>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20260919-perf-symbol-memory-send-v2-0-495b8f00ad7c@uber.com>
+ <20260919-perf-symbol-memory-send-v2-3-495b8f00ad7c@uber.com> <20260920024557.B51D81F000FF@smtp.kernel.org>
+In-Reply-To: <20260920024557.B51D81F000FF@smtp.kernel.org>
+From: Alireza Haghdoost <haghdoost@uber.com>
+Date: Sun, 20 Sep 2026 06:49:05 -0700
+X-Gm-Features: AcwNN1WGKpnrwDy-gIU_CCYFGPc2CgcA7grptGAj7xrJsG06HBe7wQg-Gy4arJc
+Message-ID: <CA+w=M=Qu-R22O3J1_g9HO-f6dv4Uey_vLZZJgNsH8mK53k2K5Q@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] perf script: Add --lazy-load-symbols for lazy
+ symbol loading
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 20/09/2026 15:10, Greg KH wrote:
-> On Sun, Sep 20, 2026 at 11:33:47AM +0200, Matthieu Baerts wrote:
->> Hello,
->>
->> On 20/09/2026 09:48, sashiko-bot@kernel.org wrote:
->>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->>> - [Low] mptcp: build failure due to READ_ONCE() on bit-field
->>
->> Mmh, I missed the fact this commit has already been backported in commit
->> 477aa7116a76 ("mptcp: annotate data-races around subflow
->> ->fully_established"), but mostly reverted by caa4a79f74f3 ("mptcp:
->> remove unneeded READ_ONCE() annotation").
->>
->> I don't know what's better here: either we leave it like that, and I can
->> fix the size of the bit-field. Or we drop patch 1 and 2, and I resolve
->> the small conflict on patch 3/5: commit 2b0f561f21b2 ("mptcp: avoid
->> unneeded actions on subflow reset"). I can send a v2, and we can drop it
->> if the other solution has been preferred.
-> 
-> Your v2 looks good, thanks for that, I'll go replace the patches with
-> those.
+>
+> [Severity: High]
+> Can this zfree() lead to a use-after-free during concurrent lookups?
+>
+> If dso__materialize_symbols_ondemand() returns early due to max-symbol-by=
+tes
+> budget limits during a concurrent lookup by name in map__find_symbol_by_n=
+ame_idx(),
+> the dso__ondemand pointer is left non-NULL. The thread then calls dso__so=
+rt_by_name(),
+> constructing the dso->symbol_names array, and begins a lockless binary se=
+arch on it.
+>
+> Concurrently, a lookup by address in another thread evaluates dso__ondema=
+nd,
+> takes the lock, calls dso__find_symbol_ondemand(), and successfully mater=
+ializes
+> a different symbol. This triggers dso__reset_symbol_names(), which immedi=
+ately frees
+> dso->symbol_names via zfree() while the first thread is actively reading =
+it.
+>
 
-Thank you! And sorry for the extra work :)
+This is a valid bug. The budget-truncated path can leave the lazy
+index active while a later address lookup invalidates symbol_names
+during a lockless name lookup.
+I=E2=80=99ll synchronize name lookup with lazy materialization and add cove=
+rage in v3.
 
-Cheers,
-Matt
--- 
-Sponsored by the NGI0 Core fund.
+>
+> [Severity: Medium]
+> Does this missing release barrier risk exposing partially written rbtree =
+nodes?
+>
+> A thread evaluating dso__ondemand locklessly in map__find_symbol() could
+> read the state as NULL, bypassing the dso__lock acquisition, and proceed =
+to
+> traverse the rbtree. Another thread executing dso__free_ondemand() stores=
+ NULL
+> into dso->ondemand as a plain write.
+>
+> Without smp_store_release() on the writer and smp_load_acquire() on the
+> reader, a weakly-ordered CPU can reorder the reader's loads such that it
+> reads the rbtree nodes before ondemand is loaded, observing stale memory.
+>
 
+I agree. The lockless `dso__ondemand()` test does not provide a
+happens-before relation for lazy rbtree updates.
+I=E2=80=99ll remove this split synchronization path and make lazy-state
+transitions and symbol lookup use the DSO lock consistently in v3.
+
+>
+> [Severity: Medium]
+> This is the lockless read mentioned above. Is an smp_load_acquire() neede=
+d
+> here to pair with a release barrier in dso__free_ondemand()?
+>
+
+I agree. above solution would fix it.
+
+>
+> [Severity: High]
+> This is the call to dso__reset_symbol_names() that triggers the use-after=
+-free
+> if a concurrent thread is searching the array locklessly in
+> map__find_symbol_by_name_idx().
+>
+
+I agree. This is on invalidation side of the same race. I=E2=80=99ll
+synchronize `symbol_names` invalidation with name lookup and lazy
+materialization in v3.
