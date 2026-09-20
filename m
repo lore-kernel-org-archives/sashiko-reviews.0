@@ -1,120 +1,115 @@
-Received: from canpmsgout05.his.huawei.com (canpmsgout05.his.huawei.com [113.46.200.220])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F231F2B8D
-	for <sashiko-reviews@lists.linux.dev>; Sun, 20 Sep 2026 09:10:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.220
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C8523BCF7;
+	Sun, 20 Sep 2026 09:33:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789895434; cv=none; b=ojg/MJCjnA47Y7zzC+bYMiRbtKnTrivTWINJtHPkdKBl6Adux6Fd7582jh0TSBjQWVGQGRhVPFKPKof5Ot+/gapBojyC+7qJLR/hAoB9fOumkyVNVg5jcH9g9eK0hscXcI+Sa+bTGTcGlokBDyr5yk45ewEsqJKhsaqylAPmoQo=
+	t=1789896831; cv=none; b=Ermzy+dFSpRWidMoiXJ7GLFE29w2jtERh8crsqYoCuseAS/Xabyg1Lu1OwM5RfIa2bJKuN3Z0RXTQfdj204mnnKudmb0EkWLvwqZTr6VP7mRrh5YcBnB17DwvKsA96nE4Z5lgER8+QCEngW+Ah7I1L8tkwOiMcqr0AyWarLvlVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789895434; c=relaxed/simple;
-	bh=QyOwJtRTeP4qZg9gddfrA5i98FC8a07q3cbLqSJAAkM=;
-	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=JrUxipe+M4GSHsP0KRTU3fZheD3EUcNaxdO9JpAG06DYXKojbMY2UHthQtt6gp/uyEwYs7+tDIQZB3HsoUEHUeiq7IU4IIqvbRkU28CGiVEwSI8up/58TtdiwG62GtK0YIkmGrBMVw8Gg3rzfxubbedRYRef6I/MxQvhAe2JOc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=xXr9g1g+; arc=none smtp.client-ip=113.46.200.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1789896831; c=relaxed/simple;
+	bh=cfhj0d9m42AsJOxteswgbyfm9euTSn6516UitbsGW+Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=l03/jbldAFQ4EUXHtBfgL614MIq3RG2Xn8EiQlBPo8QRW5af6TdjGklW5LZDbR2xwkgdAGSgQguBIhTP7UK8pDJ2NLb51u3ITKqP7IXE2g4ybG0D8G8Q3LdQO6UngZnItfC5SjF3KeYK/KTdgTNhol+yZkkFXpWssAZp2vdd4gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cXjIRkgA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="xXr9g1g+"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=cg3yH9rbmRxsBX/h/+D2hh1xBu40od0GLs4xKpx4KOQ=;
-	b=xXr9g1g+Uosytyg4XEeQgr4RaZx9G5/+i9SVljgj8trmHsGX78L/Cv7URabtIl7PNCHpmJYR8
-	B74IpUssHUIovrGkihZ86RU9CCywsRpgsKDpuJAWNlSDDSGLTrJ02gJkDlwjYi/PNkFhilmC+vV
-	bD2dR3ksQa+mx/v/eOi1og4=
-Received: from mail.maildlp.com (unknown [172.19.162.140])
-	by canpmsgout05.his.huawei.com (SkyGuard) with ESMTPS id 4hngJz4vFhz12LF9;
-	Sun, 20 Sep 2026 16:59:15 +0800 (CST)
-Received: from whupemk100014.china.huawei.com (unknown [7.152.184.20])
-	by mail.maildlp.com (Postfix) with ESMTPS id 8D0A720333;
-	Sun, 20 Sep 2026 17:10:21 +0800 (CST)
-Received: from [10.67.121.110] (10.67.121.110) by
- whupemk100014.china.huawei.com (7.152.184.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Sun, 20 Sep 2026 17:10:20 +0800
-Subject: Re: [PATCH v4 1/2] hisi_acc_vfio_pci: fix NULL dereference in
- reset_prepare on PF passthrough
-To: <sashiko-reviews@lists.linux.dev>
-CC: <kvm@vger.kernel.org>
-References: <20260918084244.1485837-1-liulongfang@huawei.com>
- <20260918084244.1485837-2-liulongfang@huawei.com>
- <20260918085735.A40551F000FF@smtp.kernel.org>
-From: liulongfang <liulongfang@huawei.com>
-Message-ID: <24bee66f-7e0a-83c3-0cd9-e619d706be0f@huawei.com>
-Date: Sun, 20 Sep 2026 17:10:20 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cXjIRkgA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A93C1F000FF;
+	Sun, 20 Sep 2026 09:33:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789896830;
+	bh=PY/8/ZsmJMMTTdpV1wAuuC6zfM59W3i4Cm8k9QPO1D8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=cXjIRkgA3jcDC5QtnMIEPsrzvOLfyxdHa0Z4TRNBnHSBkl8RflNjfzpCHcYP8PqqB
+	 a6/z/DLGpwaagCsg2glc1THaH1sWZP22qtZNVNPLNx4y0PIHEb/PKv3SBNIslYtf5l
+	 NFjUquezlq59lFMduCFhYRn1RYJpnCGK5vMtapDf8F23tiUoira1xc5Xuj+xbo9CKB
+	 mTHysdpdHDDMqXYnNITdIgBlwMgT+cxN2wLkDkK6alT/zgXtzDB/vcGaHApcWhs3LI
+	 36VaeZ7xBkxa2U9vkzaZLdu9pXiMSCNz2PcCCrsIxsW/HabXXitnbdWPCkoBikJcj2
+	 SOKQ/YaeBCbTw==
+Message-ID: <3b729163-10e6-44ad-bcde-24da5e8a11c1@kernel.org>
+Date: Sun, 20 Sep 2026 11:33:47 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260918085735.A40551F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: Patch "mptcp: annotate data-races around
+ subflow->fully_established" has been added to the 6.12-stable tree
+Content-Language: fr
+To: sashiko-reviews@lists.linux.dev, gregkh@linuxfoundation.org
+Cc: mptcp@lists.linux.dev
+References: <2026092037-islamic-default-0aca@gregkh>
+ <20260920074855.D7DFF1F000FF@smtp.kernel.org>
+From: Matthieu Baerts <matttbe@kernel.org>
+Autocrypt: addr=matttbe@kernel.org; keydata=
+ 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
+ lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
+Organization: NGI0 Core
+In-Reply-To: <20260920074855.D7DFF1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
- whupemk100014.china.huawei.com (7.152.184.20)
 
-On 2026/9/18 16:57, sashiko-bot@kernel.org wrote:
+Hello,
+
+On 20/09/2026 09:48, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] vfio/hisilicon: unprivileged userspace can spam kernel log via VFIO_DEVICE_RESET
-> --
-> 
-> commit 232c524b0aed2e92588a217b15d2d609373f3ea0
-> Author: Longfang Liu <liulongfang@huawei.com>
-> 
-> hisi_acc_vfio_pci: fix NULL dereference in reset_prepare on PF passthrough
-> 
-> This commit fixes a NULL pointer dereference in the PCI error handler by
-> checking for migration support at the entry of reset_prepare() and
-> aer_reset_done(). It also properly clears the set_reset_flag in
-> aer_reset_done() and updates the VF checking logic in the probe function.
-> 
->> diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
->> index 86362ec424a50..8ff69c8d1ff71 100644
->> --- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
->> +++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
->> @@ -1154,9 +1154,14 @@ static void hisi_acc_vf_pci_reset_prepare(struct pci_dev *pdev)
->>  {
->>  	struct hisi_acc_vf_core_device *hisi_acc_vdev = hisi_acc_drvdata(pdev);
->>  	struct hisi_qm *qm = hisi_acc_vdev->pf_qm;
->> -	struct device *dev = &qm->pdev->dev;
->> +	struct device *dev = &pdev->dev;
->>  	u32 delay = 0;
->>  
->> +	if (!hisi_acc_vdev->core_device.vdev.mig_ops) {
->> +		dev_err(dev, "device not support migration\n");
-> 
-> [Severity: Medium]
-> Could this dev_err() be used by an unprivileged user or guest VM to spam the
-> kernel log?
-> 
-> Since a non-migratable VFIO device (like a PF or older VF) is a valid state,
-> an unprivileged user repeatedly invoking the VFIO_DEVICE_RESET ioctl might
-> trigger this path continuously through pci_reset_function(). 
-> 
-> Should this be changed to a debug log, be rate-limited, or return silently
-> to prevent potential denial of service via dmesg flooding?
->
+> - [Low] mptcp: build failure due to READ_ONCE() on bit-field
 
-This error log is only printed once during VM startup. Once it appears, the function
-returns, providing the basis for the subsequent VM startup to report an error that
-live migration is not supported and exit the VM launch.
-Moreover, after this log appears, the VM will not support migration and will exit.
-If a user deliberately calls VFIO_DEVICE_RESET to trigger this kernel log, it can
-actually serve as a record that an unauthorized user is intentionally attacking the
-system.
-Furthermore, the ioctl operation itself is inherently slow; printing one line of log
-per invocation will not lead to a DDoS-like issue.
+Mmh, I missed the fact this commit has already been backported in commit
+477aa7116a76 ("mptcp: annotate data-races around subflow
+->fully_established"), but mostly reverted by caa4a79f74f3 ("mptcp:
+remove unneeded READ_ONCE() annotation").
 
-Thanks.
-Longfang.
+I don't know what's better here: either we leave it like that, and I can
+fix the size of the bit-field. Or we drop patch 1 and 2, and I resolve
+the small conflict on patch 3/5: commit 2b0f561f21b2 ("mptcp: avoid
+unneeded actions on subflow reset"). I can send a v2, and we can drop it
+if the other solution has been preferred.
 
+Cheers,
+Matt
+-- 
+Sponsored by the NGI0 Core fund.
 
->> +		return;
->> +	}
->> +
->>  	/* All reset requests need to be queued for processing */
-> 
