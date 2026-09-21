@@ -1,234 +1,224 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.6])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFA130DEA6
-	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 08:36:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.6
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789979773; cv=fail; b=PIAlLN04OZ6AaRr44kkarysRyuE3p0YglhVszyeyrvrWpUMRHKYt0866kMsSXR9y7MxMPCZ0Ts4tAXbW+y2ZZq/0g2AKtv4kLU8U+zMb812wsUpocn7i/InsWgdmEvecSy9h0YYFrVZCnxlSwYJL8jph28PXtlIewJtuo6MTz44=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789979773; c=relaxed/simple;
-	bh=HF3IXj/iGX36yu0W2e2TR58OqxmFjIcEgflssbtJqzI=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=VmNxwDehHlLXGPCXd4FWNOCNniB7KcdjAKxUgvmB3WGE4+ic/LhnJF/OrJwe4jnJXQsaAJTkD7XRhVBAm8tpvzcGENuJkzMn/oXIPb7gXhhMJkw/tZSpPMXSDkYTTv2mpLeSyoMJLwQNu8JTej4lCd98E7etXwaexxnxKu9CFx8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=E1xzwSQK; arc=fail smtp.client-ip=192.198.163.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9258844E66F;
+	Mon, 21 Sep 2026 08:38:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789979884; cv=none; b=MxfNBUEzuEEx5h8I790rrgwOOSygqZpvRmqWgad3IY2eACNvFCmsscYIBwwQL07i45iUqMXxsJud8QEfH7w43EOrYYkuxE2BfYLeF5RZtCnwJw2vQjCOvQsnsmy+8sm8TgTvksZI9lK1cuHmTPfTeZNAOk/6ozWdCuBwVgIeVVU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789979884; c=relaxed/simple;
+	bh=A15SkhMtnatuSysvz3lwCMm2XnzYJilJK3hvNSz3wFA=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=LDxi0k057nI9plXgJyJlO8rIbNQYN1Lbf1eYjAZlhkin5GUVLvsKhG93EgU5D5mYH4QWvNq4itmaXPk1cZdY6yRSZdssl8KSPfVlv5hFaXNLwWRepfdKlhZwPCbYAMtCIwB6+oBxaItVrDwma4P5K0nnukGQebakfP9/nMw5SBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=cxWHSje9; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="E1xzwSQK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1789979770; x=1821515770;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=HF3IXj/iGX36yu0W2e2TR58OqxmFjIcEgflssbtJqzI=;
-  b=E1xzwSQKE+mpwS+p3sPgOfOfg5sYCA2v9WvqdMPTTozMd2+05TiUOJfX
-   COwebltV35WqLMN95SiqvPt7NHXNCDTqCTYbXjC11AZMVuFbwIh6AkObH
-   sJ/2m1oDpnePKuSSkprg9663SQdlqQR1zkWDk7ux83Go8aOIz5OXK8rkV
-   1Jc9WDhNOZonml4MZdXz+eUDxywV29Sp7R+oslQizgii9A7pp+a35Hc4S
-   wTzOGzWv3P9QftbUTMbCKeMRM5EvjQB5fwoNDYf0w0Hq+ao82XHM7y/qJ
-   XJguI5Rgc4NN1h03ci+qwQH2WQKwvSZqTPQuyvSh1iVJP/QXJS/vYSAUV
-   Q==;
-X-CSE-ConnectionGUID: Ug/1MUz/QP+0Se0QMhqLsw==
-X-CSE-MsgGUID: yrl6wefvTXWrdm+qe7so9Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11911"; a="986398"
-X-IronPort-AV: E=Sophos;i="6.27,114,1787036400"; 
-   d="scan'208";a="986398"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by fmvoesa116.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2026 01:36:08 -0700
-X-CSE-ConnectionGUID: tmNZP+LOSH+Zyzlbkc8t+g==
-X-CSE-MsgGUID: zIEgEaayToaTyjcDcQKsJg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,114,1787036400"; 
-   d="scan'208";a="271096132"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
-  by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2026 01:36:07 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Mon, 21 Sep 2026 01:36:07 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Mon, 21 Sep 2026 01:36:07 -0700
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.62) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Mon, 21 Sep 2026 01:36:06 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HJQM75atApc9LxkN72HLlwsQEzMoF4YJ5pA71vpzcdmUQzA6Z0zO++Unr9buPaMmpCHneRgucE4kTOl2ghnltgC5sgmbFwYhW9N6mcIlWteugjmKS1uhKYw8mLLqg9auC7+6UbUY2YB6qij1rg1JPWKNeOoOg122VTPA9Na7AEKJptWgNF7OnuWW9rVZEdmbMWdrYLBDG1AUW8f1/U4Fbj8P9qvCje8dY2oxRHe5jt8tSgxrOxWs/KvDpGPn+1Bl2XYeKb6VpMUkl7/JZWJ1bt9N6wawVknRLdI+R8uqb7O6Htei7XFH6C0V9P2DOW4uRndIeFNuL4PuAjNDhlyf6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YN9ASIYWfIMAJZlWzfzgtzLbMsTvmXSHEsD1IWL/lC0=;
- b=pt3o/vug46pNBu2wCSwrAEFCKVrL29yyo0yzx1vS+irwsFZQgw0ce0vmHd8r5QebnFSl8tJURIHApCBRklDaiej1PafYqOonqY9qcDv3hvrSFjBnBDDbpFXbTs/3k1Z8hmbqRkchngMXTtikdhWKqj0B7NpNDxtwf2TyOlaIQ4HBjx+PxSK4L/ljQfRFgYniv68fI9undB3gnQfFzCaigplM8VWRH/DSeQMzsRq8ZHvXa1feW6vd47nt410acXyaGltcPzWG/lUpLcxcAlxxo22krAPMGzRjjvV+wiYqoD6sMYUaDyJxyCXCnaM5v9T6PBU45BArB042oJvMWJ+sVg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS4PPF691668CDD.namprd11.prod.outlook.com
- (2603:10b6:f:fc02::2a) by DS0PR11MB7408.namprd11.prod.outlook.com
- (2603:10b6:8:136::15) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.16; Mon, 21 Sep
- 2026 08:36:05 +0000
-Received: from DS4PPF691668CDD.namprd11.prod.outlook.com
- ([fe80::5a5c:9c7a:cd1d:d687]) by DS4PPF691668CDD.namprd11.prod.outlook.com
- ([fe80::5a5c:9c7a:cd1d:d687%6]) with mapi id 15.21.0428.015; Mon, 21 Sep 2026
- 08:36:05 +0000
-Message-ID: <9ceee528-88be-4913-9ba1-c6e1930f75aa@intel.com>
-Date: Mon, 21 Sep 2026 14:05:56 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 4/4] drm/xe: Bump prefetch BO LRU for already-valid ranges
-To: Matthew Brost <matthew.brost@intel.com>, <sashiko-reviews@lists.linux.dev>
-CC: <intel-xe@lists.freedesktop.org>
-References: <20260916112828.2528881-6-himal.prasad.ghimiray@intel.com>
- <20260916112828.2528881-10-himal.prasad.ghimiray@intel.com>
- <20260916113301.6B98D1F000FF@smtp.kernel.org>
- <aq2s87pHUQarNmFa@gsse-cloud1.jf.intel.com>
-Content-Language: en-US
-From: "Ghimiray, Himal Prasad" <himal.prasad.ghimiray@intel.com>
-In-Reply-To: <aq2s87pHUQarNmFa@gsse-cloud1.jf.intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MA5P287CA0188.INDP287.PROD.OUTLOOK.COM
- (2603:1096:a01:1b6::15) To DS4PPF691668CDD.namprd11.prod.outlook.com
- (2603:10b6:f:fc02::2a)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="cxWHSje9"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68L7Zuft3857105;
+	Mon, 21 Sep 2026 08:38:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=//bGK5
+	KZ+W/q4WQA4iB/f9z0om/0CgGHDaSjEOETS98=; b=cxWHSje92HFG78+XsSIvv/
+	T8xr9J/yBkDyLOOPcrEV3ite51/7agxnkDnO0ODkVjgfmcU6VS0ZnuL/0OzgXshq
+	Mwzdkq3Ox4wjX8TK7HKyogRAQMw8/qZT2epVqANN/igfbkyIzJ5a5TbT2Z/noX2d
+	SM4rR3saIIQ3ERu9yzgI2Dn4MVR68uNSLrzyyrYIRUEYuuTe9vzkRGvD7GuUhJPK
+	e5GzH3tyzkwkv4RFIxvc3ycldbuksjhj4q71itkxd2qCg8PhrNzuJmeiyvxuuQSx
+	G3uJIuP6Ue2EQWmzjCA4bjHTSdqOGRrOul0OqCIJnHgd3b4pcOLw0L0Kjtzr97ug
+	==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgq7c0b-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Mon, 21 Sep 2026 08:38:01 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68L7HbFH924664;
+	Mon, 21 Sep 2026 08:38:00 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt4qq4mhv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 21 Sep 2026 08:38:00 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
+	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68L8buId41353582
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 21 Sep 2026 08:37:56 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4660920043;
+	Mon, 21 Sep 2026 08:37:56 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 975DD20040;
+	Mon, 21 Sep 2026 08:37:55 +0000 (GMT)
+Received: from [9.123.2.177] (unknown [9.123.2.177])
+	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Mon, 21 Sep 2026 08:37:55 +0000 (GMT)
+Message-ID: <c33aa43e-c96d-42a1-a225-159fdeb721e0@linux.ibm.com>
+Date: Mon, 21 Sep 2026 14:07:54 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS4PPF691668CDD:EE_|DS0PR11MB7408:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6bd10a26-612d-4e0c-7b2e-08df17bb603a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|10067099003|56012099006|11063799006|4143699003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: 7dvyayjmbXU03yFprLmpSXXYPmD2F4w4mcvMoJIEtXIqcH7xsdqeaQfZlvSQuOHbEsQNYulbBlPxwrqC6t4aawMzEGpE5ybYge1ATUUT7T8ZaPb/5x5oXkAomFC90puUiDYoOZs+46UjN2N8Wcn+Oc4+6JP6OzE7ADmv+PkIz+S7Oylbp852UfWe5EFE3maqrEOv0x4uRIOC5JkAGzLljGqy9YGfFiZs47YNwG23tNaVGrJiq5KiEVWfc4hs4rE0JEhxgqo9K/tYQ0pXd+iiym+2B8BW43CY13Z+uLiPYfMskK5IuDbf67npNe47TmRX4P3Oa0GYwmyK6w00emJBEvzBoJLcwZ+onutXgDiMYD2YdKhe9wgV+gk2goUaYvPVoKC1tOCmKgLn3NNWlB2wlMQNPBzV9eFzed7zbcgJxHK8WlX3B6J+VCM83ZqKRqNnK5JJAORFl5Rh+RxsIBG6CZ8WdnJ0v1TXjgFJcZSdShN/P55Ul6kjN3XC0mEoC6SRWEjDYHShuaf1joXSpwfdIBkdLdRWUn25bC/ER3D+/iGwGu9PF+B7whQvgkptSOFTYoML8cJoOXn9vC1m3mDWHX+QnI24b3FbKA4IytMqeeU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF691668CDD.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(10067099003)(56012099006)(11063799006)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RFRCeEYrL2tYanRQOWM2VStOdGtyalFOTE44Rks0Nlhob1B2V3NWR0ZkVWh3?=
- =?utf-8?B?ZFBhN0NmUHN5SWd0QnNURHNKVlFBVUdkVG1TYmZyc1BJbVJsVWRtdFA3YTV1?=
- =?utf-8?B?MDZ4NmF6Rkpjc0RZYjduS3hRczI5M2RnY2FiWTdDTVN5MlUrQ3B0bmRINDY3?=
- =?utf-8?B?dmVqait1bXN2dXB1b2tVck1zbHlVNjZ2aXhuZ1VsbENtWForUDE0b0VpQVVJ?=
- =?utf-8?B?R0NNNnVpRDJJVVp6L0lkMU13dUY1NUV2WkJxN21rYzV4QUhtQjNwdmsrQy9C?=
- =?utf-8?B?eGo5QkFZbHM2RjlvcUZyVlNSYVlCZitWdm40aWt2WDBHeHpzRDlTUFhaWGJL?=
- =?utf-8?B?bkxoTGE1M3cremRuMk5ETXdkR284Q1gxSnkyNnR4S0MzTVZ4dmpjRUZQSkkz?=
- =?utf-8?B?N2N5ZDFyNzFXcnV4WjBEQjZQTDVnN0RJU2ZEZVpLMkNJTHdMRzNJSUdZWUND?=
- =?utf-8?B?bWFTTXd1K0Z0bEQrcHQxem03QWRwRjc3VG5IVGdRZUw2RWtYUmJEWmY5M3h4?=
- =?utf-8?B?TFBvRkFFYlZ3bU1nd0p3aksrWUpGeVdKdEFPVGI0RjRwTzV0UFloWkZEc1NV?=
- =?utf-8?B?VnRSWVRHMnRXdVlxckVtaVBvQTc3UG16Vmk5cTE2LzFEYUFkaEVnSG5KMzVS?=
- =?utf-8?B?WmtIeWJudHVkcEMvcnQveXI1K1plWkZGQ3gvSDdzTHg4QTRTZWx3WXAyNmE3?=
- =?utf-8?B?cjRUZzlSU3ZpNE5zR3l3citob0dnNlBxVlpBREFxNkJlTkhRSU8wV2dSbUln?=
- =?utf-8?B?QU1uTmN0MkgzdzhDcDJWTUtsNWNLWjlkanhoQnVWSEhJR0RkeDUxLzc5cmJ1?=
- =?utf-8?B?Z0tUcDRBaTd5VnZDQXRQMXJZNDAva1N1VUFjN0JnUWYzb1R3b0RENVpNUWUy?=
- =?utf-8?B?eVY4U1puR2dsbW5OUnhTUVZybEVMYVE3d1ljTDh3MGhYaVYwbnU3SmxkbXBJ?=
- =?utf-8?B?RGdKRGZTS29IaktYbXp2b0g0TlkvV2JtQ2NtNUZrNnRGS000dGgzK0hoQWNP?=
- =?utf-8?B?akJodEdtUTJpZEl5L3Z3VDdDSkt1S2VnTDdhNDQraTlLWUFFS2lIbUhUNDVU?=
- =?utf-8?B?VlZ0RHo5RzR0N0tzLzgxcER3VXJzd0V4TXRlTk5tU00rb3RGMTJ1cXlZQ2xS?=
- =?utf-8?B?RUpCeFJuUGY4azJETENSbFpKejZMTFZSK242NkV0SGtVdngvR1lPbUVBMWh5?=
- =?utf-8?B?MFEza2t2MHlCRlZvVFJSaU9sZm4rKzF1NFByYkdHQVJneXJQODE3WUx4Nm9t?=
- =?utf-8?B?RCthM2ZlRDJPNTZPRUU2K3RxTXF6cE5zeDcyTTVGMzdFeHQzOUQ5dUZEbUJS?=
- =?utf-8?B?THFFVEd4NlhJczdEMlkrMFU5VndIUlpaQnRXanY2eVV5YU9xenJDdzk2aENC?=
- =?utf-8?B?MmVjSjZDcW5NbzNEa3JvdlFvNGxSdHNRVUdLRUJGZFpONTFmZjJVVkRpY0dY?=
- =?utf-8?B?cUUvdFJtb0dkdXUrQjY0RFRUbW1KSHBSSkk5M1lDVElkME5MNVg1UkJpSmRq?=
- =?utf-8?B?OU1tT20wVVBIS3VkRmhwNnVrTVBma01lZW9oYVJWcUY0blhNTDdkSHM5OHFX?=
- =?utf-8?B?M2h0MlpuRExkeEUwYTQ1MHp3eTRUN0RhbE94Q0x0eXdtRHNWQS9VSW5ibnkw?=
- =?utf-8?B?elhvQ3hQS2JvWHBMcHBOZXJpR1lhWGpVMTFLMnZkcWs1VStYTkpReEdsMVlF?=
- =?utf-8?B?WkVqMGNxd2xSQ1U0cnVCeHR4K2JWazlQdk1sK2JKMkhzRnZyTVM4UmpnQmZG?=
- =?utf-8?B?ck5BZm9TME1Kd0tWbGVISWd0Z3dkSjVsNmc4ck9TTS9KNlUxa2Iya3ovelZR?=
- =?utf-8?B?b0RCMVFNeHcyUFVMMGJNcThTZ0pwMkQxNG55ckpXNXpWa0JWYVpWM2NUeFh0?=
- =?utf-8?B?dlFoQ1d0ZUpPSk12cFl0QnY2bmdodTJmZENISUZxVkpDM1MrNm1QYzhPK3hV?=
- =?utf-8?B?ajdWZlJxbmtoOTRLdVNBMUkyMzhUUGlPMjJwZHhFOTRSTWQ5SFF6MDE3Vm83?=
- =?utf-8?B?dG9VaEdMUytJMnVSRVlmUWsxNE5vQndBdUhtcnJLMW54MENPb1l1ZUNmVkE0?=
- =?utf-8?B?NGx5ZFJiSHE1UjF4dUZxWlplZVBSRXp0TlQxK21BdHVEY1JRWEpBWGFhMWl4?=
- =?utf-8?B?a0JKZjI5ZmdBd0hselQzS0RlTkpCQWxOS2JNb05wVFY3ZGpVR3R0QnlsTWov?=
- =?utf-8?B?Z0tjTmFOWEw3VGdYaFN1TnArWHlLNFVqc1BUYlVLZXdTRmErV1MwM2NFaWN0?=
- =?utf-8?B?VVh3QU96Rmt5NXV5QmlNVGFLTitaZHpWdlJTRzUrbHRwQWlMMjVjT0xIN1lD?=
- =?utf-8?B?NGxTbjhDZUljRDlvYWZTQUxHWFR0YjVaSm9RaVdWcVlxTU95TFJoVW5NUTRm?=
- =?utf-8?Q?f1MGULeSpQ+UoDNQ=3D?=
-X-Exchange-RoutingPolicyChecked: KFrq17XqdIiYTFF1aE7uAYFFNaGuLnK7np6qmFaW37nyR0H3M5Chy4qlt80Hs308zQ8b5sapqJQnsfY76FSxvFL4bG4xI1MjKaafthXVC8yXK9AY6mPmIVSua4c92Ecni6aytmu6IomLnjHTSSSD3+xReeTHsjLPOJ540KQf5pjGabh2jkyo88QDQFKrsVR8etXcVOrkX04p3BVY6VLQY8ndSqLprv4hwtSGwNzHutlfWBR+HCc60x3Jcfk3svGgP8aDvYCvCHxu3ikGAOdiV5XWy6etJIRik9Gh/cVsY0SLi2jGd/BJ6zvQlduz365q9Le/MfCvg+yKTIYC7O8xPg==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6bd10a26-612d-4e0c-7b2e-08df17bb603a
-X-MS-Exchange-CrossTenant-AuthSource: DS4PPF691668CDD.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Sep 2026 08:36:05.2494
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DCKIydPEKd/5pjWJT1n6D+DwTpGcH4E00dN/PTfgE8wx8/RNPbe+AP/D841Rg+jR+dV0Qz+VHBK16KvX/AcIQ+UFGPLDVI7+9OrBZdH04w8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB7408
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] KVM: PPC: Book3S HV: Avoid spurious interrupts caused
+ by LPCR_MER bit
+From: Narayana Murty N <nnmlinux@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev, Gautam Menghani <gautam@linux.ibm.com>
+Cc: kvm@vger.kernel.org
+References: <20260918055848.28390-1-gautam@linux.ibm.com>
+ <20260918060829.D84C61F000FF@smtp.kernel.org>
+ <31320deb-ad24-420e-aded-53031ca43fa4@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <31320deb-ad24-420e-aded-53031ca43fa4@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=G+OJgNk5 c=1 sm=1 tr=0 ts=6ab0ece9 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=yKAn6K1XAAAA:8 a=SfKORpjNdS0z9U1v8aoA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=6M1ixcW_PCWoKiWyFx5v:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDEyMyBTYWx0ZWRfX72R937KySO0H
+ LGeUa0trcznyqqs/WmuZZ5ph1KDBjJCQ4q3e1nVim7dpxlunGK7Oa7dXSpHsl8ixHo4fGibdv6Z
+ s+sBPdzQVfNkak6C9af7UwpxRuX51jMDmJi2StV/VwIK4hoWa+R/vFTvjsfGRH1522Tpl1wP2Os
+ fO+Fe7xgrqPrxNWR4hkPILjcRNOCT7Lqyzru0noQa1liXdMuLHiCQdZOkGEe8Et6lUEPB3FZGlh
+ h7djT5J+GOCxtfqaEVhdEae8eBygZ+9F5wVb921kZfeya3UKU+IrQMp853rpOaf8kYaeUl0JqlF
+ wYTYKJevh1ETRQvKYAZvIb3/dcExXieT8X4s6YbSAIsduPjbhho3gDNYEIcD7q503rNwIknLvmE
+ DYE4eP5V6J4LPH5VDCtxUZM33uVRRirXXNKD9juVbueFLainx2XSPfUPF866BrEF0Ku8HN0IJEY
+ 3YroXYmDhzIHhUUt3Rw==
+X-Proofpoint-ORIG-GUID: xK31Kh4--xJsU_R7JVIj45qdNLZd0OoI
+X-Proofpoint-GUID: xK31Kh4--xJsU_R7JVIj45qdNLZd0OoI
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDEyMyBTYWx0ZWRfX//IFy2eA5Xt0
+ qRVLTminyFpK0MyR9St0pDSEBEhT0QalqLqZPE1UNChmYrn3O5Pak1UxEtnR/2zqKhNSSQHIqoO
+ pVzLCEJJamy6jpOh9Pl9SeRJF9P++I8=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-21_03,2026-09-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
+ bulkscore=0 priorityscore=1501 clxscore=1015 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609210123
 
 
+Hi,
 
-On 19-09-2026 02:58, Matthew Brost wrote:
-> On Wed, Sep 16, 2026 at 11:33:01AM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [Medium] drm/xe: memory leak of svm_range on prefetch_lru_bump failure
->> --
->>
->> commit 09ec19c469b99c340c07a04780a85f997af72901
->> Author: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
->>
->> drm/xe: Bump prefetch BO LRU for already-valid ranges
->>
->> This commit introduces xe_svm_range_prefetch_lru_bump to re-fault CPU pages
->> without touching DMA mappings and move backing BOs to the LRU tail for
->> already-valid prefetch ranges.
->>
->>> diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
->>> index fe9ccaa129122..948060a702470 100644
->>> --- a/drivers/gpu/drm/xe/xe_vm.c
->>> +++ b/drivers/gpu/drm/xe/xe_vm.c
->>
->> [ ... ]
->>
->>> @@ -2583,6 +2583,15 @@ vm_bind_ioctl_ops_create(struct xe_vm *vm, struct xe_vma_ops *vops,
->>>   						  dpagemap, &valid_pages)) {
->>>   				xe_svm_range_debug(svm_range, "PREFETCH - RANGE IS VALID");
->>>   				xe_assert(vm->xe, valid_pages);
->>> +
->>> +				if (dpagemap) {
->>> +					err = xe_svm_range_prefetch_lru_bump(vm, vma,
->>> +									     svm_range,
+Correction to my previous reply.
+
+On 18/09/26 1:00 PM, Narayana Murty N wrote:
+> Hi
 > 
-> How about we just make xe_svm_range_prefetch_lru_bump non-failable? All
-> prefetching is fundamentally an eager optimization: we hope it succeeds,
-> but if it races, oh well, a fault will fix it. I think the LRU bump fits
-> that mindset as well.
-
-Makes sense.
-
-> 
-> Matt
-> 
->>> +									     dpagemap);
->>> +					if (err)
->>> +						goto unwind_prefetch_ops;
->>
->> [Severity: Medium]
->> Does this code leak the svm_range?
->>
->> During a VM_BIND ioctl with prefetch, xe_svm_range_find_or_insert() returns
->> an svm_range with an incremented reference count. If
->> xe_svm_range_prefetch_lru_bump() fails here, we jump to unwind_prefetch_ops.
->>
->> Because this error path is taken before the svm_range is tracked in the
->> op->prefetch_range.range xarray, the cleanup routine
->> xe_svm_prefetch_gpuva_ops_fini() will not know about it and will not free it.
->>
->> Should this error path call xe_svm_range_put(svm_range) before jumping to
->> unwind_prefetch_ops to avoid leaking the reference?
->>
->>> +				}
->>> +
->>>   				need_put = true;
->>>   				goto check_next_range;
->>>   			}
->>
+> On 18/09/26 11:38 AM, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential 
+>> issue(s) to consider:
+>> - [High] kvm: ppc: software-injected external interrupts lost on XIVE 
+>> hosts
 >> -- 
->> Sashiko AI review · https://sashiko.dev/#/patchset/20260916112828.2528881-6-himal.prasad.ghimiray@intel.com?part=4
+>>
+>> commit 05773d5b089dd4410c7e3e3a1611da5479c7d1a4
+>> Author: Gautam Menghani <gautam@linux.ibm.com>
+>>
+>> KVM: PPC: Book3S HV: Avoid spurious interrupts caused by LPCR_MER bit
+>>
+>> This commit aims to avoid a huge number of spurious interrupts on KVM 
+>> PowerNV
+>> guests in XIVE mode by not using the LPCR_MER bit when the hardware can
+>> present interrupts directly. It modifies kvmhv_run_single_vcpu() to skip
+>> setting LPCR_MER when xics_on_xive() returns true.
+>>
+>> Closes: https://lore.kernel.org/linuxppc- 
+>> dev/582904882.11159.1786719390349.JavaMail.zimbra@raptorengineeringinc.com
+>>
+>>> diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
+>>> index dbac3573b2c89..f4d12a97311b9 100644
+>>> --- a/arch/powerpc/kvm/book3s_hv.c
+>>> +++ b/arch/powerpc/kvm/book3s_hv.c
+>>> @@ -4980,7 +4980,7 @@ int kvmhv_run_single_vcpu(struct kvm_vcpu 
+>>> *vcpu, u64 time_limit,
+>>>               if (!kvmhv_on_pseries() && (__kvmppc_get_msr_hv(vcpu) & 
+>>> MSR_EE))
+>>>                   kvmppc_inject_interrupt_hv(vcpu,
+>>>                                  BOOK3S_INTERRUPT_EXTERNAL, 0);
+>>> -            else
+>>> +            else if (!xics_on_xive())
+>>>                   lpcr |= LPCR_MER;
+>>
+>> [Severity: High]
+>> Does this unconditionally disable LPCR_MER on XIVE hosts, potentially 
+>> dropping
+>> software-injected external interrupts when MSR_EE=0?
+>>
+>> The outer condition in kvmhv_run_single_vcpu() checks if either a KVM 
+>> software
+>> interrupt (BOOK3S_IRQPRIO_EXTERNAL) or a hardware XIVE interrupt is 
+>> pending.
+>>
+>> When MSR_EE=0 on guest entry, the patched code evaluates:
+>>
+>>      else if (!xics_on_xive())
+>>          lpcr |= LPCR_MER;
+>>
+>> Since xics_on_xive() evaluates to true globally on bare-metal POWER9+ 
+>> hosts
+>> with XIVE enabled, regardless of whether the guest uses the in-kernel 
+>> XIVE
+>> irqchip, bypassing LPCR_MER here seems to cause software-injected 
+>> interrupts
+>> (such as those from userspace via the KVM_INTERRUPT ioctl) to lose the
+>> hardware trap mechanism that normally fires when the guest later sets
+>> MSR_EE=1.
+>>
+>> Could this lead to dropped or severely delayed external interrupts for 
+>> guests
+>> using a userspace irqchip?
+> 
+> No, interrupts are not dropped. KVM_INTERRUPT sets 
+> BOOK3S_IRQPRIO_EXTERNAL in vcpu->arch.pending_exceptions and kicks the 
+> vCPU out to the host. On the next kvmhv_run_single_vcpu() entry, 
+> kvmppc_core_prepare_to_enter() re-evaluates the pending bit. The bit 
+> persists until MSR_EE=1 allows delivery via vmppc_inject_interrupt_hv(). 
+> LPCR_MER is not needed here as XIVE hardware handles the delivery 
+> trigger directly If I am not wrong.
+> 
+> 
+> Looks good to me, much better logic than v1. The v1 concern about the
+> case where xive_interrupt_pending() is true alongside the external
+> exception bit is now handled cleanly with the xics_on_xive() guard.
+> 
+> Feel free to add:
+> 
+> Reviewed-by: Narayana Murty N <nnmlinux@linux.ibm.com>
+> 
+> Thanks,
+> Narayana Murty N.
+>>
+I misunderstood the case raised by Sashiko. On a PowerNV/XIVE host, QEMU 
+can still run with:
+
+kernel_irqchip=off
+
+In that case interrupts are emulated in userspace, while xics_on_xive() 
+is still true for the host.
+
+A KVM_INTERRUPT can set BOOK3S_IRQPRIO_EXTERNAL without a corresponding 
+XIVE interrupt pending. If MSR_EE is clear, the exception remains 
+pending, and with:
+
+else if (!xics_on_xive())
+	lpcr |= LPCR_MER;
+
+LPCR_MER is not set. The interrupt could then be delayed until some 
+unrelated guest exit.
+
+So my previous Reviewed-by was premature. Please drop:
+
+Reviewed-by: Narayana Murty N <nnmlinux@linux.ibm.com>
+
+Thanks,
+Narayana
+> 
+> 
 
