@@ -1,163 +1,135 @@
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013008.outbound.protection.outlook.com [40.107.162.8])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C667936EAAC
-	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 16:05:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.8
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790006708; cv=fail; b=Z6bhvmjwfKHe9ogwJx/I1t+kvS+RilG/4X8crwfVe0Pt3okHkivBDAEBBYD1NQOUHa+q2kx8M7lhou1LVrkhcfQsl2QBEtGIZL7hgSrWR3xaIcEVOLDTD54wAJp3ii251NArpyHfOqiiU5gbAWB8dQKS7SuUDkx5+oVYdpb2qoM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790006708; c=relaxed/simple;
-	bh=ksomvJe9LMtV9wcMPodWzwTSYrg2TnRBRvnQLAQVOnI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=sjJ7s6gWk5z/JgCV4R8L07+WmZfOba+BtVyi0h/DVrawa4n4bbyqfEtcuKt18Mh70LgOD8MEuZhiDTEIsGdiJ7+M7ko0QCyJ4KgbXDj+W8hX3yIN9x0iBIYqJLbltJKXQGOGEUQS2uHXNWZoPFi4wt71ibTXhO1WcYJoT8CNiNs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=rm1UnpK2 reason="signature verification failed"; arc=fail smtp.client-ip=40.107.162.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07D1349CFF
+	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 16:15:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.197
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790007328; cv=none; b=ns1+GpCyv2sWyT8PMRoL2Ezbat/8K5xfJck6woasuTZpYO2gYcHuk7ZM36vAjTBwTz/T0Hi1uWjH4WEAkv5MsmWo8jfw6/hcoynfrktZg3obuz/d91MJIeCC6B0HnUrpCnU0jB8WWiPaP89XS6wk8owG/dAcGbWTuUG4YU/gPko=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790007328; c=relaxed/simple;
+	bh=NPytKttvhSWP9wC8ljBqJsACnF7U5YbZT2SHg4KiTeE=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=ojJOhhC8lkJ+poQA8b2YkqcT03CilGnayWCP4sYXGOrkKMbHQxgC83ZcvMugKOR0H38G3jHok4bJnHzIjDM4dChvhFKKfBdzVJ0MnILUDIg+NeSnbzoa4EmLLNPA2Vtp6UZZTYZ0imn05ky7UadCH0haluVkM4JeicGDdGu9lXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QcwCd5nd; arc=none smtp.client-ip=209.85.214.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="rm1UnpK2"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cPyrN3yGqoOIbwIEZZAhsKtftd+Xu47hYDn5+IofmfD7c181nZ1re3Wc0H5EXkgA/x/SojtqzpFusRUztLCgxaIQYO/VLZdEDjO2qFiMmj0U97tQQNLFgw8AX0mQRM6Oo+R89JSujpSgCIW6JuUcsvslBGS6jveerr9Jd69AO4CvrZye+0PoPGNnvTtXSQ7/MVSYbwJdVZFOi8RzhgmhpKFXWmh7MRL0bp9yLwcWuZiIhhQWCaeeKdNF/1tJK+3i9Zh8N09NE7d43WgFISBidVVaXQy4bxilHWusbnRosJGybZDl5pKtkdFntTlhcU+5ixhrLlqoJUnjMdHsWr1Dyw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gn72YvgKZGzpl3F2xP+DbqlKbr6nTifrrFed6lxSr2o=;
- b=LAZIFWV7Y11Z+BMgtHTuztfLO4vqV0bj1D2RZueFG6zemTphKJcFE0zssbKvBuNSdropits4rl6KbHzCLm4fnNANZjg4IJi8KTT8Ay0rjO2DlFaRLsDib4XxWMjSqKGISCjsvynNzAuHr8GwY6e7ueP2z2xTnPkCoQPigUoC1Wk3XNH6fguAisFFRPGO47nxdJ4Aj1Laguap0b7WEhiESL9Yikg5GXqd7KbV+eTh0Pe3jWUKg/2gAxkIvjJXFPiTk2s+f0+JG9Cmz+Tad7SDBqT1R4om9r8bM8l7lKLIaFn7bVXkw6vVvxDD7alQi/k48JAIgIvXEXyPRyHM6U4zUQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gn72YvgKZGzpl3F2xP+DbqlKbr6nTifrrFed6lxSr2o=;
- b=rm1UnpK2giIkjdnmVJWkHraTiYQq4EGyGhnmnCtIvM0t75gkOc/nwWXgbJmoH1wpl9Xt/BoaXXOdaykIn3a82dkVustdwI5LXbM9hMFRacGRqNqucmzR1AyBcXXgx2aEvkLn/+stH+zFZpYGEcC6036iSIxubmQqMF6cFBQwV7azwI5zFVh+j0xxUod14+CxXVutAhOc9fw6UWi5qRjU3GqCTjUMG+aUBAULRXPopRGPBLbiuip+le4TMwt+Mau2eXyeyMUHF0OijaE+dHbeRXZOEQLeU4h0pw+5+4OPSp//GvuN+vwVwfreJVouaj4Y5iADe+b8nGtMHNruZRfpfQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by GV1PR04MB10870.eurprd04.prod.outlook.com (2603:10a6:150:20a::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.16; Mon, 21 Sep
- 2026 16:05:03 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0428.015; Mon, 21 Sep 2026
- 16:05:03 +0000
-Date: Mon, 21 Sep 2026 11:04:56 -0500
-From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH v3] dmaengine: loongson: Remove the dev_dbg() output
-Message-ID: <arFVqH7p_plaxaqe@SMW015318>
-References: <20260921151312.I8Q8NLnx@linutronix.de>
- <20260921151614.B460D1F0089A@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260921151614.B460D1F0089A@smtp.kernel.org>
-X-ClientProxiedBy: CY5PR19CA0007.namprd19.prod.outlook.com
- (2603:10b6:930:15::21) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QcwCd5nd"
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2df375fb9b2so22676055ad.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 09:15:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1790007326; x=1790612126; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=qE+olzcN6zjo+GKIPM25wup16iAGlGxkabmAr9kueF4=;
+        b=QcwCd5nd1AIunELpLOtdcrS2Sg4n+JR3t1pFba5sUBxJjRyoXdo1B93fhzTov1PPGt
+         PZ37NLVMAVETKdnTXcWvwFq6k31jWnojBQ0LIlSP2Q1y2DsstbMgqfb7hWrbeFA9JRE7
+         Zug28FiVO7N9Jp72PmeM8jsWqJptfvDjFwNo2M4Pw9kLK9JuD4Lxl9pRTrELGdaLihO2
+         PdZ7WGSSPUNSKqdOMuxVBAv7Zh6Y94xRII1e8BpefL3P4noXBXUydvO//yOFkyl0odWn
+         KMuRlJTjOSKz+CumbZ3xQQA1VJHSL5qTgQJqVdzu/2zYFr5nLEcSTnUIRGr4Hu1FjFjf
+         995w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790007326; x=1790612126;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=qE+olzcN6zjo+GKIPM25wup16iAGlGxkabmAr9kueF4=;
+        b=uHr6TnLKmzKdCpnUiVxZgB5q/PfIFNsaZPPMNXFWwQOKRzTy+n2EdXZBd641Q0PsPl
+         fGUD+reYwS0i+pwZJvUAi9w6e8TnksRgby7PTHN3zfF3YgI2A6+rOY0N5DTmrt9jgGWf
+         0LSMoeaiM9u1nzrnwtA7Hn2wyTcgV+mvMvWjIQBBYSaTOGkSDvxF7dNO+aTYzWty6Kyi
+         /XBT9N0DuKcf0jVkXVf9KlzRkBySIrTQ87Tlxbp9Rmqj9QNVLaV9W7yaJJaERRin2N7J
+         p23ZauHIgwynQX4FFvPZX6dP1/r7DfIDZ7h0KDv99LeGEbZoM1KkEluuKAUZgQhhp+23
+         sc9w==
+X-Gm-Message-State: AFuF++nEXs+XEDAYqPShIGxW8DgVxJ5P5a7Sslt5sheGkbuGhtA44gKK
+	ElEDP2QE1kXCDiHEf2CuH9kcmlH+L/A9zHUqCivO4ML2C1cq/TvqbRHu4B1gnlqMHVqaQBu+uoU
+	aKtqqRw==
+X-Received: from pgbfu21.prod.google.com ([2002:a05:6a02:4a95:b0:cc7:4c6e:3e90])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:7d8b:b0:3d3:b02a:61a5
+ with SMTP id adf61e73a8af0-3dd8c41a021mr19357702637.28.1790007325870; Mon, 21
+ Sep 2026 09:15:25 -0700 (PDT)
+Date: Mon, 21 Sep 2026 09:15:25 -0700
+In-Reply-To: <ecbb6fb8-fe61-4028-880b-245f94db0f9f@amd.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|GV1PR04MB10870:EE_
-X-MS-Office365-Filtering-Correlation-Id: b9033d30-0d1f-40a4-4d81-08df17fa1896
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|376014|366016|19092799006|11063799006|10067099003|5023799004|3023799007|6133799003|22082099003|18002099003|56012099006|4143699003;
-X-Microsoft-Antispam-Message-Info:
-	NBlkqQ0Z3tR1/hGvPaFCj+jOqe0jRBQLTSsadiMhO7MR+bfzANWYO4g4Wyzb37Xar9nuKbvgKDSxKN8pI7/bdHNovfLtlfIrdVUukwTtd4iGyiNLEBRkY+sV/frj6uUs1U7RTq+NpbsLP6ThpCl5+4FnWjQqRefKYxIGazADi7sqcQd9MDXqI6Iostjcv6DR7prPUyB+wXarm1teISJiRL/CBpfmkzRO3ZGzkpOlMYAyRcKYXGfp5gb4CrPy2ZY5sMKZcwypycwscEjEsxiof7bbyfaviwIMP1qLH3p1oId6gNu3XEXyTf0MbEUulx6aVnf6ggjqdpbYqpB+fNSjMlMWY3oy6gKAKHPVf2DoO0QucxBoU8T+ZN1fUe6nudmeT2KMjmpUhXo6BV5Jp4msHm+FP4utUuOjYxCBf+DjpmKmxaDGOfeRJjhq3N57WUHBcaSvhpiXdA3fIAXD8dOR6i8VBM9Kp+q6AXiXxueNM7xrJo5vPf7uxGTaLb2NJbXjDXF1/P7it5tj62DsIzy64kzXeGbXP6UmpJePIY96jqqUKSKeZHL7olTM+Bhu1vqQ8nukxvkKJCdFSVMP2BkLqkHjTpH894g8cqNtlJPnsto=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(19092799006)(11063799006)(10067099003)(5023799004)(3023799007)(6133799003)(22082099003)(18002099003)(56012099006)(4143699003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?pWUvviQXb6xiZEigcuunCE/lYgRMTaqnHRshCk4yTUEiZaQXH6byC7rU+E?=
- =?iso-8859-1?Q?0aAb1y3nvbl2E0OT6S97dNBcUMaNXfSiTSnYZYNc4ph0ziEzAN0aekCKB9?=
- =?iso-8859-1?Q?gv885WPRo4ygfiMjncAZYoFH0nSwX9J+Qybm3HdDkyDwHLc1OmPcppHJHN?=
- =?iso-8859-1?Q?mK5ZresEnH9KcodwiYpPU/ynI22U/tNuOu3v84NudJsAx/4u8+n+0oc5Z1?=
- =?iso-8859-1?Q?NAkQZKfyzzIxoReSccQAHg3sNOwMpNbn9xzSAXxTNeh8naR/Ivi8zdTy35?=
- =?iso-8859-1?Q?w97BOR5DJEzOdORG7SaaeLQ/s5yVSEd4HXviZMGRZtBp+LtjIqdzBctfuR?=
- =?iso-8859-1?Q?CNHO1y6J+Iv8owM6kh63jgVVTyleDmcfp7yxI2Uy/tc/q8GBzmNoHJQhNd?=
- =?iso-8859-1?Q?0uycmv9yWCrHMN+pH1j5ZG7o8PLO94l+uWMsiGzW41fhtML9NdLcYYpuNi?=
- =?iso-8859-1?Q?/Uj61kWzPdYV0xNd6oV5pnQn62xXZQMNrZdPRk0oV1cwJUC0nGmaVWJOhb?=
- =?iso-8859-1?Q?N0Zl4OK2f++FHjOoJjgKzmY1ttlgBVJczShKyuwb6B0WBz60ybRjKuyKNr?=
- =?iso-8859-1?Q?LCot/3laAzTH3owmHMKdD2PTyaMCoMEsEyPuPoxWeUa2hhqjR2l7C+8jMv?=
- =?iso-8859-1?Q?NQV4ZizP9YQRUG3scLsNRsXuGhiXRuEopK8tQzw4TegyEXU6XdFb+7Ddc3?=
- =?iso-8859-1?Q?5ksVhN9qchLJEC+TBv1ge6Qsf8TkY4naWSHmu60x+bOyKbE7/GAMxEhX5g?=
- =?iso-8859-1?Q?cab7fTp5ni4NtmQaSbKw+6kdoImLdn4w3MQ7ACWhxchQLFYHnTEW/PnOf7?=
- =?iso-8859-1?Q?wys8/pMAQe4QWElt7uE8kXCqdJ0PoyUXnI44pCWtlLm1WWQPzxhdUcGKgN?=
- =?iso-8859-1?Q?dqlvIoTul3IRYdu4Dwx4A6L39YwEhZBNcMmHaYpQQt0wAXPQobOPvY6wF+?=
- =?iso-8859-1?Q?M8pi3GUbPUe336fn+krhuaDU4HjHa0TFU/d3RjIQ00aVH53J/KsEvYMVHo?=
- =?iso-8859-1?Q?W9uaKbmkdZHqZrWl4dozrwB249ylMo4WhVfoDINOWjFL0rNmzIr7HEO95H?=
- =?iso-8859-1?Q?v7CA6SJj6S3BJP5VQrPV0mvvMoKFVK+4k3sI1GDnl9U+eOS/k1QobiyEsb?=
- =?iso-8859-1?Q?WtBqTltIu9HXbXiCxUUVih6iTrlErhVyAR7fvko8vUpcMuBJT6Zg1SUK+Y?=
- =?iso-8859-1?Q?UjPAUkbrl8+TO0KDREfyfAvGcpzoqP7yFYFT8RtqDZ6roybVredH/S+kG9?=
- =?iso-8859-1?Q?g3ktlgcMFXRefCTqttdF78rsUVqeA6lYEwNk8NNqV+Gsb/x6SVMMJ10qrJ?=
- =?iso-8859-1?Q?dsgg4/asktdMgBVdfy9IlRdABYwD2YUZr3E+RJqH9AWurwde7AlQ8Kg6Y+?=
- =?iso-8859-1?Q?4D8ZW/9InErpwkVf7dgabInWCSOfO7nf3wgqvIY1ecKuNorJagI9V4LYRK?=
- =?iso-8859-1?Q?ZO6f7D1ODORYXzQW8i65VKkAPIBS7E/VuiGnmIXAUzVUQvR69GalP9wf3T?=
- =?iso-8859-1?Q?Xg5W91myZtlLqq1uKd7imBabP+5ujGqgwxdmK+n6C4nKRB+3R3eeUaqXmU?=
- =?iso-8859-1?Q?aQ3GzMnCgGsN5EzGskm7YP37XMpivlm+POk9bu+ObGnnOqlVTtAO55nobx?=
- =?iso-8859-1?Q?iOTjVJWjy6KGS1auAHDQLCne0slAKIvO+0DtDUD5LLSCxOXfShHIxWwVbI?=
- =?iso-8859-1?Q?Szg8TDHT7g6oIh7/RNmkJpGD3etY+z8r5M9s9AWPKuhisYA+Nycke03Lag?=
- =?iso-8859-1?Q?wqWrwfZKWR0Cf9R10FNDWfb64uyp9qtLFvMxo7mc3L0hOWyEI7bJcxcFS8?=
- =?iso-8859-1?Q?O6jxDtki5qkrOBLRLGHL1li3ozsqNRg0lvW72y9UXmA4oYCMZyzM?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b9033d30-0d1f-40a4-4d81-08df17fa1896
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Sep 2026 16:05:03.3549
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ejg5xRX1vySsfkMO73LNAbVPPX7Q/r563UKzHPAY2i0EzQs3foXGm1H/wE2owugJ6AMURVpVjCVoDi+h/mZ96zDmVQmVQtBWHPzG8pQW+sgl7NW34icCELGXznIqep7L
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR04MB10870
+Mime-Version: 1.0
+References: <cover.1789399214.git.prsampat@amd.com> <d946de080e3dd34844a665c167179e4910fdc9d4.1789399214.git.prsampat@amd.com>
+ <20260914171628.8A4631F00893@smtp.kernel.org> <ecbb6fb8-fe61-4028-880b-245f94db0f9f@amd.com>
+Message-ID: <arFYHRzNFT886BME@google.com>
+Subject: Re: [PATCH 1/3] KVM: SVM: Re-queue events that were never injected
+From: Sean Christopherson <seanjc@google.com>
+To: "Pratik R. Sampat" <prsampat@amd.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Mon, Sep 21, 2026 at 03:16:14PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] dmaengine: loongson: unnecessary curly braces around single statement
-> --
->
-> commit 800bb056df0405c03d12921052d730f7cccef7be
-> Author: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
->
-> dmaengine: loongson: Remove the dev_dbg() output
->
-> This commit removes the dev_dbg() output from
-> loongson2_cmc_dma_issue_pending() since the %pK format modifier is not
-> appropriate for general printk output. The debug statement was deemed
-> non-essential and is completely removed.
->
-> > diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> > index 1c9a542edc859..27f8f7a5738d9 100644
-> > --- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> > +++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
-> > @@ -337,7 +337,6 @@ static void loongson2_cmc_dma_issue_pending(struct dma_chan *chan)
-> >  	guard(spinlock_irqsave)(&lchan->vchan.lock);
-> >
-> >  	if (vchan_issue_pending(&lchan->vchan) && !lchan->desc) {
-> > -		dev_dbg(chan2dev(lchan), "vchan %pK: issued\n", &lchan->vchan);
-> >  		loongson2_cmc_dma_start_transfer(lchan);
-> >  	}
->
-> [Severity: Low]
-> This isn't a bug, but with the removal of the dev_dbg() statement, this if
-> block now contains only a single statement. Should the curly braces be
-> removed to adhere to the kernel coding style guidelines?
+On Thu, Sep 17, 2026, Pratik R. Sampat wrote:
+> 
+> 
+> On 9/14/26 1:16 PM, sashiko-bot@kernel.org wrote:
+> > [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+> > 
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [High] svm_complete_interrupts() incorrectly checks if (control->event_inj) instead of the SVM_EVTINJ_VALID bit, which can silently drop valid hardware-reported events (like guest page faults) by clobbering EXITINTINFO.
+> > --
+> > 
+> > commit 50716e3ba11eb9d000a0186ffad984ac08df1dcb
+> > Author: Pratik R. Sampat <prsampat@amd.com>
+> > 
+> > KVM: SVM: Re-queue events that were never injected
+> > 
+> > When injecting an event into the guest via the event_inj field, a non-zero
+> > event_inj value on #VMEXIT means the hardware was unable to inject it.
+> > This commit adds a check to recover potentially lost interrupts by detecting
+> > an undelivered injected event and re-queuing it.
+> > 
+> >> diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+> >> index d0971685034b9..e2be2cd86c320 100644
+> >> --- a/arch/x86/kvm/svm/svm.c
+> >> +++ b/arch/x86/kvm/svm/svm.c
+> > [ ... ]
+> >> @@ -4323,6 +4324,27 @@ static void svm_complete_interrupts(struct kvm_vcpu *vcpu)
+> >>       svm->nmi_l1_to_l2 = false;
+> >>       svm->soft_int_injected = false;
+> >>
+> >> +     /*
+> >> +      * Hardware clears EVENTINJ field when it injects an event.
+> >> +      * A non-empty EVENTINJ on #VMEXIT means the vCPU never entered guest
+> >> +      * mode, and thus that the event was never delivered.  Migrate the event
+> >> +      * to EXITINTINFO so that it's requeued instead of being dropped.
+> >> +      *
+> >> +      * An undelivered event doesn't imply a fatal VMEXIT_INVALID. With
+> >> +      * Enhanced SMT Protection, VMRUN may exit with an ordinary #VMEXIT
+> >> +      * without having injected that event into the guest.
+> >> +      *
+> >> +      * Clobbering EXITINTINFO is safe precisely because the vCPU never
+> >> +      * entered guest mode.
+> >> +      */
+> >> +     if (control->event_inj) {
+> > [Severity: High]
+> > Does this code silently drop valid hardware-reported events?
+> > 
+> > If an L1 hypervisor sets event_inj to a non-zero value but leaves the
+> > SVM_EVTINJ_VALID bit clear, hardware will ignore the injection and won't
+> > clear EVENTINJ.
+> 
+> 
+> The first half is right, nested_svm_check_event_inj() intentionally returns
+> true when V is clear, so vmcb02->control.event_inj can be non-zero with V=0.
+> 
+> The second half isn't. Clearing EVENTINJ is not part of injection, it's part of
+> #VMEXIT, and it's unconditional. 
 
-Please fix this also.
+So that doesn't mesh with the above comment, which says:
 
-Frank
+  Hardware clears EVENTINJ field when it injects an event.
 
->
-> >  }
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260921151312.I8Q8NLnx@linutronix.de?part=1
+And it begs the question of how this patch is at all useful.  Because all this
+fancy new paranoia is clearly generating #VMEXITs, and if #VMEXIT unconditionally
+clears control->event_inj, I don't see how control->event_inj can be non-zero if
+KVM attempted VMRUN.
+
+I.e. either this is all broken, or the APM is buggy.
