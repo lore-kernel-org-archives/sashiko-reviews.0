@@ -1,178 +1,195 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD834E0213
-	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 18:12:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790014360; cv=pass; b=RjqP2lUyiGAEsyzSwRyh/9ZSRUSjkvCYTSjJeiUy8EK/xuGxrvPqa2hL/1ePb+If8SfObBIvnKpMdHP/7BgUcMc8m2VscXZSwbrgOpDUZByhi82ufwHh3up+RahmliWJBSUCwn5nWATQwxsVM/yVWgJ7gCBkTAYQfZVyhOdQZ/U=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790014360; c=relaxed/simple;
-	bh=pxCditSPn667R8GM21+T7lWhaHVejNe/8zp9gD2W2Ic=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WrTvWzKUrP84RVPW35sNtWegiTSERM/tUIsK/qsMeMIKxMOInyrnpTDNESvY8b3cYowOwkfm2VYV4BPlBoIhQPREfNqDK7A+GBXaThsSokaZSeNbtqoYDUPKYC7mMMFITpsYT6qBYOZ+SlA4PRPxiIC1z/6XgQ7ImxDxzb3RZDQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ZAt0EmdS; arc=pass smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68CE40E8C5;
+	Mon, 21 Sep 2026 20:23:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790022229; cv=none; b=eLOSpPQ7Y0iPdu4e9SUx/nal1m4xjGs7rYJfvhfkfdInLp21GY6yw8rDqC+xWGZqFhS8/BABnNtG0wFiAFTizDVQFV42hj/IaiM/uS1uROFuxjpauA7Ynf5YL4o/+3uZHs8Pnm9vXc9JPFK/Dj5QRBEvRHkQC4cdtuUUszff0Qg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790022229; c=relaxed/simple;
+	bh=z5l8g/fSk/f3xd8J8Gb4NVyrVB7oVYjXbnaxeI/zi6g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fRrhieWIFw08MuZ5HRa53Seunqrb9fG0XnllIbxtcbijSydJRUVg7x31RTSXFmmpSMn7hfb5A5pMUOvc4MOo0TJ+zlPMg3WQQcIWyK2gbEaXm2xQyplnsGtljT3TEq+t5M1lhUOxyTxu2MzasLG3XrlZtBtgvSWWpzj6RZVaEBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=LRFbOXns; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZAt0EmdS"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2d3b445a84fso19965ad.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 11:12:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790014358; cv=none;
-        d=google.com; s=arc-20260327;
-        b=FnA3N9U6yZ0ALCMS0SpOlbZZasu1X4j1nWGNoqVHPctu7cPRyRlk0iHK4fkQ6U2xDl
-         iV/xlEU5gnGWJ0b/Nd9LO3s+MNaHOYl6cOUFrYGQPW27Y4o4bp1X4xtQ0FoA3f7pypOu
-         /ciyIOtIrxCviz7b8ovko2PbkFcchSE0c2xzu/S/aJVyVXSNt0op6LTLffCZYegDkctH
-         iGOyea02gOCiD2wzafjvWQBfYK2B/Mvv+LvbY2H/SNxlwK52P2hElK2+h5Zy87CId98D
-         kA0nVLI++thTDMUMOaMVFgOerc/FDSBRGpXWDqh9XtbSlTxRSdFvz1DyqquqpC6y+/Q8
-         fsqw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=QHAP+ThF7TxWgEqj8k74itg4E2H+sNPwvnziw5xjhM4=;
-        fh=g8YDxQwYTYAfiJG2IptUQfeN1ox7i2Ws92eJGxIDHYQ=;
-        b=RiCPnevgI+RmA5SIb8LXkekPGGN00nw13L5wnJb0W9MvTsifCE5ZKl6199L7c4ireD
-         UX1TrjZsTpzQSamQYAnn3HSoEwVtQFSZ+ujAoacEwdug9M0LBaT46w/XPfhUSfTmwF+n
-         DNQRhBjC56yUat41jMzPC0V/SzKTbYfDXP9qxRorGWd2JIGWXlG52oz05zLwhfrDk21k
-         x6dB0Dc7mK4ilt1oibEkN9Ne9rmMUnjfptQi4SaOHexzvsRyaDNU8wfdIg9E7TFmG9qP
-         bvXzTV3cqMH/UJtvHUeR9YeZ0vsSHLpHSaPo1Bgqaln419Xox0bKSSIAN8arsmTCb//Y
-         XUIA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790014358; x=1790619158; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=QHAP+ThF7TxWgEqj8k74itg4E2H+sNPwvnziw5xjhM4=;
-        b=ZAt0EmdSBuA5gGYxv0jWBHErO2tyneVs4ZKbsKo5G5LekcdDgfzyWn9xkjUhQ27kAu
-         coFhdjnbTq8Cksf09ydGZS18pKRsZiDYW2BYgXYNNFqakzcBq9IJ1+NwQzWlbZ4c/DuA
-         +nhIJH+80tuHZYT7RXwY6YfAfYWiXkzlmaMfUeKEO8liiNc4IaxqmHKgFlIhyC7FJBG0
-         Yw2Si3DPpVMOfDdpIJRLZDFPkrrmKD8Dmew1q0bT3HN5y8ZE6/6EoF3L8UsrPVy3yu10
-         jB1u5EHhE+X7SIR28smv9725r49t45Jbq+TpoVEPqQ0lYbgzV0QsWwwh8PNxIM8n5d9E
-         8Hpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790014358; x=1790619158;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=QHAP+ThF7TxWgEqj8k74itg4E2H+sNPwvnziw5xjhM4=;
-        b=YHxTQGe9BGtlIQZvBjq1J0VzyXaVMAWzdHQVxL3bXsW0cUA9r7unShH/FZUSWDLAs+
-         va1KaWhH+QbGaPfJz6lhtkDFQjKsKbc5DBbhWF5JDsx4Tqe1C0u0TnAS+LR4HRj9RdSp
-         rJKlvE2lKIxz4aBoV6f9T1pvGwR8POTWccMqztV11AnR9vSQvFCyR0M3cMimD0cKbRGr
-         b4KQYEXgVxHsR6rQZB6wSK6sVAyHvO10gwaZJi0klFEEaDfzpvo0Ibe6YW84Dj199sdQ
-         zy8Pg0dPJvQCKbupp4XCogCY8+18ITRACS7VjYLIZ4Ihpsu7VoszVL0SSKogl2DgomyG
-         4RiQ==
-X-Gm-Message-State: AFuF++n/YafRr7dd3JUhpBZCTGQ54jwufibHVA9ekvmWpgGChvw7sk4I
-	DxBTP7pu5MmT2MUmdis6imq/dg6YYNlf0DPIBSmx8TxsxNygQYkXKjEZmmJwKSh4lmbh/TrC2ot
-	BPBBsxTyFknlMLyX/db/CP61LbeWOfMMm21FZVOPrM7m9kt6DIuwgZ/Cb
-X-Gm-Gg: AYBFou2k/qnSzq9XjR7og2j1nWjkfk6jJVBEEaR8RC4P1y5xvZZpX2DeN1IO0QT7ro6
-	k8l8WCoXKg+8nRSU77+poj74kXLLXzE4nsJwydTT8fnQjJzW0N0swXueYzbrG5uPqoi4q32Q1R5
-	mZEY7MHj+i50rvCumsbL19Nok5F+eNG8MBqrPWgDbvjuDBXBD3TJzBhZjgoCRn/8OYms9zDLYx2
-	SgQUxvRJb/TMQDCb1zz2pg+K+Ag8O47EhwDm9FlY/lJoy+627QrI+br9AGOLA3w4q5eVCXBRFpc
-	/c6Wl30upTUT7NG42kJsY9C2dTSKDy8kWRYfZ5sgdwKi2F8ZGYAWSIzcGD14OUQzM9iqzjefuvV
-	IcsqA1GQb
-X-Received: by 2002:a17:902:ce12:b0:2cf:4353:f117 with SMTP id
- d9443c01a7336-2df5aae1b6dmr518255ad.0.1790014357595; Mon, 21 Sep 2026
- 11:12:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="LRFbOXns"
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68LF8NL71869624;
+	Mon, 21 Sep 2026 20:23:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=pMYwha
+	DBsrTBK1GjqA0mi3g44RZV39kByQYw8JFv+fk=; b=LRFbOXnsr+zns+ogPxagtJ
+	TfnPwU+TdT7kQW2AoNU5IJYpjVDmsMSYGX/NJzJJ93A05Bdx+QMfSDTUsc2YcBrr
+	gE6OIAiAJ6p8fkdzSoh2WlaMTjzsbD4w/ajAo68Np9X/ii/v/GFJjUmeTc8BQVbo
+	nf/sfzIqZLWcOmsAK6AGj/dYXhKPG92ekqRDLq0biZ1AS5v2SzISDLQI1XhnIqb2
+	uPkTyFBkqzec+Fy36rLksfslfvGVZx74ki8mX3iFyDDpSNrJBH5/lj+0TtBZJqjT
+	fEOMnJFBXFVn33voxRfisisWmiTFT4z8+ZFYjfDvvuiHxTKvAZj+MtsaMOQgqERQ
+	==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgs2jxr-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Mon, 21 Sep 2026 20:23:46 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68LJI6rr1451425;
+	Mon, 21 Sep 2026 20:23:46 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt67gpvtc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 21 Sep 2026 20:23:46 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com [10.39.53.230])
+	by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68LKNjGH26083902
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 21 Sep 2026 20:23:45 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 2099A58054;
+	Mon, 21 Sep 2026 20:23:45 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C09C45805A;
+	Mon, 21 Sep 2026 20:23:44 +0000 (GMT)
+Received: from [9.61.11.58] (unknown [9.61.11.58])
+	by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Mon, 21 Sep 2026 20:23:44 +0000 (GMT)
+Message-ID: <c53d3fa9-3e66-4010-87a4-e9cd61789381@linux.ibm.com>
+Date: Mon, 21 Sep 2026 13:23:43 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <ag8X7gcDw6jpJsLq@decadent.org.uk> <20260921175719.846883-1-irogers@google.com>
- <20260921175719.846883-2-irogers@google.com> <20260921180544.064DB1F00893@smtp.kernel.org>
-In-Reply-To: <20260921180544.064DB1F00893@smtp.kernel.org>
-From: Ian Rogers <irogers@google.com>
-Date: Mon, 21 Sep 2026 11:12:25 -0700
-X-Gm-Features: AcwNN1WtQRPw4NjyM-aaF9lzmK2cNFGQrwApgnAZh98Wf0nWalcexW5EAz7_hpk
-Message-ID: <CAP-5=fVQui77+75dHLMgddUM2P3GhZqV2wbdVUkcG_6jwWqECQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] perf tools: Put Python bytecode in output directory
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 1/9] scsi: ibmvfc: add basic FPIN support
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org, linux-trace-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: linux-scsi@vger.kernel.org
+References: <20260911054832.1311668-1-tyreld@linux.ibm.com>
+ <20260911054832.1311668-2-tyreld@linux.ibm.com>
+ <20260911060658.68FDC1F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: Tyrel Datwyler <tyreld@linux.ibm.com>
+In-Reply-To: <20260911060658.68FDC1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab19253 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=sCSsoGvkdPsomjlc5osA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: i-WBcODpY6xcarKkSm9ofUnSY1Ler4xK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDI5NCBTYWx0ZWRfXwMuCStUQaXjN
+ nxuPbNLCGrPLHAVi5jxstfUQPXZ7LAwZfXP2ih51K7vmyUqN9lqs+zFU9EeCCpMRk4QdkQo/EYU
+ NjNaX+joozMiLizykwI6UJJFdtYKi9MPvPlAO/INqpAETwMkJEj5ahO/eMN+rXyaTyC+ysO1E3A
+ /x5MbmpuT3VQzoxBUp6CSkkXgpRHQ1XLt6GJk/QE/S1GztzG4LbE1J92bk46mY5AQt1Ckw7dWct
+ JLq+M2t+CAPVpMFMR5jvYQ9ii+AUJoDbv2TeNp+o5F645K02vTXe1ST6b8PBgjO+qFZqM6I6vkl
+ rJhmYoKTkfSML2KxUklsmEC8guWM/lpGyCwNkKIO11rxW3PrEqt8oQyG+u8Nvo0Oaacd9u+TMmQ
+ GgSNfYpH3rbjNWL8yuSj+LPUDqe8wE10Gv5Ti795/fX41E1EIg50cZO/Qr5opS6JNJ0KLa6VC0c
+ VMKlN3R2TS0P3HQdmYA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDI5NCBTYWx0ZWRfXwqBQQyKUzwAA
+ WIhEHAbx0k7wGaGGfmpGa8DXuVOyjU6hykBazHzwy8BDf0QgVSogNd3DzWSEJVIep4EMoQZY1G8
+ VUJiXt/dSyKzH6mgydGL9FMMthe99hI=
+X-Proofpoint-GUID: i-WBcODpY6xcarKkSm9ofUnSY1Ler4xK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-21_05,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1015 phishscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609210294
 
-On Mon, Sep 21, 2026 at 11:05=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] perf: root filesystem pollution or build failure due to stray =
-slash in PYTHONPYCACHEPREFIX
+On 9/10/26 11:06 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] The KUnit test `ibmvfc_async_fpin_test` leaks references to the `Scsi_Host` and the `fc_rport` device on its successful completion path.
+> - [Medium] Unordered workqueue allows FPIN events to be processed concurrently, causing data races in FC transport statistics and FPIN event reordering.
 > --
->
-> commit 3de8bc01d44a9b11e10c327ec26bbff8605926df
-> Author: Ben Hutchings <benh@debian.org>
->
-> perf tools: Put Python bytecode in output directory
->
-> This commit sets the PYTHONPYCACHEPREFIX environment variable to relocate
-> the Python bytecode cache directory to the output directory during out-of=
--tree
-> builds. It also updates the python-clean rule to remove the new cache dir=
-ectory
-> and perf.pyi.
->
-> > diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
-> > index a0b23d20d005c..50bde95c78a54 100644
-> > --- a/tools/perf/Makefile.perf
-> > +++ b/tools/perf/Makefile.perf
-> > @@ -397,7 +397,8 @@ PYTHON_EXTBUILD_LIB :=3D $(PYTHON_EXTBUILD)lib/
-> >  PYTHON_EXTBUILD_TMP :=3D $(PYTHON_EXTBUILD)tmp/
-> >  export PYTHON_EXTBUILD_LIB PYTHON_EXTBUILD_TMP
-> >
-> > -python-clean :=3D $(call QUIET_CLEAN, python) $(RM) -r $(PYTHON_EXTBUI=
-LD) $(OUTPUT)python/perf*.so
-> > +# Put Python bytecode in output directory
-> > +export PYTHONPYCACHEPREFIX :=3D $(OUTPUT)/__pycache__
->
-> [Severity: Medium]
-> For in-tree builds where $(OUTPUT) is empty, does the unconditional inclu=
-sion
-> of the slash cause this to evaluate to the absolute path /__pycache__?
->
-> When Python 3.8+ runs during the build, it appears it would attempt to wr=
-ite
-> bytecode files to the root of the filesystem. Could this cause a regressi=
-on
-> by breaking the build with permission errors for unprivileged users, or
-> silently pollute the root filesystem if executed as root?
-
-This is already the behavior. The difference now is that instead of
-multiple __pycache__ directories for the directory the python script
-is within, there is a single top-level __pycache__ directory that is
-handled by the clean step.
-
+> 
+> commit 79377784bc96c798354f5b0f5ce5007a8d857d16
+> Author: Dave Marquardt <davemarq@linux.ibm.com>
+>     
+> scsi: ibmvfc: add basic FPIN support
+>     
+> This commit implements support for a basic level of Fabric Performance Impact
+> Notifications (FPIN) in the ibmvfc driver. It adds an async event handler that
+> offloads FPIN processing to a dedicated workqueue and passes the converted
+> messages to the FC transport layer. A KUnit test module is also introduced to
+> validate the FPIN event handling and statistics updates.
+> 
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> @@ -3547,6 +3547,56 @@ static void ibmvfc_process_async_work(struct work_struct *work)
 > [ ... ]
->
-> > @@ -919,7 +920,12 @@ $(INSTALL_DOC_TARGETS):
-> >  ### Cleaning rules
-> >
-> >  python-clean:
-> > -     $(python-clean)
-> > +     $(call QUIET_CLEAN, python) $(RM) -r $(PYTHON_EXTBUILD) $(OUTPUT)=
-__pycache__ \
->
+>> +	if (fpin) {
+>> +		fc_host_fpin_rcv(tgt->vhost->host,
+>> +				 sizeof(*fpin) + be32_to_cpu(fpin->desc_len),
+>> +				 (char *)fpin, 0);
+>> +		kfree(fpin);
+>> +	} else
+>     
 > [Severity: Medium]
-> Since $(OUTPUT)__pycache__ would evaluate to __pycache__ in the current
-> directory during in-tree builds, would this fail to clean the incorrectly
-> placed bytecode directory at the root of the filesystem?
+> Can the lockless modifications to fpin_stats in the FC transport layer here
+> cause data races and lost statistic counts?
+>     
+> Multiple FPIN events arriving rapidly from the adapter are queued to the
+> fpin_workq. Because the workqueue is created below as WQ_UNBOUND with
+> max_active=0, these events can be processed concurrently.
 
-Same issue; yes, the build would fail but the build would already be
-failing if this were a problem.
+Makes sense. See response below.
+>     
+> Furthermore, since FPIN events are stateful (e.g., congestion detected vs
+> cleared), could concurrent processing deliver events out of order to the
+> midlayer and userspace, leaving the system reflecting an incorrect state?
+> 
+> [ ... ]
+>> @@ -7135,6 +7135,15 @@ static int ibmvfc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+> [ ... ]
+>> +	vhost->fpin_workq = alloc_workqueue("%s-fpin-workq-%u", WQ_UNBOUND, 0,
+>> +						 IBMVFC_NAME, shost->host_no);
+>     
+> [Severity: Medium]
+> By setting the max_active parameter to 0, which defaults to 256 concurrent
+> execution threads, does this allow the unordered processing that triggers
+> the data races mentioned above?
 
-Thanks,
-Ian
+I think max_active should be set to 1 here to enforce ordered processing.
 
-> > +             $(OUTPUT)python/perf*.so
-> > +     @if [ "$(abspath python/perf.pyi)" !=3D "$(abspath $(OUTPUT)pytho=
-n/perf.pyi)" ]; \
-> > +     then \
-> > +             $(RM) $(OUTPUT)python/perf.pyi; \
-> > +     fi
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260921175719.84=
-6883-1-irogers@google.com?part=3D2
+>     
+> [ ... ]
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc_kunit.c b/drivers/scsi/ibmvscsi/ibmvfc_kunit.c
+>> --- /dev/null
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc_kunit.c
+>> @@ -0,0 +1,148 @@
+> [ ... ]
+>> +static void ibmvfc_async_fpin_test(struct kunit *test)
+>> +{
+> [ ... ]
+>> +	vhost = ibmvfc_get_first_vhost();
+>> +	if (!vhost)
+> [ ... ]
+>> +	rport = tgt->rport;
+>> +	get_device(&rport->dev);
+> [ ... ]
+>> +	KUNIT_EXPECT_EQ(test, pre[IBMVFC_AE_FPIN_CONGESTION_CLEARED],
+>> +			post[IBMVFC_AE_FPIN_CONGESTION_CLEARED]);
+>> +
+>> +	kref_put(&tgt->kref, ibmvfc_release_tgt);
+>> +}
+>     
+> [Severity: Medium]
+> Does this code leak the references to the Scsi_Host and the fc_rport device
+> on the successful completion path?
+>     
+> The setup code earlier in this test acquires references via
+> ibmvfc_get_first_vhost (which takes the host reference) and get_device, but
+> this success path fails to drop them before returning. This could potentially
+> prevent the driver from unloading after running the KUnit test module.
+> 
+
+If we are going to bother to take a reference might as well drop it.
+
+-Tyrel
+
