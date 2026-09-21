@@ -1,157 +1,78 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933693AEB2D
-	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 07:04:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62E23ACEE2
+	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 07:06:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789974299; cv=none; b=Dn8+vjg1ByFSRRkwQKw7dmkMSplYITg0hgK4InYX76nEO8ZeXwxLg99WqOtl8EFY+HHvqqa7KIDmevz9FnX6jT0qMcWDpPmSvdushyvbQ3QNW+JO6GskD2upljgBjYTpXP15oA610n7nCQqtLSXbsg6f9Rh7GSeln6reEvghuNI=
+	t=1789974391; cv=none; b=fDgdgaokdBLW6gOo3gFSkkHEb819DHHxQLIAJ1Q6Mmvn5ptiI0qp5NQLPCRoT3IJLEp5E1j5Hc52/tHFw053/2tRC8dERJIKfYsFGxcX9p419A/uWLTpZ56NB0LDZjdzSbGYlDzCz2l0RNJHuxj7YSrOwvy/K3Zs3u9/0VI4cqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789974299; c=relaxed/simple;
-	bh=q+4TWAH82wt5mYMumibglvij/JtGR91K1fZZsuVUS8M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ke80w3XcGXMyb+Zld+WFkj5tZ1bnmqFQ5juQbRmoPzPI1HxUNyC1rAGRoBql2UnU72b1n+NY6ofq/6rgNFfqkkpifSUAzX+cCN3bOCFvGQtnRzWvgfSqqcYdp81FhavSrUtNp7j0HvRuKjJm92pVfhRi7vfHj2JBb//qOU9cmqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=d70JbJvf; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1789974391; c=relaxed/simple;
+	bh=IYh5w+KxUAUA8iUbtSHuprwqVza+V9VJirc+X43mf5E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UHbHBrRUK4SPgf9BaM+odxfL/RcnPs6heSx1rBoccxneU/GVlM0L7m9sBGjVRp9cHY1uOAtILGowL185ahN9VfhFjSCO4Qo2X/ig2dYRxwv/kxOLknIBfw1cZk9sZhV1hzRl1afhzQVDw1uiX2QEPItHgwzx+g1nGO8RxeUZnf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dzVJCakb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="d70JbJvf"
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68L3aSYG3307017;
-	Mon, 21 Sep 2026 07:04:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=+kP1iCLZakbh0FG6jVlAEp35ZfDOaz
-	3git5jCqXt0KU=; b=d70JbJvfz0VVPd+YltVMouduLOibR5DRjO7TU8cBXcGmwD
-	m2EXy0RGeIeW1PPjL0duZfrK5RCPF3/pymdunmeO/6ScCeSXPx9AcPUGmzWPpv+y
-	Wdkl2yXwxP+eizVtA+v0FO94qbcxqe2E3nsAMIqzI3niVL3NHqJu9y6M55yLo9Tn
-	sQPum9bAcV5pT52qZHfHs/N1bjH3nfd46ztNcxphXnPoCWMPKFv2v1zx01zFy6zB
-	TwI2spOYWgmWjHuqkjLM/tUTfvGPjArFvYAmjcIySLA33B4esvjBHpTMcsJwDb4G
-	/1rj613Ue68ra2h/Ab+OiTp9S2nqg3iGUOXr0Klg==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgq716q-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Mon, 21 Sep 2026 07:04:52 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68L3XYog628081;
-	Mon, 21 Sep 2026 07:04:51 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt53vcatf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Sep 2026 07:04:51 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
-	by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68L74ne545416796
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 21 Sep 2026 07:04:49 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 35F4D20040;
-	Mon, 21 Sep 2026 07:04:49 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 159B920043;
-	Mon, 21 Sep 2026 07:04:48 +0000 (GMT)
-Received: from li-fbf77acc-29ba-11b2-a85c-e8e934f50a46.ibm.com (unknown [9.123.6.5])
-	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Mon, 21 Sep 2026 07:04:47 +0000 (GMT)
-Date: Mon, 21 Sep 2026 12:35:51 +0530
-From: Gautam Menghani <gautam@linux.ibm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org
-Subject: Re: [PATCH v2] KVM: PPC: Book3S HV: Avoid spurious interrupts caused
- by LPCR_MER bit
-Message-ID: <arDWLD7CuAwVV4LM@li-fbf77acc-29ba-11b2-a85c-e8e934f50a46.ibm.com>
-References: <20260918055848.28390-1-gautam@linux.ibm.com>
- <20260918060829.D84C61F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dzVJCakb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701C81F0089E
+	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 07:06:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1789974390;
+	bh=dS669YdL4HWYJMFHFuqUiLwJ+dBe/E6NjwQ/Nk/pJzY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=dzVJCakbVvndGYTPoffC9/BBzOjv0OuuLWyNhM2cqnoeUPz+j3kaKJOg2Ng3Ulpi/
+	 OUwKJDf/XbLgq/xbydxb4tVHHGEjq4K5NX4NTSzi7ekOAtUXh93zNeNQcirNdMSQC/
+	 qgwtyW/is7d9DkFEp3EkoYTh/aG0fqU6Z1ZbLEgZGDyMQkSD4sEopBD++gKCIhxyp5
+	 oevnUHQJOTp1ymFFvrgXGZeYcyNVXl2p9idu7/cguSIfBl5ukTlUM0D6t0uX+y9QuK
+	 oor95CfEQRpTCnYlC5qMzeXmFazG6QZVe8mtQJ66H1OOMS+yz7TCLtTUULjPcxYQ3k
+	 S9JoC0Hct48Vg==
+Received: by mail-lf2-f13.google.com with SMTP id 2adb3069b0e04-5b8c3de61a3so2112627e87.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 00:06:30 -0700 (PDT)
+X-Gm-Message-State: AFuF++kSWPlQYP+FsVZHwdGq6r51KpsY1R/8Mv+jGalP7IFbGlVdsRVT
+	o6JSor+b/GstaxLQfcHPOYd+2Dimuq4MUwDjS1NEROwiLJielx2/Ce8kQ7mK1880vLHBKJtaiLw
+	XtuX6T7WBf2DpUn4Ydaqq/WUbiREmVXw=
+X-Received: by 2002:a05:6512:23a7:b0:5b6:1a7c:aa1a with SMTP id
+ 2adb3069b0e04-5b8c197cf88mr3053851e87.50.1789974389058; Mon, 21 Sep 2026
+ 00:06:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260918060829.D84C61F000FF@smtp.kernel.org>
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=G+OJgNk5 c=1 sm=1 tr=0 ts=6ab0d714 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=yKAn6K1XAAAA:8 a=VnNF1IyMAAAA:8 a=C0UQplxeHUNF3Q06eqEA:9 a=CjuIK1q_8ugA:10
- a=6M1ixcW_PCWoKiWyFx5v:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDA5MyBTYWx0ZWRfXyK3cOmMYTXx6
- ZOb3yQAS9Yj6TuD2pOm+dGLgUuLU4YsAkBM9xvJ05OBhdNNgtdysTDS2NGnxczwy6MgHPzchkDO
- lgWTLhK5bxhXjxP58WVFDC+8kCc4IxM8v3SYNciS2uR+hP7DmbkRZrAb9MbIZmRlOFhhWIRg2bR
- AohF9MOgPLN++F2KwsMh8Ym8ZAqz9rQcKV61kg16BYCTea2PdVEEGslSqaYrgCQoEyH3fm+9oD2
- K9cscwWDAwf05bxt6B+Ex5SyJUaSvoOdV5zf2p8yyody+mmkNi7VLqydxRJ6xxzGSYiT+4ygmfi
- wkLFOkQRa4EkJ/FVCEEwp5KCJlko304epQXs/PDnhI0zv0j1hW9Q8thT5swmXos4Rzbh+nDd4v/
- Jr6DmKJSaiX55mnchF86+pn7rW1sA+p++j35+GsPYB6SrS41ahWyxlnjH1ieO8OCeaEA1bKlTQS
- nw1pm2aEX83dQVMO0nA==
-X-Proofpoint-ORIG-GUID: GygjeXbEPNI_UQ74as96vUtXmWo3C4IQ
-X-Proofpoint-GUID: GygjeXbEPNI_UQ74as96vUtXmWo3C4IQ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDA5MyBTYWx0ZWRfX/OPJRO0rJ89s
- o6dfnZlS/J4UObS/sfueUQBGxoPd2qSYguD/nx/h1p2DJi2UtqeQpTPiT2yOoOf2QQDoDwVcsu5
- sTR44QqX4ev4RkAEsHgSWZpcAMyWxQ8=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-21_02,2026-09-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- bulkscore=0 priorityscore=1501 clxscore=1015 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609210093
+References: <20260921-ux500-power-domains-v7-1-v3-0-9352be6b86b1@kernel.org>
+ <20260921-ux500-power-domains-v7-1-v3-18-9352be6b86b1@kernel.org> <20260920230526.D9E331F000FF@smtp.kernel.org>
+In-Reply-To: <20260920230526.D9E331F000FF@smtp.kernel.org>
+From: Linus Walleij <linusw@kernel.org>
+Date: Mon, 21 Sep 2026 09:06:16 +0200
+X-Gmail-Original-Message-ID: <CAD++jLkazAsBWPD9vhh_N4fgsohDARUZLb72HMpfV4ZJvVs+6A@mail.gmail.com>
+X-Gm-Features: AcwNN1WdHGAFgi49VdletBEx39eGC37Zp4G66DB5ah7Aob95Mw3hiURMbaajIF4
+Message-ID: <CAD++jLkazAsBWPD9vhh_N4fgsohDARUZLb72HMpfV4ZJvVs+6A@mail.gmail.com>
+Subject: Re: [PATCH v3 18/18] ARM: dts: ux500: Remove DB8500 EPOD regulators
+To: sashiko-reviews@lists.linux.dev
+Cc: vkoul@kernel.org, dri-devel@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, conor+dt@kernel.org, Frank.Li@kernel.org, 
+	dmaengine@vger.kernel.org, robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 18, 2026 at 06:08:29AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] kvm: ppc: software-injected external interrupts lost on XIVE hosts
-> --
-> 
-> commit 05773d5b089dd4410c7e3e3a1611da5479c7d1a4
-> Author: Gautam Menghani <gautam@linux.ibm.com>
-> 
-> KVM: PPC: Book3S HV: Avoid spurious interrupts caused by LPCR_MER bit
-> 
-> This commit aims to avoid a huge number of spurious interrupts on KVM PowerNV
-> guests in XIVE mode by not using the LPCR_MER bit when the hardware can
-> present interrupts directly. It modifies kvmhv_run_single_vcpu() to skip
-> setting LPCR_MER when xics_on_xive() returns true.
-> 
-> Closes: https://lore.kernel.org/linuxppc-dev/582904882.11159.1786719390349.JavaMail.zimbra@raptorengineeringinc.com
-> 
-> > diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
-> > index dbac3573b2c89..f4d12a97311b9 100644
-> > --- a/arch/powerpc/kvm/book3s_hv.c
-> > +++ b/arch/powerpc/kvm/book3s_hv.c
-> > @@ -4980,7 +4980,7 @@ int kvmhv_run_single_vcpu(struct kvm_vcpu *vcpu, u64 time_limit,
-> >  			if (!kvmhv_on_pseries() && (__kvmppc_get_msr_hv(vcpu) & MSR_EE))
-> >  				kvmppc_inject_interrupt_hv(vcpu,
-> >  							   BOOK3S_INTERRUPT_EXTERNAL, 0);
-> > -			else
-> > +			else if (!xics_on_xive())
-> >  				lpcr |= LPCR_MER;
-> 
-> [Severity: High]
-> Does this unconditionally disable LPCR_MER on XIVE hosts, potentially dropping
-> software-injected external interrupts when MSR_EE=0?
-> 
-> The outer condition in kvmhv_run_single_vcpu() checks if either a KVM software
-> interrupt (BOOK3S_IRQPRIO_EXTERNAL) or a hardware XIVE interrupt is pending.
-> 
-> When MSR_EE=0 on guest entry, the patched code evaluates:
-> 
->     else if (!xics_on_xive())
->         lpcr |= LPCR_MER;
-> 
-> Since xics_on_xive() evaluates to true globally on bare-metal POWER9+ hosts
-> with XIVE enabled, regardless of whether the guest uses the in-kernel XIVE
-> irqchip, bypassing LPCR_MER here seems to cause software-injected interrupts
-> (such as those from userspace via the KVM_INTERRUPT ioctl) to lose the
-> hardware trap mechanism that normally fires when the guest later sets
-> MSR_EE=1.
-> 
-> Could this lead to dropped or severely delayed external interrupts for guests
-> using a userspace irqchip?
+On Mon, Sep 21, 2026 at 1:05=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 
-Yes this is a valid case. When kernel irqchip is off, the guest vCPU will be required to make an extra
-exit to the host for interrupt injection. Will fix this in v3.
+> Will removing the v-ape-supply property cause regressions in the
+> ux500-msp-i2s driver?
+>
+> Looking at sound/soc/ux500/ux500_msp_dai.c:ux500_msp_drv_probe(), it
+> unconditionally requests this regulator:
+>
+>         drvdata->reg_vape =3D devm_regulator_get(&pdev->dev, "v-ape");
+>         if (IS_ERR(drvdata->reg_vape)) {
+>
+> Will this missing supply cause the regulator framework to fall back to a
+> dummy regulator (emitting a warning) or return an error and break the
+> driver probe entirely?
 
-Thanks,
-Gautam
+Ooops I'll add a patch removing that so the driver just uses the power
+domain.
+
+Yours,
+Linus Walleij
