@@ -1,105 +1,117 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+Received: from mta0.migadu.com (out-193.mta0.migadu.com [91.218.175.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC874A2615
-	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 14:05:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2893BB9F1
+	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 14:14:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789999505; cv=none; b=FSsgBp87B0baLyc+jRtukRA1N7SP856uVOPqsGEJJjcLxFjTQflfrX+gv/AvQ26AaTXAvYCCo9gH2Y1J5d92kcBZamz2tmeWVC7YlN48QjsX/5yrK79aRxe8LISRVYXHj9YDH2GaqOAx2r/vg5qwV/i9pk1sn3Y2NLo9Y8LxW5I=
+	t=1790000051; cv=none; b=EvCr8yKyAEr3GxKtITv40CYWaPNjoBUjDaHLMupBmNXnYmqjKW+UMz+qTkMKJEiED1EsZPOn8zNXPP0hTd0ZcJre3g53wzWooNNRuai0l3fVCDQv43QdOUSgEtLbZhP6Ug2iUlJyvHdWwtIA6vjGBOGuThYB29nvoyUJbgjQPww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789999505; c=relaxed/simple;
-	bh=2vJx7TXxxT0fRGwPZFAMsd+M7lzCJ1o7ZpGwKRgPhJU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Sz1bojZb6F0gvpC9CO91jQ9atzyGf4LuROkLVsHSXDEis6Kw01hqjDbNCd/yI9kt4ZwjI2sRQQW4tXiWinhpX1vbsDWg1mCx0ttGMZHpusWxKYChfOpNpW9uH1OBmgIv6a5dsabBDf567yGGrjqBBEXBYoxFaijR0k8QGTY7vIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Piy66IFF; arc=none smtp.client-ip=74.125.227.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790000051; c=relaxed/simple;
+	bh=5pQC0kqxUSJeFu8J4BFJADFheG0OgG3mpln6pB3C/XI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tOi8NbaaDHFX13dSfpqFH/DQXTW4Z/utadTMElrdyUj3MLst3T3qR1oQvFO8h0WQ2H1058JpatMHFX65zpGF5arQe2E3yMCvecErZJdzPXoyU+27X5wklbLJCE7jElPahHimZq4BmgGZHosA8YdRPnVx0eCDO5e51X8gQ5Qgkdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=BGaUNser; arc=none smtp.client-ip=91.218.175.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Piy66IFF"
-Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-398c066106cso2383337a91.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 07:05:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789999503; x=1790604303; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:sender:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=FVndDmsTO0EsvVcjBdIJcO67VaQ5MrgsL7GRVTGdqJY=;
-        b=Piy66IFFXUKfAJej2Y1TA/Z7PclLAksXe29T3nrJ/cfLC3mt3BRLd4OE2M7UaE9Hrl
-         PgpybTwKLH4ynAwsPtY8X/m8ZtNUQlxpXp2+wE4UbYvFkRYWHk4lO23QJIi9+9MIc70/
-         gspVasvCjFMf3/1DZcy3KPoeyiuI7nr9nW5dY/kojQG/xjQ39o4Oi60fpwmA41c7HELa
-         AAQSuSMhmsGQb+l6J0yDuvrVCIjno1CedvDoxUzmZUeRq1n4y60amsnhpjV22TOTnSMo
-         FjfbSTwJUUOEQ1Q588jvOS07AFyDdHm9FTeB6YEqI1zN5+Qh8dO5F9ofcpbahWhG22s8
-         MZ9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789999503; x=1790604303;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:sender:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=FVndDmsTO0EsvVcjBdIJcO67VaQ5MrgsL7GRVTGdqJY=;
-        b=F/Wcspoe0aLhL2bq9t/kpG7CWXOvQebKdhVSYw0ySJ2zKoasCTgaAi/U6O3qpnIC6M
-         Jba9z3LH0qJuqk6p0oorNdMk9JbAG0ts73UFpkxcp7zZilIX6fqTIZFCiiy+tDbl/TfE
-         90JkL8UfrNJfGvxKu5lrnNJ0op6MdNKaQslmv2cxuHpOEftN5DQxfibffjgmPMY5tkFz
-         wRCjjJrFcmcrXgMcltxeS24wmwXt7YlYc8XGFGYQXEh9qiJqBerH05mMNpyqq8d0sLbC
-         CQizMeS2hFotatmN0ST+ULdwXX0yL4IrM97NwDNi+V2MLv7Ml9jeaNGYsHoxJS9AJBGy
-         r7iw==
-X-Gm-Message-State: AFuF++nvs9X1Hq+sWmuDCfafwpOxquQUZYjCvLoeX+Gs/b6mL196W6XT
-	Ho8oZCUUoNvtCT6X5IBMN0/ne9SPd18h7VdWvKFPjOJ8T4gv2ZUv+9/y+zQfehLq
-X-Gm-Gg: AYBFou3Dealj9+Js1U55vMQiKZpHj3aWeWBxXFYMFFTemTMJwOFN/Y96dTqZKYXXoDb
-	lZG4BeOf2Exxdft/xvVi7CYbNbkvtChQKJknOtftspf3yhHnzSnAULL3Z9NJUb97mOqO/dOkzNe
-	oyI9IVaMIOD4QXgfXQRQiChsbvDS6XmEU3QdiQIvo5iOuz7z311yJNaP3BPH9LTq2w6aAzzuVjj
-	/6mGzkk4j0lyqSnionXoBvDty+w9DuZLrh7OTGq6W8Z7C0XkHBs0t75a8ghrowu79g/TC6oze8J
-	KJsDnZGp6ITpxiLlnujh03x6e4Tj0KoFRMWupp/wtq5p/hKtRrTDARRmFGjUIDa3Ub9MdvF+Uf+
-	PJO63l5tayBa/7IFzxg7iq+xuffubZc9bGM4fMzzUKBsiAcdXgoBaoQ1IiClBazBr37T307J0EX
-	Dkyum8hgDGCncrSpZEVBXeD21yIJaeqaxFRMa7g9/vYE2fxgaZ4RtmOekqydXyi3anpNt1dmWML
-	DnvewzXWgeZ
-X-Received: by 2002:a17:90b:3b4b:b0:39d:f66e:1720 with SMTP id 98e67ed59e1d1-39e54eaf13cmr19405297a91.13.1789999503258;
-        Mon, 21 Sep 2026 07:05:03 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a063a4185fsm273006a91.3.2026.09.21.07.05.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Sep 2026 07:05:02 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Mon, 21 Sep 2026 07:05:01 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: sashiko-reviews@lists.linux.dev
-Cc: Muhammad Bilal <meatuni001@gmail.com>, linux-watchdog@vger.kernel.org
-Subject: Re: [PATCH] watchdog: cpwd: serialize device access against
- cpwd_remove()
-Message-ID: <52bfac35-5dd2-4b19-bc8c-c766c9a93119@roeck-us.net>
-References: <20260919192301.272194-1-meatuni001@gmail.com>
- <20260919193320.0BB191F000FF@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="BGaUNser"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=5pQC0kqxUSJeFu8J4BFJADFheG0OgG3mpln6pB3C/XI=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1790000046; v=1; x=1790604846;
+ b=BGaUNserVcYMsedGCqyeMkYihdV0CK6TsTMDjb8jbCRSI5OtjPCUcPyNJvI/11WT/dUlWCtJ
+ G2w8sQgzsjNlfw/I3DraoXCoO1P2A70LOiVw15IkBFjD6H5vmh2iCttLhK9x208AXQSY7g9g2aI
+ 6te8KgO7wy1PAy6lg5RmfAps=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id e3566851e24fa24d;
+	Mon, 21 Sep 2026 14:14:06 +0000
+X-Mizu-Trace-ID: e3566851e24fa24d
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <0036dd4d-6bb3-4547-9ae7-3601f7adf366@linux.dev>
+Date: Mon, 21 Sep 2026 07:14:01 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260919193320.0BB191F000FF@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v3 16/20] libbpf: Carry the exception cleanup
+ table through the light skeleton
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20260920054225.864535-1-yonghong.song@linux.dev>
+ <20260920054347.872462-1-yonghong.song@linux.dev>
+ <20260920060112.1B9011F000FF@smtp.kernel.org>
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <20260920060112.1B9011F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Sep 19, 2026 at 07:33:19PM +0000, sashiko-bot@kernel.org wrote:
+
+
+On 9/19/26 11:01 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] watchdog: cpwd: AB-BA deadlock between misc_mtx and cpwd_mutex
+> - [High] bpf: Integer overflow in cleanup_info_tot_sz leads to heap buffer overflow
 > --
-> 
-> commit b2d69e49e806eb6cb2c3610179ff17ccacb7cf1b
-> Author: Muhammad Bilal <meatuni001@gmail.com>
-> 
-> watchdog: cpwd: serialize device access against cpwd_remove()
-> 
-> This commit adds synchronization using cpwd_mutex across device operations 
-> and teardown. It guards cpwd_remove, cpwd_open, cpwd_ioctl, and cpwd_write 
-> to prevent race conditions that could lead to use-after-free or NULL pointer 
-> dereferences.
-> 
+>
+> commit ae662736be5da05d165c478a926196fe248e707a
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> libbpf: Carry the exception cleanup table through the light skeleton
+>
+> This commit updates the light skeleton generator to emit BPF_PROG_LOAD
+> instructions that include the exception cleanup table. It stores the cleanup
+> records in the loader's bytes blob, calculates the needed buffer size, and
+> byte-swaps the records for cross-endian builds.
+>
+>> diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
+>> index af3a04f161ac1..2345fbdd46f56 100644
+>> --- a/tools/lib/bpf/gen_loader.c
+>> +++ b/tools/lib/bpf/gen_loader.c
+> [ ... ]
+>
+>> @@ -998,6 +1000,9 @@ static void info_blob_bswap(struct bpf_gen *gen, int func_info, int line_info,
+>>   
+>>   	for (i = 0; i < gen->core_relo_cnt; i++)
+>>   		bpf_core_relo_bswap(cr++);
+>> +
+>> +	for (i = 0; i < load_attr->cleanup_info_cnt; i++)
+>> +		bpf_cleanup_info_bswap(ci++);
+> [Severity: High]
+> Does this loop write beyond the allocated buffer if cleanup_info_tot_sz
+> overflowed during its calculation?
+>
+> If an untrusted user provides a malicious BPF ELF object with a very large
+> .bpf_cleanup section, load_attr->cleanup_info_cnt can be extremely large.
+> The loop uses this un-wrapped count to byte-swap entries, writing past the
+> end of the buffer if the allocation size was wrapped.
+>
+>>   }
+>>   
+>>   void bpf_gen__prog_load(struct bpf_gen *gen,
+>> @@ -1011,8 +1016,11 @@ void bpf_gen__prog_load(struct bpf_gen *gen,
+>>   			       load_attr->line_info_rec_size;
+>>   	int core_relo_tot_sz = gen->core_relo_cnt *
+>>   			       sizeof(struct bpf_core_relo);
+>> +	int cleanup_info_tot_sz = load_attr->cleanup_info_cnt *
+>> +				  load_attr->cleanup_info_rec_size;
+> [Severity: High]
+> Can this multiplication overflow a 32-bit integer?
+>
+> If load_attr->cleanup_info_cnt is a huge value (e.g., 0x15555556),
+> multiplying it by cleanup_info_rec_size (12) will wrap around a 32-bit
+> integer.
+>
+> This would result in a small wrapped value being assigned to
+> cleanup_info_tot_sz (e.g., 0x15555556 * 12 = 4294967304, wrapping to 8).
+> The resulting undersized allocation passed to add_data() would then lead
+> to the out-of-bounds write in info_blob_bswap().
 
-I am not going to apply this patch.
+Overflow is indeed possible. Will fix it, e.g. with cleanup_info_tot_sz as __u64
+and later check against INT32_MAX.
 
-If you want to do anything serious with this driver and you have the hardware
-to test the code, please convert it to use the watchdog subsystem. Otherwise
-please leave it alone.
 
-Thanks,
-Guenter
