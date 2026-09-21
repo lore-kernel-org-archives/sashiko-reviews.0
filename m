@@ -1,210 +1,157 @@
-Received: from mail-43170.protonmail.ch (mail-43170.protonmail.ch [185.70.43.170])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40148349CEF
-	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 05:35:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933693AEB2D
+	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 07:04:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789968919; cv=none; b=EDH7dRFp6QxAAUqp4cCDePVnvUdNG+pINNxWytRzvMGEo0UqnWWA+W+vIAJxU5G5ErLNcd3E7XJcteRN0F5qaDUHnXVov7UVPnkrX85nVkATDhhrlVFeCCjB7RfYJ1ISz4Y+X0y38REXXZzZQTME/VQYy551mcXSqlsoRN3gsTQ=
+	t=1789974299; cv=none; b=Dn8+vjg1ByFSRRkwQKw7dmkMSplYITg0hgK4InYX76nEO8ZeXwxLg99WqOtl8EFY+HHvqqa7KIDmevz9FnX6jT0qMcWDpPmSvdushyvbQ3QNW+JO6GskD2upljgBjYTpXP15oA610n7nCQqtLSXbsg6f9Rh7GSeln6reEvghuNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789968919; c=relaxed/simple;
-	bh=zh83OoNBxSi4NwznNu3yqEEjAZC/P1eMVO44h6RQlTg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=j3otfDAr5dmfYiMUS2W9ZpOcmpr4Yv97a037+k8Jei4ueJtgTl9bdCun/LyL3YfDwOYENwf/5+uETL6PT1kHqabkclto4IBPqRdvEWcW2Vq/eRKqTX1ZXZOEkj6T1B2IHnY5FON91x9fuWGIIk7PQcO+kXc8oZ9XE53Klu0Ag5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com; spf=pass smtp.mailfrom=geanix.com; dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b=iscnauc2; arc=none smtp.client-ip=185.70.43.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=geanix.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=geanix.com
+	s=arc-20240116; t=1789974299; c=relaxed/simple;
+	bh=q+4TWAH82wt5mYMumibglvij/JtGR91K1fZZsuVUS8M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ke80w3XcGXMyb+Zld+WFkj5tZ1bnmqFQ5juQbRmoPzPI1HxUNyC1rAGRoBql2UnU72b1n+NY6ofq/6rgNFfqkkpifSUAzX+cCN3bOCFvGQtnRzWvgfSqqcYdp81FhavSrUtNp7j0HvRuKjJm92pVfhRi7vfHj2JBb//qOU9cmqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=d70JbJvf; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=geanix.com header.i=@geanix.com header.b="iscnauc2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=geanix.com;
-	s=protonmail; t=1789968914; x=1790228114;
-	bh=8crlbQymdmkrzwA9LemJUmjDmHSjnoUEJlDLbHUk1gc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:From:To:
-	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=iscnauc2HhOCHZ1pcxj3rwdTLqsrliFnA9fiJq0QzITbhdNFvFtJvjzmNEbJjAhfX
-	 lVBhJpSSbIzWOlHJSYbVXYD7tYq7eQQzZc3T9TwctFR92X5qxN9K2a/QvmDehR4H6x
-	 ewu/vid5hjB3zSGxHGKSzi+AVOIkauuspH8W2yXzrXTp3KzsnKggBL5IMSFut82vAZ
-	 N7y0cfTcqMNu9aLEb5t0U4AgMUt+fdTRRLy72qPVkSMWVnnuUuSsbzC0h8zpmD8PZC
-	 Gen8nJdrbMNqSDgX8JdovnmwREEYC5r4AcxIBN36+LiQXv7/3/5zO/ym2Sh8oIWZ4W
-	 hOcQPqjCHHMKw==
-X-Pm-Submission-Id: 4hpBl447pPz1DDWh
-From: Esben Haabendal <esben@geanix.com>
-To: "Jonathan Cameron" <jic23@kernel.org>
-Cc: <sashiko-reviews@lists.linux.dev>,  <robh@kernel.org>,
-  <conor+dt@kernel.org>,  <devicetree@vger.kernel.org>,
-  <linux-iio@vger.kernel.org>
-Subject: Re: [PATCH v9 10/10] iio: accel: mma8452: Support interrupt sharing
-In-Reply-To: <20260921015115.4c7d79f3@jic23-hlaptop>
-References: <20260916-mma8452-open-drain-v9-0-0dd24fa2f3d7@geanix.com>
-	<20260916-mma8452-open-drain-v9-10-0dd24fa2f3d7@geanix.com>
-	<l9LG3al0xmawstyXcDwD8OhOBMwn13q6oz0NvCPy4kL0lA4DX5biMlUWcvt9Wwu1AiyugOvUZgQfnFJ4dvuvbA==@protonmail.internalid>
-	<20260916083119.03A8F1F000FF@smtp.kernel.org>
-	<87se38754p.fsf@geanix.com>
-	<DCSg94lOVof3xt7nVMHqUJ4g_0LHFg9-B1_SPzr6YW6Q76JvKW9Wi7VQHgO2chZTHzFjCa--kqtVp7lZLsx5Qw==@protonmail.internalid>
-	<20260921015115.4c7d79f3@jic23-hlaptop>
-Date: Mon, 21 Sep 2026 07:35:11 +0200
-Message-ID: <87bj9r9ng0.fsf@geanix.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="d70JbJvf"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68L3aSYG3307017;
+	Mon, 21 Sep 2026 07:04:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=+kP1iCLZakbh0FG6jVlAEp35ZfDOaz
+	3git5jCqXt0KU=; b=d70JbJvfz0VVPd+YltVMouduLOibR5DRjO7TU8cBXcGmwD
+	m2EXy0RGeIeW1PPjL0duZfrK5RCPF3/pymdunmeO/6ScCeSXPx9AcPUGmzWPpv+y
+	Wdkl2yXwxP+eizVtA+v0FO94qbcxqe2E3nsAMIqzI3niVL3NHqJu9y6M55yLo9Tn
+	sQPum9bAcV5pT52qZHfHs/N1bjH3nfd46ztNcxphXnPoCWMPKFv2v1zx01zFy6zB
+	TwI2spOYWgmWjHuqkjLM/tUTfvGPjArFvYAmjcIySLA33B4esvjBHpTMcsJwDb4G
+	/1rj613Ue68ra2h/Ab+OiTp9S2nqg3iGUOXr0Klg==
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgq716q-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Mon, 21 Sep 2026 07:04:52 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68L3XYog628081;
+	Mon, 21 Sep 2026 07:04:51 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gt53vcatf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 21 Sep 2026 07:04:51 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
+	by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68L74ne545416796
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 21 Sep 2026 07:04:49 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 35F4D20040;
+	Mon, 21 Sep 2026 07:04:49 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 159B920043;
+	Mon, 21 Sep 2026 07:04:48 +0000 (GMT)
+Received: from li-fbf77acc-29ba-11b2-a85c-e8e934f50a46.ibm.com (unknown [9.123.6.5])
+	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Mon, 21 Sep 2026 07:04:47 +0000 (GMT)
+Date: Mon, 21 Sep 2026 12:35:51 +0530
+From: Gautam Menghani <gautam@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org
+Subject: Re: [PATCH v2] KVM: PPC: Book3S HV: Avoid spurious interrupts caused
+ by LPCR_MER bit
+Message-ID: <arDWLD7CuAwVV4LM@li-fbf77acc-29ba-11b2-a85c-e8e934f50a46.ibm.com>
+References: <20260918055848.28390-1-gautam@linux.ibm.com>
+ <20260918060829.D84C61F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260918060829.D84C61F000FF@smtp.kernel.org>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=G+OJgNk5 c=1 sm=1 tr=0 ts=6ab0d714 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=yKAn6K1XAAAA:8 a=VnNF1IyMAAAA:8 a=C0UQplxeHUNF3Q06eqEA:9 a=CjuIK1q_8ugA:10
+ a=6M1ixcW_PCWoKiWyFx5v:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIxMDA5MyBTYWx0ZWRfXyK3cOmMYTXx6
+ ZOb3yQAS9Yj6TuD2pOm+dGLgUuLU4YsAkBM9xvJ05OBhdNNgtdysTDS2NGnxczwy6MgHPzchkDO
+ lgWTLhK5bxhXjxP58WVFDC+8kCc4IxM8v3SYNciS2uR+hP7DmbkRZrAb9MbIZmRlOFhhWIRg2bR
+ AohF9MOgPLN++F2KwsMh8Ym8ZAqz9rQcKV61kg16BYCTea2PdVEEGslSqaYrgCQoEyH3fm+9oD2
+ K9cscwWDAwf05bxt6B+Ex5SyJUaSvoOdV5zf2p8yyody+mmkNi7VLqydxRJ6xxzGSYiT+4ygmfi
+ wkLFOkQRa4EkJ/FVCEEwp5KCJlko304epQXs/PDnhI0zv0j1hW9Q8thT5swmXos4Rzbh+nDd4v/
+ Jr6DmKJSaiX55mnchF86+pn7rW1sA+p++j35+GsPYB6SrS41ahWyxlnjH1ieO8OCeaEA1bKlTQS
+ nw1pm2aEX83dQVMO0nA==
+X-Proofpoint-ORIG-GUID: GygjeXbEPNI_UQ74as96vUtXmWo3C4IQ
+X-Proofpoint-GUID: GygjeXbEPNI_UQ74as96vUtXmWo3C4IQ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIxMDA5MyBTYWx0ZWRfX/OPJRO0rJ89s
+ o6dfnZlS/J4UObS/sfueUQBGxoPd2qSYguD/nx/h1p2DJi2UtqeQpTPiT2yOoOf2QQDoDwVcsu5
+ sTR44QqX4ev4RkAEsHgSWZpcAMyWxQ8=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-21_02,2026-09-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
+ bulkscore=0 priorityscore=1501 clxscore=1015 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609210093
 
-"Jonathan Cameron" <jic23@kernel.org> writes:
+On Fri, Sep 18, 2026 at 06:08:29AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] kvm: ppc: software-injected external interrupts lost on XIVE hosts
+> --
+> 
+> commit 05773d5b089dd4410c7e3e3a1611da5479c7d1a4
+> Author: Gautam Menghani <gautam@linux.ibm.com>
+> 
+> KVM: PPC: Book3S HV: Avoid spurious interrupts caused by LPCR_MER bit
+> 
+> This commit aims to avoid a huge number of spurious interrupts on KVM PowerNV
+> guests in XIVE mode by not using the LPCR_MER bit when the hardware can
+> present interrupts directly. It modifies kvmhv_run_single_vcpu() to skip
+> setting LPCR_MER when xics_on_xive() returns true.
+> 
+> Closes: https://lore.kernel.org/linuxppc-dev/582904882.11159.1786719390349.JavaMail.zimbra@raptorengineeringinc.com
+> 
+> > diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
+> > index dbac3573b2c89..f4d12a97311b9 100644
+> > --- a/arch/powerpc/kvm/book3s_hv.c
+> > +++ b/arch/powerpc/kvm/book3s_hv.c
+> > @@ -4980,7 +4980,7 @@ int kvmhv_run_single_vcpu(struct kvm_vcpu *vcpu, u64 time_limit,
+> >  			if (!kvmhv_on_pseries() && (__kvmppc_get_msr_hv(vcpu) & MSR_EE))
+> >  				kvmppc_inject_interrupt_hv(vcpu,
+> >  							   BOOK3S_INTERRUPT_EXTERNAL, 0);
+> > -			else
+> > +			else if (!xics_on_xive())
+> >  				lpcr |= LPCR_MER;
+> 
+> [Severity: High]
+> Does this unconditionally disable LPCR_MER on XIVE hosts, potentially dropping
+> software-injected external interrupts when MSR_EE=0?
+> 
+> The outer condition in kvmhv_run_single_vcpu() checks if either a KVM software
+> interrupt (BOOK3S_IRQPRIO_EXTERNAL) or a hardware XIVE interrupt is pending.
+> 
+> When MSR_EE=0 on guest entry, the patched code evaluates:
+> 
+>     else if (!xics_on_xive())
+>         lpcr |= LPCR_MER;
+> 
+> Since xics_on_xive() evaluates to true globally on bare-metal POWER9+ hosts
+> with XIVE enabled, regardless of whether the guest uses the in-kernel XIVE
+> irqchip, bypassing LPCR_MER here seems to cause software-injected interrupts
+> (such as those from userspace via the KVM_INTERRUPT ioctl) to lose the
+> hardware trap mechanism that normally fires when the guest later sets
+> MSR_EE=1.
+> 
+> Could this lead to dropped or severely delayed external interrupts for guests
+> using a userspace irqchip?
 
-> On Thu, 17 Sep 2026 08:40:06 +0200
-> Esben Haabendal <esben@geanix.com> wrote:
->
->> <sashiko-bot@kernel.org> writes:
->>
->> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->> > - [Critical] iio: accel: mma8452: Interrupt storm livelock when IRQ fires during RPM_SUSPENDING
->> > - [High] iio: accel: mma8452: Invalid I2C access during system suspend due to mishandled -EINVAL
->> > - [Medium] iio: accel: mma8452: Race condition in probe error path due to pm_runtime_disable() before free_irq()
->> > --
->> >
-> So far we haven't enabled sashiko emails to the linux-iio list
-> (will probably move to that fairly soon) so fun side effect is this
-> reply was shouting into the void - except that b4 picks it up.
->
-> +CC linux-iio. I'm too lazy to add everyone by hand who was on original thread.
->
-> Key here is looks like you already plan a v10.
+Yes this is a valid case. When kernel irqchip is off, the guest vCPU will be required to make an extra
+exit to the host for interrupt injection. Will fix this in v3.
 
-Yes, sashiko-bot clearly catches a lot of valid problems. Also flags
-some things that is not valid. And for a patch series with many
-versions, like this one, these invalid findings keeps getting repeated.
-
-Are there some guidelines how to handle this? Is it enough to write a
-reply to the list(s) explaining why the finding is invalid on the first
-report by sashiko-bot, or do we have to repeat every time that
-sashiko-bot repeats the rebuted finding?
-
->> > commit bf19c63685f6fff116a3a5358196fd66dff6090a
->> > Author: Esben Haabendal <esben@geanix.com>
->> >
->> > iio: accel: mma8452: Support interrupt sharing
->> >
->> > This commit adds support for shared interrupts to the mma8452 driver. It
->> > modifies the interrupt handler to check the runtime PM status and ignores
->> > the interrupt if the device is suspended. It also updates the runtime
->> > suspend and resume paths to properly disable and restore interrupt sources.
->> >
->> >> diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
->> >> index 5aea6bf3312af..2a980c0c2e03a 100644
->> >> --- a/drivers/iio/accel/mma8452.c
->> >> +++ b/drivers/iio/accel/mma8452.c
->> >
->> > [ ... ]
->> >
->> >> @@ -1086,15 +1088,28 @@ static irqreturn_t mma8452_interrupt(int irq, void *p)
->> >>  {
->> >>  	struct iio_dev *indio_dev = p;
->> >>  	struct mma8452_data *data = iio_priv(indio_dev);
->> >> +	struct device *dev = &data->client->dev;
->> >>  	irqreturn_t ret = IRQ_NONE;
->> >> +	int pm_status;
->> >>  	int src;
->> >>
->> >> +	pm_status = pm_runtime_get_if_active(dev);
->> >> +	if (pm_status == 0)
->> >> +		return IRQ_NONE; /* device is powered down */
->> >
->> > [Severity: Critical]
->> > If the device asserts its level-triggered interrupt when the PM core is
->> > transitioning the device to RPM_SUSPENDING (e.g., when the autosuspend
->> > timer expires), pm_runtime_get_if_active() will return 0.
->> >
->> > Does returning IRQ_NONE without clearing the hardware interrupt here cause
->> > a permanent interrupt storm? Since the IRQ line is shared and unmasked upon
->> > return, the still-asserted hardware interrupt might immediately re-trigger
->> > the handler, potentially starving the worker thread that executes
->> > mma8452_runtime_suspend() and hard-locking the system.
->>
->> This should be handled by the disable of all interrupt sources (clearing
->> CTRL_REG4) in mma8452_runtime_suspend().
->>
->> > [Severity: High]
->> > During system suspend, pm_runtime_force_suspend() disables runtime PM,
->> > which increments the disable depth. If a shared interrupt fires during this
->> > window, pm_runtime_get_if_active() returns -EINVAL.
->> >
->> > Since this check only catches pm_status == 0, does this allow the handler
->> > to proceed and perform I2C reads on unpowered hardware? Per subsystem
->> > guidelines, should this check for pm_status <= 0 instead?
->>
->> If we bail out on pm_status <= 0, the driver would not work on systems
->> with CONFIG_PM not enabled.
->>
->> In order to handle the difference betwen the different reasons for
->> -EINVAL, it would seem like we would need some #ifdef CONFIG_PM in here.
->> Do we really want to do that?
->
-> That if_enabled() function is a pain.  Definitely not ifdef but
-> how about
->
->  if (IS_ENABLED(CONFIG_PM) && ret < 0) or something like that?
-
-That should work. Now, in this case, do we want to report IRQ_HANDLED or
-IRQ_NONE? We obviosly did not really handle it, but we also don't know
-if the irq was for this device.
-
->> >> +
->> >> +	/*
->> >> +	 * pm_status is now 1 or -EINVAL. If pm_status==1, runtime PM is enabled
->> >> +	 * and device is RPM_ACTIVE. If pm_status==-EINVAL, runtime PM is
->> >> +	 * disabled (e.g. CONFIG_PM not enabled), and we can/must assume device
->> >> +	 * is active.
->> >> +	 */
->> >> +
->> >>  	src = i2c_smbus_read_byte_data(data->client, MMA8452_INT_SRC);
->> >
->> > [ ... ]
->> >
->> >> @@ -1771,11 +1790,12 @@ static void mma8452_remove(struct i2c_client *client)
->> >>
->> >>  	iio_device_unregister(indio_dev);
->> >>
->> >> -	pm_runtime_disable(dev);
->> >> -	pm_runtime_set_suspended(dev);
->> >> -
->> >>  	if (client->irq)
->> >>  		free_irq(client->irq, indio_dev);
->> >> +	/* No irq will fire beyond this point */
->> >> +
->> >> +	pm_runtime_disable(dev);
->> >> +	pm_runtime_set_suspended(dev);
->> >
->> > [Severity: Medium]
->> > This correctly fixes the race in mma8452_remove() by moving free_irq()
->> > before pm_runtime_disable(), but does the same race still exist in the
->> > mma8452_probe() error path?
->> >
->> > If mma8452_probe() fails after pm_runtime_enable(), it jumps to the
->> > runtime_suspend label:
->> >
->> >   mma8452_probe() {
->> >       /* ... */
->> >   runtime_suspend:
->> >       pm_runtime_disable(dev);
->> >       pm_runtime_set_suspended(dev);
->> >
->> >   free_irq:
->> >       if (client->irq)
->> >           free_irq(client->irq, indio_dev);
->> >       /* ... */
->> >   }
->> >
->> > If a shared interrupt fires between pm_runtime_disable() and free_irq(),
->> > could the handler attempt to access unpowered hardware?
->>
->> I will apply the same reordering in mma8452_probe().
->
-> Sounds good to me
-
-I will send it when I have the above question resolved.
-
-/Esben
+Thanks,
+Gautam
