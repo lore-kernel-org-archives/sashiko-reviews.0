@@ -1,36 +1,36 @@
-Received: from mta0.migadu.com (out-193.mta0.migadu.com [91.218.175.193])
+Received: from mta1.migadu.com (out-178.mta1.migadu.com [95.215.58.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2893BB9F1
-	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 14:14:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F28E370AC6
+	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 14:20:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790000051; cv=none; b=EvCr8yKyAEr3GxKtITv40CYWaPNjoBUjDaHLMupBmNXnYmqjKW+UMz+qTkMKJEiED1EsZPOn8zNXPP0hTd0ZcJre3g53wzWooNNRuai0l3fVCDQv43QdOUSgEtLbZhP6Ug2iUlJyvHdWwtIA6vjGBOGuThYB29nvoyUJbgjQPww=
+	t=1790000428; cv=none; b=TkFURbvB4KZEr3t0ZehCpO+Wa0xTmkrEgdw5PRiVelB64s8E+/hL5m0Szuc25IBteJRyJf+w3y7Uk18MD7yW/NNGHI+LTxYolEbtjPavLsLeJszr8MLhghAl5TjboZC2gUFl9r4t1UJ623+XZtOGFr2ltEvz+PWMDmOigsxbf6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790000051; c=relaxed/simple;
-	bh=5pQC0kqxUSJeFu8J4BFJADFheG0OgG3mpln6pB3C/XI=;
+	s=arc-20240116; t=1790000428; c=relaxed/simple;
+	bh=Z6+lbQSfsts1seFo97lTcVu3MuMtDNhLODH15/zqHCA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tOi8NbaaDHFX13dSfpqFH/DQXTW4Z/utadTMElrdyUj3MLst3T3qR1oQvFO8h0WQ2H1058JpatMHFX65zpGF5arQe2E3yMCvecErZJdzPXoyU+27X5wklbLJCE7jElPahHimZq4BmgGZHosA8YdRPnVx0eCDO5e51X8gQ5Qgkdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=BGaUNser; arc=none smtp.client-ip=91.218.175.193
+	 In-Reply-To:Content-Type; b=bxm2WEW20Y3aohWIB/579hygkzODkE6oLwJBiZGjyaByQhB9DozzGHey6brXfPt9GiGkonuY+iQIsWJkZuXX7THULxKdLjPnE1fEmWeYdAmttYDmzYjRw0jDB4d5ajVD0eZLnt7K8118w4IP3I5/F05InSgTzWz8uNAUPohNZJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=nj/+VIjU; arc=none smtp.client-ip=95.215.58.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="BGaUNser"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="nj/+VIjU"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=5pQC0kqxUSJeFu8J4BFJADFheG0OgG3mpln6pB3C/XI=;
+DKIM-Signature: a=rsa-sha256; bh=Z6+lbQSfsts1seFo97lTcVu3MuMtDNhLODH15/zqHCA=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790000046; v=1; x=1790604846;
- b=BGaUNserVcYMsedGCqyeMkYihdV0CK6TsTMDjb8jbCRSI5OtjPCUcPyNJvI/11WT/dUlWCtJ
- G2w8sQgzsjNlfw/I3DraoXCoO1P2A70LOiVw15IkBFjD6H5vmh2iCttLhK9x208AXQSY7g9g2aI
- 6te8KgO7wy1PAy6lg5RmfAps=
+ t=1790000424; v=1; x=1790605224;
+ b=nj/+VIjUK6slzKfQw3m2hQOltOixLUVaRgTq2Ij05zZVPrgKywa2yXtmx8SXaDbQFEmSHs7Q
+ ZBYr4h5qraWpfQQN4iiffAY0Tl3XVNXaWLS3tjIvl1Mfn7M3GUkDtfp9V4lwGmJFQhiwpRAMNUm
+ eG4CbkBMWk7Yr01HvKK3rIvM=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id e3566851e24fa24d;
-	Mon, 21 Sep 2026 14:14:06 +0000
-X-Mizu-Trace-ID: e3566851e24fa24d
+Received: by smtp.migadu.com with ESMTPS id d936da47445c78c3;
+	Mon, 21 Sep 2026 14:20:24 +0000
+X-Mizu-Trace-ID: d936da47445c78c3
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <0036dd4d-6bb3-4547-9ae7-3601f7adf366@linux.dev>
-Date: Mon, 21 Sep 2026 07:14:01 -0700
+Message-ID: <a5ac138b-f857-4b6b-aaa9-1695b4b877e6@linux.dev>
+Date: Mon, 21 Sep 2026 07:20:20 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,80 +38,116 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v3 16/20] libbpf: Carry the exception cleanup
- table through the light skeleton
+Subject: Re: [PATCH bpf-next v3 17/20] libbpf: Let the static linker carry
+ .bpf_cleanup relocations
 Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260920054225.864535-1-yonghong.song@linux.dev>
- <20260920054347.872462-1-yonghong.song@linux.dev>
- <20260920060112.1B9011F000FF@smtp.kernel.org>
+ <20260920054353.872669-1-yonghong.song@linux.dev>
+ <20260920060026.6349C1F000FF@smtp.kernel.org>
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260920060112.1B9011F000FF@smtp.kernel.org>
+In-Reply-To: <20260920060026.6349C1F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
 
 
-On 9/19/26 11:01 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] bpf: Integer overflow in cleanup_info_tot_sz leads to heap buffer overflow
+On 9/19/26 11:00 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] libbpf: integer overflow in relocation bounds check allows out-of-bounds heap access
+> - [Low] libbpf: incompatible pointer cast to __u32 * violates strict aliasing
+> - [Low] bpf: newly added multi-line comments violate the BPF kernel comment style
 > --
 >
-> commit ae662736be5da05d165c478a926196fe248e707a
+> commit c31e91765bc81fed1c51952c88d0792cd3b4c2bd
 > Author: Yonghong Song <yonghong.song@linux.dev>
 >
-> libbpf: Carry the exception cleanup table through the light skeleton
+> libbpf: Let the static linker carry .bpf_cleanup relocations
 >
-> This commit updates the light skeleton generator to emit BPF_PROG_LOAD
-> instructions that include the exception cleanup table. It stores the cleanup
-> records in the loader's bytes blob, calculates the needed buffer size, and
-> byte-swaps the records for cross-endian builds.
+> This commit updates the static linker to accept and properly handle
+> R_BPF_64_NODYLD32 and R_BPF_64_ABS32 relocations against STT_SECTION
+> symbols in non-executable sections. This enables linking of objects
+> that contain compiler-emitted exception cleanup tables.
 >
->> diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
->> index af3a04f161ac1..2345fbdd46f56 100644
->> --- a/tools/lib/bpf/gen_loader.c
->> +++ b/tools/lib/bpf/gen_loader.c
+>> diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
+>> index 78f92c39290af..fac7390bd109d 100644
+>> --- a/tools/lib/bpf/linker.c
+>> +++ b/tools/lib/bpf/linker.c
 > [ ... ]
 >
->> @@ -998,6 +1000,9 @@ static void info_blob_bswap(struct bpf_gen *gen, int func_info, int line_info,
->>   
->>   	for (i = 0; i < gen->core_relo_cnt; i++)
->>   		bpf_core_relo_bswap(cr++);
+>> @@ -2274,6 +2275,39 @@ static int linker_append_elf_relos(struct bpf_linker *linker, struct src_obj *ob
+>>   						insn->imm += sec->dst_off / sizeof(struct bpf_insn);
+>>   					else
+>>   						insn->imm += sec->dst_off;
+>> +				} else if (sym_type == R_BPF_64_NODYLD32 ||
+>> +					   sym_type == R_BPF_64_ABS32) {
+>> +					__u32 *val;
 >> +
->> +	for (i = 0; i < load_attr->cleanup_info_cnt; i++)
->> +		bpf_cleanup_info_bswap(ci++);
+>> +					/* Two spellings of the one thing: LLVM
+>> +					 * emits NODYLD32 for a .long against a
+> [Severity: Low]
+> Does this multi-line comment format violate the BPF subsystem guidelines? The
+> BPF guidelines specify that multi-line comments must have the opening /* on
+> its own line, with the text starting on the next line.
+>
+>> +					 * section symbol, GNU as emits ABS32
+>> +					 * (bpf_reloc_type_lookup() maps
+>> +					 * BFD_RELOC_32 to it), and the value
+>> +					 * they describe is the same.
+>> +					 */
+>> +
+>> +					/* An SHT_NOBITS section has no
+>> +					 * raw_data, and r_offset is sanity
+> [Severity: Low]
+> This isn't a functional issue, but this comment also places text on the same
+> line as the opening /*.
+>
+>> +					 * checked only for sections holding
+>> +					 * instructions. Check both here
+>> +					 * before writing.
+>> +					 */
+>> +					if (!dst_linked_sec->raw_data ||
+>> +					    dst_rel->r_offset % sizeof(*val) ||
+>> +					    dst_rel->r_offset + sizeof(*val) >
+>> +					    (size_t)dst_linked_sec->sec_sz) {
 > [Severity: High]
-> Does this loop write beyond the allocated buffer if cleanup_info_tot_sz
-> overflowed during its calculation?
+> Can this bounds check bypass validation due to an integer overflow?
 >
-> If an untrusted user provides a malicious BPF ELF object with a very large
-> .bpf_cleanup section, load_attr->cleanup_info_cnt can be extremely large.
-> The loop uses this un-wrapped count to byte-swap entries, writing past the
-> end of the buffer if the allocation size was wrapped.
->
->>   }
->>   
->>   void bpf_gen__prog_load(struct bpf_gen *gen,
->> @@ -1011,8 +1016,11 @@ void bpf_gen__prog_load(struct bpf_gen *gen,
->>   			       load_attr->line_info_rec_size;
->>   	int core_relo_tot_sz = gen->core_relo_cnt *
->>   			       sizeof(struct bpf_core_relo);
->> +	int cleanup_info_tot_sz = load_attr->cleanup_info_cnt *
->> +				  load_attr->cleanup_info_rec_size;
-> [Severity: High]
-> Can this multiplication overflow a 32-bit integer?
->
-> If load_attr->cleanup_info_cnt is a huge value (e.g., 0x15555556),
-> multiplying it by cleanup_info_rec_size (12) will wrap around a 32-bit
-> integer.
->
-> This would result in a small wrapped value being assigned to
-> cleanup_info_tot_sz (e.g., 0x15555556 * 12 = 4294967304, wrapping to 8).
-> The resulting undersized allocation passed to add_data() would then lead
-> to the out-of-bounds write in info_blob_bswap().
+> If a malicious BPF ELF object provides an oversized r_offset (for example,
+> 0xFFFFFFFFFFFFFFFC), adding sizeof(*val) could wrap around to 0. This bypasses
+> the check against dst_linked_sec->sec_sz and allows out-of-bounds heap memory
+> access.
 
-Overflow is indeed possible. Will fix it, e.g. with cleanup_info_tot_sz as __u64
-and later check against INT32_MAX.
+Yes, overflow is possible. Will fix.
 
+>
+>> +						pr_warn("ELF relo #%d in section #%zu points outside the data of section '%s' in %s\n",
+>> +							j, src_sec->sec_idx,
+>> +							dst_linked_sec->sec_name,
+>> +							obj->filename);
+>> +						return -EINVAL;
+>> +					}
+>> +					val = dst_linked_sec->raw_data + dst_rel->r_offset;
+>> +					if (linker->swapped_endian)
+>> +						*val = bswap_32(bswap_32(*val) + sec->dst_off);
+>> +					else
+>> +						*val += sec->dst_off;
+> [Severity: Low]
+> Does casting the raw byte buffer to a __u32 pointer violate strict aliasing
+> rules?
+>
+> The tools/ build assumes strict aliasing, and accessing generic byte buffers
+> this way can lead to compiler misoptimization. Would it be safer to use memcpy
+> or unaligned access macros here?
+
+I think it should be okay. In the above we have
+   struct bpf_insn *insn;
+   ...
+   insn = dst_linked_sec->raw_data + dst_rel->r_offset;
+
+>
+>>   				} else {
+>>   					pr_warn("relocation against STT_SECTION in non-exec section is not supported!\n");
+>>   					return -EINVAL;
 
