@@ -1,144 +1,105 @@
-Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45094A3F34
-	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 20:48:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C724FC346
+	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 21:27:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790023732; cv=none; b=sI1u20WrJWG28PXaWdr8lznlh1P/oPzSlrpkFNjvyuWqf4Maafw+UGJERT25fOI53LUV7XLrbBb0rLFTWXztjwmuzq6JDoAFr8RoFJodKWqAO7/MAjx5OprJujCtl+KhV0oF8wFJplQh/8genYni6nnyHZwksspXuOTZhHrrLMM=
+	t=1790026061; cv=none; b=DSOZ0k/boXLfrSMBjUHkBJ+yG917lVeTuz2RgKljNlXuHSmJwuIF7L+JRiouxHNcAHFVDU2DjA8yXb+oUkpYfiWHiuPxGOj3Z61M6MmShEmqg6Tv1j6+dlEHd1N+3lfEs54aq+D+hP1jCswRpbhfW/XGRZ+byAh49yGIltp4KCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790023732; c=relaxed/simple;
-	bh=duuqjqeee1gxRjF5xn4L1VFmmMHLBdcH21nRueFfC6A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fodLq14RkGoTPWDiEbua1IAjMSgt/DRA530OfjaAgtzZbXFVIhQPnHyZN5nxh92TUk4SNlZALsRv5DJcmz+4E2UHeqZ8J5azO2kiOgwUYPgmAp2Y+f4ZDE6Aj/oLj+fSDEWYB8BhmUYsLy4r7ykoMYDpvBSYDGyiOXwOyB1qt3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=NVxL5mcm; arc=none smtp.client-ip=74.125.228.12
+	s=arc-20240116; t=1790026061; c=relaxed/simple;
+	bh=fo8XdEe5FSjrfsUHQCe4iJ/9r57GZB37hHQK3O7IOQA=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=UPam3RVP/kWJj4yY2PIS8o/QwHyMin8BCdVUxl31M6/HAihS2ajdxoMKaqWXUOb1mKdTyXneYsbqGbxSD6xSFqB1QhcTp6TyKW16WiFl20LR+Oj26UKh2V28CL3VLW+ZDe6XC1KxTYNmphFAGnpODdrrOIYsW8t7NOkCSsdajXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=T3hKd9C/; arc=none smtp.client-ip=209.85.214.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="NVxL5mcm"
-Received: by mail-pz2-f12.google.com with SMTP id d2e1a72fcca58-85469f20513so2870095b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 13:48:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="T3hKd9C/"
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2dc92350888so61497425ad.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 14:27:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790023730; x=1790628530; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=9RpdHbEhaZD0mMR4lSv7YIPkc3oHh9/Jw4xKi9A6gsk=;
-        b=NVxL5mcmOgpdhozK8W/f40/Ob+z13WLprC1KLQMzmbHCFTqfYWyDXRD1c0mTfAvrBR
-         EBAbjzL+AJxKX2CUIRCc8PuEM8NVpWefVAKblxIkrDnz1uQyb2IcRf9mKeq27h8YFQUz
-         hZ0187z1AJ0v2zIhUDwTvFxSAE5ItOm046l3u7dTv0RWK+7VpesH6XspJ1zx5QsF+IEd
-         iQ3zoJPD9cnfIvPiQFu0vQUhS9MCkQF+igI41soBCq75HEczTaMBO+6qUBc6158uN1gI
-         BygdRthpMO/iPVavOpdDMQeTgebDSwWLYjpiSb9gvGkl6gpfE1Thyw0bYxQF2vuFiNvn
-         rfuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790023730; x=1790628530;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20251104; t=1790026060; x=1790630860; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=9RpdHbEhaZD0mMR4lSv7YIPkc3oHh9/Jw4xKi9A6gsk=;
-        b=dUy3Sz5N5lQkxloJoenDCKCq00F9WAXoLNcN+yM6+FgJD1Wk9adl+TqiZwuGQ6ZdKL
-         J2PwJHWLrHusI5mcSGWy7ryqP+mJnh5h4biyND+suHgC7wKOn4Tuu6rTFktoJ9Tz2D5h
-         MeqtLzoV67Ovc6WM9GsCo5JWxocE1eXDxcsPVJ1U27I1nzm7hULjFHm8RZsBUS6ykzAv
-         EaKHQhB3rzuohh4moxQ/TqcQx3W279NvCTp7xwBMtbTGFHXkgla98Ez8y1J4PFyDRwd7
-         eCCTGNEQjMsV0cJo9aZ1TD+5ry2g/gDl1HftPReidkPjX3nGFezL9z1r+DTUYb7oQsg1
-         m+KQ==
-X-Gm-Message-State: AFuF++mQiTxAiCJQi2vbP/jII1bYl7NHO0iL5xzKzgrbyJnTy/ywT3rJ
-	4/NhNhw5tecl898UvHVrniyiPUrXRlpeKQTlehmpMH5nebqB+Ib/UfXrJNjMjmwW8w==
-X-Gm-Gg: AYBFou0PdrTLnA6nNqI7k7Ab8w7shbajOPeTYuLPIpXnQ90I5VmLbiSPfcDliz3Soq+
-	E+fbx50upnTyE2HHSohbxtKti0Bhhx3bV6nkr9F+ZV24K8tqwlfPhUPu3ZNtJB+KpR15LhDGKH1
-	8JOecjLbdZTrDW1njezeA7iqZxcfqQJJ15xmzwpBYuvMGywSJJ17nu4r6mSkfrG7mtBn2S2jQzc
-	shC/Ztn0S8g+1eWioMBLRjWMS3OpGdczFBxeQ7bqhCsagaZA/x2psRRllnWj2xKNYSWao1cWSC6
-	QIRfS7HJn1Z/T4TDhBKdDZdOVlG+VZp8I0rwznWuOkKzH+Fh574X04vYwguzWdsDzKds0CN//Az
-	yiGrpepaVOvhoYNbGgf3ZLX+SF3n5Gimlta5o+97jCwwnrkijPoTsjkVwUTPaNe0KypeF3Eld/o
-	5eEp3b5UHG4ZbmTCIcuF7tiPWWUsdSTNxHBuiyv3HbWtEK+QGgOE+5dox5HwwR5uqmysO8ZCcOC
-	jGeVXbFVtEtR6WCsbsSvk3IUAKfIK2a0fFc1NtDVBbfYJYXdJ4=
-X-Received: by 2002:a05:6a00:6c97:b0:878:34b8:2320 with SMTP id d2e1a72fcca58-87834b82455mr8559084b3a.40.1790023729351;
-        Mon, 21 Sep 2026 13:48:49 -0700 (PDT)
-Received: from google.com (192.150.203.35.bc.googleusercontent.com. [35.203.150.192])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-87bf84b6859sm44247b3a.52.2026.09.21.13.48.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Sep 2026 13:48:48 -0700 (PDT)
-Date: Mon, 21 Sep 2026 20:48:45 +0000
-From: David Matlack <dmatlack@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org,
-	linux-rdma@vger.kernel.org, Sean Christopherson <seanjc@google.com>
-Subject: Re: [PATCH v6 06/10] vfio: selftests: Allow drivers to specify
- required region size
-Message-ID: <arGYLavnr25ZSyuw@google.com>
-References: <6-v6-8af36cf7b73f+e2-mlx5st_jgg@nvidia.com>
- <20260917235245.CAAE41F00898@smtp.kernel.org>
- <20260918115217.GA11142@nvidia.com>
- <CALzav=f4NTb4Csn2BoK5kk=MckFRvbVnOdO9yiCz8MLXdRMPOg@mail.gmail.com>
- <20260918200000.GB11142@nvidia.com>
+        bh=imbcA+h5CSacGkPDqFjCLKSXoDxa8F5RkkDF7GogBlU=;
+        b=T3hKd9C/uuyHNWvm+A/74uWn5Et7Rt1aRmolE3rlsd9VwMeJS4CU2/KCjRjea12mo7
+         pEspTcDiOYEwSWtw4inl92YhbYpD3DlJ5HGYz4g7XLcyt4TthufGzUJuM5kbw5wOJruv
+         dl6rLaDpcL2aevfcqNkkV0hSpoUAn+g8H8t324w888PFGE/oTzvL7UQLzBB/E/uZ/SNW
+         v43OeNuxI8iPo65t1CAfM5jCHbiG7PKPj1W7WSpSv5uBFpcPAZ6m4QiyIOONyqvP2xuO
+         6Mmf9uWB3jnP/EHGNFv9xoF1qBHoVOzaKxEl1I0HfzknW53eczqVS2SL1D9uyGkAywji
+         gmBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790026060; x=1790630860;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=imbcA+h5CSacGkPDqFjCLKSXoDxa8F5RkkDF7GogBlU=;
+        b=pmfFwff60b2rt0Adr1yUG5ExSyRwCtBIfgPqSFgbhUWjf/c7aW4wrqTk1Rg7SP8YP4
+         QAXwzGmf+v6Mqf301PT6L39Bo65ahsd2WNI3mE416lGpK3ahHEWhR2VilCc9Z5Vg67y/
+         Xcx/eHqGEHmMKWWK/5cvyt1nf8Uf9KXMOD868flU8f9wW2IXXwLC5m0saYssseluU3w2
+         aogbmKS0w+CEe29eeVTh1/DPC4kcOm63CO5XpiZql24hWcPVNYezEIuD2B8T4v+krPhb
+         SsbLoYaI4aMC5Zw9OQyeRimox2/FR1C88YAgETaKHnGcFIKcosktEddpWSAbeq2+gzkX
+         Em4g==
+X-Gm-Message-State: AFuF++nRjfsdN1IG4wEIKL2dOTX7rWjR8BYSjaBiXVvTE2fJZ3ztuJ2U
+	Fc94Nfe6m9bffiZpF+HxS75ROb4i8oRs5asZ80U7BJrUKLK3QRu+o7QbkxRi+0o0uYVTnGQp2FZ
+	ri7o0ZF+6v1fgIpgs1wuqvceVjEVFVknOVH7IfP4s0FMyJcNQJU9Sl1pbasJbV3gp8bcOslgken
+	/8pR+7f0qYQ60e3EDGiXhuL90a5KzIumJmOggmMZBt+9I3Bup9
+X-Received: from pldu3.prod.google.com ([2002:a17:903:1083:b0:2dd:7e95:7c98])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:902:c947:b0:2dd:ad73:c93a
+ with SMTP id d9443c01a7336-2ddb1bca6e2mr171876505ad.27.1790026059668; Mon, 21
+ Sep 2026 14:27:39 -0700 (PDT)
+Date: Mon, 21 Sep 2026 14:27:38 -0700
+In-Reply-To: <20260921211941.5E8A91F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260918200000.GB11142@nvidia.com>
+Mime-Version: 1.0
+References: <20260921210616.1024168-1-seanjc@google.com> <20260921210616.1024168-5-seanjc@google.com>
+ <20260921211941.5E8A91F000FF@smtp.kernel.org>
+Message-ID: <arGhSlb-q8RkDiCO@google.com>
+Subject: Re: [PATCH v4 4/5] KVM: guest_memfd: Establish memslot<=>guest_memfd
+ bindings *after* memslot is ready
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On 2026-09-18 05:00 PM, Jason Gunthorpe wrote:
-> On Fri, Sep 18, 2026 at 07:58:58AM -0700, David Matlack wrote:
-> > > >
-> > > > [Severity: Medium]
-> > > > Since this changes the vfio test to use the dynamic driver->region.size
-> > > > instead of SZ_2M, should tools/testing/selftests/kvm/irq_test.c be updated
-> > > > as well?
-> > > >
-> > > > It looks like vfio_setup_msi() in kvm/irq_test.c still forcefully overwrites
-> > > > the dynamically probed size back to 2MB:
-> > > >
-> > > > tools/testing/selftests/kvm/irq_test.c:vfio_setup_msi() {
-> > > >       ...
-> > > >       region = &device->driver.region;
-> > > >       region->size = SZ_2M;
-> > > >       region->iova = iova_allocator_alloc(allocator, region->size);
-> > > >       ...
-> > > > }
-> > > >
-> > > > Will this cause the KVM irq_test to fail with a VFIO_ASSERT_GE during driver
-> > > > initialization via vfio_pci_driver_init() when tested with a driver that
-> > > > requires a larger region, such as the mlx5 driver mentioned in the commit
-> > > > message?
-> > >
-> > > I have no idea, Dave? Did kvm start using this stuff?
-> > 
-> > Yes, KVM started linking in the VFIO selftests library in 7.3 and
-> > irq_test.c is the first test using it.
+On Mon, Sep 21, 2026, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+> > --- a/virt/kvm/kvm_main.c
+> > +++ b/virt/kvm/kvm_main.c
+> [ ... ]
+> > @@ -1944,6 +1945,15 @@ static int kvm_set_memslot(struct kvm *kvm,
+> >  	r = kvm_prepare_memory_region(kvm, old, new, change);
+> >  	if (r)
+> >  		goto err;
+> >  
+> > +	if (change == KVM_MR_CREATE && (new->flags & KVM_MEM_GUEST_MEMFD)) {
+> > +		r = kvm_gmem_bind(kvm, new, gmem_fd, gmem_offset);
 > 
-> Okay, so I think this is all that is needed:
+> [Severity: High]
+> Does this new initialization order break guest_memfd creation on arm64?
 > 
-> @@ -101,7 +100,6 @@ static int vfio_setup_msi(struct vfio_pci_device *device)
->         allocator = iova_allocator_init(device->iommu);
->  
->         region = &device->driver.region;
-> -       region->size = SZ_2M;
->         region->iova = iova_allocator_alloc(allocator, region->size);
->         region->vaddr = kvm_mmap(region->size, prot, flags, -1);
->         TEST_ASSERT(region->vaddr != MAP_FAILED, "mmap() failed\n");
+> By moving the kvm_gmem_bind() call to execute after kvm_prepare_memory_region(),
+> the KVM_MEMSLOT_GMEM_ONLY flag is not populated in time for the architecture
+> specific hooks.
 > 
-> > Looks like that is also causing the dma_rmb/wmb() redefinition
-> > compiler warning from the kernel-test-robot.
+> In virt/kvm/guest_memfd.c:kvm_gmem_bind(), the flag is assigned:
 > 
-> Yeah, for some reason kvm defined them in its private headers instead
-> of putting them in the right place :(
+>     if (kvm_gmem_supports_mmap(inode))
+>         slot->flags |= KVM_MEMSLOT_GMEM_ONLY;
 > 
-> I think I can just delete the kvm definitions.
+> Because kvm_prepare_memory_region() now runs before this assignment, the
+> architecture hook in arch/arm64/kvm/mmu.c:kvm_arch_prepare_memory_region()
+> evaluates the flag before it is set:
 > 
-> I don't have an arm system or userspace cross compiler to test it with
-> though..
+>     if (kvm_slot_has_gmem(new) && !kvm_memslot_is_gmem_only(new))
+>         return -EINVAL;
 
-Wait, really? I can help with building and running the KVM/arm64
-selftests if that's what you need.
-
-> Are we good on everything else, can Alex pick it up after I fix this?
-
-Yes all good from my pov after we address this feedback. I am no longer
-seeing failures[1] when using the IGB driver with this series applied.
-
-[1] https://lore.kernel.org/all/anzvkibgzTae9eV9@google.com/
+Argh, all that time spent trying to avoid adding a "prepare" phase to gmem, only
+for it to be all for naught.
