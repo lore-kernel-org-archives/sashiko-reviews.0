@@ -1,138 +1,165 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F7F488221;
-	Mon, 21 Sep 2026 23:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A90E38AC72
+	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 23:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790033653; cv=none; b=kFu3BRbGM0NNq+i6Q64luwycunH23Xqpz1OvG2pxWB+tBTaFvNEdpea4iOqayz0wPpstEWBm8YPutPbneJIfFueiSgLcqZzxbuUWvsx8eT8KtLr7eDpkfifTca993kx+n6ETpDB3PR4qXXbKSVtEC05GC1KNZvfpNFyDX2Y+xmA=
+	t=1790034928; cv=none; b=KAXFLX5xLp1xI11qQGytadUnXQ+JbsmvN+TL/CctF9CnxuGgBblLPOMgCPwb4PHtPuNX0rytGt/9K1IKIxas8uN9s2hE6fMuAewsrm1GspjJJoX4rZsiGJmLhDOBJ4F37tWQN5FSDSf2ju1eKj+SdT5JnGTJkH221CA0B2FFXeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790033653; c=relaxed/simple;
-	bh=CgBfhCNxqqy/1R57Vmqx2eZ7q+Wvo+0nohHbBChlRX4=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z8C8AyGodhnZ3/wzTUMABWziR1tkv2tQCwZYgpQaEfI4Cdl2JoUsU9PtYGTVv8x4+Y6OBDgNXczD1XqyMnV60k9sJo/q5bPDJ5l+/rz05QAd6iUH917ujQfRjvZv9iXJivKgyMu/qDNy0jG2LPk/CIXWvYGah6WThpz5D9JK7+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VKl8hfQB; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790034928; c=relaxed/simple;
+	bh=uE6cvJCeUUt46qVoBXyfE9zMT/Jn6/GTUI1B1OkYTUg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jnfJsX+JdO/AjhCKfnpUk1Y4xPA8NgfUbom6YgsTJi6XXhT2oojQcqJQDdtqJfo51kFBhdP8y2rATTQeOIfXHbAduExIgb9pg9VNhWaFg5OhBflId0uwjcMXIcX7PGX8MP+58YbllKdFqyCqeID5lHBIy3onrCkZ4Uhg9Lqt6cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KrY5lfUp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VKl8hfQB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0721F000FF;
-	Mon, 21 Sep 2026 23:34:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KrY5lfUp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12BB01F00893
+	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 23:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790033647;
-	bh=qRHgzQ7fwBcrIHPW7JscnruAs7vPiD7JEBmOX4o6mD4=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=VKl8hfQBPykC27f9P+McnxIWOGPvGmgNwFW8T7YaWkeJLyLbXfkhlsb6HWZD7PK+q
-	 X30goEHDTqyzyBciLI8ZQ9gmgvV5QXSFu3B+x/28iqRiaZShn+R4KwJ3BZiaQ/7gvF
-	 q7M3oXQ1RAVn7cPpflHO2QXruVwEi5OSPPJ1awoWjmnSPhQ6fw6fAJgU0E3p5iIuZ7
-	 phOJrWx+Fbit/qrjDInJBwM3dBqAmoBipCVc8rvzJMIl/k57oqOGPLrupqm3TzrZHK
-	 woxESbPCJRHvP1+Qx9fIAaCwRg0UHCvBg3IoHnscSRayvMdXgTigFJ6Ej96b5OPZ68
-	 UJ8SULgfceNWw==
-Date: Tue, 22 Sep 2026 00:34:02 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Anisa Su <anisa.su887@gmail.com>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev,
- nvdimm@lists.linux.dev, linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v12 3/8] cxl/cdat: Gather DSMAS data for DCD partitions
-Message-ID: <20260922003402.5134db4a@jic23-hlaptop>
-In-Reply-To: <anL0mD3DKfwJh4UY@AnisaLaptop.localdomain>
-References: <20260731084901.1512819-1-anisa.su@samsung.com>
-	<20260731084901.1512819-4-anisa.su@samsung.com>
-	<20260731090250.0C8DE1F000E9@smtp.kernel.org>
-	<20260804010748.7f9f8174@jic23-huawei>
-	<anL0mD3DKfwJh4UY@AnisaLaptop.localdomain>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+	s=k20260515; t=1790034927;
+	bh=odcasyXpajK/bRBL1pCgrDLz+d+eBunFQXffgqZmUDg=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=KrY5lfUpEXXGumquRUYzC4qZ7kSmL1FqTcR82dt7LWYXdROX4/2GyuDkxL7DMCWJj
+	 deIRrswoyIthZGJ1+YxwOtqRSzMe+vQR2WDuID1pC5DRgEJCquupMahfcckfLCdsBh
+	 k12dMSnzWikvmBoz9ydjYSPvN3L61uh6l4+jnh0X1FVu4iSaiT+YoBJ9zLbWUU7GU9
+	 DdzGt3rPAfVSNy+UCC0MdZkDczzPpBsWfKnUKcY4i25/FcuDEC8xlblZSp4H453gMm
+	 Ws8CVqox1WuTItNqkWerddHiBojE3sm050OZ9WBwJ/GsGz1bNbS36JVjgAZ3LnUAk6
+	 SbMH5FENZtFUg==
+Received: by mail-pj2-f12.google.com with SMTP id 98e67ed59e1d1-398a1676000so2759531a91.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 16:55:27 -0700 (PDT)
+X-Gm-Message-State: AFuF++mNyFPNUuyGaCDmiQrVeW+3UsCMh3sCJXQvdkvMoltFqTIaZaKT
+	XxcdIukcTPV55nMa6lD8mOLVHm8mg23n0dkbcD06H13obC6vmVMrNyInU5lz8ZcD/ne7ln+pzsp
+	p+goE83k31OzXhQCbExyfInhWo9IGVBc=
+X-Received: by 2002:a17:90b:5287:b0:38e:7168:281 with SMTP id
+ 98e67ed59e1d1-39e54ce361emr18546713a91.10.1790034926666; Mon, 21 Sep 2026
+ 16:55:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <20260921220516.121589-1-wufan@kernel.org> <20260921221626.D2EAE1F000FF@smtp.kernel.org>
+In-Reply-To: <20260921221626.D2EAE1F000FF@smtp.kernel.org>
+From: Fan Wu <wufan@kernel.org>
+Date: Mon, 21 Sep 2026 16:55:14 -0700
+X-Gmail-Original-Message-ID: <CAKtyLkGDT=T-EORXb-RXXQVX2C9=vNncqcEXUz8D7uCXn0M_Uw@mail.gmail.com>
+X-Gm-Features: AcwNN1UNOrxQK0gNEAq3kAMoLMBWbD549LDDGl0pRIS2_NMuLG8sk-JPXtEJvhU
+Message-ID: <CAKtyLkGDT=T-EORXb-RXXQVX2C9=vNncqcEXUz8D7uCXn0M_Uw@mail.gmail.com>
+Subject: Re: [PATCH] dm-verity: clear LSM integrity state on suspend
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-security-module@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 5 Aug 2026 01:30:16 -0700
-Anisa Su <anisa.su887@gmail.com> wrote:
+On Mon, Sep 21, 2026 at 3:18=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] dm-verity: clearing LSM state on suspend breaks IPE for cached f=
+iles
+> - [High] ipe: Use-After-Free in evaluate_dmv_roothash() due to missing RC=
+U
+> --
+>
+> commit 0a1a0f42158da1707e32f8b9739a8420e73985d1
+> Author: Fan Wu <wufan@kernel.org>
+>
+> dm-verity: clear LSM integrity state on suspend
+>
+> This commit updates dm-verity to clear the published root hash and signat=
+ure
+> state from the LSM security blob during verity_postsuspend(). This preven=
+ts
+> the block device from retaining stale attributes if the verity target is
+> replaced with a different target type.
+>
+> > diff --git a/drivers/md/dm-verity-target.c b/drivers/md/dm-verity-targe=
+t.c
+> > index cb105ccc47ecb..6d589867623c0 100644
+> > --- a/drivers/md/dm-verity-target.c
+> > +++ b/drivers/md/dm-verity-target.c
+>
+> [ ... ]
+>
+> > @@ -1779,8 +1781,31 @@ static int verity_preresume(struct dm_target *ti=
+)
+> >       return r;
+> >  }
+> >
+> > +static void verity_security_clear_integrity(struct dm_target *ti)
+> > +{
+> > +     struct block_device *bdev =3D dm_disk(dm_table_get_md(ti->table))=
+->part0;
+> > +
+> > +     security_bdev_setintegrity(bdev, LSM_INT_DMVERITY_ROOTHASH, NULL,=
+ 0);
+>
+> [Severity: High]
+> Does passing NULL to security_bdev_setintegrity() trigger a use-after-fre=
+e
+> in IPE?
+>
+> When this is called, ipe_bdev_setintegrity() appears to free the root has=
+h
+> without RCU synchronization:
+>
+> security/ipe/hooks.c:ipe_bdev_setintegrity() {
+>         if (!value) {
+>                 ipe_digest_free(blob->root_hash);
+>                 blob->root_hash =3D NULL;
+> ...
+>
+> If a concurrent thread is evaluating an mprotect or execve call, could it
+> dereference this freed memory in evaluate_dmv_roothash()?
+>
+> security/ipe/eval.c:evaluate_dmv_roothash() {
+>         ...
+>         ipe_digest_eval(p->value, ctx->ipe_bdev->root_hash);
+> ...
+>
 
-> On Tue, Aug 04, 2026 at 01:07:48AM +0100, Jonathan Cameron wrote:
-> > On Fri, 31 Jul 2026 09:02:49 +0000
-> > sashiko-bot@kernel.org wrote:
-> >   
-> > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > > - [Medium] The commit message claims to extract and store the 'read only' attribute from DSMAS tables, but this logic is completely missing from the code.  
-> > 
-> > Given it will make a lot of difference to a user if they think they have writeable
-> > memory that isn't - I think we probably do want to have readonly here.
-> >   
-> I did some digging: it seems in v8, the read only flag was gathered and
-> exposed in sysfs, but dropped during the region -> partition rework.
-> 
-> v8 of this commit used to do:
->     dent->read_only = dsmas->flags & ACPI_CDAT_DSMAS_READ_ONLY;
->     ...
->     mds->dc_region[i].read_only = dent->read_only;
-> 
->     https://lore.kernel.org/all/20241210-dcd-type2-upstream-v8-6-812852504400@intel.com/
-> 
-> and a following patch exposed it, with a documented ABI:
-> 
->   https://lore.kernel.org/all/20241210-dcd-type2-upstream-v8-7-812852504400@intel.com/
-> 
->     /sys/bus/cxl/devices/memX/dcY/size
->     /sys/bus/cxl/devices/memX/dcY/read_only
->     /sys/bus/cxl/devices/memX/dcY/shareable
->     /sys/bus/cxl/devices/memX/dcY/qos_class
-> 
-> In v9 dynamic capacity moved from its own dc_region[] array and dcY/
-> sysfs directory to the generic partition model:
-> 
->   https://lore.kernel.org/all/20250413-dcd-type2-upstream-v9-3-1d4911a0b365@intel.com/
-> 
-> size and qos_class survived that move because ram and pmem already have
-> them. read_only and shareable did not, because the generic partition
-> model had nowhere to put attributes that only dynamic capacity has, but
-> the commit message survived the rework.
-> 
-> More specifically, read_only was dropped from both the sysfs commit and
-> this commit. shareable was dropped only from the sysfs commit, but still
-> read from the DSMAS entry in v9 of this commit. Not sure why though; I
-> didn't see any consumers of the attribute. Oh well... We use it now
-> since shared extents are supported to check if an extent marked shared
-> is actually in a shared partition.
-> 
-> So TLDR; I've removed the "read only" part from the commit message. But
-> let me know if you think it should be re-introduced?
-> 
-> I agree with what you said about it being important for a user to know
-> whether a partition is read only. Some things to consider:
-> 
-> - The partition model has no precedent for a DC only attribute.
->   dynamic_ram_1/ currently exposes size and qos_class, the same two that
->   ram/ and pmem/ expose. Adding read_only there would be the first
->   attribute that exists for one partition mode and not the others.
-> 
-> - shareable is in exactly the same position. It is gathered and used
->   internally but not exposed anywhere, so if we are adding one of these
->   back we should probably decide about both.
+I will post an UAF fix for this, however this is an ipe issue so not
+blocking this patch.
 
-I vaguely recall the discussion on this ending up with we'd call the
-partition something different to reflect the extra property.  
+> > +     verity_security_clear_signature(bdev);
+> > +}
+> > +
+> > +#else
+> > +
+> > +static inline void verity_security_clear_integrity(struct dm_target *t=
+i)
+> > +{
+> > +}
+> > +
+> >  #endif /* CONFIG_SECURITY */
+> >
+> > +static void verity_postsuspend(struct dm_target *ti)
+> > +{
+> > +     struct dm_verity *v =3D ti->private;
+> > +
+> > +     flush_workqueue(v->verify_wq);
+> > +     dm_bufio_client_reset(v->bufio);
+> > +     verity_security_clear_integrity(ti);
+>
+> [Severity: High]
+> Does unconditionally clearing the integrity state on every table suspend =
+break
+> IPE evaluation for already cached files?
+>
+> During a temporary freeze or table reload, clearing the LSM integrity sta=
+te
+> will cause concurrent VFS operations on already-cached files to see a cle=
+ared
+> state. Will this result in spurious -EACCES failures since IPE will deny
+> access despite the files being valid?
+>
 
-dynamic_readonly_1 / dynamic_sharedram_1 maybe?  Argument being
-that these properties are as different from normal RAM as persistent
-memory is.
+This is the expected behavior. Tracking the verification status of
+cached data is impractical.
 
-> 
-> - I don't think the DSMAS Flags bit 6 (read only) is specific to DCD?
+The deny issue can also be avoided by creating a new dm device instead
+of swapping tables.
 
-In theory yes, in practice there isn't a path for non DCD to actually
-get the data in place and transtion to read only so maybe an expensive
-source of zeros?  So yes allowed but not much use to anyone so we
-won't see it.  
-
->   It describes any device scoped memory range, so a read only ram or pmem
->   partition is expressible in CDAT today and the driver ignores it.
->   Maybe it should be exposed in sysfs for every partition
->   rather than only on dynamic_ram_1? Which probably makes it a generic CDAT/partition
->   patch rather than something for this series.
-> 
-Jonathan
-
+-Fan
