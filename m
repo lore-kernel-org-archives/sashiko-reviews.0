@@ -1,126 +1,191 @@
-Received: from mslow3.mail.gandi.net (mslow3.mail.gandi.net [217.70.178.249])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901D8463B8C
-	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 09:25:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.249
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D55472064
+	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 09:39:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789982719; cv=none; b=MAoY2TdVlEJutQXZ4RhXzmA3CrhJHjgvXzI8yExkKiuLSueiOk+JxKDBd9YYrE8n/SgnipK7xoqRB/+XhvGE6JlWd0NFhTHX00773J0gin/C/1aKNCjSyedZIunQr9J56olQLlQpI+EOMXN6Q1bkrbWFxVTMTLjg88qtILNEB9c=
+	t=1789983568; cv=none; b=qbxlm7H4joS5dfYdUweWK1OCGVGSKm+IyUsikmPVgL+hMqpaBv1wb7Z83MW47hAXLASfy9ocW6jcbfpr+oXZHylw5mXPakh//32D9fcab/H3sCozW2AqLctpy41VvMq2iE2N7AKGgCoXgmwjVcdklepNGuQzMocMiVlvqU4iCHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789982719; c=relaxed/simple;
-	bh=YSCpY8tqNlknDrx0+gBTDvR7njLZyPar6Kwps8b3VhI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DjfklBp/Vq772mUSFe6qdGslJJ6F60CBhNgCizisJulF/TGvbY9/iomRSzHa/O3gYckQIPXHMC6JOAiWqcAo4YjH3ksCM9ClURMBGkX9annfGzjRZjkdID9hPeraaLBfUVv5mFBhfPCwZMnK/WWLM+oGz1tYMyATVLieAIMBpcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=marmottus.net; spf=pass smtp.mailfrom=marmottus.net; dkim=pass (2048-bit key) header.d=marmottus.net header.i=@marmottus.net header.b=SzF/aoSY; arc=none smtp.client-ip=217.70.178.249
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=marmottus.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marmottus.net
+	s=arc-20240116; t=1789983568; c=relaxed/simple;
+	bh=5qs67O9O4X0BC+o/8CNVHrVTiAbkAXPQSAKyMHXk4Sg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CRqLRqfkKXIds6FGCZ0oRIL/A0Nkmxh+jTtd6Cgu0ZEE7XY61GZD3geBiFoopgW3gpNrMjlja7LYIu2V3exNZ8obI7DjOLdelb1tO1GJtLeLie0x0Fc0U7v9aZR3w5RAxn85I8ZWot9DqFFsBZqJbMCfoopshSUbxdlxkpZP2Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PFQODTDF; arc=none smtp.client-ip=192.198.163.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marmottus.net header.i=@marmottus.net header.b="SzF/aoSY"
-Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
-	by mslow3.mail.gandi.net (Postfix) with ESMTP id 821165816EA
-	for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 09:04:41 +0000 (UTC)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 04E263EC33;
-	Mon, 21 Sep 2026 09:04:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marmottus.net;
-	s=gm1; t=1789981474; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:in-reply-to:in-reply-to:  references:references;
-	bh=xlP+IH2SlJ1ApoTn35mCssnsxHazfM1zvnYS3L3OSoM=;
-	b=SzF/aoSYvL5WCOrUN+GxNiTrvYW2GGhNrDRkEifMQBR7ft+qfXbEmBpcecKS1hKZgEQzMS
-	WAeyPF9mMlzA2zPnIzD79RVeWtSDOfzgYsmlSRyPiTGHTpMGjHXG17z2laqZpgaRYQ5Iw9
-	NiCf4452kyaDhXrnVFhsVab7hce6Su5qjaTE1qqHsXT7wF4mWUCNpffrDxYg10pELZtuzJ
-	H6g/VGIJ0dtHk9Psu2x7y3oF/KSI3YPilhtw0yLcx1fZrEX4uJD4dKXNLWX2oW93iFeOc9
-	p5oV3XuoI2+napbf9Rhd2zR0CBJq4KvjKCfafEP/8+Vvx2ftJnHbMhgq5F4YIA==
-Date: Mon, 21 Sep 2026 11:04:32 +0200
-From: Arthur Crepin Leblond <arthur@marmottus.net>
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH net-next v9 3/3] w5100: detect carrier state using link
- status bit and optional interrupt
-Message-ID: <20260921090432.GA84626@marmottus.net>
-Reply-To: arthur@marmottus.net
-References: <20260918-wiznet-link-gpio-v9-0-5536f24d8d6d@marmottus.net>
- <20260918-wiznet-link-gpio-v9-3-5536f24d8d6d@marmottus.net>
- <20260919151421.2FE471F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PFQODTDF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1789983566; x=1821519566;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=5qs67O9O4X0BC+o/8CNVHrVTiAbkAXPQSAKyMHXk4Sg=;
+  b=PFQODTDFW48uUne7zRj9dnVhoqlTMA1kBJzRdop/Jq4itSVmSqUZ86J7
+   /+V+FZ4YoiJh4Ph5I48CDwaUnym9bQXZBq9S2RRuLA51DsZH1+Urzy2+N
+   ajKJtgbCNRG3HiGZOHTSiI3h2CBooidsGi5AZAXxY5ic/VoqufMMyDgsF
+   9cAoMC7KYVA5h3xHvyE9x6Y7zrDAs5Zvp6tLCdb1zCgTZyKSmagXXYuG1
+   CV0gC3gCfvDF2De3t0nPxWq2ZhFWiCZW7w+Td6JSnud/3XypTdUcnIAun
+   9Dk6i+FzwKRihuwe2Qqofy5edFoAVWaxfPkfO+UkFKX/ci3sk52zfq2mo
+   Q==;
+X-CSE-ConnectionGUID: qQUZit97SkGlfxrZUE2Tiw==
+X-CSE-MsgGUID: 6iC4mxNyQrWppuBiXkJz/g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11911"; a="90503095"
+X-IronPort-AV: E=Sophos;i="6.27,114,1787036400"; 
+   d="scan'208";a="90503095"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2026 02:39:25 -0700
+X-CSE-ConnectionGUID: rvfaqZ8qThmHrmOCZH9wyQ==
+X-CSE-MsgGUID: QJh34q2oToy6mCUA98boZQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,114,1787036400"; 
+   d="scan'208";a="271114303"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.239]) ([10.124.241.239])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2026 02:39:24 -0700
+Message-ID: <1de5af16-06a5-4b97-ba92-0a4ac02c32ff@linux.intel.com>
+Date: Mon, 21 Sep 2026 17:39:21 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260919151421.2FE471F000FF@smtp.kernel.org>
-X-GND-Sasl: arthur@marmottus.net
-X-GND-Score: 0
-X-GND-Cause: dmFkZTGgWBHBy0DWBBmEWHqm0kizxMqPyqjPRcoflXLOVD1xCRWAA97ciK0B7dU0G3o/oZDUTyLVqIZ0yagT77TStZJx60dZsikvFyJUBQ9D0kW1mXA+gb7jIHbe+kOrDwdXqoq+3c7307UXdpUYAGrJ6hIPZ/goW2NLI0gUaUs77oxeO7aEa1BVroT9X/3Qbq4YEyZqMJ6u3S7EjozqNVwzW+6Zzy9xfkJu2SD5iu2/AFJtbI1lfQMQR+v7nP4h8TH5OdikCe0ziQCzVV0PSa2jinqCc6HXGQnf5dz4dnoi8pZbq9lgNWnFSU+QZikatfi8Hbw7KyVos+ATPh+aVFTPsC2kRZJ7SoQ9YuLmsPH7maOVNLPXOM3aBiRxQ3+6lOrxk2reNRyqYxsuYcyXg21E4YeouRMzNammzjZhF9WbS4cWoYyQi92eFdMimQvy7OTRrGe7v8dHXgjck82Md2lgeOYpwMOCFh/FlvAxBGNYG9QiP6LqEC/03z++6DhsQ/dew3YORnxcFfenu/Q9Y3o5hgQJHkKFNfRDIJr5Us8reCPTXfuYQuIi+CbxrW5OzcrFGVosfAQLY9u3PfZHupwekA3vVXz6BHvqsRSIyLFXb3BWAdT3HH7ZRe2XCxXKjoDNi14Pz0NiBqKFupo4IBw+H7UNHbaRncQb3rP1TJbYbOGH2g
-X-GND-State: clean
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 12/12] KVM: x86/pmu: Support RDPMC Metrics Clear Mode
+To: sashiko-reviews@lists.linux.dev, Zide Chen <zide.chen@intel.com>
+Cc: kvm@vger.kernel.org
+References: <20260918193937.569414-1-zide.chen@intel.com>
+ <20260918193937.569414-13-zide.chen@intel.com>
+ <20260918202200.F39971F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20260918202200.F39971F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sat, Sep 19, 2026 at 03:14:20PM +0000, sashiko-bot@kernel.org wrote:
->> @@ -448,12 +526,25 @@ static void w5100_restart(struct net_device *ndev)
->>  {
->>  	struct w5100_priv *priv = netdev_priv(ndev);
->>
->> +	if (!netif_running(ndev) || !netif_device_present(ndev))
->> +		return;
+
+On 9/19/2026 4:22 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] pmu: event filter mistakenly strips METRICS_CLEAR_EN from fixed_ctr_ctrl_hw
+> - [Medium] pmu: METRICS_CLEAR_EN unmasked without validating fixed counter bounds
+> - [Low] pmu: emulation incorrectly ties PERF_METRICS clearing to SLOTS PMC existence
+> --
+>
+> commit 8ba3725c32dbde4a1c3935cb433e898e06425b83
+> Author: Zide Chen <zide.chen@intel.com>
+>
+> KVM: x86/pmu: Support RDPMC Metrics Clear Mode
+>
+> This commit adds support for PERF_CAP_RDPMC_METRICS_CLEAR (bit 19 of
+> IA32_PERF_CAPABILITIES). It advertises this capability to guests when the
+> mediated PMU is enabled and the host reports it, unmasking the relevant
+> control bit. It also updates intel_emulate_rdpmc() to replicate the
+> clear-on-read behavior for consistency.
+>
+>> diff --git a/arch/x86/kvm/vmx/pmu_intel.c b/arch/x86/kvm/vmx/pmu_intel.c
+>> index 98e2fb80347a1..3e5e8bae67ab0 100644
+>> --- a/arch/x86/kvm/vmx/pmu_intel.c
+>> +++ b/arch/x86/kvm/vmx/pmu_intel.c
+> [ ... ]
+>> @@ -138,6 +149,18 @@ static int intel_emulate_rdpmc(struct kvm_vcpu *vcpu, unsigned int idx,
+>>  			return 1;
+>>  
+>>  		*data = pmu->perf_metrics;
 >> +
->> +	disable_irq(priv->irq);
->> +	if (priv->link_irq > 0)
->> +		disable_irq(priv->link_irq);
+>> +		/*
+>> +		 * Per the SDM, RDPMC of PERF_METRICS clears both PERF_METRICS
+>> +		 * and the SLOTS fixed counter when Metrics Clear Mode is
+>> +		 * enabled via INTEL_FIXED_3_METRICS_CLEAR in FIXED_CTR_CTRL.
+>> +		 */
+>> +		pmc = kvm_pmc_idx_to_pmc(pmu, INTEL_PMC_IDX_FIXED_SLOTS);
+>> +		if (pmc && intel_pmu_metrics_clear_enabled(pmu)) {
+>> +			pmu->perf_metrics = 0;
+>> +			pmc_write_counter(pmc, 0);
+>> +		}
 >> +
+> [Severity: Low]
+> Does tying the clearing of PERF_METRICS to the existence of the SLOTS PMC in
+> intel_emulate_rdpmc() violate the hardware specification?
 >
->[Severity: Medium]
->Is it safe to call disable_irq() here? disable_irq() is a sleepable function,
->but w5100_restart() can be called from atomic context when using memory-mapped
->I/O.
+> If the guest executes RDPMC natively and triggers an interception, and the
+> SLOTS counter is not exposed to the guest (making kvm_pmc_idx_to_pmc return
+> NULL), but METRICS_CLEAR_EN is enabled, this code silently skips clearing
+> PERF_METRICS.
 >
->Looking at w5100_tx_timeout(), which executes in atomic context, the timeout
->handler falls back to calling w5100_restart() directly if the device cannot
->sleep:
+> Should the clearing of pmu->perf_metrics be performed independently of whether
+> the software PMC object for the SLOTS counter exists?
 >
->w5100_tx_timeout() {
->    ...
->    if (priv->ops->may_sleep)
->        schedule_work(&priv->restart_work);
->    else
->        w5100_restart(ndev);
->}
->
->While current in-tree drivers might set may_sleep to true, this code path
->explicitly exists to support may_sleep == false. Could this introduce a
->'scheduling while atomic' panic for non-sleepable devices?
-
-It looks like all the ops in the spi driver are setting may_sleep to
-true but indeed disable_irq should not be called from an atomic context.
-
-Would disable_irq_nosync just work here? enable_irq is not affected
-from what I understand.
-
->
->>  	netif_stop_queue(ndev);
->>  	w5100_hw_reset(priv);
->> +	enable_irq(priv->irq);
->>  	w5100_hw_start(priv);
->>  	ndev->stats.tx_errors++;
->>  	netif_trans_update(ndev);
->>  	netif_wake_queue(ndev);
+>>  		return 0;
+>>  	default:
+>>  		return 1;
+> [ ... ]
+>> @@ -601,6 +624,11 @@ static void intel_pmu_refresh(struct kvm_vcpu *vcpu)
+>>  						 INTEL_FIXED_0_USER |
+>>  						 INTEL_FIXED_0_ENABLE_PMI);
+>>  
+>> +	if (perf_capabilities & PERF_CAP_RDPMC_METRICS_CLEAR)
+>> +		pmu->fixed_ctr_ctrl_rsvd &=
+>> +			~intel_fixed_bits_by_idx(INTEL_FIXED_SLOTS_IDX,
+>> +						 INTEL_FIXED_3_METRICS_CLEAR);
 >> +
->> +	if (priv->link_irq > 0) {
->> +		w5500_report_carrier_state(ndev);
->> +		enable_irq(priv->link_irq);
->> +	}
+> [Severity: Medium]
+> Does intel_pmu_refresh() unconditionally unmask the METRICS_CLEAR_EN bit
+> without verifying if the guest topology actually exposes the SLOTS counter?
 >
->[Severity: Medium]
->Similarly, w5500_report_carrier_state() attempts to acquire a mutex
->(priv->link_lock).
+> If a VM is configured with 3 or fewer fixed counters, this unmasking would
+> allow the unprivileged guest OS to write to bit 14 in
+> MSR_CORE_PERF_FIXED_CTR_CTRL without triggering the expected #GP.
 >
->If priv->link_irq > 0 and priv->ops->may_sleep is false, wouldn't taking
->this mutex in the w5100_tx_timeout() -> w5100_restart() call chain also
->result in sleeping in atomic context?
->
->>  }
->
+> Should this be gated by checking if pmu->nr_arch_fixed_counters >
+> INTEL_FIXED_SLOTS_IDX?
 
-Maybe I could use a spin lock instead of a mutex.
+This sounds like a real risk. Should we mask out PERF_METRICS from guest
+PERF_CAPABILITIES in intel_pmu_refresh() if guest doesn't advertise fixed
+counter 3?
 
-Arthur
+
+>
+> [Severity: High]
+> Does this patch inadvertently cause event filters to strip the METRICS_CLEAR_EN
+> bit in kvm_mediated_pmu_refresh_event_filter()?
+>
+> When a host-level event filter denies the SLOTS counter (counter 3) from
+> counting, KVM applies a 0xf hardware mask that zeroes all 4 configuration bits
+> for the counter:
+>
+> arch/x86/kvm/pmu.c:kvm_mediated_pmu_refresh_event_filter() {
+> ...
+> 	} else {
+> 		u64 mask = intel_fixed_bits_by_idx(pmc->idx - KVM_FIXED_PMC_BASE_IDX, 0xf);
+>
+> 		pmu->fixed_ctr_ctrl_hw &= ~mask;
+> 		if (allowed)
+> 			pmu->fixed_ctr_ctrl_hw |= pmu->fixed_ctr_ctrl & mask;
+> 	}
+> }
+>
+> Since this mask covers the entire 4-bit configuration block, it will also clear
+> bit 14 (METRICS_CLEAR_EN) from hardware. If the guest sets METRICS_CLEAR_EN and
+> then executes RDPMC natively, it will lead to un-cleared stale metrics.
+>
+> Should the mask be updated to avoid interfering with this newly introduced
+> feature bit?
+
+This is another tricky corner case. The best way should be disabling
+PERF_METRICS along with fixed counter 3. But Intel HW doesn't provide a way
+to disable PERF_METRICS except the EN_PERF_METRICS bit in PERF_GLOBAL_CTRL.
+Since PERF_GLOBAL_CTRL could be in pass-through mode and guest could
+directly overwrite PERF_GLOBAL_CTRL, it becomes meaningless for KVM
+clearing EN_PERF_METRICS bit for guest PERF_GLOBAL_CTRL.
+
+For the filter mask, it may be good enough to only mask out
+(INTEL_FIXED_0_KERNEL | INTEL_FIXED_0_USER).
+
+Thanks.
+
+
+>
+>>  	counter_rsvd = ~((BIT_ULL(pmu->nr_arch_gp_counters) - 1) |
+>>  			 ((BIT_ULL(pmu->nr_arch_fixed_counters) - 1) << KVM_FIXED_PMC_BASE_IDX));
+>>  	pmu->global_ctrl_rsvd = counter_rsvd;
