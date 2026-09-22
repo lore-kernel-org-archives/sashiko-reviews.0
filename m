@@ -1,45 +1,45 @@
 Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D782C5372D2
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 23:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A12247291
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 23:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790120618; cv=none; b=n1Kbwrc66aJnh5caFM5GPx/ifDG04gGz7Ac7Ua0CufudTiXq63iR7sucCdRqzUdAWJJK9jv6rHO5YTplkU8X7JwX56R+J1ldnYupomGRnJCRn65wsmbu37q3kLcbzRKAFTZ4OY+4Kv6Ku2vwTYVyZTRTqV98Wpgt0zJkHYkMFqo=
+	t=1790120751; cv=none; b=pFMXsCbueVXdQ6C2zb3V8Z42tw1g1AlIojacjAr5qJ0q3SphJdg4dbn+pVOm2tx5E3fRpgWVImaH5dHqfemWH04IT9+mBnzEnho9RwXWANsIzm6Bb5rdoYQWsyMPu9LyOGyrkGp59Q+/l+ApYDRUV6qnHMTcf0sjCy0eQIBRb4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790120618; c=relaxed/simple;
-	bh=foktcOgWntPuAyEzLSwuL0FS/IRyC6DCIFiEatHBGeA=;
+	s=arc-20240116; t=1790120751; c=relaxed/simple;
+	bh=Ah7kODkvgexutE56tk6Yv0fe0wT3Bt0p7/t3lW1YFbY=;
 	h=MIME-Version:Date:From:To:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=aLrrbl6jlOIvUzXxD2o7PJVlt2bYHXN5cypSrJhIZljzGJkY2WCp7Dvf5N39T8E674DxVEnA1+krR7uIp47s5nXYCvUI8UX4EYSo3nZfY8nGyVTyRierjTypDyMrliCa0HOzXVmDueE8CdLWY8XPxaX7LWc+8Q/LyJKGdn6TrF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=OyBl2Mcb; arc=none smtp.client-ip=178.21.23.139
+	 Message-ID:Content-Type; b=kD+y7SpIjUWziwVLySioHPYQ28rfX+TUJpE0Xo7I9pWxE8CL15l5HWl0IIxKCRFwAQrw6zKCA5GPiq3SpiLywi/sfsLkaYKQGK7xu4Tw+6hFq1RlmadiF5YwP519KCQQAtC8eLSPGND5OCiFHof3hlEDRchXsOuipGGq1HvFykg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=BmVK/J2x; arc=none smtp.client-ip=178.21.23.139
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="OyBl2Mcb"
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="BmVK/J2x"
 Received: from mail01.layka.lan (localhost [127.0.0.1])
-	by disroot.org (Postfix) with ESMTP id E89D682A8E
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 01:43:30 +0200 (CEST)
+	by disroot.org (Postfix) with ESMTP id 3672980F64
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 01:45:48 +0200 (CEST)
 X-Virus-Scanned: SPAM Filter at disroot.org
 Received: from layka.disroot.org ([127.0.0.1])
  by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id JzWGPk2btWoE for <sashiko-reviews@lists.linux.dev>;
- Wed, 23 Sep 2026 01:43:30 +0200 (CEST)
+ id VjssLs5-eElt for <sashiko-reviews@lists.linux.dev>;
+ Wed, 23 Sep 2026 01:45:47 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
-	t=1790120610; bh=foktcOgWntPuAyEzLSwuL0FS/IRyC6DCIFiEatHBGeA=;
+	t=1790120747; bh=Ah7kODkvgexutE56tk6Yv0fe0wT3Bt0p7/t3lW1YFbY=;
 	h=Date:From:To:Subject:In-Reply-To:References;
-	b=OyBl2McbOGgCMBYbw0ewG8jan5u/wuDpcwfc3EqmWR4/ORkCRYRdrmFoNX6ITu3CE
-	 6GJS9CRQqHnenBUcJ9VCXWHeBXTWPhapl5n26TY3vvpEVEGrkuxI5tQCfQ9YU4raxp
-	 m++G1KYEnlnMpheeEcqMQh+qYWBSiqMdYWezctc1gUFs2WwFpYS/O5KsR+BPwP3f1g
-	 tHeQ4gIyuJC/5ojNr4cjS7Ie4vjoguu+/HGda9pQfSDn/eBufW51nyxI+EQSKOV1aP
-	 4/VbzJM69yuYQajRP8fOgrLSPZhti8Id1I0YkZxALrNmdFmn8EJDCQutz7UrLC4K3F
-	 ZTitB5KGXHlCg==
+	b=BmVK/J2x9ZNDBbyevOXKTgFUIvEyD0aF5nOodmEVkaLDcWlsZ1fvWxEmjTDxjonZ5
+	 ClVro7rawMFEECiQERnkKSYhAzKhmRKN/3tPbotyUSbjBNKUHvJyBE/cdySEUnT9pm
+	 5RN2VQtU5rqniG26LjqB9148iwJ0rdlUUcF3kny/h8EpPc5t6U1Ef/pe/gkJrnjmH/
+	 QNARgkBDxaMwy/ZxzPcnyuOpRnRtMx0Pq7Ul+2YomdqF7K8e+pRumwl/2O0CWsBEv/
+	 KNWcED1yR5i0xf+R8l7eqS/riifwhvwJLUW2CO1eFfT4X1yF2EJeoBDrajtnaAQlPF
+	 ScwZluuGevBTA==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Wed, 23 Sep 2026 01:43:30 +0200
+Date: Wed, 23 Sep 2026 01:45:47 +0200
 From: =?UTF-8?Q?Rapha=C3=ABl_Larocque?= <rlarocque@disroot.org>
 To: sashiko-reviews@lists.linux.dev
 Subject: Re: [RFC PATCH] Input: elan_i2c_smbus - resend ENABLE_TP on wake from
@@ -47,7 +47,7 @@ Subject: Re: [RFC PATCH] Input: elan_i2c_smbus - resend ENABLE_TP on wake from
 In-Reply-To: <20260922233746.136E61F000FF@smtp.kernel.org>
 References: <20260922232707.8949-1-rlarocque@disroot.org>
  <20260922233746.136E61F000FF@smtp.kernel.org>
-Message-ID: <b12f443f1834d91218b31095d1b698cc@disroot.org>
+Message-ID: <2a1a27360db479dce91ca4bd7728e553@disroot.org>
 X-Sender: rlarocque@disroot.org
 Organization: =?UTF-8?Q?Syst=C3=A8mes_Budgie?=
 Content-Type: text/plain; charset=UTF-8;
@@ -142,19 +142,9 @@ Le 2026-09-23 01:37, sashiko-bot@kernel.org a écrit :
 >> +	return 0;
 >>  }
 
-Confirmed by reading __elan_initialize() in elan_i2c_core.c:
-sleep_control(client, false) is already called there
-right after ops->initialize() for every non-ASUS device on
-every probe (and, per the "Reduce the resume time" quirk work,
-on every resume for older/non-quirked devices too). My patch would
-double-send ETP_SMBUS_ENABLE_TP in that path, which I have no way
-to confirm is safe without the datasheet.
-
-Withdrawing this version for rework, will either gate the resend
-on genuine post-sleep state, or drop it if nobody with hardware/
-datasheet access can confirm double-ENABLE_TP is harmless.
-
-If someone has the datasheet, please send a follow-up about it.
+P.S.: My previous email applies to the V2 I sent with typo fixes too,
+and also, the Low Severity one, I did it like that to match the style of 
+the rest of the file.
 
 Thanks,
 R. Larocque
