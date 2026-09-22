@@ -1,341 +1,135 @@
-Received: from Atcsqr.andestech.com (atcsqr.andestech.com [220.128.198.184])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua2-f27.google.com (mail-ua2-f27.google.com [74.125.226.219])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E055218A9
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 07:57:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.128.198.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4736B37B021
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 08:47:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.226.219
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790063834; cv=none; b=qiEj+nr6bscskW4NwuvnA93kNAlfG4qJxMyUixH4ktvypQonbjaaIFn07qdzqvIG1JZn7ye2RpfMjXfpyIB9i9/5jGdulMv0j6oW6wlVJ6koX4y0Z+9EVuyaSWPsfoowJYNqtf3t+WC4kLJPjihTFyw0JB0Jv9HaX9IVdDdwvi4=
+	t=1790066869; cv=none; b=PuN0haAF3/eO7fQLKhvwLXRe1dZhQ7EZEHeDEwoVBVKrlgGb08s4YwXAp5VSbDsP76mf1UjWLuynWV+g5KwTSCc2jFpgYjtqma2a4UbOlJI1YDUOYjUguuJGaTDzhsIDusStFLN8veygdU/xW8314gSVV8vndrjT4M6ICShd5pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790063834; c=relaxed/simple;
-	bh=UoDkm3gOOO7PAidsy67hbx+7JNKcjk/PhCqyQtSfZFg=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XBqLVQVLofvz9BpHWRBaOjDIBDEtGh8cTCbzcJTVog8Zs/8KfSDsfDgzdgLns338ab7ReJJrM+fIe3GtjCt1q/l0Fibq5gw0SpSfycKmzXCEhCq80iPxWnaiJQCwbzGG8TDr0cW8FLmQ+rb4OFwQ5gyA9Ve11PO2uW2JDMPG6PA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andestech.com; spf=pass smtp.mailfrom=andestech.com; arc=none smtp.client-ip=220.128.198.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andestech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=andestech.com
-Received: from mail.andestech.com (atcpcs55.andestech.com [10.0.1.155])
-	by Atcsqr.andestech.com with ESMTPS id 68M7uEdZ048257
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 22 Sep 2026 15:56:14 +0800 (+08)
-	(envelope-from cl634@andestech.com)
-Received: from ATCPCS34.andestech.com (10.0.1.134) by atcpcs55.andestech.com
- (10.0.1.155) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.43; Tue, 22 Sep
- 2026 15:56:14 +0800
-Received: from swlinux02 (10.0.15.183) by ATCPCS34.andestech.com (10.0.1.134)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 22 Sep
- 2026 15:56:14 +0800
-Date: Tue, 22 Sep 2026 15:56:10 +0800
-From: CL Wang <cl634@andestech.com>
-To: Frank Li <Frank.li@oss.nxp.com>
-CC: <sashiko-reviews@lists.linux.dev>, <dmaengine@vger.kernel.org>,
-        <vkoul@kernel.org>, <robh@kernel.org>, <Frank.Li@kernel.org>,
-        <conor+dt@kernel.org>, <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v7 2/2] dmaengine: atcdmac300: Add driver for Andes
- ATCDMAC300 DMA controller
-Message-ID: <arI0moAjFUudQW4J@swlinux02>
-References: <20260916134258.2178081-1-cl634@andestech.com>
- <20260916134258.2178081-3-cl634@andestech.com>
- <20260916140120.3112D1F000FF@smtp.kernel.org>
- <aqq62tSqUHvBkRs4@SMW015318>
+	s=arc-20240116; t=1790066869; c=relaxed/simple;
+	bh=SKxdp95432XDvzCPjjgWzrtl8ftbBUukhI2StzJWGQA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=J0CNCkJMvvZJpCsITLskLVzkF4E64szuYk0ZBHgaUKWASNhwlRG6mM21N95DpsQKcKpItiyXH4wuCa55VwbYaybBP5UP3vYrsJ5G2YaEO2fN8xURgE3B4dk4RGdcp5vla5Q2NbZdw9mSgqvtPgTwfLVSHPLFO8pIScwHv8dSwMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=74.125.226.219
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ua2-f27.google.com with SMTP id a1e0cc1a2514c-97e7c7bac31so2115983241.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 01:47:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790066866; x=1790671666;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=GWIDjRua9lHrNbDmVCrugzijNwD0WxzTJmDg4pdKZIc=;
+        b=SexBudiBFdB0djWTh64rA0YY02XEvclBmh76P0vBxFWUDazvdIAh6Lf51i/DQ9FZ1F
+         gic7aKYMExcKa77P0jZ3IR/Sg7LaWu7u2YP+Ph73vUDrTkOEmI+wvBPU1WajRCFLzg4L
+         itBNxGmlLSjGYJp/hXxByPn0OOrxEOGXPg7aK4vLzas15GszK9uTcTUB/sMKneEMlIOD
+         Cn/70PNr92XvFk+umpOq2tenBv1LEIDAD6cQQ9n8sni+Q8LeoYPPyfwog8WAT+1CuweY
+         fplV1fzSupHImYgXCbaPuzwRD0sMl8/lUO22jrvl46LgRhQPFh0FXnaeyu6REuJ9+JVz
+         0c8Q==
+X-Gm-Message-State: AFuF++ktUhG+oj5LygY8t2u8llrhpFBJnnqv5vUAqps77cFT0ejkqdOu
+	vmNBgmxNApmr8D/OSDl2jEMjPp4qn8JbDbumg0sSpWtbV9Ho/yOzLeTRgzVhFgaFy7A=
+X-Gm-Gg: AYBFou2cegbhZLUtUi2yXSOS80gjXsinfelY1h2ldCoPCoIeMUtdkSWPzeWo0z6EjyZ
+	HnCoxaUwOhYLkZSHCbJswNL7Z59BmvDayeR/2jLm7ga5T81vBf5TQVNgBevicfmHfa50UACTi+/
+	9e7l02kmaF+tmZAK+JtA81yMJmFCeRemUcblVzO6ix1D7qve7U0OUolguQ0J43FkFHSi7H4GuZJ
+	gmkNllyW6AZyL6jDtIYXG0li6Z4jqRm2AcN6M50EtJ83iZFNbdafpwC1umQBXJukf0HBO5WncYr
+	HFaDbC+1kC8R9cWpqI4o/fD3I8RVVEnZRU9oQgUIKXs/Q9/Y5W1zBMZF6rUISXvkLRK0NKXF5PH
+	zQH1yR88YMvUd5tZIhm4QYjgv6OEDnlrgYcWTqsa//W32Qqvnqt+VxTaCxWqyZuEC2Nj0cQjvWD
+	aHcN4VMUYsjMfMQjUuVWbhqyjKny1YxtBYQ8vIwAVAExSC2wUgj0FdrKNZawY2YkuNPNr59N+nh
+	oJxZCychsOmktP0ayG07HivDyXvvlbjqe1k
+X-Received: by 2002:a05:6102:3e8b:b0:7a7:198a:c2b7 with SMTP id ada2fe7eead31-7a7198ad3a4mr5373403137.31.1790066865787;
+        Tue, 22 Sep 2026 01:47:45 -0700 (PDT)
+Received: from mail-vs2-f43.google.com (mail-vs2-f43.google.com. [74.125.227.43])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-7ab18445373sm1008159137.9.2026.09.22.01.47.45
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Sep 2026 01:47:45 -0700 (PDT)
+Received: by mail-vs2-f43.google.com with SMTP id ada2fe7eead31-78a5e045187so1620827137.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 01:47:45 -0700 (PDT)
+X-Received: by 2002:a05:6102:6891:b0:7a5:391c:37ac with SMTP id
+ ada2fe7eead31-7a55b439f6amr7821226137.10.1790066865188; Tue, 22 Sep 2026
+ 01:47:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aqq62tSqUHvBkRs4@SMW015318>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
- ATCPCS34.andestech.com (10.0.1.134)
-X-DKIM-Results: atcpcs55.andestech.com; dkim=none;
-X-DNSRBL: 
-X-SPAM-SOURCE-CHECK: pass
-X-MAIL:Atcsqr.andestech.com 68M7uEdZ048257
+References: <cover.1790065451.git.geert+renesas@glider.be> <b8f4648eb1151b75d41e561c6b2adbd9bc4c0782.1790065451.git.geert+renesas@glider.be>
+ <20260922083355.B7BAF1F0089A@smtp.kernel.org>
+In-Reply-To: <20260922083355.B7BAF1F0089A@smtp.kernel.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Tue, 22 Sep 2026 10:47:34 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdVR_-TG_FkP36yQEhcbSOObXCqsFa7iw7gYbQB-4Go=uA@mail.gmail.com>
+X-Gm-Features: AclHuK8uO17HLkbg6-xa5vAIJjSfTAzcvmAvxN4S9JnEeQEAxUBJc4dK1JH3qYo
+Message-ID: <CAMuHMdVR_-TG_FkP36yQEhcbSOObXCqsFa7iw7gYbQB-4Go=uA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: spi: renesas,sh-msiof: Add support for
+ R-Car X5H
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, wsa+renesas@sang-engineering.com, robh@kernel.org, 
+	devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Frank,
+Hi Sashiko,
 
-Thanks for looking at this, and thanks to the bot for a careful pass.
-
-Five of the eight are fixed for v8. Three do not apply to this driver
-and I have tried to say why rather than just assert it.
-
-> - [High] dmaengine: atcdmac300: UAF on driver unbind due to devres
-> lifecycle mismatch
-Fixed.
-
-> - [High] dmaengine: atcdmac300: permanent controller halt if suspend
-> times out
-Fixed.
-
-> - [High] dmaengine: atcdmac300: NULL pointer dereference mixing cyclic
-> and non-cyclic transfers
-Fixed.
-
-> - [High] dmaengine: atcdmac300: cross-transfer corruption on
-> simultaneous TC and ERR interrupts
-I do not think this one can happen. The data sheet defines the terminal
-count bit of the interrupt status register at offset 0x30 as
-
-	The terminal count status is set when a channel transfer
-	finishes without the abort or error event.
-
-so for one transfer the two are mutually exclusive. Chained transfers do
-not widen the window either: the same document says that with IntTCMask=0
-an interrupt is "only be generated when data transfer of the last linked
-descriptor is complete", so a chain raises one terminal count rather than
-one per link.
-
-> - [Medium] dmaengine: atcdmac300: memory leak of unsubmitted
-> descriptors
-The desc_free half of this does not apply. The callback is reachable
-only through dmaengine_desc_free(),
-
-	static inline int dmaengine_desc_free(struct dma_async_tx_descriptor *desc)
-	{
-		/* this is supported for reusable desc, so check that */
-		if (!dmaengine_desc_test_reuse(desc))
-			return -EPERM;
-
-		return desc->desc_free(desc);
-	}:w
-
-and a client can only set DMA_CTRL_REUSE through dmaengine_desc_set_reuse(),
-which fails unless the channel advertises descriptor_reuse. This driver
-does not set dma_device.descriptor_reuse, so the callback can never be
-invoked and adding it would be dead code. Documentation/driver-api/
-dmaengine/provider.rst puts it the same way: dmaengine_desc_free() "can
-succeed only when DMA_CTRL_REUSE is already set".
-
-I looked at closing that properly and do not think the API allows it.
-There is no unprepare, so a client that abandons a descriptor makes no
-call the driver could hook. Tracking every descriptor handed out would
-move the recovery point from teardown to terminate or free_chan_resources
-but not remove it, at the cost of a list operation on prep and submit.
-Implementing DMA_CTRL_REUSE does not help either: dmaengine_desc_free()
-requires the client to have set that flag first, and a client that intends
-to abandon a descriptor is not one that asked to reuse it.
-
-No in-tree client of this driver prepares a transfer it does not submit,
-so I have left it. Say if you would rather have the tracking anyway.
-
-> - [Medium] dmaengine: atcdmac300: silent truncation of DT req_num
-> exceeding 15
-Fixed.
-
-> - [Medium] dmaengine: atcdmac300: transfers queued during suspend are
-> stranded on resume
-Fixed.
-
-> - [Low] dmaengine: atcdmac300: missing endianness conversions for DMA
-> descriptors
-This one cannot bite. The driver depends on ARCH_ANDES and Linux has no
-big-endian RISC-V: arch/riscv/Kconfig offers neither CPU_BIG_ENDIAN nor
-CPU_LITTLE_ENDIAN, so the conversions would be no-ops wherever this can
-be built.
-
-If here are no further comments, I will submit v8 with the five fixes.
-
-Thanks,
-CL Wang
-
-
-On Wed, Sep 16, 2026 at 10:50:50AM -0500, Frank Li wrote:
-> [EXTERNAL MAIL]
-> 
-> On Wed, Sep 16, 2026 at 02:01:19PM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 8 potential issue(s) to consider:
-> > - [High] dmaengine: atcdmac300: UAF on driver unbind due to devres lifecycle mismatch
-> > - [High] dmaengine: atcdmac300: permanent controller halt if suspend times out
-> > - [High] dmaengine: atcdmac300: NULL pointer dereference mixing cyclic and non-cyclic transfers
-> > - [High] dmaengine: atcdmac300: cross-transfer corruption on simultaneous TC and ERR interrupts
-> > - [Medium] dmaengine: atcdmac300: memory leak of unsubmitted descriptors
-> > - [Medium] dmaengine: atcdmac300: silent truncation of DT req_num exceeding 15
-> > - [Medium] dmaengine: atcdmac300: transfers queued during suspend are stranded on resume
-> > - [Low] dmaengine: atcdmac300: missing endianness conversions for DMA descriptors
-> > --
-> 
-> Please fix these problem or provide explain.
-> 
-> Frank
-> 
+On Tue, 22 Sept 2026 at 10:33, <sashiko-bot@kernel.org> wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] dt-bindings: weakened schema validation for older generations' dma counts
+> --
+>
+> commit 339efeecd4721be8f1b5b945500191b6aa6436e7
+> Author: Thanh Quan <thanh.quan.xn@renesas.com>
+>
+> dt-bindings: spi: renesas,sh-msiof: Add support for R-Car X5H
+>
+> Document support for Clock-Synchronized Serial Interfaces with FIFO
+> (MSIOF) in the Renesas R-Car X5H (R8A78000) SoC, which is the first
+> member of the R-Car Gen5 family.
+>
+> > diff --git a/Documentation/devicetree/bindings/spi/renesas,sh-msiof.yaml b/Documentation/devicetree/bindings/spi/renesas,sh-msiof.yaml
+> > index e0c7047ae8adb..41e423a42654d 100644
+> > --- a/Documentation/devicetree/bindings/spi/renesas,sh-msiof.yaml
+> > +++ b/Documentation/devicetree/bindings/spi/renesas,sh-msiof.yaml
+>
+> [ ... ]
+>
+> > @@ -100,11 +105,11 @@ properties:
 > >
-> > commit 94fd62b6d9e6afc2cf50f8dff89eedcdc57f24c9
-> > Author: CL Wang <cl634@andestech.com>
-> > Subject: dmaengine: atcdmac300: Add driver for Andes ATCDMAC300 DMA controller
-> >
-> > This patch adds support for the Andes ATCDMAC300 DMA controller. It provides
-> > scatter-gather, cyclic, and slave transfer capabilities.
-> >
-> > > diff --git a/drivers/dma/atcdmac300.c b/drivers/dma/atcdmac300.c
-> > > index 0000000000000..e0a8a980e2fe8
-> > > --- /dev/null
-> > > +++ b/drivers/dma/atcdmac300.c
-> > [ ... ]
-> > > @@ -82,9 +82,6 @@ static struct atcdmac_desc *atcdmac_alloc_desc(struct dma_chan *chan,
-> > >             INIT_LIST_HEAD(&desc->desc_node);
-> > >             INIT_LIST_HEAD(&desc->tx_list);
-> > >             dma_async_tx_descriptor_init(&desc->txd, chan);
-> > >             desc->txd.flags = DMA_CTRL_ACK;
-> > >             desc->txd.tx_submit = atcdmac_tx_submit;
-> > >             desc->txd.phys = phys;
-> > >     }
-> >
-> > [Severity: Medium]
-> > The desc_free callback is omitted from the transaction descriptor here.
-> > If a client prepares a descriptor but aborts and frees it before
-> > submission, the DMA engine core won't be able to free it.
-> >
-> > [ ... ]
-> > > @@ -494,11 +494,11 @@ static irqreturn_t atcdmac_irq_thread(int irq, void *dev_id)
-> > >     for (i = 0; i < dmac->num_ch; i++) {
-> > >             dmac_chan = &dmac->chan[i];
-> > >
-> > >             if (test_and_clear_bit(ATCDMAC_STA_TC, &dmac_chan->status)) {
-> > >                     atcdmac_advance_work(dmac_chan);
-> > >                     handled = true;
-> > >             }
-> > >
-> > >             if (test_and_clear_bit(ATCDMAC_STA_ERR, &dmac_chan->status)) {
-> > >                     atcdmac_handle_error(dmac_chan);
-> > >                     handled = true;
-> > >             }
-> >
-> > [Severity: High]
-> > The lack of mutual exclusivity allows both conditions to execute if both
-> > status bits are asserted simultaneously by the hardware. In this case,
-> > atcdmac_advance_work() would complete the current descriptor and start the
-> > next one, followed immediately by atcdmac_handle_error() wrongly aborting
-> > the newly started, innocent descriptor. Should these checks be mutually
-> > exclusive?
-> >
-> > [ ... ]
-> > > @@ -911,10 +911,8 @@ atcdmac_prep_dma_cyclic(struct dma_chan *chan,
-> > >             if (!desc)
-> > >                     goto err_desc_get;
-> > >             atcdmac_chain_desc(&first, &prev, desc, true);
-> > >     }
-> > >
-> > >     first->txd.flags = flags;
-> > >     dmac_chan->cyclic = true;
-> >
-> > [Severity: High]
-> > This modifies the channel-wide state during descriptor preparation.
-> > If a client prepares a cyclic transfer, does not submit it, and
-> > subsequently prepares and submits a non-cyclic transfer, this global
-> > flag remains set. When the non-cyclic transfer completes, could this
-> > cause atcdmac_advance_work() to treat it as cyclic and attempt to
-> > dereference dma_desc->at->next in atcdmac_start_next_trans(), leading
-> > to a kernel panic?
-> >
-> > [ ... ]
-> > > @@ -1144,10 +1144,8 @@ static void atcdmac_free_chan_resources(struct dma_chan *chan)
-> > >     spin_lock_irqsave(&dmac_chan->lock, flags);
-> > >     list_for_each_entry_safe(desc,
-> > >                              desc_next,
-> > >                              &dmac_chan->free_list,
-> > >                              desc_node) {
-> > >             list_del(&desc->desc_node);
-> > >             dma_pool_free(dmac->dma_desc_pool, desc, desc->txd.phys);
-> > >     }
-> >
-> > [Severity: Medium]
-> > This loop only frees descriptors currently sitting in the free_list.
-> > Combined with the missing desc_free callback above, does this mean any
-> > prepared but unsubmitted descriptors are permanently leaked and never
-> > returned to the dma_desc_pool?
-> >
-> > [ ... ]
-> > > @@ -1189,8 +1189,8 @@ static struct dma_chan *atcdmac_dma_xlate_handler(struct of_phandle_args *dmac,
-> > >     if (!chan)
-> > >             return NULL;
-> > >
-> > >     dmac_chan = atcdmac_chan_to_dmac_chan(chan);
-> > >     dmac_chan->dev_chan = true;
-> > >     dmac_chan->req_num = dmac->args[0] & 0xff;
-> >
-> > [Severity: Medium]
-> > The request number is extracted and masked to 8 bits. However, the hardware
-> > request selection registers (SRC_REQ_SEL_MASK, DST_REQ_SEL_MASK) are only
-> > 4 bits wide. Since FIELD_PREP silently truncates values, a device tree
-> > req_num of 16 will be programmed into hardware as 0 without warning.
-> > Should this value be explicitly validated against the 4-bit maximum?
-> >
-> > [ ... ]
-> > > @@ -1305,9 +1305,9 @@ static int atcdmac_init_ioremap_and_regmap(struct platform_device *pdev,
-> > >     regmap_read(regmap, REG_CFG, &val);
-> > >     num_ch = val & CH_NUM;
-> > >     size = sizeof(*dmac) + num_ch * sizeof(struct atcdmac_chan);
-> > >     dmac = devm_kzalloc(&pdev->dev, size, GFP_KERNEL);
-> > >     if (!dmac)
-> > >             return -ENOMEM;
-> >
-> > [Severity: High]
-> > The DMA controller structure is allocated using devres, tying its
-> > lifetime to the device binding rather than the dma_device refcount.
-> > If a client driver still holds a channel reference when the device is
-> > unbound, could this lead to a use-after-free when the client later
-> > releases the channel and atcdmac_free_chan_resources() accesses the
-> > freed dmac structure?
-> >
-> > [ ... ]
-> > > @@ -1543,9 +1543,8 @@ static int atcdmac_resume(struct device *dev)
-> > >     list_for_each_entry_safe(chan,
-> > >                              chan_next,
-> > >                              &dmac->dma_device.channels,
-> > >                              device_node) {
-> > >             dmac_chan = atcdmac_chan_to_dmac_chan(chan);
-> > >             spin_lock_irqsave(&dmac_chan->lock, flags);
-> > >             if (!list_empty(&dmac_chan->active_list))
-> > >                     atcdmac_start_next_trans(dmac_chan);
-> >
-> > [Severity: Medium]
-> > This condition actively prevents queue_list items from being serviced if
-> > the active_list is empty during resume. Since transfers submitted during
-> > suspend are placed into queue_list (because stop_mask prevents them from
-> > starting), won't they remain stranded indefinitely unless issue_pending
-> > is also called here?
-> >
-> > [ ... ]
-> > > @@ -1568,9 +1568,9 @@ static int atcdmac_suspend(struct device *dev)
-> > >     synchronize_irq(dmac->irq);
-> > >
-> > >     ret = atcdmac_wait_chan_idle(dmac,
-> > >                                  chan_mask,
-> > >                                  ATCDMAC_CHAN_TIMEOUT_US * dmac->num_ch);
-> > >
-> > >     return ret;
-> > >  }
-> >
-> > [Severity: High]
-> > If atcdmac_wait_chan_idle() times out, the function returns the error code
-> > without reverting dmac->stop_mask back to 0. Since the PM core would abort
-> > the system suspend and resume normal operations, wouldn't this permanently
-> > prevent any new transfers from starting?
-> >
-> > > diff --git a/drivers/dma/atcdmac300.h b/drivers/dma/atcdmac300.h
-> > > index 0000000000000..3d2d07effc26d
-> > > --- /dev/null
-> > > +++ b/drivers/dma/atcdmac300.h
-> > [ ... ]
-> > > @@ -148,10 +148,10 @@ enum dma_sta {
-> > >   * @ll_ptr_hi: Linked List Pointer Register (high 32-bit).
-> > >   */
-> > >  struct atcdmac_regs {
-> > >     unsigned int ctrl;
-> > >     unsigned int trans_size;
-> >
-> > [Severity: Low]
-> > The hardware descriptor layout uses native unsigned int instead of
-> > explicitly sized __le32 types. When these fields are populated in
-> > atcdmac_build_desc(), values are assigned directly without cpu_to_le32().
-> > Does this lack of endianness conversion break portability if this driver
-> > is ever used on a big-endian system?
-> >
-> > --
-> > Sashiko AI review · https://sashiko.dev/#/patchset/20260916134258.2178081-1-cl634@andestech.com?part=2
+> >    dmas:
+> >      minItems: 2
+> > -    maxItems: 4
+> > +    maxItems: 6
+>
+> [Severity: Medium]
+> Does this unintentionally weaken schema validation for older generations?
+>
+> By relaxing the global maximum to 6, a device tree for older hardware (which
+> only supports up to 4 DMAs) could now silently pass validation with an invalid
+> number of DMA channels.
+>
+> Should this preserve maxItems: 4 globally and only override it to 6 inside an
+> allOf: if-then conditional block for the new Gen5 compatible?
+
+I wouldn't bother adding further restrictions, as these are not related
+to the actual MSIOF block, but to on-SoC wiring.  DMARQ is just a single
+signal going from the MSIOF block to one or more DMAC instances.
+The number also differs among MSIOF instances on an SoC.
+
+See also my similar replies for rcar-i2c and serial:
+https://lore.kernel.org/all/CAMuHMdXj04QoxituCF3wRcyzN7qZrVBn7-ukNkKDd0OfhB8zOQ@mail.gmail.com/
+https://lore.kernel.org/all/CAMuHMdVgJkwkoF0-ptQ9g_8E5j1Oa8G41nBiiOfY+KF_p7XAxQ@mail.gmail.com/
+
+Perhaps it would be a good idea to remember this?
+Thanks!
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
