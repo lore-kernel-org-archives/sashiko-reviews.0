@@ -1,75 +1,75 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2120839F17F
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 15:13:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4FE559CA6
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 15:30:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790089989; cv=none; b=dsY2D+BAnJ+GkxrmULc/uEXLoSVHwra2Yz6+V10WfV2OZRH/HekfBqaEQXibKhavgD3BKmfXoU77sRvV8eFG35IPiFo9wflL8u8mPyQqXCcfihPjpy74yVfmeAAG6YMoy+1dhXt+lDGlZzVLr4ETlxmcKT1VT15bUbLL0yujGvE=
+	t=1790091059; cv=none; b=bZLt6N9ckBXI6iKEvqxOx9qqWtq/Rt96MHBID64Y8Zcgxaj8yOdrtqtpcfPuzVm4mC4YcBBBLsnG0tGeiq4MxSIXHbUSJ+IUFn1vlnh/fSDaOshRq8SG48FPM+m+MdXYlhZVW6lltM1Rne55u6v0+UgmIuTIrp0J0ZlkBWuTorY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790089989; c=relaxed/simple;
-	bh=BYdjDLssy8JKv6FM/v/3nDxGoG02feMVhVR5WwpnGqo=;
+	s=arc-20240116; t=1790091059; c=relaxed/simple;
+	bh=vNjOMpe/XMDvYnFfJwC48AyuS1vuPk+FSssxslTQZJk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bz65ADZ56Z+FyjcnviwkykexrSeSSjTl2zV5vadJhY8FsU3LLTz2XFkxilvRXddTBhuXZLjZ5wLUCKb28gBPSmoXujciKEHFCIr1JscULjbBmsoQEXuDu2bZZxXCnHM5GcODIr8sjwKa8h00GwC5hxa/p7kynfXVQVSfU9jFfK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bjJFsP4G; arc=none smtp.client-ip=209.85.128.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=bNO0de01YHq0nFd5tzmm18VtKfBv4BrsRn8b/YvdfiI4zerxI2+jKJ45LnLUprshT6q8sO2vulyUsrQ1Weua9mzaOPW9o4OSHICR0C7q0RZNe2tuvN9+dUCtLvOtXEkz4V8aMFFUICGm+Z3eQFQ9mc8hOzSXBN9rvBwT85IpVmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SKvZaBmV; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bjJFsP4G"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-49ccf12bed0so51525e9.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 08:13:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SKvZaBmV"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-498012a61f6so47725e9.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 08:30:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790089984; x=1790694784; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1790091055; x=1790695855; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ycaWp9SoS5hGz6SolD0/sJBzyQ5A16vDCKKDe4NgaW8=;
-        b=bjJFsP4GTgbWlBulSEBf28nbfc5dQjMqcZaXuSYH1oQj7n3YmpoGzUuwMuL6Rab0hP
-         /RKLamWatRGjFKlUCIegib5bzzWukpCdWcfizCUaXmeSTkWs0hIpxW4WOc0xOYX5ayra
-         FVTHbrQj8xRpdF0cTMKk8okg6KSe5RmTwBnJkWtMXfY1zwrJ3se98uBCA+80oKtkrcpz
-         xXBRDK2xKmTVpZvx9NsG5D3EuzBKpl8F+hSk1c4wi864m+wiGUP0fNlxhO3VzSaco3hU
-         aX7GcORDsVy15gAECWDQ77GToOi6qzIr2osjc18+hdoWLCMCjpoL/RnZB4FpbGgMflrS
-         YlKQ==
+        bh=a74MW44grhNadd50edVJgnCMHiCGD4sP0/5a9THSw4A=;
+        b=SKvZaBmV5o/fmVjClr/ZtDZ+1UHPFeNKlUs7EW2V/h0RflIGYhYwoPUjG+pZNk65VT
+         lM6HnSySCrV2bg0y4agiQzSI4mO29SCHDF6zf9TYjN4ybS06hxkryjLfaEVIp8RcIC3y
+         vNVLyiski4RvVYLM8NyjiY1MiTB+ulLKLxoSrRrpcHvkPENX2iUwbVQDLUyvlRrRUIqg
+         9aVscvpfVW7wqEPtKuFgSoGDE9QDjIZesWEjWW0YGarE7b1tPY0XddAOAcUkUUzQHzsJ
+         X+aBSsEXsHFROj7lIDF0MRksCZzPnUDs8zyksXBcL8tDbzZB4vNFs73ou4FfzIw63mPE
+         COqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790089984; x=1790694784;
+        d=1e100.net; s=20260707; t=1790091055; x=1790695855;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=ycaWp9SoS5hGz6SolD0/sJBzyQ5A16vDCKKDe4NgaW8=;
-        b=Kv4QLdfhcDFE2pjJUFk12GQz4/Y4zYGoFWrb8M0Mn7EtBdv0Chx2vrwr+w/EhEJMNP
-         kA5JHiVimTQfhBSLRm3+8bS/rfo9CuDh7T94CkfzYbsZ75ftChVzGr5o5bKKgqOtp1yF
-         uwek73DpW1MPTAVFZ0T2YUSPbp7kCrZy+WQdYrTrn03dMBQJlEDQ5jBu/WVIKZVPgil+
-         gamPGdikKdxinzBqw9lfoBCG73JNr4mjCOKwr6KS7utlTuSBYvTCP8jD3NdIpwlj3IGd
-         CCf6dWn3jctx6RDzNhG5n/Wft6eABiStJvuN2QMaw00fXHDii0Sg19VDHnYhlZpiI8nJ
-         UrDA==
-X-Gm-Message-State: AFuF++mG+nU7Em8yJVhRksidTUgW6ZgK/KBWVKbr5g87LbE3A9M0l1sh
-	Yb9m9FcYubrX7Dvm6it1C4189VK5nMzWiOsV+zDHjJ15H1mijzbgldGj6hCfKyYv2wq/oBB1k/0
-	XdihZDQ==
-X-Gm-Gg: AYBFou2AahFC9zsQlB2NXY9AVEZRQPL98HrpMkUjv4cZdjfNNpuXZRTmXdTZolVlaNd
-	iPaZDVLWz7m74OfJOZPV9s5WqBYfeXf/wUcH/Q9asifka0LAmtJyvM3Dx6IrPbv15rGT6L8iWNn
-	8+nLuHRSmDLwLkUOaC0hR/+U6GVq4zvyV+I/6tk6bwIgiXT1N8uYgooR/EN7cSKFwMsKcUM+IDH
-	bnrb0GHSpDuFr4z7T8F7jeantk+nzutXgs6vy0jNXgdEPIJWfwQcssChOr/yenf1Fe7G8FLnK4j
-	i7mqGucYo4tuuulihBuL5E+IQKW93WDfjteTuTXmoXb5z4xXqv8Gh3x0zQY5EE704BSvzUk9jXo
-	pt+n8fyUyRFMzJrNPAb10wiupiL6dkYGPaB+Oc549IeDp3gWI95REJ0a9D42x+VB6QowkWcz/Ti
-	KTCWaQDCOjEv1GbkJtnkoZcoUgfBpOtrHegIQXps4OeX+33jYKH8b+tRzlp2lNcQupJfhtZHzWy
-	OytdXk7Qg/3tMIyR2N9grVLO1n5224s8L+ZtpHhpA==
-X-Received: by 2002:a05:600c:6005:b0:49e:642a:9279 with SMTP id 5b1f17b1804b1-49fdd97d911mr116335e9.4.1790089983699;
-        Tue, 22 Sep 2026 08:13:03 -0700 (PDT)
+        bh=a74MW44grhNadd50edVJgnCMHiCGD4sP0/5a9THSw4A=;
+        b=aHAHpW0S6w/lEu8c4zf5m7wv6V8oKR6wHG96E35CgxPnI0GwQyZG/X56FIX2WpmGzC
+         15N2uHbI8NoFTQvn4jdZMtT6oQp0SGTTHeg8Ob/AbyrHYLgwj+5NXj6Iy6+b/PzKxknC
+         GM5wuPnouqNfp7DgnwlQ4g9l68/GTGPOBqWHFF/AgxeGHXgLyGJfbgV3zODNK6nPAp5V
+         vy3SsW+Vz1RgbEuf89gT82uQsundgyOkpV74vICOEsemIkbsylsh4j5EjrcAdGsXgXqH
+         80w7z+XuLclzKDsfv6fpbBSV3n6kYn3aOCEnyCJwpa2uswlvQEiaDpCPzfGLDZWnFqb/
+         4Uxg==
+X-Gm-Message-State: AFuF++nt3YWkHo1Cr2rGBbLoCEc3nlIa1guZtl7+N3C0T5WIXYocVNVm
+	TjGq5W8NQVNhD9dS+X6pkecMiI2wvytiEPrBi4wvRPKhX4Xmyu2athIdmRewN3GU+xaCIXgsHgt
+	5oiyiSw==
+X-Gm-Gg: AYBFou2xmm+VBBE+bLPXmr94ZpBmVoifx3C3bR/e0f0RFTYWswQZZWgOx8Mm/XliJho
+	BQOw7Uga45nZel5AKDaMHLr2wTcg7fzE4XS3DkTsqnCPi8G/nqxocqxTbJzbcRLmQN7ZIHlDLX+
+	sYVk/HPM1cTzUHG6q62mqmAfCQNKN1GKBS5NGp3tbvrf1Qs04ViGEgiKKVWvt5aCVE1jZs34p2E
+	OZncNyhHiZa+/e770XsUL8T0BDdtXRJ6xEkLH1syKqsGDNDUI10q2DTlbwx3q8dcQQvKnuqU8ga
+	hSie/e9+Q93pT8HjrxnpFmor5kGykGW64yY2yQnhcYi50DiBMDthp6DV8W4UBkIGibaC9uVnPCU
+	zlfdqnLwnsSTVu21FCwMt3P/CUALDKGM2F1VCqOq2DYx12BBlLYXUhEh/kWKqg22Z//rpJ5GDpk
+	CgNQ7xWiUN6/8TTXtI3QRF1lER3XfEWafu1jbRJQyZlyQizR3PFs6VqiJomyzLci3wR141GcAHo
+	MGWPl8/oNwOqDAKp6KEuSFWcgAadIc16bEVKzHHwA==
+X-Received: by 2002:a05:600c:22d2:b0:49c:fee1:5095 with SMTP id 5b1f17b1804b1-49fdd9c6041mr158085e9.16.1790091055045;
+        Tue, 22 Sep 2026 08:30:55 -0700 (PDT)
 Received: from google.com (250.192.189.35.bc.googleusercontent.com. [35.189.192.250])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fddfdce15sm1497315e9.10.2026.09.22.08.13.03
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fddfe361esm2281105e9.11.2026.09.22.08.30.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Sep 2026 08:13:03 -0700 (PDT)
-Date: Tue, 22 Sep 2026 15:12:59 +0000
+        Tue, 22 Sep 2026 08:30:53 -0700 (PDT)
+Date: Tue, 22 Sep 2026 15:30:50 +0000
 From: Mostafa Saleh <smostafa@google.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>,
-	kvmarm@lists.linux.dev
-Subject: Re: [PATCH v8 11/25] iommu/arm-smmu-v3-kvm: Add the kernel driver
-Message-ID: <arKa-8QbSSQFrUbJ@google.com>
+Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>
+Subject: Re: [PATCH v8 13/25] iommu/arm-smmu-v3-kvm: Add MMIO emulation
+Message-ID: <arKfKqwNN11C3yad@google.com>
 References: <20260922131259.2975334-1-smostafa@google.com>
- <20260922131259.2975334-12-smostafa@google.com>
- <20260922132814.D398D1F000FF@smtp.kernel.org>
+ <20260922131259.2975334-14-smostafa@google.com>
+ <20260922132232.B2E301F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -79,136 +79,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260922132814.D398D1F000FF@smtp.kernel.org>
+In-Reply-To: <20260922132232.B2E301F000FF@smtp.kernel.org>
 
-On Tue, Sep 22, 2026 at 01:28:14PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Critical] iommu: pKVM DMA isolation bypass via unbound SMMUs falling back to host driver
-> - [High] iommu: Use-after-free of smmu during platform_device removal
+On Tue, Sep 22, 2026 at 01:22:32PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] hyp: fatal WARN_ON(!mask) on host SMMU MMIO access
 > --
 > 
-> commit a8ae8dbe858fbefdcb8b149d519f07175f91d794
+> commit 0f61ec17741805782c471d3c6da0d9dad62368e6
 > Author: Mostafa Saleh <smostafa@google.com>
 > 
-> iommu/arm-smmu-v3-kvm: Add the kernel driver
+> iommu/arm-smmu-v3-kvm: Add MMIO emulation
 > 
-> This commit introduces the pKVM host driver for the Arm SMMUv3, allowing
-> the hypervisor to trap and emulate SMMU management when KVM runs in
-> protected mode. The driver probes these SMMUs and creates auxiliary
-> devices for them on the aux bus.
+> Add data abort handler for the SMMUs, at the moment most registers
+> are just passthrough.
 > 
-> > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-kvm.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-kvm.c
-> > new file mode 100644
-> > index 0000000000000..9947d3a44304b
-> > --- /dev/null
-> > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-kvm.c
+> > diff --git a/drivers/iommu/arm/arm-smmu-v3/pkvm/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/pkvm/arm-smmu-v3.c
+> > index f8b7c5406017e..7a51cb70205fe 100644
+> > --- a/drivers/iommu/arm/arm-smmu-v3/pkvm/arm-smmu-v3.c
+> > +++ b/drivers/iommu/arm/arm-smmu-v3/pkvm/arm-smmu-v3.c
 > [ ... ]
-> > +static int smmuv3_nesting_probe(struct platform_device *pdev)
+> > +static bool smmu_dabt_device(struct hyp_arm_smmu_v3_device *smmu,
+> > +			     struct user_pt_regs *regs,
+> > +			     u64 esr, u32 off)
 > > +{
-> > +	struct hyp_arm_smmu_v3_device *smmu = &kvm_arm_smmu_array[kvm_arm_smmu_cur];
-> > +	struct device *dev = &pdev->dev;
-> > +	struct resource *res;
-> > +
-> > +	/* Only device tree, ACPI not supported. */
-> > +	if (!dev->of_node)
-> > +		return -EINVAL;
-> 
-> [Severity: Critical]
-> Can an adversary bypass pKVM stage-2 memory protections here?
-> 
-> If an SMMU fails to bind to the hypervisor due to early returns in this
-> probe function (like missing a device tree node or hitting the cavium
-> erratum below), it is excluded from kvm_arm_smmu_array and the hypervisor
-> does not trap its MMIO.
-> 
-> When the native host arm_smmu_driver registers at device_initcall, it can
-> successfully bind to this unbound SMMU. Does this allow an adversary host
-> kernel at EL1 to natively program this untrapped SMMU to perform arbitrary
-> DMA into hypervisor or guest memory?
-
-Yes, nothing really we can do about this, the system might have:
-- Incompatible SMMUv3 instance.
-- Device behind another IOMMUs.
-- Devices without IOMMUs.
-
-A system shipping this code should ensure that the driver is probed
-successfully on their HW.
-
-> 
-> > +
-> > +	if (kvm_arm_smmu_cur >= kvm_arm_smmu_count)
-> > +		return -ENOSPC;
-> > +
-> > +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> > +	if (!res)
-> > +		return -ENODEV;
-> > +
-> > +	if (of_property_read_bool(dev->of_node, "cavium,cn9900-broken-page1-regspace"))
-> > +		return -EINVAL;
 > [ ... ]
-> > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> > index 2043c6dc1bdf8..d6d1e2d30ef63 100644
-> > --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> > +	case ARM_SMMU_CR1:
+> > +		if (len != sizeof(u32))
+> > +			break;
+> > +		/* Don't mess with shareability/cacheability. */
+> > +		if (is_write &&
+> > +		    (val != (FIELD_PREP(CR1_TABLE_SH, ARM_SMMU_SH_ISH) |
+> > +			     FIELD_PREP(CR1_TABLE_OC, CR1_CACHE_WB) |
+> > +			     FIELD_PREP(CR1_TABLE_IC, CR1_CACHE_WB) |
+> > +			     FIELD_PREP(CR1_QUEUE_SH, ARM_SMMU_SH_ISH) |
+> > +			     FIELD_PREP(CR1_QUEUE_OC, CR1_CACHE_WB) |
+> > +			     FIELD_PREP(CR1_QUEUE_IC, CR1_CACHE_WB))))
+> > +			break;
+> > +
+> > +		mask = read_write;
+> > +		break;
 > [ ... ]
-> > +static int arm_smmu_device_probe_emu(struct auxiliary_device *auxdev,
-> > +				     const struct auxiliary_device_id *id)
-> > +{
-> > +	struct device *parent = auxdev->dev.parent;
-> > +	void *group;
-> > +	int ret;
+> > +	}
 > > +
-> > +	dev_info(&auxdev->dev, "Probing from %s\n", dev_name(parent));
-> > +	group = devres_open_group(parent, NULL, GFP_KERNEL);
-> > +	if (!group)
-> > +		return -ENOMEM;
-> > +
-> > +	ret = arm_smmu_device_probe(to_platform_device(parent));
+> > +	if (WARN_ON(!mask))
+> > +		goto out_ret;
 > 
-> [Severity: High]
-> Can this devres setup lead to a use-after-free during platform device
-> removal?
+> [Severity: Medium]
+> Is it safe to use WARN_ON() here to validate host-controlled input?
 > 
-> If the parent physical platform device is destroyed (for example, via
-> dynamic DT overlay removal), the driver core calls devres_release_all()
-> which processes cleanups in reverse order of addition (LIFO).
+> If the host writes an unallowed value to ARM_SMMU_CR1 (breaking out of the
+> switch before setting mask), or accesses an unhandled register offset,
+> mask remains 0. The subsequent WARN_ON(!mask) will trigger a fatal
+> BRK instruction at EL2, crashing the hypervisor and the host.
 > 
-> Because arm_smmu_device_probe() adds the smmu allocation to the parent's
-> devres list after the auxiliary device was created in
-> smmu_create_aux_device(), the smmu memory gets freed first.
+> Since WARN_ON() is fatal at EL2 and does not execute the goto out_ret
+> recovery path, should this validation gracefully handle the abort instead of
+> asserting?
 
-Two points:
-1) At the moment the device can't be released as suppress_bind_attrs is
-   true. There is no kernel user for the dynamic overlay it is added
-   for testing AFAIU.
-
-2) AFAICT, __devm_auxiliary_device_create() calls, devm_add_action_or_reset()
-   for the device destroy, so the aux device will destroyed before the
-   platform device.
-
-> 
-> Following that, the auxiliary_device_destroy devres action executes,
-> unregistering the aux device and triggering driver unbind via
-> arm_smmu_device_remove_emu() and arm_smmu_device_remove(). Does this
-> result in dereferencing the already freed smmu struct?
-> 
-
-Same as above.
+Yes, no well behaved host will attempt this, so a WARN_ON() is better
+than ignoring it and making it really hard to debug.
 
 Thanks,
 Mostafa
 
-> > +	if (ret)
-> > +		devres_release_group(parent, group);
-> > +	else
-> > +		devres_close_group(parent, group);
-> > +	return ret;
-> > +}
-> > +
-> > +static void arm_smmu_device_remove_emu(struct auxiliary_device *auxdev)
-> > +{
-> > +	arm_smmu_device_remove(to_platform_device(auxdev->dev.parent));
-> > +}
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260922131259.2975334-1-smostafa@google.com?part=11
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260922131259.2975334-1-smostafa@google.com?part=13
