@@ -1,140 +1,211 @@
-Received: from mail-wr2-f12.google.com (mail-wr2-f12.google.com [74.125.225.76])
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB804848A5
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 18:10:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F418C433E9E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 18:34:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.69
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790100655; cv=none; b=fHIuWHMenM093+JEZis4mgkQEeZevBivPCr7oa+OaUtLan24WmbK11V4Zmky14QmOyQA0qEdiJQKHTXXZFWTilOgDyTSAz1k904lWt4TjJmWfAGNW+haRAiboKFvkM6CRyLBQyEIAasv4Y/Ox+fUPdlGgCChOBD29mOidAZK9pQ=
+	t=1790102093; cv=none; b=IyRlo5IqBBCrt0ulLmK7gpHRq7tlam9lLXfoDfS9mvDrl7J1519+NnAQnr/pKqp8AO1ZKFIljD+Ql2+/xcNhIumxHRcueFnLS9uXqIRg5w5oZODkRNV1AF8M0qy2JazJEaJfzE53HG/ZLUz5QcbMJjAYai5kdt04hqDA8qhozSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790100655; c=relaxed/simple;
-	bh=Aiwi/57ro32i8S+PbUKG7AiN5OxGDUL9agMO9A0gG+o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Si0gMcLuMWLAiViMDRisTjxxZEJcS7ff8pFfAymj4jNRZbq08EaVah565DqR5s2Wolleb5PLCzHN7ekY1sb40IUOSb4pd1T4IfKlX/b1hJ04UB4CtWj1+5iLicWHbndPe88qRJi7cxBblJK1NSXacrzFdofl8CQs9uxQ6iZx99I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P56BFdsf; arc=none smtp.client-ip=74.125.225.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790102093; c=relaxed/simple;
+	bh=dE6blP7xL/WHMHL7CQSKGlnHE/Koi3s3g0Al+rqSe8o=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=Hzx5a9z3oXhTSTbg9nw3PQahgTMcfjy8/+aa2TgXhDh85LttziA0rL9kxOE34U52PnkBYkMr1qwHJKNyO/YGtw74deiFZxVgV9M1/Qo5trjXBQM27GydWjB2EAR1vk5xP7nGsFa2xFE51iitgzrQBXYqNyQYONUaZ940U+vWXEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=okRu66y6; arc=none smtp.client-ip=209.85.216.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P56BFdsf"
-Received: by mail-wr2-f12.google.com with SMTP id ffacd0b85a97d-486e1a044c5so168184f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 11:10:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="okRu66y6"
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-38ecc48b3c2so341145a91.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 11:34:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790100652; x=1790705452; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=xTJGDgnrwX0goSYWUxKDiz39i158qeQbDfyk43iX700=;
-        b=P56BFdsff8Ab6AKQztTSlkZESLAiAx/rMoVo/0JRQKZaFB7lswfXJmeOgLhch2Abie
-         Fbxfv7JRmwSYgFvC9kU3jTsnLpGb8Uemtu+4gausLbgDMfdZzmKmRXUYdve2W5mYzUAs
-         8eDacP3yy2570f7bD0CK9PrYE1ArRyWkwMVlXrDXaxI15D/pRN+d2ljlveFjLcT9Pgis
-         7GgD+Txbmbzpn5l1medBeSVBgWL217DJCHPHJMpu4X5oee0L6RFr3qnJIr//6AJKqlsr
-         BrEDxjoA4h9bj/8E+B6zjKFKvzsThy8H5CsmUIAUCmZkGIsi4CpTL/894KFeo05TE2Bv
-         lA+A==
+        d=google.com; s=20251104; t=1790102091; x=1790706891; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=bJLCRmfCHJwYyMuCa+r79MDdK0EYy9EEEkSv2qnLSYw=;
+        b=okRu66y6jjhsGoNqi+o81DXmt1oCIt8Xk4MuVQhUeEyA/TG8iFsgah98QniGF4ZTDy
+         PlH9/BsnWwYwCFTjbNDtUBUdIp2jRXYRjA7IGpy6PjamGH7PEz90Jn7xS1nBUH2KGiI3
+         uecNHDoxmWKmnqSiSEOM3nisHv5k0ed5uaNt4cq59vlEpvl8nVPbmGDnYkjO6of8vmf4
+         hial8+0uiwU4xArEucHrmO0KulIa7aNN29KycvapffM//6KNkg8XupvUJLd35PvKLQQr
+         eFDDSTlwcWPknVhlZ+btlVokXQxlMoWaBRGvDdmnHWRqVBRzxKZI4N5not/JsrL3QBIv
+         6HDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790100652; x=1790705452;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=xTJGDgnrwX0goSYWUxKDiz39i158qeQbDfyk43iX700=;
-        b=hFBo8fFReu4QtA+BOEO8ezm+q2uwe38TaTSuyFSgVbp0xVmllMn0Mk5phIDuS3D2m7
-         6k6kBtDqMcO22it1JFGfR8LKW6CfPZN6EL/QNgnmOQuc3AV0ytT36kb0domj1DJTtfao
-         SGkyb80qlfQaifopRBcBZdSTRsw6S+UJxc1IqC4tbXKH9e8jocGOTY+hA3+0/43iSXe4
-         2Y+9cQfcKt2H7g5xBGRNY+0y9QuLjT8aBlNZCBNueMT563qM0+MPmSW9JSIH9ctvhfLN
-         26PObh7gifrFlGgxDT/E4mjSS1pCot1HGkyMiy5yGvGrVSIumkZM6riIh65TbsL5GzAx
-         xXDA==
-X-Gm-Message-State: AFuF++kTrnH1PF7rZ7PPwAG4ozNe9PBeysslo1MSN/RAP5lIHglEKxkC
-	LJWHSCfusbnNw93+Kl+cWXJFiGd9OSyZ8dN0jOPEP+aXpA53DV5SICgsoBMU6cMkFzE=
-X-Gm-Gg: AYBFou0L9Uug1PbFo+dP57c/u7zpBzJgVsr2ye4dV2Rh6se96iuXfMV86j0TqZ1ZL0s
-	fHDPhj/5HwEr+aqxja7NfbRZYFxTtZPPAO04SQ3RENZ+qWRGgzIogpiv6DN52tMI9lRHyeF/oo3
-	39gDGXb4nJC6A43+4yoSvse6hl/SbPJvY03kHeSPfacOGm6YMqvBPFl2FIF+YF97q94xG/9TlZU
-	kZaZh1XPIBRiM83dS6+qpiHe9ulkugEfJQ1eSCFSVd9ZmyN9tXvhRYoAtEPSJ2IJfmhnsoG4dQA
-	nbZyJZBvEl1nwml1rSJjGn4Y0lzd2Z4Of85ZZ3eE/ggE9d3kcyXCcIRSEiu4jL8+u9h26dw0JGI
-	8aippNlhEfbLh9fCJnqq3800YYEKb+aSFE2MchPDwrDhaezJvJ2jsIpSV/jXrIKj4Frbo6I7C12
-	8Md7ibtH37+YnNOluGqjCc4QoY3reiTMjqYapU7Of8svfpy5LXutMJo0pWVn5xyQq0AtwfinhMK
-	6Vs/yUJHwCF++1TH3EpVzOhX1jh6HvHVMg=
-X-Received: by 2002:a05:6000:430d:b0:486:ecc3:2d1a with SMTP id ffacd0b85a97d-488670a04b4mr601845f8f.31.1790100652027;
-        Tue, 22 Sep 2026 11:10:52 -0700 (PDT)
-Received: from ?IPV6:2a03:83e0:1126:4:1715:59a3:7aab:2955? ([2620:10d:c092:500::7:c6a4])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4886876c1fdsm190681f8f.14.2026.09.22.11.10.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Sep 2026 11:10:51 -0700 (PDT)
-Message-ID: <be18926e-124c-40b1-9846-b99277c800ad@gmail.com>
-Date: Tue, 22 Sep 2026 19:10:50 +0100
+        d=1e100.net; s=20260707; t=1790102091; x=1790706891;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=bJLCRmfCHJwYyMuCa+r79MDdK0EYy9EEEkSv2qnLSYw=;
+        b=1Z2bkhM6zrmgBqi5nvGoZAw8E4a/OmWKvKSbvjhd/9KroHazUnrobEeeTn29aI1xAe
+         6ywD2itZomTZVpn/eniTY9xSJ+bKgViaiQXAQmmBgiFVSNIaO1ipx/byJJKqFosfyXv0
+         e4GVjF3fmzvpAM5KjnLG7ALEEfET91//dhw+u3ipy05TmQaNS9B2OFmuiX9mLR+/WD0s
+         17i3aZeExyTmSEkzi0EF1G9DIqDFJ2VjzoU1ifABHf229VxN1G3A3VgEadEvFcv9iOsa
+         u/aP1oqfNZoRIHggz1pO7L20WGQ9Benk/YqKHdIPmtEWhce7DK1floixb0lFY+alb56Z
+         XHGA==
+X-Gm-Message-State: AFuF++lZtaEUBZKVompe8QMUQBRkHZuVRz1pZdyzNvm0VsyIq96ozmIG
+	/9dNBiWEz6YMZAYBEvw7lrfBvIDn0r7o1ypHuEbqcx0/LAqjoyyzySMvq0WU6zFopTArx04I6+m
+	HUe7V0g==
+X-Received: from pjbnm10.prod.google.com ([2002:a17:90b:19ca:b0:3a0:7ca0:31cc])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90a:c2ce:b0:39e:6a80:b793
+ with SMTP id 98e67ed59e1d1-3a07e5ea2bemr271386a91.35.1790102090837; Tue, 22
+ Sep 2026 11:34:50 -0700 (PDT)
+Date: Tue, 22 Sep 2026 11:34:50 -0700
+In-Reply-To: <CALMp9eThtND2KddrmySqViNsLyisdd6_ZH01s9jrA9K-_yQzXg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v3] bpf: Speed up htab lookups for u32/u64 keys
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260922-hashtab_fast_hashfn-v3-1-b7b0e9bc33ac@meta.com>
- <20260922180843.CB7721F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Mykyta Yatsenko <mykyta.yatsenko5@gmail.com>
-In-Reply-To: <20260922180843.CB7721F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <20260918154530.4129698-1-jmattson@google.com> <20260918160109.E76B81F000FF@smtp.kernel.org>
+ <arKJQwAPvApkeESD@google.com> <CALMp9eQboC6DTQfa3N58XCfOLf-qwJ2L7dC5vtqDerHG80eZLg@mail.gmail.com>
+ <arKQJJJB8HMK0B1G@google.com> <CALMp9eQi0gm7ojijfKDZz9oZh+BK13qUkJOFrCmxjJTr5sx3Lg@mail.gmail.com>
+ <arLAtdMP7LV0r-D9@google.com> <CALMp9eThtND2KddrmySqViNsLyisdd6_ZH01s9jrA9K-_yQzXg@mail.gmail.com>
+Message-ID: <arLKSkliAXuww3-0@google.com>
+Subject: Re: [PATCH] KVM: x86: Disallow EFER.LMSLE when EferLmsleUnsupported
+ is set in guest CPUID
+From: Sean Christopherson <seanjc@google.com>
+To: Jim Mattson <jmattson@google.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Sep 22, 2026, Jim Mattson wrote:
+> On Tue, Sep 22, 2026 at 10:53=E2=80=AFAM Sean Christopherson <seanjc@goog=
+le.com> wrote:
+> >
+> > On Tue, Sep 22, 2026, Jim Mattson wrote:
+> > > On Tue, Sep 22, 2026 at 7:26=E2=80=AFAM Sean Christopherson <seanjc@g=
+oogle.com> wrote:
+> > > >
+> > > > On Tue, Sep 22, 2026, Jim Mattson wrote:
+> > > > > On Tue, Sep 22, 2026 at 6:57=E2=80=AFAM Sean Christopherson <sean=
+jc@google.com> wrote:
+> > > > > > Gah, I hate the negative "feature" bits, I've gotten completely=
+ turned around
+> > > > > > multiple times trying to sort through this.
+> > > > >
+> > > > > Me too!
+> > > > >
+> > > > > > IIUC, you're trying to "fix" setups where host CPUID.EFER_LMSLE=
+_MBZ=3D0, but userspace
+> > > > > > configured guest CPUID.EFER_LMSLE_MBZ=3D1?  If so, then Sashiko=
+ is right, it needs to
+> > > > > > be declared with EMULATED_F().  I would even argue that technic=
+ally this isn't a KVM
+> > > > > > bug, because KVM won't advertise EFER_LMSLE_MBZ in KVM_GET_SUPP=
+ORTED_CPUID on such
+> > > > > > hosts.
+> > >
+> > > > > I'm trying to make it possible to run a Rome vCPU on Milan or lat=
+er.
+> > > > >
+> > > > > SInce this is a negative feature bit, it must be retained if the =
+host
+> > > > > reports it. That blocks running a Rome vCPU on Milan or later.
+> > > > > However, a defeatured Rome (which reports LMSLE_MBZ as 1) can be =
+run
+> > > >
+> > > > So, a partially defeatured Rome?  Because it sounds like the CPU re=
+ports LMSLE_MBZ=3D1,
+> > > > but then still allows setting EFER.LMSLE=3D1?
+> > >
+> > > No; it should not allow setting EFER.LMSLE=3D1. That will fail on lat=
+er
+> > > platforms and would block live migration from Rome to later platforms=
+.
+> >
+> > Oh, drat, I misread the "Rome vCPU" vs. "defeatured Rome" paragraph.  Y=
+ou want to
+> > be able to migrate a vCPU with guest.CPUID.LMSLE_MBZ=3D1 between a non-=
+defeatured,
+> > vanilla Rome and Milan+ (or a defeatured Rome).  Correct?
+> >
+> > If so, then Sashiko is right, the flag needs to be EMULATED_F() so that=
+ KVM will
+> > advertise EFER_LMSLE_MBZ to userspace on the vanilla Rome host, and als=
+o do the
+> > right thing when guest.CPUID.EFER_LMSLE_MBZ=3D0.
+>=20
+> No; that's wrong.
 
+Heh, it's not "wrong" per se, just unwise :-)
 
-On 9/22/26 7:08 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] bpf: missed u32/u64 lookup optimization for LRU/per-CPU/of_map variants
-> --
-> 
-> commit 88a648ce718a5816a7cc1175a104d2f26afc58c0
-> Author: Mykyta Yatsenko <yatsenko@meta.com>
-> 
-> bpf: Speed up htab lookups for u32/u64 keys
-> 
-> This commit introduces specialized hashing and specific lookup entry points
-> for 4-byte and 8-byte keys in BPF hash maps. It achieves significant
-> throughput improvements for standard BPF_MAP_TYPE_HASH lookups.
-> 
->> diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
->> index 6f331c80130d7..f744a42bb8139 100644
->> --- a/kernel/bpf/hashtab.c
->> +++ b/kernel/bpf/hashtab.c
-> 
-> [ ... ]
-> 
->> @@ -783,7 +805,16 @@ static int htab_map_gen_lookup(struct bpf_map *map, struct bpf_insn *insn_buf)
->>  
->>  	BUILD_BUG_ON(!__same_type(&__htab_map_lookup_elem,
->>  		     (void *(*)(struct bpf_map *map, void *key))NULL));
->> -	*insn++ = BPF_EMIT_CALL(__htab_map_lookup_elem);
->> +	BUILD_BUG_ON(!__same_type(&__htab_map_lookup_elem_u32,
->> +				  (void *(*)(struct bpf_map *map, void *key))NULL));
->> +	BUILD_BUG_ON(!__same_type(&__htab_map_lookup_elem_u64,
->> +				  (void *(*)(struct bpf_map *map, void *key))NULL));
->> +	if (map->key_size == sizeof(u32))
->> +		*insn++ = BPF_EMIT_CALL(__htab_map_lookup_elem_u32);
->> +	else if (map->key_size == sizeof(u64))
->> +		*insn++ = BPF_EMIT_CALL(__htab_map_lookup_elem_u64);
->> +	else
->> +		*insn++ = BPF_EMIT_CALL(__htab_map_lookup_elem);
-> 
-> [Severity: Medium]
-> Does this miss an opportunity to apply the identical u32/u64 lookup
-> optimization to the LRU, per-CPU, and hash-of-maps variants?
-> 
-> It looks like specialized JIT lookup generators were added here for
-> standard hash maps in htab_map_gen_lookup(), but identically structured
-> functions in the same file such as htab_lru_map_gen_lookup(),
-> htab_percpu_map_gen_lookup(), and htab_of_map_gen_lookup() still
-> unconditionally emit a call to the unspecialized __htab_map_lookup_elem.
-> 
-> Would it make sense to update those generators as well, so these heavily
-> utilized map variants do not miss out on the same performance gains?
+> KVM_GET_SUPPORTED_CPUID should continue to report EferLmsleUnsupported=3D=
+0 on
+> Rome. Otherwise, we break backwards compatibility for userspace that simp=
+ly
+> transfers KVM_GET_SUPPORTED_CPUID to KVM_SET_CPUID[2] or userspace that j=
+ust
+> doesn't know anything about EferLmsleUnsupported. The "default" for Rome =
+and
+> older platforms should still be to claim support for EFER.LMSLE, even tho=
+ugh
+> that has always been a lie.
 
-yes, I think this is a good idea.> 
->>  	*insn++ = BPF_JMP_IMM(BPF_JEQ, ret, 0, 1);
->>  	*insn++ = BPF_ALU64_IMM(BPF_ADD, ret,
->>  				offsetof(struct htab_elem, key) +
-> 
+But you can't have it both ways, KVM can't enforce a bit it doesn't support=
+.
+
+> > If not correct, then I'm even more confused, because ignoring clear_cpu=
+id,
+> > guest_cpu_cap_has() will only ever return true if boot_cpu_has() also r=
+eturns
+> > true, in which case KVM *will* reject the value because EFER_LMSLE will=
+ not be
+> > listed as a supported EFER bit.
+> >
+> >                 if (!boot_cpu_has(X86_FEATURE_EFER_LMSLE_MBZ))
+> >                         kvm_caps.supported_efer_bits |=3D EFER_LMSLE;
+> >
+> > > I want KVM to abide by the guest CPUID bit and disallow setting
+> > > EFER.LMSLE even on hardware that allows it.
+> >
+> > Right, and that requires declaring EFER_LMSLE_MBZ with EMULATED_F().
+>=20
+> I think you and Sashiko are both wrong. PASSTHROUGH_F() is correct for th=
+is bit.
+>=20
+> I think I need to report EferLmsleUnsupported=3D1 in
+> KVM_GET_EMULATED_CPUID, so that userspace knows it can opt-in if it
+> wants to.
+
+Hmm, I think we should have this be a "partially" emulated feature.  KVM de=
+finitely
+doesn't fully emulate LMSLE, and presumably anyone that cares about migrati=
+ng
+Rome vCPUs to Milan+ hosts is already advertising EFER_LMSLE_MBZ to the gue=
+st,
+i.e. doesn't need identify which KVM version have the bug and which don't.
+
+E.g. something like this?
+
+diff --git a/arch/x86/kvm/cpuid.c b/arch/x86/kvm/cpuid.c
+index 38450e9fca9a..67807cd95958 100644
+--- a/arch/x86/kvm/cpuid.c
++++ b/arch/x86/kvm/cpuid.c
+@@ -1416,6 +1416,22 @@ static int cpuid_func_emulated(struct kvm_cpuid_entr=
+y2 *entry, u32 func, u32 ind
+ 		if (kvm_cpu_cap_has(X86_FEATURE_RDTSCP))
+ 			entry->ecx =3D feature_bit(RDPID);
+ 		return 1;
++	case 0x80000008:
++		/*
++		 * Honor the guest's EFER_LMSLE_MBZ even if the underlying CPU
++		 * allows setting EFER.LMSLE, e.g. to allowing migrating a vCPU
++		 * between hosts with and without EFER.LMSLE support.  To avoid
++		 * breaking existing setups that reflect KVM's supported CPUID
++		 * into the guest, KVM doesn't advertise EFER_LMSLE_MBZ unless
++		 * it's supported by hardware, i.e. unless KVM *can't* support
++		 * EFER.LMSLE=3D1.
++		 */
++		if (include_partially_emulated &&
++		    !kvm_cpu_cap_has(X86_FEATURE_EFER_LMSLE_MBZ)) {
++			entry->ebx |=3D feature_bit(EFER_LMSLE_MBZ);
++			return 1;
++		}
++		return 0;
+ 	default:
+ 		return 0;
+ 	}
 
