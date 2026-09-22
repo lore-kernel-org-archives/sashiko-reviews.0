@@ -1,117 +1,69 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2471A51C073;
-	Tue, 22 Sep 2026 12:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6992554147B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 12:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790078589; cv=none; b=NN0j8U9mMB8s2xCTrOaA9rDcMR0S8dwz7JNZ2+Sk/0lr3YHzsMvUjlqzrw6n947WRLbPsGCKaCnJ/oKyNcobm8lScH+jO30S5+SZ5IzZmJT2MHjhs7XY4E1ta8ZI66G6Kv/hxVFFduQF2cXqAFNo4ngh9p0zIKhHTol+p12NbCw=
+	t=1790079435; cv=none; b=ksWXyrifAhSCWiti/oDo8qEnLZkmbrmjk0YijGdzl9/ac7noU4KbOJsj8+muWPy7F5HFt0Zdaqf23ueih0jPij/kAUfMkbun49vsQjrZgoL9JoMSRLeefk7Jye9R4v1Z+tQ/A8DHINlK7sg4mMF9q3dn2Dnvm7XW2U6Kr0VH0+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790078589; c=relaxed/simple;
-	bh=ZPO5CXeCLqcvaH0I/WkgJHL+ISl1+ikBTCuS4DRjBw4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZHc2wiSAq6wmDlirGlgFzxt3Zubjj1s3wpozWemu4GTkqKMlB8cj8Bfo/bhV9R1SmHaSeWIX5EVEPnmzlmGSMXgYOWXZ1EsKGtUU+F9blgbm6T95nZ46zQf0RwtBgKtetOZ+ww67aYq6cE2W1OP8VKWimV6Ga69xf/T8LmFAGi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZMUe1Z4L; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790079435; c=relaxed/simple;
+	bh=yTxnbSiAz/ON6hMopB3NB3+oXSxRjwZpBmdV0YxRmss=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LmOYY9p2oDJ9iI5pG34koZwiJyu34aamlVVvuudkndDpDqBR/lGecRZJpexuimOdc9zEC4N1PRXyzx1MkVTCdmGZcDoLNwt/nKYvn0ju68ULxyhABZZXdzFY0sL5yC7ajWu6LL4XRGKrU84NQUGTR+BrqvAiHu8rsKJIfCYGAf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hYeIFFE+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZMUe1Z4L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55CC1F000FF;
-	Tue, 22 Sep 2026 12:03:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hYeIFFE+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AEEF1F00899
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 12:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790078587;
-	bh=hCtAUGHVQbM0y1hSoXEuxktfPZV15cpsiXS3ZAOkNuQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=ZMUe1Z4L53RuG30fWJ2UTH54BMpZXR0WfIJI6nyJ8Xm+QthPKZmz/ASSHIJwFMOUT
-	 TYVwKCiyQ5FdIky4MxWCcqX2BZb6KHXmQsweB/EEWhjRMFRuxnAiX2BeYJrQ+FoSXU
-	 qd72eZT4cBzO9XoL86BC1k7YTseaG5k5SirTs9ubfrECUN13szjTqSqgfs+UfgBJAZ
-	 Uj2PzppgqgLZvICsRh5e1nV+zzALqotEzwjrPC1M/bmLhwrpEOOC2toiHZ9fh7YYZ0
-	 Qagg3f8E/mCpk7US2cRoVsF8iBqYa1p9PwbvC7/lc8N/suekd1mw90qZscUaYSFzDA
-	 Izql067IUtRcQ==
-Date: Tue, 22 Sep 2026 14:03:04 +0200
-From: Niklas Cassel <cassel@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Shawn Lin <shawn.lin@rock-chips.com>, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] PCI: dw-rockchip: Move the INTx irq setup to probe
-Message-ID: <arJueF46fIYDiwUp@ryzen>
-References: <1790044622-164744-1-git-send-email-shawn.lin@rock-chips.com>
- <1790044622-164744-2-git-send-email-shawn.lin@rock-chips.com>
- <20260922025140.5B4F31F000FF@smtp.kernel.org>
+	s=k20260515; t=1790079434;
+	bh=yTxnbSiAz/ON6hMopB3NB3+oXSxRjwZpBmdV0YxRmss=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=hYeIFFE+UckDo7eRQGCMqyMbVRk0RsKmaSBK5lJuoIsqZcU4u2weY4f8eh2+QWCtw
+	 GxJNLRlnyvRUiMLcF7eRXvVKb6VPHXGS+4vOXis/ljhS/LeYFKcRUupCaUPEKDrO6g
+	 zJdLOGTl6UL9HE6vYYgTy8Im8fR4v8kbFBx0l5FoZtEQ79qICjW45aDZe+/oRWiNbA
+	 938/bnQc0CJcBF1wqKYgaGXY96Gc3k7yYxrrUSmVvD2OlfSzjzEEB1MYxza5+H9+pk
+	 WvQ/AZzVZ/S1zGKcJ07O/Lzn3lGwEzmKVdvMKJhCOSE0fsuZ50VoG6A3u01yCkSDlx
+	 Q7zNNXyxspA4w==
+Received: by mail-lf2-f13.google.com with SMTP id 2adb3069b0e04-5b5e4f1e023so1486702e87.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 05:17:14 -0700 (PDT)
+X-Gm-Message-State: AFuF++mqvlievknBnfuXgqNazo3ygzdL5pZpihI+ZRglX2gjmDZJlQpG
+	JOI+IK4Rk+lalByQqYMCzS1rmvxaAJ9UWtE43wNl+8hPlp06hcin1HANqRZWDuMvsh/BiAZPJt7
+	Uvrx1J7EamqUmFsklgPrbXhENlOXThBw=
+X-Received: by 2002:a05:6512:3ca9:b0:5b8:9a95:e259 with SMTP id
+ 2adb3069b0e04-5b8d295e4afmr834266e87.27.1790079432863; Tue, 22 Sep 2026
+ 05:17:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260922025140.5B4F31F000FF@smtp.kernel.org>
+References: <20260921-gemini-tve200-fix-v1-0-8be03ac2a8f7@kernel.org>
+ <20260921-gemini-tve200-fix-v1-2-8be03ac2a8f7@kernel.org> <20260921092546.9F6EF1F000FF@smtp.kernel.org>
+In-Reply-To: <20260921092546.9F6EF1F000FF@smtp.kernel.org>
+From: Linus Walleij <linusw@kernel.org>
+Date: Tue, 22 Sep 2026 14:16:59 +0200
+X-Gmail-Original-Message-ID: <CAD++jLnMvzC2wmWiLY1aVDHqG39ZiJv2FyCg4-V93APpjihpRQ@mail.gmail.com>
+X-Gm-Features: AclHuK-bjk8vEyyJGB6e_jRIydjSMNUQ5bfkMux8cNhlhOVbt-7gvd6Cmxs_sAA
+Message-ID: <CAD++jLnMvzC2wmWiLY1aVDHqG39ZiJv2FyCg4-V93APpjihpRQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ARM: dts: gemini: Use a level-high interrupt for TVE200
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, robh@kernel.org, 
+	devicetree@vger.kernel.org, conor+dt@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 22, 2026 at 02:51:39AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] pcie: missing dw_pcie_host_deinit() on error paths causes UAF
-> - [High] pcie: late INTx IRQ domain registration breaks downstream INTx interrupts
-> --
-> 
-> commit af2f81da80dcb1ab2a4b7035c602bf3d2a40f1c9
-> Author: Shawn Lin <shawn.lin@rock-chips.com>
-> 
-> PCI: dw-rockchip: Move the INTx irq setup to probe
-> 
-> The commit moves INTx IRQ domain setup out of the host ops .init() callback
-> and into rockchip_pcie_configure_rc() to avoid leaking the domain upon
-> controller reset. It performs the IRQ initialization immediately after
-> dw_pcie_host_init() completes.
-> 
-> > diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-> > index af26a07c0c9e5..59d9a1b095df6 100644
-> > --- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-> > +++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-> 
-> [ ... ]
-> 
-> > @@ -739,6 +725,24 @@ static int rockchip_pcie_configure_rc(struct platform_device *pdev,
-> >  		return ret;
-> >  	}
-> >  
-> > +	/*
-> > +	 * This is done here instead of in the host ops .init() callback,
-> > +	 * which is also re-run by .reset_root_port(), so that the INTx irq
-> > +	 * domain is only created once, at probe time.
-> > +	 */
-> > +	irq = of_irq_get_byname(dev->of_node, "legacy");
-> 
+On Mon, Sep 21, 2026 at 11:25=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+
 > [Severity: High]
-> Does moving the INTx IRQ domain creation here cause downstream devices to lose
-> their INTx interrupts?
-> 
-> Since rockchip_pcie_configure_rc() calls dw_pcie_host_init() right before this,
-> which internally invokes pci_host_probe() to enumerate the PCIe bus, downstream
-> devices will be probed before this new code is reached.  When those devices
-> attempt to map their legacy INTx interrupts via the device tree, they won't
-> find the IRQ domain since it hasn't been created yet, which seems like it would
-> cause the mapping to silently fail.
-> 
-> This architectural issue appears to remain unaddressed at the end of the patch
-> series.
+> Does configuring this as a level-high interrupt break the driver's state
+> machine logic in tve200_irq()?
 
-This appears like a legit concern.
+Nope.
 
-I was the one who recommended that we call the of_irq_get_byname(), from
-looking at e.g. pcie-qcom.c.
+Tested on hardware.
 
-But I incorrectly said we should do it after dw_pcie_host_init().
-
-Looking at pcie-qcom.c platform_get_irq_byname_optional() call was before
-dw_pcie_host_init(). But if we look at e.g. pcie-tegra194.c, the
-platform_get_irq_byname() calls are before the tegra_pcie_config_rp() call,
-which calls tegra_pcie_init_controller(), which calls dw_pcie_host_init().
-
-So I think Sashiko is right, of_irq_get_byname() (and the IRQ domain creation)
-probably has to be done before calling dw_pcie_host_init().
-
-
-If we do that, the other problem reported by Sashiko will probably also be
-resolved, since you will return error before calling dw_pcie_host_init().
-
-
-Kind regards,
-Niklas
+Yours,
+Linus Walleij
