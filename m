@@ -1,125 +1,109 @@
-Received: from mail-ed2-f35.google.com (mail-ed2-f35.google.com [74.125.228.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C2B33F8A6
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 09:15:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C88E5172D3
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 10:05:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790068537; cv=none; b=bUJWPzJF4TCxA6i5Hu2knN5lGrZniCMv6IcP27ZDSqyBson97KMTV0zSjZdYg4SUoiZ86L7HsuVNGK0GDgqUJWs1s861TR5dzbPAWsQFIMv4GUSSr/eHgANbWg3iwS0EUIg2pBWwuay9RryVdkDXvxP532NuRa4UZ8pyb+1ACmg=
+	t=1790071562; cv=none; b=ff5lGJ9JUSYFNslK28YoWP+5mOHgOgq8SlLQd9mvT5YfwBsud/Q0RdR1ZiAa8J0kIJTAfjKIPIUJGgXSg1YsjueGh2fTpu41KWFq9pC//lkadlnzdapRwQIK0V/hi6AwxARUdQRWxJyBytChNxfiHojehWxmaBvl970o6ojJVu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790068537; c=relaxed/simple;
-	bh=t1f78knh12ZmqRiDQZWvjRMn+PPvWWmkItCJFVyRIUs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YjsMpBSrahCRdhJuTM+Q0NTIfm1iKu+CZogDnKbZSVmr8u96AbXXRCabSnwtxBq+NNY48lcepp+FWSLVCuDKzTV9dZKaaFQvwi1IGSyxVw8AtCRCab83Yi4yUP5iix6t9zoPneho+10Tm2lzdiIlUufwrjvboXzD0h/IxDXIEdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YQlYOkuG; arc=none smtp.client-ip=74.125.228.99
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YQlYOkuG"
-Received: by mail-ed2-f35.google.com with SMTP id 4fb4d7f45d1cf-6a9ab2a135dso5281834a12.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 02:15:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790068533; x=1790673333; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=oVBUhiCaUFlUB01ShpltKkED8p1NxLCtsXyWQV2+EPo=;
-        b=YQlYOkuGh3DIEuz0W+0LLTUcelt5DRUHWfUKiA3iUYAC/GMEmhxt58+cyDoO6/UCec
-         Gb6iJwAsyOjlmQG9d0mKz3n9ozPMKs/G1EGsgODKNiujq0k2PGVsR7FIPQUL1MxXymz6
-         /kVw286sWgCF/NFAEml2IOb8N5+b9JEOxAXWa97/U8SS7FUIhCIi62ZrO6yIeGpTKKvB
-         VFFnTAVYl+es/bE4II34JPHoaxKqFU9nnHeB0mbijyGCjHRX8XhkYF4ornW4Uz/FyFu3
-         h8DxH+6+VLEp9DYP/ni2TwxtBwyK92PISk13xLEp1R81XbIwfGyP0Qajh5LB3nGmw14L
-         6z4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790068533; x=1790673333;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=oVBUhiCaUFlUB01ShpltKkED8p1NxLCtsXyWQV2+EPo=;
-        b=GiWEXNkUcq5/Wrblmtx1Wb0iCmn35eDWDE770ygNM66ZW1OimDlYDb7XDhEa3+HtKP
-         v1YMwsMFJcvg4gx+gFk/nbR2PSEYJf+hNeUSTYPrkoOV00RuDUNYGjxydqRy+3TujIfo
-         dOMkmjonBw78mlbPVRGyHd4jI00yTSmoDZ0D4qnh6AGyabkzNCRbxFv+7+RjyxRUEve4
-         TWSHEF5K4JPfccgUGqouoPLG/ZdD03+w0vncM+WXKzgbByid5cxcDIbNGRfXJofGVka0
-         LHtCGu8nnoYronXOO5f4MGrtTGUOtW6ft7xis5oynXRuziBQyiabqADbGzNoAC3hXXCg
-         n3vw==
-X-Gm-Message-State: AFuF++nNRZHqw9HwVVKGajhpW6Mh79ZTMLZrGe7n1YE2syCh1zry+Yms
-	K365JwJTDaNVbX3YfaW1VK1SB1KiuB+rme35Rrzan+DexCmROLxG6lvBdQbt5Q==
-X-Gm-Gg: AYBFou23eniPf6zjNwOPbTEzZBcVNq21rcGR02AsgLywkmvsfLApxe5KDrXbXRdg2MW
-	BKv6Lcxv4dXxHSwwpDYFTgzs6QSFRDinwl8GNsr7nd+i4wGwCNIkH86fSfGpdoyFtYQs7SCMgk/
-	1JksTNb+DToGq/UmdbburXAg/wEau3oRR6XTaGuVuAkI7tz09ED7TlEo2RLw9QF/F+Vg+TIWvkZ
-	7/zsuYvhDArTYvfq/aOoKoedYVvfw1FCZQmDtMhET0a9uVZfgBrM6dZv8jk3eOCRB4KtAc6hoUU
-	T5NE2caujxxXvM0ExQzHIqNVYVmZ6px3REkdV7KRCghdfFYnHitrNLmcsORrUrn213r/l3TYd/F
-	xFoB6BkXFn4D3j3XbSUsTUywudEY6sU5u4Fjh2Zd0jlWhJG65HfU6JvPtFQ1ZqNEmpM1d9x8WrG
-	rYZM6DUqa4a5mbivcx/WgIPSbnIc43lAwDKhSWW7jI0yjTzzG4FTcHAO8tAQRZT/URFTU+W0dvv
-	S3bw9migzHHSLseaPu+hLhX/W4zuLCpgbeI59vAhRRaX+6PPamwoyfI23yc9O2yMEgJKgQnF2i3
-	berhzGyp/jJOJBbKt9/Juo3IMksItcCP5YL6H7X4S0aPVXIH
-X-Received: by 2002:a05:6402:4145:b0:6a9:9766:59ad with SMTP id 4fb4d7f45d1cf-6aa548d810emr11873729a12.43.1790068533059;
-        Tue, 22 Sep 2026 02:15:33 -0700 (PDT)
-Received: from ?IPV6:2a01:4b00:bd21:4f00:7cc6:d3ca:494:116c? ([2a01:4b00:bd21:4f00:7cc6:d3ca:494:116c])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6aaaae6982csm35272a12.22.2026.09.22.02.15.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Sep 2026 02:15:32 -0700 (PDT)
-Message-ID: <3585660a-f15e-4b4c-903b-d7d75448ce4b@gmail.com>
-Date: Tue, 22 Sep 2026 10:15:29 +0100
+	s=arc-20240116; t=1790071562; c=relaxed/simple;
+	bh=BfLoF1jCHlUaI48Snp61l0Vu2FM/b5RSH77/+5K/Upk=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=VjXW0YsZG7COymKx4TF2kp+o3yiNhihUx/hKOW+d+giu6laqJyE3eyxClBQ0hpOgXn+GAWO3DLOCf5Yjzk59/uGapH10IedEGtfoe0BtDksMaPCwHLiOLg8y0g8xERFEPJSxk91ThL1eJLz6OAYLydd/xPfnBlhHoy/q8X8lVFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 2fa29c7ab66d11f19a56ed5b684f684d-20260922
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.19,REQID:07c7e53d-71f7-4b66-880d-5834f7c8bd67,IP:0,U
+	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:0
+X-CID-META: VersionHash:7db8b62,CLOUDID:dc4b83c9f1d78224a7cd7263c3d279f6,BulkI
+	D:nil,BulkQuantity:0,SF:80|81|82|83|102|817|865|898,TC:nil,Content:-10|-8|
+	-5|14|50|99,EDM:-3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,CO
+	L:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 2fa29c7ab66d11f19a56ed5b684f684d-20260922
+X-User: lijiayi@kylinos.cn
+Received: from thinksys.tail1c7620.ts.net [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <lijiayi@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 288072312; Tue, 22 Sep 2026 18:05:49 +0800
+From: Jiayi Li <lijiayi@kylinos.cn>
+To: sashiko-reviews@lists.linux.dev
+Cc: Oliver Neukum <oneukum@suse.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Michal Pecio <michal.pecio@gmail.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	linux-usb@vger.kernel.org,
+	linux-scsi@vger.kernel.org,
+	usb-storage@lists.one-eyed-alien.net,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] usb: uas: quiesce SCSI before stopping endpoints on unbind
+Date: Tue, 22 Sep 2026 18:05:42 +0800
+Message-Id: <20260922100542.164047-1-lijiayi@kylinos.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260922032156.E6AC01F000FF@smtp.kernel.org>
+References: <20260922032156.E6AC01F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 02/13] iov_iter: add iterator type for dmabuf maps
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, media-ci@linuxtv.org
-References: <cover.1789997898.git.asml.silence@gmail.com>
- <6b78003332b57ec3a4552d7393464636793aff76.1789997898.git.asml.silence@gmail.com>
- <20260921135338.241751F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Pavel Begunkov <asml.silence@gmail.com>
-In-Reply-To: <20260921135338.241751F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 9/21/26 14:53, sashiko-bot@kernel.org wrote:
-...>> +void iov_iter_dmabuf_map(struct iov_iter *i, unsigned int direction,
->> +			 struct dma_buf_io_map *map,
->> +			 loff_t off, size_t count)
->> +{
->> +	WARN_ON(direction & ~(READ | WRITE));
->> +	*i = (struct iov_iter){
->> +		.iter_type = ITER_DMABUF_MAP,
->> +		.data_source = direction,
->> +		.dmabuf_map = map,
->> +		.count = count,
->> +		.iov_offset = off,
->> +	};
->> +}
-> 
-> [Severity: Medium]
-> Since iov_offset is initialized here to the absolute starting offset (off)
-> rather than a relative zero, does this cause an issue with the tracking
-> logic in iov_iter_revert()?
+> [Severity: High]
+> Will moving scsi_remove_host() before devinfo->resetting = 1 and
+> uas_zap_pending() cause a 30-second hang and 100% CPU livelock on
+> physical unplug?
+>
+> On physical unplug, usbcore detects the disconnect and calls
+> usb_disable_device(), which kills all active URBs with status -ESHUTDOWN
+> before calling uas_disconnect().
+>
+> scsi_remove_host() synchronously waits for all in-flight SCSI commands to
+> complete. Because the commands are stuck in-flight until uas_zap_pending()
+> forcefully completes them, scsi_remove_host() will block indefinitely.
 
-It is relative to the buffer. No clue why it thinks it's absolute,
-but this unroll looks fine.
+Thanks for the review.
 
-> In iov_iter_revert(), the unroll size is checked against i->iov_offset
-> like this:
-> 
-> 	if (unroll <= i->iov_offset) {
-> 		i->iov_offset -= unroll;
-> 		return;
-> 	}
-> 
-> Because iov_offset starts at the absolute offset rather than 0, couldn't a
-> caller successfully revert an ITER_DMABUF_MAP iterator beyond its initial
-> starting offset? This would bypass the BUG() safety net intended to catch
-> invalid unrolls, potentially leading to an out-of-bounds DMA access if the
-> reverted iterator is used again.
+I tested this case with v2 and can reproduce the approximately
+30-second timeout by physically unplugging the device while UAS
+commands are still in flight. I have not confirmed the reported
+100% CPU livelock.
 
+For a driver-only unbind, soft_unbind keeps the endpoints available
+and the new ordering works as intended.
 
--- 
-Pavel Begunkov
+For a physical disconnect, however, the status URB completes with
+-ESHUTDOWN before uas_disconnect() gets to drain the SCSI host.
+uas_stat_cmplt() takes the error path in this case and does not clear
+COMMAND_INFLIGHT.
 
+With the v2 ordering, the sequence is therefore roughly:
+
+    status URB -> -ESHUTDOWN
+        -> COMMAND_INFLIGHT remains set
+        -> scsi_remove_host()
+        -> outstanding command cannot reach scsi_done()
+        -> SCSI timeout
+
+The existing disconnect ordering avoids this because
+uas_zap_pending() runs before scsi_remove_host() and explicitly clears
+COMMAND_INFLIGHT after the status URBs have been killed.
+
+Would it make more sense to retain the original kill/zap-first ordering
+for a physical disconnect, while keeping scsi_remove_host()-first for
+a soft unbind?
+
+I understand Alan's earlier point that USB_STATE_NOTATTACHED alone has
+a race window, so if separate handling is appropriate, the remaining
+question would be how to distinguish these cases reliably.
+
+Thanks,
+Jiayi
