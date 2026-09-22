@@ -1,250 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f43.google.com (mail-pj2-f43.google.com [74.125.227.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB6C3A16BA;
-	Tue, 22 Sep 2026 02:39:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71ED8395DAA
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 02:53:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790044775; cv=none; b=utu6vLYUWwPBttvpn3plRDhG1LLaQeaSDFlsayPtI6xP7sjyZdTJ/wyGssteGf6xLuVMOAqlNjJLViEDXTgZMwpFhh0Pr4usAfsXvWYZF7Ps/hhfg36/1RY8MbZCWeA2Oxm8YjouMpWUnRQhTBtmhtXMWAxgE8hp/QOSRlM/Dic=
+	t=1790045630; cv=none; b=TNblB9nXCW4uXumZEK9iAhoCcRueLyOzWW5vInI/Ch8NIElyKt/vmkp8MbAiiWqNV9yZEW/ykVzV1FtAgRbjkQrH1dBRqM7ljGRcRSrd9Y+712GznYHc9GZm7LTTMV6KlVamkBe1HPnU171IDBgFgLLf9nDegQ5NdC9OJ3je6TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790044775; c=relaxed/simple;
-	bh=oZLpOhucHC43z4ds0CWKTjnSopVVOHC64Q7+aCD2T9U=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=pVudwEDAqHqQEr5ExLzb8l8sZB7Z20n3NIrgbQadvkkAKLTHJAiA/+cHtOyuYcCG3i/PakLC5s6rQ7Y+2mmpEEyYE8NMabCvGaQHWAOXzBFohjPo5t6VES8fsrkBfi798iaP9E+AJYJ31NMzg7DU2+VXY0+StUXEejuW3Ngd4cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=grS8wGjB; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790045630; c=relaxed/simple;
+	bh=D6FjnGUFqSH40VtbextCoCSGWM2PCQTatVfeoTll1dI=;
+	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:In-Reply-To:
+	 References:MIME-Version; b=D+JpZS0Nz+LvLOqcMJx2TQSFb2TURzfaG6kuJLw7MUXNSdjQXuJOW7SJoQbRpe0OVkII1GnSJ/OsH54J0wONjgaYO92G1r/u1f0Gj01gJTU2YaN7jLLAMXjPnHWXTC7PoI7WLWN0HdhFTlOrYXtqOGuSGjTE5yK5QPK5Swtm3+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rGiLAfuF; arc=none smtp.client-ip=74.125.227.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="grS8wGjB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624791F000FF;
-	Tue, 22 Sep 2026 02:39:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790044766;
-	bh=/SAfsVYoWNOJHq26yUF7h5nEJM0KRG0iyQixYLdJd5A=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=grS8wGjBF4E6C9/mcHeILgxNYrsa6oMXLRS4na/8KMmB4+53iikNfdmTyH5i+6Zf+
-	 8YJg0xNC4ZVXroZwuGKsSRmAuu4/iQz6zUkhLTuWTS9P6QmHtW8yhljyAJfpUkC8Og
-	 ECCn45hx1OOxUswv48gEzLwnzFdcoutxzmBL9LaXNnI9KSuwNjydL4/4hpziCOs/Lm
-	 jl8GrZHIA5LQmZQE3V8TStaJD3/yRG5GjvoHdy6HvjY6avL2qsOTT0z8stwjwJa1VS
-	 SHJTetGRQgyjaUOLjTzH7ZU7dMmY+3j47ThBwh3LDJhd6QBhTN+aKxalTJ/vFmYSqD
-	 b2u0OjWOHrPJg==
-Date: Tue, 22 Sep 2026 11:39:23 +0900
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: sashiko-bot@kernel.org, linux-trace-kernel@vger.kernel.org,
- linux-perf-users@vger.kernel.org, kvm@vger.kernel.org
-Subject: Re: [PATCH v16 10/13] tracing/wprobe: Add set_wprobe and
- clear_wprobe event triggers
-Message-Id: <20260922113923.351783c6db12f18befe1db79@kernel.org>
-In-Reply-To: <20260914145845.1D9D21F000FF@smtp.kernel.org>
-References: <178939017565.94750.9431053336761330458.stgit@devnote2>
-	<178939029574.94750.11636803595861231046.stgit@devnote2>
-	<20260914145845.1D9D21F000FF@smtp.kernel.org>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rGiLAfuF"
+Received: by mail-pj2-f43.google.com with SMTP id 98e67ed59e1d1-398beb616f5so1542699a91.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 19:53:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790045629; x=1790650429; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:references:in-reply-to:to
+         :from:subject:cc:message-id:date:content-type:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=wM6/yW5gI/hDw4+S5ggd70K1fst5xUknVJJO18BGc/k=;
+        b=rGiLAfuFtSzeSacHD2kkZA9teDbDj5EEfRqtjh8nlhVqLSh7ID237X0N6hEkbZ7WYd
+         FQEvWXt8FwW1kq+Ob5NTyCJMxozD0NOsUCoxwU+AjoXreoD+qXBMyFaJ+TOanj7AeemJ
+         1s5MWeG6C2z0c1R0SeOp9DJTRNC7qqxB1o7TvUB7MXREGGUBvgc//+EOOna9H/yudm0b
+         QXUUQyHAEpIoZXjF4v5D/NZLcIffNV/HKWTXsw6G3pMdzBtXKPvH+096DyU6BM1VO4st
+         S5H8TQJCFe2xsYsD0X0yMY6NJnNX9lcu6endFtiiTWZHHjw5fE4bsTBlwa01YGhkIeaS
+         OhvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790045629; x=1790650429;
+        h=mime-version:content-transfer-encoding:references:in-reply-to:to
+         :from:subject:cc:message-id:date:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=wM6/yW5gI/hDw4+S5ggd70K1fst5xUknVJJO18BGc/k=;
+        b=jF47XCvycvlawZ5hygiKEmj36gbhGQQBl1q1HBBoimVhSkvmn9uPTysX2aF56d7a1a
+         GGpJdnerVuy8cZWnkscrKQRXr9DiudwCpFaDHgEj0igGumANiPijnl9eFiPzjl4kQrfW
+         oGVXGjVmixZVkiOgMWHJYEdmzlEDAfzkh5cmkzP5gcJH3hJDzmJSTAOk8FkpTulZfvAD
+         eZEXEHxhp/CgzQtSO5qt4ckBgVKNdWTkJC3q++ta3JqngGGXocHt8K9SrVhAENKmWLFz
+         xQQ/H8P0wjGjAOIEM70op8enw2/ZWlTuR3P192b5QC13s5+b11QXDslXK37/VvX+S3uy
+         k0sA==
+X-Gm-Message-State: AFuF++nPYPJ3VsCf/fcf/YFlJXgVUhhinG1WQOZSSoVElwSTkHVeWSEn
+	3FnSdsXX4eTnqc+nhCC8RjFvUzd/mifUeb4hvg2WEdlptkfR6hDqVEa1t7UrIQ==
+X-Gm-Gg: AYBFou1jQrCFe60HGHJNMVd9RD0TWmRdYS6GdSDDVf2ZHt9BYYvhoCyLolxpxA2dQRn
+	yBI/PsVPTn6AB5mA7DRfA7dENPDkPfmIT17XCa73QEmWfEoBV+D8b01/IaFyfoiWf0R/5i02rnd
+	fXWfcOUFYjI+EAQLiR564tD6yOTp5a2QeVz4RrUk1U4Q95aJZk/GiXJFgST5bZfG3IyUXsRq/r8
+	lKuYDYTMdWugeC5nzjeX4+LxIn1u3iTxyqAVOmJQOQlyIm2g7CsxJO1weI22hnfFCChm9pmVxP3
+	fAZWlcCev+3vvET5zAVKALjthnaGyf1KZ+UZhaLAgClYDDXHvNdbR0CmLC+TYKFSZYLlGbhxyhk
+	CPsG6HOWH1p11vSv40jLACWSl4jDH9lV1PORW68O9uZ10kPidS4r14BDWPd+rAH9RBttoE7y3lf
+	h7u/x20g5NEgegZxEghYl3OPtkQ8zP+4zIyVszw3ng1AvaUo+mEqQ4Joq7zCnUgXVq+MtrYYNws
+	RaTfIZ13Yp4NXuCgHMGUIK2f0T2AVIzt6Itp1sBcXLWiRTMjTihnGKBg08Lk7FuQLOpP85XGOxt
+	K30svzd7+m6Cxw==
+X-Received: by 2002:a17:90b:3c85:b0:39e:6c68:fd91 with SMTP id 98e67ed59e1d1-3a066b93b39mr1034411a91.38.1790045628556;
+        Mon, 21 Sep 2026 19:53:48 -0700 (PDT)
+Received: from localhost ([153.61.198.245])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a06e26e6a2sm583523a91.2.2026.09.21.19.53.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Sep 2026 19:53:48 -0700 (PDT)
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 22 Sep 2026 02:53:47 +0000
+Message-Id: <DLLI7SYQ437V.386IAVGI0TTLZ@gmail.com>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf-next 07/17] bpf, x86: Add JIT support for callx
+From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>
+In-Reply-To: <20260922012712.6B21C1F00893@smtp.kernel.org>
+References: <20260922011323.1298619-1-alexei.starovoitov@gmail.com> <20260922011323.1298619-8-alexei.starovoitov@gmail.com> <20260922012712.6B21C1F00893@smtp.kernel.org>
+X-Mailer: mkdraft (claude review draft; edit before sending)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
 
-On Mon, 14 Sep 2026 14:58:44 +0000
-sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] Missing RCU synchronization in the error path of wprobe trigger registration leads to a Use-After-Free of hardware breakpoint perf_event structures.
-> - [High] Hardware breakpoint addresses are not updated for offline CPUs, leading to stale addresses when CPUs come online.
-> - [Medium] The 'count' parameter is decremented on trigger evaluation misses, causing the trigger to exhaust its count without actually modifying the watchpoint.
-> - [Medium] The wprobe event permanently leaks as enabled when the trigger is unregistered because `EVENT_FILE_FL_SOFT_DISABLED_BIT` is manually cleared.
-> - [Low] A field named 'unlimited' is silently ignored by `clear_wprobe` if no count keyword is provided.
-> --
-> 
-> commit 146ca411781d7203b266aa3745d30641c87b97d2
-> Author: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-> 
-> tracing/wprobe: Add set_wprobe and clear_wprobe event triggers
-> 
-> Add set_wprobe and clear_wprobe event triggers to dynamically attach
-> and detach hardware breakpoint address monitoring based on event field
-> contents.
-> 
-> Link: https://lore.kernel.org/all/59637b96946653393a7ad3c7de094094796b39c2.1785067572.git.wangjinchao600@gmail.com/
-> 
-> > diff --git a/kernel/trace/trace_wprobe.c b/kernel/trace/trace_wprobe.c
-> > index 9c6100b63e8d9..55a201504bb0b 100644
-> > --- a/kernel/trace/trace_wprobe.c
-> > +++ b/kernel/trace/trace_wprobe.c
-> 
-> [ ... ]
-> 
-> > @@ -231,6 +303,12 @@ static struct trace_wprobe *alloc_trace_wprobe(const char *group,
-> > 
-> > +static void wprobe_work_func(struct work_struct *work)
-> > +{
-> > +	struct trace_wprobe *tw = container_of(work, struct trace_wprobe, work);
-> > +
-> > +	on_each_cpu(wprobe_smp_update_func, tw, true);
-> 
+On Tue, Sep 22, 2026 at 01:27 AM sashiko-bot@kernel.org <sashiko-bot@kernel.org> wrote:
+>> +	} else {
+>> +		__emit_indirect_call(&prog, reg, ereg);
+>
 > [Severity: High]
-> Could this leave hardware breakpoints with stale addresses on offline CPUs?
-> 
-> on_each_cpu() only broadcasts to currently online CPUs, so offline CPUs
-> won't execute trace_wprobe_update_local(). When an offline CPU comes
-> online, won't the perf event core reinstall the hardware breakpoint using
-> the old, stale address since it wasn't updated here?
+> Does emit_indirect_call() emit raw indirect branches without KCFI hash
+> validation?
+>
+> If KCFI is active, it seems __emit_indirect_call() emits a bare indirect
+> branch instruction without the preceding caller-side hash check.
+>
+> If an attacker were able to overwrite a spilled subprogram pointer, could they
+> trigger this execution path to jump to an arbitrary kernel address and bypass
+> KCFI protections?
 
-OK, introduce cpu hotplug callback to handle it.
+Not a bug. The kCFI hash check is what the compiler emits in front of
+indirect calls in C code. JIT emits the callee side only, see
+emit_kcfi(), so that C callers of bpf_func and of callbacks pass their
+check. None of the indirect branches emitted by JIT check the hash:
+tail call, gotox, trampoline. callx is no different. The target is
+PTR_TO_FUNC with zero offset. The verifier guarantees that it's the
+entry of a static subprog of this prog.
+Whoever can overwrite a spilled pointer on bpf stack can overwrite
+the return address next to it.
 
-> 
-> [ ... ]
-> 
-> > @@ -773,3 +866,538 @@ static __init int init_wprobe_trace(void)
-> 
-> [ ... ]
-> 
-> > +static void wprobe_trigger(struct event_trigger_data *data,
-> > +			   struct trace_buffer *buffer,  void *rec,
-> > +			   struct ring_buffer_event *event)
-> > +{
-> > +	struct wprobe_trigger_data *wprobe_data = data->private_data;
-> > +	struct trace_wprobe *tw = wprobe_data->tw;
-> > +	unsigned long addr = 0, flags;
-> > +	bool changed = false;
-> 
-> [ ... ]
-> 
-> > +	raw_spin_lock_irqsave(&tw->lock, flags);
-> > +
-> > +	if (!wprobe_data->clear) {
-> > +		if (!trace_wprobe_is_valid_addr(addr, tw->len)) {
-> > +			atomic_inc(&tw->missed);
-> > +			goto out;
-> > +		}
-> > +		if (tw->addr == WPROBE_DEFAULT_CLEAR_ADDRESS) {
-> > +			/* Skip if a previous work is still propagating the address */
-> > +			if (atomic_read(&tw->work_pending)) {
-> > +				atomic_inc(&tw->missed);
-> > +				goto out;
-> > +			}
-> > +			WRITE_ONCE(tw->addr, addr);
-> > +			changed = true;
-> > +			clear_bit(EVENT_FILE_FL_SOFT_DISABLED_BIT, &wprobe_data->file->flags);
-> 
-> [Severity: Medium]
-> Does manually clearing EVENT_FILE_FL_SOFT_DISABLED_BIT cause the event to leak
-> as enabled?
-> 
-> When the trigger is unregistered, wprobe_trigger_free() calls
-> trace_event_enable_disable(file, 0, 1). Because the soft-disabled bit was
-> cleared here, won't the core event logic skip the unregister step, leaving
-> the wprobe tracepoint permanently enabled in the kernel?
-
-Good catch!
-Hmm, we should set EVENT_FILE_FL_SOFT_DISABLED_BIT when removing
-a wprobe_trigger.
-
-> 
-> [ ... ]
-> 
-> > +static int wprobe_trigger_cmd_parse(struct event_command *cmd_ops,
-> > +				    struct trace_event_file *file,
-> > +				    char *glob, char *cmd,
-> > +				    char *param_and_filter)
-> > +{
-> 
-> [ ... ]
-> 
-> > +	} else if (param && (isalpha(param[0]) || param[0] == '_')) {
-> > +		if (strncmp(param, "count=", 6) != 0 &&
-> > +		    strcmp(param, "unlimited") != 0) {
-> 
-> [Severity: Low]
-> Is this intended to skip fields named "unlimited"?
-> 
-> If a user configures a clear_wprobe trigger on an event that happens to have
-> a field named "unlimited", this parser matches the keyword and skips parsing
-> it as a field, which defaults to an unconditional clear action.
-
-Hmm, OK. Let's check the event has "unlimited" field or not.
-
-> 
-> [ ... ]
-> 
-> > +static int wprobe_register_trigger(char *glob,
-> > +				   struct event_trigger_data *data,
-> > +				   struct trace_event_file *file)
-> > +{
-> > +	int ret = 0;
-> > +
-> > +	lockdep_assert_held(&event_mutex);
-> > +
-> > +	/* The same wprobe is not accept on the same file (event) */
-> > +	if (wprobe_trigger_find_same(data, file))
-> > +		return -EEXIST;
-> > +
-> > +	if (data->cmd_ops->init) {
-> > +		ret = data->cmd_ops->init(data);
-> > +		if (ret < 0)
-> > +			return ret;
-> > +	}
-> > +
-> > +	list_add_rcu(&data->list, &file->triggers);
-> > +
-> > +	update_cond_flag(file);
-> > +	ret = trace_event_trigger_enable_disable(file, 1);
-> > +	if (ret < 0) {
-> > +		list_del_rcu(&data->list);
-> > +		update_cond_flag(file);
-> > +		if (data->cmd_ops->free)
-> > +			data->cmd_ops->free(data);
-> > +	}
-> 
+[...]
+>> +	return cfi_mode != CFI_FINEIBT;
+>
 > [Severity: High]
-> Does this error path need RCU synchronization?
-> 
-> If trace_event_trigger_enable_disable() fails, list_del_rcu() is called
-> without a subsequent synchronize_rcu(). The cmd_ops->free callback
-> (wprobe_trigger_free) will then synchronously disable the wprobe, which
-> frees the tw->bp_event array.
-> 
-> Could a concurrent tracepoint reader still observe the trigger data,
-> execute wprobe_trigger(), and dereference the freed tw->bp_event via
-> this_cpu_ptr() inside trace_wprobe_update_local()?
+> Can bpf_jit_supports_callx() incorrectly allow indirect calls to be compiled
+> when KCFI is enabled?
 
-Yes. Let me add tracepoint_synchronize_unregister() here for
-waiting RCU.
-
-> 
-> [ ... ]
-> 
-> > +static struct event_command trigger_wprobe_set_cmd = {
-> > +	.name			= SET_WPROBE_STR,
-> > +	.trigger_type		= ETT_EVENT_WPROBE,
-> > +	/* This triggers after when the event is recorded. */
-> > +	.flags			= EVENT_CMD_FL_NEEDS_REC,
-> > +	.parse			= wprobe_trigger_cmd_parse,
-> > +	.reg			= wprobe_register_trigger,
-> > +	.unreg			= wprobe_unregister_trigger,
-> > +	.set_filter		= set_trigger_filter,
-> > +	.trigger		= wprobe_trigger,
-> > +	.count_func		= event_trigger_count,
-> 
-> [Severity: Medium]
-> Will this unconditionally exhaust the trigger's count parameter even on misses?
-> 
-> Because .count_func is set to event_trigger_count, the count is decremented
-> before wprobe_trigger() runs. If the trigger fails its implicit checks inside
-> wprobe_trigger() (such as checking if the field matches the watched address),
-> the count has already been consumed.
-
-Hmm, OK. Let me add wprobe_count_func() to check the condition.
-
-Thank you,
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/178939017565.94750.9431053336761330458.stgit@devnote2?part=10
-
-
--- 
-Masami Hiramatsu (Google) <mhiramat@kernel.org>
+No. Same as above. With CFI_KCFI bpf_func points to ENDBR after the
+hash, so 'call *reg' into it works. With FineIBT that ENDBR is
+poisoned and the call would fault. That's the only reason FineIBT is
+excluded.
