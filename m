@@ -1,184 +1,103 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C875505D5
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 14:25:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528E0376BC1
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 14:26:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790087122; cv=none; b=tDvV6CeyfLoN7RMcvONPkYzLAO+BkJj8f8rE/1PsAvetnqaV1iwo+51I0fwV08bhOOTlFkP6mGI9qC0/pMoU0L8/8I4ZxKLqmpaJHSk3UEehjNxiBU1LLCdLPRbnx4kHTDNXv8LuBeo5hbFgta0hR1GPzDBoMSVbS47C6KDtCuY=
+	t=1790087207; cv=none; b=hu+eoe8oiRMGwOe6xxPgdx20lIMi1fZzLA+KLj0E/Uce4FaZw40hrrh7geOn8jqfgmG6bNi2devD90Fnou+48BrE3nah8PbTaOvHJD0NDhH3g6KRwubbvkPuTjRh3jSCPNCwbpASj5GXTONSgEgIemiB7tENBidqRMFVu+IyQNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790087122; c=relaxed/simple;
-	bh=1TSNOM1E6eZCB3afZ7ek5M3QtD+WO8seJv1O7keDluI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PSs9sJ1CFgj3uCHuESpdtt+lJecNuEUmtRpVpv1CS8kjStDGLvxzF0Fo6Rs5PR9oqFMmztedyM9/yalGMTj5c617GSvn4nbQvnvPWNhbFDfeBex6cVrDZ3aBwZx8jz+GEWFgUVpnewUS/S14ZeJ7vg5IPnvGp+oO+xdPkVDbqzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=NTnA3BJ7; arc=none smtp.client-ip=209.85.167.51
+	s=arc-20240116; t=1790087207; c=relaxed/simple;
+	bh=Za4HiTH5fd7ZrTkBdvju5YhW4OO6kkXrdIMnFfEsV8Y=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=uL+GPoafa8Lx+J0OAjFkSnkbET2KdPEvMEh5XhM2dYHNvItZCQJYd+vWhvX96YclQz5ir6KjlG2Tt8E5fjy0ilDcwx4EDSdQdAQ763rpIHsAa5F+/GZCnlzs6UNbe052qoQqscL6LeAvRd8PYT88vmm2I/NZlmcRq7jZbfy1wn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ffB+SqdM; arc=none smtp.client-ip=209.85.210.200
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="NTnA3BJ7"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5b778bdb5b8so6875e87.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 07:25:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ffB+SqdM"
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-86a74698972so4837250b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 07:26:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790087118; x=1790691918; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=APD/P/JN3bqXzCWI++nlW2aPVxv9tzFzKtSO5OwlkpM=;
-        b=NTnA3BJ7hb/z9qwJKGUW6JhPinWc+CNllPbXAhsu7wRotDwjLSKC9DgBGmxbW2uMbn
-         4Mqjspx1svJ2itHmX9iDi15zbFEH4f8SRDdrqjOUm+dfhZaGKWC5W2iCtCfr0YYsUT3P
-         UXlB8isHgFWmywCIB9s37BYfqIlDXeCbwcKQ37nifxsiO/KockXmS8TEUsRy/xltTL7R
-         fuQwy1iMu0vYI8D/x9FY5IZZf0MwOUMOG1IwHUUuSLORQbtgOQyYyDQH3lUze31G6Sjy
-         3qtoONTaG5VGRiaDw1NFB9OJM9ytta/VUkl/tfk8Aa0BxNenIsBJ/+o+CjD4LuNxE4tf
-         6IOw==
+        d=google.com; s=20251104; t=1790087205; x=1790692005; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=NMCpZ+rBKmM5pPV3/1AGo5Sjpxhi2AiAh3yEFMHYDvA=;
+        b=ffB+SqdMBKXS9T2+2/dFVTUUOZRM1UXsnw4wB1rLYK2ZI+O7NkvELC7hZIos0FI7A6
+         cXuph+bhV0BA3cKQcwmKh5o93a5M82N/TCZbYK3+cnYEdrKClCBmh82VVVCAK3Wu8/v5
+         7YGS3EwbIuXCjp1WS+6wPcpEiush2yHbHO1LS6CchpdDGbCJaYadUgVQaFC7gIV/Cs+G
+         fBfD18xT8CFv72w+vBLhjTLJLcFBFnrHf14lWSCtfG3kXwTO+k9TNWGUtkEK1aQ60Sxp
+         E3vpklwwhlImJVGJqQ5BOTuDVoBu1y4vUWAHhlo+R9EGi4fFdoc3xmwQFguI2seeWHir
+         vz7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790087118; x=1790691918;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=APD/P/JN3bqXzCWI++nlW2aPVxv9tzFzKtSO5OwlkpM=;
-        b=NmKxI1pdXoyHotPokAGpEaXxD4WrVh2ni091yUmPw3jMmgBTVGb9D/+aIGHHNGjlob
-         0pwMb51c8+E9tRu34vZyrXt3LYjYJoLrP2hvCE2ZEhIGWQtR1vCmJyRw966MT4QF3QNx
-         Mgs1r5zWZahfN+jSyXPkaTH+agzZeyQQ3adKwe34vVmjniLjAq/tXw6KODfpUtZ2KMZz
-         ySwENZmyqSVWGyIVENE+aBxZZJV2RiC18mY9wTNR+0iu+D/Ye7Ksq0WE79avF/G9BOWn
-         MfZhfVoUG98nDOF83VlON18MPhxXU2WaBwGzGy6wzRJ5/Y4T7qQ0Pq93hgkP0mm1pcyo
-         +0DQ==
-X-Gm-Message-State: AFuF++l6LK3rXzJRaea4VPE0g47RDDu8ZNrL01DXX5GXVFm5hhN8hZfz
-	Hu9TWpVZ8TSUrdFUBOaWoDSMUlsbsHvPrxZDGcpwVm7rzJpI8GVf2aEvNt0dJCJu7vkUysxmfiW
-	hDZAFTA==
-X-Gm-Gg: AYBFou0e9Kin7iZrJglvPxyjxfRYb1jnSE3fSgOlhgunnUAA2hS2vk2jYDM13PECSpW
-	cC8LMFw0h3y0ZiAkWydsXNmcSgeAQTGThxCkbuv71fG8Q/X22w7eHOwTUVETZfhtVG9GDs27Jzc
-	eM8jHhghr9mPpcpQ5O9GJ1TeJ44iXHvRKC7hbynnfzqrpgyFpeVgDu8/aMCCjgp2aN4cnJWhZV6
-	urYA7/JUR2fb5qkszAqjkhNIgCahH2zXsWIFLI3Gqjm3n/uO57gczqT+SocfWmpYj6qVT5ZMNBZ
-	GiACEo39eLbFNcbSgUobso0ua5LkgE4ib1Di7Q8ve4kclkkUVhRp25hRw8/ADZM0KSH6EhEAgBx
-	7Ya1eO5ZfS2ApOI18VOU/Ig7rt0KXgE7e5qRFyS9Euxad+o6ayRafKbXoHvopty1WmEw6cW7PS3
-	ow4IZFOayTT0VrXLYTHVPT+CF9swpScipHOfgzrus16ly7xawapFVC/X/2dJzmQ9AeH7adKh217
-	ktcapXGAJnDueYFecUOwk3Rf7PXcDlqOqIyhGEf
-X-Received: by 2002:a05:6512:3d08:b0:5b8:c230:1241 with SMTP id 2adb3069b0e04-5b8d756f723mr21662e87.10.1790087117884;
-        Tue, 22 Sep 2026 07:25:17 -0700 (PDT)
-Received: from google.com (250.192.189.35.bc.googleusercontent.com. [35.189.192.250])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b8d46e8bebsm574512e87.64.2026.09.22.07.25.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Sep 2026 07:25:16 -0700 (PDT)
-Date: Tue, 22 Sep 2026 14:25:11 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v8 01/25] KVM: arm64: Donate MMIO to the hypervisor
-Message-ID: <arKPx3W5LORqKizu@google.com>
-References: <20260922131259.2975334-1-smostafa@google.com>
- <20260922131259.2975334-2-smostafa@google.com>
- <20260922132915.911161F000FF@smtp.kernel.org>
+        d=1e100.net; s=20260707; t=1790087205; x=1790692005;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=NMCpZ+rBKmM5pPV3/1AGo5Sjpxhi2AiAh3yEFMHYDvA=;
+        b=m9Fv4tv5K7wmfHHEWz6BTZEwpoKsZPXyd7sI1R3AmWPH5oLDYuSS4tzR2YdJJlLmSl
+         EIpW3psTM4FCOcFlKJ6KTeHGiXjw5L2ky6yhY8D78/vtTtQ58CVd5BdIZyqHYPKrcfHM
+         AsG9pBI+zQ+DVWpwtFcgnAHPVxiF+wAbz+fOD/HCYg8O1wqDzI6uj1Dgw8zyhCAS8Qdl
+         FBWK8dyqvMVm/G5+wmVnWHzSOs9+7o2yzvBULtv3nZWtUKZTisFWCIIXFrHP19CRnknp
+         MvDCmpsxiq5CY11C7wiSj2Q9mtLoHBKS6IqX7zCXxvnhKQUTpDH728cBBv19Oi6uopgW
+         hGIQ==
+X-Gm-Message-State: AFuF++nRspV1wC5yFJHujBdGeYDn7uLIyrG7CfpHokiNXZG8PySqo8FT
+	YJ2Vkrpib6OHpHZIjyZE9/ZQzwL4qDv9q0J4CFxtJghBODI7sg00vf7jVsweWfuUFa24RNglTsG
+	hQC5fLQ==
+X-Received: from pfjw17.prod.google.com ([2002:aa7:9a11:0:b0:87b:4362:1067])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:4b4e:b0:868:e6d3:fc18
+ with SMTP id d2e1a72fcca58-87c8249eb60mr1475498b3a.15.1790087205245; Tue, 22
+ Sep 2026 07:26:45 -0700 (PDT)
+Date: Tue, 22 Sep 2026 07:26:44 -0700
+In-Reply-To: <CALMp9eQboC6DTQfa3N58XCfOLf-qwJ2L7dC5vtqDerHG80eZLg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260922132915.911161F000FF@smtp.kernel.org>
+Mime-Version: 1.0
+References: <20260918154530.4129698-1-jmattson@google.com> <20260918160109.E76B81F000FF@smtp.kernel.org>
+ <arKJQwAPvApkeESD@google.com> <CALMp9eQboC6DTQfa3N58XCfOLf-qwJ2L7dC5vtqDerHG80eZLg@mail.gmail.com>
+Message-ID: <arKQJJJB8HMK0B1G@google.com>
+Subject: Re: [PATCH] KVM: x86: Disallow EFER.LMSLE when EferLmsleUnsupported
+ is set in guest CPUID
+From: Sean Christopherson <seanjc@google.com>
+To: Jim Mattson <jmattson@google.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 22, 2026 at 01:29:15PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] kvm: arm64: resource leak and memory attribute mismatch on MMIO donation error path
-> --
-> 
-> commit 96c49002ec46fcffdec0cb75c633309cd148cad6
-> Author: Mostafa Saleh <smostafa@google.com>
-> 
-> KVM: arm64: Donate MMIO to the hypervisor
-> 
-> This commit introduces functions to donate MMIO memory between the host and
-> hypervisor. It enables IOMMU hypervisor drivers to protect and access the
-> MMIO of IOMMUs by mapping the MMIO range in the hypervisor's private range
-> and unmapping it from the host stage-2.
-> 
-> > diff --git a/arch/arm64/kvm/hyp/nvhe/mem_protect.c b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-> > --- a/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-> > +++ b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
-> 
-> [ ... ]
-> 
-> > +int __pkvm_host_donate_hyp_mmio(u64 pfn, u64 nr_pages, unsigned long *haddr)
-> > +{
-> > +	u64 phys = hyp_pfn_to_phys(pfn);
-> > +	u64 size = PAGE_SIZE * nr_pages;
-> > +	kvm_pte_t pte;
-> > +	u64 offset;
-> > +	int ret;
-> > +
-> > +	/* Only before de-privilege. */
-> > +	if (static_branch_unlikely(&kvm_protected_mode_initialized))
-> > +		return -EPERM;
-> > +
-> > +	if (!pfn_range_is_valid(pfn, nr_pages))
-> > +		return -EINVAL;
-> > +
-> > +	ret = __pkvm_create_private_mapping(phys, size, PAGE_HYP_DEVICE, haddr);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	host_lock_component();
-> > +	for (offset = 0; offset < size; offset += PAGE_SIZE) {
-> > +		if (addr_is_memory(phys + offset)) {
-> > +			ret = -EINVAL;
-> > +			goto unlock;
-> > +		}
-> > +		ret = kvm_pgtable_get_leaf(&host_mmu.pgt, phys + offset, &pte, NULL);
-> > +		if (ret)
-> > +			goto unlock;
-> > +		if (pte && !kvm_pte_valid(pte)) {
-> > +			ret = -EPERM;
-> > +			goto unlock;
-> > +		}
-> > +	}
-> 
-> [Severity: Medium]
-> Does this leak the hypervisor private mapping and leave a mismatched memory
-> attribute if validation fails?
-> 
-> In __pkvm_host_donate_hyp_mmio(), the PAGE_HYP_DEVICE mapping is created
-> before the physical address is validated against addr_is_memory() or the
-> page tables. If the validation fails, the function exits via the unlock
-> label and returns an error without rolling back the private mapping.
+On Tue, Sep 22, 2026, Jim Mattson wrote:
+> On Tue, Sep 22, 2026 at 6:57=E2=80=AFAM Sean Christopherson <seanjc@googl=
+e.com> wrote:
+> > Gah, I hate the negative "feature" bits, I've gotten completely turned =
+around
+> > multiple times trying to sort through this.
+>=20
+> Me too!
+>=20
+> > IIUC, you're trying to "fix" setups where host CPUID.EFER_LMSLE_MBZ=3D0=
+, but userspace
+> > configured guest CPUID.EFER_LMSLE_MBZ=3D1?  If so, then Sashiko is righ=
+t, it needs to
+> > be declared with EMULATED_F().  I would even argue that technically thi=
+s isn't a KVM
+> > bug, because KVM won't advertise EFER_LMSLE_MBZ in KVM_GET_SUPPORTED_CP=
+UID on such
+> > hosts.
+>=20
+> I'm trying to make it possible to run a Rome vCPU on Milan or later.
+>=20
+> SInce this is a negative feature bit, it must be retained if the host
+> reports it. That blocks running a Rome vCPU on Milan or later.
+> However, a defeatured Rome (which reports LMSLE_MBZ as 1) can be run
 
-Yes, in that case the private mapping is leaked, as there is no function
-to remove private mappings. This a pattern in the hypervisor in similar
-error cases during init.
+So, a partially defeatured Rome?  Because it sounds like the CPU reports LM=
+SLE_MBZ=3D1,
+but then still allows setting EFER.LMSLE=3D1?
 
-> 
-> If the host firmware provides an invalid physical address (like a RAM
-> address) for MMIO donation, this leaves the virtual address space leaked
-> in EL2. Additionally, keeping RAM mapped as PAGE_HYP_DEVICE creates a
-> mismatched memory attribute (Device vs Normal) for RAM in the hypervisor
-> translation regime, which can cause unpredictable behavior.
-> 
-
-pKVM has to trust the firmware, otherwise much bigger problems can
-happen. So this check is mainly added for very unlikely conditions
-(firmware is really busted or during development)
-
-Thanks,
-Mostafa
-
-> > +	/*
-> > +	 * We set HYP as the owner of the MMIO pages in the host stage-2, for:
-> > +	 * - host aborts: host_stage2_adjust_range() would fail for invalid non zero PTEs.
-> > +	 * - recycle under memory pressure: host_stage2_unmap_dev_all() would call
-> > +	 *   kvm_pgtable_stage2_unmap() which will not clear non zero invalid ptes (counted).
-> > +	 * - other MMIO donation: Would fail as we check that the PTE is valid or empty.
-> > +	 */
-> > +	ret = host_stage2_try(kvm_pgtable_stage2_annotate, &host_mmu.pgt,
-> > +			      phys, size, &host_s2_pool,
-> > +			      KVM_HOST_INVALID_PTE_TYPE_DONATION,
-> > +			      FIELD_PREP(KVM_HOST_DONATION_PTE_OWNER_MASK, PKVM_ID_HYP));
-> > +unlock:
-> > +	host_unlock_component();
-> > +	return ret;
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260922131259.2975334-1-smostafa@google.com?part=1
+> on Milan and later.
+>=20
+> It's the same feature-hiding we do all of the time=E2=80=94just inverted.
