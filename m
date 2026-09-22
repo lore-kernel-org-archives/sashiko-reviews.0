@@ -1,282 +1,233 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E2F32E128;
-	Tue, 22 Sep 2026 23:21:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89455304CA;
+	Tue, 22 Sep 2026 23:32:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790119279; cv=none; b=XjvfVuxO47jn9zwDcwIleFiasqQfjD2qulIrLdpquxEsBrirmWksxCBWuekUhFmf1ahNtjMz6LH3oJa76B15B+MYH3YuZr8rFfn9ylsZCaqRkcH70AjRuKGmlhNepHf9bXL9E0+d7hTteDqWrlEGXMfa57rcTCJ5urteDHfHb9o=
+	t=1790119976; cv=none; b=DK7C1v3fbXau4rG9EJ608RfwLPD3bJPj0TylrfAO265pgSdt4QxturKGdyrBudWiRM1SGMuYTjICr5Huy3ZYlYSvpFUONuLylYduiB6YcS+aZw6OX0Ldx+28nPGRj1/nATo0nRTfIQRpvygCPvjsWNec6ThV4KkMp4+7t0o6Srk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790119279; c=relaxed/simple;
-	bh=Yh4qf4AAHq1NrDhCPwzQnedoKI3ueK/KIj3E5kuxKOM=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DpS7b7mH9vC9ty10nkO7RYNfiua1c2ojL8JsGsj6T4TstiXHp6ZxD4q2FlbNdCYBH1NCnvqmptb0q4K6vIPUBaDhPFBogPr2Hh4o6tq5Yn3QYlGw7EWDM54XFcpzwTK3QGQ7f5hOmEJnvGzzfurGVFsQfoD35d/M95YHqv/TMOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QP11CcxL; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790119976; c=relaxed/simple;
+	bh=SiDh8/TX0zYQGZFPk/3p6AwW0Ud78uH55m/pmWk9uhs=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=aPiMBLooZGG+Je0UMVzCUEVOwiat5BI301QsqnERDfCHJLX2Yr8AntHNnIXi3/2ecgeBgDmGZ77n275k7AdIpGId3UTJOm0Y6MSjBsoKDdA1blWRL1WNITnj4p+34Sy5yvaCSpgGM0+piwv55ME920OlHcFXYRMLZGl2GLT2Ws8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Z6bSszb+; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QP11CcxL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936E51F000FF;
-	Tue, 22 Sep 2026 23:21:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790119277;
-	bh=uQ/blJlcn6x9i7/mngodmC3/BxIChPcfxPbePy3LYVI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=QP11CcxLqKvDUFs6cTBw7MtEjickhktuCKAuzssoSF3c74dqHq2O2/Z5xpCxFci75
-	 n5i+KNutYRvdQ17ZPUcxLIc0l4iAOFpmZCdSj8yVqcZr6/SlQTaoQ+jt8PPLdUglMH
-	 Qof4F7euiASn1GqpUFU84ardA2fLK0d9SZBkW1/MowWZ6kuFrWEeXkHYx4LBr6V1HH
-	 TeS7LYVTjO2ZGIYA6Ea0aL12Va8H/sJVoDm/uBLu7Q9sdtO9cbzRT8lK6ZWOa2I13u
-	 dp5NBLvc9BHtem2qP+REHQZiZYfRJbPFU4nhQE34k+zP5HwSMLQgzRVoFxaRZ9ZBGE
-	 VqgAagVjGiGMw==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1x99nX-0000000CHTG-1fcb;
-	Tue, 22 Sep 2026 23:21:15 +0000
-Date: Wed, 23 Sep 2026 00:21:15 +0100
-Message-ID: <86v77w50us.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Z6bSszb+"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68MI743O4143509;
+	Tue, 22 Sep 2026 23:32:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=BTV/2p
+	/sD4txvpbEuYaYkmkQd9jDPvhFuuZrGKcifGU=; b=Z6bSszb+lCwpx4sVR6Vq3p
+	WQC09GYyOWPgK3rbG2HxNqEdCAfcD0mWIaYITzkEkLqFNgFbptyHC4BbzjrM08RK
+	YY+BiuIxYN2NDr/1ZxqPcOboCW+SGhtiTkn7dwPqD04BSe1z2pUsiDquhsjdFB4y
+	kM1p7kaKudlA8gLfJ7wFw9c6xXQWKsizSkgTOE6RCKuEOPKy0ZtuPRT26uDZzX71
+	i8P4gocU2j6LpO9EIliaGIz5wYHOIx+CzPWg1X4oSztylxRzov3T12egVOH2dMN6
+	P4M+amoQjdruqxI5p+fxn9ABjBKaCHugUwCEn3ti4Nw+lePESM54Vd9Kxr80DEqA
+	==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgqg028-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Tue, 22 Sep 2026 23:32:49 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68MN613H3279475;
+	Tue, 22 Sep 2026 23:32:48 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt4qqc29q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Sep 2026 23:32:48 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
+	by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68MNWlG727525750
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 22 Sep 2026 23:32:47 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4936858102;
+	Tue, 22 Sep 2026 23:32:47 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id DF1BE58101;
+	Tue, 22 Sep 2026 23:32:46 +0000 (GMT)
+Received: from li-4c4c4544-0038-3410-8038-c4c04f423534.ibm.com (unknown [9.61.14.79])
+	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Tue, 22 Sep 2026 23:32:46 +0000 (GMT)
+Message-ID: <2c68a339f042335430d88132dc448510c98861b2.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 2/2] powerpc/pseries/dlpar: Remove DT entries if
+ failure from CPU ADD notifier
+From: Haren Myneni <haren@linux.ibm.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: "Oliver Upton" <oupton@kernel.org>,
-	kvmarm@lists.linux.dev
-Subject: Re: [PATCH 3/3] KVM: arm64: vgic: Stop the VM when disabling LPIs
-In-Reply-To: <20260922220125.91CC01F000FF@smtp.kernel.org>
-References: <20260922214212.3327146-1-maz@kernel.org>
-	<20260922214212.3327146-4-maz@kernel.org>
-	<20260922220125.91CC01F000FF@smtp.kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+Date: Tue, 22 Sep 2026 16:32:46 -0700
+In-Reply-To: <20260921034731.D7F391F000FF@smtp.kernel.org>
+References: <20260921033156.991481-1-haren@linux.ibm.com>
+	 <20260921033156.991481-2-haren@linux.ibm.com>
+	 <20260921034731.D7F391F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, oupton@kernel.org, kvmarm@lists.linux.dev
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=G+OJgNk5 c=1 sm=1 tr=0 ts=6ab31021 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=D_8-g3vMd_KBQvPCQQIA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDMwNSBTYWx0ZWRfX+f1jWLoYQRoc
+ uOStO+UoYPSfVXzKEGd+l1Mla7EvG7lA8f1h7ENoWrXWqmMZgnirg86KJuw0Uym/OrlCB4cwv/Z
+ s2Ip6jHhQjECj30KQv9Rf8T+C8yHz5hctY1yhzQxRPKbPE2svMGbX+5ZuWqcpnw2EBm8dznPI03
+ uAsDvCMzwGE+LGlcHCMYTc31w3LwhBw6nvQHM/dsg+HVkqDk24T3KURF5eVk5aGhGKEaagGW3Z9
+ 96qjamiodurlO9K71RKbWGqIlMz4DRAICxz0gdo784TTZoq/+LazZ12cUyXMfP3sErIGWTQFzgB
+ yOYkbN8Dwh0YPwyi1ZLO6DjOe3ngcF497gfWW8enJ+nHqyP23JzO/Hv9qyAJ2tkLyC+RoST59Jb
+ FYJBkrAyHta1C+88U4g0cTCqVf5SsY6E7B/FGsAl+YRwo8KZwVh5I1YT3f0mm/JTxAX4cy4QPKE
+ NFwLJJVW7ffhvsA6r5w==
+X-Proofpoint-ORIG-GUID: biNHngOEu2qJnIWK0FRfF4gJz3esAfxA
+X-Proofpoint-GUID: biNHngOEu2qJnIWK0FRfF4gJz3esAfxA
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDMwNSBTYWx0ZWRfX8U4Sf2juI4UL
+ kNmdKIqzk0WnTxOitclrSeJoPzd23XLwOBUDyy1Da4ldF7cespUXCdlIz4c3LzbifVjAaFLKB2x
+ /qSBJVV+xp8FGoQ/0Zjy1Y1Jqb6QHLc=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-22_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
+ bulkscore=0 priorityscore=1501 clxscore=1015 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220305
 
-On Tue, 22 Sep 2026 23:01:25 +0100,
-sashiko-bot@kernel.org wrote:
-> 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] kvm: arm64: vgic: race in vcpu->arch.pause unpause due to missing VM lock
-> - [High] kvm: arm64: vgic: stale LR state during vgic_flush_pending_lpis()
+On Mon, 2026-09-21 at 03:47 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issue(s) to consider:
+> - [High] powerpc/pseries: NULL pointer deref in __of_detach_node on
+> error path
+> - [Medium] powerpc/pseries: memory leak of unattached sibling device
+> nodes
 > --
-> 
-> commit 81f0f5ee375a1e011fabe86a70b81c8175c5fd88
-> Author: Marc Zyngier <maz@kernel.org>
-> 
-> KVM: arm64: vgic: Stop the VM when disabling LPIs
-> 
-> Disabling LPIs modifies the AP list of the affected CPU, which could be
-> running. This commit aims to safely manipulate the state by pausing all
-> vCPUs so they are in a quiescent state when disabling LPIs.
-> 
-> > diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-> > index 5913a20d83019..adefc42964732 100644
-> > --- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-> > +++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-> > @@ -303,9 +303,19 @@ static void vgic_mmio_write_v3r_ctlr(struct kvm_vcpu *vcpu,
-> >  		if (ctlr != GICR_CTLR_ENABLE_LPIS)
-> >  			return;
-> >  
-> > +		/*
-> > +		 * Yes, disabling LPIs is painful, since it can be done from
-> > +		 * a *remote* vcpu! So let's not take any chance, and make
-> > +		 * sure that everybody has written their LRs back to the irq
-> > +		 * structures, and release any reference they would have.
-> > +		 *
-> > +		 * If it hurts, don't do it.
-> > +		 */
-> > +		kvm_arm_halt_guest(vcpu->kvm);
-> >  		vgic_flush_pending_lpis(vcpu);
-> 
+>=20
+> commit 79a5af10ba412eed58ff43cc8d6339b8b6eee45f
+> Author: Haren Myneni <haren@linux.ibm.com>
+>=20
+> powerpc/pseries/dlpar: Remove DT entries if failure from CPU ADD
+> notifier
+>=20
+> For CPU ADD, the device tree entries are retrieved with
+> configure-connector RTAS call and attached to the device tree.
+> Then the CPU is added as part of DT node notification. If the CPU
+> ADD notifier returns failure, the corresponding CPU node entries
+> should be deleted from the device-tree.
+>=20
+> > diff --git a/arch/powerpc/platforms/pseries/dlpar.c
+> > b/arch/powerpc/platforms/pseries/dlpar.c
+> > index f4d33b8dffd85..01a9849773cd1 100644
+> > --- a/arch/powerpc/platforms/pseries/dlpar.c
+> > +++ b/arch/powerpc/platforms/pseries/dlpar.c
+> > @@ -247,15 +247,18 @@ int dlpar_attach_node(struct device_node *dn,
+> > struct device_node *parent)
+> > =C2=A0	return 0;
+> > =C2=A0}
+> > =C2=A0
+> > -int dlpar_detach_node(struct device_node *dn)
+> > +int dlpar_detach_node(struct device_node *dn, bool notify)
+> > =C2=A0{
+> > =C2=A0	struct device_node *child;
+> > =C2=A0	int rc;
+> > =C2=A0
+> > =C2=A0	for_each_child_of_node(dn, child)
+> > -		dlpar_detach_node(child);
+> > +		dlpar_detach_node(child, notify);
+>=20
+> [Severity: Medium]
+> Will this leak unattached sibling device nodes on the error path?
+>=20
+> dlpar_configure_connector() can return a chain of device nodes linked
+> via
+> dn->sibling. The error path in dlpar_cpu_add() previously called
+> dlpar_free_cc_nodes(dn), which handles sibling traversal.
+>=20
+> By replacing it with dlpar_detach_node(dn, false), which recursively
+> processes children but explicitly does not traverse dn->sibling, do
+> we
+> permanently leak any unattached sibling nodes returned by the
+> connector?
+
+No leak here. dlpar_configure_connector() can also return sibling
+nodes, but this interface should detach node and its children. Same use
+case as before dlpar_detach_node(). We have bug in the previous use of
+dlpar_free_cc_nodes() in dlpar_cpu_add(). Example: For CPU node, No
+sibling node is returned from dlpar_configure_connector() and the other
+existing CPU node is attached as sibling to the new CPU node
+(of_attach_node()).=20
+
+>=20
+> > =C2=A0
+> > -	rc =3D of_detach_node(dn);
+> > +	if (notify)
+> > +		rc =3D of_detach_node(dn);
+> > +	else
+> > +		rc =3D of_detach_node_no_notify(dn);
+>=20
+> [ ... ]
+>=20
+> > diff --git a/arch/powerpc/platforms/pseries/hotplug-cpu.c
+> > b/arch/powerpc/platforms/pseries/hotplug-cpu.c
+> > index bc6926dbf1489..15122aab05b24 100644
+> > --- a/arch/powerpc/platforms/pseries/hotplug-cpu.c
+> > +++ b/arch/powerpc/platforms/pseries/hotplug-cpu.c
+> > @@ -602,8 +602,8 @@ static ssize_t dlpar_cpu_add(u32 drc_index)
+> > =C2=A0			dn, rc, drc_index);
+> > =C2=A0
+> > =C2=A0		rc =3D dlpar_release_drc(drc_index);
+> > -		if (!rc)
+> > -			dlpar_free_cc_nodes(dn);
+> > +		if (!rc && dn)
+> > +			dlpar_detach_node(dn, false);
+>=20
 > [Severity: High]
-> Does the asynchronous halt ensure the target vCPU has fully synchronized its
-> hardware state back to software state before proceeding to flush?
-> 
-> kvm_arm_halt_guest() uses kvm_make_all_cpus_request(kvm, KVM_REQ_SLEEP).
-> If the target vCPU has exited guest mode and set vcpu->mode = OUTSIDE_GUEST_MODE
-> but has not yet executed kvm_vgic_sync_hwstate() to fold its LRs,
-> kvm_make_all_cpus_request() will skip waiting for it:
-> 
-> virt/kvm/kvm_main.c:kvm_request_needs_ipi() {
->     ...
-> 	if (req & KVM_REQUEST_WAIT)
-> 		return mode != OUTSIDE_GUEST_MODE;
->     ...
+> Does this code trigger a NULL pointer dereference when
+> pseries_cpuhp_attach_nodes() fails?
+>=20
+> In dlpar_cpu_add(), if pseries_cpuhp_attach_nodes() fails, the device
+> node
+> dn remains unattached from the device tree. This error path then
+> calls
+> dlpar_detach_node(dn, false), which invokes __of_detach_node().
+>=20
+> Because dlpar_parse_cc_node() does not set the OF_DETACHED flag on
+> allocation, __of_detach_node() assumes the node is attached and
+> iterates
+> over its parent's children to unlink it:
+>=20
+> drivers/of/dynamic.c:__of_detach_node() {
+> 	...
+> 		for (prevsib =3D np->parent->child;
+> 		=C2=A0=C2=A0=C2=A0=C2=A0 prevsib->sibling !=3D np;
+> 		=C2=A0=C2=A0=C2=A0=C2=A0 prevsib =3D prevsib->sibling)
+> 			;
+> 		prevsib->sibling =3D np->sibling;
+> 	...
 > }
-> 
-> If the wait is skipped, could the flushing vCPU clear the ap_list in
-> vgic_flush_pending_lpis() just before the target vCPU folds its LRs? 
-> Would this incorrectly resurrect the deleted LPI state and cause ghost
-> interrupts?
+>=20
+> Since the node was never linked, it is not in the list, and the
+> traversal
+> pointer prevsib reaches NULL.=C2=A0 Will this cause a guaranteed NULL
+> pointer
+> dereference (prevsib->sibling) and kernel panic?
 
-I think there is a kernel of truth here, and I reckon this is a *very*
-old bug. Something like the below should help. Oliver what do you
-think?
+No, pseries_cpuhp_attach_nodes() returns failure in 3 cases:
+- dn allocation is failed from of_changeset_attach_node(). 'if (!rc &&
+dn)' prevents the NULL pointer access.
+- if dn is not attached, 'if (!of_node_check_flag(np, OF_DETACHED))'
+check prevents=20
+- if the dn notifier is failed, fixing this issue with the new
+interface. of_detach_node_no_notify()
 
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 8b080804bc90b..5f5dd8bead4b9 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -1352,7 +1352,6 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
- 
- 		ret = kvm_arm_vcpu_enter_exit(vcpu);
- 
--		vcpu->mode = OUTSIDE_GUEST_MODE;
- 		vcpu->stat.exits++;
- 		/*
- 		 * Back from guest
-@@ -1386,6 +1385,12 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
- 
- 		kvm_arch_vcpu_ctxsync_fp(vcpu);
- 
-+		/*
-+		 * All the state has been synchronised, let advertise
-+		 * we're outside of the guest.
-+		 */
-+		smp_store_release(&vcpu->mode, OUTSIDE_GUEST_MODE);
-+
- 		/*
- 		 * We must ensure that any pending interrupts are taken before
- 		 * we exit guest timing so that timer ticks are accounted as
-
-
-> 
-> >  		vgic_its_invalidate_all_caches(vcpu->kvm);
-> >  		atomic_set_release(&vgic_cpu->ctlr, 0);
-> > +		kvm_arm_resume_guest(vcpu->kvm);
-> 
-> [Severity: High]
-> Does this block need to hold a VM-wide lock?
-> 
-> Since vgic_mmio_write_v3r_ctlr() only synchronizes locally using an atomic
-> cmpxchg on the target vgic_cpu->ctlr, multiple vCPUs could concurrently
-> write to different VGIC redistributors to disable their LPIs.
-> 
-> If this happens, multiple vCPUs will concurrently call kvm_arm_halt_guest()
-> and race to set vcpu->arch.pause = true:
-> 
-> arch/arm64/kvm/arm.c:kvm_arm_halt_guest() {
->     ...
-> 	kvm_for_each_vcpu(i, vcpu, kvm)
-> 		vcpu->arch.pause = true;
->     ...
-> }
-> 
-> The first vCPU to finish flushing will call kvm_arm_resume_guest() which
-> unconditionally clears the pause boolean:
-> 
-> arch/arm64/kvm/arm.c:kvm_arm_resume_guest() {
->     ...
-> 	kvm_for_each_vcpu(i, vcpu, kvm) {
-> 		vcpu->arch.pause = false;
-> 		__kvm_vcpu_wake_up(vcpu);
-> 	}
->     ...
-> }
-> 
-> Could this unpause the VM prematurely while another vCPU is still tearing
-> down VGIC state in vgic_flush_pending_lpis(), allowing guests to run and
-> modify their VGIC state concurrently?
-
-Just as interesting. It appears that this doesn't nest correctly,
-while we really rely on it to work. An obvious way to do this is to
-actually turn pause into a refcount. Something like the (untested)
-hack below.
-
-	M.
-
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 27fe0cd5b2d7a..08dc8f816824c 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -889,11 +889,10 @@ struct kvm_vcpu_arch {
- 	/*
- 	 * Don't run the guest (internal implementation need).
- 	 *
--	 * Contrary to the flags above, this is set/cleared outside of
--	 * a vcpu context, and thus cannot be mixed with the flags
--	 * themselves (or the flag accesses need to be made atomic).
-+	 * Contrary to the flags above, this is updated outside of
-+	 * a vcpu context, and thus cannot be mixed with the flags.
- 	 */
--	bool pause;
-+	refcount_t pause;
- 
- 	/*
- 	 * We maintain more than a single set of debug registers to support
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 8b080804bc90b..62b683107ccae 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -561,6 +561,7 @@ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
- 	kvm_arm_pvtime_vcpu_init(&vcpu->arch);
- 
- 	vcpu->arch.hw_mmu = &vcpu->kvm->arch.mmu;
-+	refcount_set(&vcpu->arch.pause, 0);
- 
- 	/*
- 	 * This vCPU may have been created after mpidr_data was initialized.
-@@ -835,6 +836,11 @@ int kvm_arch_vcpu_ioctl_set_mpstate(struct kvm_vcpu *vcpu,
- 	return ret;
- }
- 
-+static bool vcpu_can_run(struct kvm_vcpu *vcpu)
-+{
-+	return !kvm_arm_vcpu_stopped(vcpu) && !refcount_read(&vcpu->arch.pause);
-+}
-+
- /**
-  * kvm_arch_vcpu_runnable - determine if the vcpu can be scheduled
-  * @v:		The VCPU pointer
-@@ -850,8 +856,7 @@ int kvm_arch_vcpu_runnable(struct kvm_vcpu *v)
- 		      (kvm_timer_should_notify_user(v) ||
- 		       kvm_pmu_should_notify_user(v)));
- 
--	return ((irq_lines || kvm_vgic_vcpu_pending_irq(v))
--		&& !kvm_arm_vcpu_stopped(v) && !v->arch.pause);
-+	return ((irq_lines || kvm_vgic_vcpu_pending_irq(v)) && !vcpu_can_run(v));
- }
- 
- bool kvm_arch_vcpu_in_kernel(struct kvm_vcpu *vcpu)
-@@ -1014,7 +1019,7 @@ void kvm_arm_halt_guest(struct kvm *kvm)
- 	struct kvm_vcpu *vcpu;
- 
- 	kvm_for_each_vcpu(i, vcpu, kvm)
--		vcpu->arch.pause = true;
-+		refcount_inc(&vcpu->arch.pause);
- 	kvm_make_all_cpus_request(kvm, KVM_REQ_SLEEP);
- }
- 
-@@ -1024,8 +1029,8 @@ void kvm_arm_resume_guest(struct kvm *kvm)
- 	struct kvm_vcpu *vcpu;
- 
- 	kvm_for_each_vcpu(i, vcpu, kvm) {
--		vcpu->arch.pause = false;
--		__kvm_vcpu_wake_up(vcpu);
-+		if (!refcount_dec_and_test(&vcpu->arch.pause) == 0)
-+			__kvm_vcpu_wake_up(vcpu);
- 	}
- }
- 
-@@ -1034,10 +1039,10 @@ static void kvm_vcpu_sleep(struct kvm_vcpu *vcpu)
- 	struct rcuwait *wait = kvm_arch_vcpu_get_wait(vcpu);
- 
- 	rcuwait_wait_event(wait,
--			   (!kvm_arm_vcpu_stopped(vcpu)) && (!vcpu->arch.pause),
-+			   vcpu_can_run(vcpu),
- 			   TASK_INTERRUPTIBLE);
- 
--	if (kvm_arm_vcpu_stopped(vcpu) || vcpu->arch.pause) {
-+	if (!vcpu_can_run(vcpu)) {
- 		/* Awaken to handle a signal, request we sleep again later. */
- 		kvm_make_request(KVM_REQ_SLEEP, vcpu);
- 	}
-
--- 
-Without deviation from the norm, progress is not possible.
+>=20
+> > =C2=A0
+> > =C2=A0		return saved_rc;
+> > =C2=A0	}
