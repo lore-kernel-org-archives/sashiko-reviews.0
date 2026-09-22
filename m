@@ -1,158 +1,117 @@
-Received: from mail-wr2-f12.google.com (mail-wr2-f12.google.com [74.125.225.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A8E5275AB
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 11:48:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2471A51C073;
+	Tue, 22 Sep 2026 12:03:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790077706; cv=none; b=tILroDslv9f+3cttcJIZW1UM9AqT7aEXBqj5ihXge0X+OgWFHZoJVfIwHYoqqYvyZY31xoLMr8VfzGrRYz5zs0y0nwQot7ZoVge0pbf8AGGiMWpwP0c5RHLwLwwe4p2XdcT0/E+rc/GUlZJVs57PZg9POYi24JOFvaj5rFuebSk=
+	t=1790078589; cv=none; b=NN0j8U9mMB8s2xCTrOaA9rDcMR0S8dwz7JNZ2+Sk/0lr3YHzsMvUjlqzrw6n947WRLbPsGCKaCnJ/oKyNcobm8lScH+jO30S5+SZ5IzZmJT2MHjhs7XY4E1ta8ZI66G6Kv/hxVFFduQF2cXqAFNo4ngh9p0zIKhHTol+p12NbCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790077706; c=relaxed/simple;
-	bh=0fEuwFB4EDBgZytQZVYr5GO0ZMk7QxnRdFL3zHe9mKg=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=njCYPQYPw72A5Itjj0mWzbyaLcC27owZfnqbCfytijaA1aHeM74Jk3/FHGZLBaO3GSejSfkWeJpyPZmFj7Tp0V1gmhJcaTXXTpxHN+9BfEZCsSJJZuqzphGhXJzNoAcCNzS1W26ad7DY6NZdBfOtID8s0oXcDayfYf/qSMbhEKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=D1gU+TjQ; arc=none smtp.client-ip=74.125.225.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1790078589; c=relaxed/simple;
+	bh=ZPO5CXeCLqcvaH0I/WkgJHL+ISl1+ikBTCuS4DRjBw4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZHc2wiSAq6wmDlirGlgFzxt3Zubjj1s3wpozWemu4GTkqKMlB8cj8Bfo/bhV9R1SmHaSeWIX5EVEPnmzlmGSMXgYOWXZ1EsKGtUU+F9blgbm6T95nZ46zQf0RwtBgKtetOZ+ww67aYq6cE2W1OP8VKWimV6Ga69xf/T8LmFAGi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZMUe1Z4L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D1gU+TjQ"
-Received: by mail-wr2-f12.google.com with SMTP id ffacd0b85a97d-4843796e373so2315656f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 04:48:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1790077702; x=1790682502; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=aqEOVW0oYV76bRl1m3qya1gRiu6Xn1Kr6F2EDDby+mc=;
-        b=D1gU+TjQq21vDvYc6ap3SutrytR/3mb0/6i9jUdk5bVv2aSHn01MtztvhbOeJZ0rdi
-         PDE4Xh6JqSMt8D+rokhafzmo2HU80BrlTKsbK/p1U36/C0B7J2+7w+Xj86AUg4Cj5GR2
-         +r62Vwuz20yeasMraI4uI6OMAQBVnrPtTqPaTNigWVrZavZdDHGo1xxuiocVEirVomA+
-         hXjDHI9sZqETzptOKtIYDY7fneirQiK4ndWu7DpCob48gMo8H63r11CSpp43DXTLg58p
-         WgRGI3UuLIxKK/6FyqPir6uqIlIt5yp+rk35uuotWIulDEXl7skX4hhAW4PJn32JWgpw
-         WGbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790077702; x=1790682502;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=aqEOVW0oYV76bRl1m3qya1gRiu6Xn1Kr6F2EDDby+mc=;
-        b=HkddlSM0JMPRZ92FXfQMFwcVoZ0Q2ci6aFbp/hzrTsbpdy0fEa/SYxIIVXj1O3wG/S
-         6vKYztJ2Auz7c9eBJwAog/PHOUZDYJZHPDSLAh4LAQwY6+uLPn/oJ8YMdMooRnaW+61R
-         oMbIUupPf2IrMJOvixg4csvoWW/R/I8Kheq8DPFd/2Hgd2zjAXkOzN2suMeivsER2y2R
-         U92Bl6+SYqiSUgPcBSCdWBqgCw+JI1OeSyiVAVpJGA0+hgSHz6zLNNcDN2oQrpetHWIW
-         Pq91pbqeoohkh8o0O1ZmBIuduINH6hApH6DrsclxIZr631v8vZyFeHTvvgHuxyT92aAD
-         5I5w==
-X-Gm-Message-State: AFuF++nZd6rhz2SwmelmVEt7fmjRunnt6RFIn80HVs5unS9nWSmPlGra
-	MCFgSpL+MPC1czOAX+x0K3UCB8Iphx8zHUHH6XKPRgIaMEd35V40DAOG0YCEh3d2oj4str4/Tsn
-	ZNQt5CHw=
-X-Gm-Gg: AYBFou3TLVtFmpew1nQn0lolUN/XB5hoXP2IQ41AgJb7I0VxYlns5ge8S6GGDuQwXVL
-	rxmAWdY4YiTElkGNpXt/xm7aIgY+bUdV1DszQsdvZ0kz9MuY8o/FnD7RfcuVZMeNybsynhyv9xD
-	ZZyEbyXjnh+WewsqC24rIr8w9o3lFLCRc6CQtGUKkEQDPFIJAy/Ftqni2G/iO8ejOjt4d+ePjCG
-	X3e9mzYZ1ciWYPoKUywiaAQA6ukoWRsOVtCVljjnhAkeMqSGFjK9e/nT6pAbJAGzkg+8k7f1edo
-	qmZYGnDM0Pj3r/CcS9eG6HI6bhylBa98neDiKRHs/r0L2emWXGaEhmHur1J5AfjbEtnpkC5gQCx
-	3xqyaMGoapf/sbLyWsXq9wVS595/QOofCl2A7dv6sykwW0W73KbZLtKm7o+8S6zFyDHwFSHe0Rr
-	EY4YouaiLlp9RUsEeYSQHUAINpP2CydhhkxaKkJJWMYBJLO4DqenI31kjZUaAATeVxvhDcudyl8
-	mR7VzafhNqsaFQvLdzTqQwFKheFoNj51VsWscZ4wuWJIzWq0iLaQS0VypqPDeuKbQ==
-X-Received: by 2002:a05:600c:1f95:b0:49e:7862:c09e with SMTP id 5b1f17b1804b1-49fc57238b8mr180239605e9.14.1790077702455;
-        Tue, 22 Sep 2026 04:48:22 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:106d:1080:ddd0:8cc7:9887:fa82? ([2a01:e0a:106d:1080:ddd0:8cc7:9887:fa82])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fdace7941sm54428815e9.2.2026.09.22.04.48.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Sep 2026 04:48:22 -0700 (PDT)
-Message-ID: <27a837f9-6e32-43e4-94db-b5180c0baad9@linaro.org>
-Date: Tue, 22 Sep 2026 13:48:21 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZMUe1Z4L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55CC1F000FF;
+	Tue, 22 Sep 2026 12:03:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790078587;
+	bh=hCtAUGHVQbM0y1hSoXEuxktfPZV15cpsiXS3ZAOkNuQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ZMUe1Z4L53RuG30fWJ2UTH54BMpZXR0WfIJI6nyJ8Xm+QthPKZmz/ASSHIJwFMOUT
+	 TYVwKCiyQ5FdIky4MxWCcqX2BZb6KHXmQsweB/EEWhjRMFRuxnAiX2BeYJrQ+FoSXU
+	 qd72eZT4cBzO9XoL86BC1k7YTseaG5k5SirTs9ubfrECUN13szjTqSqgfs+UfgBJAZ
+	 Uj2PzppgqgLZvICsRh5e1nV+zzALqotEzwjrPC1M/bmLhwrpEOOC2toiHZ9fh7YYZ0
+	 Qagg3f8E/mCpk7US2cRoVsF8iBqYa1p9PwbvC7/lc8N/suekd1mw90qZscUaYSFzDA
+	 Izql067IUtRcQ==
+Date: Tue, 22 Sep 2026 14:03:04 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Shawn Lin <shawn.lin@rock-chips.com>, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] PCI: dw-rockchip: Move the INTx irq setup to probe
+Message-ID: <arJueF46fIYDiwUp@ryzen>
+References: <1790044622-164744-1-git-send-email-shawn.lin@rock-chips.com>
+ <1790044622-164744-2-git-send-email-shawn.lin@rock-chips.com>
+ <20260922025140.5B4F31F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8650: Add initial Valve Deckard
- devicetree
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20260922-topic-sm8650-deckard-initial-dt-v1-0-c25e7759d04a@linaro.org>
- <20260922-topic-sm8650-deckard-initial-dt-v1-2-c25e7759d04a@linaro.org>
- <20260922114234.92CC21F000FF@smtp.kernel.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20260922114234.92CC21F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260922025140.5B4F31F000FF@smtp.kernel.org>
 
-On 9/22/26 13:42, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] dts: incorrect regulator supply names for vishay,vcnl4040
+On Tue, Sep 22, 2026 at 02:51:39AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] pcie: missing dw_pcie_host_deinit() on error paths causes UAF
+> - [High] pcie: late INTx IRQ domain registration breaks downstream INTx interrupts
 > --
 > 
-> commit 04ec091c4806a5aef627fbe5d3809fe2eef39d6e
-> Author: Neil Armstrong <neil.armstrong@linaro.org>
-> arm64: dts: qcom: sm8650: Add initial Valve Deckard devicetree
+> commit af2f81da80dcb1ab2a4b7035c602bf3d2a40f1c9
+> Author: Shawn Lin <shawn.lin@rock-chips.com>
 > 
-> This commit adds the initial devicetree for the Valve "Steam Frame" (codename
-> Deckard), a VR headset based on the Snapdragon 8 Gen 3 SoC. It includes
-> definitions for reserved memory, regulators, GPIOs, UFS storage, USB,
-> Wi-Fi/Bluetooth, and I2C peripherals.
+> PCI: dw-rockchip: Move the INTx irq setup to probe
 > 
->> diff --git a/arch/arm64/boot/dts/qcom/sm8650-valve-deckard.dts b/arch/arm64/boot/dts/qcom/sm8650-valve-deckard.dts
->> new file mode 100644
->> index 0000000000000..cd801359d2b57
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/sm8650-valve-deckard.dts
+> The commit moves INTx IRQ domain setup out of the host ops .init() callback
+> and into rockchip_pcie_configure_rc() to avoid leaking the domain upon
+> controller reset. It performs the IRQ initialization immediately after
+> dw_pcie_host_init() completes.
+> 
+> > diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> > index af26a07c0c9e5..59d9a1b095df6 100644
+> > --- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+> > +++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
 > 
 > [ ... ]
 > 
->> +	light-sensor@60 {
->> +		compatible = "vishay,vcnl4040";
->> +		reg = <0x60>;
->> +
->> +		vin0-supply = <&vreg_l2b_3p0>;
->> +		vin1-supply = <&vreg_l15b_1p8>;
+> > @@ -739,6 +725,24 @@ static int rockchip_pcie_configure_rc(struct platform_device *pdev,
+> >  		return ret;
+> >  	}
+> >  
+> > +	/*
+> > +	 * This is done here instead of in the host ops .init() callback,
+> > +	 * which is also re-run by .reset_root_port(), so that the INTx irq
+> > +	 * domain is only created once, at probe time.
+> > +	 */
+> > +	irq = of_irq_get_byname(dev->of_node, "legacy");
 > 
-> [Severity: Medium]
-> Will the vcnl4000 driver be able to properly find and enable these regulators?
+> [Severity: High]
+> Does moving the INTx IRQ domain creation here cause downstream devices to lose
+> their INTx interrupts?
 > 
-> The driver expects the regulators to be named vdd, vio, and vled, but here
-> they are provided as vin0-supply and vin1-supply. Because they are not bound
-> to the names the driver expects, they might remain off or get disabled by a
-> late initcall, potentially causing the sensor to fail probing or I2C
-> communication.
+> Since rockchip_pcie_configure_rc() calls dw_pcie_host_init() right before this,
+> which internally invokes pci_host_probe() to enumerate the PCIe bus, downstream
+> devices will be probed before this new code is reached.  When those devices
+> attempt to map their legacy INTx interrupts via the device tree, they won't
+> find the IRQ domain since it hasn't been created yet, which seems like it would
+> cause the mapping to silently fail.
+> 
+> This architectural issue appears to remain unaddressed at the end of the patch
+> series.
 
-Good catch, how did I miss that...
+This appears like a legit concern.
 
-> 
->> +
->> +		proximity-near-level = <220>;
->> +	};
->> +};
-> 
+I was the one who recommended that we call the of_irq_get_byname(), from
+looking at e.g. pcie-qcom.c.
 
+But I incorrectly said we should do it after dw_pcie_host_init().
+
+Looking at pcie-qcom.c platform_get_irq_byname_optional() call was before
+dw_pcie_host_init(). But if we look at e.g. pcie-tegra194.c, the
+platform_get_irq_byname() calls are before the tegra_pcie_config_rp() call,
+which calls tegra_pcie_init_controller(), which calls dw_pcie_host_init().
+
+So I think Sashiko is right, of_irq_get_byname() (and the IRQ domain creation)
+probably has to be done before calling dw_pcie_host_init().
+
+
+If we do that, the other problem reported by Sashiko will probably also be
+resolved, since you will return error before calling dw_pcie_host_init().
+
+
+Kind regards,
+Niklas
