@@ -1,233 +1,160 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89455304CA;
-	Tue, 22 Sep 2026 23:32:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D782C5372D2
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 23:43:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790119976; cv=none; b=DK7C1v3fbXau4rG9EJ608RfwLPD3bJPj0TylrfAO265pgSdt4QxturKGdyrBudWiRM1SGMuYTjICr5Huy3ZYlYSvpFUONuLylYduiB6YcS+aZw6OX0Ldx+28nPGRj1/nATo0nRTfIQRpvygCPvjsWNec6ThV4KkMp4+7t0o6Srk=
+	t=1790120618; cv=none; b=n1Kbwrc66aJnh5caFM5GPx/ifDG04gGz7Ac7Ua0CufudTiXq63iR7sucCdRqzUdAWJJK9jv6rHO5YTplkU8X7JwX56R+J1ldnYupomGRnJCRn65wsmbu37q3kLcbzRKAFTZ4OY+4Kv6Ku2vwTYVyZTRTqV98Wpgt0zJkHYkMFqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790119976; c=relaxed/simple;
-	bh=SiDh8/TX0zYQGZFPk/3p6AwW0Ud78uH55m/pmWk9uhs=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=aPiMBLooZGG+Je0UMVzCUEVOwiat5BI301QsqnERDfCHJLX2Yr8AntHNnIXi3/2ecgeBgDmGZ77n275k7AdIpGId3UTJOm0Y6MSjBsoKDdA1blWRL1WNITnj4p+34Sy5yvaCSpgGM0+piwv55ME920OlHcFXYRMLZGl2GLT2Ws8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Z6bSszb+; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1790120618; c=relaxed/simple;
+	bh=foktcOgWntPuAyEzLSwuL0FS/IRyC6DCIFiEatHBGeA=;
+	h=MIME-Version:Date:From:To:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=aLrrbl6jlOIvUzXxD2o7PJVlt2bYHXN5cypSrJhIZljzGJkY2WCp7Dvf5N39T8E674DxVEnA1+krR7uIp47s5nXYCvUI8UX4EYSo3nZfY8nGyVTyRierjTypDyMrliCa0HOzXVmDueE8CdLWY8XPxaX7LWc+8Q/LyJKGdn6TrF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=OyBl2Mcb; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Z6bSszb+"
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68MI743O4143509;
-	Tue, 22 Sep 2026 23:32:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=BTV/2p
-	/sD4txvpbEuYaYkmkQd9jDPvhFuuZrGKcifGU=; b=Z6bSszb+lCwpx4sVR6Vq3p
-	WQC09GYyOWPgK3rbG2HxNqEdCAfcD0mWIaYITzkEkLqFNgFbptyHC4BbzjrM08RK
-	YY+BiuIxYN2NDr/1ZxqPcOboCW+SGhtiTkn7dwPqD04BSe1z2pUsiDquhsjdFB4y
-	kM1p7kaKudlA8gLfJ7wFw9c6xXQWKsizSkgTOE6RCKuEOPKy0ZtuPRT26uDZzX71
-	i8P4gocU2j6LpO9EIliaGIz5wYHOIx+CzPWg1X4oSztylxRzov3T12egVOH2dMN6
-	P4M+amoQjdruqxI5p+fxn9ABjBKaCHugUwCEn3ti4Nw+lePESM54Vd9Kxr80DEqA
-	==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgqg028-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Tue, 22 Sep 2026 23:32:49 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68MN613H3279475;
-	Tue, 22 Sep 2026 23:32:48 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt4qqc29q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Sep 2026 23:32:48 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
-	by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68MNWlG727525750
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 22 Sep 2026 23:32:47 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4936858102;
-	Tue, 22 Sep 2026 23:32:47 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id DF1BE58101;
-	Tue, 22 Sep 2026 23:32:46 +0000 (GMT)
-Received: from li-4c4c4544-0038-3410-8038-c4c04f423534.ibm.com (unknown [9.61.14.79])
-	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 22 Sep 2026 23:32:46 +0000 (GMT)
-Message-ID: <2c68a339f042335430d88132dc448510c98861b2.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 2/2] powerpc/pseries/dlpar: Remove DT entries if
- failure from CPU ADD notifier
-From: Haren Myneni <haren@linux.ibm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-Date: Tue, 22 Sep 2026 16:32:46 -0700
-In-Reply-To: <20260921034731.D7F391F000FF@smtp.kernel.org>
-References: <20260921033156.991481-1-haren@linux.ibm.com>
-	 <20260921033156.991481-2-haren@linux.ibm.com>
-	 <20260921034731.D7F391F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="OyBl2Mcb"
+Received: from mail01.layka.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id E89D682A8E
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 01:43:30 +0200 (CEST)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id JzWGPk2btWoE for <sashiko-reviews@lists.linux.dev>;
+ Wed, 23 Sep 2026 01:43:30 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1790120610; bh=foktcOgWntPuAyEzLSwuL0FS/IRyC6DCIFiEatHBGeA=;
+	h=Date:From:To:Subject:In-Reply-To:References;
+	b=OyBl2McbOGgCMBYbw0ewG8jan5u/wuDpcwfc3EqmWR4/ORkCRYRdrmFoNX6ITu3CE
+	 6GJS9CRQqHnenBUcJ9VCXWHeBXTWPhapl5n26TY3vvpEVEGrkuxI5tQCfQ9YU4raxp
+	 m++G1KYEnlnMpheeEcqMQh+qYWBSiqMdYWezctc1gUFs2WwFpYS/O5KsR+BPwP3f1g
+	 tHeQ4gIyuJC/5ojNr4cjS7Ie4vjoguu+/HGda9pQfSDn/eBufW51nyxI+EQSKOV1aP
+	 4/VbzJM69yuYQajRP8fOgrLSPZhti8Id1I0YkZxALrNmdFmn8EJDCQutz7UrLC4K3F
+	 ZTitB5KGXHlCg==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=G+OJgNk5 c=1 sm=1 tr=0 ts=6ab31021 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=D_8-g3vMd_KBQvPCQQIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDMwNSBTYWx0ZWRfX+f1jWLoYQRoc
- uOStO+UoYPSfVXzKEGd+l1Mla7EvG7lA8f1h7ENoWrXWqmMZgnirg86KJuw0Uym/OrlCB4cwv/Z
- s2Ip6jHhQjECj30KQv9Rf8T+C8yHz5hctY1yhzQxRPKbPE2svMGbX+5ZuWqcpnw2EBm8dznPI03
- uAsDvCMzwGE+LGlcHCMYTc31w3LwhBw6nvQHM/dsg+HVkqDk24T3KURF5eVk5aGhGKEaagGW3Z9
- 96qjamiodurlO9K71RKbWGqIlMz4DRAICxz0gdo784TTZoq/+LazZ12cUyXMfP3sErIGWTQFzgB
- yOYkbN8Dwh0YPwyi1ZLO6DjOe3ngcF497gfWW8enJ+nHqyP23JzO/Hv9qyAJ2tkLyC+RoST59Jb
- FYJBkrAyHta1C+88U4g0cTCqVf5SsY6E7B/FGsAl+YRwo8KZwVh5I1YT3f0mm/JTxAX4cy4QPKE
- NFwLJJVW7ffhvsA6r5w==
-X-Proofpoint-ORIG-GUID: biNHngOEu2qJnIWK0FRfF4gJz3esAfxA
-X-Proofpoint-GUID: biNHngOEu2qJnIWK0FRfF4gJz3esAfxA
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDMwNSBTYWx0ZWRfX8U4Sf2juI4UL
- kNmdKIqzk0WnTxOitclrSeJoPzd23XLwOBUDyy1Da4ldF7cespUXCdlIz4c3LzbifVjAaFLKB2x
- /qSBJVV+xp8FGoQ/0Zjy1Y1Jqb6QHLc=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-22_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- bulkscore=0 priorityscore=1501 clxscore=1015 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220305
+Date: Wed, 23 Sep 2026 01:43:30 +0200
+From: =?UTF-8?Q?Rapha=C3=ABl_Larocque?= <rlarocque@disroot.org>
+To: sashiko-reviews@lists.linux.dev
+Subject: Re: [RFC PATCH] Input: elan_i2c_smbus - resend ENABLE_TP on wake from
+ sleep (NOT TESTED, NEEDS TESTER!)
+In-Reply-To: <20260922233746.136E61F000FF@smtp.kernel.org>
+References: <20260922232707.8949-1-rlarocque@disroot.org>
+ <20260922233746.136E61F000FF@smtp.kernel.org>
+Message-ID: <b12f443f1834d91218b31095d1b698cc@disroot.org>
+X-Sender: rlarocque@disroot.org
+Organization: =?UTF-8?Q?Syst=C3=A8mes_Budgie?=
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, 2026-09-21 at 03:47 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
+Le 2026-09-23 01:37, sashiko-bot@kernel.org a écrit :
+> Thank you for your contribution! Sashiko AI review found 2 potential 
 > issue(s) to consider:
-> - [High] powerpc/pseries: NULL pointer deref in __of_detach_node on
-> error path
-> - [Medium] powerpc/pseries: memory leak of unattached sibling device
-> nodes
+> - [Medium] input: redundant ETP_SMBUS_ENABLE_TP command during 
+> initialization
+> - [Low] input: explicit failure path violation in 
+> elan_smbus_sleep_control()
 > --
->=20
-> commit 79a5af10ba412eed58ff43cc8d6339b8b6eee45f
-> Author: Haren Myneni <haren@linux.ibm.com>
->=20
-> powerpc/pseries/dlpar: Remove DT entries if failure from CPU ADD
-> notifier
->=20
-> For CPU ADD, the device tree entries are retrieved with
-> configure-connector RTAS call and attached to the device tree.
-> Then the CPU is added as part of DT node notification. If the CPU
-> ADD notifier returns failure, the corresponding CPU node entries
-> should be deleted from the device-tree.
->=20
-> > diff --git a/arch/powerpc/platforms/pseries/dlpar.c
-> > b/arch/powerpc/platforms/pseries/dlpar.c
-> > index f4d33b8dffd85..01a9849773cd1 100644
-> > --- a/arch/powerpc/platforms/pseries/dlpar.c
-> > +++ b/arch/powerpc/platforms/pseries/dlpar.c
-> > @@ -247,15 +247,18 @@ int dlpar_attach_node(struct device_node *dn,
-> > struct device_node *parent)
-> > =C2=A0	return 0;
-> > =C2=A0}
-> > =C2=A0
-> > -int dlpar_detach_node(struct device_node *dn)
-> > +int dlpar_detach_node(struct device_node *dn, bool notify)
-> > =C2=A0{
-> > =C2=A0	struct device_node *child;
-> > =C2=A0	int rc;
-> > =C2=A0
-> > =C2=A0	for_each_child_of_node(dn, child)
-> > -		dlpar_detach_node(child);
-> > +		dlpar_detach_node(child, notify);
->=20
+> 
+> commit a7e8e038348366c26f0b3d1a3a7f9e778cbce51a
+> Author: R. Larocque <rlarocque@disroot.org>
+> 
+> Input: elan_i2c_smbus - resend ENABLE_TP on wake from sleep (NOT 
+> TESTED, NEEDS TESTER!)
+> 
+> This commit updates the Elan SMBus sleep control to resend the enable 
+> command
+> when waking up the touchpad. This mirrors the initialization path to 
+> ensure
+> touch reporting resumes.
+> 
+>> diff --git a/drivers/input/mouse/elan_i2c_smbus.c 
+>> b/drivers/input/mouse/elan_i2c_smbus.c
+>> index 0287441cda46d..dd86bd1739c55 100644
+>> --- a/drivers/input/mouse/elan_i2c_smbus.c
+>> +++ b/drivers/input/mouse/elan_i2c_smbus.c
+>> @@ -93,10 +93,25 @@ static int elan_smbus_set_mode(struct i2c_client 
+>> *client, u8 mode)
+>> 
+>>  static int elan_smbus_sleep_control(struct i2c_client *client, bool 
+>> sleep)
+>>  {
+>> +	int error;
+>> +
+>>  	if (sleep)
+>>  		return i2c_smbus_write_byte(client, ETP_SMBUS_SLEEP_CMD);
+> 
+> [Severity: Low]
+> Does this direct return bypass the preferred explicit failure path 
+> style?
+> 
+> The input subsystem maintainer style guidelines suggest expanding 
+> direct
+> returns into explicit error checks when a function has multiple failure
+> points. Should this be updated to assign the return value to error and 
+> return
+> explicitly?
+> 
+>> -	else
+>> -		return 0; /* XXX should we send ETP_SMBUS_ENABLE_TP here? */
+>> +
+>> +	/*
+>> +	 * The controller stops touch reporting while asleep; resend
+>> +	 * ETP_SMBUS_ENABLE_TP on wake, mirroring what is done during
+>> +	 * elan_smbus_initialize(), so that reporting actually resumes.
+>> +	 */
+>> +	error = i2c_smbus_write_byte(client, ETP_SMBUS_ENABLE_TP);
+> 
 > [Severity: Medium]
-> Will this leak unattached sibling device nodes on the error path?
->=20
-> dlpar_configure_connector() can return a chain of device nodes linked
-> via
-> dn->sibling. The error path in dlpar_cpu_add() previously called
-> dlpar_free_cc_nodes(dn), which handles sibling traversal.
->=20
-> By replacing it with dlpar_detach_node(dn, false), which recursively
-> processes children but explicitly does not traverse dn->sibling, do
-> we
-> permanently leak any unattached sibling nodes returned by the
-> connector?
+> Will this cause a redundant enable command during initialization that
+> might confuse the hardware?
+> 
+> During device probe, the sequence calls the initialization routine and 
+> then
+> the sleep control routine to wake it up:
+> 
+> __elan_initialize()
+>    data->ops->initialize(client)
+>       -> elan_smbus_initialize() sends ETP_SMBUS_ENABLE_TP
+>    data->ops->sleep_control(client, false)
+>       -> elan_smbus_sleep_control() now sends ETP_SMBUS_ENABLE_TP again
+> 
+> Since this patch is explicitly untested on real hardware, is there a 
+> risk
+> that this double-command could cause unexpected states or fail the 
+> probe
+> sequence?
+> 
+>> +	if (error) {
+>> +		dev_err(&client->dev,
+>> +			"failed to re-enable touchpad after wake: %d\n",
+>> +			error);
+>> +		return error;
+>> +	}
+>> +
+>> +	return 0;
+>>  }
 
-No leak here. dlpar_configure_connector() can also return sibling
-nodes, but this interface should detach node and its children. Same use
-case as before dlpar_detach_node(). We have bug in the previous use of
-dlpar_free_cc_nodes() in dlpar_cpu_add(). Example: For CPU node, No
-sibling node is returned from dlpar_configure_connector() and the other
-existing CPU node is attached as sibling to the new CPU node
-(of_attach_node()).=20
+Confirmed by reading __elan_initialize() in elan_i2c_core.c:
+sleep_control(client, false) is already called there
+right after ops->initialize() for every non-ASUS device on
+every probe (and, per the "Reduce the resume time" quirk work,
+on every resume for older/non-quirked devices too). My patch would
+double-send ETP_SMBUS_ENABLE_TP in that path, which I have no way
+to confirm is safe without the datasheet.
 
->=20
-> > =C2=A0
-> > -	rc =3D of_detach_node(dn);
-> > +	if (notify)
-> > +		rc =3D of_detach_node(dn);
-> > +	else
-> > +		rc =3D of_detach_node_no_notify(dn);
->=20
-> [ ... ]
->=20
-> > diff --git a/arch/powerpc/platforms/pseries/hotplug-cpu.c
-> > b/arch/powerpc/platforms/pseries/hotplug-cpu.c
-> > index bc6926dbf1489..15122aab05b24 100644
-> > --- a/arch/powerpc/platforms/pseries/hotplug-cpu.c
-> > +++ b/arch/powerpc/platforms/pseries/hotplug-cpu.c
-> > @@ -602,8 +602,8 @@ static ssize_t dlpar_cpu_add(u32 drc_index)
-> > =C2=A0			dn, rc, drc_index);
-> > =C2=A0
-> > =C2=A0		rc =3D dlpar_release_drc(drc_index);
-> > -		if (!rc)
-> > -			dlpar_free_cc_nodes(dn);
-> > +		if (!rc && dn)
-> > +			dlpar_detach_node(dn, false);
->=20
-> [Severity: High]
-> Does this code trigger a NULL pointer dereference when
-> pseries_cpuhp_attach_nodes() fails?
->=20
-> In dlpar_cpu_add(), if pseries_cpuhp_attach_nodes() fails, the device
-> node
-> dn remains unattached from the device tree. This error path then
-> calls
-> dlpar_detach_node(dn, false), which invokes __of_detach_node().
->=20
-> Because dlpar_parse_cc_node() does not set the OF_DETACHED flag on
-> allocation, __of_detach_node() assumes the node is attached and
-> iterates
-> over its parent's children to unlink it:
->=20
-> drivers/of/dynamic.c:__of_detach_node() {
-> 	...
-> 		for (prevsib =3D np->parent->child;
-> 		=C2=A0=C2=A0=C2=A0=C2=A0 prevsib->sibling !=3D np;
-> 		=C2=A0=C2=A0=C2=A0=C2=A0 prevsib =3D prevsib->sibling)
-> 			;
-> 		prevsib->sibling =3D np->sibling;
-> 	...
-> }
->=20
-> Since the node was never linked, it is not in the list, and the
-> traversal
-> pointer prevsib reaches NULL.=C2=A0 Will this cause a guaranteed NULL
-> pointer
-> dereference (prevsib->sibling) and kernel panic?
+Withdrawing this version for rework, will either gate the resend
+on genuine post-sleep state, or drop it if nobody with hardware/
+datasheet access can confirm double-ENABLE_TP is harmless.
 
-No, pseries_cpuhp_attach_nodes() returns failure in 3 cases:
-- dn allocation is failed from of_changeset_attach_node(). 'if (!rc &&
-dn)' prevents the NULL pointer access.
-- if dn is not attached, 'if (!of_node_check_flag(np, OF_DETACHED))'
-check prevents=20
-- if the dn notifier is failed, fixing this issue with the new
-interface. of_detach_node_no_notify()
+If someone has the datasheet, please send a follow-up about it.
 
->=20
-> > =C2=A0
-> > =C2=A0		return saved_rc;
-> > =C2=A0	}
+Thanks,
+R. Larocque
