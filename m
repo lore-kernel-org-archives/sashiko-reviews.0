@@ -1,121 +1,123 @@
-Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B2B545DB9
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 14:02:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.198
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790085772; cv=none; b=mJpCRjqDEahkX1qI0NioUQD9omkF7VQTLuirO13/PCwQKihvN3I2Aemkj0jtqhl2SIjQT61/4gIw9q3mouWYxrce8HypTfFnW1Q+4eSyQX0xr7ssEhN4i26elBzLF+C4DDkcu5Tlq2vNb8yleHWmBYjrJWUgsF908VnBMleZRvA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790085772; c=relaxed/simple;
-	bh=1YKcPomv6P6yRmTvPJwEl4rh5BOtJinHDXYjgkdRQ2k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K4CkKS9iFdiTLk8IHrHKYZZL1gcVDr+EY7h2NZ5LdTP9bCRKGag9rV7XZkt2PoHvImTRYVctFqIjWR+KxBnNUxy4OArTyjESRe/OJyo59NWbzMl7APdHs5ExSq0rRyQsvZ7FHlYzajkX1xmomuBFr0aCoMzz1Z4Q0FqAaGDkk1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=marmottus.net; spf=pass smtp.mailfrom=marmottus.net; dkim=pass (2048-bit key) header.d=marmottus.net header.i=@marmottus.net header.b=Pt25Yx4t; arc=none smtp.client-ip=217.70.183.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=marmottus.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marmottus.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D543455292B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 14:20:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790086850; cv=pass; b=MeQCQI/FBn6nYS3p/LCVMcbaslxF+1OCkG5El0x6p6GvH9vJRoLLlQVgje2S/9xeNrSlEe0Lf7BNgnXZ0nbfEsVrvHbXsALe9Ac9JmmyXeAD7s8OngSpekQS/g7j4WbqHVm2/cyFnjA7n2dQ261XZ9RHiei4sC8aVgmY132ePLg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790086850; c=relaxed/simple;
+	bh=HxcTZBxIHlFg8VjYKTjraINQ4dfq1xbF20OsB84LKI8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eBq57z/20MI5B8qlqsgy2l6csJ4n6ptVM4GalQQprqplvkao4FS5INEuXXJq7KdkCbCcuhr4Wt0X7UZqjvAXXG0omFFFY6PDjAPq9e8LeSXWZUuXCIPPctHuFv4x1l6Qk5wP9mQUvuE97UGLO9FuvDSeVEJiUQGwFUfUM6n6PMo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=viJnjSSP; arc=pass smtp.client-ip=209.85.160.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marmottus.net header.i=@marmottus.net header.b="Pt25Yx4t"
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 7FCAE3ED8B;
-	Tue, 22 Sep 2026 14:02:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marmottus.net;
-	s=gm1; t=1790085762; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=s7R3jnvQZtHhs1q4noOLfzmmVxS8mbJwrU7Y7u04sO8=;
-	b=Pt25Yx4tcMlJVM7ykX4t/6mWUMk0qPxlSvFEErJFZyd7GxOy3GaETBJh+WqupheoiDbc1A
-	uXpm/TStuMVWJK8s1Ama5ewUO65ba7IoQ9Ov2NLmgvgKQB5LAfeKospIZnhlz1/mASU1ZP
-	ri/Mby8GSDgneKNqR4p64fpwDuvyBrdORo3ghepvWCPZNwcd3FfuByCdnMjcoC8Id8MVeA
-	x21nZztqKLTsRPdRwQmE2/h15awJqlnlDuS5eJlXPi53b9qCbHO1cHrYVIsQyH3AQK8gYB
-	dygJ4WBfxf6Hm+RJssUkRx3Z2Vd6ckzqbc29TQS2ejuTcuhVOL2aROkT8BASyg==
-Date: Tue, 22 Sep 2026 16:02:39 +0200
-From: Arthur Crepin Leblond <arthur@marmottus.net>
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH net-next v10 3/3] w5100: detect carrier state using link
- status bit and optional interrupt
-Message-ID: <20260922140239.GA85030@marmottus.net>
-Reply-To: arthur@marmottus.net
-References: <20260921-wiznet-link-gpio-v10-0-5874a7a147a2@marmottus.net>
- <20260921-wiznet-link-gpio-v10-3-5874a7a147a2@marmottus.net>
- <20260922105316.82F431F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="viJnjSSP"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-532e9ad9a1eso13471cf.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 07:20:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790086844; cv=none;
+        d=google.com; s=arc-20260327;
+        b=IMrZsp0fSs6G7NZ0XYyrVd2/u5Bw87VeYWLEdkyCmG0wLpfBGgbXaU1l5/vu180Amv
+         oUpESCJECOqL/AUUtIY6CDfzptieyRE/WscfA7zTxAIKTr6784DCFSG/y884FhSDtoXx
+         UDNhTxFScrqGNT6SiO7bFXP6q8xDsbUvBFRulDcm3raYr7+wGaJIkQBoAOjxFtN5kBoQ
+         9k7mcKeoTdWfxN6gMPlRHbYIUoK9Bx4M4eNhcAHBji5+8+wU2ZzK4dzBVhSv9h1TS29l
+         30RbxvhVzm2SYRNdeJHw6aUDMMpbGYuh/WyqsiYyFVe47CRo1tskkT4cVwr9hKJCVHH9
+         0OCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=7rTxuINz/tlh04A8Ubhtgy8qNqbLXxKs+YLLNkF7A1Q=;
+        fh=9lL0hF0NMGethsOlsxoDeLBT8jtu7UHbhiekQ8TuZEc=;
+        b=K/iJtMfIDQHhkdoI2B0qinYFVsr7deLOkU3wIsd5AOZU6Q1bvvmjRjwUbsZ+Sg3829
+         HdMfHP3cOsbFI2w24RP4hxfomiprYukgIuiwhnQKg6WeWhUn69RBzYVlLx4UWfWV6fAD
+         0lrgxP5LSGgn2fLGK0aVI2bR4YvSXps2UObdeEWUE56797uFdP6eL1oSo4EtEigLvlNw
+         56fUW5OUnBj8NZO0qSUFdh6OHKyQxUkrcqvzoebg+ebhqhwGJqFjbXZE8cJwoo1qjP7N
+         VuJkFHS9P7XnvYq8i8SIRIZTCGdqh5G9eMRpgl+WMJilVMqglSGLq4k2CnufROwMg1k4
+         XxBw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1790086844; x=1790691644; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=7rTxuINz/tlh04A8Ubhtgy8qNqbLXxKs+YLLNkF7A1Q=;
+        b=viJnjSSPMEOLMn+nmnTQuy/n3rFMRkj5AJao4CpaVXvn7/H0xnCdWill5XNLhOJxjW
+         8xvXvVQsMBbyh4AKQutZ5bTqZcdRsAQtzUs5Qi85XIofBRfEwllt/qoVNUXTIHWDw/4u
+         u33QZUkw5qYhgozsEGKyIwGsPzAa23FS2rR4t6oTFdenZfod34SA0i5jkDYAINFzkfXY
+         3sNchwnubFHnxM1AYkOyLQtfcaFduJomYgR+dKkwQu2IfCoL6/C056RNgKVRaJ6bbPFN
+         UHtrCCFY8d3Hfyd0CMQRces7rAd4yTZiwmI4RQHitI0Nc03uvF+ym1SaAw0vLAWXC4Z2
+         NpPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790086844; x=1790691644;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=7rTxuINz/tlh04A8Ubhtgy8qNqbLXxKs+YLLNkF7A1Q=;
+        b=tLiDIX46Hrr8FCWbN/iaHNYgE620GA+h+JEJK5cRrfFs+tetj29JkxhYFZnD8UL49x
+         /A3guwn8LydrGGV0sMN30PRRgacxOKT4o1CFHTG4fbwFgGLmxhjoDinHqF5E60wbj9n6
+         aoDpFycegrt+iu33uAMo1iYYXVSXmmJEGMLitkjef6LkxofEQ5qlOny38//tV0WUBBpy
+         MNyYS4JxH/Ta0aELOtrELB5gIUvfONBi20FAFfWPpu9a9cfYW+GkNkFJrHU0M4ZKbf7T
+         wSO6Yd2IV9Hf8P/nOWsbqUSvksDTvK1PfxMg9nY0g/M7gIfLqX0eV/hm1FCmLbUbePDM
+         lNyQ==
+X-Gm-Message-State: AFuF++lxUX5JmcYa0TfOuhztzFWdC2wMXNiysjoGDN2RESGXM+9USA+V
+	M70iVHrxE1DfVVQRF1dnfceX7E+ToIkDJftpJUyXl8GXGH+b8hxosmtjKNkpou3WzX1rOOBVvED
+	Im4vRSpWfIr0BywtbRbf8I5wbX8kSpsUWXKlzq5wX
+X-Gm-Gg: AYBFou2sCxDQQ+A0HG7c1rW0kfMU31yZ4DJIRPnx88HhSKJ68Ed0zGrM0R/5PqQTc8D
+	pjjL3fQnxGpCX56tUMElAiEz5AKEBUMriYIwnkq90BEfT1aVlQmwi690CTOdQf6F99bCh6v5Dra
+	ExTLPJkp99XB9wTMAFdalJLG63yQJpmD7hQcmhh6q3NssKZ+bGHqbU0PuSy3Z7QYqvLUJoOBQ92
+	ZosQ8LU8lvBSvJP8ErrnEbSNbO3+GiMK/HIYf1yfuwux4hgoTDurfC7Zf1EHcYFdI0uQH6PcpAw
+	JWihiRaENZcu1LDnUR2UZZ+BLWm1IwoRwcNpJQpokgIQEghaZX3SVSM=
+X-Received: by 2002:a05:622a:a16:b0:531:16a:5a3d with SMTP id
+ d75a77b69052e-532e864756fmr2029421cf.12.1790086842237; Tue, 22 Sep 2026
+ 07:20:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260922105316.82F431F000FF@smtp.kernel.org>
-X-GND-Sasl: arthur@marmottus.net
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: dmFkZTFAHYin0jq1e2g3YPE6IZPR0Oxt90ut5WR3wudyL8IPXHwNGMLv66y/Ov/37xJ2xG/aiaKmIPZwiCuYM9mn4UJ261I1CUz/upcq9ADhIbludDn6YpYRx+z/4XxE/1gzqnhJSRRLggwU8z12cK1QLHfrcF2LddTAAenEsMfy5LENxelGT4837If/RXgqCg7bB3M1MkXApNfMKTjZg1zN4aSPRQRwkfVX82VEnulbsu/6bBXIQyZXdRhkQMT/o7+lHfO5ZozMlqaUUYr8btK6ovph3GReF6Fmdj31BC54SI+bYbgNRpWuE7TjU1W5ZIBiuuxKBEMVRq7bd7R0UlP6dstAcMC9uZGCCoxe+DL+aYoi875OhGL5w96mFnFB8e9LaKOlZ+Ua+KaJbtBp+F4Ya1KJag6PrItFmxZqXRhXJXQJ1cZPaZq804t7xx1mVBHg4LCCQoflWuVFClDT2ucYFuH9x22zCTfxGvHfzhob20yEfa8WgzBbhoTiKNlt8L/+Sl2nZGj2tgyfdy1Rul8wNgdCuNQnZicuJj2AXa1pMvxRLfJVsNxrlkIplLK8+CwtQSxY87Mnzq6ZbXmD1RLVdCInW6KB9UuBbnw0nieET1bK14OhjauR1KNET6VzffjdAHVcqoeW+yLPDQjOkMJ2FvgLWfEl1XC8Yw4ha/jsLya7QQ
+References: <20260918154530.4129698-1-jmattson@google.com> <20260918160109.E76B81F000FF@smtp.kernel.org>
+ <arKJQwAPvApkeESD@google.com>
+In-Reply-To: <arKJQwAPvApkeESD@google.com>
+From: Jim Mattson <jmattson@google.com>
+Date: Tue, 22 Sep 2026 07:20:28 -0700
+X-Gm-Features: AcwNN1UNSpjbx9ZFSib4LbupARY2BAqtFx868cZm8um8dHez9pT9JspsNfZWaLQ
+Message-ID: <CALMp9eQboC6DTQfa3N58XCfOLf-qwJ2L7dC5vtqDerHG80eZLg@mail.gmail.com>
+Subject: Re: [PATCH] KVM: x86: Disallow EFER.LMSLE when EferLmsleUnsupported
+ is set in guest CPUID
+To: Sean Christopherson <seanjc@google.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 22, 2026 at 10:53:15AM +0000, sashiko-bot@kernel.org wrote:
->Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->- [High] net: w5100: race in w5100_suspend due to incorrect detach ordering and missing work flushes
->--
->
->commit 4b50b6b7047dc53f16eedfdba4f4a537ef54c0fd
->Author: Arthur Crepin Leblond <arthur@marmottus.net>
->
->w5100: detect carrier state using link status bit and optional interrupt
->
->This commit adds support for detecting the carrier state on the w5500 Ethernet
->controller using the Link Status bit and an optional interrupt. It also
->refactors the bring-up and teardown operations, including changes to when
->net device registration and work queue cancellations occur.
->
->> diff --git a/drivers/net/ethernet/wiznet/w5100.c b/drivers/net/ethernet/wiznet/w5100.c
->> --- a/drivers/net/ethernet/wiznet/w5100.c
->> +++ b/drivers/net/ethernet/wiznet/w5100.c
->[ ... ]
->> @@ -839,9 +997,20 @@ static int w5100_suspend(struct device *dev)
->>  	struct w5100_priv *priv = netdev_priv(ndev);
->>
->>  	if (netif_running(ndev)) {
->> -		netif_carrier_off(ndev);
->> +		disable_irq(priv->irq);
->> +		if (priv->link_irq > 0)
->> +			disable_irq(priv->link_irq);
->> +
->> +		cancel_work_sync(&priv->restart_work);
->> +
->>  		netif_device_detach(ndev);
->
->[Severity: High]
->Does this code leave a race condition in w5100_suspend() due to the detach
->ordering?
->
->If a TX timeout occurs between cancel_work_sync(&priv->restart_work) and
->netif_device_detach(), wouldn't restart_work be re-scheduled because the
->netdev watchdog is still active?
->
->Also, rx_work, tx_work, setrx_work, and napi do not appear to be flushed or
->disabled in w5100_suspend(), unlike in w5100_stop(). Could this allow them
->to execute concurrently with or after w5100_hw_close(priv) and access
->suspended SPI hardware?
->
->>
->> +		if (priv->link_irq > 0) {
->> +			mutex_lock(&priv->link_lock);
->> +			netif_carrier_off(ndev);
->> +			mutex_unlock(&priv->link_lock);
->> +		}
->> +
->>  		w5100_hw_close(priv);
->>  	}
->>  	return 0;
->
->--
->Sashiko AI review · https://sashiko.dev/#/patchset/20260921-wiznet-link-gpio-v10-0-5874a7a147a2@marmottus.net?part=3
+On Tue, Sep 22, 2026 at 6:57=E2=80=AFAM Sean Christopherson <seanjc@google.=
+com> wrote:
+> Gah, I hate the negative "feature" bits, I've gotten completely turned ar=
+ound
+> multiple times trying to sort through this.
 
-Probably very low chances to happen but YES, w5100_suspend() could
-cleanup the same way as w5100_stop()
+Me too!
 
-Arthur
+> IIUC, you're trying to "fix" setups where host CPUID.EFER_LMSLE_MBZ=3D0, =
+but userspace
+> configured guest CPUID.EFER_LMSLE_MBZ=3D1?  If so, then Sashiko is right,=
+ it needs to
+> be declared with EMULATED_F().  I would even argue that technically this =
+isn't a KVM
+> bug, because KVM won't advertise EFER_LMSLE_MBZ in KVM_GET_SUPPORTED_CPUI=
+D on such
+> hosts.
+
+I'm trying to make it possible to run a Rome vCPU on Milan or later.
+
+SInce this is a negative feature bit, it must be retained if the host
+reports it. That blocks running a Rome vCPU on Milan or later.
+However, a defeatured Rome (which reports LMSLE_MBZ as 1) can be run
+on Milan and later.
+
+It's the same feature-hiding we do all of the time=E2=80=94just inverted.
