@@ -1,162 +1,138 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com [44.246.68.102])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C03548562;
-	Tue, 22 Sep 2026 16:27:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9462146F48C
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 16:28:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.246.68.102
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790094481; cv=none; b=dwV2LoSc4mrY/eguV3RBc/w3CIMuwBizWnGpGCJg6+oGIltsocsFVvkXowN7LdQfkvbszER+iIzZH31KcrxWQblinIH5Q0qUAoNBhyjlHJTj8N2n2sWhAjTTOkPUYkaZJf383fyFmGTQe3za6NkKZHqNTvNN9djk1JfXefxFZpE=
+	t=1790094518; cv=none; b=usg9fDrm5ZAKwKp0GwNNSm45x0Enqqshzcu5Jr48kCp8JqSfyoGRc5OOHZwaIc9sYHpiCmIy1wgIGfZeyIa5tdd+oB5M1YYLYAEnGbgL1rFayMim4iAEZ9ZOvs6ndEK9AxQ/cqO+gjOCw0/mct3xsaPWiHirWIc9nQCKZwkiCvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790094481; c=relaxed/simple;
-	bh=3r6iyEz6pbl5FVpyIgXnFRukS+LrtFJ0V6izVERaRno=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kS6GR54nhfTVRiY/X7Yt+R8W+A2I3PqN7pv98ko2q4k4UoaG4OtDLCH0tzt2kS7OcGE7NOoLulqB1ZkQAR0yKmUZOuk7c9iEJAxWlaFQeeHasfvQcqIs8oMuqEcJN5KPbK/Tgyg/3b5mRHqtEO2w4hq9KFN3wbsjPYjhx3oVhBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ImbB//S5; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1790094518; c=relaxed/simple;
+	bh=f0m2eroJSURU1exL10gldlzl18nJ2NGdgvJAdL4mKqs=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W51kDJSj8Mmj/U/QvpxvcQRZN2uK4aPmyfEnUlqcW/i4s7tYYCtN48BQJN7leQhF/fJjWdV0Z6o46dMcJkmXIlOdTel4HkDuI8qGsxFY8qm5aBp1jU/wDiHfSPXlDiXHESRO4DSh46xNglYKH+y/vyDDGHmE4jfrK13buZG8i/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b=pTZvumWk; arc=none smtp.client-ip=44.246.68.102
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ImbB//S5"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68MF5PCH752347;
-	Tue, 22 Sep 2026 16:27:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=DHFYMJEW6ccj4GaEFRCOBqqtuwDJVJ
-	0Kb0PdNxmhw/w=; b=ImbB//S5GzstI/GyMDDRB0Wo+ZQLCrt+seWsU+espPazIm
-	eREH5Mlvh/AateRChqarMQTFN3kZNT6fLK6z6fzM507vkKVYCD2z+a6xb2TYZREW
-	BpI71Vw1VXxFbqao+i27RkXNiVdljw8D1t9JvOgpGP0Xju1edwxc9e2UG0YLwUZ4
-	iO/ClP/x2xEyanGLivqv40xaE/8QY1OFYiocteolrkmcLyNDFOSfGfOdiihJciDe
-	z4KsunIdR6MWW1zjJBdisGm+u5tH2b4t6J1QQOSeAwryBvYwb13le1jUCxBnsRsD
-	NjSCvQJ/yDMP9TBJlIP4ZWzxudy9l5eGhbJlGupw==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgs6vgm-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Tue, 22 Sep 2026 16:27:59 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68MElVeS3046781;
-	Tue, 22 Sep 2026 16:27:58 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt4qqaqt5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Sep 2026 16:27:58 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com [10.241.53.104])
-	by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68MGRvYn29819474
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 22 Sep 2026 16:27:57 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id AE03B58056;
-	Tue, 22 Sep 2026 16:27:57 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 9399A58052;
-	Tue, 22 Sep 2026 16:27:57 +0000 (GMT)
-Received: from d (unknown [9.61.84.130])
-	by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTPS;
-	Tue, 22 Sep 2026 16:27:57 +0000 (GMT)
-From: Dave Marquardt <davemarq@linux.ibm.com>
-To: Tyrel Datwyler <tyreld@linux.ibm.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v10 1/9] scsi: ibmvfc: add basic FPIN support
-In-Reply-To: <c53d3fa9-3e66-4010-87a4-e9cd61789381@linux.ibm.com>
-References: <20260911054832.1311668-1-tyreld@linux.ibm.com>
-	<20260911054832.1311668-2-tyreld@linux.ibm.com>
-	<20260911060658.68FDC1F000FF@smtp.kernel.org>
-	<c53d3fa9-3e66-4010-87a4-e9cd61789381@linux.ibm.com>
-Date: Tue, 22 Sep 2026 11:27:57 -0500
-Message-ID: <878q4tz1wy.fsf@linux.ibm.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b="pTZvumWk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
+  t=1790094517; x=1821630517;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=N6Hu/i1Ff99mkUBw5NDgey6XE7vt8L3Q+QeOM5C9N6o=;
+  b=pTZvumWkqOPokZj/2uBQDZLRrF+CMGaglXQ4tpX+631q0rrnmocsp3QD
+   BotqputHCIlM6wFCcJm/lMCtAgaRl6j2xT/lI0oMlI9TaAhmnAXlLEhZX
+   Qgw6OAB4TInP14l/Z0tVcScqlA9sFL0NaKsZLQW7qnI1xopOwedWUMbm8
+   LUsKhjawfp4sx6W0CGDdhaSk7YFNABWYHRVQB5fkNZ3EjIHqlPBIkzN+g
+   zNXgAh9nzbw58rGahaouvMPsOGBdUGDJfG9gaJRY6X7MWZMw6Iug8ndgB
+   z36k5xyVtO7+eUyjlnqkVExFOJElGmG/LWKyGvxNB8mhmN0dURsus8xmr
+   w==;
+X-CSE-ConnectionGUID: vS0FuxozQDe7HehY1Jnojw==
+X-CSE-MsgGUID: JyumqYInSEyB3lBVAKkoLw==
+X-IronPort-AV: E=Sophos;i="6.27,116,1787011200"; 
+   d="scan'208";a="29267518"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+  by internal-pdx-out-003.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2026 16:28:35 +0000
+Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:28862]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.1.232:2525] with esmtp (Farcaster)
+ id 02965251-2f28-4f16-8798-241e306edae6; Tue, 22 Sep 2026 16:28:35 +0000 (UTC)
+X-Farcaster-Flow-ID: 02965251-2f28-4f16-8798-241e306edae6
+Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
+ EX19MTAUWA001.ant.amazon.com (10.250.64.218) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.49;
+ Tue, 22 Sep 2026 16:28:34 +0000
+Received: from dev-dsk-mrgolin-1c-b2091117.eu-west-1.amazon.com
+ (10.253.103.172) by EX19D001UWA001.ant.amazon.com (10.13.138.214) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.49; Tue, 22 Sep 2026
+ 16:28:33 +0000
+Date: Tue, 22 Sep 2026 16:28:26 +0000
+From: Michael Margolin <mrgolin@amazon.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-rdma@vger.kernel.org>
+Subject: Re: [PATCH for-next v3 2/2] RDMA/efa: Pass relaxed ordering flag to
+ device
+Message-ID: <20260922162826.GA20821@dev-dsk-mrgolin-1c-b2091117.eu-west-1.amazon.com>
+References: <20260922160118.990-1-mrgolin@amazon.com>
+ <20260922160118.990-3-mrgolin@amazon.com>
+ <20260922161443.CB48B1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab2ac8f cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8
- a=BuaCO-MwPhrfmhY2Sl0A:9
-X-Proofpoint-ORIG-GUID: FHJbkOAaBLZX4Z6GtCadWqBd_B1gkVVP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDIzNSBTYWx0ZWRfX9VR32s1cn1QJ
- kCAUyfNabCrAbQsR91mNKdB5rzMNHV8jy9qH+R6G2tGbTf/W5s8klxv3hpQ7ULlxVgJGUZo8DeJ
- U+Gjc7bcBQVulia2SEGo1uI/b18N2VNkwUEHfoysw/SStYvSs3JKisJQg4DtXWBsGCFtJDRcXd+
- Spp2IcGMzIN9fc/+KvBUUNdHEloIG0ZJF4cIgsEjz0uxVeYnYO7o4J4X6lRJ1ai3r1d+JFbJ9HM
- P2mDw95oV7bgaefFqTWIEVHlzJkvPl9yoR2ks+WMNBHj3HN+nBg42jWnBgxi+TLpzHzjG7+ia8b
- /DZin4ZeWpesp5eGXtD1ivwooMdJxnb8O4QUJ/jdzZZcFVfmUDCFjZiiTJYmVgptgXehndvQedr
- R+sZoLqcSNmzOAwHlDCQQhs9lEqVeZPGAjxWy4oLsoklCgqFidqVxCtPnCQOUWMs7NsOl0FDatK
- 5s7mfKuh0H5sRsbCJjQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDIzNSBTYWx0ZWRfX4nUHc2ugVmUp
- WBI2QF7U6P2Y6Oqg4DW2MhoVcK0C0j8xredTkfkgFBCRIshhQoW+wg/N0OJcLyWPDRYFEWyjfDc
- qz+hws+m5PStXLeY7c4zXZicFW2VdvM=
-X-Proofpoint-GUID: FHJbkOAaBLZX4Z6GtCadWqBd_B1gkVVP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-22_02,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1015 phishscore=0
- bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220235
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260922161443.CB48B1F000FF@smtp.kernel.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-ClientProxiedBy: EX19D039UWB004.ant.amazon.com (10.13.138.57) To
+ EX19D001UWA001.ant.amazon.com (10.13.138.214)
 
-Tyrel Datwyler <tyreld@linux.ibm.com> writes:
+On Tue, Sep 22, 2026 at 04:14:43PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] efa: missing firmware capability check for relaxed ordering
+> --
+> 
+> commit 8cde16309300638ef5ed5570f8cb4ae347e5c6e6
+> Author: Dana Malachi <danamala@amazon.com>
+> 
+> RDMA/efa: Pass relaxed ordering flag to device
+> 
+> This commit accepts the relaxed ordering access flag during memory region
+> registration and forwards it to the device firmware via the admin command
+> path.
+> 
+> > diff --git a/drivers/infiniband/hw/efa/efa_com_cmd.c b/drivers/infiniband/hw/efa/efa_com_cmd.c
+> > index aac0e936601a1..07bfcb093df85 100644
+> > --- a/drivers/infiniband/hw/efa/efa_com_cmd.c
+> > +++ b/drivers/infiniband/hw/efa/efa_com_cmd.c
+> [ ... ]
+> > @@ -236,6 +236,8 @@ int efa_com_register_mr(struct efa_com_dev *edev,
+> >  	mr_cmd.mr_length = params->mr_length_in_bytes;
+> >  	EFA_SET(&mr_cmd.flags, EFA_ADMIN_REG_MR_CMD_PHYS_PAGE_SIZE_SHIFT,
+> >  		params->page_shift);
+> > +	if (params->relaxed_ordering)
+> > +		EFA_SET(&mr_cmd.flags, EFA_ADMIN_REG_MR_CMD_RELAXED_ORDERING_ENABLE, 1);
+> 
+> [Severity: Medium]
+> Could setting this bit cause memory region registration to fail on older
+> firmware versions?
+> 
+> If older firmware strictly enforces the MBZ (Must Be Zero) rule for bit 6,
+> it might reject the command when userspace requests relaxed ordering. Since
+> there doesn't appear to be a check against device attributes or firmware
+> capabilities here, does the driver need to verify firmware support before
+> passing this flag down in efa_com_register_mr()?
+> 
+> [ ... ]
+> > diff --git a/drivers/infiniband/hw/efa/efa_verbs.c b/drivers/infiniband/hw/efa/efa_verbs.c
+> > index 6356872753507..9e4435401a4c7 100644
+> > --- a/drivers/infiniband/hw/efa/efa_verbs.c
+> > +++ b/drivers/infiniband/hw/efa/efa_verbs.c
+> [ ... ]
+> > @@ -1679,6 +1679,7 @@ static int efa_register_mr(struct ib_pd *ibpd, struct efa_mr *mr, u64 start,
+> >  	params.permissions.local_write = !!(access_flags & IB_ACCESS_LOCAL_WRITE);
+> >  	params.permissions.remote_write = !!(access_flags & IB_ACCESS_REMOTE_WRITE);
+> >  	params.permissions.remote_read = !!(access_flags & IB_ACCESS_REMOTE_READ);
+> > +	params.relaxed_ordering = !!(access_flags & IB_ACCESS_RELAXED_ORDERING);
+> 
+> [Severity: Medium]
+> This passes the userspace IB_ACCESS_RELAXED_ORDERING flag directly into
+> the command parameters in efa_register_mr(). 
+> 
+> Should this be gated by a capability check so we don't inadvertently break
+> MR registration for older devices if a userspace application unconditionally
+> sets this access flag?
+> 
 
-> On 9/10/26 11:06 PM, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->> - [Medium] The KUnit test `ibmvfc_async_fpin_test` leaks references to the `Scsi_Host` and the `fc_rport` device on its successful completion path.
->> - [Medium] Unordered workqueue allows FPIN events to be processed concurrently, causing data races in FC transport statistics and FPIN event reordering.
->> --
->> 
->> commit 79377784bc96c798354f5b0f5ce5007a8d857d16
->> Author: Dave Marquardt <davemarq@linux.ibm.com>
->>     
->> scsi: ibmvfc: add basic FPIN support
->>     
->> This commit implements support for a basic level of Fabric Performance Impact
->> Notifications (FPIN) in the ibmvfc driver. It adds an async event handler that
->> offloads FPIN processing to a dedicated workqueue and passes the converted
->> messages to the FC transport layer. A KUnit test module is also introduced to
->> validate the FPIN event handling and statistics updates.
->> 
->>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
->>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
->>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
->>> @@ -3547,6 +3547,56 @@ static void ibmvfc_process_async_work(struct work_struct *work)
->> [ ... ]
->>> +	if (fpin) {
->>> +		fc_host_fpin_rcv(tgt->vhost->host,
->>> +				 sizeof(*fpin) + be32_to_cpu(fpin->desc_len),
->>> +				 (char *)fpin, 0);
->>> +		kfree(fpin);
->>> +	} else
->>     
->> [Severity: Medium]
->> Can the lockless modifications to fpin_stats in the FC transport layer here
->> cause data races and lost statistic counts?
->>     
->> Multiple FPIN events arriving rapidly from the adapter are queued to the
->> fpin_workq. Because the workqueue is created below as WQ_UNBOUND with
->> max_active=0, these events can be processed concurrently.
->
-> Makes sense. See response below.
->>     
->> Furthermore, since FPIN events are stateful (e.g., congestion detected vs
->> cleared), could concurrent processing deliver events out of order to the
->> midlayer and userspace, leaving the system reflecting an incorrect state?
->> 
->> [ ... ]
->>> @@ -7135,6 +7135,15 @@ static int ibmvfc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
->> [ ... ]
->>> +	vhost->fpin_workq = alloc_workqueue("%s-fpin-workq-%u", WQ_UNBOUND, 0,
->>> +						 IBMVFC_NAME, shost->host_no);
->>     
->> [Severity: Medium]
->> By setting the max_active parameter to 0, which defaults to 256 concurrent
->> execution threads, does this allow the unordered processing that triggers
->> the data races mentioned above?
->
-> I think max_active should be set to 1 here to enforce ordered processing.
+For both comments (that are basically same), that's ok in this case -
+devices ignore this bit when RO is not supported.
 
-Or use alloc_ordered_workqueue() here instead.
+Michael
 
--Dave
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260922160118.990-1-mrgolin@amazon.com?part=2
