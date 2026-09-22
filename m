@@ -1,170 +1,166 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011014.outbound.protection.outlook.com [52.101.57.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0654E28507D;
-	Tue, 22 Sep 2026 00:18:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790036340; cv=none; b=em3VGMOX07xS4qPwygohMeos/Sz4ZbD7WiPgD0O35nCxEtHTAsLPuad0Kf1+62L+/C9QhFp3lUBHTff6tqzgYT5aettNHBQbXQqjeyzn84ADQIFshBXcKQ/2U2zhl2f6DYeJUSMRt8FrbDnEWFOL5Dy3QOjpEWhKduGqTA9/4E0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790036340; c=relaxed/simple;
-	bh=0ok40EBi53GTDKxaAMVdjD3yFb6BG/LqnGiB/ursM/8=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X6wtjhLELEu71Eewh5Q93bBmoR896tZ4OU7xoA3paSlHnu9XdVMkkE/1+ljQKW2N1W6HeDedAz4GFqL9cWZ8feqgORhd/0KylBv8fSFgIEPGiLNa2lntqtrHgMhOUFf353X60F+Zq5vlI2F+BpE03hoV8qFk3v0ifwGSaryWVl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WN+5uap4; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973D736E46F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 01:23:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.14
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790040214; cv=fail; b=ExAZgBsQO7PeU8oJNeMG7ui/ctYBkzyN1yD8aM34acU7Dhw9GrBC+dQfj886cDRs/Q8dxaH9d8ExpyG3B8WJtKyxEzjba8F2mg0NSx8+9KnYheHIXgo9LIfz++WehEOlwrSadhc1LO2nJGyWX2lmRtVKXNbxhK/jzHFiMQrDlFU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790040214; c=relaxed/simple;
+	bh=1Ed7cIIRRAn9tbByw8aEBPjKiAHhpCQ8Z6BOStAxTlk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=VT5w9m70xEiF7REEH/8uazZZliSywDoL2Wc4EPwu31q35NMmAUF7C+LekIcjH+XsR4BvDpNJyAOeY7l+5FZGFh+P+dzt+uhT/f+1lFdm3A4JvX+RyAFco1wffEHTiiOXCPohz2KHdDuekYiQKKQCVlofdPVA6mUbih87zhBHLLk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=KU5BudBN; arc=fail smtp.client-ip=52.101.57.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WN+5uap4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563B21F000FF;
-	Tue, 22 Sep 2026 00:18:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790036338;
-	bh=pKuNliyFNITCCSN/73/6eM3KfsIlkN3P1gcnfOIb6UE=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=WN+5uap4lpBT8LbJu6VyCGPDGy4ZMVXKXdmc82RA/r2uf7mGg0/SDj13l5NbtRNdg
-	 cntOMCp3TuApd8gm6wfV1T66n4V6wqtdBvEyYj/XJODQjDuO1vT3cy3wPIikqu5jpp
-	 JPfEn+aZcD60uj/nspWb6KsQjzJQsImNSTNXPf04f0HOTSMzjSpYHlWw1+/ayz0YAE
-	 4frRoCjPQ/2bIsZg11Y2hc2PyrSIZz0ATyuwqEfGlBioCms2qTue+YOgrOEV/pnQ+v
-	 P4sfJFGs9avHjG7fspSVwW3EBPgbfwzVhfZLG/EUYnPkCGPdPyIlM4FEWg99pJFuix
-	 8ZtsT5ASsB7lQ==
-Date: Tue, 22 Sep 2026 01:18:54 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Esben Haabendal <esben@geanix.com>
-Cc: <sashiko-reviews@lists.linux.dev>, <robh@kernel.org>,
- <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
- <linux-iio@vger.kernel.org>
-Subject: Re: [PATCH v9 10/10] iio: accel: mma8452: Support interrupt sharing
-Message-ID: <20260922011854.1c09ca7b@jic23-hlaptop>
-In-Reply-To: <87bj9r9ng0.fsf@geanix.com>
-References: <20260916-mma8452-open-drain-v9-0-0dd24fa2f3d7@geanix.com>
-	<20260916-mma8452-open-drain-v9-10-0dd24fa2f3d7@geanix.com>
-	<l9LG3al0xmawstyXcDwD8OhOBMwn13q6oz0NvCPy4kL0lA4DX5biMlUWcvt9Wwu1AiyugOvUZgQfnFJ4dvuvbA==@protonmail.internalid>
-	<20260916083119.03A8F1F000FF@smtp.kernel.org>
-	<87se38754p.fsf@geanix.com>
-	<DCSg94lOVof3xt7nVMHqUJ4g_0LHFg9-B1_SPzr6YW6Q76JvKW9Wi7VQHgO2chZTHzFjCa--kqtVp7lZLsx5Qw==@protonmail.internalid>
-	<20260921015115.4c7d79f3@jic23-hlaptop>
-	<87bj9r9ng0.fsf@geanix.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="KU5BudBN"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=r28XNxv/agOTg2ftvb0cWG5kclmEnzbO2PIKcvIhROVYzU61hs5BX7Bpm7/Sw8lX5IWQ9HzNjvrW5RguMSc8E7d2KNU67BUfTuxFvDiVeAuSldegKDvQkKubzr0dbgtGfSsgeEMUvuSCaULNseyZuWymwj7M/NV+4hZX2eypJ/xpgugXzK/s57dejoCznAkO2UV85ULXbqfXxA6EzsLwpy66X6Q4C2SkC8ysZ0XBtBXELKwNekTjGPAwAT4Cr3PYmJb8uYmWopqjxeV083JLJbxohJsjJRoEZzBK7LXldYXkL67Vmo/NTM3GAx3Zb4fYnGYbxBwACLk+U37xSCPw8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TFhvA5GyY+cRgDFIPEU30aByu9vpPqjg3xaNcqn4bV0=;
+ b=EAO0Z3LZCjEHNAtPOedluXkrLHKRhQGK0eTEpxbJgyenCGnC4nVaIRvi3kI7kap+DFFAreWjU9WtkEvZ9d6LOI4RxwpUYk1D33Jc2UKshy1r7kUzgIHG4sZDOdT5JfykxhSVC4P/4+s24MuiDZ3OANCCMaDhufvK5JYUVpjFsxsOJ+hDkHEjEkKr4RcP1Z+XQp7JdIChsWf83LwxM2Kqjw4zz2wkBTxotHJAoglhCb0DrhmOOWO1QN2VYCnpYsWGsE/BLKs6Bo1BUxdJVn4POQZ9PaTQTPa5A3PEktiJC/rnJX9rodPEfN2jtiMQ0Nv5vy1SezD6y15xr+HoDAI5zg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TFhvA5GyY+cRgDFIPEU30aByu9vpPqjg3xaNcqn4bV0=;
+ b=KU5BudBNYGhskFzypID8kGC7JXiJUQqK4rSQebe2qPPflahkTZp02uFCblVS5cuSE5F1fjQ5PCScm5VOZViIPDPgV9Z0dS+Ml4BayFxC8i1I4K3epKRmI7EXMoXuc28L1HKy6/Os1znXEb5IFXlXIGOTriLiaJChzAdJkmW9PPy/hn5PQHvNiDfCEwFv8A7zjc/H2JP7UzwCwjGxQAKzthUkxlfUqnynbz94skAIrFhBpqDoM4riGN+s8SK2vU8+c+r/vb2Z0i7VujPw/ch75jejnJkaG02UtVUm3hrcTYqK3hxobxUTRL7MD8ZbXLTLKs5iJqnQ84WGI8V9B2AgMg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from IA0PR12MB8374.namprd12.prod.outlook.com (2603:10b6:208:40e::7)
+ by CY3PR12MB9704.namprd12.prod.outlook.com (2603:10b6:930:102::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.16; Tue, 22 Sep
+ 2026 01:23:29 +0000
+Received: from IA0PR12MB8374.namprd12.prod.outlook.com
+ ([fe80::d85f:4c87:ae84:3f16]) by IA0PR12MB8374.namprd12.prod.outlook.com
+ ([fe80::d85f:4c87:ae84:3f16%6]) with mapi id 15.21.0428.015; Tue, 22 Sep 2026
+ 01:23:29 +0000
+From: Zi Yan <ziy@nvidia.com>
+To: <sashiko-reviews@lists.linux.dev>
+Cc: <linux-trace-kernel@vger.kernel.org>
+Subject: Re: [PATCH v5 10/17] mm/page-flags: check page/folio->private instead
+ of PG_private
+Date: Mon, 21 Sep 2026 21:23:28 -0400
+X-Mailer: MailMate (3.0r7032)
+Message-ID: <A794FFD4-DAC4-468B-95D2-BC7FCBF02AAC@nvidia.com>
+In-Reply-To: <2F224947-7601-4266-8A85-7B6B3410C289@nvidia.com>
+References: <20260920-remove-pg_private-v5-0-bb68b6a21869@nvidia.com>
+ <20260920-remove-pg_private-v5-10-bb68b6a21869@nvidia.com>
+ <20260921024424.F0F951F000FF@smtp.kernel.org>
+ <2F224947-7601-4266-8A85-7B6B3410C289@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-MS-Reactions: disallow
+X-ClientProxiedBy: BN9PR03CA0371.namprd03.prod.outlook.com
+ (2603:10b6:408:f7::16) To IA0PR12MB8374.namprd12.prod.outlook.com
+ (2603:10b6:208:40e::7)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA0PR12MB8374:EE_|CY3PR12MB9704:EE_
+X-MS-Office365-Filtering-Correlation-Id: bdb80b3b-149d-435f-8dbe-08df18481b9f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|11063799006|56012099006|4143699003|10067099003|6133799003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	SdT7nVPdBJ+t2ct8eTcbYTNHbOI9J6Uc//yCA5+LnbE/4XaGhrCoeQRZVPnygN/i1X1itVr4O/A3RX0B9LkdYN1sJsULc2bVeYLmjmDIkygE5RPceYoXJNLDUtaJO3pg5ltA3ib2nWG9A57qtRDuG6p7spLADtAB8jCgf06jqigGnpdyLopLwV4nzvPGJxmV0E5klH9v8SXngLT6lG47Pwu2ovyATWN+wcAbQPexkNbYYbyPZTWVViaYXj2jnvR5Oq/tExnkMKbBpVZPd8K4tNGVJf6GoSbntu8a45sDFTgK4gHFU8B1maVdGKa0N2lkY4fmQ1srCQGbXX0pkAHUutUDI2SUBjAVBy6fDEuvqirtgtPViBHa7yDTXGucJyIH+qVggq+YJyWZ2Iwik/VZpoiMVHF4jLiuGNphTIYMG/qhspkfY7NfCZdPr48Vv6wq1h89uT0aiGCs8tiu3XqWt2DOGGSrn72N1gIq7CQi/igepmi3jUhNVEFWfAsatFMakpOWRXuZdc/8QU93B13qU+9Ng4J4n+XTl2HYYGJGlEFJpNnofSMkY/p+t0qMfo2vte0a7hYrnW2C1acQ+XpO657EQwu5c7E5FwYbeyG+PvhDnrF6Yi+u+SUpu1E2Fu3O3bU2M7KhKfIqW84EdZwbOkZHi4W2aPeWIup4Xcs8a8w=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA0PR12MB8374.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(11063799006)(56012099006)(4143699003)(10067099003)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?VzRyMXVqUStiMUZHektHd3JOVlRTandpaFd1SlpLSk1tbGZCRjU2SjF6QVh6?=
+ =?utf-8?B?TUdZZFBlWHRiZ2NWWlJNc0VFekk5aG9XK0l6WmRVOTlGL0lOVXJlK1JNRWxQ?=
+ =?utf-8?B?TzU2L3ZUL21iYTNXUkNRR0xQU3dkMDQ1TnpKeVk0cWtSSElwdlJjQ1dYNlJP?=
+ =?utf-8?B?UGc4aDVyK2plcDB5Y3B5VmsyWnRCOXJUZDNDOUZ6TkYwODRPWjBGWHJLL2FO?=
+ =?utf-8?B?NEJpNmp6TGFSL2xXNFpkZUVrc001VHVmdmlnMVByeEY5N1FnVFU3SG10REF3?=
+ =?utf-8?B?cE9Gdmtmejg0TmFzbnhDSzIyclgwSm5CcVE1eVE3U1FKWWIrVjRxUE5wY0ZS?=
+ =?utf-8?B?TnFvcVpMdFBPZ2x3LzJEQlZZS0lhQzZXQUVJcldsZHFvejVVNWRsMElwZnVL?=
+ =?utf-8?B?Z1dVeVR2TUJoWUVtd0RhNFRETVNmcUxwLzhwYjBCYjJqY3IwNjNPT3p1bzdk?=
+ =?utf-8?B?SXNUVlpoMFNlRUVLZWZVN1VsZmFMSEtDb0Z5R0d1MzYremNrWlBCb0pwZDRN?=
+ =?utf-8?B?K3FQcmJkc0ROdHMvVjMrcTQyajBCMHBXTHd5b3JzU0hFbjh5M1VpYW1UZW1V?=
+ =?utf-8?B?Mk9IWnhXcmJPaGVyeStDWG1XMnhKNUdWTndBSHorWUduVGVjeFFBRFZNNFFs?=
+ =?utf-8?B?dDFPcFlqWVdVR0JYNWRoQlJtd3BRWDhHVXNKQlg5NEhCVFJzRXlNT3FidDZU?=
+ =?utf-8?B?SjZVU2VKMFQyYmNOWi9Qa0VscFJjTHo3RVJOeFg4ejNnTytWb2F6dmVNdkZJ?=
+ =?utf-8?B?MlJ2ZFppOGV1OWY3YzRuRk5pMWlsQ1VVT2pTZEl1NnFSSHRndEEyTzRTRDRB?=
+ =?utf-8?B?Tm1LRVRsZitsTjZ4c0R5RGdHSSs3QVN2aVhQUmNJY2hEQnI0ZHhtK1BGQU9l?=
+ =?utf-8?B?K2theXFOT3Bpc01nc0pPNUllTW5ReHhBTEFpeVBGREVmeWp1em5aVmFDcnhY?=
+ =?utf-8?B?SEhFTTIwQUVBLzhRY1QweldoYWdUQVEvcmp6YVRadjhxMEZWQ0ZLc0cvRjVL?=
+ =?utf-8?B?ZDBGVzdVNjl1eG93T25NdDBsZGd1U2piVm5ZWGRkNDlQazdlSUJoVnJCVEhT?=
+ =?utf-8?B?VUlLdGRNS2FIdUN6bTB1ZWdleXlqclhPdWJ3WHU0VGJEc0czWEdnTnVwSlhu?=
+ =?utf-8?B?SUFkT09RNmxTcE5lWStPTndVWFNPZnJyUGI1dVFNRHcvaDFRYlpLcEpRTmZp?=
+ =?utf-8?B?ekJweTFPdGM3TjJoZlhjUHZVaDhNS2oxSUs2dGV6Vm1tOTRROWlJVWoyR2N0?=
+ =?utf-8?B?N1l4bkVKcHNkRTdhalF1THlCUVN1L21COVZ6NUFBS1BpR203Z3UvSjJOdUR1?=
+ =?utf-8?B?aWVkdmpqejA2NTNaUTUyRWNyUUlnbXN6TVZPbGlGQ1lxR2hpTzNvRm1JVEZn?=
+ =?utf-8?B?c2Z1NEVmRWNYaU0yb3hxNUViaVhDUXVPMFduY2VvSE9lb3p4eWdWOXhqZXBt?=
+ =?utf-8?B?L3l5WVE5aXl5TGFiK2pRMGNCbHNXTHg4QlVIdmdadFJ3STVFd01aaVVyMktX?=
+ =?utf-8?B?REhDRXg1R3VrZ2s2VUFCSHl0eU50L1A4eERJeWxOYkE2TnNhK1dOUzlhRkFQ?=
+ =?utf-8?B?VXBmS2p2NEZDOURYdjdUVTJDWmNOaFdNQUdVR3BoODNoTENmc3Q5ZWlIUms2?=
+ =?utf-8?B?eElLcDhOOEhSUzdJaEdMaGlYazd5UkZJRWQ1bllQdjRaUmw1a2gybmhKc2dh?=
+ =?utf-8?B?ZmtKN1p1MHpRZ1BINWNUclN2amxybGM1ZTFLS0MyNjRyenJOQjZ1Z2p6ekRV?=
+ =?utf-8?B?cGxmR2JSRitEVE13Y2Rmc1JlY1o5aHErNWJsQlZ6d2cyMWloaGlIWkUwWGpm?=
+ =?utf-8?B?YURNdlFnVkljTnlnL2s3NnRtWllJMUhmbUp0OEZOOUFRNjhCK3R5YXMrSGQr?=
+ =?utf-8?B?YXp1cEUwUlVZS3hIN3lCRW5lcFpWU1RBTGxiV0xlRi9OY0Q4UTZpYTV6SWk2?=
+ =?utf-8?B?Z29JU2tMZlU3aFZiZU14cVVlWjFhMXNUTGIxVEVQMC9ncFh0WllxWDVpRXBT?=
+ =?utf-8?B?L2V6T3Z6ZnJuQ3dPZG5BNXhaa2kxTWZRRHlzTmZiSXRSRVRxdjZjdzQvZ1Nn?=
+ =?utf-8?B?TFpqNy81NGRWTXA2Z1NITlhjYkZ6M2c2NzRaSTQ2Qm14ejZtQzlLUFNtb25B?=
+ =?utf-8?B?SnFmMlZTLzZzL2JRZmwxYTc0NDlnSVRzZFNhUlBnVlRLeVo5TnN4TXpLNG92?=
+ =?utf-8?B?WFB6c3laU3ZMeGt3T3lDSmRKRkZCQUZYV05wQ3RmeUZOV0NzTmE2bzZvZkJR?=
+ =?utf-8?B?NkgvS0cwUWhRREZmZjJOeFZpWjljbkpHSkFrbitZU3puNFp4MUIwUGtYQUR3?=
+ =?utf-8?B?Q05wNURKOHZLTDJKOFgxeHhpVlZnYm1JZ1YxcEtZRE8rcXhCZ2VpZz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bdb80b3b-149d-435f-8dbe-08df18481b9f
+X-MS-Exchange-CrossTenant-AuthSource: IA0PR12MB8374.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2026 01:23:29.1490
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: rb9DP9N5UQ1B/Xw/W1tfAJYAXWF6oRzXbHc6pv3JoVC6lQhnU3bpSfO+DbGWz6S8
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY3PR12MB9704
 
-On Mon, 21 Sep 2026 07:35:11 +0200
-Esben Haabendal <esben@geanix.com> wrote:
+>>
+>>> diff --git a/tools/mm/page-types.c b/tools/mm/page-types.c
+>>> index 7fc5a8be5997f..47e4781c5fc38 100644
+>>> --- a/tools/mm/page-types.c
+>>> +++ b/tools/mm/page-types.c
+>>
+>> [ ... ]
+>>
+>>> @@ -131,7 +130,6 @@ static const char * const page_flag_names[] =3D {
+>>>  	[KPF_RESERVED]		=3D "r:reserved",
+>>>  	[KPF_MLOCKED]		=3D "m:mlocked",
+>>>  	[KPF_OWNER_2]		=3D "d:owner_2",
+>>> -	[KPF_PRIVATE]		=3D "P:private",
+>>>  	[KPF_PRIVATE_2]		=3D "p:private_2",
+>>
+>> [Severity: Medium]
+>> Does removing the flag name from page_flag_names in page-types.c break
+>> parsing tools relying on the P:private designation?
+>
+> Will send a separate patch to fix page-type.c
 
-> "Jonathan Cameron" <jic23@kernel.org> writes:
-> 
-> > On Thu, 17 Sep 2026 08:40:06 +0200
-> > Esben Haabendal <esben@geanix.com> wrote:
-> >  
-> >> <sashiko-bot@kernel.org> writes:
-> >>  
-> >> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> >> > - [Critical] iio: accel: mma8452: Interrupt storm livelock when IRQ fires during RPM_SUSPENDING
-> >> > - [High] iio: accel: mma8452: Invalid I2C access during system suspend due to mishandled -EINVAL
-> >> > - [Medium] iio: accel: mma8452: Race condition in probe error path due to pm_runtime_disable() before free_irq()
-> >> > --
-> >> >  
-> > So far we haven't enabled sashiko emails to the linux-iio list
-> > (will probably move to that fairly soon) so fun side effect is this
-> > reply was shouting into the void - except that b4 picks it up.
-> >
-> > +CC linux-iio. I'm too lazy to add everyone by hand who was on original thread.
-> >
-> > Key here is looks like you already plan a v10.  
-> 
-> Yes, sashiko-bot clearly catches a lot of valid problems. Also flags
-> some things that is not valid. And for a patch series with many
-> versions, like this one, these invalid findings keeps getting repeated.
-> 
-> Are there some guidelines how to handle this? Is it enough to write a
-> reply to the list(s) explaining why the finding is invalid on the first
-> report by sashiko-bot, or do we have to repeat every time that
-> sashiko-bot repeats the rebuted finding?
+Misread the review. The change is intended. Any related parsing tool
+needs to adapt to the change.
 
-No need to repeat.  One reply as you say and then add a note either
-under the --- cut mark in the commit description or in the
-cover letter.
+>
+>>
+>> --=20
+>> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260920-remove-=
+pg_private-v5-0-bb68b6a21869@nvidia.com?part=3D10
 
 
-> 
-> >> > commit bf19c63685f6fff116a3a5358196fd66dff6090a
-> >> > Author: Esben Haabendal <esben@geanix.com>
-> >> >
-> >> > iio: accel: mma8452: Support interrupt sharing
-> >> >
-> >> > This commit adds support for shared interrupts to the mma8452 driver. It
-> >> > modifies the interrupt handler to check the runtime PM status and ignores
-> >> > the interrupt if the device is suspended. It also updates the runtime
-> >> > suspend and resume paths to properly disable and restore interrupt sources.
-> >> >  
-> >> >> diff --git a/drivers/iio/accel/mma8452.c b/drivers/iio/accel/mma8452.c
-> >> >> index 5aea6bf3312af..2a980c0c2e03a 100644
-> >> >> --- a/drivers/iio/accel/mma8452.c
-> >> >> +++ b/drivers/iio/accel/mma8452.c  
-> >> >
-> >> > [ ... ]
-> >> >  
-> >> >> @@ -1086,15 +1088,28 @@ static irqreturn_t mma8452_interrupt(int irq, void *p)
-> >> >>  {
-> >> >>  	struct iio_dev *indio_dev = p;
-> >> >>  	struct mma8452_data *data = iio_priv(indio_dev);
-> >> >> +	struct device *dev = &data->client->dev;
-> >> >>  	irqreturn_t ret = IRQ_NONE;
-> >> >> +	int pm_status;
-> >> >>  	int src;
-> >> >>
-> >> >> +	pm_status = pm_runtime_get_if_active(dev);
-> >> >> +	if (pm_status == 0)
-> >> >> +		return IRQ_NONE; /* device is powered down */  
-> >> >
-> >> > [Severity: Critical]
-> >> > If the device asserts its level-triggered interrupt when the PM core is
-> >> > transitioning the device to RPM_SUSPENDING (e.g., when the autosuspend
-> >> > timer expires), pm_runtime_get_if_active() will return 0.
-> >> >
-> >> > Does returning IRQ_NONE without clearing the hardware interrupt here cause
-> >> > a permanent interrupt storm? Since the IRQ line is shared and unmasked upon
-> >> > return, the still-asserted hardware interrupt might immediately re-trigger
-> >> > the handler, potentially starving the worker thread that executes
-> >> > mma8452_runtime_suspend() and hard-locking the system.  
-> >>
-> >> This should be handled by the disable of all interrupt sources (clearing
-> >> CTRL_REG4) in mma8452_runtime_suspend().
-> >>  
-> >> > [Severity: High]
-> >> > During system suspend, pm_runtime_force_suspend() disables runtime PM,
-> >> > which increments the disable depth. If a shared interrupt fires during this
-> >> > window, pm_runtime_get_if_active() returns -EINVAL.
-> >> >
-> >> > Since this check only catches pm_status == 0, does this allow the handler
-> >> > to proceed and perform I2C reads on unpowered hardware? Per subsystem
-> >> > guidelines, should this check for pm_status <= 0 instead?  
-> >>
-> >> If we bail out on pm_status <= 0, the driver would not work on systems
-> >> with CONFIG_PM not enabled.
-> >>
-> >> In order to handle the difference betwen the different reasons for
-> >> -EINVAL, it would seem like we would need some #ifdef CONFIG_PM in here.
-> >> Do we really want to do that?  
-> >
-> > That if_enabled() function is a pain.  Definitely not ifdef but
-> > how about
-> >
-> >  if (IS_ENABLED(CONFIG_PM) && ret < 0) or something like that?  
-> 
-> That should work. Now, in this case, do we want to report IRQ_HANDLED or
-> IRQ_NONE? We obviosly did not really handle it, but we also don't know
-> if the irq was for this device.
-
-We never get consensus on this but I tend to go with IRQ_HANDLED when
-we don't know it wasn't ours.
-
-Jonathan
-
-> 
-
+Best Regards,
+Yan, Zi
