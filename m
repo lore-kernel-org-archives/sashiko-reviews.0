@@ -1,268 +1,341 @@
-Received: from TYDPR03CU002.outbound.protection.outlook.com (mail-japaneastazolkn19013087.outbound.protection.outlook.com [52.103.43.87])
+Received: from Atcsqr.andestech.com (atcsqr.andestech.com [220.128.198.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B670B349B19
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 07:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.43.87
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790061229; cv=fail; b=NjqcSVtv2pbvhi0z2iL3hJ8MQw7S5fCDocIRBSMMAYlob0uVSk9gY95/LUlVBd+vM0GH4IbxVAsf31y8GAiDenod1uTQ1FNmP9jDAbiETaF0qLj2ymwKIxkH8mPVlBAYkoy1tkjBGISv3BlWFDE5grZB/e47jr2N5lAElTOHEFE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790061229; c=relaxed/simple;
-	bh=9XEQT6o5kp1S86GQko/9h+cbVQcU/Cmw/KRsi/xRD8o=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=bXch0WSGBZHPTfVosfH1WKnQT+9Op9WWRTOnWsepKsd3lbbd6F8WJYxAuNCltPXC+EiOJP6CniPDkxmcIlZyk5vZw+72HxTZYGxdn6Cb7/RMW4UMV1iKzo0nW9BY/85lQR1IPzcwjCMgj/3qsgMWfQmU/75Iz1u5wdGZRV2BOnc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=nTdcEaFY; arc=fail smtp.client-ip=52.103.43.87
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="nTdcEaFY"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RKVYSd/6nxjtcFYvb0rrgVE9EX1ROwMpqw5xcps7xjS9IJmbiZe2PIbbngoQTKGIgnOF46pCXdXMlEYaq1o2nh5ZgVo02ud3WnuQyN7Rx2u6ouO9HQYg+1VwfYahGSsa9jcJMysi333VqkYVLiZK0+OLLwRgxfwuD1McVwkExDHcPFSR2wCoYb5ZJn/Q5BjSZaJ/AGbQVpJbI2J2qKdC1aHzypMMRjrOn0TAEcrsCZhkvTDQHwk1za8OCTDWOxzFmoNWtF10SMSDwqT2Y2IYmR9xVnKSiZJIL/zKpNDBkQWGURtKIFEo5l/SaNulK2lEQ9j1eMBZqr9P3Mxt41ZMnA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9jgdbc39TOU+yB8WUlMiF28JDOzJBVFJqkcOChQF+tA=;
- b=u2SoGskuTWw+b8PLj3Nkm7CExWbIsPESdOzkURDGsgG3YdkvPg7UutaJgGwty6Xt5nYlbFhzJ6ZNeZuq1+NZRHjAQ2GswxrK6M3bcTO3pjro9ItTbbjXBqh8gB9ip0hPDJ3OS5COpkb+zbiczn3InExVHlWE6D37INB7tvzSdTKFiXEj4jaD9TD9huNAUMOasHKRC4PYU8Yx1eNHwu8iMSt1iwr3pOQwl7cgzVJbcriPwk9cASP2aRsQnxFBUd0J4FpoOXFBKmNm4ncUmkx9sspZHjpdhj+G3UtzPusPHZnMFARUHykBcoy65A0oiDaGNe3fQhs4wrEJy7qvOhBnCg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9jgdbc39TOU+yB8WUlMiF28JDOzJBVFJqkcOChQF+tA=;
- b=nTdcEaFY4biRWVDvQCYoQguk3OaTjhUyg+Mnke+GId+EDF//oiKm3IwimbxBmK5v6iuGyU4ewTOAPELZMHqQhbIERphCeWGw2HjJguFkoILms18IkW/BJDTxp4egzxxfZxWxm0YZGawO+9YMnxd1xu3K7V5CO2UKHvBZWRbsKGaa2VjNXjxKH8Cef26rKozhTOQc7uGUtQR3+jHUgQP01mDBwhTYRBlOzR0x/HTU9jJ3xV2bTjLi7+j9aUm1l8A9b4AnT5+TNorSDZ2Tosa8bf953jbX/+ucabrWPkYNYu9vRwKHnCZ4hDPOdzUo+uggkCvGraTjrcqetaZiQ1YRqg==
-Received: from SI2PR01MB4393.apcprd01.prod.exchangelabs.com
- (2603:1096:4:1b0::7) by TY1PPF7F53943C2.apcprd01.prod.exchangelabs.com
- (2603:1096:408::33b) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.16; Tue, 22 Sep
- 2026 07:13:44 +0000
-Received: from SI2PR01MB4393.apcprd01.prod.exchangelabs.com
- ([fe80::c735:fab8:6e3d:6d1c]) by SI2PR01MB4393.apcprd01.prod.exchangelabs.com
- ([fe80::c735:fab8:6e3d:6d1c%4]) with mapi id 15.21.0428.015; Tue, 22 Sep 2026
- 07:13:44 +0000
-Message-ID:
- <SI2PR01MB4393E84FC42451D52C3BED51DC832@SI2PR01MB4393.apcprd01.prod.exchangelabs.com>
-Date: Tue, 22 Sep 2026 15:13:37 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 5/6] PCI: Enable the enhanced ACS controls introduced
- by PCI_ACS_ECAP
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-References: <SI2PR01MB4393F337A792CB3258C2E073DCB62@SI2PR01MB4393.apcprd01.prod.exchangelabs.com>
- <SI2PR01MB43939FB8FF7F1239925023C4DCB62@SI2PR01MB4393.apcprd01.prod.exchangelabs.com>
- <20260903043916.5B7FA1F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Wei Wang <wei.w.wang@hotmail.com>
-In-Reply-To: <20260903043916.5B7FA1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TPYP295CA0050.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:7d0:8::12) To SI2PR01MB4393.apcprd01.prod.exchangelabs.com
- (2603:1096:4:1b0::7)
-X-Microsoft-Original-Message-ID:
- <91b6d856-73f3-4202-96d7-06eb2b478b0d@hotmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E055218A9
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 07:57:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.128.198.184
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790063834; cv=none; b=qiEj+nr6bscskW4NwuvnA93kNAlfG4qJxMyUixH4ktvypQonbjaaIFn07qdzqvIG1JZn7ye2RpfMjXfpyIB9i9/5jGdulMv0j6oW6wlVJ6koX4y0Z+9EVuyaSWPsfoowJYNqtf3t+WC4kLJPjihTFyw0JB0Jv9HaX9IVdDdwvi4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790063834; c=relaxed/simple;
+	bh=UoDkm3gOOO7PAidsy67hbx+7JNKcjk/PhCqyQtSfZFg=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XBqLVQVLofvz9BpHWRBaOjDIBDEtGh8cTCbzcJTVog8Zs/8KfSDsfDgzdgLns338ab7ReJJrM+fIe3GtjCt1q/l0Fibq5gw0SpSfycKmzXCEhCq80iPxWnaiJQCwbzGG8TDr0cW8FLmQ+rb4OFwQ5gyA9Ve11PO2uW2JDMPG6PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andestech.com; spf=pass smtp.mailfrom=andestech.com; arc=none smtp.client-ip=220.128.198.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andestech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=andestech.com
+Received: from mail.andestech.com (atcpcs55.andestech.com [10.0.1.155])
+	by Atcsqr.andestech.com with ESMTPS id 68M7uEdZ048257
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 22 Sep 2026 15:56:14 +0800 (+08)
+	(envelope-from cl634@andestech.com)
+Received: from ATCPCS34.andestech.com (10.0.1.134) by atcpcs55.andestech.com
+ (10.0.1.155) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.43; Tue, 22 Sep
+ 2026 15:56:14 +0800
+Received: from swlinux02 (10.0.15.183) by ATCPCS34.andestech.com (10.0.1.134)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 22 Sep
+ 2026 15:56:14 +0800
+Date: Tue, 22 Sep 2026 15:56:10 +0800
+From: CL Wang <cl634@andestech.com>
+To: Frank Li <Frank.li@oss.nxp.com>
+CC: <sashiko-reviews@lists.linux.dev>, <dmaengine@vger.kernel.org>,
+        <vkoul@kernel.org>, <robh@kernel.org>, <Frank.Li@kernel.org>,
+        <conor+dt@kernel.org>, <devicetree@vger.kernel.org>
+Subject: Re: [PATCH v7 2/2] dmaengine: atcdmac300: Add driver for Andes
+ ATCDMAC300 DMA controller
+Message-ID: <arI0moAjFUudQW4J@swlinux02>
+References: <20260916134258.2178081-1-cl634@andestech.com>
+ <20260916134258.2178081-3-cl634@andestech.com>
+ <20260916140120.3112D1F000FF@smtp.kernel.org>
+ <aqq62tSqUHvBkRs4@SMW015318>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SI2PR01MB4393:EE_|TY1PPF7F53943C2:EE_
-X-MS-Office365-Filtering-Correlation-Id: b7303a5d-8f26-41c8-4eff-08df187908e0
-X-MS-Exchange-SLBlob-MailProps:
-	AlkLxVwsndm0VyxXF8Qt58maZsxVls0a0RL1COIGqAH0wp+kHQP3mddRSbukttglPPzzMbf8/B9xeQrWtOr8nOBDcrb0v5/i/4P0vzZXxsmZ98eAXT4rSrH+NIDexP57DhDywPspaU/95XTlmOlJZN+Jmz8/pl4l6PYDy51frcjMRhPDJOqRoE59W1zqC/XHidGOIBjNu3JRyhXIFQN3pUoZujHQwyZnS+scd0vXE+TBLQiPCauxjpi5ke/pTXoy6Y8dWnjR26j+pGRsi4MgK1JGa7cbgIlJ15p6eu009lbZHYtFXINuF4/PnRrFBJ3QMlL88vnQ9Xwdi9GTHh1U+TchL3vZz0BmIHw4KXwz0Vz9Zqqqau1i0ya2uRDm4hdEOaIjI/kLXMCtRO54YHb+HvFT6GFwXp6TD6TxTR3G6P9fnzyGW2F+DDq2M0DsB+jANesSYnfTBMO40T6w+7i9P+C/HajNfV5ub8f1Gp4jET8Bw7dv4Dem4p1wYE/NzD/kVZWdoKZCt720rDzlaZUSYkirtFrpoBij2m43ELskqyE2zOX63p6GWdkHx0LhPlFC83DWOPCach7fTq9bh1S86MZQ0/h5zdOeiF+3ZdSqOn3h/Doa+1fCQHkTaEjpkwhRYWdHCf7wGEsOvHyU42qQ+K71scxEBLckcBC8Fu7KRrcJ97Rt4HZZU5aWLeLPLJUTX6tGtfBjfIrYwKaeuq9quJAwFsvVDVz7/lS6WACH278GAFu+lK4jo8wmJJPRn6GxLdI2K8SLtNpyC8kI6mgGji2uFcl0OxQm
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|6090799003|5072599009|15080799012|23021999003|7042599007|12121999013|19110799012|8060799015|25010399006|4140399003|41001999006|37011999003|45011099003|440099028|3412199025|52005399003|40105399003|2607281247196008;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?UXZIak5pQVMrL0lDTFVkTmF5UkZMUFlPRTRzUjFOR3dsMXlHbXA3aVRUY1dQ?=
- =?utf-8?B?VWFKZDk4Zms3Wjg0YlRsNDkwQ1ZvUmNVWm1YUXZpd3IrRUxrR0JPdlRsTHNG?=
- =?utf-8?B?ZVJqMzhoaTBUZXgvTDQ0Q3hSaHBicjA4QzNXcXZ5ZmtEQVdvTVFOamh1UWQ5?=
- =?utf-8?B?SU9QU09uT0RoMFkvOTgrY3dHZ1R1MHl5S1JuZjJpbUtmWHdQQVJPTks5SEFB?=
- =?utf-8?B?NW82MkR3SXVmNXBEaG8xTU5XLzBPZjA2Z2o1ejRacGJFa0hZYkZVR2oxajNQ?=
- =?utf-8?B?OEhLbnhadURNWmVQTzhVanFaLzJUS2hDWFdhT2xLaGl0NW9kVmQyMlFNRWhM?=
- =?utf-8?B?aU00ZmFhNk42aThwaE5KUG5OZ2hBbUp2bzYyWmdacFNaZU13bGJxS05KNU1D?=
- =?utf-8?B?WHpJS1YwQnFuaWlBank3L0hPa2RXajN6blROY1doRFA4QnV1dDBpR0ZZV1NP?=
- =?utf-8?B?cVlxWFd2NmxCT3pZLzZvR0FyRXh3RTJkcmZOUDJaK0MvQ0pTcG9WY3cvWGFw?=
- =?utf-8?B?bWV0eGRESWpkTnh5dTNzZCtiWXRmNEZoc05MMFE5RjZBOEZwd3ZYM3Y2bHpY?=
- =?utf-8?B?SFprRnNTYklxR05iTUh2Y091UW9EdkhBK2YvTGd1NTAyZWhuQ044eThGaENr?=
- =?utf-8?B?VmlwQ2Y2dXJiSXM1dFJYSWhHYzBPL2xqQzZuSmhPOFRCWU5INk51NXZJN0gx?=
- =?utf-8?B?dWNscW9BRlJIbGFmS1ZUejJTUElFTGM2YnJISmJ2R1dHbW4vd24vZ2hUVDVq?=
- =?utf-8?B?cS9hR1VWTmZGa1JCcUJuQ2dvdDZmdHY3ZHJ5NWwxZGxXS2hGTnoyYUM2Nlhj?=
- =?utf-8?B?NU1wTWpMa2txQ1lHSTc1WTE1Z3Z4VlBNVjBiU0trbWV2N2dvTURNWTlwd3Vv?=
- =?utf-8?B?Rmc1bytrZXBHS2tqUkh0dGdERHBjdkJxQXI1aG9TMmtOWTcwK3ZoNWtmdWlI?=
- =?utf-8?B?M2w5UnJvYnAzN3dNT21kdWxZdkZacVZZZXZ6U3JQdGFnWEZYNXNsbitIS3du?=
- =?utf-8?B?WCtmUHRSQTN4SEJTb2txcUV0TVlZQW0wRUN6T3haZGhYdkpGZHh4U0FZMVZz?=
- =?utf-8?B?ZFppMk5CQmdOWnNOL1lrdU91cFRMN296TU44bDE3emdQQkk1ZDBPZzBTVUZU?=
- =?utf-8?B?eUJrVUpicE1EeitXMy9KUTVhZkNFR2ZnKzVYNmlEZUJOdy8wa01hMUtweTd1?=
- =?utf-8?B?ejEraTVreFJ2YmhjWC9WNVRYN0p5aUI5NkRSZFN2WjlTbTZmNzQrRWpGNkFy?=
- =?utf-8?B?bmFNSjZtcXh1STJoOERTVWJCZ0pXS3BPd09EOFB6T1lyc01zbURUWlZlblEw?=
- =?utf-8?B?QTh0aEtPUDBIU0w2My9VRUxRSUgvYk5CclEvendXSHdvOVZwWTM2TEVlb1px?=
- =?utf-8?B?UlhteFlORWpqSWhzQUcrZ1NZbDR3RG1jSldNcm9rbmVRSTV6V2hXUTZUZFdX?=
- =?utf-8?B?VnV6d2RKcEVtRXcwUUIzN3BNRzMxMWdxWnU2Mk5RPT0=?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?dFFIclFJc0RNRkt1VlI0Z0NGWHBDVm5BR2dxMzNRZmVsendDV0hOS0g4dlgx?=
- =?utf-8?B?Y1BMcEJJd0lMR1hXL3pHb0N5dDArTTdqVjRwL1JxNXpNeTJKbnhURW5OTlJn?=
- =?utf-8?B?bGZTMkFTNkp5YTZIQWlyN1d1cXdobXdORkhMVk4rRnp4OHo0cjdSeGpwczc5?=
- =?utf-8?B?SDZpTHo1OXMyaUc2TXRUVlpBVkxBZG5OUFk4dWx1SzZ1TzZTbUttNHRVQUpk?=
- =?utf-8?B?L0s2dEVWbHB5SjBGdDFRcTUyQnJNZ0p5cE1LWkk2cFVSZ0l4S2xtcWNNY3Fw?=
- =?utf-8?B?MDdQeVJrcHRQZFBJVGZYdDdndUFPL1BtMUtRUW5qQ1NRQWVnMXhUQzdlV2p3?=
- =?utf-8?B?aTlrYWtzcFhyOGxzaVR6azNma1FPbzY3aWwzWVNRV2h1S3p4SG15OTg4Q2gw?=
- =?utf-8?B?cjlaYkxGaDU2ZEVKVmxXZHljeEpqRUVrUVRuU0Nyb3lwUUtvNDlET0JidzJG?=
- =?utf-8?B?YnVvem92VXhucS85RVJlckNGbGFoYm0wR25qNjBpVmd1R1VwRFNHSnNxMXUy?=
- =?utf-8?B?eEpsQ052V3E5a1dFU2lOcGtvWmdqdDltWEFpNDkwOFlBYUlzZDhrTDQyZHRQ?=
- =?utf-8?B?SmZzRXRhdWJKZ2ZKOGlsWTg1MzZoV1lyZi96Z2JuVGMrWDc3QjcyTUVPR29z?=
- =?utf-8?B?VEEwbDZacFl5MnZmNnlzY0pMT3lXTlpXdWVuSy9rdUNrdlNTUS9kcVV4bjNm?=
- =?utf-8?B?eG9USGJFR0ZoUmEvajQ0SVViZHM5N28xUFh0MkZIMGp6cEdoN1VDdk9pT3lm?=
- =?utf-8?B?cjFVSFppOFZOejVSbit3VHltQ1FxZk5JRWM2WWNTdHBiSzRhNHcrWUI1aDhZ?=
- =?utf-8?B?YmMwYjlOVEdHSzJDVlN2N0RXVjdTNFFoMUV4N3ZLVWR6UXVMM2U5YzB1c2gr?=
- =?utf-8?B?ejY3YkJaZnVtUGRZMnFRSkZZdFB3YkJ2QzNlbnFBR1hQaUhHY2FvWFFEN21X?=
- =?utf-8?B?YXY5ak9zVzQwMlhscTVCdDIwbysrZkNWU2ZZQ21lV294ZTB4cUd1b21tL2tC?=
- =?utf-8?B?VmpYUXlxRjVPZi9aejk1dWIrRjg4ZE53dzhUd0dwcWt0V3lQemxBQ2VnTFJl?=
- =?utf-8?B?Zm44elRPT3pIUndZODRmcTh1N2g3MVNJcmh4dCsxeUxCZGxwRy9lOVN4d0dV?=
- =?utf-8?B?bkIxZWFwSGxBRVpCVEI4NVIvMUFacWRvaGdYM09XRzhqdFVTSjY1ck1ZTWh5?=
- =?utf-8?B?NXhmRHlrQ3lMQlFLWExOVHJBTTFlRHNSVkkvY0VHUjRMVjJ1WkFUR3NzQlg1?=
- =?utf-8?B?MUt4S2dLN3Erc0Yvd2pkbnp6VXhSdmVrNEExT3VsS0ppejNXdFpzYlR4dnJG?=
- =?utf-8?B?blNOeHNhWm5ucDRHbDdkVjJ3N2ZKNWU2K3ptY2k3Z0ZaRkEzYTNsV1dPK0xW?=
- =?utf-8?B?aXlMNmVhZGJ6NTc1aFVDbW1QMXByd2xUM0FEQzBsM3hvNFlzeUE4R003dndP?=
- =?utf-8?B?ZGNEVVVMcVVJdVZCU3NxS3I2aTZ2UkZEbTkvT25hZFBKbTQ0cENDMEhoVVZh?=
- =?utf-8?B?cldEQ1ZrKzQvWXF6ZEw3TjJKUmtNcmhvYkJaZ1F6U3lubENwbW8yVmVBYTc0?=
- =?utf-8?B?anZBb2ZBYVdOa1llRVpTdDFKWVp1UUVVYTNEd1RlYUJsTXkrN0ZWNDV6YWNq?=
- =?utf-8?B?c1BwQ0k1QS9SZVVnSGhBRWFIODdpMmUxVExNcWx0N2lSZGpPWXRaZVVjS0Rx?=
- =?utf-8?B?ZU5iUUdCVEJaSXh4dzRUZkw2Y2tHWWROUnRodDV0QjU4S0lSejlJVDYwZ2k2?=
- =?utf-8?B?ZHJ5cjdoOVFlOVd4RU96Y2pIVTdFWXdEbkRkbzJhdnZWeUVzTkRpR0U4dnlY?=
- =?utf-8?B?dDhlaDFQWUVDYkd1SnJteHpWU2N1YnYvQTRQMzAzOWVmNE9RNERWT1RRUkJj?=
- =?utf-8?Q?nrMjT6ntVfWu/?=
-X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-3e488.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: b7303a5d-8f26-41c8-4eff-08df187908e0
-X-MS-Exchange-CrossTenant-AuthSource: SI2PR01MB4393.apcprd01.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2026 07:13:43.9939
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY1PPF7F53943C2
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aqq62tSqUHvBkRs4@SMW015318>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
+ ATCPCS34.andestech.com (10.0.1.134)
+X-DKIM-Results: atcpcs55.andestech.com; dkim=none;
+X-DNSRBL: 
+X-SPAM-SOURCE-CHECK: pass
+X-MAIL:Atcsqr.andestech.com 68M7uEdZ048257
+
+Hi Frank,
+
+Thanks for looking at this, and thanks to the bot for a careful pass.
+
+Five of the eight are fixed for v8. Three do not apply to this driver
+and I have tried to say why rather than just assert it.
+
+> - [High] dmaengine: atcdmac300: UAF on driver unbind due to devres
+> lifecycle mismatch
+Fixed.
+
+> - [High] dmaengine: atcdmac300: permanent controller halt if suspend
+> times out
+Fixed.
+
+> - [High] dmaengine: atcdmac300: NULL pointer dereference mixing cyclic
+> and non-cyclic transfers
+Fixed.
+
+> - [High] dmaengine: atcdmac300: cross-transfer corruption on
+> simultaneous TC and ERR interrupts
+I do not think this one can happen. The data sheet defines the terminal
+count bit of the interrupt status register at offset 0x30 as
+
+	The terminal count status is set when a channel transfer
+	finishes without the abort or error event.
+
+so for one transfer the two are mutually exclusive. Chained transfers do
+not widen the window either: the same document says that with IntTCMask=0
+an interrupt is "only be generated when data transfer of the last linked
+descriptor is complete", so a chain raises one terminal count rather than
+one per link.
+
+> - [Medium] dmaengine: atcdmac300: memory leak of unsubmitted
+> descriptors
+The desc_free half of this does not apply. The callback is reachable
+only through dmaengine_desc_free(),
+
+	static inline int dmaengine_desc_free(struct dma_async_tx_descriptor *desc)
+	{
+		/* this is supported for reusable desc, so check that */
+		if (!dmaengine_desc_test_reuse(desc))
+			return -EPERM;
+
+		return desc->desc_free(desc);
+	}:w
+
+and a client can only set DMA_CTRL_REUSE through dmaengine_desc_set_reuse(),
+which fails unless the channel advertises descriptor_reuse. This driver
+does not set dma_device.descriptor_reuse, so the callback can never be
+invoked and adding it would be dead code. Documentation/driver-api/
+dmaengine/provider.rst puts it the same way: dmaengine_desc_free() "can
+succeed only when DMA_CTRL_REUSE is already set".
+
+I looked at closing that properly and do not think the API allows it.
+There is no unprepare, so a client that abandons a descriptor makes no
+call the driver could hook. Tracking every descriptor handed out would
+move the recovery point from teardown to terminate or free_chan_resources
+but not remove it, at the cost of a list operation on prep and submit.
+Implementing DMA_CTRL_REUSE does not help either: dmaengine_desc_free()
+requires the client to have set that flag first, and a client that intends
+to abandon a descriptor is not one that asked to reuse it.
+
+No in-tree client of this driver prepares a transfer it does not submit,
+so I have left it. Say if you would rather have the tracking anyway.
+
+> - [Medium] dmaengine: atcdmac300: silent truncation of DT req_num
+> exceeding 15
+Fixed.
+
+> - [Medium] dmaengine: atcdmac300: transfers queued during suspend are
+> stranded on resume
+Fixed.
+
+> - [Low] dmaengine: atcdmac300: missing endianness conversions for DMA
+> descriptors
+This one cannot bite. The driver depends on ARCH_ANDES and Linux has no
+big-endian RISC-V: arch/riscv/Kconfig offers neither CPU_BIG_ENDIAN nor
+CPU_LITTLE_ENDIAN, so the conversions would be no-ops wherever this can
+be built.
+
+If here are no further comments, I will submit v8 with the five fixes.
+
+Thanks,
+CL Wang
 
 
-
-On 9/3/26 12:39 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] Unconditional validation of DMAC and UMAC fields rejects valid user ACS configurations on non-ECAP devices and fails to account for kernel-corrected states.
-> - [Medium] ACS Enhanced Capability access controls are unconditionally applied to unsupported PCIe port types, writing to reserved bits.
-> --
+On Wed, Sep 16, 2026 at 10:50:50AM -0500, Frank Li wrote:
+> [EXTERNAL MAIL]
 > 
-> commit e1302a2bae5cac8f4c54de9a2a416f24d9b8a517
-> Author: Wei Wang <wei.w.wang@hotmail.com>
+> On Wed, Sep 16, 2026 at 02:01:19PM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 8 potential issue(s) to consider:
+> > - [High] dmaengine: atcdmac300: UAF on driver unbind due to devres lifecycle mismatch
+> > - [High] dmaengine: atcdmac300: permanent controller halt if suspend times out
+> > - [High] dmaengine: atcdmac300: NULL pointer dereference mixing cyclic and non-cyclic transfers
+> > - [High] dmaengine: atcdmac300: cross-transfer corruption on simultaneous TC and ERR interrupts
+> > - [Medium] dmaengine: atcdmac300: memory leak of unsubmitted descriptors
+> > - [Medium] dmaengine: atcdmac300: silent truncation of DT req_num exceeding 15
+> > - [Medium] dmaengine: atcdmac300: transfers queued during suspend are stranded on resume
+> > - [Low] dmaengine: atcdmac300: missing endianness conversions for DMA descriptors
+> > --
 > 
-> PCI: Enable the enhanced ACS controls introduced by PCI_ACS_ECAP
+> Please fix these problem or provide explain.
 > 
-> The ACS Enhanced Capability introduces several new access controls to
-> improve device isolation. These new controls are particularly important
-> for device passthrough in virtualization scenarios.
+> Frank
 > 
->> diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
->> index 6cffdbba99d34..50a3b61f9898e 100644
->> --- a/drivers/pci/pci.c
->> +++ b/drivers/pci/pci.c
->> @@ -1026,10 +1029,23 @@ static void pci_param_config_acs(struct pci_dev *dev, struct pci_acs *caps)
->>   		disabled_bits &= valid_ctrl;
->>   	}
->>   
->> +	/*
->> +	 * DMAC/UMAC are 2-bit fields where encoding 0b11 is reserved. The
->> +	 * final value can land on 0b11 not only when the user enables both
->> +	 * bits, but also when they enable one bit, e.g. "1x", while fw_ctrl
->> +	 * already has the other set (e.g. "01").
->> +	 */
->> +	new_ctrl = (caps->fw_ctrl | enabled_bits) & ~disabled_bits;
->> +	if (FIELD_GET(PCI_ACS_DMAC_MASK, new_ctrl) == PCI_ACS_MAC_RSVD ||
->> +	    FIELD_GET(PCI_ACS_UMAC_MASK, new_ctrl) == PCI_ACS_MAC_RSVD) {
->> +		pci_err(dev, "ACS DMAC/UMAC would be set to reserved value\n");
->> +		return;
->> +	}
-> 
-> [Severity: High]
-> Does this unconditional check against reserved DMAC/UMAC values reject valid
-> user configurations on non-ECAP devices?
-> 
-> If a user boots with the config_acs parameter to configure a non-ECAP device,
-> but its firmware leaves bits 8:9 or 10:11 as 0b11, this FIELD_GET check detects
-> PCI_ACS_MAC_RSVD and aborts the configuration, preventing the user from
-> applying basic ACS settings.
-> 
-> Additionally, for ECAP devices with buggy firmware defaults (0b11), building
-> the new control register using caps->fw_ctrl instead of the kernel-corrected
-> caps->ctrl revives the invalid firmware state, instantly triggering this
-> validation failure and rejecting unrelated user flags.
-
-
-I don't think this needs a change:
-
-- On non-ECAP devices, bits 7-12 of the ACS Control register are RsvdP (RsvdP when
-   the ACS Enhanced Capability bit is clear, and RsvdP before ECAP was introduced),
-   so they read as 0 on conforming hardware.
-   User-supplied bits in that range are already dropped via valid_ctrl, so the
-   check can't fire for these devices.
-
-- For ECAP devices whose firmware writes the reserved 0b11 encoding, the config_acs
-   entry is rejected with an error and caps->ctrl is left unchanged (the
-   pci_std_enable_acs() default, DMAC = Request Redirect, when ACS is enabled). The
-   user can override the field by specifying bits 9:8 / 11:10 explicitly.
-
-- Regarding caps->ctrl v.s. caps->fw_ctrl, building from fw_ctrl is intentional.
-   In config_acs, 'x' means "keep the firmware/power-up value". Building from
-   caps->ctrl would change that meaning for every bit, not just DMAC/UMAC.
-
-> 
-> [ ... ]
-> 
->> @@ -1051,6 +1067,20 @@ static void pci_std_enable_acs(struct pci_dev *dev, struct pci_acs *caps)
->>   	/* Upstream Forwarding */
->>   	caps->ctrl |= (dev->acs_capabilities & PCI_ACS_UF);
->>   
->> +	/*
->> +	 * Enable Unclaimed Request Redirect Control, I/O Request Blocking,
->> +	 * and Downstream and Upstream Port Memory Target Access Redirect.
->> +	 */
->> +	if (dev->acs_capabilities & PCI_ACS_ECAP) {
->> +		caps->ctrl |= PCI_ACS_IB;
->> +		FIELD_MODIFY(PCI_ACS_DMAC_MASK, &caps->ctrl, PCI_ACS_MAC_RR);
-> 
-> [Severity: Medium]
-> Can this logic unconditionally apply these access controls to unsupported
-> port types?
-> 
-> If the kernel enumerates a PCIe Endpoint or Upstream Port that has the
-> PCI_ACS_ECAP bit set in its ACS capabilities, this unconditionally modifies
-> PCI_ACS_DMAC_MASK and sets PCI_ACS_IB.
-> 
-> Because ECAP controls like DMAC only apply to Root Ports and Downstream Ports,
-> applying them to Endpoints or Upstream Ports writes to reserved bits, which
-> could risk hardware misbehavior.
-
-
-I don't think this needs a functional change either.
-
-The spec defines the ACS Enhanced Capability bit as required for Root
-Ports and Switch Downstream Ports that support the ACS Enhanced
-Capability mechanisms, and those mechanisms are only defined for Root
-Ports and Switch Downstream Ports. Endpoints and Upstream Ports are not
-expected to advertise PCI_ACS_ECAP, so the capability check alone keeps
-these controls to RPs and DSPs, with URRC/UMAC further limited to DSPs.
-This matches pci_acs_enabled() in patch 6, which only checks the enhanced
-controls on RPs and DSPs.
-
-
-> 
->> +		if (pci_pcie_type(dev) == PCI_EXP_TYPE_DOWNSTREAM) {
->> +			caps->ctrl |= PCI_ACS_URRC;
->> +			FIELD_MODIFY(PCI_ACS_UMAC_MASK,
->> +				     &caps->ctrl, PCI_ACS_MAC_RR);
->> +		}
->> +	}
->> +
-> 
-
+> >
+> > commit 94fd62b6d9e6afc2cf50f8dff89eedcdc57f24c9
+> > Author: CL Wang <cl634@andestech.com>
+> > Subject: dmaengine: atcdmac300: Add driver for Andes ATCDMAC300 DMA controller
+> >
+> > This patch adds support for the Andes ATCDMAC300 DMA controller. It provides
+> > scatter-gather, cyclic, and slave transfer capabilities.
+> >
+> > > diff --git a/drivers/dma/atcdmac300.c b/drivers/dma/atcdmac300.c
+> > > index 0000000000000..e0a8a980e2fe8
+> > > --- /dev/null
+> > > +++ b/drivers/dma/atcdmac300.c
+> > [ ... ]
+> > > @@ -82,9 +82,6 @@ static struct atcdmac_desc *atcdmac_alloc_desc(struct dma_chan *chan,
+> > >             INIT_LIST_HEAD(&desc->desc_node);
+> > >             INIT_LIST_HEAD(&desc->tx_list);
+> > >             dma_async_tx_descriptor_init(&desc->txd, chan);
+> > >             desc->txd.flags = DMA_CTRL_ACK;
+> > >             desc->txd.tx_submit = atcdmac_tx_submit;
+> > >             desc->txd.phys = phys;
+> > >     }
+> >
+> > [Severity: Medium]
+> > The desc_free callback is omitted from the transaction descriptor here.
+> > If a client prepares a descriptor but aborts and frees it before
+> > submission, the DMA engine core won't be able to free it.
+> >
+> > [ ... ]
+> > > @@ -494,11 +494,11 @@ static irqreturn_t atcdmac_irq_thread(int irq, void *dev_id)
+> > >     for (i = 0; i < dmac->num_ch; i++) {
+> > >             dmac_chan = &dmac->chan[i];
+> > >
+> > >             if (test_and_clear_bit(ATCDMAC_STA_TC, &dmac_chan->status)) {
+> > >                     atcdmac_advance_work(dmac_chan);
+> > >                     handled = true;
+> > >             }
+> > >
+> > >             if (test_and_clear_bit(ATCDMAC_STA_ERR, &dmac_chan->status)) {
+> > >                     atcdmac_handle_error(dmac_chan);
+> > >                     handled = true;
+> > >             }
+> >
+> > [Severity: High]
+> > The lack of mutual exclusivity allows both conditions to execute if both
+> > status bits are asserted simultaneously by the hardware. In this case,
+> > atcdmac_advance_work() would complete the current descriptor and start the
+> > next one, followed immediately by atcdmac_handle_error() wrongly aborting
+> > the newly started, innocent descriptor. Should these checks be mutually
+> > exclusive?
+> >
+> > [ ... ]
+> > > @@ -911,10 +911,8 @@ atcdmac_prep_dma_cyclic(struct dma_chan *chan,
+> > >             if (!desc)
+> > >                     goto err_desc_get;
+> > >             atcdmac_chain_desc(&first, &prev, desc, true);
+> > >     }
+> > >
+> > >     first->txd.flags = flags;
+> > >     dmac_chan->cyclic = true;
+> >
+> > [Severity: High]
+> > This modifies the channel-wide state during descriptor preparation.
+> > If a client prepares a cyclic transfer, does not submit it, and
+> > subsequently prepares and submits a non-cyclic transfer, this global
+> > flag remains set. When the non-cyclic transfer completes, could this
+> > cause atcdmac_advance_work() to treat it as cyclic and attempt to
+> > dereference dma_desc->at->next in atcdmac_start_next_trans(), leading
+> > to a kernel panic?
+> >
+> > [ ... ]
+> > > @@ -1144,10 +1144,8 @@ static void atcdmac_free_chan_resources(struct dma_chan *chan)
+> > >     spin_lock_irqsave(&dmac_chan->lock, flags);
+> > >     list_for_each_entry_safe(desc,
+> > >                              desc_next,
+> > >                              &dmac_chan->free_list,
+> > >                              desc_node) {
+> > >             list_del(&desc->desc_node);
+> > >             dma_pool_free(dmac->dma_desc_pool, desc, desc->txd.phys);
+> > >     }
+> >
+> > [Severity: Medium]
+> > This loop only frees descriptors currently sitting in the free_list.
+> > Combined with the missing desc_free callback above, does this mean any
+> > prepared but unsubmitted descriptors are permanently leaked and never
+> > returned to the dma_desc_pool?
+> >
+> > [ ... ]
+> > > @@ -1189,8 +1189,8 @@ static struct dma_chan *atcdmac_dma_xlate_handler(struct of_phandle_args *dmac,
+> > >     if (!chan)
+> > >             return NULL;
+> > >
+> > >     dmac_chan = atcdmac_chan_to_dmac_chan(chan);
+> > >     dmac_chan->dev_chan = true;
+> > >     dmac_chan->req_num = dmac->args[0] & 0xff;
+> >
+> > [Severity: Medium]
+> > The request number is extracted and masked to 8 bits. However, the hardware
+> > request selection registers (SRC_REQ_SEL_MASK, DST_REQ_SEL_MASK) are only
+> > 4 bits wide. Since FIELD_PREP silently truncates values, a device tree
+> > req_num of 16 will be programmed into hardware as 0 without warning.
+> > Should this value be explicitly validated against the 4-bit maximum?
+> >
+> > [ ... ]
+> > > @@ -1305,9 +1305,9 @@ static int atcdmac_init_ioremap_and_regmap(struct platform_device *pdev,
+> > >     regmap_read(regmap, REG_CFG, &val);
+> > >     num_ch = val & CH_NUM;
+> > >     size = sizeof(*dmac) + num_ch * sizeof(struct atcdmac_chan);
+> > >     dmac = devm_kzalloc(&pdev->dev, size, GFP_KERNEL);
+> > >     if (!dmac)
+> > >             return -ENOMEM;
+> >
+> > [Severity: High]
+> > The DMA controller structure is allocated using devres, tying its
+> > lifetime to the device binding rather than the dma_device refcount.
+> > If a client driver still holds a channel reference when the device is
+> > unbound, could this lead to a use-after-free when the client later
+> > releases the channel and atcdmac_free_chan_resources() accesses the
+> > freed dmac structure?
+> >
+> > [ ... ]
+> > > @@ -1543,9 +1543,8 @@ static int atcdmac_resume(struct device *dev)
+> > >     list_for_each_entry_safe(chan,
+> > >                              chan_next,
+> > >                              &dmac->dma_device.channels,
+> > >                              device_node) {
+> > >             dmac_chan = atcdmac_chan_to_dmac_chan(chan);
+> > >             spin_lock_irqsave(&dmac_chan->lock, flags);
+> > >             if (!list_empty(&dmac_chan->active_list))
+> > >                     atcdmac_start_next_trans(dmac_chan);
+> >
+> > [Severity: Medium]
+> > This condition actively prevents queue_list items from being serviced if
+> > the active_list is empty during resume. Since transfers submitted during
+> > suspend are placed into queue_list (because stop_mask prevents them from
+> > starting), won't they remain stranded indefinitely unless issue_pending
+> > is also called here?
+> >
+> > [ ... ]
+> > > @@ -1568,9 +1568,9 @@ static int atcdmac_suspend(struct device *dev)
+> > >     synchronize_irq(dmac->irq);
+> > >
+> > >     ret = atcdmac_wait_chan_idle(dmac,
+> > >                                  chan_mask,
+> > >                                  ATCDMAC_CHAN_TIMEOUT_US * dmac->num_ch);
+> > >
+> > >     return ret;
+> > >  }
+> >
+> > [Severity: High]
+> > If atcdmac_wait_chan_idle() times out, the function returns the error code
+> > without reverting dmac->stop_mask back to 0. Since the PM core would abort
+> > the system suspend and resume normal operations, wouldn't this permanently
+> > prevent any new transfers from starting?
+> >
+> > > diff --git a/drivers/dma/atcdmac300.h b/drivers/dma/atcdmac300.h
+> > > index 0000000000000..3d2d07effc26d
+> > > --- /dev/null
+> > > +++ b/drivers/dma/atcdmac300.h
+> > [ ... ]
+> > > @@ -148,10 +148,10 @@ enum dma_sta {
+> > >   * @ll_ptr_hi: Linked List Pointer Register (high 32-bit).
+> > >   */
+> > >  struct atcdmac_regs {
+> > >     unsigned int ctrl;
+> > >     unsigned int trans_size;
+> >
+> > [Severity: Low]
+> > The hardware descriptor layout uses native unsigned int instead of
+> > explicitly sized __le32 types. When these fields are populated in
+> > atcdmac_build_desc(), values are assigned directly without cpu_to_le32().
+> > Does this lack of endianness conversion break portability if this driver
+> > is ever used on a big-endian system?
+> >
+> > --
+> > Sashiko AI review · https://sashiko.dev/#/patchset/20260916134258.2178081-1-cl634@andestech.com?part=2
