@@ -1,194 +1,174 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11010066.outbound.protection.outlook.com [52.101.228.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508353F58D7;
-	Tue, 22 Sep 2026 04:50:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790052634; cv=none; b=ryliU61vyZiw+MQEAdt16Xu4rYK6izgMW3YwIVySzwA23kPvzkybohuqdEAE8AeVh6Y+zXYaaoc3Fml2qglCTDI+J8G8drKpz0DFoRT7d9meD6F9owGbS50lK5ArvUL1Vzq5w/DwChRXUSsr3EGxKsHVU75HFvoWVYGw0GxWa7k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790052634; c=relaxed/simple;
-	bh=PEP/Q0fLyjjVisI1vEah+1WYgiBoNp6hMMjrhwC22b8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ro/6yDb2T0+/I31fah1DE7sCVl1yVy+z6XhkbNfGEZ4HJz578PT24Y8zNuOKuLemhzS6l90T3RMnIYwcEje2cTKxZ1QlCbwoJH73eIPTy5PT2oQ10ecNZyyx1u7GfzheUrakVfW1SDcnlWgnAnwrI+EjJCCnp0kYH4X40xvaUVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RVMQm9iL; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC5F3FE644
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 05:08:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.228.66
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790053686; cv=fail; b=Mn1i/XnwlPVIItZRkw+vVfrx4GMAod+rWAp9w0BP6qRG0n5UlgUhP22w2R+BEDOrxiHYrzh91ZiKDgNQ4rLZje8cQ/6pAdD8oRllv7V0+CB2pM2Pkj1GZP0FbAKX8fJtMxcu+7xG/kcVLuy2QH7v/6IqSzwZr6AFXMNGLR2Q9B0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790053686; c=relaxed/simple;
+	bh=Tdl1E3wQ6DphgEwncAlg1HitHSOKIU0ruuzNEi6EV0o=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=qhrFggfO0BxjW86DtbptmMER41GHvywVevf2CAXvK1VvFYr0H21SzbtARb0bOxOhYTiJ+l8hvZNAVPzoyZIUxCzC1MgvSNVMPCh0V3HlMSpEL/3uNP3u1jEfuMXNzANwKVwkKsQeOuMF0ZlVQixZalluRQMkxb1Y+xTKdQYViRg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bp.renesas.com; spf=pass smtp.mailfrom=bp.renesas.com; dkim=pass (1024-bit key) header.d=bp.renesas.com header.i=@bp.renesas.com header.b=izlDoRM6; arc=fail smtp.client-ip=52.101.228.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bp.renesas.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bp.renesas.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RVMQm9iL"
-Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id BF0BF1F0089A;
-	Tue, 22 Sep 2026 04:50:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790052629;
-	bh=ojcEIkTjlUsOgOJG1uIbX85ioLtE3VCueZKAgiOoZDo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=RVMQm9iLHkBaGYRYy85Thk68h0HyKum/oan8ckhZUWTeqZ+6Zh0MwfsMlm08rSKlq
-	 zXHkEJpRixKcJEXYQg6/uF0gk0LgMruHHNzwNL2CC5/77nUO4NxRdIa4Z3rnBlVlf6
-	 KgClFJJeqtmcRJly80fY/WNjaQEH45DLIqNdeYwGuxZnhAM7JgZ3r9bnCBjZjsHW1X
-	 0rOf9X0mMRo+ojr6rDSlhkfxw3iKm+E+kXDqfKEG+gA8Rm2RdrArJDJWpbktfM9oIV
-	 UfXOUGGb4fOK8Lt34d0h5cycr2c/yr0qoI99OJOVMRVXIvnaSs3v1ksKAgv+HJEJ/9
-	 yt95GwEaNVFng==
-Date: Mon, 21 Sep 2026 21:50:29 -0700
-From: "Darrick J. Wong" <djwong@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Andrey Albershteyn <aalbersh@kernel.org>, linux-ext4@vger.kernel.org,
-	dsterba@suse.cz, tytso@mit.edu
-Subject: Re: [PATCH v16 15/21] xfs: add fs-verity support
-Message-ID: <20260922045029.GB6239@frogsfrogsfrogs>
-References: <20260918111539.1003439-1-aalbersh@kernel.org>
- <20260918111539.1003439-16-aalbersh@kernel.org>
- <20260918114308.03C7F1F000FF@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=bp.renesas.com header.i=@bp.renesas.com header.b="izlDoRM6"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rU7cvvfe2NYlTSe5RyBFa1hh8AlUjdNohCuPUNbA5qnFeCLVjJmy+QKKhZQs01KgUVedNgWNblGNWGI9EB5p9C44Yg6O4dVqiR1lCNZCStk6FlX1ftET8Cjdp/o1hM6DwkWRcQYN7IIr0mfaLK+Of3tEDqsWtjr+jUlwGK+PsxaJ+/AixNxAWxZ1jPIJqxcF+pKlz+Q6JWe4Y72t0KRTLbS04G4FIsNhvNZTuuh+DoA+p06In0EnrUPOcQAFoPoY/MXnbz/l4T83nAlUiorSsyxq/5DjcJ7Sy8o+kZFdjiq4JjA/C6/25xHzfD4erZ4uaVBJ8o2Cj0T3DbpIjC+3cA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Tdl1E3wQ6DphgEwncAlg1HitHSOKIU0ruuzNEi6EV0o=;
+ b=bERUPnBjkCE92XqSHJXcEeAxEpDAAuGL1MVhwCwF/xRxnezCxh9JgFfJEOc+w29rBSsbazemBKgXg9bJ6NeELlhZgicWv9fQDxNBzANvynlVFf5I9dwEAsL4ufY7Gz1H5XzOxCWwwmEdc9BtMj9FFuEiLCxGaI51hzyshW9KMKLQ00U3cvZM2BKALz6CDr5oQKGPLp1cfX2xRxflAka//0XldDTx+PjRN7qksgYd1QrhaNeoJRHgpwg4XKFvohlVWc80wfbHkKzSMUrY4DRyXJWx/au5kFcyJNt9OcGSeqFHCF1Yv8GyDsrPyEaI0x24lzzAYtZmpPYraeGV8C3L9A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=bp.renesas.com; dmarc=pass action=none
+ header.from=bp.renesas.com; dkim=pass header.d=bp.renesas.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bp.renesas.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Tdl1E3wQ6DphgEwncAlg1HitHSOKIU0ruuzNEi6EV0o=;
+ b=izlDoRM6CHLmFVG/1OgEPiz4bc6IQ3qOUsAEtKxxwacMwh4woIu5/5ySyBTpfCg0DhsBz995bZqHDxv266Lzc9kn1rEiSYUqZv5TQXed6XSLB0444x94a0fFPYX+RtwfPQcwPWz5bjj4dlsppBNJ++JQkga5/Pe4hEcoQjtjKhk=
+Received: from TY3PR01MB11346.jpnprd01.prod.outlook.com (2603:1096:400:3d0::7)
+ by TY4PR01MB17065.jpnprd01.prod.outlook.com (2603:1096:405:339::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.16; Tue, 22 Sep
+ 2026 05:07:59 +0000
+Received: from TY3PR01MB11346.jpnprd01.prod.outlook.com
+ ([fe80::87d1:4928:d55:97de]) by TY3PR01MB11346.jpnprd01.prod.outlook.com
+ ([fe80::87d1:4928:d55:97de%6]) with mapi id 15.21.0451.012; Tue, 22 Sep 2026
+ 05:07:59 +0000
+From: Biju Das <biju.das.jz@bp.renesas.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"robh@kernel.org" <robh@kernel.org>, wsa+renesas
+	<wsa+renesas@sang-engineering.com>, "conor+dt@kernel.org"
+	<conor+dt@kernel.org>
+Subject: RE: [PATCH v3 8/8] arm64: dts: renesas: r9a08g046: Enable TSU
+Thread-Topic: [PATCH v3 8/8] arm64: dts: renesas: r9a08g046: Enable TSU
+Thread-Index: AQHdSkrWvC14B112yk2j/j1H5umxfbbaBWOAgAAFvAA=
+Date: Tue, 22 Sep 2026 05:07:59 +0000
+Message-ID:
+ <TY3PR01MB11346E11D58AABA063062A01F86832@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+References: <20260922042707.116378-1-biju.das.jz@bp.renesas.com>
+ <20260922042707.116378-9-biju.das.jz@bp.renesas.com>
+ <20260922044402.02C321F000FF@smtp.kernel.org>
+In-Reply-To: <20260922044402.02C321F000FF@smtp.kernel.org>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=bp.renesas.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TY3PR01MB11346:EE_|TY4PR01MB17065:EE_
+x-ms-office365-filtering-correlation-id: eb5cca1e-16f0-4145-2731-08df186778a4
+x-ld-processed: 53d82571-da19-47e4-9cb4-625a166a4a2a,ExtAddr
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|22082099003|18002099003|38070700021|56012099006|11063799006|4143699003|10067099003;
+x-microsoft-antispam-message-info:
+ Ira53iCbXTv5LE3B/8uMQFfj0xT0G+8EulApPD7xrM+DIGPswblLxM/oku0LQAYhQfiYElpkAAe8abx3LvCbVQ5/r7RoZQ+JPVfHNWy2n2jrAvafaNSpZEE1Oj0UU0+DTdE4An1ZRQaqYBACr10Tt0Xj5P6gvnGsWmlHXXoKdH/JQClB42B3ItrA/JGs5e5669CNszegZA9FUfEyq1bJ3Pf4H3ALkm+kOg3A7+dRFq+iER17TtBKUFlX/jqztUKCv46BVVOBSSx+rB5YQuVMfrzDq1UIXs+wMFwUzh1OGt/LZQvUdfMT2cX9gQxrwvQ0J5JoqI68lfoijCOE4b8v8efGiiVB9GZc65OA11qlAaP8n8vtF1tz/Me/sg640fJ2dJ0m7HXeHY0UXrGK3yTo+lrTvQJqU177kXEPylJ86YSoSBetoozD7FuPJevpk50T2z/ADSdxq8mbksNJKqplVbpmonjRNki9uA2njbbJoLC1XzPKY1srw99sTqtznFALi21MrZQE30CN+YQ+s/tStJRZkk3l9vYJjTLYoiO0m1KH4WqXUBLhXqSjAeJiXfux8AS9EKIwSS+gqzyH+ats6oxThendNCHBNBjdnRCr0GWK0mnhdlpFxy90Api3TuTlndB62DfBf6r3ZSB+bQ+UQ6se1yPkc4mxlSLX7Y0QYEA=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY3PR01MB11346.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(22082099003)(18002099003)(38070700021)(56012099006)(11063799006)(4143699003)(10067099003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?RU1MUzZnRlhtbDVnd0twVkw3QjNFZ0JZdmNyeEJWTTZMNVZWV1I0aVgvbjlF?=
+ =?utf-8?B?TmR3TU9kT3BobDQzaUk1MHd1WU45bHQ2SjNxTFJLVklQY3lieTBjTjF3OVpH?=
+ =?utf-8?B?T3ZBdTVKTWVMY1VtZklZbklwc3hxeENZQzRmVTA2aVlGaVlvOVJjQ2hSKysz?=
+ =?utf-8?B?RDUyK3kxb1JHSFR0OGJtcHlKaldVTDJXNk1KMU4xelhHUFZJTm03bk1Vb1Rh?=
+ =?utf-8?B?VlJqRVovRlBjUEVOMGRiVzdqZWlrVngvakVCS1hkZkE1NGRzZk5XaGdNemFW?=
+ =?utf-8?B?YXd3SUsxSUptZ3c5dWYxaHJPK21kTkhEdmUxT2xzM2VmNXFVYUlseENjRURq?=
+ =?utf-8?B?WXViLy9XT1lsTW96ZUJWWGtWY1dtbkdMWmdDanJ1R3luZDVaZGxEZGprUkNW?=
+ =?utf-8?B?RTFwb1BlR3QvdFBtMEdHNGYyZFpId2lIZER3eHdSdDJyM2RzV0hLdk9SVUZC?=
+ =?utf-8?B?QnJNamNmOGlJRzVsbDYwL1dHYUw2R205UjQrSDZYSytldXVOMjN1MEFMVG5L?=
+ =?utf-8?B?OCsrQUI5RzBHRnVnS2VvTHFnS0lYSmVxUnNYaUhwUk1QN05xZzlJWXNyb1h4?=
+ =?utf-8?B?NEx2eGZwNmVnZytZcjRUY2VqTHlzUXNoNTlMVUZHVUM0SUpnTURSTkYvT1Fu?=
+ =?utf-8?B?aDF2akFjNmFoVFRGM1VxMnlyNmhxWVpnZmlkZG5tTzNVZVFiWGxQMC9HUHpl?=
+ =?utf-8?B?VGFya0tuUWwrWUdoMXg0Z0l4K0JDRmdsb0R1b2VrZHBFSkNYRkVDQ2MrdG9i?=
+ =?utf-8?B?NEhNQUl5cS83YlF6c253WE9vd0x0OHNRUjFZOEtFT0d0QVZPWHZ6MjFlb0Nu?=
+ =?utf-8?B?TUpjL1A2MjJoVUFvNEJGcmRIVXVCWEFwRkw1bkhkR0pQV0tOSjVPMUhST21x?=
+ =?utf-8?B?ZDBqSUF4Z0Q3anNVenJmNm91b1N1blZtY3JuV3hVSWc4dkJOMzhOdy9GQlI4?=
+ =?utf-8?B?ZlY0OTlSeUJZRU92VzB2YU55OU1RZjVkdjQwTWRIK3U3OTlNbmZReGhKU2M5?=
+ =?utf-8?B?L0NTZlA3bHFiNGhmMVQxa2NVTnpBU2huSDRNQWR2U3FDZWYwdXUybjNTSzB2?=
+ =?utf-8?B?VGp1aDNGYVJZY2FRcDN2aW9xUCszY3FoWUFQdFcxNDArUWN3d3F4Wi9reXl4?=
+ =?utf-8?B?Yk1ES0NIOTBsYTc4akxmOG1aU3J5amQxTWdENlZsZ1lhZ0JTZFZvYTRib0N3?=
+ =?utf-8?B?SUw1djlpY1duVm93RlFmWnI0UUF0aG9ZSER5alhUaHB5TnFjS3BvUUw5NTNM?=
+ =?utf-8?B?ZVREbldWVFhEd2R4UEdBZWsyb0lWWlZGT3lqNTBsYjZ5UVJzdGc0bXBOemJZ?=
+ =?utf-8?B?eGYzeFo2UXgwdHNoeXpMNjl0eEFmOXQzMm9Qejd1UUlsT3VydFY0NHlTeStY?=
+ =?utf-8?B?L2FKWDZLVGlOUHhNKzN1c1J2SnFYSksxT2dJd2tMQWpiVmVrbS9Rak5OaCsz?=
+ =?utf-8?B?dEJPSWdtVHJJTTRMbVFNbGltQUlvMHpPajBrOWZDVUx4T3lxVGljc0JUNWc3?=
+ =?utf-8?B?dUxOTnU2SnRSTGxZdm5RanlObDg0a3dSN1VVdDRWenMvaVRjS05qSzB3M21i?=
+ =?utf-8?B?Qm5YRjhwcW56aTBSZVQ2aUQ3V1hhbjhJa3BRVmNKOXIxQ2x1NkdrSU52YXBT?=
+ =?utf-8?B?dFAxSlJLeFFhK25WQmwyNW1GVmtpb3loUGV3YjU0SWI5bmEyeE1JK0M0S2Fx?=
+ =?utf-8?B?MlFqak9DTFVtdEUvNm8xRExhV1l4SU5oZWJIYm5oWjBqdGQvR3Y3dlVsZEVt?=
+ =?utf-8?B?aWI2Sk1pUmJ4NFNMR0VBbTg0NThQaFZ5T29lYTVCTjlncU9tMTd5T2ZsWncz?=
+ =?utf-8?B?aDVQRDlBaDNnUGlEM1d1Rms5MDMreFBtRlJiNHFtZVpXWGk0V1g4YU0ya0ta?=
+ =?utf-8?B?cDBNN1FPQWIzQ2FtWWNRSy9lNkxKaFNERTNnbHl4UU5UZjRKR3NNSy92RnhW?=
+ =?utf-8?B?OE1udVU1SlB0VkZqak9wcURUKyt0QTFuVnFnbERYM1lTVmJYU3U1T3ZMRXQy?=
+ =?utf-8?B?ZjQwZUx1am1ySERSQ2lDK3B3V2pOMTVFMXJjY1MzMU9IaHFaakxYN1ZmSlFj?=
+ =?utf-8?B?RU5aMlREME5rcmlidjhwclJmblFoNVh0NTZUQ3NGcTJDdGVQVHcxVXdTdUVV?=
+ =?utf-8?B?VjVuKzJENEtaQjZjZHdDMTdDVlFGSGR0RU1CcVE5Mm1FL1NUeEpTSWFCTTBD?=
+ =?utf-8?B?L0I2anc5bDlkbmd3cGtvUVNZUWxrTk9vOFVNelB6SVVySHNSZVM3NUNKZU9P?=
+ =?utf-8?B?K0NuYWR4TEtsY09BYVlicy9LS3lkTjh5aUIzRkVzaURqbEZzQWVaczB4WmJE?=
+ =?utf-8?B?REx6MHh0cTJ5UTlud0tZYWRkZjVDQ25XZldUd0ZzMTcrSDlyN1NiZz09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260918114308.03C7F1F000FF@smtp.kernel.org>
+X-OriginatorOrg: bp.renesas.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY3PR01MB11346.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: eb5cca1e-16f0-4145-2731-08df186778a4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Sep 2026 05:07:59.4522
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: AHJBYpyrNM4dTsgn9eoRDvfR3PIVF1PGLL3YRlo/rkGqAT+pfoYvowMK02Ug1/QaalN0SUBeeztdza5CqW5MS2tMRkSu/vBejSWSRSTvfH4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY4PR01MB17065
 
-On Fri, Sep 18, 2026 at 11:43:07AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] xfs: AB-BA lock inversion in xfs_fsverity_delete_metadata()
-> - [High] xfs: verity metadata destroyed after commit on xfs_free_eofblocks failure
-> - [Low] xfs: duplicate xfs_fsverity_delete_metadata call on cleanup failure
-> --
-> 
-> commit 2cf0e89721e69aa45ac23d60792bafc833b86f51
-> Author: Andrey Albershteyn <aalbersh@kernel.org>
-> 
-> xfs: add fs-verity support
-> 
-> This commit integrates fs-verity with XFS, storing the Merkle tree and 
-> descriptor in the data fork past EOF. It sets up the enablement process
-> and handles read and write operations for the verity metadata.
-> 
-> > --- a/fs/xfs/xfs_fsverity.c
-> > +++ b/fs/xfs/xfs_fsverity.c
-> [ ... ]
-> > +static int
-> > +xfs_fsverity_delete_metadata(
-> > +	struct xfs_inode	*ip)
-> > +{
-> > +	struct xfs_trans	*tp;
-> > +	struct xfs_mount	*mp = ip->i_mount;
-> > +	int			error;
-> > +
-> > +	xfs_ilock(ip, XFS_MMAPLOCK_EXCL);
-> > +	error = xfs_trans_alloc(mp, &M_RES(mp)->tr_itruncate, 0, 0, 0, &tp);
-> > +	if (error) {
-> > +		xfs_iunlock(ip, XFS_MMAPLOCK_EXCL);
-> > +		return error;
-> > +	}
-> > +
-> > +	xfs_ilock(ip, XFS_ILOCK_EXCL);
-> > +	xfs_trans_ijoin(tp, ip, 0);
-> > +
-> > +	truncate_inode_pages(VFS_I(ip)->i_mapping, XFS_ISIZE(ip));
-> 
-> [Severity: High]
-> Does this sequence create a lock inversion between the page/folio locks and
-> the XFS_ILOCK?
-> 
-> XFS lock ordering rules require folio locks to be acquired before the log space
-> reservation (xfs_trans_alloc) and the XFS_ILOCK. Because truncate_inode_pages
-> sequentially locks folios, calling it while holding XFS_ILOCK_EXCL could cause
-> an AB-BA deadlock if a background thread (like writeback) has locked a folio
-> and is concurrently trying to acquire the XFS_ILOCK for block mapping.
-> 
-> Could truncate_inode_pages be moved outside the transaction and before
-> acquiring XFS_ILOCK_EXCL?
-
-Yes, it should.
-
-> 
-> [ ... ]
-> > +static int
-> > +xfs_fsverity_end_enable(
-> > +	struct file		*file,
-> > +	const void		*desc,
-> > +	size_t			desc_size,
-> > +	u64			merkle_tree_size)
-> > +{
-> > +	struct inode		*inode = file_inode(file);
-> > +	struct xfs_inode	*ip = XFS_I(inode);
-> > +	struct xfs_mount	*mp = ip->i_mount;
-> > +	struct xfs_trans	*tp;
-> > +	int			error = 0;
-> > +	loff_t			range_start = xfs_fsverity_metadata_offset(ip);
-> > +
-> > +	xfs_assert_ilocked(ip, XFS_IOLOCK_EXCL);
-> > +
-> > +	/* fs-verity failed, just cleanup */
-> > +	if (desc == NULL) {
-> > +		error = xfs_fsverity_delete_metadata(ip);
-> > +		goto out;
-> > +	}
-> [ ... ]
-> > +	/*
-> > +	 * Ensure that we've persisted the verity information before we enable
-> > +	 * it on the inode and tell the caller we have sealed the inode.
-> > +	 */
-> > +	ip->i_diflags2 |= XFS_DIFLAG2_VERITY;
-> > +
-> > +	xfs_trans_log_inode(tp, ip, XFS_ILOG_CORE);
-> > +	xfs_trans_set_sync(tp);
-> > +
-> > +	error = xfs_trans_commit(tp);
-> > +	xfs_iunlock(ip, XFS_ILOCK_EXCL);
-> > +	if (error)
-> > +		goto out;
-> > +
-> > +	inode_set_flags(inode, S_VERITY, S_VERITY);
-> > +
-> > +	/*
-> > +	 * Proactively remove unwritten extents left by COW preallocations and
-> > +	 * write preallocation in the merkle tree holes and past descriptor,
-> > +	 * and any delayed preallocations
-> > +	 */
-> > +	error = xfs_free_eofblocks(ip);
-> > +out:
-> > +	if (error) {
-> > +		int	error2;
-> > +
-> > +		error2 = xfs_fsverity_delete_metadata(ip);
-> 
-> [Severity: Low]
-> Is it intentional to call xfs_fsverity_delete_metadata a second time if the
-> initial early cleanup fails?
-> 
-> If desc is NULL at the start of the function, xfs_fsverity_delete_metadata is
-> called. If that call returns an error, it jumps to the out label. Because
-> error is preserved, this block executes and calls xfs_fsverity_delete_metadata
-> again with the exact same failed state.
-> 
-> [Severity: High]
-> Can a failure in xfs_free_eofblocks cause the metadata of a fully committed
-> verity inode to be destroyed?
-> 
-> If the verity enablement is successful, the transaction is committed via
-> xfs_trans_commit and the inode is permanently marked with XFS_DIFLAG2_VERITY.
-> If the subsequent post-commit optimization call to xfs_free_eofblocks fails
-> (for example, due to memory constraints or space issues), it returns an error,
-> which leads directly to this unconditional cleanup path.
-> 
-> This deletes the Merkle tree and descriptor extents. Because the on-disk flag
-> was already committed, the file remains verity-enabled but loses its metadata.
-> This would permanently fail verity validation and lock the user out of their
-> file.
-> 
-> Should this cleanup be skipped if the transaction has already been committed?
-> 
-> > +		if (error2)
-> > +			xfs_alert(ip->i_mount,
-> > +"ino 0x%llx failed to clean up new fsverity metadata, err %d",
-> > +					I_INO(ip), error2);
-> > +	}
-> > +
-> > +	xfs_iflags_clear(ip, XFS_VERITY_CONSTRUCTION);
-> > +	return error;
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260918111539.1003439-1-aalbersh@kernel.org?part=15
-> 
+SGkgU2FzaGlrbywNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBzYXNo
+aWtvLWJvdEBrZXJuZWwub3JnIDxzYXNoaWtvLWJvdEBrZXJuZWwub3JnPg0KPiBTZW50OiAyMiBT
+ZXB0ZW1iZXIgMjAyNiAwNTo0NA0KPiBTdWJqZWN0OiBSZTogW1BBVENIIHYzIDgvOF0gYXJtNjQ6
+IGR0czogcmVuZXNhczogcjlhMDhnMDQ2OiBFbmFibGUgVFNVDQo+IA0KPiBUaGFuayB5b3UgZm9y
+IHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBmb3VuZCAxIHBvdGVudGlhbCBp
+c3N1ZShzKSB0byBjb25zaWRlcjoNCj4gLSBbTWVkaXVtXSBhcm02NDogZHRzOiBpby1jaGFubmVs
+cyBzcGVjaWZpZXIgdXNlcyBzb2Z0d2FyZSBhcnJheSBpbmRleCBpbnN0ZWFkIG9mIGhhcmR3YXJl
+IGNoYW5uZWwNCj4gLS0NCj4gDQo+IGNvbW1pdCBlNDMzNjZmODBjZmZmZDMyYWUwMjZiMzNhNmFk
+NmMxNzBiMTI1ZTc4DQo+IEF1dGhvcjogQmlqdSBEYXMgPGJpanUuZGFzLmp6QGJwLnJlbmVzYXMu
+Y29tPg0KPiANCj4gYXJtNjQ6IGR0czogcmVuZXNhczogcjlhMDhnMDQ2OiBFbmFibGUgVFNVDQo+
+IA0KPiBUaGlzIGNvbW1pdCBhZGRzIGNvb2xpbmcgY2VsbHMgdG8gQ1BVIG5vZGVzIGFuZCBkZXNj
+cmliZXMgdGhlIEFEQzEgYW5kIFRTVSBub2RlcyB0byBlc3RhYmxpc2ggYSBDUFUNCj4gdGhlcm1h
+bCB6b25lLiBJdCBjb25maWd1cmVzIHBhc3NpdmUgYW5kIGNyaXRpY2FsIHRyaXAgcG9pbnRzIGFs
+b25nIHdpdGggY29vbGluZyBtYXBzIGZvciB0aGVybWFsDQo+IG1pdGlnYXRpb24uDQo+IA0KPiA+
+IGRpZmYgLS1naXQgYS9hcmNoL2FybTY0L2Jvb3QvZHRzL3JlbmVzYXMvcjlhMDhnMDQ2LmR0c2kN
+Cj4gPiBiL2FyY2gvYXJtNjQvYm9vdC9kdHMvcmVuZXNhcy9yOWEwOGcwNDYuZHRzaQ0KPiA+IGlu
+ZGV4IGM2M2E4NTdmMGU1YjAuLmEyZjY3MThjMDA0M2EgMTAwNjQ0DQo+ID4gLS0tIGEvYXJjaC9h
+cm02NC9ib290L2R0cy9yZW5lc2FzL3I5YTA4ZzA0Ni5kdHNpDQo+ID4gKysrIGIvYXJjaC9hcm02
+NC9ib290L2R0cy9yZW5lc2FzL3I5YTA4ZzA0Ni5kdHNpDQo+IFsgLi4uIF0NCj4gPiBAQCAtMjcw
+LDYgKzI3NCwzNyBAQCBzY2lmNTogc2VyaWFsQDEwMDRlMDAwIHsNCj4gPiAgCQkJc3RhdHVzID0g
+ImRpc2FibGVkIjsNCj4gPiAgCQl9Ow0KPiA+DQo+ID4gKwkJYWRjMTogYWRjQDEwOGMwMDAwIHsN
+Cj4gPiArCQkJY29tcGF0aWJsZSA9ICJyZW5lc2FzLHI5YTA4ZzA0Ni1hZGMxIjsNCj4gWyAuLi4g
+XQ0KPiA+ICsJCQkjaW8tY2hhbm5lbC1jZWxscyA9IDwxPjsNCj4gPiArDQo+ID4gKwkJCWNoYW5u
+ZWxAOCB7DQo+ID4gKwkJCQlyZWcgPSA8OD47DQo+ID4gKwkJCX07DQo+ID4gKwkJfTsNCj4gPiAr
+DQo+ID4gKwkJdHN1OiB0aGVybWFsQDEwOGQwMDAwIHsNCj4gPiArCQkJY29tcGF0aWJsZSA9ICJy
+ZW5lc2FzLHI5YTA4ZzA0Ni10c3UiOw0KPiA+ICsJCQlyZWcgPSA8MCAweDEwOGQwMDAwIDAgMHgx
+MDAwMD47DQo+ID4gKwkJCWNsb2NrcyA9IDwmY3BnIENQR19NT0QgUjlBMDhHMDQ2X1RTVV9QQ0xL
+PjsNCj4gPiArCQkJcmVzZXRzID0gPCZjcGcgUjlBMDhHMDQ2X1RTVV9QUkVTRVROPjsNCj4gPiAr
+CQkJcG93ZXItZG9tYWlucyA9IDwmY3BnPjsNCj4gPiArCQkJI3RoZXJtYWwtc2Vuc29yLWNlbGxz
+ID0gPDA+Ow0KPiA+ICsJCQlpby1jaGFubmVscyA9IDwmYWRjMSAwPjsNCj4gDQo+IFtTZXZlcml0
+eTogTWVkaXVtXQ0KPiBEb2VzIHRoaXMgaW8tY2hhbm5lbHMgcHJvcGVydHkgY29ycmVjdGx5IG1h
+cCB0byB0aGUgaGFyZHdhcmUgY2hhbm5lbCwgb3IgZG9lcyBpdCBiYWtlIGEgTGludXgtc3BlY2lm
+aWMNCj4gc29mdHdhcmUgaW5kZXggaW50byB0aGUgZGV2aWNlIHRyZWU/DQoNClllcywgUGxlYXNl
+IGNoZWNrIHRoZSBjb2RlWzFdIHdoaWNoIG1hcHMgTGludXgtc3BlY2lmaWMgc29mdHdhcmUgaW5k
+ZXggMA0KdG8gaGFyZHdhcmUgY2hhbm5lbCA4Lg0KDQpodHRwczovL2VsaXhpci5ib290bGluLmNv
+bS9saW51eC92Ny4zLXJjMy9zb3VyY2UvZHJpdmVycy9paW8vYWRjL3J6ZzJsX2FkYy5jI0wzNTQN
+Cg0KQ2hlZXJzLA0KQmlqdQ0K
