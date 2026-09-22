@@ -1,43 +1,44 @@
 Received: from mx.itxnorge.no (itx-kvm-14.itxnorge.no [91.189.121.228])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1960D23BCED
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 21:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE40541D647
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 21:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.189.121.228
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790113396; cv=none; b=Hhuoi7hbmux7BsEhJ6CzQSewQ9mkWYlcz1S9zYL1oe4vcgX1hnmAVHsa5xrDglu2p8r5W3+2MBJ23aJOpMefR2T0xF1oSeO9iyp9Mkqkuo6cQJz2uaS302mRJTBJ0zvhp7WXz+OPM7thBEEDXxtQ61kR7LAvQNv6aBvpN1yo39o=
+	t=1790113760; cv=none; b=U7UV/pUzgynYb3Ep3USryP/Ts1Vh4T/IOnVJLaLxgx5wVhl60mK5bre9qykY21eSZEwG4yWmuMH4du/JmE977arx6bQ/kRn78BvXMwXojOqx6MNQspJFDlKlJPEBBt+JwC+HaXnsx48vt8IZHLnyn8u3Z8w9KkuuG3Sg2MS2J78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790113396; c=relaxed/simple;
-	bh=SVJnzqrfqe6tpnNeAHW2A9HHOf1H8gin59l3ndisO2s=;
+	s=arc-20240116; t=1790113760; c=relaxed/simple;
+	bh=K2q/IiVeToklBnO8gewJGyEpByPIx8NJWeRyRhudUns=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=R1BdFKm+9EGXjjJKzXoDLBB49I556R0rIaSdm3Fjrch7uB9v+zY9NDN1+kNVAz/q2YXzO/CHXcbvH12SfoQQypSoNkPP9TtIcSv+5/92MBZt5nmIn8O6PNSA9vMzIU+COz2gw9b2lLK7z+YBKp+UIiDdadWSKankrN8qGmk91+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=itx.no; spf=pass smtp.mailfrom=itx.no; dkim=pass (1024-bit key) header.d=itx.no header.i=@itx.no header.b=W0JaZZB0; arc=none smtp.client-ip=91.189.121.228
+	 Content-Type:MIME-Version; b=HAPROkSi1kgdQwXsqy7nGW/AdtihaGGX7HTuCppKElVLN71UFgsQKCsaUt/r4d+nXt0Bct1K+bEWdLVuCfqK6l+hBtJQ3x7Em+Y/Ta0dd8tWPYoQbriALvD56zey7YCzS/9JOXZH3/wVZFaM2mn3kd9rooJhm7TTOBOEZGbYGrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=itx.no; spf=pass smtp.mailfrom=itx.no; dkim=pass (1024-bit key) header.d=itx.no header.i=@itx.no header.b=L9hylgpP; arc=none smtp.client-ip=91.189.121.228
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=itx.no
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=itx.no
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=itx.no header.i=@itx.no header.b="W0JaZZB0"
-Message-ID: <60dfd32837f9d1752fb96a35d8ce1d08c89e5d5d.camel@itx.no>
+	dkim=pass (1024-bit key) header.d=itx.no header.i=@itx.no header.b="L9hylgpP"
+Message-ID: <66a27d3ccb61f716b158582b0c59beca2a4546ea.camel@itx.no>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
-	t=1790113369;
+	t=1790113725;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=SVJnzqrfqe6tpnNeAHW2A9HHOf1H8gin59l3ndisO2s=;
-	b=W0JaZZB0LWLOIZl2xXLxxh4Vxs8ESsJsyYz57wYj1jkXMj0I1CENqxV6xFY+s6Bh5e35G1
-	k9WjTXve3z08zaLWuUBGjNru2Kn7Ne7WVFUWQ7MQo94IQ0xakcGdXOb/ZnYzvNccpUovqj
-	khQTfMv2hpuYcXjwVO6Gm1DWUBCDtpo=
+	bh=K2q/IiVeToklBnO8gewJGyEpByPIx8NJWeRyRhudUns=;
+	b=L9hylgpPqHSCFvgqmKGozQpYM3wBwvrXXOZskZhjkOu5bKq5LrHfRHWezNjTNXk+T7q1VH
+	FQwFy4l0N9YJQ1Xli5TJ70pOiu1fZRuuXL3MVsGsBhGd7iqGOXjn8LnqVaq6knl1s6ue5i
+	EO2Uu6LnW80zmOY5tWMZidHygoZHgUQ=
 Subject: Re: [RFC PATCH v2 2/3] sparc64: Support PERF_SAMPLE_REGS_USER and
  PERF_SAMPLE_STACK_USER
 From: Stian Halseth <stian@itx.no>
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-perf-users@vger.kernel.org
-Date: Tue, 22 Sep 2026 23:42:48 +0200
-In-Reply-To: <20260922203330.F2EEF1F000FF@smtp.kernel.org>
+Date: Tue, 22 Sep 2026 23:48:45 +0200
+In-Reply-To: <60dfd32837f9d1752fb96a35d8ce1d08c89e5d5d.camel@itx.no>
 References: <20260922201507.1719668-1-stian@itx.no>
 	 <20260922201507.1719668-3-stian@itx.no>
 	 <20260922203330.F2EEF1F000FF@smtp.kernel.org>
+	 <60dfd32837f9d1752fb96a35d8ce1d08c89e5d5d.camel@itx.no>
 Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-h1G8m4YK3/m3z6uxca5o"
+	protocol="application/pgp-signature"; boundary="=-1IGfxrB9S1M0tN8YfY7N"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -46,81 +47,68 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 
 
---=-h1G8m4YK3/m3z6uxca5o
+--=-1IGfxrB9S1M0tN8YfY7N
 Content-Type: text/plain; charset="ISO-8859-1"
 Content-Transfer-Encoding: quoted-printable
 
+Hi, correcting a typo in my previous reply.
 
-On Tue, 2026-09-22 at 20:33 +0000, sashiko-bot@kernel.org wrote:
+On Tue, 2026-09-22 at 23:42 +0200, Stian Halseth wrote:
+> > [Severity: Medium]
+> > For PERF_REG_SPARC_O6 (%sp), returning the raw register means the
+> > stack
+> > pointer remains biased by 2047 bytes on SPARC64.
+> >=20
+> > While the commit message notes this biased address is expected by
+> > consumers, when perf_output_sample_ustack() attempts to copy the
+> > stack, it
+> > will start 2047 bytes below the actual mapped stack frame.
+> >=20
+> > Could this high probability (~25% for 8KB pages) of starting in an
+> > unmapped
+> > page cause __copy_from_user_inatomic() to immediately fault and
+> > abort
+> > the
+> > copy? Would this result in a 0-byte dynamic stack dump even for
+> > perfectly
+> > valid stack frames, breaking userspace DWARF unwinding and
+> > profiling
+> > tools?
 >=20
-> [Severity: High]
-> Since %g0 is hardwired to zero on the SPARC architecture, the trap
-> entry
-> code does not save it into the PT_V9_G0 slot (u_regs[0]) of the
-> pt_regs
-> structure on the kernel stack.
+> I was thinking about setting up some real world tests to see if this
+> is
+> valid/producable, but I think I will instead go back on my first
+> statement in v1, and start the dump at the stack's actual address:
+> %o0
+> + 2047 for a 64-bit stack.=A0
+Typo: %o0 + 2047 should be %o6 + 2047
+
+Getting late, good night ;-)
 >=20
-> When an unprivileged user configures a perf event to sample
-> PERF_SAMPLE_REGS_USER or PERF_SAMPLE_REGS_INTR and requests the %g0
-> register (where idx=3D0), does returning regs->u_regs[0] here expose
-> uninitialized kernel stack memory to userspace per sample?
+> Unless I'm missing something, that should clear this concern.
 >=20
-
-Yeah, that is probably valid for trap taken in the kernel...
-
-I checked the implementation for mips and longaarch, and I will drop
-%g0 from the ABI, and put PC in its slot instead.=20
-
-Putting that into a v3 later.
-
-
-> [Severity: Medium]
-> For PERF_REG_SPARC_O6 (%sp), returning the raw register means the
-> stack
-> pointer remains biased by 2047 bytes on SPARC64.
+> Then the tools and elfutils patches take their dump base from there.
+> There aren't really any other consumers anyway, so changing this now,
+> rather than later, is probably a good idea.
 >=20
-> While the commit message notes this biased address is expected by
-> consumers, when perf_output_sample_ustack() attempts to copy the
-> stack, it
-> will start 2047 bytes below the actual mapped stack frame.
+> I will wait for some more feedback, and starting preparing a v3
+> tomorrow.
 >=20
-> Could this high probability (~25% for 8KB pages) of starting in an
-> unmapped
-> page cause __copy_from_user_inatomic() to immediately fault and abort
-> the
-> copy? Would this result in a 0-byte dynamic stack dump even for
-> perfectly
-> valid stack frames, breaking userspace DWARF unwinding and profiling
-> tools?
-
-I was thinking about setting up some real world tests to see if this is
-valid/producable, but I think I will instead go back on my first
-statement in v1, and start the dump at the stack's actual address: %o0
-+ 2047 for a 64-bit stack.=A0
-
-Unless I'm missing something, that should clear this concern.
-
-Then the tools and elfutils patches take their dump base from there.
-There aren't really any other consumers anyway, so changing this now,
-rather than later, is probably a good idea.
-
-I will wait for some more feedback, and starting preparing a v3
-tomorrow.
 
 --=20
 Best regards
 Stian Halseth
 
---=-h1G8m4YK3/m3z6uxca5o
+--=-1IGfxrB9S1M0tN8YfY7N
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQTK1ph9OaYoND1R57zoeAEuJe36VgUCarL2WAAKCRDoeAEuJe36
-VjN5AQCYQ/qkS+NpHKO+6WEEoZYqir3tfnwFJjV0LuL1/CegnQD9Fq5hYK+wPv+6
-xPb9yH7nX6Hh0JrUD/IV2rm1vncb3gE=
-=jfrk
+iHUEABYKAB0WIQTK1ph9OaYoND1R57zoeAEuJe36VgUCarL3vQAKCRDoeAEuJe36
+VjWHAP9KYb5fVFovIEpUddZZgoyoWxwJOfw79OZkjU9gneaRWgD/YwvlEkQZBjnL
+mDI74J5Y0k9R4eqKHhrADn851qUq9gM=
+=GHv8
 -----END PGP SIGNATURE-----
 
---=-h1G8m4YK3/m3z6uxca5o--
+--=-1IGfxrB9S1M0tN8YfY7N--
