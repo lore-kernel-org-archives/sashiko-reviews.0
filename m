@@ -1,573 +1,165 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from mail-ej2-f12.google.com (mail-ej2-f12.google.com [74.125.228.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7F451D537
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 10:53:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790074435; cv=none; b=uH+9LMgF3wIl9ipu1apbLpsgDtEoNGMUQvhtoElicGlupCbi88cOA5zYZYWRpDjB/oyLTujFaALUAuokwg/gZcwbE7MnAsRoo+dJrNLig10ba66zWEN9fI1X9FCgn05QfnTmzhAHIN0Rp0897eXZSHFqG7JoG8KBPrQcCUXk8EE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790074435; c=relaxed/simple;
-	bh=vNW+yTPcuPzdtPjrYo3/hoVXx9nsapP55EEFBlMGMb0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FvCm10xBZh+j+q+2OX7Vn1UE1fghQJGvgLJtjyIPUZ1hOm3YvwAbsNxONs9CZrmnbBSZwmythDb60GhaMAKnV2vgl8qucFuSnySFH+5PAM8BE8a9xG7+IRrUKbvDy5g5ZNKcLfiD71o7cp7gNezgX5AVBiCPx7wfMzGsR8jFYMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rCHIhdlc; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2308151813B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 11:25:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.140
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790076312; cv=pass; b=WQhcfGrPitJvD1bRQacn1g2y1LKDfj8fOjPPi7Wgzo5rn7YY9g45CHXGLeyaNdvD1HSWBSm3c/X0nRJPr9WEOP/8FqVqeLVMFv6aV1ubIAHriwsIJ147rh8oEogWdDv2NCopVwILlBU5B3njx/veRgUNEElT/cziT46ozJlXmrY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790076312; c=relaxed/simple;
+	bh=EmhzqAZw/qsy9hPwoqGI05KwTWaUgfqEurYCk0QECGg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lR/n4DPdsk0c4Vg1gqHDIKLShw1SBqBvaiAHPwZVxnQPYQXUkuj5q5KouZFH3KubJ0y0j8TnhlwQK2MNANJy/KZfxWJsgnexjmOEqU9vhVOWQF/QJNRwb+X1yuaJwI9Fr9OahERY6DE8jz0egrhd/vOrss2EpiVBR9BJBgQLqGA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FeSsiBKl; arc=pass smtp.client-ip=74.125.228.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rCHIhdlc"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-86ec25cf7ecso706653b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 03:53:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FeSsiBKl"
+Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c254f9f7dbeso458606366b.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 04:25:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790076299; cv=none;
+        d=google.com; s=arc-20260327;
+        b=p84Opjmi1RptywX1u500VahcQtsTaO+W7Y+/Q7RfQlMZrRG9Ce6U5/mdLHKYhlXZcv
+         82Zl6SmmsBlQL0WGUfuZna8EFv5Bx5aOM7KwVNnzzZAabHuyYwXcBEqUscEn/nQS83yE
+         az4GHajQCFVWi2u4SrscjiX+A2aUlp84lKev8ZW7yPiHo7hbxNur0wPZu1VyCkm1z83L
+         rXQNHxxYXFY2lAfsyCrsviXQshKfT7sgKCXOm5n/B3jemCt1AZDIQJgyfkVMRG2eGysL
+         ZK0z6stU45Ir1zxMFkQVqrNerbtfYQxQJ8ew1DINcnhEFYbwymlqIDY0AeATgOMrDwim
+         VDJw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=fzm1mrvF9kERqoNz+AruuNv230gzZVpxKexqbqU/OgM=;
+        fh=HhTV4G5+xnJ3thQDc6cpcOYMN3AitX7qB0zPfKB89LY=;
+        b=OO8L9GBXXk8UBXkKq5mP9b6Nn/PqwmhR+I1jkqwiDhav2RDgOyvqquLZ8DUxYSb49S
+         /G7RnVTy+iM8eWDcVM1+7C9Vou10WFBXWHSYcSv8FjlDnJLegDEBNMZvIHDsrS5KJMxd
+         bdbLVpC5Yr3p/pclClGHC1RiivlQ2UuPac1sKld5LMie7Be2HQCSLXpdyjy7WpLAgMNp
+         9TXfNGdFEG8QYdZYO0u70nU9bXFP0fOXaJ5TEUUA5J5WVNUjLyu0Wa6fCnT0+wMRU1jS
+         v6Bv1qldNbkWqJnJobIIufaBDHmeudrLsvMpJCDrLS9WyJHpB/A2TMrc/uHSPM6xAGvR
+         QKJw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790074426; x=1790679226; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=H9gt7rJ9fjZQU3mBCr/CwTz7RfxeR0IdQmWX86WZbcc=;
-        b=rCHIhdlccjtUf11InVNlv/862x7x1Xhnd5EddtAb3Qfcuk35EGKggGI498Qi/ipOaZ
-         S9W/4ixGnlRs5Of0SRr+6eL6VTa5ZTUeWQEl4Q0XKbDALGdnw8YnW/6k8UcX8Dop3Yj5
-         nUB9eUexTGlN3pHgWZkXs2KfI9ou3fhUuAJr4SZHEpmJqxwBReWxN51aaLX6673O5dCF
-         fW4rrh4riDQ7xMl90wYRtXNLEVnMsNtmbfepl0UbcuBPCHq1Zz276+kiRsGo45pyUdKl
-         HOZQGzcyHGV9v8+EqnGHrBn0TFDou3VgA2yTRqNygMj5PHGslH+NvOmhFronWDO5ecMk
-         Rrdw==
+        d=gmail.com; s=20251104; t=1790076299; x=1790681099; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=fzm1mrvF9kERqoNz+AruuNv230gzZVpxKexqbqU/OgM=;
+        b=FeSsiBKlYvaDWTvVDpoGaYAPORQOFnrBXA9PUvEMX+YjvKY9W7vTWq1EIKO7wAj5wM
+         YROm0T9R7dJ2vRqTnXoBH6oMwZhhYQB+U7TLyLEit77qIsXlgrMTuzqdTlzn90rI+Qob
+         XsX9f7jAO1kktntBmbtxurjxTI1QfO3Nx2oezxlgwdUYxv216aUnwnIBQ2+O2NHBofBH
+         0vwMrbIn29Dys4EN7Z7VTbMxzLD5M5xYqrKcNAW6R0K3BmdX9ixVugF8BQwl9JVci4kf
+         MtcSBa3x6fNdIPXhkkAACdZmQHTdBP2WTNiyszr35UVZASHAljgnEkG0zDB+zOGfHmT6
+         oIpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790074426; x=1790679226;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=H9gt7rJ9fjZQU3mBCr/CwTz7RfxeR0IdQmWX86WZbcc=;
-        b=xYQaWeDYL83yrL3yePwBGptxC/0RJeXlNQyRVxWw3OSRg5JfWEuX4YziTglJEHPQzU
-         hlswgRnCcIu0lGi3UI7hahxeuZgqkpANTnP1ihGdUexoY4e5k9f0dkzBYGR28OmwWTb/
-         1pEjETs8i/OAEwyeSQZNBof6+qCa8S4jaXGRyi58dwGHHTpwmhehoNn/i02EaKh+s4J2
-         p7fzIF6xMCm4xOcmkvrp81HY1xOKYa37F1Uuvn97F9e7sYO14wfafF7jS25yg0PUiEF4
-         oajOwCYCT/y1lvwCCzpcl4a2ei1KSNJbdlHeGssSmsPMwYDE4IBdL+Oi/RjUCPC8AOzp
-         FWRA==
-X-Forwarded-Encrypted: i=1; AKwUvByKWEIvWbCW8FfoqtijHXVEHDdzS05PFWPFWMPcDlyrKKkJs5FddOFvbb7t3v7oyrg+LGmmT5Z812HrFKmNJ+U=@lists.linux.dev
-X-Gm-Message-State: AFuF++kIECCgUFJRSPnaw9IUChCTz6Mdaspb66L8RNTvTOB8NmY9+OCR
-	+S312B3FFC/n4PE/1YdpAcjcDrCZsHqKeyFwoPGn2csBYCb94uDp5Beb
-X-Gm-Gg: AYBFou0oFUyXrj3w1Nnm7Nx0j4xorDPxc85Riuoaiy1mi6SbyOPsavUV4H8QnHmMduM
-	lqWK/ev94yQQtR1WdlLVdXXzD87mks7RLywCYPorIsLLWUx4K9iZY7DZmf0I+kTegx+FSVXspT/
-	uHaNRPPcSqPhCH3d6UGrFvzfKmuKvhwDWOjnUlhOZ07L2kwnr8j87qNcLEXVyZ1jA+Xu12jzpOT
-	bJjeWtg8oBgmAWkITHCczZPn+/xOsshyJD1R5GBkOnXiD//U7TyAuHZafqY/zJ6sY0PQIH7jDfg
-	oGW80geChiVoFiqYhqH8f34xL8AMtxcvxDepABPg7Db7Sld/8FQYu6/tAl20L5KWFo4ZyL7YDaQ
-	Td0DgkkPngd0WGLIFIHph7U0b9NV5lcMMZMHQlipQkPCsC5dO7p2b7oeo46V1l9jjAzK7pA6RlZ
-	vvrClAXuSxkeSoU116whdJTni1iN7PZxN70vK5GZmOlVXzmEw++tCx2bOD7SIzNfINO5XVcloGW
-	YBY6Z3RsQQ04gS0O8f3svMwXcdd/+rX5LPpnbw=
-X-Received: by 2002:a05:6a00:440e:b0:874:2166:4b76 with SMTP id d2e1a72fcca58-87c844386e3mr546940b3a.28.1790074426414;
-        Tue, 22 Sep 2026 03:53:46 -0700 (PDT)
-Received: from localhost.localdomain ([2409:8a1e:2e81:7320:e5f5:eb9b:fe8e:9197])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-87c333a93adsm647344b3a.58.2026.09.22.03.53.39
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 22 Sep 2026 03:53:45 -0700 (PDT)
-From: Yuchao Zhang <ndaugoing@gmail.com>
-To: Marc Zyngier <maz@kernel.org>
-Cc: Oliver Upton <oupton@kernel.org>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	James Morse <james.morse@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Zenghui Yu <yuzenghui@huawei.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	sashiko-reviews@lists.linux.dev,
-	kvmarm@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Yuchao Zhang <ndaugoing@gmail.com>
-Subject: [PATCH v2] KVM: selftests: arm64: Add test for cross-vCPU LPI disable race
-Date: Tue, 22 Sep 2026 18:53:31 +0800
-Message-ID: <20260922105331.40498-1-ndaugoing@gmail.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260922102959.41FFA1F000FF@smtp.kernel.org>
-References: <20260922102959.41FFA1F000FF@smtp.kernel.org>
+        d=1e100.net; s=20260707; t=1790076299; x=1790681099;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=fzm1mrvF9kERqoNz+AruuNv230gzZVpxKexqbqU/OgM=;
+        b=X1F/nueYJzhpdt4ZXtN6Sk1kmxPF1FvRrQzcj/5gC0cnNgJUpuSCdxjWOlN7QsOQBR
+         K6h6kVg8dpfWvkKw9gvTUK/pcGwCi+rZdFkXlDqL9U54OLl2OIKivjhEh0fkfrc7wNBx
+         kirevJzE1zMCLoDkv0t9E14AmHZLeLBdxXOyC7iRuISkfYYQ3mQYfycZXRD2wiDpAk8e
+         mgcOQoUcRlP8Y+2+PhiqZHM/E+U3VVNwjJvQaYOVRVcv4ee8rVFl/gum5cVLLyMnWa7E
+         InrhcWB1i6ZTDigM9FE6qP8ICdyxQe3+mME7VjUSwPnJ9jdfgoXvnEix19lCXG9Ub6nl
+         3xZQ==
+X-Gm-Message-State: AFuF++nV8Ivk2rlzYQqIifk1XEYLsEWTO9Bi5d6QrpjoDOmizNA8GeY9
+	QMpDYW3gjHUGYUtUR7XlGqKJho+0yNp10rvUbDZh2zfVSU3ejJ/qhA6+phslEtBbyaya868ga3r
+	MNhHAY3m6SPlDFZDPONmC+t3ZzyzjmTR83pqfQfwmNg==
+X-Gm-Gg: AYBFou2G58QSA84lGNdSpbZdsJWc3DbSn2oKcOouoi00yXGM+4AR38QhqxXfhUiTyKd
+	CgLd2CyhQhJ/r2U/GrKgGJWeCRkr7avItO1djbMo2dRiRrGTnYQsyKCTEyVbqHeI2P505OAJ646
+	ZmihO7n2pT1l805MQFgcOa3gOSxiBVB/S1YpUSTZn5Cie8R9VpSrbu4d2qq8gl0Aypk2KXYqbAE
+	BAqysV/0JLpW9rEr1CkB4p2mN9qgyqpqWHwXK62mgbzyLyBDgbD54+A7kFyfbvXAeovP0L78hOX
+	8N0T49P4O76vdMnJImmUsLH56/nEB4DVD5I4zb9ux7rIEXX4ierH6m8=
+X-Received: by 2002:a17:906:4fc9:b0:c29:4b79:e41a with SMTP id
+ a640c23a62f3a-c2a157097c1mr1120236066b.20.1790076298901; Tue, 22 Sep 2026
+ 04:24:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260922102959.41FFA1F000FF@smtp.kernel.org> <20260922105331.40498-1-ndaugoing@gmail.com>
+ <20260922110326.AA0491F000FF@smtp.kernel.org>
+In-Reply-To: <20260922110326.AA0491F000FF@smtp.kernel.org>
+From: Yuchao Zhang <ndaugoing@gmail.com>
+Date: Tue, 22 Sep 2026 19:24:46 +0800
+X-Gm-Features: AcwNN1V-zFTo6izci1n096lh7CG88Kkqv-Mn4cwhqLSFmEQdDbqY8YXhQayNhi8
+Message-ID: <CAC2BP3L1ATH2xS7Rp3RwqAjpd6ffSiavfNgxxQTruO1m2eMT5A@mail.gmail.com>
+Subject: Re: [PATCH v2] KVM: selftests: arm64: Add test for cross-vCPU LPI
+ disable race
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
+	Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Add a selftest that validates the behavior of remote LPI disabling
-while the target vCPU has in-flight/overflowing LPIs.
+Thanks for the review.
 
-The test configures an ITS with multiple LPIs targeting vCPU 0, which
-receives a continuous stream of MSIs forcing its List Registers to
-overflow into the ap_list. Concurrently, vCPU 1 repeatedly toggles
-GICR_CTLR.EnableLPIs on vCPU 0's redistributor.
+The test already gates on TEST_REQUIRE(kvm_supports_vgic_v3()), which
+is the check used by every vgic test in arm64/ (e.g. vgic_lpi_stress.c,
+vgic_irq.c, arch_timer.c).
 
-On unpatched kernels, this race can lead to a use-after-free or host
-kernel panic in vgic_fold_lr_state() due to a dangling last_lr_irq
-pointer. With the fix in place (stopping the VM and holding a
-refcount on last_lr_irq), the test runs to completion without errors.
+On arm64, kvm_arch_has_default_irqchip() is request_vgic &&
+kvm_supports_vgic_v3(), and the VM here is created with
+vm_create_with_vcpus(), so request_vgic is set and the two checks
+are equivalent. The arch-neutral helper is for the top-level
+cross-arch tests; no change needed.
 
-Signed-off-by: Yuchao Zhang <ndaugoing@gmail.com>
----
-v2:
-- Only send INVALL and SYNC for the mapped collection / target vCPU;
-  commands targeting unmapped collections or untouched vCPUs are
-  unnecessary and can stall the virtual ITS queue (Sashiko review).
-- Re-establish the ITS mappings after every EnableLPIs toggle, since
-  the disable path invalidates the ITS caches and the MSI flood would
-  otherwise go silent after the first iteration.
-- Bounds-check the -e argument and assert nr_lpis <= SZ_64K in
-  configure_lpis() so it cannot overflow the 64K ITT or LPI prop tables
-  (Sashiko review).
-- Correctly check KVM_SIGNAL_MSI return value (>0 on success) and count
-  successful injections, asserting at the end that at least one succeeded
-  (Sashiko review).
- tools/testing/selftests/kvm/Makefile.kvm      |   1 +
- .../selftests/kvm/arm64/vgic_lpi_disable.c    | 430 ++++++++++++++++++
- 2 files changed, 431 insertions(+)
- create mode 100644 tools/testing/selftests/kvm/arm64/vgic_lpi_disable.c
+Thanks,
+Yuchao
 
-diff --git a/tools/testing/selftests/kvm/Makefile.kvm b/tools/testing/selftests/kvm/Makefile.kvm
-index 96bab7002d39..cf0baec3f6c7 100644
---- a/tools/testing/selftests/kvm/Makefile.kvm
-+++ b/tools/testing/selftests/kvm/Makefile.kvm
-@@ -190,6 +190,7 @@ TEST_GEN_PROGS_arm64 += arm64/vcpu_width_config
- TEST_GEN_PROGS_arm64 += arm64/vgic_init
- TEST_GEN_PROGS_arm64 += arm64/vgic_irq
- TEST_GEN_PROGS_arm64 += arm64/vgic_lpi_stress
-+TEST_GEN_PROGS_arm64 += arm64/vgic_lpi_disable
- TEST_GEN_PROGS_arm64 += arm64/vgic_v5
- TEST_GEN_PROGS_arm64 += arm64/vpmu_counter_access
- TEST_GEN_PROGS_arm64 += arm64/no-vgic
-diff --git a/tools/testing/selftests/kvm/arm64/vgic_lpi_disable.c b/tools/testing/selftests/kvm/arm64/vgic_lpi_disable.c
-new file mode 100644
-index 000000000000..d3480369d760
---- /dev/null
-+++ b/tools/testing/selftests/kvm/arm64/vgic_lpi_disable.c
-@@ -0,0 +1,430 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * vgic_lpi_disable - Test cross-vCPU LPI disabling race condition
-+ *
-+ * Copyright (c) 2026 Yuchao Zhang <ndaugoing@gmail.com>
-+ *
-+ * This test verifies that disabling LPIs from a remote vCPU while the
-+ * target vCPU has in-flight/overflowing LPIs does not lead to use-after-free
-+ * or kernel panic.
-+ */
-+
-+#include <linux/sizes.h>
-+#include <pthread.h>
-+#include <stdatomic.h>
-+#include <sys/sysinfo.h>
-+
-+#include "kvm_util.h"
-+#include "delay.h"
-+#include "gic.h"
-+#include "gic_v3.h"
-+#include "gic_v3_its.h"
-+#include "processor.h"
-+#include "ucall.h"
-+#include "vgic.h"
-+
-+#define TEST_MEMSLOT_INDEX	1
-+#define GIC_LPI_OFFSET		8192
-+
-+#define TARGET_VCPU_ID		0
-+#define DISABLER_VCPU_ID	1
-+
-+static size_t nr_iterations = 200;
-+static gpa_t gpa_base;
-+static atomic_int lpis_injected;
-+
-+static struct kvm_vm *vm;
-+static struct kvm_vcpu **vcpus;
-+static int its_fd;
-+
-+static struct test_data {
-+	bool		request_vcpus_stop;
-+	u32		nr_cpus;
-+	u32		nr_devices;
-+	u32		nr_event_ids;
-+
-+	gpa_t		device_table;
-+	gpa_t		collection_table;
-+	gpa_t		cmdq_base;
-+	void		*cmdq_base_va;
-+	gpa_t		itt_tables;
-+
-+	gpa_t		lpi_prop_table;
-+	gpa_t		lpi_pend_tables;
-+} test_data = {
-+	.nr_cpus	= 2,
-+	.nr_devices	= 1,
-+	.nr_event_ids	= 64,
-+};
-+
-+static void guest_irq_handler(struct ex_regs *regs)
-+{
-+	u32 intid = gic_get_and_ack_irq();
-+
-+	if (intid == IAR_SPURIOUS)
-+		return;
-+
-+	GUEST_ASSERT(intid >= GIC_LPI_OFFSET);
-+	gic_set_eoi(intid);
-+}
-+
-+static void guest_setup_its_mappings(void)
-+{
-+	u32 device_id, event_id, intid = GIC_LPI_OFFSET;
-+	u32 nr_events = test_data.nr_event_ids;
-+	u32 nr_devices = test_data.nr_devices;
-+
-+	/* Map collection 0 to TARGET_VCPU_ID */
-+	its_send_mapc_cmd(test_data.cmdq_base_va, TARGET_VCPU_ID, TARGET_VCPU_ID, true);
-+
-+	/* Map all LPIs to TARGET_VCPU_ID to force LR overflow */
-+	for (device_id = 0; device_id < nr_devices; device_id++) {
-+		gpa_t itt_base = test_data.itt_tables + (device_id * SZ_64K);
-+
-+		its_send_mapd_cmd(test_data.cmdq_base_va, device_id,
-+				  itt_base, SZ_64K, true);
-+
-+		for (event_id = 0; event_id < nr_events; event_id++) {
-+			its_send_mapti_cmd(test_data.cmdq_base_va, device_id,
-+					   event_id, TARGET_VCPU_ID, intid++);
-+		}
-+	}
-+}
-+
-+static void guest_invalidate_rdists(void)
-+{
-+	/*
-+	 * Only collection TARGET_VCPU_ID is mapped; INVALL for an
-+	 * unmapped collection is a command error that stalls the
-+	 * virtual ITS command queue.
-+	 */
-+	its_send_invall_cmd(test_data.cmdq_base_va, TARGET_VCPU_ID);
-+}
-+
-+static void guest_setup_gic(void)
-+{
-+	static atomic_int nr_cpus_ready;
-+	u32 cpuid = guest_get_vcpuid();
-+
-+	gic_init(GIC_V3, test_data.nr_cpus);
-+	gic_rdist_enable_lpis(test_data.lpi_prop_table, SZ_64K,
-+			      test_data.lpi_pend_tables + (cpuid * SZ_64K));
-+
-+	atomic_fetch_add(&nr_cpus_ready, 1);
-+
-+	if (cpuid > 0)
-+		return;
-+
-+	while (atomic_load(&nr_cpus_ready) < test_data.nr_cpus)
-+		cpu_relax();
-+
-+	its_init(test_data.collection_table, SZ_64K,
-+		 test_data.device_table, SZ_64K,
-+		 test_data.cmdq_base, SZ_64K);
-+
-+	guest_setup_its_mappings();
-+	guest_invalidate_rdists();
-+
-+	/* SYNC to ensure ITS setup is complete */
-+	its_send_sync_cmd(test_data.cmdq_base_va, TARGET_VCPU_ID);
-+}
-+
-+static inline void *test_gicr_base_cpu(u32 cpu)
-+{
-+	return (void *)(GICR_BASE_GPA + cpu * SZ_64K * 2);
-+}
-+
-+static void test_gicv3_gicr_wait_for_rwp(u32 cpu)
-+{
-+	unsigned int count = 100000;
-+
-+	while (readl(test_gicr_base_cpu(cpu) + GICR_CTLR) & GICR_CTLR_RWP) {
-+		GUEST_ASSERT(count--);
-+		udelay(10);
-+	}
-+}
-+
-+static void guest_code(size_t nr_lpis)
-+{
-+	u32 cpuid = guest_get_vcpuid();
-+
-+	guest_setup_gic();
-+
-+	if (cpuid == TARGET_VCPU_ID) {
-+		local_irq_enable();
-+		GUEST_SYNC(0);
-+
-+		while (!READ_ONCE(test_data.request_vcpus_stop))
-+			cpu_relax();
-+	} else {
-+		GUEST_SYNC(0);
-+
-+		for (size_t i = 0; i < nr_iterations; i++) {
-+			/* Remotely disable LPIs on target vCPU */
-+			writel(0, test_gicr_base_cpu(TARGET_VCPU_ID) + GICR_CTLR);
-+			test_gicv3_gicr_wait_for_rwp(TARGET_VCPU_ID);
-+
-+			for (int d = 0; d < 50; d++)
-+				cpu_relax();
-+
-+			/* Remotely re-enable LPIs on target vCPU */
-+			writel(GICR_CTLR_ENABLE_LPIS,
-+			       test_gicr_base_cpu(TARGET_VCPU_ID) + GICR_CTLR);
-+			test_gicv3_gicr_wait_for_rwp(TARGET_VCPU_ID);
-+
-+			/*
-+			 * The disable path invalidates the ITS caches, so
-+			 * re-establish the mappings for the next round of
-+			 * injections.
-+			 */
-+			guest_setup_its_mappings();
-+			guest_invalidate_rdists();
-+			its_send_sync_cmd(test_data.cmdq_base_va,
-+					  TARGET_VCPU_ID);
-+		}
-+
-+		WRITE_ONCE(test_data.request_vcpus_stop, true);
-+	}
-+
-+	GUEST_DONE();
-+}
-+
-+static void setup_memslot(void)
-+{
-+	size_t pages;
-+	size_t sz;
-+
-+	sz = (3 + test_data.nr_devices) * SZ_64K;
-+	sz += (1 + test_data.nr_cpus) * SZ_64K;
-+
-+	pages = sz / vm->page_size;
-+	gpa_base = ((vm_compute_max_gfn(vm) + 1) * vm->page_size) - sz;
-+	vm_userspace_mem_region_add(vm, VM_MEM_SRC_ANONYMOUS, gpa_base,
-+				    TEST_MEMSLOT_INDEX, pages, 0);
-+}
-+
-+#define LPI_PROP_DEFAULT_PRIO	0xa0
-+
-+static void configure_lpis(void)
-+{
-+	size_t nr_lpis = test_data.nr_devices * test_data.nr_event_ids;
-+	u8 *tbl = addr_gpa2hva(vm, test_data.lpi_prop_table);
-+	size_t i;
-+
-+	TEST_ASSERT(nr_lpis <= SZ_64K,
-+		    "nr_lpis (%zu) exceeds 64K prop table", nr_lpis);
-+
-+	for (i = 0; i < nr_lpis; i++) {
-+		tbl[i] = LPI_PROP_DEFAULT_PRIO |
-+			 LPI_PROP_GROUP1 |
-+			 LPI_PROP_ENABLED;
-+	}
-+}
-+
-+static void setup_test_data(void)
-+{
-+	size_t pages_per_64k = vm_calc_num_guest_pages(vm->mode, SZ_64K);
-+	u32 nr_devices = test_data.nr_devices;
-+	u32 nr_cpus = test_data.nr_cpus;
-+	gpa_t cmdq_base;
-+
-+	test_data.device_table = vm_phy_pages_alloc(vm, pages_per_64k,
-+						    gpa_base,
-+						    TEST_MEMSLOT_INDEX);
-+
-+	test_data.collection_table = vm_phy_pages_alloc(vm, pages_per_64k,
-+							gpa_base,
-+							TEST_MEMSLOT_INDEX);
-+
-+	cmdq_base = vm_phy_pages_alloc(vm, pages_per_64k, gpa_base,
-+				       TEST_MEMSLOT_INDEX);
-+	virt_map(vm, cmdq_base, cmdq_base, pages_per_64k);
-+	test_data.cmdq_base = cmdq_base;
-+	test_data.cmdq_base_va = (void *)cmdq_base;
-+
-+	test_data.itt_tables = vm_phy_pages_alloc(vm, pages_per_64k * nr_devices,
-+						  gpa_base, TEST_MEMSLOT_INDEX);
-+
-+	test_data.lpi_prop_table = vm_phy_pages_alloc(vm, pages_per_64k,
-+						      gpa_base, TEST_MEMSLOT_INDEX);
-+	configure_lpis();
-+
-+	test_data.lpi_pend_tables = vm_phy_pages_alloc(vm, pages_per_64k * nr_cpus,
-+						       gpa_base, TEST_MEMSLOT_INDEX);
-+
-+	sync_global_to_guest(vm, test_data);
-+}
-+
-+static void setup_gic(void)
-+{
-+	its_fd = vgic_its_setup(vm);
-+}
-+
-+static void signal_lpi(u32 device_id, u32 event_id)
-+{
-+	gpa_t db_addr = GITS_BASE_GPA + GITS_TRANSLATER;
-+
-+	struct kvm_msi msi = {
-+		.address_lo	= db_addr,
-+		.address_hi	= db_addr >> 32,
-+		.data		= event_id,
-+		.devid		= device_id,
-+		.flags		= KVM_MSI_VALID_DEVID,
-+	};
-+
-+	int ret = __vm_ioctl(vm, KVM_SIGNAL_MSI, &msi);
-+
-+	/*
-+	 * KVM_SIGNAL_MSI returns 1 on success (MSI delivered to target vCPU),
-+	 * and 0 if the MSI was blocked (e.g. while LPIs are disabled or being
-+	 * remapped). Count successes so a permanently broken environment cannot
-+	 * yield a false pass.
-+	 */
-+	if (ret > 0)
-+		atomic_fetch_add(&lpis_injected, 1);
-+}
-+
-+static pthread_barrier_t test_setup_barrier;
-+
-+static atomic_bool stop_lpi_thread;
-+
-+static void *lpi_worker_thread(void *data)
-+{
-+	u32 device_id = (size_t)data;
-+	u32 event_id;
-+
-+	pthread_barrier_wait(&test_setup_barrier);
-+
-+	while (!atomic_load(&stop_lpi_thread)) {
-+		for (event_id = 0; event_id < test_data.nr_event_ids; event_id++)
-+			signal_lpi(device_id, event_id);
-+		usleep(100);
-+	}
-+
-+	return NULL;
-+}
-+
-+static void *vcpu_worker_thread(void *data)
-+{
-+	struct kvm_vcpu *vcpu = data;
-+	struct ucall uc;
-+
-+	while (true) {
-+		vcpu_run(vcpu);
-+
-+		switch (get_ucall(vcpu, &uc)) {
-+		case UCALL_SYNC:
-+			pthread_barrier_wait(&test_setup_barrier);
-+			continue;
-+		case UCALL_DONE:
-+			if (vcpu == vcpus[DISABLER_VCPU_ID]) {
-+				atomic_store(&stop_lpi_thread, true);
-+				write_guest_global(vm, test_data.request_vcpus_stop, true);
-+			}
-+			return NULL;
-+		case UCALL_ABORT:
-+			REPORT_GUEST_ASSERT(uc);
-+			break;
-+		default:
-+			TEST_FAIL("Unknown ucall: %lu", uc.cmd);
-+		}
-+	}
-+
-+	return NULL;
-+}
-+
-+static void run_test(void)
-+{
-+	pthread_t *vcpu_threads;
-+	pthread_t lpi_thread;
-+	u32 i;
-+
-+	pthread_barrier_init(&test_setup_barrier, NULL, test_data.nr_cpus + 1);
-+
-+	vcpu_threads = malloc(sizeof(pthread_t) * test_data.nr_cpus);
-+	TEST_ASSERT(vcpu_threads, "Failed to allocate vcpu_threads");
-+
-+	for (i = 0; i < test_data.nr_cpus; i++)
-+		pthread_create(&vcpu_threads[i], NULL, vcpu_worker_thread, vcpus[i]);
-+
-+	pthread_create(&lpi_thread, NULL, lpi_worker_thread, (void *)(size_t)0);
-+
-+	pthread_join(lpi_thread, NULL);
-+	for (i = 0; i < test_data.nr_cpus; i++)
-+		pthread_join(vcpu_threads[i], NULL);
-+
-+	TEST_ASSERT(atomic_load(&lpis_injected) > 0,
-+		    "no LPI was ever injected; broken test environment?");
-+
-+	free(vcpu_threads);
-+}
-+
-+static void setup_vm(void)
-+{
-+	int i;
-+
-+	vm = vm_create_with_vcpus(test_data.nr_cpus, guest_code, vcpus);
-+
-+	vm_init_descriptor_tables(vm);
-+	for (i = 0; i < test_data.nr_cpus; i++)
-+		vcpu_init_descriptor_tables(vcpus[i]);
-+
-+	vm_install_exception_handler(vm, VECTOR_IRQ_CURRENT, guest_irq_handler);
-+
-+	setup_memslot();
-+	setup_gic();
-+	setup_test_data();
-+}
-+
-+static void destroy_vm(void)
-+{
-+	close(its_fd);
-+	kvm_vm_free(vm);
-+}
-+
-+static void help(const char *name)
-+{
-+	pr_info("Usage: %s [-i iterations] [-e event_ids]\n", name);
-+	pr_info(" -i: number of iterations to toggle GICR_CTLR.EnableLPIs (default %lu)\n",
-+		nr_iterations);
-+	pr_info(" -e: number of event IDs/LPIs to inject (default %u)\n",
-+		test_data.nr_event_ids);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+	int opt;
-+
-+	TEST_REQUIRE(kvm_supports_vgic_v3());
-+
-+	while ((opt = getopt(argc, argv, "i:e:h")) != -1) {
-+		switch (opt) {
-+		case 'i':
-+			nr_iterations = atoi_positive("iterations", optarg);
-+			break;
-+		case 'e':
-+			test_data.nr_event_ids = atoi_positive("event_ids", optarg);
-+			TEST_ASSERT(test_data.nr_event_ids <= SZ_64K / 8,
-+				    "event_ids must fit in one 64K ITT page");
-+			break;
-+		case 'h':
-+		default:
-+			help(argv[0]);
-+			exit(opt == 'h' ? 0 : 1);
-+		}
-+	}
-+
-+	vcpus = malloc(sizeof(struct kvm_vcpu *) * test_data.nr_cpus);
-+	TEST_ASSERT(vcpus, "Failed to allocate vcpus array");
-+
-+	setup_vm();
-+	run_test();
-+	destroy_vm();
-+
-+	free(vcpus);
-+
-+	pr_info("Completed %lu iterations of remote LPI disable successfully\n",
-+		nr_iterations);
-+
-+	return 0;
-+}
--- 
-2.53.0
-
+<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B49=E6=9C=8822=E6=97=A5=E5=91=
+=A8=E4=BA=8C 19:03=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] selftests: kvm: missing mandatory kvm_arch_has_default_irqchip=
+() check
+> --
+>
+> commit 41b2f5071c9e0e643d02d3f1806d75461776914a
+> Author: Yuchao Zhang <ndaugoing@gmail.com>
+>
+> KVM: selftests: arm64: Add test for cross-vCPU LPI disable race
+>
+> This patch adds a selftest to validate the behavior of remote LPI disabli=
+ng
+> while the target vCPU has in-flight or overflowing LPIs. It configures an
+> ITS with multiple LPIs targeting vCPU 0, forcing its List Registers to
+> overflow, while vCPU 1 repeatedly toggles GICR_CTLR.EnableLPIs on vCPU 0'=
+s
+> redistributor.
+>
+> > diff --git a/tools/testing/selftests/kvm/arm64/vgic_lpi_disable.c b/too=
+ls/testing/selftests/kvm/arm64/vgic_lpi_disable.c
+> > new file mode 100644
+> > index 0000000000000..d3480369d7607
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/kvm/arm64/vgic_lpi_disable.c
+> [ ... ]
+> > +int main(int argc, char **argv)
+> > +{
+> > +     int opt;
+> > +
+> > +     TEST_REQUIRE(kvm_supports_vgic_v3());
+>
+> [Severity: Medium]
+> Should this code also include a check for kvm_arch_has_default_irqchip()?
+>
+> The KVM subsystem guidelines mandate that any selftest requiring an in-ke=
+rnel
+> IRQ chip must call TEST_REQUIRE(kvm_arch_has_default_irqchip()). This ens=
+ures
+> the test is correctly skipped on platforms without default IRQ chip suppo=
+rt.
+>
+> > +
+> > +     while ((opt =3D getopt(argc, argv, "i:e:h")) !=3D -1) {
+> > +             switch (opt) {
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260922105331.40=
+498-1-ndaugoing@gmail.com?part=3D1
