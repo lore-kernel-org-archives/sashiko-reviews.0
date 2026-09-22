@@ -1,73 +1,134 @@
-Received: from mta0.migadu.com (out-198.mta0.migadu.com [91.218.175.198])
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6934C569F2F
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 17:08:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.198
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87CB431A5C
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 17:53:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790096920; cv=none; b=PjsmyQRicstA9RgTm9syiE+G8jV0La9mclqxr/xjSojb4cHumIY5irt1yuLw5T4zrjZ+ezyFjy23OSTNT12ppZUj6bGZdNjENtqX4JQRZe/MxgP5r2gx+OypyWE0Xoy3SYJt5XA42jEZ6z6OhMfrDePhxpOWZsaDEEhsT+u1J+I=
+	t=1790099640; cv=none; b=mWNZqNwmWYj7tG83tSUxp1TaoBYVcPLGB7BvBddPN35TnruXgQV9pkZbYJlH8q0+d1dblOplr4czzfp+CPygQQ6+BRm3CwGYp9IgIviqznPSgZ2v/LJ8uMx7Bs5R3hlLOgux+yCUnZSkyYNIjz9mfDiWmHV63MCVRkY+iJaSzmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790096920; c=relaxed/simple;
-	bh=eX/1NASofdyRydQxppyJHOAcf0kyETrv5J8Ql/c4zbk=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OqCZPXOLF6kR2dldknXkdouVbclWkOhFi2Fw+HiVPoSzdzLiYQ4ykCyqTWY15/M8OxCIn7XsdVdrYHuuge98j6IvgdOkvXt1oKzxwJSw7We+sEESyTHUYZC/PwiSdFfWEsh6UtyhSkt3apGGaAVSbQO9yk6GfWrUTKvHMzJT5PU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=H8qq6okK; arc=none smtp.client-ip=91.218.175.198
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1790099640; c=relaxed/simple;
+	bh=sBNGKVaxgwd2C7MUTMhk8j+hcEEhVpjA4Z4BJR89HfU=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=RZFjxvs2wdTbwfl9+1UmPsvoQReupopry5xbTSr9o+r0HQ4+/2xQE4HL+5aeO/tNcTJNKlZklBRUNzTV05WtfA/pMG1Pwz9Te+TCmIRptbIjjYp7gYCpu9+AAEXrCIbU9GpQpW7nyivpuNMp7Eq5fRp0mjBC1NDrCegxbYEGMpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=H9pA9ddN; arc=none smtp.client-ip=209.85.214.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="H8qq6okK"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=eX/1NASofdyRydQxppyJHOAcf0kyETrv5J8Ql/c4zbk=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790096916; v=1; x=1790701716;
- b=H8qq6okKdCAm6lxAPSz310S8Aw1q8SnEnFbqtbQsgmqeb1g5f1zTCrj1C3lHhvNTOC79C3rP
- PAqpq7tRh/qa7UK2A2iBii2S4Ww8LtmvkWMANm8VP6abjHQasdtXM7QY4k8RRUU/fs9YP0W061c
- MpwNufc4S0YgWz5vAYmCt3mo=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 9153cb274da2b908;
-	Tue, 22 Sep 2026 17:08:36 +0000
-X-Mizu-Trace-ID: 9153cb274da2b908
-X-Migadu-Flow: FLOW_OUT
-From: Fuad Tabba <fuad.tabba@linux.dev>
-To: Yuchao Zhang <ndaugoing@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev,
-	kvmarm@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Fuad Tabba <tabba@google.com>
-Subject: Re: [PATCH v2] KVM: selftests: arm64: Add test for cross-vCPU LPI disable race
-Date: Tue, 22 Sep 2026 18:08:34 +0100
-Message-Id: <20260922170834.3228429-1-fuad.tabba@linux.dev>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20260922105331.40498-1-ndaugoing@gmail.com>
-References: <20260922102959.41FFA1F000FF@smtp.kernel.org> <20260922105331.40498-1-ndaugoing@gmail.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="H9pA9ddN"
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2d55d8cd938so1526505ad.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 10:53:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1790099638; x=1790704438; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=OTbYsyPMAXRNeqI3frHnGnx21T0lm+5EfthrZkUZKL0=;
+        b=H9pA9ddNqVXnOgshrzIztyMboF/nSblCtw0jjkgYC37EO8xHCxYZgfNTIICky7pFdH
+         PMsPSRJdEClPT69wBrTmYM2GR0wBxo+fBWX4jbmKLEtk/emXOpxJXj3ROuF+Be5CCkBQ
+         dnuaOXqWU1qNYTzlMJE9Mni3aLof0azpgoRJT5slb7AIGvvr0GpFB38KLawPFFHE9YK4
+         p4EnOfuJGcJBgu0NezuyQHcqxHVi6KINoaUcJKc3VKkEMLrQh5EvfS2LR27/kJ8W8+Np
+         utdnQei7u3L33ZTa1X8/qquoaDOmhQ/YNBtc6AM1ZEz1MZxR1uwJTxPCM9132tv6V1Y3
+         7WWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790099638; x=1790704438;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=OTbYsyPMAXRNeqI3frHnGnx21T0lm+5EfthrZkUZKL0=;
+        b=qRnSB/UortYDuwGPFMV61kenAI2RxSqBo/9+FXH1JdJHeHK4JmN/a9pCRyKdZAQXEz
+         mm6lOGNYq4+Me8PuFbseWQJupci96kicY0NteevA0uCkDAtZaC7Cb3o5r33PwcgvMpAb
+         6dgmFhnmseSsGIUbcV21Xx9nIqlFNjKhn9IRNJiTkAAO6g6l0/LvcNnAQ2eQ8emOtpeR
+         ItvuNArRyZI1YZ1gtZenxsz0sjiheOpchxahNc69uzNR+62luMS/dso9YJos9upR3C4/
+         D28shOfBzi7ILHRYLG1PL7NJVIsocNTQFO1rav7R2F2jqqXDjPvLO9avcGH6rKItRIw7
+         vtpQ==
+X-Gm-Message-State: AFuF++lUU8WdhRTiL/h5Qk2tDNAIylfUOrn0fM9WIZCGRAwiN8BA51nS
+	dpZX0mES/rObtGEjOLo2YtDMlc/wEjP1+a6J+cW8U5d/z6VvtigVDFNGgGiWrJZeKuiADIMe4G2
+	sTLk21g==
+X-Received: from ploc24.prod.google.com ([2002:a17:902:8498:b0:2dd:2e1c:cb90])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:2f8a:b0:2dd:c100:9440
+ with SMTP id d9443c01a7336-2df69e1c9bcmr1132185ad.62.1790099637923; Tue, 22
+ Sep 2026 10:53:57 -0700 (PDT)
+Date: Tue, 22 Sep 2026 10:53:57 -0700
+In-Reply-To: <CALMp9eQi0gm7ojijfKDZz9oZh+BK13qUkJOFrCmxjJTr5sx3Lg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <20260918154530.4129698-1-jmattson@google.com> <20260918160109.E76B81F000FF@smtp.kernel.org>
+ <arKJQwAPvApkeESD@google.com> <CALMp9eQboC6DTQfa3N58XCfOLf-qwJ2L7dC5vtqDerHG80eZLg@mail.gmail.com>
+ <arKQJJJB8HMK0B1G@google.com> <CALMp9eQi0gm7ojijfKDZz9oZh+BK13qUkJOFrCmxjJTr5sx3Lg@mail.gmail.com>
+Message-ID: <arLAtdMP7LV0r-D9@google.com>
+Subject: Re: [PATCH] KVM: x86: Disallow EFER.LMSLE when EferLmsleUnsupported
+ is set in guest CPUID
+From: Sean Christopherson <seanjc@google.com>
+To: Jim Mattson <jmattson@google.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Yuchao,
+On Tue, Sep 22, 2026, Jim Mattson wrote:
+> On Tue, Sep 22, 2026 at 7:26=E2=80=AFAM Sean Christopherson <seanjc@googl=
+e.com> wrote:
+> >
+> > On Tue, Sep 22, 2026, Jim Mattson wrote:
+> > > On Tue, Sep 22, 2026 at 6:57=E2=80=AFAM Sean Christopherson <seanjc@g=
+oogle.com> wrote:
+> > > > Gah, I hate the negative "feature" bits, I've gotten completely tur=
+ned around
+> > > > multiple times trying to sort through this.
+> > >
+> > > Me too!
+> > >
+> > > > IIUC, you're trying to "fix" setups where host CPUID.EFER_LMSLE_MBZ=
+=3D0, but userspace
+> > > > configured guest CPUID.EFER_LMSLE_MBZ=3D1?  If so, then Sashiko is =
+right, it needs to
+> > > > be declared with EMULATED_F().  I would even argue that technically=
+ this isn't a KVM
+> > > > bug, because KVM won't advertise EFER_LMSLE_MBZ in KVM_GET_SUPPORTE=
+D_CPUID on such
+> > > > hosts.
+>
+> > > I'm trying to make it possible to run a Rome vCPU on Milan or later.
+> > >
+> > > SInce this is a negative feature bit, it must be retained if the host
+> > > reports it. That blocks running a Rome vCPU on Milan or later.
+> > > However, a defeatured Rome (which reports LMSLE_MBZ as 1) can be run
+> >
+> > So, a partially defeatured Rome?  Because it sounds like the CPU report=
+s LMSLE_MBZ=3D1,
+> > but then still allows setting EFER.LMSLE=3D1?
+>=20
+> No; it should not allow setting EFER.LMSLE=3D1. That will fail on later
+> platforms and would block live migration from Rome to later platforms.
 
-The test passes on an unpatched 7.3-rc3 for me, so it doesn't reproduce
-the bug yet.
+Oh, drat, I misread the "Rome vCPU" vs. "defeatured Rome" paragraph.  You w=
+ant to
+be able to migrate a vCPU with guest.CPUID.LMSLE_MBZ=3D1 between a non-defe=
+atured,
+vanilla Rome and Milan+ (or a defeatured Rome).  Correct?
 
-On Tue, 22 Sep 2026 11:53:31 +0100, Yuchao Zhang <ndaugoing@gmail.com> wrote:
-[...]
-> On unpatched kernels, this race can lead to a use-after-free or host
-> kernel panic in vgic_fold_lr_state() due to a dangling last_lr_irq
-> pointer. With the fix in place (stopping the VM and holding a
-> refcount on last_lr_irq), the test runs to completion without errors.
+If so, then Sashiko is right, the flag needs to be EMULATED_F() so that KVM=
+ will
+advertise EFER_LMSLE_MBZ to userspace on the vanilla Rome host, and also do=
+ the
+right thing when guest.CPUID.EFER_LMSLE_MBZ=3D0.
 
-With only LPIs in flight EOIcount stays 0, so the fold breaks out of the
-ap_list walk before it dereferences anything past the stale last_lr_irq.
-To crash, the target vcpu has to EOI a non-LPI interrupt that's active
-outside the LRs, with the remote disable landing while it's still in the
-guest.
+If not correct, then I'm even more confused, because ignoring clear_cpuid,
+guest_cpu_cap_has() will only ever return true if boot_cpu_has() also retur=
+ns
+true, in which case KVM *will* reject the value because EFER_LMSLE will not=
+ be
+listed as a supported EFER bit.
 
-Cheers,
-/fuad
+		if (!boot_cpu_has(X86_FEATURE_EFER_LMSLE_MBZ))
+			kvm_caps.supported_efer_bits |=3D EFER_LMSLE;
 
+> I want KVM to abide by the guest CPUID bit and disallow setting
+> EFER.LMSLE even on hardware that allows it.
+
+Right, and that requires declaring EFER_LMSLE_MBZ with EMULATED_F().
