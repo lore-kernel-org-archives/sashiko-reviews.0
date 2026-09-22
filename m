@@ -1,192 +1,181 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010037.outbound.protection.outlook.com [40.93.198.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DAA49F137
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 19:05:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790103921; cv=none; b=CJzk/yRm5t8eYb3bzI+iOs7Cf27jPI0E+ktPuXrvGwUmt6CbbNqpUjGWI2qukkJ0hrfKKeT0DecoWl9I/ORGDovE0/H000cPrn2RCXrvLyCqDpqF1zyrGlKvpaN82TIzstR2XFe2YoGBNYRzW0ZYpCPq4a4xii/VSwHAA6wIVIM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790103921; c=relaxed/simple;
-	bh=Rx3vJs80Db4VF/9M751X88Qb+a1HALVjZDFximEAPW8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I2vX4S+rHjg8uxM6zhYYOMbzI3B6SZK8ghWAt0mgjHIf9ZkPOqqP7MVuL5t4+B2kUT1kyWdn/Rom3NZ6phglfSaIed8wtZUCDHsCbkM9uGjpuaLVINVa3gVTgzsPVSbwjIDHqGlfQVbz/TOHYXyZO8UfIHX57HZ2cO75a4hJCAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KUJuFMrP; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=QkbTpApL; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188A951C04A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 20:45:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.37
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790109946; cv=fail; b=rhlV0v3KCA52sudIS72Ad3Rl4aSVHs2jlJL+OsVuePux7fTLR6RTSZk+zsNzuyfhhcpLOsxRJoLjNGmr/Li3SvWNtujEG70Og/BWs42Nq/Bdre/4XxtVUcKSzDV7FqggQauxrxnpCWbIOePV57kKNHPdCNt6P8misXphtS2ZEqU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790109946; c=relaxed/simple;
+	bh=Yzeir+EjYWW0hGrNJEsaizvUwbpFqjxDCPp4XAFsHKw=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=k7lwnfdmj1IulO6+iKoq9YBrkVDiuXNCWjs05Ko95fMbhDKBbk1gQIxLmRcgNxYMmQpGnYzOaRqebkhCDKs/U2l9RzTcy67Vpa0m45GdYB1PMTONeexHWY+0AXRa/Co8Iowt5RXzEvjXNnAlmYeWw9YRLWIlEZxNXEg62mH00gg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=H2t5Gv5F; arc=fail smtp.client-ip=40.93.198.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KUJuFMrP";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="QkbTpApL"
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68MI6xb72033239
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 19:05:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Ivyrd9+tpvNNomTacj79thI+x6GEdKA0UpWcM4T1+dY=; b=KUJuFMrPz6OZimEq
-	AFoq2cpHWCRARNK215an/kRLrOznsCiyhIzJs4DvnDXHxZRPKOp9BDSP4CxcOeBr
-	+4rmry467fpWMzBNmtawt3aOvZDJevZMDK05GdYhIv8mMpFI3YZZXmyAldJwntrM
-	5aM8PZSumStPSUn0S842xcvZJRh6VDX3gikW9J7GSjrxYuS2wM/5A1A58lndZO2a
-	LKUAF80cpJD3Mgy/XV5+e9GAPgAs5Ee24+WRT+dQe2q/c6fC2FlN6G2w36qoPlG9
-	wMc0SZRbFQSYERgO4p0o7gOiLQCh+P7E3jzsjxjn8ZaA11zevUo2ezYq5VoH6Sn/
-	9/db0Q==
-Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com [209.85.217.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gux8c0dxu-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 19:05:18 +0000 (GMT)
-Received: by mail-vs1-f70.google.com with SMTP id ada2fe7eead31-7866c4ed349so143636137.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 12:05:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1790103918; x=1790708718; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Ivyrd9+tpvNNomTacj79thI+x6GEdKA0UpWcM4T1+dY=;
-        b=QkbTpApL0ZDfULYWJYeNa09Zmfjfn1kP6LFBnrunV0PJedJi/AvaI7dD8cpx1NrMUS
-         WjTfg7F5eB1PsSfbkzQTefFFPbS+6kHrBxo2UdCcmyr+H86DKotT23ja90Lpe2KUOF7C
-         4vTyLHQs8YV0+Ou1d/P4HvbkYm55lj6RJmGdbG4T/hp74rONms3XRJpFtPmwB23hBJGQ
-         jD9uY8aq5DWcUmIdjkCnChcepPIHBnROrBr/tiOr+E7JQQXGWVm6fkcozX42qktj37uj
-         OwVKAKqfnlLnAn11xTW+oLEisyGcb6b/SA2H0mZKgkkWBihwnMqTdqbHlvexzY11KuEa
-         qXRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790103918; x=1790708718;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Ivyrd9+tpvNNomTacj79thI+x6GEdKA0UpWcM4T1+dY=;
-        b=vdmaRi+zQOcdqSoTunnIm6VPNXL946EmboP45h3P8LgYQkueCjKBCf0w0WC1AztlBz
-         9txDwerXfZGHrjz0N1g/jsbvkSvqCoXgFtErqdAOsJ+JIwyh14lilGi2GpbgBExnMzgw
-         PRDZQPc+E54FOkqITYFumOdniPx7fDoVpXSBRISN5qDae4aYrlAbQiF1HqdwWqmtByFU
-         RIIkAbMD+TAJm/s0DKAN3tkXsrZ05JePGfqN8F1KHeECDOR5mfvz9vJgw5UM37MHbeer
-         iBii/DqkvD6R/QZWVmKwdYxnM+LAQQ+DiAKPfXg2neCWEdwgAc7lQmWdeMA4Z+LEsKQE
-         OEvA==
-X-Gm-Message-State: AFuF++noXfa50DZpjE0U3zt7PGpJPVRVNGTI9MNg8NT4FkbWKA/UWcUh
-	eMrbY60fU6Urd/NnrDoVh2IQvQeFH6XdgvRVtobhmvZHpAm17njWtudJFmezSlK+0e2HuzZLKau
-	jAE6xnFcrjsZy0j5jk8DjMKf9+P8ixjt33boxkV/vj7U+6hzTpf4Tj1XbBbxhOjYYQIhM27Bd/T
-	Yn2rzI6g==
-X-Gm-Gg: AYBFou1rrvlcGbS91pygh39b8wuJnK9nuq1GtETEwhBaSGO+JFr8aksZ4AhSDiFSlOM
-	oyvyDUuCEv9ifLND35fRT6phE9UwqxgcOpLqTGttHYdNkKjni2Vu4L8ORJjNwKNK/5TKmUjYEqJ
-	3ZRJ5hERkw7LQ/1gLrDyr6v/yHYgGFKSgnGITAlmUrgH8BMse3/nYl1eZkQokZX/dxvxLtdzRZ1
-	L6t4mgV99A+o2n2IrjOnuD87Xa0AedvtuB0PEwPqiH4BwpXxt3NQzOV/DbewQYvd9/Moh53B8qb
-	UjdcySZeDcCXT8WaEZwEkze3ZYdRPxWmw56HwzGUw7TzvKktutvQLb0ttLPmDaDQilvW9AAYqkW
-	WuaGG/arKypqqKvj6rTlFAw2cPUeqxoUobaZAAkxp+DrxUZJoHZJ7qDR9EEKxBJmBnpJJHXPygK
-	jP
-X-Received: by 2002:a05:6102:80a6:b0:7a7:19aa:8a87 with SMTP id ada2fe7eead31-7ac1d4eac82mr350767137.34.1790103917954;
-        Tue, 22 Sep 2026 12:05:17 -0700 (PDT)
-X-Received: by 2002:a05:6102:80a6:b0:7a7:19aa:8a87 with SMTP id ada2fe7eead31-7ac1d4eac82mr350719137.34.1790103917504;
-        Tue, 22 Sep 2026 12:05:17 -0700 (PDT)
-Received: from [10.188.38.210] (cust-west-par-46-193-35-178.cust.wifirst.net. [46.193.35.178])
-        by smtp.googlemail.com with ESMTPSA id 38308e7fff4ca-3a62f505fd2sm1258671fa.17.2026.09.22.12.05.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Sep 2026 12:05:16 -0700 (PDT)
-Message-ID: <bc795351-dcbf-492a-814f-2cb1d009f6bc@oss.qualcomm.com>
-Date: Tue, 22 Sep 2026 20:05:15 +0100
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="H2t5Gv5F"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=i5OUUaYbkT+2+S3apYfuuZiU7k/hK5OpqmsIZoLCuAOQpiCEO3BWXMV5k6t/LV+1PYu573vjJitKcBzqpguxl801OBRqrgb8TJNET4JaI2kisuxtOelVjHdXfcHhAGe22gRlZK9xt3xYCC09jl5wFnQPsTzPdeLcSqqpN5XloPGP2tlTkCsQLCPa2yJfh+8jQnRORq6brPki2ITE92QpA7gsLbMAH2e3gVBPZ22QrA6oMDlmn/Mzyr8338hGPR9/6tQIjvPta+SnNhldqtJHC6zqo20ofg776DiTq6ZfojB8Wed2HJvMziIB7cnWBpf+11YUa0fXWu5FVtO3gRZQGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mnTKqLXaqmCIyNOso0FFHdq5PheHQNpaPEBLNgZ3gC4=;
+ b=lMKQg+tFaaU013LmWjI50QP+d8KIUGqTqKVgT05+xnT40ZSvJmqxYRQGsJhGeaa8YVNJraN+kBWZNF9WxR6PVVkFw9F9k5yiACYDBHhSXWJiHUtim2ut4Jepc5SR0SrFNSQJWioMzC7HeYUwGP01xtCH+lsg1r4SVxN6igZMXMqRiHGGDZThkDNzF8X8s7Q3OeQQ/aHu4bSj1YyxRFOw9w0h7kw2oaeQ5iTvVTcu3BBUExTNA3c5tmL/iRegARrwNFwAwxNrluEGPsIrSUaATcviFnhwx9fexjR48QSccz8aemIMx0wNodrr00dyTYtq1svjjddpNbm0QUu5Lo/I5Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mnTKqLXaqmCIyNOso0FFHdq5PheHQNpaPEBLNgZ3gC4=;
+ b=H2t5Gv5F3QTy7NJPNcqm7ileREyaurwKQtndYT0KI4sIc67MIX+V1oM81m+cs8q8ZNHUPDreyNtvuSaz/KiC39PKXD5pdQuGESCp3p8aFtMeLUbztjtEtMTPRzWGf4u5HshlAEAAx+IpMXu6MPObyHe5Hy3GA1Z7FZ17/XzGK3s=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CH3PR12MB8660.namprd12.prod.outlook.com (2603:10b6:610:177::5)
+ by CH2PR12MB4197.namprd12.prod.outlook.com (2603:10b6:610:ab::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.14; Tue, 22 Sep
+ 2026 20:45:21 +0000
+Received: from CH3PR12MB8660.namprd12.prod.outlook.com
+ ([fe80::87aa:52e5:4b72:d5f3]) by CH3PR12MB8660.namprd12.prod.outlook.com
+ ([fe80::87aa:52e5:4b72:d5f3%6]) with mapi id 15.21.0451.012; Tue, 22 Sep 2026
+ 20:45:21 +0000
+Message-ID: <23c9be41-c8a8-4499-9310-fc4e6247f55d@amd.com>
+Date: Tue, 22 Sep 2026 16:45:18 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] KVM: SVM: Re-queue events that were never injected
+To: Sean Christopherson <seanjc@google.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+References: <cover.1789399214.git.prsampat@amd.com>
+ <d946de080e3dd34844a665c167179e4910fdc9d4.1789399214.git.prsampat@amd.com>
+ <20260914171628.8A4631F00893@smtp.kernel.org>
+ <ecbb6fb8-fe61-4028-880b-245f94db0f9f@amd.com> <arFYHRzNFT886BME@google.com>
+Content-Language: en-US
+From: "Pratik R. Sampat" <prsampat@amd.com>
+In-Reply-To: <arFYHRzNFT886BME@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BL1P222CA0011.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:208:2c7::16) To CH3PR12MB8660.namprd12.prod.outlook.com
+ (2603:10b6:610:177::5)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: clock: Add LPASS AUDIOCC and reset
- controller for Glymur
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org,
-        linux-clk@vger.kernel.org
-References: <20260922184425.56114-1-srinivas.kandagatla@oss.qualcomm.com>
- <20260922184425.56114-2-srinivas.kandagatla@oss.qualcomm.com>
- <20260922185449.51A221F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-In-Reply-To: <20260922185449.51A221F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI4MCBTYWx0ZWRfX3ZatzUP+Eu2S
- 68c535LYaJzYgyyvBw0R3zbj4F9Qf8mgGBi5DcQvYN09nO+O+K6rgIJgcdHkoyvWto3UlsQW6/m
- kUxe+5YBYwjVx1P5/Cbft3CNvgLKm5h52hacYqDLt5DLso/oR2rYm1njrO/Q0UR1ZcfB3hFaVz+
- UkuGmHVDNF99IJCN8i+9MabDdQGpYgwmZ9Kx87haU0DgtLTyeb8/qzG/RYodxU8Sl74cJlX+wIz
- HrbV3bqjmHf2cM6/7p5FR7RikeJbzD9WdINq2pFnq583Gx5/RnUMlIZ8u769nt0Qac5sFbBp0Uj
- dWcaRQZCNqaKiZk78GLVB5DUlI7XOg8mhhCHvtBOJ8JXLAuSbMys4lk7LRkIlrR80d+ImZvykPk
- daQQva3eT9QsphAVKw2+uX332ws4PeHEEz8mQltymhAUuClpPEgZ5lVd0riB/1ckTyb+4BFPLk8
- 7BsA9MwcIkvmy6bW/RA==
-X-Authority-Analysis: v=2.4 cv=P9evFSAu c=1 sm=1 tr=0 ts=6ab2d16e cx=c_pps
- a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=Hji71o54RgNgZYqDgtlrhw==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=A6BDbR3q_nxYMsy3TRMA:9 a=QEXdDO2ut3YA:10
- a=crWF4MFLhNY0qMRaF8an:22
-X-Proofpoint-ORIG-GUID: sVdM0ry3j4T_9JcafoiAuU9P-QQ_zpXu
-X-Proofpoint-GUID: sVdM0ry3j4T_9JcafoiAuU9P-QQ_zpXu
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI4MCBTYWx0ZWRfX9wDd/nVqYqCd
- yLx18uzBuXKxwUSSm6dKrOqHUpM2zf5ug53zzeTeMEWrLdENzyB3cuO0IITg2goCOcLFoNHbekN
- HoGqNnvDMEpwJFbfRWflYlz6yAvZiX8=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-22_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 malwarescore=0 priorityscore=1501 phishscore=0
- clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220280
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8660:EE_|CH2PR12MB4197:EE_
+X-MS-Office365-Filtering-Correlation-Id: 69168963-2c4f-4355-2d9b-08df18ea6b42
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|4143699003|56012099006|11063799006|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	H0gi/qVj3kNqJJRFlMRUXT9wP68ktQCWPnZPSpyig3zLamRyAe6SGsAc8Z9QncPRIFaUqQtyYodmPanCd860GuJhMb/S0DStDdyp8e1vueQp2buRpibV05mxwr/t3uf2l14lL76oN8NfopEuwBmZV9SvRaaczU8uFZCrB4nZMk2vi+U64JG6iBbJImPKaqXh1ahemxs5ye0zVheNpWrs0OL2ALlsHhlAVLyPDLtZ8zctdeuYmzs3s3fhVeTwnxZO8gagdEwc7Sa8VUChVe14AH5BDJTgQ/Hur/jFkmNbwT6zjBqbsATSdI601qxzHKGwXF3NOf1JbIUvx3kcUF6tSJinpQXb3JYf/SLHrOKYlo0rMP0CuzeZ5BPmEpmHu9XdWE9hznOQP8+ia/MkeDXQIthDnf9fscFY1dCu48tvNJOr4tVI0//Ni9bUiV7f3rzqJJPJyRaRpWDddfQ2b7u13+DqkFJX+So+5vsiW18CecckvvZhySkrmIQV9cysRNLUM5OY71ifpF/VdkJTCbRjyMiWejLBkoxNerOsPm0WXxbjOzyGo8M97C0mudjaF7uX6pd07yGWC9b13oabK5sESxSlDQuZZNB7dDXB5OINrDp0reeXSIek7ZEASQpnauqkvNt67yAigdKu/kZ+rHE9D0e/UDBblq/6AXfT+zW2YhI=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8660.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(4143699003)(56012099006)(11063799006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?OGV2N09wZU1QcUFmTC9CdzdtRGIvdFhMNG9RazhqVmMzRnl6VkpGdE1WU1hK?=
+ =?utf-8?B?YzVEdkVZb3VYdjN3UXFrNEpZWUVkdkM3UFRYalR4bGpjek1BYXlhdU9Cb0Y3?=
+ =?utf-8?B?aC9OeU00RjF1UWtkaEZLa1k2ZHR4NS9nOTFqUEZUSldUSGhjZ1pmMnRmUFRC?=
+ =?utf-8?B?RG9ScTVIcGgrbk9CRkphMjVuQ0NjS0VQTFFPNlliNWhsbHNHanB6YlNhODNx?=
+ =?utf-8?B?OS9hbmpyQ3g1Z0hsOE5sRWJ0cFV4eGdHcEpsVExxa3JISGxuRVlydXd4YU9F?=
+ =?utf-8?B?eSt3YWw2UGM1TTBJaDhYbGZmTjdQUDRUTHFoU2o3aWNvTXZCM1ZYUXpVd1Zp?=
+ =?utf-8?B?Z2Y0RTJ6RmJ5ME5Sb25KeHBDTzIreCtIeHhwWlFqbFV4Y0F2eld4OW9QUG5C?=
+ =?utf-8?B?bU80MFpUaEVhbVJPcXRJZmhrS3NOSWlZdlp1MW9DVjVpYzRtVGVKK3lKemp4?=
+ =?utf-8?B?d1JKUC90d2xLVGlSZjI2L1c5VFFrS1lMeS9hWGZQWGVNaDMrc05CdTdzbnpB?=
+ =?utf-8?B?aWVFRC9mNTFCK2s3R1BkNXBVNlVpanM1d1ZaRTNTa2VjWWsrQmgxVnVWUkgr?=
+ =?utf-8?B?b3JMeWNPS0xpTXhHazBuOVRvN3g5RUFXZU9oL0VObVFGNFdIcjdSVUUyOE1Y?=
+ =?utf-8?B?bUxpNXAvSG5XUmM2ZVlsdTVBNitpRHZpRDR4TFFiQWJVMTdlbkNtWlVmSkNK?=
+ =?utf-8?B?QlcxdS8vWGd4RlRhaWJoMDZ1WnA3b29oek96dzh6OWFMU2lleGd6bTEyOTlk?=
+ =?utf-8?B?VHo2RWFtNy9jcXRnbzI3b1lGVis5WFpIai8vMWJaUHlUSEhhWlU3SEZWbk5j?=
+ =?utf-8?B?RFJ2S3pEcGIwcytTK0FWSlh2WklaS0JFUTFwZVVPODE0NjZwbWtjdEZCaWg3?=
+ =?utf-8?B?TEJpRm1zTnFCa1dpelBuWGQ0bGE0YnJKV1VBV0d3a2pqQ0FpODlLaGpPZ2R3?=
+ =?utf-8?B?dnB3WG9hZzVsRGhuZUtTeEtuQ3pFOWdyazZ5ZDgrVFFUMnhxZlpGMEhVL3Na?=
+ =?utf-8?B?S2YrUGZHT0RSRWtaV1lrT293ZWE5MzRrVHNuWGxyYy95dE5EWGFOODFTTDFJ?=
+ =?utf-8?B?ODJTTUQ3NG5iVEdoT05ZQ3NJTjNMRDNGZzlTTzUyRG5RTmE3Tkl4SU00NG92?=
+ =?utf-8?B?ai9oMm5lUW1HRDNmall6YThsSVB2cGtMUjdIU3lNUVZwdmZWWlNXekNCRGoz?=
+ =?utf-8?B?b0JuVjlQdzRFdFEyNkJvMnVCT0hOekI0Sy9tbmxDTS9pN2VLM2tZU2s4dlZk?=
+ =?utf-8?B?dm55VkNUVmc2R2dwdFdWQ1YwUTdNSklaRnVFWlQ3NnpUQXRaeVZSbTNjaHhS?=
+ =?utf-8?B?cFJ3N1VlYkdnUGJRandldGhha3pIUEhyTkhXc0Q5eldYUFpxbmlFNlM2ZWVK?=
+ =?utf-8?B?NitJOGlBVjNwNnMzcGdYc2hHRkF5eFJvZUpLeERuUHJGVkpHbU54N3ZJQ2s2?=
+ =?utf-8?B?akpXY09PMFF5VzdZSCtNdmowdWhtMHNyb2N1QUthRWJadWJTWFRHU2docita?=
+ =?utf-8?B?bGVFTTZGQW82b29aRlBzNHBqcjUwU2txVnlmM0JHT05WZDNMeG42S1A5WHQ0?=
+ =?utf-8?B?dVJzVVRwak5ORDBKVnJiNlpxVXAyekdMb1RXMDRmNEovZGc2VFZidER3eCt0?=
+ =?utf-8?B?My9UeFhOY3BTbVNMcFl4Q3BtT0RKamxjbU0xMkUxREVvUUZvQmdSQ1VXbExC?=
+ =?utf-8?B?dWFZT0NDb3hiNnl1MXc4elVnbk1wYUdTdEdQcEdhc1o5VUZNblRLNWZMeS84?=
+ =?utf-8?B?Q2lMZzZyeFBYVlJoYlJ4OXlQZDZydkM5Qk5YVzJIa0lycW9EZ0JSZWxhMFBO?=
+ =?utf-8?B?aDVXUGFiSndDRk5UWmhTV09ONy8vTzVkQktRc3NiRDlXZ2QzR1JsTnVsaDlr?=
+ =?utf-8?B?dzRua2VMT2k1anBoQlRVMDFvN3JRUmxvZFprRDBFZnByQU1IU3pyTWNiUEtT?=
+ =?utf-8?B?dkhvVWhMMm04a3l3UGxLMHBTeGRtK2F4dGU4cVk5ZE9wRWlVd0JPZG44WEZp?=
+ =?utf-8?B?UDcyaUN3dmExckUwOE0vNXJCTFh5dC9MaVRwdGFJRUg4aWxERlgrcUZKcnJB?=
+ =?utf-8?B?Tml1RXA3WHNxSmdMZnFNV3ZTbVFxZnZYeTVpOUxqWHhaSVp1aVJIai9wUWNl?=
+ =?utf-8?B?NEkwblFvbEtoQVdYUGYzREtkdU1PbkVpQXEvQ2F0bXl6eWVzVmpNV1ZidWdG?=
+ =?utf-8?B?YnovYUJETkVlSzVyVlFmaHZkajhMYkVuQUd1L0tTUzBwYm14bzcxK0w3enFK?=
+ =?utf-8?B?VjRPYVRES2NPQ0J6QVFUWVZjcS9Cc3lrK1Vhem51bTdzWVFldzhWK1ZlTDQw?=
+ =?utf-8?Q?YgsTsX6UD1S3KQADIW?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 69168963-2c4f-4355-2d9b-08df18ea6b42
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8660.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2026 20:45:21.1821
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: V3iV9ol7LiQcjgzCosC342hVaFHlKgSU/LjYEKwKdl9h0ITY4Yy+1W+IOiK194h3tf3gSVDqHOY11FdvLQJuTg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4197
 
-On 9/22/26 7:54 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] dt-bindings: incorrect `#clock-cells` requirement for reset-only provider
-This binding is for  clock controller which also has reset controls
+Hi Sean,
 
-Its pretty much inline with what is done with other lpass audiocc bindings.
+On 9/21/26 12:15 PM, Sean Christopherson wrote:
+>>>> +     /*
+>>>> +      * Hardware clears EVENTINJ field when it injects an event.
+>>>> +      * A non-empty EVENTINJ on #VMEXIT means the vCPU never entered guest
+>>>> +      * mode, and thus that the event was never delivered.  Migrate the event
+>>>> +      * to EXITINTINFO so that it's requeued instead of being dropped.
+>>>> +      *
+>>>> +      * An undelivered event doesn't imply a fatal VMEXIT_INVALID. With
+>>>> +      * Enhanced SMT Protection, VMRUN may exit with an ordinary #VMEXIT
+>>>> +      * without having injected that event into the guest.
+>>>> +      *
+>>>> +      * Clobbering EXITINTINFO is safe precisely because the vCPU never
+>>>> +      * entered guest mode.
+>>>> +      */
+>>>> +     if (control->event_inj) {
+>>> [Severity: High]
+>>> Does this code silently drop valid hardware-reported events?
+>>>
+>>> If an L1 hypervisor sets event_inj to a non-zero value but leaves the
+>>> SVM_EVTINJ_VALID bit clear, hardware will ignore the injection and won't
+>>> clear EVENTINJ.
+>>
+>> The first half is right, nested_svm_check_event_inj() intentionally returns
+>> true when V is clear, so vmcb02->control.event_inj can be non-zero with V=0.
+>>
+>> The second half isn't. Clearing EVENTINJ is not part of injection, it's part of
+>> #VMEXIT, and it's unconditional. 
+> So that doesn't mesh with the above comment, which says:
+> 
+>   Hardware clears EVENTINJ field when it injects an event.
+> 
+> And it begs the question of how this patch is at all useful.  Because all this
+> fancy new paranoia is clearly generating #VMEXITs, and if #VMEXIT unconditionally
+> clears control->event_inj, I don't see how control->event_inj can be non-zero if
+> KVM attempted VMRUN.
+> 
+> I.e. either this is all broken, or the APM is buggy.
 
+My wording in the comment is misleading. The clear is part of the #VMEXIT path
+out of guest mode, where it is indeed unconditional. However, VMRUN can
+terminate even before the guest mode is ever entered. With ESMTP, the hardware
+can give out a garden variety of exits at the sync point. In this case we
+get a VMEXIT that implies the VMRUN never actually ran any guest code then
+EVENTINJ won't be cleared. Since the exit code isn't a reliable discriminator,
+a non-zero EVENTINJ is the only way to tell.
 
---srini
-> --
-> 
-> commit 347d3aed7b27ab7cf248e5a7c46279253cf08e0e
-> Author: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-> 
-> dt-bindings: clock: Add LPASS AUDIOCC and reset controller for Glymur
-> 
-> This commit introduces device tree bindings for the LPASS audio clock and
-> reset controller on Glymur. It defines the compatible string and required
-> properties for the device node.
-> 
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,glymur-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,glymur-lpasscc.yaml
->> new file mode 100644
->> index 0000000000000..c047c0174a93d
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/clock/qcom,glymur-lpasscc.yaml
-> [ ... ]
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,glymur-lpassaudiocc
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  '#clock-cells':
->> +    const: 1
->> +
->> +  '#reset-cells':
->> +    const: 1
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - '#clock-cells'
-> 
-> [Severity: Low]
-> Since the commit message specifies that the audio clock controller only
-> provides reset support when it is under the control of Q6DSP, and zero
-> clocks are exported to Linux, should '#clock-cells' be required here?
-> 
-> Making '#clock-cells' a required property forces device tree authors to
-> include an unused, dummy property that incorrectly models the hardware's
-> capabilities just to pass DT schema validation. Similar reset-only clock
-> controller bindings (e.g., qcom,sm6115-lpasscc.yaml) correctly omit the
-> '#clock-cells' property entirely.
-> 
->> +  - '#reset-cells'
-> 
-
+Thanks,
+--Pratik
