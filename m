@@ -1,165 +1,129 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F856356742;
-	Tue, 22 Sep 2026 18:02:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B143FE644;
+	Tue, 22 Sep 2026 18:03:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790100138; cv=none; b=AZn5l85owt15oRZHmsq/ETpjwC5tt7JSLfR+Q9dK+0JH74tne8P63/FsJ/642vm1OJg1UMOwNqseJyS/gHh3CLkX7F9AjS+4Nu73h4jopcTIdrJjaYKpi1YT3OrLVovcqSnD4TKZU4QvEJT7Rt0zlJJix4XwiypgsyLl/+EgNnU=
+	t=1790100213; cv=none; b=WXSPffGUoTE2/u40hZunuYDWrhmBu2hNml+TxObz6BFnAdmiC1JX9CdNRo+PvX6372g4Mx1OClLZXyerR9z//euVfDtwbLO+/b7U6NmLVgKtctebZsm813QpiMqLVbkOM9wT66H0osOnxFIxAZjBIYqYnJBW/95GAR+8Shs97SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790100138; c=relaxed/simple;
-	bh=OpQrQxAUA2wj7OjGnGO/fDpKR3trSKknumbF3UjtAjM=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=CRRlUCL5FO+E7GrX/V8G+ZJsQfdJucFB8RpLb9HAJWgl4J29n8gg9cX3eFHeGvqXRktzphc4VNpfASiUkg9TzcF/nbSlqv2db3lYD1T2SzQxcE6nWBlvMqMLsTHH6QfRt4Ax2e2+mW0NrLTaCmbglXdbrYmLqh3RYvBKs06JtCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=AxR8EfTd; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1790100213; c=relaxed/simple;
+	bh=dz1CFvaNtCGBUblMCs/3qyd/jE7PVNYRiBvUfjD03yc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ui3hQIH6ydlRo7lCVORx6GMqpQW6DBJ/WrXD1OIUDTFM70w9xQv+umpQygadFjGlDDyLeJUkhYAL5E++NNlIhFNq+fMZUgQt0p92U1DhZntJ8P4DZgBn3lKWMg26CmSfq1qjhDE35ssLgjXh1TVaEN6lJ0Lt6aES898Y3JsmA1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PgjC7Vg3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="AxR8EfTd"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68MF5qsu3072141;
-	Tue, 22 Sep 2026 18:02:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=dQh76v
-	E/Ar/e6fmF/RsmccKs/8tylOh5Ck1o3f5kkzo=; b=AxR8EfTdNvuK850H1jZOkp
-	MxwxwiWHfqowxJ6t9OmiRqsG078EfH0fnfY3pBzR8nNPRAVFcWIqTAm0e83f/LCv
-	k6PaqplJTj0IXms7/O+yM2zvnU0qB0CL5NHm5uZJr31YwFPFPoog4w6nYOy3C++w
-	beiXy6qrZk9LudF8KR2pEZ4Sa8Y5W5RjE+/n1v7OdWVLuMl1dUSQC6NRDim3IpzO
-	ww+o7unXxej6WPCaM7ia/KdfjleA9WYUSETjl4uhZuE+iujyM3mIDkXrGzkQFMO4
-	/iV3HKkLSVNHUs50M8sYMw242XzaAGCNfCfR2xPQJPotnHhfVssS/mte/o4aHksA
-	==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske1q9dj-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Tue, 22 Sep 2026 18:02:14 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68MElbhj3046813;
-	Tue, 22 Sep 2026 18:02:13 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gt4qqb1mn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Sep 2026 18:02:13 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com [10.39.53.233])
-	by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68MI2Drp33030852
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 22 Sep 2026 18:02:13 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 0411858054;
-	Tue, 22 Sep 2026 18:02:13 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 57D6C5803F;
-	Tue, 22 Sep 2026 18:02:12 +0000 (GMT)
-Received: from li-4c4c4544-0038-3410-8038-c4c04f423534.ibm.com (unknown [9.61.70.9])
-	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 22 Sep 2026 18:02:12 +0000 (GMT)
-Message-ID: <60bdd0019df887db393585f14c520e01599ccc3d.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 1/2] drivers/of: Add of_detach_node_no_notify()
-From: Haren Myneni <haren@linux.ibm.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PgjC7Vg3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681A11F000FF;
+	Tue, 22 Sep 2026 18:03:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790100212;
+	bh=TNrvPAH0QlIp8jGccbtayU0zThHOeielkfDbXFqQA20=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=PgjC7Vg3axhCcco3eUo/EPIoJvkk/h0zYg2lAHWG+Q2XZrrEzTp1OKwBKz01wgS5d
+	 Ui9gJPb+x5vJZwoZZoyC5+xxYVQEVjyHydw5BvDUMrPrDYDPW9hia5UNs4QM9oJpFg
+	 tdwj9I2OJUhC3j3THiy83MySKYqhT8J8WCBvPVI9zhRiVomCQNGOgzxTTSN2GENZnH
+	 tRf1fHEJrgdaX01Ybq45WDyYyfTvL8VB/Omc39jCQGAT2x1oM/IE/GKDcd6nzuAaJg
+	 1LciSyUi0Jxr6mZ+2aTpn1n8CDmkNj3nGgD+I0pYlOKTDHARJnfTzZhzk1+fxRvsvU
+	 9srn5e4KDB6Qg==
+Date: Tue, 22 Sep 2026 19:03:29 +0100
+From: Conor Dooley <conor@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-Date: Tue, 22 Sep 2026 11:02:11 -0700
-In-Reply-To: <20260921034430.359EC1F000FF@smtp.kernel.org>
-References: <20260921033156.991481-1-haren@linux.ibm.com>
-	 <20260921034430.359EC1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (3.60.2-1.fc44) 
+Cc: "Rob Herring (Arm)" <robh@kernel.org>, devicetree@vger.kernel.org,
+	conor+dt@kernel.org, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] dt-bindings: panel: Add JDI NT35596S
+Message-ID: <20260922-stress-creole-094d9e68fe6a@spud>
+References: <20260921232609.3130272-1-robh@kernel.org>
+ <20260921233127.C2F1E1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 9s5aWuaDxXv3gLN8Ph2h5lMkJUNlFa1A
-X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab2c2a6 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=zVZwimStdwy5hYzsWZoA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI1OCBTYWx0ZWRfX9XP7ZAXUXXjn
- s7J5zovduquMAuQ2AjuEMUfBqSJaKa3VGP5GS1ge80vLIJGrVoC8ThqBF9w3p9cjuBYGG+FQaQe
- OUaxp0B4XeGVENRHUPgOnEc1iX6i43E=
-X-Proofpoint-GUID: 9s5aWuaDxXv3gLN8Ph2h5lMkJUNlFa1A
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI1OCBTYWx0ZWRfX4ufqNfpVWOjd
- Dt9uL9JB7DXNPDEwetFuk+NKI3YEiklLam9XitJunL4nzd71r3JJi9rTc+sGnlkdN0Dlnm7+oAS
- ZnEF6wU3qqHbqiy6hMnCKbGq4xhjMo9byhuFTVKoKebneXA2TNIbO16K4NnitQjR6/EKWsqfzlN
- R5J36P80mj8MlKr7Pq2YUAY2oxFdyQE5exuJU4a1+qeWVHTJvDoRDlccUKzKxUq8a3y/ZDzndO6
- 81Hwdq+Pq9m+T8gXs17HqpNaP7qxQP8q7WIq0857WU5Rwd/voCAPe2gJeTUyED0zqt6z0cvzpO6
- MsXw0xabCsr59HQG9pYCnLnfdxRBcjGUewZogfZrnsiXpFX0thLsAIiN+iVjaEQwkyQNqk+IB4Q
- O0+H1PdIw+WXzaBjIByvixeAoQUMbQ4MJMC7ChWx7d4TJpdjOUEremBIm0COvl6NumngWTmVHqr
- DXfdCJery9B+ROyJG4Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-22_02,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220258
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Y7+JQJdZ48SF86o1"
+Content-Disposition: inline
+In-Reply-To: <20260921233127.C2F1E1F000FF@smtp.kernel.org>
 
-On Mon, 2026-09-21 at 03:44 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue(s) to consider:
-> - [Medium] of: resource leak when using of_detach_node_no_notify()
-> for rollback
+--Y7+JQJdZ48SF86o1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Sep 21, 2026 at 11:31:27PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] dt-bindings: incorrect use of additionalProperties instead of une=
+valuatedProperties
 > --
 >=20
-> commit 32bc441a65c0469af8bda8ae3a3847daa98db314
-> Author: Haren Myneni <haren@linux.ibm.com>
+> commit e0dc4d49c687f6d5568ce2c31031086acb6cd5e6
+> Author: Rob Herring (Arm) <robh@kernel.org>
 >=20
-> drivers/of: Add of_detach_node_no_notify()
+> dt-bindings: panel: Add JDI NT35596S
 >=20
-> This commit introduces the of_detach_node_no_notify() interface to
-> allow
-> callers to remove a device tree node without triggering the
-> corresponding
-> detach notifiers. This is intended to handle rollback scenarios where
-> adding nodes in a changeset fails after partially attaching them.
+> This commit adds a new device tree binding schema for the JDI FHD
+> NT35596S MIPI-DSI panel. It documents properties such as the DSI reg valu=
+e,
+> reset GPIO, backlight, port, and various power supplies.
 >=20
-> > diff --git a/drivers/of/dynamic.c b/drivers/of/dynamic.c
-> > index 744ce0e1eb24a..fc6f22371a97c 100644
-> > --- a/drivers/of/dynamic.c
-> > +++ b/drivers/of/dynamic.c
+> > diff --git a/Documentation/devicetree/bindings/display/panel/jdi,fhd-nt=
+35596s.yaml b/Documentation/devicetree/bindings/display/panel/jdi,fhd-nt355=
+96s.yaml
+> > new file mode 100644
+> > index 0000000000000..aefc9ae5d8abd
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/display/panel/jdi,fhd-nt35596s.=
+yaml
 >=20
 > [ ... ]
 >=20
-> > @@ -318,6 +318,22 @@ int of_detach_node(struct device_node *np)
-> > =C2=A0}
-> > =C2=A0EXPORT_SYMBOL_GPL(of_detach_node);
-> > =C2=A0
-> > +/**
-> > + * of_detach_node_no_notify() - "Unplug" a node from the device
-> > + * and return without running notifiers.
-> > + * @np:	Pointer to the caller's Device Node
-> > + */
-> > +int of_detach_node_no_notify(struct device_node *np)
-> > +{
-> > +	mutex_lock(&of_mutex);
-> > +	if (!of_node_check_flag(np, OF_DETACHED))
-> > +		__of_detach_node(np);
-> > +	mutex_unlock(&of_mutex);
+> > +allOf:
+> > +  - $ref: panel-common.yaml#
 > > +
-> > +	return 0;
-> > +}
+> > +properties:
+> > +  compatible:
+> > +    const: jdi,fhd-nt35596s
 >=20
-> [Severity: Medium]
-> Does bypassing the OF_RECONFIG_DETACH_NODE notifier during error
-> rollback
-> cause resource leaks?
+> [ ... ]
 >=20
-> If a caller attempts to dynamically add a device tree node and the
-> OF_RECONFIG_ATTACH_NODE notifier chain fails midway, calling this new
-> API
-> to roll back the attachment will skip the detach notifiers.
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - reset-gpios
+> > +  - vddio-supply
+> > +  - vddneg-supply
+> > +  - vddpos-supply
+> > +  - port
+> > +
+> > +additionalProperties: false
 >=20
-> This fundamentally breaks subsystem teardown symmetry, which means
-> any
-> previously successful attach notifiers in the chain might permanently
-> leak
-> their allocated resources, such as platform_device instances.
+> [Severity: Low]
+> Does the use of additionalProperties: false here incorrectly reject stand=
+ard
+> inherited panel properties?
+>=20
+> Because this schema references panel-common.yaml in an allOf block,
+> additionalProperties does not traverse the $ref references. This blocks
+> standard properties like rotation and forces the redundant declaration of
+> properties like backlight, reset-gpios, and port just to pass static JSON
+> schema validation during a make dt_binding_check.
+>=20
+> Should this use unevaluatedProperties: false instead?
 
-of_detach_node_no_notify() is called per node and only if the attached
-node notifier is failed. So up to the caller whether to use this or
-of_detach_node().
+This seems to be the new thing that Sashiko whines about, any binding I
+see with additionalProperties: false seems to get complained about.
+
+--Y7+JQJdZ48SF86o1
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCarLC8QAKCRB4tDGHoIJi
+0hIyAPwNKPbOV9Hmv3D6u1Ws4ur/UPFz+V2rAS8gvcZXil7eZQD9F++RKgFFy3Gh
+L9jt9PTuDnXHIEsLTMblxdY+gpa/kgI=
+=0wBR
+-----END PGP SIGNATURE-----
+
+--Y7+JQJdZ48SF86o1--
