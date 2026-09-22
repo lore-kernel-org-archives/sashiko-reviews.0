@@ -1,87 +1,36 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-199.mta0.migadu.com [91.218.175.199])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640B237F319
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 03:27:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC202D949C
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 03:40:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790047676; cv=none; b=j3Gkn6yCid93cwo8h/Xf4zUMyk/zmsQXGjhTimqaE2iLQ0hkjSVC93Vk63SxZ7+P5cyGC0ed+tuLZ/toTT606hgdKFYLTE6YyvinWwqqjG5Fa742qIWkNJKRuyMrgRRaI3tYYSoX/IySNXUj7yf0VhpOhdHpZhRkORpB+mzGb8Y=
+	t=1790048402; cv=none; b=XbA4w/sm1tVWc96gH9nZyNLkN9loI5XIAPLhopsCpbxvtNNKrddW83oqfRQLYExrn9XmrVgZidAduHdWdgnGgWkpaafD2E1DT/ibQkNViBJru2adlkdKvQ7mIjUAYYVKVQeSafz6qxYs33pPU2PI1+Hovn9D3Hb8GMdtKfhvQRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790047676; c=relaxed/simple;
-	bh=Qtxel18qHJKw163J6jbG6RGG0MrSRAy72mEeBvuRRrs=;
+	s=arc-20240116; t=1790048402; c=relaxed/simple;
+	bh=OHRKFvRCPl7CWghI1aZvrZv4JFj95s425kTIVePhcvU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=J6pksZrqFNBQzN1NDOUFp9Fdb7yjKEGW5lQIFrIpg2zgTj73S2A4uotQSV9B3yh4Xu9gNJgmg+ysrvlKDIbcWl/QUM0oshlqrzRrss+kPQlfFqWHzHnd5Nu0whR53zhg3oiZTVsVlWwk6jblLD8B4dat/IT9D9w92Ro2DkRx7WI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gdfJu0ax; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=e5LGR7md; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	 In-Reply-To:Content-Type; b=hIxqmIH7XNtsfzSOOjJKE+7Tb1IHr+r7y0YHQNrncR0gqIW1NRvVmp8+IRx0b2DLWfdcyOVQfrw0HBoFwS2b5Q3vY9OvT+7ucCGsB9ouz8KXwn+rT50nmkFxO+pz5FXiJozpcNUxpMMaLlL+Cqg77ddubueAOyL5s3Tu+QQgYCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=fGM1Fj7T; arc=none smtp.client-ip=91.218.175.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gdfJu0ax";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="e5LGR7md"
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68M00qpM1370670
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 03:27:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	db606FZ5rvTANVLSxVgbt5sUsdfzTaDo+c8SWQ7Q/t8=; b=gdfJu0axBKKYEKXW
-	MfePgdhEbSULg/4hA1RuqsG2vO+FAcrKMIh+y108Kuu3G1FLH3q9YIrwtvSw/MbA
-	CoATIUutxVgPfBA9SEwx0ObCTgroUYt3Exh5BWsoq6fQyVvuFuAz5U/iS073Cg5L
-	08srJr+OnllzMZUd8jUxBJACqmmi9jcwvS6GfmnT6lGeueV+RITv3y6f8YFxDV3A
-	2+siGJP6uNeouwqAz9teiZ6lLNUZKyi97hfLejkmXJen6InSOxesHw2hwa5oRkuD
-	LjOt8fxO/FmXB+MPB6GwfQMn9mQoDMLy6XsRUtxLpV5GbUOnJ7H9leVdPYzkOA/6
-	Ov7o8w==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gu7tsja4j-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 03:27:54 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-cc4216aee8fso4864420a12.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 21 Sep 2026 20:27:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1790047674; x=1790652474; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=db606FZ5rvTANVLSxVgbt5sUsdfzTaDo+c8SWQ7Q/t8=;
-        b=e5LGR7md7OyU3sAUpLtXRlTkTmK7pMgHSiqrMTlNA71dvMA50Rzvcp6Bj8WndkOd82
-         Gus4GEXPe+3bMMr93k1vfcy4TbmJEkDMy6NZyAXqDz0CKy6wIPthIXAZK4pulqHbSVta
-         XUJ0vewDLfJjtFC4RWHr2lTC61Ss6nyBlldyJSOrikFg7y9j6n8H0KVIGPey88OAruQM
-         0WHs2U1TX5zQA/xX1UmfWLY85gf8r53VkverGMgVvIu14vAxfgJaMDCu0XNRqp6dsX0G
-         kF7ACrWqaicWAvq3YXcc5o3KvC0nfMHac3ahZbWTaxr8Qso8GV0Oo3FVdUx2eV3qOTYk
-         IV5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790047674; x=1790652474;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=db606FZ5rvTANVLSxVgbt5sUsdfzTaDo+c8SWQ7Q/t8=;
-        b=dUP8bWNyd/NgP/LO4dSaQ/ZGhNGUKohyP+ZysO75w872sYImGvgmnLxtp79OBe+9kn
-         RQDYakQ8QEohQIPQ209Ab+kcSq9tcC7BMe5JdhTcHjYA3jm4TlMAI9kLVWudGbZsNXHn
-         j+vWhG8C7+9o2v7U2u8CkP7qWvsc/iWR7xwLTbUe3x6zJLhOfADwskrU8oP+q5HuQ8av
-         mJE1v96RwC39JeitglOgMgtq+s6megFV48iw7S3hQMZabuP/+mW7Ca2U/EARHXy8mW0+
-         h9Ja6Fd4eF3Uhm6jgtB3C/+ClmfvRW0zQeo4g/B+WboK9gK+yMuoYdwS62Y//1Vg7e0E
-         Gb8A==
-X-Gm-Message-State: AFuF++mFfsfO+AUj+3RyeU/J84P4jjHRxWGgDPwIfO4kPZbZ9+nxHcar
-	POz/QaY6EiiCSbdglF6z12TvsSmiBH2gjoMzq92sl5FpVVx+kaT6IxO72g3Ul6tcO2ePxZ+gLSv
-	Ng/BEKIcZVkCEbe2f/C5m0t48mHs2llCG/qvAtiN4Y17Qu+ruASB2gSycvxCxVMmP0Gl8k/MHl6
-	52V6fHzg==
-X-Gm-Gg: AYBFou2/cF5Hp8boD3YtUAstF4Y8Z1Nd9a2Z89VoW8mF1ntVHCPDoEhNfrcDE2znYzk
-	1YBMpPNOlCurQEyQKF4uohq/rbCScaKU/qqUeed/zfenIi00bDio8E2u2eNEIE761Rol+iCcsTz
-	ewDtXfXBdYMd1l8v3uLDZ9oSq0Lmfz99Q5yot7uyN2SI8mxOS95yYsYEtSqix+cMLsnt9xI4MK8
-	/oLEox+wOP81wrzSC/0cYQqFD7Ji6kz1UXy4nLrS+1R74IzOYXpLo3b9+7kDiVWjbXD+8/jfah+
-	i35vqoubeMulF9Kcuaapeobr96H3cZ6irYn+JwCwvCfDKe0djINi/d7qpiXncr5ZcFryd2s6jZ0
-	mp+AXCEHyP5hMpwoTCyL3q8MaFMjzdtfxtL1TZHe1cgTdUyoNBj6wlzbydG3tRVb+SQ==
-X-Received: by 2002:a17:90a:d4f:b0:39e:6a7f:1dd0 with SMTP id 98e67ed59e1d1-39e6a7f2240mr8215910a91.44.1790047673575;
-        Mon, 21 Sep 2026 20:27:53 -0700 (PDT)
-X-Received: by 2002:a17:90a:d4f:b0:39e:6a7f:1dd0 with SMTP id 98e67ed59e1d1-39e6a7f2240mr8215897a91.44.1790047672932;
-        Mon, 21 Sep 2026 20:27:52 -0700 (PDT)
-Received: from [10.133.33.138] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a0715e9d5esm54445a91.17.2026.09.21.20.27.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Sep 2026 20:27:52 -0700 (PDT)
-Message-ID: <6b8bf779-6494-45b7-9b87-dc62aa4a7220@oss.qualcomm.com>
-Date: Tue, 22 Sep 2026 11:27:49 +0800
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="fGM1Fj7T"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=OHRKFvRCPl7CWghI1aZvrZv4JFj95s425kTIVePhcvU=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1790048398; v=1; x=1790653198;
+ b=fGM1Fj7TLl1Pdfk41/Wj0kUqwGD3d9sucQV5EvduhLxT1VX3MPgCk0vNaTZOvM39usuoPphp
+ BzYqeinE4bApeWQSBNNMCc/4Z6dDvPXsgLcwFQ/kfc5NoqG6ygu5raDIsIW/vlPzUiA7CTU5bYH
+ eqj+/9wNl9l0aNLXGggj5o+s=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 9ff7cc0b32d0b1f8;
+	Tue, 22 Sep 2026 03:39:58 +0000
+X-Mizu-Trace-ID: 9ff7cc0b32d0b1f8
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <243d2bb2-d619-46c9-bf1b-da4afd63537c@linux.dev>
+Date: Mon, 21 Sep 2026 20:39:55 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -89,97 +38,164 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: shikra: Switch CPU ETMs to MMIO-based
- probing
+Subject: Re: [PATCH bpf-next v4 07/20] bpf: Refuse exception cleanup shapes
+ bpf_throw() cannot dispatch
+Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-References: <20260922-fix-etm-probe-issue-on-shikra-v1-1-56d25e9bbe17@oss.qualcomm.com>
- <20260922031703.54C521F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Jie Gan <jie.gan@oss.qualcomm.com>
-In-Reply-To: <20260922031703.54C521F000FF@smtp.kernel.org>
+Cc: bpf@vger.kernel.org
+References: <20260921210033.1715000-1-yonghong.song@linux.dev>
+ <20260921210109.1719713-1-yonghong.song@linux.dev>
+ <20260921212057.D23021F000FF@smtp.kernel.org>
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <20260921212057.D23021F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 9gXyvoqizT8Nbh4CHkMm5oxEK1yQukiE
-X-Authority-Analysis: v=2.4 cv=aqgnmiZV c=1 sm=1 tr=0 ts=6ab1f5ba cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=9PwK0JBZ0THiR8dXEk0A:9 a=QEXdDO2ut3YA:10
- a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDA0NSBTYWx0ZWRfXw2qv4pGCed+W
- oHcBqFqBKpPQYfEz8kl91lzbyoNfg35S8wgv1nSE7hI2VWTlFdU/6wDYlqqp70LImDl3cYVnP8M
- u2R60M1WHJzYn7AELBzsOtKWi9Jr5jQ=
-X-Proofpoint-GUID: 9gXyvoqizT8Nbh4CHkMm5oxEK1yQukiE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDA0NSBTYWx0ZWRfX9TQrxj/p3Cm6
- Jp/6voDKI3EXEPdibohso8keye6HCb8dSmn6R4dbUG64xT6BJE5DvKmsso/0I/jogJosQNw+fSP
- FaV1L10orNkYC8iu0NG8GgWNCuyGeXNpa1QMCmIwio/HBuUP9dEjt2Ut2lhIfzst+1UUNtRqapl
- nnGgEJS6yybp2naE50espDJ0HQPAA4shLEKx0bDWDyRabbsp6w9A0B8uXH80KDzfAyBWYbRgZ+d
- wmRVZobCGBcnLtAkpb074fm36FEOTLgB/uBcQWAOmPnHh2+bPOW+dQdU0rhzO0Wi3zeQm2/XN7D
- T79l0d/j+OitZZ3paxAd4qhvZ0AZ/QKNs3FqudZgK4MAJItfhsAd7QbAWSXFldMeGGtuyj1/WOJ
- BZ475LgaOS0C88FESBv9h6AZfAib21zpZlUNd9vn91nG471Q2AwnlQ17AsdcoOZZqTBcQLCppgE
- 01Bg1Gb3SKWQJC+pQbA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-21_07,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
- bulkscore=0 clxscore=1011 priorityscore=1501 adultscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220045
 
 
 
-On 9/22/2026 11:17 AM, sashiko-bot@kernel.org wrote:
+On 9/21/26 2:20 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] arm64: dts: shikra: missing arm,coresight-loses-context-with-cpu property
+> - [High] bpf: kernel stack leak via >5 arg BPF-to-BPF calls in exception pads
 > --
-> 
-> commit aab8605634d60b3bebc7a736fcec36f07d87f859
-> Author: Jie Gan <jie.gan@oss.qualcomm.com>
-> 
-> arm64: dts: qcom: shikra: Switch CPU ETMs to MMIO-based probing
-> 
-> The etm0-etm3 nodes are declared with "arm,coresight-etm4x-sysreg"
-> but do not implement self-hosted system-register trace access on
-> this SoC. The CPU ETMs have a memory-mapped aperture, so switch each
-> node to the standard "arm,coresight-etm4x", "arm,primecell" compatible
-> with its MMIO reg range.
-> 
->> diff --git a/arch/arm64/boot/dts/qcom/shikra.dtsi b/arch/arm64/boot/dts/qcom/shikra.dtsi
->> index c1f06f692f664..62bacf749241f 100644
->> --- a/arch/arm64/boot/dts/qcom/shikra.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/shikra.dtsi
+>
+> commit 961251cb485953d7f6bd99ead3712d0e8268b8eb
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> bpf: Refuse exception cleanup shapes bpf_throw() cannot dispatch
+>
+> This commit adds verification logic to reject specific control flow shapes
+> that bpf_throw() and the exception cleanup handling cannot safely dispatch.
+> It performs post-CFG checks using bpf_check_cleanup_exceptions() to inspect
+> pad reachability, catch pads, and unwinding safety.
+>
+>> diff --git a/kernel/bpf/exception.c b/kernel/bpf/exception.c
+>> index 67af78baa558d..da8fa6eb7e4b9 100644
+>> --- a/kernel/bpf/exception.c
+>> +++ b/kernel/bpf/exception.c
 > [ ... ]
->> @@ -3218,6 +3150,24 @@ cti@9020000 {
->>   			label = "cti_apss_pe0";
->>   		};
->>   
->> +		etm@9040000 {
->> +			compatible = "arm,coresight-etm4x", "arm,primecell";
-> 
- > [Severity: Medium]> Will this omission cause ETM tracing to silently 
-stop functioning during CPU
-> deep idle?
-> 
-> By switching to MMIO without adding the arm,coresight-loses-context-with-cpu
-> property, the coresight driver will skip allocating the save state.
-> 
-> drivers/hwtracing/coresight/coresight-etm4x-core.c:etm4_add_coresight_dev() {
->      ...
->      else if (pm_save_enable == PARAM_PM_SAVE_FIRMWARE)
->          pm_save = coresight_loses_context_with_cpu(dev);
->      ...
-> }
+>
+>> +static int cleanup_check_pad_insn(struct bpf_verifier_env *env, u32 i)
+>> +{
+>> +	struct bpf_insn *insn = &env->prog->insnsi[i];
+>> +
+>> +	if (bpf_helper_call(insn) && insn->imm == BPF_FUNC_tail_call) {
+>> +		verbose(env,
+>> +			"bpf_tail_call() at insn %u is in an exception cleanup landing pad\n",
+>> +			i);
+>> +		return -EINVAL;
+>> +	}
+>> +	/* A BPF_LD_[ABS|IND] can leave the frame through its epilogue. */
+>> +	if (BPF_CLASS(insn->code) == BPF_LD &&
+>> +	    (BPF_MODE(insn->code) == BPF_ABS || BPF_MODE(insn->code) == BPF_IND)) {
+>> +		verbose(env,
+>> +			"BPF_LD_[ABS|IND] at insn %u is in an exception cleanup landing pad\n",
+>> +			i);
+>> +		return -EINVAL;
+>> +	}
+>> +	if (is_stack_arg_st(insn) || is_stack_arg_stx(insn)) {
+>> +		verbose(env,
+>> +			"insn %u passes an on-stack call argument in an exception cleanup landing pad\n",
+>> +			i);
+>> +		return -EINVAL;
+>> +	}
+>> +	if (bpf_pseudo_kfunc_call(insn)) {
+>> +		struct bpf_call_summary cs;
+>> +
+>> +		if (bpf_get_call_summary(env, insn, &cs) &&
+>> +		    cs.arg_slot_cnt > MAX_BPF_FUNC_REG_ARGS) {
+> [Severity: High]
+> Does this omit checking BPF-to-BPF calls (bpf_pseudo_call) for on-stack
+> arguments?
+>
+> The JIT executes exception cleanup landing pads on the unwinder's stack (rsp),
+> while rbp points to the BPF frame. This check restricts kfuncs from passing
+> arguments on the stack, but seems to miss BPF subprograms because
+> bpf_get_call_summary() returns false for them.
+>
+> If a pad calls a BPF subprogram requiring more than 5 arguments, could the
+> callee read uninitialized kernel stack memory belonging to the unwinder's
+> caller?
 
-Currently, we are not enabling the CPU SAVE/RESTORE in HLOS driver on 
-QCOM platforms.
+We should be okay here. As the code explains, if the number of reg-level argument slots
+more than 5, verifier will reject.
 
-Thanks,
-Jie
+>> +			verbose(env,
+>> +				"insn %u passes an on-stack call argument in an exception cleanup landing pad\n",
+>> +				i);
+>> +			return -EINVAL;
+>> +		}
+>> +	}
+>> +	return 0;
+>> +}
+> [ ... ]
+>
+>> +static int cleanup_mark_pad_bodies(struct cleanup_ctx *ctx)
+>> +{
+>> +	struct bpf_verifier_env *env = ctx->env;
+>> +	u32 i, sp = 0;
+>> +	int ret;
+> [ ... ]
+>
+>> +	while (sp) {
+>> +		u32 j = ctx->stack[--sp];
+>> +		enum cleanup_insn_kind kind;
+>> +		int next, target, sub;
+>> +		u32 start, end;
+>> +
+>> +		ret = cleanup_check_pad_insn(env, j);
+>> +		if (ret)
+>> +			return ret;
+>> +
+>> +		sub = cleanup_subprog_of(env, j);
+>> +		start = env->subprog_info[sub].start;
+>> +		end = env->subprog_info[sub + 1].start;
+>> +		kind = cleanup_succ(env, j, start, end, &next, &target);
+>> +
+>> +		if (kind == CLEANUP_INSN_CALL) {
+>> +			/* check_subprogs() registered every call target. */
+>> +			int callee = cleanup_subprog_of(env, j + env->prog->insnsi[j].imm + 1);
+>> +
+>> +			if (env->subprog_info[callee].might_throw) {
+> [Severity: High]
+> Since cleanup_mark_pad_bodies() allows BPF-to-BPF calls in landing pads as
+> long as they don't throw, should it also verify that the callee does not
+> take on-stack arguments?
+>
+> For example, by checking if env->subprog_info[callee].arg_slot_cnt <=
+> MAX_BPF_FUNC_REG_ARGS?
+>
+> Without this check, a subprogram requiring more than 5 arguments could be
+> called, potentially leading to the kernel stack data leak mentioned above.
 
-> 
-> Should the arm,coresight-loses-context-with-cpu property be added to these
-> new MMIO etm nodes?
-> 
+We should be okay here. Commit "bpf: Walk the exception unwind in the verifier",
+we have
+
++static u32 unwind_pop_frame(struct bpf_verifier_env *env)
++{
++       struct bpf_verifier_state *state = env->cur_state;
++       struct bpf_func_state *callee = state->frame[state->curframe];
++       u32 callsite = callee->callsite;
++       struct bpf_func_state *caller;
++
++       caller = state->frame[state->curframe - 1];
++       account_processed_insns(env, callee, caller);
++       free_func_state(callee);
++       state->frame[state->curframe--] = NULL;
++       invalidate_outgoing_stack_args(env, caller);
++       return callsite;
++}
+
+stack arguments will be invlidated, so once pop frame and go to
+landing_pad code section, verification will fail due to un-initialized
+stack arguments.
+
+>
+>> +				verbose(env,
+>> +					"cleanup landing pad calls subprog %d at insn %u, which can throw while an exception is in flight\n",
+>> +					callee, j);
+>> +				return -EINVAL;
+>> +			}
+>> +		}
+> [ ... ]
+>
 
