@@ -1,86 +1,282 @@
-Received: from sonic.asd.mail.yahoo.com (sonic-usea1-0019.asd.mail.yahoo.com [34.2.64.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A66558200
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 22:26:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.2.64.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E2F32E128;
+	Tue, 22 Sep 2026 23:21:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790115995; cv=none; b=M0mUM/zIVpGqYNlkmb6RrOxX6x5yncajLuaLKJ0sj+CTtK6U5LFEjCVvQ9gsLMAwMCxPDGi6fIPrmpQRvsPPmPhW6BgEYu9nAMrzoNFkKQuzFdwIWavyhLeYJOxaIc6hjzuYrVWwA4bXyDkF8choLa6exmfMsx2MWI0mH0DImrw=
+	t=1790119279; cv=none; b=XjvfVuxO47jn9zwDcwIleFiasqQfjD2qulIrLdpquxEsBrirmWksxCBWuekUhFmf1ahNtjMz6LH3oJa76B15B+MYH3YuZr8rFfn9ylsZCaqRkcH70AjRuKGmlhNepHf9bXL9E0+d7hTteDqWrlEGXMfa57rcTCJ5urteDHfHb9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790115995; c=relaxed/simple;
-	bh=+r8yPFqL5aIhm/SxqAziLA06xIGTqZPDmQKrBhgzqs4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IOQ2Ryp25NezAVsxlrJnrTMvZI/5FLrjHoa8Bs06rJLc9L56CxBrERI5VT0+PGM++2ghw4uQUyEUZcHgtNGm82Cp/RePV1j45fCsNBgZ/XMpE3NUwAeNGtq2cp8bmrGCvUN9kjpxAB2++lbDScMCyaV2natSejx3skiQNsHrjLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=PZof6QkN; arc=none smtp.client-ip=34.2.64.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+	s=arc-20240116; t=1790119279; c=relaxed/simple;
+	bh=Yh4qf4AAHq1NrDhCPwzQnedoKI3ueK/KIj3E5kuxKOM=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=DpS7b7mH9vC9ty10nkO7RYNfiua1c2ojL8JsGsj6T4TstiXHp6ZxD4q2FlbNdCYBH1NCnvqmptb0q4K6vIPUBaDhPFBogPr2Hh4o6tq5Yn3QYlGw7EWDM54XFcpzwTK3QGQ7f5hOmEJnvGzzfurGVFsQfoD35d/M95YHqv/TMOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QP11CcxL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="PZof6QkN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1790115985; bh=+r8yPFqL5aIhm/SxqAziLA06xIGTqZPDmQKrBhgzqs4=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject:Reply-To; b=PZof6QkNixvGB0paHnh9riarLJf4S+CedYw1L8ZhSWZy5bATChMroB1cWK3ri9Ixcr/Afujqdx6XNOwcAmkyFgXaVblEV8A6fxYy/8cXjojCUuV4QwdiR0TovlbLwHsKxSYhbUee1c5quo5oUi0lXJ/MrKu2/XEGmwHMlq7UzOiSu3kDv4/3wBgfwE9RTh7bRvAJtYRn0Nxm52WzIK9nqg4tsH7KR4nLk0VY67O7YFdynCdIp4T8l9g1Tog9zJ5rrkmXtmZkXiLakJNoti3O3vSAGgUy14o8P3NFUFJGphYBHQpWLZaw4i9kR8rulOYumrKI/EqG5iEsnbbvZTOFJA==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1790115985; bh=Kj/JqCUSxXeX/US6vLPCl378HZ7jGUwe2C+cvJAJzmK=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=YMBduTsgzNQS8K0kygubpfJX/3DJYSjOlb5W3pGJb8eR8zbBOjimv+st5/RUiV4DHq+ZFeF4a/J01tG6JPV9qt0+Ykg4CjYGD0PyhDKTpiq1mHCmOwBUv8hTm55CR2tw1knpvN2W47nh/guqSHWyK82WIOGNklUPPCGXphJbe7QBhsW/CeqYBHWQmIcT9rqQRs3WDail78LHnNtiDyJ2841XMQFkzw8/Yqo41mQ9xSbNozXetTNjcA+2cn0ry0t7u7uQqiRXogRW3jflc3z1PsSvJa/Gd1qeVAWP0SICZhtWFS4dLQOzW8lcpHvAKDMTqyqO66Vg7d1KGj9T5Wn1xQ==
-X-YMail-OSG: XYQ4_TgVM1mxt90gm0Z_zcWMtHA4LaksYibw0c3i_yt3YmbOf9XbRCJWWAAe0Yz
- i6Q9uTXX49F0s311Kq8W6ASToGnUg.wmfHFP.F_b5PpvvmsxWvjiJtMBP5j9gbyztFd3DJ8YKYrT
- GUrHUX2wMdem7Kl8fh0MdGq6epoAImiEFRMBqXpfCEDPwUBAorsDZts15zjAYzq1dRhzMyZSNJx0
- 70ZokSmFYEEMQHv8B5QvFb9bKOXA0JJLxt0tNJIN6JkaqJ40P3peY2mE6eN6NU_wj1mPHMSod698
- nHCAQak2En57wSdgVWVE52Gl.y43B_qVySLg5QeaEoGkkVHmgBDIMkge0qd4Eja_mFBodWLtbkuZ
- duV37f3DH4kdbSxatWr7d3gFFtbpbU2BEIuz3PHtQsValpfIYcKH5T_u1t1S5znQQIsPK62AyVvZ
- LEz5Sl9KwJSmmufGv0dd0B36sqRgYAlvDGlLHYWqInexkmVLqDWQMgR5Dv7G0BjA1Pe330ptPuLr
- uMwRu.i.ePDdyUxzC56RcSSaB6e6fYj5S6Y4172hGuNarp2CJtUGtWUWx161sj.Dv93ENRwLN8qn
- Z3aRNVvAfe9VZJOKHoz7jCy1k.HkwDbQ_Y1Gsx6VjUeK9Xowjr_90qIm5BVT_Dlu5DjkoDQY4a70
- xAopcOkxwgql59w3woW4uhPCY6TDfrMRmr5Hf9o1DXxc5k02s8iJ6PH8LTvvDpfkCYapB1E8RHQc
- wWkoF9Yw3VBu291c.TbJ6RU2EP4WAwM4agqS10MfyXyq1XKAd7tSwwVONN.v2izbem4b8WTvAFqu
- 6aRu_6X4So99UdspvZGWwXw_RdQSPxtoL1qHZkG.EfveAwbHQbhcUCn8U9yA7IvxeQgzhfs_eiaX
- O_L5WETvoG0U0LN2l0HpcKxA1puAWhO5vZVwuOB1BG5tgOvbCtw9Bmwlcvd8unVD8uj33kENlqHX
- Jx2s9hZpAgRjZVJQuomU2pDLJV45nCR2G_LP2FQkBoPr7YKqZOGScMiuElq.OKQ1uGQOQzx22Ojc
- jymZiU2VsQI3M7GsT8RtAXym.4jj1xx5VaMAjFUOizS3rFISCYI9z5r7Hdz2vC5ZIIcmQrJYx0hb
- bKuAKjwIdz08aOSaJvNAOevH7Ga4egserQ_W4R6BO3IWqYXukRYLzO2rc0no7TwcNqFHJOEiElkc
- e20I7oS3sI3eLMobtQGTZHXmoXnHyA4BW8vO5v7S2Zkfxl1DQH2Pm0bgILYQJK.YUS.ETEwFV38i
- l6UT9zO33dEgurdavUp3AkgB6Ew2iSlMEgPGHnX9ISNJR5P9KOoU0EXEEXhuv6PmHX9ZLJ7wH9ll
- Uyf3x83E_3BX6rUYecG3_VnNdsMwaOH4yqJuLJKYB..HyBRhzl882QiVSjoR5AVqiMQH6mrwaK0j
- sFmeUWS5xU1LM54XQfn5yTqPiG0O5DlKuJFth52lXsYSoup8W3CQeS57cBIF4qerwwqdiN5WJ.vZ
- riMjFnUAWka7kwYckgWYFn4P.1e4ndIudUIG5atBLh12UkgQrMMxyxDrCGuU39eGeJ4U6iAMiGq2
- cM_XlXzyclFY8b2bSC4UWfYPLNAJkzpGAVgMzonMy0ixi1_Zno7nC9iOOC2rMWKcgmpR53ulxkhv
- vLlq8RP2JbkV4ugA.to_eE.iBAtHUuZMsBRvTpb5pXGyDbciQ4NC31jN4nUGAWXHP5IhKVHA72y9
- ZR.J3xhDbJ4dj79pEUg3EBpmmz6Eivs3Ce4efaboa5t0J.DpCoX5.GV_0se0rKeRrOJmbWi58RWA
- CKHu6de2TF5HWw7KR85zL2kq4sS1nQzFYNLVTd0G1EwmXYVk08HZ7D11VfBxOcU_dv1W_v7yOoed
- .SJIng1llHnHKQFi5rZB4bU1yybHKQxB9DVtVYIxhLRhqg5OQ2TQMu.S4WqrxMmch1cRGVVuEJOz
- 4It8hCR.ts4PaMEf0yeWQ7VhECtMWvibxGCEPJyIZyExsb69qGxCVKY7ifLEadNvG7v.SI0kawPc
- JA4EhTbvsQIXPZgOEBhLb98.N3sqs.Hw-
-X-Sonic-MF: <Capitain_Jack@yahoo.com>
-X-Sonic-ID: b0dbab7f-a6e5-49ee-9833-57582a32675a
-Received: from sonic.gate.mail.ne1.yahoo.com by mail-asdoutdeli-p-cin-usea1-prod-sonicconsumer-svc-102 with HTTP; Tue, 22 Sep 2026 22:26:25 +0000
-Received: from dip84.lsn.bf1.yahoo.com ([67.195.177.93])
-          by hello (SMTP) with SMTP ID 0cd2206dbccef9b797cd29a89bceac90;
-          Tue, 22 Sep 2026 22:26:22 +0000 (UTC)
-From: Daniel Campos Ramos <Capitain_Jack@yahoo.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QP11CcxL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936E51F000FF;
+	Tue, 22 Sep 2026 23:21:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790119277;
+	bh=uQ/blJlcn6x9i7/mngodmC3/BxIChPcfxPbePy3LYVI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=QP11CcxLqKvDUFs6cTBw7MtEjickhktuCKAuzssoSF3c74dqHq2O2/Z5xpCxFci75
+	 n5i+KNutYRvdQ17ZPUcxLIc0l4iAOFpmZCdSj8yVqcZr6/SlQTaoQ+jt8PPLdUglMH
+	 Qof4F7euiASn1GqpUFU84ardA2fLK0d9SZBkW1/MowWZ6kuFrWEeXkHYx4LBr6V1HH
+	 TeS7LYVTjO2ZGIYA6Ea0aL12Va8H/sJVoDm/uBLu7Q9sdtO9cbzRT8lK6ZWOa2I13u
+	 dp5NBLvc9BHtem2qP+REHQZiZYfRJbPFU4nhQE34k+zP5HwSMLQgzRVoFxaRZ9ZBGE
+	 VqgAagVjGiGMw==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1x99nX-0000000CHTG-1fcb;
+	Tue, 22 Sep 2026 23:21:15 +0000
+Date: Wed, 23 Sep 2026 00:21:15 +0100
+Message-ID: <86v77w50us.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org,
-	nouveau@lists.freedesktop.org,
-	lyude@redhat.com,
-	dakr@kernel.org,
-	Daniel Campos Ramos <Capitain_Jack@yahoo.com>
-Subject: Re: [PATCH 1/3] drm/nouveau: select HDMI deep-color link depth
-Date: Tue, 22 Sep 2026 19:26:18 -0300
-Message-ID: <20260922222618.709711-1-Capitain_Jack@yahoo.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260922193903.DE3BB1F000FF@smtp.kernel.org>
-References: <20260922192132.114546-1-Capitain_Jack@yahoo.com> <20260922192132.114546-2-Capitain_Jack@yahoo.com> <20260922193903.DE3BB1F000FF@smtp.kernel.org>
+Cc: "Oliver Upton" <oupton@kernel.org>,
+	kvmarm@lists.linux.dev
+Subject: Re: [PATCH 3/3] KVM: arm64: vgic: Stop the VM when disabling LPIs
+In-Reply-To: <20260922220125.91CC01F000FF@smtp.kernel.org>
+References: <20260922214212.3327146-1-maz@kernel.org>
+	<20260922214212.3327146-4-maz@kernel.org>
+	<20260922220125.91CC01F000FF@smtp.kernel.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: sashiko-reviews@lists.linux.dev, oupton@kernel.org, kvmarm@lists.linux.dev
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-Thank you, this one was right, and it helped.
-The SCDC gate half was already fixed in v2, but the second half was not: v2 still passes the pixel clock as khz to nvif_outp_hdmi().
-On GSP boards that value is ignored, which is why our GA106 bench never showed it, and why the v2 cover letter's claim that the pixel clock is correct there only holds for GSP.
-Without GSP, gm200_sor_hdmi_scdc() derives tmds.high_speed from it, and that sets the SOR scrambler, the 1/40 clock ratio and the clock divider.
-So when Deep Color pushes the character rate past 340 MHz while the pixel clock stays under it, v2 would tell the sink to scramble at 1/40 while the SOR stays at 1/10.
-The next revision passes the TMDS character rate there; it is ready, and will go out once the maintainers have had a chance to look at v2.
-The max bpc attach on DVI connectors is handled in the colour format series, where patch 6 closes this report.
+On Tue, 22 Sep 2026 23:01:25 +0100,
+sashiko-bot@kernel.org wrote:
+> 
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] kvm: arm64: vgic: race in vcpu->arch.pause unpause due to missing VM lock
+> - [High] kvm: arm64: vgic: stale LR state during vgic_flush_pending_lpis()
+> --
+> 
+> commit 81f0f5ee375a1e011fabe86a70b81c8175c5fd88
+> Author: Marc Zyngier <maz@kernel.org>
+> 
+> KVM: arm64: vgic: Stop the VM when disabling LPIs
+> 
+> Disabling LPIs modifies the AP list of the affected CPU, which could be
+> running. This commit aims to safely manipulate the state by pausing all
+> vCPUs so they are in a quiescent state when disabling LPIs.
+> 
+> > diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+> > index 5913a20d83019..adefc42964732 100644
+> > --- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+> > +++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+> > @@ -303,9 +303,19 @@ static void vgic_mmio_write_v3r_ctlr(struct kvm_vcpu *vcpu,
+> >  		if (ctlr != GICR_CTLR_ENABLE_LPIS)
+> >  			return;
+> >  
+> > +		/*
+> > +		 * Yes, disabling LPIs is painful, since it can be done from
+> > +		 * a *remote* vcpu! So let's not take any chance, and make
+> > +		 * sure that everybody has written their LRs back to the irq
+> > +		 * structures, and release any reference they would have.
+> > +		 *
+> > +		 * If it hurts, don't do it.
+> > +		 */
+> > +		kvm_arm_halt_guest(vcpu->kvm);
+> >  		vgic_flush_pending_lpis(vcpu);
+> 
+> [Severity: High]
+> Does the asynchronous halt ensure the target vCPU has fully synchronized its
+> hardware state back to software state before proceeding to flush?
+> 
+> kvm_arm_halt_guest() uses kvm_make_all_cpus_request(kvm, KVM_REQ_SLEEP).
+> If the target vCPU has exited guest mode and set vcpu->mode = OUTSIDE_GUEST_MODE
+> but has not yet executed kvm_vgic_sync_hwstate() to fold its LRs,
+> kvm_make_all_cpus_request() will skip waiting for it:
+> 
+> virt/kvm/kvm_main.c:kvm_request_needs_ipi() {
+>     ...
+> 	if (req & KVM_REQUEST_WAIT)
+> 		return mode != OUTSIDE_GUEST_MODE;
+>     ...
+> }
+> 
+> If the wait is skipped, could the flushing vCPU clear the ap_list in
+> vgic_flush_pending_lpis() just before the target vCPU folds its LRs? 
+> Would this incorrectly resurrect the deleted LPI state and cause ghost
+> interrupts?
 
-AI partners were leveraged in the production of this work.
+I think there is a kernel of truth here, and I reckon this is a *very*
+old bug. Something like the below should help. Oliver what do you
+think?
 
-Daniel
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 8b080804bc90b..5f5dd8bead4b9 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -1352,7 +1352,6 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+ 
+ 		ret = kvm_arm_vcpu_enter_exit(vcpu);
+ 
+-		vcpu->mode = OUTSIDE_GUEST_MODE;
+ 		vcpu->stat.exits++;
+ 		/*
+ 		 * Back from guest
+@@ -1386,6 +1385,12 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
+ 
+ 		kvm_arch_vcpu_ctxsync_fp(vcpu);
+ 
++		/*
++		 * All the state has been synchronised, let advertise
++		 * we're outside of the guest.
++		 */
++		smp_store_release(&vcpu->mode, OUTSIDE_GUEST_MODE);
++
+ 		/*
+ 		 * We must ensure that any pending interrupts are taken before
+ 		 * we exit guest timing so that timer ticks are accounted as
+
+
+> 
+> >  		vgic_its_invalidate_all_caches(vcpu->kvm);
+> >  		atomic_set_release(&vgic_cpu->ctlr, 0);
+> > +		kvm_arm_resume_guest(vcpu->kvm);
+> 
+> [Severity: High]
+> Does this block need to hold a VM-wide lock?
+> 
+> Since vgic_mmio_write_v3r_ctlr() only synchronizes locally using an atomic
+> cmpxchg on the target vgic_cpu->ctlr, multiple vCPUs could concurrently
+> write to different VGIC redistributors to disable their LPIs.
+> 
+> If this happens, multiple vCPUs will concurrently call kvm_arm_halt_guest()
+> and race to set vcpu->arch.pause = true:
+> 
+> arch/arm64/kvm/arm.c:kvm_arm_halt_guest() {
+>     ...
+> 	kvm_for_each_vcpu(i, vcpu, kvm)
+> 		vcpu->arch.pause = true;
+>     ...
+> }
+> 
+> The first vCPU to finish flushing will call kvm_arm_resume_guest() which
+> unconditionally clears the pause boolean:
+> 
+> arch/arm64/kvm/arm.c:kvm_arm_resume_guest() {
+>     ...
+> 	kvm_for_each_vcpu(i, vcpu, kvm) {
+> 		vcpu->arch.pause = false;
+> 		__kvm_vcpu_wake_up(vcpu);
+> 	}
+>     ...
+> }
+> 
+> Could this unpause the VM prematurely while another vCPU is still tearing
+> down VGIC state in vgic_flush_pending_lpis(), allowing guests to run and
+> modify their VGIC state concurrently?
+
+Just as interesting. It appears that this doesn't nest correctly,
+while we really rely on it to work. An obvious way to do this is to
+actually turn pause into a refcount. Something like the (untested)
+hack below.
+
+	M.
+
+diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+index 27fe0cd5b2d7a..08dc8f816824c 100644
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -889,11 +889,10 @@ struct kvm_vcpu_arch {
+ 	/*
+ 	 * Don't run the guest (internal implementation need).
+ 	 *
+-	 * Contrary to the flags above, this is set/cleared outside of
+-	 * a vcpu context, and thus cannot be mixed with the flags
+-	 * themselves (or the flag accesses need to be made atomic).
++	 * Contrary to the flags above, this is updated outside of
++	 * a vcpu context, and thus cannot be mixed with the flags.
+ 	 */
+-	bool pause;
++	refcount_t pause;
+ 
+ 	/*
+ 	 * We maintain more than a single set of debug registers to support
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 8b080804bc90b..62b683107ccae 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -561,6 +561,7 @@ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
+ 	kvm_arm_pvtime_vcpu_init(&vcpu->arch);
+ 
+ 	vcpu->arch.hw_mmu = &vcpu->kvm->arch.mmu;
++	refcount_set(&vcpu->arch.pause, 0);
+ 
+ 	/*
+ 	 * This vCPU may have been created after mpidr_data was initialized.
+@@ -835,6 +836,11 @@ int kvm_arch_vcpu_ioctl_set_mpstate(struct kvm_vcpu *vcpu,
+ 	return ret;
+ }
+ 
++static bool vcpu_can_run(struct kvm_vcpu *vcpu)
++{
++	return !kvm_arm_vcpu_stopped(vcpu) && !refcount_read(&vcpu->arch.pause);
++}
++
+ /**
+  * kvm_arch_vcpu_runnable - determine if the vcpu can be scheduled
+  * @v:		The VCPU pointer
+@@ -850,8 +856,7 @@ int kvm_arch_vcpu_runnable(struct kvm_vcpu *v)
+ 		      (kvm_timer_should_notify_user(v) ||
+ 		       kvm_pmu_should_notify_user(v)));
+ 
+-	return ((irq_lines || kvm_vgic_vcpu_pending_irq(v))
+-		&& !kvm_arm_vcpu_stopped(v) && !v->arch.pause);
++	return ((irq_lines || kvm_vgic_vcpu_pending_irq(v)) && !vcpu_can_run(v));
+ }
+ 
+ bool kvm_arch_vcpu_in_kernel(struct kvm_vcpu *vcpu)
+@@ -1014,7 +1019,7 @@ void kvm_arm_halt_guest(struct kvm *kvm)
+ 	struct kvm_vcpu *vcpu;
+ 
+ 	kvm_for_each_vcpu(i, vcpu, kvm)
+-		vcpu->arch.pause = true;
++		refcount_inc(&vcpu->arch.pause);
+ 	kvm_make_all_cpus_request(kvm, KVM_REQ_SLEEP);
+ }
+ 
+@@ -1024,8 +1029,8 @@ void kvm_arm_resume_guest(struct kvm *kvm)
+ 	struct kvm_vcpu *vcpu;
+ 
+ 	kvm_for_each_vcpu(i, vcpu, kvm) {
+-		vcpu->arch.pause = false;
+-		__kvm_vcpu_wake_up(vcpu);
++		if (!refcount_dec_and_test(&vcpu->arch.pause) == 0)
++			__kvm_vcpu_wake_up(vcpu);
+ 	}
+ }
+ 
+@@ -1034,10 +1039,10 @@ static void kvm_vcpu_sleep(struct kvm_vcpu *vcpu)
+ 	struct rcuwait *wait = kvm_arch_vcpu_get_wait(vcpu);
+ 
+ 	rcuwait_wait_event(wait,
+-			   (!kvm_arm_vcpu_stopped(vcpu)) && (!vcpu->arch.pause),
++			   vcpu_can_run(vcpu),
+ 			   TASK_INTERRUPTIBLE);
+ 
+-	if (kvm_arm_vcpu_stopped(vcpu) || vcpu->arch.pause) {
++	if (!vcpu_can_run(vcpu)) {
+ 		/* Awaken to handle a signal, request we sleep again later. */
+ 		kvm_make_request(KVM_REQ_SLEEP, vcpu);
+ 	}
+
+-- 
+Without deviation from the norm, progress is not possible.
