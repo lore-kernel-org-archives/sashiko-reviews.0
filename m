@@ -1,211 +1,141 @@
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F418C433E9E
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 18:34:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DED48A2A1
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 18:42:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790102093; cv=none; b=IyRlo5IqBBCrt0ulLmK7gpHRq7tlam9lLXfoDfS9mvDrl7J1519+NnAQnr/pKqp8AO1ZKFIljD+Ql2+/xcNhIumxHRcueFnLS9uXqIRg5w5oZODkRNV1AF8M0qy2JazJEaJfzE53HG/ZLUz5QcbMJjAYai5kdt04hqDA8qhozSQ=
+	t=1790102530; cv=none; b=j9shLxmWfdcm9S3+t4UZ6a95w3eKm5kvHj4kGg31Xr4JmQEuhDc9OZgVb509n78iliAWwkXXPZFtm8psLNHUbpPNLbiM3jAtD2/j7afDPb0fGfkg42yi1mq9meTEq/Xe7GjewZHPDjTbWJtkw3nTmwCl+Dp3AsRYW2XqpERLoOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790102093; c=relaxed/simple;
-	bh=dE6blP7xL/WHMHL7CQSKGlnHE/Koi3s3g0Al+rqSe8o=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Hzx5a9z3oXhTSTbg9nw3PQahgTMcfjy8/+aa2TgXhDh85LttziA0rL9kxOE34U52PnkBYkMr1qwHJKNyO/YGtw74deiFZxVgV9M1/Qo5trjXBQM27GydWjB2EAR1vk5xP7nGsFa2xFE51iitgzrQBXYqNyQYONUaZ940U+vWXEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=okRu66y6; arc=none smtp.client-ip=209.85.216.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1790102530; c=relaxed/simple;
+	bh=yRqYydSndchtTUcx/XMl6b0/WB3o87e1VH5mRwkGmUs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dsvTXtnLchewwWOOLJixTLLXlwyPmJtLYLXCQ2ClZP5r6V5fqhNAAKkydcrbZJAZo73OU+rFrdMWwfYmphvY4FPBl+WrSDYbXkc6bD5XW22ybIktLZfu6q/Lys0yTJM7GQ4lhU4/sjgh07r+8KTxBr63kuFGOsIA0VW+bvkCA1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KXGlD4YR; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=eCNRRbJp; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="okRu66y6"
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-38ecc48b3c2so341145a91.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 11:34:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KXGlD4YR";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="eCNRRbJp"
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68MI7Fvb368086
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 18:42:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	tPlTjTDG5Ok02LM/J+xRKeLvLBa+UcNx2c4ubRikRr4=; b=KXGlD4YRDr5JgoV2
+	gUQcnyXZ4cKcGj7zDXgXchV0ulGzZGcdlVt1NFBpcdc907X84b2d8TDWaUHJ7eXZ
+	Az6g3dXTBoUAhAWUR0XYAv0t+PRnAE/W/dto5aqvRAJViaTnEHz/wCT7yoi/4jna
+	+Lhr0ORgWszG/Ak+Ex9tvtC0KD0MUiE9fL6EX0tdIa/0h9XSoP4c7h4Mh8d24j5w
+	uksQ191Auz4yHjJV98mrPGWNqDhly8GxSRilkmkXu+YwE9kbwhF9caj6i7Nor3kz
+	p2zwVbQBJMLkEP9Jp+yrPgKE706fTwF+UfbKAtR8ZneuuZNUUh1LtSnIGyXjZhzZ
+	8EIa6A==
+Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com [209.85.222.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gurnta884-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 18:42:07 +0000 (GMT)
+Received: by mail-ua1-f72.google.com with SMTP id a1e0cc1a2514c-97e8be2221eso75383241.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 11:42:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790102091; x=1790706891; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=bJLCRmfCHJwYyMuCa+r79MDdK0EYy9EEEkSv2qnLSYw=;
-        b=okRu66y6jjhsGoNqi+o81DXmt1oCIt8Xk4MuVQhUeEyA/TG8iFsgah98QniGF4ZTDy
-         PlH9/BsnWwYwCFTjbNDtUBUdIp2jRXYRjA7IGpy6PjamGH7PEz90Jn7xS1nBUH2KGiI3
-         uecNHDoxmWKmnqSiSEOM3nisHv5k0ed5uaNt4cq59vlEpvl8nVPbmGDnYkjO6of8vmf4
-         hial8+0uiwU4xArEucHrmO0KulIa7aNN29KycvapffM//6KNkg8XupvUJLd35PvKLQQr
-         eFDDSTlwcWPknVhlZ+btlVokXQxlMoWaBRGvDdmnHWRqVBRzxKZI4N5not/JsrL3QBIv
-         6HDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790102091; x=1790706891;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=oss.qualcomm.com; s=google; t=1790102527; x=1790707327; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=bJLCRmfCHJwYyMuCa+r79MDdK0EYy9EEEkSv2qnLSYw=;
-        b=1Z2bkhM6zrmgBqi5nvGoZAw8E4a/OmWKvKSbvjhd/9KroHazUnrobEeeTn29aI1xAe
-         6ywD2itZomTZVpn/eniTY9xSJ+bKgViaiQXAQmmBgiFVSNIaO1ipx/byJJKqFosfyXv0
-         e4GVjF3fmzvpAM5KjnLG7ALEEfET91//dhw+u3ipy05TmQaNS9B2OFmuiX9mLR+/WD0s
-         17i3aZeExyTmSEkzi0EF1G9DIqDFJ2VjzoU1ifABHf229VxN1G3A3VgEadEvFcv9iOsa
-         u/aP1oqfNZoRIHggz1pO7L20WGQ9Benk/YqKHdIPmtEWhce7DK1floixb0lFY+alb56Z
-         XHGA==
-X-Gm-Message-State: AFuF++lZtaEUBZKVompe8QMUQBRkHZuVRz1pZdyzNvm0VsyIq96ozmIG
-	/9dNBiWEz6YMZAYBEvw7lrfBvIDn0r7o1ypHuEbqcx0/LAqjoyyzySMvq0WU6zFopTArx04I6+m
-	HUe7V0g==
-X-Received: from pjbnm10.prod.google.com ([2002:a17:90b:19ca:b0:3a0:7ca0:31cc])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90a:c2ce:b0:39e:6a80:b793
- with SMTP id 98e67ed59e1d1-3a07e5ea2bemr271386a91.35.1790102090837; Tue, 22
- Sep 2026 11:34:50 -0700 (PDT)
-Date: Tue, 22 Sep 2026 11:34:50 -0700
-In-Reply-To: <CALMp9eThtND2KddrmySqViNsLyisdd6_ZH01s9jrA9K-_yQzXg@mail.gmail.com>
+        bh=tPlTjTDG5Ok02LM/J+xRKeLvLBa+UcNx2c4ubRikRr4=;
+        b=eCNRRbJpQ+EGsVUh8La8idqwvQBE5WTGAmqjtYHMhqhaXPr+2m+g18xvQLpRXe7DzL
+         wkm+ntZjM1EYe00s/u5vgtn/FO6IqReE3+Yg8nEZ9W4WZASLHuH8DfWoLolXZoSNJt/W
+         njQeDdFWWKkxyII0eWppL/Z/M3BjsrECnVSnwIr0kHPZIGUSbK/byT+ntSJCDqZ74WZL
+         UG3yod+cFIYaVNqWvrcUTeogRLXV1hO7PIR32yB6L6SNtcpfVIcH+TLItAjMAHqDNViD
+         ZGYwk7PQl7B4yk/jRlFP8xumYf8tOttcnrb9Ud4obyOpYuztYG7CLffQ7t0TL0HwUiPr
+         LGxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790102527; x=1790707327;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=tPlTjTDG5Ok02LM/J+xRKeLvLBa+UcNx2c4ubRikRr4=;
+        b=NVy1+SzFehDlGqizFdwnIpSAONp9nhJa6VJRCifRDB6LFb8O54ohA92BessNWzvQJ+
+         TBnoE3qcZuAOWypgs2ePXBjg4Ar5uOet7/S0QdKzA7vB9JLdljIsqPtgCXJj04zyswBS
+         0c5wMemouBQHshxDdgOmby0YG2o7Z9SE3s0GTiw3O/dYZIprRBQ2byCigkstQoLLy1dD
+         WKn0fc10ysNsNY+lFGpCeIsIwRTEBdWtxZROt2bxUbqpfo5KRrROsw2feHJHkjShetl3
+         mpEMMXibI8UBd1naM4FkZmfzHDTTAz8D1RYuHREFmo+OK9b29WMZ/LHbDMjGqObZr0LH
+         LyWg==
+X-Gm-Message-State: AFuF++kX+oi+poHKdTdMU/2UTy54Uqnu10Cs/BBfem/zOntEp8dBXnNF
+	8xbNHJ3C293ShPLtc9fwl1KdqZOkehsDJTWtdvS6ui3rHsXdsmRle6AtgKFCd2mXbq79y47jBzA
+	CcQGOZgD+XdF6FtjBr2c/wU0ublZB7Jz2brzvv8MI9jnN3xKvqErQzG2WtMl9B4ASF/pTWy3eBR
+	dLepc=
+X-Gm-Gg: AYBFou3b+z0jqVAsaevKm9wkc3QdPvkRuFUbDctvXXV+tZe3DnCbVu3dGzH+5sfZlRf
+	jskN8RU8zVexEZdqzlx902CHq2v0peY8ypqyP9OrET3Ix+5IMDlu/d5HmBYKKZBbx776CishlKj
+	wqME2PhvaMKZ92Ruqi/oXGOUFTm3W4N9JKni2AQUN6HyoKHi9Q6tL6vY3cuRHQIZwPKFP/aZe6E
+	MgQolbFcVz9hRMWljbEDAOniUtSmh51LcXVCkTyBSL9Ieeex0sS4zqUgP4inZP02Jh2pZ/aWk4D
+	KvOmIpfrXwmFo5sq55qeh/5/DwPmPvR4+ZUf1mWOwpCFDh+7guzGLfnq6HrsE93j5Ikp2L1lnZU
+	DRPNA2Kp+xKcXIb4h8GtK2R9ID5ilyjs1TPHMggJVz6lmlNcRVZIk8lBkT63rBA==
+X-Received: by 2002:a05:6102:3e8a:b0:7a8:1817:278e with SMTP id ada2fe7eead31-7ac1dc2d1d1mr322332137.20.1790102526675;
+        Tue, 22 Sep 2026 11:42:06 -0700 (PDT)
+X-Received: by 2002:a05:6102:3e8a:b0:7a8:1817:278e with SMTP id ada2fe7eead31-7ac1dc2d1d1mr322296137.20.1790102526208;
+        Tue, 22 Sep 2026 11:42:06 -0700 (PDT)
+Received: from ?IPV6:2a05:6e02:1041:c10:a913:ba43:96d7:743c? ([2a05:6e02:1041:c10:a913:ba43:96d7:743c])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fdf3559b3sm1587915e9.0.2026.09.22.11.42.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Sep 2026 11:42:05 -0700 (PDT)
+Message-ID: <3448a4ef-f5a1-47b5-b47f-f208aa02a622@oss.qualcomm.com>
+Date: Tue, 22 Sep 2026 20:42:04 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20260918154530.4129698-1-jmattson@google.com> <20260918160109.E76B81F000FF@smtp.kernel.org>
- <arKJQwAPvApkeESD@google.com> <CALMp9eQboC6DTQfa3N58XCfOLf-qwJ2L7dC5vtqDerHG80eZLg@mail.gmail.com>
- <arKQJJJB8HMK0B1G@google.com> <CALMp9eQi0gm7ojijfKDZz9oZh+BK13qUkJOFrCmxjJTr5sx3Lg@mail.gmail.com>
- <arLAtdMP7LV0r-D9@google.com> <CALMp9eThtND2KddrmySqViNsLyisdd6_ZH01s9jrA9K-_yQzXg@mail.gmail.com>
-Message-ID: <arLKSkliAXuww3-0@google.com>
-Subject: Re: [PATCH] KVM: x86: Disallow EFER.LMSLE when EferLmsleUnsupported
- is set in guest CPUID
-From: Sean Christopherson <seanjc@google.com>
-To: Jim Mattson <jmattson@google.com>
-Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: x1e78100-thinkpad-t14s: Add thermal
+ zones for PMICs
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20260922181818.5503-1-daniel.lezcano@oss.qualcomm.com>
+ <20260922183135.18EA61F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
+In-Reply-To: <20260922183135.18EA61F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: 8ldSI3UxQZgl1QG2VwRVKEQ2iOdPAnl-
+X-Authority-Analysis: v=2.4 cv=eauo7LEH c=1 sm=1 tr=0 ts=6ab2cbff cx=c_pps
+ a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=VwQbUJbxAAAA:8
+ a=AQOl0tKIyClE0BU_-i8A:9 a=QEXdDO2ut3YA:10 a=1WsBpfsz9X-RYQiigVTh:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIyMDI3NCBTYWx0ZWRfX30iXXqJtTsQ7
+ GAmyj+t5lC5denDfMgFXvkxC80Af1xUN1SK0mqjqWlDiXpbhiK7c82Pxg/ZRy+FZdU/q8PLRAzz
+ sPiODyhDdf1EU1lkqP9Y5/Yx8bAMQXtReSmgPopeCsLqL7LbCCwJE3MBe3a44O3ZZYfsvBJfnPW
+ dftfYt/xijsoiT+Wc2cieqvY+7YN+9uJIv/bFX47tZgX88C7lcvlUboZO40UhpCrpOKlXBKxhwU
+ tT8D5m0/lAh4rsNnxtQd2eRsBaNGqnvjSnQVdjpLwrlDcoKtsjtnRG/9zdEYhPDuTj0gqJzy9eZ
+ Muog8h1zDb/Bk1OZKbr3sInPjCGmAKt7KTvF/ReawNzSELQBw4q5MDE23wXO86CWMZAIE+stEHA
+ 5c4QFo7GHtNyTZ9iPKFIuOfFAxt4LdpI2rYs/qmIx2U7Pz+24/afYJmp68GtJ/VMV0+bpbZb1B/
+ oNC7sxMgUtqHt8kHzGA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIyMDI3NCBTYWx0ZWRfX5dUqcC9gqXFB
+ HNrIfMgAaeHzK2Kj3yPjDGg4GabvShNzAKEPr0Qp4H9+rgVHDVks63zZ24stRhdNTZvuUB7CgaM
+ 9Qy8u0cKYEU73FzWmwP2JHeiNwtyb/A=
+X-Proofpoint-GUID: 8ldSI3UxQZgl1QG2VwRVKEQ2iOdPAnl-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-22_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1011
+ spamscore=0 malwarescore=0 bulkscore=0 adultscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609220274
 
-On Tue, Sep 22, 2026, Jim Mattson wrote:
-> On Tue, Sep 22, 2026 at 10:53=E2=80=AFAM Sean Christopherson <seanjc@goog=
-le.com> wrote:
-> >
-> > On Tue, Sep 22, 2026, Jim Mattson wrote:
-> > > On Tue, Sep 22, 2026 at 7:26=E2=80=AFAM Sean Christopherson <seanjc@g=
-oogle.com> wrote:
-> > > >
-> > > > On Tue, Sep 22, 2026, Jim Mattson wrote:
-> > > > > On Tue, Sep 22, 2026 at 6:57=E2=80=AFAM Sean Christopherson <sean=
-jc@google.com> wrote:
-> > > > > > Gah, I hate the negative "feature" bits, I've gotten completely=
- turned around
-> > > > > > multiple times trying to sort through this.
-> > > > >
-> > > > > Me too!
-> > > > >
-> > > > > > IIUC, you're trying to "fix" setups where host CPUID.EFER_LMSLE=
-_MBZ=3D0, but userspace
-> > > > > > configured guest CPUID.EFER_LMSLE_MBZ=3D1?  If so, then Sashiko=
- is right, it needs to
-> > > > > > be declared with EMULATED_F().  I would even argue that technic=
-ally this isn't a KVM
-> > > > > > bug, because KVM won't advertise EFER_LMSLE_MBZ in KVM_GET_SUPP=
-ORTED_CPUID on such
-> > > > > > hosts.
-> > >
-> > > > > I'm trying to make it possible to run a Rome vCPU on Milan or lat=
-er.
-> > > > >
-> > > > > SInce this is a negative feature bit, it must be retained if the =
-host
-> > > > > reports it. That blocks running a Rome vCPU on Milan or later.
-> > > > > However, a defeatured Rome (which reports LMSLE_MBZ as 1) can be =
-run
-> > > >
-> > > > So, a partially defeatured Rome?  Because it sounds like the CPU re=
-ports LMSLE_MBZ=3D1,
-> > > > but then still allows setting EFER.LMSLE=3D1?
-> > >
-> > > No; it should not allow setting EFER.LMSLE=3D1. That will fail on lat=
-er
-> > > platforms and would block live migration from Rome to later platforms=
-.
-> >
-> > Oh, drat, I misread the "Rome vCPU" vs. "defeatured Rome" paragraph.  Y=
-ou want to
-> > be able to migrate a vCPU with guest.CPUID.LMSLE_MBZ=3D1 between a non-=
-defeatured,
-> > vanilla Rome and Milan+ (or a defeatured Rome).  Correct?
-> >
-> > If so, then Sashiko is right, the flag needs to be EMULATED_F() so that=
- KVM will
-> > advertise EFER_LMSLE_MBZ to userspace on the vanilla Rome host, and als=
-o do the
-> > right thing when guest.CPUID.EFER_LMSLE_MBZ=3D0.
->=20
-> No; that's wrong.
+On 9/22/26 20:31, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] dts: missing #thermal-sensor-cells on pmk8550_vadc breaks thermal zones
+> --
 
-Heh, it's not "wrong" per se, just unwise :-)
+False positive probably due a wrong baseline because it is present in 
+the QC tree [1]
 
-> KVM_GET_SUPPORTED_CPUID should continue to report EferLmsleUnsupported=3D=
-0 on
-> Rome. Otherwise, we break backwards compatibility for userspace that simp=
-ly
-> transfers KVM_GET_SUPPORTED_CPUID to KVM_SET_CPUID[2] or userspace that j=
-ust
-> doesn't know anything about EferLmsleUnsupported. The "default" for Rome =
-and
-> older platforms should still be to claim support for EFER.LMSLE, even tho=
-ugh
-> that has always been a lie.
+	Thanks
 
-But you can't have it both ways, KVM can't enforce a bit it doesn't support=
-.
-
-> > If not correct, then I'm even more confused, because ignoring clear_cpu=
-id,
-> > guest_cpu_cap_has() will only ever return true if boot_cpu_has() also r=
-eturns
-> > true, in which case KVM *will* reject the value because EFER_LMSLE will=
- not be
-> > listed as a supported EFER bit.
-> >
-> >                 if (!boot_cpu_has(X86_FEATURE_EFER_LMSLE_MBZ))
-> >                         kvm_caps.supported_efer_bits |=3D EFER_LMSLE;
-> >
-> > > I want KVM to abide by the guest CPUID bit and disallow setting
-> > > EFER.LMSLE even on hardware that allows it.
-> >
-> > Right, and that requires declaring EFER_LMSLE_MBZ with EMULATED_F().
->=20
-> I think you and Sashiko are both wrong. PASSTHROUGH_F() is correct for th=
-is bit.
->=20
-> I think I need to report EferLmsleUnsupported=3D1 in
-> KVM_GET_EMULATED_CPUID, so that userspace knows it can opt-in if it
-> wants to.
-
-Hmm, I think we should have this be a "partially" emulated feature.  KVM de=
-finitely
-doesn't fully emulate LMSLE, and presumably anyone that cares about migrati=
-ng
-Rome vCPUs to Milan+ hosts is already advertising EFER_LMSLE_MBZ to the gue=
-st,
-i.e. doesn't need identify which KVM version have the bug and which don't.
-
-E.g. something like this?
-
-diff --git a/arch/x86/kvm/cpuid.c b/arch/x86/kvm/cpuid.c
-index 38450e9fca9a..67807cd95958 100644
---- a/arch/x86/kvm/cpuid.c
-+++ b/arch/x86/kvm/cpuid.c
-@@ -1416,6 +1416,22 @@ static int cpuid_func_emulated(struct kvm_cpuid_entr=
-y2 *entry, u32 func, u32 ind
- 		if (kvm_cpu_cap_has(X86_FEATURE_RDTSCP))
- 			entry->ecx =3D feature_bit(RDPID);
- 		return 1;
-+	case 0x80000008:
-+		/*
-+		 * Honor the guest's EFER_LMSLE_MBZ even if the underlying CPU
-+		 * allows setting EFER.LMSLE, e.g. to allowing migrating a vCPU
-+		 * between hosts with and without EFER.LMSLE support.  To avoid
-+		 * breaking existing setups that reflect KVM's supported CPUID
-+		 * into the guest, KVM doesn't advertise EFER_LMSLE_MBZ unless
-+		 * it's supported by hardware, i.e. unless KVM *can't* support
-+		 * EFER.LMSLE=3D1.
-+		 */
-+		if (include_partially_emulated &&
-+		    !kvm_cpu_cap_has(X86_FEATURE_EFER_LMSLE_MBZ)) {
-+			entry->ebx |=3D feature_bit(EFER_LMSLE_MBZ);
-+			return 1;
-+		}
-+		return 0;
- 	default:
- 		return 0;
- 	}
-
+[1] 
+https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/tree/arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi?h=for-next#n291
