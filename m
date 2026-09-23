@@ -1,197 +1,158 @@
-Received: from mail-yx2-f13.google.com (mail-yx2-f13.google.com [74.125.224.141])
+Received: from mail-qv2-f12.google.com (mail-qv2-f12.google.com [74.125.230.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D9447CC67
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 11:23:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967A049B205
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 11:23:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.140
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790162583; cv=pass; b=eRvilsnfXkpo7sjm91ims5nThmovJZaeofzumoB/gcAJEuLDmS1uMnM7fEgP3cULiy7d4xRKfdtEoqu3IgdD9qX6vc4kcBtwKgEOI33bFED+Ebu4inR501et9GAG4dRNCCtDTId9lutZFfxJmLIalkbV2kxFfCyXfjgbafU61Ac=
+	t=1790162609; cv=pass; b=LsPPRijt06mxlG1PAS3LAHHctm4dQta+Q+Q/t2G0V1XJi0I4Hy3hYgjBxR9AKtY0gFa0QHauwzl80wivVaIiBcQaA2c0nZLJcSswc3XNnyDHC/C0GoeXpgvyhGRjkcZdC4R6xc8QmnHjrEzBiuYWUpJhlWEw8Tjcdoqic80n89c=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790162583; c=relaxed/simple;
-	bh=0z1VCFZ2xuRyxqepe31PgaTDnQ5THZA+rjwWgzaliKM=;
+	s=arc-20240116; t=1790162609; c=relaxed/simple;
+	bh=XhxSI0UVdEQV9nwQDMNyEd97c+q+OPCqI1wpOJhsgB0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZyTGHhVYjfPmDpAyA8aAb4EYcm1M0D2M63MoJp6qgxsba7rSVo8JP970P+tsH/0dACGzY2XJfC1yCe69cqHwNfLhv7hpXaQfA9Xkj+JcgdLGADVlzpXJ2y0q1Vg8S02xOnxfGRuDDckwxucONZFEvmQTerk2XKki4NsQfwCvO6s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WRdFgJ+p; arc=pass smtp.client-ip=74.125.224.141
+	 To:Cc:Content-Type; b=NmlCyZgjvyINzkif3h2oox3vr6jUDi1zUt4wSQItdOslhhJ1PNk1KxkDgvcq21eP6sfN4ClnfFuNOvVJ73jFlMwVBA1eACR2vPwOytFWHIlqRwIgvmFh0gXw43MT+EE8Di8IFmBLwja5k01+amO6WeiHDajViOnCdNPUZAWPeRg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SmjTBxYv; arc=pass smtp.client-ip=74.125.230.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WRdFgJ+p"
-Received: by mail-yx2-f13.google.com with SMTP id 00721157ae682-8716a5baf64so9691457b3.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 04:23:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790162580; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SmjTBxYv"
+Received: by mail-qv2-f12.google.com with SMTP id 6a1803df08f44-910531ea7feso7536886d6.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 04:23:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790162606; cv=none;
         d=google.com; s=arc-20260327;
-        b=R0V5AAF8iQY59ElHAePhV3DUjP2JwSfcD0IQR/HCTaOgf5K3NfDTYSEJ5quPu5rHrh
-         JDz4yJJAuhT8uQdkkk8EfvQdGeXGX48HjnGuWo9znPlAhObRSEv5zyw0/pyWlwyPCnND
-         NE2DpYBkO5Ze11AgfLhqD/63d6xqig6CYX51rapA6c2+82+ZdoGnENCY+d1IiDDovGyA
-         /hZg4lBVfJ1t7fPdsAubJ2mSHEu4dO9IZNa4jxHSBNYYkfwdIt3agUsxUshED9lSffox
-         ILJ+Wn31iZ8MnPTqTIMgNDBAz/0QvcCtYCIo+XSjFjgdtSNx1SvS3pnN+HdD4tIA1M6W
-         E+FQ==
+        b=XCpl2/RUiJPeG9UK/EpG5RmCd6WAZb6QkO69gVX6lwXBAh9pLbwa5SANFZD96mROJU
+         H4KR/fzMWnISmKFdAJHDbWNtpqp27xICowvUKR/vW+W7UI+I4PA5SPImrQjLDac70pER
+         pBkO+HKK7UU0wWZzmedEUEoElVuWM6wDKrU5QgQFyALTlWy40Ch/HPK8xQSgdxNAKvLr
+         SKmbPhBvzl/dQG6QxXe1Gj7KpT5krpHuQ/jb8ewtvPwFo3qB/+ox1Hn3mSQ/3WSXFBVk
+         p8pbBpPDfyDPm6zLagM6wLwWQrD7RnNmqC2STY8V/BkaQWBh1u23MdjYRl8sNF2T/opu
+         inag==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=gHFi7D8qOayJJzxbwOB5rCaAL3OuK0mkAkD2JKiUgRk=;
-        fh=uHrus4W2MHbC6p85CUiYPs9hCOfwAICvoY4mVpx/Eos=;
-        b=S8VnHel0fikhw/dMSBIbehhvMKjJCmjKjj6fTD039QZz24lYuag5+7wlyFEuXjLrSA
-         C0qs38FCauMyKKWAtXZY/KZOlpMyd9T67JkTQOuq1ki8jCeqYj8YYj29WO6Py95tD5mu
-         MsVwu6vdcZr6DlHIIqeKakCSIYSUuHdG8eUZLWcRhLYfSzk5aUtvWcN2Q7DATA6TcHG+
-         33nEEM0bAKSxznzOYQu9vQF1zP4BseoiRv/R2cGROXS6hcJAqc3LKokYgg+6T2/5g1if
-         YTiqmAtNPrTd8Re0QsrQPZO0sa0aA/O4TuZyrYf0/RT+IDuNuEWgrr7bxiStJE0T3DdZ
-         Vt7Q==;
+        bh=bN6kbYIJdb6YSfYW9P/+epswRe2d9jKi28WuqxpTfyQ=;
+        fh=i0J7Vrf1Dtak+VezafgJcq22zN+YUptv8kxlFHMB4U0=;
+        b=UOpBdwcZlMfPamZSssjrQkaLcd6GCaVJgxI6S0qgVpa2CFT48uF68aMPGVl4X4JMne
+         jAwOFqEHDI4Tg03IGrrK0a8lj+Pcs16KJ+omex2yUmuT2k7jVYABfWjuxeR1wudlC436
+         3atlM74r/fT6QMm3JPPkjDeOdBLtSjRzlci/gTOLFAkLflPa9FDbUJY+NL3W78SdZOqB
+         bomSd9NP/e6FKiXUAiRLBDr72vgWR86hDYmFRYmI4HH5vNKSM4NBI76dHeCh+65TSbTM
+         m/sVvicPT/f/RpfdrnYCTE0n5pPFEJPOSa9tj660hcV9U88GysdNBjrE/zrHL/P8dxQM
+         s8BA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790162580; x=1790767380; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1790162606; x=1790767406; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=gHFi7D8qOayJJzxbwOB5rCaAL3OuK0mkAkD2JKiUgRk=;
-        b=WRdFgJ+pAsK6N/LFQqgIJ+Yjg7kYSEZqGmblhHLvWTurtDA/r1pWiY5HiSPsbEBnqu
-         Bqb3X7SoBGVALjtPtRf6AfZJFv+iOH0Z6rVrQRNKkohOOUBQuP6TWN4ksc4INFUpTffg
-         7aCRyje3EZAglvq0X84bz9LeDOxkKsjaYZpJ4KUHrRGXvHvFTf5p0JbBeMGfKYtyyk59
-         Hl4xX5hfjjCmY4irHoz8dor1MHBknxcQaQEKedz+VQLAOgCGCLJp2LbUoHz8aM39a92X
-         SuJIWPsT28cfihm2ar4mAQHfQZXaX9ZcEAREd6dbPUieWn9J4x51qTzk7Z71ya1cF8rD
-         EXHQ==
+        bh=bN6kbYIJdb6YSfYW9P/+epswRe2d9jKi28WuqxpTfyQ=;
+        b=SmjTBxYvxb0pdYfoLC6IuTaf2y4dqDjK9ZCu/xBrYsvTg3GjmdGkGN9KGjrdsI2vHP
+         KbrByBzNcar1Y5foVmf5R2ccU8c5gsAMEzDmgf0LLm5LXeIinblWCBQujJvcrnUOqm0v
+         bETECDLpjDME/4AghY+ZwREH1CsZjmtAmfLOw5Wlpue8pUqODG3UDCFIr+ZQHmBD4Z4m
+         8gcLX7CsA1RW/7rXX5eo7TmMTSABB/gpOIAYqKzj46PzI6xVBnvOQPbVD7rQObqkxTmK
+         ofDe9f+2lzSxgg5cIE2yvoMA4Ja/LS2uokCPUHwsyqS08Vnp1IDPE6bo4X2/xc9Ba8Q8
+         PxKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790162580; x=1790767380;
+        d=1e100.net; s=20260707; t=1790162606; x=1790767406;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=gHFi7D8qOayJJzxbwOB5rCaAL3OuK0mkAkD2JKiUgRk=;
-        b=EDOoFh/WciYxaeKdjp7qTiCn05bmELmsKqeC64QRYSMZ8pZ9GaN5vKtMrUdg4NcMXE
-         nzEe6Ydz+NCDf7kl87nskBFcYq0j8XoVq4zF6pfgjE/E0MzhlB3QME7Xcllh4u946BUM
-         R+vW/r3T1lvoVDvKa4LjU+F2nQOdqpD+bRRBvFrAyBn/wu4YSbYhQaADv+DIjvworhOE
-         yRowiRmeAtmMrmPRZJlzDm2JuhO5rm+Vibglb2QtHvbMlhgbyytPrB1VzSR3iM5YfYNm
-         LZ6KEFb1m9dsSvgQFn8Iy/Mpzj5Aumg481kpr0liGj7fahJLxovcLZLhERfoDG7M9oiH
-         Tzgg==
-X-Gm-Message-State: AFuF++lu50vSwCaQhWUgqLlqRREvrxptysTu/tHQJbnqEAMqyZOJCj9W
-	fFogIjzk++653or6c7UoC7fx/8xUTlYA9hSg1oY1fHt4GTHsCNwoQQtoTrElTxOleBIlVr0n9KM
-	0jOXiXI+6ca2D6S3AN0+lE16k7VJAYSBeN33L7QJC78B5
-X-Gm-Gg: AYBFou23vZoQpH8iSax7rOiA/nrWmkPFnwev+Zu7NPXVYY6HrsiyLE/WPzur1qnr6pA
-	pCn8ZeMrNGh6VU7KrXthMvYy/3c0gQ6UoOMIGWZns6iMWoiE8hUIlIu7g2JBF9VNIrsTCFsYBD5
-	ueSIqUtz+riMRnnAIsPxk9fm90OLE5/uJ8th/HBMdia2fnxZujlG67L3376LxT0y1ZRhvu4g0/E
-	m/jisWAdQNg68jQNInpiTLtQOnfs+/r22QoZN+eI+6FegPJBLa7rTQK7f26Y/XiiK35KdAPTP3S
-	EVVeIkw/bIdC3QpPpi10/lLzc8i4bKBe28zbBp/i+vRln6NhXLEbZFI0GVGeUJ44+lZ8
-X-Received: by 2002:a05:690c:c6d2:b0:854:819:64c9 with SMTP id
- 00721157ae682-8a459bfa9demr8916207b3.30.1790162580359; Wed, 23 Sep 2026
- 04:23:00 -0700 (PDT)
+        bh=bN6kbYIJdb6YSfYW9P/+epswRe2d9jKi28WuqxpTfyQ=;
+        b=aTFH3GlJJsZ+ZWnowSQt/iMUE7L/nNb2zJjJZ2Vd2NkfdNAV0eQRoalOKiVCjeysk5
+         rCIL4BHzJspsgEUblAoJ38rwdwsayRd9Jis89FYDepVViq/SPOfVFAWQ/CgJ8jDTUYZX
+         iQVcyJylIoUsCp1ZXGENlADN5D+4k5VI6FBt2jnBFJIrvSDy/MWlHMQ5mYsAB1WfYVTv
+         iB6wYAayR48V5T2iJXwh1QBnUhpzBEm0k2jzY6+P2O39kI45rGvhGYYi8zcgDvNQikXL
+         q+OgQqOnLmOf8RbUy0P0zWg5CNlLqBasuxAcNcWVNbYnjAQoVz/gL1giQ4Yi5l/NWK9w
+         h0OQ==
+X-Gm-Message-State: AFuF++lMFx+mXVOy7KfQR+Z3W8ajBZTspjbCB6fY6YYD/t5mfUP2AEFW
+	O1S4gKCK0bqQgzQRwM+dv68CUx0HZa3dU4hB4tZeOIhh7oj2OEPswxK0cv+ObhSjDN1RPaD/wbL
+	rwAhBjXTaSJBkBGig9j03VYHjamwADx+xmLfnSlczDzZb
+X-Gm-Gg: AYBFou1T6HvxEIDdr4B4UKxNhXV/OdTtPahpjXiLYrt9Es7vDvZ/tj04Huaw0sfslEw
+	5IJ/UpzfIQkzdsuyaz3inX36ywYGvExAi+/QGHnUvosRk+/5oc5Y2t5Q4RnKkUqba+DdEN25PvK
+	esi8lCWgoTCteEy38osnwCRnoKXGaoPevJrwcZbYXymNXkSUZFTl/OS8/4xgN3SVcGBJ4+XNCLQ
+	CI7biGfOw7O2jg4e+0+W/wvkYRW79Oh12KpqgkeGBkg1bbh2P5a+zim3XRNnlAWA1pQKApgBx58
+	du+TH37D8G6Hyi4cK2pZKyeexVEt/VeQmmZZPjaX1N9aWwg5rkWVV3YXew==
+X-Received: by 2002:ad4:4eaf:0:b0:912:517b:7bcd with SMTP id
+ 6a1803df08f44-9140c45e16amr36513256d6.44.1790162606203; Wed, 23 Sep 2026
+ 04:23:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260923105215.1633-1-anykey196@gmail.com> <20260923110236.CA7FB1F000FF@smtp.kernel.org>
- <CANHPwASJBzich3-2QV3FNNdKX+GHQGe2FuFWu2CUXCYya=-1zA@mail.gmail.com>
-In-Reply-To: <CANHPwASJBzich3-2QV3FNNdKX+GHQGe2FuFWu2CUXCYya=-1zA@mail.gmail.com>
+References: <20260923105757.260-1-anykey196@gmail.com> <20260923110700.C331F1F00898@smtp.kernel.org>
+In-Reply-To: <20260923110700.C331F1F00898@smtp.kernel.org>
 From: =?UTF-8?B?0JLQu9Cw0LQg0KHQktCd?= <anykey196@gmail.com>
-Date: Wed, 23 Sep 2026 16:22:47 +0500
-X-Gm-Features: AclHuK-oRbR1-Bis58IfnX-iX8wBDjxwU2mU1GEVQnmP7ClH7-r_aFOAl62yTEI
-Message-ID: <CANHPwARAonpfi2qCC2iVka-nLjXx6kgLvGWTtMqjKOeh5CZEYQ@mail.gmail.com>
+Date: Wed, 23 Sep 2026 16:23:13 +0500
+X-Gm-Features: AclHuK80bwmJZdOYxmF8iAKdw-NUD9G5_eoeZNJ35MH2NPLmCB-oxTRJeWQWiiA
+Message-ID: <CANHPwAQOPvcQvDLNpKLNL+jQg23sJMbhVSvNWqswFDm7iH6TEg@mail.gmail.com>
 Subject: Re: [PATCH] Input: axp20x-pek - add AXP313a support
 To: sashiko-reviews@lists.linux.dev
-Cc: dmitry.torokhov@gmail.com, linux-input@vger.kernel.org, 
+Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com, 
 	linux-sunxi@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Thanks. Correct: the AXP313a register map ends at AXP313A_IRQ_STATE
-(0x21), so AXP20X_PEK_KEY (0x36) is unreachable and the
-startup/shutdown sysfs files would always fail with -EIO.
+This is already addressed in v2 [1]: the AXP313a no longer reuses
+axp20x_info. It has its own axp313a_info without start-up/shutdown
+times, and the startup/shutdown attributes are hidden through
+is_visible(), so they are not created and no out-of-range access to
+AXP20X_PEK_KEY happens.
 
-v2 no longer reuses axp20x_info. The AXP313a gets its own axp313a_info
-with no start-up/shutdown times, and those two attributes are hidden
-via an is_visible() callback, so they are simply not created for this
-variant.
-
-Tested on: OrangePi Zero 2W (Allwinner H618 + AXP313a).
-
-=D1=81=D1=80, 23 =D1=81=D0=B5=D0=BD=D1=82. 2026=E2=80=AF=D0=B3. =D0=B2 16:1=
-4, =D0=92=D0=BB=D0=B0=D0=B4 =D0=A1=D0=92=D0=9D <anykey196@gmail.com>:
+=D1=81=D1=80, 23 =D1=81=D0=B5=D0=BD=D1=82. 2026=E2=80=AF=D0=B3. =D0=B2 16:0=
+7, <sashiko-bot@kernel.org>:
 >
-> Thanks. Correct: the AXP313a register map ends at AXP313A_IRQ_STATE (0x21=
-), so AXP20X_PEK_KEY (0x36) is unreachable and the startup/shutdown sysfs f=
-iles would always fail with -EIO.
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] input: broken AXP313a sysfs attributes due to out-of-bounds re=
+gmap access
+> --
 >
-> v2 no longer reuses axp20x_info. The AXP313a gets its own axp313a_info wi=
-th no start-up/shutdown times, and those two attributes are hidden via an i=
-s_visible() callback, so they are simply not created for this variant.
+> commit fbaeccab4996537ab99d0c8423e2cf36610e4b34
+> Author: Vladimir <anykey196@gmail.com>
 >
-> Tested on: OrangePi Zero 2W (Allwinner H618 + AXP313a).
+> Input: axp20x-pek - add AXP313a support
 >
-> =D1=81=D1=80, 23 =D1=81=D0=B5=D0=BD=D1=82. 2026=E2=80=AF=D0=B3. =D0=B2 16=
-:02, <sashiko-bot@kernel.org>:
->>
->> Thank you for your contribution! Sashiko AI review found 1 potential iss=
-ue(s) to consider:
->> - [Medium] sysfs: broken startup/shutdown attributes for axp313a
->> --
->>
->> commit 2573be3a312f98b032ff9523708d368661f8e004
->> Author: Vladnwx <vladnwx@users.noreply.github.com>
->>
->> Input: axp20x-pek - add AXP313a support
->>
->> The AXP313a MFD driver registers its power button cell as "axp313a-pek",
->> but the axp20x-pek platform id table only matches "axp20x-pek" and
->> "axp221-pek". The power button therefore never probes on boards using th=
-e
->> AXP313a PMIC (e.g. the OrangePi Zero 2W).
->>
->> > diff --git a/drivers/input/misc/axp20x-pek.c b/drivers/input/misc/axp2=
-0x-pek.c
->> > index 24f9e9d893de3..d4e2fc9a937ff 100644
->> > --- a/drivers/input/misc/axp20x-pek.c
->> > +++ b/drivers/input/misc/axp20x-pek.c
->> > @@ -393,6 +393,10 @@ static const struct platform_device_id axp_pek_id=
-_match[] =3D {
->> >               .name =3D "axp221-pek",
->> >               .driver_data =3D (kernel_ulong_t)&axp221_info,
->> >       },
->> > +     {
->> > +             .name =3D "axp313a-pek",
->> > +             .driver_data =3D (kernel_ulong_t)&axp20x_info,
->> > +     },
->>
->> [Severity: Medium]
->> Will using axp20x_info result in broken sysfs attributes for AXP313a?
->>
->> The AXP313a platform binding unconditionally exposes startup and shutdow=
-n
->> sysfs files because they are hardcoded in axp20x_groups. Reading or writ=
-ing
->> these files attempts to access the AXP20X_PEK_KEY register (0x36) in
->> axp20x_show_attr() and axp20x_store_attr():
->>
->> drivers/input/misc/axp20x-pek.c:axp20x_show_attr() {
->>         ...
->>         ret =3D regmap_read(axp20x_pek->axp20x->regmap, AXP20X_PEK_KEY, =
-&val);
->>         ...
->> }
->>
->> drivers/input/misc/axp20x-pek.c:axp20x_store_attr() {
->>         ...
->>         ret =3D regmap_update_bits(axp20x_pek->axp20x->regmap, AXP20X_PE=
-K_KEY,
->>                                  mask, idx);
->>         ...
->> }
->>
->> However, the AXP313a regmap configuration restricts max_register to
->> AXP313A_IRQ_STATE (0x21). The regmap core blocks accesses to registers b=
-eyond
->> max_register, meaning these sysfs accesses will definitively fail with -=
-EIO.
->>
->> Could the axp313a-pek driver be updated to avoid exposing these broken s=
-ysfs
->> attributes?
->>
->> >       { /* sentinel */ }
->> >  };
->> >  MODULE_DEVICE_TABLE(platform, axp_pek_id_match);
->>
->> --
->> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260923105215.1=
-633-1-anykey196@gmail.com?part=3D1
+> This commit adds the AXP313a PMIC platform ID to the axp20x-pek driver to
+> enable the power button. It uses the axp20x_info generic register layout.
+>
+> > diff --git a/drivers/input/misc/axp20x-pek.c b/drivers/input/misc/axp20=
+x-pek.c
+> > index 24f9e9d893de3..d4e2fc9a937ff 100644
+> > --- a/drivers/input/misc/axp20x-pek.c
+> > +++ b/drivers/input/misc/axp20x-pek.c
+> > @@ -393,6 +393,10 @@ static const struct platform_device_id axp_pek_id_=
+match[] =3D {
+> >               .name =3D "axp221-pek",
+> >               .driver_data =3D (kernel_ulong_t)&axp221_info,
+> >       },
+> > +     {
+> > +             .name =3D "axp313a-pek",
+> > +             .driver_data =3D (kernel_ulong_t)&axp20x_info,
+> [Severity: Medium]
+> Will reusing axp20x_info break the sysfs attributes startup and shutdown =
+for
+> the AXP313a?
+>
+> When these sysfs attributes are accessed, the driver calls:
+>
+> axp20x_show_attr()
+>   regmap_read(axp20x_pek->axp20x->regmap, AXP20X_PEK_KEY, &val);
+>
+> axp20x_store_attr()
+>   regmap_update_bits(axp20x_pek->axp20x->regmap, AXP20X_PEK_KEY, mask, id=
+x);
+>
+> Since AXP20X_PEK_KEY is 0x36, but the AXP313a regmap defines max_register
+> as 0x21, won't the regmap core block this out-of-bounds access and return
+> an error?
+>
+> > +     },
+> >       { /* sentinel */ }
+> >  };
+> MODULE_DEVICE_TABLE(platform, axp_pek_id_match);
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260923105757.26=
+0-1-anykey196@gmail.com?part=3D1
