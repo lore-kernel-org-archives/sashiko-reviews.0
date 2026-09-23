@@ -1,150 +1,166 @@
-Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-07.mail-europe.com (mail-07.mail-europe.com [37.187.220.204])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A12247291
-	for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 23:45:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF462882D6
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 00:55:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.187.220.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790120751; cv=none; b=pFMXsCbueVXdQ6C2zb3V8Z42tw1g1AlIojacjAr5qJ0q3SphJdg4dbn+pVOm2tx5E3fRpgWVImaH5dHqfemWH04IT9+mBnzEnho9RwXWANsIzm6Bb5rdoYQWsyMPu9LyOGyrkGp59Q+/l+ApYDRUV6qnHMTcf0sjCy0eQIBRb4o=
+	t=1790124929; cv=none; b=GuyMkkmsQs5zbnDMmxGdWTil4SRcsJ09BujYK40RI0NIxXMKmwTqY7jKgWn5zVSNv6JNi/vgM5um2N5FvFEM+Rioet8x8oHAwlxtdReuDyUA92fxirSScY1RVM8geSZRLKlN1eUTURfPSavODZVG0nRqQsIXbO5IRd7YFAd5Bts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790120751; c=relaxed/simple;
-	bh=Ah7kODkvgexutE56tk6Yv0fe0wT3Bt0p7/t3lW1YFbY=;
-	h=MIME-Version:Date:From:To:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=kD+y7SpIjUWziwVLySioHPYQ28rfX+TUJpE0Xo7I9pWxE8CL15l5HWl0IIxKCRFwAQrw6zKCA5GPiq3SpiLywi/sfsLkaYKQGK7xu4Tw+6hFq1RlmadiF5YwP519KCQQAtC8eLSPGND5OCiFHof3hlEDRchXsOuipGGq1HvFykg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=BmVK/J2x; arc=none smtp.client-ip=178.21.23.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
+	s=arc-20240116; t=1790124929; c=relaxed/simple;
+	bh=YmEr31Jh1BP9sY046D5dufHqRSA2gG11ut9PVNV11aY=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PXiwe8oBkb/Fg1nJgCfYLJaKzvKfV17vzqp/7ERNl3g7oSlypKGnu3GLUCjQbX7TeXwBScGjxmbuv2IqYYL7HZljPvC5NTom9mmFyOwYyyN2QxUMG6V63rd3gcp2NHE+/QPm0XB8FtjMLEntvXpkCck2vDgw/YhzpZwW1TiHbAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nanonej.com; spf=pass smtp.mailfrom=nanonej.com; dkim=pass (2048-bit key) header.d=nanonej.com header.i=@nanonej.com header.b=dChKYEiW; arc=none smtp.client-ip=37.187.220.204
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nanonej.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nanonej.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="BmVK/J2x"
-Received: from mail01.layka.lan (localhost [127.0.0.1])
-	by disroot.org (Postfix) with ESMTP id 3672980F64
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 01:45:48 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id VjssLs5-eElt for <sashiko-reviews@lists.linux.dev>;
- Wed, 23 Sep 2026 01:45:47 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
-	t=1790120747; bh=Ah7kODkvgexutE56tk6Yv0fe0wT3Bt0p7/t3lW1YFbY=;
-	h=Date:From:To:Subject:In-Reply-To:References;
-	b=BmVK/J2x9ZNDBbyevOXKTgFUIvEyD0aF5nOodmEVkaLDcWlsZ1fvWxEmjTDxjonZ5
-	 ClVro7rawMFEECiQERnkKSYhAzKhmRKN/3tPbotyUSbjBNKUHvJyBE/cdySEUnT9pm
-	 5RN2VQtU5rqniG26LjqB9148iwJ0rdlUUcF3kny/h8EpPc5t6U1Ef/pe/gkJrnjmH/
-	 QNARgkBDxaMwy/ZxzPcnyuOpRnRtMx0Pq7Ul+2YomdqF7K8e+pRumwl/2O0CWsBEv/
-	 KNWcED1yR5i0xf+R8l7eqS/riifwhvwJLUW2CO1eFfT4X1yF2EJeoBDrajtnaAQlPF
-	 ScwZluuGevBTA==
+	dkim=pass (2048-bit key) header.d=nanonej.com header.i=@nanonej.com header.b="dChKYEiW"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nanonej.com;
+	s=protonmail3; t=1790124906; x=1790384106;
+	bh=Vm2eCA7uL4H0o/dCrIqyrmx7kqfE3F6P5gZC455uyCs=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=dChKYEiWUVxPgiezCY+AR4Lil0xMk2oFQF5RUQnlda2bE+KJNzvpzTO4JBXMHOsiz
+	 oBAyDbGlo7PXMxvR18cjWzCxHr/gYx9y2JAAcJZPyYRXfg2orhUokN0RdkLR4nrfYz
+	 Yo/y4E+MfffSm5gPT+jvNXCg2iVWOfwujVZbaM43RkG/VPwn5gxfe4Vf35+YCv9I/t
+	 OR8uDdOqbjT3OrdjALT+2TtW3ibdbjE0gQsU/ZPtZqtVHvNahboPfS3qyMkIBI3eu3
+	 OVkWhEFTdWqWuEYyS5i4YejQeWZaO6F/G+CwlprCEzmBtHs0Cwmf4GLPuP7UY6phix
+	 DqQmFeSyUw1Uw==
+Date: Wed, 23 Sep 2026 00:55:02 +0000
+To: sashiko-reviews@lists.linux.dev
+From: Nanonej Dev <dev@nanonej.com>
+Cc: Danilo Krummrich <dakr@kernel.org>, Alexandre Courbot <acourbot@nvidia.com>, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v2 1/4] gpu: nova-core: Extract PFSP register definitions
+Message-ID: <m1qp--Csq6KPTgHYSUHPQt9tqXwClrSYXfEvfZDqI1X3pDOa1F2Zpv6yYI_9NjaybKIc8zoaveeEyXbeQ2QT0_i8ZKJzffL2zGKpSwJiG9w=@nanonej.com>
+In-Reply-To: <20260923004532.76D871F000FF@smtp.kernel.org>
+References: <20260923-b4-extract-pfsp-registers-to-falcon-mod-v2-0-74600fc068c4@nanonej.com> <20260923-b4-extract-pfsp-registers-to-falcon-mod-v2-1-74600fc068c4@nanonej.com> <20260923004532.76D871F000FF@smtp.kernel.org>
+Feedback-ID: 32181229:user:proton
+X-Pm-Message-ID: 143ae2ab622c902f6963cfb44426611d5c99b8cb
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Wed, 23 Sep 2026 01:45:47 +0200
-From: =?UTF-8?Q?Rapha=C3=ABl_Larocque?= <rlarocque@disroot.org>
-To: sashiko-reviews@lists.linux.dev
-Subject: Re: [RFC PATCH] Input: elan_i2c_smbus - resend ENABLE_TP on wake from
- sleep (NOT TESTED, NEEDS TESTER!)
-In-Reply-To: <20260922233746.136E61F000FF@smtp.kernel.org>
-References: <20260922232707.8949-1-rlarocque@disroot.org>
- <20260922233746.136E61F000FF@smtp.kernel.org>
-Message-ID: <2a1a27360db479dce91ca4bd7728e553@disroot.org>
-X-Sender: rlarocque@disroot.org
-Organization: =?UTF-8?Q?Syst=C3=A8mes_Budgie?=
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------2e7d01e8bc1c8b1d40be69e0904b0412062871eaa2d75d61afbb54aa78dbbf5c"; charset=utf-8
 
-Le 2026-09-23 01:37, sashiko-bot@kernel.org a écrit :
-> Thank you for your contribution! Sashiko AI review found 2 potential 
-> issue(s) to consider:
-> - [Medium] input: redundant ETP_SMBUS_ENABLE_TP command during 
-> initialization
-> - [Low] input: explicit failure path violation in 
-> elan_smbus_sleep_control()
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------2e7d01e8bc1c8b1d40be69e0904b0412062871eaa2d75d61afbb54aa78dbbf5c
+Content-Type: multipart/mixed;boundary=---------------------f743ee1c8d292c01b32dda55d3dbe567
+
+-----------------------f743ee1c8d292c01b32dda55d3dbe567
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
+
+On Wednesday, September 23rd, 2026 at 02:45, sashiko-bot@kernel.org <sashi=
+ko-bot@kernel.org> wrote:
+
+> Thank you for your contribution! Sashiko AI review found 2 potential iss=
+ue(s) to consider:
+> - [Medium] nova-core: PFSP registers remain pub(crate) despite commit me=
+ssage
+> - [Low] nova-core: sentence fragment in commit message
 > --
-> 
-> commit a7e8e038348366c26f0b3d1a3a7f9e778cbce51a
-> Author: R. Larocque <rlarocque@disroot.org>
-> 
-> Input: elan_i2c_smbus - resend ENABLE_TP on wake from sleep (NOT 
-> TESTED, NEEDS TESTER!)
-> 
-> This commit updates the Elan SMBus sleep control to resend the enable 
-> command
-> when waking up the touchpad. This mirrors the initialization path to 
-> ensure
-> touch reporting resumes.
-> 
->> diff --git a/drivers/input/mouse/elan_i2c_smbus.c 
->> b/drivers/input/mouse/elan_i2c_smbus.c
->> index 0287441cda46d..dd86bd1739c55 100644
->> --- a/drivers/input/mouse/elan_i2c_smbus.c
->> +++ b/drivers/input/mouse/elan_i2c_smbus.c
->> @@ -93,10 +93,25 @@ static int elan_smbus_set_mode(struct i2c_client 
->> *client, u8 mode)
->> 
->>  static int elan_smbus_sleep_control(struct i2c_client *client, bool 
->> sleep)
->>  {
->> +	int error;
->> +
->>  	if (sleep)
->>  		return i2c_smbus_write_byte(client, ETP_SMBUS_SLEEP_CMD);
-> 
+> =
+
+
+> commit 4db1b123b08a2ccc218c14e49151c182aa9d6c36
+> Author: Antonin Malzieu Ridolfi <dev@nanonej.com>
+> =
+
+
+> gpu: nova-core: Extract PFSP register definitions
+> =
+
+
+> This commit moves the Foundation Security Processor (PFSP) register
+> definitions from the root regs module into the falcon module. It also
+> re-exports PFALCON registers to allow using a single regs:: prefix.
+> =
+
+
+> > Since PFALCON registers are defined in the root regs.rs but are
+> > also part of the falcon interface, accessed by the whole falcon
+> > module. They are re-exported in falcon/regs.rs so falcon code can use
+> > a single regs:: prefix.
+> =
+
+
 > [Severity: Low]
-> Does this direct return bypass the preferred explicit failure path 
-> style?
-> 
-> The input subsystem maintainer style guidelines suggest expanding 
-> direct
-> returns into explicit error checks when a function has multiple failure
-> points. Should this be updated to assign the return value to error and 
-> return
-> explicitly?
-> 
->> -	else
->> -		return 0; /* XXX should we send ETP_SMBUS_ENABLE_TP here? */
->> +
->> +	/*
->> +	 * The controller stops touch reporting while asleep; resend
->> +	 * ETP_SMBUS_ENABLE_TP on wake, mirroring what is done during
->> +	 * elan_smbus_initialize(), so that reporting actually resumes.
->> +	 */
->> +	error = i2c_smbus_write_byte(client, ETP_SMBUS_ENABLE_TP);
-> 
+> This isn't a bug, but there is a sentence fragment in the commit message=
+ here.
+> The first sentence begins with the subordinating conjunction "Since" but
+> terminates with a period before reaching a main clause. Should these two
+> sentences be combined?
+> =
+
+
+> > diff --git a/drivers/gpu/nova-core/falcon/regs.rs b/drivers/gpu/nova-c=
+ore/falcon/regs.rs
+> > new file mode 100644
+> > index 0000000000000..5ccb10946ec4d
+> > --- /dev/null
+> > +++ b/drivers/gpu/nova-core/falcon/regs.rs
+> > @@ -0,0 +1,42 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +
+> > +use crate::driver::NovaRegisters;
+> > +use kernel::io::register;
+> > +
+> > +// FSP (Foundation Security Processor) queue registers for Hopper/Bla=
+ckwell Chain of Trust.
+> > +// These registers manage falcon EMEM communication queues.
+> > +
+> > +register! {
+> > +    base: NovaRegisters;
+> > +
+> > +    pub(crate) NV_PFSP_QUEUE_HEAD(u32)[8] @ 0x008f2c00 {
+> =
+
+
 > [Severity: Medium]
-> Will this cause a redundant enable command during initialization that
-> might confuse the hardware?
-> 
-> During device probe, the sequence calls the initialization routine and 
-> then
-> the sleep control routine to wake it up:
-> 
-> __elan_initialize()
->    data->ops->initialize(client)
->       -> elan_smbus_initialize() sends ETP_SMBUS_ENABLE_TP
->    data->ops->sleep_control(client, false)
->       -> elan_smbus_sleep_control() now sends ETP_SMBUS_ENABLE_TP again
-> 
-> Since this patch is explicitly untested on real hardware, is there a 
-> risk
-> that this double-command could cause unexpected states or fail the 
-> probe
-> sequence?
-> 
->> +	if (error) {
->> +		dev_err(&client->dev,
->> +			"failed to re-enable touchpad after wake: %d\n",
->> +			error);
->> +		return error;
->> +	}
->> +
->> +	return 0;
->>  }
+> The commit message states that visibility for these moved registers chan=
+ges
+> to pub(super), but the code retains pub(crate) visibility here and for t=
+he
+> other NV_PFSP_* registers below. Should this be updated to pub(super) as
+> intended?
+> =
 
-P.S.: My previous email applies to the V2 I sent with typo fixes too,
-and also, the Low Severity one, I did it like that to match the style of 
-the rest of the file.
 
-Thanks,
-R. Larocque
+> [ ... ]
+> =
+
+
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260923-b4-extr=
+act-pfsp-registers-to-falcon-mod-v2-0-74600fc068c4@nanonej.com?part=3D1
+> =
+
+
+
+Made a small mistake during my rebase apparently, I'll fix that tommorow a=
+nd also correct the commit punctuation issue.
+-----------------------f743ee1c8d292c01b32dda55d3dbe567--
+
+--------2e7d01e8bc1c8b1d40be69e0904b0412062871eaa2d75d61afbb54aa78dbbf5c
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wrsEARYKAG0FgmqzI0sJEFKmzSsu6sDwRRQAAAAAABwAIHNhbHRAbm90YXRp
+b25zLm9wZW5wZ3Bqcy5vcmc9yEM7ZU2n96y0Mc2cUqn/SctLWZNFV0Stsbqt
+a7DTphYhBI+99gDJjAW7MoHJ0VKmzSsu6sDwAABI/QEAtxYjKBpZ7fj/D41K
+HIRj4qH0jMCOrMKkrbmlsB2yJUgA/0e0EDNZYe9kL8IQNcJT4BJz6/y5Z+hS
+mf0uqBYQ9YAC
+=HJei
+-----END PGP SIGNATURE-----
+
+
+--------2e7d01e8bc1c8b1d40be69e0904b0412062871eaa2d75d61afbb54aa78dbbf5c--
+
