@@ -1,207 +1,153 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from firebrick.ash.relay.mailchannels.net (firebrick.ash.relay.mailchannels.net [23.83.222.59])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B192A55408C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 16:54:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36CA1544D55
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 17:09:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.222.59
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790182473; cv=none; b=BR0F2rxSJ6FQ0hlI9VDe9hSHUhzNpr307GESYhpDEhHfWORX39dhRhw9XdkLF7ikICW9xTA+5eepVR/1uKN/lCDKHaEq2JBAOInMKW42mmCkVTCBBcwZtI0y8CBX/kN2S5awvo9rvr356e8D/KTYXujajNwizjPe0WtBCbyi6CQ=
+	t=1790183383; cv=none; b=Vj8CBYqJoT3jUJagHYpx9TFLKHnpYMPUjTc92NjYyyZ+QNImjdxffj0Fbhzt7LCi/gcUKAQggowacYjrg7W7/uBXH9CO5nJB+AHMuEh1Ilu4etJqf3WwP8fN5dub6lFQiVmOKtIq0mwmqXgcZfNjolNckrZZnGyhB5+3VUn6NVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790182473; c=relaxed/simple;
-	bh=sR2JTNeIt2Bd3YpUo7q6IodMzR1FkWUtQTYdLlsbvng=;
-	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
-	 To:Date:Message-ID; b=Mtcrs4h/7fxvPeyjomU85H6bvivFojNrD20odsDWs8EG0tsjKFnEAB/DEXNA8CnRoey2txbYGHnqBcoxr6yPSXzsgtTYxz6XBzHfPrBwfjaH47Rq8ZXr4GVzaqslwVDTNG9Ukj/xfVkZxs1p+6WK9jXpPhKMsztUXB0AsTZ2sGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cQd8byvZ; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1790183383; c=relaxed/simple;
+	bh=ODnfCzQCMRdqJrF3lC1kMqiFG9xBT/eY/DQltG3A9xE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nGJAeqGc8QUd0FuDk9aamlx0vxo6s3AftQhCY8v9hZPFl6ntiQZSCbfJHUH6H0Q0PCSX4Tc/hUXgm+7G+aWMmt+AlpIfR5s1ZmE+uBmkN2H9yLzrdeibvyR1E9k0hFI7ShQwaod7JuThWvzEK41w/C6dP3X4xRnecX91up1gHq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net; spf=fail smtp.mailfrom=stgolabs.net; dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b=XZLoThng; arc=none smtp.client-ip=23.83.222.59
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=stgolabs.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cQd8byvZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1790182470; x=1821718470;
-  h=mime-version:content-transfer-encoding:in-reply-to:
-   references:subject:from:cc:to:date:message-id;
-  bh=sR2JTNeIt2Bd3YpUo7q6IodMzR1FkWUtQTYdLlsbvng=;
-  b=cQd8byvZnkLVB8RHkA8t6SO0XdPTUzPi3+gOh3DC6e2Q8aI+sj9/zYnp
-   m32Sl80wE+Bj9pIUZQZrqU87/GrEqlAhKmxYObaAvgaOX4TVeQcMXI4cw
-   /NiGPSyDo0LR0uDqoiQAWKdvfG6r+1SewimweCxpAC6tQUL/JYhsaidaY
-   2kctLdK2Zh5HemG57IT7ziY/DIGMCcCa/Xbzes9egaQy31/R3BsrSB7Ih
-   1dEsur5CANjqMTFVFMujn+DL1cfwC/kvdpyfKpFrElzDg8DerGsY7/5B7
-   mlZQqmEfWMSrhtfEWrXZMIHXEGGa8rsyUSnGVl0VSUMeF/Qa21dy7VQFF
-   Q==;
-X-CSE-ConnectionGUID: NenoZWr2QKueoB+omTCE4g==
-X-CSE-MsgGUID: wQQqBH20Rayk3hUlXS/cPA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11914"; a="116425359"
-X-IronPort-AV: E=Sophos;i="6.27,118,1787036400"; 
-   d="scan'208";a="116425359"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2026 09:54:30 -0700
-X-CSE-ConnectionGUID: ayObFwfkRBGBVVTGTHxVbg==
-X-CSE-MsgGUID: UwAXNvqtShuSaMCNbz1CUw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,118,1787036400"; 
-   d="scan'208";a="272285002"
-Received: from ncintean-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.213])
-  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2026 09:54:28 -0700
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="XZLoThng"
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 66F237A262E;
+	Wed, 23 Sep 2026 17:00:30 +0000 (UTC)
+Received: from pdx1-sub0-mail-a253.dreamhost.com (100-100-64-102.trex-nlb.outbound.svc.cluster.local [100.100.64.102])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id CB7EC7A052B;
+	Wed, 23 Sep 2026 17:00:29 +0000 (UTC)
+X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
+X-MailChannels-Auth-Id: dreamhost
+X-Harbor-Share: 04761f7460f5116f_1790182830185_3483328357
+X-MC-Loop-Signature: 1790182830185:2206886135
+X-MC-Ingress-Time: 1790182830185
+Received: from pdx1-sub0-mail-a253.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.100.64.102 (trex/8.0.2);
+	Wed, 23 Sep 2026 17:00:30 +0000
+Received: from offworld (unknown [76.167.199.67])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dave@stgolabs.net)
+	by pdx1-sub0-mail-a253.dreamhost.com (Postfix) with ESMTPSA id 4hqjrs2rsXz101l;
+	Wed, 23 Sep 2026 10:00:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
+	s=dreamhost; t=1790182829;
+	bh=tXWaak47gRKxaMrdH9l0Zy9r1HEhDEc/fZn+u/4whQE=;
+	h=Date:From:To:Cc:Subject:Content-Type;
+	b=XZLoThngjo8Si4onXok9xw+SpHrnyQTNKzEp7BNfYvTIEqpzTm3R8f4xKCtss6klC
+	 r0q5xzJZzuAhDdZk22W7pSuoYj9osL1io5pCFvcmpU0UfZcsYeYRf3UxcnWex4YLdB
+	 L5eB3+8pMv/JbJCg12/tP9KxP5B+d+UITMBL10v0utAJsmhQQd2goJvI2aw+vZIb49
+	 i3B/xEfKxYQtiYXnFaeX8YW9A7tqTB6vOS8FxFBkA8Uyo6NtJBI4QXhr+ZeYtAZlYd
+	 orRxSvKLheH6czwTgteqVpP7o2dzn6Sx00jb0rEZKLBmDJIzEfZGQ+kGYvHp42sfdd
+	 lPFWlMIBnYfrA==
+Date: Wed, 23 Sep 2026 10:00:26 -0700
+From: Davidlohr Bueso <dave@stgolabs.net>
+To: sashiko-reviews@lists.linux.dev, dave.jiang@intel.com
+Cc: linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v9 02/10] cxl/pci: Add BI topology enable/disable
+Message-ID: <20260923170026.6tpxbrgsbqa2zplr@offworld>
+References: <cover.1790103847.git.dave@stgolabs.net>
+ <d87ff01d77dacc7c0a0d20aaebb1ce906c968b91.1790103847.git.dave@stgolabs.net>
+ <20260923011241.4B9451F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <PH8PR11MB804034417C9C4625B7F20F2BF4822@PH8PR11MB8040.namprd11.prod.outlook.com>
-References: <20260630223946.2107382-1-jia.yao@intel.com> <20260630225349.984AB1F000E9@smtp.kernel.org> <178290749714.224587.15234445443946207851@jlahtine-mobl> <178292444166.273574.16738251742448073960@jlahtine-mobl> <PH8PR11MB8040EFAAE8210F2C6B53AC1BF4842@PH8PR11MB8040.namprd11.prod.outlook.com> <179005959984.27165.4749331452130832177@jlahtine-mobl> <PH8PR11MB8040A8F215B997982530CE44F4832@PH8PR11MB8040.namprd11.prod.outlook.com> <179014632773.19856.4107893493544612438@jlahtine-mobl> <PH8PR11MB804034417C9C4625B7F20F2BF4822@PH8PR11MB8040.namprd11.prod.outlook.com>
-Subject: RE: [PATCH v9] drm/i915/dg2: Add per-context control for Wa_22013059131
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>, "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>, "Roper, Matthew D" <matthew.d.roper@intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>
-To: "Yao, Jia" <jia.yao@intel.com>, "sashiko-bot@kernel.org" <sashiko-bot@kernel.org>, "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-Date: Wed, 23 Sep 2026 19:54:24 +0300
-Message-ID: <179018246485.152778.2589066724213973485@jlahtine-mobl>
-User-Agent: alot/0.13.dev2+g40c57d620
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260923011241.4B9451F000FF@smtp.kernel.org>
+User-Agent: NeoMutt/20220429
 
-Quoting Yao, Jia (2026-09-23 19:01:32)
-> Hi @Joonas Lahtinen,
->=20
-> When shifting from WA option #2 to option #1,    removing a global settin=
-g ->   adding a per-context setting.  We thought it was a per-context opera=
-tion.  However, due to the "weakest link" effect, this remains a global ope=
-ration.
-> Thus, making it per-client has no effect either.  Containers will interfe=
-re with each other.
+On Wed, 23 Sep 2026, sashiko-bot@kernel.org wrote:
 
-They would not. On the impacted SKU, the RCS and CCS at any given time
-can only run workloads with matching address space. Those workloads must
-originate from the same DRM client as there is no address space sharing
-across DRM clients implemented in i915.
+>Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>- [Medium] cxl/pci: TOCTOU race in BI setup against concurrent AER reset
 
-It's only when multi-CCS SKU would need the same W/A, we would need
-further scheduling decision to ensure 2 CCS workloads are not competing
-for the global setting.
+False positive, see below.
 
-With per DRM client enforcement, both RCS and CCS should be able to
-write the global setting without a conflict. And when a context from new
-DRM client is scheduled it, it should be able to program the global
-value to its liking as the same address space limitation guarantees the
-other workloads are not in the HW anymore.
+>--
+>
+>commit 1daa4037cbac0ebc16630c3d4f45c358bd7890f9
+>Author: Davidlohr Bueso <dave@stgolabs.net>
+>
+>cxl/pci: Add BI topology enable/disable
+>
+>This patch implements setup and teardown of the Back-Invalidate (BI) topology
+>on CXL endpoints and upstream components. It also adds a reset detection
+>mechanism to verify whether a reset cleared the hardware BI Enable state.
+>
+>> diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
+>> index b8676a3d6ec90..f3ca9861a7ba1 100644
+>> --- a/drivers/cxl/core/pci.c
+>> +++ b/drivers/cxl/core/pci.c
+>[ ... ]
+>> +static int __cxl_bi_ctrl_endpoint(struct cxl_dev_state *cxlds, bool enable)
+>> +{
+>[ ... ]
+>> +	FIELD_MODIFY(CXL_BI_DECODER_CTRL_BI_ENABLE, &ctrl, enable);
+>> +	writel(ctrl, bi + CXL_BI_DECODER_CTRL_OFFSET);
+>> +	cxlds->bi = enable;
+>
+>[Severity: Medium]
+>Could this lockless update of cxlds->bi race with a concurrent AER reset
+>handled by cxl_bi_reset_detected()?
+>
+>If a user manually binds the cxl_port driver via sysfs concurrently with a
+>PCI AER reset (SBR), the manual sysfs bind takes the endpoint->dev lock,
+>while the AER recovery (cxl_reset_done()) takes the cxlmd->dev lock, allowing
+>them to execute concurrently.
 
-Regards, Joonas
+The endpoint port cannot be bound on its own. Unbinding it from cxl_port
+tears it down through cxl_detach_ep() and a subsequent sysfs bind fails
+with -ENODEV. The only path that reaches __cxl_bi_ctrl_endpoint(enable) is
+the endpoint port probe, and that runs synchronously from
+devm_cxl_add_endpoint().
 
->=20
-> Thanks,
-> Jia
-> > -----Original Message-----=20
-> > From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-> > Sent: Tuesday, September 22, 2026 11:52 PM
-> > To: Yao, Jia <jia.yao@intel.com>; sashiko-bot@kernel.org; sashiko-
-> > reviews@lists.linux.dev
-> > Cc: dri-devel@lists.freedesktop.org; intel-gfx@lists.freedesktop.org; R=
-oper,
-> > Matthew D <matthew.d.roper@intel.com>; Tvrtko Ursulin
-> > <tursulin@ursulin.net>
-> > Subject: RE: [PATCH v9] drm/i915/dg2: Add per-context control for
-> > Wa_22013059131
-> >=20
-> > Quoting Yao, Jia (2026-09-22 17:34:08)
-> > > Hi @Joonas Lahtinen,
-> > >
-> > > For RCS -> UNSET
-> > > For CCS
-> > > 1. Old compute runtime -> UNSET
-> > > 2. New compute runtime -> USER
-> > >
-> > > If we take there's only one compute runtime version, and priority USE=
-R >
-> > UNSET?  Where's the conflict come from?
-> >=20
-> > See below.
-> >=20
-> > > But if we take there's more than one compute runtime version, and the=
-ir
-> > priority is equal,  UNSET can cover USER,  USER can cover UNSET,  even =
-with
-> > two clients they could cover each other.
-> >=20
-> > I didn't follow this part. How does the priority come into play?
-> >=20
-> > We have to keep switching the mode as the DRM clients come and go.
-> >=20
-> > > We should take it easy.
-> > > Once we reached USER, set by new compute, we should latch it, for the=
- WA
-> > has been implemented by USER.
-> >=20
-> > That won't work. If you are running two different containers, you may h=
-ave
-> > different compute runtime versions. Also, Mesa can be submitting to CCS=
- too
-> > for async compute, AFAIK.
-> >=20
-> > To properly cover things, we should make it into per DRM-client setting=
- and
-> > switch the mode accordingly when different DRM client is run.
-> >=20
-> > And for the given SKU with only one CCS, as explained earlier, it shoul=
-d be
-> > already guaranteed that two different DRM clients are not active on the
-> > hardware at the same time due to the address space mathing requirement
-> > between RCS and CCS.
-> >=20
-> > If this needs to be extended to multi CCS SKUs, then it'd be a bigger
-> > implementation effort.
-> >=20
-> > Regards, Joonas
-> >=20
-> > >
-> > > Thanks,
-> > > Jia
-> > >
-> > > > -----Original Message-----
-> > > > From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-> > > > Sent: Monday, September 21, 2026 11:47 PM
-> > > > To: Yao, Jia <jia.yao@intel.com>; sashiko-bot@kernel.org; sashiko-
-> > > > reviews@lists.linux.dev
-> > > > Cc: dri-devel@lists.freedesktop.org;
-> > > > intel-gfx@lists.freedesktop.org; Roper, Matthew D
-> > > > <matthew.d.roper@intel.com>; Tvrtko Ursulin <tursulin@ursulin.net>
-> > > > Subject: RE: [PATCH v9] drm/i915/dg2: Add per-context control for
-> > > > Wa_22013059131
-> > > >
-> > > > Quoting Yao, Jia (2026-09-21 20:33:03)
-> > > > > Hi @Lahtinen, Joonas,
-> > > > >
-> > > > > The key is LSC_CHICKEN_BIT_0 is a global register.
-> > > > >
-> > > > > Even we use per-client,  we should consider the following cases:
-> > > > >
-> > > > > 1. Should conflicting configurations within a client be rejected?
-> > > > > I recommend the first setting should be latched.
-> > > >
-> > > > From uAPI perspective it would be simpler to set this at the DRM
-> > > > client level at once. However we don't seem to have such uAPI in
-> > > > active use currently (all
-> > > > drm_noop) so you'd have to compare the complexity between indirectly
-> > > > setting it at DRM client level by first created context or adding
-> > > > such an uAPI to set it explicitly per client.
-> > > >
-> > > > > 2. Should conflicting configurations across different clients be =
-rejected?
-> > > > > I think the latter setting can cover previous one.
-> > > >
-> > > > DRM clients need to be indepenent from the driver perspective, we
-> > > > can't do that.
-> > > >
-> > > > The whole point of making it per DRM client is that given the
-> > > > impacted SKU only has 1 CCS engine. We have the address space
-> > > > matching requirement between CCS and RCS, so when both CCS and RCS
-> > > > are running, we know they belong to the same DRM client and thus
-> > > > they will not conflict with the WA mode. And if only one of them is
-> > > > running, there can be no conflict either as it's just one context.
-> > > >
-> > > > > Even like this, still can't cover all the race condition.
-> > > >
-> > > > Which race conditions do you think would remain? We definitely have
-> > > > to eliminate any race conditions to land this.
-> > > >
-> > > > Regards, Joonas
+The driver core holds device_lock(&cxlmd->dev) across cxl_mem_probe(), and
+cxl_reset_done() takes that same lock before calling
+cxl_bi_reset_detected(). The reset side therefore cannot observe the
+window between the writel() and the cxlds->bi store; it waits for the
+probe to return and only then compares the flag against the hardware bit.
+
+>
+>There is a window between the writel() that sets the hardware bit and the
+>assignment of cxlds->bi. If the AER SBR wipes the hardware bit in this window,
+>could cxl_bi_reset_detected() check the still-false cxlds->bi and ignore the
+>reset?
+
+I widened the window with a 4s msleep() between the writel() and the store,
+rebinded mem0 and issued an SBR through sysfs while the probe was sleeping
+in that window:
+
+   [16.846] cxl_pci 0000:0d:00.0: reset via cxl_bus
+   [19.290] cxl_pci 0000:0d:00.0: BI requests enabled
+   [19.335] cxl_mem mem0: probe: 0
+   [19.337] cxl_pci 0000:0d:00.0: BI disabled by reset
+
+The SBR itself lands in the window and clears BI Enable, but the reset
+write blocks on the memdev lock until the probe completes. .reset_done then
+runs, sees cxlds->bi set with the hardware bit clear, and clears the flag.
+A subsequent HDM-DB attach is refused with "BI not enabled on device". The
+software state does not desynchronize.
+
+Independently of this, patch 4 re-reads BI Enable after committing each
+endpoint decoder, so a stale flag could not commit a decoder with BI on a
+device whose BI Enable is clear.
+
+Thanks,
+Davidlohr
