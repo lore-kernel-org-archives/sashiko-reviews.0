@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F3138330A;
-	Wed, 23 Sep 2026 16:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E87497B84;
+	Wed, 23 Sep 2026 16:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790179340; cv=none; b=DXUJWiMYilwhSZDKwUOkqNTSpjKXSlYR5kysAFBujsPR5bXyx/kwSz8TdcqFE4jd8WyZ7PsX4LmWlngobnhKI9ivKCbWQXohl/H6av4FIb8vaGbZAOmDFv2/Hw0CdD8VwTW3jijLJH1cyijOiaMA6sM7LkYGndoYLhoVutWIunA=
+	t=1790179524; cv=none; b=eLtc3cCJ2GCwyr+NJle55NxpNqisam7YtxAfgFJVpHTZuXDDVXYXGNEq4g1vLnxUDs/lyoEOa6F6IkCofQtUhmV78gea/o90cI4LMrkO5JoG1xcfj7Lk5PosUylT8kwD7z+2wngvEA1wCdlpqxKl7uOkTz2Jt+UUKjlmrfHO4vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790179340; c=relaxed/simple;
-	bh=yKqqCaXaiAW7wcD+XrLEsBiEhxfIF0z6QLyTnpWUAUY=;
+	s=arc-20240116; t=1790179524; c=relaxed/simple;
+	bh=q8cUfNQksoEeTkLBpiDrT/IRN5bH+FaXJ/Qkmk2oFug=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pVBFmDv/69/msuiS1f8Wg2CgexS+MgAPyq1CqUnMqDtfbIS0p4O/HANPdFu/zg77ZeGCMwvWrYYEG33cewSPSDAOfY4VHrL2j+dxIMZo0Z/FfXDis3yEf2/AyN3Zw6Ztneufo4gCbWXRMBR67ZSqRAn25A8HobvepEf2KYOU6Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AOpNUTzq; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=cQs7DAqcrhqGd2nYY1c+CdKX+70jfvBl5K2+T8qplDQSi3ctwY8HXis+e/8COdLEzUV+vQq0LX0zLpjY+UJ5oRDm85Zqm4Tjw1xnZbBQoSjprctssApuJ9ba7wL7PDGRrN68LQK/SKrOp+2BXL9Zk8vVbo1qrf1+SwU7/CoKlkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LfSaGM+V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AOpNUTzq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1325A1F00893;
-	Wed, 23 Sep 2026 16:02:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LfSaGM+V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CF91F000FF;
+	Wed, 23 Sep 2026 16:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790179339;
-	bh=VsHoebKLwX02l5yE7/WLv3OzxkTclCZuDFVV2fPFhPc=;
+	s=k20260515; t=1790179522;
+	bh=3+axgyUbPx/jzXDFVeUotiXzYHOPsB5/21ztWxyCbmw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=AOpNUTzqlpUj6/3ZR+ipsdFTEolmjgzWuAuAzrUmukDipLBrOqbzsDm6jzQaJ3yG0
-	 U39U6NneYANvmeqoNbWS1+LyAuAx5pNIgzVMC7M/6k8MDWGBc7pmhNSBVvo4IzQgcf
-	 f4m63UMjckCAJt+oIc4vkgagxkoavdMnfNRENi84gsF36Tvb2rK3bYV+ftaccqW3mG
-	 QhZj+ghckTtaVZIq1YdMlTBckJkD3KZM2rSS5VLJaFy+vxaBLNJjFK8PwhC+v0dF9C
-	 NPcCGUDWjlmJQ1W2GknHhXnNl3zuYEdiOLYXW3LU+JiHfZCvJ7Q3P9gQUa5jjF52DG
-	 v4e+pSfP25lWw==
-Date: Wed, 23 Sep 2026 11:02:17 -0500
+	b=LfSaGM+VXCxLS0KCjmEKLx+OIHQcvstUceI4ai0h4ORBT2g3MfwmFugB/Qqu6OTyn
+	 QWGNf85YREnJlpAaMKxgyFGDwnStnyv0CE8OaG6j3okp5YpX0uQc6pags0G6KEWvEQ
+	 M7Hq2hvgmIeJpc7ygagkcKU4hO8Vg2fS3c6Xdtv9DRM200B+kUM7XLNEkVJpt+vekT
+	 boKj4yFtDD9/DE/vhIFGcVX0rejZ+PZ7+yFNxlOxJPm55bdS3eHtwBG45D3DtBQUA/
+	 fBG8eJDyZHcYJbCPEra10qXv3nPvC0BcoJXUK/hWoncivQ7W3fNjSzR7C8nKI++AjY
+	 l4h6r6mxvELWw==
+Date: Wed, 23 Sep 2026 11:05:20 -0500
 From: Rob Herring <robh@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: lee@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
-	mfd@lists.linux.dev
-Subject: Re: [PATCH] dt-bindings: mfd: Add MT6397 sound DAI cells
-Message-ID: <20260923160217.GH27237-robh@kernel.org>
-References: <20260921232649.3132592-1-robh@kernel.org>
- <20260921233645.7ECE11F000FF@smtp.kernel.org>
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: arm: coresight: Allow funnel clocks
+Message-ID: <20260923160520.GI27237-robh@kernel.org>
+References: <20260921232834.3138571-1-robh@kernel.org>
+ <20260921233744.1FDBF1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -43,48 +42,55 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260921233645.7ECE11F000FF@smtp.kernel.org>
+In-Reply-To: <20260921233744.1FDBF1F000FF@smtp.kernel.org>
 
-On Mon, Sep 21, 2026 at 11:36:45PM +0000, sashiko-bot@kernel.org wrote:
+On Mon, Sep 21, 2026 at 11:37:43PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] dt-bindings: mfd: missing conditional enforcement and example for #sound-dai-cells
+> - [Low] dt-bindings: clock-names schema forbids valid single 'atclk' config
 > --
 > 
-> commit 81069b8500a138169e7ffa4f54dfcaa00429702d
+> commit 50eea7a4ef1f09b2ff4cd2b8b69396c108a1c74e
 > Author: Rob Herring (Arm) <robh@kernel.org>
 > 
-> dt-bindings: mfd: Add MT6397 sound DAI cells
+> dt-bindings: arm: coresight: Allow funnel clocks
 > 
-> This commit documents the sound DAI cell provided by MT6397 PMIC nodes.
+> This commit modifies the arm,coresight-static-funnel schema to allow
+> one or two clocks, adding support for the apb_pclk and atclk properties.
 > 
-> > diff --git a/Documentation/devicetree/bindings/mfd/mediatek,mt6397.yaml b/Documentation/devicetree/bindings/mfd/mediatek,mt6397.yaml
-> > index 3cbc0dc12c319..e2caa049a60ba 100644
-> > --- a/Documentation/devicetree/bindings/mfd/mediatek,mt6397.yaml
-> > +++ b/Documentation/devicetree/bindings/mfd/mediatek,mt6397.yaml
-> > @@ -57,6 +57,9 @@ properties:
-> >    "#interrupt-cells":
-> >      const: 2
+> > diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-static-funnel.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-static-funnel.yaml
+> > --- a/Documentation/devicetree/bindings/arm/arm,coresight-static-funnel.yaml
+> > +++ b/Documentation/devicetree/bindings/arm/arm,coresight-static-funnel.yaml
+> > @@ -30,6 +30,16 @@ properties:
+> >    power-domains:
+> >      maxItems: 1
 > >  
-> > +  "#sound-dai-cells":
-> > +    const: 1
+> > +  clocks:
+> > +    minItems: 1
+> > +    maxItems: 2
 > > +
+> > +  clock-names:
+> > +    minItems: 1
+> > +    items:
+> > +      - const: apb_pclk
+> > +      - const: atclk
 > 
-> [Severity: Medium]
-> Does adding this at the top-level properties block bypass conditional
-> enforcement for specific variants?
+> [Severity: Low]
+> Does this positional item list unintentionally forbid valid single-clock
+> configurations where only atclk is present?
 > 
-> By placing "#sound-dai-cells" at the top level without an allOf: if-then
-> conditional block restricted to "mediatek,mt6397", the schema fails to enforce
-> it as a required property for the MT6397 PMIC, and incorrectly allows it for
-> other PMIC variants. 
+> By specifying items as a rigid positional list, the dt-schema validation
+> strictly enforces that if only one clock is provided, its name must exactly
+> match apb_pclk.
 
-No clue about the capabilities of each variant, but I would guess if one 
-has audio codec, then they all do.
+Or name should be omitted... 'minItems: 1' on clock-names can be dropped 
+when applying.
 
-> Should it be added to the required list for MT6397 and included in the MT6397
-> example block, as per DT subsystem guidelines for new provider capabilities?
+> If a device tree node for arm,coresight-static-funnel provides a single clock
+> named atclk, it will fail make dtbs_check. This seems to conflict with
+> hardware configurations where static funnels lack APB registers and may only
+> require an ATB trace clock. The coresight driver itself appears to fully
+> support this configuration, as coresight_get_enable_clocks() gracefully
+> handles an absent apb_pclk.
 
-Perfectly fine to use this h/w and not use the audio functionality. 
-Also, new required properties can be an ABI break.
-
-Rob
+There's no such case in tree. This patch is fixing a case we do have in 
+tree.
