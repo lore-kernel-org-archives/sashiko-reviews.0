@@ -1,82 +1,166 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941E55326D2;
-	Wed, 23 Sep 2026 13:30:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB59323417
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 13:39:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790170225; cv=none; b=nlKsvtXl/0tW5dzSk+rQsdzv4lX6wXpfdSNJ/pdRYZmVbnNASj+PqP3X8k4DxBeR9In7FPluQhUKGJIIe/LlWAiUS2Iie4HP0BiZg7fAbw6WITLfiKb6qV8PeF99woPSFXzqx8Q147YKgOscNgwrO050WwscqXKIN8kf+wRqt64=
+	t=1790170786; cv=none; b=QBU4Gm5wBC6WhXp9//e+YqaVBRoxu82nWf81vQkjmujW3RG2FbBKGKzj4hOA/uKua7ea6lUSNjKI+m/AkmNfRSdgbKo5uSFXushF9uH4efnsvWmmQ1s/rTNhTtcUnYvxP4FTr9V+HSeiDNf5Ny8ZHSdhvd0ajRwFWaQS11ewLCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790170225; c=relaxed/simple;
-	bh=oXYh4IkYQ+XabqSw/bucxzadbAOaFPdMa3dqqn9RxvQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ISkf7ZT7Vhfp+lMe3v/8rpwj+syKn3yKnPx/hnkr4LmlJPHCYdJBPcQVJHqZEnDmGp8q//b2gTcYLARypJKn51OL2Xr4WUlPiGWz2GzjVXGb5Wm9HfDE2VMfzk/QtmC5PXII9ZtJnSh/lw0lLbRTyzk3EbKz6g+TCNmXuw9E5VQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X3/2fGhW; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790170786; c=relaxed/simple;
+	bh=EiWgRrCZl+2DtpVafWliNqNzIqphGm44ttBYL0XpEDk=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=SLe/w18qMsoI8e7kSf/X1Y3etb4J3gvj73s7aafX1HTWhpsFPrP7cVohRVhHrD/WMGed5U2xVw2casH9ZbU+JBuKiOYU76OuI16ejVaF281MiPrDG+F9Oqfs5BburaBJwo2p1NAfpi1Sme7vEvNtrU5U1bgp7QYF/x3aNd2B+QE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VPK9XZKK; arc=none smtp.client-ip=192.198.163.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X3/2fGhW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A308E1F000FF;
-	Wed, 23 Sep 2026 13:30:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790170222;
-	bh=oXYh4IkYQ+XabqSw/bucxzadbAOaFPdMa3dqqn9RxvQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=X3/2fGhW4QV58LV2DE1YeQu00ts8v4E4IvR9766pi7WjFwuvQbFeDr2qfjU8WmL42
-	 Xok6NMR/bm8HMNGmB+SrgB38frIhfUS/Q8SMIbLCXMfKaWvITfBCDzTZMM1/lhwyek
-	 S3vicvvn4rZUoVrTEDoAEBoo/k+fmh1ZGR8OdJoYGUeVMLSm2NV1FPZpikMOwFbEvr
-	 fwWVfvPG4/N7/bTQmlkg7cQYbkpdUs/hffzKutGCi2xijfEr0vBBWsuV6e3XeEqyJY
-	 OG05Tc8t5t7EtW9ih4cvy2kKB4dM4rJHylAoiE6veSKXYgNAZh0UdVJh4n/erNkG7g
-	 kPU2L7nnR6XgQ==
-Date: Wed, 23 Sep 2026 14:30:18 +0100
-From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
-To: Fuad Tabba <fuad.tabba@linux.dev>
-Cc: sashiko-reviews@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
-	kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>, kvm@vger.kernel.org
-Subject: Re: [PATCH v3 07/14] KVM: arm64: Size the stage-2 memcache from the
- fault MMU
-Message-ID: <arPUT7DyofLwFhjt@gremlin>
-References: <20260922-kvm-arm-prefault-v3-0-787bd3bc7e3f@kernel.org>
- <20260922-kvm-arm-prefault-v3-7-787bd3bc7e3f@kernel.org>
- <20260922143157.0E84B1F000FF@smtp.kernel.org>
- <CA+EHjTziT=qEvCpjGriVhC5g7=nyQNfvEQenw-JXSJuWtJwTRg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VPK9XZKK"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1790170784; x=1821706784;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=EiWgRrCZl+2DtpVafWliNqNzIqphGm44ttBYL0XpEDk=;
+  b=VPK9XZKKUP/S46BkQp0RBX62TRDQXeBYdttUVu+zOfO2rWGBxFHDgCEE
+   R41iA3FlvtiEHIAQIatXVN3gGLeV06kPlozAhwSr7BwPF9H4Iu09rQa9X
+   BYPjSwH+6c3MssToI2iyUoiSxDzezIxWkLA/ayBqAB5CSsuPSxgzpp1ME
+   2NpVC8Mdx3lDUiSELB2nnJadXiWs3pHafXy9LSqwRVGTtsUeSjHdawMuw
+   XPjfEV7i/+C6LdgftyqsvI9Oez7Di/HyY6ESGnQEEBUPiT4hUJ9psLgGY
+   HYq4Av0M4DEmbA4Nt/fo3XbItWE1/+E4AjssBvsDXZ7J07t8rZi+qYjAx
+   Q==;
+X-CSE-ConnectionGUID: EvjrQ3zIS6qFxg9vmczv1g==
+X-CSE-MsgGUID: 6yb3qD59QAa4AM0+kubd5A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11913"; a="90982868"
+X-IronPort-AV: E=Sophos;i="6.27,118,1787036400"; 
+   d="scan'208";a="90982868"
+Received: from fmviesa011.fm.intel.com ([10.60.135.151])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2026 06:39:43 -0700
+X-CSE-ConnectionGUID: bnW3Vj6nRjenxW0epd5vvQ==
+X-CSE-MsgGUID: lITg15atQey1I4ek4KzEyw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,118,1787036400"; 
+   d="scan'208";a="4706129"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.13])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2026 06:39:42 -0700
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Wed, 23 Sep 2026 16:39:38 +0300 (EEST)
+To: sashiko-reviews@lists.linux.dev
+cc: linux-pci@vger.kernel.org
+Subject: Re: [PATCH 4/5] PCI: Fix composite resource sizing
+In-Reply-To: <20260923133151.70D231F000FF@smtp.kernel.org>
+Message-ID: <d50df48b-1221-74b6-96b2-ba8178312949@linux.intel.com>
+References: <20260923131757.7792-1-ilpo.jarvinen@linux.intel.com> <20260923131757.7792-5-ilpo.jarvinen@linux.intel.com> <20260923133151.70D231F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+EHjTziT=qEvCpjGriVhC5g7=nyQNfvEQenw-JXSJuWtJwTRg@mail.gmail.com>
+Content-Type: multipart/mixed; boundary="8323328-1957391310-1790170778=:1282"
 
-On Wed, Sep 23, 2026 at 12:00:55PM +0100, Fuad Tabba wrote:
-> Hi Lorenzo,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1957391310-1790170778=:1282
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+On Wed, 23 Sep 2026, sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] pci: bridge window gap calculation Rule 2 underestimates require=
+d size
+> --
+>=20
+> commit f9f2d66b1a5c96f99a75fc82cb40a5f073968dfb
+> Author: Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
+>=20
+> PCI: Fix composite resource sizing
+>=20
+> This commit modifies the bridge window sizing algorithm to add a gap size
+> calculator. The calculator determines the empty space required because of
+> non-aligning composite child resources, such as VF BARs and bridge window=
+s,
+> to ensure alignment constraints are met when resources are placed.
+>=20
+> Link: https://lore.kernel.org/linux-pci/20260903063124.9316-1-nbritton@ex=
+abit.io/
+>=20
+> > diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
+> > index 7ca0e9f4ffb63..9d828a59bd002 100644
+> > --- a/drivers/pci/setup-bus.c
+> > +++ b/drivers/pci/setup-bus.c
+> [ ... ]
+> > @@ -1164,6 +1164,76 @@ static inline resource_size_t calculate_mem_alig=
+n(resource_size_t *aligns,
+> [ ... ]
+> > +static resource_size_t calculate_win_gap_size(struct pci_bus *bus,
+> > +=09=09=09=09=09      struct resource *b_res,
+> > +=09=09=09=09=09      resource_size_t win_align,
+> > +=09=09=09=09=09      bool optional)
+> > +{
+> > +=09resource_size_t safe_gap =3D 0, remainders =3D 0;
+> > +=09unsigned int nonaligning =3D 0;
+> > +=09struct pci_dev *dev;
+> [ ... ]
+> > +=09=09=09nonaligning++;
+> > +=09=09=09remainders +=3D remainder;
+> > +=09=09=09safe_gap +=3D win_align - remainder;
+> > +=09=09}
+> > +=09}
+> > +
+> > +=09if (nonaligning =3D=3D 2 && (remainders <=3D win_align))
+> > +=09=09return win_align - remainders;
+>=20
+> [Severity: High]
+> Does this logic underestimate the required gap size by assuming two remai=
+nder
+> parts can perfectly share a single alignment block's padding without veri=
+fying
+> if their individual alignment constraints allow tight packing?
+>=20
+> If a parent PCI bus contains exactly two child resources (e.g., downstrea=
+m
+> bridge windows) whose sizes are not multiples of the bus's max alignment,=
+ and
+> their size remainders sum to less than or equal to the max alignment, thi=
+s
+> bypass avoids the safe_gap fallback.
+>=20
+> For example, if two 10MB windows require 4MB alignment, this calculates a=
+ gap
+> of (4 - (2+2)) =3D 0MB, resulting in a 20MB parent window. However, becau=
+se both
+> resources require 4MB alignment, if the first is placed at 0..10MB, the s=
+econd
+> must be placed at 12MB. This requires a 22MB total span, which exceeds th=
+e
+
+This is bogus, sashiko doesn't understand how the new placement algorithm=
+=20
+works when it comes to remainder parts. The remainder for the second=20
+resource would start at 10MB and the aligning part will start exactly at=20
+12MB filling all the constraints and fitting to 20MB.
+
+Thus, the calculation is correct. I suspect this case would work even=20
+without this patch because no gap is needed in the first place (untested).
+
+> calculated 20MB window.
 >
-> On Tue, 22 Sep 2026 15:31:56 +0100, sashiko-bot@kernel.org wrote:
-> [...]
-> > Does this decoupling of s2fd->mmu and vcpu->arch.hw_mmu cause a spurious
-> > allocation downstream in kvm_s2_fault_map()?
-> [...]
-> > Could this lead to an unnecessary allocation in the ioctl path that might
-> > spuriously fail and return -ENOMEM to userspace?
+> Could this underestimation cause PCI resource assignment to fail during
+> enumeration for devices or downstream bridges, leaving them uninitialized=
+?
 >
-> Sashiko might be right about this one, though the mismatch comes from
-> patch 5 rather than this patch: patch 5 moves kvm_s2_fault_map()'s pgt
-> to s2fd->mmu and leaves the allocation check above it on
-> s2fd->vcpu->arch.hw_mmu. Could patch 5 switch that check to s2fd->mmu
-> as well, the way gmem_abort() tests pgt->mmu?
+> > +
+> > +=09if (nonaligning >=3D 2)
+> > +=09=09return safe_gap;
+> > +
+> > +=09return 0;
+> > +}
 
-Yeah oops, will do that for v4.
+--=20
+ i.
 
->
-> This patch looks fine to me though.
->
-> Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
-
-Thanks!
-
->
-> Cheers,
-> /fuad
-
---
-Cheers, Lorenzo
+--8323328-1957391310-1790170778=:1282--
