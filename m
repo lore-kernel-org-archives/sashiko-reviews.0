@@ -1,124 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B413B8930;
-	Wed, 23 Sep 2026 04:21:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790137291; cv=none; b=BWrelGwuFglPBy/aSA78nTlMJK2d7bXYYl8cxNJSfMD8tncCoEh07EFD1tx5Cxouzwvg4uO5DrUUXSJaPhxMxbaTeQI3Hilyn2ENUvGfm/Bx560M30oxoEgc6bsyOQEBRHa3V9zHgYb4D7xEH+AMcCRL5WkMJWXqRAA62P+XgKw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790137291; c=relaxed/simple;
-	bh=8J9/2QPGibJv8atMjZd4P5SCNndbdItRhrLh1THYqOQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FEL+G/1C5zU+3zwqYBo8/Bcvpr3IeQmOF/G21TsxEFtoc20yPAkPc76tT3g3X2TIqqP645CtF0R1leBRVuZD8D54HKW1XjvSnpG9b7DOUtMTF6+SgYk4p4QdWEiWW2EFNYwosOnU7TxtV81D/cCXazI14LxHEkSELA0n5FmZLbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B3vjvKsH; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3988537F306
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 04:29:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.228.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790137798; cv=pass; b=nMDooDizyJlRW2AMEwWMv2H9+eFa9PC6cqSKu7wY89EfkuHayjnT/tUlXaMFvOVCI4QdKWzLmPHjlQjDq8/Rxyvs+zkH7KS2y5i1SgeG5C9RdkW62TNmLhYig5hcHo2x7HavI+urhK2JIvVB3kF8zHP7Y9CF5m/7T8Kw0OCqM1U=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790137798; c=relaxed/simple;
+	bh=nLoZvuwVJI+OxiS9sqoT9Q2uJkM5dGkbMSjhlGJ6g6c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lS0b8e/vMoljOHIEuZt6AcbzOmzvyUrKWF249mfVootTcKzCgAoa92aiWtq+afOzgUdkwpEZiII+6qo8OmQqzvNNbdrJjiaNp+hnnv4I/bUaMZrOSvGYfTAQwPCznRsdKs/89YqlzXQkF0zQTCZBAENbgaeiYZHmCi0nuZ8gTqs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SeplbN/2; arc=pass smtp.client-ip=74.125.228.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B3vjvKsH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852271F000FF;
-	Wed, 23 Sep 2026 04:21:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790137289;
-	bh=8gm/zN6fCcjmwq5mKseC3GenP7LmjNeWg6wSLYqzJiU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=B3vjvKsHQ1zdACev6FmC1n6esdgacJiUBe8fac08OqAvR+sY3BvJgDY7mEV2XroiN
-	 EoFBpzSGj6OmlzSA99Zh0/L1jMNQQ07gVkm93z9XwPD1gnArkFzMH3JPzPa/V6lDfx
-	 eootcLSOQalvn/937541GbcdZoBGV6ajL5pmKH9MbbH/5fv0efgyZGKcEv8YCM05XB
-	 JVhN/uGLqv96rClfsbYpHDqpPB3dRzfpuHETknpzkdINWnJD+koE/ZMma7ouZnwXA6
-	 u2fUL6tfYxBwyKEZk7LjtVefSIfNOpcuDEWrx+XMOcyBMFMuQ2EczLKaqH151WcfaD
-	 bpERtNRPtIihw==
-Date: Tue, 22 Sep 2026 21:21:28 -0700
-From: Eric Biggers <ebiggers@kernel.org>
-To: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-Subject: Re: [PATCH bpf-next v4] bpf: crypto: Use AES-CBC and AES-ECB
- libraries
-Message-ID: <20260923042128.GC42709@sol>
-References: <20260923032703.59816-1-ebiggers@kernel.org>
- <20260923033742.D45A81F000FF@smtp.kernel.org>
- <DLMEAUZ632XP.210Y7S9N70NHW@gmail.com>
- <20260923041124.GB42709@sol>
- <DLMEKP1LHU07.31JTP12GKADU8@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SeplbN/2"
+Received: by mail-pz2-f12.google.com with SMTP id d2e1a72fcca58-85469a34907so475980b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 21:29:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790137796; cv=none;
+        d=google.com; s=arc-20260327;
+        b=s+S3ZpvnZtGj+oLNBF3c9lQ3h4kFGmorX+0Ad3uevPbhC5vuoXt0uzCVEHjv2QkWc2
+         I5hOsj27rf1Y/V1aFpnsGVJCiw0bRyY/gAjihqreQu4Cll2wmBrSho10p9BSNUDg666t
+         JDkUCNQdDQrp1pSyLrAVrkjHGwS15G5M5C3cjxGa0M9OWejNtcxtVQkKFKsNVJKrGdAw
+         sz51QbLMf84tvXzcZWWtGORTM2qjPPQqV5BKeidedtiO2c4g1tGEIyyh8Q5tatHy3xAj
+         cPH2VqjQKyPiq9MPGtRUeWbzMhxzFSAXsiW+QhyfEKZkm+5CPpJ0Y/oaewor0DQzwPAk
+         DFBw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=nLoZvuwVJI+OxiS9sqoT9Q2uJkM5dGkbMSjhlGJ6g6c=;
+        fh=LrM3G6RcmBZ425pLRY8E44TM1XcCb9gU9D3viVl1X8E=;
+        b=j56mWgZpM4nAwVbpIfcA115dbbxcWNkgK1WQ+lUxtCPCnY6gpb0BuBKzrfVNcw1Ici
+         Oyl53aQVxmxYdvz7bVtR+F8SEb4Y7MnbDAsn8s2FeDJYO6Y6BKOwJxJGDu7+6EIWJicG
+         KExTS1ik6tsuckJb6EkZH4s3KmF2g9PxZX31ifi4kwoLs74rRRApxD89kRR8u5DNgcHa
+         VoJG/t6Re+MAUfyVB6hbeCi/GVrVTR3MWissOI8FkPB4pGlVfSXiJHoJt9yunPIC93Qt
+         M/CHl2sLMbYTe8cEf5Ce3leeKd/l+yrycMQ+zC/Tu+/fiaV8Am1FFdCzsVdyKysTBevc
+         Nr6Q==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790137796; x=1790742596; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=nLoZvuwVJI+OxiS9sqoT9Q2uJkM5dGkbMSjhlGJ6g6c=;
+        b=SeplbN/2iCgJPhqVnWBr8kyrCxAFi6cVlz98I9PNSnz5hW46LwFCHnf0IHmSddLcT0
+         mZ+x2samA3sgPmdZhYfu0W6HYvxEl4iPMZGyKtaFV6xZLcosvM2Bxs+vZzMggEsPkHIf
+         P8mkJHBJdJx0HwpS2TzHnYAXNkbMSV9ZkKqM8lR7QaevWY3MnB5gV3NgPfA4nXzlbIRB
+         Efk51HFaRDdwKnIBQYqlIqJbXquskw/Eg3C4MoZbKGIVRB5vdDBGCt3U1MQ0Fiz/hoAw
+         HwjDgbG4ScAujqXSvRpia3SDzTmCgMi6NpEiRl/KAnH+sgYVCJr0n8qseTLlp/p740DU
+         T1FQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790137796; x=1790742596;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=nLoZvuwVJI+OxiS9sqoT9Q2uJkM5dGkbMSjhlGJ6g6c=;
+        b=B1jdKvQHLLPjJD39ivTNySPW/WOx902mAXWpYBAslHR06Cd0PhVadxP058NDUbZGTh
+         BTGt+1H79NjST2Whnv9gksC2hR5FmJvis48+yuuFdaqeRhHeJ85nJy9NNy29Bnlzg1oQ
+         uBNZWgYoG237srCAB5mM0Ufz/uB0SrAPSGH0AKFAQHiiA/IiViAJjvNlt9pO8iLiCPLx
+         /iVxhmq4+j9XqFIslaE5e1JNeD1s6+vfC/K3hrTI519V/L5fzGp6j8Gw+Mfrq/KwFCpa
+         laO8Bt5ub9VIuv/u424I/VycVZZ58YwKfEOCvw/c3sjeIW0ij36rn4ijUj38MUSA8c4X
+         52WA==
+X-Gm-Message-State: AFuF++lXBU2LQJS67u+6ixZS+818oqSn4Eh+xmiW/ngI1eGMQJxZJ+Qt
+	4FNR6R2kBXqE3FZUayj4UUzIcgCnsJwKeCffNqI1SwRNH+F2CPd7RzNBadPrd0wsjTrEnDUPAGT
+	RB8EGKzQhZZkARXV3CUVSkeT2KsV1kK2uYry1
+X-Gm-Gg: AYBFou1Zw4C7OCmGnBjISiO67uFXBpMhEDN3A1af+V3YAjVnutyJpFRoxaOgoiXcIxt
+	f86XTL+wEmIx0Dzvz54DmdaOZKTCuUNFrnn22CzOHrIv3mqiC/yHRC2kJ46SINHGlFO30uH6EAP
+	9yYfessMgYEJjWAGqMWrWwNcvezehM4uhdjr53qJCDmUF87uuqmLBOQ3VNL4+2Y8U8eM8BhVlji
+	Cj7SEuRPn6dAWBboIs2nJVsP2voNfOV5rEAzbiHCBDui/HVP1uouB+QnZbTZ6JS3zJ0FHlgurIM
+	fUGXV1I0f8HrDTo62KNxEmJt56PCqZ8v4YiMvK6MU+IIvpgfu00OlRLo/Eny8klzZn7uOte+pK1
+	naaXlBPxbRatm4uzcNsCAFRjjV8TbidkcVqVlp1YsJIEzzJuMk+wWfN/0VruryEhlFt4=
+X-Received: by 2002:a05:6a00:761a:b0:87d:3894:196a with SMTP id
+ d2e1a72fcca58-87d389421a3mr1066998b3a.57.1790137796397; Tue, 22 Sep 2026
+ 21:29:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DLMEKP1LHU07.31JTP12GKADU8@gmail.com>
+References: <20260923040831.10936-1-phucduc.bui@gmail.com> <20260923041639.1EF301F000FF@smtp.kernel.org>
+In-Reply-To: <20260923041639.1EF301F000FF@smtp.kernel.org>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Wed, 23 Sep 2026 11:29:44 +0700
+X-Gm-Features: AcwNN1Vvzt3y8riuWi4-ytcJhOf2WBYBJ9_lqO28wVuyCEhFO5pzOTb8nqKb7bk
+Message-ID: <CAABR9nHHSJPcdBwY82jOZG7HWs4FKbzPF-rckz=T+NTEKHj-DA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dmaengine: ti: edma: fix pm_runtime usage counter
+ leak on error
+To: sashiko-reviews@lists.linux.dev
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Sep 23, 2026 at 04:15:13AM +0000, Alexei Starovoitov wrote:
-> On Wed Sep 23, 2026 at 4:11 AM UTC, Eric Biggers wrote:
-> > On Wed, Sep 23, 2026 at 04:02:22AM +0000, Alexei Starovoitov wrote:
-> >> On Wed Sep 23, 2026 at 3:37 AM UTC, sashiko-bot wrote:
-> >> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> >> > - [High] bpf: BPF_CRYPTO is silently disabled if AES libraries are modules
-> >> > --
-> >> >
-> >> > commit 1bcee0286f1c7c6c86befd107081ebb8a0fb0eed
-> >> > Author: Eric Biggers <ebiggers@kernel.org>
-> >> >
-> >> > bpf: crypto: Use AES-CBC and AES-ECB libraries
-> >> >
-> >> > This commit reimplements BPF crypto using the AES-CBC and AES-ECB library
-> >> > APIs instead of the lskcipher API. It adds a new BPF_CRYPTO Kconfig option
-> >> > to conditionally compile crypto.c based on the new AES library dependencies.
-> >> >
-> >> >> diff --git a/kernel/bpf/Kconfig b/kernel/bpf/Kconfig
-> >> >> index d7d25477ef481..a44ecfa3e9ef5 100644
-> >> >> --- a/kernel/bpf/Kconfig
-> >> >> +++ b/kernel/bpf/Kconfig
-> >> >> @@ -91,6 +91,15 @@ config BPF_UNPRIV_DEFAULT_OFF
-> >> >>  
-> >> >>  	  If you are unsure how to answer this question, answer Y.
-> >> >>  
-> >> >> +config BPF_CRYPTO
-> >> >> +	def_bool y
-> >> >> +	depends on BPF_SYSCALL
-> >> >> +	depends on CRYPTO_LIB_AES_CBC
-> >> >> +	depends on CRYPTO_LIB_AES_ECB
-> >> >
-> >> > [Severity: High]
-> >> > Does this dependency logic silently disable BPF_CRYPTO if the AES libraries
-> >> > are built as modules?
-> >> >
-> >> > BPF_CRYPTO is defined as a bool in Kconfig but depends on CRYPTO_LIB_AES_CBC
-> >> > and CRYPTO_LIB_AES_ECB, which are tristate symbols. Under Kconfig rules, when
-> >> > a bool depends on a tristate that evaluates to m, the dependency evaluates
-> >> > to m, which downgrades the bool to n.
-> >> >
-> >> > Consequently, kernel/bpf/crypto.c might not be compiled, and the crypto
-> >> > kfuncs could be silently stripped from the kernel. Existing BPF programs
-> >> > using crypto kfuncs will fail to load with "unknown kfunc". Because the AES
-> >> > library symbols lack user prompts, users cannot manually fix this by
-> >> > explicitly setting them to =y in menuconfig.
-> >> 
-> >> The bot is correct. Looks like a regression.
-> >
-> > Users can enable the libraries indirectly by setting
-> > CONFIG_CRYPTO_AES=y, CONFIG_CRYPTO_ECB=y, and CONFIG_CRYPTO_CBC=y in
-> > their kconfig, as the self-tests config does.
-> >
-> > I do not know what you expect.  The libraries themselves do not contain
-> > independent functionality (besides functions that other things in the
-> > kernel can call) and thus are hidden symbols themselves, as per the
-> > usual convention in the kernel.
-> >
-> > As I said on v1, if you want a prompt for BPF_CRYPTO, I can add that.  I
-> > can't find any other example of kfuncs having prompts, though.
-> 
-> No. prompt is not necessary.
-> My question is why disable BPF_CRYPTO when these are modules?
+> [Severity: Medium]
+> The commit message references netcp_probe(), but the patch actually modifies
+> edma_probe() in drivers/dma/ti/edma.c. Could the commit message be updated to
+> reflect the correct function name being patched?
+>
 
-If libaes is built as a module, then either bpf_crypto would have to be
-built as its own module (which we already ruled out on the last thread),
-or else this code would have to be merged into libaes.  From my
-perspective putting this functionality in libaes seems weird because
-this acts more like a user of the crypto code than part of it.  But
-maybe it would be more aligned with how kfuncs are usually implemented?
-
-Note that it's kind of hard to actually build a kernel with libaes as a
-module anyway, though, due to so many things needing AES support.
-
-- Eric
+Yes, I will correct the function name in the next version.
