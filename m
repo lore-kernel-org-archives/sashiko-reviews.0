@@ -1,166 +1,135 @@
-Received: from mail-07.mail-europe.com (mail-07.mail-europe.com [37.187.220.204])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF462882D6
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 00:55:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.187.220.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14913AB460
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 04:02:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790124929; cv=none; b=GuyMkkmsQs5zbnDMmxGdWTil4SRcsJ09BujYK40RI0NIxXMKmwTqY7jKgWn5zVSNv6JNi/vgM5um2N5FvFEM+Rioet8x8oHAwlxtdReuDyUA92fxirSScY1RVM8geSZRLKlN1eUTURfPSavODZVG0nRqQsIXbO5IRd7YFAd5Bts=
+	t=1790136147; cv=none; b=V7bc4+5C5DRX37x8quKTsAeS4x0Qq5WGW3RP9Av3wjsSMKshu17K2Z28BN/5Av8wYfWKcOAZhfBPdR7EHXS8sV7LF5dAsXBZbS88zFfhkABKEEPlUF/a6lnNEx3DjeGrVH0fk9Uq1oO6yhZakRVfInkGsF+Snn1y44YFPVSvY6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790124929; c=relaxed/simple;
-	bh=YmEr31Jh1BP9sY046D5dufHqRSA2gG11ut9PVNV11aY=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PXiwe8oBkb/Fg1nJgCfYLJaKzvKfV17vzqp/7ERNl3g7oSlypKGnu3GLUCjQbX7TeXwBScGjxmbuv2IqYYL7HZljPvC5NTom9mmFyOwYyyN2QxUMG6V63rd3gcp2NHE+/QPm0XB8FtjMLEntvXpkCck2vDgw/YhzpZwW1TiHbAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nanonej.com; spf=pass smtp.mailfrom=nanonej.com; dkim=pass (2048-bit key) header.d=nanonej.com header.i=@nanonej.com header.b=dChKYEiW; arc=none smtp.client-ip=37.187.220.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nanonej.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nanonej.com
+	s=arc-20240116; t=1790136147; c=relaxed/simple;
+	bh=+2gcuAyVI0aB8Lvcu8fN4nAMd9TizkviE8wvySatV6Q=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=iRT9auzLcxzyfhFbIBCQQqpRz4+H7nK8nGANXk+aMWAlgB10pzic0Y96YNbL+Hsr/TH8pYHFRsmkIfBisnuey/gdkFbbfHI7hg5HKwY+E2bpTgpS8pPO84CQ7ZlQjfX1lto7ro+0sMDk9AX0xRvkm8zHxtpztl79uKEdWczUe/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Peq60k5W; arc=none smtp.client-ip=74.125.227.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nanonej.com header.i=@nanonej.com header.b="dChKYEiW"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nanonej.com;
-	s=protonmail3; t=1790124906; x=1790384106;
-	bh=Vm2eCA7uL4H0o/dCrIqyrmx7kqfE3F6P5gZC455uyCs=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=dChKYEiWUVxPgiezCY+AR4Lil0xMk2oFQF5RUQnlda2bE+KJNzvpzTO4JBXMHOsiz
-	 oBAyDbGlo7PXMxvR18cjWzCxHr/gYx9y2JAAcJZPyYRXfg2orhUokN0RdkLR4nrfYz
-	 Yo/y4E+MfffSm5gPT+jvNXCg2iVWOfwujVZbaM43RkG/VPwn5gxfe4Vf35+YCv9I/t
-	 OR8uDdOqbjT3OrdjALT+2TtW3ibdbjE0gQsU/ZPtZqtVHvNahboPfS3qyMkIBI3eu3
-	 OVkWhEFTdWqWuEYyS5i4YejQeWZaO6F/G+CwlprCEzmBtHs0Cwmf4GLPuP7UY6phix
-	 DqQmFeSyUw1Uw==
-Date: Wed, 23 Sep 2026 00:55:02 +0000
-To: sashiko-reviews@lists.linux.dev
-From: Nanonej Dev <dev@nanonej.com>
-Cc: Danilo Krummrich <dakr@kernel.org>, Alexandre Courbot <acourbot@nvidia.com>, dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH v2 1/4] gpu: nova-core: Extract PFSP register definitions
-Message-ID: <m1qp--Csq6KPTgHYSUHPQt9tqXwClrSYXfEvfZDqI1X3pDOa1F2Zpv6yYI_9NjaybKIc8zoaveeEyXbeQ2QT0_i8ZKJzffL2zGKpSwJiG9w=@nanonej.com>
-In-Reply-To: <20260923004532.76D871F000FF@smtp.kernel.org>
-References: <20260923-b4-extract-pfsp-registers-to-falcon-mod-v2-0-74600fc068c4@nanonej.com> <20260923-b4-extract-pfsp-registers-to-falcon-mod-v2-1-74600fc068c4@nanonej.com> <20260923004532.76D871F000FF@smtp.kernel.org>
-Feedback-ID: 32181229:user:proton
-X-Pm-Message-ID: 143ae2ab622c902f6963cfb44426611d5c99b8cb
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Peq60k5W"
+Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-396cccbba92so384813a91.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 21:02:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790136144; x=1790740944; darn=lists.linux.dev;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=smyTmmEYYTZ4g1y6GKgMxOvAyTt9OblIyZ0tACnM2DA=;
+        b=Peq60k5W7yuObxHsxmzTNq0nGA9opbtLRhjdqTUJfb3ywAa15PD4IYq2UxgF7qL1aL
+         dOAMMzb668oPA8XHlIZZ8MyKu5TNhRMCcmy7XrmrRYYNxgAm9z96TNmAoL8TmDx8rE0Q
+         0GxdZj3QzvnJu+s42/OXoMw48ib16x0AKpbt+ZCHak8CPARRDo1rBQxYb8uctMzRGdoQ
+         itF5YtSnNVQr7aN1ijw977e2fmEbCeE4/4rMF3S+fXVCPYvPLGJXgO9wTpyxuDlhdJd1
+         m3+r8QSh7DoAV3Ds4kuKc/5H8IE/c/3UzxqkGTLzt3kRpyELGF3pt4L4B4OUVDCegGXM
+         Gb7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790136144; x=1790740944;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=smyTmmEYYTZ4g1y6GKgMxOvAyTt9OblIyZ0tACnM2DA=;
+        b=dDrYy7fu4Ln3ulBbN0o6S6A64BT/HOpSgxbICtg8c1Vu112FkTEAUIB2c0MwaXJHE2
+         +2p9uGPxhlqOZmqYF54DbsfGpNUJ5qLhV2LA5LW/nXs5nfQlP31h7AJ0x3fqkZ1PS+Yb
+         ItsCqydUDl5wxy4EpDHq2nQazTpMOiVxYipLlaCJERotZt0hsSDKa1hdisxX8HqmykJb
+         Aw73JjaZvM0XgBJ7vqEyO3fG6EWiib+Jh4BWGKGZmqDBBlzKpqUdlbHSMyMatymMRlFu
+         zPt+c9b8qBHE9rIKwQR94ij1Qbwc1DkX7uE9Llm/a60ZJHDW0D5KHIoVPILPTNeJQneO
+         AucA==
+X-Gm-Message-State: AFuF++n1495oWEOVYnBTw+PfXD230qjg4rHFYERQCG1dheD8qaxH60iO
+	THbjQIYEERtzDXmo8uSxvJhfyPsmIBtwT8LjC9LQqxEQ1ChMf3JpeCpP3NOXKQ==
+X-Gm-Gg: AYBFou2SwanQi1oXAjjnpHNno4AOr0VMDD1Sg4WZY5qPSh7g9COhlF9OwR8O+mRTQ7z
+	ofpKBwpyjSU3gcV/MEdvduf0xW0+b4R6pzuSvJpY/f3IWI1v5MFhI2cXbMoVaCLWuhvNT9A6cFv
+	kzkLmUx9LHVmi2wUGJa5fF2qOmNKlnZSO1Ar7ApM0qnVXcOx2+Ha1YNvaoUevs2atFZoGEYOjsK
+	JgpPANSdB4WUsWfzZpKBh2ZNuTpTx88omyQ0JK4vGO6uyeS0Twxll7+LDLNAOjolpZyfT/2GUp3
+	fPxFVMhHNWT8dBo2bVDE+X742bZzUyBuNkjpap+oaLJpsdkYvfu3tbZfbHMfJLrAIMF8SwLgCNT
+	A2YqNtgO0qs6c6E6ID5ygYdtj955NHSketRpUtktijuATWk94xOKiT4mI8V2MIIeieK+SdYYDTT
+	oDF0IjVPRKQsV1BixKoDqdiAzuy/Y5LDIK71IxM+KyboEpYqyZvqlVUx7+77aGhEejWrYy02w9B
+	Ron+LBtDq3TmeolQLA9MUbIYSte8BsL0VhMOXd+HYelsawsXFxcN8GTCVRkrMujbC7iEYgEFfHE
+	IZWTaUCQlkAdsw==
+X-Received: by 2002:a17:90b:3e82:b0:3a0:42a9:9c78 with SMTP id 98e67ed59e1d1-3a07e6144c4mr1293140a91.41.1790136143761;
+        Tue, 22 Sep 2026 21:02:23 -0700 (PDT)
+Received: from localhost ([153.61.198.251])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a07db882a5sm2431467a91.1.2026.09.22.21.02.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Sep 2026 21:02:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------2e7d01e8bc1c8b1d40be69e0904b0412062871eaa2d75d61afbb54aa78dbbf5c"; charset=utf-8
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------2e7d01e8bc1c8b1d40be69e0904b0412062871eaa2d75d61afbb54aa78dbbf5c
-Content-Type: multipart/mixed;boundary=---------------------f743ee1c8d292c01b32dda55d3dbe567
-
------------------------f743ee1c8d292c01b32dda55d3dbe567
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 23 Sep 2026 04:02:22 +0000
+Message-Id: <DLMEAUZ632XP.210Y7S9N70NHW@gmail.com>
+Subject: Re: [PATCH bpf-next v4] bpf: crypto: Use AES-CBC and AES-ECB
+ libraries
+From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>, "Eric Biggers" <ebiggers@kernel.org>
+Cc: <bpf@vger.kernel.org>
+X-Mailer: aerc 0.20.1-349-gb940a4174a3e-dirty
+References: <20260923032703.59816-1-ebiggers@kernel.org>
+ <20260923033742.D45A81F000FF@smtp.kernel.org>
+In-Reply-To: <20260923033742.D45A81F000FF@smtp.kernel.org>
 
-On Wednesday, September 23rd, 2026 at 02:45, sashiko-bot@kernel.org <sashi=
-ko-bot@kernel.org> wrote:
-
-> Thank you for your contribution! Sashiko AI review found 2 potential iss=
-ue(s) to consider:
-> - [Medium] nova-core: PFSP registers remain pub(crate) despite commit me=
-ssage
-> - [Low] nova-core: sentence fragment in commit message
+On Wed Sep 23, 2026 at 3:37 AM UTC, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] bpf: BPF_CRYPTO is silently disabled if AES libraries are module=
+s
 > --
-> =
+>
+> commit 1bcee0286f1c7c6c86befd107081ebb8a0fb0eed
+> Author: Eric Biggers <ebiggers@kernel.org>
+>
+> bpf: crypto: Use AES-CBC and AES-ECB libraries
+>
+> This commit reimplements BPF crypto using the AES-CBC and AES-ECB library
+> APIs instead of the lskcipher API. It adds a new BPF_CRYPTO Kconfig optio=
+n
+> to conditionally compile crypto.c based on the new AES library dependenci=
+es.
+>
+>> diff --git a/kernel/bpf/Kconfig b/kernel/bpf/Kconfig
+>> index d7d25477ef481..a44ecfa3e9ef5 100644
+>> --- a/kernel/bpf/Kconfig
+>> +++ b/kernel/bpf/Kconfig
+>> @@ -91,6 +91,15 @@ config BPF_UNPRIV_DEFAULT_OFF
+>> =20
+>>  	  If you are unsure how to answer this question, answer Y.
+>> =20
+>> +config BPF_CRYPTO
+>> +	def_bool y
+>> +	depends on BPF_SYSCALL
+>> +	depends on CRYPTO_LIB_AES_CBC
+>> +	depends on CRYPTO_LIB_AES_ECB
+>
+> [Severity: High]
+> Does this dependency logic silently disable BPF_CRYPTO if the AES librari=
+es
+> are built as modules?
+>
+> BPF_CRYPTO is defined as a bool in Kconfig but depends on CRYPTO_LIB_AES_=
+CBC
+> and CRYPTO_LIB_AES_ECB, which are tristate symbols. Under Kconfig rules, =
+when
+> a bool depends on a tristate that evaluates to m, the dependency evaluate=
+s
+> to m, which downgrades the bool to n.
+>
+> Consequently, kernel/bpf/crypto.c might not be compiled, and the crypto
+> kfuncs could be silently stripped from the kernel. Existing BPF programs
+> using crypto kfuncs will fail to load with "unknown kfunc". Because the A=
+ES
+> library symbols lack user prompts, users cannot manually fix this by
+> explicitly setting them to =3Dy in menuconfig.
 
-
-> commit 4db1b123b08a2ccc218c14e49151c182aa9d6c36
-> Author: Antonin Malzieu Ridolfi <dev@nanonej.com>
-> =
-
-
-> gpu: nova-core: Extract PFSP register definitions
-> =
-
-
-> This commit moves the Foundation Security Processor (PFSP) register
-> definitions from the root regs module into the falcon module. It also
-> re-exports PFALCON registers to allow using a single regs:: prefix.
-> =
-
-
-> > Since PFALCON registers are defined in the root regs.rs but are
-> > also part of the falcon interface, accessed by the whole falcon
-> > module. They are re-exported in falcon/regs.rs so falcon code can use
-> > a single regs:: prefix.
-> =
-
-
-> [Severity: Low]
-> This isn't a bug, but there is a sentence fragment in the commit message=
- here.
-> The first sentence begins with the subordinating conjunction "Since" but
-> terminates with a period before reaching a main clause. Should these two
-> sentences be combined?
-> =
-
-
-> > diff --git a/drivers/gpu/nova-core/falcon/regs.rs b/drivers/gpu/nova-c=
-ore/falcon/regs.rs
-> > new file mode 100644
-> > index 0000000000000..5ccb10946ec4d
-> > --- /dev/null
-> > +++ b/drivers/gpu/nova-core/falcon/regs.rs
-> > @@ -0,0 +1,42 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +
-> > +use crate::driver::NovaRegisters;
-> > +use kernel::io::register;
-> > +
-> > +// FSP (Foundation Security Processor) queue registers for Hopper/Bla=
-ckwell Chain of Trust.
-> > +// These registers manage falcon EMEM communication queues.
-> > +
-> > +register! {
-> > +    base: NovaRegisters;
-> > +
-> > +    pub(crate) NV_PFSP_QUEUE_HEAD(u32)[8] @ 0x008f2c00 {
-> =
-
-
-> [Severity: Medium]
-> The commit message states that visibility for these moved registers chan=
-ges
-> to pub(super), but the code retains pub(crate) visibility here and for t=
-he
-> other NV_PFSP_* registers below. Should this be updated to pub(super) as
-> intended?
-> =
-
-
-> [ ... ]
-> =
-
-
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260923-b4-extr=
-act-pfsp-registers-to-falcon-mod-v2-0-74600fc068c4@nanonej.com?part=3D1
-> =
-
-
-
-Made a small mistake during my rebase apparently, I'll fix that tommorow a=
-nd also correct the commit punctuation issue.
------------------------f743ee1c8d292c01b32dda55d3dbe567--
-
---------2e7d01e8bc1c8b1d40be69e0904b0412062871eaa2d75d61afbb54aa78dbbf5c
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wrsEARYKAG0FgmqzI0sJEFKmzSsu6sDwRRQAAAAAABwAIHNhbHRAbm90YXRp
-b25zLm9wZW5wZ3Bqcy5vcmc9yEM7ZU2n96y0Mc2cUqn/SctLWZNFV0Stsbqt
-a7DTphYhBI+99gDJjAW7MoHJ0VKmzSsu6sDwAABI/QEAtxYjKBpZ7fj/D41K
-HIRj4qH0jMCOrMKkrbmlsB2yJUgA/0e0EDNZYe9kL8IQNcJT4BJz6/y5Z+hS
-mf0uqBYQ9YAC
-=HJei
------END PGP SIGNATURE-----
-
-
---------2e7d01e8bc1c8b1d40be69e0904b0412062871eaa2d75d61afbb54aa78dbbf5c--
-
+The bot is correct. Looks like a regression.
