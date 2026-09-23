@@ -1,93 +1,93 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1602653FD3D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 20:30:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6934078F6
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 21:21:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.10
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790195415; cv=fail; b=ovYPDh14OGJvU8BS2Um7Akc637YAdCfMzA9Gr10SWaq09yWsLzk0y2Xi+gFibjgQZQnfI5eIue7liWierYntojDxdNcZJgSLAOiVhllCs7xn16QA4HZ0eS/qEeJr5XyC7o1aeeOC3fypbZ3dOwU+4SHUI1OISYShroyeJLQVfpg=
+	t=1790198466; cv=fail; b=Yh9mn8g7c8xPhpnL9UIK1sZeqXwx3MRZE6CXpshYY7g1d47nr2BmxuYi7t1auB7jZbIKFfI9zMo8SPAsv7ABZx0NUkrpFAGZYwHNt316HF+i69yOhrxyW2qVY0OUIxSFk+rL/riFyGKhJ/DBMogJc122oHikHWO7ounC+MOK6bM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790195415; c=relaxed/simple;
-	bh=6cuNmYJ/ehFDZZtAzTW3NLCKf2IUGS1yldiMyii5eZo=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=RN7i0GeXb8AXsyjnJOlpNNPOQGIpjlsdJelRFd6fWPlzmbG8hIHkG0J+eK67jkR6gBY7zEi2D9zqKc+5EWAI2VDo8UJC0R+gz1zPoTOynrfo7eu7nfiOEkXAFZ3PXG+tQPvI/5BtI2fTWjpqrgVJd5jmnD4C72jT1gpFcPbxcaw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WLUsjxVc; arc=fail smtp.client-ip=192.198.163.13
+	s=arc-20240116; t=1790198466; c=relaxed/simple;
+	bh=pQvWnT/o0xngh2QKnHHDJ/olfsiW6dlTWg/z0/n+LHs=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=cJiB2ZpI5GNwiqRwv5934NXBkp3/PmszhPXhReykIf/oBTQmV3+5schJ7096q8LwXB18lIlOMus+hseyXPy5RMxBiedw51Wrz5KPe05rkbZq+ke+Ji91yRU8PC7ZnzBJO1ilb+xBoYq0OCtSx4Q71whAagEDoKs2zM9Wox4v9S8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YBolJ1uJ; arc=fail smtp.client-ip=192.198.163.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WLUsjxVc"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YBolJ1uJ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1790195409; x=1821731409;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=6cuNmYJ/ehFDZZtAzTW3NLCKf2IUGS1yldiMyii5eZo=;
-  b=WLUsjxVcEKEuryoEt77EuneOFXQoM+4dlC8H96lULpeoRCZ9La00mjgL
-   yzOyaVM1XrbRTUZapSybGXNxsTNzOmGwEH5fNHOFTZQp1vMTNHS0Oiyy4
-   Og8jwYJoCinwuk5na3IFyOgOhFxyLiAj1bbc/5Umg/6FD2NUwmYKD8QIQ
-   ZtWibCh5dYOrVaXKTPSI+SaOSIJ0LrFQ3DiqDADRW81oU9t2Q7WvBnj32
-   2o4smKLe9UANLllac64UkSTrjP9ovkDCK6ln9zA6oKEyqon/i59oBoqR6
-   nRnXJTAFItspt6GidH/c2igWI+GzuZ5OIszX/NxcN38lqKKtmRrFDKWxT
-   g==;
-X-CSE-ConnectionGUID: LMoC/nNoQ5yV2ocNreLKMw==
-X-CSE-MsgGUID: jwn/bm+IS4GhCf9YwQAZsg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11914"; a="93435709"
+  t=1790198463; x=1821734463;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=pQvWnT/o0xngh2QKnHHDJ/olfsiW6dlTWg/z0/n+LHs=;
+  b=YBolJ1uJ9dx4m0JhTADWfZC9WGTE9suKDI9in7W6qcteBuQU4O2SbPqr
+   2Lj8YEx35jj4OayDpmoNDsIA1eZYcHs29IKCeUqvn7RaSCfwzRKgkMU1/
+   j8Uxu4Uj7NvomgbApjT/qjj3qGurC+UFh8Y+oBkJIgfgz1lrdzC3biyyT
+   lS+e3/TAiR8Jn2cn+hdGGvWI0tfadSsKhNQR91qFKN1pjoaZdFhecrfbg
+   uAshkBMWuJDgHE7u3JDX7LwNGI6VWhITej/TMF3mOBPNhHyg1MG9ECENI
+   TIG6wZB2ahJJnp4YKZVoW4HOyNAdaZqNgA0ka4F8cn8426fFgQWzcHfCh
+   Q==;
+X-CSE-ConnectionGUID: LqoXAVinT3CV/nNiJrZ8FA==
+X-CSE-MsgGUID: hh8uxYniRjeOX0djMcT6mw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11914"; a="102299700"
 X-IronPort-AV: E=Sophos;i="6.27,119,1787036400"; 
-   d="scan'208";a="93435709"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2026 13:30:04 -0700
-X-CSE-ConnectionGUID: HL7wyfr4Rgq24wTZ65qv1A==
-X-CSE-MsgGUID: IB3Xb0oDQ1aIPH4Efy6TtQ==
+   d="scan'208";a="102299700"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2026 14:20:57 -0700
+X-CSE-ConnectionGUID: Mwm6wTE5TmOCJTDxG8iHwg==
+X-CSE-MsgGUID: Fe+H3J0bTrS7WDPbzXPG3Q==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,119,1787036400"; 
-   d="scan'208";a="281849671"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2026 13:30:04 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+   d="scan'208";a="301732842"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by fmviesa001.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2026 14:20:57 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Wed, 23 Sep 2026 13:30:03 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ 15.2.2562.46; Wed, 23 Sep 2026 14:20:56 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Wed, 23 Sep 2026 13:30:03 -0700
-Received: from DM1PR04CU001.outbound.protection.outlook.com (52.101.61.31) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
+ 15.2.2562.46 via Frontend Transport; Wed, 23 Sep 2026 14:20:56 -0700
+Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.63) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Wed, 23 Sep 2026 13:30:03 -0700
+ 15.2.2562.46; Wed, 23 Sep 2026 14:20:56 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kuVxqIbHmVuJhIMbNGH2mbSBAqa9PgNhsTSvJuXtsHzBcd2VnPjJO7RgYvNU5SYLbSy+EBnnstk3HQWjLlXRhh+1Y0oGZ8jfQnoxQnnqEyr90LxYxfMDK4wrITI+bcrZgAT31Jf1Svp8/nllFQEsvHORFjVSOLwIV6uG0BLRBivj4WWslZH4Nv5BEUCk4oSu7WJFQeTwD0qGcFA9VYntyaFKDoSkXxYVr6rWm1o24pdbBuvkLH2BeSw5BRmJLaM9th2por7JHluouM22jI2yxrEbJPqrFoDQQ93tqi0aTXuYJsYGSakp3sd94OZRe1jBFrnta/yMNbSPFeTIRzG1JA==
+ b=HaNT6C4W3k5W/IyU6mO+nLMhEAMQPG5rS8JsYGTU4SW5f9d8aLaJOWLkiiPPtsAWEYA2+eCxbi+qxjI7CxzwAuKIUDEdQwklboQyINB7pRm9IhOrTAEEzSmZjl+bGNXURH27z/GO9iCEf0mkv73TK+v+MKWuFO9pXyhuHpN7J+uCuW8jrXsDyZ8rkrbvSp/ojQKwfhVDf/Hpw5j50lH/YpCzuXC+9pf+8tW+lUJozdHw+EnCYwiAUcnoS5HtrHWalVJ9+OG78sDQLiuQy3fPIwkHprS9Z2130fZIvYMHqcTQICAZIKQnXB5o+sj4yklmDD7GWQE20MMbdgVfZoZvOA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fUsm6BfdiUZfKWuxO1mzHzYEMPGzXgMa54srrV/ZqG8=;
- b=zFxrcl49XLs7HoMjl6FX0UMNp86rqilHpy5XWWJ3N44gD9epK/Tpz2xOwKUJZYe0xU+Io9GLc/978RhYl97QJNSm2VmMx5ZUuAMDMYqbpaRaRmPC7UrenEzgYFz6x1zK8FwqyDp0rKyL570IvAFBAGfOIBlY1f+3oJf7jtu63Moebc2q9dDnoMJf50aOv8KjTkj9G3lsWaKu7Sz3m/N1B8CtaPd9A4F+I96Yr0p7bLTnd6djZ8Guflk/Z1I5Zb9MGp3ZX68TLkDHMtXj6Ucc+lGEaCbwkdFCbu0hXC2kFyJUZ+vyEtgHJdnf8VxNejMAwN/lqZWnZdRjE/oirpG55A==
+ bh=HAwqnd/Alg7VrYAcf8+gAX87SZfhNCOMmdE/wTzsXkA=;
+ b=HkXCMoBVqQjfdyuNtMGddU7qhVzVEr4Z3r6x4vGMz4CPmB1LzROX4tnwLORUVp3tLfbhhOoo0ulfwSWL3pMEXdxwHRPkbjwTuYs8lJAtQ5VZuZh3sClEI5tleOPw1htPW9rEaCTWGc7sGrq2Q9hxC3mryCQhJqZTTKOW+EuZbNNaWggPeaK++d1jcGb6uHLPDxGuAnX8gKjsJx0rXWTAV0iDpSC+VGlZSULWje0GcdBWvIBzpKROUScvZXE4L445mAydtmHzeNeVAkLH8E0JUuCvpyB2iktNnR/KyCRYbuAG1r+QcrEH4jniknnfYwZ9nCGNYLVUBP9OIAgu8L2OsQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS0PR11MB8182.namprd11.prod.outlook.com (2603:10b6:8:163::17)
- by PH0PR11MB4808.namprd11.prod.outlook.com (2603:10b6:510:39::9) with
+Received: from PH8PR11MB8040.namprd11.prod.outlook.com (2603:10b6:510:238::11)
+ by SA3PR11MB7533.namprd11.prod.outlook.com (2603:10b6:806:306::15) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.16; Wed, 23 Sep
- 2026 20:29:55 +0000
-Received: from DS0PR11MB8182.namprd11.prod.outlook.com
- ([fe80::7b65:81e6:c6c4:449e]) by DS0PR11MB8182.namprd11.prod.outlook.com
- ([fe80::7b65:81e6:c6c4:449e%6]) with mapi id 15.21.0451.014; Wed, 23 Sep 2026
- 20:29:54 +0000
-Date: Wed, 23 Sep 2026 13:29:52 -0700
-From: Matt Roper <matthew.d.roper@intel.com>
-To: "Yao, Jia" <jia.yao@intel.com>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.16; Wed, 23 Sep
+ 2026 21:20:53 +0000
+Received: from PH8PR11MB8040.namprd11.prod.outlook.com
+ ([fe80::89bf:2274:1371:50c5]) by PH8PR11MB8040.namprd11.prod.outlook.com
+ ([fe80::89bf:2274:1371:50c5%3]) with mapi id 15.21.0451.014; Wed, 23 Sep 2026
+ 21:20:53 +0000
+Message-ID: <8e01832b-4a94-4f0b-86c3-71664d22a326@intel.com>
+Date: Wed, 23 Sep 2026 14:20:51 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9] drm/i915/dg2: Add per-context control for
+ Wa_22013059131
+To: Matt Roper <matthew.d.roper@intel.com>
 CC: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	"sashiko-bot@kernel.org" <sashiko-bot@kernel.org>,
 	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
 	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
 	"intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>, "Tvrtko
  Ursulin" <tursulin@ursulin.net>
-Subject: Re: [PATCH v9] drm/i915/dg2: Add per-context control for
- Wa_22013059131
-Message-ID: <20260923202952.GA730830@mdroper-desk1.amr.corp.intel.com>
 References: <20260630225349.984AB1F000E9@smtp.kernel.org>
  <178290749714.224587.15234445443946207851@jlahtine-mobl>
  <178292444166.273574.16738251742448073960@jlahtine-mobl>
@@ -98,12 +98,15 @@ References: <20260630225349.984AB1F000E9@smtp.kernel.org>
  <PH8PR11MB804034417C9C4625B7F20F2BF4822@PH8PR11MB8040.namprd11.prod.outlook.com>
  <179018246485.152778.2589066724213973485@jlahtine-mobl>
  <6e40b68c-bbfa-47b6-81e9-5076738d0abd@intel.com>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <6e40b68c-bbfa-47b6-81e9-5076738d0abd@intel.com>
-X-ClientProxiedBy: SJ0PR13CA0157.namprd13.prod.outlook.com
- (2603:10b6:a03:2c7::12) To DS0PR11MB8182.namprd11.prod.outlook.com
- (2603:10b6:8:163::17)
+ <20260923202952.GA730830@mdroper-desk1.amr.corp.intel.com>
+Content-Language: en-US
+From: "Yao, Jia" <jia.yao@intel.com>
+In-Reply-To: <20260923202952.GA730830@mdroper-desk1.amr.corp.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ0PR03CA0264.namprd03.prod.outlook.com
+ (2603:10b6:a03:3a0::29) To PH8PR11MB8040.namprd11.prod.outlook.com
+ (2603:10b6:510:238::11)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -111,226 +114,236 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS0PR11MB8182:EE_|PH0PR11MB4808:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8f00474e-293d-4e50-627e-08df19b16d2c
+X-MS-TrafficTypeDiagnostic: PH8PR11MB8040:EE_|SA3PR11MB7533:EE_
+X-MS-Office365-Filtering-Correlation-Id: d5490748-6372-46f2-be61-08df19b88c45
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|23010399003|366016|4143699003|56012099006|11063799006|10067099003|22082099003|18002099003|6133799003;
-X-Microsoft-Antispam-Message-Info: Z+WweF/tXzoNGGAW+aG+/eid3iJOu9ACUoFfGlSCxq49u7v5lC/jwGWHkn1hb50QjbFoXPZ0MaQJFTGnvOtMt2hQYim/wqkGF3UdeW/mrRfgjSazFazJvWtPNFd78mGcmY/+sje9aPXJy8yoL5bVqsAjmbeByiCSLQytafzOCK30QLo/+xywkmaz5I08yJQPGsskL6y4thBLphMkmb09ppvxxcIGrHP9owC5hXJP8LSWLC+iJ2IanxERbJJ14NaL5RmXIXP75uPs7nf5nxGc1pzUd5wJHaBo6Pj1mv+GCc/Vsr2UTOqBf4A12MhBt8z0nkdb7RnsXOzXyFqpLhffUDs+fS5fn5TLImbEIv5G/GIFDdoGRAKkqewX6goBaVO6gUxojyNS/FOXEBxTLSjNZntllXbey+dD38OjQVG07x/Q5udbos3oE7gBw/YB9/pKIwGZzGQi5m69AdP43kW5XirGCIB9S7QQmsn3c8XLL5wfPKJl1cldiLy1P7ovYf7lH7/aqp3bZDe7OooaOjBKvpqOt+s86rvv6dy2i3TZLCnW05hu5oFUEE+gce9c1B+VlAivrKGti2vDWpeGDKO6vlwJeHHt2bx5M/q6+GHeC8mTq31tgyaPs9LBLix46LcE8W1rnRtnv7fLQ2FHeuYEQfIA7OOuwu+UIef1bx6IJ/Q=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR11MB8182.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(4143699003)(56012099006)(11063799006)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|366016|1800799024|42112799006|376014|6133799003|18002099003|22082099003|11063799006|56012099006|4143699003|10067099003;
+X-Microsoft-Antispam-Message-Info: SEtXDvmKl3/D9Um7jhcNPcK356h2oE8P5MG5L7+VVJSGbGehn5o5utDUOEkEtQRtXMsWb+O0ao5JfpXhEmxCPlI84rAChu+ppq+XCl1fSyllaxkVsQJZRbMZvG7RiTqmibveL1wYFQysJNySKrrvNzm4uOWPebilzP2n6PHSG7nQDZX7dl+VBg0+LVhUJbUR5IeZQ9Il5iMLDraESOHoGFt/VTJIvcPb0QRjC8mIN4bTelC6OvBqIcaUDSJxvpjLtLzbE/YZj76oO7fLNOD/ssQl2lF77pUIyB521oJmfJI4UyxKRCKKSg9/2EEas2jd69JiukyPTOjLuYTaTYzpAIlk0RvKyKdxTAHviODL0jb3w8t9odyIofpAixqdCkbs4Ao0AFHOAxlCG+F0RHMRCoK1y3SCkTLi+TK6D//X5CDP2fUfZBiK7qNkuus9+TTYSY1iE2+WrAWckUF4DuLWQQ6i6vfT0B10Ne9KjjgkKNL1mHXOCnIhlDtuEG2j9C604bk1pSjDgqaWGGC88b2w+Mu6b2Sp/tG6kqoSyeERk9wnF3Aqn/v1TnEIXR3KJbZAekzzj1PDe5v1fF4rlYG5H+63+3sV1Qq/SBJXX0yAQKB3JTrNRqNsIbA08rqpxSdVcufbexOG13dRHn2vLJJCj1tEueT7HyJhNTCv+KYx1W0=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR11MB8040.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(42112799006)(376014)(6133799003)(18002099003)(22082099003)(11063799006)(56012099006)(4143699003)(10067099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?0IqA/MrBanbkw0xzYyur5CyrxTaqeNlPLW6h2ROzDEtllNV1gM6ATwqro9vD?=
- =?us-ascii?Q?tdvzHJZj+bVyM9io46TX45DribKf9JyAHSB9gokhHZQObVq+B/QD7LeFwuQW?=
- =?us-ascii?Q?8BLNSPiYgjvfieYSWdhpq6HnJOadcG/ex8YjDh6JrXbOi/SMo2wjTXNAyriX?=
- =?us-ascii?Q?nPaubQpHD2FCCzCxORwswVrrC9lQZ3UqmvmzMxsS4wsZWyzsFgO48CUpCx8n?=
- =?us-ascii?Q?EYiTz7W4tlYsK6XV8fE/Vu63rNsLRyUo/AhRkj78T233f+gcmak2pFR/06uM?=
- =?us-ascii?Q?nIRmIfcDMWMt93/KdEmneYbutU7ErPEhacFCzsbwyFOfqDDYJUjZd/YkSGul?=
- =?us-ascii?Q?twxniCe3mByA3PUFnLoYmNG+sbPQlsTqyeZnaACaBDozvPrfzGk53S/Cm3e0?=
- =?us-ascii?Q?FlHwuh6+xkPW8kJWa1CxVP3s61Fn2rwN7+JNGz+7nT7LXw++kRHIgJl/rdOU?=
- =?us-ascii?Q?/Mbabeb5GInkbf3dz76cldhwdf7jnsnaeFG0To0kvDzls7EKHwxpmeygi+ud?=
- =?us-ascii?Q?OJx6vSRO+BFj+o1FhT0+2G6YHR6xUIE1A9/3VZgDmszWbNkX8uqGn1Coh5DF?=
- =?us-ascii?Q?Ki/B1z9cKTLfAsqmtERVTFsw1FxRF7mx/Vlaur0iE9joPvq6ejcQBplv6fbt?=
- =?us-ascii?Q?jBp4ZKbvxLMrdK6oQD1p1+wW03OTUWA4WnaKvl95xrY9BJxB7bk/mJqGcCj0?=
- =?us-ascii?Q?pcJMHsxrkzYJWedy66BKuiL2G1VEoEdr7Z42yp1M8tz0V7gv57IAaF490ywk?=
- =?us-ascii?Q?+lKU3a02GvGY82Ncy2oJF+AE+zx7fiiq9ANHxd52HokKimf+Wio0ZZKJLq0t?=
- =?us-ascii?Q?IIx2LopBg8EVwZq8OnFGxkVZ4P26KTMSO0Ep10fC5v8aISJ+hGwP8CDfzUZR?=
- =?us-ascii?Q?BQKccd24QNzbuc8vkJdV0Eo7BwSjTKVsysiPxnLjqQIVgZ3yqZwVE7aYq0NL?=
- =?us-ascii?Q?Ha00PiY3bE2dY7ihJeK5hqeJt10/fqvtGSieS08ik2n+h+jbelB10i88vKM5?=
- =?us-ascii?Q?WZ3KcT6nuS/7ZLccUa2iGWF30pw8PomNke6SiJpvYgG6M51XygLbG9p1eCXa?=
- =?us-ascii?Q?JjQXRYfEGibupKGD7jjKMHC52GoOFTkeiAWe+dh6T79IXGbAoG/Zk1Ta3U20?=
- =?us-ascii?Q?4egbYSsA5xlAbPPixQLHdVJ5WXkv7O2U6ls8KRJVgaYbv1zv5LQxdPiz8bDc?=
- =?us-ascii?Q?pqcTrt/ge5WFgcK6dd9imyAsiIpupEexjV5NLJgU+4LOSYsVWLuKV6rP5JKm?=
- =?us-ascii?Q?4JhHTP8aFADCxSCXtVMW4GI551MVVvXHKmkdtgNyNVgcNDNidogWbStnnAR0?=
- =?us-ascii?Q?Hd3mbkh1hqHsfuGaEVeACk630aGS9pS/1CcoIq8ASCVdfkHJBf2vlmtQLyQH?=
- =?us-ascii?Q?YnDjz/Dbs4E88t+fw9kgBqEQX1vJcdKo9UJDEcfAy9zI4yubfsI1YfVg735K?=
- =?us-ascii?Q?cMRXkcoLWOrmrcJha33OJFq2pPFoRkW8+0xvR63k+qqRX8Nvrm9tXrfbS+Kv?=
- =?us-ascii?Q?xgt72fSS9VfsWJUogmiY5fjcs2sI0K1UXrTLNNkWzbNVkmYlKQIWz42v5Xzx?=
- =?us-ascii?Q?VhU1oSAb6y2QRIVQVts4zBZV7v2wiuZIPQIkjHScQ5xSEEG+3xugzv1UiG0C?=
- =?us-ascii?Q?3XCUjWtkW3CF6o3kCf8mMC6QKbnngRbTiwOVH6gB4Yj4ZM14fDhpRnOqIAHr?=
- =?us-ascii?Q?7F0A6tjWM3gO1x7vUuiYounqPpwZW+nMFadBfoKpuIksffEPZ883icNgmAAX?=
- =?us-ascii?Q?oMTsZdaYWqmS3bbV0bDOFVvtgJp9FtQ=3D?=
-X-Exchange-RoutingPolicyChecked: lHaqjySh4T85fcaciOWzTNr/vX95HbsHA+BbB1Tiy8C82URDQq5TfYissU6If0OTL/xNuI93pWo5I2U+8B78Mw0Y0OBl9LWa+2+U5Jkwsnw5uAuZ4C7FYMqXyXc/f6ICMeh8mcMznrAOwQwhfoXdrfkMoKhHdzNx1aD4Q0iDlCCLYIvLf+lgGEy6UeMlB76GQzm7kmTBX2B2lNZ6JueCj5vKDVYqGp5RN8RtNgMqpW5WBOFaA4awOyrn+ZpIRuUJAws1982cSRfD5tjWGIyhTPfwejpgTbR853ejJKkklh2HMHOrjwNXZR9laORiOTmaBYBMS1DD9SxcHEXZRaDr1A==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8f00474e-293d-4e50-627e-08df19b16d2c
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB8182.namprd11.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VHc5M3FIWk9OVWdweVlnUlY2bUFRUFFqSm84Y1l1NDRNK3QvWUZZbHdYdjdW?=
+ =?utf-8?B?Z01jZVBNenRVeS92aWRzY2tiaFBFY3dSTlhMYlpIR3QzeVBmM1IzbEZ5Q3Jr?=
+ =?utf-8?B?dFdvUFVmaXJSY2k1aGVBWlcveEtUSGhheW03U0Q5RWRhb3dqUkdLYXY0U2J2?=
+ =?utf-8?B?YUFoYWpoTmNzUEx4eXVpcHVmK2ZhcFBkVUxuQ041cXU3US9iMlJrL0Rkbno1?=
+ =?utf-8?B?NGx1L0hwREZlVEJFeU15cmVydHppcWFUaS82RW1WVzFOb1AweXpmQklKQzlM?=
+ =?utf-8?B?eDh1MWYvL2taZ1R2Yi9kYVg0Z0FCS0Nrakpleld0aUZNc1h6WUgxSEs4SXpp?=
+ =?utf-8?B?NXBtNktwaEE4THowbzhoZW9XTkI0RkgvUE5QVGxadk43ZE4zTHFmeDc5Y3Za?=
+ =?utf-8?B?OXNHRmFQOUpsM3RtY0ZlWGJjMkFDVGhyOVNLL0w3V2tXS2hVWXFONHMvV0sw?=
+ =?utf-8?B?aGxyNEpaOWRlRTBHMzhlUCs0TjhLUmxnRVdxZ3Fndm1zdEx5dHYzc2xGMmsx?=
+ =?utf-8?B?SVA4eDVDNElHTDlXVkN0aTI1MXR1T3U5MEt5cjA2TDVlb25xTWsyWDFIbUQ3?=
+ =?utf-8?B?dFFiVmxmSHdmWDhlRW9HbUdnd3hBQmI2WDJmd0JBcHVhaFFXcGM0UG1JUm9a?=
+ =?utf-8?B?SDJvS0pVQURvUWtvSHBuYng5RFRtVnJVWnZTVHpyUXE0OVJGMG5EUmVLbE56?=
+ =?utf-8?B?aCtSZ1hZTmtoVEdOOTJMOFNnV3V1MThrK0RoVG9wOHNhVzZmQm1MckkzTzlk?=
+ =?utf-8?B?WDB5N0w1WXNrckhqUzRoSG1kTXlRbm9HVXJaRjlzYkNlZzNOeXhSRnU3ZU96?=
+ =?utf-8?B?aHR0YkRVa2VyUkEycjdPM3pTdVF2RGhxVk5WcUhHZHhaUDA0ZW1mdndpWk5K?=
+ =?utf-8?B?cTZwQ0RrcEFjODNLd0pjeXovRDdidmk0WkJoME9iUzF4d3FLOEl6aWpLcmdL?=
+ =?utf-8?B?bW1JNUNydGxPM0RIbUlHaVlNNnN0YlRzWnNjcnBKeHFsZlRia1ovOTE4TG53?=
+ =?utf-8?B?QnYrY01xSzY3NGhWRHJqcWRMelZMcXVSZTJnckE3UXJuVkRDV212RHJwTXFT?=
+ =?utf-8?B?d1h1Z01pUzdYZG4yS25ESWFWZUJYd2k1SzZpRFFxU3c3K25LRDNlams5SU9E?=
+ =?utf-8?B?RnF5a3ZWSFg0eDRQNThoMEhqS0lFZGFva2JaWXFaazBxemtVbW00VjVlN0pr?=
+ =?utf-8?B?OWVnSFN6RHFrdzFGbVVKNUVyQnUzQmV2M1RyYVd0dEdGZ3lkV0hEUzd1RkJM?=
+ =?utf-8?B?UE92dStPSFBYdEJGOUpINjdQVVVvdlFKY2xGYWQxOGVpdm9tLzVQRjFNUW0x?=
+ =?utf-8?B?eWRNLzF2c1EveW1tL3pGV0l5TWJmQWxDclVWQXoxeENRS044RjBlWWY2MjBF?=
+ =?utf-8?B?a01kV1dtc3lSSkZiUkNBdHA2bytDZVgwVmVRTXBMODBRSHE4ZEZkbzg3RjFm?=
+ =?utf-8?B?UzNVWk56dEVKWW1taHdNdzdzckdWMUVsNjJTVWR5cVcydFFDQXB6VVlMUkxw?=
+ =?utf-8?B?akJKY3hHMEZEbHZPMElzRXErdE53dG4xS2RRbGxxOE5ta0VhZEd0MUErNlVz?=
+ =?utf-8?B?Q05NU2FFODJwOHFralY1NkYxNUpHOW1TLzUxeDZGcytnUzl3M3R2V3ZGUC9U?=
+ =?utf-8?B?c2hUNHNxWHpGQ3NOZEZKVitUUHNneHl3N0x2TURXS2FtblU0Nm93bUdHMmds?=
+ =?utf-8?B?cXRQQU9CZ01TTUQyNm9VTFIvVnEzSkUvelZQMEM2bW85M1dodDZnSnoxVGI3?=
+ =?utf-8?B?c1ZEdVd3K1FRVGJKN1VNRy9GN2srMG1wV3pscTU0cnE5SzRQODloZ0UrNzZP?=
+ =?utf-8?B?eXgvcHo2b2ZMeHdkUTNCNjlscHA5N0todWJvdjl6bUlJZi85dlVXZG5EYzlw?=
+ =?utf-8?B?akV0V0dxRkRBSWVYSWhvUjZMcXdiWjVTbFhiWFJlcit6L2dhandzeVdPaDIr?=
+ =?utf-8?B?Z1dCUXZyNWtIbnBSU2h0U0lOQzZqaUdsU3kwc2ZYVXd3YytERTBPOVRLRlV4?=
+ =?utf-8?B?SmZxMDNOaFkvYU1oYW0rRnVGMS9nVGdQT1E0T0JqeEt6d2d6WGlWVXFHVnJ6?=
+ =?utf-8?B?SUFNeG9yaEYzV2IreTEraHNEOFVnOU1oVStDUVZ3U1piWURGN29YT2hjc2RC?=
+ =?utf-8?B?UlAzT2pjQndya21ZbDVaOXZ2bFZuQ0hlQ2RQWWVIMkNSc2lNYXVDSTQ3VWVa?=
+ =?utf-8?B?M2NzYlc0SU40ZFZmaTFYYktRdTFzSW8xNmtRR0FmTERGdThFNDFRL1dveHVp?=
+ =?utf-8?B?eUdEaVdCOXNFK0Y3RCtLOElHd0lZaG1rdi9JaGsySU4rRjdlSDBmWHB0V0Ns?=
+ =?utf-8?B?Rmxsa013amc4SWNwcnpDUEM4ZjdGeTExazdkVE5DT3BrT1BKZEtYdz09?=
+X-Exchange-RoutingPolicyChecked: etqtyeyG62RJRMbx3XwPCM6JIov6FQCeDpi2OZk3RRcfzAn0X9pUdLHohUtGdvDJlqlG7LqsGBiYB3FBpgk5vH6NJLll3+UczevFZXW5faJTLjp7yust42Swg1EyGYrXXr87NBJcoLoQJzx7uAE0Y8U1uQbg1kv8BHwFg1U9W60KpfY/h3D6kRUjjrG/dlUKwSZ87Dupbyid7a2GMCz+g1QrTRfPxlZZfgF3BjLX8jEo9nLD7o1MJtZjdxNRVtWGsKleUnwBii3mr7e58XD7RICXaYtFYFREo+TTxMuicRuXWF1P1RsQCH3nB4YCJPYVgcSfsw0t+PsGoYnkZ3BXgA==
+X-MS-Exchange-CrossTenant-Network-Message-Id: d5490748-6372-46f2-be61-08df19b88c45
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB8040.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2026 20:29:54.3623
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2026 21:20:53.2606
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: i3V/TQQauvErrpTQKOuW/gmwh2mRXMfgI5VkwrbMMkvbpFlGHP/+Jnl2bIDZXEi74c7jabKvHz3iIhH7xY1obei/NZa33HA8dZwHwqrn5Yk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB4808
+X-MS-Exchange-CrossTenant-UserPrincipalName: JxL4Mhom2zRvRCWlkqORAfP4tvCwzV5t474ABsr6a1/AJSJqx/4tihtKmMtOeMYfAggO/mmWaTx64Xefljz7Aw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR11MB7533
 X-OriginatorOrg: intel.com
 
-On Wed, Sep 23, 2026 at 11:06:56AM -0700, Yao, Jia wrote:
-> 
-> On 9/23/2026 9:54 AM, Joonas Lahtinen wrote:
-> > Quoting Yao, Jia (2026-09-23 19:01:32)
-> > > Hi @Joonas Lahtinen,
-> > > 
-> > > When shifting from WA option #2 to option #1,    removing a global setting ->   adding a per-context setting.  We thought it was a per-context operation.  However, due to the "weakest link" effect, this remains a global operation.
-> > > Thus, making it per-client has no effect either.  Containers will interfere with each other.
-> > They would not. On the impacted SKU, the RCS and CCS at any given time
-> > can only run workloads with matching address space. Those workloads must
-> > originate from the same DRM client as there is no address space sharing
-> > across DRM clients implemented in i915.
-> > 
-> > It's only when multi-CCS SKU would need the same W/A, we would need
-> > further scheduling decision to ensure 2 CCS workloads are not competing
-> > for the global setting.
-> > 
-> > With per DRM client enforcement, both RCS and CCS should be able to
-> > write the global setting without a conflict. And when a context from new
-> > DRM client is scheduled it, it should be able to program the global
-> > value to its liking as the same address space limitation guarantees the
-> > other workloads are not in the HW anymore.
-> > 
-> > Regards, Joonas
-> 
-> I understand the benefit of address-space isolation.
-> 
-> However, The bit 15 appears to be a global register rather than an
-> address-space-specific state.
 
-That's why we're doing the special dance with INDIRECT_CTX --- by
-re-writing the register on every context switch, we've somewhat turned a
-global register into a per-context register.
+On 9/23/2026 1:29 PM, Matt Roper wrote:
+> On Wed, Sep 23, 2026 at 11:06:56AM -0700, Yao, Jia wrote:
+>> On 9/23/2026 9:54 AM, Joonas Lahtinen wrote:
+>>> Quoting Yao, Jia (2026-09-23 19:01:32)
+>>>> Hi @Joonas Lahtinen,
+>>>>
+>>>> When shifting from WA option #2 to option #1,    removing a global setting ->   adding a per-context setting.  We thought it was a per-context operation.  However, due to the "weakest link" effect, this remains a global operation.
+>>>> Thus, making it per-client has no effect either.  Containers will interfere with each other.
+>>> They would not. On the impacted SKU, the RCS and CCS at any given time
+>>> can only run workloads with matching address space. Those workloads must
+>>> originate from the same DRM client as there is no address space sharing
+>>> across DRM clients implemented in i915.
+>>>
+>>> It's only when multi-CCS SKU would need the same W/A, we would need
+>>> further scheduling decision to ensure 2 CCS workloads are not competing
+>>> for the global setting.
+>>>
+>>> With per DRM client enforcement, both RCS and CCS should be able to
+>>> write the global setting without a conflict. And when a context from new
+>>> DRM client is scheduled it, it should be able to program the global
+>>> value to its liking as the same address space limitation guarantees the
+>>> other workloads are not in the HW anymore.
+>>>
+>>> Regards, Joonas
+>> I understand the benefit of address-space isolation.
+>>
+>> However, The bit 15 appears to be a global register rather than an
+>> address-space-specific state.
+> That's why we're doing the special dance with INDIRECT_CTX --- by
+> re-writing the register on every context switch, we've somewhat turned a
+> global register into a per-context register.
+>
+> If it were possible for two completely unrelated contexts to be running
+> at the same time (e.g., one on RCS and one on CCS), then we'd wind up
+> with a case where:
+>
+>   * LRC A switches in on engine X and sets the register the way it wants
+>   * LRC B switches in on engine Y and changes the register to the other
+>     setting, even though LRC A is still running in parallel
+>
+> But fortunately that's not possible on DG2-G11.  On that platform
+> there's only a single CCS engine (so no possibility for conflicts
+> between, for example, CCS0 and CCS1).  And there's also another
+> workaround (implemented in the GuC's scheduler) that ensures that the
+> RCS and CCS engines are only allowed to run concurrently for LRCs that
+> have the same address space.  If you try to run two unrelated contexts
+> at the same on the RCS and CCS, then they'll run sequentially rather
+> than in parallel.
+>
+>
+> Matt
 
-If it were possible for two completely unrelated contexts to be running
-at the same time (e.g., one on RCS and one on CCS), then we'd wind up
-with a case where:
+I see. However, if the GuC scheduler already guarantees that workloads 
+from different address spaces are serialized, why don't we use a per-VM 
+(per-address-space) setting instead of a per-client one?
 
- * LRC A switches in on engine X and sets the register the way it wants
- * LRC B switches in on engine Y and changes the register to the other
-   setting, even though LRC A is still running in parallel
+Thanks,
 
-But fortunately that's not possible on DG2-G11.  On that platform
-there's only a single CCS engine (so no possibility for conflicts
-between, for example, CCS0 and CCS1).  And there's also another
-workaround (implemented in the GuC's scheduler) that ensures that the
-RCS and CCS engines are only allowed to run concurrently for LRCs that
-have the same address space.  If you try to run two unrelated contexts
-at the same on the RCS and CCS, then they'll run sequentially rather
-than in parallel.
+Jia
 
-
-Matt
-
-> 
-> If the register itself is not address-space isolated,
-> 
-> I'm struggling to see how address-space isolation alone resolves the
-> concern.
-> 
-> Thanks,
-> 
-> Jia
-> 
-> > > Thanks,
-> > > Jia
-> > > > -----Original Message-----
-> > > > From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-> > > > Sent: Tuesday, September 22, 2026 11:52 PM
-> > > > To: Yao, Jia <jia.yao@intel.com>; sashiko-bot@kernel.org; sashiko-
-> > > > reviews@lists.linux.dev
-> > > > Cc: dri-devel@lists.freedesktop.org; intel-gfx@lists.freedesktop.org; Roper,
-> > > > Matthew D <matthew.d.roper@intel.com>; Tvrtko Ursulin
-> > > > <tursulin@ursulin.net>
-> > > > Subject: RE: [PATCH v9] drm/i915/dg2: Add per-context control for
-> > > > Wa_22013059131
-> > > > 
-> > > > Quoting Yao, Jia (2026-09-22 17:34:08)
-> > > > > Hi @Joonas Lahtinen,
-> > > > > 
-> > > > > For RCS -> UNSET
-> > > > > For CCS
-> > > > > 1. Old compute runtime -> UNSET
-> > > > > 2. New compute runtime -> USER
-> > > > > 
-> > > > > If we take there's only one compute runtime version, and priority USER >
-> > > > UNSET?  Where's the conflict come from?
-> > > > 
-> > > > See below.
-> > > > 
-> > > > > But if we take there's more than one compute runtime version, and their
-> > > > priority is equal,  UNSET can cover USER,  USER can cover UNSET,  even with
-> > > > two clients they could cover each other.
-> > > > 
-> > > > I didn't follow this part. How does the priority come into play?
-> > > > 
-> > > > We have to keep switching the mode as the DRM clients come and go.
-> > > > 
-> > > > > We should take it easy.
-> > > > > Once we reached USER, set by new compute, we should latch it, for the WA
-> > > > has been implemented by USER.
-> > > > 
-> > > > That won't work. If you are running two different containers, you may have
-> > > > different compute runtime versions. Also, Mesa can be submitting to CCS too
-> > > > for async compute, AFAIK.
-> > > > 
-> > > > To properly cover things, we should make it into per DRM-client setting and
-> > > > switch the mode accordingly when different DRM client is run.
-> > > > 
-> > > > And for the given SKU with only one CCS, as explained earlier, it should be
-> > > > already guaranteed that two different DRM clients are not active on the
-> > > > hardware at the same time due to the address space mathing requirement
-> > > > between RCS and CCS.
-> > > > 
-> > > > If this needs to be extended to multi CCS SKUs, then it'd be a bigger
-> > > > implementation effort.
-> > > > 
-> > > > Regards, Joonas
-> > > > 
-> > > > > Thanks,
-> > > > > Jia
-> > > > > 
-> > > > > > -----Original Message-----
-> > > > > > From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-> > > > > > Sent: Monday, September 21, 2026 11:47 PM
-> > > > > > To: Yao, Jia <jia.yao@intel.com>; sashiko-bot@kernel.org; sashiko-
-> > > > > > reviews@lists.linux.dev
-> > > > > > Cc: dri-devel@lists.freedesktop.org;
-> > > > > > intel-gfx@lists.freedesktop.org; Roper, Matthew D
-> > > > > > <matthew.d.roper@intel.com>; Tvrtko Ursulin <tursulin@ursulin.net>
-> > > > > > Subject: RE: [PATCH v9] drm/i915/dg2: Add per-context control for
-> > > > > > Wa_22013059131
-> > > > > > 
-> > > > > > Quoting Yao, Jia (2026-09-21 20:33:03)
-> > > > > > > Hi @Lahtinen, Joonas,
-> > > > > > > 
-> > > > > > > The key is LSC_CHICKEN_BIT_0 is a global register.
-> > > > > > > 
-> > > > > > > Even we use per-client,  we should consider the following cases:
-> > > > > > > 
-> > > > > > > 1. Should conflicting configurations within a client be rejected?
-> > > > > > > I recommend the first setting should be latched.
-> > > > > >  From uAPI perspective it would be simpler to set this at the DRM
-> > > > > > client level at once. However we don't seem to have such uAPI in
-> > > > > > active use currently (all
-> > > > > > drm_noop) so you'd have to compare the complexity between indirectly
-> > > > > > setting it at DRM client level by first created context or adding
-> > > > > > such an uAPI to set it explicitly per client.
-> > > > > > 
-> > > > > > > 2. Should conflicting configurations across different clients be rejected?
-> > > > > > > I think the latter setting can cover previous one.
-> > > > > > DRM clients need to be indepenent from the driver perspective, we
-> > > > > > can't do that.
-> > > > > > 
-> > > > > > The whole point of making it per DRM client is that given the
-> > > > > > impacted SKU only has 1 CCS engine. We have the address space
-> > > > > > matching requirement between CCS and RCS, so when both CCS and RCS
-> > > > > > are running, we know they belong to the same DRM client and thus
-> > > > > > they will not conflict with the WA mode. And if only one of them is
-> > > > > > running, there can be no conflict either as it's just one context.
-> > > > > > 
-> > > > > > > Even like this, still can't cover all the race condition.
-> > > > > > Which race conditions do you think would remain? We definitely have
-> > > > > > to eliminate any race conditions to land this.
-> > > > > > 
-> > > > > > Regards, Joonas
-
--- 
-Matt Roper
-Graphics Software Engineer
-Linux GPU Platform Enablement
-Intel Corporation
+>
+>> If the register itself is not address-space isolated,
+>>
+>> I'm struggling to see how address-space isolation alone resolves the
+>> concern.
+>>
+>> Thanks,
+>>
+>> Jia
+>>
+>>>> Thanks,
+>>>> Jia
+>>>>> -----Original Message-----
+>>>>> From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+>>>>> Sent: Tuesday, September 22, 2026 11:52 PM
+>>>>> To: Yao, Jia <jia.yao@intel.com>; sashiko-bot@kernel.org; sashiko-
+>>>>> reviews@lists.linux.dev
+>>>>> Cc: dri-devel@lists.freedesktop.org; intel-gfx@lists.freedesktop.org; Roper,
+>>>>> Matthew D <matthew.d.roper@intel.com>; Tvrtko Ursulin
+>>>>> <tursulin@ursulin.net>
+>>>>> Subject: RE: [PATCH v9] drm/i915/dg2: Add per-context control for
+>>>>> Wa_22013059131
+>>>>>
+>>>>> Quoting Yao, Jia (2026-09-22 17:34:08)
+>>>>>> Hi @Joonas Lahtinen,
+>>>>>>
+>>>>>> For RCS -> UNSET
+>>>>>> For CCS
+>>>>>> 1. Old compute runtime -> UNSET
+>>>>>> 2. New compute runtime -> USER
+>>>>>>
+>>>>>> If we take there's only one compute runtime version, and priority USER >
+>>>>> UNSET?  Where's the conflict come from?
+>>>>>
+>>>>> See below.
+>>>>>
+>>>>>> But if we take there's more than one compute runtime version, and their
+>>>>> priority is equal,  UNSET can cover USER,  USER can cover UNSET,  even with
+>>>>> two clients they could cover each other.
+>>>>>
+>>>>> I didn't follow this part. How does the priority come into play?
+>>>>>
+>>>>> We have to keep switching the mode as the DRM clients come and go.
+>>>>>
+>>>>>> We should take it easy.
+>>>>>> Once we reached USER, set by new compute, we should latch it, for the WA
+>>>>> has been implemented by USER.
+>>>>>
+>>>>> That won't work. If you are running two different containers, you may have
+>>>>> different compute runtime versions. Also, Mesa can be submitting to CCS too
+>>>>> for async compute, AFAIK.
+>>>>>
+>>>>> To properly cover things, we should make it into per DRM-client setting and
+>>>>> switch the mode accordingly when different DRM client is run.
+>>>>>
+>>>>> And for the given SKU with only one CCS, as explained earlier, it should be
+>>>>> already guaranteed that two different DRM clients are not active on the
+>>>>> hardware at the same time due to the address space mathing requirement
+>>>>> between RCS and CCS.
+>>>>>
+>>>>> If this needs to be extended to multi CCS SKUs, then it'd be a bigger
+>>>>> implementation effort.
+>>>>>
+>>>>> Regards, Joonas
+>>>>>
+>>>>>> Thanks,
+>>>>>> Jia
+>>>>>>
+>>>>>>> -----Original Message-----
+>>>>>>> From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+>>>>>>> Sent: Monday, September 21, 2026 11:47 PM
+>>>>>>> To: Yao, Jia <jia.yao@intel.com>; sashiko-bot@kernel.org; sashiko-
+>>>>>>> reviews@lists.linux.dev
+>>>>>>> Cc: dri-devel@lists.freedesktop.org;
+>>>>>>> intel-gfx@lists.freedesktop.org; Roper, Matthew D
+>>>>>>> <matthew.d.roper@intel.com>; Tvrtko Ursulin <tursulin@ursulin.net>
+>>>>>>> Subject: RE: [PATCH v9] drm/i915/dg2: Add per-context control for
+>>>>>>> Wa_22013059131
+>>>>>>>
+>>>>>>> Quoting Yao, Jia (2026-09-21 20:33:03)
+>>>>>>>> Hi @Lahtinen, Joonas,
+>>>>>>>>
+>>>>>>>> The key is LSC_CHICKEN_BIT_0 is a global register.
+>>>>>>>>
+>>>>>>>> Even we use per-client,  we should consider the following cases:
+>>>>>>>>
+>>>>>>>> 1. Should conflicting configurations within a client be rejected?
+>>>>>>>> I recommend the first setting should be latched.
+>>>>>>>   From uAPI perspective it would be simpler to set this at the DRM
+>>>>>>> client level at once. However we don't seem to have such uAPI in
+>>>>>>> active use currently (all
+>>>>>>> drm_noop) so you'd have to compare the complexity between indirectly
+>>>>>>> setting it at DRM client level by first created context or adding
+>>>>>>> such an uAPI to set it explicitly per client.
+>>>>>>>
+>>>>>>>> 2. Should conflicting configurations across different clients be rejected?
+>>>>>>>> I think the latter setting can cover previous one.
+>>>>>>> DRM clients need to be indepenent from the driver perspective, we
+>>>>>>> can't do that.
+>>>>>>>
+>>>>>>> The whole point of making it per DRM client is that given the
+>>>>>>> impacted SKU only has 1 CCS engine. We have the address space
+>>>>>>> matching requirement between CCS and RCS, so when both CCS and RCS
+>>>>>>> are running, we know they belong to the same DRM client and thus
+>>>>>>> they will not conflict with the WA mode. And if only one of them is
+>>>>>>> running, there can be no conflict either as it's just one context.
+>>>>>>>
+>>>>>>>> Even like this, still can't cover all the race condition.
+>>>>>>> Which race conditions do you think would remain? We definitely have
+>>>>>>> to eliminate any race conditions to land this.
+>>>>>>>
+>>>>>>> Regards, Joonas
