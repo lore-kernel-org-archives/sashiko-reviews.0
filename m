@@ -1,239 +1,300 @@
-Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011059.outbound.protection.outlook.com [52.101.62.59])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BDB33937B
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 07:11:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.59
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790147478; cv=fail; b=CKwxGpn9PqRmUFkUaLLwDmsib5YZmzYNihK6ioTmjcre7dXf/Upqu2mtp4Ss5QrlEhLXMYKR0Y4NiPaHLYo/lMdvIT0kz4RgiPj2DoxXl7tiYUybCW98nIHNDMuJq9WrxdKzAM2QZdBBwcE5EGolEN3YdsCJh6g6xrL3pVR1omk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790147478; c=relaxed/simple;
-	bh=6qQr/xDOv9Aa48t2yqeFVFwMRqMBQwiGgNWC6v8tQmo=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=fYNY2aNcDMRtpzS79c1nLQ8LIoS65m1APaqNFkyZTTgR/dFUpJNO2BGywOdB34WRdkmLWFogzeWit+p3Km6e98xwM7oWvEUtd1fqwbuK63udovWZNOOLAO7eRLs1Ycz809LWv+sD5f8nOzJOBwoNNfT9oRdf8qfKA6jQuYRsoeA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=WhePRXEh; arc=fail smtp.client-ip=52.101.62.59
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E937446C0B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 07:11:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790147521; cv=none; b=DJ9hXYArFJbjVo//EGRqYtO/h8fbwa4bZgRFav79cG/+sKSJEiEjf3psdTHK/k07mr5zcp2/dIuEamHS9Iy6VblFX5Mr/qhJ98yqaBBRJUs+evJ3xknKGOrE/KMdz6Fj3a9l5YjiQxETSN7SZ6LbEiardpu1B99lSHAHAWsylz0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790147521; c=relaxed/simple;
+	bh=qO8NqbHssvyvKxNXSQHKf+ZV3+fXThxLtxoinfAMzXE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pyYQm8qQj/a5UoyoG4HEoMntjZgi69oY34GaRIpURhsiUIEEAtUsfGXW2SMSfwpfsWh3wt6CgvTZco/1D5qdzIcxIvsaDizt4ZZYiqK35HWh1zGVIldm1lMqcI07qgdpoNRVdSgUhsTVPd59WRyufubS2FBVtZwzqV2N3rdFa1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fu+58mCm; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=gWbEZnEf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="WhePRXEh"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CqSV0hFYN2IpldzbiZ67E9+0xYDakxmZEeiWvCu2maUoYzQlfNxNvDYACPC0Z0+h1fQtFjtWWtSl4PVWPByfBnEhwsMHRAIPIRp9k/jj0q7FXHh5nu0vQWIvK4m6vgjYEDMVM7GrY8QvGpQ9qcJJdieZ3CnlNRb8wvkQxhx9EodgbggiZaaPWvrdBiJFEjAC/PQiLIE7s7BUt6iGWtf/tqiPgu+qlMDJIZexD2WWHFFxA8vnCOcb3Z6VIq8V1qqcTja6EZYIdF+IHb8hP4K5yYr4Fp8afqbPD5VWyAgVlOKIMzacstkfj9ZEhco2yek4EpFggL8o25fdMfzPreH4dw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8WtNNmeOAQ8yVBGyxsSiKdWhy1kdlk+RXa1wrIZBfgk=;
- b=bLPO1fg2qrBjmFb3HrDBH8Auuodm5Wn2F23tK7Q0p7V4FPxu/eYXgLNqBgvCCLh3EERc/iBlkf7hAAFNbdORydtykLf7xt3OFAhZNLigevQE0ohx+kKk/0Pw3CvFe8v0E3iOOG2WL4VrlvsXwELImA3mdFQDm0L6oAII71bHJjNxWxhb40kj2c639FDwmS78gyrRGkkctV3ztnW/sdSC4oFaLGt22fDDS3rgmC6nfpCazQV7sehIyunELCiTV7YJwXQbgmcQEIqTmi18GdZ8KF3d5J0xf42sNxWrFsEzykVHbnBhqXq8tPTWrHBXeYfQdYRDhV5KfXeEfusG2B9T7w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8WtNNmeOAQ8yVBGyxsSiKdWhy1kdlk+RXa1wrIZBfgk=;
- b=WhePRXEhbsrmF1aOeUswPpF8KKJwmKonHw3djgmzqKIX8KWgbLc/Te7AmqZxknQVs/QMQhSXkG4+HSweodDp418mvqxu8dmjo5kbhi9pU5UZPl4nnkLEhYQ1eB2U4pfZZAIdWuNNNhLHt+QAt96h9Z7OB07ZIxixs6I5/XK5J9k=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from DS7PR12MB9475.namprd12.prod.outlook.com (2603:10b6:8:251::6) by
- CH1PPFF9270C127.namprd12.prod.outlook.com (2603:10b6:61f:fc00::62b) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.14; Wed, 23 Sep
- 2026 07:10:45 +0000
-Received: from DS7PR12MB9475.namprd12.prod.outlook.com
- ([fe80::4371:c924:8800:2587]) by DS7PR12MB9475.namprd12.prod.outlook.com
- ([fe80::4371:c924:8800:2587%6]) with mapi id 15.21.0451.014; Wed, 23 Sep 2026
- 07:10:45 +0000
-Message-ID: <666edc7e-ddd1-45ba-a690-2e4888a0f0db@amd.com>
-Date: Wed, 23 Sep 2026 12:40:37 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] irqchip: Add Xilinx Versal NET SMMU CSR interrupt
- controller driver
-To: sashiko-reviews@lists.linux.dev, Tushar Nimkar <tushar.nimkar@amd.com>
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20260918-smmu-changes-v2-v2-0-adda681ab983@amd.com>
- <20260918-smmu-changes-v2-v2-2-adda681ab983@amd.com>
- <20260918064831.92E5C1F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Tushar Nimkar <tunimkar@amd.com>
-In-Reply-To: <20260918064831.92E5C1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: PN4P287CA0028.INDP287.PROD.OUTLOOK.COM
- (2603:1096:c01:26f::15) To DS7PR12MB9475.namprd12.prod.outlook.com
- (2603:10b6:8:251::6)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fu+58mCm";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="gWbEZnEf"
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68N79Y2s3174858
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 07:11:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=4L7SwgTZYrU2uezs9VS8q650
+	pkDvZJeXPq9cVPhYSHQ=; b=fu+58mCmTd2HqKq/5PDEcey26N4YxLaFzyNRYZf0
+	uQEZI9CMHSYj5DFxnqns7q1xRIYzSgjPj5xladloCPBmpITa0d7OlGVY039iKvv7
+	CtPCEloXulDcHVTOgFtnAyhnKJ5fd6gqBObskeCTbIFnMsTEIGo0MrOyBWY9G9u9
+	nn+xHDlavS3QL1V3qqXHymzz/xpL3OK/VhhhfXn3TQ8cBDy8udJo6bjijZG5fllZ
+	HFGRvpvqdCKKBf08YLLDZTACwcrhKoI5w3S4xEN4LOKnomUFWYT+DjwaOjDSibwg
+	7VqgLRmKjmnLIWIeX806AxWQ3WSIPgLfhuhvs7UbprgnYQ==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gux7xu1he-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 07:11:57 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-93bfb2da664so174876085a.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 00:11:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1790147517; x=1790752317; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=4L7SwgTZYrU2uezs9VS8q650pkDvZJeXPq9cVPhYSHQ=;
+        b=gWbEZnEfEEAsqQafif4vemI2fYihRbXRg4mTPH1+K3DaY5FSlMgtBLQ7vlDoLxUOCm
+         kuqdR1aOYoWahgnMaBhdM089+R8wXzGL1m19/jPIhz8pd0AQ9s/utR0cz+Mi2ge7CR9H
+         +4m95OMlZ/FpxxCw8RMY1onYgcTE2OGiMLafIY9pGC96qWgCYNf8YXvRG9SQs+EWzdpI
+         XMfv069/J5Gc7JWL8No7Y2FMUvjt2VCvtTWpBmnpNi7Oe2aN9tMS4Fjc+kxSXyQYfc3W
+         xx89BINd5S9v0YFmtrbrqKB3aXakJG/i5oAX6IdEjFuB9dWnyoiuqljVglx6aOgEWVct
+         rSBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790147517; x=1790752317;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=4L7SwgTZYrU2uezs9VS8q650pkDvZJeXPq9cVPhYSHQ=;
+        b=G6j8Hw7wMzv8kpJSXFvdLGHeAyBxt7BpQInrhrmaTpzC8sIBMC8O+6FuWdje/SBx47
+         rNhXJ5FxeQvFR9yxMm/VG4axw7JbO/aXDyYmLzQ7jyUtpxyxcdjJVvEfJ3epLveDY5Xe
+         +gdODIhSzPqppYMlwvwf6WiyU+fmrz00bnrh2E4y+kpguTG0TMzuETgmFhgvEFA9ZmFq
+         ce78ZFx/8F3gTf0isyfhBd4dBpaV27eu+9p8kFow7CaPt2sgEXx5jtLLaIZlMcfQypK9
+         T0D0sdRh3jHMmBWsSrm/2PCqCNNMh05Z8o3Kgd1xcRNTHXEkEqt9dEUxBcGgAZsohVwh
+         ZBSA==
+X-Gm-Message-State: AFuF++k8hu13YU/r1JKl5uBbeyr5bgy13LyAIC2YuEeWHg6wudy6HiqK
+	55HqKiyi6uLLe9DnePq5Bk7TuyE2pz1oWi8W9sjcAShLJg9Dilinn9kMBGk7GtsjjHTEV3mB7jt
+	UjHU/LAHbdtu2SedkGLeaUH1EWy+NDkQa+v5m2b5JzBVeTKPEsyFB8HdShiX7fseU08D8vIT7Wy
+	uC7AQ=
+X-Gm-Gg: AYBFou2WhgU2v7tVVTIMWuZraB0oEcW6+hw5L3nPFFKErtDgkaeznEQz0QwKrimd7ba
+	GI3Xid4o/JAtkBc8qsfn+6JZ5AwM5t9DGwVHE4ztwBvDdvvAo5qYKlu0ih2oLcGSfNKYSRlJDD6
+	CrB6sGQ+N77yaqx/VFHvbGBrvmPAP7JyIB03L+e4G+uUGtWJTK2CoVlhJfe2U+eRHzjyFwZL+a1
+	GZqXFRBmvhq6cveyJCdMouK7PIrjBIox/qb11qQZgmLxIHGL26z5lPHnQCcJMt36/ulJEzug1S/
+	+nUHun8+DdZyo6FulgNsVS29BUyFRFhqVNvvkOrGKKyP4oxEv9IRKZxI8TMwEJ05k+7JztkHFz/
+	2gPfnISxxoPvw8Q==
+X-Received: by 2002:a05:620a:d8c:b0:937:1097:feb8 with SMTP id af79cd13be357-93c2511c4edmr299667285a.24.1790147516902;
+        Wed, 23 Sep 2026 00:11:56 -0700 (PDT)
+X-Received: by 2002:a05:620a:d8c:b0:937:1097:feb8 with SMTP id af79cd13be357-93c2511c4edmr299663985a.24.1790147516395;
+        Wed, 23 Sep 2026 00:11:56 -0700 (PDT)
+Received: from localhost ([188.216.77.92])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fde1d978fsm49131775e9.9.2026.09.23.00.11.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Sep 2026 00:11:55 -0700 (PDT)
+Date: Wed, 23 Sep 2026 09:11:54 +0200
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH net v2] net: stmmac: fix rx Scatter-Gather support
+Message-ID: <arN7uiRGaQmO0eCk@lore-desk>
+References: <20260921-stmmac-rx-sg-fix-v2-1-b6d88c5ac2d7@oss.qualcomm.com>
+ <20260922144844.B10D51F00898@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR12MB9475:EE_|CH1PPFF9270C127:EE_
-X-MS-Office365-Filtering-Correlation-Id: 82750dbc-85a0-44c4-6747-08df1941c936
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|10067099003|56012099006|18002099003|22082099003|4143699003|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	ArdpPpjYh7xvvz/AIcspWg/OLIcc62UKFbLAwf4TO87BDdRLZfxhxRfcl2utgEOCbhb9S1cVmCsdcjSWbSbsazQ9IJgpmtdlyHkT+93LzLKpfkhjX2YRql+Q0PJMZadME7U62Anx7A/zLNMkT3SeAvlFHH0bzPzSRnDbMytMpGiNTLGyP1KjAMbVr8YmxARflWD9KC1ERr6QVodPNRM9f9WcNsSruRHq4IMI2VMK6UXarvgiZKZ+YLE64QO16lwRHR9GqpbZHTX+lDkuhOVIZsYhiOt0YQz2k15hcu4gOAb/MNEuJzUzdZst0i1LkqfvotiEUzLszgnNjc540fSBL57a9LQAhJF3nctkejGlvb8Sck3LwaElx8HIomMY3r4yliC4hOjuAdVtiWjCS2g3iIj76Rnu9twQID4dp+CADPctchkKmUryOMS4rk+Q6I/Xc8zQ/NPk1CcO/AOidYnJ7+xhLOnBl1P+8vsDsi7/dQQDoieH/Xuhkl6s7hzWZVJOqsjOiDlXl/kLB+PJzzE5JWgiQXGDOv6c1VgVfj8WMOYwDdWR7/TVtfUH4W7YX+6COHlnUTF9ydP/2rKsP4cLnIoTP1I0t8QnkxxaGSyDfY8=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR12MB9475.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(10067099003)(56012099006)(18002099003)(22082099003)(4143699003)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ZERKUFZCbVBEK21vWDUrZ3RMZHZyY3JVR3A5UE51Wmg4dU1aV2JjWnBONTdT?=
- =?utf-8?B?U1NuZVpHT0luLytPcExjejFPT1lwUlg0ZHFZckk2NmlmSzlHQlA1NmZwRUZ4?=
- =?utf-8?B?akkrZGtxNitMMFg0d25GYUFCamJzMi9pRjU5aDZZREdCcjNLaGtWMlZ0eWNY?=
- =?utf-8?B?NlNPVW1yMHB4ak5ycXVJUnVsT2NhamZLNFpObkw2M05JOVlPeW5sdUlSaXhO?=
- =?utf-8?B?aHhybXVDQUxHZ2VmMGEzeUwrTEZtRkNWTm5DS29rYml6eUVBZUFIOGFiR0tk?=
- =?utf-8?B?eEtDUkNmMmpjdTYwS3E3S2ozaTlvV0ZkdW91V3hSME9aTkU2cERxanJ6TlRT?=
- =?utf-8?B?eGF4am91M3M4elo1MjZzcHd0bkJWWEVkNnRsbFNYQnU2UkU0eWI3UWFadmwr?=
- =?utf-8?B?Y3F2WllCdmJnTmxab1hhdmUzeENoZ2FJVHR5MlFVN0xLOGU3SWR1dEJoM1hj?=
- =?utf-8?B?c1dMUHBzSTF2blVnUllLWHRSNXhKTWtiWFFqQXdlL1JkbTB2aGFqMHMwMDZq?=
- =?utf-8?B?YkU2NEZMb3EyOE1MZFRrM1pVMU9mRk16VUVsUTVrVkRvKytqQkx4MVlnN3dW?=
- =?utf-8?B?am5mOXh6Z2xCUW1tNUpSWnhRTk5VOWluWTZpZ24yQ0k2RkhvWkJySzZkOEdX?=
- =?utf-8?B?ZzB0VkNDdGMxQ0tJekRQMCttYWcwTVBpL1BFWGthNmdVSnhTN3JKK01aUTJm?=
- =?utf-8?B?elhjRjFDSVVXMDJnUHVHUUlWc1E5bEYvK0N4U08vNGRXQWROR0UxUndxT2tO?=
- =?utf-8?B?UWVEbUZweFhGVVpZZkR1bG9MdGtoOTcrc0hhRGJlcHp6bnJFTGF6V2ZNdVhQ?=
- =?utf-8?B?UkNlS1UwRkRabnRYM0gvaUJnK01MWGZ3MWVYOVNMMTVGSnZ4VXk2RUdldVE0?=
- =?utf-8?B?b2FwWWNrdXloQnl4Q3k3eDF4TmtFZzIrQkdNTVdlR2ptbjR2d1RnUkJRK2xN?=
- =?utf-8?B?ZGs3aFJ6UzE0N1oveTNXcGk5MnRLdU51Q2FKZ1JOOFllaU1nd0FKSlZQSGlj?=
- =?utf-8?B?U3ByRHVOK043SFc2L0ZOVFpVSkFpVWVCZFNlMmg5S2FzdnhuVi94TzJXYlc5?=
- =?utf-8?B?UXFJbm9IMytYTGdxMHBpcStqclJ4Um82VGE0RytFcERzRHZNRU1oUVc1Mjhi?=
- =?utf-8?B?VldvTis5YllLUGcwbFFSaFNIVkFqWUtDcmduZVNHeGg2L2NaYzJ4S2pWR1lZ?=
- =?utf-8?B?WlcrTkhHbkJETXhIZm9COGtYNzc5S1RlY1c1UHpPUmNWQVVUekhXdnhjOWNV?=
- =?utf-8?B?amRtWFJCSG5jZVFONmFtZk45Skg0blJHZ1NLMDZZc3E5SDJVL2FmNDNWZlM0?=
- =?utf-8?B?SDZJL2JJcGdhVkt2NlVQakFZVkcwOVRRTWtsZEQwcXk0YnRWcmx3S20vVEl6?=
- =?utf-8?B?T0U0Y0x2dU02Y2JHTlZjVFNUTE5CQVZrZE5neFFRZ29tVXJuTE9PYUdLVGYv?=
- =?utf-8?B?bFpMdk1sM3hLQnAwc3BiNzFtakp4K2ZYRnYvL1NKK29UL0xpRVZEWXJjMDNO?=
- =?utf-8?B?ZnZxUStONXJIa2NYaEhvSzAwVmFPZFpCNE53dGFiWlg4MFVkOUp0WDZKVGhp?=
- =?utf-8?B?TDA5MmFmblMvMjB2dnp6blJXbEtMSFU2MG55M2QwWm9SbWpaOUlwOEprVnht?=
- =?utf-8?B?STNKSFZOdDNrYTRVLzJuOENaNFBIVzRKVUVmY3M2NGx1WFNiZVJmWDRoOGx4?=
- =?utf-8?B?aUxJanRIT3RVK0lRZTc0S24xckxEWjEvRzg4dXN0S2U2NjN1WHlsa1F4WDU0?=
- =?utf-8?B?LzI0bDNCMFlEWUJoOEY4ZVJwZ2FLOEQzTlJ0Z1VyOE1rUGFmZ1dNeEI0L1Z6?=
- =?utf-8?B?cUtGUUp6UmNIWjdDR2NSM1FiNUpUemllSkFFbUQrTEVhUS9QMk41YjNLcXFn?=
- =?utf-8?B?ZEJWS0FBRC9DSExZVUZLYVZicDcyK2dzUTJ1K1c3ekRRelpydExBSHphSEs5?=
- =?utf-8?B?aFk4UlpqdGxicUNreEUramNQOUJSNy9BUG13ekRnWFpycnhvNmJxQ1JVWFM4?=
- =?utf-8?B?cWtZSktlMjVaSnNGN1RXRmNWZ3RqTjYrbC9KWTJ0aHlFM29jWUpZYmVpTjVi?=
- =?utf-8?B?bE1GQU43QWZKK0Q0d3JlSzFXanE5aHZXam5zZmlzV0xvVEVNc0dQamd1Qm16?=
- =?utf-8?B?N2ExT1l3K0hzZngwb2VoN3l5M2ZMcEM2VmRnd1k1S3dRUDdlYkFFa2xMeTZP?=
- =?utf-8?B?dUwyc1VoZ3MrWlRjZU9hVzZIdXVGemVPRmhCVzZEclBXdWFURFhTVFRna1pa?=
- =?utf-8?B?dUJPa1hlZU81RjIrbVNMZnZkZ3ZUKzBGWHVzUGtoYzdNaVhrYnBsak9tbkZu?=
- =?utf-8?B?WU1VbG5FZ2NyVGczZVV0RDRTTGplMnpvQUtKSVRwelZ0ZjNoSFdlQT09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 82750dbc-85a0-44c4-6747-08df1941c936
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB9475.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2026 07:10:45.2754
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: GJVk3SXECnzMGZ8Lyq+RK3M+Fi8D93M5FoLO3Kux/CxgzVGFy83fHRfdOlXs67lAsjKnfZziJP7Ng4vTPOYCMw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH1PPFF9270C127
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="1TNf89TMGOGdcDOT"
+Content-Disposition: inline
+In-Reply-To: <20260922144844.B10D51F00898@smtp.kernel.org>
+X-Proofpoint-GUID: 2iLEz7EQVuHW4mZ3taM_2CrzMer5OJB9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIzMDAyOCBTYWx0ZWRfX3ms/cU7cpfWd
+ EvAQFarF/ytup9tSxyasix4cgwmYuutdRSPdvCS/4ZpWDJhS22Icwg8ovaU9WvNnOU5dsFO1z3H
+ ku3e6hHPqoE9yefDk+hrYhHUBFQr3wd4RvHgqQDYytTROzRxwVdJvI+hNF2zpcP2snNEflqwZ1g
+ bafTj/3/fpVwZXAaWVrNksw5yoQIrsFKJBkpuhwXvAqWN61MvF4jkMb8WPKTyo5QQDd/rA40jXF
+ 573+Cs8pYmb6HhZN+gwE3iQPukh6efRntqlM72YkmN0uDVk38oqUZZpN1u+1ZpHLJeqtyYF51TI
+ inA5aacWomFlApNVLdOg+uhVSV9bT8Jt91SpEQ+22pSLSNRMnpIvJnkcoFpIomhehMKZPQFGhKz
+ 3N2NMxnTU5Y+HQ1mzVrSlDrXN3HVskqb5Rp/3ix6Gzl8wCg8IuqUv2j3pxONJmtwjcEg3DXlOIF
+ Q/Mhv0BA983mlDheHSg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIzMDAyOCBTYWx0ZWRfX4l92Ynt6T0/7
+ Ao7lgU6AX3fG344NYudaR+ggFBtabi6iDcd3x8f8hs6Sv5byNxNN3BF0fe4ZdF2RmaA7e9BL3Lk
+ jklycu+8z/7774Kd3av95sSPAbClt9A=
+X-Authority-Analysis: v=2.4 cv=QsDLTlyd c=1 sm=1 tr=0 ts=6ab37bbd cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=WpTaRW6qxYHRGzLzQsVYzg==:17
+ a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=c92rfblmAAAA:8 a=fb3CDrQzkRIv9xq4yYUA:9 a=wPNLvfGTeEIA:10
+ a=QUrq7jf_cUBQkAu679UA:9 a=NFOGd7dJGGMPyQGDc5-O:22 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-ORIG-GUID: 2iLEz7EQVuHW4mZ3taM_2CrzMer5OJB9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-23_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 clxscore=1015 lowpriorityscore=0 phishscore=0 bulkscore=0
+ suspectscore=0 impostorscore=0 adultscore=0 malwarescore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609230028
 
+--1TNf89TMGOGdcDOT
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 9/18/2026 12:18 PM, sashiko-bot@kernel.org wrote:
-> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
->
-> Caution: This message originated from an External Source. Use proper caution when opening attachments, clicking links, or responding.
->
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] irqchip: unrecoverable interrupt storm due to unhandled CMDQ_SYNC
-> - [Medium] irqchip: spurious handling of disabled interrupts causes log spam
-Thanks Sashiko for the review,  all issues addressed in v3 and validated.
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] stmmac: FCS stripping check corrupts payload on legacy cores
+> - [High] net: stmmac: skb_trim() on non-linear SKB triggers WARN_ON and f=
+ails
 > --
->
-> commit bfa978fa90b50ee4257046a8002784c0f7fc45f7
-> Author: Anirudha Sarangi <anirudha.sarangi@amd.com>
->
-> irqchip: Add Xilinx Versal NET SMMU CSR interrupt controller driver
->
-> The Xilinx Versal NET SoC implements a Control and Status Register (CSR)
-> block in front of the ARM SMMUv3 to manage EVENTQ, PRIQ and GLOBAL
-> interrupts. This commit adds an irqchip driver to demultiplex these
-> interrupts and chain them to the upstream SMMUv3 driver.
->
->> diff --git a/drivers/irqchip/irq-xilinx-smmu-csr.c b/drivers/irqchip/irq-xilinx-smmu-csr.c
->> new file mode 100644
->> index 0000000000000..d9b575c6c58b0
->> --- /dev/null
->> +++ b/drivers/irqchip/irq-xilinx-smmu-csr.c
+>=20
+> commit a400f52631710a5add56c0a39b6ab0128eae6a53
+> Author: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+>=20
+> net: stmmac: fix rx Scatter-Gather support
+>=20
+> This commit addresses SMMU translation faults on oversized incoming frame=
+s by
+> allocating and enabling a secondary RX buffer (buffer2) for non-SPH
+> scatter-gather frames on supported cores. Legacy cores keep buffer2 disab=
+led,
+> and the FCS stripping logic is adjusted to handle both linear and assembl=
+ed
+> frames correctly.
+>=20
+> Link: https://lore.kernel.org/r/20260916-stmmac-rx-sg-fix-v1-1-b49b7b8f72=
+5f@oss.qualcomm.com
+>=20
+> > diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/driver=
+s/net/ethernet/stmicro/stmmac/stmmac_main.c
+> > --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+> > +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+>=20
 > [ ... ]
->> +static void xilinx_smmu_csr_irq_handler(struct irq_desc *desc)
->> +{
->> +     struct xilinx_smmu_csr *csr = irq_desc_get_handler_data(desc);
->> +     struct irq_chip *chip = irq_desc_get_chip(desc);
->> +     u32 status, pending;
->> +
->> +     chained_irq_enter(chip, desc);
->> +
->> +     status = readl(csr->base + SMMU_CSR_ISR);
->> +
->> +     /* Only service sources we support; SMMU_CSR_ISR latches raw status */
->> +     pending = status & SMMU_INTR_ALL;
+>=20
+> > @@ -5807,24 +5812,31 @@ static int stmmac_rx(struct stmmac_priv *priv, =
+int limit, u32 queue)
+> >  		len +=3D buf2_len;
+> > =20
+> >  		/* ACS is disabled; strip manually. */
+> > -		if (likely(!(status & rx_not_ls))) {
+> > -			if (buf2_len) {
+> > -				buf2_len -=3D ETH_FCS_LEN;
+> > -				len -=3D ETH_FCS_LEN;
+> > -			} else if (buf1_len) {
+> > -				buf1_len -=3D ETH_FCS_LEN;
+> > -				len -=3D ETH_FCS_LEN;
+> > -			}
+> > -		}
+> > +		if (likely(!(status & rx_not_ls)))
+> > +			len -=3D ETH_FCS_LEN;
+> > =20
+> >  		if (!skb) {
+> >  			unsigned int pre_len, sync_len;
+> > =20
+> > +			/* Each frame starts here: reset the FCS handling */
+> > +			fcs_stripped =3D false;
+> > +
+> >  			dma_sync_single_for_cpu(priv->device, buf->addr,
+> >  						buf1_len, dma_dir);
+> >  			net_prefetch(page_address(buf->page) +
+> >  				     buf->page_offset);
+> > =20
+> > +			/* The XDP program must not see the FCS. This only
+> > +			 * applies to a single-buffer frame (buf2_len =3D=3D 0),
+> > +			 * where the whole frame and its FCS sit in buffer1;
+> > +			 * otherwise the FCS is stripped from the assembled
+> > +			 * frame with skb_trim().
+> > +			 */
+> > +			if (stmmac_xdp_is_enabled(priv) && !buf2_len) {
+> > +				buf1_len -=3D ETH_FCS_LEN;
+> > +				fcs_stripped =3D true;
+> > +			}
+>=20
 > [Severity: High]
-> If the CMDQ_SYNC interrupt (bit 1) was enabled or asserted by a previous boot
-> stage like u-boot or kexec, it is filtered out of this pending mask. Because
-> it is never cleared or acknowledged, will this cause an interrupt storm on the
-> parent GIC line and a system hard lockup?
-Yes — fixed in v3. The handler now gates on the hardware mask register 
-and defensively masks+clears any active source it doesn't demultiplex 
-(e.g. CMDQ_SYNC), so it can't hold the GIC
-line asserted.
-> [Severity: Medium]
-> Additionally, since SMMU_CSR_ISR latches the raw status, does masking against
-> SMMU_INTR_ALL instead of a shadow mask of actually enabled interrupts lead to
-> processing disabled or unmapped events?
-Fixed in v3 - dispatch is now gated on active = status & ~mask using the 
-hardware mask register (SMMU_CSR_MASK), so masked/disabled-but-latched 
-sources are never processed.
->> +
->> +     while (pending) {
->> +             irq_hw_number_t hwirq = __ffs(pending);
->> +             int ret;
->> +
->> +             ret = generic_handle_domain_irq(csr->domain, hwirq);
->> +             if (ret)
->> +                     pr_err_ratelimited("xilinx-smmu-csr: Failed to handle domain IRQ %lu: %d\n",
->> +                                        hwirq, ret);
-> If an unmapped interrupt fires, generic_handle_domain_irq() will fail with
-> -EINVAL and log this error. Because the driver cannot ACK an unmapped
-> interrupt, the bit remains set in the ISR. Does this result in permanent
-> ratelimited log spam and wasted CPU cycles on every subsequent valid
-> interrupt?
-Fixed in v3 -  On an error return the handler now masks+clears that 
-source instead of logging, so the bit can't stay set
->> +
->> +             pending &= ~BIT(hwirq);
->> +     }
->> +
->> +     chained_irq_exit(chip, desc);
->> +}
+> Does this logic incorrectly strip the payload on legacy cores for
+> scatter-gather frames?
+
+I do think this issue can occur since the legacy cores never set rx_not_ls,=
+ so
+the packet is always contained in a single buffer.
+
+>=20
+> On legacy hardware without set_sec_addr support, stmmac_rx_check_buf2_cap=
+()
+> returns false, meaning buf2_len is always 0. When a multi-descriptor (jum=
+bo)
+> frame arrives on a legacy core with XDP enabled, the first descriptor ent=
+ers
+> this if (!skb) block. Since buf2_len is 0, this check evaluates to true,
+> improperly subtracting ETH_FCS_LEN (4 bytes) from buf1_len and truncating=
+ the
+> payload. It also sets fcs_stripped =3D true, which means the actual FCS a=
+t the
+> end of the frame won't be trimmed later, leaving a corrupted frame.
+>=20
+> [Severity: Critical]
+> This is a pre-existing issue, but can this underflow buf1_len and cause an
+> out-of-bounds access in the BPF program?
+>=20
+> If a multi-descriptor frame is received and the XDP program drops the fir=
+st
+> fragment, the driver frees the buffer, sets skb =3D NULL, and loops to re=
+ad
+> the next descriptor via goto read_again. On the final descriptor,
+> stmmac_rx_buf2_len() returns 0. Since skb is NULL, the code re-enters this
+> if (!skb) block.
+>=20
+> This check evaluates to true, executing buf1_len -=3D ETH_FCS_LEN. If the=
+ final
+> fragment only contains 1 to 3 bytes of data, this unsigned subtraction
+> underflows to a massive integer. This corrupted length is then passed to
+> xdp_prepare_buff(), setting a huge data_end and allowing the BPF program =
+to
+> read and write out of bounds.
+
+I think the main issue here is stmmac XDP implementation does not properly
+support multi-buff. I am currently working on it.
+
+>=20
 > [ ... ]
->> +static int __init xilinx_smmu_csr_init(struct device_node *node, struct device_node *parent)
->> +{
-> [ ... ]
->> +     /* Start from a known state: all sources disabled, latches cleared. */
->> +     writel(SMMU_INTR_ALL, csr->base + SMMU_CSR_IDR);
->> +     writel(SMMU_INTR_ALL, csr->base + SMMU_CSR_ISR);
+>=20
+> > @@ -5924,6 +5936,10 @@ static int stmmac_rx(struct stmmac_priv *priv, i=
+nt limit, u32 queue)
+> > =20
+> >  		/* Got entire packet into SKB. Finish it. */
+> > =20
+> > +		/* Remove FCS if needed */
+> > +		if (!fcs_stripped)
+> > +			skb_trim(skb, len);
+> > +
+>=20
 > [Severity: High]
-> SMMU_INTR_ALL omits bit 1 (CMDQ_SYNC). If a prior boot stage left CMDQ_SYNC
-> enabled or pending, doesn't writing only SMMU_INTR_ALL fail to disable and
-> clear it, setting up the interrupt storm described above?
-Correct — fixed in v3. Init now masks and clears every source the block 
-implements (SMMU_INTR_HW_ALL = GENMASK(3,0)), including CMDQ_SYNC:
+> Can this trigger a WARN_ON and fail to strip the FCS for scatter-gather
+> frames?
+>=20
+> For multi-buffer frames, data is appended using skb_add_rx_frag(), which
+> creates a non-linear SKB (skb->data_len > 0). However, skb_trim() require=
+s a
+> linear SKB. Calling it on a non-linear SKB evaluates
+> WARN_ON(skb_is_nonlinear(skb)) and returns immediately without modifying =
+the
+> SKB, leaving the FCS attached.
+>=20
+> Should this use pskb_trim(skb, len) instead to correctly handle paged SKB=
+s?
 
-   writel(SMMU_INTR_HW_ALL, csr->base + SMMU_CSR_IDR); /* mask all  */
-   writel(SMMU_INTR_HW_ALL, csr->base + SMMU_CSR_ISR); /* clear all */
+corret, I will fix it in v3.
 
-so an inherited enabled/pending CMDQ_SYNC is disabled and cleared before 
-the parent line is enabled.
+Regards,
+Lorenzo
 
->> +
->> +     csr->domain = irq_domain_create_linear(of_fwnode_handle(node), SMMU_CSR_IRQ_NR,
->> +                                            &xilinx_smmu_csr_domain_ops,
->> +                                            csr);
-> [ ... ]
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260918-smmu-changes-v2-v2-0-adda681ab983@amd.com?part=2
-Thanks, Tushar Nimkar
+>=20
+> >  		stmmac_get_rx_hwtstamp(priv, p, np, skb);
+> > =20
+> >  		if (priv->hw->hw_vlan_en)
+>=20
+> --=20
+> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20260921-stmmac-rx-s=
+g-fix-v2-1-b6d88c5ac2d7@oss.qualcomm.com?part=3D1
+
+--1TNf89TMGOGdcDOT
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTquNwa3Txd3rGGn7Y6cBh0uS2trAUCarN7ugAKCRA6cBh0uS2t
+rBi0AP9hcsdpac8wgxMDEs+MHETqGtUGE2Hprlajiq3NcqG/qQD+OpZXz68yccaq
+RjD45w6SHo7JfADDJWps4No434m5yQs=
+=Nfiq
+-----END PGP SIGNATURE-----
+
+--1TNf89TMGOGdcDOT--
