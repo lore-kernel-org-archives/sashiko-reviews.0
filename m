@@ -1,105 +1,153 @@
-Received: from mail-qk2-f42.google.com (mail-qk2-f42.google.com [74.125.230.234])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from canpmsgout05.his.huawei.com (canpmsgout05.his.huawei.com [113.46.200.220])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFAF39DBCC
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 11:42:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.234
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790163749; cv=pass; b=N5kOH3Bg14/ecHTfYheIIdAYKIOx18up63Nc8CSrshi7iQQbSVpyp2SvTmoxFVmraL/Qw8izT/st5/NRejcCTB0caN1FjOGVecpqMevfOf2ne1Jx8gXgTbJkTo5tFsiM5ycBe0X0FdhOKNZ24c24SfQIW4T3bTBXSKdGfZe7g0g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790163749; c=relaxed/simple;
-	bh=nM7tbZ862fD4OC0Mg3Y7YqIbQSRAS6s7yXDWKfA5Yyg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IrCeDEFk8gdEVy+avz2CBLRZVhQzmKT2elGdgW2bdtdRc36/SPDJtlroP9qMjUoiV0sofmYuvG8xQI822Cx0NLjPXZf0PYkpHJ2KYTJLBHzfFBDGxqn9pX1/apbkTwbQR+cqVbzR7dDuzMCxKsBsnVF/TtZtpGfdjb6JnK4Glts=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QLAsQdFD; arc=pass smtp.client-ip=74.125.230.234
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E49D4A4848
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 11:48:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.220
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790164117; cv=none; b=uK/2dMqTjDx7wgUsoKCPN+9qNEMavnCL0XbrfLCp7fvmZsONGrHH130r/89AiNLWa/v86p7mZxUnPbh7rJIZrivazy6KES67AC9LsoWLBNRQtspvuIPoLJsvye+najHAvvwMkFhzfY75LnE9BiaUBp3EhGnLOe4gIlWXUSlm3YQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790164117; c=relaxed/simple;
+	bh=KSfiOnajdT0TCJuQ3E/w5aHiveEM4BqoGuxib+bgF38=;
+	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=ACnlVC93bqKiTDnvaCszwiup/Fy3UTiHBE1wPr9qlgnunLnCNYfQCoGueAJ6gh0p1kfKte+DW/jRaOn6PeiuhrHD2wHGQdrt3kdx/PqSYgr3bJOQZg0CHoRnWgmdTxiDrG5/lV7nDxw/4uthSbaKe9deGUAuKq9Wom4awsfoy0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=06B3n92B; arc=none smtp.client-ip=113.46.200.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QLAsQdFD"
-Received: by mail-qk2-f42.google.com with SMTP id af79cd13be357-93be29bb454so125251085a.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 04:42:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790163738; cv=none;
-        d=google.com; s=arc-20260327;
-        b=DLYKAV1pyoNVYNEwqK3vFI0F8IJdp+4+SFBQS+JcsDMv7RQtzxV0oGOSsNE52RmQDZ
-         dXNrikv+qUW5bY8SIxcLY8yo5lUCMBEIyi6Rzr/EnqUMPP1roHQqNtULF+NhKGfbY1LQ
-         DUGtjEbsa9UIfoZhzQGFZr814yTfben6MGCq4O3t8nsMP+BH+etAr3xUrznGigOWphA7
-         biZ28hdQoFiLThsamQ2zQv/ltgQc773CttYsL40yA/0qsz3wB4DalgONAAGJmpCff7zk
-         B1hzC9/4Zg7/alSLefwjksi7M402s1IZAQYcGkiNIo89MAd7EPh4Bx0gkViCbotImQDj
-         OJFA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=pWFPGMzX1L+HVqe105PucXhk0+tLBSplzJw7zI8y/mo=;
-        fh=mDAuwFAhs2mIusZI9ah3F5O0wx0xm7KPAs+ghUnUShY=;
-        b=RWyI22o/hGUHpYZunrGXZOiwbuZCPwUK1YdLuHh+hFDINTAhspFvfg0vu/Wn3V+WBb
-         2xVN2AGDIqS90GeglZwbwyCUdgWEuS/2BmfO9SOHAILYQwHIC+XSW9LfXvmarOr7Jt1D
-         SeW0GvPzMRFnIEMuXd5ymn0MFJZkE5X4JzjlLK+UX+nC7aAOns5SEUCoDPti6T6y12n7
-         vhVutJSEWAHfcz8lqD3ut9+UiobQdNLED74qViLg5q1i0LT0F6S9pFobISFaiHDsYsyT
-         En8AHgINqrwWrKEA/nS9P34+8h6mreZ2B7f3vSB/Qpf+hTNhHk7qqn5X0C9hlzCbU1HE
-         05Sw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790163738; x=1790768538; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=pWFPGMzX1L+HVqe105PucXhk0+tLBSplzJw7zI8y/mo=;
-        b=QLAsQdFDSHJvOdiuWIUw5GDVD9EIDLtl6jOsbly8R8eJG4PI1TVFssVVn9enG+Foye
-         uGNSzjknTYavaC9V4qXMmekiccv6iAJc0ieW1YmbaRW1hFK81iQ5WsPt2O22y1XMABg1
-         L0YMTLwU6SnuUMAbUVUzP5+MVS5ZjXPB7Nfj3E+ZaGvz0+LAl9tjBhMyFu+frbkQzkID
-         DyfGunRVo1uHIi8Hd/6VilcFhlSYKLxmTlnjLco3ZUJroEAMU1vBsqoaeDnV6zifhOem
-         8O2SBFDuZYQPsk0v2iP2sbqTe9JIpkXj72G+p3tNCWPEL3zBvJF7UTOrMys+Ed0EZjwL
-         AxbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790163738; x=1790768538;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=pWFPGMzX1L+HVqe105PucXhk0+tLBSplzJw7zI8y/mo=;
-        b=OC0h/UtDn+Uz3K1QJ4GrFeduGe/gjqX+4iHYpmBNpiLivOzy56p0CR3HHVIbYHH6TF
-         qqO4xzFreHGw1NsOf8Hc2i95nl0WRRTeMNlw3S0et6PHKgfDnO9IFrnpMzIERI5hYS1L
-         I9acH23W8FkErp9oUndlDO5R+IPK/KfE97dTwNg0m28lcCnnd10MpkbN9EZgLTAdmWnR
-         V7i66RK6IVNFUoBv6O3ccvOW4fdFBlXf18PiLD07cTdGgEMNqHTsQnJ+ViBOTlDpxLDL
-         CgRsZL5oVaUu/hnGUU+XlZx7gySWRKP6F+tSDvRHqduN9EyICQl4WRlkJsNarJ+C0ykb
-         1f0Q==
-X-Gm-Message-State: AFuF++m5IsBeYg/mbvol9TdNRrYr+5TdVX2KSe9sdE4Y2a7i79V9/goK
-	Pc1PFtmmZH8LX9vZWC7XMLdHIaYqFVR73X6o79qyj53yI3LVbh53Ghyv9fBinzlqDK5d9VKvzD9
-	Nc/PEFJl+bJU6peNquuqDMlnfA52TAjxS+LBUtK7B/Or6
-X-Gm-Gg: AYBFou0E2AlrzvIX1mnDCNEm3Hmkgrohim6aQAFhs2WUQWjTsFpAd48mGWRF+rHHK6O
-	QPSaZFrBf17W0mUreBMJrq1IaJF6o2FE4Gvtf3CnL7u24/1DanD4SPaU/b7agW9eet1GtBHdsJZ
-	jd14R4gvoNwoOSs+jWEGGs0yyscuJ40xM9ZShyF8Ii8MSZ1PShQzJIg42QzlJ8oIJwlneMfaJ1p
-	gPFIeynJArnYvBRmuBKyB6zc2jjf/cplY27/m5VyI0w57IimM8dvyTkGNKETyUmrDU3ReYE65fl
-	HHJAOd63YJYofL0ZLwRkMcbQ0q40bRuuoLbostHsUhrpvWSTVyI1Vfj1plzTEsXl2BkY
-X-Received: by 2002:a05:620a:2a04:b0:939:b94c:3e85 with SMTP id
- af79cd13be357-93c250f8407mr332746685a.24.1790163738125; Wed, 23 Sep 2026
- 04:42:18 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="06B3n92B"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=em08yh31x8n4q97wHB76tq1Ci3byPr7e6rhH+St0tCw=;
+	b=06B3n92BKyaT8fvCOjKZCZKadr+wC+26D1QAzgWCTJTUXCo+OQhRQxaz3kF/Qs+30IyLfvQkT
+	xzv4XL6nJ9Ht3ChV//34/vI/DpNCqsQsUesgWqh5gcCMmxNCWCJa+Dkm0+qBM770ne1F/2HbXGT
+	uVbkRRLJ6jOL2M4E9CB/eBw=
+Received: from mail.maildlp.com (unknown [172.19.162.144])
+	by canpmsgout05.his.huawei.com (SkyGuard) with ESMTPS id 4hqZgn0hCKz12LF9;
+	Wed, 23 Sep 2026 19:37:09 +0800 (CST)
+Received: from whupemo200011.china.huawei.com (unknown [7.152.185.179])
+	by mail.maildlp.com (Postfix) with ESMTPS id 2FC644056D;
+	Wed, 23 Sep 2026 19:48:13 +0800 (CST)
+Received: from [10.174.178.46] (10.174.178.46) by
+ whupemo200011.china.huawei.com (7.152.185.179) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Wed, 23 Sep 2026 19:48:12 +0800
+Subject: Re: [PATCH v3 2/4] md: Handle pers->run failure in level_store
+To: <sashiko-reviews@lists.linux.dev>
+CC: <yukuai@fygo.io>, <linux-raid@vger.kernel.org>
+References: <20260923112159.94175-1-chengzhihao1@huawei.com>
+ <20260923112159.94175-3-chengzhihao1@huawei.com>
+ <20260923114627.3CC921F000FF@smtp.kernel.org>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
+Message-ID: <b21c45c9-cfd6-090a-349a-69a95a869222@huawei.com>
+Date: Wed, 23 Sep 2026 19:48:05 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260923105208.198-1-anykey196@gmail.com> <20260923105920.CAC761F000FF@smtp.kernel.org>
-In-Reply-To: <20260923105920.CAC761F000FF@smtp.kernel.org>
-From: =?UTF-8?B?0JLQu9Cw0LQg0KHQktCd?= <anykey196@gmail.com>
-Date: Wed, 23 Sep 2026 16:42:06 +0500
-X-Gm-Features: AcwNN1WQplWtIF5el8zF5Tmhe4QX7yFqwnVJq9zazF13PvpPkafeV1wGHPP3_pA
-Message-ID: <CANHPwAR6+f0dtOrBdwD8C4_cO5HvnpNKNnhxLZY+Bm6h-dicrg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: allwinner: h616: orangepi-zero2w: add 24-pin
- expansion buttons and IR
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
-	linux-sunxi@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20260923114627.3CC921F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
+ whupemo200011.china.huawei.com (7.152.185.179)
 
-Thanks for the review - you are right.  The two buttons and the IR receiver
-are on the optional 24-pin expansion board.  With the board detached the
-LRADC input and the IR receiver pin are undriven and float, which can lead to
-phantom key presses and interrupt storms.
+在 2026/9/23 19:46, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] md: NULL pointer dereference in md_handle_request() after pers->run() fails
+> --
+> 
+> commit 3549464235e3de415ce8ceb834293e195eafad7d
+> Author: Zhihao Cheng <chengzhihao1@huawei.com>
+> 
+> md: Handle pers->run failure in level_store
+>      
+> This commit adds error handling for the pers->run(mddev) call in
+> level_store(). When pers->run() fails, it stops the array via __md_stop()
+> and unlinks sysfs nodes before unlocking and returning.
+> 
+>> diff --git a/drivers/md/md.c b/drivers/md/md.c
+>> index 680b34a63cb3d..0a3252098780b 100644
+>> --- a/drivers/md/md.c
+>> +++ b/drivers/md/md.c
+> 
+> [ ... ]
+> 
+>> @@ -4229,7 +4230,33 @@ level_store(struct mddev *mddev, const char *buf, size_t len)
+>>   		mddev->in_sync = 1;
+>>   		timer_delete_sync(&mddev->safemode_timer);
+>>   	}
+>> -	pers->run(mddev);
+>> +	rv = pers->run(mddev);
+>> +	if (rv) {
+>> +		/*
+>> +		 * ->run() has released the private data of the new personality,
+>> +		 * while the old one has already been released as well. There is
+>> +		 * nothing to fall back to, so stop the array to avoid leaving
+>> +		 * 'mddev->pers' pointing to a personality which has no private
+>> +		 * data, and reminds user to try to active the mddev again.
+>> +		 */
+>> +		pr_warn("md: %s: failed to run %s after takeover, please try to active\n",
+>> +			mdname(mddev), pers->head.name);
+>> +		if (mddev->pers->sync_request && mddev->to_remove == NULL)
+>> +			mddev->to_remove = &md_redundancy_group;
+>> +		if (md_bitmap_enabled(mddev, true))
+>> +			mddev->bitmap_ops->flush(mddev);
+>> +		clear_bit(MD_SERIALIZE_POLICY, &mddev->flags);
+>> +		mddev_destroy_serial_pool(mddev, NULL);
+>> +		__md_stop(mddev);
+>> +		rdev_for_each(rdev, mddev)
+>> +			if (rdev->raid_disk >= 0)
+>> +				sysfs_unlink_rdev(mddev, rdev);
+>> +		set_capacity_and_notify(mddev->gendisk, 0);
+>> +		mddev->changed = 1;
+>> +		md_new_event();
+>> +		sysfs_notify_dirent_safe(mddev->sysfs_state);
+>> +		goto out_unlock;
+> 
+> [Severity: High]
+> Can this trigger a NULL pointer dereference in md_handle_request() for
+> concurrent bios?
+> 
+> If pers->run() fails, __md_stop() sets mddev->pers to NULL. The error path
+> then jumps to out_unlock, which subsequently calls mddev_unlock_and_resume().
+> 
+> When the array is resumed, mddev_unlock_and_resume() resurrects active_io
+> and wakes up mddev->sb_wait. If there are concurrent bios submitted to the
+> array, they may be blocked in md_handle_request() waiting on sb_wait:
+> 
+> drivers/md/md.c:md_handle_request() {
+> 	...
+> 		if (is_suspended(mddev, bio)) {
+> 			/* Bail out if REQ_NOWAIT is set for the bio */
+> 			if (bio->bi_opf & REQ_NOWAIT) {
+> 				bio_wouldblock_error(bio);
+> 				return true;
+> 			}
+> 			wait_event(mddev->sb_wait, !is_suspended(mddev, bio));
+> 		}
+> 		if (!percpu_ref_tryget_live(&mddev->active_io))
+> 			goto check_suspended;
+> 	}
+> 	if (!mddev->pers->make_request(mddev, bio)) {
+> 	...
+> }
+> 
+> Once woken up, they will re-acquire active_io and unconditionally dereference
+> mddev->pers->make_request. Since mddev->pers was set to NULL by __md_stop(),
+> will this result in a kernel panic?
 
-v2 drops them from the base board .dts and provides them as a devicetree
-overlay (sun50i-h618-orangepi-zero2w-24pin.dtso) with a Makefile entry,
-following the existing sun8i-orangepi-zero-interface-board.dtso approach.
+The problem won't happen after [1] applied.
+[1] 
+https://lore.kernel.org/lkml/20260922030538.1634904-1-chengzhihao1@huawei.com/
+> 
+>> +	}
+>>   	set_bit(MD_SB_CHANGE_DEVS, &mddev->sb_flags);
+>>   	if (!mddev->thread)
+>>   		md_update_sb(mddev, 1);
+> 
 
-Tested on: OrangePi Zero 2W (Allwinner H618) with the 24-pin expansion board.
