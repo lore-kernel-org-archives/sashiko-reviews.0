@@ -1,166 +1,154 @@
-Received: from quail.birch.relay.mailchannels.net (quail.birch.relay.mailchannels.net [23.83.209.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl2-f43.google.com (mail-dl2-f43.google.com [74.125.229.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B966E46A60B
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 21:36:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.83.209.151
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790199409; cv=none; b=UnhLBBc6X69KW6le0HgI9NiGmivq9cEeu3w8yWj1X/gjQevucwvTHAv7q6CYtJsAFgTwtCEABpWoHMOfogrW/lfWXzkkq8HhMqLMLmhH1bzkKnUqMdMJIb0jrYwyRcPYNjZtRPCZEBXvnMXyg0SudTGEgQC5YaoMDb6fzYGzeBk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790199409; c=relaxed/simple;
-	bh=akKv8QPc6zsWnwlUu+rJeQuh18Jn9ZzV1fjt1OhlRJ8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sCzTPNV1r97BJNiKGiPmUwfMBc+W+9R1QQBayxZDj14sV21WFwIm30p8WGkyhECzYgHVbQa1PKw+jlRuSsODvnN4cFmsE7TtOyrcRsSirWJaAXJWbvLnmKmBzePQciPncabi69C8ch6oxOvHcRLrO8sE0JB9La4cs5aqXje8XlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net; spf=fail smtp.mailfrom=stgolabs.net; dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b=L7R2Tuo0; arc=none smtp.client-ip=23.83.209.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=stgolabs.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=stgolabs.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40AC541A56F
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 22:21:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.229.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790202111; cv=pass; b=TG2yKWJReFDqWQzrZqsW7aCJDZdIIWIO4qXi2mtxLIQnDmPWdzQckCsqeo45tHChXFjR1IzXIlDZswyOkkC6haO4aQof7GGBh/N5s0UY8qV7PcP2HOQeyEi0HGHbWkuaINCdPHFHDEVJULczKKkeOLh0OyAHPZwmDIdAxbk7QnA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790202111; c=relaxed/simple;
+	bh=tliYGNFTpwD+P7c3MiJ22dL/iRQQdvYPsDg/ctQP6Y8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OQb3bbaZcOtXnwhdzobFzqbdDmh0SXgVZJLVey+MllUlc+spnVCZvMg7q5evfmc3oInFDuocgSCuIArtlLaGXWXPJlfHmmKYNaPJ8G5+cHNx0I82nTMVpPBJCrixTXEruEMz+kxXl+Q28w0ATkR3/we4KMQGCOWhNXeRTKJSvAc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Kt+LMjAD; arc=pass smtp.client-ip=74.125.229.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=stgolabs.net header.i=@stgolabs.net header.b="L7R2Tuo0"
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 9765E161A8C;
-	Wed, 23 Sep 2026 20:57:39 +0000 (UTC)
-Received: from pdx1-sub0-mail-a230.dreamhost.com (100-100-68-17.trex-nlb.outbound.svc.cluster.local [100.100.68.17])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 5D6ED1619E4;
-	Wed, 23 Sep 2026 20:57:39 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
-X-MailChannels-Auth-Id: dreamhost
-X-Juvenile-Trouble: 031032e163c86f32_1790197059452_2496903977
-X-MC-Loop-Signature: 1790197059452:3818249721
-X-MC-Ingress-Time: 1790197059452
-Received: from pdx1-sub0-mail-a230.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.100.68.17 (trex/8.0.2);
-	Wed, 23 Sep 2026 20:57:39 +0000
-Received: from offworld (unknown [76.167.199.67])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dave@stgolabs.net)
-	by pdx1-sub0-mail-a230.dreamhost.com (Postfix) with ESMTPSA id 4hqq6V725bz1d5;
-	Wed, 23 Sep 2026 13:57:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
-	s=dreamhost; t=1790197059;
-	bh=TVB+i48RmEI0/Wsm8uQlSUm8bEiJrK4IEyBgWCvWDwc=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=L7R2Tuo0K6Fsng+HB90+ksjTHwWUB9Cm+JjRkW9dyM4TCrYOrkPB02k8K7L+rh6Tn
-	 WdNL/Jmc8HMHwtyQGllNDXUG8gCyD7J40DUoN+a2HVKuuEn7xKbmFxHKzeTpoFhFWD
-	 xF0FndteSCSAEKk2eCY/3QuXTsgButXnBYk12cyvj75E8eRY9EB/r3u3N50sz8cucZ
-	 GA2fh0j2nRQt4G2JwfIySMDazQvc8KBFukfYsaRyGsmvmaq4E4o6cZAlRs8BzIYRfN
-	 jW0IBBFawj+Y3RqXtWJaI0KZgT5m7qOXIatkEU8sWXL+l4KbDlBp1xX/RUz6Ysxl2+
-	 ttkFe4VP16RJA==
-Date: Wed, 23 Sep 2026 13:57:36 -0700
-From: Davidlohr Bueso <dave@stgolabs.net>
-To: sashiko-reviews@lists.linux.dev, dave.jiang@intel.com
-Cc: linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v9 09/10] cxl/test: Add mock BI topology support
-Message-ID: <20260923205736.tvxwcz3qizvp3jsx@offworld>
-References: <cover.1790103847.git.dave@stgolabs.net>
- <113381dfa31a452a5522ed84b14a3b77b6e027f3.1790103847.git.dave@stgolabs.net>
- <20260923011129.BF5F31F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Kt+LMjAD"
+Received: by mail-dl2-f43.google.com with SMTP id a92af1059eb24-1450541ab50so15359c88.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 15:21:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790202109; cv=none;
+        d=google.com; s=arc-20260327;
+        b=pkRdYGltljqMAqHUchmCS65CjL/ITSzsXf9SZ8jyCVxI+WSwK5Jau1ZkqAchO1HK+L
+         1FsVZ1E8UtW51kb74gJzj6B8jB4EoVyT7PX1XJUq82ejxJRD6UCsnd9d4us71nZPZeMe
+         dUptXDPo9MLISJAtq2VghPzkCQSuHUrdiDLtoPXSowZov7qEDpFFAGcMNYc07+tBVtun
+         4d5rLyUr9EoFh9ItE+GlhOV1OKh5YtFqwvD9iNc4kaRQGqciyBn/SjEgmB4tm/nIVLrh
+         VEA4042fnHckMeerc1KSv9IK8F5vKkGFz9n9kp2hgp/PLq6hvSXBO0gpKYQ/lFLRKOyV
+         lVlw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=esE/zmEZJv3Gumf+k+6MWUx8NLOwAoSQg46jivr0oLA=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=olP+E1NcAgHltooZt5sKOvc2Jg+YxHsa8u/l1NkhT7t5sIMBgdJxZ4g6jvc55/dUiN
+         3Ll7NjIWEV/X3Sc6QZGp4WyY1T1Oq+4qGYMxxvbxxPnmiMZbYPIs3Q+OckBrXcwsWNyk
+         o2JDqw9z3+NEWocpRz7G/y44k6cNWgvp8ZSFWlZuqZE1pf3q8niIT3XVjQ3QKxkw+Sf4
+         NzRmTB7ZsRE6RG6uDFVyqaqxlxOE5VgbMaZrIJdW7fn6p9eRGWHuSLKbAoyDfoSxv1ao
+         WSIf1VtJdPKKWAN0fFuXn5It7R3vcka3leqam8bR7hr0aeb5GJmxvoveFFN22pwse3QX
+         w3Og==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1790202109; x=1790806909; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=esE/zmEZJv3Gumf+k+6MWUx8NLOwAoSQg46jivr0oLA=;
+        b=Kt+LMjADm1omYzfZy38Ke0Xn2z58u3XSpL+v9GN2EjQvCQYQfGf40YF0KO1iikRJO3
+         F2S2rIGnqQ0NQ8FTm8Qn4GXAVdr2lIw+OtSXjWXG6SGM+8BxsKuVaMcvHijOFoWG8E18
+         USLwDK4GXP2juvBGA0WPhRr5o2xhxXP2CTuXZucqA1MP9JfjXCcmzLSM8dVMJZTOxb1l
+         v3Er623Md9wur2j7ed+zFz4qwX+XK3xE2xNg/QXb8XZ/ZVBoRJ57BdvZeICkD4EzPpF3
+         Mm7kA0qZXC4YSWEy7/utcAUBw+6GCTHed4NgIn+qv08PPlmfIX+BCNUfKCGRIKmkkn3D
+         BshQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790202109; x=1790806909;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=esE/zmEZJv3Gumf+k+6MWUx8NLOwAoSQg46jivr0oLA=;
+        b=2JXz2tcCnm1B0vE8qDDRraMC0ch8YZt7lHUrLWnhKD2ApDCFFQOnW1ic9zmZG73H1k
+         2BWNnvVPKWr9vIQ1fxArUyQ4x+G/XjN11fxvULkZUiGjv3YT4YSQEycSaeuBhAPWE3+7
+         SEJkkS2k0kV9+CHuoPHucBX+OMKYiWSUtJRS8jYXjGcadFa6+lA3/K6fmk2L1vDQHv7Z
+         grs/Ii5m6VhBpI3gOUHbBGOgX8Dm4rN/5IMsmoMItJYK3g/VuNpUos4UdWfa2IcsdCLV
+         IgFtyG4N/pSJB6zlz0+eYn5iSgypX2mEYfXLDk7SEh/JEDU5ptEP4SmUL6qtlyqbC46S
+         pknA==
+X-Gm-Message-State: AFuF++nhmKwrXgijAsd7t4+7a0n8VO0/yrwnmAgEuW6gdacvXx7GLDYq
+	B8d8dynV1oIYfaH2G849kFLHgfu97+qRFetrTtQ46VpzT1pwkGO8MxIn8toFvLlB90f4YaAdqu3
+	dvJWkiqv589AUk2jf41gDmLKOwXXPQxWyjb557N8H56Nufo1lpDXsuZGdWYoQDg==
+X-Gm-Gg: AYBFou1T3Ekmyf9RAHG1B4h1Qp0AfnxZoetqSTn9IVq3wTxV6HSNPWemvY6zCrZJdpf
+	RIMljRfcc0Sp+w0432dEw9E2cR6u4ljoDDCRuc4PyrJ7n/mt8J77U1BA58IDtHso/jXu60ORJRs
+	46Y6pTietlTrYEWTDhpGMBPUqsTeeqKvBVcT2nMpPvOyV1yyomEFjxEPJ9IsbFBIDWNCvAgpfv6
+	2S7OkDCx0LYLMDPtzxOghvfkcbgEGSgSstLG8VCI0K0328M7cM3lgdONKS6hkvrayJilrykveQU
+	9bsAVdMzZ727b8VpuGNSxXe1ZCQZbSauxcnuPRE4v/B5ukDYOvF1/gLQUEDKBhepyIIt+885WgG
+	Ua4VtStBE1tOVA1NGT/tGEgZU1Sq/kmyezorbHnNWUdLN+Gvn1lfjjQotfVTM9T8iiHCF7Lnkar
+	NNLDegHTAZ7KJZafSLgObczKY=
+X-Received: by 2002:a05:701b:21c8:b0:143:5c2a:e488 with SMTP id
+ a92af1059eb24-14503f6e17amr337810c88.0.1790202108054; Wed, 23 Sep 2026
+ 15:21:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260923011129.BF5F31F000FF@smtp.kernel.org>
-User-Agent: NeoMutt/20220429
+References: <20260923213719.224838-1-kuniyu@google.com> <20260923213719.224838-8-kuniyu@google.com>
+ <20260923220251.9490C1F000FF@smtp.kernel.org>
+In-Reply-To: <20260923220251.9490C1F000FF@smtp.kernel.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
+Date: Wed, 23 Sep 2026 15:21:36 -0700
+X-Gm-Features: AclHuK_h4qXFBEFH72kLwaln6D1VfTAMFoRWKPVnz_qUcyz8UJSJ4LddlxF2mHc
+Message-ID: <CAAVpQUCTjVNRnaLSA=V56fCwG8tt5_AsGVcUbB4N5kh55vhGEQ@mail.gmail.com>
+Subject: Re: [PATCH v2 bpf-next 7/8] bpf: tcp: Add kfunc to adjust sk->sk_rcvlowat.
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 23 Sep 2026, sashiko-bot@kernel.org wrote:
-
->Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->- [Medium] cxl/test: Use-After-Free in mock_cxl_setup_hdm() on unbind/rebind
-
-This is valid, but just affects the mock device, I have fixed it per the below.
-
->--
+On Wed, Sep 23, 2026 at 3:02=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
->commit 943579b999ae7670b28d433527c8563008ab779f
->Author: Davidlohr Bueso <dave@stgolabs.net>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] bpf: tcp: OOB write in __tcp_set_rcvlowat via unrelated socket
+> --
 >
->    cxl/test: Add mock BI topology support
+> commit 68bce63bbe5802a4eee99c7c0f138096d7c16481
+> Author: Kuniyuki Iwashima <kuniyu@google.com>
 >
->    Extend the mock topology with a Back-Invalidate path
->    covering both the type3 memdevs and the type2 accelerator.
+> bpf: tcp: Add kfunc to adjust sk->sk_rcvlowat.
 >
->[ ... ]
+> This commit adds a new BPF kfunc bpf_tcp_ops_set_rcvlowat to allow
+> struct_ops programs to dynamically adjust sk->sk_rcvlowat. It clamps
+> negative values to INT_MAX and delegates the update to __tcp_set_rcvlowat=
+().
 >
->    Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
->    Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+> > diff --git a/net/ipv4/bpf_tcp_ops.c b/net/ipv4/bpf_tcp_ops.c
+> > index b0cade34cce65..e93c8d13684ef 100644
+> > --- a/net/ipv4/bpf_tcp_ops.c
+> > +++ b/net/ipv4/bpf_tcp_ops.c
+> [ ... ]
+> > @@ -368,8 +368,62 @@ static struct bpf_struct_ops bpf_tcp_ops =3D {
+> >       .owner =3D THIS_MODULE,
+> >  };
+> >
+> > +__bpf_kfunc_start_defs();
+> > +
+> > +__bpf_kfunc int bpf_tcp_ops_set_rcvlowat(struct sock *sk, int rcvlowat=
+,
+> > +                                      const struct bpf_prog_aux *aux)
+> > +{
+> > +     u32 moff =3D aux->attach_st_ops_member_off;
+> > +     bool wakeup =3D false;
+> > +
+> > +     if (moff =3D=3D offsetof(struct bpf_tcp_ops, dequeue_rcvq))
+> > +             wakeup =3D true;
+> > +
+> > +     if (rcvlowat < 0)
+> > +             rcvlowat =3D INT_MAX;
+> > +
+> > +     return __tcp_set_rcvlowat(sk, rcvlowat, wakeup);
 >
->> diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
->> index 62bd92b3be45f..cddea44e780aa 100644
->> --- a/tools/testing/cxl/test/cxl.c
->> +++ b/tools/testing/cxl/test/cxl.c
->[ ... ]
->> @@ -736,10 +767,65 @@ static struct cxl_hdm *mock_cxl_setup_hdm(struct cxl_port *port,
->>	cxlhdm->port = port;
->>	cxlhdm->interleave_mask = ~0U;
->>	cxlhdm->iw_cap_mask = ~0UL;
->> +
->> +	/*
->> +	 * A page of plain memory stands in for the HDM decoder register
->> +	 * block: cxled_committed_bi() reads the per-decoder BI bit from
->> +	 * it, which mock_decoder_commit()/reset() maintain below. All
->> +	 * other consumers of these registers are bypassed by the mocked
->> +	 * decoder setup and commit paths.
->> +	 */
->> +	cxlhdm->regs.hdm_decoder =
->> +		(void __iomem *)devm_get_free_pages(dev,
->> +						    GFP_KERNEL | __GFP_ZERO, 0);
->> +	if (!cxlhdm->regs.hdm_decoder)
->> +		return ERR_PTR(-ENOMEM);
->> +
->> +	/* likewise for the endpoint's BI Decoder block, BI Enable set */
->> +	if (is_cxl_endpoint(port) && !port->regs.bi_decoder) {
->> +		void __iomem *bi = (void __iomem *)
->> +			devm_get_free_pages(dev, GFP_KERNEL | __GFP_ZERO, 0);
->> +
->> +		if (!bi)
->> +			return ERR_PTR(-ENOMEM);
->> +		writel(CXL_BI_DECODER_CTRL_BI_ENABLE,
->> +		       bi + CXL_BI_DECODER_CTRL_OFFSET);
->> +		port->regs.bi_decoder = bi;
->> +	}
->
->[Severity: Medium]
->Could this lead to a use-after-free during a driver unbind/rebind cycle?
->
->In mock_cxl_setup_hdm(), devm_get_free_pages() is used to allocate memory
->for port->regs.bi_decoder. During a cxl_test unbind, devres will free this
->memory, but the pointer remains set in the long-lived struct cxl_port.
->
->On a subsequent rebind, the condition !port->regs.bi_decoder will evaluate to
->false, skipping the allocation of new memory. This leaves a dangling pointer
->that could be dereferenced later by cxl_bi_decoder_enabled().
+> [Severity: High]
+> Does this code allow an out-of-bounds write via an unrelated socket type?
 
-I was able to reproduce this pounding with the mock device with:
+No, from v1:
+https://lore.kernel.org/bpf/CAAVpQUAJJ2RmL_dTH=3DM2s2Tj9mypL2YtYK7t6tCSaEj4=
+bYY9Uw@mail.gmail.com/
 
-     echo endpoint16 > /sys/bus/cxl/drivers/cxl_port/unbind
-     echo endpoint16 > /sys/bus/cxl/drivers/cxl_port/bind
-     <create an HDM-DB region on decoder16.0 and commit it>
+---8<---
+No, false-positive.
 
-The bind mostly fails with ENODEV, but for a window where that bind beats
-the the unbind's queued detach work, that reprobes the same cxl_port, so
-we run into:
-
-     [   25.154927] cxl_port endpoint14: probe: 0
-     [   25.229702] cxl region6: mem7:decoder14.0 BI disabled by reset during commit
-
-Nothing had cleared BI Enable on that endpoint.
-
-I will fold this fix fix with:
-
-   -     if (is_cxl_endpoint(port) && !port->regs.bi_decoder) {
-   +     if (is_cxl_endpoint(port)) {
-
-(mock device only, real driver not affected since devm_cxl_port_bi_setup()
-re-maps on every probe and cxl_map_component_regs() assigns
-unconditionally).
+This kfunc is supported in encode_rcvq() and decode_rcvq()
+only, and we don't support lookup helpers there.
+---8<---
