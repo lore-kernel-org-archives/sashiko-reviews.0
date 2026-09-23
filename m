@@ -1,81 +1,81 @@
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968F954B1C6
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 19:08:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747B255820C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 19:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.178
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790190533; cv=pass; b=Mwnbbc1dCZNRmvx7VyM/tRdiWDhbbR8aLU9rwtZrhGvY0Hs5Kgg8asNex/mXJ2WRbZF/a1lfCTYCUygqJ7oFLn0cpJNplOzmONShzhNhh1gLImWRGyN3o6YKsg00LIk/AobF30s48xfzgYBP7T+JCetxlZqtVYTTQ6792AdrjOo=
+	t=1790190700; cv=pass; b=N+VA07VIHkke8v1JqnQbqgXW44KxxUpW1H2PqLWx2x1zxpkM1OM/dL0v5NmWo7u/kQ1/HpYg1ha5srg9MlyZ7tldVzgi64HawxtjYr1O5AiEm5EhEOotICD3cSsGtsvT2+AoUelRGiwtKUWioHu1OoFb1Vl76jIoxidfE4tUvAQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790190533; c=relaxed/simple;
-	bh=5LZM8d3innRBAzNLNsGi5lkZyJzPm9PE6/1I2v46ll8=;
+	s=arc-20240116; t=1790190700; c=relaxed/simple;
+	bh=WyM9Ze+Bhx7ApLDVxVGXqmReVBsZfd8IwGWW1NUKLuI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ToHg3IPtUePMHCxriZj7yfMrRWErGBwV7M9jVploFCPpZmAK1skR+iiFhB1V6kW4yX7aIiFqIG8GlXJSpGdPfZY9pt1GMTqFvKhoC2qO38lklqnZh56uucNISq/GBteoLWtVgtBBY3Kc/MR/HWdBvlLS3uBI4K/9pUcEBsgKNCA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Zc5ybZrJ; arc=pass smtp.client-ip=74.125.82.54
+	 To:Cc:Content-Type; b=s2Zi//e/yX4LFwo/zz5Er84JAfZHCoPDNq46CO3je0qdjreJRmAh1tkkLMh8LZP+2x5Q6ZMRfrmhmPNtPEL4CAzlH/O7mGI+nSdQJaaux+gXG0FsJxBKqS5CquIdIW8TYaFLAmmaCwybmMx3OjXZVWjHY2FEH8ZzU2qe8iF0ZSo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=A7SubFMl; arc=pass smtp.client-ip=209.85.160.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Zc5ybZrJ"
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-143490b97f7so2745c88.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 12:08:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790190531; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="A7SubFMl"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-530e8c6fb80so40071cf.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 12:11:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790190697; cv=none;
         d=google.com; s=arc-20260327;
-        b=s9vTd51MfX43xkrHc0y2omVM2mJffzgaW9cU8Hh9O+xlvnVZVL1UqS11ctjZvNVos8
-         kb3MISEoYMb366YYqVNOb8nuNTlWkSlQHCRxYeqDxY8qiBw49uCM4Maaxy/G/QdyLb7+
-         QaQ82RQEeJAauMEK7es1zYQX7SUnauXJPijNL2WKt3lsaN1ryOLXHdmH2y7X2yJz+nPW
-         S5//kmsPa2x2JOqdMIZEyY8MZH4iWuLrSc8Z7CPcsL4rqqsg4Djcp/kDOZwZjYsklrrr
-         XQUZKuE2FPvtiuwbNtzjKlEZOvzL8jsHZ3RfoYWj7cQ3X3ms73Nb7/Gobm8A57xfE8XJ
-         X5tA==
+        b=AJ3r07IjfwyG1bqNWekWxsb0625ttlEXsC+wZeNlbNjb3rKaP6fhTxXKOxpuaztU8L
+         i6svEoRwqmk00KZp9hGEahouTIORBrms4RcHb2smvKJyH/nDpI3H7St5Hj8XegWpqtl+
+         Ue+/2J35/E4AsaJ8sfTVWr160xNjnVuElBnm6XZ8mimAgHj9yFxiZbeAjcCrv6tLp613
+         fg91ie5HrrtVC3vp/CJhvtyyl28YLX5dKz7+BpPvCJ+mGKdypORnJgjfaJNzkJd98Cpm
+         FSFj/fotGY9nS8fJudwixvfddM/bRkraLt0oI53n5WmQVM2tLtd5GCyHFzUT06HD97Se
+         iTZw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=W0FYu+dVDEzIdn773qfkDF08ZIKjJFXLHOFX+/IEE1M=;
+        bh=2NQxLZICGnHK2h/s6KW/Zky2T9XW9w9CFC0y7KybVt0=;
         fh=0zVHGC//SC94CWFKHtFt4lnskmkXkJNNy7lE0FDd3Ck=;
-        b=hp3g2eVBq6HnChFlJBnaLcpDJle+eYtZ9ZE5KrWKyBpTeSkvvlo0TPtE6sydOwG8dI
-         YyQCcsB409f/koZAF/Gz3O+L1DRBMBSBQIgYncwwprNhYvLnX4qeSWQ9W3y17iu6wLGd
-         JdXvavchn0Nu8xSec1UFxuQJEfDySlyukMbIjorX97qgXHO7+kSI9eF8XfhbpedZcvoM
-         b5E6e/S8paq5mnYzrdXIE4pooQur4w81nOvZGX7sXDSXNoolfZYbdrFNELSW6sL7dQiL
-         BggxFNDyIBcs96sTY8AC5Lhhxvebw3YnEI3b64SHVsMSl9pQPtHvcT6VmdNaouFT9iqk
-         oTdQ==;
+        b=HXK7CeI7oEfrs51FzLkzWa42W+Na24UG+9TOSu6WIgHZn2GN0HD5wHUgtbpMfrUYSp
+         FKBgwKj+fNOS29wdQo/l5AVMnrS6XbOtQanXl0LT2gAEIQAPEA3b23AGCCsehs5v1DXt
+         WLXBZBj2YikD7KJ0grms+SLrzyYCnY/oDz6GOQPsXli4AoeiKH+3031ni0ji0DetqM9U
+         vv2JseqMb/I3Ov4QDVavLmqZy6tvs+xNz+OyKK3eEutg0atgtGq/8M7V9hmxob5V/cUH
+         LD2jYDdQe06/oiXfp3aL1nho0iwCK4NrmQ2e48OnDjdqnbkJnzfJbqJdFFTY3SDc8wrX
+         zO7g==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790190531; x=1790795331; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1790190697; x=1790795497; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=W0FYu+dVDEzIdn773qfkDF08ZIKjJFXLHOFX+/IEE1M=;
-        b=Zc5ybZrJwYGQhmL5CKcd2rk4gPRRHUhlfFRoJhStyziad9Ece0hZvE7BiVd/Wp6MQy
-         H8prBK+BofyOE90eobHpzgrLb8NDkTXocOKWZ2UsLWQjLfTnq+aGA3Hrli/z7HvPiTfJ
-         KrY5LAXYBNQJv6F0wbwm440wQyWKq+fqt7n6mqhWp76kKi9Az6KjMwq3ApklQZ8oHc4T
-         tnJBOA9wE1oAp3Rl75Sx1Bky8T3u5hCMzwcTabAp9euwqv636YFTCCJZAc4QQPDMi37G
-         jwXEUnefvW3Ax8ff+QXkSa2EAL2H1Jz3o7VPmAoMKJ3bxZcS2V5yfDSD0rW7lhNCmldV
-         Pr6w==
+        bh=2NQxLZICGnHK2h/s6KW/Zky2T9XW9w9CFC0y7KybVt0=;
+        b=A7SubFMl/OD3huOjAT8JgHPfPY1dPSlTaEsCXD5QgHV1g7JwyMahCHEkbpztSVhVCg
+         lMPf8k9U4NuUX3zVRNhc6Pds4hPIO2tw1VAi9mtKCO9OJGoNluoPoX28lM9dm+W32YG6
+         D0DGW099Q76ZYLFSuEZxuHzTjUjC6KZki/aNNB6gutc/iTRGRAQMeQWgG3ufxrSmdG8f
+         QFySeG8nErUG4dyzvggDNyrMggYwsEXMcjNVr5yIAcnAmys5jYZp4fz04h2FjAm2/ZDC
+         /mtE//FuquCmeO5EGoKbU/J8M95xoaQ6kpfSXYIS0S7qCNc+Mr7yMgxM8mmzMuC0CgLK
+         qhRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790190531; x=1790795331;
+        d=1e100.net; s=20260707; t=1790190697; x=1790795497;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=W0FYu+dVDEzIdn773qfkDF08ZIKjJFXLHOFX+/IEE1M=;
-        b=Mg5ydmwwf7AGoJodZnJC9RsZYXdQKrDlBg+YTPkWtDdr9Y6YCIjEfe7nghv3HeYV8/
-         hZqKP8oKYBer8XB5sz82zPCMksFaaREzOsxz+IByCo2tZHVVm38S6ofIdQC4bg+PmT89
-         ONCDX7egBUnvvHG4jF07XD6ZthCoOo8doFowrvdKdBjgqyL9e5g0J8rdkTJ0pVhAfjrv
-         sGQl+UAD86mVOBemrl2BleHVjpLXYkR3Zi8iE127J4QFBPSHl6IPgrXsb2GLJw8fGc/C
-         5hmQYiE8PtJyjJjtCZRL8PuY486CdWnAAISdYjRRkJQb9mSnyKhBSUqlxCjCMBq6J2xc
-         5xyw==
-X-Gm-Message-State: AFuF++mIxz+CiePhFfX/LESSzfPGQesunRwhloyzY/OIGUudrOvUomM2
-	HWynTXMLfGH7SiF7ciHXCApyrZA4tOLGyKO873Ojnxh9/NTYdpCOpaX469+Jq/PvMYBva/ss4Qn
-	jUF8y4RPc+uaCqnRlWAMBDRW1w+otoqMaI18Z6ME+2c6Q6e7facfxcFh7mhQ=
-X-Gm-Gg: AYBFou3QpavoM0xeSILiWnXEJOuRkkuaT5HiO3F/pra83COTcKfj4hcOitwOqp+aXnK
-	1PX7YaUN5VKtL0pa3/nPlz1JXLpv5rtHzlSVQS7rdyo2Y8xklRCRgzh3NKygH+qZM2JBWoQjEyF
-	UcGWx7NQzacDhRt+f/taeLIOnzb0/o8SdJqxMIKGnykQcUQYl6B6B7tg61wfr0ZlzxRkB93HRAE
-	EwU9uKC4W5OzCtCa7uvnj7nS7KCBLTYPtkf+pERvYzndZORliQxhKuCVcgWirE1vVJdMKPCzwWC
-	w+4BLk7kqjjB0FgMzo03uQ2YxnMUe0D4Is744u3Du33GhaF1Xgp8w2eK5Rlp/6fTCb/CWNNI2vQ
-	VVzftv65cVR6JUBViiwk9
-X-Received: by 2002:a05:701b:42c8:20b0:141:5392:d9c2 with SMTP id
- a92af1059eb24-1450301047fmr155852c88.8.1790190529723; Wed, 23 Sep 2026
- 12:08:49 -0700 (PDT)
+        bh=2NQxLZICGnHK2h/s6KW/Zky2T9XW9w9CFC0y7KybVt0=;
+        b=Cz+Fy+w7y4GoucVyBI+HTGRDIuAnPzlyY02uR9ZfGtAWW7lw1xoKpSSD8SgXxL9bkL
+         pTg42Yy2+098AhAxoRkB1vfuFrrGH8o8iDnl6EtUF4Grmqe+Z5CE0HhxBwFWTnGo26sh
+         OFVmScaz9JyUOiiJ6GKOfzzrGr/7wpQXgePj5thaFfgu7Sl/O31jWwL24D29gWvf2/7b
+         uog7tpuW5XcxfksW3sDDDiUhY+2pjeia3CHWYIFZNKoaHbR+3QZHnSVN/qIgB1yks81Y
+         PlkBTT3IWfphoLqpdiXPPLN08jWpvE6xAHF0tvH4Bmz4sf/ESDGVKmLZuiTEiBZE+MS8
+         xF6g==
+X-Gm-Message-State: AFuF++k92qeCIhF2tvH0MXonoD4oOrGy6dTqpapF70lFUXhPW+PZ8lGr
+	hZozQXwRV+faV5kyxuNtwGvrHyv7S9j+oLhwqPnTEcNhJljM8b+h+/BATSUu2hShfBbQDS73Erg
+	VgFh8VhZFlE4Y+bIATLUlxAMsMJdi/jC3uIaUVnYIhTOLJchT0iYwEu/YAV0=
+X-Gm-Gg: AYBFou04hIv54r/qeN/29qqAutdJ7X+gPUDOMZikKTfPBXcYmOktFIXP/YiR82mSZ8l
+	a/qbvqBqPJAFmSQ8+lDcRxUgJJoKHBlvKvkwgiJvEs68J7UgZa76uoLrTLCXt0NPX0q4lVU235g
+	MmUztgsvP1FvddthS6lttUuilV0wDkBXtOVX4q3GohGvXv9FCBgUl/gldFhPC7cSAwWrVwQ8kNB
+	wRklLk+MNY6f6eZbXzAWSEB7LTPF9M3+nN5WJyoBDmDUubXdlBfvz2rcZ0kluRgqqma0N69eYB3
+	kw4yVKPtq/D0WHZAzfkFvOy8oJ5+tYfFEGgA70TE1HrHomGjLufj9eAehslCVfhooOS+BRveDEV
+	Tu0pd3Tn380p2CGJlDQ1q
+X-Received: by 2002:a05:622a:4d0a:b0:530:e335:4ef with SMTP id
+ d75a77b69052e-532f8cb1cb6mr4180531cf.2.1790190696663; Wed, 23 Sep 2026
+ 12:11:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -83,101 +83,140 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <cover.1789966896.git.irogers@google.com> <20260923181213.3032038-1-irogers@google.com>
- <20260923181213.3032038-27-irogers@google.com> <20260923183554.0FA3D1F00898@smtp.kernel.org>
-In-Reply-To: <20260923183554.0FA3D1F00898@smtp.kernel.org>
+ <20260923181213.3032038-49-irogers@google.com> <20260923184942.B756E1F000FF@smtp.kernel.org>
+In-Reply-To: <20260923184942.B756E1F000FF@smtp.kernel.org>
 From: Ian Rogers <irogers@google.com>
-Date: Wed, 23 Sep 2026 12:08:38 -0700
-X-Gm-Features: AclHuK8qhCEYQ9mG1gZ1SW8-VAFZWaY6mM26YdNCosFzZd3023TzFpnigkApBYQ
-Message-ID: <CAP-5=fVZ1Czc+C-_2CYWqMo=TRJ+w9BR_s8=JTqwiztDLCo8aw@mail.gmail.com>
-Subject: Re: [PATCH v3 26/49] perf python: Port sctop to perf module
+Date: Wed, 23 Sep 2026 12:11:24 -0700
+X-Gm-Features: AclHuK9RhfE2VRdiaxPx6w1lQZEg5scq8EUYUuFYW_ImBNRcBFC_bSKcTzZfwJA
+Message-ID: <CAP-5=fVakad4+OJSMa2G0ArVXShJ9oi2jKsoNNsL6UvG5NfTxQ@mail.gmail.com>
+Subject: Re: [PATCH v3 48/49] perf script: Support standalone scripts and
+ remove embedded scripting
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-perf-users@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 23, 2026 at 11:35=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+On Wed, Sep 23, 2026 at 11:49=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] perf python: sctop silently drops legacy syscalls:sys_enter ev=
-ents
+> - [Medium] perf script: TOCTOU race condition in signal handler allows se=
+nding signals to recycled PIDs
 > --
 >
-> commit d8ecc80e7d73cc2057e5019382b002550902b4ce
+> commit 1ed2e4983f9ede9efdfc6d59669cdd2e466dc05b
 > Author: Ian Rogers <irogers@google.com>
+> Subject: perf script: Support standalone scripts and remove embedded scri=
+pting
 >
-> perf python: Port sctop to perf module
+> This commit refactors perf script to launch standalone scripts directly v=
+ia
+> fork and execvp, while removing the legacy embedded Perl and Python scrip=
+ting
+> engines. It updates script discovery to prioritize the system python dire=
+ctory
+> and updates shell tests to use the new invocation style.
 >
-> This commit ports the sctop.py script to a standalone script in
-> tools/perf/python/ using an SCTopAnalyzer class structure. It adds suppor=
-t for
-> both offline analysis and live monitoring, resolves architecture-aware sy=
-scall
-> names, and replaces unsafe signal mutation and subshell spawning with
-> threading locks and ANSI escape sequences.
+> > diff --git a/tools/perf/builtin-script.c b/tools/perf/builtin-script.c
+> > --- a/tools/perf/builtin-script.c
+> > +++ b/tools/perf/builtin-script.c
 >
-> > diff --git a/tools/perf/python/sctop.py b/tools/perf/python/sctop.py
-> > new file mode 100755
-> > index 0000000000000..fb709206993a1
-> > --- /dev/null
-> > +++ b/tools/perf/python/sctop.py
 > [ ... ]
-> > +    def process_event(self, sample: perf.sample_event) -> None:
-> > +        """Collect syscall events."""
-> > +        if not self.offline and sample.sample_pid =3D=3D self.own_pid:
-> > +            return
+>
+> > +static volatile sig_atomic_t script_child_pid;
 > > +
-> > +        name =3D str(sample.evsel)
-> > +        # raw_syscalls:sys_enter exposes the syscall number as 'id', w=
-hereas
-> > +        # per-syscall syscalls:sys_enter_* tracepoints expose '__sysca=
-ll_nr' (or 'nr')
-> > +        # and may have an unrelated syscall argument named 'id'.
-> > +        if name.startswith("evsel(raw_syscalls:sys_enter"):
-> > +            syscall_id =3D getattr(sample, "id", -1)
-> > +        elif name.startswith("evsel(syscalls:sys_enter"):
-> > +            syscall_id =3D getattr(sample, "__syscall_nr", -1)
-> > +            if not (0 <=3D (syscall_id & ~0x40000000) <=3D 0xffff):
-> > +                syscall_id =3D getattr(sample, "nr", -1)
+> > +static void forward_script_sig(int sig, siginfo_t *info, void *ucontex=
+t __maybe_unused)
+> > +{
+> > +     /*
+> > +      * Terminal-generated signals (Ctrl-C / Ctrl-\) have si_code > 0
+> > +      * (SI_KERNEL) and are already delivered by the TTY driver to the
+> > +      * entire foreground process group, including the child script.
+> > +      * Signals sent directly to the perf process via kill(2) / sigque=
+ue(3)
+> > +      * have si_code <=3D 0 (SI_USER, SI_QUEUE, etc.) and must be forw=
+arded
+> > +      * to the child script so it can catch KeyboardInterrupt / SIGTER=
+M
+> > +      * and flush its output before exiting.
+> > +      */
+> > +     if (script_child_pid > 0 && (sig =3D=3D SIGTERM || !info || info-=
+>si_code <=3D 0))
+> > +             kill(script_child_pid, sig);
 >
 > [Severity: Medium]
-> Will this silently drop legacy syscalls:sys_enter events?
+> Does this signal handler risk targeting a reused PID?
 >
-> When processing an event named evsel(syscalls:sys_enter), it matches this
-> elif block intended for per-syscall tracepoints like
-> syscalls:sys_enter_openat. This path expects the syscall number in
-> __syscall_nr or nr.
+> The script_child_pid variable is not updated atomically with the waitpid(=
+)
+> call reaping the process, which creates a race window.
 >
-> However, the legacy syscalls:sys_enter tracepoint (used by older kernels
-> like RHEL6) stores its syscall number precisely in the id field. Since th=
-is
-> block avoids fetching id, syscall_id will evaluate to -1, causing the
-> script to silently drop the event and report empty totals.
->
-> Could the prefix match be updated to distinguish the legacy tracepoint fr=
-om
-> the per-syscall variants, so we don't drop events from older perf.data
-> files?
+> If the parent is preempted right after waitpid() returns but before
+> script_child_pid is cleared, the system could recycle the PID. This handl=
+er
+> might then trigger a kill() on an unrelated, newly created process.
 
-So syscalls:sys_enter was renamed to raw_syscalls:sys_enter in Linux
-2.6.35 (commit 308fd7dd9151), and sctop in live mode records
-raw_syscalls:sys_enter. It seems unlikely that supporting pre-Linux
-2.6.35 is a real concern.
+In practice this window is small (O(a single instruction)) right
+before perf script exits, and it would require both PID
+wrap-around/reuse and an external kill() directed at perf's PID during
+that boundary.
 
-That said, distinguishing per-syscall syscalls:sys_enter_* (with the
-trailing underscore) from bare syscalls:sys_enter is straightforward =E2=80=
-=94
-checking name.startswith("evsel(syscalls:sys_enter_") first and
-falling back to sample.id for raw_syscalls:sys_enter /
-syscalls:sys_enter handles pre-2.6.35 perf.data files as well. I can
-fold that into v4 if needed, or send it as a small follow-up patch.
+However, we can eliminate the window completely by waiting with
+waitid(P_PID, pid, &info, WEXITED | WNOWAIT) so the child PID remains
+unreaped while we clear script_child_pid =3D 0 and restore sigaction,
+and then calling waitpid(pid, &status, 0) to reap the zombie. I'm
+happy to include that if there is a v4 or as a follow-up cleanup.
 
 Thanks,
 Ian
 
-> > +        else:
-> > +            syscall_id =3D -1
+> > +}
+>
+> [ ... ]
+>
+> > +             } else { /* parent */
+> > +                     int status =3D 0;
+> > +
+> > +                     script_child_pid =3D pid;
+> > +                     sigprocmask(SIG_SETMASK, &old_mask, NULL);
+> > +                     while (waitpid(pid, &status, 0) !=3D pid) {
+> > +                             if (errno =3D=3D EINTR)
+> > +                                     continue;
+> > +                             pr_err("failed to wait for script '%s': %=
+s\n",
+> > +                                    script_name, strerror(errno));
+> > +                             err =3D -errno;
+> > +                             script_child_pid =3D 0;
+> > +                             sigaction(SIGINT, &old_int, NULL);
+> > +                             sigaction(SIGQUIT, &old_quit, NULL);
+> > +                             sigaction(SIGTERM, &old_term, NULL);
+> > +                             goto out;
+> > +                     }
+> > +                     script_child_pid =3D 0;
+>
+> [Severity: Medium]
+> Is there a way to safely synchronize the clearing of script_child_pid wit=
+h the
+> reaping of the child process?
+>
+> The child process is fully reaped as soon as waitpid() successfully retur=
+ns
+> here in cmd_script().
+>
+> If the thread is suspended or preempted exactly at this point, script_chi=
+ld_pid
+> remains set to the old PID while the system is free to reassign that PID.
+>
+> If a signal like SIGTERM arrives during this window, forward_script_sig()=
+ will
+> read the stale script_child_pid and send it to the new process holding th=
+at PID.
+>
+> > +                     sigaction(SIGINT, &old_int, NULL);
+> > +                     sigaction(SIGQUIT, &old_quit, NULL);
+> > +                     sigaction(SIGTERM, &old_term, NULL);
+> > +                     if (WIFEXITED(status))
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260923181213.30=
-32038-1-irogers@google.com?part=3D26
+32038-1-irogers@google.com?part=3D48
