@@ -1,166 +1,188 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB59323417
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 13:39:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5232535FD8
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 14:03:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790170786; cv=none; b=QBU4Gm5wBC6WhXp9//e+YqaVBRoxu82nWf81vQkjmujW3RG2FbBKGKzj4hOA/uKua7ea6lUSNjKI+m/AkmNfRSdgbKo5uSFXushF9uH4efnsvWmmQ1s/rTNhTtcUnYvxP4FTr9V+HSeiDNf5Ny8ZHSdhvd0ajRwFWaQS11ewLCs=
+	t=1790172220; cv=none; b=d1pBDZg0MVL2bAQ6e1mz3/OMQGTchxYiKetIVk1NPgNKg7D+J+R/fgKAoKsUoV+e9PlIz63eulCcnAOm8DXmsMVIqedh6ttf7EMEtJatBzmglyYS6O4bqGTZyi8hygqAYPQDUYIaxhA37xP+7D5B5zuD9+hhls4xpOEA1e2NNw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790170786; c=relaxed/simple;
-	bh=EiWgRrCZl+2DtpVafWliNqNzIqphGm44ttBYL0XpEDk=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=SLe/w18qMsoI8e7kSf/X1Y3etb4J3gvj73s7aafX1HTWhpsFPrP7cVohRVhHrD/WMGed5U2xVw2casH9ZbU+JBuKiOYU76OuI16ejVaF281MiPrDG+F9Oqfs5BburaBJwo2p1NAfpi1Sme7vEvNtrU5U1bgp7QYF/x3aNd2B+QE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VPK9XZKK; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1790172220; c=relaxed/simple;
+	bh=xqf0mQQ/HukQymQ5kRyEEJMzRd1cXTrt93NP+wMpoC0=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=Pmt2bzCnf0ErkmUpDBRlqCrZ5MTPFexdiU/DPzieWtG0c1EPvKWznr34Q8GxKhbVEgvmnSnC+9W3DB7p8T6VtavSwdeEcxJM8Y1SE7630ZdkurkcxUbmooq5I6wdXPq2X2VPGvHRQ6rKA5wnKfti8xVU3VhcdCsJRJDKSiGuDhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=AyKrPuv7; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VPK9XZKK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1790170784; x=1821706784;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=EiWgRrCZl+2DtpVafWliNqNzIqphGm44ttBYL0XpEDk=;
-  b=VPK9XZKKUP/S46BkQp0RBX62TRDQXeBYdttUVu+zOfO2rWGBxFHDgCEE
-   R41iA3FlvtiEHIAQIatXVN3gGLeV06kPlozAhwSr7BwPF9H4Iu09rQa9X
-   BYPjSwH+6c3MssToI2iyUoiSxDzezIxWkLA/ayBqAB5CSsuPSxgzpp1ME
-   2NpVC8Mdx3lDUiSELB2nnJadXiWs3pHafXy9LSqwRVGTtsUeSjHdawMuw
-   XPjfEV7i/+C6LdgftyqsvI9Oez7Di/HyY6ESGnQEEBUPiT4hUJ9psLgGY
-   HYq4Av0M4DEmbA4Nt/fo3XbItWE1/+E4AjssBvsDXZ7J07t8rZi+qYjAx
-   Q==;
-X-CSE-ConnectionGUID: EvjrQ3zIS6qFxg9vmczv1g==
-X-CSE-MsgGUID: 6yb3qD59QAa4AM0+kubd5A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11913"; a="90982868"
-X-IronPort-AV: E=Sophos;i="6.27,118,1787036400"; 
-   d="scan'208";a="90982868"
-Received: from fmviesa011.fm.intel.com ([10.60.135.151])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2026 06:39:43 -0700
-X-CSE-ConnectionGUID: bnW3Vj6nRjenxW0epd5vvQ==
-X-CSE-MsgGUID: lITg15atQey1I4ek4KzEyw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,118,1787036400"; 
-   d="scan'208";a="4706129"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.13])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2026 06:39:42 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Wed, 23 Sep 2026 16:39:38 +0300 (EEST)
-To: sashiko-reviews@lists.linux.dev
-cc: linux-pci@vger.kernel.org
-Subject: Re: [PATCH 4/5] PCI: Fix composite resource sizing
-In-Reply-To: <20260923133151.70D231F000FF@smtp.kernel.org>
-Message-ID: <d50df48b-1221-74b6-96b2-ba8178312949@linux.intel.com>
-References: <20260923131757.7792-1-ilpo.jarvinen@linux.intel.com> <20260923131757.7792-5-ilpo.jarvinen@linux.intel.com> <20260923133151.70D231F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="AyKrPuv7"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 1824B4E4102D;
+	Wed, 23 Sep 2026 14:03:34 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id D99DF60580;
+	Wed, 23 Sep 2026 14:03:33 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 066D2103293F2;
+	Wed, 23 Sep 2026 16:03:26 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1790172208; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=6cfbg+DAzthoS5akP4It9Pe+3zz48iZBqgkxD/CrVZI=;
+	b=AyKrPuv7w+PVG7aCNFW1G0hTAsEI6725oWspiqlrT6PaDVEV4uwT2vMPseRkW5yDRqVkUu
+	eutmY+M7gyaPR/IZTM1FUTFa6lePh7zm5gFDlCbZ8PJ8czs9j7KTEYf9undow1kzXGNTPV
+	d7v5WVkU3diSj4YM/Lp2Ed5Cp7wDeL1zSLgypHWm/H7ldII1+B4wMio0AiAvpKBgZxX+T8
+	DaSP05JZIM6makWopMVUPtCOEJdsUKorANP3laJRNNQA11yT27SpjZcWpSJkjiu7X6Fe07
+	eepa/PiD3zd6MDrjG165ASxjBVQgzElgBhlZt66oqspVCnXgcF7ihS96ysRmOg==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1957391310-1790170778=:1282"
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 23 Sep 2026 16:03:25 +0200
+Message-Id: <DLMR324EQEUG.2G5RGH1X4B6PY@bootlin.com>
+Cc: <linux-watchdog@vger.kernel.org>
+Subject: Re: [PATCH v2 5/8] watchdog: w83627hf_wdt: Add Super I/O
+ configuration port as a platform device resource
+From: "Paul Louvel" <paul.louvel@bootlin.com>
+To: "Guenter Roeck" <linux@roeck-us.net>, <sashiko-reviews@lists.linux.dev>,
+ "Paul Louvel" <paul.louvel@bootlin.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260726-w83627hf_wdt-improvements-v2-0-3645a2a6c022@bootlin.com> <20260726-w83627hf_wdt-improvements-v2-5-3645a2a6c022@bootlin.com> <20260726185636.31D4C1F000E9@smtp.kernel.org> <2368bc26-634e-4691-a369-25090913ec50@roeck-us.net>
+In-Reply-To: <2368bc26-634e-4691-a369-25090913ec50@roeck-us.net>
+X-Last-TLS-Session-Version: TLSv1.3
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Guenter,
 
---8323328-1957391310-1790170778=:1282
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Sorry for not responding to your email earlier.
 
-On Wed, 23 Sep 2026, sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] pci: bridge window gap calculation Rule 2 underestimates require=
-d size
-> --
->=20
-> commit f9f2d66b1a5c96f99a75fc82cb40a5f073968dfb
-> Author: Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
->=20
-> PCI: Fix composite resource sizing
->=20
-> This commit modifies the bridge window sizing algorithm to add a gap size
-> calculator. The calculator determines the empty space required because of
-> non-aligning composite child resources, such as VF BARs and bridge window=
-s,
-> to ensure alignment constraints are met when resources are placed.
->=20
-> Link: https://lore.kernel.org/linux-pci/20260903063124.9316-1-nbritton@ex=
-abit.io/
->=20
-> > diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
-> > index 7ca0e9f4ffb63..9d828a59bd002 100644
-> > --- a/drivers/pci/setup-bus.c
-> > +++ b/drivers/pci/setup-bus.c
-> [ ... ]
-> > @@ -1164,6 +1164,76 @@ static inline resource_size_t calculate_mem_alig=
-n(resource_size_t *aligns,
-> [ ... ]
-> > +static resource_size_t calculate_win_gap_size(struct pci_bus *bus,
-> > +=09=09=09=09=09      struct resource *b_res,
-> > +=09=09=09=09=09      resource_size_t win_align,
-> > +=09=09=09=09=09      bool optional)
-> > +{
-> > +=09resource_size_t safe_gap =3D 0, remainders =3D 0;
-> > +=09unsigned int nonaligning =3D 0;
-> > +=09struct pci_dev *dev;
-> [ ... ]
-> > +=09=09=09nonaligning++;
-> > +=09=09=09remainders +=3D remainder;
-> > +=09=09=09safe_gap +=3D win_align - remainder;
-> > +=09=09}
-> > +=09}
-> > +
-> > +=09if (nonaligning =3D=3D 2 && (remainders <=3D win_align))
-> > +=09=09return win_align - remainders;
->=20
-> [Severity: High]
-> Does this logic underestimate the required gap size by assuming two remai=
-nder
-> parts can perfectly share a single alignment block's padding without veri=
-fying
-> if their individual alignment constraints allow tight packing?
->=20
-> If a parent PCI bus contains exactly two child resources (e.g., downstrea=
-m
-> bridge windows) whose sizes are not multiples of the bus's max alignment,=
- and
-> their size remainders sum to less than or equal to the max alignment, thi=
-s
-> bypass avoids the safe_gap fallback.
->=20
-> For example, if two 10MB windows require 4MB alignment, this calculates a=
- gap
-> of (4 - (2+2)) =3D 0MB, resulting in a 20MB parent window. However, becau=
-se both
-> resources require 4MB alignment, if the first is placed at 0..10MB, the s=
-econd
-> must be placed at 12MB. This requires a 22MB total span, which exceeds th=
-e
-
-This is bogus, sashiko doesn't understand how the new placement algorithm=
-=20
-works when it comes to remainder parts. The remainder for the second=20
-resource would start at 10MB and the aligning part will start exactly at=20
-12MB filling all the constraints and fitting to 20MB.
-
-Thus, the calculation is correct. I suspect this case would work even=20
-without this patch because no gap is needed in the first place (untested).
-
-> calculated 20MB window.
+On Mon Jul 27, 2026 at 3:08 AM CEST, Guenter Roeck wrote:
+> On 7/26/26 11:56, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential iss=
+ue(s) to consider:
+>> - [Critical] Claiming the shared Super I/O configuration port as a stati=
+c platform device resource causes a Use-After-Free and breaks global mutual=
+ exclusion upon module unload.
+>> --
+>>=20
+>> --- Patch [5]: [PATCH v2 5/8] watchdog: w83627hf_wdt: Add Super I/O conf=
+iguration port as a platform device resource ---
+>> commit 7147d011852b779a7e376729ecb29c06b86e9282
+>> Author: Paul Louvel <paul.louvel@bootlin.com>
+>>=20
+>> watchdog: w83627hf_wdt: Add Super I/O configuration port as a platform d=
+evice resource
+>>=20
+>> This commit changes the Super I/O configuration port address from a
+>> global variable to a platform device resource. It uses
+>> platform_device_register_resndata() to assign the IO resource during
+>> module initialization.
+>>=20
+>>> diff --git a/drivers/watchdog/w83627hf_wdt.c b/drivers/watchdog/w83627h=
+f_wdt.c
+>>> index 69d4230d8f6cc..a067b8ea6b289 100644
+>>> --- a/drivers/watchdog/w83627hf_wdt.c
+>>> +++ b/drivers/watchdog/w83627hf_wdt.c
+>> [ ... ]
+>>> @@ -594,8 +597,14 @@ static int __init wdt_init(void)
+>>>   	if (ret)
+>>>   		return ret;
+>>>  =20
+>>> -	wdt_pdev =3D platform_device_register_data(NULL, wdt_ids[chip].name,
+>>> -						 PLATFORM_DEVID_NONE, NULL, 0);
+>>> +	res.name =3D "Super I/O port";
+>>> +	res.flags =3D IORESOURCE_IO;
+>>> +	res.start =3D sioaddr;
+>>> +	res.end =3D sioaddr + 1;
+>>> +
+>>> +	wdt_pdev =3D platform_device_register_resndata(NULL, wdt_ids[chip].na=
+me,
+>>> +						     PLATFORM_DEVID_NONE, &res,
+>>> +						     1, NULL, 0);
+>>=20
+>> [Severity: Critical]
+>> Does claiming the shared Super I/O configuration port as a static platfo=
+rm
+>> device resource cause a use-after-free regression and break mutual exclu=
+sion
+>> on module unload?
+>>=20
+>> If this port is registered as a non-busy I/O resource, it becomes a
+>> container node in the global ioport_resource tree. When another driver
+>> calls request_muxed_region() for the same port, it might sleep on
+>> muxed_resource_wait while holding a parent pointer to this container nod=
+e.
+>>=20
+>> If the wdt module is unloaded while that thread is sleeping,
+>> platform_device_del() unlinks the container node and
+>> platform_device_release() frees its memory. When the sleeping thread
+>> wakes up, will it dereference the freed parent pointer in
+>> __request_resource()?
+>>=20
+>> Additionally, it appears that unlinking the container node orphans any
+>> active child reservations from the tree. Could this allow concurrent
+>> hardware access to the shared Super I/O port?
+>>=20
 >
-> Could this underestimation cause PCI resource assignment to fail during
-> enumeration for devices or downstream bridges, leaving them uninitialized=
+> That makes me wonder: Under which authority can the watchdog driver claim
+> ownership of this resource ? What is the rationale ?
+>
+> Why should the owner not be, for example, the hardware monitoring driver =
 ?
+> Or the Bluetooth driver, if the chip has one ? Or some other driver ?
+> Or some non-existent Super-IO core ?
+
+Yes, it should not.
+Was a misunderstanding of my part. Did not know that adding a resource in d=
+river
+registration would cause resource contention if other drivers try to access=
+ the
+SIO extended function mode.
+
 >
-> > +
-> > +=09if (nonaligning >=3D 2)
-> > +=09=09return safe_gap;
-> > +
-> > +=09return 0;
-> > +}
+> On a higher level, why even risk the problem outlined by Sashiko above ?
+> What is the benefit of doing this ? The patch description fails to
+> explain _why_ this change is made. Actually, that is true for many
+> of the patches. Quite often the description explain what is done,
+> but not the reason for it. The reason may be obvious for you, but not
+> or not always for me - and very much so for this patch.
+>
+> Please explain why you are making those changes.
+
+My bad if it was not clear.
+This series is an attempt of modernizing this driver to a platform driver s=
+o
+that it can use modern kernel APIs, expose sysfs interface, and clean the
+driver.
+
+And also add minute mode counting that is a feature that is just missing fr=
+om
+the driver. Maybe it should be a subject for another patch, outside of this
+series ?
+
+>
+> Also, I notice that at least in some cases it looks like you did not
+> address the feedback from Sashiko. Partially that is because problems
+> in one patch are addressed in a later patch of the series, but I am quite
+> sure I have seen Sashiko's feedback about the missing parent device
+> initialization before. Please ensure to address its feedback.
+
+Sashiko reviews will be taken into account for the next iteration.
+
+>
+> Thanks,
+> Guenter
+
+Thanks,
+Paul.
+
+
+
 
 --=20
- i.
+Paul Louvel, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
---8323328-1957391310-1790170778=:1282--
