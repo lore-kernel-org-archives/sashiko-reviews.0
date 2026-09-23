@@ -1,176 +1,239 @@
-Received: from mail-ua2-f12.google.com (mail-ua2-f12.google.com [74.125.226.204])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011059.outbound.protection.outlook.com [52.101.62.59])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3E344237D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 06:56:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.226.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BDB33937B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 07:11:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.59
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790146613; cv=pass; b=fh5wkT1IQklJdfrXMbQfYpa5A06vAjRzUZjKfZNwa0sLrpP8iSvCfuRHzdeqYgwm7jcs5qBUzN9JPcxULjgt7pVgPyY30tYOnnyCARL26BCj/UU6YhyrZ/BcErxvinotTtWhwF8/Qgp3kw1MVe7bzS+yHvzoF+M8RN6b7ewNUl0=
+	t=1790147478; cv=fail; b=CKwxGpn9PqRmUFkUaLLwDmsib5YZmzYNihK6ioTmjcre7dXf/Upqu2mtp4Ss5QrlEhLXMYKR0Y4NiPaHLYo/lMdvIT0kz4RgiPj2DoxXl7tiYUybCW98nIHNDMuJq9WrxdKzAM2QZdBBwcE5EGolEN3YdsCJh6g6xrL3pVR1omk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790146613; c=relaxed/simple;
-	bh=9xHQ3WPoBRJA6pLffeOMmxeaFKJ9Fi/A5A4l8P9y8gY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aV3iPfmBtxqxjRkO3jhjWW+ryXHy2FeLEvAJwgHXSfk6MtOqq43ggkz6vPNKKjKxdZ2ayNcVGsw1OT5ms/cJhqJVXzXMhb7egiLIVYY0VVMx1rGhAXFzBf8baPjzeDxXic/nCJKJNxbYjmW/xlB/opaeYauPy6bE2xNYk7QN2SU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UQ8r29Pz; arc=pass smtp.client-ip=74.125.226.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1790147478; c=relaxed/simple;
+	bh=6qQr/xDOv9Aa48t2yqeFVFwMRqMBQwiGgNWC6v8tQmo=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=fYNY2aNcDMRtpzS79c1nLQ8LIoS65m1APaqNFkyZTTgR/dFUpJNO2BGywOdB34WRdkmLWFogzeWit+p3Km6e98xwM7oWvEUtd1fqwbuK63udovWZNOOLAO7eRLs1Ycz809LWv+sD5f8nOzJOBwoNNfT9oRdf8qfKA6jQuYRsoeA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=WhePRXEh; arc=fail smtp.client-ip=52.101.62.59
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UQ8r29Pz"
-Received: by mail-ua2-f12.google.com with SMTP id a1e0cc1a2514c-98296941f99so321535241.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 23:56:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790146609; cv=none;
-        d=google.com; s=arc-20260327;
-        b=mjj0Pac1znfj8r94kt28fxqHSa6wWf7iTAFvANp2NpTjlFQRftKeUvsRE2DncYwzFg
-         /DAjJcnGS9bbFSAWoad+5zx4BH0to++egJRgLWoNfFHCEceHRbyGWkpLBNnCpjR0gvVp
-         8YNSJNpSVf0vnGoryoFYbAbq0MVby8hIf5lGLvIQO2T/c8Xos+2GY1S+3ilTfBSYtbgU
-         Cj74PCiF8tl7eimcAWjo2u0IG10Q4/wxdgdelWTECpyB4lATz5yyUbz8jZaFF7b8umZl
-         fqwziuiJy4YE60HX3KBdLfhfqYjv8dm30BiG1h6VEw0rPrmirf9BmxjrE9rLbLSe09kd
-         q3VA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=sAxPiacOiPR9kbZrzNk61u7R2KSBWQzo+Rt1br4Efz8=;
-        fh=sKsw14osZHHM4TYGm5zkUeVpQ1yZ+BdVJTrDBr186F8=;
-        b=sIbLnLxoAOw2cGtcXrvTmX9K5d3RpkBpjvmbGOHkdT9jXVYe8HJNKiHCqonEFhIm0q
-         /Uv8g8z42ue7gFCrJNIDFTbbY0PA88F4ERWIYiOqtTak+w7xLokbAfJo78FMXpN9qwl8
-         w/58/WgR6Eym5UXA+5d6INZdgXb1cBi/4J9iJL1XqkF6WBqRjtdzGl8L3EXarsMaGt0f
-         NKpI0Vw6UKfwodE0CICnFDMIPiOIKm3ytBR95pbZ4GKESByc1kVuuOyZeloRm87d6PXd
-         clMqHw9gB4tb7Ffs0gVMDeeRXtNio4qeV7VFOw5UX9uSJ7V6l2eIauMoaDFBJRVQizmM
-         0HVw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790146609; x=1790751409; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=sAxPiacOiPR9kbZrzNk61u7R2KSBWQzo+Rt1br4Efz8=;
-        b=UQ8r29PzITyNjaDMduPEV6oh/ea2/14ge0CCtQJOGSxu/ks5xupRPIN0rAO5dtJoZ0
-         uCcTLxbBeyFE369z+5lgbvcFFVevuo7Un9xTwtSD8VCsccddEK/HFvu04wQ7JhUwTk5n
-         aHnyOJmwDIHEUaeYPsNsm89CRsOlbx6foLLZlzr/WbKTDG6D529h11KMolSmSjidvYkR
-         g/S9sctDh8P311nKZankh/2EqKF48AFANGvOO7cMjbG4XYTvunFYGfqAGhnnKDbzrBEs
-         DNbtOjC/ppjpeaX/AtVZ8V8wJV2bc/pnRZmxUT0Jfu36MvvKOw8Jr6tZYJDKSmSJOg3A
-         YxCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790146609; x=1790751409;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=sAxPiacOiPR9kbZrzNk61u7R2KSBWQzo+Rt1br4Efz8=;
-        b=aI/QN1k9mD3tY/5PLXCQX7fq4m62sETbnJkRSVet7ds7hhgbiV07thGLYBU7Z1HtJc
-         jsNXjA4Bv5udk5THjigq30IzIs40noIWb60KVB3G/4qFG8gUOpQrNjEQl5BCi1s93RY/
-         53uJ5omBw0TxleYRZDrZGT67+BIE6V+DTR9UP4aZf1pc7Wd4eOVCTmyDP1ZBs9M+1cko
-         kenYDg8vfREfE52BtNPTckiRl55c9HivQ68v/O1gb75ukTPlJIN/No4wtRfEQ+No0kfi
-         efYoUknO4LeuKFdE2+TXhKcJMi7wsR8nKlGpUT8Rb34VXnxOsuR6VtkAiTpeKE653x7B
-         yzDA==
-X-Gm-Message-State: AFuF++mzMDN/ReXx9afHMY01pMUh7Qfp2T72BdYXhlcIBi2gzfNvu26A
-	YU71wjujx4yr7o5S6L7LAm4LIe5N69eeTvWVEYvcxW/Yd/WD2ZHuhth4MbbRcJZ3oiq8S1xMCyV
-	YLjsqbXB35ExAJkEEW0j/KYD/Ez5zIypfpiU34GP02MOa+eXJ5BC6dOE=
-X-Gm-Gg: AYBFou1Lv0la1uKSv11tfLGR5tYASUMZgEmNb++Ufl+6ayQSNgyse4JKHSfKxwWdNHE
-	TA++TUM2c/u+iXckn7iz/4LJLSRbJEUNw5NnYv+i47c54FZNegxJCnU5qsJ+qparY8Rgy29QIEl
-	yk7S/FVCrMZgfH3HYPDfYsrOcAQ0lG7irURko/+JOaL58/h1J3zmKI32rcmz21J62lyFCVSYo/G
-	ltzh7UBcW+Pq76TBsh0IaT90Znes9Y4NiQo+OEFZoXx/8sXTwtWzn1XyBp4ihuvsbPe4ymFkHSH
-	fb1P7eXwUoS+R+75OcSbn1ycfokjLKL85hUtOOE8FW07hJs85SYbWJYESipNq549YKi1e39Zkqn
-	WVWO0+p42+ErNiswjWAho
-X-Received: by 2002:a05:6102:c94:b0:7a7:19aa:8a81 with SMTP id
- ada2fe7eead31-7ac1ceab000mr1709991137.28.1790146608109; Tue, 22 Sep 2026
- 23:56:48 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="WhePRXEh"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CqSV0hFYN2IpldzbiZ67E9+0xYDakxmZEeiWvCu2maUoYzQlfNxNvDYACPC0Z0+h1fQtFjtWWtSl4PVWPByfBnEhwsMHRAIPIRp9k/jj0q7FXHh5nu0vQWIvK4m6vgjYEDMVM7GrY8QvGpQ9qcJJdieZ3CnlNRb8wvkQxhx9EodgbggiZaaPWvrdBiJFEjAC/PQiLIE7s7BUt6iGWtf/tqiPgu+qlMDJIZexD2WWHFFxA8vnCOcb3Z6VIq8V1qqcTja6EZYIdF+IHb8hP4K5yYr4Fp8afqbPD5VWyAgVlOKIMzacstkfj9ZEhco2yek4EpFggL8o25fdMfzPreH4dw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8WtNNmeOAQ8yVBGyxsSiKdWhy1kdlk+RXa1wrIZBfgk=;
+ b=bLPO1fg2qrBjmFb3HrDBH8Auuodm5Wn2F23tK7Q0p7V4FPxu/eYXgLNqBgvCCLh3EERc/iBlkf7hAAFNbdORydtykLf7xt3OFAhZNLigevQE0ohx+kKk/0Pw3CvFe8v0E3iOOG2WL4VrlvsXwELImA3mdFQDm0L6oAII71bHJjNxWxhb40kj2c639FDwmS78gyrRGkkctV3ztnW/sdSC4oFaLGt22fDDS3rgmC6nfpCazQV7sehIyunELCiTV7YJwXQbgmcQEIqTmi18GdZ8KF3d5J0xf42sNxWrFsEzykVHbnBhqXq8tPTWrHBXeYfQdYRDhV5KfXeEfusG2B9T7w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8WtNNmeOAQ8yVBGyxsSiKdWhy1kdlk+RXa1wrIZBfgk=;
+ b=WhePRXEhbsrmF1aOeUswPpF8KKJwmKonHw3djgmzqKIX8KWgbLc/Te7AmqZxknQVs/QMQhSXkG4+HSweodDp418mvqxu8dmjo5kbhi9pU5UZPl4nnkLEhYQ1eB2U4pfZZAIdWuNNNhLHt+QAt96h9Z7OB07ZIxixs6I5/XK5J9k=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DS7PR12MB9475.namprd12.prod.outlook.com (2603:10b6:8:251::6) by
+ CH1PPFF9270C127.namprd12.prod.outlook.com (2603:10b6:61f:fc00::62b) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.14; Wed, 23 Sep
+ 2026 07:10:45 +0000
+Received: from DS7PR12MB9475.namprd12.prod.outlook.com
+ ([fe80::4371:c924:8800:2587]) by DS7PR12MB9475.namprd12.prod.outlook.com
+ ([fe80::4371:c924:8800:2587%6]) with mapi id 15.21.0451.014; Wed, 23 Sep 2026
+ 07:10:45 +0000
+Message-ID: <666edc7e-ddd1-45ba-a690-2e4888a0f0db@amd.com>
+Date: Wed, 23 Sep 2026 12:40:37 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] irqchip: Add Xilinx Versal NET SMMU CSR interrupt
+ controller driver
+To: sashiko-reviews@lists.linux.dev, Tushar Nimkar <tushar.nimkar@amd.com>
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20260918-smmu-changes-v2-v2-0-adda681ab983@amd.com>
+ <20260918-smmu-changes-v2-v2-2-adda681ab983@amd.com>
+ <20260918064831.92E5C1F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: Tushar Nimkar <tunimkar@amd.com>
+In-Reply-To: <20260918064831.92E5C1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PN4P287CA0028.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:c01:26f::15) To DS7PR12MB9475.namprd12.prod.outlook.com
+ (2603:10b6:8:251::6)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260923063114.2683575-1-morbo@google.com> <20260923064622.90D881F000FF@smtp.kernel.org>
-In-Reply-To: <20260923064622.90D881F000FF@smtp.kernel.org>
-From: Bill Wendling <morbo@google.com>
-Date: Tue, 22 Sep 2026 23:56:30 -0700
-X-Gm-Features: AclHuK8okRDYHTzt7mr8q9IW4N8bIkemMSEoI0A8lraA56wTX6JOq4NKSUi0ez8
-Message-ID: <CAGG=3QUPSZeAPQg=MmxXqqvr3xM3PwV84HVGKryhmk8qJZoTkA@mail.gmail.com>
-Subject: Re: [PATCH] HID: bpf: add __counted_by_ptr attribute to device_data
-To: sashiko-reviews@lists.linux.dev
-Cc: dmitry.torokhov@gmail.com, linux-input@vger.kernel.org, 
-	bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR12MB9475:EE_|CH1PPFF9270C127:EE_
+X-MS-Office365-Filtering-Correlation-Id: 82750dbc-85a0-44c4-6747-08df1941c936
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|10067099003|56012099006|18002099003|22082099003|4143699003|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	ArdpPpjYh7xvvz/AIcspWg/OLIcc62UKFbLAwf4TO87BDdRLZfxhxRfcl2utgEOCbhb9S1cVmCsdcjSWbSbsazQ9IJgpmtdlyHkT+93LzLKpfkhjX2YRql+Q0PJMZadME7U62Anx7A/zLNMkT3SeAvlFHH0bzPzSRnDbMytMpGiNTLGyP1KjAMbVr8YmxARflWD9KC1ERr6QVodPNRM9f9WcNsSruRHq4IMI2VMK6UXarvgiZKZ+YLE64QO16lwRHR9GqpbZHTX+lDkuhOVIZsYhiOt0YQz2k15hcu4gOAb/MNEuJzUzdZst0i1LkqfvotiEUzLszgnNjc540fSBL57a9LQAhJF3nctkejGlvb8Sck3LwaElx8HIomMY3r4yliC4hOjuAdVtiWjCS2g3iIj76Rnu9twQID4dp+CADPctchkKmUryOMS4rk+Q6I/Xc8zQ/NPk1CcO/AOidYnJ7+xhLOnBl1P+8vsDsi7/dQQDoieH/Xuhkl6s7hzWZVJOqsjOiDlXl/kLB+PJzzE5JWgiQXGDOv6c1VgVfj8WMOYwDdWR7/TVtfUH4W7YX+6COHlnUTF9ydP/2rKsP4cLnIoTP1I0t8QnkxxaGSyDfY8=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR12MB9475.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(10067099003)(56012099006)(18002099003)(22082099003)(4143699003)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?ZERKUFZCbVBEK21vWDUrZ3RMZHZyY3JVR3A5UE51Wmg4dU1aV2JjWnBONTdT?=
+ =?utf-8?B?U1NuZVpHT0luLytPcExjejFPT1lwUlg0ZHFZckk2NmlmSzlHQlA1NmZwRUZ4?=
+ =?utf-8?B?akkrZGtxNitMMFg0d25GYUFCamJzMi9pRjU5aDZZREdCcjNLaGtWMlZ0eWNY?=
+ =?utf-8?B?NlNPVW1yMHB4ak5ycXVJUnVsT2NhamZLNFpObkw2M05JOVlPeW5sdUlSaXhO?=
+ =?utf-8?B?aHhybXVDQUxHZ2VmMGEzeUwrTEZtRkNWTm5DS29rYml6eUVBZUFIOGFiR0tk?=
+ =?utf-8?B?eEtDUkNmMmpjdTYwS3E3S2ozaTlvV0ZkdW91V3hSME9aTkU2cERxanJ6TlRT?=
+ =?utf-8?B?eGF4am91M3M4elo1MjZzcHd0bkJWWEVkNnRsbFNYQnU2UkU0eWI3UWFadmwr?=
+ =?utf-8?B?Y3F2WllCdmJnTmxab1hhdmUzeENoZ2FJVHR5MlFVN0xLOGU3SWR1dEJoM1hj?=
+ =?utf-8?B?c1dMUHBzSTF2blVnUllLWHRSNXhKTWtiWFFqQXdlL1JkbTB2aGFqMHMwMDZq?=
+ =?utf-8?B?YkU2NEZMb3EyOE1MZFRrM1pVMU9mRk16VUVsUTVrVkRvKytqQkx4MVlnN3dW?=
+ =?utf-8?B?am5mOXh6Z2xCUW1tNUpSWnhRTk5VOWluWTZpZ24yQ0k2RkhvWkJySzZkOEdX?=
+ =?utf-8?B?ZzB0VkNDdGMxQ0tJekRQMCttYWcwTVBpL1BFWGthNmdVSnhTN3JKK01aUTJm?=
+ =?utf-8?B?elhjRjFDSVVXMDJnUHVHUUlWc1E5bEYvK0N4U08vNGRXQWROR0UxUndxT2tO?=
+ =?utf-8?B?UWVEbUZweFhGVVpZZkR1bG9MdGtoOTcrc0hhRGJlcHp6bnJFTGF6V2ZNdVhQ?=
+ =?utf-8?B?UkNlS1UwRkRabnRYM0gvaUJnK01MWGZ3MWVYOVNMMTVGSnZ4VXk2RUdldVE0?=
+ =?utf-8?B?b2FwWWNrdXloQnl4Q3k3eDF4TmtFZzIrQkdNTVdlR2ptbjR2d1RnUkJRK2xN?=
+ =?utf-8?B?ZGs3aFJ6UzE0N1oveTNXcGk5MnRLdU51Q2FKZ1JOOFllaU1nd0FKSlZQSGlj?=
+ =?utf-8?B?U3ByRHVOK043SFc2L0ZOVFpVSkFpVWVCZFNlMmg5S2FzdnhuVi94TzJXYlc5?=
+ =?utf-8?B?UXFJbm9IMytYTGdxMHBpcStqclJ4Um82VGE0RytFcERzRHZNRU1oUVc1Mjhi?=
+ =?utf-8?B?VldvTis5YllLUGcwbFFSaFNIVkFqWUtDcmduZVNHeGg2L2NaYzJ4S2pWR1lZ?=
+ =?utf-8?B?WlcrTkhHbkJETXhIZm9COGtYNzc5S1RlY1c1UHpPUmNWQVVUekhXdnhjOWNV?=
+ =?utf-8?B?amRtWFJCSG5jZVFONmFtZk45Skg0blJHZ1NLMDZZc3E5SDJVL2FmNDNWZlM0?=
+ =?utf-8?B?SDZJL2JJcGdhVkt2NlVQakFZVkcwOVRRTWtsZEQwcXk0YnRWcmx3S20vVEl6?=
+ =?utf-8?B?T0U0Y0x2dU02Y2JHTlZjVFNUTE5CQVZrZE5neFFRZ29tVXJuTE9PYUdLVGYv?=
+ =?utf-8?B?bFpMdk1sM3hLQnAwc3BiNzFtakp4K2ZYRnYvL1NKK29UL0xpRVZEWXJjMDNO?=
+ =?utf-8?B?ZnZxUStONXJIa2NYaEhvSzAwVmFPZFpCNE53dGFiWlg4MFVkOUp0WDZKVGhp?=
+ =?utf-8?B?TDA5MmFmblMvMjB2dnp6blJXbEtMSFU2MG55M2QwWm9SbWpaOUlwOEprVnht?=
+ =?utf-8?B?STNKSFZOdDNrYTRVLzJuOENaNFBIVzRKVUVmY3M2NGx1WFNiZVJmWDRoOGx4?=
+ =?utf-8?B?aUxJanRIT3RVK0lRZTc0S24xckxEWjEvRzg4dXN0S2U2NjN1WHlsa1F4WDU0?=
+ =?utf-8?B?LzI0bDNCMFlEWUJoOEY4ZVJwZ2FLOEQzTlJ0Z1VyOE1rUGFmZ1dNeEI0L1Z6?=
+ =?utf-8?B?cUtGUUp6UmNIWjdDR2NSM1FiNUpUemllSkFFbUQrTEVhUS9QMk41YjNLcXFn?=
+ =?utf-8?B?ZEJWS0FBRC9DSExZVUZLYVZicDcyK2dzUTJ1K1c3ekRRelpydExBSHphSEs5?=
+ =?utf-8?B?aFk4UlpqdGxicUNreEUramNQOUJSNy9BUG13ekRnWFpycnhvNmJxQ1JVWFM4?=
+ =?utf-8?B?cWtZSktlMjVaSnNGN1RXRmNWZ3RqTjYrbC9KWTJ0aHlFM29jWUpZYmVpTjVi?=
+ =?utf-8?B?bE1GQU43QWZKK0Q0d3JlSzFXanE5aHZXam5zZmlzV0xvVEVNc0dQamd1Qm16?=
+ =?utf-8?B?N2ExT1l3K0hzZngwb2VoN3l5M2ZMcEM2VmRnd1k1S3dRUDdlYkFFa2xMeTZP?=
+ =?utf-8?B?dUwyc1VoZ3MrWlRjZU9hVzZIdXVGemVPRmhCVzZEclBXdWFURFhTVFRna1pa?=
+ =?utf-8?B?dUJPa1hlZU81RjIrbVNMZnZkZ3ZUKzBGWHVzUGtoYzdNaVhrYnBsak9tbkZu?=
+ =?utf-8?B?WU1VbG5FZ2NyVGczZVV0RDRTTGplMnpvQUtKSVRwelZ0ZjNoSFdlQT09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 82750dbc-85a0-44c4-6747-08df1941c936
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB9475.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Sep 2026 07:10:45.2754
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: GJVk3SXECnzMGZ8Lyq+RK3M+Fi8D93M5FoLO3Kux/CxgzVGFy83fHRfdOlXs67lAsjKnfZziJP7Ng4vTPOYCMw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH1PPFF9270C127
 
-On Tue, Sep 22, 2026 at 11:46=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+
+On 9/18/2026 12:18 PM, sashiko-bot@kernel.org wrote:
+> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] hid-bpf: false-positive bounds check panic via data race in __hi=
-d_bpf_allocate_data()
+> Caution: This message originated from an External Source. Use proper caution when opening attachments, clicking links, or responding.
+>
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] irqchip: unrecoverable interrupt storm due to unhandled CMDQ_SYNC
+> - [Medium] irqchip: spurious handling of disabled interrupts causes log spam
+Thanks Sashiko for the review,  all issues addressed in v3 and validated.
 > --
 >
-> commit 4a962db9c72042e7d956ca752f9439fb64fe5e37
-> Author: Bill Wendling <morbo@google.com>
+> commit bfa978fa90b50ee4257046a8002784c0f7fc45f7
+> Author: Anirudha Sarangi <anirudha.sarangi@amd.com>
 >
-> HID: bpf: add __counted_by_ptr attribute to device_data
+> irqchip: Add Xilinx Versal NET SMMU CSR interrupt controller driver
 >
-> The 'struct hid_bpf' contains a 'device_data' pointer field and an
-> 'allocated_data' field that specifies the size in bytes. This commit
-> adds the '__counted_by_ptr' attribute to 'device_data' to enable bounds
-> checking sanitizers.
+> The Xilinx Versal NET SoC implements a Control and Status Register (CSR)
+> block in front of the ARM SMMUv3 to manage EVENTQ, PRIQ and GLOBAL
+> interrupts. This commit adds an irqchip driver to demultiplex these
+> interrupts and chain them to the upstream SMMUv3 driver.
 >
-> > diff --git a/include/linux/hid_bpf.h b/include/linux/hid_bpf.h
-> > index 19fffa4574a47..f45fb9cccece8 100644
-> > --- a/include/linux/hid_bpf.h
-> > +++ b/include/linux/hid_bpf.h
-> > @@ -185,10 +185,12 @@ struct hid_bpf_ops {
-> >
-> >  /* stored in each device */
-> >  struct hid_bpf {
-> > -     u8 *device_data;                /* allocated when a bpf program o=
-f type
-> > -                                      * SEC(f.../hid_bpf_device_event)=
- has been attached
-> > -                                      * to this HID device
-> > -                                      */
-> > +     /*
-> > +      * allocated when a bpf program of type
-> > +      * SEC(f.../hid_bpf_device_event) has been attached
-> > +      * to this HID device
-> > +      */
-> > +     u8 *device_data __counted_by_ptr(allocated_data);
->
+>> diff --git a/drivers/irqchip/irq-xilinx-smmu-csr.c b/drivers/irqchip/irq-xilinx-smmu-csr.c
+>> new file mode 100644
+>> index 0000000000000..d9b575c6c58b0
+>> --- /dev/null
+>> +++ b/drivers/irqchip/irq-xilinx-smmu-csr.c
+> [ ... ]
+>> +static void xilinx_smmu_csr_irq_handler(struct irq_desc *desc)
+>> +{
+>> +     struct xilinx_smmu_csr *csr = irq_desc_get_handler_data(desc);
+>> +     struct irq_chip *chip = irq_desc_get_chip(desc);
+>> +     u32 status, pending;
+>> +
+>> +     chained_irq_enter(chip, desc);
+>> +
+>> +     status = readl(csr->base + SMMU_CSR_ISR);
+>> +
+>> +     /* Only service sources we support; SMMU_CSR_ISR latches raw status */
+>> +     pending = status & SMMU_INTR_ALL;
 > [Severity: High]
-> Does this newly added attribute introduce a false-positive bounds check p=
-anic?
->
-> The commit message mentions that allocated_data is always set before any
-> access, but looking at __hid_bpf_allocate_data() in
-> drivers/hid/bpf/hid_bpf_dispatch.c, it appears the pointer is assigned be=
-fore
-> the count without memory barriers:
->
->         *data =3D alloc_data;
->         *size =3D alloc_size;
->
-> Concurrently, if an incoming HID report triggers
-> dispatch_hid_bpf_device_event() (which holds driver_input_lock but not
-> prog_list_lock), could it observe a non-NULL device_data pointer while th=
-e
-> allocated_data count still evaluates to 0?
->
-> If so, would the new __counted_by_ptr() attribute cause sanitizers to eva=
-luate
-> the buffer size as 0 while device_data is active, triggering a false-posi=
-tive
-> kernel panic when memcpy(ctx_kern.data, data, *size) is called?
->
-This is a false-positive, though arguably correct way to look at how
-initializations of a counted buffer with its count field should be
-ordered. It's a false-positive, because assigning the buffer isn't an
-access. I'll send a v2.
+> If the CMDQ_SYNC interrupt (bit 1) was enabled or asserted by a previous boot
+> stage like u-boot or kexec, it is filtered out of this pending mask. Because
+> it is never cleared or acknowledged, will this cause an interrupt storm on the
+> parent GIC line and a system hard lockup?
+Yes — fixed in v3. The handler now gates on the hardware mask register 
+and defensively masks+clears any active source it doesn't demultiplex 
+(e.g. CMDQ_SYNC), so it can't hold the GIC
+line asserted.
+> [Severity: Medium]
+> Additionally, since SMMU_CSR_ISR latches the raw status, does masking against
+> SMMU_INTR_ALL instead of a shadow mask of actually enabled interrupts lead to
+> processing disabled or unmapped events?
+Fixed in v3 - dispatch is now gated on active = status & ~mask using the 
+hardware mask register (SMMU_CSR_MASK), so masked/disabled-but-latched 
+sources are never processed.
+>> +
+>> +     while (pending) {
+>> +             irq_hw_number_t hwirq = __ffs(pending);
+>> +             int ret;
+>> +
+>> +             ret = generic_handle_domain_irq(csr->domain, hwirq);
+>> +             if (ret)
+>> +                     pr_err_ratelimited("xilinx-smmu-csr: Failed to handle domain IRQ %lu: %d\n",
+>> +                                        hwirq, ret);
+> If an unmapped interrupt fires, generic_handle_domain_irq() will fail with
+> -EINVAL and log this error. Because the driver cannot ACK an unmapped
+> interrupt, the bit remains set in the ISR. Does this result in permanent
+> ratelimited log spam and wasted CPU cycles on every subsequent valid
+> interrupt?
+Fixed in v3 -  On an error return the handler now masks+clears that 
+source instead of logging, so the bit can't stay set
+>> +
+>> +             pending &= ~BIT(hwirq);
+>> +     }
+>> +
+>> +     chained_irq_exit(chip, desc);
+>> +}
+> [ ... ]
+>> +static int __init xilinx_smmu_csr_init(struct device_node *node, struct device_node *parent)
+>> +{
+> [ ... ]
+>> +     /* Start from a known state: all sources disabled, latches cleared. */
+>> +     writel(SMMU_INTR_ALL, csr->base + SMMU_CSR_IDR);
+>> +     writel(SMMU_INTR_ALL, csr->base + SMMU_CSR_ISR);
+> [Severity: High]
+> SMMU_INTR_ALL omits bit 1 (CMDQ_SYNC). If a prior boot stage left CMDQ_SYNC
+> enabled or pending, doesn't writing only SMMU_INTR_ALL fail to disable and
+> clear it, setting up the interrupt storm described above?
+Correct — fixed in v3. Init now masks and clears every source the block 
+implements (SMMU_INTR_HW_ALL = GENMASK(3,0)), including CMDQ_SYNC:
 
--bw
+   writel(SMMU_INTR_HW_ALL, csr->base + SMMU_CSR_IDR); /* mask all  */
+   writel(SMMU_INTR_HW_ALL, csr->base + SMMU_CSR_ISR); /* clear all */
 
-> >       u32 allocated_data;
-> >       bool destroyed;                 /* prevents the assignment of any=
- progs */
-> >
+so an inherited enabled/pending CMDQ_SYNC is disabled and cleared before 
+the parent line is enabled.
+
+>> +
+>> +     csr->domain = irq_domain_create_linear(of_fwnode_handle(node), SMMU_CSR_IRQ_NR,
+>> +                                            &xilinx_smmu_csr_domain_ops,
+>> +                                            csr);
+> [ ... ]
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260923063114.26=
-83575-1-morbo@google.com?part=3D1
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260918-smmu-changes-v2-v2-0-adda681ab983@amd.com?part=2
+Thanks, Tushar Nimkar
