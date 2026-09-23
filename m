@@ -1,222 +1,140 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+Received: from mail-wm2-f11.google.com (mail-wm2-f11.google.com [74.125.225.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747B255820C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 19:11:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.178
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790190700; cv=pass; b=N+VA07VIHkke8v1JqnQbqgXW44KxxUpW1H2PqLWx2x1zxpkM1OM/dL0v5NmWo7u/kQ1/HpYg1ha5srg9MlyZ7tldVzgi64HawxtjYr1O5AiEm5EhEOotICD3cSsGtsvT2+AoUelRGiwtKUWioHu1OoFb1Vl76jIoxidfE4tUvAQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790190700; c=relaxed/simple;
-	bh=WyM9Ze+Bhx7ApLDVxVGXqmReVBsZfd8IwGWW1NUKLuI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=s2Zi//e/yX4LFwo/zz5Er84JAfZHCoPDNq46CO3je0qdjreJRmAh1tkkLMh8LZP+2x5Q6ZMRfrmhmPNtPEL4CAzlH/O7mGI+nSdQJaaux+gXG0FsJxBKqS5CquIdIW8TYaFLAmmaCwybmMx3OjXZVWjHY2FEH8ZzU2qe8iF0ZSo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=A7SubFMl; arc=pass smtp.client-ip=209.85.160.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4426F40BCA1
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 19:29:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.139
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790191771; cv=none; b=LnMVdacfSXTRu4RYyYU/uIPSAAUZG7MoVUXVJrUP/FBaG1/uf8BBzWQB3S6yA9SK10+20qLxAKn8SsZODdON9mGAMXfdG4v/f2rVW5wlTFE9bTZTfYWhDzcThiVU2T9MQJxFz6Ecz9vpaJaegreF+o50hi0lrojqog6rQhyvU10=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790191771; c=relaxed/simple;
+	bh=54+iOccS4wvS3KEHskCddFEnm7kmenUIqpDRw31AZAc=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=l1BfiUSyhfCjRa+26kHEIFJPdqsrLeyYtcfpqED8Z6PteviF8z8A4VO5AHRKVU0DaZpzBhpOIssbSi5fGDY4kiYi3vLiqsgt5GIojo+MO7UUwtxnHANIp4kuadaSRQnlFMiVuABPUN4uL4QEy15TzZ3lwevW4B998dSGXYb4yqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=olklwS+/; arc=none smtp.client-ip=74.125.225.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="A7SubFMl"
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-530e8c6fb80so40071cf.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 12:11:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790190697; cv=none;
-        d=google.com; s=arc-20260327;
-        b=AJ3r07IjfwyG1bqNWekWxsb0625ttlEXsC+wZeNlbNjb3rKaP6fhTxXKOxpuaztU8L
-         i6svEoRwqmk00KZp9hGEahouTIORBrms4RcHb2smvKJyH/nDpI3H7St5Hj8XegWpqtl+
-         Ue+/2J35/E4AsaJ8sfTVWr160xNjnVuElBnm6XZ8mimAgHj9yFxiZbeAjcCrv6tLp613
-         fg91ie5HrrtVC3vp/CJhvtyyl28YLX5dKz7+BpPvCJ+mGKdypORnJgjfaJNzkJd98Cpm
-         FSFj/fotGY9nS8fJudwixvfddM/bRkraLt0oI53n5WmQVM2tLtd5GCyHFzUT06HD97Se
-         iTZw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=2NQxLZICGnHK2h/s6KW/Zky2T9XW9w9CFC0y7KybVt0=;
-        fh=0zVHGC//SC94CWFKHtFt4lnskmkXkJNNy7lE0FDd3Ck=;
-        b=HXK7CeI7oEfrs51FzLkzWa42W+Na24UG+9TOSu6WIgHZn2GN0HD5wHUgtbpMfrUYSp
-         FKBgwKj+fNOS29wdQo/l5AVMnrS6XbOtQanXl0LT2gAEIQAPEA3b23AGCCsehs5v1DXt
-         WLXBZBj2YikD7KJ0grms+SLrzyYCnY/oDz6GOQPsXli4AoeiKH+3031ni0ji0DetqM9U
-         vv2JseqMb/I3Ov4QDVavLmqZy6tvs+xNz+OyKK3eEutg0atgtGq/8M7V9hmxob5V/cUH
-         LD2jYDdQe06/oiXfp3aL1nho0iwCK4NrmQ2e48OnDjdqnbkJnzfJbqJdFFTY3SDc8wrX
-         zO7g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="olklwS+/"
+Received: by mail-wm2-f11.google.com with SMTP id 5b1f17b1804b1-49e78a58e17so4450825e9.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 12:29:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790190697; x=1790795497; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=2NQxLZICGnHK2h/s6KW/Zky2T9XW9w9CFC0y7KybVt0=;
-        b=A7SubFMl/OD3huOjAT8JgHPfPY1dPSlTaEsCXD5QgHV1g7JwyMahCHEkbpztSVhVCg
-         lMPf8k9U4NuUX3zVRNhc6Pds4hPIO2tw1VAi9mtKCO9OJGoNluoPoX28lM9dm+W32YG6
-         D0DGW099Q76ZYLFSuEZxuHzTjUjC6KZki/aNNB6gutc/iTRGRAQMeQWgG3ufxrSmdG8f
-         QFySeG8nErUG4dyzvggDNyrMggYwsEXMcjNVr5yIAcnAmys5jYZp4fz04h2FjAm2/ZDC
-         /mtE//FuquCmeO5EGoKbU/J8M95xoaQ6kpfSXYIS0S7qCNc+Mr7yMgxM8mmzMuC0CgLK
-         qhRg==
+        d=gmail.com; s=20251104; t=1790191768; x=1790796568; darn=lists.linux.dev;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=4XqmhhXP0A/R76xAAP865zT+LyEnQax3kp6jk0z97rQ=;
+        b=olklwS+/43BagKbvq1jf8p6cP8om/rkeohIHsnB1bs+Qs8UuC5lKQja+n6zueFITxw
+         aLKeSHUi6dJ7e4d4KmgIKMvAuvGqIlfe/Jn+UvWWSg2s4nOPeMAb18wLl1iNerMYY/7K
+         DDFssXFdBCVhMpnDfYYzFyb99UJZWWNQgN1rhMmkwN5ZdUl2n6Wmmd0LvmI3QI8jSEd9
+         YhrRi1LdF3gEStd1PZ72H6BIc1ZIZUwjx+T7vSAYay5+taIHI8tf0CNrc7JXZ5Bx3g5R
+         W4pXq1wV148dAaR8FMkRpBaPxLB/XbELubfsczrSRxbok8q41xFWoS01g4wEf48/uCaE
+         lDuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790190697; x=1790795497;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1790191768; x=1790796568;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=2NQxLZICGnHK2h/s6KW/Zky2T9XW9w9CFC0y7KybVt0=;
-        b=Cz+Fy+w7y4GoucVyBI+HTGRDIuAnPzlyY02uR9ZfGtAWW7lw1xoKpSSD8SgXxL9bkL
-         pTg42Yy2+098AhAxoRkB1vfuFrrGH8o8iDnl6EtUF4Grmqe+Z5CE0HhxBwFWTnGo26sh
-         OFVmScaz9JyUOiiJ6GKOfzzrGr/7wpQXgePj5thaFfgu7Sl/O31jWwL24D29gWvf2/7b
-         uog7tpuW5XcxfksW3sDDDiUhY+2pjeia3CHWYIFZNKoaHbR+3QZHnSVN/qIgB1yks81Y
-         PlkBTT3IWfphoLqpdiXPPLN08jWpvE6xAHF0tvH4Bmz4sf/ESDGVKmLZuiTEiBZE+MS8
-         xF6g==
-X-Gm-Message-State: AFuF++k92qeCIhF2tvH0MXonoD4oOrGy6dTqpapF70lFUXhPW+PZ8lGr
-	hZozQXwRV+faV5kyxuNtwGvrHyv7S9j+oLhwqPnTEcNhJljM8b+h+/BATSUu2hShfBbQDS73Erg
-	VgFh8VhZFlE4Y+bIATLUlxAMsMJdi/jC3uIaUVnYIhTOLJchT0iYwEu/YAV0=
-X-Gm-Gg: AYBFou04hIv54r/qeN/29qqAutdJ7X+gPUDOMZikKTfPBXcYmOktFIXP/YiR82mSZ8l
-	a/qbvqBqPJAFmSQ8+lDcRxUgJJoKHBlvKvkwgiJvEs68J7UgZa76uoLrTLCXt0NPX0q4lVU235g
-	MmUztgsvP1FvddthS6lttUuilV0wDkBXtOVX4q3GohGvXv9FCBgUl/gldFhPC7cSAwWrVwQ8kNB
-	wRklLk+MNY6f6eZbXzAWSEB7LTPF9M3+nN5WJyoBDmDUubXdlBfvz2rcZ0kluRgqqma0N69eYB3
-	kw4yVKPtq/D0WHZAzfkFvOy8oJ5+tYfFEGgA70TE1HrHomGjLufj9eAehslCVfhooOS+BRveDEV
-	Tu0pd3Tn380p2CGJlDQ1q
-X-Received: by 2002:a05:622a:4d0a:b0:530:e335:4ef with SMTP id
- d75a77b69052e-532f8cb1cb6mr4180531cf.2.1790190696663; Wed, 23 Sep 2026
- 12:11:36 -0700 (PDT)
+        bh=4XqmhhXP0A/R76xAAP865zT+LyEnQax3kp6jk0z97rQ=;
+        b=ZiWv6TRHLt+UGV0sxDfNRNKCMuPCOU/akxMW0RW29hdvWkQmexW8l26l454l67Sbxm
+         hQKEqLDJ2qTCBxb4pbEp/+lNNirQXmTQei+x6tWEWKCPTdP5KHv2oG0DFeLVWmR/o9y2
+         KduPymhxRHliObP8Do7ptaVw7SCkP4AtOpbUW64l6ZthQ4v11lr1D0zdQWXKKjOvAhyr
+         6CElK1piZkIlM1R2wDRHY3nYpWgRYVqui9e2tmZQrZFuCBeZcrSALNmzIklaWx4Nl5kC
+         KdNz7Anho+CuihvClCaQCcHS5a8PmUsDvQFDFNHQPn7GgOUmtzDn3nVA1oxlTXSTdX3Z
+         9TXw==
+X-Gm-Message-State: AFuF++nngsFQ2WmEgwXDTxyo8bAoXZ1rtWibHhy0Sja7Q2W3yvKol+6A
+	E/2WjK6z9uW1WLVey5oI1xD4xa91DQegoOikuPKx0D4DZ6euhAqzAQ44ZNmbNVhO
+X-Gm-Gg: AYBFou0GiMDs/snsDbYK97qkK1m7ihsO0KAdB/58s1KcJwDzZc3qLSJe0uY2vONFJ40
+	rNuCn5LPlaSz37qj2EjMd56cA6j9TTojUXBJnpSzGw4IilMR9qSD8P1glzc9KuUjN4e6GFvJgM8
+	mLEzq8OmRUxs6CM4eCv5xecgRhC7lx9Hhr2h/spze4d4+iXeMUfRsRubfd7fMx7xeiV4ohWyWaG
+	S5uTGWXtaA7qhGMzTI5PvTFF2nVxaOIQIVRFqRfHb/oVFliVMRb4Zgn3MVA+jDm61SCGsFPfQwd
+	gv/Uvi6+CaO7Gzu8CvhgosHGqqXyAnweBLUQDrBVP42Ukk+UKZv+nGWXIULbiMKV4+WXO8/XlJY
+	eg80hkCRLIWWDzqqZU5sr7WTcQp+kVktutSQxJfGJ5OaJvbSgngDArajFGqFNZTGSvttsEoOXST
+	lzbgl7DByHvPtNASdcctsZSpuwd5BDMpObxbOIhGVl90Ta5tCXtlDvbsWz4fVwd8d2Q3J9CyY3G
+	rwcK0thgMW+kjHOEN1nUAmAtjGKR/QquBt7WBcYe4tCM9hW620fAx8t8pWkRttxJ97fGVwLSjP1
+	zFCdkPc7fJiT7lnb2N0cpjFpHNuLR2ue+H6apg==
+X-Received: by 2002:a05:600c:6290:b0:49e:799a:8969 with SMTP id 5b1f17b1804b1-49fe6707bb7mr3307245e9.30.1790191768392;
+        Wed, 23 Sep 2026 12:29:28 -0700 (PDT)
+Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-488688856f0sm8470163f8f.30.2026.09.23.12.29.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Sep 2026 12:29:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <cover.1789966896.git.irogers@google.com> <20260923181213.3032038-1-irogers@google.com>
- <20260923181213.3032038-49-irogers@google.com> <20260923184942.B756E1F000FF@smtp.kernel.org>
-In-Reply-To: <20260923184942.B756E1F000FF@smtp.kernel.org>
-From: Ian Rogers <irogers@google.com>
-Date: Wed, 23 Sep 2026 12:11:24 -0700
-X-Gm-Features: AclHuK9RhfE2VRdiaxPx6w1lQZEg5scq8EUYUuFYW_ImBNRcBFC_bSKcTzZfwJA
-Message-ID: <CAP-5=fVakad4+OJSMa2G0ArVXShJ9oi2jKsoNNsL6UvG5NfTxQ@mail.gmail.com>
-Subject: Re: [PATCH v3 48/49] perf script: Support standalone scripts and
- remove embedded scripting
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 23 Sep 2026 21:29:27 +0200
+Message-Id: <DLMY0OLDC2E9.20RXZ8ZAY73PG@gmail.com>
+From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf-next v1 08/18] bpf: Grow the verifier id scratch on
+ demand
+X-Mailer: aerc 0.21.0
+References: <20260923191139.2816206-1-memxor@gmail.com>
+ <20260923191139.2816206-9-memxor@gmail.com>
+ <20260923192404.EE7E21F000FF@smtp.kernel.org>
+In-Reply-To: <20260923192404.EE7E21F000FF@smtp.kernel.org>
 
-On Wed, Sep 23, 2026 at 11:49=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
+On Wed Sep 23, 2026 at 9:24 PM CEST, sashiko-bot wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] perf script: TOCTOU race condition in signal handler allows se=
-nding signals to recycled PIDs
+> - [Medium] bpf: OOM in release_reference() triggers WARN_ON_ONCE and is i=
+mproperly ignored in unmark_stack_slots_iter()
 > --
 >
-> commit 1ed2e4983f9ede9efdfc6d59669cdd2e466dc05b
-> Author: Ian Rogers <irogers@google.com>
-> Subject: perf script: Support standalone scripts and remove embedded scri=
-pting
+> commit bdefbd593b54c82f98de0288f1f6f5e793ee9fbb
+> Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 >
-> This commit refactors perf script to launch standalone scripts directly v=
-ia
-> fork and execvp, while removing the legacy embedded Perl and Python scrip=
-ting
-> engines. It updates script discovery to prioritize the system python dire=
-ctory
-> and updates shell tests to use the new invocation style.
+> bpf: Grow the verifier id scratch on demand
 >
-> > diff --git a/tools/perf/builtin-script.c b/tools/perf/builtin-script.c
-> > --- a/tools/perf/builtin-script.c
-> > +++ b/tools/perf/builtin-script.c
+> The id map used to compare the ids of two states, which also serves as
+> the id stack of release_reference() and as the id set of
+> bpf_clear_singular_ids(), is a fixed array embedded in struct
+> bpf_verifier_env and sized for the most registers and stack slots a
+> state can possibly hold. Turn the map and the set into arrays grown on
+> demand, starting at 64 entries and doubling, and free them with the env.
 >
-> [ ... ]
->
-> > +static volatile sig_atomic_t script_child_pid;
-> > +
-> > +static void forward_script_sig(int sig, siginfo_t *info, void *ucontex=
-t __maybe_unused)
-> > +{
-> > +     /*
-> > +      * Terminal-generated signals (Ctrl-C / Ctrl-\) have si_code > 0
-> > +      * (SI_KERNEL) and are already delivered by the TTY driver to the
-> > +      * entire foreground process group, including the child script.
-> > +      * Signals sent directly to the perf process via kill(2) / sigque=
-ue(3)
-> > +      * have si_code <=3D 0 (SI_USER, SI_QUEUE, etc.) and must be forw=
-arded
-> > +      * to the child script so it can catch KeyboardInterrupt / SIGTER=
-M
-> > +      * and flush its output before exiting.
-> > +      */
-> > +     if (script_child_pid > 0 && (sig =3D=3D SIGTERM || !info || info-=
->si_code <=3D 0))
-> > +             kill(script_child_pid, sig);
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index d8f43f3a89912..8641f1a8d017d 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
+>> @@ -10136,8 +10136,9 @@ static int idstack_push(struct bpf_idmap *idmap,=
+ u32 id)
+>>  		if (idmap->map[i].old =3D=3D id)
+>>  			return 0;
+>>
+>> -	if (WARN_ON_ONCE(idmap->cnt >=3D BPF_ID_MAP_SIZE))
+>> -		return -EFAULT;
+>> +	if (!bpf_id_scratch_reserve((void **)&idmap->map, &idmap->cap, idmap->=
+cnt,
+>> +				    sizeof(*idmap->map)))
+>> +		return -ENOMEM;
 >
 > [Severity: Medium]
-> Does this signal handler risk targeting a reused PID?
+> With this change, idstack_push() can return -ENOMEM on a normal allocatio=
+n
+> failure, which propagates up through release_reference().
 >
-> The script_child_pid variable is not updated atomically with the waitpid(=
-)
-> call reaping the process, which creates a race window.
+> However, in kernel/bpf/verifier.c:unmark_stack_slots_iter(), we have:
 >
-> If the parent is preempted right after waitpid() returns but before
-> script_child_pid is cleared, the system could recycle the PID. This handl=
-er
-> might then trigger a kill() on an unrelated, newly created process.
+> 	for (i =3D 0; i < nr_slots; i++) {
+> 		struct bpf_stack_state *slot =3D bpf_stack_slot(state, spi - i);
+> 		struct bpf_reg_state *st =3D &slot->spilled_ptr;
+>
+> 		if (i =3D=3D 0)
+> 			WARN_ON_ONCE(release_reference(env, st->id));
+>
+> Does this mean a simple -ENOMEM during verification will trigger this
+> WARN_ON_ONCE splat? Since release_reference() can now legitimately fail u=
+nder
+> memory pressure, should this warning be removed, and should the -ENOMEM e=
+rror
+> be properly propagated here instead of discarded?
 
-In practice this window is small (O(a single instruction)) right
-before perf script exits, and it would require both PID
-wrap-around/reuse and an external kill() directed at perf's PID during
-that boundary.
-
-However, we can eliminate the window completely by waiting with
-waitid(P_PID, pid, &info, WEXITED | WNOWAIT) so the child PID remains
-unreaped while we clear script_child_pid =3D 0 and restore sigaction,
-and then calling waitpid(pid, &status, 0) to reap the zombie. I'm
-happy to include that if there is a v4 or as a follow-up cleanup.
-
-Thanks,
-Ian
-
-> > +}
->
-> [ ... ]
->
-> > +             } else { /* parent */
-> > +                     int status =3D 0;
-> > +
-> > +                     script_child_pid =3D pid;
-> > +                     sigprocmask(SIG_SETMASK, &old_mask, NULL);
-> > +                     while (waitpid(pid, &status, 0) !=3D pid) {
-> > +                             if (errno =3D=3D EINTR)
-> > +                                     continue;
-> > +                             pr_err("failed to wait for script '%s': %=
-s\n",
-> > +                                    script_name, strerror(errno));
-> > +                             err =3D -errno;
-> > +                             script_child_pid =3D 0;
-> > +                             sigaction(SIGINT, &old_int, NULL);
-> > +                             sigaction(SIGQUIT, &old_quit, NULL);
-> > +                             sigaction(SIGTERM, &old_term, NULL);
-> > +                             goto out;
-> > +                     }
-> > +                     script_child_pid =3D 0;
->
-> [Severity: Medium]
-> Is there a way to safely synchronize the clearing of script_child_pid wit=
-h the
-> reaping of the child process?
->
-> The child process is fully reaped as soon as waitpid() successfully retur=
-ns
-> here in cmd_script().
->
-> If the thread is suspended or preempted exactly at this point, script_chi=
-ld_pid
-> remains set to the old PID while the system is free to reassign that PID.
->
-> If a signal like SIGTERM arrives during this window, forward_script_sig()=
- will
-> read the stale script_child_pid and send it to the new process holding th=
-at PID.
->
-> > +                     sigaction(SIGINT, &old_int, NULL);
-> > +                     sigaction(SIGQUIT, &old_quit, NULL);
-> > +                     sigaction(SIGTERM, &old_term, NULL);
-> > +                     if (WIFEXITED(status))
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260923181213.30=
-32038-1-irogers@google.com?part=3D48
+This one is legit, probably needs more graceful handling.
