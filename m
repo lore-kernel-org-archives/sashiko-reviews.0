@@ -1,197 +1,207 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60773A75B8;
-	Wed, 23 Sep 2026 16:41:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B192A55408C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 16:54:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790181726; cv=none; b=bKQBWh5cisfhy0d2LJcVPFfUUFc4bNvCYUglif7L0flmVpulUdeZ2jOPWB+/4nJVAGvkgTp1Ey0I/6mejdrWrAfnkq77vdzKY1JIddhOB79fmeXiQ8f+mr9bx/5MjLJlIzqvwPhC8O9Usqgg6uDy6nmQQSDRtTJz2Q+f2+MHTbc=
+	t=1790182473; cv=none; b=BR0F2rxSJ6FQ0hlI9VDe9hSHUhzNpr307GESYhpDEhHfWORX39dhRhw9XdkLF7ikICW9xTA+5eepVR/1uKN/lCDKHaEq2JBAOInMKW42mmCkVTCBBcwZtI0y8CBX/kN2S5awvo9rvr356e8D/KTYXujajNwizjPe0WtBCbyi6CQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790181726; c=relaxed/simple;
-	bh=xOZIm6bqo4y68oG1OtMjuRu5Wf7wgmjgjrbJ2UFvh5o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BJQMrllYSQOveyQxH306TWF3nevgNqaVDWfNot6ga/uKtOPHhc7+nDbfWoZfR9l/KyliOwXARYNKGz4ZHWlXo5+oAEjEqDiVhTXCcZ44dkSWx0nTrW1zaga5LWrUs5BSHqjEpqkduZiGKia9napAQrHvsPQ5OPmHLBecO9sMJFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NH5I5xKQ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790182473; c=relaxed/simple;
+	bh=sR2JTNeIt2Bd3YpUo7q6IodMzR1FkWUtQTYdLlsbvng=;
+	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
+	 To:Date:Message-ID; b=Mtcrs4h/7fxvPeyjomU85H6bvivFojNrD20odsDWs8EG0tsjKFnEAB/DEXNA8CnRoey2txbYGHnqBcoxr6yPSXzsgtTYxz6XBzHfPrBwfjaH47Rq8ZXr4GVzaqslwVDTNG9Ukj/xfVkZxs1p+6WK9jXpPhKMsztUXB0AsTZ2sGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cQd8byvZ; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NH5I5xKQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9BA1F00893;
-	Wed, 23 Sep 2026 16:41:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790181715;
-	bh=6wsmFKsZ5fCzZ4EY98wEhAeDRg8SsIHUlKL3Es/G0VU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=NH5I5xKQ1nd6/2kvbVVde9pEjBC0BgR67EKQo8GB1Dtr4j/bIPWXamiY16OI9c3H4
-	 /a/Rgs1UCaegLbltOyTEEL1EICXFNO6PN9n3DrivgjBbmQuy1m8sPTf6n58tCNc33y
-	 RPAc3Y4J6DJhP1tsIFBhy35YSNj9l57l+jjlsOwPn7e07GNg4pScKZLA5WONcnRo/I
-	 hcHXUyCiPAOxssC+SL7/XNqh345DcIkkl0evAU7c7L5AQ5eeGZuvF+aN7sMU1YLOST
-	 ejBa2Zsyb9Jj3rPz5tT//UI+Z+/fJOxXUWOAbCiJLlWlCm1X3N2ZiZSVyqt3bas4dg
-	 IP+iHORuEkTOg==
-Date: Wed, 23 Sep 2026 09:41:53 -0700
-From: Oliver Upton <oupton@kernel.org>
-To: Marc Zyngier <maz@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev
-Subject: Re: [PATCH 3/3] KVM: arm64: vgic: Stop the VM when disabling LPIs
-Message-ID: <arQBUZJ_uUDQapbw@kernel.org>
-References: <20260922214212.3327146-1-maz@kernel.org>
- <20260922214212.3327146-4-maz@kernel.org>
- <20260922220125.91CC01F000FF@smtp.kernel.org>
- <86v77w50us.wl-maz@kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cQd8byvZ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1790182470; x=1821718470;
+  h=mime-version:content-transfer-encoding:in-reply-to:
+   references:subject:from:cc:to:date:message-id;
+  bh=sR2JTNeIt2Bd3YpUo7q6IodMzR1FkWUtQTYdLlsbvng=;
+  b=cQd8byvZnkLVB8RHkA8t6SO0XdPTUzPi3+gOh3DC6e2Q8aI+sj9/zYnp
+   m32Sl80wE+Bj9pIUZQZrqU87/GrEqlAhKmxYObaAvgaOX4TVeQcMXI4cw
+   /NiGPSyDo0LR0uDqoiQAWKdvfG6r+1SewimweCxpAC6tQUL/JYhsaidaY
+   2kctLdK2Zh5HemG57IT7ziY/DIGMCcCa/Xbzes9egaQy31/R3BsrSB7Ih
+   1dEsur5CANjqMTFVFMujn+DL1cfwC/kvdpyfKpFrElzDg8DerGsY7/5B7
+   mlZQqmEfWMSrhtfEWrXZMIHXEGGa8rsyUSnGVl0VSUMeF/Qa21dy7VQFF
+   Q==;
+X-CSE-ConnectionGUID: NenoZWr2QKueoB+omTCE4g==
+X-CSE-MsgGUID: wQQqBH20Rayk3hUlXS/cPA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11914"; a="116425359"
+X-IronPort-AV: E=Sophos;i="6.27,118,1787036400"; 
+   d="scan'208";a="116425359"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2026 09:54:30 -0700
+X-CSE-ConnectionGUID: ayObFwfkRBGBVVTGTHxVbg==
+X-CSE-MsgGUID: UwAXNvqtShuSaMCNbz1CUw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,118,1787036400"; 
+   d="scan'208";a="272285002"
+Received: from ncintean-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.213])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2026 09:54:28 -0700
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <86v77w50us.wl-maz@kernel.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <PH8PR11MB804034417C9C4625B7F20F2BF4822@PH8PR11MB8040.namprd11.prod.outlook.com>
+References: <20260630223946.2107382-1-jia.yao@intel.com> <20260630225349.984AB1F000E9@smtp.kernel.org> <178290749714.224587.15234445443946207851@jlahtine-mobl> <178292444166.273574.16738251742448073960@jlahtine-mobl> <PH8PR11MB8040EFAAE8210F2C6B53AC1BF4842@PH8PR11MB8040.namprd11.prod.outlook.com> <179005959984.27165.4749331452130832177@jlahtine-mobl> <PH8PR11MB8040A8F215B997982530CE44F4832@PH8PR11MB8040.namprd11.prod.outlook.com> <179014632773.19856.4107893493544612438@jlahtine-mobl> <PH8PR11MB804034417C9C4625B7F20F2BF4822@PH8PR11MB8040.namprd11.prod.outlook.com>
+Subject: RE: [PATCH v9] drm/i915/dg2: Add per-context control for Wa_22013059131
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>, "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>, "Roper, Matthew D" <matthew.d.roper@intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>
+To: "Yao, Jia" <jia.yao@intel.com>, "sashiko-bot@kernel.org" <sashiko-bot@kernel.org>, "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+Date: Wed, 23 Sep 2026 19:54:24 +0300
+Message-ID: <179018246485.152778.2589066724213973485@jlahtine-mobl>
+User-Agent: alot/0.13.dev2+g40c57d620
 
-Hey,
+Quoting Yao, Jia (2026-09-23 19:01:32)
+> Hi @Joonas Lahtinen,
+>=20
+> When shifting from WA option #2 to option #1,    removing a global settin=
+g ->   adding a per-context setting.  We thought it was a per-context opera=
+tion.  However, due to the "weakest link" effect, this remains a global ope=
+ration.
+> Thus, making it per-client has no effect either.  Containers will interfe=
+re with each other.
 
-On Wed, Sep 23, 2026 at 12:21:15AM +0100, Marc Zyngier wrote:
-> I think there is a kernel of truth here, and I reckon this is a *very*
-> old bug. Something like the below should help. Oliver what do you
-> think?
-> 
-> diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-> index 8b080804bc90b..5f5dd8bead4b9 100644
-> --- a/arch/arm64/kvm/arm.c
-> +++ b/arch/arm64/kvm/arm.c
-> @@ -1352,7 +1352,6 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
->  
->  		ret = kvm_arm_vcpu_enter_exit(vcpu);
->  
-> -		vcpu->mode = OUTSIDE_GUEST_MODE;
->  		vcpu->stat.exits++;
->  		/*
->  		 * Back from guest
-> @@ -1386,6 +1385,12 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
->  
->  		kvm_arch_vcpu_ctxsync_fp(vcpu);
->  
-> +		/*
-> +		 * All the state has been synchronised, let advertise
-> +		 * we're outside of the guest.
-> +		 */
-> +		smp_store_release(&vcpu->mode, OUTSIDE_GUEST_MODE);
-> +
->  		/*
->  		 * We must ensure that any pending interrupts are taken before
->  		 * we exit guest timing so that timer ticks are accounted as
-> 
+They would not. On the impacted SKU, the RCS and CCS at any given time
+can only run workloads with matching address space. Those workloads must
+originate from the same DRM client as there is no address space sharing
+across DRM clients implemented in i915.
 
-Yeah, this looks reasonable to me.
+It's only when multi-CCS SKU would need the same W/A, we would need
+further scheduling decision to ensure 2 CCS workloads are not competing
+for the global setting.
 
-> > 
-> > >  		vgic_its_invalidate_all_caches(vcpu->kvm);
-> > >  		atomic_set_release(&vgic_cpu->ctlr, 0);
-> > > +		kvm_arm_resume_guest(vcpu->kvm);
-> > 
-> > [Severity: High]
-> > Does this block need to hold a VM-wide lock?
-> > 
-> > Since vgic_mmio_write_v3r_ctlr() only synchronizes locally using an atomic
-> > cmpxchg on the target vgic_cpu->ctlr, multiple vCPUs could concurrently
-> > write to different VGIC redistributors to disable their LPIs.
-> > 
-> > If this happens, multiple vCPUs will concurrently call kvm_arm_halt_guest()
-> > and race to set vcpu->arch.pause = true:
-> > 
-> > arch/arm64/kvm/arm.c:kvm_arm_halt_guest() {
-> >     ...
-> > 	kvm_for_each_vcpu(i, vcpu, kvm)
-> > 		vcpu->arch.pause = true;
-> >     ...
-> > }
-> > 
-> > The first vCPU to finish flushing will call kvm_arm_resume_guest() which
-> > unconditionally clears the pause boolean:
-> > 
-> > arch/arm64/kvm/arm.c:kvm_arm_resume_guest() {
-> >     ...
-> > 	kvm_for_each_vcpu(i, vcpu, kvm) {
-> > 		vcpu->arch.pause = false;
-> > 		__kvm_vcpu_wake_up(vcpu);
-> > 	}
-> >     ...
-> > }
-> > 
-> > Could this unpause the VM prematurely while another vCPU is still tearing
-> > down VGIC state in vgic_flush_pending_lpis(), allowing guests to run and
-> > modify their VGIC state concurrently?
-> 
-> Just as interesting. It appears that this doesn't nest correctly,
-> while we really rely on it to work. An obvious way to do this is to
-> actually turn pause into a refcount. Something like the (untested)
-> hack below.
-> 
-> 	M.
-> 
-> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> index 27fe0cd5b2d7a..08dc8f816824c 100644
-> --- a/arch/arm64/include/asm/kvm_host.h
-> +++ b/arch/arm64/include/asm/kvm_host.h
-> @@ -889,11 +889,10 @@ struct kvm_vcpu_arch {
->  	/*
->  	 * Don't run the guest (internal implementation need).
->  	 *
-> -	 * Contrary to the flags above, this is set/cleared outside of
-> -	 * a vcpu context, and thus cannot be mixed with the flags
-> -	 * themselves (or the flag accesses need to be made atomic).
-> +	 * Contrary to the flags above, this is updated outside of
-> +	 * a vcpu context, and thus cannot be mixed with the flags.
->  	 */
-> -	bool pause;
-> +	refcount_t pause;
->  
->  	/*
->  	 * We maintain more than a single set of debug registers to support
-> diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-> index 8b080804bc90b..62b683107ccae 100644
-> --- a/arch/arm64/kvm/arm.c
-> +++ b/arch/arm64/kvm/arm.c
-> @@ -561,6 +561,7 @@ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
->  	kvm_arm_pvtime_vcpu_init(&vcpu->arch);
->  
->  	vcpu->arch.hw_mmu = &vcpu->kvm->arch.mmu;
-> +	refcount_set(&vcpu->arch.pause, 0);
->  
->  	/*
->  	 * This vCPU may have been created after mpidr_data was initialized.
-> @@ -835,6 +836,11 @@ int kvm_arch_vcpu_ioctl_set_mpstate(struct kvm_vcpu *vcpu,
->  	return ret;
->  }
->  
-> +static bool vcpu_can_run(struct kvm_vcpu *vcpu)
-> +{
-> +	return !kvm_arm_vcpu_stopped(vcpu) && !refcount_read(&vcpu->arch.pause);
-> +}
-> +
->  /**
->   * kvm_arch_vcpu_runnable - determine if the vcpu can be scheduled
->   * @v:		The VCPU pointer
-> @@ -850,8 +856,7 @@ int kvm_arch_vcpu_runnable(struct kvm_vcpu *v)
->  		      (kvm_timer_should_notify_user(v) ||
->  		       kvm_pmu_should_notify_user(v)));
->  
-> -	return ((irq_lines || kvm_vgic_vcpu_pending_irq(v))
-> -		&& !kvm_arm_vcpu_stopped(v) && !v->arch.pause);
-> +	return ((irq_lines || kvm_vgic_vcpu_pending_irq(v)) && !vcpu_can_run(v));
->  }
->  
->  bool kvm_arch_vcpu_in_kernel(struct kvm_vcpu *vcpu)
-> @@ -1014,7 +1019,7 @@ void kvm_arm_halt_guest(struct kvm *kvm)
->  	struct kvm_vcpu *vcpu;
->  
->  	kvm_for_each_vcpu(i, vcpu, kvm)
-> -		vcpu->arch.pause = true;
-> +		refcount_inc(&vcpu->arch.pause);
->  	kvm_make_all_cpus_request(kvm, KVM_REQ_SLEEP);
->  }
+With per DRM client enforcement, both RCS and CCS should be able to
+write the global setting without a conflict. And when a context from new
+DRM client is scheduled it, it should be able to program the global
+value to its liking as the same address space limitation guarantees the
+other workloads are not in the HW anymore.
 
-No issues with this approach but it is worth noting that all other
-callers of kvm_arm_halt_guest() do so behind the config_lock today. You
-could probably do the same with the LPI disable path.
+Regards, Joonas
 
-Thanks,
-Oliver
+>=20
+> Thanks,
+> Jia
+> > -----Original Message-----=20
+> > From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+> > Sent: Tuesday, September 22, 2026 11:52 PM
+> > To: Yao, Jia <jia.yao@intel.com>; sashiko-bot@kernel.org; sashiko-
+> > reviews@lists.linux.dev
+> > Cc: dri-devel@lists.freedesktop.org; intel-gfx@lists.freedesktop.org; R=
+oper,
+> > Matthew D <matthew.d.roper@intel.com>; Tvrtko Ursulin
+> > <tursulin@ursulin.net>
+> > Subject: RE: [PATCH v9] drm/i915/dg2: Add per-context control for
+> > Wa_22013059131
+> >=20
+> > Quoting Yao, Jia (2026-09-22 17:34:08)
+> > > Hi @Joonas Lahtinen,
+> > >
+> > > For RCS -> UNSET
+> > > For CCS
+> > > 1. Old compute runtime -> UNSET
+> > > 2. New compute runtime -> USER
+> > >
+> > > If we take there's only one compute runtime version, and priority USE=
+R >
+> > UNSET?  Where's the conflict come from?
+> >=20
+> > See below.
+> >=20
+> > > But if we take there's more than one compute runtime version, and the=
+ir
+> > priority is equal,  UNSET can cover USER,  USER can cover UNSET,  even =
+with
+> > two clients they could cover each other.
+> >=20
+> > I didn't follow this part. How does the priority come into play?
+> >=20
+> > We have to keep switching the mode as the DRM clients come and go.
+> >=20
+> > > We should take it easy.
+> > > Once we reached USER, set by new compute, we should latch it, for the=
+ WA
+> > has been implemented by USER.
+> >=20
+> > That won't work. If you are running two different containers, you may h=
+ave
+> > different compute runtime versions. Also, Mesa can be submitting to CCS=
+ too
+> > for async compute, AFAIK.
+> >=20
+> > To properly cover things, we should make it into per DRM-client setting=
+ and
+> > switch the mode accordingly when different DRM client is run.
+> >=20
+> > And for the given SKU with only one CCS, as explained earlier, it shoul=
+d be
+> > already guaranteed that two different DRM clients are not active on the
+> > hardware at the same time due to the address space mathing requirement
+> > between RCS and CCS.
+> >=20
+> > If this needs to be extended to multi CCS SKUs, then it'd be a bigger
+> > implementation effort.
+> >=20
+> > Regards, Joonas
+> >=20
+> > >
+> > > Thanks,
+> > > Jia
+> > >
+> > > > -----Original Message-----
+> > > > From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+> > > > Sent: Monday, September 21, 2026 11:47 PM
+> > > > To: Yao, Jia <jia.yao@intel.com>; sashiko-bot@kernel.org; sashiko-
+> > > > reviews@lists.linux.dev
+> > > > Cc: dri-devel@lists.freedesktop.org;
+> > > > intel-gfx@lists.freedesktop.org; Roper, Matthew D
+> > > > <matthew.d.roper@intel.com>; Tvrtko Ursulin <tursulin@ursulin.net>
+> > > > Subject: RE: [PATCH v9] drm/i915/dg2: Add per-context control for
+> > > > Wa_22013059131
+> > > >
+> > > > Quoting Yao, Jia (2026-09-21 20:33:03)
+> > > > > Hi @Lahtinen, Joonas,
+> > > > >
+> > > > > The key is LSC_CHICKEN_BIT_0 is a global register.
+> > > > >
+> > > > > Even we use per-client,  we should consider the following cases:
+> > > > >
+> > > > > 1. Should conflicting configurations within a client be rejected?
+> > > > > I recommend the first setting should be latched.
+> > > >
+> > > > From uAPI perspective it would be simpler to set this at the DRM
+> > > > client level at once. However we don't seem to have such uAPI in
+> > > > active use currently (all
+> > > > drm_noop) so you'd have to compare the complexity between indirectly
+> > > > setting it at DRM client level by first created context or adding
+> > > > such an uAPI to set it explicitly per client.
+> > > >
+> > > > > 2. Should conflicting configurations across different clients be =
+rejected?
+> > > > > I think the latter setting can cover previous one.
+> > > >
+> > > > DRM clients need to be indepenent from the driver perspective, we
+> > > > can't do that.
+> > > >
+> > > > The whole point of making it per DRM client is that given the
+> > > > impacted SKU only has 1 CCS engine. We have the address space
+> > > > matching requirement between CCS and RCS, so when both CCS and RCS
+> > > > are running, we know they belong to the same DRM client and thus
+> > > > they will not conflict with the WA mode. And if only one of them is
+> > > > running, there can be no conflict either as it's just one context.
+> > > >
+> > > > > Even like this, still can't cover all the race condition.
+> > > >
+> > > > Which race conditions do you think would remain? We definitely have
+> > > > to eliminate any race conditions to land this.
+> > > >
+> > > > Regards, Joonas
