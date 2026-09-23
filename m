@@ -1,153 +1,177 @@
-Received: from canpmsgout05.his.huawei.com (canpmsgout05.his.huawei.com [113.46.200.220])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf2-f13.google.com (mail-lf2-f13.google.com [74.125.229.205])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E49D4A4848
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 11:48:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.220
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790164117; cv=none; b=uK/2dMqTjDx7wgUsoKCPN+9qNEMavnCL0XbrfLCp7fvmZsONGrHH130r/89AiNLWa/v86p7mZxUnPbh7rJIZrivazy6KES67AC9LsoWLBNRQtspvuIPoLJsvye+najHAvvwMkFhzfY75LnE9BiaUBp3EhGnLOe4gIlWXUSlm3YQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790164117; c=relaxed/simple;
-	bh=KSfiOnajdT0TCJuQ3E/w5aHiveEM4BqoGuxib+bgF38=;
-	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=ACnlVC93bqKiTDnvaCszwiup/Fy3UTiHBE1wPr9qlgnunLnCNYfQCoGueAJ6gh0p1kfKte+DW/jRaOn6PeiuhrHD2wHGQdrt3kdx/PqSYgr3bJOQZg0CHoRnWgmdTxiDrG5/lV7nDxw/4uthSbaKe9deGUAuKq9Wom4awsfoy0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=06B3n92B; arc=none smtp.client-ip=113.46.200.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72FC53F3263
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 11:57:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.229.205
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790164641; cv=pass; b=RnIXi3m3fOjMUwraJewUlbmRZE1FHrQeYLJkl09P3M0bmYuwObdhLJT/blRb9RNLduWXjaFkcGJXb1811F/cIvIbV/3YRdIVONYxRTGqWUrAZeS4PUleWq4WsKvXf03F0lqX1NK6/E33HYDnAzjEhLqTHieKlJy85jLQLxL2VpI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790164641; c=relaxed/simple;
+	bh=d3pIqDKjwzqjI/GWL4Iy6hIvXv3G/GiTWsez1fVu8C8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pNXl2It9bYmw191VMSqYMs8QFcFrcBaJYRBAdPGUzcE9glYsGKCvdAA0Mft/7+xh0fs54pdhZhlkasnhECEGdAxvtjQabOddyFAHxFnNa/JVgtiOoi0N0YUZzvkiRDk4QNG/r8EY9WLMCNsqY57SbEZJrpT204UbgrBX4jFFj+0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hq4gajRA; arc=pass smtp.client-ip=74.125.229.205
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="06B3n92B"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=em08yh31x8n4q97wHB76tq1Ci3byPr7e6rhH+St0tCw=;
-	b=06B3n92BKyaT8fvCOjKZCZKadr+wC+26D1QAzgWCTJTUXCo+OQhRQxaz3kF/Qs+30IyLfvQkT
-	xzv4XL6nJ9Ht3ChV//34/vI/DpNCqsQsUesgWqh5gcCMmxNCWCJa+Dkm0+qBM770ne1F/2HbXGT
-	uVbkRRLJ6jOL2M4E9CB/eBw=
-Received: from mail.maildlp.com (unknown [172.19.162.144])
-	by canpmsgout05.his.huawei.com (SkyGuard) with ESMTPS id 4hqZgn0hCKz12LF9;
-	Wed, 23 Sep 2026 19:37:09 +0800 (CST)
-Received: from whupemo200011.china.huawei.com (unknown [7.152.185.179])
-	by mail.maildlp.com (Postfix) with ESMTPS id 2FC644056D;
-	Wed, 23 Sep 2026 19:48:13 +0800 (CST)
-Received: from [10.174.178.46] (10.174.178.46) by
- whupemo200011.china.huawei.com (7.152.185.179) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Wed, 23 Sep 2026 19:48:12 +0800
-Subject: Re: [PATCH v3 2/4] md: Handle pers->run failure in level_store
-To: <sashiko-reviews@lists.linux.dev>
-CC: <yukuai@fygo.io>, <linux-raid@vger.kernel.org>
-References: <20260923112159.94175-1-chengzhihao1@huawei.com>
- <20260923112159.94175-3-chengzhihao1@huawei.com>
- <20260923114627.3CC921F000FF@smtp.kernel.org>
-From: Zhihao Cheng <chengzhihao1@huawei.com>
-Message-ID: <b21c45c9-cfd6-090a-349a-69a95a869222@huawei.com>
-Date: Wed, 23 Sep 2026 19:48:05 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hq4gajRA"
+Received: by mail-lf2-f13.google.com with SMTP id 2adb3069b0e04-5b5e4f17452so662725e87.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 04:57:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790164633; cv=none;
+        d=google.com; s=arc-20260327;
+        b=kwK0AVsJEvjkLd98c5VN0AIQbtAygZZngc9w1FQYTZaODY1/sRvx2V6Dn0AcHFZHqN
+         p14BOPfKEGa4Y0kizJ7ZpEuOxYEHdLJ/apAR8g6qvCNJ7woQPmENsYwvfQbG+Q038XrA
+         Zz35BH0IY9YkNO2iNQNTChDiclBcz2TGsm9G5DtrQhD7K32iGnt904XSGKvN1kLeQFje
+         NKriHOU1830a4LraEenmFzc5ZXyr1L9ZxpGgT3tP9KeuRqfUtCq9HGWBuJvB+hXZTILe
+         k2o+aeR1zmx3Amf9Hb8AJ6lzWqhOtyZcbcp5Gb8k2/orJpyJ5F/jnbgdbfQQXkZZEjPY
+         3+IA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=D20TpGH49qOv9/0QKKs9pgkC9gvT+RAFw0ynQyUTh4c=;
+        fh=LurvqkyHfbugGG7TvbGP+3ajYP8m5w7mjQCQwC86IXk=;
+        b=gFbez5itDq7a+BIO4Fhy3uHfJTrDZTVqBD+0YpluwqWIRONt/VnCh8AXraO17neiBP
+         rpeB//CoJZYWdvBldqvhGEHHmbq66oPPsM8k816ac0WIDVM2OeR6WT4ZnA3Kj6bd/RHW
+         Vq+fjws9HxhZK2uB7Xigsn2W2ThDYdOAI/lpVh0grTCxDsw8X1XYKAd6dcb2QUCQDHYR
+         3yLk29itdA510+EO6KOX/rUsjOaj23L0x4l6r2BxoCYF3byG6KvQWwHROIw0LVFi4+fT
+         UA+rgPgtnvRYErOUOh7hKEBLf249ixSG3rxOHgX6CvfvipWSpyoSVAjkxwQzG68bzqvC
+         hI/g==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790164633; x=1790769433; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=D20TpGH49qOv9/0QKKs9pgkC9gvT+RAFw0ynQyUTh4c=;
+        b=Hq4gajRAJJI3/RageZ6J/QHzefCwm2RsNpsG73RPNHm6gtlH0qJDAWAZ1BnymYS5L1
+         kynKDG4/IInMkLBPWz6CAr5w65egJFlLKAM8Th1L4J33fOvF2fmlYwBQalvh8teUUi95
+         l74EXTVuHJUVWkus097/uqKfIols5MiwL7+GbX/c0/UE8YiEJEb3ezackYlSkDzBlVMZ
+         6oyD1mwW3Hw1/TIfDNVmsUbRKSudv2GNYvMe2O+xQQxLnj1z9oczl0epYiDCS3T39qs8
+         GC0eq9CA1m2kJEQ8LgrtXu0868ZrMK7n/+z7cgIl1HZ0NbV6UhaRF7oWMJ6vHbMXcnhB
+         TOFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790164633; x=1790769433;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=D20TpGH49qOv9/0QKKs9pgkC9gvT+RAFw0ynQyUTh4c=;
+        b=QLXGSRH7l9WNOA1uzY4yb7Dc8aV1ib6xa/5OGuIHA5kf4oggDosiAXMk2KZeK+d9Rv
+         FK4vT1Aoyn3aFKZVHvozYmN3FYv9baH6AA7kRHndOczAXX2VuhAcwQVQaYLobLAXM2Gx
+         3hmaXPGSK65qX0rqz0YVXoZ3NaWtk0DK5VX17mGaJtwbi9h3+lIZx3/E0k9R6NOHqvpf
+         QdU5l/U16tMl099vaoZ0PbSwL5r4yPbhZCSgeKF7PYL/SBYiExYnrev0gdGWSglnNEn6
+         qEVlYwZaQ0jCK5yZiXsnXK3TZWPL5oWXG6rM3iro6ted1fYibxTMe14+99tueLLs3/lY
+         l8Zw==
+X-Gm-Message-State: AFuF++nFr6jr0XpE2fCkDXy4nwTK3KSWYlQhSvPfLMxk2TPZVF4zbnks
+	VO64+pFOlFa6IrHlVJGRZVbclRByXwStQISpQAt5yTvcXJURyCQil0YW/idZpQahIDK2PQ8Hgk1
+	f3/az4ix+fQuiBA1g5kc8WHVe/f7lXDNoTOxy//IQSQ==
+X-Gm-Gg: AYBFou36CV6tuHCw4i+AvpMiEiJKVv42CQPEyuYIfi/16nPWct5Q6h6B80B6446C0Hz
+	9cQcTW6YmmIAD1qUsdOGf+/Kc2vd+jBacVvT2+lk5Jmq2ABYxd4jnfrM5tHB8XCe+XJEcETT7Lj
+	a8uXxmu9Co+iNkSqZh8yGix7dPXZCIq/eGUgF0JdYP+sBuv4nJDR15BRXWSGy4HJx2kSykDTOjY
+	Sk+Y3B3EzOlUVnEjWD82vonpS3UPVC8WRKYWwBIVXhBhdKM1CQunV7WoqEhvtOWQBNZNQGWJ817
+	MGxIY4+6aiAQLQHaOSnfToHz0t9HQ469/vlYAUOKTpRvtIgETB8Jz+3Mu9bRMoIhoCRzZf9Ba6i
+	Cc9DKSZK6Lc3m
+X-Received: by 2002:a05:6512:3b1e:b0:5b8:999f:718b with SMTP id
+ 2adb3069b0e04-5b8d89529a8mr775837e87.12.1790164632483; Wed, 23 Sep 2026
+ 04:57:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260923114627.3CC921F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
- whupemo200011.china.huawei.com (7.152.185.179)
+References: <20260921021459.283023-1-stevereaver@gmail.com>
+ <20260923092626.873202-1-stevereaver@gmail.com> <20260923094144.E723B1F00893@smtp.kernel.org>
+In-Reply-To: <20260923094144.E723B1F00893@smtp.kernel.org>
+From: Steve Reaver <stevereaver@gmail.com>
+Date: Wed, 23 Sep 2026 21:57:00 +1000
+X-Gm-Features: AcwNN1Vz4ppQFb3PfMiYiHwl33Vcr8dKREmMuo6U_3H7qEGvy_Pm4z2nh8h_0rk
+Message-ID: <CA+sfT55QcfAGP=ttb-YNvR85ggCyfmgBp9YJ4853KGg0da1aDQ@mail.gmail.com>
+Subject: Re: [PATCH v4] mtd: maps: add INT0800 firmware-flash map driver
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-mtd@lists.infradead.org, Richard Weinberger <richard@nod.at>, 
+	linux-kernel@vger.kernel.org, Vignesh Raghavendra <vigneshr@ti.com>, 
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-在 2026/9/23 19:46, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] md: NULL pointer dereference in md_handle_request() after pers->run() fails
+The remaining removal paths don't apply to this device. The platform
+device is only unregistered via ACPI_RECONFIG_DEVICE_REMOVE, which
+requires the INT0800 ACPI node to leave the namespace. INT0800 is a
+static DSDT device: it has no _EJ0 (the eject sysfs attribute is never
+created for it), cannot live in an unloadable SSDT overlay, and has no
+hotplug notify source. Unbinding a parent device/driver does not
+invoke a child's remove(). With .suppress_bind_attrs the sysfs unbind
+is gone, and module unload is blocked by open fds via mtd->owner. The
+residual "rmmod -f with CONFIG_MODULE_FORCE_UNLOAD" bypasses
+refcounting for every driver. FWIW, the underlying limitation =E2=80=94 map
+providers freeing mtd_info while the core cannot wait for open fds =E2=80=
+=94
+is shared by all existing drivers/mtd/maps users; addressing it would
+be an MTD core lifetime change beyond this driver.
+
+On Wed, 23 Sept 2026 at 19:41, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] mtd: maps: UAF of mtd_info and I/O memory on device unregistrati=
+on
 > --
-> 
-> commit 3549464235e3de415ce8ceb834293e195eafad7d
-> Author: Zhihao Cheng <chengzhihao1@huawei.com>
-> 
-> md: Handle pers->run failure in level_store
->      
-> This commit adds error handling for the pers->run(mddev) call in
-> level_store(). When pers->run() fails, it stops the array via __md_stop()
-> and unlinks sysfs nodes before unlocking and returning.
-> 
->> diff --git a/drivers/md/md.c b/drivers/md/md.c
->> index 680b34a63cb3d..0a3252098780b 100644
->> --- a/drivers/md/md.c
->> +++ b/drivers/md/md.c
-> 
+>
+> commit ad3016fe3893b23f61acf9f96913ff51726ac3a0
+> Author: Stephen Bancroft <stevereaver@gmail.com>
+>
+> mtd: maps: add INT0800 firmware-flash map driver
+>
+> Add a read-only mapping driver that binds the ACPI INT0800 "Intel
+> 82802 firmware hub" device and exposes the system firmware flash as an
+> MTD ROM device.
+>
+> > diff --git a/drivers/mtd/maps/int0800.c b/drivers/mtd/maps/int0800.c
+> > new file mode 100644
+> > index 0000000000000..c5f108aa34797
+> > --- /dev/null
+> > +++ b/drivers/mtd/maps/int0800.c
+>
 > [ ... ]
-> 
->> @@ -4229,7 +4230,33 @@ level_store(struct mddev *mddev, const char *buf, size_t len)
->>   		mddev->in_sync = 1;
->>   		timer_delete_sync(&mddev->safemode_timer);
->>   	}
->> -	pers->run(mddev);
->> +	rv = pers->run(mddev);
->> +	if (rv) {
->> +		/*
->> +		 * ->run() has released the private data of the new personality,
->> +		 * while the old one has already been released as well. There is
->> +		 * nothing to fall back to, so stop the array to avoid leaving
->> +		 * 'mddev->pers' pointing to a personality which has no private
->> +		 * data, and reminds user to try to active the mddev again.
->> +		 */
->> +		pr_warn("md: %s: failed to run %s after takeover, please try to active\n",
->> +			mdname(mddev), pers->head.name);
->> +		if (mddev->pers->sync_request && mddev->to_remove == NULL)
->> +			mddev->to_remove = &md_redundancy_group;
->> +		if (md_bitmap_enabled(mddev, true))
->> +			mddev->bitmap_ops->flush(mddev);
->> +		clear_bit(MD_SERIALIZE_POLICY, &mddev->flags);
->> +		mddev_destroy_serial_pool(mddev, NULL);
->> +		__md_stop(mddev);
->> +		rdev_for_each(rdev, mddev)
->> +			if (rdev->raid_disk >= 0)
->> +				sysfs_unlink_rdev(mddev, rdev);
->> +		set_capacity_and_notify(mddev->gendisk, 0);
->> +		mddev->changed = 1;
->> +		md_new_event();
->> +		sysfs_notify_dirent_safe(mddev->sysfs_state);
->> +		goto out_unlock;
-> 
+>
+> > +static void int0800_remove(struct platform_device *pdev)
+> > +{
+> > +     struct int0800 *fw =3D platform_get_drvdata(pdev);
+> > +
+> > +     mtd_device_unregister(fw->mtd);
+> > +     map_destroy(fw->mtd);
+>
 > [Severity: High]
-> Can this trigger a NULL pointer dereference in md_handle_request() for
-> concurrent bios?
-> 
-> If pers->run() fails, __md_stop() sets mddev->pers to NULL. The error path
-> then jumps to out_unlock, which subsequently calls mddev_unlock_and_resume().
-> 
-> When the array is resumed, mddev_unlock_and_resume() resurrects active_io
-> and wakes up mddev->sb_wait. If there are concurrent bios submitted to the
-> array, they may be blocked in md_handle_request() waiting on sb_wait:
-> 
-> drivers/md/md.c:md_handle_request() {
-> 	...
-> 		if (is_suspended(mddev, bio)) {
-> 			/* Bail out if REQ_NOWAIT is set for the bio */
-> 			if (bio->bi_opf & REQ_NOWAIT) {
-> 				bio_wouldblock_error(bio);
-> 				return true;
-> 			}
-> 			wait_event(mddev->sb_wait, !is_suspended(mddev, bio));
-> 		}
-> 		if (!percpu_ref_tryget_live(&mddev->active_io))
-> 			goto check_suspended;
-> 	}
-> 	if (!mddev->pers->make_request(mddev, bio)) {
-> 	...
-> }
-> 
-> Once woken up, they will re-acquire active_io and unconditionally dereference
-> mddev->pers->make_request. Since mddev->pers was set to NULL by __md_stop(),
-> will this result in a kernel panic?
+> Does this teardown path force a use-after-free if the device is removed
+> while a file descriptor is open?
+>
+> While the driver sets .suppress_bind_attrs =3D true to prevent manual sys=
+fs
+> unbinds, the driver core can still invoke remove() when the underlying
+> device is unregistered. This can happen if root unbinds the parent bridge
+> in sysfs, or via ACPI SSDT unloading.
+>
+> If int0800_remove() is invoked while userspace holds an open file
+> descriptor, mtd_device_unregister() puts the kref but does not release
+> the struct device because the character device retains an active referenc=
+e.
+>
+> Unconditionally calling map_destroy(fw->mtd) then frees the mtd_info
+> structure. Could subsequent /dev/mtd0 reads or sysfs accesses dereference
+> this freed memory and access unmapped devm I/O memory?
+>
+> > +}
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260923092626.87=
+3202-1-stevereaver@gmail.com?part=3D1
 
-The problem won't happen after [1] applied.
-[1] 
-https://lore.kernel.org/lkml/20260922030538.1634904-1-chengzhihao1@huawei.com/
-> 
->> +	}
->>   	set_bit(MD_SB_CHANGE_DEVS, &mddev->sb_flags);
->>   	if (!mddev->thread)
->>   		md_update_sb(mddev, 1);
-> 
 
+
+--=20
+Steve Reaver
+http://www.stevereaver.com/
+Electronic Music Production
