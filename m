@@ -1,65 +1,65 @@
 Received: from mail-wm2-f11.google.com (mail-wm2-f11.google.com [74.125.225.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4426F40BCA1
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 19:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F59D5678DB
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 19:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790191771; cv=none; b=LnMVdacfSXTRu4RYyYU/uIPSAAUZG7MoVUXVJrUP/FBaG1/uf8BBzWQB3S6yA9SK10+20qLxAKn8SsZODdON9mGAMXfdG4v/f2rVW5wlTFE9bTZTfYWhDzcThiVU2T9MQJxFz6Ecz9vpaJaegreF+o50hi0lrojqog6rQhyvU10=
+	t=1790191786; cv=none; b=QBQ+mRHeQm5lK/Vp6om87gHUi2jF66Xc2CLHUo32fFOmVWprI2bn2Ri8bEB40Xk7XLK30X0suJPPLXctsfN437FR5aBSsX3TI1BVOXR6xPs61D2My5YWGTUs0b3ayNnijMN2hcvfmAGAueBqpMb/t9reC8BmTdg5O50/8nmfIzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790191771; c=relaxed/simple;
-	bh=54+iOccS4wvS3KEHskCddFEnm7kmenUIqpDRw31AZAc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=l1BfiUSyhfCjRa+26kHEIFJPdqsrLeyYtcfpqED8Z6PteviF8z8A4VO5AHRKVU0DaZpzBhpOIssbSi5fGDY4kiYi3vLiqsgt5GIojo+MO7UUwtxnHANIp4kuadaSRQnlFMiVuABPUN4uL4QEy15TzZ3lwevW4B998dSGXYb4yqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=olklwS+/; arc=none smtp.client-ip=74.125.225.139
+	s=arc-20240116; t=1790191786; c=relaxed/simple;
+	bh=1KwF/7YBtIPZkRPYZUO0p+gOfbBOZvlijizewDOJ8No=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=apFzM4f7Z5DTedLvUFriY3ZmosvftQd+h9dpR7e18VDDnylyhhX/uw5eJ4fkmS18V+Xlp8HnMMIdmDhf+NXAUd6OUZEChsCYUhXMsKpyTC6UxbEkC6RNSoSSNs02lgjZvxhv8A2UrUEn4W02vkRyaLOrrh04K1veImNbVcQajD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jg9AAMHA; arc=none smtp.client-ip=74.125.225.139
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="olklwS+/"
-Received: by mail-wm2-f11.google.com with SMTP id 5b1f17b1804b1-49e78a58e17so4450825e9.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 12:29:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jg9AAMHA"
+Received: by mail-wm2-f11.google.com with SMTP id 5b1f17b1804b1-49814d35686so293655e9.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 12:29:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790191768; x=1790796568; darn=lists.linux.dev;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
+        d=gmail.com; s=20251104; t=1790191783; x=1790796583; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-type:content-transfer-encoding:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=4XqmhhXP0A/R76xAAP865zT+LyEnQax3kp6jk0z97rQ=;
-        b=olklwS+/43BagKbvq1jf8p6cP8om/rkeohIHsnB1bs+Qs8UuC5lKQja+n6zueFITxw
-         aLKeSHUi6dJ7e4d4KmgIKMvAuvGqIlfe/Jn+UvWWSg2s4nOPeMAb18wLl1iNerMYY/7K
-         DDFssXFdBCVhMpnDfYYzFyb99UJZWWNQgN1rhMmkwN5ZdUl2n6Wmmd0LvmI3QI8jSEd9
-         YhrRi1LdF3gEStd1PZ72H6BIc1ZIZUwjx+T7vSAYay5+taIHI8tf0CNrc7JXZ5Bx3g5R
-         W4pXq1wV148dAaR8FMkRpBaPxLB/XbELubfsczrSRxbok8q41xFWoS01g4wEf48/uCaE
-         lDuw==
+        bh=IlP694hjPzjhxFPT82RcykXfpGBUKpwzMUdCD5lt6oY=;
+        b=jg9AAMHAdmVPpVrMsfnRd6ta0sWMKaZP7kp615bU59h8dzckPeByESBIEDFP6Yd/p4
+         eHtxIuJXIYDrTbAOLx2zs6XHro4pl85g3FVHj3Vjss24FVBca8SqTDTFkVo3h89yOulX
+         WUWT+J0mp81+sfa3UjZidFZ6OOhVoeindHKX0i7sZVnyNuD43m07pUi9DnkAd0SunLdZ
+         AvCzpe+mg6Zns9J7MdBufexR9SC2vewt/2Z+TVh3quxDGV0ZDvgPPcFtBFJMpAEGAXR2
+         0WjEYbN33fkAsHy2DUgNFeds4w+SML6O5HDC3sOpbka82VglD4vumOVopuZYaMGovcIj
+         kM7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790191768; x=1790796568;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
+        d=1e100.net; s=20260707; t=1790191783; x=1790796583;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-type:content-transfer-encoding:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=4XqmhhXP0A/R76xAAP865zT+LyEnQax3kp6jk0z97rQ=;
-        b=ZiWv6TRHLt+UGV0sxDfNRNKCMuPCOU/akxMW0RW29hdvWkQmexW8l26l454l67Sbxm
-         hQKEqLDJ2qTCBxb4pbEp/+lNNirQXmTQei+x6tWEWKCPTdP5KHv2oG0DFeLVWmR/o9y2
-         KduPymhxRHliObP8Do7ptaVw7SCkP4AtOpbUW64l6ZthQ4v11lr1D0zdQWXKKjOvAhyr
-         6CElK1piZkIlM1R2wDRHY3nYpWgRYVqui9e2tmZQrZFuCBeZcrSALNmzIklaWx4Nl5kC
-         KdNz7Anho+CuihvClCaQCcHS5a8PmUsDvQFDFNHQPn7GgOUmtzDn3nVA1oxlTXSTdX3Z
-         9TXw==
-X-Gm-Message-State: AFuF++nngsFQ2WmEgwXDTxyo8bAoXZ1rtWibHhy0Sja7Q2W3yvKol+6A
-	E/2WjK6z9uW1WLVey5oI1xD4xa91DQegoOikuPKx0D4DZ6euhAqzAQ44ZNmbNVhO
-X-Gm-Gg: AYBFou0GiMDs/snsDbYK97qkK1m7ihsO0KAdB/58s1KcJwDzZc3qLSJe0uY2vONFJ40
-	rNuCn5LPlaSz37qj2EjMd56cA6j9TTojUXBJnpSzGw4IilMR9qSD8P1glzc9KuUjN4e6GFvJgM8
-	mLEzq8OmRUxs6CM4eCv5xecgRhC7lx9Hhr2h/spze4d4+iXeMUfRsRubfd7fMx7xeiV4ohWyWaG
-	S5uTGWXtaA7qhGMzTI5PvTFF2nVxaOIQIVRFqRfHb/oVFliVMRb4Zgn3MVA+jDm61SCGsFPfQwd
-	gv/Uvi6+CaO7Gzu8CvhgosHGqqXyAnweBLUQDrBVP42Ukk+UKZv+nGWXIULbiMKV4+WXO8/XlJY
-	eg80hkCRLIWWDzqqZU5sr7WTcQp+kVktutSQxJfGJ5OaJvbSgngDArajFGqFNZTGSvttsEoOXST
-	lzbgl7DByHvPtNASdcctsZSpuwd5BDMpObxbOIhGVl90Ta5tCXtlDvbsWz4fVwd8d2Q3J9CyY3G
-	rwcK0thgMW+kjHOEN1nUAmAtjGKR/QquBt7WBcYe4tCM9hW620fAx8t8pWkRttxJ97fGVwLSjP1
-	zFCdkPc7fJiT7lnb2N0cpjFpHNuLR2ue+H6apg==
-X-Received: by 2002:a05:600c:6290:b0:49e:799a:8969 with SMTP id 5b1f17b1804b1-49fe6707bb7mr3307245e9.30.1790191768392;
-        Wed, 23 Sep 2026 12:29:28 -0700 (PDT)
+        bh=IlP694hjPzjhxFPT82RcykXfpGBUKpwzMUdCD5lt6oY=;
+        b=HX0ipQ29krpaA4plfxXl1m3rYVRF1fmuthVVBdFi2ylwbgJU0dQ0FN2Pr8xd1Qm+qM
+         kKCiLxAgschLmArQuWgnz1F3Inwazv1aYOJGnUvnBAdFOXMKLDxhi2af4rafwPR/+Zcx
+         CUUuK/f/zmN9yas6Znal83/V7wUUlBtSQksOzCcMCVchhAzoSkiaCy1w5rD9Qz6oHLdZ
+         uVRgc5Eku0OlSk24iIMOp+Gj6G1iyzJraB11Y0ItYDIUhd7DfKAio/Dp0j4ZK3BHlJJr
+         7j1UN4RvJkG2zDhh63lPs1ZgAvxit4KeT3RTRAsRsfG1HuSwgfisP6EuGiRNa2gCWQLL
+         k+GQ==
+X-Gm-Message-State: AFuF++l4OF9XCW0c7mo+h3mzuYQdQZ1VAq7wLiPNyRMoHwv8kStOZD5X
+	/WSkhpN/PaSO9nwyYsttlh8T+wrswa2TcyK2VLVtOBJMGqfHyrAt2khfLRmx7/J/
+X-Gm-Gg: AYBFou2DYQo0puCRUd8k1XzE7uyoj6AEDmhITsxR83Udah0qHY1azb0J1kSnwNpWCRU
+	egsuW7alvIr9KD8UhnetJY86d4OGQOzGN6qjwHB1oc5QKQIRsizZpr3zUS4cdGWijiAKUejzdG8
+	4kG7dEzJZ0UDmw+K1Xihk5CtI3/zQkO7uUdWowlfYyCL+TPuljSvvijxyJHN3zJgRNTQu+FENDg
+	zw7xFfiOKyPCide9XXcfotbgs29JDt8XscIQVQlB6zhHi5j5q1Z9Q4o7S0E3KqH0wczvIZdbXou
+	mtDURAjnr2FNxnbMEalu6UAun3M0vq4OLzPyNkK6XI77PPh2D0igBEAEdS7QYw0xTTveaYJPPNh
+	DpySFt4JxH3TlvXUH0aCTwRth2hB83G2J7hjtGlBcV+plDNy9AKyZBDwfYhwb1aQ1AsRqWrtcEu
+	6klJZyhVy7e4AEnS3k67hJqABcnWaAbsrNNPbNXtcVeTLDnw/q7JGHLGMxIdmg1FrKO9rBXPbTB
+	LHDanZvjWqbwjwpiuuUt9sM/lJz/Jwci7Gx4zCafsrYCPad0huo4/ifXFhlfhw5dviWX3k/ItWH
+	l5WwbBI4aQwJWjTCykCrE7GqvjCwHj56R1GCJnu/SJiNChIn
+X-Received: by 2002:a05:600c:4f89:b0:49e:6581:7baf with SMTP id 5b1f17b1804b1-49fe66c80c8mr3977805e9.2.1790191783164;
+        Wed, 23 Sep 2026 12:29:43 -0700 (PDT)
 Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-488688856f0sm8470163f8f.30.2026.09.23.12.29.27
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49fe5cca160sm7822465e9.12.2026.09.23.12.29.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Sep 2026 12:29:27 -0700 (PDT)
+        Wed, 23 Sep 2026 12:29:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -68,73 +68,99 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 23 Sep 2026 21:29:27 +0200
-Message-Id: <DLMY0OLDC2E9.20RXZ8ZAY73PG@gmail.com>
+Date: Wed, 23 Sep 2026 21:29:42 +0200
+Message-Id: <DLMY0VFF2ZG2.2LGZAQCRLJNI@gmail.com>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf-next v1 11/18] selftests/bpf: Check liveness merge
+ of masks with different widths
 From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
 To: <sashiko-reviews@lists.linux.dev>
-Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf-next v1 08/18] bpf: Grow the verifier id scratch on
- demand
 X-Mailer: aerc 0.21.0
 References: <20260923191139.2816206-1-memxor@gmail.com>
- <20260923191139.2816206-9-memxor@gmail.com>
- <20260923192404.EE7E21F000FF@smtp.kernel.org>
-In-Reply-To: <20260923192404.EE7E21F000FF@smtp.kernel.org>
+ <20260923191139.2816206-12-memxor@gmail.com>
+ <20260923192607.8FC661F000FF@smtp.kernel.org>
+In-Reply-To: <20260923192607.8FC661F000FF@smtp.kernel.org>
 
-On Wed Sep 23, 2026 at 9:24 PM CEST, sashiko-bot wrote:
+On Wed Sep 23, 2026 at 9:26 PM CEST, sashiko-bot wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] bpf: OOM in release_reference() triggers WARN_ON_ONCE and is i=
-mproperly ignored in unmark_stack_slots_iter()
+> - [Low] bpf: merge_keeps_whole_frame_read test is vacuous on some 64-bit =
+archs
 > --
 >
-> commit bdefbd593b54c82f98de0288f1f6f5e793ee9fbb
+> commit 1299c778ee1ba2ffa8d447fa3ce55a6d2aec24cd
 > Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 >
-> bpf: Grow the verifier id scratch on demand
+> selftests/bpf: Check liveness merge of masks with different widths
 >
-> The id map used to compare the ids of two states, which also serves as
-> the id stack of release_reference() and as the id set of
-> bpf_clear_singular_ids(), is a fixed array embedded in struct
-> bpf_verifier_env and sized for the most registers and stack slots a
-> state can possibly hold. Turn the map and the set into arrays grown on
-> demand, starting at 64 entries and doubling, and free them with the env.
+> This commit adds a selftest to verify that merge_instances() correctly
+> widens liveness masks of different widths when a function instance is
+> analyzed through different call sites.
 >
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index d8f43f3a89912..8641f1a8d017d 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
->> @@ -10136,8 +10136,9 @@ static int idstack_push(struct bpf_idmap *idmap,=
- u32 id)
->>  		if (idmap->map[i].old =3D=3D id)
->>  			return 0;
->>
->> -	if (WARN_ON_ONCE(idmap->cnt >=3D BPF_ID_MAP_SIZE))
->> -		return -EFAULT;
->> +	if (!bpf_id_scratch_reserve((void **)&idmap->map, &idmap->cap, idmap->=
-cnt,
->> +				    sizeof(*idmap->map)))
->> +		return -ENOMEM;
+>> diff --git a/tools/testing/selftests/bpf/progs/verifier_live_stack.c b/t=
+ools/testing/selftests/bpf/progs/verifier_live_stack.c
+>> index f8758eb62dac5..a94365decd5f1 100644
+>> --- a/tools/testing/selftests/bpf/progs/verifier_live_stack.c
+>> +++ b/tools/testing/selftests/bpf/progs/verifier_live_stack.c
+>> @@ -2861,3 +2861,52 @@ __naked void narrow_store_defines_nothing(void)
 >
-> [Severity: Medium]
-> With this change, idstack_push() can return -ENOMEM on a normal allocatio=
-n
-> failure, which propagates up through release_reference().
+> [ ... ]
 >
-> However, in kernel/bpf/verifier.c:unmark_stack_slots_iter(), we have:
+>> +SEC("socket")
+>> +__log_level(2)
+>> +__msg("stack use/def subprog#{{[0-9]+}} merge_read_all_callee (d2,cs{{[=
+0-9]+}}):")
+>> +__msg("(79) r0 =3D *(u64 *)(r1 +0){{.*}}; use: fp0-8..-512")
+>> +__naked void merge_keeps_whole_frame_read(void)
+>> +{
+>> +	asm volatile (
+>> +	"r1 =3D 0;"
+>> +	"*(u64 *)(r10 - 8) =3D r1;"
+>> +	"*(u64 *)(r10 - 16) =3D r1;"
+>> +	"*(u64 *)(r10 - 264) =3D r1;"
 >
-> 	for (i =3D 0; i < nr_slots; i++) {
-> 		struct bpf_stack_state *slot =3D bpf_stack_slot(state, spi - i);
-> 		struct bpf_reg_state *st =3D &slot->spilled_ptr;
+> [Severity: Low]
+> Is this test effectively vacuous on 64-bit architectures with a 512-byte =
+stack
+> limit?
 >
-> 		if (i =3D=3D 0)
-> 			WARN_ON_ONCE(release_reference(env, st->id));
+> The precise 8-byte read at offset -264 touches half-slot 66. This means t=
+he
+> mask requires 66 bits, which on a 64-bit architecture occupies 2 words.
 >
-> Does this mean a simple -ENOMEM during verification will trigger this
-> WARN_ON_ONCE splat? Since release_reference() can now legitimately fail u=
-nder
-> memory pressure, should this warning be removed, and should the -ENOMEM e=
-rror
-> be properly propagated here instead of discarded?
+> The second pass performs an unknown-offset read, forcing a whole-frame ma=
+sk.
+> For a 512-byte stack limit, this covers 128 half-slots (128 bits), which
+> also occupies 2 words.
+>
+> Because both masks occupy 2 words, the actual widening logic in
+> widen_frame_masks() is silently skipped, missing the intended test covera=
+ge.
+>
+> While later patches in this series might raise the stack limit for some
+> architectures, the test remains mathematically vacuous on 64-bit architec=
+tures
+> that retain the 512-byte limit (e.g., RISC-V, s390x, or when JIT is off).
+>
+> Would changing the precise read to an offset <=3D 256 (e.g., -248) correc=
+tly
+> produce a 1-word mask and test the intended logic universally?
+>
 
-This one is legit, probably needs more graceful handling.
+Plausible, will investigate.
+
+>> +	"call %[bpf_get_prandom_u32];"
+>> +	"r0 &=3D 8;"
+>> +	"r1 =3D r10;"
+>> +	"r1 +=3D -16;"
+>> +	"r1 +=3D r0;"
+>> +	"call merge_read_all_mid;"
+>> +	"r1 =3D r10;"
+>> +	"r1 +=3D -264;"
+>> +	"call merge_read_all_mid;"
+>> +	"r0 =3D 0;"
+>> +	"exit;"
+>> +	:: __imm(bpf_get_prandom_u32)
+>> +	: __clobber_all);
+>> +}
+
