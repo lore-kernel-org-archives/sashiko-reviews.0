@@ -1,185 +1,164 @@
-Received: from mail-yx2-f12.google.com (mail-yx2-f12.google.com [74.125.224.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884F0390C8C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 06:01:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.140
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790143270; cv=pass; b=iGyOycrBmCISCcuvDv4PcaxFMq/wVVxOLZ73BQ8h4jEUNql9q8ZglJ+wGf0bC5xedVcJRlnehH+RZGYLDH/WQXJe9XvJlSyDGvFq9RuAZ7Sdp0TOpQXhQAVjUASFvGmUR2/7UD78NtgFan1RF8VDgfDtvNeomvRR4/ubsYZW278=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790143270; c=relaxed/simple;
-	bh=HgLSZl8XxyK20T4gh3lI0f3nK0YB9PmdSCSKHAKyLFM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IvJ825objhDYDtSyWBnRH4HcknB5oYqB2Y8SVbL4KNkOwxtfiPl7nLnpYPTFgEiqiwrMzRCn54Q3WJt/Ol0HcVc/dMVPOTMXQ5nqxdk/syXcCTWJNDH4cFpB7jsLaLFOWR64ZRGP7K7MAGbZPhNOGFJxazOeJIzaHypPPsl5lUs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=jUsZaQRn; arc=pass smtp.client-ip=74.125.224.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97ECA30ACEE
+	for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 06:52:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790146337; cv=none; b=qxP+p0U8Nak3tSJeo3hKBoPPG1zkSfOw231eNhLDk0onZPiAlQ63xYlPuBfGTGEbfuw/qZQ4KPKRKCuytj6WCi0M/m5eoj/QVURZd6DWktTi3FxlOPhtPFoySpj6d70t3xqYWaVIFf1wzA4JEdXWINn6BWaVWbObN2iF34Xdezk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790146337; c=relaxed/simple;
+	bh=hTMiXPl4WbKEJ1YMTZWqxrXiBFu1K6Gg2Aq+TrT3yiQ=;
+	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
+	 To:Date:Message-ID; b=CcugOIxxXRZ72WPqpe5qcpxvYTLGNSium3vvAxDyBRhHXnRA6FP4go+vW6WV9dDzPfdKWdYg8TRAXhNHbPXerNxU7lm6FXPmEVjQL2UJK1lsZZHaa1aOXj4YmOsT4FQ5ej6PnBgkH+Z7PXXc5uoAWmPlJysdkurr6WOgRTDBTZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FKxCKI1L; arc=none smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="jUsZaQRn"
-Received: by mail-yx2-f12.google.com with SMTP id 956f58d0204a3-66e4ab20f4bso626866d50.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 22 Sep 2026 23:01:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790143266; cv=none;
-        d=google.com; s=arc-20260327;
-        b=sAsLWsKHSqtkPDB5gbtVizIobfZzMEZ9oE3SeNnqnYKn5eGnSf0sfu+bkFCan3OMyC
-         2cb56R6wLyMuE1KwwsGW03w+uL/uskCeKTgc8B3lexxvTpAsLLeSOQMcyT6ZzPsYy6nb
-         odNPIkTvOEs7b+ir2XYXUzFtg2C7RQznhp5nIz9hyKLF5kYDhAnSm2mCTd3z3RwVmRQx
-         Hjkxu4U7bo1JgnXcXe2q5XNedA3JA9OIyozACKxO3OpVYPdV7FbnHhGr7Cbb++K53i6K
-         VFMlL4GWbCzgn9fXCLL/VihVbHokW85ioR5FfIikR9+B0AFr4Er2T9WNBSr/wF2CP/3M
-         LcNw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=BI7bwcNjzQv13pRkfjbMflvweeVEe6lYqf3+ijkmu54=;
-        fh=XV7sKTyah1K7aipQhcnsXSXP1qrM3RCNndYxUeBi5Vg=;
-        b=RwjyFUV/AjDFG2LdDVE+J+vKkJoUbZfX8NV5CiiVJsduzaBP1gFywKXrAEy/+D2khV
-         y/9K2qYjTY8o0+t/L25CcSn2lUwm+Posiwqu1YUTFdZCqHg5lF8OpQCFT9mV7Ykr/V+7
-         Qxzyg3lDRty8inYt6IQwWY6hEHCNf19T2HWsnKUQPxFBLZQAVH6Cj/uSzIVxKNc/it3C
-         EjyfB3OP7ibhjBkxxjBNil4swTrcvUv4/GSajJ8+4zr9BHxYL/LSMuvMCKdraMWKKIH8
-         QMJ5SffziFfG9FykdlNDDPAcBxZ6I86gAyBSlsHn+TRf3gBugSLhEs48XViznBZomtrN
-         A2YQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1790143266; x=1790748066; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=BI7bwcNjzQv13pRkfjbMflvweeVEe6lYqf3+ijkmu54=;
-        b=jUsZaQRnGtLu97Sq1odJ+i2Cs/8cbQWrGwOldKN+Si5FH+ptN89aSKiF/cbSUbvV77
-         jlruprcgMhwxUBWGeixof15JVWUDxf4+9I57RajU/JU7vGpgeoQgra3MDzV/VJmc7nWC
-         vMPdraH2Dv3crwfBh3gwzOCuEChYfm285tmMThy7lr38GiIvkA4yV+Xf/dB42lKhQRR2
-         sq+Tzp4PY6KsZG98Fq/fnDqgeQwWhPLP055gfgAQKaeuHX2igTtOqGo5pCgtu0kSg1CJ
-         Gd0JTtVQbw5h0jcp8/bND8cWEM0jCrS5UWNNNW9/u48OG3m6xi7ogsBOUrsLrZOL3Z3V
-         ZjaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790143266; x=1790748066;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=BI7bwcNjzQv13pRkfjbMflvweeVEe6lYqf3+ijkmu54=;
-        b=CunOFe4fYrNt0XUYw4Dc1P1fporYb6tEwnIPr6T6Sqh5BwIl6f1dhPRMzlaugcP5KZ
-         +tZQfxLtjFUBmPVU1P+pVHEv4Ejq5On9M3ftbe8ca2rNJvTlRkIqEJLFgV8BncykRi/r
-         oetXwVAtad+tB3dFmLdyvdlJ9Q7Ro5zfat8ZDJUa20BAIs68VT7uywg4YuzOBqiCs3T5
-         DhZ7yAbVdeW9VLQUkx+WUZfiSkkHYdglBqQfz3xCQWM8XaGwFcdHs0h0E2UTSiaflf5A
-         Xnl/tkd2Ace2K1jFnVHvhvWzC9yDh0+yM+kgv4sxGEA+Nwo2qt0QOKsqrllvhuhedKJi
-         2LVA==
-X-Gm-Message-State: AFuF++k2veSjYCps4ZA27vsmApjDa/t5kWt2eV+EbcLz5JUCgmnhlO6h
-	/gVQ+aXnD56BJ70Of/NmSAqmHtAgxP27+ZyzFnJrVJ3fH+ESI3N71U97hxD9doYQEwYXK8IVwWN
-	gatyYNDT4JCFjL0F0pGbW6LJX01jqfb04bkwu43z+68T2AS4xGRbtY48rHQ==
-X-Gm-Gg: AYBFou1tsHyc8ahVELgz7DjFmmejGzSXS7xqZaynzO26ooM25LtHuNwLhsfO+QJ9WbQ
-	jpy1rkcIOOmC/+0WyaxeNYQBaOCtv0rOLpQ9igJ9J7nRQanvEZCP6JgT1b9WpwXfCwjyA7Jre08
-	cZxLi9mxrSsTnu1c9+gDTEw1FLBC2hzGUSzh4ML1ErsSFe1tzDHlyaBnY3YJsSfbGXZORGA0RC0
-	kAIUiN37vLtAcET3WrH24yHa5jClX27BeFlRLXl5AU5OQR8J4SXDZxQ4/J3rilknfrV/wCIBAWG
-	7j6uGPJRNRJOO4Z+pc9GLyUhFPm/OYgenr1Y1VW6P4DrcU7OljPPOMs=
-X-Received: by 2002:a53:ad50:0:b0:66f:c1bc:40a0 with SMTP id
- 956f58d0204a3-672d58abf06mr470879d50.99.1790143266221; Tue, 22 Sep 2026
- 23:01:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FKxCKI1L"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1790146335; x=1821682335;
+  h=mime-version:content-transfer-encoding:in-reply-to:
+   references:subject:from:cc:to:date:message-id;
+  bh=hTMiXPl4WbKEJ1YMTZWqxrXiBFu1K6Gg2Aq+TrT3yiQ=;
+  b=FKxCKI1LsLkVDx0QcfUska96wvzjIugb/mjTV7GAMr4E90GKwPj0Z7wn
+   p4nR7d5LO6z5qDC0vAVYFnx8EXdjSwUSjMGlHzrrMh/CRDvhznQtqbxfV
+   MkZTjrVYH3sXZBJEt1GJlk82V3Xrmuf2sqmJxbKtjEJIvMBz0Y2YuXfsw
+   8wHiJCvQ6mbLx/oKZVRq/SoBiNb0bgv/RBllfCpd5+RuU1k5TGFi1PKTB
+   1d3wX50VrVWmPiIconi367ZUsO+cLgOJ8ZDZ8zmVO0kvu3F6xzdUiA14I
+   OvEx+AjfK4NQr54J1DGqJOhzH6IOCSpQp0R+wtFMMWXS02opZrnVkOHIv
+   w==;
+X-CSE-ConnectionGUID: 6O5fGnnWSeS1tDGa206/hw==
+X-CSE-MsgGUID: n/SuMlJ1QE6JIIix2eA8bA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11913"; a="102167909"
+X-IronPort-AV: E=Sophos;i="6.27,118,1787036400"; 
+   d="scan'208";a="102167909"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2026 23:52:13 -0700
+X-CSE-ConnectionGUID: K0PZ+RDiTLmTX4t+ilRhUQ==
+X-CSE-MsgGUID: 69MZ1TYBTKOhG5aDx4RwEg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,118,1787036400"; 
+   d="scan'208";a="273654392"
+Received: from ncintean-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.213])
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2026 23:52:10 -0700
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260922082551.874901-1-songmuchun@bytedance.com>
- <20260922082551.874901-3-songmuchun@bytedance.com> <20260922083712.A89111F00893@smtp.kernel.org>
-In-Reply-To: <20260922083712.A89111F00893@smtp.kernel.org>
-From: Muchun Song <songmuchun@bytedance.com>
-Date: Wed, 23 Sep 2026 14:00:29 +0800
-X-Gm-Features: AcwNN1U14lhaEIPXhrx92Llhfbcm9mObr2diD8G4hu8c12kamR6vjUggv5v3RCQ
-Message-ID: <CAMZfGtURkCQo4DCbdj+KcG0zbZHzECfY2c0aqnDeLWYt_uo9Eg@mail.gmail.com>
-Subject: Re: Re: [PATCH v2 2/2] dax/bus: fix Device DAX range alignment validation
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-cxl@vger.kernel.org, Linux NVDIMM <nvdimm@lists.linux.dev>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <PH8PR11MB8040A8F215B997982530CE44F4832@PH8PR11MB8040.namprd11.prod.outlook.com>
+References: <20260630223946.2107382-1-jia.yao@intel.com> <20260630225349.984AB1F000E9@smtp.kernel.org> <178290749714.224587.15234445443946207851@jlahtine-mobl> <178292444166.273574.16738251742448073960@jlahtine-mobl> <PH8PR11MB8040EFAAE8210F2C6B53AC1BF4842@PH8PR11MB8040.namprd11.prod.outlook.com> <179005959984.27165.4749331452130832177@jlahtine-mobl> <PH8PR11MB8040A8F215B997982530CE44F4832@PH8PR11MB8040.namprd11.prod.outlook.com>
+Subject: RE: [PATCH v9] drm/i915/dg2: Add per-context control for Wa_22013059131
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>, "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>, "Roper, Matthew D" <matthew.d.roper@intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>
+To: "Yao, Jia" <jia.yao@intel.com>, "sashiko-bot@kernel.org" <sashiko-bot@kernel.org>, "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+Date: Wed, 23 Sep 2026 09:52:07 +0300
+Message-ID: <179014632773.19856.4107893493544612438@jlahtine-mobl>
+User-Agent: alot/0.13.dev2+g40c57d620
 
-On Tue, Sep 22, 2026 at 4:37=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] dax: TOCTOU race in size_store causes partial shrink failure
-> --
->
-> commit 519db297333e73581e0bbd5524e7d6959d7610a7
-> Author: Muchun Song <muchun.song@linux.dev>
->
->     dax/bus: fix Device DAX range alignment validation
->
->     dev_dax->align describes the page size used by a Device DAX mapping.
->     Both the start and size of every range must therefore be aligned to i=
-t;
->     otherwise the starting PFN cannot represent a naturally aligned page =
-of
->     that size.
->
-> > diff --git a/drivers/dax/bus.c b/drivers/dax/bus.c
-> > index e40c25401cf06..277c3ce23b831 100644
-> > --- a/drivers/dax/bus.c
-> > +++ b/drivers/dax/bus.c
-> [ ... ]
-> > @@ -923,6 +964,9 @@ static int adjust_dev_dax_range(struct dev_dax *dev=
-_dax, struct resource *res, r
-> >       if (dev_WARN_ONCE(dev, !size, "deletion is handled by dev_dax_shr=
-ink\n"))
-> >               return -EINVAL;
-> >
-> > +     if (!range_is_aligned(dev_dax, range->start, size))
-> > +             return -EINVAL;
-> > +
->
-> [Severity: Medium]
-> Does this new strict alignment check introduce a regression where partial
-> shrink fails if the device alignment changes concurrently?
+Quoting Yao, Jia (2026-09-22 17:34:08)
+> Hi @Joonas Lahtinen,
+>=20
+> For RCS -> UNSET
+> For CCS
+> 1. Old compute runtime -> UNSET
+> 2. New compute runtime -> USER
+>=20
+> If we take there's only one compute runtime version, and priority USER > =
+UNSET?  Where's the conflict come from?
 
-Thanks for pointing this out. The underlying TOCTOU race is not
-introduced by this
-patch. It was introduced by commit 6d82120f4156 (=E2=80=9Cdevice-dax: add a=
-n =E2=80=98align=E2=80=99
-attribute=E2=80=9D), which made dev_dax->align writable while leaving the
-size-alignment check
-outside the locking scope.
+See below.
 
-That is also the commit this patch is intended to fix, as indicated by
-its Fixes: tag.
-The stricter check added by this patch merely makes the existing race
-visible as a
-partial-shrink failure. I will therefore fold a fix into this patch by
-moving the size-
-alignment validation under dax_region_rwsem and dax_dev_rwsem, before any
-ranges are modified.
+> But if we take there's more than one compute runtime version, and their p=
+riority is equal,  UNSET can cover USER,  USER can cover UNSET,  even with =
+two clients they could cover each other.
 
->
-> In the sysfs interface, size_store validates the size alignment before
-> acquiring dax_region_rwsem. If a root user concurrently writes to align_s=
-tore
-> and changes the alignment requirement under lock, the shrink path proceed=
-s
-> with an outdated alignment assumption.
->
-> During a shrink, dev_dax_shrink irreversibly deletes fully trailing range=
-s by
-> calling trim_dev_dax_range. When it reaches the final range to be partial=
-ly
-> shrunk, it calls adjust_dev_dax_range.
->
-> If the concurrently updated alignment causes this new range_is_aligned ch=
-eck
-> to fail, it returns an error mid-operation after trailing ranges have alr=
-eady
-> been deleted.
->
-> Since sysfs writes require root privileges, can this time-of-check to
-> time-of-use race leave the local resource state corrupted, with the devic=
-e
-> configuration permanently broken due to missing ranges and an inconsisten=
-t
-> size?
->
-> >       rc =3D adjust_resource(res, range->start, size);
-> >       if (rc)
-> >               return rc;
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260922082551.87=
-4901-1-songmuchun@bytedance.com?part=3D2
+I didn't follow this part. How does the priority come into play?
+
+We have to keep switching the mode as the DRM clients come and go.
+
+> We should take it easy.
+> Once we reached USER, set by new compute, we should latch it, for the WA =
+has been implemented by USER.
+
+That won't work. If you are running two different containers, you may
+have different compute runtime versions. Also, Mesa can be submitting
+to CCS too for async compute, AFAIK.
+
+To properly cover things, we should make it into per DRM-client setting
+and switch the mode accordingly when different DRM client is run.
+
+And for the given SKU with only one CCS, as explained earlier, it should
+be already guaranteed that two different DRM clients are not active on
+the hardware at the same time due to the address space mathing
+requirement between RCS and CCS.
+
+If this needs to be extended to multi CCS SKUs, then it'd be a bigger
+implementation effort.
+
+Regards, Joonas
+
+>=20
+> Thanks,
+> Jia=20
+>=20
+> > -----Original Message-----
+> > From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+> > Sent: Monday, September 21, 2026 11:47 PM
+> > To: Yao, Jia <jia.yao@intel.com>; sashiko-bot@kernel.org; sashiko-
+> > reviews@lists.linux.dev
+> > Cc: dri-devel@lists.freedesktop.org; intel-gfx@lists.freedesktop.org; R=
+oper,
+> > Matthew D <matthew.d.roper@intel.com>; Tvrtko Ursulin
+> > <tursulin@ursulin.net>
+> > Subject: RE: [PATCH v9] drm/i915/dg2: Add per-context control for
+> > Wa_22013059131
+> >=20
+> > Quoting Yao, Jia (2026-09-21 20:33:03)
+> > > Hi @Lahtinen, Joonas,
+> > >
+> > > The key is LSC_CHICKEN_BIT_0 is a global register.
+> > >
+> > > Even we use per-client,  we should consider the following cases:
+> > >
+> > > 1. Should conflicting configurations within a client be rejected?
+> > > I recommend the first setting should be latched.
+> >=20
+> > From uAPI perspective it would be simpler to set this at the DRM client=
+ level at
+> > once. However we don't seem to have such uAPI in active use currently (=
+all
+> > drm_noop) so you'd have to compare the complexity between indirectly
+> > setting it at DRM client level by first created context or adding such =
+an uAPI to
+> > set it explicitly per client.
+> >=20
+> > > 2. Should conflicting configurations across different clients be reje=
+cted?
+> > > I think the latter setting can cover previous one.
+> >=20
+> > DRM clients need to be indepenent from the driver perspective, we can't=
+ do
+> > that.
+> >=20
+> > The whole point of making it per DRM client is that given the impacted =
+SKU
+> > only has 1 CCS engine. We have the address space matching requirement
+> > between CCS and RCS, so when both CCS and RCS are running, we know they
+> > belong to the same DRM client and thus they will not conflict with the =
+WA
+> > mode. And if only one of them is running, there can be no conflict eith=
+er as it's
+> > just one context.
+> >=20
+> > > Even like this, still can't cover all the race condition.
+> >=20
+> > Which race conditions do you think would remain? We definitely have to
+> > eliminate any race conditions to land this.
+> >=20
+> > Regards, Joonas
