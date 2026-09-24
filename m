@@ -1,148 +1,210 @@
-Received: from mail-wr2-f35.google.com (mail-wr2-f35.google.com [74.125.225.99])
+Received: from mail-wr2-f38.google.com (mail-wr2-f38.google.com [74.125.225.102])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B27489863
-	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 13:29:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.99
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790256595; cv=none; b=UgA59XiEs+g1aT7Cdg9W7uq1DIjZ1mvRzLyV45Axz1cuujb2t7L5i3PMqoLZ2rIgsW2yx/Noh+djQ0vZ/uS6y+gMOJbRE4gXXcf1rhYL/n/46OV+YRSbM9HXJaz6HjAJXTLU+pB7GUISEuvqpYWqW01YNff2nfdAKq44H9MSdac=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790256595; c=relaxed/simple;
-	bh=b6+s+j2E+PamgZmztaZFx+a2tmmlK+zV8zH9cUia+64=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NyJVM5/CdqzJWfX7/uqtKUfLi9NmPStZn6ZpTTil2FCj8jMCWStGYI71AiO1RWi9kXN8jEdzPwSgK/WZTNmQzcBih/VnXeCSCEQk6ZH4bwcNoaHVkGo6Z5x0Bryym6sTsfY7UHTw0oWAV3sQ/msNG1sgC/eZbRB6y2ofzBQ/Ab0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=PWX5mUBE; arc=none smtp.client-ip=74.125.225.99
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4545B496D5B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 13:44:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.225.102
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790257482; cv=pass; b=rXe6pJ1vrzoFek4LSyO7ckHv2cxuqkzlFjBe/7dfay+fjZVKEczF+1DXZOKnNWH1VDCrerxDxyAVXEnKsBvhlkKm3ExAnJkufXoGM75imbRQoA8FqueyTVwIewgR+/amEjPrMNgSyemsr4YGdtk6c3sw2bjJT3lPdRO3ZGbRjBQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790257482; c=relaxed/simple;
+	bh=srpUlNZOrzAYgQzUQn9udJrV5U4zpQZLaeztMl04WB0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IvT9Jq7T7yLWof4H1RjuckPktsGxV/HqKRbaKm5iWdXKcSvm2yBasiDz0SlDXCSumLWtPKDa1iGzVTptm3x1Lsqb/0fmgUmUImNi9SH+oA7BiCo97xs30CNg8jEki3tO1rF0NRLmMYiniGY90KFCf82IkcJ/wuRuA/UggIRDrZY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i//WU+D/; arc=pass smtp.client-ip=74.125.225.102
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PWX5mUBE"
-Received: by mail-wr2-f35.google.com with SMTP id ffacd0b85a97d-48434392b02so1574810f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 06:29:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i//WU+D/"
+Received: by mail-wr2-f38.google.com with SMTP id ffacd0b85a97d-482f6350f89so1465351f8f.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 06:44:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790257474; cv=none;
+        d=google.com; s=arc-20260327;
+        b=IJWliLKHOMaNo+1UA0ykHjyRL/+wswpXEDSsiO44VquGpXRb29sIW31FuhCJLh91Hu
+         /IK5QI72DPghKrpEmhOI+n1WtHM03H/8DWFLY5rxXpC+BqyToxnVR1p3QLjQUV9HgIe+
+         KUAUQlFvadlmf/x09eYDSxNlnw7Muplgk/Q03UcBbRdYeaW+KV+UzUXMj27GRD9xABl9
+         Y7QiirAnhF+ZXwE+u5gMqgrCbcrYE2UOpSp0uj7/Aw5kQUO/3cMQoE1ysbjvLfm6JWhX
+         9ebtNJFyWOilWp2jSLkAYtPZOM9v4NJZ1tChk9F1N3mCSGlTI+8R+nmx/b/xuHc35s2z
+         4zqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=1vA/7F7T4hKWXEqYJVanQp0Khdd6KmZi7BaKquhMJvs=;
+        fh=0mxpjGD6X/fmff7Usi2r8vU+RCRygamFiGm0Ghp0iIM=;
+        b=LOxMrWleu2/a3Px68mD0qUTExYZh76Ci8gmVz/P7A5tWO0Lgl/be6lo10j+RQdGfLp
+         M7FMnrQvO+SK4yp7EEP9/+YdVg9Hj/LYv7Q/dAs+FmpmpMlHKHzDPAB3XWKhwpS87DAa
+         G0HZ9QHTLVDRV2UfH9lwGjWx0KKrg4Xniauh9Th7uT2Wiagin8nHkD0yF90uFaIGfi2w
+         v83y2Z59P18U9FzR3LremuXF/Pg64VuJnsJkwIOoZimLOTeK0PbrSHLE36nKDigQ3zWZ
+         Buf+QLjwbSBNnH1Oq/i0oxQNp8Jww52i07UOWseQR9eKLgjm9X6u6BcTpp/+LxqdEg2V
+         S0XQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790256581; x=1790861381; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=LQQKLzXJaAQsQHa2KS7tADnjrxkQ8I/GwCwJ8DG8zts=;
-        b=PWX5mUBEK3TK4WcEnU3PG4yu3k3gtnIyBcwPGg2PuzsH7XYzN/VC5zP8P418CG8Y/Y
-         fcl3aaOzpdBERTfTYjt7Yj0XyQm0I29Grm0VMxxnlEnFocfYQg0matkqkmAHDS6eWGoR
-         tV8N3eJNPxf6T27374PupCB5dwEKpv93KM339u0zw1orGL4EtM/RZWv2gfeojqAS5aKo
-         XUJPu15ezRUv09SQIpMBgg8oonwSAutl6dqx778h0ApT1J/uBltuS2dHuZM6i8GQ8nK4
-         Q879fve480zYWM0zoodJ2/CxKzi9Y7BS4iSmKXuz5p5xeMOtxgHNmk74/Ue/3/eHVof1
-         pjTA==
+        d=gmail.com; s=20251104; t=1790257473; x=1790862273; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=1vA/7F7T4hKWXEqYJVanQp0Khdd6KmZi7BaKquhMJvs=;
+        b=i//WU+D/Xft4xTh5d8kl25g3Aytx4qPw4UxV9BVVOYZjWFKmZyBivFEQEmJPHkTEwq
+         o34KP5k5EefcyU/RLhGYEmpLN69AcQLUM8UnvKwpiXZA829exq0/Q7z2I21CPl/sR7F2
+         8DauVUefh93m5tgUh12o3jDe8mQ+TC5/E41TJWwYPRl/nQHUxNghlxagqzUiYhQalkUC
+         B1ctafBz4bYi0oAqyTNo3zN1BtrJkOOnDa4qQ/BcusHf0Z2VhBr7yzDZS2gS53nwvfsP
+         5zm05cbI8xE0lliNlTCjQsY8sHwRZRiSVPpKyD2GzOJoUhpMGHQsUDkxXvGHOnHlwr8F
+         DjKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790256581; x=1790861381;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=LQQKLzXJaAQsQHa2KS7tADnjrxkQ8I/GwCwJ8DG8zts=;
-        b=YPqoICB09gkA+k2pnimBozH4ssHvT3X1vvHpKTvJAsEdZcEZePDifQ8G38+1LO0s0B
-         HdcErFH3YhEp8KqZk7akniuYO4qRJNinOPZGe6x5XSi4UIY5L9Q4z7T5SyoO8+TJVY/g
-         vnXYkRQ59Qex3EChvHOhKx96ddKuj23+SExjOe40qLv+i/OmMGdGOEjNlhy+q+T6Q6Oc
-         I1wHZZi5EfD/GQHn09R00rjQXxGsqNWuiTXYulZAjyZEc0futJLBnT0WX+sdKMtFp6jk
-         cto+B/bzTraWkxjHQNbkkc3Wo9txJlmYTdmARNwOdnAkOE1HYeaIIE4ad+x3FtNSsUpw
-         PiHw==
-X-Gm-Message-State: AFuF++leKA++SeRmyBX2l92e8Fyq1nXbE6op5b8fQPYrvMB638t2UYji
-	T0gGY96YZeX0RgfSLxRh1RGKMBhgLxH0wn4IlM/EJ6Bw40LhL7TAKzdpDM5B2384AP0nbSGOTzE
-	6SJj76A==
-X-Gm-Gg: AYBFou3q4is4Yf4iiwRqhQhiTwyIVHfowwzg3eNcKvoeZT9BdYBZ1NK8sLJEnFjzAds
-	BDmeMKoGlEyKGWYdfIGxFx9xuHpvQXzui4NiItmE2GY+N+qw3jtTOwoJA0ff9P9Vk1aTQe9+Y+M
-	hhA772YAoaWI3Y2xZl4nba+Tce58qR69bU+XIL1jhwGEsXa1FY7JRZGlVFp5EahuULvOO9/LPc6
-	EDHjNnKzkR2rFxLdfejItdge7pTRNQmwk6++RI+4ZqyiRpY2QyB6tgzFp9h1DrX4m/ycZo3vSuS
-	3w0ml6lNnOlrRO4i/nlm/tz3qjkPF4FiDCFCc/eJTx9uSZbSbdXGwGVldu2aj8VMaMJ4XC7ThFm
-	O51f+R3UquwrRv+gyFoo+AbfMuMOjZ/9KvSrW8ltgtjvzQRkI1jkA4HbO8ZdO4DwGiHYY48oFQH
-	k7o2+Fs1CbSeHxVQuYYjv515aSWxpAZmAl3G7UrErZiGS/96o9dRnfUfcPir8ob/BxZVpt8UKK0
-	N27J/zMiznZuONv0gwdyNYgNiCwbO5FBHeH2JPQ5C0=
-X-Received: by 2002:a05:6000:2512:b0:487:da0:df33 with SMTP id ffacd0b85a97d-488716b7498mr3963942f8f.3.1790256580199;
-        Thu, 24 Sep 2026 06:29:40 -0700 (PDT)
-Received: from google.com (135.91.155.104.bc.googleusercontent.com. [104.155.91.135])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-488684862a3sm13572566f8f.7.2026.09.24.06.29.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Sep 2026 06:29:39 -0700 (PDT)
-Date: Thu, 24 Sep 2026 14:29:36 +0100
-From: Vincent Donnefort <vdonnefort@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH v6 16/18] tracing/remotes: Add trace_remote cmdline
- options
-Message-ID: <arUlwHtTyvlMDxUP@google.com>
-References: <20260817135517.3919534-1-vdonnefort@google.com>
- <20260817135517.3919534-17-vdonnefort@google.com>
- <20260817141252.4FD471F00A3A@smtp.kernel.org>
+        d=1e100.net; s=20260707; t=1790257473; x=1790862273;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=1vA/7F7T4hKWXEqYJVanQp0Khdd6KmZi7BaKquhMJvs=;
+        b=Dad82t6eM3JFoslI4wD2fVP4+VTFnDR8SM7bOWemL7YPAD+LGUro54NonE8ScEtKhA
+         UNToGlhs3EEurtKi2ogopExKwckwaZtINtd5/Xht4aH4S8ZZO1g/0UhV3ofS/cN1NCzh
+         Z9cO12XQPTD/G9SdjJpDzrivjFEr70AEJ3rvwUujx9fsXz7br9sb5ck1O5FM7TLpLc6Y
+         h3gkUkQs6OKjzNAgyKcyR5aPaftLnSTM3RfVpeg8F6powrRXn2+HZB0LDDe4j4va7Nyi
+         Ia4I0DjTHWyuwPuD78hKWFwLlWcAIr5ObLMgINtYnc3YERmLxn4HqLkyeGe5RYPo+XG3
+         VeWg==
+X-Forwarded-Encrypted: i=1; AKwUvBxCLmGV2puMmgKHVP04z0WrzITfhk64mvPlAmvsIMfhPqcYnblJFnxwqYizLfVi6VYmY8jPeZL0QkaSul8Dq2Q=@lists.linux.dev
+X-Gm-Message-State: AFuF++k1FVxk+3NDP73WkvR36yGgwLZO80pTS6lxaf4S+NcvJV8lts0p
+	JcRrSnYldZKJzSEoNuO05J/zzAcviFWE4oagN+4w/mxuzfDKkdFCDfTBka81wjbSXj+ExR9hn2a
+	VWAgamyw87TzLsSdqXow+4zx/fxaL1c9skLl2rf4=
+X-Gm-Gg: AYBFou36oBOXqFGjDe9B6GLmyWllAC6S4A0EvtoF1G7HAKAx4GOMV9ry1w6dcKLKtMs
+	Vjjf6kq6Ekn0trF2qaSYjDOhqxFrdl1Cs/XPwl9at7SIqeq8HsoIOInjbFdJqkBBY3yOQecjNgO
+	AsifUBPYduqXTNxjobyTQhzN9eCSK1ZagTij4l8n8xPa96su5rj49yoav0/Y7ggS36t49CsaslZ
+	nrhiwWriv0cmAt+inhrpbFF2vladTJq4AuX/ONzkhQoVY3dmfxJAhNO2HjhoFUvaS2fW2yVo2tz
+	5CmlqFW1kvxXnp5gkfkezt/YzYtObHmdmU+XBiUKJsyqLCTD9iY6pDF3wZGa/+lffmy2AMZxf5A
+	La+/zhnw5z4BnKe5AHocEC5O4jcRcuowvWYwYY60MecL18/RM2u4/J73g84BL/V1HqVncRHQDvg
+	==
+X-Received: by 2002:a05:6000:41ee:b0:487:71a:be5e with SMTP id
+ ffacd0b85a97d-48871751e7emr4423057f8f.28.1790257473544; Thu, 24 Sep 2026
+ 06:44:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260817141252.4FD471F00A3A@smtp.kernel.org>
+References: <20260923104054.3324830-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260923104054.3324830-7-prabhakar.mahadev-lad.rj@bp.renesas.com> <20260923105237.7B87D1F00893@smtp.kernel.org>
+In-Reply-To: <20260923105237.7B87D1F00893@smtp.kernel.org>
+From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+Date: Thu, 24 Sep 2026 14:44:07 +0100
+X-Gm-Features: AclHuK8zM1ciyUvzD6y496Uq1l_AhIJFVnKp0Rhb2IMAuf1s6F4re485NR0FU3Q
+Message-ID: <CA+V-a8uD16uG8cc9m7NHVZXT5bU64TYfu+_1POuXeioRAy6Z+A@mail.gmail.com>
+Subject: Re: [PATCH v6 6/8] watchdog: rzv2h: Add syscon support for WDTDCR
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Geert Uytterhoeven <geert+renesas@glider.be>, linux-watchdog@vger.kernel.org, 
+	sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org, 
+	conor+dt@kernel.org, wsa+renesas@sang-engineering.com, robh@kernel.org, 
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>, Biju Das <biju.das.jz@bp.renesas.com>, 
+	Linux-Renesas <linux-renesas-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 17, 2026 at 02:12:51PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] The `dump_on_panic` command-line option sets `remote->panic_on = true` but fails to dynamically register the panic handler if the trace buffer is already loaded.
+Hi Guenter,
+
+On Wed, Sep 23, 2026 at 11:52=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] watchdog: rzv2h: Deadlock in restart handler via syscon regmap l=
+ocking
 > --
-> 
-> --- Patch [16]: [PATCH v6 16/18] tracing/remotes: Add trace_remote cmdline options ---
-> commit 16551de261e3bdeffe51c1a5227c6a115ddbe725
-> Author: Vincent Donnefort <vdonnefort@google.com>
-> 
-> tracing/remotes: Add trace_remote cmdline options
->     
-> This commit introduces command-line options for trace remotes, allowing
-> configuration of features like dump_on_panic, dmesg, buf_size, and poll,
-> as well as enabling specific trace events automatically on boot.
-> 
-> > diff --git a/kernel/trace/trace_remote.c b/kernel/trace/trace_remote.c
-> > index 204d5bef7a8c4..34847463d9e43 100644
-> > --- a/kernel/trace/trace_remote.c
-> > +++ b/kernel/trace/trace_remote.c
-> 
+>
+> commit 1e1b26069f70735a537750b22a51257bb422c2e4
+> Author: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+>
+> watchdog: rzv2h: Add syscon support for WDTDCR
+>
+> The commit adds support for accessing the WDTDCR register via a syscon
+> regmap interface for RZ/T2H and RZ/N2H SoCs. It looks up the SYSC regmap
+> using the "renesas,sysc" property or falls back to MMIO access if absent.
+>
+> > diff --git a/drivers/watchdog/rzv2h_wdt.c b/drivers/watchdog/rzv2h_wdt.=
+c
+> > index 76c1d315b0e77..30b0b70fecaa9 100644
+> > --- a/drivers/watchdog/rzv2h_wdt.c
+> > +++ b/drivers/watchdog/rzv2h_wdt.c
+>
 > [ ... ]
-> 
-> > @@ -1170,6 +1172,126 @@ static int poll_ms_show(struct seq_file *s, void *unused)
-> > +static void trace_remote_apply_cmdline_opts(struct trace_remote *remote, char *cmdline)
-> > +{
-> > +	bool dmesg_on = false;
-> > +	char *opt;
-> > +	int ret;
+>
+> > @@ -93,18 +104,22 @@ static int rzv2h_wdt_ping(struct watchdog_device *=
+wdev)
+> >
+> >  static int rzt2h_wdt_wdtdcr_count_stop(struct rzv2h_wdt_priv *priv)
+> >  {
+> > -     guard(spinlock_irqsave)(&priv->regmap_lock);
+> > -     return regmap_set_bits(priv->wdtdcr_regmap, WDTDCR, WDTDCR_WDTSTO=
+PCTRL);
+> > +     struct rzv2h_sysc_wdtdcr *sysc =3D &priv->sysc;
 > > +
-> > +	while ((opt = strsep(&cmdline, "^"))) {
-> > +		if (!*opt)
-> > +			continue;
+> > +     guard(spinlock_irqsave)(&sysc->regmap_lock);
+> > +     return regmap_set_bits(sysc->regmap, sysc->offset, WDTDCR_WDTSTOP=
+CTRL);
+> >  }
+>
+> [Severity: High]
+> Is the external sysc->regmap_lock still necessary here?
+>
+> When using the syscon regmap returned by syscon_regmap_lookup_by_phandle_=
+args(),
+> the regmap has internal locking enabled by default. Since regmap_set_bits=
+()
+> already performs an atomic read-modify-write using the syscon's internal =
+lock,
+> this external wrapper lock appears redundant for the syscon path.
+>
+> >
+> >  static inline int rzt2h_wdt_wdtdcr_count_start_nolock(struct rzv2h_wdt=
+_priv *priv)
+> >  {
+> > -     return regmap_clear_bits(priv->wdtdcr_regmap, WDTDCR, WDTDCR_WDTS=
+TOPCTRL);
+> > +     struct rzv2h_sysc_wdtdcr *sysc =3D &priv->sysc;
 > > +
-> > +		if (!strcmp(opt, "dump_on_panic")) {
-> > +			remote->panic_on = true;
-> 
-> [Severity: Medium]
-> If the trace remote was configured across multiple command line arguments, and
-> an earlier argument already enabled events (which loads the trace buffer via
-> trace_remote_enable_tracing()), will setting remote->panic_on = true here
-> fail to register the panic notifier?
-> 
-> Since this doesn't call trace_remote_panic_load() if the buffer is already
-> loaded, it appears the panic handler might never be registered under this
-> configuration pattern.
+> > +     return regmap_clear_bits(sysc->regmap, sysc->offset, WDTDCR_WDTST=
+OPCTRL);
+> >  }
+>
+> [Severity: High]
+> Could this lead to a deadlock during a system panic or restart?
+>
+> This function is called by the rzv2h_wdt_restart() handler, which execute=
+s in
+> atomic or panic context and must remain strictly lockless to prevent dead=
+locks.
+>
+> While bypassing the driver's local sysc->regmap_lock was safe in the lega=
+cy
+> MMIO fallback case (where rzv2h_wdtdcr_regmap_config disables locking), t=
+he
+> syscon regmap has internal locking enabled.
+>
+> Calling regmap_clear_bits() unconditionally attempts to acquire the sysco=
+n
+> regmap's internal spinlock. If the system panics while another CPU is acc=
+essing
+> the shared syscon block, the restart handler could hang trying to acquire=
+ this
+> lock, defeating the purpose of the watchdog restart recovery.
+>
+Agreed, the syscon regmap lock cannot be bypassed from the watchdog
+driver, so the _nolock variant does not achieve anything for the
+syscon case.
 
-Interesting. I will fix that
+Rather than working around this, I think the right fix is to not
+register a watchdog restart handler on RZ/T2H at all. On RZ/T2H,
+system reset is implemented by TF-A through PSCI SYSTEM_RESET, which
+triggers a software system reset via the SWRSYS register. The PSCI
+driver registers its restart handler at priority 129, while the
+watchdog restart handler is registered at the default priority of 0,
+so PSCI already resets the system first and the watchdog restart
+handler is never reached on this SoC.
 
-> 
-> > +		} else if (!strcmp(opt, "dmesg")) {
-> > +			dmesg_on = true;
-> > +		} else if (!strncmp(opt, "buf_size=", 9)) {
-> > +			/* buf_size can only be applied if the buffer is unloaded */
-> > +			if (trace_remote_loaded(remote))
-> > +				pr_warn("Cannot apply buf_size after events are enabled\n");
-> > +			else
-> > +				remote->trace_buffer_size = memparse(opt + 9, NULL);
-> 
-> [ ... ]
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260817135517.3919534-1-vdonnefort@google.com?part=16
+With the restart handler gone on RZ/T2H, WDTDCR is only accessed
+during probe and from the start/stop callbacks.
 
--- 
-Vincent
+Is this approach OK?
+
+Cheers,
+Prabhakar
