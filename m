@@ -1,187 +1,182 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f43.google.com (mail-pz2-f43.google.com [74.125.228.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC3D242925;
-	Thu, 24 Sep 2026 21:47:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBC1440A2B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 21:48:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790286433; cv=none; b=IWFfK43EIhKw5CzyWdtA8tjjT0ng/hpwDYs5oPIb5V/mxef/d3M4d346PXzzgVC4rPwY7nTXd3KRuaiFQ8uSKoRqG510WEYPRupI+YGb+k7wObiR5wtVOivls93eHlSwppH/e3bmI7+ePdoscsNZXxteASQ2iErHZ6jAaDMPSfs=
+	t=1790286534; cv=none; b=cZVKNz3bjtkOt8Tvc4zIFEx485IswzDbrAfH7eXxOmyFrAx+G9N+AqIXKwkspaQnV6kO5hOoUY+4YGhw9AYwD5g2jPFhaEhq9aIectZ8Gl3fBwKL3YvjZRt+mgXLYZpCknhF5AUk9n7/Z91lXjhiSsO+6TJWbVmeQm1XCYLgYH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790286433; c=relaxed/simple;
-	bh=By+orAmivfFph/4Pp4KGg0gf6vQlQvaRbFP78qt4u8o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sTIGMB9VA87bUfu7EdYUEglPcJm6AWR0sKZIaInuOocPED0tU8YM3cqmhKUp8sgJMiq6zFuy1qArKe4vaXKKUx6LqO36Lj2boAgMmfs7wgFQLoJRNoxCfr5sIm+eBrngrsK+LM8iTAzBb8p791DhHnA0pXziyhyhc+dogVSXIw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=aQp3cMP+; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1790286534; c=relaxed/simple;
+	bh=22T5Y5q1dDPW8Fz12c4c6F2VYqRVut/pkd+njYS4uxw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dy1eY2pSeZ8694f8XMrFUt01TmvXJgngxla3rhAFckEBsCUtI2mhvCt34XaWqQRHnyvXSWjgGDWeIIolQuVFpHMK2GyL00t5JctpQaHG+dBvQfs9JePTJUeIQdoAwZR1QPt0DOgcSK7LKryPgFSy8Z4qIOp4rGvjzrMZO4+Beew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S2Sps3IX; arc=none smtp.client-ip=74.125.228.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="aQp3cMP+"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68OJ5k0T3079487;
-	Thu, 24 Sep 2026 21:47:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=r7jXVs
-	RxYauBKt36pI/M7tRGg7/lUkj5oqapcJKREpE=; b=aQp3cMP+5E02tbAr5XZC3F
-	5vQmWBSRrI+YnmESr2+XPk9KAb8X0/NpZWBvfxSBlinbbybFJOAa6jNUgxnnkqVw
-	GAIbchv79xeRar2SmuarMPAR8sFhgdlMo7IaP1TSxrT/heS/FFIp19O3Hy4KtM2r
-	Jfp1oEmxlaeD34bWQBBFvxj0Q1uyhPgMMvbTqawJrcUlSR14bk5ZP06tfd42fiZ0
-	jzDvS4d/sVtX/xvB8agPcGsHkeVUMCPkdEk19RwrF+STB0BqmGQsbskLMUm+pTm+
-	FQMIVMpvjLNJNzeokDgX6v1bNDkiXpyl9Mt0/gaOoveIKerP3Mo6j5f2bmyFBAqg
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskg2uvn6-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Thu, 24 Sep 2026 21:47:10 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68OIlbaP2516022;
-	Thu, 24 Sep 2026 21:47:09 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbu8yryr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 24 Sep 2026 21:47:09 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
-	by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68OLl8eQ24838714
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 24 Sep 2026 21:47:08 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 265915805A;
-	Thu, 24 Sep 2026 21:47:08 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 91E5F58052;
-	Thu, 24 Sep 2026 21:47:07 +0000 (GMT)
-Received: from [9.61.5.111] (unknown [9.61.5.111])
-	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 24 Sep 2026 21:47:07 +0000 (GMT)
-Message-ID: <bb74e30c-ee6c-474e-b60c-f2f55928f49b@linux.ibm.com>
-Date: Thu, 24 Sep 2026 17:47:07 -0400
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S2Sps3IX"
+Received: by mail-pz2-f43.google.com with SMTP id d2e1a72fcca58-85469d249c4so265694b3a.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 14:48:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790286532; x=1790891332; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:sender:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/2VDHuC8A3j6iZ3qSRJ3zMwgO1Yc9tVse+wSVpxPDMY=;
+        b=S2Sps3IXUG+CMrSrUuxpgwih+pg0jmoHifTMnT400kgLnxxytvynCTaUJRULpwRdYD
+         iT59+rLsxWR3vGEL23+DayBFTI+BszZowIjgJR0MsER3xE0jerN/2Ipu3j/pEIeoOKb6
+         br1SsvAu92XVw1xkCxeL1E4qL0MjkYZutm9s9/J97yhxX57KhJl/D8W23aFivaUVHXIO
+         QwZhlPGtv6w1bkPRWfZBk3WF4V2BlnAnFd4s6HpnldqgIqv1abX2qw1k7g/aLVGUjZc3
+         bUr6vDh1kXacZKTtIrBrTpQbhOs648TfMdWeIXe4XsCv9qLgi5GmZywX9OM/Hc0Uvy+e
+         KgTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790286532; x=1790891332;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:sender:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=/2VDHuC8A3j6iZ3qSRJ3zMwgO1Yc9tVse+wSVpxPDMY=;
+        b=hldXNtSTrmYa04usqnqALisls1PKLuhK5+GVNxQ1OfiAIHNdLPzGgy/lfKvbbVjTp7
+         vY5iGTdlgUnMAelQ78OsIYBo9+YFvbvEZoQ8i55aSa+DxnyaStz4QJ9w3WmwIuehVI42
+         NCnzkgLz8M89zJ/lreC28wQsSEuwFsRb+KeLAwNcoQZng3rzmqmHnS+JcLXVpdgViE//
+         QldUUD9w6FRZeW3za6F5oyxVDeJSxNJBKAH9uS1Qsef1xR23T8OyZb/PRzFlqbJoN/xT
+         rfMdBrVtKYVFLwe6c1aS2iQcOw9Dayu4UgbZc8IxW7fbaF4B+NGvZJgmC6RX+VLzU4w0
+         /RVQ==
+X-Forwarded-Encrypted: i=1; AKwUvByk63dkKCGiGyedZyIjF2qaB4VhzXT0UhH781YJJOXsPxf/DvQu5q/NKd9adGqGkWC4O8mb9guOibBty9S3SCw=@lists.linux.dev
+X-Gm-Message-State: AFuF++nudFgflz6V0gbZwr6oTBTEh8iJRpdU3SCHBX4AcI34TI8zY4jn
+	ZiBAXgeVTb/tka2o7QyABoxb1mMIL5Mt08sOiHJ2co7pV4XHkpKsrjSL
+X-Gm-Gg: AYBFou0uSurah+PCGgU+82hLgk0hxnUoFZVejZurbYX26FmxBRZv1QQhC1Efl6qEhvy
+	Hx1BpimHwp+z8Sga9Q2x4D1O+83aiKcvg2XaU3Ov2lOjOk/JrXQL6+Zqq6onURDCW79389cbHgx
+	MEdepBANV7VZ7M4bqgvvWEtpFJopK8O75islnx4/9d8Xc9AT+sxcgPRw8JycjSk4Bw/53aTABLS
+	MTSIuyVR9Uz/jG1RSgce8l3zQ1IumGo761LtD/WDfIeVaGLjfyAtXRzpK9eEvFHjkItQYOzZ7SZ
+	JWty31+V1loKmLFGGK/R9XsximikD4NGOEf000n40kpJCqKsVqrbY3gngs2qPUaLATGe83kl3aw
+	Zbt5U8m3S7RY5jUUpReC+RIJYG6XXHiun0RYfx3OZ0Z7q4Eh3uKmmEUAn7eZtyhkmylPPBaqj0d
+	NnbOJZZuIfvHG0b0RJKeOvpdJcE1/RPrtiRfWJm/uZSRsuEq0gTVHKkw6EjjS2MmtLoPl5RpGyv
+	3637n3F69Z8iEOUZXKQJzc=
+X-Received: by 2002:a05:6a00:1948:b0:878:37b2:df9d with SMTP id d2e1a72fcca58-87e9ca1e71amr3307440b3a.55.1790286532158;
+        Thu, 24 Sep 2026 14:48:52 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-87feb57e56csm196702b3a.48.2026.09.24.14.48.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Sep 2026 14:48:51 -0700 (PDT)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Thu, 24 Sep 2026 14:48:49 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+Cc: Geert Uytterhoeven <geert+renesas@glider.be>,
+	linux-watchdog@vger.kernel.org, sashiko-reviews@lists.linux.dev,
+	devicetree@vger.kernel.org, conor+dt@kernel.org,
+	wsa+renesas@sang-engineering.com, robh@kernel.org,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Linux-Renesas <linux-renesas-soc@vger.kernel.org>
+Subject: Re: [PATCH v6 6/8] watchdog: rzv2h: Add syscon support for WDTDCR
+Message-ID: <4f5aadf0-8f23-4871-918f-430a0c99900d@roeck-us.net>
+References: <20260923104054.3324830-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260923104054.3324830-7-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20260923105237.7B87D1F00893@smtp.kernel.org>
+ <CA+V-a8uD16uG8cc9m7NHVZXT5bU64TYfu+_1POuXeioRAy6Z+A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 5/6] s390/vfio-ap: fix queue state leakage to guest and
- host
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-s390@vger.kernel.org, Alexander Gordeev <agordeev@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>, kvm@vger.kernel.org,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>
-References: <20260904223531.1611088-1-akrowiak@linux.ibm.com>
- <20260904223531.1611088-6-akrowiak@linux.ibm.com>
- <20260904224637.A2C711F00A3D@smtp.kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260904224637.A2C711F00A3D@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: ck98XoivYAs1lshw2vz3zo3KlUOhM33e
-X-Authority-Analysis: v=2.4 cv=I43w19gg c=1 sm=1 tr=0 ts=6ab59a5e cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=OB2yBHD6Z5LEc4g70-sA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA4OCBTYWx0ZWRfX/sJ59/R/KTos
- X4JGPIHjGf4suz3xq37YidnMsHSZTeIlfS7fM0HSvlxR3fBwSz30/WxMPoMscfkkVrPiAMEuMkP
- 75p8G91IG0I+bKmczr6mudl0eLiaYmzcZj8kIpoc/ratvZefZUHMXkd6ldkHi97NpB+Z59CDlF2
- 31x6cxqopwSAmHBazMnKGgJ02VrvqBZdd/hkSTvsSPF7FXsDN3MQPQpkL1kAdphIQFtiOYMLOmr
- MmC3swaHO+hj1trP4LsskL1dtyFb1qj2m1Ozubz8g3ILkCS4vL645Q967ksAVDToxHkwJI0pTDf
- 2Qypk2CIru7mVXobe2cqDjs6q0KOj7OZi8c1ZV5shyKHnUAYy05bXbKBuGl4KwZJG1dMePqc52L
- C8xmKY1VzHye2TlmX6z6QT+79woIoTtT8RkRG3X6tJwPEodmHeAdfSR50hAZPAI75KLomVuFG8Z
- Q4aE4OQSSS4VNSQ6t2w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA4OCBTYWx0ZWRfX/STh3xfGRfh6
- CDE9Q78/4qNK77t4ACJWijnhTpAXwP/SFTJqdnjHt5L19SYPUVGuPZcZ6uLy4XbjNSQiZN/lt5i
- OrH+7hx9vuwCFa3JAwDgJEFw7I37zUI=
-X-Proofpoint-GUID: ck98XoivYAs1lshw2vz3zo3KlUOhM33e
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-24_05,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0
- lowpriorityscore=0 bulkscore=0 phishscore=0 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609240088
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CA+V-a8uD16uG8cc9m7NHVZXT5bU64TYfu+_1POuXeioRAy6Z+A@mail.gmail.com>
 
+On Thu, Sep 24, 2026 at 02:44:07PM +0100, Lad, Prabhakar wrote:
+> Hi Guenter,
+> 
+> On Wed, Sep 23, 2026 at 11:52 AM <sashiko-bot@kernel.org> wrote:
+> >
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [High] watchdog: rzv2h: Deadlock in restart handler via syscon regmap locking
+> > --
+> >
+> > commit 1e1b26069f70735a537750b22a51257bb422c2e4
+> > Author: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+> >
+> > watchdog: rzv2h: Add syscon support for WDTDCR
+> >
+> > The commit adds support for accessing the WDTDCR register via a syscon
+> > regmap interface for RZ/T2H and RZ/N2H SoCs. It looks up the SYSC regmap
+> > using the "renesas,sysc" property or falls back to MMIO access if absent.
+> >
+> > > diff --git a/drivers/watchdog/rzv2h_wdt.c b/drivers/watchdog/rzv2h_wdt.c
+> > > index 76c1d315b0e77..30b0b70fecaa9 100644
+> > > --- a/drivers/watchdog/rzv2h_wdt.c
+> > > +++ b/drivers/watchdog/rzv2h_wdt.c
+> >
+> > [ ... ]
+> >
+> > > @@ -93,18 +104,22 @@ static int rzv2h_wdt_ping(struct watchdog_device *wdev)
+> > >
+> > >  static int rzt2h_wdt_wdtdcr_count_stop(struct rzv2h_wdt_priv *priv)
+> > >  {
+> > > -     guard(spinlock_irqsave)(&priv->regmap_lock);
+> > > -     return regmap_set_bits(priv->wdtdcr_regmap, WDTDCR, WDTDCR_WDTSTOPCTRL);
+> > > +     struct rzv2h_sysc_wdtdcr *sysc = &priv->sysc;
+> > > +
+> > > +     guard(spinlock_irqsave)(&sysc->regmap_lock);
+> > > +     return regmap_set_bits(sysc->regmap, sysc->offset, WDTDCR_WDTSTOPCTRL);
+> > >  }
+> >
+> > [Severity: High]
+> > Is the external sysc->regmap_lock still necessary here?
+> >
+> > When using the syscon regmap returned by syscon_regmap_lookup_by_phandle_args(),
+> > the regmap has internal locking enabled by default. Since regmap_set_bits()
+> > already performs an atomic read-modify-write using the syscon's internal lock,
+> > this external wrapper lock appears redundant for the syscon path.
+> >
+> > >
+> > >  static inline int rzt2h_wdt_wdtdcr_count_start_nolock(struct rzv2h_wdt_priv *priv)
+> > >  {
+> > > -     return regmap_clear_bits(priv->wdtdcr_regmap, WDTDCR, WDTDCR_WDTSTOPCTRL);
+> > > +     struct rzv2h_sysc_wdtdcr *sysc = &priv->sysc;
+> > > +
+> > > +     return regmap_clear_bits(sysc->regmap, sysc->offset, WDTDCR_WDTSTOPCTRL);
+> > >  }
+> >
+> > [Severity: High]
+> > Could this lead to a deadlock during a system panic or restart?
+> >
+> > This function is called by the rzv2h_wdt_restart() handler, which executes in
+> > atomic or panic context and must remain strictly lockless to prevent deadlocks.
+> >
+> > While bypassing the driver's local sysc->regmap_lock was safe in the legacy
+> > MMIO fallback case (where rzv2h_wdtdcr_regmap_config disables locking), the
+> > syscon regmap has internal locking enabled.
+> >
+> > Calling regmap_clear_bits() unconditionally attempts to acquire the syscon
+> > regmap's internal spinlock. If the system panics while another CPU is accessing
+> > the shared syscon block, the restart handler could hang trying to acquire this
+> > lock, defeating the purpose of the watchdog restart recovery.
+> >
+> Agreed, the syscon regmap lock cannot be bypassed from the watchdog
+> driver, so the _nolock variant does not achieve anything for the
+> syscon case.
+> 
+> Rather than working around this, I think the right fix is to not
+> register a watchdog restart handler on RZ/T2H at all. On RZ/T2H,
+> system reset is implemented by TF-A through PSCI SYSTEM_RESET, which
+> triggers a software system reset via the SWRSYS register. The PSCI
+> driver registers its restart handler at priority 129, while the
+> watchdog restart handler is registered at the default priority of 0,
+> so PSCI already resets the system first and the watchdog restart
+> handler is never reached on this SoC.
+> 
+> With the restart handler gone on RZ/T2H, WDTDCR is only accessed
+> during probe and from the start/stop callbacks.
+> 
+> Is this approach OK?
+> 
+Makes sense to me.
 
-
-On 9/4/26 6:46 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->
-> Pre-existing issues:
-> - [High] A hardware error during queue reset circumvents the newly introduced security check, incorrectly marking a potentially un-zeroized queue as 'passable'.
-> --
->
-> commit 239f603c9ac4d1441b4d22a11bde0df9a2b5aa5c
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
->
-> s390/vfio-ap: fix queue state leakage to guest and host
->
-> This commit introduces an upper bound on the wait time for a queue reset
-> to complete and prevents the leakage of queue state to guests. It ensures
-> zeroization is strictly confirmed by returning true in _queue_passable()
-> only when the response code is AP_RESPONSE_NORMAL.
->
->> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
->> --- a/drivers/s390/crypto/vfio_ap_ops.c
->> +++ b/drivers/s390/crypto/vfio_ap_ops.c
->> @@ -785,14 +785,14 @@ static bool _queue_passable(struct vfio_ap_queue *q)
->>   	if (!q)
->>   		return false;
->>   
->> -	switch (q->reset_status.response_code) {
->> -	case AP_RESPONSE_NORMAL:
->> -	case AP_RESPONSE_DECONFIGURED:
->> -	case AP_RESPONSE_CHECKSTOPPED:
->> -		return true;
->> -	default:
->> -		return false;
->> -	}
->> +	/*
->> +	 * A queue is only passable if zeroization was confirmed by
->> +	 * apq_reset_check() via TAPQ status bit verification. This is
->> +	 * indicated by reset_status.response_code == AP_RESPONSE_NORMAL (0).
->> +	 * This is to protect against leaking the internal state of the queue
->> +	 * to the guest.
->> +	 */
->> +	return q->reset_status.response_code == AP_RESPONSE_NORMAL;
->>   }
-> [ ... ]
->
->> @@ -2129,7 +2153,7 @@ static void apq_reset_check(struct work_struct *reset_work)
->>   			 */
->>   			vfio_ap_free_aqic_resources(q);
->>   			return;
-> [Severity: High]
-> This is a pre-existing issue, but does this error path leave
-> q->reset_status.response_code set to AP_RESPONSE_NORMAL if a hardware or
-> firmware fault occurs?
->
-> When vfio_ap_mdev_reset_queue() successfully initiates a reset, ap_zapq()
-> returns AP_RESPONSE_NORMAL (0), which is initially copied into
-> q->reset_status.
->
-> If ap_tapq() subsequently returns an invalid response code causing
-> apq_status_check() to return -EIO, this workqueue function aborts and frees
-> the AQIC resources. However, it exits without updating q->reset_status to a
-> failure state.
->
-> Because _queue_passable() now strictly checks for AP_RESPONSE_NORMAL, could
-> this fail-open state result in an un-zeroized queue being incorrectly passed
-> to an untrusted guest, leaking cryptographic key material?
-
-This will be fixed in the next version.
-
->
->> -
->> +		}
->>   		if (elapsed >= AP_RESET_MAX_WAIT) {
->>   			/*
->>   			 * Zeroization confirmed (ret == 0): the TAPQ status bits
->> @@ -2143,8 +2167,10 @@ static void apq_reset_check(struct work_struct *reset_work)
->>   			 * queue cannot generate interrupts, so the NIB page is
->>   			 * no longer a DMA target and it is safe to free it.
->>   			 */
-
+Thanks,
+Guenter
