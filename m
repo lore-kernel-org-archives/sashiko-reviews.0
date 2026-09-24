@@ -1,211 +1,205 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F7D4718C3
-	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 10:46:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5B8426416
+	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 11:03:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790246806; cv=none; b=RMVWlx4qNuhftSLNB9HuAJ7eP8oZeP5mMLGfKNd+kc94PA7dcfrnhIi7V280b8/OgiK8ER9qaMPzXeaVHWvQGmeRBNtXu9XtE0MGlh++xlwyn/c8r3reFWWLEsPvDZxZKIajQv8w/3LZSK4H3Us4yQ2EBgRCHWwn6Nf0mpXXQPQ=
+	t=1790247822; cv=none; b=kDK5xazbKVWsOYY5hNMSjIYeQl5nVrgZ8WRWB+QIhKM+JC0KGFeaJkP2qFzjSXQpqsV/WbAksxXvlKyKezc2PhsItwcJk+8Yw6ONpgyhVTsIQQsGrksq5nqOw1nVpf0/pHC6Y19hNFxQRwGZ5Wexppds4HhDH7dPC+345P9UmsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790246806; c=relaxed/simple;
-	bh=+ywPZjttvo62zYb3HWZ3Wz4VeL7t+xBCRXInpeEW9GU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tNnKxSFdNec63vBdKA3hN5muYLzdL3TKwu1IJmLT2EnoncwylZ3U0yEr/ODTlGf84wxks9z+88OM05/PkHxevgvLdHs5CmMbAdHmUShQfl7muLLs3O1sYgBkPltCXkuSAY+Ou6GbmNtY4TsvWjADblw4K0bSxzfBXlkNDU8EAUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=t1UphFUo; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=cCG5TLp9; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=PpZgHqkB; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=jCihZN4b; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1790247822; c=relaxed/simple;
+	bh=IhabpTLczNnSHQ0UJk2NzC+d4ckaiZ88UI5IfHfDiAk=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=O53kajQjwd3ZhPbfg8ILvMKcfkcSOPotpnd1Zj+cWlwx7MD/2oGZ1Km8u2YMfhkkaH3mLXIzp7e0ahoCQ859UJQZ2WlUcasqPomPpDGcS9aVCOlWkoUx8wiv3mGu4XpwFizCHw654N8FGgpNyM8I53+kVpXRXXo6G7+2d8bupQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=X2CSM7eb; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="t1UphFUo";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="cCG5TLp9";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="PpZgHqkB";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="jCihZN4b"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 1DFB321EBF;
-	Thu, 24 Sep 2026 10:46:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1790246793; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=oa7Z2bXQvWMTDG162a3ENzsWRpailpO1SXnlrsEkNTk=;
-	b=t1UphFUo7kcrWcl2HNBA828UMnRrKGGUw1vt8kgDuqnDUsNk/bmf3wpg2KIjedpHbpyoMS
-	esczWuCpTGQK9/0rFP2x7/137GYm3x9M5jGrNRu44wEzkn4OFGARi2z1YQ8dmHSOVYAzhO
-	3rUzwixSE980+hTG8yRsa4v1vbUBR4c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1790246793;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=oa7Z2bXQvWMTDG162a3ENzsWRpailpO1SXnlrsEkNTk=;
-	b=cCG5TLp9gQeBe+V5s6ft550xPNHBVScn4+JzzCN6x6twsl1kNF2O3srKGyCdMM8Sd5fp+b
-	2/WRMXdRA0TlJ9DQ==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=PpZgHqkB;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=jCihZN4b
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1790246789; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=oa7Z2bXQvWMTDG162a3ENzsWRpailpO1SXnlrsEkNTk=;
-	b=PpZgHqkBS1WUMDL9MnGO4whto6FhJg5rP4IidurC2q6Zj+Mjue4zkWOj63I/1Pgx7SG0Un
-	eM+GjR/A2TNE1D24LuPkBCQHzr3P2oKwWY5q4H7bU1FXlp0Zs6TUEdT2EuXFXSpS8ajz2N
-	Zl10JA8wU3a/SwhGS0ZTCd2W65eh/DY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1790246789;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=oa7Z2bXQvWMTDG162a3ENzsWRpailpO1SXnlrsEkNTk=;
-	b=jCihZN4bTYCHAnzV2Llu3edwtQ3aYH17LTrH9wjFpjFdt2Q6JvIfGyiABLYwtv7515TWUq
-	SUzJ44wSWSo3KBDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AD48513354;
-	Thu, 24 Sep 2026 10:46:28 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id nH5vE4T/tGpxdAAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 24 Sep 2026 10:46:28 +0000
-Message-ID: <80a93244-dc29-49c2-b4bc-1133d0443443@suse.de>
-Date: Thu, 24 Sep 2026 12:46:27 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="X2CSM7eb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1790247820; x=1821783820;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version:content-id;
+  bh=IhabpTLczNnSHQ0UJk2NzC+d4ckaiZ88UI5IfHfDiAk=;
+  b=X2CSM7ebLsvmjRl92OW1z8fYTfoN9zrqgKx9w/YFdcYFVXmH4GKT2GF1
+   xVkA0KcUN77ZR1F59976w3wwT8ywURKfddlQixdzk/0Zy9DafIZn7cmjP
+   VedwxAxVTXrOBIavIeStAT+j8ldFRJIVL876EvLztLvj55qDr9rSQ2Dar
+   Jc++7YcojOwf+fdMxAKlfdwnjMxjzx3bDa7F6L431IY2GrNC95019RfTS
+   ZunKXwMNCLXWKFvoZVXfKGIY3oyk5rlP0IURVgHYmWzUJP6JvYqczGZuk
+   skiDoY3zZAmr8SejS/4T+KgTwpsSRAF948zKTVly09AFd4/21UVFMZXBV
+   w==;
+X-CSE-ConnectionGUID: sQSbz1h1S2qS58TK+7QsWA==
+X-CSE-MsgGUID: al4/k6Z3TaGs/9XeTlQAug==
+X-IronPort-AV: E=McAfee;i="6800,10657,11914"; a="101186714"
+X-IronPort-AV: E=Sophos;i="6.27,120,1787036400"; 
+   d="scan'208";a="101186714"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Sep 2026 04:03:39 -0700
+X-CSE-ConnectionGUID: XKhCMxK0SkGEqi9xCjf9dw==
+X-CSE-MsgGUID: IzzmPFaURc6e1HBUr37y5Q==
+X-ExtLoop1: 1
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.183])
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Sep 2026 04:03:37 -0700
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Thu, 24 Sep 2026 14:03:33 +0300 (EEST)
+To: sashiko-reviews@lists.linux.dev
+cc: linux-pci@vger.kernel.org
+Subject: Re: [PATCH 3/5] PCI: Place resources to either edge of the window
+In-Reply-To: <20260923132848.B7A451F000FF@smtp.kernel.org>
+Message-ID: <9aa21437-c8c1-8b51-62aa-aeaa64854f1f@linux.intel.com>
+References: <20260923131757.7792-1-ilpo.jarvinen@linux.intel.com> <20260923131757.7792-4-ilpo.jarvinen@linux.intel.com> <20260923132848.B7A451F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] drm/fbdev: Move fbdev helpers into client library
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org
-References: <20260924093036.82356-1-tzimmermann@suse.de>
- <20260924093036.82356-3-tzimmermann@suse.de>
- <20260924094332.14F311F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260924094332.14F311F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Score: -4.51
-X-Rspamd-Queue-Id: 1DFB321EBF
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spam-Level: 
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-0.999];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email,suse.de:mid];
-	MID_RHS_MATCH_FROM(0.00)[];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_THREE(0.00)[4];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	TO_DN_NONE(0.00)[];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Flag: NO
+Content-Type: multipart/mixed; BOUNDARY="8323328-467248736-1790245410=:1187"
+Content-ID: <98b81c16-5dbd-a0e4-5742-f88e0aba1a5b@linux.intel.com>
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--8323328-467248736-1790245410=:1187
+Content-Type: text/plain; CHARSET=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-ID: <1cc40ac6-288f-1647-2d71-a8848471b11d@linux.intel.com>
 
-Am 24.09.26 um 11:43 schrieb sashiko-bot@kernel.org:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] drm: missing DRM_CLIENT_LIB selection in memory helpers causes linker error
+On Wed, 23 Sep 2026, sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] pci: undefined behavior from 64-bit resource sizes on 32-bit sys=
+tems
+> - [Medium] pci: res->end + 1 overflow breaks natural alignment logic
 > --
->
-> commit b0f3c606cfc59f0c56cd9be7e3349abc72f97a64
-> Author: Thomas Zimmermann <tzimmermann@suse.de>
->
-> drm/fbdev: Move fbdev helpers into client library
->
-> DRM's fbdev helpers are for the fbdev-emulation clients. Move them
-> into the client-library module. Fix include statements throughout
-> DRM drivers.
->
->> diff --git a/drivers/gpu/drm/clients/Makefile b/drivers/gpu/drm/clients/Makefile
->> index c16addbc327f0..1304ff358509d 100644
->> --- a/drivers/gpu/drm/clients/Makefile
->> +++ b/drivers/gpu/drm/clients/Makefile
->> @@ -4,5 +4,6 @@ subdir-ccflags-y += -I$(src)/..
->>   
->>   drm_client_lib-y := drm_client_setup.o
->>   drm_client_lib-$(CONFIG_DRM_CLIENT_LOG) += drm_log.o
->> -drm_client_lib-$(CONFIG_DRM_FBDEV_EMULATION) += drm_fbdev_client.o
->> +drm_client_lib-$(CONFIG_DRM_FBDEV_EMULATION) += drm_fbdev_client.o \
->> +						drm_fbdev_helper.o
-> [Severity: Low]
-> Since drm_fbdev_helper.o is now built into drm_client_lib, can this cause a
-> linker error for built-in memory helpers?
->
-> If CONFIG_DRM_FBDEV_EMULATION=y and a driver selects DRM_GEM_DMA_HELPER=y,
-> but CONFIG_DRM_CLIENT_SELECTION=m (selected only by modular drivers),
-> drm_client_lib.ko will be built as a module while drm_fbdev_dma.o becomes
-> built-in.
->
-> This would lead to undefined references to fbdev helper functions (e.g.,
-> drm_fb_helper_fini) during vmlinux linkage.
->
-> Do the memory helpers in drivers/gpu/drm/Kconfig (DRM_GEM_DMA_HELPER,
-> DRM_GEM_SHMEM_HELPER, DRM_TTM_HELPER) need to explicitly select
-> DRM_CLIENT_LIB when DRM_FBDEV_EMULATION is enabled to prevent this?
+>=20
+> commit 65c3dea851ed27dd4bf3576e0a9387eaa7359798
+> Author: Ilpo J=E4rvinen <ilpo.jarvinen@linux.intel.com>
+> Subject: PCI: Place resources to either edge of the window
+>=20
+> This commit updates the PCI resource assignment phase to use a window edg=
+e
+> aware resource assignment algorithm. It alters the greedy assignment logi=
+c
+> to place resources either to the left or right edge of the window to avoi=
+d
+> fragmenting contiguous free space.
+>=20
+> > diff --git a/drivers/pci/setup-res.c b/drivers/pci/setup-res.c
+> > index eacce9e2486bf..1ab5d167ab5c6 100644
+> > --- a/drivers/pci/setup-res.c
+> > +++ b/drivers/pci/setup-res.c
+> [ ... ]
+> > @@ -262,16 +265,80 @@ resource_size_t pci_resource_alignment(const stru=
+ct pci_dev *dev,
+> >  =09return resource_alignment(res);
+> >  }
+> > =20
+> > +static resource_size_t pci_max_natural_size(const struct resource *res=
+,
+> > +=09=09=09=09=09    resource_size_t *max_align)
+> > +{
+> > +=09resource_size_t size =3D resource_size(res);
+> > +=09resource_size_t powof2, natural_start;
+> > +
+> > +=09*max_align =3D 1;
+> > +=09if (!size)
+> > +=09=09return 0;
+> > +
+> > +=09powof2 =3D rounddown_pow_of_two(size);
+>=20
+> [Severity: High]
+> Does this code inadvertently truncate 64-bit resource sizes on 32-bit sys=
+tems?
+>=20
+> When a 32-bit kernel is built with a 64-bit phys_addr_t (like x86 PAE or
+> ARM LPAE), passing a 64-bit size into rounddown_pow_of_two() casts it to =
+an
+> unsigned long. If the size is a multiple of 4GB (which is common for larg=
+e
+> GPU BARs), the lower 32 bits are silently truncated to 0, causing powof2 =
+to
+> be evaluated as 0.
 
-To answer that question: yes they do. And I forgot that they already do 
-the same for DRM_KMS_HELPER because of this dependency. [1] The 
-KMS-helper rule simply needs to be replaced with the client-lib. The 
-memory managers do not use the three module parameters that remain in 
-drm_kms_helper.ko . No need for a dependency there.
+This is a pre-existing issue. PCI core already uses __ffs() which is based=
+=20
+on unsigned long (at least on x86).
 
->
+There's also a serious discussion in x86 space about future of 32-bit=20
+support where keeping it wastes development effort:
 
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
+https://lore.kernel.org/all/bd252483-fb0a-4818-bfaf-b9b6ebd187fe@intel.com/
+
+The non-trivial cost here is avoiding the problematic generic helpers=20
+(custom coding them) or fixing ffs() and round*_pow_of_two() when input=20
+size > sizeof(unsigned long), for ability to run >=3D4GB BARs on a 32-bit=
+=20
+platform. Yeah, modern GPUs have big BARs but running them on a 32-bit=20
+platform doesn't sound that great combination.
 
 
+That being said, I think round*_pow_of_two() interface should be made
+to return same type as the input because it simply doesn't make sense to=20
+convert the value to some other type. I briefly looked into that earlier=20
+but it requires auditting that all the callers can handle that (IIRC,=20
+there were even some build failures from making just the type change and
+there could be logic flaws as well if something relies on type expansion
+to unsigned long).
+
+> > +=09natural_start =3D ALIGN(res->start, powof2);
+> > +=09if (natural_start >=3D ALIGN_DOWN(res->end + 1, powof2)) {
+>=20
+> [Severity: Medium]
+> Could this boundary check overflow if the window ends exactly at ~0U?
+>=20
+> If a 32-bit system maps PCI space just below the 4GB boundary, res->end
+> could be 0xFFFFFFFF. In that scenario, res->end + 1 wraps to 0, which
+> causes ALIGN_DOWN(0, powof2) to return 0. The check natural_start >=3D 0 =
+then
+> unconditionally evaluates to true for unsigned types, incorrectly forcing
+> the algorithm to halve powof2 and potentially failing to pack memory wind=
+ows
+> tightly.
+
+This will be fixed by subtracting 1 from the aligned result to underflow=20
+it back from 0 to ~0.
+
+> > +=09=09powof2 =3D max(powof2 / 2, 1U);
+> > +=09=09natural_start =3D ALIGN(res->start, powof2);
+> > +=09}
+> > +
+> > +=09if (natural_start) {
+> > +=09=09*max_align <<=3D __ffs(natural_start);
+>=20
+> [Severity: High]
+> Does this trigger undefined behavior when passing a truncated 64-bit valu=
+e?
+>=20
+> Similar to rounddown_pow_of_two(), __ffs() takes an unsigned long. If a
+> 64-bit natural_start is a multiple of 4GB, the cast truncates it to 0.
+> Passing 0 to __ffs() invokes undefined behavior, which can lead to
+> unpredictable results or kernel panics during boot (such as garbage shift
+> amounts or arch-specific trap instructions on zero inputs).
+
+Sashiko knows no shame with rather bold claims. I'm pretty sure the answer=
+=20
+should have fit into its context window, no matter how small that was. ;-)
+
+> > +=09} else {
+> > +=09=09/*
+> > +=09=09 * Zero address has infinite alignment, return the largest
+> > +=09=09 * representable number even if it's not a power of two.
+> > +=09=09 */
+> > +=09=09*max_align =3D RESOURCE_SIZE_MAX;
+> > +=09}
+> > +
+> > +=09return powof2;
+> > +}
+>=20
+>=20
+
+--=20
+ i.
+--8323328-467248736-1790245410=:1187--
