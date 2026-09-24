@@ -1,174 +1,178 @@
-Received: from mail-wr2-f35.google.com (mail-wr2-f35.google.com [74.125.225.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FF53EB0E3
-	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 13:23:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28190489FD6;
+	Thu, 24 Sep 2026 13:26:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790256230; cv=none; b=RfhrB7VA91o+1hIoUdiUnqtF9SApDTXv2QVWVYwV90PUlbSbVgVtQLRWAxI//xLPLHpb4OrPsgmssP6CmmxY26lzwNvfWsmPD/Hv1wRNSD/IKbmdP6qmACevLRmmkeGd1ZRl2Ix9Y4KPRcp0O/Xod652rc9+wXqicioHvqevTgA=
+	t=1790256391; cv=none; b=FacD9dNWAphEiMpA8GhSoqlQ3XOZ4fHgZ5eCQ5szt1PRjv3NW+pacfAkI88QfHAaJtWmD62/dSRopuJVfo8JV5U4jybY19MiM4JQamJ4SH5ggOJb1zV/furkZsG2l36QHW6uPonaEVEf/66zxWBqF9H93dSL+4bsZBnqFflOhOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790256230; c=relaxed/simple;
-	bh=0Lo8Fc4RrHTz2i0pVyyvUOWs9Q7J+HdB9eO5ehxCpZg=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=rXhkVbNvmEAhILh53PTsLBBtoSJTISgfltM2SVQsEpEnT/mkVObbxw1792hwlRuaAN25RM457RtGwMDYmbP9IIWXz8R5T0xpVPk5nY1GJqJJ3uNX9WSHvw43IyEqSRz2GU3NnYN4UG7WAgTeVKxfZN3ExL/ECwx7CaKZt4YSxdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lEP5zZpD; arc=none smtp.client-ip=74.125.225.99
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1790256391; c=relaxed/simple;
+	bh=TMxMY6dpKY12lXJIR9MB8qhRoe/rIKmgZbGZ38PWC9s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=n7POQD0lMjqNstzpIkT19wBjHTsmqPQ5OVj/puNxDrq080OYyfha+whS8kQn07eVNe9PWJZ7/fkYSHoQusXFGorgUIvSaXMdQrb6g+3cNgt+/VFoyO8wvxkY+GDJx5GGGR1deDj8ToQUKXxlimUuaMroL4gxZfy/AbbK/wZdLPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EXoEyJpb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lEP5zZpD"
-Received: by mail-wr2-f35.google.com with SMTP id ffacd0b85a97d-4885d4825adso1297852f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 06:23:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1790256216; x=1790861016; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=HLz2UJ7WZAfDvJwz6oWzjaHjslHfX+WvIHzGXDGM04s=;
-        b=lEP5zZpD5o0y5RECozVM2VhO6+tBa+8mXIpuFktws/ZW7dJN7gkqZWXrHAVN0dXMuk
-         5tSQzlTSMCH+Y3zBaRc6Lt0ciUgZlzsG8cOCjeLZ5e5Y+y73mWO2FqD01pAX/G1ZQIY5
-         4w418NmNGNylt6C7pR9AmmK6hK2QykA683jh2WTnW/S/tbmMrEdyjSnGeyCfwL/faKPi
-         isPuwXG77xhqpkEe8F9dg3gKw8I7O0oNC+/tBoU6Op4UKKtrdzHQVd6ND9PvCiHRgREI
-         ta3HF4lSXjzTpWFxl0NHySNT2eDJ9fsBbAKeL9JaPYdMM3RN2p7e+cVtvTkBql1BYS16
-         VPtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790256216; x=1790861016;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=HLz2UJ7WZAfDvJwz6oWzjaHjslHfX+WvIHzGXDGM04s=;
-        b=t9dnGLGIb1Fk2SvMfRfap/x0dsOoX0zKdj1gZeqH0TEayK1TQhNiuXwOjeQm/ErGrp
-         H6ElvHmXLoulu2AahH7MRjVbxty4GO/tWpepzvdp105uQ7xYuS4VAiFQ9mZEltp8Z4j1
-         yRLJROlq5ubzKtERmsPA4A/2I8PcarVQota/Nry5mjX5QWls6BiuBepRv/VxnY7a0qT1
-         SpVUVf3Fd6Q074cNCzwctsip3NPN+Gdg5eYjEwkKXOWyAy9kn4oq9RJpFGqtnuyi1WNi
-         Sd3Jhg4PbQDcJQQ05s6i6Ffjes4tzARPdfSvhQ1KfIeDsRS04LSVHzHXbvnZdITUNnS/
-         T8IQ==
-X-Gm-Message-State: AFuF++mgpltjx0odyDfYJ3gIdDb6JTfAKlpsQ6zxFOYF2OYYsyBadrbQ
-	wJ0AUffdGosCxITCfFr66JanCOs02ngBAX+HdrtWOvRYvrAfZ/vQCAG2gzHbrchPzIvLhcD0EDi
-	nAtG4fAo=
-X-Gm-Gg: AYBFou0ayU5bwkA2CFr0RYBaVzkFbGb21Fx1WNkELqU+isn4vGIukiDeQ0+qsHyYocg
-	C972tUHUppI5uTS1yCI338zFuMX6CJRNZXfiYqaUTeAR7AWuKrPFN1e7dU/NP1RUQ37IlEbV8i2
-	VLPwi9ySsFHvDF4MjgLgpt5G+ZcTM4F9xXLxzavVQvU3/hzl/yf4lu4REaatPPFbzS75KVrsBNp
-	PhOOk37oF/ekWt4IZlsKvupR3wxKPjCZUBJT4bHJgfXyZaWBNca6IwcgapCArF70FLl9+85R53q
-	kPV7gPE836NcC8UVzkISvEpCHSxnGzqaq9b1tGOnkTStxQBlwt5Eba1C/w286kn0oGB+U7WwZeE
-	XChXWOmVebaWoV9J7yLkqJhprgsqO2ut9ttvk7BLF5Wfr+XvWunLCivguCeVhaMWi7tyTLa41sa
-	ccdpwPKIBZNDH6M8echbcbKgFe47s5Yz4qMUXNU0TZ0GqEjLroAw5mjLNs3KgJCL+rfmevaNqaH
-	gqpG0ZSJfLi7gbvhPBC2Lm6Dbs5TBiarikksGPaPr2ZXHwkTJSxa+Y=
-X-Received: by 2002:a05:600c:4689:b0:49f:bc8a:b103 with SMTP id 5b1f17b1804b1-49fe66841f8mr42901125e9.0.1790256216193;
-        Thu, 24 Sep 2026 06:23:36 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:106d:1080:336e:a1a0:8f96:9f7a? ([2a01:e0a:106d:1080:336e:a1a0:8f96:9f7a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-488684863d9sm14891752f8f.12.2026.09.24.06.23.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Sep 2026 06:23:35 -0700 (PDT)
-Message-ID: <1d014f4d-1c05-45d8-b559-6ed03293db24@linaro.org>
-Date: Thu, 24 Sep 2026 15:23:34 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EXoEyJpb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15541F000FF;
+	Thu, 24 Sep 2026 13:26:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790256388;
+	bh=kjlo8XBtE9TxB1LKTX/vUG/maDWdF6slESEL4axLxF0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=EXoEyJpbObkYPw/DP1BT2piCT31gRKuurm0smBCDhbkQwG4a2mfShKuql3FVVLIjm
+	 +yA/famYpOLn89tGaZGE+MzXDC1ESpo5SncCDOsPksbiM3Bvm3pVL55WPEW2ZEFrTS
+	 PJe6teyjuYG0jkQsqYCFIhZon1XF4icI4W44CDhYIwY7CHPbsaGFygYPIsCv8RvtW8
+	 8HlnJpEghYdF0tIp4r24+iUYmRjjr/Np/xzuf8gTk6o+gyERUXhEtTdy9J/qN7F7hr
+	 tbZlHPvZtTXvrpoq1AhVWxM6YNeYJTZ9D0iFATWWZqb8GNhSvZp7In4Qz+IfdXphnC
+	 ffIWYWAo54S0A==
+From: Pratyush Yadav <pratyush@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: "Pasha Tatashin" <pasha.tatashin@soleen.com>,  "Andrew Morton"
+ <akpm@linux-foundation.org>,  "Samiullah Khawaja" <skhawaja@google.com>,
+  "Pratyush Yadav" <pratyush@kernel.org>,  "David Hildenbrand"
+ <david@kernel.org>,  "Alexander Graf" <graf@amazon.com>,  "Baolin Wang"
+ <baolin.wang@linux.alibaba.com>,  "Mike Rapoport" <rppt@kernel.org>,
+  "David Matlack" <dmatlack@google.com>,  "Hugh Dickins"
+ <hughd@google.com>,  "Lorenzo Stoakes" <ljs@kernel.org>,
+  sashiko-reviews@lists.linux.dev,  linux-kernel@vger.kernel.org,
+  kexec@lists.infradead.org,  linux-mm@kvack.org
+Subject: Re: [RFC PATCH 1/6] liveupdate: luo_file: look up outgoing tokens
+ by id
+In-Reply-To: <20260923225550.32AC21F00898@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Wed, 23 Sep 2026 22:55:49 +0000")
+References: <20260923224408.3745689-1-pratyush@kernel.org>
+	<20260923224408.3745689-2-pratyush@kernel.org>
+	<20260923225550.32AC21F00898@smtp.kernel.org>
+Date: Thu, 24 Sep 2026 15:26:24 +0200
+Message-ID: <2vxzwlsa4w73.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2 1/2] dt-bindings: iio: add: document the MAX34417
- Four-Channel High Dynamic Range Power Accumulator
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-References: <20260924-topic-sm8x50-iio-max34417-adc-v2-0-9a0609e72f5c@linaro.org>
- <20260924-topic-sm8x50-iio-max34417-adc-v2-1-9a0609e72f5c@linaro.org>
- <20260924132022.D479F1F000FF@smtp.kernel.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20260924132022.D479F1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 9/24/26 15:20, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] dt-bindings: max34417: arbitrarily restrictive minimum on shunt resistor
+On Wed, Sep 23 2026, sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] liveupdate: NULL pointer dereference in liveupdate_get_token_outgoing() on incoming sessions
+> - [Medium] liveupdate: flat ID namespace in liveupdate_get_token_outgoing() risks cross-handler collisions
+> - [Low] liveupdate: O(N) indirect function calls in liveupdate_get_token_outgoing() list traversal
 > --
-> 
-> commit 3650a83bfbfc37f2001988362d1f90e712127acc
-> Author: Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> dt-bindings: iio: add: document the MAX34417 Four-Channel High Dynamic Range Power Accumulator
-> 
-> Document the Maxim MAX34417 Four-Channel High Dynamic Range Power
-> Accumulator used to monitor power consumption of portable systems.
-> 
->> diff --git a/Documentation/devicetree/bindings/iio/adc/maxim,max34417.yaml b/Documentation/devicetree/bindings/iio/adc/maxim,max34417.yaml
->> new file mode 100644
->> index 0000000000000..058af61cc04e2
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/iio/adc/maxim,max34417.yaml
-> 
+
+Let me reply to Sashiko for this patch since I think we should take this
+regardless of where this series goes. I think struct file is the wrong
+primitive for liveupdate_get_token_outgoing().
+
+I'll ignore Sashiko on other patches. It does raise some good points,
+but code correctness isn't the main point of the series. I'll fix them
+up on the main posting if we agree to go in this direction.
+
+>
+> commit 17b042e4901cfc25a86dec1038092fbe1eb5d060
+> Author: Pratyush Yadav (Google) <pratyush@kernel.org>
+>
+> liveupdate: luo_file: look up outgoing tokens by id
+>
+> liveupdate_get_token_outgoing() is used to look up tokens of dependencies.
+> It does the search based on struct file. LUO provides file handlers a
+> get_id callback that can return the unique identifier of a resource. This
+> patch uses ID to look up dependencies in liveupdate_get_token_outgoing()
+> instead of struct file.
+>
+>> diff --git a/kernel/liveupdate/luo_file.c b/kernel/liveupdate/luo_file.c
+>> index a39992da504fb..51817d202ce26 100644
+>> --- a/kernel/liveupdate/luo_file.c
+>> +++ b/kernel/liveupdate/luo_file.c
 > [ ... ]
-> 
->> +patternProperties:
->> +  "^channel@[0-3]$":
->> +    $ref: adc.yaml
->> +    type: object
->> +    description:
->> +      Represents the internal channels of the sensor.
->> +
->> +    properties:
->> +      reg:
->> +        items:
->> +          - minimum: 0
->> +            maximum: 3
->> +
->> +      label: true
->> +
->> +      shunt-resistor-micro-ohms:
->> +        description:
->> +          Value in micro Ohms of the shunt resistor connected between the RS+ and RS- inputs.
->> +        minimum: 1000
-> 
+>>  int liveupdate_get_token_outgoing(struct liveupdate_session *s,
+>> -				  struct file *file, u64 *tokenp)
+>> +				  unsigned long id, u64 *tokenp)
+>
 > [Severity: Medium]
-> Does this minimum set an artificially restrictive lower bound for the
-> shunt-resistor-micro-ohms property?
-> 
-> Valid hardware configurations could utilize sub-milliohm shunt resistors
-> (e.g., 250 or 500 micro-ohms), which would fail device tree validation and
-> prevent the driver from probing.
+> Will this flat ID namespace risk cross-handler collisions?
+>
+> Because liveupdate_get_token_outgoing() searches across all preserved files
+> using just an unsigned long id, it loses the context of which file handler
+> the ID belongs to.
+>
+> If different handlers use overlapping namespaces, such as IDR indices or
+> pointers that might alias depending on object lifetime, a lookup intended
+> for one handler's object could incorrectly match an object from a different
+> handler that happens to appear earlier in the list.
 
-The min/max values MAX34417 are taken from the datasheet page 18 Table 14 (Table 14. Correction Factors for Various Current-Sense Resistor Values).
+The IDs are supposed to be unique in the whole session. That's the whole
+point of the ID mechanism. If handlers use overlapping IDs, the handlers
+are broken and should be fixed.
 
-Max 100 mOhm, min 1 mOhm,
+>
+> Could the API require the expected file handler context to scope the search
+> safely?
 
-Neil
+This can be done but only when there is a need for it, which we have not
+seen so far. Without a use-case, namespacing the IDs per-file-handler is
+overengineering.
 
-> 
->> +        maximum: 100000
->> +        default: 1000
->> +
->> +    required:
->> +      - reg
-> 
+>
+>>  {
+>>  	struct luo_file_set *file_set = luo_file_set_from_session_locked(s);
+>>  	struct luo_file *luo_file;
+>>  	int err = -ENOENT;
+>>  
+>>  	list_for_each_entry(luo_file, &file_set->files_list, list) {
+>> -		if (luo_file->file == file) {
+>> +		if (luo_get_id(luo_file->fh, luo_file->file) == id) {
+>
+> [Severity: High]
+> Can this cause a NULL pointer dereference on incoming sessions?
+>
+> In an incoming session after deserialization, luo_file->file is initialized
+> to NULL and remains NULL until the file is explicitly retrieved.
+>
+> Because liveupdate_get_token_outgoing() is an exported API that accepts a
+> generic struct liveupdate_session, an in-kernel caller could mistakenly pass
+> an incoming session.
 
+That's a broken caller and should be fixed.
+
+>
+> Prior to this patch, doing so would safely return -ENOENT because NULL == file
+> is false. With this patch, luo_get_id() will blindly pass the NULL file
+> pointer to the handler's get_id callback.
+>
+> Handlers like memfd_luo call file_inode(file), which would cause an
+> immediate NULL pointer dereference and kernel crash.
+>
+> [Severity: Low]
+> Are these indirect function calls necessary during the list traversal?
+>
+> Replacing the direct pointer comparison with luo_get_id() performs an indirect
+> function call (fh->ops->get_id) if defined, on every iteration of the
+> files_list traversal.
+>
+> Because this function is used to look up tokens for dependencies, it can be
+> called for every dependency of every preserved object, resulting in O(N * M)
+> indirect calls.
+
+A very large number of files with dependencies need to be preserved for
+this to be a problem. We haven't hit this bottleneck so far and don't
+think will hit it at least in the near future.
+
+>
+> Since the ID is a constant property of the preserved file, could it be
+> evaluated exactly once during luo_preserve_file() and cached directly in
+> struct luo_file?
+
+Not a bad idea to be fair. But that's an independent fixup.
+
+>
+>>  			if (tokenp)
+>>  				*tokenp = luo_file->token;
+>>  			err = 0;
+
+-- 
+Regards,
+Pratyush Yadav
