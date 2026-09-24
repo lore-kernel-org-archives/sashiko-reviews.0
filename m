@@ -1,105 +1,207 @@
-Received: from mail-pj2-f43.google.com (mail-pj2-f43.google.com [74.125.227.171])
+Received: from mail-dy2-f12.google.com (mail-dy2-f12.google.com [74.125.229.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF20F3D1AB5
-	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 02:18:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257F63932D9
+	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 04:30:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790216311; cv=none; b=ijSK4+1ZBqJRR7JEMF7St5stMpLb4dT+QLrQdI6P/oV8GGYjskZz4ZtHX0ulqUjeeH1OovxaYVcsyQo8cT+cyBZCaupIVrt8JUVyKlx6IfGeBlgQvpnHHySAZTnAe50HO0fuKjcraQMhOacN4gNC7Q30eoRHCYA/j1EzzDxiWmY=
+	t=1790224203; cv=none; b=j6TQtMolmJwxX0dXf4/ah/Dhlzd4Uay5dGuygqh0n+Duu5xsO+aLAuSLJ4UqwZ9GBRivPIm7AVgFu1NE7lBhmJFuG1XCGUTn7PyudC/1GvQo73yzKtvDIgVRa3TMHzuWKOO7ShWh9Hrhz2ai3HWgOug+xx0B6eRrVORYUUJ/d50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790216311; c=relaxed/simple;
-	bh=6eqLqdxdZnQfhuRFBuoUOMB3TvRuvwD19HIqai7vaFU=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=Ybi9ZkPmLWl/pAWcXvTYDRr1cpFyKJpyn7+Uo/w+0y4N+ZazwMP/hlwlfi6xpXkRFnRiqH6ZVNVbzKArcG7gI4W8aFGtSzmoqtOxoPjVjtn0GOqdDqgxbxsxZ8gTLUV+c+q+7BejdawTbvFJQRYKs6InYfu/6/x7D4S1uu6JyY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NYdyOgQw; arc=none smtp.client-ip=74.125.227.171
+	s=arc-20240116; t=1790224203; c=relaxed/simple;
+	bh=DGI+jNvsZqaWgCIG18I9kcv8LEm8FvmlozW/ZGSMzbk=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SD7gCFPm5TlYhS79UKq5nS4+7Ctlcd85z+ZzqFzPlULC6hPbluQxo6o3tZZ+2hzbpcVAZvZASlBAELPUKALCLyb2Ex1EZ8/gn3EnV57wjUYdFRc5hshQz0Ab7uMgz01r2lSGxE1tkuTmiuhR97XkWf+2o1jyAfomdQsy3m7AAac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NEoZ+oeJ; arc=none smtp.client-ip=74.125.229.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NYdyOgQw"
-Received: by mail-pj2-f43.google.com with SMTP id d9443c01a7336-2dd88a115ebso9657795ad.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 19:18:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NEoZ+oeJ"
+Received: by mail-dy2-f12.google.com with SMTP id 5a478bee46e88-33bf5a1c4d9so1657754eec.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 21:30:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790216309; x=1790821109; darn=lists.linux.dev;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=0znCr+Z0mJneqMTm4htrgffhWJ/mVEoGgq/qNX6FvCM=;
-        b=NYdyOgQwagETd+4zahNGodkjvbeGKd/3MhjgN92FKjTPBVEnX4GqqgDtn79EjH0gIs
-         rMjBVZYB+Sp7G6tps9Zr2iFqDLlzovgh8UxAGyaeSZCufFBRhQPpZwr33lRvRXQfIOCn
-         kA5n+lw6P/HCI8SKUPKq4AjYnFMg+xoWdN1I7yEieK8o6XOwKj8wILKGkmzAwLcaqvzO
-         i4Vu0BDnY3VDrOw+l8egszqYUPx7oBrNYFxjwruOXtc01k5zxE6+ZvwIckmSgwsRhBn0
-         QwTRhFKLkBp800SkZF/SNfDbkzBbpPx5S8xLMtTXEbSnwa60GiUxt7BQWINEJb/+ddz5
-         sdqA==
+        d=gmail.com; s=20251104; t=1790224201; x=1790829001; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:date:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=AKL757kGHNvfsML+k55hOUcVYeXxT3urEJywVMirA7A=;
+        b=NEoZ+oeJzQe3KFEVeP5LUYK439GRKUZVYO5DTcD4MgBJjaPMml1//pR8n0uUlA64Yz
+         kMARjMUVls9Wg17wBItTnfS6/Ybr6YCHSKzhIfEAnmnhoX01exyBEhjuEdZJZR4rtcvu
+         NLL0Hx0WS6XjMgR1nIXJ8lsAos0cr5mpfP1vPxkNUfIVIupt7vbWVq/8YVjRmUCv06Ax
+         H29UIa9Hv9nwLwFBpOrO/PXLAWMcLHcKbZAf+tyQoKsk24H60vYhDqotE/HIYw9ey4lF
+         IkLeGBYOg/lGb92dM5C0qUihGyYjAN98IO0I5a3uOjHgzdlrrXilxgQZv2CDAF3PYKJX
+         29OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790216309; x=1790821109;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1790224201; x=1790829001;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=0znCr+Z0mJneqMTm4htrgffhWJ/mVEoGgq/qNX6FvCM=;
-        b=J9LF74wEsQzcwc3k8IJhl8aNtfOf0WtcVBGo2PjWi6MCPiNJ9FlmX5Uld1NACVYewd
-         CjsZSZjaeZ76oVHTZN8j4Du81cnBz9drHPrMQ3rft+zn0XhHMkbTOsl0Xzt2nzLjLT4h
-         DcO5jRE7Y479UxxpYyr78/EuW1Hxv4DY3Bt+Q9ALpcl9hlj3rQj1335F+YTW0Tepo811
-         htupbwrHzl0RQM9E/86SBaYu8cUUICjY8zZp51xFdP5QBSLSrwWiWN/V4yZ4zcEvJJXd
-         vwYiZ/5rsYBaKSCddFf5JtAbyC2vPHT/35l9fob37eOU7n6+U3+YA3XBLq/dLi/RTmvr
-         VnLA==
-X-Gm-Message-State: AFuF++lrRiM7dtN21Pm51mSsKwmnIeCXA9AK070lk03/T3QIZQ9rd2I+
-	2SbPwwDvc5Z+PMBNYljp1DT7+h6l8kurELV+PnDgUz7pMLLoLzWaaL8K
-X-Gm-Gg: AYBFou29v69dgWtz4irg6DntMv+ji6ZJznoOuZd4iINKTbnbEv9dLrYI6o6861ubz72
-	EwZg/QGzI9yA/zzJ00iWkeJAOHDzr1mA2tsUD/4GeDCssQ13PmwLvFLpprOoDAmcnUp9x3/5CuF
-	jD76PGp+qcQD17J8vL9cHn7Epe8+ZYofb/9Qr4hmWZsYpHwAEZTT7g4RtaRpLG5GSuPLmBdkbTC
-	JoD62aIPFm+On3swgaqGl2bxUV3l0xqtOOHoCNxNRtdchYAokaRWZIvClSPGCGNrgUts7cz2zTz
-	wtng8iP3cgLZ46Rj5KG3ClShQzC2GMrIYsDs+aAI7XM2LYZgimFSu9e3yCX5BE87yDGNdvU4Vql
-	phmkmLC9EP3b7pF94sGn67E08yyz0m1+u1NyAqpkeDtEqEviCxibwP+7ENcOy0mBwYRl2HYe9Oq
-	UhselZtJytmbEw6AD8DZp/O8reJondRdNHunCWjlfRtOexXfoIt8i+HWb5U3YDY5Qb2GmlECJly
-	qADy0SnDV88+kxpYBZuflSdkN0452oz+NaGS0PVRNKi2SFczS8aozavpIvkclJthwwIARfsfatI
-	0W0=
-X-Received: by 2002:a17:903:1447:b0:2dd:c053:ec6d with SMTP id d9443c01a7336-2df7e11d07fmr8703805ad.32.1790216308788;
-        Wed, 23 Sep 2026 19:18:28 -0700 (PDT)
-Received: from localhost ([153.61.198.252])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2df6a5a5157sm19125315ad.14.2026.09.23.19.18.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Sep 2026 19:18:28 -0700 (PDT)
+        bh=AKL757kGHNvfsML+k55hOUcVYeXxT3urEJywVMirA7A=;
+        b=Afo727LymKIlRI/GkayUrJNHmHD4gXHpnHTG/lzF7NB+Xk8iWUMhOWizCMyTtPa4Yi
+         pdntCasydYbZlXIzedUMplGDEFzuUcJw7ye+Ur+ees6ok2axiEKeL7wC4W/CHXK6mTMK
+         hLLOLut/7Jp6kkxOe0k9MIpXBeF8WMxYNLJ1u+12bDy+rhxe4ijrGY+1cNHqGafpyvoN
+         3FYyqS+eh8Vhcn+WrV/NWMff4VrXFSiubEyoJVK2BWYPCGN9GjirsrslVnTX7OK6eUB/
+         zxWoOeC2WzcCZFyRbiXqu6L5Goin9h/7vn5f9FIwgco7VVnOmH0YiMXgDNSyEqZHC5b/
+         kdNQ==
+X-Forwarded-Encrypted: i=1; AKwUvBz2matJ9YJykHolL74+jBOVM9r7RcCYI5ubJF6BriltX/jt0eEwbx7OVwDeAVBqHKeVtIia2hpJ59sDwSfqsQ0=@lists.linux.dev
+X-Gm-Message-State: AFuF++lAlwnNHa6xa/jOEO+RvtYmDPVMeFT/rtzbLeiGUveWMTswODMR
+	SxwRUgKQ9TdY06jGuIWF7yCLGrOJ6PESFQJMPcUyJAaCt4eSUXmGoQkp
+X-Gm-Gg: AYBFou17YQw57Fk6l2Rd+M+Zj/zlhnWoTg0Z/qxH8yti4KxL5a4VWITVbsxvf5hfj2e
+	w9P1snCrehyWUC1v85BWSH1vkiatBGKBuqJ/YbpW2sAN5AajFSZxYJW3m4Wa71Wb4GstMm2YF6R
+	FNJGuodTPJX8ooSBOv4MJQtyw6dAmV4kDH/5b8yS+QP3Wf/cqHasYcVhKo2/X/iKZFOYVfdCpEd
+	rUImpV/Gtbh8jT6R4LKsC7adX9SsWp+F8z4sSY4K5P4Dhri0HX+/wfdYpTQbGxlxPV1WB3G5bAt
+	YPcjordzQXhlHc4B2vCPNuX6ns3nh/AC/S5zscmWYfmQ4bv/8Is5299MlyvGy334rB2p60++PYE
+	o7sBv1t3R7awtd5HJJAKwQlmLalT4B04uPtqqRTMiXUZkaCKlK8fH4txHAeqBVnIeOqW/TpVtOL
+	vwpKKe2pRG6G3xl3oxCDBt9kohRXiSRy/A/5/4oOtb7BafwDQijSB4D/QqexGAmqA7BRYpySiqP
+	Dp/s2YG48cIYFrDmdP2wfNIo8DMxxc9NgIkOWHvx+Eb85sZgrPb/d141pGUSTQgvHMDDGtII97D
+	KEyjY3SyyjTjLQYsCYlEAL98aeA=
+X-Received: by 2002:a05:7300:d08e:b0:333:f2a3:5517 with SMTP id 5a478bee46e88-3400637c0eemr880525eec.26.1790224200857;
+        Wed, 23 Sep 2026 21:30:00 -0700 (PDT)
+Received: from 4470NRD-ASU.ssi.samsung.com (c-73-170-217-179.hsd1.ca.comcast.net. [73.170.217.179])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-33e96258204sm8590672eec.11.2026.09.23.21.29.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Sep 2026 21:30:00 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Wed, 23 Sep 2026 21:29:58 -0700
+To: Jonathan Cameron <jic23@kernel.org>
+Cc: Anisa Su <anisa.su887@gmail.com>, sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev, nvdimm@lists.linux.dev,
+	linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v12 3/8] cxl/cdat: Gather DSMAS data for DCD partitions
+Message-ID: <arSnRvG0VGSMHSBM@4470NRD-ASU.ssi.samsung.com>
+References: <20260731084901.1512819-1-anisa.su@samsung.com>
+ <20260731084901.1512819-4-anisa.su@samsung.com>
+ <20260731090250.0C8DE1F000E9@smtp.kernel.org>
+ <20260804010748.7f9f8174@jic23-huawei>
+ <anL0mD3DKfwJh4UY@AnisaLaptop.localdomain>
+ <20260922003402.5134db4a@jic23-hlaptop>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 24 Sep 2026 02:18:28 +0000
-Message-Id: <DLN6PUF2FMLF.NU2U8L9V0XWH@gmail.com>
-From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
-To: "Eric Biggers" <ebiggers@kernel.org>
-Cc: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf-next v4] bpf: crypto: Use AES-CBC and AES-ECB
- libraries
-X-Mailer: aerc 0.20.1-349-gb940a4174a3e-dirty
-References: <20260923032703.59816-1-ebiggers@kernel.org>
- <20260923033742.D45A81F000FF@smtp.kernel.org>
- <DLMEAUZ632XP.210Y7S9N70NHW@gmail.com> <20260923041124.GB42709@sol>
- <DLMEKP1LHU07.31JTP12GKADU8@gmail.com> <20260923042128.GC42709@sol>
- <DLMFF6THNB1F.260JQGVX0PO8Y@gmail.com> <20260923050134.GE42709@sol>
-In-Reply-To: <20260923050134.GE42709@sol>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260922003402.5134db4a@jic23-hlaptop>
 
-On Wed Sep 23, 2026 at 5:01 AM UTC, Eric Biggers wrote:
->
-> Module code can only be called directly by module code, not built-in
-> code.  So CONFIG_CRYPTO_LIB_AES=3Dm && CONFIG_BPF_CRYPTO=3Dy cannot work;
-> you'd get a linker error.  For a module to offer these kfuncs they would
-> either need to be their own module (e.g. bpf_crypto.ko), or else merged
-> into the module of the underlying functions (libaes.ko, though again, in
-> practice libaes is usually built-in anyway for other reasons).
+On Tue, Sep 22, 2026 at 12:34:02AM +0100, Jonathan Cameron wrote:
+> On Wed, 5 Aug 2026 01:30:16 -0700
+> Anisa Su <anisa.su887@gmail.com> wrote:
+> 
+> > On Tue, Aug 04, 2026 at 01:07:48AM +0100, Jonathan Cameron wrote:
+> > > On Fri, 31 Jul 2026 09:02:49 +0000
+> > > sashiko-bot@kernel.org wrote:
+> > >   
+> > > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > > > - [Medium] The commit message claims to extract and store the 'read only' attribute from DSMAS tables, but this logic is completely missing from the code.  
+> > > 
+> > > Given it will make a lot of difference to a user if they think they have writeable
+> > > memory that isn't - I think we probably do want to have readonly here.
+> > >   
+> > I did some digging: it seems in v8, the read only flag was gathered and
+> > exposed in sysfs, but dropped during the region -> partition rework.
+> > 
+> > v8 of this commit used to do:
+> >     dent->read_only = dsmas->flags & ACPI_CDAT_DSMAS_READ_ONLY;
+> >     ...
+> >     mds->dc_region[i].read_only = dent->read_only;
+> > 
+> >     https://lore.kernel.org/all/20241210-dcd-type2-upstream-v8-6-812852504400@intel.com/
+> > 
+> > and a following patch exposed it, with a documented ABI:
+> > 
+> >   https://lore.kernel.org/all/20241210-dcd-type2-upstream-v8-7-812852504400@intel.com/
+> > 
+> >     /sys/bus/cxl/devices/memX/dcY/size
+> >     /sys/bus/cxl/devices/memX/dcY/read_only
+> >     /sys/bus/cxl/devices/memX/dcY/shareable
+> >     /sys/bus/cxl/devices/memX/dcY/qos_class
+> > 
+> > In v9 dynamic capacity moved from its own dc_region[] array and dcY/
+> > sysfs directory to the generic partition model:
+> > 
+> >   https://lore.kernel.org/all/20250413-dcd-type2-upstream-v9-3-1d4911a0b365@intel.com/
+> > 
+> > size and qos_class survived that move because ram and pmem already have
+> > them. read_only and shareable did not, because the generic partition
+> > model had nowhere to put attributes that only dynamic capacity has, but
+> > the commit message survived the rework.
+> > 
+> > More specifically, read_only was dropped from both the sysfs commit and
+> > this commit. shareable was dropped only from the sysfs commit, but still
+> > read from the DSMAS entry in v9 of this commit. Not sure why though; I
+> > didn't see any consumers of the attribute. Oh well... We use it now
+> > since shared extents are supported to check if an extent marked shared
+> > is actually in a shared partition.
+> > 
+> > So TLDR; I've removed the "read only" part from the commit message. But
+> > let me know if you think it should be re-introduced?
+> > 
+> > I agree with what you said about it being important for a user to know
+> > whether a partition is read only. Some things to consider:
+> > 
+> > - The partition model has no precedent for a DC only attribute.
+> >   dynamic_ram_1/ currently exposes size and qos_class, the same two that
+> >   ram/ and pmem/ expose. Adding read_only there would be the first
+> >   attribute that exists for one partition mode and not the others.
+> > 
+> > - shareable is in exactly the same position. It is gathered and used
+> >   internally but not exposed anywhere, so if we are adding one of these
+> >   back we should probably decide about both.
+> 
+> I vaguely recall the discussion on this ending up with we'd call the
+> partition something different to reflect the extra property.  
+> 
+> dynamic_readonly_1 / dynamic_sharedram_1 maybe?  Argument being
+> that these properties are as different from normal RAM as persistent
+> memory is.
+> 
+Yeah I think we discussed making it its own partition mode but I don't think there
+was a strong consensus, just that we agreed it should be exposed somewhere,
+somehow...
 
-ok. I feel it's better to go back to v1 approach:
-select CRYPTO_LIB_AES_CBC
-select CRYPTO_LIB_AES_ECB
-with no prompt.
-That will keep kfuncs on every BPF_SYSCALL kernel without a bpf_crypto.ko
-and without moving the kfuncs into libaes.
+I am leaning towards just putting it under dynamic_ram_1 even though
+these attributes would only exist for dynamic_ram mode:
 
-Another alternative is:
-depends on CRYPTO_LIB_AES=3Dy && CRYPTO_LIB_AES_CBC && CRYPTO_LIB_AES_ECB
-but select is imo better.
+/sys/bus/cxl/devices/memX/dynamic_ram_1/shareable
+/sys/bus/cxl/devices/memX/dynamic_ram_1/read_only
 
+Mainly because if we go up to 8 partitions, we would have
+(dynamic_ram, dynamic_shared, dynamic_readonly, dynamic_shared_readonly) * 8.
+And NDCTL would have to know how to handle creating each type.
+
+I also don't see anything in the code that makes it terrible:
+- each partition mode has its own attribute array and visibility callback
+  function, so it doesn't affect ram/pmem modes
+
+I brought it up because I wasn't sure if there was a specific reason why
+shareable and read_only weren't carried over after the partition
+rework. From a code standpoint, it seems fine to me?
+I assumed it was so all partitions would share common sub-attributes
+but I guess I shouldn't have assumed...
+
+> > 
+> > - I don't think the DSMAS Flags bit 6 (read only) is specific to DCD?
+> 
+> In theory yes, in practice there isn't a path for non DCD to actually
+> get the data in place and transtion to read only so maybe an expensive
+> source of zeros?  So yes allowed but not much use to anyone so we
+> won't see it.  
+> 
+Mmm very true. You might just clarifying this point here but just to make
+sure we're on the same page: I dropped the R_O part of the series and deferred
+it for the future because it includes implementing write rejection for
+r_o partitions which IMO can be done after the core functionality is in.
+
+Thanks,
+Anisa
+> >   It describes any device scoped memory range, so a read only ram or pmem
+> >   partition is expressible in CDAT today and the driver ignores it.
+> >   Maybe it should be exposed in sysfs for every partition
+> >   rather than only on dynamic_ram_1? Which probably makes it a generic CDAT/partition
+> >   patch rather than something for this series.
+> > 
+> Jonathan
+> 
