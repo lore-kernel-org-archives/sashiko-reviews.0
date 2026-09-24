@@ -1,65 +1,64 @@
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012005.outbound.protection.outlook.com [52.101.48.5])
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010004.outbound.protection.outlook.com [52.101.84.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8488D3F7A9A;
-	Thu, 24 Sep 2026 18:26:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0EF3998AE
+	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 18:38:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.84.4
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790274416; cv=fail; b=Ch+p7Cf7Z/n6HoQA6h9Uw4G1dlVIxqb+zwaaYWkBceNgzYL1vzBglbCBeolnQS6q/Elg32pO6tR6+2ttr10JeQpEnlln9Rm2c+KlsnFD21hzt7py3U+VW0t6jxX592Fz6VLwkcLgIE0pcOmjw5xwvaogNN/qtsxj7nxMp3UQa6g=
+	t=1790275127; cv=fail; b=Vi7V3vm/9BcNhhukeWzuQKl0DyJhg379XsHcfOYWjoD6ZMLU2Ew7kmYBEJO9fIz3n46aul1BxCM27wY0CV2alwGLcsHQqzZUKHFzCboWVGE0rketq9ep4LnBkxg0xxXGvjDcVePbbuw1kz5IM3K0G+T+c9xlWYRWtjkeSxeUoFo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790274416; c=relaxed/simple;
-	bh=h9jhGS8NtUBq0zs6MgfONAnCSPH2FDBSUTad5zPMXrI=;
+	s=arc-20240116; t=1790275127; c=relaxed/simple;
+	bh=nOZgBFUUf5EOM6sHgt4jYsdSjV6591anUpEbxP591zA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=kciqOJN7ufJldl1psP9QiqAvYMuUh3QdQNxusQETW2MjfRqT1Y99EZcSHcDCWu8cTGT5AkXAMOxJ5nbKdfHNEUgnuw/+HsxEdZZ9xCNncADe4eNcXWXzOxvON77UBrd3u+BV3VH+5lNxlhvYCFqlxzWuwXuB9MKd8zdN3yPEfr0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=O8ny68Xg; arc=fail smtp.client-ip=52.101.48.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Vid+zbfLkOka+yz2ynMXS8jpJuaV+C4tEcWH8Azih3ifG/0ujlzSms6L47VsYBB3YRW2B7KcWz++kQS0alwhZeBNLY8EzLziiKYwLxEaE/RejBjojrlndpZucz90UfXV8dhwn1ivzR5Nd5PoqtMi85WlIWWFvgQ66YwU54zFx20=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=Pc/4Kehg reason="signature verification failed"; arc=fail smtp.client-ip=52.101.84.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="O8ny68Xg"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="Pc/4Kehg"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TqEwCwU+1G/m1kHFAivjGqguzxY4dIDkyiHLeXvzGnU7Rl86WO99upUiCFCZ7V2squHmeH70mEoxXEcIy1lOYZicBTSdoGwfqvtH/ujnwOVqJa5w8dxALfNITN8MyoM1oNTey/4ZD5a+lDFSNwfSceVB5tHanNQyAOxbJ2W6NdoT9UsCIdtBNj9nBT+4p6d1iRF5FMd2LQnN1nw4jaJ+luwrxlfoPhhqdYYF0FElnS9QrcDIlDnixHyYNs1oBBA0BpzstvNu2YXgCSvaczF/y1TBixXlSXzLX9kdJf44Jcffmaikn+idM8ZO597GD3hsFkkhRcd4i26WpJKtLFJpLw==
+ b=bpXZcF5PHS9FIK41np5XtaX6amKptW+OmsWX1M3ualXR8enNhtQn0w24VJ0QeFus3FzzLykBMEjf3QrkjIuUDKA3pmhOrIFxkXYw+ma5DTEZRrcDNxR5ETwbAViEfPcA8lVbq+DBeOdAkE3yFz7s/VdLSFDJVuU3yFhs0RdQ2P/pVvEQLkWyZC/IdNSCSZ5Ew1kYhvjwCJTqOYt7rkwHDrHFA3xj+ffZtb49lxDo74yX6N7XrgJs2QxF7OXI1hJO/CaHAdTi9p24ctdpl/vDWy5nmcskmm5XT0J8zEcoHu27VHfgNF/sFpyKcXNcXEOBbog/EbwptHeZLf+HlsfYag==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XYjtCOk6adHxJHjYr4tvhIzdDAh9mt3SDAKveVZMI6I=;
- b=wTtRN7V1aetLRmQPj2baIDYxU/TcJnd31eVAgYXdM2wOtiYys7rvF6YStGrcQ3BuXVAgenOmTwxTvMCSFVq/rvY3B5Hz8dY8LS8Cqi+36Mqc/RM0Ym11T7JiM54cA3eLPxSgs2JlE0LgRb9EHsQ5umFr9PEs3vaNhycMhsl/wgImlwZK6Ky33OHZrFc25+weET+2v7y+jYjTXkvuw9mj66eSuRJ38z2L2z9oQmIvdP/kmpK/1IPpKnkJnXHeXwqC+evJvb9X8dgNMniT1Uc32T/z7SBeuJuZhZbmR8ej04uumcos/aFGMjzLmLut9IYkyZJR5fZHbxpcRtP4grMZZw==
+ bh=0rMvbHIoZ4D2gfQNEVSaB/5qhO32oNoDJ0x1fsSzXJA=;
+ b=i1aucnv/tP3I6OzwNZg8UElpIYB5T25ybacoNOzV1NaVWM/0y8QcOKMFhyVxa8tuAhv3bbswlOAS2EXInt+TbUkxv6Esjt+S4eeud6TC0ZBNMmmrqJVpjhtKKrGY3w6bTZUv/VsaY5+a8arZNKqbzdBOm41/sUhTFy1T46+aOmZeX5UFPz7zU4w+JBNS66OIu4079nNcJUIAZq4B9JxFQ2BLm7lreRngChhzLj20dM3RO0fl5L5OqbmLa5WVKoqRJJvvg0Mqm2ga1fsA4XNnlBZ/1+XBpAomEo/rJu/5IoZkXxmXJm24RW6H3paowrDgbmqfwsLXC8VfBt10rhZsjw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XYjtCOk6adHxJHjYr4tvhIzdDAh9mt3SDAKveVZMI6I=;
- b=O8ny68XgyAgxzts6EGVQSHlkjufjpYnPNw7d/GuxjxpKGCbTDJdt+Q+AC2ZA3IQdyDAIxtjvEQGHpmeoVkk1yK5g+CNNwz5B96L+ECeG2eegFHoNeLTyoF7MpYcAFENDj3ONcQVF1ycAX4ffMOBzccR5ctcN8zmaIJmtmADGPQFirX4X7EaCo0o0VXAld17k+WPq9Qz/l2AOW6XltxJ82KDIuhFlNHmdMlYcUDJ/154C4NzgwNXVY/0Ur4ZyfCgrY5xGmQYeBmU4gHiT6lv5w7NNs930I5BWOYMM8t7MVy3jn/qV8d0e6k+FkOSD6OHsom/3b7N+9/Lz0Ei6FveoIw==
+ bh=0rMvbHIoZ4D2gfQNEVSaB/5qhO32oNoDJ0x1fsSzXJA=;
+ b=Pc/4KehgHi6BPbmPbLbNhxQpTHEVpINmmlK7pOIPJoeumj3bwFHQbKZIfxbMUcRxSV0KEUfE+JDxlC7fpAxkflQY9B7MtZ7xNsnhsPion6Hw8++5LXylAxu2UZgErLENw3oYzWcdMKLeilIqzvg9yih+fbISPL8wm4HBhT6G483u2DFyQMGrczRHwnlRxacmB3oHgC6DzjPeaK8ICS84kjcvc4EevlpsI6PaTwkelsvbrykmz5sogPipTriqjNAr1Gp37PUpeTYYxeyhOSBsheFrDfVg/RHyKiYY+bUrGLvLO09QKaWhccdzxuEFTyRgRgEyls5qevYcRQsYdkD99w==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CHBPR12MB731189.namprd12.prod.outlook.com
- (2603:10b6:610:33d::12) by CH2PR12MB4279.namprd12.prod.outlook.com
- (2603:10b6:610:af::24) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.22; Thu, 24 Sep
- 2026 18:26:50 +0000
-Received: from CHBPR12MB731189.namprd12.prod.outlook.com
- ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
- ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0451.014; Thu, 24 Sep 2026
- 18:26:50 +0000
-Date: Thu, 24 Sep 2026 15:26:43 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org,
-	media-ci@linuxtv.org, Marc Zyngier <maz@kernel.org>,
-	kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>
-Subject: Re: [RFC PATCH v8 01/14] mm: Add an allocator for CoCo shared memory
-Message-ID: <20260924182643.GC9354@nvidia.com>
-References: <20260924100529.1398790-1-aneesh.kumar@kernel.org>
- <20260924100529.1398790-2-aneesh.kumar@kernel.org>
- <20260924101907.5C6261F000FF@smtp.kernel.org>
- <yq5a1pai4tlc.fsf@kernel.org>
-Content-Type: text/plain; charset=us-ascii
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by PA1PR04MB10746.eurprd04.prod.outlook.com (2603:10a6:102:484::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Thu, 24 Sep
+ 2026 18:38:41 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0451.014; Thu, 24 Sep 2026
+ 18:38:41 +0000
+Date: Thu, 24 Sep 2026 13:38:34 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Rui Wang <wr574332525@163.com>, Frank.Li@kernel.org,
+	dmaengine@vger.kernel.org, vkoul@kernel.org
+Subject: Re: [PATCH v5] dmaengine: dw-axi-dmac: report paused state and
+ residue in tx_status
+Message-ID: <arVuKmKc8XE46R9B@SMW015318>
+References: <20260924025739.844-1-wr574332525@163.com>
+ <20260924031827.DC6351F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <yq5a1pai4tlc.fsf@kernel.org>
-X-ClientProxiedBy: PH0PR07CA0025.namprd07.prod.outlook.com
- (2603:10b6:510:5::30) To CHBPR12MB731189.namprd12.prod.outlook.com
- (2603:10b6:610:33d::12)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260924031827.DC6351F000FF@smtp.kernel.org>
+X-ClientProxiedBy: CY5PR20CA0004.namprd20.prod.outlook.com
+ (2603:10b6:930:3::17) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -67,150 +66,174 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|CH2PR12MB4279:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4a34f821-22a7-4024-cd32-08df1a69666d
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA1PR04MB10746:EE_
+X-MS-Office365-Filtering-Correlation-Id: d8c9fd0f-2a29-4a4e-c0f0-08df1a6b0e05
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|376014|1800799024|11063799006|6133799003|10067099003|56012099006|4143699003|22082099003|18002099003;
+	BCL:0;ARA:13230040|376014|1800799024|19092799006|366016|23010399003|18002099003|22082099003|56012099006|11063799006|10067099003|4143699003;
 X-Microsoft-Antispam-Message-Info:
-	ocLA9wnCSHXb43iTcGyGY+XUOWdeGbghAeIKFTNX2n1JozIPozf/c4Jb78JbicIb3MVB0+WvFmGcsyOVRvJPftqulSQ/9qbyZSjhDmQHMdcykI3iCHFO7/K/jsyIM8CZz8EViJ7MqwpJiMaFknSGRPTaGWRmyUHxPlBmiJzNDSTpi8i1qitzEEYuzNIT8IFgBwn81Nz1ij5xiMfdyfG/5hotuo61z4/8pS/CkKq6R1yL7KKyGQt3121oZfqa7Rg27dIjipaMxBE5BNrRI+Qcg64TCJnv/eUDyucQwF5u5vG2GgTRfEf2mjuhNexKiBRzkNN1umfvf5+ryYjZ81uO5ZguJ02gzpXycjiZ1JprMPfdf03q/K1aacWQYTOlpxb5HcoN/psZ7xQQWZTe2dfAsgS1wIXLOFD3oVXhkTBhIqTSQbsPTKbM/f7qp7YAdt1RhXIp64nMcR31u19cth96wXrxi+f/PhYMYM7VB7MDVsMl9k1YpGYSRVIKpZfK21f72tFB7WZExo8aLql5XSkz0SXDWWApQ7cZqLZZYv7YIVi7KkeRXBIXCg2VULj7gsAyM6lf6lfFXaWfaMji2wegleiFMjqdm6J8k/fA12jYrhodlCx+xSejAdUX174mnOD7GMJgBQVG3yN/EDl+zVECkVgG6LaCBXRCF0dg1wBT4qI=
+	pTrgAhpRtCqQMHphmfgOr5PfSIkNVdrBG964Z5zsDdpDiPa0TzvajpIrQerZDnzE6wDestD4KDdvjlabPxzgWYQ9j3thdpPuhmpZhiN2VMtjwQy6OiNf8cr9+IawF2mTaLJYZke5OZux7vvT/u2gKGQUsI7xRrCiIbWeSgAK8tjaEHoiV7FBX6YVHEVflFDh5f+29RnvkCoibfsIWln3UnFLY2Y+AOrRbN1M5J1S5R8EdnX3nMerBApKYomkcxDuMBc65gL/muahAfmN1IutsprKPSGqJ5nvvQV5YNllaMw0bsTr6je9XLfyBorAWvbECHc2zXJZ1uHeIGPFcFMnH7FVujT/6SeMDWzYxugnyc07j+Gv21++7XkwFAcMVNXLgJmRlxutZGeyNWB5KuwfwjB8qCdELFdP6dGFdVD6xZuJh/GmoIt6U6+ZOXrprg+qVoDcLRnS0z1a1PQjoMAqj1xbtcto0yEUM1UGE/z0rHY9/okPGNxgS6xdHDlxKOhiiVaO5j4nNUuh7jwH4s1pNCzeqMhIrLWtmUAsXuPX5r55oCyKbImi4/QHr0aXl8lQZI2S9WGbI7JCeJHoBaVeL0rEZblHZuZbP+FrlNB8n+8=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(11063799006)(6133799003)(10067099003)(56012099006)(4143699003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(19092799006)(366016)(23010399003)(18002099003)(22082099003)(56012099006)(11063799006)(10067099003)(4143699003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?i12alCYJyJqSqdP5qN2Sv4e/GGoAD/FRjLlQhGT6howbosCGqpizPFu+wnWF?=
- =?us-ascii?Q?FSyetW2A37TWEoVpSgmv8S4gmB8U7Pv2CX0UAQV92LIwGnWb1We6yMjce2ID?=
- =?us-ascii?Q?6l5W4faGyFPgODHgPH60Xy4lO4xIHJ0fJ1QK70/cDNsOHpMS+4umiYm6+oM/?=
- =?us-ascii?Q?/9Gn5+DO1ocQg66FoDdjSdWjNGCizEqT4V+51HBVDGf07cDUF8WpHfRLD9dH?=
- =?us-ascii?Q?Ii5xx3psI/rXsvZp2hXdNzLptea9A1vanU7H/VtjSHCQJMi/6FGjQwg1IR2I?=
- =?us-ascii?Q?Qpi4rZL7Y1xUUb2/uA1rij30Ycmbw4EOle3H5hEV0qZCBVK4t34+TqqzGoof?=
- =?us-ascii?Q?iqbIAP9Q4tMNzqC3qhBJmVopz68CANVFfzjpwX92PRXOzySqaGvVY3aySjss?=
- =?us-ascii?Q?SdVpN4VVhYBNvUFK3Q+PBIMMaFSIKQp/R0fsyveSZtAf9Hecb82UAh1FUyto?=
- =?us-ascii?Q?U/hDrEKyPGzl5WyHNBDSU2mzfVgO1YWpXt3yLmLcV1hty2cDFXpkDYgJbltx?=
- =?us-ascii?Q?Oskv4cCqnioC33SDxaAyaj/FjG1Tqlt4eDedAUfijRI/D/ITc6CeRKykkEw5?=
- =?us-ascii?Q?J0UJvABg4QYPqB5HoDbOZqxnYcnAQ0YkyU8WnD1E5eTtrl2oVDPlvenBriWZ?=
- =?us-ascii?Q?R1PSVjcdLFSdwUnFRQjYGedPbExDABnOQnSuZ8xyHMqTu5MFHQOdCC4Njx/P?=
- =?us-ascii?Q?3uiVe7XRWO++mOkd4XROfjY1jOUh9n6YBNPZIPhcQ/LdQ++Ue2aId7jxWjl2?=
- =?us-ascii?Q?/gxeP4tdANFrc0mD5iNeA2A5bjHXio4yUzdvr55pNX9Cw5MiHiqEJMWQn4xp?=
- =?us-ascii?Q?Ws6gAThgVQ1oQuYD35Er3Z+SabLvRm6g+ercHO7WHtPoQIVaVbHEjstQq0L7?=
- =?us-ascii?Q?GqPf1JgdvQo3iZWQfoK0nnodDkd4cE4jEzuPQSLSPxN8paSO6Vie/CuV9hcS?=
- =?us-ascii?Q?cZpbvkXHzSt25YZSeqdtSJP9IR0hPjSiDo499TN6zhnFC/+3fQ+SQ71efhqB?=
- =?us-ascii?Q?mVEXOVy0iwU/v+ZDxGz2B5S949uEENvocf6TSTdih8aHmjzEBCgtB1eJBEED?=
- =?us-ascii?Q?l+OASnwcPWcdnCG9B4P08D8ogMiWt3L6MRrCNNt/vINshxNCH+GQ4iCphWAO?=
- =?us-ascii?Q?flgfFi1aZG8w9I+gOJTjld1QtNnLGImt/ZEeu6ozpt1CguG4diJ2OJzDkMT4?=
- =?us-ascii?Q?JiNiVFzrVjZSQfrGNf8OYbtJfdz6yZ9nkJcc7WGpGVSUIbznsOi5aUPoRKZm?=
- =?us-ascii?Q?+WkKNg32EINnF6lARdm7NGBS6QGaGfga6w5mftIYY+gkhsoxUax+cwEWgv8p?=
- =?us-ascii?Q?LTjiz0jvYrl+yzXdvJQGz842pbUN7X/Upgf4tx0IZsgJiNWiqfnuG4OK50rk?=
- =?us-ascii?Q?vUKW1AoJM8Bj/5A3wIQkwcGHpKN9HaE2ynmtpiYKFKKSEH+6rouPUAUtNxtV?=
- =?us-ascii?Q?DcPWCRDpj3Zvdyr9NACIj7c8k7bq7vIi4ylMZPsXz7INQrxeOIANtMZTlti1?=
- =?us-ascii?Q?3icYFCwrGTptv9yryxC4Fh1PPfzTAXolbxXlcE+RiI6gW1JKSTFZ389jEB98?=
- =?us-ascii?Q?uUefksYJkaUgR8etn7KlAodczS55vEgzbZEjqPeZGz1tc3iyWnjHt7IeJCuI?=
- =?us-ascii?Q?ufUBleM+Aj13G55af5KCqwgJBl16CCWcUgCQ1LUtIif3VvxOJIVKC0U5uKPz?=
- =?us-ascii?Q?vBA8fjdC2TnRs0pjGMMuY5MCgbze3URb0on54Jjzn9GjQfEr?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4a34f821-22a7-4024-cd32-08df1a69666d
-X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
+	=?iso-8859-1?Q?pjGVUn4YWxN1X3On2ToK3tcs48gJzeGDdG8OYM0P4FJeE6Ly/MzWdw3bTk?=
+ =?iso-8859-1?Q?veAc8lLXpwLxHqP+HpTK8JdyIvecwrqvltbg3WYLXroQFfpPYm7tIwMoCH?=
+ =?iso-8859-1?Q?NAZAFm4ddItf91fVXRtDoIezZ/ZxeAeUCsF1+P1qZ/ePgJk07fpzM7tin8?=
+ =?iso-8859-1?Q?ZmhH7DAlM0NEcHCq5cB0s/4BojZTxHQcX2DWr34o3wbrLStyzVlMSLXHXE?=
+ =?iso-8859-1?Q?twHOv2LmuiGM6bMnxm0lAFqqeNy3b+c9jZJIk0xDRCsXZo1aOVMMoa6mVG?=
+ =?iso-8859-1?Q?6hjsOXBnBKByCQkrRIu5zLPzYMpWN4gnqbdRkQRcvZajh2WZSjpEhiTDMi?=
+ =?iso-8859-1?Q?r2QfcymlN1rDbFquu0MUS1HCsZftbLnWOM3kUMk0sluQ7sx507FY2ltDx2?=
+ =?iso-8859-1?Q?8Uq4STHmw+7rzhmTiWFtkN5jEt9Tf0u2xc2SgrM0BpythCsX460qey84iP?=
+ =?iso-8859-1?Q?xV+dHa6Ta4Ls99FBO0HBV5TqKfMYtRs3dnHJMls0U83Ox/075vEt2vt4vM?=
+ =?iso-8859-1?Q?a5Qekef3HOlGI3Agk99fW0Z0HpMkWgzDKV8ffpBl3OD6DbQ0A0OMMYbZvx?=
+ =?iso-8859-1?Q?dfQM72QVeN/UKWGwxRqIyzlYkTgbcULf5PeB53DjmfIYyXtuSv+GfZg8Ru?=
+ =?iso-8859-1?Q?FKwSgmNl8u+lk/RttYBRybeoOSSvtNJHdd2VAri8c7241NHjst2AaKaOd1?=
+ =?iso-8859-1?Q?p6+Fjf9HK0cb/8YTcwrMcoSjOqyUnCDkitD/hSFXlRtINy31EShFpFXoA6?=
+ =?iso-8859-1?Q?7y2E5VRlZ/AvAmbXDwB/zj29lBgkK4Lpg24JT8MqVwXmheh/Bp9rdAXjMi?=
+ =?iso-8859-1?Q?0SLwCbMsWsem+JGF45bMq1YKwrCldtJ+S7Mi5CnQvhv6mTUzGG6Q4jC9Ap?=
+ =?iso-8859-1?Q?hdbkoc3mS2/YMTjHxslD1fm1XrTCK3ED1pe2Jveh2erEmiK10VovEcrYOE?=
+ =?iso-8859-1?Q?oms88Y+dT+K2vIA1STv84n01wYgS3KpYfuSMcKdg1755nh6ttXsrCCaQ3M?=
+ =?iso-8859-1?Q?GscYyBGXEhIXPgkwU0CNyO3tkBxkHn7X7r94I2hgJgiLak2sK+rqZrR1lc?=
+ =?iso-8859-1?Q?/29HqfhI9UhTkEtGUtf/v2tZ08Uu4VZl8DV1re1fx6roSaIZGFPcURKE1o?=
+ =?iso-8859-1?Q?FyT0XsFU672qb7K+exfZXJLoxqbl3rXpEOjpYcarVKlRDD8DElw24dovaW?=
+ =?iso-8859-1?Q?mt93mWE7OYkAfLMBp4dLfPiGgeXgJSKlsmqgclkkkFD78wuyBl8tOqFMAC?=
+ =?iso-8859-1?Q?nY4+c8TmJVnUiNj/nWU4knC2DEx0HMdfW3PP3bSeLtQLCPYEMOvkB76eQF?=
+ =?iso-8859-1?Q?hhWudCkPnuWs2n1O/25iVYhZVmm/ghVT6S0HlPwYII4TvX4r2MHB2U5FLG?=
+ =?iso-8859-1?Q?kwFTB3OBD6Y07ls6REmJSM2XalUsNa9NBhFKoqumlbYKC6FU9qumePS/6K?=
+ =?iso-8859-1?Q?2ZIFhProkS1wlZyFaOpWfLGT7rzx1jSyPZ9+WVQ/Nyvv5ZXy8u+QLoN9vX?=
+ =?iso-8859-1?Q?5C5T9EBCzOVRTrNHA9PpzbomrfXkcECYtDIgkWE1xCtewNSCSpRnNaUNDg?=
+ =?iso-8859-1?Q?EnwlVkgrIGEa1R+jwTXyOeYO+sMQguegD3w7sctnNgu/1LqpRYzjKB/kre?=
+ =?iso-8859-1?Q?9osP2NMXYt1j8wh6hicE/ZfdPkC5W2uIB9INboYPvb8RDYNhSNooEbsUfM?=
+ =?iso-8859-1?Q?hBTRLhOHmi8RwDNLrU6Hh1wEnALjKg28xpYPNUPMVMTuFDgQ1376iFJZp9?=
+ =?iso-8859-1?Q?VR9q6fMz1tffrepSjRL/QwI1ZuTzu2rn9VWGi/geScOJCOYoQOWVigVqr2?=
+ =?iso-8859-1?Q?VJWyFeos2WgVR91fBg2xppDYRgN3657eIa6XPu5DKBltzwSFuhYP?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d8c9fd0f-2a29-4a4e-c0f0-08df1a6b0e05
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 18:26:50.2859
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 18:38:41.2763
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 21XRIfLarhyeL+4wgvh3ddZy0FIYrZUVchxkzduusJC6QKWJJFZvvuUn2CMkN5ql
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4279
+X-MS-Exchange-CrossTenant-UserPrincipalName: xPskn/4BcQEiNRRTGr4kAUh0AatNkClwVep7kSl5Eu9ms2xeWGIPSjjYaQK5ssEDqFAdjzrgk2hmMhHZjVNuDuZL1RkMOKIJQfbY+XgC9xaoVHcn/tkCaNYuNyIXGCWR
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR04MB10746
 
-On Thu, Sep 24, 2026 at 07:52:39PM +0530, Aneesh Kumar K.V wrote:
-> >> +int cc_make_shared(void *addr, size_t size)
-> >> +{
-> >> +	int ret = cc_validate_transition(addr, size);
-> >> +
-> >> +	if (ret)
-> >> +		return ret;
-> >> +
-> >> +	return set_memory_decrypted((unsigned long)addr, size >> PAGE_SHIFT);
-> >> +}
+On Thu, Sep 24, 2026 at 03:18:27AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] dmaengine: dw-axi-dmac: stale hardware pointer race on buffer reuse
+> - [Medium] dmaengine: dw-axi-dmac: incorrect residue for overlapping SG regions
+> --
+>
+> commit 51268a3a8963bcf17968d0065986bd47e9b6a2a8
+> Author: Rui Wang <wr574332525@163.com>
+> dmaengine: dw-axi-dmac: report paused state and residue in tx_status
+>
+> The driver implements device_pause/device_resume, but device_tx_status
+> keeps reporting DMA_IN_PROGRESS for a paused channel. This commit updates
+> the reporting to handle paused state and calculates actual byte residue.
+>
+> > diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> > index eebed2474210d..f0cb3c7956629 100644
+> > --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> > +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+>
+> [ ... ]
+>
+> > @@ -352,33 +352,110 @@ static void vchan_desc_put(struct virt_dma_desc *vdesc)
+> >  	axi_desc_put(vd_to_axi_desc(vdesc));
+> >  }
 > >
-> > [Severity: Medium]
-> > Will this function be unavailable to dynamically loadable modules since it
-> > is missing an EXPORT_SYMBOL_GPL() macro?
+> > +/*
+> > + * Read a 64-bit channel address register while the transfer may be
+> > + * running. The two 32-bit halves cannot be read atomically on all
+>
+> [ ... ]
+>
+> > +static u32 axi_chan_get_xferred(struct axi_dma_chan *chan,
+> > +				struct axi_dma_desc *desc)
+> > +{
+> > +	struct axi_dma_hw_desc *hw_desc;
+> > +	bool dst = chan->direction == DMA_DEV_TO_MEM;
+> > +	u64 pos, start;
+> > +	u32 xferred = 0;
+> > +	int i;
+> > +
+> > +	pos = axi_chan_readq(chan, dst ? CH_DAR : CH_SAR);
+> > +
+> > +	for (i = 0; i < desc->nr_hw_descs; i++) {
+> > +		hw_desc = &desc->hw_desc[i];
+> > +		start = le64_to_cpu(dst ? hw_desc->lli->dar : hw_desc->lli->sar);
+> > +
+> > +		/* Current position is inside this block: partial progress */
+> > +		if (pos >= start && pos <= start + hw_desc->len)
+> > +			return xferred + (u32)(pos - start);
+>
+> [Severity: Medium]
+> Will this logic correctly handle scatter-gather lists that contain
+> overlapping or repeating physical memory addresses?
+>
+> If a DMA client submits an SG list using a common memory region for padding
+> across multiple elements, pos could match an earlier block while the DMA
+> engine is actually processing a subsequent block reusing the same physical
+> address.
+>
+> Could this cause the residue to jump backwards and report an artificially
+> high remaining byte count to clients that rely on a monotonically
+> decreasing residue?
+>
+> > +
+> > +		xferred += hw_desc->len;
+> > +	}
+> > +
+> > +	/* Position doesn't match any block, be conservative */
+> > +	return 0;
+> > +}
+>
+> [ ... ]
+>
+> > @@ -468,6 +545,9 @@ static void axi_chan_block_xfer_start(struct axi_dma_chan *chan,
+> >  	}
+> >  	axi_chan_config_write(chan, &config);
 > >
-> > The commit message states it should be usable by callers managing their own
-> > backing memory, but virtio or guest drivers won't be able to link to it
-> > without an export.
-
-> >> +
-> >> +int cc_make_private(void *addr, size_t size)
-> >> +{
-> >> +	int ret = cc_validate_transition(addr, size);
-> >> +
-> >> +	if (ret)
-> >> +		return ret;
-> >> +
-> >> +	return set_memory_encrypted((unsigned long)addr, size >> PAGE_SHIFT);
-> >> +}
+> > +	/* The hardware pointer registers now belong to this descriptor */
+> > +	chan->desc = first;
+> > +
+> >  	write_chan_llp(chan, first->hw_desc[0].llp | lms);
 > >
-> > [Severity: Medium]
-> > Does this function also need an EXPORT_SYMBOL_GPL() macro so that modules
-> > can successfully link and call it?
-> 
-> I guess we don't want the cc_make_shared() and cc_make_private() APIs to be
-> called by modules. Modules that need CoCo shared memory should use
-> alloc_cc_shared_pages().
-
-Indeed, but we may also be over indexing on the cc name given AMD also
-uses this for their troubled host memory encryption address limit problem :\
-
-The note about virtio seems a bit strange, these are new functions why
-does it think virtio is calling them?
-
-> >> +	/*
-> >> +	 * State transitions require a linear-map address and may modify memory.
-> >> +	 * Allocate from low memory and defer requested zeroing until afterwards.
-> >> +	 */
-> >> +	gfp &= ~(__GFP_HIGHMEM | __GFP_ZERO);
+> >  	irq_mask = DWAXIDMAC_IRQ_DMA_TRF | DWAXIDMAC_IRQ_ALL_ERR;
+> >  	axi_chan_irq_sig_set(chan, irq_mask);
 > >
-> > [Severity: High]
-> > Does this code inadvertently leave __GFP_MOVABLE intact if passed by the
-> > caller?
+> >  	/* Generate 'suspend' status but don't generate interrupt */
+> >  	irq_mask |= DWAXIDMAC_IRQ_SUSPENDED;
+> >  	axi_chan_irq_set(chan, irq_mask);
 > >
-> > Pages are returned as shared memory, but they lack migration hooks
-> > (movable_operations) to handle encryption state transitions during page
-> > migration.
-> >
-> > If a caller passes __GFP_MOVABLE, the page might be placed in ZONE_MOVABLE.
-> > Since the kernel migration code does not know how to handle encryption state
-> > transitions, the page cannot be safely migrated. Could this permanently pin
-> > the movable zone, thereby breaking memory hot-unplug and compaction?
-> 
-> I don't think we want CoCo shared memory allocations to be movable, but
-> I'm also not sure whether we should filter out all of these GFP flags.
+> >  	axi_chan_enable(chan);
+> >  }
+>
+> [Severity: High]
+> Is there a race condition between setting the descriptor as active and the
+> hardware actually updating its pointer registers?
+>
+> If a client reuses a previously completed buffer for a new transfer,
+> axi_chan_block_xfer_start() assigns chan->desc = first and enables the
+> channel.
+>
+> If dma_chan_tx_status() is called to check the status before the DMA engine
+> fetches the first LLI, it might evaluate a stale hardware pointer.
+>
+> Since the buffer is identical to the previous run, could the stale pointer
+> match the end of the new transfer's memory range, causing
+> axi_chan_get_xferred() to erroneously return the full block length and
+> report a 0 residue for a newly started transfer?
 
-It sounds like we should at least *reject* movable. It is right that
-seems incompatible with this, and we have no use case..
+Look like possible. Caller may reuse prevous DMA buffer. But I don't know
+how to resolve it.
 
-> >> +	if (cc_platform_has(CC_ATTR_MEM_ENCRYPT))
-> >> +		return __alloc_cc_shared_pages_node(nid, gfp, requested, mem);
-> >> +
-> >> +	order = get_order(requested);
-> >> +	if (order > MAX_PAGE_ORDER)
-> >> +		return -EINVAL;
-> >> +
-> >> +	if (nid == NUMA_NO_NODE)
-> >> +		page = alloc_pages(gfp, order);
-> >> +	else
-> >> +		page = alloc_pages_node(nid, gfp, order);
-> >
-> > [Severity: Medium]
-> > Can this fallback path inadvertently allocate a highmem page?
-> >
-> > The function's kernel-doc explicitly guarantees: "A memory-state transition
-> > requires a valid linear-map address, so such allocations never come from
-> > high memory".
-> 
-> Only when a private-to-shared transition is required.
+Frank
 
-IMHO disable the whole thing at kconfig if highmem is enabled. Make
-the calls always fail.
-
-Jason
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260924025739.844-1-wr574332525@163.com?part=1
