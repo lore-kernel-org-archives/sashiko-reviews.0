@@ -1,242 +1,105 @@
-Received: from mta0.migadu.com (out-111.mta0.migadu.com [91.218.175.111])
+Received: from mail-pj2-f43.google.com (mail-pj2-f43.google.com [74.125.227.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EC437F315
-	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 01:53:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.111
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF20F3D1AB5
+	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 02:18:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790214832; cv=none; b=qu12twN3ewB/JqkfdHHvWMdPWkiidMIvx56Btw7fCSuVSrZt7g+s3gl86kk1+OZu1Znx5BUaPCvY0+f5H5vXz4ihsGE+nggGCZz5g1nFDVELx2FstN08jpYRAv8/NHtDTAuyE0uYPDTx+9YCRsvdnsJzeHbnq9PLul9kNl8thn0=
+	t=1790216311; cv=none; b=ijSK4+1ZBqJRR7JEMF7St5stMpLb4dT+QLrQdI6P/oV8GGYjskZz4ZtHX0ulqUjeeH1OovxaYVcsyQo8cT+cyBZCaupIVrt8JUVyKlx6IfGeBlgQvpnHHySAZTnAe50HO0fuKjcraQMhOacN4gNC7Q30eoRHCYA/j1EzzDxiWmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790214832; c=relaxed/simple;
-	bh=931ue2KcThGCUETeys1OfFNQ43tpNJM0OR+htR2Lvxo=;
-	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
-	 In-Reply-To:References; b=F8E8BpZxGWiVG0ngLf7q+cfG9zvVygARrJDDz+D7PBKhnqoe3SPEkmynCZVLiSFVVWt7Ciou8rb6PIqE9yjirc+gGiHl/7xcU46WwQhxF87M4OSseLG5tPFuqXqdQfZ5dhk7t0CZkfq/CDxHfpMtP9jSobVPbJ92ikYvMH3lcHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=YArrgFS5; arc=none smtp.client-ip=91.218.175.111
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1790216311; c=relaxed/simple;
+	bh=6eqLqdxdZnQfhuRFBuoUOMB3TvRuvwD19HIqai7vaFU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=Ybi9ZkPmLWl/pAWcXvTYDRr1cpFyKJpyn7+Uo/w+0y4N+ZazwMP/hlwlfi6xpXkRFnRiqH6ZVNVbzKArcG7gI4W8aFGtSzmoqtOxoPjVjtn0GOqdDqgxbxsxZ8gTLUV+c+q+7BejdawTbvFJQRYKs6InYfu/6/x7D4S1uu6JyY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NYdyOgQw; arc=none smtp.client-ip=74.125.227.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="YArrgFS5"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=931ue2KcThGCUETeys1OfFNQ43tpNJM0OR+htR2Lvxo=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790214827; v=1; x=1790819627;
- b=YArrgFS5H+UeVMZg//dugz/SaHEMSpV3GP9rUFixe2WfEYJO0fUogtUFMSBBSW3UyhAZMl1R
- mjFGeUFVUbdLm/XbLmw5jkqwY9eFoTlH+QHlNw47XxWQVPawjBMG/tn2JjTHkzX/4qLutTi8ZDI
- 2laMkvR20kYISSrFrkaKWYJg=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 81a41aec7d3a9737;
-	Thu, 24 Sep 2026 01:53:47 +0000
-X-Mizu-Trace-ID: 81a41aec7d3a9737
-X-Migadu-Flow: FLOW_OUT
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NYdyOgQw"
+Received: by mail-pj2-f43.google.com with SMTP id d9443c01a7336-2dd88a115ebso9657795ad.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 23 Sep 2026 19:18:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790216309; x=1790821109; darn=lists.linux.dev;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=0znCr+Z0mJneqMTm4htrgffhWJ/mVEoGgq/qNX6FvCM=;
+        b=NYdyOgQwagETd+4zahNGodkjvbeGKd/3MhjgN92FKjTPBVEnX4GqqgDtn79EjH0gIs
+         rMjBVZYB+Sp7G6tps9Zr2iFqDLlzovgh8UxAGyaeSZCufFBRhQPpZwr33lRvRXQfIOCn
+         kA5n+lw6P/HCI8SKUPKq4AjYnFMg+xoWdN1I7yEieK8o6XOwKj8wILKGkmzAwLcaqvzO
+         i4Vu0BDnY3VDrOw+l8egszqYUPx7oBrNYFxjwruOXtc01k5zxE6+ZvwIckmSgwsRhBn0
+         QwTRhFKLkBp800SkZF/SNfDbkzBbpPx5S8xLMtTXEbSnwa60GiUxt7BQWINEJb/+ddz5
+         sdqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790216309; x=1790821109;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=0znCr+Z0mJneqMTm4htrgffhWJ/mVEoGgq/qNX6FvCM=;
+        b=J9LF74wEsQzcwc3k8IJhl8aNtfOf0WtcVBGo2PjWi6MCPiNJ9FlmX5Uld1NACVYewd
+         CjsZSZjaeZ76oVHTZN8j4Du81cnBz9drHPrMQ3rft+zn0XhHMkbTOsl0Xzt2nzLjLT4h
+         DcO5jRE7Y479UxxpYyr78/EuW1Hxv4DY3Bt+Q9ALpcl9hlj3rQj1335F+YTW0Tepo811
+         htupbwrHzl0RQM9E/86SBaYu8cUUICjY8zZp51xFdP5QBSLSrwWiWN/V4yZ4zcEvJJXd
+         vwYiZ/5rsYBaKSCddFf5JtAbyC2vPHT/35l9fob37eOU7n6+U3+YA3XBLq/dLi/RTmvr
+         VnLA==
+X-Gm-Message-State: AFuF++lrRiM7dtN21Pm51mSsKwmnIeCXA9AK070lk03/T3QIZQ9rd2I+
+	2SbPwwDvc5Z+PMBNYljp1DT7+h6l8kurELV+PnDgUz7pMLLoLzWaaL8K
+X-Gm-Gg: AYBFou29v69dgWtz4irg6DntMv+ji6ZJznoOuZd4iINKTbnbEv9dLrYI6o6861ubz72
+	EwZg/QGzI9yA/zzJ00iWkeJAOHDzr1mA2tsUD/4GeDCssQ13PmwLvFLpprOoDAmcnUp9x3/5CuF
+	jD76PGp+qcQD17J8vL9cHn7Epe8+ZYofb/9Qr4hmWZsYpHwAEZTT7g4RtaRpLG5GSuPLmBdkbTC
+	JoD62aIPFm+On3swgaqGl2bxUV3l0xqtOOHoCNxNRtdchYAokaRWZIvClSPGCGNrgUts7cz2zTz
+	wtng8iP3cgLZ46Rj5KG3ClShQzC2GMrIYsDs+aAI7XM2LYZgimFSu9e3yCX5BE87yDGNdvU4Vql
+	phmkmLC9EP3b7pF94sGn67E08yyz0m1+u1NyAqpkeDtEqEviCxibwP+7ENcOy0mBwYRl2HYe9Oq
+	UhselZtJytmbEw6AD8DZp/O8reJondRdNHunCWjlfRtOexXfoIt8i+HWb5U3YDY5Qb2GmlECJly
+	qADy0SnDV88+kxpYBZuflSdkN0452oz+NaGS0PVRNKi2SFczS8aozavpIvkclJthwwIARfsfatI
+	0W0=
+X-Received: by 2002:a17:903:1447:b0:2dd:c053:ec6d with SMTP id d9443c01a7336-2df7e11d07fmr8703805ad.32.1790216308788;
+        Wed, 23 Sep 2026 19:18:28 -0700 (PDT)
+Received: from localhost ([153.61.198.252])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2df6a5a5157sm19125315ad.14.2026.09.23.19.18.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Sep 2026 19:18:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Date: Thu, 24 Sep 2026 01:53:47 +0000
-Content-Type: text/plain; charset="utf-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-From: gang.yan@linux.dev
-Message-ID: <da961f27c729d9232a59e509e8e3c2f50bc1db00@linux.dev>
-TLS-Required: No
-Subject: Re: [PATCH mptcp-next v7 6/6] Squash to previous one
-To: sashiko-reviews@lists.linux.dev
-Cc: mptcp@lists.linux.dev
-In-Reply-To: <20260923101140.E62E41F000FF@smtp.kernel.org>
-References: <cover.1790147728.git.yangang@kylinos.cn>
- <6a1cbdd1a0f4866ff6cda3b8679450172c203f5b.1790147728.git.yangang@kylinos.cn>
- <20260923101140.E62E41F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 24 Sep 2026 02:18:28 +0000
+Message-Id: <DLN6PUF2FMLF.NU2U8L9V0XWH@gmail.com>
+From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
+To: "Eric Biggers" <ebiggers@kernel.org>
+Cc: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf-next v4] bpf: crypto: Use AES-CBC and AES-ECB
+ libraries
+X-Mailer: aerc 0.20.1-349-gb940a4174a3e-dirty
+References: <20260923032703.59816-1-ebiggers@kernel.org>
+ <20260923033742.D45A81F000FF@smtp.kernel.org>
+ <DLMEAUZ632XP.210Y7S9N70NHW@gmail.com> <20260923041124.GB42709@sol>
+ <DLMEKP1LHU07.31JTP12GKADU8@gmail.com> <20260923042128.GC42709@sol>
+ <DLMFF6THNB1F.260JQGVX0PO8Y@gmail.com> <20260923050134.GE42709@sol>
+In-Reply-To: <20260923050134.GE42709@sol>
 
-September 23, 2026 at 6:11 PM, sashiko-bot@kernel.org mailto:sashiko-bot@=
-kernel.org  wrote:
-
-
->=20
->=20Thank you for your contribution! Sashiko AI review found 1 potential =
-issue(s) to consider:
-> - [High] mptcp: uaf and uninitialized access in pm_ops during disconnec=
-t
-> --
->=20
->=20commit 89b80a47ef923bdc04a9069fdcf06de447841c5b
-> Author: Gang Yan <yangang@kylinos.cn>
->=20
->=20Squash to previous one
->=20
->=20This patch applies RCU discipline to msk->pm.ops, moving its initiali=
-zation,
-> publication, and release to better align with RCU patterns. It updates =
-readers
-> to use rcu_dereference() and writers to use rcu_assign_pointer() under =
-the
-> PM lock.
->=20
->=20Link: https://sashiko.dev/#/patchset/20260819125629.49823-1-gang.yan@=
-linux.dev?part=3D5
->=20
->=20>=20
->=20> mptcp_destroy(), the final close path: mptcp_token_destroy() has
-> >  already removed the socket from the token hash by then, so no new
-> >  reader can find the msk anymore.
-> >=20=20
->=20>  Note that rcu_assign_pointer() before pm_ops->init(msk) does not
-> >  publish a partially initialised object: the ops are registered
-> >  immutable, init() only prepares the per-socket state, and the msk is
-> >  not reachable by readers until its token is registered.
-> >=20
->=20[Severity: High]
-> Is this assumption accurate? A concurrent SoftIRQ can receive an MP_JOI=
-N
-> request, look up the socket via mptcp_token_get_sock(), increment its r=
-efcnt,
-> and drop the RCU read lock. Concurrently, the socket could be disconnec=
-ted,
-> calling mptcp_disconnect() -> mptcp_pm_data_reset() -> mptcp_pm_ops_ini=
-t().
->=20
->=20The SoftIRQ thread could then re-acquire the RCU read lock and call
-> mptcp_pm_get_local_id(), accessing the actively tearing down or uniniti=
-alized
-> per-socket state.
-
-The concurrent softirq reader you describe does exist -- that is
-exactly the race this patch fixes. But note what that reader
-consumes: mptcp_pm_get_local_id() consults the per-net endpoint
-table (inside its own RCU section) and the msk addresses; it does
-not read any of the per-socket state managed by init()/release()
-(pm->work_pending, accept_addr, ...), which is only consumed by
-the PM worker under the socket lock. So the reader cannot observe
-the teardown/reset of the fields those callbacks manage. It's safe
-for now.
-
->=20
->=20[ ... ]
->=20
->=20>=20
->=20> diff --git a/net/mptcp/pm.c b/net/mptcp/pm.c
-> >  index 64244a1a01bca..66fb7c3d9c827 100644
-> >  --- a/net/mptcp/pm.c
-> >  +++ b/net/mptcp/pm.c
-> >=20
->=20[ ... ]
->=20
->=20>=20
->=20> @@ -1158,23 +1166,39 @@ void mptcp_pm_worker(struct mptcp_sock *msk=
-)
-> >  static void mptcp_pm_ops_init(struct mptcp_sock *msk,
-> >  struct mptcp_pm_ops *pm_ops)
-> >  {
-> >  - if (!pm_ops || !bpf_try_module_get(pm_ops, pm_ops->owner)) {
-> >  - pr_warn_once("pm %s fails, fallback to default pm", pm_ops->name);
-> >  - pm_ops =3D &mptcp_pm_kernel;
-> >  + struct mptcp_pm_ops *old;
-> >  +
-> >  + spin_lock_bh(&msk->pm.lock);
-> >  + old =3D rcu_dereference_protected(msk->pm.ops,
-> >  + lockdep_is_held(&msk->pm.lock));
-> >  + if (old !=3D pm_ops)
-> >  + rcu_assign_pointer(msk->pm.ops, pm_ops);
-> >=20
->=20[Severity: High]
-> Does this publish the new ops to readers before its state is initialize=
-d via
-> init(msk) below? If a reader finds the socket, it could access the new =
-ops
-> before its per-socket state is ready.
->=20
-
-On=20the publish-before-init concern: pm_ops->init(msk) prepares
-the per-socket state, not the ops -- the ops are registered
-immutable, their callbacks are valid from registration. A reader
-entering between the assign and init() would call valid ops code
-and read fields it does not consume (see comments above); this
-ordering also matches the previous, non-RCU code.
-
-> >=20
->=20> + spin_unlock_bh(&msk->pm.lock);
-> >  +
-> >  + if (old) {
-> >  + synchronize_rcu();
-> >  + if (old->release)
-> >  + old->release(msk);
-> >=20
->=20[Severity: High]
-> If old =3D=3D pm_ops, we skip the rcu_assign_pointer() above, meaning t=
-he ops
-> are still actively published in msk->pm.ops. Does calling old->release(=
-msk)
-> here violate RCU removal rules by releasing the ops state while it is s=
-till
-> reachable by readers?
->=20
-
-On=20releasing the still-installed ops when old =3D=3D pm_ops: no
-in-tree PM defines release() today, so this is currently dead
-code. For a future PM that does define it, the synchronize_rcu()
-in front guarantees no in-flight reader is executing the ops when
-release() runs, so no RCU removal rule is violated. It's also an old
-issue raised by sashiko before, this code can address it correctly I
-think (call .release before remove it).
-
-> >=20
->=20> + bpf_module_put(old, old->owner);
-> >  }
-> >=20=20
->=20>  - msk->pm.ops =3D pm_ops;
-> >  - if (msk->pm.ops->init)
-> >  - msk->pm.ops->init(msk);
-> >  + if (pm_ops->init)
-> >  + pm_ops->init(msk);
-> >=20=20
->=20>  pr_debug("pm %s initialized\n", pm_ops->name);
-> >  }
-> >=20
->=20[ ... ]
->=20
->=20>=20
->=20> diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-> >  index 14aa82647c3d1..4953cfa329e81 100644
-> >  --- a/net/mptcp/subflow.c
-> >  +++ b/net/mptcp/subflow.c
-> >  @@ -94,14 +94,17 @@ static struct mptcp_sock *subflow_token_join_req=
-uest(struct request_sock *req)
-> >  return NULL;
-> >  }
-> >=20=20
->=20>  + rcu_read_lock();
-> >  local_id =3D mptcp_pm_get_local_id(msk, (struct sock_common *)req);
-> >=20
->=20[Severity: High]
-> This is where a concurrent reader accesses the PM ops using a cached ms=
-k
-> reference. Does this disprove the assumption in the commit message that
-> the socket is unreachable, since the reader already holds a reference t=
-o msk?
->=20
-
-It's=20the misleading of the commit message, as the first comment of this=
- letter
-said.
-
-@Matt, @Geliang
-So for now, I think all the patches in this series are ready for review. =
-It=E2=80=99s
-not urgent, so please take a look when you have time.
-
-Thanks
-Gang
-
-> >=20
->=20> if (local_id < 0) {
-> >  SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_MPJOINNOIDFOUND);
-> >  + rcu_read_unlock();
-> >  sock_put((struct sock *)msk);
-> >  return NULL;
-> >  }
-> >=20
->=20--=20
->=20Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1790147=
-728.git.yangang@kylinos.cn?part=3D6
+On Wed Sep 23, 2026 at 5:01 AM UTC, Eric Biggers wrote:
 >
+> Module code can only be called directly by module code, not built-in
+> code.  So CONFIG_CRYPTO_LIB_AES=3Dm && CONFIG_BPF_CRYPTO=3Dy cannot work;
+> you'd get a linker error.  For a module to offer these kfuncs they would
+> either need to be their own module (e.g. bpf_crypto.ko), or else merged
+> into the module of the underlying functions (libaes.ko, though again, in
+> practice libaes is usually built-in anyway for other reasons).
+
+ok. I feel it's better to go back to v1 approach:
+select CRYPTO_LIB_AES_CBC
+select CRYPTO_LIB_AES_ECB
+with no prompt.
+That will keep kfuncs on every BPF_SYSCALL kernel without a bpf_crypto.ko
+and without moving the kfuncs into libaes.
+
+Another alternative is:
+depends on CRYPTO_LIB_AES=3Dy && CRYPTO_LIB_AES_CBC && CRYPTO_LIB_AES_ECB
+but select is imo better.
+
