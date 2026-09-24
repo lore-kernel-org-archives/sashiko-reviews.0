@@ -1,240 +1,211 @@
-Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazon11023086.outbound.protection.outlook.com [40.107.44.86])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1D9441027
-	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 10:37:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.44.86
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790246268; cv=fail; b=O+bQME3QdlIeuMcdFq8n7uIyvhO9Q5kT73KUKyKeKxY+zPoSN1EapEhYfAdh8G3AcaTcIYQGcXEwNnPES4+3zUZ4gkYaPMb7x7lFuLR03lBfHcXL5xcXX/v/YvVv9DSUs6S272sNNNldmHyYvZUQlK9nRi/7i2Jsf4be6qlJnFI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790246268; c=relaxed/simple;
-	bh=3MhdNvD11fGKPTahpDAbdj6l97px4KM/gGj3RKecsu8=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=Gc7zcgy/LhQLlrR1cTCAFCSdEzk9DTM8Y6V7KntZFZHSdMNdWjvsMsJXXof248k2FNmxLkq6e512NBjXZkwvoRAtjdQchP+50kltlOTA5QYYxH+1I//dSmdMX0u0Ogcl7/4PMhgsQ8ezakV/YqkJoJHMDiRel5OlKMIZUYQRZ2k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com; spf=pass smtp.mailfrom=amlogic.com; dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b=fk6C/UAy; arc=fail smtp.client-ip=40.107.44.86
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amlogic.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F7D4718C3
+	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 10:46:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790246806; cv=none; b=RMVWlx4qNuhftSLNB9HuAJ7eP8oZeP5mMLGfKNd+kc94PA7dcfrnhIi7V280b8/OgiK8ER9qaMPzXeaVHWvQGmeRBNtXu9XtE0MGlh++xlwyn/c8r3reFWWLEsPvDZxZKIajQv8w/3LZSK4H3Us4yQ2EBgRCHWwn6Nf0mpXXQPQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790246806; c=relaxed/simple;
+	bh=+ywPZjttvo62zYb3HWZ3Wz4VeL7t+xBCRXInpeEW9GU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tNnKxSFdNec63vBdKA3hN5muYLzdL3TKwu1IJmLT2EnoncwylZ3U0yEr/ODTlGf84wxks9z+88OM05/PkHxevgvLdHs5CmMbAdHmUShQfl7muLLs3O1sYgBkPltCXkuSAY+Ou6GbmNtY4TsvWjADblw4K0bSxzfBXlkNDU8EAUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=t1UphFUo; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=cCG5TLp9; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=PpZgHqkB; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=jCihZN4b; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b="fk6C/UAy"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=S+lN1ShL6F8RypAKtxB+Q1YhiJ803rZFM9X54+uwQsFKoA+40rthju+IZpumn/04WJhAG9w0LfTkj8t/YJFPPSccIeljrGZwuPF9MfZINn8zxVC+qbir6O8G7MgfSnXZrzG7pp/QrTohe1ZSN4z26DaV9vfK5MWHeSDU8RKUCpJ1Aw12KS8cLGbHmr2GFKt8Kcgv0bQAbQ0x81RnHEpzylCh43a2XixrK4WYevOHPSGeekee1SwzyQHBQcwElE4Ggt7rVzuRoTqvTXuvc+f/64UhjyczzsQNpgOWvbjoP5K3fo5e7JhQJPVVJKy4rSYlNQ2IAtZkYLOwrcAzkqzDNg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/aVGVA/y5suqMtGINtsNZSCng9qJcTNEhVywcJgm6MY=;
- b=Z4NK70mVSIDUkWgZ/xZEw3+b3Y1IQa1rTCLuq5zGGKD/n0G16H4vZVYKJhjkX/AH8Xa+wJ5kKBvOhTIMGdqrV2TEl1TqSHC6kn6AYKsJISzOknXk+RujjbJWvlIHdsOdC5KOGu77hOHHj44VgDzjPOMDPSufgOV1ruzEgG7aDHTHLiuVJ2F+ayYgNk6Pmpx7DhqIxTrw1WkhiMLPbp6pg4gcDrxfdRjvwB0RUkXALASVW5kwb5+54j7msXzhIckidTvNGzCDiz+D5wVpvpSdS+BgCe1SWCSbyhIMlI2fUL5QycDvd9h9iKf7hS3BO19MNMm9VBS/38s5j39LtdqOUg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amlogic.com; dmarc=pass action=none header.from=amlogic.com;
- dkim=pass header.d=amlogic.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amlogic.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/aVGVA/y5suqMtGINtsNZSCng9qJcTNEhVywcJgm6MY=;
- b=fk6C/UAyfHvVspRKqIobEOlQ6YWX5rMja/S1DfBjHifbSg/NCrpU3XLqqJ7OJ9gcZoTjK53PqBd5prWhMuqRPIrgvm6TKlnete8aIdkndibNgEINAAI4yVC93eYbpjdGSNqRqIV/9CAhWsDcBCCEORo6upzm829qGqfTZa2LBRekg80AyUsu6fOt/WAkG26zj44K37O4YqtGrxHnK8gTUV6fnLdt5dxwpUTfEuuKxUJQnDmKjIB0H1Z4Pq/BJ7hZnzRhONXBOJ4/2/kLfD2BMu3E55tEmZAdwhM1+IBCzF7c1o1crZriKwCIFwMaC6saCYsSvUp+vWiyg7XsYfIGww==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amlogic.com;
-Received: from KL1PR03MB7149.apcprd03.prod.outlook.com (2603:1096:820:ca::7)
- by KL1PR03MB7902.apcprd03.prod.outlook.com (2603:1096:820:fa::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.16; Thu, 24 Sep
- 2026 10:37:43 +0000
-Received: from KL1PR03MB7149.apcprd03.prod.outlook.com
- ([fe80::2f06:12a:fff0:6506]) by KL1PR03MB7149.apcprd03.prod.outlook.com
- ([fe80::2f06:12a:fff0:6506%3]) with mapi id 15.21.0451.014; Thu, 24 Sep 2026
- 10:37:43 +0000
-Message-ID: <e9ac114c-625e-4d76-9aae-0afb90d0ed92@amlogic.com>
-Date: Thu, 24 Sep 2026 18:37:40 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 3/3] clk: meson: t7: Model PLL pre-divider as a
- divider clock
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org,
- linux-amlogic@lists.infradead.org, linux-clk@vger.kernel.org,
- robh@kernel.org, neil.armstrong@linaro.org
-References: <20260923-meson_refactor_n-v1-0-3a8ce27121a2@amlogic.com>
- <20260923-meson_refactor_n-v1-3-3a8ce27121a2@amlogic.com>
- <20260923112659.8A02B1F000FF@smtp.kernel.org>
-From: Jian Hu <jian.hu@amlogic.com>
-In-Reply-To: <20260923112659.8A02B1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SE2P216CA0018.KORP216.PROD.OUTLOOK.COM
- (2603:1096:101:114::17) To KL1PR03MB7149.apcprd03.prod.outlook.com
- (2603:1096:820:ca::7)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="t1UphFUo";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="cCG5TLp9";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="PpZgHqkB";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="jCihZN4b"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 1DFB321EBF;
+	Thu, 24 Sep 2026 10:46:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1790246793; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=oa7Z2bXQvWMTDG162a3ENzsWRpailpO1SXnlrsEkNTk=;
+	b=t1UphFUo7kcrWcl2HNBA828UMnRrKGGUw1vt8kgDuqnDUsNk/bmf3wpg2KIjedpHbpyoMS
+	esczWuCpTGQK9/0rFP2x7/137GYm3x9M5jGrNRu44wEzkn4OFGARi2z1YQ8dmHSOVYAzhO
+	3rUzwixSE980+hTG8yRsa4v1vbUBR4c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1790246793;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=oa7Z2bXQvWMTDG162a3ENzsWRpailpO1SXnlrsEkNTk=;
+	b=cCG5TLp9gQeBe+V5s6ft550xPNHBVScn4+JzzCN6x6twsl1kNF2O3srKGyCdMM8Sd5fp+b
+	2/WRMXdRA0TlJ9DQ==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=PpZgHqkB;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=jCihZN4b
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1790246789; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=oa7Z2bXQvWMTDG162a3ENzsWRpailpO1SXnlrsEkNTk=;
+	b=PpZgHqkBS1WUMDL9MnGO4whto6FhJg5rP4IidurC2q6Zj+Mjue4zkWOj63I/1Pgx7SG0Un
+	eM+GjR/A2TNE1D24LuPkBCQHzr3P2oKwWY5q4H7bU1FXlp0Zs6TUEdT2EuXFXSpS8ajz2N
+	Zl10JA8wU3a/SwhGS0ZTCd2W65eh/DY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1790246789;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=oa7Z2bXQvWMTDG162a3ENzsWRpailpO1SXnlrsEkNTk=;
+	b=jCihZN4bTYCHAnzV2Llu3edwtQ3aYH17LTrH9wjFpjFdt2Q6JvIfGyiABLYwtv7515TWUq
+	SUzJ44wSWSo3KBDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AD48513354;
+	Thu, 24 Sep 2026 10:46:28 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id nH5vE4T/tGpxdAAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 24 Sep 2026 10:46:28 +0000
+Message-ID: <80a93244-dc29-49c2-b4bc-1133d0443443@suse.de>
+Date: Thu, 24 Sep 2026 12:46:27 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR03MB7149:EE_|KL1PR03MB7902:EE_
-X-MS-Office365-Filtering-Correlation-Id: 956b2bab-cb4f-4ac3-7675-08df1a27dd40
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|10067099003|4143699003|56012099006|11063799006|6133799003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	tBgjBRxkAgP5ucIFFR38Ik9UeEY8gkt28Ys0n5YYeCtcnaNbwcZeRgwWFOHOwjJ68J4W8h9VkdX3ef2WjsvjpvlHHsbvW9BtSdlU9FV8iDPKpNNMGV2PlKAxF1ncIQ96xAT6qyz3D1GrJdfCNsprf5Z1mrzJC3kWly+HPm7+NfoTq25icpCrALg+44twcD+4tnQWqn3JFvQi/1xEMFMvzgCHlr2k4BLBmQNJt+zc/8fbhKttJ0xfkMPGMawcTfsDMpCYw3l3/ly13n7TfflniFNc3iqa4WAysOZQb2ntdV7XF1PrYTP+tWPSObtJBRXHxRsl7INoMRdrIPsXEqabqYmiYeY1s0FjTP5ER5QZGIHQ2kST0H/cA5tH0rS+6Rc/RuVytHog6YGvNviZ1A5fujA6dkFRf7cFf7ZbERzdbnIsxyXUMDhUvIPNgQywW72uqwBLV343HCr5PTUotJFuSeItTBYOkA1ONDn1ZO2Au1fUPfkHE7+oropGNjbBvsBqPoNDvgkfvmDCs1jV5Gv8d6a2E4OxTYlqN88baW+Kbqn6cXXe4uGOI4bOZxo8FXavT5NNEhlkURggDr2zzkK6JtMaR+8L0/BkHp1mlF9STzY=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:KL1PR03MB7149.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(10067099003)(4143699003)(56012099006)(11063799006)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?bCtmNE9rbmxMT0l5MnJ3a2lHSkptRWtzODArSjRRRXZVcUxydG5MK21Dcnhk?=
- =?utf-8?B?K3VtbjNzcHBER1VpR3htWkgrUU82MUUway84QnNpRGpFRnBFKzhwRmxrZU1C?=
- =?utf-8?B?bHhWakxvV3BJMEMxYlZVUFNhc2pobHhNWVBzT1dnK2Z3a0wxZzlQV0FHdDNE?=
- =?utf-8?B?V01XaGdHVGlzVDlNUWJZNW45ZVhlc3lVam1JcnFSOExSK29zcnNsQWZtYVVM?=
- =?utf-8?B?emxNNXVpdGVrRDJyMjU3dWMydlRrbHZnYlFWazV5amdSSVFBRERHVEFsc0Rh?=
- =?utf-8?B?MDFIRFBZRGZtNFNGSkVOcEpMMlc5S1FqOEZxcHJlVGJEYVFDU1NQSUwrbW9W?=
- =?utf-8?B?WUFFQWhQSHRWWW1SVUtWaVJjU0s1WHEzSmtHWkl3QXJTRUduYjZBUGtEcU1h?=
- =?utf-8?B?UlVjOWMyUEorS0t6VXBkWmgvaHZWSjdvU2ZFK2dneHR0cVpxNG55OUN0bkxM?=
- =?utf-8?B?ZjVuaDVpM0pLRjdRN3dBTXJpZ2loeDU4Z3B3RTBnQ0svV2hEZTIzaHlnMm1l?=
- =?utf-8?B?OXJpVEdJUldVQWtPbHlmSjlVQzB4OFhBWTI3ODZwL1VpLzNXUHIrUXZnaytQ?=
- =?utf-8?B?Mmk0NG1IcStDZzJES3M2alBRMCs4ZDRaVWZzQURjdkJFL0F0UTBvcU5BK1pM?=
- =?utf-8?B?V3lDSXJXTy9YSlNoK0twblc4Q0FWTXRiVUpEajQ1VTAzVFVhYks2MnBCQ1kw?=
- =?utf-8?B?NDh4dDlJdDJBb2t1ZUE5OWNtQ01iY1gvcFFoTmRMMnZVQWVZZ2V1NTF2emwx?=
- =?utf-8?B?TGt4cklybHBKUE16eDBFTUhwMDBvWHptMGw0QlJlOWc1bnkxRmFjODJVNDVy?=
- =?utf-8?B?N00xclFST2lhN0dIcFh1aVY3Q09BL2FDYlU1NVRYb1pWWCs3MmNpSTByc1cx?=
- =?utf-8?B?eG5rRVJmalg3anNETDJJTVFJRmMrd0prL29ZLzZYZEVhU3picHc0d1hDNTlP?=
- =?utf-8?B?TENYZXYxalUzT2RBbmkvR0lmazVGVWd5bDBSQTQxdXR3M2N3RHN0SWM4dmdK?=
- =?utf-8?B?aFQ2RnlBQjhzNG1VY1pneVhOemNjeWR2TFFVVDM5WmFFdU0rbGJFTDJnaXF0?=
- =?utf-8?B?ZW5iSDdoY2VVOG4zNlRSc1V2ZDRZV2dld1k0eUtVOVd3STFadnNlNnFhZFdF?=
- =?utf-8?B?cXVGU3Y4MS9RYWNLZHk1ZzFDK1lhd0M5RWx2czRIS202NkhoRlFBbDZ3TG9r?=
- =?utf-8?B?YjJNdWhVeDBUb0FSeklqR01RTElLcEg4bXpBOHBBWHhCUmowRGJVcU5DWm55?=
- =?utf-8?B?clFhdFRYTmpoRktJd05GcFZTdkJiY2JWcENIb3RRblpRdzQwN0h1ZjVFd09k?=
- =?utf-8?B?YUFja1VxdUhUQ1FkMWdnWEREQmZpUWZTckoyK0hMN0F0alIxYkp0SDI0RVNl?=
- =?utf-8?B?RU5SSThVS3hKcjlxWHg2aWFCS2FTbnBMMXhLZHc5Y2RRWFB1M0JkNGV5cVpu?=
- =?utf-8?B?S1ZxNUFMcXNuSXpnbC83T3k1cGJhMThBN1gwWDJyUmY5dWpkQlNhRVNpYWc0?=
- =?utf-8?B?Und1ejVzV1VGVGlWUlNSbXBMaUs1eVdBNEhHKzluWVdaaHRzajN6bUpFVm5i?=
- =?utf-8?B?SFEvSTd6R0lZaFRIZGFWbjFBc0pEN0F3M0VHMWZ6OEYrdU9wV05UYVhyM2RP?=
- =?utf-8?B?RFFxWU9sR2pMaWxvTUJvYnpBOW1wdjBWN2FDZWFpL3JvaXpLVDZjSFpTeERF?=
- =?utf-8?B?VWxOeXpobDlkSU0rV3J3OFkvQ2dtek9GUDZCRkFMNU9iVVQ2L0t2Zml5KzNZ?=
- =?utf-8?B?MCtHU1J1ajEwWDVrcUc3aU9NTmFLS1VrVEwwdG9zK0NaMWNCN1NBc0FOSjlF?=
- =?utf-8?B?bE10eEdGZHE4WTcyZUVjek11c3RCTk5CS1RRdEhaWjhPL2hxQXQ1aDNhUUtU?=
- =?utf-8?B?RW9zbzRCMTduekgvaGhadHJUVDBFbXZDdDJnM3IzMU5IMWlBOTlTclp4OTZU?=
- =?utf-8?B?cEZRNkpLOTZsOFptU0t3c0tDaXpKMGNaOG15MGJxeGtXcFJSWGplYncyVUp3?=
- =?utf-8?B?OGRnbDhKb2FQUGFNQlQ2OUpKVXJiZGdWM1plZU45YUZLdjAweGhoMWZ1a2Nn?=
- =?utf-8?B?SGZiNVhvSHlPc2E1NGtQRk1CL2VSUVQ0ZGhycWZ6MEpXcjNKMGdtcW8wTXNU?=
- =?utf-8?B?eGlnYXZjOWdxMFlBcms4YTZlbFczSWZBUVR6T25kWWlsQldRcnNscFZhSGRw?=
- =?utf-8?B?LzdWenFBYlNRMmRSV0tmUlV4dFMzcjFDQ0l0MERIazBJVWltQW1ud3lGeit1?=
- =?utf-8?B?M20vSXF1cFlEOHJMTDFrcWV5djM1SEMrMllBSkZtcUxKVG5VR3Y1a0RxU2pM?=
- =?utf-8?B?UHhaM3B1RWJrUnpFaSsvWTN2UHd1QjF0ZVRXckloakhhbFByRXZwdz09?=
-X-OriginatorOrg: amlogic.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 956b2bab-cb4f-4ac3-7675-08df1a27dd40
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR03MB7149.apcprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 10:37:42.8980
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0df2add9-25ca-4b3a-acb4-c99ddf0b1114
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2y1rccH5oPmpoy7x1XWZxfvCgUST2GgftNJg4Qg3AUED+y1loAwk6rtMIvoBvbIbd2+pYtN5+ysLdx+uUSFHsg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR03MB7902
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] drm/fbdev: Move fbdev helpers into client library
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org
+References: <20260924093036.82356-1-tzimmermann@suse.de>
+ <20260924093036.82356-3-tzimmermann@suse.de>
+ <20260924094332.14F311F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <20260924094332.14F311F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Score: -4.51
+X-Rspamd-Queue-Id: 1DFB321EBF
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spam-Level: 
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-0.999];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email,suse.de:mid];
+	MID_RHS_MATCH_FROM(0.00)[];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_THREE(0.00)[4];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	TO_DN_NONE(0.00)[];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Spam-Flag: NO
 
 
-On 9/23/2026 7:26 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] clk: meson: t7: PLL pre-dividers permanently stuck at 0 due to missing CLK_SET_RATE_PARENT
-> - [Low] clk: meson: build failure in drivers after struct meson_clk_pll_data change
+
+Am 24.09.26 um 11:43 schrieb sashiko-bot@kernel.org:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] drm: missing DRM_CLIENT_LIB selection in memory helpers causes linker error
 > --
 >
-> commit 03f0a62ef49427b4fecb0de15b51e80cb45be623
-> Author: Jian Hu <jian.hu@amlogic.com>
+> commit b0f3c606cfc59f0c56cd9be7e3349abc72f97a64
+> Author: Thomas Zimmermann <tzimmermann@suse.de>
 >
-> clk: meson: t7: Model PLL pre-divider as a divider clock
+> drm/fbdev: Move fbdev helpers into client library
 >
-> This commit replaces the dedicated PLL pre-divider with a standalone
-> divider clock in the Meson T7 clock driver. The PLL DCO clocks are
-> updated to take the new pre-divider clock as their parent instead of
-> the input clock directly.
+> DRM's fbdev helpers are for the fbdev-emulation clients. Move them
+> into the client-library module. Fix include statements throughout
+> DRM drivers.
 >
->> diff --git a/drivers/clk/meson/t7-pll.c b/drivers/clk/meson/t7-pll.c
->> index 0a622f45fa368..049f0c879c458 100644
->> --- a/drivers/clk/meson/t7-pll.c
->> +++ b/drivers/clk/meson/t7-pll.c
->> @@ -71,6 +71,34 @@
->>   #define MCLK_PLL_CNTL4               0x10
->>   #define MCLK_PLL_STS         0x14
->>
->> +static const struct clk_div_table t7_prediv_div_table[] = {
->> +     { .val = 1, .div = 1 },
->> +     { /* sentinel */ }
->> +};
->> +
->> +static struct clk_regmap t7_gp0_prediv = {
->> +     .data = &(struct clk_regmap_div_data){
->> +             .offset = GP0PLL_CTRL0,
->> +             .shift = 10,
->> +             .width = 5,
->> +             .table = t7_prediv_div_table,
->> +             /*
->> +              * The hardware reset value is 0. Allow it during clock registration
->> +              * to avoid a warning from the common divider code.
->> +              * set_rate() will program the valid divider value (1).
->> +              */
->> +             .flags = CLK_DIVIDER_ALLOW_ZERO,
-> [ ... ]
->
->> @@ -97,11 +125,6 @@ static struct clk_regmap t7_gp0_pll_dco = {
->>                        .shift   = 0,
->>                        .width   = 8,
->>                },
->> -             .n = {
->> -                     .reg_off = GP0PLL_CTRL0,
->> -                     .shift   = 10,
->> -                     .width   = 5,
->> -             },
+>> diff --git a/drivers/gpu/drm/clients/Makefile b/drivers/gpu/drm/clients/Makefile
+>> index c16addbc327f0..1304ff358509d 100644
+>> --- a/drivers/gpu/drm/clients/Makefile
+>> +++ b/drivers/gpu/drm/clients/Makefile
+>> @@ -4,5 +4,6 @@ subdir-ccflags-y += -I$(src)/..
+>>   
+>>   drm_client_lib-y := drm_client_setup.o
+>>   drm_client_lib-$(CONFIG_DRM_CLIENT_LOG) += drm_log.o
+>> -drm_client_lib-$(CONFIG_DRM_FBDEV_EMULATION) += drm_fbdev_client.o
+>> +drm_client_lib-$(CONFIG_DRM_FBDEV_EMULATION) += drm_fbdev_client.o \
+>> +						drm_fbdev_helper.o
 > [Severity: Low]
-> When removing the .n parameter initialization here (and presumably from
-> struct meson_clk_pll_data in a prerequisite commit), does this patch series
-> also update other Meson drivers like drivers/clk/meson/gxbb.c and
-> drivers/clk/meson/axg.c?
+> Since drm_fbdev_helper.o is now built into drm_client_lib, can this cause a
+> linker error for built-in memory helpers?
 >
-> Looking at other drivers in the tree, they appear to still statically
-> initialize .n in their declarations:
+> If CONFIG_DRM_FBDEV_EMULATION=y and a driver selects DRM_GEM_DMA_HELPER=y,
+> but CONFIG_DRM_CLIENT_SELECTION=m (selected only by modular drivers),
+> drm_client_lib.ko will be built as a module while drm_fbdev_dma.o becomes
+> built-in.
 >
-> drivers/clk/meson/gxbb.c:gxbb_fixed_pll_dco() {
->          ...
->          .n = {
->              .reg_off = HHI_MPLL_CNTL,
->              .shift   = 9,
->              .width   = 5,
->          },
->          ...
-> }
+> This would lead to undefined references to fbdev helper functions (e.g.,
+> drm_fb_helper_fini) during vmlinux linkage.
 >
-> Will leaving these initializations in place cause a build failure with a
-> 'has no member' error for those drivers?
+> Do the memory helpers in drivers/gpu/drm/Kconfig (DRM_GEM_DMA_HELPER,
+> DRM_GEM_SHMEM_HELPER, DRM_TTM_HELPER) need to explicitly select
+> DRM_CLIENT_LIB when DRM_FBDEV_EMULATION is enabled to prevent this?
 
+To answer that question: yes they do. And I forgot that they already do 
+the same for DRM_KMS_HELPER because of this dependency. [1] The 
+KMS-helper rule simply needs to be replaced with the client-lib. The 
+memory managers do not use the three module parameters that remain in 
+drm_kms_helper.ko . No need for a dependency there.
 
-  I will include clk-pll.c and all the PLLs in a single patch.
-
->>                .l = {
->>                        .reg_off = GP0PLL_STS,
->>                        .shift   = 31,
->> @@ -119,8 +142,8 @@ static struct clk_regmap t7_gp0_pll_dco = {
->>        .hw.init = &(struct clk_init_data){
->>                .name = "gp0_pll_dco",
->>                .ops = &meson_clk_pll_ops,
->> -             .parent_data = &(const struct clk_parent_data) {
->> -                     .fw_name = "in0",
->> +             .parent_hws = (const struct clk_hw *[]) {
->> +                     &t7_gp0_prediv.hw
->>                },
->>                .num_parents = 1,
->>        },
-> [Severity: High]
-> Since the pre-divider relies on .set_rate() to correct the invalid
-> hardware reset value of 0, will the common clock framework ever actually
-> call .set_rate() on the pre-divider?
 >
-> Without adding the CLK_SET_RATE_PARENT flag here on the DCO clock
-> (t7_gp0_pll_dco), rate requests to the DCO won't propagate up to the
-> pre-divider. Could this leave the pre-divider stuck at the invalid 0 state
-> and permanently prevent the PLL from functioning?
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
 
 
-Ok, I will add CLK_SET_RATE_PARENT flag for DCO clock in the next version.
-
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260923-meson_refactor_n-v1-0-3a8ce27121a2@amlogic.com?part=3
