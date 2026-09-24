@@ -1,273 +1,190 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3433E38C438
-	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 14:15:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.175
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790259312; cv=pass; b=FNHPQPnZCwkx2xU5bN/UzwI2JTsUgbAVIuE0S6O5suPyZF56nMW7fZCjBZHx8Ee1iNZn/h2zkPn36fbet3BR65qLUAkMXz5G1/QIE7D7DTKKrK86eN6CWILnl8Uf1mWBxFfDWEwNuC2Xx6KLMvw1svhiKQm5XldGJha/tzx9nqE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790259312; c=relaxed/simple;
-	bh=cjkcJje3D43GI36ThNxlKNXb2AapwbD/qOFz41XnyWw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZhRdQHDUUZXjcQLvf8aSyTDOADYQCrLFBonYCR0HoJ/obzgXn3FvbUQKLaOAwUKVmNLeAIyDxo03f07Z7Fz//v8XXM6PYkHqWIcjHgi0zmU+Xif8H/VAlfUj6ohIYPnBSNWfWxntpqCQcSIDKu0x0VlWUiFspFvWm9js6NeNrxI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tHm1I0uO; arc=pass smtp.client-ip=209.85.160.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817CB3AFB06;
+	Thu, 24 Sep 2026 14:22:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790259773; cv=none; b=RZlscYeR+eyHxXxpEWsPmJw7QaFCE9toUo5jQzPAlEumK++okEcUxDzNqH3xmVFpxs7DLUMKM/HnZYqs+sGd2T5R5XdeCo4RFJ3NWESRE8Vso1NgyxlezacsRZjn9ud04J95an0SQvGDMt9O5p1X8PfPfrnN6YNxYdHM3G5GUCg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790259773; c=relaxed/simple;
+	bh=HcgilLYHpxyoqmigxbps8RHK8zFGBv5PTxUhVX50ys0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WtINspKq0OWtNeUyJOekEX8J7EiC9xSjaDQo7O9t4sbbsR62cxxcDom3gInb9QKzJjg2sCZED+C1Lm2QJt2aMj9+r2/ME8etaPUd8NGCq2hExMeM70YMFkWRiL6XBYihgyU70Cjpaywaz2SWcyUfM9jsByqz93EPoZdd/beRXJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iJLjQ+z3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tHm1I0uO"
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-52faa58bff5so274951cf.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 07:15:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790259307; cv=none;
-        d=google.com; s=arc-20260327;
-        b=OnCyfMyEvzZ7YVAaBT6rW2uBQJSdE8G6vUkUm32CorYtR8WRYJvoJMVU9xQMmkwx7Z
-         kGO6pDvBlmllOtLdbLlpZLAl1h6TJ4rpIQ9KJgSonhuTbNlRRG0NwiJ9XgT2RlldYMYP
-         Q+B7JcmJ5OWr57w1gtAS1SWvXed4NKn1U8MWp7yZqzY8AMO+iFN0HV1G7gmO0cxnh8VZ
-         W80verTpLoDOgVzPQSa96M9RRHL6cs7H50q2hPbh/I9gMkEoxW/vWCxIF1Y+c8ApbbYB
-         wIZQt0+VJo5SwO1s9hEqmtAaa24RywvyA8MZ/bsD1ztSEgFxSI+JIIRD83eQh8/esxxr
-         yIpg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=C7QwgFIDJPeVD+m+9h/VZ8uU/5iMIuRsG3J/mrcbQTA=;
-        fh=WwZD1EB6Tjgd87mh/04sazSNljN3VCeXXd+1MHPWLKM=;
-        b=Cocs2V7F/acwjhQ6C9fOCH8Um6E/DQmhRpKGR6yNzrxbbFyt7zl+dW5EgHPdOb1Bre
-         9CfkiO5mBmRcIJJvY9rbmmY9v0WmSnUWqj/lZxsj6lSpkVqdeUxEilkm366NrAwns05H
-         IvUmPdXAvGQAXSSsgljZUzAV7leG4jKG1T9oGs4tWgN5HtblUgAvbTdfXbAM82KOukID
-         1xpsCFsCrWvIwPbthiMyKO0gMGEcViqi6mU0xr/p556egoCu2jpOg35SmvOYPev38c7+
-         b1kX2MJy3gsj1izOcvQHv4oil5n1IHi4R7cIWKySN1eNmqvbDyp5XIdOf+I3TfXcwX78
-         VN4Q==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790259307; x=1790864107; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=C7QwgFIDJPeVD+m+9h/VZ8uU/5iMIuRsG3J/mrcbQTA=;
-        b=tHm1I0uO4U4BPDSsyIACljvyp9Wxa9TRnA0ieOk4Dzt/gZVW/XrZvbWuOzZUPRkvIy
-         EnNCYk3Nui7XFyRCvBmUOfFJzKfcwJxXdEjT2L3HGA94O0+lvLri4/LWDido3PD/HKAo
-         YbVChmwTWgrtQRZFumVtnnha5Pzq1v12Dzg8DaPsXOebE4HoJhwjpmNVDhEtSEwMZFhB
-         iIYVclqH5HiB0Bpy9GXW84NEAxAyoGQgJm5R7x0v0O+oFvpzhD69M5RFCiKFTkyBBsZ4
-         +dGe+mFhZrAJ5DH4UTH8U5AB7XHMno+TYxua2sI5Zv2ylB2F3lh8m8tR+IJUU88ZEFIx
-         t4Vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790259307; x=1790864107;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=C7QwgFIDJPeVD+m+9h/VZ8uU/5iMIuRsG3J/mrcbQTA=;
-        b=aFCFtrqCMr4rSlymrsOGMJPEH/ce+g71txRs+6veklEYzuBdUgIKEuxPf2I6q6fUz7
-         sBWQZjAWw+U/v9M1SFcogl5Ed85Y14KK/hW5u4JThO7UwVtMJ2Ns+M6VEjuiuy2VsWG2
-         erEudOeWD7pqBe5iAmI6cruWlIrN7ZhPsgcbbXtmVTZkKGod24yGCN0i6Z+sBDGEyNcF
-         21sjK3jWDNLSOgGNvzVHgYAvPbiIdETrQiFi3WZcPzKi4myZ3uVrneyED7pz3+af9sJR
-         vfcvYuKcUNXhpbYERq2DM6s2PdOpNRyqnVJL8iVx3QS8EMHl4jN18WKNUtJ0zR5cwf3E
-         ME9A==
-X-Gm-Message-State: AFuF++mKc50IkgluDPCyQovKSnfkFm1r6HIE2V/o5eseyzten/9A6w2+
-	AUqe5rxKk/VYFYm1HrpNLO+NKnwVdjzMkyfFnsXX5B5iSgTHBkWynzLsugVYqCsqzbIPDGLptog
-	e1+zsjQS9V2viDQYFgxxqTP/Rt2dv1agPcAC+hb76XUXkSMF0LR5DPc0lLKQ=
-X-Gm-Gg: AYBFou1HK+BilNjNh6ygNOAr4oo8gJy6jJiphXvZRcf68+W49z32txLn594R9zn0/RO
-	wO0cIADWD6NAn60mfdBN5EHYpBYv6moofkQ3PZyefPrvycbbAmNhKQnNhdrYrnlZcp1RwWp8jbY
-	86jdtrK1nYUM1Il9y38eGLlQSwODqkkU84HQF3Hr111OtgaqvSypzk4lU40WhlvLTGhMA2q8Y8f
-	GYFSj9ADPfhuKasMdYzpF3BE4R+X3kl3M9hIlADMVel5+n4oAPRYyVRohOYUSt9P7aMc8NaFeFQ
-	hIgfp7zohlOybjerNHoH1U77HMUIuomHguDBwWf0rK1mPsgVVncgtpg=
-X-Received: by 2002:a05:622a:107:b0:532:84d3:abb with SMTP id
- d75a77b69052e-532fea4a126mr10270761cf.7.1790259305798; Thu, 24 Sep 2026
- 07:15:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iJLjQ+z3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F791F000FF;
+	Thu, 24 Sep 2026 14:22:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790259766;
+	bh=j5t8Z8t0hCyzALZcT8Uztk064hS1Vk/1yGtt+yian+I=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=iJLjQ+z3yyBT7V5gaptAQEHSv7FTz/FXSmqHiO42Xo42m/OKfDyHmm/iO9/9MUoSs
+	 J45fM7pL+Ot6+gX1Fpq48VbXjG4uXEU5cnrLrh5SH0tZbo+e0bpeH2oMr0dwc47jdq
+	 GZPtGzBbdsMj7b49J6R7n83Ug9s3KMqW8ssG7BX1SWji3S5NxFM9gme2Zcc130wqCx
+	 d8EiTZh/xomFPqCEEoOQ8Rn5bCnqjDAcLE/538AMBOIHAx3UnOVpnBVjhdHZVeQIIN
+	 +pVqoAgWP4vIhy4oIPBBsj7Kuwax8eDlSOP9d2FsbWpNMcZGyepNsrl72ahyUqgj8W
+	 e7rQ7140vEEiQ==
+X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, media-ci@linuxtv.org,
+	Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>
+Subject: Re: [RFC PATCH v8 01/14] mm: Add an allocator for CoCo shared memory
+In-Reply-To: <20260924101907.5C6261F000FF@smtp.kernel.org>
+References: <20260924100529.1398790-1-aneesh.kumar@kernel.org>
+ <20260924100529.1398790-2-aneesh.kumar@kernel.org>
+ <20260924101907.5C6261F000FF@smtp.kernel.org>
+Date: Thu, 24 Sep 2026 19:52:39 +0530
+Message-ID: <yq5a1pai4tlc.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260924053645.3555041-1-irogers@google.com> <20260924053645.3555041-16-irogers@google.com>
- <20260924054906.404961F000FF@smtp.kernel.org>
-In-Reply-To: <20260924054906.404961F000FF@smtp.kernel.org>
-From: Ian Rogers <irogers@google.com>
-Date: Thu, 24 Sep 2026 07:14:53 -0700
-X-Gm-Features: AclHuK8ZVOo9UPJOqQO5EI7ej6eUSk_Nl-O97AH2fqwChdW9BPzVRoYbGo57ahU
-Message-ID: <CAP-5=fXwk8TT-aQYUz+q7RYAcEiEez4MZwGEe5j7rfsTtvq2bA@mail.gmail.com>
-Subject: Re: [PATCH v1 15/21] perf vendor events intel: Update novalake events
- from 1.00 to 1.04
-To: sashiko-reviews@lists.linux.dev, Edward <edward.baker@intel.com>, 
-	"Taylor, Perry" <perry.taylor@intel.com>, Stephane Eranian <eranian@google.com>, 
-	Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: linux-perf-users@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Sep 23, 2026 at 10:49=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] perf: UMask omission in novalake events causes EventCode alias=
-ing
+sashiko-bot@kernel.org writes:
+
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] mm: alloc_cc_shared_pages_node fails to strip __GFP_MOVABLE
+> - [Medium] mm: alloc_cc_shared_pages_node fails to strip __GFP_HIGHMEM in fallback path
+> - [Medium] mm: cc_make_shared and cc_make_private are not exported for modular callers
 > --
 >
-> commit 1470a977cdc98c6d093466522a50ce1b48974108
-> Author: Ian Rogers <irogers@google.com>
+> commit 3978c8ce72bbc2aa23e57a460b585808665262a4
+> Author: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+> mm: Add an allocator for CoCo shared memory
 >
-> perf vendor events intel: Update novalake events from 1.00 to 1.04
+> This commit introduces a common allocator for confidential-computing guests
+> to allocate shared memory. It provides helpers to allocate properly aligned
+> contiguous pages and transition them to shared state. It also adds helpers
+> for transitioning memory states when callers manage their own backing memory.
 >
-> This commit updates the novalake PMU events from version 1.00 to 1.04.
-> It synchronizes the event lists with the latest intel perfmon updates
-> and updates the format encoding for the off module response MSRs.
->
-> Link: https://github.com/intel/perfmon/commit/50afd00f84fb8c7bfa26a993a96=
-8982c1573e6d1
-> Link: https://github.com/intel/perfmon/commit/b576c542b68d377fa00ef467471=
-5ea87a37c309c
-> Link: https://lore.kernel.org/linux-perf-users/20260923015517.2665398-1-d=
-apeng1.mi@linux.intel.com/
->
-> > diff --git a/tools/perf/pmu-events/arch/x86/novalake/floating-point.jso=
-n b/tools/perf/pmu-events/arch/x86/novalake/floating-point.json
-> > index 471a90f3670c4..2dda2225d0043 100644
-> > --- a/tools/perf/pmu-events/arch/x86/novalake/floating-point.json
-> > +++ b/tools/perf/pmu-events/arch/x86/novalake/floating-point.json
->
+>> diff --git a/mm/cc_shared.c b/mm/cc_shared.c
+>> new file mode 100644
+>> index 0000000000000..85e16f4504b8f
+>> --- /dev/null
+>> +++ b/mm/cc_shared.c
 > [ ... ]
->
-> > @@ -181,6 +181,22 @@
-> >          "UMask": "0x1",
-> >          "Unit": "cpu_core"
-> >      },
-> > +    {
-> > +        "BriefDescription": "FP_ARITH_INST_RETIRED.SCALAR_HALF",
-> > +        "Counter": "0,1,2,3,4,5,6,7",
-> > +        "EventCode": "0xc8",
-> > +        "EventName": "FP_ARITH_INST_RETIRED.SCALAR_HALF",
-> > +        "SampleAfterValue": "100003",
-> > +        "Unit": "cpu_core"
-> > +    },
-> > +    {
-> > +        "BriefDescription": "Number of all Scalar Half-Precision FP ar=
-ithmetic instructions(1) retired - regular and complex.",
-> > +        "Counter": "0,1,2,3,4,5,6,7",
-> > +        "EventCode": "0xc8",
-> > +        "EventName": "FP_ARITH_INST_RETIRED.SCALAR_HALF_WCOMPLEX",
-> > +        "SampleAfterValue": "100003",
-> > +        "Unit": "cpu_core"
-> > +    },
+>> +int cc_make_shared(void *addr, size_t size)
+>> +{
+>> +	int ret = cc_validate_transition(addr, size);
+>> +
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	return set_memory_decrypted((unsigned long)addr, size >> PAGE_SHIFT);
+>> +}
 >
 > [Severity: Medium]
-> Is the UMask intentionally omitted for FP_ARITH_INST_RETIRED.SCALAR_HALF_=
-WCOMPLEX?
+> Will this function be unavailable to dynamically loadable modules since it
+> is missing an EXPORT_SYMBOL_GPL() macro?
 >
-> When the UMask is omitted, the perf tool JSON converter defaults to UMask=
- 0x00.
-> Because FP_ARITH_INST_RETIRED.SCALAR_HALF also shares EventCode 0xc8 and
-> lacks a UMask, these become indistinguishable aliases for mutually exclus=
-ive
-> events.
+> The commit message states it should be usable by callers managing their own
+> backing memory, but virtio or guest drivers won't be able to link to it
+> without an export.
 >
-> Could this cause incorrect PMU programming and inaccurate measurements?
-
-This finding is correct and I need to do a fix. When there is a umask
-of 0 and and a umask_ext the umask_ext wasn't getting combined with
-the umask:
-https://github.com/intel/perfmon/blob/main/scripts/create_perf_json.py#L350
-It is the scalar_ext that differentiates these events:
-https://github.com/intel/perfmon/blob/main/NVL/events/novalake_coyotecove_c=
-ore.json#L8626
-I'll fix this in v2. This impacts more than just Novalake, here is a diffst=
-at:
-
- arrowlake/cache.json                      |    1
- arrowlake/pipeline.json                   |    2 +
- cascadelakex/uncore-interconnect.json     |    6 +++
- clearwaterforest/pipeline.json            |    3 +
- clearwaterforest/uncore-cache.json        |    5 +++
- clearwaterforest/uncore-interconnect.json |    2 +
- emeraldrapids/uncore-cache.json           |   42 +++++++++++++++++++++++++=
-+
- emeraldrapids/uncore-interconnect.json    |   12 +++++++
- emeraldrapids/uncore-io.json              |    1
- emeraldrapids/uncore-memory.json          |   10 ++++++
- graniterapids/uncore-cache.json           |    5 +++
- graniterapids/uncore-interconnect.json    |    2 +
- icelakex/uncore-cache.json                |   79
-++++++++++++++++++++++++++++++++++++++++++++++++++
- icelakex/uncore-interconnect.json         |   22 +++++++++++++
- lunarlake/cache.json                      |    3 +
- lunarlake/pipeline.json                   |    2 +
- novalake/cache.json                       |    2 +
- novalake/floating-point.json              |   18 +++++++++++
- novalake/pipeline.json                    |    4 ++
- pantherlake/cache.json                    |    3 +
- pantherlake/pipeline.json                 |    4 ++
- sapphirerapids/uncore-cache.json          |   42 +++++++++++++++++++++++++=
-+
- sapphirerapids/uncore-interconnect.json   |   12 +++++++
- sapphirerapids/uncore-io.json             |    1
- sapphirerapids/uncore-memory.json         |   10 ++++++
- sierraforest/uncore-cache.json            |    5 +++
- sierraforest/uncore-interconnect.json     |    2 +
- skylakex/uncore-interconnect.json         |    6 +++
- snowridgex/uncore-cache.json              |   68
-+++++++++++++++++++++++++++++++++++++++++++
- snowridgex/uncore-interconnect.json       |   10 ++++++
- 30 files changed, 383 insertions(+), 1 deletion(-)
-
-Thanks,
-Ian
-
-> [ ... ]
->
-> > +    {
-> > +        "BriefDescription": "Counts the number of retired packed 128 b=
-it or 256 bit double precision floating point arithmetic operations.",
-> > +        "Counter": "0,1,2,3,4,5,6,7",
-> > +        "EventCode": "0xc8",
-> > +        "EventName": "FP_ARITH_RETIRED.PACKED_DP",
-> > +        "SampleAfterValue": "1000003",
-> > +        "Unit": "cpu_atom"
-> > +    },
+>> +
+>> +int cc_make_private(void *addr, size_t size)
+>> +{
+>> +	int ret = cc_validate_transition(addr, size);
+>> +
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	return set_memory_encrypted((unsigned long)addr, size >> PAGE_SHIFT);
+>> +}
 >
 > [Severity: Medium]
-> Similarly, FP_ARITH_RETIRED.PACKED_DP shares EventCode 0xc8 without a UMa=
-sk.
+> Does this function also need an EXPORT_SYMBOL_GPL() macro so that modules
+> can successfully link and call it?
 >
-> This defaults to UMask 0x00, which will alias with PACKED_SP and other ev=
-ents
-> that share this EventCode.
->
-> Does this need a distinct UMask to prevent profiling collisions?
->
-> > diff --git a/tools/perf/pmu-events/arch/x86/novalake/pipeline.json b/to=
-ols/perf/pmu-events/arch/x86/novalake/pipeline.json
-> > index 998dd4cbc66a7..65a8a3058f81d 100644
-> > --- a/tools/perf/pmu-events/arch/x86/novalake/pipeline.json
-> > +++ b/tools/perf/pmu-events/arch/x86/novalake/pipeline.json
+
+
+I guess we don't want the cc_make_shared() and cc_make_private() APIs to be
+called by modules. Modules that need CoCo shared memory should use
+alloc_cc_shared_pages().
+
+
 >
 > [ ... ]
+>> +static int __alloc_cc_shared_pages_node(int nid, gfp_t gfp,
+>> +					size_t requested,
+>> +					struct cc_shared_pages *mem)
+>> +{
+> [ ... ]
+>> +	/*
+>> +	 * State transitions require a linear-map address and may modify memory.
+>> +	 * Allocate from low memory and defer requested zeroing until afterwards.
+>> +	 */
+>> +	gfp &= ~(__GFP_HIGHMEM | __GFP_ZERO);
 >
-> > @@ -146,6 +196,15 @@
-> >          "UMask": "0x2",
-> >          "Unit": "cpu_core"
-> >      },
-> > +    {
-> > +        "BriefDescription": "Counts the number of far branch instructi=
-ons retired, includes far jump, far call and return, and interrupt call and=
- return.",
-> > +        "Counter": "0,1,2,3,4,5,6,7",
-> > +        "EventCode": "0xc4",
-> > +        "EventName": "BR_INST_RETIRED.FAR_BRANCH",
-> > +        "PublicDescription": "Counts the number of far branch instruct=
-ions retired, includes far jump, far call and return, and interrupt call an=
-d return. Available PDIST counters: 0,1",
-> > +        "SampleAfterValue": "1000003",
-> > +        "Unit": "cpu_atom"
-> > +    },
+> [Severity: High]
+> Does this code inadvertently leave __GFP_MOVABLE intact if passed by the
+> caller?
+>
+> Pages are returned as shared memory, but they lack migration hooks
+> (movable_operations) to handle encryption state transitions during page
+> migration.
+>
+> If a caller passes __GFP_MOVABLE, the page might be placed in ZONE_MOVABLE.
+> Since the kernel migration code does not know how to handle encryption state
+> transitions, the page cannot be safely migrated. Could this permanently pin
+> the movable zone, thereby breaking memory hot-unplug and compaction?
+>
+
+I don't think we want CoCo shared memory allocations to be movable, but
+I'm also not sure whether we should filter out all of these GFP flags.
+
+>
+>> +	if (nid == NUMA_NO_NODE)
+>> +		page = alloc_pages(gfp, order);
+> [ ... ]
+>> +int alloc_cc_shared_pages_node(int nid, gfp_t gfp,
+>> +			       size_t requested,
+>> +			       struct cc_shared_pages *mem)
+>> +{
+> [ ... ]
+>> +	if (cc_platform_has(CC_ATTR_MEM_ENCRYPT))
+>> +		return __alloc_cc_shared_pages_node(nid, gfp, requested, mem);
+>> +
+>> +	order = get_order(requested);
+>> +	if (order > MAX_PAGE_ORDER)
+>> +		return -EINVAL;
+>> +
+>> +	if (nid == NUMA_NO_NODE)
+>> +		page = alloc_pages(gfp, order);
+>> +	else
+>> +		page = alloc_pages_node(nid, gfp, order);
 >
 > [Severity: Medium]
-> Does BR_INST_RETIRED.FAR_BRANCH require a specific UMask?
+> Can this fallback path inadvertently allocate a highmem page?
 >
-> It currently lacks one, defaulting to UMask 0x00 for cpu_atom. This will
-> collide with the preexisting ALL_BRANCHES event that also defaults to
-> UMask 0x00, leading to inaccurate performance measurements.
+> The function's kernel-doc explicitly guarantees: "A memory-state transition
+> requires a valid linear-map address, so such allocations never come from
+> high memory".
 >
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260924053645.35=
-55041-1-irogers@google.com?part=3D15
+
+Only when a private-to-shared transition is required.
+
+>
+> In the non-encrypted fallback path, the caller's unmodified gfp flags
+> (potentially containing __GFP_HIGHMEM) are passed directly to alloc_pages()
+> or alloc_pages_node() without any masking.
+>
+> If a caller passes a flag mask containing __GFP_HIGHMEM (e.g., GFP_HIGHUSER)
+> on a system without memory encryption, the fallback path will allocate a
+> highmem page. Any subsequent attempt by the caller to access the memory via
+> page_address() could return NULL and cause a crash, breaking the API
+> contract. Should the gfp flags be sanitized in this path as well?
+>
+
+From the allocation API's perspective, both GFP flags are supported. The
+only restriction is that memory cannot come from highmem when the
+allocation requires a private-to-shared transition.
+
+-aneesh
