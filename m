@@ -1,93 +1,174 @@
-Received: from mail-wr2-f19.google.com (mail-wr2-f19.google.com [74.125.225.83])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053F14E323D
-	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 21:54:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.83
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A756241D23C;
+	Thu, 24 Sep 2026 23:18:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790286870; cv=none; b=le+xAXevwsSvKQB2U/Wzz8S3bo+wApSRVYzFU64/WglEhhMUwNHXyKLx2Y1WkTyWKzZbbqfbj6USyKwGar8gOUvJLEw3CPrMcNaQARrwNNQ80T8lpWM9BZqdxDSGBtZ4IO8QyL3o/0FdqKV4jTc5ztXnVG1+JZpqHLpSKxiAKvc=
+	t=1790291934; cv=none; b=m+utQOrnXFeMl53W+N6wI5csR/2V50Qd43A2BZfWSQXZk6RW05hvjW7YIdk8kPaEQknlUMT/f9dZ7qeNHK6nDsqm8ekJInznM1UbHgNyHFvkgxoujE1WioiKO5iPi8yU7dU/pkaILrVYPos3Ahl2syg0xdMfg+hIoKZq3JGar14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790286870; c=relaxed/simple;
-	bh=K3t+LaWqIf9lBw3vRzbJsWwSHz8qVHJ39IY9rjX9FSU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r3Denr9nyrpTdfEaVCUNXd2gjxWTozh+guz34yl7gRbrNSFu58tqi2CufDXbtvOswFZZp5futedz6BUwI2TKBRbrlzaDxfRUl0f6wEd6cVxEzySAjo5PrCZfDXCnlIT6W26IVqy1XBqEQ9kk0DEt1H+2Qyn+NjMz6HM+AVdV9bM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rD7bPhhc; arc=none smtp.client-ip=74.125.225.83
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790291934; c=relaxed/simple;
+	bh=EMMUNFyB1PUTqCDsa5CKWLLr4IbRaMN1Zan3hUAnon4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JJ9YtflhkhqsyyatvlgkcADkydkM1jLq2HCcYbXCZ9lH41v81RLr/5EK1beV+XI34jrYH0on8ynNnIi345CIbjZl/cuJ3dtybZMmjbvaWet2q7MIb/COcefjCvavq2qoQgeLuKwnFM8lZV6609G4OMAuMWL6KiZ//BMRwa9I6O4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=KkXPizQR; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rD7bPhhc"
-Received: by mail-wr2-f19.google.com with SMTP id ffacd0b85a97d-48583cc7ab1so133299f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 14:54:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790286867; x=1790891667; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=K3t+LaWqIf9lBw3vRzbJsWwSHz8qVHJ39IY9rjX9FSU=;
-        b=rD7bPhhcYE7KdcId5F1RUjfz2UakcGcIEkZN/qnt2WHndlPyrQlKPLu8Cf30qDHX3d
-         /ceiG93ipKExgoPf1OA76YC0dBzlN4FV+j0GGA7KsJ6m5R/Pumy1V/oU8SPpxX0oTqGv
-         s5wcgnq4rCCt20zuP+vHGEWHvyiFFLFUVRxMWlQAQyf5nqbjZkhYlcdIdkTcx7i5R2kZ
-         LYyoZ6bqrZCoGsnxFiQdcXJP1Mu8Mlzyt2+aIEcN7/3MmCujGxlUcDtWXR338gVjX5KL
-         ZqjXCxW8EPU6Nua2AuOkv+Ctf4FVBq7m8SpsvV6JpDHhR3YB2KiuhEA//HraRWxlybvb
-         fsOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790286867; x=1790891667;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=K3t+LaWqIf9lBw3vRzbJsWwSHz8qVHJ39IY9rjX9FSU=;
-        b=iG3WNzH+sjGO5V88c9EFZBU4kxqcq1IIXO4lsQqV/iRMIp0jRewzj2/bWVUbod5Y29
-         j75Johwp6PokiftAsFXeT3O6IO1XSHha+MLtRhMMtDfxsJS58qP1iLreJO1jwTny29+r
-         o14tbUEIXnOlpYjXWBOqLwvtG11ziothVIBgqGjiw3u3auCD34suIuVQh8DYLpIXIqhp
-         VcajOVwc20eYHktagKVdbOBBOYYD6nkv9FQhs8p0AOgsAtkiY4HFoGEklXYYNEJRP1ao
-         BbWnb/ZYIv9+pt4QsyG2IPx9Nddc8Spx8+8B9rXam1FZVFZg1rQCt+IuAf5a/Ed58YwZ
-         kN6Q==
-X-Forwarded-Encrypted: i=1; AKwUvBx6vNSdGKSw9FJfw6QOM3XwdYHQCXVmzFfHuzAyLod1oCOd5Dka/Pxqwb4CVU0ncX9ltMYRYkhd1zQD7FGsgmc=@lists.linux.dev
-X-Gm-Message-State: AFuF++kSIKdkOrISpNgNdI+cVrV3AN6qAI/6975ns0FOeW4M9cYCkeCB
-	MTtBYS2ptdguu2POa6pZNSR+EhH6b8yFKn/5VWHyDcwS4uXji9FuwRgz
-X-Gm-Gg: AYBFou1fzC2dODrijsq7HJhhjQ4eumGxQ3Ae7nUG6M3NHHbISVYazg54UnwBcShsLib
-	XCtUnb6d3ObF8k8u6Uj5+lUclyR3dObbn8Ptou4oQlMXuiN0gPrATKnIJeb+bNLxSqZlSMbxxoq
-	DNUd7AWNIHXmA1BaB0DPLOa7A6XgKq9H02QutwejsHqllcryvAJiwIIj2gz6NawCc80oJTx+4mC
-	YjDsvdNSGLDnVZ7RsrXJMofd421zvSD4Ec6TuVL2DwHxLvVJ6TRCP9ueSqARZYGL+gUQqtJJWgc
-	V/SyVsYAIv/+Pclvi394Yr8+fTyDHnxQnvZuma32QeLnxXNuUHTYXfhGjhdg/BaoBoNaP2O81UN
-	3LH41N5zMZ/y2xac3ef9zwYxTNIj5z4xCztJZhS+5O+A09+JOsAR+3RZbj1wcZxqvh4pOZ/LR/b
-	jvip3launRFyqBW7g7vW1pKy9DKEunbrpk/ENomxAvZXgmRRe/1EDlggt0dlN/eht5A16bxVC/M
-	yBPHB+YDjBFRR6XZwHl943Yr6QSFSoeOtvIOoGVsPuZahwtZyFpzoQHKgHqdr955vCcAmT3N1IW
-	M9TDbUC9WUIrVKJ1N8Gn3J8jpyI=
-X-Received: by 2002:a5d:64e9:0:b0:487:1575:ebef with SMTP id ffacd0b85a97d-4887176868bmr7025346f8f.47.1790286867087;
-        Thu, 24 Sep 2026 14:54:27 -0700 (PDT)
-Received: from 1Z10 (mob-176-245-31-160.net.vodafone.it. [176.245.31.160])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4887a355d96sm2382024f8f.17.2026.09.24.14.54.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Sep 2026 14:54:26 -0700 (PDT)
-From: Maurizio Casciano <mauriziocasciano7@gmail.com>
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	linux-input@vger.kernel.org
-Cc: David Heidelberg <david@ixit.cz>,
-	linux-kernel@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v7] Input: drv260x: Fix suspend and resume sequencing
-Date: Thu, 24 Sep 2026 23:54:24 +0200
-Message-ID: <20260924215424.931989-1-mauriziocasciano7@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260831150323.2922792-1-mauriziocasciano7@gmail.com>
-References: <20260831150323.2922792-1-mauriziocasciano7@gmail.com>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="KkXPizQR"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9C2421E5E;
+	Thu, 24 Sep 2026 16:18:48 -0700 (PDT)
+Received: from [10.57.10.88] (unknown [10.57.10.88])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5E8793F632;
+	Thu, 24 Sep 2026 16:18:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1790291932; bh=EMMUNFyB1PUTqCDsa5CKWLLr4IbRaMN1Zan3hUAnon4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=KkXPizQRiO5wKnqRTe8Be1Dum5uOdVN1ZPpb0FEAGes41Sdj2ztg0Bc6+PCe1jNYj
+	 996xLPWBYJH2H179ok9NkNxJmTfJJJzmGYwHpBP4neNoxgRNJgG/Tj55oilEG7O6Uh
+	 wxk5C2cosiGR1RCa2WFJfE6XixaN7CUmVmu9KeoU=
+Message-ID: <6a6eef51-a2c0-47cf-98d8-526ab8ebf963@arm.com>
+Date: Fri, 25 Sep 2026 00:18:49 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v19 4/7] firmware: arm_rmm: Add support for SRO
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: Marc Zyngier <maz@kernel.org>, kvm@vger.kernel.org,
+ Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev
+References: <20260924135201.850038-1-suzuki.poulose@arm.com>
+ <20260924135201.850038-5-suzuki.poulose@arm.com>
+ <20260924140847.AFA411F000FF@smtp.kernel.org>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20260924140847.AFA411F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Dmitry,
+On 24/09/2026 15:08, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] arm_rmm: SRO cancellation loop prematurely exits, leaving operations suspended
+> --
+> 
+> commit 95084224252b24a8efc8b9db3fa71d3058e8d228
+> Author: Steven Price <steven.price@arm.com>
+> 
+> firmware: arm_rmm: Add support for SRO
+>      
+> RMM v2.0 introduces the concept of "Stateful RMI Operations" (SRO). This
+> commit adds support for executing SROs, including donating and reclaiming
+> memory dynamically as requested by the RMM. It also implements cancellation
+> support for these operations.
+> 
+>> diff --git a/drivers/firmware/arm_rmm/rmi.c b/drivers/firmware/arm_rmm/rmi.c
+>> index c9ea964fd9081..035f21d3f26b6 100644
+>> --- a/drivers/firmware/arm_rmm/rmi.c
+>> +++ b/drivers/firmware/arm_rmm/rmi.c
+> 
+> [ ... ]
+> 
+>> +		if (ret) {
+>> +			/*
+>> +			 * All memory donating SROs must be cancellable. So a
+>> +			 * failure in memory allocation shouldn't be an issue.
+>> +			 * However, if we encounter a random failure (e.g.,
+>> +			 * buggy RMM), don't loop forever, just give up.
+>> +			 */
+>> +			if (WARN_ON_ONCE(!can_cancel))
+>> +				return ret;
+>> +			/*
+>> +			 * If we have already cancelled, and came back here due
+>> +			 * to an error in MEMREQ, then there is no point
+>> +			 * in going in loops.
+>> +			 */
+>> +			if (WARN_ON_ONCE(cancelled))
+>> +				break;
+>> +			rmi_op_cancel(sro_handle, regs);
+>> +			cancelled = true;
+>> +
+>> +			if (WARN_ON_ONCE(RMI_RESULT_STATUS(regs->a0) != RMI_INCOMPLETE))
+>> +				return ret;
+> 
+> [Severity: High]
+> Does this error path permanently leave the SRO suspended in the RMM?
+> 
+> The commit message notes that after requesting cancellation, the host must
+> still "continue the operation until it has completed (otherwise the incomplete
+> operation may cause future RMM operations to fail)".
+> 
+> However, when rmi_op_cancel() issues SMC_RMI_OP_CANCEL, it returns RMI_SUCCESS
 
-This v7 patch has been pending since August 31. It incorporates the prior
-resume-failure and teardown feedback, including deferred reinitialization
-from open() and unregistering the input device before final work
-cancellation. The patch remains unchanged.
+This is wrong. RMI_OP_CANCEL returns RMI_INCOMPLETE. It doesn't return 
+RMI_SUCCESS. See Section B4.3.2.5 Cancelling an SRO (DEN0137 Beta3)
 
-Please let me know if any further changes or testing are needed.
+Rules RVLNV and GGSTJ covers both cases (with or without memory 
+reclamation). Both cases end up in RMI_INCOMPLETE, and the 
+RMI_OP_CONTINUE must be invoked to drive the SRO handle to inactive.
 
-With Best Regards,
-Maurizio Casciano
+
+> to acknowledge the cancel request, overwriting regs->a0. As a result,
+> RMI_RESULT_STATUS(regs->a0) != RMI_INCOMPLETE evaluates to true, triggering
+> this WARN_ON_ONCE and causing an immediate return. The host fails to issue the
+> required SMC_RMI_OP_CONTINUE calls to drive the cancellation to completion.
+
+> 
+>> +		}
+>> +	}
+>> +
+>> +	if (cancelled)
+>> +		return -ECANCELED;
+>> +
+>> +	return regs->a0;
+>> +}
+>> +EXPORT_SYMBOL_GPL(rmi_sro_memxfer_execute);
+> 
+> [ ... ]
+> 
+>> +long rmi_sro_execute(struct arm_smccc_1_2_regs *regs)
+>> +{
+>> +	bool cancelled = false;
+>> +	unsigned long sro_handle = regs->a1;
+>> +
+>> +	rmi_smccc_invoke(regs);
+>> +
+>> +	sro_handle = regs->a1;
+>> +	while (RMI_RESULT_STATUS(regs->a0) == RMI_INCOMPLETE) {
+>> +		bool can_cancel = RMI_RESULT_CAN_CANCEL(regs->a0) == RMI_OP_CAN_CANCEL;
+>> +
+>> +		switch (RMI_RESULT_MEMREQ(regs->a0)) {
+>> +		case RMI_OP_MEM_REQ_NONE:
+>> +			rmi_op_continue(sro_handle, RMI_CONTINUE_KEEP_GOING,
+>> +					regs);
+>> +			break;
+>> +		default:
+>> +			WARN_ON_ONCE(1);
+>> +			if (!can_cancel)
+>> +				return regs->a0;
+>> +			/*
+>> +			 * We can't get here normally, but handle this anyway
+>> +			 * for a buggy RMM implementation.
+>> +			 */
+>> +			if (cancelled)
+>> +				return -ECANCELED;
+>> +			rmi_op_cancel(sro_handle, regs);
+>> +			cancelled = true;
+>> +		}
+>> +	}
+> 
+> [Severity: High]
+> Does this loop terminate prematurely without continuing the cancelled SRO?
+> 
+> Similar to rmi_sro_memxfer_execute() above, after rmi_op_cancel() updates
+> regs->a0 to RMI_SUCCESS, the while loop condition
+> (RMI_RESULT_STATUS(regs->a0) == RMI_INCOMPLETE) evaluates to false. The
+> function exits immediately without calling SMC_RMI_OP_CONTINUE to complete
+> the cancellation.
+
+As above, this is incorrect.
+
+Cheers
+Suzuki
+
