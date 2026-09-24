@@ -1,927 +1,222 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9332D381E8B;
-	Thu, 24 Sep 2026 06:09:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790230177; cv=none; b=oUxZ/RBjYTjmwmJ/Qcq4DL94q/GMmQcv4iCtLqBb1P0R+4iyJd2lCPXer+Al1+5YtU7GGPuFbDiXqCgjWaOo2P/bLBwhMxAlJykIFVbGZXxY+lQ/zoEjp6cSvyidyENXoLz4Ifc1yqPnOqgqKG7q6hFyx78quJXv/Umub6AqGTo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790230177; c=relaxed/simple;
-	bh=j+U8HuxacQJtcKfElg/5wM+sI3VsPpnEx4t4seOyjiM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CvIAY4eHz6luGfi67Zx4+dV9Yb9pIQ+jZMFrxAOgX+O6m/6wZ77KaJj+UBkdoJimbAf7IB+IW/aCAYFpdRBuMXP0mSmmwrJZl58XLczFfUyE2lJRmNGUM5vKmMMywNeTVhoveQxj23ded9MF3oGiVhSR9S5O19m76Ih6+xVEcfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=RJebUkbv; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3871A8F7B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 06:12:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.18
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790230352; cv=fail; b=JSsL/TOeC4WQzGQk81KXA7+Zv/4Fu+9PZEyZ+VtPb3tZLzmz11hFy0Q50CJQnNrEpvj6rWefxJT5Cz8IeCtGB7dfz8um/s0RBseZn8DUSmhXfcvUm+iIRNkonWt9dj69bLWJLSjXz81QKAL3wni4Fa4Pop4w0dwyRbp3dMFXY/U=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790230352; c=relaxed/simple;
+	bh=bFNgQC6o1XXPBD5/jJkGObPlHXJ/5pp84j9hFg8cR/8=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=d1JHG14GQjaQyiCzgvTkoJn81BURCsKAe36CyhT/no80rq2NAmZceM9iBuX9NO8fM507e9R9HBpv6xOlO1x30OGLysSF7l+11/SJTrSZGW/TYtGdy9AMYFIkGc3ov+DAGF8FzardWmIj7MJV0VYmCb85g2QJzDqGpfYaewtM3zI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NfaYajLG; arc=fail smtp.client-ip=198.175.65.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="RJebUkbv"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68O5cEWP1335178;
-	Thu, 24 Sep 2026 06:09:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=pp1; bh=bq039fxjyfgMdeyFv
-	QaIYQub4xyjD9WR8eqGWjKoXJk=; b=RJebUkbvBbRs1vE1nbISeJ6XeWfnkvxhF
-	g05l1nQu4JTNlU0ryPZxeszHDoDC5XwaA800O5p9ioKUB82BzxROjlVSdnaF6ARs
-	BnFNDhoTuudNDlc4fzj677AtSf6veLW2cjHi/zjXU4gM/quVEpjjZDtY7LfKHtfw
-	elMDzRMgc3ry1fcxEK6u4i8ibVD1cYUEQRw2c0OCbWrBVytxGt6DJmLwLmproCPy
-	wHonwTQ0SRrD/pwyATIYM0JW8Zb1N1mYY7EtiP5MnoaBvR5GTSCg6IfEPwij5rWm
-	pZ/kXs6eSE6zucB2trl41OgEDIT9HxxFEGa9DXq3kvjr6g0B23cEA==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgsf9fp-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Thu, 24 Sep 2026 06:09:33 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68O5lffN1501547;
-	Thu, 24 Sep 2026 06:09:32 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbt2v8c7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 24 Sep 2026 06:09:32 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
-	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68O69SQ642205466
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 24 Sep 2026 06:09:28 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 29CA620043;
-	Thu, 24 Sep 2026 06:09:28 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id F2F2620040;
-	Thu, 24 Sep 2026 06:09:27 +0000 (GMT)
-Received: from tuxmaker.lnxne.boe (unknown [9.87.85.9])
-	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 24 Sep 2026 06:09:27 +0000 (GMT)
-From: M Nikhil <nikh1092@linux.ibm.com>
-To: linux-s390@vger.kernel.org, sashiko-reviews@lists.linux.dev
-Cc: M Nikhil <nikh1092@linux.ibm.com>
-Subject: [PATCH v12 2/2] zfcp: Use DMA streaming API to map I/O
-Date: Thu, 24 Sep 2026 08:09:23 +0200
-Message-ID: <20260924060923.3076902-3-nikh1092@linux.ibm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260924060923.3076902-1-nikh1092@linux.ibm.com>
-References: <20260924060923.3076902-1-nikh1092@linux.ibm.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NfaYajLG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1790230351; x=1821766351;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=bFNgQC6o1XXPBD5/jJkGObPlHXJ/5pp84j9hFg8cR/8=;
+  b=NfaYajLG349ChjaZq822OF03sd4Pan1T11osbMLRMQiZpKhTBlrzX8iF
+   dSrt3mFaIfbjNhCEPnZKHFT0KPrSSxRXEmMhzXs+hAMT0ESDaOjvp5Gpn
+   Sgx7rgJxqGufLT1mtIBu0xgDolOLeXUEenBJnDDAro8VqMDRTnBSLBJx+
+   ZjLiElQ20lhs3hwu4qcvVemusAS85j7UolEXJnrfbmPM7Mcx4ZDicCpp/
+   IeuCCnNn0vt+wLbB8yIdFKQdn7acS+eJXao9+/L/xYUlkxH3WuO5Z8DEL
+   64wcrCUtEPHv7kJWz0Bi3a65eXjVDq7YY7PwRfjSZKWzgqXHkYl2xuKOj
+   w==;
+X-CSE-ConnectionGUID: dT3GZuyySGyH63of7Ke+Kg==
+X-CSE-MsgGUID: ZWCBc8GZQsOOuEEQG4pXgA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11914"; a="90055055"
+X-IronPort-AV: E=Sophos;i="6.27,120,1787036400"; 
+   d="scan'208";a="90055055"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2026 23:12:30 -0700
+X-CSE-ConnectionGUID: VcrbiQkjTO+XlwlnGrYHrg==
+X-CSE-MsgGUID: 1uYqtCF2T6+rUg/jm2XjKw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,120,1787036400"; 
+   d="scan'208";a="271770181"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2026 23:12:30 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Wed, 23 Sep 2026 23:12:29 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46 via Frontend Transport; Wed, 23 Sep 2026 23:12:29 -0700
+Received: from BN8PR05CU002.outbound.protection.outlook.com (52.101.57.11) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Wed, 23 Sep 2026 23:12:29 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=GXMK3PEoHlB/6NVoNMXA1MdiO3hNtShp2fx9Ag3y99wD/kiBc0UaODDC2/7r4H6pHVu+TAcPqwt4oNVU65XLmGRX4uQi17YAsl8QU9qu+8maHKhxjH237MZLYBacXH02dYh6VHP6JjyjzHObiY8A41BOGlfk+BaXt83cYvy/6h3WeXRMZwuI3Qh9WhJDmSHXfkxdf4J5uQvm2WdZUWrIXPqi+5cl1zclMU4C48Nqfv3qKucTFJlYaDO+50yCvp/gMopLEWmcKhAIt6vCcUj9ZoveFG/vgOP9Da8LWrK51dF1KKXOSy1LPtHyD00ZCLiRQuwAxS5ZcM0xmQPeRSHlQg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bFNgQC6o1XXPBD5/jJkGObPlHXJ/5pp84j9hFg8cR/8=;
+ b=n02OFTsC28OK9486XI8C2ug7qQO5ngF1FQmrDL6ZrSpx4Yzryri6jw8URdJawO9OpVKuT2aOFzw8wk6U2NcZqBns+ZlNfJA4/lcueZijJKVSntdQSAgLhvMZxMf43x5q1iNNVh38U5XcdSHZlLtkl2wGoW8gsWi1XL/H6QKbk4R3a9yiIlywWmq1y7BdcbCBIbrkvK1TbKvC/bGPDTmGQKsq4dNBRiQyk84lVOlL2qxizGj3WGnG7BeeQrTZVDLtFocWsWLb0m4SMbu5gSSzTERsxWKZ1adE+wEsLrK/huaTrgcCx8tovCNOJkVgocVM5nccqWsVSEY+YiYrVuyyzg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from DS4PPFE901A304F.namprd11.prod.outlook.com
+ (2603:10b6:f:fc02::5b) by PH8PR11MB9952.namprd11.prod.outlook.com
+ (2603:10b6:510:3d5::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Thu, 24 Sep
+ 2026 06:12:22 +0000
+Received: from DS4PPFE901A304F.namprd11.prod.outlook.com
+ ([fe80::5be7:2ceb:99ef:6334]) by DS4PPFE901A304F.namprd11.prod.outlook.com
+ ([fe80::5be7:2ceb:99ef:6334%8]) with mapi id 15.21.0451.014; Thu, 24 Sep 2026
+ 06:12:22 +0000
+From: "Kandpal, Suraj" <suraj.kandpal@intel.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "intel-xe@lists.freedesktop.org" <intel-xe@lists.freedesktop.org>,
+	"intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>
+Subject: RE: [PATCH 2/2] drm/i915/display: Don't require a 1:1 pipe to port
+ mapping for DC3co
+Thread-Topic: [PATCH 2/2] drm/i915/display: Don't require a 1:1 pipe to port
+ mapping for DC3co
+Thread-Index: AQHdS+m/MpW5+Qr/YUStYOAGJQ4517bdPZmAgAABZOA=
+Date: Thu, 24 Sep 2026 06:12:22 +0000
+Message-ID: <DS4PPFE901A304FCC877717E910BB3F9D19E3812@DS4PPFE901A304F.namprd11.prod.outlook.com>
+References: <20260924055734.2138787-1-suraj.kandpal@intel.com>
+ <20260924055734.2138787-3-suraj.kandpal@intel.com>
+ <20260924060535.E81611F000FF@smtp.kernel.org>
+In-Reply-To: <20260924060535.E81611F000FF@smtp.kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DS4PPFE901A304F:EE_|PH8PR11MB9952:EE_
+x-ms-office365-filtering-correlation-id: e5b22a07-6554-40e2-58cd-08df1a02cbd3
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|23010399003|366016|376014|1800799024|38070700021|6133799003|10067099003|56012099006|11063799006|4143699003|22082099003|18002099003;
+x-microsoft-antispam-message-info: 0YokTzLeOuiFo+IaP+U4i4yS/jEzITFSedEyMnDE+zljX4/i9asUTQE2hw6AYOL98esKsEwuPMUXXDYLzpmrB4tXKVNA2zqBXJzKVc/w4gi0VObcj0+BTpBnOgLQiggGEMjkLmJ2Xfu9XqvuD1qHVuL7mmofgqSEu8YZojrZSccZbsu2gwNnaow+++LkCl+eL0e4EwhcK9dW7TaV023KgWKgdmTCrsfykD9ej4kKri3i+Fic1YUL6UBB8LOstB0NCaD3xOGLgsSK3o/n+EVtjRFoykgtS9tG8VvfFPpnhvinF0EGsZPZpLgwWhKNnQMotSpwrZmpEsSiTaUmN+l5JoqSoqgvatBbWU9ethg/24RFODroIN0fx2Yyk1UVZXHZlExzOpyB3gpfpOb29lp37Q+JJ0i0CSTjNRkfnmCBTKnqEB/xS/O/qj3qmdlQSkuUAzFsNYjpHxCFxipyN6dZhDC1wnHkYBCH4MHw12v2Lg5Se7Gy/RkZBrehxJf+TOuQ8c3xD8A6AIFA8WMrMKd1iGRdxr9cyzezNlvBa4KgSlau7hlNM90Ulqc52Xand2A+DwIrq+uSPhOKcOXP2LQhv+I28KOEnphp2V9WmXCbJB8GFtEkKIp9YVJr6Cf8dmUfZXxsFDkrNxyuSAAsrUvQpYa1KpcwF72rhRXg5XjZBVo=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPFE901A304F.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(376014)(1800799024)(38070700021)(6133799003)(10067099003)(56012099006)(11063799006)(4143699003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ZndJc09hb0hjb3ZRb3BTdC90WkxpUEdISXQveEkxNE9QTXg2VXh1K0RoQWZS?=
+ =?utf-8?B?anI3b2U0QzFjM0NjaXh4bURPeGJ5bTJUVGxDMndCOUJjVzRFenZhK29WMlZK?=
+ =?utf-8?B?cmNrdzM1dlFJNzd6QWR5bDRWTEp5N3dGL2YzcW9pVnYvOW5BZlhnbkFPemZi?=
+ =?utf-8?B?d0U1UVo1RVZXaktwWW1pbTA1L01jR1VFamt4bVdJNW5WUGcxb0loL0xVTU9q?=
+ =?utf-8?B?cVJUbHc4R0lLb1NpczFRajZtZ3prSVNlVFlhVlNmWVBtOU85NmQzSU5hbnUy?=
+ =?utf-8?B?NVRBMi9HbDFoOTEwekQwYWpjM05mc201cjIvUlB2YnMwYTZTMXlVVTBBRkdF?=
+ =?utf-8?B?bER5bWFJOFVnM1ZLSXlndTZlbVNxT3pDMmpweXRLQjJObW81bE5OeTZ5SUpD?=
+ =?utf-8?B?NDYwQm9OSHJQWUtucTh0VnhjS0k2THNnT3ZEaWcrQS9pVCtGeE02MEpmVUVQ?=
+ =?utf-8?B?Y3VLRWNhTUdOR3VJRmJvQ2pVeXJXeWpZUnRROXc2bDVkc0RIY1o0aXhnZDEz?=
+ =?utf-8?B?N0JEeEJmQm82MWExZzRiOGJrVFZtcXZGTjJlL3hYL1JZL0wxbHBoVys4bjZ0?=
+ =?utf-8?B?YkZIdkFUWnM0SSthU0p0TGhYSERvRXZhQ0lGaGdDNDlhS0JjNjVCTnVYQjQ3?=
+ =?utf-8?B?VkgxWS9WN1ZxL1ZNa0p0OHcyclBpQjBscUlka091REF2ek1qNGxkMkxYcUNP?=
+ =?utf-8?B?MmhSY2crR0xBVVpxL2NUTHJVQWlJaE52OHJ5Q3phZE1GNzVzY0c3YmVlV2s3?=
+ =?utf-8?B?T1dFYUlEWEtlbFdENktPclpEeHppaDRvU3ZTZzBuL3BnZHZaM3pXa1k3a29l?=
+ =?utf-8?B?dnorM3ZEMzNFamtUcktIT2JhRGY2bHhEUU1LRmhLYmh1SGxRNk00MmRZc2hk?=
+ =?utf-8?B?dHB6YlNTcGZwRmNQMGp5d3RKNzZuMWRGYjY5T0tuaWZBdGJGR3NSREZpMjVO?=
+ =?utf-8?B?YitZS1d5YUdicjhVajB5aXlYamFDTFhPSEtaV2VobWQ0c0VWQXFjWnJ3MzNt?=
+ =?utf-8?B?WGNzeUNiOWx3ZEU2QmtIazVUd3d4b01zc2ZTekpUb3NKaTlGdzFGaWNJelpG?=
+ =?utf-8?B?TW91OXpYbEc1TEZYdkZFc1lrV1JFeHVuUEt2eWMxb1RYMm1Sc1FHTFlZck4r?=
+ =?utf-8?B?cmlYUURkaGJ4Um04U2hmRnJXTFFpNSs1RzM4TURRakRZN0hGQ0x3d25QYnJm?=
+ =?utf-8?B?K1ZKS1VPemF6NlAxeXFVY0o2d1N5a0l6SFdFVklIL1IvRXpnUFNVMVFLd3B0?=
+ =?utf-8?B?ZE84emJkdGpjRm1OZmtGT2VhV25IUlR6L1k5Rlhod1A0TjZVaVU1ZjZYM3VJ?=
+ =?utf-8?B?WHRJdkU0REtNN3JSNll0Ym1BbkJKY0ZhQ1VvL2djRndJa1J0UXlkQ3hpbHkz?=
+ =?utf-8?B?Z2pqOVc4UGVNMG1Ud292SG55Y295clR5VEhrOE1YMzBBT1J2NTZuOEJ5YTk0?=
+ =?utf-8?B?K3psY21vQnhxVVgva29rQ2g2cEY0L3lzMWRUaXNkU3IzVG1HaWRLSTlINVpp?=
+ =?utf-8?B?eHlkSDRqWkU4MFppdlFwbFdGcThzeTU1VHJROUxVdnlNZ2VNL3E4UEE5c1NE?=
+ =?utf-8?B?RU5VVnowdmp1V2FwNlg0eEp2QXJPTTQxSkJUUThxZ3hLRGNEL2w3dlY3VzJB?=
+ =?utf-8?B?RjBBdER3YTRWQ3VRUVVKaU9xcVgvdjY4Zk4wa2VsVzM0ODJLQTluNmN2RW9I?=
+ =?utf-8?B?WmE1WTlCRVZyV2c0QXcwSVlWdE1qMVhPVXBPdmFUT2svVHBraXBUMTBMdTIw?=
+ =?utf-8?B?WU05eUhSeXZxaFZaWnFUZWtYUDdISzRzRmZjMGZacEMrbEU5aytjQ0g4M3E3?=
+ =?utf-8?B?TG5zeEYwUGdSYVZPRkpWb2RyaTFSR3NUVW1STlhlazA1UWhLUkNiVlgrZm1C?=
+ =?utf-8?B?MWQ5QmlvdXJQeE5GWDVzZXdVYjl0QUlrdWM4SFhIL1cxK3A3SmFWUnNBNEt0?=
+ =?utf-8?B?RXhzMFZ1OFIvNitPYW9TZWhyR01WTW9Tei8rVFBGTWdsSFhGUGNOVzlSL2R4?=
+ =?utf-8?B?M2h6T0QzQ0QvWmg2YnRocm5Icy9xazB2dTVsSUJLZHN0c3lKK2dORlJ4M0Jr?=
+ =?utf-8?B?NnFaa0hrS25rKytrd1NEUXZVWTlZZEdPby9vNlRxSkNyRStyL1ZFRzZnOEU1?=
+ =?utf-8?B?eHB2ZytjU3FwaWZydHJKcFoxaC84NEtEVTRrNHRyRC9VQ3poRXgxV212aGFF?=
+ =?utf-8?B?K1FGSm5yQnRWbG9tQktRazRUK3F0U3MvMmVMdnRSa2kwNEREbm01NlFmdXVT?=
+ =?utf-8?B?TUZOVlMzMUJFSzlhSEwyY0dJN1dnbnZRRmpua3Z4NzBqMENnYnZENm5mSUZR?=
+ =?utf-8?B?ZU5QQTM2NTVseVdiWUpHVHNFRW00aVM5UlZmeGJkS3VOVHNTWVFodz09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab4be9d cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=QaDQshc9lqK-wEEmcf0A:9
- a=O8hF6Hzn-FEA:10
-X-Proofpoint-ORIG-GUID: QVuy_TH47rMu39YqQ4x-xKaAHXzy5DLI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDAyNiBTYWx0ZWRfX/RC9ouaIWcPn
- 9vJtro8Yw4edzZu/hbyglIvW8tj4XWrFnw7W93FLH+vsdn/JdzyMMGpsN2s/Apc4cyqZ16az4sG
- az44nFW8ISEZ+qMEYxvcG1B5i336QyQBpeb5mq/hbgr6vRmUW7NU85A/ZbElFdsmRR4CzDmJl+X
- c0gNCLcxJbN+yGzkb5S5o/6tdxeaUulbl7/xw6uuwaLMgfr/6cDCUTGc+u43eLN2JHqu79Z3YEc
- /fKGUlz3puBlt3KGAnzCd+La1eM7Qdp8bIrIytH1wYaR0ooeWLJJO+qg0M0aQ0VKQEH2DIi03UW
- fYyC56ckxjrzFCLWkCubSTjP4IMsxIPWw4XYbQRA8o+vmRYzr24m/63QVBS+XfZlnEKJGriTnSv
- J/li0NFWCSxLrKRWxnAuJ4O30IZq8ic0fUc04nd00HaGYrQ9arkK6uuvKxR25m4oJ1ceJcnuCFF
- FtvcrfHSwZmE7BXvozg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDAyNiBTYWx0ZWRfX04HEfLa2hGLm
- 7m5XEUr0v/JimCgKFU3sdO9Q47poGk+L4To4XH9R66oqcGm2N8vuz3FCApw3v8VLmemS1/iuhpw
- DP7+jHJw68KOPUPcT4dr5b0Oc8PDa90=
-X-Proofpoint-GUID: QVuy_TH47rMu39YqQ4x-xKaAHXzy5DLI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-24_02,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1015 phishscore=0
- bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609240026
+X-Exchange-RoutingPolicyChecked: 4txETbcVtgKw6I2mk/GxjJsHOkUsg1iWNHJ6L3zWHYXUU5qg8pGJ8DKXM5/qZ8dVBmu2TIhJl/kgYNPA5eNG5HgMmdNrPCJ5hCAAGikaG6GWIg879JkBiOzzf762ziVavirETFNFht6TP29KV4YQtxmczG/EMN6pNP++SEKSmlz5b8JQsC63n3eGTOHYSrIuKveRLBhBYC+JFfp9o/VzrCjOVqyTQkBkLMHahwJrVZA/xWnthvoDSPoiJ4ZbMwc6G6TPg1a67s+8fbO470vSjtTNHOlY9HV4yQv8gwmuiu8jDezBxTu3yAtu7JQduVaViY1nOx7E23QS12HBRDuu7w==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DS4PPFE901A304F.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e5b22a07-6554-40e2-58cd-08df1a02cbd3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Sep 2026 06:12:22.1706
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 1F4hE/wGS8FZJG77pDTZmrxFezEtNOury31L3PqUu0dNvN38vSRRXzpv+Q6Rz1enHjyH6yq5N56a/kSGaZ8X2A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR11MB9952
+X-OriginatorOrg: intel.com
 
-In the existing zFCP driver, virtual addresses are translated directly
-into bus (physical) addresses for DMA operations on all I/O buffers
-passed from the zFCP driver to the device.
-
-Need for DMA API:
-
-In secure execution environment, the host must ensure that device DMA
-addresses are restricted to non-guest-private, page-sized memory blocks.
-This prevents I/O failures that can occur when a device attempts to
-access guest-private memory. Therefore, guest memory pages must be
-prepared by the hypervisor before they become accessible to an I/O
-device.
-
-To support this requirement, the host linux kernel must be reliably
-informed whenever a memory region becomes eligible for device DMA access
-and when that access must be revoked. This information must be
-maintained correctly at least at page level granularity.
-
-To satisfy these requirements, all I/O buffers used by the zFCP driver
-should be mapped through the DMA API.
-
-DMA streaming API usage in zFCP:
-
-Changes in this patch-series converts all I/O buffer mappings in the
-zFCP driver to use the DMA streaming API. Specifically,
-`dma_map_sgtable()` and `dma_unmap_sgtable()` are used to map and unmap
-the scatter-gather lists.
-
-All zFCP I/O buffers (QTCB, SRB, CT/ELS and SCSI I/O) are represented
-using scatter-gather lists. The `sg_table` structure, which encapsulates
-the scatterlist together with the original and mapped entry counts, is
-used to manage DMA mappings efficiently.
-
-For QTCB and status read buffers, which are not currently scatter-gather
-based, `sg_init_one()` is used to initialize a single-entry scatterlist.
-The resulting scatterlist is then associated with an `sg-table` by
-initializing its `sgl` and `orig_nents` fields before DMA mapping.
-
-For SCSI I/O, the  SCSI midlayer already maintains `sg_table` instances
-for both normal and protection enabled SCSI commands. These sg tables
-are mapped using the same DMA mapping functions.
-
-DMA mapping is performed after the associated I/O buffers have been
-populated or updated. Consequently, no explicit DMA synchronization for
-device access before passing the DMA address to the adapter. On the
-receive path, synchronization for CPU access is handled implicitly by
-the DMA unmap operations.
-
-Signed-off-by: M Nikhil <nikh1092@linux.ibm.com>
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
-Reviewed-by: Nihar Panda <niharp@linux.ibm.com>
----
- drivers/s390/scsi/zfcp_aux.c  |  16 +++
- drivers/s390/scsi/zfcp_def.h  |   4 +
- drivers/s390/scsi/zfcp_ext.h  |  10 +-
- drivers/s390/scsi/zfcp_fsf.c  | 260 ++++++++++++++++++++++++++++------
- drivers/s390/scsi/zfcp_qdio.c |  37 +++--
- drivers/s390/scsi/zfcp_qdio.h |  27 ++--
- 6 files changed, 283 insertions(+), 71 deletions(-)
-
-diff --git a/drivers/s390/scsi/zfcp_aux.c b/drivers/s390/scsi/zfcp_aux.c
-index fea573e00f9d..20c905c68e1e 100644
---- a/drivers/s390/scsi/zfcp_aux.c
-+++ b/drivers/s390/scsi/zfcp_aux.c
-@@ -329,6 +329,19 @@ static void zfcp_destroy_adapter_work_queue(struct zfcp_adapter *adapter)
- 
- }
- 
-+static int zfcp_set_dma_mask_for_adapter(struct zfcp_adapter *adapter)
-+{
-+	int ret;
-+
-+	ret = dma_set_mask_and_coherent(&adapter->ccw_device->dev,
-+					DMA_BIT_MASK(64));
-+	if (ret)
-+		dev_err(&adapter->ccw_device->dev,
-+			"Setting the DMA mask failed for the FCP device.\n");
-+
-+	return ret;
-+}
-+
- /**
-  * zfcp_adapter_enqueue - enqueue a new adapter to the list
-  * @ccw_device: pointer to the struct cc_device
-@@ -404,6 +417,9 @@ struct zfcp_adapter *zfcp_adapter_enqueue(struct ccw_device *ccw_device)
- 	rwlock_init(&adapter->erp_lock);
- 	rwlock_init(&adapter->abort_lock);
- 
-+	if (zfcp_set_dma_mask_for_adapter(adapter))
-+		goto failed;
-+
- 	if (zfcp_erp_thread_setup(adapter))
- 		goto failed;
- 
-diff --git a/drivers/s390/scsi/zfcp_def.h b/drivers/s390/scsi/zfcp_def.h
-index 6c761299a22f..5063921e8d93 100644
---- a/drivers/s390/scsi/zfcp_def.h
-+++ b/drivers/s390/scsi/zfcp_def.h
-@@ -322,6 +322,8 @@ static inline u64 zfcp_scsi_dev_lun(struct scsi_device *sdev)
-  * @pool: reference to memory pool if used for this request
-  * @issued: time when request was send (STCK)
-  * @handler: handler which should be called to process response
-+ * @metadata_sgt: sg_table for metadata of a QTCB or SRB request
-+ * @metadata_sg: scatterlist for metadata of a QTCB or SRB request
-  */
- struct zfcp_fsf_req {
- 	struct list_head	list;
-@@ -337,6 +339,8 @@ struct zfcp_fsf_req {
- 	mempool_t		*pool;
- 	unsigned long long	issued;
- 	void			(*handler)(struct zfcp_fsf_req *);
-+	struct sg_table		metadata_sgt;
-+	struct scatterlist	metadata_sg;
- };
- 
- static inline
-diff --git a/drivers/s390/scsi/zfcp_ext.h b/drivers/s390/scsi/zfcp_ext.h
-index 0eb9bc9d03e4..97fd144d0fd3 100644
---- a/drivers/s390/scsi/zfcp_ext.h
-+++ b/drivers/s390/scsi/zfcp_ext.h
-@@ -150,6 +150,11 @@ enum zfcp_fsf_print_fmt {
- extern ssize_t zfcp_fsf_scnprint_fc_security(char *buf, size_t size,
- 					     u32 fc_security,
- 					     enum zfcp_fsf_print_fmt fmt);
-+int zfcp_fsf_req_map_sg(struct zfcp_fsf_req *req, struct sg_table *sgt,
-+			enum dma_data_direction dma_dir);
-+void zfcp_fsf_req_unmap_sg(struct zfcp_fsf_req *req,
-+			   struct sg_table *sgt,
-+			   enum dma_data_direction dma_dir);
- 
- /* zfcp_qdio.c */
- extern int zfcp_qdio_setup(struct zfcp_adapter *);
-@@ -157,8 +162,9 @@ extern void zfcp_qdio_destroy(struct zfcp_qdio *);
- extern int zfcp_qdio_sbal_get(struct zfcp_qdio *qdio)
- 	__must_hold(qdio->req_q_lock);
- extern int zfcp_qdio_send(struct zfcp_qdio *, struct zfcp_qdio_req *);
--extern int zfcp_qdio_sbals_from_sg(struct zfcp_qdio *, struct zfcp_qdio_req *,
--				   struct scatterlist *);
-+int zfcp_qdio_sbals_from_sg(struct zfcp_qdio *qdio, struct sg_table *sgt,
-+			    struct zfcp_fsf_req *req,
-+			    enum dma_data_direction dma_dir);
- extern void zfcp_qdio_shost_update(struct zfcp_adapter *const adapter,
- 				   const struct zfcp_qdio *const qdio);
- extern int zfcp_qdio_open(struct zfcp_qdio *);
-diff --git a/drivers/s390/scsi/zfcp_fsf.c b/drivers/s390/scsi/zfcp_fsf.c
-index a3b99839da9e..371ef231d87b 100644
---- a/drivers/s390/scsi/zfcp_fsf.c
-+++ b/drivers/s390/scsi/zfcp_fsf.c
-@@ -14,6 +14,7 @@
- #include <linux/types.h>
- #include <linux/slab.h>
- #include <scsi/fc/fc_els.h>
-+#include <linux/dma-mapping.h>
- #include "zfcp_ext.h"
- #include "zfcp_fc.h"
- #include "zfcp_dbf.h"
-@@ -84,6 +85,60 @@ static void zfcp_fsf_class_not_supp(struct zfcp_fsf_req *req)
- 	req->status |= ZFCP_STATUS_FSFREQ_ERROR;
- }
- 
-+/**
-+ * zfcp_fsf_req_map_sg - map the scattergather list for DMA transfer
-+ * @req: pointer to zfcp_fsf_req
-+ * @sgt: pointer to scattergather list table
-+ * @dma_dir: DMA data direction
-+ * Returns: 0 on success, -EIO otherwise
-+ */
-+int zfcp_fsf_req_map_sg(struct zfcp_fsf_req *req, struct sg_table *sgt,
-+			enum dma_data_direction dma_dir)
-+{
-+	if (valid_dma_direction(dma_dir) && sgt->orig_nents) {
-+		if (dma_map_sgtable(&req->adapter->ccw_device->dev, sgt,
-+				    dma_dir, 0))
-+			return -EIO;
-+	} else if ((dma_dir == DMA_NONE) && sgt->orig_nents) {
-+		return -EIO;
-+	}
-+
-+	return 0;
-+}
-+
-+/**
-+ * zfcp_fsf_req_unmap_sg - unmap the scattergather list after DMA transfer
-+ * @req: pointer to zfcp_fsf_req
-+ * @sgt: pointer to scattergather list table
-+ * @dma_dir: DMA direction of the sg
-+ */
-+void zfcp_fsf_req_unmap_sg(struct zfcp_fsf_req *req, struct sg_table *sgt,
-+			   enum dma_data_direction dma_dir)
-+{
-+	/*
-+	 * We still need the check for mapped sg count here to not perform
-+	 * unmap for SCSI commands which have zero payload.
-+	 */
-+	if (!sgt->nents)
-+		return;
-+
-+	dma_unmap_sgtable(&req->adapter->ccw_device->dev, sgt, dma_dir, 0);
-+}
-+
-+/**
-+ * zfcp_fsf_req_unmap_metadata - unmap the metadata associated with FSF req
-+ * @req: pointer to zfcp_fsf_req
-+ */
-+static inline
-+void zfcp_fsf_req_unmap_metadata(struct zfcp_fsf_req *const req)
-+{
-+	if (unlikely(zfcp_fsf_req_is_status_read_buffer(req)))
-+		zfcp_fsf_req_unmap_sg(req, &req->metadata_sgt, DMA_FROM_DEVICE);
-+	else
-+		zfcp_fsf_req_unmap_sg(req, &req->metadata_sgt,
-+				      DMA_BIDIRECTIONAL);
-+}
-+
- /**
-  * zfcp_fsf_req_free - free memory used by fsf request
-  * @req: pointer to struct zfcp_fsf_req
-@@ -259,6 +314,8 @@ static void zfcp_fsf_status_read_handler(struct zfcp_fsf_req *req)
- 	struct zfcp_adapter *adapter = req->adapter;
- 	struct fsf_status_read_buffer *sr_buf = req->data;
- 
-+	zfcp_fsf_req_unmap_metadata(req);
-+
- 	if (req->status & ZFCP_STATUS_FSFREQ_DISMISSED) {
- 		zfcp_dbf_hba_fsf_uss("fssrh_1", req);
- 		mempool_free(virt_to_page(sr_buf), adapter->pool.sr_data);
-@@ -457,6 +514,7 @@ static void zfcp_fsf_req_complete(struct zfcp_fsf_req *req)
- 		return;
- 	}
- 
-+	zfcp_fsf_req_unmap_metadata(req);
- 	timer_delete_sync(&req->timer);
- 	zfcp_fsf_protstatus_eval(req);
- 	zfcp_fsf_fsfstatus_eval(req);
-@@ -870,10 +928,27 @@ static struct zfcp_fsf_req *zfcp_fsf_req_create(struct zfcp_qdio *qdio,
- 		req->qtcb->prefix.qtcb_version = FSF_QTCB_CURRENT_VERSION;
- 		req->qtcb->header.req_handle = req->req_id;
- 		req->qtcb->header.fsf_command = fsf_cmd;
--	}
- 
--	zfcp_qdio_req_init(adapter->qdio, &req->qdio_req, req->req_id, sbtype,
--			   req->qtcb, sizeof(struct fsf_qtcb));
-+		sg_init_one(&req->metadata_sg, req->qtcb,
-+			    sizeof(struct fsf_qtcb));
-+		req->metadata_sgt.sgl = &req->metadata_sg;
-+		req->metadata_sgt.orig_nents = 1;
-+
-+		if (zfcp_fsf_req_map_sg(req, &req->metadata_sgt,
-+					DMA_BIDIRECTIONAL)) {
-+			zfcp_fsf_req_free(req);
-+			return ERR_PTR(-EIO);
-+		}
-+
-+		zfcp_qdio_req_init(adapter->qdio, &req->qdio_req, req->req_id,
-+				   sbtype, true,
-+				   sg_dma_len(req->metadata_sgt.sgl),
-+				   sg_dma_address(req->metadata_sgt.sgl));
-+	} else {
-+		/* SRB */
-+		zfcp_qdio_req_init(adapter->qdio, &req->qdio_req, req->req_id,
-+				   sbtype, false, 0, 0);
-+	}
- 
- 	return req;
- }
-@@ -954,7 +1029,17 @@ int zfcp_fsf_status_read(struct zfcp_qdio *qdio)
- 	memset(sr_buf, 0, sizeof(*sr_buf));
- 	req->data = sr_buf;
- 
--	zfcp_qdio_fill_next(qdio, &req->qdio_req, sr_buf, sizeof(*sr_buf));
-+	sg_init_one(&req->metadata_sg, sr_buf, sizeof(*sr_buf));
-+	req->metadata_sgt.sgl = &req->metadata_sg;
-+	req->metadata_sgt.orig_nents = 1;
-+
-+	retval = zfcp_fsf_req_map_sg(req, &req->metadata_sgt, DMA_FROM_DEVICE);
-+	if (unlikely(retval))
-+		goto failed_dma_map;
-+
-+	zfcp_qdio_fill_next(qdio, &req->qdio_req,
-+			    sg_dma_address(req->metadata_sgt.sgl),
-+			    sg_dma_len(req->metadata_sgt.sgl));
- 	zfcp_qdio_set_sbale_last(qdio, &req->qdio_req);
- 
- 	retval = zfcp_fsf_req_send(req);
-@@ -965,6 +1050,8 @@ int zfcp_fsf_status_read(struct zfcp_qdio *qdio)
- 	goto out;
- 
- failed_req_send:
-+	zfcp_fsf_req_unmap_metadata(req);
-+failed_dma_map:
- 	req->data = NULL;
- 	mempool_free(virt_to_page(sr_buf), adapter->pool.sr_data);
- failed_buf:
-@@ -1076,6 +1163,7 @@ struct zfcp_fsf_req *zfcp_fsf_abort_fcp_cmnd(struct scsi_cmnd *scmnd)
- 	}
- 
- out_error_free:
-+	zfcp_fsf_req_unmap_metadata(req);
- 	zfcp_fsf_req_free(req);
- 	req = NULL;
- out:
-@@ -1091,6 +1179,9 @@ static void zfcp_fsf_send_ct_handler(struct zfcp_fsf_req *req)
- 
- 	ct->status = -EINVAL;
- 
-+	zfcp_fsf_req_unmap_sg(req, &ct->sgt_req, DMA_TO_DEVICE);
-+	zfcp_fsf_req_unmap_sg(req, &ct->sgt_resp, DMA_FROM_DEVICE);
-+
- 	if (req->status & ZFCP_STATUS_FSFREQ_ERROR)
- 		goto skip_fsfstatus;
- 
-@@ -1130,19 +1221,41 @@ static void zfcp_fsf_send_ct_handler(struct zfcp_fsf_req *req)
- 		ct->handler(ct->handler_data);
- }
- 
--static void zfcp_fsf_setup_ct_els_unchained(struct zfcp_qdio *qdio,
--					    struct zfcp_qdio_req *q_req,
--					    struct scatterlist *sg_req,
--					    struct scatterlist *sg_resp)
-+static int zfcp_fsf_setup_ct_els_unchained(struct zfcp_fsf_req *req,
-+					   struct zfcp_qdio *qdio,
-+					   struct sg_table *sg_req_table,
-+					   struct sg_table *sg_resp_table)
- {
--	zfcp_qdio_fill_next(qdio, q_req, sg_virt(sg_req), sg_req->length);
--	zfcp_qdio_fill_next(qdio, q_req, sg_virt(sg_resp), sg_resp->length);
--	zfcp_qdio_set_sbale_last(qdio, q_req);
-+	int retval = 0;
-+
-+	retval = zfcp_fsf_req_map_sg(req, sg_req_table, DMA_TO_DEVICE);
-+	if (unlikely(retval))
-+		goto err;
-+
-+	retval = zfcp_fsf_req_map_sg(req, sg_resp_table,
-+				     DMA_FROM_DEVICE);
-+	if (unlikely(retval))
-+		goto err_unmap;
-+
-+	zfcp_qdio_fill_next(qdio, &req->qdio_req,
-+			    sg_dma_address(sg_req_table->sgl),
-+			    sg_dma_len(sg_req_table->sgl));
-+	zfcp_qdio_fill_next(qdio, &req->qdio_req,
-+			    sg_dma_address(sg_resp_table->sgl),
-+			    sg_dma_len(sg_resp_table->sgl));
-+	zfcp_qdio_set_sbale_last(qdio, &req->qdio_req);
-+
-+	return 0;
-+
-+err_unmap:
-+	zfcp_fsf_req_unmap_sg(req, sg_req_table, DMA_TO_DEVICE);
-+err:
-+	return retval;
- }
- 
- static int zfcp_fsf_setup_ct_els_sbals(struct zfcp_fsf_req *req,
--				       struct scatterlist *sg_req,
--				       struct scatterlist *sg_resp)
-+				       struct sg_table *sgt_req,
-+				       struct sg_table *sgt_resp)
- {
- 	struct zfcp_adapter *adapter = req->adapter;
- 	struct zfcp_qdio *qdio = adapter->qdio;
-@@ -1150,57 +1263,70 @@ static int zfcp_fsf_setup_ct_els_sbals(struct zfcp_fsf_req *req,
- 	u32 feat = adapter->adapter_features;
- 
- 	if (zfcp_adapter_multi_buffer_active(adapter)) {
--		if (zfcp_qdio_sbals_from_sg(qdio, &req->qdio_req, sg_req))
-+		if (zfcp_qdio_sbals_from_sg(qdio, sgt_req, req, DMA_TO_DEVICE))
- 			return -EIO;
-+
- 		qtcb->bottom.support.req_buf_length =
--			zfcp_qdio_real_bytes(sg_req);
--		if (zfcp_qdio_sbals_from_sg(qdio, &req->qdio_req, sg_resp))
--			return -EIO;
-+			zfcp_qdio_real_bytes(sgt_req->sgl);
-+
-+		if (zfcp_qdio_sbals_from_sg(qdio, sgt_resp, req, DMA_FROM_DEVICE))
-+			goto err_unmap;
-+
- 		qtcb->bottom.support.resp_buf_length =
--			zfcp_qdio_real_bytes(sg_resp);
-+			zfcp_qdio_real_bytes(sgt_resp->sgl);
- 
--		zfcp_qdio_set_data_div(qdio, &req->qdio_req, sg_nents(sg_req));
-+		zfcp_qdio_set_data_div(qdio, &req->qdio_req,
-+				       sg_nents(sgt_req->sgl));
- 		zfcp_qdio_set_sbale_last(qdio, &req->qdio_req);
- 		zfcp_qdio_set_scount(qdio, &req->qdio_req);
- 		return 0;
- 	}
- 
- 	/* use single, unchained SBAL if it can hold the request */
--	if (zfcp_qdio_sg_one_sbale(sg_req) && zfcp_qdio_sg_one_sbale(sg_resp)) {
--		zfcp_fsf_setup_ct_els_unchained(qdio, &req->qdio_req,
--						sg_req, sg_resp);
-+	if (zfcp_qdio_sg_one_sbale(sgt_req->sgl) &&
-+	    zfcp_qdio_sg_one_sbale(sgt_resp->sgl)) {
-+		if (zfcp_fsf_setup_ct_els_unchained(req, qdio, sgt_req,
-+						    sgt_resp))
-+			return -EIO;
-+
- 		return 0;
- 	}
- 
- 	if (!(feat & FSF_FEATURE_ELS_CT_CHAINED_SBALS))
- 		return -EOPNOTSUPP;
- 
--	if (zfcp_qdio_sbals_from_sg(qdio, &req->qdio_req, sg_req))
-+	if (zfcp_qdio_sbals_from_sg(qdio, sgt_req, req, DMA_TO_DEVICE))
- 		return -EIO;
- 
--	qtcb->bottom.support.req_buf_length = zfcp_qdio_real_bytes(sg_req);
-+	qtcb->bottom.support.req_buf_length =
-+		zfcp_qdio_real_bytes(sgt_req->sgl);
- 
- 	zfcp_qdio_set_sbale_last(qdio, &req->qdio_req);
- 	zfcp_qdio_skip_to_last_sbale(qdio, &req->qdio_req);
- 
--	if (zfcp_qdio_sbals_from_sg(qdio, &req->qdio_req, sg_resp))
--		return -EIO;
-+	if (zfcp_qdio_sbals_from_sg(qdio, sgt_resp, req, DMA_FROM_DEVICE))
-+		goto err_unmap;
- 
--	qtcb->bottom.support.resp_buf_length = zfcp_qdio_real_bytes(sg_resp);
-+	qtcb->bottom.support.resp_buf_length =
-+		zfcp_qdio_real_bytes(sgt_resp->sgl);
- 
- 	zfcp_qdio_set_sbale_last(qdio, &req->qdio_req);
- 
- 	return 0;
-+
-+err_unmap:
-+	zfcp_fsf_req_unmap_sg(req, sgt_req, DMA_TO_DEVICE);
-+	return -EIO;
- }
- 
- static int zfcp_fsf_setup_ct_els(struct zfcp_fsf_req *req,
--				 struct scatterlist *sg_req,
--				 struct scatterlist *sg_resp,
-+				 struct sg_table *sgt_req,
-+				 struct sg_table *sgt_resp,
- 				 unsigned int timeout)
- {
- 	int ret;
- 
--	ret = zfcp_fsf_setup_ct_els_sbals(req, sg_req, sg_resp);
-+	ret = zfcp_fsf_setup_ct_els_sbals(req, sgt_req, sgt_resp);
- 	if (ret)
- 		return ret;
- 
-@@ -1242,8 +1368,7 @@ int zfcp_fsf_send_ct(struct zfcp_fc_wka_port *wka_port,
- 	}
- 
- 	req->status |= ZFCP_STATUS_FSFREQ_CLEANUP;
--	ret = zfcp_fsf_setup_ct_els(req, ct->sgt_req.sgl, ct->sgt_resp.sgl,
--				    timeout);
-+	ret = zfcp_fsf_setup_ct_els(req, &ct->sgt_req, &ct->sgt_resp, timeout);
- 	if (ret)
- 		goto failed_send;
- 
-@@ -1256,12 +1381,17 @@ int zfcp_fsf_send_ct(struct zfcp_fc_wka_port *wka_port,
- 
- 	ret = zfcp_fsf_req_send(req);
- 	if (ret)
--		goto failed_send;
-+		goto err_unmap;
-+
- 	/* NOTE: DO NOT TOUCH req PAST THIS POINT! */
- 
- 	goto out;
- 
-+err_unmap:
-+	zfcp_fsf_req_unmap_sg(req, &ct->sgt_req, DMA_TO_DEVICE);
-+	zfcp_fsf_req_unmap_sg(req, &ct->sgt_resp, DMA_FROM_DEVICE);
- failed_send:
-+	zfcp_fsf_req_unmap_metadata(req);
- 	zfcp_fsf_req_free(req);
- out:
- 	spin_unlock_irq(&qdio->req_q_lock);
-@@ -1275,6 +1405,9 @@ static void zfcp_fsf_send_els_handler(struct zfcp_fsf_req *req)
- 
- 	send_els->status = -EINVAL;
- 
-+	zfcp_fsf_req_unmap_sg(req, &send_els->sgt_req, DMA_TO_DEVICE);
-+	zfcp_fsf_req_unmap_sg(req, &send_els->sgt_resp, DMA_FROM_DEVICE);
-+
- 	if (req->status & ZFCP_STATUS_FSFREQ_ERROR)
- 		goto skip_fsfstatus;
- 
-@@ -1343,9 +1476,8 @@ int zfcp_fsf_send_els(struct zfcp_adapter *adapter, u32 d_id,
- 	if (!zfcp_adapter_multi_buffer_active(adapter))
- 		zfcp_qdio_sbal_limit(qdio, &req->qdio_req, 2);
- 
--	ret = zfcp_fsf_setup_ct_els(req, els->sgt_req.sgl, els->sgt_resp.sgl,
-+	ret = zfcp_fsf_setup_ct_els(req, &els->sgt_req, &els->sgt_resp,
- 				    timeout);
--
- 	if (ret)
- 		goto failed_send;
- 
-@@ -1358,12 +1490,17 @@ int zfcp_fsf_send_els(struct zfcp_adapter *adapter, u32 d_id,
- 
- 	ret = zfcp_fsf_req_send(req);
- 	if (ret)
--		goto failed_send;
-+		goto err_unmap;
-+
- 	/* NOTE: DO NOT TOUCH req PAST THIS POINT! */
- 
- 	goto out;
- 
-+err_unmap:
-+	zfcp_fsf_req_unmap_sg(req, &els->sgt_req, DMA_TO_DEVICE);
-+	zfcp_fsf_req_unmap_sg(req, &els->sgt_resp, DMA_FROM_DEVICE);
- failed_send:
-+	zfcp_fsf_req_unmap_metadata(req);
- 	zfcp_fsf_req_free(req);
- out:
- 	spin_unlock_irq(&qdio->req_q_lock);
-@@ -1404,6 +1541,7 @@ int zfcp_fsf_exchange_config_data(struct zfcp_erp_action *erp_action)
- 	zfcp_fsf_start_erp_timer(req);
- 	retval = zfcp_fsf_req_send(req);
- 	if (retval) {
-+		zfcp_fsf_req_unmap_metadata(req);
- 		zfcp_fsf_req_free(req);
- 		erp_action->fsf_req_id = 0;
- 	}
-@@ -1469,6 +1607,8 @@ int zfcp_fsf_exchange_config_data_sync(struct zfcp_qdio *qdio,
- 			retval = -EIO;
- 		else if (req->status & ZFCP_STATUS_FSFREQ_XDATAINCOMPLETE)
- 			retval = -EAGAIN;
-+	} else {
-+		zfcp_fsf_req_unmap_metadata(req);
- 	}
- 
- 	zfcp_fsf_req_free(req);
-@@ -1516,6 +1656,7 @@ int zfcp_fsf_exchange_port_data(struct zfcp_erp_action *erp_action)
- 	zfcp_fsf_start_erp_timer(req);
- 	retval = zfcp_fsf_req_send(req);
- 	if (retval) {
-+		zfcp_fsf_req_unmap_metadata(req);
- 		zfcp_fsf_req_free(req);
- 		erp_action->fsf_req_id = 0;
- 	}
-@@ -1578,6 +1719,8 @@ int zfcp_fsf_exchange_port_data_sync(struct zfcp_qdio *qdio,
- 			retval = -EIO;
- 		else if (req->status & ZFCP_STATUS_FSFREQ_XDATAINCOMPLETE)
- 			retval = -EAGAIN;
-+	} else {
-+		zfcp_fsf_req_unmap_metadata(req);
- 	}
- 
- 	zfcp_fsf_req_free(req);
-@@ -1810,6 +1953,7 @@ int zfcp_fsf_open_port(struct zfcp_erp_action *erp_action)
- 	zfcp_fsf_start_erp_timer(req);
- 	retval = zfcp_fsf_req_send(req);
- 	if (retval) {
-+		zfcp_fsf_req_unmap_metadata(req);
- 		zfcp_fsf_req_free(req);
- 		erp_action->fsf_req_id = 0;
- 		put_device(&port->dev);
-@@ -1876,6 +2020,7 @@ int zfcp_fsf_close_port(struct zfcp_erp_action *erp_action)
- 	zfcp_fsf_start_erp_timer(req);
- 	retval = zfcp_fsf_req_send(req);
- 	if (retval) {
-+		zfcp_fsf_req_unmap_metadata(req);
- 		zfcp_fsf_req_free(req);
- 		erp_action->fsf_req_id = 0;
- 	}
-@@ -1950,8 +2095,10 @@ int zfcp_fsf_open_wka_port(struct zfcp_fc_wka_port *wka_port)
- 
- 	zfcp_fsf_start_timer(req, ZFCP_FSF_REQUEST_TIMEOUT);
- 	retval = zfcp_fsf_req_send(req);
--	if (retval)
-+	if (retval) {
-+		zfcp_fsf_req_unmap_metadata(req);
- 		zfcp_fsf_req_free(req);
-+	}
- 	/* NOTE: DO NOT TOUCH req PAST THIS POINT! */
- out:
- 	spin_unlock_irq(&qdio->req_q_lock);
-@@ -2009,8 +2156,10 @@ int zfcp_fsf_close_wka_port(struct zfcp_fc_wka_port *wka_port)
- 
- 	zfcp_fsf_start_timer(req, ZFCP_FSF_REQUEST_TIMEOUT);
- 	retval = zfcp_fsf_req_send(req);
--	if (retval)
-+	if (retval) {
-+		zfcp_fsf_req_unmap_metadata(req);
- 		zfcp_fsf_req_free(req);
-+	}
- 	/* NOTE: DO NOT TOUCH req PAST THIS POINT! */
- out:
- 	spin_unlock_irq(&qdio->req_q_lock);
-@@ -2103,6 +2252,7 @@ int zfcp_fsf_close_physical_port(struct zfcp_erp_action *erp_action)
- 	zfcp_fsf_start_erp_timer(req);
- 	retval = zfcp_fsf_req_send(req);
- 	if (retval) {
-+		zfcp_fsf_req_unmap_metadata(req);
- 		zfcp_fsf_req_free(req);
- 		erp_action->fsf_req_id = 0;
- 	}
-@@ -2227,6 +2377,7 @@ int zfcp_fsf_open_lun(struct zfcp_erp_action *erp_action)
- 	zfcp_fsf_start_erp_timer(req);
- 	retval = zfcp_fsf_req_send(req);
- 	if (retval) {
-+		zfcp_fsf_req_unmap_metadata(req);
- 		zfcp_fsf_req_free(req);
- 		erp_action->fsf_req_id = 0;
- 	}
-@@ -2316,6 +2467,7 @@ int zfcp_fsf_close_lun(struct zfcp_erp_action *erp_action)
- 	zfcp_fsf_start_erp_timer(req);
- 	retval = zfcp_fsf_req_send(req);
- 	if (retval) {
-+		zfcp_fsf_req_unmap_metadata(req);
- 		zfcp_fsf_req_free(req);
- 		erp_action->fsf_req_id = 0;
- 	}
-@@ -2474,6 +2626,13 @@ static void zfcp_fsf_fcp_cmnd_handler(struct zfcp_fsf_req *req)
- 		return;
- 	}
- 
-+	if ((scsi_get_prot_op(scpnt) != SCSI_PROT_NORMAL) &&
-+	    scsi_prot_sg_count(scpnt))
-+		zfcp_fsf_req_unmap_sg(req, &scpnt->prot_sdb->table,
-+				      scpnt->sc_data_direction);
-+
-+	zfcp_fsf_req_unmap_sg(req, &scpnt->sdb.table, scpnt->sc_data_direction);
-+
- 	zfcp_fsf_fcp_handler_common(req, scpnt->device);
- 
- 	if (unlikely(req->status & ZFCP_STATUS_FSFREQ_ERROR)) {
-@@ -2619,18 +2778,20 @@ int zfcp_fsf_fcp_cmnd(struct scsi_cmnd *scsi_cmnd)
- 	    scsi_prot_sg_count(scsi_cmnd)) {
- 		zfcp_qdio_set_data_div(qdio, &req->qdio_req,
- 				       scsi_prot_sg_count(scsi_cmnd));
--		retval = zfcp_qdio_sbals_from_sg(qdio, &req->qdio_req,
--						 scsi_prot_sglist(scsi_cmnd));
-+		retval = zfcp_qdio_sbals_from_sg(qdio,
-+						 &scsi_cmnd->prot_sdb->table,
-+						 req,
-+						 scsi_cmnd->sc_data_direction);
- 		if (retval)
- 			goto failed_scsi_cmnd;
- 		io->prot_data_length = zfcp_qdio_real_bytes(
- 						scsi_prot_sglist(scsi_cmnd));
- 	}
- 
--	retval = zfcp_qdio_sbals_from_sg(qdio, &req->qdio_req,
--					 scsi_sglist(scsi_cmnd));
-+	retval = zfcp_qdio_sbals_from_sg(qdio, &scsi_cmnd->sdb.table, req,
-+					 scsi_cmnd->sc_data_direction);
- 	if (unlikely(retval))
--		goto failed_scsi_cmnd;
-+		goto failed_normal_scsi_map;
- 
- 	zfcp_qdio_set_sbale_last(adapter->qdio, &req->qdio_req);
- 	if (zfcp_adapter_multi_buffer_active(adapter))
-@@ -2638,12 +2799,22 @@ int zfcp_fsf_fcp_cmnd(struct scsi_cmnd *scsi_cmnd)
- 
- 	retval = zfcp_fsf_req_send(req);
- 	if (unlikely(retval))
--		goto failed_scsi_cmnd;
-+		goto failed_req_send;
-+
- 	/* NOTE: DO NOT TOUCH req PAST THIS POINT! */
- 
- 	goto out;
- 
-+failed_req_send:
-+	zfcp_fsf_req_unmap_sg(req, &scsi_cmnd->sdb.table,
-+			      scsi_cmnd->sc_data_direction);
-+failed_normal_scsi_map:
-+	if ((scsi_get_prot_op(scsi_cmnd) != SCSI_PROT_NORMAL) &&
-+	    scsi_prot_sg_count(scsi_cmnd))
-+		zfcp_fsf_req_unmap_sg(req, &scsi_cmnd->prot_sdb->table,
-+				      scsi_cmnd->sc_data_direction);
- failed_scsi_cmnd:
-+	zfcp_fsf_req_unmap_metadata(req);
- 	zfcp_fsf_req_free(req);
- 	scsi_cmnd->host_scribble = NULL;
- out:
-@@ -2719,6 +2890,7 @@ struct zfcp_fsf_req *zfcp_fsf_fcp_task_mgmt(struct scsi_device *sdev,
- 		goto out;
- 	}
- 
-+	zfcp_fsf_req_unmap_metadata(req);
- 	zfcp_fsf_req_free(req);
- 	req = NULL;
- out:
-diff --git a/drivers/s390/scsi/zfcp_qdio.c b/drivers/s390/scsi/zfcp_qdio.c
-index bac8385e069f..7e15b1a470e7 100644
---- a/drivers/s390/scsi/zfcp_qdio.c
-+++ b/drivers/s390/scsi/zfcp_qdio.c
-@@ -233,31 +233,40 @@ zfcp_qdio_sbale_next(struct zfcp_qdio *qdio, struct zfcp_qdio_req *q_req)
- }
- 
- /**
-- * zfcp_qdio_sbals_from_sg - fill SBALs from scatter-gather list
-+ * zfcp_qdio_sbals_from_sg - DMA map scatter-gather list and fill SBALs from it
-  * @qdio: pointer to struct zfcp_qdio
-- * @q_req: pointer to struct zfcp_qdio_req
-- * @sg: scatter-gather list
-- * Returns: zero or -EINVAL on error
-+ * @sgt: pointer to scattergather list table
-+ * @req: pointer to zfcp_fsf_req
-+ * @dma_dir: DMA direction of I/O
-+ * Returns: zero on success, -EINVAL or -EIO otherwise
-  */
--int zfcp_qdio_sbals_from_sg(struct zfcp_qdio *qdio, struct zfcp_qdio_req *q_req,
--			    struct scatterlist *sg)
-+int zfcp_qdio_sbals_from_sg(struct zfcp_qdio *qdio, struct sg_table *sgt,
-+			    struct zfcp_fsf_req *req,
-+			    enum dma_data_direction dma_dir)
- {
- 	struct qdio_buffer_element *sbale;
-+	int i;
-+	struct scatterlist *sg_element;
-+
-+	if (zfcp_fsf_req_map_sg(req, sgt, dma_dir))
-+		return -EIO;
- 
- 	/* set storage-block type for this request */
--	sbale = zfcp_qdio_sbale_req(qdio, q_req);
--	sbale->sflags |= q_req->sbtype;
-+	sbale = zfcp_qdio_sbale_req(qdio, &req->qdio_req);
-+	sbale->sflags |= req->qdio_req.sbtype;
- 
--	for (; sg; sg = sg_next(sg)) {
--		sbale = zfcp_qdio_sbale_next(qdio, q_req);
-+	for_each_sgtable_dma_sg(sgt, sg_element, i) {
-+		sbale = zfcp_qdio_sbale_next(qdio, &req->qdio_req);
- 		if (!sbale) {
- 			atomic_inc(&qdio->req_q_full);
--			zfcp_qdio_zero_sbals(qdio->req_q, q_req->sbal_first,
--					     q_req->sbal_number);
-+			zfcp_qdio_zero_sbals(qdio->req_q,
-+					     req->qdio_req.sbal_first,
-+					     req->qdio_req.sbal_number);
-+			zfcp_fsf_req_unmap_sg(req, sgt, dma_dir);
- 			return -EINVAL;
- 		}
--		sbale->addr = u64_to_dma64(sg_phys(sg));
--		sbale->length = sg->length;
-+		sbale->addr = u64_to_dma64(sg_dma_address(sg_element));
-+		sbale->length = sg_dma_len(sg_element);
- 	}
- 	return 0;
- }
-diff --git a/drivers/s390/scsi/zfcp_qdio.h b/drivers/s390/scsi/zfcp_qdio.h
-index 8f7d2ae94441..9f89f2975f6f 100644
---- a/drivers/s390/scsi/zfcp_qdio.h
-+++ b/drivers/s390/scsi/zfcp_qdio.h
-@@ -11,6 +11,7 @@
- #define ZFCP_QDIO_H
- 
- #include <linux/interrupt.h>
-+#include <linux/types.h>
- #include <asm/qdio.h>
- 
- #define ZFCP_QDIO_SBALE_LEN	PAGE_SIZE
-@@ -106,16 +107,19 @@ zfcp_qdio_sbale_curr(struct zfcp_qdio *qdio, struct zfcp_qdio_req *q_req)
-  * @q_req: the qdio request to start
-  * @req_id: The request id
-  * @sbtype: type flags to set for all sbals
-- * @data: First data block
-- * @len: Length of first data block
-+ * @has_qtcb: FSF request has a QTCB
-+ * @qtcb_len: Length of first data block QTCB, if any
-+ * @qtcb_dma_handle: DMA handle of the QTCB, if any
-  *
-  * This is the start of putting the request into the queue, the last
-  * step is passing the request to zfcp_qdio_send. The request queue
-  * lock must be held during the whole process from init to send.
-  */
- static inline
--void zfcp_qdio_req_init(struct zfcp_qdio *qdio, struct zfcp_qdio_req *q_req,
--			u64 req_id, u8 sbtype, void *data, u32 len)
-+void zfcp_qdio_req_init(struct zfcp_qdio *qdio,
-+			struct zfcp_qdio_req *q_req, u64 req_id,
-+			u8 sbtype, bool has_qtcb, u32 qtcb_len,
-+			dma_addr_t qtcb_dma_handle)
- {
- 	struct qdio_buffer_element *sbale;
- 	int count = min(atomic_read(&qdio->req_q_free),
-@@ -133,33 +137,34 @@ void zfcp_qdio_req_init(struct zfcp_qdio *qdio, struct zfcp_qdio_req *q_req,
- 	sbale->eflags = 0;
- 	sbale->sflags = SBAL_SFLAGS0_COMMAND | sbtype;
- 
--	if (unlikely(!data))
-+	if (unlikely(!has_qtcb))
- 		return;
- 	sbale++;
--	sbale->addr = virt_to_dma64(data);
--	sbale->length = len;
-+	sbale->addr = u64_to_dma64(qtcb_dma_handle);
-+	sbale->length = qtcb_len;
- }
- 
- /**
-  * zfcp_qdio_fill_next - Fill next sbale, only for single sbal requests
-  * @qdio: pointer to struct zfcp_qdio
-  * @q_req: pointer to struct zfcp_queue_req
-- * @data: pointer to data
-+ * @dma_handle: dma address
-  * @len: length of data
-  *
-  * This is only required for single sbal requests, calling it when
-  * wrapping around to the next sbal is a bug.
-  */
- static inline
--void zfcp_qdio_fill_next(struct zfcp_qdio *qdio, struct zfcp_qdio_req *q_req,
--			 void *data, u32 len)
-+void zfcp_qdio_fill_next(struct zfcp_qdio *qdio,
-+			 struct zfcp_qdio_req *q_req,
-+			 dma_addr_t dma_handle, u32 len)
- {
- 	struct qdio_buffer_element *sbale;
- 
- 	BUG_ON(q_req->sbale_curr == qdio->max_sbale_per_sbal - 1);
- 	q_req->sbale_curr++;
- 	sbale = zfcp_qdio_sbale_curr(qdio, q_req);
--	sbale->addr = virt_to_dma64(data);
-+	sbale->addr = u64_to_dma64(dma_handle);
- 	sbale->length = len;
- }
- 
--- 
-2.53.0
-
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogc2FzaGlrby1ib3RAa2Vy
+bmVsLm9yZyA8c2FzaGlrby1ib3RAa2VybmVsLm9yZz4NCj4gU2VudDogMjQgU2VwdGVtYmVyIDIw
+MjYgMTE6MzYNCj4gVG86IEthbmRwYWwsIFN1cmFqIDxzdXJhai5rYW5kcGFsQGludGVsLmNvbT4N
+Cj4gQ2M6IGludGVsLXhlQGxpc3RzLmZyZWVkZXNrdG9wLm9yZzsgaW50ZWwtZ2Z4QGxpc3RzLmZy
+ZWVkZXNrdG9wLm9yZw0KPiBTdWJqZWN0OiBSZTogW1BBVENIIDIvMl0gZHJtL2k5MTUvZGlzcGxh
+eTogRG9uJ3QgcmVxdWlyZSBhIDE6MSBwaXBlIHRvIHBvcnQNCj4gbWFwcGluZyBmb3IgREMzY28N
+Cj4gDQo+IFRoYW5rIHlvdSBmb3IgeW91ciBjb250cmlidXRpb24hIFNhc2hpa28gQUkgcmV2aWV3
+IGZvdW5kIDEgcG90ZW50aWFsIGlzc3VlKHMpDQo+IHRvIGNvbnNpZGVyOg0KPiAtIFtNZWRpdW1d
+IGRybS9pOTE1L2Rpc3BsYXk6IERDM0NPIGFjY2lkZW50YWxseSBkaXNhYmxlZCBmb3IgRElTUExB
+WV9WRVIgPg0KPiAzNQ0KPiAtLQ0KPiANCj4gY29tbWl0IGZlOGVkY2MwMWM4MjUyM2ZmODNjZGE1
+MmI0Y2RhYWI3NjFmNTdmNjYNCj4gQXV0aG9yOiBTdXJhaiBLYW5kcGFsIDxzdXJhai5rYW5kcGFs
+QGludGVsLmNvbT4NCj4gDQo+IGRybS9pOTE1L2Rpc3BsYXk6IERvbid0IHJlcXVpcmUgYSAxOjEg
+cGlwZSB0byBwb3J0IG1hcHBpbmcgZm9yIERDM2NvDQo+IA0KPiBUaGlzIGNvbW1pdCByZWxheGVz
+IHRoZSBzdHJpY3QgMToxIHBpcGUtdG8tcG9ydCBtYXBwaW5nIHJlcXVpcmVtZW50IGZvciBEQzNj
+bw0KPiBvbiBYZTNwX0xQRCAoRElTUExBWV9WRVIgMzUpLiBJdCByZXBsYWNlcyB0aGUgcHJldmlv
+dXMgaWYvZWxzZSBjb25kaXRpb25hbA0KPiB3aXRoIGEgc2ltcGxpZmllZCBjaGVjayB0byBhbGxv
+dyBEQzNjbyBvbiBlRFAgcGFuZWxzIHdpcmVkIHRvIG5vbi1tYXRjaGluZw0KPiBwb3J0cy4NCj4g
+DQo+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvZ3B1L2RybS9pOTE1L2Rpc3BsYXkvaW50ZWxfZGlz
+cGxheV9wb3dlci5jDQo+ID4gYi9kcml2ZXJzL2dwdS9kcm0vaTkxNS9kaXNwbGF5L2ludGVsX2Rp
+c3BsYXlfcG93ZXIuYw0KPiA+IGluZGV4IDJlNTM0ZGRiNzM0NzkuLmQ0NzVlNjJlOGY0MGIgMTAw
+NjQ0DQo+ID4gLS0tIGEvZHJpdmVycy9ncHUvZHJtL2k5MTUvZGlzcGxheS9pbnRlbF9kaXNwbGF5
+X3Bvd2VyLmMNCj4gPiArKysgYi9kcml2ZXJzL2dwdS9kcm0vaTkxNS9kaXNwbGF5L2ludGVsX2Rp
+c3BsYXlfcG93ZXIuYw0KPiA+IEBAIC00MjgsMTggKzQyOCwxNCBAQCB2b2lkIGludGVsX2Rpc3Bs
+YXlfcG93ZXJfZGMzY29fdXBkYXRlKHN0cnVjdA0KPiA+IGludGVsX2Rpc3BsYXkgKmRpc3BsYXks
+IHUzMiB0cmlnZ2VyICBzdGF0aWMgYm9vbA0KPiBpbnRlbF9kYzNjb19wb3J0X3BpcGVfY29tcGF0
+aWJsZShzdHJ1Y3QgaW50ZWxfZHAgKmludGVsX2RwLA0KPiA+ICAJCQkJCSAgICAgY29uc3Qgc3Ry
+dWN0IGludGVsX2NydGNfc3RhdGUNCj4gKmNydGNfc3RhdGUpICB7DQo+ID4gKwlzdHJ1Y3QgaW50
+ZWxfZGlzcGxheSAqZGlzcGxheSA9IHRvX2ludGVsX2Rpc3BsYXkoaW50ZWxfZHApOw0KPiA+ICAJ
+c3RydWN0IGludGVsX2RpZ2l0YWxfcG9ydCAqZGlnX3BvcnQgPSBkcF90b19kaWdfcG9ydChpbnRl
+bF9kcCk7DQo+ID4gIAllbnVtIHBpcGUgcGlwZSA9IHRvX2ludGVsX2NydGMoY3J0Y19zdGF0ZS0+
+dWFwaS5jcnRjKS0+cGlwZTsNCj4gPiAgCWVudW0gcG9ydCBwb3J0ID0gZGlnX3BvcnQtPmJhc2Uu
+cG9ydDsNCj4gPiAgCWludCBudW1fcGlwZXMgPSBpbnRlbF9jcnRjX251bV9qb2luZWRfcGlwZXMo
+Y3J0Y19zdGF0ZSk7DQo+ID4NCj4gPiAtCS8qIE5lZWQgdG8gZm9sbG93IDE6MSBtYXBwaW5nIGJl
+Y2F1c2Ugb2YgQ01URyByZXN0cmljdGlvbiAqLw0KPiA+IC0JaWYgKERJU1BMQVlfVkVSKHRvX2lu
+dGVsX2Rpc3BsYXkoY3J0Y19zdGF0ZSkpID09IDM1KQ0KPiA+IC0JCXJldHVybiBudW1fcGlwZXMg
+PT0gMSAmJg0KPiA+IC0JCSAgICAgICAoKHBpcGUgPT0gUElQRV9BICYmIHBvcnQgPT0gUE9SVF9B
+KSB8fA0KPiA+IC0JCQkocGlwZSA9PSBQSVBFX0IgJiYgcG9ydCA9PSBQT1JUX0IpKTsNCj4gPiAt
+CWVsc2UNCj4gPiAtCQlyZXR1cm4gbnVtX3BpcGVzID09IDEgJiYgcGlwZSA8PSBQSVBFX0IgJiYg
+cG9ydCA8PSBQT1JUX0I7DQo+ID4gKwlyZXR1cm4gRElTUExBWV9WRVIoZGlzcGxheSkgPT0gMzUg
+JiYgbnVtX3BpcGVzID09IDEgJiYgcGlwZSA8PQ0KPiBQSVBFX0IgJiYNCj4gPiArCQlwb3J0IDw9
+IFBPUlRfQjsNCj4gDQo+IFtTZXZlcml0eTogTWVkaXVtXQ0KPiBXaWxsIHRoaXMgaW5hZHZlcnRl
+bnRseSBkaXNhYmxlIERDM2NvIGZvciBwbGF0Zm9ybXMgd2hlcmUgRElTUExBWV9WRVIgaXMNCj4g
+Z3JlYXRlciB0aGFuIDM1Pw0KPiANCj4gQnkgcmVwbGFjaW5nIHRoZSBlbnRpcmUgaWYvZWxzZSBi
+bG9jayB3aXRoIGEgc2luZ2xlIHJldHVybiBzdGF0ZW1lbnQgdGhhdA0KPiBleHBsaWNpdGx5IGNo
+ZWNrcyBESVNQTEFZX1ZFUihkaXNwbGF5KSA9PSAzNSwgaXQgYXBwZWFycw0KPiBpbnRlbF9kYzNj
+b19wb3J0X3BpcGVfY29tcGF0aWJsZSgpIHdpbGwgbm93IHVuY29uZGl0aW9uYWxseSByZXR1cm4g
+ZmFsc2UgZm9yDQo+IGFueSBmdXR1cmUgaGFyZHdhcmUgd2l0aCBhIHZlcnNpb24gPiAzNS4NCj4g
+DQo+IFNpbmNlIHRoZSBIQVNfREMzQ08oKSBtYWNybyB1c3VhbGx5IGd1YXJkcyBlbnRyeSBpbnRv
+IERDM2NvIHBhdGhzIGZvcg0KPiBwbGF0Zm9ybXMgd2hlcmUgRElTUExBWV9WRVIgPj0gMzUsIGRv
+ZXMgaXQgbWFrZSBzZW5zZSB0byBkcm9wIHRoZSBzdHJpY3QNCj4gdmVyc2lvbiBlcXVhbGl0eSBj
+aGVjayBoZXJlIHNvIHRoYXQgZnV0dXJlIHBsYXRmb3JtcyBhcmVuJ3QgdW5pbnRlbnRpb25hbGx5
+DQo+IHJlc3RyaWN0ZWQ/DQoNClRoYXQgaXMgb2theSBiZWNhdXNlICBEQzNDTyBpcyBlbmFibGVk
+IG9ubHkgZnJvbSBYZTNQIG9yIGRpc3BsYXkgdmVyID09IDM1DQoNClJlZ2FyZHMsDQpTdXJhaiBL
+YW5kcGFsDQoNCj4gDQo+ID4gIH0NCj4gDQo+IC0tDQo+IFNhc2hpa28gQUkgcmV2aWV3IMK3DQo+
+IGh0dHBzOi8vc2FzaGlrby5kZXYvIy9wYXRjaHNldC8yMDI2MDkyNDA1NTczNC4yMTM4Nzg3LTEt
+DQo+IHN1cmFqLmthbmRwYWxAaW50ZWwuY29tP3BhcnQ9Mg0K
