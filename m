@@ -1,593 +1,273 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from TYDPR03CU002.outbound.protection.outlook.com (mail-japaneastazon11023102.outbound.protection.outlook.com [52.101.127.102])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3919265629
-	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 09:31:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790242272; cv=none; b=HFm+UJrkgyj/VkFW//a3s+MERWXD01CrS9X3CtntVuao3fxck+aD+yYX2T7/UBcsFaNicIP41AgWNihHMKr33Fc9yBW4aTRILJC4XuPhJa1C8fAk6UHoBNDkJ41OEaNjZJ1fdmw28Wd3rHcxiUn7YIHFHpCSaZbYfan94Gfx1C0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790242272; c=relaxed/simple;
-	bh=SWD7UuNCHF3lQx+qt62KDyEwtR/jSPvgf92rCGQrzcw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MYWNgM+eEfbOC4ZoR92tLb/4ahasBl/Td/XbNb+yl0HmRuT89Ql9Mw18fTckRTBG/E24A0rk9pPgAr/MdUp+PToeEn+rklgkfW3gllhZ2Vq7XBKFeVi4WERG29kqE3xgC6GAxngTqSWPNTdfULGt6Q71HKWY2JMLy4yFF+EicPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=p+BhUeAK; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=BU6fSTet; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=J5OeEiSb; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Bwzdt44s; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B5247140F
+	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 10:36:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.127.102
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790246210; cv=fail; b=OgDhDUNUQkF0TpbfnAHBnAveZA4MJQ2YlblTSz1MK9OA4SEQkFy3CmJJbQDDy6yGiiobNXP1DsBsmDVKivfPr88DSmNHcJwzKdGPHGgHp+0K/EqQY31LLDZCA7PpbmoHsN3FZdrU38XqfdyOiDsjrwx5ZsQxh0qw5QCHsrxe9Wg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790246210; c=relaxed/simple;
+	bh=tA3+pJvR75v023WUPwKE6LNrXV375BhHsiWPATif2rI=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=SB5XlcnBbBffSyX/9fgHRK8GdhxbMgTdj2MtkxnkWmhYnAHozYW0+vI/IitedAypmtTOjThaEzFiZRZl69UAr+H7PKBC9Z4feow+//YlJFGqiaml/5zWc8rwseIScwlQTuHeITgVZvA4ngaHfxaQhANGBZpyx8VqKjrGfsOJgz0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com; spf=pass smtp.mailfrom=amlogic.com; dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b=H407oEon; arc=fail smtp.client-ip=52.101.127.102
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amlogic.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="p+BhUeAK";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="BU6fSTet";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="J5OeEiSb";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Bwzdt44s"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 87AD921E7D;
-	Thu, 24 Sep 2026 09:30:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1790242252; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4B3LaegPwkv2RB4rLF8EsjDYl0Zo7A9//9lFJY8tWIo=;
-	b=p+BhUeAKwis+7Pveqn50Kd8hidhfMkAG7C98UjRPF6a9+wK0b8BTUJ5dnKXlki3xLp7KEl
-	IwRalfiKpSxB+EKUlfhd4mMaJOaohRFuySIjzBONTPDAcB3OXLPkL4caFkfDSmRlvolGe3
-	IiBKL+z+qRLKkNCGZ0EjukLKVxb3rmM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1790242252;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4B3LaegPwkv2RB4rLF8EsjDYl0Zo7A9//9lFJY8tWIo=;
-	b=BU6fSTet7EFkX8NjVcwtXqUjYYa8xFdNo2YEIZnIo/7TTUdvh2HMQRkY9lj/MpW6fQ/Qe4
-	mR4rkl4aGDEYC4BQ==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=J5OeEiSb;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Bwzdt44s
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1790242248; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4B3LaegPwkv2RB4rLF8EsjDYl0Zo7A9//9lFJY8tWIo=;
-	b=J5OeEiSbj/uzEKnmiI+1p+gOzt3+JFQ814a1QUuhW9f+U8Is7OBmZdcgq1DYuJUhCospwL
-	Zf2TsO6gLInQ2nXpuVV8I02bhYTatip+DDxr1LNzd4USKsQVwVxNpPeZOmpQkFSp+4TVOR
-	znrFrf8FyfrxJa5tRE4MNQpmLExkPXY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1790242248;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4B3LaegPwkv2RB4rLF8EsjDYl0Zo7A9//9lFJY8tWIo=;
-	b=Bwzdt44s0b+M/jpkQAo4NrWHOp+t/YO/PZGq+NrBP7m3AgXaEYIARPGikj6WBDJeCkU2LD
-	a5t9D34CWmgy0qAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 96837136ED;
-	Thu, 24 Sep 2026 09:30:47 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 2es5CcbttGp+IgAAD6G6ig:T3
-	(envelope-from <tzimmermann@suse.de>); Thu, 24 Sep 2026 09:30:47 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: jfalempe@redhat.com,
-	javierm@redhat.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	jani.nikula@linux.intel.com,
-	Alexander.Deucher@amd.com
-Cc: dri-devel@lists.freedesktop.org,
-	amd-gfx@lists.freedesktop.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	intel-gfx@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	nouveau@lists.freedesktop.org,
-	linux-rockchip@lists.infradead.org,
-	linux-tegra@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH v2 2/2] drm/fbdev: Move fbdev helpers into client library
-Date: Thu, 24 Sep 2026 11:29:14 +0200
-Message-ID: <20260924093036.82356-3-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260924093036.82356-1-tzimmermann@suse.de>
-References: <20260924093036.82356-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=amlogic.com header.i=@amlogic.com header.b="H407oEon"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=TN/OAWEjqpz8RXlUG2XyQi2yxtDJQmhZVG+VpMzOW4+H0gwhsNF20luW7f4kYLfiL+3fflN2dgSRceMesBsaCF+Im7GaBJhkNsCWANaCGW5q+tXqGYm0Wm+Udy7uPk2ZXHtV11yNEj7SserpCGh5VAxW+1hBL7g0CLmtUDDX+aVJrl8PACKpkSOWVyp4swzhvTd4E9qDGecT6XmehZXkrw7QUvPfIOAJxW1B3GeT2t1FUci/o/ioVPrCc3Qu71Jk1pgicx0hJITyofdxq1xKyfXRCJb7gy+uste5QC4A4cKB5oviT8vdkvpr6yGz+oj3UnSAvbf7XZWmnJbRKxUyZg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=jcxUdSWXO0uo7qWCpzUXhO/KcSLWuya52Xj9nXMGXv4=;
+ b=ZrC1IYTR6FPXjxz/xkME2/atQa2iYxCNULQkun5mSbvqyjOck5y/IB9Gpa3/+NCrpo7KSTdEgUs880NQyqsf6uxvGuEXwSutQ/s7NX/o40tb8oa9zshvFhEVdDx5+BZthf5aDSsqu7T61Af+B0ZiPiVCbNtJZCsP2+JmYqV3MMF3kCGlkOtXEJTeZwrVq3v/s3j5HhUxFd7tlOd5K6VgO9xD+U2t6alFSjzVulVN4tSBaFxSoGDe5CbV5BIrU4+WPLM7TywW884SjThKUmWSo1AIx8y7kkyvX6Cv4qbUzBdDHqyANMGKxJlx1TrfGkN1CjfcADDzys32aWLuKz+nzA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amlogic.com; dmarc=pass action=none header.from=amlogic.com;
+ dkim=pass header.d=amlogic.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amlogic.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=jcxUdSWXO0uo7qWCpzUXhO/KcSLWuya52Xj9nXMGXv4=;
+ b=H407oEonkzNix46lWe7RybSOc9/I8TGsJ35NmQuApHl+0wGXx7K5kUxQF1l4OeY4dhLO4XkuGCL8/KXK9329///VDR1WzpkKQYsjCngAAmGyfUP4hm6fvN2NNVxhFh8muP++2rhinNG8X4OJMtwhkU+KFnS92bqiEr8BRz+331Ahe7uVIWRGA/2EoBufZfbvZ52HLoM3VOhfuoZue1nCen06djq9V2cgDmgMFlobTRGFCVEy9A1UZAvt5+XSVcaBHyKb1A173DMDw4BxWe4M8VzgdIBLSauVNSl36afV0XrnY1o1FdREWeWbq4nbfYssOTxej9f8Ga9iQdLyzYpX7g==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amlogic.com;
+Received: from KL1PR03MB7149.apcprd03.prod.outlook.com (2603:1096:820:ca::7)
+ by KL1PR03MB7902.apcprd03.prod.outlook.com (2603:1096:820:fa::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.406.16; Thu, 24 Sep
+ 2026 10:36:44 +0000
+Received: from KL1PR03MB7149.apcprd03.prod.outlook.com
+ ([fe80::2f06:12a:fff0:6506]) by KL1PR03MB7149.apcprd03.prod.outlook.com
+ ([fe80::2f06:12a:fff0:6506%3]) with mapi id 15.21.0451.014; Thu, 24 Sep 2026
+ 10:36:44 +0000
+Message-ID: <719ccdb9-82ed-456f-a222-3a0e6319e886@amlogic.com>
+Date: Thu, 24 Sep 2026 18:36:41 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 1/3] clk: meson: pll: Remove the dedicated n parameter
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+ linux-clk@vger.kernel.org, neil.armstrong@linaro.org,
+ linux-amlogic@lists.infradead.org
+References: <20260923-meson_refactor_n-v1-0-3a8ce27121a2@amlogic.com>
+ <20260923-meson_refactor_n-v1-1-3a8ce27121a2@amlogic.com>
+ <20260923112431.925B71F00893@smtp.kernel.org>
+From: Jian Hu <jian.hu@amlogic.com>
+In-Reply-To: <20260923112431.925B71F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SE2P216CA0018.KORP216.PROD.OUTLOOK.COM
+ (2603:1096:101:114::17) To KL1PR03MB7149.apcprd03.prod.outlook.com
+ (2603:1096:820:ca::7)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Level: 
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 87AD921E7D
-X-Spamd-Result: default: False [-3.01 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	FREEMAIL_TO(0.00)[redhat.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch,amd.com];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,amd.com:email,suse.de:dkim,suse.de:email,suse.de:mid,intel.com:email];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	R_RATELIMIT(0.00)[to_ip_from(RLgosu6qu4h11rje89ht7rjgg5)];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spam-Flag: NO
-X-Spam-Score: -3.01
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KL1PR03MB7149:EE_|KL1PR03MB7902:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4961a209-e6e7-4c2d-713e-08df1a27ba48
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|10067099003|4143699003|56012099006|11063799006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	nUY6MUOLN/oHnbZRVsRPvJUXayOqz79WH+0Y+mZtgvkl5A7O6kQ0hZHEQbjFdyHZgaB/OBqYdhDhxSJbJPN8M5FliKZk+wjQyHhweLCx3WUCIUt+8j5axrhSYYatzIppg6rsQbjaNHrlT+lUc+lfH73KR1LuY5IZIK81oA7wQ9cmtvLBsqsUkReRGM/sX0O5N4UavinRwWU/vWOEx2UZvTdxDHEWjlX6UGMGxIRzWI5urX2i9zyaTHawmZlg+l0RxUHofbPSudQL3zOyQcXmZ44hIshQpKB7IY6PJtqQl5XUCAvqaT5Cm386u/EwxpVoZGU0JwfhgM2jBcJqctmJZphCxyLHA6ctb2TNkQSM+/nVrtcw5EZARIf7r4NrbtSTI3KLWMPP9sFUKqbHjD7Mh9qhyBv1f2O6ArllaL1UsXRqBwCF+xEKKdLMSqR8j0M1MBS5ZZ3h6pvvKGTq4W6hwMzkh5teTUYCpbZr+3F1m1S06iq/TSfnfou4TeA0oVZShVUvzwn9Xw7bB7glxi0P1JFw1BjPJXvNnAGQRzgxxY4QqX/yZJxGBj6pntv1StBSK/fbhzX7lv3TT2P+fe1AcS8KnK2V/qnZt9N7euaz/wY=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:KL1PR03MB7149.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(10067099003)(4143699003)(56012099006)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?cUxjaGdZeW5LT1B5bXJpVTNHS0hISXR1MTdsOEkyc0ZMN1FrSFVFalJaajF3?=
+ =?utf-8?B?K1pyZEIrRjFhVzlOMDYrc2Znc01MRDhMaW9GMEFzb1BYV2VVOFFubkdtMWdo?=
+ =?utf-8?B?bHFYVHpEWXBSTUY4KzgzT0Y3eWIyUHM3ZUxXa1J2TVV4eFpnMWxzOFcvZzhz?=
+ =?utf-8?B?TFEzUVZBcExjY21nNGtwVlErdGpGcms3YVdxUi8xU1pVNlUyUDBsQzZlUWEy?=
+ =?utf-8?B?aktlUHZCMURwbjBZSER3RDNjc0w4d2JmS1hMaGlmc3hGeUJCako4MUM3UFVz?=
+ =?utf-8?B?ZzF6elg2VXhXcEUrMEJPcllyV2lCN0FoZXhnTDc3VnBRU3ArbjhYT0RUQTNJ?=
+ =?utf-8?B?dmdJdXpON0NSYVhEZXBmdXUyc0g1WGtqWTFxenNPUTBoNjhCU0lVZ2ljSnNp?=
+ =?utf-8?B?dDl3TllMdkNGYlE1a1RaMk1NRUJiM1lOdEpKaEk5cDFrTzZSZThnUWh4aGJ4?=
+ =?utf-8?B?VVpwTWFOZ1RKNTVUZUMwc2Q5OEFpQTVmRVU3ZCtpZFY1Vlk1ZVJzMlFidnhC?=
+ =?utf-8?B?Nyt6aC9CRDVDaDVkOHpsRHcwaXR2ZHVVaTJRMU5DL1lBb1NENmovV21BUE45?=
+ =?utf-8?B?cVRsMS9rc0F3L2lWVU0xSmZDVmNPWC9YK2pXN0JBRktrdk9YbGF1RG5oMGd4?=
+ =?utf-8?B?QktJcHVsNkFudGR6cHR5dG1TU1ZSbC83UGNUdUx3a0drSUJveTRpb3p5dGZG?=
+ =?utf-8?B?WHkzUTBqSXd3a1I0MDRQbERlVDRHRDVEMFhac3FzQk41OE1tZ0pJdmZSL21s?=
+ =?utf-8?B?MDNyMVJqMFgrU0ZtbkRyaWlaemU3em51QXhmMkdMMmpGbmsraHZsZkdQbzZi?=
+ =?utf-8?B?NE8zSU1GR3RyV1Uya21uUE9oak5RWjRvSm5FaTZ4ZnN5THFUTzhkcHJlaEM3?=
+ =?utf-8?B?ZnZRakd6QVRKazJZNElFZEFuRXIrMVpUS09kZHF4aFlyMmJEVUJMdnRPMjVS?=
+ =?utf-8?B?dm9IYURLY0FHY2t2MU5XN0Y5MFJUa2ZCMU8wYTJ3amRncXhTZkZ1bmQ3VGc3?=
+ =?utf-8?B?L3JpcWhRTlhEV21yMEVnVG9qTWpmdjUrbHlmdWdNQTNlMjAwSkM4dWszb1pk?=
+ =?utf-8?B?cStMNWpPTDhtbVpUUzFCNEpUdmJEWmp6ckFDUnRPMFkyc0w5WlNRbFd0dlpP?=
+ =?utf-8?B?c0o1Y2FZZytWaUtzNmRTS3hRd21Cbm55c2gxTlF6NXc4UzRMeFdLNXZ4WlYr?=
+ =?utf-8?B?R0pGNVN4RnlyS2hpek1NU1NEbW1wZUVHYWVybi9Sc1E3L3Y1bXpoSlZLMTVP?=
+ =?utf-8?B?NjVJWUhPdzU3TGgxakl2SDZpdCtZTCs0djkzRTJPY3R3WmtHVHM0U2dyaTNp?=
+ =?utf-8?B?NXAweXE2eCtDVk5BdnJPQUpmZlF3alZNell3K1d5TmU1ZjBxS0t4ajk2SGlG?=
+ =?utf-8?B?Y1U0SllNWmtHdHVtZnhnL2JHU0wydjBQeVIvWisxdmlPbXlSR0owUmhWSzk0?=
+ =?utf-8?B?M3p2Y0ozNkhzNEdseFRocml1U0hUcXc5OUxHRkUzdy9PSjFoV0lwUXBkam41?=
+ =?utf-8?B?aVlkbTY1R1RZcEdPTHYwMFlrdXl5NzlFL2FpYXVNVTgxeldFNVF2WjBlb1Fx?=
+ =?utf-8?B?WGtKU2ZXNEFaZUZqdmhiQTQycUViM2NBTE5zajkraWZ2QmUyTjYvUGk5THNu?=
+ =?utf-8?B?VE9MUTZvTitNc2pqYlVHWG1CTnNNRUkxRHI1anJQaTFNMjFRRDkvUnJhUDN2?=
+ =?utf-8?B?SzdGMXV2NklMMzNvK01ON0cyTnpyVENtbndQZ055YXJMakxWaXFFZUVwcVlX?=
+ =?utf-8?B?SzZqRWNYWGxvWVYyNEdkNUZTc1plN0VmOUY3c2k1TE5acGpydGpRU3J2R005?=
+ =?utf-8?B?ZTBsVjJuK01jRVk5LzBMZVdWTVByMDJRc3pOcmFXM1ZNR3hPbVdtbzVNQUo2?=
+ =?utf-8?B?YXlZdytBOEdLanZ4ZUhTRkFMeEg2REZ5R3c4N1FqaUZYVGRMV2Ivam51ZytC?=
+ =?utf-8?B?SjU0Vk16UWRPR24rMUNhbGdmM1FzS201dWM0aWZSK0JoUFIyRnNzcGVpTjRP?=
+ =?utf-8?B?TWxaYlpScnJjdCtNdVRKc1NqL2pjRTEyZlA3WkU4MnBvd3U4M2dXK1Z0bzFr?=
+ =?utf-8?B?RXFVdlM2a1ZvRkduaFphcitOMlRLY1JieHhGVStZNjZhbS85cWZPSjIyL1I0?=
+ =?utf-8?B?MjUwLzRmRml3SThhT0UvRGg0OEdJK2V0cmdreTFyT2ZVQWZKeUtvZWc3M3dj?=
+ =?utf-8?B?N1pOdWF1MldpSis1Mmt2MXQ5OXRKaGh4RTJmVUlud2R5WjNDUUpvY1ZETVVa?=
+ =?utf-8?B?ODRWMG1zMUFPM0pIcUd2N2dJZU85Q2pBeGs4dnoxYlYzZk1VWHE3UXRGWFN2?=
+ =?utf-8?B?OUlzbUQwT2NYdE01YUJDUUcxMW9DaURJMUJseGY4d2hwNVFjMHVoUT09?=
+X-OriginatorOrg: amlogic.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4961a209-e6e7-4c2d-713e-08df1a27ba48
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR03MB7149.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 10:36:44.2576
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0df2add9-25ca-4b3a-acb4-c99ddf0b1114
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7j7kE3Kps4O2400iI22YFh1qJbZaX9YKzubyRuZMXpzrcUv8JCAdqFVKTd/gB5aaRzBq9z7jWcJ9hrQeJ8yT9g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR03MB7902
 
-DRM's fbdev helpers are for the fbdev-emulation clients. Move them
-into the client-library module. Fix include statements throughout
-DRM drivers.
 
-While at it, rename the files from drm_fb_helper to drm_fbdev_helper.
-The old name was too reminiscent of DRM's framebuffer code.
+On 9/23/2026 7:24 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Critical] clk: meson: struct meson_clk_pll_data removal of 'n' breaks compilation
+> - [High] clk: meson: pll unconditionally requires range, breaking table-based PLLs
+> - [High] clk: meson: external pre-divider violates PLL disable/reset sequencing
+> --
+>
+> commit 9a0d9eb075576d244c161f62134109ad2353a8b7
+> Author: Jian Hu <jian.hu@amlogic.com>
+>
+> clk: meson: pll: Remove the dedicated n parameter
+>
+> The Meson PLL framework models the PLL pre-divider (N) using a dedicated
+> field in struct meson_clk_pll_data. Since the common clock framework already
+> provides a generic divider implementation, this patch removes the dedicated
+> n parameter from the framework and simplifies the PLL rate calculation.
+>
+>> --- a/drivers/clk/meson/clk-pll.c
+>> +++ b/drivers/clk/meson/clk-pll.c
+> [ ... ]
+>> @@ -119,145 +107,48 @@ static unsigned int __pll_params_with_frac(unsigned long rate,
+> [ ... ]
+>> -static int meson_clk_get_pll_table_index(unsigned int index,
+>> -                                      unsigned int *m,
+>> -                                      unsigned int *n,
+>> -                                      struct meson_clk_pll_data *pll)
+>> +static int meson_clk_get_pll_multiplier(unsigned long rate,
+>> +                                     unsigned long parent_rate,
+>> +                                     unsigned int *m,
+>> +                                     struct meson_clk_pll_data *pll)
+>>   {
+>> -     if (!pll->table[index].n)
+>> +     if (!pll->range)
+>>                return -EINVAL;
+> [Severity: High]
+> Does this unconditionally reject any PLL that lacks a .range definition?
+>
+> Many table-based PLLs in Meson SoC drivers (like axg_gp0_pll_dco) leave
+> .range as NULL and rely strictly on .table. Without .range, rate calculations
+> for these PLLs will deterministically fail at runtime.
 
-The GEM support code for fbdev remains part of DRM's memory managers.
 
-v2:
-- update armada und docs
+Yes, the table consists of m and n, and n has now been deleted.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
----
- Documentation/gpu/drm-kms-helpers.rst                       | 6 +++---
- drivers/gpu/drm/Makefile                                    | 1 -
- drivers/gpu/drm/amd/amdgpu/amdgpu_display.c                 | 2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c                     | 2 +-
- drivers/gpu/drm/armada/armada_fbdev.c                       | 2 +-
- drivers/gpu/drm/clients/Makefile                            | 3 ++-
- drivers/gpu/drm/clients/drm_fbdev_client.c                  | 2 +-
- .../gpu/drm/{drm_fb_helper.c => clients/drm_fbdev_helper.c} | 2 +-
- drivers/gpu/drm/drm_fbdev_dma.c                             | 2 +-
- drivers/gpu/drm/drm_fbdev_shmem.c                           | 2 +-
- drivers/gpu/drm/drm_fbdev_ttm.c                             | 2 +-
- drivers/gpu/drm/exynos/exynos_drm_fbdev.c                   | 2 +-
- drivers/gpu/drm/gma500/fbdev.c                              | 2 +-
- drivers/gpu/drm/i915/display/intel_fbdev.c                  | 2 +-
- drivers/gpu/drm/msm/msm_debugfs.c                           | 2 +-
- drivers/gpu/drm/msm/msm_fbdev.c                             | 2 +-
- drivers/gpu/drm/nouveau/dispnv50/disp.c                     | 1 -
- drivers/gpu/drm/omapdrm/omap_debugfs.c                      | 2 +-
- drivers/gpu/drm/omapdrm/omap_fbdev.c                        | 2 +-
- drivers/gpu/drm/radeon/radeon_device.c                      | 2 +-
- drivers/gpu/drm/radeon/radeon_fbdev.c                       | 2 +-
- drivers/gpu/drm/rockchip/rockchip_drm_gem.c                 | 2 +-
- drivers/gpu/drm/sitronix/st7571.c                           | 1 -
- drivers/gpu/drm/tegra/fbdev.c                               | 2 +-
- drivers/gpu/drm/vboxvideo/vbox_mode.c                       | 2 +-
- include/drm/{drm_fb_helper.h => clients/drm_fbdev_helper.h} | 4 ++--
- 26 files changed, 27 insertions(+), 29 deletions(-)
- rename drivers/gpu/drm/{drm_fb_helper.c => clients/drm_fbdev_helper.c} (99%)
- rename include/drm/{drm_fb_helper.h => clients/drm_fbdev_helper.h} (99%)
+Therefore, the table method will be converted to the range method.
 
-diff --git a/Documentation/gpu/drm-kms-helpers.rst b/Documentation/gpu/drm-kms-helpers.rst
-index 400cd0112713..65bc16b96f8f 100644
---- a/Documentation/gpu/drm-kms-helpers.rst
-+++ b/Documentation/gpu/drm-kms-helpers.rst
-@@ -109,13 +109,13 @@ VBLANK Helper Reference
- fbdev Helper Functions Reference
- ================================
- 
--.. kernel-doc:: drivers/gpu/drm/drm_fb_helper.c
-+.. kernel-doc:: drivers/gpu/drm/clients/drm_fbdev_helper.c
-    :doc: fbdev helpers
- 
--.. kernel-doc:: include/drm/drm_fb_helper.h
-+.. kernel-doc:: include/drm/clients/drm_fbdev_helper.h
-    :internal:
- 
--.. kernel-doc:: drivers/gpu/drm/drm_fb_helper.c
-+.. kernel-doc:: drivers/gpu/drm/clients/drm_fbdev_helper.c
-    :export:
- 
- Draw Helper Functions Reference
-diff --git a/drivers/gpu/drm/Makefile b/drivers/gpu/drm/Makefile
-index f0c340aa2ec6..3a0f2095de3c 100644
---- a/drivers/gpu/drm/Makefile
-+++ b/drivers/gpu/drm/Makefile
-@@ -158,7 +158,6 @@ drm_kms_helper-y := \
- drm_kms_helper-$(CONFIG_DRM_PANEL_BRIDGE) += bridge/panel.o
- drm_kms_helper-$(CONFIG_DRM_PANIC_HELPER) += drm_panic_helper.o
- drm_kms_helper-$(CONFIG_DRM_PANIC_SCREEN_QR_CODE) += drm_panic_helper_qr.o
--drm_kms_helper-$(CONFIG_DRM_FBDEV_EMULATION) += drm_fb_helper.o
- obj-$(CONFIG_DRM_KMS_HELPER) += drm_kms_helper.o
- 
- #
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-index 59ea338b554c..126bfd9bb89e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-@@ -38,11 +38,11 @@
- 
- #include <linux/pci.h>
- #include <linux/pm_runtime.h>
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_crtc_helper.h>
- #include <drm/drm_damage_helper.h>
- #include <drm/drm_drv.h>
- #include <drm/drm_edid.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_gem_framebuffer_helper.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_modeset_helper.h>
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-index f2f179421c4d..51a7a4091376 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-@@ -28,8 +28,8 @@
- 
- #include "amdgpu.h"
- #include <drm/amdgpu_drm.h>
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_drv.h>
--#include <drm/drm_fb_helper.h>
- #include "amdgpu_uvd.h"
- #include "amdgpu_vce.h"
- #include "atom.h"
-diff --git a/drivers/gpu/drm/armada/armada_fbdev.c b/drivers/gpu/drm/armada/armada_fbdev.c
-index 8bbae94804f8..f35afec2125f 100644
---- a/drivers/gpu/drm/armada/armada_fbdev.c
-+++ b/drivers/gpu/drm/armada/armada_fbdev.c
-@@ -9,9 +9,9 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_crtc_helper.h>
- #include <drm/drm_drv.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_print.h>
- 
-diff --git a/drivers/gpu/drm/clients/Makefile b/drivers/gpu/drm/clients/Makefile
-index c16addbc327f..1304ff358509 100644
---- a/drivers/gpu/drm/clients/Makefile
-+++ b/drivers/gpu/drm/clients/Makefile
-@@ -4,5 +4,6 @@ subdir-ccflags-y += -I$(src)/..
- 
- drm_client_lib-y := drm_client_setup.o
- drm_client_lib-$(CONFIG_DRM_CLIENT_LOG) += drm_log.o
--drm_client_lib-$(CONFIG_DRM_FBDEV_EMULATION) += drm_fbdev_client.o
-+drm_client_lib-$(CONFIG_DRM_FBDEV_EMULATION) += drm_fbdev_client.o \
-+						drm_fbdev_helper.o
- obj-$(CONFIG_DRM_CLIENT_LIB) += drm_client_lib.o
-diff --git a/drivers/gpu/drm/clients/drm_fbdev_client.c b/drivers/gpu/drm/clients/drm_fbdev_client.c
-index 7574bd36f45e..eec463d19943 100644
---- a/drivers/gpu/drm/clients/drm_fbdev_client.c
-+++ b/drivers/gpu/drm/clients/drm_fbdev_client.c
-@@ -1,9 +1,9 @@
- // SPDX-License-Identifier: MIT
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_client.h>
- #include <drm/drm_crtc_helper.h>
- #include <drm/drm_drv.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_print.h>
- 
-diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/clients/drm_fbdev_helper.c
-similarity index 99%
-rename from drivers/gpu/drm/drm_fb_helper.c
-rename to drivers/gpu/drm/clients/drm_fbdev_helper.c
-index 76195410db60..fff3cf6a0aed 100644
---- a/drivers/gpu/drm/drm_fb_helper.c
-+++ b/drivers/gpu/drm/clients/drm_fbdev_helper.c
-@@ -32,9 +32,9 @@
- #include <linux/console.h>
- #include <linux/export.h>
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_atomic.h>
- #include <drm/drm_drv.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_framebuffer.h>
- #include <drm/drm_gem_framebuffer_helper.h>
-diff --git a/drivers/gpu/drm/drm_fbdev_dma.c b/drivers/gpu/drm/drm_fbdev_dma.c
-index 9412d9fdd74b..452f84400350 100644
---- a/drivers/gpu/drm/drm_fbdev_dma.c
-+++ b/drivers/gpu/drm/drm_fbdev_dma.c
-@@ -4,10 +4,10 @@
- #include <linux/fb.h>
- #include <linux/vmalloc.h>
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_drv.h>
- #include <drm/drm_fbdev_dma.h>
- #include <drm/drm_fb_dma_helper.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_framebuffer.h>
- #include <drm/drm_gem_dma_helper.h>
- #include <drm/drm_print.h>
-diff --git a/drivers/gpu/drm/drm_fbdev_shmem.c b/drivers/gpu/drm/drm_fbdev_shmem.c
-index 458c899b5d4f..8eb05fe9bc98 100644
---- a/drivers/gpu/drm/drm_fbdev_shmem.c
-+++ b/drivers/gpu/drm/drm_fbdev_shmem.c
-@@ -3,9 +3,9 @@
- #include <linux/export.h>
- #include <linux/fb.h>
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_drv.h>
- #include <drm/drm_fbdev_shmem.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_framebuffer.h>
- #include <drm/drm_gem_framebuffer_helper.h>
- #include <drm/drm_gem_shmem_helper.h>
-diff --git a/drivers/gpu/drm/drm_fbdev_ttm.c b/drivers/gpu/drm/drm_fbdev_ttm.c
-index 160bc35d8738..8eb59c2ac5ea 100644
---- a/drivers/gpu/drm/drm_fbdev_ttm.c
-+++ b/drivers/gpu/drm/drm_fbdev_ttm.c
-@@ -4,9 +4,9 @@
- #include <linux/moduleparam.h>
- #include <linux/vmalloc.h>
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_crtc_helper.h>
- #include <drm/drm_drv.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_framebuffer.h>
- #include <drm/drm_gem.h>
- #include <drm/drm_print.h>
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-index 8641c9e84d4c..f412269d6323 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-@@ -10,9 +10,9 @@
- 
- #include <linux/fb.h>
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_crtc_helper.h>
- #include <drm/drm_drv.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_framebuffer.h>
- #include <drm/drm_gem_framebuffer_helper.h>
- #include <drm/drm_prime.h>
-diff --git a/drivers/gpu/drm/gma500/fbdev.c b/drivers/gpu/drm/gma500/fbdev.c
-index d1e93588234f..428912574f20 100644
---- a/drivers/gpu/drm/gma500/fbdev.c
-+++ b/drivers/gpu/drm/gma500/fbdev.c
-@@ -7,9 +7,9 @@
- 
- #include <linux/fb.h>
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_crtc_helper.h>
- #include <drm/drm_drv.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_framebuffer.h>
- 
- #include "gem.h"
-diff --git a/drivers/gpu/drm/i915/display/intel_fbdev.c b/drivers/gpu/drm/i915/display/intel_fbdev.c
-index db0e36dd8722..219ee17de3f6 100644
---- a/drivers/gpu/drm/i915/display/intel_fbdev.c
-+++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
-@@ -38,10 +38,10 @@
- #include <linux/vga_switcheroo.h>
- 
- #include <drm/clients/drm_client_setup.h>
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/intel/display_parent_interface.h>
- #include <drm/drm_crtc.h>
- #include <drm/drm_crtc_helper.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_gem.h>
- #include <drm/drm_gem_framebuffer_helper.h>
-diff --git a/drivers/gpu/drm/msm/msm_debugfs.c b/drivers/gpu/drm/msm/msm_debugfs.c
-index f12701e286ec..d05307bfa123 100644
---- a/drivers/gpu/drm/msm/msm_debugfs.c
-+++ b/drivers/gpu/drm/msm/msm_debugfs.c
-@@ -9,8 +9,8 @@
- #include <linux/debugfs.h>
- #include <linux/fault-inject.h>
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_debugfs.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_file.h>
- #include <drm/drm_framebuffer.h>
- 
-diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
-index dd6d6c507d77..f37cc3f97a21 100644
---- a/drivers/gpu/drm/msm/msm_fbdev.c
-+++ b/drivers/gpu/drm/msm/msm_fbdev.c
-@@ -6,9 +6,9 @@
- 
- #include <linux/fb.h>
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_drv.h>
- #include <drm/drm_crtc_helper.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_file.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_framebuffer.h>
-diff --git a/drivers/gpu/drm/nouveau/dispnv50/disp.c b/drivers/gpu/drm/nouveau/dispnv50/disp.c
-index add19d479ebe..e91130f93db6 100644
---- a/drivers/gpu/drm/nouveau/dispnv50/disp.c
-+++ b/drivers/gpu/drm/nouveau/dispnv50/disp.c
-@@ -40,7 +40,6 @@
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_edid.h>
- #include <drm/drm_eld.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_fixed.h>
- #include <drm/drm_probe_helper.h>
- #include <drm/drm_vblank.h>
-diff --git a/drivers/gpu/drm/omapdrm/omap_debugfs.c b/drivers/gpu/drm/omapdrm/omap_debugfs.c
-index 9edc1b3f9f95..1c40c489ed72 100644
---- a/drivers/gpu/drm/omapdrm/omap_debugfs.c
-+++ b/drivers/gpu/drm/omapdrm/omap_debugfs.c
-@@ -6,10 +6,10 @@
- 
- #include <linux/seq_file.h>
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_crtc.h>
- #include <drm/drm_debugfs.h>
- #include <drm/drm_file.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_framebuffer.h>
- #include <drm/drm_print.h>
- 
-diff --git a/drivers/gpu/drm/omapdrm/omap_fbdev.c b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-index 4881777642d2..e1dcc3cb7c55 100644
---- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
-+++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-@@ -7,9 +7,9 @@
- #include <linux/fb.h>
- 
- #include <drm/clients/drm_client_setup.h>
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_drv.h>
- #include <drm/drm_crtc_helper.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_file.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_framebuffer.h>
-diff --git a/drivers/gpu/drm/radeon/radeon_device.c b/drivers/gpu/drm/radeon/radeon_device.c
-index 9523240110a6..fdbdcefa84e7 100644
---- a/drivers/gpu/drm/radeon/radeon_device.c
-+++ b/drivers/gpu/drm/radeon/radeon_device.c
-@@ -33,11 +33,11 @@
- #include <linux/vga_switcheroo.h>
- #include <linux/vgaarb.h>
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_cache.h>
- #include <drm/drm_client_event.h>
- #include <drm/drm_crtc_helper.h>
- #include <drm/drm_device.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_file.h>
- #include <drm/drm_framebuffer.h>
- #include <drm/drm_probe_helper.h>
-diff --git a/drivers/gpu/drm/radeon/radeon_fbdev.c b/drivers/gpu/drm/radeon/radeon_fbdev.c
-index 3e243f5e2f44..e40c23d9dff2 100644
---- a/drivers/gpu/drm/radeon/radeon_fbdev.c
-+++ b/drivers/gpu/drm/radeon/radeon_fbdev.c
-@@ -29,9 +29,9 @@
- #include <linux/pm_runtime.h>
- #include <linux/vga_switcheroo.h>
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_crtc_helper.h>
- #include <drm/drm_drv.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_framebuffer.h>
- #include <drm/drm_gem_framebuffer_helper.h>
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-index 9a1dc9f12072..b55113a7a00b 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-@@ -8,9 +8,9 @@
- #include <linux/iommu.h>
- #include <linux/vmalloc.h>
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm.h>
- #include <drm/drm_dumb_buffers.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_gem.h>
- #include <drm/drm_gem_dma_helper.h>
- #include <drm/drm_prime.h>
-diff --git a/drivers/gpu/drm/sitronix/st7571.c b/drivers/gpu/drm/sitronix/st7571.c
-index fc3ba5e8600f..5e60c4685671 100644
---- a/drivers/gpu/drm/sitronix/st7571.c
-+++ b/drivers/gpu/drm/sitronix/st7571.c
-@@ -20,7 +20,6 @@
- #include <drm/drm_damage_helper.h>
- #include <drm/drm_drv.h>
- #include <drm/drm_encoder.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_fbdev_shmem.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_framebuffer.h>
-diff --git a/drivers/gpu/drm/tegra/fbdev.c b/drivers/gpu/drm/tegra/fbdev.c
-index 003e80cf7b9a..64c2e64f219b 100644
---- a/drivers/gpu/drm/tegra/fbdev.c
-+++ b/drivers/gpu/drm/tegra/fbdev.c
-@@ -11,9 +11,9 @@
- #include <linux/fb.h>
- #include <linux/vmalloc.h>
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_drv.h>
- #include <drm/drm_crtc_helper.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_framebuffer.h>
- #include <drm/drm_gem_framebuffer_helper.h>
-diff --git a/drivers/gpu/drm/vboxvideo/vbox_mode.c b/drivers/gpu/drm/vboxvideo/vbox_mode.c
-index bb3f7f0ad7c4..7c34299fa531 100644
---- a/drivers/gpu/drm/vboxvideo/vbox_mode.c
-+++ b/drivers/gpu/drm/vboxvideo/vbox_mode.c
-@@ -13,11 +13,11 @@
- #include <linux/iosys-map.h>
- #include <linux/export.h>
- 
-+#include <drm/clients/drm_fbdev_helper.h>
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_blend.h>
- #include <drm/drm_edid.h>
--#include <drm/drm_fb_helper.h>
- #include <drm/drm_fourcc.h>
- #include <drm/drm_framebuffer.h>
- #include <drm/drm_gem_atomic_helper.h>
-diff --git a/include/drm/drm_fb_helper.h b/include/drm/clients/drm_fbdev_helper.h
-similarity index 99%
-rename from include/drm/drm_fb_helper.h
-rename to include/drm/clients/drm_fbdev_helper.h
-index 0c5e5ed7b5e7..7575aaf34c62 100644
---- a/include/drm/drm_fb_helper.h
-+++ b/include/drm/clients/drm_fbdev_helper.h
-@@ -27,8 +27,8 @@
-  *      Dave Airlie <airlied@linux.ie>
-  *      Jesse Barnes <jesse.barnes@intel.com>
-  */
--#ifndef DRM_FB_HELPER_H
--#define DRM_FB_HELPER_H
-+#ifndef DRM_FBDEV_HELPER_H
-+#define DRM_FBDEV_HELPER_H
- 
- struct drm_clip_rect;
- struct drm_fb_helper;
--- 
-2.55.0
+> [ ... ]
+>> @@ -420,7 +311,7 @@ static int meson_clk_pll_set_rate(struct clk_hw *hw, unsigned long rate,
+> [ ... ]
+>>        enabled = meson_parm_read(clk->map, &pll->en);
+>>        if (enabled)
+>>                meson_clk_pll_disable(hw);
+>>
+>> -     meson_parm_write(clk->map, &pll->n, n);
+> [Severity: High]
+> Does stripping the write to the N pre-divider from this protected atomic
+> section violate the hardware requirement to place the PLL in a disabled and
+> reset state before its input frequency changes?
+>
+> By modelling the pre-divider as an external generic CCF clk_divider,
+> its .set_rate will modify the hardware register immediately without
+> notifying the running downstream PLL. Can this cause the active PLL to
+> lose lock and produce an unstable clock, potentially locking up the system?
 
+
+Separating N from the PLL will not affect PLL locking.
+
+The PLL locking operation is initiated by the enable signal.
+
+>>        meson_parm_write(clk->map, &pll->m, m);
+>>
+>>        if (MESON_PARM_APPLICABLE(&pll->frac)) {
+>> --- a/drivers/clk/meson/clk-pll.h
+>> +++ b/drivers/clk/meson/clk-pll.h
+>> @@ -11,29 +11,17 @@
+>>   #include <linux/regmap.h>
+>>   #include "parm.h"
+>>
+>> -struct pll_params_table {
+>> -     unsigned int    m;
+>> -     unsigned int    n;
+>> -};
+>> -
+> [Severity: High]
+> Does removing pll_params_table also remove the framework's capability to
+> enforce non-contiguous PLL multiplier rules?
+
+
+Yes, it losts  non-contiguous PLL multiplier rules
+
+The "range" method can cover the frequency points of the "table" method.
+
+In the pre-divider, N is typically fixed at 1.
+
+>>   struct pll_mult_range {
+>>        unsigned int    min;
+>>        unsigned int    max;
+>>   };
+> [ ... ]
+>>   struct meson_clk_pll_data {
+>>        struct parm en;
+>>        struct parm m;
+>> -     struct parm n;
+> [Severity: Critical]
+> Does removing the n and table fields from struct meson_clk_pll_data break
+> the build for untouched SoC platform drivers?
+>
+> Drivers such as axg.c continue to initialize these fields in their static PLL
+> definitions (like axg_sys_pll_dco):
+>
+> static struct clk_regmap axg_sys_pll_dco = {
+>          .data = &(struct meson_clk_pll_data){
+>                  ...
+>                  .n = {
+>                          .reg_off = HHI_SYS_PLL_CNTL,
+>                          .shift   = 9,
+>                          .width   = 5,
+>                  },
+>
+> This will cause an immediate compiler error because the types have been
+> removed. Will this breakage persist and break git bisect?
+
+
+That is indeed the case,  I will include clk-pll.c and all the PLLs in a 
+single patch.
+
+>>        struct parm frac;
+>>        struct parm l;
+>>        struct parm rst;
+> [ ... ]
+>> @@ -41,7 +29,6 @@ struct meson_clk_pll_data {
+>>        struct parm l_detect;
+>>        const struct reg_sequence *init_regs;
+>>        unsigned int init_count;
+>> -     const struct pll_params_table *table;
+>>        const struct pll_mult_range *range;
+>>        unsigned int frac_max;
+>>        u8 flags;
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260923-meson_refactor_n-v1-0-3a8ce27121a2@amlogic.com?part=1
