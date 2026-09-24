@@ -1,215 +1,301 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from mx0a-0002e601.pphosted.com (mx0a-0002e601.pphosted.com [148.163.150.75])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58F939A067
-	for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 14:26:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0ED73C37B3;
+	Thu, 24 Sep 2026 14:56:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.150.75
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790259982; cv=fail; b=Dhnoigb2uy3w/tx8XeoLH0N7+7KA3j8NfOcmhOIE+GFbwYl/+ELnMehxtPUxC6KWeitHtOhm0MKJN/N73JZYIPNmOwxJmGaCQGoBwORK7F4G714iY00sseuJz5Mde8nNXk1Q0WUATRd7bHkrClG7clLTacsOX0TIFpwZzlt7bsk=
+	t=1790261766; cv=fail; b=c1BmXz5/p6cSAVtgY31Rv3MTUeUqQgIjJD2lNfH/Ie3J7ncuX9cJ6wIEMxkMPLGUXCgrVmnJ9cZAlVmDQDPwRXCTkywWeppdlVEP8+oQWVPHoDMdkC3jIq5gjgIbIi+8uoRaHE5G06aLhY+PvCgnftkrtj/RBpe2qB0k7sK2e+A=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790259982; c=relaxed/simple;
-	bh=wJ2SVf1upl/bvdBCrXT9aJ73r7h45KC3gaWfSjUp5vc=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=JLNF7DgbMknSIS00cTyW4FwPiv0JKUMv3KyayiNwpp/yvbooJkC46u5iXQpEhpgYKjyZR7OsMSU9XMA78+j00fM6q1raE6vhyNWR9W6q4jzUy2bRVfrZOG1ClsGxQETzyvjP4xj5G+URxBR+4XL376IlL89H26o1evgwu2SuRCI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XVLjjhpw; arc=fail smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1790261766; c=relaxed/simple;
+	bh=T1k163diXB+KFi/cW1eaR4gUe3q3fOWY0vaa08knYTg=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TYedHyFnr8kOBFb9HABFGB1WAkz9cuNbYNy1XiJ3VIgpqWFk1Tu4966WTwvkaMa2cvZ6fNGpJ5AemGbyBY6vwkAw7ZZWFuCQimCVkIioDNOUnNeUhJ175hDu5aPou4XMPUW1MoMGPEtXT9ouSD4414DPSS6lnNa+ea6je85Rr6o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b=g9WRb0za; dkim=fail (1024-bit key) header.d=ti.com header.i=@ti.com header.b=jk0A2rK0 reason="signature verification failed"; arc=fail smtp.client-ip=148.163.150.75
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XVLjjhpw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1790259979; x=1821795979;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=wJ2SVf1upl/bvdBCrXT9aJ73r7h45KC3gaWfSjUp5vc=;
-  b=XVLjjhpwMmz2Fy4NlsPtr7OVbwQOXkraWF2is+ghjXAx+DaQPH1JxMfz
-   HdWUBlg+WHmHaeEIC0FxMpAkO5z1fb61wP1FWiYLvcOfeVnqJIxiBObEK
-   oQW6dogas0seZnqoy8wJK4+hLBW3krIZCeR+ZTG7cDLuVSE1BlugfKwDQ
-   3YXegz67pPOZ5CH1hXAuOjDMVDKrVDfv8t+0Ay447kjAObjw9eoOd7UIh
-   kwZWQUBV661CPhst4RiNifOw3k5wA2BmUWw5dAuUeGisWKeLqYuITLSHo
-   jb7anAx+0aS3ft04qyWF6lgYFl4LDtBqn3RxbXSWq3fG/eFCMMuIVe5Yl
-   w==;
-X-CSE-ConnectionGUID: 2hVjgWSrRXiCBxlgm/5EFw==
-X-CSE-MsgGUID: XRb3BO9ZQPascTH2AcxG8Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11915"; a="89989334"
-X-IronPort-AV: E=Sophos;i="6.27,120,1787036400"; 
-   d="scan'208";a="89989334"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Sep 2026 07:26:17 -0700
-X-CSE-ConnectionGUID: 0fpDUKU2RBixPmo/aOFf5g==
-X-CSE-MsgGUID: q532xN2kSpSmHvW+dPzexA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,120,1787036400"; 
-   d="scan'208";a="277798994"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
-  by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Sep 2026 07:26:16 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Thu, 24 Sep 2026 07:26:15 -0700
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Thu, 24 Sep 2026 07:26:15 -0700
-Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.52) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Thu, 24 Sep 2026 07:26:15 -0700
+	dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b="g9WRb0za";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=ti.com header.i=@ti.com header.b="jk0A2rK0"
+Received: from pps.filterd (m0384305.ppops.net [127.0.0.1])
+	by m0384305.ppops.net (8.18.1.11/8.18.1.11) with ESMTP id 68OC65UH537093;
+	Thu, 24 Sep 2026 09:56:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	proofpoint-05-2026; bh=OHGUhJz2AxUah5H1qhr1Wgp54P7Edazt6AYYl1AE2
+	5Y=; b=g9WRb0zauEGlx2kdRCpsEEGT5Qz50dfULdGzeT4DUPUXDp36UyiMQk4hR
+	EJ4e1ZCB0nPXzBm+Y3ISP9YojMf/WWb0RDkXGf2UMEZLecUo26+XmavMGzf7uBzJ
+	QwkIaiNGfH7Z+Oo3lEn8xV3BrrTK9gVcziYEubkENagugP5pN/24xFi2w8GSo3ZK
+	1W0SF+y11IDJR1sA7/3c+ucahEwnWBYndgbbJ3gqN2AvAnDDAkfDNQ/jdeAjmnAF
+	BAT2HZoi2L0WXbcuPZ1eQNEHQOlMPT01EbxfSNPy5ZnAx43tq9oS5yiv7je1k3Lm
+	kc0NiR5bCvri5K7kcEOEAw8rPf7Dw==
+Received: from ch1pr05cu001.outbound.protection.outlook.com (mail-northcentralusazon11010001.outbound.protection.outlook.com [52.101.193.1])
+	by m0384305.ppops.net (PPS) with ESMTPS id 4gw13thus3-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Thu, 24 Sep 2026 09:56:00 -0500 (CDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lpJzD1+VmhJeXcfHSQdwOVW4e48m0IQ6RZBJQDfXwBfoT5783e8gI9uLbZnn7b61H72w9QeMGBQCWBre1FBRYXS4llLrgsh+GLNVGLRrrYV863oNeDwEzgQ+v+qCr44pStAfSUx91hCtJYlB4LNd/RedqhrZhPXLqybkdTAzp9UIIiBLsvap0N8T2AwkqUU0qawja/NTrAPtIC7Iva1gJt6/Ac6jEEynOKz6v/UbRRM86lxrKxiZctXEmxZIV2WNFlgB873jMZf2DfwT3aTV9xbYQhiCVmCL2nHB0KRp4Yznd/HNrqIe3uE/Ndkly05Msx1nQWCQdgJo2jzxQK6wNQ==
+ b=NqvcYIMDTK96FNTO114S4lhw1MZEFTcjtlCFg6elBl67esBwjLqL8kYnFBLxVCkio/64ky6zWkP0ojQHk4Z7T/OGm/E8jo99t4jggAoRiwmUUg8FvInifMXyTdTntY8MF5zC+3GE4Vdp8Lb4I0VjihspZBs4aGn8FLuWrc+myuFqu8NwDGaDDWLql5d5rzVpFmrVBwe/WXdaXEtoor2TUVO2tHvKXeuZTwDMOuckw/SZYFyArRsB+8iQ0erv0zGHjvubrTkfosFN9XcVdwMCfiG9TWBgqpeSBJ84Qp26yxxzukqvF3TecGb6xeyEjxmVocO6+4Wuzk+rLQ3rvVZdEw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fFSTs/mICINFNdmhYfNl+ML5kjNsLuSUJlzT+9FKLrU=;
- b=ar5rw0TWODpqSAsvoJfoNSroZ1bN6mP9JxcHUOoTGwCEQ3ZfW+00Np+KofrHepvEq8wMB0ngEzMey3F4gw7NPWk3YaKq43cUX9jSS6Hk3Rzt9KxU18enA5MJdGep9TbYHdSAH9hIE3ctnATSNpf3UJKxT5limAmCQjpvrr2okZdKAM5MeYr8kTTGUpbmEIQ427mZU6rX+AwCrhrUPv4Akn4gBsAZWT0QfiNBAcp+itpUUbPcG47rrAiXwez6pawutgejUvN1dUpcPpd97GY6iFCtSsV5hJevll/xuTgkEoczsuj2AJxA++YCFTPMfaHifjq3Ilm8ehcgjyd63XTMLQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CH0PR11MB5249.namprd11.prod.outlook.com (2603:10b6:610:e0::17)
- by LV2PR11MB573934.namprd11.prod.outlook.com (2603:10b6:408:412::13) with
+ bh=ArHSa6bEkNfW2fNjcD6NupZQUE/2F65bZCI5/4fl1io=;
+ b=y8/TswNEb3JsqB4J/roMx4vuTivjmsebFxzbrR/oSc0nu9Bhlp/i7U1V8YxwNhMmKqGLCzZG4ZcxDgZTk+L+ZCG4CePVLIN+M9mygPOANrp4UXDWgzduXFeUA01Lgwe59gded0mRRi5D/qeL9gkjhChRDkpUDTjkJuiAKYfH2/gn2aICI8RR1pXQsZ9H6CqyxuKYpB3WI7lOaXN8lUOECRnQ9FwHA1+ftTYMJayN+A5i2ocA+udzlc+FZROs4hacaPO8/UEJal/B2VGqG2fqCZRbW3EPkJm8Xv04vR2X2oxwntbTtVWmXGWSHyVTBuOgadhZSXH7ygzHl0Cf+/TKWw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 198.47.23.195) smtp.rcpttodomain=kernel.org smtp.mailfrom=ti.com; dmarc=pass
+ (p=quarantine sp=none pct=100) action=none header.from=ti.com; dkim=none
+ (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ArHSa6bEkNfW2fNjcD6NupZQUE/2F65bZCI5/4fl1io=;
+ b=jk0A2rK0lgT2t/3aiVG6JrIsCS1iWw4QKyc/2PMIvL9F51hccO4ufWGXMO1aA4cSr1QvFxOXvV7V7geup2nSiNOWs6yx7TNwpmBNf+Ho6t9VACPiOJHs08Vb2z188ei0hU+2LtRRwBeRII3Sp6kU/8iT5eHV3mwOMr8iVBMC3EA=
+Received: from SJ0PR13CA0199.namprd13.prod.outlook.com (2603:10b6:a03:2c3::24)
+ by SJ5PPFD796AA27B.namprd10.prod.outlook.com (2603:10b6:a0f:fc02::7d3) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Thu, 24 Sep
- 2026 14:26:11 +0000
-Received: from CH0PR11MB5249.namprd11.prod.outlook.com
- ([fe80::a665:5444:d558:23c3]) by CH0PR11MB5249.namprd11.prod.outlook.com
- ([fe80::a665:5444:d558:23c3%6]) with mapi id 15.21.0451.014; Thu, 24 Sep 2026
- 14:26:11 +0000
-Message-ID: <e17cf560-9107-49f2-9d3d-2fee9db7edb2@intel.com>
-Date: Thu, 24 Sep 2026 19:56:04 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/13] drm/xe/hwmon: Handle pcode read failures of
- xe_hwmon_pcode_rmw_power_limit
+ 2026 14:55:55 +0000
+Received: from MWH0EPF000A6732.namprd04.prod.outlook.com
+ (2603:10b6:a03:2c3:cafe::45) by SJ0PR13CA0199.outlook.office365.com
+ (2603:10b6:a03:2c3::24) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.451.18 via Frontend Transport; Thu,
+ 24 Sep 2026 14:55:54 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 198.47.23.195) smtp.mailfrom=ti.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=ti.com;
+Received-SPF: Pass (protection.outlook.com: domain of ti.com designates
+ 198.47.23.195 as permitted sender) receiver=protection.outlook.com;
+ client-ip=198.47.23.195; helo=lewvzet201.ext.ti.com; pr=C
+Received: from lewvzet201.ext.ti.com (198.47.23.195) by
+ MWH0EPF000A6732.mail.protection.outlook.com (10.167.249.24) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.451.8 via Frontend Transport; Thu, 24 Sep 2026 14:55:54 +0000
+Received: from DLEE214.ent.ti.com (157.170.170.117) by lewvzet201.ext.ti.com
+ (10.4.14.104) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Thu, 24 Sep
+ 2026 09:55:25 -0500
+Received: from DLEE213.ent.ti.com (157.170.170.116) by DLEE214.ent.ti.com
+ (157.170.170.117) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Thu, 24 Sep
+ 2026 09:55:25 -0500
+Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DLEE213.ent.ti.com
+ (157.170.170.116) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45 via Frontend
+ Transport; Thu, 24 Sep 2026 09:55:25 -0500
+Received: from localhost (uda0133052.dhcp.ti.com [128.247.81.232] (may be forged))
+	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 68OEtPRB096216;
+	Thu, 24 Sep 2026 09:55:25 -0500
+Date: Thu, 24 Sep 2026 09:55:25 -0500
+From: Nishanth Menon <nm@ti.com>
 To: <sashiko-reviews@lists.linux.dev>
-CC: <intel-xe@lists.freedesktop.org>
-References: <20260924111156.2628915-1-karthik.poosa@intel.com>
- <20260924111156.2628915-2-karthik.poosa@intel.com>
- <20260924112332.E27421F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: "Poosa, Karthik" <karthik.poosa@intel.com>
-In-Reply-To: <20260924112332.E27421F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MA5PR01CA0293.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:21b::17) To CH0PR11MB5249.namprd11.prod.outlook.com
- (2603:10b6:610:e0::17)
+CC: "Markus Schneider-Pargmann (TI)" <msp@baylibre.com>, <robh@kernel.org>,
+        <devicetree@vger.kernel.org>, <conor+dt@kernel.org>
+Subject: Re: [PATCH v9 7/9] arm64: dts: ti: k3-am62a: Split r5f memory region
+Message-ID: <20260924145525.2g5ymuwsjwf5ecct@twice>
+References: <20260918-topic-am62a-ioddr-dt-v6-19-v9-0-40972ef1f663@baylibre.com>
+ <20260918-topic-am62a-ioddr-dt-v6-19-v9-7-40972ef1f663@baylibre.com>
+ <20260918094011.99AE01F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260918094011.99AE01F000FF@smtp.kernel.org>
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH0PR11MB5249:EE_|LV2PR11MB573934:EE_
-X-MS-Office365-Filtering-Correlation-Id: f1c1a87a-b359-4246-847e-08df1a47c815
+X-MS-TrafficTypeDiagnostic: MWH0EPF000A6732:EE_|SJ5PPFD796AA27B:EE_
+X-MS-Office365-Filtering-Correlation-Id: 44a49747-e628-4bc2-68ad-08df1a4bef36
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|4143699003|10067099003|11063799006|56012099006|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info: 9kz7BknJltezKkbkDci6ts8TMrS8m96M5m7nH5jdsZsftwrQcR06T6Ts0R1cUBA5YgIRsFrNEV/Mtlc8rzzpDZcMXCAo/vFSRHGGojhD94qVjqcULRnrnTPAtOQNJzATlVdfBcZF7MML6IQAFajSBukLzdDBO6XXUOCVchXuV5/PzZIEwRqkXA+swmy+eaWsymA3RvNA2DPJFc0/DJT18IQCNHH67CALDQ6gaRtrH7rrtxU/5ZNPOI4dRymjG64x3an2nre79XTaRpqTNcBEGSF21zsG52xuGnbarjKDVHk+MxdmOCUwjMtCQvyBqOssSY16xCybDbgJbRPULwSwN0AGz++/csLB+8hV3n2mnnHthip/j78aJoOa8kUWkZOCgUD74nftnT2X2MdpvcObTUG+79c+JMQAFux2hZhBxVAFfxxYh2NLo3P5WbUwQ0nrEzcLW8a3VPdLyKDuw68lgZUgOEDvE3VKs8qt+fANRnbv+niZ6QqgdT3xiBCBGEQTx0jmjHBCTPcsXydj6Zw+ERAXfUkUOpnVDbKHbbT9asem0RGX3lKkZfbdS1HXDhmud+It8jz8ZlpDwpHepVOOJ9I52PsKJ3zlDlvznc8QEBTIGNw3fIEQsqWJziJWqan08LVI1fHKbgvJp++D2at9+BZs+wTi9cihFT2n65krc98=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH0PR11MB5249.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(4143699003)(10067099003)(11063799006)(56012099006)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700016|1800799024|376014|23010399003|82310400026|4143699003|10067099003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	7cVACIAu7I8iQLZYyu//pZnO+HgqURj4iztbnnUOfxLPMgcD2uLZj1unTvhCHlB9wU2vexixW0Oj0aa4/dxklLEcVI59QTmIvAJB839AKem90Q5bcTjoU5ejKDJT2EWAcaTJ9MDH2Uygub9NCfIdpeNLtOYFItyN93zaFNlj9Xp20VyXJjReBAuO718xIPBj8iTZZ+I860FRCeAhOPy+9Lc5L9dwRqamqchOG/94EYCmYouM31RV46ifNup3d53UOQ/kU0Ytz5yx12IlmhOgV1j4Nq3V7PVJ7902zKgofaQXkpWXZUrzQtoyf0kP0qKnGR9RDUyuIS2fwp6Qc11mXP7cgA0yojU7ifpfjW4pGMVUHlrrLO7/QEJAvP7Es8dUtwueNNzI5yngfDHughFN0N1GqcbDaL3+ujzWb4bleo3+wSLYbM6eIoQ6PlYCO9/H/4tyBlBuLH3VOSX39BArdgjIbkt9Q8uji32HkMgdtpAjkh0V4y7BN0HpZqekJt8KF5dye49IGqfhakXHGTXQAReWRhPuCUqO39g5XPDr68qrjgprDPSq4tSCoqosYizxj7Uw8FFTu7Gldm6SmkhM248r1R0PDhG2E9QUVc8GmkEkLWgNDKg1yHmtnwQswcfs8lXZlWp4XuZ5R0dgJ3U7cg==
+X-Forefront-Antispam-Report:
+	CIP:198.47.23.195;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:lewvzet201.ext.ti.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(1800799024)(376014)(23010399003)(82310400026)(4143699003)(10067099003)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Q3RjUWpWb1BCYU1JOVZOdzBuVGptRGFLKzFPL1JneCtWWTVkRWc5T1kxaGI3?=
- =?utf-8?B?SkplV05ITDd5ZUt6UUxrUGVPOWxaZ2NtNHFtK3Y2TXZUYUtjQW9VaW1mZDIy?=
- =?utf-8?B?WVlsTlkvWVpOcGpiYjZML0todUYwc0ljODJXek4wS3lncUppb1NJVURxYmU5?=
- =?utf-8?B?SzUvZ0g0V1hpa1RnZXhOdGh2emRwNmhrQVNVYi83SkxQMWI3T255Y0I2ZVFC?=
- =?utf-8?B?alFUc05wQ1VTdjRQMHo2RG1ONHU2T2tpMlArdURNbzNTTGNsaGxJbGNtZ1JF?=
- =?utf-8?B?Mmw3RjMvc2dFUGtCc0dWMlliZWMwVHFRNFVsVXRGWGJkMkI3cGMrVHMwV3Iy?=
- =?utf-8?B?cm5pY01nNHhMdlROWDNGdGVhcytZc3RpOUd3T1ZSMnZDYlk1Uy8zYVVHeU5Q?=
- =?utf-8?B?ZW52VUl5SDZXc00veENnQzVZbVBSODlvNnJYcXB1RDN5WHloMGh4UkhRb3hM?=
- =?utf-8?B?OE0yQXFhTVBBSE5VMDlEY2ZhWkdsU1dSa3dIa3BJbk1HcTJQY3kwUVl5V2th?=
- =?utf-8?B?MDUxL3YvWlRMMVBDeFY0ejF1cnhCbWxNNnd6QTlrbU5DcVZVeVFSZzZBTkVJ?=
- =?utf-8?B?cGN3ais1YktSREp3MVdIcU9IZXpZR1JNeWxkdWtHREVIK2M5U3pZanllQlFr?=
- =?utf-8?B?eUZsQ1dUL2kxVk5mMDVKeUs2SmRJZS9SeVJkeW1DOXNRS3cvM2FIdWdoTENk?=
- =?utf-8?B?aW9NNk5wVkNISnhBWmRGa0cyalNhVjNyd1lNZmFEakNUeUhnc2gwa1BtS1pL?=
- =?utf-8?B?dTVsbVpFNHBGTWh4NGJ3elhUK2w5dVEzWkthWGFoQTV3T0xxOFZySWJrbVdB?=
- =?utf-8?B?ZkxYaUwrNnJpVUh6R0pCNHJvYk1veTR0Q0lveGpGY3J4OW5hNUlBaUMwRlAx?=
- =?utf-8?B?OHZSbVlXMGJlV3pOV0xmTy9XMW1SNVFva0VyMVZ1aWxpbFhWKzVieHNwY2lh?=
- =?utf-8?B?OTNEY3NTbXNHZUhMeXZpT1pEWXdKT2JmaG5tV0R4a2MzcmxheHdiNTh0VHdi?=
- =?utf-8?B?MkhiTDFPdjM3SXlwRWZqSGQyUVNlTTNYcGlwOHp0NnBKTXF4S0hIRmt6QlBq?=
- =?utf-8?B?dVl0bVdnVXFQR1BIYWhrYlRXdkdFVVJEVlFWMWRvWnlBbVplcGpYVC9XeG5R?=
- =?utf-8?B?S1E4NGRlSmgyNnN3TGdrbks4Y0R2L2R6VFFDVFlsRU5XSmtLZ3hBTWxHdVNS?=
- =?utf-8?B?UnhxVVBtT3B2UnVLOXB4Z0ZTcjh3ZG9KbkxnVzlvS2ZHR2VTQlVhYUQ0TkIx?=
- =?utf-8?B?c1UzUmpyMnNwQzVlK0pCYkl1ampaUW1jWm5GY0t4VlZrL1o3TDlNOTR3ZHk5?=
- =?utf-8?B?ZEpYTHpZelltSXcxK1RGMXhqUGRHMjJGbExMQWxyL0tKVGIwWnE0NC8zSE9N?=
- =?utf-8?B?akY3K0hQeFBuakJGSUkwN1NWRDNLVnZnd1hHU1hIajR3TkdjbjlveXh0OWVP?=
- =?utf-8?B?Q1BVSGluRUs0NGVBeDV1ZEM1STRIN2I1Z1JENXF0UTlybmtFWk1wVW1qRTBq?=
- =?utf-8?B?ZUltdXRRL2k4UjI2NngzaGdNQ2JiRlhKYVgyRWJRa2J2RldKYi8rcUxjeEtK?=
- =?utf-8?B?K0tTVGZSajNGSVBodzhnWk53UWU2a0JuVytzZGZVcWMzYk9QWVlOaXJzQkNv?=
- =?utf-8?B?VlBhSHE5TGlMQTQ1REcxeXlQZlFlWGtUREZmb0tROHc5YmYvVllmWXF4SWxn?=
- =?utf-8?B?V3lVV1JOZDFsMXFlb0ZGRFdPcVNzd0h1Z2F6ZTZSSzVmdE9aOVkwK2NOUkU3?=
- =?utf-8?B?WDRWZnZsZHhiUEU4QmF4Rk9TVGd4NklLNTd3WmQzWC96MmFUSnBMazFtZXBu?=
- =?utf-8?B?VzYzeEd5S01SYXpTbllSRGhhSFdiZ2djTDBwT1NXZ3Fwb2pwaGtlTGFFMnVQ?=
- =?utf-8?B?UUtnN09Kc2k3M09YVlhlWGllcGMyS1ExbWYwNjNjbHRZWGVPTU80TDd1MFJJ?=
- =?utf-8?B?ZEFHQ0hxellwK2hwa2tqQWlnUUhxdm1UVmlZZUpiOTh5NHZPc1FZM2U3K0hU?=
- =?utf-8?B?SjJWQjJBWlVkL25ZUHRMMVBUQmg4VGIxTmJ4NlBrTFBhaFJhYy9QWW9uYTFm?=
- =?utf-8?B?VWJRWE9sK2dMV3VuSFQ4Z3JYWnZvN2VrNzVhZ0tiSzlQL2pVVGhQVWxCbWk1?=
- =?utf-8?B?S0VWYWNyQlZOc0l5ZzZEY1BVWWQ3OUtPWkVlQmdza2paQTJ4RmsyU3ZPSUMv?=
- =?utf-8?B?TENjVkMyKzRCR0VOd3lTVUtkcHJrWnYxWmcvNkt4TmZoOHU1WFdzangzZWJP?=
- =?utf-8?B?QjF4dmtobXhHU1UxS05vMFdZVDNsNzg1T0VZYWcxbGJ5WjhqV1BQclVVY2pX?=
- =?utf-8?B?cGwxeE1kNzU1aHA1WW5hQWRKMVNwMTdjVzZEK3QyMlR2TnlRcDM3QT09?=
-X-Exchange-RoutingPolicyChecked: OllScExqTCG4mVXQMOHT56Hjo6gv9M2D3WlpDo2uMyQ9hoUt9PJ5x19x1K57mHL4+Mn3KzoFy92U9nhIKL4NegGtvl1yr50xAc6kyH73Q+aepwlEfgf62WPUb33yUikTjQJdQJ4u51+KJ5ZvD6zi3Zp2w8VB87uWmOglvgrfAHNUj39pj35ZJXyoK+DZksLcGOLdEuLlSbMQyXvZcl8AJz5Df5hkEXJVskb2t0BJMLNcDKT+dS2f/LvpTcmtDISzvIXCirg3HpffXaGpvBV/tn4nM0IhDHAT4wi2ZlUMCfa9pWocoYU/ADSz+MZZpkzocaoVjLJSBGE+JNojbE0kAw==
-X-MS-Exchange-CrossTenant-Network-Message-Id: f1c1a87a-b359-4246-847e-08df1a47c815
-X-MS-Exchange-CrossTenant-AuthSource: CH0PR11MB5249.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 14:26:11.5455
+X-MS-Exchange-AntiSpam-MessageData-0:
+	rFPPcRJyS5LLUiMgaQmG1sbwzY0a91AOW8e5aDk7hp/bfhRTsUoUBcI+kZ+nB51wfAgw4ptvs04VhUPbgMcJ4XD97/1yNabCgbnFzg4TbjMH5F4exOotDAeOjQfuJu+QowSHRT4wLWDEHXfcVHge0+zBCyfTLIBloQe7WODJeoxTqbqMzEt1h98WH3NSHIj9MHBGn8xmDXPniDxGDt/EJQ3hjzIxL70su915pYPNYTSV6gzC7ZZA+uRz/2oXJqmMZ3cq69LCpLGCNWAQkIsjLdc2ESwvP5+uA8BIZETXhu3/vmee9O+J4Fw2BOh2YTPYz5cURrbHPRravwM8uMDPds2PW4Ul6H0Mu0Z3nQb6IDPWUolKNh5BoAMo/rDA12bpqjwTYp0181MaA3GVOXxs4FTTLNOyPBxPoYSGTaIbft0pIEq2d0r83QTLsTTfTDl4
+X-Exchange-RoutingPolicyChecked:
+	Y3PIvbwbE1x6rt43HKsPP0H7vrg+JyszGCnmcGcp8q2tfbyEgj2hJeFI9VhCJCcyZiGWnpdtiTpm408zWNTinWZ+lKZid4F2Sza8/wWTwCt12ylRC1LCqkotsHWLHaMVdAX9gFiB3ZKHwY2Qu8HwbOGMtacKI2gxJPP/AVnapEx6P4EdrDVrzdOy0MbZiDDfqXkWrr86OYkFs/b9cSoa2Qi0GjPbwtZVIDeOP9FPlMHL7uyjszju7OVMjPTjg5/JtYGRZaEsSqYgn41leNbeEE3CYYoZRhLxtjWFweVCVkaZd2lmQnE5uZsaVas5uZ/YmD7e6FPqyXJL/yCKkN+gPw==
+X-OriginatorOrg: ti.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2026 14:55:54.6692
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4h3I/BbGsDBLEz14ahS43Vx7unqvZk3yCJ2TyZLo+tjnh5xO4r2PpmoTH8rlAjK8lsri9LCwVaWm9OGLkYUHsA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR11MB573934
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 44a49747-e628-4bc2-68ad-08df1a4bef36
+X-MS-Exchange-CrossTenant-Id: e5b49634-450b-4709-8abb-1e2b19b982b7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.23.195];Helo=[lewvzet201.ext.ti.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	MWH0EPF000A6732.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPFD796AA27B
+X-Proofpoint-GUID: -q0kiRWKsnx9kGxDl405GJtqn-HyZRLI
+X-Authority-Analysis: v=2.4 cv=YKUKWhGx c=1 sm=1 tr=0 ts=6ab53a01 cx=c_pps
+ a=DmgWn/vclFWqUiYYRim7xg==:117 a=f+v6EHfkeJbVwR46tk4DMg==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=8nJEP1OIZ-IA:10 a=VdqzKS8jKosA:10
+ a=s63m1ICgrNkA:10 a=V5UXEbMT0ywA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Z8NIEmU8O1QQgoT56wFK:22 a=taLDd7a_hP9WKsMzeGRc:22 a=VwQbUJbxAAAA:8
+ a=P-IC7800AAAA:8 a=c92rfblmAAAA:8 a=IpJZQVW2AAAA:8 a=sozttTNsAAAA:8
+ a=QTkWtJGXlbzmhja5lWoA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
+ a=d3PnA9EDa4IxuAV0gXij:22 a=GvGzcOZaWPEFPQC_NcjD:22 a=IawgGOuG5U0WyFbmm1f5:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI0MDA2MSBTYWx0ZWRfX0CVBCYJSryU5
+ C9SyutrZLkpMMFFLKVsOIw9fIyHGmu5qn08c7FVNjbtbYYTw7XTS9Hh6d6dRVgR4Q14L64btmyk
+ Sj7r+XTEWzQqOiMzNGnEuDw3rEarA8w=
+X-Proofpoint-ORIG-GUID: -q0kiRWKsnx9kGxDl405GJtqn-HyZRLI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI0MDA2MSBTYWx0ZWRfX4VCRAXbOyJBd
+ MXtMb77klFpvGyaVKWLk1ia1tJtqzSVi2IFtp5AhwFAJDPFcOs6v00rV8FrhlILr0bXS+7ipJmv
+ Geq4QkeLvjrGhMkoLMgnO/sLF6YTJHRskpjsr8IxsrLY1r5Pmj99nrJHojY+YH6tB4d2KlaOWh+
+ POScKIfKSe3KmUBmFUuYs77Wy1Cv0/jL8yjLnOM7Xk0gW3Vc80ZB+g82L3U3DvJ+bpbUTyCmTQg
+ HTuV42tSwegKA3kLPEr5zKACpT6uPOHu+KrQNUD6KHa6jH6WpVG6A6StmxxgYPcwUFeY/ef1knl
+ J5l9Dp0rirGObwBH14o9sn3F/6VfPc3rMf5j3a6X2wEam9i8RaGGkxxsw/9Bug1GbAEQ9Jshavk
+ P8zTzaiuSy3eGyQNL4CJOTj6HMFFxDDBoBs8GVC2UDvM3fuFiZJYMOQJBWE+/x5Lewp/6LIcVXt
+ UJpMYQqKWqbh6fc+TPg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-24_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 clxscore=1015 adultscore=0 spamscore=0
+ priorityscore=1501 phishscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609240061
 
-
-On 24-09-2026 16:53, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] sysfs: returning 0 on error in store callback causes userspace infinite loop
+On 09:40-20260918, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] remoteproc: ti_k3: k3_rproc_da_to_va() rejects segments spanning split memory regions
+> - [High] arm64: dts: ti: missing bootph-pre-ram breaks SPL DM firmware loading
+> - [Medium] arm64: dts: ti: hardcoding volatile firmware layout into Device Tree
 > --
->
-> commit fdbe8069cbe324980fc35768d7993da6a046117b
-> Author: Karthik Poosa <karthik.poosa@intel.com>
-> drm/xe/hwmon: Handle pcode read failures of xe_hwmon_pcode_rmw_power_limit
->
-> This commit adds error handling for pcode read failures in
-> xe_hwmon_pcode_rmw_power_limit() and checks the returned error in callers
-> to prevent updating power limit settings with invalid data.
->
->> diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
->> --- a/drivers/gpu/drm/xe/xe_hwmon.c
->> +++ b/drivers/gpu/drm/xe/xe_hwmon.c
+> 
+> commit 33643294863f45f1ac37617eafcfc525d230effc
+> Author: Markus Schneider-Pargmann (TI) <msp@baylibre.com>
+> 
+> arm64: dts: ti: k3-am62a: Split r5f memory region
+> 
+> Split the firmware memory region in more specific parts so it is better
+> described where to find which information. Specifically the LPM metadata
+> region is important as bootloader software like U-Boot has to know where
+> that data is to be able to read that data.
+> 
+> > diff --git a/arch/arm64/boot/dts/ti/k3-am62a-ti-ipc-firmware.dtsi b/arch/arm64/boot/dts/ti/k3-am62a-ti-ipc-firmware.dtsi
+> > index 06d4e815b1670..94c1d60d8d7a1 100644
+> > --- a/arch/arm64/boot/dts/ti/k3-am62a-ti-ipc-firmware.dtsi
+> > +++ b/arch/arm64/boot/dts/ti/k3-am62a-ti-ipc-firmware.dtsi
+> > @@ -65,8 +65,14 @@ &wkup_r5fss0 {
+> >  &wkup_r5fss0_core0 {
+> >  	mboxes = <&mailbox0_cluster0>, <&mbox_r5_0>;
+> >  	memory-region = <&wkup_r5fss0_core0_dma_memory_region>,
+> > -			<&wkup_r5fss0_core0_memory_region>;
+> > -	memory-region-names = "dma", "firmware";
+> > +			<&wkup_r5fss0_core0_ipc_region>,
+> > +			<&wkup_r5fss0_core0_lpm_fs_stub_region>,
+> > +			<&wkup_r5fss0_core0_lpm_metadata_region>,
+> > +			<&wkup_r5fss0_core0_lpm_rest_region>,
+> > +			<&wkup_r5fss0_core0_dm_region>;
+> 
+> [Severity: High]
+> Does this multi-region split cause a regression when loading a monolithic
+> firmware ELF whose segments span across the new chunk boundaries?
+> 
+> Looking at k3_rproc_da_to_va() in drivers/remoteproc/ti_k3_common.c, it
+> evaluates segments against each reserved memory region individually and
+> lacks logic to aggregate sequential chunks:
+> 
+> drivers/remoteproc/ti_k3_common.c:k3_rproc_da_to_va() {
+>     ...
+>     if (da >= dev_addr && ((da + len) <= (dev_addr + size))) {
+>         offset = da - dev_addr;
+>         va = kproc->rmem[i].cpu_addr + offset;
+>         return (__force void *)va;
+>     }
+>     ...
+> }
+> 
+> Will this bounds check fail and abort the boot sequence for any system using
+> standard firmware linked under the assumption of a single contiguous memory
+> block?
+
+
+Do we need to protect with something on the lines of
+https://lore.kernel.org/all/20260921145325.300025-3-richard.genoud@bootlin.com/
+
+Could you please add in diffstat any comments if the sashiko reviews
+are'nt accurate from previous feedback?
+
+> 
+> > +	memory-region-names = "dma", "ipc", "lpm-stub",
+> > +			      "lpm-metadata", "lpm-context",
+> > +			      "dm-firmware";
+> 
 > [ ... ]
->> @@ -679,11 +683,13 @@ xe_hwmon_power_max_interval_store(struct device *dev, struct device_attribute *a
->>   
->>   	mutex_lock(&hwmon->hwmon_lock);
->>   
->> -	if (hwmon->xe->info.has_mbx_power_limits)
->> -		xe_hwmon_pcode_rmw_power_limit(hwmon, power_attr, channel, PWR_LIM_TIME, rxy);
->> -	else
->> +	if (hwmon->xe->info.has_mbx_power_limits) {
->> +		if (xe_hwmon_pcode_rmw_power_limit(hwmon, power_attr, channel, PWR_LIM_TIME, rxy))
->> +			count = 0;
+> 
+> > diff --git a/arch/arm64/boot/dts/ti/k3-am62d2-evm.dts b/arch/arm64/boot/dts/ti/k3-am62d2-evm.dts
+> > index a8c794d073431..7cba3ff99e6a3 100644
+> > --- a/arch/arm64/boot/dts/ti/k3-am62d2-evm.dts
+> > +++ b/arch/arm64/boot/dts/ti/k3-am62d2-evm.dts
+> > @@ -65,13 +65,37 @@ wkup_r5fss0_core0_dma_memory_region: memory@9c800000 {
+> [ ... ]
+> > +		wkup_r5fss0_core0_lpm_fs_stub_region: memory@9ca00000 {
+> > +			compatible = "shared-dma-pool";
+> > +			reg = <0x00 0x9ca00000 0x00 0x8000>;
+> > +			no-map;
+> > +		};
+> 
 > [Severity: Medium]
-> In xe_hwmon_power_max_interval_store() within drivers/gpu/drm/xe/xe_hwmon.c,
-> will setting count to 0 here cause userspace tools to enter an infinite loop?
->
-> When a sysfs store callback returns 0 instead of a negative error code, it
-> indicates to the virtual file system that 0 bytes were written and swallows
-> the error. Standard userspace utilities (like echo or dd) often treat a
-> 0-byte write as a short write and retry infinitely.
->
-> If an administrative user or script writes to the sysfs attribute and the
-> underlying pcode mailbox operation fails, could this cause an infinite loop
-> that consumes maximum processor time while simultaneously flooding the kernel
-> log with error messages?
->
-> Should this return the negative error code from
-> xe_hwmon_pcode_rmw_power_limit() instead of setting count to 0?
-I shall return -EIO instead of 0 here in next revision.
->
->> +	} else {
->>   		r = xe_mmio_rmw32(mmio, xe_hwmon_get_reg(hwmon, REG_PKG_RAPL_LIMIT, channel),
->>   				  PWR_LIM_TIME, rxy);
->> +	}
->>   
->>   	mutex_unlock(&hwmon->hwmon_lock);
+> Does this create a regression by hardcoding a software-defined volatile
+> firmware layout directly into the Device Tree?
+> 
+> If a subsequent firmware build increases the size of lpm_fs_stub beyond the
+> 32KB hardcoded here, will this crash or require a lockstep DT update to
+> function properly?
+> 
+> > +
+> > +		wkup_r5fss0_core0_lpm_metadata_region: memory@9ca08000 {
+> > +			compatible = "shared-dma-pool";
+> > +			reg = <0x00 0x9ca08000 0x00 0x1000>;
+> >  			no-map;
+> >  			bootph-pre-ram;
+> >  		};
+> >  
+> > +		wkup_r5fss0_core0_lpm_rest_region: memory@9ca09000 {
+> > +			compatible = "shared-dma-pool";
+> > +			reg = <0x00 0x9ca09000 0x00 0x97000>;
+> > +			no-map;
+> > +		};
+> > +
+> > +		wkup_r5fss0_core0_dm_region: memory@9caa0000 {
+> > +			compatible = "shared-dma-pool";
+> > +			reg = <0x00 0x9caa0000 0x00 0x1c60000>;
+> > +			no-map;
+> > +		};
+> 
+> [Severity: High]
+> Does the omission of the bootph-pre-ram tag on this new DM region create a
+> regression for SPL DM firmware loading?
+> 
+> Since U-Boot fdtgrep processes the SPL DTB by keeping only nodes tagged
+> with bootph-pre-ram, these split regions will be stripped.
+> 
+> Will this result in the no-map protections being lost, causing U-Boot's
+> remoteproc driver to error out parsing dangling phandles when attempting
+> to load the Device Manager (DM) firmware?
+
+Is'nt this valid? why would we let R5 SPL or U-boot SPL think it has
+memory access? Adding a comment is probably worth in the code.
+
+> 
+> > +
+> >  		secure_ddr: optee@9e800000 {
+> >  			reg = <0x00 0x9e800000 0x00 0x01800000>; /* for OP-TEE */
+> >  			no-map;
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260918-topic-am62a-ioddr-dt-v6-19-v9-0-40972ef1f663@baylibre.com?part=7
+
+-- 
+Regards,
+Nishanth Menon
+Key (0xDDB5849D1736249D) / Fingerprint: F8A2 8693 54EB 8232 17A3  1A34 DDB5 849D 1736 249D
+https://ti.com/opensource
