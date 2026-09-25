@@ -1,185 +1,263 @@
-Received: from mail-oo2-f37.google.com (mail-oo2-f37.google.com [74.125.231.165])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37080422E3E
-	for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 06:53:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.165
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813C0427F98
+	for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 06:55:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.15
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790319207; cv=pass; b=r3u/Ub9MjqBz2fhLxTjA5diRLucXcsXkFJnoIJB6BuCglz6pPqztlOoVypxpy2xgHIOSZ98d+bMRzfh3KM14cMA2mRWIApElkK3Qq7TUjdkp47tCm9JZP0UawEbpycWQiIxV3BRgGTaoZYU5+j+jCisMr01VlerSTbb+aPo40aw=
+	t=1790319338; cv=fail; b=JBP2Uozf+vAUyN9iGV3gzbtsr9aboXbStHpcfRlh2+trUZVPd1CEC5/hPq8SXXRfsUmhhwv1vpQr7wwDmd0149520iEu0lwzhf4IbQXOgoS8yKZ7xXv2JHzdLlqM9ae1A7l/QntpGo6/qiSfCeFxUxuTZ/tu4tkyGXe51YyNr9g=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790319207; c=relaxed/simple;
-	bh=BFIkCiMN6Y1LoKTLebJzQG3e63+7y153xXWK22vEVw4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n/LwLt+Jq6t180EltW2EzuhpaY/NIElhRi9UOtPC5UmJJg757Zhi5fHwm7KjZnLC0g4imqtDABCRK5QS/h1E1UVFnS8iO5OyAwFebhJKsN4QhWg/5kyI60zCZ3C2GK6TmgNnTodziCWxZMB5rjDClG84LDVOYw+Ficu/8a0EN90=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WZ6xOUns; arc=pass smtp.client-ip=74.125.231.165
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790319338; c=relaxed/simple;
+	bh=kGBBHUwCbIOtOA4O8lZmGdl/ZU30rW/SdYwkD8QVfgk=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=GxznY2gv65NnBA7Urd9BFTeJfH/PZbcI5jePQQTy+2kljxCTIiP+U/CBR7SsDxld/SJLrjqGM6MtMeze6+qTqTVuekbhLY9qj3WPbqGgH7JDeGlxnQcoRQpED24wFDzrbyRbpXUzuLxcYzOaBhjJH5NMvnDfzrZaZkk+RtbdH5U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZTCC3g7e; arc=fail smtp.client-ip=192.198.163.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WZ6xOUns"
-Received: by mail-oo2-f37.google.com with SMTP id 46e09a7af769-7fccd4c3f36so541502a34.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 24 Sep 2026 23:53:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790319200; cv=none;
-        d=google.com; s=arc-20260327;
-        b=YgZHIdyZCX10dUfTUZfiY2pfyE3Lh/McOitxe+YnNTuAoGwR9VzKdydSXGICxyGFHC
-         Vct4PJsQvnta2ZcP2igYJNV+dAE7OatVcoNBLSUd6iC47dFe+rAAMLcg8enWpjrTbgDs
-         yQQvLYWgC47JjM/mNRH9Bs+yUi2czNl6Et6RfcZ0URViHSPQw6p2dgSq9nozk6/kvRit
-         B0MnCxurF/zxQyw+MYC/3g2wsH5bGoxli9jaKn3ECzuPjgVgPzHZnZjIU/DZtN9vM+A8
-         bkfGL0ht6egsTIsDJ8tKWy1+daTYG94+4xPACOH9M+Wg1vAfcF9yS6eSy5madH9mS4Jb
-         TJwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=LD4caPae1oVXrCq1fFq8mP/1u249QbSVdZngF71A038=;
-        fh=gj73vF7gfHpskuYo4ZPaNGDMo9r8lFxbvv5q5QAWYg8=;
-        b=r1NkBNbFv5l1qZorepvO0s8BBsbPsyp3iBfYBykwSxyHYH5yHwAsdG1pmFVXy7/6hP
-         mY3bprG9p8O6c6G0due0g1KfqdAHxAnktNrcWLGotY4ttDfHVCLf/pUeNCfExnzKSTzP
-         85ZLCJTH60abnBa2jzJVXu2HBgTF+V4/Uwi5hulQhgRMw/rjj3+kEhWAbq7qd0wLgoaz
-         RxvFEmJ+aUvMnERKcS5GTnD+I4a5Y2FXyvM9tCTL+prfz4QK5diTV57jfpGzdCHW1mbl
-         Dn8UTn5esBswN95+DUNoUrYajaLzhOhAi42EOvAb1YnXSOAV3C5mRZlpQ4QhFHQz4Zu8
-         QTgg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790319200; x=1790924000; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=LD4caPae1oVXrCq1fFq8mP/1u249QbSVdZngF71A038=;
-        b=WZ6xOUnsS99sFSSDVpw+QZitHMV1WP7av+9J41YnNEPOi7Zf5p47TOJGXUV48wA7Lw
-         rbGKF1z16KXZwim1N8xUr4ub75c7B5V9lL+4j/wDSMhJRzTJhbnCUEbu0NMYqLhL6j6+
-         Qg6nw1R2NolHKYVU6hmqBkTejmksVxgZfCHAaH8fv/Q753Xv5myOoyVnYR3PLQjsA7+A
-         aT8HROL9cnMWz9yLTa95YJ0p5amtF2TZiN6MAx7BAC0t4G3dgrJF0l5VvHnjj7ur8XLY
-         +yhtkFSvJtNq2Cl6Mv5cE/ZTmIvCcWpvARPCzxHAWuNU5AAOHwT5Vpw5z1akn78KT2FA
-         z7/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790319200; x=1790924000;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LD4caPae1oVXrCq1fFq8mP/1u249QbSVdZngF71A038=;
-        b=0jehO6ozxApLNmL+aIWdxRvhOJLBOQyGgtt9sS1HcYUzTCiCQ8gvdf0EHfjpjJWpGV
-         wyJzek+2WRrTx5BVcZM+PCqO8pkGHgK/tF8+7zJ0giMZImtnRO/tzDNr1YWVzhcq5uKZ
-         dZULr8LDTKh/gCJBRbllEEAVc336iZCptgkoKwjyZTAc1C078IRnrhVY1ZEpgieVEx5W
-         MrOTIm55mWv3g90Qr9Xq16w9PgZXPwVoExfQMu3cAobr6MuZunjAzr5PCYct85LVhJII
-         VUNMLoDZhEsQ/+w+7rBY0AiP7xHZdI22gjhu2ooAnS3cA+HufpXPXQD7HfrShcXDbPbN
-         GZiA==
-X-Gm-Message-State: AFuF++m9zLda3WHxJfbtqtYrXPmOG6meeRMW+aPGMJI6cHfS6W0nB9xH
-	zKwlwri59fVLpXKyt7cDoNSE1y+4Ubu6Y6Asqh1N4bj504BxYd4QoqKNg5JAjxDRaPgAeGzUMCl
-	VcqyvUIylxDUWDlRM9GC7ma7iE1WAElZiQbpFwDU=
-X-Gm-Gg: AYBFou0xzxU546sdsxVO/eUq+bNMG6ZyG7pc3BRd9iSNJoBrS8jNvCPf9UNuq/IOM+P
-	3ruaA6TLTSpVBnKyX8GftD3tD8zGxWwxKpKPGqlGxMF+REr5bNm6SMR2DaQI2XiwKD8zqmt75LY
-	96onl4rT8QBpSLRWLETvXZJUOqumjkxsrLTkm+ti1TKzcyIfoIUSOkJKXlSHCHp7f8C957el20w
-	psiiHchBUR8xpLJac0utT1c39d20APfg0ASCFZMJUhJ25k/dF3XX5eAcc9O5UXYrHIKJmVpEIrl
-	VZgF1B29t4S5UBzwLMgXgzNgyEW0746FzAvj+rmSbc1ITWkzt3wkJcU/VixjaMGUsWaNepGzGpq
-	SwPzzUjHtg3Ts
-X-Received: by 2002:a05:6808:6782:b0:4cb:f40e:6f3b with SMTP id
- 5614622812f47-4d72ac48247mr5534034b6e.43.1790319199849; Thu, 24 Sep 2026
- 23:53:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZTCC3g7e"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1790319336; x=1821855336;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=kGBBHUwCbIOtOA4O8lZmGdl/ZU30rW/SdYwkD8QVfgk=;
+  b=ZTCC3g7eHzl8SsBWGxUJ7QqtEIbDyE7mtoDQ3vNZS/jRSvWqT2gKYMVW
+   UNifQzufwW0ukSLr1ZDPtAHT8FGJxeSQ2owI0QruByXaLKQe1Fr1voQgj
+   kTyPxPdk8cka9Rh7D4idiBtTAyvbBw516iYdrL8+BDEYv4IYRty0Fb59e
+   lwClR7VJVvcTyN3MYV1LAgVtWhzB1i6nb+CaSoHotn9yJeYpsqi+NvWH6
+   8iBjHe6YdcQlTVEHh9EfporGbpmh1O1rucfMO9pX4I6nJRLSZh1Lye0xF
+   tXwqnvnSCNjiVFOTf4T66Z17vtflypyfb5Y2y0Fx4kxYyz3ftHAeBIPwG
+   A==;
+X-CSE-ConnectionGUID: dlERFGu/R5WYz422LJLlYw==
+X-CSE-MsgGUID: M8StZgXOTzGzQSakNVxWPg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11915"; a="91205907"
+X-IronPort-AV: E=Sophos;i="6.27,122,1787036400"; 
+   d="scan'208";a="91205907"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Sep 2026 23:55:35 -0700
+X-CSE-ConnectionGUID: zni4QfPbS2CLrTC9eFg21A==
+X-CSE-MsgGUID: ULr3p4UbSf6XslS2ZkfNfA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,122,1787036400"; 
+   d="scan'208";a="274354374"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Sep 2026 23:55:35 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Thu, 24 Sep 2026 23:55:34 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46 via Frontend Transport; Thu, 24 Sep 2026 23:55:34 -0700
+Received: from DM5PR21CU001.outbound.protection.outlook.com (52.101.62.4) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Thu, 24 Sep 2026 23:55:14 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pBEvpaQeayttq/0aUf8N68+r3mGHfJgjfZNZk9Ds42d2HAMd5bxZqV+4YqxPIM2J9u0/87cSQLBWOQPY75u//tz/YmunkglToOv5GnNdVS4wOBCUEO4d2R08ASLTtKyfzK0NPXqIR3crxcmOWxjQ9a/XN08qCdjhjDQR0zmP6A2P8aKDvgqj1hk3FP91rKIgo8u6gxp0RxugTplI0hdN1noGJjpk+M0VE9APRtSD3O8kzwnG/2h8QCHdC6q5gVc0INJqC1fYqxB4kGN/6xPF5Aw99MY9Dfn9XlYenIsbkIzNjaQkCOa4AtCtiEsPgv/IqbYCIBVIH52DbZjKv6Eykw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hEFDpsMQcMdGc38ZpMrjxB3rDanYI6NneZGx16G9jfM=;
+ b=KKSK6grAvIozP2fQV3gi3XJgiGXAKyAonDBBN4qNT32SMZ1/iTKk48Dd5vsuaYEdei1cUJcrGyQuGh9Q4shtZ6x6CPFE4YK/B7biLswnqnPgZ8is/XnIC4kwfCrGy/BYqyb43AnNBWZptfja6VtflbdQAzjzff9QCmAv4Txy+t93/b7rFwAmxl1fexiwa/uVUOdUG9imytWzsiF8YibhCW+G7dzWvY7dXoZUonnNkdFNeTKoJMtRlIFMU1Bgb6/Dt1egw0btmjvQVIOhncRiVCz+jYEyZls4rlxcO3J+zb6Ti5FWDC0n0/u7AdPFry3No9cAV//alffDdJxzFrIQ4A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CO1PR11MB4787.namprd11.prod.outlook.com (2603:10b6:303:95::23)
+ by BL1PR11MB5255.namprd11.prod.outlook.com (2603:10b6:208:31a::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Fri, 25 Sep
+ 2026 06:54:31 +0000
+Received: from CO1PR11MB4787.namprd11.prod.outlook.com
+ ([fe80::e7eb:a872:53d1:21fd]) by CO1PR11MB4787.namprd11.prod.outlook.com
+ ([fe80::e7eb:a872:53d1:21fd%4]) with mapi id 15.21.0451.014; Fri, 25 Sep 2026
+ 06:54:30 +0000
+Date: Thu, 24 Sep 2026 23:54:28 -0700
+From: Matthew Brost <matthew.brost@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <intel-xe@lists.freedesktop.org>
+Subject: Re: [PATCH v7 13/24] drm/xe: Enable CPU binds for jobs
+Message-ID: <arYapDIMe2PAW4qF@gsse-cloud1.jf.intel.com>
+References: <20260925045320.1325860-1-matthew.brost@intel.com>
+ <20260925045320.1325860-14-matthew.brost@intel.com>
+ <20260925060326.27F9A1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260925060326.27F9A1F000FF@smtp.kernel.org>
+X-ClientProxiedBy: SJ0PR03CA0069.namprd03.prod.outlook.com
+ (2603:10b6:a03:331::14) To CO1PR11MB4787.namprd11.prod.outlook.com
+ (2603:10b6:303:95::23)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260924053121.17703-1-yupeng0921@gmail.com> <20260924054540.ABC821F000FF@smtp.kernel.org>
-In-Reply-To: <20260924054540.ABC821F000FF@smtp.kernel.org>
-From: peng yu <yupeng0921@gmail.com>
-Date: Thu, 24 Sep 2026 23:53:08 -0700
-X-Gm-Features: AclHuK_uHr4EXcshl0s8Z_YRYoCYwHghR4xWOWXss3V9-88IOhUBhefWslpQq4Y
-Message-ID: <CAG3TDc3vZjgLmsMH6-nUq-YdJLrX7r9O1gEynhaSMWfWXv62Yw@mail.gmail.com>
-Subject: Re: [PATCH v4] nvmet: add cgroup_path to charge namespace I/O to a cgroup
-To: sashiko-reviews@lists.linux.dev
-Cc: hannes@cmpxchg.org, tj@kernel.org, mkoutny@suse.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PR11MB4787:EE_|BL1PR11MB5255:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4a566e0a-83c2-41fc-3f1f-08df1ad1d918
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|6133799003|10067099003|22082099003|18002099003|56012099006|11063799006|4143699003;
+X-Microsoft-Antispam-Message-Info: 7VEWFCtZ0htU8SQdFYxVpRhex7N8SXMtfqm9yAeVhU43gz3f7WnQ/JcctuBL+KmusDZHtrsd1MHJxKwqbqeGDlbauB4UJUH8qKEqUUnqxpSIs5rXjH1tSKwKX+LQOz34wDkAlrYeuk+CVMnI6cX4lYGRbb/B/RtBG/0F2CnE3jMRGLQGsLAA80d33o/ELIRuCAQj0YQFYzjWIdRvLM4NCtucAnoIrpsxLibgtAqNZGuep20vOPlw95h4qrTYzifMvsMPUqDPj0IMsbdhcY6gaHdMlPm9bU1I5dYVcxVTjIugXJYO0D5pHSdejtrtk2/mTYJWHmEZpn7mTzNmEdkxDPZSIdAXU+AXTaMFjx0gFDeTMZ4R91XwuWOJOHjRthNoeIVtGWG7Buooxr9/9pt5AZxJ0uHx9mAZWST5fEX13YuqFjnfRBaLTXMhruLKiDG7lCkbkuZbaHhAjgCLeLLtIAahIvDX08r48ALEXKEFCeNJ3SmvXVoGZ62+oqGsn8CSRFXwz7Rfy8JDfGPrBXqBcDTgaeJ5+Id/n3lHFfXf3grry39pd8T724rLU+dOQsBjltiFCZUfzuDgGd12nPCmIPX6L8YRbDfSOsX9eYsEhj0=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB4787.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(6133799003)(10067099003)(22082099003)(18002099003)(56012099006)(11063799006)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?97iLyEwSREL6fl2U+dX94ddxzuVTSJDJOcdkoTRYpfmqAeqpT0MfQDYZOT?=
+ =?iso-8859-1?Q?9yJ3qudPIu3zYErAiYTxnM0bPNtGK2ciwmPuWH8ZQHDrI2UBUZ/tnlDOqM?=
+ =?iso-8859-1?Q?Np+pWy7p4zl4YhJWx1z0Pfe8mpwZ35aLtiAxcy13y4y9I3sb3XJEY0qvos?=
+ =?iso-8859-1?Q?xodFaaRwqm4bidbL83qYMYwD0eSYnsnb7p3KfdfSAYBNqUxPTbl7msihOn?=
+ =?iso-8859-1?Q?3nYJMXB5pBf3FZ+kcE/9cU382VIJynjx5FqilwdkeXvAxGhinZra8HSgK5?=
+ =?iso-8859-1?Q?VZ48xOepnVlUFA0E81AqiCRxH9whfOxt8IbqJEt7yV+o/DkEoUZ9NGtvSY?=
+ =?iso-8859-1?Q?wlbB9eok/Y0zYDM89eEGRSbdAjUjxFi8r+sv4ffRiDsJzdKHETYwMXrfVm?=
+ =?iso-8859-1?Q?nWiXRrsbznXpzWDvYxsD7Y13z9np0X9OHN2TGb8+Ju6HjAkE0aB/dMziUT?=
+ =?iso-8859-1?Q?dWZjxKTe1sFwOcLpd4xfxKZ9f/SIp3dtRTu8cXASpdbKU6wIvSxFaL7iUJ?=
+ =?iso-8859-1?Q?q9SKSXpPASpt5zRJaqx9JVe1cGEpNsHsY9TVOLrwCYIMnDX4Zqv7Jqx2Dn?=
+ =?iso-8859-1?Q?ER5p+WJouFutXbOALfEJfa2cTwB08J5KzhiGsZIbo+sq86CQiRFd+DIRPj?=
+ =?iso-8859-1?Q?tG6mhe1qJ4otBr2NG4kTw0YGx/c4sZSBdTUOBuFt+4wHKAxOpYVxevytZd?=
+ =?iso-8859-1?Q?MI2yPd2RpiT5fkB8yX/RZaIULioedtEt3rAim77UvI0qIS43tN5gfDGdwQ?=
+ =?iso-8859-1?Q?f86ovWnFaCWFv6RtlCD4M4gFn7CpAH68w0lkPxu9GG6AsTMUteEKlbmikB?=
+ =?iso-8859-1?Q?CedPUJBubex9SMaC04/yg/OoMW/vQDJB5Zpu7/i6HqyDQwi0GPtRxRlHh0?=
+ =?iso-8859-1?Q?u6PvwzJvVbNZ6dR4pAQGQXgbaoon8x2mDiIHDNYgxFj6Jlfr+fKMyVXvty?=
+ =?iso-8859-1?Q?ixNTCvV6OhrDDmKhwiqf8h5UywfZCcWk3CfRYgoQs+tbCaOAyPJbp0voW0?=
+ =?iso-8859-1?Q?U2S6zpAlzZ8dl95X0eKEAziPZOBLGR2w/Qg4WegurPAk3Hc/+AeuO0VtO8?=
+ =?iso-8859-1?Q?EVRHeiNKK8/ECsYA5wNqbjjP0ejLJ+/gRxSERKiqItQqnmPUNToqiuOpKq?=
+ =?iso-8859-1?Q?xSDdzmhCJGbJUjJBkjArQX3RW/UwN4SHMQa0yZe/45R+l6/dAIf5P+RotD?=
+ =?iso-8859-1?Q?xk+YfOP2nrfFvi55R41lfjsKoL/JsdTJUqhjNqUFyIuhv1FA80FpX3JqRk?=
+ =?iso-8859-1?Q?tDQtCmYfsgRsn2bboXzgncxiOWZPNrRjMhZpXLNSaIcV3eg0AcpCmsPzzU?=
+ =?iso-8859-1?Q?1kF8/uVh0KESQSuXsBRiRi8cvlgU4zweBfd4qZswqpIiTaaFNrewO/y2Y+?=
+ =?iso-8859-1?Q?SsLSOYdCmMlhgNYvZSsdPj6aldKRt8vqQ4wxpTyw9mI1g6sGcbPZX6aLYq?=
+ =?iso-8859-1?Q?ewaWQy6R2NXXUh8lCwjE+1PCsxvDGta0FiCb/OfRrp/cHsvFkbGgspVxXv?=
+ =?iso-8859-1?Q?9ykRrqgKVErsp7G6Szsrulm0HYhHQW8IcmoGio7inZw86C0FM7mcJNh3fP?=
+ =?iso-8859-1?Q?/pTusaLXENAMnt3vfpFrbuwdXHrdwupEbXHqNrUJ4XTIWEc/3Oc0UHO/Tc?=
+ =?iso-8859-1?Q?+PMfUBV8rlbkA4iWJkUF1FJGgp2IeIQDbCMIJ9TEcvV0b/7sI7SszwYE50?=
+ =?iso-8859-1?Q?knUZToCIL9Y5d8eMgq+VtyBZ/8ybDD20wChly1dU5sl5QyO1/YUcsVHU77?=
+ =?iso-8859-1?Q?Ur3lnYJJ1FDQ0j/IJR+p8tgrAZzeigSrpFb//MpZuYi/tDchs2QBFnlWhJ?=
+ =?iso-8859-1?Q?pdqk4eWsYg=3D=3D?=
+X-Exchange-RoutingPolicyChecked: 2enYk5sTS0fN5hIOyZTzRQ/Ic5GA+6kbZeTJYBof7rXXs8SrrmJ5oBzuXCJeGRbnjDIMsqcow2J6Vr9opV3CBGKChFq7LaK07Xq6p5FM/LrRuDw4a7qP/QvLRTTpGp25ItlJL4YM6ngon9lHauM2hLTX3XQa0k6VTBBiaU1wVu80HS/QdlueHelu8Bpy7GV3QZYVI1e42tQGV0DatSb6kKGyN4m2aXgPpQqK0Eu7gjWIquo2r3l+wMY5UqPdSgDi3z3MW5CWDZh53WAUVBf+FA6uoZW1qyqb4s9ozmJU/6Gz9cK8H+sJBsTMgP/0niK31jpeEzOYY5DJm2XvBpkZew==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4a566e0a-83c2-41fc-3f1f-08df1ad1d918
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB4787.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Sep 2026 06:54:30.3975
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: QCn7YryLtVyPOJKnwsuWeJvwoxXb/6B+RJ7n+PA/Hc600ZL9DYMHgOmU/QUkWaB3pLy9kj/y955JRrangjAyYg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR11MB5255
+X-OriginatorOrg: intel.com
 
-On Wed, Sep 23, 2026 at 10:45=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] nvmet: cgroup IO isolation is silently bypassed for non-kthrea=
-d transports
+On Fri, Sep 25, 2026 at 06:03:25AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] drm/xe: memory leak of pt_job_ops and dma_fence when PT jobs are canceled
+> - [High] drm/xe: GPU hang and memory leak due to missing CPU bind support in Execlist backend
 > --
->
-> commit dd3858fd51d1cf303ef355857ff0cd794f5322ff
-> Author: Peng Yu <yupeng0921@gmail.com>
->
-> nvmet: add cgroup_path to charge namespace I/O to a cgroup
->
-> This commit introduces cgroup support to the NVMe target subsystem, allow=
-ing
-> administrators to limit namespace I/O by configuring a cgroup_id. It hand=
-les
-> both block and file-backed namespaces and associates the submitting threa=
-d
-> with the target cgroup during execution.
->
-> > diff --git a/drivers/nvme/target/io-cmd-file.c b/drivers/nvme/target/io=
--cmd-file.c
-> > index 0b22d183f9279..570e65259ad89 100644
-> > --- a/drivers/nvme/target/io-cmd-file.c
-> > +++ b/drivers/nvme/target/io-cmd-file.c
+> 
+> commit 6471c15e2149c2517458e891e7dceef8c5573f97
+> Author: Matthew Brost <matthew.brost@intel.com>
+> 
+> drm/xe: Enable CPU binds for jobs
+> 
+> This commit updates the migration layer to formulate page table jobs that
+> issue CPU binds in the submission backend. All code related to GPU-based
+> binding is removed to lower latency and avoid PTE migration limits.
+> 
+> > diff --git a/drivers/gpu/drm/xe/xe_migrate.c b/drivers/gpu/drm/xe/xe_migrate.c
+> > --- a/drivers/gpu/drm/xe/xe_migrate.c
+> > +++ b/drivers/gpu/drm/xe/xe_migrate.c
 > [ ... ]
-> > @@ -97,7 +99,10 @@ static ssize_t nvmet_file_submit_bvec(struct nvmet_r=
-eq *req, loff_t pos,
-> >       iocb->ki_filp =3D req->ns->file;
-> >       iocb->ki_flags =3D ki_flags | iocb->ki_filp->f_iocb_flags;
-> >
-> > -     return call_iter(iocb, &iter);
-> > +     associated =3D nvmet_blkcg_begin(req->ns);
-> > +     ret =3D call_iter(iocb, &iter);
-> > +     nvmet_blkcg_end(associated);
-> > +     return ret;
-> >  }
->
-> [Severity: Medium]
-> Since file backend IO submission relies on nvmet_blkcg_begin() to associa=
-te
-> the cgroup, does executing this in a process context (like nvme-loop) res=
-ult
-> in the IO being charged to the submitting user task rather than the confi=
-gured
-> namespace cgroup?
->
-> > diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
-> > index dbda55895f4fb..62bbfcc4ea143 100644
-> > --- a/drivers/nvme/target/nvmet.h
-> > +++ b/drivers/nvme/target/nvmet.h
-> [ ... ]
-> > @@ -732,6 +743,42 @@ void nvmet_bdev_execute_zone_mgmt_recv(struct nvme=
-t_req *req);
-> >  void nvmet_bdev_execute_zone_mgmt_send(struct nvmet_req *req);
-> >  void nvmet_bdev_execute_zone_append(struct nvmet_req *req);
-> >
-> > +#ifdef CONFIG_BLK_CGROUP
-> [ ... ]
-> > +static inline bool nvmet_blkcg_begin(struct nvmet_ns *ns)
-> > +{
-> > +     if (!ns->blkcg_css || !in_task() || !(current->flags & PF_KTHREAD=
-))
-> > +             return false;
+> > @@ -1937,162 +1866,18 @@ __xe_migrate_update_pgtables(struct xe_migrate *m,
+> >  {
+> >  	const struct xe_migrate_pt_update_ops *ops = pt_update->ops;
+> >  	struct xe_tile *tile = m->tile;
+> >  	struct xe_sched_job *job;
+> >  	struct dma_fence *fence;
+> >  	bool is_migrate = is_migrate_queue(m, pt_update_ops->q);
+> > +	int err;
+> >  
+> > -	job = xe_bb_create_migration_job(pt_update_ops->q, bb,
+> > -					 xe_migrate_batch_base(m, usm),
+> > -					 update_idx);
+> > +	job = xe_sched_job_create(pt_update_ops->q, NULL);
+> 
+> [Severity: High]
+> Does the Execlist backend properly handle these new PT jobs?
+> 
+
+Execlist backend is dead. Non-issue.
+
+> Since xe_sched_job_create() is now called with a NULL batch address, these
+> jobs rely on backend interception. However, looking at execlist_run_job() in
+> the Execlist backend:
+> 
+> drivers/gpu/drm/xe/xe_execlist.c:execlist_run_job() {
+>     ...
+>     q->ring_ops->emit_job(job);
+>     xe_execlist_make_active(exl);
+> 
+>     return job->fence;
+> }
+> 
+> If GuC submission is disabled, it appears the backend receives this job and
+> directly emits it to the ring without an is_pt_job() check. Could this result
+> in pushing an uninitialized batch address to the hardware, causing a GPU hang
+> and leaking the pt_job_ops structures?
+> 
+> >  	if (IS_ERR(job)) {
+> >  		err = PTR_ERR(job);
+> > -		goto err_sa;
+> > +		goto err_out;
+> >  	}
+> >  
+> > -	xe_sched_job_add_migrate_flush(job, MI_INVALIDATE_TLB);
+> > +	xe_tile_assert(tile, job->is_pt_job);
+> >  
+> >  	if (ops->pre_commit) {
+> >  		pt_update->job = job;
+> > @@ -2103,6 +1888,12 @@ __xe_migrate_update_pgtables(struct xe_migrate *m,
+> >  	if (is_migrate)
+> >  		mutex_lock(&m->job_mutex);
+> >  
+> > +	job->pt_update[0].vm = pt_update->vops->vm;
+> > +	job->pt_update[0].tile = tile;
+> > +	job->pt_update[0].ops = ops;
+> > +	job->pt_update[0].pt_job_ops =
+> > +		xe_pt_job_ops_get(pt_update_ops->pt_job_ops);
 > > +
-> > +     kthread_associate_blkcg(ns->blkcg_css);
-> > +     return true;
-> > +}
->
-> [Severity: Medium]
-> Does this explicit check against PF_KTHREAD silently bypass cgroup IO
-> isolation for synchronous transports like nvme-loop?
->
-> Local users can use nvme-loop to submit I/O inline without a kthread.
-> When this happens, kthread_associate_blkcg() is skipped, which appears
-> to allow the I/O to escape the configured target cgroup limits and defeat
-> the noisy neighbor protection.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260924053121.17=
-703-1-yupeng0921@gmail.com?part=3D1
+> 
+> [Severity: High]
+> Is there a memory leak if this PT job gets canceled before execution?
+> 
 
-Per my understanding, the nvme-loop submits the IOs to a work queue, so
-the nvmet kernel thread will handle the request. No IO has a user associate=
-d
-cgroup. So I think we don't need to worry about both the two medium severit=
-y
-concerns. If I'm wrong, please let me know.
+Again non-issue - _arm() always equals run_job() call. Non-issue.
+
+Matt
+
+> We acquire a reference to pt_job_ops here, and xe_sched_job_arm() takes an
+> extra dma_fence reference. If the job is canceled (for example, from an
+> execution queue kill or GPU reset), the DRM scheduler calls the free_job
+> callback which ultimately calls xe_sched_job_destroy():
+> 
+> drivers/gpu/drm/xe/xe_sched_job.c:xe_sched_job_destroy() {
+>     ...
+>     xe_sched_job_free_fences(job);
+>     dma_fence_put(job->fence);
+>     drm_sched_job_cleanup(&job->drm);
+>     job_free(job);
+> }
+> 
+> Since xe_sched_job_destroy() doesn't check job->is_pt_job, it seems we never
+> drop the pt_job_ops or the extra dma_fence reference. This would permanently
+> leak the deferred actions and their associated page table BO references. Does
+> the job destruction path need updating to clean up canceled PT jobs?
+> 
+> >  	xe_sched_job_arm(job);
+> >  	fence = dma_fence_get(&job->drm.s_fence->finished);
+> >  	xe_sched_job_push(job);
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260925045320.1325860-1-matthew.brost@intel.com?part=13
