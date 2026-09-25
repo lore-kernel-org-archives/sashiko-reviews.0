@@ -1,181 +1,258 @@
-Received: from mail-wr2-f35.google.com (mail-wr2-f35.google.com [74.125.225.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0002e601.pphosted.com (mx0b-0002e601.pphosted.com [148.163.154.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3424772A1
-	for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 09:21:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.225.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D892B402BA1;
+	Fri, 25 Sep 2026 09:34:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.154.28
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790328089; cv=pass; b=Q6V7CnZMTC1r9TMrmf2rctDyO792f33OB/edZYvjeVzvdxfzmto/BYp9GgM+0OmpHHPSuPf87e8RFf3ZPal1ggTzl+JyuHUHhJuzvCV9kCxdrd4uyEV4bUV0JlaA6at807Q+c8P+gi3wHASCu5LH9MQtmoiiAH6QcGbWSpVMe4Q=
+	t=1790328860; cv=fail; b=mguUmgxjFQQcfca/VwnvxViInc+mhLW4CKKrGmUmf/Wy3pkK4fY85ocLS65Wo9KtiiuxNG6XxT10iIjukmS5sZ5syWy+XiuqFsBUNevL1NqlvQoevLcYpGXdgk5midumbq4OwPCMwpAcqEesMaqetR6vUQyjiKKmZI/6dKVVqKg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790328089; c=relaxed/simple;
-	bh=NCueJ4dcU3NpqgGF7u84YtQGIxF+FQ97Y+VznPDBXYA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=q9qeRdAGy2a/3H2liTcg4hOwuIzU5G9wTiH1muoK4WdX/rvy3fIJ5J6I2/A5uyTbq7GNlONpC/8kZ57wPp3fgjxHwOj/sEcMIPt+E+zdfqXC3cKfW+C4zCEFH6Kth4atjVI1aCb1HJXzaQwS2rPmdKZtfn6JD8qrlCYsVlnzITg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WwsM3KXT; arc=pass smtp.client-ip=74.125.225.99
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790328860; c=relaxed/simple;
+	bh=nyGnHctoIguE7NwaCcHzdmfigczTePHyMVHSUAhAf5c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=nsLtVVnTwfmuq2CRZJWePRV05LY/FyFcto9DP4xvyAGoFm6pB9eOFhd5uvehfyqADgY6xiQTOgmsUTWDGW0TP/qSIrq/0TvZFEoQjyuThPmB5azhgwda8lcgZKEfmHIyjwvNY1B4lQvqGG3tuH4SPhwhK3neCHnHycJwz/zeeZc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b=iH3oKhoP; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=a/tRYWNa; arc=fail smtp.client-ip=148.163.154.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WwsM3KXT"
-Received: by mail-wr2-f35.google.com with SMTP id ffacd0b85a97d-4885d4825adso364193f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 02:21:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790328083; cv=none;
-        d=google.com; s=arc-20260327;
-        b=fS2SAbuKRoHEG8yA2iMU/cyZr7+ePx6BD8HSb22AJWUsUU8l3mOoD9uzuqe98PIvEO
-         5Pf4prYcBH5GgE2LWUwSqVWhfFoQh9k5GrzjlGCAMShfMODZgaeaFEEnyyIHATFMViqO
-         k8WAhmT+LNcFkarX5Ev/Atq7PIj39D7mpJX9YQ6U4/onsVKs+yjgvKTzrCjPTp3S4nEw
-         Sza/i4iYu3vEmq6vXZavIXmX5gl1MQ0xeIA0UNUF/2vCJRyLmrCaxhwRtFcioKQKIoiO
-         5RqYiacwU5WFQEoh1PmBEuZLnXVyvVkIo4jLnoCywsNJuUGDTXGmeyuuCAgzo1v+ZiDh
-         vYvQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ZlooN9kx6gRrXmg2e0W2xusZ6bAGGvgElZ4hCzz0Zhs=;
-        fh=CUjzafYHViQLrqJW4+DqWvVRVltnVbAIrIBRnHlCmmI=;
-        b=ZGybadpEz59NAWn6hdVSNtSiDLtcndYt0V6IH0DiHVr4nAzNAIDWoJJ6ALcJtCvA3A
-         9+TBP/HJTRuA735C4QmRerIK35QMaGlmg3CSpLy5refdyXYBf/5gXvpn/c12fVy+9fe3
-         yrv9TH7RySqZg4YY1F30GZ/N7EtXXUN6RqOC6knnEnro9JEzwsmawymXteKJcX8lLlUz
-         iKA11ywOHQYQfKh9HcQ7V+KRanW8eODWeaUie2QY8hqCyV2DhNy5SCpUciyOxzFj3XzK
-         FdGn1uOKEvo5EL43iD4lmJokxtiqHWRKsxOKcf+GicFIEU6F+oTEI3OQW1w2+kMRCey4
-         r8zA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790328083; x=1790932883; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=ZlooN9kx6gRrXmg2e0W2xusZ6bAGGvgElZ4hCzz0Zhs=;
-        b=WwsM3KXTG8zvlvu9IBZBOMaqAPaJdLKeAz7MZArNpZ9ogje3k3485jySyuCJzeN1TM
-         lq5ExeAuCvukgNdGyLfXO1SfRADzEyHF+NNB3jE26PX+KJiOYvxFFsdbuZctS7v9YlHQ
-         P/xAz3uce32mQUArzTcxuLz3dmeNPCVxGTJqndVKhzOwdM+Yr85s/13KuycdgUn1OSUN
-         0qCxjM0kWiHYNsgAyZWOxh/nc//hqx5en6k6oYJY17wj2Po9+2K4PdBSWVV+GUwo83k7
-         mr0xBFZ+x5xtIGXaWyZEROHh0DL2eO7GG/6x7ZoCCJubyh1EHFjeBv9v98owctxSbIeP
-         X/yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790328083; x=1790932883;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ZlooN9kx6gRrXmg2e0W2xusZ6bAGGvgElZ4hCzz0Zhs=;
-        b=uqlgZ1pnRW+67qMiCDRHYKJICuP3rUaZNiDlNnMKkX5wz9ayjtOzKD0YKrES7z3KiF
-         EHN3vwKJpS/yO/7mFwODjdKj7kd+fCxjnmYVNrxAkHVMF9DrPrrgzAJaMsYKHpMuCaQk
-         xfutkfPB+Zi1e+yg39ooQj3+dyNLe/tztmyiIFpSqnDeNcwBzUHHYeHJSMiuDHgILDoB
-         t1+iqXUp5/l6/UAQXpxUWt3iuSq6kqJHRMkwSJwukmkt16CFDpF3fqj2UVlA24V4yOMu
-         54KHRI3YJ4bh2bKLBaY7Rv5rqeipP4u7zQ8LYS2n2GaT2gv7JRCssgVfjPf4RHa3iauO
-         Unwg==
-X-Forwarded-Encrypted: i=1; AKwUvBwgTSenmItb4SPFLGyIjxdILdAnIlA/jS5b1u+ltX6QmRUe9XjdZ+kOLXlCh3L1xbIU5+BPqtfvbZl+9M6HH4Q=@lists.linux.dev
-X-Gm-Message-State: AFuF++miJGFR084bmAcz832R8hz/tCiiIyxEq1VeKVFUl/PGtIrGnDRb
-	GvYLkvCpu3zdQ1yqyZc5HYk896vVPMkLgaU3gk1L0d4WNfWwvPnPSe7PUfLikGWtbMAsPl6cGHt
-	y9Kd21hOityd0qkmOe43lFy09RMOZRg4=
-X-Gm-Gg: AYBFou0z4RJ4Zu/cWbS6DsikGPsPK4Y0WN46vxmWLWA3L79hPpGZ1JWbU0JuNnIeGp/
-	d0+/v2aABY0U7d9dNGbcScJqLQXNysbTahkShhujwL0pxCkpqZ5/HGTkPZPNtiQx3Zw87+nD/gt
-	pU435vzy0eADLQLqxLnUuE9HVhQ/I9OdiHDGi0m1sM/XCkKl59aqsSoDEJT59UmcXXQ9LKk6VcW
-	/OtnrfUWbf0UXQp3xxPdMXlyObiXs41chKcM3Q9VkC/9jzWd+uivdVUlPtunuoITks9WZU/6LIx
-	83I56SG5ZrfsKM+xEAliypJsMM4Tx0Exntyh28ScdmSWqekMDu2EpAbzPtFz895pa4acnxN3cXW
-	S8JBYKYOwzLlimBfh4IZoAS1zQsS+doNeugAwiUZO9K1lqZflxY71Mk3tMji7X3I9PiewCDf5
-X-Received: by 2002:a05:6000:460f:b0:487:a46:a9cf with SMTP id
- ffacd0b85a97d-4887174c0famr8766945f8f.29.1790328083300; Fri, 25 Sep 2026
- 02:21:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b="iH3oKhoP";
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="a/tRYWNa"
+Received: from pps.filterd (m0374956.ppops.net [127.0.0.1])
+	by mx0b-0002e601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68P4aO4v1175293;
+	Fri, 25 Sep 2026 04:34:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	proofpoint-05-2026; bh=3E6SM4I7tSRsQPQ19aNAvZiIGP92vEDcSMNMd4IRk
+	EY=; b=iH3oKhoPMQGMl4cOs586F4iKMq8AZCdWuSQCk31TCRfcj0Bd40AhojWbS
+	HWUpDTTKaIM5ioODLFXUdZlU6Mnvj8kAYU+mpd2y0S7oyVEc0fjaryuqpT6uyyp/
+	c7T1SuAlOTcG6aQ9eH3SLZlhXqDsvhzg64FSe756BMtkoMyZ5t47qz/HtK2lEKP0
+	XnrGEbVJy2ufMO7NuMKI/s49vQpJKIzNzrAzDW19RNHdzrN5RL3qLWo3cJX9o/gK
+	+g8sss32safDaZhaY2evyR4P1sWDpvHRaMkxjW+qdxn58bOgZGRPiLoFeX0o5aev
+	+enNpAb2jaVC9E7cZ04Eqr1G8aRMw==
+Received: from byapr05cu005.outbound.protection.outlook.com (mail-westusazon11010065.outbound.protection.outlook.com [52.101.85.65])
+	by mx0b-0002e601.pphosted.com (PPS) with ESMTPS id 4gvwm38n92-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Fri, 25 Sep 2026 04:34:13 -0500 (CDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=DShlOTtZcrFtQlA5UVqi+onnlmHkcnbM9OHEO3TxDnKcDu/snI887oE3lH8v95ayc/DHXZ4k0RdjchEtTD3KtnojxYsxMYDh+ebqzC6xYprkvSerYPgXO3FRtVldaa/smwRoZe409aQyL4vpaYIFPlzj/6zya2LmFjl46u678+tgJPFS5QNblxKdI/CTgRMsYSeS+4ZBd9HsX9qj5dY/HfAlGe0CskDKbVnVf6F0wv7DKYMIw/t/m4aQDNMLlvutL1ZHK5pFUzPcR1nxT6vEgfCXuTvUP0A3zPPcqBLy6w61poagQDZvwSeuUCnG/2u4ICq2BsXRhahrq43TvLn8IA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3E6SM4I7tSRsQPQ19aNAvZiIGP92vEDcSMNMd4IRkEY=;
+ b=NC+MlmYLgF79xGwS2JypFUI9+PQ8n7ArrZBO7Qk7DEiAXtxJrci/D6EBYhtSSHP+cWFj6d3clI0+AxTB/q06nhElcWLGAKVrNeDsPUbdZB9mIn6w5nEJVCRGA2wKz94wMjp36e9kimHeziN6Bgcdto6wX2y5Pv32Z7ExiPxbQsrQtVEeHxzoyxSJSsKpKwkTngDberZWJS+kZRc6ffPUalw9+ri0OqusfDU7x64XeDMza/b0qQ6DLR5lL5kz8BqUyiXxTsuY4R1FyLtvPZsBPhQ4mXFplo2lsz6Ek0+3pAYmidPFF451RKqeeDx55cgU2SwI00VMz49Kiq1JIqHVPg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 198.47.23.195) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=ti.com;
+ dmarc=pass (p=quarantine sp=none pct=100) action=none header.from=ti.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3E6SM4I7tSRsQPQ19aNAvZiIGP92vEDcSMNMd4IRkEY=;
+ b=a/tRYWNaaBIxHuQao3e/pTJLmJk5mn0ssMd/Ax4f4kU7GAR/N/YwBrotdmdDUE3ru2W2QbIbruvpyP5T2f6i3ORxNUxf0/bHM0h5/yvltNflj+w7ueH5VCNQxSdDnmGMAVN1jRcRO2Bi6wVOZOecl77O/sDoFpOiAIzd3DJnvQw=
+Received: from MN2PR11CA0026.namprd11.prod.outlook.com (2603:10b6:208:23b::31)
+ by IA1PR10MB8212.namprd10.prod.outlook.com (2603:10b6:208:463::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Fri, 25 Sep
+ 2026 09:34:11 +0000
+Received: from BN7PEPF000000A5.namprd05.prod.outlook.com
+ (2603:10b6:208:23b:cafe::aa) by MN2PR11CA0026.outlook.office365.com
+ (2603:10b6:208:23b::31) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.451.19 via Frontend Transport; Fri,
+ 25 Sep 2026 09:34:10 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 198.47.23.195) smtp.mailfrom=ti.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=ti.com;
+Received-SPF: Pass (protection.outlook.com: domain of ti.com designates
+ 198.47.23.195 as permitted sender) receiver=protection.outlook.com;
+ client-ip=198.47.23.195; helo=lewvzet201.ext.ti.com; pr=C
+Received: from lewvzet201.ext.ti.com (198.47.23.195) by
+ BN7PEPF000000A5.mail.protection.outlook.com (10.167.245.229) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.451.8 via Frontend Transport; Fri, 25 Sep 2026 09:34:09 +0000
+Received: from DLEE214.ent.ti.com (157.170.170.117) by lewvzet201.ext.ti.com
+ (10.4.14.104) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Fri, 25 Sep
+ 2026 04:34:01 -0500
+Received: from DLEE204.ent.ti.com (157.170.170.84) by DLEE214.ent.ti.com
+ (157.170.170.117) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Fri, 25 Sep
+ 2026 04:34:01 -0500
+Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DLEE204.ent.ti.com
+ (157.170.170.84) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45 via Frontend
+ Transport; Fri, 25 Sep 2026 04:34:01 -0500
+Received: from [10.24.51.24] (psdkl-workstation0.dhcp.ti.com [10.24.51.24])
+	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 68P9XwX31600494;
+	Fri, 25 Sep 2026 04:33:59 -0500
+Message-ID: <5594cdb2-93c6-4b6a-83d4-c35aabe9e5d2@ti.com>
+Date: Fri, 25 Sep 2026 15:03:58 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260923104054.3324830-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20260923104054.3324830-7-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20260923105237.7B87D1F00893@smtp.kernel.org> <CA+V-a8uD16uG8cc9m7NHVZXT5bU64TYfu+_1POuXeioRAy6Z+A@mail.gmail.com>
- <4f5aadf0-8f23-4871-918f-430a0c99900d@roeck-us.net> <TY3PR01MB11346CC8B3C7374C293E0F3EB86802@TY3PR01MB11346.jpnprd01.prod.outlook.com>
- <2d32d7f1-f87b-45b3-9ccd-95e9773ca658@roeck-us.net> <TY3PR01MB113461EFFC2B9B39A53ED1D3386802@TY3PR01MB11346.jpnprd01.prod.outlook.com>
- <CA+V-a8t3HKQ6D8jb_y-XM64BHkWm3vRw6JiTydSp3rqVr9nhdg@mail.gmail.com> <CAMuHMdXZwnRtp=f0iOiDqoLVjBTGVYNbbLeP9E3qjTn3RUEkUg@mail.gmail.com>
-In-Reply-To: <CAMuHMdXZwnRtp=f0iOiDqoLVjBTGVYNbbLeP9E3qjTn3RUEkUg@mail.gmail.com>
-From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
-Date: Fri, 25 Sep 2026 10:20:56 +0100
-X-Gm-Features: AclHuK--x_qeFFnhJWfBmO_fp3zwDw0cPGYw1M7_Cyl9HfxYZY4jYF_Kzh6z3Zs
-Message-ID: <CA+V-a8tzLEScwpJ1Va-vpEHdJeOjo4v6K8_xTH=aAGZoxFHHbA@mail.gmail.com>
-Subject: Re: [PATCH v6 6/8] watchdog: rzv2h: Add syscon support for WDTDCR
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Biju Das <biju.das.jz@bp.renesas.com>, Guenter Roeck <linux@roeck-us.net>, 
-	"linux-watchdog@vger.kernel.org" <linux-watchdog@vger.kernel.org>, 
-	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, 
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>, 
-	"wsa+renesas" <wsa+renesas@sang-engineering.com>, "robh@kernel.org" <robh@kernel.org>, 
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>, 
-	Linux-Renesas <linux-renesas-soc@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] i2c: designware: Support per-variant reg/bit
+ offsets and intr handling
+To: <sashiko-reviews@lists.linux.dev>
+CC: <dri-devel@lists.freedesktop.org>, <robh@kernel.org>,
+        <conor+dt@kernel.org>, <intel-xe@lists.freedesktop.org>,
+        <devicetree@vger.kernel.org>
+References: <20260925-tda54-upstream-i2c-v3-0-544d74e992ff@ti.com>
+ <20260925-tda54-upstream-i2c-v3-2-544d74e992ff@ti.com>
+ <20260925070941.C58B51F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: Aniket Limaye <a-limaye@ti.com>
+In-Reply-To: <20260925070941.C58B51F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN7PEPF000000A5:EE_|IA1PR10MB8212:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3fe1ab15-bcf1-46f8-32d0-08df1ae8270d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|376014|36860700016|23010399003|1800799024|13003099007|4143699003|18002099003|22082099003|6133799003|56012099006|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	UeuldAZINAeUSKtFh1n8K8c16TKoaaqTk88OApcRJnO1HeoWWMhfaoPJ7vbFS3gWBORRYc7pjE7Qq38CrkTzJP9Wlg79IbGIWoTMtkkf4bXOl+xiRi0+eaPdp6dwkqFHdUWFRzuiEBiVBtkwYabV+XmJrHlsDaUPUoqk4to4xBxRwn2MJgyskkYI3XhA47iBhcDnNClng/ZK2XEyExgZVJb4MiRsnm1douEtI3cdMLqA0pUn/HHgZYLArwxLzqACeGiCNj1nQIfoQU3ia/3kpXd7jUjQlWCUCL1I769ysqFbWsYdtZ6y3fdo3B0dEXBK+OEj3Qsw4owR9t0d3Uq/gCcn/2TdAASkaveICiqPynpuTqBeRFDsvgUgoJ78RVhR4P+TxMA+yAqb96+o+FpFE9ZDbdkBbDOF0GKNigZ0bNsuYcjZahft7EAZKoBnXbe8+/mfqjXNDyRPOdTaoqDUfOfpA9S+6yUdIs5ahYtbvsPQdJR6y325YwvU9BVZL3+yN5UbYjGbbcOaECSGVDMlLc6Mop+5iUgxnYnGGYnv7wHzHWTWsrRdwHJce1QHtKQ+5Gympo2D1pP6iywPLLkxPhQlFd2IL+wfXWbp9MqOWA+OEFi1KVNRRCUO1Rn5y9ZqqQuT7R3TvtS96UIUlsLCrH91WZnYQKQrBdlEWuqP3mI=
+X-Forefront-Antispam-Report:
+	CIP:198.47.23.195;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:lewvzet201.ext.ti.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(376014)(36860700016)(23010399003)(1800799024)(13003099007)(4143699003)(18002099003)(22082099003)(6133799003)(56012099006)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	QguaoRFfQqTjm1nl/kq4tP8vX/Fmx2ZEyN132HxGcRWMtD5EsN/o2SB3yJdEUOgX04Mw8Dx21xJiuUV45i6cvpF6F2m/VPFkOuesx3qESVbgw7sgcJ/0yzXmIuRSoNM7rqLIGaR7TH/madN0SszSEHTtDT2GYOxDBI9b2HDJiSdVNbM8r2bytnDIUy4J25HnwyMgn5OrXol6Nfu5d4wGI2rZqC6Ld16bVw8/3iJmIomuXIiBzJA6xB6ukWhuBE7MZgbf36kWs3OcHg7tmlBN4PqQ68tfKtHR4Z1c0fuQiXQ3KndiPJ8dj2R+OFY+QPm7WNg1St2wjzHVEqRfZDZBpTSTtAZQXOrF7GC9/FztFRu4OuemYbL0ZE/xyQucY+YOusYCH/EVF0RTkOnzMSq95nJb5E87A8U2PAlQelOVJ0QCkG+/+mIvmyIxRJvw5hWC
+X-Exchange-RoutingPolicyChecked:
+	o/lRrU/JiCTZWY69BRw9FY4ubvqLuJ+qWeNQkNjH21ezpuZEepSMSyfXjGHpdzJB9PDW1JfOZ4OJCdrw4rZUSYyWb7gbB4WGzsm36xV6CZowdrOR3tOnOOVfE813+h+7xptfwC6InqqMB+QxHBcTp1FfjHqTuBtWDxmb1x2XpAEnCwA1i/Ut7whsXTIG/1yzGUmhw8+yDxfAoM4NbQ6ooGTUP5gg4CNrAtTcgjEChjnVZfBJFNJl2ieEDVPnK7eTnMIc0OvzuNiriF562NkH8HSwOAJYlRr+Nl96GtKnD0JMcbE6l0Gi4k4kBrvr3+vqUKNtEJj8ms9asVd3oKKjZg==
+X-OriginatorOrg: ti.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Sep 2026 09:34:09.8629
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3fe1ab15-bcf1-46f8-32d0-08df1ae8270d
+X-MS-Exchange-CrossTenant-Id: e5b49634-450b-4709-8abb-1e2b19b982b7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.23.195];Helo=[lewvzet201.ext.ti.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN7PEPF000000A5.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR10MB8212
+X-Proofpoint-GUID: ENVG1xoPilm3yVgduJcSBlAhGZwCBXPc
+X-Authority-Analysis: v=2.4 cv=EvdHPicA c=1 sm=1 tr=0 ts=6ab64015 cx=c_pps
+ a=ZfP+Ya0swgQO+W9lSFUZ5g==:117 a=f+v6EHfkeJbVwR46tk4DMg==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10
+ a=s63m1ICgrNkA:10 a=V5UXEbMT0ywA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Z8NIEmU8O1QQgoT56wFK:22 a=jwouBfj2j3NM8CExmVVE:22 a=VwQbUJbxAAAA:8
+ a=sozttTNsAAAA:8 a=G7YHkjnZpCtBf7_akjcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDAzNyBTYWx0ZWRfXxdT2zaNhUvaC
+ z25jXvmKrFHf6lTfnrKsnD8YxvCgMzCrUKv3iS2ogUS4eO2lwQtL5z2cjMAy67WR5laPDNSHqQL
+ tOp7h39qDpjeYQwnbiTHhynvvtXWPCfUp2PL2VPh+lKGgimyMZoSIdv9N5s0uplS4Svd32tu3iX
+ Lpj2p9wU3crkQiXLxEnYf7mZs74MtKHWb0qIoaJ3bAAtbuNqMnh9Q7BIQyvecw/iR8SyDDeWzcU
+ sWFbnHJlFadpMiHweqjUKOpOz/JotL4QaO10/1fW9wf5scsbUgJKvNw8tEKSLCdga/AV5B7KmbO
+ 1K5AihNcnkCl3kJuGuKc+ffu+mq2/r34wiwzvNGi3hJl5qJhSakFfaxavXFs7qlR3Tup8r4Uuny
+ SXo+beP+vFtDBkQIkWvuey0rYaN2GShnDYTv2HmaEkm8j/CNxfP/e04szdDCmGSxephcylAjsmI
+ bSYwtQ2g/Auwdo7qHug==
+X-Proofpoint-ORIG-GUID: ENVG1xoPilm3yVgduJcSBlAhGZwCBXPc
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDAzNyBTYWx0ZWRfX4EWy4o9qJGnK
+ L6cO+jw1mwExxbyimvP1CwLpGvLBrrWY6JHa2pD/j5XRb9iHVoHB0bT7rJCXxWkS7OyCJpgcIGL
+ b5y4l2Y2qnw9zz/kWoAxQNuPbh+5Jag=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-25_02,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 suspectscore=0 bulkscore=0 phishscore=0 spamscore=0
+ priorityscore=1501 adultscore=0 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609250037
 
-Hi Geert,
 
-On Fri, Sep 25, 2026 at 10:09=E2=80=AFAM Geert Uytterhoeven
-<geert@linux-m68k.org> wrote:
+On 25/09/26 12:39, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] i2c: designware: wangxun hardware register access broken
+> - [Low] i2c: designware: dw_i2c_reg_offsets array bloat in header
+> --
 >
-> Hi Prabhakar,
+> commit 5382481b0ab458e2922590488d443f56e4cc2c8b
+> Author: Aniket Limaye <a-limaye@ti.com>
 >
-> On Fri, 25 Sept 2026 at 11:06, Lad, Prabhakar
-> <prabhakar.csengg@gmail.com> wrote:
-> > On Fri, Sep 25, 2026 at 6:11=E2=80=AFAM Biju Das <biju.das.jz@bp.renesa=
-s.com> wrote:
-> > > > From: Guenter Roeck <groeck7@gmail.com> On Behalf Of Guenter Roeck
-> > > > On Fri, Sep 25, 2026 at 04:13:24AM +0000, Biju Das wrote:
-> > > > > Just a question,
-> > > > > For automatic software upgrade, if the reboot using PSCI fails, w=
-hat
-> > > > > is the fallback for reboot, reset the board?
-> > > >
-> > > > That seems to be a bit theoretic. The reason for having the ability=
- to register multiple restart handlers
-> > > > is not to have failure fallbacks, but to have fallbacks if preferre=
-d restart handlers are not available.
-> > > > If the PSCI restart handler is present, it is expected to work.
-> > > > That is why it has higher priority. The idea is to use the highest =
-priority restart handler, not to try
-> > > > one after another.
-> > > >
-> > > > Sure, the failure fallback works as well, but that doesn't mean tha=
-t fallbacks should be provided just to
-> > > > provide fallbacks.
-> > > >
-> > > > If you claim that the PSCI restart handler does not work on this sy=
-stem, provide evicence, and we can
-> > > > discuss this further.
-> > >
-> > > I agree normal cases there won't be any failures
-> > >
-> > > I never heard about PSCI restart fails. But have seen a case due to a=
- bug in
+>      i2c: designware: Support per-variant reg/bit offsets and intr handling
 >
-> Oh yes, if PSCI is not really implemented ;-)
+> This commit introduces support for per-variant register and bit offsets,
+> and interrupt handling in the DesignWare I2C driver. It changes register
+> offsets from compile-time constants to a logical enum, resolving physical
+> offsets via a regmap-based mapping table to prepare for different register
+> layouts.
 >
-> > > serial driver that made the PSCI restart to fail as it hangs the syst=
-ems.
-> > >
-> > > So, if this is the case, a memory corruption can cause the same.
-> > >
-> > > Long back I worked on femto based product(single core), where we have=
- normal restart
-> > > and a fallback watchdog restart. But it does not have PSCI system han=
-dlers.
-> > > On some cases, we have seen automatic upgrade failed because of failu=
-re in
-> > > normal restart.
-> > >
-> > If you think the PSCI might fail and not restart the machine the other
-> > alternative would be to export functions to configure WDTDCR using
-> > readl/writel.
+> Link: https://lore.kernel.org/all/20260925-tda54-upstream-i2c-v2-2-261785e58493@ti.com/
+> Link: https://lore.kernel.org/r/20260919-tda54-upstream-i2c-v1-2-b0b9f77be18b@ti.com/
 >
-> Well, if PSCI resets fails: that's exactly why you have a watchdog
-> (or two) in the system, right?
+>> diff --git a/include/linux/designware_i2c.h b/include/linux/designware_i2c.h
+>> index 53f37f18a7229..994e0e5ea623f 100644
+>> --- a/include/linux/designware_i2c.h
+>> +++ b/include/linux/designware_i2c.h
+>> @@ -11,48 +11,103 @@
+>>   #include <linux/bits.h>
+>>   
+>>   /*
+>> - * Registers offset
+>> + * Logical register IDs. Each ID is resolved to a physical offset via a
+>> + * per-variant table (see dw_i2c_reg_offsets[] below); regmap backends
+>> + * (dw_reg_read()/dw_reg_write() and the Xe I2C_REG() macro) perform that
+>> + * lookup so callers never need to know the real offset.
+>>    */
+>> -#define DW_IC_CON				0x00
+>> -#define DW_IC_TAR				0x04
+> [ ... ]
+>> -#define DW_IC_COMP_TYPE				0xfc
+>> +enum dw_ic_reg_id {
+>> +	DW_IC_CON,
+>> +	DW_IC_TAR,
+> [Severity: High]
+> Does changing these constants to logical enum IDs break Wangxun hardware
+> register access?
 >
-Agreed, To avoid taking the syscon lock from restart context, how
-about exporting helpers from the CPG/MSSR driver to start/stop the
-WDTDCR count using plain readl/writel? Each WDTDCR register belongs to
-a single watchdog instance, so no locking is needed.
+> When the Wangxun driver's parent (txgbe) provisions an external parent regmap,
+> the I2C core skips its built-in regmap initialization:
+>
+> drivers/i2c/busses/i2c-designware-common.c:i2c_dw_init_regmap() {
+>      ...
+>      /*
+>       * Skip detecting the registers map configuration if the regmap has
+>       * already been provided by a higher code.
+>       */
+>      if (dev->map)
+>          return 0;
+>      ...
+> }
+>
+> Because the parent regmap hasn't been updated to expect logical register IDs,
+> it will pass these new enum values directly to the hardware. For example, it
+> would pass 26 for DW_IC_ENABLE instead of the physical offset 0x6c.
+>
+> Will this cause the driver to read and write to incorrect register offsets on
+> Wangxun platforms?
 
-  /* include/linux/soc/renesas/renesas.h */
-  int rzt2h_cpg_wdtdcr_count_start(unsigned int wdt_index);
-  int rzt2h_cpg_wdtdcr_count_stop(unsigned int wdt_index);
+This is a legitimate miss in current version, and will be handled in v4
+similar to how xe_i2c.c is handled currently.
 
-Cheers,
-Prabhakar
+Will wait for a bit to see if there are more reviews on the approach,
+before sending v4.
+
+>
+> [ ... ]
+>> +	DW_IC_COMP_TYPE,
+>> +	AMD_UCSI_INTR_REG,
+>> +	DW_IC_REG_MAX
+>> +};
+>> +
+>> +/*
+>> + * Default "snps,designware-i2c" register offsets, indexed by
+>> + * enum dw_ic_reg_id.
+>> + */
+>> +static const __maybe_unused u32 dw_i2c_reg_offsets[DW_IC_REG_MAX] = {
+>> +	[DW_IC_CON]			= 0x00,
+> [Severity: Low]
+> Does defining this static const array in a header file cause binary bloat?
+>
+> Including linux/designware_i2c.h will embed a private copy of this 164-byte
+> array into every translation unit that includes the header.
+>
