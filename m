@@ -1,191 +1,133 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3DD33F8AA;
-	Fri, 25 Sep 2026 16:36:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2683BE636
+	for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 17:00:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790354216; cv=none; b=jrzLKqC6ZoU+gRP0NU/chB6eZ5nPzOvarUnGSFuS/Dpc/kAQfHAefVMdMANXeP+Ubnq7RoNK1YF6F4b/xjDvFqkjJBP79ufIxQS0huY4cJQ543F1Hj3Jy4svjLgZWVrMzq6nLb186gVr8jA9V/Sbkm3a9S1fOtPDPSm5RlcJm8g=
+	t=1790355628; cv=none; b=HabOJ0d7IjyVuFkDDsLB2gtpMwmMUb3ONCWCWmmYuS1Qg0W8IQEZfkKMRbld/PtWlOUmCNfsK9gzB9tVn/iJhIG4p7RdRX8307M36g6IcOcRyZcKemjuw6qE0J0R8FpYrdmRA1C2gIq8WSxygsWeqxcBWYJJBEn3I8MtllM0umA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790354216; c=relaxed/simple;
-	bh=DBbaOC65r7+Dgxfq2B06H/Tjz/ApSVA3lOC0US27Vhg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gb56LtB/XJdDKJi6PABRaMZQl2isipFSutyET/wvg5qigzuoWqwM9y5cOKTsuXelLyjmWzUz2DXRUOIIhpqNyTPOUcC6IWZqJzf9FNamq/+3lRDcx/NpccmOc+WeCpPafqjrHEmgxFCaMlLp0zrdj1gSz7F6gOagQIYL/Ljgc48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=e3Y1G8CS; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1790355628; c=relaxed/simple;
+	bh=trGfb5h3aihrsj132AhSyMKG2jvzs9a9TvuhCmuHUE0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aooJAnLb9igP9kLQIvCeomHgGfOnuewNTThe6Zzw+Fm2+oOihUOF9ljw/+1h8yshU2axDDCixwzvk+OweLCGrmJFeESE9/9fuWEgkJvCh5+XtdyoWprKnKoaoovwWg1vuZ5vTe60888hZ3cOIcJq+MdPx/aInQTp1V5y/B2OjKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NqRAiY7E; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="e3Y1G8CS"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68PG5L1r3853761;
-	Fri, 25 Sep 2026 16:36:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=GC41UHDpoaje/A8ZJCU6uWD8vJTVAF
-	A8F56NYVISa4I=; b=e3Y1G8CSG15a8O1FNyyr9FE00dXIyyQ68i1so8MxLKJ322
-	ly4PFUAgnjASCO8OP0TFQweDFjjUe3lREfhvgWP3AEc4qLH4CVKjuI6Plc1+fALP
-	ePi8t/SZhudqgCsFOdThzLx64lI5x2CQj0cyaazo7jhXgOP0T1ZunEGrEQM8MsYZ
-	J2QH9/aQ8tFcWY2WzZm8UPDogD/Kn1vPuBlXDg1snGkvSPRzUc7a0bsh49ptBWqT
-	jTDOQpNa3luHz811ghSJSfXvI/lgl7+4uR7KI3HU5mpx10CKdfZuFRgcY2/KY9Uz
-	KE3sRXJ11josr4HWi8s3OI2d1Yxyd9mlM0Z5WSxg==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske283ng-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Fri, 25 Sep 2026 16:36:52 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68PG37a14192011;
-	Fri, 25 Sep 2026 16:36:51 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb8k35s0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 25 Sep 2026 16:36:51 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com [10.241.53.105])
-	by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68PGapKQ2425598
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 25 Sep 2026 16:36:51 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4648C5805E;
-	Fri, 25 Sep 2026 16:36:51 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 3608858055;
-	Fri, 25 Sep 2026 16:36:51 +0000 (GMT)
-Received: from d (unknown [9.16.59.154])
-	by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTPS;
-	Fri, 25 Sep 2026 16:36:51 +0000 (GMT)
-From: Dave Marquardt <davemarq@linux.ibm.com>
-To: sashiko-bot@kernel.org
-Cc: "Tyrel Datwyler" <tyreld@linux.ibm.com>, sashiko-reviews@lists.linux.dev,
-        linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v11 04/11] scsi: ibmvfc: add basic FPIN support
-In-Reply-To: <87tsnd1f2r.fsf@linux.ibm.com> (Dave Marquardt's message of "Fri,
-	25 Sep 2026 11:16:44 -0500")
-References: <20260925044900.414340-1-tyreld@linux.ibm.com>
-	<20260925044900.414340-5-tyreld@linux.ibm.com>
-	<20260925050305.6F20E1F000FF@smtp.kernel.org>
-	<87tsnd1f2r.fsf@linux.ibm.com>
-Date: Fri, 25 Sep 2026 11:36:50 -0500
-Message-ID: <87o6dl1e59.fsf@linux.ibm.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NqRAiY7E"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1790355611; x=1821891611;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=trGfb5h3aihrsj132AhSyMKG2jvzs9a9TvuhCmuHUE0=;
+  b=NqRAiY7E5uDF02hg9Va87PUDYZmI0CkJc7OASDzbB9e9JDl0CVzFpl4J
+   Oy/SoHJkekOwYmOG6pdnrohJZUkcKBUzpmAn5gH69KUhZo3unow1kxfmO
+   jVPwluheeOGE6cfO7p21cLDUMs64k3xur2zNCNLzsV9WU3xohHdMv1yMo
+   AH1v1fpadrfKJp5N4icgu+/eRksk7eV+fA8ExYm/0OAqlL7cCzO3myEDx
+   1DQ5PqlVprFGfWbg5xabg3HFcK+8rhRmoH537eOYXsS8Swx8PidIM0Ffu
+   nYRYwlV8HZvcW8iJb8cIUCJqh2mkjVDKYePp7JrQ24U9Zpm6oSzpMAELn
+   w==;
+X-CSE-ConnectionGUID: byNn2z5zQMO1HhA0fiN/IA==
+X-CSE-MsgGUID: apDtdea7Sa6yD7FYTjMIQw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11916"; a="112931454"
+X-IronPort-AV: E=Sophos;i="6.27,122,1787036400"; 
+   d="scan'208";a="112931454"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2026 10:00:08 -0700
+X-CSE-ConnectionGUID: trxOHcR0T9mkE3PUghq/gA==
+X-CSE-MsgGUID: qazJTVfLSqaQ5iNF8wCLoQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,122,1787036400"; 
+   d="scan'208";a="272970527"
+Received: from mkosciow-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.27])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2026 10:00:06 -0700
+Date: Fri, 25 Sep 2026 20:00:04 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-serial@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] serial: 8250_port: properly handle runtime PM in
+ IRQ
+Message-ID: <araolO22LVK_Nq1-@ashevche-desk.local>
+References: <20260924122549.668680-1-andriy.shevchenko@linux.intel.com>
+ <20260924122549.668680-3-andriy.shevchenko@linux.intel.com>
+ <20260924124042.1C4AF1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Fmb7QWFynqiNjjYNkXpJn7A45cICDkqq
-X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab6a324 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8
- a=9MSN80hXFWM00mvxam4A:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA2NiBTYWx0ZWRfXxaB+wiNlSFxJ
- cichYIque6VKZDi5HQqlR1J7nab8pCKxC0//w6yyierpleV/3ujhpD+Up3Qvttid3xbO/mSd8Oo
- sk/tzYHo4WZFosst2Kf4FeGsxs/D0yc=
-X-Proofpoint-GUID: Fmb7QWFynqiNjjYNkXpJn7A45cICDkqq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA2NiBTYWx0ZWRfX+9QaTu7dZTr1
- Mc4yuGAU4ZIvmZEVGv1tz6pL9cC9ksynJxeAN358YTrKNoY9xNIX3uFDU70DBPCetg5gPFULAWR
- wD7z0QY2eXdufvhqe1mAHiBaaqBIRNiCdNYz2qv6/wJ9F72ZkDqd+SPEK3EXdfgba/RUotS1Kfe
- WrqBSTmdByJKZ7swsi6DAPY52CfmTs4+OcWWKGSZjuGV/r7O0K72AFaoZHprgl2RbZTo/hdkr/m
- tDWOarO1Tfai05fPvbncGEltpWufLZ/Qhh7xPsZCGirAPcqV8H9cmxQv7pq8OxPjsbnH07y/sEq
- jyfPcxpk9CGI/4KXWSIXrX1zFxCME4ufukn9mhjjmhC4hoCpFIGnOd3uXPwAzx2/2L3n/7nFEqp
- o1DIqvZsgs12p8KdZDyN4nl6et93uyq4j3IP83UwsE/bcX634g7oHQnTP2oJL04m+/SJ8bvnOgw
- 7kTIusoRdYDJro6fIBQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-25_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250066
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260924124042.1C4AF1F000FF@smtp.kernel.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-Dave Marquardt <davemarq@linux.ibm.com> writes:
+On Thu, Sep 24, 2026 at 12:40:41PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] serial: 8250: missing port->dev NULL check in serial8250_default_handle_irq()
+> --
 
-> sashiko-bot@kernel.org writes:
->
->> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
->> - [Medium] scsi: ibmvfc: missing scsi_host_put() in test success path
->> - [Medium] scsi: ibmvfc: missing host_lock around ibmvfc_handle_async() in KUnit test
->> --
->>
->> commit 29ab8a9a78c94679b8187ae357d2978336830599
->> Author: Dave Marquardt <davemarq@linux.ibm.com>
->>
->> scsi: ibmvfc: add basic FPIN support
->>
->> Implement support for a basic level of Fabric Performance Impact
->> Notifications (FPIN) in the ibmvfc driver to enable monitoring of
->> fabric congestion and link integrity events. This includes async event
->> handling and KUnit test infrastructure.
->>
->>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc_kunit.c b/drivers/scsi/ibmvscsi/ibmvfc_kunit.c
->>> new file mode 100644
->>> index 0000000000000..ec52285b0aa22
->>> --- /dev/null
->>> +++ b/drivers/scsi/ibmvscsi/ibmvfc_kunit.c
->>> @@ -0,0 +1,149 @@
->> [ ... ]
->>> +static void ibmvfc_async_fpin_test(struct kunit *test)
->>> +{
->> [ ... ]
->>> +	vhost = ibmvfc_get_first_vhost();
->>> +	if (!vhost)
->>> +		kunit_skip(test, "No ibmvfc devices available");
->> [ ... ]
->>> +	for (fs = IBMVFC_AE_FPIN_LINK_CONGESTED; fs <= IBMVFC_AE_FPIN_CONGESTION_CLEARED; fs++) {
->>> +		ae[fs].valid = 0x80;
->>> +		ae[fs].link_state = IBMVFC_AE_LS_LINK_UP;
->>> +		ae[fs].fpin_status = fs;
->>> +		ae[fs].event = cpu_to_be64(IBMVFC_AE_FPIN);
->>> +		ae[fs].scsi_id = cpu_to_be64(tgt->scsi_id);
->>> +		ae[fs].wwpn = cpu_to_be64(tgt->wwpn);
->>> +		ae[fs].node_name = cpu_to_be64(tgt->ids.node_name);
->>> +		ibmvfc_handle_async(&ae[fs], vhost);
->>
->> [Severity: Medium]
->> Does this invocation of ibmvfc_handle_async() need to be protected by
->> the host_lock?
->>
->> If a concurrent device removal via ibmvfc_remove() sets vhost->state to
->> IBMVFC_HOST_OFFLINE and destroys fpin_workq just before this handles the
->> async event, could queue_work() be called on a freed workqueue?
->
-> Yes, this routine should acquire the host_lock before calling ibmvfc_handle_async.
+Isn't this a preexisting issue since serial8250_rpm_get() is implemented this way
+https://elixir.bootlin.com/linux/v7.3-rc3/source/drivers/tty/serial/8250/8250_port.c#L517
+?
 
-So, the host_lock is taken early in the routine and held in this case.
-I'm getting mixed messages in my research on whether return or something
-like KUNIT_FAIL() is required after kunit_skip(). I will add return
-statements.
+Yes, only for platforms with UART_CAP_RPM, but it doesn't matter, they have no
+special handling for the port in this case. (And pm_runtime_get_if_active() actually
+works properly on those which do not set that flag as we only check pm_status for 0
+and don't care for the other cases.)
 
->>> +		ae[fs].valid = 0;
->>> +		wmb(); /* ensure valid bit clear is visible before checking stats */
->>> +	}
->>> +	flush_workqueue(vhost->fpin_workq);
->> [ ... ]
->>> +	ae[0].valid = 0x80;
->>> +	ae[0].link_state = IBMVFC_AE_LS_LINK_UP;
->>> +	ae[0].fpin_status = 0; /* bad value */
->>> +	ae[0].event = cpu_to_be64(IBMVFC_AE_FPIN);
->>> +	ae[0].scsi_id = cpu_to_be64(tgt->scsi_id);
->>> +	ae[0].wwpn = cpu_to_be64(tgt->wwpn);
->>> +	ae[0].node_name = cpu_to_be64(tgt->ids.node_name);
->>> +	ibmvfc_handle_async(&ae[0], vhost);
->>
->> [Severity: Medium]
->> Is the host_lock similarly required around this call to
->> ibmvfc_handle_async() to prevent a use-after-free if the device is
->> concurrently unbound?
->
-> Yes.
->
->>> +	ae[0].valid = 0;
->>> +	wmb(); /* ensure valid bit clear is visible before checking stats */
->>> +	flush_workqueue(vhost->fpin_workq);
->> [ ... ]
->>> +	kref_put(&tgt->kref, ibmvfc_release_tgt);
->>> +	put_device(&rport->dev);
->>> +}
+> commit 128116d52224b04215dd65b2f4f799e8c14bdec7
+> Author: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> 
+> serial: 8250_port: properly handle runtime PM in IRQ
+> 
+> This commit updates the 8250 driver IRQ handler to explicitly check the
+> runtime PM status before processing the interrupt. It returns immediately
+> if the device is powered off, assuming it is a shared interrupt.
+> 
+> > diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
+> > index c0bcc0742a60c..1e62460b19ab9 100644
+> > --- a/drivers/tty/serial/8250/8250_port.c
+> > +++ b/drivers/tty/serial/8250/8250_port.c
+> > @@ -1878,13 +1878,22 @@ EXPORT_SYMBOL_GPL(serial8250_handle_irq);
+> >  
+> >  static int serial8250_default_handle_irq(struct uart_port *port)
+> >  {
+> [ ... ]
+> > +	/* if driver suspended, return, probably shared interrupt */
+> > +	pm_status = pm_runtime_get_if_active(port->dev);
+> 
+> [Severity: High]
+> Will this trigger a kernel panic if the port has no associated device? 
+> Some ports, such as legacy ISA serial ports, might have a NULL port->dev. 
+> Calling pm_runtime_get_if_active() with a NULL pointer would unconditionally 
+> dereference it.
+> 
+> > +	if (!pm_status)
+> > +		return 0;
+> >  
+> >  	iir = serial_port_in(port, UART_IIR);
+> > -	return serial8250_handle_irq(port, iir);
+> > +	ret = serial8250_handle_irq(port, iir);
+> > +
+> > +	if (pm_status > 0)
+> > +		pm_runtime_put_autosuspend(port->dev);
+> 
+> [Severity: High]
+> Similarly, does this put operation need a check to ensure port->dev is valid
+> before passing it to pm_runtime_put_autosuspend()?
 
--Dave
+Same as above. We check pm_status. It can't be positive if above case failed
+already.
+
+> > +	return ret;
+> >  }
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
