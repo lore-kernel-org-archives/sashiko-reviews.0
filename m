@@ -1,188 +1,162 @@
-Received: from TYVP286CU001.outbound.protection.outlook.com (mail-japaneastazon11011020.outbound.protection.outlook.com [52.101.125.20])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F733FF1CB
-	for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 05:11:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.125.20
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790313115; cv=fail; b=kZmwfi5i8v6u1rHA4NEY42FE1zbUCGvxDmd5gH55jN9cN499SMfz0IQ32E4HCRNBvuJoXZtYxri2BhRFZnIDkePFXtre0AhYKz5DgNytF1HBoKTV+G176XINiaxrNEH0VTds6LylMDXbVJVYV9PGWjRMbr45MNrZqzE9QDzYKIQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790313115; c=relaxed/simple;
-	bh=epLCXdrkivskGlKtP1i+ZZbuRbklomBpUC80PR7ODFc=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=Qli35Z5US630pZE0+Rb69YSJiFiqfSoSEwcgStjQ0rpXwYCWZyPlhYpoxGB7JgzM264BqaLXFCgYMpDl9VVbhWxPceUXwZEOPLWstDCFMN8bjQ7mY301XgGIZi8UMxPjdflE9lXPhJTX1zGhp3vImXE2++7P1EJIUsdcc+zBgFg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bp.renesas.com; spf=pass smtp.mailfrom=bp.renesas.com; dkim=pass (1024-bit key) header.d=bp.renesas.com header.i=@bp.renesas.com header.b=NHndd/Ao; arc=fail smtp.client-ip=52.101.125.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=bp.renesas.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bp.renesas.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4210367291;
+	Fri, 25 Sep 2026 05:20:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790313649; cv=none; b=Z4s/9rIMhsfbUI8IpgQwgjv+uszu6T2X1nwICWnZC8nLpvhbZtcAzQBLPsph1LVGrmGdHIJyAAPlMICKizppsGkyEWOoVvuCCnVM5NheIKk2hkYNlsp2FVoUz5w50Ob06rGTG5QEzHV8gnPxrA8Sh4h/OdcXY9NIt4hDeRvUrxo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790313649; c=relaxed/simple;
+	bh=8qxpkMMoaVY836cgrQgnFdFSEX02qHLJ14wkm+LoT70=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=i6cwQ0XuTwXSUXSq66hB5qwqwHlHONUzcWvUUzfYxmR4toquaqHvS4J+Ecj0XXAR0KneTEiRMcehqbb6gJkLxaFkByNYTFxQmJTwixr3Wb2RP8LRf/+Z7utDsHB2p5ApyI4ykVanReExyqdWWtLO8YSkdrW1PZdqPFtVULRpDFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=LXnn2mW8; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=bp.renesas.com header.i=@bp.renesas.com header.b="NHndd/Ao"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mr+862rt/36BYLeVnXx8Yh2PjP3b461uwE7HkL359t2aH9JUfw38bYgRXutyZXZtFdhIbt+86hHV0uNMbnkdTc305a+yrXj+/9aSXWLPFwi+qNUQ7gJR/ZjK4N5Nb5hX1HU1O82pkIegb9o7fmKABnXcEMjwZCfkHjb+2m8oUlP1IFTvo5mJ8NXk7W5adVxiZBeW2HR5qfjKUTav7VMUrghlsULjE4oQOW8ZHWUBiobUk0BzBKtL1dURvLYQVMM1TRpIOAX5eG7GENQe6BiBkOB0Qc/IhefrDbWI+xna4sA6bmn1JnJ0OjL/x42DMl6CnIpB/svL7sBbT8cT4ZEDxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=epLCXdrkivskGlKtP1i+ZZbuRbklomBpUC80PR7ODFc=;
- b=Drc0TkLZa2ikIsAYqPiIkWuqX63cblp18fXuvUEqHnZ42RcoWgHsDx2HqOfCFAT/un1KBZ/j+DVCSFuUgzM1FJspHgWwgHddugLyC1AnMypkBbBFBjaOSKpMjq/7wK1K0+IpmJ+TLrOPc3Kybc7CvntLwbfBL9yjXUGJSOnZUG0JAK7PJIlXrRR9vWFv4OsnFw+56J1HdYdzyCpazLsVVrRmTYcaoalFXwyaPqQAI+lI2X96093dgtMT/pDD9OGlLVS1LgEcOuMVYXLQw9eKp+vrpcC9+WN7xxO4ILbWmF77nKdw3+3NEUuk/BUowsJcZkrXzxny3zU23jByy9axTQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=bp.renesas.com; dmarc=pass action=none
- header.from=bp.renesas.com; dkim=pass header.d=bp.renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bp.renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=epLCXdrkivskGlKtP1i+ZZbuRbklomBpUC80PR7ODFc=;
- b=NHndd/AoD4VfNOaO7Mi28heovXPJW75c7lic5NEvmRtHeXOJq1k+zFo2ilmzv2WqyKUkJquthtbFNGRVN9RBuGKfXbKDljn7fnD7wn2lwIzePJwtlyBiVLF2XOknaa/xJDYosdRIEBVTQiGDoswGul682iIGI+RlMlDwh0BzOg4=
-Received: from TY3PR01MB11346.jpnprd01.prod.outlook.com (2603:1096:400:3d0::7)
- by TYYPR01MB10545.jpnprd01.prod.outlook.com (2603:1096:400:30e::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.22; Fri, 25 Sep
- 2026 05:11:46 +0000
-Received: from TY3PR01MB11346.jpnprd01.prod.outlook.com
- ([fe80::87d1:4928:d55:97de]) by TY3PR01MB11346.jpnprd01.prod.outlook.com
- ([fe80::87d1:4928:d55:97de%6]) with mapi id 15.21.0451.014; Fri, 25 Sep 2026
- 05:11:46 +0000
-From: Biju Das <biju.das.jz@bp.renesas.com>
-To: Guenter Roeck <linux@roeck-us.net>
-CC: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>, Geert Uytterhoeven
-	<geert+renesas@glider.be>, "linux-watchdog@vger.kernel.org"
-	<linux-watchdog@vger.kernel.org>, "sashiko-reviews@lists.linux.dev"
-	<sashiko-reviews@lists.linux.dev>, "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>,
-	wsa+renesas <wsa+renesas@sang-engineering.com>, "robh@kernel.org"
-	<robh@kernel.org>, Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Linux-Renesas <linux-renesas-soc@vger.kernel.org>
-Subject: RE: [PATCH v6 6/8] watchdog: rzv2h: Add syscon support for WDTDCR
-Thread-Topic: [PATCH v6 6/8] watchdog: rzv2h: Add syscon support for WDTDCR
-Thread-Index: AQHdTCrXWsFavv0/7EqWKNI1uetVXbbeRKCAgABqooCAAAtJgIAAAniA
-Date: Fri, 25 Sep 2026 05:11:45 +0000
-Message-ID:
- <TY3PR01MB113461EFFC2B9B39A53ED1D3386802@TY3PR01MB11346.jpnprd01.prod.outlook.com>
-References: <20260923104054.3324830-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20260923104054.3324830-7-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20260923105237.7B87D1F00893@smtp.kernel.org>
- <CA+V-a8uD16uG8cc9m7NHVZXT5bU64TYfu+_1POuXeioRAy6Z+A@mail.gmail.com>
- <4f5aadf0-8f23-4871-918f-430a0c99900d@roeck-us.net>
- <TY3PR01MB11346CC8B3C7374C293E0F3EB86802@TY3PR01MB11346.jpnprd01.prod.outlook.com>
- <2d32d7f1-f87b-45b3-9ccd-95e9773ca658@roeck-us.net>
-In-Reply-To: <2d32d7f1-f87b-45b3-9ccd-95e9773ca658@roeck-us.net>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=bp.renesas.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TY3PR01MB11346:EE_|TYYPR01MB10545:EE_
-x-ms-office365-filtering-correlation-id: 87e09af8-9d14-4153-26e9-08df1ac37ee7
-x-ld-processed: 53d82571-da19-47e4-9cb4-625a166a4a2a,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|7416014|23010399003|366016|376014|10067099003|56012099006|11063799006|4143699003|18002099003|22082099003|38070700021;
-x-microsoft-antispam-message-info:
- rTFkZxbnRSsVsQcRUy5JFPD9P13EpzQnQ6cX1/gWRYYJ913cqGG1xI8g2OnNHGV0wo8AV8JsLgIMJYlsYySRW1KO7V+kgErgsFwmRipiY97jLTflhB5DzTslgVQKGJoDaSD4nY9dV7t9oCFcsgkBNahk99vvqavISKtwfyA6Z/08t0bL7/r7XMPz9CKANEUXhlYcv7S55n/25rARPR/x2/7TOc0oXjif1HKn4hpseKSLI1rTqv/Vu1fUQkKUONfUTlSH1zIIfSyoirw5m4b567sUNd49cBM/P733w2Of2w/MsJKwOkm9LHFD0hjggbwHYVx8fIkN/dYN7NvlQpHQ5JWqaop7+V5o/4zjCnm5QSQq3XMo7qNbdtgNMaTJNCjvWVNisfRol5QuVHZbCN8G1mkTSBytd8mPNjpTAXv/e1hY21RDhSfVyNxPB4EpgiRBPZJjZI01zICGYVXrqSE9cjcBtqgsYcrGEIItoWQ0xILvmY/DyQuvNWGur6w3e3SljgKgtugHX+OVKSizOh0f3D+m124Tz1AbtzAwHfw5P8hXXvMRu7jg/oEjqKteaqjXjfTBybyel1QS4nc7T/a4P4Y/wEBgDfCPiw2k3dusmFnhxL9T2Fu5VEI9+QuD+Kew0Ot3dVZB/oMFFBMzKhW7gMNSOBUhoafXuTNBlyiIJ4hJfe3xbocRB6SfygtMsqWS0SVsNOVs6+nVthIA0QZQ+4YldF0d8vMQwpQKsghNCwA=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY3PR01MB11346.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(23010399003)(366016)(376014)(10067099003)(56012099006)(11063799006)(4143699003)(18002099003)(22082099003)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?ykIMyUyHsfB98rVqkpiKjH+dFrUtVdedffTk1SWJl9HcnV9KUHympk7Xz6kz?=
- =?us-ascii?Q?eweLLbbXu3Tg2laerF4mMv3yhZ7iEI89BsuYqQmGPJeCIPSIRYf2HgRSgP9U?=
- =?us-ascii?Q?BAznzyl35wjjgsfnOq171L4l/6ZLlRgM3AuOqIq2UJJy/7vtyUaQLdbr+wmN?=
- =?us-ascii?Q?dMA/XRo6OA05WsHgdG+qORrim++xAPcU204myhmJsw6EiVe2OWYjcTrxBEuC?=
- =?us-ascii?Q?JmMp3m+KCDcuTyFnwURko25wBYS90eDNzBL4bOecQ6kMPbjsWbdDOypzl4wm?=
- =?us-ascii?Q?V/lk2RoPn5qyVPbzgJ8jhXc65dCmZFOQMkuWoxXb/oh0BR5fV3FIGS85qaAs?=
- =?us-ascii?Q?V4i5xkOoSCDGAaUF0mALoIFju/0Y9/stu47jbhmlVf18kZPdcF3GlG6UP58i?=
- =?us-ascii?Q?mZLfah/OOOyNEagB8hpxk5wv1VHcqaam4J2oZNI00fQ/OiZ1RQvp4CniE/cM?=
- =?us-ascii?Q?FPzVygph3UccsF6SnWyZi3Vt+LGz6PhcmjL8TFZVPKZ0d/WZh8Baib+YZwhf?=
- =?us-ascii?Q?2E5oNgdhR++dYiaow7kcnPikCyIPRyYNFshCxusLz7EgPkEUsQEOHEXwt0xS?=
- =?us-ascii?Q?1qQ+KsB66GIzpb1YAPuCvN1z4de5DK4dTPUpkjCkWuEqDbCkjqVO5X284DQQ?=
- =?us-ascii?Q?BT0o/H6EuFwhGVd7iMIRXxCBju2wJl+sACbwNVtZvPBYPqxFv6w2iYfUM09/?=
- =?us-ascii?Q?hofPG8rFtcijgIGKVGekaNzZhK54hhNvvhKZfIUvrft+wiwcYILFKWDb2mzm?=
- =?us-ascii?Q?6WJtaGZxPFx90w1S3W1HwCkSQrHxdLQp9hx0ytRYb6cftoWUu0BrxDC/NGq7?=
- =?us-ascii?Q?b1Vh8BRjp6Pa3MDb1otGZ0lf/hL+BoThTTMcWzbt30v6E4h3sVcfWYe7/VeJ?=
- =?us-ascii?Q?DiucHxAOC6B5pYmRTgIGk3yOCfiIfChGgLv+CgQqNMHbjgMjnD1kCGz/+U2Y?=
- =?us-ascii?Q?/BASKRM4GFhgzLCyg1TKknT3n9y5BqxTboEvz3mk41GLbV8YNLwokma9Uih2?=
- =?us-ascii?Q?WsA0FKHtcj5hcpwcb9fDKEnZQb5jo6XAfbHISIrsW8r8hfKdeV1idTBFDyt9?=
- =?us-ascii?Q?8FS6Ty65LbxCBryQYQVpfAtOZ91DMVRDRHvdzpv7Pbg1RzV7eFwayF4mP4Lg?=
- =?us-ascii?Q?yHpJ2gtkopGDNN6Jm5Z+k5/gUALg4rlFGpIGBHYcLOsjTHm84gAiTF2U0uRq?=
- =?us-ascii?Q?GMutN6U2Q5a0peyhC/yb2ksJa1GMVCs/akDQm1BUcl10SOzyI4Px5elra6aw?=
- =?us-ascii?Q?an8CuT1hEzcic5TchSFuCY0vZ2GRCJnfPQwl61D8jLcGt7VghS++9c6/BJjM?=
- =?us-ascii?Q?PenCz3SS4UhHM02C7V5WkzbJXjsSIRjZEdIGdvLpYrGH2l+bpKrbo7zRgy8u?=
- =?us-ascii?Q?5buZnDsuulP6E10QQTvVJODUAtyY24MKZdOCRDxojQxqk7rePHyoW0HIqFWo?=
- =?us-ascii?Q?PJFnqP0BcpsKmoO0ACtJ2RZkK+BfGKsZsSLOZUY3s72APFq12v8afxq4bLhe?=
- =?us-ascii?Q?RHnLJheM8ZP+MQbVZ7GFPwXZciW162wLGKx+UYGaZtMlZmUo0MQw/ZvluRVI?=
- =?us-ascii?Q?jI/b7RZAL2FMGjEbRMEKkFSibMSMFhzeqnJIo5LmIfP0KO0viok6KEuV4Orn?=
- =?us-ascii?Q?s0RLS5ebw6/o4O3Pl8uSziPDWugcHzvioXKrXfgDAlXjXjgDfj/MvoGbjBte?=
- =?us-ascii?Q?2K5ZQy1nTMve9CFTJbZIyXriUe/y39iMj6n4liduPgueFmvDUhV8S4lr1OdF?=
- =?us-ascii?Q?vNMRHHEgOA=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="LXnn2mW8"
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68P4aB4c061545;
+	Fri, 25 Sep 2026 05:20:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:sender:subject:to; s=pp1;
+	 bh=Rn3aWsRBSbK7JlEcAr0q9d3vEYD1JDh5vsJpTXheSks=; b=LXnn2mW8RF2l
+	TsWYgMIjFBCJAhx2Woy9Ko1Dt3qvkRy3Wzo+5jW4CjwEESJEmzLJCzkEpRJegP0O
+	+RD3giE7D8zBBOLKN58te4xn5f4fRwYMHWfr13YnZ/YbDDtZmAebhABT3JihM3ej
+	QqjdtGcayhw1+rittm0CaHcWaLSyeO7okh3dUErMYw5FrNINUBHsYCeTRRZYwnk0
+	r6VtTcFdkCqbcgPiBnFcJnUte7bERAspysHJephLn7q+8+MwA9Wne9Q1gvE5BVtm
+	JH4o+Mesi7SdWq5uEn8n3scy500hYINZYmfdoSkyLoal+a2C6dLoOfPZWSweVqjT
+	O5iiaVI8vw==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gskgsn82w-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Fri, 25 Sep 2026 05:20:46 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68P4lYBa3248902;
+	Fri, 25 Sep 2026 05:20:45 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gvbt3129m-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 25 Sep 2026 05:20:45 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
+	by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68P5KfTo52298020
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 25 Sep 2026 05:20:41 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5D5F220065;
+	Fri, 25 Sep 2026 05:20:41 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 46ADD2004F;
+	Fri, 25 Sep 2026 05:20:41 +0000 (GMT)
+Received: from p14sgen6-pf6akexs (unknown [9.111.75.35])
+	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Fri, 25 Sep 2026 05:20:41 +0000 (GMT)
+Received: from bblock by p14sgen6-pf6akexs with local (Exim 4.99.5)
+	(envelope-from <bblock@linux.ibm.com>)
+	id 1x9yMS-00000009R7E-3jWZ;
+	Fri, 25 Sep 2026 07:20:40 +0200
+Date: Fri, 25 Sep 2026 07:20:40 +0200
+From: Benjamin Block <bblock@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev, Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: linux-s390@vger.kernel.org,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        intel-xe@lists.freedesktop.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v15 5/5] s390/pci: Fix circular/recursive deadlocks in
+ PCI-bus and -device release
+Message-ID: <20260925052040.GA2183239@p14sgen6-pf6akexs.fritz.box>
+References: <cover.1790267348.git.bblock@linux.ibm.com>
+ <845f3fd0e94294765ea10454823c21e464d2f4bd.1790267348.git.bblock@linux.ibm.com>
+ <20260924164406.B7A151F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: bp.renesas.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TY3PR01MB11346.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 87e09af8-9d14-4153-26e9-08df1ac37ee7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Sep 2026 05:11:45.9882
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: eYbQGTykI/RouJze6A+//Uk/pooWXuhKTGcET5FB7c4DVP81YKMvQZzGTAqq2ryLe2O1czeI1TNcRe/qIAxt57YiGP7zlG9/8KTEMISuBOw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYYPR01MB10545
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260924164406.B7A151F000FF@smtp.kernel.org>
+Sender: Benjamin Block <bblock@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=V/XoQuni c=1 sm=1 tr=0 ts=6ab604ae cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=8nJEP1OIZ-IA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=VwQbUJbxAAAA:8 a=FFIfLM0yJpXRnZ21FiUA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
+X-Proofpoint-ORIG-GUID: cH8_hwyH5h2DnXUFrYoirBoTEL14nOtH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDAyMCBTYWx0ZWRfX6uTnNMvbolH3
+ svX1sJY6gdmUzbUSQY6alJt16bNodUFAujaO6VXEhbxFHdBqE8BgPc33mMDMt7KKCPACQPQhhQu
+ qMMweFpKdXG8tqKi2AfuLs7mJsfWMQWZJp9Ly9bSj8CMISScBOBR8utkru8LJJMBY8EqS8TeZZC
+ aZU3EPlWO6BXhwrrIyG5xudPtRlumSG/ntFO47hKXCjN5m/knTYaRoceo4DvisGogSRTsNc0ien
+ 0yJEglOcP7exNxiX8moajR3+I53lOg39sq0W8S9j5FSqmCuYrZeCKL3S5NHtoczcAK5M3u3JoOm
+ l6BTGzL/sJy3aRa75nykkrV8JS9NSuU5jjMhOF10wV+trl5DMGRV5T8Wwnk2Z2qwwCghpOQ/bev
+ KnO1binI0uqgcAzGACPzw6NBNWYWIYbdr5AOFe9HmZvbL+/qNI79/0hnKxXwkI9ioZ943GaKkE+
+ OwPnm0KoYtOvDAAXH5Q==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDAyMCBTYWx0ZWRfX+rImqnaeRuTu
+ Tt3KM3A9zVxEJgXcLciWeVQ8/RF9f2xt/vKUbl1YQlGjsJ0jj73dMXrvz+v2OUwP0eM3MP7D2nQ
+ n9zHfPIaKwjxwiSXJVEqOZC0Ly298Co=
+X-Proofpoint-GUID: cH8_hwyH5h2DnXUFrYoirBoTEL14nOtH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-25_02,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 malwarescore=0 clxscore=1011 phishscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250020
 
-Hi Guenter,
+On Thu, Sep 24, 2026 at 04:44:06PM +0000, sashiko-bot@kernel.org wrote:
+> > diff --git a/arch/s390/pci/pci.c b/arch/s390/pci/pci.c
+> > index d64c544b32b0c..4fc3e3dc87ad1 100644
+> > --- a/arch/s390/pci/pci.c
+> > +++ b/arch/s390/pci/pci.c
+> > @@ -1208,7 +1212,8 @@ static int __init pci_base_init(void)
+> >  	if (rc)
+> >  		goto out_irq;
+> >  
+> > -	rc = zpci_scan_devices();
+> > +	scoped_guard(pci_rescan_remove)
+> > +		rc = zpci_scan_devices();
+> >  	if (rc)
+> >  		goto out_find;
+> 
+> The pci_base_init() function contains multiple goto statements for error
+> handling, and this patch introduces a scoped_guard() into the same routine.
+> The cleanup.h guidelines state that usage of goto and cleanup helpers should
+> never be mixed in the same function.
+--8<--
+> > diff --git a/arch/s390/pci/pci_event.c b/arch/s390/pci/pci_event.c
+> > index f317a1465dad8..268f435677ae3 100644
+> > --- a/arch/s390/pci/pci_event.c
+> > +++ b/arch/s390/pci/pci_event.c
+> > @@ -382,6 +382,7 @@ static void __zpci_event_error(struct zpci_ccdf_err *ccdf)
+> >  	pci_dev_put(pdev);
+> >  no_pdev:
+> >  	mutex_unlock(&zdev->state_lock);
+> > +	guard(pci_rescan_remove)();
+> >  	zpci_zdev_put(zdev);
+> >  }
+> 
+> In __zpci_event_error(), there are goto statements used for error handling,
+> and this patch introduces a guard() right at the cleanup label. Mixing goto
+> with cleanup.h helpers in the same function goes against the subsystem
+> guidelines.
 
-> -----Original Message-----
-> From: Guenter Roeck <groeck7@gmail.com> On Behalf Of Guenter Roeck
-> Sent: 25 September 2026 05:51
-> Subject: Re: [PATCH v6 6/8] watchdog: rzv2h: Add syscon support for WDTDC=
-R
->=20
-> On Fri, Sep 25, 2026 at 04:13:24AM +0000, Biju Das wrote:
-> > Hi Geunter/Prabhakar,
-> >
-> ...
-> > Just a question,
-> > For automatic software upgrade, if the reboot using PSCI fails, what
-> > is the fallback for reboot, reset the board?
->=20
-> That seems to be a bit theoretic. The reason for having the ability to re=
-gister multiple restart handlers
-> is not to have failure fallbacks, but to have fallbacks if preferred rest=
-art handlers are not available.
-> If the PSCI restart handler is present, it is expected to work.
-> That is why it has higher priority. The idea is to use the highest priori=
-ty restart handler, not to try
-> one after another.
->=20
-> Sure, the failure fallback works as well, but that doesn't mean that fall=
-backs should be provided just to
-> provide fallbacks.
->=20
-> If you claim that the PSCI restart handler does not work on this system, =
-provide evicence, and we can
-> discuss this further.
+So as far as I know this rule from cleanup.h is motivated by cases where
+someone jumps *into* a cleanup-scope and thus skips the initialization, but
+executes the cleanup, which then breaks.
 
-I agree normal cases there won't be any failures
+This shouldn't be a problem here, but if our s390 maintainers think this
+should be changed regardless, I can use ordinary calls in those two cases,
+since it's probably not worth converting the whole functions here.
 
-I never heard about PSCI restart fails. But have seen a case due to a bug i=
-n
-serial driver that made the PSCI restart to fail as it hangs the systems.
-
-So, if this is the case, a memory corruption can cause the same.
-
-Long back I worked on femto based product(single core), where we have norma=
-l restart
-and a fallback watchdog restart. But it does not have PSCI system handlers.
-On some cases, we have seen automatic upgrade failed because of failure in
-normal restart.
-
-So, I just throw a question based on that's all.
-
-Cheers,
-Biju
-
+-- 
+Best Regards, Benjamin Block        /        Linux on IBM Z Kernel Development
+IBM Deutschland Research & Development GmbH    /   https://www.ibm.com/privacy
+Vors. Aufs.-R.: Wolfgang Wendt         /        Geschäftsführung: David Faller
+Sitz der Ges.: Ehningen     /     Registergericht: AmtsG Stuttgart, HRB 243294
