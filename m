@@ -1,142 +1,70 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F013D891F
-	for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 12:46:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6582E03E4;
+	Fri, 25 Sep 2026 13:27:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790340406; cv=none; b=mhDNFGmabNn3lZmiUEVg/+hoJyPN4ehnFy6upcHW8yK0j3iZjF76OMowFr8l+Ou6YyCLVzuHG+JDX2ogc3Iw+6wx9CqRKkMiwmL3RggkWglaERoCdp2t3Ar/DZHgBVECUoHJAJaqukjKLsZfGo5tXfCx4OV9Qf1F/QTsZqE4VQo=
+	t=1790342872; cv=none; b=ZkmX4/INoPIxOk54lqmrTXt5+do8gOM+Ctev8aZb+sW3+y6fQNrWmheWnoKBTrMTyzgMFrjbMY4foRBIH/CsuY/hVyzCb+xhAGocEUAuipwU1FiHsHSvs0A0moBNta1xtCFiYHiqRzV8HVtdOxwTbhEsbbxkPcv3cm9SlnqPk/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790340406; c=relaxed/simple;
-	bh=xt9jpLiwPOdPKGTMCvuyRPEudCPvIhQx+fsOUK0ILB0=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=YdjCfMA8IZSu1902T1xvNNAPw+KJBzGKf+2mizlUqJDf/5Yh2mFPF2JSviL1pcC85tbMegptoFkp+NXAPkPYU4bHgKINFlLWomgeGB1/qfD6Q+nKO3Svbwh6jzdL99Bs/m2Lj8nrB3GkTLnTuwjI+LYdEz/qZ112izqbTT9epc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Ydp7MEfN; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=mzsiUczE; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	s=arc-20240116; t=1790342872; c=relaxed/simple;
+	bh=PIzAaC9JkZJowMrQb3gm2CiCOEJ2YXtuPoK4R3OParI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KT/zL7b9UJs+S33daA+ieFUhyuSmU+w4Fvc4z1hn7uQU6TtI/cGcBk/TUEe661q8HUqemNlAcnLI6fBfJaiBrBjXTL5DxQTkhr2aDcOHO6tM7G/86rgWq5WTT56CH/djYDyP2xHvM3g+5+FBzZc1ZHqqAQvju3Ei/O+ePwr66L0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GEjlwu5Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Ydp7MEfN";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="mzsiUczE"
-Message-ID: <e7e56030f307e9837ef7375953fe06ca6c01b2ca.camel@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1790340401;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tW4NRRfzn/Y38qXoWB2bb+XlWNEz6Lz8yXDZ44Xr0o4=;
-	b=Ydp7MEfNAcdty/RgMOhOKfdwBbOuQRf45mgNSHLxeOZsHuD+SDN/i9V2mbzJA1lliG3jfw
-	0JgWYEY7aka8Azfzh4PXvbcjQylWgMcmfvsp9FQkoBZVkpht3BE0FS8ZHalFBCcDFiVg1t
-	ErmW5ZghVrv/s/NuaUfnTW6IYx2qhl0EaOZarBV4+NL0wxKgOAJfFaqfapWAVddZQchwOW
-	gOn8I9qKWF9JJKDw0DYkJGWFsufWi1LbtdRo9d7x0lEAQkuIdO7htGB1DLw3WIebUBqgBl
-	EUtjgo5V/ybSZbS2oRTgpKqVKfNQnu2xn2W7HrW3QTTMHeXJiE0xkqu1ElN7uA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1790340401;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tW4NRRfzn/Y38qXoWB2bb+XlWNEz6Lz8yXDZ44Xr0o4=;
-	b=mzsiUczEIHqu4DGerIM/OtjmQ7Yfxs3TJ4xncb34mrLv5Zujx1tYJRbwJrNupsohAH8qeq
-	m+ar3E82f+CuP9Dw==
-Subject: Re: [PATCH net-next v3 4/8] net: dsa: Add tag handling for SoC-e
- switches
-From: Vasilij Strassheim <v.strassheim@linutronix.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
- Vladimir Oltean <olteanv@gmail.com>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski
- <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Simon Horman
- <horms@kernel.org>, Russell King <linux@armlinux.org.uk>, Andrew Lunn
- <andrew+netdev@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org,  Martin Kaistra
- <martin.kaistra@linutronix.de>, Benedikt Spranger <b.spranger@linutronix.de>
-Date: Fri, 25 Sep 2026 14:46:40 +0200
-In-Reply-To: <20260924104003.A49F31F000FF@smtp.kernel.org>
-References: 
-	<20260923-devel-vstrassheim-soce-dsa-ml-v3-0-ddebafcb9ba7@linutronix.de>
-	 <20260923-devel-vstrassheim-soce-dsa-ml-v3-4-ddebafcb9ba7@linutronix.de>
-	 <20260924104003.A49F31F000FF@smtp.kernel.org>
-Organization: Linutronix GmbH
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GEjlwu5Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1A41F000FF;
+	Fri, 25 Sep 2026 13:27:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790342870;
+	bh=Xsdg93i9heFX8fuBndTH1OVgKayNCX99LVf/8O28y00=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=GEjlwu5QC9FHvcqiPBLQLmVC5KtQ7DwKqcc9oFAZMcU8xUXCkIPAfkr0D53YNkxOi
+	 svxXxiEWba8oGuU4ZhPt4lB3EviP3SgEo1WRRV+/iWKE5dBD19RYca12OMVOpuwaim
+	 5QKNPqF0xdSuDO2dzfmUK8cdE8kg9kDJHsi3f1/cMEKqmYPLYmkNpjDtKiEBeP8YZi
+	 0utbp2q+d1DEDeWPgi22i6a+d6tPDp8XZ8R25VOolpekgsQ2YG6tCvswEdnWMizhu6
+	 f8odDV45QApJUVJPfNMuWOjlA1xU+lT1zRJAvcuT7MJ5F+DXF81smvfzfX/LgZON3g
+	 rrjFPxJsAygXA==
+Date: Fri, 25 Sep 2026 15:27:47 +0200
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
+To: Jiebin Sun <jiebin.sun@intel.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH 4/4] perf tests c2c: Add function view stdio coverage
+Message-ID: <arZ200WZAtBYy5bb@x2>
+References: <cover.1787283281.git.jiebin.sun@intel.com>
+ <9bd7a313c9c1d71058e857c320c6d5c30cf4cbfa.1787283281.git.jiebin.sun@intel.com>
+ <20260821055803.74B191F00A3A@smtp.kernel.org>
+ <aqB8eNXwAvKoiMMR@x2>
+ <20260909030156.1771188-1-jiebin.sun@intel.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260909030156.1771188-1-jiebin.sun@intel.com>
 
-On Thu, 2026-09-24 at 10:40 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] net: dsa: tag_sdsa: unsupported VLAN tags left in hwaccel metada=
-ta
-> --
->=20
-> commit c9312ab6752036eeab3076e94713c79223982016
-> Author: Vasilij Strassheim <v.strassheim@linutronix.de>
->=20
-> net: dsa: Add tag handling for SoC-e switches
->=20
-> This commit adds a DSA tag driver for SoC-e switches, which use an 8-byte
-> SDSA header carrying frame direction, port, and VLAN metadata. The header
-> is inserted between the source MAC address and the original EtherType on
-> transmit and receive.
->=20
-> > diff --git a/net/dsa/tag_sdsa.c b/net/dsa/tag_sdsa.c
-> > new file mode 100644
-> > index 0000000000000..8cc3fa357be42
-> > --- /dev/null
-> > +++ b/net/dsa/tag_sdsa.c
->=20
-> [ ... ]
->=20
-> > +static struct sk_buff *sdsa_xmit(struct sk_buff *skb, struct net_devic=
-e *dev)
-> > +{
-> > +	struct dsa_port *dp =3D dsa_user_to_port(dev);
-> > +	struct sdsa_tag *tag;
-> > +	u16 vlan_tci;
->=20
-> [ ... ]
->=20
-> > +	/* SDSA carries no TPID, so only encode 802.1Q C-tags. */
-> > +	if (skb_vlan_tag_present(skb) &&
-> > +	    skb->vlan_proto =3D=3D htons(ETH_P_8021Q)) {
-> > +		vlan_tci =3D skb_vlan_tag_get(skb);
-> > +		__vlan_hwaccel_clear_tag(skb);
-> > +		tag->frame_type_port_hi |=3D SDSA_TAG_VLAN_BIT;
-> > +		tag->vlan =3D cpu_to_be16(vlan_tci);
-> > +	} else {
-> > +		tag->vlan =3D 0;
-> > +	}
->=20
-> [Severity: High]
-> Does this else branch leave unsupported VLAN tags (like 802.1ad) in the=
-=20
-> skb's hardware accelerated metadata?
->=20
-> If a user configures an unsupported VLAN protocol on a DSA user port, the=
-=20
-> skb will still have skb_vlan_tag_present(skb) set when reaching sdsa_xmit=
-().
-> Because this branch does not clear the tag via __vlan_hwaccel_clear_tag(s=
-kb),
-> the conduit driver's MAC hardware might subsequently insert the remaining=
-=20
-> VLAN tag at the MAC boundary.
->=20
-> Could this insertion displace the 8-byte SDSA header just pushed, causing=
-=20
-> the switch hardware to receive unrecognized frames and drop them?
->=20
+On Wed, Sep 09, 2026 at 11:01:52AM +0800, Jiebin Sun wrote:
+> Hi Arnaldo,
+> 
+> Thanks for checking this.
+> 
+> Patch 2/4 covers this case:
+> 
+>   perf tests c2c: Report skip when the workload fails
+> 
+> It sets err=2 before returning when the workload fails, while patch 4 calls
+> test_c2c_function_report() only when err remains 0.
+> 
+> I also verified this by forcing the workload command to fail. The script
+> printed the skip message, did not run the function test, and exited with
+> status 2, which the perf test harness treats as a skip.
+> 
+> So I don't think any change is needed here.
 
-That's right, I missed it. I will fix it in a similar way to tag_ks8995.
+Thanks for checking, applied to perf-tools-next, for v7.4.
 
-> > +
-> > +	return skb;
-> > +}
->=20
-
+- Arnaldo
