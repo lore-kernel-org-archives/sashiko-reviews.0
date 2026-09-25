@@ -1,69 +1,191 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32CC14AE13A
-	for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 16:23:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3DD33F8AA;
+	Fri, 25 Sep 2026 16:36:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790353397; cv=none; b=Sdz8C8yjgD3GjO6VSAnLU2DOqMrTjscAb6H8EwfBhx0eymDNRUiUnIDFyJbp/ZOufxLaYg+da7pZvnjylgLiOq0QS7NsKHo/kQSAxNLfGLngU9qRKIk7h37XbEPbwkJcqoEHSRxhUICTdtTJdAQw04gzxN/zoE1/hRVAWAMidEc=
+	t=1790354216; cv=none; b=jrzLKqC6ZoU+gRP0NU/chB6eZ5nPzOvarUnGSFuS/Dpc/kAQfHAefVMdMANXeP+Ubnq7RoNK1YF6F4b/xjDvFqkjJBP79ufIxQS0huY4cJQ543F1Hj3Jy4svjLgZWVrMzq6nLb186gVr8jA9V/Sbkm3a9S1fOtPDPSm5RlcJm8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790353397; c=relaxed/simple;
-	bh=CSnR6SaHncmXObf4vmkQBy16CuGf6WWFDkg77Cbv8sQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=h0VNgNulJE687Fk8zx3Z3UcnUb1iX9E+dAjXiyb0xjBb/46PLfsukFVxYChY0SJLs4W+t9WRVYMraeXGo1CQHijJwqMv1HDo9xgo13wJyap3EzaCLB712NoI9MqhQycFoKdNhZdbi7nviSZ/afYpOCVJcKLkDX8lZwq1eipkTtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WSG9xzQX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790354216; c=relaxed/simple;
+	bh=DBbaOC65r7+Dgxfq2B06H/Tjz/ApSVA3lOC0US27Vhg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gb56LtB/XJdDKJi6PABRaMZQl2isipFSutyET/wvg5qigzuoWqwM9y5cOKTsuXelLyjmWzUz2DXRUOIIhpqNyTPOUcC6IWZqJzf9FNamq/+3lRDcx/NpccmOc+WeCpPafqjrHEmgxFCaMlLp0zrdj1gSz7F6gOagQIYL/Ljgc48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=e3Y1G8CS; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WSG9xzQX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E57791F00893
-	for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 16:23:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790353395;
-	bh=CSnR6SaHncmXObf4vmkQBy16CuGf6WWFDkg77Cbv8sQ=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=WSG9xzQXdb3HCv7S2Qh/LMnRV37Pu03tOztoElQYoQkgDDnq2u/gVzJGf/MjFcn32
-	 9LNh8uF0svx3zMOOrZZUtmFb5RbvpxQzfjAkyon2Nu6brpcs0r3EfH4lFlQ44fmOBm
-	 nLSdXxdJ+jLA8iD4CtpH9+2ZRabdvk725TMJmkTP6SI3nALjrClrwAU8xsLegpcOVU
-	 +6iVu2p+LYS5auhk4xpkYDWbyNW7h91dV3gcvhtpzLb6RVxq4EIkAd0VGHZ8xfDQbg
-	 BQdR0f78pTOVRQnn2B6VXsKv7gN6mDS4GY7QgSsfBkby5a+6mmyFYLe1xMGagoGzgX
-	 wgT0vZ4AdnTpA==
-Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b8e6ec4dc5so712677e87.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 09:23:15 -0700 (PDT)
-X-Gm-Message-State: AFuF++l/BjVlAjVrVKraNHDR25gFPbmz/dPH3xb+MV4WPSlruJx9+eGN
-	A5u20yLeES5o2YwPvpGyeRk5TWslba9VZ/lwIeHbGSI6T0iAyCO7Xepxkx1BpQyyZ5JfbHSIPmN
-	FZu3qziY1c4pHMg3eDjyaaLq3qXGakpU=
-X-Received: by 2002:a05:6512:620d:b0:5b8:9a2d:3a5 with SMTP id
- 2adb3069b0e04-5b8df06a538mr2306320e87.11.1790353394728; Fri, 25 Sep 2026
- 09:23:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="e3Y1G8CS"
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68PG5L1r3853761;
+	Fri, 25 Sep 2026 16:36:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=GC41UHDpoaje/A8ZJCU6uWD8vJTVAF
+	A8F56NYVISa4I=; b=e3Y1G8CSG15a8O1FNyyr9FE00dXIyyQ68i1so8MxLKJ322
+	ly4PFUAgnjASCO8OP0TFQweDFjjUe3lREfhvgWP3AEc4qLH4CVKjuI6Plc1+fALP
+	ePi8t/SZhudqgCsFOdThzLx64lI5x2CQj0cyaazo7jhXgOP0T1ZunEGrEQM8MsYZ
+	J2QH9/aQ8tFcWY2WzZm8UPDogD/Kn1vPuBlXDg1snGkvSPRzUc7a0bsh49ptBWqT
+	jTDOQpNa3luHz811ghSJSfXvI/lgl7+4uR7KI3HU5mpx10CKdfZuFRgcY2/KY9Uz
+	KE3sRXJ11josr4HWi8s3OI2d1Yxyd9mlM0Z5WSxg==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gske283ng-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Fri, 25 Sep 2026 16:36:52 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68PG37a14192011;
+	Fri, 25 Sep 2026 16:36:51 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gvb8k35s0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 25 Sep 2026 16:36:51 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com [10.241.53.105])
+	by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68PGapKQ2425598
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 25 Sep 2026 16:36:51 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4648C5805E;
+	Fri, 25 Sep 2026 16:36:51 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3608858055;
+	Fri, 25 Sep 2026 16:36:51 +0000 (GMT)
+Received: from d (unknown [9.16.59.154])
+	by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+	Fri, 25 Sep 2026 16:36:51 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: sashiko-bot@kernel.org
+Cc: "Tyrel Datwyler" <tyreld@linux.ibm.com>, sashiko-reviews@lists.linux.dev,
+        linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v11 04/11] scsi: ibmvfc: add basic FPIN support
+In-Reply-To: <87tsnd1f2r.fsf@linux.ibm.com> (Dave Marquardt's message of "Fri,
+	25 Sep 2026 11:16:44 -0500")
+References: <20260925044900.414340-1-tyreld@linux.ibm.com>
+	<20260925044900.414340-5-tyreld@linux.ibm.com>
+	<20260925050305.6F20E1F000FF@smtp.kernel.org>
+	<87tsnd1f2r.fsf@linux.ibm.com>
+Date: Fri, 25 Sep 2026 11:36:50 -0500
+Message-ID: <87o6dl1e59.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260925-ab8500-charger-dt-v3-0-f80b8d295e2d@kernel.org>
- <20260925-ab8500-charger-dt-v3-2-f80b8d295e2d@kernel.org> <20260925090811.818CC1F000FF@smtp.kernel.org>
-In-Reply-To: <20260925090811.818CC1F000FF@smtp.kernel.org>
-From: Linus Walleij <linusw@kernel.org>
-Date: Fri, 25 Sep 2026 18:23:03 +0200
-X-Gmail-Original-Message-ID: <CAD++jLnt3SWoR28MyGYm-6K8HwLrnsnmgEVEq-QTBc0h4hjytA@mail.gmail.com>
-X-Gm-Features: AclHuK8Nad98zzMdUxUqMvQN_6xD6EMqBRNJWmpcUdxz4Bk-vDZnP8HQCOqqAu8
-Message-ID: <CAD++jLnt3SWoR28MyGYm-6K8HwLrnsnmgEVEq-QTBc0h4hjytA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] ARM: dts: ux500: Use AB8505 charger compatible
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: Fmb7QWFynqiNjjYNkXpJn7A45cICDkqq
+X-Authority-Analysis: v=2.4 cv=EOCTQFZC c=1 sm=1 tr=0 ts=6ab6a324 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8
+ a=9MSN80hXFWM00mvxam4A:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI1MDA2NiBTYWx0ZWRfXxaB+wiNlSFxJ
+ cichYIque6VKZDi5HQqlR1J7nab8pCKxC0//w6yyierpleV/3ujhpD+Up3Qvttid3xbO/mSd8Oo
+ sk/tzYHo4WZFosst2Kf4FeGsxs/D0yc=
+X-Proofpoint-GUID: Fmb7QWFynqiNjjYNkXpJn7A45cICDkqq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI1MDA2NiBTYWx0ZWRfX+9QaTu7dZTr1
+ Mc4yuGAU4ZIvmZEVGv1tz6pL9cC9ksynJxeAN358YTrKNoY9xNIX3uFDU70DBPCetg5gPFULAWR
+ wD7z0QY2eXdufvhqe1mAHiBaaqBIRNiCdNYz2qv6/wJ9F72ZkDqd+SPEK3EXdfgba/RUotS1Kfe
+ WrqBSTmdByJKZ7swsi6DAPY52CfmTs4+OcWWKGSZjuGV/r7O0K72AFaoZHprgl2RbZTo/hdkr/m
+ tDWOarO1Tfai05fPvbncGEltpWufLZ/Qhh7xPsZCGirAPcqV8H9cmxQv7pq8OxPjsbnH07y/sEq
+ jyfPcxpk9CGI/4KXWSIXrX1zFxCME4ufukn9mhjjmhC4hoCpFIGnOd3uXPwAzx2/2L3n/7nFEqp
+ o1DIqvZsgs12p8KdZDyN4nl6et93uyq4j3IP83UwsE/bcX634g7oHQnTP2oJL04m+/SJ8bvnOgw
+ 7kTIusoRdYDJro6fIBQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-25_03,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0
+ adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609250066
 
-On Fri, Sep 25, 2026 at 11:08=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+Dave Marquardt <davemarq@linux.ibm.com> writes:
 
-> [Severity: High]
-> Will this cause the probe function to fail on the AB8505 platform?
+> sashiko-bot@kernel.org writes:
+>
+>> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+>> - [Medium] scsi: ibmvfc: missing scsi_host_put() in test success path
+>> - [Medium] scsi: ibmvfc: missing host_lock around ibmvfc_handle_async() in KUnit test
+>> --
+>>
+>> commit 29ab8a9a78c94679b8187ae357d2978336830599
+>> Author: Dave Marquardt <davemarq@linux.ibm.com>
+>>
+>> scsi: ibmvfc: add basic FPIN support
+>>
+>> Implement support for a basic level of Fabric Performance Impact
+>> Notifications (FPIN) in the ibmvfc driver to enable monitoring of
+>> fabric congestion and link integrity events. This includes async event
+>> handling and KUnit test infrastructure.
+>>
+>>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc_kunit.c b/drivers/scsi/ibmvscsi/ibmvfc_kunit.c
+>>> new file mode 100644
+>>> index 0000000000000..ec52285b0aa22
+>>> --- /dev/null
+>>> +++ b/drivers/scsi/ibmvscsi/ibmvfc_kunit.c
+>>> @@ -0,0 +1,149 @@
+>> [ ... ]
+>>> +static void ibmvfc_async_fpin_test(struct kunit *test)
+>>> +{
+>> [ ... ]
+>>> +	vhost = ibmvfc_get_first_vhost();
+>>> +	if (!vhost)
+>>> +		kunit_skip(test, "No ibmvfc devices available");
+>> [ ... ]
+>>> +	for (fs = IBMVFC_AE_FPIN_LINK_CONGESTED; fs <= IBMVFC_AE_FPIN_CONGESTION_CLEARED; fs++) {
+>>> +		ae[fs].valid = 0x80;
+>>> +		ae[fs].link_state = IBMVFC_AE_LS_LINK_UP;
+>>> +		ae[fs].fpin_status = fs;
+>>> +		ae[fs].event = cpu_to_be64(IBMVFC_AE_FPIN);
+>>> +		ae[fs].scsi_id = cpu_to_be64(tgt->scsi_id);
+>>> +		ae[fs].wwpn = cpu_to_be64(tgt->wwpn);
+>>> +		ae[fs].node_name = cpu_to_be64(tgt->ids.node_name);
+>>> +		ibmvfc_handle_async(&ae[fs], vhost);
+>>
+>> [Severity: Medium]
+>> Does this invocation of ibmvfc_handle_async() need to be protected by
+>> the host_lock?
+>>
+>> If a concurrent device removal via ibmvfc_remove() sets vhost->state to
+>> IBMVFC_HOST_OFFLINE and destroys fpin_workq just before this handles the
+>> async event, could queue_work() be called on a freed workqueue?
+>
+> Yes, this routine should acquire the host_lock before calling ibmvfc_handle_async.
 
-Not your problem.
+So, the host_lock is taken early in the routine and held in this case.
+I'm getting mixed messages in my research on whether return or something
+like KUNIT_FAIL() is required after kunit_skip(). I will add return
+statements.
 
-Bindings, DTS:es and drivers are orthogonal.
+>>> +		ae[fs].valid = 0;
+>>> +		wmb(); /* ensure valid bit clear is visible before checking stats */
+>>> +	}
+>>> +	flush_workqueue(vhost->fpin_workq);
+>> [ ... ]
+>>> +	ae[0].valid = 0x80;
+>>> +	ae[0].link_state = IBMVFC_AE_LS_LINK_UP;
+>>> +	ae[0].fpin_status = 0; /* bad value */
+>>> +	ae[0].event = cpu_to_be64(IBMVFC_AE_FPIN);
+>>> +	ae[0].scsi_id = cpu_to_be64(tgt->scsi_id);
+>>> +	ae[0].wwpn = cpu_to_be64(tgt->wwpn);
+>>> +	ae[0].node_name = cpu_to_be64(tgt->ids.node_name);
+>>> +	ibmvfc_handle_async(&ae[0], vhost);
+>>
+>> [Severity: Medium]
+>> Is the host_lock similarly required around this call to
+>> ibmvfc_handle_async() to prevent a use-after-free if the device is
+>> concurrently unbound?
+>
+> Yes.
+>
+>>> +	ae[0].valid = 0;
+>>> +	wmb(); /* ensure valid bit clear is visible before checking stats */
+>>> +	flush_workqueue(vhost->fpin_workq);
+>> [ ... ]
+>>> +	kref_put(&tgt->kref, ibmvfc_release_tgt);
+>>> +	put_device(&rport->dev);
+>>> +}
 
-But there is a fix in a different patch series.
-
-Yours,
-Linus Walleij
+-Dave
