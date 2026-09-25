@@ -1,89 +1,118 @@
-Received: from mail-lf2-f12.google.com (mail-lf2-f12.google.com [74.125.229.204])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEEB4C7523
-	for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 19:32:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A1F3955EA;
+	Fri, 25 Sep 2026 19:55:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790364775; cv=none; b=XSRWWJjkJFSIfqwzXLr8UKvrKoTK9cZCcaXmBQEmfFmDHrFkxLejMnjAUMLusFGz5F1WDjPJicCYP5wX18zzGilSbTnUEOtx8VmqYDy0imspfmf4tYXRUmjZZoRx5UKLfxAe/rrBb2kBDOIi8QzMZEcx0i+dD1JVNe7yCyyTzo0=
+	t=1790366105; cv=none; b=hH3oBJ/66NVM558Hh+FNesaG/7D0neMJnHH7pGEPfXS5d7AppHFAoPSt4hpmMZoeN7V/GXjfckpdOq0JSJkSI02Jr9NuH46jL3f4lihcPWnuv0KXMhlq+PTOkGy7rHHnXQfEuGHkKeool6iU0CptEoDmEPbniGq35wZmnxl+8nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790364775; c=relaxed/simple;
-	bh=K8K1S9ERuiSvvG6VKGDrUmZzsFAhSAuIeiifb6ecQio=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZrXruQC1KHUPsIv8Agwh2SE4CvIdEK2ehaWVE36nZ1XEd/6lkv9luImN9Vvao7U3S8yFT4uP0a7tD1GJ1NKGu4ywi3v7dS4kGw3XmapAkK3JF1xRvkRF7ay/QzCNW1MS7TbV8G6s56qZqs9p7KRw0zkmOCscX0vecfM2aN5HpUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XDneOzHz; arc=none smtp.client-ip=74.125.229.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790366105; c=relaxed/simple;
+	bh=hKHRq0LhI1zolL4uHSTmSljmnQD+TYC96AymLijR8t8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=t46Vdwcuv8930/As8oyFLsa9m2qMMcxbNotxuvWbm0HmZv2lUm6lnNVVkZZCmU41QCTyJ0omVWVnFGEw3AGEfzjIu7KauHR9RQE+6w6LxQpBqu/PwYctykKbcc9MQEybmreZv84Fb2/qqXbHXbsOS86S4ICUHdRyvxmEC2pJXgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aQwePNuN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XDneOzHz"
-Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b5e4f1801fso1407852e87.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 12:32:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790364769; x=1790969569; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=K8K1S9ERuiSvvG6VKGDrUmZzsFAhSAuIeiifb6ecQio=;
-        b=XDneOzHz3LecZ79tQxW8UjqFFY1aEZf1RrXy8dhrRRa470EldCCT0zlNAtHJx62rIq
-         DqkI3fjFPuy1lwjDA65pyN93832FX29ugNPByoP1Eip9LNKM5/mjmBGN2rBL/+XK6/vE
-         rUYxo2bFWERojC+WVoNDbYcccUzqcnTDuq4As6Ptcq8eCvhH0uIDNPV4GKLhGcEkRknG
-         /NdeWDbhOkS4Dipkz3Ec4uiiZ9vOhnze+2Jrw3OM5PJiyHAgDXXJepfKHRmJzlezWEMp
-         H/T/cwaxr8/qszMzEdNvr+5ERDNofm/wQkeszoO0vkHBr06kbSlvXiAKaoFGV9aFbN9M
-         l8eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790364769; x=1790969569;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=K8K1S9ERuiSvvG6VKGDrUmZzsFAhSAuIeiifb6ecQio=;
-        b=JhndpZZQuiDB9IpMvw4F1W8J/JGTv4U+gv3XljQj6xTZdPs97QG5JPFbAamrn0++1Q
-         gLTBC+HH2OOlKjqyoOCors5+myY+DTwsM7u4m1DZyCD9RtBtoOXexiPlHHs7zoYoeKhm
-         pENdP/++BdiuXktIKV0v9CxIKqmW5sSLnpbBqu2rF/SQfTG7HTSl6vR/fEoOFoad4eNh
-         ZhxEJjf5MCvNEsLKi9QbLRczJsFEobkuEExcRdWFB/B5jImzSNTAfve8vADcckE1MqUv
-         QWNE5aYRypwt5Bj1rrMK6yxnhuH3OGu3h71jUi4wYlOHXwQUAsHjGLbgSIkk0G/ofkqR
-         Y1IA==
-X-Gm-Message-State: AFuF++n3RLVlN49No+vpbOuTeA/lSTIatgdJsaNJJ6p0H2X/UeECPmpU
-	t9Ssgx1CT1NPIE6Is47T7Zbz3RqP3rwZxJIg/QAEoTso4dNkVoZoVarntT3vBixr1HAoyQ==
-X-Gm-Gg: AYBFou1ZRIxQIs9eNdw0/p03EtPTZ1b6yMFCmLTAIKRAwbRiWKAOn4wAFPFimeJv0Lu
-	VyCG3zubFS97IXOi1Topzc7SvB01Ws+E1xnmwIjlv+0UD3YD1zPsX5rUuQw9yy6MBeoTwQws+tp
-	+IjgfOusDpzkcJIVLE5m7NXS8+b+ZTPlygd4B94l2GbR4Z/IcEnem2ZBHJaGnh/dWaZZgH5Jv92
-	+hAIv7oZ7ib2EKwX+077agahqjZi8519EGkTAX1o/c6tHa7hdJJfhVpjdiF4awN0K7/eJL+0IaE
-	Y9Jb9JM7YQRUjvbZn2wsd7VzuhLO84ci97tkqKpCv0phfum5qexN92qkiH6NIpitNe8ir0Zfjw4
-	dj0hkrYSmY0jelmV7E5ztKOH7TlbqQv2TFTNX+8MOZ+XK7n3kOehYdMSyO033aFhNmnIskkJLKp
-	GjUVXOKNSzgxdix1QPuoo5vveORFolo/zDjH/FORJWlSyLkRbngN6XeJCDGlGkPs+T2UvHq+d6A
-	I3aYkjQYeFgwfc3
-X-Received: by 2002:a05:6512:a87:b0:5b4:adb1:b25b with SMTP id 2adb3069b0e04-5b8df049ebbmr2324537e87.14.1790364768717;
-        Fri, 25 Sep 2026 12:32:48 -0700 (PDT)
-Received: from localhost.localdomain ([80.66.93.121])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5b8e6afe7dcsm778146e87.51.2026.09.25.12.32.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Sep 2026 12:32:48 -0700 (PDT)
-From: Maxim Skokov <skokovmaksimevg@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org,
-	Maxim Skokov <skokovmaksimevg@gmail.com>
-Subject: Re: [PATCH bpf-next v2 2/2] selftests/bpf: Check that bpftool map dump fails for socket storage
-Date: Fri, 25 Sep 2026 22:32:30 +0300
-Message-ID: <20260925193235.48369-1-skokovmaksimevg@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260925162915.2CB261F000FF@smtp.kernel.org>
-References: <20260925162031.27259-1-skokovmaksimevg@gmail.com> <20260925162031.27259-3-skokovmaksimevg@gmail.com> <20260925162915.2CB261F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aQwePNuN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 617571F000FF;
+	Fri, 25 Sep 2026 19:55:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790366103;
+	bh=bpVmtn0t5O97jPCAVABKpxtYNMzagCrnZQRLZ6EWAwI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=aQwePNuN7Hjw08+dF52gRhhrbdolVFjRkv1u/JVA7OwOPOV3Lz+uJzwDcijIH9NSz
+	 +q4Q69T80dunW+lG7TiwFAsmVsEKZlN5AfLrUEtUCb/nF+pPJ6u1Ys1DwmlAerVsQG
+	 jRa3JkY6HumUrf3Jl0xI0bN8Sl7EI6wrWbZIqgV2fzLG2RsrkjVn15KusXMsTlIc8j
+	 riOpgjhRf65IqqJZGrczBWINPOIKOBkrVaHuvgjolb2rVMV+Ii3mcsIFABcf/W6cj2
+	 lFDLiign3TY3foJZKn1zf31NrEFAKk0UCYhxUEgqzp4gGL4LieTOqIdxCkCxIBnzBk
+	 SXRYkmLgW/DbQ==
+Message-ID: <6fc6245b-5497-40dd-a032-53c323467d2f@kernel.org>
+Date: Fri, 25 Sep 2026 20:55:02 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 bpf-next 2/3] bpftool: Update func representation to
+ include function signature
+To: sashiko-reviews@lists.linux.dev, Alan Maguire <alan.maguire@oracle.com>
+Cc: bpf@vger.kernel.org
+References: <20260925170854.1240637-1-alan.maguire@oracle.com>
+ <20260925170854.1240637-3-alan.maguire@oracle.com>
+ <20260925171703.5D9EB1F000FF@smtp.kernel.org>
+From: Quentin Monnet <qmo@kernel.org>
+Content-Language: en-GB
+In-Reply-To: <20260925171703.5D9EB1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-> Since the out label is positioned after unlink(PIN_PATH), the cleanup is
-> bypassed on failure paths.
->
-> Should the unlink be moved after the out label so the cleanup is always
-> executed?
+2026-09-25 17:17 UTC+0000 ~ sashiko-bot@kernel.org
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] bpf: btf_locsec_append hides truncation marker due to null byte gap
+> --
+> 
+> commit 6f503008243b4dfc886859b905f8a6fa7b657ef2
+> Author: Alan Maguire <alan.maguire@oracle.com>
+> 
+> bpftool: Update func representation to include function signature
+> 
+> This commit augments the func= output for LOCSEC entries to include a mapping
+> from function signature to where parameters are stored. It addresses a feature
+> suggestion to dump LOC_PARAM, LOC_PROTO and LOCSEC more verbosely.
+> 
+>> diff --git a/tools/bpf/bpftool/btf.c b/tools/bpf/bpftool/btf.c
+>> index e29c8a84e224c..ce4c4036c2796 100644
+>> --- a/tools/bpf/bpftool/btf.c
+>> +++ b/tools/bpf/bpftool/btf.c
+> 
+> [ ... ]
+> 
+>> +static bool btf_locsec_append(char *str, size_t sz, size_t *off,
+>> +			      const char *suffix)
+>> +{
+>> +	size_t len;
+>> +
+>> +	if (!sz || *off >= sz)
+>> +		return false;
+>> +
+>> +	len = strlen(suffix);
+>> +	if (len < sz - *off) {
+>> +		memcpy(str + *off, suffix, len + 1);
+>> +		*off += len;
+>> +		return true;
+>> +	}
+>> +
+>> +	if (sz >= 4) {
+>> +		memcpy(str + sz - 4, "...", 4);
+>> +	} else if (sz > 1) {
+> 
+> [Severity: Medium]
+> When a string exceeds the buffer size and we hit this fallback path in
+> btf_locsec_append(), is there a risk that the truncation marker is hidden?
+> 
+> The truncation marker ... is unconditionally placed at the very end of the
+> buffer (sz - 4). Because the function fails to copy the prefix of the string
+> that would fit and does not write over the existing null terminator at *off,
+> a gap of null bytes can separate the current end of the string from the
+> truncation marker.
+> 
+> String reading functions like printf or JSON dumpers will terminate at the
+> first null byte, which would completely hide the ... marker and discard the
+> partial data.
+> 
+> This would be triggered when bpftool formats a BTF location string (for 
+> example, a function signature with many parameters) that cumulatively exceeds
+> 1024 characters.
 
-A failed pin creates nothing, and every check after a successful pin
-falls through to the unlink, so no path leaves the map pinned. What is
-left is a run killed after the pin: the stale pin then makes every later
-run fail with EEXIST. Moving the unlink under the out label lets the
-next failed run clear it, so I'll do that in the next version.
+Maybe copy whatever we can from the suffix first, overwrite the end with
+the dots after? Something like:
+
+        if (sz >= 4) {
+                size_t space_left = sz - 1 - *off;
+
+                if (space_left)
+                        memcpy(str + *off, suffix, space_left);
+                memcpy(str + sz - 4, "...", 4);
+        }
