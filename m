@@ -1,143 +1,140 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A9E4479885
-	for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 21:33:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from 013.lax.mailroute.net (013.lax.mailroute.net [199.89.1.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C44483BCD
+	for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 21:55:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790372002; cv=none; b=PaZgInbOClQapXsieIfpa7Mh+Sxxb5WR5VGwEhttWTmgPLONqngXxoEDLjQRH5eP5NArkQd7b9VJHocyEOR2moyyFPfNRLf37LFOzgNVqTf+wC8uoXRKSexamGcRBme2Xkt2+P3GozBsopD6s+hLqHt8Z3DxdelwkZN8uH+Lc+c=
+	t=1790373318; cv=none; b=nR/ZxQTtbKQOed210PU+5cIPYEiYi0fdvLZDFA+VbCMcEOwuU1p6jsBcEu8D4tNJbAPiFMRkG9htn2NhPy7DV+1TcbSbdcfLxlY8/ozh3CsVq8xK6V5jm7i3twMAEQE3aP151p9LJKpd/m62P3ss/Wvn0tiOK1bHa7FIaZQs6Vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790372002; c=relaxed/simple;
-	bh=fdYTU5U5yPhXQuFyexoLor1rQLck6e9sGLmm960hzA4=;
+	s=arc-20240116; t=1790373318; c=relaxed/simple;
+	bh=Nh3CSRcnTQE1l/HduodypiTOrQ1qbRJMopIvxGbMZj4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KiEAXt2qbkMkW5w8NR2NK7sgppNH++t9JWLZlPE19S7m/BEDcLH/1pSnuwQZ7bMYMBJDaGs/XlHtQNmHuDPmGr/tW39aB+hZssFSnrdsvTtgxX6rgHnMfWQRJpmmecgpudETkbBo00UJqQVVuKmtWCMSdwN2nBbNi0ZIgxieBYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=XL40tDeU; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	 In-Reply-To:Content-Type; b=kGCDWFsWh9mWmJpzSaWstPoZGni9DPh6zZgqap41XdsVdt/x08RG/nzWQmk3vlXxvqPC6EyZ7W7HBdOcTUpKk052VRmhUNKqfP2zNbBi12aYU7HEgu2s0U+XETLqPfPy9fLE6FC4cZjPkoB827Iv3kndCissLnYkSFBAzsoMTzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=NaDifzZ9; arc=none smtp.client-ip=199.89.1.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="XL40tDeU"
-Received: from [192.168.0.88] (192-184-212-33.fiber.dynamic.sonic.net [192.184.212.33])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 2AE2B20B7169;
-	Fri, 25 Sep 2026 14:32:29 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2AE2B20B7169
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1790371949;
-	bh=TRnGNk2C3pGkf1OWgvn5WxWb3mQ1EV+W88G8M579pHk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=XL40tDeUa5VP2TXhXbvOTl66CYxfzmaPao2PLYMJfKbSctGeK5c+9tMWY8H7XG13T
-	 syScJ2xM88QTECHDr2GsrMAanWxYJyalfIWOOAUAvnMx/j6roCyN6MtyU6GZtoxLh6
-	 NRlAQQtUvIN0jLCZT2n76WzwduAuUJUTqV1X/vBU=
-Message-ID: <44536e5f-efcd-c9d4-7619-d2343c7b7f9f@linux.microsoft.com>
-Date: Fri, 25 Sep 2026 14:33:18 -0700
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="NaDifzZ9"
+Received: from localhost (localhost [127.0.0.1])
+	by 013.lax.mailroute.net (Postfix) with ESMTP id 4hs4J21fbbzlfvpS;
+	Fri, 25 Sep 2026 21:55:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1790373311; x=1792965312; bh=ZcdwxZIRznE75ejorIyCGDum
+	bdmzlK7Krhh+dFQUu4A=; b=NaDifzZ9qo3+HVa4xk9zMw3f2EXSaR2JMmLoY7cW
+	RcDGCDpehyZdRlUY2wExnfOhnq5Du12upYECUEdt8Inxckab0+HyeIXfmmHs0t2o
+	q6XpbLt4tvgfQiBO2RQ3MmcCuZmityJ1eeca2igbeipK9ZDHj1SSfNw4nTzLhuwV
+	ZWNng7DEU2ZJlUPTQ0aXtQcYCXHLECieDSu/S0cKBq/xbwJsKPo8YWTZT2WZ3xQp
+	1zMP/1N9te1GhPGWaCGXHdbkB15FXMlFCZNuVAenwdKWGKxqZ8wpGMlY3ZYcI271
+	ttMfzgL/4mNXH4hQQcEdwdFm3c+sAQzmiRbZ6pPHxT7a/A==
+X-Virus-Scanned: by MailRoute
+Received: from 013.lax.mailroute.net ([127.0.0.1])
+ by localhost (013.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id Sr68ZukCwUSt; Fri, 25 Sep 2026 21:55:11 +0000 (UTC)
+Received: from [IPV6:2a00:79e0:2ed2:d:9d67:ec98:e8f9:601a] (unknown [104.135.182.42])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 013.lax.mailroute.net (Postfix) with ESMTPSA id 4hs4Hy3cFjzlfvpG;
+	Fri, 25 Sep 2026 21:55:09 +0000 (UTC)
+Message-ID: <c0de128d-5c3a-4b53-a059-d382ab9f4d9e@acm.org>
+Date: Fri, 25 Sep 2026 14:55:09 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH V2 2/3] mshv: Redesign hypervisor memory deposit logic
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GIT PULL] SCSI fixes for 7.3-rc4+
+To: sashiko-reviews@lists.linux.dev,
+ James Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: linux-scsi@vger.kernel.org
+References: <ea8f769b49f7d1185f588cf5b9202f300c280af7.camel@HansenPartnership.com>
+ <20260925214614.0CD7E1F000FF@smtp.kernel.org>
 Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org
-References: <20260912000318.2959621-1-mrathor@linux.microsoft.com>
- <20260912000318.2959621-3-mrathor@linux.microsoft.com>
- <20260912001508.0C31C1F000FF@smtp.kernel.org>
-From: Mukesh R <mrathor@linux.microsoft.com>
-In-Reply-To: <20260912001508.0C31C1F000FF@smtp.kernel.org>
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20260925214614.0CD7E1F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 9/11/26 17:15, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Memory leak of all un-deposited pages when `hv_do_rep_hypercall` returns `U64_MAX`.
-> --
-> 
-> commit 68b286f4de61fdc1a888242cfc4b1a1ea3d187dc
-> Author: Mukesh R <mrathor@linux.microsoft.com>
-> 
-> mshv: Redesign hypervisor memory deposit logic
-> 
-> This commit redesigns the hypervisor memory deposit logic to optimize
-> performance and address preexisting issues. It defaults to allocating and
-> depositing 2M chunks when possible to reduce overhead and avoids unnecessary
-> interrupt disabling during the process.
-> 
->> diff --git a/drivers/hv/hv_proc.c b/drivers/hv/hv_proc.c
->> index 57864bb5bcd8c..df39a5c587ca2 100644
->> --- a/drivers/hv/hv_proc.c
->> +++ b/drivers/hv/hv_proc.c
+On 9/25/26 2:46 PM, sashiko-bot@kernel.org wrote:
+>> diff --git a/drivers/scsi/megaraid/megaraid_sas_base.c b/drivers/scsi/megaraid/megaraid_sas_base.c
+>> index b95f187297aed..4f9a53769966f 100644
+>> --- a/drivers/scsi/megaraid/megaraid_sas_base.c
+>> +++ b/drivers/scsi/megaraid/megaraid_sas_base.c
 > [ ... ]
->> +static int hv_call_deposit_pages(int node, u64 partition_id, bool contiguous)
->> +{
-> [ ... ]
->> +	/* Not using hyperv_pcpu_input_arg, so no need to disable interrupts */
->> +
->> +	status = hv_do_rep_hypercall(HVCALL_DEPOSIT_MEMORY, num_pages, 0,
->> +				     hc_input, NULL);
->> +	if (!hv_result_success(status))
->> +		goto err_free_dep_pages;
->> +
->> +	if (lastpfn) {
->> +		hc_input->gpa_page_list[0] = lastpfn;
->> +		status = hv_do_rep_hypercall(HVCALL_DEPOSIT_MEMORY, 1, 0,
->> +					     hc_input, NULL);
->> +
->> +		if (!hv_result_success(status) && hv_repcomp(status) == 0)
+>> @@ -7886,7 +7886,9 @@ megasas_resume(struct device *dev)
+>>   			goto fail_init_mfi;
+>>   	}
+>>   
+>> -	if (megasas_get_ctrl_info(instance) != DCMD_SUCCESS)
+>> +	scoped_guard(mutex, &instance->reset_mutex)
+>> +		rval = megasas_get_ctrl_info(instance);
+>> +	if (rval != DCMD_SUCCESS)
 > 
-> [Severity: Medium]
-> Will this leak the page pointed to by lastpfn if hv_do_rep_hypercall() returns
-> U64_MAX?
+> [Severity: Low]
+> This isn't a bug, but this function relies heavily on goto-based error
+> handling.
 > 
-> If the hypervisor is unavailable or hypercalls are unsupported,
-> hv_do_rep_hypercall() can return the sentinel value U64_MAX, which is explicitly
-> handled by hv_result_to_errno() elsewhere.
+> Does the introduction of a scope-based cleanup helper (scoped_guard) here
+> violate the cleanup subsystem guidelines?
 > 
-> When status is U64_MAX, the hv_repcomp(status) macro extracts bits 43:32, which
-> results in 4095 instead of 0.
-> 
-> Does this cause the condition to evaluate to false and skip freeing the page?
+> The kernel cleanup guidelines state that scope-based cleanup helpers and
+> goto should not be mixed in the same function, as it can create confusing
+> ownership semantics.
 
-This hypercall will not return U64_MAX.
+I assume the above refers to the rules in include/linux/cleanup.h?
+In that header file I found the following:
 
+  * Lastly, given that the benefit of cleanup helpers is removal of
+  * "goto", and that the "goto" statement can jump between scopes, the
+  * expectation is that usage of "goto" and cleanup helpers is never
+  * mixed in the same function. I.e. for a given routine, convert all
+  * resources that need a "goto" cleanup to scope-based cleanup, or
+  * convert none of them.
 
->> +			/* We deposited lot earlier, so give it a go */
->> +			__free_page(pfn_to_page(lastpfn));
->> +	}
->> +
->> +	free_page((unsigned long)hc_input);
->> +	return 0;
->> +
->> +err_free_dep_pages:
->> +	hv_status_err(status, "\n");
->> +	rc = hv_result_to_errno(status);
->> +
->> +	for (i = hv_repcomp(status); i < num_pages; i++)
+I think these rules are too strict and should be relaxed.
+
+>> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+>> index 2ba244cf40ac7..54f4e7d7de02e 100644
+>> --- a/drivers/ufs/core/ufshcd.c
+>> +++ b/drivers/ufs/core/ufshcd.c
+>> @@ -6817,11 +6817,17 @@ static void ufshcd_err_handling_prepare(struct ufs_hba *hba)
+>>   	}
+>>   	/* Wait for ongoing ufshcd_queuecommand() calls to finish. */
+>>   	blk_mq_quiesce_tagset(&hba->host->tag_set);
+>> +	/*
+>> +	 * Internal commands are submitted on the pseudo SCSI device. Let them
+>> +	 * through so that the error handler can recover the link.
+>> +	 */
+>> +	blk_mq_unquiesce_queue(hba->host->pseudo_sdev->request_queue);
 > 
-> [Severity: Medium]
-> Will this loop fail to free any pages in the pfna[] array when status is
-> U64_MAX?
+> [Severity: High]
+> Can this sequence lead to a use-after-free on hba->host->pseudo_sdev?
 > 
-> Similar to the check above, if status is U64_MAX, hv_repcomp(status) evaluates
-> to 4095.
+> If a device error triggers ufshcd_intr(), it schedules hba->eh_work.
+> Concurrently, the driver could be unbound, invoking ufshcd_remove().
 > 
-> Since num_pages is bounded to a maximum of 511 (HV_DEPOSIT_INP_MAX) in this
-> path, the loop initialization sets i = 4095, making the condition i < num_pages
-> immediately false.
+> ufshcd_remove() calls scsi_remove_host(), which destroys and frees the SCSI
+> devices, including hba->host->pseudo_sdev.
 > 
-> Does this cause the loop to terminate without executing, silently leaking up to
-> 511 allocated pages per failed deposit attempt?
-
-
-status cannot be U64_MAX for this hypercall.
-
-
->> +		__free_page(pfn_to_page(pfna[i]));
->> +	if (lastpfn)
->> +		__free_page(pfn_to_page(lastpfn));
->> +
->> +out_free:
->> +	free_page((unsigned long)hc_input);
->> +	return rc;
->> +}
+> Because ufshcd_remove() does not cancel hba->eh_work until later in
+> ufshcd_hba_exit(), the error handler might execute
+> ufshcd_err_handling_prepare() while teardown is in progress.
 > 
+> Is it possible for the code to dereference hba->host->pseudo_sdev here
+> after it has already been freed?
+
+This is an existing issue in the UFS driver that predates the UFS driver
+changes shown above. Additionally, in a typical setup the UFS device is
+not removable and hence ufshcd_remove() will never be called.
+
+Thanks,
+
+Bart.
 
