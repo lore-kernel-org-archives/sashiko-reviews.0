@@ -1,194 +1,209 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383D43AEB40
-	for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 23:32:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA3033065D
+	for <sashiko-reviews@lists.linux.dev>; Sat, 26 Sep 2026 02:18:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.10
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790379141; cv=pass; b=qZCcRFcIH/W0S3FQolIiqFE6dlEK+bh19sZxsCOGrQaTk8WkTehleN3fKNQc37u/QjMZLwxq3L5ab7wWJFkQL+zZSMOK53PKcRQxbP8j4AoHsrk5HLXnQLOD2S2/8M8nhU1v44Tf6hrD21BGGD++TuvGlI06opapT3jvZtEGpak=
+	t=1790389092; cv=fail; b=XrlMw9QcNSFEiaQSbqSC7f3URrUAmmPJGnc3wIMeQVEqEEDACm0Qi0NVs6G7C5b9eA+BJgbHXkQFofkDtc3EIF3tM9RQucHrbedTgmvPn3tHWskzkIPCKKl5odEHuqfS6hd89tXHuDlU+bSUe4pZIktRUhUP7cVo6MvxK75T+jo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790379141; c=relaxed/simple;
-	bh=j+18zH4z+m0k1FZ0dd1cO98bGHWJwxwzLIK0UXvDr7Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZuGuTjrAXF4IaAnnToXQeHOMsjtEuYD2SaWj0nS0DLm7+VOe7EtIMk4HRJf692THD0R2zFZZqt3KFB1JPLXM4PrGf4/Az1NJj3/KT4l3+0dIP9SUiSsoIsE1IHj6CpkkZXknarCrxqnDTfL9c8KGrQYN+f0NLWa+PKNE9rGyj4k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SMlgyAK0; arc=pass smtp.client-ip=74.125.227.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790389092; c=relaxed/simple;
+	bh=dRGWId1wJKUSEuQAHNcS95zaS02ViRpUZpoMX0WcgsY=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=j2kYBp0S5/9TPwy4HjqsAT20hSKxQ5ptkSRyFwlKU29+vJbEr8QtqXFkmtWTlQpUME2fZATTu76SiI4CLAdC/4Nj1/gmvNKgIqufBUKmoDKIDpd3eoPaR17bL8SAg9PfmGkyJZfRXb5LwBUNJDG+N/IHxLQEf895P2OHuWvWXKI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Rx4NM58v; arc=fail smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SMlgyAK0"
-Received: by mail-pj2-f13.google.com with SMTP id d9443c01a7336-2dd58e1e2c7so6570955ad.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 25 Sep 2026 16:32:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790379139; cv=none;
-        d=google.com; s=arc-20260327;
-        b=r2A+q34EsoyUaMmDynjz/6+IW7/MWdK7G629uVvYziHvO0chXrRlV6rukCjFp2mQhe
-         I/cpa5Tvyh/IHaK4A+c6/0T/0X0PxjQujOmWqfz1mJLI49h17yIUXtZX3aaMY7jyJZLL
-         wVjD1Fu4sk1AlhdC2Px8zQih/lj1epovi8LXlcPeeRQwO8pCYSFFsHboCrkuJCu6VUJ5
-         QY25jFFpWnUoO38GjBPU9+qYUbnALGE2qmuupoDeFi4H0/gglLYtGpeyGFuWU2u3Gktm
-         lcX1lzMA3Ap8lziwXP1+E0C1L8KCWR6+5T/OsHLZj5zKZtS/1Zgnh0G3vMNqcxuov5eX
-         e19g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Uojy6J6IqOesK9tCRrbsVJpUEHxbUlzpNFdYyzAnwaQ=;
-        fh=iVbzucXGpMk9epqvqFl+31RxW2EZ/9tfB0+u4C1h4t4=;
-        b=fDHS+fmOqeYg99nVsr7oTHNWStHSKa5TwIM0jWK6hgZWEBJxHN1ezUCZ9rAktz4hm/
-         mrgNoqgprJaFlvDlGi+KltDbobDdhupgM7Y1q/qZaWi28pVqNNF2RqZ8JJC70CvjR8ok
-         XrTai7wVrEcwG6HXuou0UizDfI3RWpX2PQDfswkiTkmAM0Kjdr5QPfogpVKlktCf4r5o
-         3JEjdSuCoYQCVKXqqgR41belc9bIGS5z9a/1bJFY+5DR2tOtjfVzxJzGml6ZYCgq1+Dc
-         eP522dwDNwDSPXj58+23HIYYYX3GMa5SkpK1jXZnRb5wZiqwtskUGN4woras5KebUyvo
-         H6lA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790379139; x=1790983939; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Uojy6J6IqOesK9tCRrbsVJpUEHxbUlzpNFdYyzAnwaQ=;
-        b=SMlgyAK0yj1Cc9VwimyeZSCDPoNQj2+8YNjK7r6chMvWMuOIpClYEfIv4NrxuZQB/t
-         CICMyK7gXQzMnSUBprkiljV88ADZYnnJPqCvs6BHh8dMc+xCpPQAEZP2wXf1g6YRrpt+
-         p2tS0qzkcrGa0xbBfYkajdqzhlAiG0kDc+zF91lUWhwhhJm1DDFuz5o7XG+bWgBn1Vwz
-         j9dei6pBgBQWtYrRuBhZP+DyAoiBl5h7DnAci78iXbKa/+qFIv1kRpbUFbxWWq4pJ4rR
-         w2ITIstP8McKlGib2ZL4DtwG9k3486pl6FetVMSjfOq8Av6mF92enbctj93w8VE0CGEv
-         MAzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790379139; x=1790983939;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Uojy6J6IqOesK9tCRrbsVJpUEHxbUlzpNFdYyzAnwaQ=;
-        b=u80hVPfy0V2puvlf0u9wOvMsRfceDdC6TTekJUeTgo5AziKDMFQPUIs0tnqRpSvNdC
-         8HewZFbDt+lR5oFHHGmNQrYr+Jal91QDy27dnFEiF4Si/plNq3XAxu2n0phCk084qJNX
-         JB87exbpjBpAJAfCF2y0loKWSSwBf8wt6o25PzSjTRJPTXbQK2auT8M0ieedT2LKwjpM
-         lEmOcbGAq6QM45DRuDMkjwCLDzrzqKTz7EDvkR+WZDc4VhpXfkChvk2nBI+D9/l1QQPy
-         fRoGpQ86L/we4HQga+g0dmyOQh7Bv1hNbXsoEyrlcYp7VHW2Sr9RCV9L2VTV+Hvk+YNt
-         EgHQ==
-X-Gm-Message-State: AFuF++m5wzBy4jqbpNl9ihcmp1Ji7Pr/LD9cRNL05R3KFrDOqqHteMRu
-	4q9w/uaDOO7QF5Jv07iQYYmq4xqvNe9sQ4y+xgICyzrkmuYbRB8hdlFXK56eaCNYCF4numZRQAk
-	sV3HiQ/KoC3wE3h9AL3mrshGgr1SRSPIwag==
-X-Gm-Gg: AYBFou08aQvoGcRJ42w72s+AiiL0DHxQ5JXAuH1izS4qnOz5lRulOQhvGMJQ8FXEZgl
-	4EXlpov6Za50bL4F0wICk6G0hq2BhNH5D8/ypeLjVwuuO7lfL7EqlGo4DFT9g5fpJhFojIgiImn
-	grJhZQrx4ot0HXG9sPvm/eqCCefMf7ImS/SlbfNCQp5S5YLKVYshmjGyxDnOqWk+1/YYW6eahDQ
-	JqS3OjHMLyOZUV14VcRn39GN1kc4h4K8dTBFqvmkBvw6ZjTh9HDkSjy3tE9aNseFky92lpWRjzN
-	bofs0h6taVc2RsN5KsWeA029PFxNKxy1p71gVjKY4qVYRlrbBql47FhC266g4qL/P0KYFRff0d2
-	oksEgWSRiqBB+95AX0EZG3pkbgVV3V+ePxEUf
-X-Received: by 2002:a17:903:37cd:b0:2dd:c053:c208 with SMTP id
- d9443c01a7336-2df7dc1ee10mr53227255ad.36.1790379139383; Fri, 25 Sep 2026
- 16:32:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Rx4NM58v"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1790389090; x=1821925090;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=dRGWId1wJKUSEuQAHNcS95zaS02ViRpUZpoMX0WcgsY=;
+  b=Rx4NM58vXDdU+8vl2iOlckdTrZMoV7/SIe/58FxheANiiKzdSWeARmid
+   oS9bvkzjX1JhxaculrfomV1wUgpNODDTv/aUYymzT0vxqqPJiPy//OaEf
+   75Zset8ZMzuSacTfw0Uxkl9KA2KSazEkRwGJLR3VIbLe647mVKcvHb2lJ
+   syDlLVghPDZckvjBGkCkKJq2B7qO1Tuw06of4coPWUA7nqRocJlFlyUj/
+   r4ixlUS0eh0ckIXjIWDaDauzdzcTK4DwcgL3hmqrxIY3N0IJaOcLjvYlu
+   WLz3wZVp0Myt1ajAH1PAam/DcLm0qyRyC0N4jfqKJ4EOGvvk3kBaUpp98
+   A==;
+X-CSE-ConnectionGUID: MHgOZimIQi2BKcEDcWH8Dw==
+X-CSE-MsgGUID: 6/QXdaEUQ4CbG7MSQLoH0w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11916"; a="102542727"
+X-IronPort-AV: E=Sophos;i="6.27,123,1787036400"; 
+   d="scan'208";a="102542727"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2026 19:18:10 -0700
+X-CSE-ConnectionGUID: kS1mvXitTju+9e86Ic4KOA==
+X-CSE-MsgGUID: 07Lo75U5SdGhFWfnYO03MQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,123,1787036400"; 
+   d="scan'208";a="272640435"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by orviesa010.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2026 19:18:10 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Fri, 25 Sep 2026 19:18:09 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46 via Frontend Transport; Fri, 25 Sep 2026 19:18:09 -0700
+Received: from CO1PR03CU002.outbound.protection.outlook.com (52.101.46.16) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Fri, 25 Sep 2026 19:18:09 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YVZkAUad7N0DeXoG1pnhYI5+xlJen/mJ31zY6qsxckytbvaH3xQUcCPzT2gVwPz/Dav9yotLNJ301QaoIScOdfEZtL7paALBNUK+bZZk3BkTLOZ4dA51+7CcyQKFlScwahW+ew89dgoG3e0YOGumStojMaYJyKIJ2e/DRBTcVFUXZl4XHQHQK3/vfLJoKg3pZpWJ6FjT61o3pbxA6O9UfYenbEaP3BRFHFfBb/NSvShksveRjfaqW7zrH+JrXw9BKW34sHaLMESMltlGRagIwgRieZcSG2hSxOcNM5RiyNDqlLyr6Dljp+tJt78iSLftjLuN2WUA/ot14XaKySWZVQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=XIEcd+G/Ar8qJRZyhX+dIXD8C8V5QQXv4e+ugZc4GYw=;
+ b=dYCnaX5S/YzJ+HDWohlnvtm120nhpKyPpeUE2AGaAZl+BNkHeBBDuKyKQUMKN+yHZrbMnYeGOxc1TaivDAsaOZSDfG/IBm4s17BMqdFRE95ySJnzI8vjyFKAHOUUCkSYWXpvvLNIDIYBxhkBxXiPlabOF7vN29UXKCCbqsyQVZ9J0RX6XjLlEaec+oWYRnES1a1CWuj1iFcdILeY2BcNyGEZ5Csbi4mA7gFmMJjQ+JgrnoRMSUOlZ+GR8lBvXEous34TfmIMfhPAkjSEydaj7ZY3UVjORKn9aSUxBT3Nle/XGeJT/SahcEvMWSsMfzz9qZaO89Bl/tZvQBPEC+j3kg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CO1PR11MB4787.namprd11.prod.outlook.com (2603:10b6:303:95::23)
+ by BN9PR11MB5259.namprd11.prod.outlook.com (2603:10b6:408:134::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Sat, 26 Sep
+ 2026 02:18:07 +0000
+Received: from CO1PR11MB4787.namprd11.prod.outlook.com
+ ([fe80::e7eb:a872:53d1:21fd]) by CO1PR11MB4787.namprd11.prod.outlook.com
+ ([fe80::e7eb:a872:53d1:21fd%4]) with mapi id 15.21.0451.014; Sat, 26 Sep 2026
+ 02:18:06 +0000
+Date: Fri, 25 Sep 2026 19:18:04 -0700
+From: Matthew Brost <matthew.brost@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: Brian Nguyen <brian3.nguyen@intel.com>, <intel-xe@lists.freedesktop.org>
+Subject: Re: [PATCH] drm/xe: Implement print vfunc for page fault info logging
+Message-ID: <arcrXAJy/bzijpdp@gsse-cloud1.jf.intel.com>
+References: <20260925232757.3456172-2-brian3.nguyen@intel.com>
+ <20260925233853.399E01F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260925233853.399E01F000FF@smtp.kernel.org>
+X-ClientProxiedBy: MW4PR03CA0228.namprd03.prod.outlook.com
+ (2603:10b6:303:b9::23) To CO1PR11MB4787.namprd11.prod.outlook.com
+ (2603:10b6:303:95::23)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260925224631.1490488-1-andrii@kernel.org> <20260925224631.1490488-2-andrii@kernel.org>
- <20260925225809.B4AE01F000FF@smtp.kernel.org>
-In-Reply-To: <20260925225809.B4AE01F000FF@smtp.kernel.org>
-From: Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Date: Fri, 25 Sep 2026 16:32:06 -0700
-X-Gm-Features: AclHuK892OGHXlxagHR-gVN-qbZR0IEC17qQX162odU9MC5MDHyosbHdN2Jnj-0
-Message-ID: <CAEf4Bzb1vDcu1NWs79uOwrmXUz-J4XetWQiUYUAaTuAu=su99A@mail.gmail.com>
-Subject: Re: [PATCH bpf-next 2/2] selftests/bpf: Add linked_externs test for
- externs in allocated sections
-To: sashiko-reviews@lists.linux.dev
-Cc: Andrii Nakryiko <andrii@kernel.org>, bpf@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PR11MB4787:EE_|BN9PR11MB5259:EE_
+X-MS-Office365-Filtering-Correlation-Id: 179debaa-81b6-442e-eca8-08df1b7466e3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|22082099003|10067099003|56012099006|3023799007|18002099003|4143699003|11063799006;
+X-Microsoft-Antispam-Message-Info: 7j5tKVJX0iTCiT5m7r67UWkhwh/qv3v218vRVweAe7Ix8kiIgWDtkxoLoMTOccmZmrM6B7sOhPArrQAYZ/pB8CbirY1tc2HUWKqdZ6ZynmhtIA0l9/nQrWV9NadtBVhQdad7AhIj9c1JJ9i6R0awd9WVXJfMeYX8JnZrt29PELmiEp+XDo24cvIOfTWbN40FF1gX4EdoagVj0mmGIeGfeX1ZI89x+8vCLRfJXaIIHx/Tdot+7gMGtYeh1I1i6u7+cNqPz2hYytSIg5o0eQmWgwtYe437R28nQCjFi0COkLIP9qc0kMHH3pdGAe5m5nvYHuQ5RJx3xB5StEkUv6Y7cC7pqseqYXHS5rJ1HZ/IJ/KcmJQaCCZCa9wX6GizQa3Db3SoXONkXn6ez3Ok3pKazkcdlIkR9DNhSpamQQpsMXN+SWVMQ5LLAajzb6dYJHo54DAw5GkcUIo6i6qRsH5L2mPWVU7D9U7OEVHbKtfIaOD7NzKATEsP8zFrJ4i2i7ArRZGQ4SxCezdvhtYGrI+KWav3uyn5xEUNKJMwrd7k7P1VAu0R6HnaPBIXNtCQq9qAYG/yvFDB4h2PVZFK3ACIxW30GN7ua+084nPOD5576eA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB4787.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(22082099003)(10067099003)(56012099006)(3023799007)(18002099003)(4143699003)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?9H/7EpbgXqZNIcMwRqgMYWIhvaqM1L9q2zayTpdxBEHh1mpk+so5DRpOJI?=
+ =?iso-8859-1?Q?f8oZCy82lI8EJn19ndkdS/+gbadlreXDgbafgIKgR+tNu7UGCmxbP9V8U6?=
+ =?iso-8859-1?Q?bQJWckIQLYMU1VChOBBA6HiimB+77pXIUSCKuoNuZVbI+4hi6G91raNo0J?=
+ =?iso-8859-1?Q?8hZzLeezHxnb9h3l8Kr6WOAaCf1xV0AYGee0lO3lZLAnr+YT2LFtZnWlsc?=
+ =?iso-8859-1?Q?cBsHIQ2Dg0xiVFFn5z67hmEVcvz7zlniFc8Aq3AUv1l4HQ7qyh0+iYyD97?=
+ =?iso-8859-1?Q?cGuVbFmkHCv0Wktt23Lr69p7cJdtWkhNhKycqRdXsGRs4z4FhiGv1iXTHH?=
+ =?iso-8859-1?Q?Vz5E1XJSHwdQMxQvlPhm+l2VTgWDadUds+5Z83FXID+op8ywMPf6cXIjL8?=
+ =?iso-8859-1?Q?PQeXiXch4gtdcF09rb2VGu94PeiGFREp+Lh+sXHdfyZoWUo8i8LhqueE2T?=
+ =?iso-8859-1?Q?9ff/bv9/3ZVuxdFCvIg3OFH+Wznfamk0ABRwzAerjpw+mfSB6PWvTuNw3G?=
+ =?iso-8859-1?Q?KAAkUu3T5RXs80qziICRw+hNfjqWC4bCpWS20UhHAzdSZQE164rIsfMVLu?=
+ =?iso-8859-1?Q?IQRnetTgM69flH0m8H6SBXidD3/ZkvIPMBh4MxkNAZJt45bBLTK/TewZDS?=
+ =?iso-8859-1?Q?ajLy0iXTnSr/nocvrlkqH6cpANRD+XPQK7p0/y7zYEq7Lw7Yb6zQgOkL0V?=
+ =?iso-8859-1?Q?CNDkkF8+iJ593/wIsCoT+10Dar4BshNRmTh6Qm4B/C2DsPeFiwMnFj+im+?=
+ =?iso-8859-1?Q?zYzrcBT0qmPlLSIUH/rN83k989lTqfVmJWcP92NfVNGHSntVU8PfdjOw3n?=
+ =?iso-8859-1?Q?XcdkOpbQ2e2v+lnjX8xZYsv9xqHlqn5abg71min9dy00D5bHaMFh7Jf/7q?=
+ =?iso-8859-1?Q?w2D8vMjmmP+c1GT2hTynw9Wd09YTKfCDuX7cSc3+tIFINjAoeT2Wax0HK6?=
+ =?iso-8859-1?Q?9mnHnKVOsRy61m26at5aCoG5Iem/4LINo7yCw4i+iCzyIYVtxBxa3akCN5?=
+ =?iso-8859-1?Q?pw7TsdA92VEU7OJRiyKrl3PFaOtHTe8gIQXrWnWYyn+gqUnrfqmPeRC5cx?=
+ =?iso-8859-1?Q?wjOJxBxeYPfVpHL5JawdZM4umdTXRkd6jBV+3Z/R2vTO+P2wFOcrEvVSaO?=
+ =?iso-8859-1?Q?TWA33ZpU6BzChMuV+SvKlGgbSPpLwUUNkL9uBHinxBBtc+PmtZPcEg4tiI?=
+ =?iso-8859-1?Q?LLyoSX+Tn0BiuSozVliewBkoiw+NuTFH6xRefbKwpWtUKkz6mWOY8yeCF2?=
+ =?iso-8859-1?Q?iQKRprozo0JOqn7e//iHV4qICpcdP2YrSZH3Ypp4tz3NOqy9lphSVQDiT6?=
+ =?iso-8859-1?Q?4qrbKo1WI3KyaHNWQeBbjdIH3irQOE1HBg1ppPTHoq4pJl4eEVPC3j4nKz?=
+ =?iso-8859-1?Q?sZkWDvUROT4GI38OSP+R6NomF7F9h1zRXR0jKhSCgdhW6NxuP35TtoMa9P?=
+ =?iso-8859-1?Q?pkggt/kQRE9vImi5GsblHG4FyE8HtM9yDBMuCmh3mlR0wlEosa+vPzusms?=
+ =?iso-8859-1?Q?LsvtZwuhPR9HuL/HY7v268PzPzAqe65l7TOJTQqi0YgAdhCn7Y77fPPz93?=
+ =?iso-8859-1?Q?Nz8674sRW/auWvnEByz4LzysmpGEcVYQJdasMIPnN5A7KNbeO9C2w/5oeZ?=
+ =?iso-8859-1?Q?5RdJ1cbATek/U9OWu2ItWJq/O81regzNy4epZicl/5MaPnrhM5zZjhHYII?=
+ =?iso-8859-1?Q?p3OwAHXFzYwYSVgYCrECT8Wyzbd8oUv4nm2ApZHXVdRERfiodq5RtF8Rj3?=
+ =?iso-8859-1?Q?ZYaaiC1YZwTRM0sV1QCAJgSkpfbTIMMuTz6x15tjIR30uRJSR5FZzr1gOP?=
+ =?iso-8859-1?Q?aHRNqIKIBil5QWnwnIq/k9UuDH7tdDw=3D?=
+X-Exchange-RoutingPolicyChecked: bs9BRoBvQZZ0dlRH658l86so6oYyKlbQsPnajek2imjWteqPlR/wASnadHRLmSeg7jBk1my7envz95fwTB1RTKr4Q6CcXI+bFIwSHNaZP3EYar9ZcWksJIsdP/YmDd431TveMmeVW1kcGsgP1OFN/Ps+g228RFUhQGa2xUWE0ishyvT0a4pvdPTK/e89n6PdSjXCqd8IPE7JUPpAgMV8vL/o96LDzAtbxXiW05X5EZNcSX4KJq3FKfNuVIQa9lAgzm4NWWRwS8rDuRznFhfvihtuX54N1ufWF/4iXtz8TsFoxENubBWwGsAkxp0osQzWKRWb7AYFdZo26b3iXoHApA==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 179debaa-81b6-442e-eca8-08df1b7466e3
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB4787.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Sep 2026 02:18:06.7588
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: re4/eAYRJkXLV8FLn4G3eL5fl3jQjaiHGwo/HI0FxKFOAyq0j+VRL58nlvoMb6XBDm6hP4E66/j0wVJer+tyZA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR11MB5259
+X-OriginatorOrg: intel.com
 
-On Fri, Sep 25, 2026 at 3:58=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [Medium] bpf: TOCTOU and missing error check for mkstemp in test_relink=
-()
-> - [Medium] bpf: Missing NULL check for bpf_object__btf() in test_relink()
+On Fri, Sep 25, 2026 at 11:38:52PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] xe: log interleaving and redundant prefixes due to split print calls
 > --
->
-> commit 2e7da3dcbd552604f0f6c052dc8cda7a3628ffb8
-> Author: Andrii Nakryiko <andrii@kernel.org>
->
-> selftests/bpf: Add linked_externs test for externs in allocated sections
->
-> This commit adds two objects that define an arena global each and declare=
- the
-> other one's as extern, linking them into a single skeleton. It also intro=
-duces
-> a test to drive the libbpf linker directly to verify the relinking proces=
-s.
->
-> > diff --git a/tools/testing/selftests/bpf/prog_tests/linked_externs.c b/=
-tools/testing/selftests/bpf/prog_tests/linked_externs.c
-> > new file mode 100644
-> > index 0000000000000..29358c82dc356
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/bpf/prog_tests/linked_externs.c
+> 
+> commit 114cd7fd731f9ee67d8c36081ae1b0f44d9be562
+> Author: Brian Nguyen <brian3.nguyen@intel.com>
+> 
+> drm/xe: Implement print vfunc for page fault info logging
+> 
+> This commit adds a print vfunc to xe_pagefault_ops to let producer
+> backends log specific relevant debug info. This keeps the consumer
+> layer free of backend-specific formatting logic, with consumer-specific
+> prints handled separately.
+> 
+> > diff --git a/drivers/gpu/drm/xe/xe_pagefault.c b/drivers/gpu/drm/xe/xe_pagefault.c
+> > --- a/drivers/gpu/drm/xe/xe_pagefault.c
+> > +++ b/drivers/gpu/drm/xe/xe_pagefault.c
+> > @@ -607,35 +606,9 @@ static const char *xe_pagefault_error_to_str(enum xe_pagefault_error error)
+> >  
+> >  static void xe_pagefault_print(struct xe_pagefault *pf)
+> >  {
+> 
 > [ ... ]
-> > +/* link in1 on its own first, then link the result with in2 */
-> > +static void test_relink(const char *in1, const char *in2, const char *=
-sec_name)
-> > +{
-> > +     char out1[] =3D "/tmp/linked_externs.XXXXXX", out2[] =3D "/tmp/li=
-nked_externs.XXXXXX";
-> > +     const struct btf_var_secinfo *vi;
-> > +     struct bpf_object *obj =3D NULL;
-> > +     const struct btf_type *t;
-> > +     struct btf *btf;
-> > +     int i, id, n;
-> > +
-> > +     close(mkstemp(out1));
-> > +     close(mkstemp(out2));
->
-> [Severity: Medium]
-> Could this result in a Time-Of-Check to Time-Of-Use (TOCTOU) race conditi=
-on
-> and silently ignore failures?
->
-> mkstemp() can fail, returning -1 and leaving the template unchanged. Beca=
-use
-> the return value is discarded, could concurrent test runs end up using th=
-e
-> identical fallback filename "/tmp/linked_externs.XXXXXX" and corrupt each
-> other's output?
->
-> Additionally, even on success, does immediately closing the temporary fil=
-e and
-> reopening it by name in a world-writable directory (/tmp) introduce a cla=
-ssic
-> TOCTOU race condition?
+> 
+> > -		   FIELD_GET(XE_PAGEFAULT_ENGINE_INSTANCE_MASK,
+> > -			     pf->consumer.engine_class_instance),
+> > -		   FIELD_GET(XE_PAGEFAULT_SRCID_MASK,
+> > -			     pf->consumer.id),
+> > +	xe_gt_assert(pf->gt, pf->producer.ops->print);
+> > +	pf->producer.ops->print(pf);
+> > +	xe_gt_info(pf->gt, "\tError: %s\n",
+> >  		   xe_pagefault_error_to_str(xe_pagefault_get_error(pf)));
+> >  }
+> 
+> [Severity: Low]
+> Does this split print call cause log interleaving and redundant prefixes?
+> 
+> Because the error string is now logged with a separate call to xe_gt_info()
+> in xe_pagefault_print(), it will be printed as an isolated log entry with
+> its own prefix, rather than forming a continuous atomic block with the fault
+> details from the producer print vfunc.
+> 
+> This disrupts the formatting of the page fault debug info, introducing
+> redundant logging prefixes in the middle of what used to be a single
+> continuous multiline log block. It also creates a risk of concurrent kernel
+> messages interleaving with the output.
+> 
 
-classic no less, but I think we can survive that possibility just fine.
+This is valid too. So either make print accept the output of
+xe_pagefault_error_to_str as an argument and print the entire thing in
+one shot.
 
->
-> > +
-> > +     if (!ASSERT_OK(link_objs(out1, in1, NULL), "link_stage1") ||
-> > +         !ASSERT_OK(link_objs(out2, out1, in2), "link_stage2"))
-> > +             goto cleanup;
-> > +
-> > +     obj =3D bpf_object__open_file(out2, NULL);
-> > +     if (!ASSERT_OK_PTR(obj, "obj_open"))
-> > +             goto cleanup;
-> > +
-> > +     btf =3D bpf_object__btf(obj);
-> > +     id =3D btf__find_by_name_kind(btf, sec_name, BTF_KIND_DATASEC);
->
-> [Severity: Medium]
-> Does this code dereference a potentially NULL pointer?
->
-> bpf_object__btf(obj) can return NULL if the loaded BPF object lacks BTF
+Matt
 
-except it won't lack BTF, so yes it's fine
-
-> information. The returned btf pointer is then passed to
-> btf__find_by_name_kind(), which dereferences it internally (btf->start_id=
-).
->
-> Could this lead to a segmentation fault on malformed objects instead of a
-> graceful test failure (e.g., via ASSERT_OK_PTR())?
->
-> > +     if (!ASSERT_GT(id, 0, "find_datasec"))
-> > +             goto cleanup;
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260925224631.14=
-90488-1-andrii@kernel.org?part=3D2
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260925232757.3456172-2-brian3.nguyen@intel.com?part=1
