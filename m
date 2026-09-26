@@ -1,174 +1,64 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CEE2652A2
-	for <sashiko-reviews@lists.linux.dev>; Sat, 26 Sep 2026 13:46:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.176
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790430382; cv=pass; b=MaJ52AG2v9Llsky2MGJwjVt+j5LCa+jdqdZbMPs/UCDqhzdryGsKX4Mqas3t0SFo04XEbX7aAvLQkfgfgx0EW6MQyFPTjz19qoz7mzbN3ATsL6q0YZPFLh3SFENjDEPp6Zf9keQfadvPjA/h4z8FVrzwWf/vB1eYR22vBpBXueY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790430382; c=relaxed/simple;
-	bh=Tx1oOOC0NfZU6KNipWxxzy84I8pBGTmceJk/A55dXM4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WrYgeOi31r99VJofTiGj+FU2uv/uMebWUBUJX4bssan1pI5lGW9WCMs4eddvL6BjB2Wdh3Sb1+zfRyeREhyrLUgSzN79fMArvjwAPd1sVe8xzo2SChEPQ9efvfHRPdgOZQYPjUcNzVlxvKkNC1QUUlxsjGsq1gfwDe8kOnRQ6BQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fwRAHIkA; arc=pass smtp.client-ip=209.85.160.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF5A3BE179;
+	Sat, 26 Sep 2026 14:47:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790434069; cv=none; b=Loi9kYnZr9jXAcl/cWC+eX+e8xdhJwNkSxQ51wfXqQcZYB3Tujs+b2BnJBq0ZCkuWMrbIQDPi+xvG1yifhxPcBuOmUc8flINeKXZa12q7YwFhQ5DCJJ3Lm5k5LlqU6rnviDOMCaDjl1VAUI+4nqNBlaI70o0LLY/w/bH77Qpk5c=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790434069; c=relaxed/simple;
+	bh=SoIzXhEvbmeAD+ywcurIKAt/n3H8uZhGifNEixSUVaw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uqcf5JO/cuHlCsYoL8EGZLpdLwhyeodS67OFv2VJbA+okisc01ObeSdY7KTghJ9Y0rW6ElGH6huooOOVOoo7ISv7KjuIqkoG6m8bVIM4ZkfMqqpkcs3Jcbotpa2+SdBig0TD1jzPUlirsuVQiuUrm8OSt3+cXoJk5GTL0NqituY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XWfrJrju; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fwRAHIkA"
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-53328262efbso73001cf.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 26 Sep 2026 06:46:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790430379; cv=none;
-        d=google.com; s=arc-20260327;
-        b=o4R1NsFHd/xp/C1o7U5z+M+47j5z9O1U3dXETV7u4j6OfaIT0Ocn+u4Q9Qy6p/EJi0
-         C5crH4ApG39q3Ma8DEyCYLD8Yjjfo8jkdewEoTnIWRlWgYsYx4BaGiEhlCUPua+VnQT5
-         VLi86jlqXx2jaTnQiFs4JNArpMRe2I78BuO2gUrPQTyyirlYmnrHZ0+Tl1G0cpoiGi7Q
-         Vjph7MJMUJqGinFR6nQ1ErDv+kmAxs74NdwfiVpSPp4Fpv0H5Kp7vRJtTuv/bBnQPqWM
-         hG7z0iP/GU82xFjVlBZCiAU8p2ZnPCbrodtitgo/rdqMFaNzPt4lSm8MdsHtkJcgSCqp
-         tNjw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=vJLu3kDSRfbZXFyhHWOsWhCoWdaigpzzohCPc4GKQh4=;
-        fh=0zVHGC//SC94CWFKHtFt4lnskmkXkJNNy7lE0FDd3Ck=;
-        b=dmBDmNCqOm4kdTBKkaJwwPZPUi6E9rJIJUxOdunvcdgN8r+zySh944eAPL+gK6SoRO
-         Z+gRQ1IkOr340Fz50vInx0ViqyOFz56QhN/+mkw3L0mFJPjkVQDhaYOaTQ3QNTAsYGz0
-         Dn6yJi1Kd8gk+v5Tr8AOb+6nEEuKL40Vj8EXPbZNgR4WoeL44D2lYqie9U1iJzIwrXAp
-         foPfS4E2EF8KFYsuckxrOILm5a+xVmZxoORZwR/tD11ng6Z31+9thCrw8I9ayewPNQOR
-         2HKdRN1LgC+kti9APX3ZY1xNeF+758CgV7hid8inCXj54fC6sJE3iI4XWz0kLzXr8FsS
-         gUbg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790430379; x=1791035179; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=vJLu3kDSRfbZXFyhHWOsWhCoWdaigpzzohCPc4GKQh4=;
-        b=fwRAHIkAbi5QpCLHhIWd/wUzGCHwVi422bAcFAyjgIp0PJlUcNDNPZ8Dl7qfIfCd45
-         +5VQGaxQjYURXUKgOwjM2o4AW1ZEezvfsjEQSoQ9W7/yzsXy/Wqz4gMbgDUSJUez/wJ0
-         S9xsqTVIWsmhGEdBM3VCt2GV/E3P2FMuAj8F+gJtbydNhe09RPgD8wAZIjHp4TycVQgk
-         S9TbvZiSHb6/X88XxG6TZUaLs0u2ohOWN8wXS+13lZwR6MKnMXGpuksbT/sKXmsgllg4
-         ZmhU627kaGTTgho7hK8S3zKbk4fyGPHvGwYjlSxx86/y6PchyBXxWA0KAvXIEtVYxn27
-         bR9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790430379; x=1791035179;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=vJLu3kDSRfbZXFyhHWOsWhCoWdaigpzzohCPc4GKQh4=;
-        b=FpfGOZVR2moQh+zx73xZPGKOZe4q9ZbInGIrmf4GEpRG+J4gc114qMULMaV+cKrn6S
-         yKyjCWsIKTilXBBRxsOFbiq1985/4+fehIW9nLMjXJ1rjL9lZ4I6F1Tk0Vnl08sd1tMc
-         4k9UtqiVM7U+SQOaStIrBqn9ECuSC/Z58usgXu/uCXR4Mif8Qh+Y0PLJASXwt+riDAa3
-         4nSl+LD0Jv5ZWdciGpvgs9jAiG8C9fOiZQLLs2IbLwPY3XDQYzIcj8U363zW4qwDY1C/
-         vfzafbRNtquUSS8nulIinthqHRt7QXBhvgxdlCa+UIhPVKNW2ydTnIUcl55P0FyDW7TS
-         zrYw==
-X-Gm-Message-State: AFuF++nED9Pnuuszrbg61A9rTA72rXxMtuule0IL80lvGcozU1tzGfs3
-	bLS5GwoUg1MXz9/cJeM4StU0gzOz8FLWa2sJIswBJ0/yGAHla0eKJmjUJVp0Fsj2jyql1RqByHQ
-	DAkSh4JNvFTjcOy/3XCzNSwDaIcQmOfIcLhMm+1sO3CKBtIq+sA+OmN+fiHc=
-X-Gm-Gg: AYBFou3GV4AwmngA/GfZT8RieTZugXSPdndpYWiTouB/84zawJsayGn62NbWoH9P3WZ
-	X9pZgUi0EUnYeVZs0n72u2beMyKtm7wJgL+bRWtvdwBDoMwZMBCRiIiiVBL9HS5lZhGbbT6EIwh
-	a40LbxQsWWSHyTOm6uvsop0QwxRDIGro7EoOj4dsPQJkNSGSO6PwjPl7TyC8LwhnE1xP0xk1cjS
-	yF3BBEcsRGf5ulc2REIzUPfLlHb4QtnSbML3TjsRB8bOaidKpwKDmyFWyI4Mzih8ioll1cRbNRV
-	+3x//ExovP/zTSPAKh9hRlTKe4R9i0iPXfBzTIPHkIpW1RkNjxKK3QY=
-X-Received: by 2002:a05:622a:598c:b0:532:858d:e791 with SMTP id
- d75a77b69052e-533201552e2mr13447991cf.8.1790430378320; Sat, 26 Sep 2026
- 06:46:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XWfrJrju"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E7C1F000FF;
+	Sat, 26 Sep 2026 14:47:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790434067;
+	bh=YlivOBdPljKSWxtj70JMDp/3hwUgvEIJgivJLHAjQZc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=XWfrJrjuLQI3IPqEWMR+N6/6eFxlzs+LCCJVTOs3GhKN4zA/LJlkqkmsi4+BkT2YC
+	 Llq7XMsepZ02+FOyWeAKoHvXJ7NGPZ3b2J1iHGG4W+ZFvtFnclh4VYAbzbP5vvH125
+	 ula6zpGB74d0NHfdcRr85gLdIQevicggqvHyE2pR5GdFzgyaxrH7RP/Vjg4p0LKzet
+	 UnMiFfrITgh4PZzppReuok/+VL2URbQY8ZYcW0DJzh86iijQXVTMf8PBtuhCxXk7Gy
+	 Gi6D6Vmi4r+UMT+X6sIpckYXldueylbfMqzmVfMXQhtsvo5t2KrGf8MFej4tumaEF8
+	 Dc0fAY+ieHBVg==
+Date: Sat, 26 Sep 2026 16:47:35 +0200
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Christian Marangi <ansuelsmth@gmail.com>, conor+dt@kernel.org, 
+	devicetree@vger.kernel.org, vkoul@kernel.org, robh@kernel.org, olteanv@gmail.com, 
+	neil.armstrong@linaro.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v11 3/3] phy: airoha: Add support for Airoha AN7581 USB
+ PHY
+Message-ID: <owibbez4nfq5gh4b2ensbhy7d5trmcwupe4rqox5ig3wy33ngp@6z4gbmqry2cy>
+References: <20260724184523.193661-1-ansuelsmth@gmail.com>
+ <20260724184523.193661-4-ansuelsmth@gmail.com>
+ <20260724190135.B22051F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260923181213.3032038-1-irogers@google.com> <20260926062029.800743-1-irogers@google.com>
- <20260926062029.800743-22-irogers@google.com> <20260926063435.5FDD21F000FF@smtp.kernel.org>
-In-Reply-To: <20260926063435.5FDD21F000FF@smtp.kernel.org>
-From: Ian Rogers <irogers@google.com>
-Date: Sat, 26 Sep 2026 06:46:06 -0700
-X-Gm-Features: AclHuK8XMz-BOrz2CX67qrrrD064GgmoSWiLrW7QQhmG6NSRGgZn1LOhVzl2UbU
-Message-ID: <CAP-5=fURGSJtYcs0jP+oyRZOX6w5KNRF73V-KswmzQN9DTUAPA@mail.gmail.com>
-Subject: Re: [PATCH v4 21/49] perf python: Port event_analyzing_sample to perf module
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260724190135.B22051F000E9@smtp.kernel.org>
 
-On Fri, Sep 25, 2026 at 11:34=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] perf python: SQLite journal symlink attack via shared temp direc=
-tory
-> --
->
-> commit 69d795499ff20d3b762362308ad4405d0fa32d19
-> Author: Ian Rogers <irogers@google.com>
->
-> perf python: Port event_analyzing_sample to perf module
->
-> This commit ports the event_analyzing_sample.py script to a standalone sc=
-ript
-> using the perf module and standard library sqlite3. It adds database
-> encapsulation and argparse options, while removing Python 2 compatibility
-> and adding type annotations.
->
-> > diff --git a/tools/perf/python/event_analyzing_sample.py b/tools/perf/p=
-ython/event_analyzing_sample.py
-> > new file mode 100755
-> > index 0000000000000..15b47cff9fa30
-> > --- /dev/null
-> > +++ b/tools/perf/python/event_analyzing_sample.py
->
-> [ ... ]
->
-> > +def trace_begin(db_path: str | None =3D None) -> None:
-> > +    """Initialize database tables."""
-> > +    print("In trace_begin:\n")
-> > +    if not db_path:
-> > +        fd, db_path =3D tempfile.mkstemp(prefix=3D"perf_events_", suff=
-ix=3D".db")
-> > +        os.close(fd)
-> > +        _DB.temp_path =3D db_path
-> > +    con =3D sqlite3.connect(db_path)
->
-> [Severity: High]
-> Can this sequence open a race window for symlink attacks via SQLite journ=
-al
-> files?
->
-> When tempfile.mkstemp() creates the main database file in the shared /tmp
-> directory, it doesn't reserve paths for SQLite's auxiliary sidecar files
-> like -journal or -wal.
->
-> If a local attacker monitors /tmp and observes the newly created base fil=
-ename,
-> could they immediately create a symlink for the -journal file pointing to=
- an
-> arbitrary target before sqlite3.connect() writes to it?
->
-> If a privileged user runs the script without specifying a database path,
-> would SQLite follow the symlink and clobber the target file when writing
-> to the journal?
->
-> Would it be better to use tempfile.mkdtemp() to create a secure private
-> directory for the database (similar to export-to-sqlite.py)?
+On Fri, Jul 24, 2026 at 07:01:35PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] Missing PHY Initialization for SerDes PHY (API Violation)
+> - [High] Incorrect Register Update using regmap_set_bits with a multi-bit mask
+> - [Medium] Semantic Mismatch: Hardcoding SerDes PHY to DEVICE mode ignores HOST controller capability
+> - [Low] Missing Header Files for Core Kernel APIs
 
-The legacy script hardcoded `sqlite3.connect("/tmp/perf.db")`, so
-`tempfile.mkstemp()` was used here to avoid a fixed `/tmp/perf.db`
-path when `--db` is not specified. Note that on Linux
-`fs.protected_symlinks=3D1` and SQLite's `O_NOFOLLOW` when opening
-journal/WAL files already prevent `/tmp` symlink clobbering, and when
-`--db` is omitted the temporary database is unlinked in `trace_end()`.
+Please respond to these issues.
 
-Switching the default (no `--db`) path to use `tempfile.mkdtemp()` (or
-`sqlite3.connect(":memory:")`) is a nice cleanup. If there is a v5
-I'll add that fix to the series; otherwise, I'll send a small
-follow-up patch once this series lands.
+- Mani
 
-Thanks,
-Ian
-
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260926062029.80=
-0743-1-irogers@google.com?part=3D21
+-- 
+மணிவண்ணன் சதாசிவம்
