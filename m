@@ -1,111 +1,67 @@
-Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BEFE20C029
-	for <sashiko-reviews@lists.linux.dev>; Sun, 27 Sep 2026 15:43:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.160.73.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0745A41A923
+	for <sashiko-reviews@lists.linux.dev>; Sun, 27 Sep 2026 17:48:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790523837; cv=none; b=Hwxw7HeEkJqrv3c1ea+VgcTh5msVyp4zQOjh2WVLAFPjIaPjlXk48M2B0bwhkEGXwsB/43ZuTCAfzOk99KLCBbRQZ5DW9Ru/u2nbAehVgJvjzQeByhAXgai0Xdr+L9hLbszD5vJU6pPh1bZ/oh/kLadbbkaaRFLE9awTN+8kJUM=
+	t=1790531300; cv=none; b=iDUWiucrfGnL3Jr/FW0oBfq9DQmvV64SSL4cYV5qGG3kpR1128v9guPaDzog27tZJSeOtqw9yDwFs7/uB6PWf3hMnFXtQg3hasx9/gf/1EI1BvrirKb6nQyQoeXqDIJFZiNnnIHYu05QySnYO/a8OBRChhN8DjKxxE9CGfCBlY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790523837; c=relaxed/simple;
-	bh=NAph2avTsG03FrifzX0VZIAfzJ/vmAGtxvvdy8EPXPQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WEjkw5cX/MrrAwq+UH5UARiHbhc/PRXtI1gdAaePOJfVojT1V7wNsCIxozxSeI7nHcBLXqUzOEF1QjH80Eu2LtbVb6lLyauvTos1Ytj4/QOoa+zMlZZ4LgBZTyuQK7XQ34G/NCVnLQ3ZBOnO7FFonmYrXx3M10CAeKIYeCPsez0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org; spf=pass smtp.mailfrom=narfation.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=aKJEcirS; arc=none smtp.client-ip=213.160.73.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=narfation.org
+	s=arc-20240116; t=1790531300; c=relaxed/simple;
+	bh=9tCMVdNkP35IT55kMkZYxiVxL1wlT03JU2Np7kTuI3o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MDmH9AN+O3syW/gDgFLdJ6bjTEIR0jYWcaKmff+6QLgMmi/5WVI3mXkWpYuaLDOv8RRV2WgDs/QsiZNPGjFAYE6Zu5ysSmPt/2/LgvjLJR4hglyzvIaXUGc9pfOLLOoasdWhzqCchSTInwJN+F9dAR982mJh6kJ/Wc+8mJDAoCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d2+zprAD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="aKJEcirS"
-Received: by dvalin.narfation.org (Postfix) id A5D3B202F3;
-	Sun, 27 Sep 2026 15:43:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
-	s=20121; t=1790523833;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=2EGi2PrsTQLrG6Rc3gVCCF0hUp5QNm3KG5YxM+ef3GQ=;
-	b=aKJEcirSThbv+Do8RB5wpaT+V6DFT3nmtEM8uFJDdQEmTZB8DOdG7qFe5IBG9zGVGX8b4g
-	xVu7+sK4+BZlRje9WsHkcMqqDVrp7hath/Ae+/RDMEF5ESOITzZNbbpPGXoRZ8J6UhUzyb
-	bXaLPXaG2BiUMdkPV8AfE5L8rccLCX4=
-From: Sven Eckelmann <sven@narfation.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: antonio@mandelbit.com, marek.lindner@mailbox.org, sw@simonwunderlich.de
-Subject:
- Re: [PATCH batadv 2/2] batman-adv: tt: queue local DEL event before marking
- entry as pending
-Date: Sun, 27 Sep 2026 17:43:48 +0200
-Message-ID: <3028159.mvXUDI8C0e@sven-desktop>
-In-Reply-To: <20260927154118.ED9ED1F000FF@smtp.kernel.org>
-References:
- <20260927-tt-order-local_remove-v1-0-8951549e4a38@narfation.org>
- <20260927-tt-order-local_remove-v1-2-8951549e4a38@narfation.org>
- <20260927154118.ED9ED1F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d2+zprAD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B6B1F00899
+	for <sashiko-reviews@lists.linux.dev>; Sun, 27 Sep 2026 17:48:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790531298;
+	bh=9tCMVdNkP35IT55kMkZYxiVxL1wlT03JU2Np7kTuI3o=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=d2+zprADYu0HLdWVVfnKPA9zO53sZqJ0FhZpzjEUBL6AepXgLxjY0fR6VSeVSc4Gn
+	 1oInQhg6jJOdOYaWYX/5/tcXDKYmoQmYW5DwMKBsHmvwoyVRVYuiTqZwLT9DQYkY1l
+	 KmW2o8FLgVNDBxq2Jb0l95NopR6be2D73/8PrymwD/u9TvnA07Wp93Zs1qxDDTcfVe
+	 ykDFk0WFujuqTUBC3pNaRjbO62U4uNjRa0hDEUUS4l9rnRJQg2/c2wjqzew+LfQSQP
+	 W1bOnOiSGvze7UlvfXsZWQDvdO+RTrdyoX/IHCExzMuN4sq5Gkfvh2+kO/tCy8bhLr
+	 6rMOkHiasdMDQ==
+Received: by mail-lf2-f12.google.com with SMTP id 2adb3069b0e04-5b8f27a48cfso669791e87.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 27 Sep 2026 10:48:18 -0700 (PDT)
+X-Gm-Message-State: AFq9FYJtpxnUxBzKitaJFsWNSlHgZoWDE5/7mMnc8MO9+B8/Xvd/yqw2
+	PXa8aug1akqHiGolFvbKmlOBRAx5J6fvsWKiOdxOSl0jY2qHqL8pdIREbl8WPx7H0jr7dLF980y
+	RewN2CBQqsg5ZRnAY3z2DAtism7bxy0U=
+X-Received: by 2002:a05:6512:2396:b0:5b8:f2ca:40e6 with SMTP id
+ 2adb3069b0e04-5b8f2ca4232mr1294357e87.8.1790531297453; Sun, 27 Sep 2026
+ 10:48:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart13156350.O9o76ZdvQC";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
-
---nextPart13156350.O9o76ZdvQC
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Sven Eckelmann <sven@narfation.org>
+References: <20260927-dma40-fixes-v7-0-89f595e8851d@kernel.org>
+ <20260927-dma40-fixes-v7-6-89f595e8851d@kernel.org> <20260927092431.DE0921F000FF@smtp.kernel.org>
+In-Reply-To: <20260927092431.DE0921F000FF@smtp.kernel.org>
+From: Linus Walleij <linusw@kernel.org>
+Date: Sun, 27 Sep 2026 19:48:05 +0200
+X-Gmail-Original-Message-ID: <CAD++jLmFQiqiuJpF=Mo9bkF2n6_Q9nKjKR0x3Lmgw4107bUGFA@mail.gmail.com>
+X-Gm-Features: AclHuK9ty_hlcVfOqVsIEWWAP2Dv2LmHPHtWsLwQyvXHBviYrFQVUhYWR49-6aA
+Message-ID: <CAD++jLmFQiqiuJpF=Mo9bkF2n6_Q9nKjKR0x3Lmgw4107bUGFA@mail.gmail.com>
+Subject: Re: [PATCH v7 06/24] dmaengine: ste_dma40: Check runtime PM in IRQ
 To: sashiko-reviews@lists.linux.dev
-Date: Sun, 27 Sep 2026 17:43:48 +0200
-Message-ID: <3028159.mvXUDI8C0e@sven-desktop>
-In-Reply-To: <20260927154118.ED9ED1F000FF@smtp.kernel.org>
-MIME-Version: 1.0
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sunday, 27 September 2026 17:41:18 CEST sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> Does this introduce a race condition in batadv_tt_local_purge_list() by
-> splitting the timeout check and the state modification?
-> 
-> By removing the BATADV_TT_CLIENT_PENDING assignment from within the
-> flags_lock scoped_guard (just above this snippet), the lock is now dropped
-> before batadv_tt_local_set_pending() is called.
-> 
-> If a concurrent batadv_tt_local_add_existing() updates the client in this
-> window:
-> 
-> CPU1: batadv_tt_local_purge_list()
->     checks !batadv_has_timed_out()
->     leaves scoped_guard, dropping flags_lock
-> 
-> CPU2: batadv_tt_local_add_existing()
->     updates last_seen
->     skips queuing an ADD event (since PENDING is not yet set)
-> 
-> CPU1: batadv_tt_local_set_pending()
->     queues DEL event
->     acquires flags_lock
->     sets PENDING
-> 
-> Could this sequence override the client refresh without an opposing ADD
-> event to cancel it out, wrongfully dropping an active routing table entry?
+On Sun, Sep 27, 2026 at 11:24=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 
-Ok, whenever you touch the TT code, it starts to burn. I should stop trying to 
-fix anything in it.
+> Will this cause the kernel to eventually disable the interrupt line
+> ("nobody cared") and permanently break the DMA controller?
 
-Regards,
-	Sven
---nextPart13156350.O9o76ZdvQC
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
+Yes that is the idea.
 
------BEGIN PGP SIGNATURE-----
+That is what spurious interrupt handling does.
 
-iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCark5tAAKCRBND3cr0xT1
-ywb3AQDpzLqGMmgg8V8kNWSRuvG1XS0bcFcPdlo2A7z/JJqbGwD+M0BwYStpKdfB
-uNpbdVQ1bLBo9tWarW8fgz/rPgVXqgg=
-=ePXu
------END PGP SIGNATURE-----
-
---nextPart13156350.O9o76ZdvQC--
-
-
-
+Yours,
+Linus Walleij
