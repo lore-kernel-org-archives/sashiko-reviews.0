@@ -1,36 +1,36 @@
-Received: from mta1.migadu.com (out-53.mta1.migadu.com [95.215.58.53])
+Received: from mta0.migadu.com (out-59.mta0.migadu.com [91.218.175.59])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250E13A48CE
-	for <sashiko-reviews@lists.linux.dev>; Sat, 26 Sep 2026 23:54:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD06632
+	for <sashiko-reviews@lists.linux.dev>; Sun, 27 Sep 2026 00:02:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.59
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790466849; cv=none; b=oXtBww76ZvOEQQ8r7xeovsqObutd7SgiEAud70CUVMS1AsDbnxbsMFJhYDNCsNS41t8Qjqt1ZUf8l4GNzY2pmNxyYuRz83SrckR8Ue88iRD64TvXZwxYfdmuLXBn+C6Sc7bLYyVy0y9/TyBtf+BRFyoNjzVi5Z9NU3gHU8Z5pk0=
+	t=1790467341; cv=none; b=nC+BcyUcXwNKSe1aL/LNX7UD2DjH3BG5W4JEF4fcMsWH0GdacrXTZ1+Lpcv5pkB4BRvYgtEfCI1HXHxRFRZ8KRfaD7IPlrBjWTK9evOKdg51uhf0FGw9SgIszEufwFfyvRoHyti6os+ZHdvwv5jXg4WOrYD31tQTxAzwIT4HYkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790466849; c=relaxed/simple;
-	bh=jnoEmM6Qt97VgN8QiJcQ9FUn+SKqvZTHZvARRfMvd5Q=;
+	s=arc-20240116; t=1790467341; c=relaxed/simple;
+	bh=+618+mufiBuzAWWHOtxBAv76pP8RS0vaeumb9smfaBw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sBENffwNLof9BTabtGUZPLJ8u2dL0Oh78tujH6Iyv9ONh0zths8UNbMzkMi1JgLYJ2FKgO0fDjIzsIjcupP5OUG+P6NA9EkUxbJzjm814eTLSeNc5P1HaB9CmCKb4HJIF/jai3ETvbq4xJdcTfttgOiwyxVuyoJGpt+xDFjP098=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=RGIx4/MN; arc=none smtp.client-ip=95.215.58.53
+	 In-Reply-To:Content-Type; b=j32akwXVTPm2AJrf7rCYab9sjPwheE1eGAz7yqKO+9s/cQBUtSZDWVj4sJnqFOt4cRn8rl71AVMN/o0J6Ep9fjauwjku4nFC/KGVeGGchmVLNJwWYd9b8SYSUrOCPHbyM2Ru2X9MNrTsD64Z3KIR7RSRt/gTlqdIXPJ8XHAolkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=OKkhQNS3; arc=none smtp.client-ip=91.218.175.59
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="RGIx4/MN"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="OKkhQNS3"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=jnoEmM6Qt97VgN8QiJcQ9FUn+SKqvZTHZvARRfMvd5Q=;
+DKIM-Signature: a=rsa-sha256; bh=+618+mufiBuzAWWHOtxBAv76pP8RS0vaeumb9smfaBw=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790466843; v=1; x=1791071643;
- b=RGIx4/MN2qdnbaJNrryBXzeAowAJwSnp/jgWhSeV2zXUpa/am/EX6Os9T4rAJLLRb885V4h8
- ywYXawh23PH/moH77gl7qMxqplyGQ3lkMGRRVEhY4G4wAPuP887eoDXmz+ySgJTzR93rpEWHB0V
- lE/ib/dMvtlB9vbeL9LOLtyM=
+ t=1790467337; v=1; x=1791072137;
+ b=OKkhQNS3soN/pOkl/d80kaN2vCgKEDKQZK00ykAqSRHygKaPfRAcIumAE9cdQppZOnWsD22u
+ SM/nyUqeFtdysLbuIy6CdRgUfpx6JVcU6K8Vmw8uqV8i/5j8rb0ePRvRfqEb4+IG3yPF9etACPB
+ OVzDmZ1SfT6pZYRix4Kr9caw=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 23df2140449d7eee;
-	Sat, 26 Sep 2026 23:54:02 +0000
-X-Mizu-Trace-ID: 23df2140449d7eee
+Received: by smtp.migadu.com with ESMTPS id 4509d27e0a3bd69b;
+	Sun, 27 Sep 2026 00:02:16 +0000
+X-Mizu-Trace-ID: 4509d27e0a3bd69b
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <d19b799a-03d6-4902-91ff-9b97d54c3fd4@linux.dev>
-Date: Sat, 26 Sep 2026 16:54:00 -0700
+Message-ID: <16ff7e99-973b-44f0-b139-ff5dca529ac6@linux.dev>
+Date: Sat, 26 Sep 2026 17:02:11 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,114 +38,130 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v6 05/21] bpf: Prepare for an exception cleanup
- table before the CFG walk
+Subject: Re: [PATCH bpf-next v6 06/21] bpf: Make exception landing pads
+ reachable in the CFG
 Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260926050006.2213110-1-yonghong.song@linux.dev>
- <20260926050032.2215748-1-yonghong.song@linux.dev>
- <20260926051638.867681F00893@smtp.kernel.org>
+ <20260926050037.2216265-1-yonghong.song@linux.dev>
+ <20260926052120.AEFD41F000FF@smtp.kernel.org>
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260926051638.867681F00893@smtp.kernel.org>
+In-Reply-To: <20260926052120.AEFD41F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 
 
-On 9/25/26 10:16 PM, sashiko-bot@kernel.org wrote:
+On 9/25/26 10:21 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] bpf: bpf_throw() bypasses exception_callback_subprog check skipping cleanup pads
+> - [Medium] bpf: DFS traversal invariant violation in visit_func_call_insn
 > --
 >
-> commit bfb14bc84bb67f59ae10ca034e824ec0357d7d80
+> commit 9f815c7b6f7049f1604884b98686a7516748e963
 > Author: Yonghong Song <yonghong.song@linux.dev>
 >
-> bpf: Prepare for an exception cleanup table before the CFG walk
+> bpf: Make exception landing pads reachable in the CFG
 >
-> This commit introduces bpf_prepare_cleanup_exceptions() to record landing pads
-> for BPF-to-BPF calls and bpf_unwind() within a cleanup record's range. It
-> ensures the JIT supports dispatching landing pads and refuses to combine
-> tables with an exception callback.
+> A bpf_unwind() or a bpf2bpf call inside the [begin_off, end_off) range of a
+> cleanup record can reach that record's landing pad. Add that edge to the
+> CFG walk, which explores the pad and makes both ends prune points, and to
+> bpf_insn_successors(), which liveness and the SCC passes walk.
 >
->> diff --git a/kernel/bpf/exception.c b/kernel/bpf/exception.c
->> index b19fcbf49b7ef..1ed0370a171b7 100644
->> --- a/kernel/bpf/exception.c
->> +++ b/kernel/bpf/exception.c
->> @@ -7,9 +7,56 @@
->>   #include <linux/filter.h>
->>   #include "exception.h"
->>   
->> +#define verbose(env, fmt, args...) bpf_verifier_log_write(env, fmt, ##args)
->> +
->>   BTF_ID_LIST_SINGLE(bpf_unwind_id, func, bpf_unwind)
->>   BTF_ID_LIST_SINGLE(bpf_unwind_resume_id, func, bpf_unwind_resume)
->>   
->> +static void mark_call_sites(struct bpf_verifier_env *env)
->> +{
->> +	u32 i, j;
->> +
->> +	for (i = 0; i < env->cleanup_info_cnt; i++) {
->> +		struct bpf_cleanup_info *rec = &env->cleanup_info[i];
->> +
->> +		for (j = rec->begin_off; j < rec->end_off; j++) {
->> +			struct bpf_insn *insn = &env->prog->insnsi[j];
->> +
->> +			if (!bpf_pseudo_call(insn) && !bpf_is_unwind_kfunc(insn))
->> +				continue;
-> [Severity: Medium]
-> Since bpf_throw() is not matched here, does it skip receiving a landing pad?
->
-> If a program is loaded with .bpf_cleanup records and calls bpf_throw() without
-> specifying a custom exception callback, could this cause it to silently bypass
-> the cleanup execution during unwinding, leaking user-defined logical resources
-> like map-based counters?
-
-Yes, when bpf_throw() is triggered and landing pad has some resource to be
-released, it is possible those resource is not released. Will reject
-bpf_throw() if *any* landing pad exists in the program.
-
->
->> +			env->insn_aux_data[j].cleanup_pad = rec->landing_pad_off + 1;
->> +		}
->> +	}
->> +}
->> +
->> +int bpf_prepare_cleanup_exceptions(struct bpf_verifier_env *env)
->> +{
+>> diff --git a/kernel/bpf/cfg.c b/kernel/bpf/cfg.c
+>> index b0bd9ba951dfb..4e2b6985bc964 100644
+>> --- a/kernel/bpf/cfg.c
+>> +++ b/kernel/bpf/cfg.c
 > [ ... ]
 >
->> +	if (!bpf_jit_supports_cleanup_pads() || !env->prog->jit_requested) {
->> +		verbose(env,
->> +			"exception cleanup needs a JIT that can dispatch landing pads\n");
->> +		return -EOPNOTSUPP;
->> +	}
->> +	env->prog->jit_required = 1;
+>> @@ -160,17 +161,64 @@ static int push_insn(int t, int w, int e, struct bpf_verifier_env *env)
+>>   	return DONE_EXPLORING;
+>>   }
+>>   
+>> +static int visit_cleanup_pad_edge(int t, struct bpf_verifier_env *env)
+>> +{
+>> +	int *insn_stack = env->cfg.insn_stack;
+>> +	int *insn_state = env->cfg.insn_state;
+>> +	int w;
 >> +
->> +	if (env->exception_callback_subprog) {
+>> +	if (!env->cleanup_info_cnt)
+>> +		return DONE_EXPLORING;
+>> +	w = bpf_exc_pad_of_call(env, t);
+>> +	if (w < 0)
+>> +		return DONE_EXPLORING;
+>> +
+>> +	/*
+>> +	 * @t is a call that may branch here, and @w is the target of that
+>> +	 * branch, so both are prune points. @w especially: every covered call
+>> +	 * site in a region unwinds to the same pad, and without a prune point
+>> +	 * at its head the verifier walks the pad again for each of them.
+>> +	 */
+>> +	mark_prune_point(env, t);
+>> +	mark_prune_point(env, w);
+>> +	mark_jmp_point(env, w);
+>> +	mark_jump_target(env, w);
+>> +
+>> +	if (insn_state[w])
+>> +		return DONE_EXPLORING;
+>> +	if (env->cfg.cur_stack >= env->prog->len)
+>> +		return -E2BIG;
+>> +	insn_stack[env->cfg.cur_stack++] = w;
+>> +	insn_state[w] |= DISCOVERED;
 > [Severity: Medium]
-> Does this check the state of env->exception_callback_subprog too early?
+> Does setting the DISCOVERED flag here in visit_cleanup_pad_edge() mark the
+> pad prematurely?
 >
-> If a later pass dynamically inserts a default exception callback, could it
-> bypass this restriction and result in a mix of exception cleanup tables and
-> bpf_throw() usage?
+> By marking it DISCOVERED before fully exploring its path, any valid
+> cross-edges to the cleanup pad (e.g., from shared cleanup code) might be
+> incorrectly classified as back-edges and rejected by the verifier.
 
-In the beginning of bpf_prepare_cleanup_exceptions(), we have
-
-+       if (!env->cleanup_info_cnt)
-+               return 0;
-
-so landing_pad will exist in the prog. With previous explanation, that
-means bpf_throw() will be rejected. So reject exception_callback_subprog
-too.
+The actual problem is below due to premature dfs stop's. See below.
 
 >
->> +		verbose(env,
->> +			"exception cleanup table cannot be combined with an exception callback\n");
->> +		return -EINVAL;
->> +	}
->> +
->> +	mark_call_sites(env);
->> +	return 0;
+>> +	return KEEP_EXPLORING;
 >> +}
+>> +
+> [ ... ]
+>
+>>   static int visit_func_call_insn(int t, struct bpf_insn *insns,
+>>   				struct bpf_verifier_env *env,
+>>   				bool visit_callee)
+>>   {
+>> -	int ret, insn_sz;
+>> +	int ret, insn_sz, pad_ret;
+>>   	int w;
+>>   
+>> +	pad_ret = visit_cleanup_pad_edge(t, env);
+>> +	if (pad_ret < 0)
+>> +		return pad_ret;
+>> +
+>>   	insn_sz = bpf_is_ldimm64(&insns[t]) ? 2 : 1;
+>>   	ret = push_insn(t, t + insn_sz, FALLTHROUGH, env);
+> [Severity: Medium]
+> Is it safe to push the fallthrough edge even if visit_cleanup_pad_edge()
+> has just returned KEEP_EXPLORING?
+>
+> The CFG checker typically relies on returning KEEP_EXPLORING immediately
+> after pushing a new node to maintain the invariant that DISCOVERED nodes are
+> strictly ancestors. By ignoring whether pad_ret is KEEP_EXPLORING and
+> eagerly pushing the fallthrough edge, this leaves the cleanup pad marked
+> DISCOVERED while the fallthrough path is being explored.
+>
+> Could this lead to loop-free programs being incorrectly rejected if a
+> cross-edge on the fallthrough path is misidentified as a back-edge?
+
+The above
+	if (pad_ret < 0)
+		return pad_ret;
+is not correct and it may cause premature dfs stop (ignoring KEEP_EXPLORING).
+The correct one is
+	if (pad_ret != DONE_EXPLORING)
+		return pad_ret;
+This way, pad_ret can be either KEEP_EXPLORING or err.
+If KEEP_EXPLORING, dfs can continue with landing pad.
+
+>
+>>   	if (ret)
+>> -		return ret;
+>> +		return merge_visit_ret(pad_ret, ret);
 
