@@ -1,36 +1,36 @@
-Received: from mta1.migadu.com (out-217.mta1.migadu.com [95.215.58.217])
+Received: from mta0.migadu.com (out-92.mta0.migadu.com [91.218.175.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E854219B3CB
-	for <sashiko-reviews@lists.linux.dev>; Sun, 27 Sep 2026 03:07:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.217
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAB5286D70
+	for <sashiko-reviews@lists.linux.dev>; Sun, 27 Sep 2026 04:35:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790478426; cv=none; b=c1gwQbCfltpjfxnrTIX0pXIl4UPLD/MNzlhEDp9mzKgUPTQSmuhc4/nK0b5Sytwtu5ZMTnW5nSBkQfDHnCcxQvm9HbF0SnVhI1LjN6zrlKR1EfA2qAdm8Q9Cw9R1zBH3rznjCFfOLZLKVYtdY7FlHuDydefYEcFoDmJNkdX2b/4=
+	t=1790483742; cv=none; b=ZUTdTmSaP44LdEovpjY3DpChLVptzmUUkkci10C5MfIvxq+glHofkNWRDxgax+4HOYi7dZiklhRt4Kfyrja2J7g4CxrZ6rgsrDzySONfWGoGGwNJ3znewvVOPmnn2ADairJm1EuU8PozpToADNXUEb02cdZ+pdrZ7SB9WI9Y/wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790478426; c=relaxed/simple;
-	bh=aSsCkNVBzts7NVFFSDZCGGuI3H8CXU9IKpaXzGylRAo=;
+	s=arc-20240116; t=1790483742; c=relaxed/simple;
+	bh=gMW+LqaZBOobL0nwVugxqJOL7fLnyUSayxIjQJjzuJk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=B7G3Ic2+sKSOjWFsotCQF9mTesuw5zNBcn1CztUtL7N4LJdv4dAd75vaZupbL382xiF2lNDQQ6ifCXMdtsl5ndw0IjccP+mfUKOGwPgmRplMluEgQIuKBvA85HBWo/t7UeGNzbPxGYc0S3dFaZ2v1ltNcKCa2EqJmvuQgA4ec04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=RbKjZkT8; arc=none smtp.client-ip=95.215.58.217
+	 In-Reply-To:Content-Type; b=asahcF63SIrcSxvXeK364KQBcggtiqgmpu58uDwJsZQn4pAZbc/OOFt2qIT2kIeVVJ2W/UKHZSNYOWzCMK+EUcZt/Vq6/W/DepqbrJTKMIOXomqxzCzScQFWqXyvFHNKxIvFmM4cOQvUWha+7fWrXIFINacg3J5EJju1TJCAfbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=kRYPZZmI; arc=none smtp.client-ip=91.218.175.92
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="RbKjZkT8"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="kRYPZZmI"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=aSsCkNVBzts7NVFFSDZCGGuI3H8CXU9IKpaXzGylRAo=;
+DKIM-Signature: a=rsa-sha256; bh=gMW+LqaZBOobL0nwVugxqJOL7fLnyUSayxIjQJjzuJk=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790478421; v=1; x=1791083221;
- b=RbKjZkT8Ea93SkwMrZpPpKpHL3wuZdehUL2jqNlMtfyNGHJ15v/C/s1HnzmOt8dzLn8pG54d
- QvqietoiOPq4JqirSfTEhhLACA+HOW4Vy3s+Litou1JNrGqX04H/pLYsZGOTBnzNhy2cQ0k/i4s
- 6kJXc0L5ICXyZtRXsXMA5sWI=
+ t=1790483737; v=1; x=1791088537;
+ b=kRYPZZmI8tqiwkmOXNDr4CIDmn5BGprqXylxpxMMESsTMYzbXdiDsnpRWxi7PpZMNLMJ6FQt
+ BKMxqAio2CuaQS8gRHV/yCyjsMFIXH4T7OhwXikd//EbQICHSBPc5uKM0NJFv7/fsGvBUxoNyb9
+ 1Yap8BfWs9Yvab1vC/G1VK8E=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id d2f0a114ac974d92;
-	Sun, 27 Sep 2026 03:07:01 +0000
-X-Mizu-Trace-ID: d2f0a114ac974d92
+Received: by smtp.migadu.com with ESMTPS id 375785e4799922db;
+	Sun, 27 Sep 2026 04:35:34 +0000
+X-Mizu-Trace-ID: 375785e4799922db
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <dd286a79-f423-4bcd-9e81-5babb25d572a@linux.dev>
-Date: Sat, 26 Sep 2026 20:06:58 -0700
+Message-ID: <c30b6d55-1ef1-4b9a-a434-99b7f3834bb4@linux.dev>
+Date: Sat, 26 Sep 2026 21:35:32 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,114 +38,95 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v6 08/21] bpf: Refuse a landing pad that does not
- resume
+Subject: Re: [PATCH bpf-next v6 11/21] bpf, x86: Dispatch exception cleanup
+ pads at run time
 Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260926050006.2213110-1-yonghong.song@linux.dev>
- <20260926050047.2216836-1-yonghong.song@linux.dev>
- <20260926051719.48E4B1F00893@smtp.kernel.org>
+ <20260926050102.2218021-1-yonghong.song@linux.dev>
+ <20260926051542.4DF841F000FF@smtp.kernel.org>
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260926051719.48E4B1F00893@smtp.kernel.org>
+In-Reply-To: <20260926051542.4DF841F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
 
 
-On 9/25/26 10:17 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Critical] bpf: bpf_unwind bypasses resource leak checks when no landing pad is present
-> - [High] bpf: bpf_unwind_resume creates invalid ghost paths by returning to caller's normal path
-> - [Medium] bpf: Speculative branches to landing pads bypass nospec recovery
+On 9/25/26 10:15 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] bpf, x86: missing JIT epilogue for exit-less subprograms crashes exception unwinder
 > --
 >
-> commit 3aafeed4814ca53533c421881eb0f30857cc42a0
+> commit 9bb870f715bdf91026578628a6afaf5325f80183
 > Author: Yonghong Song <yonghong.song@linux.dev>
-> Subject: bpf: Refuse a landing pad that does not resume
 >
-> This commit restricts exception landing pads in BPF to only support cleanup
-> pads that resume via bpf_unwind_resume(). It adds checks in the verifier
-> to ensure that instructions are not reached both inside and outside a pad,
-> and it refuses unsupported program exits within a pad.
+> bpf, x86: Dispatch exception cleanup pads at run time
 >
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
->> @@ -19197,6 +19202,7 @@ static int process_bpf_unwind(struct bpf_verifier_env *env, int *insn_idx)
->>   	int pad = bpf_exc_pad_of_call(env, *insn_idx);
->>   
->>   	if (pad < 0)
->>   		return PROCESS_BPF_EXIT;
-> [Severity: Critical]
-> Does this early return in process_bpf_unwind() bypass resource leak checks?
+> This commit updates the x86 BPF JIT to dispatch exception cleanup pads at run
+> time, setting up native cleanup tables and populating the epilogue IP to allow
+> redirecting a frame to its landing pad during an ORC stack walk.
 >
-> If a program acquires a resource like a bpf_spin_lock and throws an
-> exception where there is no landing pad, it appears this directs the verifier
-> to pop the state without calling check_resource_leak(), allowing the
-> program to leak the lock at runtime.
-
-This issue is covered in previous patch. Indeed, check_resource_leak()
-is needed.
-
->
+>> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+>> index 6c7a0578760e7..fb7e8ca1aab21 100644
+>> --- a/arch/x86/net/bpf_jit_comp.c
+>> +++ b/arch/x86/net/bpf_jit_comp.c
 > [ ... ]
 >
->> @@ -19450,6 +19461,7 @@ static int do_check_insn(struct bpf_verifier_env *env, bool *do_print_state)
->>   				 */
->>   				mark_reg_unknown(env, cur_regs(env), BPF_REG_0);
->>   				mark_reg_known_zero(env, cur_regs(env), BPF_REG_0);
->> +				cur_func(env)->in_pad = false;
->>   				return process_bpf_exit_full(env, do_print_state, false);
+>> @@ -3278,6 +3279,8 @@ static int do_jit(struct bpf_verifier_env *env, struct bpf_prog *bpf_prog, int *
+>>   			seen_exit = true;
+>>   			/* Update cleanup_addr */
+>>   			ctx->cleanup_addr = proglen;
+>> +			/* Where an unwind sends a frame with no pad. */
+>> +			bpf_prog->aux->epilogue_ip = (u64)image + proglen;
 > [Severity: High]
-> Could passing false to process_bpf_exit_full() here instruct the verifier to
-> continue at the callsite's normal return path instead of unwinding to the
-> caller's landing pad?
+> What happens if a BPF subprogram only terminates via a noreturn kfunc like
+> bpf_throw(), meaning it lacks a BPF_EXIT instruction entirely?
 
-The above code is under branch:
-	if (bpf_is_unwind_resume_kfunc(insn)) {
-		...
-                 mark_reg_unknown(env, cur_regs(env), BPF_REG_0);
-                 mark_reg_known_zero(env, cur_regs(env), BPF_REG_0);
-                 return process_bpf_exit_full(env, do_print_state, false);		
-	}
-So control is ready to return to either bpf prog (including main) or
-exit the prog itself. This one (cur_func(env)->in_pad = false)
-is irrelevant.
+bpf_throw() will be rejected if landing_pad is available.
 
 >
-> Because push_cleanup_pad_branch() eagerly pushed the caller's landing pad
-> with the pre-call state, returning to the normal success path might merge
-> the post-cleanup state incorrectly and cause a divergence between verifier
-> control flow and runtime execution.
+> Since the x86 JIT generates the epilogue lazily when the first BPF_EXIT is
+> encountered, wouldn't do_jit() produce no epilogue at all for such a program,
+> leaving epilogue_ip as 0?
+>
+> If an exception unwinds through this subprogram's frame, the unwinder relies
+> on epilogue_ip to rewrite the return address. Wouldn't it hit this error path
+> and abort the unwind?
+>
+> kernel/bpf/helpers.c:bpf_unwind_rewrite() {
+>      ...
+>      } else if (prog->aux->epilogue_ip) {
+>          *ra = prog->aux->epilogue_ip;
+>      } else {
+>          WARN_ON_ONCE(1);
+>          return false;
+>      }
+> }
+>
+> Could this lead to corrupted exception handling that can be triggered by
+> user-supplied BPF programs?
 
-This is possible. This is addressed in previous commit. The idea is
-the state (related to resources) at the beginning of the function
-must be the same as when bpf_unwind_resume() does resource checking.
+Yes, it is possible that epilogue_ip is 0 if that subprog is always
+in the path when unwinding happens. The fix will be keep 'exit' insn's
+so they won'be removed. See bpf_jit_comp.c
+
+                 case BPF_JMP | BPF_EXIT:
+                         if (seen_exit) {
+                                 jmp_offset = ctx->cleanup_addr - addrs[i];
+                                 goto emit_jmp;
+                         }
+                         seen_exit = true;
+                         /* Update cleanup_addr */
+                         ctx->cleanup_addr = proglen;
+                         /* Where an unwind sends a frame with no pad. */
+                         bpf_prog->aux->epilogue_ip = (u64)image + proglen;
+			...
 
 >
->>   			}
+>>   			if (bpf_prog_was_classic(bpf_prog) &&
+>>   			    !ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN)) {
+>>   				if (emit_spectre_bhb_barrier(&prog, ip, bpf_prog))
 > [ ... ]
 >
->> @@ -19578,6 +19590,12 @@ static int do_check(struct bpf_verifier_env *env)
->>   			}
->>   		}
->>   
->> +		if (unlikely(env->cleanup_info_cnt)) {
->> +			err = bpf_exc_check_insn(env, insn);
->> +			if (err)
->> +				return err;
-> [Severity: Medium]
-> When do_check() returns an error from bpf_exc_check_insn() due to a
-> speculative visit to a landing pad, does it bypass the subsequent
-> error_recoverable_with_nospec() check entirely?
->
-> If the verifier speculatively explores a dead branch targeting a landing pad,
-> this might cause the verifier to fatally abort instead of properly recovering
-> by inserting a speculation barrier.
->
-Yes, error_recoverable_with_nospec() should help to resolve the issue.
-
->> +		}
->> +
 
