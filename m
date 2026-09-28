@@ -1,126 +1,95 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr2-f35.google.com (mail-wr2-f35.google.com [74.125.225.99])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D982637A844
-	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 18:10:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC685367F2F
+	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 18:17:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.99
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790619037; cv=none; b=PQwdXRSLQH1V+BDSDPsOkL24r1QNQTVsKeh9c/iRdJyzbMK0an4hysKe1hIe8/lT6jv7agETbOiTDRckhISIurFgVNeeFnpoKKU2736U9sSa5XiawJqH30bxh8a75dCyNwr8f5JWh3A+rAL9uA84cnF/XOz8apQYn21tp0Oh6q8=
+	t=1790619433; cv=none; b=NmldQ48s01XTOpIGp3BTgmvFfxb9y0xID3hRuIgHK/7jeFOf8MB17zR5udDlJDa9EjLPFa0lXQQEVSeWZnk0N0dL++Ew5hhdMYtDxztKE7/T45xeG9BhBobQhR/LugdFVT8P6NKbh8gMzbv5IgIwSW2RJbuG15R+WVlmmW4bgVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790619037; c=relaxed/simple;
-	bh=bbVVcjiD4ES+ov/wPnX+0XE+Qh3pApdn+aRpLrnrl9I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Rbw+NdHbIUZguArxWd0mWTMk2QY2TtfdIRNaz+vDnLUCr8P2lwgAW+BJgJw0SuODfiIA7/pt8aZ6c3XD92vnthsjoYODszB4PZz2NLzjBUybGdkfZIlUSjAIv1O5aJhlx1CrShre+Lx1ItvLV0/GXTIA2S23pvZY3Q5wpBoIc0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ba5M3eSB; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1790619433; c=relaxed/simple;
+	bh=LBceeQL6zeowdtsbVWYN2KERwU9s973+eLElj1dczx4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=miX3LXEN7r4TOXACjSN2kCGvdpqpuF08uZ8whc49Trx0VwLLNtIUTEfaWIPxBBmdQPTU1BFwqlRrOtE3Hs03WQWw5VgCvlE1sS5t0ALXfpQQjx4kkY+BrudgS+SwExNuvGc+G2FOnRPTyyv0ZQje1eGqGrq0NO9gnMS41i42FjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EwUnNarE; arc=none smtp.client-ip=74.125.225.99
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ba5M3eSB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1790619034;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OFTht72VGYwnHy4rRuIiS5N5orHNND6LgvZVdS8G2Q0=;
-	b=ba5M3eSB2aU1dR+veVcUzfFraM+VToN/iV7Wpk8dz1654estlF+ipPmSpkfiV7SNzL0sTn
-	IlxU5CrReGOZ52vnu2CyWIFT6Vq6cnGlBH+MF7CbOHlW/x57wmC8uOoCUSs2eLoIOo7BR+
-	1d96OCVGuIvm2DE2vmxxTX58BGEFmA4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-488-zBTGfSwUNR-LLZgF1G1hww-1; Mon, 28 Sep 2026 14:10:31 -0400
-X-MC-Unique: zBTGfSwUNR-LLZgF1G1hww-1
-X-Mimecast-MFC-AGG-ID: zBTGfSwUNR-LLZgF1G1hww_1790619030
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-49ffe48d1dfso23756425e9.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 11:10:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790619030; x=1791223830;
-        h=content-type:mime-version:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EwUnNarE"
+Received: by mail-wr2-f35.google.com with SMTP id ffacd0b85a97d-4887f6cf16bso2087010f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 11:17:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790619430; x=1791224230; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=OFTht72VGYwnHy4rRuIiS5N5orHNND6LgvZVdS8G2Q0=;
-        b=M7Xy0ly6FqNsB+40w6xaoP0jh83lTBnIoRW6x0B/t/x+khPFeQtnR3mRENoBI6Ug+q
-         zylK6k4wRrIZtUMCn3jazw/nICGYnyaADnTXk4FKJAc+/emRtpBvzCJMD8tCkthdIWl9
-         eBM9Nw7yV/aXSW7qkyjQGnm5Bsp3tB9oZCwXbpVJlVQBg6iYf0R39l2p8gi8H4xmY0dd
-         nNFeNT4h7XjcawzYuinWQGN5DNtynEqLIIhHgFlx6H7AkTPNKU5iusFP0KAfJU6q1lQp
-         Jbw7IMuKWWXQA+GsKPvzVzgCIQwIQPQZSUK79dwHobbABbn+hL6HVK2N+DWTxsnEGWck
-         9TBA==
-X-Forwarded-Encrypted: i=1; AKwUvByc9VzfZqR+1PaYOFlolIX9uNzc1dCd8XDi9qoSdAnjIux25srBf/yiHdFpcZI0acEJ8fxjcB+2iHYPj41fGEo=@lists.linux.dev
-X-Gm-Message-State: AFuF++kozSFM3uDxTffffq2kSQ/r97gEZ3/+UJLp0NOzZ6L/EdBb3oS2
-	pKMblDMZ213P6vStBxieb5glL3cheA6waV38YOmcJ6XxvP1cFAoilZLP6oBNeXmSVPZXU37rxiE
-	aKHXKB9v1CoHn8GRVmuViR7GMBPBvCrnnEGbcmYEtyNdgbB0WFg+F/xwPT1ZB6nMcHgeMQA==
-X-Gm-Gg: AYBFou0ARHkc1A2oMqUWG1YiqV1qIx6u7oWDE7Q4YKTZyD10Eah+r0HH/mQ/fyM9fyu
-	YORBy7B4s8fcuSn9uKsTB+wIVt99mePHyDiQaT7LmopE2w0NNKer83dIEJDU7QkyXdRb9Gq4Yxa
-	9p1ob+M31BhXn/icuYHglEze9GIMNxNgYVKb/4lwcauSOurzdGQs+2RnuWFI0VtTM6b+br0eAXF
-	B/2z+aTWKU9Ubiab3nV3MG4zc9ak1cTkOZv7UPxZaq1/hr0NrFU3xpb0IB6+hJlIJQ/djaY2uc9
-	ph6FdWsGCU2H/c6+Rm8WX9FzpWH2d8ohYj7JFSGnhro7x2WjbEW/KwVMrtRN6gb3qMhBuUZ59IP
-	5HwFJZeLiHx9efnEdfHUCTFWzPyCrFAynGB543oFjgAiIVYpNlYRs29SvBdXAgtrZ8w==
-X-Received: by 2002:a05:600c:4f44:b0:4a0:23f:8b0d with SMTP id 5b1f17b1804b1-4a0023f8d93mr91712585e9.2.1790619030046;
-        Mon, 28 Sep 2026 11:10:30 -0700 (PDT)
-X-Received: by 2002:a05:600c:4f44:b0:4a0:23f:8b0d with SMTP id 5b1f17b1804b1-4a0023f8d93mr91712165e9.2.1790619029624;
-        Mon, 28 Sep 2026 11:10:29 -0700 (PDT)
-Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a00cfe16a2sm9652415e9.4.2026.09.28.11.10.27
+        bh=LBceeQL6zeowdtsbVWYN2KERwU9s973+eLElj1dczx4=;
+        b=EwUnNarEdyPebMrpJ4BufnraRiWNXxVUGwvtQjRfpx72GJi49VrSF4znKer1XTvP+z
+         PVpBUG7DLdatgoGpWlF9peOuNMArGeSkkp5zLGKOiGCB9O8Ws2JSKOfbvBBaiwElKWZx
+         6OMv6TAv355n/2J+uF1BwlwrF0LoXm3qzgUbV8CDjmp93TD2JhPUrrsHIt56bJsacySo
+         54wRuwqNzZ14kAqrQSPrvJHPKlOjEmQ5R666+N/l6CnmdSK2AtCI1phrUuFM11m5o4AF
+         FvhK8JRcA2zKL9+e3PYU9hTLk1+B28uscJJvGK+rIQhNR75OiqVnC67olPdAEjF+0eY2
+         Z4yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790619430; x=1791224230;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=LBceeQL6zeowdtsbVWYN2KERwU9s973+eLElj1dczx4=;
+        b=Lxx9aVnUYjIoD0AtyxpgyuzI4988F5OgJMsarhDKA0o+sWDvT8lyiwpRIPfRTmZ5ES
+         V23uZFtYe7JBM13PhqLNcucoxFq6louRM5mODiv0D9JHVn3pRBc3CUn4IyLDi8W4zMyu
+         WD+C32mK0Jg8HuCEpuIlvl9FwKjLd96WklxqxNQXF9cclJgN/uYPClRjL/vAGZrAhBlX
+         z+t+/oj6H9/ybCMZHSeUeZZq8yxqFYCZKpO4mxrubLTPUfs7aqC+J3vNy7JoetI0HvMP
+         bpnN6gYJ/xzi65dH4Ysi5G9pbKWmjwF+vFVARPbclqe4GryItgZMTw7RV5PbWb7raL4s
+         WNEg==
+X-Forwarded-Encrypted: i=1; AKwUvBx3twPY3Wfiq76tD9+ghohYibqMd9LALqjdUHTAj/uvxvE5c//9AkRCxEwZlLNXcIWb7HwO055y4lLk4O+LJQ8=@lists.linux.dev
+X-Gm-Message-State: AFq9FYINR9Y8HBTxEQg46b7jdFyS8mN8mWcgtP0Y0e7Zm879g8gun1NZ
+	Owd57XqX3MUfKQ1ZI40HbGPSG0a276p01dMG3Wu/rzLOrgc48RulS3c=
+X-Gm-Gg: AYBFou1EeaoD0rPcgpvs4qGZILijXM1irsyAN5zH5FAxpfghUWyYDPGTgKp/BdlLnvz
+	kOkS7Y1aoNJKj/e6AwknbRfGzA21Zc050UpCtZ4dX6crN020pIv3eoca+S0kSwqA2nB6MLt81jY
+	47TK2mLeYFtXCDzV4xpZ2D7FqXwJHPmoyuw0wYJKoxSWKpiQ9tYVd+lm8PFivrmC+O9QN8Dq2mO
+	VlhRNeRRKGIOa/QgOeqyFKutFh7nsCZF3CrOx2htDszXGN9BLLvIIFelGtM50DF9GgstQ/78Ca2
+	sBHK3ZHnOn2hv3HxLsWCOU7FKtbV6ZtGxVVJkuEInHYYvmWrpIM1dpEQzsrDTjB+uCj9wPaJZa6
+	CztJTfxLDbzceQbotODcIPbswO9nM4HGi12Sd6VRgqVIQTTuOyQHFUI3UgnBBb0jd02ZLIJDmku
+	UKns7JUCAndFgyx4n9/Cfc6qeEUiUMNiD8+BYOl04QolaQEeLxUIEcZdbhqU4PZGyPnQfpZQuE0
+	vo18o3mFNfSPD0RfgsmaVhC2Q8RucnUi+RyrJzPE2NCOHu8ceTbSFQ6dN8=
+X-Received: by 2002:a05:6000:27d5:b0:488:8525:4985 with SMTP id ffacd0b85a97d-48885254b3emr10941836f8f.24.1790619429708;
+        Mon, 28 Sep 2026 11:17:09 -0700 (PDT)
+Received: from localhost.localdomain ([31.223.84.8])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4887a6470b7sm29540093f8f.27.2026.09.28.11.17.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2026 11:10:28 -0700 (PDT)
-From: Javier Martinez Canillas <javierm@redhat.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>, jfalempe@redhat.com,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
- simona@ffwll.ch, jani.nikula@linux.intel.com, Alexander.Deucher@amd.com
-Cc: dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
- linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
- intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- nouveau@lists.freedesktop.org, linux-rockchip@lists.infradead.org,
- linux-tegra@vger.kernel.org, sashiko-reviews@lists.linux.dev, Thomas
- Zimmermann <tzimmermann@suse.de>, Alex Deucher
- <alexander.deucher@amd.com>, Jani Nikula <jani.nikula@intel.com>
-Subject: Re: [PATCH v4 2/2] drm/fbdev: Move fbdev helpers into client library
-In-Reply-To: <20260928080323.23909-3-tzimmermann@suse.de>
-References: <20260928080323.23909-1-tzimmermann@suse.de>
- <20260928080323.23909-3-tzimmermann@suse.de>
-Date: Mon, 28 Sep 2026 20:10:27 +0200
-Message-ID: <xlv1zex1dz70.fsf@fmartine-thinkpadx1carbongen12.rmtes.csb>
+        Mon, 28 Sep 2026 11:17:09 -0700 (PDT)
+From: "=?UTF-8?q?Habil=20Eren=20T=C3=BCrker?=" <habilerenturker@gmail.com>
+X-Google-Original-From: =?UTF-8?q?Habil=20Eren=20T=C3=BCrker?= <habilerenturker@hotmail.com>
+To: sashiko-bot@kernel.org
+Cc: dmitry.torokhov@gmail.com,
+	linux-input@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2] Input: fix potential use-after-free in input_devices_seq_show
+Date: Mon, 28 Sep 2026 21:15:24 +0300
+Message-ID: <20260928181704.61015-1-habilerenturker@hotmail.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260928172128.D6AB41F000FF@smtp.kernel.org>
+References: <20260928172128.D6AB41F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: eGywPlEYVR0FIBLEEmhIcUE1pCinyKfvKYD5fZC5zK4_1790619030
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Thomas Zimmermann <tzimmermann@suse.de> writes:
+This patch is withdrawn.
 
-> DRM's fbdev helpers are for the fbdev-emulation clients. Move them
-> into the client-library module. Fix include statements throughout
-> DRM drivers.
->
-> While at it, rename the files from drm_fb_helper to drm_fbdev_helper.
-> The old name was too reminiscent of DRM's framebuffer code.
->
-> The GEM support code for fbdev remains part of DRM's memory managers.
->
-> v4:
-> - fix the depedendencies from v3
-> v3:
-> - remove obsolete dependencies from Kconfig
-> v2:
-> - update armada und docs
->
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-> Acked-by: Jani Nikula <jani.nikula@intel.com>
-> ---
+Sashiko's assessment is correct. input_mutex already protects the device
+during seq_file iteration, so the explicit refcounting is unnecessary.
+Additionally, the patch had two bugs: a refcount imbalance in next() and
+a missing IS_ERR() check in stop(), which could lead to a kernel panic
+or use-after-free.
 
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+I will investigate the actual root cause further.
 
--- 
-Best regards,
-
-Javier Martinez Canillas
-Core Platforms
-Red Hat
-
+Regards,
+Türker
