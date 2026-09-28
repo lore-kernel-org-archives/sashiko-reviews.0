@@ -1,30 +1,41 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+Received: from cp2.siel.si (cp2.siel.si [46.19.12.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1C928B4E2
-	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 12:46:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7753E306779;
+	Mon, 28 Sep 2026 12:51:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.19.12.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790599600; cv=none; b=WEaygGnjmqgkbTzOL/ORZOt7NY61VizF+/Ryet7ruYQDRMg1HT/KeaDHLA8u1NFRI+2Q5jSV+547IlCd2LiycE5rDQc53bNdy9+tCGzkiWKdG8GlowWyyQygci9Qostkkdvcmnplaxh1maSpbiHcG40x+0wnfl1/9AuBvZW1OOQ=
+	t=1790599881; cv=none; b=BvzmsGuWLu/i+/tWSSenSTnJe3DQa5G/q/33fBo+xRqz4CQ2qK4bVTtY04rpbmomTBiBmGtWNDEO4eHBUf2AlxdXz4/d3B3vv2FnHMPbtPzRTudPhVfHgj4HigznHpd8qmizp7IkY1EJJ7du6BO9f99dG19DRG/hJVjhLuW/tns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790599600; c=relaxed/simple;
-	bh=4hCYLJkTGUQETROtL5OWvDslbHodh0mVKtdF088gnQE=;
+	s=arc-20240116; t=1790599881; c=relaxed/simple;
+	bh=NVnUykZb2bttYQ/cwG/R9RTv+eYHY7atrHpBM825X84=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t1zX4EHrdJV+9BY0QkWxx8shI/WrSxZg/PXJA6YvoCQyk19kvEklQx7y/PcraNRbeB1P35ZvMfuYetSlKJpdxlaxtH8wDFnVgNzH5rINKbVSSISWtjWgmEgEZuueHTrsQWbT7qPdZqH2j8sLqn55OEsMFg6/8UQHqgfN3QNPgVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.198])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4htgz05sHzzYQtm8
-	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 20:46:04 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id 543C340561
-	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 20:46:30 +0800 (CST)
-Received: from [10.174.178.176] (unknown [10.174.178.176])
-	by APP4 (Coremail) with UTF8SMTPSA id gCh0CgBXdCekYbpqBR0ACA--.8279S3;
-	Mon, 28 Sep 2026 20:46:30 +0800 (CST)
-Message-ID: <168ab288-39d2-48e5-9b2d-59441102c728@huaweicloud.com>
-Date: Mon, 28 Sep 2026 20:46:28 +0800
+	 In-Reply-To:Content-Type; b=PLNb/rnhwXfP5zYuU6dgLwzsYPd25QvTumk33tvpZBvLWiCc2nhSt2PZmWuTyMLooVPSklwnHvuU3EOLjIkHdojaEDRLXQCEHs5cbgtEB6MYzpvIYZlEWYRSJz6dMhuS8p0NYFUd04bd77JJPwrMZ/jwvKBsOsk4qtYBmwvtjRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=norik.com; spf=pass smtp.mailfrom=norik.com; dkim=pass (2048-bit key) header.d=norik.com header.i=@norik.com header.b=dhsXa91E; arc=none smtp.client-ip=46.19.12.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=norik.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=norik.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=norik.com header.i=@norik.com header.b="dhsXa91E"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=norik.com;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=rinGqyQqnVWywjI+IAdfG9OGkv98ahQmrv2dvsNrLYE=; b=dhsXa91E/nVpsbdpw4lE+R7e2+
+	RwnaMAdu27MYylA8GAnhBdVI8uFWd7AIJfOgSEKrCSfxMpvs/4IQAURpto5T69xCGlb0MbtzmrAkB
+	JYCe1JrtRMSM2P03JsY/SMHH4Hp+BUQVD5qQzvTkLjpsqkMwEyWS3oxkmXvw0wazMnW59w7XZWw6e
+	kdWH57vsp1wc5lnhVIoDIcjX7pkyIfi5XSq6gX3HuzdpSTkZKP6txVhptvRJRUP2zqVYeZsNxJW5j
+	KED9Y7RATe+CaesH/a6mkmHVSjt/pCbmI0u793f0Dapepa2db73HR3pT6JV3sD/VcZmX/yAY4Nk2Y
+	h2Jsijsg==;
+Received: from 89-212-21-243.static.t-2.net ([89.212.21.243]:52346 helo=[192.168.69.116])
+	by cp2.siel.si with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+	(Exim 4.100.1)
+	(envelope-from <primoz.fiser@norik.com>)
+	id 1xBApC-0000000FppD-0z9I;
+	Mon, 28 Sep 2026 14:51:17 +0200
+Message-ID: <83ccb4b4-ee31-40e1-9b34-83d59a905607@norik.com>
+Date: Mon, 28 Sep 2026 14:51:16 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -32,97 +43,105 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/4] mm/truncate: align truncation boundaries to
- mapping minimum folio order
-To: sashiko-reviews@lists.linux.dev, linux-mm@kvack.org
-Cc: "linux-fsdevel@vger.kernel.org" <linux-fsdevel@vger.kernel.org>,
- linux-ext4@vger.kernel.org,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-References: <20260928120833.3440834-1-yi.zhang@huaweicloud.com>
- <20260928120833.3440834-2-yi.zhang@huaweicloud.com>
- <20260928123136.2D6891F000FF@smtp.kernel.org>
+Subject: Re: [PATCH] ARM: dts: imx6dl-phytec-mira: Add phyBOARD-Mira-i.MX6DL
+ with eMMC
+To: sashiko-reviews@lists.linux.dev
+Cc: Frank.Li@kernel.org, robh@kernel.org, devicetree@vger.kernel.org,
+ conor+dt@kernel.org, imx@lists.linux.dev
+References: <20260928123612.2250601-1-primoz.fiser@norik.com>
+ <20260928124450.3B22D1F000FF@smtp.kernel.org>
 Content-Language: en-US
-From: Zhang Yi <yi.zhang@huaweicloud.com>
-In-Reply-To: <20260928123136.2D6891F000FF@smtp.kernel.org>
+From: Primoz Fiser <primoz.fiser@norik.com>
+Autocrypt: addr=primoz.fiser@norik.com; keydata=
+ xjMEZrROOxYJKwYBBAHaRw8BAQdAADVOb5tiLVTUAC9nu/FUl4gj/+4fDLqbc3mk0Vz8riTN
+ JVByaW1veiBGaXNlciA8cHJpbW96LmZpc2VyQG5vcmlrLmNvbT7CiQQTFggAMRYhBK2YFSAH
+ ExsBZLCwJGoLbQEHbnBPBQJmtE47AhsDBAsJCAcFFQgJCgsFFgIDAQAACgkQagttAQducE+T
+ gAD+K4fKlIuvH75fAFwGYG/HT3F9mN64majvqJqvp3gTB9YBAL12gu+cm11m9JMyOyN0l6Os
+ jStsQFghPkzBSDWSDN0NzjgEZrROPBIKKwYBBAGXVQEFAQEHQP2xtEOhbgA+rfzvvcFkV1zK
+ 6ym3/c/OUQObCp50BocdAwEIB8J4BBgWCAAgFiEErZgVIAcTGwFksLAkagttAQducE8FAma0
+ TjwCGwwACgkQagttAQducE8ucAD9F1sXtQD4iA7Qu+SwNUAp/9x7Cqr37CSb2p6hbRmPJP8B
+ AMYR91JYlFmOJ+ScPhQ8/MgFO+V6pa7K2ebk5xYqsCgA
+Organization: Norik systems d.o.o.
+In-Reply-To: <20260928124450.3B22D1F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:gCh0CgBXdCekYbpqBR0ACA--.8279S3
-X-Coremail-Antispam: 1UD129KBjvJXoW7ZFy3CFykKrWUGr1UZFy7Wrg_yoW5JF1UpF
-	WDXFWruw48Ww4xuFy093WDAr1fWa48Kay5AF1xK393Jwn3WwnF9r4Utay0gw4Iqr4xAF10
-	yF1jyr9rWr4jvFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7
-	CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
-	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
-	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCY1x0262kKe7AKxVWUAVWUtwCF04k20xvY0x0E
-	wIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFIxCjY7AvzIIF6xkI1cIj4wC20s026c02F4
-	0E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1l
-	IxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxV
-	AFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j
-	6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjxUIl
-	1vDUUUU
-X-CM-SenderInfo: d1lo6xhdqjqx5xdzvxpfor3voofrz/
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cp2.siel.si
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - norik.com
+X-Get-Message-Sender-Via: cp2.siel.si: authenticated_id: primoz.fiser@norik.com
+X-Authenticated-Sender: cp2.siel.si: primoz.fiser@norik.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 
-On 9/28/2026 8:31 PM, sashiko-bot@kernel.org wrote:
+
+On 9/28/26 14:44, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] mm: integer overflow in round_up() during truncation causes complete file data loss
+> - [Low] arm: dts: build failure due to non-existent .dtsi inclusion
 > --
-
-As mentioned in the cover litter,  this is a pre-existing issue related
-to the file system that needs to be addressed separately.
-
-Thanks,
-Yi.
-
 > 
-> commit 583804d300760dcf60e3ec5aab6503a560ad3e7e
-> Author: Zhang Yi <yi.zhang@huawei.com>
+> commit d27346cce6650da77827531e0a8db928754f5352
+> Author: Primoz Fiser <primoz.fiser@norik.com>
 > 
-> mm/truncate: align truncation boundaries to mapping minimum folio order
+> ARM: dts: imx6dl-phytec-mira: Add phyBOARD-Mira-i.MX6DL with eMMC
 > 
-> When the mapping has a non-zero minimum folio order, this patch changes
-> folio_split() in truncate_inode_partial_folio() to stop at min_order instead
-> of order 0. It also aligns both start and end to the mapping minimum folio
-> order so they always fall on a folio boundary, preventing valid out-of-range
-> tails from being dropped.
+> Add device-tree for PHYTEC phyBOARD-Mira-i.MX6 DL board with eMMC. The
+> variant with NAND storage is already present in-tree. Now let's add the
+> eMMC variant for which the compatible string "imx6dl-pbac06-emmc"
+> already exists too but was not used until now.
 > 
-> Link: https://lore.kernel.org/linux-mm/CAJnrk1bQYUe6+1ryyJur5EEnZYrC+_5AYsy=OWzVRgD4202y1g@mail.gmail.com/
-> 
->> diff --git a/mm/truncate.c b/mm/truncate.c
->> index b58ba940be474..8a28f4a212677 100644
->> --- a/mm/truncate.c
->> +++ b/mm/truncate.c
-> [ ... ]
->> @@ -395,6 +397,10 @@ void truncate_inode_pages_range(struct address_space *mapping,
->>  	else
->>  		end = (lend + 1) >> PAGE_SHIFT;
->>  
->> +	start = round_up(start, min_nrpages);
-> 
-> [Severity: Critical]
-> Could this round_up() result in an integer overflow that changes a very large
-> start index to 0 on 32-bit architectures?
-> 
-> When an unprivileged user issues fallocate(PUNCH_HOLE) or truncate at an offset
-> near ULONG_MAX << PAGE_SHIFT (e.g., 16TB on 32-bit systems) on a filesystem with
-> min_nrpages > 1 (like ext4 with large folio/iomap), start approaches
-> ULONG_MAX (e.g., 0xFFFFFFFF on 32-bit x86).
-> 
-> The macro round_up(start, min_nrpages) performs 32-bit arithmetic. With
-> start approaching 0xFFFFFFFF, start + min_nrpages - 1 can overflow to a value
-> less than min_nrpages, causing round_up to evaluate to 0.
-> 
-> This would corrupt the start index to 0 in truncate_inode_pages_range(), and
-> the subsequent loop would unintentionally truncate the entire page cache from
-> index 0 to end, causing complete data loss of unwritten data.
-> 
->> +	if (end != (pgoff_t)-1)
->> +		end = round_down(end, min_nrpages);
+>> diff --git a/arch/arm/boot/dts/nxp/imx/imx6dl-phytec-mira-rdk-emmc.dts b/arch/arm/boot/dts/nxp/imx/imx6dl-phytec-mira-rdk-emmc.dts
+>> new file mode 100644
+>> index 0000000000000..aa3239660bca7
+>> --- /dev/null
+>> +++ b/arch/arm/boot/dts/nxp/imx/imx6dl-phytec-mira-rdk-emmc.dts
+>> @@ -0,0 +1,75 @@
+>> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+>> +/*
+>> + * Copyright (C) 2018 PHYTEC Messtechnik GmbH
+>> + * Author: Christian Hemp <c.hemp@phytec.de>
+>> + */
 >> +
->>  	folio_batch_init(&fbatch);
->>  	index = start;
->>  	while (index < end && find_lock_entries(mapping, &index, end - 1,
+>> +/dts-v1/;
+>> +#include "imx6dl.dtsi"
+>> +#include "imx6dl-phytec-phycore-som.dtsi"
 > 
+> [Severity: Low]
+> Could there be a typo in this include filename? The file
+> "imx6dl-phytec-phycore-som.dtsi" doesn't exist in the tree, which results in
+> a fatal error during device tree compilation when the C preprocessor fails
+> to find it.
+> 
+> Should this include "imx6qdl-phytec-phycore-som.dtsi" instead, which does
+> exist and is used by similar variants?
+
+True.
+
+This patch depends on series [1].
+
+Sorry for confusion.
+
+BR,
+Primoz
+
+
+[1]
+https://lore.kernel.org/all/20260923070505.494949-1-primoz.fiser@norik.com/
+
+
+
+> 
+
+-- 
+Primoz Fiser
+phone: +386-41-390-545
+email: primoz.fiser@norik.com
+--
+Norik systems d.o.o.
+Your embedded software partner
+Slovenia, EU
+phone: +386-41-540-545
+email: info@norik.com
 
