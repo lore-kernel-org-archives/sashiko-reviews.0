@@ -1,229 +1,183 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25334E4C3C
-	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 19:26:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.178
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790623614; cv=pass; b=JGbv1Z+IAu1qJqcPDpykSF7PgdTfndpim+QNRDoeDjOHpzos4tubS0tW4fOP8XB9h5OeaMsloot0PLh62DeCcRJ1eM4Wv2LRkAwyyP3PbbKLqXPH8xYQN8EYRDgOwSOeV6S1XXyvDK52hL1oKhqaX6/8zvypzAewMYOikBot1pw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790623614; c=relaxed/simple;
-	bh=CCtsovL76mQGnwUnadWeKBo/Yn5xN9tJZzTsPA2bd9U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=c45kyRFshIDooIRk0vNeYp7xkoaiUoeG/NYk7pQIR+KUvteEqeDkcOcoqr5wvuaG5eEbHHhRE2XV7N+msGtLrk94MYqgAKX91oFxB7GkdLdrxfzyU6EcCP+hCfsQfrdZ39bBrWlCY7IjahUAXErjgNN9icbnRBxpwOPFY4q6Ul4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cCjCKYy/; arc=pass smtp.client-ip=209.85.160.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB1E397945
+	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 19:43:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790624622; cv=none; b=UO7cQNHfL5Yn8ypSd6n6UgqexCs6MT7Ay9IAGMdopW0gLjNEJYl55EN8iZWJJJslsS8VlEynB5zQjOqy5hQ2ve1I/+GNKPnjjkNibi8PI1IbzHwJSFfZAkSU7K3tyvlEhX5O9rr0XR3YC2k9iidi7KttNDwX1f60a9y5spn6Ano=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790624622; c=relaxed/simple;
+	bh=hHbJUj9MjIHZzV/WT6UjK867+TXBSMDLnyF5p+XNjqU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ahz5cqpP5ulA66UoHXEWlevh3dAODAMOkMTlbF99vM4/hxsPrzTpMeyfu2xt1pKQXPt5+31DWSMPmP57CUJtseBvY2JMYgqm7C1tMCkJgv7wFlPDVEelVVOv19DDWaOEVy8uSsyYodA1+bTrkfim/6pLSxDCp+/2owQVn2GQJ7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=ioSl8FDF; arc=none smtp.client-ip=74.125.225.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cCjCKYy/"
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-5333401e359so10431cf.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 12:26:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790623606; cv=none;
-        d=google.com; s=arc-20260327;
-        b=PuiF0MrlF9xxK1fTgYw2wC0jvAqlA/MAOIrrY0/Ye1lGdN8vBz6hNRZVGSe21+Q7BB
-         6jcgWz29M22urH5ApRE5SOvQgx/AADykkIFOoaTRvP2sqiqTJaPTuhxPATX33F32TtwL
-         G4pfcivrPpfTf+MOWSFUm2YIAppmiHRi5ue20Wu2ngj81VCDYuaik4yIImSNCyAhkgYB
-         o6RCbS1aGzl8UX8uhOHIwZ6F3LZGimoNRt5cVavHbZrleL32/5YeAuGUwiy+mfg8rvFg
-         +Xocrrkp5j3RmvjWeEkAedXHO6KtQCAHucvvrSWlEcCl9eQ9t+OvtpnvgorV4ceU0tdK
-         re6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=O1YVRuatRiCyBlEcIy8P0JVw+6nR39Uq0eyj7XmStx0=;
-        fh=0zVHGC//SC94CWFKHtFt4lnskmkXkJNNy7lE0FDd3Ck=;
-        b=MTzE9PaUmZ+EX9loSuMSDPB0Q4IMQHlrY3MJ3kRyudQUCt8czMwQw8Hmyk83XzA+/L
-         GFcaHFq0GVSBf6/nBLFY9tugvtd9JlpViXXJLit2FxXZ3L+ScxtbhsYKVe6AoWzs2XYU
-         UAtcgw899QDtXCwFbmVwbNtKGRk9SCO5tzhp1OkWohpBveM+/X3eRY+Z9YsyaLCyfdgo
-         yhHdN+2MjDfrmBDeiAmqfMp53g6xjfkuxT64Tox8/JQ/yhDXuX6M221BtlrK4CXIRWSz
-         MVCTqkuntJRqKvy+1m93xkNOX5Z1R4stiuhm45+p0UbgsSHmcLg/2dIMv1Qde4ahwFby
-         H0LA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="ioSl8FDF"
+Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49ffe281cb1so13959905e9.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 12:43:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790623606; x=1791228406; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+        d=baylibre.com; s=google; t=1790624618; x=1791229418; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=O1YVRuatRiCyBlEcIy8P0JVw+6nR39Uq0eyj7XmStx0=;
-        b=cCjCKYy/Rbxj2fNgQWMjYpYkV8SBofvLy5u5laFxEzw8BNQEMzb0Sr2T9CuEzQ3ndu
-         IofvV3YI1Lj692vtLCU6ER1uKGWJQ1N6mXfBT0xFcQxkOGMPg0FdlywP6kqfjpY/rZFm
-         mpAtrNOZmb/LZE0+uD1RNXxu9KgOxo70w3JDSCd7oOVeaEOSKwUA/O9FrWBCpnV2rG+1
-         E0AK1fSzQ0jKB1I7Mzh10O11GngP/5sgmVlAqH7B0is27tnTn4B7mn7VLdfg7XZTOFl+
-         UdTY1vkvpUSmD0VHZWXTnXKSgvUXuUmomAP/KE+IGiLVRZXrO6ecyyDB/LWMgj94vnOi
-         uwcg==
+        bh=fxZSOX2/DMzIaUKEB17ch3Vac56Jr8Y6RNEiYe6dpbE=;
+        b=ioSl8FDFHR/ZiE1VKL8vJOXlBx+znYQSZ5/j3I4yKBfoW73P/K75RCBx3Tu+8fJpjL
+         X0GIqvTH9Ei13skPfSa3qvkV/swDGcnM0eOxhtuUkdEyobBFAS+ohDbOxtRGlEL5+VmJ
+         Yfn+W0I+lsE+uG+XTYKO/68ZaSJxjmc2hwPMjaA8Ub0XJ6NoAx0H7pjGbqvi0NQOwtOp
+         rfOch9luvsxxrMGK/jSqeEd5HrriQwJYfHfmvB4FmDAoqL/0Y+WZ18S9XkWFsQniAasj
+         irQR9WaFC7A/BIVMB3QG/GGYshM9/tY7cYn4HUdTKAByseAfePh8UXaBhoqwsYTwftBJ
+         OchQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790623606; x=1791228406;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1790624618; x=1791229418;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=O1YVRuatRiCyBlEcIy8P0JVw+6nR39Uq0eyj7XmStx0=;
-        b=daRf1gT5np4I0OTPRxKMkU0p6BDVqb1U/8wGA1fCNKvthvZd5/fpYb09eyGxXrzTY7
-         Be6RtxCF9MSQYdc3PR+lVrmZbvGVguwOdSGxd2y8+1oI0n3N4srl4LQ2ijCROgAJEzof
-         WoWn8Vm58XLNJL51oxbVfJp3VUwxsFmWJewaVJ3Mj7WqpguN6D1qkUUrMDbGs+wwD/9I
-         pFHT6/x53k3eYToA+eEdaSHWZbwxsKgseIe8u/I2WXtQKou32zXZjatmRoqNwx8/usRB
-         NLwoFCw9yM5kUOAQtmCv+ePdrIk/wGrUIT6eCBKjqqYiaP+Q+MLNVQ+qE7aohTRzeEyz
-         Af4Q==
-X-Gm-Message-State: AFuF++lMprP5jAudhrFNFaeSIsecd3u+wx1qZ10gKBdVpbfnAN9OFc6Y
-	4w/DnaVk+D2R//iwdImaUzqV25wManQEjtRC4QZbqeHr/pCdU/MBiXUmoBljpk1viuHtQcS/aZx
-	/h1wVChUcXqaG4ZYYzKhmkuEE2cMiWi/8L3y4QaGv3mJKfMDNnqmb7vx/hmM=
-X-Gm-Gg: AYBFou0n6R8wQULTzlFsI+sMfRjDmAnwi0TKiwSD/uDALXQMJbzqDyHMBID8GHGy/Kg
-	iqeRQzEaZpNbLtLI77ZYBaFEGuMAPe9XmI567d7diruV12i4YKwFDT1+7ClewC0yD6EmJB+VrW9
-	GgvkLA22TDGH108wWaJDxZoruUO80spT3m+G6cr2z0w/QSIQFZF71popwf8Peb2Nj/VgRVLMLNp
-	PeUueTXcDdEgGC6IR7jaGCn1Y2+xaT4VFIu8XyITV1WMQCXT7tr0xQlNS/7gbTUKl/OunIWtk37
-	JvLTevmCs2ZE3GQBb5BCBNUZK7PcWSUxLblxIUoHyzRbJtKp7wHKxPEUZqiVMJvxb2Rl3R2lu3a
-	UKRGuMYVc
-X-Received: by 2002:a05:622a:152:b0:532:a17b:9581 with SMTP id
- d75a77b69052e-533589a1f9fmr1095181cf.3.1790623604931; Mon, 28 Sep 2026
- 12:26:44 -0700 (PDT)
+        bh=fxZSOX2/DMzIaUKEB17ch3Vac56Jr8Y6RNEiYe6dpbE=;
+        b=cDn/rH+H65eakaq+/klOJK5sg/DsLrmDOAcy3EJAOH3Xk6wz1sZSo/1pnMoX30QvPr
+         4KXf26DS1zYD5Y3jH7vyy2JGBX7aNqrNXPJWETU3NgU/v6Xk/c5Aqxy4rh9G1gDJh9P7
+         6NfheT+3f01uuJrqz/k/i8FJAfF41j/fs/9aIVLn1BzFMi+smsfiCOeEC7ZUiUdxjaT/
+         wM82UzeMeBFCj6mPGUYDGuLlotA8I++pJoQGSpKiIkuF9rQjQYS5aRUvgHSMgjSxkQGj
+         QMD1GG5DIuiOZjmG8QtZkNeDeezD1ivid/gwRwt2Tc/YQpsP0OoupXdk8iFDtE+ETdOM
+         xI2Q==
+X-Gm-Message-State: AFuF++nh5S6+oQrfJ7LBrS9KmF7eFYcVnPYKQkYS8v+WthrXd/fn1c9v
+	F+ni55Hn5dik5p4xlLo3B5DGeM7TJPsKM5JurG+SObPoVuFKkB8Dp0LW+Ci8/EzuWu2S8I1dh7Q
+	5hvcA
+X-Gm-Gg: AYBFou0vimmC08wkvee9q8qqn1ZlBiJEirTdyDphpOjRsWIhzatrXfdGkt87GaIaEUB
+	g/mZdp5uj++Gr9vTs5DedIV3aDXF1IWWSn/lcAJuTyIswATtA0rteid3Y7Gdpy3mvKao4gdeh4J
+	+N+veUTAI1iU1aCqca4cmOeV+BFU9y3hysLqT+UKN5puu+MLYtSKfq9z9GIPN/0ByRnYu54LQ1b
+	wWwNmkVJ1/ItRjIoJrLrDP8WpsYlV862YWqyA2m38LZwt7W5Q9+Z2KVgshcx1emTtVBmjJ1TJ2I
+	nM8A2R/osoI9AaKEuYfDDVR8rccPqUq5xJdjiTW11Acnppoe0nthRybb2tL0wOQnLrBx2U08o29
+	NfZNcwQyZbNqgKcDDG63YGiWO3u3ZvO35aaud0Z0WSmaZQeva/yxIqrnmWtsH23BjHaSFWfjFXr
+	kij1XAdoXy0wIlubCUJcRyBwdLm1ij/TbbhT1ZjOCMa8MmuGGK/UNTVlw+ADR8mGkTFh0CZvsPV
+	yTh
+X-Received: by 2002:a05:600c:4e49:b0:49f:cc2a:f73a with SMTP id 5b1f17b1804b1-49ff06ed754mr173176835e9.25.1790624617351;
+        Mon, 28 Sep 2026 12:43:37 -0700 (PDT)
+Received: from localhost ([2a02:8071:56d1:2de0:1d24:d58d:2b65:c291])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4a00cfecb39sm16755135e9.7.2026.09.28.12.43.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Sep 2026 12:43:36 -0700 (PDT)
+Date: Mon, 28 Sep 2026 21:43:34 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] Add TAINT_DRIVER_OVERRIDE for usage of
+ driver_override
+Message-ID: <arrCUYnwhK68Q46T@monoceros>
+References: <cover.1790612298.git.u.kleine-koenig@baylibre.com>
+ <a92a69151266129e20abc4a8ec543d4f4438324e.1790612298.git.u.kleine-koenig@baylibre.com>
+ <20260928165818.69F321F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cover.1790145937.git.irogers@google.com> <20260928182605.3649015-1-irogers@google.com>
- <20260928182605.3649015-18-irogers@google.com> <20260928184640.E53151F000FF@smtp.kernel.org>
-In-Reply-To: <20260928184640.E53151F000FF@smtp.kernel.org>
-From: Ian Rogers <irogers@google.com>
-Date: Mon, 28 Sep 2026 12:26:31 -0700
-X-Gm-Features: AclHuK9vZf6ldAAIZ0qh_-pa8BEHDUt81WPZTx-PT06jSAGJTHiMtcW2Ir2uvsg
-Message-ID: <CAP-5=fXkC4A4J-Acz2+bbfUup6YyHSZ6H3w8TvHkiJAErOBZcg@mail.gmail.com>
-Subject: Re: [PATCH v6 17/26] perf trace: Do not return 0 from syscall
- tracepoint BPF
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="e2btm2zbxiwiyxbf"
+Content-Disposition: inline
+In-Reply-To: <20260928165818.69F321F000FF@smtp.kernel.org>
+
+
+--e2btm2zbxiwiyxbf
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v3 2/3] Add TAINT_DRIVER_OVERRIDE for usage of
+ driver_override
+MIME-Version: 1.0
 
-On Mon, Sep 28, 2026 at 11:46=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+On Mon, Sep 28, 2026 at 04:58:18PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] bpf: perf trace silently loses syscall events on BPF augmenter f=
-ailure paths
-> - [Medium] perf: out-of-bounds read in trace__bpf_output due to missing b=
-ounds check
+> - [Medium] device: false kernel taint from internal driver_override usage
 > --
->
-> commit 662e5192e10694c169bbb2fe60bc8a7182517dbe
-> Author: Namhyung Kim <namhyung@kernel.org>
-> Subject: perf trace: Do not return 0 from syscall tracepoint BPF
->
-> This commit transitions perf trace to exclusively use the bpf-output even=
-t
-> for both augmented and normal syscall arguments, omitting the standard
-> raw_syscalls:sys_{enter,exit} tracepoints. It identifies whether the
-> bpf-output data belongs to an enter or exit event by repurposing the
-> common_type field.
->
-> Link: https://lore.kernel.org/r/20250814071754.193265-4-namhyung@kernel.o=
-rg
->
-> > diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-> > index d327603ae4540..3dd40f3c3cbb7 100644
-> > --- a/tools/perf/builtin-trace.c
-> > +++ b/tools/perf/builtin-trace.c
-> [ ... ]
-> > +/* The BPF output event carries both entry and exit, tagged in common_=
-type. */
-> > +static int trace__bpf_output(struct trace *trace, union perf_event *ev=
-ent,
-> > +                          struct perf_sample *sample)
-> > +{
-> > +     u16 type =3D *(u16 *)sample->raw_data;
->
-> [Severity: Medium]
-> Does this code safely dereference sample->raw_data?
->
-> If the bpf-output event is missing the PERF_SAMPLE_RAW flag,
-> sample->raw_data could be NULL. Alternatively, if sample->raw_size is les=
-s
-> than sizeof(u16), could this lead to an out-of-bounds read when processin=
-g
-> corrupted or malicious perf.data files?
-
-Neither can happen. trace__bpf_output() is only the handler for perf
-trace's own __augmented_syscalls__ event when tracing live;
-trace__replay() doesn't set a handler for bpf-output events, so a
-perf.data file never reaches it. evsel__new_idx() gives bpf-output
-events PERF_SAMPLE_RAW, and the only writers are perf trace's BPF
-programs, which output at least a struct syscall_exit_args (24 bytes).
-The handlers it calls already read the syscall id at offset 8 of the
-same raw_data, as trace__sys_enter() did for this event before the
-patch.
-
-> > +
-> > +     if (type =3D=3D SYSCALL_TRACE_ENTER)
-> > +             return trace__sys_enter(trace, event, sample);
-> > +
-> > +     return trace__sys_exit(trace, event, sample);
-> > +}
-> [ ... ]
-> > diff --git a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c b/to=
-ols/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
-> > index 3bc9e28a9b8a3..d16e55706335b 100644
-> > --- a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
-> > +++ b/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
-> [ ... ]
-> > @@ -408,7 +424,9 @@ int sys_enter_perf_event_open(struct syscall_enter_=
-args *args)
-> >
-> >       return augmented__output(args, augmented_args, len + size);
-> >  failure:
-> > -     return 1; /* Failure: don't filter */
-> > +     if (augmented_args)
-> > +             augmented__output(args, augmented_args, sizeof(augmented_=
-args->args));
-> > +     return 1;
-> >  }
-> >
-> >  SEC("tp/syscalls/sys_enter_clock_nanosleep")
-> >  int sys_enter_clock_nanosleep(struct syscall_enter_args *args)
+>=20
+> commit 224a6c2cd832599abb4180f63153f96e5c11d2a8
+> Author: Uwe Kleine-K=F6nig <u.kleine-koenig@baylibre.com>
+>=20
+> Add TAINT_DRIVER_OVERRIDE for usage of driver_override
+>=20
+> This commit introduces a new kernel taint, TAINT_DRIVER_OVERRIDE, which is
+> applied when a driver is matched to a device via the driver_override
+> mechanism. It aims to distinguish overrides from manual sysfs bindings, as
+> overrides can lead to driver crashes if the driver expects specific match=
+ data.
+>=20
+> Link: https://lore.kernel.org/driver-core/DLIL9H50MALI.3JROXYEEUM3KU@kern=
+el.org/
+>=20
+> > diff --git a/include/linux/device.h b/include/linux/device.h
+> > index 879eb758b5eec..4dac5e09b74c1 100644
+> > --- a/include/linux/device.h
+> > +++ b/include/linux/device.h
+> > @@ -905,8 +905,15 @@ static inline int device_match_driver_override(str=
+uct device *dev,
+> >  					       const struct device_driver *drv)
 > >  {
-> [ ... ]
-> > -     bpf_probe_read_user(&augmented_args->arg.value, size, rqtp_arg);
-> > +     err =3D bpf_probe_read_user(&augmented_args->arg.value, size, rqt=
-p_arg);
-> > +     if (err)
-> > +             size =3D 0;
-> > +     augmented_args->arg.size =3D size;
-> > +     augmented_args->arg.err =3D err;
-> >
-> >       return augmented__output(args, augmented_args, len + size);
-> >  failure:
-> >       return 1; /* Failure: don't filter */
-> >  }
->
-> [Severity: High]
-> Does returning 1 here without explicitly calling augmented__output() resu=
-lt
-> in silently dropping the syscall event?
->
-> Since this patch drops the raw_syscalls:sys_{enter,exit} tracepoints and
-> now relies entirely on bpf-output, returning 1 on BPF augmenter failure p=
-aths
-> (like in sys_enter_clock_nanosleep and sys_enter_nanosleep) appears to
-> completely lose the trace record.
->
-> Should these failure paths be updated to emit the unaugmented payload,
-> similar to the fix applied above for sys_enter_perf_event_open?
+> >  	guard(spinlock)(&dev->driver_override.lock);
+> > -	if (dev->driver_override.name)
+> > -		return !strcmp(dev->driver_override.name, drv->name);
+> > +	if (dev->driver_override.name) {
+> > +		int ret =3D !strcmp(dev->driver_override.name, drv->name);
+> > +
+> > +		if (ret > 0)
+> > +			add_taint_module(drv->owner,
+> > +					 TAINT_DRIVER_OVERRIDE, LOCKDEP_STILL_OK);
+>=20
+> [Severity: Medium]
+> Will this unconditionally taint the kernel even for valid internal usages=
+ of
+> driver_override?
 
-No, those branches are there for the verifier and are never taken.
-augmented_args_tmp is a 1-entry per-CPU array, so looking up key 0
-can't return NULL, and sys_enter() makes the same lookup and check
-before the tail call. The size check compares two constants,
-sizeof(struct timespec64) and sizeof(arg.value) (PATH_MAX), so it's
-always false. A failed read of the timespec doesn't take that path, it
-is output with arg.err set. The other augmenters' early returns are
-unreachable too; rename's arg.size is at most PATH_MAX after
-augmented_arg__read_str(). perf_event_open's failures are reachable, a
-bad attr pointer or an attr->size over PATH_MAX, so only it needed to
-output the unaugmented args on failure.
+Well, if you assume there are valid internal usages of driver_override,
+yes. I think it is possible to not need these all.
+=20
+> Many kernel subsystems and drivers use device_set_driver_override()
+> programmatically to force driver matching for dynamically instantiated de=
+vices
+> during normal operation or probing.
+>=20
+> For example, in drivers/clk/imx/clk-scu.c:imx_clk_scu_alloc_dev() sets the
+> override internally:
+>=20
+> 	ret =3D device_set_driver_override(&pdev->dev, "imx-scu-clk");
 
-Thanks,
-Ian
+Here I think you need to change `platform_device_alloc(name,
+PLATFORM_DEVID_NONE)` to `platform_device_alloc("imx-scu-clk",
+PLATFORM_DEVID_NONE)` plus maybe create uniq device ids (using a static
+int that is increased for each call).
 
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260928182605.36=
-49015-1-irogers@google.com?part=3D17
+> Since device_match_driver_override() cannot distinguish between a userspa=
+ce
+> sysfs override and a legitimate internal programmatic override, won't this
+> cause production systems using these platforms to falsely report as taint=
+ed on
+> boot?
+>=20
+> Falsely tainting the kernel breaks the reliability of the taint mechanism=
+ and
+> could lead to valid bug reports being ignored by maintainers.
+
+Best regards
+Uwe
+
+--e2btm2zbxiwiyxbf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmq6w2QACgkQj4D7WH0S
+/k713QgAuYGFOD8zr18eUyBJO0UxhmdDG/wvrKbHotQLYnJ05hM07+9ENNV9iLQw
+o8IjBj0j0INhu9NrJsK1YxH8yyIbSt3Gi8eZjJVfO+blKFQKucdwAG3/532WaN2P
+4VJuA3GVG6z656qY4omCJgleHpjkOF1xx17TkdzjnXj3p8ne1h4vt6JTyy9xNW24
+frVtuk/Llje62jDIq6ZtnEoeyddBiqcx94t5OITmnr+LXXKhmmFKwypHO08sNjck
+/y51XSz0Hv5lBE+mgLF8JoMAwB+D1Xg/liZs3XTZ14H6ruLjuNMK7m0LtXgTpOru
+42UhIyXsoV3uE4dIkAvsa3WZCf1Y3A==
+=rjkE
+-----END PGP SIGNATURE-----
+
+--e2btm2zbxiwiyxbf--
