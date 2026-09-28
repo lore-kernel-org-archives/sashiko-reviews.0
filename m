@@ -1,217 +1,190 @@
-Received: from mail-ed2-f29.google.com (mail-ed2-f29.google.com [74.125.228.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201834DE716
-	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 14:41:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.93
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F664D6C5D;
+	Mon, 28 Sep 2026 15:45:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790606498; cv=none; b=S8lekM8yv3mmpw0RuMjcMButi5XcWpjlkaP8RgeveP7HFFGhYsf3IMDsLMfquwT0+5QK0lBD/g4zmVZXFXl/43RGYbDbi08m1AFouu/NRLvBPRIAoFlyCZujICAyDfjxHWrbGrhaN24Sk/uYHuwVRopLJnahUlITAZ+xMgq2M94=
+	t=1790610358; cv=none; b=fWbAHtBW2Mz1nQ6lbHViVSq7r1QcmtLp21vNGq4xbI17TYfVQgk438T6/XBjzjbcgxBmQAHolAd8pPekG6k5lF9sy8/EaXQkW8orAZp9xoCnWub3Ead+f+19LbTKxj7u9PlW+3bPFzTgIAmgZrI6IqIUjJ4QLciCn8KRkZ5zyAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790606498; c=relaxed/simple;
-	bh=r1C08sQk0GHVIvDGj1//j8XkroBMKx8uoljNRrjhUSY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I9gmqPI7Av9KhycqebGlWGQex1ZqVNNiivxXOVcPx8OB/y6tB0v9sszHx83wJur+36Rd/tTyT+4OhiLjpvbBJgSUOL6wQyIUgL/R5Sg0F4HVTtKRoHIyh+0+9zcrl3Z04/Mcoo80kfvjPRpGLDpmgeOCTBMYQsQolF5dugfHE7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rhRLxE17; arc=none smtp.client-ip=74.125.228.93
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790610358; c=relaxed/simple;
+	bh=5/Mr4bZYVvwDb1E2f7zT2r2zcBHMFKR8KlLVnNXhPpU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KahJg7p5MT5cUaZmlIz1kVOjSjMOHzrsxqKL0OAOrbaF4AAC/oQpP0sal9Jyym+0Un36WeBERDfjuLr9D5ef78uT1GPt/I/RW2i8xyskSFe5SAJYzuCMzp54jwMZ2j+I6oiSpzuu8/dbVcQEb3yB3g2XDs6nRFoa5osJnAoZdqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=iJcwI/T5; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rhRLxE17"
-Received: by mail-ed2-f29.google.com with SMTP id 4fb4d7f45d1cf-6aa0ee64afdso3633783a12.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 07:41:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790606490; x=1791211290; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=gdKbC3riLBZ98r8oodQbbP8SrsBHoTyLl7tB6yhXYEA=;
-        b=rhRLxE17+rLMfp8HeO8Dbm7q5IoCUNeuSJkL+IbgAR3IpEoeqanoW8fvYi2tT4VZuJ
-         txsSod9s97cbFziYxPunMDzWxY2H1tXSkt6+t4oFgO/EiGDgeu0s7L0iek0nNgJYiuBh
-         gneP6yAB/Ezl8figyazegt+4EMeBS+6Ti3LvcqZtP5101eBYLhKao6PqAJxQ+T+CL4uY
-         pKm8CpiPARZ49bnoRcXlaaUFHBDoYXGQmqSF46FyWM58ZWo+du9IH3P7h1P4Ti0aXhg7
-         L/FXuU9VjdYGFokUU7XC3JtMoUn8DuuM3MBx/VV2jO67NtpMmL7Leb6Q+CoGYeH5aAik
-         z9CA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790606490; x=1791211290;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=gdKbC3riLBZ98r8oodQbbP8SrsBHoTyLl7tB6yhXYEA=;
-        b=X9PJXT/enc3nhN7kcdI63JjQ9D7MR/+CcKBaHOEt2h/wPfQBsOuNVzY9fpR6UEmN/z
-         ueteAdCCdJq/boPT/cLDZl1X1I9CKWUlHrj5yuTldNSI/fdfDUNK3r31XNUZkSRrcbpo
-         cT5FzlECkAYXO0v0jzl/jX8c9qhpkGLrx/Bjhjy5wqkx9VlVmphHRl8nTGCio4nMF8Mv
-         GfzGYxObngnyTRSFU/4eobIuNcndno+xeEhBaE4EYO6NsFVnMnhRa6kNOjNo9iZ9L83Y
-         Q2TFeX5eScbA/TVQoZGkHCJIek0jKZ5Tv2t8dpHgK7BHP01rLcYgib/3w0/ay35bnuKP
-         Lxug==
-X-Gm-Message-State: AFuF++nzfkYciLxTPkR918r7r72zzKgH+9cU249idBwAtDxSHl6Nssh0
-	N6PVzf9R16zhLYGeoahdYv7Zhf/YqnD09hMuwjG8EO3lNNlJz7Kp34bLviQruw==
-X-Gm-Gg: AYBFou2Ix9GJV3kFW+ZIWiq1XxwzVb8o2yec+4czvjjDrWcEH5paIroGAa1tIEjcjsZ
-	AS2JnP0QTK1m6HG7wmUWnMOoZ3ywDEYf8gWPQ4bBZnwU8VzT19OLHJ8PMCnZXFkId8CObAgo8EA
-	jXTeV23yYFlpIQDeEtWPUq2m9PkgfULAdwuY922DPXuCub3uRCnVtWRC0xXOGJxdHVR65qRlUh8
-	hf+C4YMHhmKkeR95Y5Gk6hLuJUxavR+5FQomh/aUa2+Inyv8CjeXZzTk3eS0R+P8kNnGaAI3wd+
-	DvLl69gvt7pB7eIXX43s4zWCEuM3p4Yta0D8yELHRTlCOB0QYti+v/phv3yCdqWCTBbJAFTYuXs
-	HHcGE/o27/IVmk+4Cz+/6Yr7rySU4buB9sEm+J0zKK6DIvK46KgALjVmxjXN6qjYLU5sH1v8dqI
-	3iwNjVvitz5Jr/9bBXWycBoKOAhHSd7h/4dlY/HlZH1HU5pqFivezTlAzfdcJZzi06OfpBA9yUH
-	hHBchiWhdmyVK3RlCFg/3FviBpNuzF1ZwWMErA2ZM4PlFejtRkZSlRSaEiI/Kl+S5aWWICF6NLU
-	hJpRIJ0Yi7RxaYDKN1KCXzfJCVAooEBnbtgrSayiqHutHESz
-X-Received: by 2002:a17:907:7b8c:b0:c2d:c33d:a9d4 with SMTP id a640c23a62f3a-c2dc33dada2mr388838266b.10.1790606489807;
-        Mon, 28 Sep 2026 07:41:29 -0700 (PDT)
-Received: from ?IPV6:2a01:4b00:bd21:4f00:7cc6:d3ca:494:116c? ([2a01:4b00:bd21:4f00:7cc6:d3ca:494:116c])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2b769429ddsm355555066b.51.2026.09.28.07.41.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Sep 2026 07:41:29 -0700 (PDT)
-Message-ID: <38f81e58-44ca-4fe6-ba72-97557b7625e9@gmail.com>
-Date: Mon, 28 Sep 2026 15:41:28 +0100
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="iJcwI/T5"
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68SF5ikb1269117;
+	Mon, 28 Sep 2026 15:45:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=sYPvC5VNJ9T1YDXYML+EzE2jNgSNES
+	NOr/gh5Y9PArw=; b=iJcwI/T5cBMdrureBRxpeRXvcWYx9sUOMKerugHJdeihbq
+	bxd+LpUc6viAdnL151sA+u54WDwqGgHJ2gJYAHfZZKg1J7pJKc5g5uB5OYfezGxD
+	dt8BP2fLheai9YHXaowUZi50lk07DmgOqsLrQ5QBIGL3GCVypYKvk3/SQZDlWfCR
+	hoKtApQtyYmBty+KB/qZp2Fm9Z/bJFdi8MLDUG/c01HXRrWE6rzYMcECgpIjRIZ7
+	2zpzYIHaAi7tFSZ5CuFaS8uADFkD2XOnVZSQnUO2JL6VdFdmOpubcyNeIpHxmSQ3
+	fLtQBfpERK+abGNQZ+xyewIs6MfOwaEK8G5jaYfQ==
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx3fk2a2y-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Mon, 28 Sep 2026 15:45:53 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68SElWqV3181806;
+	Mon, 28 Sep 2026 15:45:53 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gxtkg5rtb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 28 Sep 2026 15:45:53 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
+	by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68SFjquo30278370
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 28 Sep 2026 15:45:52 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id F0FA25803F;
+	Mon, 28 Sep 2026 15:45:51 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id D088C58056;
+	Mon, 28 Sep 2026 15:45:51 +0000 (GMT)
+Received: from d (unknown [9.61.160.252])
+	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+	Mon, 28 Sep 2026 15:45:51 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: sashiko-bot@kernel.org
+Cc: "Tyrel Datwyler" <tyreld@linux.ibm.com>, sashiko-reviews@lists.linux.dev,
+        linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v11 07/11] scsi: ibmvfc: extend async event handlers for
+ async sub-CRQ events
+In-Reply-To: <20260925050023.8E5481F000FF@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Fri, 25 Sep 2026 05:00:23
+	+0000")
+References: <20260925044900.414340-1-tyreld@linux.ibm.com>
+	<20260925044900.414340-8-tyreld@linux.ibm.com>
+	<20260925050023.8E5481F000FF@smtp.kernel.org>
+Date: Mon, 28 Sep 2026 10:45:51 -0500
+Message-ID: <87ld8l5qhc.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 06/13] nvme-pci: implement dma-buf backed requests
-To: sashiko-reviews@lists.linux.dev
-Cc: media-ci@linuxtv.org, dri-devel@lists.freedesktop.org
-References: <cover.1790602223.git.asml.silence@gmail.com>
- <e99dd5221c71cbf9aafb5737468d814cb83b9174.1790602223.git.asml.silence@gmail.com>
- <20260928140208.0C56B1F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Pavel Begunkov <asml.silence@gmail.com>
-In-Reply-To: <20260928140208.0C56B1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: IxI_TvdDSdLThxV2-h6QgauV-cIu_0b4
+X-Proofpoint-GUID: IxI_TvdDSdLThxV2-h6QgauV-cIu_0b4
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA2MiBTYWx0ZWRfX96GX6A44GtY6
+ gbWIkm0gQ6Bk4vSFqjJTElMey90sM9lKkkOxs1GIm1skdq9wH4X0Wm4DNPmFFmw5FbWoSdQvEOb
+ pBL/ZAUQy6sS2Kql7U1EG6LhybRCyYA=
+X-Authority-Analysis: v=2.4 cv=Vv62kO2n c=1 sm=1 tr=0 ts=6aba8bb1 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=JSOx8VvfMqNT5BbnElQA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA2MiBTYWx0ZWRfXyg42/6IaEbWv
+ p95NTqzj5gjLeck9mkEWpEQ1PkmHK/WnEEJh36RaYJlf1FYeeEjypmcoE+ZWu/qoSACDU0kpX/c
+ LggElYoAeIGzwJSWo+MZgnd7bsqnnbJwz3qe8nv58+BwcfV1xoYg24x+iYQFevhvul4zGmJJX9N
+ pFkvwS6fwB675DD0FbvayZXvD7Nu9VFynBaZy2ZY43Ml2CXEpN2lXxKDiuyrs3es/NwpvXr5EXi
+ tZTgcdM9mVoip7lKefsSfxy42otlkgKOwwbnuncCAVWsBbqRp9lIWubycrDyxKNulxqtezpyqoT
+ GYQXqm27fVyBONEGMGZRl7stMUFKBc4iB2gpYgi1ssV8utTULf1N76jN7wX/kkOdKacpBGxXaik
+ K6YvHofq1iWfjpd5tAI/451a8/zKV9CQTIeeXLiAxgPGmzBL16wvO862sVzlP9tuiEpc5Znoxfd
+ U6vZ0sUGytq/gNftEiA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-28_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 phishscore=0 bulkscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 lowpriorityscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609280062
 
-On 9/28/26 15:02, sashiko-bot@kernel.org wrote:
-...>> +	nvme_dmabuf_map_sync_for_device(nvmeq->dev, req);
->> +
->> +	if (length <= 0) {
->> +		prp2_dma = 0;
->> +		goto done;
->> +	}
->> +
->> +	if (length <= NVME_CTRL_PAGE_SIZE) {
->> +		prp2_dma = dma_list[map_idx];
-> 
-> [Severity: Critical]
-> Is map_idx checked against map->nr_entries here?
-> 
-> If dmabuf->size is 4608 bytes, nr_entries is truncated to 1, allocating 1
+sashiko-bot@kernel.org writes:
 
-It'd be rejected, not truncated, see below.
-
-> array element. Userspace could submit a 4608-byte IO. The driver calculates
-> 'length' up to 4608 and advances 'map_idx' to 1 for the remaining 512 bytes.
-> It reads 'dma_list[1]' (which is out-of-bounds) and uses it as 'prp2_dma',
-> potentially resulting in arbitrary physical DMA (read or write).
-> 
->> +		goto done;
->> +	}
-> 
-> [ ... ]
-> 
->> +free_prps:
->> +	iod->cmd.common.dptr.prp1 = cpu_to_le64(prp1_dma);
->> +	iod->cmd.common.dptr.prp2 = cpu_to_le64(prp2_dma);
->> +	nvme_free_descriptors(req);
->> +	return BLK_STS_RESOURCE;
-> 
-> [Severity: High]
-> Does this code leave iod->nr_descriptors greater than 0 on the error path?
-
-I can clear it, but unless I missed sth that's what e.g.
-nvme_pci_setup_data_prp() already does.
-
-nvme_pci_setup_data_prp() // goto bad_sgl:
-	nvme_unmap_data()
-		nvme_free_descriptors();
-
-
-> If dma_pool_alloc() fails in nvme_rq_setup_dmabuf_map(), it jumps to
-> 'free_prps:', which calls nvme_free_descriptors() but leaves
-> 'iod->nr_descriptors' unchanged. The block layer may requeue the failed
-> request.
-> 
-> If the queue is subsequently torn down, the cancellation path invokes
-> nvme_unmap_data() -> nvme_rq_clean_dmabuf_map(). Seeing the non-zero
-> 'nr_descriptors', it calls nvme_free_descriptors() again, resulting in a
-> double free.
-> 
->> +}
-> 
-> [ ... ]
-> 
->> +static struct dma_buf_io_map *nvme_dma_buf_io_map(struct dma_buf_io_ctx *ctx)
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] scsi: ibmvfc: FPIN descriptor uses potentially unpopulated WWPN from sub-CRQ
+> --
+>
+> commit 8a1ab5ee327462636518cdba29b91df0f867bb9f
+> Author: Dave Marquardt <davemarq@linux.ibm.com>
+>
+> scsi: ibmvfc: extend async event handlers for async sub-CRQ events
+>
+> This commit refactors async event handling to support both traditional async
+> CRQs and new asynchronous sub-queue CRQs. It introduces a tagged union that
+> wraps the async event and dispatches processing based on event type.
+>
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> index f465efadc02c8..321bb2f7219ed 100644
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> @@ -3426,6 +3426,45 @@ ibmvfc_basic_fpin_to_desc(struct ibmvfc_async_crq *crq, u64 wwpn)
+>>  					  cpu_to_be32(1));
+>>  }
+>>  
+>> +/**
+>> + * ibmvfc_full_fpin_to_desc(): allocate and populate a struct fc_els_fpin struct
+>> + * containing a descriptor.
+>> + * @ibmvfc_fpin: Pointer to async subq FPIN data
+>> + *
+>> + * Allocate a struct fc_els_fpin containing a descriptor and populate
+>> + * based on data from *ibmvfc_fpin.
+>> + *
+>> + * Return:
+>> + * NULL     - unable to allocate structure
+>> + * non-NULL - pointer to populated struct fc_els_fpin
+>> + */
+>> +static struct fc_els_fpin *
+>> +ibmvfc_full_fpin_to_desc(struct ibmvfc_async_sub_crq *ibmvfc_fpin)
 >> +{
->> +	unsigned nr_entries = ctx->dmabuf->size / NVME_CTRL_PAGE_SIZE;
->> +	struct nvme_dma_buf_io_ctx *nvme_ctx = ctx->dev_priv;
->> +	struct dma_buf_attachment *attach = nvme_ctx->attach;
->> +	unsigned long tmp, i = 0;
->> +	struct nvme_dmabuf_map *map;
->> +	struct scatterlist *sg;
->> +	struct sg_table *sgt;
->> +	int ret;
+>> +	__be16 type;
+>
+> [ ... ]
+>
+>> +	return ibmvfc_common_fpin_to_desc(ibmvfc_fpin->fpin_status, ibmvfc_fpin->wwpn,
+>> +					  type, cpu_to_be16(0),
+>> +					  cpu_to_be32(IBMVFC_FPIN_DEFAULT_EVENT_THRESHOLD),
+>> +					  cpu_to_be32(1));
+>> +}
+>
+> [ ... ]
+>
+>> @@ -3463,28 +3502,40 @@ static struct ibmvfc_target *ibmvfc_find_target(struct list_head *target_list,
+>>   */
+>>  static void ibmvfc_process_async_work(struct work_struct *work)
+>>  {
+>
+> [ ... ]
+>
+>> @@ -3496,7 +3547,11 @@ static void ibmvfc_process_async_work(struct work_struct *work)
+>>  		goto free;
+>>  	}
+>>  
+>> -	fpin = ibmvfc_basic_fpin_to_desc(crq, tgt->wwpn);
+>> +	if (crq)
+>> +		fpin = ibmvfc_basic_fpin_to_desc(crq, tgt->wwpn);
+>> +	else
+>> +		fpin = ibmvfc_full_fpin_to_desc(subq);
 >> +
->> +	dma_resv_assert_held(ctx->dmabuf->resv);
->> +
->> +	map = kvmalloc_flex(*map, dma_list, nr_entries);
->> +	if (!map)
->> +		return ERR_PTR(-ENOMEM);
->> +
->> +	sgt = dma_buf_map_attachment(attach, ctx->dir);
->> +	if (IS_ERR(sgt)) {
->> +		ret = PTR_ERR(sgt);
->> +		sgt = NULL;
->> +		goto err;
->> +	}
->> +
->> +	for_each_sgtable_dma_sg(sgt, sg, tmp) {
->> +		dma_addr_t dma_addr = sg_dma_address(sg);
->> +		unsigned long sg_len = sg_dma_len(sg);
->> +
->> +		if ((sg_len % NVME_CTRL_PAGE_SIZE) ||
->> +		    (dma_addr % NVME_CTRL_PAGE_SIZE)) {
->> +			ret = -EINVAL;
->> +			goto err;
->> +		}
->> +		while (sg_len) {
->> +			map->dma_list[i++] = dma_addr;
-> 
-> [Severity: High]
-> Does this loop overflow dma_list[]?
-> 
-> 'nr_entries' is computed via integer division of dmabuf->size. If the dmabuf
-> size is not page-aligned (e.g., 4097 bytes), nr_entries truncates down (to 1).
+>
+> [Severity: Medium]
+> If the hardware sends an async sub-CRQ FPIN event lacking a WWPN but
+> providing a valid node_name or scsi_id, the driver successfully resolves
+> the target (tgt) earlier in this function. 
+>
+> However, ibmvfc_full_fpin_to_desc() uses subq->wwpn instead of the resolved
+> tgt->wwpn. Could this generate an FPIN descriptor with a zero attached WWPN,
+> causing fc_host_fpin_rcv() to fail to match the target's rport and drop the
+> congestion statistics update?
+>
+> The legacy CRQ path safely passes tgt->wwpn via ibmvfc_basic_fpin_to_desc().
+> Should ibmvfc_full_fpin_to_desc() be updated to also take tgt->wwpn?
 
-It'll fail on the alignment check in this loop for [4096, 4097)
+I agree. I've extended ibmvfc_full_fpin_to_desc() with a new u64 wwpn
+argument, similar to ibmvfc_basic_fpin_to_desc().
 
-> However, exporters often pad sg_table allocations to full pages (e.g., 8192
-> bytes).
-> 
-> The loop unconditionally writes all sg_len chunks to 'dma_list', exceeding the
-> allocated 'nr_entries' capacity.
-> 
->> +			dma_addr += NVME_CTRL_PAGE_SIZE;
->> +			sg_len -= NVME_CTRL_PAGE_SIZE;
->> +		}
->> +	}
->> +
->> +	ret = dma_buf_io_init_map(ctx, &map->base, sgt);
->> +	if (ret)
->> +		goto err;
->> +	map->nr_entries = nr_entries;
->> +	map->sgt = sgt;
->> +	return &map->base;
->> +err:
->> +	if (sgt)
->> +		dma_buf_unmap_attachment(attach, sgt, ctx->dir);
->> +	kfree(map);
-> 
-> [Severity: High]
-> Is it safe to free a kvmalloc_flex() allocation with kfree()?
-
-Going to fix.
-
--- 
-Pavel Begunkov
-
+-Dave
