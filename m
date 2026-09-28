@@ -1,372 +1,146 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114AD4B049D
-	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 11:45:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816C41E7660;
+	Mon, 28 Sep 2026 12:22:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790595926; cv=none; b=fWZhEqSwkSNDjle6a8ma3Y6HwTZG4hKxs1oXLKxnuB5r3NTmn//xQjpZFpDsiCU63iPVHaTmOD8jEyia8NlX4sbvw/bj/Em8qJM3/ZOSSEqiaghjV6UIxZCRcCUv5lNQc3RiSeUzYMHPuTj8WQ3oMHXfcHVQGnIBkIbtlCA2DjQ=
+	t=1790598175; cv=none; b=JdCAUwV91YKcGVvylEFpQdrgoc5F5CPAvH96A0QQA/1SyWGWYTWMzcLOseQwfhWBxGJt8ZiusWdVRnEov/yqebPNTIjR0oehyChc+ppkXajnxwI/mmxlF+hq6pQglCHgzN8uV17Tkibp1C6zGp5Pl7azeihjvcDLV/5ilhV3PIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790595926; c=relaxed/simple;
-	bh=gk1d6iWHSG2fWZvzY7hxPims+zk50DZ0DapJERgkQyg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hq1hdFxGGmr4XKhudsAySLpECJKgTB9FlkWtYITTC8+3sTTChiY/1HCJdetHztbhSURjpS3CrUL7NTZ41BGXQOC81TgvPYvj0mzR/WzP5GDhWsdo74+58a6TEF40eqlG1Dk3Qgnobpu5Hm6pr+y4YbvfM+Q5sxJN1L5lvXess+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=droKwZF4; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=oq1mL7Ef; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=W/4lSq6C; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=EDoFp/Au; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1790598175; c=relaxed/simple;
+	bh=oERatHrNyti65M0Q6PWz9JbXSiUntq66rbkX4KZmZTg=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=IdeDECooACXn0pVnWY9Tf6v6xbCOwkTdfEAMIkzvdGYhdTz0ZBF1BJAUn4G3+KMLY91O4lE9MYEm9NfVOruv2F78XUU2NZR84u4A810slU1GRzbY+ADtQllzODOBV1YkM3XYr/fAcgdY819uC1azE3UsozHijM36zR3tbntHaLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nbcyLi8/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="droKwZF4";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="oq1mL7Ef";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="W/4lSq6C";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="EDoFp/Au"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 0C60421C07;
-	Mon, 28 Sep 2026 11:45:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1790595919; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=2WVpFuXjFddjDeRIFbAJvdlTK7EgmkNkTiDhxMr1adY=;
-	b=droKwZF4+XAkNO5BnDz5fFgevBpfjIM0g4bBczyWs5IjRYoxodw9aFC90JHrbcZaoJISke
-	7MXZD2r7ewdLBzOxdp6GeJ+KE5mLbBPkQ6KNUpBUA4dKz28Nm1NNNFU4Oj6GlyQNj1nKaN
-	zH8oeU18inWrT/NkWnbmRgyuO/TEK5M=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1790595919;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=2WVpFuXjFddjDeRIFbAJvdlTK7EgmkNkTiDhxMr1adY=;
-	b=oq1mL7EfoOJA7wJiapCfDPPPmtyexesiZ0no8b0gsnPIyfHfMMRkqa3+hyk01pyR5sRdVw
-	g227V8St8MeXO/Aw==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b="W/4lSq6C";
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="EDoFp/Au"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1790595915; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=2WVpFuXjFddjDeRIFbAJvdlTK7EgmkNkTiDhxMr1adY=;
-	b=W/4lSq6CkagFNUNwOVpQmrORPmQ6YVyutZFacBfNKMgWu37UpMoFBHTvwlssQyz2obTG0B
-	j8gPcnDlGzb58LOv20Y1gKlss/WIiE/TUPwseaY+I8AOo3a0eMgLcR4XjY8ql81yFrCXUT
-	3QcVqmTe5rRsBk0igz2NV3i/1R2Guqw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1790595915;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=2WVpFuXjFddjDeRIFbAJvdlTK7EgmkNkTiDhxMr1adY=;
-	b=EDoFp/AuTUuQmOiohUqBR2hUT9i2l4lwY/8VgVmKQEk0WXBKRC13dSUNyINSZozjzJXg7b
-	Mr6un4R4x+FDhbCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A467E133F3;
-	Mon, 28 Sep 2026 11:45:14 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id WH1nHEpTumrkTQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Mon, 28 Sep 2026 11:45:14 +0000
-Message-ID: <2c5caf22-1fa4-43d7-95c0-782c111ab3f7@suse.de>
-Date: Mon, 28 Sep 2026 13:45:14 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nbcyLi8/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641AB1F000FF;
+	Mon, 28 Sep 2026 12:22:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790598174;
+	bh=ztLdZryxXo0UnEDHRAaJoKaaXxKgEfERrJosCd2p1Oo=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=nbcyLi8/vG/vKchA/PAhaI+POjW5sxfK5ooSAdb2FiyJ2WD3i2gqANIsSHwAbNokt
+	 4xsOzQDc+rGLGmxK6hRXpxcce5tgEmh+yzNwVIvCDfAN5LDBpu+SgYJ8owNC+Voi1t
+	 OpT15iIbbCB9KwBFNEz2wS5qdaV+Mx7WHbhl0DtigqL/FUWH0n9jycdVe7FFzbsNFo
+	 F4LeG5Rih0HB7S8j8b3h7JomTPxdKiggCAtHaznP+jEKXvxRhdMhwNBrVC30L71Myh
+	 uyLyuuaRVgPCROq00Vkd9jcC8yDnYtcmmkr9rN4Z5T2CbReQe09cqu2SPpfOzXVI1x
+	 LK75c6UDKwTOQ==
+Date: Mon, 28 Sep 2026 21:22:51 +0900
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: sashiko-bot@kernel.org, linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH] fprobe: Protect fprobe_return() with guard(rcu)()
+Message-Id: <20260928212251.58fa1f68f33d4c967a8e8b1c@kernel.org>
+In-Reply-To: <20260928005114.9C9FC1F000FF@smtp.kernel.org>
+References: <179055575009.241711.6358052647499787191.stgit@devnote2>
+	<179055575973.241711.6618845269004184577.stgit@devnote2>
+	<20260928005114.9C9FC1F000FF@smtp.kernel.org>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] vt: Add cursor-size helpers
-To: Jani Nikula <jani.nikula@linux.intel.com>, deller@gmx.de,
- gregkh@linuxfoundation.org, jirislaby@kernel.org, simona@ffwll.ch
-Cc: linux-fbdev@vger.kernel.org, dri-devel@lists.freedesktop.org,
- linux-serial@vger.kernel.org, sashiko-reviews@lists.linux.dev
-References: <20260928085724.41660-1-tzimmermann@suse.de>
- <20260928085724.41660-2-tzimmermann@suse.de>
- <7e3cccd612e87e6e85271a026d9fc737a56eaa6c@intel.com>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <7e3cccd612e87e6e85271a026d9fc737a56eaa6c@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Score: -4.51
-X-Rspamd-Queue-Id: 0C60421C07
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spam-Level: 
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
-	FREEMAIL_ENVRCPT(0.00)[gmx.de];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_TO(0.00)[linux.intel.com,gmx.de,linuxfoundation.org,kernel.org,ffwll.ch];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	MID_RHS_MATCH_FROM(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RCVD_TLS_ALL(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email,suse.de:mid];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Flag: NO
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Hi
+On Mon, 28 Sep 2026 00:51:14 +0000
+sashiko-bot@kernel.org wrote:
 
-Am 28.09.26 um 11:07 schrieb Jani Nikula:
-> On Mon, 28 Sep 2026, Thomas Zimmermann <tzimmermann@suse.de> wrote:
->> Cursors in the VT subsystem are blocks within a character cell that are
->> filled with the foreground color. The new helpers vc_cursor_start() and
->> vc_cursor_end() return the scanlines in which the cursor block starts rsp.
->> ends. This is compatible with VGA hardware.
->>
->> In terms of cursor design, the new cursor-size helpers follow established
->> styles in fbcon. The only exception is in underline cursors for fonts with
->> a size larger than 10. The underlining dash is now one pixel closer to
->> the font-glyph data, so that the cursor looks less detached. This follows
->> the style used by vgacon.
->>
->> Users control the cursor size with the vt module's parameter cur_default
->> or with the ESC sequence \e[?Nc, where N is the cursor-size constant. In
->> case of an invalid setting, the new helpers fall back to cur_default and
->> then underline cursors; in this order.
->>
->> Similar code in vgacon and fbcon ignores the cursor's default size stored
->> in vt.cur_default. The consoles default to full-block cursors, while vt
->> defaults to underline cursors. VGA BIOSes also tend to use underline by.
->> default. Upon initialization vt applies its default to the console, but
->> each console might fall back to it own default. For example, running the
->> ESC code from above with the invalid constant of 8 magically flips the
->> cursor from underline to block size on vgacon. Another call with N set
->> to 0 (i.e., default) magically flips it back to underlyine. Making
->> underline the new default everywhere harmonizes vt, fbcon and most VGA
->> BIOSes.
->>
->> v3:
->> - mention user interfaces to control cursor size in commit message (GregKH)
->> - elaborate defaults (GregKH)
->> - move retry logic into helper
->> - handle CUR_DEF
->> v2:
->> - export non-font interface for vgacon
->> - avoid interference from concurrent user space (Sashiko)
->> - fix function docs (Sashiko)
->>
->> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->> Reviewed-by: Helge Deller <deller@gmx.de>
->> ---
->>   drivers/tty/vt/vt.c            | 104 +++++++++++++++++++++++++++++++++
->>   include/linux/console_struct.h |   7 +++
->>   2 files changed, 111 insertions(+)
->>
->> diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
->> index 57edf37495a8..8141296ccad0 100644
->> --- a/drivers/tty/vt/vt.c
->> +++ b/drivers/tty/vt/vt.c
->> @@ -71,6 +71,7 @@
->>    * by Adam Tla/lka <atlka@pg.gda.pl>, Aug 2006
->>    */
->>   
->> +#include <linux/compiler.h>
->>   #include <linux/module.h>
->>   #include <linux/types.h>
->>   #include <linux/sched/signal.h>
->> @@ -264,6 +265,109 @@ unsigned int vc_font_size(const struct vc_font *font)
->>   }
->>   EXPORT_SYMBOL_GPL(vc_font_size);
->>   
->> +/*
->> + * Cursors
->> + */
->> +
->> +static unsigned int vc_cursor_size(unsigned int cursor_size)
->> +{
->> +	const unsigned int cursor_default_size = CUR_SIZE(READ_ONCE(cur_default));
->> +
->> +retry:
->> +	switch (cursor_size) {
->> +	case CUR_NONE:
->> +	case CUR_UNDERLINE:
->> +	case CUR_LOWER_THIRD:
->> +	case CUR_LOWER_HALF:
->> +	case CUR_TWO_THIRDS:
->> +	case CUR_BLOCK:
->> +		return cursor_size;
->> +	default:
->> +		pr_warn_once("Unknown cursor %u\n", cursor_size);
->> +		fallthrough;
->> +	case CUR_DEF:
->> +		/*
->> +		 * Use user-given default size, or underline if
->> +		 * the given default is invalid.
->> +		 */
->> +		if (cursor_size != cursor_default_size)
->> +			cursor_size = cursor_default_size;
->> +		else
->> +			cursor_size = CUR_UNDERLINE;
->> +		goto retry;
-> Complete bikeshed, but IMO goto for retries is ugly. It's fine for error
-> handling, but this could trivially be a loop.
+> > diff --git a/kernel/trace/fprobe.c b/kernel/trace/fprobe.c
+> > index 1e9b00997ff27..e34c3f7667848 100644
+> > --- a/kernel/trace/fprobe.c
+> > +++ b/kernel/trace/fprobe.c
+> > @@ -656,7 +656,7 @@ static void fprobe_return(struct ftrace_graph_ret *trace,
+> >  	size_words = SIZE_IN_LONG(size);
+> >  	ret_ip = ftrace_regs_get_instruction_pointer(fregs);
+> >  
+> > -	preempt_disable_notrace();
+> > +	guard(rcu)();
+> 
+> [Severity: High]
+> Since ftrace operations lacking the FTRACE_OPS_FL_RCU flag can execute in
+> idle contexts where RCU is not watching, does adding guard(rcu)() here
+> trigger an illegal RCU lock usage splat?
 
-Ok. I have no strong opinion about it.
+Hm, OK. Maybe we need to add something like checking rcu_watching, but
+FTRACE_OPS_FL_RCU does not work correctly because fgraph_init_ops() only
+configures subops (gops->ops). ftrace_startup_subops() does not propagete
+that flag to graph_ops. (I guess that is yet another problem?)
 
-Best regards
-Thomas
+To guarantee no illegal RCU usage or lockdep splats if an instrumented
+function returns while RCU is offline, we can check 
 
->
-> BR,
-> Jani.
->
->> +	}
->> +}
->> +
->> +/**
->> + * vc_cursor_start - Calculates the cursor's first scanline within a character cell
->> + * @cell_height: The overall height of the character cell
->> + * @cursor_size: The size constant of cursor pattern
->> + *
->> + * The parameter @cell_height is the height of the character cell as
->> + * displayed by the console. The argument given in @cursor_size is one
->> + * of the CUR_ constants, as stored in struct @vc_data.vc_cursor_type.
->> + * For unknown values, the helper draws the default cursor or an underline
->> + * dash.
->> + *
->> + * Returns:
->> + * The index of the cursor's first scanline within the character cell
->> + */
->> +unsigned int vc_cursor_start(unsigned int cell_height, unsigned int cursor_size)
->> +{
->> +	switch (vc_cursor_size(cursor_size)) {
->> +	case CUR_NONE:
->> +		return cell_height;
->> +	case CUR_UNDERLINE:
->> +	default:
->> +		if (cell_height < 10)
->> +			return cell_height - 1;
->> +		else
->> +			return cell_height - 3;
->> +	case CUR_LOWER_THIRD:
->> +		return cell_height - cell_height / 3;
->> +	case CUR_LOWER_HALF:
->> +		return cell_height - cell_height / 2;
->> +	case CUR_TWO_THIRDS:
->> +		return cell_height - (cell_height * 2) / 3;
->> +	case CUR_BLOCK:
->> +		return 0;
->> +	}
->> +}
->> +EXPORT_SYMBOL_GPL(vc_cursor_start);
->> +
->> +/**
->> + * vc_cursor_end - Calculates the first scanline after the cursor within a character cell
->> + * @cell_height: The overall height of the character cell
->> + * @cursor_size: The size constant of cursor pattern
->> + *
->> + * The parameter @cell_height is the height of the character cell as
->> + * displayed by the console. The argument given in @cursor_size is one
->> + * of the CUR_ constants, as stored in struct @vc_data.vc_cursor_type.
->> + * For unknown values, the helper draws the default cursor or an underline
->> + * dash.
->> + *
->> + * Returns:
->> + * The index of the first scanline after the cursor within the character cell
->> + */
->> +unsigned int vc_cursor_end(unsigned int cell_height, unsigned int cursor_size)
->> +{
->> +	switch (vc_cursor_size(cursor_size)) {
->> +	case CUR_UNDERLINE:
->> +	default:
->> +		if (cell_height < 10)
->> +			return cell_height;
->> +		else
->> +			return cell_height - 1;
->> +	case CUR_NONE:
->> +	case CUR_LOWER_THIRD:
->> +	case CUR_LOWER_HALF:
->> +	case CUR_TWO_THIRDS:
->> +	case CUR_BLOCK:
->> +		return cell_height;
->> +	}
->> +}
->> +EXPORT_SYMBOL_GPL(vc_cursor_end);
->> +
->>   /*
->>    * /sys/class/tty/tty0/
->>    *
->> diff --git a/include/linux/console_struct.h b/include/linux/console_struct.h
->> index fe915afdece5..1d37c7898ea0 100644
->> --- a/include/linux/console_struct.h
->> +++ b/include/linux/console_struct.h
->> @@ -204,6 +204,10 @@ struct vc {
->>   extern struct vc vc_cons [MAX_NR_CONSOLES];
->>   extern void vc_SAK(struct work_struct *work);
->>   
->> +/*
->> + * Cursors
->> + */
->> +
->>   #define CUR_MAKE(size, change, set)	((size) | ((change) << 8) |	\
->>   		((set) << 16))
->>   #define CUR_SIZE(c)		 ((c) & 0x00000f)
->> @@ -222,6 +226,9 @@ extern void vc_SAK(struct work_struct *work);
->>   #define CUR_CHANGE(c)		 ((c) & 0x00ff00)
->>   #define CUR_SET(c)		(((c) & 0xff0000) >> 8)
->>   
->> +unsigned int vc_cursor_start(unsigned int cell_height, unsigned int cursor_size);
->> +unsigned int vc_cursor_end(unsigned int cell_height, unsigned int cursor_size);
->> +
->>   bool con_is_visible(const struct vc_data *vc);
->>   
->>   #endif /* _LINUX_CONSOLE_STRUCT_H */
+ if (unlikely(!rcu_is_watching()))
+	return;
+
+before acquiring guard(rcu)().
+
+> 
+> Additionally, since RCU doesn't track read-side critical sections that
+> start when RCU isn't watching, does this mean synchronize_rcu() during
+> unregistration will fail to wait for these handlers, leaving the fprobe
+> vulnerable to the same use-after-free this patch attempts to fix?
+
+As I said above, if we add the rcu_is_watching() checks, we can avoid
+this issue.
+
+
+> 
+> [ ... ]
+> 
+> 
+> Looking at fprobe_fgraph_entry() in the same file:
+> 
+> kernel/trace/fprobe.c:fprobe_fgraph_entry() {
+>     ...
+> 	if (WARN_ON_ONCE(!fregs))
+> 		return 0;
+> 
+> 	guard(rcu)();
+> 	head = rhltable_lookup(&fprobe_ip_table, &func, fprobe_rht_params);
+>     ...
+> }
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but fprobe_fgraph_entry() also
+> uses guard(rcu)(). Could this pre-existing usage cause the same lockdep
+> splats in idle contexts?
+
+Yeah, so we also need !rcu_is_watching() check. BTW for x86-64, it seems
+those call path are removed from ftrace by objtool.
+
+> 
+> 
+> Looking at how fgraph operations are initialized:
+> 
+> kernel/trace/fgraph.c:fgraph_init_ops() {
+> 	dst_ops->flags = FTRACE_OPS_FL_PID | FTRACE_OPS_GRAPH_STUB;
+> 
+> #ifdef CONFIG_DYNAMIC_FTRACE
+>     ...
+> }
+> 
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does the lack of
+> FTRACE_OPS_FL_RCU in these global fgraph operations expose all fgraph
+> users to execution when RCU is not watching? Should this flag be added
+> here to prevent tracing callbacks from being invoked in contexts where
+> RCU is offline?
+
+Yeah, but the fgraph_ops in fprobe becomes a subops, whose flags
+are ignored. So fprobe needs to check the rcu_is_watching() by
+itself.
+
+Let me update it.
+
+However, I think this is fundamentally unneeded check if we replace
+guard(rcu)() with preempt-disabled.
+
+Thank you,
+
 
 -- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
-
-
+Masami Hiramatsu (Google) <mhiramat@kernel.org>
