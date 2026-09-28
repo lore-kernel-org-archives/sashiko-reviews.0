@@ -1,88 +1,217 @@
-Received: from sipsolutions.net (s3.sipsolutions.net [168.119.38.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed2-f29.google.com (mail-ed2-f29.google.com [74.125.228.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FFC4DAFB5;
-	Mon, 28 Sep 2026 14:19:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.38.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201834DE716
+	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 14:41:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.93
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790605170; cv=none; b=A07r8nNVDWMXRon8bdxvZ8njlV8jmebrn3ssEjChxtScdT2Xf4g/mB6O3pZCVSgCk8M9MkkllVWS+mE1i8LIpbKtPjQlJE4VLU+RpPMGFk8Mg1UGn1h3P9nM9KU5C2cC06WfLaIBe4+cMrDbKIyX/2OCngpQOB2nJ6eY7zj219U=
+	t=1790606498; cv=none; b=S8lekM8yv3mmpw0RuMjcMButi5XcWpjlkaP8RgeveP7HFFGhYsf3IMDsLMfquwT0+5QK0lBD/g4zmVZXFXl/43RGYbDbi08m1AFouu/NRLvBPRIAoFlyCZujICAyDfjxHWrbGrhaN24Sk/uYHuwVRopLJnahUlITAZ+xMgq2M94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790605170; c=relaxed/simple;
-	bh=kMPws3DmqsvCg05hs4fveBqAzjBYVJp8kMdNJmPQVGA=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=N/O5olcLJJP7yaE2a5DeBiYvF/j/o42jNaCU0UOzUg4F9F65Wsd8nuazNPFZDkIYbqP3ZM4kqcfG9WcLi0hmuUxnQDlRFnG4SzdfsjG/DgLbwcBpd2gT/RvVHCzkQFyqSr2EZ2wtDFDlJzFEeit27gAe9g5IuM8ACVEMaq7w5s4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=permerror header.from=sipsolutions.net; spf=pass smtp.mailfrom=sipsolutions.net; dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b=lkYKd66C; arc=none smtp.client-ip=168.119.38.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=permerror header.from=sipsolutions.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sipsolutions.net
+	s=arc-20240116; t=1790606498; c=relaxed/simple;
+	bh=r1C08sQk0GHVIvDGj1//j8XkroBMKx8uoljNRrjhUSY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=I9gmqPI7Av9KhycqebGlWGQex1ZqVNNiivxXOVcPx8OB/y6tB0v9sszHx83wJur+36Rd/tTyT+4OhiLjpvbBJgSUOL6wQyIUgL/R5Sg0F4HVTtKRoHIyh+0+9zcrl3Z04/Mcoo80kfvjPRpGLDpmgeOCTBMYQsQolF5dugfHE7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rhRLxE17; arc=none smtp.client-ip=74.125.228.93
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sipsolutions.net header.i=@sipsolutions.net header.b="lkYKd66C"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=sipsolutions.net; s=mail; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-To:
-	Resent-Cc:Resent-Message-ID; bh=1HIHic1e07cJlsjdHQI93QJFXAzvnsuYhE7/gvB5xkA=;
-	t=1790605167; x=1791814767; b=lkYKd66C9H7KlYWraxZP9O+bTRzk0NuPQVj35aIzfUACYOS
-	R0TCZIF9CEqq3ui1dS6etEKHYxxIXuU39M1P5FFYdAaSIrag+lFEDa5UDyy+NI3uZuXc2C43EeVxz
-	0x9ZyK3Ydgpy5sauL7CNxcBPwqF0TarPMj11GdRXFHg8LxheqR71d6kOSlXsDxIkaTZSVkjsluR7Y
-	DWIrqMfyBEvzPUdrwOSFL6E2lK83P9bVGkraJ6u9jyHitYjEUBPaFHEE+mUOzgiqZ2V+QzZk3FyOj
-	N145TeGJ318BJlHQeNTdtHmJJRLxusAwWcq8no1xTpoLWVt9JRReMI7nJu5GC9bA==;
-Received: by sipsolutions.net with esmtpsa (TLS1.3:ECDHE_X25519__ECDSA_SECP256R1_SHA256__AES_256_GCM:256)
-	(Exim 4.98.2)
-	(envelope-from <johannes@sipsolutions.net>)
-	id 1xBCCP-0000000DcZz-14UD;
-	Mon, 28 Sep 2026 16:19:21 +0200
-Message-ID: <2f552b80cb4a88f52bf7df70a7766460f4fc1628.camel@sipsolutions.net>
-Subject: Re: [PATCH v7 1/4] tracing: add __print_sym() to replace
- __print_symbolic()
-From: Johannes Berg <johannes@sipsolutions.net>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-trace-kernel@vger.kernel.org
-Date: Mon, 28 Sep 2026 16:19:20 +0200
-In-Reply-To: <20260923111017.F17CD1F000FF@smtp.kernel.org>
-References: <20260922110955.363677-6-johannes@sipsolutions.net>
-	 <20260922110955.363677-7-johannes@sipsolutions.net>
-	 <20260923111017.F17CD1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (3.60.2-2.fc44) 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rhRLxE17"
+Received: by mail-ed2-f29.google.com with SMTP id 4fb4d7f45d1cf-6aa0ee64afdso3633783a12.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 07:41:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790606490; x=1791211290; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=gdKbC3riLBZ98r8oodQbbP8SrsBHoTyLl7tB6yhXYEA=;
+        b=rhRLxE17+rLMfp8HeO8Dbm7q5IoCUNeuSJkL+IbgAR3IpEoeqanoW8fvYi2tT4VZuJ
+         txsSod9s97cbFziYxPunMDzWxY2H1tXSkt6+t4oFgO/EiGDgeu0s7L0iek0nNgJYiuBh
+         gneP6yAB/Ezl8figyazegt+4EMeBS+6Ti3LvcqZtP5101eBYLhKao6PqAJxQ+T+CL4uY
+         pKm8CpiPARZ49bnoRcXlaaUFHBDoYXGQmqSF46FyWM58ZWo+du9IH3P7h1P4Ti0aXhg7
+         L/FXuU9VjdYGFokUU7XC3JtMoUn8DuuM3MBx/VV2jO67NtpMmL7Leb6Q+CoGYeH5aAik
+         z9CA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790606490; x=1791211290;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=gdKbC3riLBZ98r8oodQbbP8SrsBHoTyLl7tB6yhXYEA=;
+        b=X9PJXT/enc3nhN7kcdI63JjQ9D7MR/+CcKBaHOEt2h/wPfQBsOuNVzY9fpR6UEmN/z
+         ueteAdCCdJq/boPT/cLDZl1X1I9CKWUlHrj5yuTldNSI/fdfDUNK3r31XNUZkSRrcbpo
+         cT5FzlECkAYXO0v0jzl/jX8c9qhpkGLrx/Bjhjy5wqkx9VlVmphHRl8nTGCio4nMF8Mv
+         GfzGYxObngnyTRSFU/4eobIuNcndno+xeEhBaE4EYO6NsFVnMnhRa6kNOjNo9iZ9L83Y
+         Q2TFeX5eScbA/TVQoZGkHCJIek0jKZ5Tv2t8dpHgK7BHP01rLcYgib/3w0/ay35bnuKP
+         Lxug==
+X-Gm-Message-State: AFuF++nzfkYciLxTPkR918r7r72zzKgH+9cU249idBwAtDxSHl6Nssh0
+	N6PVzf9R16zhLYGeoahdYv7Zhf/YqnD09hMuwjG8EO3lNNlJz7Kp34bLviQruw==
+X-Gm-Gg: AYBFou2Ix9GJV3kFW+ZIWiq1XxwzVb8o2yec+4czvjjDrWcEH5paIroGAa1tIEjcjsZ
+	AS2JnP0QTK1m6HG7wmUWnMOoZ3ywDEYf8gWPQ4bBZnwU8VzT19OLHJ8PMCnZXFkId8CObAgo8EA
+	jXTeV23yYFlpIQDeEtWPUq2m9PkgfULAdwuY922DPXuCub3uRCnVtWRC0xXOGJxdHVR65qRlUh8
+	hf+C4YMHhmKkeR95Y5Gk6hLuJUxavR+5FQomh/aUa2+Inyv8CjeXZzTk3eS0R+P8kNnGaAI3wd+
+	DvLl69gvt7pB7eIXX43s4zWCEuM3p4Yta0D8yELHRTlCOB0QYti+v/phv3yCdqWCTBbJAFTYuXs
+	HHcGE/o27/IVmk+4Cz+/6Yr7rySU4buB9sEm+J0zKK6DIvK46KgALjVmxjXN6qjYLU5sH1v8dqI
+	3iwNjVvitz5Jr/9bBXWycBoKOAhHSd7h/4dlY/HlZH1HU5pqFivezTlAzfdcJZzi06OfpBA9yUH
+	hHBchiWhdmyVK3RlCFg/3FviBpNuzF1ZwWMErA2ZM4PlFejtRkZSlRSaEiI/Kl+S5aWWICF6NLU
+	hJpRIJ0Yi7RxaYDKN1KCXzfJCVAooEBnbtgrSayiqHutHESz
+X-Received: by 2002:a17:907:7b8c:b0:c2d:c33d:a9d4 with SMTP id a640c23a62f3a-c2dc33dada2mr388838266b.10.1790606489807;
+        Mon, 28 Sep 2026 07:41:29 -0700 (PDT)
+Received: from ?IPV6:2a01:4b00:bd21:4f00:7cc6:d3ca:494:116c? ([2a01:4b00:bd21:4f00:7cc6:d3ca:494:116c])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c2b769429ddsm355555066b.51.2026.09.28.07.41.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Sep 2026 07:41:29 -0700 (PDT)
+Message-ID: <38f81e58-44ca-4fe6-ba72-97557b7625e9@gmail.com>
+Date: Mon, 28 Sep 2026 15:41:28 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-malware-bazaar: not-scanned
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 06/13] nvme-pci: implement dma-buf backed requests
+To: sashiko-reviews@lists.linux.dev
+Cc: media-ci@linuxtv.org, dri-devel@lists.freedesktop.org
+References: <cover.1790602223.git.asml.silence@gmail.com>
+ <e99dd5221c71cbf9aafb5737468d814cb83b9174.1790602223.git.asml.silence@gmail.com>
+ <20260928140208.0C56B1F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: Pavel Begunkov <asml.silence@gmail.com>
+In-Reply-To: <20260928140208.0C56B1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, 2026-09-23 at 11:10 +0000, sashiko-bot@kernel.org wrote:
-> > +#undef __print_sym
-> > +#define __print_sym(value, symbol_id)	__print_sym(value:symbol_id)
->=20
-> [Severity: Medium]
-> Does this delimiter choice in the __print_sym() macro in
-> include/trace/stages/stage7_class_define.h cause issues for arbitrary C
-> expressions?
->=20
-> This macro transforms the arguments into a string format using a delimite=
-r (:)
-> that is unsafe for arbitrary C expressions if parsed left-to-right. If a
-> kernel developer uses an expression containing a colon (such as a ternary
-> operator like a ? b : c) as the value argument, it seems the string
-> representation will contain multiple colons.
+On 9/28/26 15:02, sashiko-bot@kernel.org wrote:
+...>> +	nvme_dmabuf_map_sync_for_device(nvmeq->dev, req);
+>> +
+>> +	if (length <= 0) {
+>> +		prp2_dma = 0;
+>> +		goto done;
+>> +	}
+>> +
+>> +	if (length <= NVME_CTRL_PAGE_SIZE) {
+>> +		prp2_dma = dma_list[map_idx];
+> 
+> [Severity: Critical]
+> Is map_idx checked against map->nr_entries here?
+> 
+> If dmabuf->size is 4608 bytes, nr_entries is truncated to 1, allocating 1
 
-[snip]
+It'd be rejected, not truncated, see below.
+
+> array element. Userspace could submit a 4608-byte IO. The driver calculates
+> 'length' up to 4608 and advances 'map_idx' to 1 for the remaining 512 bytes.
+> It reads 'dma_list[1]' (which is out-of-bounds) and uses it as 'prp2_dma',
+> potentially resulting in arbitrary physical DMA (read or write).
+> 
+>> +		goto done;
+>> +	}
+> 
+> [ ... ]
+> 
+>> +free_prps:
+>> +	iod->cmd.common.dptr.prp1 = cpu_to_le64(prp1_dma);
+>> +	iod->cmd.common.dptr.prp2 = cpu_to_le64(prp2_dma);
+>> +	nvme_free_descriptors(req);
+>> +	return BLK_STS_RESOURCE;
+> 
+> [Severity: High]
+> Does this code leave iod->nr_descriptors greater than 0 on the error path?
+
+I can clear it, but unless I missed sth that's what e.g.
+nvme_pci_setup_data_prp() already does.
+
+nvme_pci_setup_data_prp() // goto bad_sgl:
+	nvme_unmap_data()
+		nvme_free_descriptors();
 
 
-Technically, yes, but I think it's implausible to have a ternary for
-printing a simple enum value *inside* the TP_printk(). You'd usually
-want to store the result of the ternary via TP_fast_assign(), I'd think.
+> If dma_pool_alloc() fails in nvme_rq_setup_dmabuf_map(), it jumps to
+> 'free_prps:', which calls nvme_free_descriptors() but leaves
+> 'iod->nr_descriptors' unchanged. The block layer may requeue the failed
+> request.
+> 
+> If the queue is subsequently torn down, the cancellation path invokes
+> nvme_unmap_data() -> nvme_rq_clean_dmabuf_map(). Seeing the non-zero
+> 'nr_descriptors', it calls nvme_free_descriptors() again, resulting in a
+> double free.
+> 
+>> +}
+> 
+> [ ... ]
+> 
+>> +static struct dma_buf_io_map *nvme_dma_buf_io_map(struct dma_buf_io_ctx *ctx)
+>> +{
+>> +	unsigned nr_entries = ctx->dmabuf->size / NVME_CTRL_PAGE_SIZE;
+>> +	struct nvme_dma_buf_io_ctx *nvme_ctx = ctx->dev_priv;
+>> +	struct dma_buf_attachment *attach = nvme_ctx->attach;
+>> +	unsigned long tmp, i = 0;
+>> +	struct nvme_dmabuf_map *map;
+>> +	struct scatterlist *sg;
+>> +	struct sg_table *sgt;
+>> +	int ret;
+>> +
+>> +	dma_resv_assert_held(ctx->dmabuf->resv);
+>> +
+>> +	map = kvmalloc_flex(*map, dma_list, nr_entries);
+>> +	if (!map)
+>> +		return ERR_PTR(-ENOMEM);
+>> +
+>> +	sgt = dma_buf_map_attachment(attach, ctx->dir);
+>> +	if (IS_ERR(sgt)) {
+>> +		ret = PTR_ERR(sgt);
+>> +		sgt = NULL;
+>> +		goto err;
+>> +	}
+>> +
+>> +	for_each_sgtable_dma_sg(sgt, sg, tmp) {
+>> +		dma_addr_t dma_addr = sg_dma_address(sg);
+>> +		unsigned long sg_len = sg_dma_len(sg);
+>> +
+>> +		if ((sg_len % NVME_CTRL_PAGE_SIZE) ||
+>> +		    (dma_addr % NVME_CTRL_PAGE_SIZE)) {
+>> +			ret = -EINVAL;
+>> +			goto err;
+>> +		}
+>> +		while (sg_len) {
+>> +			map->dma_list[i++] = dma_addr;
+> 
+> [Severity: High]
+> Does this loop overflow dma_list[]?
+> 
+> 'nr_entries' is computed via integer division of dmabuf->size. If the dmabuf
+> size is not page-aligned (e.g., 4097 bytes), nr_entries truncates down (to 1).
 
-> Could a backward search for ':' from the closing parenthesis safely isola=
-te
-> the symbol ID?
+It'll fail on the alignment check in this loop for [4096, 4097)
 
-Technically? But it'd be relatively more complicated, the code would
-have to pre-parse to the end and we have seq_put() here etc.
+> However, exporters often pad sg_table allocations to full pages (e.g., 8192
+> bytes).
+> 
+> The loop unconditionally writes all sg_len chunks to 'dma_list', exceeding the
+> allocated 'nr_entries' capacity.
+> 
+>> +			dma_addr += NVME_CTRL_PAGE_SIZE;
+>> +			sg_len -= NVME_CTRL_PAGE_SIZE;
+>> +		}
+>> +	}
+>> +
+>> +	ret = dma_buf_io_init_map(ctx, &map->base, sgt);
+>> +	if (ret)
+>> +		goto err;
+>> +	map->nr_entries = nr_entries;
+>> +	map->sgt = sgt;
+>> +	return &map->base;
+>> +err:
+>> +	if (sgt)
+>> +		dma_buf_unmap_attachment(attach, sgt, ctx->dir);
+>> +	kfree(map);
+> 
+> [Severity: High]
+> Is it safe to free a kvmalloc_flex() allocation with kfree()?
 
-I'm not convinced it's worth doing.
+Going to fix.
 
-johannes
+-- 
+Pavel Begunkov
+
