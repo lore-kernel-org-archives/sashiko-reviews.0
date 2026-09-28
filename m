@@ -1,154 +1,294 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx2-f13.google.com (mail-yx2-f13.google.com [74.125.224.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37D234DCD2;
-	Mon, 28 Sep 2026 22:30:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085A237F8BD
+	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 23:46:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790634627; cv=none; b=ODXOMxMdE9riIXYVeyvaU7dCVqFBc5yifx9QZiGV/lZ5Olmvpqes38qGUgCehH8xTODIIoAxAQulHGvRsdbR3Euop9293cwNCnhf6Wd5Yafnn/jly8RC9XrP7G3CWpVjP/OYTm4vMYZU1YnjC+978fvf30iHnMCXnWKZJUYILug=
+	t=1790639182; cv=none; b=ZiQxxPLW0ecWMeqLeR+IrK5zjQz9vQ15oS9WJVJeCOHvK0avN2E/Do3kW4T6gvnzZfokOGtJLHMFI/tBrsXG/JszDNQTiGakJmMl8065ZbNMX2nuJ3zROGCwkfd9Uwsjh4IhOY6k96rv/iuzBDDnrCrqKbFDC28obbDsZFXK/VU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790634627; c=relaxed/simple;
-	bh=zp8K5ZPapjlT8OgD9hqnw2nUc2jyh4F+GnbjP9PWxwI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LUSU4s86ntrg14wSamEdXhI9oNR6+m7Y1NYlvUZC5jNQspOZjyki/J5T2iX+PauYO1zXed/v6rxsaWdn5lM5mL4w1LvZJxoPKqaZPrrEaJ+vOe6xo92vTS/cICEaz98LnvWDfdwlKEdVjPju8AI6Wvjb+xKFdjr13rxVys9UQJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=bC/uzXuH; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1790639182; c=relaxed/simple;
+	bh=8OHbbiZkLx94md3sQMK00u04gK5Y5O5bMMixwGDd1tg=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D6ZqmttK82DTESGynl2OXknRzTskigGfY1Ubcqo8+NMhHnt+KcbzFS9edpEf06/jCDHlTnxwJ4rAubK497+zykTZevMGAUko5zOHGzak3yz2XEw+Q15JDrkYbPnWleybFPfhZyR9qCvQDlTfR6KNJ3+Lus9QBsDNh8Zf6Y7csac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RXY33aN/; arc=none smtp.client-ip=74.125.224.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="bC/uzXuH"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68SLZwEJ2251660;
-	Mon, 28 Sep 2026 22:30:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=ov16wgpG1/bBp758Qshp67YYZX0XVv
-	sxpIdhjePyJx8=; b=bC/uzXuHmL9TboXmzRExfYetlwgCyVxDa+hZDjVKoswhS/
-	gVvSoKQkUMR02pWNqtqRA0ec6peUbUQRD6tPRX/gGXI/BOy/iYyPwhHrYnxJGJ8W
-	qhF37RN+EV4JFAAkGTFX7GBbjLmIMYZp4ueO1SzFXyiR8nZulXlWdeutn47iPGj4
-	b7oK5qknEHIyl3u9mDR3lxJ4bvZOfdvq5XbwgNepnncPAU/5Es76wFonvyehMnXR
-	o+z9ZMzZdlYb7kmqbD5f/nk5rkFWrhPG7DOyv4p6RRfc7S6UL0C0umVkq7M1Ywgf
-	3GxZTrJrOOBSAuChbabvGSOEZwDo0TnZCR9D9CPg==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5s542e0-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Mon, 28 Sep 2026 22:30:23 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68SLWavt700114;
-	Mon, 28 Sep 2026 22:30:22 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gxsck76sr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 28 Sep 2026 22:30:22 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
-	by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68SMUMFk15532690
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 28 Sep 2026 22:30:22 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 1031C58060;
-	Mon, 28 Sep 2026 22:30:22 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id E2A6A5803F;
-	Mon, 28 Sep 2026 22:30:21 +0000 (GMT)
-Received: from d (unknown [9.61.160.252])
-	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
-	Mon, 28 Sep 2026 22:30:21 +0000 (GMT)
-From: Dave Marquardt <davemarq@linux.ibm.com>
-To: sashiko-bot@kernel.org
-Cc: "Tyrel Datwyler" <tyreld@linux.ibm.com>, sashiko-reviews@lists.linux.dev,
-        linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v11 10/11] scsi: ibmvfc: register and use asynchronous
- sub CRQ for events
-In-Reply-To: <20260925050903.EEEC21F000FF@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Fri, 25 Sep 2026 05:09:03
-	+0000")
-References: <20260925044900.414340-1-tyreld@linux.ibm.com>
-	<20260925044900.414340-11-tyreld@linux.ibm.com>
-	<20260925050903.EEEC21F000FF@smtp.kernel.org>
-Date: Mon, 28 Sep 2026 17:30:21 -0500
-Message-ID: <87a4p157r6.fsf@linux.ibm.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RXY33aN/"
+Received: by mail-yx2-f13.google.com with SMTP id 956f58d0204a3-66fb93aee5eso3848027d50.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 16:46:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790639180; x=1791243980; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:date:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=oYlEo7yXk7/pIBZiHMkUiSaKnUE72TG2PrHzVkxWnFw=;
+        b=RXY33aN/NsZrIWDCU4OagBx0W8rBDccdPMCqtcMw3/0xL3FmMrM/JQ6hFfGVGDq8A6
+         gtANHchRZBPKrAcifBJoRi7UnkJJmxAmax/GLv61YoxxR72E+8fiuhANvmrRoGplOuDp
+         RXhu1PoDAib1UyTE7oJs89HxKY1z4zEKfj4Ditv89uXaqBnlsZIeHuiSGvDUaJFvUh6L
+         N2gUCdYP4hMzuX+oDbHrLO82mTTkBrpP/oeSlO/C0y7LpaOADQicuUxHj0zqGLgswn8m
+         ZruNKJrDk2CwS/XBVjJsjXxoHTRrxAG4XW7+mI1seAB1nO9gAKJGDTWOHVGl/kwrirGq
+         p5mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790639180; x=1791243980;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:date:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=oYlEo7yXk7/pIBZiHMkUiSaKnUE72TG2PrHzVkxWnFw=;
+        b=l6wHTFukkat137GrUmWVmYEyWSqR77J1ejRvxF8zR0wOpJ68GhTeKXZmwbwW3Je4Xk
+         SycQNhN8xGkDBP2DhnWdgrax4aYRDSU1NKCfObbtiBv3J9Z4vdde3jHDflyuAWKjNUTN
+         lhgA4pyvKTwkT+3dJhLWGiSZMMjIh/6uvehV6n+Ybd0zrKhV3LbI8C9j08VGJsrOpDF/
+         SdP7ucEI1zVvX1wvEWHlsVF5/WHYS5f68LD52sjDsvQlY4GGQR485j0nlc+zp8/Wjjur
+         AjwYSR6KRzOZnO+Ee7h7dUGPwxW+ZZNwqomOiYNkSsZHxSkBFEqdnNSCTqHk9N977V9H
+         WHpA==
+X-Forwarded-Encrypted: i=1; AKwUvByaqSRADfN+NPJ6VRVC5A5kDoN4JKOTkisMOKZqAgj7mU7oLv0G6HsIg/iYArhs70sUf98n4LFPHPJkwE9klq8=@lists.linux.dev
+X-Gm-Message-State: AFq9FYLjsVOgpLfMejlGh8PNCikV7sxuDGHiTxB96CnQYGVx7nCxX0m8
+	o0CnGSd+jZ+zcsmcHZq0OCuedpDrINMw13zZi+RJHdyroU0Ed7C2OAM8
+X-Gm-Gg: AYBFou0zy8LGRpprI5Ojx0NVESQeWuMXvaXk9pBTJChGZLoFC7OQUlDZacmIKoEJF3s
+	XSDDcQobXQOCkl+0PadNPu0XqJ9YRN3OaqmaRGl5Ajn/LIJjOfFEreX5/aizrlPLf8CcF1ZdcEH
+	1tLXeQdMhl7makpcz+cEuR56Ao4wGPnTdqxTnNsiGjIZRCpa72R8URSu0e/EJ0zkG/Tzr2zsq7d
+	+L/GGqq8c5poMyOlamBJMIODrGvpvHJwnidw1wToCpcdndCr+YQ/AvXxlVjJz6QTAnnDgvZejyg
+	umQ0/1o1dfJTeKgfvn4nHz9ooOIbEEBbVQTeL2h/hTMATU6aSZSTCEOWWeZ+0FbTgpTTqu3JMhq
+	417iH0iwDbkeQK0VmFOGwTusKKz5//HHt/eC0cUpjJyR5D6erOQ4T4VQxtU1B/Jtx8VfmZgKhuV
+	z9PyYI+SGoXkgdBQcolsJpPqoqs63qTyftraqnFMHiWk17NRHmVTmxLNEWchrclLCArim4gaqBy
+	b54YcjwGXfbVkaUslFsDb5GbDGgiPp4xyr1NHXVs3g0os4nYDvXauMW7sXA
+X-Received: by 2002:a05:690e:e8b:b0:674:1336:7d5b with SMTP id 956f58d0204a3-67413368232mr3568896d50.52.1790639179917;
+        Mon, 28 Sep 2026 16:46:19 -0700 (PDT)
+Received: from 4470NRD-ASU.ssi.samsung.com ([50.205.20.42])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6740ef7de00sm5414705d50.15.2026.09.28.16.46.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Sep 2026 16:46:19 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Mon, 28 Sep 2026 16:46:17 -0700
+To: Jonathan Cameron <jic23@kernel.org>
+Cc: Anisa Su <anisa.su887@gmail.com>, sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev, nvdimm@lists.linux.dev,
+	linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v12 3/8] cxl/cdat: Gather DSMAS data for DCD partitions
+Message-ID: <arr8ScmcSiuq8RIH@4470NRD-ASU.ssi.samsung.com>
+References: <20260731084901.1512819-1-anisa.su@samsung.com>
+ <20260731084901.1512819-4-anisa.su@samsung.com>
+ <20260731090250.0C8DE1F000E9@smtp.kernel.org>
+ <20260804010748.7f9f8174@jic23-huawei>
+ <anL0mD3DKfwJh4UY@AnisaLaptop.localdomain>
+ <20260922003402.5134db4a@jic23-hlaptop>
+ <arSnRvG0VGSMHSBM@4470NRD-ASU.ssi.samsung.com>
+ <20260925201932.292f1451@jic23-hlaptop>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI4MDA4OCBTYWx0ZWRfXzfCwrWHjPwEn
- EfmnxENKaCzgrFGRf7/Me0ZhiTSGufgnaT/Jbn7cWQaFlRt3QuDO+XJKT4b3UhKqCaS96UFoCBB
- YOkO8BYpYUAC9lfi3TRDSekIAWcjNOk=
-X-Authority-Analysis: v=2.4 cv=HJ5WhYtv c=1 sm=1 tr=0 ts=6abaea7f cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=bepc-JlDGLegi25DsoIA:9
-X-Proofpoint-GUID: oEqGYczEyqIh5R6e2-cwJQBjZpM4lqkc
-X-Proofpoint-ORIG-GUID: oEqGYczEyqIh5R6e2-cwJQBjZpM4lqkc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI4MDA4OCBTYWx0ZWRfX39Qcj3scf7K3
- dtZYIs1sEBLTztijVtk6yYDjqoD+tMEdug8DwDiOCzqvhMlbBg/DD3LsBroi1Ze6gVdGiFDuxG8
- RyTLK6lz2hJyaL0sFNthXfAAJoYgsbDmg7wa84p4k3PSkGsef8Cnbfrt2whcS136YpmutDC3e8h
- 5NW86UhiHWOsEaQj0HNZcmD4fGLOjvdxHvef6tjC+EEyQOl4C9DVdnS7j3bGpDggwRxb+BdmeEf
- a525v7JvRRWJT31EJs/BQqoQQ+P5hL1V5yPzapH184jilQqH28IjsPNdC5aPzEgae95HFZ5eq/i
- y09EN1tRlhsCc3Nx4QKHV1aIa19hn8Pkgus5mNwxbLGLJvnmaMO7sRx3D8rJAB+ISENJ3Bh6thM
- VxFsaIKpYWS1c2LLVAB6MGHEIaNWpG5Vq9rg2o+Iaye31dV1zdCjon9G8xSAwhugllUwJR2rJRm
- JjwOvyTy+KbZcGv0Zgg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-28_06,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
- spamscore=0 impostorscore=0 phishscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609280088
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260925201932.292f1451@jic23-hlaptop>
 
-sashiko-bot@kernel.org writes:
+On Fri, Sep 25, 2026 at 08:19:32PM +0100, Jonathan Cameron wrote:
+> On Wed, 23 Sep 2026 21:29:58 -0700
+> Anisa Su <anisa.su887@gmail.com> wrote:
+> 
+> > On Tue, Sep 22, 2026 at 12:34:02AM +0100, Jonathan Cameron wrote:
+> > > On Wed, 5 Aug 2026 01:30:16 -0700
+> > > Anisa Su <anisa.su887@gmail.com> wrote:
+> > >   
+> > > > On Tue, Aug 04, 2026 at 01:07:48AM +0100, Jonathan Cameron wrote:  
+> > > > > On Fri, 31 Jul 2026 09:02:49 +0000
+> > > > > sashiko-bot@kernel.org wrote:
+> > > > >     
+> > > > > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > > > > > - [Medium] The commit message claims to extract and store the 'read only' attribute from DSMAS tables, but this logic is completely missing from the code.    
+> > > > > 
+> > > > > Given it will make a lot of difference to a user if they think they have writeable
+> > > > > memory that isn't - I think we probably do want to have readonly here.
+> > > > >     
+> > > > I did some digging: it seems in v8, the read only flag was gathered and
+> > > > exposed in sysfs, but dropped during the region -> partition rework.
+> > > > 
+> > > > v8 of this commit used to do:
+> > > >     dent->read_only = dsmas->flags & ACPI_CDAT_DSMAS_READ_ONLY;
+> > > >     ...
+> > > >     mds->dc_region[i].read_only = dent->read_only;
+> > > > 
+> > > >     https://lore.kernel.org/all/20241210-dcd-type2-upstream-v8-6-812852504400@intel.com/
+> > > > 
+> > > > and a following patch exposed it, with a documented ABI:
+> > > > 
+> > > >   https://lore.kernel.org/all/20241210-dcd-type2-upstream-v8-7-812852504400@intel.com/
+> > > > 
+> > > >     /sys/bus/cxl/devices/memX/dcY/size
+> > > >     /sys/bus/cxl/devices/memX/dcY/read_only
+> > > >     /sys/bus/cxl/devices/memX/dcY/shareable
+> > > >     /sys/bus/cxl/devices/memX/dcY/qos_class
+> > > > 
+> > > > In v9 dynamic capacity moved from its own dc_region[] array and dcY/
+> > > > sysfs directory to the generic partition model:
+> > > > 
+> > > >   https://lore.kernel.org/all/20250413-dcd-type2-upstream-v9-3-1d4911a0b365@intel.com/
+> > > > 
+> > > > size and qos_class survived that move because ram and pmem already have
+> > > > them. read_only and shareable did not, because the generic partition
+> > > > model had nowhere to put attributes that only dynamic capacity has, but
+> > > > the commit message survived the rework.
+> > > > 
+> > > > More specifically, read_only was dropped from both the sysfs commit and
+> > > > this commit. shareable was dropped only from the sysfs commit, but still
+> > > > read from the DSMAS entry in v9 of this commit. Not sure why though; I
+> > > > didn't see any consumers of the attribute. Oh well... We use it now
+> > > > since shared extents are supported to check if an extent marked shared
+> > > > is actually in a shared partition.
+> > > > 
+> > > > So TLDR; I've removed the "read only" part from the commit message. But
+> > > > let me know if you think it should be re-introduced?
+> > > > 
+> > > > I agree with what you said about it being important for a user to know
+> > > > whether a partition is read only. Some things to consider:
+> > > > 
+> > > > - The partition model has no precedent for a DC only attribute.
+> > > >   dynamic_ram_1/ currently exposes size and qos_class, the same two that
+> > > >   ram/ and pmem/ expose. Adding read_only there would be the first
+> > > >   attribute that exists for one partition mode and not the others.
+> > > > 
+> > > > - shareable is in exactly the same position. It is gathered and used
+> > > >   internally but not exposed anywhere, so if we are adding one of these
+> > > >   back we should probably decide about both.  
+> > > 
+> > > I vaguely recall the discussion on this ending up with we'd call the
+> > > partition something different to reflect the extra property.  
+> > > 
+> > > dynamic_readonly_1 / dynamic_sharedram_1 maybe?  Argument being
+> > > that these properties are as different from normal RAM as persistent
+> > > memory is.
+> > >   
+> > Yeah I think we discussed making it its own partition mode but I don't think there
+> > was a strong consensus, just that we agreed it should be exposed somewhere,
+> > somehow...
+> > 
+> > I am leaning towards just putting it under dynamic_ram_1 even though
+> > these attributes would only exist for dynamic_ram mode:
+> > 
+> > /sys/bus/cxl/devices/memX/dynamic_ram_1/shareable
+> > /sys/bus/cxl/devices/memX/dynamic_ram_1/read_only
+> > 
+> > Mainly because if we go up to 8 partitions, we would have
+> > (dynamic_ram, dynamic_shared, dynamic_readonly, dynamic_shared_readonly) * 8.
+> > And NDCTL would have to know how to handle creating each type.
+> > 
+> > I also don't see anything in the code that makes it terrible:
+> > - each partition mode has its own attribute array and visibility callback
+> >   function, so it doesn't affect ram/pmem modes
+> > 
+> > I brought it up because I wasn't sure if there was a specific reason why
+> > shareable and read_only weren't carried over after the partition
+> > rework. From a code standpoint, it seems fine to me?
+> > I assumed it was so all partitions would share common sub-attributes
+> > but I guess I shouldn't have assumed...
+> 
+> I think this needs another discussion. I agree there were differences
+> of opinion but thought we'd ended up with the different names rather
+> than attributes for each one.
+> 
+I might have misremembered. Let me ask for some eyes on this.
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] scsi: ibmvfc: double registration of scsi_scrqs and missing async_scrqs registration
-> --
->
-> commit d44dbe8300fc3639dbfcef8f1950443462606f5b
-> Author: Dave Marquardt <davemarq@linux.ibm.com>
->
-> scsi: ibmvfc: register and use asynchronous sub CRQ for events
->
-> This commit wires the async sub-CRQ into the sub-CRQ lifecycle so it is
-> allocated, registered, and freed alongside the SCSI channel queues.
->
->> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
-> [ ... ]
->> @@ -986,6 +987,7 @@ static int ibmvfc_reenable_crq_queue(struct ibmvfc_host *vhost)
->>  	spin_unlock(vhost->crq.q_lock);
->>  	spin_unlock_irqrestore(vhost->host->host_lock, flags);
->>  
->> +	ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs);
->>  	ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs);
->>  	ibmvfc_reg_sub_crqs(vhost, &vhost->nvme_scrqs);
->>  
->
-> [Severity: High]
-> Could this introduce a regression where scsi_scrqs is accidentally registered
-> twice instead of registering async_scrqs?
->
-> Because the first call was added as ibmvfc_reg_sub_crqs(vhost,
-> &vhost->scsi_scrqs), it appears to skip the async sub-CRQ registration
-> entirely. This leaves the async sub-CRQ permanently disabled after a CRQ
-> re-enablement, which could prevent asynchronous event handling (like FPINs)
-> after recovery.
+Here's my case for adding shareable and read_only as a sub-attribute:
 
-Yes, this is broken. The added call should be
+Shareable and read-only are independent bits, and a DC region can be
+both, so we have 4 possibilities: dynamic_ram, dynamic_shared, dynamic_readonly, dynamic_shared_readonly.
+Every consumer of the mode string grows with it: the memdev group
+names, the decoder mode store, the mode-name helper in hdm.c, the
+region mode description, cxl_test, QEMU and ndctl. If a third
+property comes up later (but probably not?), it would double again.
 
-	ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs);
+What it would look like for new modes:
 
-and will be fixed in v12.
+enum cxl_partition_mode {
+ 	CXL_PARTMODE_RAM,
+ 	CXL_PARTMODE_PMEM,
+ 	CXL_PARTMODE_DYNAMIC_RAM_1,
++	CXL_PARTMODE_DYNAMIC_SHARED_1,
++	CXL_PARTMODE_DYNAMIC_READONLY_1,
++	CXL_PARTMODE_DYNAMIC_SHARED_READONLY_1,
+ };
+ 
++static inline bool cxl_partmode_is_dc(enum cxl_partition_mode mode)
++{
++	return mode >= CXL_PARTMODE_DYNAMIC_RAM_1;
++}
 
-> Also, wouldn't the double registration of scsi_scrqs cause
-> ibmvfc_register_channel() to fail? If H_REG_SUB_CRQ returns an error for an
-> already registered channel, this will abort the registration and clear
-> vhost->do_enquiry = 0, functionally breaking multi-queue capabilities during
-> standard operational recovery paths.
+static const char *cxl_mode_name(enum cxl_partition_mode mode)
+ 		return "pmem";
+ 	case CXL_PARTMODE_DYNAMIC_RAM_1:
+ 		return "dynamic_ram_1";
++	case CXL_PARTMODE_DYNAMIC_SHARED_1:
++		return "dynamic_shared_1";
++	case CXL_PARTMODE_DYNAMIC_READONLY_1:
++		return "dynamic_readonly_1";
++	case CXL_PARTMODE_DYNAMIC_SHARED_READONLY_1:
++		return "dynamic_shared_readonly_1";
+ 	default:
+ 		return "";
 
--Dave
+If support for partitions 2-8 is added later, this multiplies by 8.
+
+NDCTL would also need to support 4 modes of region creation:
+
+cxl create-region ... -t dynamic_ram_1/dynamic_shared_1/dynamic_readonly_1/dynamic_shared_readonly_1
+
+Counter argument:
+Shareable and read_only are different enough from "regular" DC that
+they should be their own modes. Since PMEM isn't expressed as a adding
+a "persistent" attribute under ram/, the same should apply for shareable
+and read_only. Especially since pmem can't be onlined as system RAM
+through the normal path, the logic should also apply to
+shareable and r_o.
+
+If we prefer separate partition modes, I can do that, but we gotta decide
+now because partition setup is in the prep series.
+
+> > 
+> > > > 
+> > > > - I don't think the DSMAS Flags bit 6 (read only) is specific to DCD?  
+> > > 
+> > > In theory yes, in practice there isn't a path for non DCD to actually
+> > > get the data in place and transtion to read only so maybe an expensive
+> > > source of zeros?  So yes allowed but not much use to anyone so we
+> > > won't see it.  
+> > >   
+> > Mmm very true. You might just clarifying this point here but just to make
+> > sure we're on the same page: I dropped the R_O part of the series and deferred
+> > it for the future because it includes implementing write rejection for
+> > r_o partitions which IMO can be done after the core functionality is in.
+> 
+> Why do we need to reject writes?  The device just drops them. Maybe
+> it is a nice to have to prevent the mapping path setting up writeable mappings
+> and so fault earlier but I'm not sure it is necessary.
+> 
+I see. I thought it would be better to do it since the dropped write
+is silent?
+
+CXL r4.0 Section 9.13.3 "If the host issues a write to any DPA in a
+read-only DC Region, the device shall drop the write and send an NDR
+(see Section 3.3.9) as a response". I assume the rc is an ordinary Cmp,
+which is returned for "completions for writebacks, reads and
+invalidates" (Section 3.3.9 Table 3-50).
+
+So any user that that maps the dax device writable thinks its stores
+landed which seems not very good.
+
+Anisa
+
+> > 
+> > Thanks,
+> > Anisa
+> > > >   It describes any device scoped memory range, so a read only ram or pmem
+> > > >   partition is expressible in CDAT today and the driver ignores it.
+> > > >   Maybe it should be exposed in sysfs for every partition
+> > > >   rather than only on dynamic_ram_1? Which probably makes it a generic CDAT/partition
+> > > >   patch rather than something for this series.
+> > > >   
+> > > Jonathan
+> > >   
+> 
