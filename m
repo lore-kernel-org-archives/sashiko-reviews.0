@@ -1,308 +1,229 @@
-Received: from mail-qk1-f228.google.com (mail-qk1-f228.google.com [209.85.222.228])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD18B3955E3
-	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 18:40:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.228
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790620832; cv=none; b=jzIp/07XphR7jIgGYjG3ZM5cg80E9SenCruEWWQVKG03Bz30luGSqdbNdm5YyoH7I01y4ELCEohftYorfkE0J4viaQS+KZYcEpGOaQdeYUmJYMBHB+Gp72es6kM5QIzS07KzYjrSQpxRKInT6/VMe/wk7qN5u1jpfjCxdIXxslE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790620832; c=relaxed/simple;
-	bh=OCPci/KNqZ9Ad0MNRr3YgnvuiHTayf5wuRkCxHx6mZY=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25334E4C3C
+	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 19:26:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.178
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790623614; cv=pass; b=JGbv1Z+IAu1qJqcPDpykSF7PgdTfndpim+QNRDoeDjOHpzos4tubS0tW4fOP8XB9h5OeaMsloot0PLh62DeCcRJ1eM4Wv2LRkAwyyP3PbbKLqXPH8xYQN8EYRDgOwSOeV6S1XXyvDK52hL1oKhqaX6/8zvypzAewMYOikBot1pw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790623614; c=relaxed/simple;
+	bh=CCtsovL76mQGnwUnadWeKBo/Yn5xN9tJZzTsPA2bd9U=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R+gSKx8KO8lKJgg0XmowFmy5AxHvff3fGlHPLEtEgVM6SphVhr0DLtTpCkoE2gxPVp6jUzSmXPWqJxGro5LCeC7lnAxqKkTl5V2v+cyM8DwouA5vlTsXzSS8qwD+x6ZXakwXmroz5oc/oMD0yIScr94idGyq4FFvJorIB07QL94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Cv5WfGRS; arc=none smtp.client-ip=209.85.222.228
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	 To:Cc:Content-Type; b=c45kyRFshIDooIRk0vNeYp7xkoaiUoeG/NYk7pQIR+KUvteEqeDkcOcoqr5wvuaG5eEbHHhRE2XV7N+msGtLrk94MYqgAKX91oFxB7GkdLdrxfzyU6EcCP+hCfsQfrdZ39bBrWlCY7IjahUAXErjgNN9icbnRBxpwOPFY4q6Ul4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cCjCKYy/; arc=pass smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Cv5WfGRS"
-Received: by mail-qk1-f228.google.com with SMTP id af79cd13be357-93c7ac110dfso19347385a.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 11:40:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790620829; x=1791225629;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=vakyTyJxLeNDPlpuNpXxBAXgpuMBuiJ1e+QsVMZbrAY=;
-        b=CXOqcIAjVdXdnwWAVEDMY6FfSEg3YqnKCHhi2Sc/EAZ6cHOCKE1LYG+mIhaIjo7SuX
-         KTIWCNokqCbznxF2sufUv+HNY/272Hb9Y70wBDGF/ENsUsJvyJVF+Jexwd0QeTkxUTnT
-         wnlTMSeAb7kgWCt9z8ADQMePN9DkuuAM7XvvEcA1OeZTcV4Reyd8HxNoMNTUfEiUW+XO
-         uhY4PTzlpdVAoa2WnJZf4/hlLcgog/I4uXsdol9lLvUWD12Cr/cd9xN7cuWdqTTDbLFZ
-         TDAAfJaXs7fPY/i0JOSO4EDGX6s9s85jei62uy/cJ1PE3z8UDxFw9g2/Pmiiu/WQb39s
-         Lr5g==
-X-Gm-Message-State: AFuF++mG86hBtjEk7jqs+D4S8nblOsnNFFb65lQ4JAaHKpyiSpRTXn/B
-	GmFANi3sw0hBiEjew2FRPKaobNDjveInB21p+iCwZQf5pClS8Vsln6N1QtnSJxUjaybOr3paFBw
-	sfbuhtMJqfFyjB5ZbRdRgT8sxDIKbsFqOF/eMnJ7n0HtjXkYnfiJKDHMljoDSaSHvlbAM+q12SG
-	JHiNu8VTCXr1ZJjm4zdRW7AACjAgSqQP7zWHDQKQroDr8iCMKCVrNKSLADeMVUlJvFRGkQgYhts
-	BKKunc97Lff9MNLBtB2
-X-Gm-Gg: AYBFou12LJWliBwkfyctCDdD56IENKM5oeARa85WOvRGLYYEi2yrIwgsqXwatlFBCuB
-	jfPuV8xWgGb89+h90+S9HiJ0bbmoRa/hG0eQ9XuLfUJLzF+GTPxKZTK0FFSOSNHE30E1PThroCa
-	OaYtsFQzUjw4Z9hCAVMR+Yh09DDpLZXPhmNl7MfaZEsiZtTGEFz7AY8finILVVkO+hB67WD5NZM
-	GzdwAs4j428U0aw3bdYBEnSyaH73a2F9YKiuj+kjW7KycETks9ONOVgcYCXq1g4hclwfY0aHJwz
-	TiK/eNQElJWKFsBgH3dbWp2DkgBh34q81QmMW4gmkOUjGa1OFFZNrAw9esGCbKeQQqvYewAFm2d
-	OJ6jjBCkTGpFaHwCqdsRFu5JKbbPEUi5quxQl6SOZnsJVhSWKobJDa6ei+JpDXrhSToQ9Cbx107
-	6rSdVqe5a/CNKF1ZDLk1zq9IryPIHOU2oA
-X-Received: by 2002:a05:620a:4623:b0:93c:29b3:3525 with SMTP id af79cd13be357-93c43ca0058mr2283730685a.36.1790620829303;
-        Mon, 28 Sep 2026 11:40:29 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-18.dlp.protect.broadcom.com. [144.49.247.18])
-        by smtp-relay.gmail.com with ESMTPS id af79cd13be357-93c810335desm74399585a.0.2026.09.28.11.40.27
-        for <sashiko-reviews@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Sep 2026 11:40:29 -0700 (PDT)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-lj1-f199.google.com with SMTP id 38308e7fff4ca-3a49dcb2b24so891161fa.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 11:40:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cCjCKYy/"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-5333401e359so10431cf.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 12:26:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790623606; cv=none;
+        d=google.com; s=arc-20260327;
+        b=PuiF0MrlF9xxK1fTgYw2wC0jvAqlA/MAOIrrY0/Ye1lGdN8vBz6hNRZVGSe21+Q7BB
+         6jcgWz29M22urH5ApRE5SOvQgx/AADykkIFOoaTRvP2sqiqTJaPTuhxPATX33F32TtwL
+         G4pfcivrPpfTf+MOWSFUm2YIAppmiHRi5ue20Wu2ngj81VCDYuaik4yIImSNCyAhkgYB
+         o6RCbS1aGzl8UX8uhOHIwZ6F3LZGimoNRt5cVavHbZrleL32/5YeAuGUwiy+mfg8rvFg
+         +Xocrrkp5j3RmvjWeEkAedXHO6KtQCAHucvvrSWlEcCl9eQ9t+OvtpnvgorV4ceU0tdK
+         re6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=O1YVRuatRiCyBlEcIy8P0JVw+6nR39Uq0eyj7XmStx0=;
+        fh=0zVHGC//SC94CWFKHtFt4lnskmkXkJNNy7lE0FDd3Ck=;
+        b=MTzE9PaUmZ+EX9loSuMSDPB0Q4IMQHlrY3MJ3kRyudQUCt8czMwQw8Hmyk83XzA+/L
+         GFcaHFq0GVSBf6/nBLFY9tugvtd9JlpViXXJLit2FxXZ3L+ScxtbhsYKVe6AoWzs2XYU
+         UAtcgw899QDtXCwFbmVwbNtKGRk9SCO5tzhp1OkWohpBveM+/X3eRY+Z9YsyaLCyfdgo
+         yhHdN+2MjDfrmBDeiAmqfMp53g6xjfkuxT64Tox8/JQ/yhDXuX6M221BtlrK4CXIRWSz
+         MVCTqkuntJRqKvy+1m93xkNOX5Z1R4stiuhm45+p0UbgsSHmcLg/2dIMv1Qde4ahwFby
+         H0LA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1790620826; x=1791225626; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20251104; t=1790623606; x=1791228406; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=O1YVRuatRiCyBlEcIy8P0JVw+6nR39Uq0eyj7XmStx0=;
+        b=cCjCKYy/Rbxj2fNgQWMjYpYkV8SBofvLy5u5laFxEzw8BNQEMzb0Sr2T9CuEzQ3ndu
+         IofvV3YI1Lj692vtLCU6ER1uKGWJQ1N6mXfBT0xFcQxkOGMPg0FdlywP6kqfjpY/rZFm
+         mpAtrNOZmb/LZE0+uD1RNXxu9KgOxo70w3JDSCd7oOVeaEOSKwUA/O9FrWBCpnV2rG+1
+         E0AK1fSzQ0jKB1I7Mzh10O11GngP/5sgmVlAqH7B0is27tnTn4B7mn7VLdfg7XZTOFl+
+         UdTY1vkvpUSmD0VHZWXTnXKSgvUXuUmomAP/KE+IGiLVRZXrO6ecyyDB/LWMgj94vnOi
+         uwcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790623606; x=1791228406;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=vakyTyJxLeNDPlpuNpXxBAXgpuMBuiJ1e+QsVMZbrAY=;
-        b=Cv5WfGRSnSijVgJW2MYBn+ihhyM0EkKFvUczaIupFRCY9ZZkydzvr9624eX6I25aHp
-         6D6tclLu89uC7OL3424AxrQ3GtCTVkg6Dyc8KmAcFvcb+izsBVJhgD8LOQqp1de25jpv
-         h8e0CyEMnHjgqyep1sa2EuqGVXy5h2hre0acU=
-X-Received: by 2002:a05:651c:18c6:b0:3a6:5fab:f4c8 with SMTP id 38308e7fff4ca-3a76479b9fcmr534781fa.21.1790620826605;
-        Mon, 28 Sep 2026 11:40:26 -0700 (PDT)
-X-Received: by 2002:a05:651c:18c6:b0:3a6:5fab:f4c8 with SMTP id
- 38308e7fff4ca-3a76479b9fcmr534701fa.21.1790620826067; Mon, 28 Sep 2026
- 11:40:26 -0700 (PDT)
+        bh=O1YVRuatRiCyBlEcIy8P0JVw+6nR39Uq0eyj7XmStx0=;
+        b=daRf1gT5np4I0OTPRxKMkU0p6BDVqb1U/8wGA1fCNKvthvZd5/fpYb09eyGxXrzTY7
+         Be6RtxCF9MSQYdc3PR+lVrmZbvGVguwOdSGxd2y8+1oI0n3N4srl4LQ2ijCROgAJEzof
+         WoWn8Vm58XLNJL51oxbVfJp3VUwxsFmWJewaVJ3Mj7WqpguN6D1qkUUrMDbGs+wwD/9I
+         pFHT6/x53k3eYToA+eEdaSHWZbwxsKgseIe8u/I2WXtQKou32zXZjatmRoqNwx8/usRB
+         NLwoFCw9yM5kUOAQtmCv+ePdrIk/wGrUIT6eCBKjqqYiaP+Q+MLNVQ+qE7aohTRzeEyz
+         Af4Q==
+X-Gm-Message-State: AFuF++lMprP5jAudhrFNFaeSIsecd3u+wx1qZ10gKBdVpbfnAN9OFc6Y
+	4w/DnaVk+D2R//iwdImaUzqV25wManQEjtRC4QZbqeHr/pCdU/MBiXUmoBljpk1viuHtQcS/aZx
+	/h1wVChUcXqaG4ZYYzKhmkuEE2cMiWi/8L3y4QaGv3mJKfMDNnqmb7vx/hmM=
+X-Gm-Gg: AYBFou0n6R8wQULTzlFsI+sMfRjDmAnwi0TKiwSD/uDALXQMJbzqDyHMBID8GHGy/Kg
+	iqeRQzEaZpNbLtLI77ZYBaFEGuMAPe9XmI567d7diruV12i4YKwFDT1+7ClewC0yD6EmJB+VrW9
+	GgvkLA22TDGH108wWaJDxZoruUO80spT3m+G6cr2z0w/QSIQFZF71popwf8Peb2Nj/VgRVLMLNp
+	PeUueTXcDdEgGC6IR7jaGCn1Y2+xaT4VFIu8XyITV1WMQCXT7tr0xQlNS/7gbTUKl/OunIWtk37
+	JvLTevmCs2ZE3GQBb5BCBNUZK7PcWSUxLblxIUoHyzRbJtKp7wHKxPEUZqiVMJvxb2Rl3R2lu3a
+	UKRGuMYVc
+X-Received: by 2002:a05:622a:152:b0:532:a17b:9581 with SMTP id
+ d75a77b69052e-533589a1f9fmr1095181cf.3.1790623604931; Mon, 28 Sep 2026
+ 12:26:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cover.1790014793.git.zack.rusin@broadcom.com> <9ef573cdbbf5e659eea16fa23afeaf2488049198.1790014793.git.zack.rusin@broadcom.com>
- <20260928180829.3A3461F000FF@smtp.kernel.org>
-In-Reply-To: <20260928180829.3A3461F000FF@smtp.kernel.org>
-From: Zack Rusin <zack.rusin@broadcom.com>
-Date: Mon, 28 Sep 2026 14:40:12 -0400
-X-Gm-Features: AclHuK9rgQQeHz19PVz8BmJKDUJ1fDkrmkQ8Mwi1v0UIsBqIb-VqjZZNOA_FQDw
-Message-ID: <CABQX2QNHSjP+FFppUR1ohthwvCjWNA2ozOuZtnwwdNu7WGaV0g@mail.gmail.com>
-Subject: Re: [PATCH v2 2/6] crash: Notify pre-kdump callbacks before switching kernels
+References: <cover.1790145937.git.irogers@google.com> <20260928182605.3649015-1-irogers@google.com>
+ <20260928182605.3649015-18-irogers@google.com> <20260928184640.E53151F000FF@smtp.kernel.org>
+In-Reply-To: <20260928184640.E53151F000FF@smtp.kernel.org>
+From: Ian Rogers <irogers@google.com>
+Date: Mon, 28 Sep 2026 12:26:31 -0700
+X-Gm-Features: AclHuK9vZf6ldAAIZ0qh_-pa8BEHDUt81WPZTx-PT06jSAGJTHiMtcW2Ir2uvsg
+Message-ID: <CAP-5=fXkC4A4J-Acz2+bbfUup6YyHSZ6H3w8TvHkiJAErOBZcg@mail.gmail.com>
+Subject: Re: [PATCH v6 17/26] perf trace: Do not return 0 from syscall
+ tracepoint BPF
 To: sashiko-reviews@lists.linux.dev
-Cc: Petr Mladek <pmladek@suse.com>, Baoquan He <baoquan.he@linux.dev>, 
-	Mike Rapoport <rppt@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
-	Pratyush Yadav <pratyush@kernel.org>, Dave Young <ruirui.yang@linux.dev>, 
-	Pasha Tatashin <pasha.tatashin@soleen.com>, Kees Cook <kees@kernel.org>, linux-doc@vger.kernel.org, 
-	Shuah Khan <skhan@linuxfoundation.org>, "H. Peter Anvin" <hpa@zytor.com>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, linux-kernel@vger.kernel.org, 
-	Ian Forbes <ian.forbes@broadcom.com>, Borislav Petkov <bp@alien8.de>, 
-	Joel Granados <joel.granados@kernel.org>, 
-	Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>, 
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>, Ajay Kaher <ajay.kaher@broadcom.com>, 
-	Bo Gan <bo.gan@broadcom.com>, virtualization@lists.linux.dev, 
-	Sergey Senozhatsky <senozhatsky@chromium.org>, Ingo Molnar <mingo@redhat.com>, x86@kernel.org, 
-	"Michael S. Tsirkin" <mst@redhat.com>, Maaz Mombasawala <maaz.mombasawala@broadcom.com>, 
-	Alexey Makhalov <alexey.makhalov@broadcom.com>, Thomas Gleixner <tglx@kernel.org>, 
-	John Ogness <john.ogness@linutronix.de>, Stephen Brennan <stephen.s.brennan@oracle.com>, 
-	Steven Rostedt <rostedt@goodmis.org>, Jonathan Corbet <corbet@lwn.net>, 
-	Randy Dunlap <rdunlap@infradead.org>, Michael Kelley <mhklinux@outlook.com>, 
-	Eugenio Perez <eperezma@redhat.com>, kexec@lists.infradead.org, 
-	bcm-kernel-feedback-list@broadcom.com
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="00000000000050f712065c8f6672"
-
---00000000000050f712065c8f6672
+Cc: linux-perf-users@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 28, 2026 at 2:09=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Mon, Sep 28, 2026 at 11:46=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Medium] panic: Pre-kdump callbacks always receive NULL message in defa=
-ult config
-
-fwiw, this report seems invalid to me.
-
-> commit 8884313d127ae4b9734baebea7b4ba8dd25b38a5
-> Author: Zack Rusin <zack.rusin@broadcom.com>
+> - [High] bpf: perf trace silently loses syscall events on BPF augmenter f=
+ailure paths
+> - [Medium] perf: out-of-bounds read in trace__bpf_output due to missing b=
+ounds check
+> --
 >
-> crash: Notify pre-kdump callbacks before switching kernels
+> commit 662e5192e10694c169bbb2fe60bc8a7182517dbe
+> Author: Namhyung Kim <namhyung@kernel.org>
+> Subject: perf trace: Do not return 0 from syscall tracepoint BPF
 >
-> Fatal x86 oopses can call crash_kexec() without reaching panic(). Run the
-> pre-kdump chain from __crash_kexec() as well, after finding a loaded imag=
-e
-> under the kexec lock and capturing the original registers.
+> This commit transitions perf trace to exclusively use the bpf-output even=
+t
+> for both augmented and normal syscall arguments, omitting the standard
+> raw_syscalls:sys_{enter,exit} tracepoints. It identifies whether the
+> bpf-output data belongs to an enter or exit event by repurposing the
+> common_type field.
 >
-> Link: https://lore.kernel.org/r/aquttpMVKX8e6zGB@pathway.suse.cz
+> Link: https://lore.kernel.org/r/20250814071754.193265-4-namhyung@kernel.o=
+rg
 >
-> >     the shared guard skips callbacks already invoked by panic().
->
-> [Severity: Medium]
-> Is this statement accurate?
->
-> During a standard panic-triggered kdump with crash_kexec_post_notifiers=
-=3D0
-> (the default configuration), vpanic() calls __crash_kexec(NULL) before it
-> formats the panic message and calls its own explicit
-> panic_notify_pre_kdump(buf).
->
-> Because __crash_kexec(NULL) runs first, won't the new
-> panic_notify_pre_kdump(NULL) call consume the once-per-boot atomic guard,
-> rather than being skipped by it?
-
-Yes, and that's intended. By default the crash-core call runs first
-and the late call in vpanic() is skipped. With
-crash_kexec_post_notifiers=3D1 the order is reversed. vpanic() runs the
-list with buf, and the crash-core call is skipped. The changelog
-sentence only describes the second case.
-
-> > diff --git a/kernel/crash_core.c b/kernel/crash_core.c
-> > index 2b36aa9fade06..5d9fe9e00f39f 100644
-> > --- a/kernel/crash_core.c
-> > +++ b/kernel/crash_core.c
+> > diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+> > index d327603ae4540..3dd40f3c3cbb7 100644
+> > --- a/tools/perf/builtin-trace.c
+> > +++ b/tools/perf/builtin-trace.c
 > [ ... ]
-> > @@ -139,6 +140,7 @@ void __noclone __crash_kexec(struct pt_regs *regs)
-> >                       struct pt_regs fixed_regs;
-> >
-> >                       crash_setup_regs(&fixed_regs, regs);
-> > +                     panic_notify_pre_kdump(NULL);
+> > +/* The BPF output event carries both entry and exit, tagged in common_=
+type. */
+> > +static int trace__bpf_output(struct trace *trace, union perf_event *ev=
+ent,
+> > +                          struct perf_sample *sample)
+> > +{
+> > +     u16 type =3D *(u16 *)sample->raw_data;
 >
 > [Severity: Medium]
-> Will this cause pre-kdump notifiers to receive a NULL message pointer ins=
-tead
-> of the expected panic message?
+> Does this code safely dereference sample->raw_data?
 >
-> If a system panic occurs and kexec is configured with the default setting=
- of
-> crash_kexec_post_notifiers=3D0, vpanic() triggers __crash_kexec(NULL) bef=
-ore
-> reaching its own explicit panic_notify_pre_kdump(buf):
+> If the bpf-output event is missing the PERF_SAMPLE_RAW flag,
+> sample->raw_data could be NULL. Alternatively, if sample->raw_size is les=
+s
+> than sizeof(u16), could this lead to an out-of-bounds read when processin=
+g
+> corrupted or malicious perf.data files?
+
+Neither can happen. trace__bpf_output() is only the handler for perf
+trace's own __augmented_syscalls__ event when tracing live;
+trace__replay() doesn't set a handler for bpf-output events, so a
+perf.data file never reaches it. evsel__new_idx() gives bpf-output
+events PERF_SAMPLE_RAW, and the only writers are perf trace's BPF
+programs, which output at least a struct syscall_exit_args (24 bytes).
+The handlers it calls already read the syscall id at offset 8 of the
+same raw_data, as trace__sys_enter() did for this event before the
+patch.
+
+> > +
+> > +     if (type =3D=3D SYSCALL_TRACE_ENTER)
+> > +             return trace__sys_enter(trace, event, sample);
+> > +
+> > +     return trace__sys_exit(trace, event, sample);
+> > +}
+> [ ... ]
+> > diff --git a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c b/to=
+ols/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
+> > index 3bc9e28a9b8a3..d16e55706335b 100644
+> > --- a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
+> > +++ b/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
+> [ ... ]
+> > @@ -408,7 +424,9 @@ int sys_enter_perf_event_open(struct syscall_enter_=
+args *args)
+> >
+> >       return augmented__output(args, augmented_args, len + size);
+> >  failure:
+> > -     return 1; /* Failure: don't filter */
+> > +     if (augmented_args)
+> > +             augmented__output(args, augmented_args, sizeof(augmented_=
+args->args));
+> > +     return 1;
+> >  }
+> >
+> >  SEC("tp/syscalls/sys_enter_clock_nanosleep")
+> >  int sys_enter_clock_nanosleep(struct syscall_enter_args *args)
+> >  {
+> [ ... ]
+> > -     bpf_probe_read_user(&augmented_args->arg.value, size, rqtp_arg);
+> > +     err =3D bpf_probe_read_user(&augmented_args->arg.value, size, rqt=
+p_arg);
+> > +     if (err)
+> > +             size =3D 0;
+> > +     augmented_args->arg.size =3D size;
+> > +     augmented_args->arg.err =3D err;
+> >
+> >       return augmented__output(args, augmented_args, len + size);
+> >  failure:
+> >       return 1; /* Failure: don't filter */
+> >  }
 >
-> kernel/panic.c:vpanic() {
->     ...
->     if (!_crash_kexec_post_notifiers)
->         __crash_kexec(NULL);
->     ...
->     panic_notify_pre_kdump(buf);
-> }
+> [Severity: High]
+> Does returning 1 here without explicitly calling augmented__output() resu=
+lt
+> in silently dropping the syscall event?
 >
-> When this happens, __crash_kexec() will invoke panic_notify_pre_kdump() w=
-ith
-> a NULL message pointer. This permanently consumes the once-per-boot guard=
-,
-> and any callback relying on the documented msg parameter will experience
-> data loss or potential NULL dereferences, violating the API contract that
-> promises the panic message during a panic.
+> Since this patch drops the raw_syscalls:sys_{enter,exit} tracepoints and
+> now relies entirely on bpf-output, returning 1 on BPF augmenter failure p=
+aths
+> (like in sys_enter_clock_nanosleep and sys_enter_nanosleep) appears to
+> completely lose the trace record.
+>
+> Should these failure paths be updated to emit the unaugmented payload,
+> similar to the fix applied above for sys_enter_perf_event_open?
 
-afaict Sashiko gets tripped up here by the doc from the previous
-email. Nothing in this series dereferences the msg. The only callback
-is the VMware logger in patch 4, which ignores the argument. It reads
-the printk buffer, where vpanic() has already written the panic line.
+No, those branches are there for the verifier and are never taken.
+augmented_args_tmp is a 1-entry per-CPU array, so looking up key 0
+can't return NULL, and sys_enter() makes the same lookup and check
+before the tail call. The size check compares two constants,
+sizeof(struct timespec64) and sizeof(arg.value) (PATH_MAX), so it's
+always false. A failed read of the timespec doesn't take that path, it
+is output with arg.err set. The other augmenters' early returns are
+unreachable too; rename's arg.size is at most PATH_MAX after
+augmented_arg__read_str(). perf_event_open's failures are reachable, a
+bad attr pointer or an attr->size over PATH_MAX, so only it needed to
+output the unaugmented args on failure.
 
-If there's an interest in fixing this false-positive in code for
-Sashiko (or if there are other issues that would make me respin v3)
-I'd just change the doc added in the first change in this series like
-this:
-- * @msg: Panic message, or NULL for direct crash-kexec entry
-+ * @msg: Optional panic message; callbacks must tolerate NULL
-which, I think, would fix Sashiko here.
+Thanks,
+Ian
 
-z
-
---00000000000050f712065c8f6672
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
-
-MIIVIgYJKoZIhvcNAQcCoIIVEzCCFQ8CAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0BBwGg
-ghKPMIIGqDCCBJCgAwIBAgIQfofDCS7XZu8vIeKo0KeY9DANBgkqhkiG9w0BAQwFADBMMSAwHgYD
-VQQLExdHbG9iYWxTaWduIFJvb3QgQ0EgLSBSNjETMBEGA1UEChMKR2xvYmFsU2lnbjETMBEGA1UE
-AxMKR2xvYmFsU2lnbjAeFw0yMzA0MTkwMzUzNTNaFw0yOTA0MTkwMDAwMDBaMFIxCzAJBgNVBAYT
-AkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIEdDQyBS
-NiBTTUlNRSBDQSAyMDIzMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAwjAEbSkPcSyn
-26Zn9VtoE/xBvzYmNW29bW1pJZ7jrzKwPJm/GakCvy0IIgObMsx9bpFaq30X1kEJZnLUzuE1/hlc
-hatYqyORVBeHlv5V0QRSXY4faR0dCkIhXhoGknZ2O0bUJithcN1IsEADNizZ1AJIaWsWbQ4tYEYj
-ytEdvfkxz1WtX3SjtecZR+9wLJLt6HNa4sC//QKdjyfr/NhDCzYrdIzAssoXFnp4t+HcMyQTrj0r
-pD8KkPj96sy9axzegLbzte7wgTHbWBeJGp0sKg7BAu+G0Rk6teO1yPd75arbCvfY/NaRRQHk6tmG
-71gpLdB1ZhP9IcNYyeTKXIgfMh2tVK9DnXGaksYCyi6WisJa1Oa+poUroX2ESXO6o03lVxiA1xyf
-G8lUzpUNZonGVrUjhG5+MdY16/6b0uKejZCLbgu6HLPvIyqdTb9XqF4XWWKu+OMDs/rWyQ64v3mv
-Sa0te5Q5tchm4m9K0Pe9LlIKBk/gsgfaOHJDp4hYx4wocDr8DeCZe5d5wCFkxoGc1ckM8ZoMgpUc
-4pgkQE5ShxYMmKbPvNRPa5YFzbFtcFn5RMr1Mju8gt8J0c+dxYco2hi7dEW391KKxGhv7MJBcc+0
-x3FFTnmhU+5t6+CnkKMlrmzyaoeVryRTvOiH4FnTNHtVKUYDsCM0CLDdMNgoxgkCAwEAAaOCAX4w
-ggF6MA4GA1UdDwEB/wQEAwIBhjBMBgNVHSUERTBDBggrBgEFBQcDAgYIKwYBBQUHAwQGCisGAQQB
-gjcUAgIGCisGAQQBgjcKAwwGCisGAQQBgjcKAwQGCSsGAQQBgjcVBjASBgNVHRMBAf8ECDAGAQH/
-AgEAMB0GA1UdDgQWBBQAKTaeXHq6D68tUC3boCOFGLCgkjAfBgNVHSMEGDAWgBSubAWjkxPioufi
-1xzWx/B/yGdToDB7BggrBgEFBQcBAQRvMG0wLgYIKwYBBQUHMAGGImh0dHA6Ly9vY3NwMi5nbG9i
-YWxzaWduLmNvbS9yb290cjYwOwYIKwYBBQUHMAKGL2h0dHA6Ly9zZWN1cmUuZ2xvYmFsc2lnbi5j
-b20vY2FjZXJ0L3Jvb3QtcjYuY3J0MDYGA1UdHwQvMC0wK6ApoCeGJWh0dHA6Ly9jcmwuZ2xvYmFs
-c2lnbi5jb20vcm9vdC1yNi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUAA4IC
-AQCRkUdr1aIDRmkNI5jx5ggapGUThq0KcM2dzpMu314mJne8yKVXwzfKBtqbBjbUNMODnBkhvZcn
-bHUStur2/nt1tP3ee8KyNhYxzv4DkI0NbV93JChXipfsan7YjdfEk5vI2Fq+wpbGALyyWBgfy79Y
-IgbYWATB158tvEh5UO8kpGpjY95xv+070X3FYuGyeZyIvao26mN872FuxRxYhNLwGHIy38N9ASa1
-Q3BTNKSrHrZngadofHglG5W3TMFR11JOEOAUHhUgpbVVvgCYgGA6dSX0y5z7k3rXVyjFOs7KBSXr
-dJPKadpl4vqYphH7+P40nzBRcxJHrv5FeXlTrb+drjyXNjZSCmzfkOuCqPspBuJ7vab0/9oeNERg
-nz6SLCjLKcDXbMbKcRXgNhFBlzN4OUBqieSBXk80w2Nzx12KvNj758WavxOsXIbX0Zxwo1h3uw75
-AI2v8qwFWXNclO8qW2VXoq6kihWpeiuvDmFfSAwRLxwwIjgUuzG9SaQ+pOomuaC7QTKWMI0hL0b4
-mEPq9GsPPQq1UmwkcYFJ/Z4I93DZuKcXmKMmuANTS6wxwIEw8Q5MQ6y9fbJxGEOgOgYL4QIqNULb
-5CYPnt2LeiIiEnh8Uuh8tawqSjnR0h7Bv5q4mgo3L1Z9QQuexUntWD96t4o0q1jXWLyrpgP7Zcnu
-CzCCBYMwggNroAMCAQICDkXmuwODM8OFZUjm/0VRMA0GCSqGSIb3DQEBDAUAMEwxIDAeBgNVBAsT
-F0dsb2JhbFNpZ24gUm9vdCBDQSAtIFI2MRMwEQYDVQQKEwpHbG9iYWxTaWduMRMwEQYDVQQDEwpH
-bG9iYWxTaWduMB4XDTE0MTIxMDAwMDAwMFoXDTM0MTIxMDAwMDAwMFowTDEgMB4GA1UECxMXR2xv
-YmFsU2lnbiBSb290IENBIC0gUjYxEzARBgNVBAoTCkdsb2JhbFNpZ24xEzARBgNVBAMTCkdsb2Jh
-bFNpZ24wggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQCVB+hzymb57BTKezz3DQjxtEUL
-LIK0SMbrWzyug7hBkjMUpG9/6SrMxrCIa8W2idHGsv8UzlEUIexK3RtaxtaH7k06FQbtZGYLkoDK
-RN5zlE7zp4l/T3hjCMgSUG1CZi9NuXkoTVIaihqAtxmBDn7EirxkTCEcQ2jXPTyKxbJm1ZCatzEG
-xb7ibTIGph75ueuqo7i/voJjUNDwGInf5A959eqiHyrScC5757yTu21T4kh8jBAHOP9msndhfuDq
-jDyqtKT285VKEgdt/Yyyic/QoGF3yFh0sNQjOvddOsqi250J3l1ELZDxgc1Xkvp+vFAEYzTfa5MY
-vms2sjnkrCQ2t/DvthwTV5O23rL44oW3c6K4NapF8uCdNqFvVIrxclZuLojFUUJEFZTuo8U4lptO
-TloLR/MGNkl3MLxxN+Wm7CEIdfzmYRY/d9XZkZeECmzUAk10wBTt/Tn7g/JeFKEEsAvp/u6P4W4L
-sgizYWYJarEGOmWWWcDwNf3J2iiNGhGHcIEKqJp1HZ46hgUAntuA1iX53AWeJ1lMdjlb6vmlodiD
-D9H/3zAR+YXPM0j1ym1kFCx6WE/TSwhJxZVkGmMOeT31s4zKWK2cQkV5bg6HGVxUsWW2v4yb3BPp
-DW+4LtxnbsmLEbWEFIoAGXCDeZGXkdQaJ783HjIH2BRjPChMrwIDAQABo2MwYTAOBgNVHQ8BAf8E
-BAMCAQYwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUrmwFo5MT4qLn4tcc1sfwf8hnU6AwHwYD
-VR0jBBgwFoAUrmwFo5MT4qLn4tcc1sfwf8hnU6AwDQYJKoZIhvcNAQEMBQADggIBAIMl7ejR/ZVS
-zZ7ABKCRaeZc0ITe3K2iT+hHeNZlmKlbqDyHfAKK0W63FnPmX8BUmNV0vsHN4hGRrSMYPd3hckSW
-tJVewHuOmXgWQxNWV7Oiszu1d9xAcqyj65s1PrEIIaHnxEM3eTK+teecLEy8QymZjjDTrCHg4x36
-2AczdlQAIiq5TSAucGja5VP8g1zTnfL/RAxEZvLS471GABptArolXY2hMVHdVEYcTduZlu8aHARc
-phXveOB5/l3bPqpMVf2aFalv4ab733Aw6cPuQkbtwpMFifp9Y3s/0HGBfADomK4OeDTDJfuvCp8g
-a907E48SjOJBGkh6c6B3ace2XH+CyB7+WBsoK6hsrV5twAXSe7frgP4lN/4Cm2isQl3D7vXM3PBQ
-ddI2aZzmewTfbgZptt4KCUhZh+t7FGB6ZKppQ++Rx0zsGN1s71MtjJnhXvJyPs9UyL1n7KQPTEX/
-07kwIwdMjxC/hpbZmVq0mVccpMy7FYlTuiwFD+TEnhmxGDTVTJ267fcfrySVBHioA7vugeXaX3yL
-SqGQdCWnsz5LyCxWvcfI7zjiXJLwefechLp0LWEBIH5+0fJPB1lfiy1DUutGDJTh9WZHeXfVVFsf
-rSQ3y0VaTqBESMjYsJnFFYQJ9tZJScBluOYacW6gqPGC6EU+bNYC1wpngwVayaQQMIIGWDCCBECg
-AwIBAgIMYT8cPnonh1geNIT5MA0GCSqGSIb3DQEBCwUAMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
-ExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIEdDQyBSNiBTTUlNRSBDQSAy
-MDIzMB4XDTI0MTEyODA2NTUwOVoXDTI2MTEyOTA2NTUwOVowgaUxCzAJBgNVBAYTAlVTMRMwEQYD
-VQQIEwpDYWxpZm9ybmlhMREwDwYDVQQHEwhTYW4gSm9zZTEZMBcGA1UEYRMQTlRSVVMrREUtNjYx
-MDExNzEWMBQGA1UEChMNQlJPQURDT00gSU5DLjETMBEGA1UEAxMKWmFjayBSdXNpbjEmMCQGCSqG
-SIb3DQEJARYXemFjay5ydXNpbkBicm9hZGNvbS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw
-ggEKAoIBAQCwQ8KpnuEwUOX0rOrLRj3vS0VImknKwshcmcfA9VtdEQhJHGDQoNjaBEFQHqLqn4Lf
-hqEGUo+nKhz2uqGl2MtQFb8oG+yJPCFPgeSvbiRxmeOwSP0jrNADVKpYpy4UApPqS+UfVQXKbwbM
-6U6qgI8F5eiKsQyE0HgYrQJx/sDs9LLVZlaNiA3U8M8CgEnb8VhuH3BN/yXphhEQdJXb1TyaJA60
-SmHcZdEQZbl4EjwUcs3UIowmI/Mhi7ADQB7VNsO/BaOVBEQk53xH+4djY/cg7jvqTTeliY05j2Yx
-uwwXcDC4mWjGzxAT5DVqC8fKQvon1uc2heorHb555+sLdwYxAgMBAAGjggHYMIIB1DAOBgNVHQ8B
-Af8EBAMCBaAwgZMGCCsGAQUFBwEBBIGGMIGDMEYGCCsGAQUFBzAChjpodHRwOi8vc2VjdXJlLmds
-b2JhbHNpZ24uY29tL2NhY2VydC9nc2djY3I2c21pbWVjYTIwMjMuY3J0MDkGCCsGAQUFBzABhi1o
-dHRwOi8vb2NzcC5nbG9iYWxzaWduLmNvbS9nc2djY3I2c21pbWVjYTIwMjMwZQYDVR0gBF4wXDAJ
-BgdngQwBBQMBMAsGCSsGAQQBoDIBKDBCBgorBgEEAaAyCgMCMDQwMgYIKwYBBQUHAgEWJmh0dHBz
-Oi8vd3d3Lmdsb2JhbHNpZ24uY29tL3JlcG9zaXRvcnkvMAkGA1UdEwQCMAAwQQYDVR0fBDowODA2
-oDSgMoYwaHR0cDovL2NybC5nbG9iYWxzaWduLmNvbS9nc2djY3I2c21pbWVjYTIwMjMuY3JsMCIG
-A1UdEQQbMBmBF3phY2sucnVzaW5AYnJvYWRjb20uY29tMBMGA1UdJQQMMAoGCCsGAQUFBwMEMB8G
-A1UdIwQYMBaAFAApNp5ceroPry1QLdugI4UYsKCSMB0GA1UdDgQWBBQNDn2m/OLuDx9YjEqPLCDB
-s/VKNTANBgkqhkiG9w0BAQsFAAOCAgEAF463syOLTQkWZmEyyR60W1sM3J1cbnMRrBFUBt3S2NTY
-SJ2NAvkTAxbPoOhK6IQdaTyrWi8xdg2tftr5FC1bOSUdxudY6dipq2txe7mEoUE6VlpJid/56Mo4
-QJRb6YiykQeIfoJiYMKsyuXWsTB1rhQxlxfnaFxi8Xy3+xKAeX68DcsHG3ZU0h1beBURA44tXcz6
-fFDNPQ2k6rWDFz+XNN2YOPqfse2wEm3DXpqNT79ycU7Uva7e51b8XdbmJ6XVzUFmWzhjXy5hvV8z
-iF+DvP+KT1/bjO6aNL2/3PWiy1u6xjnWvobHuAYVrXxQ5wzk8aPOnED9Q8pt2nqk/UIzw2f67Cn9
-3CxrVqXUKm93J+rupyKVTGgKO9T1ODVPo665aIbM72RxSI9Wsofatm2fo8DWOkrfs29pYfy6eECl
-91qfFMl+IzIVfDgIrEX6gSngJ2ZLaG6L+/iNrUxHxxsaUmyDwBbTfjYwr10H6NKES3JaxVRslnpF
-06HTTciJNx2wowbYF1c+BFY4r/19LHygijIVa+hZEgNuMrVLyAamaAKZ1AWxTdv8Q/eeNN3Myq61
-b1ykTSPCXjBq/03CMF/wT1wly16jYjLDXZ6II/HYyJt34QeqnBENU9zXTc9RopqcuHD2g+ROT7lI
-VLi5ffzC8rVliltTltbYPc7F0lAvGKAxggJXMIICUwIBATBiMFIxCzAJBgNVBAYTAkJFMRkwFwYD
-VQQKExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIEdDQyBSNiBTTUlNRSBD
-QSAyMDIzAgxhPxw+eieHWB40hPkwDQYJYIZIAWUDBAIBBQCggccwLwYJKoZIhvcNAQkEMSIEIPhI
-gaXowkjjU9UqGixDN9KfNAZpSsFV1cvMkPQZAQKnMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEw
-HAYJKoZIhvcNAQkFMQ8XDTI2MDkyODE4NDAyNlowXAYJKoZIhvcNAQkPMU8wTTALBglghkgBZQME
-ASowCwYJYIZIAWUDBAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQcwCwYJ
-YIZIAWUDBAIBMA0GCSqGSIb3DQEBAQUABIIBADF9zyt1TzcjIO9q6kaPLHyVwDQW/qHPu3RX/QW1
-lRgOL+zkqpfhgAJfMYHo946HHdNdu70dPWn+YOiPbJxoJL2vo32Za69viZJsreL3xtf25S4yjyWF
-8yj/xby7OVYFLGP9n7r8hwziIOHWJG/Vuw9s4e1yZuDawOitJlVZQYhcFQfI5fhl2dnYtnW2TOao
-sCigQsvUFud6irkf1+UTpJeUm814yCPeK2w8UBrrlkxhXrMqcvg1B0iCzAzmNHx5W3c584MJ4rgG
-imy1LHh8zOZl81BtxkuLOmt87EvSTszUfs24QLzB9oyTBffOsSbYDt68G4lFV4NFG1yDKTklSsA=
---00000000000050f712065c8f6672--
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260928182605.36=
+49015-1-irogers@google.com?part=3D17
