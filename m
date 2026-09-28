@@ -1,193 +1,308 @@
-Received: from mail-oi2-f13.google.com (mail-oi2-f13.google.com [74.125.231.205])
+Received: from mail-qk1-f228.google.com (mail-qk1-f228.google.com [209.85.222.228])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC28C386423
-	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 18:33:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.205
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790620418; cv=pass; b=lIhQnpOtEUFpRg0r8E0XdjW0wztNZDx0Am65ogH8YHPnhv2XBBLD+go0Rei+x74ZXWze6+vCxWc8Qd/chHGiwBYJRP1AE2IQD2nk6ujjbiqgX8sDaMzQCaRtOF3z55tIFG9DsW1i34hp959oBrurYoZiuWQYaYQ2TarFtMgnJvo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790620418; c=relaxed/simple;
-	bh=t0yDPJvdEtGqTqYBpAtdipUVGNWr+/cPQ70R+VoF7EY=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD18B3955E3
+	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 18:40:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.228
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790620832; cv=none; b=jzIp/07XphR7jIgGYjG3ZM5cg80E9SenCruEWWQVKG03Bz30luGSqdbNdm5YyoH7I01y4ELCEohftYorfkE0J4viaQS+KZYcEpGOaQdeYUmJYMBHB+Gp72es6kM5QIzS07KzYjrSQpxRKInT6/VMe/wk7qN5u1jpfjCxdIXxslE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790620832; c=relaxed/simple;
+	bh=OCPci/KNqZ9Ad0MNRr3YgnvuiHTayf5wuRkCxHx6mZY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FcHdffSU9TNMTHqnrxA4HVlSAU++jYCpCOG0uo29EoujqbkLqxq2ESchpDEkRZU3o2P8yzsKRSN9NHYlJWd2qs+XwgF3p1erICPCfjxS3N2buA2j/rBtSAffP++IX/NIIs0EIC9oke7sNusuSNb8sCd9+qfHqEG74YGJVCxYUB0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mbb9WEtE; arc=pass smtp.client-ip=74.125.231.205
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=R+gSKx8KO8lKJgg0XmowFmy5AxHvff3fGlHPLEtEgVM6SphVhr0DLtTpCkoE2gxPVp6jUzSmXPWqJxGro5LCeC7lnAxqKkTl5V2v+cyM8DwouA5vlTsXzSS8qwD+x6ZXakwXmroz5oc/oMD0yIScr94idGyq4FFvJorIB07QL94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=Cv5WfGRS; arc=none smtp.client-ip=209.85.222.228
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mbb9WEtE"
-Received: by mail-oi2-f13.google.com with SMTP id 5614622812f47-4c4bf3defecso2599603b6e.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 11:33:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790620414; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Ycx6WM+LLaU9EjK5nPYIvPbErdfJP/1txN44WAfrUQ0mH3m+LWvViHMxnzzLT/ozvo
-         Ao7FdGBi4e4v2oUoPZLyo8pUv3ogC3FlilCkl8Qbnk/P7IB6UqZVuJ1rqYGrwqCRyanD
-         hPLshxL4dnwL53G0mxXlXMNggltdBDOWIwBOmUYhWys2/cV5G0ofvtUMqgb9gD/wV17f
-         RgNXGAKKiue217Y1dJ42vPk9W5ag1FsvInrKdmg+GqLQXvxSj0mIxkalv0mrWDmZBrXR
-         G9WHZDjJgFeRrComkiBqyXRfqiYsvoVCgV9aFzxXf0EF1x3LsBxMgdty1cqChPAHrqem
-         j8+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=GJv0YrgM9Mo4NiT5Hn/XU5a/l8or40BlSM4zqfmb43I=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=iRXwZIItzjP0ow+5JeV7MblgOZAMlJN3WNKIY+pBq5r9C6nNJ/Um6XnmFBFXZ+7beD
-         p9Ypqd6GxMIFNzja/RSpcCnrFMNQCdllFMX6zAiiv8EfjafYjbZQIuMaxFR7R/tR2saV
-         v6ja02gs+Me9gFqaOrXmDbhvgKFMGqxw+LVKFaJ7lXS3z0q7tOohboppG7ojgTYHcVtm
-         Oifh7gDkisveQx9QWpP+cHmNyFRk+otsAg0w75yz5ekhyzwNOm9x/EfNJXtk5s8tNRhy
-         eoBAm4PkdxppJmQNqCGNHRMHBkW9svbABaByecHAMSqMG3/91Mt/WsV3gkfZR+wRn9d7
-         kAEQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790620414; x=1791225214; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=GJv0YrgM9Mo4NiT5Hn/XU5a/l8or40BlSM4zqfmb43I=;
-        b=mbb9WEtEInmFhRVDGP+Redu/4TB7F28hZEAbPnYanMK52glm85QN3kim/zJ0VQjZSP
-         BFvbImDwuPDou21tgdV3MJxH3r9o8y9UOr9Ln3Ysq0MxwCnEsItjUirB2i63CeW63F9m
-         DoYHnG34kLAdUQLpFZYF5Q3JRUX6M2j7SEtddpfxD89kOwXWEmaHzpzwLL5AKn1PXP11
-         lx9B6s79gOIE9P7uobg+hlUWb2SVLID8nLYotz3Ppa2szE1F7k/czr8uajn43HFOr9rT
-         FdEVw9yoRoMuu8pPBu9zuGGDdPEdiTN7gmBiiZ9lYbJ2OclloaoWqlswjd41CB49X+uP
-         0fTg==
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="Cv5WfGRS"
+Received: by mail-qk1-f228.google.com with SMTP id af79cd13be357-93c7ac110dfso19347385a.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 11:40:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790620414; x=1791225214;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=1e100.net; s=20260707; t=1790620829; x=1791225629;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=vakyTyJxLeNDPlpuNpXxBAXgpuMBuiJ1e+QsVMZbrAY=;
+        b=CXOqcIAjVdXdnwWAVEDMY6FfSEg3YqnKCHhi2Sc/EAZ6cHOCKE1LYG+mIhaIjo7SuX
+         KTIWCNokqCbznxF2sufUv+HNY/272Hb9Y70wBDGF/ENsUsJvyJVF+Jexwd0QeTkxUTnT
+         wnlTMSeAb7kgWCt9z8ADQMePN9DkuuAM7XvvEcA1OeZTcV4Reyd8HxNoMNTUfEiUW+XO
+         uhY4PTzlpdVAoa2WnJZf4/hlLcgog/I4uXsdol9lLvUWD12Cr/cd9xN7cuWdqTTDbLFZ
+         TDAAfJaXs7fPY/i0JOSO4EDGX6s9s85jei62uy/cJ1PE3z8UDxFw9g2/Pmiiu/WQb39s
+         Lr5g==
+X-Gm-Message-State: AFuF++mG86hBtjEk7jqs+D4S8nblOsnNFFb65lQ4JAaHKpyiSpRTXn/B
+	GmFANi3sw0hBiEjew2FRPKaobNDjveInB21p+iCwZQf5pClS8Vsln6N1QtnSJxUjaybOr3paFBw
+	sfbuhtMJqfFyjB5ZbRdRgT8sxDIKbsFqOF/eMnJ7n0HtjXkYnfiJKDHMljoDSaSHvlbAM+q12SG
+	JHiNu8VTCXr1ZJjm4zdRW7AACjAgSqQP7zWHDQKQroDr8iCMKCVrNKSLADeMVUlJvFRGkQgYhts
+	BKKunc97Lff9MNLBtB2
+X-Gm-Gg: AYBFou12LJWliBwkfyctCDdD56IENKM5oeARa85WOvRGLYYEi2yrIwgsqXwatlFBCuB
+	jfPuV8xWgGb89+h90+S9HiJ0bbmoRa/hG0eQ9XuLfUJLzF+GTPxKZTK0FFSOSNHE30E1PThroCa
+	OaYtsFQzUjw4Z9hCAVMR+Yh09DDpLZXPhmNl7MfaZEsiZtTGEFz7AY8finILVVkO+hB67WD5NZM
+	GzdwAs4j428U0aw3bdYBEnSyaH73a2F9YKiuj+kjW7KycETks9ONOVgcYCXq1g4hclwfY0aHJwz
+	TiK/eNQElJWKFsBgH3dbWp2DkgBh34q81QmMW4gmkOUjGa1OFFZNrAw9esGCbKeQQqvYewAFm2d
+	OJ6jjBCkTGpFaHwCqdsRFu5JKbbPEUi5quxQl6SOZnsJVhSWKobJDa6ei+JpDXrhSToQ9Cbx107
+	6rSdVqe5a/CNKF1ZDLk1zq9IryPIHOU2oA
+X-Received: by 2002:a05:620a:4623:b0:93c:29b3:3525 with SMTP id af79cd13be357-93c43ca0058mr2283730685a.36.1790620829303;
+        Mon, 28 Sep 2026 11:40:29 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-18.dlp.protect.broadcom.com. [144.49.247.18])
+        by smtp-relay.gmail.com with ESMTPS id af79cd13be357-93c810335desm74399585a.0.2026.09.28.11.40.27
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 28 Sep 2026 11:40:29 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-lj1-f199.google.com with SMTP id 38308e7fff4ca-3a49dcb2b24so891161fa.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 11:40:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1790620826; x=1791225626; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=GJv0YrgM9Mo4NiT5Hn/XU5a/l8or40BlSM4zqfmb43I=;
-        b=gCjX0LmhsDMwAi0sdzjwn9tviE/tcASKHSUretUJjssINmEeoSFbalfJvef30vV1MX
-         sbYJcID1vhZkwFm4o8bfd6S4Qvu9kjfiQdJph+AHUVJaxw75CKWg9q/eP18VEleJmw98
-         RvH8mIE0/sMkHUxV4Rt8VEdPeeY+CUT+FvIOK1ksL2GgTwIwJwONPS1J1tR1k1AzoQiZ
-         +7xOzsAEpydsW4+eUOWn0kBQ2osThNNjWccqjIdnnEWCOAuc0mK0ORz6kBR1JKEfjNrr
-         t2XmuEfcYcaSS10Gk3B7ILPy9VhoIcjy1rlymkbQzTI6ouSVaCQeNIARjvuMY6SipBUq
-         HaxA==
-X-Gm-Message-State: AFuF++khqISFF09iNPP2Ie0hy+5JYbn7/CBoUKmjFI0ZaUXfCwkisssP
-	eojkk+g0Sm4jfpPgtDIEUa5oxBqviiZhPMFESpTo810exXs0x7zj/zbkOf+xfdGqy8O/4jMl0km
-	KLi94ngeEyuseB4JGDK0DMHieFwr8Ly9EpQ==
-X-Gm-Gg: AYBFou3V3c8547p/TrtyW6eaMWKtdoUdxWQTvgkEIDkRspZ0VsAvPb77DaPCadcm7GF
-	L3dAzv24OxXa2FyW6almhOfO9NmqaDVpS6TCo7p/qqJSMybMUglJDBOb8Ooe8/eBO87/rOdESQt
-	7agH84gpxDU3EWda/sokrgj/VWsLPlkcN5+FK9ES5+Xkkh84cHuYceEHz4726jmYstBtdNhW1Xi
-	buZbMt6OR5a2vk+RzbA8MGp/qLWAm1+cOTfLQ3eVIjw6WX2ZN2u6QWRo6vH9Zowh6oR10YLjIpK
-	kziE/lSCeHAvwm5UlnDvYn4eK5PYUBrGHajIFjV8jisr8ZWLTQcbUVY=
-X-Received: by 2002:a05:6808:50a9:b0:4d7:22cd:51cc with SMTP id
- 5614622812f47-4d72aa5b173mr17373947b6e.35.1790620414186; Mon, 28 Sep 2026
- 11:33:34 -0700 (PDT)
+        bh=vakyTyJxLeNDPlpuNpXxBAXgpuMBuiJ1e+QsVMZbrAY=;
+        b=Cv5WfGRSnSijVgJW2MYBn+ihhyM0EkKFvUczaIupFRCY9ZZkydzvr9624eX6I25aHp
+         6D6tclLu89uC7OL3424AxrQ3GtCTVkg6Dyc8KmAcFvcb+izsBVJhgD8LOQqp1de25jpv
+         h8e0CyEMnHjgqyep1sa2EuqGVXy5h2hre0acU=
+X-Received: by 2002:a05:651c:18c6:b0:3a6:5fab:f4c8 with SMTP id 38308e7fff4ca-3a76479b9fcmr534781fa.21.1790620826605;
+        Mon, 28 Sep 2026 11:40:26 -0700 (PDT)
+X-Received: by 2002:a05:651c:18c6:b0:3a6:5fab:f4c8 with SMTP id
+ 38308e7fff4ca-3a76479b9fcmr534701fa.21.1790620826067; Mon, 28 Sep 2026
+ 11:40:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260928181414.644158-1-ameryhung@gmail.com> <20260928181414.644158-9-ameryhung@gmail.com>
- <20260928182823.0EFEF1F000FF@smtp.kernel.org>
-In-Reply-To: <20260928182823.0EFEF1F000FF@smtp.kernel.org>
-From: Amery Hung <ameryhung@gmail.com>
-Date: Mon, 28 Sep 2026 11:33:22 -0700
-X-Gm-Features: AclHuK8HINrwTptjbFI71Pm_-wCViCSyK26VqdhJFYXA3tuWxpYFVyBj9WHNrwQ
-Message-ID: <CAMB2axOEyuY67huG=POzf4ummgSFcQ-sGYX6-0kOXTdQEYfaLw@mail.gmail.com>
-Subject: Re: [PATCH bpf-next v2 08/11] bpf: Check subprog dynptr arguments in
- the common path
+References: <cover.1790014793.git.zack.rusin@broadcom.com> <9ef573cdbbf5e659eea16fa23afeaf2488049198.1790014793.git.zack.rusin@broadcom.com>
+ <20260928180829.3A3461F000FF@smtp.kernel.org>
+In-Reply-To: <20260928180829.3A3461F000FF@smtp.kernel.org>
+From: Zack Rusin <zack.rusin@broadcom.com>
+Date: Mon, 28 Sep 2026 14:40:12 -0400
+X-Gm-Features: AclHuK9rgQQeHz19PVz8BmJKDUJ1fDkrmkQ8Mwi1v0UIsBqIb-VqjZZNOA_FQDw
+Message-ID: <CABQX2QNHSjP+FFppUR1ohthwvCjWNA2ozOuZtnwwdNu7WGaV0g@mail.gmail.com>
+Subject: Re: [PATCH v2 2/6] crash: Notify pre-kdump callbacks before switching kernels
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
+Cc: Petr Mladek <pmladek@suse.com>, Baoquan He <baoquan.he@linux.dev>, 
+	Mike Rapoport <rppt@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
+	Pratyush Yadav <pratyush@kernel.org>, Dave Young <ruirui.yang@linux.dev>, 
+	Pasha Tatashin <pasha.tatashin@soleen.com>, Kees Cook <kees@kernel.org>, linux-doc@vger.kernel.org, 
+	Shuah Khan <skhan@linuxfoundation.org>, "H. Peter Anvin" <hpa@zytor.com>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, linux-kernel@vger.kernel.org, 
+	Ian Forbes <ian.forbes@broadcom.com>, Borislav Petkov <bp@alien8.de>, 
+	Joel Granados <joel.granados@kernel.org>, 
+	Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>, 
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>, Ajay Kaher <ajay.kaher@broadcom.com>, 
+	Bo Gan <bo.gan@broadcom.com>, virtualization@lists.linux.dev, 
+	Sergey Senozhatsky <senozhatsky@chromium.org>, Ingo Molnar <mingo@redhat.com>, x86@kernel.org, 
+	"Michael S. Tsirkin" <mst@redhat.com>, Maaz Mombasawala <maaz.mombasawala@broadcom.com>, 
+	Alexey Makhalov <alexey.makhalov@broadcom.com>, Thomas Gleixner <tglx@kernel.org>, 
+	John Ogness <john.ogness@linutronix.de>, Stephen Brennan <stephen.s.brennan@oracle.com>, 
+	Steven Rostedt <rostedt@goodmis.org>, Jonathan Corbet <corbet@lwn.net>, 
+	Randy Dunlap <rdunlap@infradead.org>, Michael Kelley <mhklinux@outlook.com>, 
+	Eugenio Perez <eperezma@redhat.com>, kexec@lists.infradead.org, 
+	bcm-kernel-feedback-list@broadcom.com
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
+	boundary="00000000000050f712065c8f6672"
+
+--00000000000050f712065c8f6672
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 28, 2026 at 11:28=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+On Mon, Sep 28, 2026 at 2:09=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Low] bpf: dead code and unreachable diagnostic in process_dynptr_func(=
-)
-> --
+> - [Medium] panic: Pre-kdump callbacks always receive NULL message in defa=
+ult config
+
+fwiw, this report seems invalid to me.
+
+> commit 8884313d127ae4b9734baebea7b4ba8dd25b38a5
+> Author: Zack Rusin <zack.rusin@broadcom.com>
 >
-> commit a02951e0de8834e87c650bf3681861699a204241
-> Author: Amery Hung <ameryhung@gmail.com>
+> crash: Notify pre-kdump callbacks before switching kernels
 >
-> bpf: Check subprog dynptr arguments in the common path
+> Fatal x86 oopses can call crash_kexec() without reaching panic(). Run the
+> pre-kdump chain from __crash_kexec() as well, after finding a loaded imag=
+e
+> under the kexec lock and capturing the original registers.
 >
-> This commit routes subprog dynptr arguments through check_func_arg() to e=
-nsure
-> register types, offsets, and dynptr states are validated in a common orde=
-r. It
-> also updates a related selftest to maintain consistent failure states acr=
-oss
-> different compilers.
+> Link: https://lore.kernel.org/r/aquttpMVKX8e6zGB@pathway.suse.cz
 >
-> > diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-> > index efb20e50c974a..075002f6a59fe 100644
-> > --- a/kernel/bpf/verifier.c
-> > +++ b/kernel/bpf/verifier.c
-> > @@ -10883,7 +10883,7 @@ static int btf_check_func_arg_match(struct bpf_=
-verifier_env *env, int subprog,
-> >               nslots =3D btf_arg_slots(t);
+> >     the shared guard skips callbacks already invoked by panic().
+>
+> [Severity: Medium]
+> Is this statement accurate?
+>
+> During a standard panic-triggered kdump with crash_kexec_post_notifiers=
+=3D0
+> (the default configuration), vpanic() calls __crash_kexec(NULL) before it
+> formats the panic message and calls its own explicit
+> panic_notify_pre_kdump(buf).
+>
+> Because __crash_kexec(NULL) runs first, won't the new
+> panic_notify_pre_kdump(NULL) call consume the once-per-boot atomic guard,
+> rather than being skipped by it?
+
+Yes, and that's intended. By default the crash-core call runs first
+and the late call in vpanic() is skipped. With
+crash_kexec_post_notifiers=3D1 the order is reversed. vpanic() runs the
+list with buf, and the crash-core call is skipped. The changelog
+sentence only describes the second case.
+
+> > diff --git a/kernel/crash_core.c b/kernel/crash_core.c
+> > index 2b36aa9fade06..5d9fe9e00f39f 100644
+> > --- a/kernel/crash_core.c
+> > +++ b/kernel/crash_core.c
+> [ ... ]
+> > @@ -139,6 +140,7 @@ void __noclone __crash_kexec(struct pt_regs *regs)
+> >                       struct pt_regs fixed_regs;
 > >
-> >               if (arg_type =3D=3D ARG_SCALAR || arg_type =3D=3D ARG_IGN=
-ORE ||
-> > -                 arg_type =3D=3D ARG_PTR_TO_CTX ||
-> > +                 arg_type =3D=3D ARG_PTR_TO_CTX || arg_type =3D=3D ARG=
-_PTR_TO_DYNPTR ||
-> >                   base_type(arg_type) =3D=3D ARG_PTR_TO_ARENA) {
+> >                       crash_setup_regs(&fixed_regs, regs);
+> > +                     panic_notify_pre_kdump(NULL);
 >
-> [Severity: Low]
-> Does routing this through check_func_arg() render the register type valid=
-ation
-> in process_dynptr_func() redundant and unreachable?
-
-Indeed. I will remove the redundant check in v3.
-
+> [Severity: Medium]
+> Will this cause pre-kdump notifiers to receive a NULL message pointer ins=
+tead
+> of the expected panic message?
 >
-> Since check_func_arg() calls check_reg_type() before process_dynptr_func(=
-),
-> the requirement for PTR_TO_STACK or CONST_PTR_TO_DYNPTR is already enforc=
-ed
-> earlier in the flow.
+> If a system panic occurs and kexec is configured with the default setting=
+ of
+> crash_kexec_post_notifiers=3D0, vpanic() triggers __crash_kexec(NULL) bef=
+ore
+> reaching its own explicit panic_notify_pre_kdump(buf):
 >
-> This makes the custom error block in process_dynptr_func() dead code:
->
-> kernel/bpf/verifier.c:process_dynptr_func() {
->         ...
->         if (reg->type !=3D PTR_TO_STACK && reg->type !=3D CONST_PTR_TO_DY=
-NPTR) {
->                 verbose(env,
->                         "%s expected pointer to stack or const struct bpf=
-_dynptr\n",
->                         reg_arg_name(env, argno));
->                 ...
->                 return -EINVAL;
->         }
->         ...
+> kernel/panic.c:vpanic() {
+>     ...
+>     if (!_crash_kexec_post_notifiers)
+>         __crash_kexec(NULL);
+>     ...
+>     panic_notify_pre_kdump(buf);
 > }
 >
-> The selftest updates in this patch seem to confirm this, as the expected
-> error message is changed from this custom diagnostic to the generic one
-> produced by check_reg_type().
->
-> >                       ret =3D check_func_arg(env, arg, slot, 0, &meta, =
-env->insn_idx);
-> >                       if (ret)
-> > @@ -10912,15 +10912,6 @@ static int btf_check_func_arg_match(struct bpf=
-_verifier_env *env, int subprog,
-> >                                       reg_arg_name(env, argno));
-> >                               return -EINVAL;
-> >                       }
-> > -             } else if (arg_type =3D=3D ARG_PTR_TO_DYNPTR) {
-> > -                     ret =3D check_func_arg_reg_off(env, reg, argno, A=
-RG_PTR_TO_DYNPTR);
-> > -                     if (ret)
-> > -                             return ret;
-> > -
-> > -                     ret =3D process_dynptr_func(env, reg, argno, env-=
->insn_idx,
-> > -                                               arg_type, &meta);
-> > -                     if (ret)
-> > -                             return ret;
-> >               } else if (base_type(arg_type) =3D=3D ARG_PTR_TO_BTF_ID) =
-{
-> >                       int err;
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260928181414.64=
-4158-1-ameryhung@gmail.com?part=3D8
+> When this happens, __crash_kexec() will invoke panic_notify_pre_kdump() w=
+ith
+> a NULL message pointer. This permanently consumes the once-per-boot guard=
+,
+> and any callback relying on the documented msg parameter will experience
+> data loss or potential NULL dereferences, violating the API contract that
+> promises the panic message during a panic.
+
+afaict Sashiko gets tripped up here by the doc from the previous
+email. Nothing in this series dereferences the msg. The only callback
+is the VMware logger in patch 4, which ignores the argument. It reads
+the printk buffer, where vpanic() has already written the panic line.
+
+If there's an interest in fixing this false-positive in code for
+Sashiko (or if there are other issues that would make me respin v3)
+I'd just change the doc added in the first change in this series like
+this:
+- * @msg: Panic message, or NULL for direct crash-kexec entry
++ * @msg: Optional panic message; callbacks must tolerate NULL
+which, I think, would fix Sashiko here.
+
+z
+
+--00000000000050f712065c8f6672
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+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
+6U6qgI8F5eiKsQyE0HgYrQJx/sDs9LLVZlaNiA3U8M8CgEnb8VhuH3BN/yXphhEQdJXb1TyaJA60
+SmHcZdEQZbl4EjwUcs3UIowmI/Mhi7ADQB7VNsO/BaOVBEQk53xH+4djY/cg7jvqTTeliY05j2Yx
+uwwXcDC4mWjGzxAT5DVqC8fKQvon1uc2heorHb555+sLdwYxAgMBAAGjggHYMIIB1DAOBgNVHQ8B
+Af8EBAMCBaAwgZMGCCsGAQUFBwEBBIGGMIGDMEYGCCsGAQUFBzAChjpodHRwOi8vc2VjdXJlLmds
+b2JhbHNpZ24uY29tL2NhY2VydC9nc2djY3I2c21pbWVjYTIwMjMuY3J0MDkGCCsGAQUFBzABhi1o
+dHRwOi8vb2NzcC5nbG9iYWxzaWduLmNvbS9nc2djY3I2c21pbWVjYTIwMjMwZQYDVR0gBF4wXDAJ
+BgdngQwBBQMBMAsGCSsGAQQBoDIBKDBCBgorBgEEAaAyCgMCMDQwMgYIKwYBBQUHAgEWJmh0dHBz
+Oi8vd3d3Lmdsb2JhbHNpZ24uY29tL3JlcG9zaXRvcnkvMAkGA1UdEwQCMAAwQQYDVR0fBDowODA2
+oDSgMoYwaHR0cDovL2NybC5nbG9iYWxzaWduLmNvbS9nc2djY3I2c21pbWVjYTIwMjMuY3JsMCIG
+A1UdEQQbMBmBF3phY2sucnVzaW5AYnJvYWRjb20uY29tMBMGA1UdJQQMMAoGCCsGAQUFBwMEMB8G
+A1UdIwQYMBaAFAApNp5ceroPry1QLdugI4UYsKCSMB0GA1UdDgQWBBQNDn2m/OLuDx9YjEqPLCDB
+s/VKNTANBgkqhkiG9w0BAQsFAAOCAgEAF463syOLTQkWZmEyyR60W1sM3J1cbnMRrBFUBt3S2NTY
+SJ2NAvkTAxbPoOhK6IQdaTyrWi8xdg2tftr5FC1bOSUdxudY6dipq2txe7mEoUE6VlpJid/56Mo4
+QJRb6YiykQeIfoJiYMKsyuXWsTB1rhQxlxfnaFxi8Xy3+xKAeX68DcsHG3ZU0h1beBURA44tXcz6
+fFDNPQ2k6rWDFz+XNN2YOPqfse2wEm3DXpqNT79ycU7Uva7e51b8XdbmJ6XVzUFmWzhjXy5hvV8z
+iF+DvP+KT1/bjO6aNL2/3PWiy1u6xjnWvobHuAYVrXxQ5wzk8aPOnED9Q8pt2nqk/UIzw2f67Cn9
+3CxrVqXUKm93J+rupyKVTGgKO9T1ODVPo665aIbM72RxSI9Wsofatm2fo8DWOkrfs29pYfy6eECl
+91qfFMl+IzIVfDgIrEX6gSngJ2ZLaG6L+/iNrUxHxxsaUmyDwBbTfjYwr10H6NKES3JaxVRslnpF
+06HTTciJNx2wowbYF1c+BFY4r/19LHygijIVa+hZEgNuMrVLyAamaAKZ1AWxTdv8Q/eeNN3Myq61
+b1ykTSPCXjBq/03CMF/wT1wly16jYjLDXZ6II/HYyJt34QeqnBENU9zXTc9RopqcuHD2g+ROT7lI
+VLi5ffzC8rVliltTltbYPc7F0lAvGKAxggJXMIICUwIBATBiMFIxCzAJBgNVBAYTAkJFMRkwFwYD
+VQQKExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIEdDQyBSNiBTTUlNRSBD
+QSAyMDIzAgxhPxw+eieHWB40hPkwDQYJYIZIAWUDBAIBBQCggccwLwYJKoZIhvcNAQkEMSIEIPhI
+gaXowkjjU9UqGixDN9KfNAZpSsFV1cvMkPQZAQKnMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEw
+HAYJKoZIhvcNAQkFMQ8XDTI2MDkyODE4NDAyNlowXAYJKoZIhvcNAQkPMU8wTTALBglghkgBZQME
+ASowCwYJYIZIAWUDBAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQcwCwYJ
+YIZIAWUDBAIBMA0GCSqGSIb3DQEBAQUABIIBADF9zyt1TzcjIO9q6kaPLHyVwDQW/qHPu3RX/QW1
+lRgOL+zkqpfhgAJfMYHo946HHdNdu70dPWn+YOiPbJxoJL2vo32Za69viZJsreL3xtf25S4yjyWF
+8yj/xby7OVYFLGP9n7r8hwziIOHWJG/Vuw9s4e1yZuDawOitJlVZQYhcFQfI5fhl2dnYtnW2TOao
+sCigQsvUFud6irkf1+UTpJeUm814yCPeK2w8UBrrlkxhXrMqcvg1B0iCzAzmNHx5W3c584MJ4rgG
+imy1LHh8zOZl81BtxkuLOmt87EvSTszUfs24QLzB9oyTBffOsSbYDt68G4lFV4NFG1yDKTklSsA=
+--00000000000050f712065c8f6672--
