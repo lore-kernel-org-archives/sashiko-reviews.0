@@ -1,186 +1,116 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7D23D649C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 17:45:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8706C54A7CD
+	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 17:50:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790703928; cv=none; b=kejx9Vhj1yzPE+zsB5PLQWrntYNhsVRRSkv9w39k/Wkx7k16HpM4CPj/QXbXzzEt37eghcPBBNVlfajcCx+xWXvI3cNzrzRGlRKHBuZ8bXT5T9IRbuWEFfnROHiAi200N4lMqXlxnmKOTKAYC/2IJmFB6AY42Hykz7zOaZJRoIE=
+	t=1790704228; cv=none; b=S/818tJXGaGpqAuF9sMseZdAZhbfMWrUANBPQGIfaLGhsyXKNPIzWWv0yqF1nagPxtOfT0m90HGdTIW9MKm4K/t/gZ4yHFwjR6dNEqD114Y1votFJhkwIA0tg+SjFH3l5yppx0f5ntWWp9FU7i9RhpPGqO8wcPO06ncJiBko9zY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790703928; c=relaxed/simple;
-	bh=kVcy16VRk+NdxqnWoUhi02A6dHlACtODyGa7wNIbzTo=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZH+0hhN5bc8xZsZxxoz/xO55Zdo/jQI81Drc419qnS/oH0WSxcFsIKPlVFWYgBCfYzD9VLWpkl/CO+LKGkMOolVxhDPVf0otNAwCtJ6kDtwKeS75QDJzYM+WfO6WrOnJtaIn/4iB+jqLwhGRb1ReXtgMFq7+jDmGwu9uiJ/ypOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=hIhbs/9h; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1790704228; c=relaxed/simple;
+	bh=JXImq5c8d89U/m2D0Uk/1rvyc4z0Deo/xtJ4+3h15+Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hCvsZfRKXO/tAYCM5ID+MCu5B7ha9UlN7KG66pgejDIKm1Plk53HVvrrOZCqnjmTRX+ARDQJ56ZBh/T1mhJpWTWk/CzmakLupB8cjgQbP/CEHu0f8vihE4vmpkmWXwo5Bsq4MEidWbA8d2bcmDX5o7TAfq6lTgQlFts+7QqBMoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QwfYC6Oc; arc=none smtp.client-ip=74.125.227.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="hIhbs/9h"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1790703925;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kVcy16VRk+NdxqnWoUhi02A6dHlACtODyGa7wNIbzTo=;
-	b=hIhbs/9hCd8juY8Jj9Oy/O5OBmixe2IfIR8IXVUEylXJraXYrWeMT/6v6mcjjjOjcKoOIX
-	NhoPxJmgktyRzIRiKc2TeVSBXMeiNSBDOFeKG1Eh6mFpQzqBPz6sUnLBQVlGsQQPb+1Pq0
-	Ken7YMu/BxtlUbuPMK19E/CzxeFhMyA=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-173-0yEOCctCMLCIJ-ZhjbW0hw-1; Tue, 29 Sep 2026 13:45:23 -0400
-X-MC-Unique: 0yEOCctCMLCIJ-ZhjbW0hw-1
-X-Mimecast-MFC-AGG-ID: 0yEOCctCMLCIJ-ZhjbW0hw_1790703923
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-93c599e3d3bso721157385a.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 10:45:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QwfYC6Oc"
+Received: by mail-pj2-f13.google.com with SMTP id d9443c01a7336-2d90ba1d807so34993575ad.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 10:50:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790704227; x=1791309027; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=DurJlfglRtxfoYGfZICWlyKpb6JqelzUeYbLyKTge0E=;
+        b=QwfYC6OcnnIFN8m2x9bRot9kDd0c7pP/qFvcfQ7gj6Hmf6pNyXIGnqnh+bUzd9uDP8
+         4ZZUWR47VP4ZAJPCr21LlehS9mpB9E4Xssbx/RHNSkeVPIgt7t+4G0mhuUQGi4OzsiQb
+         6A050TnHbj/xVb+1T5II7g5OjaG/G4U41xSUCuv1EZwymIpdcLvC/QpezKbBJRPkKQtD
+         GCc9eRaQYMd937UMUH4z1yAGa8nlQEaSwy50vsLSLjZPVkc9/US7TqkMHEE8CCubTbJG
+         js6Ts/dq3kUTMUjkzsVmPb0spsuZk3mjGoHz268kEoV3HH8ZhK/aAFqnYzkgrRNKw3Xp
+         kibw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790703923; x=1791308723;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=p+/ZhVDWLPZxvmMp9jtbl9VESILtaLIBrhjShuwTPLg=;
-        b=W2r7pKDteHcdsaPumnnUz8Okj4c2S9WKGZ6ZV7f+KbWM14O7/xAabwuU+HxIhXFti2
-         jtt859Ugdc7ODYCKlP8ODDyDoZclJCDv2oVltXytk7N46hwxIiwdXeNNE4Al4atEMR0L
-         b8h5W4Ox0HrYVTkBywOR4yOB/PnF4+OPO2UnagbGw3PjMLevlITmaB6eRmyeoTXhenl7
-         MTxesgjjy1rfftEDyN/cHifuZ2Esrb7rI7cPNSM8LmSX1RkAKja5BFOZ66pyCM8ay1mH
-         IF08fd6eFxFEbX5sYn2Quj6QIIqeWUdN/7pIxPgPuS27tFrdG801ahsoASIJ+C9/KBgY
-         EBRQ==
-X-Gm-Message-State: AFuF++kGyhzCGlxTmTim+tBS3eKKLfr+gkx9cjtvNbHhLuXFeotZr+Y/
-	ENoEXR//ooDhwoWOM6Y+Bk6QwZnKXC2W3NQkrHbJNYfHPE1kYMRa2JkIOywit3xpv3DPvUReJTH
-	cgdCuvrvykME5eOvf2lvYY8EcXMQXRBhvlrmGPLYJx/WpdGCjNK/NRU6rjKsU5Y6Yq8+mW7FVuM
-	tmUewlbmlz7YqGBLf+CaWpQNA+SwEj7IiJcIh1HFZ28rp0v0n/LBHutw==
-X-Gm-Gg: AYBFou2WKpClqAJB6gPK4avNLImA1VJpoYKOOQa7Zfb2GlgajxFc8Qx91143LciQ/Sw
-	oyLhYlIqXethi5kMHkM38sME1fqDArPoo0F2IQbgml03+aUav8tqKASCN+r9EHfNfSFdgmnNjEh
-	Mr3wDHNjxKYRtN/0E21SRhhglhTD/X/TV3pozd5UNYjCmgccBmkVbLIhDAC3yt4WEI4ngoS4wjL
-	ZFxRGoQAGickVgCDZZY9sCWm0KB5HAeVIi7uLkqZEMnqyrwaMYXQBvrThP1fUWGVAsGzAiCTASk
-	uyni0CTLvnNWumNCmktU3Z0/TC5ex1eSjVUJSEPIXL9Jzx/P6dlUhbDsIunGh7l8WZnc3mYRsbo
-	Eg+XACivO3Qjctb7EabhAYiIbme+328Q6Dgnt
-X-Received: by 2002:a05:620a:40cf:b0:936:77d7:55a4 with SMTP id af79cd13be357-93c9fb42879mr42482585a.19.1790703922531;
-        Tue, 29 Sep 2026 10:45:22 -0700 (PDT)
-X-Received: by 2002:a05:620a:40cf:b0:936:77d7:55a4 with SMTP id af79cd13be357-93c9fb42879mr42473785a.19.1790703921777;
-        Tue, 29 Sep 2026 10:45:21 -0700 (PDT)
-Received: from loberman-thinkpadp16gen3.rmtusma.csb ([2600:6c65:2440:d8c:aa2b:ddff:fe88:da74])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93c9f2e00d1sm25614685a.6.2026.09.29.10.45.20
+        d=1e100.net; s=20260707; t=1790704227; x=1791309027;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=DurJlfglRtxfoYGfZICWlyKpb6JqelzUeYbLyKTge0E=;
+        b=X28O37fP3Y9LSeqgebrvixgVLg+b3GSAfURbADxiDKGYYYC5m7ys810U4VsJOIA2cY
+         2xe02SUKiVx/7et8DCqkIsfureOWmZ+9/X4XocBO4r3FpyiTN0NhNTA47Ze4JbRrqXZF
+         pFiLBZIBehFpz5gJQx+Dv68gSEmkqApkNfS4vhJdhwGK2s9Os8ERIMnY6ae/I7En9LkK
+         ZVEChEpuUAfGprVeh38sKZYl6MBJVP0NSvi1COmD2a7vPLMb9IDJPjXK5FlglaozWz4C
+         nkSkNyZJHuI4ryeL1bDeoeXETpj5oylxnDq0vRJhgSf5rXA/IXul9gTbDGGv359xo6RP
+         4gAQ==
+X-Gm-Message-State: AFq9FYJ3bI6hTK8EB0T+XFmEb1pTLG1QJNWE4xrk/XObfY7439GzkIWg
+	7YcpY5OnxZTKEGTh1RD4h+QQ4CmCZNK8e4kQ0RZ1KqPQ9z2HNncQVdzWrpv0Lcvy
+X-Gm-Gg: AYBFou19V8J+BBbU/KUfInLqwLOT42guW6O26AwDKWuh//iZBONvCPNkE2OBzGnM6St
+	xmoLWPOm4OddpYpgFlA0wtqJ0HCqRleusnhs7ERHS6g61qnB5bcB0CbUiMq6Y5r/Y/RS/a7sMkz
+	aGmjX3mqft9kSCK1WC72R+Cag3w5+xEYWOfmDDv3pWD7E3sO3GRTDn5vkezOAl+DCkRJQdNGpdP
+	Vnm9HpCYvzFg0Wap4HO7fjnd0uVKMTApm3UQ3OmuaVYB+R3ozmvfqy0fiiO7a+BVrGEnZgTQzV8
+	IxzpW4lyxBhMgr+mjOi5AvF5OrIjVfgpkwf6hX557DYkgg82Djp2cTARPBxHXFO03JlGsTRiFhd
+	mlnw8/UqDbb0frELlpWb25LywZbUtcBdmKfZGOYQ1Rk4ALxUYjpXksNakHD35p7anjj9j/fpHOl
+	6K+rJOc77oCLciXr46E7Wo/UTx4zegZF6bCQF/N+twegZ4JFGC5rLSGojA3T1O5/lW9m0piLNNe
+	SczQjvG8IM2aA==
+X-Received: by 2002:a17:902:c406:b0:2dd:9b53:f9ba with SMTP id d9443c01a7336-2df7da5e366mr158748795ad.1.1790704226719;
+        Tue, 29 Sep 2026 10:50:26 -0700 (PDT)
+Received: from DESKTOP-NM9EKIA ([125.134.240.130])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2e2c794166fsm15247035ad.21.2026.09.29.10.50.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2026 10:45:20 -0700 (PDT)
-Message-ID: <9a9da14629887529cbdc7efbe5809f19ed140d23.camel@redhat.com>
-Subject: Re: [PATCH v3 1/4] scsi: st: Restore changed drive settings after
- reset also for MTLOAD and MTRETEN
-From: Laurence Oberman <loberman@redhat.com>
+        Tue, 29 Sep 2026 10:50:26 -0700 (PDT)
+From: Joonhoe Kim <26rote@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-Date: Tue, 29 Sep 2026 13:45:19 -0400
-In-Reply-To: <20260929173335.0562F1F000FF@smtp.kernel.org>
-References: <20260929171813.844733-1-loberman@redhat.com>
-	 <20260929171813.844733-2-loberman@redhat.com>
-	 <20260929173335.0562F1F000FF@smtp.kernel.org>
-User-Agent: Evolution 3.60.2 (3.60.2-2.fc44)
+Cc: dri-devel@lists.freedesktop.org,
+	robin.clark@oss.qualcomm.com,
+	lumag@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	sashiko-bot@kernel.org,
+	Joonhoe Kim <26rote@gmail.com>
+Subject: Re: [PATCH] drm/msm/dp: hold one runtime PM reference per plugged state
+Date: Wed, 30 Sep 2026 02:50:19 +0900
+Message-ID: <20260929175019.3899-1-26rote@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.5
+In-Reply-To: <20260929132029.911491F000FF@smtp.kernel.org>
+References: <20260929130627.959-1-26rote@gmail.com> <20260929132029.911491F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: l3CSVPL8iMzVobrwioi4p_MBmYZxXrvYghYX4ZX1aP4_1790703923
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, 2026-09-29 at 17:33 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue(s) to consider:
-> - [High] scsi: st: MTLOAD in immediate mode attempts premature
-> settings restore
-> --
->=20
-> commit 17d984b3de3a58216a78afa696892ddd4aea0bbd
-> Author: Laurence Oberman <loberman@redhat.com>
->=20
-> scsi: st: Restore changed drive settings after reset also for MTLOAD
-> and MTRETEN
->=20
-> A device reset returns the drive's density and block size to their
-> defaults.
-> This patch attempts to re-apply values changed by the user when
-> recovering
-> with MTLOAD or MTRETEN.
->=20
-> > diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
-> > index f1c3c49466379..0a4263bef9cbb 100644
-> > --- a/drivers/scsi/st.c
-> > +++ b/drivers/scsi/st.c
-> [ ... ]
-> > @@ -3819,6 +3848,9 @@ static long st_ioctl(struct file *file,
-> > unsigned int cmd_in, unsigned long arg)
-> > =C2=A0
-> > =C2=A0=09=09if (mtc.mt_op =3D=3D MTLOAD) {
-> > =C2=A0=09=09=09retval =3D do_load_unload(STp, file, max(1,
-> > mtc.mt_count));
-> > +=09=09=09if (!retval)
-> > +=09=09=09=09st_restore_changed_settings(STp,
-> > restore_density,
-> > +=09=09=09=09=09=09=09=C2=A0=C2=A0=C2=A0
-> > restore_blksize);
->=20
-> [Severity: High]
-> Does this code attempt a premature settings restore if MTLOAD is
-> called
-> in immediate mode?
->=20
-> If a user application issues MTLOAD with O_NONBLOCK and STp-
-> >immediate
-> set to recover after a drive reset, do_load_unload() will issue the
-> load
-> command and return immediately. This unconditional call to
-> st_restore_changed_settings() would then cause MODE SELECT commands
-> to
-> fail because the drive is still asynchronously loading.
->=20
-> Later, when the drive is accessed, check_tape() detects the new
-> session
-> and clears the changed flags, causing the drive to silently revert to
-> its default density and block size. Subsequent writes might then
-> produce
-> incorrectly formatted tapes without errors.
->=20
-> For MTRETEN, this patch correctly checks for !STp->immediate before
-> restoring
-> the settings:
->=20
-> > =C2=A0=09=09=09goto out;
-> > =C2=A0=09=09}
-> [ ... ]
-> > @@ -3837,6 +3869,19 @@ static long st_ioctl(struct file *file,
-> > unsigned int cmd_in, unsigned long arg)
-> > =C2=A0=09=09=09retval =3D st_compression(STp, (mtc.mt_count
-> > & 1));
-> > =C2=A0=09=09else
-> > =C2=A0=09=09=09retval =3D st_int_ioctl(STp, mtc.mt_op,
-> > mtc.mt_count);
-> > +=09=09if (!retval && mtc.mt_op =3D=3D MTRETEN && !STp-
-> > >immediate &&
-> > +=09=09=C2=A0=C2=A0=C2=A0 (restore_density >=3D 0 || restore_blksize >=
-=3D
-> > 0)) {
->=20
-> Should MTLOAD also verify !STp->immediate before calling
-> st_restore_changed_settings() in st_ioctl()? Note that follow-up
-> patches
-> in this series do not correct this omission.
->=20
->=20
-Hello Sashiko,=20
+On Tue, 29 Sep 2026 13:20:29 +0000, sashiko-bot@kernel.org wrote:
+> Then, on the next plug, msm_dp_display_host_phy_init() will silently skip
+> PHY initialization because dp->phy_initialized was never reset to false:
+[...]
+> Can this sequence leave the hardware PHY uninitialized on replug, causing
+> link training to fail and the display to remain broken until reboot?
 
-This only affects MTLOAD in immediate mode with an O_NONBLOCK open;
-with a blocking open check_tape() waits for the drive and the restore
-works. In the non-blocking case the MODE SELECTs fail and the settings
-stay at the drive defaults, which is the current behaviour without the
-patch, so it is not a regression. I can add a "STp->ready =3D=3D ST_READY"
-check before the restore in a follow-up and leave v3 as is.
+I tried it on the device (Lenovo TB323FU, a DP monitor over USB-C) by
+delaying the unplug handler by 5 s and forcing a detect in that window.
 
-Thanks
-Laurence
+- A normal unplug already leaves the PHY initialized across the
+  controller's runtime suspend: msm_dp_hpd_unplug_handle() only calls
+  msm_dp_display_host_phy_exit() when sink_count == 0, which it was not
+  here, and msm_dp_pm_runtime_suspend() does not touch the PHY for DP.
+  With this patch the controller suspended after the unplug, and a
+  replug 20 s later trained the link with phy_init=1 and brought the
+  picture back. The controller's runtime suspend does not power the PHY
+  down, so the flag still describes the PHY correctly.
 
+- Tearing the PHY down in detect() when the sink is gone (the natural
+  fix for the scenario in the review) made it worse: the next detect()
+  initialized the PHY again and hit
+
+    phy phy-88e8000.phy.3: phy_power_on was called before phy_init
+
+  and the SoC reset shortly after.
+
+So I would keep this patch as it is. detect() clearing plugged so that
+the unplug handler returns early is older than this change and is not
+affected by it.
+
+Thanks,
+Joonhoe
