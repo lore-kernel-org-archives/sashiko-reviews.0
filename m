@@ -1,184 +1,256 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBF14968F3;
-	Tue, 29 Sep 2026 09:36:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DFE4FD29F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 09:55:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790674588; cv=none; b=RBTlwIB0C9YwfJIYFsLKy1+QyX1j/qaKQlTzZCiEM56pwpglfpuC6kS3hfVyMZ+BJyARhR+FDJWA6o51gcIJ/SRkz3AFPDZNvSEKkQQyxAcQwc1pOOmdD1NWDDrBjk97MLP5CKl8jNcxA8bKy+gWadlXvuBjzr3ovTTXGkHNv04=
+	t=1790675726; cv=none; b=oYIB0A6QZMUa38yBZM5WNGhBTAOYVRBvQszh84nBJShcP4Y78Tuf0J49GJbgB252YLBrNlhu8tN3SaT0HQeoJz5fEL6PQerGW3J/zbCpHdPyl2YOFUY8zKPwL7g7kis6GICxpV0WYY6LTc+bMn/xUvCgH0sUZZX76wYIbWtdCTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790674588; c=relaxed/simple;
-	bh=pFM70FbyR1JknXLq7uZwl6YV5EpPi9DGj3f51A1Qqbk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gP7GhMTDqMLCjeNcGqNzP8EdurYbtiKfnFE3W2rgoHUPGWiL8c8GPJJyW1MyPMEY9bbwu78M1xPsZoxaj3p0Q8WWaUFKDs/BnIxcn4arQmyw0B/rhL/9xrgCHRKQrSxRCVBsO7QtjNYzGJrNfES/laIy8VhyclJCKPCSH4gV+5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=sxD/SrnW; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1790675726; c=relaxed/simple;
+	bh=98UbK4N2251SUFmDgHu33sL9B1Db+PPtpfyBhOYbq2k=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=Vo5UFJEmQ95sAO91ASE7E3w5o0YTonKP/7oGrPpLiRr1EIEHlQh/nCJCk8lLNj6PKm1iLrLdw3fERtwoBR/dEDgWAPYVTbZyQkQXUtexnGA3XP2rvXUEIwfe8WZl6soderdt9eH6RX0fmyVqmXD87m2X3eunWQDDBHkQZNb1vj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=U5+5neBg; arc=none smtp.client-ip=74.125.225.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="sxD/SrnW"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68T7aDwY3536158;
-	Tue, 29 Sep 2026 09:36:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=KVpDbV
-	bfbiJtmrjCjI3Y+IC3oKR47tlBG6IjlgbdpyY=; b=sxD/SrnWKX1fJNH6dyLVer
-	AANxPC2zM2TWQ8Y7n0fJS+CTPxw552lfOeNZa1b4q1Jkzdx/W2QJfzkqXrhtFNPJ
-	PqMuNHuDNPHwtVd+cjhWUGK3XtRcGp5iJrSl0wU44eh1FCq81GS7zZ/iEai5JS8v
-	TBeinZwD62rZiDKNdmVRDyRxiMKCA0VCjE5Yq1FdlffsAwRHTOT+J/kjo0cf79uJ
-	Npl1/3wC3wyGGS1zERyoFOpqFXxCkBimZC4NA5ARsAgJzc1kvmi/6WAIUdt/cZx2
-	IxduQtwq+JE3Lsb6TtAgub8zby1yelEZOWG8CR2/ijbrIWEledErBF1eDS2EHoXA
-	==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5s5688g-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Tue, 29 Sep 2026 09:36:26 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68T7Wccj092052;
-	Tue, 29 Sep 2026 09:36:25 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gxtkg8xp6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Sep 2026 09:36:25 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com [10.39.53.231])
-	by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68T9aNEX49217812
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 29 Sep 2026 09:36:23 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C293358054;
-	Tue, 29 Sep 2026 09:36:23 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C99CC58052;
-	Tue, 29 Sep 2026 09:36:22 +0000 (GMT)
-Received: from [9.61.24.130] (unknown [9.61.24.130])
-	by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 29 Sep 2026 09:36:22 +0000 (GMT)
-Message-ID: <dbeb1586-52e7-4ff0-884c-7cbdf3242904@linux.ibm.com>
-Date: Tue, 29 Sep 2026 05:36:22 -0400
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="U5+5neBg"
+Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49ffe281cb1so17465265e9.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 02:55:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1790675720; x=1791280520; darn=lists.linux.dev;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-type:mime-version:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=pmauSvEG/mGV3JuTK5ds225WsQMQmw8wXcrzlAj8aGc=;
+        b=U5+5neBgRUq8jrCkt7OUzf7shlk/GW1stpeMYTld/9ibvMfJagXBkyMjfQ+lm/7VPF
+         PY6JdX2qUG/1qp2MUsWzh9nYvgQzm7QFifMcAiIyNppK1El7wnjbg5SXBbe6+w/GTt0U
+         jnXwbCc+bFGfpdDyR34YFBcMT/RPKpXoiJAV0uSiYYUVr/fi458mypci+xFqD0i/FVki
+         xL5+JDYsMgIgcU34m7+6hzw7ruU+wtGViYvkr9Z3Nv3cih8y2nfqYYya+4GLTGUR4EBP
+         4dkIdip7Bx7YRlZiwqzL9lMAO9Ez/d6uyzU42bj5jYPzH6rJSkPJ1D3rsx2IHdv7v7M/
+         z8xQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790675720; x=1791280520;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-type:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=pmauSvEG/mGV3JuTK5ds225WsQMQmw8wXcrzlAj8aGc=;
+        b=uJBfwAaBuE2/wAeEq8uxy2sRAAncC8bvKqVlaw2dt5jWGgzvyaCuCXRuZK4Ba2g80y
+         R2cOWLDOMZ671hikerTiGee+cQ8K+bT0pgqIAx8UzpLz7NzOWSAITSN/2aTSJFpEAoMi
+         VyYbiX4KzwXYgMEGeBSkXoM4wHLw3h7500tuCVgOSHbQ9IYnOCgA5oE8iQHGoN0wr3ir
+         mwCTavR0SEcU8tCg7lHSUB2Ir9+XpJZRxJ/U4YutlF2RyW9Ybyet6JzyayFla5QRqdQ+
+         DW1fRAnPLMeipsKrAj4tOcZUSEs1GaGC8IYEzuj77vDP2QgCAYO1Q/atKKuvJJRqxVza
+         696A==
+X-Forwarded-Encrypted: i=1; AKwUvBzUHcYh1Qe6sTwg02aB4fKGV8KRDKNahZxiYnscOamxTBLSK8hMb0oMK1aIELiLEbu8eV6kovKHPZjnopNFKhs=@lists.linux.dev
+X-Gm-Message-State: AFuF++kM9tn2GL3ethU9KdjzAdvTJ7bFmgmjqs+EwX2R3CiZU3bTsFt9
+	rPMG6X1ShOPp92uA1Gmw4zVKA/rQnsX8q/0Kq/b5FKdgg5PGUxrm7urCltjBrV6cgJo=
+X-Gm-Gg: AYBFou1pn6Hh1XHJpO/2QyGZRQg8Fdcaej/x1sF9zrD72GhA+gc1hNMFFhGLmqXSaqZ
+	57ktYD3cumSLAxLSAwwxP1KYShZAooZ+oX+Q54hg3bJqsLKlwWd8+V93zhEpo/GXTF2h097uVF1
+	EKrOIFqFPUF5kmbJ/WCp+WGPY42CAIjz6sRChTZtsTqByyIEwE0b1QUUYRq+2zIRYre++2Nbvmb
+	mBhPiyd9leWw5pj6GsPoLIMsFD2v5Nfy9BRUlyJY+m8jaTlKxsRN3FCQic0Y2fgtjFJHot9R0F4
+	IxqVcoH8tssXfOmF9PlGId410epVG12yZDeezq4XFvdU2uNRh9IwTdgIXGWMLdo7YSxY2wFaQNW
+	fOmuHaWrBiVfE7UseusVfDYmSCoZrb09zhKIXLcCAZ6peFt1rYCWllKjgHTkXgtQxoutQwvRfzd
+	LDp5IEnziyMLNuLyzt6bNgfW5ffAXfKmrzzdS8efCTJnq0NrS83Ps4aKZ2v/r57Ogs
+X-Received: by 2002:a05:600c:3550:b0:49f:fd40:80fa with SMTP id 5b1f17b1804b1-49ffd408357mr138179665e9.34.1790675720029;
+        Tue, 29 Sep 2026 02:55:20 -0700 (PDT)
+Received: from localhost ([2001:4090:a244:8223:c4e6:4d28:61c:74bb])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a00cf2d973sm77824505e9.0.2026.09.29.02.55.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Sep 2026 02:55:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 1/6] s390/vfio-ap: Fix leaks of pinned NIB and
- registered GISC
-To: sashiko-reviews@lists.linux.dev
-Cc: Vasily Gorbik <gor@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>, kvm@vger.kernel.org,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Jason Herne <jjherne@linux.ibm.com>
-References: <20260925124551.665448-1-akrowiak@linux.ibm.com>
- <20260925124551.665448-2-akrowiak@linux.ibm.com>
- <20260925125721.5C29C1F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260925125721.5C29C1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDAzOCBTYWx0ZWRfXzYLJbo5INnVj
- syjCP568XS5CGLaeZVwpPpDW9bhfUjPTWjDJT1aDfu0U+A5rTsdnm8LqFeA8YH8RGuFsxxQF8uJ
- IUw2TCyPyYfFtUPbz4VS5qh2G9kzLxs=
-X-Authority-Analysis: v=2.4 cv=HJ5WhYtv c=1 sm=1 tr=0 ts=6abb869a cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=V9ano03wmCg1Q3s48aMA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: r-QIiHrIuGcOxYSM9Iz-Xt2-yMfqdqno
-X-Proofpoint-ORIG-GUID: r-QIiHrIuGcOxYSM9Iz-Xt2-yMfqdqno
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDAzOCBTYWx0ZWRfX3fbh/wkYx+xI
- MfQc2Hg2R34i5QaMnGvP8oq4MBJNXlDGSiWlhempwLXEAWkcIJlZHzExcKS4qxAFrq28ycnIZkQ
- 0VUjQ1iI5F8azV1SUb0BryolwkdsdrYjg4PX/AEgFeLEd4v+fJvndB0C3A0dIkLnbuQR6yCNJpR
- PHpzQGl3S0UNHfTX1Tb4AFEk+1Pf6ZSg6jqEw3pY/riUb0EX4dzqohPFtvXdSo1rf9rVqBCOI8A
- A+Fy2ySiDU32LE14gbTck9Mb5RAVeZumQRBqwSIQJYaPVXLnob7p8rZcClrXmTCon+zlG7Ycios
- mWmFkggQ71g92oAOfKSlCyIwqkO+raybHdNf1VcvFtvXlnJvF6KSXyq73o7/j3MVhhY7N1LA35J
- KLIeDHUZExZIdojK/sLt78NzwdaI/OC/OsXzi3bD0doAFXmXRCz3vYL2pqQoUvXlhHz6jX/Frfk
- xVbiACv6aYAhUoWSKKQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-29_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
- spamscore=0 impostorscore=0 phishscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609290038
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=a51f3dada9c225cfc13250421c3f01b3dbfa553491d9b870147849dc99d6;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Tue, 29 Sep 2026 11:55:11 +0200
+Message-Id: <DLRPK96Q063Q.20AXDX3LTN7R@baylibre.com>
+Subject: Re: [PATCH v9 7/9] arm64: dts: ti: k3-am62a: Split r5f memory
+ region
+From: "Markus Schneider-Pargmann" <msp@baylibre.com>
+To: "Nishanth Menon" <nm@ti.com>, <sashiko-reviews@lists.linux.dev>
+Cc: "Markus Schneider-Pargmann (TI)" <msp@baylibre.com>, <robh@kernel.org>,
+ <devicetree@vger.kernel.org>, <conor+dt@kernel.org>
+X-Mailer: aerc 0.21.0-146-gb5c16ebe1835
+References: <20260918-topic-am62a-ioddr-dt-v6-19-v9-0-40972ef1f663@baylibre.com> <20260918-topic-am62a-ioddr-dt-v6-19-v9-7-40972ef1f663@baylibre.com> <20260918094011.99AE01F000FF@smtp.kernel.org> <20260924145525.2g5ymuwsjwf5ecct@twice>
+In-Reply-To: <20260924145525.2g5ymuwsjwf5ecct@twice>
 
+--a51f3dada9c225cfc13250421c3f01b3dbfa553491d9b870147849dc99d6
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
+Hi Nishanth,
 
-On 9/25/26 8:57 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] s390/vfio-ap: wild DMA write due to unconditional NIB unpin in unmap_iova
-> --
+On Thu Sep 24, 2026 at 4:55 PM CEST, Nishanth Menon wrote:
+> On 09:40-20260918, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 3 potential iss=
+ue(s) to consider:
+>> - [High] remoteproc: ti_k3: k3_rproc_da_to_va() rejects segments spannin=
+g split memory regions
+>> - [High] arm64: dts: ti: missing bootph-pre-ram breaks SPL DM firmware l=
+oading
+>> - [Medium] arm64: dts: ti: hardcoding volatile firmware layout into Devi=
+ce Tree
+>> --
+>>=20
+>> commit 33643294863f45f1ac37617eafcfc525d230effc
+>> Author: Markus Schneider-Pargmann (TI) <msp@baylibre.com>
+>>=20
+>> arm64: dts: ti: k3-am62a: Split r5f memory region
+>>=20
+>> Split the firmware memory region in more specific parts so it is better
+>> described where to find which information. Specifically the LPM metadata
+>> region is important as bootloader software like U-Boot has to know where
+>> that data is to be able to read that data.
+>>=20
+>> > diff --git a/arch/arm64/boot/dts/ti/k3-am62a-ti-ipc-firmware.dtsi b/ar=
+ch/arm64/boot/dts/ti/k3-am62a-ti-ipc-firmware.dtsi
+>> > index 06d4e815b1670..94c1d60d8d7a1 100644
+>> > --- a/arch/arm64/boot/dts/ti/k3-am62a-ti-ipc-firmware.dtsi
+>> > +++ b/arch/arm64/boot/dts/ti/k3-am62a-ti-ipc-firmware.dtsi
+>> > @@ -65,8 +65,14 @@ &wkup_r5fss0 {
+>> >  &wkup_r5fss0_core0 {
+>> >  	mboxes =3D <&mailbox0_cluster0>, <&mbox_r5_0>;
+>> >  	memory-region =3D <&wkup_r5fss0_core0_dma_memory_region>,
+>> > -			<&wkup_r5fss0_core0_memory_region>;
+>> > -	memory-region-names =3D "dma", "firmware";
+>> > +			<&wkup_r5fss0_core0_ipc_region>,
+>> > +			<&wkup_r5fss0_core0_lpm_fs_stub_region>,
+>> > +			<&wkup_r5fss0_core0_lpm_metadata_region>,
+>> > +			<&wkup_r5fss0_core0_lpm_rest_region>,
+>> > +			<&wkup_r5fss0_core0_dm_region>;
+>>=20
+>> [Severity: High]
+>> Does this multi-region split cause a regression when loading a monolithi=
+c
+>> firmware ELF whose segments span across the new chunk boundaries?
+>>=20
+>> Looking at k3_rproc_da_to_va() in drivers/remoteproc/ti_k3_common.c, it
+>> evaluates segments against each reserved memory region individually and
+>> lacks logic to aggregate sequential chunks:
+>>=20
+>> drivers/remoteproc/ti_k3_common.c:k3_rproc_da_to_va() {
+>>     ...
+>>     if (da >=3D dev_addr && ((da + len) <=3D (dev_addr + size))) {
+>>         offset =3D da - dev_addr;
+>>         va =3D kproc->rmem[i].cpu_addr + offset;
+>>         return (__force void *)va;
+>>     }
+>>     ...
+>> }
+>>=20
+>> Will this bounds check fail and abort the boot sequence for any system u=
+sing
+>> standard firmware linked under the assumption of a single contiguous mem=
+ory
+>> block?
 >
-> commit f138c70af93258555b6e1c1c1233b5d5dc8b82da
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
 >
-> s390/vfio-ap: Fix leaks of pinned NIB and registered GISC
->
-> This commit addresses resource leaks of pinned NIB pages and registered
-> GISCs across several paths. It introduces intentional leaks for cases where
-> hardware might still be able to write to the NIB, while freeing resources
-> when queues become unavailable.
->
->> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
->> --- a/drivers/s390/crypto/vfio_ap_ops.c
->> +++ b/drivers/s390/crypto/vfio_ap_ops.c
-> [ ... ]
->> @@ -1857,8 +2006,28 @@ static void unmap_iova(struct ap_matrix_mdev *matrix_mdev, u64 iova, u64 length)
->>   	int loop_cursor;
->>   
->>   	hash_for_each(qtable->queues, loop_cursor, q, mdev_qnode) {
->> -		if (q->saved_iova >= iova && q->saved_iova < iova + length)
->> +		if (q->saved_iova >= iova && q->saved_iova < iova + length) {
->>   			vfio_ap_irq_disable(q);
->> +			/*
->> +			 * If IRQ disable failed or IR=0 could not be confirmed,
->> +			 * vfio_ap_irq_disable() intentionally leaks the NIB to
->> +			 * prevent a wild DMA write. But vfio core requires the
->> +			 * page to be unpinned before dma_unmap returns, or it
->> +			 * will BUG_ON after 10 re-notification rounds.
->> +			 *
->> +			 * Fall back to a bounded queue reset. The ZAPQ zeroizes
->> +			 * the NIB pointer in hardware, eliminating the DMA risk
->> +			 * that justified the leak. Once the worker finishes (or
->> +			 * times out with a reset confirmed in-progress), the
->> +			 * hardware no longer holds a reference to saved_iova and
->> +			 * it is safe to unpin unconditionally.
->> +			 */
->> +			if (q->saved_iova) {
->> +				vfio_ap_mdev_reset_queue(q);
->> +				flush_work(&q->reset_work);
->> +				vfio_ap_free_aqic_resources(q);
-> [Severity: High]
-> Does this unconditional call to vfio_ap_free_aqic_resources() risk allowing
-> a wild DMA write into host memory?
->
-> If vfio_ap_mdev_reset_queue() encounters a hardware fault and TAPQ returns
-> an invalid response code, it intentionally leaves the NIB pinned. The
-> comment in vfio_ap_mdev_reset_queue() notes:
->
-> "An invalid response code indicates a hardware or firmware bug. Since we
-> cannot determine whether the queue can still DMA-write to the NIB, the AQIC
-> resources are intentionally leaked lest the NIB page is reallocated to a new
-> owner."
->
-> However, calling vfio_ap_free_aqic_resources() in unmap_iova() forces the
-> NIB page to be unpinned regardless of the reset result. If the ZAPQ failed
-> to zeroize the NIB, unpinning it here overrides the intentional safety leak
-> and could expose the host to memory corruption.
+> Do we need to protect with something on the lines of
+> https://lore.kernel.org/all/20260921145325.300025-3-richard.genoud@bootli=
+n.com/
 
-vfio_ap_reset_queue() along with the apq_reset_check() work queue function
-frees the AQIC resources only if reset completion is verified; so, the
-freeing of resources should be delegated to vfio_ap_reset_queue()
-and not unconditionally.
+No, we don't need to protect this here. The devicetree nodes changed
+here are only ever loaded with firmware in the bootloader. A monolithic
+firmware ELF is never loaded in Linux because the driver code in
+k3_r5_rproc_configure_mode() detects that it is already running and puts
+it in RPROC_DETACHED for these cores.
+
+> Could you please add in diffstat any comments if the sashiko reviews
+> are'nt accurate from previous feedback?
+
+Sure, will do that in the future. Does sashiko pick these up then?
 
 >
->> +			}
->> +		}
->>   	}
->>   }
+>>=20
+>> > +	memory-region-names =3D "dma", "ipc", "lpm-stub",
+>> > +			      "lpm-metadata", "lpm-context",
+>> > +			      "dm-firmware";
+>>=20
+>> [ ... ]
+>>=20
+>> > diff --git a/arch/arm64/boot/dts/ti/k3-am62d2-evm.dts b/arch/arm64/boo=
+t/dts/ti/k3-am62d2-evm.dts
+>> > index a8c794d073431..7cba3ff99e6a3 100644
+>> > --- a/arch/arm64/boot/dts/ti/k3-am62d2-evm.dts
+>> > +++ b/arch/arm64/boot/dts/ti/k3-am62d2-evm.dts
+>> > @@ -65,13 +65,37 @@ wkup_r5fss0_core0_dma_memory_region: memory@9c8000=
+00 {
+>> [ ... ]
+>> > +		wkup_r5fss0_core0_lpm_fs_stub_region: memory@9ca00000 {
+>> > +			compatible =3D "shared-dma-pool";
+>> > +			reg =3D <0x00 0x9ca00000 0x00 0x8000>;
+>> > +			no-map;
+>> > +		};
+>>=20
+>> [Severity: Medium]
+>> Does this create a regression by hardcoding a software-defined volatile
+>> firmware layout directly into the Device Tree?
+>>=20
+>> If a subsequent firmware build increases the size of lpm_fs_stub beyond =
+the
+>> 32KB hardcoded here, will this crash or require a lockstep DT update to
+>> function properly?
+>>=20
+>> > +
+>> > +		wkup_r5fss0_core0_lpm_metadata_region: memory@9ca08000 {
+>> > +			compatible =3D "shared-dma-pool";
+>> > +			reg =3D <0x00 0x9ca08000 0x00 0x1000>;
+>> >  			no-map;
+>> >  			bootph-pre-ram;
+>> >  		};
+>> > =20
+>> > +		wkup_r5fss0_core0_lpm_rest_region: memory@9ca09000 {
+>> > +			compatible =3D "shared-dma-pool";
+>> > +			reg =3D <0x00 0x9ca09000 0x00 0x97000>;
+>> > +			no-map;
+>> > +		};
+>> > +
+>> > +		wkup_r5fss0_core0_dm_region: memory@9caa0000 {
+>> > +			compatible =3D "shared-dma-pool";
+>> > +			reg =3D <0x00 0x9caa0000 0x00 0x1c60000>;
+>> > +			no-map;
+>> > +		};
+>>=20
+>> [Severity: High]
+>> Does the omission of the bootph-pre-ram tag on this new DM region create=
+ a
+>> regression for SPL DM firmware loading?
+>>=20
+>> Since U-Boot fdtgrep processes the SPL DTB by keeping only nodes tagged
+>> with bootph-pre-ram, these split regions will be stripped.
+>>=20
+>> Will this result in the no-map protections being lost, causing U-Boot's
+>> remoteproc driver to error out parsing dangling phandles when attempting
+>> to load the Device Manager (DM) firmware?
+>
+> Is'nt this valid? why would we let R5 SPL or U-boot SPL think it has
+> memory access? Adding a comment is probably worth in the code.
 
+These bootph-pre-ram properties did not exist before this patch for
+nearly all memory regions. R5 SPL or SPL u-boot does not care about
+these memory regions. It is all configured through Kconfig options or
+binman. Only the upcoming IO+DDR resume code cares about just a specific
+region. I personally would prefer to keep the DT as small as possible
+for SPL.
+
+Best
+Markus
+
+--a51f3dada9c225cfc13250421c3f01b3dbfa553491d9b870147849dc99d6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iKMEABYKAEsWIQSJYVVm/x+5xmOiprOFwVZpkBVKUwUCaruK/xsUgAAAAAAEAA5t
+YW51MiwyLjUrMS4xMiwyLDIRHG1zcEBiYXlsaWJyZS5jb20ACgkQhcFWaZAVSlPs
+KwD+J2JQBCaUypBZe46jJO6/EE5+ULM609YmlMKERfB0TWUA/0xrll/BHTIAPhpr
+dU3ZW9kGp9DMDVu0bFD91Jzuo8YD
+=0LaM
+-----END PGP SIGNATURE-----
+
+--a51f3dada9c225cfc13250421c3f01b3dbfa553491d9b870147849dc99d6--
