@@ -1,294 +1,211 @@
-Received: from mail-yx2-f13.google.com (mail-yx2-f13.google.com [74.125.224.141])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085A237F8BD
-	for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 23:46:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4723F340A7F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 00:18:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790639182; cv=none; b=ZiQxxPLW0ecWMeqLeR+IrK5zjQz9vQ15oS9WJVJeCOHvK0avN2E/Do3kW4T6gvnzZfokOGtJLHMFI/tBrsXG/JszDNQTiGakJmMl8065ZbNMX2nuJ3zROGCwkfd9Uwsjh4IhOY6k96rv/iuzBDDnrCrqKbFDC28obbDsZFXK/VU=
+	t=1790641141; cv=none; b=V6HNx+42QxUTTlVke9hTMoAxF/hvOYrZsvTHMVIynQEwysDE6GD2pVe3maCtQ1UgAb7oY4rHodkqhjpfd/0A9ZM98pxF5O7IRiTzj12icrJMHH450VxfpNTsOOoUeSfYz3Lg8xk1feLTEUTDOenjvJScLGSHePh1HFsvHuxF5jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790639182; c=relaxed/simple;
-	bh=8OHbbiZkLx94md3sQMK00u04gK5Y5O5bMMixwGDd1tg=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D6ZqmttK82DTESGynl2OXknRzTskigGfY1Ubcqo8+NMhHnt+KcbzFS9edpEf06/jCDHlTnxwJ4rAubK497+zykTZevMGAUko5zOHGzak3yz2XEw+Q15JDrkYbPnWleybFPfhZyR9qCvQDlTfR6KNJ3+Lus9QBsDNh8Zf6Y7csac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RXY33aN/; arc=none smtp.client-ip=74.125.224.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790641141; c=relaxed/simple;
+	bh=IZmvuJ/cB2Ukwi0Ed0PQxNxoWM3wlUYZa4MwiOaqkw8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PelIOJ99StRjI/SCINrbM03ssET/YFHQdq+oeCCcpdFnre34nSOwkhETP/1TlqRrJ/Ee/bs8jX1Uwg56sKVBCaQazWBdzXl1yYT59Zzu2w2P6La+Vhy6csrvYnaTdVbj5zceLhAc5JdDHKRuCRSSB/DfTNEyqtKkgUncOMua1JQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=b+IELGtn; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Tvu7wUXP; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=0uDpQJ/L; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=8Rjx6FdF; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RXY33aN/"
-Received: by mail-yx2-f13.google.com with SMTP id 956f58d0204a3-66fb93aee5eso3848027d50.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 28 Sep 2026 16:46:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790639180; x=1791243980; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:date:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=oYlEo7yXk7/pIBZiHMkUiSaKnUE72TG2PrHzVkxWnFw=;
-        b=RXY33aN/NsZrIWDCU4OagBx0W8rBDccdPMCqtcMw3/0xL3FmMrM/JQ6hFfGVGDq8A6
-         gtANHchRZBPKrAcifBJoRi7UnkJJmxAmax/GLv61YoxxR72E+8fiuhANvmrRoGplOuDp
-         RXhu1PoDAib1UyTE7oJs89HxKY1z4zEKfj4Ditv89uXaqBnlsZIeHuiSGvDUaJFvUh6L
-         N2gUCdYP4hMzuX+oDbHrLO82mTTkBrpP/oeSlO/C0y7LpaOADQicuUxHj0zqGLgswn8m
-         ZruNKJrDk2CwS/XBVjJsjXxoHTRrxAG4XW7+mI1seAB1nO9gAKJGDTWOHVGl/kwrirGq
-         p5mQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790639180; x=1791243980;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=oYlEo7yXk7/pIBZiHMkUiSaKnUE72TG2PrHzVkxWnFw=;
-        b=l6wHTFukkat137GrUmWVmYEyWSqR77J1ejRvxF8zR0wOpJ68GhTeKXZmwbwW3Je4Xk
-         SycQNhN8xGkDBP2DhnWdgrax4aYRDSU1NKCfObbtiBv3J9Z4vdde3jHDflyuAWKjNUTN
-         lhgA4pyvKTwkT+3dJhLWGiSZMMjIh/6uvehV6n+Ybd0zrKhV3LbI8C9j08VGJsrOpDF/
-         SdP7ucEI1zVvX1wvEWHlsVF5/WHYS5f68LD52sjDsvQlY4GGQR485j0nlc+zp8/Wjjur
-         AjwYSR6KRzOZnO+Ee7h7dUGPwxW+ZZNwqomOiYNkSsZHxSkBFEqdnNSCTqHk9N977V9H
-         WHpA==
-X-Forwarded-Encrypted: i=1; AKwUvByaqSRADfN+NPJ6VRVC5A5kDoN4JKOTkisMOKZqAgj7mU7oLv0G6HsIg/iYArhs70sUf98n4LFPHPJkwE9klq8=@lists.linux.dev
-X-Gm-Message-State: AFq9FYLjsVOgpLfMejlGh8PNCikV7sxuDGHiTxB96CnQYGVx7nCxX0m8
-	o0CnGSd+jZ+zcsmcHZq0OCuedpDrINMw13zZi+RJHdyroU0Ed7C2OAM8
-X-Gm-Gg: AYBFou0zy8LGRpprI5Ojx0NVESQeWuMXvaXk9pBTJChGZLoFC7OQUlDZacmIKoEJF3s
-	XSDDcQobXQOCkl+0PadNPu0XqJ9YRN3OaqmaRGl5Ajn/LIJjOfFEreX5/aizrlPLf8CcF1ZdcEH
-	1tLXeQdMhl7makpcz+cEuR56Ao4wGPnTdqxTnNsiGjIZRCpa72R8URSu0e/EJ0zkG/Tzr2zsq7d
-	+L/GGqq8c5poMyOlamBJMIODrGvpvHJwnidw1wToCpcdndCr+YQ/AvXxlVjJz6QTAnnDgvZejyg
-	umQ0/1o1dfJTeKgfvn4nHz9ooOIbEEBbVQTeL2h/hTMATU6aSZSTCEOWWeZ+0FbTgpTTqu3JMhq
-	417iH0iwDbkeQK0VmFOGwTusKKz5//HHt/eC0cUpjJyR5D6erOQ4T4VQxtU1B/Jtx8VfmZgKhuV
-	z9PyYI+SGoXkgdBQcolsJpPqoqs63qTyftraqnFMHiWk17NRHmVTmxLNEWchrclLCArim4gaqBy
-	b54YcjwGXfbVkaUslFsDb5GbDGgiPp4xyr1NHXVs3g0os4nYDvXauMW7sXA
-X-Received: by 2002:a05:690e:e8b:b0:674:1336:7d5b with SMTP id 956f58d0204a3-67413368232mr3568896d50.52.1790639179917;
-        Mon, 28 Sep 2026 16:46:19 -0700 (PDT)
-Received: from 4470NRD-ASU.ssi.samsung.com ([50.205.20.42])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6740ef7de00sm5414705d50.15.2026.09.28.16.46.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Sep 2026 16:46:19 -0700 (PDT)
-From: Anisa Su <anisa.su887@gmail.com>
-X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
-Date: Mon, 28 Sep 2026 16:46:17 -0700
-To: Jonathan Cameron <jic23@kernel.org>
-Cc: Anisa Su <anisa.su887@gmail.com>, sashiko-bot@kernel.org,
-	sashiko-reviews@lists.linux.dev, nvdimm@lists.linux.dev,
-	linux-cxl@vger.kernel.org
-Subject: Re: [PATCH v12 3/8] cxl/cdat: Gather DSMAS data for DCD partitions
-Message-ID: <arr8ScmcSiuq8RIH@4470NRD-ASU.ssi.samsung.com>
-References: <20260731084901.1512819-1-anisa.su@samsung.com>
- <20260731084901.1512819-4-anisa.su@samsung.com>
- <20260731090250.0C8DE1F000E9@smtp.kernel.org>
- <20260804010748.7f9f8174@jic23-huawei>
- <anL0mD3DKfwJh4UY@AnisaLaptop.localdomain>
- <20260922003402.5134db4a@jic23-hlaptop>
- <arSnRvG0VGSMHSBM@4470NRD-ASU.ssi.samsung.com>
- <20260925201932.292f1451@jic23-hlaptop>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="b+IELGtn";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Tvu7wUXP";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="0uDpQJ/L";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="8Rjx6FdF"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 561281F793;
+	Tue, 29 Sep 2026 00:18:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1790641132; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=OY7PKLcapT3BnjwNrptJ242k7jAeI/f1YFmK8jfY0yA=;
+	b=b+IELGtnIxJo6nUI6hmcfC2prMx9b8iGYeuP9OQRE4awMysy9RVZSS7LH/O69mNDmJifjC
+	c7Hqx6zIqMKnnhGFvjFAO4dvrgOdkzaR+7qnoERZCmtOe/F7lxw64+h8OQLEGyhULp1HsD
+	9QgN9V3fnDTYBIKS6pEll26eDWZUxqQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1790641132;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=OY7PKLcapT3BnjwNrptJ242k7jAeI/f1YFmK8jfY0yA=;
+	b=Tvu7wUXP4mg+wQCG/wSu0IX/XWo9s5hosLUxQ1m2s/YASMW4ReIRk1fSWcbbkS0z84J0Pm
+	k9prq+SMVBsfujAg==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b="0uDpQJ/L";
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=8Rjx6FdF
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1790641128; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=OY7PKLcapT3BnjwNrptJ242k7jAeI/f1YFmK8jfY0yA=;
+	b=0uDpQJ/L2giZ19Rr669DiITiXuqRDT4NxGWzsqdI9WcF3uQHi/WcA1j4qH+i+2UHM4je7i
+	dgisAhPKv9qPAnPr+FOVREJ1DlpFfyaSbiwMi1kMOO9RUUG3nBJ3ZOrMu4aiv/AEAyfCiT
+	hUBtTzIy7tcFZS89rCdK8cKxgIhkMMs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1790641128;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=OY7PKLcapT3BnjwNrptJ242k7jAeI/f1YFmK8jfY0yA=;
+	b=8Rjx6FdFvtQXxMyYMsnDpATA8kPOuA7PYOh0eC+3zLIAeAyG9GW6VRJhUFQHAO9jG9njVG
+	t/uG3KQO+BE1HjAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id ECFBE133F1;
+	Tue, 29 Sep 2026 00:18:47 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id TuLPK+cDu2rGWgAAD6G6ig
+	(envelope-from <krisman@suse.de>); Tue, 29 Sep 2026 00:18:47 +0000
+From: Gabriel Krisman Bertazi <krisman@suse.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: tytso@mit.edu, linux-ext4@vger.kernel.org
+Subject: Re: [PATCH 2/4] ext4: Expose the filesystem encoding through sysfs
+In-Reply-To: <20260928214542.2DFDC1F000FF@smtp.kernel.org>
+Organization: SUSE
+References: <20260928213155.2612039-1-krisman@suse.de>
+ <20260928213155.2612039-3-krisman@suse.de>
+ <20260928214542.2DFDC1F000FF@smtp.kernel.org>
+Date: Mon, 28 Sep 2026 20:18:46 -0400
+Message-ID: <87se2syknt.fsf@mailhost.krisman.be>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260925201932.292f1451@jic23-hlaptop>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Score: -4.51
+X-Rspamd-Queue-Id: 561281F793
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spam-Level: 
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	ARC_NA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	HAS_ORG_HEADER(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email];
+	RCPT_COUNT_THREE(0.00)[3];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	TO_DN_NONE(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Spam-Flag: NO
 
-On Fri, Sep 25, 2026 at 08:19:32PM +0100, Jonathan Cameron wrote:
-> On Wed, 23 Sep 2026 21:29:58 -0700
-> Anisa Su <anisa.su887@gmail.com> wrote:
-> 
-> > On Tue, Sep 22, 2026 at 12:34:02AM +0100, Jonathan Cameron wrote:
-> > > On Wed, 5 Aug 2026 01:30:16 -0700
-> > > Anisa Su <anisa.su887@gmail.com> wrote:
-> > >   
-> > > > On Tue, Aug 04, 2026 at 01:07:48AM +0100, Jonathan Cameron wrote:  
-> > > > > On Fri, 31 Jul 2026 09:02:49 +0000
-> > > > > sashiko-bot@kernel.org wrote:
-> > > > >     
-> > > > > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > > > > > - [Medium] The commit message claims to extract and store the 'read only' attribute from DSMAS tables, but this logic is completely missing from the code.    
-> > > > > 
-> > > > > Given it will make a lot of difference to a user if they think they have writeable
-> > > > > memory that isn't - I think we probably do want to have readonly here.
-> > > > >     
-> > > > I did some digging: it seems in v8, the read only flag was gathered and
-> > > > exposed in sysfs, but dropped during the region -> partition rework.
-> > > > 
-> > > > v8 of this commit used to do:
-> > > >     dent->read_only = dsmas->flags & ACPI_CDAT_DSMAS_READ_ONLY;
-> > > >     ...
-> > > >     mds->dc_region[i].read_only = dent->read_only;
-> > > > 
-> > > >     https://lore.kernel.org/all/20241210-dcd-type2-upstream-v8-6-812852504400@intel.com/
-> > > > 
-> > > > and a following patch exposed it, with a documented ABI:
-> > > > 
-> > > >   https://lore.kernel.org/all/20241210-dcd-type2-upstream-v8-7-812852504400@intel.com/
-> > > > 
-> > > >     /sys/bus/cxl/devices/memX/dcY/size
-> > > >     /sys/bus/cxl/devices/memX/dcY/read_only
-> > > >     /sys/bus/cxl/devices/memX/dcY/shareable
-> > > >     /sys/bus/cxl/devices/memX/dcY/qos_class
-> > > > 
-> > > > In v9 dynamic capacity moved from its own dc_region[] array and dcY/
-> > > > sysfs directory to the generic partition model:
-> > > > 
-> > > >   https://lore.kernel.org/all/20250413-dcd-type2-upstream-v9-3-1d4911a0b365@intel.com/
-> > > > 
-> > > > size and qos_class survived that move because ram and pmem already have
-> > > > them. read_only and shareable did not, because the generic partition
-> > > > model had nowhere to put attributes that only dynamic capacity has, but
-> > > > the commit message survived the rework.
-> > > > 
-> > > > More specifically, read_only was dropped from both the sysfs commit and
-> > > > this commit. shareable was dropped only from the sysfs commit, but still
-> > > > read from the DSMAS entry in v9 of this commit. Not sure why though; I
-> > > > didn't see any consumers of the attribute. Oh well... We use it now
-> > > > since shared extents are supported to check if an extent marked shared
-> > > > is actually in a shared partition.
-> > > > 
-> > > > So TLDR; I've removed the "read only" part from the commit message. But
-> > > > let me know if you think it should be re-introduced?
-> > > > 
-> > > > I agree with what you said about it being important for a user to know
-> > > > whether a partition is read only. Some things to consider:
-> > > > 
-> > > > - The partition model has no precedent for a DC only attribute.
-> > > >   dynamic_ram_1/ currently exposes size and qos_class, the same two that
-> > > >   ram/ and pmem/ expose. Adding read_only there would be the first
-> > > >   attribute that exists for one partition mode and not the others.
-> > > > 
-> > > > - shareable is in exactly the same position. It is gathered and used
-> > > >   internally but not exposed anywhere, so if we are adding one of these
-> > > >   back we should probably decide about both.  
-> > > 
-> > > I vaguely recall the discussion on this ending up with we'd call the
-> > > partition something different to reflect the extra property.  
-> > > 
-> > > dynamic_readonly_1 / dynamic_sharedram_1 maybe?  Argument being
-> > > that these properties are as different from normal RAM as persistent
-> > > memory is.
-> > >   
-> > Yeah I think we discussed making it its own partition mode but I don't think there
-> > was a strong consensus, just that we agreed it should be exposed somewhere,
-> > somehow...
-> > 
-> > I am leaning towards just putting it under dynamic_ram_1 even though
-> > these attributes would only exist for dynamic_ram mode:
-> > 
-> > /sys/bus/cxl/devices/memX/dynamic_ram_1/shareable
-> > /sys/bus/cxl/devices/memX/dynamic_ram_1/read_only
-> > 
-> > Mainly because if we go up to 8 partitions, we would have
-> > (dynamic_ram, dynamic_shared, dynamic_readonly, dynamic_shared_readonly) * 8.
-> > And NDCTL would have to know how to handle creating each type.
-> > 
-> > I also don't see anything in the code that makes it terrible:
-> > - each partition mode has its own attribute array and visibility callback
-> >   function, so it doesn't affect ram/pmem modes
-> > 
-> > I brought it up because I wasn't sure if there was a specific reason why
-> > shareable and read_only weren't carried over after the partition
-> > rework. From a code standpoint, it seems fine to me?
-> > I assumed it was so all partitions would share common sub-attributes
-> > but I guess I shouldn't have assumed...
-> 
-> I think this needs another discussion. I agree there were differences
-> of opinion but thought we'd ended up with the different names rather
-> than attributes for each one.
-> 
-I might have misremembered. Let me ask for some eyes on this.
+sashiko-bot@kernel.org writes:
 
-Here's my case for adding shareable and read_only as a sub-attribute:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] ext4: NULL pointer deref in encoding_show() via dynamic casefold
+> --
+>
+> commit c325498f77eea14582e06218baa713f49fde001a
+> Author: Gabriel Krisman Bertazi <krisman@suse.de>
+>
+> ext4: Expose the filesystem encoding through sysfs
+>
+> This commit introduces new sysfs attributes in ext4 to display the active
+> filesystem encoding and encoding flags. This provides users with a direct
+> interface to check casefold support without relying on dmesg parsing.
+>
+>> diff --git a/fs/ext4/sysfs.c b/fs/ext4/sysfs.c
+>> index 923b375e017fa..bc1c59d67eed8 100644
+>> --- a/fs/ext4/sysfs.c
+>> +++ b/fs/ext4/sysfs.c
+> [ ... ]
+>> @@ -161,6 +163,25 @@ static ssize_t err_report_sec_store(struct ext4_sb_=
+info *sbi,
+>>  	return count;
+>>  }
+>>=20=20
+>> +static ssize_t encoding_show(struct ext4_sb_info *sbi, char *buf)
+>> +{
+>> +#if IS_ENABLED(CONFIG_UNICODE)
+>> +	struct super_block *sb =3D sbi->s_sb;
+>> +
+>> +	if (ext4_has_feature_casefold(sb))
+>> +		return sysfs_emit(buf, "UTF-8 (%d.%d.%d)\n",
+>> +				  unicode_major(sb->s_encoding->version),
+>> +				  unicode_minor(sb->s_encoding->version),
+>> +				  unicode_rev(sb->s_encoding->version));
+>
+> [Severity: High]
+> Does this introduce a regression where reading the sysfs attribute causes=
+ a
+> NULL pointer dereference if casefold is enabled dynamically?
+>
+> If a privileged user dynamically enables EXT4_FEATURE_INCOMPAT_CASEFOLD on
+> an online filesystem via the EXT4_IOC_SET_TUNE_SB_PARAM ioctl, it updates
+> the in-memory on-disk superblock representation but does not load the
+> unicode map into the VFS superblock:
+>
+> fs/ext4/ioctl.c:ext4_ioctl_set_tune_sb() {
+>     ...
+>     if ((params.set_feature_incompat_mask &
+>          EXT4_FEATURE_INCOMPAT_CASEFOLD)) {
+>         enabling_casefold =3D 1;
+>     ...
+> }
+>
+> In this state, ext4_has_feature_casefold(sb) evaluates to true, but
+> sb->s_encoding remains NULL. If the sysfs attribute is read,
+> encoding_show() will unconditionally dereference sb->s_encoding->version,
+> resulting in a system crash.
 
-Shareable and read-only are independent bits, and a DC region can be
-both, so we have 4 possibilities: dynamic_ram, dynamic_shared, dynamic_readonly, dynamic_shared_readonly.
-Every consumer of the mode string grows with it: the memdev group
-names, the decoder mode store, the mode-name helper in hdm.c, the
-region mode description, cxl_test, QEMU and ndctl. If a third
-property comes up later (but probably not?), it would double again.
+Uh...
 
-What it would look like for new modes:
+If we flip EXT4_FEATURE_INCOMPAT_CASEFOLD without loading the casefold
+table, I'm surprised the current code doesn't blow up already.  I
+completely missed the introduction of EXT4_IOC_SET_TUNE_SB_PARAM, so I'm
+missing context if there is a use case to actually do an online flip of
+feat_casefold.  It seems the ioctl actually can set this bit, but I
+don't see any provision to load the table.  I'm a bit confused now.  I
+can work around it for /sys/fs, but is anyone actually enabling casefold
+without a remount?
 
-enum cxl_partition_mode {
- 	CXL_PARTMODE_RAM,
- 	CXL_PARTMODE_PMEM,
- 	CXL_PARTMODE_DYNAMIC_RAM_1,
-+	CXL_PARTMODE_DYNAMIC_SHARED_1,
-+	CXL_PARTMODE_DYNAMIC_READONLY_1,
-+	CXL_PARTMODE_DYNAMIC_SHARED_READONLY_1,
- };
- 
-+static inline bool cxl_partmode_is_dc(enum cxl_partition_mode mode)
-+{
-+	return mode >= CXL_PARTMODE_DYNAMIC_RAM_1;
-+}
+>
+>> +#endif
+>> +	return sysfs_emit(buf, "(none)\n");
+>> +}
+>> +
+> [ ... ]
+>
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260928213155.26=
+12039-1-krisman@suse.de?part=3D2
 
-static const char *cxl_mode_name(enum cxl_partition_mode mode)
- 		return "pmem";
- 	case CXL_PARTMODE_DYNAMIC_RAM_1:
- 		return "dynamic_ram_1";
-+	case CXL_PARTMODE_DYNAMIC_SHARED_1:
-+		return "dynamic_shared_1";
-+	case CXL_PARTMODE_DYNAMIC_READONLY_1:
-+		return "dynamic_readonly_1";
-+	case CXL_PARTMODE_DYNAMIC_SHARED_READONLY_1:
-+		return "dynamic_shared_readonly_1";
- 	default:
- 		return "";
-
-If support for partitions 2-8 is added later, this multiplies by 8.
-
-NDCTL would also need to support 4 modes of region creation:
-
-cxl create-region ... -t dynamic_ram_1/dynamic_shared_1/dynamic_readonly_1/dynamic_shared_readonly_1
-
-Counter argument:
-Shareable and read_only are different enough from "regular" DC that
-they should be their own modes. Since PMEM isn't expressed as a adding
-a "persistent" attribute under ram/, the same should apply for shareable
-and read_only. Especially since pmem can't be onlined as system RAM
-through the normal path, the logic should also apply to
-shareable and r_o.
-
-If we prefer separate partition modes, I can do that, but we gotta decide
-now because partition setup is in the prep series.
-
-> > 
-> > > > 
-> > > > - I don't think the DSMAS Flags bit 6 (read only) is specific to DCD?  
-> > > 
-> > > In theory yes, in practice there isn't a path for non DCD to actually
-> > > get the data in place and transtion to read only so maybe an expensive
-> > > source of zeros?  So yes allowed but not much use to anyone so we
-> > > won't see it.  
-> > >   
-> > Mmm very true. You might just clarifying this point here but just to make
-> > sure we're on the same page: I dropped the R_O part of the series and deferred
-> > it for the future because it includes implementing write rejection for
-> > r_o partitions which IMO can be done after the core functionality is in.
-> 
-> Why do we need to reject writes?  The device just drops them. Maybe
-> it is a nice to have to prevent the mapping path setting up writeable mappings
-> and so fault earlier but I'm not sure it is necessary.
-> 
-I see. I thought it would be better to do it since the dropped write
-is silent?
-
-CXL r4.0 Section 9.13.3 "If the host issues a write to any DPA in a
-read-only DC Region, the device shall drop the write and send an NDR
-(see Section 3.3.9) as a response". I assume the rc is an ordinary Cmp,
-which is returned for "completions for writebacks, reads and
-invalidates" (Section 3.3.9 Table 3-50).
-
-So any user that that maps the dax device writable thinks its stores
-landed which seems not very good.
-
-Anisa
-
-> > 
-> > Thanks,
-> > Anisa
-> > > >   It describes any device scoped memory range, so a read only ram or pmem
-> > > >   partition is expressible in CDAT today and the driver ignores it.
-> > > >   Maybe it should be exposed in sysfs for every partition
-> > > >   rather than only on dynamic_ram_1? Which probably makes it a generic CDAT/partition
-> > > >   patch rather than something for this series.
-> > > >   
-> > > Jonathan
-> > >   
-> 
+--=20
+Gabriel Krisman Bertazi
