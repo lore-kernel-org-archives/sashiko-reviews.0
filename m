@@ -1,162 +1,118 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f37.google.com (mail-pz2-f37.google.com [74.125.228.37])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3A93D7D94;
-	Tue, 29 Sep 2026 15:33:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD78B51E42F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 16:27:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790696008; cv=none; b=pQWUF9/mRfdGrhS12wCGrTJurtBNEre401j/gP8l/NO+qddphUKhAfMnSZrLAHpL5ykFunaEQnmjB4l3pyI77U2fQNEp+ksXT44MXge3NAywQncHLP8CVzGDvJlQ19cTZirFx31MKS47/IgdowC+Pz/wS26rzbbXWo5ErTlxKjs=
+	t=1790699260; cv=none; b=PQcrRW+Z7CGa/nPhPLeL+CVPU0xr6ICvazgp98KnMmrm/f5lBOCCksrZ7463hvRg2O4Iz7k7bCxfUhW/c/3DQrJyz+d5nAWGQ5q/y7XWdEaYO6zXbhwRB7+36QTQQpUZIyfZCeAGwDmJkohqTQOnAXZom59IfNwCby1Rwd6WMnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790696008; c=relaxed/simple;
-	bh=cigZ80+8+q+9BMKi9FwSNiC3z3eLiNZDSw6eUBsoWTY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mzTBWVsLTTLToVKqjtOcoa7l9wxYlDl69f/ZU7+XpygDpjDyxCzUfHhEiXA/0Kc6SxRSlL/jW91XUhr5fsQKrdksVl0h/ntumUvtEHrtECFkTeOoOr5qIhgYEaYP/TiZoOjHbTgJ3Qpx+eMgFJ3x6g6W1KnV+nb/rQ44ZvSVNxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=c1izC6k1; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1790699260; c=relaxed/simple;
+	bh=PMX1p5KQ1LljzZN0fjjRX/ggRrs5b9HbaoJ5+VgHJlw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=oBRB26g18eTPgxhekuHDtPNB2mxBEEUCnyek/yR0Beo7hQtpGsDatSyo5wLyRU2nfqVILqs6k91KeqjjglaL6d+cLqPqMxXac0GLPJPQfS/IpFczRZ8Zr9FT4EXfdsVygXNlbbViOxrm7airq9GFXVWESgPO43GNnOL+HSCrjOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o79O4+GM; arc=none smtp.client-ip=74.125.228.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="c1izC6k1"
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68TB5d9t4017642;
-	Tue, 29 Sep 2026 15:33:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=5AclAy
-	en8c5KNNg7Ubb6G80Gn1XHE6FWHqe/kKE9Wzs=; b=c1izC6k1g/QqfdxHhqQ580
-	fHTT5mkZAOP15+0nK5MdZ4RnIAWdna8fDguRra/Dcqf4UAd+L0eexInAZypRSXS5
-	txhi3pf50zGSWfue9nUzie2yiC5HSsp0lCaw5cbcZNV9k3dr8prHJHarog+8M9ab
-	r+SGWaQIDfxSaV9a9rDjDEhSLkQy35Mlwqt66a0i6sseaDLceAaAzqHqWlixg+0B
-	h5lqollpYn/BAi/bjVgL+oXdPZuzyht+HgQQAAHwoaL5qZL/1gJZxhreB3jsABdZ
-	tDS3ZwLGGBHXmlbq1UfayPicbvlV7DeGY0eSy0Flymc2egxzrzdJ3AlPkcAdl5Kw
-	==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5pt72wc-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Tue, 29 Sep 2026 15:33:24 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68TF1xYP1657703;
-	Tue, 29 Sep 2026 15:33:23 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gxrcptgfd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Sep 2026 15:33:23 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com [10.39.53.231])
-	by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68TFXN5Y22807072
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 29 Sep 2026 15:33:23 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 435EE58056;
-	Tue, 29 Sep 2026 15:33:23 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id BBE835805E;
-	Tue, 29 Sep 2026 15:33:22 +0000 (GMT)
-Received: from [9.61.145.13] (unknown [9.61.145.13])
-	by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 29 Sep 2026 15:33:22 +0000 (GMT)
-Message-ID: <2c024860-4799-4410-ac57-f67a434cb5ee@linux.ibm.com>
-Date: Tue, 29 Sep 2026 08:33:21 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o79O4+GM"
+Received: by mail-pz2-f37.google.com with SMTP id 41be03b00d2f7-cc7cadbe09dso310317a12.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 09:27:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790699258; x=1791304058; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=PMX1p5KQ1LljzZN0fjjRX/ggRrs5b9HbaoJ5+VgHJlw=;
+        b=o79O4+GMoItIhdzptLylNyr8hWei8uLI9QDad0X14DTMw/OPc3LbVJ8/k9piXr2lN3
+         15pUvZSFzUHurxaEcN7H39InNAxm1H/ybftMkzrp19APGu5tokWfQn+zZDxfqLa3RD5f
+         mb876p/vcqNHFg0fameabJp0DiFdB0Ad3+fnO6EWo1uhdJnAaB/NRGMOenE476fr/w6T
+         joPmoc/vvWFYkvUWXIdiQQzT6hMtTlfsSYgHRV4NK9HEU+7omL4bVuLA2FH033IWCiES
+         u7L8XcoVDFTecJl1MdyBplKRpaVVzkxsH+6FvqyPFDRkmLZel1qSZmD3+bjV7mrXDklQ
+         +9IA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790699258; x=1791304058;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=PMX1p5KQ1LljzZN0fjjRX/ggRrs5b9HbaoJ5+VgHJlw=;
+        b=AaSglmRtwyIMWdbKnUgha0WnhYZDzGpLf6NXu0V3fe2CVEFcLIQ3bz1v2j0c0Pc6BO
+         vu8cG/EuQnHtiaB0ARZ1bYqN1z/8HVYqgzrNl9Qy3eqSuEZp4t2Gra8x3zHGLwXmqHtR
+         tHAavXZLjl8RSkq/7j7q7x2oChjMEVlglkww9GTRAq9nx8USlRWzJWIkGxwa1iQt/BW2
+         8zVYrX/0cDAwvISYVXfnBF+Ox2yowAw+yXRLR8GVN9l8obXKFQ5Zxxph+PkU0TWHiJS4
+         DZGbv972o9RHAGeUI69GA/IIGHVsTwjO5WbFt80CepK1CWtw1k6NIP273e5jviR3PEVI
+         WCKg==
+X-Gm-Message-State: AFq9FYIm2fc84CL+0r++ppVEUtcPEFG84tmywZkNLwKppoP7UA1SeKu2
+	gUaqNLm+hvhMriG3YQ2L8NC9IEfteMoRSdfOgwEjwLLtFxNkcSwzRBgcmIIDpIG6cGTO0Q==
+X-Gm-Gg: AYBFou0A2EjkjooV5zfgM6VPht7wd4o5SlJPGsx9EFKFudOHDQ8S7xDPH9x7xPFT8yL
+	C0gfq2araEZoie92usB2j1zIL8wqMnxLGy0SCfS9ZvsIoUeJbxM1D7rQxkN5sN5i5MJrGXy3el2
+	WQzSoSBg5C14jyyM6gSH+itnlBzFORWanqLf8TThGpjf0JRjZ7SPKtl3rCrgXTqrw9Lu1e2HriB
+	SVZB9LJlKQ9k9tfRlqq5mmvL5rBdmUSgOd9JwUkIurUdcuvbxcq9lxuLzxrY2boTqwznIgwP5EV
+	NoHSJM1s9HeyLKGLRrFSyhd9IhrF0CZgZgI49JKbU+kzPk5FxC/O+DVOTScU8h3yqtDBzjr88Cq
+	hSyet80W82bTIMzma+qUOHIP5eFwKJGRunlnSuLo0sBs2haYlC1DZMhy/W2MShFBTGF0144HEAc
+	yo3PMxtmTX88/G69tdpYRUC0rGSo8yz2tllvX6OsdFYNukhNzScINg3zWHzKflMf2j/S/Qfuq6S
+	2141dlVHgU=
+X-Received: by 2002:a17:90b:524a:b0:3a4:71b7:eb63 with SMTP id 98e67ed59e1d1-3a471b7f585mr3801721a91.10.1790699257948;
+        Tue, 29 Sep 2026 09:27:37 -0700 (PDT)
+Received: from Aaron-M6 ([188.253.120.162])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a497f23328sm6510887a91.10.2026.09.29.09.27.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Sep 2026 09:27:37 -0700 (PDT)
+From: Yaozhong Li <yaozhonguwl@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Lee Jones <lee@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	devicetree@vger.kernel.org,
+	mfd@lists.linux.dev,
+	Heiko Stuebner <heiko@sntech.de>,
+	linux-rockchip@lists.infradead.org,
+	Yaozhong Li <yaozhonguwl@gmail.com>
+Subject: Re: [RFC PATCH v3 3/3] arm64: dts: rockchip: fix power-off on Firefly-RK3399
+Date: Wed, 30 Sep 2026 00:27:24 +0800
+Message-ID: <20260929162724.1545-1-yaozhonguwl@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.3
+In-Reply-To: <20260929141337.6F0321F000FF@smtp.kernel.org>
+References: <20260929140649.55-1-yaozhonguwl@gmail.com> <20260929140649.55-4-yaozhonguwl@gmail.com> <20260929141337.6F0321F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 10/11] scsi: ibmvfc: register and use asynchronous sub
- CRQ for events
-To: Dave Marquardt <davemarq@linux.ibm.com>, sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
-References: <20260925044900.414340-1-tyreld@linux.ibm.com>
- <20260925044900.414340-11-tyreld@linux.ibm.com>
- <20260925050903.EEEC21F000FF@smtp.kernel.org> <87a4p157r6.fsf@linux.ibm.com>
-Content-Language: en-US
-From: Tyrel Datwyler <tyreld@linux.ibm.com>
-In-Reply-To: <87a4p157r6.fsf@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: svXTy-bW_Ge31vp4N3IGwyxtR0IRTqyL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfX3fDSwhUurHhH
- 0hACeq9Sw0Hf4czK3fhsaU3jbi+vu2pg138eSA6avfwTPI1msF+S09VINmRMo5W14uoSnYz4EmW
- YBh+C57IdMiQWO+uSF/maCnkU5Jaijp7y9maC1nyP8nLCZ9s4ikaD1xtP5v7foCuBSQxKm2eiHJ
- ks8hB7e697i5ZhISx2CbHpqpXtLf3NGR8DqErDPggzs5pGvinKeYtQUaBTDxd8BTGz+prWSl4V4
- d5y3U0qkuEK5f+C/LTmWxrGEhdjpmcgIsgXObGHDeISip7KnLvF21cTmu5xihzgNR16PEf3Mb6S
- 9vaLK7cmTgpLPyj/5dM8NbXzQscmOFlQ7FEr6JzhadDFt7pvYiPkUgEdKpzYQrEVgzoDEH0o2hV
- mpyt5wpHABjnbfYa2gQVx5oXzBatVEfnyr65qBUO04OjatOPwj9woaCKFTy0ZuYZWnBmcDkdUTL
- haN+m9Gq91k/PBJZN7w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfX5hQoN49BH+ip
- VtwcNyLlC8s41j+ktMk9wo7x4io1aSU1TpQthQ/BVPxeERC37UQKKxd4IHcaANqnQOsIOksTfef
- ntTnlJizpjL0Cfo9BOKSd/QYFm1zyGA=
-X-Authority-Analysis: v=2.4 cv=EY5d0/mC c=1 sm=1 tr=0 ts=6abbda44 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=BAGDUCPmOm5mR4Ag3-sA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: svXTy-bW_Ge31vp4N3IGwyxtR0IRTqyL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 suspectscore=0 adultscore=0 clxscore=1011
- malwarescore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609290060
+Content-Transfer-Encoding: 8bit
 
-On 9/28/26 3:30 PM, Dave Marquardt wrote:
-> sashiko-bot@kernel.org writes:
-> 
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [High] scsi: ibmvfc: double registration of scsi_scrqs and missing async_scrqs registration
->> --
->>
->> commit d44dbe8300fc3639dbfcef8f1950443462606f5b
->> Author: Dave Marquardt <davemarq@linux.ibm.com>
->>
->> scsi: ibmvfc: register and use asynchronous sub CRQ for events
->>
->> This commit wires the async sub-CRQ into the sub-CRQ lifecycle so it is
->> allocated, registered, and freed alongside the SCSI channel queues.
->>
->>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
->>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
->>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> [ ... ]
->>> @@ -986,6 +987,7 @@ static int ibmvfc_reenable_crq_queue(struct ibmvfc_host *vhost)
->>>  	spin_unlock(vhost->crq.q_lock);
->>>  	spin_unlock_irqrestore(vhost->host->host_lock, flags);
->>>  
->>> +	ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs);
->>>  	ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs);
->>>  	ibmvfc_reg_sub_crqs(vhost, &vhost->nvme_scrqs);
->>>  
->>
->> [Severity: High]
->> Could this introduce a regression where scsi_scrqs is accidentally registered
->> twice instead of registering async_scrqs?
->>
->> Because the first call was added as ibmvfc_reg_sub_crqs(vhost,
->> &vhost->scsi_scrqs), it appears to skip the async sub-CRQ registration
->> entirely. This leaves the async sub-CRQ permanently disabled after a CRQ
->> re-enablement, which could prevent asynchronous event handling (like FPINs)
->> after recovery.
-> 
-> Yes, this is broken. The added call should be
-> 
-> 	ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs);
+On 2026-09-29 14:13 UTC, sashiko-bot@kernel.org wrote:
+> By delegating this core power-off requirement to the optional
+> pwm-backlight driver, could the board reboot instead of powering off
+> if the backlight driver is inactive?
 
-Still wrong. s/scsi_scrqs/async_scrqs
+I plan to keep the GPIO1_D0-only description in v4, and to make the
+commit message say what the backlight does and does not guarantee.
 
--Tyrel
+On the emergency case: the PMIC's power-off prepare handler runs from
+kernel_power_off(), after device_shutdown(). orderly_poweroff() and
+the forced hardware-protection path both go through kernel_power_off().
+emergency_restart() does skip device_shutdown(), but it restarts and
+never runs this handler.
 
-> 
-> and will be fixed in v12.
-> 
->> Also, wouldn't the double registration of scsi_scrqs cause
->> ibmvfc_register_channel() to fail? If H_REG_SUB_CRQ returns an error for an
->> already registered channel, this will abort the registration and clear
->> vhost->do_enquiry = 0, functionally breaking multi-queue capabilities during
->> standard operational recovery paths.
-> 
-> -Dave
-> 
+With pwm-backlight bound, it sets GPIO1_B5 low when it powers the
+backlight off, and its shutdown callback attempts that from
+device_shutdown(); the result of that GPIO write is not checked. On
+this board, with the backlight on at full brightness beforehand, the
+GPIO1_D0-only setup stayed off in 3 of 3 runs. GPIO1_B5 itself was
+not sampled at the PMIC handler in those runs.
 
+With pwm-backlight not bound, it does not claim GPIO1_B5. The pin was
+an input reading low on this board, and that setup also stayed off in
+3 of 3 runs. That is an observation on one board, not something the
+kernel guarantees. In particular, if a bootloader left GPIO1_B5 high
+and pwm-backlight failed to probe before setting the pin, it could
+remain high. I have not tested that case.
+
+The alternative, listing GPIO1_B5 in power-hold-gpios, means removing
+the backlight's enable-gpios, and I have no schematic showing that
+property is wrong. That is open question 4 in the cover letter.
+
+Thanks,
+Yaozhong
