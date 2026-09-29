@@ -1,180 +1,111 @@
-Received: from OS0P286CU010.outbound.protection.outlook.com (mail-japanwestazon11021143.outbound.protection.outlook.com [40.107.74.143])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-141.mta0.migadu.com [91.218.175.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5EB25771;
-	Tue, 29 Sep 2026 01:20:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.74.143
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790644805; cv=fail; b=Oh1wRU6Q5DUXHSI4u2xoB9FzYdBYpi2L0/zml/OH5Tu15/Gjs/dbsGS4ByIasXtdxkg9/3XGo8lPiT8GEdNrVJG/Zttg8gzIhibDnY248QeUyvUsC22uCY3+v487DaMIk3i2hHQDuDgxoqoG78szyl61m00HVv2xcz9w9shR2wU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790644805; c=relaxed/simple;
-	bh=gShpg0wkebfzltvJnNg8bDqb8RxhNgcGAgjIqf/EJck=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=NNV45vNdO753S/ZZcsPv2fOusUbe5BCHmoaKS398qXWhEXbfU3o4SULJzIVV2luk2PAIV7Z5mVR6jKNHy2QhVZlkt0HXZy8bZ/jyWnTw+rQ1T2hiugLyqjR3iibAlqqESGzoqmf6WSIbGwNrFpXHabRcVwUy34NZy4AqjmsDUYw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=JZ13gOSK reason="signature verification failed"; arc=fail smtp.client-ip=40.107.74.143
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9061230C62D
+	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 01:22:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.141
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790644934; cv=none; b=oYviy5OYqCM2PtEAy88ty5QlNRzpcK5MqhFjQoJc453R0lpUgIYLYgaJ/Z0lUmE/3Q0tTKvAT9CGhQ+piE55oJRxBqKy0jRha/Dwu+ZpftFsJOFeqRDLM8W39orj9m4ISlgC6qPiin+h+0Cilt0EVtgtK59kz6tZ6d5Xm/Ecokk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790644934; c=relaxed/simple;
+	bh=y6zwP3b2fxxBONzUl72JLW4nTSFbQsYTTWD04VWcprk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tTTpxrodoSpsa7ZKew5A3TYGr1qjshdADEE01pmS4Bh66JxIf7uf/hocXGBDZJ0tfioQAuYZg1WJBfkbOJ48OvDptrhedFOtYDt/cwOBddXFxbykbllYAk7E+DY18xdvL0F/OrnutE5EQnVT/QG9/YH3nQg0y9zF8LYP/ccCyUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=csQ2F424; arc=none smtp.client-ip=91.218.175.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="JZ13gOSK"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MS90gka3yHnZ0HixdwXQO+xHMbE62n17dO5EW4HxlV3dQscJYNGFBMNAyVIznw8FMtBlK/1OJ2IttQv5YAvs7v+vquaU57DpOBUroRXZGvXTv9+4YSE/ZP0AUh8eMR1sDCGjpA3uJfxhRyDpNTSv6UDQtFavdlXPhJcc9zAKW/vQ+uFol1xUtnnoClDJhQWNjjGykTqv51btCyY4TT1oQTGZOPd7HZJ8c4tsgRr820Or3K7fQENyrN0KtsbNQMnaruOVNOK45qHIKgBk2aZkI8fhnPNpOjWXKEXV0TkTTeaWjsKK8TnFczfsLx3NNtUD4ntRsr2+1KBjA35k3cBf7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=M1pdPbf9SGQNtVyYhH5Ef8I+sqRYgjdxvka4tYS490c=;
- b=LHrUOM768hjDq19LF8YG4zpz1vqPgbBad26PaJSMvyPeoYnCAaJqCK0MxlDi0QKXyS4esny04QMpZMroZAQRPW0aEQtgQXQtkPC3fLad71Bc2xvQTB49HOW3JBGPFjVH+OLS/m8IWvts15rJum0JBtCXLr39B4xMyoq4qDpVCvlCr0peyt8uQFXC87gHSI2qdIckkRQIaHBI4ynkq2PVoyufagl4IOg+QMltUHzLLHkuH4+15vBoM59JVfAHURg0Ub9nvNRHlIB2u/6VHHSvnUsG9/W6fiufdQzUWCL8h2T+3XQrmpsqI/Lbdlcp2/jnXdgBapFtVJF4D788vtG0/g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=M1pdPbf9SGQNtVyYhH5Ef8I+sqRYgjdxvka4tYS490c=;
- b=JZ13gOSKIfHyAkYdhblZCDotZWromaPXwI3nrf1Ej249WOC1BdwYhnALFIYMCbtcbnGHPOdtpWG1It9EovTgY0ZFuZAwQvC8DntP7H8lwpbj1IWK1WNSfiDopgp4/uaMRypi7mYIMOKytXsd4brundpHTYsgLUZWppP/Pksft8Q=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:325::11)
- by OS9P286MB7839.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:46b::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.24; Tue, 29 Sep
- 2026 01:19:58 +0000
-Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- ([fe80::cce5:2aa8:53f9:dba9]) by TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- ([fe80::cce5:2aa8:53f9:dba9%5]) with mapi id 15.21.0451.022; Tue, 29 Sep 2026
- 01:19:58 +0000
-Date: Tue, 29 Sep 2026 10:19:57 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: sashiko-reviews@lists.linux.dev
-Cc: ntb@lists.linux.dev
-Subject: Re: [PATCH v3 04/15] NTB: ntb_transport: Avoid deadlock when
- cancelling link work
-Message-ID: <o6fymoslepqiu6jrcqwumhf5mlzzkw5jwzl4s6quhio3g4scwb@7xghdgcvtil2>
-References: <20260928152550.3354675-1-den@valinux.co.jp>
- <20260928152550.3354675-5-den@valinux.co.jp>
- <20260928154306.C352F1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260928154306.C352F1F000FF@smtp.kernel.org>
-X-ClientProxiedBy: TY4P286CA0017.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:2b0::19) To TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:325::11)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="csQ2F424"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=y6zwP3b2fxxBONzUl72JLW4nTSFbQsYTTWD04VWcprk=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1790644929; v=1; x=1791249729;
+ b=csQ2F424N0nEzbZgEWW2TqgN3RVvIITuTUrMqNtOvn9uLfe3ccp96NpXcsXQszLquOPo/Hb8
+ a6UVHOL4++prHudRC/S2PjeUSPUTO5lg/9z4IhM8yR9yB2V5VT0ib2MwZOCI026eqDYbe+KuFwa
+ EP1Gr5T5YAkJEzBpOEzVZPpQ=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 64465a751bbcb560;
+	Tue, 29 Sep 2026 01:22:09 +0000
+X-Mizu-Trace-ID: 64465a751bbcb560
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <0499fb85-d323-4141-b76e-bc9812b1d142@linux.dev>
+Date: Mon, 28 Sep 2026 18:22:02 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB6866:EE_|OS9P286MB7839:EE_
-X-MS-Office365-Filtering-Correlation-Id: 29e0ff2d-bb17-4777-dc17-08df1dc7c6ea
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|10070799003|366016|23010399003|376014|22082099003|18002099003|4143699003|56012099006|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	JoIdliM/oG5dumWJFjDi6rVAWHrc2e7PWZftijse0OE0NrwrSx6uYVudoHBecDiWUD0tblroc8rtEZZTL+Ws2fH0QoKF8bkqptxWGehKeUwF0siIIm7gTIjckBaPr82CqCA0483ITbE14U7+Oj9f7FpYpcCPRNVnaCb1c40LSjUmsKRLOznhYOO6F+Q6GRII4T3R84O5x4imydWsZw25Co8kCFQzJHrBKRraGv8uPHB0IL6nZ9oocZ2DXNayqu299ElohWcN97L++i1Ww+uqLdO9qO+k3170foXmzTeTiv1M3I8avndSlGSVhd21RfOMX+7eyz0ZLeJUPlS6pCvyxJ5RnDuH9zqrpnjcBbt4oy2EQlqKX2OEov20QQAoqzl+7iSaSwLJsfyV1N/J84GONoPgKDRXwfsU434xRkSH6I2DImcuQ89rIAsBUIsxIi23WIghfuyb7oOaz66SOmx32VGkXr07v26Z0p8D69skdg7Slm955pN8ofbQ7GTc9eNluYIM3yB61EZWzIAi/LuVMJGTnK2xBcwGP5gToiPM/2vQZsCiBXyJpwnNm7zOlvQGdPW0mn6yC0MPwX34pmn722jUm8VoCok2sn2oNBdAatg=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(10070799003)(366016)(23010399003)(376014)(22082099003)(18002099003)(4143699003)(56012099006)(10067099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?/nkYFq9rbsZ2k/xcbwhY5KTRWJpKjDgAy3ZC1unnb87DsYmEc033uNt+PJ?=
- =?iso-8859-1?Q?FtD5vAxYztPKTVdqOeM9Rj2UvfUU7fRlCFjagUKmAw8lXO/3dMRKZ7ZKgy?=
- =?iso-8859-1?Q?X1R35VoIL2bjnvG8yBN2CXfpwhcgCvzT0ZDJOg+pNa/HcQezTvVq7LbSMW?=
- =?iso-8859-1?Q?ZH2D1gns4hhGmiRZ2xMcyMvfz0zRjBijtqB82FG7/UI4ctZFI5QByr4sH+?=
- =?iso-8859-1?Q?L7MmhI0h0Bp645IB7J2R85rePn6gZfWdLNAKWOGmalIuK5b0rd960wL88r?=
- =?iso-8859-1?Q?z0F9oW9rBiK/GCmzBF73IgCk2JhOYTDYmLljipIOi+p1wJtB26QlN1sl+Y?=
- =?iso-8859-1?Q?MPMx5xKvV2e8rgHy6A9UiboKtZh1XQZMrVhmAnbbhUzAK+zjtQBshs7wgU?=
- =?iso-8859-1?Q?lw6LET99u3Zpi2F7yFdAQcqEVt7HbH0DQoH8W/cvlFEbcz+xNBHSJbnD8M?=
- =?iso-8859-1?Q?teolsTHONsoiFtQueccxUcb19gAbRx3treC6/1tqxOgkY/OoX9F9U5CBbI?=
- =?iso-8859-1?Q?LL51AA+ZwJo7T3CEY1QMjak9T9d6aMN+F2FhMB539WGF2oGcDM6jOiAKck?=
- =?iso-8859-1?Q?e+6Jh0lPQ55tDCCksn8pH4tHswiusSDPRJPzmj2xoWbqrpP7x9TSWDnwnP?=
- =?iso-8859-1?Q?+LQqkY+ipm0B45EqzL+Wk2z+HRjHB3qklSjkSTGgbOvvJ+CQ5f+0gfSQkK?=
- =?iso-8859-1?Q?q7JobQkP6mFyAlvQ3/aIOk3wV9IyLfYUISwzFEY6Fhf+zWS3JBbFmT5G5n?=
- =?iso-8859-1?Q?sODC0BK1QVfFGWZ5VGnEjk64E73Au2XNGHIuGBXw0X87nI/YaOtdX68Y4+?=
- =?iso-8859-1?Q?D4h9eljIY9qPVepcJ+++3+GcS69ck1hup/fbdXHqPC+E002oNVoeynzYFT?=
- =?iso-8859-1?Q?hLDvi69gChaLXVHlFCdGVHXGxTmYW5VCW8EKsGM+a2sEq8J14F8L4eVbgR?=
- =?iso-8859-1?Q?8EMkhSO3p5CAbZNtWY+WIK8NEo/qKi/IIIxoDssAbFJG+SETmx0y+pPfKJ?=
- =?iso-8859-1?Q?DtuCP2YosRYM8r11hdAPQ+dtIBhjEj/CUy6F5+0E5fYnoVaAmIoSOWLekm?=
- =?iso-8859-1?Q?1UhSPQPBMagmgcQJE5kj5aNLyAb5SaIygRDc7wBv8zQP6YMMx7DrJaKKZH?=
- =?iso-8859-1?Q?GS1PiBmgOSIeichc6etoJozXlEy725e3/NAgnfgIpr5xUSV/oW2W7DoC+/?=
- =?iso-8859-1?Q?xNL5UxJ5lBJRZqzbtLHL14jaTWyobFa6Ubz8op5I6NCXBS2GTIiYzBJPFe?=
- =?iso-8859-1?Q?uIxUSvDF9pYe/53G3UBtCGZv+uC00vThnsAFXIxHJ68MyY6Td3qu7NGmEO?=
- =?iso-8859-1?Q?MSUivtSewXjHupdALKhn388gXeOxVNYY2a35CFEUJLqC2PLaJw2QRqAMqr?=
- =?iso-8859-1?Q?nZu23IbS8fBOTU7I7Az+VSn67D5ZUJd6OKbHrHrGpp631qX/+YZ/dqozE+?=
- =?iso-8859-1?Q?qz0D3H2xhxpq4BeFaNMXXJ4VJYZsGdy0ryc+qCaJ9gIeOS+hHudla0quz3?=
- =?iso-8859-1?Q?+DXhGU6LhouQglzu77A07eil4wQAbvakWxsBgTj31MV19M3GpRObZBv2tS?=
- =?iso-8859-1?Q?lM/aK71G3f6dMK8dKiICL7x6b7bsgWE8k7fm4dhkbPq+5S0ZbKap14h80r?=
- =?iso-8859-1?Q?spaI7ylfLgOtia2cYNp+njM+xFCMBk1IgopyyMavQcAVyr2kL3wi4Xhd7X?=
- =?iso-8859-1?Q?qLqak2wvpoeVZNcI+iPgOC6Y/89mgPyhKJc2KWryv7g/jD0pvxTrJcM1DJ?=
- =?iso-8859-1?Q?roPHCxs+8R4ccDFhCLd5A5JAZb5rXwcxjpNKIH+kwnIcFN4MWRMP4vnLrV?=
- =?iso-8859-1?Q?wvh1c/v/NkAGTAAvOANuIwuOtIH/8pw3fqlc+9V1M/EntDQ5azLJ?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: 29e0ff2d-bb17-4777-dc17-08df1dc7c6ea
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2026 01:19:58.4627
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: i48qaFLIykDrpnZWSl/A76r0emgtrwj8AKIanSHb7I3gS5b30SxznVPYcccCcnfRM/nTmfALg8KYuS1bugyE7A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS9P286MB7839
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/1] tracing: fgraph: allocate shadow stacks inline
+ with GFP_NOWAIT
+To: sashiko-reviews@lists.linux.dev, Peter Zijlstra <peterz@infradead.org>,
+ rostedt@goodmis.org, Andrii Nakryiko <andrii@kernel.org>
+Cc: bpf@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+ LKML <linux-kernel@vger.kernel.org>, kernel-team@meta.com
+References: <20260929005411.4105448-1-vineet.gupta@linux.dev>
+ <20260929005411.4105448-2-vineet.gupta@linux.dev>
+ <20260929010327.024281F000FF@smtp.kernel.org>
+From: Vineet Gupta <vineet.gupta@linux.dev>
+Content-Language: en-US
+In-Reply-To: <20260929010327.024281F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Sep 28, 2026 at 03:43:06PM +0000, sashiko-bot@kernel.org wrote:
+On 9/28/26 6:03 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] ntb: TOCTOU race in link cleanup permanently breaks link
+> - [Low] cleanup: mixing goto-based error handling and scope-based cleanup
 > --
-> 
-> commit 8d90bddbec3eab6d6adeb7ec37e857cc536bb4d5
-> Author: Koichiro Den <den@valinux.co.jp>
-> 
-> NTB: ntb_transport: Avoid deadlock when cancelling link work
-> 
-> This patch moves the conditional cancellation of the link work outside of
-> the link_event_lock to avoid a deadlock when ntb_transport_link_work()
-> retries. QP cleanup and MW release are kept under the lock.
-> 
-> > diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
-> > --- a/drivers/ntb/ntb_transport.c
-> > +++ b/drivers/ntb/ntb_transport.c
-> > @@ -962,6 +962,11 @@ static void ntb_transport_link_cleanup(struct ntb_transport_ctx *nt)
-> >  	u64 qp_bitmap_alloc;
-> >  	unsigned int i, count;
-> >  
-> > +	if (!atomic_read(&nt->link_is_up))
-> > +		cancel_delayed_work_sync(&nt->link_work);
-> > +
-> > +	guard(mutex)(&nt->link_event_lock);
-> 
-> [Severity: High]
-> Does moving the lock to after the cancellation check create a race condition
-> where the link state can become permanently broken?
-> 
-> If the hardware link flaps quickly, ntb_transport_link_cleanup() can be
-> queued, followed by ntb_transport_link_work(). When
-> ntb_transport_link_cleanup() evaluates the condition here, it might skip
-> cancellation or cancel an old work item, and then wait for the mutex.
-> 
-> The newly queued ntb_transport_link_work() could then win the lock,
-> establish the link, and drop the lock. Afterward,
-> ntb_transport_link_cleanup() acquires the lock and unconditionally tears
-> down the newly established QPs. Because the hardware link is already up,
-> no further interrupts will arrive to restart the software link, leaving
-> it unresponsive.
+>
+> commit a6de528fef00ef67da15965a7a8b3944fa92b053
+> Author: Vineet Gupta <vineet.gupta@linux.dev>
+> Subject: tracing: fgraph: allocate shadow stacks inline with GFP_NOWAIT
+>
+> This commit aims to resolve performance regressions with ftrace graph tracing
+> when there are a large number of tasks. It replaces the pre-allocated batch
+> approach with inline allocation using GFP_NOWAIT, avoiding repeated sweeps of
+> the task list. Additionally, it transitions the RCU read-side section to use
+> scoped_guard(rcu) instead of manual rcu_read_lock and rcu_read_unlock calls.
+>
+>> diff --git a/kernel/trace/fgraph.c b/kernel/trace/fgraph.c
+>> index 40d373d65f9b9..1c5ccc3f80d53 100644
+>> --- a/kernel/trace/fgraph.c
+>> +++ b/kernel/trace/fgraph.c
+> [ ... ]
+>> @@ -1057,26 +1056,37 @@ static int alloc_retstack_tasklist(unsigned long **ret_stack_list)
+>>   		}
+>>   	}
+>>   
+>> -	rcu_read_lock();
+>> -	for_each_process_thread(g, t) {
+>> -		if (start == end) {
+>> -			ret = -EAGAIN;
+>> -			goto unlock;
+>> -		}
+>> +	scoped_guard (rcu) {
+> [Severity: Low]
+> Does this mix goto-based error handling and scope-based cleanup within the same
+> function?
+>
+> Looking at alloc_retstack_tasklist(), the function retains the legacy goto free
+> path in the initial pre-allocation loop (just before this block), while
+> introducing scoped_guard(rcu) here.
+>
+> The cleanup subsystem guidelines recommend that for a given routine, we should
+> convert all resources that need a goto cleanup to scope-based cleanup, or
+> convert none of them. Mixing these paradigms creates confusing ownership
+> semantics and is highly prone to double-free or resource leak regressions upon
+> future modifications.
+>
+> Could we either convert the ret_stack_list array cleanup to use scope-based
+> helpers, or stick to the manual rcu_read_lock() and rcu_read_unlock() here to
+> keep the error handling style consistent?
 
-Same ordering issue as discussed in v2:
+And a third option is to drop the fallback allocation completely and 
+return -EAGAIN and come back. Granted I don't have much experience of 
+typical handling of GFP_NOWAIT fails and retrying immediately: would 
+that recover at all or does that take us back to where we started ? Peter
 
-  https://lore.kernel.org/r/k2dsuf5c6ld7xdovnaavk5semqsujcrfrbihguyoagjtfr3lyu@vka7awtbihpe/
-  [...]
-  - If link_work wins and completes setup, cleanup can tear the link down again.
-    The old code also allowed setup to run before a pending cleanup though. In
-    that sense, although Sashiko flagged it as a new issue, I believe the ordering
-    issue itself is pre-existing.
-
-Best regards,
-Koichiro
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260928152550.3354675-1-den@valinux.co.jp?part=4
+Thx,
+-Vineet
