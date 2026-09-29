@@ -1,90 +1,40 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4723F340A7F
-	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 00:18:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C78422F767;
+	Tue, 29 Sep 2026 00:37:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790641141; cv=none; b=V6HNx+42QxUTTlVke9hTMoAxF/hvOYrZsvTHMVIynQEwysDE6GD2pVe3maCtQ1UgAb7oY4rHodkqhjpfd/0A9ZM98pxF5O7IRiTzj12icrJMHH450VxfpNTsOOoUeSfYz3Lg8xk1feLTEUTDOenjvJScLGSHePh1HFsvHuxF5jw=
+	t=1790642270; cv=none; b=OOCHZd+nj4zworN0hqHb43uTzYT2VGq1snzy1mhqTqFcrfObBc7pES7hiRw2Q+dkHsI+pZ8XbKaGQyfn75YS0cIfu6CasszVmcgtNZoJWpXTiaiQbXfrbv2+VqKafO2zCDxtnxLhO8/j50zCBo10UjlzP10YZ0agHBZQunFzOLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790641141; c=relaxed/simple;
-	bh=IZmvuJ/cB2Ukwi0Ed0PQxNxoWM3wlUYZa4MwiOaqkw8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PelIOJ99StRjI/SCINrbM03ssET/YFHQdq+oeCCcpdFnre34nSOwkhETP/1TlqRrJ/Ee/bs8jX1Uwg56sKVBCaQazWBdzXl1yYT59Zzu2w2P6La+Vhy6csrvYnaTdVbj5zceLhAc5JdDHKRuCRSSB/DfTNEyqtKkgUncOMua1JQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=b+IELGtn; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Tvu7wUXP; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=0uDpQJ/L; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=8Rjx6FdF; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1790642270; c=relaxed/simple;
+	bh=yB1MLLdCqUonDrdh0M2r/ZXHyBBJ8wDDaV8fGqrt7Wo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zvv6ybgW7Z0yoIQpDIFoh1Wr/rf0B5NWaLfcKTLS0059o5FaQSC2zPFqeFUCMj168KSUjfrHQSDKTaRqvrkP0m+206XX/6ck7ZTTBjUkixQVw1PdP/mXs1bqQPmPdUMhs1C7hVhohdkTmR7Eb7/hpgUZgD6TiXD284ukP2xynOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c2ZtA44P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="b+IELGtn";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Tvu7wUXP";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="0uDpQJ/L";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="8Rjx6FdF"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 561281F793;
-	Tue, 29 Sep 2026 00:18:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1790641132; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OY7PKLcapT3BnjwNrptJ242k7jAeI/f1YFmK8jfY0yA=;
-	b=b+IELGtnIxJo6nUI6hmcfC2prMx9b8iGYeuP9OQRE4awMysy9RVZSS7LH/O69mNDmJifjC
-	c7Hqx6zIqMKnnhGFvjFAO4dvrgOdkzaR+7qnoERZCmtOe/F7lxw64+h8OQLEGyhULp1HsD
-	9QgN9V3fnDTYBIKS6pEll26eDWZUxqQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1790641132;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OY7PKLcapT3BnjwNrptJ242k7jAeI/f1YFmK8jfY0yA=;
-	b=Tvu7wUXP4mg+wQCG/wSu0IX/XWo9s5hosLUxQ1m2s/YASMW4ReIRk1fSWcbbkS0z84J0Pm
-	k9prq+SMVBsfujAg==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b="0uDpQJ/L";
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=8Rjx6FdF
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1790641128; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OY7PKLcapT3BnjwNrptJ242k7jAeI/f1YFmK8jfY0yA=;
-	b=0uDpQJ/L2giZ19Rr669DiITiXuqRDT4NxGWzsqdI9WcF3uQHi/WcA1j4qH+i+2UHM4je7i
-	dgisAhPKv9qPAnPr+FOVREJ1DlpFfyaSbiwMi1kMOO9RUUG3nBJ3ZOrMu4aiv/AEAyfCiT
-	hUBtTzIy7tcFZS89rCdK8cKxgIhkMMs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1790641128;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OY7PKLcapT3BnjwNrptJ242k7jAeI/f1YFmK8jfY0yA=;
-	b=8Rjx6FdFvtQXxMyYMsnDpATA8kPOuA7PYOh0eC+3zLIAeAyG9GW6VRJhUFQHAO9jG9njVG
-	t/uG3KQO+BE1HjAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id ECFBE133F1;
-	Tue, 29 Sep 2026 00:18:47 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id TuLPK+cDu2rGWgAAD6G6ig
-	(envelope-from <krisman@suse.de>); Tue, 29 Sep 2026 00:18:47 +0000
-From: Gabriel Krisman Bertazi <krisman@suse.de>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c2ZtA44P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE221F00893;
+	Tue, 29 Sep 2026 00:37:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790642269;
+	bh=bQdz0KDwrvXOnzJTXF9iR7HnWNXiJKsAgxY8YCHN0oo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=c2ZtA44PyxoH74UFGeTvQ0lfenSaX2Yb0spp4b2v9JWOHIsxfKvHHNzZc4k5/DMg3
+	 DzIf2hmbIcOnNbo/FjpQICyuM+7hYhN+7+mf6b5RCAomURoWmzDo35n202p7GfA+uY
+	 dWTUrqJhPwj33opp51pe0pFx0jJQEHHaeObzrjt5uDImRIX/VoHaPNRrilcNb67y8W
+	 STfZ34LqxdKRLOPuGcP6WTUXUwMtWu3vZphCmVvbGJcfqF+w4Al8LxTHqw6+W5oy0P
+	 quaR2u/5TNSJwz4Rg72FYZs5FmzQ4RQs4lpOvbtyDF73QSgpvo33tnD7DBluEQL732
+	 7bRXB87HXM6wA==
+Date: Mon, 28 Sep 2026 17:37:47 -0700
+From: Namhyung Kim <namhyung@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: tytso@mit.edu, linux-ext4@vger.kernel.org
-Subject: Re: [PATCH 2/4] ext4: Expose the filesystem encoding through sysfs
-In-Reply-To: <20260928214542.2DFDC1F000FF@smtp.kernel.org>
-Organization: SUSE
-References: <20260928213155.2612039-1-krisman@suse.de>
- <20260928213155.2612039-3-krisman@suse.de>
- <20260928214542.2DFDC1F000FF@smtp.kernel.org>
-Date: Mon, 28 Sep 2026 20:18:46 -0400
-Message-ID: <87se2syknt.fsf@mailhost.krisman.be>
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v1 3/8] perf tools: Check system path when check debuginfo
+Message-ID: <arsIW-1drTVVsuBR@z2>
+References: <20260928055055.95144-1-namhyung@kernel.org>
+ <20260928055055.95144-4-namhyung@kernel.org>
+ <20260928055956.D386E1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -92,120 +42,98 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Score: -4.51
-X-Rspamd-Queue-Id: 561281F793
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spam-Level: 
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	HAS_ORG_HEADER(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:email];
-	RCPT_COUNT_THREE(0.00)[3];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	TO_DN_NONE(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Flag: NO
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260928055956.D386E1F000FF@smtp.kernel.org>
 
-sashiko-bot@kernel.org writes:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] ext4: NULL pointer deref in encoding_show() via dynamic casefold
+On Mon, Sep 28, 2026 at 05:59:56AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] perf tools: Loss of DWARF support for .gnu_debugdata and .zdebug_info
 > --
->
-> commit c325498f77eea14582e06218baa713f49fde001a
-> Author: Gabriel Krisman Bertazi <krisman@suse.de>
->
-> ext4: Expose the filesystem encoding through sysfs
->
-> This commit introduces new sysfs attributes in ext4 to display the active
-> filesystem encoding and encoding flags. This provides users with a direct
-> interface to check casefold support without relying on dmesg parsing.
->
->> diff --git a/fs/ext4/sysfs.c b/fs/ext4/sysfs.c
->> index 923b375e017fa..bc1c59d67eed8 100644
->> --- a/fs/ext4/sysfs.c
->> +++ b/fs/ext4/sysfs.c
+> 
+> commit 945ce7f07042383e50c7db270f3808ce02dd95b3
+> Author: Namhyung Kim <namhyung@kernel.org>
+> 
+> perf tools: Check system path when check debuginfo
+> 
+> This commit removes the fallback to open the given binary path in
+> debuginfo__new() and instead relies on checking the SYSTEM_PATH_DSO
+> type within dso__find_dbginfo_type().
+> 
+> > diff --git a/tools/perf/util/debuginfo.c b/tools/perf/util/debuginfo.c
+> > index d6bd0fcc22648..2669d5f5ee612 100644
+> > --- a/tools/perf/util/debuginfo.c
+> > +++ b/tools/perf/util/debuginfo.c
 > [ ... ]
->> @@ -161,6 +163,25 @@ static ssize_t err_report_sec_store(struct ext4_sb_=
-info *sbi,
->>  	return count;
->>  }
->>=20=20
->> +static ssize_t encoding_show(struct ext4_sb_info *sbi, char *buf)
->> +{
->> +#if IS_ENABLED(CONFIG_UNICODE)
->> +	struct super_block *sb =3D sbi->s_sb;
->> +
->> +	if (ext4_has_feature_casefold(sb))
->> +		return sysfs_emit(buf, "UTF-8 (%d.%d.%d)\n",
->> +				  unicode_major(sb->s_encoding->version),
->> +				  unicode_minor(sb->s_encoding->version),
->> +				  unicode_rev(sb->s_encoding->version));
->
+> > @@ -114,18 +114,12 @@ struct debuginfo *debuginfo__new(const char *path)
+> >  	dso__find_dbginfo_type(dso);
+> >  	if (dso__read_binary_type_filename(dso, dso__dbginfo_type(dso), &nil,
+> >  					   buf, PATH_MAX) < 0)
+> > -		goto out;
+> > +		return NULL;
+> >  
+> >  	dinfo = __debuginfo__new(buf);
+> >  	dso__put(dso);
+> >  
+> > -out:
+> > -	if (dinfo)
+> > -		return dinfo;
+> > -
+> > -	/* if failed to open all distro debuginfo, open given binary */
+> > -	symbol__join_symfs(buf, path);
+> > -	return __debuginfo__new(buf);
+> 
 > [Severity: High]
-> Does this introduce a regression where reading the sysfs attribute causes=
- a
-> NULL pointer dereference if casefold is enabled dynamically?
->
-> If a privileged user dynamically enables EXT4_FEATURE_INCOMPAT_CASEFOLD on
-> an online filesystem via the EXT4_IOC_SET_TUNE_SB_PARAM ioctl, it updates
-> the in-memory on-disk superblock representation but does not load the
-> unicode map into the VFS superblock:
->
-> fs/ext4/ioctl.c:ext4_ioctl_set_tune_sb() {
->     ...
->     if ((params.set_feature_incompat_mask &
->          EXT4_FEATURE_INCOMPAT_CASEFOLD)) {
->         enabling_casefold =3D 1;
->     ...
+> Does removing this fallback break DWARF support for files using alternative
+> debug sections like .gnu_debugdata (mini-debuginfo) or .zdebug_info?
+
+IIUC ".gnu_debugdata" on Fedora only carries symbol tables so it doesn't
+check DSO_BINARY_TYPE__GNU_DEBUGDATA and no need to check the section.
+But I think I need to add ".zdebug_info".
+
+> 
+> The new logic entirely relies on dso__find_dbginfo_type() successfully
+> returning a binary type. However, dso__find_dbginfo_type() strictly
+> validates the file by exact string match:
+> 
+> tools/perf/util/dso.c:dso__find_dbginfo_type() {
+> 	...
+> 		if (filename__has_section(buf, ".debug_info"))
+> 			break;
+> 	...
 > }
->
-> In this state, ext4_has_feature_casefold(sb) evaluates to true, but
-> sb->s_encoding remains NULL. If the sysfs attribute is read,
-> encoding_show() will unconditionally dereference sb->s_encoding->version,
-> resulting in a system crash.
+> 
+> Because files relying on .gnu_debugdata or .zdebug_info do not have a section
+> named exactly ".debug_info", this check fails. The type then defaults to
+> DSO_BINARY_TYPE__NOT_FOUND, and debuginfo__new() returns NULL.
+> 
+> Could this cause features like inline callchain resolution to silently fail on
+> these binaries since we completely bypass libdw's native support for parsing
+> these alternative formats?
 
-Uh...
+Something like this?
 
-If we flip EXT4_FEATURE_INCOMPAT_CASEFOLD without loading the casefold
-table, I'm surprised the current code doesn't blow up already.  I
-completely missed the introduction of EXT4_IOC_SET_TUNE_SB_PARAM, so I'm
-missing context if there is a use case to actually do an online flip of
-feat_casefold.  It seems the ioctl actually can set this bit, but I
-don't see any provision to load the table.  I'm a bit confused now.  I
-can work around it for /sys/fs, but is anyone actually enabling casefold
-without a remount?
+diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
+index 10c4cd35b6d9464b..0b152988d18b60b0 100644
+--- a/tools/perf/util/dso.c
++++ b/tools/perf/util/dso.c
+@@ -2130,7 +2130,8 @@ void dso__find_dbginfo_type(struct dso *dso)
+                                                   buf, PATH_MAX) < 0)
+                        continue;
 
->
->> +#endif
->> +	return sysfs_emit(buf, "(none)\n");
->> +}
->> +
-> [ ... ]
->
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260928213155.26=
-12039-1-krisman@suse.de?part=3D2
+-               if (filename__has_section(buf, ".debug_info"))
++               if (filename__has_section(buf, ".debug_info") ||
++                   filename__has_section(buf, ".zdebug_info"))
+                        break;
+        }
 
---=20
-Gabriel Krisman Bertazi
+Thanks,
+Namhyung
+
+
+> 
+> > +	return dinfo;
+> >  }
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260928055055.95144-1-namhyung@kernel.org?part=3
