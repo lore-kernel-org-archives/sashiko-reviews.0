@@ -1,286 +1,394 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24E83B38B9;
-	Tue, 29 Sep 2026 13:38:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884522459E1
+	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 13:50:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790689107; cv=none; b=F4RFuw2sfc+4cZQkkXbSq5KCmx0droGYVb1cp/hqw1eJHvwBQQvJS1eP28ipkMgkbGUqRd3DFZkbDg32YR6HWjfIRUATGXG1FdccoKcOs81h0/sh1POcyJED/9QSb4qKyWPucZQwp4toys5eIlfrrftO0SgEZV3J98FemzOcVuc=
+	t=1790689831; cv=none; b=Jwu3XYtQ35XponYj66BontbdzrAMiiWRXFU2xBcptj5ENiV//VXNnB8ZCgWimCmchDaa0pLW+G4oUa8qXinCKP/m4o3xqxZkAl8iq5WfoV7vqxQsloqP7iKH2II4b9rSpTbmC0NF8dPJogC9fM3QCGcrPj9qy4NyE1rwwpfR36U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790689107; c=relaxed/simple;
-	bh=LiTZ2CqzUEmT2+U5pU37fEvQKbAwfuMhEfoTh3UgvII=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tI/xR7BHXZ2IEFcUyiClZI6ecQEJF5tAf5Y4QErqi43TWjptpn6ajidgfkd80YTFM6f5+52aEGbLWs0Uhu89YAd6z/qoOmwBOZQCnEJ6DM8Z01NucvE2JPacE8mMNUPCARNDszP1Yka/G786H7jLYqeIJjiO8x9/Dwncd5RPK84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=NqA+B+IL; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1790689831; c=relaxed/simple;
+	bh=ImdRUux9KzzRL+1xdUNymp0o180ROvHb0/RcCXnhBHE=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=QXwJFX/rxbkHGW8+XqudyXmtvPrpTimD1ubW3JQpioQ2DX+kJKlPj/uGa7Tox9ICVPUKJyatwPUy8ro0IblO3xs+B10EsZZH8IXj15LIOGXfFxzYFAEZRVVXATSxpFT0oTQ9vdg5Y58eOs6Rjsh6+PE+HwaS/cEWHTTsuYJFi64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=by4hw/OT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="NqA+B+IL"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68TB5YUE2187974;
-	Tue, 29 Sep 2026 13:38:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=+x5SJn
-	easI6AK27aTC2+v3wSsY8o47SiNhlvYQVxad0=; b=NqA+B+ILRAk0qDlfE8GnXJ
-	PPHsVt4DB2fZ33maZpsz7yhIPwmKvdtQYLXExfYlzVXT+byJ27bIvLDcSFVTELen
-	/QoQ4pqxGASD/hZwpYz01iIAzqVrST80xTxGDowwy+AhQav8GrN4o6o3HzxbzOny
-	o1lozP/v6xh1aYEbbn7WLgzlJmt+JUJbxMAfm++y5JuSg0XwuBI2wzfXdHdnc6jj
-	dR5h8AsBZnFdo49TKDeMzWCm9S9eqlppEyh52W2dqXwKOlWwWfteKQZxqTLt6Tn2
-	jgoOljnjw0aIYE/ehqzS2C1zIYCBgggGMCDrh7z6i2+nvuaqzPGTaCHgFHVhg5Hg
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5qr788k-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Tue, 29 Sep 2026 13:38:24 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68TAm2fl1617536;
-	Tue, 29 Sep 2026 13:38:23 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gxrrwa1fb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 29 Sep 2026 13:38:23 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
-	by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68TDcM6E26804852
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 29 Sep 2026 13:38:22 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 21DA658056;
-	Tue, 29 Sep 2026 13:38:22 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 8718D5803F;
-	Tue, 29 Sep 2026 13:38:21 +0000 (GMT)
-Received: from [9.61.162.12] (unknown [9.61.162.12])
-	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 29 Sep 2026 13:38:21 +0000 (GMT)
-Message-ID: <23656c81-a31b-408c-9f1f-d066a58c6192@linux.ibm.com>
-Date: Tue, 29 Sep 2026 09:38:21 -0400
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="by4hw/OT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054B71F000FF;
+	Tue, 29 Sep 2026 13:50:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790689829;
+	bh=616FDv5Fk7HGoXObNx5Uo5bt1jlHlKanlf8qTlPy0NA=;
+	h=Date:From:To:Cc:Subject;
+	b=by4hw/OTmA6DX8ISrXWaxo9YSPu/9g7S0MDTYQBf6LkNuWM1xzEd285Jk/kt0MYZ/
+	 OgL/MpeqVMHtDmBpQ2FvKmGtw6DsLcLLk6OxuSB8I0bJpPqQs3rZt6RFcfuZslXgYf
+	 vBAULuF8Y3RxUW76D9BZIx9Blhj/NBt6WxV+gko18psmkrBVtfILjQsXkexUeINEyx
+	 JyFVukVCChJNCtlAfvm7NiOG28U9rGQuiK62qOkDo0GZyTOC4MazpV4viPNtAWZh7B
+	 eXCkU4COD87NYnxctk505lZ2DTFxQkU/LDLCzvVB9slKMdX8i/LXDTSmJcwjiKScep
+	 d4/3u+9h1nwQg==
+Date: Tue, 29 Sep 2026 14:50:23 +0100
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+To: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: sashiko-reviews@lists.linux.dev
+Subject: addressing sashiko's false positive rate
+Message-ID: <arvAhwPOxQ0JL15n@gremlin>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 1/6] s390/vfio-ap: Fix leaks of pinned NIB and
- registered GISC
-To: sashiko-reviews@lists.linux.dev
-Cc: Vasily Gorbik <gor@linux.ibm.com>, kvm@vger.kernel.org,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Heiko Carstens <hca@linux.ibm.com>
-References: <20260929121837.2715710-1-akrowiak@linux.ibm.com>
- <20260929121837.2715710-2-akrowiak@linux.ibm.com>
- <20260929123327.D24FE1F0089A@smtp.kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260929123327.D24FE1F0089A@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA1NCBTYWx0ZWRfX3fZS5wgC8vZa
- OpBr5xKnclaInC+f0wlolUccxZ+zeW8mtbgQtEksahOn9NzgxY9pNa579DQY3J9dm/D7JaC8JWo
- OScr6hYhDzSH3PMb7BUf/xFP/FxNk+/fkNwRCW1GahR1hsfUtvMp5wZiaeRhzUvU+rUTyy+9HNM
- YwB6vcxP5Ut/JSuen912ngaA1i6EI/NJC7nqg47GwyxB8oPX/+MoTQOndbut9tgdhcmvrEW6O+q
- rHvC4diTx6m02wJwoXifqUXcooJASqwmR+ZWVHnD5WZomhXDWmw3G77BRwy5mqHnNBRcuNE2pQk
- ShXb7+CqFUv8fuP1afd+WmtxMCVMyS7+8S/iNjrhscWO6lbZtScqMDOmC6ov4JrZBfsGJQPrfIX
- etgrnOYno1TpLHYw4q3zKjbYQhmDdD4lwMPfwYpgDZPdR8muGVvHUHG9ozwSCcmXlhr8Li02AiK
- v8aNtMxf08Np8EzQwGw==
-X-Authority-Analysis: v=2.4 cv=SPbXx+vH c=1 sm=1 tr=0 ts=6abbbf50 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=rORQQuJ1QDlRwYwXYLEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: LI-rj9vcVDm8Zrs-3UCkTbKFMHbJ-pVe
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA1NCBTYWx0ZWRfXxlrgQX3+CFvK
- Szz8gHjs2JkmqJWXUhdPEvFILKYqfM37d1hr20/z2jYSRZTSe/zSvHbWYq8epq22ecGFUYUw6CO
- g6mM/jdBDjEMc6rlchk8TZJ9qIg3TnA=
-X-Proofpoint-GUID: LI-rj9vcVDm8Zrs-3UCkTbKFMHbJ-pVe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 clxscore=1015 spamscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2609290054
+Content-Type: multipart/mixed; boundary="d6bwfpisf7mfsmzw"
+Content-Disposition: inline
 
 
+--d6bwfpisf7mfsmzw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 9/29/26 8:33 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [Critical] vfio_ap: Use-After-Free of vfio_device on AQIC resource release
-> - [High] vfio_ap: ABA pointer aliasing causes unintended KVM GISC unregistration
-> - [High] vfio_ap: Host panic due to VFIO BUG_ON when queue reset fails during unmap
-> - [Medium] vfio_ap: KVM GISC alert reference leak on dynamic queue unplug
-> --
->
-> commit 83f84bb0e3c067b95ee373106f589b768094e294
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
-> Subject: s390/vfio-ap: Fix leaks of pinned NIB and registered GISC
->
-> Several code paths in the vfio_ap driver failed to free the AQIC resources,
-> specifically the pinned guest NIB page and the registered guest ISC used to
-> enable interrupts for a queue. This commit adds fixes to handle response
-> codes and prevent memory exhaustion and depletion of KVM interrupt subclass
-> registrations during dynamic AP reconfiguration.
->
->> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
->> index 4db878c18f41c..e178b657faa8f 100644
->> --- a/drivers/s390/crypto/vfio_ap_ops.c
->> +++ b/drivers/s390/crypto/vfio_ap_ops.c
-> [ ... ]
->> @@ -254,90 +276,231 @@ static void vfio_ap_wait_for_irqclear(int apqn)
-> [ ... ]
->>   static void vfio_ap_free_aqic_resources(struct vfio_ap_queue *q)
->>   {
->>   	if (!q)
->>   		return;
->> -	if (q->saved_isc != VFIO_AP_ISC_INVALID) {
->> -		if (!WARN_ON(!q->matrix_mdev) && q->matrix_mdev->kvm)
->> -			kvm_s390_gisc_unregister(q->matrix_mdev->kvm, q->saved_isc);
->> -		q->saved_isc = VFIO_AP_ISC_INVALID;
->> +
->> +	if (q->aqic_resources.isc != VFIO_AP_ISC_INVALID) {
->> +		if (q->aqic_resources.kvm &&
->> +		    q->matrix_mdev && q->aqic_resources.kvm == q->matrix_mdev->kvm) {
->> +			kvm_s390_gisc_unregister(q->aqic_resources.kvm, q->aqic_resources.isc);
-> [Severity: High]
-> Can this equality check fall victim to an ABA problem? If the original guest's
-> struct kvm is freed and a new guest's struct kvm is allocated at the exact
-> same memory address, could this evaluate to true and mistakenly unregister
-> the new guest's GISC, silently stopping its AP interrupts?
+Hi Roman, Sashiko team,
 
-Not valid. `vfio_ap_mdev_set_kvm()` takes a `kvm_get_kvm()`
-reference before storing the pointer, so the struct cannot be
-freed while the mdev holds it. `vfio_ap_mdev_unset_kvm()` sets
-`matrix_mdev->kvm = NULL` before dropping the ref, so by the
-time the struct could be freed the comparison cannot be true.
+I gave some feedback about false positives at [0], but I thought I'd expand on
+that and give some solid data.
 
->
-> [Severity: Medium]
-> If a queue is hot-unplugged from a running guest via sysfs and the reset
-> fails, the AQIC resources are intentionally leaked and q->matrix_mdev is set
-> to NULL. If the queue recovers later, will bypassing
-> kvm_s390_gisc_unregister() permanently leak the KVM GISA alert reference for
-> the still-running guest?
+To be clear at the outset - my intent here is to be constructive, I feel that
+sashiko's false positive rate can be improved and I hope this analysis helps in
+that regard.
 
-Not valid. `kvm_s390_gisa_destroy()` zeroes `gi->alert.mask`
-and sets `gi->origin = NULL` on guest teardown. After that,
-`kvm_s390_gisc_unregister()` returns -ENODEV harmlessly. The
-KVM teardown path cleans up the GISC registration regardless
-of whether vfio-ap explicitly calls unregister.
+I've done analysis on that series [1], my build speed up series [2], and my
+kvmarm prefault series [3].
 
->
->> +		} else {
->> +			report_gisc_unregister_failure(q);
->> +		}
->> +		q->aqic_resources.isc = VFIO_AP_ISC_INVALID;
->> +		q->aqic_resources.kvm = NULL;
->>   	}
->> -	if (q->saved_iova && !WARN_ON(!q->matrix_mdev)) {
->> -		vfio_unpin_pages(&q->matrix_mdev->vdev, q->saved_iova, 1);
->> -		q->saved_iova = 0;
->> +
->> +	if (q->aqic_resources.iova) {
->> +		if (q->aqic_resources.vdev)
->> +			vfio_unpin_pages(q->aqic_resources.vdev, q->aqic_resources.iova, 1);
-> [Severity: Critical]
-> Is it possible for the q->aqic_resources.vdev pointer to become dangling here
-> if the original matrix_mdev was destroyed? If a queue reset failed previously
-> and the resources were kept leaked, the queue would retain the unreferenced
-> vdev pointer while the matrix_mdev is freed. Could a subsequent reset or
-> reassignment trigger a use-after-free when dereferencing it for
-> vfio_unpin_pages()?
+Series [1] is 39-40 patches over 3 postings, [2] is 20-23 patches over 4
+postings and [3] is 8-14 patches over 4 postings.
 
-Not valid in practice. `vfio_ap_mdev_remove()` flushes all
-reset work before calling `vfio_put_device()`, so
-`vfio_ap_free_aqic_resources()` — the only site that
-dereferences `vdev` — always completes before `matrix_mdev`
-is freed. No reachable path calls it on a detached queue.
+This should give at least a reasonable amount of data to work with.
 
->
->> +		else
->> +			pr_warn_ratelimited("APQN %02x.%04x: Failed to unpin NIB page at %pad\n",
->> +					    AP_QID_CARD(q->apqn),
->> +					    AP_QID_QUEUE(q->apqn),
->> +					    &q->aqic_resources.iova);
->> +		q->aqic_resources.iova = 0;
->> +		q->aqic_resources.vdev = NULL;
->>   	}
->>   }
-> [ ... ]
->> @@ -489,27 +658,48 @@ static struct ap_queue_status vfio_ap_irq_enable(struct vfio_ap_queue *q,
->>   	status = ap_aqic(q->apqn, aqic_gisa, h_nib);
->>   	switch (status.response_code) {
->>   	case AP_RESPONSE_NORMAL:
-> [ ... ]
->>   		vfio_ap_free_aqic_resources(q);
->> -		q->saved_iova = nib;
->> -		q->saved_isc = isc;
->> +		q->aqic_resources.iova = nib;
->> +		q->aqic_resources.isc  = isc;
->> +		q->aqic_resources.vdev = &q->matrix_mdev->vdev;
-> [Severity: Critical]
-> Does this code need to acquire a lifecycle reference to the vdev pointer
-> before storing it here? Snapshooting the embedded pointer from matrix_mdev
-> without taking a reference appears to expose the use-after-free discussed
-> above if the mediated device goes away.
+I had AI check through them (I find a frontier model + review-prompts is very
+good at assessing sashiko reports), cross-referencing the changes that were
+taken and reasoning given, and then went through the verdicts by hand.
 
-Not valid in practice, same reason as Comment 3. Taking a
-vfio ref would also be wrong: `vdev` is embedded in
-`matrix_mdev`, so holding a ref while resources are
-intentionally leaked would prevent the mdev from ever being
-freed — introducing a new leak.
+You state in the README:
 
->
->> +		q->aqic_resources.kvm  = q->matrix_mdev->kvm;
->>   		break;
-> [ ... ]
->> @@ -1857,8 +2046,29 @@ static void unmap_iova(struct ap_matrix_mdev *matrix_mdev, u64 iova, u64 length)
->>   	int loop_cursor;
->>   
->>   	hash_for_each(qtable->queues, loop_cursor, q, mdev_qnode) {
->> -		if (q->saved_iova >= iova && q->saved_iova < iova + length)
->> +		if (q->aqic_resources.iova >= iova && q->aqic_resources.iova < iova + length) {
->>   			vfio_ap_irq_disable(q);
->> +			/*
->> +			 * If AQIC disable was unable to confirm that interrupts were
->> +			 * disabled (IR=0), q->aqic_res.iova remains non-zero. VFIO
->> +			 * core requires the mapped pages to be unpinned during DMA
->> +			 * unmap notifications (or type1 IOMMU will BUG_ON after 10
->> +			 * retries).
->> +			 *
->> +			 * To satisfy VFIO core safely, fall back to a queue reset via
->> +			 * ZAPQ. ZAPQ wipes the queue state and clears the hardware's
->> +			 * internal NIB address register, neutralizing pending DMA.
->> +			 *
->> +			 * Flush the reset worker. If the reset completes, the worker
->> +			 * frees the AQIC resources (unpinning the NIB). If the reset
->> +			 * times out or fails with an error, the resources are kept
->> +			 * leaked to guard against wild DMA writes.
->> +			 */
->> +			if (q->aqic_resources.iova) {
->> +				vfio_ap_mdev_reset_queue(q);
->> +				flush_work(&q->reset_work);
->> +			}
-> [Severity: High]
-> If the queue reset times out or fails with an error, the NIB page is kept
-> leaked and remains pinned. Since the VFIO core requires all mapped pages to
-> be unpinned during an unmap notifier, could returning to the VFIO core from
-> unmap_iova() without unpinning the page trigger a BUG_ON or WARN_ON and panic
-> the host kernel?
+"The rate of false positives is harder to measure, but based on limited manual
+reviews it's well within 20% range and the majority of it is a gray zone."
 
-Valid. If both `vfio_ap_irq_disable()` and the ZAPQ fallback
-fail, `unmap_iova()` returns with `aqic_resources.iova`
-non-zero. `vfio_iommu_type1.c:1522` hits
-`BUG_ON(++retries > 10)` — a real host panic. Fix: add a
-last-resort forced unpin with a `pr_crit` after `flush_work()`
-when the ZAPQ also fails to release the NIB.
+I both disagree with that number and feel that there very much are better ways
+of determining false positives. More on that below.
 
->
->> +		}
->>   	}
->>   }
+Analysing the series:
 
+Summary, unique findings (duplicates removed)
+---------------------------------------------
+
+  Series    Unique  Useful  Wrong   Useful%
+  1           36      20     16       56%   (1 v1 alone: 17 unique, 71%)
+  2           36      17     19       47%   (2 v1 alone: 18 unique, 61%)
+  3            3       1      2       33%
+  Total       75      38     37       51%
+
+'Useful' here means the report was correct, whether the issue was in the
+series or pre-existing in code it touched. 'Wrong' means the claim does not
+hold against the code, or holds only under a precondition nothing in-tree
+meets (a driver violating a documented contract, an unsupported build host,
+an OOM-only error path) - those were rated High or Critical as often as not,
+so I count them as false positives.
+
+This matches my intuition that I've expressed to you in-person and on-list that
+the false positive rate is ~50%.
+
+I've heard people say this was limited to mm specifically, but now I've seen
+this pattern across 3 subsystems (mm, kvmarm, kbuild) so I feel it's more
+generalised.
+
+What concerns me here is that the rate doesn't seem to have improved over time,
+which makes me think it's less a model issue and more sashiko needing to be
+sharper at dismissing false positives.
+
+The per-posting numbers are also interesting:
+
+Unique findings by posting (duplicates within and across postings removed)
+--------------------------------------------------------------------------
+
+  Series  Posting   Raw  Dup  Unique  Useful  Wrong   Useful%  Wrong%
+  ------  -------   ---  ---  ------  ------  -----   -------  ------
+  1 mm    v1         24    7      17      12      5       71%     29%
+  1 mm    v2         17    2      15       8      7       53%     47%
+  1 mm    v3          9    5       4       0      4        0%    100%
+  ------  -------   ---  ---  ------  ------  -----   -------  ------
+  2 kbld  v1         20    2      18      11      7       61%     39%
+  2 kbld  v2         11    5       6       3      3       50%     50%
+  2 kbld  v3         15    9       6       3      3       50%     50%
+  2 kbld  v4         12    6       6       0      6        0%    100%
+  ------  -------   ---  ---  ------  ------  -----   -------  ------
+  3 kvma  v1          0    0       0       -      -         -       -
+  3 kvma  v2          3    1       2       0      2        0%    100%
+  3 kvma  v3          1    0       1       1      0      100%      0%
+  3 kvma  v4          0    0       0       -      -         -       -
+  ------  -------   ---  ---  ------  ------  -----   -------  ------
+  Total             112   37      75      38     37       51%     49%
+
+As you'd expect, the real issues are fixed on respin.
+
+However, what's interesting is the continued false positive rate that
+remains: the number of wrong reports per posting stays roughly constant
+(5, 7, 4 for mm and 7, 3, 3, 6 for kbuild) while the real issues run out,
+so on the final posting of each series everything emitted was wrong.
+
+This is good evidence for there being a problem with sashiko's verifier -
+these numbers are de-duplicated across revisions - so it is allowing
+arbitrary new invalid reports through on each occasion.
+
+Severity is an interesting breakdown also:
+
+By severity, raw, all series combined
+-------------------------------------
+
+  Severity  Findings  Useful  Wrong  Duplicate  Useful%  Useful% unique
+  Critical      4        3      0       1        75%       100%
+  High         53       18     18      17        34%        50%
+  Medium       27       11     11       5        41%        50%
+  Low          28        6      8      14        21%        43%
+
+Every 'critical' was a real bug (barring the duplicate). Below that it's
+a coin flip regardless of severity, so the severity label isn't currently
+usable as a confidence signal.
+
+What helps bring this together is that the API exposes the candidate
+concerns the verifier dismissed for each posting, alongside what it emitted:
+
+Candidates generated vs. emitted vs. useful
+-------------------------------------------
+
+  Posting   Candidates dismissed   Emitted   Useful   Useful / all candidates
+  1 v1            287                24        12          4.0%
+  1 v2            275                17         8          2.8%
+  1 v3            276                 9         0          0%
+  2 v1            162                20        11          6.0%
+  2 v2            158                11         3          1.8%
+  2 v3            138                15         3          2.0%
+  2 v4            151                12         0          0%
+  3 v1             89                 0         0          0%   (not sent)
+  3 v2            123                 3         0          0%
+  3 v3            116                 1         1          0.9%
+  3 v4            138                 0         0          0%
+  ------------------------------------------------------------------------
+  Total          1913               112        38          1.9%
+
+So the emailed reports are already the ~5% of candidates that survived
+internal verification, and roughly half of those survivors are still
+wrong. This helps back up the idea that the verifier is not quite doing its
+job properly, in line with the per-posting numbers above.
+
+The model doesn't seem to be the issue: I raised a ~50% hit rate just over
+6 months ago ([4]), and the API shows that series was reviewed by the same
+model, gemini-3.1-pro-preview, as every posting analysed here.
+
+Also on that - I gathered from previous discussions that model improvement
+was being leaned upon for accuracy improvements moving forwards. Has the
+model behind that version string actually changed over the six months, or
+has it been identical throughout?
+
+If the latter, is there any intention to upgrade it over time? If the
+former, the data above suggests it hasn't moved the false positive rate.
+
+Also it seems the newer prompt versions didn't do much to address the issue
+as below:
+
+Prompt versions
+---------------
+
+  Posting     Date     Model                    Prompts
+  ----------  -------  -----------------------  -------
+  kvmarm v1   25 Aug   gemini-3.1-pro-preview   0.3.3
+  mm v1        8 Sep   gemini-3.1-pro-preview   0.3.3
+  kbuild v1    8 Sep   gemini-3.1-pro-preview   0.3.4
+  mm v2       14 Sep   gemini-3.1-pro-preview   0.4.0
+  kbuild v2   14 Sep   gemini-3.1-pro-preview   0.3.4
+  kvmarm v2   14 Sep   gemini-3.1-pro-preview   0.3.4
+  mm v3       17 Sep   gemini-3.1-pro-preview   0.4.0
+  kbuild v3   17 Sep   gemini-3.1-pro-preview   0.4.0
+  kvmarm v3   22 Sep   gemini-3.1-pro-preview   0.4.0
+  kbuild v4   23 Sep   gemini-3.1-pro-preview   0.4.0
+  kvmarm v4   23 Sep   gemini-3.1-pro-preview   0.4.0
+
+So all this I think has a positive edge to it - by improving the verifier
+we can probably improve the false positive rate.
+
+Some suggestions:
+
+1. Sample a random subset of series authors to assess which of the reports
+   sent were considered accurate. This is a good methodology for actual false
+   positive rate.
+
+2. Do the same, only for a random set of _dismissed_ candidates - check to
+   see if anything good is being thrown out. Only you can do this one, as
+   the dismissed candidates and the verifier's reasoning are in your records
+   but never sent to anybody.
+
+3. You could even get a weak signal from detecting whether code at the report
+   site was altered or not, that wouldn't require voluntary input.
+
+It feels like step 1 could be really useful for honing/training the verifier to
+be more accurate.
+
+A couple of requests:
+
+1. An ability to mark something as a false positive so this data can proactively
+   be provided to you to help improve things.
+
+2. An ability to mark reports as 'rejected' so they are not re-emitted in each
+   respin, it's a real issue at the moment: a third of everything emitted
+   across these 11 postings was a repeat, and on later postings the repeats
+   plus new false positives are all there is.
+
+It'd be nice to update that section in the README about the false positive
+rate, though if so it's important to define what counts as a false positive
+and which denominator is being used (unique reports, total reports, etc.).
+
+That can wait on potentially retrieving more data on this though.
+
+I enclose CSV output for data relating to the 3 series above for reference,
+one row per emitted report with the verdict and the reason for it too.
+
+[0]: https://lore.kernel.org/sashiko/araV69I3WLn9I_Nu@gremlin/
+[1]: https://lore.kernel.org/all/20260917-b4-mmap-prepare-vma-flag-sanify-v3-0-4583d8a23bca@kernel.org/
+[2]: https://lore.kernel.org/all/20260923-build-speedup-v4-0-73128809a4a4@kernel.org/
+[3]: https://lore.kernel.org/all/20260923-kvm-arm-prefault-v4-0-d4b0b4dfa8c3@kernel.org/
+[4]: https://lore.kernel.org/all/3d6cca25-75ff-434a-b210-114451f8dbaf@lucifer.local/
+
+--
+Cheers, Lorenzo
+
+--d6bwfpisf7mfsmzw
+Content-Type: text/csv; charset=us-ascii
+Content-Disposition: attachment; filename="sashiko-mm-findings.csv"
+
+version,patch,severity,claim,verdict,note
+v1,01,High,file reference leak when file swapped and mapping merged,valid-acted,v2: new patch 1 with put_map()
+v1,01,High,file reference leak in call_mmap_prepare() error paths after swap,valid-acted,same fix
+v1,03,High,corrupted vm_start left in place on validation failure so cleanup unmaps wrong range,valid-acted,v2: restore vm_start before teardown
+v1,03,High,mmap_prepare_validate() failure leaks driver resources and file ref,valid-acted,file ref part fixed by put_map(); resources part not actionable (no VMA yet)
+v1,03,High,same leak in __compat_vma_mmap(),duplicate,
+v1,04,High,file leak on validation failure after file replacement,duplicate,same as patch 1
+v1,07,Low,dup.h missing map_kernel_discontig member,valid-acted,v2: mirrored
+v1,08,High,PAGE_SIZE * nr_pages overflow in end calculation,wrong,trusted driver input; mirrors existing code
+v1,08,High,bounds check does not handle huge nr_pages,wrong,same
+v1,08,High,infinite loop if nr_pages is 0,valid-acted,v2: reject zero batch
+v1,10,High,hfi1 PIO_BUFS clears VM_MAYREAD but not VM_READ,valid-acted,pre-existing; series validation covers it
+v1,10,Medium,RTAIL loses VM_DONTEXPAND via dma_mmap_coherent() on IOMMU path,valid-acted,v2: VM_DONTEXPAND set
+v1,10,High,hfi1 EGRBUF clears VM_MAYWRITE but not VM_WRITE,valid-acted,as above
+v1,12,High,ALSA vm_insert_page() uses stale vm_page_prot granting write,valid-acted,v2: recompute vm_page_prot
+v1,15,High,file leak when driver replaces desc->vm_file and validate fails,duplicate,same as patch 1
+v1,18,High,fb_deferred_io_mmap() NULL deref if init failed,valid-out-of-scope,pre-existing ssd1307fb; separate fix
+v1,18,High,ssd1307fb_probe() ignores fb_deferred_io_init() return,duplicate,same issue
+v1,23,High,mlock_count leaked on concurrent unmap,valid-acted,v2: munlock_vma_folio() tests VMA_LOCKED_MASK
+v1,23,High,concurrent rmap walks skip munlock while VMA_LOCKED_BIT cleared,duplicate,same issue
+v1,24,Medium,WARN_ON_ONCE reachable by unprivileged user is a DoS under panic_on_warn,wrong,requires buggy driver; standard kernel practice
+v1,24,High,resource leak in call_mmap_prepare() on validation error,duplicate,same as patch 1
+v1,24,High,double free when mmap_file() fails after file swap,duplicate,same family
+v1,32,High,MADV_WIPEONFORK uses vm_file to classify anonymous VMAs,wrong,stale against base; private /dev/zero already anonymous
+v1,32,High,__MADV_SET_ANON_VMA_NAME same,wrong,same
+v2,04,High,restoring vm_start before unmap_region() orphans PTEs,wrong,restoring is the only sane choice; lowered start would be another VMA's range
+v2,04,High,vma_close() before unmap_region() leaves UAF window,valid-acted,dismissed as unreachable in v2; independently confirmed by a human reviewer on v3; fixed in v4
+v2,04,High,no check for VM_WRITE set without VM_MAYWRITE,wrong,hardening idea presented as exploit; no driver does it
+v2,04,High,vm_end not validated,valid-acted,v3: symmetric end check added
+v2,05,Critical,map->vma_flags copied before call_action_prepare() so PFNMAP/IO lost,valid-acted,the real bug; also found by mm-ci bisect three days later
+v2,08,High,discontig_kernel_map_page() maps from folio head when given a tail page,wrong,documented contract plus VM_WARN
+v2,08,Medium,ops->init() state leaks on error,wrong,contract documents release via vm_ops->close
+v2,08,Low,NULL ops dereferenced before WARN,valid-acted,v3: guard added
+v2,08,High,apply_discontig_action() maps from folio head (restated),duplicate,second block for the tail-page issue
+v2,11,High,remap_vmalloc_range() requires the vmalloc base address,wrong,find_vm_area() is a range lookup
+v2,14,High,bpf arena zap_pages() walks unstable mm,wrong,pre-existing and incorrect; maple tree consistent under mmap_read_lock
+v2,16,Critical,same vma_flags ordering bug reported on patch 16,duplicate,same as patch 5
+v2,17,Low,dup.h vma_flags_can_merge() not updated to use is_fixed_mapping,valid-acted,v3: mirrored
+v2,19,Critical,ssd1307fb passes virtual address to __free_pages(),valid-out-of-scope,real pre-existing bug; separate fix
+v2,19,High,ssd1307fb ignores fb_deferred_io_init() return,valid-out-of-scope,repeat of v1 in effect; separate fix in progress
+v2,19,High,ssd1307fb i2c id table lacks driver_data,valid-out-of-scope,plausible NULL deref on sysfs instantiation; unverified
+v2,24,Low,casting bool to void * warns,wrong,verified no warning with gcc or clang under -Wall -Wextra
+v3,01,High,vma->vm_file NULL in compat_set_vma_from_desc() when VMA anonymised,wrong,path only reachable from a file's own mmap hook
+v3,01,High,same NULL on the success path,duplicate,second block for the same claim
+v3,04,High,vma_close() before unmap_region() UAF window,duplicate,repeat of v2 (valid)
+v3,04,Medium,resources allocated in mmap_prepare never closed on validation failure,wrong,no VMA exists yet; pre-existing behaviour on every such failure
+v3,04,Medium,file reference leak after hook swaps file and validation fails,wrong,put_map() at the abort label drops it
+v3,04,Medium,validation failure in call_mmap_prepare() skips close (restated),duplicate,second block for the compat-layer claim
+v3,08,High,discontig_kernel_map_page_range() page array read after get hook returns (stack UAF),wrong,true of the API but no caller exists; doc note at most
+v3,08,High,apply_discontig_action() dereferences the stale array (restated),duplicate,second block for the same claim
+v3,24,Low,bool to void * cast warns,duplicate,repeat of v2 (wrong)
+
+--d6bwfpisf7mfsmzw
+Content-Type: text/csv; charset=us-ascii
+Content-Disposition: attachment; filename="sashiko-kvmarm-findings.csv"
+
+version,patch,severity,claim,verdict,note
+v1,-,-,no findings emitted (8 patches reviewed; 89 candidates dismissed; nothing emailed),-,
+v2,01,Low,esr_trap_is_iabt() ignores ESR_ELx_EC_IABT_CUR so a future host-fault caller could misuse it,wrong,mirrors the KVM vCPU wrapper it replaces; stage-2 helpers only see LOW; the review itself says current use is safe
+v2,01,Low,esr_abt_is_exec_fault() inherits the same,duplicate,
+v2,06,High,pkvm_mem_abort() lacks the mmu_invalidate_seq retry protocol,wrong,pre-existing pKVM code the patch touches on one line; pKVM pins the page before mapping by design
+v3,07,Medium,kvm_guest_s2_mapping allocation gated on vcpu->arch.hw_mmu while the pgt uses s2fd->mmu so pre-fault on a nested vCPU allocates spuriously,valid-acted,v4: gate on s2fd->mmu (credited to Fuad who wrote "Sashiko might be right about this one")
+v4,-,-,no findings emitted (14 patches reviewed; 138 candidates dismissed; 14 "no issues" mails sent),-,
+
+--d6bwfpisf7mfsmzw
+Content-Type: text/csv; charset=us-ascii
+Content-Disposition: attachment; filename="sashiko-speedup-findings.csv"
+
+version,patch,severity,claim,verdict,note
+v1,04,Medium,kallsyms fopen "w" not "wb" corrupts on MinGW,wrong,kernel builds require a POSIX host; repeated v4 p3
+v1,06,Low,--emit-relocs only on final link breaks riscv relaxation/kallsyms,wrong,riscv passes --no-relax to every vmlinux link; repeated v2 p5
+v1,11,Medium,st_mtim breaks macOS host build,wrong,macOS is not a supported build host; repeated 5 more times
+v1,11,Medium,st_mtim (second site),duplicate,same as above
+v1,11,High,fwrite() unchecked in write_without_deps,valid-acted,v2: check ferror() before close
+v1,11,High,fclose() insufficient to catch earlier write errors,duplicate,same fix as previous
+v1,15,Critical,__this_module emission order breaks under CONFIG_RANDSTRUCT,valid-acted,v2: emit fields in offset order
+v1,16,High,seq not POSIX so modfinal-chunks empty,wrong,seq universal on build hosts; empty chunks are silently a no-op anyway; repeated v3 p14
+v1,16,High,empty modules.order gives make syntax error,wrong,tested: empty target list is accepted and nothing to finalise
+v1,17,High,read_text_file() infinite loop / no buf advance on short read,valid-out-of-scope,pre-existing modpost code; patch dropped in v2
+v1,17,Medium,concurrent warn() interleaves stderr,valid-out-of-scope,true but cosmetic; patch dropped in v2
+v1,19,Medium,insn_hash never freed,valid-acted,v2: freed
+v1,19,High,objtool_pv_add() list_add races across threads,valid-acted,v2: lock around pv_ops
+v1,19,Low,realloc() failure leaks decode_ranges,wrong,tool exits on the error; repeated v2 v3 v4
+v1,19,Medium,mark_sec_changed() races in threaded add_call_destinations,valid-acted,v2: call destinations resolved serially
+v1,19,Low,early return skips free_decode_ranges(),wrong,tool exits; repeated v2
+v1,20,Medium,-j8/-Zthreads=8 ignores make -j1 memory limits,valid-acted,v2 made opt-in (credited to humans); dropped v3
+v1,22,Medium,ifeq MAKECMDGOALS exact match fails with multiple goals,valid-acted,v2: filter
+v1,23,Medium,KGZIP := overrides user environment,valid-acted,v3: KPGZIP with KGZIP = gzip restored
+v1,23,High,pigz thread explosion under parallel modules_install,valid-acted,v2 modules use gzip; v3 pigz via jobserver
+v2,05,Low,riscv relaxation (repeat),duplicate,
+v2,09,Low,st_mtim (repeat),duplicate,
+v2,09,Low,target_of() name_len underflows for a bare ".cmd",valid-acted,v3: hardened against empty name
+v2,09,Low,st_mtim (repeat second site),duplicate,
+v2,09,Low,ferror() || fclose() short-circuit leaks the FILE,wrong,fatal error path of a short-lived tool; repeated v3
+v2,14,Medium,.module-common.o rule visible to every chunk child,valid-acted,v3: only top-level instance builds it
+v2,17,Low,realloc leak (repeat),duplicate,
+v2,17,Low,early-return leak (repeat),duplicate,
+v2,20,Medium,KBUILD_RUST_DIRS order-only dep bypassed for arch/x86,wrong,hypothetical; no arch rust directories exist
+v2,20,Medium,make all modules_prepare builds rust/ twice concurrently,valid-acted,v3: skip when a tree-building goal is present (credited to Kees)
+v2,20,Medium,rust-dir-ok firstword rejects arch/x86,wrong,same hypothetical as above
+v3,01,Low,sed comment removed while sed still needed,valid-out-of-scope,fair nit; v4 removed the sed entirely
+v3,07,Medium,System.map fclose() without ferror(),valid-acted,v4: ferror() before close (credited to Kees)
+v3,07,Medium,same at second site,duplicate,
+v3,09,Low,st_mtim (repeat),duplicate,
+v3,09,Low,st_mtim (repeat),duplicate,
+v3,09,Low,ferror short-circuit (repeat),duplicate,
+v3,11,Low,Kconfig cc-option accepts unknown -Wno-* flags,valid-acted,v4: probe positive form (credited to kernel robot; Sashiko was first)
+v3,11,Low,same for -Wno-packed-not-aligned,duplicate,
+v3,14,High,seq missing (repeat),duplicate,
+v3,15,High,reloc cache windows initialised to 0,wrong,true of the code; only trailing offsets past the last reloc scan linearly; negligible
+v3,15,High,init_reloc_cache leaves tail windows at 0,duplicate,same issue
+v3,15,High,trailing lookups fall back to linear scan,duplicate,same issue
+v3,16,Medium,free_insns() on early decode failure walks a NULL insn_hash,wrong-but-technically-right,reachable only if cfi_hash_alloc/init_pv_ops/classify_symbols fail; one-line guard; repeated v4 p18
+v3,17,Low,realloc leak (repeat),duplicate,
+v3,17,Medium,mark_sec_changed race in threaded jump destinations,wrong,benign write of true; Sashiko says so itself
+v4,01,Low,--dump-section fails when .modinfo absent (tinyconfig),wrong,unverified but robot-tested across four versions; built-in MODULE_LICENSE tags keep the section
+v4,03,Low,"wb" (repeat),duplicate,
+v4,12,High,cc-option-str undefined so CET flags dropped,wrong,series depends on Kees's cc-option-str series as the cover states
+v4,12,High,same for -fzero-init-padding-bits,duplicate,
+v4,12,High,same for ld-option-str,duplicate,
+v4,17,Low,compare_reloc_order returns 1 for identical elements,wrong,nit; qsort never compares an element with itself in practice
+v4,17,Medium,trailing windows linear scan (repeat),duplicate,
+v4,17,High,unsorted path returns 0 causing endless rebuilds,wrong,index rebuilt once under lock and sorted set true
+v4,18,Medium,NULL insn_hash (repeat),duplicate,
+v4,19,Low,realloc leak (repeat),duplicate,
+v4,19,High,double-checked sorted flag set before cache populated,wrong-but-technically-right,dropped indexes are only rebuilt outside the threaded phase; moving sorted=true after the loop closes it
+v4,21,Medium,make modules_prepare tar-pkg races on rust/,wrong,nonsensical goal combination
+
+--d6bwfpisf7mfsmzw--
