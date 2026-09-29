@@ -1,175 +1,162 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6960A4CDDEF
-	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 14:51:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3A93D7D94;
+	Tue, 29 Sep 2026 15:33:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790693512; cv=none; b=CcFCfFcAWGPAZc2JAJtyvjuSNEgVbQo0nT/C/TzmrGr313b741WVJ2ruK0NFEMMlvEsApMceWij/JTcZbBkMDXCb9Hl4Btgpi/bC+oUs07tANA+U5BvVEBgDPOpTSc50UUpAK3bc0QASU9X1mUEVNzt0H4jl1j9KaWoMNYE53WI=
+	t=1790696008; cv=none; b=pQWUF9/mRfdGrhS12wCGrTJurtBNEre401j/gP8l/NO+qddphUKhAfMnSZrLAHpL5ykFunaEQnmjB4l3pyI77U2fQNEp+ksXT44MXge3NAywQncHLP8CVzGDvJlQ19cTZirFx31MKS47/IgdowC+Pz/wS26rzbbXWo5ErTlxKjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790693512; c=relaxed/simple;
-	bh=MRuyxQXJp40bL8dwNATYRFY1ijbLSnp0uV/0N1XZbr4=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=s04Z//+N0lJb15D24FYFmtSQQbrlkUZ6kpMEug7UJLm698bAfVwkR7U4dnz5/O+8k0am2u94ykj4I4Vz2urEktaXERylG1y+loZOKmmsZQXxgXB+jRAJkA56SSR/t4/bEeUkyMEMQ0XNxTurzLnQqccDJvrx5IrqSLQnWDIxLE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cNKhX3fQ; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1790696008; c=relaxed/simple;
+	bh=cigZ80+8+q+9BMKi9FwSNiC3z3eLiNZDSw6eUBsoWTY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mzTBWVsLTTLToVKqjtOcoa7l9wxYlDl69f/ZU7+XpygDpjDyxCzUfHhEiXA/0Kc6SxRSlL/jW91XUhr5fsQKrdksVl0h/ntumUvtEHrtECFkTeOoOr5qIhgYEaYP/TiZoOjHbTgJ3Qpx+eMgFJ3x6g6W1KnV+nb/rQ44ZvSVNxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=c1izC6k1; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cNKhX3fQ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1790693510; x=1822229510;
-  h=message-id:subject:from:to:cc:date:in-reply-to:
-   references:content-transfer-encoding:mime-version;
-  bh=MRuyxQXJp40bL8dwNATYRFY1ijbLSnp0uV/0N1XZbr4=;
-  b=cNKhX3fQSxuTRzexVI3paYq6fIk8HiUyDgvCnhEt0E/RK2jYM9zdEeJp
-   PbS4mYi/UzkWRiyXoI+VLumQpSpzz3D1BWWg88G8+UPmmQ75tUmmDTtAf
-   VlzfeX4HFolilhiYgVFlOVUMaH0/RNDpHQFhWwz7HhCToQua8f7c+UrRv
-   2yI8qhoMnzO3WojJVXYCd3iSvO/Ax8yijrCc/KUMH+0BSxFnZwi23d0mE
-   E/ikFU4aA0/gzhbiF8h+LDls678+MA8Nv1JaPjooSk1bampZceAx+V4gk
-   yINd6/lIqPNL5VxNSjRHXYJfciesaFP3NPelRcRieReMDmcv7z5IUtacc
-   Q==;
-X-CSE-ConnectionGUID: HuBgtQn3S82OHf4rPa9pBA==
-X-CSE-MsgGUID: nqYkb1SGSmmSRDWwLr1ElQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11920"; a="95227504"
-X-IronPort-AV: E=Sophos;i="6.27,130,1787036400"; 
-   d="scan'208";a="95227504"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Sep 2026 07:51:50 -0700
-X-CSE-ConnectionGUID: 5lNNmvaXR3GwIqXpUfPdBw==
-X-CSE-MsgGUID: 9WrxSw64SeCt9TTbkKQkMg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,130,1787036400"; 
-   d="scan'208";a="278735337"
-Received: from abityuts-desk1.ger.corp.intel.com (HELO [10.245.244.222]) ([10.245.244.222])
-  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Sep 2026 07:51:49 -0700
-Message-ID: <6783d40b1d6881ed8ea58ae15d5b83a1092544cc.camel@linux.intel.com>
-Subject: Re: [PATCH v4 1/3] drm/xe: Don't unload the driver until all drm
- devices are freed
-From: Thomas =?ISO-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: intel-xe@lists.freedesktop.org
-Date: Tue, 29 Sep 2026 16:51:46 +0200
-In-Reply-To: <20260929144106.68C6C1F000FF@smtp.kernel.org>
-References: <20260929142910.47480-1-thomas.hellstrom@linux.intel.com>
-	 <20260929142910.47480-2-thomas.hellstrom@linux.intel.com>
-	 <20260929144106.68C6C1F000FF@smtp.kernel.org>
-Organization: Intel Sweden AB, Registration Number: 556189-6027
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="c1izC6k1"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68TB5d9t4017642;
+	Tue, 29 Sep 2026 15:33:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=5AclAy
+	en8c5KNNg7Ubb6G80Gn1XHE6FWHqe/kKE9Wzs=; b=c1izC6k1g/QqfdxHhqQ580
+	fHTT5mkZAOP15+0nK5MdZ4RnIAWdna8fDguRra/Dcqf4UAd+L0eexInAZypRSXS5
+	txhi3pf50zGSWfue9nUzie2yiC5HSsp0lCaw5cbcZNV9k3dr8prHJHarog+8M9ab
+	r+SGWaQIDfxSaV9a9rDjDEhSLkQy35Mlwqt66a0i6sseaDLceAaAzqHqWlixg+0B
+	h5lqollpYn/BAi/bjVgL+oXdPZuzyht+HgQQAAHwoaL5qZL/1gJZxhreB3jsABdZ
+	tDS3ZwLGGBHXmlbq1UfayPicbvlV7DeGY0eSy0Flymc2egxzrzdJ3AlPkcAdl5Kw
+	==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5pt72wc-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Tue, 29 Sep 2026 15:33:24 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68TF1xYP1657703;
+	Tue, 29 Sep 2026 15:33:23 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4gxrcptgfd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Sep 2026 15:33:23 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com [10.39.53.231])
+	by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68TFXN5Y22807072
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 29 Sep 2026 15:33:23 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 435EE58056;
+	Tue, 29 Sep 2026 15:33:23 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id BBE835805E;
+	Tue, 29 Sep 2026 15:33:22 +0000 (GMT)
+Received: from [9.61.145.13] (unknown [9.61.145.13])
+	by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Tue, 29 Sep 2026 15:33:22 +0000 (GMT)
+Message-ID: <2c024860-4799-4410-ac57-f67a434cb5ee@linux.ibm.com>
+Date: Tue, 29 Sep 2026 08:33:21 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 10/11] scsi: ibmvfc: register and use asynchronous sub
+ CRQ for events
+To: Dave Marquardt <davemarq@linux.ibm.com>, sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
+References: <20260925044900.414340-1-tyreld@linux.ibm.com>
+ <20260925044900.414340-11-tyreld@linux.ibm.com>
+ <20260925050903.EEEC21F000FF@smtp.kernel.org> <87a4p157r6.fsf@linux.ibm.com>
+Content-Language: en-US
+From: Tyrel Datwyler <tyreld@linux.ibm.com>
+In-Reply-To: <87a4p157r6.fsf@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: svXTy-bW_Ge31vp4N3IGwyxtR0IRTqyL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfX3fDSwhUurHhH
+ 0hACeq9Sw0Hf4czK3fhsaU3jbi+vu2pg138eSA6avfwTPI1msF+S09VINmRMo5W14uoSnYz4EmW
+ YBh+C57IdMiQWO+uSF/maCnkU5Jaijp7y9maC1nyP8nLCZ9s4ikaD1xtP5v7foCuBSQxKm2eiHJ
+ ks8hB7e697i5ZhISx2CbHpqpXtLf3NGR8DqErDPggzs5pGvinKeYtQUaBTDxd8BTGz+prWSl4V4
+ d5y3U0qkuEK5f+C/LTmWxrGEhdjpmcgIsgXObGHDeISip7KnLvF21cTmu5xihzgNR16PEf3Mb6S
+ 9vaLK7cmTgpLPyj/5dM8NbXzQscmOFlQ7FEr6JzhadDFt7pvYiPkUgEdKpzYQrEVgzoDEH0o2hV
+ mpyt5wpHABjnbfYa2gQVx5oXzBatVEfnyr65qBUO04OjatOPwj9woaCKFTy0ZuYZWnBmcDkdUTL
+ haN+m9Gq91k/PBJZN7w==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfX5hQoN49BH+ip
+ VtwcNyLlC8s41j+ktMk9wo7x4io1aSU1TpQthQ/BVPxeERC37UQKKxd4IHcaANqnQOsIOksTfef
+ ntTnlJizpjL0Cfo9BOKSd/QYFm1zyGA=
+X-Authority-Analysis: v=2.4 cv=EY5d0/mC c=1 sm=1 tr=0 ts=6abbda44 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=BAGDUCPmOm5mR4Ag3-sA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: svXTy-bW_Ge31vp4N3IGwyxtR0IRTqyL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 suspectscore=0 adultscore=0 clxscore=1011
+ malwarescore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609290060
 
-On Tue, 2026-09-29 at 14:41 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue(s) to consider:
-> - [High] xe: module unload race causing instruction page fault in
-> xe_device_destroy()
-> --
->=20
-> commit 4a4203d8cd4165e1a99345416f131e7eafe530d1
-> Author: Thomas Hellstr=C3=B6m <thomas.hellstrom@linux.intel.com>
->=20
-> drm/xe: Don't unload the driver until all drm devices are freed
->=20
-> This commit introduces a device count and a module exit hook to wait
-> until all bare drm_device references are freed before unloading the
-> xe
-> module. It uses a 20-second timeout with wait_var_event_timeout() to
-> block rmmod from unloading while devices remain active.
->=20
-> > diff --git a/drivers/gpu/drm/xe/xe_device.c
-> > b/drivers/gpu/drm/xe/xe_device.c
-> > --- a/drivers/gpu/drm/xe/xe_device.c
-> > +++ b/drivers/gpu/drm/xe/xe_device.c
->=20
-> [ ... ]
->=20
-> > @@ -391,6 +394,9 @@ static void xe_device_destroy(struct drm_device
-> > *dev, void *dummy)
-> > =C2=A0		destroy_workqueue(xe->destroy_wq);
-> > =C2=A0
-> > =C2=A0	ttm_device_fini(&xe->ttm);
-> > +
-> > +	if (atomic_dec_and_test(&xe_device_count))
-> > +		wake_up_var(&xe_device_count);
->=20
-> [Severity: High]
-> Does this wake up the rmmod thread while still executing inside
-> module text?
-> If the thread executing xe_device_destroy() is preempted immediately
-> after
-> wake_up_var(), rmmod can complete the module exit sequence and unmap
-> the
-> xe module text. When the preempted thread resumes, it might attempt
-> to
-> execute the function epilogue in unmapped memory, potentially causing
-> an
-> instruction page fault.
+On 9/28/26 3:30 PM, Dave Marquardt wrote:
+> sashiko-bot@kernel.org writes:
+> 
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [High] scsi: ibmvfc: double registration of scsi_scrqs and missing async_scrqs registration
+>> --
+>>
+>> commit d44dbe8300fc3639dbfcef8f1950443462606f5b
+>> Author: Dave Marquardt <davemarq@linux.ibm.com>
+>>
+>> scsi: ibmvfc: register and use asynchronous sub CRQ for events
+>>
+>> This commit wires the async sub-CRQ into the sub-CRQ lifecycle so it is
+>> allocated, registered, and freed alongside the SCSI channel queues.
+>>
+>>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> [ ... ]
+>>> @@ -986,6 +987,7 @@ static int ibmvfc_reenable_crq_queue(struct ibmvfc_host *vhost)
+>>>  	spin_unlock(vhost->crq.q_lock);
+>>>  	spin_unlock_irqrestore(vhost->host->host_lock, flags);
+>>>  
+>>> +	ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs);
+>>>  	ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs);
+>>>  	ibmvfc_reg_sub_crqs(vhost, &vhost->nvme_scrqs);
+>>>  
+>>
+>> [Severity: High]
+>> Could this introduce a regression where scsi_scrqs is accidentally registered
+>> twice instead of registering async_scrqs?
+>>
+>> Because the first call was added as ibmvfc_reg_sub_crqs(vhost,
+>> &vhost->scsi_scrqs), it appears to skip the async sub-CRQ registration
+>> entirely. This leaves the async sub-CRQ permanently disabled after a CRQ
+>> re-enablement, which could prevent asynchronous event handling (like FPINs)
+>> after recovery.
+> 
+> Yes, this is broken. The added call should be
+> 
+> 	ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs);
 
-This warning is a consequence of removing the first patch. But it's a
-false positive. If the drm_dev_put() is executed within an xe module
-workqueue we wait for that work item to complete later in the unload
-sequence. If called from a driver hook the caller holds a module
-reference around the drm_device reference.
+Still wrong. s/scsi_scrqs/async_scrqs
 
-/Thomas
+-Tyrel
 
+> 
+> and will be fixed in v12.
+> 
+>> Also, wouldn't the double registration of scsi_scrqs cause
+>> ibmvfc_register_channel() to fail? If H_REG_SUB_CRQ returns an error for an
+>> already registered channel, this will abort the registration and clear
+>> vhost->do_enquiry = 0, functionally breaking multi-queue capabilities during
+>> standard operational recovery paths.
+> 
+> -Dave
+> 
 
-
->=20
-> > =C2=A0}
-> > =C2=A0
-> > =C2=A0/**
->=20
-> [ ... ]
->=20
-> > @@ -1501,3 +1508,25 @@ struct xe_vm *xe_device_asid_to_vm(struct
-> > xe_device *xe, u32 asid)
-> > =C2=A0
-> > =C2=A0	return vm;
-> > =C2=A0}
-> > +
-> > +/**
-> > + * xe_device_exit() - Device subsystem exit function.
-> > + *
-> > + * Exit function to be called at module unload time.
-> > + */
-> > +void xe_device_exit(void)
-> > +{
-> > +	/*
-> > +	 * Wait for all devices to be freed. 20s is well above the
-> > typical
-> > +	 * maximum dma_fence signalling time, so warn and keep
-> > waiting if
-> > +	 * we're still not done by then, since it may indicate a
-> > leaked
-> > +	 * xe_device reference is stalling module unload.
-> > +	 */
-> > +	if (!wait_var_event_timeout(&xe_device_count,
-> > +				=C2=A0=C2=A0=C2=A0
-> > !atomic_read(&xe_device_count),
-> > +				=C2=A0=C2=A0=C2=A0 HZ * 20)) {
->=20
-> [Severity: High]
-> Is there a risk that the rmmod thread waiting here proceeds to exit
-> and unmap
-> the module before the waker has safely exited xe_device_destroy()?
-> Once
-> awoken, this thread is unaware that the waker is still executing in
-> module
-> text.
->=20
-> > +		pr_warn("%s: Waiting for %d xe device(s) to be
-> > freed before unloading.\n",
-> > +			DRIVER_NAME,
-> > atomic_read(&xe_device_count));
-> > +		wait_var_event(&xe_device_count,
-> > !atomic_read(&xe_device_count));
-> > +	}
-> > +}
