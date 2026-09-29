@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EED72931DF
-	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 04:52:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7B2296BCF
+	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 06:08:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790657574; cv=none; b=scFerpJ52unevQ62J6cV3z1ODdjDTjAFu89CLr33p891H4slcK4H82cOTwWgPKDQIzqqUGlmBmH0ouo09c4AkVa4xcj+b9YkoR1FPpKB8LkF+oiLYsIF+hb+kz7l99asyaYorv1XLaq/J61/6Yc3aPEdGOYVnr71Vfrb5Pm6vJM=
+	t=1790662136; cv=none; b=BKmoBAlwsafEHmRTFkGNatdNBxlar1LUHJgASMPI/6Cts0yqTPlf/SVQpzADO9RgcFA172k3sd7OiK2EwcsCAbJGscc978+Yhm9+bjesPKF5gUF3uFDVzeiaGd6HoLtj8uOfpYJR0kYWuvkKgNFSHINWNBtEOD1DRLgQxWj21rE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790657574; c=relaxed/simple;
-	bh=2fp2od85mOgG29trnedjFlVlk/StEn9F4v2Bf5U7kxg=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ep6khSHDRsD85/UzkNECXZ8gijcbieivLE1CHEiS0gP4yaxHS0uDxok9iajz33KHbvgqLnmRn3dhgMOjABp6m6j4K/wd06Y6G8f08qArTgZNO+U+McXoIU1eUF78dKV1ssZkJW+PeWEFbUajNwWZJs8V2fz5qlbdz82MUPdIgKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LL92kmA+; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1790662136; c=relaxed/simple;
+	bh=e7HfHug5Y8Z7SBTfW+u3rv0Z3Ai9il89WEgBk7p5lqM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=s1MweesN9l4CkwWMKELiDfqZhcNUYLC20iNcOkOSwkgNFj8LoBlKv5JhNudHoGG7XlWmbYlrMzXXhsig84e5xExpFQGAU1Re2zU60nZwcJUSslF6zO2iTsnhXFL/qiYHNvpteVp4Idttw/6+dJU9AF9UC2zDkXplFY9tcDb0jAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=g38+X7+m; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LL92kmA+"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="g38+X7+m"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1790657573; x=1822193573;
-  h=message-id:date:mime-version:from:subject:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=2fp2od85mOgG29trnedjFlVlk/StEn9F4v2Bf5U7kxg=;
-  b=LL92kmA+aoKvnXaoUCILH5j0DS5arpjLa3y6j+d1gAHr4SVhoqTsbaga
-   /84vNsIQmXxgg1SVVscSU2HYyALljzYInHVcUPb0lOO7fZpX7dA7l7l9N
-   Jau+LNjuaxIcpeQbC8Q3mThYwgHsD6diBTGO4vccGClvgy9eX2hWC3oyz
-   RAGf6wnBtD8W8P3Z+GGytxpouzSNqjLzTQJmeBIPVkK4SfIgPaSM/Rrv/
-   mtEgLzWdVbXnTAnuF5fwFwMedMpa8qXHRFpMCjmp2Zwl8Xhf0IMsmPHNs
-   wxElTbpYrlCwTWQNfzsmGyWjwrfxzz3ZjgAPTxLYIfZNYWz6+yA+VV6xC
-   Q==;
-X-CSE-ConnectionGUID: ZrrJv+wUTruFcYeLW5rFDQ==
-X-CSE-MsgGUID: qCUvepeVRZ20+DlYdTrexg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11919"; a="101937227"
-X-IronPort-AV: E=Sophos;i="6.27,129,1787036400"; 
-   d="scan'208";a="101937227"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2026 21:52:52 -0700
-X-CSE-ConnectionGUID: vWgnRSQXRMOHqO7tMtMIIQ==
-X-CSE-MsgGUID: OeD0c+NRR/yBi8+vsZZgDw==
+  t=1790662134; x=1822198134;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=e7HfHug5Y8Z7SBTfW+u3rv0Z3Ai9il89WEgBk7p5lqM=;
+  b=g38+X7+mn8lMQyNzIBf+2J4E14k2BEAw1CObm2peTz/a9+wKwl+GQllP
+   ZjztuvV/GamiYeDEy78hlvt6GwfdwsSxu3D3rkKWzQ5c5VpZNVkqZMCR4
+   +/xfxO7UIAESIMOOAfsCbwjEQQQ3EOLGCc1HFmYoavPy0zgF+LDkKMbha
+   22AsBYIMSCyyS3iz643MW43z7d08U535kGlsPjpbLNQ2zhbHn2f60SN31
+   pZVHRNMSbYOmNOcV9eaLoBuxLYFteE1O2WUzL437T/iWIgdiOhh4+TZgJ
+   rE28oOCiAPHpuwLLRLyUXfY4O+FrmD3Op4jc5Fu9vyvlnUGwOT0oOKYP3
+   g==;
+X-CSE-ConnectionGUID: Y43ZPm4WSJqNu4GSntfMUA==
+X-CSE-MsgGUID: thssRBfpS5a5u2UW5w2yPw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11919"; a="116900999"
+X-IronPort-AV: E=Sophos;i="6.27,130,1787036400"; 
+   d="scan'208";a="116900999"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2026 23:08:53 -0700
+X-CSE-ConnectionGUID: eAS+XA21QVu5PE2J8fYNmg==
+X-CSE-MsgGUID: PL1oSM0CQnemSG4LoAoirQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,129,1787036400"; 
-   d="scan'208";a="283337930"
-Received: from dbhadane-mobl1.gar.corp.intel.com (HELO [10.66.117.203]) ([10.66.117.203])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2026 21:52:51 -0700
-Message-ID: <77862b03-640a-49e3-a7a7-82cddb106b05@Intel.com>
-Date: Tue, 29 Sep 2026 10:22:49 +0530
+X-IronPort-AV: E=Sophos;i="6.27,130,1787036400"; 
+   d="scan'208";a="274492597"
+Received: from unknown (HELO [10.238.1.105]) ([10.238.1.105])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2026 23:08:52 -0700
+Message-ID: <1827c1cc-a543-4a27-afb5-ccef49493055@linux.intel.com>
+Date: Tue, 29 Sep 2026 14:08:49 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,68 +52,81 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@Intel.com>
-Subject: Re: [PATCH v4 10/12] drm/xe/lmtt: Report invalidation errors using
- structured xe_log API
+Subject: Re: [PATCH 07/15] perf/x86/intel: Reject SAMPLE_READ for
+ no-counter-snapshot ACR events
 To: sashiko-reviews@lists.linux.dev
-Cc: intel-xe@lists.freedesktop.org
-References: <20260928092114.1610203-1-dnyaneshwar.bhadane@intel.com>
- <20260928092114.1610203-11-dnyaneshwar.bhadane@intel.com>
- <20260928093659.4A08F1F000FF@smtp.kernel.org>
+Cc: linux-perf-users@vger.kernel.org
+References: <20260928074309.898043-1-dapeng1.mi@linux.intel.com>
+ <20260928074309.898043-8-dapeng1.mi@linux.intel.com>
+ <20260928080451.9139A1F00893@smtp.kernel.org>
 Content-Language: en-US
-Organization: intel
-In-Reply-To: <20260928093659.4A08F1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20260928080451.9139A1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 
-
-On 28-Sep-26 3:06 PM, sashiko-bot@kernel.org wrote:
+On 9/28/2026 4:04 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] xe_lmtt: missing newline in xe_log_err format string
+> - [Medium] perf/x86: Validation bypass for SAMPLE_READ on ACR events via software events
 > --
-> 
-> commit d8b97ea5041b192b44dac80a8e9209e9058d6519
-> Author: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
-> 
-> drm/xe/lmtt: Report invalidation errors using structured xe_log API
-> 
-> This commit replaces xe_tile_sriov_err() with xe_log_err() using the LMTT
-> component tag for LMTT and MERT invalidation failures. It preserves the
-> SR-IOV prefix in the newly structured log messages.
-> 
->> diff --git a/drivers/gpu/drm/xe/xe_lmtt.c b/drivers/gpu/drm/xe/xe_lmtt.c
->> index 0c726eda93906..fe77b3ec06807 100644
->> --- a/drivers/gpu/drm/xe/xe_lmtt.c
->> +++ b/drivers/gpu/drm/xe/xe_lmtt.c
-> 
+>
+> commit cc3bcd9a57c859b5993ae9c14bd06faec36a3c33
+> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
+>
+> perf/x86/intel: Reject SAMPLE_READ for no-counter-snapshot ACR events
+>
+> This commit restricts the use of PERF_SAMPLE_READ for Auto Counter Reload (ACR) 
+> events to prevent perf from reporting invalid counts. It ensures that 
+> SAMPLE_READ is only permitted for PEBS-backed ACR events with counter snapshot 
+> support, as non-PEBS events can be auto-reloaded before software reads them.
+>
+>> diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+>> index 377ff39124206..3fc3795534bf7 100644
+>> --- a/arch/x86/events/intel/core.c
+>> +++ b/arch/x86/events/intel/core.c
 > [ ... ]
-> 
->> @@ -302,14 +303,15 @@ void xe_lmtt_invalidate_hw(struct xe_lmtt *lmtt)
->>   
->>   	err = lmtt_invalidate_hw(lmtt);
->>   	if (err)
->> -		xe_tile_sriov_err(tile, "LMTT invalidation failed (%pe)",
->> -				  ERR_PTR(err));
->> +		xe_log_err(tile, LMTT, err, "%s invalidation failed.",
->> +			   xe_sriov_printk_prefix(xe));
-> 
-> [Severity: Low]
-> Does this format string need a trailing newline?
-> 
-> Without a trailing '\n' in xe_log_err(), the kernel printk system might leave
-> the log line unterminated, potentially causing subsequent logs to be
-> concatenated to this line.
-Noted,I will update in the next patch.
->>   	if (xe_device_has_mert(xe) && xe_tile_is_root(tile)) {
->>   		err = xe_mert_invalidate_lmtt(xe);
->>   		if (err)
->> -			xe_tile_sriov_err(tile, "MERT LMTT invalidation failed (%pe)",
->> -					  ERR_PTR(err));
->> +			xe_log_err(tile, LMTT, err,
->> +				   "%s MERT invalidation failed.\n",
->> +				   xe_sriov_printk_prefix(xe));
->>   	}
->>   }
-> 
+>
+>> @@ -5184,6 +5239,10 @@ static int intel_pmu_hw_config(struct perf_event *event)
+>>  		if (hweight64(cause_mask) > hweight64(hybrid(pmu, acr_cause_mask64)) ||
+>>  		    num > hweight64(hybrid(event->pmu, acr_cntr_mask64)))
+>>  			return -EINVAL;
+>> +
+>> +		if (!intel_pmu_allow_acr_sample_read(event, has_sample_read))
+>> +			return -EINVAL;
+>> +
+> [Severity: Medium]
+> Does this validation fully prevent PERF_SAMPLE_READ from being applied to ACR
+> groups?
+>
+> Because this check is inside intel_pmu_hw_config(), it is evaluated when the
+> x86 event is initialized. If a user creates an ACR hardware event group
+> initially without PERF_SAMPLE_READ, it will successfully pass this check.
+>
+> What happens if the user subsequently creates a Software PMU event (like a
+> dummy tracepoint) with PERF_SAMPLE_READ set, and attaches it to the existing
+> ACR hardware group using the leader's group_fd?
+>
+> Since perf_event_open() allows software events to be attached to hardware
+> groups without re-invoking the hardware PMU's validation callbacks for
+> existing members, it appears intel_pmu_hw_config() won't be re-evaluated
+> for the hardware events. 
+>
+> When the appended software event overflows, won't perf_output_read_group()
+> read all siblings and still capture the imprecise auto-reloaded values of the
+> ACR hardware counters?
 
+Yes, it's a real risk. But it's hard to implement the check for last
+software event in current framework. If the last event in the group is a
+software event, then intel_pmu_hw_config() won't be involved to validate
+the software event.
+
+I suppose this could be just a corner case, we may leave this as a known
+issue. Thanks.
+
+
+
+>
+>>  		/*
+>>  		 * In the second round, apply the counter-constraints for
+>>  		 * the events which can cause other events reload.
