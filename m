@@ -1,107 +1,178 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26ED821A42D;
-	Tue, 29 Sep 2026 08:33:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9E447989C
+	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 08:43:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790670834; cv=none; b=CuXMzMN4W8qfABROIf8J2fknxl2fnNllE3iOpLFmnUhSModx9m+Kj/WtkcCDxgNl+BJWqv8yvnAzClY9uMG3P98An0wLP/EqhypgBrcQ+exs4QNaAQ2+xTMO8amMlYRpQh9jqstJXh3hMgCjwqxkKSEZzEvZnmKp3waUesqy6/Q=
+	t=1790671409; cv=none; b=jgX+7DMiFCr073sUWVyhtmRidIdxscl1GAzlRtGJ2cYouUkTWA6BJVCyWLljjPfY/CSvjVlk9/WxbMOgzw1JFMCB9itkg4u34vo9x8iWIqm20Cob75H2TQqWrwBlupwS3ESaC6XVGi9gT5IW9Tbh9Xmc7gCEcySzCeKqb6+0MLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790670834; c=relaxed/simple;
-	bh=g+moG+Xqr5GkW3sv8BKDaFh8Xd89UQOgPOu5R98NveE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R5xEzuhz03NMsUYE6zNwyyF/ugaCSNdJcHsHj4dBqb85ujB/aEuQHTVpvEIMakbgV9wtSvb1S24pjHXqn5AItg71l9WyV7fjtkAk0b2ZFDyQtO/eAkfR3kGBFaboGFokKZ9ST3l/bzG7tKDTA0BD3z8HNZjRdRNRz8S57UjfNQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PDn8zDZr; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790671409; c=relaxed/simple;
+	bh=tqigy/RPPNbZFnODG/49qM6N3MCyj/CtBjinXZTerNQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=fgAX23+Efgb/cjPmbdwKREDNVAvqyjHpJryBKSSgz0iBBt7dB7qwCSbSD+fGUvYAweaVY9H/i0eH1SOEtODqm95PZpF+6V80Ilg1mJJy4oPaiifJpIXO0kWf6bfdJSMupxmkGVTtKZb8h3GuNSdIp6c1EuzKlLlxbEoaiQDO3nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=FwJSdlhP; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PDn8zDZr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E811F000FF;
-	Tue, 29 Sep 2026 08:33:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790670832;
-	bh=LG8m6jXzQIhCHVyOAXzZvwVDGqI2AMU4RU+I5bDg540=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=PDn8zDZrIH400CAXSTKYmLkCmL/dBOORP/cc9m1+TN7A/ECrH26I3iYOo++ADTUUx
-	 o+0Xql+Sn1045NwsBfNmuT+44GZ3gLN7Oz7bz5m4Sof/S0yhc8dYlPPITahrh535a7
-	 vnFHs3SckEIy63Zj6NL3GKVOQASJvt39r5YD/Wk9L1pZ1IQi92oFTKV8lDSsoJr5Ky
-	 J345R2b2TO46IGtgWHFZ+dnQE88bL/B7+XoQJZc2Qe5AR7t8SWx2cVWGJBtB7K93hg
-	 pY9QXaiauoMc3UNxizTTQc6NkIWv2z6inGkbq69Lcg86nNUVgZuehgSlohmkdHys/J
-	 mC5aZVF6Msbxw==
-Date: Tue, 29 Sep 2026 11:33:47 +0300
-From: Leon Romanovsky <leon@kernel.org>
-To: Selvin Xavier <selvin.xavier@broadcom.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-rdma@vger.kernel.org
-Subject: Re: [PATCH for-rc v3 5/8] RDMA/bnxt_re: Validate num_sge in
- bnxt_re_post_srq_recv()
-Message-ID: <20260929083347.GH563127@unreal>
-References: <20260922061230.7909-1-selvin.xavier@broadcom.com>
- <20260922061230.7909-6-selvin.xavier@broadcom.com>
- <20260922010711.3E3C21F000FF@smtp.kernel.org>
- <CA+sbYW0A0gS2dhgLF18etO9mnMzhxvLbDmru6v17t+7qQ4Hizw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="FwJSdlhP"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 2079F4E410BA;
+	Tue, 29 Sep 2026 08:43:24 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id E8296601BD;
+	Tue, 29 Sep 2026 08:43:23 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id A436710329732;
+	Tue, 29 Sep 2026 10:43:21 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1790671403; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=XUukpv0RaIWaTqnSN1VNGyI5f7tSEwPscxKOXLtVRsE=;
+	b=FwJSdlhP6pe7/Kd5jKpAUiVPxH2cAT/tFLWQW31u5oY9KXpioM2fM2lBXBrN7EaCOR0lZQ
+	GPCSN35ECSA+IZ+FQyzKB1y2aFYqfRUYn67yBrENCT40V+/B+DvGrwl9jsujzDrQELI7rS
+	y4z3dS64LUrkOKMA8yyZFtPyRaNfT2uAHxTSZGbDaVVpgQsfBJdI/Qv7gu8esxJwz3fMMI
+	Bat5YHlY7cnxHFwptYGBTRSwWlRj4cVw+9s9kqzJGfS7Y5rO8gsE5Yl8DI8NYZ509wOqJw
+	x+eQT0aAxcwlQc4bzoXipCGebj/W4DTDoADbMLN4bZ3aHyTbho6Wvme9ggh/hg==
+Date: Tue, 29 Sep 2026 10:43:20 +0200
+From: Herve Codina <herve.codina@bootlin.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
+ wsa+renesas@sang-engineering.com, robh@kernel.org,
+ devicetree@vger.kernel.org
+Subject: Re: [PATCH v5 2/4] clocksource/drivers: Add support for the Renesas
+ RZ/N1 timers
+Message-ID: <20260929104320.0e6eeadc@bootlin.com>
+In-Reply-To: <20260911151837.709F41F000FF@smtp.kernel.org>
+References: <20260911150456.893761-1-herve.codina@bootlin.com>
+	<20260911150456.893761-3-herve.codina@bootlin.com>
+	<20260911151837.709F41F000FF@smtp.kernel.org>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CA+sbYW0A0gS2dhgLF18etO9mnMzhxvLbDmru6v17t+7qQ4Hizw@mail.gmail.com>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Tue, Sep 22, 2026 at 10:09:52AM +0530, Selvin Xavier wrote:
-> On Tue, Sep 22, 2026 at 6:37 AM <sashiko-bot@kernel.org> wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [High] rdma/bnxt_re: un-ratelimited error log in spinlock allows DoS
-> > --
-> >
-> > commit bb7479cd7b3a22e9b0e6b2862ab2b9133790528b
-> > Author: Selvin Xavier <selvin.xavier@broadcom.com>
-> >
-> > RDMA/bnxt_re: Validate num_sge in bnxt_re_post_srq_recv()
-> >
-> > Add a check if max sge for SRQ is exceeding the device maximum.
-> >
-> > > diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-> > > index c35ed6ed03516..3cccef8e2e837 100644
-> > > --- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-> > > +++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-> > > @@ -2399,6 +2399,13 @@ int bnxt_re_post_srq_recv(struct ib_srq *ib_srq, const struct ib_recv_wr *wr,
-> > >               /* Transcribe each ib_recv_wr to qplib_swqe */
-> > >               wqe.flags = 0;
-> > >               wqe.num_sge = wr->num_sge;
-> > > +             if (wr->num_sge > srq->qplib_srq.max_sge) {
-> > > +                     ibdev_err(&srq->rdev->ibdev,
-> > > +                               "Limit exceeded for SRQ Receive SGEs");
-> >
-> > [Severity: High]
-> > Is it safe to use an un-ratelimited ibdev_err() here while holding the
-> > srq->lock spinlock with interrupts disabled in bnxt_re_post_srq_recv()?
-> >
-> > Since an unprivileged user can repeatedly invoke the RDMA uverbs API with a
-> > wr->num_sge larger than srq->qplib_srq.max_sge, could this regression allow a
-> > local user to flood the kernel log buffer and potentially cause soft lockups?
->  It is possible to reach the kernel driver using an under privilaged
-> user, but there is no support in rdma-core/libbnxt_re to call
-> ibv_cmd_post_srq_recv and this code path will not be reached as of
-> now. So I think this can be ignored.
+Hi,
 
-We cannot assume that rdma-core is trusted. Anyone can build it locally and use it
-to interact with the kernel. In addition, syzkaller uses our UAPI structures
-and commands directly, without involving rdma-core.
+On Fri, 11 Sep 2026 15:18:37 +0000
+sashiko-bot@kernel.org wrote:
 
-Thanks
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] The 16-bit per-CPU timers will never be chosen over the arch timer due to their low rating, resulting in asymmetrical per-CPU tick devices.
+> - [Medium] Clocksource and sched_clock return raw decreasing values if the timer is a down-counter.
+> --
+> 
+> commit 0389aacef8150cde2d480116d05b7b23c573015b
+> Author: Herve Codina (Schneider Electric) <herve.codina@bootlin.com>
+> 
+> clocksource/drivers: Add support for the Renesas RZ/N1 timers
+> 
+> The Renesas RZ/N1 timer block controller is the controller in charge of
+> timers available in the Renesas RZ/N1 SoCs family. This controller handles
+> 8 timers (6 16-bit, 2 32-bit). Each timer has its own interrupt and prescaler.
+> 
+> > diff --git a/drivers/clocksource/timer-rzn1.c b/drivers/clocksource/timer-rzn1.c
+> > new file mode 100644
+> > index 0000000000000..a66a045309f63
+> > --- /dev/null
+> > +++ b/drivers/clocksource/timer-rzn1.c  
+> 
+> [ ... ]
+> 
+> > +static u64 notrace rzn1_sched_read(void)
+> > +{
+> > +	return readl_relaxed(rzn1_sched_clock->base + RZN1_TIMER_CURRENT_COUNT_REG);
+> > +}
+> > +
+> > +static u64 rzn1_clksrc_read(struct clocksource *cs)
+> > +{
+> > +	return readl_relaxed(rzn1_sched_clock->base + RZN1_TIMER_CURRENT_COUNT_REG);
+> > +}  
+> 
+> [Severity: Medium]
+> If the timer is a down-counter, will these functions return a decreasing value?
+> 
+> The clocksource and sched_clock cores require monotonically increasing values.
+> If the timer counts down, returning the raw value could cause the
+> (now - last) & mask calculation to yield large forward time jumps, breaking
+> system timekeeping and scheduling.
 
-> >
-> > > +                     rc = -EINVAL;
-> > > +                     *bad_wr = wr;
-> > > +                     break;
-> > > +             }
-> > >               bnxt_re_build_sgl(wr->sg_list, wqe.sg_list, wr->num_sge);
-> > >               wqe.wr_id = wr->wr_id;
-> > >               wqe.type = BNXT_QPLIB_SWQE_TYPE_RECV;
-> >
-> > --
-> > Sashiko AI review · https://sashiko.dev/#/patchset/20260922061230.7909-1-selvin.xavier@broadcom.com?part=5
+Timers available in the hardware increases their counter.
 
+These functions return increasing values.
 
+> 
+> [ ... ]
+> 
+> > +static int rzn1_local_timer_starting_cpu(unsigned int cpu)
+> > +{
+> > +	struct rzn1_timer *timer;
+> > +
+> > +	/* We assign the first and second 16-bit timer as per-cpu timers. */
+> > +	if (cpu >= 2)
+> > +		return 0;
+> > +
+> > +	timer = &rzn1_tab_timers[cpu + RZN1_TIMER_BASE_INDEX_16BIT_TIMERS];  
+> 
+> [ ... ]
+> 
+> > +static void rzn1_timer_clkevt_init_ced(struct rzn1_timer *timer, const char *name,
+> > +				       int irq)
+> > +{  
+> 
+> [ ... ]
+> 
+> > +	/*
+> > +	 * 32-bit timers are fed with a 25 MHz clock directly derived from the
+> > +	 * main PLL (1 GHz). The arch timer, ARMv7 CP15 in RZ/N1 SoCs, is fed
+> > +	 * with to a 6.25 MHz clock.
+> > +	 *
+> > +	 * The clock of the RZ/N1 timers block is a stable one and the RZ/N1
+> > +	 * timers have a higher resolution than the ARM CP15 one.
+> > +	 *
+> > +	 * Also those 32-bit RZ/N1 timers are assigned per-cpu.
+> > +	 *
+> > +	 * Use a high rating for the 32-bit RZ/N1 timers in order to have them
+> > +	 * chosen by the system.
+> > +	 */
+> > +	timer->ced.rating = timer->width == 16 ? 200 : 460;  
+> 
+> [Severity: High]
+> Is it intentional that the 16-bit per-CPU timers are assigned a rating of 200?
+> 
+> In rzn1_local_timer_starting_cpu(), the 16-bit timers are explicitly assigned
+> as the per-CPU tick devices. However, because the ARM arch timer typically has
+> a higher rating (400-450), won't the 16-bit timers always be outranked and
+> ignored by the clockevents core?
+> 
+> This appears to contradict the comment stating that 32-bit timers are assigned
+> per-cpu, and could leave CPU 1 falling back to the arch timer while CPU 0
+> might use the global 32-bit timer, resulting in asymmetrical per-CPU tick
+> devices.
+> 
+
+First the comment is not fully correct. Only 16-bit timers are registered
+per-cpu. I will update the comment in the next series iteration.
+
+We have one 32-bit timer shared between cpu (cpumask set to cpu_possible_mask),
+two 16-bit timers per-cpu with cpumask set to the cpu registering the timer in
+rzn1_local_timer_starting_cpu().
+
+When timers are registered (calls to clockevents_config_and_register() function),
+tick_check_preferred() [1] is called.
+
+This function prefers a local cpu timer even if the local cpu timer has a rating
+lower than a shared cpu timer.
+
+With that pointed out, we cannot have asymmetrical per-CPU tick devices.
+
+[1] https://elixir.bootlin.com/linux/v7.3-rc5/source/kernel/time/tick-common.c#L289
+
+Best regards,
+Hervé
