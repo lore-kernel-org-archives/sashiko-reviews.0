@@ -1,111 +1,196 @@
-Received: from mta0.migadu.com (out-141.mta0.migadu.com [91.218.175.141])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from TYVP286CU001.outbound.protection.outlook.com (mail-japaneastazon11021092.outbound.protection.outlook.com [52.101.125.92])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9061230C62D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 01:22:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.141
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790644934; cv=none; b=oYviy5OYqCM2PtEAy88ty5QlNRzpcK5MqhFjQoJc453R0lpUgIYLYgaJ/Z0lUmE/3Q0tTKvAT9CGhQ+piE55oJRxBqKy0jRha/Dwu+ZpftFsJOFeqRDLM8W39orj9m4ISlgC6qPiin+h+0Cilt0EVtgtK59kz6tZ6d5Xm/Ecokk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790644934; c=relaxed/simple;
-	bh=y6zwP3b2fxxBONzUl72JLW4nTSFbQsYTTWD04VWcprk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tTTpxrodoSpsa7ZKew5A3TYGr1qjshdADEE01pmS4Bh66JxIf7uf/hocXGBDZJ0tfioQAuYZg1WJBfkbOJ48OvDptrhedFOtYDt/cwOBddXFxbykbllYAk7E+DY18xdvL0F/OrnutE5EQnVT/QG9/YH3nQg0y9zF8LYP/ccCyUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=csQ2F424; arc=none smtp.client-ip=91.218.175.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF842367D3;
+	Tue, 29 Sep 2026 01:27:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.125.92
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790645249; cv=fail; b=ZvhQnXr82TD5cUF1rXa3TB8VwLPJDyx4F/ALXQ4AB7JrFFXpJKsKWoBq1ICRGAvEH7uTM+R/bwF7HLwAFX1knfL1E3rsma0TKpAjDBXf4whanbpSgomZGxxWo4PrbA4qrJmWcBb/ya9pC4BfZttMU4hSw4vZb5IUqEBxTKgghLg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790645249; c=relaxed/simple;
+	bh=gbWj557I/0qJzNXA7YujDCBINRG7K5vgOQhyLCg4Mqg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=jdYh+4oO6U4MlfJKRBuJoAbHIagCoydkGZiRtdXnv5qmtVcHi0xiMKkvxayG6VnlLu46mgN0bziLE4oiO8X4EpBwucqXzZ81/5t3moBsW/wuXauhON71BjzgRRCgC/mqMG3G5yJgaDCiXTbRSrq6cQ9uT332sIT9k1bKG2rIqKI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=uWna/mdF reason="signature verification failed"; arc=fail smtp.client-ip=52.101.125.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="csQ2F424"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=y6zwP3b2fxxBONzUl72JLW4nTSFbQsYTTWD04VWcprk=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790644929; v=1; x=1791249729;
- b=csQ2F424N0nEzbZgEWW2TqgN3RVvIITuTUrMqNtOvn9uLfe3ccp96NpXcsXQszLquOPo/Hb8
- a6UVHOL4++prHudRC/S2PjeUSPUTO5lg/9z4IhM8yR9yB2V5VT0ib2MwZOCI026eqDYbe+KuFwa
- EP1Gr5T5YAkJEzBpOEzVZPpQ=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 64465a751bbcb560;
-	Tue, 29 Sep 2026 01:22:09 +0000
-X-Mizu-Trace-ID: 64465a751bbcb560
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <0499fb85-d323-4141-b76e-bc9812b1d142@linux.dev>
-Date: Mon, 28 Sep 2026 18:22:02 -0700
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="uWna/mdF"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ndoJenDSoXgchQ3HggW+D4Elckgt7cUB01zB2vz3ihS06ongjJrdbcVGc+Lr4jT5mDkFYxn8g4WJCwIVLFptm2kY/P/xpumbBlpbEN8hrav9dp44gXSG6qCbUaTb/Xe3mWNZPNoy6YSKsMA3TJkBw/2huiFbQXKS9Bx87wT6PxNX41jaklNTRI4wOE3dSscnLeczWQl7FHf1xiGn7y7mZGMcI4mPTGxnl2xhQQ8Vkw++ulaklcyLZCyyjqRyF+9Qa4uwVbfS86CLYGfgebr9tuwM4OB5pvG5WawvCae9OrNCjoXxQk9RagKYMF+URD3F6ZwkoPVtw3JWMkjR1q1n1A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=s9vbW/14TWHT/Ba6hhSRq0Y8oP+SWLAfFcENQxI8zyY=;
+ b=TRT5sKc3sXbUaIiQVVzL5DiLUHE8qk80EUM7xW6kVpV5VO/sAc4nT1SyRAHxw0hgiHFfZgix9O+k3jsLLQ2WKwLWgcOhELMeRsw/HF/g7rZ9M2jF3nJ5381nHsMEeGXmqtGSUgQ39DSzxtOzYKJDn58aPi9BlaRRmarPO5Hl3kg5K7hNvTJhjLjPPb6DljMNvcFXLQtjhKx35E7/DLBTBHKEy7+YzJjh2cAO/gVi+RalotEdLNypJdQEyrG0Fxw+mbvtVzQNh5QEsmAobHmHbx1qvXdyFSuSl2/XLfOCMU7nfBp9tqAgyXf4c5UrTllavpQQfzD9I1AgeLFvEnOOZA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=s9vbW/14TWHT/Ba6hhSRq0Y8oP+SWLAfFcENQxI8zyY=;
+ b=uWna/mdFfcY/zCzRh/8FwdZ/ivCLU6FrOfi6I7oPSgaYIWMLKFvjiBjLFQvrpq9aHrgxnOizY0CAmYSnH9esT32EtzD7YXit5UHugyP32BRw6uqPs46yJkYKObr+5eeTGItgQ3ijrt6leYd6Ig0gkrCVQ22+Qv9unAbhjxb97F4=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:325::11)
+ by TY4P286MB7207.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:366::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.24; Tue, 29 Sep
+ 2026 01:27:22 +0000
+Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::cce5:2aa8:53f9:dba9]) by TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::cce5:2aa8:53f9:dba9%5]) with mapi id 15.21.0451.022; Tue, 29 Sep 2026
+ 01:27:21 +0000
+Date: Tue, 29 Sep 2026 10:27:20 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: sashiko-reviews@lists.linux.dev
+Cc: ntb@lists.linux.dev
+Subject: Re: [PATCH v3 11/15] NTB: ntb_transport: Wait for RX completions
+ before resetting a QP
+Message-ID: <yt4rrm57ovjgxukko72ubfprr7maffakfj65rooobyq2wawn65@eeoah2kpci2y>
+References: <20260928152550.3354675-1-den@valinux.co.jp>
+ <20260928152550.3354675-12-den@valinux.co.jp>
+ <20260928155410.783AD1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260928155410.783AD1F000FF@smtp.kernel.org>
+X-ClientProxiedBy: TY4P301CA0006.JPNP301.PROD.OUTLOOK.COM
+ (2603:1096:405:26f::10) To TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:325::11)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] tracing: fgraph: allocate shadow stacks inline
- with GFP_NOWAIT
-To: sashiko-reviews@lists.linux.dev, Peter Zijlstra <peterz@infradead.org>,
- rostedt@goodmis.org, Andrii Nakryiko <andrii@kernel.org>
-Cc: bpf@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
- LKML <linux-kernel@vger.kernel.org>, kernel-team@meta.com
-References: <20260929005411.4105448-1-vineet.gupta@linux.dev>
- <20260929005411.4105448-2-vineet.gupta@linux.dev>
- <20260929010327.024281F000FF@smtp.kernel.org>
-From: Vineet Gupta <vineet.gupta@linux.dev>
-Content-Language: en-US
-In-Reply-To: <20260929010327.024281F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TY7P286MB6866:EE_|TY4P286MB7207:EE_
+X-MS-Office365-Filtering-Correlation-Id: 796639bb-e558-4f25-d9ba-08df1dc8cf33
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|366016|10070799003|23010399003|1800799024|22082099003|18002099003|10067099003|56012099006|4143699003;
+X-Microsoft-Antispam-Message-Info:
+	iQkeOlMnWUq5qb+yG8FpEXA+AlGSL9/MqLsDyOI9/nr+HwFBI+Ks4Id0GsBNiZOMsR6+MsZ3gg2QxOfRcJOgqyg6aE3i6ISqGY5wyn802+HSJrKPKNFITu7VW2/QUVeZ9JtNLxJbM376usRHgL7UWsuSo0n4L0ffKpP8YelDrwz1gVExLgMqpzJUWlR2oWrpzS2Ohp0MgbnBGIMAGHkFdxr+B0JrnKYXZXp+ETgWAUQOg1+Hg3Fh750ujGMhtnGC2PSAiwKg8raxyIzcKxAE4YX0WG1H7bakQXhnk9i9Rj+XccLldCe4LDrbtMKCK514rc6znH2I9/icPQEb5TIkVYEUvMHfJz2lLrJsTK2hOi3IVdUb0qY6kVq1ftSzjVZMZb3uMBtlIkS/GRLBRIeKpJejdyIUtNf/tAH+MWZquGBGn0TXiokv4dTvu90rXi6xwH+4K6R7rwnLdsl4wmjgeaFH3lVIsTPwMuVAvcqknwJUrZVJnrsOcIUtIsbMCJ/r10skeOVNVlfrTvQ+0UrBG9+UDmj0tXRhblH8M3unXjGq8Q+tT8yPMMnDtcOXNMHdsddtbKTCJb9KuiwTJw8JY2HX8tWAzVZhuKl2jOxsIiU=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(10070799003)(23010399003)(1800799024)(22082099003)(18002099003)(10067099003)(56012099006)(4143699003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?mSNCF1HqrbL436kYscmPzwRh97QGDebEvFNdscjyJ4wDCR/eFu5gcv2/LK?=
+ =?iso-8859-1?Q?OEodqWNYoceeQqgxHA71EAjj3n+jrSGOksovyB+b4ga85vIrlfxR34riqu?=
+ =?iso-8859-1?Q?//d+X+PsJJhSyIy7uNU295yG7l8+u9TT+5e5glqznuXosNgrpZududy1nk?=
+ =?iso-8859-1?Q?vtX2LMA7zRw8ps/qVs5JZ8m77Hu1exb5nSZY6sD9oTHH2Gjqk6jMAisBJD?=
+ =?iso-8859-1?Q?YqCLATK36HdFwKj5OouNfXUg63+aoRbw+hz2ru+ZLO/kCng+hAu1vNWWTW?=
+ =?iso-8859-1?Q?lsMkW9zmEz0vRM80hOAhalBNYuo4pHjxX/Ecju1EZqIWYkEsVlX4eVkOu5?=
+ =?iso-8859-1?Q?JjQY2guRSuk7vWxwncK+8mS0I+0XGeFdPxIgVvflAEudB/TSQGGYiwG5uB?=
+ =?iso-8859-1?Q?hw3BEGrjA/mJ+wCHS65PSJg8DhR1OwATGugWI4CFmIVuNxpB6MgFb/YMMl?=
+ =?iso-8859-1?Q?/tOr229qdpjZLry3aXcxe1/YaitPHiHlF8CPzQugM3XWmFdQejYMYtrX8I?=
+ =?iso-8859-1?Q?J3bJ+rAhmDAGl7BdpKyrhHRkU5f9TkCUBtrrTVlIWdma4BIueSJLFksSVc?=
+ =?iso-8859-1?Q?wQYTXvRVbGqgfFIotEFv667Lln5RMFPYxQNvaaWoS/Y8V4ygZmglIkb/Q0?=
+ =?iso-8859-1?Q?cnAUhoksMFRpj2L6EhRGluYs46bLq6y/D0EOtn+TUF23X5vLg+wWg6BlXY?=
+ =?iso-8859-1?Q?5IcT/y60GmP8LphswRcwGhRZD5u5/auU1FwflBsPevqILxUsws/8Zq19wQ?=
+ =?iso-8859-1?Q?Tw/ktmETq9weSeZJH4ypY9GXxWG6jd+ad3bs9j3yri1ikpSlveYTLApY67?=
+ =?iso-8859-1?Q?GsP6542le1Sq/CThgi0sikJgwewPMULEoJOu/OWgkHeEBlSy5GVeB8YLec?=
+ =?iso-8859-1?Q?NUDlXkdQ7oTBYxaQiWwMUuAFLBZqeC2e1hx9xKuOKC0gkRcNy5JZjqCcSy?=
+ =?iso-8859-1?Q?7pFdMFanNfJ0aXe6W5vmbg4fG5gGOY/BJ3/esPx1Hd1pBKbrMZimSzXrAX?=
+ =?iso-8859-1?Q?EvxXo27mI433EZWGLInKxyYFtKJqsMFHy+VZLxIWQ/zpj1AJAyM8vgSu1/?=
+ =?iso-8859-1?Q?7nALhd4V26WQcQqakLODlwuK+FdXxRkbqaz81YTqH3ZZjlqXUvHFC4k8o8?=
+ =?iso-8859-1?Q?/2jbF4nqUNTNMYgMLWQTDK5ov6MZcNLg9zBo6wSSlRfwenjrgdTRHNyBcm?=
+ =?iso-8859-1?Q?tBjsWVIASjbUez41eLDxmTFxom12gq51GNDOxJ8ANdiC9CwB9OptL/0Yyp?=
+ =?iso-8859-1?Q?SjO8Oif70AU8UB3f4j4BbQt4WxERfYEgeD6f6qjNRBFndmjB6J8osFmU2z?=
+ =?iso-8859-1?Q?YS9afvcMxJAGmHZjaqvZUJQYVp5uY/jtECuRstvHyuZiPUr1x+cF31rKOA?=
+ =?iso-8859-1?Q?M+k6Ycgf2JBbzeNXIo4PkQKqXHAxPa669LJolywcnKG9ul8OnUSkx8NLv3?=
+ =?iso-8859-1?Q?K/Dw9xouUHWMFZkUaaAHDsjJmjRhi2fyHJLtB20gofC9EjMTDIX+NUNlkL?=
+ =?iso-8859-1?Q?hMsJBP5V3SrMcnLCMrtwTIPmEd3mSVq5L7WvrRuTYR3IOK9mE1CzqWtEBP?=
+ =?iso-8859-1?Q?0d4HdoS+AN7HRJqrEdfWI81LW1KVYPtt0CK1Mjlr6LV6Ej1rTJTAmpDESV?=
+ =?iso-8859-1?Q?46yN4tjKbLEX+JuO9JR8YwG0+gdQZDGmzL9ZxOUTBYPO+q2FXeXGrspKmw?=
+ =?iso-8859-1?Q?B9gF0KkDGew0xDVGvQ/Fj5YW6KfgX7eFh3bongmTbClZ6/v/LFycqR2DCo?=
+ =?iso-8859-1?Q?nJBfgnpsx7uD+MAlD5jCXvTn/rtqfW1szJXdWRhSBTzkFoP+pyBEZn6jhg?=
+ =?iso-8859-1?Q?tsqSkp3eq1FiFANN0P/V8MtHpYTSSY/jZmv89MKqYKKyiPGRR3up?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: 796639bb-e558-4f25-d9ba-08df1dc8cf33
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2026 01:27:21.8614
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: C4BW73Q56HiDr8LO+AAbAfrkC6/I6J7cA7kT7o+NG+MfbS7vKm+2c2ZU2tdJ1pXcSFOa1Sk51SdYpoMo5sd5wg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY4P286MB7207
 
-On 9/28/26 6:03 PM, sashiko-bot@kernel.org wrote:
+On Mon, Sep 28, 2026 at 03:54:10PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] cleanup: mixing goto-based error handling and scope-based cleanup
+> - [High] ntb_transport: unbounded wait in ntb_qp_link_cleanup() can deadlock
 > --
->
-> commit a6de528fef00ef67da15965a7a8b3944fa92b053
-> Author: Vineet Gupta <vineet.gupta@linux.dev>
-> Subject: tracing: fgraph: allocate shadow stacks inline with GFP_NOWAIT
->
-> This commit aims to resolve performance regressions with ftrace graph tracing
-> when there are a large number of tasks. It replaces the pre-allocated batch
-> approach with inline allocation using GFP_NOWAIT, avoiding repeated sweeps of
-> the task list. Additionally, it transitions the RCU read-side section to use
-> scoped_guard(rcu) instead of manual rcu_read_lock and rcu_read_unlock calls.
->
->> diff --git a/kernel/trace/fgraph.c b/kernel/trace/fgraph.c
->> index 40d373d65f9b9..1c5ccc3f80d53 100644
->> --- a/kernel/trace/fgraph.c
->> +++ b/kernel/trace/fgraph.c
+> 
+> commit a765c073e53bc7d3e624d4540c20299c1d832801
+> Author: Koichiro Den <den@valinux.co.jp>
+> 
+> NTB: ntb_transport: Wait for RX completions before resetting a QP
+> 
+> This commit adds a wait loop to ntb_qp_link_cleanup() to ensure the rx_post_q
+> is fully drained before tearing down the connection. This prevents memory
+> windows from being freed while they are still actively in use by the DMA
+> hardware on systems that lack proper terminate and synchronize operations.
+> 
+> Link: https://lore.kernel.org/r/20260907144257.767281F00A3A@smtp.kernel.org/
+> 
+> > diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
+> > index 9f71af97a8ef9..8f1acf44bb53c 100644
+> > --- a/drivers/ntb/ntb_transport.c
+> > +++ b/drivers/ntb/ntb_transport.c
+> 
 > [ ... ]
->> @@ -1057,26 +1056,37 @@ static int alloc_retstack_tasklist(unsigned long **ret_stack_list)
->>   		}
->>   	}
->>   
->> -	rcu_read_lock();
->> -	for_each_process_thread(g, t) {
->> -		if (start == end) {
->> -			ret = -EAGAIN;
->> -			goto unlock;
->> -		}
->> +	scoped_guard (rcu) {
-> [Severity: Low]
-> Does this mix goto-based error handling and scope-based cleanup within the same
-> function?
->
-> Looking at alloc_retstack_tasklist(), the function retains the legacy goto free
-> path in the initial pre-allocation loop (just before this block), while
-> introducing scoped_guard(rcu) here.
->
-> The cleanup subsystem guidelines recommend that for a given routine, we should
-> convert all resources that need a goto cleanup to scope-based cleanup, or
-> convert none of them. Mixing these paradigms creates confusing ownership
-> semantics and is highly prone to double-free or resource leak regressions upon
-> future modifications.
->
-> Could we either convert the ret_stack_list array cleanup to use scope-based
-> helpers, or stick to the manual rcu_read_lock() and rcu_read_unlock() here to
-> keep the error handling style consistent?
+> 
+> > @@ -960,6 +967,17 @@ static void ntb_qp_link_cleanup(struct ntb_transport_qp *qp)
+> >  	disable_delayed_work_sync(&qp->link_work);
+> >  	ntb_transport_set_qp_active(qp, false);
+> >  	tasklet_kill(&qp->rxc_db_work);
+> > +	/*
+> > +	 * Some DMA engines lack terminate/synchronize ops (e.g. IOAT), and
+> > +	 * DMA_COMPLETION_NO_ORDER rules out cookie-based waits.
+> > +	 *
+> > +	 * Waiting for rx_post_q to empty suffices: ntb_complete_rxc() finishes
+> > +	 * its MW accesses before removing each entry under ntb_rx_q_lock.
+> > +	 * qp->active is false and rxc_db_work is stopped, so no new RX DMA
+> > +	 * can be submitted.
+> > +	 */
+> > +	while (!ntb_transport_rx_idle(qp))
+> > +		fsleep(1000);
+> 
+> [Severity: High]
+> Could this loop wait indefinitely and cause a deadlock?
+> 
+> If a pending RX DMA operation never completes due to a wedged DMA engine,
+> hardware fault, or dropped interrupt, ntb_complete_rxc() will never be called
+> to remove the entry from rx_post_q.
 
-And a third option is to drop the fallback allocation completely and 
-return -EAGAIN and come back. Granted I don't have much experience of 
-typical handling of GFP_NOWAIT fails and retrying immediately: would 
-that recover at all or does that take us back to where we started ? Peter
+It is a trade-off. If we time out and continue clean-up, DMA or its callback may
+still acceass the freed memory, bringing back the UAF this patch is meant to
+prevent.
 
-Thx,
--Vineet
+> 
+> Since the caller of this function, ntb_transport_link_cleanup(), acquires
+> nt->link_event_lock prior to calling ntb_qp_link_cleanup(), an unbounded wait
+> here could permanently deadlock the NTB link state machine and result in a
+> hung task.
+
+The RX completion path does not ever take link_event_lock, so holding it does
+not prevent RX completion. There is no circular wait here, but clean-up can
+indeed remain blocked if the dmaengine gets wedged (probably broken).
+
+Best regards,
+Koichiro
+
+> 
+> Would it make sense to add a timeout mechanism to this wait?
+> 
+> >  
+> >  	ntb_qp_link_down_reset(qp);
+> >
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260928152550.3354675-1-den@valinux.co.jp?part=11
