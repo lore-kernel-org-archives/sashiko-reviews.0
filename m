@@ -1,79 +1,79 @@
-Received: from relay.hostedemail.com (smtprelay0013.hostedemail.com [216.40.44.13])
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9132B559300
-	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 19:48:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB473A5E9F
+	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 20:36:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790711289; cv=none; b=rNl9qQocRbFZT8GT3030Sfj/VZQcMQTr9y3GWlikn74IZ45h7L83fbwW0hxMTyVamW3h1EVMwolYxzerDBUHEMC4Jya1wc2wI7V4AMzeL1+277FLWu2kBLw/XzeHfW1r4x/DVflpXglJp/GFfx7E7JefNW/PMuPX0zVO1Wb2c/c=
+	t=1790714204; cv=none; b=uuf9YvzH3kPdYSZCkSIjiG33g+HPjN7jd3UYZ/DoGVpq3s79/bGcpEO3HR2txUDFjFYV2jmmzSnN7CI122/Xp72Ugf75mw2yoXyVAF1lQrholibxR9T7lv1exlEQi12q9OEYtqMZosSZFOS0Sedy/F2Vk9nwq/VUzv6Jdqy8ld4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790711289; c=relaxed/simple;
-	bh=DNUlYcJcSEUFHMm5obKzwX9J6libSg16uQzAP1pKcQA=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XFf8nafIlr3JUbI+RZzNQGFzamR8qGTFxxmc4QHGMqeToiDCsygCxFVLSw+OfqsFi9Ko1yVVoMeB/wJCQzkofiEU+d+UikJzl05YNCFsTDpJFHyLCSU4EBi3JSTeNhdhPfA1d3NgCCO8ZzACdwF1U6hyYQeRe03GETtYOPJ0hto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b=Q/vE5jO+; arc=none smtp.client-ip=216.40.44.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+	s=arc-20240116; t=1790714204; c=relaxed/simple;
+	bh=yhpu5AzNOI5Y10YA5nFBH+Nkn7LBfLtKpgOknmId3pg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=K8gQ1791KjwrZTDe+TaScyNa590nTp89PJhA+BicdUJ635xdm35Rfgzaqp8ujxyoUBPkAbZrAgH0TrIixLymf1oygWm3dmTBJeTqAxbMPpkzsg7WqXUj2qzJ0AIu1ROyozZ8by0Eq/7gScRhBX/zKkIV+3lLUE+Oxfjbtyu+m94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=WAH/Mp+1; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=goodmis.org header.i=@goodmis.org header.b="Q/vE5jO+"
-Received: from omf16.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay05.hostedemail.com (Postfix) with ESMTP id E3658401C8;
-	Tue, 29 Sep 2026 19:39:11 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf16.hostedemail.com (Postfix) with ESMTPA id BC27120018;
-	Tue, 29 Sep 2026 19:39:09 +0000 (UTC)
-Date: Tue, 29 Sep 2026 15:39:06 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org,
- linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH] fprobe: Protect fprobe_return() with guard(rcu)()
-Message-ID: <20260929153906.6b1f9c29@fedora>
-In-Reply-To: <20260928212251.58fa1f68f33d4c967a8e8b1c@kernel.org>
-References: <179055575009.241711.6358052647499787191.stgit@devnote2>
-	<179055575973.241711.6618845269004184577.stgit@devnote2>
-	<20260928005114.9C9FC1F000FF@smtp.kernel.org>
-	<20260928212251.58fa1f68f33d4c967a8e8b1c@kernel.org>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="WAH/Mp+1"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 2F6871A1068;
+	Tue, 29 Sep 2026 20:36:40 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id E7F47601BD;
+	Tue, 29 Sep 2026 20:36:39 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 8876B10329865;
+	Tue, 29 Sep 2026 22:36:37 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1790714198; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=yhpu5AzNOI5Y10YA5nFBH+Nkn7LBfLtKpgOknmId3pg=;
+	b=WAH/Mp+13aZ5eDr8kOEsC1v3Ok9ucToS9GnpiqyopQtL29j1sHMbGhqHPlXUaJBc8KihKl
+	KSW3Q2eUAT9N8eEvvMKurcqFeUFtvkTd0lFqGSGlwReBdAC6GqfJjvkhT0e77v+Fs5FgGc
+	sB6a4aPme+tBjZLoP5U6K28wdW1zbq2uFCMCte+Y2Iptg/sOkLtTjQ8hj/RGRwMtemj44u
+	aZiWAaTDFXvFfsu4ATJOpFSHcIoIm4jAuHBqrnB9OVKWl5wDojJK2qkQkUWikm9SBRdP4a
+	ePkus+vRyVlAVqxNuksxJKAqmuvZ1W97trLVnkMf0CgyVrl6U1uaB7HtImEOwA==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev,  devicetree@vger.kernel.org,
+  linux-clk@vger.kernel.org,  conor+dt@kernel.org,  robh@kernel.org
+Subject: Re: [PATCH v5 8/9] clk: nuvoton: ma35d1: get HXT/LXT from DT
+In-Reply-To: <20260929145618.187A21F000FF@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Tue, 29 Sep 2026 14:56:17
+	+0000")
+References: <20260929-perso-ma35d1-upstream-clk-v5-0-68533e935ee4@bootlin.com>
+	<20260929-perso-ma35d1-upstream-clk-v5-8-68533e935ee4@bootlin.com>
+	<20260929145618.187A21F000FF@smtp.kernel.org>
+User-Agent: mu4e 1.12.12; emacs 30.2
+Date: Tue, 29 Sep 2026 22:36:36 +0200
+Message-ID: <871pab6bhn.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: BC27120018
-X-Stat-Signature: 64rxwjxc7h8xzymq7yf5xeybsu56coga
-X-Rspamd-Server: rspamout03
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX19EJTXI6Y25m7rHCu8yDfU5KgFid2hBqK4=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=jjbDCGbXfyKSSVMX4uWSBtgxjUjoFTH1WWvMXYQ5xp0=; b=Q/vE5jO+eO2yzw9ZhHjRYjYfdACrM+b7Nrh55JffvIvJbJHRGGTn8zeKuOUTdMwcrR7tgbpbADF7ZFoqHTjelLmSxaQbIljq/iq4q5A7sIRb0KaypUMEGdE6WzPfoBnx4/3v4TP96JABqqIsJE61YHDa4LsQWMDFdcYSslpydcM=
-X-HE-Tag: 1790710749-136500
-X-HE-Meta: U2FsdGVkX1+7Asc9l6BwE9XzBFYbgHRhNF04fNCkailSZIkioM+DDR0DbXeJnPdiFRn1ib7iJH2jDjVxQL1Zi41lx0MPtGUsMVgVw0baOMX7H7djyukoLxFc9dvgAAG1dv3gF3MJcbQLb8B1ywlRZVTrbQatDkpIAN/atmPch/YU+/Mo34APRIQsF+mskG1kFgk/qXHdpShuc+AElaySxZpOKG1nwY8orQUiJWINazFILgk3pB/I6qbVSoOZwckY7mJZVcda5NpbAA4JXGdE7eVTdr8vN1Mp88KJIDML9g4scKWBcgaxByIY/T/ym30Oxlw664IBfsXDMQ8FSPGP59n6Im52ez3x1Wj3bXvU8sDj9MnNp7GcWg==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Mon, 28 Sep 2026 21:22:51 +0900
-Masami Hiramatsu (Google) <mhiramat@kernel.org> wrote:
+On 29/09/2026 at 14:56:17 GMT, sashiko-bot@kernel.org wrote:
 
-> 
-> Hm, OK. Maybe we need to add something like checking rcu_watching, but
-> FTRACE_OPS_FL_RCU does not work correctly because fgraph_init_ops() only
-> configures subops (gops->ops). ftrace_startup_subops() does not propagete
-> that flag to graph_ops. (I guess that is yet another problem?)
-> 
-> To guarantee no illegal RCU usage or lockdep splats if an instrumented
-> function returns while RCU is offline, we can check 
-> 
->  if (unlikely(!rcu_is_watching()))
-> 	return;
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [High] clk: nuvoton: missing IS_ERR check causes permanent probe
+> deferral
 
-If rcu isn't watching then that is a bug.
+Gasp. Yes that's correct.
 
-If you enable CONFIG_FTRACE_VALIDATE_RCU_IS_WATCHING then the
-ftrace_test_recursion_trylock() tests for rcu_is_watching(). We
-actually had that as default for some time to trigger any ftrace calls
-that were outside of RCU watching and was fixed.
+> - [Medium] clk: nuvoton: hardcoded parent strings cause orphaned gate
+> clocks
 
-Perhaps we need to enable that on more test machines to see if anything
-came back and allowed ftrace to trigger without it watching?
+I don't think this one is serious, linkage is reliable because we
+leverage the device tree nodes in the clk_core_get/clk_parse_spec
+path. The fallback is indeed based on string matching, but heh, that's
+because of backward compat, not my call.
 
--- Steve
+I will send a v6.
+
+Miqu=C3=A8l
