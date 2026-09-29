@@ -1,50 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884522459E1
-	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 13:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A744E66AD;
+	Tue, 29 Sep 2026 13:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790689831; cv=none; b=Jwu3XYtQ35XponYj66BontbdzrAMiiWRXFU2xBcptj5ENiV//VXNnB8ZCgWimCmchDaa0pLW+G4oUa8qXinCKP/m4o3xqxZkAl8iq5WfoV7vqxQsloqP7iKH2II4b9rSpTbmC0NF8dPJogC9fM3QCGcrPj9qy4NyE1rwwpfR36U=
+	t=1790690018; cv=none; b=av38X6LM4jZzqf1G/KtmU2RSEHpHC7aKiuD6eM3NbH0+mdMVM8aqjoQveH5Nup5DhWeUlzxiEsZF/p24NkAh/NvI6p1gYwbaAyzgKVTMUF11wZTyFkuySD54vTSE+9KxTGFygDiWYwWEyUxXTiA8jR2Kb1HXyTsd8vnob+eH9LE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790689831; c=relaxed/simple;
-	bh=ImdRUux9KzzRL+1xdUNymp0o180ROvHb0/RcCXnhBHE=;
+	s=arc-20240116; t=1790690018; c=relaxed/simple;
+	bh=RCZc5l+UwP94XlqAVRmAKFCkp14DeHPCy4UfofZiMuM=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=QXwJFX/rxbkHGW8+XqudyXmtvPrpTimD1ubW3JQpioQ2DX+kJKlPj/uGa7Tox9ICVPUKJyatwPUy8ro0IblO3xs+B10EsZZH8IXj15LIOGXfFxzYFAEZRVVXATSxpFT0oTQ9vdg5Y58eOs6Rjsh6+PE+HwaS/cEWHTTsuYJFi64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=by4hw/OT; arc=none smtp.client-ip=100.103.45.18
+	 Content-Disposition; b=M8PNCwmyyhVgtYTLlJ531fCJMTpC/Edr8kr20k8hQRtyzygAuCQg4WmTn4ZqnbjMz5WUZLKlHOMYhrkgu/2uST1f4b3YRf1PaDwR79k3Ta2OzC9pQRWSWZm4uNAeRPTaqFBItJ4tc1IwYW8GkR20scelrl2FtnPy26VLuK7SZx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H738kUXS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="by4hw/OT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054B71F000FF;
-	Tue, 29 Sep 2026 13:50:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H738kUXS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9CD1F000FF;
+	Tue, 29 Sep 2026 13:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790689829;
-	bh=616FDv5Fk7HGoXObNx5Uo5bt1jlHlKanlf8qTlPy0NA=;
+	s=k20260515; t=1790690016;
+	bh=mSFXVkI0lCosHeD9y1J7OJK3oqBZhqiWf5K29e6UckE=;
 	h=Date:From:To:Cc:Subject;
-	b=by4hw/OTmA6DX8ISrXWaxo9YSPu/9g7S0MDTYQBf6LkNuWM1xzEd285Jk/kt0MYZ/
-	 OgL/MpeqVMHtDmBpQ2FvKmGtw6DsLcLLk6OxuSB8I0bJpPqQs3rZt6RFcfuZslXgYf
-	 vBAULuF8Y3RxUW76D9BZIx9Blhj/NBt6WxV+gko18psmkrBVtfILjQsXkexUeINEyx
-	 JyFVukVCChJNCtlAfvm7NiOG28U9rGQuiK62qOkDo0GZyTOC4MazpV4viPNtAWZh7B
-	 eXCkU4COD87NYnxctk505lZ2DTFxQkU/LDLCzvVB9slKMdX8i/LXDTSmJcwjiKScep
-	 d4/3u+9h1nwQg==
-Date: Tue, 29 Sep 2026 14:50:23 +0100
+	b=H738kUXSQ/crfTKGCP+/e5ewKLgkuSrbbU4dbI1uKJbB2WwGUWg+3prVssBzkH0yX
+	 /8vFe8ToyjnIObh/+OONJvz6BwI9q/tlHCVUiEmq0nA7RcuwOgin3tin9xkxEUQVxM
+	 btpmj4Xa++Z2Nr9aQ2IjMurySUXRHDT9bhcRubNwze8gGD5ShFrSvzpevLb8YP63Tt
+	 4oGj4v4dAwUd6TpsXhEkCLTs7JL3+pe2agfFt9gGjsw2BWLB+TELkJNHkgmc2DnTx+
+	 93Iq3Qji0Ga1M/c7dNErE6EUdzOSGvchBAHcAC7CnxM+qzkegJ4/AsKerH1Xr7lW47
+	 IK0WObjMlXl9w==
+Date: Tue, 29 Sep 2026 14:53:32 +0100
 From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
 To: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: sashiko-reviews@lists.linux.dev
+Cc: sashiko-reviews@lists.linux.dev, sashiko@lists.linux.dev
 Subject: addressing sashiko's false positive rate
-Message-ID: <arvAhwPOxQ0JL15n@gremlin>
+Message-ID: <arvCuOARoB9LvQqY@gremlin>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="d6bwfpisf7mfsmzw"
+Content-Type: multipart/mixed; boundary="zmzjlkhwbafjxkxy"
 Content-Disposition: inline
 
 
---d6bwfpisf7mfsmzw
+--zmzjlkhwbafjxkxy
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+
+[adding forgotten sashiko ML to cc's oops!]
 
 Hi Roman, Sashiko team,
 
@@ -259,7 +261,7 @@ one row per emitted report with the verdict and the reason for it too.
 --
 Cheers, Lorenzo
 
---d6bwfpisf7mfsmzw
+--zmzjlkhwbafjxkxy
 Content-Type: text/csv; charset=us-ascii
 Content-Disposition: attachment; filename="sashiko-mm-findings.csv"
 
@@ -315,7 +317,7 @@ v3,08,High,discontig_kernel_map_page_range() page array read after get hook retu
 v3,08,High,apply_discontig_action() dereferences the stale array (restated),duplicate,second block for the same claim
 v3,24,Low,bool to void * cast warns,duplicate,repeat of v2 (wrong)
 
---d6bwfpisf7mfsmzw
+--zmzjlkhwbafjxkxy
 Content-Type: text/csv; charset=us-ascii
 Content-Disposition: attachment; filename="sashiko-kvmarm-findings.csv"
 
@@ -327,7 +329,7 @@ v2,06,High,pkvm_mem_abort() lacks the mmu_invalidate_seq retry protocol,wrong,pr
 v3,07,Medium,kvm_guest_s2_mapping allocation gated on vcpu->arch.hw_mmu while the pgt uses s2fd->mmu so pre-fault on a nested vCPU allocates spuriously,valid-acted,v4: gate on s2fd->mmu (credited to Fuad who wrote "Sashiko might be right about this one")
 v4,-,-,no findings emitted (14 patches reviewed; 138 candidates dismissed; 14 "no issues" mails sent),-,
 
---d6bwfpisf7mfsmzw
+--zmzjlkhwbafjxkxy
 Content-Type: text/csv; charset=us-ascii
 Content-Disposition: attachment; filename="sashiko-speedup-findings.csv"
 
@@ -391,4 +393,4 @@ v4,19,Low,realloc leak (repeat),duplicate,
 v4,19,High,double-checked sorted flag set before cache populated,wrong-but-technically-right,dropped indexes are only rebuilt outside the threaded phase; moving sorted=true after the loop closes it
 v4,21,Medium,make modules_prepare tar-pkg races on rust/,wrong,nonsensical goal combination
 
---d6bwfpisf7mfsmzw--
+--zmzjlkhwbafjxkxy--
