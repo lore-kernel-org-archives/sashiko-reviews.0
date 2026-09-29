@@ -1,78 +1,71 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC202E64D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 20:48:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A533CF670
+	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 21:45:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790714925; cv=none; b=aHj6pBjzft53+Y8FRbblstBjTCXRNJeFhZpqAHIuEp8poFXzXDgfj0ZclhplEiwdLs8Giv9QIvd8LYmA/VV2rWaPK02B4lIhaCVTxrboso5TM64FzJ29T9l0+VbiRkPpHeSo4cj+G1qJD/ZnC3rUFQshaNr0qiPg+kaKowlwlCE=
+	t=1790718330; cv=none; b=CAYzFIyBuIzvcreAFiTogZQsVjU7Lf4MqHNjkoLAkm5HfWB/X8BoBXhL4rQVsPyla9sOG3gyHxtEPQEYWmyjnVqdEvAio+SNiBP+BBERbfYuAlOP+S3lPw2dgWqmdaEPjf1SJgjtTCtnrzPNfvVETJdgQ1sfM4ClzJJlbFLRxiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790714925; c=relaxed/simple;
-	bh=avJYZWkj4l0EiBcsbVStp2mz+Rl/tkNUwnORB67A1xU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XNmaDrGNYDSDSLFEsZ7/SF/HtzxETlL05LA2GMHxAtYglpt1cx6tFOi3cXIlvoeQhVKmE4HdqbxUt0Szpu068E+8kj/CfXwVYKJS3Dxpr8O92XUiPg1lfpf+Z6kN5UdacVUpxdH9YnTXv9yNlsaRLmk2TsFncWsS98vvPgjJxZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=f65rGmgP; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1790718330; c=relaxed/simple;
+	bh=zsu5uWNKbRqp6lNgPV4nWWx3U6lpU1GwAvOF/oIJJXQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Z7p3DdO6j/huIRHM7DsypWWNuZjPIeOuUZut8LriawichROfiTTiCQGpxRUUn9HUTGhjL1nKJPbTcbo3Ghf4c+SJFR266a4QZFkaTcGE5pDXQZ+ZhI3tX6OJ6yj1GDMX7wYPdVyjJ0wgYxqP2nGTIXDUdFWjPVsmo6lQB+3B20I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aak2xX3w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="f65rGmgP"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 81EEE1A1062
-	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 20:48:41 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 09D55601BD;
-	Tue, 29 Sep 2026 20:48:41 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id D83EE1032985C;
-	Tue, 29 Sep 2026 22:48:35 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1790714916; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=4ubprdTX1kgEC8P+y84dilH+rVHlCsjNj9qT0HZjZ6M=;
-	b=f65rGmgPRY/awRdRm7IXgnJx98o4gaTYmjW6RTYOqATCfKU6uNyGAKzAnU0qWRDFZQLRJI
-	oSBAFrl4KGkFcymPTpsgM2V+6MZobgIiduwtbWmeVbxHWPiTwFmK+Y/TEFF0cPy3z/NR7O
-	0e15jPqjDUXMoFfaO9xCQ3txbOhskkKBpZRK1jq4zOZphYVufCb3Q6KkWLzwPJOcgkRJa6
-	mTrUH0jAsqn4cMFjq3fxZUdRyYTnt43HXPa+3niYd85P+VdOeDOhA0pulrqJm/dieD3C0o
-	lkOS6Onxtq1C7QwBgpff/mRbx/CVyCWt4cgPLwKs/wFdb9/P3CeWV7itmQ9uwQ==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev,  robh@kernel.org,
-  linux-clk@vger.kernel.org,  devicetree@vger.kernel.org,
-  conor+dt@kernel.org
-Subject: Re: [PATCH v5 9/9] arm64: dts: nuvoton: ma35d1: Add LXT crystal and
- correct HXT name
-In-Reply-To: <20260929150121.739D91F000FF@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Tue, 29 Sep 2026 15:01:20
-	+0000")
-References: <20260929-perso-ma35d1-upstream-clk-v5-0-68533e935ee4@bootlin.com>
-	<20260929-perso-ma35d1-upstream-clk-v5-9-68533e935ee4@bootlin.com>
-	<20260929150121.739D91F000FF@smtp.kernel.org>
-User-Agent: mu4e 1.12.12; emacs 30.2
-Date: Tue, 29 Sep 2026 22:48:35 +0200
-Message-ID: <87pkxv4wd8.fsf@bootlin.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aak2xX3w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583851F000FF
+	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 21:45:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790718322;
+	bh=zsu5uWNKbRqp6lNgPV4nWWx3U6lpU1GwAvOF/oIJJXQ=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=aak2xX3wCrx7if/cUgmVg/0cW+xRleyJv7N6aR73dpEZJbvosGlJ46e+rSiaRtUoO
+	 vgxg534xFaHqpT+tMhkbORZ99/2T8HvFjguo3gtwFgXCpWDe6hxkF2VozL8TMG2vLH
+	 jJ5Aw9/XEd6riCqchspM5eujtZH84fDVQa7RLNvHl+6ypz0Zh5iWKvOC4gxfK4nQIu
+	 w+oqXlsgygqyER7TJz8Hp6EjOdn+Yt8k15rYD4MC/ZvIcWDNI4RXJCDmTJ3DY+aSOM
+	 GTNnLnBm4aYj92+vn5Lx7sNEI0Q8KFvp050+UGmf+jXNwx7KXjTZdLlspc3TtaR+49
+	 uHDWjOn2vsAlQ==
+Received: by mail-ed2-f31.google.com with SMTP id 4fb4d7f45d1cf-6ad795d5205so74607a12.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 14:45:22 -0700 (PDT)
+X-Gm-Message-State: AFuF++lnMhCTEs+OJuzHdHO2cyQb6YShSwntp0tbmuEUONGCxgACLJEu
+	T3jArQdoqbq1ZJB2XPWrbaqL84YVuyHukwy4rbT1mZHG3+V5zrGfWB/SX+n3dSZoRmaOIxy4ghw
+	G7Ov5ZYgdgWvq6Nzmk8wTxFHQIh6NVA==
+X-Received: by 2002:a17:907:3f92:b0:c29:462b:f908 with SMTP id
+ a640c23a62f3a-c2e15e4f929mr52741166b.10.1790718321016; Tue, 29 Sep 2026
+ 14:45:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <cover.1788886615.git.adrian.ho.yin.ng@altera.com>
+ <cover.1789114385.git.adrian.ho.yin.ng@altera.com> <0fbda23eb4a22a56e455b5e89125813af60ab0cc.1789114385.git.adrian.ho.yin.ng@altera.com>
+ <20260911091335.AF1481F000FF@smtp.kernel.org>
+In-Reply-To: <20260911091335.AF1481F000FF@smtp.kernel.org>
+From: Rob Herring <robh@kernel.org>
+Date: Tue, 29 Sep 2026 16:45:08 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqKHOA2F_4r-5go7=vMe5j9yV3h_QkVm8gktEmK9-Ke_xQ@mail.gmail.com>
+X-Gm-Features: AclHuK_PDgyTTCTjlUF-Yy16WB-PaUd2Th8p6y9L9sXbr37fdqM19HyYoJdc030
+Message-ID: <CAL_JsqKHOA2F_4r-5go7=vMe5j9yV3h_QkVm8gktEmK9-Ke_xQ@mail.gmail.com>
+Subject: Re: [PATCH v7 1/2] dt-bindings: usb: add Altera Agilex5 DWC3 controller
+To: sashiko-reviews@lists.linux.dev
+Cc: adrian.ho.yin.ng@altera.com, conor+dt@kernel.org, 
+	devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: TLSv1.3
 
-
->> -		clock-output-names =3D "clk_hxt";
->> +		clock-output-names =3D "hxt";
+On Fri, Sep 11, 2026 at 4:13=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
-> [Severity: High]
-> Could this change cause a regression with older kernels?
->
-> When booting an older kernel with this newly updated Device Tree,
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [Low] The schema incorrectly uses `additionalProperties: false` while r=
+eferencing a common schema (`snps,dwc3-common.yaml#`), breaking property in=
+heritance and leading to redundant property declarations.
+> - [Low] Mandating software workaround quirks (`snps,dis_u2_susphy_quirk`,=
+ `snps,dis_u3_susphy_quirk`) in the `required` list.
 
-I don't think we should bother too much about forward compatibility, do
-we? I will set the name back to the weird "clk_hxt"/"clk_lxt" string,
-because I don't want to fight. This was supposedly a 1 patch fixing the
-SPI controller driver behaviour, we now are at 9 after 5 versions. So it
-is time to settle. I find the "clk_" prefix awful, but I'll just assume
-it is too late.
+Not issues.
 
-Miqu=C3=A8l
+Rob
