@@ -1,165 +1,85 @@
-Received: from mail-dl2-f43.google.com (mail-dl2-f43.google.com [74.125.229.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231E14E433D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 21:46:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662DD4FD7AF;
+	Tue, 29 Sep 2026 21:46:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790718382; cv=none; b=fih0Oun57fosLy/mAs5XMRpjhopvoZGu7YIRhi/dStRxl46HcIJ8nWftuHVeVc8/Pmxs4+n0N3Rvc1qSZMAE92TP4wpr7fUTyIFabZSvoFqB34gmItAG6jrpvg3LHK/FfOaSVYobsd5gj63eVJjO8g/ci6sEUqGXjbT5QUKyEbw=
+	t=1790718425; cv=none; b=IcFjXF1+5LpbyPFCHXXzlza4KHMknhbD7xPQbli/DbqSbyWuAZkfMUsgJKox+SZDRJqCHsVgxBSzwre3UcioP9ejtTKZuX9o+NwKUaFpAyryfo/N4Q3jWKeBzWvKzXSqj8x/vLKVtmw4oPpxybQCGTptXxGfBtgzOUzClmM486w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790718382; c=relaxed/simple;
-	bh=c60XZr6gjgTXxTb8TD6mSviBn7hGFt9Ur2eTffcnqXw=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=GRedsVH8UD2mZMVtHCffWfJVXIILjtlTGPxVO/ZIXu4QI65sCnbUqkGokgDTlSNLqKpmlb2ZlApxwEaJMafFRTcqcBVS2d77VXuEtKbXels7Hd79hdLgcZINQhx7pXeolIn8GTGGUewqsXGitljGVm2jT8Jg+3PhaAtEfNd5Dak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=INpUPo3z; arc=none smtp.client-ip=74.125.229.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790718425; c=relaxed/simple;
+	bh=pzWPE/FsBXmNVTESJIsQmnK4rcy6psGCAwguo6i/EjQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IRMpbs9nF8kIXyh7mzZpgYl/XR2L1tcgsLWkE9xQLUnSnEiEhdfUQPePC5zoqVLObtyu8ryKyvw73CvJEqbltHZsPV9U90eSd3sVotx2GWPTuB6VHH+AdbNw6MpWQvzgKe0FR1LVJPo6WA5zZa7sJaZvgypWd5bcFxwe8sXiuWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bmi6EEbB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="INpUPo3z"
-Received: by mail-dl2-f43.google.com with SMTP id a92af1059eb24-142dd04edb5so7890739c88.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 14:46:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790718363; x=1791323163; darn=lists.linux.dev;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
-         :cc:subject:date:message-id:reply-to:content-type;
-        bh=gtOvtANTNZsbuqRv+rrjZ79D7N3AuJOn+HMwiY7MqVE=;
-        b=INpUPo3zRmr4QmJa9BpGu2N8s6lMjLgqTgUgdbd52JLfMsXgfn/I4rws4jZboWEy2J
-         lOheVnE+5zIIP/oB2EnIujiMNBIeuzFvllUCnP1O0/KRM9ZyMb3afMPyDan8lJ24PA/F
-         oz6qh2gPRFiiX8l4+ckOdx5IOIRNp9yg2Ixag1ejDzqHv53MvxltQof8E+4KGxxzltr3
-         H2sr9OMBTBWMKAsmBmrKD0y3YSV3iMZSXMT0hfZwYLESp2cfYoD73yCO4KGKHd25wHkH
-         nvKme9wMc/rGdCGkl9lrjzYSm3pYST5ifHDXMM51vXKPWJfmH1nVX2OhoVQl2pn9UZRc
-         45eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790718363; x=1791323163;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=gtOvtANTNZsbuqRv+rrjZ79D7N3AuJOn+HMwiY7MqVE=;
-        b=N6+Y1IwYGhjOI/DwmfxaaekQcm/BA6x2/vy8GP/AyAbGB9QW4SE/cMZl9huIR5ldx2
-         5syR4Z4i9k1GSU41y8JfvzLfbQrRVmZZCTszKecTkAeJRIM3qRzY5aZFyElBdETW3Ofw
-         XfBQgzlruXmaBFfEr7PXOS4p90ykpvwLKBouJ2AuO+PeNlANtdQSXrEfP0fxwD7CYK/U
-         l0ddh1EC3iNVPuuTsMDmjBKKh3AaLiw/RhRToiqAyHqyeuhe/yRVe9yg/okx9tbzUyI1
-         m7Thl672YOqsmIjF6H1+QLgyMDt6MgZ6Tt+JRkV8yqzUekUiRhz0YFSgRnqURLZsVCO/
-         Fj7Q==
-X-Gm-Message-State: AFuF++kGfJtMb/lmPtKhf1WS9lLwn8d9cc+xM1k8aGOF1DvWig3NMk/f
-	L2zVO3OAwPYlzHzzNn8Sa/qRESzz7eXbw12qRXe3h1sGa0XFSM2baHmoFBrELxTz
-X-Gm-Gg: AYBFou21aflf7Swd0C/nOUsjnintv+PbUiH5wY0ND2bkzUJkoH3aS/wBFvP1EHcTqFT
-	oksccAnANVyT664i5Xi2XjCR1xghKAP3rE7gkuHC0dKB165ty9dCMokEtFMtMc/vjSq8oLguwER
-	tUP5sCeeOI9QrmC246A8KlllcL3mYQ4l+6HxOmZK/yEaCpiakw4z1T/ZMKBCkkhJv68O8oHjJsH
-	D4/0dm2V0IJ+7uqwM6olgwotl/3fVwQX+qSClO2z0TPzox2LWSjHHwegiILZJMI2/CsqyAXUgHI
-	ph7WkCkK6zqIB3TjZr1EiP5FqdpSbiMTVDp3TWwHzlyfuQNBlpTcxlaCS32tdEbWklChogdjsbl
-	l/3gUJ/hmbUaKgToTpcDunS/TrRWW7Doi2nqSa3rCR938TzzPNN8+68Tzd5iNVuZf64hSFz12MB
-	uaeLmiqFN2oV2TM2hK/m8qXBDmDSCY4JQhdbUnZzAzJ+rZhPoUsphCTsPMtaXksVAPhH2TgUGcf
-	Ka20LChLb8pRSYDElhrt6BorTZgbMTyV6rb0KJ6xLgzHJmcGm/wonWY
-X-Received: by 2002:a05:7022:f210:b0:143:7821:e151 with SMTP id a92af1059eb24-14ca00a1a62mr735605c88.47.1790718362606;
-        Tue, 29 Sep 2026 14:46:02 -0700 (PDT)
-Received: from ?IPv6:2a03:83e0:115c:1:abbd:bfa5:f574:cca3? ([2620:10d:c090:500::7:dfd3])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14c640bc413sm1524006c88.11.2026.09.29.14.46.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2026 14:46:01 -0700 (PDT)
-Message-ID: <9176a077b5ba674b0d35cd4db36bd239f99f48a7.camel@gmail.com>
-Subject: Re: [PATCH bpf-next 08/36] bpf: add cnum64_intersect_linear()
-From: Eduard Zingerman <eddyz87@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bmi6EEbB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DFC51F00893;
+	Tue, 29 Sep 2026 21:46:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790718414;
+	bh=UTwrgYZlPSkPGo6lYw20vGwlNY4gPjktN4L/m/Kq5rQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=bmi6EEbB3m6fqmWSMAFijzYeY9vtF1RdlYWgmHHFBMrikKyKBUsXdwgSBoMPM7MiO
+	 79Tp8UyPzJ1ar/uEbeEx7ZPZ1UdB+HPdWR0CEPWqWj4ZG1cZk4OhJ8alXQA4X/5Aog
+	 QwrVo/CWz0+tF7k1A00gibR0MVl2rwX5u3ux/ziD2t/ca4A7m+Uc+vwXQyPH2TYDCy
+	 L1jB8ycPzCYJRpsJMctqnWOb+vGEAQyyqQhEg5DrFlOHqBfApVKgBUBfUK6Z/1/dHX
+	 /K97MwOt8xOG3I/o2DjmlIeGqiUzoIhOGYKlEuw20U3c9apw8FU2DSLO2j0Y0FM1T8
+	 tnXPny1BJ+sZg==
+Date: Tue, 29 Sep 2026 22:46:51 +0100
+From: Mark Brown <broonie@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Date: Tue, 29 Sep 2026 14:46:00 -0700
-In-Reply-To: <20260926143403.113531F000FF@smtp.kernel.org>
-References: <20260926-scev-minimal-rebase-v1-0-c8e5ab5ba79f@gmail.com>
-	 <20260926-scev-minimal-rebase-v1-8-c8e5ab5ba79f@gmail.com>
-	 <20260926143403.113531F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (3.60.2-2.fc44) 
+Cc: kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oupton@kernel.org>, kvm@vger.kernel.org
+Subject: Re: [PATCH v8 3/3] KVM: selftests: arm64: Make set_id_regs bitfield
+ validity checks non-fatal
+Message-ID: <fb5448a2-8d8a-4101-8964-6b08b5887eab@sirena.org.uk>
+References: <20260929-kvm-arm64-set-id-regs-aarch64-v8-0-58aabe2c2fac@kernel.org>
+ <20260929-kvm-arm64-set-id-regs-aarch64-v8-3-58aabe2c2fac@kernel.org>
+ <20260929163445.0D9331F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="6BSZv4amUqQksatZ"
+Content-Disposition: inline
+In-Reply-To: <20260929163445.0D9331F000FF@smtp.kernel.org>
+X-Cookie: 1 bulls, 3 cows.
 
-On Sat, 2026-09-26 at 14:34 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] bpf: cnum64_intersect_linear over-expands intervals that wrap =
-the signed boundary
-> --
->=20
-> commit 07e53bba30487c590757dc2ec233d2811a607b9a
-> Author: Eduard Zingerman <eddyz87@gmail.com>
->=20
-> bpf: add cnum64_intersect_linear()
->=20
-> This commit introduces cnum64_intersect_linear() to intersect a cnum64
-> interval with integers congruent to 'base' modulo 'step'. It tightens the
-> interval using signed bounds to keep residues consistent. This is a build=
-ing
-> block for tracking scalar registers with values known to lie on a line.
->=20
-> > diff --git a/kernel/bpf/cnum.c b/kernel/bpf/cnum.c
-> > index 86142cb2aee5f..2bff2c7e0cdf5 100644
-> > --- a/kernel/bpf/cnum.c
-> > +++ b/kernel/bpf/cnum.c
-> [ ... ]
-> > @@ -118,3 +119,38 @@ struct cnum64 cnum64_cnum32_intersect(struct cnum6=
-4 a, struct cnum32 b)
-> >  	}
-> >  	return t;
-> >  }
-> > +
-> > +/* Intersect 'in' with the set of integers defined by equation 'base +=
- step * k'. */
-> > +struct cnum64 cnum64_intersect_linear(struct cnum64 in, u16 base, u16 =
-step)
-> > +{
-> > +	s64 smin =3D cnum64_smin(in);
-> > +	s64 smax =3D cnum64_smax(in);
-> > +	s64 lo, hi;
-> > +	u16 d;
-> > +
-> > +	if (step <=3D 1 || cnum64_is_empty(in))
-> > +		return in;
-> > +	/*
-> > +	 * Round smin up to the next value congruent to 'base' modulo 'step',
-> > +	 * i.e. increase smin by d =3D (base - smin) mod step:
-> > +	 *
-> > +	 *                 |<---- d ---->|
-> > +	 *     |-----------|=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D|...
-> > +	 * base+step*k    smin       base+step*(k+1)
-> > +	 */
-> > +	d =3D imod(base - imod(smin, step), step);
-> > +	if ((u64)smax - (u64)smin < d)
-> > +		return CNUM64_EMPTY;
-> > +	lo =3D smin + d;
-> > +	/*
-> > +	 * Round smax down to the previous value congruent to 'base' modulo '=
-step',
-> > +	 * i.e. decrease smax by d =3D (smax - base) mod step:
-> > +	 *
-> > +	 *     |<--- d --->|
-> > +	 *  ...|=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D|-------------|
-> > +	 * base+step*k    smax       base+step*(k+1)
-> > +	 */
-> > +	d =3D imod(imod(smax, step) - base, step);
-> > +	hi =3D smax - d;
-> > +	return cnum64_from_srange(lo, hi);
->=20
-> [Severity: Medium]
-> Does this code improperly expand intervals that wrap the signed boundary?
->=20
-> For such intervals, cnum64_smin() returns S64_MIN and cnum64_smax() retur=
-ns
-> S64_MAX. The function then calculates 'lo' near S64_MIN and 'hi' near
-> S64_MAX, returning cnum64_from_srange(lo, hi).
 
-I'll add `|| cnum64_srange_overflow(in)` to the entry condition.
+--6BSZv4amUqQksatZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> This replaces a potentially small wrapping interval with a massive contig=
-uous
-> range spanning nearly the entire 64-bit space, violating the intersection
-> property (A =E2=88=A9 B =E2=8A=86 A). While this over-approximation is so=
-und, it could cause
-> the verifier to lose precision and falsely reject valid BPF programs.
+On Tue, Sep 29, 2026 at 04:34:44PM +0000, sashiko-bot@kernel.org wrote:
 
-> > +}
+> >  	vcpu_set_reg(vcpu, reg, val);
+>=20
+> [Severity: Low]
+> Does using vcpu_set_reg() here defeat the stated goal of making write
+> validation checks non-fatal?=20
+
+These are all ID registers so the register should always exist and be
+writable, we'll need updates if we extend to non-ID registers but that's
+out of scope for this test.
+
+--6BSZv4amUqQksatZ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmq8McoACgkQJNaLcl1U
+h9Aj7wf/SM/VHq0aNl1s920wfr+FqgenDv3QwXQ47UuouubE+neUR1ENpW9RCybM
+pEtpwHChpS4EBzycKQ3Lg6UdYtmBBLnW+5UGQWo2xgaDAEz5wmPii0oKcpxkBvIB
+e9ChxWN6vXfApHdDL6iAFU8yeyVZRiRIJRfgkeDpaTwkFaB4PpL7CmOyTA7o0Ume
+lM9lzjLTpGZ2m7W8TW4qB71YYU00qDajvdpLLjds870mI8n77lMCfMl+NQ5XTlKU
++8uD1NHH8ULFc1XF7IwUuKiHCkJxJZwcfDl3NCToefoES0MkrikGjPfMPvtxgE51
+0wtg4wwc/tX35J+DfW0fGIUR7rvKBg==
+=gICA
+-----END PGP SIGNATURE-----
+
+--6BSZv4amUqQksatZ--
