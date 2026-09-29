@@ -1,256 +1,373 @@
-Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DFE4FD29F
-	for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 09:55:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455EB4FE2EE;
+	Tue, 29 Sep 2026 11:11:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790675726; cv=none; b=oYIB0A6QZMUa38yBZM5WNGhBTAOYVRBvQszh84nBJShcP4Y78Tuf0J49GJbgB252YLBrNlhu8tN3SaT0HQeoJz5fEL6PQerGW3J/zbCpHdPyl2YOFUY8zKPwL7g7kis6GICxpV0WYY6LTc+bMn/xUvCgH0sUZZX76wYIbWtdCTQ=
+	t=1790680283; cv=none; b=TQw3wrF4v/GAHSswHICMIIXkBY8DoPzkIHK6a2PqWarQbgEPwM9KU0ldmazUKeYN2+L1mLCbIeEPdR5N2pb2tXIrOqWD59rGyP0DYeg9fFgITJBHWMb4AwQQMoS7gBON1QDuv2CSIv5xFwHO2vV53Y5X/oA1VWUopOLTddCCKcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790675726; c=relaxed/simple;
-	bh=98UbK4N2251SUFmDgHu33sL9B1Db+PPtpfyBhOYbq2k=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=Vo5UFJEmQ95sAO91ASE7E3w5o0YTonKP/7oGrPpLiRr1EIEHlQh/nCJCk8lLNj6PKm1iLrLdw3fERtwoBR/dEDgWAPYVTbZyQkQXUtexnGA3XP2rvXUEIwfe8WZl6soderdt9eH6RX0fmyVqmXD87m2X3eunWQDDBHkQZNb1vj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=U5+5neBg; arc=none smtp.client-ip=74.125.225.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1790680283; c=relaxed/simple;
+	bh=ZyyMkW5S1TM3sy3g1z9MwxHefuII4HNTK4qD5iAhAn0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=h85oX/KyJhoa5/TYuuHHDhTl0WRrTbNKZZoP1gLZfscydT2cczWt/dNzYt8ZX0YFk2WEqCv2P8MxYt7YxjswwCP2OxMez7op7LCu77P1xAVJDdYfLb026vQR8JJjwBU8styULQ6gJsDGxgsFCRMBpQvfXj81dvADGWmHqPOGSxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Xjy5v/dL; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="U5+5neBg"
-Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-49ffe281cb1so17465265e9.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 02:55:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1790675720; x=1791280520; darn=lists.linux.dev;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-type:mime-version:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=pmauSvEG/mGV3JuTK5ds225WsQMQmw8wXcrzlAj8aGc=;
-        b=U5+5neBgRUq8jrCkt7OUzf7shlk/GW1stpeMYTld/9ibvMfJagXBkyMjfQ+lm/7VPF
-         PY6JdX2qUG/1qp2MUsWzh9nYvgQzm7QFifMcAiIyNppK1El7wnjbg5SXBbe6+w/GTt0U
-         jnXwbCc+bFGfpdDyR34YFBcMT/RPKpXoiJAV0uSiYYUVr/fi458mypci+xFqD0i/FVki
-         xL5+JDYsMgIgcU34m7+6hzw7ruU+wtGViYvkr9Z3Nv3cih8y2nfqYYya+4GLTGUR4EBP
-         4dkIdip7Bx7YRlZiwqzL9lMAO9Ez/d6uyzU42bj5jYPzH6rJSkPJ1D3rsx2IHdv7v7M/
-         z8xQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790675720; x=1791280520;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-type:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=pmauSvEG/mGV3JuTK5ds225WsQMQmw8wXcrzlAj8aGc=;
-        b=uJBfwAaBuE2/wAeEq8uxy2sRAAncC8bvKqVlaw2dt5jWGgzvyaCuCXRuZK4Ba2g80y
-         R2cOWLDOMZ671hikerTiGee+cQ8K+bT0pgqIAx8UzpLz7NzOWSAITSN/2aTSJFpEAoMi
-         VyYbiX4KzwXYgMEGeBSkXoM4wHLw3h7500tuCVgOSHbQ9IYnOCgA5oE8iQHGoN0wr3ir
-         mwCTavR0SEcU8tCg7lHSUB2Ir9+XpJZRxJ/U4YutlF2RyW9Ybyet6JzyayFla5QRqdQ+
-         DW1fRAnPLMeipsKrAj4tOcZUSEs1GaGC8IYEzuj77vDP2QgCAYO1Q/atKKuvJJRqxVza
-         696A==
-X-Forwarded-Encrypted: i=1; AKwUvBzUHcYh1Qe6sTwg02aB4fKGV8KRDKNahZxiYnscOamxTBLSK8hMb0oMK1aIELiLEbu8eV6kovKHPZjnopNFKhs=@lists.linux.dev
-X-Gm-Message-State: AFuF++kM9tn2GL3ethU9KdjzAdvTJ7bFmgmjqs+EwX2R3CiZU3bTsFt9
-	rPMG6X1ShOPp92uA1Gmw4zVKA/rQnsX8q/0Kq/b5FKdgg5PGUxrm7urCltjBrV6cgJo=
-X-Gm-Gg: AYBFou1pn6Hh1XHJpO/2QyGZRQg8Fdcaej/x1sF9zrD72GhA+gc1hNMFFhGLmqXSaqZ
-	57ktYD3cumSLAxLSAwwxP1KYShZAooZ+oX+Q54hg3bJqsLKlwWd8+V93zhEpo/GXTF2h097uVF1
-	EKrOIFqFPUF5kmbJ/WCp+WGPY42CAIjz6sRChTZtsTqByyIEwE0b1QUUYRq+2zIRYre++2Nbvmb
-	mBhPiyd9leWw5pj6GsPoLIMsFD2v5Nfy9BRUlyJY+m8jaTlKxsRN3FCQic0Y2fgtjFJHot9R0F4
-	IxqVcoH8tssXfOmF9PlGId410epVG12yZDeezq4XFvdU2uNRh9IwTdgIXGWMLdo7YSxY2wFaQNW
-	fOmuHaWrBiVfE7UseusVfDYmSCoZrb09zhKIXLcCAZ6peFt1rYCWllKjgHTkXgtQxoutQwvRfzd
-	LDp5IEnziyMLNuLyzt6bNgfW5ffAXfKmrzzdS8efCTJnq0NrS83Ps4aKZ2v/r57Ogs
-X-Received: by 2002:a05:600c:3550:b0:49f:fd40:80fa with SMTP id 5b1f17b1804b1-49ffd408357mr138179665e9.34.1790675720029;
-        Tue, 29 Sep 2026 02:55:20 -0700 (PDT)
-Received: from localhost ([2001:4090:a244:8223:c4e6:4d28:61c:74bb])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a00cf2d973sm77824505e9.0.2026.09.29.02.55.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2026 02:55:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Xjy5v/dL"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68TB5b7u2783627;
+	Tue, 29 Sep 2026 11:11:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=1noVY2
+	vw/fnkEnLs97LTa80eKlAgUIq6tcCNC6juZ3A=; b=Xjy5v/dLCUZEsMMo5dGq1l
+	qWkS8M/reQgbgKprBZ0BP6ikO9PtMWBa/a3xgS63kYf9ob8/6QLnCa9s7bL1drpb
+	VCpYIqDGyr9nerPqPEsYcQSIq/xtUoDmYf8b/DC5wkor/dG+UorIgbrYfspeVHn/
+	QWozi9vCCXUtUHnh8sS9GQ+tWJ+v8bCVl/F7asCkILSOFecIvhj511S2U2NGWPck
+	A13/GZOWRJ/j83rKWPwvV/YSBGtaNrCcAfvWLZvQF1h7lbHEMCQ1c1d28H3OtNd4
+	EotLkBoVZdo48d1k0I6nrNHA8uIqm1LZimO+3m+ADrBxaSBNf1Drh0Xao8+X32bw
+	==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx4fe60ya-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Tue, 29 Sep 2026 11:11:19 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 68TAldpR1667746;
+	Tue, 29 Sep 2026 11:11:19 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4gxsvhhbdg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 29 Sep 2026 11:11:19 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com [10.39.53.231])
+	by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 68TBBI9A33751578
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 29 Sep 2026 11:11:18 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 2AD3B58054;
+	Tue, 29 Sep 2026 11:11:18 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 14C2658045;
+	Tue, 29 Sep 2026 11:11:17 +0000 (GMT)
+Received: from [9.61.24.130] (unknown [9.61.24.130])
+	by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Tue, 29 Sep 2026 11:11:16 +0000 (GMT)
+Message-ID: <af150dee-b942-4bb6-a25b-5c8be9f98b73@linux.ibm.com>
+Date: Tue, 29 Sep 2026 07:11:16 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=a51f3dada9c225cfc13250421c3f01b3dbfa553491d9b870147849dc99d6;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Tue, 29 Sep 2026 11:55:11 +0200
-Message-Id: <DLRPK96Q063Q.20AXDX3LTN7R@baylibre.com>
-Subject: Re: [PATCH v9 7/9] arm64: dts: ti: k3-am62a: Split r5f memory
- region
-From: "Markus Schneider-Pargmann" <msp@baylibre.com>
-To: "Nishanth Menon" <nm@ti.com>, <sashiko-reviews@lists.linux.dev>
-Cc: "Markus Schneider-Pargmann (TI)" <msp@baylibre.com>, <robh@kernel.org>,
- <devicetree@vger.kernel.org>, <conor+dt@kernel.org>
-X-Mailer: aerc 0.21.0-146-gb5c16ebe1835
-References: <20260918-topic-am62a-ioddr-dt-v6-19-v9-0-40972ef1f663@baylibre.com> <20260918-topic-am62a-ioddr-dt-v6-19-v9-7-40972ef1f663@baylibre.com> <20260918094011.99AE01F000FF@smtp.kernel.org> <20260924145525.2g5ymuwsjwf5ecct@twice>
-In-Reply-To: <20260924145525.2g5ymuwsjwf5ecct@twice>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 3/6] s390/vfio-ap: Fix unbounded loop in
+ apq_reset_check()
+To: sashiko-reviews@lists.linux.dev
+Cc: Vasily Gorbik <gor@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>, kvm@vger.kernel.org,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Jason Herne <jjherne@linux.ibm.com>
+References: <20260925124551.665448-1-akrowiak@linux.ibm.com>
+ <20260925124551.665448-4-akrowiak@linux.ibm.com>
+ <20260925130031.739B01F00898@smtp.kernel.org>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20260925130031.739B01F00898@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=FYWiV5+6 c=1 sm=1 tr=0 ts=6abb9cd7 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=PggxQ46kYxiAi-Y4iioA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=O8hF6Hzn-FEA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA0NCBTYWx0ZWRfXy9HRfLijL5HL
+ zx0kwWsCBC+Jo7OunbIZRtpfwetpZnB+sNpIs8X8zdxXw2B1aSguqSWHSzfnwuoqOMBJ7ZmFVgw
+ hBEJXHXAbLgKEjN/EiiqkH47leckuss=
+X-Proofpoint-ORIG-GUID: D8RaYGAv2Jo5y49noU0srvwd5_fmVw5k
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA0NCBTYWx0ZWRfX+pvGNWhleGbM
+ fvVjIUkHIde0deL+yOdksd1m93ltkSzxoIlyjfDiojoaGP+bXmJ2o8KXW+oVaPvUmq+pzdyKgj8
+ kNQA/DBAjf52Lmk0ugH+kYIe4jJupyrwN20N8bplkon91RzlLEKuMjgmNRTcwlWs31JfqzFp2h7
+ DxQx+9KasSG0RUdGjWwgj/2sxDd3Ep8gNBQ540H4OEBLyKvfQanoRlqnh5Yibz0VMZbPiKKH2k+
+ 9mSM5QEDzPcb2oEVmdW2rOWu8v/XfeghIYVbgV8bCurXITBxA3ue+XusMBkGW6V1Ax+oKGIgECU
+ 2UogKRNY6QPqmAvJRlD/WYqxbkGyUILlhAC0h83o0R4PF0BPD/VdQkq0lfpqF5j1fE+rPJ8EIU0
+ C6n7nUg550VAxrcBkPQqen9hbjJRv4MR+HF9IhZ9faDxwAE0fP4uA1u4/nG0dfW3zbW9WMlSkiV
+ LUyM1agMu+FgnJYqFTg==
+X-Proofpoint-GUID: D8RaYGAv2Jo5y49noU0srvwd5_fmVw5k
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 clxscore=1015 impostorscore=0 spamscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609290044
 
---a51f3dada9c225cfc13250421c3f01b3dbfa553491d9b870147849dc99d6
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
 
-Hi Nishanth,
 
-On Thu Sep 24, 2026 at 4:55 PM CEST, Nishanth Menon wrote:
-> On 09:40-20260918, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 3 potential iss=
-ue(s) to consider:
->> - [High] remoteproc: ti_k3: k3_rproc_da_to_va() rejects segments spannin=
-g split memory regions
->> - [High] arm64: dts: ti: missing bootph-pre-ram breaks SPL DM firmware l=
-oading
->> - [Medium] arm64: dts: ti: hardcoding volatile firmware layout into Devi=
-ce Tree
->> --
->>=20
->> commit 33643294863f45f1ac37617eafcfc525d230effc
->> Author: Markus Schneider-Pargmann (TI) <msp@baylibre.com>
->>=20
->> arm64: dts: ti: k3-am62a: Split r5f memory region
->>=20
->> Split the firmware memory region in more specific parts so it is better
->> described where to find which information. Specifically the LPM metadata
->> region is important as bootloader software like U-Boot has to know where
->> that data is to be able to read that data.
->>=20
->> > diff --git a/arch/arm64/boot/dts/ti/k3-am62a-ti-ipc-firmware.dtsi b/ar=
-ch/arm64/boot/dts/ti/k3-am62a-ti-ipc-firmware.dtsi
->> > index 06d4e815b1670..94c1d60d8d7a1 100644
->> > --- a/arch/arm64/boot/dts/ti/k3-am62a-ti-ipc-firmware.dtsi
->> > +++ b/arch/arm64/boot/dts/ti/k3-am62a-ti-ipc-firmware.dtsi
->> > @@ -65,8 +65,14 @@ &wkup_r5fss0 {
->> >  &wkup_r5fss0_core0 {
->> >  	mboxes =3D <&mailbox0_cluster0>, <&mbox_r5_0>;
->> >  	memory-region =3D <&wkup_r5fss0_core0_dma_memory_region>,
->> > -			<&wkup_r5fss0_core0_memory_region>;
->> > -	memory-region-names =3D "dma", "firmware";
->> > +			<&wkup_r5fss0_core0_ipc_region>,
->> > +			<&wkup_r5fss0_core0_lpm_fs_stub_region>,
->> > +			<&wkup_r5fss0_core0_lpm_metadata_region>,
->> > +			<&wkup_r5fss0_core0_lpm_rest_region>,
->> > +			<&wkup_r5fss0_core0_dm_region>;
->>=20
->> [Severity: High]
->> Does this multi-region split cause a regression when loading a monolithi=
-c
->> firmware ELF whose segments span across the new chunk boundaries?
->>=20
->> Looking at k3_rproc_da_to_va() in drivers/remoteproc/ti_k3_common.c, it
->> evaluates segments against each reserved memory region individually and
->> lacks logic to aggregate sequential chunks:
->>=20
->> drivers/remoteproc/ti_k3_common.c:k3_rproc_da_to_va() {
->>     ...
->>     if (da >=3D dev_addr && ((da + len) <=3D (dev_addr + size))) {
->>         offset =3D da - dev_addr;
->>         va =3D kproc->rmem[i].cpu_addr + offset;
->>         return (__force void *)va;
->>     }
->>     ...
->> }
->>=20
->> Will this bounds check fail and abort the boot sequence for any system u=
-sing
->> standard firmware linked under the assumption of a single contiguous mem=
-ory
->> block?
+On 9/25/26 9:00 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+> - [Critical] s390/vfio-ap: unmap_iova() defeats timeout leak, causing wild DMA write
+> - [Critical] s390/vfio-ap: vfio_ap_mdev_reset_queue() abandons reset on AP_RESPONSE_BUSY
+> - [Critical] s390/vfio-ap: apq_reset_check() falsely reports zeroization complete
+> - [High] s390/vfio-ap: apq_reset_check() infinite loop on AP_RESPONSE_BUSY
+> - [High] s390/vfio-ap: cross-guest resource corruption due to dangling IOVA/ISC
+> - [Low] s390/vfio-ap: dead code and ineffective state handling on reset timeout
+> --
 >
+> commit 3205ec637b4cfa8d70d28a8f5abc909aba0bd19c
+> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
+> Subject: s390/vfio-ap: Fix unbounded loop in apq_reset_check()
 >
-> Do we need to protect with something on the lines of
-> https://lore.kernel.org/all/20260921145325.300025-3-richard.genoud@bootli=
-n.com/
+> The commit introduces a 2000ms timeout to apq_reset_check() to prevent
+> indefinite spinning when the hardware continuously returns a busy response.
+> If the timeout is reached, the NIB page and ISC registration are intentionally
+> leaked to avoid memory corruption from potential wild DMA writes. It also
+> corrects the confirmation logic by checking multiple status bits returned
+> from TAPQ.
+>
+>> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
+>> index 940c0ff668bee..47d4936fb9d7c 100644
+>> --- a/drivers/s390/crypto/vfio_ap_ops.c
+>> +++ b/drivers/s390/crypto/vfio_ap_ops.c
+> [ ... ]
+>> @@ -1857,8 +2006,28 @@ static void unmap_iova(struct ap_matrix_mdev *matrix_mdev, u64 iova, u64 length)
+>>   	int loop_cursor;
+>>   
+>>   	hash_for_each(qtable->queues, loop_cursor, q, mdev_qnode) {
+>> -		if (q->saved_iova >= iova && q->saved_iova < iova + length)
+>> +		if (q->saved_iova >= iova && q->saved_iova < iova + length) {
+>>   			vfio_ap_irq_disable(q);
+>> +			/*
+>> +			 * If IRQ disable failed or IR=0 could not be confirmed,
+>> +			 * vfio_ap_irq_disable() intentionally leaks the NIB to
+>> +			 * prevent a wild DMA write. But vfio core requires the
+>> +			 * page to be unpinned before dma_unmap returns, or it
+>> +			 * will BUG_ON after 10 re-notification rounds.
+>> +			 *
+>> +			 * Fall back to a bounded queue reset. The ZAPQ zeroizes
+>> +			 * the NIB pointer in hardware, eliminating the DMA risk
+>> +			 * that justified the leak. Once the worker finishes (or
+>> +			 * times out with a reset confirmed in-progress), the
+>> +			 * hardware no longer holds a reference to saved_iova and
+>> +			 * it is safe to unpin unconditionally.
+>> +			 */
+>> +			if (q->saved_iova) {
+>> +				vfio_ap_mdev_reset_queue(q);
+>> +				flush_work(&q->reset_work);
+>> +				vfio_ap_free_aqic_resources(q);
+> [Severity: Critical]
+> Could this sequence unconditionally free the AQIC resources immediately after
+> the timeout completes, defeating the deliberate leak?
+>
+> apq_reset_check() intentionally leaks the NIB page on timeout because hardware
+> might still be actively writing to it. However, unmap_iova() executes
+> flush_work(&q->reset_work) and then unconditionally checks q->saved_iova.
+>
+> Because the timeout path didn't clear saved_iova, unmap_iova() immediately
+> unpins the page via vfio_ap_free_aqic_resources(). Returning an active DMA
+> target to the page allocator could cause host memory corruption via wild DMA
+> writes.
 
-No, we don't need to protect this here. The devicetree nodes changed
-here are only ever loaded with firmware in the bootloader. A monolithic
-firmware ELF is never loaded in Linux because the driver code in
-k3_r5_rproc_configure_mode() detects that it is already running and puts
-it in RPROC_DETACHED for these cores.
-
-> Could you please add in diffstat any comments if the sashiko reviews
-> are'nt accurate from previous feedback?
-
-Sure, will do that in the future. Does sashiko pick these up then?
+Asked and answered in response to same comment in patch 1/6.
 
 >
->>=20
->> > +	memory-region-names =3D "dma", "ipc", "lpm-stub",
->> > +			      "lpm-metadata", "lpm-context",
->> > +			      "dm-firmware";
->>=20
->> [ ... ]
->>=20
->> > diff --git a/arch/arm64/boot/dts/ti/k3-am62d2-evm.dts b/arch/arm64/boo=
-t/dts/ti/k3-am62d2-evm.dts
->> > index a8c794d073431..7cba3ff99e6a3 100644
->> > --- a/arch/arm64/boot/dts/ti/k3-am62d2-evm.dts
->> > +++ b/arch/arm64/boot/dts/ti/k3-am62d2-evm.dts
->> > @@ -65,13 +65,37 @@ wkup_r5fss0_core0_dma_memory_region: memory@9c8000=
-00 {
->> [ ... ]
->> > +		wkup_r5fss0_core0_lpm_fs_stub_region: memory@9ca00000 {
->> > +			compatible =3D "shared-dma-pool";
->> > +			reg =3D <0x00 0x9ca00000 0x00 0x8000>;
->> > +			no-map;
->> > +		};
->>=20
->> [Severity: Medium]
->> Does this create a regression by hardcoding a software-defined volatile
->> firmware layout directly into the Device Tree?
->>=20
->> If a subsequent firmware build increases the size of lpm_fs_stub beyond =
-the
->> 32KB hardcoded here, will this crash or require a lockstep DT update to
->> function properly?
->>=20
->> > +
->> > +		wkup_r5fss0_core0_lpm_metadata_region: memory@9ca08000 {
->> > +			compatible =3D "shared-dma-pool";
->> > +			reg =3D <0x00 0x9ca08000 0x00 0x1000>;
->> >  			no-map;
->> >  			bootph-pre-ram;
->> >  		};
->> > =20
->> > +		wkup_r5fss0_core0_lpm_rest_region: memory@9ca09000 {
->> > +			compatible =3D "shared-dma-pool";
->> > +			reg =3D <0x00 0x9ca09000 0x00 0x97000>;
->> > +			no-map;
->> > +		};
->> > +
->> > +		wkup_r5fss0_core0_dm_region: memory@9caa0000 {
->> > +			compatible =3D "shared-dma-pool";
->> > +			reg =3D <0x00 0x9caa0000 0x00 0x1c60000>;
->> > +			no-map;
->> > +		};
->>=20
->> [Severity: High]
->> Does the omission of the bootph-pre-ram tag on this new DM region create=
- a
->> regression for SPL DM firmware loading?
->>=20
->> Since U-Boot fdtgrep processes the SPL DTB by keeping only nodes tagged
->> with bootph-pre-ram, these split regions will be stripped.
->>=20
->> Will this result in the no-map protections being lost, causing U-Boot's
->> remoteproc driver to error out parsing dangling phandles when attempting
->> to load the Device Manager (DM) firmware?
+>> +			}
+>> +		}
+>>   	}
+>>   }
+> [ ... ]
+>> @@ -1959,8 +2220,77 @@ static void apq_reset_check(struct work_struct *reset_work)
+>>   		elapsed += AP_RESET_INTERVAL;
+>>   		status = ap_tapq(q->apqn, NULL);
+>>   		ret = apq_status_check(q->apqn, &status);
+> [ ... ]
+>> +		if (!ret || ret == -ENODEV) {
+>> +			/*
+>> +			 * Zeroization confirmed (ret == 0): the TAPQ status bits
+>> +			 * indicate the async portion of the ZAPQ completed
+>> +			 * successfully. Free AQIC resources and return.
+>> +			 *
+>> +			 * Queue non-operational (ret == -ENODEV): the queue is
+>> +			 * deconfigured or checkstopped; interrupts are not
+>> +			 * possible so AQIC resources can be safely freed.
+>> +			 * Zeroization cannot be confirmed in this state, but the
+>> +			 * queue cannot generate interrupts, so the NIB page is
+>> +			 * no longer a DMA target and it is safe to free it.
+>> +			 */
+>> +			apq_reset_finalize(q, &status, ret);
+>> +			return;
+> [Severity: Critical]
+> Does this immediate return prevent the rejected ZAPQ instruction from being
+> reissued, bypassing queue zeroization entirely while falsely reporting success?
 >
-> Is'nt this valid? why would we let R5 SPL or U-boot SPL think it has
-> memory access? Adding a comment is probably worth in the code.
+> If the initial ap_zapq() is rejected (e.g., returns
+> AP_RESPONSE_STATE_CHANGE_IN_PROGRESS), apq_reset_check() is queued without the
+> queue being zeroized. apq_reset_check() polls with ap_tapq().
+>
+> Once the hardware state change finishes, ap_tapq() returns AP_RESPONSE_NORMAL
+> (queue empty). apq_reset_check() sees !ret, executes apq_reset_finalize(),
+> and returns success.
+>
+> The ZAPQ command is never reissued. The queue is falsely marked as reset and
+> can be assigned to a new guest with the previous guest's cryptographic secrets
+> intact.
 
-These bootph-pre-ram properties did not exist before this patch for
-nearly all memory regions. R5 SPL or SPL u-boot does not care about
-these memory regions. It is all configured through Kconfig options or
-binman. Only the upcoming IO+DDR resume code cares about just a specific
-region. I personally would prefer to keep the DT as small as possible
-for SPL.
+This is a legitimate concern and will be fixed in v9 of the series 
+forthcoming.
 
-Best
-Markus
+>
+>> +		}
+>> +
+>> +		if (elapsed >= AP_RESET_MAX_WAIT) {
+>> +			/*
+>> +			 * Timed out without being able to verify zapq completed.
+> [ ... ]
+>> +			 */
+>> +			report_aqic_resource_leak(q);
+>> +			/*
+>> +			 * Zeroization could not be confirmed; set
+>> +			 * reset_status to AP_RESPONSE_RESET_IN_PROGRESS.
+>> +			 * This is used internally to signal that the reset
+>> +			 * did not complete, and ensures that if the queue
+>> +			 * is reset again, the re-issue logic in
+>> +			 * apq_reset_check() will re-issue the ZAPQ.
+>> +			 */
+>> +			q->reset_status.response_code = AP_RESPONSE_RESET_IN_PROGRESS;
+>> +
+>> +			return;
+> [Severity: High]
+> Can leaving q->saved_iova and q->saved_isc populated after the timeout corrupt
+> cross-guest resources?
+>
+> If the queue is assigned to a new guest, q->matrix_mdev points to the new
+> guest's matrix_mdev. When the new guest enables interrupts,
+> vfio_ap_free_aqic_resources() is called.
+>
+> It uses the new q->matrix_mdev to unpin the old q->saved_iova and unregister
+> the old q->saved_isc, corrupting the new guest's IOMMU pinning counts
+> and KVM ISC refcounts.
 
---a51f3dada9c225cfc13250421c3f01b3dbfa553491d9b870147849dc99d6
-Content-Type: application/pgp-signature; name="signature.asc"
+This is a legitimate concern; The guest ISC needs to be unregistered 
+using the
+kvm pointer used to register it if possible. The pinned NIB page needs to be
+freed using the vfio_device whose IOMMU container owns the pinned NIB
+page. This will be fixed in v9 of the series forthcoming.
 
------BEGIN PGP SIGNATURE-----
+>
+>> +		}
+>> +
+>>   		if (ret == -EBUSY) {
+>>   			pr_notice_ratelimited(WAIT_MSG, elapsed,
+>>   					      AP_QID_CARD(q->apqn),
+>> @@ -1968,18 +2298,15 @@ static void apq_reset_check(struct work_struct *reset_work)
+>>   					      status.response_code,
+>>   					      status.queue_empty,
+>>   					      status.irq_enabled);
+>> -		} else {
+>> -			if (q->reset_status.response_code == AP_RESPONSE_RESET_IN_PROGRESS ||
+>> -			    q->reset_status.response_code == AP_RESPONSE_BUSY ||
+>> -			    q->reset_status.response_code == AP_RESPONSE_STATE_CHANGE_IN_PROGRESS ||
+>> -			    ret == -EAGAIN) {
+>> -				status = ap_zapq(q->apqn, 0);
+>> -				memcpy(&q->reset_status, &status, sizeof(status));
+>> -				continue;
+>> -			}
+>> -			if (q->saved_isc != VFIO_AP_ISC_INVALID)
+>> -				vfio_ap_free_aqic_resources(q);
+>> -			break;
+>> +			continue;
+>> +		}
+>> +
+>> +		if (ret == -EAGAIN ||
+>> +		    q->reset_status.response_code == AP_RESPONSE_RESET_IN_PROGRESS ||
+>> +		    q->reset_status.response_code == AP_RESPONSE_STATE_CHANGE_IN_PROGRESS) {
+> [Severity: Low]
+> Is this condition checking dead code because earlier flow control guarantees
+> ret == -EAGAIN is always true here?
+>
+> The code attempts to signal a failed reset by setting
+> reset_status.response_code = AP_RESPONSE_RESET_IN_PROGRESS on timeout.
+>
+> However, vfio_ap_mdev_reset_queue() overwrites reset_status unconditionally
+> with the result of a new ap_zapq() call on the next reset attempt, rendering
+> the signal useless. Furthermore, the conditional check for this status inside
+> apq_reset_check() is completely unreachable because execution only reaches that
+> block if ret == -EAGAIN, which short-circuits the OR condition.
 
-iKMEABYKAEsWIQSJYVVm/x+5xmOiprOFwVZpkBVKUwUCaruK/xsUgAAAAAAEAA5t
-YW51MiwyLjUrMS4xMiwyLDIRHG1zcEBiYXlsaWJyZS5jb20ACgkQhcFWaZAVSlPs
-KwD+J2JQBCaUypBZe46jJO6/EE5+ULM609YmlMKERfB0TWUA/0xrll/BHTIAPhpr
-dU3ZW9kGp9DMDVu0bFD91Jzuo8YD
-=0LaM
------END PGP SIGNATURE-----
+The premature early exit for !ret needs to be removed from the top of 
+the loop.
+When the worker starts after an initial ap_zapq() returns
+AP_RESPONSE_STATE_CHANGE_IN_PROGRESS or AP_RESPONSE_RESET_IN_PROGRESS,
+TAPQ might initially report AP_RESPONSE_NORMAL (returning ret = 0); in 
+this case,
+the queue will not have been reset/zeroized, so we need to let it fall 
+through to
+the block above. This will be fixed in the forthcoming v9 of the series.
 
---a51f3dada9c225cfc13250421c3f01b3dbfa553491d9b870147849dc99d6--
+
+>
+>> +			status = ap_zapq(q->apqn, 0);
+>> +			memcpy(&q->reset_status, &status, sizeof(status));
+>> +			elapsed = 0;
+> [Severity: High]
+> Will this repeatedly reset the timeout counter when dealing with busy
+> responses, bypassing the timeout logic?
+>
+> If the hardware continuously returns AP_RESPONSE_BUSY, apq_status_check()
+> maps this to -EAGAIN. In apq_reset_check(), if ret == -EAGAIN, the elapsed
+> timeout counter is reset to 0, completely bypassing the new 2000ms timeout
+> logic.
+>
+> This causes the worker to spin indefinitely, deadlocking the host system as
+> callers hold global mutexes like mdevs_lock while waiting on flush_work().
+
+The the 'elapsed' timeout counter should not be reset to 0.
+If the hardware continuously returns busy / EAGAIN responses, the
+loop will be guaranteed to exit once elapsed >= AP_RESET_MAX_WAIT (2000ms),
+preventing any unbounded spinning or host deadlock.
+
+>
+>>   		}
+>>   	}
+>>   }
+> [ ... ]
+>> @@ -1995,18 +2322,27 @@ static void vfio_ap_mdev_reset_queue(struct vfio_ap_queue *q)
+>>   	switch (status.response_code) {
+>>   	case AP_RESPONSE_NORMAL:
+>>   	case AP_RESPONSE_RESET_IN_PROGRESS:
+>> -	case AP_RESPONSE_BUSY:
+>>   	case AP_RESPONSE_STATE_CHANGE_IN_PROGRESS:
+>>   		/*
+>>   		 * Let's verify whether the ZAPQ completed successfully on a work queue.
+>>   		 */
+>>   		queue_work(system_long_wq, &q->reset_work);
+>>   		break;
+> [Severity: Critical]
+> Would removing AP_RESPONSE_BUSY here cause the flow to fall through to the
+> default error case?
+>
+> If the initial ap_zapq() returns AP_RESPONSE_BUSY, it falls to the default
+> case, aborting the reset and not queueing the reset_work.
+>
+> This leaves the cryptographic queue unzeroized, leading to an information
+> leak when the queue is reassigned.
+
+The AP_RESPONSE_BUSY (05) response code is not a valid response for
+ZAPQ according to the architecture; so, it makes sense to let it fall 
+through
+to the default case since it is architecturally incorrect.  On the other 
+hand,
+AP_RESPONSE_BUSY is valid for TAPQ which is used by apq_status_check()
+to verify whether a reset has successfully completed. If TAPQ returns
+AP_RESPONSE_BUSY, the status check returns -EAGAIN so the ZAPQ
+is re-issued.
+
+>
+
