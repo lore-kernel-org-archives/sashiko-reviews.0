@@ -1,248 +1,121 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f38.google.com (mail-pz2-f38.google.com [74.125.228.38])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25415012A7
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 14:08:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA4F50E587
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 14:11:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.38
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790777293; cv=none; b=mKzpMu1T0YX8oeen08hxgnGTP0kUvNj3xTXQGyRWI6a42NYEzDlx7H6pnDryNahKDx2Y3IrAQJGEzCbCHiH0IMf9dFH8Pqd0f0zJqBTiTADeM7/WeVzVbhTmQrnvgK8JiBkEmjO35CphTarFxhM8eZ9Z2gdcVPDQfJdcFW8qlvU=
+	t=1790777519; cv=none; b=WapL53+Pxu/1talAJ/u/eIdV4mAPSkhLvN9fDefVOx8CqjEZ9nIVBA60gMqdxjXJ90vEQ42bYzqiCUr7JLZXsAfomnCVJaegR2/2G8tvRqTj7J0sKAD1znr7BxOKhu3B28XceHD7VQFjCBi3Ju+8KpXgZJRPBsfa96TrcmZB8VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790777293; c=relaxed/simple;
-	bh=3nLtYLFSF0/0HBjLgTBRgRJtaTOHmMO04FN0/7VEpII=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=K1FBosQRExfc8sPEW9DQa/+P0zE54AC8mDbrbK1Plw9Pys0XvR847sY3vbQV/nOjxmUg2RecE32Fz8Ugc3/zSO/6Sn328eAI5AF8ux2IpKFLJ5fQAohh+gHkKAPu6pvj3V9cbBnKX8s+PA7tfBG1yA4i73MUJFVSddOo1uWE59E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AFZgrena; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=QPNk+Bte; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1790777519; c=relaxed/simple;
+	bh=j35vEpIPMoY28tuw8z89btjkr+NCLOZ/6D4QTxytxCs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=FRhPqsHXkD7N6FGaIwPPioIk8/ZiyreoHCwDH+rUBWnoLJAOLao4IDto6LBv8aETryGyg+xBrNw1ZzkxYmUHxSAbgKDmf2zH+NGrRPhQZhcxAErJKMfpF+MVXSXnfeXbV4vkQA/Ebq9BbGt8V2UX6jOyW9piE8d1fb6GMUfOfKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lu3CR2E+; arc=none smtp.client-ip=74.125.228.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AFZgrena";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="QPNk+Bte"
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68UE0Ivl147043
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 14:08:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Z5/lWtloNnIfNbXA6QSNEOy67CLHeyzL4Sp3AyQejEA=; b=AFZgrenaxIKYQYHP
-	eIAPyxWdOBavkYQMZ3yZJunIvi/wwGAea1kGZQOUwdyutlJ1/iLazEtabuUIv0on
-	25hSZhX4tCnskI1yUv/RqFrqbYDlVfMK95BiXxjdYdkhj1oPIjBM7+AuUmZ1yRm9
-	JG4+3rgzUxW8KlQGlBRdfNAkVMGoJWSwfExmX9z6a3JDnmWVg61MBVfQghnC+pma
-	jvCEWIOZu1GZFiOJiIRlLJ947UrTGZ5dCwUJHPS3p76Lmua8K3QrDbPoXkaHOmZW
-	doezSkwPKo/Mjk0LGzVuMMyawvTR16Y2D4/AU5vSmBUVNYqAyw26VnMCz/3srj7e
-	ZMygZw==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0j97vpxg-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 14:08:03 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-39b6416441eso9392275a91.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 07:08:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lu3CR2E+"
+Received: by mail-pz2-f38.google.com with SMTP id d2e1a72fcca58-881d9da69b1so1331632b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 07:11:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1790777283; x=1791382083; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Z5/lWtloNnIfNbXA6QSNEOy67CLHeyzL4Sp3AyQejEA=;
-        b=QPNk+BtekKYJeoYmH/xd9vxciAc4KrkMUa0AUUHSj8bGyk6a21aROY/XGBTbG9uvfN
-         sXxD7C6oioDwzFYa6dQvkLOSoTJQueEg0L5dJP0zOIA296yQmgCKpLTGBUOY4eFJbSd+
-         57s4U/kUv8VtzJXSlQ/mCpVy820zMq0NPdQjahfkyMlQTfFEQoGqn7abVyvoQ5eM+n2V
-         a99DN/3ntGq7a/kQOoVN5UPFFqRZoutN9D1e24/AsTL9Ru3Dgr7Ijp4Zpyn5o0pjzXbk
-         g98y8RIgQQUjxs1Oh/gRtHyMRGaC3fwehSJYn4oo7AvdN9XsMHMVGCcHGRPGm10NcdgS
-         7PIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790777283; x=1791382083;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1790777498; x=1791382298; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=Z5/lWtloNnIfNbXA6QSNEOy67CLHeyzL4Sp3AyQejEA=;
-        b=S9NEo3WEIQU0F0o/OfApx3LwF7CKTsJcfmouU7e6Fd+NwZ6iRcLNzxEzCCO4D/QT41
-         mxw5IUXdQ3qNWaTFrqoYhriq8e2cCaI2cr76bofYR0UDz0lijRD/r47JHT/Pstc4BTMq
-         TO8kqQD0829wxSbvUsW0L/e80WO7ngZfgznH41z8FqHcclVf9QPwH37Qz1rAq2W0UhA1
-         Fo1908YElMQVvrk1MYvk8wjF1z26rscJYSfTMcVm2PH2ctxE5U0G6FDKC14gy7hOQZoa
-         rOageaX+pnEC8dUN5u4kba9oAqA/uBG4N+lzjNQesZuVlN2uOCiqd9Jidqf7bLgiNOeG
-         BRow==
-X-Gm-Message-State: AFq9FYIQK5ikWSmXoCq0GWkrrV7jCmeJy3XWE/UrGpH0CYAwFXzbpc/2
-	0efyD6RtHW/8wdoEOyyM+diOD0LJ/mg3ICRMMwlfLOJeOI08+sXEb5zUp/WwPYydzjgJek/tnxZ
-	nEnRpfNZFhFCk/fQdMQG5cf5fULVutXJsTmW+5C+yIuCQWEl7Db1xm3fRDDGQpiqGJ9Umbj3/2E
-	vRRok=
-X-Gm-Gg: AYBFou0jt4rkp+sNIiFdEqJbVwG4GJdCPlFASnOV9jaiy6sjfcnFu3WyptvI3jkd1P7
-	Ll0O+V35cT+fTmdmUhM4FyGMozPDo575IcGYbWeOQdiZi/cFpEF3IksofbUqozAH6TQ8EQhB7VN
-	4y4SBPYQBn73QETGbMQR/7ACe+5pwTGKNyQcnVGeU/yPTRJqIPtor7X2ONXGOvV4DR7rHu/6ai3
-	LWXVB5WkR2w8kiCBS333yvaqvd/dmjg9OXvTyQNMDo6CptyJq9J9OKg4HyBKvVkJ3xQdBa3IBXN
-	/QsWzfrlw5TeIT2plUggHBlPIa0VTqM4qYbDS939ThLVrmlWmgtVlL1L1Hk5mQ9Bt0EIW8Kpowf
-	H3YxMcCyIJxfMcA8Bj/pmtPKqplDakTgqjOnVlR4k6ripUFm8M0mJYs09ig0Mkw8=
-X-Received: by 2002:a17:90a:2cc5:b0:3a4:e635:a8b9 with SMTP id 98e67ed59e1d1-3a4e636a641mr365458a91.32.1790777282555;
-        Wed, 30 Sep 2026 07:08:02 -0700 (PDT)
-X-Received: by 2002:a17:90a:2cc5:b0:3a4:e635:a8b9 with SMTP id 98e67ed59e1d1-3a4e636a641mr365426a91.32.1790777281916;
-        Wed, 30 Sep 2026 07:08:01 -0700 (PDT)
-Received: from [192.168.1.6] ([117.143.161.217])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a4e5d9adeasm628557a91.0.2026.09.30.07.07.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Sep 2026 07:08:01 -0700 (PDT)
-Message-ID: <a77004e6-c375-46fb-ba32-bc6f34bba2ab@oss.qualcomm.com>
-Date: Wed, 30 Sep 2026 22:07:53 +0800
+        bh=ZD5Wk2pVEzvLwEM+dw1Nh8s2zTNtUbkNWimSe6i9Hnc=;
+        b=Lu3CR2E+16SFopxLh9R9SMHCiU5sKo/DBSE2trZzrVvNaYSA4J5fa+c6mwlaYWxJC7
+         dKYPTIcQEApFr5evUY0G7FPGw8iagnNZ18NmIjt2wIJD+zWQR4XAmNjwJSlJnwfzIXaS
+         qRb59WXSu5Wfdi/b4q93wAntzEkmXrME+byEMbQrO7YQO5xEsvnqrBkdtETb8f2kGvoM
+         wilm3jUL3y/IlE4Pxpj1OFFvbmGi4Oh6F/7RZNcrfwHjTztxyi6BYoyyDUTtvrAomqPm
+         7uNJgg+rae6UZB3odNi3Taewwqy9572KZ6gVmUAYEQUu6cN7zSrUt8Jzos7KNZcD4qo7
+         2KvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790777498; x=1791382298;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=ZD5Wk2pVEzvLwEM+dw1Nh8s2zTNtUbkNWimSe6i9Hnc=;
+        b=KBAhHV30JQi6On8mrExiDxMPjqCzR3ak2N+4PcSZonEdOicbOAc5zV4VbynoYuKLKB
+         RubA+bDPQB4Coeh1qoxb0ZyrAFpl8VjJkTjIm1iQFNVJwT8MlQteYR6E6xfAhW1NfVsX
+         fQbdtPeC2tdsw5iRhAN0UKsAV+dkZEFutbMT6qZS18UacQQ+ezFsLKczbJsncvGRRCHh
+         TC1dOmm/z2v4d0+y/h6NqtWFbK7shT1RrzQSv8r3Pfk1D12BH2fO08NpxGxNOsbMk+vu
+         zyk6RV6aUOKuRwznCryb9qJ7QUa77Gxy/EsZAPk5YVE/SVT+9JdzksR4l3gnWIV0oypN
+         sL/g==
+X-Forwarded-Encrypted: i=1; AKwUvBwsIIKYpVWa+T3e1eJ1flPI6/93lI5Rb3a//YEWep1MYCTxllNjCFPGbyvO29sAqoHl9Ek1cgDMTH2QkS+fNJY=@lists.linux.dev
+X-Gm-Message-State: AFuF++mNg+j/JRnCrloXiT7vCPaCgOMQkrd/Hz949FMjBPd8gKMD6/os
+	+xNBugwEgA9IlKvDhi9r2XwF1QOmyqS7AmPgrfZ1wmWUKI9agQflLKjU
+X-Gm-Gg: AYBFou3gB7ipZo4BoYc9hpNr53ORWfKU9ojXtc51N1Dsee6eAiPJd0d27x5opPFWldo
+	OQ91toQ04pQ+nWroIeGLG+l7VC6WIceHk4YTKcqasT4uCgjobQRYcRnoPQnTIQceULCKGMbk0By
+	+YiErR0jGjd8Veo1YslZh+pyK+qvsbd1oRoRw61K8dxJ+tRFFDsnyIop/ri4F9Qa586cDKoajmr
+	nXblNc2e3m3Lf6oja012p2/2hk+gFht7ad7ki2GyfkfT5tW+rk6hWs9Dne7JfcdkoKWUwRSYgLs
+	LQoQ750YJ4i1pLYtmPcX4CrOwNrLQK4RQa6Uq+S6Dt2T9dXazy/LjjLLHqbhH5WoCpIdsD1Sla2
+	l9B91cp83Apm+3snprSEIFyl+vjUKQ9ZBsEKZZZFHxTVBOkVPd0WXQFW8vddzi2p/apPgMEppOa
+	pNypY2kbXv5fKjV4cJ0SaSshEw358kAcMvwX91mzoiAKhKDsDGJKWvaqGH6peKbLM8hUvyx7Vta
+	MP5xRtpx9kLADtTQbXVNy70CPTzZIxGIiisVg4GgZl6roXgPUp78g8lESmnom8Q094qq1PVZw==
+X-Received: by 2002:a05:6a00:1d93:b0:87c:9094:b72d with SMTP id d2e1a72fcca58-8874980140dmr1107172b3a.6.1790777497986;
+        Wed, 30 Sep 2026 07:11:37 -0700 (PDT)
+Received: from lima-arm64-dev.hitronhub.home (180-176-144-38.dynamic.kbronet.com.tw. [180.176.144.38])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-88726c0c243sm916905b3a.58.2026.09.30.07.11.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Sep 2026 07:11:37 -0700 (PDT)
+From: Harry Hsu <x90613@gmail.com>
+To: mbenes@suse.cz,
+	pmladek@suse.com
+Cc: jikos@kernel.org,
+	joe.lawrence@redhat.com,
+	jpoimboe@kernel.org,
+	linux-kernel@vger.kernel.org,
+	live-patching@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	shuah@kernel.org,
+	song@kernel.org,
+	x90613@gmail.com
+Subject: Re: [PATCH v4 1/3] livepatch: Fail object initialization on duplicate patched function
+Date: Wed, 30 Sep 2026 22:11:32 +0800
+Message-ID: <20260930141132.373715-1-x90613@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <alpine.LSU.2.21.2609181452160.21788@pobox.suse.cz>
+References: <alpine.LSU.2.21.2609181452160.21788@pobox.suse.cz>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 07/11] media: qcom: camss: vfe: Add support for VFE
- Gen4
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, vkoul@kernel.org, devicetree@vger.kernel.org,
-        olteanv@gmail.com, neil.armstrong@linaro.org,
-        linux-phy@lists.infradead.org, robh@kernel.org, media-ci@linuxtv.org
-References: <20260928-kaanapali-camss-v17-0-dcf3fd37f76c@oss.qualcomm.com>
- <20260928-kaanapali-camss-v17-7-dcf3fd37f76c@oss.qualcomm.com>
- <20260929061755.8BA321F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-In-Reply-To: <20260929061755.8BA321F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: SBJJ4BUEveGRi16sQZiCE4UO0fozugSF
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA1NiBTYWx0ZWRfXyGrfRJZm5U6w
- p3BU11AWlT3JIqoKnSHCM0GVuBYBVna2JrK/ar2xSRtldS8mSb5AN2/Mbf5iObFI06w9qX4lAKc
- 4J5TZNoDB++PcXjo+C6GOWPhHFkcz1IJCCrWkkdWV8atz6/puk6bGPppZyOKB3rv18ZJ2vwixvD
- YRa+mTmQnogs1MUB1eRbkl4ugO4IXHgphDcCuo4bJBTDOYqMfwukOfJKkXZRImMgsU8s3lbJ13e
- RcZ3hTqKzW87dQ4Wog5h8OuETK6PZ5Sw0fLde09d0TToqUT/WgOe5OH2L4eMWArD24vn5GTjwrW
- Bl3oQoTBt2b8hvF0HTPwdvEYiRCxks2bSIe+3+y7b8xfEQUYGGUtMfPNhGXjDXQCWvSScKflwEa
- IOIl9IYmldDHqdTGC+d8DSSKtKb3OahMzpXeSnprX6OobQfGb9hX6fzIP++s0lfM+vaNgJKh/kH
- DJEuOfhybt9NMLRfoVw==
-X-Proofpoint-ORIG-GUID: SBJJ4BUEveGRi16sQZiCE4UO0fozugSF
-X-Authority-Analysis: v=2.4 cv=BPImP1QG c=1 sm=1 tr=0 ts=6abd17c3 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=K/RrOd38U9TixX+j9hIN8g==:17
- a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=aJ_sJalLn2DonVaVJ1AA:9 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA1NiBTYWx0ZWRfX19htJ7q6GPlo
- op38YoY4ybcjs7Sxgl3NVgXBMwYOK4sRzN5FbO5yzFMS0hUTjP4K49Z2qNXfiaPeI7ZEbaCf8IJ
- vrS0YV09j6KOfAKbPqV8ORvv/emB9z8=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-30_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
- bulkscore=0 priorityscore=1501 suspectscore=0 impostorscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300056
+Content-Transfer-Encoding: 8bit
 
-On 9/29/2026 2:17 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] camss: hardware constraint violation due to unconditional AUP_UPDATE loop in CSID
-> - [High] camss: subsystem API violation where IFE Lite's 4th RDI line is incorrectly configured as PIX
-> --
-> 
-> commit def99c6cf972d2305c4c27701233f42e411f7857
-> Author: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-> 
-> media: qcom: camss: vfe: Add support for VFE Gen4
-> 
-> This commit adds support for the VFE Gen4 (TFE) found on the Kaanapali SoC.
-> It configures the hardware blocks and clock requirements, while deferring
-> REG_UPDATE and AUP_UPDATE until after CSID configuration completes.
-> 
->> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
->> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
->> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-> 
-> [ ... ]
-> 
->> @@ -552,7 +554,9 @@ int vfe_enable_output_v2(struct vfe_line *line)
->>   		output->gen2.active_num++;
->>   		ops->vfe_wm_update(vfe, output->wm_idx[0],
->>   				   output->buf[i]->addr[0], line);
->> -		ops->reg_update(vfe, line->id);
->> +
->> +		if (!vfe->res->reg_update_after_csid_config)
->> +			ops->reg_update(vfe, line->id);
->>   	}
->>   
->>   	spin_unlock_irqrestore(&vfe->output_lock, flags);
-> 
-> [Severity: High]
-> The commit message states: "the number of AUP_UPDATE requests must match the
-> number of buffers queued to the write master while it is being enabled."
-> 
-> In vfe_enable_output_v2(), the VFE loop shown above queues pending buffers
-> dynamically up to CAMSS_INIT_BUF_COUNT, but breaks early if userspace queued
-> fewer buffers. By setting reg_update_after_csid_config to true for Kaanapali,
-> this defers the update to CSID.
-> 
-> However, the corresponding CSID code at csid_configure_stream() in
-> camss-csid-gen4.c blindly issues AUP_UPDATEs matching the maximum buffer
-> count:
-> 
-> for (k = 0; k < CAMSS_INIT_BUF_COUNT; k++)
->      __csid_aup_update(csid, i);
-> 
-> If userspace queues fewer buffers before starting the stream, does this cause
-> a mismatch between the generated AUP_UPDATEs and the actually queued buffers,
-> violating the hardware constraint?
-> 
-No. The hardware accept this operation and no issue is found in tests.
+Thanks for catching this.
 
->> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
->> --- a/drivers/media/platform/qcom/camss/camss.c
->> +++ b/drivers/media/platform/qcom/camss/camss.c
-> 
-> [ ... ]
-> 
->> @@ -158,6 +158,157 @@ static const struct camss_subdev_resources csid_res_kaanapali[] = {
-> 
-> [ ... ]
-> 
->> +	/* VFE3 - IFE Lite */
->> +	{
->> +		.clock = { "gcc_axi_hf", "cpas_ahb", "cpas_fast_ahb",
->> +			   "vfe_lite_ahb", "vfe_lite",
->> +			   "cpas_vfe_lite", "camnoc_rt_axi",
->> +			   "camnoc_nrt_axi", "qdss_debug_xo" },
->> +		.clock_rate = { { 0 },
->> +				{ 0 },
->> +				{ 0 },
->> +				{ 0 },
->> +				{ 266666667, 400000000, 480000000 },
->> +				{ 0 },
->> +				{ 200000000, 300000000, 400000000, 480000000 },
->> +				{ 0 },
->> +				{ 0 } },
->> +		.reg = { "vfe_lite0" },
->> +		.interrupt = { "vfe_lite0" },
->> +		.vfe = {
->> +			.line_num = 4,
->> +			.is_lite = true,
-> 
-> [Severity: High]
-> The commit message explicitly states: "Support is currently limited to three
-> output lines, matching the constraints of the CAMSS framework."
-> 
-> But line_num is initialized to 4 for the IFE Lite blocks.
-> 
-> Since the CAMSS framework hardcodes VFE_LINE_PIX to index 3, does configuring
-> 4 lines cause the 4th line (RDI3 with id 3) to be incorrectly subjected to
-> PIX-specific logic? For example, in vfe_try_format(), this would force a raw
-> RDI dump stream to use PIX format tables and validation:
-> 
-> if (line->id == VFE_LINE_PIX) {
->      struct v4l2_rect *rect;
->      rect = __vfe_get_crop(line, sd_state, which);
->      fmt->width = rect->width;
->      fmt->height = rect->height;
-> }
-> 
-> Is this initialization to 4 lines unintentional given the 3-line limit
-> mentioned in the commit?
-> 
+I've updated the duplicate-address check in klp_init_object_loaded() to
+only reject the pair when both klp_funcs are nops:
 
-It's acceptable to align with the commits. Actually this is a CAMSS 
-framework restriction which needs additional efforts. Will keep it the 
-same for TFE Full and TFE Lite in next revision.
+    if (prev_func->old_func == func->old_func) {
+            if (prev_func->nop && func->nop)
+                    continue;
+            pr_err(...);
+            return -EINVAL;
+    }
 
-Best Regards,
-Hangxiang
+nops added by klp_add_nops() for two replaced aliases are
+interchangeable. Both just fall through to the original function, so
+allowing that combination fixes exactly the scenario you described: an
+atomic replace patch that inherits nops for __do_sys_fork and
+__x64_sys_fork from two separate previous patches will now load fine.
 
+The check still rejects two non-nop funcs that resolve to the same
+address, since that's still genuinely ambiguous. It also still rejects
+a non-nop func colliding with an auto-generated nop for its alias.
+klp_add_nops() always appends nops after the explicitly-listed funcs,
+and klp_patch_func() always pushes new entries onto the head of
+ops->func_stack, so allowing that combination would let the nop
+silently land on top and disable the real replacement instead of
+failing loudly.
+
+Petr, do you have any further changes on your side for this series?
+And once this fix gets an Ack, would you like me to send v5, or would
+it be more convenient for you to fold my commit in and send it
+together with yours? Happy to go either way, just let me know what
+works best for you.
+
+Harry
