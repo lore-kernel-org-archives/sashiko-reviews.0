@@ -1,111 +1,109 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD996470EA1;
-	Wed, 30 Sep 2026 09:12:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9245A376A19
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 09:13:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790759561; cv=none; b=eczlaus8A046XCKJq3LthUWhxLE7ndJt5lYzp3cuJ5kYYMLitNczjwyrloNt4l2XL9CU3/O6yukw5pcIhiCWKsqrod+6f9XvrhiDxA78Se/0yXQRhApEUqcCDnkNtAHO850itnoVhs0ebaRGJ1EdAGOrwXatddDBgMvYeeGcZeU=
+	t=1790759583; cv=none; b=OSlBpa81NS5W0jkJJGG1/O0J3ZoAuL0GmoRasJdAF/HnPJFQtchYH6cebaYoHy59hYfPeEm1GjM9RNHqWHtkDEn6mzw0hgVVbE6Dfjz7QgQ9bv2F/huvyDCfviLNCQv/cWFUTj0/ztbKqjpvkIzIG7eVL6JwBIporhN4w0ddikU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790759561; c=relaxed/simple;
-	bh=5wUMLjbpUp7hbWm3itPpbabvQ22t6nYyy/JKeslxhqc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bO5M4vY3PreXXSYLIv8UUpCiKiv8TzeSpntHXGhdhGI67ukOpyad1Khf7lDM8F/zXqr6/3H/mA5lGCDaoXwtjo0xqnc2DZrMLugKyYWsPYOfXPeGRv/CwNUh4/SmqMq/jgMTQLIaMJAx4voYHH8Q4iCSDjIXlblOcxDvoE7BEgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=oC/hiUWT; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1790759583; c=relaxed/simple;
+	bh=rc3F38niV6Jz71yriF1+hndfNRVS9oHFtAWBR7nnoZw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ib9mD5CocHxK2W85crECstIYduH3oaYh7vH/+NWTBQ6HqAQO8/6dZyGbfdw0DdzS2JV2c3eNsRqfplNn+mbLRrtqUViEBv23pgUTWhc8O05bnBDJqxatUcWmgaosCSIh8gaI8c5h7jq1x/Hzgnq+nu9+PZk8U1vsfCndbiOLSg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=GV27zS/j; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="oC/hiUWT"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9BE5A497;
-	Wed, 30 Sep 2026 02:12:35 -0700 (PDT)
-Received: from [10.57.9.178] (unknown [10.57.9.178])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4D2423F86F;
-	Wed, 30 Sep 2026 02:12:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1790759559; bh=5wUMLjbpUp7hbWm3itPpbabvQ22t6nYyy/JKeslxhqc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=oC/hiUWTuvNjj19hTmLuXbyubzGAMMjiF2MqLfmEGGUB42pJtNd/c8CU20jjE8Ken
-	 JMXGNvdqqNw+68IE+U/D8SnF3qv+u/Qpz525D2SEDHBW2Zpx8yar53B23gKOM10yZB
-	 cr3kvg5IQVlwnNl7cGDeNtyymCcw4b/mTbdtj52Y=
-Message-ID: <8e02fe1d-2011-47f0-97a6-c34d730dee6c@arm.com>
-Date: Wed, 30 Sep 2026 10:12:36 +0100
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="GV27zS/j"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id E40D31A107C;
+	Wed, 30 Sep 2026 09:12:59 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id B18FA60749;
+	Wed, 30 Sep 2026 09:12:59 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 9C528103293CE;
+	Wed, 30 Sep 2026 11:12:57 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1790759578; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=rc3F38niV6Jz71yriF1+hndfNRVS9oHFtAWBR7nnoZw=;
+	b=GV27zS/j4JL4iMt8lEeOPOxRs012H2H+tm0XNIPds64WLlMdO4anU8HSXuoGrnu9PG9OtF
+	2io5aCOh7PKczgydtb5EosfzMz2fW1A0j7vaodjqrU+XHMdB0OEiiTQHo/dTuTwoG8YNcl
+	2H9jLLdd9A/ACYR7IAD/vIjtJCdrYSdppCtDr2WLm7UKMIBifpR5sJNCcWcU+CB+82cxve
+	vths9/Pj0U0ymepEXSq7ZsWEK8SJrBSeqq8+SUMacntYD+QUBkmMBFUmIlZhkTrme5k49D
+	Izo1puX7+4SZaoavhNP/gmdT1H7fPaY5y6BUbgEFmKQytqiHXm7zGfVtrJyClQ==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Jerome Brunet <jbrunet@baylibre.com>
+Cc: sashiko-bot@kernel.org,  sashiko-reviews@lists.linux.dev,
+  devicetree@vger.kernel.org,  linux-clk@vger.kernel.org,
+  conor+dt@kernel.org,  robh@kernel.org
+Subject: Re: [PATCH v5 8/9] clk: nuvoton: ma35d1: get HXT/LXT from DT
+In-Reply-To: <1jzewz2nng.fsf@starbuckisacylon.baylibre.com> (Jerome Brunet's
+	message of "Wed, 30 Sep 2026 09:39:47 +0200")
+References: <20260929-perso-ma35d1-upstream-clk-v5-0-68533e935ee4@bootlin.com>
+	<20260929-perso-ma35d1-upstream-clk-v5-8-68533e935ee4@bootlin.com>
+	<20260929145618.187A21F000FF@smtp.kernel.org>
+	<871pab6bhn.fsf@bootlin.com>
+	<1jzewz2nng.fsf@starbuckisacylon.baylibre.com>
+User-Agent: mu4e 1.12.12; emacs 30.2
+Date: Wed, 30 Sep 2026 11:12:56 +0200
+Message-ID: <87v77ncdbb.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v20 7/9] arm64: Block hibernate and kexec while RMM is
- active
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, kvm@vger.kernel.org,
- Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
-References: <20260929221623.1342076-1-suzuki.poulose@arm.com>
- <20260929221623.1342076-8-suzuki.poulose@arm.com>
- <20260929222639.997731F000FF@smtp.kernel.org>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20260929222639.997731F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Last-TLS-Session-Version: TLSv1.3
 
-On 29/09/2026 23:26, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] arm64: hibernation resume blind copy triggers GPF when RMM is active
-> --
-> 
-> commit cd33ba7dfabdc9882b5491e3f0d6693b247f8326
-> Author: Suzuki K Poulose <suzuki.poulose@arm.com>
-> 
-> arm64: Block hibernate and kexec while RMM is active
-> 
-> RMM can be deactivated only after all delegated granules have been
-> reclaimed. If a new kernel is entered while any granules remain in the
-> Realm PAS, accesses to that memory can raise a Granule Protection Fault
-> and be fatal to the new kernel.
-> 
->> diff --git a/arch/arm64/kernel/hibernate.c b/arch/arm64/kernel/hibernate.c
->> index 424291c547f02..253f544a59731 100644
->> --- a/arch/arm64/kernel/hibernate.c
->> +++ b/arch/arm64/kernel/hibernate.c
-> 
-> [ ... ]
-> 
->> @@ -341,6 +342,11 @@ int swsusp_arch_suspend(void)
->>   		return -EBUSY;
->>   	}
->>   
->> +	if (is_rmm_active()) {
->> +		pr_err("Can't hibernate: RMM is active.\n");
->> +		return -EBUSY;
->> +	}
->> +
-> 
-> [Severity: High]
-> While this successfully prevents saving a hibernation image, is there a missing
-> check in the resume path, specifically arch_hibernation_header_restore() in
-> arch/arm64/kernel/hibernate.c?
-> 
-> If a hibernation image is present on disk (e.g., from a prior boot with RMM
-> disabled, but with a matching uts_version), subsys_initcall(arm64_init_rmi)
-> activates RMM and delegates memory to the Realm PAS early in boot.
-> 
-> Later, late_initcall_sync(software_resume_initcall) restores the image.
-> Because arch_hibernation_header_restore() lacks an is_rmm_active() check,
-> the image is accepted. The low-level resume path swsusp_arch_resume() then
-> blindly overwrites physical memory with the saved image.
-> 
-> Without an upstream guard during resume, won't this overwrite newly delegated
-> Realm PAS memory, triggering a fatal Granule Protection Fault?
+On 30/09/2026 at 09:39:47 +02, Jerome Brunet <jbrunet@baylibre.com> wrote:
 
-That is a valid point, I have added a check there to bail out if the rmm
-is active.
+> On mar. 29 sept. 2026 at 22:36, Miquel Raynal <miquel.raynal@bootlin.com>=
+ wrote:
+>
+>> On 29/09/2026 at 14:56:17 GMT, sashiko-bot@kernel.org wrote:
+>>
+>>> Thank you for your contribution! Sashiko AI review found 2 potential is=
+sue(s) to consider:
+>>> - [High] clk: nuvoton: missing IS_ERR check causes permanent probe
+>>> deferral
+>>
+>> Gasp. Yes that's correct.
+>>
+>>> - [Medium] clk: nuvoton: hardcoded parent strings cause orphaned gate
+>>> clocks
+>>
+>> I don't think this one is serious, linkage is reliable because we
+>> leverage the device tree nodes in the clk_core_get/clk_parse_spec
+>> path. The fallback is indeed based on string matching, but heh, that's
+>> because of backward compat, not my call.
+>
+> If think it is a legit warning.
+>
+> Here you say that your "hxt_gate" will parent to a clock named "hxt" in
+> CCF, but you've got not guarantee that will be the name your externally
+> provided clock.=20
+>
+> Its fw_name is stable for you but you should make any assumption how
+> another module will name its clock.
+>
+> You should use parent_data here with .fw_name that will match the externa=
+lly
+> provided clock and .name as a fallback if the clock is actually provided
+> internally
 
-Suzuki
+Ok, I believe I got your point. I can avoid any assumptions for the gate
+clocks, because I have access to their parent 'hw'.
 
-> 
->>   	flags = local_daif_save();
->>   
->>   	if (__cpu_suspend_enter(&state)) {
-> 
+For the crystals, I see what you mean with the naming being global and
+not enforced, that's true. I will continue expecting "the first clock"
+to be hxt (already enforced by the bindings/existing DT). For the
+second crystal, lxt, I will try a regular DT lookup (similar to the
+.fw_name approach you mentioned) and fallback to an internally provided
+block.
 
+Thanks,
+Miqu=C3=A8l
