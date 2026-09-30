@@ -1,87 +1,116 @@
-Received: from mta0.migadu.com (out-235.mta0.migadu.com [91.218.175.235])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31553491591
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 11:50:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.235
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED293250BF2
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 11:51:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790769055; cv=none; b=T6rdjIvkoyGFgaJ1z3h1Qfjn+IYyyPH6KFHUsGfbsCxGhTUy8cMIj1u7Y4Aj+P0CVm7ajEXZSUQEeAoQ3CrLi6QL9co1GQxAGw4qsiRgUVbj4PgEavws5Dv49wPfv5+2xuew/0Qq1xVS64jmjfrxSGK4zRANXbOHkMOfgO673mc=
+	t=1790769091; cv=none; b=Ggm3YIu8zmr/HBRGdcHnk5EDjaMLTHJsXrBIuLQGHRgu21cRr05xjBwDqXUqINc5Rf9eAZ/BrAW+LCc9dNV2x/X803u4aoHejcOgwL0eIkOT1sMtaDzwcPcPkQvgON1GXV+hnr0Bck/HGfTR6TyV43gqpfIFJHVaavL9YkzkvVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790769055; c=relaxed/simple;
-	bh=s1d9s2uZpjV4NHv1E/jjK0caCmGFjqY92Yem+RWDv7k=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=O9aZYigFNCksYmadiHrOXols/J+G+vrr9X1Zl9wKgT57MI1qqkur0ad/e0uHHT4ak5pqlF5+m+hVcFxz3qbcM32dIXQf47xIJ7UDJD1IZnCAs2ZttWbRfsjpo0I2Mi84So73JIg3N0Pi6JxSzcY95dLTBKfBanKa8DgmzmZC6IU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=QdnKI9dp; arc=none smtp.client-ip=91.218.175.235
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1790769091; c=relaxed/simple;
+	bh=fJrj6pUFObIDwtipRJ7D3IYPG+BrLZt3Fno8Tb6jOtA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j5rWUw0Ph/qzYguMJjY3Nf2MZIAufJ5v4vaRch2ae4vCYfIeFZMzgp/36s9eJf36s6Yzbec0+nLvyHxkcIM6eRMAPhot5gc+4i5VrrX5aZB7yOo2FmwsLfPO7/zlrbNaoVSnjIE7wGq7dwdAqdA5Q3+Xi+Hz6uLT5ksEifo8ZpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ktgHxXgy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="QdnKI9dp"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=s1d9s2uZpjV4NHv1E/jjK0caCmGFjqY92Yem+RWDv7k=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790769050; v=1; x=1791373850;
- b=QdnKI9dphw/bwa7DEfwKSuEOmAoWy7vWDzRcyczBBq4fjfSPIbfOfhRF/eaLtLeof9/32MWu
- Ufe5sIeWXNlG/Qps7ScJwSsmyfdrgjk0xeijdUj7cm41KUql8f1iNwY986mioKT7Expzd5zdeK9
- AQ84uEliADE8vhvDiXByObwA=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id f33bd8b0dbe14da9;
-	Wed, 30 Sep 2026 11:50:50 +0000
-X-Mizu-Trace-ID: f33bd8b0dbe14da9
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <dbc80af8-f277-4180-bfe3-c7a56c265e8d@linux.dev>
-Date: Wed, 30 Sep 2026 19:50:46 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ktgHxXgy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70BD1F000FF;
+	Wed, 30 Sep 2026 11:51:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790769089;
+	bh=twvCo9F4fQHCiiIQGifl5pTUwb8i7TJL07u4EaKAtrE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ktgHxXgya3AUgLBiMWAz4ZqBqUWRUd81EzR39TzRBTYKWy9tV8HJ/YHc0ypkdPNFN
+	 QWMGTn7P350BPiKnauLylMKCSLenRGXQyBQte4WwU9HpY5qHWRzM/bDBGnHunxDwZV
+	 koFKqaKIMUVu/81NuLcg9iQIYTpFGZAJ28FafA0IH6LfLQnnjzdFN9r5t9w/9qnNPG
+	 RreKWBzQ9NzmgBEDWPiugXotn2BjXWkbgdkKcBFk04HvNDiSNtj6S98QnwUbYgFm2F
+	 +Y3iYFNpndmqqyTxIml5rgYEUKM2j2THaONQ5nUR6AXxbrTwjCfUBbDrYKaOETP0nk
+	 /heBp9hfuks7w==
+Date: Wed, 30 Sep 2026 12:51:59 +0100
+From: Jean-Philippe Brucker <jpb@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Ryan Roberts <ryan.roberts@arm.com>, dri-devel@lists.freedesktop.org
+Subject: Re: [RFC PATCH v1 1/8] misc/arm-cla: Add driver skeleton and
+ documentation
+Message-ID: <20260930115159.GA480985@myrica>
+References: <20260717104759.123203-1-ryan.roberts@arm.com>
+ <20260717104759.123203-2-ryan.roberts@arm.com>
+ <20260717105637.9FBB61F000E9@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: cui.tao@linux.dev, mkoutny@suse.com, tj@kernel.org, bpf@vger.kernel.org,
- hannes@cmpxchg.org
-Subject: Re: [RFC PATCH v8 1/4] blk-iocost: add BPF struct_ops cost model
- support
-To: sashiko-reviews@lists.linux.dev
-References: <20260930075154.189958-1-cui.tao@linux.dev>
- <20260930075154.189958-2-cui.tao@linux.dev>
- <20260930081123.8CDA91F00893@smtp.kernel.org>
-From: Tao Cui <cui.tao@linux.dev>
-In-Reply-To: <20260930081123.8CDA91F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260717105637.9FBB61F000E9@smtp.kernel.org>
 
-Hello,
+On Fri, Jul 17, 2026 at 10:56:37AM +0000, sashiko-bot@kernel.org wrote:
+> > +#include <linux/bitfield.h>
+> > +#include <linux/bits.h>
+> > +
+> > +/* Registers */
+> > +#define CLA_REG_DATA(i)			(0x00 + (8 * (i)))
+> [ ... ]
+> > +#define CLA_PLxCTRL_AVAIL		BIT(0)
+> > +#define CLA_PLxCTRL_DBGPERM		GENMASK(3, 1)
+> > +#define CLA_PLxCTRL_PREP(accid, v)	((u64)(v) << (8 * (accid)))
+> 
+> [Severity: Low]
+> Should linux/types.h be included in drivers/misc/arm-cla/arm-cla-regs.h?
+> 
+> The CLA_PLxCTRL_PREP macro casts the value to u64, but the header doesn't
+> include linux/types.h. This could lead to build failures if the header is
+> included directly in new source files without prior type inclusions.
 
-在 2026/9/30 16:11, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] block: Use-After-Free in q_to_ioc() list traversal due to dropped rq_qos_mutex
-> --
+linux/types.h gets included, but 4 levels deep starting from
+bitfields.h. I'll move the include from arm-cla.h here.
 
-The findings are confirmed; here is
-how each will be addressed in the next revision:
 
-1. Lockless q_to_ioc() in the attach path (sashiko, patch 1).
+> > +/* Common register offsets */
+> > +#define CLA_MTC_PSTATE			0
+> > +#define CLA_MTC_TTBR0			1
+> > +#define CLA_MTC_TTBR1			2
+> > +#define CLA_MTC_TCR			3
+> > +#define CLA_MTC_SCTLR			4
+> > +#define CLA_MTC_MAIR			5
+> > +#define CLA_MTC_TCR2			8
+> > +
+> > +/* EL2 specific register offsets */
+> > +#define CLA_MTC_HCR_EL2			80
+> > +#define CLA_MTC_VTTBR_EL2		81
+> > +#define CLA_MTC_VTCR_EL2		82
+> 
+> [Severity: Medium]
+> Are these EL2 specific register offsets intended to be relative offsets like the
+> common ones (0-8)?
+> 
+> They are currently defined as absolute indices (80, 81, 82). If the driver
+> applies these by adding the base index (e.g., CLA_MTC_REGIDX_PL2, which is 64)
+> to the offset, using CLA_MTC_HCR_EL2 (80) would yield an index of 144. This
+> would exceed the defined CLA_MTC_PL_SIZE (64) and target the wrong hardware
+> address space.
 
-   Confirmed. After blk_iocost_init() succeeds, the attach path called
-   q_to_ioc() with rq_qos_mutex released. Although the returned value was
-   not used, q_to_ioc() walks the non-RCU rq_qos list and should not be
-   called outside its synchronization. The unnecessary lookup is removed.
+The generic offsets are for both EL1 and EL2. These are differentiated
+by their _EL2 suffix. Targetting the EL3 frame or beyond causes
+cla_op_setctx() to fail loudly.
 
-2. Missing test__skip() on -EOPNOTSUPP (sashiko, patch 2).
 
-   Confirmed. Both attach paths now call test__skip() before returning so
-   skipped tests are reported correctly. The unused line[256]/word[256]
-   arrays in write_cost_model() are removed as well.
+> > diff --git a/drivers/misc/arm-cla/arm-cla.h b/drivers/misc/arm-cla/arm-cla.h
+> > +struct cla_dev {
+> > +	unsigned int cpu;
+> > +	struct device *dev;
+> > +};
+> > +
+> > +#define cla_dbg(dev, fmt, ...) \
+> > +	dev_dbg((dev)->dev, "[%u] " fmt, (dev)->cpu, ##__VA_ARGS__)
+> 
+> [Severity: Low]
+> Does this header need to include linux/device.h and linux/dev_printk.h?
+> 
+> The cla_dbg macro uses dev_dbg() and dereferences struct device. Relying on
+> implicit inclusions can cause build issues if arm-cla.h is included in
+> a different order or in new files.
 
-3. Documentation commit message vs. text (bpf-ci, patch 4).
-
-   Confirmed. The commit message described two behaviors that were not
-   stated explicitly in the documentation. The documentation is extended
-   to say that detaching restores the builtin model, and that the ctrl
-   field accepts only "auto" and "user" and never selects the active
-   model.
-
-Thanks,
-Tao
-
+We include device.h in a later patch. It includes dev_prink.h
