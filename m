@@ -1,195 +1,188 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs2-f36.google.com (mail-vs2-f36.google.com [74.125.227.36])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F331432E65
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 06:54:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956EE30AAA6
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 07:20:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.36
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790751303; cv=fail; b=DDNUdW+9nwqNukooQzcVY7e1dUmkj3LylxqgDxk57mAQsHL8/i2TcXb5JvIo+GGBE9R1rEDCTQlQY5WcJ7/bWQmoSdLwn5Rssc67WHfgfh0KW1pLjS6tTI3Koi/1eMmjql6MfeRAPUNsHDmWguJBOlArD6tyWvgBOBQoD2JKYwU=
+	t=1790752824; cv=pass; b=tR+tQxkj1W8IBCYeEGcx9aVdi/513XurQwuMbj+bUr9t/DC84C1BY2qNJ/RvIquNEBneCBHK3lv9QcdwanlTwL3qSX8iHdq4WoFdulpYdfVkjkQNsZ7nKL/em28FVFPakO4Xl3p+csZMoyweyRLo5dsDVnvaL3779ecz3w4v5IU=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790751303; c=relaxed/simple;
-	bh=kVjil3wU86oBa35c2s5G/P1r2qxtfiRL61f5KNHLF3M=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=bcqeaaFg7xLburDV8G1W+P9wcqvEs4DNejjg/pZPv0VQuYEeT51n/0UV+nM5Ib0WxgvqKaMqNcYwXOa2QtQGDq3sl+bKDTnYcDt63DTLjCNMD4JC1ItizMAgFNeccZ4vB71i33fin/n0+O4bQqfA2Ppd/OfQf097MtwHRcRJNOs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iGgCqpA/; arc=fail smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1790752824; c=relaxed/simple;
+	bh=qGt0YsFYcN017fQvszpRHzy5hsd1xvba1wbomW7VY3M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SzcgFsrCLYpkpXMlZbVbr0PjH0jPVBiqVejAW8IdqkNOlkY0YhxpVNwvR+zVvAYFY7hZUwfYpJs4Q+3pAFRuqn65nM3cCUb42wo8gwlSqiRJb4aPEJ3eVPw8FYOwQ4mgzQ/qw3XPd9erLPbifjkMashheQdPY7zRbTSs/zVrZS0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=clA0nCNL; arc=pass smtp.client-ip=74.125.227.36
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iGgCqpA/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1790751294; x=1822287294;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=kVjil3wU86oBa35c2s5G/P1r2qxtfiRL61f5KNHLF3M=;
-  b=iGgCqpA/vU+tQhfSwJBpGvMO3kCHvmPdTZ9ZlZyXoOV1a9vrZLpZSEAV
-   FsWAU5asH9m9t3SD5VUrDCIZxqY2Q7qLb9gQLu3bYqCvR2v51MaSnhhgP
-   CLNyh25DgOPDe3APwmXQqCFORo15FQzdBaGrCDNdDe9xu9uAYQOiA8aLH
-   zkXhrt9UKCzS/tUXdhCPJbqnr9ftUfAIc3j+Og8p01CYAKpRrZUd6figz
-   3AOZlivDgS4eoVo+LNfKtrKJKGS3Fa+oW6hChX/crZP/Mg28VDk4cmgch
-   zRa1uDE6rRpFJ9uYhqxZZB9NZ+wIiG8H82JsTFNTYqNgUEjckBNiRZgNo
-   g==;
-X-CSE-ConnectionGUID: nckw+aX0TT67dUM9Qo1K9w==
-X-CSE-MsgGUID: b37GqD0pRQmGWlKszmUMzQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11920"; a="90246337"
-X-IronPort-AV: E=Sophos;i="6.27,132,1787036400"; 
-   d="scan'208";a="90246337"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Sep 2026 23:54:39 -0700
-X-CSE-ConnectionGUID: UnQuzdQDTcuqzXSz5pxUJQ==
-X-CSE-MsgGUID: w8sGXh9tTEmUOGkiai78tQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,132,1787036400"; 
-   d="scan'208";a="278949635"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
-  by orviesa004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Sep 2026 23:54:38 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Tue, 29 Sep 2026 23:54:37 -0700
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46 via Frontend Transport; Tue, 29 Sep 2026 23:54:37 -0700
-Received: from BL2PR02CU003.outbound.protection.outlook.com (52.101.52.6) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.46; Tue, 29 Sep 2026 23:54:37 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Z7hcAXrxTvJGR8dvlgs3F1hhDJX3RJFG1YuoRVWCmQ+vHehbNN8o6jYEdk4rLjmHokYp+OBi7aQreuSF3TrzQoCi9LxpmKtpbLWsBIo2uyPF3Nvq3kH+esM/UIkqZdD8D6XWIMy5myDnXzgq0wOb0nPl9DOcC64iWUlndRxPXzx7KSkyFJQTS6IrL8rrpKR1kgb4syA1GAyhrp7rSpVw047YT85+Xf25ptj9fyGlPcFBECJrGz9au0aOrsTsM5HECYYMm/kJZshw88n3WITwjguT8PONhvpx/QXSXnWcCE5aGjt1qL0TBcivCAO3ZMNnpckOF2XSUX76M3azrG7vvQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uxop2U/cAsogyjaoh5DHFboj3cLxyEPQ1F1wCRgD7Ww=;
- b=s9+PUzwPsoZ/Emt3q1Pf1pDHgug7OQpsEucBVCzXWHa5rC4VE0Mh31XTcsNXeLKZ3G+xJ+Rgawfzl5hTLy0EPuO0lMzroV13UsbPMuF+kX7KF0Ql9303hACHjnjcMIqjN7hS9JYg+mgX9wTM6A4a6lVZrnXARv/8Y2fibPTcs6VFG9clifussk+T0rU/TIXsT6nXE1IDITL/bEh12pnOh9j4SMvCJ4byCznAknqHsNIbX3k7Kvjv9UHO6o00o6Iif2IZ7ZCh2HYDBJQ6q94j41NCoYcb1j9MzBAj+eyD1HpiObwNXGb7gQRSf6fYDa8dSfbgxe/h7QYyLTQmpt8S0Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CO1PR11MB4787.namprd11.prod.outlook.com (2603:10b6:303:95::23)
- by BY1PR11MB8053.namprd11.prod.outlook.com (2603:10b6:a03:525::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.15; Wed, 30 Sep
- 2026 06:54:35 +0000
-Received: from CO1PR11MB4787.namprd11.prod.outlook.com
- ([fe80::e7eb:a872:53d1:21fd]) by CO1PR11MB4787.namprd11.prod.outlook.com
- ([fe80::e7eb:a872:53d1:21fd%4]) with mapi id 15.21.0472.015; Wed, 30 Sep 2026
- 06:54:34 +0000
-Date: Tue, 29 Sep 2026 23:54:32 -0700
-From: Matthew Brost <matthew.brost@intel.com>
-To: Pavel Begunkov <asml.silence@gmail.com>
-CC: <sashiko-reviews@lists.linux.dev>, <media-ci@linuxtv.org>,
-	<dri-devel@lists.freedesktop.org>
-Subject: Re: [PATCH v6 01/13] dma-buf: introduce initial file I/O
- infrastructure
-Message-ID: <aryyKMFpgK9JYQr0@gsse-cloud1.jf.intel.com>
-References: <cover.1789997898.git.asml.silence@gmail.com>
- <5490ee42c4452fd4198b245ead20fcf7438c066e.1789997898.git.asml.silence@gmail.com>
- <20260921135344.035B81F000FF@smtp.kernel.org>
- <17884261-52ab-484e-a39a-01e67f7a1d2e@gmail.com>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <17884261-52ab-484e-a39a-01e67f7a1d2e@gmail.com>
-X-ClientProxiedBy: SJ2P220CA0010.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:a03:5da::7) To CO1PR11MB4787.namprd11.prod.outlook.com
- (2603:10b6:303:95::23)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="clA0nCNL"
+Received: by mail-vs2-f36.google.com with SMTP id ada2fe7eead31-7ba99a2e56dso378646137.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 00:20:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790752821; cv=none;
+        d=google.com; s=arc-20260327;
+        b=YfmNXkBSfrx6WEm8zfT5U4SowWiw/34hpqIvGHWV30zGbCdXNT27okxhdyi4IQldE3
+         JKsZkl0tBfC5bp4jo+8txn/wALjCOlNIhSAHvYHr7OcnFZT+BCsc7MuJSYwWtfFH13cw
+         X8kGQzoN1ZAXBcIi4geIw+ZiR9ubW6HDohnieKgoHslDiRrc50D0A8huQZFxGxA0YVED
+         heR7T88atxQetih1QHLN50Dh6UtcTJSY/yrAKx26HQES8tg0WNA9nlx9H8vWLTOBJJGE
+         55lIDacRHn6Qu9cV9T9Lk6iNlvK/4Dg3QVP298mlXunsRdP6ZQSdIcteSWu+W1Up49gA
+         ISCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=tRhP5/3LMDdFdRUnOnnSO2A2XycO9Quxua+nOknp1LU=;
+        fh=2xfOhBJyN5MrDXDnqEqgkqZlEOPXo6XBQo6m99gnAL4=;
+        b=fkUo8LUG5AQLBC29a1hORvQQuug+4AImiZ71HcGgVehN2oW5aPY/WL/3YFpb23iXyk
+         Sq4Anzq15cVUeumRO3zzmcXM/Iy+tTMKbHs+4VUWYe2QkbZ3mEaORJ63QXxDxiJ0s/s4
+         71gEUdChWPY0Yr4VtDtyJ7JWwGNXrznFQWMgvslers7gTe53WbB2R1bUrVFlui0/P46k
+         PyWU6w9SWCm9ygdkOeULu+GKDH7HDjGAuEoXviSPv0+LiEIQF+eEKR0b0NXZtnBaeLdm
+         g5ENs9PYFztOxgTYTjouSfGTZO5PouzOjCx/edlwFV0CWAyVvyDfGLxLmM4RKItM9SB8
+         nnsA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790752821; x=1791357621; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=tRhP5/3LMDdFdRUnOnnSO2A2XycO9Quxua+nOknp1LU=;
+        b=clA0nCNLmlc3VpQSmmnA/v08BAU+bmm+XGOeXtpaye/S0J4NR8MVUEut0f6QE+Elpu
+         6GEzPdlt4erq11MfsLj1PuU4+rCCsrvy6BkeRhTOBQzREXbceIKClh8HMPK9qFuEzvym
+         8Le2kwco7Lp6fZqBszwppKeW8SngvwjpYeF4S7U5m7ftWcCq1xs8oarROBsCbq9YL979
+         VCS9GV8TaN9T0Q4XksoDxvNFVbP09kmxwkYLmIuRv+krW5Jp47gpSycRi5MxTE/PaWK0
+         cvV4/NcWaI6nqXWboAnwikYJbkLKDnizYCexE6FXw4aImAffQ1tC5T+3QcnGe6k06d6y
+         bB4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790752821; x=1791357621;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=tRhP5/3LMDdFdRUnOnnSO2A2XycO9Quxua+nOknp1LU=;
+        b=QT1Nq1VVitq/DihVY17ryhBxqugiO1tgvPoWq7Dl1xSVcGOQwSfmFDnxC00PivslfR
+         vF6oxeoeisSCsTJ18UNKhaqYprjIEi4a9IBCzHAtaGyxBhPg4i3J28Ny3if4XddZJvrj
+         SKLxmeiwOE+I8W3ftPwMVSFy7nxq5L35Avbeiyj7wSrJncebmSgbr6wjEqye26iKwc+7
+         a7ZxcZ14VyyGm1V/XAmOh/jGT/ucDB3KFPTMG2z+g9KBt3/2ok3PRsrpRbOD191cHliO
+         7C4QPJQVZOKxPsMBaoZyIgb17pl/L7x4k1geVZtiR6GYkvheY2MXJqeLIjzBdvVcmGQ9
+         0FEQ==
+X-Gm-Message-State: AFq9FYJxFRlRIx9O5retHVRdwQzFbSncfS9fIO1iGjApA+b1O4/bTvTP
+	vLQKPDHziXEwfSUO+Z3eNAh2U6b/EEMAnqWLOZONH/rkmleuXlcyiTFgIw6Nw/z2qmv0SIjTDL0
+	yL2o5Ce2QEtQN+1yYKKnLP09hyjZTQ7eB0U1GqgVmhQ==
+X-Gm-Gg: AYBFou3Khi6LMJ/RcrQHzIabXs/B2xgOI6ZW/DKiw+dntTOCGAcXYTRocSuwB08MHPM
+	YiFCLbUvsJHV9MPYqbfA/4GBLhC7VIUJKuVMZxjUtk75j7eweLBTJo+EX8baaWCXqeT8OQD9/ke
+	wpYCpbHjEbuUUFcw7HVUJF263qBZYLKKQGb8uR7TcfTKzytbwOi13mOalvK26K3UepXJo7rK7ia
+	iqH5ejirn9nUu+tkZLfUZIj23SHR8zNj1hSi7av1NJduyeifXnQgqodavIIB4UAtg2FxDkvdAwW
+	q4iTu7kjI/bV0wOSlI0HxNbR9msiYmHSpCNAWR73zDx6t/qTrGdPnxdPMvTYA/7B2HSj9exMbvT
+	VVbt+rsDfLJqAsumMa8SBWlOkE7sm3Pi+5F3AUMqcgciJPwBzz/onM6OktogPAkjVuyNR3NhKcA
+	==
+X-Received: by 2002:a05:6102:6a8b:b0:7a7:7961:b14d with SMTP id
+ ada2fe7eead31-7be727addccmr57937137.12.1790752820234; Wed, 30 Sep 2026
+ 00:20:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PR11MB4787:EE_|BY1PR11MB8053:EE_
-X-MS-Office365-Filtering-Correlation-Id: c990f216-6655-4f64-45c7-08df1ebfafde
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|11063799006|4143699003|10067099003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: tIuk0+tsikxP/iqtSulD/GEuBRaMt6MdtGMbd0KEtkgBHIEt0oNTZWT/ELcygcRRbJ48d6K6TZ7wvTRaTAgpEHQfloxwBQ8trhEbtXbQ+kN8uZMNWJdLwDz69V+r3Pp6HjltWKWeDTJkk53Nk3TRzBi2mVCepr9Ou9jhEOSNlxXdrZGZ4HqAhHspk47kl29tKAre6KRAiAyccVVXy3AScH+d+tANkv+UzKTFc6XpI3Nm2zpRewuwWsYPqZzph/7/rXoA3xcB/aSMXF9ebNpJkpMomUz585Af4mhyC4+n1HhToU/HIH0AIlRkrjcWglnBzyexG9XRCJLo8I+xwdTAB5HzXSnUTyHhbUfn44m626dpDLZ8D9/OI63bZki8OUhOs6wEnKWHn5FOMki2Z+U+igaMLbJwpQwjsgpvTk9J/R8x8TdXboVIqWvsFZPn6PzxgspmCNadg0AYDYtHWSpZZM9248dxqP+wgsgEMozykjcJ0FD4DnBHd0jLr+F7toYoLQzamjzhGT1S5co8SlfYVrOkBou/fVoQ2CCTtbnZPtf8Xj4gFtWwh7ufo0Y1gOt7GKjwnntuANue/gdoDfhgffv9uRnNq33kwZA8YVCIeEFmDdqbvkl4Obqqw7VYFkvTFEmeymMXZiFz0xkXwIeyBTtakDv/hx5cTdV+Vt2VDms=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB4787.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(11063799006)(4143699003)(10067099003)(56012099006)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?o3ylus2cfN2E9ylnzVjLGYbZOXAEoy/pPDYibP76duSlwM3wjvCjyIPsLfSz?=
- =?us-ascii?Q?pxP55+9HD09oR1cd8/4w7jgFa0F2P20l0KTzxgozxm+UhcsPIXmsfS3CAFJ6?=
- =?us-ascii?Q?Vq3077BmsyUhbrMaiVtrFFxyyV+aQjl8gxquHnC5ugtSf6pYBOVV0C6Qw5FV?=
- =?us-ascii?Q?S1R20PDGUnuEI2O7ETtVjI4hOo/EyIvPEc2B4Lr6MCYJ5krMyvXbDkZCfc1C?=
- =?us-ascii?Q?MLxIunYGwUoBd5DoMSctN5sv7sR0yWmKfIyemBiYWckNiL2CZVT+ekEmJcUz?=
- =?us-ascii?Q?ll0guhN2y2FIQXKim04GSwEajYedzLV/HuhbRfFzzKGdrprXMTybMbfRIIQv?=
- =?us-ascii?Q?j5IumcioB7FD35oeAp+3bsoRdy6ih1UIOQVsGFXqVHoX8Q7yzDoScuqDDTzM?=
- =?us-ascii?Q?z7fJ7+opXfMeQJziBfAbbAl6k0vX57jEPSCVyLcBT9F9ST+vEMCJ7+UxYB31?=
- =?us-ascii?Q?LKzqn5tVfSrAdI4ct9JnceBL4BoVj7Y1pDQ3lo0ZoshVFUi2hTfCtoBVuH7R?=
- =?us-ascii?Q?F8qd4I8Zhd7/lIFEwkFAguGmoBgbYbWfR1ZqDmOfRbjhLLNv5fglOD6FDLxz?=
- =?us-ascii?Q?MgJKUUjDVhNfiPBJ3rToZCSdLKubgRuifHzonKS947ZRqXDet/XO7D1iGlw/?=
- =?us-ascii?Q?uSbFovimTYijeDROxpvNBqzYom7NRXkqnHQrgeT6zpiq6mfHS335eZZSsc1H?=
- =?us-ascii?Q?p4KVgjrLtLRgW0R9mk1eVSflSSq3qHof0jDuzDZjnnjh/BsVlmjcrtdrTg4p?=
- =?us-ascii?Q?PszXNUVW/6i+SZnSqSidCTx/0+clKYxmVCHSJ+TtOQ6Hx/a/O91izqi32DlU?=
- =?us-ascii?Q?WIkA33CbSjYR1I1BVtMpoBRuX0iWg26BuNYIOPf7Z9J9+MA3OYpSopWSM+c0?=
- =?us-ascii?Q?GPGc0rSK45PNwqVbIuMqJ3mBit46N0K23M+/+fNaPW8m0RMHa4joU2y9uZx4?=
- =?us-ascii?Q?rJ1Sj8dRWsaGKmXrhh1GIGzg4R1lN6VJMratI+CzAFQzoabwq6amcQQDiR3N?=
- =?us-ascii?Q?XTDbdJs8PHz9uUCeZf7Br9aqZiqvavGRufSBUVl4l49eog6500oNu8Dv73HE?=
- =?us-ascii?Q?wBGBhwCJoM/F3cVc8F59rOt/MoLP1af9MLZ2ZdOmROjEqNiiEoSdpuOOz4lj?=
- =?us-ascii?Q?0nntbgeKiPXFVtySLw0o3O1hKWUMG5yrLggCtwVPgGRu7Xz78Zuw3WcxbpMr?=
- =?us-ascii?Q?la6S6enXrgMzxNc6niHaSp+om1xHsoHyokfqwXRsnp/zJVjOHj4lxZqdQ/Xw?=
- =?us-ascii?Q?deHawWO3dQPMjq6/0PRXVMTTgGuGCcJVtUgYAyPMLnqDuLSURyA8G0iK3p+b?=
- =?us-ascii?Q?rITvE4pcAfxFoWbPANh01klm90WqhnSHMz/zsL4zLbFz6JuVaIXN+CmglBnq?=
- =?us-ascii?Q?aQTEVWRDx3vwZxfGfGRbxK7OW8mD/ea05YXgUUGYd7TF47YTtEV+l+PhGKm3?=
- =?us-ascii?Q?4H+lwUkyU9I5HOO5Aga3jOij/Sfr5UCPLYh1PHRulEVuPepR0lby6JirOsTJ?=
- =?us-ascii?Q?h6B9HuO/FVq/yI+EUyBj7l7xpYT5D/3ehqpyv3fsRLeUZEhb0kresEjII31B?=
- =?us-ascii?Q?smit28woxOxKznjT+x7E/iIWpbbd657jPB0n/vL3qgkmC7BeyV2atkO2smdS?=
- =?us-ascii?Q?Z8wPtrdhmyMDc/0UMJLc3FB+h0wO7EDUMRRyhuBRW7luPx3jjj+mBwH6QKwE?=
- =?us-ascii?Q?UbrMhxQirSCOEySmZHIwTVTd1uXW6q9idq6Xl0WIWPOBWUGm0NEKcfm/f0dS?=
- =?us-ascii?Q?zCZN0cvYIBWZYdhrjPY6SGto25fpAdw=3D?=
-X-Exchange-RoutingPolicyChecked: N4aqt11mMZ6RENkt5tubx7XWJDFXvW4yCBfUhuFlVh6x41MPUeszR/SCAPaQc5CISZ2pX9eEBvZZ0sLSkT4XP/RO0BNnjVGHSygdWiuDc+hxkDRoa+d1y0wpPnPtdTvkfnsdQRkeebZ7rOAAiaf5v+8oP2a2R3eiw+RzpEQx5rITFivvjAqRT+UhblXXruYJG9HrddovVkXsVRuZlc8wIbCaLVTj7X+Olb+EjfnFbzx9zvA7qZyYKE8y9KYC9p195M07CqhQ6Yy8r+5gqXAmdXCmu6GT79eaiPmEa4kj7nbBGW/bDY9f6DMOVXl7NVUYrRxOgXa9xMEMPHmXHLdbTg==
-X-MS-Exchange-CrossTenant-Network-Message-Id: c990f216-6655-4f64-45c7-08df1ebfafde
-X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB4787.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Sep 2026 06:54:34.9550
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: vT233ozQwcI9OIzc/qiL1CuPudSBS+/0KqeU0KlXlcDsBmtoJbdX+8/+zMBv/9BFIig0CuFEbg+PUI5zsGYt4Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY1PR11MB8053
-X-OriginatorOrg: intel.com
+References: <20260930-b4-elan2514-irq-route-v1-1-44671bf01d05@gmail.com> <20260930063500.7D2B31F00899@smtp.kernel.org>
+In-Reply-To: <20260930063500.7D2B31F00899@smtp.kernel.org>
+From: Waqar Gulzar <iamwaqargulzar@gmail.com>
+Date: Wed, 30 Sep 2026 12:20:07 +0500
+X-Gm-Features: AclHuK9IFTRHVM_07XLjX37kXd5ttmHGtWIewbnT6PdHeLfO8q_q-f65p6pYENE
+Message-ID: <CADeB2Yr5WZ2mbWCv7YT4YWS-jaD=XvSXvyjffdsTFtwdg3ijow@mail.gmail.com>
+Subject: Re: [PATCH] HID: i2c-hid-acpi: restore touchscreen IRQ routing on HP
+ OmniBook X Flip 16
+To: sashiko-reviews@lists.linux.dev
+Cc: dmitry.torokhov@gmail.com, linux-input@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 22, 2026 at 10:08:38AM +0100, Pavel Begunkov wrote:
-> On 9/21/26 14:53, sashiko-bot@kernel.org wrote:
-> ...>>   }
-> > [ ... ]
-> > > +int dma_buf_io_init_map(struct dma_buf_io_ctx *ctx, struct dma_buf_io_map *map,
-> > > +			struct sg_table *sgt)
-> > > +{
-> > > +	unsigned seg_shift = ~0U;
-> > > +	struct scatterlist *sg;
-> > > +	unsigned long tmp;
-> > > +	int ret;
-> > > +
-> > > +	for_each_sgtable_dma_sg(sgt, sg, tmp)
-> > > +		seg_shift = min(seg_shift, __ffs(sg_dma_len(sg)));
-> > > +
-> > > +	ret = percpu_ref_init(&map->refs, dma_buf_io_map_refs_release, 0,
-> > > +			      GFP_KERNEL);
-> > 
-> > [Severity: High]
-> > Does this GFP_KERNEL allocation violate DMA-buf locking rules?
-> > 
-> > dma_buf_io_create_map() calls ctx->dev_ops->map(ctx) while holding the
-> > dmabuf->resv ww_mutex. If the driver then calls dma_buf_io_init_map() under
-> > this lock, the GFP_KERNEL allocation could deadlock if memory reclaim
-> > attempts to acquire dma_resv locks.
-> 
-> Most of these look trivial, going to fix them. This one, however,
-> doesn't sound true AFAIU, I haven't heard about any blank ban on
-> GFP_KERNEL allocation under resv lock.
-> 
+On Wed, 30 Sept 2026 at 11:35, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] hid: i2c-hid-acpi: IRQ routing quirk bypassed on resume if wak=
+eup enabled
+> --
+>
+> commit c1ea0adbfc4956d2ccd0cfccdc56448c010e7ac2
+> Author: Waqar Gulzar <iamwaqargulzar@gmail.com>
+>
+> HID: i2c-hid-acpi: restore touchscreen IRQ routing on HP OmniBook X Flip =
+16
+>
+> The HP OmniBook X Flip 16 firmware disconnects the ELAN2514 touchscreen
+> interrupt from the IO-APIC in its power resource _ON method, which Linux
+> runs at probe and resume. This patch re-enables the routing through the
+> firmware's own helper from i2c-hid-acpi's power_up hook.
+>
+> Link: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2142384
+> Link: https://github.com/testyfishy/hp-omnibook-flip16-touchscreen-fix
+> Link: https://github.com/iamwaqargulzar/hp-omnibook-x-flip-16-linux-touch=
+screen-pen-fix
+>
+> > diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.c b/drivers/hid/i2c-hid/i=
+2c-hid-acpi.c
+> > index 9371db200fc4d..b6348ee3d422b 100644
+> > --- a/drivers/hid/i2c-hid/i2c-hid-acpi.c
+> > +++ b/drivers/hid/i2c-hid/i2c-hid-acpi.c
+>
+> [ ... ]
+>
+> > @@ -85,6 +140,9 @@ static int i2c_hid_acpi_probe(struct i2c_client *cli=
+ent)
+> >       ihid_acpi->adev =3D adev;
+> >       ihid_acpi->ops.shutdown_tail =3D i2c_hid_acpi_shutdown_tail;
+> >       ihid_acpi->ops.restore_sequence =3D i2c_hid_acpi_restore_sequence=
+;
+> > +     if (acpi_dev_hid_uid_match(ihid_acpi->adev, "ELAN2514", NULL) &&
+> > +         dmi_check_system(i2c_hid_acpi_irq_route_dmi))
+> > +             ihid_acpi->ops.power_up =3D i2c_hid_acpi_restore_irq_rout=
+e;
+>
+> [Severity: Medium]
+> Will this quirk be reliably applied on resume if the device has wakeup en=
+abled?
+>
+> The quirk is hooked up to the power_up callback. However, in
+> i2c_hid_core_resume() the core driver conditionally skips the power_up
+> callback if wakeup is enabled:
+>
+> drivers/hid/i2c-hid/i2c-hid-core.c:i2c_hid_core_resume() {
+>     ...
+>         if (!device_may_wakeup(&client->dev))
+>                 i2c_hid_core_power_up(ihid);
+>     ...
+> }
+>
+> If the user or system enables wakeup for the touchscreen,
+> i2c_hid_core_resume() skips i2c_hid_core_power_up(). If the device's ACPI
+> power resource was turned off during sleep, _ON will execute on resume an=
+d
+> break the IRQ routing again, but the power_up quirk will not run to fix i=
+t.
+>
+> Does the quirk need to run unconditionally on resume instead of being tie=
+d
+> to the core's power management logic?
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260930-b4-elan2=
+514-irq-route-v1-1-44671bf01d05@gmail.com?part=3D1
 
-I can confirm this definitely not correct - see dma_resv_lockdep it
-acquires dma_resv then fs_reclaim_acquire(GFP_KERNEL). Shrinker enter
-direct reclaim and try to take dma-resv locks, but not block on the
-lock.
 
-Matt
+> Will this quirk be reliably applied on resume if the device has wakeup en=
+abled?
 
-> -- 
-> Pavel Begunkov
-> 
+On the affected boards it cannot have wakeup enabled. The touchscreen's
+ACPI device (\_SB.PC00.I2C4.TPL1) has no _PRW, so it is not wakeup-capable:
+there is no power/wakeup attribute for the i2c client, it is not listed in
+/proc/acpi/wakeup, and device_may_wakeup() is always false. So
+i2c_hid_core_resume() always calls power_up here, which matches the test
+result (the IRQ stays idle after s2idle resume).
+
+I agree the dependency is implicit. If the maintainers prefer, I can send a
+v2 that either documents this assumption in a comment or makes the routing
+fix independent of the wakeup state.
+
+Thanks,
+Waqar
