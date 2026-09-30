@@ -1,194 +1,159 @@
-Received: from mta0.migadu.com (out-108.mta0.migadu.com [91.218.175.108])
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D251F344DA8
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 01:09:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EBA9349CFC
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 01:09:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790730579; cv=none; b=TqVLVo8vjxmw+gRIrYZ7SPua2loBr8liCadu1+2pwvCy3y5o19N3P+wqHiYB707UN/13YBMT45J6wHF596FwHGcatTVxuzyVR3rAUkVg+Esu6sUP72mab7LaShSI4jfqqvn5nmnZOrZ1+Q9ziPAdjVHY6WTDo1lu8UbBdkGX8vE=
+	t=1790730587; cv=none; b=mR9Tnzvg61Mjps532Avc151eTkz0DnCBNosVVq8VglUMObe974iTrO6BwNExUq1SkQ+SgDAEgsftM1XwBbuzcUPOMPMVnzb+6jpNwZ67+Y9Hcoh7JfFs6XtxVttHLiA0qgkx8RZe908REdYVci/GazyLxfTw3DVcmlWl018XlS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790730579; c=relaxed/simple;
-	bh=sI1D2ep9dYGTQ4J5tLZoATKKAmcMxx3PeQ+xN0rhHps=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=K6GXScGgeUFobm/68Fop04KpA5dVZ9q5OfgVBwMwH2ol3QK97Iuj7t6R82g4dJbD1WPmHhcLWDsdjEzX8Z5VQY4yp2j87VfBrxPwMMm+P2JrWRVdTv9TDP42bwJVUtQUTTeQaie669E1qIqPbNbMuucsbBy2aM1fwMd6vHNAQIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=TbAvEIFV; arc=none smtp.client-ip=91.218.175.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1790730587; c=relaxed/simple;
+	bh=SezVP/uFBTMZxwx49txY9QcmGavw70qer/Mr8hN7hi4=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=mE9HcgNv2H0cC9SnpcNAgimVN8RuoysD4jWfpdzUv6qKduaVfF6SXvaoZ0avDIYsERDOZ1Ai5lmdrSxUSPtDcVm2VeLuLjrzUBxU/gdJMYJyN7IAgP9xP4PS8qmkWZfugALQKUCo9SUhno/OtwYOLdHRD4xNpMxUhR53I7ucLUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=lgsHOsE8; arc=none smtp.client-ip=209.85.215.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="TbAvEIFV"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=sI1D2ep9dYGTQ4J5tLZoATKKAmcMxx3PeQ+xN0rhHps=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790730574; v=1; x=1791335374;
- b=TbAvEIFVbTAQDHLH2DB2HcL7RDMt5lqWD+XCnR5juFhNRkaEswPHF7T8t8odJuMqUXphqrWn
- XYHbqv6f/gmwTV1gRTh/iGZRD1GG2nCBNyWYGD7YTFF6isBfcXpqKOgLnyEwUsDjFuQ/bPYRlKG
- 9v/mJmVXelQq/TX3F6Aj3+9E=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 8121d26f7cf1fabd;
-	Wed, 30 Sep 2026 01:09:34 +0000
-X-Mizu-Trace-ID: 8121d26f7cf1fabd
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <b2cf2368-a562-4569-b466-b70baa35205d@linux.dev>
-Date: Tue, 29 Sep 2026 18:09:32 -0700
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lgsHOsE8"
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-cc1bbd7d6e6so3378147a12.3
+        for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 18:09:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1790730586; x=1791335386; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=kI5zWnoGu/0SkUW3WJKgj52/D/XlXm6qzd94iamwT1A=;
+        b=lgsHOsE8xGsVr6S/8u2AaBdjb15B7H9yDiDeohWqtHmK0ibHdJXDSk9PA1CXtdYqqM
+         HhxQXc8ZbZowWR1Z7DnKW/EoNeDGThhHcpjqV+jHHoD/4Utrtd00fT1aSzMmJIBoEa/d
+         NS/AARpXtlopgdAs19WZJ0j/uTVflDYU/kXHeEejD+EsLN4sTHYdyRMuqupqNVdC5Met
+         KY8h69Oh6dahdQnz4iZaIVqTzXUX9zGqcmv8Xt9Kcp7sJtYeb31c0szmYbZBO6iyD0Qg
+         V6aOu/bfr67FBg3+AnVTZ9cYNDEhYJu80BRKq0Y/6C4uvns4g+VEaU2PrnBsGXQgiPwF
+         FcEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790730586; x=1791335386;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=kI5zWnoGu/0SkUW3WJKgj52/D/XlXm6qzd94iamwT1A=;
+        b=ZYtbNe9ife21umPVjsYKLs8Pk96vgS/Lg9Wxbh84iJmB2F5DNWijeCOFCm1VGyTBwV
+         CUl/Z3jUHlBQUrSwzuWEjxtPRoO2RDkcdhpGk7goNxZi0XBx7Lcck1gVRweBhA2DzMzE
+         Qofiz97BXWlOkr4rHXE4rX3/XyBVqOilMNcIazQlGBzwpNZlqtaucOxeN+00o3I1044G
+         pDLArYzDzC9oG0DXuE1VSwKDmQu3LazLu8UQapYqQNYKZWhXkA/rHr0NYytExupo1vaO
+         d6a7MCwWSTrjqSdHWOelD7eIWTo9oH6meYKGy7S3NuPxsS0aPRGzhpuJGINMH5oPex8O
+         hdQA==
+X-Gm-Message-State: AFuF++lNFh1TBnYG1CrRaDJ07VAvNMEenwWhrj76DGFn0IkiesA8w4Km
+	A+6U/PtQJloDERvuhqFdYlRPk3NTrInOUsmv5nk2cSiZ8YXCb1/RNVNb/GKYKdg7vI3divg/Jfm
+	VLN8wjyAulyAUmEaHRSp9I1uL/UJ/eWlVP7Rn9txX1jmD0ufbUjEZJp9Gpj/mj1N4DUmMNVGmmW
+	Jejf7Ifx5JnSg40a4kO8I8BOSwAUyCggicIsQXM6vsvDswuwnM
+X-Received: from pgbdo7.prod.google.com ([2002:a05:6a02:e87:b0:cc7:9970:4594])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6300:2288:b0:3de:4db6:9805
+ with SMTP id adf61e73a8af0-3de9525222bmr787304637.37.1790730585402; Tue, 29
+ Sep 2026 18:09:45 -0700 (PDT)
+Date: Tue, 29 Sep 2026 18:09:44 -0700
+In-Reply-To: <20260930003120.1DC101F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v7 08/22] bpf: Require an unwind to leave a frame
- holding what it entered with
-Content-Language: en-GB
+Mime-Version: 1.0
+References: <20260930002140.3174449-1-seanjc@google.com> <20260930002140.3174449-5-seanjc@google.com>
+ <20260930003120.1DC101F000FF@smtp.kernel.org>
+Message-ID: <arxhWBSLjT5560mM@google.com>
+Subject: Re: [PATCH v3 4/5] KVM: selftests: Add module param API to check if
+ nested virtualization is enabled
+From: Sean Christopherson <seanjc@google.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260929001601.3242665-1-yonghong.song@linux.dev>
- <20260929001643.3249386-1-yonghong.song@linux.dev>
- <20260929003638.8A1181F000FF@smtp.kernel.org>
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260929003638.8A1181F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-
-
-On 9/28/26 5:36 PM, sashiko-bot@kernel.org wrote:
+On Wed, Sep 30, 2026, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Critical] bpf: type confusion and memory corruption due to stale cleanup pad state
-> - [High] bpf: lock corruption and double-unlock via missing identity check on unwind
+> - [Medium] kvm: selftests: kvm_is_nested_virtualization_enabled() aborts on Intel
+> - [Low] kvm: selftests: get_common_kvm_vendor_param_bool() returns int instead of bool
 > --
->
-> commit 585aa50d9e8811792b9a816a4d1ad6cd51d63ea7
-> Author: Yonghong Song <yonghong.song@linux.dev>
-> Subject: bpf: Require an unwind to leave a frame holding what it entered with
->
-> This commit updates the BPF verifier to record what locks and references
-> a program holds when a frame is entered. It enforces that an unwind must
-> leave the frame holding what it entered with, ensuring that landing pads
-> verified against pre-call snapshots remain valid.
->
->> diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
->> index 0143688896b0e..75e572a8a1bab 100644
->> --- a/include/linux/bpf_verifier.h
->> +++ b/include/linux/bpf_verifier.h
->> @@ -339,6 +339,18 @@ struct bpf_func_state {
->>   	bool in_async_callback_fn;
->>   	bool in_exception_callback_fn;
->>   	bool no_stack_arg_load;
->> +	/*
->> +	 * What the program held when this frame was entered. An unwind leaves
->> +	 * the frame without running anything below it, so the frame has to put
->> +	 * these back to what it found before it goes -- otherwise a caller's
->> +	 * landing pad, whose state was taken at the call, is wrong about them.
->> +	 */
->> +	u32 entry_active_locks;
->> +	u32 entry_preempt_locks;
->> +	u32 entry_rcu_locks;
->> +	u32 entry_irq_id;
->> +	u32 entry_id_gen;
->> +	u32 entry_acquired_refs;
-> [Severity: High]
-> Does this structure need fields to record the identity of the lock held upon
-> frame entry? Without this, it might be difficult to accurately enforce the
-> correct lock state on unwind.
+> 
+> commit 680296c2620e4e5c37fadd1bdce211406dcc250c
+> Author: Sean Christopherson <seanjc@google.com>
+> 
+> KVM: selftests: Add module param API to check if nested virtualization is enabled
+>     
+> Add an API to check if the nested virtualization module param is enabled,
+> e.g. so that tests can verify KVM's own enumeration of the corresponding
+> CPU feature. Provide a big warning above the API to make it as obvious as
+> possible clear that tests should use "kvm_cpu_has(X86_FEATURE_VMX) ||
+> kvm_cpu_has(X86_FEATURE_SVM)" when checking for nested virtualization.
+> 
+> Link: https://lore.kernel.org/all/20260910115414.3015260-2-ewanhai-oc@zhaoxin.com
+> 
+> > diff --git a/tools/testing/selftests/kvm/include/x86/processor.h b/tools/testing/selftests/kvm/include/x86/processor.h
+> > index 6e6f70035508a..1608ddb91b6e6 100644
+> > --- a/tools/testing/selftests/kvm/include/x86/processor.h
+> > +++ b/tools/testing/selftests/kvm/include/x86/processor.h
+> > @@ -1429,6 +1429,14 @@ static inline bool get_kvm_amd_param_bool(const char *param)
+> >  	return kvm_get_module_param_bool("kvm_amd", param);
+> >  }
+> >  
+> > +static inline int get_common_kvm_vendor_param_bool(const char *param)
+> 
+> [Severity: Low]
+> Does this function have a type mismatch? It evaluates vendor-specific boolean
+> parameter helpers, but returns an int instead of a bool.
 
-Assuming the bug in patch 7 fixed.
+That part is intentional.
 
-Verifier flow should match lock/unlock with the same identity. Otherwise
-verification will fail. I think we are okay here.
-
->
-> Additionally, is it necessary to update func_states_equal() to compare these
-> new entry_* fields? Without comparing them, could the verifier unsafely prune
-> states with different entry locking conditions?
-
-I think we are fine here. There are already some lock checking in refsafe(),
-assuming patch 7 bug fixed.
-
->
+> > +{
+> > +	if (host_cpu_is_intel)
+> > +		return get_kvm_intel_param_bool(param);
+> > +
+> > +	return get_kvm_amd_param_bool(param);
+> > +}
+> 
 > [ ... ]
->> diff --git a/kernel/bpf/exception.c b/kernel/bpf/exception.c
->> index c1779d2d02f05..c0b0b8478af51 100644
->> --- a/kernel/bpf/exception.c
->> +++ b/kernel/bpf/exception.c
->> @@ -12,6 +12,72 @@
->>   BTF_ID_LIST_SINGLE(bpf_unwind_id, func, bpf_unwind)
->>   BTF_ID_LIST_SINGLE(bpf_unwind_resume_id, func, bpf_unwind_resume)
->>   
->> +void bpf_exc_record_frame_entry(const struct bpf_verifier_state *state,
->> +				struct bpf_func_state *frame, u32 id_gen)
->> +{
-> [ ... ]
->> +int bpf_exc_check_frame_balance(struct bpf_verifier_env *env, const char *prefix)
->> +{
->> +	const struct bpf_verifier_state *state = env->cur_state;
->> +	const struct bpf_func_state *frame = cur_func(env);
->> +	u32 i, held;
->> +	const char *what;
->> +
->> +	if (state->active_rcu_locks != frame->entry_rcu_locks)
->> +		what = "bpf_rcu_read_lock";
->> +	else if (state->active_preempt_locks != frame->entry_preempt_locks)
->> +		what = "bpf_preempt_disable";
->> +	else if (state->active_irq_id != frame->entry_irq_id)
->> +		what = "bpf_local_irq_save";
->> +	else if (state->active_locks != frame->entry_active_locks)
->> +		what = "bpf_spin_lock";
-> [Severity: High]
-> Does this code adequately verify lock identity? While it checks the count of
-> active locks, it appears to miss checking the identity of the lock
-> (active_lock_id and active_lock_ptr).
->
-> If a BPF program acquires lock A, passes it to a subprogram which unlocks A,
-> locks B, and then throws an exception (bpf_unwind()), could the unwinder
-> accept the frame balance since the active_locks count is still 1?
->
-> The exception would jump back to the caller's cleanup pad, which assumes
-> lock A is still held. The cleanup pad unlocking A could potentially cause a
-> double-unlock of lock A and leak lock B forever.
+> 
+> > @@ -1472,6 +1485,16 @@ static inline bool kvm_is_lbrv_enabled(void)
+> >  	return !!get_kvm_amd_param_integer("lbrv");
+> >  }
+> >  
+> > +/*
+> > + * Do NOT use this to check for nVMX or nSVM support.  Querying kvm_cpu_has()
+> > + * for either of X86_FEATURE_{VMX,SVM} is the idiomatic way to check for nested
+> > + * virtualization support.  Use this *only* to validate KVM's own enumeration.
+> > + */
+> > +static inline bool kvm_is_nested_virtualization_enabled(void)
+> > +{
+> > +	return get_common_kvm_vendor_param_integer("nested");
+> 
+> [Severity: Medium]
+> Will this unconditionally abort the test suite on Intel hosts?
 
-This should be okay once v7, patch 7 fixed. That will be able to
-avoid double unlock.
+Ugh, yes.  I had a brain fart and mentally inverted the X86_FEATURE_SVM result,
+i.e. thought I was testing this helper.
 
->
->> +	else
->> +		what = NULL;
-> [ ... ]
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index ee074d4a936b5..4bdee3f02fe9d 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
-> [ ... ]
->> @@ -19512,6 +19554,10 @@ static int do_check_insn(struct bpf_verifier_env *env, bool *do_print_state)
->>   			mark_reg_scratched(env, BPF_REG_0);
->>   			/* An unwind out of this call resumes at the pad. */
->>   			err = push_cleanup_pad_branch(env, env->insn_idx);
-> [Severity: Critical]
-> Does taking a pre-call snapshot of the verifier state for the cleanup pad
-> incorrectly ignore valid memory modifications made by the callee before
-> unwinding?
->
-> For example, if a caller spills a valid pointer to its stack and passes a
-> pointer to this stack slot to a subprogram:
->
-> - The verifier schedules the caller's cleanup pad branch by pushing a snapshot
->    of the verifier state (including the stack) taken BEFORE the callee runs.
-> - The subprogram overwrites the caller's stack slot with an attacker-controlled
->    scalar and calls bpf_unwind().
-> - At runtime, the exception jumps to the cleanup pad, which loads the scalar.
->
-> Because the cleanup pad uses the pre-call snapshot, does the verifier
-> incorrectly assume the loaded value is still a valid pointer, potentially
-> leading to type confusion and memory corruption?
+> The VMX "nested" module parameter is a boolean exposed via sysfs as "Y\n" or
+> "N\n". If this helper uses the integer reader on Intel, it will read "Y\n"
+> and pass "Y" directly to atoi_paranoid(), which throws a TEST_ASSERT because
+> strtol() fails to parse "Y" as an integer:
+> 
+> tools/testing/selftests/kvm/lib/test_util.c:atoi_paranoid() {
+>     ...
+>     TEST_ASSERT(num_str != end_ptr,
+>                 "strtol(\"%s\") didn't find a valid integer.", num_str);
+>     ...
 
-You are right. See comments in patch 7. Will fix.
+OMG, I hate KVM.  I'll just do the obvious thing, and then make a mental note to
+call out the semantic "conflict" in the pull request.  *sigh*
 
->
->> +			if (err)
->> +				return err;
->> +			/* Or, with no pad, leaves the frame for good. */
->> +			err = check_unwind_through_call(env, env->insn_idx);
->>   			if (err)
->>   				return err;
+/*
+ * Do NOT use this to check for nVMX or nSVM support.  Querying kvm_cpu_has()
+ * for either of X86_FEATURE_{VMX,SVM} is the idiomatic way to check for nested
+ * virtualization support.  Use this *only* to validate KVM's own enumeration.
+ */
+static inline bool kvm_is_nested_virtualization_enabled(void)
+{
+	if (host_cpu_is_intel)
+		return get_kvm_intel_param_bool("nested");
 
+	return get_kvm_amd_param_integer("nested");
+}
