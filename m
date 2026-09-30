@@ -1,127 +1,170 @@
-Received: from mail-dl2-f12.google.com (mail-dl2-f12.google.com [74.125.229.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from delivery.antispam.mailspamprotection.com (delivery.antispam.mailspamprotection.com [185.56.87.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEBE368D71
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 05:14:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.229.140
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790745290; cv=none; b=A/aGMOEdQfba5G8QJHthNFTL0IsS5vWmySYfPCIq0hfW4Kt1gL6FxELo6cDtUlpQiRHS/a/BjM7XeQezP6WmWKYXZdWMjeLXCeKd9/S/HP3yRbxpGpq21dTFVSkK08l8OFxHYahrt4oEFMnLSdz67MWElhkHv+BuQhUxEfQbjIA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790745290; c=relaxed/simple;
-	bh=0DwyDbiXHFs6nzuVuyMWZLug6XA5RmgSBkppMkUsuCY=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793643B8BBF;
+	Wed, 30 Sep 2026 06:19:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.56.87.1
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790749164; cv=pass; b=Wb/MGI+8rtQQc6EI3yFZYHj7hmAxtzzXaWT1Ho2/uBajDuZbqbnShiz9Uet6TIAtsQWAnkuemk+PiPCnb7okqmSw8SiFwzRyh4if5OEgZR1tb6J4fPTo2XWuZ2/TfQ8CLlFDgRa1zeeQyGHUolT5SKZbEAaoND82SOvyAKfk1h4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790749164; c=relaxed/simple;
+	bh=zFoTYb73ldMKwmEbO428TD3BtZYTxTeL01meO4CkLck=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YUn1yqB8fg1sVSKQO763MwBW4gUDg355HoIKKdViaothHC4piIlnEeXUZjSEaY1hg+GLI0tjr0f6MAh3dlz91svMT7eb9XoSaaI8xITcCF1sNe9+KBlt25jarekeyZ9WjUMF+aIp0x/zqIEL8OXEZvvXEWHttE3TnLOEvmSef5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ABq3wUem; arc=none smtp.client-ip=74.125.229.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=CNeiVnGh7GCh/6NkTbjlICmxp0AWFBjbnUVzVYSO5zjhFoJvtwV391I1gyD/pb5yzWcTvJPTwRoigdKNl/omAel4qGEe72FON9Yc8MNECGg/cTzCYzt8Ov5W0YJglU/z6PnUpUBsfUvCM8uN7u4/VMxLp82xl3xKWIcz8eOWqC8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valla.it; spf=pass smtp.mailfrom=valla.it; dkim=pass (1024-bit key) header.d=antispam.mailspamprotection.com header.i=@antispam.mailspamprotection.com header.b=kZSrusab; dkim=pass (1024-bit key) header.d=valla.it header.i=@valla.it header.b=vNWaZTSM; arc=pass smtp.client-ip=185.56.87.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valla.it
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valla.it
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ABq3wUem"
-Received: by mail-dl2-f12.google.com with SMTP id a92af1059eb24-142dd04be84so5961611c88.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 29 Sep 2026 22:14:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790745288; x=1791350088; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=S9KLD/n4FOKEHxzSj3ZLLw0Kd4SGiqNFcDpZxx8Aapk=;
-        b=ABq3wUemwd2wDatYztOEycE+jvRC6gGyZNR5WjfZFGsWsTNlsi+7w4AvZcFMrMANG6
-         Nn8GMfzkrkmqVBUl5jcYIwEIAtybE5vF0FG7vefii7BiSD3aSq6+xfvrmlirSM0RIkTA
-         fRnV9D671R8+g/voFTWLt6zfhtzh8zbEB6Go5dshyqhEiRqzNzUHeUIA++IpJCqp97/N
-         45gcsXFPK4YN73Tf7krPMk2MilMvcZWXTsmrS320igU2m9Ew17K2tRee9nX2y4lkC2WQ
-         vlyxAneUm4fVeGmN1GFgqX3LvhAYDQ+XdlZPM3eVAN/D9pdVQEj0f7BT0FEmYEiFDVWn
-         0Mhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790745288; x=1791350088;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=S9KLD/n4FOKEHxzSj3ZLLw0Kd4SGiqNFcDpZxx8Aapk=;
-        b=iuvjhOC7XcZO2TZSIqOw9FqICGT9Zt/CD4/xBTy5tjE2OL24kXhZUV5TKICjR8NNVh
-         kO8KiDcyCEn/Q6icKWfS8EKoSEfwHOvTwNsg39rE14B1umAqtwOM+h0ffiyw7+yeqkVe
-         AkfXtVe+uKAIYcDS9LSQ6XunQq0hID/DAnABDITfson0fhrKjf6D8HCxBSlu/7lqa/+p
-         cmhO87zA5mA94y/T3XiS9tEgjppbbDgkvefHd2lxP6YER1UFmlvN1f62NnJLHW+EPJJa
-         Ylmdp627KtAEBK8QozlHCA10Vy4E2umXFBuS2wqYO8JbNYkEZbBd1Pep6ByXZbs16nSE
-         50iQ==
-X-Gm-Message-State: AFuF++kKHsSJorHY7rL13L2nI19QwuGH6FgyO63vPIXZstP5hyHcfdhy
-	PQhOeRmDWeO0OIZiRbW6PC/WjqU8zbwLNYd89102/7rTOQWzheq1vE+Rwijzy97P
-X-Gm-Gg: AYBFou2B9pTQcyczYvAZx89ijxa9CNiBF8cF2XrafO24yuFWeJa3zHnUWsZg/+os3Mt
-	+JZKhWHtyqq3sVX85pL1/mQgbRVSkcdtbJUNlpY7HoXdPeHA7FEBdNCgxyYtrT0oQWbwQTw/yBs
-	+mPU7/8dfeOQFabcB81NtXdZfwIgrbdhes7lOfHWVFbchYVgPAeWVTrcBv3oJJEQJmqLM1gL/1t
-	vqJkYfYljxagq0FhzazVFi/+MJpdCM+9XMQPG9eF5PP3+GamLo3yavLI5oc8XziBh9lzuUigdI4
-	bP7shrDaeyj8lFOfAeQTurY0zYpFwprMsPYE+Xa5pScWGRQXRLbUzGUR6E7U5VNEfQFWFP4F7aN
-	H1eyTATnjLu4sfWtRiSqyrkTb/kw09gYQYACWRI+KQP+S+dCrGr0obmDeMAT1I/alUeHZzYL2mI
-	SJk1huCC5rQwIxtWAZO+0OY9xnCpzrjOjYXqxoDlYzRL+42kssbExLxuWoKxTUgSYAsYDIJ0Z+R
-	C6d9wl13yVOk1nIk1C7pBXCk92CD24XilsZ3a3N
-X-Received: by 2002:a05:7023:a4b:20b0:143:342a:3d3d with SMTP id a92af1059eb24-14d2d8b8ac8mr124363c88.0.1790745288339;
-        Tue, 29 Sep 2026 22:14:48 -0700 (PDT)
-Received: from google.com ([2a00:79e0:2ebe:8:101a:5ce6:a15e:d8ca])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14d089da7e0sm1218538c88.10.2026.09.29.22.14.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Sep 2026 22:14:47 -0700 (PDT)
-Date: Tue, 29 Sep 2026 22:14:44 -0700
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+	dkim=pass (1024-bit key) header.d=antispam.mailspamprotection.com header.i=@antispam.mailspamprotection.com header.b="kZSrusab";
+	dkim=pass (1024-bit key) header.d=valla.it header.i=@valla.it header.b="vNWaZTSM"
+ARC-Seal: i=1; cv=none; a=rsa-sha256; d=outgoing.instance-europe-west4-kr49.prod.antispam.mailspamprotection.com; s=arckey; t=1790749162;
+	 b=iDIhjD5f4n1aKHTSDHb2PIRdiX27rHYZRhLCzBEe4Wuw/mirMIOVxAJ8v+glq+dgfzaohapmRc
+	  hAEgjbNs+qVXMQbOHbmqAdJyBGqQfqIJxe7SysjKE3nYV8U8uAJvE8hchGv/nwVEztb16CunWj
+	  FCCkc9NxUO7M8L3egfHcTfg+edY8KajS65vSiOkbNntCV0Y70z4Z6rghAGm4U2S6AsXQkFLBQR
+	  /merw5ROacY6KLeh/n7rQ0r2AAEC8Ro9u4hmHNBc5HxA0TZ1c4zeQBPpYpzMjx4xAiJgzmy2ZA
+	  ziQ28o/eQMZNb/S6OENmMJfZPGt3c0uYow+tcN8Piave+Q==;
+ARC-Authentication-Results: i=1; outgoing.instance-europe-west4-kr49.prod.antispam.mailspamprotection.com; smtp.remote-ip=35.214.173.214;
+	iprev=pass (214.173.214.35.bc.googleusercontent.com) smtp.remote-ip=35.214.173.214;
+	auth=pass (LOGIN) smtp.auth=esm19.siteground.biz;
+	dkim=pass header.d=valla.it header.s=default header.a=rsa-sha256;
+	arc=none
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed; d=outgoing.instance-europe-west4-kr49.prod.antispam.mailspamprotection.com; s=arckey; t=1790749162;
+	bh=zFoTYb73ldMKwmEbO428TD3BtZYTxTeL01meO4CkLck=;
+	h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:
+	  Message-ID:Subject:Cc:To:From:Date:DKIM-Signature:DKIM-Signature;
+	b=1BOTpyvUPijcdxHh9te/Oay/m9Bm24F2aV78fK8EY5y6iVxB97gzeIbo1wlzKW4gPzqNgcZO5f
+	  mckaH3Ey/kRZTkgvSspa1D7WNj29ufp+IpMsz875GgiBHVcse0uc1dqTmqg8aE/6RYXL61p/5t
+	  yKW0eFaXE4vC7CH//Gf4J4ethOkpvwzyiENE5JkUbL0d6SNPWDWPHRu84Foty08PqmeR59Krah
+	  azXp3zkOpdE/pv/cHG3S31iUJDPzAeA/S9aHKAWVu202gC9RahFT2I67Xwvh+tQXeB/+0pU1hN
+	  a2rOvfcoHRL9HPTJ9fNoixLv5+XIDd7tgqhPenfSH89TYg==;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=antispam.mailspamprotection.com; s=default; h=CFBL-Feedback-ID:CFBL-Address
+	:Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:Subject:Cc:To
+	:From:Date:Reply-To:List-Unsubscribe;
+	bh=AbLTFjIhx+uI0756kXzx+0Wed7ebu42odZefl23u124=; b=kZSrusab/QZIiCLVOpmjc2TsLT
+	0sqbamHWLyEE4NaQhyIeGwZ5L94+aQc14Q6IPSSn5KhFD7+TYZ0E6iEDLphnxl6kn70K17Y1OELQL
+	A974K74x773b9mvjAJH1zMSVfAm+cV8I/1yYuyPFfmJ0Eil+0ZeH5EcdmQN/pVeupZ+U=;
+Received: from 214.173.214.35.bc.googleusercontent.com ([35.214.173.214] helo=esm19.siteground.biz)
+	by instance-europe-west4-kr49.prod.antispam.mailspamprotection.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <francesco@valla.it>)
+	id 1xBnes-00000000DDm-39hf;
+	Wed, 30 Sep 2026 06:19:15 +0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=valla.it;
+	s=default; h=Subject:Cc:To:From:Date:list-help:list-unsubscribe:
+	list-subscribe:list-post:list-owner:list-archive;
+	bh=AbLTFjIhx+uI0756kXzx+0Wed7ebu42odZefl23u124=; b=vNWaZTSMdKSjuGWs4B1nAJLk+v
+	JgZgpuuMYwkOKAokZdtW4FbhvcKdbSfQAbmDZuPhMmsifXY+It3LX1H5Tlom/t/67KuTCjwJ5VbNj
+	f7iaIxoAD//wZICuPL52kUW9hdtchJiO7XOsr74gbRyS39at1urOoT9laQIF81sUJWDo=;
+Received: from [87.14.44.235] (port=64978 helo=bywater)
+	by esm19.siteground.biz with essmtpa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <francesco@valla.it>)
+	id 1xBneo-00000000PI1-2Ld3;
+	Wed, 30 Sep 2026 06:19:10 +0000
+Date: Wed, 30 Sep 2026 08:19:08 +0200
+From: Francesco Valla <francesco@valla.it>
 To: sashiko-reviews@lists.linux.dev
-Cc: David Heidelberg <david@ixit.cz>, linux-input@vger.kernel.org
-Subject: Re: [PATCH v2] Input: s6sy761 - fix resume ordering and restore
- sensing
-Message-ID: <aryaRAaXNJTv0yUG@google.com>
-References: <20260926-s6sy761-suspend-v2-1-8f00a96ee6e8@ixit.cz>
- <20260926203744.82FAA1F000FF@smtp.kernel.org>
+Cc: devicetree@vger.kernel.org, virtualization@lists.linux.dev, 
+	Eugenio Perez <eperezma@redhat.com>, robh@kernel.org, conor+dt@kernel.org, 
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH 1/2] dt-bindings: spi: add bindings for spi-virtio
+Message-ID: <arypmHeudsJm4RIN@bywater>
+References: <20260929-spi-virtio-bindings-v1-0-6a0eef3213b3@valla.it>
+ <20260929-spi-virtio-bindings-v1-1-6a0eef3213b3@valla.it>
+ <20260929165015.E5DDF1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260926203744.82FAA1F000FF@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260929165015.E5DDF1F000FF@smtp.kernel.org>
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - esm19.siteground.biz
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - valla.it
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-SGantispam-id: ad6de6e4cc0feb0ba0f106e4f1151177
+X-AntiAbuse: ID - ad6de6e4cc0feb0ba0f106e4f1151177
+AntiSpam-DLS: false
+AntiSpam-DLSP: 
+AntiSpam-DLSRS: 
+AntiSpam-TS: 1.0
+CFBL-Address: feedback@antispam.mailspamprotection.com; report=arf
+CFBL-Feedback-ID: 1xBnes-00000000DDm-39hf-feedback@antispam.mailspamprotection.com
+Authentication-Results: outgoing.instance-europe-west4-kr49.prod.antispam.mailspamprotection.com;
+	iprev=pass (214.173.214.35.bc.googleusercontent.com) smtp.remote-ip=35.214.173.214;
+	auth=pass (LOGIN) smtp.auth=esm19.siteground.biz;
+	dkim=pass header.d=valla.it header.s=default header.a=rsa-sha256;
+	arc=none
 
-On Sat, Sep 26, 2026 at 08:37:44PM +0000, sashiko-bot@kernel.org wrote:
+On Tue, Sep 29, 2026 at 04:50:14PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] input: permanent IRQ disable on s6sy761_power_on() failure
+> - [Low] dt-bindings: spi-virtio: undocumented compatible in example
 > --
 > 
-> commit e5e3e44a0960351c54b4dc02894567b7b504952c
-> Author: David Heidelberg <david@ixit.cz>
+> commit eb6ae8a9a8b3aa403347f70589897a8c7d297186
+> Author: Francesco Valla <francesco@valla.it>
 > 
-> Input: s6sy761 - fix resume ordering and restore sensing
+> dt-bindings: spi: add bindings for spi-virtio
 > 
-> This commit alters the resume ordering to power on the controller before
-> unmasking the interrupt, addressing an issue where the boot-complete
-> event was consumed prematurely. It also ensures SENSE_ON is re-sent upon
-> resume if the input device is already open.
+> This commit adds device tree bindings for spi-virtio based on virtio-device.
+> It defines the properties and node dependencies for the virtio SPI controller.
 > 
-> > diff --git a/drivers/input/touchscreen/s6sy761.c b/drivers/input/touchscreen/s6sy761.c
-> > index 0f24a9b730635..899c179fb2d31 100644
-> > --- a/drivers/input/touchscreen/s6sy761.c
-> > +++ b/drivers/input/touchscreen/s6sy761.c
-> > @@ -500,10 +500,22 @@ static int s6sy761_suspend(struct device *dev)
-> >  static int s6sy761_resume(struct device *dev)
-> >  {
-> >  	struct s6sy761_data *sdata = dev_get_drvdata(dev);
-> > +	int err;
+> > diff --git a/Documentation/devicetree/bindings/spi/spi-virtio.yaml b/Documentation/devicetree/bindings/spi/spi-virtio.yaml
+> > new file mode 100644
+> > index 0000000000000..5b8639dd2e1f1
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/spi/spi-virtio.yaml
+> 
+> [ ... ]
+> 
+> > +examples:
+> > +  - |
+> > +    virtio@3000 {
+> > +        compatible = "virtio,mmio";
+> > +        reg = <0x3000 0x100>;
+> > +        interrupts = <41>;
 > > +
-> > +	err = s6sy761_power_on(sdata);
-> > +	if (err)
-> > +		return err;
+> > +        spi {
+> > +            compatible = "virtio,device2d";
+> > +
+> > +            #address-cells = <1>;
+> > +            #size-cells = <0>;
+> > +
+> > +            sram@0 {
+> > +                compatible = "microchip,mchp23k256";
 > 
-> [Severity: Medium]
-> Will this early return permanently disable the interrupt if power on fails?
+> [Severity: Low]
+> Is this compatible string documented in any existing binding schema?
+>
+
+Yes - the compatible fot the Microchip MCHP23K256 is documented in:
+
+  Documentation/devicetree/bindings/mtd/microchip,mchp23k256.yaml
+
+> The dt_binding_check tool strictly validates all compatible strings against
+> known schemas, so an undocumented compatible string in an example will emit a
+> schema validation warning.
 > 
-> If s6sy761_power_on() fails (for example, due to a transient I2C error
-> during resume), this early return skips enable_irq(). However, the PM core
-> will still clear the suspended state despite the error.
-
-It looks like the PM core never implemented properly trackign device
-state and not calling suspend on devices that has not resumed. That
-means that we need to do it ourselves. We definitely do not want to keep
-interrupts enabled if powering up the device failed.
-
-I'll send out a patch fixing this.
-
-Thanks.
-
--- 
-Dmitry
+> When running make dt_binding_check on the new spi-virtio.yaml file, it
+> parses the example and attempts to match microchip,mchp23k256 against
+> registered bindings, which fails if none exist.
+> 
+> > +                reg = <0>;
+> > +                spi-max-frequency = <20000000>;
+> > +            };
+> > +        };
+> > +    };
+> > +
+> > +...
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260929-spi-virtio-bindings-v1-0-6a0eef3213b3@valla.it?part=1
