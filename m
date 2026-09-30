@@ -1,89 +1,173 @@
-Received: from 013.lax.mailroute.net (013.lax.mailroute.net [199.89.1.16])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EC84D8D9D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 13:16:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.16
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790774209; cv=none; b=mgdLMaxqVXrKNJUGCansqzX2Jqf4Lk1SGY+yn8lniSpDLFxKq3QRi/GO4om21a5BzDySM6dCHbWjCcRw8XQ5Jbx1thNJHfgcA8PafnVxRN9fCUIKZXvVIaqBBY4wrW4oYMgk4nr3Z5SGnqRIaJmvt6CXfRb8CZHQYn70QI5tNqw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790774209; c=relaxed/simple;
-	bh=skgW2TF+RzkHHbRYpLtW0QQmaIJn4AGjtyfi6y/CqsU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dTVgy21uwkxYAVy0Yj1JpHTcvBlhUUfB/qysmAxvuePYMcszJQY4T+UkCNQKr1lY7uR/526TiiyJiUXX2MDYc7cB17Ulo4UbaOQtsU9n1TBh0n440P4bIa51uvKQ6jTQeKgu+5hVxpLwtFcOyFvNiANIo9ySAUcyYt5/7MDAPvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=sfrQv7lB; arc=none smtp.client-ip=199.89.1.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB7F4F3ED3
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 13:41:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.9
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790775676; cv=fail; b=PrR0qeYkhtHjLbJbbJ5xYV3zNniaUtqYhHIQJ9mC2BKi9wyq9OdKenWNOJXP60fRkHbZ0mWPNHeD6EZ5u0buPLETa93vtaWmN6zuVylvjp7Nl+FHzMlnN47v6TbMgfXxIcy5p8UwQVKSqx8cy0dzZKcptKfoH3XXEs6onUJkrPw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790775676; c=relaxed/simple;
+	bh=DfaDh4RNrU+uRWKZAcvnoFJU1uxho35PkzaLlEj+fNE=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=IAzy+aEwJ9fPvxULxUc3ZDvjddD2bXDCq6U+cZ+dNZMnNenwY07aSqRreb9tObgHQ0NqihPnb6LhMU8y+9mkmmQE3Tri8bVOgonqioZu6B1NbbC+Ph5jdzWjU7Nc/kzQAq1sxMdhar54MseSihwvSz16YKjJXj9jcLVBtixbhEE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=N3Rltaeo; arc=fail smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="sfrQv7lB"
-Received: from localhost (localhost [127.0.0.1])
-	by 013.lax.mailroute.net (Postfix) with ESMTP id 4hvwYJ4Y75zlfddn;
-	Wed, 30 Sep 2026 13:16:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1790774194; x=1793366195; bh=pIo2GLg2LMczcA57bLmXH1TE
-	tnlMAxiGcDXrwkx0t14=; b=sfrQv7lBAO5ByVWEb46E4fdmJNof/bh3/PZrJgVD
-	md17RKNvkCxtaGMEy0y8GsffItAy4btR2rrX6YkhD5zL4oAJYnzdzLEbSj5aGxeE
-	2FmG9f7XENMLxzP1gCN8lU7vSmwQQI/UfhkFGjfPwESA5X66RQvSxznoJ4Y6kKzl
-	/0UDCeK1u4iGybuckzKgZBI6SE22KH1Ful1OsgjUXE6L0tzFHlz2H/3VEMR6Dko7
-	LGxup7by4f27XMxALI28RIqA4xOe9lTwQrSVlANRHSXH4djokubKgiU3ffp0E8/q
-	yKmm/knJ0szeFU3ScaO2UB79++xkLaS+UF9oNl3OP0YWYw==
-X-Virus-Scanned: by MailRoute
-Received: from 013.lax.mailroute.net ([127.0.0.1])
- by localhost (013.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id jVx7bQQhlaZb; Wed, 30 Sep 2026 13:16:34 +0000 (UTC)
-Received: from [192.168.0.215] (c-24-6-239-25.hsd1.ca.comcast.net [24.6.239.25])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 013.lax.mailroute.net (Postfix) with ESMTPSA id 4hvwYG3NQWzlfvpH;
-	Wed, 30 Sep 2026 13:16:33 +0000 (UTC)
-Message-ID: <d383363b-f2e6-49a0-9f50-719c0895bf64@acm.org>
-Date: Wed, 30 Sep 2026 06:16:32 -0700
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="N3Rltaeo"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1790775666; x=1822311666;
+  h=date:from:to:cc:subject:message-id:references:
+   in-reply-to:mime-version;
+  bh=DfaDh4RNrU+uRWKZAcvnoFJU1uxho35PkzaLlEj+fNE=;
+  b=N3RltaeooBmwAhHKuNDaYFPiJGipxYx/IoS809QM/KXcIEUy75uLVphr
+   O1NePrDA1FHwEIlfgV3MHYuoMZ/A4ZC/sAr8hgCGD3rqN4YfZ3dTOhvcZ
+   nwdvTlWkvzO3z3LfvoBqYRAIfd24AmgE8LdJd8P3dzSSsQ0Pm1Q1OPFYu
+   /p/LMNWj87UNxQ5xG3JaJjp4xIE2kZzEZMhJakn7m8eEyeqRCLeJMl3hV
+   XR+BYk7ZL/PDDTtuSvzxTdibc3BUNMtVXVgXH81/tx7NH/uee3wfrdOxw
+   U1FhlVeG3iOyRk+T1tNPPIbif3RUWdJc8WZKjTHma8PYnSqgQ8l/2THV9
+   g==;
+X-CSE-ConnectionGUID: udTtbeigSxGw26+B5GSwYQ==
+X-CSE-MsgGUID: pt7VuwcnRaWfRfEQXajH9w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11920"; a="113299742"
+X-IronPort-AV: E=Sophos;i="6.27,132,1787036400"; 
+   d="scan'208";a="113299742"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Sep 2026 06:40:59 -0700
+X-CSE-ConnectionGUID: pSkY1F1pTw6aBrhCywXYMQ==
+X-CSE-MsgGUID: cg0HRbx/TNOpfss92t22jg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,132,1787036400"; 
+   d="scan'208";a="313624325"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Sep 2026 06:40:59 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Wed, 30 Sep 2026 06:40:59 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49 via Frontend Transport; Wed, 30 Sep 2026 06:40:59 -0700
+Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.52) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Wed, 30 Sep 2026 06:40:59 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=seSBrhzdy/0/SwDJCNwl3WMBJVTkWmwpMCQ8iqz+SfPZJNgFN8/h2Ezt7JQtqBxfoMAN6+k/kjVQGkgYppOMIO7vfo5f9M4F6Laa54aOZopj0oIbAZP9HhiIjDxYePqoJjaLjIMZ/MwW6P5ClkWx3RHdNR3p63Q8JEE0hjUZAqbEz1k/GiGGeJGH54ABxtWLWtJkDh8z1bQsJxvAwqrYyPDZycQi6qbmjzMNa7S04zIg1FHOdBx9Fw+8TN5vJv/VzkFg1n4F4MSFIjaLvkA7s0QI1Mn/g2hgLCh2a8xsQ2yiD1piAblI5wZFUSn3BhRbPW64cC8Wu+RAhM4MlIf53A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=YVcWH8osukxhr3oPRrmga9Sx3bOSNIJxp+uVF4LWsj0=;
+ b=SGkFmHIxeV33URB1WQVA9X4aeyPNvno75EpR3tXk+mAYr+4VkRRyJ7fek4E/3RUMsZZfFjhxFReOBvecbB2mupMmLa7vQgNCo/BCONMwdzhn8UOlDLn7kzq5H/V6O7rT8GGSR6aV8kd35VytjdHbuGiRAXqRQ50b7WznPoqouEUSRt8NOcF27tVGWHl121g0Dk9aDaq29c9YMKeFYtEN5XR3zk7zpVWaBaclpHIITOM+1bNMP7hRipD0i4B1PbTB/mHFLXNvcwchPAwUKlGnO6KmEfAeLmj9QrARX4jQGRU3sAhwqNcXdQJ9y76PWvpgaImboSFwTtXAphkjM2Gpsw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CH3PR11MB435924.namprd11.prod.outlook.com
+ (2603:10b6:610:34a::8) by SA2PR11MB4987.namprd11.prod.outlook.com
+ (2603:10b6:806:113::24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.26; Wed, 30 Sep
+ 2026 13:40:56 +0000
+Received: from CH3PR11MB435924.namprd11.prod.outlook.com
+ ([fe80::1696:c90e:60af:a0cd]) by CH3PR11MB435924.namprd11.prod.outlook.com
+ ([fe80::1696:c90e:60af:a0cd%6]) with mapi id 15.21.0472.015; Wed, 30 Sep 2026
+ 13:40:56 +0000
+Date: Wed, 30 Sep 2026 06:40:39 -0700
+From: Peter Fang <peter.fang@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>
+Subject: Re: [PATCH v6 6/6] virt: tdx-guest: Make the Quote buffer size
+ dynamic
+Message-ID: <ar0RVyfvEGykm0_u@intel.com>
+References: <20260930103739.2851980-1-peter.fang@intel.com>
+ <20260930103739.2851980-7-peter.fang@intel.com>
+ <20260930104949.8677A1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20260930104949.8677A1F00893@smtp.kernel.org>
+X-ClientProxiedBy: SJ0PR13CA0003.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c0::8) To CH3PR11MB435924.namprd11.prod.outlook.com
+ (2603:10b6:610:34a::8)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/7] scsi: scsi_debug: Improve lock context annotations
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org
-References: <cover.1790723966.git.bvanassche@acm.org>
- <c0546935640ceffd1b0513753dd469833e767c5e.1790723966.git.bvanassche@acm.org>
- <20260929233530.7CD061F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20260929233530.7CD061F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR11MB435924:EE_|SA2PR11MB4987:EE_
+X-MS-Office365-Filtering-Correlation-Id: a37abf25-5c4b-49e9-fe04-08df1ef8741e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|23010399003|376014|366016|4143699003|22082099003|10067099003|11063799006|56012099006|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info: Ca9bV+CoiSfv0xE+jvt0bDKDGGMO69bjOVrPwAf5Lax4chrn4AjmB8gYTK8xH0ldd55b4mjMp/4ZltKKztYDFwery8ojMn5Wuwjt1w/AhDteAmW6QbckSBJPb88DEKsbpCHS6uzEM5FAm6L7yUAhrUTSKy/zxrAijjsg0xBlFwHFRRztX0C5NT7E6VlaTogEmktzNxsCp4ioLvsnT0sfSvLdnUoGZjgOuDlua3jc7XbMq4mm+5aTb6UCeg01wrojwCxfP6PmsXNz0DKHLc+5c/A+ll5hlFkoIz4YijwPwGNjxyYcDnnxyGqzAeozvytq46zPZPgEzoN8X3aogH0UTWIgZcBTKdawhdb3gTeOQSTMxDVidF+A5iVCtQQr6o6sLWGrR8peBPcq1iYxy7jwqb9viQcr00KdkdQ92bpdqI3gOkQuNhNGZeTTtknp4aOca1ekEQZkTGSYlJIIFVlYylUCzlllIyBbBKYYVxeftpQJ4OaITQQl4F2TmTBKV3O+NBds7xDAqRXEkKq+XlsbB6Up3yyVU6MqTIlNriIuQmuUXYHhzsWQ1RntksY4N1va9+jo7rqQ8xZ00L8YGsSXIEpeefVDnfPeZJDcq3riCY4inkuu668xUtDYdKEN85AZk0VWLkBPQCx0LKuqoq2O9QNEDJQqKFCzowCx24TLgiE=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR11MB435924.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(4143699003)(22082099003)(10067099003)(11063799006)(56012099006)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?9EF68LfRQbsarPtErLmeTveEt7aw0WTbHxV2FP4C4zRx5uIwgwov3KHQB0YU?=
+ =?us-ascii?Q?As/JmUf+/7eAyShV7h7JVGlbX6Fh43806b/0sPOWzuY5zeHMCZIiG5y7rxAD?=
+ =?us-ascii?Q?yHuf+Rt4A+ksn2EFyTklMNnB4hI2ehR7Y2uoc90k4kyG0ULs6OTOoZWEtowu?=
+ =?us-ascii?Q?VInK+U/31unkIAe5ItMqIcuJKS2KLIhIE6Pnfdi+iC26I8vSRV7kiMkpfvnm?=
+ =?us-ascii?Q?gClOerIfbWRKf3QhMMm1cBfbwd4cGWOj3g7nNTLNL9JATwr0vRVkjSKEfZQ0?=
+ =?us-ascii?Q?I+veJgkJN8uW9U7dfvFUrmIVzpwXMJqx8Ascl92Buvn7X544sUF29987Y2E1?=
+ =?us-ascii?Q?jN2fS/7G/8B/c2oPMbKakVVITIRgfM0Kwzsh+KLTfNl1SyxjwtZrzVSpJmCY?=
+ =?us-ascii?Q?fs86NR1dJsA5j27Vw8ETVoHTk0xnXG8G2nqjWyvm+oc5p/iqpOygEGWrUCx1?=
+ =?us-ascii?Q?FxZOLbpCD4UJFfe/ZABxSmokyiOA8gtg7ZJLO5MIXDsRPvVCtCRDOSIB/VSl?=
+ =?us-ascii?Q?+18B15Qr1qPZhYrLbVX/UjZsRlEapsOXkF+wp9elKEYwhfJpGBkvCZN51+ia?=
+ =?us-ascii?Q?Z+oUClulMRm2B+VrijoWd4+ghyxap+avyaO1s1XUJYeRDUVhf0Gfb6mqekmK?=
+ =?us-ascii?Q?WVV420pqtZ6LnNDbRMkQPVP9+o9b8Yeb5s8LSm9q+djeX6E6gsABHbSlJzz5?=
+ =?us-ascii?Q?2nGDJTy2uoCRk36cMYsq9cqyjeS+Xo3FidVhL5jcXVRtSfMbgSmB/Pn01wt+?=
+ =?us-ascii?Q?Ugr11y6bKKzGDXd8LlWzF9Pd9k/thi2tMfP2H2nb7Zk4Qlrlo+oj0rgmb96u?=
+ =?us-ascii?Q?leH85TKVnHiLSWaQeCuLBhEfuuBlXEvoEx5YdaWM9bk+ICPrZ0qZA4G0C1bV?=
+ =?us-ascii?Q?0Vfi/+JZ7Eklnx7h3R+sO9CNoaSg7Hxqw3yowL+RsItWgzESDi7BMcnasSXy?=
+ =?us-ascii?Q?ovKQ4/JE7vXPKJ8kk0+A/hMBYtJwKpD65xHjMwQ9LWoiU9KZwy/KINiZwzm/?=
+ =?us-ascii?Q?HNQhoUIqYNMF6lGBj6g03xrHDdqDp90+jDiCSGrljUem+d5w0g24edv589u/?=
+ =?us-ascii?Q?YTtP4wah0siE9ipoWeQo0nDOaN2EMWTSYYIW5U2IOpv0Hpk9Bjv+3apw1xYH?=
+ =?us-ascii?Q?lU0g1njde6KGk4jS9c2USwe8mCjQUfOC5kDBLx+kLOeMY6Z2ZsGMRB+t4n8E?=
+ =?us-ascii?Q?mS3d4URuP3sHFAPKAhCZmggfHfJLm1f7DZLwnTB5Gbt37pyh2x5rcR+HpL8X?=
+ =?us-ascii?Q?Y2Ik8FsdO5CpiZsyxuYVJ7GRzY4MG4B0o7vrRMc2d6SDdjzSrkXclU9DMl+B?=
+ =?us-ascii?Q?R4bk6A9POLyRCRxantOKZQ/qaaiAvTf0AhJJPaLmB5ZHbpXckAo9zxkEIBWY?=
+ =?us-ascii?Q?sMDE56X9ugftzB7/sowNF4cMAvx5cXa+nm+ra4lETfJ8mUOv1rwYI2m7zCUJ?=
+ =?us-ascii?Q?LiDZKyWso7ZCkmLPaPO9CkLjDSgQogZQPK1GUyWdn26b61uCLvj32E0lMUn7?=
+ =?us-ascii?Q?e6uvBrYNHRXxQm6j9pBgV6CJ1gmNjIjI4RR47nSQTyiri2l9Cd37+aqVtOOh?=
+ =?us-ascii?Q?INGnOT7AeO6tZ0EyjONO95AqJZT67jPQ3J5jigHiSFGHkEWdPZWudZTHQNNc?=
+ =?us-ascii?Q?DJl8rMOZTsgRB76VEa83Jl3ldBH8BNIF9dvKf4okeYRho0VYFnPi3CL7/qSL?=
+ =?us-ascii?Q?7jqhlED3JiidtFR4IXxzZEonVbY4oYdNqg7yBCVk2X1okNMEJVgN0FtDiNcY?=
+ =?us-ascii?Q?dttWEt8WPg=3D=3D?=
+X-Exchange-RoutingPolicyChecked: LyDud/auHV55Qxvd9BwGqdRourbYDXENs/Edo2bgBEa8EWz9os3NIz4JGdTOF0Uv198r6mJ11O0EF2/oMmNBy7/uIqxkJ9i2bSg8yo0Wfy/LmYeasUa3YAjkxwEHEtZYsN0GITAYFQLfGoO4wOukAV3E0CCgYeeWFGH0PTToOKHSHfCuQ/aPXM+NcXmxeRA5f7K002KnVr3c54pSP631qsQFLz4QtOWZ6tY2s5P+rmGwSvetjAACOYNWw86rvw9yLtDRsZcfXJBOAaupwFtHCrXmUv1k7bDeHLk4zQGKS6gsJ8d7b00PWlPz0LrG+ojse8hokcIosZi25seJuHUsjw==
+X-MS-Exchange-CrossTenant-Network-Message-Id: a37abf25-5c4b-49e9-fe04-08df1ef8741e
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR11MB435924.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Sep 2026 13:40:55.9735
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Igy4rtVN594HXJAtO9ME70R+bWJTH4vUjFGDhFc1wCzgsosCxCL82FI3JgWM5iCSbkMDU7gi29J6rNA5se1lsQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR11MB4987
+X-OriginatorOrg: intel.com
 
-On 9/29/26 4:35 PM, sashiko-bot@kernel.org wrote:
->>   static inline void
->>   sdeb_meta_write_lock(struct sdeb_store_info *sip)
->> +	__acquires(&sip->macc_meta_lck)
->> +	__context_unsafe(/*conditional locking*/)
->>   {
->> -	if (sdebug_no_rwlock) {
->> -		if (sip)
->> -			__acquire(&sip->macc_meta_lck);
->> -		else
->> -			__acquire(&sdeb_fake_rw_lck);
->> -	} else {
->> +	if (!sdebug_no_rwlock) {
->>   		if (sip)
->>   			write_lock(&sip->macc_meta_lck);
->>   		else
->>   			write_lock(&sdeb_fake_rw_lck);
+On Wed, Sep 30, 2026 at 10:49:49AM +0000, sashiko-bot@kernel.org wrote:
 > 
-> [Severity: Low]
-> Does this also omit tracking for the sdeb_fake_rw_lck when sip is NULL?
+> [Severity: High]
+> Can this dynamic evaluation cause an out-of-bounds write or buddy allocator
+> corruption?
+> 
+> If tdx_get_max_quote_size() fails transiently during initialization when
+> alloc_quote_buf() is called, get_quote_buf_size() will return the default
+> size, and alloc_pages_exact() will allocate a buffer of that size.
 
-These Sashiko findings are expected and are an unavoidable side effect
-of how locking has been implemented in the scsi_debug kernel driver.
+Hmm, I don't think TDX code usually handles "fails transiently" on
+SEAMCALLs/TDCALLs. Like mentioned in [1], if attestation fails the TD is
+functionally dead.
 
-Bart.
+[1] https://lore.kernel.org/all/amCv00f5Q6QlztyY@thinkstation/
+
+> 
+> If a subsequent userspace request triggers tdx_report_new_locked(), and the
+> size query succeeds this time returning a larger size, could the driver write
+> past the end of the allocation?
+> 
