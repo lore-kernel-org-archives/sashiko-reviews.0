@@ -1,87 +1,87 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA094E433D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 13:54:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25415012A7
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 14:08:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790776481; cv=none; b=Ly0pl6LNxkPcj8NP9b1OcNGRGY8b0lEHijO9nYF4+lc4WTMzciSKcHd+zqXgGDPoH6MW87FABlJ22CvBNYXGVtKNgucWW3wlkwxbcufQpJD9vrpazsofLrl8A4s/7cVs4DhliVP33cOMTGIlwURBT/+nEaIatiR/DLGfWyxcDsc=
+	t=1790777293; cv=none; b=mKzpMu1T0YX8oeen08hxgnGTP0kUvNj3xTXQGyRWI6a42NYEzDlx7H6pnDryNahKDx2Y3IrAQJGEzCbCHiH0IMf9dFH8Pqd0f0zJqBTiTADeM7/WeVzVbhTmQrnvgK8JiBkEmjO35CphTarFxhM8eZ9Z2gdcVPDQfJdcFW8qlvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790776481; c=relaxed/simple;
-	bh=p1dEZHWOCqIZMCAeAr+JzcO6l6qzrMOZX05XuccTfpM=;
+	s=arc-20240116; t=1790777293; c=relaxed/simple;
+	bh=3nLtYLFSF0/0HBjLgTBRgRJtaTOHmMO04FN0/7VEpII=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lQBdaVIhHYn36kCucGVkqulf/ZzhUwr8cbvMYZ/vXGzGRJn8fi6FHFz/JOnN0eymU5mNmGUhyjaUcwhy5p2cq0HoFAb25+CNkUPFuZASo8nLXK3jby6Kc6lYFIAMRehupAKN4FdeXcVB6o+63GQoiTy5YaCutBVcpSORJD/Kkbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PCMLeh7y; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LBoYX87H; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=K1FBosQRExfc8sPEW9DQa/+P0zE54AC8mDbrbK1Plw9Pys0XvR847sY3vbQV/nOjxmUg2RecE32Fz8Ugc3/zSO/6Sn328eAI5AF8ux2IpKFLJ5fQAohh+gHkKAPu6pvj3V9cbBnKX8s+PA7tfBG1yA4i73MUJFVSddOo1uWE59E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AFZgrena; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=QPNk+Bte; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PCMLeh7y";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="LBoYX87H"
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68UDrArN690069
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 13:54:23 GMT
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AFZgrena";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="QPNk+Bte"
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68UE0Ivl147043
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 14:08:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2ilMQ1MePaJJxNUKIWbLqWASxBz/Hn4eNufkx/CW0Bc=; b=PCMLeh7yiWmm+35G
-	zdZGlJW9aILRtFQYJdRMNoVpq1QSUhrim8lmHIpKSqUm+h5SgN9ly4c3RBaQn4Ls
-	CiNvFbTbPyR8DJuQFDUcJh8OTKg9pqzby/Ot34U+tFtSDLWfrSc5lKjj1VhATrzJ
-	YWl+/gIPsp79JY41V31mjcZoi5kBSu/h/ZVAxvvMLxxp+J+2FkTexgqs6xJGhVnN
-	UGrufjfVFNk8LrLWWWhU61uUm9P8Xnl5txXKeaORAvqFRbafSuhyLyTqV9YrziJy
-	CI2fBIjLJlN3nS9NzFagoF+8iNjUyhrGVpPwHI7AnmNREJfcXiNG4ITV0w4K+G4o
-	buZWxA==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h136tg4hs-1
+	Z5/lWtloNnIfNbXA6QSNEOy67CLHeyzL4Sp3AyQejEA=; b=AFZgrenaxIKYQYHP
+	eIAPyxWdOBavkYQMZ3yZJunIvi/wwGAea1kGZQOUwdyutlJ1/iLazEtabuUIv0on
+	25hSZhX4tCnskI1yUv/RqFrqbYDlVfMK95BiXxjdYdkhj1oPIjBM7+AuUmZ1yRm9
+	JG4+3rgzUxW8KlQGlBRdfNAkVMGoJWSwfExmX9z6a3JDnmWVg61MBVfQghnC+pma
+	jvCEWIOZu1GZFiOJiIRlLJ947UrTGZ5dCwUJHPS3p76Lmua8K3QrDbPoXkaHOmZW
+	doezSkwPKo/Mjk0LGzVuMMyawvTR16Y2D4/AU5vSmBUVNYqAyw26VnMCz/3srj7e
+	ZMygZw==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h0j97vpxg-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 13:54:23 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-8696b921ac0so4680376b3a.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 06:54:23 -0700 (PDT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 14:08:03 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-39b6416441eso9392275a91.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 07:08:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1790776463; x=1791381263; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1790777283; x=1791382083; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=2ilMQ1MePaJJxNUKIWbLqWASxBz/Hn4eNufkx/CW0Bc=;
-        b=LBoYX87HV7vL2L0PGPs1cMTPKvYHbrCPp2EdeSdPoMOqHHPJuzBqTa8SEclCK5g0d8
-         JuRkutXlJkIwprqKkCHM/w3ZZJQJrQlKoNKECQEM/dSbEZtifSOZQLqkPcrtVTEbRhZ7
-         EkER7M4YB83Gmm7Absw6th0BvGYUEMqBfjzNdxqIDcVtmpEnTWIwY0JXNzPSKpBMvi8B
-         iSWVgkQpHfM9YBYtOnjDJTcsyeF3EAnGFrZQoh1RCHg39RI/0IyjguDglf60cs9VU1+Z
-         YpoQNXNM6nEhhC8wr26FoWkSKPoITTvcgcqFJKnUKnpW3+Ecxm5c6xgv9w9diuYzoH7+
-         eX2Q==
+        bh=Z5/lWtloNnIfNbXA6QSNEOy67CLHeyzL4Sp3AyQejEA=;
+        b=QPNk+BtekKYJeoYmH/xd9vxciAc4KrkMUa0AUUHSj8bGyk6a21aROY/XGBTbG9uvfN
+         sXxD7C6oioDwzFYa6dQvkLOSoTJQueEg0L5dJP0zOIA296yQmgCKpLTGBUOY4eFJbSd+
+         57s4U/kUv8VtzJXSlQ/mCpVy820zMq0NPdQjahfkyMlQTfFEQoGqn7abVyvoQ5eM+n2V
+         a99DN/3ntGq7a/kQOoVN5UPFFqRZoutN9D1e24/AsTL9Ru3Dgr7Ijp4Zpyn5o0pjzXbk
+         g98y8RIgQQUjxs1Oh/gRtHyMRGaC3fwehSJYn4oo7AvdN9XsMHMVGCcHGRPGm10NcdgS
+         7PIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790776463; x=1791381263;
+        d=1e100.net; s=20260707; t=1790777283; x=1791382083;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=2ilMQ1MePaJJxNUKIWbLqWASxBz/Hn4eNufkx/CW0Bc=;
-        b=qO2sEMihbye2sE9xIvNWa/7ggU1H6BM3s56CMMjQM3uQ+6hCpQ+h3Ii6zquQos5LJN
-         doAl9ZnR2rJaUUqKMIi53fnHvPlxkMfU5Rc/Lg2KqCAWKSUaXWhy9W1hnCyk4HmU6x/H
-         JRw+t+Vnwm7xZV+oobhIqIGMrC/XpDVn6IxJqYs05ysLU219yWf25colChKZncHiBUWN
-         U7SBKaYStui37TBcnkAQtEPfgRkn9HanVlbXX30AwhTDPc4q5boNkch3ojkfa8ghtYLC
-         jWZz8ZIK4EhGjaLNG2BfTDHfzTwERTUHOQF0DHpoZmQwcEpCIzVvbm0roqdswD18swa+
-         hP7A==
-X-Gm-Message-State: AFuF++n1OK42cZhnlfR1hyLGnNRqSqitiA71qeFrmwG/324bwbPXLr1w
-	Msxu4kxeDckopIL1gA932NR5FqztnGv4l+UalohbxcfdRCxvMy5y1SFGAvhIU9RYk6QZ9l7EPKt
-	Ti0OO7BKXo1iiiviosZ7x8CXRV1lUjHIg4svQuNjcoJiGdVIGIV6w2MyxxOND7ttYqzZsnPMlni
-	seygs=
-X-Gm-Gg: AYBFou0HeGVjanAacwcsY4CBPaAT/h+v2hTKeJqsCDuc+OKnHvuoyNKXcWEIUKPhSfP
-	ChrkOdLZ4pb3D8LLrRm5X8SjMW0b+d2yy7s6L4PcfXFkskFHng1HaP91PfaJ5pPd/BYyL1KYM0b
-	vafdOCUiAsvSYkIVyBvj6n4h9S5qE/pF15vY/dbgGz/wzsLBc8oVd9TSsWulvkn+khveOiL79JK
-	vfysbbw8Myp1vp4H2aMpeYK5tLT7HULmsFKMGsxZg/zONmRPFlpx+sp4DC8Djwo3nWP80EKdIGV
-	kbsv6sinfh3OTUeNtQBs+iqhoDVjnGMUNRWWxh89z0LXMUcRNBbZ+NqkULzbEKYFdyUHPoB2ikH
-	kcLXOY91/Vl1fRcXb+La9GPxPosEZtipy4eCYzIga/DPOsP859XYvaSpjeR5ZQm0=
-X-Received: by 2002:a05:6a00:4c14:b0:882:6836:25f0 with SMTP id d2e1a72fcca58-8874ba1e7e9mr1074369b3a.52.1790776462484;
-        Wed, 30 Sep 2026 06:54:22 -0700 (PDT)
-X-Received: by 2002:a05:6a00:4c14:b0:882:6836:25f0 with SMTP id d2e1a72fcca58-8874ba1e7e9mr1074344b3a.52.1790776461977;
-        Wed, 30 Sep 2026 06:54:21 -0700 (PDT)
+        bh=Z5/lWtloNnIfNbXA6QSNEOy67CLHeyzL4Sp3AyQejEA=;
+        b=S9NEo3WEIQU0F0o/OfApx3LwF7CKTsJcfmouU7e6Fd+NwZ6iRcLNzxEzCCO4D/QT41
+         mxw5IUXdQ3qNWaTFrqoYhriq8e2cCaI2cr76bofYR0UDz0lijRD/r47JHT/Pstc4BTMq
+         TO8kqQD0829wxSbvUsW0L/e80WO7ngZfgznH41z8FqHcclVf9QPwH37Qz1rAq2W0UhA1
+         Fo1908YElMQVvrk1MYvk8wjF1z26rscJYSfTMcVm2PH2ctxE5U0G6FDKC14gy7hOQZoa
+         rOageaX+pnEC8dUN5u4kba9oAqA/uBG4N+lzjNQesZuVlN2uOCiqd9Jidqf7bLgiNOeG
+         BRow==
+X-Gm-Message-State: AFq9FYIQK5ikWSmXoCq0GWkrrV7jCmeJy3XWE/UrGpH0CYAwFXzbpc/2
+	0efyD6RtHW/8wdoEOyyM+diOD0LJ/mg3ICRMMwlfLOJeOI08+sXEb5zUp/WwPYydzjgJek/tnxZ
+	nEnRpfNZFhFCk/fQdMQG5cf5fULVutXJsTmW+5C+yIuCQWEl7Db1xm3fRDDGQpiqGJ9Umbj3/2E
+	vRRok=
+X-Gm-Gg: AYBFou0jt4rkp+sNIiFdEqJbVwG4GJdCPlFASnOV9jaiy6sjfcnFu3WyptvI3jkd1P7
+	Ll0O+V35cT+fTmdmUhM4FyGMozPDo575IcGYbWeOQdiZi/cFpEF3IksofbUqozAH6TQ8EQhB7VN
+	4y4SBPYQBn73QETGbMQR/7ACe+5pwTGKNyQcnVGeU/yPTRJqIPtor7X2ONXGOvV4DR7rHu/6ai3
+	LWXVB5WkR2w8kiCBS333yvaqvd/dmjg9OXvTyQNMDo6CptyJq9J9OKg4HyBKvVkJ3xQdBa3IBXN
+	/QsWzfrlw5TeIT2plUggHBlPIa0VTqM4qYbDS939ThLVrmlWmgtVlL1L1Hk5mQ9Bt0EIW8Kpowf
+	H3YxMcCyIJxfMcA8Bj/pmtPKqplDakTgqjOnVlR4k6ripUFm8M0mJYs09ig0Mkw8=
+X-Received: by 2002:a17:90a:2cc5:b0:3a4:e635:a8b9 with SMTP id 98e67ed59e1d1-3a4e636a641mr365458a91.32.1790777282555;
+        Wed, 30 Sep 2026 07:08:02 -0700 (PDT)
+X-Received: by 2002:a17:90a:2cc5:b0:3a4:e635:a8b9 with SMTP id 98e67ed59e1d1-3a4e636a641mr365426a91.32.1790777281916;
+        Wed, 30 Sep 2026 07:08:01 -0700 (PDT)
 Received: from [192.168.1.6] ([117.143.161.217])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8872587f784sm871316b3a.23.2026.09.30.06.54.18
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a4e5d9adeasm628557a91.0.2026.09.30.07.07.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Sep 2026 06:54:21 -0700 (PDT)
-Message-ID: <66b8dd1f-7aca-467d-9929-8598bea9fb04@oss.qualcomm.com>
-Date: Wed, 30 Sep 2026 21:54:15 +0800
+        Wed, 30 Sep 2026 07:08:01 -0700 (PDT)
+Message-ID: <a77004e6-c375-46fb-ba32-bc6f34bba2ab@oss.qualcomm.com>
+Date: Wed, 30 Sep 2026 22:07:53 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -89,147 +89,160 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 06/11] media: qcom: camss: csid: Add support for CSID
+Subject: Re: [PATCH v17 07/11] media: qcom: camss: vfe: Add support for VFE
  Gen4
 To: sashiko-reviews@lists.linux.dev
-Cc: neil.armstrong@linaro.org, vkoul@kernel.org, devicetree@vger.kernel.org,
-        linux-phy@lists.infradead.org, media-ci@linuxtv.org, robh@kernel.org,
-        olteanv@gmail.com, conor+dt@kernel.org
+Cc: conor+dt@kernel.org, vkoul@kernel.org, devicetree@vger.kernel.org,
+        olteanv@gmail.com, neil.armstrong@linaro.org,
+        linux-phy@lists.infradead.org, robh@kernel.org, media-ci@linuxtv.org
 References: <20260928-kaanapali-camss-v17-0-dcf3fd37f76c@oss.qualcomm.com>
- <20260928-kaanapali-camss-v17-6-dcf3fd37f76c@oss.qualcomm.com>
- <20260929061724.7E52C1F00893@smtp.kernel.org>
+ <20260928-kaanapali-camss-v17-7-dcf3fd37f76c@oss.qualcomm.com>
+ <20260929061755.8BA321F000FF@smtp.kernel.org>
 Content-Language: en-US
 From: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-In-Reply-To: <20260929061724.7E52C1F00893@smtp.kernel.org>
+In-Reply-To: <20260929061755.8BA321F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA1NSBTYWx0ZWRfX8V+YFWqpn9i2
- Md8F8ZQ9KRXubV0kM1MJcxCM8RnFlFSKFMMeYr5vjf33XhmUZfvw51D3P/RtprlADnYwA/Qy+31
- 2goGSXed1xm2oWDovqIJtIh+zFupCh4=
-X-Authority-Analysis: v=2.4 cv=aPFlOr9m c=1 sm=1 tr=0 ts=6abd148f cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=K/RrOd38U9TixX+j9hIN8g==:17
+X-Proofpoint-GUID: SBJJ4BUEveGRi16sQZiCE4UO0fozugSF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA1NiBTYWx0ZWRfXyGrfRJZm5U6w
+ p3BU11AWlT3JIqoKnSHCM0GVuBYBVna2JrK/ar2xSRtldS8mSb5AN2/Mbf5iObFI06w9qX4lAKc
+ 4J5TZNoDB++PcXjo+C6GOWPhHFkcz1IJCCrWkkdWV8atz6/puk6bGPppZyOKB3rv18ZJ2vwixvD
+ YRa+mTmQnogs1MUB1eRbkl4ugO4IXHgphDcCuo4bJBTDOYqMfwukOfJKkXZRImMgsU8s3lbJ13e
+ RcZ3hTqKzW87dQ4Wog5h8OuETK6PZ5Sw0fLde09d0TToqUT/WgOe5OH2L4eMWArD24vn5GTjwrW
+ Bl3oQoTBt2b8hvF0HTPwdvEYiRCxks2bSIe+3+y7b8xfEQUYGGUtMfPNhGXjDXQCWvSScKflwEa
+ IOIl9IYmldDHqdTGC+d8DSSKtKb3OahMzpXeSnprX6OobQfGb9hX6fzIP++s0lfM+vaNgJKh/kH
+ DJEuOfhybt9NMLRfoVw==
+X-Proofpoint-ORIG-GUID: SBJJ4BUEveGRi16sQZiCE4UO0fozugSF
+X-Authority-Analysis: v=2.4 cv=BPImP1QG c=1 sm=1 tr=0 ts=6abd17c3 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=K/RrOd38U9TixX+j9hIN8g==:17
  a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=QeBPY30dwJJEyPjSs70A:9 a=QEXdDO2ut3YA:10
- a=IoOABgeZipijB_acs4fv:22
-X-Proofpoint-ORIG-GUID: 1Ow5G5_PoR4ZZzQDVxtUyvRl8Cqv5fYT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTMwMDA1NSBTYWx0ZWRfX13HFYCNKWM1v
- B6mLDn3+g5EFtASLodh62TPQGxx2WPmfoMHdJHGfKmQYokyuCPaEM/zxyEvMOBqkv+NXk7tWi9H
- eDaDxDdI6Qo7tCuYpFrSjpwPMP3Ztxeijk+GQE+TskUFl3CStwWr4OFRmys20lKK9AlNj6xE6cZ
- yESkU+oEraTQdfRy08wdH3VAQx+hy6DDnO2b8/jgSEwK48z5z8RvE5J0T2LRBUnegfaEwFHj7sk
- 6bAAKI+ZrgHKUTD15jDTKVmpmMJ6YL0CRv882ZAoxSeiVsrP9L6YxXHiAdCT876qiaBZ4TUECEe
- E47ZBWY73P/hEKjDI82ZueUtvjLegCYonaGOVDN6c58lJtao2pu3oHCUziINRJNpdh7kPmQ3WR4
- Ygbowo16OJ9RWvJV47fYRpM/IIJykHlJXJsHHEZviR6RxyuafKQFk5WM/8a+eASn6Ugfj/cmEe1
- j/EvKuaTI4jqoyzO9rQ==
-X-Proofpoint-GUID: 1Ow5G5_PoR4ZZzQDVxtUyvRl8Cqv5fYT
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=aJ_sJalLn2DonVaVJ1AA:9 a=QEXdDO2ut3YA:10
+ a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTMwMDA1NiBTYWx0ZWRfX19htJ7q6GPlo
+ op38YoY4ybcjs7Sxgl3NVgXBMwYOK4sRzN5FbO5yzFMS0hUTjP4K49Z2qNXfiaPeI7ZEbaCf8IJ
+ vrS0YV09j6KOfAKbPqV8ORvv/emB9z8=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-30_02,2026-09-21_02,2025-10-01_01
+ definitions=2026-09-30_03,2026-09-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 adultscore=0 phishscore=0 spamscore=0
- malwarescore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015
+ clxscore=1015 adultscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
+ bulkscore=0 priorityscore=1501 suspectscore=0 impostorscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300055
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609300056
 
 On 9/29/2026 2:17 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] media: qcom/camss: data race on csid->aup_update and rup_update
-> - [Medium] media: qcom/camss: integer underflow in __csid_configure_rx
+> - [High] camss: hardware constraint violation due to unconditional AUP_UPDATE loop in CSID
+> - [High] camss: subsystem API violation where IFE Lite's 4th RDI line is incorrectly configured as PIX
 > --
 > 
-> commit 611abdeb4b5da574ae292d1ff736d0d71f2f4ed2
+> commit def99c6cf972d2305c4c27701233f42e411f7857
 > Author: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
 > 
-> media: qcom: camss: csid: Add support for CSID Gen4
->      
-> Add support for the CSID Gen4 hardware found on Kaanapali SoC.
->      
-> Introduce Gen4 resource descriptions and implement the hardware-specific
-> register programming, reset sequence, and BUF_DONE interrupt handling.
->      
-> Gen4 splits RUP and AUP updates into separate registers and uses a SET
-> register to commit the updates. Update the CSID interface to support
-> both this scheme and the legacy combined reg_update mechanism.
+> media: qcom: camss: vfe: Add support for VFE Gen4
 > 
->> diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen4.c b/drivers/media/platform/qcom/camss/camss-csid-gen4.c
->> new file mode 100644
->> index 0000000000000..4ff2f41f70f7e
->> --- /dev/null
->> +++ b/drivers/media/platform/qcom/camss/camss-csid-gen4.c
+> This commit adds support for the VFE Gen4 (TFE) found on the Kaanapali SoC.
+> It configures the hardware blocks and clock requirements, while deferring
+> REG_UPDATE and AUP_UPDATE until after CSID configuration completes.
+> 
+>> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+>> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> 
 > [ ... ]
->> +static void __csid_aup_rup_clear(struct csid_device *csid, int port_id)
->> +{
->> +	/* Hardware clears the registers upon consuming the settings */
->> +	csid->aup_update &= ~CSID_RUP_AUP_RDI(port_id);
->> +	csid->rup_update &= ~CSID_RUP_AUP_RDI(port_id);
->> +}
+> 
+>> @@ -552,7 +554,9 @@ int vfe_enable_output_v2(struct vfe_line *line)
+>>   		output->gen2.active_num++;
+>>   		ops->vfe_wm_update(vfe, output->wm_idx[0],
+>>   				   output->buf[i]->addr[0], line);
+>> -		ops->reg_update(vfe, line->id);
 >> +
->> +static void __csid_aup_update(struct csid_device *csid, int port_id)
->> +{
->> +	csid->aup_update |= CSID_RUP_AUP_RDI(port_id);
->> +	writel(csid->aup_update, csid->base + CSID_AUP_CMD);
->> +
->> +	__csid_aup_rup_trigger(csid);
->> +}
->> +
->> +static void __csid_reg_update(struct csid_device *csid, int port_id)
->> +{
->> +	csid->rup_update |= CSID_RUP_AUP_RDI(port_id);
->> +	writel(csid->rup_update, csid->base + CSID_RUP_CMD);
->> +
->> +	__csid_aup_rup_trigger(csid);
->> +}
+>> +		if (!vfe->res->reg_update_after_csid_config)
+>> +			ops->reg_update(vfe, line->id);
+>>   	}
+>>   
+>>   	spin_unlock_irqrestore(&vfe->output_lock, flags);
 > 
 > [Severity: High]
-> Does this introduce a data race on csid->aup_update and csid->rup_update?
+> The commit message states: "the number of AUP_UPDATE requests must match the
+> number of buffers queued to the write master while it is being enabled."
 > 
-> If a stream is configured in process context via csid_set_stream(),
-> __csid_aup_update() and __csid_reg_update() modify the shared state with
-> non-atomic bitwise operations (|=).
+> In vfe_enable_output_v2(), the VFE loop shown above queues pending buffers
+> dynamically up to CAMSS_INIT_BUF_COUNT, but breaks early if userspace queued
+> fewer buffers. By setting reg_update_after_csid_config to true for Kaanapali,
+> this defers the update to CSID.
 > 
-> If an interrupt (such as RUP_DONE) fires concurrently for an already running
-> stream, csid_isr() will execute and call __csid_aup_rup_clear(), which modifies
-> the same variables using non-atomic bitwise clear operations (&= ~).
+> However, the corresponding CSID code at csid_configure_stream() in
+> camss-csid-gen4.c blindly issues AUP_UPDATEs matching the maximum buffer
+> count:
 > 
-> Because these bitwise operations lack locking, could the interrupt's
-> modifications be lost, causing the hardware to receive an invalid AUP/RUP
-> command mask? This might lead to broken streaming when dynamically configuring
-> multiple virtual channels.
+> for (k = 0; k < CAMSS_INIT_BUF_COUNT; k++)
+>      __csid_aup_update(csid, i);
 > 
-Ack
+> If userspace queues fewer buffers before starting the stream, does this cause
+> a mismatch between the generated AUP_UPDATEs and the actually queued buffers,
+> violating the hardware constraint?
+> 
+No. The hardware accept this operation and no issue is found in tests.
 
->> +
->> +static void __csid_configure_rx(struct csid_device *csid,
->> +				struct csid_phy_config *phy)
->> +{
->> +	int val;
->> +
->> +	val = (phy->lane_cnt - 1) << CSI2_RX_CFG0_NUM_ACTIVE_LANES;
->> +	val |= phy->lane_assign << CSI2_RX_CFG0_DL0_INPUT_SEL;
->> +	val |= (phy->csiphy_id + CSI2_RX_CFG0_PHY_SEL_BASE_IDX)
->> +	       << CSI2_RX_CFG0_PHY_NUM_SEL;
->> +	writel(val, csid->base + CSID_CSI2_RX_CFG0);
+>> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+>> --- a/drivers/media/platform/qcom/camss/camss.c
+>> +++ b/drivers/media/platform/qcom/camss/camss.c
 > 
-> [Severity: Medium]
-> Can this code underflow if phy->lane_cnt is 0?
+> [ ... ]
 > 
-> If the device tree incorrectly omits the data-lanes property, phy->lane_cnt can
-> evaluate to 0.
+>> @@ -158,6 +158,157 @@ static const struct camss_subdev_resources csid_res_kaanapali[] = {
 > 
-> While __csid_configure_rdi_stream() provides a fallback for this scenario:
+> [ ... ]
 > 
->      if (!lane_cnt)
->          lane_cnt = 4;
+>> +	/* VFE3 - IFE Lite */
+>> +	{
+>> +		.clock = { "gcc_axi_hf", "cpas_ahb", "cpas_fast_ahb",
+>> +			   "vfe_lite_ahb", "vfe_lite",
+>> +			   "cpas_vfe_lite", "camnoc_rt_axi",
+>> +			   "camnoc_nrt_axi", "qdss_debug_xo" },
+>> +		.clock_rate = { { 0 },
+>> +				{ 0 },
+>> +				{ 0 },
+>> +				{ 0 },
+>> +				{ 266666667, 400000000, 480000000 },
+>> +				{ 0 },
+>> +				{ 200000000, 300000000, 400000000, 480000000 },
+>> +				{ 0 },
+>> +				{ 0 } },
+>> +		.reg = { "vfe_lite0" },
+>> +		.interrupt = { "vfe_lite0" },
+>> +		.vfe = {
+>> +			.line_num = 4,
+>> +			.is_lite = true,
 > 
-> __csid_configure_rx() omits this check. If phy->lane_cnt is 0,
-> (phy->lane_cnt - 1) underflows to -1. This would result in writing 0xFFFFFFFF
-> to CSID_CSI2_RX_CFG0, clobbering all its fields.
+> [Severity: High]
+> The commit message explicitly states: "Support is currently limited to three
+> output lines, matching the constraints of the CAMSS framework."
 > 
-> Should there be a similar fallback or validation check here to prevent
-> hardware misconfiguration?
+> But line_num is initialized to 4 for the IFE Lite blocks.
+> 
+> Since the CAMSS framework hardcodes VFE_LINE_PIX to index 3, does configuring
+> 4 lines cause the 4th line (RDI3 with id 3) to be incorrectly subjected to
+> PIX-specific logic? For example, in vfe_try_format(), this would force a raw
+> RDI dump stream to use PIX format tables and validation:
+> 
+> if (line->id == VFE_LINE_PIX) {
+>      struct v4l2_rect *rect;
+>      rect = __vfe_get_crop(line, sd_state, which);
+>      fmt->width = rect->width;
+>      fmt->height = rect->height;
+> }
+> 
+> Is this initialization to 4 lines unintentional given the 3-line limit
+> mentioned in the commit?
 > 
 
-Ack
+It's acceptable to align with the commits. Actually this is a CAMSS 
+framework restriction which needs additional efforts. Will keep it the 
+same for TFE Full and TFE Lite in next revision.
 
 Best Regards,
 Hangxiang
+
