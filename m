@@ -1,199 +1,242 @@
-Received: from mail-wr2-f35.google.com (mail-wr2-f35.google.com [74.125.225.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0AA9519DFC
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 18:21:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.99
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792486; cv=none; b=KIpgDchLQYH11xl4GU/JSl1/ftuCKSwhCmNWMcSJ9CCKbcR5hS7J6m3ZzLOk2+CVWvwm0wlcE56UTKB7H+mKGwJZqs9LJ1UdJhqIQWR6cktipaukZupCOgMRUtMNBO1LTZMtbdoQJ/vhM8K6lSXShTnFTJM8FTmJRohBcL+I01c=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792486; c=relaxed/simple;
-	bh=lg6aivrxTqBRLzIPKY88JLYw0CPW4j1nokLPM5koSvk=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=coE9Bf3wDesCvmGi/NXO8KXZIW+eUyxwHDQOJ4MvPdWOT+bQoedrCF43f0m9/xUwcZMyH8htfASuAwfy0vgsQ9TE2kor008XkuTc5Kp3IwBxfaKXI6xoolysW85kPAkHQJ6qpNmRXntDnmubHrK6/fCiLbi50zVpLcn6qPthJ/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aBsaswmp; arc=none smtp.client-ip=74.125.225.99
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2A5511E90
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 18:32:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.13
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790793162; cv=fail; b=Rd1q1/y8zZY3MwzXIPQNAsFR+Jo/8uRcQ/Db7LoKWcKD+AfDwxJbxl0t+/2tJnV/o1vUuBU27r1xK1M80EF4HRV8aFUoELFJmaw1BYdw+wD20XR/KCXY1CFPoKT3KEigml1SAKzO2c48iqXe9aFb/HdXKx+1cvCq18fSIS0Fzj8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790793162; c=relaxed/simple;
+	bh=X5n0y6oK7FYnuWVoR23SkG3XpD51/e6e5HDzXJ6hkKo=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=a2/4YwhFZ9Ryufea5zNWXi18D6CTKPJvq0WIJVZFFYQVU3UlHszrMbzz5Z6XZpdj8TnOA8yYyxJSoXnr5WosCiFQLUw6NA6iEhp46DgWp6Og6z5yEQdVkR/amWarE8npWvmYzgmF1fpj54SrxkfD6s/vDUQmOVijsTzr4ShvN4Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=DB4bxOyw; arc=fail smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aBsaswmp"
-Received: by mail-wr2-f35.google.com with SMTP id ffacd0b85a97d-482f635552aso4443068f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 11:21:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790792483; x=1791397283; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=HmtafwAk9w3FChk+oreA8eX/x5O2/vYIjUw4i9jNPQs=;
-        b=aBsaswmpRhGOdhYiZoKiPIY2h6RIG5FZ+fNjOm48bVbD/mbEXlmsurTocbig4fRF6C
-         cUNv1TeLLroRvu/mJnsAkwbE1OXrpiEiMOZHEbefU3tM4xTxYyM2f0xzCTeluyXvMMr9
-         AcPN5Hi7J4CMuvjCqvP11z1BRwKJdOyYpSDOSH3HqJmwV2oCgcu2xDqzIERSqhtdJIMo
-         y5N8rIPtBZ/aOt1Oxwo7mKQJWy+xvK2CI/heaCOs1vD61U8ziGSFelMXhty8aozpgaQZ
-         pV5XPLbvX/YoECN+HtI/Hz7wKYVrwP9esmBsMueAJAaWjSUfMYxgV4l05KdYnuE7BcT8
-         azSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790792483; x=1791397283;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=HmtafwAk9w3FChk+oreA8eX/x5O2/vYIjUw4i9jNPQs=;
-        b=yshhbV07SwT69tdeh3TlbdIkKT5rFG9DN4OLcZVhNNAe/IS6iHFJZp5klbHF/N085n
-         hPSueTdRPd1tjYFXil9jsECONq8KVWAB4C/05VIm4CK5btmsr09hnbOMsSYIriZbFBua
-         LmvrN3o7U4R/15E+4eUPj20pvnu+miD9+cgjXnIxLsXliFfmpppiuHOsIlLNTlKHInnE
-         KoRNsQPpzMnVpLw8A4TZ9/kuQ9Ht4FPo+xORh8t57zSWk7lrXJzVEht4o1P9pp85PC16
-         tDBIcdTFtv4QBOFV6fxHrAStvknNdfG7CZPxt9znkIHa79fhl0hkh5wK+7XBcERxzkJ/
-         YknQ==
-X-Gm-Message-State: AFq9FYKC2bESXrOg+TFuIRMP4sjJx9VYG/2K5Xz7n7fw1WtMtr9g5JJX
-	OgAY6Ju1LRuNz6Mt5KkkR3yuRvz6NircPHelxotKUgPnTKdLDrsjynrJ
-X-Gm-Gg: AYBFou0E9bva+sstRJ22BqoIKU4bzZFDnwFxiCJkDWEiN9umtfvxOJClSz5NU6QLren
-	SWFYgIYHyhD1mi+G/l6xm8+unsvaxN1rAjo1fnE4Z1i03euzq+p9H2mFsLWMNs+H8hNuw9m7LaT
-	8PBbeIGXCBDFCLTSlXnIJr4uk1lAw+6394/c5J3ybZLgL7uNsL8x2eWx/F/n9XGDIL1E9QayPKe
-	alNjVk/GZcOqIjCkCRk3iGYcuW67/U9NQUenKwMF3/tXCr95QqWGvAp2/tDclnB4J85BiVAZUgL
-	XjWFMRMUgoixQGdnfysZj2H3nzk/NRTesYbdN1Mwl2h+YQA5CIEgnLlPok8umTZt6maWRrWM9JV
-	nnf6mCW/qtBNfgR3KtrFK7lIGf1CjeP2E/umfx2kY+qSXwHSNchBPqQ4COcUT9T6qSsdOlmWFIY
-	ymhnMriICdqFqEUC92jaHpTPwTzXPKaVQu83v7Q5HM/qG8ioK5lHHu3oZHLeDXB5KK1fphiP6wU
-	Lpk0QLHNSUgRVjqW07Dd3sQp+WXJ2b/sYE=
-X-Received: by 2002:a5d:6f1e:0:b0:48a:f247:214a with SMTP id ffacd0b85a97d-48b02431188mr4748619f8f.5.1790792483003;
-        Wed, 30 Sep 2026 11:21:23 -0700 (PDT)
-Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48b0690e19asm816139f8f.18.2026.09.30.11.21.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Sep 2026 11:21:22 -0700 (PDT)
-Date: Wed, 30 Sep 2026 19:21:15 +0100
-From: David Laight <david.laight.linux@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-Subject: Re: [PATCH 2/2] kallsyms: Optimise symbol name search
-Message-ID: <20260930192115.491c461a@pumpkin>
-In-Reply-To: <20260930133525.C8CA21F000FF@smtp.kernel.org>
-References: <20260930132109.260597-1-david.laight.linux@gmail.com>
-	<20260930132109.260597-3-david.laight.linux@gmail.com>
-	<20260930133525.C8CA21F000FF@smtp.kernel.org>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DB4bxOyw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1790793160; x=1822329160;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=X5n0y6oK7FYnuWVoR23SkG3XpD51/e6e5HDzXJ6hkKo=;
+  b=DB4bxOywF7+MhipdF1K4zSeZ9RYzQxz9oPWLMXj6UlKJJEFbnkTLMlNt
+   cobXJZxJrXocSGThvu8DgZw7Nwj/KhL3KBQNHbpeQNzSJcbTx+Q5d00Zh
+   hs0qsUjLKeyluRS3EzbYhAXrjMCBfBOgO7PSi6wseHcj/dsLKSksa/8Mt
+   bYJdKGWXa87ECDNHmRs5TU7Y4q7A/pnialSSR1U1RHDFg/jT0dhe8/uZM
+   aY4GH5LB7xF4K+lJk3ZSboeItdtnkokG3fiURsTV3DuaFtsni3ETKHZz+
+   7xSOBxlD/TH71mbPls8gnUDQLFCpyY8LPx8XNkBRDu7yYnyzQPsmKsyyJ
+   g==;
+X-CSE-ConnectionGUID: TIXlY2kqQJm2eee20vG2WA==
+X-CSE-MsgGUID: fRy+5lnKRzeNFTRGEY7W+Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11921"; a="101703099"
+X-IronPort-AV: E=Sophos;i="6.27,133,1787036400"; 
+   d="scan'208";a="101703099"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Sep 2026 11:32:39 -0700
+X-CSE-ConnectionGUID: fP4b9OerQtqe6Z2b3mgUhA==
+X-CSE-MsgGUID: DhfEgA+RSdSyfpsSxWxGRA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,133,1787036400"; 
+   d="scan'208";a="275891958"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+  by fmviesa008.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Sep 2026 11:32:39 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Wed, 30 Sep 2026 11:32:38 -0700
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49 via Frontend Transport; Wed, 30 Sep 2026 11:32:38 -0700
+Received: from PH8PR06CU001.outbound.protection.outlook.com (40.107.209.70) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.46; Wed, 30 Sep 2026 11:32:38 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ypbH/mc3wJue91U705tpfi4jVHOD9dvQI5cvCAkdsUE5ZGVfqfowq/EH0LtMvQ4DMSpWqRt6YVxx3xJ7ykPN++b0qUDmZ+ztysrDgh5WreSBVYdHmpI2VcWZ9eQDrKbSqOsC6rsc0hRzU8GHkVbGdoAEXsDXbc1HIry3gACpvpbY2n3Ew9vKlMNEMw9PQAWSz8RtfT1bnBl5Ne0uNO/+8qvZtCScyatDyaajhTKIAtZCyibXVKc+aJSax5RPGvjSCAS5RSblbMujEElmujnkWT9Qjut+8tZKCGm2IRpXdWqAVkiFuUwjDRY/m975o3GcLfr57s9aLTeOoShABL5E3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0RQGTu6c2OtXdw6kqU64NQVjRsewibSTU02G76gLyUs=;
+ b=GWQZzXsHtW9XQ0jxQquUYv/Su3q3o86m9+6vOhZ+jo5/QsJm1/U5/7NV547R8C+5/M74EhMBE1MMhKv1fviu2R6laSEoRgCLfBcwukKlyhakTyDzNXc9NZs4efosK6cCnw4egWTQ7KmycO9COQ40SceA64WWzNcdQMIn0Fj2U6Qgc9SELFFSigCngwlAcLCxzgsKfgB+HLQNgq069K41I9TcXg9ZonFS/GFI9mYmmZCIwAHqgxskZjlYfng1pqwyio67pSNzzBVjtq0jkNhbGikc9laA7nZQRxjpGz7+HIWKe6lK6f3a96x0LMRE26C76Bz1Rq8PRExGjC2ti/fLvQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from PH8PR11MB8040.namprd11.prod.outlook.com (2603:10b6:510:238::11)
+ by IA4PR11MB9204.namprd11.prod.outlook.com (2603:10b6:208:56d::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.24; Wed, 30 Sep
+ 2026 18:32:34 +0000
+Received: from PH8PR11MB8040.namprd11.prod.outlook.com
+ ([fe80::89bf:2274:1371:50c5]) by PH8PR11MB8040.namprd11.prod.outlook.com
+ ([fe80::89bf:2274:1371:50c5%5]) with mapi id 15.21.0451.022; Wed, 30 Sep 2026
+ 18:32:32 +0000
+Message-ID: <91673528-75c0-4e2d-bec8-d6eaf58c5d2c@intel.com>
+Date: Wed, 30 Sep 2026 11:32:31 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12] drm/i915/dg2: Add per-client control for
+ Wa_22013059131
+To: <sashiko-reviews@lists.linux.dev>
+CC: <intel-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>
+References: <20260630223946.2107382-1-jia.yao@intel.com>
+ <20260930171334.3636-1-jia.yao@intel.com>
+ <20260930172544.3A1E71F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: "Yao, Jia" <jia.yao@intel.com>
+In-Reply-To: <20260930172544.3A1E71F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ0PR13CA0171.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c7::26) To PH8PR11MB8040.namprd11.prod.outlook.com
+ (2603:10b6:510:238::11)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH8PR11MB8040:EE_|IA4PR11MB9204:EE_
+X-MS-Office365-Filtering-Correlation-Id: 29346d60-69dc-4c53-2988-08df1f2130c6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|23010399003|1800799024|42112799006|11063799006|56012099006|10067099003|4143699003|6133799003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: Ru8ei67hSmorhc4uvdVNTMBeLMuBhYn9SpgW7T/shfEcAae+B0ntjHeLXA8N7hSsublqMKR1hYyxnznUhDQRGHpFLg3WKgoq9v1DokAIKpbzKIU9XxtRZ3lcXSzFV576yk+c+OdnD7E+GNdp/C5ncD/kfr8XRbLgWQHcAopUq1LYwQzCdEBDtSZywErGqOnUdPARWnwdEjZvu96iyNWwr8lJsIhLvEuriSs6SQlPNIicaGKw/udRrVn3cqN86P9ZlbXt+SBpY2LyM+nW+23rm06tybwO5Q580y5am76BV8RYZTgnC4FB5VD3mGuPsg9dWsbyoVI5jkMmuOSbBTRf5GDwW3epB/OR1RQpdokSJlK0NxFUIRvuB6FMtkNxlfVJFDQESOpXGE+o9kOmxa+1iX+ZGbFgxIT65anq7cqqQ01ZpFi1kHUOhK7Gte0aoJFr27WT+OGKoZuNOaKMMW/50NPHZzSmqElFue6aiE9tU/b8ZkH34Px3DqhUwkT4QZXfdfqzXNQ646cEw2yqSGjGc9qAY2TqP/T8hGuayKchd5JpXbtEAzmoehtbLl0iiLm6s6ixk/s8xTmb6abO0rmrSHGqGHXg+fr3NPWnaFKnv0VAc3mgR64tMnAUh+xpf7hHRS26IOyz4kGnMeTFNoU6Jx7lova9E8Bnhb7b7AfdJxk=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR11MB8040.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(42112799006)(11063799006)(56012099006)(10067099003)(4143699003)(6133799003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UjQ2Kzc3SmdLcklSaWVGN3k3ZmJJdU0xSUhRemN5YVJra1psbnBVVkxwL0Ni?=
+ =?utf-8?B?Mmw0WW5hZktLUW4xKzNsaUw2QWt0c2hTT2ZBWUhtWFBBNDhRRGlEc2I4Vzh3?=
+ =?utf-8?B?NGQxZ2ZwbEh4WW4zV2g2OE9vSHBKSEp5M2pxRUlYbnFORXdSSTVmL0E1blN2?=
+ =?utf-8?B?eXVxTkNEL254KzRneGl4Wm5kcTdLUEJ1c2NLQ0svNGRMelNZQ2dIZjgwbFpx?=
+ =?utf-8?B?ckh2UWdQSWtPaTZ5U1RGZ21XdDRGdkphcjNyRS9wVXBBUDdlWEQ3c0NNYzlr?=
+ =?utf-8?B?QTF0R1h6S3pFa3pKaXN3c1VZR01jNTNNWUJvTm5PdWlyWC9uNkV1UW9pRXpr?=
+ =?utf-8?B?cEZSWXBNQlRoTnM5M1NxYnZDYXloVkxpOEFCUkUxcWIxaWpWVTMrT1FpT3F1?=
+ =?utf-8?B?aHZWbDBDY2twdWt6aDZYa3o3R0lOUUhSWGhZdTVCc1JWZ2hBNlp1Q0pDeGZM?=
+ =?utf-8?B?c3VtWWJpSkptc1JqbHl2QmhLYldtdlQ4U2YrOGdSeFhsVExtNTY3YkYxZXMw?=
+ =?utf-8?B?MlRXSDNWc3YxeGE2dEdkZ2c0Y1Vkb3lXZ3h2azM5ZzlYZCszVVk2UllVQ0Nq?=
+ =?utf-8?B?cDAzcStMakFWOUtUR1JtTzRKVTlmL0RhWnZnWFhHelVROTNkZlk4OCt1NDZu?=
+ =?utf-8?B?VjFGYXQyNnpTckxQUXNzckJDQTN3aHEwRW9CVSt3ci9EK3Bza1lxWUNZem83?=
+ =?utf-8?B?N0pjTHJ5TFJFMSs3bW5HNG4vNzZQNDNObFdWQ0JJN2xONGlMVXhmRHp3YjdO?=
+ =?utf-8?B?TDNOU256cmV2QjRkN0wvVFpzc0VreUlQRFhnbHZHVkxtdFBDV0tINHdRYmIy?=
+ =?utf-8?B?U1N4ajExcXNJcTR0K1ZPVkxpM1AyWGNXRm9BM3N0ZGsvU3VtQU9sL1VvZ0lY?=
+ =?utf-8?B?eTU2UURoemNhOHlaZWNIVzFMelo2ZTBlTjhFendoUHZmQjFRK2pZdXZRYmVi?=
+ =?utf-8?B?M1dhcDVxcXllT3pENmtCUlY5T3gvaHNWVzFrdlh4dFdTL0g2VmxINnFEYk9G?=
+ =?utf-8?B?Nks1YkZQYWdDRFQ5K3orRGdFcTZvRHJMT3AwcFZLdjZ2R0JxVjFMTG9ORito?=
+ =?utf-8?B?dnZzMk1yc04wcWNDVm1JUGoxOXZWeHVRYkMxUUZTVHNOSEgzcDdtbTFUaGsv?=
+ =?utf-8?B?a2h5UjM0RGt0Sko1dURwQlVXanpBbFVGQlJDbjBNb2lMWElpWXYrMzdIWmNj?=
+ =?utf-8?B?MDZNMzJFeWdmb1FsZ1NPc3RSK0Npd0NVS3dWdDVjNXlEaEJYSjEra3prNUhQ?=
+ =?utf-8?B?UFZnUGg4amg3aXBmQkdXK0Fua3NnVUkxOUM5UEpnTXFsazQ3c0JVcWhqd0Jy?=
+ =?utf-8?B?SndSMkg0WkRQZUJ2V0k2d0Z4Y1YvQlFuYXZlSE1LKzR4ZXNOaENFd1hvOGZK?=
+ =?utf-8?B?SFdCY1ZpclcwajlPM2g1bGZORGh0NWtBL3lycmJkc3dtVmJMTUpsN2dWZTM3?=
+ =?utf-8?B?eFVDaldwMDc5NU1IUExVejlFQ0JXYVQ1RVZCYjdPVklDdER4bW9JUWl3V0sx?=
+ =?utf-8?B?RHVrVFQ4SC94cHlJWDRZb2dKdlBOcnVBT1R4bjQxWHdSdWxCOUhyTkNHUVZ6?=
+ =?utf-8?B?RWRwb0J3VmxFNlRLZDVNSS9iRzNtVTlFcUZzS3JKcXpOMW1kK1p3M1JVNmo0?=
+ =?utf-8?B?NG53R1M5bll0SXo1RkpZL21RdXdYN0xFOTRGcVJVRVg0U1VFa0tvYVZNZW5U?=
+ =?utf-8?B?UEVNc3BsTS9FcThodWhzTlJMNHkwSnlsZWhkbytMVUVRelJQTGJrYjI5Mi9O?=
+ =?utf-8?B?dzQ5SkE5dWVZcHIxK25ieEY3SUMwdHJJeVdjTTRqcWlQYmZzcFNrVTI5dHlv?=
+ =?utf-8?B?STRJbEVKQmhGVlh1UnpTRTZFdEU1NzZ2RHdpZ0pEVXFYTjdnNHdjNmdXekJz?=
+ =?utf-8?B?VHJobFJva2hHT3k5emxneDJzdm1QcWp2NXZPTVF2amlWTzY5dC9TM2JXbXRy?=
+ =?utf-8?B?OSs5UjlMY1hIQVFPdXlteGpLTWJVNEhmcHh6aU91MUozeW5SUFFhZVBBY09r?=
+ =?utf-8?B?MVVGV1dDbldTS0NVdlYrcDA2QjZOelpWelN3UWoyM0JLSzg5amM4SlZrVWVr?=
+ =?utf-8?B?Y3RmT09mZnNBSnJZTE1kcjFWTUpScmxjdVFpR0FhTTZZYXliM2tNWlpia2pT?=
+ =?utf-8?B?SjRhakxPMFZISWYwMFE1Y0daTnpZNjNaRnE3bktmWmdSVzhmdnZ0d2s2cFl1?=
+ =?utf-8?B?MWVwZGdXVFNaSXBxQktwMWlza2NLYW5mVGpnOExGWWlQL05nV0ZxMUlpMDBL?=
+ =?utf-8?B?bExkWmxLMXBtZENzMHNsSjMwbmRBck1tMDljcHRxamR6RG05Sk1IaTA4d0x6?=
+ =?utf-8?B?MGl2VG1CQmdEbVZwamoyME5SeHVmeHBJOEZTSFFVbHpFRzlOVXdGQT09?=
+X-Exchange-RoutingPolicyChecked: ECrQpBjc4IzrBy+81ZjmqKSolSrZNkq+XM28wxfpdE/a+H4qGMhgRt9Dst0tOnhZdNh24BrPI1HtX6LPPplkEKkmbkGvuwdAdXRe7nXth/ml61IkoTOB1H1FpmAZe8TF+dpb/BqzOH9toE7y0gSf7e+zzJcwguonzi1OdBhL8eQ2HSZZtoHLct3bb3jqyb02M+ZRNBe18L6WsSRFSveH/KkXQ7QD3eHbJmlzUxiju01dA78mVNiCtWcxLKG/19UKLzcBhiCXj2wgP8LGSdh6qoULT1Ex3HEis0e5xDRYb92hMktcCI3nYQsex1WnpnRT/P3AXC+4XdBtFZvgqv4xmQ==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 29346d60-69dc-4c53-2988-08df1f2130c6
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB8040.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Sep 2026 18:32:32.4685
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: sDyKVHOlEmEk8YCWsdDo7tFRTq9mOp1gmQ2EiAYQZzZNd4Wr0y5DaCGMUlpIPjXq6bHQP5y/hbxAlkL785kJsA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR11MB9204
+X-OriginatorOrg: intel.com
 
-On Wed, 30 Sep 2026 13:35:25 +0000
-sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] kallsyms: 32-bit offset truncation in scripts/kallsyms.c causes panic
-> - [Medium] kallsyms: off-by-one in get_name_address binary search bounds doubles scan time
+On 9/30/2026 10:25 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] drm/i915/dg2: kernel contexts clear Wa_22013059131 in LSC_CHICKEN_BIT_0
 > --
-> 
-> commit aa83959ffd157437ca56938c0da66225c5fc9aaf
-> Author: David Laight <david.laight.linux@gmail.com>
-> 
-> kallsyms: Optimise symbol name search
-> 
-> Change the alphabetically ordered lookup table (kallsyms_seqs_of_names)
-> with one that indexes the table of compressed names rather than the
-> array of symbol values. This removes linear scans during the binary search
-> for the symbol name.
-> 
-> > diff --git a/kernel/kallsyms.c b/kernel/kallsyms.c
-> > index d18d78e626db2..2f39fa850deae 100644
-> > --- a/kernel/kallsyms.c
-> > +++ b/kernel/kallsyms.c  
-> [ ... ]
-> > @@ -177,6 +177,36 @@ static unsigned int get_symbol_offset(unsigned long pos)
-> >  	return name - kallsyms_names;
-> >  }
-> >  
-> > +/*
-> > + * Find the value of a symbol givem the offset in the compressed stream.
-> > + */
-> > +static unsigned long get_name_address(unsigned int name_offset)
-> > +{
-> > +	unsigned int low, pos, high;
-> > +
-> > +	low = 0;
-> > +	high = kallsyms_num_syms >> 8;
-> > +
-> > +	while (high - low > 1) {  
-> 
+>
+> commit 4fe69a30e73450cf67244b9e1360470b774fd0a5
+> Author: Jia Yao <jia.yao@intel.com>
+>
+> drm/i915/dg2: Add per-client control for Wa_22013059131
+>
+> Wa_22013059131 sets FORCE_1_SUB_MESSAGE_PER_FRAGMENT in LSC_CHICKEN_BIT_0
+> at engine init, but this is known to cause GPU hangs in certain workloads.
+> Add I915_CONTEXT_PARAM_WA_22013059131 so userspace that handles the
+> workaround itself (e.g. by limiting SLM size) can set it to 1 to let the
+> kernel know bit 15 programming is not needed.
+>
+> Link: https://github.com/intel/compute-runtime/pull/919
+>
+>> diff --git a/drivers/gpu/drm/i915/gt/intel_context.c b/drivers/gpu/drm/i915/gt/intel_context.c
+>> --- a/drivers/gpu/drm/i915/gt/intel_context.c
+>> +++ b/drivers/gpu/drm/i915/gt/intel_context.c
+>> @@ -80,6 +81,7 @@ int intel_context_alloc_state(struct intel_context *ce)
+>>   			if (ctx->client)
+>>   				i915_drm_client_add_context_objects(ctx->client,
+>>   								    ce);
+>> +			lrc_latch_wa_22013059131(ce, ctx);
 > [Severity: Medium]
-> Since high acts as an exclusive upper bound here, doesn't this omit the final
-> lookup marker from the search space if kallsyms_num_syms is not an exact
-> multiple of 256?
-> 
-> Any kallsyms lookup for symbols in the last partial block (up to 255 symbols)
-> might fall back to the second-to-last marker, unnecessarily doubling the
-> linear scan fallback duration.
-
-I'll double check.
-This matched one of the other scans.
-I did check the first and last symbols (by name and number could be found). 
-
-> 
-> > +		pos = low + (high - low) / 2;
-> > +		if (name_offset >= kallsyms_markers[pos])
-> > +			low = pos;
-> > +		else
-> > +			high = pos;
-> > +	}  
+> Since lrc_latch_wa_22013059131() in intel_context_alloc_state() is only called
+> when ctx is not NULL, what happens for kernel-internal contexts where
+> ce->gem_context is NULL?
+>
+> If the latch function is skipped, CONTEXT_WA_22013059131_APPLY remains unset
+> (0). Does this mean the kernel context will execute with the
+> FORCE_1_SUB_MESSAGE_PER_FRAGMENT workaround disabled?
+Yes, we intended to do that, kernel context don't need the register.
+>
+>>   			i915_gem_context_put(ctx);
+>>   		}
+>>   	}
+>> diff --git a/drivers/gpu/drm/i915/gt/intel_lrc.c b/drivers/gpu/drm/i915/gt/intel_lrc.c
+>> --- a/drivers/gpu/drm/i915/gt/intel_lrc.c
+>> +++ b/drivers/gpu/drm/i915/gt/intel_lrc.c
 > [ ... ]
-> > diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
-> > index 494852ade6d87..74264ead1efe1 100644
-> > --- a/scripts/kallsyms.c
-> > +++ b/scripts/kallsyms.c  
-> [ ... ]
-> > @@ -448,13 +439,28 @@ static void write_src(void)
-> >  	printf("\n");
-> >  
-> >  	sort_symbols_by_name();
-> > -	output_label("kallsyms_seqs_of_names");
-> > -	for (i = 0; i < table_cnt; i++)
-> > -		printf("\t.byte 0x%02x, 0x%02x, 0x%02x\t/* %s */\n",
-> > -			(unsigned char)(table[i]->seq >> 16),
-> > -			(unsigned char)(table[i]->seq >> 8),
-> > -			(unsigned char)(table[i]->seq >> 0),
-> > -		       table[i]->sym);
-> > +	if (table_size < (1u << 24)) {
-> > +		output_label("kallsyms_off24_of_names");
-> > +		for (i = 0; i < table_cnt; i++) {
-> > +			printf("\t.byte 0x%02x, 0x%02x, 0x%02x\t/* %s */\n",
-> > +#ifdef CONFIG_CPU_BIG_ENDIAN
-> > +				(unsigned char)(table[i]->seq >> 16),
-> > +				(unsigned char)(table[i]->seq >> 8),
-> > +				(unsigned char)(table[i]->seq >> 0),
-> > +#else
-> > +				(unsigned char)(table[i]->seq >> 0),
-> > +				(unsigned char)(table[i]->seq >> 8),
-> > +				(unsigned char)(table[i]->seq >> 16),
-> > +#endif
-> > +			       table[i]->sym);
-> > +		}
-> > +	} else {
-> > +		output_label("kallsyms_off32_of_names");
-> > +		for (i = 0; i < table_cnt; i++) {
-> > +			printf("\t.long %#04x\t/* %s */\n",
-> > +				table[i]->seq >> 16, table[i]->sym);  
-> 
-> [Severity: High]
-> Does this code inadvertently truncate the 32-bit offset?
-
-That is a C&P error :-(
-
-David
-
-> 
-> When the compressed symbol table exceeds 16MB (such as in allyesconfig builds),
-> this code shifts table[i]->seq right by 16 bits. This unconditionally discards
-> the lower 16 bits of the sequence offset.
-> 
-> Could this corrupt the lookup table kallsyms_off32_of_names and lead to a
-> panic during boot when the kernel attempts to look up wild memory addresses?
-> 
-> > +		}
-> > +	}
-> >  	printf("\n");
-> >  }  
-> 
-
+>
+>> +static u32 *
+>> +dg2_g11_emit_wa_22013059131(const struct intel_context *ce, u32 *cs)
+>> +{
+>> +	/*
+>> +	 * While re-writing LSC_CHICKEN_BIT_0 for Wa_22013059131, the
+>> +	 * other bits of the register will also get overwritten.  The
+>> +	 * hardware default for all other bits is 0, but any workarounds
+>> +	 * that adjust the other bits in the lower dword of the register
+>> +	 * also need to be re-applied here.  At the moment that's just
+>> +	 * Wa_22014226127, which is always set for DG2-G11 platforms.
+>> +	 */
+>> +	u32 val = DISABLE_D8_D16_COASLESCE;
+>> +
+>> +	if (test_bit(CONTEXT_WA_22013059131_APPLY, &ce->flags))
+>> +		val |= FORCE_1_SUB_MESSAGE_PER_FRAGMENT;
+>> +
+>> +	*cs++ = MI_LOAD_REGISTER_IMM(1);
+>> +	*cs++ = i915_mmio_reg_offset(LSC_CHICKEN_BIT_0);
+>> +	*cs++ = val;
+> [Severity: Medium]
+> If CONTEXT_WA_22013059131_APPLY is unset for kernel contexts, this will
+> unconditionally emit a write that clears FORCE_1_SUB_MESSAGE_PER_FRAGMENT
+> in the hardware register.
+>
+> The commit message indicates that "Kernel-internal context will not change
+> workaround settings", but it appears this code clears the workaround during
+> kernel context execution. Could this expose the kernel context to the GPU
+> hangs the workaround is meant to prevent?
+No. GuC prevents this scenario from occurring, so kernel contexts are 
+not exposed to the hangs that this workaround is designed to avoid.
+>
+>> +
+>> +	return cs;
+>> +}
