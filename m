@@ -1,118 +1,189 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC94A4F55B5
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 15:25:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717CD52B1EB
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 17:35:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790781929; cv=none; b=qSfvo1muBKwLoYdATafZkssO9i24RuQSOPxeI8fxGbu+lGmVZpKS+BDisOCGHO9vbKGnvcWCkuPTRUGKLoLVw5IKvMSrB/i2RCJ/Ihl+jWfqyTsT+BTT1KbOmA5/ph+BwEGsGLTdi00U06OKREcjaWWVCxedIhrVK5GpGwxjfQg=
+	t=1790789731; cv=none; b=uL8cQ99ILgw5Vmt44n65eg7ezstM5w1ExhHIMytMxHudTevTVSO1NgihDjZqvWvurm7SBYPN8TT8u3mButiH36pYhnB/GWPlR18YeJRXxn++fJ0xHnwCWnFpmv6zc34zziVJmvfy0dBC/eyIL2NnQnWVS9BCEx1pKGdrqx4ejfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790781929; c=relaxed/simple;
-	bh=PFa7S4pW+Hy8bZZeeL38QaLRJgemHnL/A2Y1cYYlfd8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l/Wt5MlamZcFvlhI1h4skZVky8LH3glXeHA3BMxJZ1L+/bLJxexZ1+3dQSwVUOoASanVD8yE5/n+5ISX+rRsWIg7F8ZJPMvoUdxGVblU4S0cwQs74qNXfYMNVTkrPFN3k1ky3DwzmyhG1eLQJgu3ym5qhVCLk8D8A1RHzhrb/zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=bz66pLxC; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1790789731; c=relaxed/simple;
+	bh=vOKtFAes3FzbDDplqLaCiD5e4lVf9oFMBm4gHbTfOtM=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=mKkG4wViDUhelHKG6+XrMpC23KJesU5YxJkOwz8GocSG+TOdMxR5UV1DPNbqWlg2ZfDBoppjtuym7GMrY2wwMrlqZffj2f3B4fj/cCMk9gU/SkBikOQPZxPfVJl89dVub2gkP6IUwXfX1bSN4RkEwCg/PqGW4malYpqZjCEZ+7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=QYQ16/BD; arc=none smtp.client-ip=185.67.36.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="bz66pLxC"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id D6B3D4E410D5;
-	Wed, 30 Sep 2026 15:25:15 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id A48CE60749;
-	Wed, 30 Sep 2026 15:25:15 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 9EB68103281E9;
-	Wed, 30 Sep 2026 17:25:14 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1790781915; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=ldNxRRaVyUs1307HOf8eQfls4TO8viEDxDPiJue7YlA=;
-	b=bz66pLxCxPWoGBLTXP0EKgnSzepn/rcr8CwnG6OHeyc5j9iZifld/9XpJ2WS8eUku5aRPB
-	nPSA7yCK4/BMJ+gUz9zDbJnSAThSdSpOvGknVFfm2KaswwC61uJMg89l3MJaty/9ewU9LY
-	w/WoaOcQs9hJdxZkgkbe9T8ncxBze7QqfkgmplDmQsIdPlLeVLxtZLITlrVFz/pCnE47d3
-	Hvq8kqQ9ijUCo9gTY1Lqexa/bKLenLlLSYMEZr5uHJkv6YAa0jh3fsvUIh7+1mZQGF4pEh
-	Dw4qGe6L14Z8aLAPC/KbbeBShDeB7fvqup5XAz9eJm4HJSyMCyvb2nS8uKRCoA==
-Date: Wed, 30 Sep 2026 17:25:13 +0200
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="QYQ16/BD"
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout02.posteo.de (Postfix) with ESMTPS id 364D8240103
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 19:35:26 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de;
+	s=1984.8680eb; t=1790789726;
+	bh=dT/Hs+ay33oP7LeObujmA6DJM6pWp7qZoKPWA+ruDqI=;
+	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
+	 MIME-Version:OpenPGP:From;
+	b=QYQ16/BD6HMxYpVyaN5otpnrMX/CQ9fHaNIEm9NljhPnMuTlOOBhnQwbkcBSgFQR6
+	 q371LilnrM/lt7phUHynqKEPT6KRxbFNT+eLCkxvD+m6V8AH3WATs2+n6zoQu1efbd
+	 cPlPilQ/P6FZbm7Ml37fXve8lgPyBDWfMFtQEGFdlNa7oMqY/l59fpwGo3fQWdP254
+	 39yX5pu+09EGkAJmF4qrYxZDpsdqUHkq0v76lugMxlVnl/qB9aqvSb0H4o46Mycr+r
+	 dEV2g10Ql3K8QpwV4cCWm1RzLg9WoXYlkQF147SrQdScoGzte61xfJjXHhVZFdCpjU
+	 w6l/o83tWWU6Q==
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4hw2Hx1gTHz9rxR;
+	Wed, 30 Sep 2026 19:35:25 +0200 (CEST)
+Message-ID: <efe459f84fc81dcfb820fb8cdcc28dc0a13b2e8a.camel@posteo.de>
+Subject: Re: [PATCH RESEND v4] ACPI: SPCR: Support UART clock frequency field
+From: Markus Probst <markus.probst@posteo.de>
 To: sashiko-reviews@lists.linux.dev
-Cc: Michael Walle <mwalle@kernel.org>, linux-rtc@vger.kernel.org
-Subject: Re: [PATCH] rtc: pcf8563: add SMBus support
-Message-ID: <20260930152513dd617b74@mail.local>
-References: <20260930113126.720555-1-mwalle@kernel.org>
- <20260930114005.2C6661F000FF@smtp.kernel.org>
+Cc: linux-serial@vger.kernel.org
+Date: Wed, 30 Sep 2026 17:35:25 +0000
+In-Reply-To: <20260930154517.97E6B1F00898@smtp.kernel.org>
+References: <20260930-acpi_spcr-v4-1-ab649aa1f09c@posteo.de>
+	 <20260930154517.97E6B1F00898@smtp.kernel.org>
+Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
+ keydata=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
+ jfGillcaQOqFZ3WwVqyzG1BUfTow==
+Content-Type: multipart/signed; micalg="pgp-sha256";
+	protocol="application/pgp-signature"; boundary="=-BYg8AhYl4Gq//wFmZbEq"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260930114005.2C6661F000FF@smtp.kernel.org>
-X-Last-TLS-Session-Version: TLSv1.3
+OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
 
-On 30/09/2026 11:40:04+0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] rtc: pcf8563: time tearing on SMBus adapters lacking block read
+
+--=-BYg8AhYl4Gq//wFmZbEq
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, 2026-09-30 at 15:45 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] acpi: out-of-bounds read of SPCR uart_clk_freq field
 > --
-> 
-> commit 22b80c04bcdbffd7bde30f876c7c59ca8c532372
-> Author: Michael Walle <mwalle@kernel.org>
-> 
-> rtc: pcf8563: add SMBus support
-> 
-> This commit removes the restriction that the driver can only be used with
-> I2C controllers. It delegates bus compatibility checks to regmap, aiming
-> to allow the driver to work on SMBus controllers that support block
-> accesses.
-> 
-> > diff --git a/drivers/rtc/rtc-pcf8563.c b/drivers/rtc/rtc-pcf8563.c
-> > index 7eebdb0580674..eee9bc752b52a 100644
-> > --- a/drivers/rtc/rtc-pcf8563.c
-> > +++ b/drivers/rtc/rtc-pcf8563.c
-> > @@ -479,9 +479,6 @@ static int pcf8563_probe(struct i2c_client *client)
-> >  
-> >  	dev_dbg(&client->dev, "%s\n", __func__);
-> >  
-> > -	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C))
-> > -		return -ENODEV;
-> > -
-> [Severity: High]
-> Could removing this check lead to time tearing on restricted SMBus adapters?
-> 
-> While the commit message mentions SMBus controllers supporting block
-> accesses, removing the check entirely delegates bus validation to regmap. If
-> the adapter only supports I2C_FUNC_SMBUS_BYTE_DATA and lacks block transfer
-> capabilities, regmap silently falls back to regmap_smbus_byte:
-> 
-> drivers/base/regmap/regmap-i2c.c:regmap_get_i2c_bus() {
->     ...
->     else if (config->val_bits == 8 && config->reg_bits == 8 &&
->              i2c_check_functionality(i2c->adapter,
->                                      I2C_FUNC_SMBUS_BYTE_DATA))
->         bus = &regmap_smbus_byte;
->     ...
-> }
-> 
-> Because of this fallback, when pcf8563_rtc_read_time() reads the time:
-> 
-> drivers/rtc/rtc-pcf8563.c:pcf8563_rtc_read_time() {
->     ...
->     err = regmap_bulk_read(pcf8563->regmap, PCF8563_REG_ST1, buf,
->                            sizeof(buf));
->     ...
-> }
-> 
-> The bulk read executes as a loop of separate single-byte SMBus reads instead
-> of an atomic transaction. Since each SMBus byte transaction issues its own
-> STOP condition, the RTC's internal register latch is released between reads.
-> 
-> Does this allow the hardware time to roll over mid-read and result in
-> corrupt time data?
+>=20
+> commit 541ea063ef44d64e511d2deae13a8adcab45ebc7
+> Author: Markus Probst <markus.probst@posteo.de>
+>=20
+> ACPI: SPCR: Support UART clock frequency field
+>=20
+> This commit adds support for the UART Clock Frequency field introduced in=
+ the
+> Microsoft SPCR specification revision 1.08. It introduces a new function
+> setup_earlycon_with_uartclk() to configure the serial port with the corre=
+ct
+> clock frequency from the SPCR table if available.
+>=20
+> Link: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports=
+/serial-port-console-redirection-table
+>=20
+> > diff --git a/drivers/acpi/spcr.c b/drivers/acpi/spcr.c
+> > index 73cb933fdc89b..c79c809f49d46 100644
+> > --- a/drivers/acpi/spcr.c
+> > +++ b/drivers/acpi/spcr.c
+> > @@ -228,7 +228,8 @@ int __init acpi_parse_spcr(bool enable_earlycon, bo=
+ol enable_console)
+> >  	pr_info("console: %s\n", opts);
+> > =20
+> >  	if (enable_earlycon)
+> > -		setup_earlycon(opts);
+> > +		setup_earlycon_with_uartclk(opts,
+> > +					    table->header.revision >=3D 3 ? table->uart_clk_freq : 0);
+>=20
+> [Severity: Medium]
+> Does this code risk an out-of-bounds memory read when accessing
+> table->uart_clk_freq?
+>=20
+> In acpi_parse_spcr(), the table is mapped using acpi_get_table(), which
+> only maps the number of bytes specified by table->header.length.
+>=20
+> If a malformed ACPI SPCR table is provided by system firmware where
+> table->header.revision >=3D 3 but the length is too small to contain
+> uart_clk_freq, could this access read past the mapped length?
+>=20
+> This could result in unmapped memory accesses leading to an early boot ke=
+rnel
+> panic, or silently reading garbage data which results in an incorrect ear=
+ly
+> console UART clock frequency.
+>=20
+> Should there be a validation of table->header.length against the expected
+> size containing the uart_clk_freq field before accessing it?
+>=20
+> > =20
+> >  	if (enable_console)
+> >  		err =3D add_preferred_console(uart, 0, opts + strlen(uart) + 1);
+Fields from revision 4 are being accessed, so I don't think accessing
+one from revision 3 requires more checking.
 
-This is a valid concern, did you test?
 
--- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+
+
+--=-BYg8AhYl4Gq//wFmZbEq
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmq9SFwbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPS5EUP/0YmKpV0x2JHlnW8iq+Z
+/w4X0GTm29sQBzal+Lzh1+n8NJTwPdDKthxegKRi77FpBO03HAPDVQR8TipeCSn5
+chdiGBCPwQSkTzbDzmB1CPZKPMDnXNJG16VKeiAZzZuYqHCFBWP7NKLNz9+pjVbq
+ieageWTuyzo+nC2/Gy4IfTakTLoNZO0Mws8yy6gE65pT2tyzAD5jinbtmjIvMwmd
+YZJsnJcdGYGjEWiC9ytmPjMwMPaQr4PpW7JLHHjRPhRtIZCDqb5UcqxZlRs451nq
+apj8PIW980VYp3ANp05Ak55XWxlNUNIoA4PirTBkq8x4VMOr9lCeO5+W9Q0VU7cw
+Uca4PSAib0df8si1O/S+Z+nq8Pyg0EM2XxLzWh+M5azMEirFDTKGtxDe8zpZbyW3
+nERAExzUpTwh7o+Ij1jlIzL7llfK9Fmx8+tMAk1UoIA1ozug3+Bd5mEgHuUMgghN
+SvtQITAUNWjoRxx0zjh5PKnyjnaWt5o427C3LnKNivqa9jy9Wx4sK7Cjt9mxofqe
+3Zr4dvJjTDHOxaNrpevntwxJazPZMy8f6F6/3U3MeIMHJukCzyaTM8sxTfMEMVA7
+6k0fZbnZm6NdLZ3quFE3+deapCAKwfufL3G9OSccfvNO2juPrQAS3lArJ0YVYmsO
+J3rjQxwa5z6YMl1dLmNWiDkZ
+=5LTw
+-----END PGP SIGNATURE-----
+
+--=-BYg8AhYl4Gq//wFmZbEq--
