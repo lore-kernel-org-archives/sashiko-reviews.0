@@ -1,36 +1,36 @@
-Received: from mta1.migadu.com (out-161.mta1.migadu.com [95.215.58.161])
+Received: from mta0.migadu.com (out-108.mta0.migadu.com [91.218.175.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D9D233926
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 00:28:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D251F344DA8
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 01:09:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790728113; cv=none; b=FtO9iCCaZyWuv4mJ7qfCH5GEu2AcBiGqHpYSML+9RBDD+aBTkRWv/UodOf2WXam3Un8TdT+I3TKfbebSNcWzY9Z9h9puBWx+zJqSfY7M5TDfuHu2DsTp1UFOd5XGxSo3s+3INdGJqzMViMDUY9SA9CokOjT+gTvd1fd9sYYGaLo=
+	t=1790730579; cv=none; b=TqVLVo8vjxmw+gRIrYZ7SPua2loBr8liCadu1+2pwvCy3y5o19N3P+wqHiYB707UN/13YBMT45J6wHF596FwHGcatTVxuzyVR3rAUkVg+Esu6sUP72mab7LaShSI4jfqqvn5nmnZOrZ1+Q9ziPAdjVHY6WTDo1lu8UbBdkGX8vE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790728113; c=relaxed/simple;
-	bh=H6OmdGKh1eVXFrmLOMRLKUgkSisn7WiU4uvfXhKG8pM=;
+	s=arc-20240116; t=1790730579; c=relaxed/simple;
+	bh=sI1D2ep9dYGTQ4J5tLZoATKKAmcMxx3PeQ+xN0rhHps=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YN5FRZiRMbg4FtUHfGVPBV215x801WzJQHaIT8jfiIM8DtrMqEjA38MYw+xhCHoHtMk+jNOlZ6SuYIZmyHn6ZiK/Wf1MgO5YId2p3gvTeUAsPFOKS/sUwQyqUtCi3KHFSNGfOaC1oK/pfLygbQt/Ndi907Fwz0WTWeD9Br+Fg8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=lWGQYODn; arc=none smtp.client-ip=95.215.58.161
+	 In-Reply-To:Content-Type; b=K6GXScGgeUFobm/68Fop04KpA5dVZ9q5OfgVBwMwH2ol3QK97Iuj7t6R82g4dJbD1WPmHhcLWDsdjEzX8Z5VQY4yp2j87VfBrxPwMMm+P2JrWRVdTv9TDP42bwJVUtQUTTeQaie669E1qIqPbNbMuucsbBy2aM1fwMd6vHNAQIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=TbAvEIFV; arc=none smtp.client-ip=91.218.175.108
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="lWGQYODn"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="TbAvEIFV"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=H6OmdGKh1eVXFrmLOMRLKUgkSisn7WiU4uvfXhKG8pM=;
+DKIM-Signature: a=rsa-sha256; bh=sI1D2ep9dYGTQ4J5tLZoATKKAmcMxx3PeQ+xN0rhHps=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790728109; v=1; x=1791332909;
- b=lWGQYODnY0L2818lC0V00K6qM4dnxBeMHZtYPsnyDLu8EZz3ZKFWivN0VLzQ991Z9S/cyWLv
- qy2CCH86/asTGdeeOqts1/K7kG/6sczGZIH1p3d+UHOkol096+AHvQ+7LaoHpC1WukZbMeE4rgB
- HotdOOTvySLfDzEfBag/l6sk=
+ t=1790730574; v=1; x=1791335374;
+ b=TbAvEIFVbTAQDHLH2DB2HcL7RDMt5lqWD+XCnR5juFhNRkaEswPHF7T8t8odJuMqUXphqrWn
+ XYHbqv6f/gmwTV1gRTh/iGZRD1GG2nCBNyWYGD7YTFF6isBfcXpqKOgLnyEwUsDjFuQ/bPYRlKG
+ 9v/mJmVXelQq/TX3F6Aj3+9E=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 71debd812362a652;
-	Wed, 30 Sep 2026 00:28:29 +0000
-X-Mizu-Trace-ID: 71debd812362a652
+Received: by smtp.migadu.com with ESMTPS id 8121d26f7cf1fabd;
+	Wed, 30 Sep 2026 01:09:34 +0000
+X-Mizu-Trace-ID: 8121d26f7cf1fabd
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <5c4797c6-8fdb-4072-a134-31784b8e8481@linux.dev>
-Date: Tue, 29 Sep 2026 17:28:26 -0700
+Message-ID: <b2cf2368-a562-4569-b466-b70baa35205d@linux.dev>
+Date: Tue, 29 Sep 2026 18:09:32 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,182 +38,157 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v7 07/22] bpf: Resume a covered call at its
- landing pad
+Subject: Re: [PATCH bpf-next v7 08/22] bpf: Require an unwind to leave a frame
+ holding what it entered with
 Content-Language: en-GB
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20260929001601.3242665-1-yonghong.song@linux.dev>
- <20260929001638.3248952-1-yonghong.song@linux.dev>
- <20260929003106.3A0211F00893@smtp.kernel.org>
+ <20260929001643.3249386-1-yonghong.song@linux.dev>
+ <20260929003638.8A1181F000FF@smtp.kernel.org>
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260929003106.3A0211F00893@smtp.kernel.org>
+In-Reply-To: <20260929003638.8A1181F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 9/28/26 5:31 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] bpf: landing pad state desync via discarded memory mutations allows OOB access
+On 9/28/26 5:36 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] bpf: type confusion and memory corruption due to stale cleanup pad state
+> - [High] bpf: lock corruption and double-unlock via missing identity check on unwind
 > --
 >
-> commit 41b3c5e14924fae7175095b7012838a14c2e5ffc
+> commit 585aa50d9e8811792b9a816a4d1ad6cd51d63ea7
 > Author: Yonghong Song <yonghong.song@linux.dev>
+> Subject: bpf: Require an unwind to leave a frame holding what it entered with
 >
-> bpf: Resume a covered call at its landing pad
+> This commit updates the BPF verifier to record what locks and references
+> a program holds when a frame is entered. It enforces that an unwind must
+> leave the frame holding what it entered with, ensuring that landing pads
+> verified against pre-call snapshots remain valid.
 >
-> This commit allows a covered call to resume at its landing pad when bpf_unwind()
-> is invoked by a subprogram. It pushes a cleanup pad branch with the caller's
-> pre-call state and handles bpf_unwind() by returning PROCESS_BPF_EXIT for
-> nested frames.
+>> diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
+>> index 0143688896b0e..75e572a8a1bab 100644
+>> --- a/include/linux/bpf_verifier.h
+>> +++ b/include/linux/bpf_verifier.h
+>> @@ -339,6 +339,18 @@ struct bpf_func_state {
+>>   	bool in_async_callback_fn;
+>>   	bool in_exception_callback_fn;
+>>   	bool no_stack_arg_load;
+>> +	/*
+>> +	 * What the program held when this frame was entered. An unwind leaves
+>> +	 * the frame without running anything below it, so the frame has to put
+>> +	 * these back to what it found before it goes -- otherwise a caller's
+>> +	 * landing pad, whose state was taken at the call, is wrong about them.
+>> +	 */
+>> +	u32 entry_active_locks;
+>> +	u32 entry_preempt_locks;
+>> +	u32 entry_rcu_locks;
+>> +	u32 entry_irq_id;
+>> +	u32 entry_id_gen;
+>> +	u32 entry_acquired_refs;
+> [Severity: High]
+> Does this structure need fields to record the identity of the lock held upon
+> frame entry? Without this, it might be difficult to accurately enforce the
+> correct lock state on unwind.
+
+Assuming the bug in patch 7 fixed.
+
+Verifier flow should match lock/unlock with the same identity. Otherwise
+verification will fail. I think we are okay here.
+
 >
+> Additionally, is it necessary to update func_states_equal() to compare these
+> new entry_* fields? Without comparing them, could the verifier unsafely prune
+> states with different entry locking conditions?
+
+I think we are fine here. There are already some lock checking in refsafe(),
+assuming patch 7 bug fixed.
+
+>
+> [ ... ]
+>> diff --git a/kernel/bpf/exception.c b/kernel/bpf/exception.c
+>> index c1779d2d02f05..c0b0b8478af51 100644
+>> --- a/kernel/bpf/exception.c
+>> +++ b/kernel/bpf/exception.c
+>> @@ -12,6 +12,72 @@
+>>   BTF_ID_LIST_SINGLE(bpf_unwind_id, func, bpf_unwind)
+>>   BTF_ID_LIST_SINGLE(bpf_unwind_resume_id, func, bpf_unwind_resume)
+>>   
+>> +void bpf_exc_record_frame_entry(const struct bpf_verifier_state *state,
+>> +				struct bpf_func_state *frame, u32 id_gen)
+>> +{
+> [ ... ]
+>> +int bpf_exc_check_frame_balance(struct bpf_verifier_env *env, const char *prefix)
+>> +{
+>> +	const struct bpf_verifier_state *state = env->cur_state;
+>> +	const struct bpf_func_state *frame = cur_func(env);
+>> +	u32 i, held;
+>> +	const char *what;
+>> +
+>> +	if (state->active_rcu_locks != frame->entry_rcu_locks)
+>> +		what = "bpf_rcu_read_lock";
+>> +	else if (state->active_preempt_locks != frame->entry_preempt_locks)
+>> +		what = "bpf_preempt_disable";
+>> +	else if (state->active_irq_id != frame->entry_irq_id)
+>> +		what = "bpf_local_irq_save";
+>> +	else if (state->active_locks != frame->entry_active_locks)
+>> +		what = "bpf_spin_lock";
+> [Severity: High]
+> Does this code adequately verify lock identity? While it checks the count of
+> active locks, it appears to miss checking the identity of the lock
+> (active_lock_id and active_lock_ptr).
+>
+> If a BPF program acquires lock A, passes it to a subprogram which unlocks A,
+> locks B, and then throws an exception (bpf_unwind()), could the unwinder
+> accept the frame balance since the active_locks count is still 1?
+>
+> The exception would jump back to the caller's cleanup pad, which assumes
+> lock A is still held. The cleanup pad unlocking A could potentially cause a
+> double-unlock of lock A and leak lock B forever.
+
+This should be okay once v7, patch 7 fixed. That will be able to
+avoid double unlock.
+
+>
+>> +	else
+>> +		what = NULL;
+> [ ... ]
 >> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index fc3df452de2e4..ee074d4a936b5 100644
+>> index ee074d4a936b5..4bdee3f02fe9d 100644
 >> --- a/kernel/bpf/verifier.c
 >> +++ b/kernel/bpf/verifier.c
 > [ ... ]
->
->> @@ -19167,6 +19186,57 @@ enum {
->>   	INSN_IDX_UPDATED = 2,
->>   };
->>   
->> +static int push_cleanup_pad_branch(struct bpf_verifier_env *env, int insn_idx)
->> +{
->> +	struct bpf_verifier_state *branch;
->> +	struct bpf_func_state *frame;
->> +	int pad = bpf_exc_pad_of_call(env, insn_idx);
->> +
->> +	if (pad < 0)
->> +		return 0;
->> +	branch = push_stack(env, pad, insn_idx, false);
->> +	if (IS_ERR(branch))
->> +		return PTR_ERR(branch);
->> +	frame = branch->frame[branch->curframe];
->> +	/*
->> +	 * The state at that call with the caller-saved registers gone: the
->> +	 * callee's epilogue put r6-r9 and the stack back on the way out.
->> +	 */
->> +	clear_caller_saved_regs(env, frame->regs);
->> +	mark_reg_unknown(env, frame->regs, BPF_REG_0);
->> +	return 0;
->> +}
->> +
->> +static int process_bpf_unwind(struct bpf_verifier_env *env, int *insn_idx,
->> +			      bool *do_print_state)
->> +{
->> +	struct bpf_func_state *frame = cur_func(env);
->> +	int pad = bpf_exc_pad_of_call(env, *insn_idx);
->> +	int err;
->> +
->> +	if (pad < 0) {
->> +		err = check_resource_leak(env, false, !env->cur_state->curframe,
->> +					  "an unwind with no landing pad");
->> +		if (err)
->> +			return err;
->> +		if (env->cur_state->curframe)
->> +			return PROCESS_BPF_EXIT;
-> [Severity: Critical]
-> When process_bpf_unwind() returns PROCESS_BPF_EXIT here, the verifier stops
-> exploring the callee and discards its state. Does this discard any memory
-> mutations made by the callee to pointer arguments before calling bpf_unwind()?
-
-You are right. It is my mistake. The key problem is here (in v7):
-
-+static int push_cleanup_pad_branch(struct bpf_verifier_env *env, int insn_idx)
-+{
-+	struct bpf_verifier_state *branch;
-+	struct bpf_func_state *frame;
-+	int pad = bpf_exc_pad_of_call(env, insn_idx);
-+
-+	if (pad < 0)
-+		return 0;
-+	branch = push_stack(env, pad, insn_idx, false);
-+	if (IS_ERR(branch))
-+		return PTR_ERR(branch);
-+	frame = branch->frame[branch->curframe];
-+	/*
-+	 * The state at that call with the caller-saved registers gone: the
-+	 * callee's epilogue put r6-r9 and the stack back on the way out.
-+	 */
-+	clear_caller_saved_regs(env, frame->regs);
-+	mark_reg_unknown(env, frame->regs, BPF_REG_0);
-+	return 0;
-+}
-
-esp.
-   branch = push_stack(env, pad, insn_idx, false);
-it ignored the state change in callee, e.g., a value in stack
-may get changed. This will make verification incorrect due to
-such changed value.
-
->
-> Since the CPU unwinds the stack without undoing memory writes at runtime,
-> could this desynchronize the verifier state from runtime state and allow
-> out-of-bounds memory accesses?
-
-Yes, see the above.
-
->
->> +		/*
->> +		 * The main program's frame returns at once, which is the
->> +		 * program returning. Mark r0 the zero the fixups leave after
->> +		 * the call, and leave through the exit, which is what holds
->> +		 * that zero to the program type.
->> +		 */
->> +		mark_reg_unknown(env, cur_regs(env), BPF_REG_0);
->> +		mark_reg_known_zero(env, cur_regs(env), BPF_REG_0);
->> +		return process_bpf_exit_full(env, do_print_state, false);
->> +	}
->> +	clear_caller_saved_regs(env, frame->regs);
->> +	mark_reg_unknown(env, frame->regs, BPF_REG_0);
->> +	*insn_idx = pad;
->> +	return INSN_IDX_UPDATED;
->> +}
->> +
-> [ ... ]
->
->> @@ -19421,7 +19491,29 @@ static int do_check_insn(struct bpf_verifier_env *env, bool *do_print_state)
->>   					return -EINVAL;
->>   				}
->>   			}
->> +			if (bpf_is_unwind_kfunc(insn) || bpf_is_unwind_resume_kfunc(insn)) {
->> +				err = check_kfunc_allowed_only(env, insn, env->insn_idx);
->> +				if (err)
->> +					return err;
->> +				if (bpf_is_unwind_kfunc(insn))
->> +					return process_bpf_unwind(env, &env->insn_idx,
->> +								  do_print_state);
->> +				/*
->> +				 * Mark r0 a known zero -- unknown first, as
->> +				 * the known-zero helper keeps the type it
->> +				 * finds, which here is NOT_INIT. The fixups
->> +				 * lower this to 'r0 = 0; exit', so the frame
->> +				 * returns a real zero.
->> +				 */
->> +				mark_reg_unknown(env, cur_regs(env), BPF_REG_0);
->> +				mark_reg_known_zero(env, cur_regs(env), BPF_REG_0);
->> +				return process_bpf_exit_full(env, do_print_state, false);
->> +			}
+>> @@ -19512,6 +19554,10 @@ static int do_check_insn(struct bpf_verifier_env *env, bool *do_print_state)
 >>   			mark_reg_scratched(env, BPF_REG_0);
->> +			/* An unwind out of this call resumes at the pad. */
->> +			err = push_cleanup_pad_branch(env, env->insn_idx);
+>>   			/* An unwind out of this call resumes at the pad. */
+>>   			err = push_cleanup_pad_branch(env, env->insn_idx);
+> [Severity: Critical]
+> Does taking a pre-call snapshot of the verifier state for the cleanup pad
+> incorrectly ignore valid memory modifications made by the callee before
+> unwinding?
+>
+> For example, if a caller spills a valid pointer to its stack and passes a
+> pointer to this stack slot to a subprogram:
+>
+> - The verifier schedules the caller's cleanup pad branch by pushing a snapshot
+>    of the verifier state (including the stack) taken BEFORE the callee runs.
+> - The subprogram overwrites the caller's stack slot with an attacker-controlled
+>    scalar and calls bpf_unwind().
+> - At runtime, the exception jumps to the cleanup pad, which loads the scalar.
+>
+> Because the cleanup pad uses the pre-call snapshot, does the verifier
+> incorrectly assume the loaded value is still a valid pointer, potentially
+> leading to type confusion and memory corruption?
+
+You are right. See comments in patch 7. Will fix.
+
+>
 >> +			if (err)
 >> +				return err;
-> [Severity: Critical]
-> push_cleanup_pad_branch() pushes a branch using a snapshot of the pre-call
-> state. If the callee modified a stack variable (e.g., an array index) and then
-> unwound the stack, does the verifier evaluate the landing pad with the original
-> unmodified value?
->
-> Could a BPF program use this to bypass bounds checks by mutating an index in
-> the callee before unwinding, causing the verifier to optimize out the checks
-> in the landing pad while using the out-of-bounds value at runtime?
-
-You are right. See the above explanation. Will fix.
-
->
->>   			if (bpf_in_stack_arg_cnt(&env->subprog_info[cur_func(env)->subprogno]))
->>   				cur_func(env)->no_stack_arg_load = true;
->>   			if (bpf_is_callx(insn))
+>> +			/* Or, with no pad, leaves the frame for good. */
+>> +			err = check_unwind_through_call(env, env->insn_idx);
+>>   			if (err)
+>>   				return err;
 
