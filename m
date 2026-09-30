@@ -1,44 +1,45 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26BCE1CAA6C;
-	Wed, 30 Sep 2026 15:15:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC94A4F55B5
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 15:25:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790781353; cv=none; b=KVcX+abFWhWcGQ3oz7ZfNOhHHwot2ShV7hONPNZeE3aoaipcwJPRWKqRJ4oa3W9lxbWyFYe/6CipGYlS+xjhAVFJ1nxx3NXSdOoQLf1+jbGhKTBKPsLDA3UG7D6qNso1tlQrhdEZ5BFTlA+FUhnFUMBOTUPm632FYnfTUfLjTII=
+	t=1790781929; cv=none; b=qSfvo1muBKwLoYdATafZkssO9i24RuQSOPxeI8fxGbu+lGmVZpKS+BDisOCGHO9vbKGnvcWCkuPTRUGKLoLVw5IKvMSrB/i2RCJ/Ihl+jWfqyTsT+BTT1KbOmA5/ph+BwEGsGLTdi00U06OKREcjaWWVCxedIhrVK5GpGwxjfQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790781353; c=relaxed/simple;
-	bh=uYkptGHOhkZ2njHmLCr5cNIbKXL2O554/Yv3adwer90=;
+	s=arc-20240116; t=1790781929; c=relaxed/simple;
+	bh=PFa7S4pW+Hy8bZZeeL38QaLRJgemHnL/A2Y1cYYlfd8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=knkRbUH4v0MD+902nlASt4gTaWuFHy4v2lAYImHbOb7Gtu67nKNkefFUu4FY4Vn/5aefGtuv/5SFoOYu0QgOlLqLL5Zb5rKkvPNGn+VsFqp1x7hiNV10bOWtumAwTp4QdQMCVxe+Vl3mXbOl+RlcLdOfGkNT/99KIeXnW9JZYm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=BmHbJrVr; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=l/Wt5MlamZcFvlhI1h4skZVky8LH3glXeHA3BMxJZ1L+/bLJxexZ1+3dQSwVUOoASanVD8yE5/n+5ISX+rRsWIg7F8ZJPMvoUdxGVblU4S0cwQs74qNXfYMNVTkrPFN3k1ky3DwzmyhG1eLQJgu3ym5qhVCLk8D8A1RHzhrb/zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=bz66pLxC; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="BmHbJrVr"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 26DFC497;
-	Wed, 30 Sep 2026 08:15:34 -0700 (PDT)
-Received: from arm.com (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AEE043F86F;
-	Wed, 30 Sep 2026 08:15:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1790781337; bh=uYkptGHOhkZ2njHmLCr5cNIbKXL2O554/Yv3adwer90=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BmHbJrVrGvUQ6nSgYk2xP4TaPo8s7Zlp9mF0y2GhEW7dUf/kgSRTYX33BPp0bGAW4
-	 LPD/nXm7UOIaCPOVdz9r4lglf93cm+gasqhhoNEdYJHls29atAYIvoREwyAGhiMBgW
-	 2y/xgdgHE+nSMWp6qJk/X8IHVNSg8ntmL9JBpcVY=
-Date: Wed, 30 Sep 2026 16:15:30 +0100
-From: Catalin Marinas <catalin.marinas@arm.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev,
-	kvm@vger.kernel.org, Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v20 7/9] arm64: Block hibernate and kexec while RMM is
- active
-Message-ID: <ar0nko4Gjj_PlwB5@arm.com>
-References: <20260929221623.1342076-1-suzuki.poulose@arm.com>
- <20260929221623.1342076-8-suzuki.poulose@arm.com>
- <20260929222639.997731F000FF@smtp.kernel.org>
- <8e02fe1d-2011-47f0-97a6-c34d730dee6c@arm.com>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="bz66pLxC"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id D6B3D4E410D5;
+	Wed, 30 Sep 2026 15:25:15 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id A48CE60749;
+	Wed, 30 Sep 2026 15:25:15 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 9EB68103281E9;
+	Wed, 30 Sep 2026 17:25:14 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1790781915; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=ldNxRRaVyUs1307HOf8eQfls4TO8viEDxDPiJue7YlA=;
+	b=bz66pLxCxPWoGBLTXP0EKgnSzepn/rcr8CwnG6OHeyc5j9iZifld/9XpJ2WS8eUku5aRPB
+	nPSA7yCK4/BMJ+gUz9zDbJnSAThSdSpOvGknVFfm2KaswwC61uJMg89l3MJaty/9ewU9LY
+	w/WoaOcQs9hJdxZkgkbe9T8ncxBze7QqfkgmplDmQsIdPlLeVLxtZLITlrVFz/pCnE47d3
+	Hvq8kqQ9ijUCo9gTY1Lqexa/bKLenLlLSYMEZr5uHJkv6YAa0jh3fsvUIh7+1mZQGF4pEh
+	Dw4qGe6L14Z8aLAPC/KbbeBShDeB7fvqup5XAz9eJm4HJSyMCyvb2nS8uKRCoA==
+Date: Wed, 30 Sep 2026 17:25:13 +0200
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Michael Walle <mwalle@kernel.org>, linux-rtc@vger.kernel.org
+Subject: Re: [PATCH] rtc: pcf8563: add SMBus support
+Message-ID: <20260930152513dd617b74@mail.local>
+References: <20260930113126.720555-1-mwalle@kernel.org>
+ <20260930114005.2C6661F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -47,52 +48,71 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8e02fe1d-2011-47f0-97a6-c34d730dee6c@arm.com>
+In-Reply-To: <20260930114005.2C6661F000FF@smtp.kernel.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Wed, Sep 30, 2026 at 10:12:36AM +0100, Suzuki K Poulose wrote:
-> On 29/09/2026 23:26, sashiko-bot@kernel.org wrote:
-> > > diff --git a/arch/arm64/kernel/hibernate.c b/arch/arm64/kernel/hibernate.c
-> > > index 424291c547f02..253f544a59731 100644
-> > > --- a/arch/arm64/kernel/hibernate.c
-> > > +++ b/arch/arm64/kernel/hibernate.c
-> > 
-> > [ ... ]
-> > 
-> > > @@ -341,6 +342,11 @@ int swsusp_arch_suspend(void)
-> > >   		return -EBUSY;
-> > >   	}
-> > > +	if (is_rmm_active()) {
-> > > +		pr_err("Can't hibernate: RMM is active.\n");
-> > > +		return -EBUSY;
-> > > +	}
-> > > +
-> > 
-> > [Severity: High]
-> > While this successfully prevents saving a hibernation image, is there a missing
-> > check in the resume path, specifically arch_hibernation_header_restore() in
-> > arch/arm64/kernel/hibernate.c?
-> > 
-> > If a hibernation image is present on disk (e.g., from a prior boot with RMM
-> > disabled, but with a matching uts_version), subsys_initcall(arm64_init_rmi)
-> > activates RMM and delegates memory to the Realm PAS early in boot.
-> > 
-> > Later, late_initcall_sync(software_resume_initcall) restores the image.
-> > Because arch_hibernation_header_restore() lacks an is_rmm_active() check,
-> > the image is accepted. The low-level resume path swsusp_arch_resume() then
-> > blindly overwrites physical memory with the saved image.
-> > 
-> > Without an upstream guard during resume, won't this overwrite newly delegated
-> > Realm PAS memory, triggering a fatal Granule Protection Fault?
+On 30/09/2026 11:40:04+0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] rtc: pcf8563: time tearing on SMBus adapters lacking block read
+> --
 > 
-> That is a valid point, I have added a check there to bail out if the rmm
-> is active.
+> commit 22b80c04bcdbffd7bde30f876c7c59ca8c532372
+> Author: Michael Walle <mwalle@kernel.org>
+> 
+> rtc: pcf8563: add SMBus support
+> 
+> This commit removes the restriction that the driver can only be used with
+> I2C controllers. It delegates bus compatibility checks to regmap, aiming
+> to allow the driver to work on SMBus controllers that support block
+> accesses.
+> 
+> > diff --git a/drivers/rtc/rtc-pcf8563.c b/drivers/rtc/rtc-pcf8563.c
+> > index 7eebdb0580674..eee9bc752b52a 100644
+> > --- a/drivers/rtc/rtc-pcf8563.c
+> > +++ b/drivers/rtc/rtc-pcf8563.c
+> > @@ -479,9 +479,6 @@ static int pcf8563_probe(struct i2c_client *client)
+> >  
+> >  	dev_dbg(&client->dev, "%s\n", __func__);
+> >  
+> > -	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C))
+> > -		return -ENODEV;
+> > -
+> [Severity: High]
+> Could removing this check lead to time tearing on restricted SMBus adapters?
+> 
+> While the commit message mentions SMBus controllers supporting block
+> accesses, removing the check entirely delegates bus validation to regmap. If
+> the adapter only supports I2C_FUNC_SMBUS_BYTE_DATA and lacks block transfer
+> capabilities, regmap silently falls back to regmap_smbus_byte:
+> 
+> drivers/base/regmap/regmap-i2c.c:regmap_get_i2c_bus() {
+>     ...
+>     else if (config->val_bits == 8 && config->reg_bits == 8 &&
+>              i2c_check_functionality(i2c->adapter,
+>                                      I2C_FUNC_SMBUS_BYTE_DATA))
+>         bus = &regmap_smbus_byte;
+>     ...
+> }
+> 
+> Because of this fallback, when pcf8563_rtc_read_time() reads the time:
+> 
+> drivers/rtc/rtc-pcf8563.c:pcf8563_rtc_read_time() {
+>     ...
+>     err = regmap_bulk_read(pcf8563->regmap, PCF8563_REG_ST1, buf,
+>                            sizeof(buf));
+>     ...
+> }
+> 
+> The bulk read executes as a loop of separate single-byte SMBus reads instead
+> of an atomic transaction. Since each SMBus byte transaction issues its own
+> STOP condition, the RTC's internal register latch is released between reads.
+> 
+> Does this allow the hardware time to roll over mid-read and result in
+> corrupt time data?
 
-I wonder whether adding something to hibernation_available() would be
-better, though it would have to be a __weak arch_hibernation_available()
-or something similar.
-
-I think it blocks both the suspend and resume paths and also hides
-"disk" from /sys/power/state.
+This is a valid concern, did you test?
 
 -- 
-Catalin
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
