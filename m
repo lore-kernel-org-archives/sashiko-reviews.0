@@ -1,36 +1,40 @@
-Received: from mta0.migadu.com (out-32.mta0.migadu.com [91.218.175.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from canpmsgout11.his.huawei.com (canpmsgout11.his.huawei.com [113.46.200.226])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637E03385A5
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 01:34:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CB732E757;
+	Wed, 30 Sep 2026 01:44:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.226
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790732059; cv=none; b=o3zNUycqI9cNYgxj0Y+75Zej7iWje7ROtzcxtaJaQA4UVGPhU0RgH++iHgX65N8KrV+Eu4jpGplZUg+eLirhVRzOhu9xu33BMvRrbiQO6+t9dg6d2SUeB0TUuUzgQe4AQZ2M53xqI8rXKCo0vygYR6EJmxSf8Verha1TsnQS1l8=
+	t=1790732695; cv=none; b=i7w0RR4JypqFl9PggLRbTDh3vCAXlIbIyBlSi/c+Hgq+ZNaUewwfDW2Pivs1ZbuOOkMF1+z3vNv8tOVH7qb5xm5nYssFcmZ0HGKGSPLG8iZqBqnNiB8LzRk09aV8EzZhidxcUz15cLZyYjWHJvsSYs2BUidFoM5nyY7jMpWtOMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790732059; c=relaxed/simple;
-	bh=5QL2XutwcNraGW2+IuSz3WkhNGt2+jFEZrdcSrDs1jA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jxXULKUcTBge8C0ozRZlI/7nc4YH5Yo3sqezurJ7xcWr9aJTBTYocufyMEgAfLm4JK36J9Hs/XMHL3GfS5GAiH05HjeC2VyGjtEjxP3N7RBX0k2RCrftX/Oaeoe/nZYcDcbxpTAqfIliRAaMW7uxI7DkCRyz49I1h7jCWBYIFqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=A0+lpvJb; arc=none smtp.client-ip=91.218.175.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1790732695; c=relaxed/simple;
+	bh=3fNq/xN0h430HQsMTd63roWjBs5boGCWu7pNTnREaH4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=LHj6o1XVUMS/YdWiwPCMcv179YZ59r2sd/GaXgrg8an+m7R2Xq/s6BXt2iE57uH002nBtGymkxlzDFk74WDnms24S68MJoC5hsC782AORazTALrBQMHbq1i229XqUu+DPDXJDwU4nMSW9wVXZiWkn17NuEzHrBmad67/x9xlKoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=1TXQ+L1F; arc=none smtp.client-ip=113.46.200.226
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="A0+lpvJb"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=5QL2XutwcNraGW2+IuSz3WkhNGt2+jFEZrdcSrDs1jA=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790732055; v=1; x=1791336855;
- b=A0+lpvJb5Je5xTQ1AGdKr6z2PYmR9XscmobGjue3yGE2Uf4S/Lc4zztp6Wuer0JeUsFNc3m8
- 4Dy47xr1JtVttLR+BPUXy3sp3i9Ek89u0YVJbzPV9e//tzdKrBt1vzScn7PUce0+PgbWqX3BB3E
- LGioZthuNFmUJItQ6tPsHEis=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 7bafeff122540951;
-	Wed, 30 Sep 2026 01:34:15 +0000
-X-Mizu-Trace-ID: 7bafeff122540951
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <e771ec2c-1821-40db-abe3-b25b5f876013@linux.dev>
-Date: Tue, 29 Sep 2026 18:34:08 -0700
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="1TXQ+L1F"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=ihc5SseKl/AQM92jQ4PAex3Oz7TkINI/rCAtYAPWwGU=;
+	b=1TXQ+L1FnKr8oEYcb9B1Fbq9njwrSCYqpr/G1tAysIuXy2dJNbk7nhVso6G4ym9pwej5aP/OE
+	rQME8NVaQQF9BHW4W96ko+lL6tLRA18RkItq8lhcBsP6fropvJSXXdKt2kRP0S7mWVlX4ELd4Gs
+	MUnFRpt9O8fOYKXQq51TK1Q=
+Received: from mail.maildlp.com (unknown [172.19.163.15])
+	by canpmsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4hvcwm5wkyzKm4b;
+	Wed, 30 Sep 2026 09:32:24 +0800 (CST)
+Received: from kwepemr100010.china.huawei.com (unknown [7.202.195.125])
+	by mail.maildlp.com (Postfix) with ESMTPS id AC05240586;
+	Wed, 30 Sep 2026 09:44:37 +0800 (CST)
+Received: from [10.67.120.103] (10.67.120.103) by
+ kwepemr100010.china.huawei.com (7.202.195.125) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Wed, 30 Sep 2026 09:44:37 +0800
+Message-ID: <c624d394-d4c4-4335-9419-e83fdd0eae8f@huawei.com>
+Date: Wed, 30 Sep 2026 09:44:36 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,92 +42,91 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v7 12/22] bpf, x86: Dispatch exception cleanup
- pads at run time
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20260929001601.3242665-1-yonghong.song@linux.dev>
- <20260929001704.3251543-1-yonghong.song@linux.dev>
- <20260929003055.812791F000FF@smtp.kernel.org>
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20260929003055.812791F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v5 04/15] KVM: arm64: Add KVM_REQ_RELOAD_STAGE2
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvmarm@lists.linux.dev>, Oliver Upton <oupton@kernel.org>, Marc Zyngier
+	<maz@kernel.org>, <kvm@vger.kernel.org>
+References: <20260929103655.85107-1-zhengtian10@huawei.com>
+ <20260929103655.85107-5-zhengtian10@huawei.com>
+ <20260929105038.ED3781F000FF@smtp.kernel.org>
+From: Tian Zheng <zhengtian10@huawei.com>
+In-Reply-To: <20260929105038.ED3781F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
+ kwepemr100010.china.huawei.com (7.202.195.125)
 
 
 
-On 9/28/26 5:30 PM, sashiko-bot@kernel.org wrote:
+On 9/29/2026 6:50 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] bpf: exception unwinding aborted when bpf_unwind is traced via kretprobe
+> - [Critical] kvm: arm64: host panic on nVHE due to EL1 access of EL2 sysregs in __load_stage2
 > --
->
-> commit f3ba2238caee72a50c097a775a0290b3b66ab98b
-> Author: Yonghong Song <yonghong.song@linux.dev>
->
-> bpf, x86: Dispatch exception cleanup pads at run time
->
-> This commit updates the BPF JIT on x86 to dispatch exception cleanup pads at
-> run time by writing directly to the return-address slot. It introduces
-> arch_bpf_stack_walk_ra() to support unwinding alongside the ORC unwinder.
->
->> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
->> index 6c7a0578760e7..d4feade5b5c72 100644
->> --- a/arch/x86/net/bpf_jit_comp.c
->> +++ b/arch/x86/net/bpf_jit_comp.c
+> 
+> commit 982e8feb07630370c5da59ed6e47706db5188e18
+> Author: Leonardo Bras <leo.bras@arm.com>
+> Subject: KVM: arm64: Add KVM_REQ_RELOAD_STAGE2
+> 
+> This commit adds a vcpu request to exit the guest, reload stage-2, and come
+> back to the guest, anticipating subsequent patches for S2 HAFDBS and HDBSS.
+> 
+> Link: https://lore.kernel.org/all/20260901171558.2674031-5-leo.bras@arm.com/
+> 
+>> diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+>> index 0576c2022ef57..d9ad765943d9e 100644
+>> --- a/arch/arm64/kvm/arm.c
+>> +++ b/arch/arm64/kvm/arm.c
+> 
 > [ ... ]
->
->> @@ -4614,6 +4628,34 @@ void arch_bpf_stack_walk(bool (*consume_fn)(void *cookie, u64 ip, u64 sp, u64 bp
->>   #endif
->>   }
+> 
+>> @@ -1175,6 +1175,14 @@ static int check_vcpu_requests(struct kvm_vcpu *vcpu)
+>>   		if (kvm_dirty_ring_check_request(vcpu))
+>>   			return 0;
 >>   
->> +void arch_bpf_stack_walk_ra(bool (*consume_fn)(void *cookie, u64 ip, u64 sp, u64 bp, u64 *ra),
->> +			    void *cookie)
->> +{
->> +#if defined(CONFIG_UNWINDER_ORC)
->> +	struct unwind_state state;
->> +	unsigned long addr, *ra;
+>> +		if (kvm_check_request(KVM_REQ_RELOAD_STAGE2, vcpu)) {
+>> +			unsigned long flags;
 >> +
->> +	for (unwind_start(&state, current, NULL, NULL); !unwind_done(&state);
->> +	     unwind_next_frame(&state)) {
->> +		addr = unwind_get_return_address(&state);
->> +		ra = unwind_get_return_address_ptr(&state);
->> +		if (!addr || !ra)
->> +			break;
->> +		/*
->> +		 * A traced return: the unwinder recovered @addr from under a
->> +		 * function graph or kretprobe trampoline, which is what the
->> +		 * slot itself still holds. Writing there would skip the
->> +		 * trampoline and leave its entry for the next hooked return
->> +		 * to pop.
->> +		 */
->> +		if (READ_ONCE_NOCHECK(*ra) != addr)
->> +			break;
-> [Severity: High]
-> Will this unconditionally abort the unwinder if a kernel function like
-> bpf_unwind() is traced via a kretprobe or function graph tracer?
->
-> When a BPF program triggers an exception, bpf_unwind() invokes
-> arch_bpf_stack_walk_ra(). The unwinder processes kernel frames first. If
-> a user has legitimately attached a tracer to bpf_unwind(), the stack return
-> address slot (*ra) for that frame will hold the tracer's trampoline, while
-> the unwinder recovers the real return address (addr).
->
-> Because this evaluates to true and breaks the loop, it seems the walk stops
-> completely before it even reaches the BPF frames. Could this result in a
-> silent failure of BPF exception handling and resource leaks (e.g., unreleased
-> spinlocks or memory) since the cleanup pads are never executed?
+>> +			local_irq_save(flags);
+>> +			__load_stage2(vcpu->arch.hw_mmu);
+> 
+> [Severity: Critical]
+> Could this trigger a host kernel panic on systems running in nVHE or
+> pKVM mode?
+> 
+> In nVHE or pKVM mode, the host kernel runs at EL1. The check_vcpu_requests()
+> function executes from the host context. If a KVM_REQ_RELOAD_STAGE2 request
+> is processed here, it calls __load_stage2(), which performs the following:
+> 
+> arch/arm64/include/asm/kvm_mmu.h:__load_stage2() {
+>      write_sysreg(mmu->vtcr, vtcr_el2);
+>      write_sysreg(kvm_get_vttbr(mmu), vttbr_el2);
+>      ...
+> }
+> 
+> Because vtcr_el2 and vttbr_el2 are EL2 system registers, writing to them
+> from EL1 will cause an UNDEFINED instruction exception. This causes the CPU
+> to trap to the hypervisor, which will intentionally panic upon receiving an
+> unexpected sysreg trap from the host, crashing the system.
+> 
+> Since any unprivileged user with access to /dev/kvm could potentially trigger
+> a memory region update that sets KVM_REQ_RELOAD_STAGE2, it seems this might
+> provide a trivial path to trigger a host Denial of Service.
+> 
+> Would it be possible to add a has_vhe() guard here or handle the reload via
+> a hypercall for non-VHE systems?
+> 
 
-Will add a WARN_ON_ONCE to expose the failure if it happens.
+Yes, you're right, that's my mistake. I'll add a has_vhe() guard in
+check_vcpu_requests() as a defensive check, and also prevent the request
+from being raised on nVHE at the source.
 
->
->> +		if (!consume_fn(cookie, (u64)addr, (u64)state.sp, (u64)state.bp, (u64 *)ra))
->> +			break;
->> +	}
->> +#endif
->> +}
+
+
+>> +			local_irq_restore(flags);
+>> +		}
 >> +
->>   void bpf_arch_poke_desc_update(struct bpf_jit_poke_descriptor *poke,
->>   			       struct bpf_prog *new, struct bpf_prog *old)
->>   {
+>>   		check_nested_vcpu_requests(vcpu);
+>>   	}
+>>
+> 
 
