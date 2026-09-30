@@ -1,112 +1,106 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112DC4248BB
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 19:35:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B9E4E3245
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 20:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790796954; cv=none; b=K0A8REF5WMc6CoqWEaAF4z9hVOM9nhRcORpNXu0ou79Hzx9xURbakmysAVAxwXK0ljvB2qDHSkQupxHpcFLif9ioJbsj4/FqDqAHkq3GWYkfdTxdBTUjpxWvkzNhGSqi3ocTd8G3xng09U2mW0avhhMUD4yu06uUxXBV/0xHmKs=
+	t=1790799626; cv=none; b=TCGXjYY1s95JHdK+kB3IE6W9oL5Za0IayZJiYRGe4oIwe1mSO3yEjXsWuAHniOFduCcWXKzyIXGeeiE5m/Q+CCmtOwveYITOwrGxRLVLOVxEmU9RL/ZbaMPQ2wYloh22H4VI/xcqdcaMiPCxoupBXl1/ysDolkUOqHfMi7QvN+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790796954; c=relaxed/simple;
-	bh=RyYgxmQTPenrP6JtQOHr/dswyrUhr6UE6WMMfi5iTFU=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:Subject:Cc:To:
-	 References:In-Reply-To; b=TwG7GFHA4FyoSwg/5LICpKjOFgZYRIf69RzQWTYpRol8adKfHWZedBsxgt6My6PItrB7PIEdwlBOnYLzrBMJQZ4w9zFgXJ4SW/FGuaPsFqDE0YVaeEgzTODD74YUjMGaEN7kLZEjCrKNMD5woV1Ryh7OWwBeMN4HHL7c9Fp2P4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=rKwk765z; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1790799626; c=relaxed/simple;
+	bh=pROM/d8TjYItyczd0ZLvs1b3rVntUprmiozAkwXTu5g=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=Hruhr0B7vZlAnIFklAP13EWmRFkRU8BgfhKNjxqJyIAl8vrhpiOdWy6QprrNeAyO735DhXEDyFCzyw+I5+iB3KBFpJhTmDFNtGHs9uBPT3Kt/y5zbG/Kwi5lddWhEEdcVx9DIFQ2M+HbNRETBt4a1xyMWslxStt5BuZtT8UdtDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Sd5+eTEV; arc=none smtp.client-ip=209.85.214.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="rKwk765z"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 34AD74E410D5;
-	Wed, 30 Sep 2026 19:35:48 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id E707060749;
-	Wed, 30 Sep 2026 19:35:47 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 67C771032A657;
-	Wed, 30 Sep 2026 21:35:41 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1790796942; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=vpqwVhkaQrlM436Ao8cy3FIBQzurew4N1bUjRlG3ai4=;
-	b=rKwk765zTUA62PJdK6Dbqbnq30ntX08ZMYWV9oB4Bkff4C0oXIhqhIPXhT6CRN0HsQlFU9
-	5b4bHMwIQUtwRhiCGp2C9VWPa16v0EWh84DXBgciHzslAo919sCG505Lz5Lm/udM56j5ga
-	DjrCV8uZA7AU0TUTolKn0jzNrKzHOtTxtGFhPJoMXeVkc8QWhn3SJgaZ6Ajz+G+rJJCww7
-	QEVb4SZd3TFHfpiHwuxG3e/Kzr9u7yKCf3yfyf29356z6ZU27N3kV80Ua+eSwMT1T+c/2n
-	Cznaegi02Y9iRSzMnBlRDuvPm/BoAoeakPqq9yeNPLLtS4kMMBF4Y4FIDTy3fQ==
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Sd5+eTEV"
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2e2d3a3ff86so23707085ad.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 13:20:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1790799624; x=1791404424; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/BSGxIvKKiTIcHT7dHMyFdt77JSPWeT71yIZ+PkBTxY=;
+        b=Sd5+eTEVyeDg2KH9sH1YVia/xCrkpdKMSB+odBqhQASGYqlnZ2y18hqWbE88B9q0Z8
+         nbIVHfdmirpP7+YRP+/oYffDi3dj3G0frDGc6FX8KCY2d825z8EiBqjOuiAOqjUU1RMN
+         /SEeMh/V5YUARabqhYJzbcPO1yIAu3gdiBayDNzo/N+BlE34wPoBvliZTjn0gTA9tm2d
+         15LoZkGJCHCVPYLeO9eIBDakSFL/Sfd58oCCYs3i6z6jQyrt6cP6dvU/ZI6Vg6sit7xS
+         gvgfggJ87Wt93s0vuj5IFZwVkiFGfNlTEtDkLQM0/UGoN+F2A/qRlE1ie72J5e3oBTeU
+         fdFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790799624; x=1791404424;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=/BSGxIvKKiTIcHT7dHMyFdt77JSPWeT71yIZ+PkBTxY=;
+        b=DqTi5rP2YqTzd/Fy7NukXn61nrGu1qYVFjBoBj7GQzNfFARtg+tiGAuPPYIB1RE0Ks
+         2zqjkXWjc93uT7SzBh8YKjUcV2RTzosdcWBUpEC5v8e9s3T01a0fDE4Ncpymzr4lJdlt
+         Tf6FccCAxzt5FXuD5hE6JSxGMLYeRV9JRXwC55K1RdVYTVd5voWIuLrfF/Qy9W3TXTRd
+         aL2gk1Z4B/NrFWtX8IH3e3LWsb+qxWX/RdzKDl8eJexG1eTnfdqNDL0OzIgv1JD3OJue
+         UxNJGoB4GgcasGCc74ZJ7ZaewHXK+0+uskObHSz4ShuQC3U8tKhcERmJDjEdPq/B/d8K
+         XTnw==
+X-Gm-Message-State: AFq9FYI8QrFy4Oi8Rhn23pg4ZxEMx1Y+4cS8Jb+5CUmJTRAED+2wjp3g
+	jsSTfrW1UUbygdxF3gtCTQu8Svl6t4CMz+0S5TRRvdurr4nC51cj/8ka1+vKO4iTTCGcLosl+Wb
+	YN/oXFCxF4sCqX69gw6LdyIpV//fRkj43vUHOMLUNBzmN/YLpDW5UDtLqvOsNZhYKdkqYq98/+Z
+	t51UBp0glajGziyxXRSLtt/XSiRMOHsEwZUDwa7zqO6Ku1OuYd
+X-Received: from pldy20.prod.google.com ([2002:a17:902:cad4:b0:2df:a5ff:bf3])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:4587:b0:2db:63cb:1b17
+ with SMTP id d9443c01a7336-2e2e4b5b242mr23140155ad.18.1790799623967; Wed, 30
+ Sep 2026 13:20:23 -0700 (PDT)
+Date: Wed, 30 Sep 2026 13:20:23 -0700
+In-Reply-To: <20260930195407.28A811F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 30 Sep 2026 21:35:39 +0200
-Message-Id: <DLSWJ8V1AIC9.3D68VRRVHXJUF@bootlin.com>
-From: "Luca Ceresoli" <luca.ceresoli@bootlin.com>
-Subject: Re: [PATCH v2 3/7] drm/bridge: dw-mipi-dsi: stop using deprecated
- devm_drm_of_get_bridge()
-Cc: <wsa+renesas@sang-engineering.com>, <imx@lists.linux.dev>,
- <Frank.Li@kernel.org>, <dri-devel@lists.freedesktop.org>
-To: <sashiko-reviews@lists.linux.dev>, "Luca Ceresoli"
- <luca.ceresoli@bootlin.com>
-X-Mailer: aerc 0.22.0
-References: <20260929-drm-fix-of_get_bridge-build-regression-v2-0-6da431d8f180@bootlin.com> <20260929-drm-fix-of_get_bridge-build-regression-v2-3-6da431d8f180@bootlin.com> <20260929135537.5E85C1F00898@smtp.kernel.org>
-In-Reply-To: <20260929135537.5E85C1F00898@smtp.kernel.org>
-X-Last-TLS-Session-Version: TLSv1.3
+References: <20260930193634.3415089-1-seanjc@google.com> <20260930193634.3415089-13-seanjc@google.com>
+ <20260930195407.28A811F000FF@smtp.kernel.org>
+Message-ID: <ar1vB2BtBggBIxzp@google.com>
+Subject: Re: [PATCH v6 12/12] KVM: SVM: Add support for virtualizating Bus
+ Lock Detect
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Tue Sep 29, 2026 at 3:55 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] drm: bridge reference leak on dw_mipi_dsi_host_detach early re=
-turn
-> --
->
-> commit b7207f37872ee6fe7eb2903e38f89975b930c392
-> Author: Luca Ceresoli <luca.ceresoli@bootlin.com>
->
-> drm/bridge: dw-mipi-dsi: stop using deprecated devm_drm_of_get_bridge()
->
-> This commit switches from the deprecated devm_drm_of_get_bridge() to
-> of_drm_get_bridge_by_endpoint() to resolve a build failure when CONFIG_OF
-> is disabled. Since of_drm_get_bridge_by_endpoint() returns a refcounted
-> bridge, it adds the necessary put operations to release the reference.
->
-> Link: https://lore.kernel.org/r/20260928161605.2271412-1-arnd@kernel.org
-> Link: https://lore.kernel.org/oe-kbuild-all/202609291109.9RGna4XZ-lkp@int=
-el.com/
->
->> diff --git a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c b/drivers/gpu=
-/drm/bridge/synopsys/dw-mipi-dsi.c
->> index 5dd475fcaacf8..22d1b8cbe1d57 100644
->> --- a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
->> +++ b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
+On Wed, Sep 30, 2026, sashiko-bot@kernel.org wrote:
+> > diff --git a/arch/x86/kvm/svm/svm.h b/arch/x86/kvm/svm/svm.h
+> > index c3380d865b751..6d0242966dc87 100644
+> > --- a/arch/x86/kvm/svm/svm.h
+> > +++ b/arch/x86/kvm/svm/svm.h
 > [ ... ]
->> @@ -368,9 +368,8 @@ static int dw_mipi_dsi_host_detach(struct mipi_dsi_h=
-ost *host,
->>  			return ret;
->
+> > @@ -789,7 +789,12 @@ BUILD_SVM_MSR_BITMAP_HELPERS(void, set, __set)
+> >  
+> >  static inline u64 svm_get_supported_debugctl(struct kvm_vcpu *vcpu)
+> >  {
+> > -	return DEBUGCTLMSR_LBR;
+> > +	u64 debugctl = DEBUGCTLMSR_LBR;
+> > +
+> > +	if (guest_cpu_cap_has(vcpu, X86_FEATURE_BUS_LOCK_DETECT))
+> > +		debugctl |= DEBUGCTLMSR_BUS_LOCK_DETECT;
+> > +
+> 
 > [Severity: Medium]
-> If pdata->host_ops->detach() returns a negative error code (e.g., during
-> device unbind or PHY teardown errors) and takes this early return, does t=
-his
-> leak the bridge reference acquired in the attach function?
->
-> Since the bridge is now dynamically refcounted and we skip the newly adde=
-d
-> drm_bridge_clear_and_put(&dsi->bridge.next_bridge), it looks like the
-> reference count will not be properly decremented on this error path.
+> Does this restrict host-initiated MSR restoration? By making the
+> DEBUGCTLMSR_BUS_LOCK_DETECT bit strictly dependent on guest_cpu_cap_has(),
+> this might reject host-initiated writes to MSR_IA32_DEBUGCTLMSR if the VMM
+> restores MSRs before initializing the guest CPUID.
+> 
+> In svm_set_msr(), the rejection happens unconditionally:
+> 
+> svm_set_msr()
+>     if (data & ~svm_get_supported_debugctl(vcpu))
+>         return 1;
+> 
+> Since svm_set_msr() does not appear to check msr->host_initiated before
+> enforcing this capability limit, could this regression break live
+> migration when userspace sends KVM_SET_MSRS before the CPUID is fully
+> configured?
 
-The issue was there already for drm_of_panel_bridge_remove() (here deleted)
-and drm_bridge_remove().
-
-Id say it's orthogonal, and most likely nobody has this issue in real
-life. So I took a note to fix this soon, and I'd let this patch be applied
-as is because it fixes an issue bothering people.
-
-Luca
-
---
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+By design.  The msr->host_initiated exemption is "legacy" KVM behavior that we're
+actively trying to remove.
