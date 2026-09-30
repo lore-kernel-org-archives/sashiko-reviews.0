@@ -1,43 +1,41 @@
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 662F1439F86;
-	Wed, 30 Sep 2026 11:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA60B46EF77
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 11:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790766186; cv=none; b=FmbyMKtU/N4GgtKceuk17PN/aVcN3CnN5sKr5s61b9FPoUIKcpCwxXAvj/Z98QQZtr7Nb+qRg8q/GDWVKwHTWCvZSU6GRthBLC47qgfM96mX5/n6xkjCgGcSrH2XbM1JvzdG+MMTMqbT/DhwqCaldcyKS/KCZ3EcCTzgSB4SCw4=
+	t=1790766736; cv=none; b=GT/UiTsl5s3UQ1ge/p/UOL0/Q9RdN5CZcIpLj+bPgpSrqANxin3ZjAQRuIqPrQVzSzy8Ep3GFPyGFjZ0XhJLe3MfxI61ZPFXUTY4/VR0oH4DPnHM0oustQ2Szdle9XzUav2pfWGXZIg8KPXAlfGUEYBHkLyHzIJ1yAYOhadQrxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790766186; c=relaxed/simple;
-	bh=d/ZqsJkhTu9Q1JG0R55H06EvsSQWPRW2DAbAsYcuplE=;
+	s=arc-20240116; t=1790766736; c=relaxed/simple;
+	bh=1g0cpawlh0wWGVA3lCyggdCtoH7CJs/p/g1RH1hFSxg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bN38NkxBav4Q94rjxJqZjtcuRPVL5Q3H7fOYNX46/xro/GJ/68MLCsgmfWW/nAcsaHQUUVhaNx/xc8MK90+bCeJ5OrB2yZuafYmv/j7D6/RjhOVQ86lq1K2KdqqtSSt6l3BMEWI1WF3RR3udbCurc48uQNptreb086mWlWdAAD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=et/efCJQ; arc=none smtp.client-ip=217.140.110.172
+	 Content-Type:Content-Disposition:In-Reply-To; b=mGQSSg0mmM6oXwqsA+6Y/R7htNvgNDBjydWDE/AL86gzGEMdrU7MHEwpVNZ6Ft0aUPjZ6azfERbrUl7i3TfchKO+L1eb8qMxEcro1nr6WCo2A/zTgqr8aOwYavOMlwsdqVvQEwfZfgiep1P0qem6thkBwXPNAwx0GV7RrgK4iKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=SKEzh0Rw; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="et/efCJQ"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="SKEzh0Rw"
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5B8B2497;
-	Wed, 30 Sep 2026 04:02:46 -0700 (PDT)
-Received: from arm.com (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D616F3F85F;
-	Wed, 30 Sep 2026 04:02:48 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E8BFB497;
+	Wed, 30 Sep 2026 04:12:08 -0700 (PDT)
+Received: from localhost (unknown [10.2.196.114])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 066E73F86F;
+	Wed, 30 Sep 2026 04:12:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1790766169; bh=d/ZqsJkhTu9Q1JG0R55H06EvsSQWPRW2DAbAsYcuplE=;
+	t=1790766732; bh=1g0cpawlh0wWGVA3lCyggdCtoH7CJs/p/g1RH1hFSxg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=et/efCJQXCQlPg6gHb8rQgmvT/x/p77iTa1oktgGtlWhzItbU2V/d5w0r8WE4M7M9
-	 EyEL3JDBR1EcqKWnGd48RLTzbpJ8EN6o3pi2I6ntKTm+Hm+dm51eyXgikGAhBk+TuZ
-	 gFmqABZdMfWVc19c+SkZBFNQDUvMm+jm01vlncqk=
-Date: Wed, 30 Sep 2026 12:02:41 +0100
-From: Catalin Marinas <catalin.marinas@arm.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev,
-	kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oupton@kernel.org>
-Subject: Re: [PATCH v20 2/9] firmware: arm_rmm: Check for RMI support at init
-Message-ID: <arzsUdIEVvafG-S5@arm.com>
-References: <20260929221623.1342076-1-suzuki.poulose@arm.com>
- <20260929221623.1342076-3-suzuki.poulose@arm.com>
- <20260929222840.A0E821F000FF@smtp.kernel.org>
- <a2fa2bd1-6888-4ed5-9e2f-233eacb600a5@arm.com>
+	b=SKEzh0RwSSaNeaPZ5v/OjEYXm3+FHiXMlhOnHs/nQzwSr8nH0cy8rkM/zbbosawQJ
+	 JLtuKGruRRX1G9Mx+H7ZgehH9nNQM2Ayz/OxpBXVZgC3MxcKhzEe+sLDpqrm3NfPDK
+	 6npKRPjL77p434Ils1F0pleYgRYy/knCVt66yc+o=
+Date: Wed, 30 Sep 2026 12:12:10 +0100
+From: Leo Yan <leo.yan@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH 1/3] perf build: Build the Python extension before pylint
+ consumers
+Message-ID: <20260930111210.GJ14479@e132581.arm.com>
+References: <20260930-perf_fix_pylint_errors-v1-0-f72151d8b255@arm.com>
+ <20260930-perf_fix_pylint_errors-v1-1-f72151d8b255@arm.com>
+ <20260930091525.B98E41F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -46,66 +44,33 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <a2fa2bd1-6888-4ed5-9e2f-233eacb600a5@arm.com>
+In-Reply-To: <20260930091525.B98E41F000FF@smtp.kernel.org>
 
-On Wed, Sep 30, 2026 at 09:18:48AM +0100, Suzuki K Poulose wrote:
-> On 29/09/2026 23:28, sashiko-bot@kernel.org wrote:
-> > > diff --git a/include/linux/arm-rmi-cmds.h b/include/linux/arm-rmi-cmds.h
-> > > new file mode 100644
-> > > index 0000000000000..911489b636522
-> > > --- /dev/null
-> > > +++ b/include/linux/arm-rmi-cmds.h
-> > [ ... ]
-> > > +static inline void rmi_smccc_invoke(struct arm_smccc_1_2_regs *regs)
-> > > +{
-> > > +	struct arm_smccc_1_2_regs args = *regs;
-> > > +	long status;
-> > > +	int i = 0;
-> > > +
-> > > +	while (i < RMM_BLOCKED_RETRY_COUNT) {
-> > > +		arm_smccc_1_2_invoke(&args, regs);
-> > > +
-> > > +		status = RMI_RESULT_STATUS(regs->a0);
-> > > +		if (status != RMI_BUSY && status != RMI_BLOCKED)
-> > > +			break;
-> > > +		if (status == RMI_BLOCKED)
-> > > +			i++;
-> > > +		cpu_relax();
-> > > +	}
-> > 
-> > [Severity: High]
-> > Does this sequence create an unbounded spin loop if the firmware continuously
-> > returns RMI_BUSY?
-> > 
-> > If the status returned by arm_smccc_1_2_invoke() is RMI_BUSY, the loop
-> > continues without incrementing the exit counter i. It issues cpu_relax()
-> > but does not yield the CPU (e.g., via cond_resched()) or impose a timeout.
-> > If the RMM firmware remains busy, this could cause the host kernel to lock
-> > up indefinitely.
+On Wed, Sep 30, 2026 at 09:15:25AM +0000, sashiko-bot@kernel.org wrote:
+
+[...]
+
+> > +ifdef PYLINT
+> > +# Build the Python extension before starting sub-makes that lint its users.
+> > +$(PERF_IN) $(LIBPERF_TEST_IN): | $(LANG_BINDINGS)
 > 
-> This is like "spinlock contention". RMM returns EBUSY when a resource is
-> locked temporarily. We should be able to make progress, unlike the
-> RMI_BLOCKED, which is blocking due to a long running operation.
+> [Severity: Low]
+> Does this order-only dependency block the $(PERF_IN) sub-make from executing
+> until $(LANG_BINDINGS) and all its prerequisites (including $(LIBPERF_UTIL))
+> are fully built?
+> 
+> $(PERF_IN) launches the sub-make that compiles all builtin-*.c files.
+> Meanwhile, $(LANG_BINDINGS) depends on $(PERFLIBS_PY), which launches the
+> sub-make that compiles all util/*.c files.
+> 
+> Does this completely serialize the compilation of the builtin/ directory
+> behind the full compilation of the util/ directory and the Python extension,
+> impacting concurrent parallel build efficiency?
 
-I dug a bit into the RMI_BUSY description in the spec and it's not
-always safe to spin forever. For RMI_{PDEV,VDEV}_COMMUNICATE, for
-example, we need to return to the caller and retry later (for VDEV, the
-spec suggests informing the realm). That's the TSM series, which doesn't
-use the new API yet, but something to be aware of when it's updated.
 
-We may need the spec to bound this spin anyway, or at least give an
-indication that it's not forever, otherwise it affects latency,
-especially in an RT kernel.
+> Furthermore, does it force an isolated make perf to needlessly build the
+> Python extension when PYLINT is enabled on the host?
 
-There's a generic RMI command return code table in B4.2 that lists
-RMI_BUSY for an imp def reason for the command failing to make progress.
-Does this apply to something like REC_ENTER? In the KVM series we call
-that with IRQs masked.
-
-We might need different APIs here: one for sleepable callers that does
-cond_resched() (or backs off) while retrying, and one that returns
--EBUSY, e.g. for TSM, or for commands like REC_ENTER that we don't
-expect to see RMI_BUSY and don't want to spin on.
-
--- 
-Catalin
+Fair point. I will update the Makefile to separate pylint from C
+compilation, this can avoid dependency within C files, and can avoid
+the dependency between perf binary and python extension.
