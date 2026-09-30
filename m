@@ -1,47 +1,50 @@
 Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717CD52B1EB
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 17:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B097E5208DA
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 17:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790789731; cv=none; b=uL8cQ99ILgw5Vmt44n65eg7ezstM5w1ExhHIMytMxHudTevTVSO1NgihDjZqvWvurm7SBYPN8TT8u3mButiH36pYhnB/GWPlR18YeJRXxn++fJ0xHnwCWnFpmv6zc34zziVJmvfy0dBC/eyIL2NnQnWVS9BCEx1pKGdrqx4ejfk=
+	t=1790790942; cv=none; b=i5WikmHPbpuvX1bSG0q7OZPIQIOA36CrEyYkf6ykZSRRemCjRrR/c4EGMCVi77iZrRc05RvF0emdligmBfUcISCprkyP9JkVupbgw9zlaMy1VIZm6IWEMTNNcIC4XpMd3RItsM2+JtE56R7tdizXkmXlYB7YKr7qAGVehllnTGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790789731; c=relaxed/simple;
-	bh=vOKtFAes3FzbDDplqLaCiD5e4lVf9oFMBm4gHbTfOtM=;
+	s=arc-20240116; t=1790790942; c=relaxed/simple;
+	bh=AZSDroTFvfKnuaaxYGY2YeUQ1yf6PTxmndMCJO+EF1w=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=mKkG4wViDUhelHKG6+XrMpC23KJesU5YxJkOwz8GocSG+TOdMxR5UV1DPNbqWlg2ZfDBoppjtuym7GMrY2wwMrlqZffj2f3B4fj/cCMk9gU/SkBikOQPZxPfVJl89dVub2gkP6IUwXfX1bSN4RkEwCg/PqGW4malYpqZjCEZ+7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=QYQ16/BD; arc=none smtp.client-ip=185.67.36.66
+	 Content-Type:MIME-Version; b=EJAanWWiq2utvu5j21xYVKnqQoIsBmNYE49la6RAIUlq7Gcon5YRtAstnH6TcPN+s+kww6go+/9TB5TEwcsdzCk/8wY4CgJmYVDQSmT8JrLcB7ZhUGEIZu3zsnNByEU/BqWXgfoaDNpqv05u538XMb7LjCMXQ19q9cpCV6RUXbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=hR+xoNWS; arc=none smtp.client-ip=185.67.36.66
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="QYQ16/BD"
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="hR+xoNWS"
 Received: from submission (posteo.de [185.67.36.169]) 
-	by mout02.posteo.de (Postfix) with ESMTPS id 364D8240103
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 19:35:26 +0200 (CEST)
+	by mout02.posteo.de (Postfix) with ESMTPS id 69FD8240104
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 19:48:16 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de;
-	s=1984.8680eb; t=1790789726;
-	bh=dT/Hs+ay33oP7LeObujmA6DJM6pWp7qZoKPWA+ruDqI=;
+	s=1984.8680eb; t=1790790496;
+	bh=V3niE6WEv00dnTClKTgw/hzPOB84un8xX0M9WxcZnCk=;
 	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
 	 MIME-Version:OpenPGP:From;
-	b=QYQ16/BD6HMxYpVyaN5otpnrMX/CQ9fHaNIEm9NljhPnMuTlOOBhnQwbkcBSgFQR6
-	 q371LilnrM/lt7phUHynqKEPT6KRxbFNT+eLCkxvD+m6V8AH3WATs2+n6zoQu1efbd
-	 cPlPilQ/P6FZbm7Ml37fXve8lgPyBDWfMFtQEGFdlNa7oMqY/l59fpwGo3fQWdP254
-	 39yX5pu+09EGkAJmF4qrYxZDpsdqUHkq0v76lugMxlVnl/qB9aqvSb0H4o46Mycr+r
-	 dEV2g10Ql3K8QpwV4cCWm1RzLg9WoXYlkQF147SrQdScoGzte61xfJjXHhVZFdCpjU
-	 w6l/o83tWWU6Q==
+	b=hR+xoNWSjCS5Vn251zCGhdV2BQ85nkHrdvJXTeTz8XtcV+kmC0D0ipk8yqU/iV/WQ
+	 KB1tH06P7sBMSoNUrhIIgcTNKl8iJPMJmVnnjg9WnpZyjg+pigNqFvYoYJ1kx9L30g
+	 FEnjJ7ADDrVcm4LOdRUHOLopi0cYlWv4g3lcuJ9uSwZEVU2cYXgu7IqYGtlXplxvmF
+	 Tlf0dmbsitoS6k4A6LgvDRW7t1yZryJI/pScklSb4g3i/IRxwr81ftEbm+hLlhqfHd
+	 tuN3MKE3kkNJhMUB6ryGYyvoptFKocmt4Yn3CyD9IM27dIdzkWnJnCBrcQkQ2pGvf1
+	 uVZBdVDVc6aag==
 Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4hw2Hx1gTHz9rxR;
-	Wed, 30 Sep 2026 19:35:25 +0200 (CEST)
-Message-ID: <efe459f84fc81dcfb820fb8cdcc28dc0a13b2e8a.camel@posteo.de>
-Subject: Re: [PATCH RESEND v4] ACPI: SPCR: Support UART clock frequency field
+	by submission (posteo.de) with ESMTPSA id 4hw2Zl5X2Fz9rxB;
+	Wed, 30 Sep 2026 19:48:15 +0200 (CEST)
+Message-ID: <cc761b12f8ddc6c900713ef09b6368bd293aadaf.camel@posteo.de>
+Subject: Re: [PATCH v3 2/4] tty: serdev: Export functions to pause
+ receive_buf callback calls
 From: Markus Probst <markus.probst@posteo.de>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-serial@vger.kernel.org
-Date: Wed, 30 Sep 2026 17:35:25 +0000
-In-Reply-To: <20260930154517.97E6B1F00898@smtp.kernel.org>
-References: <20260930-acpi_spcr-v4-1-ab649aa1f09c@posteo.de>
-	 <20260930154517.97E6B1F00898@smtp.kernel.org>
+Cc: ojeda@kernel.org, gary@garyguo.net, linux-serial@vger.kernel.org
+Date: Wed, 30 Sep 2026 17:48:16 +0000
+In-Reply-To: <20260930174318.032AA1F00898@smtp.kernel.org>
+References: 
+	<20260930-rust_serdev_probe_refactor-v3-0-d1b6e77135e0@posteo.de>
+	 <20260930-rust_serdev_probe_refactor-v3-2-d1b6e77135e0@posteo.de>
+	 <20260930174318.032AA1F00898@smtp.kernel.org>
 Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
  keydata=mQINBGiDvXgBEADAXUceKafpl46S35UmDh2wRvvx+UfZbcTjeQOlSwKP7YVJ4JOZrVs93
  qReNLkOWguIqPBxR9blQ4nyYrqSCV+MMw/3ifyXIm6Pw2YRUDg+WTEOjTixRCoWDgUj1nOsvJ9tVA
@@ -87,7 +90,7 @@ Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
  dQNGrZ91M9nlIBKw8Y7c7xZ4098qX2b8JX/CxD+gC1r4C8vuA3GkhFLx+KlkON7LyiJPkrePp6Qky
  jfGillcaQOqFZ3WwVqyzG1BUfTow==
 Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-BYg8AhYl4Gq//wFmZbEq"
+	protocol="application/pgp-signature"; boundary="=-7n5+9zA0RVLFoV4z/Btm"
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -97,93 +100,155 @@ MIME-Version: 1.0
 OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
 
 
---=-BYg8AhYl4Gq//wFmZbEq
+--=-7n5+9zA0RVLFoV4z/Btm
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2026-09-30 at 15:45 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+On Wed, 2026-09-30 at 17:43 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
 e(s) to consider:
-> - [Medium] acpi: out-of-bounds read of SPCR uart_clk_freq field
+> - [High] tty: serdev: AB-BA deadlock between ttyport_pause_rx() and ttypo=
+rt_receive_buf()
+> - [High] tty: serdev: Self-deadlock calling pause_rx or resume_rx from re=
+ceive_buf
+> - [High] tty: serdev: TOCTOU race leading to NULL pointer dereference in =
+ttyport_close/pause/resume
 > --
 >=20
-> commit 541ea063ef44d64e511d2deae13a8adcab45ebc7
+> commit f462dbe8ac06c8a92e0fb79ce15c1e6444a27110
 > Author: Markus Probst <markus.probst@posteo.de>
 >=20
-> ACPI: SPCR: Support UART clock frequency field
+> tty: serdev: Export functions to pause receive_buf callback calls
 >=20
-> This commit adds support for the UART Clock Frequency field introduced in=
- the
-> Microsoft SPCR specification revision 1.08. It introduces a new function
-> setup_earlycon_with_uartclk() to configure the serial port with the corre=
-ct
-> clock frequency from the SPCR table if available.
+> These functions will be used to simply the serdev rust abstraction. It
+> also contributes to the fixing of 2 race conditions in the serdev rust
+> abstraction.
 >=20
-> Link: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports=
-/serial-port-console-redirection-table
+> > diff --git a/drivers/tty/serdev/serdev-ttyport.c b/drivers/tty/serdev/s=
+erdev-ttyport.c
+> > index c11908f5e1ce3..2bed0e54202a8 100644
+> > --- a/drivers/tty/serdev/serdev-ttyport.c
+> > +++ b/drivers/tty/serdev/serdev-ttyport.c
 >=20
-> > diff --git a/drivers/acpi/spcr.c b/drivers/acpi/spcr.c
-> > index 73cb933fdc89b..c79c809f49d46 100644
-> > --- a/drivers/acpi/spcr.c
-> > +++ b/drivers/acpi/spcr.c
-> > @@ -228,7 +228,8 @@ int __init acpi_parse_spcr(bool enable_earlycon, bo=
-ol enable_console)
-> >  	pr_info("console: %s\n", opts);
+> [ ... ]
+>=20
+> > @@ -35,6 +37,9 @@ static size_t ttyport_receive_buf(struct tty_port *po=
+rt, const u8 *cp,
+> >  	if (!test_bit(SERPORT_ACTIVE, &serport->flags))
+> >  		return 0;
 > > =20
-> >  	if (enable_earlycon)
-> > -		setup_earlycon(opts);
-> > +		setup_earlycon_with_uartclk(opts,
-> > +					    table->header.revision >=3D 3 ? table->uart_clk_freq : 0);
+> > +	if (test_bit(SERPORT_PAUSE_RX, &serport->flags))
+> > +		return 0;
+> > +
+> >  	ret =3D serdev_controller_receive_buf(ctrl, cp, count);
 >=20
-> [Severity: Medium]
-> Does this code risk an out-of-bounds memory read when accessing
-> table->uart_clk_freq?
+> [Severity: High]
+> Can this cause a self-deadlock if the driver attempts to pause or resume
+> reception during data reception?
 >=20
-> In acpi_parse_spcr(), the table is mapped using acpi_get_table(), which
-> only maps the number of bytes specified by table->header.length.
+> If the downstream driver's receive callback calls serdev_device_pause_rx(=
+)
+> or serdev_device_resume_rx(), they will attempt to acquire the non-recurs=
+ive
+> serport->lock which is already held by ttyport_receive_buf().
+It was never intended to be called from inside receive_buf.
+
 >=20
-> If a malformed ACPI SPCR table is provided by system firmware where
-> table->header.revision >=3D 3 but the length is too small to contain
-> uart_clk_freq, could this access read past the mapped length?
+> [ ... ]
 >=20
-> This could result in unmapped memory accesses leading to an early boot ke=
-rnel
-> panic, or silently reading garbage data which results in an incorrect ear=
-ly
-> console UART clock frequency.
->=20
-> Should there be a validation of table->header.length against the expected
-> size containing the uart_clk_freq field before accessing it?
->=20
+> > @@ -177,6 +182,32 @@ static bool ttyport_close(struct serdev_controller=
+ *ctrl)
+> >  	return true;
+> >  }
 > > =20
-> >  	if (enable_console)
-> >  		err =3D add_preferred_console(uart, 0, opts + strlen(uart) + 1);
-Fields from revision 4 are being accessed, so I don't think accessing
-one from revision 3 requires more checking.
+> > +static void ttyport_pause_rx(struct serdev_controller *ctrl)
+> > +{
+> > +	struct serport *serport =3D serdev_controller_get_drvdata(ctrl);
+> > +	struct tty_struct *tty =3D serport->tty;
+>=20
+> [Severity: High]
+> Is it possible for this unprotected read of serport->tty to introduce a T=
+OCTOU
+> race leading to a NULL pointer dereference?
+>=20
+> If ttyport_pause_rx() races with ttyport_open(), the local tty pointer co=
+uld
+> be captured as NULL before acquiring the lock. After acquiring the lock, =
+the
+> code might observe SERPORT_ACTIVE as true (set by the concurrent open) an=
+d
+> proceed to dereference the stale, NULL tty pointer.
+>=20
+> (Note: ttyport_close() also appears to have this pre-existing issue).
+True.
 
+>=20
+> > +
+> > +	guard(mutex)(&serport->lock);
+> > +
+> > +	set_bit(SERPORT_PAUSE_RX, &serport->flags);
+> > +
+> > +	if (test_bit(SERPORT_ACTIVE, &serport->flags))
+> > +		tty_buffer_flush_work(tty->port);
+>=20
+> [Severity: High]
+> Could this tty_buffer_flush_work() cause an AB-BA deadlock with
+> ttyport_receive_buf()?
+>=20
+> ttyport_pause_rx() acquires serport->lock and then calls
+> tty_buffer_flush_work(), which blocks waiting for the currently executing=
+ work
+> to finish. If the current work is flush_to_ldisc(), it calls
+> ttyport_receive_buf(), which attempts to acquire serport->lock, resulting=
+ in
+> a deadlock.
+Already mentioned in a comment (true).
 
+>=20
+> > +}
+> > +
+> > +static void ttyport_resume_rx(struct serdev_controller *ctrl)
+> > +{
+> > +	struct serport *serport =3D serdev_controller_get_drvdata(ctrl);
+> > +	struct tty_struct *tty =3D serport->tty;
+>=20
+> [Severity: High]
+> Can this also cause a NULL pointer dereference if it races with ttyport_o=
+pen()
+> and captures a NULL tty pointer before acquiring the lock?
+True.
 
+>=20
+> > +
+> > +	guard(mutex)(&serport->lock);
+> > +
+> > +	clear_bit(SERPORT_PAUSE_RX, &serport->flags);
+> > +
+> > +	if (test_bit(SERPORT_ACTIVE, &serport->flags))
+> > +		tty_buffer_restart_work(tty->port);
+> > +}
+> > +
 
---=-BYg8AhYl4Gq//wFmZbEq
+--=-7n5+9zA0RVLFoV4z/Btm
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmq9SFwbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPS5EUP/0YmKpV0x2JHlnW8iq+Z
-/w4X0GTm29sQBzal+Lzh1+n8NJTwPdDKthxegKRi77FpBO03HAPDVQR8TipeCSn5
-chdiGBCPwQSkTzbDzmB1CPZKPMDnXNJG16VKeiAZzZuYqHCFBWP7NKLNz9+pjVbq
-ieageWTuyzo+nC2/Gy4IfTakTLoNZO0Mws8yy6gE65pT2tyzAD5jinbtmjIvMwmd
-YZJsnJcdGYGjEWiC9ytmPjMwMPaQr4PpW7JLHHjRPhRtIZCDqb5UcqxZlRs451nq
-apj8PIW980VYp3ANp05Ak55XWxlNUNIoA4PirTBkq8x4VMOr9lCeO5+W9Q0VU7cw
-Uca4PSAib0df8si1O/S+Z+nq8Pyg0EM2XxLzWh+M5azMEirFDTKGtxDe8zpZbyW3
-nERAExzUpTwh7o+Ij1jlIzL7llfK9Fmx8+tMAk1UoIA1ozug3+Bd5mEgHuUMgghN
-SvtQITAUNWjoRxx0zjh5PKnyjnaWt5o427C3LnKNivqa9jy9Wx4sK7Cjt9mxofqe
-3Zr4dvJjTDHOxaNrpevntwxJazPZMy8f6F6/3U3MeIMHJukCzyaTM8sxTfMEMVA7
-6k0fZbnZm6NdLZ3quFE3+deapCAKwfufL3G9OSccfvNO2juPrQAS3lArJ0YVYmsO
-J3rjQxwa5z6YMl1dLmNWiDkZ
-=5LTw
+iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmq9S18bFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSNC8QALTj72bR7OkQO3NisogX
+gbBLeMfi5NO6Wioz0V0SUh26/Wk2mZqwOaJ8Lt5aX1L7xvufGvvn/vAvu/nKHiUG
+gEKjZldJ2jV5AvDW4p/XMWlV7dHStNtbZd2Ym4C+xzLFjyFzRWkF+iCPR/JI70A2
+eFuiSv0n0MxtTHQ/BktB5g6HEK2GNKAnuSzrkmax+Hsr6w18dzWWWA2hYMSMuRCv
+wD7Rx17xX8h1jvDfyttfkC461LC1F8lLSfU+KMbVrJhgtZDyvhyC67Vtyk8YeaAW
+awwoy1g8c5o0glN5dqu3GNdyQKnNa62MTD+4mghfveH+WCF1/m/s/v7LHfUjCyQt
+F01BKWwZv/FR9m0JZNoqNMZF7fsx4TvP+ELy8DQ7swB8PvyRVBjLEkL0CoxIdXGx
+m/bpipHlvxTHjp86+R32Lg59IkPa3JobYJ9elxe6dhBtFLMW2Mhjoss81II12jNV
+tQIP2tTWfbAwWrJ1IV6znAJobO+sqerRGxBfq3sa5oE85+muISXed4S7Rpd3+E0B
+H8HUMbT7BS1XhuXLem7RCHqV9OKkrgwZsZosss4KSKfku8bN5pVc1TVg6bvhfzh8
+ji7knjuAWJ/E/m1VEpJSQ8Z40gPo18OSElRynV6JCvU/EBiYnJGq7P7apN0sFftz
+XIO7CXemASSGKxXPkWWlExa5
+=ULo7
 -----END PGP SIGNATURE-----
 
---=-BYg8AhYl4Gq//wFmZbEq--
+--=-7n5+9zA0RVLFoV4z/Btm--
