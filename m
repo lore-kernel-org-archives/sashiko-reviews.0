@@ -1,101 +1,112 @@
-Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A519A4E77FD
-	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 18:38:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112DC4248BB
+	for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 19:35:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790793525; cv=none; b=FeFPPUeBEMWYs5hHgzRAeRX8ICTujbio0m7Vko9B83UD4cUMHs95dyg4ljcK04NHyCRnc2+tuOK1GxqnQZz6YDh/LLLT6M7amxoingzdtOWJXArLMAM2SJJv0R62p9AJ63sKGTpWB0QngSVtTh07fZCLMFxX/5f1vykOCSkIOF0=
+	t=1790796954; cv=none; b=K0A8REF5WMc6CoqWEaAF4z9hVOM9nhRcORpNXu0ou79Hzx9xURbakmysAVAxwXK0ljvB2qDHSkQupxHpcFLif9ioJbsj4/FqDqAHkq3GWYkfdTxdBTUjpxWvkzNhGSqi3ocTd8G3xng09U2mW0avhhMUD4yu06uUxXBV/0xHmKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790793525; c=relaxed/simple;
-	bh=qIYeVUCO05ZbZhdAAAoZexxaRjrSKWkj1JQrUJwwZr8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d+thLkxxXZlhjQWMKKj1D7kjmiIZVJr1uQhMZFeNjhZApeCnpwAjwrpgQ5qTMgCdBgiK5O1EZAsdDn9ADNqLrrg/QA9S+MihdiP6rhWPwzkefIfIWj8lqOzngPzJ3z+20JGQxYsHtG6XCGsrubsHY8dDCwLjnCvgkOpXg4lssGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NmHj7Jwn; arc=none smtp.client-ip=74.125.225.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790796954; c=relaxed/simple;
+	bh=RyYgxmQTPenrP6JtQOHr/dswyrUhr6UE6WMMfi5iTFU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:Subject:Cc:To:
+	 References:In-Reply-To; b=TwG7GFHA4FyoSwg/5LICpKjOFgZYRIf69RzQWTYpRol8adKfHWZedBsxgt6My6PItrB7PIEdwlBOnYLzrBMJQZ4w9zFgXJ4SW/FGuaPsFqDE0YVaeEgzTODD74YUjMGaEN7kLZEjCrKNMD5woV1Ryh7OWwBeMN4HHL7c9Fp2P4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=rKwk765z; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NmHj7Jwn"
-Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49e7d2bb404so9716985e9.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 30 Sep 2026 11:38:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790793522; x=1791398322; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=X/kW+42sSDWDUbw6VMWjlova15EUzqflh+DF1qz2pHg=;
-        b=NmHj7Jwn2/pQdWScnlxY+p6xRE/jugG41XByf1vDN2+rTY69gc6Mqf8ZrEopYZGCn0
-         pnlACQrdf8R59HwAfbZizqKtVBhgBIXENhIILBygJ7HjSJnL4u4jZ6iI7QuXE8PjnTZl
-         JamMB73NhNvB4u1bGjz/dxAgW6AhA19aYtR5plKXYYm59mgCnLB3gWaLKp/kp8XoaUX5
-         CJYEv8ppeu4qZAexvQP0BTciXlRpFf0ABj3oGABvGrNNrH+2SJu5b3euK3WuVJvDJDZL
-         bd6Ckn/1yw5c5KVv4mYw0uHRW0J8/SSIA9az4hl3kJoohiNJv6KfnbD4H8rJoLJ9hk/k
-         AiuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790793522; x=1791398322;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=X/kW+42sSDWDUbw6VMWjlova15EUzqflh+DF1qz2pHg=;
-        b=2BvBk1eO/eShj/tbIk+WIh/2Gm8VAc4g4piT+on6nlbw4Mn9WVBWxI6DvFuNB5u01Z
-         7daJMpNKfaEezvNu72RxSLoRIklucgNJtpLQVBu1ZtHunB0O2GCgXc/tgpFpgil/bfB5
-         K+Yn8wZpuAiPTieoQQbrAWUgbSKVJxoigcEXAGpnR324ottfG4IEVq/F5qETIWziOk3F
-         s4n3Ynu/fwPiuTWneLrojneXGl/FZEfNYk1hTzx2eSpLTP1WaqRnxshBbr/Le3igHb4G
-         IkB6kNJ/JiAD2p4CtrjBKbg8rzLW+gig9YwuK5er18wGJ0xJThRCOMaQffdFW8UJyE8o
-         9ZEw==
-X-Gm-Message-State: AFuF++nwEUkxvG89ML+wRHCkerg9RABZb8FaSJ+pyzgTRADAXLuPxkn8
-	ViXQcrALp++oKjxocmdaCVrJGEnQzTlx/5EtrXS1zTZ41vFBy0XRo6elCbogabVh
-X-Gm-Gg: AYBFou2Mj1ENHufZd1r6BXTCGJbmKPm8qUq4+fRmHpTDxgAMuz6ZcFi4H8WA2Ep929V
-	OntQaJs6t5JMxTPhhOS6p2d5W4hFH1DVmawgRoMBq8GN+X1E195ZNJXKdIfMVg8qxBBTLA2kysu
-	t7ckDB7UKYZcHdXQZIjwWyvHtnK6W5RzpdH9r4DZ+arYDhjO4xzRUcSsIROwzcklNMiDnR+GH5Q
-	VtNR8prfR7MZYWOQ5UOLcQ5Qi0T90Ku5cDMX52/DVHxDAE4FZmeubgpeeVMPJcB9gJgUW4GcUGz
-	XT7nvadu6y1+Blny40PBdU2abcKSq6H6sYFXv/TZLfAwUJBfR4L4EABktTqGURBWcUC5PyuQjm5
-	pWXaY0b4W5F3S//iC08cxVw66Eu3dplWEr/WauJU8EqNxTeMFKVHUXibMrV8rLgHwKFRF4ziXbE
-	xuDRMHnfKEEIPv5BrkbrvEZk8Jy4c+ZLE3KtumDlVB7uGC3C37FNhHGrkPkz0Uat86VUuDdZ3LR
-	fS8CVuiDDfNc/qgrwQ1oK4p+Nx9rQgMr2d0cgMSGTw//U3VIdLNpaPh8jFjCk37iQEr2TKrnajn
-	Zzp0fvf2GPMmJ55hghKyW2VIRbEfKXHZnEpWvlSqsbt99TuyYuLqi0Z2SefAVNBEr77/tSL6eQ=
-	=
-X-Received: by 2002:a7b:ca5a:0:b0:49f:fbad:29ae with SMTP id 5b1f17b1804b1-4a01eb19ffdmr6267285e9.17.1790793521692;
-        Wed, 30 Sep 2026 11:38:41 -0700 (PDT)
-Received: from unknown748F3CBA5068 (dynamic-2a02-3100-b2b3-0101-b51c-a607-3dcc-3979.310.pool.telefonica.de. [2a02:3100:b2b3:101:b51c:a607:3dcc:3979])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a01f979bbcsm1867795e9.5.2026.09.30.11.38.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Sep 2026 11:38:41 -0700 (PDT)
-Date: Wed, 30 Sep 2026 20:38:39 +0200
-From: Karl Mehltretter <kmehltretter@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org, linux-rt-devel@lists.linux.dev, 
-	netdev@vger.kernel.org, sashiko-bot@kernel.org, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@kernel.org>, Jakub Kicinski <kuba@kernel.org>, 
-	Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, 
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>, Clark Williams <clrkwllms@kernel.org>, 
-	Steven Rostedt <rostedt@goodmis.org>, Stephen Hemminger <stephen@networkplumber.org>
-Subject: Re: [PATCH net 2/2] netpoll: avoid blocking on the transmit lock in
- queue_process
-Message-ID: <ar1VeFD4pTgsG0i0@gmail.com>
-References: <20260928064239.32456-1-kmehltretter@gmail.com>
- <20260928064239.32456-3-kmehltretter@gmail.com>
- <20260929064307.569CE1F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="rKwk765z"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 34AD74E410D5;
+	Wed, 30 Sep 2026 19:35:48 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id E707060749;
+	Wed, 30 Sep 2026 19:35:47 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 67C771032A657;
+	Wed, 30 Sep 2026 21:35:41 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1790796942; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=vpqwVhkaQrlM436Ao8cy3FIBQzurew4N1bUjRlG3ai4=;
+	b=rKwk765zTUA62PJdK6Dbqbnq30ntX08ZMYWV9oB4Bkff4C0oXIhqhIPXhT6CRN0HsQlFU9
+	5b4bHMwIQUtwRhiCGp2C9VWPa16v0EWh84DXBgciHzslAo919sCG505Lz5Lm/udM56j5ga
+	DjrCV8uZA7AU0TUTolKn0jzNrKzHOtTxtGFhPJoMXeVkc8QWhn3SJgaZ6Ajz+G+rJJCww7
+	QEVb4SZd3TFHfpiHwuxG3e/Kzr9u7yKCf3yfyf29356z6ZU27N3kV80Ua+eSwMT1T+c/2n
+	Cznaegi02Y9iRSzMnBlRDuvPm/BoAoeakPqq9yeNPLLtS4kMMBF4Y4FIDTy3fQ==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260929064307.569CE1F000FF@smtp.kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 30 Sep 2026 21:35:39 +0200
+Message-Id: <DLSWJ8V1AIC9.3D68VRRVHXJUF@bootlin.com>
+From: "Luca Ceresoli" <luca.ceresoli@bootlin.com>
+Subject: Re: [PATCH v2 3/7] drm/bridge: dw-mipi-dsi: stop using deprecated
+ devm_drm_of_get_bridge()
+Cc: <wsa+renesas@sang-engineering.com>, <imx@lists.linux.dev>,
+ <Frank.Li@kernel.org>, <dri-devel@lists.freedesktop.org>
+To: <sashiko-reviews@lists.linux.dev>, "Luca Ceresoli"
+ <luca.ceresoli@bootlin.com>
+X-Mailer: aerc 0.22.0
+References: <20260929-drm-fix-of_get_bridge-build-regression-v2-0-6da431d8f180@bootlin.com> <20260929-drm-fix-of_get_bridge-build-regression-v2-3-6da431d8f180@bootlin.com> <20260929135537.5E85C1F00898@smtp.kernel.org>
+In-Reply-To: <20260929135537.5E85C1F00898@smtp.kernel.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Tue, Sep 29, 2026 at 06:43:06AM +0100, sashiko-bot@kernel.org wrote:
-> > +			schedule_delayed_work(&npinfo->tx_work, HZ / 10);
-> > +			return;
-> 
-> [Severity: High]
-> Does this schedule an excessively long delay when encountering a transient
-> spinlock contention?
+On Tue Sep 29, 2026 at 3:55 PM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] drm: bridge reference leak on dw_mipi_dsi_host_detach early re=
+turn
+> --
+>
+> commit b7207f37872ee6fe7eb2903e38f89975b930c392
+> Author: Luca Ceresoli <luca.ceresoli@bootlin.com>
+>
+> drm/bridge: dw-mipi-dsi: stop using deprecated devm_drm_of_get_bridge()
+>
+> This commit switches from the deprecated devm_drm_of_get_bridge() to
+> of_drm_get_bridge_by_endpoint() to resolve a build failure when CONFIG_OF
+> is disabled. Since of_drm_get_bridge_by_endpoint() returns a refcounted
+> bridge, it adds the necessary put operations to release the reference.
+>
+> Link: https://lore.kernel.org/r/20260928161605.2271412-1-arnd@kernel.org
+> Link: https://lore.kernel.org/oe-kbuild-all/202609291109.9RGna4XZ-lkp@int=
+el.com/
+>
+>> diff --git a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c b/drivers/gpu=
+/drm/bridge/synopsys/dw-mipi-dsi.c
+>> index 5dd475fcaacf8..22d1b8cbe1d57 100644
+>> --- a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
+>> +++ b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
+> [ ... ]
+>> @@ -368,9 +368,8 @@ static int dw_mipi_dsi_host_detach(struct mipi_dsi_h=
+ost *host,
+>>  			return ret;
+>
+> [Severity: Medium]
+> If pdata->host_ops->detach() returns a negative error code (e.g., during
+> device unbind or PHY teardown errors) and takes this early return, does t=
+his
+> leak the bridge reference acquired in the attach function?
+>
+> Since the bridge is now dynamically refcounted and we skip the newly adde=
+d
+> drm_bridge_clear_and_put(&dsi->bridge.next_bridge), it looks like the
+> reference count will not be properly decremented on this error path.
 
-Yes, HZ / 10 is too long for transient TX-lock contention. I've changed
-it in v2 to retry after one jiffy. The existing HZ / 10 backoff remains
-for a stopped transmit queue or NETDEV_TX_BUSY.
+The issue was there already for drm_of_panel_bridge_remove() (here deleted)
+and drm_bridge_remove().
 
-Karl
+Id say it's orthogonal, and most likely nobody has this issue in real
+life. So I took a note to fix this soon, and I'd let this patch be applied
+as is because it fixes an issue bothering people.
+
+Luca
+
+--
+Luca Ceresoli, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
