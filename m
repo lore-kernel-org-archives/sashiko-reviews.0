@@ -1,756 +1,273 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-wr2-f34.google.com (mail-wr2-f34.google.com [74.125.225.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FF45013B7;
-	Thu,  1 Oct 2026 13:37:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC78F1F5834
+	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 13:52:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790861884; cv=none; b=rHTeEZ9TUUv8mghVudDGgRemvKVuk9CrHgmeM9nd4x5dzuHpQIATbcqDfgizUEUjdeBLlwckHMjyPG2YUMdJwkNkGt+8eKZGp1RzCiyfwK3ZEs4SoPf3kCF2MjqA0lrfty9Fze0Wh4FtVF+yhUwx6bCO0JhZmI59ovwkAY3CCVU=
+	t=1790862731; cv=none; b=dYIc1TbAuK8FBmrP20wW28c1Kzwxh4s9MskltVITORkMVx0TeQmP5YiXPx1TaPpiLYHAda2jvn8Gl2hSWijoH+fm+t1aHYtQKUMnBaaFluyIhGYopyPrvpGNLn8SoiIfgmQWJ/FfwzW/aAjEbtMMqw4a3NtvK0/PDtTlG9d7ZSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790861884; c=relaxed/simple;
-	bh=M40EEIrA/vbLHQ6yHL4RPGT8bBcdUlfr4UTfVVBu3aM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s0wxZ4wKYCkt6+F+a53clFq+MGz8yuiVZfh16NNe8rWzy4Bd2OchrMPl4tQdEaAPqC9JaAN7cK9qtgIZyyi6Uxof9hpxoEUwR93QFRfiTCTrwICNIU0BcdyG0Su7oZYSbnIZwWAKs0z89+7zE7YqZdijm90T2qI3ptvCma6wyxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=1DrlmJS9; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=9+zRUqF7; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=S4unxRWc; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=1c3ynNbx; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1790862731; c=relaxed/simple;
+	bh=xph1c43Xe1W7p8VbWvnpVws2Aq5YHWyRuoWpTrL40fo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z3XCwdyb7fdn2atNoTrlSzmVSylodgbG9BORHHKHsvGGgPxBKNYSSy6/s4Gw7V1qHEq/5sS1YnSTCNDpcdYTDKy4BumfoFUGjrY1vFHV99vL1xslSNP96IPLWjpfWvoPbT6mq9ixShbyVECh8wr0nGwjoGAnLbz+d4YUcByEUv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=PsQ9T87+; arc=none smtp.client-ip=74.125.225.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="1DrlmJS9";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="9+zRUqF7";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="S4unxRWc";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="1c3ynNbx"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 5593D1FCDC;
-	Thu,  1 Oct 2026 13:37:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1790861866; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=EbPLpreX6eGjQmUmM/w1A6keJ/9bXneRkMYVcc27vQo=;
-	b=1DrlmJS9EwCDOa5e/nOk/zqN46kAbqLqB8+NXshGewnKbTobnofNwFP8QQ5vdw2Ui/FAjM
-	lg0Ff7i+UzAgXFmrzAOVKD+cuhEZtcWgGWP6a+8zgPjj+dfS/sQ+fFYgzxgo7Azh4Pu3u2
-	k4N470+bFhIPvDS+fj3V5NNuBEPgz5E=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1790861866;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=EbPLpreX6eGjQmUmM/w1A6keJ/9bXneRkMYVcc27vQo=;
-	b=9+zRUqF7AH03c/Z3TZ2yAEaBOAvOGl5ecinU3V7EUce9bv7W3/iQdCHbcTjXzYAagKUDyO
-	VrEancfxLOjmiACw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1790861862; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=EbPLpreX6eGjQmUmM/w1A6keJ/9bXneRkMYVcc27vQo=;
-	b=S4unxRWc87gV6g/WTw0BOyIn0MxQCFmMRlinU696qQHPN0gxjBmdz2mb0KSuz8uS16DhzD
-	IjS+3/E/UzkGbpUzIAMxVv0wHIk5F3oOL6/OpYrj9/n1JL/Qw/WJ6aZsvmBVOe+RPqFEzh
-	pJpNSScAtteEnOoY1R3PwGVgFd4clEU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1790861862;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=EbPLpreX6eGjQmUmM/w1A6keJ/9bXneRkMYVcc27vQo=;
-	b=1c3ynNbxR4+FDpZkykoKSYmG85mpuV/JIQeUscLmyOUYhfl+QJ0E3ujMllcINxYbf5L5Vt
-	d7ueJ92Cfou4d6Dg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C3E1E13B7B;
-	Thu,  1 Oct 2026 13:37:41 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id Ih09KyRivmrGOQAAD6G6ig:T3
-	(envelope-from <tzimmermann@suse.de>); Thu, 01 Oct 2026 13:37:41 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	decui@microsoft.com,
-	longli@microsoft.com,
-	ssengar@linux.microsoft.com,
-	andy@kernel.org,
-	gregkh@linuxfoundation.org
-Cc: dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	linux-fbdev@vger.kernel.org,
-	linux-staging@lists.linux.dev,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 2/2] drm/kms-helper: Remove struct drm_simple_display_pipe and helpers
-Date: Thu,  1 Oct 2026 15:35:38 +0200
-Message-ID: <20261001133736.802604-3-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261001133736.802604-1-tzimmermann@suse.de>
-References: <20261001133736.802604-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PsQ9T87+"
+Received: by mail-wr2-f34.google.com with SMTP id ffacd0b85a97d-48afe3b2383so1526546f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 01 Oct 2026 06:52:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1790862728; x=1791467528; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=puUp6QetFCd0xmG62nmZajmHZqrboAPDRquIYk2wybY=;
+        b=PsQ9T87+rrY7tfG83Ui6QtEYJM+hImnbNNXVzfLNMxORwjb/uLZih9MWO82sXnCGli
+         RMpvjDhQTe7K5p9TZKfDazC1cECsuDCuacFMoQ5JwRlewYnT57NvpRRcCO1gmzpdeGlV
+         RRsR5bkD7xXzxs2wXmtVR0iJO4Tot8c6dp0JCzDQxDgBVkUr4081lXrjLJ5gJSLt+DoS
+         th7wHqPiss9QwmTVO7rXgADQZffaM1V/UtO7x1zUR1V7ZGQO3VYd3K5Cgln6eFYLx39w
+         Zf5UoLIBGxrn6dOhZLGjiEFng7O8ptoTaxzZpQ1vPpHYLbw0BUiJLYnGtzKhC5pIH44v
+         ChPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790862728; x=1791467528;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=puUp6QetFCd0xmG62nmZajmHZqrboAPDRquIYk2wybY=;
+        b=HHu7phvbn/SJXxPNCRrFVu2jWV7mZ/eOki4lQEn3U/FZ9y8KZXj3e+xJkpFV2hecqZ
+         aG8F/M+9TIOsll4zjHxBMb1Izf42jqN0nBtK/uEkoJ7yJmN2tWC/bgavJWyNYZQ6xcwR
+         nbki2dkbImpq9anXCdmv9M8G/BwMwAIECy1tBRg+SRBiEAwN3RHhiqpY+8/thjFgACND
+         tIFwGAMfpQ6gLn/u0lWv3e3400cydUFC0RmCNQzqQLfsv80kLrT0m1o1jV7nmtr8+t8Q
+         MfjmufGE0TRMIGuUVJlfVZFkM3nIv2PUq3yZ/bswLD2Jfz6gtDJStmhqxSGG0DuFRFKO
+         FLjQ==
+X-Gm-Message-State: AFuF++mPTdku9nNjXaLHi+sec4qYMZzqEsmxU03lSrxXrTtXxF6h+H0X
+	0pDq4/RUboIaCikFeRryWhhfzCuAh3iXeUX1ZYFRpUnGj+etskt2TaO/6nK4bvgwD8tzATEEee2
+	htS/eF3qN
+X-Gm-Gg: AYBFou2uTtQMR/oJP2CpGOpUrE9WNrcMSAcTOP9g9sm3u7wf/Zs1DH3UVhxjSnAZwvM
+	QiILOEUtg9jpUm5L4UF2z/UXD8499FNwl89VVluBHN99TofQjnu0vwhtbqrFdepi5g9CNDDno3U
+	pJALxS+onac+EHeg86Q8P8ewRjvMStl5grFsLs2d09sd2e/w/QOJ/rGfoydA8+jjB8yofKdODt7
+	JY+Ai1XxY7542EHyPPEvxWxnCv9pyXaM87apx3dsOV6CcBiHg9X/ktmE1wugdhnQDH8yIMP9FoB
+	VQF3sBSGYG6RWL4oVCndUfXYuOYmLq/7/8GtQ+ApAox+qOLBJeuJpRdr4yI+89bAQdLkZkJEUpz
+	3/RN8lFc+oOR0mFvC0TFF5DqTtUyoKwChjmXDRn1jFuuqsd/RlajV5NI4i6t4e+64xaOqoXWJZ6
+	NOPshp/esYCy5DFe4diBeZZ+6mm7/5Sy0YlYf1lzJ0+h8f6eD+YG6Z9wpynmQ3ILql4vPuxKGQv
+	u1XVLDj+6jk6diD56FQ8bP+a4woDszsUpEjia6Ogso=
+X-Received: by 2002:a05:600c:83c3:b0:49c:edd8:ba35 with SMTP id 5b1f17b1804b1-4a01aff3c4emr82048195e9.6.1790862726856;
+        Thu, 01 Oct 2026 06:52:06 -0700 (PDT)
+Received: from google.com (197.183.140.34.bc.googleusercontent.com. [34.140.183.197])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a01f947898sm75262965e9.10.2026.10.01.06.52.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Oct 2026 06:52:05 -0700 (PDT)
+Date: Thu, 1 Oct 2026 14:52:01 +0100
+From: Vincent Donnefort <vdonnefort@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>
+Subject: Re: [PATCH v4 4/4] KVM: arm64: Add hyp_printk event to nVHE/pKVM hyp
+Message-ID: <ar5lgYD93976IO6s@google.com>
+References: <20261001084909.2937943-1-vdonnefort@google.com>
+ <20261001084909.2937943-5-vdonnefort@google.com>
+ <20261001090709.C0A971F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-6.80 / 50.00];
-	REPLY(-4.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_HAS_DN(0.00)[];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,gmail.com,ffwll.ch,microsoft.com,linux.microsoft.com,linuxfoundation.org];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
-	FROM_EQ_ENVFROM(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RCVD_TLS_ALL(0.00)[];
-	R_RATELIMIT(0.00)[to_ip_from(RLqirfcw6gnbcr9a9yhi49fhi6)];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Spam-Score: -6.80
-X-Spam-Level: 
-X-Spam-Flag: NO
+In-Reply-To: <20261001090709.C0A971F000FF@smtp.kernel.org>
 
-There are no drivers using struct drm_simple_display_pipe. Remove
-the data type and all related helpers.
+On Thu, Oct 01, 2026 at 09:07:09AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] kvm: trace_hyp_printk lacks format string validation leading to host panic/leak
+> - [Medium] arm64: unaligned _hyp_string_fmts section start leads to pointer corruption
+> - [Medium] kvm: out-of-bounds read in __hyp_trace_printk when trace sequence is empty
+> - [Medium] kvm: uninitialized padding in remote_event_format_hyp_printk leaks hyp memory
+> --
+> 
+> commit bc7c47888c5fbd307a50212081f15f7498660a9b
+> Author: Vincent Donnefort <vdonnefort@google.com>
+> 
+> KVM: arm64: Add hyp_printk event to nVHE/pKVM hyp
+> 
+> Create an event to allow developers to log pretty much anything into the
+> hypervisor tracing buffer with trace_hyp_printk(), just like the kernel
+> tracing has the function trace_printk().
+> 
+> > diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
+> > index af1d720209764..7f9b6c7dfe70f 100644
+> > --- a/arch/arm64/kernel/vmlinux.lds.S
+> > +++ b/arch/arm64/kernel/vmlinux.lds.S
+> > @@ -324,6 +324,10 @@ SECTIONS
+> >  		__hyp_events_start = .;
+> >  		*(SORT(_hyp_events.*))
+> >  		__hyp_events_end = .;
+> > +
+> > +		__hyp_string_fmts_start = .;
+> > +		*(_hyp_string_fmts)
+> > +		__hyp_string_fmts_end = .;
+> >  	}
+> >  #endif
+> 
+> [Severity: Medium]
+> Could __hyp_string_fmts_start capture an unaligned address before section
+> padding is applied? The compiler might align struct hyp_string_fmt
+> elements, but without an ALIGN() directive, __hyp_string_fmts_start
+> captures the location counter before any alignment padding. When calculating
+> fmt_id in the hypervisor (fmt - __hyp_string_fmts_start), this unaligned
+> offset might yield incorrect values and cause memory access errors.
 
-The idea behind struct drm_simple_display_pipe was to provide an
-easier way for writing DRM drivers besides regular atomic helpers.
-It turned out to be more complicated. With all drivers being updated
-to use atomic helpers, it's time to remove simple-pipe. Also clean
-up the related TODO items.
+arg, that is correct, it depends on the number of events...
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- Documentation/gpu/todo.rst              |  17 --
- drivers/gpu/drm/drm_gem_atomic_helper.c |  92 -------
- drivers/gpu/drm/drm_simple_kms_helper.c | 328 ------------------------
- drivers/staging/fbtft/TODO              |   6 +-
- include/drm/drm_gem_atomic_helper.h     |  28 --
- include/drm/drm_simple_kms_helper.h     |  56 +---
- 6 files changed, 5 insertions(+), 522 deletions(-)
+I'll move into its own .rodata.hyp_string_fmts output section.
 
-diff --git a/Documentation/gpu/todo.rst b/Documentation/gpu/todo.rst
-index a437ae5c71f4..e6d36f8da086 100644
---- a/Documentation/gpu/todo.rst
-+++ b/Documentation/gpu/todo.rst
-@@ -29,23 +29,6 @@ refactorings already and are an expert in the specific area
- Subsystem-wide refactorings
- ===========================
- 
--Replace struct drm_simple_display_pipe with regular atomic helpers
--------------------------------------------------------------------
--
--The data type struct drm_simple_display_pipe and its helpers were supposed
--to simplify driver development. Instead they only added an intermediate layer
--between atomic modesetting and the DRM driver.
--
--There are still drivers that use drm_simple_display_pipe. The task here is to
--convert them to use regular atomic helpers. Search for a driver that calls
--drm_simple_display_pipe_init() and inline all helpers from drm_simple_kms_helper.c
--into the driver, such that no simple-KMS interfaces are required. Please also
--rename all inlined functions according to driver conventions.
--
--Contact: Thomas Zimmermann, respective driver maintainer
--
--Level: Easy
--
- Remove custom dumb_map_offset implementations
- ---------------------------------------------
- 
-diff --git a/drivers/gpu/drm/drm_gem_atomic_helper.c b/drivers/gpu/drm/drm_gem_atomic_helper.c
-index dd9efa7e3216..c952cfed84c1 100644
---- a/drivers/gpu/drm/drm_gem_atomic_helper.c
-+++ b/drivers/gpu/drm/drm_gem_atomic_helper.c
-@@ -10,7 +10,6 @@
- #include <drm/drm_gem.h>
- #include <drm/drm_gem_atomic_helper.h>
- #include <drm/drm_gem_framebuffer_helper.h>
--#include <drm/drm_simple_kms_helper.h>
- 
- #include "drm_internal.h"
- 
-@@ -367,94 +366,3 @@ void drm_gem_end_shadow_fb_access(struct drm_plane *plane, struct drm_plane_stat
- 	drm_gem_fb_vunmap(fb, shadow_plane_state->map);
- }
- EXPORT_SYMBOL(drm_gem_end_shadow_fb_access);
--
--/**
-- * drm_gem_simple_kms_begin_shadow_fb_access - prepares shadow framebuffers for CPU access
-- * @pipe: the simple display pipe
-- * @plane_state: the plane state of type struct drm_shadow_plane_state
-- *
-- * This function implements struct drm_simple_display_funcs.begin_fb_access.
-- *
-- * See drm_gem_begin_shadow_fb_access() for details and
-- * drm_gem_simple_kms_cleanup_shadow_fb() for cleanup.
-- *
-- * Returns:
-- * 0 on success, or a negative errno code otherwise.
-- */
--int drm_gem_simple_kms_begin_shadow_fb_access(struct drm_simple_display_pipe *pipe,
--					      struct drm_plane_state *plane_state)
--{
--	return drm_gem_begin_shadow_fb_access(&pipe->plane, plane_state);
--}
--EXPORT_SYMBOL(drm_gem_simple_kms_begin_shadow_fb_access);
--
--/**
-- * drm_gem_simple_kms_end_shadow_fb_access - releases shadow framebuffers from CPU access
-- * @pipe: the simple display pipe
-- * @plane_state: the plane state of type struct drm_shadow_plane_state
-- *
-- * This function implements struct drm_simple_display_funcs.end_fb_access.
-- * It undoes all effects of drm_gem_simple_kms_begin_shadow_fb_access() in
-- * reverse order.
-- *
-- * See drm_gem_simple_kms_begin_shadow_fb_access().
-- */
--void drm_gem_simple_kms_end_shadow_fb_access(struct drm_simple_display_pipe *pipe,
--					     struct drm_plane_state *plane_state)
--{
--	drm_gem_end_shadow_fb_access(&pipe->plane, plane_state);
--}
--EXPORT_SYMBOL(drm_gem_simple_kms_end_shadow_fb_access);
--
--/**
-- * drm_gem_simple_kms_create_shadow_plane_state - creates shadow-buffered plane state
-- * @pipe: the simple display pipe
-- *
-- * This function implements struct drm_simple_display_pipe_funcs.create_plane_state
-- * for shadow-buffered planes.
-- *
-- * Returns:
-- * A pointer to a new plane state on success, or an ERR_PTR()-encoded
-- * error code otherwise.
-- */
--struct drm_plane_state *
--drm_gem_simple_kms_create_shadow_plane_state(struct drm_simple_display_pipe *pipe)
--{
--	return drm_gem_create_shadow_plane_state(&pipe->plane);
--}
--EXPORT_SYMBOL(drm_gem_simple_kms_create_shadow_plane_state);
--
--/**
-- * drm_gem_simple_kms_duplicate_shadow_plane_state - duplicates shadow-buffered plane state
-- * @pipe: the simple display pipe
-- *
-- * This function implements struct drm_simple_display_funcs.duplicate_plane_state
-- * for shadow-buffered planes. It does not duplicate existing mappings of the shadow
-- * buffers. Mappings are maintained during the atomic commit by the plane's prepare_fb
-- * and cleanup_fb helpers.
-- *
-- * Returns:
-- * A pointer to a new plane state on success, or NULL otherwise.
-- */
--struct drm_plane_state *
--drm_gem_simple_kms_duplicate_shadow_plane_state(struct drm_simple_display_pipe *pipe)
--{
--	return drm_gem_duplicate_shadow_plane_state(&pipe->plane);
--}
--EXPORT_SYMBOL(drm_gem_simple_kms_duplicate_shadow_plane_state);
--
--/**
-- * drm_gem_simple_kms_destroy_shadow_plane_state - resets shadow-buffered plane state
-- * @pipe: the simple display pipe
-- * @plane_state: the plane state of type struct drm_shadow_plane_state
-- *
-- * This function implements struct drm_simple_display_funcs.destroy_plane_state
-- * for shadow-buffered planes. It expects that mappings of shadow buffers
-- * have been released already.
-- */
--void drm_gem_simple_kms_destroy_shadow_plane_state(struct drm_simple_display_pipe *pipe,
--						   struct drm_plane_state *plane_state)
--{
--	drm_gem_destroy_shadow_plane_state(&pipe->plane, plane_state);
--}
--EXPORT_SYMBOL(drm_gem_simple_kms_destroy_shadow_plane_state);
-diff --git a/drivers/gpu/drm/drm_simple_kms_helper.c b/drivers/gpu/drm/drm_simple_kms_helper.c
-index 5e324c77ad27..1d048282ed50 100644
---- a/drivers/gpu/drm/drm_simple_kms_helper.c
-+++ b/drivers/gpu/drm/drm_simple_kms_helper.c
-@@ -16,10 +16,6 @@
- #include <drm/drm_probe_helper.h>
- #include <drm/drm_simple_kms_helper.h>
- 
--static const struct drm_encoder_funcs drm_simple_encoder_funcs_cleanup = {
--	.destroy = drm_encoder_cleanup,
--};
--
- void *__drmm_simple_encoder_alloc(struct drm_device *dev, size_t size,
- 				  size_t offset, int encoder_type)
- {
-@@ -28,329 +24,5 @@ void *__drmm_simple_encoder_alloc(struct drm_device *dev, size_t size,
- }
- EXPORT_SYMBOL(__drmm_simple_encoder_alloc);
- 
--static enum drm_mode_status
--drm_simple_kms_crtc_mode_valid(struct drm_crtc *crtc,
--			       const struct drm_display_mode *mode)
--{
--	struct drm_simple_display_pipe *pipe;
--
--	pipe = container_of(crtc, struct drm_simple_display_pipe, crtc);
--	if (!pipe->funcs || !pipe->funcs->mode_valid)
--		/* Anything goes */
--		return MODE_OK;
--
--	return pipe->funcs->mode_valid(pipe, mode);
--}
--
--static int drm_simple_kms_crtc_check(struct drm_crtc *crtc,
--				     struct drm_atomic_commit *state)
--{
--	struct drm_crtc_state *crtc_state = drm_atomic_get_new_crtc_state(state, crtc);
--	int ret;
--
--	if (!crtc_state->enable)
--		goto out;
--
--	ret = drm_atomic_helper_check_crtc_primary_plane(crtc_state);
--	if (ret)
--		return ret;
--
--out:
--	return drm_atomic_add_affected_planes(state, crtc);
--}
--
--static void drm_simple_kms_crtc_enable(struct drm_crtc *crtc,
--				       struct drm_atomic_commit *state)
--{
--	struct drm_plane *plane;
--	struct drm_simple_display_pipe *pipe;
--
--	pipe = container_of(crtc, struct drm_simple_display_pipe, crtc);
--	if (!pipe->funcs || !pipe->funcs->enable)
--		return;
--
--	plane = &pipe->plane;
--	pipe->funcs->enable(pipe, crtc->state, plane->state);
--}
--
--static void drm_simple_kms_crtc_disable(struct drm_crtc *crtc,
--					struct drm_atomic_commit *state)
--{
--	struct drm_simple_display_pipe *pipe;
--
--	pipe = container_of(crtc, struct drm_simple_display_pipe, crtc);
--	if (!pipe->funcs || !pipe->funcs->disable)
--		return;
--
--	pipe->funcs->disable(pipe);
--}
--
--static const struct drm_crtc_helper_funcs drm_simple_kms_crtc_helper_funcs = {
--	.mode_valid = drm_simple_kms_crtc_mode_valid,
--	.atomic_check = drm_simple_kms_crtc_check,
--	.atomic_enable = drm_simple_kms_crtc_enable,
--	.atomic_disable = drm_simple_kms_crtc_disable,
--};
--
--static struct drm_crtc_state *drm_simple_kms_crtc_duplicate_state(struct drm_crtc *crtc)
--{
--	struct drm_simple_display_pipe *pipe;
--
--	pipe = container_of(crtc, struct drm_simple_display_pipe, crtc);
--	if (!pipe->funcs || !pipe->funcs->duplicate_crtc_state)
--		return drm_atomic_helper_crtc_duplicate_state(crtc);
--
--	return pipe->funcs->duplicate_crtc_state(pipe);
--}
--
--static void drm_simple_kms_crtc_destroy_state(struct drm_crtc *crtc, struct drm_crtc_state *state)
--{
--	struct drm_simple_display_pipe *pipe;
--
--	pipe = container_of(crtc, struct drm_simple_display_pipe, crtc);
--	if (!pipe->funcs || !pipe->funcs->destroy_crtc_state)
--		drm_atomic_helper_crtc_destroy_state(crtc, state);
--	else
--		pipe->funcs->destroy_crtc_state(pipe, state);
--}
--
--static int drm_simple_kms_crtc_enable_vblank(struct drm_crtc *crtc)
--{
--	struct drm_simple_display_pipe *pipe;
--
--	pipe = container_of(crtc, struct drm_simple_display_pipe, crtc);
--	if (!pipe->funcs || !pipe->funcs->enable_vblank)
--		return 0;
--
--	return pipe->funcs->enable_vblank(pipe);
--}
--
--static void drm_simple_kms_crtc_disable_vblank(struct drm_crtc *crtc)
--{
--	struct drm_simple_display_pipe *pipe;
--
--	pipe = container_of(crtc, struct drm_simple_display_pipe, crtc);
--	if (!pipe->funcs || !pipe->funcs->disable_vblank)
--		return;
--
--	pipe->funcs->disable_vblank(pipe);
--}
--
--static const struct drm_crtc_funcs drm_simple_kms_crtc_funcs = {
--	.atomic_create_state = drm_atomic_helper_crtc_create_state,
--	.destroy = drm_crtc_cleanup,
--	.set_config = drm_atomic_helper_set_config,
--	.page_flip = drm_atomic_helper_page_flip,
--	.atomic_duplicate_state = drm_simple_kms_crtc_duplicate_state,
--	.atomic_destroy_state = drm_simple_kms_crtc_destroy_state,
--	.enable_vblank = drm_simple_kms_crtc_enable_vblank,
--	.disable_vblank = drm_simple_kms_crtc_disable_vblank,
--};
--
--static int drm_simple_kms_plane_atomic_check(struct drm_plane *plane,
--					struct drm_atomic_commit *state)
--{
--	struct drm_plane_state *plane_state = drm_atomic_get_new_plane_state(state,
--									     plane);
--	struct drm_simple_display_pipe *pipe;
--	struct drm_crtc_state *crtc_state;
--	int ret;
--
--	pipe = container_of(plane, struct drm_simple_display_pipe, plane);
--	crtc_state = drm_atomic_get_new_crtc_state(state,
--						   &pipe->crtc);
--
--	ret = drm_atomic_helper_check_plane_state(plane_state, crtc_state,
--						  DRM_PLANE_NO_SCALING,
--						  DRM_PLANE_NO_SCALING,
--						  false, false);
--	if (ret)
--		return ret;
--
--	if (!plane_state->visible)
--		return 0;
--
--	if (!pipe->funcs || !pipe->funcs->check)
--		return 0;
--
--	return pipe->funcs->check(pipe, plane_state, crtc_state);
--}
--
--static void drm_simple_kms_plane_atomic_update(struct drm_plane *plane,
--					struct drm_atomic_commit *state)
--{
--	struct drm_plane_state *old_pstate = drm_atomic_get_old_plane_state(state,
--									    plane);
--	struct drm_simple_display_pipe *pipe;
--
--	pipe = container_of(plane, struct drm_simple_display_pipe, plane);
--	if (!pipe->funcs || !pipe->funcs->update)
--		return;
--
--	pipe->funcs->update(pipe, old_pstate);
--}
--
--static int drm_simple_kms_plane_prepare_fb(struct drm_plane *plane,
--					   struct drm_plane_state *state)
--{
--	struct drm_simple_display_pipe *pipe;
--
--	pipe = container_of(plane, struct drm_simple_display_pipe, plane);
--	if (!pipe->funcs || !pipe->funcs->prepare_fb) {
--		if (WARN_ON_ONCE(!drm_core_check_feature(plane->dev, DRIVER_GEM)))
--			return 0;
--
--		WARN_ON_ONCE(pipe->funcs && pipe->funcs->cleanup_fb);
--
--		return drm_gem_plane_helper_prepare_fb(plane, state);
--	}
--
--	return pipe->funcs->prepare_fb(pipe, state);
--}
--
--static void drm_simple_kms_plane_cleanup_fb(struct drm_plane *plane,
--					    struct drm_plane_state *state)
--{
--	struct drm_simple_display_pipe *pipe;
--
--	pipe = container_of(plane, struct drm_simple_display_pipe, plane);
--	if (!pipe->funcs || !pipe->funcs->cleanup_fb)
--		return;
--
--	pipe->funcs->cleanup_fb(pipe, state);
--}
--
--static int drm_simple_kms_plane_begin_fb_access(struct drm_plane *plane,
--						struct drm_plane_state *new_plane_state)
--{
--	struct drm_simple_display_pipe *pipe;
--
--	pipe = container_of(plane, struct drm_simple_display_pipe, plane);
--	if (!pipe->funcs || !pipe->funcs->begin_fb_access)
--		return 0;
--
--	return pipe->funcs->begin_fb_access(pipe, new_plane_state);
--}
--
--static void drm_simple_kms_plane_end_fb_access(struct drm_plane *plane,
--					       struct drm_plane_state *new_plane_state)
--{
--	struct drm_simple_display_pipe *pipe;
--
--	pipe = container_of(plane, struct drm_simple_display_pipe, plane);
--	if (!pipe->funcs || !pipe->funcs->end_fb_access)
--		return;
--
--	pipe->funcs->end_fb_access(pipe, new_plane_state);
--}
--
--static bool drm_simple_kms_format_mod_supported(struct drm_plane *plane,
--						uint32_t format,
--						uint64_t modifier)
--{
--	return modifier == DRM_FORMAT_MOD_LINEAR;
--}
--
--static const struct drm_plane_helper_funcs drm_simple_kms_plane_helper_funcs = {
--	.prepare_fb = drm_simple_kms_plane_prepare_fb,
--	.cleanup_fb = drm_simple_kms_plane_cleanup_fb,
--	.begin_fb_access = drm_simple_kms_plane_begin_fb_access,
--	.end_fb_access = drm_simple_kms_plane_end_fb_access,
--	.atomic_check = drm_simple_kms_plane_atomic_check,
--	.atomic_update = drm_simple_kms_plane_atomic_update,
--};
--
--static struct drm_plane_state *
--drm_simple_kms_plane_create_state(struct drm_plane *plane)
--{
--	struct drm_simple_display_pipe *pipe;
--
--	pipe = container_of(plane, struct drm_simple_display_pipe, plane);
--	if (!pipe->funcs || !pipe->funcs->create_plane_state)
--		return drm_atomic_helper_plane_create_state(plane);
--
--	return pipe->funcs->create_plane_state(pipe);
--}
--
--static struct drm_plane_state *drm_simple_kms_plane_duplicate_state(struct drm_plane *plane)
--{
--	struct drm_simple_display_pipe *pipe;
--
--	pipe = container_of(plane, struct drm_simple_display_pipe, plane);
--	if (!pipe->funcs || !pipe->funcs->duplicate_plane_state)
--		return drm_atomic_helper_plane_duplicate_state(plane);
--
--	return pipe->funcs->duplicate_plane_state(pipe);
--}
--
--static void drm_simple_kms_plane_destroy_state(struct drm_plane *plane,
--					       struct drm_plane_state *state)
--{
--	struct drm_simple_display_pipe *pipe;
--
--	pipe = container_of(plane, struct drm_simple_display_pipe, plane);
--	if (!pipe->funcs || !pipe->funcs->destroy_plane_state)
--		drm_atomic_helper_plane_destroy_state(plane, state);
--	else
--		pipe->funcs->destroy_plane_state(pipe, state);
--}
--
--static const struct drm_plane_funcs drm_simple_kms_plane_funcs = {
--	.update_plane		= drm_atomic_helper_update_plane,
--	.disable_plane		= drm_atomic_helper_disable_plane,
--	.destroy		= drm_plane_cleanup,
--	.atomic_create_state	= drm_simple_kms_plane_create_state,
--	.atomic_duplicate_state	= drm_simple_kms_plane_duplicate_state,
--	.atomic_destroy_state	= drm_simple_kms_plane_destroy_state,
--	.format_mod_supported   = drm_simple_kms_format_mod_supported,
--};
--
--int drm_simple_display_pipe_attach_bridge(struct drm_simple_display_pipe *pipe,
--					  struct drm_bridge *bridge)
--{
--	return drm_bridge_attach(&pipe->encoder, bridge, NULL, 0);
--}
--EXPORT_SYMBOL(drm_simple_display_pipe_attach_bridge);
--
--int drm_simple_display_pipe_init(struct drm_device *dev,
--			struct drm_simple_display_pipe *pipe,
--			const struct drm_simple_display_pipe_funcs *funcs,
--			const uint32_t *formats, unsigned int format_count,
--			const uint64_t *format_modifiers,
--			struct drm_connector *connector)
--{
--	struct drm_encoder *encoder = &pipe->encoder;
--	struct drm_plane *plane = &pipe->plane;
--	struct drm_crtc *crtc = &pipe->crtc;
--	int ret;
--
--	pipe->connector = connector;
--	pipe->funcs = funcs;
--
--	drm_plane_helper_add(plane, &drm_simple_kms_plane_helper_funcs);
--	ret = drm_universal_plane_init(dev, plane, 0,
--				       &drm_simple_kms_plane_funcs,
--				       formats, format_count,
--				       format_modifiers,
--				       DRM_PLANE_TYPE_PRIMARY, NULL);
--	if (ret)
--		return ret;
--
--	drm_crtc_helper_add(crtc, &drm_simple_kms_crtc_helper_funcs);
--	ret = drm_crtc_init_with_planes(dev, crtc, plane, NULL,
--					&drm_simple_kms_crtc_funcs, NULL);
--	if (ret)
--		return ret;
--
--	encoder->possible_crtcs = drm_crtc_mask(crtc);
--	ret = drm_encoder_init(dev, encoder, &drm_simple_encoder_funcs_cleanup,
--			       DRM_MODE_ENCODER_NONE, NULL);
--	if (ret || !connector)
--		return ret;
--
--	return drm_connector_attach_encoder(connector, encoder);
--}
--EXPORT_SYMBOL(drm_simple_display_pipe_init);
--
- MODULE_DESCRIPTION("Helpers for drivers for simple display hardware");
- MODULE_LICENSE("GPL");
-diff --git a/drivers/staging/fbtft/TODO b/drivers/staging/fbtft/TODO
-index e72a08bf221c..72df3ea3a52c 100644
---- a/drivers/staging/fbtft/TODO
-+++ b/drivers/staging/fbtft/TODO
-@@ -1,3 +1,3 @@
--* convert all these over to drm_simple_display_pipe and submit for inclusion
--  into the DRM subsystem under drivers/gpu/drm - fbdev doesn't take any new
--  drivers anymore.
-+* convert all these over to DRM and submit thme for inclusion into
-+  the DRM subsystem under drivers/gpu/drm - fbdev doesn't take any
-+  new drivers anymore.
-diff --git a/include/drm/drm_gem_atomic_helper.h b/include/drm/drm_gem_atomic_helper.h
-index d41877f77b77..f605a8a7b017 100644
---- a/include/drm/drm_gem_atomic_helper.h
-+++ b/include/drm/drm_gem_atomic_helper.h
-@@ -9,8 +9,6 @@
- #include <drm/drm_fourcc.h>
- #include <drm/drm_plane.h>
- 
--struct drm_simple_display_pipe;
--
- /*
-  * Plane Helpers
-  */
-@@ -126,30 +124,4 @@ void drm_gem_end_shadow_fb_access(struct drm_plane *plane, struct drm_plane_stat
- 	.begin_fb_access = drm_gem_begin_shadow_fb_access, \
- 	.end_fb_access = drm_gem_end_shadow_fb_access
- 
--int drm_gem_simple_kms_begin_shadow_fb_access(struct drm_simple_display_pipe *pipe,
--					      struct drm_plane_state *plane_state);
--void drm_gem_simple_kms_end_shadow_fb_access(struct drm_simple_display_pipe *pipe,
--					     struct drm_plane_state *plane_state);
--struct drm_plane_state *
--drm_gem_simple_kms_create_shadow_plane_state(struct drm_simple_display_pipe *pipe);
--struct drm_plane_state *
--drm_gem_simple_kms_duplicate_shadow_plane_state(struct drm_simple_display_pipe *pipe);
--void drm_gem_simple_kms_destroy_shadow_plane_state(struct drm_simple_display_pipe *pipe,
--						   struct drm_plane_state *plane_state);
--
--/**
-- * DRM_GEM_SIMPLE_DISPLAY_PIPE_SHADOW_PLANE_FUNCS -
-- *	Initializes struct drm_simple_display_pipe_funcs for shadow-buffered planes
-- *
-- * Drivers may use GEM BOs as shadow buffers over the framebuffer memory. This
-- * macro initializes struct drm_simple_display_pipe_funcs to use the rsp helper
-- * functions.
-- */
--#define DRM_GEM_SIMPLE_DISPLAY_PIPE_SHADOW_PLANE_FUNCS \
--	.begin_fb_access = drm_gem_simple_kms_begin_shadow_fb_access, \
--	.end_fb_access = drm_gem_simple_kms_end_shadow_fb_access, \
--	.create_plane_state = drm_gem_simple_kms_create_shadow_plane_state, \
--	.duplicate_plane_state = drm_gem_simple_kms_duplicate_shadow_plane_state, \
--	.destroy_plane_state = drm_gem_simple_kms_destroy_shadow_plane_state
--
- #endif /* __DRM_GEM_ATOMIC_HELPER_H__ */
-diff --git a/include/drm/drm_simple_kms_helper.h b/include/drm/drm_simple_kms_helper.h
-index 2b31c25c57a9..beb5c8a19bb7 100644
---- a/include/drm/drm_simple_kms_helper.h
-+++ b/include/drm/drm_simple_kms_helper.h
-@@ -11,61 +11,9 @@
- #ifndef __LINUX_DRM_SIMPLE_KMS_HELPER_H
- #define __LINUX_DRM_SIMPLE_KMS_HELPER_H
- 
--#include <drm/drm_crtc.h>
--#include <drm/drm_encoder.h>
--#include <drm/drm_plane.h>
-+#include <linux/types.h>
- 
--struct drm_simple_display_pipe;
--
--struct drm_simple_display_pipe_funcs {
--	enum drm_mode_status (*mode_valid)(struct drm_simple_display_pipe *pipe,
--					   const struct drm_display_mode *mode);
--	void (*enable)(struct drm_simple_display_pipe *pipe,
--		       struct drm_crtc_state *crtc_state,
--		       struct drm_plane_state *plane_state);
--	void (*disable)(struct drm_simple_display_pipe *pipe);
--	int (*check)(struct drm_simple_display_pipe *pipe,
--		     struct drm_plane_state *plane_state,
--		     struct drm_crtc_state *crtc_state);
--	void (*update)(struct drm_simple_display_pipe *pipe,
--		       struct drm_plane_state *old_plane_state);
--	int (*prepare_fb)(struct drm_simple_display_pipe *pipe,
--			  struct drm_plane_state *plane_state);
--	void (*cleanup_fb)(struct drm_simple_display_pipe *pipe,
--			   struct drm_plane_state *plane_state);
--	int (*begin_fb_access)(struct drm_simple_display_pipe *pipe,
--			       struct drm_plane_state *new_plane_state);
--	void (*end_fb_access)(struct drm_simple_display_pipe *pipe,
--			      struct drm_plane_state *plane_state);
--	int (*enable_vblank)(struct drm_simple_display_pipe *pipe);
--	void (*disable_vblank)(struct drm_simple_display_pipe *pipe);
--	struct drm_crtc_state * (*duplicate_crtc_state)(struct drm_simple_display_pipe *pipe);
--	void (*destroy_crtc_state)(struct drm_simple_display_pipe *pipe,
--				   struct drm_crtc_state *crtc_state);
--	struct drm_plane_state * (*create_plane_state)(struct drm_simple_display_pipe *pipe);
--	struct drm_plane_state * (*duplicate_plane_state)(struct drm_simple_display_pipe *pipe);
--	void (*destroy_plane_state)(struct drm_simple_display_pipe *pipe,
--				    struct drm_plane_state *plane_state);
--};
--
--struct drm_simple_display_pipe {
--	struct drm_crtc crtc;
--	struct drm_plane plane;
--	struct drm_encoder encoder;
--	struct drm_connector *connector;
--
--	const struct drm_simple_display_pipe_funcs *funcs;
--};
--
--int drm_simple_display_pipe_attach_bridge(struct drm_simple_display_pipe *pipe,
--					  struct drm_bridge *bridge);
--
--int drm_simple_display_pipe_init(struct drm_device *dev,
--			struct drm_simple_display_pipe *pipe,
--			const struct drm_simple_display_pipe_funcs *funcs,
--			const uint32_t *formats, unsigned int format_count,
--			const uint64_t *format_modifiers,
--			struct drm_connector *connector);
-+struct drm_device;
- 
- void *__drmm_simple_encoder_alloc(struct drm_device *dev, size_t size,
- 				  size_t offset, int encoder_type);
+And make the hyp_string_fmts struct const at the same time...
+
+> 
+> > diff --git a/arch/arm64/kvm/hyp/include/nvhe/trace.h b/arch/arm64/kvm/hyp/include/nvhe/trace.h
+> > index 8813ff250f8e0..fa50720e2cffd 100644
+> > --- a/arch/arm64/kvm/hyp/include/nvhe/trace.h
+> > +++ b/arch/arm64/kvm/hyp/include/nvhe/trace.h
+> [ ... ]
+> > @@ -46,6 +46,70 @@ static inline pid_t __tracing_get_vcpu_pid(struct kvm_cpu_context *host_ctxt)
+> >  void *tracing_reserve_entry(unsigned long length);
+> >  void tracing_commit_entry(void);
+> >  
+> > +/*
+> > + * The trace_hyp_printk boilerplate is too fiddly to be declared with
+> > + * HYP_EVENT():
+> > + *
+> > + * The string format is stored into a kernel-accessible ELF section. The
+> > + * hypervisor only writes the format ID.
+> > + *
+> > + * The function has a variadic prototype. We have no easy way to know each
+> > + * argument width so they must all cast to u64.
+> > + */
+> > +#define REMOTE_EVENT_CUSTOM_PRINTK(...)
+> > +
+> > +#define __TO_U64_0()
+> > +#define __TO_U64_1(x)			, (u64)(x)
+> > +#define __TO_U64_2(x, ...)		, (u64)(x) __TO_U64_1(__VA_ARGS__)
+> > +#define __TO_U64_3(x, ...)		, (u64)(x) __TO_U64_2(__VA_ARGS__)
+> > +#define __TO_U64_4(x, ...)		, (u64)(x) __TO_U64_3(__VA_ARGS__)
+> > +#define __TO_U64_5(x, ...)		, (u64)(x) __TO_U64_4(__VA_ARGS__)
+> > +#define __TO_U64_6(x, ...)		, (u64)(x) __TO_U64_5(__VA_ARGS__)
+> > +#define __TO_U64_7(x, ...)		, (u64)(x) __TO_U64_6(__VA_ARGS__)
+> > +#define __TO_U64_8(x, ...)		, (u64)(x) __TO_U64_7(__VA_ARGS__)
+> > +
+> > +#define __TO_U64_X(N, ...)		CONCATENATE(__TO_U64_, N)(__VA_ARGS__)
+> > +#define __TO_U64(...)			__TO_U64_X(COUNT_ARGS(__VA_ARGS__), ##__VA_ARGS__)
+> > +
+> > +REMOTE_EVENT_FORMAT(hyp_printk, HE_STRUCT(he_field(u16, fmt_id) he_field(u64, args[])));
+> 
+> [Severity: Medium]
+> Can this leak hypervisor memory to the host or userspace through uninitialized
+> struct padding? The REMOTE_EVENT_FORMAT definition creates a structure with
+> u16 fmt_id followed by a u64 args[] array, which introduces padding bytes
+> before the array to satisfy the 8-byte alignment requirement of u64. Because
+> tracing_reserve_entry() does not zero the allocated space, these padding bytes
+> are never initialized before tracing_commit_entry() exposes them.
+
+That memory is kernel-shared memory anyway. I do not believe this is an issue.
+
+> 
+> > +extern struct hyp_event_id hyp_event_id_hyp_printk;
+> > +
+> > +static __always_inline void __trace_hyp_printk(struct hyp_string_fmt *fmt, int nr_args, ...)
+> > +{
+> > +	struct remote_event_format_hyp_printk *entry;
+> > +	va_list va;
+> > +	int i;
+> > +
+> > +	if (!atomic_read(&hyp_event_id_hyp_printk.enabled))
+> > +		return;
+> > +
+> > +	entry = tracing_reserve_entry(struct_size(entry, args, nr_args));
+> > +	if (!entry)
+> > +		return;
+> > +
+> > +	entry->hdr.id = hyp_event_id_hyp_printk.id;
+> > +	entry->fmt_id = fmt - __hyp_string_fmts_start;
+> > +
+> > +	va_start(va, nr_args);
+> > +	for (i = 0; i < nr_args; i++)
+> > +		entry->args[i] = va_arg(va, u64);
+> > +	va_end(va);
+> > +
+> > +	tracing_commit_entry();
+> > +}
+> > +
+> > +#define trace_hyp_printk(__fmt, __args...)						\
+> > +do {											\
+> > +	static struct hyp_string_fmt __used __section("_hyp_string_fmts")		\
+> > +	__hyp_str_fmt  = {								\
+> > +		.fmt		= __fmt,						\
+> > +		.nr_args	= COUNT_ARGS(__args),					\
+> > +	};										\
+> > +	BUILD_BUG_ON(sizeof(__fmt) > HYP_STRING_FMT_MAX_SIZE);				\
+> > +	/* __TO_U64 prepends a comma if there are arguments */				\
+> > +	__trace_hyp_printk(&__hyp_str_fmt, COUNT_ARGS(__args) __TO_U64(__args));	\
+> > +} while (0)
+> 
+> [Severity: High]
+> Does this macro validate that the provided format string matches the given
+> arguments? Without checking the format string (e.g. using __printf attributes
+> or if (0) printk(...) type-checking), a mismatch like
+> trace_hyp_printk("val=%d") will set nr_args to 0.
+
+It is impossible to use __printf here due to the u64 cast.
+
+> 
+> The host kernel's __hyp_trace_printk() will then unconditionally call
+> trace_seq_printf(seq, fmt); with no arguments, potentially causing
+> out-of-bounds reads or invalid dereferences when it parses the %d or %s
+> specifiers.
+> 
+> > diff --git a/arch/arm64/kvm/hyp_trace.c b/arch/arm64/kvm/hyp_trace.c
+> > index 8faaec899f92c..ebb882d0152b6 100644
+> > --- a/arch/arm64/kvm/hyp_trace.c
+> > +++ b/arch/arm64/kvm/hyp_trace.c
+> [ ... ]
+> > @@ -421,6 +424,58 @@ static const char *__hyp_enter_exit_reason_str(u8 reason)
+> >  	return strs[min(reason, HYP_REASON_UNKNOWN)];
+> >  }
+> >  
+> > +static void __hyp_trace_printk(struct remote_event_format_hyp_printk *entry, struct trace_seq *seq)
+> > +{
+> [ ... ]
+> > +	switch (hyp_str_fmt->nr_args) {
+> > +	case 0:
+> > +		trace_seq_printf(seq, fmt);
+> > +		break;
+> > +	case 1:
+> > +		trace_seq_printf(seq, fmt, entry->args[0]);
+> > +		break;
+> [ ... ]
+> > +	}
+> > +
+> > +	if (seq->buffer[trace_seq_used(seq) - 1] != '\n')
+> > +		trace_seq_putc(seq, '\n');
+> 
+> [Severity: Medium]
+> Is it possible for trace_seq_used(seq) to be 0 here? If the sequence buffer
+> was empty or in an overflowed state when passed to this function, subtracting
+> 1 would result in an out-of-bounds array read (accessing seq->buffer[-1]).
+> Would adding a check for trace_seq_used(seq) > 0 prevent this?
+
+I will fix that too.
+
+> 
+> > +}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261001084909.2937943-1-vdonnefort@google.com?part=4
+
+I will also change the "\"Unknown\"" even though we do not support yet external
+tooling.
+
 -- 
-2.55.0
-
+Vincent
