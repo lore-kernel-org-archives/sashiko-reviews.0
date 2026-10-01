@@ -1,81 +1,81 @@
-Received: from mail-yx2-f41.google.com (mail-yx2-f41.google.com [74.125.224.169])
+Received: from mail-yx2-f13.google.com (mail-yx2-f13.google.com [74.125.224.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD2D4078DC
-	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 21:53:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743E4305666
+	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 22:02:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.141
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790891631; cv=pass; b=hCcBpXEP3YpbowpnKJkfjAQ4NQ7aluhvk6wSkD0xSyw5b4544voahHPPoAKFh6P/E8Gvx7hGI5asRrmeEN+OSlhbnfKbMenTW/z5of0yzoADszd0UGFYBl1ReEytOxCFiQ5tWIC1pa3SaQm+o3pq32O0CC4q8Lp2U7T6w+IOWWE=
+	t=1790892163; cv=pass; b=TJL7RWscsHEkaTEHbOJ/aVSEcBXFG3qx+UUhkrS8Z4nTRkBrGThBzldyNDpcG++2MU2gynZQM/4rL/uflQQYWc2oLCF6epBuRSv7oWQGM7ATDJn7JVxh/lYUi7QZp3r0cN3f6rPwe1Nl7FTJTp711fKiOuvB7hj8JJTkN2v17QE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790891631; c=relaxed/simple;
-	bh=vA19tAGIJDqPrBtiC/KKawxnc593Ufa0N0iSnBpRCWM=;
+	s=arc-20240116; t=1790892163; c=relaxed/simple;
+	bh=/dIIozle01F2TP5UAfP90kLzrnuXniZTjSv6hVrVNdo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HuG2PnbX7T+ztfGf5LlMd8xlkRJtek75GasyDHckqMrsia30MpPRP2PSPFZ+NbXtuTaPWcOfVBjzmIaKTQsxlBx6Q9BkNDZxI8yeI1zelPsdJyQb2UqAlltuI+AKC1g+Ri5Qnrmcmn7KG7C6po3EUSMGphbKpdvIi0KhAUoydoY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X5l4H/1j; arc=pass smtp.client-ip=74.125.224.169
+	 To:Cc:Content-Type; b=ZQVi+BmzUE/3l1NHF0ZjwLquZMpS7+8xiXM2su+bhVtjKW/PSVOhrNk6S7t1o1wTCVn6Rx8P67WYhZnz4eJ1pIifpgv3wpBkCcI6K385O1VAvg7OCEeAwM2M3UWKR+9oMgcA5Cu+i3duFvGKav3CkG3shF2tqQIHSxI35YWvN0A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EAWkaVvZ; arc=pass smtp.client-ip=74.125.224.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X5l4H/1j"
-Received: by mail-yx2-f41.google.com with SMTP id 956f58d0204a3-6756d2aff02so3441309d50.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 01 Oct 2026 14:53:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790891629; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EAWkaVvZ"
+Received: by mail-yx2-f13.google.com with SMTP id 956f58d0204a3-66f7a9afe43so6171307d50.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 01 Oct 2026 15:02:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790892161; cv=none;
         d=google.com; s=arc-20260327;
-        b=gvGiTHb2z5muGus2odC7ukhZhgqNe75Jt3Jgdr4c+flC6+I+9yAiZK2y7ixSpDahy8
-         /QgzrPyTN5P+o9IcwTIxd70Qw4qTGjg1IbCQoDYiDjHQ3g0GXNFh9z7GkGcs6GhCfF4e
-         Xl8tRM5PvpSJ6sMboYbqb/pjKkaqcTkxbca6r3aQG71R4mDusilMWAJ62gQthjVlEKt2
-         xdLABF6HRA1IPEfwbS4qeSyn4sshQjhfz7S5YcaN2+KSrZAemkqK5WaxdCIKq7KAix/M
-         ULUJfd7Qfp1on9zGt0Kbyol3UUKsKXBQMm19p3WNh4hbh0dnT5zqNZsc6XOEUO2ttSjp
-         145A==
+        b=OjAPN6Dd7Lb8kN/3c4nW26YJT8MrgrBRY8l/0ZEfOJco0m+PVMQwjLkpO7lhO5QDQJ
+         vCNWQ2ozYGV/OLG1eKVYy9+c2naTye/+gv9Ihkxdg1TNCHX/Ra5Hhlwfz04sGWhtu8UT
+         P6zQEZ7LZ7mJvB4Ee5AQxnWUXaOtLElp2bmWF7JQF4VYLlN2Wsc2KvJGcos9Qhp8iqcm
+         AjUjJQR4ISRPy8r2pnVZ2sgQ7ovolxqTec2QZ3wqF8S+GQtomaKUmfISeZjHZDfKZEVK
+         hw5xt/Qne9JEpNDkVoez7GB1XYs0TLoz5ApH9P2aIiV7+/u44NhCaZluNyir/+gFaL40
+         Oqqw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=njBFBYHB/ygG0sy5bqGUdErgBk/nK08nFChwa26Lyng=;
+        bh=fqM5uspbbFzV6bdXwPQ6MVvrUI0lCblX7jHB4nRMB9U=;
         fh=5cs6b6d7Xpq2ANmcE1sW6J73OLOoOdfaXy4E0BsYxz0=;
-        b=P72WBSXx50lQn13K5khEviHmyNQtOw1seLzfHAt/Z434aiHr4/M0HyljwR8p0oQ+6s
-         RSxcXuhoUhE6I2QPFlifcdhO/t8PV+hxjjCNnRsP59gs13WyjPuFZI6W/kVc1sAl74/5
-         dW0EJB1oBO4+MCduMe5pIQo0S1LSKZrFj98IIVT19DAzbNwPq7ie5IKMYQunNuOvViI/
-         EhHz834lIhwXR6DX3iZSSmZ3lydmMo6hSD3ppezvYVwJKv22O0UpwksyibN7LeKpjGrt
-         owTdMxAF55hyx49xAtSYxuoytpFA7Th7dwc42SpP1BOYGlOUGdZInygc56m76+PJ+i9n
-         +vqw==;
+        b=ElqcUpGHRRE7x8cBkHj5NUhoIrYiPDWDp0Gk4O3WMH6jc8ZDEmEuTJnZYpXaWuvlbu
+         nX2h8tlfWNFiG7liD3SNU13Kymv0q98qbdPkKm9rddwgMpwwNg8JGkVIZPnyPNK3szff
+         WeEUjLqzVyppTWmqWzK8H0+spi6buX7TWYAON7+fBH990esO933S8IIY15TgbKXU9+ns
+         9zY3YwSaEy228JEaMc1kOz4F9sQGaupVSb9Vs/PidH+McDJr11bJ8KK57zpce2RdeUCg
+         19jENfA6NNC0CSpuv+EvL+nEwzTUkuAqqzuF2qUsNXyosNal+opsEGfrIn/Fa4c8HB6O
+         gA6w==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790891629; x=1791496429; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1790892161; x=1791496961; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=njBFBYHB/ygG0sy5bqGUdErgBk/nK08nFChwa26Lyng=;
-        b=X5l4H/1jdjKYfRkB1QetVWTUA48Zxyt61gup5aGJVGDGJGr/ZZqJ6ojjYFcM2/3GG/
-         aOacyuDSE5N3VmuBAV6Lo2YPr4ZUgR5LAEHZ7FLx48TzQ979JYasAqh5Hwwa253MOiQP
-         +qQQcYlOEcAuF5ThlyuIS1MRCTyHbPwCRMoBhASPbevjI2OZT8TWbNU3nh21p0x9O4Ku
-         rHsHTPnzj48bS75+tRP/wkH0IQkM+b232Hg2XSvDrYtzqc8QyU5rS3DjLu7WFIx4gVgO
-         EA+TZYvdwpERKOwOz9nS8aJSj5VNBjxtOnhjfOjjfSZ+p4nujQUHc0E/NVNMyz9wAWiE
-         x9wg==
+        bh=fqM5uspbbFzV6bdXwPQ6MVvrUI0lCblX7jHB4nRMB9U=;
+        b=EAWkaVvZScR2y8oS4g2QZnGErbqEY/l3T2FP5d0O3j1242L6mkR8T01screBifu3c2
+         4Zt8F1cTVR4ALCdjv57RgVaK+6UG1ba5H1p2oQwIMQsGPbXfdTyJXNzoeVnTIc5DX2aD
+         wyOlg7QF7LbFukdzIr0BHrajPPAqmAzvjRWq1Cnn6WrkdRdADrcf2v4E566pr5UY1KOH
+         ncb8KOimFleMVA42Sp7eB/C2S3p++AJcKcK4dk4wcJ0Hya/edohGvzMrIxxfRnn5Wi7J
+         5g30/fT+hRFmyqCLG0CO5yIyT7tugeQbSuCKo4qGpf25J6F+zveSGIoihaHumngzh0d6
+         jcRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790891629; x=1791496429;
+        d=1e100.net; s=20260707; t=1790892161; x=1791496961;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=njBFBYHB/ygG0sy5bqGUdErgBk/nK08nFChwa26Lyng=;
-        b=CjmKCBvqsAarilNqCUfnVNfgB0PdjNdLHJkJj5phZc1eBbH/CkEkZKHYAfuxrtQcx2
-         B+NEjFEzIbiafo/HJ+1VOrKB6m1JfRFgY2u3/TypS88/V4WLO5+K8rzG86q56buGHlPt
-         NJ+7F5tyPTztAscCpaYH7Q5IDjD6UrN70ro71Q3APk+tQ0Yk+1mTZjotVWhOm55o2ob7
-         uXSD29J0Vi8VDgUpA8OFCSLBzOf7cKDabbKsn4R/82vzK+CXICrU3s80hLKer/fX3y+4
-         XOb6UWUubtwJuPemLTrY4+15PSw8QMJqfPYS/pi5Ma7fhGflSC9OcEiAurU92v/nIaJA
-         O4eQ==
-X-Gm-Message-State: AFq9FYIXQCUb+Nlnh7TaOyBiE+xlTxfQsPXPvUuLnG8neEiQyb9woNHm
-	SjGsE2BZSQDqmJvdzUTtt+kNvSgoFDiZbctEndgRcCnKOHLela1uPrFJKcnQynsOAEjrdE1P7qp
-	+1PKbaSIkjx6E0i7qWTvfTkhZtRxAvv9+OOkt
-X-Gm-Gg: AYBFou2aTeCXzFUIMD/YcaG2xMPhCqAsyf1E0IgJho1oRwgI5UV/zqLHp+pdNBBMJ8C
-	GRw3ak+p3vNo5Sj3/wdXwmWWo2x919FRPIrFmGuEpmfi/JDW2bwvTQsx19Tiy5ev07sehQwB4CA
-	MBVYMaRfey1NOmkKgUkMnVhGbxCGRTxBp5phampIWtJVq1ECiixG++f8F2hmGfK1P0l7nsDy2ey
-	6j9JFNztFg+ZzFKcSgsZ7V7xsyAKp76p9Pb6K/dqIByNW3gpWP6o41L8hXuCE6zLzjVXRJ2Fxh1
-	lTUxlcsOpO0MVegh9FNu8p8ly1s+f8+HKCqNQcCvDx/wKzPQJY0ZsQDeZZv1lILg1RelaigdPdg
-	qj4CHkyearuQF8dxyUhGBSiZ5w86M71HJ8g==
-X-Received: by 2002:a05:690e:488c:20b0:671:203c:2fd1 with SMTP id
- 956f58d0204a3-677ac0f1326mr206768d50.70.1790891628567; Thu, 01 Oct 2026
- 14:53:48 -0700 (PDT)
+        bh=fqM5uspbbFzV6bdXwPQ6MVvrUI0lCblX7jHB4nRMB9U=;
+        b=0rIpwwrkF8y9oxLLI/TsQiPHRXy43BwodeigpitmR8mrJk+IJkKh+x9WXvgRiurjFb
+         4YkoPcXLrL7SI2/oJv+rnKmIa7LPiu+yEAEV+tKCeTuHwTpKcIldgCFkMrsgrGDNat7A
+         740Jrk4yDhRwlk6I4/VyBE6bk9dmqPNBYg4GaY/vM0CMwCXDnV+TYE1jqAiA/zgNtHay
+         YHwtC7Ncpc3tyvS/j+ii/11TRw0XheA3mz0zNeSfNwV9vbofY/kVxgLHCV7RqDKSzta/
+         PyNAAtAIdVm73AUrRSBVsOqFuAod+7+tgvSBbteDZd0pSittiAivBviMeDg2tNgIre0i
+         zQQw==
+X-Gm-Message-State: AFq9FYL/TkzRmzVG2l2tkZ/otmRdswW0PXy5fPp1zLmS+Vnf46Kju/iS
+	zHQBZwhCOvkQFbZsoaYnOSACxKVpeCsuXpF/r5oBxY5kG4ynlbCB9ZxTaQGRlbpwi7iR4JLYLx8
+	Svl3DnXRndDD4Hn0AqcP5vBp9KLC100GipWQV
+X-Gm-Gg: AYBFou2/jClOhmiU/MzehAk87RpLcC79yutLWVmbi4zOfwBOyCSHq2pH9x80GFG06wJ
+	fqnmjnHZOl/nypsUHkwYvQB+cQ864NVpbjOWnoNIchbml3xPlwO1/lDYaXI0yr5xu9JW08GQmI4
+	XfnxcFxPWYMTX1h64Dqzaka4PemmavN8K5O7ENlcXJfV0Q+xkjmXUp3IcIiVidN1WyiMbKP/M/a
+	v1A3pGAZqasqKm2HE7tWgZz9E3kJc3Z60RkJcdMMHUHoVMr0PExjA+mxvcIvd6cjugRFitTS5Ye
+	SCQBkC9Vez7JRotud0WvgT1mc/5Bi0rnL2NpSaatsIUR1DJYifacp+tkktQAjdvEsA4ggaG200H
+	KwW9zTAwz/cv58aVWmzHwWwbm0Ubb0t0FWQ==
+X-Received: by 2002:a05:690e:438d:b0:671:1bbe:f68c with SMTP id
+ 956f58d0204a3-677ac03e975mr192565d50.51.1790892161398; Thu, 01 Oct 2026
+ 15:02:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -83,95 +83,114 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260923-dd-cmap-part2-clean-v11-0-9b6c217fdf2f@gmail.com>
- <20260923-dd-cmap-part2-clean-v11-37-9b6c217fdf2f@gmail.com> <20260923225247.B92F21F000FF@smtp.kernel.org>
-In-Reply-To: <20260923225247.B92F21F000FF@smtp.kernel.org>
+ <20260923-dd-cmap-part2-clean-v11-29-9b6c217fdf2f@gmail.com> <20260923224657.3F5C71F000FF@smtp.kernel.org>
+In-Reply-To: <20260923224657.3F5C71F000FF@smtp.kernel.org>
 From: jim.cromie@gmail.com
-Date: Thu, 1 Oct 2026 15:53:22 -0600
-X-Gm-Features: AclHuK-VhbFVr2q_qUQkOvb_sVHawA26J4kUVe6GFDVRsehq4ONG5tWwrqz5Ps8
-Message-ID: <CAJfuBxw8O+=Z0TjGHDapnUZuu+ffkYsOJdyVPdPQBx7f9Uv1oQ@mail.gmail.com>
-Subject: Re: [PATCH v11 37/38] dyndbg: add +c flag to count pr_debug calls
- without printing
+Date: Thu, 1 Oct 2026 16:02:14 -0600
+X-Gm-Features: AclHuK8ODmvd4WyPoy9OINszBNVr-POspB9wdJcmt3RssLX_jouSGEmCCu5Ssb0
+Message-ID: <CAJfuBxwYku+xUmWVG2-BhqKCeb=-=B6d9cdOJ9vf73NtBq=sdA@mail.gmail.com>
+Subject: Re: [PATCH v11 29/38] dyndbg: control-parser: treat comma as a token separator
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-modules@vger.kernel.org, dri-devel@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 23, 2026 at 4:52=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Wed, Sep 23, 2026 at 4:46=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] lib: Kernel oops when modifying string literal in ddebug_exec_qu=
-eries
+> - [High] dyndbg: UAPI break for unquoted commas in queries
 > --
 >
-> commit 33851d8d7a58ba9b9a4cd975835feabf66d636db
+> commit 3647cd55c26b2f7588078b414e3120a9276258a8
 > Author: Jim Cromie <jim.cromie@gmail.com>
 >
-> dyndbg: add +c flag to count pr_debug calls without printing
+> dyndbg: control-parser: treat comma as a token separator
 >
-> This commit introduces a new "+c" flag for dynamic debug to count pr_debu=
-g
-> calls without actually printing them, saving memory bandwidth. It adds a
-> per-CPU counter for the hits and a "reset_stats" control command to clear
-> the counters.
+> This commit updates the dynamic debug control parser to treat commas as
+> token separators alongside spaces and tabs. This is intended to allow use=
+rs
+> to avoid shell quoting issues by substituting spaces with commas.
 >
 > > diff --git a/lib/dynamic_debug.c b/lib/dynamic_debug.c
-> > index 88440c1f6abba..9b789287afe56 100644
+> > index 8eef2e7387a98..6482fd28def46 100644
 > > --- a/lib/dynamic_debug.c
 > > +++ b/lib/dynamic_debug.c
->
 > [ ... ]
->
-> > @@ -727,6 +745,11 @@ static int ddebug_exec_queries(char *query, const =
-char *modname)
-> >               if (!query || !*query || *query =3D=3D '#')
-> >                       continue;
+> > @@ -336,8 +344,8 @@ static int ddebug_tokenize(char *buf, char *words[]=
+, int maxwords)
+> >       while (*buf) {
+> >               char *end;
 > >
-> > +             if (!strcmp(strstrip(query), "reset_stats")) {
+> > -             /* Skip leading whitespace */
+> > -             buf =3D skip_spaces(buf);
+> > +             /* Skip leading whitespace and comma */
+> > +             buf =3D skip_spaces_and_commas(buf);
 >
 > [Severity: High]
-> Will this cause a kernel oops when parsing module parameters?
+> Does this introduce a UAPI regression for existing unquoted queries that
+> contain commas?
 >
-> If a user supplies the dyndbg or module.dyndbg parameter without an
-> explicit value, ddebug_dyndbg_param_cb() handles it by falling back to
-> a string literal:
+> For example, if a user currently submits a query like "format a,b +p" via
+> the debugfs interface, the parser would previously see three tokens: "for=
+mat",
+> "a,b", and "+p".
 >
->     ddebug_exec_queries((val ? val : "+p"), modname);
->
-> Since strstrip() modifies the string in-place by writing a null byte at
-> the end of the processed string, passing the read-only literal "+p" will
-> attempt a write to the .rodata section and crash the kernel during boot o=
-r
-> module load.
+> With commas treated as separators here and in the loop below, wouldn't th=
+is
+> result in four disconnected tokens: "format", "a", "b", and "+p"?
 >
 
-Confirmed and fixed for v12.
+Treating comma as a lexical delimiter alongside space and tab is an
+intentional grammar extension, explicitly documented in
+Documentation/admin-guide/dynamic-debug-howto.rst:
 
-strstrip() calls strim(), which unconditionally writes a null terminator
-to *(end + 1), faulting on read-only literals in .rodata.
+0. Comma separation exists specifically to solve shell and command-line
+   quoting friction in space-hostile contexts (boot command lines and
+   modprobe args like "modprobe drm dyndbg=3Dclass,DRM_UT_CORE,+p").
 
-Fixed by:
-0. Replacing strstrip() with a non-mutating check in
-   ddebug_exec_queries():
-     if (!strncmp(query, "reset_stats", 11) &&
-         !*skip_spaces_and_commas(query + 11))
+1. The dynamic debug grammar rule is uniform: any argument containing a
+   lexical delimiter must be quoted. Spaces inside format strings have
+   always required quotes (e.g. format "foo bar" +p). Because commas are
+   now full token terminators, commas inside format arguments must also
+   be quoted (e.g. format "a,b" +p).
 
-1. Passing a mutable static buffer from ddebug_dyndbg_param_cb():
-     static char dflt[] =3D "+p";
-     ddebug_exec_queries((val ? val : dflt), modname);
-
-
+and the user is free to add the quotes if literal "a,b" is what they wanted=
+.
+    #> echo format "a,b" +p >control
 
 
-> > +                     reset_ddebug_call_count();
-> > +                     continue;
-> > +             }
-> > +
-> >               if (modname)
-> >                       v2pr_info("query %d: module %s \"%s\"\n", i, modn=
-ame, query);
-> >               else
+
+> >               if (!*buf)
+> >                       break;  /* oh, it was trailing whitespace */
+> >               if (*buf =3D=3D '#')
+> > @@ -353,7 +361,7 @@ static int ddebug_tokenize(char *buf, char *words[]=
+, int maxwords)
+> >                               return -EINVAL; /* unclosed quote */
+> >                       }
+> >               } else {
+> > -                     for (end =3D buf; *end && !isspace(*end); end++)
+> > +                     for (end =3D buf; *end && !isspace(*end) && *end =
+!=3D ','; end++)
+> >                               ;
+>
+> [Severity: High]
+> Because the parser now explicitly stops at commas within an unquoted stri=
+ng,
+> existing queries containing unquoted commas will be split.
+>
+> Since ddebug_parse_query() expects an even number of match-spec tokens
+> (checking nwords % 2 !=3D 0), won't it fail and print "expecting pairs of
+> match-spec <value>"?
+>
+> This would break automated scripts or user commands that pass unquoted
+> commas in their match arguments. Is there a way to support commas as
+> separators without breaking existing unquoted comma usage?
+
+again, if theyre looking for "a,b", then they should quote it.
+just like if they were looking for "a b"
+
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260923-dd-cmap-=
-part2-clean-v11-0-9b6c217fdf2f@gmail.com?part=3D37
+part2-clean-v11-0-9b6c217fdf2f@gmail.com?part=3D29
