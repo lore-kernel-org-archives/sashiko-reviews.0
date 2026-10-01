@@ -1,75 +1,47 @@
-Received: from mail-wr2-f42.google.com (mail-wr2-f42.google.com [74.125.225.106])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDDE3769FB
-	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 07:05:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.106
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFE6489866
+	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 07:29:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790838316; cv=none; b=GtWGf0hCecOQCiPDJyvVY0/q6GQ1ndwlkOCY88MuyD2QzJj1155zfwrxrKq74Gg6/isa0ujzZ2nyg5FlNGSRPs3ZxeaFzwPbf43fZlJFL9OwheBnn0kuK66TwYtXMUDJhC1hcNSRuQ/fMVMcgdXiFPKAXByXqRD2FESW/5F28GU=
+	t=1790839797; cv=none; b=NixWKeUBDngVeD/CUftIJ9ex3n8XYWSsARPeC2ScskNxH9Y6TqqRUwAlcTbehzXOf1I2s4tQYuTWRQzM5+HMdk2J9RQYJYz3w5AKL9DSfHaLvKkdH+bVjmZaG50oZAqlr8h1phWcAmX0+xgPXOw8GqZnnu4auJ8hFHnhbNfh6uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790838316; c=relaxed/simple;
-	bh=2bWlEomTT6RXTQU0/yUWRf8NsUBDGdxk15/fvQlF8Og=;
+	s=arc-20240116; t=1790839797; c=relaxed/simple;
+	bh=lpXg5QtAI4gtqTYddyv2V+COTh6mSwYtWhaPIdw0ZNU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PQRdpCDWSfrrogPucTNSgInskiBIi1LzVuMdPqsPKnRY4gf6E/ExtrDLgK7dql/bim57d69DUFjBkL0vMFseHLGr4Z42Hp9xe78E4lTVK7S5IpVL+aNQkqVwokM4DmrmBza8jwJ4VzP9GDKfkwzzJJsPmOeEAYaoc27Gw1C3hlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OIiYkmVs; arc=none smtp.client-ip=74.125.225.106
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=OQqyO9emneCjC0ga4mtwn2dXdx8BOQCUSS2DHBcTiT/puTzAmQf7Lqn0C7d0GfU3Ne7NqWFMYh14NLfpnQahPCRmmADqW4XtaCylMDhkUv9AUfpYUsqglauEKQjpURZFx+n6fBeLnPQMYVHzUfE/++3ubQNHzWERQ7l8fPjdfQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=qTK6rbvN; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OIiYkmVs"
-Received: by mail-wr2-f42.google.com with SMTP id ffacd0b85a97d-48b0622cc90so362640f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 01 Oct 2026 00:05:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790838313; x=1791443113; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ip0JK1laKbzgFDQ4J4NPke6DEzSIhz7SWsZYR9ctV80=;
-        b=OIiYkmVsu0UzrwFNR6ChX9IevmWQ2VCwaEHUHjsvFZpF5yq/V5RTT4xvdIV31FsALW
-         VdOPEYPhC2vLhYd1gwDcMlArU/P4gRSnlQMsyyBY7zsq3IDMFE4krwJ4uL06WIco1Z2O
-         yRgF439wxvx8CTRSwB1E63iztPeOCJXpIHQx0xgcZnZFhhJEOydim4OCr6751hq/bJd+
-         Ar7ebBodz2s3kYuoZ0nrsVBg+kcTwxOjlh5bw+9pTBkEe6Ro4gu+O083y23X+kKrir7H
-         EVZLVtDVmg82pImQVdJcs/ua411OgavVpdwj44ON2OhBW49HIXMMsvRJsmMNaJk1eaWT
-         xNDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790838313; x=1791443113;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=ip0JK1laKbzgFDQ4J4NPke6DEzSIhz7SWsZYR9ctV80=;
-        b=P5erzb3CPjJ0h5TG9E5x2hTuVD9BDN3mwrU+QbzHRE6Hfk25SDRt1ZcQPsGtwUirUF
-         rGAuhazR2qRgQCdZkxL/dY4ki5B6V3tJnHMqveiSbm2bLzPlrrdnp0oFSQYlif0G3hkq
-         LpNHo26aMvsQ8b9XEdi4xsMiRDG8TV7w6+4C2Sb5ipZ6jI7Ml3pV3P4dH2UbI4n8gW8V
-         7jwxwKDiDJeOPIoIz81T6Pm20bxnV3Ak/3zQ6WOxrKyEFHiyg7Rti+4MzFaG/86Z2++K
-         VBnpC9RX97IALkILVo4nGBwRMpw0lbxXGMbQeSNAmezk+glYCc87KVck0IVxkeKHj0B4
-         Lb4w==
-X-Gm-Message-State: AFq9FYIX/KFbyi/5H4Wg1bPz1fjuQCE8wOWheeewqtxVOqh6Kp6w2ZS+
-	hP6TwG7u7IfbhfLwf44k8PAORT+PcCquBhl9qMNI5Sbs2pRR86gfR+eHrLAhK6qjEelTgs+9QWA
-	V59frG1bm
-X-Gm-Gg: AYBFou3dbZp1FIdz+CusE2oSzTGM7sSU39wV4dwvUAwustpc9uTOsGRi7xuSNT5YqXy
-	kHQf7pvn3vJSfeuHkqA4RgcdJNcJlodg5S/2xK4J6Jd7fzZ955KQaOk5rRoKti1A1Cm8YOxW8R/
-	LrJ8soqnVICelVEIwLc3IVS/8GP3uY6ANpBTewZMtadEXesqFxLNJi0hmhHFmern2jY9hrcnV4h
-	zx0FmggfiO4Opfap5swExUM66tADipEtVIL14UNT5nUjdNq4nOM4LWKuyz6OGgWBCoaCWVXgCpF
-	2Sy2gt3yDqYzcDI6uNjOYflQdQKfAdvyOMJm1iO0BRDYKYGGrbinHIRUsDU7q9fkzVSV2oWDSpi
-	oNkUrqXBNqEEgQjtr7MPzxWy02toNsnvw2t72xz8UhSSDg0URAlibVTybLID77Gnk39+SAK32Ry
-	cIkXqQ6Jcbl1iY29pjgm5kqKFBFWlSUfiXYA0bknnMqTI84rGiSk1+DQvIclWvrJEy8+ogW9n2Y
-	8qkx9+h8Td4dbq28UZSIa1U2g9yIEpXvUUN5DQGKIk=
-X-Received: by 2002:a05:6000:230f:b0:487:6f6:29a6 with SMTP id ffacd0b85a97d-48b0252a86amr7003700f8f.35.1790838311680;
-        Thu, 01 Oct 2026 00:05:11 -0700 (PDT)
-Received: from google.com (197.183.140.34.bc.googleusercontent.com. [34.140.183.197])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48b0690c47dsm4532152f8f.15.2026.10.01.00.05.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Oct 2026 00:05:11 -0700 (PDT)
-Date: Thu, 1 Oct 2026 08:05:07 +0100
-From: Vincent Donnefort <vdonnefort@google.com>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="qTK6rbvN"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id C9B584E410EC;
+	Thu,  1 Oct 2026 07:29:50 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 9BFE660341;
+	Thu,  1 Oct 2026 07:29:50 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 264CD1032946E;
+	Thu,  1 Oct 2026 09:29:48 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1790839790; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=+6SFI7PvjPIbCS2CVlqilXNKDCO3yQ0/tGuHkrFJY6c=;
+	b=qTK6rbvNn5u2KxR8FpnWF8LHdcAfDc6q1kJH5iOPnRVDXirjOamnnGL+W96SW9xdF6FsxC
+	S3lUFQaRfGyoc+fZ9knyLSyeBavyVAyrckBlz+riIPrFUw+xeFNo253kjKz5RZDS0FktDQ
+	wGXZTyzt6K3l50u1BVjyanvi1D0nhprxH41yotf8k88FfckGMKn3jk+LR9VNwAPkSQRKE+
+	aGpQvtA0PD7KCv+nhdH3p9DzYjN6k5Pr87mIYBouEgRiXcbmnE3SeYTGVm78RojcgD6vVF
+	ccGIAzNppP+AxEKqj6TholmLkFYIJYGEJcHZmMhamEeL/n4k/Ez5QfvxmuQKDg==
+Date: Thu, 1 Oct 2026 09:29:48 +0200
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oupton@kernel.org>
-Subject: Re: [PATCH v3 4/4] KVM: arm64: Add hyp_printk event to nVHE/pKVM hyp
-Message-ID: <ar4GI_kJNVxno7eV@google.com>
-References: <20260930153505.2144559-1-vdonnefort@google.com>
- <20260930153505.2144559-5-vdonnefort@google.com>
- <20260930155655.8E63E1F0089C@smtp.kernel.org>
+Cc: Eric Liu <liuer@nvidia.com>, linux-rtc@vger.kernel.org,
+	linux-hwmon@vger.kernel.org
+Subject: Re: [PATCH] rtc: nct3018y: report chassis intrusion through hwmon
+Message-ID: <20261001072948351dc257@mail.local>
+References: <20261001054108.3346426-1-liuer@nvidia.com>
+ <20261001054821.AEF6E1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -79,117 +51,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260930155655.8E63E1F0089C@smtp.kernel.org>
+In-Reply-To: <20261001054821.AEF6E1F000FF@smtp.kernel.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Wed, Sep 30, 2026 at 03:56:55PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] trace: trace_hyp_printk calculates invalid ring_buffer_event pointer causing memory corruption
-> - [Medium] trace: trace_hyp_printk lacks compile-time format string validation
-> - [Medium] trace: trace_hyp_printk macro shadows caller variables named fmt
+On 01/10/2026 05:48:21+0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] rtc: nct3018y: hwmon device registration violates layering guidelines
 > --
 > 
-> commit 26cdec70ff2d60c665c546592ecab1e31f40820e
-> Author: Vincent Donnefort <vdonnefort@google.com>
+> commit 12bf4b0b27866f7565ebcc7b10db8faf4943fb10
+> Author: Eric Liu <liuer@nvidia.com>
 > 
-> KVM: arm64: Add hyp_printk event to nVHE/pKVM hyp
+> rtc: nct3018y: report chassis intrusion through hwmon
 > 
-> Create an event to allow developers to log pretty much anything into the
-> hypervisor tracing buffer with trace_hyp_printk(), just like the kernel
-> tracing has the function trace_printk().
+> This patch adds an hwmon intrusion alarm for the chip's chassis intrusion
+> latch. Reading it says whether the chassis has been opened since the latch was
+> last cleared; writing 0 clears it and re-arms.
 > 
-> > diff --git a/arch/arm64/kvm/hyp/include/nvhe/trace.h b/arch/arm64/kvm/hyp/include/nvhe/trace.h
-> > index 8813ff250f8e0..3d0b5c634bb3f 100644
-> > --- a/arch/arm64/kvm/hyp/include/nvhe/trace.h
-> > +++ b/arch/arm64/kvm/hyp/include/nvhe/trace.h
+> > diff --git a/drivers/rtc/rtc-nct3018y.c b/drivers/rtc/rtc-nct3018y.c
+> > index 2f7ad57057a4b..194ba077363aa 100644
+> > --- a/drivers/rtc/rtc-nct3018y.c
+> > +++ b/drivers/rtc/rtc-nct3018y.c
+> 
 > [ ... ]
-> > +
-> > +#define trace_hyp_printk(__fmt, __args...)						\
-> > +do {											\
-> > +	static struct hyp_string_fmt __used __section("_hyp_string_fmts") fmt = {	\
 > 
-> [Severity: Medium]
-> Will this shadow caller variables named fmt? If a caller passes a local
-> variable named fmt as one of the format arguments, it seems it would resolve
-> to this static struct instead of the intended variable, logging the struct
-> address or causing a compilation error.
-> 
-> [Severity: Medium]
-> Does this macro validate the format string at compile time?
-> 
-> Since __trace_hyp_printk() does not use a __printf compiler attribute, passing
-> unsupported specifiers like %s or %p, or providing mismatched arguments, won't
-> trigger a compiler warning. This could cause a host panic when
-> trace_seq_printf() attempts to dereference an EL2 pointer at runtime.
-> 
-> > +		.fmt = __fmt								\
-> > +	};										\
-> > +	BUILD_BUG_ON(sizeof(__fmt) > HYP_STRING_FMT_MAX_SIZE);				\
-> > +	/* __TO_U64 prepends a comma if there are arguments */				\
-> > +	__trace_hyp_printk(&fmt, COUNT_ARGS(__args) __TO_U64(__args));			\
-> > +} while (0)
+> > @@ -491,6 +494,95 @@ static const struct rtc_class_ops nct3018y_rtc_ops = {
+> >  	.ioctl		= nct3018y_ioctl,
+> >  };
 > >  
-> >  int __tracing_load(unsigned long desc_va, size_t desc_size);
+> > +#if IS_REACHABLE(CONFIG_HWMON)
+> 
 > [ ... ]
-> > diff --git a/arch/arm64/kvm/hyp_trace.c b/arch/arm64/kvm/hyp_trace.c
-> > index 8faaec899f92c..9d4378bcad74b 100644
-> > --- a/arch/arm64/kvm/hyp_trace.c
-> > +++ b/arch/arm64/kvm/hyp_trace.c
-> [ ... ]
-> > @@ -421,6 +424,61 @@ static const char *__hyp_enter_exit_reason_str(u8 reason)
-> >  	return strs[min(reason, HYP_REASON_UNKNOWN)];
-> >  }
-> >  
-> > +static void __hyp_trace_printk(struct remote_event_format_hyp_printk *entry, struct trace_seq *seq)
+> 
+> > +static void nct3018y_hwmon_register(struct nct3018y *nct3018y)
 > > +{
-> > +	const char *fmt = (const char *)(&__hyp_string_fmts_start[entry->fmt_id]);
-> > +	struct ring_buffer_event *evt = (void *)entry - RB_EVNT_HDR_SIZE;
-> 
-> [Severity: High]
-> Does this pointer arithmetic correctly locate the event header?
-> 
-> Since this event is allocated by simple_ring_buffer_reserve(), the payload
-> starts at array[1] (offset 8) rather than immediately after a standard ring
-> buffer header. Subtracting RB_EVNT_HDR_SIZE (4 bytes) appears to result in a
-> misaligned pointer pointing to array[0] instead of the event header.
-
-Lol, fun I missed that in the testing because printf behaves quite well with the
-format string.
-
-Anyway, it's even worse than Sahiko thinks because I am adding support for
-compressed length here [1]. As a consequence it is a bit dodgy to know the event
-size. I'll store the number of arguments directly into struct hyp_string_fmt
-instead.
-
-[1] https://lore.kernel.org/all/20260924145754.1285146-8-vdonnefort@google.com/
-
-> 
-> > +	int nr_args;
+> > +	struct device *dev;
 > > +
-> > +	trace_seq_putc(seq, ' ');
-> > +
-> > +	if ((void *)fmt >= (void *)__hyp_string_fmts_end) {
-> > +		trace_seq_printf(seq, "Unknown hyp_string_fmt ID %d\n", entry->fmt_id);
-> > +		return;
-> > +	}
-> > +
-> > +	nr_args = (ring_buffer_event_length(evt) -
-> > +		   offsetof(struct remote_event_format_hyp_printk, args)) / sizeof(entry->args[0]);
+> > +	dev = devm_hwmon_device_register_with_info(&nct3018y->client->dev,
+> > +						   "nct3018y", nct3018y,
+> > +						   &nct3018y_hwmon_chip_info,
+> > +						   NULL);
+> [Severity: Medium]
+> Does this violate the hardware monitoring subsystem architecture rules?
 > 
-> [Severity: High]
-> Does ring_buffer_event_length() read garbage data here?
+> Registering a hardware monitoring device directly from within
+> nct3018y_hwmon_register() in drivers/rtc/rtc-nct3018y.c bypasses hwmon
+> maintainer review and pollutes the RTC driver with secondary hardware
+> monitoring code.
 > 
-> If the evt pointer is misaligned, interpreting the payload data as the event
-> header could yield a garbage nr_args value. This could lead to out-of-bounds
-> memory reads or information leaks of uninitialized host stack/registers when
-> trace_seq_printf() is called below.
+> Could this hwmon functionality be decoupled via an auxiliary device driver
+> located in the hwmon subsystem directory instead?
+
+While this is not an issue to register the hwmon driver from rtc, this
+still needs a review from the hwmon maintainers.
+
 > 
-> > +	switch (nr_args) {
-> > +	case 0:
-> > +		trace_seq_printf(seq, fmt);
-> > +		break;
+> > +	if (IS_ERR(dev))
+> > +		dev_warn(&nct3018y->client->dev,
+> > +			 "unable to register hwmon device %ld\n", PTR_ERR(dev));
+> > +}
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260930153505.2144559-1-vdonnefort@google.com?part=4
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261001054108.3346426-1-liuer@nvidia.com?part=1
 
 -- 
-Vincent
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
