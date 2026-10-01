@@ -1,273 +1,172 @@
-Received: from mail-wr2-f34.google.com (mail-wr2-f34.google.com [74.125.225.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC78F1F5834
-	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 13:52:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCD550AC33
+	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 13:55:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790862731; cv=none; b=dYIc1TbAuK8FBmrP20wW28c1Kzwxh4s9MskltVITORkMVx0TeQmP5YiXPx1TaPpiLYHAda2jvn8Gl2hSWijoH+fm+t1aHYtQKUMnBaaFluyIhGYopyPrvpGNLn8SoiIfgmQWJ/FfwzW/aAjEbtMMqw4a3NtvK0/PDtTlG9d7ZSk=
+	t=1790862943; cv=none; b=DyJDc2sTeTXhOMTRf2iVIgiINU6IyIx0/DI6W0PNw3fILyh52XaL1jIUi0zbmTLpGOWvGWjemy4UxGQhsSInNglPkoQuBatodcXXOgmqAIrOa4aI9hX0wqgYzwMXKDUTOxyBhGku0exCslKOnAX9X1PpOb85SGEB09WY6i1x3EQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790862731; c=relaxed/simple;
-	bh=xph1c43Xe1W7p8VbWvnpVws2Aq5YHWyRuoWpTrL40fo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z3XCwdyb7fdn2atNoTrlSzmVSylodgbG9BORHHKHsvGGgPxBKNYSSy6/s4Gw7V1qHEq/5sS1YnSTCNDpcdYTDKy4BumfoFUGjrY1vFHV99vL1xslSNP96IPLWjpfWvoPbT6mq9ixShbyVECh8wr0nGwjoGAnLbz+d4YUcByEUv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=PsQ9T87+; arc=none smtp.client-ip=74.125.225.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1790862943; c=relaxed/simple;
+	bh=iM4k9v+FWnYdhh+RUe247xj2bTwVAPB85IccLeZbDxA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=c01D5Y2UUOLnlkvYm7Rl2UNkA8ZpNHoTD/VMgH5F02+9Y7jDtzDc2nQ6sBxbzhnbM552F+hCcHjQLxTtoKEx3NwDTU8TFmrWn+i19NI4xIA2E2l+iXOkocIYGopqSQ9wMkJ/p8mm6Lf9CcXa7caRSz1qKav/i+iungJyQ4r0m1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Y79mmOjp; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IYPS21CJ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PsQ9T87+"
-Received: by mail-wr2-f34.google.com with SMTP id ffacd0b85a97d-48afe3b2383so1526546f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 01 Oct 2026 06:52:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Y79mmOjp";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="IYPS21CJ"
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 691Dj4oQ2188558
+	for <sashiko-reviews@lists.linux.dev>; Thu, 1 Oct 2026 13:55:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	7oFJMmnDqr2y8CcL25EGGYAYefN1maD9v9sMlG47tKo=; b=Y79mmOjpMGzRclah
+	VfoYN8SWOOlSTtz+vD1w3HwLwQpVX4t4wujQJJFJAQEtHA03M9tHJpfraUoqDyC4
+	b5tF0bXpHUuAIrlRt4RrJd+uMpfXbtB8GEl5PNEOy4Me/SoNbSKTlSKufi/z6d04
+	SnMae29t34L9qvQpjydCrvXWTOEGgdU0MsK1bacFKM+8TA/daLesoFEkVDXJPF0X
+	OtknGjClf8vmJuZo3e+xfgF29Vkw5PnvfYCTi2OaKpAek4CWCddlsMCU8+Gl/P1T
+	gb+cpPkUVBll42gxgZaNYvCZtIFqh8kNHqEfB6RsrPxGh3HXNYyC8tBKfUs5+sTe
+	ayKnig==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h17pjca5g-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Thu, 01 Oct 2026 13:55:38 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id a92af1059eb24-1383723dfddso6858345c88.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 01 Oct 2026 06:55:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790862728; x=1791467528; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=puUp6QetFCd0xmG62nmZajmHZqrboAPDRquIYk2wybY=;
-        b=PsQ9T87+rrY7tfG83Ui6QtEYJM+hImnbNNXVzfLNMxORwjb/uLZih9MWO82sXnCGli
-         RMpvjDhQTe7K5p9TZKfDazC1cECsuDCuacFMoQ5JwRlewYnT57NvpRRcCO1gmzpdeGlV
-         RRsR5bkD7xXzxs2wXmtVR0iJO4Tot8c6dp0JCzDQxDgBVkUr4081lXrjLJ5gJSLt+DoS
-         th7wHqPiss9QwmTVO7rXgADQZffaM1V/UtO7x1zUR1V7ZGQO3VYd3K5Cgln6eFYLx39w
-         Zf5UoLIBGxrn6dOhZLGjiEFng7O8ptoTaxzZpQ1vPpHYLbw0BUiJLYnGtzKhC5pIH44v
-         ChPA==
+        d=oss.qualcomm.com; s=google; t=1790862938; x=1791467738; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=7oFJMmnDqr2y8CcL25EGGYAYefN1maD9v9sMlG47tKo=;
+        b=IYPS21CJ9AUr+6KABOsQRpt+2Jfp5H4sNS2/rYo6RldxVvzxBIrxkNAEHVVNz5oori
+         G782T9Mf5feQ/RRfymFKyHHaJcy2/ZL4IR0YCx2mJ+jnLyKc+yBh+e61BNxuWS9jnY8x
+         7wUQCIMgDVT0IYw/oSPImaO+E7S3SJlMhP/d9YuU7CmU+KxlI07CK0/MxQjVTIVaPqD/
+         BUsm/Kcu5ZimZ0THf7OmSAKwAGxqgxzaQSo0DUYBwtM9pATHfR5ZSoU1SzqkUVY1qnbM
+         9e9aAjk1xlQuZoMJPGTD+y38KK4FbCNXquKAqUiUAHyRNsvGdQ2cZ/n5tWMujcVbnJZO
+         fy9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790862728; x=1791467528;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=puUp6QetFCd0xmG62nmZajmHZqrboAPDRquIYk2wybY=;
-        b=HHu7phvbn/SJXxPNCRrFVu2jWV7mZ/eOki4lQEn3U/FZ9y8KZXj3e+xJkpFV2hecqZ
-         aG8F/M+9TIOsll4zjHxBMb1Izf42jqN0nBtK/uEkoJ7yJmN2tWC/bgavJWyNYZQ6xcwR
-         nbki2dkbImpq9anXCdmv9M8G/BwMwAIECy1tBRg+SRBiEAwN3RHhiqpY+8/thjFgACND
-         tIFwGAMfpQ6gLn/u0lWv3e3400cydUFC0RmCNQzqQLfsv80kLrT0m1o1jV7nmtr8+t8Q
-         MfjmufGE0TRMIGuUVJlfVZFkM3nIv2PUq3yZ/bswLD2Jfz6gtDJStmhqxSGG0DuFRFKO
-         FLjQ==
-X-Gm-Message-State: AFuF++mPTdku9nNjXaLHi+sec4qYMZzqEsmxU03lSrxXrTtXxF6h+H0X
-	0pDq4/RUboIaCikFeRryWhhfzCuAh3iXeUX1ZYFRpUnGj+etskt2TaO/6nK4bvgwD8tzATEEee2
-	htS/eF3qN
-X-Gm-Gg: AYBFou2uTtQMR/oJP2CpGOpUrE9WNrcMSAcTOP9g9sm3u7wf/Zs1DH3UVhxjSnAZwvM
-	QiILOEUtg9jpUm5L4UF2z/UXD8499FNwl89VVluBHN99TofQjnu0vwhtbqrFdepi5g9CNDDno3U
-	pJALxS+onac+EHeg86Q8P8ewRjvMStl5grFsLs2d09sd2e/w/QOJ/rGfoydA8+jjB8yofKdODt7
-	JY+Ai1XxY7542EHyPPEvxWxnCv9pyXaM87apx3dsOV6CcBiHg9X/ktmE1wugdhnQDH8yIMP9FoB
-	VQF3sBSGYG6RWL4oVCndUfXYuOYmLq/7/8GtQ+ApAox+qOLBJeuJpRdr4yI+89bAQdLkZkJEUpz
-	3/RN8lFc+oOR0mFvC0TFF5DqTtUyoKwChjmXDRn1jFuuqsd/RlajV5NI4i6t4e+64xaOqoXWJZ6
-	NOPshp/esYCy5DFe4diBeZZ+6mm7/5Sy0YlYf1lzJ0+h8f6eD+YG6Z9wpynmQ3ILql4vPuxKGQv
-	u1XVLDj+6jk6diD56FQ8bP+a4woDszsUpEjia6Ogso=
-X-Received: by 2002:a05:600c:83c3:b0:49c:edd8:ba35 with SMTP id 5b1f17b1804b1-4a01aff3c4emr82048195e9.6.1790862726856;
-        Thu, 01 Oct 2026 06:52:06 -0700 (PDT)
-Received: from google.com (197.183.140.34.bc.googleusercontent.com. [34.140.183.197])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a01f947898sm75262965e9.10.2026.10.01.06.52.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Oct 2026 06:52:05 -0700 (PDT)
-Date: Thu, 1 Oct 2026 14:52:01 +0100
-From: Vincent Donnefort <vdonnefort@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, kvmarm@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>
-Subject: Re: [PATCH v4 4/4] KVM: arm64: Add hyp_printk event to nVHE/pKVM hyp
-Message-ID: <ar5lgYD93976IO6s@google.com>
-References: <20261001084909.2937943-1-vdonnefort@google.com>
- <20261001084909.2937943-5-vdonnefort@google.com>
- <20261001090709.C0A971F000FF@smtp.kernel.org>
+        d=1e100.net; s=20260707; t=1790862938; x=1791467738;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=7oFJMmnDqr2y8CcL25EGGYAYefN1maD9v9sMlG47tKo=;
+        b=ODJfJsRrdxiuIB8Uv6fd59xV27IM1vozHbw6mJIike/M5TVm4kWuJycpmysO1nOCO+
+         Hrh/93du1WrIZREiChP4AlEezuRZrwh0L3hpjhE2PGT7Hva9VLcAGrf0drw0r7uHYYjT
+         3BY1If45ogIyXOMHQSLhoURRNMnb25eCt9HtuS4Fvrf1zl/JBAZwZ1/yeEpCqM9VjSol
+         IC7E4L1hKs9Xk06L37LcoDIMc3gJrDUJSoQFQ8ibJiNmQOp0pVbiPKDy31Zj8ljeAeLB
+         UCwgt1T6jvKZw587dapBWSeA3ie0oijr4QwjemOsT9PFi+u7Gqi7HmbrWVPFQjU2tI5s
+         ul9g==
+X-Gm-Message-State: AFuF++kjIZAtQqI5GC0phZ44GMUF65WGcVAxW6E6wEqBSXE7A3wnXoyb
+	cSkWqTLzVXBYYcIkyhGGBaWHL/X0wdAvb3QWXfrDUBwXqqaYc9nXOuOTyz3HiXNMLT1veRfeWCf
+	Hcm1zsPk6ZagQlcyNCIWp+QUgkZ31gi07fk6eVh/ATy24Ml9t60tvv0Oe7lzByUdPn6bj05RqJM
+	1w4Vg=
+X-Gm-Gg: AYBFou2pVd6Vk6Jfai9hNVtynLPW2SaXo46E16xCoJy7eECJnG2N3C/IDo76nz1MwMG
+	lrKKnXqfSsYuWxsFMYBjvDHT8Z5bcs7wpvpVG8LGkhLZxugoS81RLJ84y4phqht2xjl9nxGun2/
+	19bBFh9Cg2PE9ebtMk/u1Z9+c0LkQid/0Pw9rleqjvFdtw9PVSC6trK1KNueakLXcP0nSaTyU4X
+	kNTbxc0ZcFYYBwnFmAlZX7UmGUe0/ZFXIXoVX3BWNuTDjbxdMD+V9P2M3xGHK2yLRYuuTd37A9f
+	28564fB4YgRvKo1yH+Qt/NpCz1ue5I5fhIHRpm07emyhkvEz9VknXthqItRsVMTkhCn32EXcFa8
+	VzlG0/DOSRlRQMZ7ddVwR8gKeDY36GAE=
+X-Received: by 2002:a05:701b:4244:10b0:143:296a:4e58 with SMTP id a92af1059eb24-14d328ffce7mr4673516c88.27.1790862937790;
+        Thu, 01 Oct 2026 06:55:37 -0700 (PDT)
+X-Received: by 2002:a05:701b:4244:10b0:143:296a:4e58 with SMTP id a92af1059eb24-14d328ffce7mr4673482c88.27.1790862936950;
+        Thu, 01 Oct 2026 06:55:36 -0700 (PDT)
+Received: from [10.206.103.83] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14df40dc189sm6921469c88.11.2026.10.01.06.55.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Oct 2026 06:55:36 -0700 (PDT)
+Message-ID: <c14ee77f-5413-4c0c-afc9-269b0a6bf3bb@oss.qualcomm.com>
+Date: Thu, 1 Oct 2026 19:25:32 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261001090709.C0A971F000FF@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 1/2] arm64: dts: qcom: shikra: Add Iris video codec
+ node
+To: sashiko-reviews@lists.linux.dev
+Cc: media-ci@linuxtv.org, devicetree@vger.kernel.org, conor+dt@kernel.org,
+        robh@kernel.org
+References: <20261001-shikra_vpu-v6-0-37143dc1bb9d@oss.qualcomm.com>
+ <20261001-shikra_vpu-v6-1-37143dc1bb9d@oss.qualcomm.com>
+ <20261001135049.D945E1F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+In-Reply-To: <20261001135049.D945E1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=eqpKXYpX c=1 sm=1 tr=0 ts=6abe665a cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=bMxCJCIvrp3_V2EDkisA:9 a=QEXdDO2ut3YA:10
+ a=vBUdepa8ALXHeOFLBtFW:22
+X-Proofpoint-GUID: nBgDP5G3zSt4MJNt5uKYJAw8wCWpu2yM
+X-Proofpoint-ORIG-GUID: nBgDP5G3zSt4MJNt5uKYJAw8wCWpu2yM
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA1NSBTYWx0ZWRfX3ROIk30MiqDp
+ duo/b07YCVWx074BfF3w8+NcR5fXuv/Fl8Gffj1zBx8Zfe+wC42Dgxikr3EIPNPa25Z3+uZu/Q6
+ Fssiju2eRn9zViD3bUmxaOvH1X7su3I=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA1NSBTYWx0ZWRfX1mKfdPiMmxa+
+ NFM8Lq1oNZjbzWoCYJE8o+zI2jPatT3UACFSZYi0Y91yhg4ssCC7J82b1zZ52tWsrlFl1YHMXcf
+ ZJdFR3q714L1IS05rb5xge5L3/4oW8rNgcKqbO5WN0iJ/h2H3wW7drmO1ERiy/Qv2+/Y6ZJ4z9W
+ m+vPuaRVcJEJ5Dd4++zhZN/PhvKkFXA2T3+Wj24yg/ZQvKtwtzL1hoZrt8ZmosixaOrsPVzBYTX
+ kcjzWJdGHmc2ZP0FDqYk4SuIElQvU1yyzWc6c5qEYQWAqj3UjQ52MywbxbEQIuQmfsdW6kIHBgN
+ xFr80X7MTgNE9nQAkgPn9eFU1U8j0GoYR60Y4VfIspbvgqQAhg/YQaAHbXywhUtig4U7iCFkbR3
+ t7zWDKhal8cQyvrMk5VUBJpxj0jwtnwdy7lu7iSENSZ7dyf+AM9kiuZhLv8zsrrgLAIdq7zJfmh
+ aQnER1bRNYIL5F4z5vA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-01_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 clxscore=1015 malwarescore=0 adultscore=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610010055
 
-On Thu, Oct 01, 2026 at 09:07:09AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] kvm: trace_hyp_printk lacks format string validation leading to host panic/leak
-> - [Medium] arm64: unaligned _hyp_string_fmts section start leads to pointer corruption
-> - [Medium] kvm: out-of-bounds read in __hyp_trace_printk when trace sequence is empty
-> - [Medium] kvm: uninitialized padding in remote_event_format_hyp_printk leaks hyp memory
+
+On 10/1/2026 7:20 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] dt-bindings: missing qcom,shikra-venus compatible string in schema
 > --
 > 
-> commit bc7c47888c5fbd307a50212081f15f7498660a9b
-> Author: Vincent Donnefort <vdonnefort@google.com>
+> commit 72de37a6e4a3d11559749c7b3aae80f415758b83
+> Author: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
 > 
-> KVM: arm64: Add hyp_printk event to nVHE/pKVM hyp
+> arm64: dts: qcom: shikra: Add Iris video codec node
 > 
-> Create an event to allow developers to log pretty much anything into the
-> hypervisor tracing buffer with trace_hyp_printk(), just like the kernel
-> tracing has the function trace_printk().
+> This commit adds the Iris video codec device tree node for the Shikra
+> platform. It describes the Iris-based video decoder/encoder block, allowing
+> the media driver to probe and initialize the hardware.
 > 
-> > diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
-> > index af1d720209764..7f9b6c7dfe70f 100644
-> > --- a/arch/arm64/kernel/vmlinux.lds.S
-> > +++ b/arch/arm64/kernel/vmlinux.lds.S
-> > @@ -324,6 +324,10 @@ SECTIONS
-> >  		__hyp_events_start = .;
-> >  		*(SORT(_hyp_events.*))
-> >  		__hyp_events_end = .;
-> > +
-> > +		__hyp_string_fmts_start = .;
-> > +		*(_hyp_string_fmts)
-> > +		__hyp_string_fmts_end = .;
-> >  	}
-> >  #endif
-> 
-> [Severity: Medium]
-> Could __hyp_string_fmts_start capture an unaligned address before section
-> padding is applied? The compiler might align struct hyp_string_fmt
-> elements, but without an ALIGN() directive, __hyp_string_fmts_start
-> captures the location counter before any alignment padding. When calculating
-> fmt_id in the hypervisor (fmt - __hyp_string_fmts_start), this unaligned
-> offset might yield incorrect values and cause memory access errors.
-
-arg, that is correct, it depends on the number of events...
-
-I'll move into its own .rodata.hyp_string_fmts output section.
-
-And make the hyp_string_fmts struct const at the same time...
-
-> 
-> > diff --git a/arch/arm64/kvm/hyp/include/nvhe/trace.h b/arch/arm64/kvm/hyp/include/nvhe/trace.h
-> > index 8813ff250f8e0..fa50720e2cffd 100644
-> > --- a/arch/arm64/kvm/hyp/include/nvhe/trace.h
-> > +++ b/arch/arm64/kvm/hyp/include/nvhe/trace.h
+>> diff --git a/arch/arm64/boot/dts/qcom/shikra.dtsi b/arch/arm64/boot/dts/qcom/shikra.dtsi
+>> index 9823c591b02b1..d2e4db4025dcc 100644
+>> --- a/arch/arm64/boot/dts/qcom/shikra.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/shikra.dtsi
 > [ ... ]
-> > @@ -46,6 +46,70 @@ static inline pid_t __tracing_get_vcpu_pid(struct kvm_cpu_context *host_ctxt)
-> >  void *tracing_reserve_entry(unsigned long length);
-> >  void tracing_commit_entry(void);
-> >  
-> > +/*
-> > + * The trace_hyp_printk boilerplate is too fiddly to be declared with
-> > + * HYP_EVENT():
-> > + *
-> > + * The string format is stored into a kernel-accessible ELF section. The
-> > + * hypervisor only writes the format ID.
-> > + *
-> > + * The function has a variadic prototype. We have no easy way to know each
-> > + * argument width so they must all cast to u64.
-> > + */
-> > +#define REMOTE_EVENT_CUSTOM_PRINTK(...)
-> > +
-> > +#define __TO_U64_0()
-> > +#define __TO_U64_1(x)			, (u64)(x)
-> > +#define __TO_U64_2(x, ...)		, (u64)(x) __TO_U64_1(__VA_ARGS__)
-> > +#define __TO_U64_3(x, ...)		, (u64)(x) __TO_U64_2(__VA_ARGS__)
-> > +#define __TO_U64_4(x, ...)		, (u64)(x) __TO_U64_3(__VA_ARGS__)
-> > +#define __TO_U64_5(x, ...)		, (u64)(x) __TO_U64_4(__VA_ARGS__)
-> > +#define __TO_U64_6(x, ...)		, (u64)(x) __TO_U64_5(__VA_ARGS__)
-> > +#define __TO_U64_7(x, ...)		, (u64)(x) __TO_U64_6(__VA_ARGS__)
-> > +#define __TO_U64_8(x, ...)		, (u64)(x) __TO_U64_7(__VA_ARGS__)
-> > +
-> > +#define __TO_U64_X(N, ...)		CONCATENATE(__TO_U64_, N)(__VA_ARGS__)
-> > +#define __TO_U64(...)			__TO_U64_X(COUNT_ARGS(__VA_ARGS__), ##__VA_ARGS__)
-> > +
-> > +REMOTE_EVENT_FORMAT(hyp_printk, HE_STRUCT(he_field(u16, fmt_id) he_field(u64, args[])));
+>> @@ -2809,6 +2809,67 @@ adreno_smmu: iommu@59a0000 {
+>>   			power-domains = <&gpucc GPU_CX_GDSC>;
+>>   		};
+>>   
+>> +		iris: video-codec@5a00000 {
+>> +			compatible = "qcom,shikra-venus", "qcom,qcm2290-venus";
 > 
-> [Severity: Medium]
-> Can this leak hypervisor memory to the host or userspace through uninitialized
-> struct padding? The REMOTE_EVENT_FORMAT definition creates a structure with
-> u16 fmt_id followed by a u64 args[] array, which introduces padding bytes
-> before the array to satisfy the 8-byte alignment requirement of u64. Because
-> tracing_reserve_entry() does not zero the allocated space, these padding bytes
-> are never initialized before tracing_commit_entry() exposes them.
+> [Severity: Low]
+> Is this new "qcom,shikra-venus" compatible string documented in the
+> dt-bindings schema?
 
-That memory is kernel-shared memory anyway. I do not believe this is an issue.
+yes, its committed with #fe12ccf5a98f (dt-bindings: media: 
+qcom,qcm2290-venus: document shikra venus compatible) in media-next.
 
 > 
-> > +extern struct hyp_event_id hyp_event_id_hyp_printk;
-> > +
-> > +static __always_inline void __trace_hyp_printk(struct hyp_string_fmt *fmt, int nr_args, ...)
-> > +{
-> > +	struct remote_event_format_hyp_printk *entry;
-> > +	va_list va;
-> > +	int i;
-> > +
-> > +	if (!atomic_read(&hyp_event_id_hyp_printk.enabled))
-> > +		return;
-> > +
-> > +	entry = tracing_reserve_entry(struct_size(entry, args, nr_args));
-> > +	if (!entry)
-> > +		return;
-> > +
-> > +	entry->hdr.id = hyp_event_id_hyp_printk.id;
-> > +	entry->fmt_id = fmt - __hyp_string_fmts_start;
-> > +
-> > +	va_start(va, nr_args);
-> > +	for (i = 0; i < nr_args; i++)
-> > +		entry->args[i] = va_arg(va, u64);
-> > +	va_end(va);
-> > +
-> > +	tracing_commit_entry();
-> > +}
-> > +
-> > +#define trace_hyp_printk(__fmt, __args...)						\
-> > +do {											\
-> > +	static struct hyp_string_fmt __used __section("_hyp_string_fmts")		\
-> > +	__hyp_str_fmt  = {								\
-> > +		.fmt		= __fmt,						\
-> > +		.nr_args	= COUNT_ARGS(__args),					\
-> > +	};										\
-> > +	BUILD_BUG_ON(sizeof(__fmt) > HYP_STRING_FMT_MAX_SIZE);				\
-> > +	/* __TO_U64 prepends a comma if there are arguments */				\
-> > +	__trace_hyp_printk(&__hyp_str_fmt, COUNT_ARGS(__args) __TO_U64(__args));	\
-> > +} while (0)
+> It appears to be missing from the corresponding dt-bindings schema (such as
+> qcom,qcm2290-venus.yaml). This will cause validation failures during
+> `make dtbs_check`.
 > 
-> [Severity: High]
-> Does this macro validate that the provided format string matches the given
-> arguments? Without checking the format string (e.g. using __printf attributes
-> or if (0) printk(...) type-checking), a mismatch like
-> trace_hyp_printk("val=%d") will set nr_args to 0.
 
-It is impossible to use __printf here due to the u64 cast.
-
-> 
-> The host kernel's __hyp_trace_printk() will then unconditionally call
-> trace_seq_printf(seq, fmt); with no arguments, potentially causing
-> out-of-bounds reads or invalid dereferences when it parses the %d or %s
-> specifiers.
-> 
-> > diff --git a/arch/arm64/kvm/hyp_trace.c b/arch/arm64/kvm/hyp_trace.c
-> > index 8faaec899f92c..ebb882d0152b6 100644
-> > --- a/arch/arm64/kvm/hyp_trace.c
-> > +++ b/arch/arm64/kvm/hyp_trace.c
-> [ ... ]
-> > @@ -421,6 +424,58 @@ static const char *__hyp_enter_exit_reason_str(u8 reason)
-> >  	return strs[min(reason, HYP_REASON_UNKNOWN)];
-> >  }
-> >  
-> > +static void __hyp_trace_printk(struct remote_event_format_hyp_printk *entry, struct trace_seq *seq)
-> > +{
-> [ ... ]
-> > +	switch (hyp_str_fmt->nr_args) {
-> > +	case 0:
-> > +		trace_seq_printf(seq, fmt);
-> > +		break;
-> > +	case 1:
-> > +		trace_seq_printf(seq, fmt, entry->args[0]);
-> > +		break;
-> [ ... ]
-> > +	}
-> > +
-> > +	if (seq->buffer[trace_seq_used(seq) - 1] != '\n')
-> > +		trace_seq_putc(seq, '\n');
-> 
-> [Severity: Medium]
-> Is it possible for trace_seq_used(seq) to be 0 here? If the sequence buffer
-> was empty or in an overflowed state when passed to this function, subtracting
-> 1 would result in an out-of-bounds array read (accessing seq->buffer[-1]).
-> Would adding a check for trace_seq_used(seq) > 0 prevent this?
-
-I will fix that too.
-
-> 
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261001084909.2937943-1-vdonnefort@google.com?part=4
-
-I will also change the "\"Unknown\"" even though we do not support yet external
-tooling.
-
--- 
-Vincent
