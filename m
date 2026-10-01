@@ -1,68 +1,68 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3633909BF
-	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 14:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0795208A1
+	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 14:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790865535; cv=none; b=piJKQ8ySy7zw7OiXg0ynwxRSMrEFyjqgLhM3WWKujJvvJ582OTGIH5MYR9L2pp1Sn+Zi/EMOYLbMKto0qV0H4tocAM0Ghdnuw7p5/RkFLmU0kYm+fMZrHBP/SDwiGNnOf4iTy4zkN+rmjtfPT9cCFlDhB2cZKo0tNZMjSaFDxbU=
+	t=1790865988; cv=none; b=s2a1CPGMdMxrU0sJugSil2hLhTEIm4PmtAMgWFmFRQZXnRPOK7AyL9NRJHlRtovpGExhbKK9bypzzQm9OoYYw7OCNn/aHTwzsfPpInjQSg22COs+wwvIaIyrwGDVi9ExA1S02E7KAamWYA3ynciiDcSKuXlVQq4Db0mkv1dYUgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790865535; c=relaxed/simple;
-	bh=TP4jI+wG6PBqBKAosooF+4rrhoc5hNQtPHbUvJ/nxic=;
+	s=arc-20240116; t=1790865988; c=relaxed/simple;
+	bh=y592cWDD7sh9JPJn4KeHW+g6gg94dBAe9nlpopS5a+I=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DUgSMGuhyJEA4H0wlvaJj7FUFsGegN4OwGvMscpZJTGpmRD9erbCGjuL2mgf1Np44eowTDAc5d3hsF96F4YNIOWt/hsNvUcTzG+k4wsJeR8Gq547COaFS+dbpZ3TuyUzktcb/jEay9VXUmTwmL5W+s22GXA35CefSwbcfEDqv8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=J5TPUfqt; arc=none smtp.client-ip=170.10.129.124
+	 MIME-Version:Content-Type; b=Rv4wxTBtpZCT4BxGM11e4mzgHb0yUguS1GVx3jKcIKS8NRgDBWeY02htai/usiJ+tLdf0NDdC1GFkM9FMzNbvXkmn/Rz0RMte0k1Geil4txBNInktH5ktznN9XWH2ULXE5PH9xSw7mnu99GVJosX5gwi379Ezk52oDHvDpjUL1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=bnu0cgts; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="J5TPUfqt"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="bnu0cgts"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1790865529;
+	s=mimecast20190719; t=1790865984;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=i4xhRQFt/bWT6UALcOITRzeSEDfb1ACELZHI8/ear74=;
-	b=J5TPUfqtrtqpeS8SlQLjzv3vhrZQdFt09DaMBP94eK/YbQB2f0TRRn7Uw/OTIzX1pxI5r3
-	ZLumVB0WwfmL9B+zV394FspL1wqlVAwXGDUJ75ujzTrNlSTUh3cY+APEITL89jeovZUJKY
-	piixZs0h17ThkR5Mm/lqlJhsvUjvd6k=
+	bh=CuGmcOB5B7OU7vPcQ5Kxs9sP8F6GWHF+e8A0rz6DPVU=;
+	b=bnu0cgtsDC7TTD+g9P2qdakhJ4ghf9AvIsR9zUYcPjpjlwY2dDe0IKvPlsR5FUZhmJ63hv
+	DnN8QkTzQSCNKun2TwM0RzXrbKx+rwLmDAWpM61ah0Ycp5UdIHfHsRZ9UkSOsjVebobEQo
+	2D+cBp6+Ec2871uYcMyi0tfZOeuzeqA=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-479-t1bLDUQ-Nb6kRR-Vdg3Ktw-1; Thu, 01 Oct 2026 10:38:48 -0400
-X-MC-Unique: t1bLDUQ-Nb6kRR-Vdg3Ktw-1
-X-Mimecast-MFC-AGG-ID: t1bLDUQ-Nb6kRR-Vdg3Ktw_1790865526
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-4a01c621dc2so10879955e9.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 01 Oct 2026 07:38:47 -0700 (PDT)
+ us-mta-81-1uvq-vu5Nze284kRhDjQAg-1; Thu, 01 Oct 2026 10:46:23 -0400
+X-MC-Unique: 1uvq-vu5Nze284kRhDjQAg-1
+X-Mimecast-MFC-AGG-ID: 1uvq-vu5Nze284kRhDjQAg_1790865982
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-4a020cf06c3so5071735e9.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 01 Oct 2026 07:46:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790865526; x=1791470326;
+        d=1e100.net; s=20260707; t=1790865982; x=1791470782;
         h=content-type:mime-version:message-id:date:references:in-reply-to
          :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=i4xhRQFt/bWT6UALcOITRzeSEDfb1ACELZHI8/ear74=;
-        b=Z4sIyfvn4lw5LyDLWmdDkdH9ClhlKlZLoaXo63ttfbRJAa8WXp99aV/N7dDzM0dSFx
-         oV56B8HdIQ97+pRP5j1xbLuNBkrqQYjZf4kpsakGARgYhgs05YUN8qSSfDfao2of6TsU
-         m5LWj6zgyjO0Jef0/2Gl3gdDdNytIR20CwfulN4jGVbMIFx1ldGt6VvPScazYZeclQDC
-         m2t4o3bhfSdp7Lzk+iaOtNcZ2ToyZX5S3RBNEnCco6EcxiJHfZsU6syN5JhIKxX3kjO1
-         UvwMFVG5Ed7v5A5ajJsnRMdQc9tMchl9VoIYO+EknM5B64AJ3ibzQihNU+O+uSeSKA4y
-         m+AQ==
-X-Forwarded-Encrypted: i=1; AKwUvByfgeKqoqgBasKZLLkqbu39ti56BbyttKS76ooyj9y0fjP0ZdsRUTaftVeXHp5ryMw6p/WJqyahkV5+PPE+1lE=@lists.linux.dev
-X-Gm-Message-State: AFuF++k4Atn+/lTFJBFEu90Xg+E6IwOKlxmql8zLbl9I2fasVP5BJQw8
-	9Z45p7kg9t0wJyHr8ZcmsEWP0Fv06/gM25K8emWtxqD1ar4jdkXutVa67TWxcIqtqUHHeiF7pyg
-	Un+qXOvkAs0MqZiaMZ6mdrywoCqw5mccOtchyWUaKzqzWBVQY8KyKL18UtZIZH3u++gsCYQ==
-X-Gm-Gg: AYBFou2UJKmaGHl4vWZTu58YRqiqSlfZON5G8545tlqROKt2ppDRpzqBjCDVYJw5V3q
-	w7FaIFBqnNQssnME59O1hBd/zMFQkswKJyJqbx2riErN3OHtcSUYSykglTHmJHRa6u+WLeSFDw/
-	xpkvLk3A+Ji07Fym9hkSZwv9HAk7spQMIcDnWIGsa2LJeajvqde6uk+jetEYDhN3PmFB48D4yHB
-	ExhmDvviLsbLVoVsT/SWniXYznZ8S4UbXZNS51Jg1OvWLb8RCAFhFV4/TOG4/mpI6+/EWHqO0M0
-	3QQOVRRDXfMRJ3g38khnbzMrfQQIGH0HDZt/rBvxIDMHjs+uIAXar9ZqMnwSMShHL3rL3vapv+z
-	Rk1rPEe+4jpBIbEvle3ApsP9xUjfYEKNOIQqE6XDb26nJQBey8eYOjaEOy2zymmr59g==
-X-Received: by 2002:a05:600c:1f86:b0:4a0:13ea:2ec3 with SMTP id 5b1f17b1804b1-4a01b135eccmr80506865e9.35.1790865526381;
-        Thu, 01 Oct 2026 07:38:46 -0700 (PDT)
-X-Received: by 2002:a05:600c:1f86:b0:4a0:13ea:2ec3 with SMTP id 5b1f17b1804b1-4a01b135eccmr80506425e9.35.1790865525833;
-        Thu, 01 Oct 2026 07:38:45 -0700 (PDT)
+        bh=CuGmcOB5B7OU7vPcQ5Kxs9sP8F6GWHF+e8A0rz6DPVU=;
+        b=jaCuNuzWApB0poW8L6pFWFM6MdmPC/oTG7J7iyvt977wTexHme8VyZcQyUvf/u9dfV
+         HMwlujLPLQ/0UXPeWzpXBRi8021cnnaAyi9O0eOWbTvlQ4dir3yKv6+IiLlpGtPtp4iI
+         4uktAwY2EKqvuBdt+Ap0YX1BCcYYCboHCd5lf868jBoVI31YGWOwqb0o/iv1GAVdsEhS
+         sn2p1I+OvcLhWDpGnZgm0J7eFcVt9M8XSkb+FIEASKMdnBidaVy/9XJomyYdzBu3bKb/
+         WOw3EKo9PcHovHxx5H/KerWXDojL9MyQbmPpTDjXgCiwkZ218d5JyUWBtJFtwmQKeARk
+         tnag==
+X-Forwarded-Encrypted: i=1; AKwUvBwLNraxVXpJf+LUul54FNfJ+cm36hxpUoYhAj+zE/7IB8z5GGn/v1XWx5F9PSsGmDQmltlv6fHC/AHSn77A5YA=@lists.linux.dev
+X-Gm-Message-State: AFuF++ndiKDSom0XTMKfmNep+SkCYXMU/0ZByTeyvwtiXx8tzxDoPmKA
+	ycbabA1MWqxJYuFXXKIR6W4nfNBbmiVsvZY1qkLkDqXan4vOOvRFrkxZI5lvVsvgIqZLvOTCBZ+
+	thmAbdFviIcSzJCaWgGcKwHxSPPbneP64xicQ+ywgG0iF1dh4inzjE6IX9iIk0lRZH5+2Hg==
+X-Gm-Gg: AYBFou2S4HP5dkXTSGi1LjX5sFkC0qtKQCKa/P8L80cdH6H2yTlPIiAj4WizwqCggJA
+	WsHXHrjN0J7G2GcbtxYE5ziVsubcJY81Deh45HmO0F9cw0sytfwb3iv59Dfuo3Ts/ku15eZ/GhG
+	MJBAM9iTxmD6eh+rj2lcTnl2r5QdqmMB36Ym6zz4yDr2+Qaaien90QuIucq3VkPH4aFz9Ov6mXr
+	JbTspmpk8I79hzO2UwlLoLbL+1WUNa5Jn3VuEacaQoZC0P2AtQ5B6NVGSW9fvPjahBSqX4zl43I
+	8YYzi8R8dVWUF0/3eqNWTogP+hVeh1W4wvJYCl+2X0pNxhvvwuV1uJ3NjF+ISeGxq4fVWItJNMM
+	PiJwUFEnW6njQHMZEH0DCzQDEOOq6c46ZRGJ5rjStmakbe1wtFGR8kgLv8ZRlxGve1Q==
+X-Received: by 2002:a05:600c:4e41:b0:4a0:c01:1902 with SMTP id 5b1f17b1804b1-4a01ad9e5d2mr78126055e9.2.1790865981637;
+        Thu, 01 Oct 2026 07:46:21 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e41:b0:4a0:c01:1902 with SMTP id 5b1f17b1804b1-4a01ad9e5d2mr78125495e9.2.1790865981098;
+        Thu, 01 Oct 2026 07:46:21 -0700 (PDT)
 Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a023ebe694sm51117505e9.10.2026.10.01.07.38.45
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a0226201aasm59955425e9.6.2026.10.01.07.46.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Oct 2026 07:38:45 -0700 (PDT)
+        Thu, 01 Oct 2026 07:46:20 -0700 (PDT)
 From: Javier Martinez Canillas <javierm@redhat.com>
 To: Thomas Zimmermann <tzimmermann@suse.de>,
  maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
@@ -76,8 +76,8 @@ Subject: Re: [PATCH 2/2] drm/kms-helper: Remove struct
 In-Reply-To: <20261001133736.802604-3-tzimmermann@suse.de>
 References: <20261001133736.802604-1-tzimmermann@suse.de>
  <20261001133736.802604-3-tzimmermann@suse.de>
-Date: Thu, 01 Oct 2026 16:38:44 +0200
-Message-ID: <xlv1mrsxfpu3.fsf@fmartine-thinkpadx1carbongen12.rmtes.csb>
+Date: Thu, 01 Oct 2026 16:46:19 +0200
+Message-ID: <xlv1jyo1fphg.fsf@fmartine-thinkpadx1carbongen12.rmtes.csb>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -85,11 +85,13 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: JTDRpB48gVoUbShfjwDZTuuAZUU_A3YwwHYC7n4PStM_1790865526
+X-Mimecast-MFC-PROC-ID: RcvP7pY3jnX1FsaPi6CL6Y29VtvW7GElvJ4qVsv4qCw_1790865982
 X-Mimecast-Originator: redhat.com
 Content-Type: text/plain
 
 Thomas Zimmermann <tzimmermann@suse.de> writes:
+
+Hello Thomas,
 
 > There are no drivers using struct drm_simple_display_pipe. Remove
 > the data type and all related helpers.
@@ -102,6 +104,20 @@ Thomas Zimmermann <tzimmermann@suse.de> writes:
 >
 > Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 > ---
+>  Documentation/gpu/todo.rst              |  17 --
+>  drivers/gpu/drm/drm_gem_atomic_helper.c |  92 -------
+>  drivers/gpu/drm/drm_simple_kms_helper.c | 328 ------------------------
+>  drivers/staging/fbtft/TODO              |   6 +-
+>  include/drm/drm_gem_atomic_helper.h     |  28 --
+>  include/drm/drm_simple_kms_helper.h     |  56 +---
+
+There are no more users of struct drm_simple_display_pipe but still some
+drivers include the drm_simple_kms_helper.h header. Latest drm-misc-next: 
+
+git grep "drm_simple_kms_helper.h" -- drivers/gpu/drm/*/ | wc -l
+21
+
+So it seems you need more  preparatory patches. For this patch though:
 
 Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
 
