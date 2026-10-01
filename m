@@ -1,91 +1,140 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5239C3EBF18;
-	Thu,  1 Oct 2026 08:59:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90BB93E7BBF;
+	Thu,  1 Oct 2026 09:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790845190; cv=none; b=V5x2Hc9xkIgy2Kn/1KeR6qC7DRNoP32OF+8zO92Cwndg9Q5ywErgOeCsdr1/zREn5jyHnmlXw2j8t17EUZZ/qEq8P6rv2kGuVkrhOle1030etjakB3uBHa8VUbfEoVhfng+mNsW+9gOfWvQesktfdpw9ljlL2wxLFdMUVJevWAc=
+	t=1790845900; cv=none; b=K/JAeqLh0GTr2V9D4qfnIyaOuzodsjyO2Cf0Jif5glvz+cGpCFIKutZbbeyh8UpQPZRQfnN9AX00rTdE1sSZ7CLg9gJk01DtQLQBmCs7nIOYznkaQfp/rGTMKse8Zevyos8KJL0ZRyINwk8wew1mv6Ye51ufvwPB0yCNU2WOUBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790845190; c=relaxed/simple;
-	bh=/n+HpAFyL5opcXfvNs5inPIWYnLZEZ2JOWwSwyIxluo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q9BSAAD8HpTZpY52VdpL9so8/xiMnUUDnL60lPb9GHDMpbMj2Ddz5IhDq/oYBKPvDiVvbKA3yyJbLqxYjw/QROh4XjVuMgc14JQWquIl94MLcdPbohmbPtTLwo/Pxfy0X/wZ7dTDL9ooQZuVWzz8tN2RetUHWmnVWEEcuQ3qGxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gl5pnPY+; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790845900; c=relaxed/simple;
+	bh=GQrDMdfMqZNswkZK5dFyWnVceo9e29aWWhkScXVyzjw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iThmIv2WREBsVVjZUZxVji/2WW4Y1v2HXK3lkv9xzoZAy03YNEW580R7Z44rExI45Znqn59TVH3/gx0eULKmn9MvvJV0seDPTfSRZvbbpXX0dlVGb1Mxn14+0ZBcrTKilUTBGxXPv3t+saEHz1dHCpLQNTWW/+MMXSNOZPaMC2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=ufUYSCru; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gl5pnPY+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BAB41F000FF;
-	Thu,  1 Oct 2026 08:59:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1790845189;
-	bh=Qg3Weja5Q3oGkvaEMHZcYe3F1qNOpQXxAR+re6VwDN8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=gl5pnPY+TWiY33etkY/VLoSqJeVD9QLK0rsqIaNNfIAimk3hMzn9h76h8D1uWGR7o
-	 BY04wSAeIwXRDh2vbBdvHd8XgWI9TbS8KiGhjF86utpbCQU6Au3x8vva3DV7M8iE2c
-	 to1hZK/Ch63Zr+LGAfxBRkCQ0ahopfB7pjd+856g=
-Date: Thu, 1 Oct 2026 10:59:42 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: deller@gmx.de, jirislaby@kernel.org, simona@ffwll.ch,
-	linux-fbdev@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	linux-serial@vger.kernel.org, sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v3 1/5] vt: Add cursor-size helpers
-Message-ID: <2026100134-handwork-detoxify-6888@gregkh>
-References: <20260928085724.41660-1-tzimmermann@suse.de>
- <20260928085724.41660-2-tzimmermann@suse.de>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="ufUYSCru"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9757D497;
+	Thu,  1 Oct 2026 02:11:34 -0700 (PDT)
+Received: from [10.57.9.178] (unknown [10.57.9.178])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BDB343F86F;
+	Thu,  1 Oct 2026 02:11:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1790845898; bh=GQrDMdfMqZNswkZK5dFyWnVceo9e29aWWhkScXVyzjw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ufUYSCruKSsgdz5AQlNPK4y4LK9KHDsv7nd6GemQeqNp+/bgncE9xD3ttBnyyqxgp
+	 yW4GsFqAV2/s/ErFu2GT4lpgVd14g+qe52yHiioiQYjTtr0gr/tzyth1sfw1THT4mY
+	 19QyBDeyP+mJwuEAStC3anS0gKSFObEQ79Qw93a0=
+Message-ID: <ea458644-d723-46e2-bd7d-7746e56d7a08@arm.com>
+Date: Thu, 1 Oct 2026 10:11:35 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260928085724.41660-2-tzimmermann@suse.de>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v21 8/9] firmware: arm_rmm: Add wrappers for Realm related
+ RMI commands
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: Marc Zyngier <maz@kernel.org>, kvm@vger.kernel.org,
+ kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>,
+ Catalin Marinas <catalin.marinas@arm.com>,
+ "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ Will Deacon <will@kernel.org>
+References: <20261001084555.1456543-1-suzuki.poulose@arm.com>
+ <20261001084555.1456543-9-suzuki.poulose@arm.com>
+ <20261001090450.C1CBB1F0089A@smtp.kernel.org>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20261001090450.C1CBB1F0089A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Sep 28, 2026 at 10:55:24AM +0200, Thomas Zimmermann wrote:
-> Cursors in the VT subsystem are blocks within a character cell that are
-> filled with the foreground color. The new helpers vc_cursor_start() and
-> vc_cursor_end() return the scanlines in which the cursor block starts rsp.
-> ends. This is compatible with VGA hardware.
+On 01/10/2026 10:04, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] arm_rmm: dropped out_top on RMI_ERROR_RTT for range commands
+> --
 > 
-> In terms of cursor design, the new cursor-size helpers follow established
-> styles in fbcon. The only exception is in underline cursors for fonts with
-> a size larger than 10. The underlining dash is now one pixel closer to
-> the font-glyph data, so that the cursor looks less detached. This follows
-> the style used by vgacon.
+> commit 68e63e1b38f1af07d69bbc2eee9306e4bedb8efa
+> Author: Steven Price <steven.price@arm.com>
 > 
-> Users control the cursor size with the vt module's parameter cur_default
-> or with the ESC sequence \e[?Nc, where N is the cursor-size constant. In
-> case of an invalid setting, the new helpers fall back to cur_default and
-> then underline cursors; in this order.
+> firmware: arm_rmm: Add wrappers for Realm related RMI commands
 > 
-> Similar code in vgacon and fbcon ignores the cursor's default size stored
-> in vt.cur_default. The consoles default to full-block cursors, while vt
-> defaults to underline cursors. VGA BIOSes also tend to use underline by.
-> default. Upon initialization vt applies its default to the console, but
-> each console might fall back to it own default. For example, running the
-> ESC code from above with the invalid constant of 8 magically flips the
-> cursor from underline to block size on vgacon. Another call with N set
-> to 0 (i.e., default) magically flips it back to underlyine. Making
-> underline the new default everywhere harmonizes vt, fbcon and most VGA
-> BIOSes.
+> This commit introduces wrappers for the RMI calls used to create and
+> manage realm guests. These inline functions map the standard KVM realm
+> operations to their underlying SMCCC interfaces.
 > 
-> v3:
-> - mention user interfaces to control cursor size in commit message (GregKH)
-> - elaborate defaults (GregKH)
-> - move retry logic into helper
-> - handle CUR_DEF
-> v2:
-> - export non-font interface for vgacon
-> - avoid interference from concurrent user space (Sashiko)
-> - fix function docs (Sashiko)
+>> diff --git a/include/linux/arm-rmi-cmds.h b/include/linux/arm-rmi-cmds.h
+>> index 5d005054f3c6c..e3503aba646e2 100644
+>> --- a/include/linux/arm-rmi-cmds.h
+>> +++ b/include/linux/arm-rmi-cmds.h
+> [ ... ]
+>> +static inline long rmi_rtt_data_map(unsigned long rd,
+>> +				    unsigned long base,
+>> +				    unsigned long top,
+>> +				    unsigned long flags,
+>> +				    unsigned long oaddr,
+>> +				    unsigned long *out_top)
+>> +{
+>> +	struct arm_smccc_1_2_regs regs = {
+>> +		SMC_RMI_RTT_DATA_MAP, rd, base, top, flags, oaddr
+>> +	};
+>> +	long ret;
+>> +
+>> +	ret = rmi_sro_execute(&regs);
+>> +
+>> +	if (ret == RMI_SUCCESS && out_top)
+>> +		*out_top = regs.a1;
 > 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Reviewed-by: Helge Deller <deller@gmx.de>
-> ---
->  drivers/tty/vt/vt.c            | 104 +++++++++++++++++++++++++++++++++
->  include/linux/console_struct.h |   7 +++
->  2 files changed, 111 insertions(+)
+> [Severity: High]
+> If this operation encounters an RTT state conflict midway through processing
+> the range, the RMM terminates early and returns RMI_ERROR_RTT.
+> 
 
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Nope, see below.
+
+> When that happens, the RMM writes the failing IPA to out_top (register x1)
+> so the caller knows which pages were successfully processed before the error.
+> 
+> By restricting the out_top assignment strictly to ret == RMI_SUCCESS, doesn't
+> this silently discard the partial progress indicator on RMI_ERROR_RTT, causing
+> KVM to lose track of the modified pages?
+> 
+>> +
+>> +	return ret;
+>> +}
+> [ ... ]
+>> +static inline long rmi_rtt_data_unmap(unsigned long rd,
+>> +				      unsigned long base,
+>> +				      unsigned long top,
+>> +				      unsigned long flags,
+>> +				      unsigned long oaddr,
+>> +				      unsigned long *out_top,
+>> +				      unsigned long *out_range,
+>> +				      unsigned long *out_count)
+>> +{
+>> +	struct arm_smccc_1_2_regs regs = {
+>> +		SMC_RMI_RTT_DATA_UNMAP, rd, base, top, flags, oaddr
+>> +	};
+>> +	long ret;
+>> +
+>> +	ret = rmi_sro_execute(&regs);
+>> +
+>> +	if (ret != RMI_SUCCESS)
+>> +		return ret;
+>> +
+>> +	if (out_top)
+>> +		*out_top = regs.a1;
+> 
+> [Severity: High]
+> Similarly, if rmi_rtt_data_unmap() encounters an RMI_ERROR_RTT, it returns
+> early here without populating out_top.
+
+As explained earlier, out_top is invalid when result != RMI_SUCCESS for
+all cases except RMI_RTT_DESTROY.
+
+Suzuki
