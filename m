@@ -1,127 +1,134 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C133DA7D2;
-	Thu,  1 Oct 2026 12:50:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269C23D8121;
+	Thu,  1 Oct 2026 12:59:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790859047; cv=none; b=MTWfTNvoOZQAdU2Ipv6vr/dfvNo/JvS7GHjAIFZs0N+bXwb0jqICsOhS45e4yEx+Ima8WtBN3h1VjYUgd48k/N7znB8+dfweVObm2laIDsz1osBoGRWihfWoVQFXV88XveL32dSmRdlQ4hIe6FhHjYVLdJipd7OtEutkMb92XUE=
+	t=1790859591; cv=none; b=JZX3X3larjRmca3plEII92LqpsJ1qUUX7w2QSj7VINI2etk9TYENuJNviJrxNtLANcuoTpYx+DlUlhL2BqHQs1asdzewuaGZS9FEUSr1gD9L0GbfNdDbZ34zIEjpc/b/ob7DpjJWePgPgHwVSO3Dt2bh69kVRgc3uTjj/MwuGnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790859047; c=relaxed/simple;
-	bh=ZCy35iQaL/AoggCKNogfxYo4f/HeuiJhJdHyYThiv5A=;
+	s=arc-20240116; t=1790859591; c=relaxed/simple;
+	bh=+oEEYMyapdfy2MygoVgo6lezDIyzegG2R9t+lllJbIA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rSPegjMCyOE/Bfrx89RmKSIc4c2SvuV1scbcLzK5pPLFzzr0cICMkPEqP3S1DyWBqE8AF5myRwyuvkm5atYxcpVebTpt0+UX2vd7hEswTPrp64hxctccVKLCrJRgtjcsMwED/igrRhKl3oP5sAkKVJV/3B/iB4X4C3PwgJGs4do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=DFqZ0W2K; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=hRp0bIXDNuskvk6SzK+OoATc6vTZPiK9n44OP02TWWOD/Cf7jkRPRiVQKg0P9+m2ryEEg2qdwDBk8KimB04BqV2O05CAgK+Csn7aQIyQQGbc7iN7LpqIdC0+OKegh/Gurf/0hdq2SxOAUBgJc3ecYW+rUG8qjgIh2HoGXLhzPtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JIF/B0EW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="DFqZ0W2K"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69175fbl1119395;
-	Thu, 1 Oct 2026 12:50:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=hRBEH4IbF4NdppaXKddUnLVNA72Cv1
-	mpe3KugTX05Hk=; b=DFqZ0W2Kzw811AHvoqclZ2LUu8brBgiuTW11dO/wyGmMbM
-	VMqfLbcP8868boOS3/9II+HgQbN93mZs9QN4PpAR/ut6McvcD36Fl5w9A/b2lHv+
-	gMOnjV+R99nZu7pgOcIhOSK2RxKEg1GkUNXSubcBfXMxTtmZU67OFO5xdLSJ0LCB
-	p1KZCv/tCxLDmwex6jSKrFmSCqueiirAW/OhTCo/YwzIx6VY8EChMZAzczEIoCm8
-	wLGeYcZm4iaqh5Vv8tQHBisJ3Leq0HFOJAYjsjpUnyfoLq9Xgolf93QYdsJnM42X
-	LubdNItyxoNmCzkCkxgNH707Uqmott76VQ7saydw==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4gx5j5kd3s-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Thu, 01 Oct 2026 12:50:45 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 691BDj5Q589647;
-	Thu, 1 Oct 2026 12:50:44 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h1aa7ty78-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 01 Oct 2026 12:50:44 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
-	by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 691CoekA53018962
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 1 Oct 2026 12:50:40 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 7C9FF20043;
-	Thu,  1 Oct 2026 12:50:40 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 430EC20040;
-	Thu,  1 Oct 2026 12:50:40 +0000 (GMT)
-Received: from osiris (unknown [9.111.57.16])
-	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Thu,  1 Oct 2026 12:50:40 +0000 (GMT)
-Date: Thu, 1 Oct 2026 14:50:38 +0200
-From: Heiko Carstens <hca@linux.ibm.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JIF/B0EW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB11F1F000FF;
+	Thu,  1 Oct 2026 12:59:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790859589;
+	bh=mWEhNC2bx28+yRg0dPmgwrk6vKK8w5OBcpeNy+gKRH4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=JIF/B0EWXJ0MDjxeLJZ7yO1RQlpIaMdKbKKNsSXNWszWPJ3PBB4IoBEyGD5DARCr6
+	 EghD/+7Ha3UjceHW9Y7A7cvC/XxmnNWI28uTVunnCjnAZhrBDv5jL1BQBGa3yejDd9
+	 8JtJ9TQEwE9J8Epe8QYSKPF+/imypf3aX6Ku8z3ojDryet26BK6wy/1B+aVsbYEP8A
+	 bCyy3I8sdeW1g+eTaXFkbJPLdBLEP9UbiViiSkgnH4LRiYzLb6taZ99aGK9yoG235C
+	 WMk4EwMOCwp9Tvw37ZZdHse/DBW/9OckkefvsDEBIG7Q+OIcogIXov6gHrykqeG8MO
+	 4GyhjSqX2XKAg==
+Date: Thu, 1 Oct 2026 15:59:44 +0300
+From: Leon Romanovsky <leon@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: Re: [PATCH 08/32] s390/dis: Improve show_code() output
-Message-ID: <20261001125038.23106B29-hca@linux.ibm.com>
-References: <20261001103247.1989111-1-hca@linux.ibm.com>
- <20261001103247.1989111-9-hca@linux.ibm.com>
- <20261001104832.A2F561F000FF@smtp.kernel.org>
+Cc: dri-devel@lists.freedesktop.org, linux-rdma@vger.kernel.org,
+	media-ci@linuxtv.org, linux-pci@vger.kernel.org,
+	kvm@vger.kernel.org
+Subject: Re: [PATCH v9 16/18] PCI/P2PDMA: Let a client declare that it
+ selects ATS per mapping
+Message-ID: <20261001125944.GM3401365@unreal>
+References: <20261001-fix-p2p-acs-v4-0-v9-0-1a8e0f50ddd9@nvidia.com>
+ <20261001-fix-p2p-acs-v4-0-v9-16-1a8e0f50ddd9@nvidia.com>
+ <20261001120807.8723F1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20261001104832.A2F561F000FF@smtp.kernel.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA1MCBTYWx0ZWRfX/nxQI/vKSiAl
- 6PE4MJ6tcLWo0cu4i5i9WVOu/4pqJAvJ4qeXFm2nUbM0ozbXj1lhERwuzHX+dqFBVONItYpbVuf
- 8FpE7/+yTeBbsjseTSimlr3UIf8ysZY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA1MCBTYWx0ZWRfX5Lwxx+xklEya
- SPJ3Exr8mjAmacipt5UVXPwR1cw6ZvdiodDK+ps4q/98e8xia2tg5aEDQ+4q3gCW96qeRSTUbsX
- EKWSJdUnEPPnIDXIDr4KSj/4E51yahgp4h4ClcHHKGASOC3SPdbaLNuN+cHV6fpkTq7T6D2gHMw
- MzCDRbM0XsW2LNnbBUUDQUM1ami5aLxHBYkzWHvNmxo9VOOEW9sCd883DUUmTDvDlZwXp+r9mtp
- m6IEyPQsUqD9r4WUoYyqHuKJ0jzqUIyxX7goxesDVFBIO7JxG1sc5NT7iXwhmd6Vj2tZO12YH4F
- Gvk8KTc5qGoKmArQqVkCbl6xOMiaNOp84tFITQvmRduvl3QLOngFukBGR8MWWFY4XKLDJjsRdP6
- eFRx1lz6QGOiWJOPMWZYfM+jhb1Ctj6B6p8nMk1O46Rj9kwyhoWP7fYGKgRnxZjtf+Erx2mjSSf
- B+FKGgFk7XB9ulkYKjA==
-X-Proofpoint-GUID: Y73gZvn7pTUjQph6mRjQfRCn2iHPbq3W
-X-Authority-Analysis: v=2.4 cv=RKcmjIi+ c=1 sm=1 tr=0 ts=6abe5725 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=kj9zAlcOel0A:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=gi8WgnqM83tjWKFgJRQA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: Y73gZvn7pTUjQph6mRjQfRCn2iHPbq3W
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-01_03,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 priorityscore=1501 spamscore=0 bulkscore=0 impostorscore=0
- adultscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610010050
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261001120807.8723F1F000FF@smtp.kernel.org>
 
-On Thu, Oct 01, 2026 at 10:48:32AM +0000, sashiko-bot@kernel.org wrote:
+On Thu, Oct 01, 2026 at 12:08:07PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] s390/dis: NULL pointer dereference in get_trap_ip() during early boot crashes
-> > +	pgm_check = test_pt_regs_flag(regs, PIF_PGM_CHECK);
-> > +	if (pgm_check)
-> > +		trapaddr = get_trap_ip(regs);
+> - [Medium] pci/p2pdma: pure clients cannot set ats_per_mapping because pdev->p2pdma is NULL
+> --
+> 
+> commit f332086fc4a4273d099c81fafb33298021d47d1a
+> Author: Leon Romanovsky <leon@kernel.org>
+> 
+> PCI/P2PDMA: Let a client declare that it selects ATS per mapping
+> 
+> The PCIe ATS Enable bit covers the whole device, so P2PDMA cannot tell
+> from it whether a client will translate a given address. Most devices
+> translate any address once ATS is enabled, but some choose ATS per DMA
+> mapping and can still use bus addresses for the rest.
+> 
+> Add pcim_p2pdma_set_ats_per_mapping() so the driver of such a device can
+> declare that before P2PDMA starts treating clients with ATS enabled as
+> translating everything.
+> 
+> > diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
+> > index cf190bd572d4a..6a63901c65fb6 100644
+> > --- a/drivers/pci/p2pdma.c
+> > +++ b/drivers/pci/p2pdma.c
+> 
+> [ ... ]
+> 
+> > @@ -1562,6 +1563,32 @@ void pci_p2pmem_publish(struct pci_dev *pdev, bool publish)
+> >  }
+> >  EXPORT_SYMBOL_GPL(pci_p2pmem_publish);
+> >  
+> > +/**
+> > + * pcim_p2pdma_set_ats_per_mapping - Declare per-mapping ATS for a client
+> > + * @pdev: PCI device that initiates peer-to-peer DMA
+> > + *
+> > + * Declare that @pdev issues Translated Requests only for the DMA mappings its
+> > + * driver sets up to use ATS, rather than for any address once ATS is enabled.
+> > + * P2PDMA then routes this client's Requests with the Address Type each query
+> > + * asks about, rather than the one its ATS Enable bit implies.
+> > + */
+> > +void pcim_p2pdma_set_ats_per_mapping(struct pci_dev *pdev)
+> > +{
+> > +	struct pci_p2pdma *p2p;
+> > +
+> > +	p2p = rcu_dereference_protected(pdev->p2pdma, 1);
+> > +	if (!p2p)
+> > +		/*
+> > +		 * ats_per_mapping is a performance optimization,
+> > +		 * if pcim_p2pdma_init() didn't set pdev->p2pdma pointer
+> > +		 * for some reason, let's simply use ATS global settings.
+> > +		 */
+> > +		return;
 > 
 > [Severity: Medium]
-> Could this call to get_trap_ip() cause a NULL pointer dereference during an
-> early boot crash?
+> Will this silently fail for pure P2PDMA clients?
 > 
-> If an early boot exception occurs with the transaction abort bit set
-> (regs->int_code & 0x200), __do_early_pgm_check() will handle the exception,
-> set PIF_PGM_CHECK, and eventually call show_regs() which calls show_code().
-> 
-> In get_trap_ip(), there is a check for the transaction abort bit:
-> 
-> arch/s390/kernel/traps.c:get_trap_ip() {
->     ...
->     if (regs->int_code & 0x200)
->         psw.addr = current->thread.trap_tdb.data[3];
+> It looks like pdev->p2pdma is only allocated when a device registers as a
+> P2P memory provider via pcim_p2pdma_init():
 
-This is not possible, since 0x200 is the mask for TX abort evented. Since the
-kernel doesn't make use of TX itself, this bit cannot be set for the early
-program check handler.
+Yes, this is exactly for them and no one else.
+
+Thanks
+
+> 
+> drivers/pci/p2pdma.c:pcim_p2pdma_init() {
+> 	...
+> 	p2p = devm_kzalloc(&pdev->dev, sizeof(*p2p), GFP_KERNEL);
+> 	...
+> }
+> 
+> If a driver for a pure P2PDMA client (e.g., an NVMe initiator without CMB)
+> calls pcim_p2pdma_set_ats_per_mapping() to declare its ATS behavior, won't
+> pdev->p2pdma be NULL since it never called pcim_p2pdma_init()?
+
+Only RDMA NICs support that per-mapping thing.
+
+Thanks
+
+> 
+> If so, wouldn't this cause the client to silently fall back to suboptimal
+> global ATS routing, as it can never successfully set the ats_per_mapping flag?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261001-fix-p2p-acs-v4-0-v9-0-1a8e0f50ddd9@nvidia.com?part=16
