@@ -1,134 +1,99 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269C23D8121;
-	Thu,  1 Oct 2026 12:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED0B359A6D;
+	Thu,  1 Oct 2026 13:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790859591; cv=none; b=JZX3X3larjRmca3plEII92LqpsJ1qUUX7w2QSj7VINI2etk9TYENuJNviJrxNtLANcuoTpYx+DlUlhL2BqHQs1asdzewuaGZS9FEUSr1gD9L0GbfNdDbZ34zIEjpc/b/ob7DpjJWePgPgHwVSO3Dt2bh69kVRgc3uTjj/MwuGnc=
+	t=1790861053; cv=none; b=BW/Y+CzTQw6TOm9nV+bgJd4mkm6WsUgV/vuFK6xVAG0cngVFgksoAK2dsohL+OkfBY6XjYm5cjEGY4JouviAm+In5p264xzf4mWTfUgR29KADM8bb9L7kngsVhnQJY8Mr1Npc4VTaA6Hg1FZGtIJds86Khff7iy53HffkdAls6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790859591; c=relaxed/simple;
-	bh=+oEEYMyapdfy2MygoVgo6lezDIyzegG2R9t+lllJbIA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hRp0bIXDNuskvk6SzK+OoATc6vTZPiK9n44OP02TWWOD/Cf7jkRPRiVQKg0P9+m2ryEEg2qdwDBk8KimB04BqV2O05CAgK+Csn7aQIyQQGbc7iN7LpqIdC0+OKegh/Gurf/0hdq2SxOAUBgJc3ecYW+rUG8qjgIh2HoGXLhzPtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JIF/B0EW; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1790861053; c=relaxed/simple;
+	bh=X3bEkhlf2gZZ3OnkEQK0X6+xXjV2dWqggmj0Oiskz8I=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Subject:Cc:
+	 References:In-Reply-To; b=IbwiZVFRkYBeCRnZ6+g0tPtvp0zd6UrKYDZigNRkRsPWNbiihJBvPAy3FD0xdTulWd2CCInVwnFX1Z5t3qJ1QkSp9FarCSwbpNcOYhQ5BMQmV4B44RHSsXHaLQIoVqZvhd0cXJoiv+/rP6AYHjsfAnlF9QqGLT6I/hiJU5ikapM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UdrnTc7V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JIF/B0EW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB11F1F000FF;
-	Thu,  1 Oct 2026 12:59:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UdrnTc7V"
+Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id AFBEB1F000FF;
+	Thu,  1 Oct 2026 13:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790859589;
-	bh=mWEhNC2bx28+yRg0dPmgwrk6vKK8w5OBcpeNy+gKRH4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=JIF/B0EWXJ0MDjxeLJZ7yO1RQlpIaMdKbKKNsSXNWszWPJ3PBB4IoBEyGD5DARCr6
-	 EghD/+7Ha3UjceHW9Y7A7cvC/XxmnNWI28uTVunnCjnAZhrBDv5jL1BQBGa3yejDd9
-	 8JtJ9TQEwE9J8Epe8QYSKPF+/imypf3aX6Ku8z3ojDryet26BK6wy/1B+aVsbYEP8A
-	 bCyy3I8sdeW1g+eTaXFkbJPLdBLEP9UbiViiSkgnH4LRiYzLb6taZ99aGK9yoG235C
-	 WMk4EwMOCwp9Tvw37ZZdHse/DBW/9OckkefvsDEBIG7Q+OIcogIXov6gHrykqeG8MO
-	 4GyhjSqX2XKAg==
-Date: Thu, 1 Oct 2026 15:59:44 +0300
-From: Leon Romanovsky <leon@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, linux-rdma@vger.kernel.org,
-	media-ci@linuxtv.org, linux-pci@vger.kernel.org,
-	kvm@vger.kernel.org
-Subject: Re: [PATCH v9 16/18] PCI/P2PDMA: Let a client declare that it
- selects ATS per mapping
-Message-ID: <20261001125944.GM3401365@unreal>
-References: <20261001-fix-p2p-acs-v4-0-v9-0-1a8e0f50ddd9@nvidia.com>
- <20261001-fix-p2p-acs-v4-0-v9-16-1a8e0f50ddd9@nvidia.com>
- <20261001120807.8723F1F000FF@smtp.kernel.org>
+	s=k20260515; t=1790861052;
+	bh=TxmM7g86vqWg38a4SdLtH6GLKKWCA2S+rsHqVLNPnzs=;
+	h=Date:From:To:Subject:Cc:References:In-Reply-To;
+	b=UdrnTc7VhjcqmAPuMMCl8UmdyGGXQjb9ksYiIoYyXk60Nsxy9YjPk1ByDAlNdbTwM
+	 ld3Dq1HKt/QwlcfrJfb+nvw/mzmpgJN/tVqH9WAV7FCpYK4EOPW8LzdPAcs3neQblU
+	 d8OfwsUKHJFxZAHsNswzMqJUTeeUDTVXVpUCevdMJX1j7luoCajWllVsJvwoBuJr6D
+	 b+ROI88GROPfuG3FejnHNkrHskvNjX3fT89HCVvcR2Weev1AYdtPatP4iWLPHDUZis
+	 TXwM1pRnc6TEuxHkvwsWP+UiUnDzBMTEq+1Zg41URe3XcHmvWu61TVJNWS/geZteO3
+	 eTddDZEOmBrRw==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261001120807.8723F1F000FF@smtp.kernel.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=77375552f6370145b30eb1ccdc2150a0059ef6924f39b36562e21db53e52;
+ micalg=pgp-sha384; protocol="application/pgp-signature"
+Date: Thu, 01 Oct 2026 15:24:07 +0200
+Message-Id: <DLTJ9BRUJFAO.XKH3SG306MBJ@kernel.org>
+From: "Michael Walle" <mwalle@kernel.org>
+To: "Alexandre Belloni" <alexandre.belloni@bootlin.com>,
+ <sashiko-reviews@lists.linux.dev>
+Subject: Re: [PATCH] rtc: pcf8563: add SMBus support
+Cc: <linux-rtc@vger.kernel.org>
+X-Mailer: aerc 0.20.0
+References: <20260930113126.720555-1-mwalle@kernel.org>
+ <20260930114005.2C6661F000FF@smtp.kernel.org>
+ <20260930152513dd617b74@mail.local>
+In-Reply-To: <20260930152513dd617b74@mail.local>
 
-On Thu, Oct 01, 2026 at 12:08:07PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] pci/p2pdma: pure clients cannot set ats_per_mapping because pdev->p2pdma is NULL
-> --
-> 
-> commit f332086fc4a4273d099c81fafb33298021d47d1a
-> Author: Leon Romanovsky <leon@kernel.org>
-> 
-> PCI/P2PDMA: Let a client declare that it selects ATS per mapping
-> 
-> The PCIe ATS Enable bit covers the whole device, so P2PDMA cannot tell
-> from it whether a client will translate a given address. Most devices
-> translate any address once ATS is enabled, but some choose ATS per DMA
-> mapping and can still use bus addresses for the rest.
-> 
-> Add pcim_p2pdma_set_ats_per_mapping() so the driver of such a device can
-> declare that before P2PDMA starts treating clients with ATS enabled as
-> translating everything.
-> 
-> > diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
-> > index cf190bd572d4a..6a63901c65fb6 100644
-> > --- a/drivers/pci/p2pdma.c
-> > +++ b/drivers/pci/p2pdma.c
-> 
-> [ ... ]
-> 
-> > @@ -1562,6 +1563,32 @@ void pci_p2pmem_publish(struct pci_dev *pdev, bool publish)
-> >  }
-> >  EXPORT_SYMBOL_GPL(pci_p2pmem_publish);
-> >  
-> > +/**
-> > + * pcim_p2pdma_set_ats_per_mapping - Declare per-mapping ATS for a client
-> > + * @pdev: PCI device that initiates peer-to-peer DMA
-> > + *
-> > + * Declare that @pdev issues Translated Requests only for the DMA mappings its
-> > + * driver sets up to use ATS, rather than for any address once ATS is enabled.
-> > + * P2PDMA then routes this client's Requests with the Address Type each query
-> > + * asks about, rather than the one its ATS Enable bit implies.
-> > + */
-> > +void pcim_p2pdma_set_ats_per_mapping(struct pci_dev *pdev)
-> > +{
-> > +	struct pci_p2pdma *p2p;
-> > +
-> > +	p2p = rcu_dereference_protected(pdev->p2pdma, 1);
-> > +	if (!p2p)
-> > +		/*
-> > +		 * ats_per_mapping is a performance optimization,
-> > +		 * if pcim_p2pdma_init() didn't set pdev->p2pdma pointer
-> > +		 * for some reason, let's simply use ATS global settings.
-> > +		 */
-> > +		return;
-> 
-> [Severity: Medium]
-> Will this silently fail for pure P2PDMA clients?
-> 
-> It looks like pdev->p2pdma is only allocated when a device registers as a
-> P2P memory provider via pcim_p2pdma_init():
+--77375552f6370145b30eb1ccdc2150a0059ef6924f39b36562e21db53e52
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-Yes, this is exactly for them and no one else.
+On Wed Sep 30, 2026 at 5:25 PM CEST, Alexandre Belloni wrote:
+>> Because of this fallback, when pcf8563_rtc_read_time() reads the time:
+>>=20
+>> drivers/rtc/rtc-pcf8563.c:pcf8563_rtc_read_time() {
+>>     ...
+>>     err =3D regmap_bulk_read(pcf8563->regmap, PCF8563_REG_ST1, buf,
+>>                            sizeof(buf));
+>>     ...
+>> }
+>>=20
+>> The bulk read executes as a loop of separate single-byte SMBus reads ins=
+tead
+>> of an atomic transaction. Since each SMBus byte transaction issues its o=
+wn
+>> STOP condition, the RTC's internal register latch is released between re=
+ads.
+>>=20
+>> Does this allow the hardware time to roll over mid-read and result in
+>> corrupt time data?
+>
+> This is a valid concern, did you test?
 
-Thanks
+Yes, did you read my first reply? I'm not sure how this is handled
+in the RTC subsystem. Most regmap converted RTC should fall into
+this case. How do you propose to handle that? Instead of removing
+the check, we could just test for either I2C or SMBus block read.
 
-> 
-> drivers/pci/p2pdma.c:pcim_p2pdma_init() {
-> 	...
-> 	p2p = devm_kzalloc(&pdev->dev, sizeof(*p2p), GFP_KERNEL);
-> 	...
-> }
-> 
-> If a driver for a pure P2PDMA client (e.g., an NVMe initiator without CMB)
-> calls pcim_p2pdma_set_ats_per_mapping() to declare its ATS behavior, won't
-> pdev->p2pdma be NULL since it never called pcim_p2pdma_init()?
+Anyway, I have an SMBus host controller which supports the block
+read, thus it doesn't fall into the single byte read case.
 
-Only RDMA NICs support that per-mapping thing.
+-michael
 
-Thanks
+--77375552f6370145b30eb1ccdc2150a0059ef6924f39b36562e21db53e52
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> 
-> If so, wouldn't this cause the client to silently fall back to suboptimal
-> global ATS routing, as it can never successfully set the ats_per_mapping flag?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261001-fix-p2p-acs-v4-0-v9-0-1a8e0f50ddd9@nvidia.com?part=16
+-----BEGIN PGP SIGNATURE-----
+
+iKgEABMJADAWIQTIVZIcOo5wfU/AngkSJzzuPgIf+AUCar5e+BIcbXdhbGxlQGtl
+cm5lbC5vcmcACgkQEic87j4CH/jhlgF/Y8IyyaBQcyjnDWyIDp+bbHMRunlhL/Xr
+Q7ggknk+4hfiJyNkQODvbDVIJubun0OHAX9ArRo7FRsEblq6m05JtDlnrtmWPsq/
+yrgL9SUkZgCt/+yIGpDtvsZkzTRvOM5Oa4M=
+=beSV
+-----END PGP SIGNATURE-----
+
+--77375552f6370145b30eb1ccdc2150a0059ef6924f39b36562e21db53e52--
