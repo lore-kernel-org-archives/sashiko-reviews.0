@@ -1,192 +1,144 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F90052E06C
-	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 17:36:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9C45304AC;
+	Thu,  1 Oct 2026 18:14:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790876211; cv=none; b=YiJcmJ481M7IDwfq7Ncuc779LFYURNJ1be1iz4Vo7ExwSQ+YhcxdsUkoXOa2DzfhL0NmZ+Mvzppcs2GoG/HVj1IHdPjqgjkLHRESsn18BFkfV8xtSU1lacIlbvcLsXBPYljYVb6Chmivqx6v/mQTLGlGmLrCUAn9rTtf5uk6KDc=
+	t=1790878470; cv=none; b=bF+t657kKkO7gUPJ5KyMQRoa1kXpI7rbVq8bk1Eh3vGBzPQ8q4U8d8Zii3tFEs0bHCwqpDNlZ7//mgLgVqaGi7OLOjEwYQZ2aVTStcY9VASmP9N/ax3zNaI0luAhpqTvtGbjXljDErHpUTK7y6n5MGWU8Gm2K/9q7a0ytgGAn8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790876211; c=relaxed/simple;
-	bh=DvEKW4qQtXK8wx2eeKFFlLjmHpvwdW30UhnZH8q+cEI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CtPVAQzxrKmmxJEjAilYwA2WbySVW4zlRHgeXQ1veyuekOs00hGSxOFFtA2y8aIk9cxwOlM+/eYyqzvWetrH5r5WIDCRtVTGidnTxbddsWH/Azf00jT1Sc6CmUfD8xmtfaDvf/FA/T0Pw1mjR4GRKL57dKMu7NfhG1fT8gHxpFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=b4DfB8o4; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1790878470; c=relaxed/simple;
+	bh=w9P9rJzSRE0GpuIuoLKKYxu3RJc5Jzvrmnq0TtCsS/U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pm/QXmQIKwYNRnY3vapmwfOC0agikifjsmjvLb+by6t0RZwHew+hCm9yqwjWn4akAq+Lz2Cg7nJK/nDVfq/hAgOPjzAxIH7vkkbBS8sQYe7wCHZoDEV9nyzJQK3NF+xkYxWV8D8/IiZVBI9f3++ma7aRA065HmAKM7v6CNAPHX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oe/kvKa9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="b4DfB8o4"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1790876209; x=1822412209;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=DvEKW4qQtXK8wx2eeKFFlLjmHpvwdW30UhnZH8q+cEI=;
-  b=b4DfB8o4k6tQ5Q45kSyawyyBv3WG1JgfQLvusdFe6UnAJItLYkLhQIYH
-   /T3HxrAluAsXJk2MIQ8dmI3BWdzcIBUfZmUsK+3c+SkvXR0ChfLG3/6pF
-   MgLLuW8KNnMkCWiqg8n8KM2XxnF7No7apZRQJgJVEIzULfSbOq/Vc9aCo
-   bRfXcPZgiEE3tkb97tr5R/ywNmxy6LDg6U6RGSG4ROrCCpaK/EDSJSniX
-   W3w4Zl4xYRrwDa0OKZsakrasVLQG97qTuHRDYwP3O3oPB1Rflec9vZ2BZ
-   XFq74pLe8ME+HlQtnxnXfqaIlXcte2xKiEDu9CIjOT2hB6pj9/ooiGV83
-   g==;
-X-CSE-ConnectionGUID: yiG02Z4rT/+qsDyoQVrpAg==
-X-CSE-MsgGUID: 3FHDta/4RvyYHzaZ8heu8Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11922"; a="94523805"
-X-IronPort-AV: E=Sophos;i="6.27,135,1787036400"; 
-   d="scan'208";a="94523805"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Oct 2026 10:36:49 -0700
-X-CSE-ConnectionGUID: INJ4DAUKSeGEGKX5JWxGwA==
-X-CSE-MsgGUID: JAdSJhuSRzGvMvIVhRCxLQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,135,1787036400"; 
-   d="scan'208";a="314013369"
-Received: from sghuge-mobl2.amr.corp.intel.com (HELO [10.125.111.241]) ([10.125.111.241])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Oct 2026 10:36:48 -0700
-Message-ID: <71282f45-a103-4e72-8b94-f0b2400f9188@intel.com>
-Date: Thu, 1 Oct 2026 10:36:47 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oe/kvKa9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB71B1F00898;
+	Thu,  1 Oct 2026 18:14:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790878462;
+	bh=jS0Nq0w9RKs5B8nsMHGnTmNUpi2QgzhTBj/CTSHxK6Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=oe/kvKa9imnqiph3EzOibz/+ag7e9Ge6CMURePovPsw0z4tGtMuxDcR459Ny8Pyf8
+	 /B1ql80ZLbAhhp69kw/OVfV3FcOMls2bsyyg+7sXCc5tkxTG3swqFHVSFqD7X1tHpn
+	 0u6yaTMGrzdHs7Z33TVLQOOqOFpp5iv/fp5Ef9Y1iZ3YsZpWG7foff74O1wsJZAaPh
+	 CSxSXFAbc/F7JkW/TYvAp32oMhcSuSDq+dF0SSsUiLp1xkF2q0AP9E7HRtcm1QL3Du
+	 Qk11T13QFHOi8iEB7FY4tGfsixEMEV0un1yoM20DmaIJ3i6GR0sUVeu/Tnuu573KgS
+	 TMzcNCLt6P1wg==
+Date: Thu, 1 Oct 2026 11:14:21 -0700
+From: Namhyung Kim <namhyung@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Yanbo Zhao <yzhao62@ncsu.edu>, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] perf dwarf-aux: Add die_is_compound_type() to
+ handle C++ class types
+Message-ID: <ar6i_ZKXNVZmze2r@google.com>
+References: <20260930210038.196928-1-yzhao62@ncsu.edu>
+ <20260930210038.196928-2-yzhao62@ncsu.edu>
+ <20260930211051.8EFDA1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/3] cxl/core: Hold the dport host lock across dport
- lookup and use
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-cxl@vger.kernel.org
-References: <20261001154744.1095902-1-dave.jiang@intel.com>
- <20261001154744.1095902-3-dave.jiang@intel.com>
- <20261001160257.E0BEC1F000FF@smtp.kernel.org>
-From: Dave Jiang <dave.jiang@intel.com>
-Content-Language: en-US
-In-Reply-To: <20261001160257.E0BEC1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260930211051.8EFDA1F000FF@smtp.kernel.org>
 
-
-
-On 10/1/26 9:02 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] cxl/core: AB-BA deadlock in RCH topologies due to child-to-parent lock inversion
+On Wed, Sep 30, 2026 at 09:10:51PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] perf/dwarf-aux: stack overflow in __die_find_member_offset_cb via cyclic inheritance
+> - [Medium] perf/dwarf-aux: flex array detection fails for C++ classes
 > --
 > 
-> commit 689adbac9a3f5c00d58408df886ec90fd00ca46d
-> Author: Dave Jiang <dave.jiang@intel.com>
+> commit 3f3b9b56b2e28f1713af3b40ab8946d5bbc8d245
+> Author: Yanbo Zhao <yzhao62@ncsu.edu>
 > 
-> cxl/core: Hold the dport host lock across dport lookup and use
+> perf dwarf-aux: Add die_is_compound_type() to handle C++ class types
 > 
-> Callers of cxl_pci_find_port() and cxl_mem_find_port() can be handed a
-> struct cxl_dport that is already freed, and all four dereference it
-> without the lock that would prevent that.
->     
-> A dport is kzalloc()'d into a devres group on its host device, so it dies
-> when that host unbinds. The host is &port->dev for a switch port and
-> port->uport_dev for the root port.
+> This commit introduces die_is_compound_type() to support C++ classes alongside
+> structs and unions. It also updates offset lookups to descend into base class
+> subobjects using DW_TAG_inheritance entries.
 > 
->> diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
->> index 9d807c1a002ca..55a571f86d477 100644
->> --- a/drivers/cxl/core/pci.c
->> +++ b/drivers/cxl/core/pci.c
->> @@ -734,10 +734,16 @@ int cxl_pci_setup_regs(struct pci_dev *pdev, enum cxl_regloc_type type,
->>  	if (rc && type == CXL_REGLOC_RBI_COMPONENT && is_cxl_restricted(pdev)) {
->>  		struct cxl_dport *dport;
->>  		struct cxl_port *port __free(put_cxl_port) =
->> -			cxl_pci_find_port(pdev, &dport);
->> +			cxl_pci_find_port(pdev);
->>  		if (!port)
->>  			return -EPROBE_DEFER;
->>  
->> +		guard(device)(cxl_port_dport_host(port));
+> > diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
+> > index 54f8b5ec74a2f..eb4b8f3475df1 100644
+> > --- a/tools/perf/util/dwarf-aux.c
+> > +++ b/tools/perf/util/dwarf-aux.c
+> > @@ -61,6 +61,14 @@ const char *cu_get_comp_dir(Dwarf_Die *cu_die)
+> >  	return dwarf_formstring(&attr);
+> >  }
+> >  
+> > +bool die_is_compound_type(Dwarf_Die *type_die)
+> > +{
+> > +	int tag = dwarf_tag(type_die);
+> > +
+> > +	return tag == DW_TAG_structure_type || tag == DW_TAG_union_type ||
+> > +	       tag == DW_TAG_class_type;
+> > +}
 > 
-> [Severity: High]
-> Does acquiring the ancestor host bridge lock here while the driver core holds
-> the descendant (pdev) device lock cause an AB-BA deadlock?
+> [Severity: Medium]
+> Does die_has_flex_array_recurse() also need to be updated to use this new
+> helper?
 > 
-> If concurrent device removal locks the parent device and then iterates to lock
-> children, could it deadlock against this path in cxl_pci_setup_regs() during
-> device probe?
-
-No. The lock taken is not the host bridge and not an ancestor of pdev.
-
-These paths only run for an RCH, where cxl_pci_find_port() returns the CXL
-root port. cxl_port_dport_host() of a root port is root->uport_dev, the
-ACPI0017 platform device. The host bridge is only the dport device.
-
-On x86 the PCI root bus is created with a NULL parent, so the RCiEP and its
-memdev live under /sys/devices/pci0000:xx, and ACPI0017 lives under the
-platform bus. A parent-to-child walk from either tree never reaches the
-other.
-
-The order is also not new. cxl_mem_probe() already locks root->uport_dev
-for an RCH endpoint, and cxl_mem probes synchronously from cxl_pci_probe().
-That establishes:
-
-	pdev -> cxlmd -> ACPI0017
-
-cxl_pci_setup_regs() adds pdev -> ACPI0017, which that chain already
-implies.
-
-Nothing takes these locks in the reverse order:
-
-  - delete_endpoint() runs from cxlmd devm teardown: cxlmd -> ACPI0017.
-  - unregister_port() of the endpoint takes only the endpoint's own lock.
-  - detach_memdev() locks cxlmd from cxl_bus_wq, and nothing waits on that
-    work under the ACPI0017 lock.
-  - PCI hot-remove goes pdev -> cxlmd -> ACPI0017.
-
+> If we look at die_has_flex_array_recurse() in tools/perf/util/dwarf-aux.c,
+> it currently forces flex array detection to return false for C++ classes
+> because it explicitly ignores DW_TAG_class_type:
 > 
->> +
->> +		dport = cxl_pci_find_dport(pdev, port);
->> +		if (!dport)
->> +			return -EPROBE_DEFER;
->> +
->>  		rc = cxl_rcrb_get_comp_regs(pdev, map, dport);
->>  		if (rc)
->>  			return rc;
+>     if (tag != DW_TAG_structure_type && tag != DW_TAG_union_type)
+>         return false;
+>     ...
+>     if (tag == DW_TAG_structure_type && found) {
+>         if (is_flex_array_member(&last_mb))
+>             return true;
+> 
+> Could this cause accesses to flex array members inside C++ classes to be
+> wrongly rejected as out-of-bounds?
+
+IIUC C++ officially doesn't support flexible arrays and there are
+better alternatives so I guess it's rare to see them in C++ classes.
+Maybe it's ok to ignore them until we find it's really needed.
+
 > 
 > [ ... ]
 > 
->> diff --git a/drivers/cxl/core/ras_rch.c b/drivers/cxl/core/ras_rch.c
->> index e0e01aa5eba6c..3c6aae26deedd 100644
->> --- a/drivers/cxl/core/ras_rch.c
->> +++ b/drivers/cxl/core/ras_rch.c
->> @@ -118,10 +118,20 @@ void cxl_handle_rdport_errors(struct cxl_dev_state *cxlds)
->>  	int severity;
->>  
->>  	struct cxl_port *port __free(put_cxl_port) =
->> -		cxl_pci_find_port(pdev, &dport);
->> +		cxl_pci_find_port(pdev);
->>  	if (!port)
->>  		return;
->>  
->> +	/*
->> +	 * The dport may have been freed since the lookup above, so take the
->> +	 * lock that pins it and find it again.
->> +	 */
->> +	guard(device)(cxl_port_dport_host(port));
+> > @@ -2164,6 +2180,30 @@ static int __die_find_member_offset_cb(Dwarf_Die *die_mem, void *arg)
+> >  			loc = 0;
+> >  	}
+> >  
+> > +	if (tag == DW_TAG_inheritance) {
+> > +		Dwarf_Die base_die, member_die;
+> > +
+> > +		/*
+> > +		 * A base class subobject can be smaller than the size of the
+> > +		 * class type: an empty base takes no space (EBO) and a member
+> > +		 * of the derived class can be placed in the tail padding of
+> > +		 * the base.  In both cases a member of the derived class is
+> > +		 * at the same offset as the base, so only match the base if
+> > +		 * it actually has a member at the offset.
+> > +		 */
+> > +		if (offset < loc)
+> > +			return DIE_FIND_CB_SIBLING;
+> > +
+> > +		if (die_get_real_type(die_mem, &base_die) == NULL)
+> > +			return DIE_FIND_CB_SIBLING;
+> > +
+> > +		if (die_find_child(&base_die, __die_find_member_offset_cb,
+> > +				   (void *)(long)(offset - loc), &member_die))
+> > +			return DIE_FIND_CB_END;
 > 
 > [Severity: High]
-> Could this also lead to an AB-BA deadlock on Restricted CXL Host (RCH)
-> topologies?
+> Does this recursive call into the DWARF child tree lack a depth limit?
 > 
-> This acquires the ancestor host bridge lock while the caller holds the
-> descendant (&cxlmd->dev) device lock. Concurrent device hot-remove paths
-> typically lock from parent to child, which seems like it would deadlock against
-> this AER handling path.
+> Unlike __add_member_cb(), there is no recursion depth limit tracked or
+> enforced here. If a maliciously crafted or corrupted DWARF file contains
+> cyclic inheritance (e.g., A inherits from B, B inherits from A), could
+> this trigger unbounded mutual recursion between die_find_child() and
+> __die_find_member_offset_cb(), rapidly exhausting the stack?
 
-Same answer. This is cxlmd -> ACPI0017, the pair cxl_mem_probe() takes in
-the same order. Hot-remove takes them in that order too.
+It looks like a corner case which requires some refactoring.  I feel
+like we can add it in a separate patch.
 
-> 
->> +
->> +	dport = cxl_pci_find_dport(pdev, port);
->> +	if (!dport)
->> +		return;
->> +
->>  	if (!cxl_rch_get_aer_info(dport->regs.dport_aer, &aer_regs))
->>  		return;
->>
-> 
+Thanks,
+Namhyung
 
