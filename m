@@ -1,81 +1,81 @@
-Received: from mail-yx2-f40.google.com (mail-yx2-f40.google.com [74.125.224.168])
+Received: from mail-yx2-f39.google.com (mail-yx2-f39.google.com [74.125.224.167])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932984BD375
-	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 22:16:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.168
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D414B828D
+	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 22:53:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.167
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790892972; cv=pass; b=XF7rhl164BtgnArAXExpcrnfWQWNszaIdIewyv4SV2FT6uCSM5LasKVQWI5Resdm9e3CxiVqL/lH7s+mDOhQXUEsDpqa1S22VbImHMdm8G7y40zeVgdd3aPrBjnoRddIp0tlcDRljCpDiAeWRFfi1KccVeNI6OQur5AjiJSdnps=
+	t=1790895235; cv=pass; b=RKbQPgOYVnn39seNMosE/hT9YS8IvKDuFYR6FBB4sSvqFBlMLZa5dE2Sd0rzis/eNuFlCC4mov0/ZP5OPXpp4a//4ok7P1r13jpZAGuJZEJU0p+JrFtwilDDPk6pPZPk22EklM6IRenq7sbloE8TRthHUa1p+IH9/S/Xpp87eiQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790892972; c=relaxed/simple;
-	bh=Kg2RBXpFtT5mFhV9J7d4HKN6JQoqJIJ64uHnfF1xOZs=;
+	s=arc-20240116; t=1790895235; c=relaxed/simple;
+	bh=9WU6gk8eX4Rgb9wpGURVmjH7c1vwFJ+Sl5X4ljE9SyY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=K7DigQL1+oBnIcgdZzxZ1ChHilpjPf/fQH6khvNgoszQpESnElH93VCDBDCertAEnf5qzmMlmCvd3WYWVrzXNk0kEEDbGCmWbZRACw1TuYKG/3yZ9GiadKCbSVAg1b0ysSJNUUnBuoyc/FxtgIAeyJbwNJJr8XTvfyO8Xqn8Cw0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K5DWuEGa; arc=pass smtp.client-ip=74.125.224.168
+	 To:Cc:Content-Type; b=dhWugNnPyGUGyH0eMau2ifN+ydV8upzcCrhlZU3VKog7r5b841lADA/FWSVuNOlHPkcCklRXQT7qKX+TfBkFehxRMJ0ZPcvugekKpt4MUlt+K4LHCraYKuqqKolDgOQc+b07CFthnsxCLpX72oun/LYtxunjCQuaRB4K/6yJRXw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GpE8S1bB; arc=pass smtp.client-ip=74.125.224.167
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K5DWuEGa"
-Received: by mail-yx2-f40.google.com with SMTP id 956f58d0204a3-6762de1c77eso2483609d50.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 01 Oct 2026 15:16:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790892966; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GpE8S1bB"
+Received: by mail-yx2-f39.google.com with SMTP id 956f58d0204a3-67559a09ec2so3773467d50.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 01 Oct 2026 15:53:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790895232; cv=none;
         d=google.com; s=arc-20260327;
-        b=Y9bDpV6wnVCYPC763nLLVHa5mb5VYxsxaglk6HZax/m3ei1lu0F/PR6nN7WKJ5SbRF
-         S3Bfr9itk9OYAFgoCob2YWXc9Vh8j7D6QUU4czgHTJKTrG2aBx47X4M7awmNRRV3Lleh
-         fG1n32smxQsSG4LTRAslCNNJar4zfNAc7xa9vQybtwEAoc+bpe1bgK+hI0yneNZ7FZLw
-         Mq63Fb0qUrP2/p+mEsYjdgZKVpol9oOBzLiQJF1Wt9mgwYSWNgfNdxlbhGNfJ+xBvto4
-         bXVGid6FQBnYz6of1IPWzB1yuZdC3g8XrOEcdJJUxRHmVOD9SZmI8YfsZLgqtXBFnqC+
-         eKtg==
+        b=A89XldQ4fAAlML5nDsD4dcNk8NoqlQ1ttQKB7xiD5iISwynTTFK97+a+o4spJuepPK
+         LsGzy8G48v3a9q1dNV+D1OKp8NugnIr+ONjRBFNYiV9+iyMzdW3nJRJLG90A5Afz0Tu+
+         AgegjzU67/UVDH4cSbrhiD21cH5xtbG7rFQMrUjngaionI7eoBm4O+GcwZ1fmvcw+fu2
+         c52rowDFiUSfn/zW9BxN1ONXIbB0k0n6JDL+M/wnaFSaUNRr8EtI8dK3JEyHG3YUy4rX
+         OBosjA2JXdQq6V0JfxcdtKhDb/1k06BooeFiPLJW2NJII3wXwUbdy292MDqdoNZ7n3YX
+         qdQA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=fFp9K5kNxLern9IX4I7rgGeq/2vHkCE/7tXvywJUIjY=;
+        bh=TBYFdlPzVVihY84Cq15ZaQjohkF0LhdMTg9utDLtVGs=;
         fh=kAGRFKDN7aRGd6VO33HQbsOy3CoTfL4nr4GTMsDqfhg=;
-        b=hLKD9xOpP1Vmju79+LXyvsUXgzPYNYx09qLbCCO/lQ48fExpyY4LY2bUzK3U9snZ4/
-         1Bhdsd/jXzAndLw3IrD03eXLQWidF0NqWKH6WJCTjkxPUEQpofbXgmw1W0FIta3z/7JL
-         tmZA9pgrwQQjJfLV98TYHqFpG1+h/mmqSAZ/b5OlGP4qQ/RScvPjLhXwEcfq63KTiioa
-         4k/0AKQCEsFJIbf/hs+b/TrSNe8YVHaD0CH9gi3ENz9ibp4DJ4KbUlnevwdVbEl7W9SQ
-         dekf8tfZJ16M+6xMMOFt7UhMt/+SUPJc1qQQJ+G0hKukg/IKhVk5MO+hmhZsr/hBtiBt
-         Rnvw==;
+        b=QxJjQRGtJul1ZqVwZtTnzyrwbi5HjPOuCRF4pB1M7a8WxhCIYvYNuOo9O8f2qrwZ71
+         ebuAjK04M+c1blzEpRbsM/vNd/qdd+gf7O8V5oIIzXqXZXfzBqteIl7xkgBZV9Tz6LVy
+         9cai5L5TCPdm5CN6VTQYNMZ9att1Okitt+iPZAe4HgA0Gjx1hI4ZBU5MwWJlczyx2Mm7
+         u/o/q9/RZ3tS1P/ceJxHRHqqBA4Jg0K3nlGy+uOGk00ZfGlFjrX/crAeB52deNoEOX1k
+         sxyKmctDBhe6gb9JJ2JQwUeJEybkleYrIsSvJnbLd7nMYmvfDvG7gh/57dClhaTiaanw
+         KT9A==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790892966; x=1791497766; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1790895232; x=1791500032; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=fFp9K5kNxLern9IX4I7rgGeq/2vHkCE/7tXvywJUIjY=;
-        b=K5DWuEGaaJ4qwAEheesHf5kCti0jKo3gllN8tf2R/fXmazrUen1/uis6a6RQOl3epW
-         JznwzDyFk5A4A4ATYMB3x0hC8Z+NLe/aiRKXMNxb7zpkPoboDDI8B2L9oscDc0fdMTPU
-         mKs47wy3WC3cZmvjLcc4NFECUmL+rUzVUKp8zn4npRK+V/tFReuC8Zry96yIznn8rr4+
-         8dzbJMOKbMRcMYYXP781zGOooUDx2ZE8ZK5LJjBMtttOhtVnQync4W8UuDmIf/8sQSAY
-         u3ykXQnbczCM50RCo/TYgtlsbcoQ21l2ziiJy8D+KPizMo4DQAiji32oAiEZzV9JCHmf
-         7rsA==
+        bh=TBYFdlPzVVihY84Cq15ZaQjohkF0LhdMTg9utDLtVGs=;
+        b=GpE8S1bB62ZiKoGHyylYQpp8GtshM+VWbUh1PZLX5nDsLfavHhV/iJNWnklqzN4w7j
+         QTqSiCzf1kJpGVblUu58AbARS6YchQ5of9HzNaJ4eBg1TJ9BoNPN0YHdIc9M4SGQPGWi
+         Twh1KvfOjgvTTNWVq9z7I84fsR3+u+HPT7u/wd+RbWv1Faenx1pslL51D+LZGg/9pvdv
+         WZFwGOUIZHhvqEaCsMoqKEiusa5aVpRi08qrIHVtRDsnl1BeThWCp/ct9ljVTijRlx1I
+         Pdz31Ss0JtDMbGuWaezDXkIacvqzDuJKw0o+7u5AArOelVu2EN3K1uJDa1QbJyYIZ8uf
+         3P/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790892966; x=1791497766;
+        d=1e100.net; s=20260707; t=1790895232; x=1791500032;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=fFp9K5kNxLern9IX4I7rgGeq/2vHkCE/7tXvywJUIjY=;
-        b=H+G/tKBBgsibddJ+Kn2p4ewRMBw1DzaRRC9apDDiSdnkm4Lmv8gMqE4KU5UP44UipG
-         wFwjxLTR8TBxjSWdWtFZVU21n5ZkMR3EGfxJZc1TQqRQSyM+x4CBzEvzLL8uOtsWcWED
-         fM8u6yisX2sTFtZzkUdYWFafIKWSpGh1Y5ZgXevsYfqaGyxrkgZQUzpTxN4hLfmsWQoi
-         aUJ5hOVyakRWMVEkHRj1u7MD4jIURFcYUA8ZA0RShDd+0TfB19VR/QUNUFqUDdtEX/Pr
-         vzm73iSz45tkgnhoxRokEcl+jhC6ELzfDPYzsOkk9DROn5mSCaYfqiSTChMIPexOAdBW
-         KdpQ==
-X-Gm-Message-State: AFq9FYKt033UgiTaax7HD78tn1t39sZtwfoLgTubC7D3+BEa3CZlYzUI
-	T/knd2dNsqgmbGsunioQ8lRtujAJvUP72yqJIq2h9RBe32q3YigVhQaaLEpQsjM1o+xS0uy0tVM
-	nTWpUgfXm0XSf4TcLYdhUvm8Yfl1QF8vv7A==
-X-Gm-Gg: AYBFou2z7dO6l3bDCU5PRSmIR/pDRRaeb8Z5aB6/sPi+QE9h9kaVu5MdFptrcU+9tA/
-	DN4aj6lVH3NUH9o1WTbxa0amDYyL/qfXa24qgTQT6f/DqfDxxXKnjuMpeqMHHwpUru4phvyY5Q/
-	kO1kbQcJIe6ePFfa/3+Mhjx6lSQ04uX3d/Hd4WZ8Fm0xdvmdoiVHE5XoH/rJU+4XTaDms/VEaHH
-	p/0NQ0fPcdkq99xCzMAdHfxDe3zCO9Rq31FnntKX6MwgcMI9vcfDlGjavPiGXrjiYTLsLz6JHAV
-	bDirl8jbACvYyRvtb3v6ye6kWzbJTi7kWx4MlOpieL4mQLqgmb+7xn0dwfNw6ck3unoSXO1FcZW
-	OOibgXUfbL1tQ52jwdlzZu54KoeOLnn8aRw==
-X-Received: by 2002:a05:690e:4885:20b0:674:f33:3a38 with SMTP id
- 956f58d0204a3-677ac148763mr250188d50.125.1790892965727; Thu, 01 Oct 2026
- 15:16:05 -0700 (PDT)
+        bh=TBYFdlPzVVihY84Cq15ZaQjohkF0LhdMTg9utDLtVGs=;
+        b=ha56EcQkwzS2DtZMjnp392JGKWZ+o3OffyF1iPv5FldXwF/IyFl/B6fiYIWX7f7NR0
+         WJe40jMmWxaGop+cX8N3f8wUE5ncYv162gTWWald7nhi/rvCuzDC4alXVruEHxt44Sxr
+         R9enrZutT9rnMFjBg9BKbj+9YrApr9QEz3+01+IEfXwU1oaZk/QnpOxSDwdFWc8lL1TS
+         v1sx83iNLBd64TiA4JtoHFMrgLBFU0/ADYZYzulQcFISv1szKF1+dNnMfREMOGaCOwAu
+         eMdVKWKGqzXPK5IUuEIKvuogoYOvQnpitLAJ4XkG0KN8FvXWnWIZ04gLN3J72e1CrjnS
+         Jn4A==
+X-Gm-Message-State: AFq9FYLjCiJrF3DRugyoyCSE0POdCwK8d1zewR9W0freGNhUST7ouklQ
+	/5SiQ6feIFxvWt2hvXHK8KZwavZEaPAzAG14wf36SuAFa2vRO5c8Sl5gRPxYirklfkcoC6N8u0Y
+	DRmpDfznRXN/u28MN6qSGceHZZu85JirSXIeN
+X-Gm-Gg: AYBFou1KlaVse8G5c9zegVeB4tC/zi24aSR8fTE1iEIOf3rn/PrM0ikaNg2EhIqxJj1
+	Drhob8RV58XJjw2KT6uhiEPZRekwnrKDX51O626wt3+TXKRennlnjgC+yKSqqVL2QQ1U+ecaL2/
+	y/cRr0WMi8qYBBbBQwL57jyQahEDGTSgWQAbGWEtanhzNbhmqZ7/l/xP64CrG1lEOPkITxE973n
+	1KPs7c9eCbV7Ss6dfND4+yAKZT3ksVC+MI3JXLTvw/y6LsA1pUwwEXxguoy/ewYNxbUkk2bJ3LT
+	rwMYJAJ5GAQSvODNCQD28QR8i5EewRw2ekTkgnqraDjTIxRfo2LNNGLu6AeRFuDPAVo5J77/5te
+	4wpAEIDKGFSYZAMixLS2KFv1Ux7ZRyD0jostJYgcb1+hk
+X-Received: by 2002:a05:690e:1c08:b0:676:87c6:4f71 with SMTP id
+ 956f58d0204a3-677ac165db5mr389082d50.99.1790895231491; Thu, 01 Oct 2026
+ 15:53:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -83,106 +83,145 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260923-dd-cmap-part2-clean-v11-0-9b6c217fdf2f@gmail.com>
- <20260923-dd-cmap-part2-clean-v11-14-9b6c217fdf2f@gmail.com> <20260923224509.4DE3F1F000FF@smtp.kernel.org>
-In-Reply-To: <20260923224509.4DE3F1F000FF@smtp.kernel.org>
+ <20260923-dd-cmap-part2-clean-v11-23-9b6c217fdf2f@gmail.com> <20260923224940.ABEB51F00893@smtp.kernel.org>
+In-Reply-To: <20260923224940.ABEB51F00893@smtp.kernel.org>
 From: jim.cromie@gmail.com
-Date: Thu, 1 Oct 2026 16:15:39 -0600
-X-Gm-Features: AclHuK-GHAcqAEG9-PO9HaBTq4Efz44Tmpp9mn4Tt1hmvZxExK0du5Qqqyez3YY
-Message-ID: <CAJfuBxzvL1ATWv96GeEgUHY0m3G-sm0=0KRSOqVjaXQ7e61spg@mail.gmail.com>
-Subject: Re: [PATCH v11 14/38] dyndbg: Bind callsites and classmaps to DDEBUG_MODNAME
+Date: Thu, 1 Oct 2026 16:53:25 -0600
+X-Gm-Features: AclHuK89upHDiixXSE95YCeG6kGs9RvurvEycW_YR863IjXCz2W8iVCgqdQxxeI
+Message-ID: <CAJfuBxzPMjqAsnqGqEESjZCfz=nmFGiOj6vFZby0kpAdFnNEFg@mail.gmail.com>
+Subject: Re: [PATCH v11 23/38] dyndbg-API: replace DECLARE_DYNDBG_CLASSMAP
 To: sashiko-reviews@lists.linux.dev
 Cc: dri-devel@lists.freedesktop.org, linux-modules@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 23, 2026 at 4:45=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Wed, Sep 23, 2026 at 4:49=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Medium] dyndbg: classmaps for loadable modules are dropped if DDEBUG_M=
-ODNAME is overridden
+> - [Medium] dyndbg: TOCTOU race in ddebug_sync_classbits allows stale modu=
+le settings
+> - [Low] dyndbg: incompatible pointer type in module section load
 > --
 >
-> commit 5e35c3cb693ea4379aa99e08e89d78671956f5c5
+> commit 0e12bed35baa8c038def6b06ffc95416176ee997
 > Author: Jim Cromie <jim.cromie@gmail.com>
 >
-> dyndbg: Bind callsites and classmaps to DDEBUG_MODNAME
+> dyndbg-API: replace DECLARE_DYNDBG_CLASSMAP
 >
-> Currently, dyndbg binds KBUILD_MODNAME directly into callsite and
-> classmap declarator macros.
+> This commit replaces DECLARE_DYNDBG_CLASSMAP with an explicit client-serv=
+er
+> model using DEFINE and USE macros. It resolves boot-time parameter
+> propagation failures by establishing a robust reference linkage. At modul=
+e
+> load time, dyndbg now scans and resolves parent classmap references.
 >
-> For built-ins, KBUILD_MODNAME defaults to the basename of the source
-> file. For many subsystems, this fragments what should be a single
-> module into separate file basenames: kernel/power/ produces "main",
-> "suspend", "hibernate", "snapshot", and "swap" when all should be
-> "power". Conversely, multiple unrelated built-in files across the tree
-> (init/main.c, kernel/power/main.c) all collide under "main".
->
+> > diff --git a/kernel/module/main.c b/kernel/module/main.c
+> > --- a/kernel/module/main.c
+> > +++ b/kernel/module/main.c
 > [ ... ]
+> > @@ -2791,6 +2791,9 @@ static int find_module_sections(struct module *mo=
+d, struct load_info *info)
+> >       mod->dyndbg_info.maps.start =3D section_objs(info, "__dyndbg_clas=
+s_maps",
+> >                                                  sizeof(*mod->dyndbg_in=
+fo.maps.start),
+> >                                                  &mod->dyndbg_info.maps=
+.len);
+> > +     mod->dyndbg_info.users.start =3D section_objs(info, "__dyndbg_cla=
+ss_users",
+> > +                                                sizeof(*mod->dyndbg_in=
+fo.users.start),
+> > +                                                &mod->dyndbg_info.user=
+s.len);
 >
-> > diff --git a/include/linux/dynamic_debug.h b/include/linux/dynamic_debu=
-g.h
-> > index baf5c0853f459..85863e24ad134 100644
-> > --- a/include/linux/dynamic_debug.h
-> > +++ b/include/linux/dynamic_debug.h
+> [Severity: Low]
+> The len field in struct _ddebug_class_users is declared as a signed int, =
+but
+> section_objs() expects an unsigned int pointer for its num parameter. Cou=
+ld
+> passing &mod->dyndbg_info.users.len here trigger an incompatible pointer
+> type compiler warning and result in a build error under standard
+> configurations?
+>
+
+fixed for v12
+
+
+
+
 > [ ... ]
-> > @@ -121,7 +129,7 @@ struct ddebug_class_param {
-> >       static struct ddebug_class_map __aligned(8) __used              \
-> >               __section("__dyndbg_classes") _var =3D {                 =
- \
-> >               .mod =3D THIS_MODULE,                                    =
- \
-> > -             .mod_name =3D KBUILD_MODNAME,                            =
- \
-> > +             .mod_name =3D DDEBUG_MODNAME,                            =
- \
-> >               .base =3D _base,                                         =
- \
-> >               .map_type =3D _maptype,                                  =
- \
-> >               .class_names =3D _var##_classnames,                      =
- \
+> > diff --git a/lib/dynamic_debug.c b/lib/dynamic_debug.c
+> > --- a/lib/dynamic_debug.c
+> > +++ b/lib/dynamic_debug.c
+> [ ... ]
+> > +static void ddebug_sync_classbits(const struct kernel_param *kp, const=
+ char *modname)
+> > +{
+> > +     const struct ddebug_class_param *dcp =3D kp->arg;
+> > +     u32 val, new_bits;
+> > +
+> > +     if (!dcp || !dcp->map)
+> > +             return;
+> > +
+> > +     switch (dcp->map->map_type) {
+> > +     case DD_CLASS_TYPE_DISJOINT_BITS:
+> > +             val =3D READ_ONCE(*dcp->bits);
+> > +             new_bits =3D val;
+> > +             v2pr_info("  %s: classbits: 0x%x\n", KP_NAME(kp), new_bit=
+s);
+> > +             ddebug_apply_class_bitmap(dcp, &new_bits, 0, modname);
 >
 > [Severity: Medium]
-> Will this drop classmaps for loadable modules if a maintainer overrides
-> DDEBUG_MODNAME?
+> Because dcp->bits is read locklessly via READ_ONCE() before
+> ddebug_apply_class_bitmap() takes ddebug_lock, is there a race condition
+> here?
 >
-> When a loadable module is loaded, ddebug_module_notify() calls
-> ddebug_add_module() using the module's actual load name (mod->name) to
-> initialize the ddebug_table's module name.
+> If a user concurrently writes to the corresponding sysfs parameter, the s=
+ysfs
+> thread will update existing modules under the lock, release it, and then
+> update the parameter value.
 >
-> During initialization, ddebug_attach_module_classes() attempts to match t=
-he
-> classmap to the module by comparing strings:
+> If a concurrent module load thread executing ddebug_sync_classbits() read=
+s
+> the old parameter value right before the sysfs thread writes the new valu=
+e,
+> and then acquires the lock to apply the settings:
 >
-> lib/dynamic_debug.c:ddebug_attach_module_classes() {
->     ...
->     if (!strcmp(cm->mod_name, dt->mod_name)) {
->     ...
-> }
+> sysfs thread:
+> param_set_dyndbg_module_classes()
+>     mutex_lock(&ddebug_lock);
+>     // updates existing modules
+>     mutex_unlock(&ddebug_lock);
 >
-> If a maintainer uses the opt-in hook (e.g., ccflags-y +=3D -DDDEBUG_MODNA=
-ME=3D'"power"')
-> on a loadable module whose load name is "suspend", cm->mod_name will be "=
-power"
-> while dt->mod_name is "suspend".
+> Module load thread in ddebug_sync_classbits():
+>     val =3D READ_ONCE(*dcp->bits); // reads old stale value
 >
-> Since the string comparison fails, will all classmaps for the loadable mo=
-dule
-> be silently dropped, causing class'd pr_debug calls to lose their functio=
-nality
-> and trigger pr_warn spam on load due to unknown class IDs?
+> sysfs thread:
+>     *dcp->bits =3D new_value;
+>
+> Module load thread in ddebug_sync_classbits():
+>     ddebug_apply_class_bitmap(...)
+>         mutex_lock(&ddebug_lock);
+>         // applies stale value
+>
+> Would the newly loading module miss the concurrent sysfs update and
+> initialize with stale debug class settings?
 >
 
-I have dropped the DDEBUG_MODNAME indirection,
-am keeping the existing KBUILD_MODNAME.
+Holding ddebug_lock during the READ_ONCE() in ddebug_sync_classbits()
+would deadlock against ddebug_change(), which acquires ddebug_lock to
+iterate ddebug_tables and toggle descriptor flags.
 
-While it has the effect of breaking up what might be considered a single mo=
-dule,
-like "power", into ~6 separate ones, with names like "core" and "main",
-we can debate that separately, perhaps as an RFC,
-since it touches so many builtin module names.
+ddebug_add_module() publishes dt to ddebug_tables under ddebug_lock
+before calling ddebug_sync_classbits(). Because ddebug_change()
+acquires ddebug_lock while walking ddebug_tables, any concurrent sysfs
+write either completes before publication (so ddebug_sync_classbits()
+reads the new value) or executes after publication (so ddebug_change()
+finds and updates the new module directly).
+
+
 
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260923-dd-cmap-=
-part2-clean-v11-0-9b6c217fdf2f@gmail.com?part=3D14
+part2-clean-v11-0-9b6c217fdf2f@gmail.com?part=3D23
