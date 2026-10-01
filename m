@@ -1,97 +1,96 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-lr2-f35.google.com (mail-lr2-f35.google.com [74.125.230.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677DF3D0934
-	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 14:02:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A0E19D8BC
+	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 14:04:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.99
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790863381; cv=pass; b=g4dYOwZRakLUjeza7O7Mwitc3vXt9OOvckBD3gQ67GTd5KcuulQgRtH+Rijc78zGl4imsXxj+9AD+r5Z7kLLYB/QXTF5I+W6oVwJ7Ab2DaTNRoLBBkphn9RRqR36v8nCr7BsqD3+CRPaYTHSmyzzDYyoz1UQ99EoscegR/830OQ=
+	t=1790863446; cv=pass; b=iBEPh3ndyYlsZ2wNfUOlnybpPBnbp8McdOgUv2xta0YU/dAtbXlHG3rB7kGy2d1zZV82Ul9LdJXy9KOuatNNo99j3azgUVYuK3BBeB17gTX2Wes7ehdTDFeC3f8GqBTqELRzCpP6CWNEhFoP+MqtMD9bpzALMmLdfE9EaH8JrgI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790863381; c=relaxed/simple;
-	bh=d6FEHjro//70G/l/gSUyI1rn/GjbHT4yliKB3BRSvoU=;
+	s=arc-20240116; t=1790863446; c=relaxed/simple;
+	bh=U9jLK7/wc7B6mGa6+VCwGx4Ieg2jj91kEAwv06rg/rQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mrTyrhZRMZSic7enI5dMiSptmw/EXTrUy/lRxu4iOxU6ejedsHEtHP8Y4mk45hPUHhPy0grTybxoaHRaDBigLu14ya36I7Cwttto+qGNkDNMZlOr1PSvl65s2hwuIo9GqTGEUVOXQTXZsBPDxUTM/alOpW7rZHk3is+De4/G/tI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Df1HSgf3; arc=pass smtp.client-ip=209.85.218.47
+	 To:Cc:Content-Type; b=IKCzPPEStgBkv4XUxG026KQw5J2MOkTRKbAh1cGIEKUWFOhJGGnETuN5kKNBirLNfUIk208MI1JZY/vsbzVNzkZvRrgCXHY7lUsYDOtt2jxaa4FLFBzmEEGyYII+qb95BB9yIXeBCDzL8fAkvDWw6ABZSIz/pzP3AvNz98J0VpA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MebMxh2a; arc=pass smtp.client-ip=74.125.230.99
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Df1HSgf3"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-c2946aa0d5aso390638466b.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 01 Oct 2026 07:02:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790863377; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MebMxh2a"
+Received: by mail-lr2-f35.google.com with SMTP id 38308e7fff4ca-3a7756096e7so19279991fa.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 01 Oct 2026 07:04:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790863442; cv=none;
         d=google.com; s=arc-20260327;
-        b=ZNXJsnK6ovnaoIiiU+w7QeN+nwzu7sSbhqQz+8cxa4YXjvIZ31hdkY3//+3i+yfgEH
-         4b3HZQE62MxQevrEnRiROdGhIWlUKuJt46LDOZM4iCxVFNmmAa1YPnPPl6HVm+DNs+Zr
-         pDxzS/83Wp4E8c5rSHRy63HwA0NbC++1E1KaOPM3sVs093OXMEYbQi14BHnjg5SgN41w
-         kLNWH6T1Kw0olTftAvn4Mum5gCU3mcObe6uBmZa+ekIFZ5ha+x9Y9OgeKJbF/86VCfcR
-         9dSMvIue6nwc8JrYTrFSsq3tnrJLzV9WKZhfElLUt6yJr95v0Dz58yuM7aUUCzqpxk+f
-         DBAQ==
+        b=m2l7ebtUgjHv9RQVXl9sHIuqgF48x2vRn1P8u+O8FAbaA9DuU1FR3p7T/anvi3a1IW
+         CncQjcvoF5yB0Q3Lt2w0Igo5pEMfm6LPGhTGpMHbTHQYjMTrrd8SBnJXNB143K2V5Ovy
+         Q+VifwsPVbdJ9Z+TMUx0EJv8zyXl2qud395O0gjkAgAFp4G0n/tf9LMIYLJU/JyTPUkp
+         hIL6ZlHxrGjcyaKvk9lGzQX0uEDJYldbQ5RMp+upU9EuHYK8t4ARrqvoU9FRCsmx3cAx
+         AdvFihQGsYehAHsnV65dKnAVenBAEz457j33cXUSd+xZV35VHLtNF9CU9XB49SFDrod9
+         /xOA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=N8/7CE4ZuKqaD2pkivrDjqtKal/kq71Tiz2qeo/N8RI=;
-        fh=czhGovw1ORCXZDmDKjpX11tAOiV+9cU1czO48NmPsIU=;
-        b=BkWDK3PugF4mJffD2yozO9OPaIuXjTixUe1RnWj24w1XUMO2Ie4gbesDpA7iKtMLnd
-         9hx+Ufo/49fBGl057VkvuzddoHjGLnoo/h4P64To5mv46r6m7j76JhjxfTCGDzaO2vwq
-         WHV031S1xcxTgNUspqCjjv2wl9duuudV7u4yw0GvTOB+MZ5A8CXITZCUz5lG4tuPAQEb
-         XVB5G6v1zOiajsQykt3dleFkyMOd1gDaocHNW4X5+afuGrd/DHZYji1a6rgxexe1b2Rt
-         JFdBePoCPsMoM1ssjMrZ+UtvN2/b0iPJ6UzR3yW89ZhHPYyriR4bqzpHma+4p9qtN+PK
-         zq9Q==;
+        bh=U9jLK7/wc7B6mGa6+VCwGx4Ieg2jj91kEAwv06rg/rQ=;
+        fh=oxqvzzyL6o02JsJSzbdpVLalJy797tM5dI6XYPcNd1M=;
+        b=P4lvftdXhuwhrs8hfuw1eDZke4PSZNNbaFf8RvQY3aeAkwrrznTIXv/thM8jVAXmWy
+         kjc4lOQSYTWtxIoMFby50uV4pbXWWJcxX9IRBNQBopfphsQr0bB3RR8tXiwuB84CDZG6
+         yAr7iUhUsURNAjxDIDF1AChmXGYPVbHI8K7ErvhZegPWSzzW+11ifOYpKFveQhdin5Mb
+         ETj4cEQKpUhBRrV3yX+8kI8kjLWhpuaHtgUzI9sjsmu/+PPONf6Hm1/GJ//yuxA4Blws
+         lEJjlj0R0Ex1UGPwlHgWnbp/5fkhznNFh1Axq3WSdHlcruLuv5/FpoGKQvWPHQoYo0jX
+         PhPw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790863377; x=1791468177; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1790863442; x=1791468242; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=N8/7CE4ZuKqaD2pkivrDjqtKal/kq71Tiz2qeo/N8RI=;
-        b=Df1HSgf3KQCjom1egdFfT6tkH73TcRtxeLNF+Sc0NmRU+YuMaQQZd4h5/Gk23r6xor
-         RQ9qpLPc7bcAPVZzeOFfWPKhZgGWc8hKXgSn8K3RIlnH/aYhgzvlAi7H54IWTgtOiTmL
-         czQc6XbVOvuw872Bq+0oFqrI704RPbCnQCd4B9qSnP0lt4RhXrd5wS8nPFmfQwlt30ye
-         3Voh8CM0+E6vZWU35tl1bIgPEi09AJyOdBiWENOH2lp7cs5dvtA19chR4cfepGlu9j/D
-         hpJ4mNZtOCEVZsoxYcVdIiFXGHk7x3l0mBrtpSmiFaECSF+xhaGVLhf4Zc924HZlvfEP
-         nXbg==
+        bh=U9jLK7/wc7B6mGa6+VCwGx4Ieg2jj91kEAwv06rg/rQ=;
+        b=MebMxh2a/2AaLxNS1zUbDK8TpR4UW0JuYtFQa8YmlCFDytkeiK4RNDCFDYf7iJIQul
+         HWdhYVpupgAbznZZEbE9BIvEC9N8RIiJaEOB684SrQ+ieI74jEjv6OiOV3pxaDlyddcP
+         OmX/6xW5X9HyePv9rzceqkHSosub5ozK5cntlu0cO0q0IMZFunDSMC0wmzzrIZqho/Ex
+         I8FutnZRZjW6ag7E29mExmXRK+IYRKlXkTmyUyh5V37triE8j8hZ8+qdU4Ytkl8nr4pV
+         kfuK79PdGK+z7Mo1RNWG37OGcgxixa00pBZkDZoNXRXWv6AZuM1s9RXeWQO8ov8eh99Z
+         nduw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790863377; x=1791468177;
+        d=1e100.net; s=20260707; t=1790863442; x=1791468242;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=N8/7CE4ZuKqaD2pkivrDjqtKal/kq71Tiz2qeo/N8RI=;
-        b=0ttam9Cc3H4GQ+wgrHBuJrR7VhwezCAMGimnIqOhiPYw6qqY1YTvmJifPuvotxyJBf
-         jVxeAvHak3XoMilH3xjTEOOuroyt9o/D5VJJJVHYkbs6yp7iGdYtP9sh3fkr9s8b4J9l
-         6C8/6xeQmHKNKz8q4hDW9Q5ZoF7RVP6CD0DaLybUUCZManPLpK8Rehlf6AzveOBijcxL
-         +LTnee5BcrJAp7azEmnOfUXgSKNbSdlAiWKvvYC4NF/avEI5GXuLdq7JCDXUBWQ65pMD
-         3vzChqS1Ktdb9+/nhwQYfLfUtp4vDM1mD8uwb3Z6KtcE+KAWtlsAfadf5FYGrTMfpPI0
-         HuDA==
-X-Forwarded-Encrypted: i=1; AKwUvBynWNws6+nGvv5LfvjM9tV/3mj7uTJWoIIIu2yfIxrD2lE1Z6cbxkLnxSHlkTGG1EcPmFDCHZZVLmJciumzOm8=@lists.linux.dev
-X-Gm-Message-State: AFuF++nfCFg0ZJx+4VeXlBvqmM6p1whqStYPPB4MTRGIIiU6INdK3xrM
-	9mE1EO81Zyw+NJUj0qPDSfwcKHfGPO5wG/Ok9GZfRF6khmXHfpzVj3DmNXmNN8TVV2K3WvEb23z
-	LYke5AiWmPeVl93Emx8phAre663nyWSs=
-X-Gm-Gg: AYBFou23Zc7cH9A6pzyYG2p/RxDU+nRDUV3r28qcHTz4mDnuP0aiVdjfzNY2ilLj1Xs
-	39yzOuk5R8eyidqy05fEFZsVgXRQ42y5wulb3ghYIbZD328+ixBwi5n2jDCE4plbzF7ez9xSKGf
-	9pDGYdoJDPjWtYYd0lvKWTx0+kIcVyNZkUWTza0qdRAUYvC2TgMPzjhCUXEUEAXNUxm2DmgB3cF
-	I4omLbStaZG6JXMEDfyRIyrmL41Dkg4d6co6dwwcbgN62P/BC4Uisg4wRwSua21m9FiOB+vb9Mq
-	d3tMjntAHdm2wc8agJXR6YblP7L+ZHl9r94KDjfAA/p8FMpBWy2Ilea37hsA3XiqwoBXSWDtbrn
-	zbBdc70nr77W802O9dARcZTX35mm6DAUX3hCASbyWWai+39zF1oApW4t9htchqDhoYEcEiiPVCl
-	njgN59JWIVd+kNjsDLulOPSBo/ETcr3qqoHjyiOzJo
-X-Received: by 2002:a17:907:9625:b0:c2e:2275:1168 with SMTP id
- a640c23a62f3a-c2e33fa28d3mr242508666b.19.1790863377337; Thu, 01 Oct 2026
- 07:02:57 -0700 (PDT)
+        bh=U9jLK7/wc7B6mGa6+VCwGx4Ieg2jj91kEAwv06rg/rQ=;
+        b=PckDB5doFaWlWHbZeHweHV3WvqYSm28Ou+0s9KwkL6fOvWiHvaaPJIVhiAC5doRjZV
+         0CGdcOQcGeZ2lAVQxo/IgIc46F0qNRWRjhOb5ZODh24uJW4hR0fiAhXQGtpTsBfFTzSX
+         mNpxpTWGkvznfZ7uX3EVsnTKdKRu80FbRGHknT5L4AOGYai0GzkGIYTyQXSr7kSRkczA
+         KpSsik1k1CxFiUCk0bZbDxJadmcCzDY8wAe30MXkp2vD9gotetaCK3+kpYyWhvsHWV5U
+         ZK130oqLH1l/qTB2+eMP1iHqJz9NpouTyo8zMy/lmbVSYT8c5QGjUviTp/9zPhEUGEo0
+         QNFQ==
+X-Forwarded-Encrypted: i=1; AKwUvByndPERj8R6WT/6lpjM2cYQ7WVxPhbjvSf5OtbgG3Kh3FB3bU/pY1DadQmTpoxfR2GJT14fBS/y+uE1H/6FS8M=@lists.linux.dev
+X-Gm-Message-State: AFq9FYIKkj8+j4G/ZN0Yh1citCq4qEm6BJ9BWuMjJygs1xuRF9z9J25z
+	OGrB7KnQF8S2Rydk/GZrsbS03eRFiHYUl7sc/Tvwhp9nbfrAtA/40mGwozhrAMwfBQN3+1HkG0s
+	0imB7VZHbEyySjnPb8JsD2bGdYnuUL8g=
+X-Gm-Gg: AYBFou3JQNXuPFJvZnO5lCuxSoH0PIXLdxQsbSyOWcyChL1C922YWzxF4J6E1+mDwbN
+	Xg8RYuGWoxDxy4Upzl99nTvV2UQ7LRkV2rOkJ95sJQT6shI5rSWhuWC9oSOUSn0Ih7vhkcPxUXY
+	NQ5jLbu4QUFAaWO9t+2dyI50iVBr68QftaqQv3Ndjx2NCw7PolQB1HuRFvxC0BYsQilkFIsxg3U
+	Qnzb16Ecdz4rHbJIkUZpTvP7NzexKFDleeuBPuO8PvBkTQW4WCasp7Gbe0LovRRlu2k7L4aGx6N
+	iztxVaH2deXjpfkfxliRIpXndD1gr2MNyxLlQHX7SBblomC8kGeUAhgoIhQCBPHHt6KkDszpDZd
+	2P3M0dHdQi6Oa6Pkvrp0daBFFUZjtS/7FyDbZSODfQ9sEDw9oW9J/8oCd13+qaZi212OoCEtPC7
+	/R9X3m+eUVZ8TflnUl3yRDbKqrS9PycYrQoHkjDb2L
+X-Received: by 2002:a05:651c:2121:b0:3a6:27ba:be0b with SMTP id
+ 38308e7fff4ca-3a77928dc6cmr16119671fa.20.1790863442038; Thu, 01 Oct 2026
+ 07:04:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261001133736.802604-1-tzimmermann@suse.de> <20261001133736.802604-3-tzimmermann@suse.de>
-In-Reply-To: <20261001133736.802604-3-tzimmermann@suse.de>
+References: <20261001133736.802604-1-tzimmermann@suse.de>
+In-Reply-To: <20261001133736.802604-1-tzimmermann@suse.de>
 From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Thu, 1 Oct 2026 17:02:20 +0300
-X-Gm-Features: AclHuK-Ck5Qo38vd623LvGwdR2qBOOVXPJ98wewQWMKyHiuuGCBfZRXpFz9rHO4
-Message-ID: <CAHp75Ve1-LhMaLczyOyLYhXaHzhRVOTsG4Wi6c-KPT1VQJ-nKA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] drm/kms-helper: Remove struct drm_simple_display_pipe
- and helpers
+Date: Thu, 1 Oct 2026 17:03:25 +0300
+X-Gm-Features: AclHuK-MGGGgGsa7XTJEX30X4AH0rHlA77AtOEFwmZmXzvdKsC2XJRDqSMsLZSA
+Message-ID: <CAHp75Vf80MzmPvOK7Qpy99dxoKY1JSiJWM6KUVswoO12LgtuBw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] drm: Remove simple-display pipe
 To: Thomas Zimmermann <tzimmermann@suse.de>
 Cc: maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com, 
 	simona@ffwll.ch, decui@microsoft.com, longli@microsoft.com, 
@@ -102,35 +101,20 @@ Cc: maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 1, 2026 at 4:38=E2=80=AFPM Thomas Zimmermann <tzimmermann@suse.=
+On Thu, Oct 1, 2026 at 4:37=E2=80=AFPM Thomas Zimmermann <tzimmermann@suse.=
 de> wrote:
 >
-> There are no drivers using struct drm_simple_display_pipe. Remove
-> the data type and all related helpers.
->
-> The idea behind struct drm_simple_display_pipe was to provide an
-> easier way for writing DRM drivers besides regular atomic helpers.
-> It turned out to be more complicated. With all drivers being updated
-> to use atomic helpers, it's time to remove simple-pipe. Also clean
-> up the related TODO items.
+> There are no drivers using struct drm_simple_display_pipe left. Remove
+> the related helpers from DRM and clear any TODO items. Hyperv-drm needs
+> a minor fix to include some additonal headers.
+
+additional
 
 ...
 
-> +++ b/drivers/staging/fbtft/TODO
-> @@ -1,3 +1,3 @@
-> -* convert all these over to drm_simple_display_pipe and submit for inclu=
-sion
-> -  into the DRM subsystem under drivers/gpu/drm - fbdev doesn't take any =
-new
-> -  drivers anymore.
-> +* convert all these over to DRM and submit thme for inclusion into
-
-them
-
-(spell checking?)
-
-> +  the DRM subsystem under drivers/gpu/drm - fbdev doesn't take any
-> +  new drivers anymore.
+Makes a lot of sense,
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+with the spelling fix in the patch 2/2.
 
 --=20
 With Best Regards,
