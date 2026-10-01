@@ -1,231 +1,71 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F35E4A4410;
-	Thu,  1 Oct 2026 08:17:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA333B777D;
+	Thu,  1 Oct 2026 08:18:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790842672; cv=none; b=DY77PL6270ye40xZQCGN16qQ21MKfsXXjm/oKJQStuQNfC4jA4aIV0j3JqnmI52iiDcGNxuNYISC5Li6Hjn8IN1iTQufq3a55epmFsS0rJNhk3JhEIlDUrk+xB4nwvD5iUnw2kFyxdwkYI0twqaTPxHFcRFFU4ah0mMNplq2H9I=
+	t=1790842684; cv=none; b=fxL/Nkr7KT28XqNzlklvCEBvV7n0dypThgjqYvoilTIKqUgzWibE/USqVaFQBvp6H5azZkNLg+dMulknqwOwrwTRAaMyJ/wu7qqp3AtSBPX9Z9rQypIHd21wCpB1VFH0t8OCZ5ByyyAZqUKlVQ31+w4RAc9ay2xRilkn9OKfDhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790842672; c=relaxed/simple;
-	bh=TJwc5O7ntGMNZfYYJkuk0LGKcByvcIHqyNd0eoZ3S9g=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=YB7ZSPQt7MHPZZNhuprsk8IkWk/ibNjsUs/DTdDeoYJmIgQ/QTLOt6vTrff7ZvIz5CYjktmjodFBHm6ORvcJSvYvhx11IMl7ZIID2HxfVRfKkAiTSR7/1A3A4x5zuGt4/NCMLY3ooOqVLbmIFAjwiv85rVSuUbw8fpwmOibcMfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=CewNhKN7; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1790842684; c=relaxed/simple;
+	bh=QXDQ+OspMZqb4HJ/NT5tmFnjddbCDSZT5sV4r+E4/EA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tMPf/Z5lTFsoZ2sf++JnUU+KamTqH79aDmtXyokFCa+vmOr/iCDXyUFKEdGbvOt9TfilYqLnsbedloXylC/S2R7PUultNhfA1uSPwAj0h5OD4bHzUFDtWJKYwBwE+qu66ujpdr/anQVn31+T0zds9+e8dAXzcoNxwdnVGG51KgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TeukVepO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="CewNhKN7"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BFB6B497;
-	Thu,  1 Oct 2026 01:17:40 -0700 (PDT)
-Received: from [10.57.9.178] (unknown [10.57.9.178])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3FA6C3F85F;
-	Thu,  1 Oct 2026 01:17:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1790842664; bh=TJwc5O7ntGMNZfYYJkuk0LGKcByvcIHqyNd0eoZ3S9g=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=CewNhKN7JS2IKfCPqmjxqGA/HGZSmdZau194WtiV0AwU8/0QjE13Noo9pp6XnKP7e
-	 AYh+kAU3AAJEJua+EsH3XguV6rmsCSrnJ8rF0PamnA3sUu+Rurome6qBdPHbVQX2M4
-	 Jb+JZPL47Yj3M4VJhrdptyCuzbosmUTzhGS17YC8=
-Message-ID: <18d2c6d4-55d7-4a9d-992f-fe33fa11c182@arm.com>
-Date: Thu, 1 Oct 2026 09:17:41 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TeukVepO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C12C1F000FF;
+	Thu,  1 Oct 2026 08:17:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790842681;
+	bh=uJ4LATxvBGPupAWwKvn70eY8k8KsKVWYIsLbmOrHFcI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=TeukVepOUU2MqlJIhZaQeIwQKh7jNTqLX8qmBh/FblfNocvXKs4lb1IWCXQpuJMUL
+	 gdIr/rf5I5lK000e8kFodXr3PpvmcFLJRJTJUhpTt+nwH/pBH2m51HsAJgc0OmccX3
+	 sifQ1cEDslyqq/IaP8C1nk86QDAcHMtlRI6AbcuFTheZY3FCC/Lf3LlyA/JTga5+pJ
+	 BkKh882rlrBjgviIRlx1KH6jPbm4Z7clX+4FEcUMEygrKv3jzp9C1mzXdXrMvJrmK3
+	 Kn6BMp/P0dcdR3LEhorzsWpswfPVrmcPSzYVa0li7/iQnFNLAgG5lwfoUxPpwJjk/z
+	 kPKZhPEoPxOcA==
+Date: Thu, 1 Oct 2026 10:17:57 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Luna HART <lhart.opensource@witekio.com>
+Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, 
+	"robh@kernel.org" <robh@kernel.org>, "conor+dt@kernel.org" <conor+dt@kernel.org>, 
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: hwmon: Add TI
+ TPS389004/TPS389006/TPS389008
+Message-ID: <20261001-luminous-alligator-of-inspiration-4f80f3@quoll>
+References: <20260929-lhart-dev-tps38900x-v1-0-7045c5894152@witekio.com>
+ <20260929-lhart-dev-tps38900x-v1-1-7045c5894152@witekio.com>
+ <20260929231757.5B97D1F000FF@smtp.kernel.org>
+ <AM7P192MB07852B4444A165F85EE74B14B48B2@AM7P192MB0785.EURP192.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v20 2/9] firmware: arm_rmm: Check for RMI support at init
-Content-Language: en-GB
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-To: Catalin Marinas <catalin.marinas@arm.com>
-Cc: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev,
- kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
- Oliver Upton <oupton@kernel.org>
-References: <20260929221623.1342076-1-suzuki.poulose@arm.com>
- <20260929221623.1342076-3-suzuki.poulose@arm.com>
- <20260929222840.A0E821F000FF@smtp.kernel.org>
- <a2fa2bd1-6888-4ed5-9e2f-233eacb600a5@arm.com> <arzsUdIEVvafG-S5@arm.com>
- <b4af8478-f02c-4c94-afea-7bd0adbe7b79@arm.com>
-In-Reply-To: <b4af8478-f02c-4c94-afea-7bd0adbe7b79@arm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <AM7P192MB07852B4444A165F85EE74B14B48B2@AM7P192MB0785.EURP192.PROD.OUTLOOK.COM>
 
-On 01/10/2026 07:03, Suzuki K Poulose wrote:
-> On 30/09/2026 12:02, Catalin Marinas wrote:
->> On Wed, Sep 30, 2026 at 09:18:48AM +0100, Suzuki K Poulose wrote:
->>> On 29/09/2026 23:28, sashiko-bot@kernel.org wrote:
->>>>> diff --git a/include/linux/arm-rmi-cmds.h b/include/linux/arm-rmi- 
->>>>> cmds.h
->>>>> new file mode 100644
->>>>> index 0000000000000..911489b636522
->>>>> --- /dev/null
->>>>> +++ b/include/linux/arm-rmi-cmds.h
->>>> [ ... ]
->>>>> +static inline void rmi_smccc_invoke(struct arm_smccc_1_2_regs *regs)
->>>>> +{
->>>>> +    struct arm_smccc_1_2_regs args = *regs;
->>>>> +    long status;
->>>>> +    int i = 0;
->>>>> +
->>>>> +    while (i < RMM_BLOCKED_RETRY_COUNT) {
->>>>> +        arm_smccc_1_2_invoke(&args, regs);
->>>>> +
->>>>> +        status = RMI_RESULT_STATUS(regs->a0);
->>>>> +        if (status != RMI_BUSY && status != RMI_BLOCKED)
->>>>> +            break;
->>>>> +        if (status == RMI_BLOCKED)
->>>>> +            i++;
->>>>> +        cpu_relax();
->>>>> +    }
->>>>
->>>> [Severity: High]
->>>> Does this sequence create an unbounded spin loop if the firmware 
->>>> continuously
->>>> returns RMI_BUSY?
->>>>
->>>> If the status returned by arm_smccc_1_2_invoke() is RMI_BUSY, the loop
->>>> continues without incrementing the exit counter i. It issues 
->>>> cpu_relax()
->>>> but does not yield the CPU (e.g., via cond_resched()) or impose a 
->>>> timeout.
->>>> If the RMM firmware remains busy, this could cause the host kernel 
->>>> to lock
->>>> up indefinitely.
->>>
->>> This is like "spinlock contention". RMM returns EBUSY when a resource is
->>> locked temporarily. We should be able to make progress, unlike the
->>> RMI_BLOCKED, which is blocking due to a long running operation.
->>
->> I dug a bit into the RMI_BUSY description in the spec and it's not
->> always safe to spin forever. For RMI_{PDEV,VDEV}_COMMUNICATE, for
->> example, we need to return to the caller and retry later (for VDEV, the
->> spec suggests informing the realm). That's the TSM series, which doesn't
->> use the new API yet, but something to be aware of when it's updated.
+On Wed, Sep 30, 2026 at 11:28:08PM +0000, Luna HART wrote:
+> On Tue, 29 Sep 2026 at 16:17, sashiko-bot@kernel.org wrote:
+> > > +allOf:
+> > > +  - if:
+> > > +      properties:
+> > > +        compatible:
+> > > +          const: ti,tps389004
+> >
+> > [Severity: Medium]
+> > Will this properly evaluate the compatible property?
+> [...]
+> > Should this use contains: const: ti,tps389004 instead?
 > 
-> Agree. There RMI_BUSY indicates the Pdev is busy with an ongoing
-> communication which could take longer.
-> 
->>
->> We may need the spec to bound this spin anyway, or at least give an
->> indication that it's not forever, otherwise it affects latency,
->> especially in an RT kernel.
->>
->> There's a generic RMI command return code table in B4.2 that lists
->> RMI_BUSY for an imp def reason for the command failing to make progress.
->> Does this apply to something like REC_ENTER? In the KVM series we call
->> that with IRQs masked.
-> 
-> REC_ENTER only tries to lock the REC object. The only other code that
-> tries to lock is the PSCI completion processing to update the "rec"
-> state to runnable. Hence we don't expect a the REC_ENTER to be waiting
-> for the REC object lock and encounter an RMI_BUSY. Also, REC_ENTER
-> locks the object to get a refcount on the granule and the lock is
-> released. So even if the host issued REC_ENTER in parallel, the second
-> one will encounter RMI_ERROR_REC due to the bumped refcount.
-> 
-> That said, I am happy to return to the caller on RMI_REC_ENTER in the 
-> worst case and pretend there was an IRQ and that would allow the KVM
-> to re-enter the guest after servicing the interrupts. I have added the 
-> following changes to the patch where we introduce the REC_ENTER:
-> 
-> +/*
-> + * rmi_smccc_invoke_once: Invoke the RMI call and return the results. 
-> Do not
-> + * retry the command. Let the caller deal with RMI_BUSY or RMI_BLOCKED.
-> + */
-> +static inline void rmi_smccc_invoke_once(struct arm_smccc_1_2_regs *regs)
-> +{
-> +       struct arm_smccc_1_2_regs args = *regs;
-> +
-> +       arm_smccc_1_2_invoke(&args, regs);
-> +}
-> +
-> 
-> ...
-> 
-> 
-> +/**
-> + * rmi_rec_enter() - Enter a REC
-> + * @rec: PA of the target REC
-> + * @run_ptr: PA of RecRun structure
-> + *
-> + * Starts (or continues) execution within a REC.
-> + *
-> + * Return: RMI return code
-> + */
-> +static inline long rmi_rec_enter(unsigned long rec, unsigned long run_ptr)
-> +{
-> +       struct arm_smccc_1_2_regs regs = {
-> +               SMC_RMI_REC_ENTER, rec, run_ptr,
-> +       };
-> +
-> +       rmi_smccc_invoke_once(&regs);
-> +       return regs.a0;
-> +}
-> 
-> 
+> I believe this is a non issue. This pattern is also used in an existing schema file:
 
-And for the record, here is the change in the KVM CCA Driver for 
-handling this case :
+Correct.
 
-         if (status == RMI_ERROR_REALM) {
-                 vcpu->run->exit_reason = KVM_EXIT_SHUTDOWN;
-                 return ARM_EXCEPTION_EXIT;
-         }
+Best regards,
+Krzysztof
 
-         /*
-          * If a VCPU has been turned on, but the REC state hasn't been 
-updated
-          * we may experience RMI_ERROR_REC. Exit to the userspace with 
--EAGAIN
-          * for a retry.
-          */
-         if (status == RMI_ERROR_REC)
-                 return -EAGAIN;
-
-+       /*
-+        * If the RMI_REC_ENTER encounters RMI_BUSY, treat it as if it was
-+        * an IRQ and go back to the run-loop. We don't sync the state back
-+        * to the vcpu when status != RMI_SUCCESS.
-+        */
-+       if (status == RMI_BUSY)
-+               return ARM_EXCEPTION_IRQ;
-+
-         if (rec_run_ret)
-                 return rec_exit_fatal(vcpu, "Unexpected REC_ENTER status",
-                                       rec_run_ret);
-
-         switch (rec->run->exit.exit_reason) {
-         case RMI_EXIT_SYNC:
-                 /*
-                  * HPFAR_EL2_NS is hijacked to indicate a valid HPFAR 
-value,
-                  * see __get_fault_info()
-                  */
-                 vcpu->arch.fault.hpfar_el2 = rec->run->exit.hpfar | 
-HPFAR_EL2_NS;
-                 rec_exit_sync(vcpu);
-                 return ARM_EXCEPTION_TRAP;
-         case RMI_EXIT_IRQ:
-         case RMI_EXIT_FIQ:
-                 return ARM_EXCEPTION_IRQ;
-         case RMI_EXIT_SERROR:
-                 return ARM_EXCEPTION_EL1_SERROR;
-         case RMI_EXIT_PSCI:
-                 rec_exit_hvc(vcpu);
-                 /*
-                  * Queue completion before dispatching the exit through the
-                  * generic HVC handling path. The request will be 
-processed after
-                  * HVC handling has updated the vCPU state and before 
-the next REC
-                  * entry.
-                  */
-                 kvm_make_request(KVM_REQ_RMI, vcpu);
-                 return ARM_EXCEPTION_TRAP;
-         case RMI_EXIT_RIPAS_CHANGE:
-                 return rec_exit_ripas_change(vcpu);
-
-Cheers
-Suzuki
