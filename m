@@ -1,151 +1,231 @@
-Received: from www537.your-server.de (www537.your-server.de [188.40.3.216])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A603AFCF3;
-	Thu,  1 Oct 2026 08:03:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.40.3.216
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F35E4A4410;
+	Thu,  1 Oct 2026 08:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790841813; cv=none; b=D+21IHs53l+QTL9E2nF3tb6Wfy8odhffR7R9ub624klR7mrXbQKMo/F16Hhi5xSRV/yoceWm/jIUFcSMAwsD3DRHNhhRBsrJxr7fBbixR4H4ImSc06fTKtCdWqOIc8yeBBMCk9Bb7kpJj9xOmn+2XUvg6ZNhtv7T9QxVGRXOfL0=
+	t=1790842672; cv=none; b=DY77PL6270ye40xZQCGN16qQ21MKfsXXjm/oKJQStuQNfC4jA4aIV0j3JqnmI52iiDcGNxuNYISC5Li6Hjn8IN1iTQufq3a55epmFsS0rJNhk3JhEIlDUrk+xB4nwvD5iUnw2kFyxdwkYI0twqaTPxHFcRFFU4ah0mMNplq2H9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790841813; c=relaxed/simple;
-	bh=0h0aexifzoPXfbUZClj0yqJPccXtsYDA5KZI5w0hEmY=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=QLGil8MlG7QCDWJvjCXsJTot6QDS5O+1uQy5FEOgporaPA98tHXPb/KbqOKpMjxGH8+i8pJmCun8z0U5GEAaNSWlb3LZN4s29zkpI2WRTYqwVxcYhg1SLDy+wIgSZZb4sEe5vFSIrauCxVoiJT2H5sA96YlmTnteK448ma+MS2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com; spf=pass smtp.mailfrom=ew.tq-group.com; dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b=kJqDj22S; arc=none smtp.client-ip=188.40.3.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ew.tq-group.com
+	s=arc-20240116; t=1790842672; c=relaxed/simple;
+	bh=TJwc5O7ntGMNZfYYJkuk0LGKcByvcIHqyNd0eoZ3S9g=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=YB7ZSPQt7MHPZZNhuprsk8IkWk/ibNjsUs/DTdDeoYJmIgQ/QTLOt6vTrff7ZvIz5CYjktmjodFBHm6ORvcJSvYvhx11IMl7ZIID2HxfVRfKkAiTSR7/1A3A4x5zuGt4/NCMLY3ooOqVLbmIFAjwiv85rVSuUbw8fpwmOibcMfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=CewNhKN7; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b="kJqDj22S"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=ew.tq-group.com; s=default2602; h=MIME-Version:Content-Transfer-Encoding:
-	Content-Type:References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=394NVBA+I3aKDJvMtsiHLQQOBJKP9/gvjWUusXvjJFA=; b=kJqDj22StpD/Ysk8rs5g+GW/0A
-	5BS1xzWABhab3V5O8jqlUqMqDrdS9KQCtqgwa4vwRrAElBhT3qFw1M9Lh6oi6QEIWe4kZRSad5GJe
-	3yYVCKC47KkFQwpRKsH6zfZsVI+Hp24xFdIUAq8kIpHxoHpa5lkv0FGYKMl+VbSgUk3vuafGiPTKA
-	wvSyq6+vkuanaVOYU82sVhIY/6kxepciDjtwU3EtAYZMuHem1ZCFYlTe5e8GWbNTO1mFc2RTYqInQ
-	R//idZ2lvq8AJMYBtixsgeik5JLO8xPx5GdcsWnY/u8IjHsNze30MtAYmp/RiKZgChGHcUxIPnbva
-	emen9CNw==;
-Received: from sslproxy02.your-server.de ([78.47.166.47])
-	by www537.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <nora.schiffer@ew.tq-group.com>)
-	id 1xCBlI-0002Wj-18;
-	Thu, 01 Oct 2026 10:03:28 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy02.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <nora.schiffer@ew.tq-group.com>)
-	id 1xCBlH-000ISz-34;
-	Thu, 01 Oct 2026 10:03:28 +0200
-Message-ID: <addd45d2eed383ba0885fe841ba5fafc2be7accb.camel@ew.tq-group.com>
-Subject: Re: [PATCH v4 08/10] leds: pca995x: Add sysfs files for error
- reporting
-From: Nora Schiffer <nora.schiffer@ew.tq-group.com>
-To: sashiko-reviews@lists.linux.dev, lee@kernel.org
-Cc: robh@kernel.org, devicetree@vger.kernel.org, linux-leds@vger.kernel.org,
-  conor+dt@kernel.org, linux@ew.tq-group.com
-Date: Thu, 01 Oct 2026 10:03:27 +0200
-In-Reply-To: <20260930154824.5083C1F000FF@smtp.kernel.org>
-References: <cover.1790684839.git.nora.schiffer@ew.tq-group.com>
-	 <3232b9b6f3574b19082281c0d03873e80bc8e2e5.1790684839.git.nora.schiffer@ew.tq-group.com>
-	 <20260930154824.5083C1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.3-0ubuntu1.1 
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="CewNhKN7"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BFB6B497;
+	Thu,  1 Oct 2026 01:17:40 -0700 (PDT)
+Received: from [10.57.9.178] (unknown [10.57.9.178])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3FA6C3F85F;
+	Thu,  1 Oct 2026 01:17:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1790842664; bh=TJwc5O7ntGMNZfYYJkuk0LGKcByvcIHqyNd0eoZ3S9g=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=CewNhKN7JS2IKfCPqmjxqGA/HGZSmdZau194WtiV0AwU8/0QjE13Noo9pp6XnKP7e
+	 AYh+kAU3AAJEJua+EsH3XguV6rmsCSrnJ8rF0PamnA3sUu+Rurome6qBdPHbVQX2M4
+	 Jb+JZPL47Yj3M4VJhrdptyCuzbosmUTzhGS17YC8=
+Message-ID: <18d2c6d4-55d7-4a9d-992f-fe33fa11c182@arm.com>
+Date: Thu, 1 Oct 2026 09:17:41 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28140/Thu Oct  1 08:24:38 2026)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v20 2/9] firmware: arm_rmm: Check for RMI support at init
+Content-Language: en-GB
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+To: Catalin Marinas <catalin.marinas@arm.com>
+Cc: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev,
+ kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+ Oliver Upton <oupton@kernel.org>
+References: <20260929221623.1342076-1-suzuki.poulose@arm.com>
+ <20260929221623.1342076-3-suzuki.poulose@arm.com>
+ <20260929222840.A0E821F000FF@smtp.kernel.org>
+ <a2fa2bd1-6888-4ed5-9e2f-233eacb600a5@arm.com> <arzsUdIEVvafG-S5@arm.com>
+ <b4af8478-f02c-4c94-afea-7bd0adbe7b79@arm.com>
+In-Reply-To: <b4af8478-f02c-4c94-afea-7bd0adbe7b79@arm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, 2026-09-30 at 15:48 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] leds: pca995x: unintentional overwrite of MODE2 register during =
-probe
-> --
->=20
-> commit 1bf2389241c12cac5965e7df3db32ae52db81482
-> Author: Nora Schiffer <nora.schiffer@ew.tq-group.com>
->=20
-> leds: pca995x: Add sysfs files for error reporting
->=20
-> The PCA995x has builtin failure detection. Provide sysfs files for
-> individual LED status (reporting "okay", "short-circuit" or
-> "open-circuit") as well as a global "has_errors" flag. has_errors is
-> sticky and must be cleared by writing "clear" to the sysfs file.
->=20
-> > diff --git a/drivers/leds/leds-pca995x.c b/drivers/leds/leds-pca995x.c
-> > index df3f7ab2e1f87..1fc8de5a77bbc 100644
-> > --- a/drivers/leds/leds-pca995x.c
-> > +++ b/drivers/leds/leds-pca995x.c
-> [ ... ]
-> > @@ -185,11 +279,20 @@ static int pca995x_probe(struct i2c_client *clien=
-t)
-> >  	if (ret)
-> >  		goto err_put_nodes;
-> > =20
-> > +	/* Clear errors on probe */
-> > +	ret =3D regmap_write(chip->regmap, PCA995X_MODE2, PCA995X_MODE2_CFG);
->=20
-> [Severity: High]
-> Does this unconditional write clobber the entire MODE2 register?
->=20
-> Using regmap_write() instead of regmap_update_bits() zeroes out all other
-> bits in the MODE2 register.
->=20
-> This clobbers the power-on reset defaults of the hardware, specifically t=
-he
-> OUTDRV bit (typically bit 2), which defaults to 1 (totem-pole output).
->=20
-> Clearing it changes the output driver to open-drain, which can cause the
-> LEDs to fail to light up or behave erratically.
->=20
-> Could regmap_update_bits() be used here instead to only set the CLRERR bi=
-t,
-> similar to how it is handled in has_errors_store()?
+On 01/10/2026 07:03, Suzuki K Poulose wrote:
+> On 30/09/2026 12:02, Catalin Marinas wrote:
+>> On Wed, Sep 30, 2026 at 09:18:48AM +0100, Suzuki K Poulose wrote:
+>>> On 29/09/2026 23:28, sashiko-bot@kernel.org wrote:
+>>>>> diff --git a/include/linux/arm-rmi-cmds.h b/include/linux/arm-rmi- 
+>>>>> cmds.h
+>>>>> new file mode 100644
+>>>>> index 0000000000000..911489b636522
+>>>>> --- /dev/null
+>>>>> +++ b/include/linux/arm-rmi-cmds.h
+>>>> [ ... ]
+>>>>> +static inline void rmi_smccc_invoke(struct arm_smccc_1_2_regs *regs)
+>>>>> +{
+>>>>> +    struct arm_smccc_1_2_regs args = *regs;
+>>>>> +    long status;
+>>>>> +    int i = 0;
+>>>>> +
+>>>>> +    while (i < RMM_BLOCKED_RETRY_COUNT) {
+>>>>> +        arm_smccc_1_2_invoke(&args, regs);
+>>>>> +
+>>>>> +        status = RMI_RESULT_STATUS(regs->a0);
+>>>>> +        if (status != RMI_BUSY && status != RMI_BLOCKED)
+>>>>> +            break;
+>>>>> +        if (status == RMI_BLOCKED)
+>>>>> +            i++;
+>>>>> +        cpu_relax();
+>>>>> +    }
+>>>>
+>>>> [Severity: High]
+>>>> Does this sequence create an unbounded spin loop if the firmware 
+>>>> continuously
+>>>> returns RMI_BUSY?
+>>>>
+>>>> If the status returned by arm_smccc_1_2_invoke() is RMI_BUSY, the loop
+>>>> continues without incrementing the exit counter i. It issues 
+>>>> cpu_relax()
+>>>> but does not yield the CPU (e.g., via cond_resched()) or impose a 
+>>>> timeout.
+>>>> If the RMM firmware remains busy, this could cause the host kernel 
+>>>> to lock
+>>>> up indefinitely.
+>>>
+>>> This is like "spinlock contention". RMM returns EBUSY when a resource is
+>>> locked temporarily. We should be able to make progress, unlike the
+>>> RMI_BLOCKED, which is blocking due to a long running operation.
+>>
+>> I dug a bit into the RMI_BUSY description in the spec and it's not
+>> always safe to spin forever. For RMI_{PDEV,VDEV}_COMMUNICATE, for
+>> example, we need to return to the caller and retry later (for VDEV, the
+>> spec suggests informing the realm). That's the TSM series, which doesn't
+>> use the new API yet, but something to be aware of when it's updated.
+> 
+> Agree. There RMI_BUSY indicates the Pdev is busy with an ongoing
+> communication which could take longer.
+> 
+>>
+>> We may need the spec to bound this spin anyway, or at least give an
+>> indication that it's not forever, otherwise it affects latency,
+>> especially in an RT kernel.
+>>
+>> There's a generic RMI command return code table in B4.2 that lists
+>> RMI_BUSY for an imp def reason for the command failing to make progress.
+>> Does this apply to something like REC_ENTER? In the KVM series we call
+>> that with IRQs masked.
+> 
+> REC_ENTER only tries to lock the REC object. The only other code that
+> tries to lock is the PSCI completion processing to update the "rec"
+> state to runnable. Hence we don't expect a the REC_ENTER to be waiting
+> for the REC object lock and encounter an RMI_BUSY. Also, REC_ENTER
+> locks the object to get a refcount on the granule and the lock is
+> released. So even if the host issued REC_ENTER in parallel, the second
+> one will encounter RMI_ERROR_REC due to the bumped refcount.
+> 
+> That said, I am happy to return to the caller on RMI_REC_ENTER in the 
+> worst case and pretend there was an IRQ and that would allow the KVM
+> to re-enter the guest after servicing the interrupts. I have added the 
+> following changes to the patch where we introduce the REC_ENTER:
+> 
+> +/*
+> + * rmi_smccc_invoke_once: Invoke the RMI call and return the results. 
+> Do not
+> + * retry the command. Let the caller deal with RMI_BUSY or RMI_BLOCKED.
+> + */
+> +static inline void rmi_smccc_invoke_once(struct arm_smccc_1_2_regs *regs)
+> +{
+> +       struct arm_smccc_1_2_regs args = *regs;
+> +
+> +       arm_smccc_1_2_invoke(&args, regs);
+> +}
+> +
+> 
+> ...
+> 
+> 
+> +/**
+> + * rmi_rec_enter() - Enter a REC
+> + * @rec: PA of the target REC
+> + * @run_ptr: PA of RecRun structure
+> + *
+> + * Starts (or continues) execution within a REC.
+> + *
+> + * Return: RMI return code
+> + */
+> +static inline long rmi_rec_enter(unsigned long rec, unsigned long run_ptr)
+> +{
+> +       struct arm_smccc_1_2_regs regs = {
+> +               SMC_RMI_REC_ENTER, rec, run_ptr,
+> +       };
+> +
+> +       rmi_smccc_invoke_once(&regs);
+> +       return regs.a0;
+> +}
+> 
+> 
 
-Okay, while the description of the specific flag is nonsense (none of the
-PCA995x have an "OUTDRV" bit), the unconditional initialization of MODE2 wi=
-ll
-have to differ between the PCA9952 and PCA9955B/PCA9956B, and only the latt=
-er
-implement the error reporting as handled by my patch - I'll fix this in the=
- next
-revision.
+And for the record, here is the change in the KVM CCA Driver for 
+handling this case :
 
-One question: The AI reviews made conflicting suggestions in different revi=
-sions
-of my series. First it suggested to fully initialize MODE2 instead of relyi=
-ng on
-reset defaults. Now it suggested the opposite. Which should I go with?
+         if (status == RMI_ERROR_REALM) {
+                 vcpu->run->exit_reason = KVM_EXIT_SHUTDOWN;
+                 return ARM_EXCEPTION_EXIT;
+         }
 
-@Lee Jones: Patches 8-10 will definitely need another revision, but if patc=
-hes
-1-7 look good to you, they could be applied by themselves, so the next seri=
-es
-would be smaller.
+         /*
+          * If a VCPU has been turned on, but the REC state hasn't been 
+updated
+          * we may experience RMI_ERROR_REC. Exit to the userspace with 
+-EAGAIN
+          * for a retry.
+          */
+         if (status == RMI_ERROR_REC)
+                 return -EAGAIN;
 
-Best,
-Nora
++       /*
++        * If the RMI_REC_ENTER encounters RMI_BUSY, treat it as if it was
++        * an IRQ and go back to the run-loop. We don't sync the state back
++        * to the vcpu when status != RMI_SUCCESS.
++        */
++       if (status == RMI_BUSY)
++               return ARM_EXCEPTION_IRQ;
++
+         if (rec_run_ret)
+                 return rec_exit_fatal(vcpu, "Unexpected REC_ENTER status",
+                                       rec_run_ret);
 
+         switch (rec->run->exit.exit_reason) {
+         case RMI_EXIT_SYNC:
+                 /*
+                  * HPFAR_EL2_NS is hijacked to indicate a valid HPFAR 
+value,
+                  * see __get_fault_info()
+                  */
+                 vcpu->arch.fault.hpfar_el2 = rec->run->exit.hpfar | 
+HPFAR_EL2_NS;
+                 rec_exit_sync(vcpu);
+                 return ARM_EXCEPTION_TRAP;
+         case RMI_EXIT_IRQ:
+         case RMI_EXIT_FIQ:
+                 return ARM_EXCEPTION_IRQ;
+         case RMI_EXIT_SERROR:
+                 return ARM_EXCEPTION_EL1_SERROR;
+         case RMI_EXIT_PSCI:
+                 rec_exit_hvc(vcpu);
+                 /*
+                  * Queue completion before dispatching the exit through the
+                  * generic HVC handling path. The request will be 
+processed after
+                  * HVC handling has updated the vCPU state and before 
+the next REC
+                  * entry.
+                  */
+                 kvm_make_request(KVM_REQ_RMI, vcpu);
+                 return ARM_EXCEPTION_TRAP;
+         case RMI_EXIT_RIPAS_CHANGE:
+                 return rec_exit_ripas_change(vcpu);
 
-
-
->=20
-> > +	if (ret)
-> > +		goto err_put_nodes;
-> > +
->=20
-
---=20
-TQ-Systems GmbH | M=C3=BChlstra=C3=9Fe 2, Gut Delling | 82229 Seefeld, Germ=
-any
-Amtsgericht M=C3=BCnchen, HRB 105018
-Gesch=C3=A4ftsf=C3=BChrer: Detlef Schneider, R=C3=BCdiger Stahl, Stefan Sch=
-neider
-https://www.tq-group.com/
+Cheers
+Suzuki
