@@ -1,87 +1,81 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCD550AC33
-	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 13:55:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207B851CF61
+	for <sashiko-reviews@lists.linux.dev>; Thu,  1 Oct 2026 13:58:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790862943; cv=none; b=DyJDc2sTeTXhOMTRf2iVIgiINU6IyIx0/DI6W0PNw3fILyh52XaL1jIUi0zbmTLpGOWvGWjemy4UxGQhsSInNglPkoQuBatodcXXOgmqAIrOa4aI9hX0wqgYzwMXKDUTOxyBhGku0exCslKOnAX9X1PpOb85SGEB09WY6i1x3EQ=
+	t=1790863131; cv=none; b=YHgS76Ye4MGERA8C/obVe3Pmp3Yoo781xgeXbfqfnP/wT4m/j7hHmaJ2PjAl+iXGjlHmwE1nmweTG7L3zncAxJqMbA+/4LbQb6bT3RHwBEhnE9QMgNl+XvSOkDPDyLFoYlboQqj1wLbQpWJxOewcyQF1WlU8CL8FaJQ8UGyG6uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790862943; c=relaxed/simple;
-	bh=iM4k9v+FWnYdhh+RUe247xj2bTwVAPB85IccLeZbDxA=;
+	s=arc-20240116; t=1790863131; c=relaxed/simple;
+	bh=MUQWqYj/fjDzmooZ04sT0CY+5BrtFXvtm2iAu6ZXrE8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=c01D5Y2UUOLnlkvYm7Rl2UNkA8ZpNHoTD/VMgH5F02+9Y7jDtzDc2nQ6sBxbzhnbM552F+hCcHjQLxTtoKEx3NwDTU8TFmrWn+i19NI4xIA2E2l+iXOkocIYGopqSQ9wMkJ/p8mm6Lf9CcXa7caRSz1qKav/i+iungJyQ4r0m1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Y79mmOjp; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IYPS21CJ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	 In-Reply-To:Content-Type; b=UaQfpkQWH/b29XLmRYgV7Khzin4ZXS3gFLMF0YICgLEcg6Ss89qWismk9Bp6CAvbpKt0rAaQOLV6hvvjqTJtAj/zT5eBZuAqfix+7bUu96T1d9LWnuErxUlo1+ijRvdkCNb3nUpMo488csc5xy4x+MjleBN8qEYxEjOcGD7bE2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=cxEv0u3l; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=BgtnYXwi; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=SAhyY8M+; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ma0duzFG; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Y79mmOjp";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="IYPS21CJ"
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 691Dj4oQ2188558
-	for <sashiko-reviews@lists.linux.dev>; Thu, 1 Oct 2026 13:55:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7oFJMmnDqr2y8CcL25EGGYAYefN1maD9v9sMlG47tKo=; b=Y79mmOjpMGzRclah
-	VfoYN8SWOOlSTtz+vD1w3HwLwQpVX4t4wujQJJFJAQEtHA03M9tHJpfraUoqDyC4
-	b5tF0bXpHUuAIrlRt4RrJd+uMpfXbtB8GEl5PNEOy4Me/SoNbSKTlSKufi/z6d04
-	SnMae29t34L9qvQpjydCrvXWTOEGgdU0MsK1bacFKM+8TA/daLesoFEkVDXJPF0X
-	OtknGjClf8vmJuZo3e+xfgF29Vkw5PnvfYCTi2OaKpAek4CWCddlsMCU8+Gl/P1T
-	gb+cpPkUVBll42gxgZaNYvCZtIFqh8kNHqEfB6RsrPxGh3HXNYyC8tBKfUs5+sTe
-	ayKnig==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h17pjca5g-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Thu, 01 Oct 2026 13:55:38 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id a92af1059eb24-1383723dfddso6858345c88.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 01 Oct 2026 06:55:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1790862938; x=1791467738; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=7oFJMmnDqr2y8CcL25EGGYAYefN1maD9v9sMlG47tKo=;
-        b=IYPS21CJ9AUr+6KABOsQRpt+2Jfp5H4sNS2/rYo6RldxVvzxBIrxkNAEHVVNz5oori
-         G782T9Mf5feQ/RRfymFKyHHaJcy2/ZL4IR0YCx2mJ+jnLyKc+yBh+e61BNxuWS9jnY8x
-         7wUQCIMgDVT0IYw/oSPImaO+E7S3SJlMhP/d9YuU7CmU+KxlI07CK0/MxQjVTIVaPqD/
-         BUsm/Kcu5ZimZ0THf7OmSAKwAGxqgxzaQSo0DUYBwtM9pATHfR5ZSoU1SzqkUVY1qnbM
-         9e9aAjk1xlQuZoMJPGTD+y38KK4FbCNXquKAqUiUAHyRNsvGdQ2cZ/n5tWMujcVbnJZO
-         fy9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790862938; x=1791467738;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=7oFJMmnDqr2y8CcL25EGGYAYefN1maD9v9sMlG47tKo=;
-        b=ODJfJsRrdxiuIB8Uv6fd59xV27IM1vozHbw6mJIike/M5TVm4kWuJycpmysO1nOCO+
-         Hrh/93du1WrIZREiChP4AlEezuRZrwh0L3hpjhE2PGT7Hva9VLcAGrf0drw0r7uHYYjT
-         3BY1If45ogIyXOMHQSLhoURRNMnb25eCt9HtuS4Fvrf1zl/JBAZwZ1/yeEpCqM9VjSol
-         IC7E4L1hKs9Xk06L37LcoDIMc3gJrDUJSoQFQ8ibJiNmQOp0pVbiPKDy31Zj8ljeAeLB
-         UCwgt1T6jvKZw587dapBWSeA3ie0oijr4QwjemOsT9PFi+u7Gqi7HmbrWVPFQjU2tI5s
-         ul9g==
-X-Gm-Message-State: AFuF++kjIZAtQqI5GC0phZ44GMUF65WGcVAxW6E6wEqBSXE7A3wnXoyb
-	cSkWqTLzVXBYYcIkyhGGBaWHL/X0wdAvb3QWXfrDUBwXqqaYc9nXOuOTyz3HiXNMLT1veRfeWCf
-	Hcm1zsPk6ZagQlcyNCIWp+QUgkZ31gi07fk6eVh/ATy24Ml9t60tvv0Oe7lzByUdPn6bj05RqJM
-	1w4Vg=
-X-Gm-Gg: AYBFou2pVd6Vk6Jfai9hNVtynLPW2SaXo46E16xCoJy7eECJnG2N3C/IDo76nz1MwMG
-	lrKKnXqfSsYuWxsFMYBjvDHT8Z5bcs7wpvpVG8LGkhLZxugoS81RLJ84y4phqht2xjl9nxGun2/
-	19bBFh9Cg2PE9ebtMk/u1Z9+c0LkQid/0Pw9rleqjvFdtw9PVSC6trK1KNueakLXcP0nSaTyU4X
-	kNTbxc0ZcFYYBwnFmAlZX7UmGUe0/ZFXIXoVX3BWNuTDjbxdMD+V9P2M3xGHK2yLRYuuTd37A9f
-	28564fB4YgRvKo1yH+Qt/NpCz1ue5I5fhIHRpm07emyhkvEz9VknXthqItRsVMTkhCn32EXcFa8
-	VzlG0/DOSRlRQMZ7ddVwR8gKeDY36GAE=
-X-Received: by 2002:a05:701b:4244:10b0:143:296a:4e58 with SMTP id a92af1059eb24-14d328ffce7mr4673516c88.27.1790862937790;
-        Thu, 01 Oct 2026 06:55:37 -0700 (PDT)
-X-Received: by 2002:a05:701b:4244:10b0:143:296a:4e58 with SMTP id a92af1059eb24-14d328ffce7mr4673482c88.27.1790862936950;
-        Thu, 01 Oct 2026 06:55:36 -0700 (PDT)
-Received: from [10.206.103.83] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-14df40dc189sm6921469c88.11.2026.10.01.06.55.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Oct 2026 06:55:36 -0700 (PDT)
-Message-ID: <c14ee77f-5413-4c0c-afc9-269b0a6bf3bb@oss.qualcomm.com>
-Date: Thu, 1 Oct 2026 19:25:32 +0530
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="cxEv0u3l";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="BgtnYXwi";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="SAhyY8M+";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ma0duzFG"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 9BC5A21CEE;
+	Thu,  1 Oct 2026 13:58:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1790863122; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=JefXXGjGXYBipBajIfXp0RgCgzM+4oFcHKX48E330sk=;
+	b=cxEv0u3lAdy8Eoc4xA90MfkwjfvLo6/ZOkVv+wUhxcUq8av86WkVX7ZoWx/GDQjme0HSVt
+	4EECUO/5MxQhj28NXTUKs7jjPsrXuOtFh3szfvOJ5J0X8TYS2JBiFJlwci8pJXzqlAGnXW
+	zBp8ZeB2vxLu16pfgsMi+LyacYLIR4M=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1790863122;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=JefXXGjGXYBipBajIfXp0RgCgzM+4oFcHKX48E330sk=;
+	b=BgtnYXwiBRoZ02SMK2ABKhNvO378S/ZQy8b+dviuUSeSv9V/4fZcFVSL172tF8gYg73PWi
+	ncFa4rWu4zng9BBA==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=SAhyY8M+;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ma0duzFG
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1790863118; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=JefXXGjGXYBipBajIfXp0RgCgzM+4oFcHKX48E330sk=;
+	b=SAhyY8M++a2tQ3w1+2KIhA5HilEMNeKXwF++z+nc62jyyPIfKkwPZNb/kGsKp3dzR1GpjQ
+	uADmxxkZ8WB+CAcqxrVZjXBlChXmWZfNISm6Kg9AyzAFN3zAi1PzQqgk0Y9cl7do+uxd88
+	yxvq1KadEDZKpVCaKR138kVuKSsKp9Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1790863118;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=JefXXGjGXYBipBajIfXp0RgCgzM+4oFcHKX48E330sk=;
+	b=ma0duzFGFH39Ha38EJlGPfRjGUl6TIZOjAVXouXUt0VYv9swDzOSjY/j7Z/SVKuBLfU4H5
+	AzPRZkIWy34GH5Bw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 67D6D134B3;
+	Thu,  1 Oct 2026 13:58:38 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id Vn9/Dg5nvmrxUAAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 01 Oct 2026 13:58:38 +0000
+Message-ID: <74d49d9b-133c-49de-913a-9f526bcfc883@suse.de>
+Date: Thu, 1 Oct 2026 15:58:37 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -89,84 +83,142 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/2] arm64: dts: qcom: shikra: Add Iris video codec
- node
+Subject: Re: [PATCH 2/2] drm/kms-helper: Remove struct drm_simple_display_pipe
+ and helpers
 To: sashiko-reviews@lists.linux.dev
-Cc: media-ci@linuxtv.org, devicetree@vger.kernel.org, conor+dt@kernel.org,
-        robh@kernel.org
-References: <20261001-shikra_vpu-v6-0-37143dc1bb9d@oss.qualcomm.com>
- <20261001-shikra_vpu-v6-1-37143dc1bb9d@oss.qualcomm.com>
- <20261001135049.D945E1F000FF@smtp.kernel.org>
+Cc: dri-devel@lists.freedesktop.org
+References: <20261001133736.802604-1-tzimmermann@suse.de>
+ <20261001133736.802604-3-tzimmermann@suse.de>
+ <20261001134714.67EF61F00898@smtp.kernel.org>
 Content-Language: en-US
-From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-In-Reply-To: <20261001135049.D945E1F000FF@smtp.kernel.org>
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <20261001134714.67EF61F00898@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=eqpKXYpX c=1 sm=1 tr=0 ts=6abe665a cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=bMxCJCIvrp3_V2EDkisA:9 a=QEXdDO2ut3YA:10
- a=vBUdepa8ALXHeOFLBtFW:22
-X-Proofpoint-GUID: nBgDP5G3zSt4MJNt5uKYJAw8wCWpu2yM
-X-Proofpoint-ORIG-GUID: nBgDP5G3zSt4MJNt5uKYJAw8wCWpu2yM
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDAxMDA1NSBTYWx0ZWRfX3ROIk30MiqDp
- duo/b07YCVWx074BfF3w8+NcR5fXuv/Fl8Gffj1zBx8Zfe+wC42Dgxikr3EIPNPa25Z3+uZu/Q6
- Fssiju2eRn9zViD3bUmxaOvH1X7su3I=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDAxMDA1NSBTYWx0ZWRfX1mKfdPiMmxa+
- NFM8Lq1oNZjbzWoCYJE8o+zI2jPatT3UACFSZYi0Y91yhg4ssCC7J82b1zZ52tWsrlFl1YHMXcf
- ZJdFR3q714L1IS05rb5xge5L3/4oW8rNgcKqbO5WN0iJ/h2H3wW7drmO1ERiy/Qv2+/Y6ZJ4z9W
- m+vPuaRVcJEJ5Dd4++zhZN/PhvKkFXA2T3+Wj24yg/ZQvKtwtzL1hoZrt8ZmosixaOrsPVzBYTX
- kcjzWJdGHmc2ZP0FDqYk4SuIElQvU1yyzWc6c5qEYQWAqj3UjQ52MywbxbEQIuQmfsdW6kIHBgN
- xFr80X7MTgNE9nQAkgPn9eFU1U8j0GoYR60Y4VfIspbvgqQAhg/YQaAHbXywhUtig4U7iCFkbR3
- t7zWDKhal8cQyvrMk5VUBJpxj0jwtnwdy7lu7iSENSZ7dyf+AM9kiuZhLv8zsrrgLAIdq7zJfmh
- aQnER1bRNYIL5F4z5vA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-01_04,2026-09-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 clxscore=1015 malwarescore=0 adultscore=0
- lowpriorityscore=0 phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610010055
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 9BC5A21CEE
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.49 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.18)[-0.881];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:email,suse.de:dkim];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ARC_NA(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWO(0.00)[2];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	TO_DN_NONE(0.00)[];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Spam-Flag: NO
+X-Spam-Score: -4.49
+X-Spam-Level: 
 
 
-On 10/1/2026 7:20 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] dt-bindings: missing qcom,shikra-venus compatible string in schema
+
+Am 01.10.26 um 15:47 schrieb sashiko-bot@kernel.org:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Low] drm/kms-helper: build breakage in imx-lcdc due to removed drm_simple_display_pipe
+
+drm-misc-next already contains the fix for this problem.
+
+> - [Low] doc: spelling mistake introduced in fbtft/TODO
 > --
-> 
-> commit 72de37a6e4a3d11559749c7b3aae80f415758b83
-> Author: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-> 
-> arm64: dts: qcom: shikra: Add Iris video codec node
-> 
-> This commit adds the Iris video codec device tree node for the Shikra
-> platform. It describes the Iris-based video decoder/encoder block, allowing
-> the media driver to probe and initialize the hardware.
-> 
->> diff --git a/arch/arm64/boot/dts/qcom/shikra.dtsi b/arch/arm64/boot/dts/qcom/shikra.dtsi
->> index 9823c591b02b1..d2e4db4025dcc 100644
->> --- a/arch/arm64/boot/dts/qcom/shikra.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/shikra.dtsi
-> [ ... ]
->> @@ -2809,6 +2809,67 @@ adreno_smmu: iommu@59a0000 {
->>   			power-domains = <&gpucc GPU_CX_GDSC>;
->>   		};
->>   
->> +		iris: video-codec@5a00000 {
->> +			compatible = "qcom,shikra-venus", "qcom,qcm2290-venus";
-> 
+>
+> commit d4d7a38057f45dc5b1cce9536154c93423caeae1
+> Author: Thomas Zimmermann <tzimmermann@suse.de>
+> Subject: drm/kms-helper: Remove struct drm_simple_display_pipe and helpers
+>
+> This commit removes the struct drm_simple_display_pipe data type and its
+> associated helper functions from the DRM subsystem. It cleans up the
+> remaining TODO items related to simple-pipe, under the premise that all
+> drivers have been updated to use regular atomic helpers.
+>
+>>      There are no drivers using struct drm_simple_display_pipe. Remove
+>>      the data type and all related helpers.
 > [Severity: Low]
-> Is this new "qcom,shikra-venus" compatible string documented in the
-> dt-bindings schema?
+> Is this description accurate?
+>
+> The imx-lcdc driver appears to still use struct drm_simple_display_pipe and
+> its helper functions. Compiling with CONFIG_DRM_IMX_LCDC enabled will result
+> in a build failure because the driver still relies on this structure in its
+> device setup:
+>
+> drivers/gpu/drm/imx/lcdc/imx-lcdc.c:imx_lcdc() {
+> 	...
+> 	struct drm_simple_display_pipe pipe;
+> 	...
+> }
+>
+> As well as during initialization:
+>
+> drivers/gpu/drm/imx/lcdc/imx-lcdc.c:imx_lcdc_probe() {
+> 	...
+> 	ret = drm_simple_display_pipe_init(drm, &lcdc->pipe,
+> 					   &imx_lcdc_pipe_funcs,
+> 					   imx_lcdc_formats,
+> 					   ARRAY_SIZE(imx_lcdc_formats), NULL, NULL);
+> 	...
+> }
+>
+>> diff --git a/drivers/staging/fbtft/TODO b/drivers/staging/fbtft/TODO
+>> index e72a08bf221cf..72df3ea3a52ce 100644
+>> --- a/drivers/staging/fbtft/TODO
+>> +++ b/drivers/staging/fbtft/TODO
+>> @@ -1,3 +1,3 @@
+>> -* convert all these over to drm_simple_display_pipe and submit for inclusion
+>> -  into the DRM subsystem under drivers/gpu/drm - fbdev doesn't take any new
+>> -  drivers anymore.
+>> +* convert all these over to DRM and submit thme for inclusion into
+>                                                ^^^^
+>
+> [Severity: Low]
+> This isn't a bug, but there is a typo here (thme instead of them).
+>
+>> +  the DRM subsystem under drivers/gpu/drm - fbdev doesn't take any
+>> +  new drivers anymore.
 
-yes, its committed with #fe12ccf5a98f (dt-bindings: media: 
-qcom,qcm2290-venus: document shikra venus compatible) in media-next.
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
 
-> 
-> It appears to be missing from the corresponding dt-bindings schema (such as
-> qcom,qcm2290-venus.yaml). This will cause validation failures during
-> `make dtbs_check`.
-> 
 
