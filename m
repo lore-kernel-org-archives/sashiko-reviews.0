@@ -1,228 +1,130 @@
-Received: from mail-wr2-f34.google.com (mail-wr2-f34.google.com [74.125.225.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013039.outbound.protection.outlook.com [40.107.162.39])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A34D2EEE7B
-	for <sashiko-reviews@lists.linux.dev>; Fri,  2 Oct 2026 08:14:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.98
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790928865; cv=none; b=HkqhxMIb/mRzbx2KeqHT8j3IP5VNHht68LImAt8zELvabCeZGQcjpCQo2VzXtCP3HhRdPNGamLW2i+34ruN6vm6TMNbETAFDCbbybpvnYPMjgOjyGcrCFWMva6KvrNR5PQ3ZN7IaX4u6SJzAyojrPgdeYRXF049pDtaJgJqvuNk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790928865; c=relaxed/simple;
-	bh=lUjsj/zkzOnzY9LSr0WPam4i8+l8opVo1V9Pswn+IGI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=reS8cS+fOfHZvZkuNPr6m9knyiTRmCCXj+JxCYVKP+yuS40Z4Q1fJpiBSs+m+f895hfuVysdsa6jTbymMbygfHFcjYdgfmY5+9OjzUYzfHvHrG3UFZoNnS9vfqMGxywJgdaJPCx4H+fwbiuMLsEF5hjY30s/u410DoaiRdnMm7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=coMo/j3b; arc=none smtp.client-ip=74.125.225.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418C94779BF
+	for <sashiko-reviews@lists.linux.dev>; Fri,  2 Oct 2026 09:16:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.39
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790932602; cv=fail; b=ZEW94ASHG0xRWSJTvRuhBX6bWQ1gNvf7yN1DQZHOOsEpcq+bkwjulUMrhGao+I4UpG3fMMH38BzM2YYtKgMFJdVjxwnoqp2EiG7Fz2amMqk5ibnFfmoW721fhw4FZsdA1lXjirlBbAV/8AHlWEivOPxinKoUHtSAVtc6xwKStkM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790932602; c=relaxed/simple;
+	bh=r9B7oopihmuDaYXh3m7ktJ/iGxEwRDXZB0SF9J8p8Wk=;
+	h=From:To:CC:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KHASLuXaT+vA2e3imn76bc9IO8gmJqyVVwEz8EcJhwhdNrU+SE2fMBeStTXEzblkwE97moPEtuqHHKwGnmVCedLyuEqgDtbkEe1H4hp/lw4md8ZxkoubPpT9v6fHccUei4JFFMZ1y8xC2MiLFCFcQ5/YUqmOurUmJXFLGevwZBI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=axis.com; spf=pass smtp.mailfrom=axis.com; dkim=pass (1024-bit key) header.d=axis.com header.i=@axis.com header.b=GGx8rzMx; arc=fail smtp.client-ip=40.107.162.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=axis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=axis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="coMo/j3b"
-Received: by mail-wr2-f34.google.com with SMTP id ffacd0b85a97d-48af4663da5so2950919f8f.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 02 Oct 2026 01:14:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1790928862; x=1791533662; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=B2gYiRdzNQHv1M+pzNmzpe4igCpVm4DThoeMguavKds=;
-        b=coMo/j3bIcFLLuimQxMe/+tsBTAjbf0zsICQ/Erkj6rHhQxf+Pcqh3jyZyGpE6M4NG
-         qJrRclFrtIW9eJxoWOaAc9we7QkKUdkJwh/8tDr/Md3Kss4LEY7KqHahSO5UJFNDx9es
-         Y/Dz89DBAVpQvFmatP6p/4xqgswusm8b/CmtxZK8E7OOaAcC5nWyzU9OaNmQUb18sQ2O
-         Oht75b9k2glaSPbihxV7l/HOUFMzQBVEK+w7vHVReONmkSGzbHaU9LVozi+1Xh5NaZXh
-         i3C5XLKrr2pOU+HzX3yV503EgD5+g5+wJJYdfLMR7awVxIYrJTzG4bNnANsiN5qZHJXZ
-         3Dpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790928862; x=1791533662;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=B2gYiRdzNQHv1M+pzNmzpe4igCpVm4DThoeMguavKds=;
-        b=NzN4HsCt2IG+M6rF1aqHbwpIyEfYN11UHl088W4ldJoy4/tAqdVTP23JiEO63Bbuab
-         5QlgEt8B1zB7POxtY+XfSYTrHsJyCtf3NVSHHBv77uYpNYoMh11qFPnI6qdwqP5N6aDr
-         QId0vaCWqKYZv7b+d/BYzR1hDlc3WmhmqZdvh1h/NPfaepYHl+uu8rMwjniDv/VdbXLD
-         YlE6GKt3ORDZNoMpmE+ID3jY093y7Z6g4PHxRbz//u5mjPzLEnzpjCq3pyeoy6vWgUQt
-         Vwp5RW12Z58ckvZS4g62Af1vrqAyFXleZjAosVdeG4eeTsVZpSZ7wSXi3fw8V2jaPfiX
-         BNMg==
-X-Gm-Message-State: AFuF++nK2ZDv06f5NvrgAtOH4V9zou6dwFkZIFMWZsdEzx02tfRzGtc2
-	u/+7VqERUu7MgkrKK40n/ApfHyaCurD/AClxvIFY4Y1RKPaQhJUHNBVGhr7wFxtrxjE5U0puiaQ
-	7IZlTKqk=
-X-Gm-Gg: AYBFou1T3mVpoHaqsOJIEXlNtnsGqAZrJJp27VnY+mjaoKfdbkcrgcgEzclBeoN3J3h
-	qf276LOZUqK+jLVOXSnCcmIyhOAVlZZFDl+Y+Vj87unDvxuEY0JiCMU7wwBpI4nsI3+ECnlJhU/
-	RFoVZ5uuA2ieTXsmx1b9WL8FIeKTlFjrakocAN0aGJsHX8UUeYx8A21sEMWBAQ0+bTmcTFRFDrl
-	5d9dF66MSb2kojCK3/AU7tir5skGIZ+e/TzP68GTrTwnYnECYmTuzu8s+ugl18To37Hcq7phAI/
-	B+gELI7/YEjtScCS/q+AXQtlGEwON+aYZGY/HHj0uniHnI8N7iSQM2y1o/OSBv54zHYyQF7zmOd
-	rKeLQ+6PzVauaXICWw/3CTmkzeqk3UyDr+YbbvoEdmDTATTT60XemXesdDchj4JCMh0R1dOHVhg
-	28/s2c+uxJevCFFc8WzH98rkMiQq1dGGwe2X39ehWhMUOEKNDfquOK9jogvAkmcqBRUqjhTbJ5
-X-Received: by 2002:a05:600c:4454:b0:49f:f922:1dc1 with SMTP id 5b1f17b1804b1-4a0276a0e46mr32937455e9.28.1790928862090;
-        Fri, 02 Oct 2026 01:14:22 -0700 (PDT)
-Received: from pathway.suse.cz ([176.114.240.130])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a027734b49sm64339675e9.10.2026.10.02.01.14.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2026 01:14:21 -0700 (PDT)
-Date: Fri, 2 Oct 2026 10:14:19 +0200
-From: Petr Mladek <pmladek@suse.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-serial@vger.kernel.org
-Subject: Re: [PATCH v4 1/1] braille: nbcon: Allow to use a serial console
- with NBCON API as Braille console
-Message-ID: <ar9n2__RhOeiXRgC@pathway.suse.cz>
-References: <20261001140727.124398-1-pmladek@suse.com>
- <20261001140727.124398-2-pmladek@suse.com>
- <20261001142407.84C721F000FF@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=axis.com header.i=@axis.com header.b="GGx8rzMx"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YSuiVipL0CTL3AHV+wx/Dc/UzFHEFyPffgSB5cTJ/fqMtor6JK6V00ULsF3nsliN6aMGbVbHK9rkzCvPaDHvXM018tteWKJphTYc+TtHiKRJv7Ta1rOc8c0vS5Xr144y44Bkw1fs/78rwm2eIlmvSRXKe+6TvjVMk+4/GL5rKQD3O+I9bJbTVDZmdS3Cq+0YPI60TcUqYqnVX1TPfO54zmPXOCP+IZtNuFSp1pvID2Cu0SvZfWIo120Ne/DSqA2Um0qHnZrb7lsUpjI9MP4CIbnOuPHdrbh7OIBu7i97JyexX3Qxx1taY0aFNqs+zW4I4pH7QediPbI2LUEEcH5aqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=r9B7oopihmuDaYXh3m7ktJ/iGxEwRDXZB0SF9J8p8Wk=;
+ b=LEw6yZVxn53TwKr90+oBEC27IGFjAn22W0ys0PYLXhtC9Ra3HZItobJ8oZdQdZ5M+0lyNbfzhnkRHqEYC7FeYybOuo0QlG1tKaolM3xdE1r7pyMwvVrtKJQ31Vj+NPQqOe/zA/ITYzTPvI0V1koDd+t6aWjyTxv0hJqlobzfts6pC/DqizXg83/LcDW06CRsBPOEu8Kzu7Dv1gXvq4D5gQ7fDzo0ZfOaTedeyAIplFvAcN+rg64XKk9/ApezQOSkDOFiUcgb7f8H14HNDHpbsM+VMZRTubAEA0XIxOdBCh+K9ihhkoxB/9JbyQwP5cE5+ieMYvtzLeIZ0ZdbfPpiIg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 195.60.68.100) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=axis.com;
+ dmarc=pass (p=none sp=none pct=100) action=none header.from=axis.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axis.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=r9B7oopihmuDaYXh3m7ktJ/iGxEwRDXZB0SF9J8p8Wk=;
+ b=GGx8rzMxDOHK7LVMcjejTDIMnKDv7g6P1ace2G1zqU5MuF54Og6bjbp6A3t4WVRAskT2hvVZEOUGN5uX/NjVDyrkWjoIPSd711ihbrhEem8kb667DebaCMXVntDS/BA0s2JrMAp2J/PfYowVP/lDyHcYUw30luXjgW80TOEypqU=
+Received: from PR1P264CA0179.FRAP264.PROD.OUTLOOK.COM (2603:10a6:102:344::6)
+ by PAVPR02MB9644.eurprd02.prod.outlook.com (2603:10a6:102:30f::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.18; Fri, 2 Oct
+ 2026 09:16:34 +0000
+Received: from MI3PEPF00008557.eurprd05.prod.outlook.com
+ (2603:10a6:102:344:cafe::69) by PR1P264CA0179.outlook.office365.com
+ (2603:10a6:102:344::6) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.472.19 via Frontend Transport; Fri, 2
+ Oct 2026 09:16:30 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 195.60.68.100) smtp.mailfrom=axis.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=axis.com;
+Received-SPF: Pass (protection.outlook.com: domain of axis.com designates
+ 195.60.68.100 as permitted sender) receiver=protection.outlook.com;
+ client-ip=195.60.68.100; helo=mail.axis.com; pr=C
+Received: from mail.axis.com (195.60.68.100) by
+ MI3PEPF00008557.mail.protection.outlook.com (10.167.240.11) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.472.14 via Frontend Transport; Fri, 2 Oct 2026 09:16:30 +0000
+Received: from pc67007-2609 (10.4.0.13) by se-mail10w.axis.com (10.20.40.10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.39; Fri, 2 Oct
+ 2026 11:16:29 +0200
+From: Waqar Hameed <waqar.hameed@axis.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <robh@kernel.org>, <conor+dt@kernel.org>, <devicetree@vger.kernel.org>
+Subject: Re: [PATCH 25/38] arm: dts: qcom: ipq8064: Break long property
+ array data
+In-Reply-To: <20261002091359.40B021F000FF@smtp.kernel.org>
+References: <cover.1790892852.git.waqar.hameed@axis.com>
+	<d8c979c34a5b49a7b83bda8101c5f74711a953a6.1790892852.git.waqar.hameed@axis.com>
+	<20261002091359.40B021F000FF@smtp.kernel.org>
+User-Agent: a.out
+Date: Fri, 2 Oct 2026 11:16:29 +0200
+Message-ID: <pndqzi85uoi.a.out@axis.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261001142407.84C721F000FF@smtp.kernel.org>
+Content-Type: text/plain
+X-ClientProxiedBy: se-mail11w.axis.com (10.20.40.11) To se-mail10w.axis.com
+ (10.20.40.10)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PEPF00008557:EE_|PAVPR02MB9644:EE_
+X-MS-Office365-Filtering-Correlation-Id: 033e7397-5c14-4ae9-1a5d-08df2065d861
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700016|23010399003|1800799024|82310400026|376014|56012099006|4143699003|11063799006|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	/wB8hR4ofOM53wJeynBVzrhDFS/kIqvA8kGHnyJkie6Gj5AHgZjyURY3rkgZslNKhr4mDdXFZ09nC0q649w2e2C0/OZACCV7opqAhprHsnAuRvXCEYeAZahbbkUFJC29w9+0pdro4qKE6mKSmG654rCNLMpimcnsygfjEqTBYzXWoDkxuP5DXnyXIB7iYlFSjXFN9SoEy9BP2RsicWTMVbe9UiFTiIT7PM4bTwgT7jsxxZJV9gvCRC4EZFfwjj0RKPDrQAbuj9TCgBpgYV6GpPsUuxJkdYGOaSWIBb82o+amZz2rrbWt+sQ0+eKfAIFCdoD6VsiVMD0ZsJiGbTxY2v/z2jQTlyJB5IRoN9xIAsKJwPoJDH5owvrGdskOaO9YHV4XMdaJeNiZNHjntMOzpuTnlhfBBUfo/0avaTwsFOEI9O+ie4rKLRsOtVyMs+udHD9xSPYzS1PJHigP5Zsdm599OoWPIvEHP0LRYuRwZaiyRkEkyUBWMLrOO8lC9Jp3pwewr7Hj3+E7Cmwh0tf3YWMrVBrJ2exICaxx9PYqPCrsGxzA01CuaB4JTXQeUVd0f9cSHtZxkxWaNHF57mBEXdeveLiIFjsuzr9hs6Vno/aY4CTjSFEGk+a0xWVQUDCJIdlf2if0HbbBBLjorDvJemFU6hGWE1uds99s7fjmEjEdoQiu52fpUV2El1d38y/6gxJ1vsMquUDFxbgQ+EbTzg==
+X-Forefront-Antispam-Report:
+	CIP:195.60.68.100;CTRY:SE;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.axis.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(23010399003)(1800799024)(82310400026)(376014)(56012099006)(4143699003)(11063799006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	4V/h+XJYhsSWDtP8ihdyszX0715Sn6vqcpgM4rnIWCnvIRIG5u3fPvSQqSjMdowGTxJYiH6AIvb3y8qgEStAHwvIRIQlNKeRxyBhcNCUiciZjYu1KnTZKRa8+LFSsc5+SjJqUvVpEEd+4sELDQPTyZZkIk6bCoNOUDeHHZlnWPJomSTHN931uF67wDrss1APUfrTue5hcw4w1MklqgqjDS6rA6fO4j0YcuKef6bP7JshaEQx1kqbaxzxJhNZ2Dz+iT8xd4T3lTIffFb+Ti74hGpIijHmvz/wXYWJmGv5l7lXbxk/48jLCh4M8NbgkI1rv2s806I6qgQ6VnTN7XjzcBf625fU/2R4kHzxWjrN+zHl7sqJZofFdAL85qz9V9IAIFBXdhWEBZ0UcFesRxkZzrBRO5qDuI7Tj53XnLsy9HKV6jUWmE+p+/XU+Ju1DEYi
+X-OriginatorOrg: axis.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Oct 2026 09:16:30.3335
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 033e7397-5c14-4ae9-1a5d-08df2065d861
+X-MS-Exchange-CrossTenant-Id: 78703d3c-b907-432f-b066-88f7af9ca3af
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=78703d3c-b907-432f-b066-88f7af9ca3af;Ip=[195.60.68.100];Helo=[mail.axis.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	MI3PEPF00008557.eurprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAVPR02MB9644
 
-On Thu 2026-10-01 14:24:07, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] console: deadlock in braille_write() from atomic/IRQ context
-> - [High] console: infinite loop in braille_write() when CONFIG_PRINTK is disabled
+On Fri, Oct 02, 2026 at 09:13 +0000 sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] arm/dts: commit message mismatch for msm8226
 > --
-> 
-> commit 0bb1344e643dce4e38416fdf04095c16fe6023c8
-> Author: Petr Mladek <pmladek@suse.com>
-> 
-> braille: nbcon: Allow to use a serial console with NBCON API as Braille console
-> 
-> This patch integrates the Braille console with the NBCON API by allowing
-> braille_write() to attempt acquiring NBCON ownership before writing. It
-> simulates the original locking using nbcon_braille_try_acquire() and routes
-> output through write_atomic() or write_thread() callbacks.
-> 
-> > diff --git a/drivers/accessibility/braille/braille_console.c b/drivers/accessibility/braille/braille_console.c
-> > --- a/drivers/accessibility/braille/braille_console.c
-> > +++ b/drivers/accessibility/braille/braille_console.c
-> [ ... ]
-> > @@ -62,14 +62,50 @@ static void braille_write(u16 *buf)
-> [ ... ]
-> > +	if (braille_co->flags & CON_NBCON) {
-> > +		if (panic_on_this_cpu()) {
-> > +			/*
-> > +			 * This should be good enough in practice. Most/all
-> > +			 * serial console drivers have the atomic callback.
-> > +			 */
-> > +			if (!braille_co->write_atomic)
-> > +				return;
-> > +
-> > +			local_irq_save(flags);
-> > +			/* NBCON API strictly requires the ownership. */
-> > +			if (!nbcon_braille_try_acquire(braille_co, &wctxt)) {
-> > +				local_irq_restore(flags);
-> > +				return;
-> > +			}
-> > +		} else {
-> > +			braille_co->device_lock(braille_co, &flags);
-> > +			while (!nbcon_braille_try_acquire(braille_co, &wctxt))
-> > +				cpu_relax();
-> > +		}
-> > +	}
-> 
-> [Severity: High]
-> Could this lead to a deadlock? braille_write() can be invoked by VT
-> notifiers from atomic or IRQ contexts (e.g., from keyboard interrupts or
-> console_flush_all()). By calling device_lock() and spinning on NBCON
-> ownership with a cpu_relax() loop, if the interrupted context already holds
-> the lock (like an active nbcon flush), nbcon_braille_try_acquire() will
-> permanently return false, causing an infinite busy-loop.
+>
+> commit 48c3f8677b03cbab24e050029b004bb3e0cca06a
+> Author: Waqar Hameed <waqar.hameed@axis.com>
+>
+> arm: dts: qcom: ipq8064: Break long property array data
+>
+> This commit resolves an awkward line break in a devicetree property array by
+> placing all elements on a new line.
+>
+>> arm: dts: qcom: ipq8064: Break long property array data
+>
+> [Severity: Medium]
+> Does this commit message prefix accurately reflect the changes?
+>
+> The prefix explicitly states 'ipq8064' (and shares the identical subject with
+> an earlier patch in the series, commit 0462db0355be), while the only modified
+> file is arch/arm/boot/dts/qcom/qcom-msm8226.dtsi which corresponds to the
+> MSM8226 SoC.
 
-The short answer is that we should be on the safe side because it
-used to work with the legacy uart 8250 console driver which took
-port->lock as well.
-
-It should work when the code under port->lock:
-
-   + is called with disabled interrupts.
-   + do not call VT code (the is no reason to do so).
-   + use only printk_deferred() (or better no printk() at all.
-
-All the conditions should be fulfilled. Otherwise, it would cause
-deadlocks even when the serial console driver is used for printk()
-in the non-Braille mode.
-
-> [ ... ]
-> > @@ -102,7 +138,24 @@ static void braille_write(u16 *buf)
-> [ ... ]
-> > -	braille_co->write(braille_co, data, c - data);
-> > +	if (braille_co->flags & CON_NBCON) {
-> > +		nbcon_write_context_set_buf(&wctxt, (char *)data, c - data);
-> > +		if (panic_on_this_cpu())
-> > +			braille_co->write_atomic(braille_co, &wctxt);
-> > +		else
-> > +			braille_co->write_thread(braille_co, &wctxt);
-> 
-> [Severity: High]
-> Does this violate the write_thread API constraints? The
-> include/linux/console.h documentation specifies that write_thread must
-> strictly execute in a task context. Since braille_write() can be called
-> from an atomic or IRQ context, invoking the kthread-specific callback here
-> could be unsafe.
-
-It should be OK for all the currently converted serial console drivers
-which are candidates for the Braille console. We might need to revisit
-this in the future.
-
-> > +	} else {
-> > +		braille_co->write(braille_co, data, c - data);
-> > +	}
-> [ ... ]
-> > diff --git a/include/linux/console.h b/include/linux/console.h
-> > --- a/include/linux/console.h
-> > +++ b/include/linux/console.h
-> [ ... ]
-> > @@ -678,8 +687,14 @@ static inline void nbcon_reacquire_nobuf(struct nbcon_write_context *wctxt) { }
-> >  static inline bool nbcon_kdb_try_acquire(struct console *con,
-> >  					 struct nbcon_write_context *wctxt) { return false; }
-> >  static inline void nbcon_kdb_release(struct nbcon_write_context *wctxt) { }
-> > +static inline
-> > +bool nbcon_write_context_is_braille(struct nbcon_write_context *wctxt) { return false; }
-> >  static inline bool console_is_usable(struct console *con, short flags,
-> >  				     bool use_atomic) { return false; }
-> > +static inline bool nbcon_braille_try_acquire(struct console *con,
-> > +					     struct nbcon_write_context *wctxt) { return false; }
-> 
-> [Severity: High]
-> Could this cause a hard lockup if CONFIG_A11Y_BRAILLE_CONSOLE is enabled
-> but CONFIG_PRINTK is disabled?
-> 
-> Since this fallback stub unconditionally returns false, the
-> while (!nbcon_braille_try_acquire(...)) cpu_relax(); loop in braille_write()
-> will never terminate when triggered by terminal output.
-
-Good point!
-
-But there is a bigger problem. kernel/printk/nbcon.c is compiled only
-when CONFIG_PRINTK is enabled. We expected that con->write*()
-callbacks will be called only when there are printk() messages.
-
-The Braille console is a new use-case. It uses con->write() callbacks
-even for non-printk messages.
-
-A proper solution would be to allow building nbcon.c even when
-CONFIG_PRINTK is disbled. But we would need to review the entire
-design.
-
-A short term workaround is to make Braille console dependent on
-CONFIG_PRINTK. It might be good enough in practice. I mean this:
-
-diff --git a/drivers/accessibility/Kconfig b/drivers/accessibility/Kconfig
-index 6b2f79d1f1b8..bd5db30e9aab 100644
---- a/drivers/accessibility/Kconfig
-+++ b/drivers/accessibility/Kconfig
-@@ -20,6 +20,7 @@ if ACCESSIBILITY
- config A11Y_BRAILLE_CONSOLE
- 	bool "Console on braille device"
- 	depends on VT
-+	depends on PRINTK
- 	depends on SERIAL_CORE_CONSOLE
- 	help
- 	  Enables console output on a braille device connected to a 8250
-
-
-Best Regards,
-Petr
+Good bot! Will fix!
