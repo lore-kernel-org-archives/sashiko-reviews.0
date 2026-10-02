@@ -1,217 +1,163 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A0D38E8BE;
-	Fri,  2 Oct 2026 22:56:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790981809; cv=none; b=fLHsITYFkM4GxBSEKP+5qqDQh9g+CVs3xiTEkRF0X6TV4CKi+ireJ5VPo3CASlhFajtlIHFdOzcilUY0Dj5GnE65xXWvlsF1rzGhlDDgdycS7qVNNI2VhVYzFw6WTam6+T0AMwGYxlmzJJjhCUQ0pVTjhhRC0crzHHcAPcS47vo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790981809; c=relaxed/simple;
-	bh=GFx/LeUutYGou8DsysigmeQmHVZsZ6+hH0tks7jO7Tc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h7zFuZ2ajSOHLLCZQBzCtKYto0hoqyLrAQckN3bhMtUnOwUN5lt6DDk9wHuGhw7O6srPPtoZGdfwOfXPX6yEDHFbEx1Qqxf1RYvzr1DW7qFktOPUIhavXB+2UGDtouPL7lJKSGv+b9L8FgmBoKIRiUO1IUb9YUrdcZ96lTq5KVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A8tUhLBc; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BAAE368D76
+	for <sashiko-reviews@lists.linux.dev>; Fri,  2 Oct 2026 23:44:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790984644; cv=pass; b=oL6wvvkFAW/GTxKyFp6e9gAzrpK/HIq0Ct+d1FhEgh9qVHAqRfKQ0p2QQvq2HeiHdEgFX4xncMAc3wwfc0kWdqpbzngHwzIac0F28uQedVuCLfngyfdQWmiAWLc3vKSbcCUs88uPXpHN6ZoSon+I3P2W0MwepsTsiGE6/0dZv/k=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790984644; c=relaxed/simple;
+	bh=DZr/vCbFgIBJPmKcQOyr74fLm5UgcCgTHWfWGuIHrcY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FDzi8DOs6NONjRLPw7oU+a13ji8o1WduuUdUFrR5YGpPfBvzlTru/7s4JUaeoQLf2xob2P3EK3/kob/9EIVy3griZTBvdDc2yk5x3ZfLf1yRhEd40k0VQVOzxhe7CQVoO0EhtXRBSu1hji1G6Ople+W9qQl46zr/qGAcZ5xaD/Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vM0jUFq3; arc=pass smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A8tUhLBc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D1C1F000FF;
-	Fri,  2 Oct 2026 22:56:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790981808;
-	bh=4ix/4A8+bmjpefCe0g2D3yU51PxoWBhvKoT6KgI83UQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=A8tUhLBcScFLRNZn0CdsgC4NVThzvEkPAtm2D5cAzDzfyUXt1vLwEZVXUR5CT0+sh
-	 FbejBpXVDS0iK8SRhPsHzxezLzXhB+VCcUQ6O3mzNvKUIDgO73Go2WAX9TUY/ynDlV
-	 NsZUZwESApKt0yjW/opmN4ztKdp1bjrjFDinOT5tEsDrgzPQX6m3uo4J7W5RH78AKX
-	 O/HOGmycUE9yBz98XQXHa8corPbjms2CWpCRluOGCOtEAt9A4aYV+9m5bqtMl5+oHv
-	 TXKpXMkQMvD7ws+If+B9hhAhNlNt+VIsY/5CA7v6ZsE3ZT4Ylr5+DoOPBsnvSWwTsu
-	 el/LpupsXgfSQ==
-Date: Fri, 2 Oct 2026 15:56:46 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Yanbo Zhao <yzhao62@ncsu.edu>, linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] perf annotate: Resolve C++ virtual function calls
- in x86 insn tracking
-Message-ID: <asA2rgBbNuwh-zR-@google.com>
-References: <20260930210038.196928-1-yzhao62@ncsu.edu>
- <20260930210038.196928-4-yzhao62@ncsu.edu>
- <20260930211112.B2A431F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vM0jUFq3"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6aae147ef9dso3838a12.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 02 Oct 2026 16:44:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1790984641; cv=none;
+        d=google.com; s=arc-20260327;
+        b=TVjTfqtleySzdaZjadPRzgNLhQ2OGmtUbHZLxxEbJjcli++/cuvdwspEe9M45mL2tF
+         fl0cOYb6ZiFB4AWg6dg9287kcvcdTGttYOePJj9ywS+Zne+Zg7zLdBa6GWDr0D5Om5TM
+         RdS64F/lIL6/OkfPt4wVknQP8uBX9rhpS0ZBd65SNuicUhKL52ifX1Eg265dIcf4u67Z
+         vDFIr+HRZhlkuZndJ6nQnTN5APESH7OjtHh7m9548jQm+igLulfEfKzx+dWMWTGHu5xI
+         B9U2WFaNzvvJrkEcgVd3HLOR8dOda4hk/GUcR8PtGjs6YSr7SeIFp2/Watg6iAL5w4Pg
+         BJkg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=aIlGyARb9eRqNb63DpSQXFW7TwIGyoCVVTaa9X6iF28=;
+        fh=9lL0hF0NMGethsOlsxoDeLBT8jtu7UHbhiekQ8TuZEc=;
+        b=WIMQAAGvQx51BzTXl5aMQliNdyRkCkcIjh/lbkSG1SSm1AypKNwY2dFbID1Ph/zs/8
+         ub/JmoZTqJ2dY5RZ9U8AsOy+T/KSlmO9ovqPNVEGIvWX41V86m/rVLOd69QBsF6VsvYk
+         YNgv9ZpLFUmDA/W2oNOK5fRsLxWxw7P7vYz3jNxBk7JQ1lObW/m/8lSMe6fkimg8l3R6
+         0NIQh5O3KO4wwfMeJzxk6/t5XKwyXleJ2uDcxljIrJ/vJTbPDMyWT+QPEAu/CGAr6ito
+         UA+uDSHi/BuZWwGXFlrwWWrr7WytT4l0q9CP1omko9sBD35pmvn/rGa/Xfde+eg9KXo+
+         JSSA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1790984641; x=1791589441; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=aIlGyARb9eRqNb63DpSQXFW7TwIGyoCVVTaa9X6iF28=;
+        b=vM0jUFq3V3h4T44xfj9SamhIaaqNgmzZr71aRJvQQTmQKTE/63giH2KDBSyhJr5PH1
+         USJVe8KLD+FaPbcUpj9kp7scCxOF1VCiNhZFePabhBhrrJnIx4QREO6Q8abZFZ6bQd3x
+         62j93vlISYENb1i7ia4MerTnA53+yNA1uIwbZmbVc+56TsdypgHTm+s0FV4JULLCQXuI
+         owdWDrDyWKs75vftP/hwEmi0Inq7YTIea+65obkUSQ2G2INrlL4DBXM0nOG57U4SKJX8
+         OQD/tsNNzcX1/MXT+c9S6dG9IGnp10HqBVQBKjUJcaRyWeJzFPkYKi0896OTKy//RDk0
+         0aTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1790984641; x=1791589441;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=aIlGyARb9eRqNb63DpSQXFW7TwIGyoCVVTaa9X6iF28=;
+        b=uv+HdfStOX6eE+T89kMCPmBZGhd0jam7IKr5MVda6zlDetKP9YPO/y3CqjfLL8jUsv
+         k2Qh+L/apzrc9u2XLImUpzmpHCUuXUWLKCRS4Ma3bneeOjzyu5LLzV5kd6aaOnnuY7wP
+         /4u8MExVe4uQ7TOwLewzYc1gK28NiIBerxj0bqF8shohGhAK/u0gkwDMxkuhF42Wjvc+
+         JWgXnmRaKjDeU/DWoqE5286HdDbpSPZaT6PajCQKg7U36cHUZfDoRwJgQS7iUx6U2dgn
+         EMX6j9Ch2TLqZ3I85dehWe8SFtrtZZsGsnugfe+90kO+B7GLe3mNA8MXGU6d5DteKv7Z
+         S/aQ==
+X-Gm-Message-State: AFq9FYK0Wibn8frDfj7BjRJhySNQ+ZBN+NIuXaPtsGaeLJYFR04byEAC
+	BrTRqYmICxT3sGIwtS0/rB8unIatg6fdZ25/4c3gDGIYEYcmqQL06uBV3YM9seMV5xR0uPP3Kgd
+	lx6iLnAt/zr59qVVMMkwLFcLXeocp5Ftn61vYJAIVO8n+c/SCfXtTsuF1
+X-Gm-Gg: AYBFou05AJulvL3YZiR7ltW9rB8ZmtEzyG1mcclm5wASn6B28apP7TJbMAxOV+OPyb1
+	tfyXnmiDec+uoQlBzi7P/7ZT8YmGCInKPDxRYXdc0HtXYqUd362C9hpEYrMPLFYn5I87OPZ65JD
+	HN9PUDH2WgAEsftNYhSHmJJvmrhX1lQXIEgLEfyx7t3tcQXvBRg7gMISFAPA8KSNCPzUmsYcCHL
+	cbhbIg9ZNau9A6lf3PhYCWwfleEFten0CmImgAxwkpTqJYYd05khjfQI4CO2AMdPRcwDHnUB7mc
+	XwZrXO4x9PE0oHCyVzKZ46KR2wjDSx3JZhR87v6INYZIvmcGiz+bJmo=
+X-Received: by 2002:a05:6402:a2cb:10b0:6af:7a5a:97e4 with SMTP id
+ 4fb4d7f45d1cf-6afaf6bf03amr12928a12.12.1790984640920; Fri, 02 Oct 2026
+ 16:44:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260930211112.B2A431F000FF@smtp.kernel.org>
+References: <20260930173635.3362655-1-seanjc@google.com> <20260930173635.3362655-14-seanjc@google.com>
+ <20260930175237.A8FD21F00898@smtp.kernel.org> <ar1QBSKMGJUFBExK@google.com>
+In-Reply-To: <ar1QBSKMGJUFBExK@google.com>
+From: Jim Mattson <jmattson@google.com>
+Date: Fri, 2 Oct 2026 16:43:48 -0700
+X-Gm-Features: AclHuK_u3oOlu9nwYVbzwucGA7__Is1oGfxZD76ma2kyYIXaC_NIXJdsyLaNogQ
+Message-ID: <CALMp9eRkgiFYeQcTU_aweJQTfrq7ijN5hw+6otKE_RvgGQm=Uw@mail.gmail.com>
+Subject: Re: [PATCH v3 13/21] KVM: selftests: Use KVM's reported TSC KHz as
+ L0's frequency (sanity checked)
+To: Sean Christopherson <seanjc@google.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 30, 2026 at 09:11:12PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] perf: cross-platform analysis broken by hardcoded host pointer size
-> - [Medium] perf: vtable pointer load ignores multi-register index
-> --
-> 
-> commit a71181b28893b295ef8ae1558faf7b1c66e3593b
-> Author: Yanbo Zhao <yzhao62@ncsu.edu>
-> 
-> perf annotate: Resolve C++ virtual function calls in x86 insn tracking
-> 
-> This commit introduces tracking of C++ virtual function calls by resolving
-> vtable pointer loads and virtual function calls through the vtable in x86
-> instruction state tracking. It enhances update_insn_state_x86() to handle
-> TSR_KIND_VTABLE_PTR and TSR_KIND_VFUNC_PTR register states.
-> 
-> > diff --git a/tools/perf/util/annotate-arch/annotate-x86.c b/tools/perf/util/annotate-arch/annotate-x86.c
-> > index 1acf31a2c7597..d21192b74b6bf 100644
-> > --- a/tools/perf/util/annotate-arch/annotate-x86.c
-> > +++ b/tools/perf/util/annotate-arch/annotate-x86.c
-> 
-> [ ... ]
-> 
-> > @@ -216,6 +216,29 @@ static void invalidate_reg_state(struct type_state_reg *reg)
-> >  	reg->copied_from = -1;
-> >  }
-> >  
-> > +/*
-> > + * Get the return type of the C++ virtual function at the @offset in the
-> > + * vtable of @class_die.  Returns false if it's not found or the function
-> > + * returns void.
-> > + */
-> > +static bool vtable_get_rettype(Dwarf_Die *class_die, int offset,
-> > +			       Dwarf_Die *type_die)
-> > +{
-> > +	Dwarf_Die func_die;
-> > +	int index;
-> > +
-> > +	if (offset < 0)
-> > +		return false;
-> > +
-> > +	/* TODO: arch-dependent pointer size */
-> > +	index = offset / sizeof(void *);
-> 
-> [Severity: Medium]
-> Will dividing the target's vtable byte offset by the host's sizeof(void *)
-> compute an incorrect slot index when analyzing data from an architecture
-> with a different pointer size?
-> 
-> Relying on host execution details like sizeof(void *) breaks
-> cross-platform analysis (e.g., analyzing 32-bit x86 perf.data on a
-> 64-bit host).
+On Wed, Sep 30, 2026 at 11:23=E2=80=AFAM Sean Christopherson <seanjc@google=
+.com> wrote:
+>
+> On Wed, Sep 30, 2026, sashiko-bot@kernel.org wrote:
 
-I think this is fine for now as we also have other places assuming the
-host pointer size.  We'll fix it later.
+> > > @@ -212,18 +209,30 @@ static void test_tsc_scaling(u64 l0_tsc_freq, u=
+64 l1_scale_factor, u64 l2_scale_
+> > >  int main(int argc, char *argv[])
+> > >  {
+> > >     u64 l0_tsc_freq, tsc_start, tsc_end, l1_scale, l2_scale;
+> > > +   struct kvm_vm *vm;
+> > >
+> > >     TEST_REQUIRE(kvm_cpu_has(X86_FEATURE_VMX) ||
+> > >                  kvm_cpu_has(X86_FEATURE_SVM));
+> > >     TEST_REQUIRE(kvm_has_cap(KVM_CAP_TSC_CONTROL));
+> > >     TEST_REQUIRE(sys_clocksource_is_based_on_tsc());
+> > >
+> > > +   /*
+> > > +    * Create a dummy VM to get KVM's default TSC frequency.  All CPU=
+s that
+> > > +    * support TSC scaling should have a constant TSC, i.e. there's n=
+o need
+> > > +    * to calibrate the "real" TSC.  But do sanity check that the obs=
+erved
+> > > +    * TSC is within range of KVM's reported TSC frequency.
+> > > +    */
+> > > +   vm =3D vm_create_barebones();
+> > > +   l0_tsc_freq =3D (u64)__vm_ioctl(vm, KVM_GET_TSC_KHZ, NULL) * 1000=
+;
+> > > +   TEST_ASSERT(l0_tsc_freq, "vcpu ioctl KVM_GET_TSC_KHZ failed");
+> >
+> > [Severity: Low]
+> > Does this properly catch an ioctl failure? If __vm_ioctl() fails and re=
+turns
+> > -1, casting it to a u64 and multiplying by 1000 results in a very large
+> > non-zero value (0xfffffffffffffc18).
+> >
+> > Since TEST_ASSERT only checks if l0_tsc_freq is non-zero, won't this pa=
+ss
+> > using garbage data instead of failing the test?
+>
+> Eh, yes and no.  KVM_GET_TSC_KHZ existed long before TSC scaling, and whi=
+le KVM
+> doesn't sanity check tsc_khz, i.e. KVM_GET_TSC_KHZ could return a "legiti=
+mate"
+> negative frequency (when those ~2.17PHz CPUs come along), in practice che=
+cking
+> for a non-zero value is sufficient because any bogus value will quickly f=
+ail the
+> functional checks.
+>
+> Heh, actually, kvm_arch_vm_post_create() *already* validates KVM_GET_TSC_=
+KHZ:
+>
+>         r =3D __vm_ioctl(vm, KVM_GET_TSC_KHZ, NULL);
+>         TEST_ASSERT(r > 0, "KVM_GET_TSC_KHZ did not provide a valid TSC f=
+requency.");
+>         guest_tsc_khz =3D r;
+>
+> so this is a non-issue.  I agree it's not the prettiest, I just don't car=
+e enough
+> to clean it up.
 
-> 
-> > +
-> > +	if (die_find_virtual_func(class_die, index, &func_die) == NULL)
-> > +		return false;
-> > +
-> > +	return die_get_real_type(&func_die, type_die) != NULL;
-> > +}
-> > +
-> >  static void update_insn_state_x86(struct type_state *state,
-> 
-> [ ... ]
-> 
-> > @@ -622,13 +669,38 @@ static void update_insn_state_x86(struct type_state *state,
-> >  			}
-> >  			pr_debug_type_name(&tsr->type, tsr->kind);
-> >  		}
-> > +		/* Load a function pointer from the vtable (for 'call *%reg') */
-> > +		else if (has_reg_type(state, sreg) && state->regs[sreg].ok &&
-> > +			 state->regs[sreg].kind == TSR_KIND_VTABLE_PTR &&
-> > +			 vtable_get_rettype(&state->regs[sreg].type, src->offset,
-> > +					    &type_die)) {
-> 
-> [Severity: Medium]
-> Does this query the wrong vtable slot by ignoring the index register when
-> src->multi_regs is true?
-> 
-> If the operand is an indexed memory reference using multiple registers
-> (e.g., mov 0x8(%rbx, %rcx, 8), %rax), src->offset contains only the
-> static displacement part, not the dynamic index. Should this verify
-> !src->multi_regs before querying the DWARF vtable with src->offset?
+In my best Sashiko passive-aggressive tone:
 
-Multiple register is not handled well in the current code.  Dealing with
-dynamic index would require more careful instruction tracking.
-
-Anyway, it'd be safer to check !src->multi_regs here.
-
-Thanks,
-Namhyung
-
-> 
-> > +			tsr->type = type_die;
-> > +			tsr->kind = TSR_KIND_VFUNC_PTR;
-> > +			tsr->offset = 0;
-> > +			tsr->ok = true;
-> > +
-> > +			pr_debug_dtp("mov [%x] %#x(reg%d) -> reg%d",
-> > +				     insn_offset, src->offset, sreg, dst->reg1);
-> > +			pr_debug_type_name(&tsr->type, tsr->kind);
-> > +		}
-> >  		/* And then dereference the pointer if it has one */
-> 
-> [ ... ]
-> 
-> > diff --git a/tools/perf/util/annotate-data.c b/tools/perf/util/annotate-data.c
-> > index 8a9d3f2eec4dc..e9bf76cc28633 100644
-> > --- a/tools/perf/util/annotate-data.c
-> > +++ b/tools/perf/util/annotate-data.c
-> 
-> [ ... ]
-> 
-> > @@ -715,8 +723,11 @@ void set_stack_state(struct type_state_stack *stack, int offset, u8 kind,
-> >  			    Dwarf_Die *type_die, int ptr_offset)
-> >  {
-> >  	Dwarf_Word size;
-> > +	bool is_pointer = (kind == TSR_KIND_POINTER ||
-> > +			   kind == TSR_KIND_VTABLE_PTR ||
-> > +			   kind == TSR_KIND_VFUNC_PTR);
-> >  
-> > -	if (kind == TSR_KIND_POINTER) {
-> > +	if (is_pointer) {
-> >  		/* TODO: arch-dependent pointer size */
-> >  		size = sizeof(void *);
-> >  	}
-> 
-> [Severity: Medium]
-> Like the vtable_get_rettype() issue above, will hardcoding the host's
-> pointer size here corrupt the stack state tracking for the target
-> architecture?
-> 
-> [ ... ]
-> 
-> > diff --git a/tools/perf/util/disasm.c b/tools/perf/util/disasm.c
-> > index 5478c134e7e3b..5d96ee4c866b6 100644
-> > --- a/tools/perf/util/disasm.c
-> > +++ b/tools/perf/util/disasm.c
-> 
-> [ ... ]
-> 
-> > @@ -300,6 +300,11 @@ static int call__parse(const struct arch *arch, struct ins_operands *ops, struct
-> >  	if (tok != NULL) {
-> >  		endptr++;
-> >  
-> > +		/* Save the operand (without '*') to extract register and offset */
-> > +		ops->target.raw = strdup(tok + 1);
-> 
-> [Severity: Low]
-> This is a pre-existing issue, but this file calls strdup() without
-> explicitly including <string.h>.
-> 
-> Can we add the explicit <string.h> include? The perf subsystem guide states
-> that POSIX standard headers should be explicitly included to prevent musl
-> compilation failures from missing implicit inclusions.
-> 
-> > +		if (ops->target.raw == NULL)
-> > +			return -1;
-> > +
-> >  		/* Indirect call can use a non-rip register and offset: callq  *0x8(%rbx).
-> >  		 * Do not parse such instruction.  */
-> >  		if (strstr(endptr, "(%r") == NULL)
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260930210038.196928-1-yzhao62@ncsu.edu?part=3
+Is it possible that vm_create_barebones() bypasses that check?
