@@ -1,132 +1,149 @@
-Received: from mta0.migadu.com (out-22.mta0.migadu.com [91.218.175.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C26E3E2AD8
-	for <sashiko-reviews@lists.linux.dev>; Fri,  2 Oct 2026 22:09:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364A33438A0;
+	Fri,  2 Oct 2026 22:52:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790978953; cv=none; b=gS+RLg2JpB2bibRyEbOj649F+yZ4T+jA/3dL4zCFigoUpSMV4Nx9Y2wYrJ/C8HqFR6r1nff9Gt0Hq9yHux4HMkAQ4k7YXZmpXDJqJefAp1PtHXJ80SpX8TNrAgwIAF2rKSsRoB9XRTLWea6UY6AJfgFE02clACtOT4yw5VpV/Mw=
+	t=1790981566; cv=none; b=gZF3XbxRSi3W0hfltz9Me/RIj+OgcGJ8VEuLAoZl1jkm4xYZ0+aPJxdqDYVMPvJZr6r75KrgfWqAliUiOXz+v2z7+7KNOtDHtZ+hWjzaN9sGuGG+7sWQ1O72I7f1ouErGZcnKKEOPiZADEjghxWkq4u7bUqKzrUOfvRDV/9K8Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790978953; c=relaxed/simple;
-	bh=lCrM91YSYyv1hK7mWbTZ0/WGnWfhDQh0+G5pNz7vI0E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j9jNd2CuCy+l0ZYKHue7+PvfkXkSfQ59/ZuHPZbze1paqlQoN/pHbOchn4etQeWg6svSadXJoKm20Ue1PQj6PF78MSmfp583iStWB1eEnh9oigMVpfYwO+uZh2oOzPP6NDbN9izsAOxFVk2P/BXcRrMN+lhp1ExltzqN4iHFWWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Qq9WV0ri; arc=none smtp.client-ip=91.218.175.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1790981566; c=relaxed/simple;
+	bh=0+PRHAdnIW4b5KGtIbdTCy6AkPvzX4dQrn+b/TfinPY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WL5TDrgKZ2DA9U+L0ys+7GPEtQmOr9Rki5y9y+zwO9rGZ13dB04AbxlGC4efHr+HrQT5Z8RohyEkk0h1WWY3ts2lyXHhhDFbXAzS3roKOZ+kvI/55Ds/KiX/SqCCBxT4NEWtm1sSiNWDanxT94fT15lSN6rhloT8xM53c6oeKSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y8qxcvla; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Qq9WV0ri"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=lCrM91YSYyv1hK7mWbTZ0/WGnWfhDQh0+G5pNz7vI0E=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790978948; v=1; x=1791583748;
- b=Qq9WV0riPhnQOMnsjEejDBWyj4Y2ZXotuXfg6IoQRYVnbNJVaUBsMbo3ZKeYbSZ/RcF+9kEF
- g4qkWDuW36rWU9zgkRqUIEBiDUYhWfqHjF3VP1hpJNJDe7b9uSklavspUblwc0IF9Hhf5dzJhHo
- mFXRwrirAtOa6GnwJAkEgp4A=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 9d2928c1e37d3bed;
-	Fri, 02 Oct 2026 22:09:08 +0000
-X-Mizu-Trace-ID: 9d2928c1e37d3bed
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <b44147cd-cec9-4416-b622-24c05c2ba785@linux.dev>
-Date: Fri, 2 Oct 2026 23:09:07 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y8qxcvla"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D5F1F000FF;
+	Fri,  2 Oct 2026 22:52:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790981564;
+	bh=sk8cmahE72VkyCDPGqs7Xgd7IrOvJ3nVdLA7qac7vYo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Y8qxcvlacV3yYi9GMwbiU+wADA1L4gc/4LwDBFFAiTbrLw3To91c/V0upinBCYOJU
+	 TZ00ynl6Y5mOyleeBefpNlvVyXuyLSknlpt8DIYgRvJFBg1qf9U67PJXVQGmkqVEmY
+	 hfAmDS17P3/y6/5UYbJ5C5GIicX6ShrzgHXMo/lvB/poEeKZyxYhkEQ6E0+cj+jR8T
+	 TePqFQtWYE8EppwKI6148erlXB2DK8rUmt68fItT5lUfuByH1VhpJz9+6xgwD8paW4
+	 BrVHIpkAqH5NhwNDB8kvfBD1zqHew0i0JqoSifHCx5m2hyOGZZhDKyrA5wqb71cfQ6
+	 ucWb6f4DZkbaw==
+Date: Fri, 2 Oct 2026 15:52:43 -0700
+From: Namhyung Kim <namhyung@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Yanbo Zhao <yzhao62@ncsu.edu>, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] perf dwarf-aux: Add C++ vtable helpers
+Message-ID: <asA1u7LBRp2gqbWI@google.com>
+References: <20260930210038.196928-1-yzhao62@ncsu.edu>
+ <20260930210038.196928-3-yzhao62@ncsu.edu>
+ <20260930211057.2E1641F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v8 15/22] libbpf: Add cleanup_info to
- bpf_prog_load_opts
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20261001133006.1335369-1-yonghong.song@linux.dev>
- <20261001133125.1344001-1-yonghong.song@linux.dev>
- <20261001134623.B9A071F000FF@smtp.kernel.org>
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <20261001134623.B9A071F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260930211057.2E1641F000FF@smtp.kernel.org>
 
-
-
-On 10/1/26 6:46 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] bpf: ABI breakage due to reuse of padding in bpf_prog_load_opts
+On Wed, Sep 30, 2026 at 09:10:56PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] perf dwarf-aux: DW_AT_virtuality presence check incorrectly skips non-virtual bases
+> - [Medium] perf dwarf-aux: infinite loop in C++ inheritance traversal on malformed DWARF
 > --
->
-> commit 71e2541e0b207ab646c97a6cfe861ce9bf16fe7f
-> Author: Yonghong Song <yonghong.song@linux.dev>
->
-> libbpf: Add cleanup_info to bpf_prog_load_opts
->
-> This commit introduces an exception cleanup table to the bpf_prog_load
-> options. It adds cleanup_info_cnt, cleanup_info, and cleanup_info_rec_size
-> to struct bpf_prog_load_opts and propagates them to the kernel in
-> bpf_prog_load.
->
->> diff --git a/tools/lib/bpf/bpf.c b/tools/lib/bpf/bpf.c
->> index b49822d212aed..b4031f62bdee5 100644
->> --- a/tools/lib/bpf/bpf.c
->> +++ b/tools/lib/bpf/bpf.c
-> [ ... ]
->> @@ -370,6 +370,10 @@ int bpf_prog_load(enum bpf_prog_type prog_type,
->>   	attr.fd_array = ptr_to_u64(OPTS_GET(opts, fd_array, NULL));
->>   	attr.fd_array_cnt = OPTS_GET(opts, fd_array_cnt, 0);
->>   
->> +	attr.cleanup_info = ptr_to_u64(OPTS_GET(opts, cleanup_info, NULL));
->> +	attr.cleanup_info_rec_size = OPTS_GET(opts, cleanup_info_rec_size, 0);
->> +	attr.cleanup_info_cnt = OPTS_GET(opts, cleanup_info_cnt, 0);
->> +
-> [Severity: High]
-> Does this OPTS_GET macro read uninitialized padding from older applications?
-> When an application compiled against an older version of libbpf passes its
-> opts structure here, the sz field will be set to the old struct size.
->
-> If the old struct had padding at the end that the new structure replaces
-> with cleanup_info_cnt, OPTS_GET might think the field is present because
-> the sz value includes the padding, causing it to read stack garbage.
->
->>   	if (log_level) {
->>   		attr.log_buf = ptr_to_u64(log_buf);
->>   		attr.log_size = log_size;
->> diff --git a/tools/lib/bpf/bpf.h b/tools/lib/bpf/bpf.h
->> index 826d9cc9ab65d..cbe56ddc8cf7d 100644
->> --- a/tools/lib/bpf/bpf.h
->> +++ b/tools/lib/bpf/bpf.h
-> [ ... ]
->> @@ -128,9 +128,14 @@ struct bpf_prog_load_opts {
->>   
->>   	/* if set, provides the length of fd_array */
->>   	__u32 fd_array_cnt;
->> +
->> +	/* exception cleanup table, from the .bpf_cleanup section */
->> +	__u32 cleanup_info_cnt;
-> [Severity: High]
-> Does placing cleanup_info_cnt immediately after fd_array_cnt break the
-> size-based backward compatibility check?
->
-> Because fd_array_cnt is a 4-byte field, the struct bpf_prog_load_opts in
-> older applications likely contained a 4-byte padding hole at the end to
-> align with the 8-byte size_t type.
->
-> An older application would pass an opts structure where sz includes those 4
-> bytes of padding. Because OPTS_HAS evaluates if sz >=
-> offsetofend(struct bpf_prog_load_opts, cleanup_info_cnt), it will evaluate
-> to true. The library will then read the uninitialized padding left by the
-> older application as the cleanup_info_cnt value.
->
-> If the padding contains garbage, the kernel could reject the program load
-> or fail unexpectedly. Could this be resolved by placing cleanup_info_cnt
-> after the pointer, or by introducing explicit padding?
->
->> +	const void *cleanup_info;
->> +	__u32 cleanup_info_rec_size;
->>   	size_t :0;
+> 
+> commit e1f1b87424c8d58d923a8c3fbc1408fa0ae0c3b9
+> Author: Yanbo Zhao <yzhao62@ncsu.edu>
+> 
+> perf dwarf-aux: Add C++ vtable helpers
+>     
+> Add DWARF helper functions needed to resolve C++ virtual function calls
+> statically in the data type profiling.
+> 
+> > diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
+> > index eb4b8f3475df1..b1f3dca057abb 100644
+> > --- a/tools/perf/util/dwarf-aux.c
+> > +++ b/tools/perf/util/dwarf-aux.c
+> > @@ -2293,6 +2293,222 @@ Dwarf_Die *die_get_member_type(Dwarf_Die *type_die, int offset,
+> > [ ... ]
+> > +static int __die_find_primary_base_cb(Dwarf_Die *die_mem, void *arg __maybe_unused)
+> > +{
+> > +	Dwarf_Attribute attr;
+> > +	Dwarf_Die base_die, vptr_die;
+> > +	Dwarf_Word loc;
+> > +
+> > +	if (dwarf_tag(die_mem) != DW_TAG_inheritance)
+> > +		return DIE_FIND_CB_SIBLING;
+> > +
+> > +	if (dwarf_attr_integrate(die_mem, DW_AT_virtuality, &attr))
+> > +		return DIE_FIND_CB_SIBLING;
+> 
+> [Severity: Medium]
+> Does this code incorrectly skip valid primary base classes when parsing DWARF 5?
+> 
+> DWARF 5 allows DW_AT_virtuality to be present with the default value
+> DW_VIRTUALITY_none (0x00).
+> 
+> If a compiler explicitly emits this default value, will the presence check
+> evaluate to true and falsely identify the non-virtual base as virtual,
+> skipping it?
 
-I think the current implementation is okay. IIUC, 'size_t :0' will ensure
-to filling '0''s for tailing unnamed fields.
+Right, it'd be better to check the value of the attribute as well.
 
+> 
+> > +
+> > +	if (die_get_data_member_location(die_mem, &loc) < 0 || loc != 0)
+> > [ ... ]
+> > +Dwarf_Die *die_find_virtual_func(Dwarf_Die *class_die, int index,
+> > +				 Dwarf_Die *die_mem)
+> > +{
+> > +	Dwarf_Die cur_die = *class_die;
+> > +	Dwarf_Die base_die;
+> > +
+> > +	while (die_is_compound_type(&cur_die)) {
+> 
+> [Severity: Medium]
+> Can this loop hang indefinitely when processing malformed DWARF?
+> 
+> If a maliciously crafted or malformed DWARF file contains cyclic inheritance,
+> die_get_real_type() resolves the type back to the current class.
+> 
+> Since the loop does not maintain a depth counter or cycle detection, does it
+> spin infinitely as it re-evaluates the same class type?
+
+It seems sashiko is picky about possible recursions on invalid dwarf.
+As we recently added recursion depth limits, can you follow the
+convention and bail out if it detects one?
+
+> 
+> > +		if (die_find_child(&cur_die, __die_find_virtual_func_cb,
+> > +				   (void *)(long)index, die_mem))
+> > +			return die_mem;
+> > [ ... ]
+> > +Dwarf_Die *die_get_vptr_class(Dwarf_Die *type_die, int offset,
+> > +			      Dwarf_Die *die_mem)
+> > +{
+> > +	Dwarf_Die class_die = *type_die;
+> > +	Dwarf_Die vptr_class = *type_die;
+> > +	Dwarf_Die member_die, mb_type;
+> > +	Dwarf_Word loc;
+> > +
+> > +	while (die_is_compound_type(&class_die)) {
+> 
+> [Severity: Medium]
+> Similarly, does this loop also lack a depth limit or cycle detection when
+> traversing base class subobjects dynamically, risking infinite cycles on
+> malformed DWARF?
+
+Ditto.
+
+Thanks,
+Namhyung
+
+> 
+> > +		if (die_find_child(&class_die, __die_find_member_offset_cb,
+> > +				   (void *)(long)offset, &member_die) == NULL)
+> > +			return NULL;
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260930210038.196928-1-yzhao62@ncsu.edu?part=2
