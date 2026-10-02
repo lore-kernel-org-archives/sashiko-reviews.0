@@ -1,122 +1,67 @@
-Received: from www537.your-server.de (www537.your-server.de [188.40.3.216])
+Received: from mail-24418.protonmail.ch (mail-24418.protonmail.ch [109.224.244.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19743DA7DD;
-	Fri,  2 Oct 2026 09:52:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.40.3.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9895F3B27DE
+	for <sashiko-reviews@lists.linux.dev>; Fri,  2 Oct 2026 09:53:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790934748; cv=none; b=fNDY1t1szqL+hWJKR+KDu8Hpe+AmkeyR2yxNrBdckomNbc2MUyYrfF5CXFBuAXpqzqPh3yx57oUwOQ0vYSL6hiOGD2nZ0giOO1LcvZuu1qQ5V4LnjUgV5zhGrpQ9bq2PkxlYwZ+d7ehj21tN3hSfnWvAnczO/sBBrLJo+G1+6mo=
+	t=1790934828; cv=none; b=CIOiyo3kIu3Dn/mV3J9UGquPeq4qnxyr8zaHIOJHVue3ubIYya7gKZsdzBERQQPfVkPIJ2d+RGLJUV2DEsPktY1jAJ7sn8VTdXRlj1i692wGOaQqGmrlimk8LmXXL4TOeZMveAQANEwUnroZBQmsZVuIv8Dkn9B8ejxQQZB5V4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790934748; c=relaxed/simple;
-	bh=hWF5NVPDGeavTZ2CmTxvVgwrzuWuvj2xDBCIgVZsAoM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AeKdmvWGPyzHvkiTErifkuy4ZWNE9dnE0lDZX6xOaxYMrIiXNeBqgIXncDieqSzu4aaWkIhQKi3FAgnMYpMnC9FM0AYDkv25W7paMfFfm0zvJFpLn6m+xC7Y7rrcsKAbW6FjEVDc6Ib0i85XxvOZgUD3KB7oY2e2glUv27rj3VA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com; spf=pass smtp.mailfrom=ew.tq-group.com; dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b=EelR0GJe; arc=none smtp.client-ip=188.40.3.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ew.tq-group.com
+	s=arc-20240116; t=1790934828; c=relaxed/simple;
+	bh=gBVfS8Z97pp/piGdlIkEVhWZcOZCyLP6JZH2sHnPxI4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=pnmX56NPuRcTegPmTcm/Et5t/imlvkD/uUafEtUP6dvdMhVJXZN/Od0qe/L2j7ZEh6sVwDRVnx0JO/Ps57CNFlbhevdxUOQ2nOUysCPOWrW64EMLKT1MgNs61pdElah3YpHvWYK4Y7DnDMu5LgAlwV+GtGz4zEkq7Mz15B2FTMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=EqSkZGWI; arc=none smtp.client-ip=109.224.244.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b="EelR0GJe"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=ew.tq-group.com; s=default2602; h=Content-Type:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=23bZN+sNeGjgUvD43/rhOqW+40shzWtYC3P1eUNq76U=; b=EelR0GJe27E7hO4k0wYu+1/QJF
-	e1UbhLAE6s1ciFt0/JrwKnVxyQ0ujmK7lvidK6sitWt1qlPq43svUMRiGaXXt28xtz9qvpf9x1hfO
-	1oz9pR8DXkNEBZvHNAc8YTZdQ5Zhl/HdB65iJ0TOqkVHrrc/9NejynkFfgnV0Yvs1CjhhEARCVPhP
-	ROh7Ll41Xlx48aNY3lWrhU7oARxTAKs5+UZivTwRUIeYhdvuiYuxPm58bgkuEWTSk0TynZf/3NWjS
-	3phDtkKsEUuZEKysI1PrBeOKwnO4I1O+fLL3ofqb86Z6kZ+ahzSVt2EmaVLmQ26c/s7T+YpgaqRKA
-	fsoZ3Wew==;
-Received: from sslproxy05.your-server.de ([78.46.172.2])
-	by www537.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <alexander.stein@ew.tq-group.com>)
-	id 1xCZwF-0002aY-0v;
-	Fri, 02 Oct 2026 11:52:23 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy05.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <alexander.stein@ew.tq-group.com>)
-	id 1xCZwD-000MG3-3A;
-	Fri, 02 Oct 2026 11:52:22 +0200
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Frank.Li@kernel.org, devicetree@vger.kernel.org, imx@lists.linux.dev,
- robh@kernel.org, conor+dt@kernel.org
-Subject:
- Re: [PATCH 7/8] ARM: dts: imx6ull: Add parallel display DT overlay for
- TQMa6ULLx
-Date: Fri, 02 Oct 2026 11:52:21 +0200
-Message-ID: <8176216.DvuYhMxLoT@steina-w>
-Organization: TQ-Systems GmbH
-In-Reply-To: <20261002091446.3571F1F0089A@smtp.kernel.org>
-References:
- <20261002081417.2092471-1-alexander.stein@ew.tq-group.com>
- <20261002081417.2092471-8-alexander.stein@ew.tq-group.com>
- <20261002091446.3571F1F0089A@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="EqSkZGWI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1790934818; x=1791194018;
+	bh=gBVfS8Z97pp/piGdlIkEVhWZcOZCyLP6JZH2sHnPxI4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=EqSkZGWIt90Bk+2itJm4JwvBaT8CrCrbwDCHBxI4k36yLUcJfv9GSWAH709/R8Gg7
+	 36ANzuQJJ3qRxmHUmZV/25OoVb8oMDlmUKEvR7S1etMz3YgAoxqeEjcvTlurv8A2fw
+	 R5URhN8yHmXzS97FPQPi4N3TCphgJrBo43gyLTlBofCks0lont+uDw3HoYVakM8E4o
+	 PfvdCs+0urapr6L/hymmk9nhYTjhqo+0se7x9u7YB3G+PtmpCv+Ox+pO267pAKques
+	 VjTcJLvYEi9XxMJO0RSEC/Kf4HHIXvjOyX+TsTsiopt7ppycxhpfMJZaV5q5XICjse
+	 mWm6V1uMgNBQQ==
+Date: Fri, 02 Oct 2026 09:53:32 +0000
+To: Sakari Ailus <sakari.ailus@linux.intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Andre Gilerson <andre.gilerson@gmail.com>, Dan Scally <dan.scally@ideasonboard.com>
+From: Sergey Lebedev <lsa.uz@pm.me>
+Cc: Hans de Goede <hansg@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, German Pablo Lindo <germanpapulindez@gmail.com>, sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, linux-media@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 2/3] media: i2c: Add Sony IMX681 sensor driver
+Message-ID: <20261002095324.65355-1-lsa.uz@pm.me>
+In-Reply-To: <20261002082537.74084-3-lsa.uz@pm.me>
+References: <20261002082537.74084-1-lsa.uz@pm.me> <20261002082537.74084-3-lsa.uz@pm.me>
+Feedback-ID: 113843758:user:proton
+X-Pm-Message-ID: e99c89fc6fe63ed71028b4fc2830343b8854d6c8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28141/Fri Oct  2 08:26:12 2026)
 
-Am Freitag, 2. Oktober 2026, 11:14:45 CEST schrieb sashiko-bot@kernel.org:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] dts: Makefile: incorrect dtbo included for fc21 dtb target
-> --
->=20
-> commit bc626d69455423e37445a45960310a9fe70cea35
-> Author: Alexander Stein <alexander.stein@ew.tq-group.com>
->=20
-> ARM: dts: imx6ull: Add parallel display DT overlay for TQMa6ULLx
->=20
-> This commit adds parallel display device tree overlays for the TQMa6ULLx =
-board.
-> It reuses the existing .dtso files from TQMa6ULx for these new targets.
->=20
-> > diff --git a/arch/arm/boot/dts/nxp/imx/Makefile b/arch/arm/boot/dts/nxp=
-/imx/Makefile
-> > index e86b9c1a63005..5f190900904ab 100644
-> > --- a/arch/arm/boot/dts/nxp/imx/Makefile
-> > +++ b/arch/arm/boot/dts/nxp/imx/Makefile
-> > @@ -427,6 +427,8 @@ imx6ul-tqma6ul2l-mba6ulx-lvds-tm070jvhg33-dtbs +=3D=
- imx6ul-tqma6ul2-mba6ulx.dtb im
-> >  imx6ul-tqma6ul2l-mba6ulx-cdtech-dc44-dtbs +=3D imx6ul-tqma6ul2l-mba6ul=
-x.dtb imx6ul-tqma6ul2-mba6ulx-cdtech-dc44.dtbo
-> >  imx6ul-tqma6ul2l-mba6ulx-cdtech-fc21-dtbs +=3D imx6ul-tqma6ul2l-mba6ul=
-x.dtb imx6ul-tqma6ul2-mba6ulx-cdtech-fc21.dtbo
-> >  imx6ull-tqma6ull2-mba6ulx-lvds-tm070jvhg33-dtbs +=3D imx6ull-tqma6ull2=
-=2Dmba6ulx.dtb imx6ul-tqma6ul2-mba6ulx-lvds-tm070jvhg33.dtbo
-> > +imx6ull-tqma6ull2-mba6ulx-cdtech-dc44-dtbs +=3D imx6ull-tqma6ull2-mba6=
-ulx.dtb imx6ul-tqma6ul2-mba6ulx-cdtech-dc44.dtbo
-> > +imx6ull-tqma6ull2-mba6ulx-cdtech-fc21-dtbs +=3D imx6ull-tqma6ull2-mba6=
-ulx.dtb imx6ul-tqma6ul2-mba6ulx-cdtech-dc44.dtbo
->=20
-> [Severity: Medium]
-> Should this target use the fc21 overlay instead? It looks like it is
-> incorrectly including imx6ul-tqma6ul2-mba6ulx-cdtech-dc44.dtbo for the
-> cdtech-fc21 target.
+Sashiko's review of this patch [1] went to devicetree, not linux-media. It
+asks whether the flip controls are read here without the control handler
+lock:
 
-That is correct and will be fixed in v2.
+> When a userspace process calls VIDIOC_SUBDEV_ENUM_MBUS_CODE or
+> VIDIOC_SUBDEV_S_FMT with V4L2_SUBDEV_FORMAT_TRY, the V4L2 core locks the
+> file handle's TRY state, but not the control handler.
 
-Best regards
-Alexander
+The TRY state's lock is the control handler's lock. The driver sets
+sd.state_lock to ctrl_handler.lock before v4l2_subdev_init_finalize(), and
+subdev_fh_init() allocates each TRY state with sd->state_lock, so these
+ioctls hold the same mutex as S_CTRL. No change needed.
 
-> >  imx6ull-tqma6ull2l-mba6ulx-lvds-tm070jvhg33-dtbs +=3D imx6ull-tqma6ull=
-2l-mba6ulx.dtb imx6ul-tqma6ul2-mba6ulx-lvds-tm070jvhg33.dtbo
->=20
->=20
+[1] https://lore.kernel.org/all/20261002091451.1476A1F000FF@smtp.kernel.org=
+/
 
-
-=2D-=20
-TQ-Systems GmbH | M=FChlstra=DFe 2, Gut Delling | 82229 Seefeld, Germany
-Amtsgericht M=FCnchen, HRB 105018
-Gesch=E4ftsf=FChrer: Detlef Schneider, R=FCdiger Stahl, Stefan Schneider
-http://www.tq-group.com/
-
+Sergey
 
