@@ -1,116 +1,120 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14A783B47D0;
-	Fri,  2 Oct 2026 09:20:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from www537.your-server.de (www537.your-server.de [188.40.3.216])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262D746F498;
+	Fri,  2 Oct 2026 09:44:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.40.3.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790932838; cv=none; b=SenZ1NKGdL5wltCgm9IKUomwMMNbI+MbDzZoWkPw2rA5Ib45Fm+wJ0o91/HF/0Lc9QtBEaf8CV8o0P8soG+OYaR+DARgIrXWaLmz2T0OTpUV1UJtxfqSq9Tarj5c43JBoO5S3Weq+oOjpWPca9wHHztLNg26w076Ea+c7zNWHzY=
+	t=1790934301; cv=none; b=DPHL7ylBLjJ/mk287LdRp81djvZLnXeasqq1IS3I5wv7fa6tmIn9Yqiam/9MaBZYeh9nJM/2rTg3BdCtIObbrrRH/JRmCgNk0WefKFAlBNJshAo1XdwK6z+l1RYjDLr0+7FAHmREPe8991Ay3oAFYEgkbTEaOxmC9P/SeXNTGX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790932838; c=relaxed/simple;
-	bh=NiDPwnF91J1fElrQM+XOqR3EbPaFQvf5QeJhyPBAcs0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Tvb8cbXJl6LdbejXbglpVGMckAKLdXPiez72Tlg6g8IHxU8X1nndJj8awQQVeDewceCpiOz6V11svbheBhEci66dv8DtyzInFLXCzABNRhaUlJWRZG+LYuY68gxwgh9NoFnYX2F+ros+ZADYNnKolL9/LUptgfbgAAdeipdhk/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=kVni3wC7; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1790934301; c=relaxed/simple;
+	bh=4of8sWxprnt9S/BW3WWLJvAo0dudddC8g87jOW2r9Pc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=HGcRrZHKGdlNZPWSlBHUXHWYQZ0LeTrmEfRCKDkeDWZAIf5GRUIDxb6VeSqrJNhyaqr/qvrgfn2nHc/XTaBWsGFuobRTPht8FJS+eX/KeHJ1R1p1dHcxb3OTYvFxpnE8l3q5AlKvu2IoeTVEvhYftO9WrIq89JGTOqVDzSguquc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com; spf=pass smtp.mailfrom=ew.tq-group.com; dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b=Isjivyed; arc=none smtp.client-ip=188.40.3.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ew.tq-group.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="kVni3wC7"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DE243497;
-	Fri,  2 Oct 2026 02:20:30 -0700 (PDT)
-Received: from [10.57.8.170] (unknown [10.57.8.170])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A6A1A3F86F;
-	Fri,  2 Oct 2026 02:20:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1790932834; bh=NiDPwnF91J1fElrQM+XOqR3EbPaFQvf5QeJhyPBAcs0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=kVni3wC7f/qTgA063L/gEbfkL5Vy/kC4H8uyWTCs2um2/CQorXzR1TU+NnjXw1Vjz
-	 kq/KGVFfbFf8VPdv9o6CtFoDJkFSEBblU08m/dpa+CB4Toy9jLMpMhEPJcwp1TF+dD
-	 zemNRWJmmTOG+Wrx//RcIimAAw0a4SLnw+ZVFOxs=
-Message-ID: <73ee7e2e-997b-4b19-9280-2d5a5d5c8deb@arm.com>
-Date: Fri, 2 Oct 2026 10:20:30 +0100
+	dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b="Isjivyed"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=ew.tq-group.com; s=default2602; h=Content-Type:Content-Transfer-Encoding:
+	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=liOd2sCFDhODfd60RF9lAvSvZGgNsQRWBBUInqpCsH8=; b=Isjivyed81TOzDJkWA28MJwL3h
+	IHOIct94MrgGwCS+4AdLXRLOQdJKUrzNkuRb26xcgPALsyIYS5ZtTlmIzzFzFjFHmurVWPEupfath
+	m5x5gTzQe9cfMFsQUlSy3sgzQXLF7HhLmHKa5OXtYLajNDQL66fwHv3ALLcfSfdhFO7x8zNWePW32
+	MKsKvJMrolxH54pEAiYiymaFi6ekIU79SquVaV5y5CMaYYhj03Vhnd+Wva9H3fE8I3VWc9v8DAVFU
+	F1SERbnu5ShDm9MkDAbTvvtUHCdYm/i8YoooyLCMIO/ETJzv0cAXHE3/2D4hAiT63eD1rndjgnhPr
+	C1/NXlnA==;
+Received: from sslproxy06.your-server.de ([78.46.172.3])
+	by www537.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <alexander.stein@ew.tq-group.com>)
+	id 1xCZp2-00016B-1E;
+	Fri, 02 Oct 2026 11:44:56 +0200
+Received: from localhost ([127.0.0.1])
+	by sslproxy06.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <alexander.stein@ew.tq-group.com>)
+	id 1xCZp2-00095u-0k;
+	Fri, 02 Oct 2026 11:44:56 +0200
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Frank.Li@kernel.org, robh@kernel.org, conor+dt@kernel.org,
+ devicetree@vger.kernel.org, imx@lists.linux.dev
+Subject: Re: [PATCH 2/8] ARM: dts: imx6ul: Add LVDS DT overlay for TQMa6ULxL
+Date: Fri, 02 Oct 2026 11:44:55 +0200
+Message-ID: <4993405.mvXUDI8C0e@steina-w>
+Organization: TQ-Systems GmbH
+In-Reply-To: <20261002091447.0E8F51F00899@smtp.kernel.org>
+References:
+ <20261002081417.2092471-1-alexander.stein@ew.tq-group.com>
+ <20261002081417.2092471-3-alexander.stein@ew.tq-group.com>
+ <20261002091447.0E8F51F00899@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v21 18/23] KVM: arm64: CCA: Don't expose unsupported
- capabilities for realm guests
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev
-Cc: Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev,
- kvm@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
- Fuad Tabba <tabba@google.com>
-References: <20261001210703.1597150-1-suzuki.poulose@arm.com>
- <20261001210703.1597150-19-suzuki.poulose@arm.com>
- <20261002091348.1769C1F00899@smtp.kernel.org>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20261002091348.1769C1F00899@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
+X-Virus-Scanned: Clear (ClamAV 1.4.3/28141/Fri Oct  2 08:26:12 2026)
 
-On 02/10/2026 10:13, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] arm64: kvm: KVM_CAP_IRQCHIP incorrectly exposed for Realm VMs
+Am Freitag, 2. Oktober 2026, 11:14:46 CEST schrieb sashiko-bot@kernel.org:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] kbuild: wrong base DTB for imx6ul-tqma6ul2l-mba6ulx-lvds-tm070jv=
+hg33
 > --
-> 
-> commit af0bceb4971b2a4c5816fbca6500c4f10a51388d
-> Author: Suzuki K Poulose <suzuki.poulose@arm.com>
-> 
-> KVM: arm64: CCA: Don't expose unsupported capabilities for realm guests
-> 
-> This commit limits the capabilities that are allowed for Realm VMs and blocks
-> the corresponding vm_ioctls. It repurposes kvm_pkvm_ioctl_allowed() to
-> support both pKVM and Realm ioctls and adds a generic kvm_vm_ext_allowed()
-> helper for filtering.
-> 
->> diff --git a/arch/arm64/include/asm/kvm_rmi.h b/arch/arm64/include/asm/kvm_rmi.h
->> index 44f5c75a27b5b..ea1450e0c8619 100644
->> --- a/arch/arm64/include/asm/kvm_rmi.h
->> +++ b/arch/arm64/include/asm/kvm_rmi.h
-> [ ... ]
->> @@ -58,4 +60,26 @@ struct realm {
->>   
->>   void kvm_init_rmi(void);
->>   
->> +static inline bool kvm_realm_ext_allowed(long ext)
->> +{
->> +	switch (ext) {
->> +	case KVM_CAP_IRQCHIP:
-> 
-> [Severity: Medium]
-> The commit message states "Drop KVM_CAP_CREATE_IRQCHIP, as we don't support
-> VGIC_V2 for Realms". Did you intend to drop KVM_CAP_IRQCHIP from this
-> allowlist?
+>=20
+> commit 008daca5167f9a5874f9d9c4e80bdfc8d57fb2cc
+> Author: Alexander Stein <alexander.stein@ew.tq-group.com>
+>=20
+> ARM: dts: imx6ul: Add LVDS DT overlay for TQMa6ULxL
+>=20
+> This commit adds the LVDS DT overlay for the TQMa6ULxL board, reusing
+> the overlay file from the TQMa6ULx board.
+>=20
+> > diff --git a/arch/arm/boot/dts/nxp/imx/Makefile b/arch/arm/boot/dts/nxp=
+/imx/Makefile
+> > index ea0799ba1893e..734d40b8d389c 100644
+> > --- a/arch/arm/boot/dts/nxp/imx/Makefile
+> > +++ b/arch/arm/boot/dts/nxp/imx/Makefile
+> > @@ -421,8 +421,10 @@ dtb-$(CONFIG_SOC_IMX6UL) +=3D \
+> >  	imx6ulz-bsh-smm-m2.dtb
+> > =20
+> >  imx6ul-tqma6ul2-mba6ulx-lvds-tm070jvhg33-dtbs +=3D imx6ul-tqma6ul2-mba=
+6ulx.dtb imx6ul-tqma6ul2-mba6ulx-lvds-tm070jvhg33.dtbo
+> > +imx6ul-tqma6ul2l-mba6ulx-lvds-tm070jvhg33-dtbs +=3D imx6ul-tqma6ul2-mb=
+a6ulx.dtb imx6ul-tqma6ul2-mba6ulx-lvds-tm070jvhg33.dtbo
+>=20
+> [Severity: High]
+> Should this use imx6ul-tqma6ul2l-mba6ulx.dtb as the base instead of
+> imx6ul-tqma6ul2-mba6ulx.dtb?
+>=20
+> Using the non-L variant base DTB here for the TQMa6ULxL board might boot
+> the board with incorrect hardware definitions.
 
-No, this was put back in based on Fuad's comment to advertise that 
-in-kernel IRQ chip is supported.
+That is correct and will be fixed in v2.
 
-See 
-https://lore.kernel.org/all/CA+EHjTwYqTFzGdNPproWW5L6j5pNqmuWeFuu9HbHa8LBLPvY2A@mail.gmail.com 
+Best regards
+Alexander
 
-
-
-Cheers
-Suzuki
-
-
-> 
-> Because KVM_CAP_IRQCHIP is still explicitly allowed here in
-> kvm_realm_ext_allowed(), userspace is falsely advertised VGIC_V2 capability
-> via KVM_CHECK_EXTENSION.
-> 
-
-> This also allows the KVM_CREATE_IRQCHIP ioctl to bypass the
-> kvm_vm_ioctl_allowed() check in kvm_arch_vm_ioctl() and attempt to
-> instantiate an unsupported VGIC_V2 before being rejected downstream.
+> > =20
+> >  dtb-$(CONFIG_SOC_IMX6UL) +=3D 	imx6ul-tqma6ul2-mba6ulx-lvds-tm070jvhg3=
+3.dtb
+> > +dtb-$(CONFIG_SOC_IMX6UL) +=3D 	imx6ul-tqma6ul2l-mba6ulx-lvds-tm070jvhg=
+33.dtb
+>=20
+>=20
 
 
-> 
->> +	case KVM_CAP_ARM_PSCI:
->> +	case KVM_CAP_ARM_PSCI_0_2:
->> +	case KVM_CAP_DEVICE_CTRL:
-> [ ... ]
-> 
+=2D-=20
+TQ-Systems GmbH | M=FChlstra=DFe 2, Gut Delling | 82229 Seefeld, Germany
+Amtsgericht M=FCnchen, HRB 105018
+Gesch=E4ftsf=FChrer: Detlef Schneider, R=FCdiger Stahl, Stefan Schneider
+http://www.tq-group.com/
+
 
