@@ -1,293 +1,228 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+Received: from mail-wr2-f34.google.com (mail-wr2-f34.google.com [74.125.225.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA09F443319
-	for <sashiko-reviews@lists.linux.dev>; Fri,  2 Oct 2026 07:34:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A34D2EEE7B
+	for <sashiko-reviews@lists.linux.dev>; Fri,  2 Oct 2026 08:14:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790926473; cv=none; b=jqfwzMgp85ev6tO3hklV1/isv86ZOQMDpXQLCZtDDC4OAU5dev3+kaW71ohd6q8rI+z3XZ/XJhXu9k6MP1KiWY+SDsPj9tMYrE45aG4vxusNBsMroxfDhH/FSvRVoECAxK5vT6B/KhTffELwfhdd+fWkPVgE0/74azCBhwON5Ww=
+	t=1790928865; cv=none; b=HkqhxMIb/mRzbx2KeqHT8j3IP5VNHht68LImAt8zELvabCeZGQcjpCQo2VzXtCP3HhRdPNGamLW2i+34ruN6vm6TMNbETAFDCbbybpvnYPMjgOjyGcrCFWMva6KvrNR5PQ3ZN7IaX4u6SJzAyojrPgdeYRXF049pDtaJgJqvuNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790926473; c=relaxed/simple;
-	bh=isRNiK3JMMbMyX7EF+GiOK7SUM+cgP7kmkg8imf6MvY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ElSDYgTMykKFbIaorzOI8eYFU2+njsSGtwHCht1o3+emzGpm91XhBcZb8myls6tzy6MYup2dh0FeUQQHQ6j8MEirrl6qjZkGDO2ed8dDHpMoFLtDYNNVTBwmtKldG7/dJU057qMXYoMadLG2jMpfMZ9B4qghdvSvbcNfsvnyjjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YPk98SWB; arc=none smtp.client-ip=74.125.227.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1790928865; c=relaxed/simple;
+	bh=lUjsj/zkzOnzY9LSr0WPam4i8+l8opVo1V9Pswn+IGI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=reS8cS+fOfHZvZkuNPr6m9knyiTRmCCXj+JxCYVKP+yuS40Z4Q1fJpiBSs+m+f895hfuVysdsa6jTbymMbygfHFcjYdgfmY5+9OjzUYzfHvHrG3UFZoNnS9vfqMGxywJgdaJPCx4H+fwbiuMLsEF5hjY30s/u410DoaiRdnMm7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=coMo/j3b; arc=none smtp.client-ip=74.125.225.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YPk98SWB"
-Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-396ccd5cf02so3853011a91.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 02 Oct 2026 00:34:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="coMo/j3b"
+Received: by mail-wr2-f34.google.com with SMTP id ffacd0b85a97d-48af4663da5so2950919f8f.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 02 Oct 2026 01:14:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1790926471; x=1791531271; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=gS7zKOv1EqOmDyg8WJGW/LMneMC1tlnOuM3sUdO8PR8=;
-        b=YPk98SWBkZ0oJ7fUepKxSRnt4HxPVamKgBsBi5CEbDMlUJPSZEhCx6qOcNPsha5itj
-         cSB3FyJvfrN0iRsORNhymVBaKcxFRBPoyAcLv+DzAHTXJt9uZ+L/Y8lwi1Ns7mingmrn
-         enh6s/fZf4H9WTHJ5eFDQzIyaLSArXyCF+tgEURp1a7dJChW3zB9LMjiA+52KsoR6OWi
-         SHPE5Gww9MxqH0b2bav/qPsBAG4Xz9DGH5kKBGMAdb5yf9yi/VY3a5HGtaPQ5oz+iXmn
-         fjnJzaDSi8y23Tu5+/wQrSgHi3FvM0vTb/OJQNK2LKjUmp69o1ujN/qoi4+mjDpRKrS7
-         ji8w==
+        d=suse.com; s=google; t=1790928862; x=1791533662; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=B2gYiRdzNQHv1M+pzNmzpe4igCpVm4DThoeMguavKds=;
+        b=coMo/j3bIcFLLuimQxMe/+tsBTAjbf0zsICQ/Erkj6rHhQxf+Pcqh3jyZyGpE6M4NG
+         qJrRclFrtIW9eJxoWOaAc9we7QkKUdkJwh/8tDr/Md3Kss4LEY7KqHahSO5UJFNDx9es
+         Y/Dz89DBAVpQvFmatP6p/4xqgswusm8b/CmtxZK8E7OOaAcC5nWyzU9OaNmQUb18sQ2O
+         Oht75b9k2glaSPbihxV7l/HOUFMzQBVEK+w7vHVReONmkSGzbHaU9LVozi+1Xh5NaZXh
+         i3C5XLKrr2pOU+HzX3yV503EgD5+g5+wJJYdfLMR7awVxIYrJTzG4bNnANsiN5qZHJXZ
+         3Dpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790926471; x=1791531271;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=gS7zKOv1EqOmDyg8WJGW/LMneMC1tlnOuM3sUdO8PR8=;
-        b=rw8GQu2eUJQWIM9tF3A6haWe11xjAb3U8VSZmVKuZ01GcrbxqnlMkpeJqstS2dt+ES
-         hFbc0y2lHCMkdjGkz/UoN5tovrb5E6Co7kIEF5khSACgYLhGwxdhemPyA3xST7I+RTgk
-         i7+auG6ZzegOiI2z8q88s1cTOyRqloFhKhLncRXQ5ybSDaVg4h133yMRAWRLhhOyhFzs
-         NDOB3iy9/Oi1Mrk9mz0swlr7e/fEzd/Yol9e73t1i8m93xtIIVuaexQJp0E4XpUVCLIQ
-         3fRZntxzU3VBWHnnSVXNMmwpxZ3sgrkBuslaN4mPuyFmF+2QJVPZWbecYR0uO64j+YVw
-         3mxA==
-X-Forwarded-Encrypted: i=1; AKwUvBxiTUE2fCcZv0DX4vpUTgyiAXnc70u9QQtuE9P8V/teh9oxnr/7WCIbZHk/O77BpM/w1f0uoOauLvRxPmWNBDg=@lists.linux.dev
-X-Gm-Message-State: AFq9FYJKLOZfbt7zKwqk1yLbRynbRDlETRqaJzwpwxiDngJFGOHc7I1R
-	KyjOUNjWR6UTyuF2FRveuEO6RIFuj9OZc5K/6jLiN1xoOX4xuMr7A6Og
-X-Gm-Gg: AYBFou2XO0c3gNNTQ6Jzw+drpycwl8vzVTyfsIX3KVdZOM8LGQ+uXkl0RaDBpTFn7YE
-	FfPJ69RY5x6OBqct1wPFFzp5h4hLtq+bMXPeI/KHzATf6PQ3tCUHm6kSk1vB5zkOZLR/wAjWIPO
-	94HWN3bZecA8WL9Vddd4acY8Y4riAmFgLXJm59EyJ7yrdsdy438xLAl5vCwCGOvlEQsZWTdHo9U
-	ujBKwe0+e1/JdEQSileSoR5gEfuEGpd5/hfnBAz3TCzRcmj5SS/A8WtJ3787JglyyKNXvaPJG9n
-	l70sdhQSowL2r8UXuSQrL/2xd2fqUIY/C2aKHS91sUUnMU7wZPauGHxjg+7VIfD30NEWEtq0Tc5
-	r52IFyp03NKOFj0Cs2ifV8UVM25L5SwP6qZ3rOwAgyIPbozmG7DUGrEwwrDHtGRirbeX/Sj+Bdr
-	BlAYS5hNve8qlmQtqEjU2QJXPuPAyT3sIVcwpf1rhWpeiN3/P6uppXofiIu+1amGBgfkTdeB83P
-	z8mA+cB3L5BIO1Chq9AP7/B3ePGifpuW7hix3p9/lhlkMmTjeIqgDqlmcwH9bSDlXRYlt4YPAHj
-	QeW1pzftIay1kqHkwBNU0pdaIbs9ePsH19/BPHgO0jLAZJxUeSJMt4MUFw==
-X-Received: by 2002:a17:90b:4c08:b0:3a2:ad6e:4435 with SMTP id 98e67ed59e1d1-3a6ce5a1c77mr1889027a91.5.1790926470615;
-        Fri, 02 Oct 2026 00:34:30 -0700 (PDT)
-Received: from 0xiviel.ip (122-63-128-121.mobile.spark.co.nz. [122.63.128.121])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a4f478e750sm7931692a91.13.2026.10.02.00.34.26
+        d=1e100.net; s=20260707; t=1790928862; x=1791533662;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=B2gYiRdzNQHv1M+pzNmzpe4igCpVm4DThoeMguavKds=;
+        b=NzN4HsCt2IG+M6rF1aqHbwpIyEfYN11UHl088W4ldJoy4/tAqdVTP23JiEO63Bbuab
+         5QlgEt8B1zB7POxtY+XfSYTrHsJyCtf3NVSHHBv77uYpNYoMh11qFPnI6qdwqP5N6aDr
+         QId0vaCWqKYZv7b+d/BYzR1hDlc3WmhmqZdvh1h/NPfaepYHl+uu8rMwjniDv/VdbXLD
+         YlE6GKt3ORDZNoMpmE+ID3jY093y7Z6g4PHxRbz//u5mjPzLEnzpjCq3pyeoy6vWgUQt
+         Vwp5RW12Z58ckvZS4g62Af1vrqAyFXleZjAosVdeG4eeTsVZpSZ7wSXi3fw8V2jaPfiX
+         BNMg==
+X-Gm-Message-State: AFuF++nK2ZDv06f5NvrgAtOH4V9zou6dwFkZIFMWZsdEzx02tfRzGtc2
+	u/+7VqERUu7MgkrKK40n/ApfHyaCurD/AClxvIFY4Y1RKPaQhJUHNBVGhr7wFxtrxjE5U0puiaQ
+	7IZlTKqk=
+X-Gm-Gg: AYBFou1T3mVpoHaqsOJIEXlNtnsGqAZrJJp27VnY+mjaoKfdbkcrgcgEzclBeoN3J3h
+	qf276LOZUqK+jLVOXSnCcmIyhOAVlZZFDl+Y+Vj87unDvxuEY0JiCMU7wwBpI4nsI3+ECnlJhU/
+	RFoVZ5uuA2ieTXsmx1b9WL8FIeKTlFjrakocAN0aGJsHX8UUeYx8A21sEMWBAQ0+bTmcTFRFDrl
+	5d9dF66MSb2kojCK3/AU7tir5skGIZ+e/TzP68GTrTwnYnECYmTuzu8s+ugl18To37Hcq7phAI/
+	B+gELI7/YEjtScCS/q+AXQtlGEwON+aYZGY/HHj0uniHnI8N7iSQM2y1o/OSBv54zHYyQF7zmOd
+	rKeLQ+6PzVauaXICWw/3CTmkzeqk3UyDr+YbbvoEdmDTATTT60XemXesdDchj4JCMh0R1dOHVhg
+	28/s2c+uxJevCFFc8WzH98rkMiQq1dGGwe2X39ehWhMUOEKNDfquOK9jogvAkmcqBRUqjhTbJ5
+X-Received: by 2002:a05:600c:4454:b0:49f:f922:1dc1 with SMTP id 5b1f17b1804b1-4a0276a0e46mr32937455e9.28.1790928862090;
+        Fri, 02 Oct 2026 01:14:22 -0700 (PDT)
+Received: from pathway.suse.cz ([176.114.240.130])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a027734b49sm64339675e9.10.2026.10.02.01.14.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2026 00:34:30 -0700 (PDT)
-From: Eva Crystal <0xiviel@gmail.com>
-To: Min Ma <mamin506@gmail.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Oded Gabbay <ogabbay@kernel.org>
-Cc: dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Eva Crystal <0xiviel@gmail.com>,
-	Sashiko AI review <sashiko-bot@kernel.org>
-Subject: [PATCH] accel/amdxdna: bound the firmware-supplied mailbox ring against the mapped region
-Date: Fri,  2 Oct 2026 19:37:39 +1300
-Message-ID: <20261002063739.184503-1-0xiviel@gmail.com>
-X-Mailer: git-send-email 2.53.0
+        Fri, 02 Oct 2026 01:14:21 -0700 (PDT)
+Date: Fri, 2 Oct 2026 10:14:19 +0200
+From: Petr Mladek <pmladek@suse.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-serial@vger.kernel.org
+Subject: Re: [PATCH v4 1/1] braille: nbcon: Allow to use a serial console
+ with NBCON API as Braille console
+Message-ID: <ar9n2__RhOeiXRgC@pathway.suse.cz>
+References: <20261001140727.124398-1-pmladek@suse.com>
+ <20261001140727.124398-2-pmladek@suse.com>
+ <20261001142407.84C721F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261001142407.84C721F000FF@smtp.kernel.org>
 
-The mailbox ring start address and size both come from firmware, and
-rb_start_addr is used directly as an offset into the ioremapped SRAM BAR:
+On Thu 2026-10-01 14:24:07, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] console: deadlock in braille_write() from atomic/IRQ context
+> - [High] console: infinite loop in braille_write() when CONFIG_PRINTK is disabled
+> --
+> 
+> commit 0bb1344e643dce4e38416fdf04095c16fe6023c8
+> Author: Petr Mladek <pmladek@suse.com>
+> 
+> braille: nbcon: Allow to use a serial console with NBCON API as Braille console
+> 
+> This patch integrates the Braille console with the NBCON API by allowing
+> braille_write() to attempt acquiring NBCON ownership before writing. It
+> simulates the original locking using nbcon_braille_try_acquire() and routes
+> output through write_atomic() or write_thread() callbacks.
+> 
+> > diff --git a/drivers/accessibility/braille/braille_console.c b/drivers/accessibility/braille/braille_console.c
+> > --- a/drivers/accessibility/braille/braille_console.c
+> > +++ b/drivers/accessibility/braille/braille_console.c
+> [ ... ]
+> > @@ -62,14 +62,50 @@ static void braille_write(u16 *buf)
+> [ ... ]
+> > +	if (braille_co->flags & CON_NBCON) {
+> > +		if (panic_on_this_cpu()) {
+> > +			/*
+> > +			 * This should be good enough in practice. Most/all
+> > +			 * serial console drivers have the atomic callback.
+> > +			 */
+> > +			if (!braille_co->write_atomic)
+> > +				return;
+> > +
+> > +			local_irq_save(flags);
+> > +			/* NBCON API strictly requires the ownership. */
+> > +			if (!nbcon_braille_try_acquire(braille_co, &wctxt)) {
+> > +				local_irq_restore(flags);
+> > +				return;
+> > +			}
+> > +		} else {
+> > +			braille_co->device_lock(braille_co, &flags);
+> > +			while (!nbcon_braille_try_acquire(braille_co, &wctxt))
+> > +				cpu_relax();
+> > +		}
+> > +	}
+> 
+> [Severity: High]
+> Could this lead to a deadlock? braille_write() can be invoked by VT
+> notifiers from atomic or IRQ contexts (e.g., from keyboard interrupts or
+> console_flush_all()). By calling device_lock() and spinning on NBCON
+> ownership with a cpu_relax() loop, if the interrupted context already holds
+> the lock (like an active nbcon flush), nbcon_braille_try_acquire() will
+> permanently return false, causing an infinite busy-loop.
 
-	read_addr = mb_chann->mb->res.ringbuf_base + start_addr + head;
-	header.total_size = readl(read_addr);
+The short answer is that we should be on the safe side because it
+used to work with the legacy uart 8250 console driver which took
+port->lock as well.
 
-Nothing compares it against the length of that mapping. The only gate
-between the firmware words and that readl() is is_power_of_2(rb_size) in
-xdna_mailbox_start_channel(); the bounds tests in mailbox_get_msg() are
-all relative to the firmware-supplied rb_size, not to the mapping. The
-driver does record the true length, in struct
-xdna_mailbox_res::ringbuf_size from pci_resource_len(), but that field is
-never read anywhere.
+It should work when the code under port->lock:
 
-So firmware can describe a ring that starts past the end of the BAR, and
-the receive path reads there. Measured on an npu4 device (0000:06:00.1,
-1022:17f0 rev 0x10, fw 1.1.2.64) by moving i2x_buf one page beyond the
-window: the channel starts, the first firmware response drives
-mailbox_get_msg(), and the peek readl() in mailbox_rx_worker faults on a
-not-present page at exactly ringbuf_base + ringbuf_size. pcim_iomap()
-maps the whole BAR, so one byte past the window is already past the
-mapping. This happens during probe, before any device node exists, so no
-userspace is involved. The oops kills the mailbox worker mid work item
-and probe then wedges in drain_workqueue(). Only the read direction was
-measured; nothing is claimed here about the write path.
+   + is called with disabled interrupts.
+   + do not call VT code (the is no reason to do so).
+   + use only printk_deferred() (or better no printk() at all.
 
-Reject a channel whose ring does not lie entirely inside the mapping.
-The check sits in xdna_mailbox_start_channel(), which is where all three
-producers of this geometry converge: the management information block in
-aie2_get_mgmt_chann_info(), the CREATE_CONTEXT response in
-aie2_create_context(), and the mailbox information block in
-aie4_mailbox_start().
+All the conditions should be fulfilled. Otherwise, it would cause
+deadlocks even when the serial console driver is used for printk()
+in the non-Braille mode.
 
-Reaching this needs firmware that reports geometry it should not.
-npu*.sbin is signed and loaded from root-owned /lib/firmware, so this is
-not something an unprivileged user can drive. The file already validates
-other firmware input on this path, the MGMT_MBOX_MAGIC check,
-aie2_check_protocol() and the tail pointer in mailbox_get_msg(), so the
-standard applied here is the one it already sets for itself.
+> [ ... ]
+> > @@ -102,7 +138,24 @@ static void braille_write(u16 *buf)
+> [ ... ]
+> > -	braille_co->write(braille_co, data, c - data);
+> > +	if (braille_co->flags & CON_NBCON) {
+> > +		nbcon_write_context_set_buf(&wctxt, (char *)data, c - data);
+> > +		if (panic_on_this_cpu())
+> > +			braille_co->write_atomic(braille_co, &wctxt);
+> > +		else
+> > +			braille_co->write_thread(braille_co, &wctxt);
+> 
+> [Severity: High]
+> Does this violate the write_thread API constraints? The
+> include/linux/console.h documentation specifies that write_thread must
+> strictly execute in a task context. Since braille_write() can be called
+> from an atomic or IRQ context, invoking the kthread-specific callback here
+> could be unsafe.
 
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/all/20260913214451.639251F000FF@smtp.kernel.org/
-Signed-off-by: Eva Crystal <0xiviel@gmail.com>
----
+It should be OK for all the currently converted serial console drivers
+which are candidates for the Braille console. We might need to revisit
+this in the future.
 
-This was first raised publicly by the Sashiko AI review bot on dri-devel on
-13 September 2026, in its automated review of my own mailbox register-offset
-series, where I then listed it as deferred in the v2 cover letter; this patch
-is the measured follow-up to that report.
+> > +	} else {
+> > +		braille_co->write(braille_co, data, c - data);
+> > +	}
+> [ ... ]
+> > diff --git a/include/linux/console.h b/include/linux/console.h
+> > --- a/include/linux/console.h
+> > +++ b/include/linux/console.h
+> [ ... ]
+> > @@ -678,8 +687,14 @@ static inline void nbcon_reacquire_nobuf(struct nbcon_write_context *wctxt) { }
+> >  static inline bool nbcon_kdb_try_acquire(struct console *con,
+> >  					 struct nbcon_write_context *wctxt) { return false; }
+> >  static inline void nbcon_kdb_release(struct nbcon_write_context *wctxt) { }
+> > +static inline
+> > +bool nbcon_write_context_is_braille(struct nbcon_write_context *wctxt) { return false; }
+> >  static inline bool console_is_usable(struct console *con, short flags,
+> >  				     bool use_atomic) { return false; }
+> > +static inline bool nbcon_braille_try_acquire(struct console *con,
+> > +					     struct nbcon_write_context *wctxt) { return false; }
+> 
+> [Severity: High]
+> Could this cause a hard lockup if CONFIG_A11Y_BRAILLE_CONSOLE is enabled
+> but CONFIG_PRINTK is disabled?
+> 
+> Since this fallback stub unconditionally returns false, the
+> while (!nbcon_braille_try_acquire(...)) cpu_relax(); loop in braille_write()
+> will never terminate when triggered by terminal output.
 
-To be precise about scope, because that report raises two items and this patch
-addresses only the first: it bounds the ring's placement and span against the
-mapping. It does not bound rb_size from below, so it does NOT fix the second
-item in the same report, where a tiny but still power-of-two rb_size (e.g. 2)
-makes mailbox_get_ringbuf_size() - sizeof(u32) underflow and widens the
-send-path wrap bound. I checked that case against this patch and the patch
-accepts it: is_power_of_2(2) passes, and all four of the added clauses read
-false on an honest rb_start_addr. That item is not mine to claim, it was
-published in the same message, and if it is addressed it should be a separate
-patch crediting the same report. I have not measured it; the underflow is on
-the x2i/send side and the harness described below has no x2i override.
+Good point!
 
-The mailbox ring start address and size are both supplied by firmware, and
-rb_start_addr is used directly as an offset into the ioremapped SRAM BAR
-without being compared against the length of that mapping. The only gate
-between the firmware words and the first readl() on the receive path is
-is_power_of_2(rb_size) in xdna_mailbox_start_channel(); the three bounds
-tests inside mailbox_get_msg() are all relative to the firmware-supplied
-rb_size rather than to the mapped region, and struct
-xdna_mailbox_res::ringbuf_size, which the driver fills from
-pci_resource_len() and which holds the true window length, is never read
-anywhere in the driver. A firmware-supplied i2x_buf that places the receive
-ring base past the end of the window therefore produces an out-of-window
-read. This patch adds the missing comparison in
-xdna_mailbox_start_channel(), which is the single point all three producers
-of this geometry pass through (the aie2 management block, the aie2
-CREATE_CONTEXT response, and the aie4 mailbox info block), and fails channel
-start when the ring does not lie entirely inside the mapping.
+But there is a bigger problem. kernel/printk/nbcon.c is compiled only
+when CONFIG_PRINTK is enabled. We expected that con->write*()
+callbacks will be called only when there are printk() messages.
 
-How this was measured. On an npu4 device (0000:06:00.1, 1022:17f0 rev 0x10,
-firmware amdnpu/17f0_10/npu_7.sbin, fw_version 1.1.2.64, HP OMEN 16-ap0xxx,
-kernel 7.1.5) I built the driver out of tree with instrumentation that logs
-the ring geometry and recomputes, for every ring access, whether the target
-lies inside res.ringbuf_base + res.ringbuf_size. A module parameter
-overrides exactly one firmware field, info_regs.i2x_buf, at the point it
-lands in aie2_get_mgmt_chann_info(), i.e. upstream of every gate, so the
-whole downstream path is the driver's real one. The override moved the
-receive ring base to BAR2 offset 0x80000, one byte past a 0x80000 window.
-The channel started with no complaint, the only check applied being
-is_power_of_2(rb_size)=1, and the first response from firmware then drove
-mailbox_get_msg(). The peek readl() faulted:
+The Braille console is a new use-case. It uses con->write() callbacks
+even for non-printk messages.
 
-  BUG: unable to handle page fault for address: ffffd0db86b80000
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  Workqueue: xdna_mailbox mailbox_rx_worker [amdxdna]
-  RIP: 0010:mailbox_rx_worker.cold+0xb6/0x43b [amdxdna]
+A proper solution would be to allow building nbcon.c even when
+CONFIG_PRINTK is disbled. But we would need to review the entire
+design.
 
-The faulting address is exactly res.ringbuf_base + res.ringbuf_size in both
-runs; pcim_iomap(pdev, 2, 0) maps the whole BAR, so one byte past the window
-is already past the mapping and the PTE is zero. This happens during probe,
-before /dev/accel/accel0 is created, so no userspace component is involved.
-As a secondary effect the oops kills the mailbox worker mid work item, and
-the RX timeout path then calls drain_workqueue() on a work item whose worker
-is dead, so probe wedges in uninterruptible sleep and the module cannot be
-unloaded.
+A short term workaround is to make Braille console dependent on
+CONFIG_PRINTK. It might be good enough in practice. I mean this:
 
-The same override was run twice, from two independent boots, the second with
-preconditions recorded beforehand (tainted 0, in-tree module, device bound).
-Everything that identifies the defect was identical across the two runs: the
-access type, the not-present PTE, the workqueue, the RIP symbol and offset,
-the faulting instruction bytes, every frame and offset of the call trace, and
-fault minus base equal to res.ringbuf_size. The only differences are the
-ioremap base and the module load base, which a reboot is expected to move.
-A benign control, the unmodified firmware geometry, was run through the same
-instrumented build across two runs, with both the straight-line and the wrap
-branch of the send path exercised, and all 513 bounded ring accesses landed
-inside the window.
+diff --git a/drivers/accessibility/Kconfig b/drivers/accessibility/Kconfig
+index 6b2f79d1f1b8..bd5db30e9aab 100644
+--- a/drivers/accessibility/Kconfig
++++ b/drivers/accessibility/Kconfig
+@@ -20,6 +20,7 @@ if ACCESSIBILITY
+ config A11Y_BRAILLE_CONSOLE
+ 	bool "Console on braille device"
+ 	depends on VT
++	depends on PRINTK
+ 	depends on SERIAL_CORE_CONSOLE
+ 	help
+ 	  Enables console output on a braille device connected to a 8250
 
-What I am not claiming. Both injection arms overrode the i2x (device to
-host) direction only and left x2i untouched, so the send path ran on honest
-geometry throughout. There is no measurement here of what an out-of-window
-x2i->rb_start_addr would do at the memcpy_toio() in mailbox_send_msg(); no
-write-path injection was attempted, and nothing in this report should be read
-as a write-side or code-execution claim. What was measured is a 4-byte
-out-of-window read that faults on a not-present page, and the probe wedge
-that follows. The per-hwctx path is also uncovered: the second producer of
-these same values is the CREATE_CONTEXT response in aie2_message.c, and
-exercising it needs a userspace stack to create a hardware context, which
-was not available on this box, so only the management channel was driven.
-The instrumentation for the cq_pair path exists and never fired. The same
-absence of a window check applies there on paper, and the fix sits in the
-common function, but that path was not measured. Separately, a second arm
-that overrode rb_size instead of rb_start_addr was accepted by the driver
-and recorded as exceeding the window, yet produced no out-of-bounds access
-in 137 accesses, so rb_size alone is not sufficient to leave the mapping;
-rb_start_addr is.
 
-The patched driver was then run on the same device, six arms across six clean
-boots, each arm a single override of the same instrumented build (one module,
-one sha256, no rebuild between arms). Honest geometry is accepted and the
-device works normally: probe completes, /dev/accel/accel0 appears, 10 workload
-passes return 100/100 queries, and 32 real ring accesses all land in window.
-Four out-of-bounds geometries are rejected at channel start, before any ring
-access, with no page fault, no oops, and a clean module unload in about two
-seconds: rb_start_addr equal to the window length, rb_start_addr strictly
-greater than it, an oversized span, and a non-power-of-two rb_size handled by
-the gate already shipped. The rejection cascade is byte-identical across those
-arms except for which gate names itself.
-
-What that does and does not establish, clause by clause. The two receive-side
-clauses are each exercised in isolation: the span clause by an oversized
-rb_size on an honest rb_start_addr, and the placement clause by
-rb_start_addr=0x100000 against a measured ringbuf_size=0x80000, where the span
-clause cannot fire at all because ringbuf_size - rb_start_addr underflows in
-size_t to 0xFFFFFFFFFFF80000. That is the arm which shows the two clauses are
-not redundant. Two limits on it, stated rather than left to be inferred: the
-kernel short-circuits at the placement clause and so never evaluates the span
-clause on that input, which means the span clause's falsity there is
-arithmetic over hardware-measured operands rather than an observed branch, and
-I did not build a variant with the clause removed to show acceptance directly;
-and that arm has had one hardware run, not two, so I am not describing it as
-reproduced. The two x2i clauses were never injected at all and remain
-unexercised, for the reason given above.
-
-Finally, the injected values stand in for firmware rather than coming from
-it. The module parameter writes the word where the firmware word lands, so
-the path below that point is real, but the firmware itself was never made to
-publish these values. npu*.sbin is signed and loaded from root-owned
-/lib/firmware, so this is not reachable by an unprivileged user on a healthy
-system; I am proposing it as the same kind of defensive check the file
-already applies to other firmware input on this path (the MGMT_MBOX_MAGIC
-check, aie2_check_protocol(), and the tail pointer in mailbox_get_msg()).
-
-The full oops from both runs, the instrumented build, the runners, the
-control run and the complete measurement record are available on request
-rather than pasted here.
-
-Eva Crystal (0xiviel)
-XSource Security
-https://xsourcesec.com
-
- drivers/accel/amdxdna/amdxdna_mailbox.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git a/drivers/accel/amdxdna/amdxdna_mailbox.c b/drivers/accel/amdxdna/amdxdna_mailbox.c
-index 05c3786de135..896b7503cf8d 100644
---- a/drivers/accel/amdxdna/amdxdna_mailbox.c
-+++ b/drivers/accel/amdxdna/amdxdna_mailbox.c
-@@ -518,6 +518,19 @@ xdna_mailbox_start_channel(struct mailbox_channel *mb_chann,
- 		return -EINVAL;
- 	}
- 
-+	/*
-+	 * The ring start address and size are supplied by firmware and are
-+	 * used as an offset into the mapped ring buffer region. Check that
-+	 * the ring described lies entirely inside it.
-+	 */
-+	if (x2i->rb_start_addr >= mb_chann->mb->res.ringbuf_size ||
-+	    x2i->rb_size > mb_chann->mb->res.ringbuf_size - x2i->rb_start_addr ||
-+	    i2x->rb_start_addr >= mb_chann->mb->res.ringbuf_size ||
-+	    i2x->rb_size > mb_chann->mb->res.ringbuf_size - i2x->rb_start_addr) {
-+		pr_err("Ring buf does not fit in the mapped region\n");
-+		return -EINVAL;
-+	}
-+
- 	mb_chann->msix_irq = mb_irq;
- 	mb_chann->iohub_int_addr = iohub_int_addr;
- 	memcpy(&mb_chann->res[CHAN_RES_X2I], x2i, sizeof(*x2i));
--- 
-2.53.0
-
+Best Regards,
+Petr
