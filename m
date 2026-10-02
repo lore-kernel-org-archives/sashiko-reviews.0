@@ -1,124 +1,172 @@
-Received: from mail-wr2-f32.google.com (mail-wr2-f32.google.com [74.125.225.96])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954CF44CAE4
-	for <sashiko-reviews@lists.linux.dev>; Fri,  2 Oct 2026 11:58:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.96
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE8C471403;
+	Fri,  2 Oct 2026 12:45:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790942332; cv=none; b=gM7y+Rc4HyQS/IcLvSYjiZulXYGOl+mZ5Ftbb15Uu6WqLAutqMhkZI9FqtZk/40bBl+d2aE+OygPqMcNmkEmeVoOBBnmhq/GJvBekf0VBltlsOyJ+pREbVizfafFoXHeLr1ma3dvbE4nI2ESmJT04dcjIj7FkWJHBjMow4md+8g=
+	t=1790945113; cv=none; b=a/b7Eqf4gfHazMJ4ddsup2SZtAA3mN69Y4B2GZj8Rr3KL8flqKJh849pWz3RRWR9gChFVJnRYY8PvNN686jutC3sqi5ASoFrWDQU9VmAxNr+dl1niRWUJio1AMoRyGBBBnuyMxQVPRfVu5PvVELchdxPp3IHEM3nPZF2HBm+rx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790942332; c=relaxed/simple;
-	bh=LlZxGGTvdojYdT8k3tDVdc8QzvkSYhyl3Z1KAuLonF8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cGTrPxzkVeu/YPrMfoBTwtVnlDZdtKOiB3fP4DKUO4gguOqpz2oEBWsca3Hwq0PYAWuln4xuYAhsSIipAS1p2gBNbkqwFAaUvsBuKGVZhcsw+TarqXk6uTdnN2JrfqomZuLgiQuOvTMXfTAko0uOFWv4+Zd8tRUEsaB4cXcBiXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=ORPC4Sfs; arc=none smtp.client-ip=74.125.225.96
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1790945113; c=relaxed/simple;
+	bh=YAvlDIH6ftSHWKAJ561EKmstiTQUB0grJz8gmwjP0AY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Z/omAL0KpPO60TFvKVDlHqF9e1aGTjldDYuS+Yw6lnYHtdoKaPGCakikocMj0VQjO2cbWPD+0ZisIvn/I/4Belni/aO0RmBHw7YsJV7dfD+oET/DK49aB+TIOpGJhPOzcOQwZLqN09zADxeeEcdUUl6lrbmcFbpm5ZV1FSZ0Tso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=VmXLNfPC; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=D+UDt5kQ; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=GdS+Lnhg; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=cx3nW2AF; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="ORPC4Sfs"
-Received: by mail-wr2-f32.google.com with SMTP id ffacd0b85a97d-482f6350f91so4402759f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 02 Oct 2026 04:58:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1790942329; x=1791547129; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=HuDPir+q4FERrKXQ8zp3kgZyGxkcWGZ+Inj9ACfB8ZM=;
-        b=ORPC4SfsEP3bsQ0Z7VVroheqwIwSf7CtWiAhChaXQtBBRe+/+o2l+OcH1k7B5BSzld
-         62zJpu7+GHeD9FUvuMl4YhVunXItiYoirfrY5PveeiPIvac1dss+ceB9FGFvkeuexU5W
-         7Nb4QpaW97wYJ+8dl3mRMetfjqy6GINMmxjsm/Ql1fSzi7uPaaFXvyqS7veXWQkxLYMH
-         QUYWOeSdt7rHZa6GTHND9/lLxHVSO+wt1EkOrQABQ5WVNltgPZlqsZE2z5Yo7e+Zmg1x
-         lVDMZ7MsgP2LmuaYBmabr5s6qgdDCXEyUC4csdRbjk1S1UVuj1EG3zaGNtnvc2Nc1FCT
-         LG8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790942329; x=1791547129;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=HuDPir+q4FERrKXQ8zp3kgZyGxkcWGZ+Inj9ACfB8ZM=;
-        b=fFKGXuDxnN0IbTgq2Gx18Ecy1QYFHE9NJ8QnDen1/hylApL0wz5ykBMVqOzLqNisPT
-         d9JvuTZQIrhcFWUg4F3ik/nzkZNJNIhIFErqvMm4eMbWtEUH4XoGiwDUZz+EvQhCrDcP
-         aMkvCYcXPb2j5B3IdO/Fj1w8biVhjk7MlE9ZQo44CgkW5hk0Xf3P04heuxmnzJ19uEV/
-         OiUuZ2lzfG2ZwtfuYPHTTxXa06L2+OG7icovtc572cxANOGwCjxJJVfBFSCTWDyE8AcP
-         ZxM7XWMM98iZvzYBGamFHRqo6TcacKgZWPWWhcop2RgoJPQIe5SZ+pe8hTvIhh1snpAe
-         nGZQ==
-X-Gm-Message-State: AFq9FYKkNa9hD0aK0FL+hy7dgZCugMnppGyDcYpq2uo1Zcs7MDKnwd1m
-	FpprvokdBTmT1C1hKYw/CNkVvbmVdEuB7y+zXQS/nUZ0jCs7sbjjxsE+YO+a63zGIX0pKSM3UTp
-	d8zFAYrY=
-X-Gm-Gg: AYBFou0CfBezjhazGEiSGFbcp6lP2rM3roLg5qGvp3WESX2qDkhrfzeTwiJx3ljOKv8
-	KX/9Davz6MGIvflZGXveHLR1/ykGTnXOMsZXOzaJh7dHra27AEEkqTWR7JCc04palI1OrWjIk9a
-	WJfotOqgAx2ySmE5mRYu9CqwG+tFLGb4zvrgeT0050r73kWAqlEZ2kgspn71lmMGcFhLiRv781l
-	bVMgyBa0qDklmgLdDL0tb9ISX15ZgkOuvKYjzEu8dAkLsoN9QVxG/ZU3MKVuFVp2ijso1hx/8pr
-	wST2y9Wp/zO2OpoFx7ykfkwKtjvTAtGk6imuSOgoHVRAfKmygfg/b8AEZYAX6LjEoC4bFXTbQnL
-	Kr24BncBsPVqxbZPvG4OIPe0mDjwwJV/WHgJdyBcotJMICnwoAx2IvethHoQU+KBY74JTLTgr/u
-	f5mmFCug0I2stfVSI/f9f6ZSzEUdpjrWvE93JbCXSx3ANRKlJtp1l2ty94mhqKrUPCoBhr/Q9kX
-	mZqfDj3nW4OhPHmn75oKpZ0IMkdMeMtFdI=
-X-Received: by 2002:a05:6000:27cd:b0:486:f620:63bd with SMTP id ffacd0b85a97d-48b125a19fcmr3400232f8f.0.1790942328677;
-        Fri, 02 Oct 2026 04:58:48 -0700 (PDT)
-Received: from ?IPV6:2a07:de40:8100:0:89a9:fd0e:583d:4a53? ([2001:af0:8000:1409:193:86:92:181])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48b380faaeesm5023947f8f.18.2026.10.02.04.58.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Oct 2026 04:58:48 -0700 (PDT)
-Message-ID: <c166a29c-14f4-44ee-81ac-d79c82175fc8@suse.com>
-Date: Fri, 2 Oct 2026 13:58:48 +0200
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="VmXLNfPC";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="D+UDt5kQ";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="GdS+Lnhg";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="cx3nW2AF"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 517E921A1C;
+	Fri,  2 Oct 2026 12:45:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1790945105; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=sLsOdwi1hUceimsVUFcOl/fguiWv2isWvjC4TvjZLVk=;
+	b=VmXLNfPCxP77vO/nlyNXfoYG4SDZWYv+1M/U1DAnZ4vLKhXgenge8Xnj0L3nz+K5L9eBIu
+	HnnFecqx2rFcypEO3m32uREZfj9SdIXG15rDl6b3VKE9IvaEPr/y7eFCJOdkgGF14btu2h
+	cJ96iljm79UV7Ipo5GEhQAfqedHdo+Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1790945105;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=sLsOdwi1hUceimsVUFcOl/fguiWv2isWvjC4TvjZLVk=;
+	b=D+UDt5kQYcoV+Bcq0bt+eyLj7UeLxMsSPyBZxmb8NRZBt2Mro9LizbWEXFvLFyeSqqviU2
+	VHVks2qKRtuQbdCA==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=GdS+Lnhg;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=cx3nW2AF
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1790945101; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=sLsOdwi1hUceimsVUFcOl/fguiWv2isWvjC4TvjZLVk=;
+	b=GdS+Lnhg96MlzI60D2n3vKFzCVBb3CSdXpdTsuPtYdcTtsCUGf0us1GPLBFza9j1ahFJRe
+	ah0UYRQUG2lQsP/DRAYlTjD85D8CfLUjzjQb/iaLa9ZQ6f76KWwkbz/Ze4KlXAcnwDf65C
+	CGQTcG6eRFsNcinzdUiIMWqVs9pbtY8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1790945101;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=sLsOdwi1hUceimsVUFcOl/fguiWv2isWvjC4TvjZLVk=;
+	b=cx3nW2AF0y2nm5OZSYyMvG6loYQCJxdmRBP+bkXw8Pngrzy0nPM+PQzaCbhrOJxX3mQEIG
+	v8apTFO9FvoBFbDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C252D13C73;
+	Fri,  2 Oct 2026 12:45:00 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id V/hJI0ynv2rNTwAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Fri, 02 Oct 2026 12:45:00 +0000
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	decui@microsoft.com,
+	ssengar@linux.microsoft.com,
+	andy@kernel.org,
+	gregkh@linuxfoundation.org
+Cc: dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	linux-fbdev@vger.kernel.org,
+	linux-staging@lists.linux.dev,
+	sashiko-reviews@lists.linux.dev,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v2 0/7] drm: Remove simple-display pipe
+Date: Fri,  2 Oct 2026 14:41:50 +0200
+Message-ID: <20261002124456.741011-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] module: Add stubs.c for CONFIG_MODULES=n
- module_put_and_kthread_exit()
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, linux-modules@vger.kernel.org
-References: <20261002-module-stubs-v2-1-a0d8c6ad1738@suse.com>
- <20261002091451.D4FBC1F00893@smtp.kernel.org>
-Content-Language: en-US
-From: Petr Pavlu <petr.pavlu@suse.com>
-In-Reply-To: <20261002091451.D4FBC1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-3.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-0.996];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	ARC_NA(0.00)[];
+	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,gmail.com,ffwll.ch,microsoft.com,linux.microsoft.com,linuxfoundation.org];
+	DKIM_TRACE(0.00)[suse.de:+];
+	TO_DN_SOME(0.00)[];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+	R_RATELIMIT(0.00)[to_ip_from(RLqtkr6cif1ebgurukgmwdm7xc)];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Spam-Score: -3.01
+X-Spam-Level: 
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 517E921A1C
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spam-Flag: NO
 
-On 10/2/26 11:14 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] bpf: resolve_btfids build failure with CONFIG_MODULES=n and LTO/GC
-> --
-> 
-> commit caaeb9d0651743944c690c066494bb16509c01e9
-> Author: Petr Pavlu <petr.pavlu@suse.com>
-> 
-> module: Add stubs.c for CONFIG_MODULES=n module_put_and_kthread_exit()
-> 
-> This commit introduces kernel/module/stubs.c to hold stub functions when
-> CONFIG_MODULES is disabled. It moves the stub implementation for
-> __module_put_and_kthread_exit() to this new file and removes the
-> corresponding #ifdef from the BPF verifier's noreturn list.
-> 
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index 72a3f5998dd27..be70f10e49682 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
->> @@ -20417,9 +20417,7 @@ BTF_ID(func, __ia32_sys_exit_group)
->>  BTF_ID(func, __kunit_abort)
->>  BTF_ID(func, kunit_try_catch_throw)
->>  #endif
->> -#ifdef CONFIG_MODULES
->>  BTF_ID(func, __module_put_and_kthread_exit)
-> 
-> [Severity: Low]
-> If CONFIG_MODULES=n and dead-code elimination (like CONFIG_LTO_CLANG or
-> CONFIG_LD_DEAD_CODE_DATA_ELIMINATION) is enabled, will this cause 
-> resolve_btfids to fail?
-> 
-> Because the #ifdef is removed, this unconditionally requires the function to
-> be present in the BTF. If there are no callers in the kernel, the linker 
-> might discard the stub function, causing a missing BTF ID and a fatal build 
-> error under CONFIG_WERROR.
+There are no drivers using struct drm_simple_display_pipe left. Remove
+the related helpers from DRM and clear any TODO items. Hyperv-drm needs
+a minor fix to include some additional headers.
 
-This is a valid issue. I think a simple solution would be to mark
-__module_put_and_kthread_exit() as __retain.
+Since we're at it, also remove include statements for the simple-kms
+header that are no longer needed. Most of them are likely left over from
+earlier usage of the simple-display pipe.
 
--- Petr
+Thomas Zimmermann (7):
+  drm/hyperv: Add missing include statements
+  drm/kms-helper: Remove struct drm_simple_display_pipe and helpers
+  drm/bridge: Do not include <drm/drm_simple_kms_helper.h>
+  drm/hisilicon/hibmc: Do not include <drm/drm_simple_kms_helper.h>
+  drm/tegra: Do not include <drm/drm_simple_kms_helper.h>
+  drm/verisilicon: Do not include <drm/drm_simple_kms_helper.h>
+  drm/vc4: Do not include <drm/drm_simple_kms_helper.h>
+
+ Documentation/gpu/todo.rst                    |  17 -
+ drivers/gpu/drm/bridge/inno-hdmi.c            |   1 -
+ drivers/gpu/drm/bridge/microchip-lvds.c       |   1 -
+ drivers/gpu/drm/bridge/synopsys/dw-dp.c       |   1 -
+ drivers/gpu/drm/bridge/tda998x_drv.c          |   1 -
+ drivers/gpu/drm/drm_gem_atomic_helper.c       |  92 -----
+ drivers/gpu/drm/drm_simple_kms_helper.c       | 328 ------------------
+ .../gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c    |   1 -
+ .../gpu/drm/hisilicon/hibmc/hibmc_drm_vdac.c  |   1 -
+ drivers/gpu/drm/hyperv/hyperv_drm.h           |   5 +
+ drivers/gpu/drm/hyperv/hyperv_drm_drv.c       |   1 -
+ drivers/gpu/drm/hyperv/hyperv_drm_proto.c     |   1 -
+ drivers/gpu/drm/tegra/output.c                |   1 -
+ drivers/gpu/drm/vc4/vc4_dpi.c                 |   1 -
+ drivers/gpu/drm/vc4/vc4_dsi.c                 |   1 -
+ drivers/gpu/drm/vc4/vc4_hdmi.c                |   1 -
+ drivers/gpu/drm/vc4/vc4_vec.c                 |   1 -
+ drivers/gpu/drm/verisilicon/vs_bridge.c       |   1 -
+ drivers/staging/fbtft/TODO                    |   4 +-
+ include/drm/drm_gem_atomic_helper.h           |  28 --
+ include/drm/drm_simple_kms_helper.h           |  56 +--
+ 21 files changed, 9 insertions(+), 535 deletions(-)
+
+
+base-commit: 9ecc25f4cc83ac280099d6c39e044d911774018d
+-- 
+2.55.0
+
