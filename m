@@ -1,67 +1,200 @@
-Received: from mail-24418.protonmail.ch (mail-24418.protonmail.ch [109.224.244.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9895F3B27DE
-	for <sashiko-reviews@lists.linux.dev>; Fri,  2 Oct 2026 09:53:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F74A346E74;
+	Fri,  2 Oct 2026 10:46:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790934828; cv=none; b=CIOiyo3kIu3Dn/mV3J9UGquPeq4qnxyr8zaHIOJHVue3ubIYya7gKZsdzBERQQPfVkPIJ2d+RGLJUV2DEsPktY1jAJ7sn8VTdXRlj1i692wGOaQqGmrlimk8LmXXL4TOeZMveAQANEwUnroZBQmsZVuIv8Dkn9B8ejxQQZB5V4s=
+	t=1790937987; cv=none; b=g7PVU/yg1MAhgVS0HDRti5g9fV0pYoCaZD7GtfCZAXWFhMmoESg8p69XXEqkPSLP5iNrJ/1GiHO75Ifsxds74Z32bRUDiWT4fUXi7z7UGmsCcbMnov0xMmijZpcKPNBWV9+rHCqCjQPCNfvfI2nDbNEL06KTdMQSVgjd6OHkfR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790934828; c=relaxed/simple;
-	bh=gBVfS8Z97pp/piGdlIkEVhWZcOZCyLP6JZH2sHnPxI4=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pnmX56NPuRcTegPmTcm/Et5t/imlvkD/uUafEtUP6dvdMhVJXZN/Od0qe/L2j7ZEh6sVwDRVnx0JO/Ps57CNFlbhevdxUOQ2nOUysCPOWrW64EMLKT1MgNs61pdElah3YpHvWYK4Y7DnDMu5LgAlwV+GtGz4zEkq7Mz15B2FTMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=EqSkZGWI; arc=none smtp.client-ip=109.224.244.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	s=arc-20240116; t=1790937987; c=relaxed/simple;
+	bh=ZQJ07gpmYbbEG6GvhdN1M+UrkoAN/Od4laf2T+Hwmic=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=kmlpdi6f94cI47w9eieWVNhsy3WkBHV15VBp4klrwzl+LY0ag/EEhSg727YSigz+XuZo088rTZTyyOCRm9fCvT4ZkrQRmCDGczQCiPO6Gk+irRSRCQnjUv27FmS3yAkXcFv31xlzR/RD5cBl9tt6LhCcHEIXVsl1iBpjyFqCXlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fWC64QWp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="EqSkZGWI"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1790934818; x=1791194018;
-	bh=gBVfS8Z97pp/piGdlIkEVhWZcOZCyLP6JZH2sHnPxI4=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=EqSkZGWIt90Bk+2itJm4JwvBaT8CrCrbwDCHBxI4k36yLUcJfv9GSWAH709/R8Gg7
-	 36ANzuQJJ3qRxmHUmZV/25OoVb8oMDlmUKEvR7S1etMz3YgAoxqeEjcvTlurv8A2fw
-	 R5URhN8yHmXzS97FPQPi4N3TCphgJrBo43gyLTlBofCks0lont+uDw3HoYVakM8E4o
-	 PfvdCs+0urapr6L/hymmk9nhYTjhqo+0se7x9u7YB3G+PtmpCv+Ox+pO267pAKques
-	 VjTcJLvYEi9XxMJO0RSEC/Kf4HHIXvjOyX+TsTsiopt7ppycxhpfMJZaV5q5XICjse
-	 mWm6V1uMgNBQQ==
-Date: Fri, 02 Oct 2026 09:53:32 +0000
-To: Sakari Ailus <sakari.ailus@linux.intel.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Andre Gilerson <andre.gilerson@gmail.com>, Dan Scally <dan.scally@ideasonboard.com>
-From: Sergey Lebedev <lsa.uz@pm.me>
-Cc: Hans de Goede <hansg@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, German Pablo Lindo <germanpapulindez@gmail.com>, sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, linux-media@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v8 2/3] media: i2c: Add Sony IMX681 sensor driver
-Message-ID: <20261002095324.65355-1-lsa.uz@pm.me>
-In-Reply-To: <20261002082537.74084-3-lsa.uz@pm.me>
-References: <20261002082537.74084-1-lsa.uz@pm.me> <20261002082537.74084-3-lsa.uz@pm.me>
-Feedback-ID: 113843758:user:proton
-X-Pm-Message-ID: e99c89fc6fe63ed71028b4fc2830343b8854d6c8
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fWC64QWp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9A61F000FF;
+	Fri,  2 Oct 2026 10:46:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790937985;
+	bh=oAv2rOsqA15/L6vfWCnfyySEcVkci68T9Wxx66gwCVQ=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=fWC64QWp2yL8iB3v679sA2BQDWJ77FPzg5FYeIAkbJ78G1KohB3jDilAOXbhWeBn+
+	 djcA/RMuM6MxGl2yam5Ts25gfkCZbsWDlg6hgNYjGfALN6E+ghzGcLki+MYgHJr75D
+	 BM2q2sCkwEr0pLw5m2YV2gKN0jQ6wEBisdNhPPzg7PwgyJc8ZjvIwEjztxNUf4jHVw
+	 own/sWqtt4ILlI+FDI3z8xggpkCQ9kaWJznOgJsBP7AuSlgdkCLw3mCkEcEWgxOmIs
+	 RJOvk/B0L/ZPd6JWhGUfnWBrTECXo1ZpUFJaV+mkS+cwfqkjbyio9CDFpF6YOBwwil
+	 wIvYNTSNgfBlQ==
+Date: Fri, 2 Oct 2026 10:46:03 +0000
+From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] tracing: Override the same name trace_instance=
+ by latter one
+Message-ID: <20261002104603.3cebd743@mhiramat99.roam.internal>
+In-Reply-To: <20261002091431.DD73F1F000FF@smtp.kernel.org>
+References: <179091984881.537422.15308457677039592540.stgit@devnote2>
+	<179091985884.537422.15845141877166136300.stgit@devnote2>
+	<20261002091431.DD73F1F000FF@smtp.kernel.org>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.51; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Sashiko's review of this patch [1] went to devicetree, not linux-media. It
-asks whether the flip controls are read here without the control handler
-lock:
+On Fri, 02 Oct 2026 09:14:31 +0000
+sashiko-bot@kernel.org wrote:
 
-> When a userspace process calls VIDIOC_SUBDEV_ENUM_MBUS_CODE or
-> VIDIOC_SUBDEV_S_FMT with V4L2_SUBDEV_FORMAT_TRY, the V4L2 core locks the
-> file handle's TRY state, but not the control handler.
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issue(s) to consider:
+> - [High] tracing: heap out-of-bounds write in
+> parse_boot_instance_info due to unescaped tabs
+> - [Medium] tracing: duplicate trace array creation via implicit
+> backup lookup causes tracefs init failure --
+> 
+> commit e7d9ac9646a2e104af11665c8c61543d20737c13
+> Author: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+> 
+>     tracing: Override the same name trace_instance= by latter one
+>     
+>     Override the same name boot instance by the latter parameter.
+>     This allows user to override the trace instance in bootconfig by
+> the cmdline from bootloader.
+> 
+> > diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+> > index e4a490d3d08c8..4590d38969450 100644
+> > --- a/kernel/trace/trace.c
+> > +++ b/kernel/trace/trace.c
+> > @@ -308,6 +309,7 @@ static int __init boot_instance(char *str)
+> >  
+> >  	ret = snprintf(slot, left, "%s\t", str);
+> >  	boot_instance_index += ret;
+> > +	nr_boot_instances++;
+> >  
+> >  	return 1;
+> >  }  
+> 
+> [ ... ]
+> 
+> > +__init static void parse_boot_instance_info(struct boot_instance
+> > *boot_instances) {  
+> 
+> [ ... ]
+> 
+> > +	while ((events = strsep(&str, "\t"))) {
+> > +		if (!*events)
+> > +			continue;  
+> 
+> [ ... ]
+> 
+> > +		for (i = 0; i < idx; i++) {
+> > +			/* Override by the last defined instance */
+> > +			if (!strcmp(name, boot_instances[i].name))
+> > +				break;
+> >  		}
+> >  
+> > +		boot_instances[i].name = name;
+> > +		boot_instances[i].flag_delim = flag_delim;
+> > +		boot_instances[i].addr_delim = addr_delim;
+> > +		boot_instances[i].backup = backup;
+> > +		boot_instances[i].events = events;  
+> 
+> [Severity: High]
+> If a user provides a quoted parameter containing a literal tab (for
+> example, trace_instance="foo\tbar"), won't strsep(&str, "\t") split
+> it into more tokens than what was originally counted in
+> nr_boot_instances?
+> 
+> This loop appears to write beyond the bounds of the boot_instances
+> array when there are embedded tabs, which could lead to memory
+> corruption and a kernel panic during early boot.
 
-The TRY state's lock is the control handler's lock. The driver sets
-sd.state_lock to ctrl_handler.lock before v4l2_subdev_init_finalize(), and
-subdev_fh_init() allocates each TRY state with sd->state_lock, so these
-ioctls hold the same mutex as S_CTRL. No change needed.
+Ah, OK. Such usage is not recommended but it can happen and
+causes array index overrun.
 
-[1] https://lore.kernel.org/all/20261002091451.1476A1F000FF@smtp.kernel.org=
-/
+> 
+> > +		if (i == idx)
+> > +			idx++;
+> > +	}
+> > +
+> > +	nr_boot_instances = idx;
+> > +}
+> > +
+> > +__init static void enable_instances(void)
+> > +{
+> > +	struct boot_instance *boot_instances __free(kfree) = NULL;
+> > +	struct boot_instance *bi;
+> > +	struct trace_array *tr;
+> > +	bool memmap_area = false;
+> > +	char *tok;
+> > +
+> > +	if (!boot_instance_index)
+> > +		return;
+> > +
+> > +	/* Parse the instance name to check the overlap */
+> > +	boot_instances = kmalloc_array(nr_boot_instances,
+> > +				       sizeof(*boot_instances),
+> > GFP_KERNEL);
+> > +	if (!boot_instances)
+> > +		return;
+> > +
+> > +	parse_boot_instance_info(boot_instances);
+> > +
+> > +	for (int i = 0; i < nr_boot_instances; i++) {
+> > +		char *rname __free(kfree) = NULL;  
+> 
+> [ ... ]
+> 
+> > -		if (trace_array_find(name)) {
+> > -			pr_warn("Tracing: Instance %s already
+> > exists\n", name);
+> > -			continue;
+> > -		}
+> > -
+> > -		if (backup) {
+> > -			if (backup_instance_area(backup, &addr,
+> > &size) < 0)
+> > +		if (bi->backup) {
+> > +			if (backup_instance_area(bi->backup,
+> > &addr, &size) < 0) continue;
+> >  		}  
+> 
+> [ ... ]
+> 
+> > -		tr = trace_array_create_systems(name, NULL, addr,
+> > size);
+> > +		tr = trace_array_create_systems(bi->name, NULL,
+> > addr, size);  
+> 
+> [Severity: Medium]
+> With the trace_array_find() check removed, does this unconditionally
+> create a new trace array, even if one implicitly exists?
 
-Sergey
+parse_boot_instance_info() already checks the overlaps.
 
+> 
+> If a user specifies a trace_instance with a backup pointing to
+> another instance defined later (e.g., trace_instance=foo=bar
+> trace_instance=bar), backup_instance_area() will implicitly create
+> "bar" via trace_array_get_by_name().
+
+Ah, that's a good point! we should check it in
+parse_boot_instance_info().
+
+> 
+> When the loop processes "bar" explicitly later on, it seems this code
+> will call trace_array_create_systems("bar", ...) a second time,
+> duplicating the trace array in ftrace_trace_arrays. This duplicate
+> could cause tracefs_create_dir() to fail and abort initialization of
+> subsequent trace instances.
+> 
+
+Thank you,
+
+-- 
+Masami Hiramatsu (Google) <mhiramat@kernel.org>
