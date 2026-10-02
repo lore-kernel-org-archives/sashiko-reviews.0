@@ -1,150 +1,129 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CDD2773E4
-	for <sashiko-reviews@lists.linux.dev>; Fri,  2 Oct 2026 02:47:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A4E1C5D5E;
+	Fri,  2 Oct 2026 03:06:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790909259; cv=none; b=e5tgEW0TIQp8RSNfIjQdsU+ilISyvIGmDbaEMhMx3RnZvPyOjo5iHqcx3uzoeHtNkI9PsfeimRQdLBP07reRJCdfEdLJigHLeF8d1Ql3QSYDf0H/G0SbFjXp0gFNPMsO1mJMWtIzobN/urktRPEVYKv1E4We0D1vu+FmsN6NJEA=
+	t=1790910376; cv=none; b=pCAEuQWb+QOWhda2OjZIXbK0r2kYjhSFb/t39UWCQMZktjc5L8uoTlmoR5iDSza7QFt3GL83cf7R5bqGu8/Pn12Q050z6K1Og02UElLQe6d0L8OVpjm+elNUP4rKJQ4Iq7rHUIauICJLR4RzJJk5CmRiPiDOUQzrzJe8Qy47T6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790909259; c=relaxed/simple;
-	bh=CUMD//euyUn0AtRSVe0ri0IJIQ+TNNUPlWVQRqcBkmw=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=pG5AlgoHkcoyfYxhY7P2TbeRIhlhBel0VpyszsE+F4SydobkiUnIEzEYDVqIdYzj7maA7wk/Eu625qr6Wl8fjZM9xpFDM06DFbzG3zfdxA3+H8GWJvh9Wq0edhkpCcbeon3OIgvOFpGOPtR54/rIye1UOxhXpRYSqSHnR/Owb7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=dJE1h+Gf; arc=none smtp.client-ip=220.197.31.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1790910376; c=relaxed/simple;
+	bh=oAwuRKh00IONPA+rvwAu8qtOhpyvxCrtbPvNTzsGGls=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nfr3Us3WMMPlO1mSlb/ft/kQ01RTKyATee88ApgJeJ3csheekUS1kFT/PHI7kxEBdqyIwEbKGW4Kbp5nI5pyeBGhLR+W9AycR1B419NG+K+pbcqOLUp4KO1gFZ7vuvI+Kh0gh3mkBexAnbkpZPOxCrgJBgv2hRkfdwyc1HPDrpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QFNBLgcq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="dJE1h+Gf"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=Ig
-	PosaQZzzRdSuWu6GnBn41EP9uSuMfYZlnF4bOOBxI=; b=dJE1h+GfuqWnZhc/O1
-	HfBJM+SRP2C8JjgjrT42zfgVuXVJ3c2Czdgii845JPoHstG7H8vBs0dK090fjiw6
-	hWcB3YfR7dqzoW7zfbvije+mtLa7sVwIShNpR0hwZgmxU+ukLUHQ/4ZGndFMbp/3
-	qVs67c0TvrhEAeIEycbndWkPo=
-Received: from localhost.localdomain (unknown [])
-	by gzga-smtp-mtada-g0-2 (Coremail) with SMTP id _____wD3H4YvG79qL5ryBw--.20560S2;
-	Fri, 02 Oct 2026 10:47:12 +0800 (CST)
-From: wang wei <a929244872@163.com>
-To: sashiko-bot@kernel.org,
-	bbrezillon@kernel.org,
-	miquel.raynal@bootlin.com,
-	richard@nod.at,
-	sashiko-reviews@lists.linux.dev,
-	vigneshr@ti.com,
-	wenyou.yang@microchip.com,
-	yamada.masahiro@socionext.com
-Cc: linux-kernel@vger.kernel.org,
-	linux-mtd@lists.infradead.org,
-	wang wei <a929244872@163.com>,
-	stable@vger.kernel.org
-Subject: [PATCH V3] drivers/mtd: rawnand: nandsim: Fix stale NAND_ROW_ADDR_3 with overridesize
-Date: Fri,  2 Oct 2026 10:47:09 +0800
-Message-Id: <20261002024709.16510-1-a929244872@163.com>
-X-Mailer: git-send-email 2.25.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QFNBLgcq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8026B1F00893;
+	Fri,  2 Oct 2026 03:06:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790910374;
+	bh=RDka1zA21dVd1416/IcxvzoMzp3YA9EEJUMJC3MFjhg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=QFNBLgcq5wKOo9AZs3TZFPld5HYa60SIMUSoUqZ1JYyxwysCTiwsaF46UOZFaioYT
+	 PgGpmCfPOdDnf4cCQDJ/hNprbBsl4j3Vq8YNbBiRRdlrB7cd10ys8ZVJep4C01cgfX
+	 ajJ/sQL2LAMHemGUrKLhYkFQQbHxNgAhGtwPkbXHykDqDHrJPnuoVGNXCdgM79WT0M
+	 YqWpdJphUj5CRVxHn2eJcn55Kt5T4MzPXydBYRQohVg0cx/v1T+dMRrk20/yxCdJj6
+	 szayJ4nfsXJPecZfz3jfgaNX8iAHCN/oKHZmbJSxVvbMlco7hUcCaA5lkaK5xcVrG8
+	 Ag2Ik2p3eu46Q==
+Date: Fri, 2 Oct 2026 03:06:12 +0000
+From: Yixun Lan <dlan@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, devicetree@vger.kernel.org,
+	linux-scsi@vger.kernel.org, robh@kernel.org
+Subject: Re: [PATCH v6 2/2] scsi: ufs: spacemit: k3: Add UFS Host Controller
+ driver
+Message-ID: <20261002030612-GKC51329@kernel.org>
+References: <20260921-08-k3-ufs-support-v6-0-3479768a2299@kernel.org>
+ <20260921-08-k3-ufs-support-v6-2-3479768a2299@kernel.org>
+ <20260921124652.AF2201F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wD3H4YvG79qL5ryBw--.20560S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxWw13Aw4xuF4kurWfCFy3urg_yoWrWr4fpr
-	WUGayUKw4DGF9rurZrZ3Wru3WrJ3ZYya1j9FyfA34F93W5ury2va45KryYkF1UAF4rX3WY
-	vrs3XryDC3WYv3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pREoGPUUUUU=
-X-CM-SenderInfo: jdzsmjiuuylji6rwjhhfrp/xtbCwhBdBGq-GzDAJwAA3S
+In-Reply-To: <20260921124652.AF2201F000FF@smtp.kernel.org>
 
-The overridesize module parameter changes the size of the simulated
-device after nand_scan() has completed. It updates nsmtd->size,
-memorg->eraseblocks_per_lun, chip->chip_shift and chip->pagemask to
-match the new geometry, but leaves the NAND_ROW_ADDR_3 option
-untouched, even though nand_scan_ident() set it from the geometry
-decoded out of the ID bytes.
+Hi ALL,
 
-When the ID bytes describe a device larger than 128 MiB and
-overridesize shrinks the simulation to 128 MiB or less, the stale
-option makes the core emit one extra row address byte (page >> 16,
-always zero given the reduced page count) in every read, program and
-erase operation, while the simulator state machine expects one byte
-less. All accesses then fail with:
+On 12:46 Mon 21 Sep     , sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] scsi: ufs: spacemit: missing M-PHY TX EQ configuration for lane 1
+> - [Medium] scsi: ufs: spacemit: unchecked return value from quirk configuration
+> --
+> 
+> commit 16f84e82c7f6101530a90dc4cc7509a53d6ac1b4
+> Author: Yixun Lan <dlan@kernel.org>
+> 
+> scsi: ufs: spacemit: k3: Add UFS Host Controller driver
+> 
+> This commit introduces the UFS host controller driver for the SpacemiT K3
+> SoC. It implements the vendor-specific configurations and initialization
+> sequences required to interact with the M-PHY and UniPro hardware.
+> 
+> > diff --git a/drivers/ufs/host/ufs-spacemit.c b/drivers/ufs/host/ufs-spacemit.c
+> > new file mode 100644
+> > index 0000000000000..941506cc5ab68
+> > --- /dev/null
+> > +++ b/drivers/ufs/host/ufs-spacemit.c
+> 
+> [ ... ]
+> 
+> > @@ -211,6 +211,9 @@ static int ufs_spacemit_uniprov1p6_init(struct ufs_hba *hba)
+> > +		/* RX HB8_TIME CAP */
+> > +		{ UIC_ARG_MIB_SEL(0x0092, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(0)), 0x64 },
+> > +		{ UIC_ARG_MIB_SEL(0x0092, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(1)), 0x64 },
+> > +		/* TX EQ 3DB */
+> > +		{ UIC_ARG_MIB_SEL(0x00CD, UIC_ARG_MPHY_TX_GEN_SEL_INDEX(0)),  0x5 },
+> 
+> [Severity: Medium]
+> The TX EQ 3DB attribute is explicitly configured for lane 0, but the
+> corresponding configuration for lane 1 (UIC_ARG_MPHY_TX_GEN_SEL_INDEX(1))
+> is missing in ufs_spacemit_uniprov1p6_init(), unlike other dual-lane
+> attributes in this array.
+> 
+> Can this missing equalization on lane 1 cause signal integrity issues and a
+> high error rate on the second TX lane, potentially degrading performance or
+> causing transmission failures unconditionally during the UniPro initialization
+> sequence when the device operates in 2-lane mode?
+ignore this comment, the configuration will also apply to lane 1
 
-    nandsim: error: write_byte: address (0x0) isn't expected, expected
-    state is STATE_CMD_READSTART, switch to STATE_READY
+> 
+> > +		/* RX garbage cnt = 32 SI */
+> > +		{ UIC_ARG_MIB_SEL(0x00F2, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(0)), 0x9F },
+> > +		{ UIC_ARG_MIB_SEL(0x00F2, UIC_ARG_MPHY_RX_GEN_SEL_INDEX(1)), 0x9F },
+> > +	};
+> 
+> [ ... ]
+> 
+> > @@ -401,6 +401,9 @@ static int ufs_spacemit_apply_dev_quirks(struct ufs_hba *hba)
+> > +	int err;
+> > +
+> > +	if (hba->dev_quirks & UFS_DEVICE_QUIRK_HOST_PA_SAVECONFIGTIME)
+> > +		ufs_spacemit_quirk_host_pa_saveconfigtime(hba);
+> 
+> [Severity: Medium]
+> The return value of ufs_spacemit_quirk_host_pa_saveconfigtime() is neither
+> assigned nor checked in ufs_spacemit_apply_dev_quirks(), ignoring potential
+> DME access errors.
+> 
+I will add a check and abort if it fails
 
-The opposite direction is equally broken: growing a small device past
-128 MiB keeps NAND_ROW_ADDR_3 cleared, so the third row address byte
-is dropped and the wrong pages are silently addressed.
+> If the PA_SaveConfigTime quirk configuration fails, could the error be
+> silently ignored, causing the device to operate with an invalid timing
+> configuration and leading to link instability or failure when a device
+> requiring UFS_DEVICE_QUIRK_HOST_PA_SAVECONFIGTIME is initialized?
+> 
+> > +
+> > +	if (hba->dev_info.wmanufacturerid == UFS_VENDOR_WDC)
+> > +		hba->dev_quirks |= UFS_DEVICE_QUIRK_HOST_PA_TACTIVATE;
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260921-08-k3-ufs-support-v6-0-3479768a2299@kernel.org?part=2
 
-This used to work before commit 14157f861437 ("mtd: nand: introduce
-NAND_ROW_ADDR_3 flag"). Back then nandsim kept chip->chipsize in sync
-with the override, and nand_command_lp() decided at run time, per
-command, whether the third row address cycle was needed by testing
-chip->chipsize against 128 MiB. This code thus always saw the
-overridden size. The above commit moved the decision to
-nand_scan_ident(), which encodes it once into NAND_ROW_ADDR_3 at
-scan time -- before nandsim applies the override -- and the
-overridesize path was never taught to re-evaluate the flag. 
-
-Re-evaluate NAND_ROW_ADDR_3 right after overriding chip_shift, using
-the same test as nand_scan_ident().
-
-The core encodes the third row address cycle as "the row address is
-wider than 16 bits", ie. more than 65536 pages, regardless of the
-page size. ns_init() however derives its expectation from the total
-size with a hardcoded 128 MiB threshold, which is only equivalent
-for 2 KiB-page devices. For 4 KiB-page devices between 128 MiB and
-256 MiB (32768 < pgnum <= 65536) the row address still fits in two
-bytes, so the core drops the third byte while ns_init() keeps
-expecting it. Fix ns_init() to derive the row address width from the
-page count as well, which also matches the small-page branch (32 MiB
-of 512-byte pages is exactly 65536 pages).
-
-Fixes: 14157f861437 ("mtd: nand: introduce NAND_ROW_ADDR_3 flag")
-Cc: stable@vger.kernel.org
-Signed-off-by: wang wei <a929244872@163.com>
----
-Changes in v3:
-- Drop the comment block on the flag re-evaluation.
-- Also derive ns_init()'s pgaddrbytes/secaddrbytes from the page
-  count instead of the hardcoded 128 MiB threshold: re-evaluating
-  the flag alone would regress 4 KiB-page devices overridden into
-  the 128-256 MiB range, where the stale flag used to match
-  ns_init()'s (incorrect) 5-byte expectation serendipitously.
-  Reported by reviewer.
-  
-Changes in v2:
-  Remove unnecessary comments
-  
----
- drivers/mtd/nand/raw/nandsim.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/mtd/nand/raw/nandsim.c b/drivers/mtd/nand/raw/nandsim.c
-index fe96803..90dbb93 100644
---- a/drivers/mtd/nand/raw/nandsim.c
-+++ b/drivers/mtd/nand/raw/nandsim.c
-@@ -686,7 +686,7 @@ static int __init ns_init(struct mtd_info *mtd)
- 			ns->geom.secaddrbytes = 3;
- 		}
- 	} else {
--		if (ns->geom.totsz <= (128 << 20)) {
-+		if (ns->geom.pgnum <= (1 << 16)) {
- 			ns->geom.pgaddrbytes  = 4;
- 			ns->geom.secaddrbytes = 2;
- 		} else {
-@@ -2359,6 +2359,11 @@ static int __init ns_init_module(void)
- 		targetsize = nanddev_target_size(&chip->base);
- 		chip->chip_shift = ffs(nsmtd->erasesize) + overridesize - 1;
- 		chip->pagemask = (targetsize >> chip->page_shift) - 1;
-+
-+		if (chip->chip_shift - chip->page_shift > 16)
-+			chip->options |= NAND_ROW_ADDR_3;
-+		else
-+			chip->options &= ~NAND_ROW_ADDR_3;
- 	}
- 
- 	ret = ns_setup_wear_reporting(nsmtd);
 -- 
-2.55.0.windows.3
-
+Yixun Lan (dlan)
