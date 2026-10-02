@@ -1,40 +1,42 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9E44EF14B;
-	Fri,  2 Oct 2026 16:50:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F6583382CB;
+	Fri,  2 Oct 2026 17:02:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790959839; cv=none; b=I5/MhACCh21nhMoOWOeeBMV1GEEuc45CHWCVU8DaoITL3wbqIzujEMDNwA2UYiWWya8Go4K2enHt4o5i5vxGGtgYhyY67NF5XTv7ASCyCJFzY+pLNaNt+wWV5B83pGUZ4hvvWcS5D1q4AlbBzdG9DbQRZb6pXdYNR3kuWNF2ZvM=
+	t=1790960578; cv=none; b=aKwO2AdqOSNIz19hth0RBZf+sgHJY/bt1b/U/xF/GpfEtUczNUxW87tkjcxO14nG0JNRJ0SFJ++1+AQCuiZPZywwc9nxj6RPgzB7HB0jj81mLOvdBo5Tfg1Gtsjq4rhqhEvF/VnW9fu/KR4eAkmCVDVuhPowv0qndcRto7Yylo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790959839; c=relaxed/simple;
-	bh=95x3xlDiI2815n07zzg/LipKgqeGPOjrYNNYimMmE1k=;
+	s=arc-20240116; t=1790960578; c=relaxed/simple;
+	bh=AujEG1ysY5IJFtWwYdnh06UeIW4r3DOKSApXusGeGxM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d+ynHX7Vu6Glsyy0o0PavOfpnhwgX6xJWfdQoryrRea+0qENtn1vOGqPDQqam858qNFayX/Iz+IE0aHIzf2TY0PnFuowrWC3Wkz4GyPc1SYWPxGBxiMs8GFAqdJRP1X8WJ3yx0YHB+0THm9kENEnSUoPglCU4Qg9sDp824xPYQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VfYLT+H8; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=DraUjlENzePqxt0krx3DPXZjAduAmQ1XSBiG9jzoJp6G5adufjx+Q8ZpCeUGNGk37JViwu1ig6UvSr0qyDXkoKUWJoRsUkEAIEpcLPUxf33vrJAYCQH00RZBtX6pFVo/+NOIR8mcWLpFbF7e8NL2hyelIpJ8DsfKlcFSWA5aA18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Htjy25Ij; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VfYLT+H8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125E71F000FF;
-	Fri,  2 Oct 2026 16:50:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790959838;
-	bh=iU941MCnit9NZoso/+yvrXLFeMMiJWq38g6mRlpKti4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=VfYLT+H8WSRoWF9w6/ROPOg49cJC06QH4zKtnt7J1ullfUBQYnkk7xMmxm3bPw9oj
-	 KgStcyUdRMX5AnjLGKtQsrhFOYUevWT3UauGdHscls1SvrNHb1QK7s0XugQojHmMBo
-	 UWYrCK5uQO/woS80RaZ0Y7aMTxWQza9YlTTciQiTSd+tk7UoU6nwx1MnnMsuFx/x3s
-	 oSZG3V5sUCdN0UQgSlW+bJ8SAKt0Gw2C4N6SC0U1D22oKh/F7/s2ARzaY6OiBExr2w
-	 Epz+zsVr9V0POS7kM2k5RwnFrrsid4yte5JoVyKovs42ee/8O0ks2hNFEoPw+k7Z1G
-	 Ht+Bb0r1GqHdw==
-Date: Fri, 2 Oct 2026 11:50:36 -0500
-From: Rob Herring <robh@kernel.org>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Htjy25Ij"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3CE602F;
+	Fri,  2 Oct 2026 10:02:53 -0700 (PDT)
+Received: from e129823.arm.com (e129823.arm.com [10.2.213.3])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E085A3F86F;
+	Fri,  2 Oct 2026 10:02:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1790960576; bh=AujEG1ysY5IJFtWwYdnh06UeIW4r3DOKSApXusGeGxM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Htjy25IjFnqUGOnh4KBghZ8ryIF0YjUJg8NYh2au01V2VpYWUdp4QJ1JmaqcxfnJc
+	 dgBkdgtnJVzGBtFQ0zi6K+yhL7TltxajxflAMNlUHxD7Ng7dr3U3QbdrmsHeJaZgV5
+	 vVl7jIvT3o7KVpjvkg0iP/tLiXO9q/aJ+c1JCATM=
+Date: Fri, 2 Oct 2026 18:02:53 +0100
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH net-next v2] dt-bindings: net: Convert HiSilicon hns-dsaf
- to DT schema
-Message-ID: <20261002165036.GA2622685-robh@kernel.org>
-References: <20260930201919.76465-2-robh@kernel.org>
- <20261002091340.E8C1C1F0089A@smtp.kernel.org>
+Cc: Yeoreum Yun <yeoreum.yun@arm.com>, linux-rt-devel@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v12 01/14] coresight: etm4x: read-back TRCSEQSTR at
+ disabling and prohibit modifying seq_state while enabling.
+Message-ID: <ar_jvRE0C0Jb8WDE@e129823.arm.com>
+References: <20260924-separate_etm_cfg_v2-v12-0-a2b41d2f7c2b@arm.com>
+ <20260924-separate_etm_cfg_v2-v12-1-a2b41d2f7c2b@arm.com>
+ <20260924174611.917571F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -43,77 +45,71 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261002091340.E8C1C1F0089A@smtp.kernel.org>
+In-Reply-To: <20260924174611.917571F00893@smtp.kernel.org>
 
-On Fri, Oct 02, 2026 at 09:13:40AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] dt-bindings: additionalProperties false ignores properties from $ref
-> - [Medium] dt-bindings: missing required properties desc-num, buf-size and subctrl-syscon
-> - [Low] dt-bindings: driver still uses removed top-level phy-handle property
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] coresight: TOCTOU race in seq_state_store lockless mode check
+> - [Low] coresight: misplaced IS_ERR_OR_NULL(drvdata) after dereference
 > --
 > 
-> commit d25b601aef3405df25a4432415cfd3e767a90222
-> Author: Rob Herring (Arm) <robh@kernel.org>
-> Subject: dt-bindings: net: Convert HiSilicon hns-dsaf to DT schema
+> commit fb240199cfa6db080873efbe2c007beb70c01070
+> Author: Yeoreum Yun <yeoreum.yun@arm.com>
 > 
-> This commit converts the HiSilicon hns-dsaf device tree binding from
-> the old text format to the new YAML schema format. It drops the
-> top-level phy-handle property and adds the media-type property.
+> coresight: etm4x: read-back TRCSEQSTR at disabling and prohibit modifying seq_state while enabling.
 > 
-> > Convert the HiSilicon hns-dsaf binding to DT schema format.
-> > 
-> > Drop 'phy-handle' at top level as there are no users. Add undocumented
-> > 'media-type' property.
+> TRCSEQSTR can be changed by the ETM while a session is active. Its value
+> therefore needs to be preserved when a sysfs session is disabled so that
+> users can read the current sequence state after the session ends.
+> 
+> > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+> > index cc6cdd3ae29d5..db3cf4ad6806c 100644
+> > --- a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+> > +++ b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+> > @@ -1437,6 +1437,8 @@ static ssize_t seq_state_store(struct device *dev,
+> >  		return -EINVAL;
+> >  	if (val >= drvdata->nrseqstate)
+> >  		return -EINVAL;
+> > +	if (IS_ERR_OR_NULL(drvdata) || coresight_get_mode(drvdata->csdev))
+> > +		return -EBUSY;
 > 
 > [Severity: Low]
-> Is it entirely accurate that there are no users of the top-level
-> phy-handle property?
+> Does this code introduce a regression by checking drvdata for NULL after it
+> has already been dereferenced?
+> 
+> Looking at seq_state_store(), drvdata is dereferenced during the check for
+> val >= drvdata->nrseqstate before IS_ERR_OR_NULL(drvdata) is called.
 
-Yes, there are no .dts users. It is not even clear if these platforms 
-are even being used. HiSilicon folks can add it back if they care.
+Yes. I'll fix it.
 
 > 
-> Looking at hns_mac_init_phy_handle() in
-> drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c:
+> While drvdata is fundamentally guaranteed to be valid in this sysfs context,
+> making the check technically dead code rather than a reachable crash, should
+> the validation be moved before the dereference if it is kept?
 > 
->     np = of_parse_phandle(mac_cb->dev->of_node, "phy-handle",
->                           mac_cb->mac_id);
-> 
-> The driver still explicitly parses this property from the top-level DSAF
-> node as a fallback if port subnodes are not present. Removing this from
-> the schema without removing the fallback logic in the driver will cause
-> out-of-tree or legacy device trees relying on this feature to needlessly
-> fail schema validation.
-> 
-> Should it remain in the schema (possibly marked as deprecated) until the
-> C driver is patched to drop support entirely?
-> 
-> [ ... ]
-> > diff --git a/Documentation/devicetree/bindings/net/hisilicon,hns-dsaf-v1.yaml b/Documentation/devicetree/bindings/net/hisilicon,hns-dsaf-v1.yaml
-> > new file mode 100644
-> > index 0000000000000..36251b45abeb9
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/net/hisilicon,hns-dsaf-v1.yaml
-> [ ... ]
-> > +patternProperties:
-> > +  "^port@[0-5]$":
-> > +    description: DSA Fabric port node
-> > +    $ref: ethernet-switch-port.yaml#
-> > +    additionalProperties: false
+> >  
+> >  	config->seq_state = val;
 > 
 > [Severity: Medium]
-> Does additionalProperties: false correctly allow properties inherited
-> from the $ref?
+> Could this lockless mode check cause a regression?
 > 
-> Under JSON Schema semantics, additionalProperties only restricts the
-> properties explicitly listed in the local object, completely ignoring
-> any properties evaluated via a $ref.
+> A concurrent thread could enable the trace session immediately after the
+> lockless coresight_get_mode() check evaluates to disabled. This would allow
+> config->seq_state to be modified while the session is actively starting or
+> already active, completely defeating the patch's stated goal of prohibiting
+> state modification during an active session.
 > 
-> Would it be better to use unevaluatedProperties: false here so standard
-> Ethernet port properties aren't incorrectly rejected by dt_binding_check
-> when present in the device tree?
+> Should raw_spin_lock(&drvdata->spinlock) be held across both the mode check
+> and the subsequent state update to prevent this regression?
+> 
+> >  	return size;
+> >  }
 
-There aren't any properties from ethernet-controller.yaml used. Again, 
-old platform, no new users, and possibly unused.
+This doesn't matter, TBH I don't expect user concurrently setup the
+configuration while session is not ended yet and similar problem
+is already exist before separation of this patch too.
 
-Rob
+So, this is ignorable.
+
+-- 
+Sincerely,
+Yeoreum Yun
