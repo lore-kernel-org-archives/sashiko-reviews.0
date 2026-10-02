@@ -1,109 +1,95 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F26D3F329E
-	for <sashiko-reviews@lists.linux.dev>; Fri,  2 Oct 2026 12:52:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DDB497B76
+	for <sashiko-reviews@lists.linux.dev>; Fri,  2 Oct 2026 13:07:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790945539; cv=none; b=FnC9aIQoMAbaKmVQdFRQi3CMDBj/dNoBBTldEQni8sosax3IcHP/gsUU2eD3S5dCCOnOW6wCPY82ayfYBqBC/P9OEd9ohoxvY4tr9k5PpB22vKudIzFMWR/yI4gnoQVsYgjsLW8rylTOYuOLqoLiYOb1QSPABeMW82V6TKxmp/k=
+	t=1790946481; cv=none; b=NNQY4lk+tJsPb7mP3cp58aIBh0jJzZaTP80Umj697dpIS7+5YgA35ksgHt1mjHomurIwxjYXLNPDuyIfKb55UJ4NJvX0gkQtOkqhmXMqiUhARLFPnpybHbSz5bDwHL1VEAaQQR31qgoxTCj7rNVQiScWYf+IXUZefNO7ldTy1I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790945539; c=relaxed/simple;
-	bh=f6JvRf5cXMcwuYhI5B1gEJ3HcRG24XuF8kIGhCAv6MA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aOq/NusNnyweZAjlHoXyJ+6aEgE9gzf6a6k5vDcQLmaZFW8PhX6KS5HJM8ZPK+5fJhODYc6I+6amhwrm3PNP+hbf7+r7v8y9fea++gh34L1iwqCQWaKhbu0xZIT8cRe27kP2WyH/y7Y6/1DPf68SXcMg/UhwZeKbKoZjZvD6MWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=a0fzFgLo; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1790946481; c=relaxed/simple;
+	bh=rxlktV5QmP9O8gmeTAM7mahiIUPXqUp0GbzhOcDZy1M=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=i3KaUq9Ntrun3Ys52Y+jqrOMZ7ihFImjsLf/5u++6s2bSttJQ0CM0teVFdUTB+hXJLC0MOpvemsNdOr8DXlsdvhtoHzXHYCeqlbuSsO+pcqIytKhDNT8TFGXbC8yVrHP/ohPk/tLjFpIBwRvILsJcFBpAKAcJT+Y+NhTujkpc0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c/rsOFCL; arc=none smtp.client-ip=74.125.228.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="a0fzFgLo"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1790945537;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tCH7oA4DdPw+pCkiWuwkP5ynmVOdNK54ww31eSeUk6E=;
-	b=a0fzFgLo1Znmomj5C37P84t9RmLkAKa6KC7Yew4YFvPbq2zU+MlDGGcDLtlviEf3KZ+L4U
-	EZuaxg5v/tBsE8wj10I4S/VpqybCU7BPxDl/EKBdYdU1vf+VKlbF1rmhjTCmKSWcc8dOpz
-	efb7u6qiO8N4qgTXQOkzRmRQJkZNZO8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-410-xXegnkzePiy0lC9lbIOINw-1; Fri, 02 Oct 2026 08:52:15 -0400
-X-MC-Unique: xXegnkzePiy0lC9lbIOINw-1
-X-Mimecast-MFC-AGG-ID: xXegnkzePiy0lC9lbIOINw_1790945535
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-4a0228f4a1bso32945e9.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 02 Oct 2026 05:52:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c/rsOFCL"
+Received: by mail-pz2-f12.google.com with SMTP id d2e1a72fcca58-8686f46e4adso4878599b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 02 Oct 2026 06:07:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1790946465; x=1791551265; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=rxlktV5QmP9O8gmeTAM7mahiIUPXqUp0GbzhOcDZy1M=;
+        b=c/rsOFCLbPkpGnUdO7dCdzXnjst5wuawgI5qbeA6LmR3Et50ZfxeUXYfiSSaAACqZx
+         zA+hw2YXiUXWl3aEWEYBVLYhIsYJxCsYTbdtxtzvIfs7Hi0KTWRX7Pts1Kfz1sEkaR1w
+         yeAIPAPXwfmeWVo3cQO6q1m1DNGthKts7MkIZBgM8cB6zclYlxaQgnirtO/lqysg9yHr
+         M0ymfMhExRLZu2S29U52oTmreaxV9AGSxaCAvVOiM6sFzFGuKoWtLj+h5aiWm5oHCl3J
+         5iHq0LUfWEpLNybqJtIr8oc2WDxRWs87/n125Tt5yaXaR4cq+l7cRfROxwWcBdI6ztj8
+         Oxnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790945534; x=1791550334;
-        h=content-type:mime-version:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=tCH7oA4DdPw+pCkiWuwkP5ynmVOdNK54ww31eSeUk6E=;
-        b=GD1eH1qi1uSRZ5uzfXOg1QaxT6O1MkciEFM+JvbUfSQ9ROZtdlR3xDdiR+6+RuUrIv
-         DfJZywUeQZXaZ+WyirzmtFSLyktiCC8oZHJaOAjnfwPhWULM+uCQpZodEq3GHk10wEn6
-         UdEdQDCACWPNuDWBwKvUcCU2e4ce3Hj/yMPamQPBhFWv8pWFW8Wu5b656nUABCKFtPj8
-         PoxCPiSWagnJ8i3ISsQe5CyDKr5Y51F3EroKT3aEG6zqD5M17aMzxddtyTw8AkF3HKGV
-         1j3yMnmIRs1UsS2UjqkeVaYrmwkvMn+xAq9NzZR6+/9sv+JYo+gx/KbBpvHWccUSHcV7
-         ow1g==
-X-Forwarded-Encrypted: i=1; AKwUvBy74W/qug2m0su+e4uc0mz7/xK2dyTvfIOS6RdSrw37C1iAhrwq/UyXjxv1SvehJiAxJNcjZ5RndOyB1EQ4KXU=@lists.linux.dev
-X-Gm-Message-State: AFuF++nEDo6y4WlgvnRBg9adzTmY51pIaRGZum+H/iiSv79s4qE3mi7O
-	SEyGUkq/yVPa+PcjBu6KoJ1qOI3M13cGNDzr5CwmHIMuLbV5tYCBHsKBdBNpsueZJll2nnfIaCT
-	ch8QyzsKt4xNHuHHL7cFt2MD6uiGeGRnGCWsVDkoz+4XgtbrnSkTZkNpMN1CTfrjm8Fwd7Q==
-X-Gm-Gg: AYBFou1WnSvzMpAM5CWMzeclgda9xiEE1/QJrx/bQ/pFmi5INNvFa7Fcd+noKS9+qBE
-	5R6bTPQZknASTN2QQMjT9wsO2PtBRouMZ6PyC3qGHLhCcvNcsEZrZ3hCtEK/QFzrL2hfniaXORO
-	eAKBOT4vxDeh0AtiVV/+mSyp1DDlZ5NpSMOOF/6wXSgJ5M0Bzb3wJ9bAZWjx0NSKVzRvXRCrZQN
-	WNyddqWuJcYoa9P//BHZCkZ1MrareC3XrjJ7OTf4r+Np4gUitE06zmcE0nux2WNnpumupbYd+YF
-	gGbQjY5wm3q+8rXZraBQDgYbg19Dt5CpHPU26B48NKk1aPm3nZiFsgWdCC0z853U9cI0qP0YYFH
-	S3eHE0gm2qBB6WxyruATeUYDjx2VAl46jffj2gkXZnAsBJWM+vu94OWd2tQbNQspRbQ==
-X-Received: by 2002:a05:600c:1911:b0:499:b65e:49c9 with SMTP id 5b1f17b1804b1-4a02756643dmr43591525e9.10.1790945534471;
-        Fri, 02 Oct 2026 05:52:14 -0700 (PDT)
-X-Received: by 2002:a05:600c:1911:b0:499:b65e:49c9 with SMTP id 5b1f17b1804b1-4a02756643dmr43591275e9.10.1790945533987;
-        Fri, 02 Oct 2026 05:52:13 -0700 (PDT)
-Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48b38105239sm7570526f8f.33.2026.10.02.05.52.13
+        d=1e100.net; s=20260707; t=1790946465; x=1791551265;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=rxlktV5QmP9O8gmeTAM7mahiIUPXqUp0GbzhOcDZy1M=;
+        b=qisnq8qJ8dJgsCM7hj+2vixZKGvWbHYLsEoh+r6K/wShS4SQGfpvoVmw8DwZgJiMk9
+         ES+kdGBv51r8+JttLQ122Q04YRT7LMG7G7zbKF/XYNYihgIhnKCfUjvU+wduupJwuiHX
+         n1/Thw6xSRFOBrf5XOtlGE68M5XHQcoMNDfWMzs9ENHqG8FLYpU4jNjhfvVo4oqult+j
+         lAVeeGr9BCAzqxAwfggVRlSnos7QTDuDYu469b1hsBKu9te+K9uMhYVUACCv17PODi4g
+         aqW/BYHTZiyK99iESvvodb4cAWlVLl4wjmtoIbzrKkOmQ6sI3CHIrYCXnTrQpiqcbvMD
+         EdsA==
+X-Gm-Message-State: AFuF++nHM0Nfa8CS7lipMUAAe1ucZKCAczXMlZ5b8CotAfVRggFaU9b+
+	a6JP7JPxGkOuLqxSN3RLBpt5y79UfQ6GFOgcwB47CLKuXzSp6zGchs3r+MD2mHYZRdA=
+X-Gm-Gg: AYBFou0HvOWlwQp34xvaCKlOHTVI2KXBqVKBqjhN41Q8GizIpXhZSwy4Z/CQchAJVWz
+	ZAgzdEuZG7OzaI2RV3jrzB3WzljR2fA5vjbo2gHXXlr9bRdOXRGRFEfWWD9y/ysnsOgHxwZYDyF
+	V1ERf4G4mZQa0R8cdj2Ew99DHXxAlwZuxVPVTk/x6XRvt/Cc/1ohFXLn/jTOaopylygbancYj3j
+	1YioRnUHTAgF4nVBac3XE6OHl15rIclYEY582YT9Pa/KSLq/lKC8EV30+/VMe6uN3nvCKyq24Hl
+	JsP9Iq5/A3WhKVtGR6zeTVE7khBPoEtyf9ezByu/8PalfZ3N2ENAws53VHhKR3CXyggHi1swcHN
+	3twiS8bpG6VqdR+XVpAPD1Rbw2Xn3mVsgsXhnKJol5ypi/3jtQj6Mg2/lABjH9xsGR5trddScae
+	AOaARFnKUz29acR9mY05nWg5WWeD8EjpAp0yX7YJ4sTHaJG7yE5oAjhUwWDMDAp9XV8mehRlZmD
+	SzjGV3rqtXtw/0=
+X-Received: by 2002:a05:6a00:9285:b0:874:706d:856a with SMTP id d2e1a72fcca58-88af7aade2bmr2356719b3a.27.1790946464816;
+        Fri, 02 Oct 2026 06:07:44 -0700 (PDT)
+Received: from DESKTOP-NM9EKIA ([125.134.240.130])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-88b0c3a4862sm853157b3a.32.2026.10.02.06.07.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Oct 2026 05:52:13 -0700 (PDT)
-From: Javier Martinez Canillas <javierm@redhat.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
- simona@ffwll.ch, decui@microsoft.com, ssengar@linux.microsoft.com,
- andy@kernel.org, gregkh@linuxfoundation.org
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-fbdev@vger.kernel.org, linux-staging@lists.linux.dev,
- sashiko-reviews@lists.linux.dev, Thomas Zimmermann <tzimmermann@suse.de>
-Subject: Re: [PATCH v2 7/7] drm/vc4: Do not include
- <drm/drm_simple_kms_helper.h>
-In-Reply-To: <20261002124456.741011-8-tzimmermann@suse.de>
-References: <20261002124456.741011-1-tzimmermann@suse.de>
- <20261002124456.741011-8-tzimmermann@suse.de>
-Date: Fri, 02 Oct 2026 14:52:09 +0200
-Message-ID: <xlv15wzk6z9i.fsf@fmartine-thinkpadx1carbongen12.rmtes.csb>
+        Fri, 02 Oct 2026 06:07:44 -0700 (PDT)
+From: Joonhoe Kim <26rote@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Joonhoe Kim <26rote@gmail.com>,
+	dri-devel@lists.freedesktop.org,
+	robin.clark@oss.qualcomm.com,
+	lumag@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	sashiko-bot@kernel.org
+Subject: Re: [PATCH] drm/msm/dpu: stop all video interfaces before cleaning up a split encoder
+Date: Fri,  2 Oct 2026 22:07:41 +0900
+Message-ID: <20261002130741.50757-1-26rote@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.5
+In-Reply-To: <20260929131840.DF20C1F0089E@smtp.kernel.org>
+References: <20260929130621.943-1-26rote@gmail.com> <20260929131840.DF20C1F0089E@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: EN3GmYumU3Uo_LJV90ZrkVZ3yxq7MtOYS-Cf6VJh1oc_1790945535
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Thomas Zimmermann <tzimmermann@suse.de> writes:
+On Tue, 29 Sep 2026 13:18:40 +0000, sashiko-bot@kernel.org wrote:
+> Could this result in the vsync being permanently missed, causing the wait
+> to timeout?
 
-> The vc4 driver does not require anything from the simple-kms
-> header. Do not include it.
->
-> Suggested-by: Javier Martinez Canillas <javierm@redhat.com>
->
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Yes, the window is real; I did not hit it in 13 cycles, but nothing
+prevents it. v2 stopped only the slave interfaces up front, and v3
+follows Dmitry's suggestion and disables the slave before the master,
+so no timing engine is stopped outside its own disable path:
+https://lore.kernel.org/all/20261002130712.50612-1-26rote@gmail.com/
 
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-
--- 
-Best regards,
-
-Javier Martinez Canillas
-Core Platforms
-Red Hat
-
+Thanks,
+Joonhoe
