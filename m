@@ -1,157 +1,169 @@
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA7B49552B
-	for <sashiko-reviews@lists.linux.dev>; Fri,  2 Oct 2026 13:36:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9614AD7C8
+	for <sashiko-reviews@lists.linux.dev>; Fri,  2 Oct 2026 13:48:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790948189; cv=none; b=UWByX5Kp+jQ3o0WPIKPn+fQASEAVxZKLSYWCKq2XXvrexGQ80JbbyZz5gK0I7JM234bdmJ7nx19iNh+Z57peAeKrl/x+ZaCmHzBNaZlEATiZblsrbvhOnThZg08713xtmLgWF8Qz8XqBMwHNegYzJSl0265Q+sI6kfxEJUtaVoY=
+	t=1790948882; cv=none; b=HhZMlO9PEWU3/CD+7ZcZTAQOMcy0JGlBI/bjaRVAKcR73+n5OBmsVDy5My6R6q18VfeUWs7YhgvWmDL/aNNqMFZW2ynFi4WFsnyCbPnbmgCj/olBhhoAe6CUZDzDxQKDkaS7bjhT47LGN+HyMuqt7r9Kv+tV4/zYNcQMGzGWEsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790948189; c=relaxed/simple;
-	bh=QF+V7wNqKGgV7XYoB6glXEczeqS/jN2SsUOlgbKk4Gc=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=ClsA+Ur7Md9l6rHXHp4JojTrkXCtO1oiaI/EKGfdolG7mT2mqNThZug4t84PTjGqSYUWZdgBu++p3R2qjTOX8NK+cvnlGvvr8kzKZm5M1kYi3AiyoWy/110wOb2Hz887epuaZ+d88n5+znQpEzg4TS+lInc5e+kdN+OibaKy/gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=BM3NbAEG; arc=none smtp.client-ip=209.85.216.72
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	s=arc-20240116; t=1790948882; c=relaxed/simple;
+	bh=ZdaMnhg0+U5nMFJz6GrDRt3qR1lCDZwhfTCkgtyg/Y0=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=kbsc1ymbcyoUuz/+FvkZxzSac1jdlsL51B8w7dDFYobxxiTC+7eSuv4HWiaKq0KJjSlfBE6LJmFgOnCXXBVOv3S+WEex1efxQOUdUfaG73qU7UZDJir+7K4VrvRvW70TUD65BOFKhFbw7mKTv9npWAvGVpErM8J9nTsayuQ9esA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lcWAsXr8; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BM3NbAEG"
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3a470ead068so5204744a91.3
-        for <sashiko-reviews@lists.linux.dev>; Fri, 02 Oct 2026 06:36:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1790948187; x=1791552987; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=HH7Yz/iMGy273Km5ybMiRdHkxei7Nci6prC81C4z3FM=;
-        b=BM3NbAEGqPIIX1iDCZmdFPM3a4XV6Sx7miKWxgp0dEIYwZOSTzGiWVz0rAEhdtFAOZ
-         uMOFcaJuz1bkAi7ojPBmEEnN/yMmLWZhCDS2pSHZx1frH4lLxvSveN2NfsfjVXCGzYCA
-         BgbSM7E85wl9qQHS4KMJzNHp/ddtYNLq4mB4CGo310FJ4PQX2/C1txxihRgYqSVmQ6fe
-         jutVFRDE9cqjiY7Q/I/nUwg+hGQM74oJhvdWKQltPZO/gVcBU2NSiVo7vGiLEBstlWeW
-         u3aoy4sk3SuuKb7rdsyZ2AXAxy/H5LejofPm7LULO91VcSLrDEFVlS/Vv9y4TDSo4yL6
-         Q+MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790948187; x=1791552987;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=HH7Yz/iMGy273Km5ybMiRdHkxei7Nci6prC81C4z3FM=;
-        b=MytcfrUYyQEQLeZCe4q0yCtC8APDkX+IIXY1PamIS9TR+kZgO8fxVW/8pYYorfq6fM
-         lkQ1yjx3ocTxA3H9fbDyAPfH1ULWddQ/yvS6+8qgHuKufXZhwp28VV3oSIquBcxSEFrP
-         6hTIndqZo88PJ0whwmNK84KDiCvBDz7RQ0Y9Nw6gjroqt/3d4gKGVX5rKCtJqOLJGq7B
-         QoDT2rfprjAF3cnxtGQS+Sdv7NbdggdnKt5bXb2HUFujwXikLpqfGo3X4/+qVr1hEp8N
-         ecg+ed8CEEX7MpVDlJNRGEVY58lIv90t4wrL3ZBhl1grgu7QFvgYroGYCfIXscFwiIlS
-         8BuA==
-X-Gm-Message-State: AFq9FYLW0Wq40b0XWiceWoT2VbYf8UiUSyfFcThRz1IO6p6jba72zfJs
-	OS4lz8fNaViF9tStU+FaS0Tm+7u3gguahXwvt+VIU3nJzJUX8UEIuFa89QKM07u+Gli5urY41Tj
-	ytkeUDlqIDB/VppPC0z1QjJ5pVgWYp3oFdERLnWn1q+vtbVBnnc+6Y4t7CWLxPgQiNf+dY2ej3M
-	DKKl7E1GMOAczJEJfM4jSJLO06ngP4aDxZ9mICM3TgIjzHgABz
-X-Received: from pjbic4.prod.google.com ([2002:a17:90b:4144:b0:3a4:e23e:7b0c])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90a:f17:b0:3a6:e159:a22b
- with SMTP id 98e67ed59e1d1-3a6e159b4demr648478a91.34.1790948186809; Fri, 02
- Oct 2026 06:36:26 -0700 (PDT)
-Date: Fri, 2 Oct 2026 06:36:25 -0700
-In-Reply-To: <20261002091342.50ADA1F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lcWAsXr8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1790948881; x=1822484881;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=ZdaMnhg0+U5nMFJz6GrDRt3qR1lCDZwhfTCkgtyg/Y0=;
+  b=lcWAsXr8h3CR0hBNCnFB68RVEvDBYS9hFUM5j7DKSCa0WZlRvzEv6u/B
+   NbsrLe/h8CP+rmlvRayeSMJZyKd0PRZTYzdV4Dq4JrkOSSzixiuBovlA5
+   ltipX6tK+OQd+G0j7ooTeOh9RNRjB0iqkEnlbO0/P5Ke8vDWc0+PyIuZu
+   /JJUn8VcdUMJS6q5uSXoxCnWCX4B8H5Y7Cls+X6+dVtogLirOVheGKWEB
+   d7kCqE49/hpdsxNbXGnP2TPlupdzes3D781y5Ck0gX8+pNlZed4OVw0Bj
+   7Yyka4VDGLsMh0UfAGDJfavzGpjplc0uvewLum+0b2lzXFdHOHDviJBH9
+   g==;
+X-CSE-ConnectionGUID: d5JP4VieTdmTfZESSaWFwA==
+X-CSE-MsgGUID: txtz5Kl5RCiMAtvnYJkEjw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11923"; a="90614438"
+X-IronPort-AV: E=Sophos;i="6.27,136,1787036400"; 
+   d="scan'208";a="90614438"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Oct 2026 06:48:00 -0700
+X-CSE-ConnectionGUID: ctyVlKXYQW+fbD2DLGHEsA==
+X-CSE-MsgGUID: HNxBVGcoSF+IUM9ikHUQNw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,136,1787036400"; 
+   d="scan'208";a="272656601"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.243])
+  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Oct 2026 06:47:58 -0700
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Fri, 2 Oct 2026 16:47:54 +0300 (EEST)
+To: sashiko-reviews@lists.linux.dev
+cc: linux-pci@vger.kernel.org
+Subject: Re: [PATCH v2 7/7] PCI/quirks: Avoid certain address on Genoa
+ systems
+In-Reply-To: <20261002114833.679371F000FF@smtp.kernel.org>
+Message-ID: <27be560c-4b69-bc39-f362-bd77b217d7c5@linux.intel.com>
+References: <20261002113319.6652-1-ilpo.jarvinen@linux.intel.com> <20261002113319.6652-8-ilpo.jarvinen@linux.intel.com> <20261002114833.679371F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20261001202234.3794060-1-seanjc@google.com> <20261001202234.3794060-4-seanjc@google.com>
- <20261002091342.50ADA1F000FF@smtp.kernel.org>
-Message-ID: <ar-y8vCZt84a_xm7@google.com>
-Subject: Re: [PATCH v2 03/10] KVM: x86: Unmap VMAs for KVM-internal memslots
- when the memslot is freed
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-515967273-1790948874=:1156"
 
-On Fri, Oct 02, 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] kvm: double unmap of internal memslot VMA causes host UAF
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-515967273-1790948874=:1156
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+On Fri, 2 Oct 2026, sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] pci/quirks: skipped workaround and UAF on rescan due to dangling=
+ resource pointer
 > --
-> 
-> commit 120ca6d762cdf95d09e394aff4bb4af6d01288d6
-> Author: Sean Christopherson <seanjc@google.com>
-> KVM: x86: Unmap VMAs for KVM-internal memslots when the memslot is freed
-> 
-> This commit unmaps KVM-created VMAs for KVM-internal memslots when the
-> associated memslot is freed directly, instead of using x86's internal API,
-> to prevent VMA leaks on teardown.
-> 
-> > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-> > index 79468ddfe4736..e91bd79dd3cc6 100644
-> > --- a/arch/x86/kvm/x86.c
-> > +++ b/arch/x86/kvm/x86.c
-> 
+>=20
+> commit 988b9fe1c0d1202ac7629ed0f5250a0381f61b90
+> Author: Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
+>=20
+> PCI/quirks: Avoid certain address on Genoa systems
+>=20
+> This commit addresses a 64kB iomem black hole on Genoa systems that cause=
+s
+> reads to return ~0 and blocks overlapping BARs from working. It reserves =
+the
+> problematic space via a bridge quirk.
+>=20
+> Closes: https://bugzilla.kernel.org/show_bug.cgi?id=3D222074
+>=20
+> > diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+> > index de9bbccda21fd..5483b47d8d544 100644
+> > --- a/drivers/pci/quirks.c
+> > +++ b/drivers/pci/quirks.c
+>=20
 > [ ... ]
-> 
-> > @@ -10066,6 +10048,16 @@ void kvm_arch_free_memslot(struct kvm *kvm, struct kvm_memory_slot *slot)
-> >  	}
-> >  
-> >  	kvm_page_track_free_memslot(slot);
+>=20
+> > +static struct resource black_hole_res =3D DEFINE_RES_MEM_NAMED(0x9c000=
+000, SZ_64K,
+> > +=09=09=09=09=09=09=09     "reserved");
 > > +
-> > +	/*
-> > +	 * Free memory regions allocated on behalf of userspace, unless the
-> > +	 * memory map has changed due to process exit or fd copying.  Leak the
-> > +	 * mapping on failure, e.g. if the task is killed, worst case scenario,
-> > +	 * the page(s) will be reclaimed when the process exits.
-> > +	 */
-> > +	if (current->mm == kvm->mm && slot->id >= KVM_USER_MEM_SLOTS &&
-> > +	    !WARN_ON_ONCE(!slot->npages))
-> > +		vm_munmap(slot->userspace_addr, slot->npages * PAGE_SIZE);
-> >  }
-> 
+> > +static void genoa_iomem_black_hole(struct pci_dev *dev)
+> > +{
+> > +=09struct resource *r;
+> > +
+> > +=09pci_bus_for_each_resource(dev->bus, r) {
+> > +=09=09if (!r || !r->flags || !resource_assigned(r))
+> > +=09=09=09continue;
+> > +
+> > +=09=09if (!__resource_contains_unbound(r, &black_hole_res))
+> > +=09=09=09continue;
+> > +
+> > +=09=09if (resource_assigned(&black_hole_res))
+> > +=09=09=09pci_dbg(dev, "iomem black hole workaround already applied\n")=
+;
+>=20
 > [Severity: High]
-> Does this unconditionally unmap the VMA for every freed internal memslot object,
-> potentially leading to a double unmap?
-> 
-> In __x86_set_memory_region(), the twin memslot objects are created with the
+> Can this lead to a use-after-free and cause the workaround to be skipped =
+on
+> rescan?
+>=20
+> During the first probe, insert_resource() sets black_hole_res.parent to t=
+he
+> dynamically allocated host bridge window. If the PCI bridge is subsequent=
+ly
+> removed, the bridge's resources are released and freed.
+>=20
+> However, release_resource() unlinks the parent but does not clear the par=
+ent
+> pointers of child resources. Because black_hole_res is statically allocat=
+ed,
+> its parent pointer is left dangling.
+>
+> When the bus is rescanned, resource_assigned(&black_hole_res) evaluates t=
+o
+> true due to the dangling parent pointer. The code erroneously logs "alrea=
+dy
+> applied" and skips inserting the reservation into the new bridge window.
+>
+> This leaves the new window unprotected, allowing subsequent BAR allocatio=
+ns
+> to fall into the 0x9c000000 black hole.
 
-Ugh, SMM, which is the "twin" aspect Sashiko is referring to.
+Before sending this, I did test removing the PCI devices all the way to=20
+the Root Complex (RC included) and the black hole marker weathered the=20
+storm just fine.
 
-> exact same userspace_addr for each address space:
-> 
-> 	for (i = 0; i < kvm_arch_nr_memslot_as_ids(kvm); i++) {
-> 		struct kvm_userspace_memory_region2 m;
-> 
-> 		m.slot = id | (i << 16);
-> 		m.flags = 0;
-> 		m.guest_phys_addr = gpa;
-> 		m.userspace_addr = hva;
-> ...
-> 
-> When the VM is destroyed or the memslot is deleted, KVM iterates over all
-> address spaces and calls kvm_arch_free_memslot() for each memslot object.
-> 
-> Because vm_munmap() is called here without checking if slot->as_id is 0, could
-> it unmap the same HVA range multiple times?
+I suppose if I'd proceed removing something from further up (something=20
+ACPI side?), the scenario might actually occur but why would anyone want=20
+to do that?
 
-Heh, I arrived at the same conclusion before reading this.
+I think this goes to the territory where root has many ways to shoot=20
+oneself's own foot...
 
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index e91bd79dd3cc..e55aa26e26cc 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -10050,13 +10050,15 @@ void kvm_arch_free_memslot(struct kvm *kvm, struct kvm_memory_slot *slot)
- 	kvm_page_track_free_memslot(slot);
- 
- 	/*
--	 * Free memory regions allocated on behalf of userspace, unless the
--	 * memory map has changed due to process exit or fd copying.  Leak the
--	 * mapping on failure, e.g. if the task is killed, worst case scenario,
--	 * the page(s) will be reclaimed when the process exits.
-+	 * Unmap VMAs allocated on behalf of userspace for internal memslots,
-+	 * unless the memory map has changed due to process exit or fd copying.
-+	 * Do the unmap only for the non-SMM slot, as the same VMA is used for
-+	 * both non-SMM and SMM memslots.  Leak the mapping on failure, e.g.
-+	 * if the task is killed.  Worst case scenario, the page(s) will be
-+	 * reclaimed when the process exits.
- 	 */
- 	if (current->mm == kvm->mm && slot->id >= KVM_USER_MEM_SLOTS &&
--	    !WARN_ON_ONCE(!slot->npages))
-+	    !slot->as_id && !WARN_ON_ONCE(!slot->npages))
- 		vm_munmap(slot->userspace_addr, slot->npages * PAGE_SIZE);
- }
+--=20
+ i.
+=20
+> > +=09=09else if (!insert_resource(r, &black_hole_res))
+> > +=09=09=09pci_info(dev, "iomem black hole workaround enabled\n");
+> > +=09=09else
+> > +=09=09=09pci_dbg(dev, "iomem black hole workaround add failed\n");
+> > +=09=09return;
+> > +=09}
+> > +}
+> > +DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, 0x14ab, genoa_iomem_black_=
+hole);
+>=20
+>=20
+--8323328-515967273-1790948874=:1156--
