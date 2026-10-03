@@ -1,44 +1,44 @@
-Received: from mta1.migadu.com (out-72.mta1.migadu.com [95.215.58.72])
+Received: from mta1.migadu.com (out-126.mta1.migadu.com [95.215.58.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8E4547056
-	for <sashiko-reviews@lists.linux.dev>; Sat,  3 Oct 2026 06:17:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D372F30C164
+	for <sashiko-reviews@lists.linux.dev>; Sat,  3 Oct 2026 06:24:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.126
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791008269; cv=none; b=YY8CxLk+t9mTAa8m1LgS/RwRgJ58KpKvQtyOyH0KD0PDOHO5+1+LwEVlPRJymSR+t+7eCwUUUxO+CddQsT2pbEWyV79W3YD66pnhpAl2wk42dXC3jTPLvZ6TDNRwAO8o6Hi25ka/4KGMq2vn59+/BgORFWlp35jX0joEZasAqh0=
+	t=1791008648; cv=none; b=mhUaVsdpxuH9FloDqfrhEO53rIUuQ0yL5yBGYYHeP5S5jGWwqllLjiv6dBWbVvmyC7bJVLRmMyZ6OUcZywtful+cR83+wtkZs5bKrjdide4qE7KZp3cCgC4jUHn4ichVEUjrfS0F+k4vlFJC3Ca7oGJ4LM1oqi80fWhBNYuNk+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791008269; c=relaxed/simple;
-	bh=Cn3gxRbdQGSoHGFt/R4ctEUU1BHG04emF26Eenc075Q=;
+	s=arc-20240116; t=1791008648; c=relaxed/simple;
+	bh=uXr2q7UZes+MeSF6RarEYCzlQMvAzuwsQ0pseuoaz2I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Cmg7w/y38eoxfrL5foiKG5DxUs7PF+NcK7yTice9DzLdlryASkqHf2wBBFdEOlaw7pSiAnnWMoz+rlJlwGFlqLNQKAVvyXtJlGMujBTRVpsvN4tvvuw5Kf5vo0brZ9oj6zRNhRlIs5izaDj63Cc/+ZaDxgQQ7V0EgriIGCeDqgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qocXrE2I; arc=none smtp.client-ip=95.215.58.72
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z3Rgyn463uqxkWHwqgOOTLMsVDtPTaZOaf6aiKnOIYtux6e1S00vr3wA/SCaYy1g4ZEuLlprDskKW2c6/WNLO3vD7G9gdc9HnGQh4c4Kyq8dDGD1XhZb6p+rzloOdA2AVJU0Z3dQjnZwxipw8glDpUY3el1080jCsDPcShwJs6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=I3ynhin+; arc=none smtp.client-ip=95.215.58.126
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qocXrE2I"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="I3ynhin+"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=Cn3gxRbdQGSoHGFt/R4ctEUU1BHG04emF26Eenc075Q=;
+DKIM-Signature: a=rsa-sha256; bh=uXr2q7UZes+MeSF6RarEYCzlQMvAzuwsQ0pseuoaz2I=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791008265; v=1; x=1791613065;
- b=qocXrE2IeNzKqrHFNa0PMIX9q7RzxiuBBKvJfbRUQSDEGw3ZUqZ3wxlT6vuDWvUVYlSP4BZZ
- v8Ie/uDNmeZBwR653ueiy6+uA0/rCSulGvreIbvbGBf1zhTH7SbpTG+8b7M3WLlssFHCT7hYP14
- /NcGzz03xa/JIUBVfbZ4NGIk=
+ t=1791008644; v=1; x=1791613444;
+ b=I3ynhin+y1MOY6yewIJDVRDoe7ViJIxwHoMLR1xw4GwlQgKju5xQSSCe6lWayNvTrUXa2efz
+ Pk3KyrIaw9jPqVvQhtG/TC7xI6ejdH4dsMMvMdImiPhpgBvIbWj2OLlFLsVicPn0NFvTgb4XFzY
+ PPfWp9X+tzaIsiEbGvZt7d5M=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta10.migadu.com with ESMTPS id 86151182d8391d4f;
-	Sat, 03 Oct 2026 06:17:45 +0000
-X-Mizu-Trace-ID: 86151182d8391d4f
+Received: by mta10.migadu.com with ESMTPS id d7c4947124629513;
+	Sat, 03 Oct 2026 06:24:04 +0000
+X-Mizu-Trace-ID: d7c4947124629513
 X-Migadu-Flow: FLOW_OUT
-Date: Sat, 3 Oct 2026 14:17:37 +0800
+Date: Sat, 3 Oct 2026 14:23:53 +0800
 From: Hangbin Liu <hangbin.liu@linux.dev>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH net-next v3 6/6] netlink: specs: rt-route: describe
- seg6-local attrs
-Message-ID: <asCeAciYgnEBZNab@fedora>
+Cc: bpf@vger.kernel.org, netdev@vger.kernel.org
+Subject: Re: [PATCH net-next v3 2/6] tools: ynl: convert enum selector to
+ string for sub-message parsing
+Message-ID: <asCfefn6IADLNDtD@fedora>
 References: <20260930-ynl_rt_encap-v3-0-4106c21b9ee7@kylinos.cn>
- <20260930-ynl_rt_encap-v3-6-4106c21b9ee7@kylinos.cn>
- <20261001015133.E361A1F000FF@smtp.kernel.org>
+ <20260930-ynl_rt_encap-v3-2-4106c21b9ee7@kylinos.cn>
+ <20261001015134.963061F00898@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -47,73 +47,82 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261001015133.E361A1F000FF@smtp.kernel.org>
+In-Reply-To: <20261001015134.963061F00898@smtp.kernel.org>
 
-On Thu, Oct 01, 2026 at 01:51:33AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] netlink: incorrect type: flags causes uAPI mismatch for seg6-local-flv-ops
-> - [Low] netlink: yaml naming convention violation in seg6-local-flv-ops name-prefix
-> - [Low] netlink: missing doc properties on new major yaml spec additions
+On Thu, Oct 01, 2026 at 01:51:34AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] ynl: early return 0 aborts entire parsing loop on unknown sub-message
+> - [Medium] ynl: invalid C code generated for external enum selectors
 > --
 > 
-> commit 1d8d137d71e90b2ea51b5a3ae23d03831ee06b0b
+> commit f2c434cd3f008807f1723585dcbfd634aa3f28b7
 > Author: Hangbin Liu <liuhangbin@kylinos.cn>
 > 
-> netlink: specs: rt-route: describe seg6-local attrs
+> tools: ynl: convert enum selector to string for sub-message parsing
 > 
-> This commit adds SEG6 local actions enums and seg6-local-flv-ops flags to the
-> rt-route Netlink specification. It also replaces binary attributes with nested
-> seg6-local-bpf, seg6-local-cnt, and seg6-local-flv definitions.
+> YNL sub-message parsing expects a string selector for strcmp(). So for
+> non-external enum selectors, convert the integer value to its string form
+> via the family's {enum}_str() helper. This enables correct decoding of
+> sub-messages keyed by enum values.
 > 
-> > diff --git a/Documentation/netlink/specs/rt-route.yaml b/Documentation/netlink/specs/rt-route.yaml
-> > index afec0375661f5..0260fca398d2c 100644
-> > --- a/Documentation/netlink/specs/rt-route.yaml
-> > +++ b/Documentation/netlink/specs/rt-route.yaml
-> > @@ -116,6 +116,45 @@ definitions:
-> >        - rpl
-> >        - ioam6
-> >        - xfrm
-> > +  -
-> > +    name: seg6-local-actions
-> > +    type: enum
+> > diff --git a/tools/net/ynl/pyynl/ynl_gen_c.py b/tools/net/ynl/pyynl/ynl_gen_c.py
+> > index 15c79849c6096..783242537fe48 100755
+> > --- a/tools/net/ynl/pyynl/ynl_gen_c.py
+> > +++ b/tools/net/ynl/pyynl/ynl_gen_c.py
+> > @@ -951,13 +951,31 @@ class TypeSubMessage(TypeNest):
+> >              sel_var = f"_sel_{sel}"
+> >          else:
+> >              sel_var = f"{var}->{sel}"
+> > -        get_lines = [f'if (!{sel_var})',
+> > -                     f'return ynl_submsg_failed(yarg, "{self.name}", "{selector}");',
+> > -                     f"if ({self.nested_render_name}_parse(&parg, {sel_var}, attr))",
+> > -                     "return YNL_PARSE_CB_ERROR;"]
+> > +
+> > +        local_vars = None
+> > +
+> > +        if self.selector.is_enum_val():
+>             ^^^^
 > 
-> [Severity: Low]
-> Does this new major property need a doc field? The Netlink subsystem
-> guidelines recommend that each major property should carry a doc entry to
-> explain its purpose.
+> [Severity: Medium]
+> Will this generate invalid C code for external enum selectors?
 > 
-> [ ... ]
+> The condition doesn't check if the selector is external. If a YAML spec
+> defines a sub-message with an external enum selector, it appears this will
+> generate a non-existent structure member access for the presence variable:
 > 
-> > +  -
-> > +    name: seg6-local-flv-ops
-> > +    type: flags
-> > +    name-prefix: seg6_local_flv_op-
+>     pres_var = f"{var}->_present.{sel}"
+> 
+> and try to pass the string pointer to the enum string helper, which expects
+> an integer. Should this check include `and not self.selector.is_external()`?
+
+OK...
+
+> 
+> > +            enum = self.family.consts[self.selector.get_enum_name()]
+> > +            pres_var = f"{var}->_present.{sel}"
+> > +            parse_sel = f"{sel}_str"
+> > +            local_vars = [f'const char *{parse_sel};']
+> > +
+> > +            get_lines = [
+> > +                f'if (!{pres_var})',
+> > +                f'return ynl_submsg_failed(yarg, "{self.name}", "{selector}");',
+> > +                f'{parse_sel} = {enum.render_name}_str({sel_var});',
+> > +                f'if (!{parse_sel})',
+> > +                'return 0;']
+>                  ^^^^
 > 
 > [Severity: High]
-> Can using type: flags here cause a uAPI mismatch with the kernel?
-
-Right, I forgot the change the type and name prefix.
-
+> Does returning 0 here abort the entire parsing loop?
 > 
-> The kernel uAPI defines these operations as sequential values (for example,
-> SEG6_LOCAL_FLV_OP_USD is 3). When type: flags is used, the YNL code
-> generator will emit bitmasks (1, 2, 4, 8), resulting in
-> SEG6_LOCAL_FLV_OP_USD being incorrectly defined as 8 in the generated
-> headers.
+> If a generated YNL parser encounters an unrecognized sub-message enum
+> selector (for example, sent by a newer kernel), it looks like `return 0;`
+> executes directly inside the attribute loop of the parsing function.
 > 
-> Would it be safer to use type: enum to ensure the generated values match
-> the existing kernel constants?
-> 
-> [Severity: Low]
-> Also, could the name-prefix use dashes instead of underscores? The naming
-> convention for YAML specs specifies that names should contain dashes, as
-> the code generator handles converting them to underscores for the C code.
+> This would silently abort processing the remainder of the Netlink message and
+> drop all trailing attributes without returning an error. Is it possible to
+> skip the attribute and continue parsing instead?
 
-Yes, I will fix it.
+OK, I will use continue then.
 
 Thanks
 Hangbin
-> 
-> [Severity: Low]
-> Additionally, should seg6-local-flv-ops include a doc property?
-
