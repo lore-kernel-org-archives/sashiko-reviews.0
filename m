@@ -1,185 +1,138 @@
-Received: from mail-wr2-f34.google.com (mail-wr2-f34.google.com [74.125.225.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A429309EFC
-	for <sashiko-reviews@lists.linux.dev>; Sat,  3 Oct 2026 02:05:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.225.98
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790993110; cv=pass; b=Q6p0mxEKdemskDo7kHdqPoyv6a4a/9ofTBA2RM6MJVyb2F3AWw1SMUmwYMUyTevzNDNlV64soKVy3+0vROVaTSqJjyQaZX3SN4/U2noNnC9ObpnUBtDB73EiGQo5ACaBiTPCU2eyyRw218+KoRcSqYmeoHqFo0HjeEPCMGrI5Sw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790993110; c=relaxed/simple;
-	bh=qaonKjcNM5SnG3XPM5ZaN1TL+Neq6W6d2iqmRt1cKI8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lJDh0K0sLmRr8jbzwnlkDgxh9AaZ0Ap13cQP2Oq3829hL46U2Cg7G7TenddGW8cLISmf0Z7oj3/n7XXguqOYprV///gm/7W3kUfROFnBhAEQRb4NwBotMkHw715qS/1VDkj4RsKrEe4xXjj9Xo6VlMpVxUDahj6No1W0Giz9VRU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nahida.im; spf=pass smtp.mailfrom=nahida.im; dkim=pass (2048-bit key) header.d=nahida.im header.i=@nahida.im header.b=i7a4Dr3d; arc=pass smtp.client-ip=74.125.225.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nahida.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nahida.im
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CE171FF7C8;
+	Sat,  3 Oct 2026 02:30:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790994626; cv=none; b=j2ihWb0FhaqgJI1SoMs4pySjUqV0EjNNUXV3BKlSi+8CsUBYTBWVb3mrq65vOM3ovRfea8SGM9/ck39I4wXHKPDaHGBG7tIT2FTjoU4Rmq+7TKRLUAxPHLLJ/s8kbl2J46VzkU+P+Y6ho/tQBVWlEMJIrO4wdbe3O0Vsth5eRwk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790994626; c=relaxed/simple;
+	bh=bOZ8zCdpPujZhaWmDqARnL6IPmO6aZcDhybIp53bYX8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NgAIE75xTHHJLRR+aTksLyNW5VAuJgpsTnZV3Ny2NUP0TmyFrRSf9npaNI8lsj7Mk6ZDpEgUztd2tnK7Cjx5zL5f+doM1PVP22JQV5cENfZx+BNjz+4Yf6tZPl+nCebHW+E5X8xdf7pxcHH4b4yg3Agh48GHF7itm0rA0BZMBSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=BmutJxP9; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nahida.im header.i=@nahida.im header.b="i7a4Dr3d"
-Received: by mail-wr2-f34.google.com with SMTP id ffacd0b85a97d-48b01c4f4daso29678f8f.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 02 Oct 2026 19:05:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1790993106; cv=none;
-        d=google.com; s=arc-20260327;
-        b=oAFhiGYi3PE6M8fs3D9wvtFKieHnzs/k9ZkKlzaXF+3ki4z85VMMMxHiSNb3QpSY2+
-         PMCWV1/NlkiZjaLv7rSO8nKMuQmyA6lKvSG40Y/i1/4GzhBsDrHmZpsOJDCSkm0qXGo4
-         arRHbSZ231raIQoOWLxXG0QnnDNlyyTpPFc1lDe271FJnkDOW+Ms0l9yJb/9v7UKVfcP
-         Yw8rzwRNveL5RG10QjNFHTdS+/X/GUQL4FmgL6/UHammFic9j5CEPdiaMWxDlMMyiUh+
-         WqP1BXrtkkCcwOOBP4w8xQ+07B2q50oq5qmrzL3iAlMgL0532a4TSGDSXueKm7jxEggJ
-         n9gA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=t+8QgWjahKnuvKzRyDtBXHsZJiJkScJBHz23qDo+hDM=;
-        fh=bN3WHTlzXcVIr2RkgMpk3NXK/DwXOefqRaFpMbeYf7s=;
-        b=L/DJo9NJCoS0jTMk+bV8UNFti/Odfl3Bd035pvHBY7UCICm1snAX1F+KkvlnnfgqOP
-         a3NF92G6IzmHY4q89pLE/0OVJaF/c06iJ9MQ17o5J+J57xOE44EUOXpvLypue5RXe9GE
-         0YeM+6+VIuc4+lScVVmG2ztF90W6hTFGwd6Wp+bzcWRzseN5R2xYS+j4gaBmvM0twpA5
-         jHf4QLY5rniob/anje2kaVdrlR39cqlAaRHwKvReuS6xqC7In1N/Jn/QTcbGABEzDIBr
-         xP89/cADRLE9ayOktBOcAmI6/cmua1A6weKgzUreqoi67K9C6xgTLHTAC/zhxqOSIW6i
-         Xhhg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nahida.im; s=nahida; t=1790993106; x=1791597906; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=t+8QgWjahKnuvKzRyDtBXHsZJiJkScJBHz23qDo+hDM=;
-        b=i7a4Dr3dzircVH4dW1Uktw43H46M91X3pfmhsXln3iZz1JKzpd65ToFZk2HW0Jm15m
-         J+Omfd4H0KpqsmFv3Ji11Y384Jbyz2bURZ/0b27+MTLLOX9Io+Z5jn05M+EefntY6xm2
-         /tW24LtdXscMv3vi+bidO5mmEvB7B1WxloMreS0wIf2Mp7q9P8BZ8HES4JSi3seVLzri
-         bPNnArm2w+HJFHh2ToEAdTwTbIBtXI3Az7rE9tofBohc6bTadAg1v6ztrdlZ9sQLw5km
-         RVvL856C2sFQroNFUj2viCGddol6MQ54c1wK10ouxSOMvE0NntFTzrybv474QOmqCLFJ
-         TLSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790993106; x=1791597906;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=t+8QgWjahKnuvKzRyDtBXHsZJiJkScJBHz23qDo+hDM=;
-        b=k2mKJFsTweAoAhZHfrK/YjMdZodrNCE2du2pacQxy5CHqPuE1atG/YLX4q8sJ32j+i
-         mHF/jcFXjrLiQ3DZAHiURAG4/RHuXbYVAAPv/wuh9lCKn3/TARuORGk837uh5a0a2bCB
-         X2eDMS5fmezXatkKy9F/I0Cw2Xw6DrUziN5aX9obr8EyP5HQihdfB9T66XWh93vZuX8i
-         iKRbA7P39J8C0jv9A76fBpPoTncqkdjlrZysCNJfAlm2KExcglf6iilQsnnkCw8SPrbZ
-         mJCWgqpHaysxJBNxQZTIObMK0u8WY2QgJtm5DG7JbFekK8X2c6ILeR1irxMyAMRy7U9A
-         VqLQ==
-X-Gm-Message-State: AFq9FYJTNXbvrRR5AKWlR/1US2LzonWKgWHkMEbYwg50RLebW3DBqIHi
-	gDmWnf8qVzgO+Ik9TWFry4AOrkEUC1PegrwUBUqdAEFZMPS2bLxqbdDFjx2c0UPRQ+dpDcBwEm5
-	tui3xdB1vnlBeXCY+GFeisqf2/11t97Q8t2+0UXb4rf0v6TrCF1Bc7VsA5PwY/g==
-X-Gm-Gg: AYBFou3M3tdxsUXfVyGtx9qk4LEewPtpB4mP8z9PtDZLPXgLWxxLrALMc3uHsBrg3+p
-	AkghbVVkAe5w6uV7HOV92naBC/qCoVvPpRN+GAQBDtXRbaZretV0VkFSlfCt/87sc2XWe5K1n2L
-	j1Wrm1JoFmVXxC6w/NLN9J8e9x2IiP4vPTDHARQWXvOPqH0V+FVtP6IVavL17VpNvYFIxY7ym5j
-	PWvbYr2G3J3lMUZpPxOs/P66aIiqyuDW5gGlJGqDU2BApUs+Eek/QEuKXT9X9PbnTqIo2hEvdDb
-	yR/IAHiRZhv5P5JaW9ptS4K/Fy++1YhEiSitjtruw8VKquCVKLjMtzeM+jKttcAZc6L1fQ+EMh2
-	x1x0uDSC4SCv+6Im/Y+8xFhUS
-X-Received: by 2002:adf:f304:0:b0:48a:fbf7:15b3 with SMTP id
- ffacd0b85a97d-48b12747253mr6029639f8f.54.1790993106650; Fri, 02 Oct 2026
- 19:05:06 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="BmutJxP9"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 108D72F;
+	Fri,  2 Oct 2026 19:30:21 -0700 (PDT)
+Received: from e129823.arm.com (e129823.arm.com [10.2.213.3])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 99F9C3F763;
+	Fri,  2 Oct 2026 19:30:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1790994624; bh=bOZ8zCdpPujZhaWmDqARnL6IPmO6aZcDhybIp53bYX8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BmutJxP9pK9fwDpfn/EZVE2MJbnoAb5YcW2R7T4JLVuYNzopInBGNz8KXYT7GvgX/
+	 bHvIVhR2liGBK7G0tzaz2CZ/cWNmLdS5jClfsTgn6rJaSSNatI9ykXEztniJrdn44h
+	 XW9xzmR1UE10zDzLOFABlzxNepf/q+Fyly+bb3zk=
+Date: Sat, 3 Oct 2026 03:30:21 +0100
+From: Yeoreum Yun <yeoreum.yun@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Yeoreum Yun <yeoreum.yun@arm.com>, linux-kernel@vger.kernel.org,
+	linux-rt-devel@lists.linux.dev
+Subject: Re: [PATCH v13 04/14] coresight: etm4x: fix inconsistencies with
+ sysfs configuration
+Message-ID: <asBovdmuZRDF5r8c@e129823.arm.com>
+References: <20261002-separate_etm_cfg_v2-v13-0-fe429d8d96fb@arm.com>
+ <20261002-separate_etm_cfg_v2-v13-4-fe429d8d96fb@arm.com>
+ <20261003013347.0E07E1F00899@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261002203140.121165-1-me@nahida.im> <20261002222021.149450-1-me@nahida.im>
- <20261003013405.9EF9B1F00893@smtp.kernel.org>
-In-Reply-To: <20261003013405.9EF9B1F00893@smtp.kernel.org>
-From: =?UTF-8?B?57qz6KW/5aayIMK3IE5haGlkYQ==?= <me@nahida.im>
-Date: Sat, 3 Oct 2026 10:04:55 +0800
-X-Gm-Features: AclHuK_dQjIHK3_7hoLlUhTHoLKkninCH-PAncgkVstKtoNod_DO7nt3bkfbd6s
-Message-ID: <CAEEzyciPRcDWJ9pgaJBx9peeV16p9t=wx4bdy9ZyKyjgMZ+NKQ@mail.gmail.com>
-Subject: Re: [PATCH v2] drm/panic: allow overriding panic QR code URL
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261003013347.0E07E1F00899@smtp.kernel.org>
 
-OK I'll fix it in v3
-
-<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B410=E6=9C=883=E6=97=A5=E5=91=
-=A8=E5=85=AD 09:34=E5=86=99=E9=81=93=EF=BC=9A
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] drm/panic: OOB read due to missing null-termination on panic_q=
-r_url
+On Sat, Oct 03, 2026 at 01:33:46AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] coresight: etm4x: data race in etm4_disable_sysfs() due to missing spinlock
+> - [Medium] coresight: etm4x: resource leak when disabling sysfs tracing on an offline CPU
 > --
->
-> commit 4020ffafa052ada60c700fa2d64b78e9eb01e839
-> Author: =E7=BA=B3=E8=A5=BF=E5=A6=B2 =C2=B7 Nahida <me@nahida.im>
->
-> drm/panic: allow overriding panic QR code URL
->
-> This patch adds a module parameter to override the DRM panic QR code base=
- URL
-> at boot or module load time. It exposes a getter function for the DRM pan=
-ic
-> helper to retrieve and format the configured URL when generating the QR c=
-ode.
->
-> > diff --git a/drivers/gpu/drm/drm_panic.c b/drivers/gpu/drm/drm_panic.c
-> > index 9fe97c4eda6c8..463544f71c537 100644
-> > --- a/drivers/gpu/drm/drm_panic.c
-> > +++ b/drivers/gpu/drm/drm_panic.c
-> [ ... ]
-> > @@ -49,6 +49,15 @@ MODULE_LICENSE("GPL");
-> >  static uint panic_qr_version =3D CONFIG_DRM_PANIC_SCREEN_QR_VERSION;
-> >  module_param(panic_qr_version, uint, 0644);
-> >  MODULE_PARM_DESC(panic_qr_version, "maximum version (size) of the QR c=
-ode");
-> > +static char panic_qr_url[256] =3D CONFIG_DRM_PANIC_SCREEN_QR_CODE_URL;
->
-> [Severity: Medium]
-> Will this array be null-terminated if CONFIG_DRM_PANIC_SCREEN_QR_CODE_URL=
- is
-> exactly 256 bytes or longer?
->
-> In C, initializing a fixed-size character array with a string literal of =
-equal
-> or greater length does not append a null terminator.
->
-> [ ... ]
-> > diff --git a/drivers/gpu/drm/drm_panic_helper.c b/drivers/gpu/drm/drm_p=
-anic_helper.c
-> > index 8913c3d22e8d3..b0ea0b4e8edef 100644
-> > --- a/drivers/gpu/drm/drm_panic_helper.c
-> > +++ b/drivers/gpu/drm/drm_panic_helper.c
-> [ ... ]
-> > @@ -609,17 +609,20 @@ static void drm_panic_helper_qr_exit(void)
-> >       stream.workspace =3D NULL;
+> 
+> commit 431ca53aed38063c4c77184079a32f5fbbb5b69b
+> Author: Yeoreum Yun <yeoreum.yun@arm.com>
+> 
+> coresight: etm4x: fix inconsistencies with sysfs configuration
+> 
+> This commit separates the configuration into curr_config and config to prevent
+> inconsistencies when modifying via sysfs during an active perf session. It
+> also removes the lock/unlock from the sysfs enable/disable path and
+> startup/dying_cpu, except when accessing config fields.
+> 
+> > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> > --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> > +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> > @@ -1090,8 +1097,9 @@ static void etm4_disable_sysfs_smp_call(void *info)
+> >  
+> >  	etm4_disable_hw(drvdata);
+> >  
+> > +	cscfg_csdev_disable_active_config(drvdata->csdev);
+> > +
+> >  	drvdata->csdev->path = NULL;
+> > -	coresight_set_mode(drvdata->csdev, CS_MODE_DISABLED);
 > >  }
-> >
-> > -static int drm_panic_helper_get_qr_code_url(u8 **qr_image, unsigned in=
-t qr_version)
-> > +static int drm_panic_helper_get_qr_code_url(u8 **qr_image, unsigned in=
-t qr_version,
-> > +                                         const char *qr_url)
-> >  {
-> >       struct kmsg_dump_iter iter;
-> > -     char url[256];
-> > +     char url[512];
-> >       size_t kmsg_len, max_kmsg_size;
-> >       char *kmsg;
-> >       int max_qr_data_size, url_len;
-> >
-> >       url_len =3D snprintf(url, sizeof(url), "%s?a=3D%s&v=3D%s&z=3D",
-> > -                        CONFIG_DRM_PANIC_SCREEN_QR_CODE_URL,
-> > -                        utsname()->machine, utsname()->release);
-> > +                        qr_url, utsname()->machine, utsname()->release=
-);
->
+> 
+> [ ... ]
+> 
+> > @@ -1144,9 +1153,19 @@ static void etm4_disable_sysfs(struct coresight_device *csdev)
+> >  	smp_call_function_single(drvdata->cpu, etm4_disable_sysfs_smp_call,
+> >  				 drvdata, 1);
+> 
 > [Severity: Medium]
-> Could this lead to an out-of-bounds memory read during a kernel panic?
->
-> If qr_url points to a panic_qr_url array that lacks a null terminator,
-> snprintf() will read past the end of the array until it encounters a null
-> byte in adjacent memory. This could potentially leak adjacent memory into=
- the
-> QR code URL or cause a secondary crash that prevents the panic screen fro=
-m
-> displaying.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261002222021.14=
-9450-1-me@nahida.im?part=3D1
+> If smp_call_function_single() fails (for instance, if the target CPU is
+> offline), it will return -ENXIO and bypass the callback entirely.
+> Since cscfg_csdev_disable_active_config() was moved into the SMP callback
+> etm4_disable_sysfs_smp_call(), does this mean we could permanently leak the
+> active configuration when the CPU is offline? This could leave the module
+> reference count (active_cnt) leaked and active_cscfg_ctxt dangling.
+
+This is totally wrong. since sysfs seesion is disabled before *offline*
+by coresight_dying_cpu().
+
+> >  
+> > -	raw_spin_unlock(&drvdata->spinlock);
+> > +	/*
+> > +	 * Userspace may read ss_status and cntr_val through sysfs after
+> > +	 * the sysfs-session has been disabled.
+> > +	 */
+> > +	for (i = 0; i < drvdata->nr_ss_cmp; i++)
+> > +		config->ss_status[i] = curr_config->ss_status[i];
+> >  
+> > -	cscfg_csdev_disable_active_config(csdev);
+> > +	for (i = 0; i < drvdata->nr_cntr; i++)
+> > +		config->cntr_val[i] = curr_config->cntr_val[i];
+> > +
+> > +	config->seq_state = curr_config->seq_state;
+> 
+> [Severity: Medium]
+> Is it safe to copy curr_config to config here without holding the
+> drvdata->spinlock?
+> 
+> Sysfs writers (like reset_store()) and readers (like cntr_val_show()) do
+> not check if the device is currently in CS_MODE_SYSFS; they rely solely on
+> the spinlock for synchronization.
+> 
+> Could this create a data race where concurrent sysfs operations are
+> overwritten by this lockless loop, corrupting the sysfs-exposed state?
+
+It's okay since the ss_status's purpose is to clear the PENDING and
+STATUS bit otherwise, RES and RO field.
+
+> 
+> > +
+> > +	coresight_set_mode(drvdata->csdev, CS_MODE_DISABLED);
+> >  
+> >  	/*
+> >  	 * we only release trace IDs when resetting sysfs.
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261002-separate_etm_cfg_v2-v13-0-fe429d8d96fb@arm.com?part=4
+
+-- 
+Sincerely,
+Yeoreum Yun
