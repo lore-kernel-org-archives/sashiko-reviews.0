@@ -1,110 +1,100 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D951A22D4E9;
-	Sat,  3 Oct 2026 03:44:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3584F171B1;
+	Sat,  3 Oct 2026 03:57:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790999083; cv=none; b=qvgJVQ7XZllvZ3v3N4ilIRccP7DHzYfIRRCnqLfmFVBcaCSKcOHckx8W2Olv6ImhoR7sopXvetVzBLmOcXUQYgp9NRI3db0QsrwMAhUmjKCACPl/Ec1dFUvRB9NJRSCdpazy7of2QEMIrynXL0HvALpnFAGwjbmziIPKuH2Y9pA=
+	t=1790999878; cv=none; b=ALnW8kV7Xmrq3D/RbX103tL10Gub1dzCGi72gzK8BicixeCoDg3A/k9k63FcHFwXmxGUcWUCyYZFXcRMgPViWoGkx/YgmGBLb6GWdes9u57r3qlsjkZuDyay5j/kV+7y2RUDreTTGD8et5gETN3RB6jnQYyuY+mYTiJ1kMjTlL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790999083; c=relaxed/simple;
-	bh=GrLpAvXzF80DRMTpDhRj/qFzvX9wlVwcGV/DBEqFkVw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RkHbrxpqUdGM3wgykUc0H0OzcoewtJ3C5spV2YxrxZZ1/SlD6aGo+QVKHLID5DfFX86BFVHOArGUskVzAcjIZ6J5K+ucMFct9yWRzkCDmp800KIO1fb+kqxzARVOnk2XCh/DExgqwv/QgYwE98jpteXP07IHs5V0BeCBSHb9WAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=IpfQ2zNb; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	s=arc-20240116; t=1790999878; c=relaxed/simple;
+	bh=DpWhDO/vdUTbTi2AJigJJaIadSOLyzzzGoJkHiqkRtY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=q2Agt6v9Ux/5UVjwlj9gEqMOBfDKNujNs3ScEXX3ErNyy/hUcqbpxiKB6fEiIRWGGm3TlxGI/hKNER5u0Kfgrp9qPonBfFcQoBygM4sDoTHZm5fFJ4Sf1+ZV5ZU9Bp+cWeUcnPThhU7MzIexBWoNPGdL6LBKtYXotP260UpAKCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=WB2UQbl8; arc=none smtp.client-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="IpfQ2zNb"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D60F02F;
-	Fri,  2 Oct 2026 20:44:37 -0700 (PDT)
-Received: from e129823.arm.com (e129823.arm.com [10.2.213.3])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9538E3F85F;
-	Fri,  2 Oct 2026 20:44:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1790999081; bh=GrLpAvXzF80DRMTpDhRj/qFzvX9wlVwcGV/DBEqFkVw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IpfQ2zNbp2th4W30ULSz/Z5k0u7bDMkB6S3AmJEXiFg+C7Cs1y9i+5vmZYbsFTyXq
-	 fR2QBdTBGTbNtu85ZEsoRhI/WciOaKTHCK42wZCqEWXsSXKHq22pthbNkNorY9uuUE
-	 Hff1KGEaTQSmCOxiUJBB4EiB90WR7IzA+JldMuDI=
-Date: Sat, 3 Oct 2026 04:44:38 +0100
-From: Yeoreum Yun <yeoreum.yun@arm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Yeoreum Yun <yeoreum.yun@arm.com>, linux-rt-devel@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RESEND v13 01/14] coresight: etm4x: read-back TRCSEQSTR
- at disabling and prohibit modifying seq_state while enabling.
-Message-ID: <asB6JgDE6S6JQr4r@e129823.arm.com>
-References: <20261003-separate_etm_cfg_v2-v13-0-5d8a29aead95@arm.com>
- <20261003-separate_etm_cfg_v2-v13-1-5d8a29aead95@arm.com>
- <20261003030811.B35331F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="WB2UQbl8"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 0E5BA1077D6;
+	Sat, 03 Oct 2026 05:57:46 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
+	s=dkim; t=1790999867;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=PuhoXoeA2Pi+cnJ3g9zEOtuLW+cFrTqs5s9GqaeHR4M=;
+	b=WB2UQbl8PCYAwMiqCvhzYBmrynWvtel/y2V8Z6xv4Uw8t2iplfgb8x/Yz6eow+XEceiUwV
+	jTpJcAZvTa0+5jTx2oGfWElJujJYFR7vzNznQlKxF85qQCBdv4Cx4HzNSuA1y46IrhTv93
+	EYKJSaDek0ej40+nCCRAqpUuANjdRcBOuHP9bahe5nbBaPrNUW9nxpzwap9N68T/KEGqw/
+	yJGID1kH+HkUmeFIOEPHhfCCLFL5ddQFjBntBXKIoWUC+/B2EVErWYHhsXXjvkNHb3spgR
+	ukBWJbbe9kIDESqLaMM6PZx/5BT3DeU1PTEl4wly9Y6iKm+rvQAZsPWicBvA8g==
+Message-ID: <20232ace-d9a8-4082-b553-8e029ab63963@nabladev.com>
+Date: Sat, 3 Oct 2026 05:57:45 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261003030811.B35331F000FF@smtp.kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [net-next,PATCH] enetc: Set eMDIO MDC rate to 2.5 MHz only on
+ i.MX95
+To: sashiko-reviews@lists.linux.dev, Wei Fang <wei.fang@nxp.com>
+Cc: Frank.Li@kernel.org, imx@lists.linux.dev
+References: <20261001223947.60189-1-marex@nabladev.com>
+ <20261003013406.536AF1F00898@smtp.kernel.org>
+Content-Language: en-US
+From: Marek Vasut <marex@nabladev.com>
+In-Reply-To: <20261003013406.536AF1F00898@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Sat, Oct 03, 2026 at 03:08:11AM +0000, sashiko-bot@kernel.org wrote:
+On 10/3/26 3:34 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] coresight: TOCTOU race in seq_state_store bypasses active-session guard
+> - [High] net: enetc: uninitialized mdc_div breaks MDIO for non-PCI users
 > --
 > 
-> commit 750a64ecfab03057a253043e06b3def402bb7137
-> Author: Yeoreum Yun <yeoreum.yun@arm.com>
+> commit 324eeacc2ec0cb1fd98e9f3ac96f2fe7f653ae78
+> Author: Marek Vasut <marex@nabladev.com>
 > 
-> coresight: etm4x: read-back TRCSEQSTR at disabling and prohibit modifying seq_state while enabling.
+> enetc: Set eMDIO MDC rate to 2.5 MHz only on i.MX95
 > 
-> TRCSEQSTR can be changed by the ETM while a session is active. Its value
-> therefore needs to be preserved when a sysfs session is disabled so that
-> users can read the current sequence state after the session ends.
+> The current eMDIO MDC rate is 2.5 MHz on i.MX95 B0. It was pointed
+> out by NXP, that the MDC rate is divided down from clock of different
+> frequency and using different division ratio on different SoCs. Configure
+> the i.MX95 eMDIO MDC rate to 2.5 MHz to match the 802.3 specification
+> and reinstate previous divider ratio for all other SoCs.
 > 
-> > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-> > --- a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-> > +++ b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
-> > @@ -1435,6 +1435,8 @@ static ssize_t seq_state_store(struct device *dev,
-> >  
-> >  	if (kstrtoul(buf, 16, &val))
-> >  		return -EINVAL;
-> > +	if (IS_ERR_OR_NULL(drvdata->csdev) || coresight_get_mode(drvdata->csdev))
-> > +		return -EBUSY;
-> >  	if (val >= drvdata->nrseqstate)
-> >  		return -EINVAL;
-> >  
-> >  	config->seq_state = val;
->         ^^^^^^^^^^^^^^^^^^^^^^^^
+>> diff --git a/drivers/net/ethernet/freescale/enetc/enetc_mdio.c b/drivers/net/ethernet/freescale/enetc/enetc_mdio.c
+>> index a90a04a47befd..7ed9b9120f447 100644
+>> --- a/drivers/net/ethernet/freescale/enetc/enetc_mdio.c
+>> +++ b/drivers/net/ethernet/freescale/enetc/enetc_mdio.c
+> [ ... ]
+>> @@ -63,7 +63,7 @@ int enetc_mdio_write_c22(struct mii_bus *bus, int phy_id, int regnum,
+>>   	u16 dev_addr;
+>>   	int ret;
+>>   
+>> -	mdio_cfg = ENETC_EMDIO_CFG;
+>> +	mdio_cfg = ENETC_EMDIO_CFG(mdio_priv->mdc_div);
 > 
-> [Severity: Medium]
-> Could this active-session guard be bypassed due to a Time-of-Check to
-> Time-of-Use race?
+> [Severity: High]
+> Does this code break MDIO communication for non-PCI users?
 > 
-> If a user-space write to seq_state and an enable_source call occur
-> concurrently, is it possible for enable_source to succeed immediately
-> after this mode check passes?
+> The mdio_priv struct is allocated and zero-initialized by drivers such as
+> the enetc PF driver (drivers/net/ethernet/freescale/enetc/enetc_pf_common.c
+> in enetc_mdio_probe() and enetc_imdio_create()), the DSA NETC driver
+> (drivers/net/dsa/netc/netc_main.c in netc_port_create_emdio_bus()), and the
+> Ocelot driver (drivers/net/dsa/ocelot/felix_vsc9959.c in
+> vsc9959_mdio_bus_alloc()) via devm_mdiobus_alloc_size() or
+> mdiobus_alloc_size().
 > 
-> If coresight_take_mode() succeeds in the racing enable_source call, it
-> would take drvdata->spinlock to copy the configuration for the active
-> session. This seq_state_store() write would then proceed without a lock,
-> modifying the configuration after it was already checked.
+> Since this patch only initializes mdc_div in enetc_pci_mdio_probe(), mdc_div
+> remains 0 for these other drivers.
 > 
-> When the sysfs session is later disabled, wouldn't the old state read
-> from hardware overwrite the user's new value?
-> 
-> Should raw_spin_lock(&drvdata->spinlock) be taken around this mode check
-> and the configuration assignment?
-
-No. seq_state_store() does not update any user configuration.
-It only clears the STATUS and PENDING bits.
-
-The other bits in TRCSSCSRn are RO or RES fields, so there is no
-user-programmed state here that can be lost or overwritten by a
-later hardware readback.
-
-Therefore, the race described above does not result in a lost
-configuration update.
-
--- 
-Sincerely,
-Yeoreum Yun
+> When enetc_mdio_write_c22() and other MDIO accessors use
+> ENETC_EMDIO_CFG(mdio_priv->mdc_div), the MDC clock divisor will be set to 0
+> instead of a valid value (like 66). This results in a clock rate that
+> violates the IEEE 802.3 2.5 MHz limit, breaking PHY probing and leaving
+> network interfaces unusable.
++CC Wei -- this is nonsense, right ? Ocelot isn't even NXP ?
