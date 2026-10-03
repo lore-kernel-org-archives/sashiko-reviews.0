@@ -1,264 +1,110 @@
-Received: from mta1.migadu.com (out-193.mta1.migadu.com [95.215.58.193])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61FA309EFC
-	for <sashiko-reviews@lists.linux.dev>; Sat,  3 Oct 2026 03:15:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.193
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D951A22D4E9;
+	Sat,  3 Oct 2026 03:44:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790997359; cv=none; b=WU83icaQdlfAETxXF6zVJY9TDIUtWAQMkwXP2d7ediWHc94dZbGrL8aN+XipaLeQCSmOi5IOIsXRw//RwlplSE1dBucxZv9U3tgr3faC4P5jxYCzHLiYM9l612DMJMWKc5y3BdMhtwNlg8Gy63NxYDFZN0FHyl2g/qypmFMLSmQ=
+	t=1790999083; cv=none; b=qvgJVQ7XZllvZ3v3N4ilIRccP7DHzYfIRRCnqLfmFVBcaCSKcOHckx8W2Olv6ImhoR7sopXvetVzBLmOcXUQYgp9NRI3db0QsrwMAhUmjKCACPl/Ec1dFUvRB9NJRSCdpazy7of2QEMIrynXL0HvALpnFAGwjbmziIPKuH2Y9pA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790997359; c=relaxed/simple;
-	bh=yihSlxuUpgPUsTg3JVzj5YPw0phRzOPn+y4aih8THPY=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=KQUa2l49ZYP018wGspUKZFEU7/45/l6M3dw8H2p4mhbarAEmG5aqeKxexZiHlwKC65OXTRJDGjrQU4Ik+6rFPuWhu4N6Wn34ZuT3TVWoS4HtGUaZHLl5LrPq+yTaJXWJQA172fNoD0iI61MtGZ692PoyeYcwJAk3GFeUu67SSj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Or1OjZMo; arc=none smtp.client-ip=95.215.58.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1790999083; c=relaxed/simple;
+	bh=GrLpAvXzF80DRMTpDhRj/qFzvX9wlVwcGV/DBEqFkVw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RkHbrxpqUdGM3wgykUc0H0OzcoewtJ3C5spV2YxrxZZ1/SlD6aGo+QVKHLID5DfFX86BFVHOArGUskVzAcjIZ6J5K+ucMFct9yWRzkCDmp800KIO1fb+kqxzARVOnk2XCh/DExgqwv/QgYwE98jpteXP07IHs5V0BeCBSHb9WAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=IpfQ2zNb; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Or1OjZMo"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=yihSlxuUpgPUsTg3JVzj5YPw0phRzOPn+y4aih8THPY=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1790997355; v=1; x=1791602155;
- b=Or1OjZMoIzS12C+mStuqmfIWgbW6HjG2MjXBBfL4kWWsqmoWytj6UDLZCbVyiSZuPnKbwF5n
- oEueMyqRM1tG/wwFpX3v68fRO736o+rGTpDA5YI4HbyRQGlGLr8rgyGqn6xcKY2yAeLyux9cRnu
- 0swFulrqh7xrdx+U985Tk//I=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id e7a91b6cb695afc3;
-	Sat, 03 Oct 2026 03:15:55 +0000
-X-Mizu-Trace-ID: e7a91b6cb695afc3
-X-Migadu-Flow: FLOW_OUT
-Date: Sat, 03 Oct 2026 11:15:49 +0800
-From: Tao Cui <cui.tao@linux.dev>
-To: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org
-CC: tj@kernel.org, mkoutny@suse.com, bpf@vger.kernel.org, hannes@cmpxchg.org
-Subject: =?US-ASCII?Q?Re=3A_=5BRFC_PATCH_v9_1/4=5D_blk-iocost=3A_a?=
- =?US-ASCII?Q?dd_BPF_struct=5Fops_cost_model_support?=
-User-Agent: Thunderbird for Android
-In-Reply-To: <20261003015208.1D9261F000FF@smtp.kernel.org>
-References: <20261003013033.149288-1-cui.tao@linux.dev> <20261003013033.149288-2-cui.tao@linux.dev> <20261003015208.1D9261F000FF@smtp.kernel.org>
-Message-ID: <EE538304-41BD-4844-973F-6E97F44BBE52@linux.dev>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="IpfQ2zNb"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D60F02F;
+	Fri,  2 Oct 2026 20:44:37 -0700 (PDT)
+Received: from e129823.arm.com (e129823.arm.com [10.2.213.3])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9538E3F85F;
+	Fri,  2 Oct 2026 20:44:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1790999081; bh=GrLpAvXzF80DRMTpDhRj/qFzvX9wlVwcGV/DBEqFkVw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IpfQ2zNbp2th4W30ULSz/Z5k0u7bDMkB6S3AmJEXiFg+C7Cs1y9i+5vmZYbsFTyXq
+	 fR2QBdTBGTbNtu85ZEsoRhI/WciOaKTHCK42wZCqEWXsSXKHq22pthbNkNorY9uuUE
+	 Hff1KGEaTQSmCOxiUJBB4EiB90WR7IzA+JldMuDI=
+Date: Sat, 3 Oct 2026 04:44:38 +0100
+From: Yeoreum Yun <yeoreum.yun@arm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Yeoreum Yun <yeoreum.yun@arm.com>, linux-rt-devel@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RESEND v13 01/14] coresight: etm4x: read-back TRCSEQSTR
+ at disabling and prohibit modifying seq_state while enabling.
+Message-ID: <asB6JgDE6S6JQr4r@e129823.arm.com>
+References: <20261003-separate_etm_cfg_v2-v13-0-5d8a29aead95@arm.com>
+ <20261003-separate_etm_cfg_v2-v13-1-5d8a29aead95@arm.com>
+ <20261003030811.B35331F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261003030811.B35331F000FF@smtp.kernel.org>
 
+On Sat, Oct 03, 2026 at 03:08:11AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] coresight: TOCTOU race in seq_state_store bypasses active-session guard
+> --
+> 
+> commit 750a64ecfab03057a253043e06b3def402bb7137
+> Author: Yeoreum Yun <yeoreum.yun@arm.com>
+> 
+> coresight: etm4x: read-back TRCSEQSTR at disabling and prohibit modifying seq_state while enabling.
+> 
+> TRCSEQSTR can be changed by the ETM while a session is active. Its value
+> therefore needs to be preserved when a sysfs session is disabled so that
+> users can read the current sequence state after the session ends.
+> 
+> > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+> > --- a/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+> > +++ b/drivers/hwtracing/coresight/coresight-etm4x-sysfs.c
+> > @@ -1435,6 +1435,8 @@ static ssize_t seq_state_store(struct device *dev,
+> >  
+> >  	if (kstrtoul(buf, 16, &val))
+> >  		return -EINVAL;
+> > +	if (IS_ERR_OR_NULL(drvdata->csdev) || coresight_get_mode(drvdata->csdev))
+> > +		return -EBUSY;
+> >  	if (val >= drvdata->nrseqstate)
+> >  		return -EINVAL;
+> >  
+> >  	config->seq_state = val;
+>         ^^^^^^^^^^^^^^^^^^^^^^^^
+> 
+> [Severity: Medium]
+> Could this active-session guard be bypassed due to a Time-of-Check to
+> Time-of-Use race?
+> 
+> If a user-space write to seq_state and an enable_source call occur
+> concurrently, is it possible for enable_source to succeed immediately
+> after this mode check passes?
+> 
+> If coresight_take_mode() succeeds in the racing enable_source call, it
+> would take drvdata->spinlock to copy the configuration for the active
+> session. This seq_state_store() write would then proceed without a lock,
+> modifying the configuration after it was already checked.
+> 
+> When the sysfs session is later disabled, wouldn't the old state read
+> from hardware overwrite the user's new value?
+> 
+> Should raw_spin_lock(&drvdata->spinlock) be taken around this mode check
+> and the configuration assignment?
 
+No. seq_state_store() does not update any user configuration.
+It only clears the STATUS and PENDING bits.
 
-=E4=BA=8E 2026=E5=B9=B410=E6=9C=883=E6=97=A5 GMT+08:00 09:52:07=EF=BC=8Csa=
-shiko-bot@kernel=2Eorg =E5=86=99=E9=81=93=EF=BC=9A
->Thank you for your contribution! Sashiko AI review found 4 potential issu=
-e(s) to consider:
->- [Critical] bpf: UAF on ioc in ioc_bpf_detach due to lockless fetch befo=
-re freeze
->- [Critical] bpf: UAF on struct_ops map due to concurrent modification of=
- ops->q
->- [High] bpf: TOCTOU race in ioc_bpf_detach reading ops->q leads to UAF o=
-n queue
->- [High] bpf: ioc_bpf_detach fails to verify ops->link causes cross-link =
-teardown
+The other bits in TRCSSCSRn are RO or RES fields, so there is no
+user-programmed state here that can be lost or overwritten by a
+later hardware readback.
 
-Thank you for catching these issues=2E
-I've noted all the reported UAF and TOCTOU races and am working on fixes=
-=2E
+Therefore, the race described above does not result in a lost
+configuration update.
 
->--
->
->commit d8ef9c16531866711abee0afcce05f21400897b9
->Author: Tao Cui <cui=2Etao@linux=2Edev>
->Subject: blk-iocost: add BPF struct_ops cost model support
->
->This patch adds BPF struct_ops support to blk-iocost, allowing BPF
->programs to provide custom IO pricing models=2E The struct_ops is attache=
-d
->per-device and replaces the built-in linear model for IO cost
->calculations=2E
->
->> diff --git a/block/blk-iocost=2Ec b/block/blk-iocost=2Ec
->> index 2745bffcd5eef=2E=2E581b485434411 100644
->> --- a/block/blk-iocost=2Ec
->> +++ b/block/blk-iocost=2Ec
->
->[ =2E=2E=2E ]
->
->> @@ -2888,6 +2959,45 @@ static void ioc_rqos_queue_depth_changed(struct =
-rq_qos *rqos)
->>  	spin_unlock_irq(&ioc->lock);
->>  }
->> =20
->> +#ifdef CONFIG_BLK_CGROUP_IOCOST_BPF
->> +/*
->> + * Eject the model on device removal=2E  The caller holds rq_qos_mutex
->> + * and blkcg_deactivate_policy() has already run, so every existing
->> + * blkg got iocg_free() from ioc_pd_free() and no walk is needed=2E
->> + *
->> + * bdev is read into a local before ops->q is cleared: once q is
->> + * NULL, =2Eunreg returns without taking any lock and the map holding
->> + * ops can be freed, so ops must not be touched afterwards=2E
->> + */
->> +static void ioc_bpf_eject(struct ioc *ioc)
->> +{
->> +	struct request_queue *q =3D ioc->rqos=2Edisk->queue;
->> +	struct iocost_model_ops *ops;
->> +	struct block_device *bdev;
->> +
->> +	spin_lock_irq(&q->queue_lock);
->> +	spin_lock(&ioc->lock);
->> +	ops =3D (struct iocost_model_ops *)rcu_dereference_protected(
->> +			ioc->attached, lockdep_is_held(&ioc->lock));
->> +	if (!ops) {
->> +		spin_unlock(&ioc->lock);
->> +		spin_unlock_irq(&q->queue_lock);
->> +		return;
->> +	}
->> +	bdev =3D ops->bdev;
->> +	rcu_assign_pointer(ioc->attached, NULL);
->> +	rcu_assign_pointer(ioc->model, NULL);
->> +	spin_unlock(&ioc->lock);
->> +	WRITE_ONCE(ops->q, NULL);
->
->[Severity: Critical]
->Is it possible for this ejection to clear ops->q when the map has been
->re-attached to a different queue?
->
->If a user attaches the same struct_ops map to multiple devices, ops->q ge=
-ts
->overwritten=2E If the first device is then removed, ioc_bpf_eject() clear=
-s
->ops->q=2E This can cause subsequent unreg operations for other active lin=
-ks
->to fail to detach the map, resulting in a use-after-free when the map is
->freed but the surviving queues still use it=2E
->
->> +	WRITE_ONCE(ops->link, NULL);
->> +	spin_unlock_irq(&q->queue_lock);
->> +
->> +	blkdev_put_no_open(bdev);
->> +}
->
->[ =2E=2E=2E ]
->
->> +int ioc_bpf_attach(struct iocost_model_ops *ops, struct bpf_link *link=
-)
->> +{
->> +	struct block_device *bdev;
->> +	struct request_queue *q;
->
->[ =2E=2E=2E ]
->
->> +	rcu_assign_pointer(ioc->attached, ops);
->> +	rcu_assign_pointer(ioc->model, ops);
->> +	spin_unlock(&ioc->lock);
->> +
->> +	ops->bdev =3D bdev;
->> +	WRITE_ONCE(ops->link, link);
->> +	WRITE_ONCE(ops->q, q);
->
->[Severity: Critical]
->Does this allow concurrent modification of the shared ops state?
->
->ops->q is only protected by the target queue's queue_lock=2E If the same =
-map
->is attached to multiple queues, this will clobber ops->q, setting up the
->ejection bug mentioned above=2E
->
->> +
->> +	/* pair iocg_init() with the cgroups which already exist */
->> +	ioc_bpf_walk_iocgs(ioc, ops, true);
->> +
->> +	spin_unlock_irq(&q->queue_lock);
->> +	mutex_unlock(&q->blkcg_mutex);
->
->[ =2E=2E=2E ]
->
->> +/*
->> + * Detach a model: switch back to the builtin model when the attached
->> + * model is in use, clear the attachment, and deliver iocg_free() to
->> + * the cgroups which still exist, under the same freeze and quiesce as
->> + * the attach=2E  The caller has already checked ops->q=2E
->> + */
->> +void ioc_bpf_detach(struct iocost_model_ops *ops, struct bpf_link *lin=
-k)
->> +{
->> +	struct request_queue *q =3D READ_ONCE(ops->q);
->
->[Severity: High]
->Does re-reading ops->q here introduce a TOCTOU race?
->
->In bpf_iocost_unreg(), a queue reference is correctly secured using
->blk_get_queue_rcu(q)=2E However, the queue is re-read here=2E If a concur=
-rent
->attach overwrites ops->q before this read, the code will operate on a
->different, unreferenced queue=2E This can lead to a use-after-free when
->calling blk_mq_freeze_queue() if the new queue is concurrently destroyed=
-=2E
->
->> +	struct block_device *bdev;
->> +	struct ioc *ioc;
->> +	unsigned int memflags;
->> +
->> +	if (!q)
->> +		return;
->> +	ioc =3D q_to_ioc(q);
->
->[Severity: Critical]
->Can this lockless fetch of ioc lead to a use-after-free?
->
->The ioc pointer is fetched here without securing an independent reference=
-=2E
->When the function blocks on blk_mq_freeze_queue(q) directly below, a
->concurrent device hot-unplug (e=2Eg=2E del_gendisk) can run rq_qos_exit()=
- and
->free the ioc struct=2E=20
->
->When this thread resumes, the later spin_lock(&ioc->lock) would dereferen=
-ce
->the freed ioc pointer=2E
->
->> +	if (!ioc)
->> +		return;
->> +
->> +	bdev =3D ops->bdev;
->> +
->> +	/*
->> +	 * the freeze is taken before rq_qos_mutex like in the attach;
->> +	 * the link is re-checked under the mutex below, as the ejection
->> +	 * or a newer attachment may have won the race meanwhile
->> +	 */
->> +	memflags =3D blk_mq_freeze_queue(q);
->> +	blk_mq_quiesce_queue(q);
->> +
->> +	mutex_lock(&q->rq_qos_mutex);
->> +
->> +	mutex_lock(&q->blkcg_mutex);
->> +	spin_lock_irq(&q->queue_lock);
->> +
->> +	spin_lock(&ioc->lock);
->> +	if (rcu_dereference_protected(ioc->attached,
->> +				      lockdep_is_held(&ioc->lock)) !=3D ops) {
->
->[Severity: High]
->Is there a missing check to verify the link argument here?
->
->ioc_bpf_detach() is passed a link pointer but never validates it against
->READ_ONCE(ops->link)=2E If the same map was attached to another queue via
->a new link, closing the old link could cause this function to mistakenly
->tear down the new link's attachment, leaving the intended link orphaned=
-=2E
->
->> +		/* the ejection or a newer link won; nothing to detach */
->> +		spin_unlock(&ioc->lock);
->> +		spin_unlock_irq(&q->queue_lock);
->> +		mutex_unlock(&q->blkcg_mutex);
->> +		mutex_unlock(&q->rq_qos_mutex);
->> +		blk_mq_unquiesce_queue(q);
->> +		blk_mq_unfreeze_queue(q, memflags);
->> +		return;
->> +	}
->
+-- 
+Sincerely,
+Yeoreum Yun
