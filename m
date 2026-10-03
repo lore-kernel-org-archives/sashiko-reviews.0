@@ -1,103 +1,171 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+Received: from mail-qk2-f37.google.com (mail-qk2-f37.google.com [74.125.230.229])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFC63A1688
-	for <sashiko-reviews@lists.linux.dev>; Sat,  3 Oct 2026 11:48:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.141
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791028100; cv=none; b=Fmkyr6xmCJQwQ4hwhzIJPstwrdP4GwrWeCp5APnenQMDfjSGc4AAtDO9msh8IBKp2Sic40eZVujSkSLOGNgK3S5hauj6DdhNyDiX6Vp4G0QZDuEZSIexUPO3Q9ugmdinf6Aio4FsLjOxXhxJCRoUofMrKWPLuobwd+QDH1b/b84=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791028100; c=relaxed/simple;
-	bh=zECgbO2OrNsJA1DKBanbJA41mp9Ft2z0GzvH95EX+IU=;
-	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:In-Reply-To:
-	 References:MIME-Version; b=mXyYfB5t5gcaqk9yb60drQQX7bPxSks+Sz04llWmr3NKiyo/aRB7FG9V9vU1Tiv0JQgwYE+X04SOktfl/ADupd3ix43uYnmViW4C/MEAsBtm9ebbj/ZOmvSenhp8LEcu9zeyOSQhsBP+EsXMmLbGoKDb8H2xPRxSV5RqCUfHwOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bdan6j9i; arc=none smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D4A328B7F
+	for <sashiko-reviews@lists.linux.dev>; Sat,  3 Oct 2026 23:54:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.230.229
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791071653; cv=pass; b=AcEtAfmGE5FKhcKUWJUwSJwapg2wCUM4+LVMywOkpcMggS+cdjimmSMeTfKldHuEWphaa5dc0+bBNFFbxGL8y2JQ/oFA7+1ThUhrTEKTXLgKhMDzWljmG8ju+bgZ2HYtYy6Gib4JA9a4uW7NCgTYd/IJO5ExHRbuSqyfos89sCY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791071653; c=relaxed/simple;
+	bh=tLQXED6TnpPW56Dh+KHvxT+XAjreuYSqEVzU3htBIms=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iK0KYGRm1Kxf9p0VVAAk3AxJ5xbSENxGZfqp3psbJRoGs1wUwH+9f4TuR6QM/ltf/8+GsmjDx8yHAcE1RexgYB10ogZOvI0Ut70PovlyMegsFdMsY917R7pNXp4sY27Euol+1ff4JuJK5BWeWx6QfD/vhsYrrS9jF/jPtdzJj/0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M2TH249c; arc=pass smtp.client-ip=74.125.230.229
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bdan6j9i"
-Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-396ccc09d65so202190a91.3
-        for <sashiko-reviews@lists.linux.dev>; Sat, 03 Oct 2026 04:48:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M2TH249c"
+Received: by mail-qk2-f37.google.com with SMTP id af79cd13be357-93e587358e0so88630085a.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 03 Oct 2026 16:54:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791071650; cv=none;
+        d=google.com; s=arc-20260327;
+        b=OqHkL7iwea9ibceHKYRitJ8qVHRV+X02nP8Webjq9Q4sPpq5bkVF+ClHBsl3ri1yiQ
+         8SHwYSbu43Jp8QlzWev3CMKAuAJP6pVTRX2YlM0W/wyBz+qAmXXJmdSqTJ1TBE3VcuHg
+         q37+RNkG8m3QVVVW0xJfa29aRZoFXkOzrfPY5cUtP0tbMgGzRYzsNrWk8GrMsZE6TJiI
+         /QrcadkwMyBWRVTbmO5n8To8nyfmv0I75ZwS60M1L8IsuyerDm3wO/GdvOPjfAaQZUSM
+         suuHoQ73ZrgMXlTxv9tAfR0ti5kXdHRhCdpjnw6qwdfESkmL3qi5dTMUcfURDLQEZy2l
+         bb+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=mfJzD8Nrn5OBEx9DAMeICCEetrQp74ti+65lMtrTctk=;
+        fh=MkNNWmR18b3t4BZAqPlpZ2EfxgqWNAPqgdhOEe4Su/k=;
+        b=UOT9w7ggOG3sLR4wVwRZ2kq66Ijp2n+hNP9eFZ+N0Cs7dAtsVVKTzzbGu+zF18wlUK
+         BYh/eobeJ3O+LJ1YukOKoIfG3KRsIjVHkunpYSXAq2+/w68ioetDiqOvKMOLWn1qM0cf
+         g7KCO/XlZ4qx1oLDm465YiRowejojdcnmoD9D6Ku6eD/1YQBmlZnYyCWcgt2SdqWj4an
+         DeZq5F48+BxuB6eZnH3QHLyFUFghPGK8TRoO8bJnDUTTFVJCAJuGZ5AR/erINSKq0b9W
+         WCao398nKnXA9J6R+MAtE7M/Z53L7qhlHcfWUoARiQ+KZ96bnxaCytc61Np0HB7iADnz
+         XJcg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791028098; x=1791632898; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:references:in-reply-to:to
-         :from:subject:cc:message-id:date:content-type:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1791071650; x=1791676450; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=xAp/hNN9Qw4nc2pzNGX5wUYzu3DJjKjKdjN7rvAbQLY=;
-        b=bdan6j9i1Fc7UYpZAheN5x56Rg7B+A59EPM3R8HfU/NM2Kk3ihqlw2iNGTpF5EyYkO
-         ov4PgZ/mkZHdUIq9tep1+wILzmzcanGX/yhAkMI2E6YmgMfpy8e1My5uoG5LAKaW1NpH
-         EV+4nM1bomtTcfl1VrYgZMBS/TtLNUdoUtNibI2zq+29uYg7HYXfEyj+130cl858RAvQ
-         xHQwnxn/0AhNJ9r8e8Ye0tpCeTl+LXZwyAj2U9rIeGYUO//ClW9E1PX/woeGZL+LU+Qb
-         PDWDSqovSSgGUEs2tqfWag3jVQVmFNjauLMwlGlIlQ5WYAofGwJviKOFKqKaxjzA7gQ5
-         ILZQ==
+        bh=mfJzD8Nrn5OBEx9DAMeICCEetrQp74ti+65lMtrTctk=;
+        b=M2TH249cN7cKaG28ibZ5SpCCTUKILB/fkUwLlGytz6e2TGBmoYD0ViRSJAUQa/1v9j
+         md2FSFXfbMRV2/6QwZ9Bpd5YyvzN2XFmt+dZgpenz4tFza+e9IvLDYGahyV4C4XlG9xx
+         sY5xE+/vnuSYGt55hPZCPrqJ3vm3qUe/5kQIPjiBIlgXkos5rJjTpCn5mEBtub3IvtwX
+         weF/I/5kb5qt+shCBzqy/RNnIuhdyEWxPIxXXXZImBIkzMmoWe6fdzcyhbz+RxWvayLz
+         UneXoJYVvmDnAIFdEu8MnwfZWeeFKHBqEGWX2FuvqY3FjqO9dluDB4gFEVLkUEFcFZVu
+         NbvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791028098; x=1791632898;
-        h=mime-version:content-transfer-encoding:references:in-reply-to:to
-         :from:subject:cc:message-id:date:content-type:x-gm-gg
+        d=1e100.net; s=20260707; t=1791071650; x=1791676450;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=xAp/hNN9Qw4nc2pzNGX5wUYzu3DJjKjKdjN7rvAbQLY=;
-        b=eKhTYH5pF1vop/hRtMaLet5YQPKMqOuOoM6KcyuSgF00d2TH+Zwh5Se4EhOtMd3c09
-         P//1CCVD9AKRR4brsFXjIStorFmmqUc2SBxIBEtr8L3pA/crzbZljWAyYw/pqVmc0TR1
-         4q8QCfFellSZRWj2AWga4CChGHA+136tc6Ar+E2vhiRuI+/YOi/dUYjd4WM4F/nbYGP3
-         f+uaYt7HG/R/waIMRMx61YUDJ+ODBPnkkfeRvTNYWv68XUpMsiTtmC8pe1sYm6aRNW34
-         5IMWBLcNRIFF+hx5X0DdomY+rDq/Fow1NaGmHokhWCuCExfM7zQgjGLD7wwYTrX9v5wV
-         ih4A==
-X-Gm-Message-State: AFq9FYJDojsiSmWFDwMan9PnSlmZLOMDpRJORSE2BesZ/bzgCYaQiByJ
-	Pyl3zgE5a1ZKNCvqsgV0WeVHrm45n6hzThwGU94a9K1/UMPmN5CX0DYZNckTymMw
-X-Gm-Gg: AYBFou0iy64olZPEUgtxRIl/5RVls9NtTmB3ve4XR6Utzuh8fqI5lAk3sqRfDtTMoAo
-	KMd6CsAa3kKK+j3q1rjKK4oNUYR1zgg9EqoF4CJZ7Eg443KxJm1RZMDpYb0YhFv6uIUJEHXhyl7
-	nO+WUQcutqpifiwCWk4LT/0BdYfIEfMBV5T6bQUgfF2H2V2v1nqdpBeWVqXF4eXhOBdIgHNC1Cw
-	Ljyr+clnOOzwfUOLC5ct4SSBfTXv7d++0ZRT/wi9dScC8sMfIi6lgJIKKdklGa7MPZRD1n6Vl0N
-	NV8t7nW5jug0RSgB32EUDFqY9Rtmjv64WXVoMoWEsnZdT/FJXq5U/QcjuGGIwyA1WT08oK/xpL8
-	7mEFTO904cxTx4p2PXM4497ElNt73jpQE7tqGp0bGA8M0apEbU7ym3SqUA5wCFGS8kvPSJ6gnHV
-	ftArqlCTzE8+pwe1bPNhKAemo+dpMqLTKVBRBV9elRwKhtkEY4ctr5FYr93IwmXoRClAtERlBW8
-	9UiFtcEK8MKj2GNDXuzioqyllGDyEIxrZa781hgj6GZ2r43fZE207rDNNa/O9KdYins1k2cydwN
-	3QM=
-X-Received: by 2002:a17:90b:3912:b0:3a6:f800:4463 with SMTP id 98e67ed59e1d1-3a733d76730mr2210508a91.16.1791028098236;
-        Sat, 03 Oct 2026 04:48:18 -0700 (PDT)
-Received: from localhost ([153.61.198.244])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a78e4664ebsm2716574a91.7.2026.10.03.04.48.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 03 Oct 2026 04:48:17 -0700 (PDT)
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 03 Oct 2026 11:48:17 +0000
-Message-Id: <DLV6H1CSHK76.14LXBR533VMQJ@gmail.com>
-Cc: <bpf@vger.kernel.org>
-Subject: Re: [PATCH bpf-next v2 02/15] selftests/bpf: Add tests for ALU on
- pointers with CAP_PERFMON
-From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>
-In-Reply-To: <20261002130803.A0FFA1F000FF@smtp.kernel.org>
-References: <20261002124714.180012-1-alexei.starovoitov@gmail.com> <20261002124714.180012-3-alexei.starovoitov@gmail.com> <20261002130803.A0FFA1F000FF@smtp.kernel.org>
-X-Mailer: mkdraft (claude review draft; edit before sending)
-Content-Transfer-Encoding: 8bit
+        bh=mfJzD8Nrn5OBEx9DAMeICCEetrQp74ti+65lMtrTctk=;
+        b=R4kUnBr4f0HDkCOry9pZ1qkG/G5FNUht6n1rTiVnSSO4p8svw2iu0oRbZQif3u9MsB
+         LfrkJJYI01/vg9uVHl7qenlRATKQseHTdkiDneNfrEwfnYAi7marz7DpBxFmjsoz0aDn
+         89OSSpfdgOuQAM+fEWL4oLBdU1dmoFtn5KBBCeB6+6S2N0bMcynjlhz/v90iWEWQbE09
+         HAeAd8Fg5rm1ksTcGcBKG22GWBpDNcakM3U4WtTDTsRX7bOABTyO+20o0HQNLCG1hiQF
+         Y2BgCkUopSO9tvjvUzi3X8EcDGmhSPg7Ucjyotqle5hi/2+UezU7OPdeqqURcfgiizJ7
+         heYA==
+X-Gm-Message-State: AFuF++nQw9y3Bbd5DFWRauZymmuSkGcX0yO6+qkk6B1WV69Nm9ipLd5/
+	8DraHTj2a+8aK+tlhj9ZsskZDtFR7LvD0WXhZtiyFb3JBQJjw1yfB8qDWUjk2q4xKd8F7pPT6FL
+	f/w5vI89Lvd2mmX9WhEw9osFfQfWtOL6FJU6FxXs=
+X-Gm-Gg: AYBFou3WzD24tDpWKwj4CxWHH+aHZA6YkHfH2CWl8L8ruhbPzkyyAi3HvJnrqagiaBX
+	l8qJdu81zM47KYdZBCxLWPYLVQHN7x/j6DAJDydWNxHHJVon2z+9SkmH2clz6VFH13XY2vAefyV
+	KEEpvTsFm+MuKy0oeUXOQqKIlIVxcS5YPbHSeok5p/oQ3ZBfYEFdQBVWO0piRWiYyIAf8w78+we
+	4WqYqdNEJDZjRszdHT0mIylK89zuIYMnZsGxKpH13igZemIB3wl2enxfoi5lBjDTXzeGeaDd8GS
+	6IiFFmMP4aAEWncmMuntJ2vtpkWj9XtPLU/t1adoUD89eU68XxU4COQ=
+X-Received: by 2002:a05:620a:608c:b0:93e:4d60:d389 with SMTP id
+ af79cd13be357-93e4d60d772mr857459885a.25.1791071650174; Sat, 03 Oct 2026
+ 16:54:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+References: <20261002074551.318789-6-physicalmtea@gmail.com> <20261003074657.71AC91F0089C@smtp.kernel.org>
+In-Reply-To: <20261003074657.71AC91F0089C@smtp.kernel.org>
+From: Jia Jia <physicalmtea@gmail.com>
+Date: Sun, 4 Oct 2026 07:53:34 +0800
+X-Gm-Features: AclHuK9yiZzs7l16_RtJMlKQwOPOXk2Ehni0GrB9F0m8WE6NLxHkqNqpNjLmApI
+Message-ID: <CAJwVaMLBRYhoZ9krgTt5X2e__AYXMtyJQhW_DEQ8_zqCM7WxZg@mail.gmail.com>
+Subject: Re: [PATCH 5/5] vsock: defer RX readable notifications until batch unlock
+To: sashiko-reviews@lists.linux.dev
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, virtualization@lists.linux.dev, 
+	Eugenio Perez <eperezma@redhat.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 02, 2026 at 01:08 PM sashiko-bot@kernel.org <sashiko-bot@kernel.org> wrote:
-
-> Additionally, since this program places multiple unprivileged operations
-> sequentially, wouldn't the verifier abort at the first failure (r1 &= 1),
-> leaving the unprivileged rejection of the subsequent operations (>>=, |=, ^=)
-> completely untested?
-
-Not an issue. Nothing changes for unpriv. to_scalar is false without
-allow_ptr_leaks.
-
->> +	r1 = 7;						\
->> +	r1 *= r0;					\
 >
-> [Severity: Medium]
-> Does this actually test the verifier's handling of pointer *= scalar?
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Low] vsock: unreachable callback replacement abort logic in batching
+> --
 >
-> The multiplication is applied to a scalar destination (r1) with a pointer
-> source (r0). Would it be more accurate to test if applying *= to a pointer
-> destination correctly downgrades the pointer to a scalar?
+> commit 811453fb266663fdded1db37d3b4cf3bde547c9f
+> Author: Jia Jia <physicalmtea@gmail.com>
+>
+> vsock: defer RX readable notifications until batch unlock
+>
+> This commit defers vsock RX data-ready notifications until the batch fini=
+shes
+> and releases the socket lock. It records the initial callback to handle
+> mid-batch replacements.
+>
+> > diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/vi=
+rtio_transport_common.c
+> > --- a/net/vmw_vsock/virtio_transport_common.c
+> > +++ b/net/vmw_vsock/virtio_transport_common.c
+>
+> [ ... ]
+>
+> > @@ -2015,6 +2040,13 @@ void virtio_transport_recv_pkt_batch(struct virt=
+io_transport *t,
+> >                   vsock_addr_equals_addr(&batch->dst, &dst) &&
+> >                   virtio_transport_recv_pkt_batchable(t, batch->sk)) {
+> >                       sk =3D batch->sk;
+> > +                     defer_data_ready =3D READ_ONCE(sk->sk_data_ready)=
+ =3D=3D
+> > +                                        vsock_sk(sk)->default_data_rea=
+dy;
+> > +                     if (batch->data_ready_pending && !defer_data_read=
+y) {
+> > +                             virtio_transport_rx_batch_finish(batch);
+> > +                             goto lookup;
+> > +                     }
+> > +
+>
+> [Severity: Low]
+> Can this branch ever execute?
+>
 
-No. The test is "number op= pointer". That's dst_reg != ptr_reg case.
-pointer op= number is covered by other tests in this file.
+Unless I'm mistaken, this branch can actually be reached.
+
+> The condition checks if a custom callback was installed (!defer_data_read=
+y)
+> while a default notification is already pending.
+>
+> Since custom callback attachments (such as BPF sockmap insertion) require
+> acquiring the exact same socket lock, and the lock is held continuously w=
+hile
+> the batch is active, is it possible for the callback to change from defau=
+lt
+> to custom mid-batch?
+>
+> Could this bailout branch be unreachable dead code due to the structural =
+mutual
+> exclusion provided by the socket lock?
+>
+
+The premise that sockmap updates always take lock_sock(sk) applies only to
+the syscall path. When a BPF program calls bpf_map_update_elem(), for examp=
+le
+from SK_LOOKUP or BPF_TRACE_ITER, sock_map_update_elem() takes
+bh_lock_sock(sk),
+
+The batch reuse path checks sk->sk_prot in
+virtio_transport_recv_pkt_batchable() before reading sk->sk_data_ready. A
+concurrent BPF update can replace both callbacks between those reads while
+the RX worker owns the socket.
+
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261002074551.31=
+8789-1-physicalmtea@gmail.com?part=3D5
