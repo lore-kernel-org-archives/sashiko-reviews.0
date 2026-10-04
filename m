@@ -1,250 +1,148 @@
-Received: from CWXP265CU009.outbound.protection.outlook.com (mail-ukwestazon11021131.outbound.protection.outlook.com [52.101.100.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783383AE712
-	for <sashiko-reviews@lists.linux.dev>; Sun,  4 Oct 2026 12:27:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.100.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A10647F76B
+	for <sashiko-reviews@lists.linux.dev>; Sun,  4 Oct 2026 19:21:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.53
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791116837; cv=fail; b=s9u5PZCdRIwIjm7hRAAsmUxVcKUbGvojz7qq4e3X5VKCz7HYgJO70EbyGoykGjSqH5OYwIYGKwyJTuDk+9cA8XZz64Sv+YDYf3VIuS+lIsbbswsjtABQil4dq/sB8lkM7pUdQIxyyR56EYPHPJXVW1pZwZ1FFxHUyXyIpMtUy6I=
+	t=1791141697; cv=pass; b=B0O9Dn6c5P8mutWCyJ2G2VCpP3v00LaFYO8lSwgLcQIE7vlEB1j3x9abOF6pCG9s+E3vbUr8Gg4NOvgYs1ji1YpqX8Ytn2UCvu64+/Pq5F5dZZF8g0QpFmjBWvRTmtH+AMsllMbFI2aONu6SovIor61GgRfUw1F1/JEEzJ0KrdM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791116837; c=relaxed/simple;
-	bh=fgnjFknYnBzdn224ogCqr2oMzFNuFLl1SYsn+N+EYhA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=qjuXHJK9NoXLLN7DYKC1J8wb/UiGIfC1oW7Gvj05IeQywVEujbn+Mv6kHzBChZm1rW3UragNWWBXnq+wMS9SVYW5n2F6EYm+ngcdwxq+ylYDU3Pst5fLqF+wm9caNCexWTwNxXq2vPbDAjxVKsGS8OfTfQJprKG4iQ1r+EP5FH8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com; spf=pass smtp.mailfrom=atomlin.com; arc=fail smtp.client-ip=52.101.100.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ggsKR7nmtT48/O8bzxJ4dohIW72YrlP6Ymp09/S/RaSmuVBaUqdQl+LuryaCRPnYWGIkSfvDtEMFY/X+WeMX6Bb06VgZFs6kippbVKo/wI5hqXKOA9TGNS63CSZLYwKcGJqz/6TPxvrIEnxazQNDOKYFeR06rb9HgccfdH9qKJS9pyNO4noorZX+9zYXQO/IhtfEZrtB74wIz9bbIxe7U+mKCqCyw63/8M8pO/DiB1fzdcpaORCl7H/Z4Y3VJJr0k+aoIhbS/WA5OWn3/MPst9PDJqFmGZeSGP9GXSqFTc9s+xQsKIyJ5v6duryBC1QeU3pms2r20DZNh87W2a7S6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
- bh=QAZg8eCC/8oDkc/bN++5ssX/LPE4aKrS3WZDsga9Ddk=;
- b=B+klUxgAMaUfGGuGrvh7gac3Op/ZWJKWTTJlZjhOOO2SJKhIqLJroeg/4OgTocYoMchKEoF6kNmYuYFsF6HZs88v6JQNzJ+XfWofGzCVpg4PJ7+mc05C0ADyuc54rOuWhNw5vIh/9hTnx38Tr5kCm6/x30J+pi4IMtL0mQzXde2mX4Q3ZCuOlel/y38a5ibneV3tq/M1t6wOZJaPQ6YRfP86dRH8QQa6nQ+I2fc+2wDbSnNAyC2Vo7JXAQpmDjRm7dMVoANlLyVY/6WSGI4C2Kl7skFuccYal2xLN+R8HxLkkbomk1hGAAs/gbvfvQ+dowf/cn64Q9KgTIHTNnAK/A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
- dkim=pass header.d=atomlin.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=atomlin.com;
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:183::5)
- by LOEP123MB317428.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:500::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Sun, 4 Oct
- 2026 12:27:11 +0000
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230]) by CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230%4]) with mapi id 15.21.0472.016; Sun, 4 Oct 2026
- 12:27:11 +0000
-Date: Sun, 4 Oct 2026 08:27:09 -0400
-From: Aaron Tomlin <atomlin@atomlin.com>
-To: sashiko-reviews@lists.linux.dev, acme@kernel.org, namhyung@kernel.org, 
-	irogers@google.com
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH] perf trace: Support --bitmask-list with --libtraceevent
-Message-ID: <roxqzxhbk5lciajncvrttpz7kzszj6bie6xp5v3z7rh2i3khgi@lhtwjgsyfsce>
-References: <20261002213145.333100-1-atomlin@atomlin.com>
- <20261003013401.9EDCF1F00893@smtp.kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20261003013401.9EDCF1F00893@smtp.kernel.org>
-X-ClientProxiedBy: FR3P281CA0116.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:a3::20) To CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:400:183::5)
+	s=arc-20240116; t=1791141697; c=relaxed/simple;
+	bh=anqUzSCvMyf6ofquk9+HHp9dh9/UXqbFF9xnCdBnaC4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UIytgVcSbHSWD7b9hjI5Zo0V+i+RI8PRzc0WojlbXMqzGUiRcarMY4WfZ33UHuG1McjGak9tTRw9qTlA8l4H006zlpkpmascYSZQ3GwYabdzof4+V4IOfMO6wFMyGAsOfrsBSgbWzpO3xNOVOACYSlTRkp9ZHY+HDEN1srBiXxI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EcEiGQo1; arc=pass smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EcEiGQo1"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6a601ba6870so1868324a12.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 04 Oct 2026 12:21:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791141693; cv=none;
+        d=google.com; s=arc-20260327;
+        b=HOrT9T8mLhOTCi1KYub6uyXtb4WMCcJDjPnn4gQ7WeYHFjdaAzzAmI3XwNo5A+vRW8
+         0FUO8adWbI92bYyVOQ32KaEfYkaGJCOiJL5r1UVbe+a6iq59hQvql9/dAElH14I0oyAX
+         GTRMaTFpCN+SuH6QpHq1YN62VFAbzEZwOgnoaMEGiC7e55mzgkGYYPkq9P3I7j0ULE1w
+         3yokPsocUuWJvsmVZlrin/CUXFehq3+mKhP3ESyZUea/UPuvl8rGFU4c4MeGQsuRh2gc
+         4oVo/wHCZpwQWF9FKCmirHa/5nHvtmvONnT2EQzAXeRNCFioPe4TdBNgV3wWidqomhm4
+         GmSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=F0NMA3u5MDg6GtkZkDHPBKXcFteg2lEcZn/vhtwGh+k=;
+        fh=X8kFhCRvD1ZAnt2QFmhGdJsTtxTmhd/tlfZ1ON8bsvs=;
+        b=ii8spx2fHB3aou9fLk3Sg/RzopOGA+lIHiMN+XI2Md3UxA7HRwzWKwSjmWRLpbUff9
+         y4LMn821ZdIz39/zE6B8/kmpOFU+8Gby3crsPaclAKHY6dL+Kl2sUb6v+bxSh6gPiU6q
+         jzZpSOWEL4BlWYLeV/213ZrZHZpnMxEK8pSpQQ7FDT7z/rxUutpsOXQzqVEEszz2xKHr
+         VAYeAHDT0A+37BwdQHP8lHTOgF6ExwiZVbARtXiE0as+JVa2kVsowqm/xqw65womUoOl
+         +gKHlxlUvdHNMPOEaMiT5921p9vCBzi00u9lab62Qrn+mdM7Ucjw8peiKKee91VNeTYd
+         aRzw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791141693; x=1791746493; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=F0NMA3u5MDg6GtkZkDHPBKXcFteg2lEcZn/vhtwGh+k=;
+        b=EcEiGQo13WwMk3L5fYvasgQ7GEVxR53TVz88ZC6d48EUNOhurUtKQXgV0T9tlkgenl
+         J+XeJMfhndvfqK8jTVBCh1jsx0G3SmJnsNZK5AJnUWpD0o1wSOS0OHuSUTr33mcHIY3G
+         D/ptTfEGu18W5c4R7NIUa14LC/tqUEPjyuALRSZtnXpU4mdTb6M4KHJKRMbA/MTIJMab
+         PR/SWCTrhU3Kbn4w7lejrEJcnr6KwvZONviuAFXfwCicGpbIzUZRKjjml+MuHYN8kO9x
+         2xfCUiJqezFciMnBVv2k9gl3MOlTfStT87iYiMKnE4x546oYzjoQdfXrtFjCDi7Yx5h4
+         uVGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791141693; x=1791746493;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=F0NMA3u5MDg6GtkZkDHPBKXcFteg2lEcZn/vhtwGh+k=;
+        b=uzq+SJJZxsIlR5u0o+kj2p2v+21qySCCMpBHZw2X7ml+s84vL1fuCIXUcbVrPqckxT
+         TzNEP1Cvq4rtJHIH/d2dipRiQp6E99MwtKnDMoUkWBiWMleHmDFFfE32R4vZ1qTbb+U1
+         0bR8XFDUyDg+SoxrCZGUy9nb+evCIJzKjTQwBoIhb8lzOChMFCWDogYSuG1jZbfjjic3
+         D+letz8uxl2n6LIb4qbJ3FSjLtaqKZ1f4X7MxQZcVdJ/nKVkwo+Lr5RLmL87BuqZfFSA
+         61I2FagF2qzi954wejjMjn1LMs55bxKknFNdzL11IRG1OWlVf7v8G/0Py1N0plXQiLm+
+         lnsA==
+X-Gm-Message-State: AFq9FYJpywoZ6ff4fynRiXJeQc7DZ9h4X7q2Cz03wZ3fkW/Uoxvq28qk
+	MiXCb7nxjJpreIUoZDgkyWDHev7kNi/iSg3Le9eE/uqQctd8xJyxh8tbuBAx1PoaLx5uJOmfdpX
+	x3eYfwyuN+c9nWlhSJwDkbUHpG2IGfhFYtWWouH8=
+X-Gm-Gg: AYBFou1LQSFfHLKvbSy8oc+y/Ir+hnlUjkNZmLKp2YPj97gxzr+iB60M4hKCR064jmV
+	IB/OzRGeDS99FV6mhTwJBqFCXjo3qfx4kbmY14IMvYcs5azuuhztEPH2IO7V8iliWI9gwFK44pp
+	KrsXbcq0cMcE6Mp7z3Yw4ies04YH6Z0PQfrkXCMcya2bsJu5ikHCjg/G8pYIwvBhSXyVhtnwOPQ
+	GSHQ7t6utK1+IhvsI5ZRQmWepf/Y0cIlBQ3DklNz+mODa/XrGyGouKPpuYyE6Rwy3s9vffeut1n
+	Ucy2omIunpX/HzIV4QKOJrvzub9MqNDRCEzOa+Xr3c0kkmhTs8Y6IiDSXdWir+mvrDym3WDFkMf
+	4ihg5Rc5HlAGtJWKO0/UIBlLnkjQkj8mKlkUM1ZjwtGYC5a7odlF51vUuN+c8KvC0itVa3s7fLi
+	4eWOh5dVQRc3ULCtKJMV6eJXUkUHVVeZ3PjW48Th8oxgeBREk22d9Oh0HBKSvdWraFrg==
+X-Received: by 2002:a17:907:3d05:b0:c29:ab1d:b5be with SMTP id
+ a640c23a62f3a-c2e6ed68587mr418879466b.27.1791141693253; Sun, 04 Oct 2026
+ 12:21:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CWLP123MB6607:EE_|LOEP123MB317428:EE_
-X-MS-Office365-Filtering-Correlation-Id: 54182e50-8e83-4d80-8694-08df2212d08e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|10067099003|56012099006|6133799003|4143699003|18002099003|22082099003|27256017;
-X-Microsoft-Antispam-Message-Info:
-	xpsL8KrhfjktjAugi+6UzMlHddUIJ2qzADdsPYJVOL/yQgy/3BvbSDFzIjQAE7WpFkooarK5o4CAZDjLAiYO0kqzoibmo4wTa943D86Gdrh5bgJ3xamT5JISh/H8osnP9XUE2WDFLzYLhWwHYN2ZCi+gb6KBa5rvoM65eosABg3LMy3fSMeGVxVy+KU49rYjZPkOJH/2gy/gM7jYi7ZzP0WCupsPynC+DKrjg3WYbZOBUjNQBdJaL4MF9H0pa/ODpfxJKyQnrBw7b4b6Zs2GenxxrQz0cp4mfYiIGKYVr7UCpTgmLETGVkwZsfHlTJlIHzeXBYyG0xsbv/PWfBD+gvyu4pq0CDT1bCJhwjBUGUC0VsrVZ+IuxWXbW268h4epEuJS9+t1ip25f4eafjrjatZWQzqps1S/KZsntjJ5xLT9cna8eU78/MDwikTLEzvQ9fdrqZ4BrVMml/m9I18N9tVkRDBY3O3KY0T7Tju6bfcEUjoB7Sttuk9vZsEdry+jzC8WZLvZ+wtRXhJQi6WPEt7UajIi4GKYMteqLC0cBALV1wHpkWXeWU+ac6+y52zWbxjWRdG1IVta27Tgvv0qZ4gXpuMATeMs2MiG5wqZGrDAsBkvzOdxzDMGA9jvd9atZ8oeTn3YFFt2wNKxqCUL4SzuElkYSAQsPW00joAKsy/fOpVxsqo4pxOAsP6c43zDNB8fLLpx68Kf7J4583obvA==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(10067099003)(56012099006)(6133799003)(4143699003)(18002099003)(22082099003)(27256017);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?OVBYQ2FUL2dHSU9IM3ZaWDRwTTZ1VXc2WWVVa25BUkYzeHhDNUcrb0lSL3RT?=
- =?utf-8?B?Qm9tYjB2K2xOWHpGMmpISHRKVEpqL3Q3T2g2cnEzeThCb2hETmxZQkhNbkxm?=
- =?utf-8?B?Zi9uM21GcVZuQWxwdUhmaHZkVjZHNjE0dC9ZdGZlVk5va1hldGRRdFN1amFy?=
- =?utf-8?B?aVdRdEwwQ1plT1ZVc3NXUDBoOHN2Sm5HL1prTllvVDJmanZFOVVvbjJuMDQ2?=
- =?utf-8?B?VURFTlJRTi8rVWNXN1oyaktrNExQQUw1RTBHdmI3T0NDQ1V6L2tJcHF6VVBU?=
- =?utf-8?B?TWJHa29yNjV2M1V6azJ6a283WEJLeVZXd3gzbGRrYjgwejJOWGJUS0g0L0l4?=
- =?utf-8?B?SEJlTnhKMVhHTWc4UVZlTXVKdzQvV21nQWZmUDh1bXJpTnUzRHdIWm5DaGJP?=
- =?utf-8?B?bHduVk94eUVvVFUybG9hV1llYm4rWVlnQU1DTUhTSFZveHk3NDBYT0ZoVGtQ?=
- =?utf-8?B?L1dEMytsNjZ4Z25UNytpT3ZQYkdJV0c2VHdUY0ZEMHE0aDcwYTE5QitxMDNi?=
- =?utf-8?B?VXBHNG5UQ1A5QTh3OWVsSW9OYmJaUVJWZFZOYXhQeTNXVXNXdGVqQjJ0eVhp?=
- =?utf-8?B?bTZPT1U0SjVaVnZlMmdkR0swYmNtcFB0SlI2TUx3dm5zWVI0dG9hNDJoUnVW?=
- =?utf-8?B?U3R4OEVpVDNOdElXNEVQK1k1d0lHdWdWM2NrR3JHdU5tNG5CekErdkZkbk5D?=
- =?utf-8?B?SXBrMGE0REpKeXR3T09qcU5TYmJtbEJVN2o3Yzh1enM1bEtnemVFWEVvbTNk?=
- =?utf-8?B?d1BCWVpzbHF6Rk5DaGIvWUpmZnpobU5ydVpRMkMxdHR3bWl3clJDeWlCdEhx?=
- =?utf-8?B?UWlGN3IzTUxGWFRoVHRTTEliLzEvNk1EcU12NHVwRGNBTFNoUXprZHNwYVJC?=
- =?utf-8?B?V0ptUkZwSWd5OHNET29Wa3p1c3o5MFRGS1JzTE9oVzFXNkxiak1kYWo5UzdH?=
- =?utf-8?B?ZmJQUXRQWW51dnM0T1hHa0dPMVd4UHlRWTdrMy9hT2N1TkxxWHV3NTlnNHFX?=
- =?utf-8?B?d3g1Zm4wMmdzcjU4NWwwZWxHUmdSWWY4QUExaUJsYUxjTlhtZkFGcFAyNDZy?=
- =?utf-8?B?MVJpc3FSMFhPTmhFOFpjT3NseFlQblpVcVRGTE51MVkyNDBnRWkxMzdxenR1?=
- =?utf-8?B?YjYrZFlwbVQ5OHVlVFlXSy9VeHJRNE92TWZoN3VkVkRRRDdxOHo4c2lzSGVh?=
- =?utf-8?B?Rk4vaGlWQUxvR293L0JCZnJMREhqNGIrcmdnMGdzNUtiUktKQU4zdGpjcUdZ?=
- =?utf-8?B?eVNTRndaaW9XMjIrUHQyZ2N4dVhaaElsSXpWMml1V2pLSFQ4cnArM3hLVDJx?=
- =?utf-8?B?YU01Qlg5SmhISEZxNGQ1ak9qL1kxK3VUZmR4S29kakVqQS9mUFdVUEtXazhy?=
- =?utf-8?B?ek1DaHp4bDVZUlRmVFJuV2xEK0c1ZHQrYkczckg2UmEyOXVHL1M1RmhuRzVp?=
- =?utf-8?B?bWFZcVZOZ0xHenl5L1BxU1VsUTJTYXBtOW9EUjdmUkMxbEFPQW0xdVB4M1k0?=
- =?utf-8?B?UzF0Z2czMksyaWhIcEg3MFJaelFKTGY5ODRha2tsNk8zNnpWY2lQSzdkb2E3?=
- =?utf-8?B?TTVSc3pQUXB0ZGx3QTgvNU9TM1ZTMm9wb0RndDlCRlh4dFRIbDhHaW5yeThC?=
- =?utf-8?B?SzZpQjdaT2w1dkh5YVBmaUtzNzZhMmlNY05xeFdzYnB3NDFXMDB3OHNOZWYx?=
- =?utf-8?B?Z2JIdXgvMjQxNTdQU0ZDYkdJcGwrdzJQZjhMWG9aV0p1eU5OcmlsSjQ1MWZ2?=
- =?utf-8?B?b25VQUZTYit2QWo2anYxcFBGS3EzcEVDTUdFTG85MExpUHNKaFZ3OEsra0tC?=
- =?utf-8?B?QlRyZVVsMzV6TE5aV0lPZks1dGEwNjR0bVMrT2ZnTElHcFFCU0lidFpCd3By?=
- =?utf-8?B?ZmVPc3VyWUd2S0NCemYxVzBObVNyRUUvdWdrV1JWd01hY0d1S2R0L2tCbWVy?=
- =?utf-8?B?eW5XWjRGN2tsdlkvWVVta0RBQlJJSmg2VTlIWmlPaTdGWkkzSW4rYWdJTVVB?=
- =?utf-8?B?dEx0eVJKRmJlV2daZUZhS3QycCtWNlllL0MxSFVkOFFYY21JL3FZUHArY2F5?=
- =?utf-8?B?Z28xaEdiWURHTlY3U2xzTklwM3RRZnZXMDlBT0o0bXgzTXpkK1VyQ09FMXA5?=
- =?utf-8?B?UTdCeWh2ZlRMNEVjb1R6eFhSdWw3UmRiQlMyaTFLVGlOZ0VOOVU1OW0vZzZm?=
- =?utf-8?B?WklzcnFnNDdkeVNlTU1IbFJlU2tZTms3WXMwL0RkcUp1aVRzRGU0VUdEVmlZ?=
- =?utf-8?B?WXZXbnp1SUdtTGRuT21RcTZDSUM2Q0RTSkRhOTZtcUpzMVRIVWpZSFpkYnJ4?=
- =?utf-8?B?ZjVtZyt0akhoQ0xKYWUvY2kxYkJQc25vbHBXNm9hN1NCOTRuaG50QT09?=
-X-OriginatorOrg: atomlin.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 54182e50-8e83-4d80-8694-08df2212d08e
-X-MS-Exchange-CrossTenant-AuthSource: CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Oct 2026 12:27:11.4674
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: vK5BM2uNB9oYPLn9DCEcFeNj3/jQAZ9zedsG8wmqiO1vKZRZPizSecoLPUGP7qQuSRhPs0HzidXSp3/sVyKrRQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LOEP123MB317428
+References: <20261004191042.143713-1-rosenp@gmail.com> <20261004191730.247471F000FF@smtp.kernel.org>
+In-Reply-To: <20261004191730.247471F000FF@smtp.kernel.org>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Sun, 4 Oct 2026 12:21:21 -0700
+X-Gm-Features: AclHuK-r6TZQaG6dalsSO0XzDLOu9FRKbJFkKWkwYe1BsjdoeuJOTYI5Pv6Cjc0
+Message-ID: <CAKxU2N8D4y+MC_S8qnho2xYJNQ3Ft83qpBo_vKQe-yY=UXC+_A@mail.gmail.com>
+Subject: Re: [PATCH v2] dt-bindings: gpio: pca95xx: add onnn,pca9655 compatible
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
+	linux-gpio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Oct 03, 2026 at 01:34:01AM +0000, sashiko-bot@kernel.org wrote:
-> [Severity: Low]
-> Will this cause build failures on future libtraceevent updates?
-> 
-> The commit message mentions adding all enum values of tep_print_arg_type to
-> satisfy -Wswitch-enum. However, because tep_print_arg_type is an external
-> enum from libtraceevent, any future updates to libtraceevent that add new
-> values to this enum will break the perf build due to -Werror.
-
-Good point. Explicitly enumerating all external enum variants is fragile
-against future upstream additions. In the next iteration, this is resolved
-by casting arg->type explicitly to (int) in the switch evaluation
-
-> 
-> > +		case TEP_PRINT_BITMASK:
-> > +			arg->type = TEP_PRINT_CPUMASK;
-> 
-> [Severity: Low]
-> Can this cause a build failure on older libtraceevent versions?
-> 
-> If TEP_PRINT_CPUMASK is missing from the installed system libtraceevent
-> headers, this unconditional assignment will fail to compile.
-
-TEP_PRINT_CPUMASK was introduced in libtraceevent 1.7.0, so building
-against older versions without a version check breaks compilation.
-In the next iteration, the transformation and helper are guarded with:
-
-    #if defined(HAVE_LIBTRACEEVENT) && \
-        defined(LIBTRACEEVENT_VERSION) && \
-        (MAKE_LIBTRACEEVENT_VERSION(1, 7, 0) <= LIBTRACEEVENT_VERSION)
-
-> 
-> > +			break;
-> > +		case TEP_PRINT_OP:
-> > +			tep_print_arg__set_bitmask_list(arg->op.left);
-> > +			tep_print_arg__set_bitmask_list(arg->op.right);
-> > +			break;
-> > +		case TEP_PRINT_FUNC:
-> > +			tep_print_arg__set_bitmask_list(arg->func.args);
-> > +			break;
-> > +		case TEP_PRINT_FLAGS:
-> > +			tep_print_arg__set_bitmask_list(arg->flags.field);
-> > +			break;
-> > +		case TEP_PRINT_SYMBOL:
-> > +			tep_print_arg__set_bitmask_list(arg->symbol.field);
-> > +			break;
-> > +		case TEP_PRINT_HEX:
-> > +			tep_print_arg__set_bitmask_list(arg->hex.field);
-> > +			tep_print_arg__set_bitmask_list(arg->hex.size);
-> > +			break;
-> > +		case TEP_PRINT_INT_ARRAY:
-> > +			tep_print_arg__set_bitmask_list(arg->int_array.field);
-> > +			tep_print_arg__set_bitmask_list(arg->int_array.count);
-> > +			tep_print_arg__set_bitmask_list(arg->int_array.el_size);
-> > +			break;
-> > +		case TEP_PRINT_TYPE:
-> > +			tep_print_arg__set_bitmask_list(arg->typecast.item);
-> > +			break;
-> > +		case TEP_PRINT_DYNAMIC_ARRAY:
-> > +			tep_print_arg__set_bitmask_list(arg->dynarray.index);
-> > +			break;
-> > +		case TEP_PRINT_NULL:
-> > +		case TEP_PRINT_ATOM:
-> > +		case TEP_PRINT_FIELD:
-> > +		case TEP_PRINT_STRING:
-> > +		case TEP_PRINT_BSTRING:
-> > +		case TEP_PRINT_DYNAMIC_ARRAY_LEN:
-> > +		case TEP_PRINT_HEX_STR:
-> 
+On Sun, Oct 4, 2026 at 12:17=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] dt-bindings: commit message falsely claims in-tree DTS usage
+> --
+>
+> commit 7b4c1f570780f70afdcc949de9998c051c2323e5
+> Author: Rosen Penev <rosenp@gmail.com>
+>
+> dt-bindings: gpio: pca95xx: add onnn,pca9655 compatible
+>
+> This commit documents the onnn,pca9655 compatible string for the On Semi
+> variant of the pca9555 16-bit I2C GPIO expander. It adds the string along=
+side
+> other standalone entries without a fallback.
+>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202610021617.AlVUa9No-lkp@i=
+ntel.com/
+>
+> > The pca9655 is the On Semi variant of the pca9555 16-bit I2C GPIO
+> > expander. "onnn,pca9655" is already used standalone by in-tree DTS
+> > (armada-388-clearfog, armada-388-helios4) and has a dedicated entry in
+> > the pca953x driver's OF match table, but was never documented, causing
+> > dtbs_check failures.
+>
 > [Severity: Medium]
-> Does this skip the AST traversal for TEP_PRINT_HEX_STR nodes?
-> 
-> The fallthrough here prevents the recursive traversal of arg->hex.field and
-> arg->hex.size for TEP_PRINT_HEX_STR nodes, which share the same structural
-> payload as TEP_PRINT_HEX. Nested bitmask evaluations inside a hex string
-> length or field argument could be silently ignored.
-
-TEP_PRINT_HEX_STR shares the identical struct tep_print_arg_hex payload
-(arg->hex.field and arg->hex.size) with TEP_PRINT_HEX. The next iteration,
-TEP_PRINT_HEX_STR is grouped together with TEP_PRINT_HEX:
-
-        case TEP_PRINT_HEX:
-        case TEP_PRINT_HEX_STR:
-            tep_print_arg__set_bitmask_list(arg->hex.field);
-            tep_print_arg__set_bitmask_list(arg->hex.size);
-            break;
-
-> 
-> > +		case TEP_PRINT_CPUMASK:
-> > +		default:
-> > +			break;
-> > +		}
-> > +	}
-> > +}
-> > +
-> 
-> [ ... ]
-> 
-> > @@ -4908,6 +4979,8 @@ static int trace__replay(struct trace *trace)
-> >  	if (err)
-> >  		goto out;
-> >  
-> > +	trace__init_tp_bitmask_list(trace, session->evlist);
-> 
-> [Severity: Medium]
-> Is --bitmask-list broken for pipe mode streams?
-> 
-> In pipe mode, the event list is populated dynamically from synthesized
-> events during perf_session__process_events(), which happens later in this
-> function. By calling trace__init_tp_bitmask_list() here, the initialization
-> operates on an empty evlist, skipping the AST transformation.
-
-In perf trace, file replay (trace__replay()) expects to read from a
-recorded perf.data file where the session header (including event
-descriptions and tracepoint formats) is read upfront by
-perf_session__new(). Existing tracepoint setup in trace__replay() already
-relies on session->evlist being populated prior to
-perf_session__process_events() e.g. evlist__find_tracepoint_by_name() for
-raw_syscalls and syscalls.
-
-Doing this transformation once during tracepoint setup avoids adding
-per-event checks or lookups to trace__event_handler() in the sample
-delivery hot path. The commit message has been updated to explicitly state
-that, as with existing tracepoint replay in perf trace, this expects the
-evlist to be populated from the session header.
-
-Kind regards,
--- 
-Aaron Tomlin
+> Is this claim about in-tree DTS usage accurate?
+>
+> Looking at the armada-388-clearfog.dtsi file, the compatible string appea=
+rs
+> to be only used within a comment:
+>
+>         /*
+>          * This is how it should be:
+>          * compatible =3D "onnn,pca9655", "nxp,pca9555";
+>          * but you can't do this because of the way I2C works.
+>          */
+>         compatible =3D "nxp,pca9555";
+>
+> Because the string is only present in a comment and the active property i=
+s
+> nxp,pca9555, it would not trigger dtbs_check failures. Could the commit
+> message be updated to reflect why the binding actually needs to be added?
+This is outdated. 6dfda79476538a9aad1d2dac45453e62c6939522 in
+linux-next fixes this.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261004191042.14=
+3713-1-rosenp@gmail.com?part=3D1
