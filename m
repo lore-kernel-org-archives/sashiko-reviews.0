@@ -1,52 +1,57 @@
 Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB0335E1A8
-	for <sashiko-reviews@lists.linux.dev>; Sun,  4 Oct 2026 21:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED493BE623
+	for <sashiko-reviews@lists.linux.dev>; Sun,  4 Oct 2026 21:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791148755; cv=none; b=PXiWIrFJpYprYCI+ZfKzmOo9vOMK4ta7CWGlODmH1gP/Yo29tdN+rWOpGkp7tYKtsA+DByHU9ts+YWdy5jmnW6pndxBgKOjPmlaBvg3KujvOizy4qQsxhqJjGCP0wPwJZQQcO6QFxy+SnBXK//gaj3PC3FU21O3uQLjN7YnGAaU=
+	t=1791148970; cv=none; b=OGnD5PvQMZeO5hcvDCBJscYP7+jI9VXDndSHhyXBnJElK3AZ9rwQ/c4aaNVUB8XhrpXrDOIRy3S6U6xQcWruDUaOWO0G1IeqifhQw06stwwABfM5597rNeBX7FpkoaM4RFRRyHPq1ppy+uTHJeFlLubEmLo9HK5TmSE/GD3m3DI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791148755; c=relaxed/simple;
-	bh=nGpEuimdXJJK+grRLfCMRLAmaHZIBGbXbdnVtIzeM9A=;
+	s=arc-20240116; t=1791148970; c=relaxed/simple;
+	bh=WmWYV2k7FqhwmLYzxQ1/5AjtdXrLIU9ft5LFmuWJHGU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oOAjmebQ2Ij8w5Roe0ilKXLR22u/E5JMEPK2PAim9yREZuvf4Vvs9uqGL5TB95cWYb/tQGL7kPN8USAkmtexGdSXMpVNf9wevr2tktWlTgETPFRPBoLEpfDmvgdya9V4JbDShWkSIf7vSbYCa9qQAFU5khDbXxYqNoWCzm+qUd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=B5t/Xuev; arc=none smtp.client-ip=185.246.85.4
+	 MIME-Version:Content-Type; b=jODefwvPGVYUygND3y/5DzVvE0Y4+lC7JqfTJde/uKYaD7KYycXwEEGA7WUHxOlFtdLDHjUQ+ae8Ly2/w0tJazRl16SOAmM77QNXg/iE9emSv2EDF2+So627GnxGNlXtRi4goizig89131ftCNL930h3EDE+K3IHu2mCmdOD5c8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=rTXxDP/4; arc=none smtp.client-ip=185.246.85.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="B5t/Xuev"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="rTXxDP/4"
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 1CD564E41169;
-	Sun,  4 Oct 2026 21:19:12 +0000 (UTC)
+	by smtpout-03.galae.net (Postfix) with ESMTPS id CA67F4E41169;
+	Sun,  4 Oct 2026 21:22:47 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id C7862604FE;
-	Sun,  4 Oct 2026 21:19:11 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id DAB331032820F;
-	Sun,  4 Oct 2026 23:19:09 +0200 (CEST)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 88600604FE;
+	Sun,  4 Oct 2026 21:22:47 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 60E1410328384;
+	Sun,  4 Oct 2026 23:22:43 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1791148750; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	t=1791148966; h=from:subject:date:message-id:to:cc:mime-version:content-type:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=nGpEuimdXJJK+grRLfCMRLAmaHZIBGbXbdnVtIzeM9A=;
-	b=B5t/Xuevbe0azs2bAdTacTXq1ubkPUXqy5Bi43QtKNH2wB0H9T6JzevRp7Cm071+DPyWiT
-	KY82EQCoUwnnHEoLbUxTqISYUCAXG2+3f9eCA1QlTDbYVs0mAXgCkYCF0r32UGgs6Gfndi
-	DMCC9FFEpwieYXWER6YMfqDx8PCb7cm0ksQ57tT9tq0EgIkOfubzfoeZ6utX/I18IqbIWm
-	jcyTkDF6a2m8nltcrApCDEsSuGqWuZ9BZjywz9DLzZy1/Vdj+ubm8c3mMvTijjakmLET3b
-	si/wfYMxLqRTF3ABbcKuxV51K9yycw2tDNX8+1VW6HZExUlWz3pBnFgtzYiLmA==
+	bh=WmWYV2k7FqhwmLYzxQ1/5AjtdXrLIU9ft5LFmuWJHGU=;
+	b=rTXxDP/4cfRx+uJwv0cpboAYbzMtPt7OkQCiMndnI+f3I8/NzhH9sGnGuxCghbQyGJKpne
+	19QEoOvreRwwBk55kvsRIQlWgQfiZQIcL/3n69SrojNtuZjegjmQD/TSDoEliQJGZqRXCf
+	3PMbhlMwqjqiewKJZ5wU0ujYxhE841i1H3Wr6TvFZzqg09Jxs9IRf0q/1lKJCu6BzbQgui
+	8wFUuctckV4GOj3e7lPkEIr2NlCmHD2ORXN4Wo0rNCBqzWMuuw0u0Vx8MIAUjS4nVCl8Sg
+	VkLDj7K2nK5SBWsOF4ldsKFX2VMYllOLDEdOLYnXapeYhdRWM3ZVR+ftv/qWFA==
 From: Miquel Raynal <miquel.raynal@bootlin.com>
 To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev,  conor+dt@kernel.org,
-  linux-clk@vger.kernel.org,  robh@kernel.org,  devicetree@vger.kernel.org
-Subject: Re: [PATCH v8 5/7] clk: nuvoton: ma35d1: Reparent SYSPLL correctly
-In-Reply-To: <20261004205551.6279C1F000FF@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Sun, 04 Oct 2026 20:55:50
+Cc: "Richard Weinberger" <richard@nod.at>,  "Takahiro Kuwano"
+ <takahiro.kuwano@infineon.com>,  "Pratyush Yadav" <pratyush@kernel.org>,
+  "Vignesh Raghavendra" <vigneshr@ti.com>,  "Michael Walle"
+ <mwalle@kernel.org>,  sashiko-reviews@lists.linux.dev,
+  linux-mtd@lists.infradead.org,  "Steam Lin" <STLin2@winbond.com>,
+  "Thomas Petazzoni" <thomas.petazzoni@bootlin.com>,
+  linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 06/15] mtd: spi-nor: Fix WRSR with ODTR chips
+In-Reply-To: <20261002123432.42F6E1F00893@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Fri, 02 Oct 2026 12:34:31
 	+0000")
-References: <20261004-perso-ma35d1-upstream-clk-v8-0-e1a106a128c0@bootlin.com>
-	<20261004-perso-ma35d1-upstream-clk-v8-5-e1a106a128c0@bootlin.com>
-	<20261004205551.6279C1F000FF@smtp.kernel.org>
+References: <20261002-winbond-master-spi-nor-w35t-v1-0-a22a2f95c26e@bootlin.com>
+	<20261002-winbond-master-spi-nor-w35t-v1-6-a22a2f95c26e@bootlin.com>
+	<20261002123432.42F6E1F00893@smtp.kernel.org>
 User-Agent: mu4e 1.12.12; emacs 30.2
-Date: Sun, 04 Oct 2026 23:19:08 +0200
-Message-ID: <87zewti2pf.fsf@bootlin.com>
+Date: Sun, 04 Oct 2026 23:22:41 +0200
+Message-ID: <87tsn1i2ji.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -57,17 +62,23 @@ Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-Last-TLS-Session-Version: TLSv1.3
 
-On 04/10/2026 at 20:55:50 GMT, sashiko-bot@kernel.org wrote:
+On 02/10/2026 at 12:34:31 GMT, sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Low] clk: nuvoton: ma35d1: Modification of global static state
-> during probe
+> - [High] mtd: spi-nor: state leak in spi_nor_write_sr_ll() due to
+> missing WEL cleanup
 
-There is a single clock controller. Should never be a problem. I can
-certainly move it in to more local scope if someone asks, but it's not
-practically needed.
+I don't think we care. If the chip fails here, we probably have a bus
+issue. Write Enable guards very little anyway.
 
-Thanks,
+> - [High] mtd: spi-nor: 16-bit status register writes erroneously
+> rejected in 8-8-8 DTR mode
+
+Not a problem with octal DTR chips: there is no "write sr1 and sr2
+opcode".
+
+I will disregard these two comments, unless someone asks me to take care
+of them.
+
 Miqu=C3=A8l
-
