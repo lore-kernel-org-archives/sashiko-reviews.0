@@ -1,82 +1,250 @@
-Received: from mail-dl1-f50.google.com (mail-dl1-f50.google.com [74.125.82.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CWXP265CU009.outbound.protection.outlook.com (mail-ukwestazon11021131.outbound.protection.outlook.com [52.101.100.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4C92F260C
-	for <sashiko-reviews@lists.linux.dev>; Sun,  4 Oct 2026 09:49:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791107346; cv=none; b=rz/gY/0+7L9ppCDLTPGCZxcsNOUGt0CgC0bsIBsBVpKcS6K2+PRYD9qOobNgAwDLuY5qSd/rE2dBd1iuAuEH1sHVFoeuabogR3qhQMGNTCZftmfsB7C8kBsrAZJLQZW0yXAxo91hlxpJVPlMFc0bmBPLDE+Zc5dhH33Vb56nAps=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791107346; c=relaxed/simple;
-	bh=ykUND7+mWwQH15b088ZPOHKV33z4sOLmTy51vjvLY9o=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kH/STaZehywRwEIZsxlOa4kcYw4YR+WCdAYrVgeHHTjq8zPj6D9ghBZ/QMLSlpgLebbsE1Hvmm0rKyfMzSKsla1xX4sGjzb+87DDreAS6Kgcgguzu6QWZfn7lhVSpgxcOrprOlgjk1tt+a0xMwszIbXOyovkDhbftQGUQO43cFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m77I8QNK; arc=none smtp.client-ip=74.125.82.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m77I8QNK"
-Received: by mail-dl1-f50.google.com with SMTP id a92af1059eb24-149241d04f5so868973c88.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 04 Oct 2026 02:49:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791107344; x=1791712144; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=0mb/xR5eRFy3O59ezfi15bus74aOTFozmcjdhnt60XY=;
-        b=m77I8QNKPH+1UCEgerhn8HsUvSXrtJaoz0S5GTkNVinaI0TREiJhKkj+YaTZPCz+to
-         oCncJHj8j9l84gJ6CKy8vJr5cad03SgEYArrraxFGpuROhOpIfTtJ3sXi3vtyY4IP2Xl
-         U6s9N2ylxtyfkgIX72VCUoQfZ3gg0Gj089sAbxoAGsa3sosZrdNPu1Wv9Dwio6zEeeTD
-         YfXsnqvgNp4RGH4Y0F73Dq2SaPdgUpPt2m+faQxe/Nh4bp04+ZLyN0rft3nGPNCb/5Fk
-         a9/CI74gCfPM4HxgvB6QAjspjmjIVBXd3halpTxZ25eep9aoL5zvZGuTSvgbyjW0ZMhz
-         /XWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791107344; x=1791712144;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=0mb/xR5eRFy3O59ezfi15bus74aOTFozmcjdhnt60XY=;
-        b=hWeXDxMD8vUILuCzVD45Epk9tQymA+W7nL+cLwR3UCzkzztIQGn+wQ9Iw3+Glp3tjZ
-         WfasQi0xaj7JTD3cmRpFntnOD3qbi9mk4MZKVReoeGJPxKM7w+IqzxwUbfUscycWC7tv
-         Q506pJLhki4djKxFdza2plnbDi79Csr3RGLqKCKnt8xE3btpg3JZaTTygFKcUlORPOJa
-         k+2QZnA22LCOQtfmm50tEX/IDfP6XmEBiN+dxvAf1YNGOVDcAYT5osIEbfedgAVZqIKq
-         d/eeyntIph1Bnb7ib2w6LQBFbzQ03KVe260z0RHfvCcT87eTAP66BITDBv2mI5yDAhR0
-         jxGw==
-X-Gm-Message-State: AFuF++nssbKl6Qg11G3rshwYKZFnCAorJG+zROxbtMruB38L8yx4Jdc+
-	p2oUfk4tVIeBJ3W2gF7hbW7991CJ4eBDhLUVrriM0BTIrLBcTngWW8gQTzHbty4aRnC7Rg==
-X-Gm-Gg: AYBFou3EnlpxusIkxUZvgJ/nHukdDC3mV2oJ3d33Mq3ZvWTRk84C+RcBpwRrK7Y1Xeb
-	Kg+1VuXMba3cvrNCwvHYjeFvFW5o1TK8jAvjsxdfwnnlsk+uiWdhCQ1VR1lwYas7/PpoK3J20OM
-	exlFn21nQvCNyVFCcmZziodcwNWEZvo7dZG3pWhiJwNC7ZI2QvXmtTBisXu9akyvZ1FphbE4SC8
-	z8QpNz4AzBhJJie3SxmzL77HtmxSslJ+UyFLAlrVk6wz4ml6Vzlliv1dENW6BXvMUPdiwodfJwA
-	NAo40qyqW3Olq/mQj8gdohydfi8jDWW2ypQ/bdLHydNHle/q06BLf5uXPHmNC7EMUtc3ItaaVXy
-	LDQC+lsT4R49Qtf18cQzG3nqN/9fUFNYxVaHuXClWLCH6ioDp1zKpAQonYAhsU4tsovSYrTQpEr
-	Wveu5GGzOngMRxoGxBMFSac/jdr4qSb96fQ3Y8aJcIi2GFInhy0QnpNDXa9VOHII6kTOGQzMFc5
-	EKAUP2dEAvgG1SSuKcQu34c/epxxkWlHh4OJlVRaqRfmyKE4vxEs7P9MnbcLrnZSpFAae55oQWr
-	XfitI2M6K2DKDv5eD35T3S+UxrYc/0V26bFVJAdMyeKxjz6osJgAmrkW134=
-X-Received: by 2002:a05:701b:4552:10b0:137:5b9d:cf87 with SMTP id a92af1059eb24-151be1472c2mr5904637c88.0.1791107343946;
-        Sun, 04 Oct 2026 02:49:03 -0700 (PDT)
-Received: from spider.bream-herring.ts.net ([103.6.151.236])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-151fc39a7d1sm11321647c88.3.2026.10.04.02.49.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Oct 2026 02:49:03 -0700 (PDT)
-From: Matthias Goergens <matthias.goergens@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org,
-	intel-gfx@lists.freedesktop.org
-Subject: Re: [PATCH] drm/i915: look up shmem folios by index for writeback
-Date: Sun,  4 Oct 2026 17:49:00 +0800
-Message-ID: <20261004094900.174818-1-matthias.goergens@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261002091439.59C611F00899@smtp.kernel.org>
-References: <20261002073107.2209644-1-matthias.goergens@gmail.com> <20261002091439.59C611F00899@smtp.kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783383AE712
+	for <sashiko-reviews@lists.linux.dev>; Sun,  4 Oct 2026 12:27:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.100.131
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791116837; cv=fail; b=s9u5PZCdRIwIjm7hRAAsmUxVcKUbGvojz7qq4e3X5VKCz7HYgJO70EbyGoykGjSqH5OYwIYGKwyJTuDk+9cA8XZz64Sv+YDYf3VIuS+lIsbbswsjtABQil4dq/sB8lkM7pUdQIxyyR56EYPHPJXVW1pZwZ1FFxHUyXyIpMtUy6I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791116837; c=relaxed/simple;
+	bh=fgnjFknYnBzdn224ogCqr2oMzFNuFLl1SYsn+N+EYhA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=qjuXHJK9NoXLLN7DYKC1J8wb/UiGIfC1oW7Gvj05IeQywVEujbn+Mv6kHzBChZm1rW3UragNWWBXnq+wMS9SVYW5n2F6EYm+ngcdwxq+ylYDU3Pst5fLqF+wm9caNCexWTwNxXq2vPbDAjxVKsGS8OfTfQJprKG4iQ1r+EP5FH8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com; spf=pass smtp.mailfrom=atomlin.com; arc=fail smtp.client-ip=52.101.100.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ggsKR7nmtT48/O8bzxJ4dohIW72YrlP6Ymp09/S/RaSmuVBaUqdQl+LuryaCRPnYWGIkSfvDtEMFY/X+WeMX6Bb06VgZFs6kippbVKo/wI5hqXKOA9TGNS63CSZLYwKcGJqz/6TPxvrIEnxazQNDOKYFeR06rb9HgccfdH9qKJS9pyNO4noorZX+9zYXQO/IhtfEZrtB74wIz9bbIxe7U+mKCqCyw63/8M8pO/DiB1fzdcpaORCl7H/Z4Y3VJJr0k+aoIhbS/WA5OWn3/MPst9PDJqFmGZeSGP9GXSqFTc9s+xQsKIyJ5v6duryBC1QeU3pms2r20DZNh87W2a7S6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
+ bh=QAZg8eCC/8oDkc/bN++5ssX/LPE4aKrS3WZDsga9Ddk=;
+ b=B+klUxgAMaUfGGuGrvh7gac3Op/ZWJKWTTJlZjhOOO2SJKhIqLJroeg/4OgTocYoMchKEoF6kNmYuYFsF6HZs88v6JQNzJ+XfWofGzCVpg4PJ7+mc05C0ADyuc54rOuWhNw5vIh/9hTnx38Tr5kCm6/x30J+pi4IMtL0mQzXde2mX4Q3ZCuOlel/y38a5ibneV3tq/M1t6wOZJaPQ6YRfP86dRH8QQa6nQ+I2fc+2wDbSnNAyC2Vo7JXAQpmDjRm7dMVoANlLyVY/6WSGI4C2Kl7skFuccYal2xLN+R8HxLkkbomk1hGAAs/gbvfvQ+dowf/cn64Q9KgTIHTNnAK/A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
+ dkim=pass header.d=atomlin.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=atomlin.com;
+Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:183::5)
+ by LOEP123MB317428.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:500::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Sun, 4 Oct
+ 2026 12:27:11 +0000
+Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+ ([fe80::cec4:77ab:262e:d230]) by CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+ ([fe80::cec4:77ab:262e:d230%4]) with mapi id 15.21.0472.016; Sun, 4 Oct 2026
+ 12:27:11 +0000
+Date: Sun, 4 Oct 2026 08:27:09 -0400
+From: Aaron Tomlin <atomlin@atomlin.com>
+To: sashiko-reviews@lists.linux.dev, acme@kernel.org, namhyung@kernel.org, 
+	irogers@google.com
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH] perf trace: Support --bitmask-list with --libtraceevent
+Message-ID: <roxqzxhbk5lciajncvrttpz7kzszj6bie6xp5v3z7rh2i3khgi@lhtwjgsyfsce>
+References: <20261002213145.333100-1-atomlin@atomlin.com>
+ <20261003013401.9EDCF1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20261003013401.9EDCF1F00893@smtp.kernel.org>
+X-ClientProxiedBy: FR3P281CA0116.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:a3::20) To CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:400:183::5)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CWLP123MB6607:EE_|LOEP123MB317428:EE_
+X-MS-Office365-Filtering-Correlation-Id: 54182e50-8e83-4d80-8694-08df2212d08e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|10067099003|56012099006|6133799003|4143699003|18002099003|22082099003|27256017;
+X-Microsoft-Antispam-Message-Info:
+	xpsL8KrhfjktjAugi+6UzMlHddUIJ2qzADdsPYJVOL/yQgy/3BvbSDFzIjQAE7WpFkooarK5o4CAZDjLAiYO0kqzoibmo4wTa943D86Gdrh5bgJ3xamT5JISh/H8osnP9XUE2WDFLzYLhWwHYN2ZCi+gb6KBa5rvoM65eosABg3LMy3fSMeGVxVy+KU49rYjZPkOJH/2gy/gM7jYi7ZzP0WCupsPynC+DKrjg3WYbZOBUjNQBdJaL4MF9H0pa/ODpfxJKyQnrBw7b4b6Zs2GenxxrQz0cp4mfYiIGKYVr7UCpTgmLETGVkwZsfHlTJlIHzeXBYyG0xsbv/PWfBD+gvyu4pq0CDT1bCJhwjBUGUC0VsrVZ+IuxWXbW268h4epEuJS9+t1ip25f4eafjrjatZWQzqps1S/KZsntjJ5xLT9cna8eU78/MDwikTLEzvQ9fdrqZ4BrVMml/m9I18N9tVkRDBY3O3KY0T7Tju6bfcEUjoB7Sttuk9vZsEdry+jzC8WZLvZ+wtRXhJQi6WPEt7UajIi4GKYMteqLC0cBALV1wHpkWXeWU+ac6+y52zWbxjWRdG1IVta27Tgvv0qZ4gXpuMATeMs2MiG5wqZGrDAsBkvzOdxzDMGA9jvd9atZ8oeTn3YFFt2wNKxqCUL4SzuElkYSAQsPW00joAKsy/fOpVxsqo4pxOAsP6c43zDNB8fLLpx68Kf7J4583obvA==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(10067099003)(56012099006)(6133799003)(4143699003)(18002099003)(22082099003)(27256017);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?OVBYQ2FUL2dHSU9IM3ZaWDRwTTZ1VXc2WWVVa25BUkYzeHhDNUcrb0lSL3RT?=
+ =?utf-8?B?Qm9tYjB2K2xOWHpGMmpISHRKVEpqL3Q3T2g2cnEzeThCb2hETmxZQkhNbkxm?=
+ =?utf-8?B?Zi9uM21GcVZuQWxwdUhmaHZkVjZHNjE0dC9ZdGZlVk5va1hldGRRdFN1amFy?=
+ =?utf-8?B?aVdRdEwwQ1plT1ZVc3NXUDBoOHN2Sm5HL1prTllvVDJmanZFOVVvbjJuMDQ2?=
+ =?utf-8?B?VURFTlJRTi8rVWNXN1oyaktrNExQQUw1RTBHdmI3T0NDQ1V6L2tJcHF6VVBU?=
+ =?utf-8?B?TWJHa29yNjV2M1V6azJ6a283WEJLeVZXd3gzbGRrYjgwejJOWGJUS0g0L0l4?=
+ =?utf-8?B?SEJlTnhKMVhHTWc4UVZlTXVKdzQvV21nQWZmUDh1bXJpTnUzRHdIWm5DaGJP?=
+ =?utf-8?B?bHduVk94eUVvVFUybG9hV1llYm4rWVlnQU1DTUhTSFZveHk3NDBYT0ZoVGtQ?=
+ =?utf-8?B?L1dEMytsNjZ4Z25UNytpT3ZQYkdJV0c2VHdUY0ZEMHE0aDcwYTE5QitxMDNi?=
+ =?utf-8?B?VXBHNG5UQ1A5QTh3OWVsSW9OYmJaUVJWZFZOYXhQeTNXVXNXdGVqQjJ0eVhp?=
+ =?utf-8?B?bTZPT1U0SjVaVnZlMmdkR0swYmNtcFB0SlI2TUx3dm5zWVI0dG9hNDJoUnVW?=
+ =?utf-8?B?U3R4OEVpVDNOdElXNEVQK1k1d0lHdWdWM2NrR3JHdU5tNG5CekErdkZkbk5D?=
+ =?utf-8?B?SXBrMGE0REpKeXR3T09qcU5TYmJtbEJVN2o3Yzh1enM1bEtnemVFWEVvbTNk?=
+ =?utf-8?B?d1BCWVpzbHF6Rk5DaGIvWUpmZnpobU5ydVpRMkMxdHR3bWl3clJDeWlCdEhx?=
+ =?utf-8?B?UWlGN3IzTUxGWFRoVHRTTEliLzEvNk1EcU12NHVwRGNBTFNoUXprZHNwYVJC?=
+ =?utf-8?B?V0ptUkZwSWd5OHNET29Wa3p1c3o5MFRGS1JzTE9oVzFXNkxiak1kYWo5UzdH?=
+ =?utf-8?B?ZmJQUXRQWW51dnM0T1hHa0dPMVd4UHlRWTdrMy9hT2N1TkxxWHV3NTlnNHFX?=
+ =?utf-8?B?d3g1Zm4wMmdzcjU4NWwwZWxHUmdSWWY4QUExaUJsYUxjTlhtZkFGcFAyNDZy?=
+ =?utf-8?B?MVJpc3FSMFhPTmhFOFpjT3NseFlQblpVcVRGTE51MVkyNDBnRWkxMzdxenR1?=
+ =?utf-8?B?YjYrZFlwbVQ5OHVlVFlXSy9VeHJRNE92TWZoN3VkVkRRRDdxOHo4c2lzSGVh?=
+ =?utf-8?B?Rk4vaGlWQUxvR293L0JCZnJMREhqNGIrcmdnMGdzNUtiUktKQU4zdGpjcUdZ?=
+ =?utf-8?B?eVNTRndaaW9XMjIrUHQyZ2N4dVhaaElsSXpWMml1V2pLSFQ4cnArM3hLVDJx?=
+ =?utf-8?B?YU01Qlg5SmhISEZxNGQ1ak9qL1kxK3VUZmR4S29kakVqQS9mUFdVUEtXazhy?=
+ =?utf-8?B?ek1DaHp4bDVZUlRmVFJuV2xEK0c1ZHQrYkczckg2UmEyOXVHL1M1RmhuRzVp?=
+ =?utf-8?B?bWFZcVZOZ0xHenl5L1BxU1VsUTJTYXBtOW9EUjdmUkMxbEFPQW0xdVB4M1k0?=
+ =?utf-8?B?UzF0Z2czMksyaWhIcEg3MFJaelFKTGY5ODRha2tsNk8zNnpWY2lQSzdkb2E3?=
+ =?utf-8?B?TTVSc3pQUXB0ZGx3QTgvNU9TM1ZTMm9wb0RndDlCRlh4dFRIbDhHaW5yeThC?=
+ =?utf-8?B?SzZpQjdaT2w1dkh5YVBmaUtzNzZhMmlNY05xeFdzYnB3NDFXMDB3OHNOZWYx?=
+ =?utf-8?B?Z2JIdXgvMjQxNTdQU0ZDYkdJcGwrdzJQZjhMWG9aV0p1eU5OcmlsSjQ1MWZ2?=
+ =?utf-8?B?b25VQUZTYit2QWo2anYxcFBGS3EzcEVDTUdFTG85MExpUHNKaFZ3OEsra0tC?=
+ =?utf-8?B?QlRyZVVsMzV6TE5aV0lPZks1dGEwNjR0bVMrT2ZnTElHcFFCU0lidFpCd3By?=
+ =?utf-8?B?ZmVPc3VyWUd2S0NCemYxVzBObVNyRUUvdWdrV1JWd01hY0d1S2R0L2tCbWVy?=
+ =?utf-8?B?eW5XWjRGN2tsdlkvWVVta0RBQlJJSmg2VTlIWmlPaTdGWkkzSW4rYWdJTVVB?=
+ =?utf-8?B?dEx0eVJKRmJlV2daZUZhS3QycCtWNlllL0MxSFVkOFFYY21JL3FZUHArY2F5?=
+ =?utf-8?B?Z28xaEdiWURHTlY3U2xzTklwM3RRZnZXMDlBT0o0bXgzTXpkK1VyQ09FMXA5?=
+ =?utf-8?B?UTdCeWh2ZlRMNEVjb1R6eFhSdWw3UmRiQlMyaTFLVGlOZ0VOOVU1OW0vZzZm?=
+ =?utf-8?B?WklzcnFnNDdkeVNlTU1IbFJlU2tZTms3WXMwL0RkcUp1aVRzRGU0VUdEVmlZ?=
+ =?utf-8?B?WXZXbnp1SUdtTGRuT21RcTZDSUM2Q0RTSkRhOTZtcUpzMVRIVWpZSFpkYnJ4?=
+ =?utf-8?B?ZjVtZyt0akhoQ0xKYWUvY2kxYkJQc25vbHBXNm9hN1NCOTRuaG50QT09?=
+X-OriginatorOrg: atomlin.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 54182e50-8e83-4d80-8694-08df2212d08e
+X-MS-Exchange-CrossTenant-AuthSource: CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Oct 2026 12:27:11.4674
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: vK5BM2uNB9oYPLn9DCEcFeNj3/jQAZ9zedsG8wmqiO1vKZRZPizSecoLPUGP7qQuSRhPs0HzidXSp3/sVyKrRQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LOEP123MB317428
 
-Thanks, good catch.  v2 looks the folios up in batches with
-filemap_get_folios() and calls cond_resched() between batches:
-https://lore.kernel.org/all/20261004094827.174193-1-matthias.goergens@gmail.com/
+On Sat, Oct 03, 2026 at 01:34:01AM +0000, sashiko-bot@kernel.org wrote:
+> [Severity: Low]
+> Will this cause build failures on future libtraceevent updates?
+> 
+> The commit message mentions adding all enum values of tep_print_arg_type to
+> satisfy -Wswitch-enum. However, because tep_print_arg_type is an external
+> enum from libtraceevent, any future updates to libtraceevent that add new
+> values to this enum will break the perf build due to -Werror.
+
+Good point. Explicitly enumerating all external enum variants is fragile
+against future upstream additions. In the next iteration, this is resolved
+by casting arg->type explicitly to (int) in the switch evaluation
+
+> 
+> > +		case TEP_PRINT_BITMASK:
+> > +			arg->type = TEP_PRINT_CPUMASK;
+> 
+> [Severity: Low]
+> Can this cause a build failure on older libtraceevent versions?
+> 
+> If TEP_PRINT_CPUMASK is missing from the installed system libtraceevent
+> headers, this unconditional assignment will fail to compile.
+
+TEP_PRINT_CPUMASK was introduced in libtraceevent 1.7.0, so building
+against older versions without a version check breaks compilation.
+In the next iteration, the transformation and helper are guarded with:
+
+    #if defined(HAVE_LIBTRACEEVENT) && \
+        defined(LIBTRACEEVENT_VERSION) && \
+        (MAKE_LIBTRACEEVENT_VERSION(1, 7, 0) <= LIBTRACEEVENT_VERSION)
+
+> 
+> > +			break;
+> > +		case TEP_PRINT_OP:
+> > +			tep_print_arg__set_bitmask_list(arg->op.left);
+> > +			tep_print_arg__set_bitmask_list(arg->op.right);
+> > +			break;
+> > +		case TEP_PRINT_FUNC:
+> > +			tep_print_arg__set_bitmask_list(arg->func.args);
+> > +			break;
+> > +		case TEP_PRINT_FLAGS:
+> > +			tep_print_arg__set_bitmask_list(arg->flags.field);
+> > +			break;
+> > +		case TEP_PRINT_SYMBOL:
+> > +			tep_print_arg__set_bitmask_list(arg->symbol.field);
+> > +			break;
+> > +		case TEP_PRINT_HEX:
+> > +			tep_print_arg__set_bitmask_list(arg->hex.field);
+> > +			tep_print_arg__set_bitmask_list(arg->hex.size);
+> > +			break;
+> > +		case TEP_PRINT_INT_ARRAY:
+> > +			tep_print_arg__set_bitmask_list(arg->int_array.field);
+> > +			tep_print_arg__set_bitmask_list(arg->int_array.count);
+> > +			tep_print_arg__set_bitmask_list(arg->int_array.el_size);
+> > +			break;
+> > +		case TEP_PRINT_TYPE:
+> > +			tep_print_arg__set_bitmask_list(arg->typecast.item);
+> > +			break;
+> > +		case TEP_PRINT_DYNAMIC_ARRAY:
+> > +			tep_print_arg__set_bitmask_list(arg->dynarray.index);
+> > +			break;
+> > +		case TEP_PRINT_NULL:
+> > +		case TEP_PRINT_ATOM:
+> > +		case TEP_PRINT_FIELD:
+> > +		case TEP_PRINT_STRING:
+> > +		case TEP_PRINT_BSTRING:
+> > +		case TEP_PRINT_DYNAMIC_ARRAY_LEN:
+> > +		case TEP_PRINT_HEX_STR:
+> 
+> [Severity: Medium]
+> Does this skip the AST traversal for TEP_PRINT_HEX_STR nodes?
+> 
+> The fallthrough here prevents the recursive traversal of arg->hex.field and
+> arg->hex.size for TEP_PRINT_HEX_STR nodes, which share the same structural
+> payload as TEP_PRINT_HEX. Nested bitmask evaluations inside a hex string
+> length or field argument could be silently ignored.
+
+TEP_PRINT_HEX_STR shares the identical struct tep_print_arg_hex payload
+(arg->hex.field and arg->hex.size) with TEP_PRINT_HEX. The next iteration,
+TEP_PRINT_HEX_STR is grouped together with TEP_PRINT_HEX:
+
+        case TEP_PRINT_HEX:
+        case TEP_PRINT_HEX_STR:
+            tep_print_arg__set_bitmask_list(arg->hex.field);
+            tep_print_arg__set_bitmask_list(arg->hex.size);
+            break;
+
+> 
+> > +		case TEP_PRINT_CPUMASK:
+> > +		default:
+> > +			break;
+> > +		}
+> > +	}
+> > +}
+> > +
+> 
+> [ ... ]
+> 
+> > @@ -4908,6 +4979,8 @@ static int trace__replay(struct trace *trace)
+> >  	if (err)
+> >  		goto out;
+> >  
+> > +	trace__init_tp_bitmask_list(trace, session->evlist);
+> 
+> [Severity: Medium]
+> Is --bitmask-list broken for pipe mode streams?
+> 
+> In pipe mode, the event list is populated dynamically from synthesized
+> events during perf_session__process_events(), which happens later in this
+> function. By calling trace__init_tp_bitmask_list() here, the initialization
+> operates on an empty evlist, skipping the AST transformation.
+
+In perf trace, file replay (trace__replay()) expects to read from a
+recorded perf.data file where the session header (including event
+descriptions and tracepoint formats) is read upfront by
+perf_session__new(). Existing tracepoint setup in trace__replay() already
+relies on session->evlist being populated prior to
+perf_session__process_events() e.g. evlist__find_tracepoint_by_name() for
+raw_syscalls and syscalls.
+
+Doing this transformation once during tracepoint setup avoids adding
+per-event checks or lookups to trace__event_handler() in the sample
+delivery hot path. The commit message has been updated to explicitly state
+that, as with existing tracepoint replay in perf trace, this expects the
+evlist to be populated from the session header.
+
+Kind regards,
+-- 
+Aaron Tomlin
