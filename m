@@ -1,73 +1,74 @@
-Received: from mail-wr2-f35.google.com (mail-wr2-f35.google.com [74.125.225.99])
+Received: from mail-wm2-f12.google.com (mail-wm2-f12.google.com [74.125.225.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D6741836C
-	for <sashiko-reviews@lists.linux.dev>; Sun,  4 Oct 2026 08:49:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8CA54774
+	for <sashiko-reviews@lists.linux.dev>; Sun,  4 Oct 2026 08:50:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791103790; cv=none; b=QrhC9hvOr+hQHANemJnUdIVWAAMGpr0bLlB98lK+ENj8Qf8I4b/SPKFOmGmuLoYyEt2CYxPp6b+NBHrN3CQbzoMXsvdgO0DpNwNPs0R9nCHWc3i9R4vQhFrgWMzOPRXGxVoI6GFwYMqRR0OGJWgPpmNbbKvsGdWw1HJkeWh3rho=
+	t=1791103804; cv=none; b=HPrlU7D0RhQzmYkGaENq+sTT8neI/Q4eQIvKGLvd5UKg99K5uTe76YfbkcjK1YdOpKLL9LsTh3cxxuHv4XY+caAA5ZpbFbeEclwTla1nJPpf1/06NWRBltNeX//TLoLe493DDvmRaLZ0iUAEQ8TejyLWMjHDgjHYTMYqthUW+6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791103790; c=relaxed/simple;
-	bh=PGsH7rDWkRj8clYSuUGvdGlvrrgMjVS3OseQtK1KgI0=;
+	s=arc-20240116; t=1791103804; c=relaxed/simple;
+	bh=TBLGnJLwIPub+jgduJVfPnz8P8wgTaw89DxN0dlS+ZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gDXFnmc3bnVcJlCAd8xD1ofuFgAOd9bqQaYUzvk2JmW49VKHbjOsCM/Y1l2HkAVgJKHtQHVVQI4v4qWlzWNQ3uQHmSgEfbWdgPjiujCM1sLFBOtfp8vNvmKU6yJJh/CI1wlQkIUrVFtHQNLMu2Pxlu3iAZrzAQrK3g5+C/+4fLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y+MD+2VU; arc=none smtp.client-ip=74.125.225.99
+	 MIME-Version:Content-Type; b=Fy7iFMwp1Xf+gTZ85RrIWVVnRAbPbdbaejbB+Zq+Y9PG2k4gf8NEVPxdd23qCx8dtHlUBmnAQQwIkZjpu66dOWf1Bb2epuw8mrSrtDzwknnket4DuCdAgB0sghIYXQkc1Z+qk6Iuag1JS5Twka6MScqk709ksR3xQgD2NXlEdew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S6t2lKxy; arc=none smtp.client-ip=74.125.225.140
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y+MD+2VU"
-Received: by mail-wr2-f35.google.com with SMTP id ffacd0b85a97d-48b059eae96so688749f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 04 Oct 2026 01:49:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S6t2lKxy"
+Received: by mail-wm2-f12.google.com with SMTP id 5b1f17b1804b1-4a01ff8c098so5973095e9.3
+        for <sashiko-reviews@lists.linux.dev>; Sun, 04 Oct 2026 01:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791103780; x=1791708580; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1791103800; x=1791708600; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=PGsH7rDWkRj8clYSuUGvdGlvrrgMjVS3OseQtK1KgI0=;
-        b=Y+MD+2VUY14z+O6YboHyjJfNEtjdGLrORuQjPqnh7xdGRSGnMnzj7B7pwmVne/FMPs
-         CotNVYPU9iSSzuJY7ZLCIA+JI8MuXU0vTzVQqqfSgP0CQpbXrThi5tP9gpDZdm2vIGik
-         yMVgxTCSuh8AGFFhaF5RFJP2fReiFwbwkA96waeY6IR3Kl3zQ1f+WdYN498OR4BbSKMh
-         IjHwSmaJmcWsn/YjYzjvVMK25GSrXsIH6fxmrnt2HDibLJ3q938xsRnsOFqSCcBY3daq
-         P9AegrXvBnu+q9fQv365tpE/MBlYOCpk3aAWpBVI9fGJQbXssuxOnnfTZKUI+fK9UyCX
-         wFPQ==
+        bh=TBLGnJLwIPub+jgduJVfPnz8P8wgTaw89DxN0dlS+ZI=;
+        b=S6t2lKxyRpOHek6YKUx6pp9/f+btuwd9oVo5f8+jHdbR6rAOdN4BgblCkGNzBssD2G
+         QEE6Y9IPTCYHza6W15u94GiE+wRgMGbI84b7soKjJcXOrBPLtcNI4xSa2Ku2loT7dFSA
+         ssZsNJkLFrvutccw5s/wO9/oowVwaMJCFAQoGYbRrpMJegWG/9xW2jQNk2JjIy+ZlZ2T
+         /0ASL+QRyKhDMMGr+Fy8MmYmf+W5q5DjOZpLLmxeIMHvqd63VyKcQiOc2QvoCqNVJPbs
+         /3yT+mjMlmnJDSx7eiI3D86U8HKGnXyKpe4dYHXXBttphV7aQNrsNys+HQcs6uMf0MYp
+         OiXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791103780; x=1791708580;
+        d=1e100.net; s=20260707; t=1791103800; x=1791708600;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=PGsH7rDWkRj8clYSuUGvdGlvrrgMjVS3OseQtK1KgI0=;
-        b=QDUelRsL62hFw2ylqpyIiwUAwibAv6TwnHPo7z9NP+jby6l58JYwkJOoLSNkdlA50Y
-         DWl/PYqJTYz1V9bWV94ZVjO+1aHap/oGtx5JI1BWtQJABgB/GYi7bwCvwHZdkXjveWlU
-         3yxpjuKgzWtXrGTPuLHzrn1YpEiLHTZStsCiMaeqMbfNx3hWbD39/d33MR1iGI/4obQF
-         jTNT/6drHcD1inE7rB51f698glm6CKMlq8T3QwRo9EFm8WM6bAxVlWHR40FAnr6dI8Zc
-         bDyD13T6YwtGJWyLajPDIlQnS3brRLkQSvIBRR9YnAZBdjNYPfJfVrd4B9YgReO3X4/P
-         hGTQ==
-X-Gm-Message-State: AFuF++mcPTgsFws36vudUs680VNzZWALXGPvpdflEwv9JFgDfUY1llXl
-	ZTaE2RmrWogaSBOJ92UBb3+3XcguFVEqmABzdoUgrt5GfNduwlpU5vDXiFQ0kHP8
-X-Gm-Gg: AYBFou3nB3icH38rtpKGTyCsXWUiaQUpPdLG4Ry2e0ZHEr1dhwOYvLjh2tkpeM8bojp
-	MxNMTOrSFPomajSCv6/V/W6O/yYVHQS9Ng0NW5ZpWs6lCvX1hVAe55U8s71hICsqY/IguPoqxXH
-	b6C/SisewuS0tgqTMfFBS+7cGcKYmxYxzlZTj2n8OKa4DDKP2Y9V3WfKuCCnqWf5k2x+l9zELNe
-	wBOumr4V7LObOlmbvslS76KiuAp+7nu2+t1j+ySddJihPEJfsE0Jp8SQ/f74PJWDcV7FGoQXz8E
-	9JMFh4eHKPuyLCJYr1kEGwrtCdMiJ4iTYUkz7DK1n0rl1JWQVyGnQg3+Zmxy/XC5S5fE0hRVtce
-	KO9uQMO87Rc/quDVulbsmZwbTeeKrUuiQGP/V+Nd3wfCTbBQDipk+LfKYub42+eeKiA3ECebp5K
-	m8peY550SM3YN5EZhQkVhO+31OLYqs+YCzd2msVh/yWQAy/fzzBWR1Ta7KZwsFD/54U17C8tHn+
-	7En1VOMDWt3U5PqYwiblkbBLfwv8xX71XsMXYZBtIa+cbbBn9OFuW+6xizuLhvHGx4=
-X-Received: by 2002:a05:600c:3b1d:b0:4a1:7033:5b55 with SMTP id 5b1f17b1804b1-4a170335d02mr17995165e9.21.1791103780373;
-        Sun, 04 Oct 2026 01:49:40 -0700 (PDT)
+        bh=TBLGnJLwIPub+jgduJVfPnz8P8wgTaw89DxN0dlS+ZI=;
+        b=BIxvUD8DAy+jqRVy5TjVBwmDx3NvcyPm8DQwCRVtbDQRRV87ApalsgsHED8kzh/89W
+         tf0NaTdGI3sivRG7B8O3np4hwbloDJmWoJIhHpEUJPa6bmUxixUzFR7X7mpOlW1T//gg
+         JfreNdNvSaXqlDhiEnbbCLMUj/QsJ06mOYhocEYXO4NnFcs2yHa6WMXqVTLxHHCNPs58
+         G0LlDBIwayESaMpLmfEAQxdQf/8dMCZ+9oDaAKyrHhIrpvIfnvyTWu2pbZYd0k0lfhOi
+         +iEsruVusZclDrOlGn2fwlzA9Q9maLqqQrywNtuoDMUalK0R16HpNQb2nXGz4TtrCWWW
+         grLQ==
+X-Gm-Message-State: AFuF++kAkF5YOfjPLAr3wDR/xISJh4BNXsNKhIha7FUVkjAibF8bcdIN
+	Txjstc8zD6KrtpMfnyRPpaW5hCx47giSrbrNg674bJmQuGacJqTcj5+T07cmeQMm
+X-Gm-Gg: AYBFou0Qd0z/VLjuo3KtESdeRrXqrtms/VsCMD1lxQupMGX62y7TedDbFAF74txZjaO
+	mzeikKFXn+Afq1CsvY0Nu4JBN+gXs/AdCkScTmeIjt3XeB3pXNlHtZ29uaXCP+3nWqDVC10l13H
+	EckNXUbLAZgcv7mKh9nZoVZMnoCKsLG333WG4ovoGJBU8+gS7HLgvb2m3xEUhWHMCURUBX9Khlt
+	K+gQUH1je/4XOtRIeLFMFNd367oRspAZrGlh6FQY6yHxfTbs7gouZQW95oUCvSyRyH4LZ9c6KpB
+	hkCjL//eQc+ENhVuR8N0MW3MkSL/DaRjENiSSK89nmUV8cTbbiMKDq1oXMBuBYcCFmSIx+1zpyS
+	wBdmJJuz/Uocp+idvIQoLvLs4ctsfvSNlDWIlotVGaypFVB6ieomgbCCp2RC6fV11ZyCIN12h6y
+	WtxMYuJsMwxqYzgs6ynasJFSMBvHftDDnQ7n474TnyHNOItKOU6PopwIw+eb+02kWyMpeu03b9Q
+	CcMr8v/QbnKruksWRIF/zidOgFb4JHaGsOMzDG5CZWUP36LoaU8MQ8+JoQ180vEsPnSViNl05cl
+	cml0
+X-Received: by 2002:a05:600d:6445:10b0:4a1:6d21:93c1 with SMTP id 5b1f17b1804b1-4a16d2194fdmr27595865e9.16.1791103799699;
+        Sun, 04 Oct 2026 01:49:59 -0700 (PDT)
 Received: from localhost (p200300eba703ae00ca7f54fffe019321.dip0.t-ipconnect.de. [2003:eb:a703:ae00:ca7f:54ff:fe01:9321])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a027f2a4c4sm251131045e9.2.2026.10.04.01.49.39
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48c57d9327bsm2076646f8f.3.2026.10.04.01.49.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Oct 2026 01:49:39 -0700 (PDT)
+        Sun, 04 Oct 2026 01:49:59 -0700 (PDT)
 From: =?UTF-8?q?Johannes=20W=C3=BCller?= <johanneswueller@gmail.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [RESEND PATCH v2 1/2] drm: add edid_overridden flag to drm_connector
-Date: Sun,  4 Oct 2026 10:49:30 +0200
-Message-ID: <20261004084933.1440705-1-johanneswueller@gmail.com>
+Subject: Re: [RESEND PATCH v2 2/2] drm/amd: fix HDMI signal type for EDID overrides
+Date: Sun,  4 Oct 2026 10:49:57 +0200
+Message-ID: <20261004084959.1441071-1-johanneswueller@gmail.com>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261003175620.245AE1F0089B@smtp.kernel.org>
-References: <20261003161525.23600-1-johanneswueller@gmail.com> <20261003161525.23600-2-johanneswueller@gmail.com> <20261003175620.245AE1F0089B@smtp.kernel.org>
+In-Reply-To: <20261003175619.722451F0089E@smtp.kernel.org>
+References: <20261003161525.23600-1-johanneswueller@gmail.com> <20261003161525.23600-3-johanneswueller@gmail.com> <20261003175619.722451F0089E@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -78,8 +79,7 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 On Sat, 03 Oct 2026 17:56:19 +0000, sashiko-bot@kernel.org wrote:
-> Does this new flag also need to be set when falling back to an override EDID
-> after a failed DDC probe?
+> Could this override check also be added to rgb_output_is_limited_range()
+> so TV formats correctly output limited range RGB?
 
-Yes, drm_edid_override_connector_update() applies the override without
-setting the flag. I will fix that in v3.
+Yes. In v3, I'll move the check into a helper and use it there as well.
