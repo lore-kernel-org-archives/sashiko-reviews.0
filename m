@@ -1,105 +1,216 @@
-Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342014349A8
-	for <sashiko-reviews@lists.linux.dev>; Mon,  5 Oct 2026 09:12:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B26043B49D;
+	Mon,  5 Oct 2026 09:24:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791191559; cv=none; b=P9L0T+9IbBDDsVSXtlmqAFsHHfMZNYfp5ZSlyzUHNzGuhxT4EBxS++aDnyTSiSfVzovXYh27RNz+HRrjX8P/cIrVDlHin9ISEmphgo4tiHhSjBGqTX1pcUBzGjgbCZ1j/h7n3e902YbB1oQIlqfiUvVvtEaBnCDDzZE/jWJkOeQ=
+	t=1791192263; cv=none; b=izxzjAVORnZJP5HkqOmV0UHXLjxZB1nAIY/Efdd6FCm6MyqV9rPSH4q4lgoy83tAVO0N4ZbQY0+8jZwwhTysbgZbMPtfETIM+pgKPrvu+XunfKvrQHsjNWBhjgqUmDG0oULPELtlqO2kTK8FRYMGbL9veTF/b9MxBURbrvTSLBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791191559; c=relaxed/simple;
-	bh=DEKopGIrQkLh8SWF/zKNuJLXidGRTJJo4QAeZeLI1Kg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=F6ojt5+M7ZBVZ1IxOpWnLvTuEuJSnPsS6UQ9RSnj5LeDfPZ8zDAncsJMFhlYGi1ovCc15AjDbKcAS9r51EUbI2KKajEQSEybTPLJn3YBrfflLVMDwI+WRUxaoA6+PQ7mbv1/z+0RVVqgV/TWNmCc4IVTuoS04ATHQsZAzO6gQ7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=c2z5RcD8; arc=none smtp.client-ip=74.125.225.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1791192263; c=relaxed/simple;
+	bh=3uBhIxFiHUFW6NL19n880iSOAR9dUsSyt4FBTCjm7v4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=nBl6hvIuL1e3Qgph3ZIhc/eI2gCABANrcB9Qfz6oS2wqzondSCOa6aa6oiNMeH/73OV4EgIhfbeaIrV3gkgVOt7P7cKHeQp14Jg7dDHC2EDxAeQTo2/yflIbT9Cgwm4JWGonkWO9cZuO7xd+JA8yK3xOQwfyQw3j6XjVatQYIb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ZF9hNK/X; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="c2z5RcD8"
-Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49ccf3ca626so10060885e9.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 05 Oct 2026 02:12:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1791191556; x=1791796356; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=DEKopGIrQkLh8SWF/zKNuJLXidGRTJJo4QAeZeLI1Kg=;
-        b=c2z5RcD8X8wKY/m2lNxW5r1r45HP5E3BoBgNWOO1SLMLcf9IMWtP1lR9qZtTD8vftp
-         IsGKFcjtc4w1z9oXZH9qICyDQBgsuMAdOfooV89+MXZEwUbL87OtFOPsZ/J8jADWNp+E
-         tx0NzxYktlOgkxdV+40PxM5brGuN3ugVdQFdJImmfDMeL8FlkM12bWL9CvcEMuIHxKZC
-         IJYrhVkoduFoHQQWBbVtn14Rek+tGSg3O0DLk3OWTLhE85a8wbDyCmQqPdEFp44HxJDl
-         ZcgOwdslXYb9o8Uz2bVzKNbvcAIzNWBuAcdimCPH+FlcXT3upiVNrDKCT3OXmIfcHUPz
-         J+7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791191556; x=1791796356;
-        h=content-transfer-encoding:content-type:mime-version:message-id:date
-         :references:in-reply-to:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=DEKopGIrQkLh8SWF/zKNuJLXidGRTJJo4QAeZeLI1Kg=;
-        b=yH6KEx9l7hhqe5aCTFVe05tqV00IywwN0p8sfX1udPhOPhrAfLs5N8XcdqblXmTt0r
-         CMDHvjawM77XV0NlvcySRK1dwJVWjjjimivQtjl6zqJ+gHT7nPXTasXx6l5vRMeAkFcg
-         dX1JAE5NPE45xqwAaEdB48G/zDT/pL/Q3lCJGV9JsLl+B9T/aL4E3b7xM6SF97pzm3Dc
-         l7Invzoom1sy3BRgBAbA2jqFW/lJPni+widE0cqBpR3ufzG5u/M0xJn2pwG5FZS9rhi1
-         snOuEw6BKXAffLd5/HtK+3XRvhLQvbcjyf0C5SnIJulrLcrjt85scRlvYDGnSra7O/ed
-         Pz5Q==
-X-Gm-Message-State: AFuF++kNhHA0h4mKANxWGI77fuBbNcR8l2/jizR+Op9S9VrR0gTo5EDf
-	ajGvAqdCxGeQSbYNVSGJK1/NJ8eOU2PdZxyZcrcwxHp87KxxUzER24WQE+Yd7SaS+oM=
-X-Gm-Gg: AYBFou0aMFzwZKYuC69DyKTjC2BZQQJMlXY6ewSjXtIPMPnLYPI79Y7lH2kJtc6bR86
-	ayW+gmfOcelsZM2mCwaD9hgagoBxT233fUlBPrnAumfxmv9ZgfQIZesqb8yckyjOKyy457T24Go
-	03TcIEtneuYpkonWD7q6eSVJwMT9c6XOahGbApUMiAgth0pq6r+r7v7zT9ZPGhA7t7dY1G6wSVH
-	KJ1i0kw+vOg5+zBat7sxun+H/GoF+EC4MgU06wGSoNPNxSpvsZQJbvUReNUhUBiLkQ4zZ9GrJvl
-	KeV7z9IZ4uRYnxtJCiqVQq1WfAsxJUtfHjtzektx+0HIGtsojZ0zIf7KQRqi6QbijMuUpktXKZ+
-	qWSeqD1+uNNE93ZbtNNUjFLpBwiFjJVHBLh5/ZwbOBmMRgjR/X79e8Xw2hxQQkCpBSjm9Hi17vP
-	UsxAReHUez/h6MX0TUyNCV4PT82CELbMuylNyHCWfMSYgVfe9IPLaHfRLWz1ePdLqYtdxW8izCi
-	MizevG/IiPYvvdO
-X-Received: by 2002:a05:600c:1394:b0:4a0:1c17:4fb2 with SMTP id 5b1f17b1804b1-4a02759dc21mr185147705e9.31.1791191556536;
-        Mon, 05 Oct 2026 02:12:36 -0700 (PDT)
-Received: from localhost (90-182-211-1.rcp.o2.cz. [90.182.211.1])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a03ff20831sm205138945e9.4.2026.10.05.02.12.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2026 02:12:36 -0700 (PDT)
-From: Jerome Brunet <jbrunet@baylibre.com>
-To: Miquel Raynal <miquel.raynal@bootlin.com>, sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
- linux-clk@vger.kernel.org, robh@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v8 5/7] clk: nuvoton: ma35d1: Reparent SYSPLL correctly
-In-Reply-To: <87zewti2pf.fsf@bootlin.com>
-References: <20261004-perso-ma35d1-upstream-clk-v8-0-e1a106a128c0@bootlin.com>
- <20261004-perso-ma35d1-upstream-clk-v8-5-e1a106a128c0@bootlin.com>
- <20261004205551.6279C1F000FF@smtp.kernel.org> <87zewti2pf.fsf@bootlin.com>
-Date: Mon, 05 Oct 2026 11:12:35 +0200
-Message-ID: <1jjynw7bp8.fsf@starbuckisacylon.baylibre.com>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ZF9hNK/X"
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69515aos3290354;
+	Mon, 5 Oct 2026 09:24:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=pp1; bh=eUrQAXGF1YVhWopl6hU66/h5AwX0
+	PeeLJ4eMq7RUbjc=; b=ZF9hNK/X1yF8HcRzwSCeGSgs5rBcMLJLkGTgAv0XowIm
+	AhANZQFdeuFUio/YvSWZLAJR6dtxayejeE58S3o4FfgVoJB4eAlOZ8IHgw0x8wnp
+	QpAucTHcfFeW5aHakAo3/pCR7xHV4YDX/K1Q//COe8vMaMAFrX89LvhJSYXB8eMb
+	x8dhqznrSmEnvKQyOLG2pon7h0CIYczqwQ8TbDFkGVhh8e448bsfcsV+1YAvplIJ
+	doHa+8Q//HKe8xP7Zt3mxa/EYfUU/ha/X7I6o8ftFLXkcMNEzaF6jE2io9IlYPCi
+	zK3tJCiV6o00nax09CBFfemcQAlW5kzjY4IoWyn5Cg==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2sbv0mw6-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Mon, 05 Oct 2026 09:24:20 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69568ADr2203903;
+	Mon, 5 Oct 2026 09:24:20 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3dhgmqam-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 05 Oct 2026 09:24:20 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
+	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6959OFgL19137268
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 5 Oct 2026 09:24:15 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7C52E2004E;
+	Mon,  5 Oct 2026 09:24:15 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6715220040;
+	Mon,  5 Oct 2026 09:24:15 +0000 (GMT)
+Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
+	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Mon,  5 Oct 2026 09:24:15 +0000 (GMT)
+From: Ajaykumar Rajappa <ajaykr@linux.ibm.com>
+To: linux-s390@vger.kernel.org, sashiko-reviews@lists.linux.dev
+Cc: Ajaykumar Rajappa <ajaykr@linux.ibm.com>
+Subject: [PATCH v4] zfcp: Fix integer underflow in status read buffer payload length
+Date: Mon,  5 Oct 2026 11:23:56 +0200
+Message-ID: <20261005092357.2747395-1-ajaykr@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: zZkfYivrPsQyT1Ln3S12mkAjxk4f3eZ8
+X-Authority-Analysis: v=2.4 cv=KJHPn1Fo c=1 sm=1 tr=0 ts=6ac36cc4 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=vJmfF2MOdrWGp7hqUaMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: zZkfYivrPsQyT1Ln3S12mkAjxk4f3eZ8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDAzNiBTYWx0ZWRfX9EKg3Yhrbkm+
+ dQhEzOdpSaIVMdvEgLnUHWLfT5Goq6ekZAc7+j5zSgJ82UFlp3a+caWsPHcspKVAjxu4QJVozPn
+ Tml3np7LxUqi4uFKE8ll2yUu7+Oh4uT9xjTeN5XutiCFaSs9clhUq+tpReWJZrA6qu57SAaCAux
+ 824lOktV0u2G0bu3XVJrXgDm3BjoSfOagqvMNAUY7uKg+lBSUlLkoVaOHDfgZ1AzNopSOQ6QeQS
+ 4Xt8ilJxMYKREMUTMg1Zwh9kOrLJrkigNueFp1bIynbxRZBky3DXd1Sxx5niFDQED65kTExsBw3
+ m8j81msmfhVX2+wKhl3ieWs8tralbk2+N8Qw7nFNu0JI865TPiP+NqgFnEtWw+mySu5s4V0z5uL
+ QmmFN05IYS5mD/FVceoaaqfVvPv9m6/YEDKUS2skAieFrGAsLPL/+LXcqVtcwKVmLPGyoYTgoiR
+ btehVetVhLYzWZJp+1w==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDAzNiBTYWx0ZWRfX9G1oeUHbB9Nm
+ XZJGb9OoZuNCPnE8DVVfPzBFP6PXb0i6eQ9WffXOwnm4Xh7MgasLSya2txes2hWcEEwIJJdkc+G
+ r62tuikI2Fkiyj0Jt5B4FQ29Rr9mLYQ=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-05_01,2026-10-02_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ priorityscore=1501 phishscore=0 impostorscore=0 adultscore=0 clxscore=1015
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2610050036
 
-On Sun 04 Oct 2026 at 23:19, Miquel Raynal <miquel.raynal@bootlin.com> wrot=
-e:
+zfcp_dbf_hba_fsf_uss() only guards against a zero-length status read
+buffer. If srb->length is smaller than the fixed header size of
+struct fsf_status_read_buffer, subtracting the payload offset
+underflows and can lead to an out-of-bounds read.
 
-> On 04/10/2026 at 20:55:50 GMT, sashiko-bot@kernel.org wrote:
->
->> Thank you for your contribution! Sashiko AI review found 1 potential iss=
-ue(s) to consider:
->> - [Low] clk: nuvoton: ma35d1: Modification of global static state
->> during probe
->
-> There is a single clock controller. Should never be a problem. I can
-> certainly move it in to more local scope if someone asks, but it's not
-> practically needed.
+zfcp_dbf_san_in_els() has the same issue, where the underflowed value
+is used as the scatterlist payload length.
 
-I may be missing something key here but why is not in your defined
-indexes like the rest of the clocks ?=20
+Fix both cases by validating srb->length before subtracting the payload
+offset. If the reported buffer length does not reach the payload area,
+prevent payload access and treat the payload as empty.
 
->
-> Thanks,
-> Miqu=C3=A8l
->
+For SAN tracing, retain the original channel-reported SRB length in the
+trace record when no valid payload area exists. This preserves trace
+evidence of anomalous firmware-reported lengths for serviceability,
+while using a capture length of zero to ensure that no payload data is
+accessed beyond the reported buffer.
 
---=20
-Jerome
+For valid payloads, preserve the existing tracing behavior.
+
+Fixes: a54ca0f62f95 ("[SCSI] zfcp: Redesign of the debug tracing for HBA records.")
+Fixes: 2c55b750a884 ("[SCSI] zfcp: Redesign of the debug tracing for SAN records.")
+Signed-off-by: Ajaykumar Rajappa <ajaykr@linux.ibm.com>
+---
+Changes in v4:
+ - Preserve the original channel-reported SRB length in SAN trace
+   records when no payload area exists.
+ - Distinguish between the recorded length and the payload length that
+   may be accessed using length/cap_length semantics.
+ - Use a capture length of zero to prevent payload access for malformed
+   status read buffers.
+ - Address both the underflow/OOB issue and the trace serviceability
+   concern in the same patch. 
+Changes in v3: 
+ - Rework payload length handling for srb->length < pay_offset and 
+   treat such cases as an empty payload.
+ - Prevent payload processing and scatterlist initialization when the 
+   reported buffer length does not reach the payload area.
+ - Keep the fix focused on the underflow/OOB issue and preserve the 
+   existing tracing behavior for valid payloads.
+Changes in v2: 
+ - Preserve anomalous short srb->length values by capping payload lengths
+   to srb->length instead of forcing them to 0.
+ - Introduce a local pay_offs₹et variable to avoid repeated offsetof()
+
+Changes on the git hub can be found at: 
+https://github.ibm.com/Ajay-Kumar-K-R/linux/tree/zfcp-fix-srb-length-underflow-v4
+---
+ drivers/s390/scsi/zfcp_dbf.c | 35 +++++++++++++++++++++++++++--------
+ 1 file changed, 27 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/s390/scsi/zfcp_dbf.c b/drivers/s390/scsi/zfcp_dbf.c
+index 81fb8af408e9..d487e9bb1561 100644
+--- a/drivers/s390/scsi/zfcp_dbf.c
++++ b/drivers/s390/scsi/zfcp_dbf.c
+@@ -223,6 +223,7 @@ void zfcp_dbf_hba_fsf_uss(char *tag, struct zfcp_fsf_req *req)
+ 	struct zfcp_dbf_hba *rec = &dbf->hba_buf;
+ 	static int const level = 2;
+ 	unsigned long flags;
++	const u32 pay_offset = offsetof(struct fsf_status_read_buffer, payload);
+ 
+ 	if (unlikely(!debug_level_enabled(dbf->hba, level)))
+ 		return;
+@@ -254,8 +255,9 @@ void zfcp_dbf_hba_fsf_uss(char *tag, struct zfcp_fsf_req *req)
+ 	memcpy(&rec->u.uss.res4, &srb->res4, sizeof(rec->u.uss.res4));
+ 
+ 	/* status read buffer payload length */
+-	rec->pl_len = (!srb->length) ? 0 : srb->length -
+-			offsetof(struct fsf_status_read_buffer, payload);
++	rec->pl_len = (srb->length < pay_offset) ?
++			      0 :
++			      (u16)(srb->length - pay_offset);
+ 
+ 	if (rec->pl_len)
+ 		zfcp_dbf_pl_write(dbf, srb->payload.data, rec->pl_len,
+@@ -714,17 +716,34 @@ void zfcp_dbf_san_in_els(char *tag, struct zfcp_fsf_req *fsf)
+ 	struct zfcp_dbf *dbf = fsf->adapter->dbf;
+ 	struct fsf_status_read_buffer *srb =
+ 		(struct fsf_status_read_buffer *) fsf->data;
+-	u16 length;
++	u16 length, cap_length;
+ 	struct scatterlist sg;
++	const u32 pay_offset = offsetof(struct fsf_status_read_buffer, payload);
+ 
+ 	if (unlikely(!debug_level_enabled(dbf->san, ZFCP_DBF_SAN_LEVEL)))
+ 		return;
+ 
+-	length = (u16)(srb->length -
+-			offsetof(struct fsf_status_read_buffer, payload));
+-	sg_init_one(&sg, srb->payload.data, length);
+-	zfcp_dbf_san(tag, dbf, "san_els", &sg, ZFCP_DBF_SAN_ELS, length,
+-		     fsf->req_id, ntoh24(srb->d_id), length);
++	if (srb->length < pay_offset) {
++		/*
++		 * Invalid buffer: record the reported SRB length in pl_len
++		 * for tracing, but capture no payload.
++		 */
++		length = srb->length;
++		cap_length = 0;
++	} else {
++		/*
++		 * Valid buffer: record the payload length in pl_len
++		 * and capture the payload.
++		 */
++		length = (u16)(srb->length - pay_offset);
++		cap_length = length;
++ 
++		sg_init_one(&sg, srb->payload.data, length);
++	}
++
++	zfcp_dbf_san(tag, dbf, "san_els", cap_length ? &sg : NULL,
++		     ZFCP_DBF_SAN_ELS, length, fsf->req_id,
++		     ntoh24(srb->d_id), cap_length);
+ }
+ 
+ /**
+-- 
+2.53.0
+
