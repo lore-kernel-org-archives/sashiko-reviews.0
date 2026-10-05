@@ -1,170 +1,148 @@
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11023109.outbound.protection.outlook.com [40.107.159.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3619F3115AE
-	for <sashiko-reviews@lists.linux.dev>; Mon,  5 Oct 2026 08:19:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.109
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791188388; cv=fail; b=noTrP6MXdjErngTWKDlCsVkHvvunOXmgKfw+s2EzUCIVpFFXDiUCx/VfQT288tcMS+mGPmRiqlEOFC9f7aCHPQTJ0aCMDUuAaVavomb4SUYR1uewApKbtmLnYBcV6sDhWeOXbm97XPFhqYQtOrBHvwtzJxw4L+CLr7+X7WzrLKI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791188388; c=relaxed/simple;
-	bh=smcVTxvZ78s3Disw4pHxoiLnQXo5P5Ka60Z+O0B1eYM=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=dznOI1B5ckxsmO4WXhnpyr0gG9BWMmJXjnit94KD25/UZz5cZlkWQ30GWklPwSKwsiJGRkNzHoqDq8Z8+F5SgC9j1788jZnF+c1aYHWbPzs5GCYj7xmaaJQr77ZIesDG66RoTuRS27yIREujQDNeZkocdy4MLiRnkdHHS6pAwaM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=vaisala.com; spf=pass smtp.mailfrom=vaisala.com; dkim=pass (2048-bit key) header.d=vaisala.com header.i=@vaisala.com header.b=eVMDK/O+; arc=fail smtp.client-ip=40.107.159.109
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=vaisala.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vaisala.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C572429CD2
+	for <sashiko-reviews@lists.linux.dev>; Mon,  5 Oct 2026 09:07:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791191227; cv=none; b=SWN7uQxAcUG95UFTdaTECioOBflR47+NgeX6UOSTpL8ua7mFaVUKPB5IvmXsnt4eQGnJbGJHk+szi9C041Nh+RRt2KHV2e+pGxyf5cc/4ytJr21A03+rpwQ9BLuvCSVGk8o/eJzaPoF6SqfqJxR1gl954IF4h6eIXXoJqCcbz1g=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791191227; c=relaxed/simple;
+	bh=AcOLGf4v2rbS8shGlvVPEN+rZjREDTeoRFP79D6hClQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NEhiHl0egu4c2J3RVkPypTewHe0UVVSR46Vt8k6N7NpPtLDZMxpvKJfgHZp9NaB1kn0X17+bGUYrfL6gugs/0/Hv6CFmT45Rtu3JPtfhgKxKqk28BQmXw5TPwYzxp7q0c6isINeKJOCkLKZnmRH58li6BKTk/N2GPxmMEFFl2j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=imtTSJUW; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vaisala.com header.i=@vaisala.com header.b="eVMDK/O+"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YJDbMkJlnlM+9Ije+xTfr0PfE8EbYw0zcazELytCVt6cWU93w4Kg3kcJZw2HqBbrid/IEFV6qeZvl7X54o86BHVdWRPzGk3Ikks8nRLkEgSqsCaHm9batRUkJGnsQ2Y9Q1WAlYPfzrTMYxGB+WYnru9GwLUxpLOsqi/8FWAcpWpTDbPUYUCWzFfBq6VxZEc/6xepyoGSi003fKOF/fDkYsLDEGXJRTuaQS82t98sHXwSH/P0zW7iIn88jJSd573DZi9jwaP8fyJ12KOhCeEsJpb5n+wO3b/0QcLFiype4E8ASP08tUwZclZjFU32GgISF/8NKRNHg5nf8dPA9SZUiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=smcVTxvZ78s3Disw4pHxoiLnQXo5P5Ka60Z+O0B1eYM=;
- b=OS3rKkcy+fQoVkijygwFsSglHj3H37a/h44m5pz6HHAqDXZSekiTMDU9jsDi9sXfwg0epPd6pjht3e/VyTgFIsyoEAenqo5Jyj+54juDGuttzu8eh6du6Ts9FDjHfbv0MH4hdX4pHxJXJWCi6HbTVCfey7gmcBQrCJzzngvNQ24ratmX8XUoIsLnGjPBlswZb9+kcPXfaHEddx96sdikr3MfA+/nDmWIoggtwWJ1OVDQ3ol4AT6ud40Vp3cYxjKkTQ4ByriKbOykNt6/RhUgAWA/8FWdaY0YdH4V62MrE+aA+lHMKIdLP961tjkd+QAI1R0NS271FdMOVkaPCoMApg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vaisala.com; dmarc=pass action=none header.from=vaisala.com;
- dkim=pass header.d=vaisala.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vaisala.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=smcVTxvZ78s3Disw4pHxoiLnQXo5P5Ka60Z+O0B1eYM=;
- b=eVMDK/O++2ZsPkDzl5TLKUxexNiW2o/g0dcvbaaAu1Yal6cDE14vQ06sgZjHUEbvSi/U7tUB8vG7flrBtMuv4rTMaYCBtnU7KTFwYzvO5TjlFAICeB89riCeoLwFXOWeInrQdBzhMErK0dtLA+QJqsTtvak80u1tn+cJ8fVNgp+wF2qK3d/R+Xq4KRxv7ckFeSDTS0TyklvX+eNQohJ77o4Stgtq9XwQLma1O4rIO13W1NEyeJQpvRMKiQXu5DjaO3bue9emSSTy/cPIJXWwuxtORph4rPXi4PUnKmS7uJYtiwDpvo5Kl/GVAkqHSzbQI3s2fWvzBcxkwiZzAbnJZA==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=vaisala.com;
-Received: from AM9PR06MB7907.eurprd06.prod.outlook.com (2603:10a6:20b:3a6::23)
- by DU4PR06MB10267.eurprd06.prod.outlook.com (2603:10a6:10:621::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Mon, 5 Oct
- 2026 08:19:37 +0000
-Received: from AM9PR06MB7907.eurprd06.prod.outlook.com
- ([fe80::a597:33a7:d4e2:1b17]) by AM9PR06MB7907.eurprd06.prod.outlook.com
- ([fe80::a597:33a7:d4e2:1b17%4]) with mapi id 15.21.0472.016; Mon, 5 Oct 2026
- 08:19:37 +0000
-Message-ID: <1e1a097b-bc64-4ca8-a499-e6bc3cf4c502@vaisala.com>
-Date: Mon, 5 Oct 2026 11:19:35 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 5/9] serial: max310x: wait for TX to drain before
- powering down in shutdown
-To: sashiko-reviews@lists.linux.dev
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jiri Slaby <jirislaby@kernel.org>, linux-kernel@vger.kernel.org,
- Hugo Villeneuve <hvilleneuve@dimonoff.com>,
- Tapio Reijonen <tapio.reijonen@kolumbus.fi>
-References: <20261004-max310x-rs485-sw-delay-v6-0-3a0ef13ed9e3@vaisala.com>
- <20261004-max310x-rs485-sw-delay-v6-5-3a0ef13ed9e3@vaisala.com>
- <20261004122835.92E741F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: Tapio Reijonen <tapio.reijonen@vaisala.com>
-In-Reply-To: <20261004122835.92E741F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BE1P281CA0301.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:b10:85::10) To AM9PR06MB7907.eurprd06.prod.outlook.com
- (2603:10a6:20b:3a6::23)
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="imtTSJUW"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-49d05d51553so10374975e9.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 05 Oct 2026 02:07:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1791191223; x=1791796023; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=uWvBdfWTlWbNxYn1ui3rGPRWaxO6riK7kgAYX6piQTM=;
+        b=imtTSJUWeTWMdtJkbOhHPSU+EeI9MD83MFqdXrO8XnKR4r6ufIJfxDiXh2lEKB7h9u
+         /8wZ9RcobAlGLGpAtNUQV+P+ZD51MLQIGaaXKeZNwOujWD1GIASvgn39ABMVngXj3KeU
+         sInFbF4DY0Dki67DLS9grRpK4JmkBzyZXsoRmM+tfFBcmxTHnFkbOxZYVCNs3j9zcH1r
+         j/HW8kagoZrOA6d/gZT1uIUbFc2/zIev4TLnqDV21pbthbYk8LQ/6wTuoLpw/6PTGCBs
+         nk/SZtoxqs5n56r/m+68h2bYXa4zzkt+jZrcL8tC7FCmFMsZfrJaCXjShgF2fwst26bF
+         AaXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791191223; x=1791796023;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :references:in-reply-to:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=uWvBdfWTlWbNxYn1ui3rGPRWaxO6riK7kgAYX6piQTM=;
+        b=NdBzjFr/EDT2bUwDRs/14FBxtB+B2SJnKhWlY5HO1idhDjZxnyLePa5RSn7iW0aQUh
+         2Jh9XIGiUFJF3sW5/tWD8lY9Vw3RUU9UaSMXfbjqhP4ylOD/SQsX6a3PdTNJfMytqbXl
+         bXNKrRWsKEZpLsV+QBtYCO1PrCzO7RQqp79bCw6tAvcekO+MEwlb3GREoqw/X0jid0n9
+         zM6G7iPSb8L4VD9Bf36JNAY+WessQAEOt3Ka9UPFDkActcYiexOJuGynKkEmRMWV4FEO
+         f8fvHCeAIQZbGyCa6AM/UA+qIa+s87ZGoQDm1PkR3He9+Z0mG99CzUlR1an3LZdD69DZ
+         8EsQ==
+X-Gm-Message-State: AFuF++kzA3Kb17x8Q0CVwHvR30XDN+yn5lrk3tb3WcDJrdsjvaSYi7v4
+	YYyvvayefqiVdCaSvW4rD86p8RqYzsOdLGUS2CwXKEc8oywXXyZ4YKGfkQPZOXb0LJI=
+X-Gm-Gg: AYBFou2/YsjlM5q6PfXKCOOP5Kx69etWyKt0731Zuy1qf+35JVmWsi8g2ijVR/WrHgB
+	vaIU7UKYNvcYuR4JCga6ITQK8aKmTZ3eSmIO8ZmbRzQwRsGU9ky6cfGWfbF8BtnoSXE5I8LULmG
+	eZNbpCWgXMM+Ux7xHYAHVrWxusAm4kvKZtbObnrHBRLW4rAHATh+SB7bIC9wQUnbrBtKXf9t2yD
+	dUuMPn872629V8FveFycDnX/E5LjRX7HYUfdSgc6HWBJufOWFM9pf1JQw0LZ5BKGTmHUxEZoERo
+	9e+DGvPvccxOhVFk7hqfz8btcyZsGu7mUW9PVdZS3gmgoQv1YROotRM64cB/6Xw8HhlrXDFVqTX
+	wmUy6ThgZ8XEiGl9+5qsnYLo7o/wZGCWMbofmfQevm1spGl3V2rLcUpeJQwn8P3TyfNa1BuW2X6
+	HPcR61PQbPlH1angLcB+B8WZChHpmhK7NcEZ8y0wyvQbcWP3SbcUxqWsSpssbW5bQJMc/uSozoa
+	QM2/iZBJCb2/SdmBhxwee3dgA==
+X-Received: by 2002:a05:600c:6212:b0:49d:15b9:2a2a with SMTP id 5b1f17b1804b1-4a1680e9466mr100424735e9.10.1791191222643;
+        Mon, 05 Oct 2026 02:07:02 -0700 (PDT)
+Received: from localhost (90-182-211-1.rcp.o2.cz. [90.182.211.1])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a0394c937csm189528695e9.1.2026.10.05.02.06.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Oct 2026 02:07:00 -0700 (PDT)
+From: Jerome Brunet <jbrunet@baylibre.com>
+To: Miquel Raynal <miquel.raynal@bootlin.com>, sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, conor+dt@kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+Subject: Re: [PATCH v8 3/7] clk: nuvoton: ma35d1: Retrieve HXT/LXT from DT
+ when possible
+In-Reply-To: <875wzhjhe6.fsf@bootlin.com>
+References: <20261004-perso-ma35d1-upstream-clk-v8-0-e1a106a128c0@bootlin.com>
+ <20261004-perso-ma35d1-upstream-clk-v8-3-e1a106a128c0@bootlin.com>
+ <20261004205903.E62F91F000FF@smtp.kernel.org> <875wzhjhe6.fsf@bootlin.com>
+Date: Mon, 05 Oct 2026 11:06:50 +0200
+Message-ID: <1jmrss7byt.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR06MB7907:EE_|DU4PR06MB10267:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6a52b775-6a05-4ccb-93b1-08df22b9652f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|10067099003|56012099006|4143699003|11063799006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	4tG6JDFLWJBoHREKolDuu6JF+DuXhfQwF4E+9I2GPSBI4rQJa8K/AYB+9h7pGIr/jxUjQ+HJzJaJW21aYQArEDGNDKAiQbcAWJcNERVVD9zw0wGLWkoSbwRKGJ1C+6xXl1siBSaBbaaS8sg249XlfqaSeyJ7VN46SNfSBEqBpoPh0cQagcu9cyEF0feO5O6kED1P/R3+66NxfUfVspBBkLkSkspRBaatEoBEnfOiMmKekBB+Vst5NSE4GaGfQyRAnpLXj2uA+UHVpbZYzBxzNyj2yDauiXf8qHWdk9I/tYq3gvjrx9ZyqhT8R0qN/UnVo/1MLmZcS9X8/TT4qNPeICd8FNzsqUnLKrOmW1L0JkldN4Q+Jtm5htW/LURI7CLJ5q7OmZcqorjYQPOv42rOU0GI6JSfUDhmq1wDBHtPwnlOgw99RFXOQGfSBewGe4JNX5X9Sa7XZY2RaPtaq4y5SfOOFdUNKn6nE27SQOpIgsNKG2AHXzdHeqlPNWUIFBLrLYNuQUZbnXKMZarlPEURKSg/JlqxP8DufZ9IZHAvEgDcIq9HHelvIRbB6NsXGSY5HZafCPNREEg8pIJlwVSu1/lXgPdS9xnm3UoyaB+OhrZcgbLmdt0AguKpE/szmrMRnSRF9HLrMnVffOEGfO4CeKd5YnXsyaidaN+Ej0w+500=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM9PR06MB7907.eurprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(10067099003)(56012099006)(4143699003)(11063799006)(18002099003)(22082099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?c0did2h3UnFwNnh6ZjhtVXJYY2sxMGMwc1B4OFZRN2VoUE5jR0graGtvS1BC?=
- =?utf-8?B?UmtRdkdiM3NVTTdOWEkwTC9hU2x2T29Zakl1M1U2U2dhaUhPMEVQUnRkSVBM?=
- =?utf-8?B?K0U3TWVxbmF6K2FiQW9xRkhDWms3Yi9CbHhvREd6UlNvTzhFWGRzT014OVVG?=
- =?utf-8?B?Vkx0bFA5SVh5ZEpNQWUrM3hGUFZ4VkcyMWZmc0ptdFg3Ky8vTjJoVjBON2wz?=
- =?utf-8?B?M1BLN3pDVHBqeGMyQlJtTWVyVko2c2dlZ3pwbGxPUXhFdXh3ZGZMOWNYUHIv?=
- =?utf-8?B?eTU3YlBBQlNjaVZjME5mcThjZnFSc2dVeThnSDZGV2JDZExpK1NON0xlRzFh?=
- =?utf-8?B?UmNtN296Q1RJa005TzRUanZGZ0RjMWc4UkwrRVZZNEltdzM0R0tEcVdVUGtJ?=
- =?utf-8?B?L1lPbkxsRjRmOEkvV21pK2RLeElWV0JqUkpXQWFEYjFDekgyaVNCUDhLOVpU?=
- =?utf-8?B?SHZOWkFtTWEwc1VTbVBQczZTaDNkNmx3aGZ4RkVmK2Q3NXUzRHFyVVlnT1ll?=
- =?utf-8?B?Y2VzcXkzc0VGa3dIbU5OQkpha0lvaFVuQURPU3hlNjRob2d6aitmWTNOd0t2?=
- =?utf-8?B?c3d2Y2VQejJ0b2lreDg4NGN3SUJ5WGw1aDluZm5Vbzl6WmhNQ3MwbUhyU0Rx?=
- =?utf-8?B?SW5lcHkra09OTERiaUwvNXlnQURQWGpxSXdYZEV3Rm5jMnVWYUlXRUlYQ3lJ?=
- =?utf-8?B?QXZ5eHlKaVhZYzVVU0hTd2VpRmo5QUNrNWIvSUVWZFFUQWpaNHprN2tKNk9K?=
- =?utf-8?B?YTIrckFqZEV6VW52WEJ3T3U1ZTIxN2IyZVdoUE56OUUzUjFwcUFoMmxVekhp?=
- =?utf-8?B?NzJNSGx4NzlCc01UWXlmSWFIbHlvaStyTU9KNjg1R0VmUGg3OUUyMVNsWENr?=
- =?utf-8?B?ZzJ2QnJyVWdQdTdsQ2pQR0xSb1lZamFwcEpkdmNRTkltU3VUYUFmZVlxRXhr?=
- =?utf-8?B?U2FGSW5XckNvZkt3VExLdWpYaXNQTEY2Vmh0UjBVbktwSlBMWm5Vb2ZMTThn?=
- =?utf-8?B?cS80MHJGYTNXUHVWTlJPMXp0a1VHeDR0MXpESzY0R2tSdEdXSjJQM1o2eGYr?=
- =?utf-8?B?bWdVa1NLRFozZCtycUp4NFkvN240MWp4TTNUT29nOVRsUXhKV0cxd0EybnQ3?=
- =?utf-8?B?L05tOFZFRG5rREVQZzBDVTJiUDhzSWpHejdvdWlaL25CUk13NStldU5Cb25F?=
- =?utf-8?B?ZDJOM2huaE5SbG9hV2RCTFZtWHF1K1crYi9DVDZPV0o2WHh1dHFzZUQ5UmhI?=
- =?utf-8?B?NzhHMWRKRHRlR3FDM2dvSk1Na1VyclhncFljNnNKdGprKzB1ZGFCeDFCNVgv?=
- =?utf-8?B?eU53Rm1mRWhiKzhvaGI3NWxhaHNROUxnZGliUUlBRmFpODRwbVpQYitaQnp4?=
- =?utf-8?B?UFB5cWd2eW5wZy82VWN3MlNkc0tURTZZdysySkt5c3pFMTRKT2ovejJ3ai9F?=
- =?utf-8?B?ZGgreWRBejZUU051T3I2ZzQ1UW92WnJjWjlvQzF5VkhJV1dyUkN0T05OZlRD?=
- =?utf-8?B?OG9CdThEOWh1TEkxSmtnR2pHdi9OZkNqVFdyTkUrcEJ2TkFpb1ZDcVZxZ2JY?=
- =?utf-8?B?SmRqcU0ycFhKL1JXVTdTRkNHaW5GWXVvcFFBS04ydDVJTU9oYk1GQXVwWCtY?=
- =?utf-8?B?aUNHMjRBRW1PY0d4QjNySUJDN2crZThjWExwZlFoZUZuOW9JWDU3UWowSFZV?=
- =?utf-8?B?ZnE0cmlpUW5QNHJ3ZHI4MGFLb01yUGZUY09Wb3ovaitMdkpSaW1hOGJ6SXdQ?=
- =?utf-8?B?UmRlQTBZdHRoR1M5c0src2ErZ3dRRngxNDRYWlYzcEtKTDhUaFUzSjRMNTZK?=
- =?utf-8?B?dUtEQVZUMDh2enhNVUJ6MmljTEs5U2FuYms1VGN6YWZYMTl5bm02bDBjQ3gr?=
- =?utf-8?B?MEwxak05c25SeTBOb3hEYlovRWgwcm82LzFaSEZYQVhxT3p2Ykw5K0duRHRr?=
- =?utf-8?B?SGJNdVRRNXpkYVpZT3VIUUpnSEt2bXN2RGt4Y2p0Z2VueFo4RGVMWUE3UUxR?=
- =?utf-8?B?MVZmY2tiZlN4aW1CWDJRMjBjZENESFdvWlNLVlRtWVQvQjJVdENnaTZLY0o0?=
- =?utf-8?B?WnFKamE3SG5MbzM4eUNibnY0TU1hK1BGWUd0YUE0NG5ZUEN6bUVSNlJtVEtB?=
- =?utf-8?B?TTNMY3VpaHhTSHU0UENJVlFpL2c2L3U2RG5BRVBsMlpnV0hoSml5OGZwZlc4?=
- =?utf-8?B?K1lkU1hucFpJMnpHOFdoWVZyWDcyZWZKZmc2MXRGMzFheVhvUHpXcit1MEZJ?=
- =?utf-8?B?TWozTFVEOVh4YlMrVkNsc3F4bUprVEVydGd0WUIwWXlZdlR5ekRqZGY2RGlF?=
- =?utf-8?B?c3BNc0NuR3NmT0hNUFAycC9HRG4vMDlDTWw0ZXBQSmlDeU5Ja2JqQjgzU09k?=
- =?utf-8?Q?EM9jTYqwn1VU1DwE=3D?=
-X-OriginatorOrg: vaisala.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6a52b775-6a05-4ccb-93b1-08df22b9652f
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR06MB7907.eurprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Oct 2026 08:19:37.3743
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 6d7393e0-41f5-4c2e-9b12-4c2be5da5c57
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Z+4GZMuosB2qDqjk4HiaRolrIZ8alaSCUne0onG6RZWMFSeaclyidVnvgMDJmp0J/LhIp96lLnWFfM9JEBKlreiNXiLc75ZZF49gzdFmM0Y=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR06MB10267
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+On Sun 04 Oct 2026 at 23:16, Miquel Raynal <miquel.raynal@bootlin.com> wrot=
+e:
 
-
-On 10/4/26 15:28, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> Can this loop be used to cause a local Denial of Service via an
-> extended D-state hang or Hung Task Panic?
+>> This commit modifies the clock driver to retrieve the external HXT and L=
+XT
+>> clocks from the device tree instead of registering them directly. It fal=
+ls
+>> back to registering LXT for backward compatibility with older device tre=
+es.
+>>
+>>> diff --git a/drivers/clk/nuvoton/clk-ma35d1.c b/drivers/clk/nuvoton/clk=
+-ma35d1.c
+>>> index ceebcbd8c18b3..ed61a990870e4 100644
+>>> --- a/drivers/clk/nuvoton/clk-ma35d1.c
+>>> +++ b/drivers/clk/nuvoton/clk-ma35d1.c
+>> [ ... ]
+>>> @@ -240,12 +257,18 @@ static int ma35d1_clocks_probe(struct platform_de=
+vice *pdev)
+>>>  		return -EINVAL;
+>>>  	}
+>>>=20=20
+>>> -	hws[HXT] =3D ma35d1_clk_fixed("hxt", 24000000);
+>>
+>> [Severity: Critical]
+>> Does this unconditional removal break ABI compatibility with older device
+>> trees?
+>>
+>> Because HXT (index 0) is exported as a public ABI in the DT bindings,
+>> removing its explicit registration leaves hws[HXT] as NULL in the provid=
+er's
+>> clock array. If an existing downstream or older device tree consumer exp=
+licitly
+>> references this clock via clocks =3D <&clk HXT>, won't the provider's
+>> of_clk_hw_onecell_get() fail to resolve the clock and return an error?
 >
-> If a user opens the TTY, configures a very low baud rate (e.g.,
-> speed 1-50), disables CTS flow control (preventing the TX FIFO from
-> draining), and closes the device, max310x_shutdown() could call
-> fsleep() up to 129 times in TASK_UNINTERRUPTIBLE.
+> Jerome, your wisdom matters here :-) For me this is a false positive,
+> because nobody outside this driver should access hws[HXT] and the clock
+> is still referenced through the DT, just not provided by this
+> driver. For me this is not an issue we should consider, let me know
+> otherwise.
 
-Agreed, the loop waits on data, so a blocked FIFO makes close() pay
-for it. One precision note: the baud rate generator floors at
-uartclk / 16 / 0xffff, tens of baud with the usual crystals, so the
-1-baud / 20-minute case is not reachable - but ~26 s per close() at
-50 baud with CTS blocked is real and bad enough.
+Strictly speaking there is (used to be) a clock at this index so it is
+not a false positive. Someone crazy enough could have gone through here
+to get the OSC even if does not make a lot of sense.
 
-v7 will rework shutdown() to stop the transmitter instead of
-draining it, following what imx.c does: set MODE1 TxDisabl (the
-character in flight completes, the rest of the FIFO is abandoned -
-the next startup() resets the FIFOs anyway) and honour only the RTS
-timing. On the auto-RTS path the FIFO is also reset, so the engine
-sees the transmitter empty and releases RTS before the power-off
-freezes the pin. The wait is then bounded by one character plus the
-configured after-send delay, independent of how much data was
-queued: measured on a MAX14830 board, a close() with a second of
-data still in flight at 50 baud takes 0.23 s instead of 2.4, and the
-CTS-blocked case no longer waits on data at all. Data the tty layer
-explicitly did not wait for is then truncated rather than drained,
-which matches how other RS485 drivers close.
+This clock should never have existed to start with but it got in the
+bindings ... and that is the pain of dealing with bad bindings :/
 
-Tapio
+You've got 2 options:
+* Removing the ID from the bindings explaining clearly that it conflicts
+  with the fact this clock is actually an input according to the same
+  bindings. I suspect the DT maintainers won't like this much ...
 
+* Keep the bad support binding in the driver: You'll need a pass-through
+  clock element where the parent data is the fw_name and a fallback to
+  an `hxt-fake-internal' fixed clock. Feel free to add a comment
+  explaining how bad it is to use that clock and what user should be
+  doing instead.
+
+You'll probably need to play that last trick with the lxt anyway ?
+
+>
+> Miqu=C3=A8l
+
+--=20
+Jerome
