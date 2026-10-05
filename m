@@ -1,233 +1,204 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DE148550E
-	for <sashiko-reviews@lists.linux.dev>; Mon,  5 Oct 2026 13:33:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A15489FBC;
+	Mon,  5 Oct 2026 13:50:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791207239; cv=none; b=n8zOO/koIB9KbCm3hHHT10y588BVk6B8Inoa3em7+IsCAFd8U6ADTtah6h6Aw5LN5Dliv4F04AR9hSI4+3HKEHBeb7Wkaw5gVcYz75olp6YeBKF0t90s/3YCsl34BRT4efoPQPuGDe1Sp2oIZLJMd1LX95aLvuF/3dyfOJ57C8E=
+	t=1791208221; cv=none; b=sShrxyP/5+X4f/B2XGNQ+fZPUc5JRex3Pph7dRnfmit2CwKUs1g6RwTEKggXP2y9LzWAARFT4F8qrDMUmbXL3GQ4Y6BeIjQGtxfouKULiJ3FR5DnBHMUoM5NIomMD2NyOzi7r4SKW+Esfa57Y9isLIGgYhn+FldvgTVfEfg4QrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791207239; c=relaxed/simple;
-	bh=fW5WQRnGUu5NNryVooiTdlNVXAc8inzeidnxQnNJ2f4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ic7lpz/zw2SPrXzj80qcIQG4odLj0haSjhjrpKQPLcKmWXx8C7wwNke10P46P6SlE5OpOjHV0xvSD+IbVddCDRdd6DNi7ok5qd4rFpXOX1RWa7WZXWFCASzH1RheV6AskLQh9clsOxvZZC/IUMX9Q9sPr4Jy/oGyh7eAu7uZIOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=MbaoMmFb; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=HKo3oZsB; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=J+p3yCEF; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=aNhCyHee; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1791208221; c=relaxed/simple;
+	bh=KAF0mqBkm1MJkTKpXFoxayuFG+fjQ7NhTfOvUk3j+CU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=a5ustYeyqdw1rkmIbz6abgpApALT0BsRhpLteZkby5w3c9i7Ejyf91FjJ30C6x3JXP0gaMwisQDS4g85oO38M5rUWtS0oTNYRjWvrgqH0LMbNAwiePbDxyT+8i0o6DGBMA9DY9/hFsT0kS5Lym69eLolmTL/2Yc7QoZVXOF08NM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dpl45RMe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="MbaoMmFb";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="HKo3oZsB";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="J+p3yCEF";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="aNhCyHee"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id B27D021E97;
-	Mon,  5 Oct 2026 13:33:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1791207231; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1oIXnK9BJ5o0Bs3piDf5cl5Uw0ez1OiaSndJYSF7vOE=;
-	b=MbaoMmFblnvJBpKVpeG7sJdUwRKrXZtRCrxb3nog7dUkCQNIISOR64hvkTxneSBsGvge4t
-	DzP2f/pGUbo7f3V9EyAJuDKzIGkkQxZxLtj9NqJXXYIiae0ZSRReTpvnCHOIM3TE08EkGy
-	cALhEFkp3QpSOC0+cwMuFicHIdrRe7c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1791207231;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1oIXnK9BJ5o0Bs3piDf5cl5Uw0ez1OiaSndJYSF7vOE=;
-	b=HKo3oZsBhrATi1uT2Qn9+YItEBqIvAr6X3xUZmaM4DERvCexR9aWp2RsrGIE5QLpil+Lsl
-	ZE4JSxwb/vybG6Aw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1791207227; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1oIXnK9BJ5o0Bs3piDf5cl5Uw0ez1OiaSndJYSF7vOE=;
-	b=J+p3yCEFZxkl0h6Z9N/c7QoyfEzQ6fLS2D3ETtPVeQy1FBOkI5oSPG6yJkZiCtWDec+n+t
-	Bjv1OuVTAe4NmE3bcFv8opWaPYfl/HfoAAEotp6cdyGjX4cv2MyQjZxwYnItzu+ly6f5Aw
-	KEhcfmaTLkwlW3ECbyEpZTg65AaYb/s=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1791207227;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1oIXnK9BJ5o0Bs3piDf5cl5Uw0ez1OiaSndJYSF7vOE=;
-	b=aNhCyHeehgEMd0fOKlllPh2JfoADQaXhY2TGzVzUoUM+YyLSroSde9Uel+ebT9rFECdDOo
-	QfRUaUYTiXhni3Bg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4380313AF1;
-	Mon,  5 Oct 2026 13:33:44 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id BiqWKDanw2rDdQAAD6G6ig:T5
-	(envelope-from <tzimmermann@suse.de>); Mon, 05 Oct 2026 13:33:44 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: deller@gmx.de,
-	gregkh@linuxfoundation.org,
-	jirislaby@kernel.org,
-	simona@ffwll.ch,
-	jani.nikula@linux.intel.com
-Cc: linux-fbdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-serial@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v4 4/5] lib/fonts: Add font_glyph_cursor() helper
-Date: Mon,  5 Oct 2026 15:31:02 +0200
-Message-ID: <20261005133335.344302-5-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261005133335.344302-1-tzimmermann@suse.de>
-References: <20261005133335.344302-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dpl45RMe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4AEA1F000FF;
+	Mon,  5 Oct 2026 13:50:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791208218;
+	bh=zxskwQj+IRAHV+Byj+TN6+uofwLjQQPlJVRyyQu77iQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=dpl45RMecHihKXarc63chFVjEXSpU6OLmXT453T7CZWX2Gg9gNIgZrcg7Jq6XsT6i
+	 8TsGBljFSi9s5yDi0rUCUhn5abv+mzT23JoFbHYIyIetaz9q6u2COsrFxFrU53VwMo
+	 dWhKPR4FaO4tj209glKxSSVUm6Q8evmftaQ/Kn4A/Z87GLNwLIHKlC7BFwv73L+Y1l
+	 rdBSUJ+waymn8bxfKly3CvRMM78nvZc+BoN0GXyQL6X1GQw4d2FJSFHlJmRq8Sf4vS
+	 ip1MrsIxuObhTVBP2820KyrmF1hEFHE6Q+PaPztjdQZ+WjsDvCEx1uQszXTKOOefbF
+	 w+0gZK9SExU3g==
+Message-ID: <a6279445-3a48-4a2a-975e-545fad3f5733@kernel.org>
+Date: Mon, 5 Oct 2026 16:50:15 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-6.80 / 50.00];
-	REPLY(-4.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	RCVD_COUNT_TWO(0.00)[2];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	FREEMAIL_TO(0.00)[gmx.de,linuxfoundation.org,kernel.org,ffwll.ch,linux.intel.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,gmx.de:email,imap1.dmz-prg2.suse.org:helo];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	R_RATELIMIT(0.00)[to_ip_from(RLqirfcw6gnbcr9a9yhi49fhi6)];
-	FREEMAIL_ENVRCPT(0.00)[gmx.de]
-X-Spam-Flag: NO
-X-Spam-Score: -6.80
-X-Spam-Level: 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 8/9] PCI: rzg3s-host: Re-enumerate the bus on PCIe
+ link-state changes
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org, wsa+renesas@sang-engineering.com
+References: <20261002110935.2004349-1-claudiu.beznea@kernel.org>
+ <20261002110935.2004349-9-claudiu.beznea@kernel.org>
+ <20261002112519.6082F1F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Claudiu Beznea <claudiu.beznea@kernel.org>
+In-Reply-To: <20261002112519.6082F1F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The new helper font_glyph_cursor() fills a glyph with a cursor pattern.
-As with the font_glyph_rotate_*() helpers, the caller has to provide the
-output memory.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Helge Deller <deller@gmx.de>
----
- include/linux/font.h    |  4 +++
- lib/fonts/Makefile      |  3 ++-
- lib/fonts/font_cursor.c | 56 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 62 insertions(+), 1 deletion(-)
- create mode 100644 lib/fonts/font_cursor.c
 
-diff --git a/include/linux/font.h b/include/linux/font.h
-index 5e1cf9830084..be1a26ff8ae9 100644
---- a/include/linux/font.h
-+++ b/include/linux/font.h
-@@ -109,6 +109,10 @@ const unsigned char *font_data_glyph_buf(font_data_t *fd,
- bool font_data_is_equal(font_data_t *lhs, font_data_t *rhs);
- int font_data_export(font_data_t *fd, struct console_font *font, unsigned int vpitch);
- 
-+/* font_cursor.c */
-+void font_glyph_cursor(unsigned int width, unsigned int height,
-+		       unsigned int from, unsigned int to, unsigned char *out);
-+
- /* font_rotate.c */
- void font_glyph_rotate_90(const unsigned char *glyph, unsigned int width, unsigned int height,
- 			  unsigned char *out);
-diff --git a/lib/fonts/Makefile b/lib/fonts/Makefile
-index 7202a70a56ef..bc08bf8ea3f8 100644
---- a/lib/fonts/Makefile
-+++ b/lib/fonts/Makefile
-@@ -1,7 +1,8 @@
- # SPDX-License-Identifier: GPL-2.0
- # Font handling
- 
--font-y := fonts.o
-+font-y := fonts.o \
-+	  font_cursor.o
- font-$(CONFIG_FRAMEBUFFER_CONSOLE_ROTATION) += font_rotate.o
- 
- # Built-in fonts; sorted by Family-Size in ascending order
-diff --git a/lib/fonts/font_cursor.c b/lib/fonts/font_cursor.c
-new file mode 100644
-index 000000000000..7f4d587669aa
---- /dev/null
-+++ b/lib/fonts/font_cursor.c
-@@ -0,0 +1,56 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+#include <linux/bug.h>
-+#include <linux/export.h>
-+#include <linux/string.h>
-+
-+#include "font.h"
-+
-+/**
-+ * font_glyph_cursor - Create a cursor glyph
-+ * @width: The glyph width in bits per scanline
-+ * @height: The number of scanlines in the glyph
-+ * @start: The first scanline of the cursor block
-+ * @end: The first scanline after the cursor block
-+ * @out: The cursor-glyph bitmap
-+ *
-+ * The parameters @width and @height refer to the glyph size. The caller
-+ * has to provide the output buffer @out of sufficient size to hold the
-+ * cursor glyph. The arguments in @start and @end describe the number of
-+ * scanlines occupied by the cursor block; counting from the top of the
-+ * glyph. The helper fills these scanlines with a pattern and clears the
-+ * remaining scanlines.
-+ */
-+void font_glyph_cursor(unsigned int width, unsigned int height,
-+		       unsigned int start, unsigned int end, unsigned char *out)
-+{
-+	unsigned int pitch = font_glyph_pitch(width);
-+	const unsigned char *out_end = out + height * pitch;
-+	unsigned int size;
-+
-+	if (WARN_ON_ONCE(start > height))
-+		start = height;
-+	if (WARN_ON_ONCE(end > height))
-+		end = height;
-+
-+	if (end < start)
-+		end = start;
-+
-+	/* clear scanlines before cursor block */
-+	size = start * pitch;
-+	memset(out, 0x00, size);
-+	out += size;
-+
-+	/* set cursor block */
-+	size = (end - start) * pitch;
-+	memset(out, 0xff, size);
-+	out += size;
-+
-+	/* clear scanlines below cursor block */
-+	size = (height - end) * pitch;
-+	memset(out, 0x00, size);
-+	out += size;
-+
-+	WARN_ON_ONCE(out != out_end);
-+}
-+EXPORT_SYMBOL_GPL(font_glyph_cursor);
--- 
-2.55.0
+On 10/2/26 14:25, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] PCI: deadlock during hibernation due to unhandled PM notifiers
+> - [High] PCI: probe succeeds with uninitialized controller on DT error
+> - [High] PCI: NULL pointer dereference if event IRQ fires before root bus creation
+> - [Medium] PCI: ghost devices left on bus if link bounces during suspend
+> --
+> 
+> commit e916ae87086b955078f323f09316792067184bfe
+> Author: John Madieu <john.madieu.xa@bp.renesas.com>
+> Subject: PCI: rzg3s-host: Re-enumerate the bus on PCIe link-state changes
+> 
+> This commit adds support for reacting to link-state changes by handling
+> the DL_UpDown signal on RZ/G3 and RZ/V2 PCIe controllers. It introduces
+> a link event interrupt, hotplug-like logic, and PM notifiers to serialize
+> with device suspend/resume.
+> 
+>> diff --git a/drivers/pci/controller/pcie-rzg3s-host.c b/drivers/pci/controller/pcie-rzg3s-host.c
+>> index 3b62b1be5b2a1..78e783928b9dc 100644
+>> --- a/drivers/pci/controller/pcie-rzg3s-host.c
+>> +++ b/drivers/pci/controller/pcie-rzg3s-host.c
+> [ ... ]
+>> @@ -1095,6 +1103,98 @@ static int rzg3s_pcie_set_max_link_speed(struct rzg3s_pcie_host *host)
+>>   	return ret;
+>>   }
+>>   
+>> +static void rzg3s_pcie_link_event(struct rzg3s_pcie_host *host)
+>> +{
+>> +	struct pci_host_bridge *bridge = pci_host_bridge_from_priv(host);
+>> +	struct pci_bus *bus = bridge->bus;
+>> +	u32 val;
+>> +
+>> +	val = readl_relaxed(host->axi + RZG3S_PCI_PCSTAT1);
+>> +	if (val & RZG3S_PCI_PCSTAT1_DL_DOWN_STS) {
+>> +		struct pci_dev *dev, *tmp;
+>> +
+>> +		dev_info(host->dev, "PCIe link down, removing devices\n");
+>> +
+>> +		pci_lock_rescan_remove();
+>> +		list_for_each_entry_safe_reverse(dev, tmp, &bus->devices,
+> 
+> [Severity: High]
+> The event IRQ is requested and enabled in rzg3s_pcie_host_setup() before
+> bridge->bus is allocated by pci_host_probe().
+> 
+> If the hardware generates a spurious interrupt during this narrow window,
+> bridge->bus could be NULL when this handler runs.
+> 
+> Will this dereference a NULL pointer?
+
+That shouldn't happen. The initialization masks the link interrupt at controller 
+level. The interrupt is unmasked at the controller level only at the end of the 
+probe, after bridge->bus becomes valid.
+
+> 
+>> +						 bus_list)
+>> +			pci_stop_and_remove_bus_device(dev);
+>> +		pci_unlock_rescan_remove();
+>> +	} else {
+>> +		struct pci_bus *child;
+>> +		int ret;
+>> +
+>> +		dev_info(host->dev, "PCIe link up, rescanning bus\n");
+> 
+> [Severity: Medium]
+> On resume, the PM notifier wakes the IRQ thread.
+> 
+> If the link is currently up, it seems this branch is taken and rescans the bus
+> without removing the old devices that might have been hot-swapped while the
+> link was down.
+> 
+> Could this leave ghost devices on the bus if the link goes down and comes back
+> up while the system is suspended?
+
+Yes, it could. I'll update it in a similar way it is done in pciehp_core.c
+
+
+> 
+> [ ... ]
+>> @@ -1723,8 +1838,14 @@ rzg3s_pcie_host_setup(struct rzg3s_pcie_host *host,
+>>   
+>>   	ret = rzg3s_pcie_host_init(host);
+>>   	if (ret) {
+>> -		dev_err_probe(dev, ret, "Failed to initialize the HW!\n");
+>> -		goto teardown_irqdomain;
+>> +		if (ret != -ENODEV) {
+>> +			dev_err_probe(dev, ret,
+>> +				      "Failed to initialize the HW!\n");
+>> +			goto teardown_irqdomain;
+>> +		}
+>> +
+>> +		/* Link is down: hotplug via DL_UpDown will recover. */
+>> +		return 0;
+> 
+> [Severity: High]
+> If a mandatory resource is missing, such as resource_list_first_type()
+> returning NULL in rzg3s_pcie_config_init(), it returns -ENODEV.
+> 
+> This would be caught here as a safe link-down state and return success,
+> potentially leaving the controller uninitialized.
+> 
+> Does this pattern mask genuine configuration errors?
+
+
+That is valid. I'll update it.
+
+> 
+> [ ... ]
+>> @@ -1905,6 +2026,31 @@ static void rzv2h_pcie_release_lanes(void *data)
+>>   	rzv2h_num_total_lanes -= host->num_lanes;
+>>   }
+>>   
+>> +static int rzg3s_pcie_pm_notifier(struct notifier_block *nb,
+>> +				  unsigned long action, void *data)
+>> +{
+>> +	struct rzg3s_pcie_host *host = container_of(nb, struct rzg3s_pcie_host,
+>> +						    pm_nb);
+>> +
+>> +	switch (action) {
+>> +	case PM_SUSPEND_PREPARE:
+>> +		/* Disable link up/down interrupts. */
+>> +		disable_irq(host->event_irq);
+>> +		break;
+> 
+> [Severity: High]
+> The switch statement only handles PM_SUSPEND_PREPARE and PM_POST_SUSPEND,
+> completely omitting PM_HIBERNATION_PREPARE and PM_RESTORE_PREPARE.
+> 
+> If a link event occurs during hibernation transitions, the threaded interrupt
+> could attempt to acquire the same lock the PM core is holding.
+> 
+> Can this missing hibernation support open a window for a deadlock?
+
+The hibernation wasn't treated since it is currently unavailable on any of the 
+SoCs supporting this driver.
+
+> 
+>> +
+>> +	case PM_POST_SUSPEND:
+>> +		/* Enable link up/down interrupts and force link re-scan. */
+>> +		writel_relaxed(RZG3S_PCI_PEIE0_DL_UPDOWN,
+>> +			       host->axi + RZG3S_PCI_PEIE0);
+>> +		WRITE_ONCE(host->link_rescan, true);
+>> +		enable_irq(host->event_irq);
+>> +		irq_wake_thread(host->event_irq, host);
+>> +		break;
+>> +	}
+>> +
+>> +	return NOTIFY_DONE;
+>> +}
+> 
 
