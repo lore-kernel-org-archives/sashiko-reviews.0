@@ -1,216 +1,115 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B26043B49D;
-	Mon,  5 Oct 2026 09:24:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFAC1442373;
+	Mon,  5 Oct 2026 09:31:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791192263; cv=none; b=izxzjAVORnZJP5HkqOmV0UHXLjxZB1nAIY/Efdd6FCm6MyqV9rPSH4q4lgoy83tAVO0N4ZbQY0+8jZwwhTysbgZbMPtfETIM+pgKPrvu+XunfKvrQHsjNWBhjgqUmDG0oULPELtlqO2kTK8FRYMGbL9veTF/b9MxBURbrvTSLBs=
+	t=1791192672; cv=none; b=ncV7sxy1tOb+SXoUNgfqwdZtxalJdDicVVH+nE6AjEaKCRN2FqiOFGSHx/ZHVIS6RSTlt82eeKY9MyWOrYRehFYkvDEJHRjq/SGutIwn+q4Vp+SHuwB4QrOJOdFxwbUAtaadhM4hkM68cBw0ip5SVu8QrGF3vsvde0rd2XTkvfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791192263; c=relaxed/simple;
-	bh=3uBhIxFiHUFW6NL19n880iSOAR9dUsSyt4FBTCjm7v4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=nBl6hvIuL1e3Qgph3ZIhc/eI2gCABANrcB9Qfz6oS2wqzondSCOa6aa6oiNMeH/73OV4EgIhfbeaIrV3gkgVOt7P7cKHeQp14Jg7dDHC2EDxAeQTo2/yflIbT9Cgwm4JWGonkWO9cZuO7xd+JA8yK3xOQwfyQw3j6XjVatQYIb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ZF9hNK/X; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1791192672; c=relaxed/simple;
+	bh=oiNC2UVN9am+dSkDjz1+RMRIYImzAsNCopUZB8DjsHo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ICK4JwKiS/BGleLwfkvz7idY3yWymMzUGsmAL6VDt6PjmVMHd1sFwHiTBCabGtUS+J+kQDKRjdf5q0+M1xxWQSkQHc6FSLsUbLAF8IM0GXvLDdUdJYC9nesg9VV1nUsdvOJZ7I8gPNl/gAItmwcfPknyO6bKhOzydBJq+ZZvvVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=COR2Cx0U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ZF9hNK/X"
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69515aos3290354;
-	Mon, 5 Oct 2026 09:24:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=pp1; bh=eUrQAXGF1YVhWopl6hU66/h5AwX0
-	PeeLJ4eMq7RUbjc=; b=ZF9hNK/X1yF8HcRzwSCeGSgs5rBcMLJLkGTgAv0XowIm
-	AhANZQFdeuFUio/YvSWZLAJR6dtxayejeE58S3o4FfgVoJB4eAlOZ8IHgw0x8wnp
-	QpAucTHcfFeW5aHakAo3/pCR7xHV4YDX/K1Q//COe8vMaMAFrX89LvhJSYXB8eMb
-	x8dhqznrSmEnvKQyOLG2pon7h0CIYczqwQ8TbDFkGVhh8e448bsfcsV+1YAvplIJ
-	doHa+8Q//HKe8xP7Zt3mxa/EYfUU/ha/X7I6o8ftFLXkcMNEzaF6jE2io9IlYPCi
-	zK3tJCiV6o00nax09CBFfemcQAlW5kzjY4IoWyn5Cg==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2sbv0mw6-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Mon, 05 Oct 2026 09:24:20 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69568ADr2203903;
-	Mon, 5 Oct 2026 09:24:20 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3dhgmqam-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 05 Oct 2026 09:24:20 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
-	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6959OFgL19137268
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 5 Oct 2026 09:24:15 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 7C52E2004E;
-	Mon,  5 Oct 2026 09:24:15 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 6715220040;
-	Mon,  5 Oct 2026 09:24:15 +0000 (GMT)
-Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
-	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Mon,  5 Oct 2026 09:24:15 +0000 (GMT)
-From: Ajaykumar Rajappa <ajaykr@linux.ibm.com>
-To: linux-s390@vger.kernel.org, sashiko-reviews@lists.linux.dev
-Cc: Ajaykumar Rajappa <ajaykr@linux.ibm.com>
-Subject: [PATCH v4] zfcp: Fix integer underflow in status read buffer payload length
-Date: Mon,  5 Oct 2026 11:23:56 +0200
-Message-ID: <20261005092357.2747395-1-ajaykr@linux.ibm.com>
-X-Mailer: git-send-email 2.53.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="COR2Cx0U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC181F00893;
+	Mon,  5 Oct 2026 09:31:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791192670;
+	bh=X9bv50gllBrRNQuoS7XRwzwWb4UhCyV3bLMHqoCJJVc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=COR2Cx0UhrjG86YnD6O8kFzpxqrJoSYabwIFXH+2dIbTfgWJeZQN+4e0L2Z3h9qGQ
+	 hI6fQLmtuBsPUISOx/a1HBBB6IcLEpRTW0DRtJLYyuw7OM+Wn6VYl5u+ZMFoOdpiwp
+	 F2LRbd1pnubR2ZVQ1aJj1kE+d+DIbck6RYA+OsLIEJPcbXlzqvuSt59wulyY/4gKMW
+	 uj5yEDuLGWkBWFpXSIsHWtR2J67Q+pYLKVvGu+mdXnpV7NwhxrrmNFy4+6fldlF/6u
+	 08F6ZKIuvvnFZCGUNmHKin23vW+k2c9Zz6ubCXcMrIx7Vt/1CD4KuYzSV7zInhGII+
+	 3OWIW4e0GjYCQ==
+Date: Mon, 5 Oct 2026 10:31:07 +0100
+From: Sudeep Holla <sudeep.holla@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-gpio@vger.kernel.org, imx@lists.linux.dev, Frank.Li@kernel.org,
+	Sudeep Holla <sudeep.holla@kernel.org>
+Subject: Re: [PATCH v2 2/4] firmware: arm_scmi: Skip requests for standard
+ protocol devices
+Message-ID: <20261005-military-rousing-copperhead-6e10db@sudeepholla>
+References: <20261005-scmi_bus_fixes-v2-0-34a51338875a@kernel.org>
+ <20261005-scmi_bus_fixes-v2-2-34a51338875a@kernel.org>
+ <20261005091843.13F271F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: zZkfYivrPsQyT1Ln3S12mkAjxk4f3eZ8
-X-Authority-Analysis: v=2.4 cv=KJHPn1Fo c=1 sm=1 tr=0 ts=6ac36cc4 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=vJmfF2MOdrWGp7hqUaMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: zZkfYivrPsQyT1Ln3S12mkAjxk4f3eZ8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDAzNiBTYWx0ZWRfX9EKg3Yhrbkm+
- dQhEzOdpSaIVMdvEgLnUHWLfT5Goq6ekZAc7+j5zSgJ82UFlp3a+caWsPHcspKVAjxu4QJVozPn
- Tml3np7LxUqi4uFKE8ll2yUu7+Oh4uT9xjTeN5XutiCFaSs9clhUq+tpReWJZrA6qu57SAaCAux
- 824lOktV0u2G0bu3XVJrXgDm3BjoSfOagqvMNAUY7uKg+lBSUlLkoVaOHDfgZ1AzNopSOQ6QeQS
- 4Xt8ilJxMYKREMUTMg1Zwh9kOrLJrkigNueFp1bIynbxRZBky3DXd1Sxx5niFDQED65kTExsBw3
- m8j81msmfhVX2+wKhl3ieWs8tralbk2+N8Qw7nFNu0JI865TPiP+NqgFnEtWw+mySu5s4V0z5uL
- QmmFN05IYS5mD/FVceoaaqfVvPv9m6/YEDKUS2skAieFrGAsLPL/+LXcqVtcwKVmLPGyoYTgoiR
- btehVetVhLYzWZJp+1w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDAzNiBTYWx0ZWRfX9G1oeUHbB9Nm
- XZJGb9OoZuNCPnE8DVVfPzBFP6PXb0i6eQ9WffXOwnm4Xh7MgasLSya2txes2hWcEEwIJJdkc+G
- r62tuikI2Fkiyj0Jt5B4FQ29Rr9mLYQ=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-05_01,2026-10-02_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
- priorityscore=1501 phishscore=0 impostorscore=0 adultscore=0 clxscore=1015
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
- definitions=main-2610050036
+In-Reply-To: <20261005091843.13F271F000FF@smtp.kernel.org>
 
-zfcp_dbf_hba_fsf_uss() only guards against a zero-length status read
-buffer. If srb->length is smaller than the fixed header size of
-struct fsf_status_read_buffer, subtracting the payload offset
-underflows and can lead to an out-of-bounds read.
+On Mon, Oct 05, 2026 at 09:18:42AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] arm_scmi: dead code in scmi_device_create() for standard devices
+> --
+> 
+> commit cb938ad959a8195c8129d8e6f7596ff9fd2ddff8
+> Author: Sudeep Holla <sudeep.holla@kernel.org>
+> 
+> firmware: arm_scmi: Skip requests for standard protocol devices
+> 
+> The SCMI core skips request tracking for standard protocol devices to avoid
+> issues when unregistered drivers destroy the core-created device. Keep
+> request tracking and rollback for nonstandard devices unchanged.
+> 
+> > diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
+> > index f2e2ed56bc326..230ee9f6f1aa5 100644
+> > --- a/drivers/firmware/arm_scmi/bus.c
+> > +++ b/drivers/firmware/arm_scmi/bus.c
+> > @@ -186,12 +186,44 @@ static void scmi_protocol_device_unrequest(const struct scmi_device_id *id_table
+> [ ... ]
+> >  static int scmi_protocol_table_register(const struct scmi_device_id *id_table)
+> >  {
+> >  	const struct scmi_device_id *entry;
+> >  	int ret;
+> >  
+> >  	for (entry = id_table; entry->name[0]; entry++) {
+> > +		/* Skip standard devices as they are created unconditionally */
+> > +		if (scmi_device_id_in_std_id_table(entry))
+> > +			continue;
+> > +
+> >  		ret = scmi_protocol_device_request(entry);
+> >  		if (ret)
+> >  			goto err_unrequest;
+> 
+> [Severity: Low]
+> Does this change make the check for standard devices in scmi_device_create()
+> obsolete?
+> 
+> Since standard devices are no longer passed to scmi_protocol_device_request(),
+> they aren't added to the scmi_requested_devices IDR. When scmi_device_create()
+> subsequently walks the requested list, phead will only contain non-standard
+> devices:
+> 
+> drivers/firmware/arm_scmi/bus.c:scmi_device_create() {
+>     ...
+> 	/* Walk the list of requested devices for protocol and create them */
+> 	list_for_each_entry(rdev, phead, node) {
+> 		/* Standard proto matches already have their dev created above */
+> 		if (scmi_device_id_in_std_id_table(rdev->id_table))
+> 			continue;
+>     ...
+> }
+> 
+> Will this check in scmi_device_create() always evaluate to false now, making
+> it dead code?
+> 
 
-zfcp_dbf_san_in_els() has the same issue, where the underflowed value
-is used as the scatterlist payload length.
+Agreed! It can be removed.
 
-Fix both cases by validating srb->length before subtracting the payload
-offset. If the reported buffer length does not reach the payload area,
-prevent payload access and treat the payload as empty.
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20261005-scmi_bus_fixes-v2-0-34a51338875a@kernel.org?part=2
 
-For SAN tracing, retain the original channel-reported SRB length in the
-trace record when no valid payload area exists. This preserves trace
-evidence of anomalous firmware-reported lengths for serviceability,
-while using a capture length of zero to ensure that no payload data is
-accessed beyond the reported buffer.
-
-For valid payloads, preserve the existing tracing behavior.
-
-Fixes: a54ca0f62f95 ("[SCSI] zfcp: Redesign of the debug tracing for HBA records.")
-Fixes: 2c55b750a884 ("[SCSI] zfcp: Redesign of the debug tracing for SAN records.")
-Signed-off-by: Ajaykumar Rajappa <ajaykr@linux.ibm.com>
----
-Changes in v4:
- - Preserve the original channel-reported SRB length in SAN trace
-   records when no payload area exists.
- - Distinguish between the recorded length and the payload length that
-   may be accessed using length/cap_length semantics.
- - Use a capture length of zero to prevent payload access for malformed
-   status read buffers.
- - Address both the underflow/OOB issue and the trace serviceability
-   concern in the same patch. 
-Changes in v3: 
- - Rework payload length handling for srb->length < pay_offset and 
-   treat such cases as an empty payload.
- - Prevent payload processing and scatterlist initialization when the 
-   reported buffer length does not reach the payload area.
- - Keep the fix focused on the underflow/OOB issue and preserve the 
-   existing tracing behavior for valid payloads.
-Changes in v2: 
- - Preserve anomalous short srb->length values by capping payload lengths
-   to srb->length instead of forcing them to 0.
- - Introduce a local pay_offs₹et variable to avoid repeated offsetof()
-
-Changes on the git hub can be found at: 
-https://github.ibm.com/Ajay-Kumar-K-R/linux/tree/zfcp-fix-srb-length-underflow-v4
----
- drivers/s390/scsi/zfcp_dbf.c | 35 +++++++++++++++++++++++++++--------
- 1 file changed, 27 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/s390/scsi/zfcp_dbf.c b/drivers/s390/scsi/zfcp_dbf.c
-index 81fb8af408e9..d487e9bb1561 100644
---- a/drivers/s390/scsi/zfcp_dbf.c
-+++ b/drivers/s390/scsi/zfcp_dbf.c
-@@ -223,6 +223,7 @@ void zfcp_dbf_hba_fsf_uss(char *tag, struct zfcp_fsf_req *req)
- 	struct zfcp_dbf_hba *rec = &dbf->hba_buf;
- 	static int const level = 2;
- 	unsigned long flags;
-+	const u32 pay_offset = offsetof(struct fsf_status_read_buffer, payload);
- 
- 	if (unlikely(!debug_level_enabled(dbf->hba, level)))
- 		return;
-@@ -254,8 +255,9 @@ void zfcp_dbf_hba_fsf_uss(char *tag, struct zfcp_fsf_req *req)
- 	memcpy(&rec->u.uss.res4, &srb->res4, sizeof(rec->u.uss.res4));
- 
- 	/* status read buffer payload length */
--	rec->pl_len = (!srb->length) ? 0 : srb->length -
--			offsetof(struct fsf_status_read_buffer, payload);
-+	rec->pl_len = (srb->length < pay_offset) ?
-+			      0 :
-+			      (u16)(srb->length - pay_offset);
- 
- 	if (rec->pl_len)
- 		zfcp_dbf_pl_write(dbf, srb->payload.data, rec->pl_len,
-@@ -714,17 +716,34 @@ void zfcp_dbf_san_in_els(char *tag, struct zfcp_fsf_req *fsf)
- 	struct zfcp_dbf *dbf = fsf->adapter->dbf;
- 	struct fsf_status_read_buffer *srb =
- 		(struct fsf_status_read_buffer *) fsf->data;
--	u16 length;
-+	u16 length, cap_length;
- 	struct scatterlist sg;
-+	const u32 pay_offset = offsetof(struct fsf_status_read_buffer, payload);
- 
- 	if (unlikely(!debug_level_enabled(dbf->san, ZFCP_DBF_SAN_LEVEL)))
- 		return;
- 
--	length = (u16)(srb->length -
--			offsetof(struct fsf_status_read_buffer, payload));
--	sg_init_one(&sg, srb->payload.data, length);
--	zfcp_dbf_san(tag, dbf, "san_els", &sg, ZFCP_DBF_SAN_ELS, length,
--		     fsf->req_id, ntoh24(srb->d_id), length);
-+	if (srb->length < pay_offset) {
-+		/*
-+		 * Invalid buffer: record the reported SRB length in pl_len
-+		 * for tracing, but capture no payload.
-+		 */
-+		length = srb->length;
-+		cap_length = 0;
-+	} else {
-+		/*
-+		 * Valid buffer: record the payload length in pl_len
-+		 * and capture the payload.
-+		 */
-+		length = (u16)(srb->length - pay_offset);
-+		cap_length = length;
-+ 
-+		sg_init_one(&sg, srb->payload.data, length);
-+	}
-+
-+	zfcp_dbf_san(tag, dbf, "san_els", cap_length ? &sg : NULL,
-+		     ZFCP_DBF_SAN_ELS, length, fsf->req_id,
-+		     ntoh24(srb->d_id), cap_length);
- }
- 
- /**
 -- 
-2.53.0
-
+Regards,
+Sudeep
