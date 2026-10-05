@@ -1,149 +1,205 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011043.outbound.protection.outlook.com [40.107.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D752C3E2AB6
-	for <sashiko-reviews@lists.linux.dev>; Mon,  5 Oct 2026 21:26:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791235617; cv=none; b=lqbXDrtNp2uyZ42YB9eleIaBuA/Ti4dF9PcgMX5/3sWR18MQI+vPbz1/ST/XaAHLqVhX6c+k5waMh2bqZh8Ci95+hAEe75Lk3lVwa/wZPdqkMt0eeAXDFqKv71Q+pCUxUiyQM4D+DPCa/1aFn/ItAigt5pO0CxNXcyS6lV+Dvwk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791235617; c=relaxed/simple;
-	bh=dViAwycqlhC94szZBFseDic4iSpt+fVVDuPkQGr//aQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L3BumkZjN0jUYAJZdxLt8d6elIZtML1o6dfjI2anFn5e6HNGAtMRXYrZqwAsHn2AhuCbcTsLCsUWO8oxWAGhrL3u24tMPohB0ORL/t/pfXlDUGxQj240XuidliNIRew9yqEuCWfu5UMz7oI/w0hz4oKNThKMzXX4lcZ39P+D9bE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DwtQJcWJ; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E477B31F998
+	for <sashiko-reviews@lists.linux.dev>; Mon,  5 Oct 2026 21:49:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791236955; cv=fail; b=b69gYht8bOkfCZKUXVD1s1jMLCb7zcN9gqsgGaohGKve2oJTc6VPLWV2ipYxUd/fWXs2PXLnFy8ZyjgTL6Maa3jxmsvJXc/UnwWqBW67CqMpmwoOhbSbrs6dH45WtclATWQmpsSkoFzTQNkcgSk3cNjY4UE3YtEa10oWAIzLqRg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791236955; c=relaxed/simple;
+	bh=PtwmQjMa7AACL9vXUOj7uWd867H5bKQuFVBmEczu0SY=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=oFhehfXmrXxjIuS60YkTmq0lDYJkQU1zknRky2dGpwZsbJsKY6U7lnfYJwjf3ixA1Lzm/oTS6UI+6CRlR/3pWD+wQNCc+Ui6m0yMyUevJLaB0L1Lo8ntaBr9ikXGXN3hEoNeIjJ9AMJVXi8i0IdX+pVm2PAXpEeXqj33cTrKVRw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=ZS11+p62; arc=fail smtp.client-ip=40.107.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DwtQJcWJ"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2db33db4de9so19865ad.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 05 Oct 2026 14:26:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1791235615; x=1791840415; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=0delO3SDUwNPg2/XER4kYXkLDt9VJFcjmgwYxx8hZ4s=;
-        b=DwtQJcWJeO+zlq0w6z/J5Aic1cE5YWa8bK320a7/V1kZsaQZjXhHUKfNnNlumTQMjV
-         0hwjeqYtvH7rmB74Le+KMyA8fz74pimwWBk6CK2/0ivmJviKefBcexAtLe4PowYG8lZ9
-         hnBEw0y2SO+fJVJ3Hs6ikg8enJ92cYScxnyO36Rey/v9Z5O36pWnOuDkKQUkvV1O5NhJ
-         8zQBci5EVkLm8j0IRx6EeUDx67+VxbQtBy4g1FEzCmOFAqVnNGpS8dpeXpkd6CLhpkUm
-         K/Y9AsMEURc0oATn7gGy/3dNV5wSeU1Ipq0jOvfKJefIscz19zp7nz7hfweA+UCOLpcZ
-         JoMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791235615; x=1791840415;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=0delO3SDUwNPg2/XER4kYXkLDt9VJFcjmgwYxx8hZ4s=;
-        b=I1gkT087Ce35bN1FRoj4sElOTe/fetmVCbq0B7hynVpiNOEjDUqtUEXzjMMSuue9OK
-         LFTnQ+bTvsnRTXZCz0CR4r5j2TmQEFMA9Mjw+9u862Vo9C9LxHKhJC4rResnZuf1pNm3
-         YlmmAwW126kc7Yvtc9ZhigfIph5hoiRb0NR9EVSharpe7MarfNN95yWWhM0xlyqQlcRh
-         NzvosCXbrJTA1iTz3nYX15uF27ekVphgWXQS7YF5pOlrtA/SYDYpkMork5AIhDx2Yry3
-         yBTRuaY/cBj/d73z+E6ysaFpcGg4Nt3U7jq1IXVqSThUvC2IyyK1eHkSd73xloE3pClo
-         rBgA==
-X-Gm-Message-State: AFq9FYIlKcATR80GUm4dkTZgXI0EScUSkTamefv0oes3la9xk7oo0dSo
-	2iF+W4QWZujL2CGEGO1gcESElhqn01PAngyIBK66R1XlY/brGim7gulUj1LHVcV4G1+oDgEyud2
-	2n40GBw==
-X-Gm-Gg: AYBFou3tjh2wvUiIJW/jVZu8GMWILRgLcfXyChjsjZ6+PEE3bQ6osHujt7MUglo13ch
-	gz7tjkgEHLbqiqpSZxLHsZ/cVUo8JPUpCyM7J01BypCNbtyIDmmv+RZSrTWOmcBCHtJa2ETiDLW
-	dQSb5N7yZwmq5wCC3lkTd+lm2zFuVGSZiG9cdcpVgSKtdmTZ1Dsh54s+rfMPyYF0+t5Pbmpb+k5
-	qPsMZhNZ1p6Y3B7Fvirjlyi6iyxCNPnr+wOf0UGmcCsUj9J572EumW1CRzugwiiUg0CUm5dxNNK
-	BNDERAUjly4qaTcTfizoCfFzn5BO0CedR/9xLd8fw4RjDg1nLZ6svIdLM+f6ATQFBp87RKH06p0
-	pbTnn8J9iPyCWFX3V8NTHYjcHSGj8wWoLxBOj2ptyLrCfu6aMLl9JZX0t4xRHDDKILnXcqKw+74
-	JXpfKlADxLGJ8+oGwt08PUi+InSTbIrFp0yV5PCvZjgsZ0zTEVv9hQj7EQ0PD+IR8IFR30pAvJV
-	PQFtnMW7R7bbyMxgQZ3vZawJmTrYDRRtw==
-X-Received: by 2002:a17:902:f60f:b0:2d0:1aaf:daec with SMTP id d9443c01a7336-2e5ccdbbfb0mr556185ad.9.1791235614423;
-        Mon, 05 Oct 2026 14:26:54 -0700 (PDT)
-Received: from google.com (230.0.127.34.bc.googleusercontent.com. [34.127.0.230])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a8543e8478sm1491257a91.17.2026.10.05.14.26.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2026 14:26:53 -0700 (PDT)
-Date: Mon, 5 Oct 2026 21:26:48 +0000
-From: Lisa Wang <wyihan@google.com>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="ZS11+p62"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=zAwcHkUYRbSbbGGORqKgl+bAhMnBU6a3ZEiBgVfphoOgRNVhqxEJpQbIRQRWfM49YpIpKt6xp35eFQ/13xJliwrY/+wW8AUz8/Cj/wfPUDSnbNB0rgIxO3xIpKpQj/5oLX1/+A0gs++EqioWdD5+c1MxULqAORtDymo4w2svbdU90GULCvgeZF7SDnrA9vNUuZ5JvSX2HHdz/rJQoKDajIaYBpAfd9ONDcQwBWz+7ZHUt80BBJO/WSMiGpVQOgib6OrlcIyFt8T/R449zOwwFPqrXJCiJjh/10fcM85u1WEM+n9pAMGenYjclgebX/457eKceS3VVvK/YbokYt1X7g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pVB4OiX57lwq/lePepP55usQgGFUNLzfTjjC+90YpM4=;
+ b=soyD+kz2mHPRhBimjX651xAC73VxxS31e8x/t28vmAgkUro1HQlKn4xCKB5Iwyg/U1q0a3uMhJDYNS9iPKXvW0Q2aghBQiI6rD175CRskQ0Iod/I131Ldif49BuXjzi9EJiO4w5xoFGQOPUIl7MRXYSHJG1XyiHTR4etnzOPlMQ/g6jw6disIKem9XqS0SNOWyk/zfBdS66TaIPHC0XMuWJhDaDrKKIrxTxc3vWz/C/GVtuZMZ9zmEhvTv4c3P2pkSVgqAVRdGm8dYotHoeCo8Xfl0B1DJcpeuO5SXJA+Zq+G1ZfO4H6qjcgneLkKJbmzzfgZbAin9ICrlguYQ3UJg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pVB4OiX57lwq/lePepP55usQgGFUNLzfTjjC+90YpM4=;
+ b=ZS11+p62MA3Mg5O2RljB8V01LzeXQPykTdryA296A1Sun8HtYF9+zbRcZqH/QtMYFdN8KFBAWE2LdkIkJrQvOX9RmBxeA3VBKvekWhKhJGXG5XLtE1jkvsoXT10FcWVX/+u0UXxHfDpWY3x3vCVn/+c7cfAyY6GqejpyRnbLC68=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from IA1PR12MB9062.namprd12.prod.outlook.com (2603:10b6:208:3aa::14)
+ by PH8PR12MB6961.namprd12.prod.outlook.com (2603:10b6:510:1bc::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.15; Mon, 5 Oct
+ 2026 21:49:08 +0000
+Received: from IA1PR12MB9062.namprd12.prod.outlook.com
+ ([fe80::28c6:3cbd:6e97:5257]) by IA1PR12MB9062.namprd12.prod.outlook.com
+ ([fe80::28c6:3cbd:6e97:5257%6]) with mapi id 15.21.0451.022; Mon, 5 Oct 2026
+ 21:49:08 +0000
+Message-ID: <195a273c-53d0-4db3-bc7d-0150bd5db892@amd.com>
+Date: Mon, 5 Oct 2026 14:49:06 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V1 16/20] accel/amdxdna: Implement AIE4 suspend and resume
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Subject: Re: [PATCH v15 03/23] KVM: selftests: Initialize the TDX VM
-Message-ID: <asQWGLagCRTuEaEk@google.com>
-References: <20261001-tdx-selftests-v15-0-7c62a5d8a992@google.com>
- <20261001-tdx-selftests-v15-3-7c62a5d8a992@google.com>
- <20261002091331.1148B1F000FF@smtp.kernel.org>
+Cc: dri-devel@lists.freedesktop.org
+References: <yidong.zhang@amd.com>
+ <20260930033233.1727265-1-yidong.zhang@amd.com>
+ <20260930033233.1727265-17-yidong.zhang@amd.com>
+ <20260930040712.A27381F000FF@smtp.kernel.org>
+Content-Language: en-US
+From: "Zhang, Yidong (David)" <yidong.zhang@amd.com>
+In-Reply-To: <20260930040712.A27381F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SJ0PR13CA0231.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c1::26) To IA1PR12MB9062.namprd12.prod.outlook.com
+ (2603:10b6:208:3aa::14)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261002091331.1148B1F000FF@smtp.kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR12MB9062:EE_|PH8PR12MB6961:EE_
+X-MS-Office365-Filtering-Correlation-Id: a8cbbf70-7695-4332-ffc8-08df232a7bba
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|22082099003|4143699003|11063799006|56012099006|10067099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	k/cJktk/ZH3WgK/oEuhG1b6zR2g1X8qBwXh6Wt9ENn7T5qhoCXH+SJrZM2SYlL/n5bml1IH1tKoEiJWKg9wshMugVCoK60Dc+WU7yCa3LOVDULZOv/4vdgaH/GFL2CV6oiE+EGIJJ+CIHLIydSrprEP82xX0H+CHiQJhogmHf4RrGEAfKOvp2j2apy0ZTYWHmBS8498VKYsw0vuMoWkDnYfRLz/BVM8UTYs+tYB1wNaMMQQsz+q9hb3tJ32eKqH24LkAz+S9zRUJobKs2ixA3t+zuEpOXqfLeMVBS4qe+q29/n70gqMOBuOWXOEMxFF98M/rZw3vgoXphGqVCym0LwFstaZqEOLjUR6si5zIPnC3mde2EGoeRUD9g8zl57TUsquJhkneBhpgL/wUXKyjGxLVYr/rotnfkE9jxENMq64LIvMmyFL+bFYf6hZ3FQt+uHGB2TjxOR7IqDUO0H8B/1/P5rdoDrjyISiuWSlDNxN8BF17D88QLk1+olMQ0WZo3Erch5D8wKWyQTPSt39K58TwvV8MQOLVEmCp5dIo3eR/foltrXhY9/XQLYE5Tbalda/INEy6RXLn5hJlnYw/tCFZKe9PlacL/K5hk9t69+o=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR12MB9062.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(22082099003)(4143699003)(11063799006)(56012099006)(10067099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?bWEyZUdmMTMzd3UybHdmYndGcnhwQXp1Y1JpVDJ5cGlEVXVVTElJOFpHbTVj?=
+ =?utf-8?B?NmFVZ1dyWTN1V0N2MHB6VlpRQWxYS3ZBVXZheE9GMzlIU1lxSFJxQXlmT0ts?=
+ =?utf-8?B?cHJhRi9IZTFkVmdIMDhWaUk4anRvbzV1Unl2MTM3QjJFREtiWWszaldHTU9W?=
+ =?utf-8?B?bXBLSDN3TEtobU13R05UNkdFVGtwWWx1QTNWMGNnck1hMWNKdm9jTU4rYjZW?=
+ =?utf-8?B?d2lQM2taV0c0dHJoUERGTGU2MEQ2Nk5hNjFWL2tMT0VoekxqeTBUOVZTU3l0?=
+ =?utf-8?B?cVBWTkk0Y3dRM25qajlsSlVSQVFORUU1MEpYcVhMN2Z1azZINzZjVVJBcXZn?=
+ =?utf-8?B?RS9VZkRzU2tiMTNXVThEdDAxNnQ1RCtJVXFuWHk5MDlITkFVTExJQ0REajBP?=
+ =?utf-8?B?c2NKWUFRZmZ4RVFnalFQbUFRcTlTb1FRZGViZGpXM2hFQ0pPZDNrdFlNMkl0?=
+ =?utf-8?B?UStFTnJhYnE5c3Y3VE41WmZ0OUVRTmlGY1BGYkttNEdhTnJraUVmSjFsQkNy?=
+ =?utf-8?B?SWlML1p3MVVtcHY3OWVPNjFBbHYvN0ZyVVV1bGRUTzlqUHgxM1dKTzkxU3pZ?=
+ =?utf-8?B?bW1kRkVZaDBDck5GUFBCMVV4NCsyVUtoeHJuc3FKYWVhL1RBZk9YWWp5THQ4?=
+ =?utf-8?B?NmJubk1ITis0V3EzK1UrRC9iUU5WVzQ2QjVWRDlUUlRwYUxWNnNTQXFWVXlT?=
+ =?utf-8?B?LzdrcHE0OGovRk9XNXkrczREQjNDYUZhWUlBNDNuKzg5YzlLMlpJZDZZaU5o?=
+ =?utf-8?B?RnppWVAwaEVvcUtJdk9qOVUyWGtBcFJUTjdEVmxYWjhFU2pkaXN6Y0xGMDFn?=
+ =?utf-8?B?K1hRRGlHa09Jc2FEa0xha1puODlsNnJJZ0k2T3VWaGNKQUJUVGFCc2d1ZTJx?=
+ =?utf-8?B?RnF2Z1pxRjNCSklGQTNsQmNCN1dvSGJVdWkxemhzUDBWRDlnRktKMzFqRXBk?=
+ =?utf-8?B?L1ZyZzlVcTNqeGZ2ZzJYQjhoZFRuTkt6cUtIK0lQNHhrWEJOSDdoYk1lb0wr?=
+ =?utf-8?B?MUI0ZzVlZGpKTWxoRmtHYVoyY0UvRGp0eGUrNXdFdXVNSHBYVkhUcHBWZDQr?=
+ =?utf-8?B?bjRpRHV3TStScjc1RDVhZ0VRWUkvZWhEWU1ZNWVBRTFrMkl1K3lnL3NxRjhh?=
+ =?utf-8?B?a3IzZjl5T3R1UWtqaXU3OFZZZmUrTjVIVnVSQ1J3VVlSbG1ndktGSnQwVUFy?=
+ =?utf-8?B?M0ZmeXV0dEhzbmN1bTZZS25obDhCbVZndkxwenZPRFg4MExGVmRYWFJNVjhv?=
+ =?utf-8?B?QklvdVZyVi9WZFVYTWFvTmozRFNZTWk4eW1yUE5nc2N6STdHM0tvczk2T2dp?=
+ =?utf-8?B?QzVKcDNpM0VpSWNkRkhubHFNalVWcXlGcExYOWhtZ3FKMW9LbnpDRDQrNXBZ?=
+ =?utf-8?B?MXdNNldrZld5cCtsU1h1bXZQVzVLWVJBTCtUMzBZQmNRYk84M3RyUm5WMnlG?=
+ =?utf-8?B?WmV4b2lBVDNoVHhYS0l4ODl3TCtudEpDMnBKbU5IODFpRDJ4U0tvR005SlJr?=
+ =?utf-8?B?aStTdDlZOVhHZmR6andIdk80anZkSjdPMVdLTEYwQXVGSEk1VitmYkFuRm52?=
+ =?utf-8?B?U1QzelcxK1c3dzN1THJ1bDVNcHFRdjlPWHVQUTNIZm8wR1JrNEJlTE0vYjRK?=
+ =?utf-8?B?akp1czFBalZ3NnJuREtORFNxbW5HOCsySlFOd2hZaGZhS0luTHRZUFUwM3lq?=
+ =?utf-8?B?NUZIMFpQKy9QaUVpWVNvZDBzT0luMWpaQmtFbncxUkhGYlpDTVpDN240eDli?=
+ =?utf-8?B?VHNkL0lyc2t4Z0V2VjIwdDhRdjFsUU15clBYODcvcWVnZWNEOWx5bXcvUUt4?=
+ =?utf-8?B?b2MwZ2lMTXZhdnY5Tmt2K2doOVZUQXo1czZ0VXYyOW1vMC9RZ3ZTdlcrUStU?=
+ =?utf-8?B?TDJjd0pkY3NUQ1Vwa2kwQk4xT0pTcW1odmxUaEJRNDJON1E3My9QVXZUSVRV?=
+ =?utf-8?B?aTBlM2p4MlhDbTZmTlVlSG1lb3V3eVdwdlJia3p0TEV4VzdkUW9aSzgzdjBt?=
+ =?utf-8?B?Ulo4RzlDK3FUdnFJZWRtTGt0WDBHKzBVUU14aElRNHZrR2lvN0lXL1JXNFNQ?=
+ =?utf-8?B?WjdmQkUvNVIrWG54UmNxL1M2WnZ0RDRCUHUwRUNUWGYrNnVRL001cTd3SEk4?=
+ =?utf-8?B?aGRIMlkxSTZJSnN3RUc0MUMzeGhJRmhOaUxJZS9kNU9EMVN1emJsNkFTeGp4?=
+ =?utf-8?B?bUhTbk5oOWZGWkwxdmRsV20ySnBkd3NubVQwMEViVGUvZ3NuRGhBSkdSdWlO?=
+ =?utf-8?B?Q0kvL0FYOEN4M2MrT0tXY1BMRjQ2VzdzZW9LM1ZhUkxCVjBJQkl0Y2FqNVJk?=
+ =?utf-8?B?T3ZNdjl0eHczRUZJK2gwZStTalN4ZElZZk8xaWdFeHZHVzdiQmFEZz09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a8cbbf70-7695-4332-ffc8-08df232a7bba
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB9062.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Oct 2026 21:49:08.3749
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: nJWhMamvJm7NlHdaSmMLGpPfdHaQrmFKsUkiyIDc/0DABNKpu+J6H9kVkFKHtpan7YLXgjKsr9zqmOQpbhYlFA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6961
 
-> > +
-> > +static const struct kvm_tdx_capabilities *tdx_read_capabilities(struct kvm_vm *vm)
-> > +{
-> > +	static struct kvm_tdx_capabilities *tdx_cap;
-> > +	int nr_cpuid_configs = 4;
-> > +	int rc = -1;
-> > +	int i;
-> > +
-> > +	if (tdx_cap)
-> > +		return tdx_cap;
-> > +
-> > +	do {
-> > +		nr_cpuid_configs *= 2;
-> > +
-> > +		tdx_cap = realloc(tdx_cap, sizeof(*tdx_cap) +
-> > +					   (sizeof(struct kvm_cpuid_entry2) * nr_cpuid_configs));
-> 
-> [Severity: Medium]
-> Could this realloc() cause a data race if multiple threads attempt to
-> create TDX VMs concurrently?
-> 
-> If tdx_read_capabilities() checks and reallocates the static pointer
-> tdx_cap without locking, concurrent calls might race on the realloc(),
-> potentially leading to memory corruption, a double free, or a
-> use-after-free during test execution.
 
-In KVM selftests, VM creation is performed on the main thread during test
-setup, matching other cached helpers like kvm_get_supported_cpuid(). I
-don't think we should care about potential race here.
-
+On 9/29/2026 9:07 PM, sashiko-bot@kernel.org wrote:
+> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] amdxdna: submitter thread hangs forever on failed device resume
+> --
+>
+> commit 3c6d084a73c19b1b3a172be33a5eb12a9d7f8889
+> Author: David Zhang <yidong.zhang@amd.com>
+>
+>      accel/amdxdna: Implement AIE4 suspend and resume
+>
+>      Implement suspend and resume callbacks for AIE4 Physical Function (PF),
+>      Virtual Function (VF), and Classic device types.
+>
+>> diff --git a/drivers/accel/amdxdna/aie4_pci.c b/drivers/accel/amdxdna/aie4_pci.c
+>> index f180983a692dc..6a50c1499ec93 100644
+>> --- a/drivers/accel/amdxdna/aie4_pci.c
+>> +++ b/drivers/accel/amdxdna/aie4_pci.c
 > [ ... ]
-> > +void tdx_init_vm(struct kvm_vm *vm)
-> > +{
-> > +	struct kvm_tdx_init_vm *init_vm;
-> > +	const struct kvm_cpuid2 *tmp;
-> > +	struct kvm_cpuid2 *cpuid;
-> > +
-> > +	tmp = kvm_get_supported_cpuid();
-> > +
-> > +	cpuid = allocate_kvm_cpuid2(tmp->nent);
-> > +	memcpy(cpuid, tmp, kvm_cpuid2_size(tmp->nent));
-> > +	tdx_filter_cpuid(vm, cpuid);
-> > +
-> > +	init_vm = calloc(1, sizeof(*init_vm) +
-> > +			 sizeof(init_vm->cpuid.entries[0]) * cpuid->nent);
-> > +	TEST_ASSERT(init_vm, "init_vm allocation failed");
-> > +
-> > +	memcpy(&init_vm->cpuid, cpuid, kvm_cpuid2_size(cpuid->nent));
-> 
-> [Severity: Medium]
-> Does this memcpy() copy uninitialized padding into the ioctl payload?
-> 
-> Since allocate_kvm_cpuid2() allocates struct kvm_cpuid2 using malloc(),
-> the padding field can be left uninitialized. The kernel's
-> KVM_GET_SUPPORTED_CPUID ioctl does not clear this padding, and it is
-> subsequently copied into init_vm->cpuid here.
-> 
-> Because the KVM_TDX_INIT_VM ioctl strictly validates that cpuid.padding
-> is zero, could this cause KVM_TDX_INIT_VM to fail with -EINVAL if the
-> padding contains garbage?
+>
+>> @@ -1096,11 +1096,250 @@ static void aie4_debugfs_init(struct amdxdna_dev *xdna)
+> [ ... ]
+>
+>> +static int aie4_vf_resume(struct amdxdna_dev *xdna)
+>> +{
+> [ ... ]
+>
+>> +     ret = aie4_hwctx_resume_all(ndev);
+>> +     if (ret) {
+>> +             XDNA_ERR(xdna, "hwctx_resume failed %d", ret);
+>> +             goto hw_clear;
+>> +     }
+>> +
+>> +     XDNA_DBG(xdna, "vf resume done");
+>> +     return 0;
+>> +
+>> +hw_clear:
+>> +     aie4_hwctx_suspend_all(ndev, true);
+>> +     aie4_vf_hw_stop(ndev);
+>> +pci_disable:
+>> +     pci_disable_device(pdev);
+> [Severity: High]
+> Could this error path leave submitter threads permanently hung in an
+> uninterruptible wait?
+>
+> When aie4_vf_resume() or aie4_classic_resume() fails, they call
+> aie4_hwctx_suspend_all(ndev, true) which destroys the context with
+> AIE4_HWCTX_ERROR (setting has_reset = true).
+>
+> However, a submitter thread waiting in wait_till_connected_hsa_not_full() in
+> drivers/accel/amdxdna/aie4_ctx.c with wait_through_reset = true explicitly
+> ignores has_reset:
+>
+>      ret = wait_event_freezable(priv->job_list_wq,
+>                                 aie4_hwctx_connected(hwctx) ||
+>                                 (!wait_through_reset &&
+>                                  aie4_hwctx_has_reset(hwctx)));
+>
+> Since the hardware resume failed, the context will never be recreated and
+> connected, causing it to block forever. This holds the srcu read lock and
+> prevents device removal (causing a deadlock in synchronize_srcu()).
 
-This might not happen in practice, as this allocation happens at the
-beginning of VM creation. It would only happen if a previously freed
-chunk with non-zero data is reused by malloc(), polluting cpuid->padding.
+I will fix the synchronize_srcu() deadlock in context teardown by stopping
+the hardware context and waking all waiters before destroying it.
+The fix will be in upcoming PATCH V2.
 
-Still, we can set cpuid->padding = 0 here, or change malloc() to
-calloc() in allocate_kvm_cpuid2().
+/David
 
+>> +     return ret;
+>> +}
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260930033233.1727265-1-yidong.zhang@amd.com?part=16
