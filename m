@@ -1,127 +1,95 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4F5449992
-	for <sashiko-reviews@lists.linux.dev>; Mon,  5 Oct 2026 12:24:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 537624825C4;
+	Mon,  5 Oct 2026 13:08:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791203082; cv=none; b=XuUcNB80mQfvgi2T0loSZfp79IO6qiOpeElR3hU6x0KD2n994Y0oUzqKYrjWqA3gsc6B7oEeuwIw26ckHvS9QSE0Wd96rGs0R4ucB80HDbunVC6E4uiVK1LpcLBKtQcT3vxjAY7ng8BtgjQsDi44+c64JUOMu90AFDPy3gS7/nA=
+	t=1791205712; cv=none; b=HQpXTPDd1usIS3M59oX9aKG1DLf8R5ltPnVkcxoXaM5CL36DZWqjOPEZdbPpCwGwBkLs0KDcZ1o50WYVMu0yH4XH2rT8ryVQwR//0pt6WYJ7X4fzzvChrsXTyM/QEuwXGgekfziS1J89TRENkZRtAGZ4Fcr5bS3m/G1V5RLtFrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791203082; c=relaxed/simple;
-	bh=qUOkumMnwJfFMMoM3tWFuUz3pIkaM5fDFt8gDbkFbvY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jymx3ijaT+YS1r+oZ05QNPNGePFFUbX4X/8VsRPYBYgsp7sLmsO+tr6HtVZFfkzOWtlV5S8ciFRB9bq1i7tzDf/kTWnxZKi2I/8frkmK4vGtnu4r3trv2jjgm8GODrjTA8op2E2sSHF5Yi4iZKuconrCijVvhNxh4DItQ7FLrVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=uve4j2ti; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1791205712; c=relaxed/simple;
+	bh=lYST04BH3VQZzexEJ/zChuLkdT8K4wYmGOYVKpKfUzQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FEPcP3Cf9TzEGlijYy1AtNbTLfRvWZOsSMjz06vYJwo0ibUCSOWZhIh2ca/stqydNPaMKjaL8cPURj7V3Vr9MQKi+Bo3WA22wxcjk/Xl6T5WGZlx1bEzB/1Bk0h07VK/7zJh/Hjqb5Siao69Q2EaK6EhWmAVGlXOxIEVViRD4cI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=JNXmxrcF; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="uve4j2ti"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id EA3A11A116C
-	for <sashiko-reviews@lists.linux.dev>; Mon,  5 Oct 2026 12:24:36 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id BEF64601A5;
-	Mon,  5 Oct 2026 12:24:36 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 87C3F10330608;
-	Mon,  5 Oct 2026 14:24:31 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1791203072; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=eSOfea8A8CadGj+B4+dbXmXA4L8v/ccUNrJQZSRutdQ=;
-	b=uve4j2tikFGqHz/gGZ4rE3ftBIxN6taEuixfv1OBNCDoY46jLdj2k2VQH7gz/HeJ6Kw0Ft
-	daYnPKuDtYa1bpkCfRnfa+w8gz92E+REpuKuF7yEH4stNtB7PyOYTo1QV5uTdElTixDZs1
-	47FJ6s53yMkF72PuDjh9ZIL9FdPuFgIYwE/bf1erg5fwOVeEdScNXYumi9KsAs0KsX8q7z
-	NN4yj+cAoCjFz3BdeaIwiJkgT6Zvxj2QXDRwNv8vf9V0sGlSt5yVT1S7yRPpDlJV49PWCk
-	VA50zG9rvEI9GeQafT3EbLJ6Gk+ocq9A8wUdoqBZl60wnuP/wNRv4ypz6CeIcQ==
-Date: Mon, 5 Oct 2026 14:24:28 +0200
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-rtc@vger.kernel.org
-Subject: Re: [PATCH v2] rtc: ftrtc010: fix cast
-Message-ID: <202610051224282c785760@mail.local>
-References: <20261005111502.159855-1-alexandre.belloni@bootlin.com>
- <20261005112417.A42BE1F000FF@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="JNXmxrcF"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4AA62152B;
+	Mon,  5 Oct 2026 06:08:25 -0700 (PDT)
+Received: from [10.57.13.4] (unknown [10.57.13.4])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B91B13F86F;
+	Mon,  5 Oct 2026 06:08:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1791205708; bh=lYST04BH3VQZzexEJ/zChuLkdT8K4wYmGOYVKpKfUzQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=JNXmxrcFr0Mms66c/CAvaOPDeA1md3eCGPJ/w4oAcyi/Pn9zp3tUdv+UHyOc/YWj1
+	 teYXPygbOQoWVaWaLoQ0LFf/cvwUKu0ekIwjRX3uR56fE3htJrfxfs420/+bhSIFIO
+	 8jmjagWihz8WLuhoUa1U77aslxhmy8iXa/pf+0xU=
+Message-ID: <d18fc122-744e-40c7-b10b-cc29c0a88e20@arm.com>
+Date: Mon, 5 Oct 2026 15:08:25 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261005112417.A42BE1F000FF@smtp.kernel.org>
-X-Last-TLS-Session-Version: TLSv1.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v22 23/23] KVM: arm64: CCA: Control user register access
+ for Realms
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: Marc Zyngier <maz@kernel.org>, kvm@vger.kernel.org,
+ Oliver Upton <oupton@kernel.org>, kvmarm@lists.linux.dev
+References: <20261005090754.2140522-1-suzuki.poulose@arm.com>
+ <20261005090754.2140522-24-suzuki.poulose@arm.com>
+ <20261005093006.928C41F000FF@smtp.kernel.org>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20261005093006.928C41F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 05/10/2026 11:24:17+0000, sashiko-bot@kernel.org wrote:
+On 05/10/2026 10:30, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] rtc: ftrtc010: 64-bit promotion breaks negative offset wraparound
+> - [Medium] kvm: arm64: missing lifecycle checks for Realm configuration registers
 > --
 > 
-> commit 2ccc1a04cd44cfcc28a0e0150aa880f011201f5c
-> Author: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> commit c1323429b568607fedbbcbc78dbc0df5d8c3cfd9
+> Author: Jean-Philippe Brucker <jpb@kernel.org>
+> Subject: KVM: arm64: CCA: Control user register access for Realms
 > 
-> rtc: ftrtc010: fix cast
+> This commit restricts the host access to register states for a given Realm,
+> aligning with RMM restrictions. It exposes certain registers for initial
+> Realm parameter configuration, as well as specific core registers at creation
+> or during specific exits.
 > 
-> The hour and minute registers will rollover before the multiplication to
-> convert to a number of seconds can exceed an 32bit integer, there is no
-> need to cast them.
+> [Severity: Medium]
+> In arch/arm64/kvm/guest.c within validate_realm_set_reg at line 769, the code
+> returns true unconditionally for KVM_REG_ARM_ID_AA64DFR0_EL1 and
+> KVM_REG_ARM64_SVE_VLS. Does this allow an unprivileged VMM userspace process
+> to write to these Realm configuration registers even after the Realm
+> Descriptor has already been created? If the VMM calls KVM_SET_ONE_REG after
+> finalization, it appears KVM might silently accept the write and update its
+> software state, while the RMM ignores it. Could this lead to a silent state
+> desynchronization between KVM and the RMM?
+
+The KVM doesn't have any control over the DFR0 after the Realm is 
+created and the KVM doesn't get to access the SVE for the Realm.
+This is similar to the approach we take for GET_ONE_REG where
+there is no guarantee on what the KVM sees.
+
 > 
-> Link: https://patch.msgid.link/20261002105946.8rdteIpO7uWGEcTlS65F8iSi4gsRoXi2kgq8FTSaDPA@z/
-> 
-> > diff --git a/drivers/rtc/rtc-ftrtc010.c b/drivers/rtc/rtc-ftrtc010.c
-> > index b29c96be40f4a..c66d4a85f23c1 100644
-> > --- a/drivers/rtc/rtc-ftrtc010.c
-> > +++ b/drivers/rtc/rtc-ftrtc010.c
-> > @@ -72,7 +72,7 @@ static int ftrtc010_rtc_read_time(struct device *dev, struct rtc_time *tm)
-> >  	days = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
-> >  	offset = readl(rtc->rtc_base + FTRTC010_RTC_RECORD);
-> >  
-> > -	time = (timeu64_t)(offset + days * 86400 + hour * 3600 + min * 60 + sec);
-> > +	time = offset + (timeu64_t)days * 86400 + hour * 3600 + min * 60 + sec;
-> 
-> [Severity: High]
-> Does this 64-bit promotion break the negative offset wraparound?
-> 
-> In ftrtc010_rtc_set_time(), if the target time is set backwards to a value
-> smaller than the elapsed hardware counter (time < hw_counter), the 64-bit
-> subtraction yields a negative offset that is truncated and stored in the
-> 32-bit offset register as a two's complement value (e.g., 0xFFFFFC18).
-> 
-> The previous implementation explicitly performed offset + hw_counter in
-> 32-bit arithmetic, allowing the negative offset to correctly wrap around
-> modulo 2^32 and yield the correct time.
-> 
-> By removing the outer grouping parentheses and casting days to timeu64_t,
-> the entire addition is promoted to 64-bit arithmetic. Because offset is an
-> unsigned 32-bit integer, it is zero-extended to 64-bit rather than
-> sign-extended, which prevents the necessary 32-bit wraparound.
-> 
-> As a result, the negative offset is added as a massive positive value
-> (e.g., 4,294,967,295), causing the RTC read time to leap about 136 years
-> into the future. Setting the clock backwards triggers this logic error,
-> resulting in corrupted time reading.
+> [Severity: Medium]
+> Similarly, in arch/arm64/kvm/guest.c within kvm_realm_validate_core_reg at
+> line 86, the function returns true unconditionally for the PC register. The
+> comment above states that the PC can only be set before the realm is
+> activated. Without an explicit lifecycle check in this path, can the VMM
+> modify the PC via KVM_SET_ONE_REG even after the Realm Execution Context
+> has been activated?
 > 
 
-offset is unsigned and is never going to be negative.
+Same as above. The state cannot be synced back to the Realm state. So,
+this is intentional
 
-> [ ... ]
-> > @@ -92,8 +92,7 @@ static int ftrtc010_rtc_set_time(struct device *dev, struct rtc_time *tm)
-> >  	hour = readl(rtc->rtc_base + FTRTC010_RTC_HOUR);
-> >  	day = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
-> >  
-> > -	offset = time - ((timeu64_t)day * 86400 + (timeu64_t)hour * 3600 +
-> > -			 (timeu64_t)min * 60 + (timeu64_t)sec);
-> > +	offset = time - ((timeu64_t)day * 86400 + hour * 3600 + min * 60 + sec);
-> 
-> [Severity: High]
-> Does setting the time to a value smaller than the elapsed hardware counter
-> generate a two's complement negative offset in this 32-bit unsigned register?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261005111502.159855-1-alexandre.belloni@bootlin.com?part=1
+Suzuki
 
--- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
