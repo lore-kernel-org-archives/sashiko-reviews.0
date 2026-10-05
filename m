@@ -1,208 +1,203 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from mx0b-0002e601.pphosted.com (mx0b-0002e601.pphosted.com [148.163.154.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A364D596E;
-	Mon,  5 Oct 2026 17:49:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791222545; cv=none; b=RF/3buChqYPaEEq8B+2rkvZHL7SQpjxSwY4lTbe3wxdVixuVj2mJkhfsJF6ppcGmSS8JxUHix0RkBImrT2n0rvoY5/9qP1uWqMVf/ZAQXytxpvD8AUCPLK23F67RIjj04uOe6tvzEf/i2MoDlaOicB8TZq6w7Mli4cgBUZF69B0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791222545; c=relaxed/simple;
-	bh=cTVEOTSX3L3eErrdq8mBnziN6GscpcdmpOcmhVNn+yE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bz6K/SgdY8JW1AZuvY93t0j7VBuJyzEOlT2LQxxLk57Ayt1gHCkVCUFpJHE2476oyFzf2tBErF9RM/109vHJ8A75hGW4lOf3lFa0ee2cUAUgs0yjRBTuOtIGhsjNYaBMYwk9xi1CL0OTrTLK7kX8b8RQeEGVtmF0JFm5TTyhLKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=GmHrnuin; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C30E39656C;
+	Mon,  5 Oct 2026 20:43:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.154.28
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791232999; cv=fail; b=h0ZVt4T0iJA386cxxPrmrfYtYybCncfQJu3YteueDWXIyNoMxl0jX2F1c4ZTBXxNzBDNqxsCVkY0N4S5vZEPPjUGCFdLgtPlGBfgoMCaI+rUKEeX5rDLekUxR6ACYvjux1nN61LdIgWDnsy+xg60sflqMJujhFMyknXOKHW1820=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791232999; c=relaxed/simple;
+	bh=g/n017PRA/8Hr+XHsrvbTfivPQ21orBySQxhV8P9dms=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F6z3MGEkWJJfT5kUUPGyQPVdxkDy+/hqq/k8ExiEeOasw9spRJYsp/mof4DoKrpJwgi2fXvVgGfDYmfX+9OveC7AOlcCM98OvN9qt/JyM7Skm+9PR0Rd8yzrIsb15BxohlIZ74/v741ZWEml1t4H1jYe6zOqA0fq8GSRlKMUrVs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b=jOx2OlxE; dkim=pass (1024-bit key) header.d=ticloud.onmicrosoft.com header.i=@ticloud.onmicrosoft.com header.b=VR8BFbSE; arc=fail smtp.client-ip=148.163.154.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="GmHrnuin"
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 695HZg9j1131374;
-	Mon, 5 Oct 2026 17:49:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=t0RuP8
-	msZqzgRqlx85iIGSCxZNORUlsqsomgArmKdjk=; b=GmHrnuinuiEpKcW3ahl+vO
-	RqBwoRQkhYkL/sSduSkfPlegcuYkoa4BhacyYwiqyRiSEaL3UnDmn0dziYZYQ+Sx
-	pFLkrFntlHYLLRJQhKytnfMqXEhpKNxZLUHCymdoVv7sqDs9RjIks4q956790BVm
-	MZfDim6HENQjmLTV1XGiZiFivl34dHAAhZzlwacUB4VvF5v5sLMfxd+9LRUCzKuT
-	uTTiaUau84eDSvhnLgB03EReetcgJxnQ3mvUCkDrQdXmcZHKFUIUToyjEn2O+9iX
-	VtEm7AbshIH/UGe4XdduLxq3JyLkwW4No8AYZnECtKQmvjV4IBm/FNs4+MEXSPZg
-	==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2q4jk9s2-1
+	dkim=pass (2048-bit key) header.d=ti.com header.i=@ti.com header.b="jOx2OlxE";
+	dkim=pass (1024-bit key) header.d=ticloud.onmicrosoft.com header.i=@ticloud.onmicrosoft.com header.b="VR8BFbSE"
+Received: from pps.filterd (m0374955.ppops.net [127.0.0.1])
+	by mx0b-0002e601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 695HLOVh543855;
+	Mon, 5 Oct 2026 15:43:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=proofpoint-05-2026; bh=dKJuj28VtPHOSZa
+	vm79Qw3aCw72vwvaf4mjJdqiwaPY=; b=jOx2OlxEiQWUdnzMhdNHLCpM7xLp+10
+	Oc1q+3p87s4eRjSb2N8K4CHXgLlvNewBRycWfrxr1BXUNzNo1j+WpiIQxIbGCeyc
+	11qMDERdVxQRyUnE4ASvYABgAOdFq4uYCWRZOU6Rok5kqB5QR0fxQuQX5CS5yOM0
+	XaiEzZSbTaOa2a+JDQgRpc8AZqeUv14pCtLTNSGGY/3LV++oZf4Zww79rLr3I8gM
+	SF+spaFNN6p/UdCgKzPm6B69UjbrCHWo9oM/N4MbbXeYxyQcrrotSnJKHXuPrhY9
+	BiV9wjtCSE77bT78nfLlKMyb171ixaY0ASB74utw0BomSnDbd/+NmRw==
+Received: from ch4pr04cu002.outbound.protection.outlook.com (mail-northcentralusazon11013019.outbound.protection.outlook.com [40.107.201.19])
+	by mx0b-0002e601.pphosted.com (PPS) with ESMTPS id 4h4d7c2jex-1
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Mon, 05 Oct 2026 17:49:02 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 695HMZnB3214612;
-	Mon, 5 Oct 2026 17:49:02 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3d1jpg57-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 05 Oct 2026 17:49:02 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com [10.20.54.104])
-	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 695Hmw4550987486
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 5 Oct 2026 17:48:58 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 284742004B;
-	Mon,  5 Oct 2026 17:48:58 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 496CE20043;
-	Mon,  5 Oct 2026 17:48:57 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
-	by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Mon,  5 Oct 2026 17:48:57 +0000 (GMT)
-Date: Mon, 5 Oct 2026 23:27:08 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Amit Machhiwal <amachhiw@linux.ibm.com>, kvm@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] KVM: PPC: Book3S HV: Add preempt_disable() around
- virtual-mode HPTE bit-lock users
-Message-ID: <20261005232317.1da37e05-5f-amachhiw@linux.ibm.com>
-Mail-Followup-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-References: <20260930173750.56759-1-amachhiw@linux.ibm.com>
- <20260930173750.56759-3-amachhiw@linux.ibm.com>
- <20260930175243.54FF71F00898@smtp.kernel.org>
+	Mon, 05 Oct 2026 15:43:13 -0500 (CDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=OyM897sX7Zpo1ijldIbIfLX94Pjud/VzSo4Trs/VBTspaAseul7NQpzkjz1pSY0KTQyenMvLV4Mnwy0LsBhxo/jTISpuWRGhuFyp/UeRoA9DTnE445xuJ5A8LvU+v//lDEPNtIaGbU/5COHy0Pz5RPmSw0uR8HnTDA2tpUDuhThkx+C3mWCcxdUocp+1EXWMbXCj6CFYig3uQdGtep4W+rQ5twWXoLPSk5bmfCOtjTyjgYmRDciKfTPeO6M6svF4i5xxSrrPFl8QHxNc3ZYdf18uZ8jJTagxM19bejADsGW3+5lAsTHRBDpbSIQVWZUJBOFZfClEjeC6BXe6syUT5A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dKJuj28VtPHOSZavm79Qw3aCw72vwvaf4mjJdqiwaPY=;
+ b=vfeUnpUiNjxw+OKWJLFKqJjLA4nD55BvSb5FWJby6w5h7+CFESyqu/dQZMZV9G7Md1Ctn+PbrzsHXAyuNKJfeIbBImrzdBeCBZp+npbPXk2oMIWyrkV7PsFdFbwiuYqPcomKEcUXfsRyPzuuvNAdjmWfJl3EH3Bi+hS//WLOY+QV1+2pd5Rh8JH39RWfl54Ie93azh1S12OnWSUcrvgmhOxzsIXgKsQHv/aROm+SNFVscVYACzwLn46Ax8/2ehHg/tVyB7UP5tqzR1lI7QVouXNnau9rb3kbnK0tBs0YA3zviV/A2HxJBtgRgZRD5hxH7JMo6Aqlb44c8oapyR9jBg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 198.47.23.194) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=ti.com;
+ dmarc=pass (p=quarantine sp=none pct=100) action=none header.from=ti.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ticloud.onmicrosoft.com; s=selector1-ticloud-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dKJuj28VtPHOSZavm79Qw3aCw72vwvaf4mjJdqiwaPY=;
+ b=VR8BFbSE62WPKvRSHAiHCpLXIQdSc6ALR6qnY4OkR5wVymr5/rlsrQDQhxgs4qEeElRjK5kdrcedoQu8SbOIgAOZ1a2J+NBE/mGVeCB7KlcstyiQySAqHOik65wN2KQk34tfrNu57V3IU1h3P82d5ei5/FymmL/fzjhtnhTMu/M=
+Received: from BN9PR03CA0573.namprd03.prod.outlook.com (2603:10b6:408:10d::8)
+ by PH7PR10MB6251.namprd10.prod.outlook.com (2603:10b6:510:211::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.18; Mon, 5 Oct
+ 2026 20:43:09 +0000
+Received: from BN2PEPF0000A98E.namprd04.prod.outlook.com
+ (2603:10b6:408:10d:cafe::38) by BN9PR03CA0573.outlook.office365.com
+ (2603:10b6:408:10d::8) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.472.20 via Frontend Transport; Mon, 5
+ Oct 2026 20:43:09 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 198.47.23.194) smtp.mailfrom=ti.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=ti.com;
+Received-SPF: Pass (protection.outlook.com: domain of ti.com designates
+ 198.47.23.194 as permitted sender) receiver=protection.outlook.com;
+ client-ip=198.47.23.194; helo=lewvzet200.ext.ti.com; pr=C
+Received: from lewvzet200.ext.ti.com (198.47.23.194) by
+ BN2PEPF0000A98E.mail.protection.outlook.com (10.167.248.133) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.496.14 via Frontend Transport; Mon, 5 Oct 2026 20:43:09 +0000
+Received: from DLEE215.ent.ti.com (157.170.170.118) by lewvzet200.ext.ti.com
+ (10.4.14.103) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Mon, 5 Oct
+ 2026 15:42:48 -0500
+Received: from DLEE204.ent.ti.com (157.170.170.84) by DLEE215.ent.ti.com
+ (157.170.170.118) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Mon, 5 Oct
+ 2026 15:42:48 -0500
+Received: from lelvem-mr05.itg.ti.com (10.180.75.9) by DLEE204.ent.ti.com
+ (157.170.170.84) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45 via Frontend
+ Transport; Mon, 5 Oct 2026 15:42:48 -0500
+Received: from localhost (uda0506412.dhcp.ti.com [128.247.81.196])
+	by lelvem-mr05.itg.ti.com (8.18.1/8.18.1) with ESMTP id 695KgmSS1854283;
+	Mon, 5 Oct 2026 15:42:48 -0500
+Date: Mon, 5 Oct 2026 15:42:48 -0500
+From: Kendall Willis <k-willis@ti.com>
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+CC: <sashiko-reviews@lists.linux.dev>, <robh@kernel.org>,
+        <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-input@vger.kernel.org>
+Subject: Re: [PATCH v3 2/2] Input: gpio-keys - support wakeup pinctrl state
+ on suspend
+Message-ID: <20261005204248.57wr5vyknulpsrtm@uda0506412>
+References: <20261001-upstream-gpio-wakeup-v3-0-6f3bcde367a3@ti.com>
+ <20261001-upstream-gpio-wakeup-v3-2-6f3bcde367a3@ti.com>
+ <20261001160201.4F53D1F00898@smtp.kernel.org>
+ <20261001161231.eopj5fqxfn6d54sz@uda0506412>
+ <asCRyl0MeG1AWiZW@google.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260930175243.54FF71F00898@smtp.kernel.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: UkJWMhBC_IsVTAA7Fsrfl0Ip2ve4vUHs
-X-Proofpoint-GUID: UkJWMhBC_IsVTAA7Fsrfl0Ip2ve4vUHs
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA2OSBTYWx0ZWRfX8aZs1Oax8UaS
- itqVNhonH7HcfoeuseftYel1nkLKU5be/sADWNeSiQ6usCeSakCgI+AbMnsBylOmyvLh8cWFri8
- zre37L46xs4LkZe6Kt4CU8ea6kdE+F8=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA2OSBTYWx0ZWRfX3oSrdgXTY3Go
- DgKUMWFIcVh/ZzcKye/95iBlSa1eSGPfVLZbuQMBbdNc2NNUsulUfvGn7laVsf3B5XHmeNty8ut
- Oww3q7EMYjKYWiE9w9VWtWiuBl0FY75rnC+QlI9SkgD66eEYbWBy1HWI2lHlKtWg90jKWrosXAW
- RWHNjPkp2FVImxRuEIUXFAcy6LYMrJRLfMtWLzsi/1Dgb0Zzuw0LWgrSfmGJHfijpyUWfjP7J5A
- 8Lx8PvW3UAMdlYSMdKmH6NamDahzEl7rPK1B1xzVsr2Okne2JdzzLqejObceRoq8W/9rIDXgYlP
- Xy7WaZT8xRHo5Tq3z3E3QB/QsBjhnp7tSGZA8g9FG4KKujzp5uUNecwUrfDrbLcPuMOXf5clzj1
- AnVSuONGQZlZOesMf++a5D0ICdlrPl/1eHuoEQH+Pqi50ovMPoNlcX5XhXLLG4fCFeVkPj5tfob
- GymEjCq/5DGC5VvFHNw==
-X-Authority-Analysis: v=2.4 cv=eYeo7LEH c=1 sm=1 tr=0 ts=6ac3e30e cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=gvuWFeR2MmSz4E1sB28A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+In-Reply-To: <asCRyl0MeG1AWiZW@google.com>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF0000A98E:EE_|PH7PR10MB6251:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0ecd7c1f-8121-4673-5fa3-08df2321446a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|82310400026|23010399003|36860700016|56012099006|10067099003|18002099003|4143699003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	XUiYKf9lVfmNNna0Q3Gt994mLS+eqLtaAM24268Ny667f1f3w1QmkQlC1oJJu1Ygj/n6VtYTdC/km/pU9ycJsuyTNCmTWDx8c7bUFB0jf/zlWf3lH1id82fbUd27gjwcHySQEdGot6266kMPgIQ4f+OagR/jIjugFJXpZFDKxta4G6I4rUnZFqgNJ+KSw3Kxvrz491/gdk8tvpDZvjQwOynu5sX/UnxmK31gKMLDVZ2pPhXxbDQzOM0FMlwA1nOYPNsKrkqONJimytv/gLVSku5sMjEAnoAXPP6KR6Dt1Zs0OfVNdvH4x6ElX2GkfxuFIxF1GWXn9K4UyVW+/A2L5u8ubVRg2r2npiyxzpisNiyquIF+FepDFTWfpnO9oI+J0QMJkIpunNtByw509pIydI4XZSitKLtO+Wwm2QDRBob+ncmrtPZvR782y8Ar7yJt4Zwym/k37bx5MAXlX9TPqySjTX9Qc65fVRF6KEd5RqAU5Xkm+AMSasKmuVgZbxWiAZhsOF6ucoJbKEWYLbzBXPK/1FmTBELmalPNsG8BV1/bhA79wGfrKkaXjzi4lJz6jTKmObAN0Ib1etyJp4MSEw1y9jYCHE9cWdD/w8JUpq2FnTAROJbdI1AtisKQDJrBwMQIX650JVXxvJzRZIN1NrhxudnEL2Mhewigmb3a++H+VtNEJd8JJIgrdrB2nm55HMHcaFQbSsAAuOvtHaHsIQ==
+X-Forefront-Antispam-Report:
+	CIP:198.47.23.194;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:lewvzet200.ext.ti.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(376014)(82310400026)(23010399003)(36860700016)(56012099006)(10067099003)(18002099003)(4143699003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	yEEJXPA6lhl8vxWtOduDDzUy1EC/FtLfUH/xzWBj+71zFWU4kKHs2tzAAPZf7d85597UHC5yjXDJtYafYgldnRWkvCeDqVfs8gVURjBGziZdCfNi85W7FtIzK6bVewuOhL9Lrg8RFWVFw0hgXBnwLnZQdAbd3r0y1geqM1VTg8heKXXNBS3t3ZRlfuIvoOAOhevpGhfmzvuH+i95I9YnFIlAHm5eUh0S37qCYLikFa0TP5If4DJmW0AAi/Qr9sOowzfCZs73UZ7AKCCsfPKnkfUjJphhSeImj7G1TUC0J1RkcGYG3tdhSJZ3Y1UJSnkyHlKPkODVanfDxe3XlLKSuEylLgS3VHJMkm10m/haSi7gbdXtTpS5fKdML9ljPxlUlzETYCSSq35J6nrcrwztGWXUgWYnil+sNvtPeJZWXmnUHpMp3mOzqRb5s0Yed2mb
+X-Exchange-RoutingPolicyChecked:
+	EuswOWnrAFz6XGba6in9V32pMjnoy08UHTIm2COLMxc0jWHYUcH8wj/3rDA+hvwaHFnyiRzfYjQNAXsOlDEUdGOqhR2HYMUq+2RsEuG+kpNiPvAp3/9R85hgOi/2VtEyUfTxjweC0uV9VzOHkFkD8HCsSEzgwODUMpVRyyKbvv5PjLqhtfM9McWRS+cr8FwFjsletbMNVd+xgjnQz7xFhxOPr740hHbOKtnop3LNHCsDlhtXk6nAr/wcmjRkGj43DjuONx+KmDS8kWMZmaVGgYE7E23KE5GboFn7TvWncrU8b1TpYHQKjLXdd8KRPPSU2xg9ga8D/+SIvGGrRVEhKw==
+X-OriginatorOrg: ti.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Oct 2026 20:43:09.7919
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0ecd7c1f-8121-4673-5fa3-08df2321446a
+X-MS-Exchange-CrossTenant-Id: e5b49634-450b-4709-8abb-1e2b19b982b7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.23.194];Helo=[lewvzet200.ext.ti.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN2PEPF0000A98E.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB6251
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA1MDA4MSBTYWx0ZWRfX1QB4Tmolqft3
+ ZYBsw6cw/tl/mY/k/mJZ5Pkmu74U0kA8krQcThOWBif7gZzDomfePvRgp2zDMJBx7s8LqrgZJg6
+ Nvh/gfVntgeJNusZoGmxpdfeXnmucYU=
+X-Proofpoint-ORIG-GUID: cJGqdjTyqD6ABJzQjOs3O_p3zsFHTgZA
+X-Authority-Analysis: v=2.4 cv=RfYFmFtv c=1 sm=1 tr=0 ts=6ac40be1 cx=c_pps
+ a=UA+Ybm6NSixuq697YtHT5A==:117 a=WotqVVQAdb04rnGuttW3Kw==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=kj9zAlcOel0A:10 a=660iZSQnnn4A:10
+ a=s63m1ICgrNkA:10 a=AlMIdn_sM9wA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Z8NIEmU8O1QQgoT56wFK:22 a=fPAWb5peG099m5CrUpKH:22 a=T5Ejp_LkUWRfFa4TVX8A:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA1MDA4MSBTYWx0ZWRfX8+kwEZSpuDGs
+ 0EE96u/sNA5reiSWq4Bfvous9K2CeVD4QTXa/MpAGzDaJDctkeMnNfUW0g6KXxzO2TDbKg1khW/
+ Qy9BW1K7V7tWjA7QP0Gxi3d0+xPgY63TkIpJxR0yDW3MVV10b/kQJ1d5YpzJfZpOA6ZRK2E2BiG
+ RFh2Iig57qO2iy/MT3iaamwnIjKO+BMxaWDet/jyx1t8+UD90J6uWYISMYSNz53oLzdZbGbiCKM
+ 714Miaz/+Ou22z+Va9d5/LgHxpSJ8lkcZIpNA109kJZ83EVrW9F+fogSUfHtSlgfx0tDhxmRg4+
+ Xr1TEkrpVt1Iuv+ZRbMa7eO7323i2UGYbfwrYY6MHaX3ZVsvYxd8LjHSl4f4qRCIQk6FhatrrC5
+ aeD0RhSePg64eUzqi4V+XG3yjXSL1a5iAkK8WzPBdHfuhmxZQCOO9iiIUm94I4MFexxUnsY9sem
+ i47fU6D1jsmYnfvRHUw==
+X-Proofpoint-GUID: cJGqdjTyqD6ABJzQjOs3O_p3zsFHTgZA
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-05_05,2026-10-05_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0 clxscore=1015
- spamscore=0 malwarescore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610050069
+ phishscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
+ adultscore=0 clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2610050081
 
-On 2026/09/30 05:52 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] kvm: ppc: deadlock in lock_rmap() due to preemption guard in HPT hcalls
-> - [Medium] kvm: ppc: resize_hpt_rehash_hpte() spins with preemption disabled
-> --
+Hi Dmitry,
+On 22:26-20261002, Dmitry Torokhov wrote:
+> Hi Kendall,
 > 
-> commit 68aaf6c48f58de2d582ba27ebef746d63f655779
-> Author: Amit Machhiwal <amachhiw@linux.ibm.com>
+> On Thu, Oct 01, 2026 at 11:12:31AM -0500, Kendall Willis wrote:
+> > Pinctrl is optional to use for gpio-keys so we only care if
+> > -EPROBE_DEFER is the error from pinctrl which would mean that it just
+> > has not been probed yet. All other errors can fall through and the
+> > pinctrl_wakeup variable would be left as NULL.
 > 
-> KVM: PPC: Book3S HV: Add preempt_disable() around virtual-mode HPTE bit-lock users
+> If pinctrl is not specified, devm_pinctrl_get() returns -ENODEV (or NULL
+> if !CONFIG_PINCTRL). Other errors (-ENOMEM, -EINVAL) indicate genuine
+> issues that should not be swallowed.
 > 
-> This patch adds preemption disable guards around virtual-mode HPTE bit-lock
-> users in KVM PPC. This prevents situations where a lock-holding thread
-> gets preempted, starving other threads spinning on the same lock.
+> Please reset ddata->pinctrl to NULL, ignore -ENODEV, and propagate any
+> other errors:
 > 
-> > diff --git a/arch/powerpc/kvm/book3s_64_mmu_hv.c b/arch/powerpc/kvm/book3s_64_mmu_hv.c
-> > index 2ccb3d138f46c..59da958e09cb4 100644
-> > --- a/arch/powerpc/kvm/book3s_64_mmu_hv.c
-> > +++ b/arch/powerpc/kvm/book3s_64_mmu_hv.c
+> 	ddata->pinctrl = devm_pinctrl_get(dev);
+> 	if (IS_ERR(ddata->pinctrl)) {
+> 		error = PTR_ERR(ddata->pinctrl);
+> 		ddata->pinctrl = NULL;
 > 
-> [ ... ]
+> 		if (error != -ENODEV)
+> 			return dev_err_probe(dev, error,
+> 					     "Failed to get pinctrl\n");
+> 	}
 > 
-> > @@ -1219,6 +1229,7 @@ static unsigned long resize_hpt_rehash_hpte(struct kvm_resize_hpt *resize,
-> >  	if (!(vpte & HPTE_V_VALID) && !(vpte & HPTE_V_ABSENT))
-> >  		return 0; /* nothing to do */
-> >  
-> > +	preempt_disable();
-> >  	while (!try_lock_hpte(hptep, HPTE_V_HVLOCK))
-> >  		cpu_relax();
-> >  
+> Thanks.
 > 
-> [Severity: Medium]
-> The commit message states: "On failed lock acquisition the guard is released
-> before the cpu_relax() spin so the lock owner can be scheduled."
-> 
-> Does this unconditional spin with preemption disabled violate that
-> description?
+> -- 
+> Dmitry
 
-Acknowledged.  The commit message description of the preempt_disable() guard is
-imprecise for resize_hpt_rehash_hpte().  I'll look into clarifying it.
+Will update the code to this in the next version. Thanks for pointing
+this out.
 
-> 
-> [ ... ]
-> 
-> > diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
-> > index aa51968e206a7..0b7743bb89d9a 100644
-> > --- a/arch/powerpc/kvm/book3s_hv.c
-> > +++ b/arch/powerpc/kvm/book3s_hv.c
-> 
-> [ ... ]
-> 
-> > @@ -1212,9 +1216,11 @@ int kvmppc_pseries_do_hcall(struct kvm_vcpu *vcpu)
-> >  	case H_CLEAR_REF:
-> >  	case H_PROTECT:
-> >  	case H_BULK_REMOVE:
-> > +		preempt_disable();
-> >  		idx = srcu_read_lock(&kvm->srcu);
-> >  		ret = kvmppc_pseries_do_hpt_hcall(vcpu, req);
-> >  		srcu_read_unlock(&kvm->srcu, idx);
-> > +		preempt_enable();
-> >  		if (ret == H_TOO_HARD)
-> >  			return RESUME_HOST;
-> >  		break;
-> 
-> [Severity: High]
-> Does this preemption guard create a permanent deadlock with lock_rmap()?
-> 
-> For example, a host thread executing kvm_test_clear_dirty_npages() or
-> kvm_unmap_rmapp() acquires lock_rmap() with preemption enabled:
-> 
-> arch/powerpc/kvm/book3s_64_mmu_hv.c:kvm_test_clear_dirty_npages() {
->     ...
->     retry:
->         lock_rmap(rmapp);
->     ...
-> }
-> 
-> If the host thread is preempted while holding the bit-lock, and a VCPU
-> thread for the same guest is scheduled on the same CPU, it can execute an
-> H_ENTER hypercall.
-> 
-> When the VCPU thread reaches kvmppc_do_h_enter(), it attempts to acquire
-> the same rmap lock:
-> 
-> arch/powerpc/kvm/book3s_hv_rm_mmu.c:kvmppc_do_h_enter() {
->     ...
->     if (realmode)
->         rmap = real_vmalloc_addr(rmap);
->     lock_rmap(rmap);
->     ...
-> }
-> 
-> Since preemption is now disabled across the entire hcall by this patch,
-> the VCPU thread could spin indefinitely on contention. It would never yield
-> the CPU, meaning the preempted host thread could never resume to release
-> the lock.
-
-This is correct.  The v2 fix placed preempt_disable() just before try_lock_hpte(),
-but lock_rmap() is acquired earlier in kvm_unmap_rmapp() and kvm_age_rmapp()
-with preemption still enabled — leaving a residual window where a host thread
-can be preempted while holding lock_rmap() alone.  I'll look into fixing this.
-
-Thanks,
-Amit
+Best,
+Kendall
