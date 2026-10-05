@@ -1,84 +1,127 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8FA3DAAB9
-	for <sashiko-reviews@lists.linux.dev>; Mon,  5 Oct 2026 12:01:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4F5449992
+	for <sashiko-reviews@lists.linux.dev>; Mon,  5 Oct 2026 12:24:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791201669; cv=none; b=sGYxQ5sJNJZBD2M3uwDK9St6eJE3VVscj3PcCBE5P5U0cwb56tk0nzAUEnuQuxH5kQIXOxdE6xZZjT53Gf/86jXmqO3FO+/J0SzDsVa5EMaEryUjdtM3cl326747flg+OxjbrV0uGXfwBqWW+SyLkMk9d0iplIh1a0emHpp18yk=
+	t=1791203082; cv=none; b=XuUcNB80mQfvgi2T0loSZfp79IO6qiOpeElR3hU6x0KD2n994Y0oUzqKYrjWqA3gsc6B7oEeuwIw26ckHvS9QSE0Wd96rGs0R4ucB80HDbunVC6E4uiVK1LpcLBKtQcT3vxjAY7ng8BtgjQsDi44+c64JUOMu90AFDPy3gS7/nA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791201669; c=relaxed/simple;
-	bh=H/kHJw9LcGCcKRAnKglPQnsaIZ/ZF5vj0tr6ekL8oKY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:content-type; b=hH9h7PoOFRIYUfGfdLsnXQBF3nOElimJ+UEHCyJypXGHLlw3D79W2//lZUiYfAJoZ3ysgULVa6nntjNffqKZAyVGP/hkeXSPQng/hgIslOFpfUDp8k5muDxKJ7EobDGO1LRJRDoi/pFhRLdygVrkYfKOfNlBTC5ReI3jZ2416PA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=TXBjrn9b; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1791203082; c=relaxed/simple;
+	bh=qUOkumMnwJfFMMoM3tWFuUz3pIkaM5fDFt8gDbkFbvY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jymx3ijaT+YS1r+oZ05QNPNGePFFUbX4X/8VsRPYBYgsp7sLmsO+tr6HtVZFfkzOWtlV5S8ciFRB9bq1i7tzDf/kTWnxZKi2I/8frkmK4vGtnu4r3trv2jjgm8GODrjTA8op2E2sSHF5Yi4iZKuconrCijVvhNxh4DItQ7FLrVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=uve4j2ti; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="TXBjrn9b"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1791201667;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=H/kHJw9LcGCcKRAnKglPQnsaIZ/ZF5vj0tr6ekL8oKY=;
-	b=TXBjrn9bXJyWdi9NT0zKYxxyU5TZnqEAbgxswZlXgOhogglnqjf9WnlW1btVPALFyFjrO2
-	JcdGFyIbkwA1gCTCym0ZnFD9djTkzZ9pDYAS01m8shjXxplm0ANKT54kwwz6U/wvkN4e3k
-	nOLXuRIl0RCOriYcoDzwdZfHLBJD2nw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-446-id0ycPwqM-yF-zVfcjuSkA-1; Mon,
- 05 Oct 2026 08:01:03 -0400
-X-MC-Unique: id0ycPwqM-yF-zVfcjuSkA-1
-X-Mimecast-MFC-AGG-ID: id0ycPwqM-yF-zVfcjuSkA_1791201662
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id ADB261944B13;
-	Mon,  5 Oct 2026 12:01:02 +0000 (UTC)
-Received: from jtornosm-thinkpadp1gen7.rmtes.csb (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
-	by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 3825F1800351;
-	Mon,  5 Oct 2026 12:01:01 +0000 (UTC)
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-To: sashiko-bot@kernel.org
-Cc: jtornosm@redhat.com,
-	linux-pci@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v15 1/2] PCI: Add device-specific reset for Qualcomm SDX62/SDX65 modems
-Date: Mon,  5 Oct 2026 14:00:59 +0200
-Message-ID: <20261005120059.111630-1-jtornosm@redhat.com>
-In-Reply-To: <20261005110741.D53A31F00893@smtp.kernel.org>
-References: <20261005110741.D53A31F00893@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="uve4j2ti"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id EA3A11A116C
+	for <sashiko-reviews@lists.linux.dev>; Mon,  5 Oct 2026 12:24:36 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id BEF64601A5;
+	Mon,  5 Oct 2026 12:24:36 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 87C3F10330608;
+	Mon,  5 Oct 2026 14:24:31 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1791203072; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=eSOfea8A8CadGj+B4+dbXmXA4L8v/ccUNrJQZSRutdQ=;
+	b=uve4j2tikFGqHz/gGZ4rE3ftBIxN6taEuixfv1OBNCDoY46jLdj2k2VQH7gz/HeJ6Kw0Ft
+	daYnPKuDtYa1bpkCfRnfa+w8gz92E+REpuKuF7yEH4stNtB7PyOYTo1QV5uTdElTixDZs1
+	47FJ6s53yMkF72PuDjh9ZIL9FdPuFgIYwE/bf1erg5fwOVeEdScNXYumi9KsAs0KsX8q7z
+	NN4yj+cAoCjFz3BdeaIwiJkgT6Zvxj2QXDRwNv8vf9V0sGlSt5yVT1S7yRPpDlJV49PWCk
+	VA50zG9rvEI9GeQafT3EbLJ6Gk+ocq9A8wUdoqBZl60wnuP/wNRv4ypz6CeIcQ==
+Date: Mon, 5 Oct 2026 14:24:28 +0200
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-rtc@vger.kernel.org
+Subject: Re: [PATCH v2] rtc: ftrtc010: fix cast
+Message-ID: <202610051224282c785760@mail.local>
+References: <20261005111502.159855-1-alexandre.belloni@bootlin.com>
+ <20261005112417.A42BE1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-X-Mimecast-MFC-PROC-ID: RMTHY57TIhrh_d4tI6YtVcD__0_b8KUZevRtQMRf9LA_1791201662
-X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-content-type: text/plain; charset="US-ASCII"; x-default=true
+In-Reply-To: <20261005112417.A42BE1F000FF@smtp.kernel.org>
+X-Last-TLS-Session-Version: TLSv1.3
 
+On 05/10/2026 11:24:17+0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] rtc: ftrtc010: 64-bit promotion breaks negative offset wraparound
+> --
+> 
+> commit 2ccc1a04cd44cfcc28a0e0150aa880f011201f5c
+> Author: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> 
+> rtc: ftrtc010: fix cast
+> 
+> The hour and minute registers will rollover before the multiplication to
+> convert to a number of seconds can exceed an 32bit integer, there is no
+> need to cast them.
+> 
+> Link: https://patch.msgid.link/20261002105946.8rdteIpO7uWGEcTlS65F8iSi4gsRoXi2kgq8FTSaDPA@z/
+> 
+> > diff --git a/drivers/rtc/rtc-ftrtc010.c b/drivers/rtc/rtc-ftrtc010.c
+> > index b29c96be40f4a..c66d4a85f23c1 100644
+> > --- a/drivers/rtc/rtc-ftrtc010.c
+> > +++ b/drivers/rtc/rtc-ftrtc010.c
+> > @@ -72,7 +72,7 @@ static int ftrtc010_rtc_read_time(struct device *dev, struct rtc_time *tm)
+> >  	days = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
+> >  	offset = readl(rtc->rtc_base + FTRTC010_RTC_RECORD);
+> >  
+> > -	time = (timeu64_t)(offset + days * 86400 + hour * 3600 + min * 60 + sec);
+> > +	time = offset + (timeu64_t)days * 86400 + hour * 3600 + min * 60 + sec;
+> 
 > [Severity: High]
-> Could restoring PCI_COMMAND here cause a system address conflict?
->
-> If the saved cmd originally had the PCI_COMMAND_MEMORY bit set (for example,
-> when called from a path like Xen PCIBACK's pcistub_reset_device_state),
-> writing it back immediately enables memory decode. Because the hardware reset
-> has just occurred, the device's BARs will have been cleared to 0.
->
-> Does this create a risk of silent memory corruption by allowing the device to
-> claim physical address 0 before the PCI core has a chance to restore the BARs
-> properly in pci_restore_config_space()?
+> Does this 64-bit promotion break the negative offset wraparound?
+> 
+> In ftrtc010_rtc_set_time(), if the target time is set backwards to a value
+> smaller than the elapsed hardware counter (time < hw_counter), the 64-bit
+> subtraction yields a negative offset that is truncated and stored in the
+> 32-bit offset register as a two's complement value (e.g., 0xFFFFFC18).
+> 
+> The previous implementation explicitly performed offset + hw_counter in
+> 32-bit arithmetic, allowing the negative offset to correctly wrap around
+> modulo 2^32 and yield the correct time.
+> 
+> By removing the outer grouping parentheses and casting days to timeu64_t,
+> the entire addition is promoted to 64-bit arithmetic. Because offset is an
+> unsigned 32-bit integer, it is zero-extended to 64-bit rather than
+> sign-extended, which prevents the necessary 32-bit wraparound.
+> 
+> As a result, the negative offset is added as a massive positive value
+> (e.g., 4,294,967,295), causing the RTC read time to leap about 136 years
+> into the future. Setting the clock backwards triggers this logic error,
+> resulting in corrupted time reading.
+> 
 
-The MHI SoC reset is a device-internal reset that resets the device's
-firmware logic, not a PCIe fundamental reset. PCI config space
-(including BARs) is maintained across this type of reset, so BARs
-are not cleared to 0. The PCI_COMMAND save/restore just enables
-memory access for the reset operation.
+offset is unsigned and is never going to be negative.
 
+> [ ... ]
+> > @@ -92,8 +92,7 @@ static int ftrtc010_rtc_set_time(struct device *dev, struct rtc_time *tm)
+> >  	hour = readl(rtc->rtc_base + FTRTC010_RTC_HOUR);
+> >  	day = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
+> >  
+> > -	offset = time - ((timeu64_t)day * 86400 + (timeu64_t)hour * 3600 +
+> > -			 (timeu64_t)min * 60 + (timeu64_t)sec);
+> > +	offset = time - ((timeu64_t)day * 86400 + hour * 3600 + min * 60 + sec);
+> 
+> [Severity: High]
+> Does setting the time to a value smaller than the elapsed hardware counter
+> generate a two's complement negative offset in this 32-bit unsigned register?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261005111502.159855-1-alexandre.belloni@bootlin.com?part=1
+
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
