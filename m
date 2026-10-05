@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA41648BD26;
-	Mon,  5 Oct 2026 13:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A856548B386;
+	Mon,  5 Oct 2026 14:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791208245; cv=none; b=lGkZIXpjvIbtx5jOPk8uzWoQXa6QQug+9xBXoBQ8zn8q1I2XVpZXF1rWO1/KuO0wixoH1DaqrETZBRAjfrn2LBLubzh858/Ah/SUMaT4aZgmrbBN7Q638B5aDPy/hz2Ju3j4bL7W8dYqJ9H89ZB3GLuj/0x9yvbXtfU2/IgSPCE=
+	t=1791212119; cv=none; b=L4R+QwCX2tXvqMAyrwUD5rPs+TTeD7ZWgMETuehiLsJYGJ9XCF6c7Cq29k1tiSAoaC0tmB74YMwaQ6E592Rn3Xzw7lLaAYNa6rV+JUWazFMGHBK7ARaJCnL7h5zB4wsXokhIH8nVZVoYYXcN5Sm64z+Ud5XFlXFE/XtMydTklM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791208245; c=relaxed/simple;
-	bh=EbVxswirfPudSM4HJY8LWk3cfzRiX/+HVgm2KbKQ9eM=;
+	s=arc-20240116; t=1791212119; c=relaxed/simple;
+	bh=wkNdmorawwoFAHdJAHdzMDu5tZxmxU4H1yRd2gvj2jI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nMJLz0LXzlZaJCdwM8W3HuLAT7CTZoIO9MREyRPuIFbqlwmKZOHaUQ+uCaQHkdV2/5xtV7LWtgn+hCd8jGjJmOeVo/UAuHTBVZuunOTYsXJu/mMjTRC7OXk2BN2W0IyOEx38HDHC6sWSMLoEcpnKgaDyA3nCdIE/YWK4WBLZR/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bfuRrMtq; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=G7O0j8Szn9k27Yyfv71ZMjzF3Gd+TwyKA4qWzJFk1MYZKEtlxhAaNr1RKoH+Plzq1HrkCA+x6XpCv51inaNy3GS+my/kOa76Nf3cZ1WsI3jeTNmhMADqC79y4uenrZQM0LbTam4FOVv9SzN6uoTLk++aQqiZVnDZ6zLmO15U2JM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KQDOI8nl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bfuRrMtq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F951F000FF;
-	Mon,  5 Oct 2026 13:50:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KQDOI8nl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 503DC1F00898;
+	Mon,  5 Oct 2026 14:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791208243;
-	bh=nw0bPeo1wRUICh0D3V423poJaprJh+1r7N7ZXcacTag=;
+	s=k20260515; t=1791212115;
+	bh=0pDITv/g0LRTGIDS8ucfGtN9ZceNhd2q7WnJ2mDYUPQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=bfuRrMtqMChLZ6ocYcYECzVIu6tKiJZT8CK/Qsc5DYAxlu26zWzn5ULL9qSRHNrzA
-	 dcrqEIOJP2yLXjvX5w00OII8Wg/92UNlfdbHh7Dt5VUExbHMy2KHS0eZrrQfU0yZUN
-	 i/es33fvhXGVJ9Rm1A9EjEdgJn3r4qGlhNYuNMxLAf1E6RawaKYMe/4LxgwnjvZUI2
-	 J8I/yqozoH8Mg7/NdWkUEO3ssBRWQ8I31WiHHnCaaEquO/xGAVX2yJ0hBnPbDFPUeO
-	 HWPVAE6fypJO9uV9OM1QDU8qBDYmVAQjNEFd8QCu+cb215PWTfWJEORVv9vdN4zIbM
-	 QgS5MwIX5+4bw==
-Message-ID: <f5144b5b-0890-4c19-9e0b-1c8a7b462233@kernel.org>
-Date: Mon, 5 Oct 2026 16:50:41 +0300
+	b=KQDOI8nlH+ExOhlXBr5Y0Gd+8ziG0Q2vcx3Oba42c5owBOesvK++W8k9P+qPCSnAf
+	 pJyNV6Ub3ce91O44ZpKOLqT9batwa0sW0NsSW3+OpsaD1O7Un9UlpjdVyx4aydreb5
+	 geetBm9Odyxj9Pu3y3kbLfx3/cN88Zx1WwY699on0vrH9Dd3cdCx2EgGby1cfg/7d/
+	 LOVewh3SOzhd0HVZGti7gaoXw7rHcfnpQnebwbhJghIGnPEg/O6HpHBex3b4mupptk
+	 Bsi3Ww8+lMzMcHJbCNgGc7IsdSnX1hFKj40r9ngpb2CVvrK1FSbu/cCgdBtBmiu0oA
+	 zj0JVsQyF5ExA==
+Message-ID: <595ca63d-5768-48ca-bc2e-aebb1fafd0d6@kernel.org>
+Date: Mon, 5 Oct 2026 17:55:12 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -35,63 +35,188 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/9] PCI: rzg3s-host: Select PCI_HOST_COMMON
+Subject: Re: [PATCH v5 9/9] PCI: rzg3s-host: Add bridge::reset_root_port()
 To: sashiko-reviews@lists.linux.dev
 Cc: wsa+renesas@sang-engineering.com, linux-pci@vger.kernel.org
 References: <20261002110935.2004349-1-claudiu.beznea@kernel.org>
- <20261002110935.2004349-4-claudiu.beznea@kernel.org>
- <20261002112227.DB32A1F000FF@smtp.kernel.org>
+ <20261002110935.2004349-10-claudiu.beznea@kernel.org>
+ <20261002112518.9DD401F000FF@smtp.kernel.org>
 Content-Language: en-US
 From: Claudiu Beznea <claudiu.beznea@kernel.org>
-In-Reply-To: <20261002112227.DB32A1F000FF@smtp.kernel.org>
+In-Reply-To: <20261002112518.9DD401F000FF@smtp.kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 10/2/26 14:22, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] Kconfig: unnecessary selection of PCI_HOST_COMMON causes kernel bloat
+On 10/2/26 14:25, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] pci: rzg3s: INTx/MSI mask state loss due to stale register snapshot
+> - [High] pci: rzg3s: fatal unpowered MMIO access in PM notifier after reset failure
+> - [High] pci: rzg3s: lockless iteration over bus->devices causes list corruption
+> - [Medium] pci: rzg3s: missing I/O flush allows IRQs to fire after synchronize_irq
 > --
 > 
-> commit 45902cd2b000fac7ca52cf6e5a8c266554c39e27
+> commit c5ffdc83b56df877b7b137c1229cfe9487c3fb34
 > Author: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+> Subject: PCI: rzg3s-host: Add bridge::reset_root_port()
 > 
-> PCI: rzg3s-host: Select PCI_HOST_COMMON
+> This commit adds a reset_root_port() callback for the rzg3s-host bridge.
+> It introduces the started boolean to track the controller state and prevents
+> double start/stop from breaking reference counters. It also updates the link
+> event and power management notifier paths to handle the interrupts correctly.
 > 
-> This commit adds a select for PCI_HOST_COMMON to the PCIE_RENESAS_RZG3S_HOST
-> kconfig option. It states this is needed for pci_host_common_link_train_delay()
-> to avoid build failures.
+>> diff --git a/drivers/pci/controller/pcie-rzg3s-host.c b/drivers/pci/controller/pcie-rzg3s-host.c
+>> index 78e783928b9dc..eea215818633b 100644
+>> --- a/drivers/pci/controller/pcie-rzg3s-host.c
+>> +++ b/drivers/pci/controller/pcie-rzg3s-host.c
+> [ ... ]
+>> @@ -1115,6 +1117,11 @@ static void rzg3s_pcie_link_event(struct rzg3s_pcie_host *host)
+>>   
+>>   		dev_info(host->dev, "PCIe link down, removing devices\n");
+>>   
+>> +		for_each_pci_bridge(dev, bridge->bus) {
+>> +			if (pci_pcie_type(dev) == PCI_EXP_TYPE_ROOT_PORT)
+>> +				pci_host_handle_link_down(dev);
+>> +		}
+>> +
+>>   		pci_lock_rescan_remove();
 > 
->> diff --git a/drivers/pci/controller/Kconfig b/drivers/pci/controller/Kconfig
->> index d246bbe37948e..3e2889a7f1a09 100644
->> --- a/drivers/pci/controller/Kconfig
->> +++ b/drivers/pci/controller/Kconfig
->> @@ -296,6 +296,7 @@ config PCIE_RENESAS_RZG3S_HOST
->>   	depends on ARCH_RENESAS || COMPILE_TEST
->>   	select MFD_SYSCON
->>   	select IRQ_MSI_LIB
->> +	select PCI_HOST_COMMON
+> [Severity: High]
+> Is it safe to iterate over bus->devices without holding the PCI
+> rescan/remove lock?
+
+Doing this will lead to deadlock on the following calls:
+pci_host_handle_link_down() ->
+   pcie_do_recovery() ->
+     pci_host_reset_root_port() ->
+       pci_lock_rescan_remove()
+
+> 
+> It looks like concurrent modifications to the list from sysfs rescan or
+> hotplug events could cause list corruption or a use-after-free. The
+> necessary lock is correctly taken immediately after this loop for the removal
+> step, but appears to be omitted for this iteration.
+
+I kept it as is to align with the current usage of pci_host_handle_link_down() 
+in other drivers.
+
+> 
+> [ ... ]
+>> @@ -1956,6 +1974,64 @@ static int rzg3s_pcie_host_start(struct rzg3s_pcie_host *host)
+>>   	return ret;
+>>   }
+>>   
+>> +static int rzg3s_pcie_host_reset_root_port(struct pci_host_bridge *bridge,
+>> +					   struct pci_dev *pdev)
+>> +{
+>> +	struct rzg3s_pcie_host *host = pci_host_bridge_priv(bridge);
+>> +	unsigned long flags;
+>> +	u32 irqs;
+>> +	int ret;
+>> +
+>> +	/* Mask link up/down interrupts. */
+>> +	writel(0, host->axi + RZG3S_PCI_PEIE0);
+>> +
+>> +	/* Mask INTx and MSI interrupts. */
+>> +	raw_spin_lock_irqsave(&host->hw_lock, flags);
+>> +	irqs = readl(host->axi + RZG3S_PCI_PINTRCVIE);
+>> +	writel(0, host->axi + RZG3S_PCI_PINTRCVIE);
+>> +	raw_spin_unlock_irqrestore(&host->hw_lock, flags);
+>> +
+>> +	/*
+>> +	 * Make sure the next operations are not disturbed by any pending
+>> +	 * IRQs.
+>> +	 */
+>> +	if (IS_ENABLED(CONFIG_PCI_MSI))
+>> +		synchronize_irq(host->msi.irq);
 > 
 > [Severity: Medium]
-> Is this select actually required for the build?
-> 
-> The commit message notes that pci_host_common_link_train_delay() depends on
-> PCI_HOST_COMMON. However, looking at the header,
-> pci_host_common_link_train_delay() is implemented as a static inline function
-> entirely within pci-host-common.h and only requires linux/delay.h. There
-> doesn't appear to be any link dependency on pci-host-common.c.
+> Does the posted write to the interrupt mask register need to be flushed
+> with a dummy read before calling synchronize_irq()?
 
-That's true. I did a mistake here. I should have select this flag on patch 9 
-which uses pci_host_handle_link_down().
+OK
 
 > 
-> Since selecting a tristate from a bool config forces PCI_HOST_COMMON and
-> PCI_ECAM to be built-in rather than modules, could this be pulling in
-> unneeded infrastructure and unnecessarily increasing the vmlinux size?
+> Without a read-back to ensure the mask has reached the physical hardware, the
+> controller might still emit an interrupt while synchronize_irq() runs,
+> potentially creating a race window where the handler crashes when the
+> controller clocks are subsequently cut in rzg3s_pcie_host_stop().
 > 
->>   	help
->>   	  Say Y here if you want PCIe host controller support on Renesas RZ/G3S
->>   	  SoC.
+>> +	for (unsigned int i = 0; i < PCI_NUM_INTX; i++)
+>> +		synchronize_irq(host->intx_irqs[i]);
+>> +
+>> +	ret = rzg3s_pcie_host_stop(host);
+>> +	if (ret) {
+>> +		dev_err(host->dev, "Failed to stop the host!\n");
+>> +		goto unmask_irqs;
+>> +	}
+>> +
+>> +	ret = rzg3s_pcie_host_start(host, false);
+>> +	if (ret) {
+>> +		dev_err(host->dev, "Failed to start the host!\n");
+>> +
+>> +		/*
+>> +		 * Don't unmask IRQs. We are in a bad state here and we
+>> +		 * can recover only through a suspend/resume cycle. Just
+>> +		 * return and preserve the stop state.
+>> +		 */
+>> +		return ret;
+>> +	}
+>> +
+>> +unmask_irqs:
+>> +	/* Unmask INTx and MSI interrupts. */
+>> +	raw_spin_lock_irqsave(&host->hw_lock, flags);
+>> +	writel_relaxed(irqs, host->axi + RZG3S_PCI_PINTRCVIE);
+>> +	raw_spin_unlock_irqrestore(&host->hw_lock, flags);
+> 
+> [Severity: High]
+> Could this unconditional restore overwrite mask changes made by concurrent
+> INTx mask/unmask operations?
+> 
+> Since hw_lock was dropped earlier to wait for IRQs and execute the
+> controller stop/start sequence, any intermediate updates to the register by
+> other drivers dynamically masking or unmasking their IRQs might be
+> permanently lost here when the old snapshot is restored.
+
+[1] had the mechanism to avoid this. It was discussed (not exactly on this 
+particular use case) to drop it.
+
+[1] 
+https://lore.kernel.org/all/n7cafny3y6rr63tx6rkt5umxl3f4rsxpu2ojze7luudzzr4flb@egj7dru2bnhq
+
+> 
+>> +
+>> +	/* Unmask link up/down interrupts. */
+>> +	writel_relaxed(RZG3S_PCI_PEIE0_DL_UPDOWN, host->axi + RZG3S_PCI_PEIE0);
+>> +
+>> +	host->started = true;
+>> +
+>> +	return ret;
+>> +}
+> [ ... ]
+>> @@ -2036,6 +2112,7 @@ static int rzg3s_pcie_pm_notifier(struct notifier_block *nb,
+>>   	case PM_SUSPEND_PREPARE:
+>>   		/* Disable link up/down interrupts. */
+>>   		disable_irq(host->event_irq);
+>> +		writel_relaxed(0, host->axi + RZG3S_PCI_PEIE0);
+> 
+> [Severity: High]
+> Could this write cause a synchronous external abort if the controller is
+> currently unpowered?
+> 
+> If rzg3s_pcie_host_start() fails inside rzg3s_pcie_host_reset_root_port(),
+> the function intentionally returns early, leaving host->started false and
+> the controller in reset with clocks disabled. A subsequent system suspend
+> would unconditionally hit this AXI write, which might hang the bus since
+> the target peripheral is held in reset.
+
+Will update to take into account the host->started in both PM_SUSPEND_PREPARE 
+and PM_POST_SUSPEND.
+
+> 
+>>   		break;
+>>   
+>>   	case PM_POST_SUSPEND:
 > 
 
