@@ -1,118 +1,112 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7397342EEAC
-	for <sashiko-reviews@lists.linux.dev>; Mon,  5 Oct 2026 22:34:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073C14570D8;
+	Mon,  5 Oct 2026 23:49:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791239645; cv=none; b=IHuyhWYJsrgvU1ie/g3sUTA8pe3qI5kXWwA1vYpJ7kJPrSo4r8aDWzCC11EBwph2oaI3bxohqNqzn/KHPF3jsEBGDicUhC4ogZ67YDsKkZ+YdFBaUstY8ZVhPMN/7+LXV7JgERmHHSJpIq+25AylJTyrcpI0WT5X4jaITj6qzPE=
+	t=1791244150; cv=none; b=smqc1rVTBe5SlMrOeXArLtyzaSqEnycJUoSxO81kMbS7jiKUKRWE8z7OU3+tqDVfeyPZUQdH/Bgmf2cIwCQnLg/JveIN/0YW6MANLN31bREuNl0lDQvt7Vxc9gHCgaLt+zV7GTOzSiNywx//ZmCpfKAqrB4OaBvRK7e8xJQTAi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791239645; c=relaxed/simple;
-	bh=V1qsBrhvz7v25JC3ijOWpLP9V3s8Bt+LPOK287APpMQ=;
+	s=arc-20240116; t=1791244150; c=relaxed/simple;
+	bh=lZTwnOoFTGNNdEYGUvrj5bog1h4AiMkbiUbGM4A//QY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lLX9g9nGvEwHb7HAv0Q3Pt2+o53QBABL3vstKCdiQb+PQTtB+ZK4S6Vqh/P63PIEhK45hOeUFibYQyBGtRXWJuNphOWLBSoXpbOv24MVKZ3Vzsw3LODScBywjfLqp+gSyQKd7W82YitL2ZotAEbF9k/Czn6pWnyB7HvQZh01Gd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=EWYbZVmH; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=uLXDzjXYELjX2xzjI5eUo1+wQ/p5D73bUA1AcSe/58PeO/tA6orIZIucU9vDm9A9S3nNZjIt+RU4btaWf1AsxvQmjgqnikgIdjbg0cQjW1hk0j64YL8Y7QHnpfPs6Id80t9pIfIP6jwjvWL15MlSsqhSmhDl4mdDCj5QHMpZoAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S1eXY5e/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="EWYbZVmH"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2e2e4ef20beso21835ad.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 05 Oct 2026 15:34:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1791239643; x=1791844443; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=OvVZJ9mVxE/RIGdj4jq/yHj7p5dyaauFgOlJsChu8aE=;
-        b=EWYbZVmHVkXzgyKb+13nYc6/jhrF2HesdTtHJ6ARVNMTt1ABhmPl/fwqPmyxJeLRJx
-         sA3mO3Z6Jf0Jkg5Lot6dP5jk50ASaGG2fmcRooEO57GxCSeEqq99Q9SURuRVTUabsyH7
-         JU95I3wE9Aq2OCe7JeMYv+1ZGpwF+gbCnwWz+Z1/OeLNoZBWGsdAHPzOj5F961+oxlKW
-         PyeLNoee6o3G1rNyENgsINAd6pzJGHuGWxAmdjMKMR/ekpvCRGR6D9qn2CgHx+/CLmLy
-         vM6Z/ZuEYDQPL+ozgjrUFiIlSmrUqy21b6MRabcoQ0gHdUqzNV3m7RbLW2qPRshRMadX
-         Ez0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791239643; x=1791844443;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=OvVZJ9mVxE/RIGdj4jq/yHj7p5dyaauFgOlJsChu8aE=;
-        b=K/ah67G8MM8GdPvh685h0WQmBgQqpa0Dw7RMEBShTWpF0b+JopQMiQK2RS4svQKiQJ
-         vpb5uqRAy4tM+HZ+6qn8gLfWxcP5vhjaxMeI3RBTg1dx+34tcboDgaApQgGUMHIfhUrc
-         I8tKB3xazCNhU0Ptb0lRk84zZDHJ4+saUugFGd8Q10d+jTctzs/T/M9Fd0cc5iRdiYMp
-         9zGpyFDfovl8+0JyTmEHFZlZfkfUjC0vTjDxBnzkeXKxIzG1Etvy28f3znTIUKa5590T
-         5dwgxYkO5QfNJ5HYVe3vqSJ0zQ8ZhGJFYG3CJzrXDJckci9xVpN1qroU3/rsTSBZK1Mf
-         5tdA==
-X-Gm-Message-State: AFq9FYJL3c4azblz9d4f4pXOagnKsUYRfES4qxjXLGb2dQN3KRV3vW8p
-	TzrbLMbHUJ8IQhWNB5+Ecv8oT8ly1CkVLWfmXYqSTjKLxAuzjtCBm+nBWdV+IAAPHF533wceCC/
-	hO3uvjQ==
-X-Gm-Gg: AYBFou36R1h4aCvnxwJmcFUfr0ub+UDji58GyNsXbJJIC8QSUDT6iZ6ahZ6Zi7Yel9k
-	yIacOh3wXewxb/xDVfGKX1VX72G2ONktfrLeavmRMGQFjBoDD/TRI+MdSdGfXXgo0zbtIQPrhxr
-	JaXZBvnOY2d8FaqxgSWspvdpwcoLoutWZVBubd9TztBzHIOJLjIR+idevB6ORsgKYRH+wMn1vXt
-	HXJca2gOI0jq+8wxHLhqdFi9HC+137GEo3Gojok/QiL0rSkL3WNDqzMCE4vWMNcrp734vwCqJy5
-	2fnL4pEsJC5Y/4rEYIslXJ38AovpBZseYfyX6HHeAAOsvYnBFsCaQsvMG9+Lx6BnPuJinSbxwGk
-	/npIHUWhVxsB3Bpe36XYLTbD0Fv5JGvVE8XFRzJz5Hkat3w15sP6RN99rUZ9aEVaLTA9JA4iaN1
-	ZHCJYZTR8K9cU/nz5tHELx3PSraVm3SJ+bpzm/+lolCbnxMALrHndzfrZPoapAR1B+VuyKu4aH7
-	iia/yr8svEFWmmeMkqGFADnR7ngU45V
-X-Received: by 2002:a17:902:ea0c:b0:2df:8e89:3bff with SMTP id d9443c01a7336-2e5cd1f1170mr778865ad.17.1791239642076;
-        Mon, 05 Oct 2026 15:34:02 -0700 (PDT)
-Received: from google.com (230.0.127.34.bc.googleusercontent.com. [34.127.0.230])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a853cb7cb3sm1489772a91.11.2026.10.05.15.34.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Oct 2026 15:34:01 -0700 (PDT)
-Date: Mon, 5 Oct 2026 22:33:56 +0000
-From: Lisa Wang <wyihan@google.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S1eXY5e/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865ED1F000FF;
+	Mon,  5 Oct 2026 23:49:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791244148;
+	bh=3m1AWPWn5W99hApseKdyu3DOT2c4xLUVxX2/bA6UP5A=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=S1eXY5e/JCKHrtr2oaZkkfgZH/YcQaWdP7W0TG+k+O2qarU7V0GWZ2fMO3OfC+5f9
+	 KaFWG9u4g8d5aOPdJ5KMOjeSfxKI+piZ0j3rRu2tYyK+yoKFIHbArIo6M2ohmTCKfM
+	 0+tSxBAydkP5rkj8g/Zn1f8g3G5P//yPkNsMOL86Mde+bAqSIDP7WC9Ixr2JBzngOV
+	 Ys1W5aNaU9Gvv8iyFVPlnnnGnu6VvfEG4L1/M3l08tPMPJz1wuz5P9M4svwXdWYy7b
+	 by70zCDvRubJrAsj68KJDdmsqpmkzxaSFug0oOejdlUUoNExMtMUrFE5XnBXRIYsn4
+	 9XVcmD8cn1bUw==
+Date: Mon, 5 Oct 2026 16:49:07 -0700
+From: Namhyung Kim <namhyung@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Subject: Re: [PATCH v15 10/23] KVM: selftests: Set up TDX boot parameters
- region
-Message-ID: <asQl1OrH2vtnhHS4@google.com>
-References: <20261001-tdx-selftests-v15-0-7c62a5d8a992@google.com>
- <20261001-tdx-selftests-v15-10-7c62a5d8a992@google.com>
- <20261002091329.9ACBE1F00893@smtp.kernel.org>
+Cc: Michal Pluta <michalpl2003@gmail.com>, linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH 1/8] perf bench futex: Retry futex_wait() when
+ interrupted by a signal
+Message-ID: <asQ3cyGMAJbVUEoR@google.com>
+References: <20260926190407.1106421-1-michalpl2003@gmail.com>
+ <20260926190407.1106421-2-michalpl2003@gmail.com>
+ <20260926191347.E59281F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261002091329.9ACBE1F00893@smtp.kernel.org>
+In-Reply-To: <20260926191347.E59281F000FF@smtp.kernel.org>
 
-On Fri, Oct 02, 2026 at 09:13:29AM +0000, sashiko-bot@kernel.org wrote:
-> [ ... ]
-> > +	/* Set parameters! */
-> > +	params->cr0 = kvm_get_default_cr0();
-> > +	TEST_ASSERT(vm->mmu.pgd < (1ULL << 32),
-> > +		    "PGD must be within 32-bit address space for 32-bit boot code");
-> > +	params->cr3 = vm->mmu.pgd;
-> > +	params->cr4 = cr4;
-> > +	params->idtr.base = vm->arch.idt;
-> > +	params->idtr.limit = kvm_get_default_idt_limit();
-> > +	params->gdtr.base = vm->arch.gdt;
-> > +	params->gdtr.limit = kvm_get_default_gdt_limit();
-> > +
-> > +	TEST_ASSERT(params->idtr.base < (1ULL << 32),
-> > +		    "idt must be within 32-bit address space for 32-bit boot code");
-> > +	TEST_ASSERT(params->gdtr.base < (1ULL << 32),
-> > +		    "gdt must be within 32-bit address space for 32-bit boot code");
-> 
-> [Severity: Low]
-> Does this assignment silently truncate the 64-bit vm->arch.idt and
-> vm->arch.gdt addresses?
-> 
-> Since params->idtr.base and params->gdtr.base are 32-bit fields, the
-> subsequent TEST_ASSERT checks evaluate the already-truncated values. If a
-> test allocates an IDT or GDT address beyond 4GB, the assertions will
-> always be trivially true because the upper 32 bits are lost before the
-> check.
-> 
-> This could lead to confusing test failures during guest execution instead
-> of properly failing the assertion here.
-> 
-> Should these assertions check vm->arch.idt and vm->arch.gdt directly
-> before assigning them to the base fields?
+Hello,
 
-Will update the assertions to check vm->arch.idt and vm->arch.gdt directly.
+On Sat, Sep 26, 2026 at 07:13:47PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] perf: deadlock in futex wake-parallel due to missed one-shot futex_wake()
+> --
+> 
+> commit 4425d175409b64dbe77117f655f0ffa4eca2b864
+> Author: Michal Pluta <michalpl2003@gmail.com>
+> 
+> perf bench futex: Retry futex_wait() when interrupted by a signal
+> 
+> The worker threads in 'futex wake' and 'futex wake-parallel' are meant
+> to go back to sleep when a signal interrupts futex_wait(), but the check
+> never works. futex_wait() returns -1 and sets errno, so comparing its
+> return value with EINTR is always true and the loop ends at the first
+> interruption.
+> 
+> > diff --git a/tools/perf/bench/futex-wake-parallel.c b/tools/perf/bench/futex-wake-parallel.c
+> > index 6aede7c46b337..a089d8ee4b023 100644
+> > --- a/tools/perf/bench/futex-wake-parallel.c
+> > +++ b/tools/perf/bench/futex-wake-parallel.c
+> > @@ -139,10 +139,9 @@ static void *blocked_workerfn(void *arg __maybe_unused)
+> >  	cond_wait(&thread_worker, &thread_lock);
+> >  	mutex_unlock(&thread_lock);
+> >  
+> > -	while (1) { /* handle spurious wakeups */
+> > -		if (futex_wait(&futex, 0, NULL, futex_flag) != EINTR)
+> > -			break;
+> > -	}
+> > +	/* Retry if the wait was interrupted by a signal. */
+> > +	while (futex_wait(&futex, 0, NULL, futex_flag) == -1 && errno == EINTR)
+> > +		;
+> 
+> [Severity: Medium]
+> Can this retry loop cause a deadlock if a signal interrupts the wait?
+> 
+> If blocked_workerfn() receives a signal, futex_wait() returns -1 and
+> errno == EINTR. The thread then temporarily leaves the futex wait queue before
+> looping back to call futex_wait() again.
+> 
+> If waking_workerfn() in tools/perf/bench/futex-wake-parallel.c happens to
+> execute its single futex_wake() call during this unqueued window:
+> 
+> tools/perf/bench/futex-wake-parallel.c:waking_workerfn() {
+>     ...
+>     waker->nwoken = futex_wake(&futex, nwakes, futex_flag);
+>     if (waker->nwoken != nwakes)
+>         warnx("couldn't wakeup all tasks (%d/%d)",
+>     ...
+> }
+> 
+> Will the waker thread miss the unqueued worker and exit, leaving the worker to
+> block forever on its next futex_wait() and causing the main thread to hang in
+> pthread_join()?
+
+Looks like this patch discovers an existing bug.
+
+Probably you can add a logic at the end of wakeup_threads() to check
+each waker's nwoken and call futex_wake() additionally if needed.
+
+Thanks,
+Namhyung
 
