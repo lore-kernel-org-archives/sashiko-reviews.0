@@ -1,1056 +1,196 @@
-Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76CE459AE4
-	for <sashiko-reviews@lists.linux.dev>; Tue,  6 Oct 2026 13:05:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.160.73.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCD83E9C2B;
+	Tue,  6 Oct 2026 13:12:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791291945; cv=none; b=YxkFJ3LMZKSEaC/Li4SkzyUNPxlQGGa+JovFJ/2WJzUSvSUg8rAdcPYOF2f+wIcBtdNPPIa5pDIQ/rbk2lXLc9dHwi4aV5eJMX4vPpl8CGUPCzbFsg+GZOBM+9xLPAvxzyc6Guj+EOUwabO/J7B4hRBuM+OinKj9gaW0JMBpWlQ=
+	t=1791292352; cv=none; b=eTtC0BTiko90sf7YF8Jk1E2p8O6yNAcIFlhc7NJ+qaoy/Gd4HZQ0Ysbj0Dn68wFxzWUoJjqVpuKpeAs7J7kEkDvIS+IPJr0+hGNpe7Avcxpt2BHuJVs4IfZtEEoA2imAFMa7UIYxaQvFfiOLcsB7IT5r1VucOY+p94BKecZ/Go4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791291945; c=relaxed/simple;
-	bh=mhNwfCszmkilBWyo+m9QZdTp6GtGco/mHT1PhE+IiFw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XtQbTexx6mklczOtntDDsjMiM4N7te6ZJMsCqSmWItfsBF31Ai7GuCyoqG50sDRtA3nUmfDrz01KqLUhJGQRcIrY5HENvuPGG5mVDELQVClrU9kGevYEpqYgTmPnHf5WP8Y5VidBZHXmCh+qjvZYt2O4RAibGumf1YAEjrQXpUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org; spf=pass smtp.mailfrom=narfation.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=pOG53iOD; arc=none smtp.client-ip=213.160.73.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=narfation.org
+	s=arc-20240116; t=1791292352; c=relaxed/simple;
+	bh=ZCVYTUZnTXZyTrRVjphJvOYu/pMx9KdBpM4QUck0toA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IqMii0Z5dRnqgP57Ml4WnkDUYk1vp6szEwyoIZ1UdjToeWOnunD+0M3jhdSX6WyW8T2+6QSSw9CHgYOjFRSC58Fzb9vXqGWDra4/g7D1CXX4qMSlGkY9JOnfX+M9WF+EcR1hqkdBs+touOFJee1prLwuzh7tYDDuzsNL2IYQ69s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SYTWQ01h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="pOG53iOD"
-Received: by dvalin.narfation.org (Postfix) id 8A05020411;
-	Tue, 06 Oct 2026 13:05:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
-	s=20121; t=1791291925;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=leMROTpkwTJLP4gquGwlXc+Y9Mr/ZVFaEnXalX39paE=;
-	b=pOG53iODMpPMRnZQIsNIS7WPci8nCkm1zav21wIRMWyBhsxOuqFNzrEPjeVhD6Z+vd5aeO
-	fyXuL+K/wwdsGwxJr6Z32B0u0hof9ySoXHUPR1tbsGxtEU0ENc1OdqKzD+uJuJV5Zh2ctF
-	rJh2M4zV9PdZebl5+9gTBeKAmb0Teqg=
-From: Sven Eckelmann <sven@narfation.org>
-To: Linus =?UTF-8?B?TMO8c3Npbmc=?= <linus.luessing@c0d3.blue>
-Cc: sashiko-reviews@lists.linux.dev, b.a.t.m.a.n@lists.open-mesh.org
-Subject:
- Re: [batadv,v13 5/5] batman-adv: avoid superfluous DAT DHT_PUT additions to
- local DAT
-Date: Tue, 06 Oct 2026 15:05:22 +0200
-Message-ID: <3435112.aeNJFYEL58@sven-l14>
-In-Reply-To: <20261006121937.398DD1F000FF@smtp.kernel.org>
-References:
- <20261006120647.8646-1-linus.luessing@c0d3.blue>
- <20261006120647.8646-6-linus.luessing@c0d3.blue>
- <20261006121937.398DD1F000FF@smtp.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SYTWQ01h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC911F000FF;
+	Tue,  6 Oct 2026 13:12:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791292350;
+	bh=4LvfoqhtHgWbDEgayj3ZprDs3tmO35VoOivMkzGAMAE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=SYTWQ01hxci9COZZPeaJMyU7ds8x+Ml/VT9Iy2Vq7EUyxPKq26gGYkkzb6/N7j3Ip
+	 SZr5C3cLe0253lqhrez/ABSMmcAC4+k+wtoeD9tKAIGgW3RHZPgKopCCbq6a/dr2ZE
+	 SJ7K2QnQERM87lSmT4thIgqSxHUNgx82FoBIfA9GccKjLWS+PHQYSGRDKgc1BBENCc
+	 oqsWMaG2yuQPD/Zwn38hz/PxUu2QlLSJl4+fhlEZRxALQZHCGoed/I163cePIC47y5
+	 vCmRjKq8The2J2A2ra9M4ySW4IUnaIcb3YxhnTMKBVFYjtBt9lyZGBuHMypkUBajiz
+	 /JNFaK8JZYboQ==
+Message-ID: <0254e559-b9d2-4563-9864-0aef85b9b5a3@kernel.org>
+Date: Tue, 6 Oct 2026 15:12:28 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart3441699.44csPzL39Z";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/7] zloop: add degrade_element control command
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-scsi@vger.kernel.org
+References: <20261006124510.882017-1-dlemoal@kernel.org>
+ <20261006124510.882017-6-dlemoal@kernel.org>
+ <20261006125600.7F72C1F000FF@smtp.kernel.org>
+From: Damien Le Moal <dlemoal@kernel.org>
+Content-Language: en-US
+Organization: Western Digital Research
+In-Reply-To: <20261006125600.7F72C1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
---nextPart3441699.44csPzL39Z
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Sven Eckelmann <sven@narfation.org>
-To: Linus =?UTF-8?B?TMO8c3Npbmc=?= <linus.luessing@c0d3.blue>
-Cc: sashiko-reviews@lists.linux.dev, b.a.t.m.a.n@lists.open-mesh.org
-Date: Tue, 06 Oct 2026 15:05:22 +0200
-Message-ID: <3435112.aeNJFYEL58@sven-l14>
-In-Reply-To: <20261006121937.398DD1F000FF@smtp.kernel.org>
-MIME-Version: 1.0
+On 2026/10/06 14:56, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Medium] block/zloop: removing degraded element re-enables I/O during transition
+> - [Low] block/zloop: format string arguments swapped in degrade_element
+> - [Low] block/zloop: missing validation for ZLOOP_OPT_ELEMENT_ID
+> --
+> 
+> commit a9552af0fb1bf978fc86a4c32f3c9541477e5165
+> Author: Damien Le Moal <dlemoal@kernel.org>
+> Subject: zloop: add degrade_element control command
+> 
+> This commit introduces a new degrade_element control command for zloop 
+> devices to simulate degraded storage elements. Read and write operations 
+> to zones served by a degraded element are failed based on element type. 
+> The patch also updates storage element status accesses to use READ_ONCE() 
+> and WRITE_ONCE() for safe lockless checks in the I/O path.
+> 
+>> diff --git a/drivers/block/zloop.c b/drivers/block/zloop.c
+>> index d6a45f2148576..3913bd2299108 100644
+>> --- a/drivers/block/zloop.c
+>> +++ b/drivers/block/zloop.c
+> 
+> [ ... ]
+> 
+>> @@ -982,11 +986,26 @@ static bool zloop_prep_rq(struct zloop_device *zlo, struct request *rq)
+>>  	spin_lock(&zone->wp_lock);
+>>  
+>>  	if (zlo->nr_elements) {
+>> +		struct blk_storage_element *se;
+>> +
+>>  		if (zone->cond == BLK_ZONE_COND_OFFLINE ||
+>>  		    (zone->cond == BLK_ZONE_COND_READONLY && is_write)) {
+>>  			ret = false;
+>>  			goto unlock;
+>>  		}
+>> +
+>> +		/*
+>> +		 * Check the health state of the storage element serving the
+>> +		 * zone.
+>> +		 */
+>> +		if (is_write)
+>> +			se = &zlo->elements[zone->wr_se_id - 1];
+>> +		else
+>> +			se = &zlo->elements[zone->rd_se_id - 1];
+>> +		if (READ_ONCE(se->status) == BLK_SE_STS_DEGRADED) {
+>> +			ret = false;
+>> +			goto unlock;
+>> +		}
+>>  	}
+> 
+> [ ... ]
+> 
+>> @@ -1249,9 +1293,9 @@ static int zloop_remove_element(struct gendisk *disk, unsigned int element_id)
+>>  	 * modify the zones.
+>>  	 */
+>>  	zlo->remove_element_id = element_id;
+>> -	se->status = BLK_SE_STS_REMOVE_IN_PROGRESS;
+>> -	if (paired_se && paired_se->status != BLK_SE_STS_REMOVED)
+>> -		paired_se->status = BLK_SE_STS_REMOVE_IN_PROGRESS;
+>> +	WRITE_ONCE(se->status, BLK_SE_STS_REMOVE_IN_PROGRESS);
+>> +	if (paired_se && READ_ONCE(paired_se->status) != BLK_SE_STS_REMOVED)
+>> +		WRITE_ONCE(paired_se->status, BLK_SE_STS_REMOVE_IN_PROGRESS);
+> 
+> [Severity: Medium]
+> When zloop_remove_element() is called on an element that was previously marked
+> as degraded, won't this unconditionally overwrite the status to
+> BLK_SE_STS_REMOVE_IN_PROGRESS?
+> 
+> If the status changes to BLK_SE_STS_REMOVE_IN_PROGRESS, the check in
+> zloop_prep_rq() for BLK_SE_STS_DEGRADED will no longer match. Does this
+> mean that I/O will unexpectedly succeed on the degraded element until the
+> 2-second delayed removal work actually offlines the zones?
 
-On Tuesday, 6 October 2026 14:19:36 CEST sashiko-bot@kernel.org wrote:> > d=
-iff --git a/net/batman-adv/routing.c b/net/batman-adv/routing.c
-> > index 5cf26e8b3257a..8dd4094d134bd 100644
-> > --- a/net/batman-adv/routing.c
-> > +++ b/net/batman-adv/routing.c
-> > @@ -1094,7 +1096,8 @@ int batadv_recv_unicast_packet(struct sk_buff *sk=
-b,
-> >  			unicast_4addr_packet =3D
-> >  				(struct batadv_unicast_4addr_packet *)skb->data;
-> >  			subtype =3D unicast_4addr_packet->subtype;
-> > -			batadv_dat_inc_counter(bat_priv, subtype);
-> > +			flags =3D unicast_4addr_packet->flags;
-> > +			batadv_dat_inc_counter(bat_priv, subtype, flags);
->=20
+Yes. The remove in progress condition needs to be checked too.
+
+> 
+> [ ... ]
+> 
+>> @@ -1944,6 +1988,42 @@ static int zloop_ctl_remove(struct zloop_options *opts)
+>>  	return 0;
+>>  }
+>>  
+>> +static int zloop_ctl_degrade_element(struct zloop_options *opts)
+>> +{
+>> +	struct zloop_device *zlo;
+>> +	int ret = 0;
+>> +
+>> +	if (!(opts->mask & ZLOOP_OPT_ID)) {
+>> +		pr_err("No ID specified for degrade_element\n");
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	if (opts->mask & ~(ZLOOP_OPT_ID | ZLOOP_OPT_ELEMENT_ID)) {
+>> +		pr_err("Invalid option specified for degrade_element\n");
+>> +		return -EINVAL;
+>> +	}
+> 
 > [Severity: Low]
-> This passes three arguments to batadv_dat_inc_counter(). However, looking
-> at net/batman-adv/distributed-arp-table.h, the dummy fallback implementat=
-ion=20
-> of this function used when CONFIG_BATMAN_ADV_DAT is disabled seems to onl=
-y=20
-> accept two arguments:
->=20
-> static inline void batadv_dat_inc_counter(struct batadv_priv *bat_priv,
-> 					  u8 subtype)
-> {
-> }
->=20
-> Will this cause a build failure when compiling the kernel with
-> CONFIG_BATMAN_ADV_DAT=3Dn?
-
-Confirmed (+ some extra):
-
-Name of failed tests
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-pu
-=2D-
-
- * checkpatch include/uapi/linux/batadv_packet.h
- * kerneldoc
- * sparse v5.18 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dy BATMAN=
-_V=3Dn
- * sparse v5.19 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dy BATMAN=
-_V=3Dn
- * sparse v6.0 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dy BATMAN_=
-V=3Dn
- * sparse v6.0 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dy BATMAN_=
-V=3Dn
- * sparse v6.1.188 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dn BAT=
-MAN_V=3Dn
- * sparse v6.10 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dn BATMAN=
-_V=3Dn
- * sparse v6.11 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dy BATMAN=
-_V=3Dy
- * sparse v6.11 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dn BATMAN=
-_V=3Dy
- * sparse v6.12 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dn BATMAN=
-_V=3Dy
- * sparse v6.12.110 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dn BA=
-TMAN_V=3Dy
- * sparse v6.12.110 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dn BA=
-TMAN_V=3Dn
- * sparse v6.12.110 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dn BA=
-TMAN_V=3Dy
- * sparse v6.17 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dn BATMAN=
-_V=3Dn
- * sparse v6.17 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dy BATMAN=
-_V=3Dy
- * sparse v6.18 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dn BATMAN=
-_V=3Dn
- * sparse v6.18.51 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dy BAT=
-MAN_V=3Dn
- * sparse v6.18.51 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dy BAT=
-MAN_V=3Dy
- * sparse v6.2 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dy BATMAN_=
-V=3Dn
- * sparse v6.3 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dn BATMAN_=
-V=3Dy
- * sparse v6.4 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dn BATMAN_=
-V=3Dy
- * sparse v6.4 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dy BATMAN_=
-V=3Dn
- * sparse v6.6 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dy BATMAN_=
-V=3Dy
- * sparse v6.6 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dn BATMAN_=
-V=3Dy
- * sparse v6.6.157 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dy BAT=
-MAN_V=3Dy
- * sparse v6.8 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dn BATMAN_=
-V=3Dn
- * sparse v6.9 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dy BATMAN_=
-V=3Dn
- * sparse v7.0 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dy BATMAN_=
-V=3Dy
- * sparse v7.0 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dn BATMAN_=
-V=3Dn
- * sparse v7.1 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dn BATMAN_=
-V=3Dn
- * sparse v7.2 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dy BATMAN_=
-V=3Dy
- * sparse v7.2 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dy BATMAN_=
-V=3Dn
- * sparse v7.2.5 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dn BATMA=
-N_V=3Dy
- * sparse v7.3-rc3 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dy BAT=
-MAN_V=3Dn
- * sparse v7.3-rc3 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dn BAT=
-MAN_V=3Dy
- * sparse v7.3-rc3 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dn BAT=
-MAN_V=3Dy
- * unused_symbols v5.18 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3D=
-y BATMAN_V=3Dn
- * unused_symbols v5.19 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3D=
-y BATMAN_V=3Dn
- * unused_symbols v6.0 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dy=
- BATMAN_V=3Dn
- * unused_symbols v6.0 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dy=
- BATMAN_V=3Dn
- * unused_symbols v6.1.188 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=
-=3Dn BATMAN_V=3Dn
- * unused_symbols v6.10 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3D=
-n BATMAN_V=3Dn
- * unused_symbols v6.11 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3D=
-y BATMAN_V=3Dy
- * unused_symbols v6.11 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3D=
-n BATMAN_V=3Dy
- * unused_symbols v6.12 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3D=
-n BATMAN_V=3Dy
- * unused_symbols v6.12.110 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAS=
-T=3Dn BATMAN_V=3Dy
- * unused_symbols v6.12.110 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAS=
-T=3Dn BATMAN_V=3Dn
- * unused_symbols v6.12.110 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAS=
-T=3Dn BATMAN_V=3Dy
- * unused_symbols v6.17 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3D=
-n BATMAN_V=3Dn
- * unused_symbols v6.17 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3D=
-y BATMAN_V=3Dy
- * unused_symbols v6.18 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3D=
-n BATMAN_V=3Dn
- * unused_symbols v6.18.51 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=
-=3Dy BATMAN_V=3Dn
- * unused_symbols v6.18.51 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=
-=3Dy BATMAN_V=3Dy
- * unused_symbols v6.2 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dy=
- BATMAN_V=3Dn
- * unused_symbols v6.3 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dn=
- BATMAN_V=3Dy
- * unused_symbols v6.4 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dn=
- BATMAN_V=3Dy
- * unused_symbols v6.4 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dy=
- BATMAN_V=3Dn
- * unused_symbols v6.6 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dy=
- BATMAN_V=3Dy
- * unused_symbols v6.6 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dn=
- BATMAN_V=3Dy
- * unused_symbols v6.6.157 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=
-=3Dy BATMAN_V=3Dy
- * unused_symbols v6.8 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dn=
- BATMAN_V=3Dn
- * unused_symbols v6.9 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dy=
- BATMAN_V=3Dn
- * unused_symbols v7.0 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dy=
- BATMAN_V=3Dy
- * unused_symbols v7.0 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dn=
- BATMAN_V=3Dn
- * unused_symbols v7.1 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dn=
- BATMAN_V=3Dn
- * unused_symbols v7.2 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dy=
- BATMAN_V=3Dy
- * unused_symbols v7.2 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dy=
- BATMAN_V=3Dn
- * unused_symbols v7.2.5 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=
-=3Dn BATMAN_V=3Dy
- * unused_symbols v7.3-rc3 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=
-=3Dy BATMAN_V=3Dn
- * unused_symbols v7.3-rc3 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=
-=3Dn BATMAN_V=3Dy
- * unused_symbols v7.3-rc3 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=
-=3Dn BATMAN_V=3Dy
-
-
-Output of different failed tests
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D
-
-pu: checkpatch include/uapi/linux/batadv_packet.h
-=2D------------------------------------------------
-
-    CHECK: Please don't use multiple blank lines
-    #85: FILE: include/uapi/linux/batadv_packet.h:85:
-    +
-    +
-   =20
-    total: 0 errors, 0 warnings, 1 checks, 688 lines checked
-
-pu: kerneldoc
-=2D------------
-
-    Warning: ./net/batman-adv/distributed-arp-table.c:1032 Excess function =
-parameter 'hw_dst' description in 'batadv_dat_dht_get_self_reply' (did you =
-mean one of: 'ip_dst', 'hw_src')
-    Warning: ./net/batman-adv/distributed-arp-table.c:1286 Excess function =
-parameter 'hw_dst' description in 'batadv_dat_forward_dht_get' (did you mea=
-n one of: 'ip_dst', 'hw_src')
-    Warning: ./net/batman-adv/distributed-arp-table.c:1032 Excess function =
-parameter 'hw_dst' description in 'batadv_dat_dht_get_self_reply' (did you =
-mean one of: 'ip_dst', 'hw_src')
-    Warning: ./net/batman-adv/distributed-arp-table.c:1286 Excess function =
-parameter 'hw_dst' description in 'batadv_dat_forward_dht_get' (did you mea=
-n one of: 'ip_dst', 'hw_src')
-    4 errors
-
-pu: sparse v5.18 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dy BATMA=
-N_V=3Dn
-=2D---------------------------------------------------------------------
-
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c: In =
-function =E2=80=98batadv_recv_unicast_packet=E2=80=99:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c:1100=
-:25: error: too many arguments to function =E2=80=98batadv_dat_inc_counter=
-=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from /home/build_test/build_env/tmp.FzAjE3FV2V/net/bat=
-man-adv/routing.c:30:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/distributed-ar=
-p-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[3]: *** [scripts/Makefile.build:288: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv/routing.o] Error 1
-    make[2]: *** [scripts/Makefile.build:550: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv] Error 2
-    make[1]: *** [Makefile:1834: /home/build_test/build_env/tmp.FzAjE3FV2V]=
- Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v5.19 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dy BATMA=
-N_V=3Dn
-=2D---------------------------------------------------------------------
-
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c: In =
-function =E2=80=98batadv_recv_unicast_packet=E2=80=99:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c:1100=
-:25: error: too many arguments to function =E2=80=98batadv_dat_inc_counter=
-=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from /home/build_test/build_env/tmp.FzAjE3FV2V/net/bat=
-man-adv/routing.c:30:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/distributed-ar=
-p-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[3]: *** [scripts/Makefile.build:249: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv/routing.o] Error 1
-    make[2]: *** [scripts/Makefile.build:466: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv] Error 2
-    make[1]: *** [Makefile:1843: /home/build_test/build_env/tmp.FzAjE3FV2V]=
- Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.0 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dy BATMAN=
-_V=3Dn
-=2D--------------------------------------------------------------------
-
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c: In =
-function =E2=80=98batadv_recv_unicast_packet=E2=80=99:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c:1100=
-:25: error: too many arguments to function =E2=80=98batadv_dat_inc_counter=
-=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from /home/build_test/build_env/tmp.FzAjE3FV2V/net/bat=
-man-adv/routing.c:30:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/distributed-ar=
-p-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[3]: *** [scripts/Makefile.build:249: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv/routing.o] Error 1
-    make[2]: *** [scripts/Makefile.build:465: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv] Error 2
-    make[1]: *** [Makefile:1852: /home/build_test/build_env/tmp.FzAjE3FV2V]=
- Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.1.188 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dn BA=
-TMAN_V=3Dn
-=2D------------------------------------------------------------------------
-
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c: In =
-function =E2=80=98batadv_recv_unicast_packet=E2=80=99:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c:1100=
-:25: error: too many arguments to function =E2=80=98batadv_dat_inc_counter=
-=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from /home/build_test/build_env/tmp.FzAjE3FV2V/net/bat=
-man-adv/routing.c:30:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/distributed-ar=
-p-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[3]: *** [scripts/Makefile.build:250: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv/routing.o] Error 1
-    make[2]: *** [scripts/Makefile.build:503: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv] Error 2
-    make[1]: *** [Makefile:2025: /home/build_test/build_env/tmp.FzAjE3FV2V]=
- Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.10 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dn BATMA=
-N_V=3Dn
-=2D---------------------------------------------------------------------
-
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c: In =
-function =E2=80=98batadv_recv_unicast_packet=E2=80=99:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c:1100=
-:25: error: too many arguments to function =E2=80=98batadv_dat_inc_counter=
-=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from /home/build_test/build_env/tmp.FzAjE3FV2V/net/bat=
-man-adv/routing.c:30:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/distributed-ar=
-p-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[4]: *** [scripts/Makefile.build:244: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv/routing.o] Error 1
-    make[3]: *** [scripts/Makefile.build:485: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v6.10/Makefi=
-le:1934: /home/build_test/build_env/tmp.FzAjE3FV2V] Error 2
-    make[1]: *** [Makefile:240: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.11 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dy BATMA=
-N_V=3Dy
-=2D---------------------------------------------------------------------
-
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c: In =
-function =E2=80=98batadv_recv_unicast_packet=E2=80=99:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c:1100=
-:25: error: too many arguments to function =E2=80=98batadv_dat_inc_counter=
-=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from /home/build_test/build_env/tmp.FzAjE3FV2V/net/bat=
-man-adv/routing.c:30:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/distributed-ar=
-p-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[4]: *** [scripts/Makefile.build:244: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv/routing.o] Error 1
-    make[3]: *** [scripts/Makefile.build:485: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v6.11/Makefi=
-le:1926: /home/build_test/build_env/tmp.FzAjE3FV2V] Error 2
-    make[1]: *** [Makefile:224: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.12 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dn BATMA=
-N_V=3Dy
-=2D---------------------------------------------------------------------
-
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c: In =
-function =E2=80=98batadv_recv_unicast_packet=E2=80=99:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c:1100=
-:25: error: too many arguments to function =E2=80=98batadv_dat_inc_counter=
-=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from /home/build_test/build_env/tmp.FzAjE3FV2V/net/bat=
-man-adv/routing.c:30:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/distributed-ar=
-p-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[4]: *** [scripts/Makefile.build:229: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv/routing.o] Error 1
-    make[3]: *** [scripts/Makefile.build:478: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v6.12/Makefi=
-le:1936: /home/build_test/build_env/tmp.FzAjE3FV2V] Error 2
-    make[1]: *** [Makefile:224: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.12.110 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dn B=
-ATMAN_V=3Dy
-=2D-------------------------------------------------------------------------
-
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c: In =
-function =E2=80=98batadv_recv_unicast_packet=E2=80=99:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c:1100=
-:25: error: too many arguments to function =E2=80=98batadv_dat_inc_counter=
-=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from /home/build_test/build_env/tmp.FzAjE3FV2V/net/bat=
-man-adv/routing.c:30:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/distributed-ar=
-p-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[4]: *** [scripts/Makefile.build:229: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv/routing.o] Error 1
-    make[3]: *** [scripts/Makefile.build:466: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v6.12.110/Ma=
-kefile:1967: /home/build_test/build_env/tmp.FzAjE3FV2V] Error 2
-    make[1]: *** [Makefile:224: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.17 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dy BATMA=
-N_V=3Dy
-=2D---------------------------------------------------------------------
-
-    net/batman-adv/routing.c: In function =E2=80=98batadv_recv_unicast_pack=
-et=E2=80=99:
-    net/batman-adv/routing.c:1100:25: error: too many arguments to function=
- =E2=80=98batadv_dat_inc_counter=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from net/batman-adv/routing.c:30:
-    net/batman-adv/distributed-arp-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[5]: *** [/home/build_test/build_env/linux-build/linux/v6.17/script=
-s/Makefile.build:287: net/batman-adv/routing.o] Error 1
-    make[4]: *** [/home/build_test/build_env/linux-build/linux/v6.17/script=
-s/Makefile.build:556: net/batman-adv] Error 2
-    make[3]: *** [/home/build_test/build_env/linux-build/linux/v6.17/Makefi=
-le:2011: .] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v6.17/Makefi=
-le:248: __sub-make] Error 2
-    make[1]: *** [Makefile:248: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.18 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dn BATMA=
-N_V=3Dn
-=2D---------------------------------------------------------------------
-
-    net/batman-adv/routing.c: In function =E2=80=98batadv_recv_unicast_pack=
-et=E2=80=99:
-    net/batman-adv/routing.c:1100:25: error: too many arguments to function=
- =E2=80=98batadv_dat_inc_counter=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from net/batman-adv/routing.c:30:
-    net/batman-adv/distributed-arp-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[5]: *** [/home/build_test/build_env/linux-build/linux/v6.18/script=
-s/Makefile.build:287: net/batman-adv/routing.o] Error 1
-    make[4]: *** [/home/build_test/build_env/linux-build/linux/v6.18/script=
-s/Makefile.build:556: net/batman-adv] Error 2
-    make[3]: *** [/home/build_test/build_env/linux-build/linux/v6.18/Makefi=
-le:2010: .] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v6.18/Makefi=
-le:248: __sub-make] Error 2
-    make[1]: *** [Makefile:248: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.18.51 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dy BA=
-TMAN_V=3Dn
-=2D------------------------------------------------------------------------
-
-    net/batman-adv/routing.c: In function =E2=80=98batadv_recv_unicast_pack=
-et=E2=80=99:
-    net/batman-adv/routing.c:1100:25: error: too many arguments to function=
- =E2=80=98batadv_dat_inc_counter=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from net/batman-adv/routing.c:30:
-    net/batman-adv/distributed-arp-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[5]: *** [/home/build_test/build_env/linux-build/linux/v6.18.51/scr=
-ipts/Makefile.build:287: net/batman-adv/routing.o] Error 1
-    make[4]: *** [/home/build_test/build_env/linux-build/linux/v6.18.51/scr=
-ipts/Makefile.build:544: net/batman-adv] Error 2
-    make[3]: *** [/home/build_test/build_env/linux-build/linux/v6.18.51/Mak=
-efile:2050: .] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v6.18.51/Mak=
-efile:248: __sub-make] Error 2
-    make[1]: *** [Makefile:248: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.2 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dy BATMAN=
-_V=3Dn
-=2D--------------------------------------------------------------------
-
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c: In =
-function =E2=80=98batadv_recv_unicast_packet=E2=80=99:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c:1100=
-:25: error: too many arguments to function =E2=80=98batadv_dat_inc_counter=
-=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from /home/build_test/build_env/tmp.FzAjE3FV2V/net/bat=
-man-adv/routing.c:30:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/distributed-ar=
-p-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[3]: *** [scripts/Makefile.build:252: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv/routing.o] Error 1
-    make[2]: *** [scripts/Makefile.build:504: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv] Error 2
-    make[1]: *** [Makefile:2021: /home/build_test/build_env/tmp.FzAjE3FV2V]=
- Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.3 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dn BATMAN=
-_V=3Dy
-=2D--------------------------------------------------------------------
-
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c: In =
-function =E2=80=98batadv_recv_unicast_packet=E2=80=99:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c:1100=
-:25: error: too many arguments to function =E2=80=98batadv_dat_inc_counter=
-=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from /home/build_test/build_env/tmp.FzAjE3FV2V/net/bat=
-man-adv/routing.c:30:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/distributed-ar=
-p-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[3]: *** [scripts/Makefile.build:252: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv/routing.o] Error 1
-    make[2]: *** [scripts/Makefile.build:494: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv] Error 2
-    make[1]: *** [Makefile:2025: /home/build_test/build_env/tmp.FzAjE3FV2V]=
- Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.4 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dn BATMAN=
-_V=3Dy
-=2D--------------------------------------------------------------------
-
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c: In =
-function =E2=80=98batadv_recv_unicast_packet=E2=80=99:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c:1100=
-:25: error: too many arguments to function =E2=80=98batadv_dat_inc_counter=
-=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from /home/build_test/build_env/tmp.FzAjE3FV2V/net/bat=
-man-adv/routing.c:30:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/distributed-ar=
-p-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[3]: *** [scripts/Makefile.build:252: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv/routing.o] Error 1
-    make[2]: *** [scripts/Makefile.build:494: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv] Error 2
-    make[1]: *** [Makefile:2026: /home/build_test/build_env/tmp.FzAjE3FV2V]=
- Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.6 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dy BATMAN=
-_V=3Dy
-=2D--------------------------------------------------------------------
-
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c: In =
-function =E2=80=98batadv_recv_unicast_packet=E2=80=99:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c:1100=
-:25: error: too many arguments to function =E2=80=98batadv_dat_inc_counter=
-=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from /home/build_test/build_env/tmp.FzAjE3FV2V/net/bat=
-man-adv/routing.c:30:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/distributed-ar=
-p-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[4]: *** [scripts/Makefile.build:243: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv/routing.o] Error 1
-    make[3]: *** [scripts/Makefile.build:480: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v6.6/Makefil=
-e:1913: /home/build_test/build_env/tmp.FzAjE3FV2V] Error 2
-    make[1]: *** [Makefile:234: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.6.157 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dy BA=
-TMAN_V=3Dy
-=2D------------------------------------------------------------------------
-
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c: In =
-function =E2=80=98batadv_recv_unicast_packet=E2=80=99:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c:1100=
-:25: error: too many arguments to function =E2=80=98batadv_dat_inc_counter=
-=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from /home/build_test/build_env/tmp.FzAjE3FV2V/net/bat=
-man-adv/routing.c:30:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/distributed-ar=
-p-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[4]: *** [scripts/Makefile.build:243: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv/routing.o] Error 1
-    make[3]: *** [scripts/Makefile.build:480: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v6.6.157/Mak=
-efile:1933: /home/build_test/build_env/tmp.FzAjE3FV2V] Error 2
-    make[1]: *** [Makefile:234: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.8 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dn BATMAN=
-_V=3Dn
-=2D--------------------------------------------------------------------
-
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c: In =
-function =E2=80=98batadv_recv_unicast_packet=E2=80=99:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c:1100=
-:25: error: too many arguments to function =E2=80=98batadv_dat_inc_counter=
-=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from /home/build_test/build_env/tmp.FzAjE3FV2V/net/bat=
-man-adv/routing.c:30:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/distributed-ar=
-p-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[4]: *** [scripts/Makefile.build:243: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv/routing.o] Error 1
-    make[3]: *** [scripts/Makefile.build:481: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v6.8/Makefil=
-e:1921: /home/build_test/build_env/tmp.FzAjE3FV2V] Error 2
-    make[1]: *** [Makefile:240: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v6.9 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dy BATMAN=
-_V=3Dn
-=2D--------------------------------------------------------------------
-
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c: In =
-function =E2=80=98batadv_recv_unicast_packet=E2=80=99:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/routing.c:1100=
-:25: error: too many arguments to function =E2=80=98batadv_dat_inc_counter=
-=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from /home/build_test/build_env/tmp.FzAjE3FV2V/net/bat=
-man-adv/routing.c:30:
-    /home/build_test/build_env/tmp.FzAjE3FV2V/net/batman-adv/distributed-ar=
-p-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[4]: *** [scripts/Makefile.build:244: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv/routing.o] Error 1
-    make[3]: *** [scripts/Makefile.build:485: /home/build_test/build_env/tm=
-p.FzAjE3FV2V/net/batman-adv] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v6.9/Makefil=
-e:1919: /home/build_test/build_env/tmp.FzAjE3FV2V] Error 2
-    make[1]: *** [Makefile:240: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v7.0 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3Dn BATMAN=
-_V=3Dn
-=2D--------------------------------------------------------------------
-
-    net/batman-adv/routing.c: In function =E2=80=98batadv_recv_unicast_pack=
-et=E2=80=99:
-    net/batman-adv/routing.c:1100:25: error: too many arguments to function=
- =E2=80=98batadv_dat_inc_counter=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from net/batman-adv/routing.c:30:
-    net/batman-adv/distributed-arp-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[5]: *** [/home/build_test/build_env/linux-build/linux/v7.0/scripts=
-/Makefile.build:289: net/batman-adv/routing.o] Error 1
-    make[4]: *** [/home/build_test/build_env/linux-build/linux/v7.0/scripts=
-/Makefile.build:548: net/batman-adv] Error 2
-    make[3]: *** [/home/build_test/build_env/linux-build/linux/v7.0/Makefil=
-e:2105: .] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v7.0/Makefil=
-e:248: __sub-make] Error 2
-    make[1]: *** [Makefile:248: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v7.1 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dn BATMAN=
-_V=3Dn
-=2D--------------------------------------------------------------------
-
-    net/batman-adv/routing.c: In function =E2=80=98batadv_recv_unicast_pack=
-et=E2=80=99:
-    net/batman-adv/routing.c:1100:25: error: too many arguments to function=
- =E2=80=98batadv_dat_inc_counter=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from net/batman-adv/routing.c:30:
-    net/batman-adv/distributed-arp-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[5]: *** [/home/build_test/build_env/linux-build/linux/v7.1/scripts=
-/Makefile.build:289: net/batman-adv/routing.o] Error 1
-    make[4]: *** [/home/build_test/build_env/linux-build/linux/v7.1/scripts=
-/Makefile.build:548: net/batman-adv] Error 2
-    make[3]: *** [/home/build_test/build_env/linux-build/linux/v7.1/Makefil=
-e:2144: .] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v7.1/Makefil=
-e:248: __sub-make] Error 2
-    make[1]: *** [Makefile:248: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v7.2 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3Dy BATMAN=
-_V=3Dy
-=2D--------------------------------------------------------------------
-
-    net/batman-adv/routing.c: In function =E2=80=98batadv_recv_unicast_pack=
-et=E2=80=99:
-    net/batman-adv/routing.c:1100:25: error: too many arguments to function=
- =E2=80=98batadv_dat_inc_counter=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from net/batman-adv/routing.c:30:
-    net/batman-adv/distributed-arp-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[5]: *** [/home/build_test/build_env/linux-build/linux/v7.2/scripts=
-/Makefile.build:289: net/batman-adv/routing.o] Error 1
-    make[4]: *** [/home/build_test/build_env/linux-build/linux/v7.2/scripts=
-/Makefile.build:549: net/batman-adv] Error 2
-    make[3]: *** [/home/build_test/build_env/linux-build/linux/v7.2/Makefil=
-e:2187: .] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v7.2/Makefil=
-e:248: __sub-make] Error 2
-    make[1]: *** [Makefile:248: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v7.2.5 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=3Dn BATM=
-AN_V=3Dy
-=2D----------------------------------------------------------------------
-
-    net/batman-adv/routing.c: In function =E2=80=98batadv_recv_unicast_pack=
-et=E2=80=99:
-    net/batman-adv/routing.c:1100:25: error: too many arguments to function=
- =E2=80=98batadv_dat_inc_counter=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from net/batman-adv/routing.c:30:
-    net/batman-adv/distributed-arp-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[5]: *** [/home/build_test/build_env/linux-build/linux/v7.2.5/scrip=
-ts/Makefile.build:289: net/batman-adv/routing.o] Error 1
-    make[4]: *** [/home/build_test/build_env/linux-build/linux/v7.2.5/scrip=
-ts/Makefile.build:550: net/batman-adv] Error 2
-    make[3]: *** [/home/build_test/build_env/linux-build/linux/v7.2.5/Makef=
-ile:2198: .] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v7.2.5/Makef=
-ile:248: __sub-make] Error 2
-    make[1]: *** [Makefile:248: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: sparse v7.3-rc3 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=3Dy BA=
-TMAN_V=3Dn
-=2D------------------------------------------------------------------------
-
-    net/batman-adv/routing.c: In function =E2=80=98batadv_recv_unicast_pack=
-et=E2=80=99:
-    net/batman-adv/routing.c:1100:25: error: too many arguments to function=
- =E2=80=98batadv_dat_inc_counter=E2=80=99
-     1100 |                         batadv_dat_inc_counter(bat_priv, subtyp=
-e, flags);
-          |                         ^~~~~~~~~~~~~~~~~~~~~~
-    In file included from net/batman-adv/routing.c:30:
-    net/batman-adv/distributed-arp-table.h:197:20: note: declared here
-      197 | static inline void batadv_dat_inc_counter(struct batadv_priv *b=
-at_priv,
-          |                    ^~~~~~~~~~~~~~~~~~~~~~
-    make[5]: *** [/home/build_test/build_env/linux-build/linux/v7.3-rc3/scr=
-ipts/Makefile.build:290: net/batman-adv/routing.o] Error 1
-    make[4]: *** [/home/build_test/build_env/linux-build/linux/v7.3-rc3/scr=
-ipts/Makefile.build:551: net/batman-adv] Error 2
-    make[3]: *** [/home/build_test/build_env/linux-build/linux/v7.3-rc3/Mak=
-efile:2229: .] Error 2
-    make[2]: *** [/home/build_test/build_env/linux-build/linux/v7.3-rc3/Mak=
-efile:248: __sub-make] Error 2
-    make[1]: *** [Makefile:248: __sub-make] Error 2
-    make: *** [Makefile:65: all] Error 2
-
-pu: unused_symbols v6.0 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=3D=
-y BATMAN_V=3Dn
-=2D------------------------------------------------------------------------=
-=2D-
-
-    batadv_bla_check_bcast_duplist
-    batadv_bla_is_backbone_gw
-    batadv_frag_send_packet
-    batadv_frag_skb_buffer
-    batadv_frag_skb_fwd
-    batadv_gw_get_selected_orig
-    batadv_hardif_no_broadcast
-    batadv_interface_rx
-    batadv_netdev_get_wifi_flags
-    batadv_netlink_tpmeter_notify
-    batadv_orig_node_vlan_get
-    batadv_orig_node_vlan_new
-    batadv_orig_node_vlan_release
-    batadv_skb_head_push
-
-pu: unused_symbols v6.10 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=
-=3Dn BATMAN_V=3Dn
-=2D------------------------------------------------------------------------=
-=2D-
-
-    batadv_frag_send_packet
-    batadv_frag_skb_buffer
-    batadv_frag_skb_fwd
-    batadv_gw_get_selected_orig
-    batadv_hardif_no_broadcast
-    batadv_interface_rx
-    batadv_is_my_mac
-    batadv_netdev_get_wifi_flags
-    batadv_netlink_tpmeter_notify
-    batadv_orig_node_vlan_get
-    batadv_orig_node_vlan_new
-    batadv_orig_node_vlan_release
-    batadv_skb_head_push
-
-pu: unused_symbols v6.11 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAST=
-=3Dy BATMAN_V=3Dy
-=2D------------------------------------------------------------------------=
-=2D-
-
-    batadv_frag_send_packet
-    batadv_frag_skb_buffer
-    batadv_frag_skb_fwd
-    batadv_gw_get_selected_orig
-    batadv_interface_rx
-    batadv_netdev_get_wifi_flags
-    batadv_netlink_tpmeter_notify
-    batadv_orig_node_vlan_get
-    batadv_orig_node_vlan_new
-    batadv_orig_node_vlan_release
-    batadv_skb_head_push
-
-pu: unused_symbols v6.17 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dy MCAST=
-=3Dy BATMAN_V=3Dy
-=2D------------------------------------------------------------------------=
-=2D-
-
-    batadv_bla_check_bcast_duplist
-    batadv_bla_is_backbone_gw
-    batadv_frag_send_packet
-    batadv_frag_skb_buffer
-    batadv_frag_skb_fwd
-    batadv_gw_get_selected_orig
-    batadv_interface_rx
-    batadv_netdev_get_wifi_flags
-    batadv_netlink_tpmeter_notify
-    batadv_orig_node_vlan_get
-    batadv_orig_node_vlan_new
-    batadv_orig_node_vlan_release
-    batadv_skb_head_push
-
-pu: unused_symbols v6.8 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dn TRACING=3Dn MCAST=3D=
-n BATMAN_V=3Dn
-=2D------------------------------------------------------------------------=
-=2D-
-
-    batadv_bla_check_bcast_duplist
-    batadv_bla_is_backbone_gw
-    batadv_bla_is_backbone_gw_orig
-    batadv_frag_send_packet
-    batadv_frag_skb_buffer
-    batadv_frag_skb_fwd
-    batadv_gw_get_selected_orig
-    batadv_hardif_no_broadcast
-    batadv_interface_rx
-    batadv_is_my_mac
-    batadv_netdev_get_wifi_flags
-    batadv_netlink_tpmeter_notify
-    batadv_orig_node_vlan_get
-    batadv_orig_node_vlan_new
-    batadv_orig_node_vlan_release
-    batadv_skb_head_push
-
-pu: unused_symbols v7.2.5 cfg: BLA=3Dy DAT=3Dn DEBUG=3Dy TRACING=3Dn MCAST=
-=3Dn BATMAN_V=3Dy
-=2D------------------------------------------------------------------------=
-=2D-
-
-    batadv_bla_check_bcast_duplist
-    batadv_bla_is_backbone_gw
-    batadv_bla_is_backbone_gw_orig
-    batadv_frag_send_packet
-    batadv_frag_skb_buffer
-    batadv_frag_skb_fwd
-    batadv_gw_get_selected_orig
-    batadv_interface_rx
-    batadv_netdev_get_wifi_flags
-    batadv_netlink_tpmeter_notify
-    batadv_orig_node_vlan_get
-    batadv_orig_node_vlan_new
-    batadv_orig_node_vlan_release
-    batadv_skb_head_push
-
-pu: unused_symbols v7.3-rc3 cfg: BLA=3Dn DAT=3Dn DEBUG=3Dn TRACING=3Dy MCAS=
-T=3Dy BATMAN_V=3Dn
-=2D------------------------------------------------------------------------=
-=2D-
-
-    batadv_frag_send_packet
-    batadv_frag_skb_buffer
-    batadv_frag_skb_fwd
-    batadv_gw_get_selected_orig
-    batadv_hardif_no_broadcast
-    batadv_interface_rx
-    batadv_netdev_get_wifi_flags
-    batadv_netlink_tpmeter_notify
-    batadv_orig_node_vlan_get
-    batadv_orig_node_vlan_new
-    batadv_orig_node_vlan_release
-    batadv_skb_head_push
-
---nextPart3441699.44csPzL39Z
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCasTyEgAKCRBND3cr0xT1
-y1GcAP9hBU7w6GeFcgUCtLKhk+fFvaBxrauWYZFINQs7qWDF+gD/eGtnKFTwfiTF
-4o6iS6Nx6yDjpPX7EUUCpLtJY+8BKQ8=
-=zO+Q
------END PGP SIGNATURE-----
-
---nextPart3441699.44csPzL39Z--
-
-
-
+> Does this code silently fail if the user omits the element_id option?
+
+No. The missing element_id option is checked before this if.
+
+> 
+> The check above ensures no invalid options are provided, but it lacks a
+> validation to ensure ZLOOP_OPT_ELEMENT_ID is actually present in opts->mask.
+> If omitted, opts->element_id defaults to 0, which gets rejected silently inside
+> zloop_degrade_element() without any error message to the user.
+> 
+>> +
+>> +	mutex_lock(&zloop_ctl_mutex);
+>> +
+>> +	zlo = idr_find(&zloop_index_idr, opts->id);
+>> +	if (!zlo || zlo->state == Zlo_creating)
+>> +		ret = -ENODEV;
+>> +	else if (zlo->state == Zlo_deleting)
+>> +		ret = -EINVAL;
+>> +	if (ret)
+>> +		goto unlock;
+>> +
+>> +	ret = zloop_degrade_element(zlo, opts->element_id);
+>> +	if (!ret)
+>> +		pr_info("Degraded element %u of device %u\n",
+>> +			opts->id, opts->element_id);
+> 
+> [Severity: Low]
+> Are the arguments to pr_info() swapped here?
+
+Yes they are.
+
+> 
+> The format string specifies "element %u of device %u", but the variables are
+> passed as opts->id (the device ID) followed by opts->element_id (the element
+> ID). This will display the values in the reverse order of the text.
+> 
+>> +
+>> +unlock:
+>> +	mutex_unlock(&zloop_ctl_mutex);
+>> +
+>> +	return ret;
+>> +}
+> 
+
+
+-- 
+Damien Le Moal
+Western Digital Research
