@@ -1,71 +1,71 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798523AEF34
-	for <sashiko-reviews@lists.linux.dev>; Tue,  6 Oct 2026 11:30:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427733B14A9
+	for <sashiko-reviews@lists.linux.dev>; Tue,  6 Oct 2026 11:38:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791286261; cv=none; b=G1nzAwxAIKswp8cYTeVJ9BCHh//9eGY9fsCTMJh5LYlHCjPca3TOAzgqO1O/MVkQ7WFEhFobFYWuQgnQA8b+WlSmdiFm9AI/l5QjWcUaSJewf7uomxjXGRHepn/FzH7svwgF0i6LTrEdorDaKwMY30/5mxebKsnslj+GwK53Jus=
+	t=1791286735; cv=none; b=a6yNmyJTeZjlULpBMXJ0Tn2HtId9AkLzmSoYcST3vj6ycr++yvrY1F6ZBOJ189A9T16nK8Iyk16qFMl4ZVv8wxcElFqOr9QRE+kUPdQSAZmbwm3GNTSNEteYvrM/UoksTRn7BgCMaClmKCJGmO4E9LFG9B49NxeTMFen9FHtjmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791286261; c=relaxed/simple;
-	bh=R4Q6Oufor1a5QGPX/ia8OLnOebta9NNQBwUAa7to8wY=;
+	s=arc-20240116; t=1791286735; c=relaxed/simple;
+	bh=2zOaI/Z8e1drzDVrD9ua/LHiKbHe+SYveww2HsYsFEo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Zt1ZerNxI++buQpUvUp4M42O1rQUxDNrRC0LY5IWZR28DYnM40GU34GtPwJ3jF7z5scKdfRJahmMXN16pZwJkDsZdymhRsfgcIBCrJDr7lJlmURJn2LbO20hM67vdJ5iHVx20r37G10NZjzim/W34sjml32eOOsuqV//dk1EbuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=eLFE8bzo; arc=none smtp.client-ip=170.10.133.124
+	 In-Reply-To:Content-Type; b=WNGUMcw7osGnc++SRoQ71Ne0ATqWLgKxvAhfQ+SCG7K/JTA+nyGs2CxNt3UhrG9HNK+JRWCXGbRMJ7cYFGkt92/UvTskHSZC4v07rcyzFPaYb8kuyz6ZeSolyYrKiR2sT52iuzgCZ58/HcHib6cag8VdMn9lPI4im2lozinbH9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=M6/HNBw6; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="eLFE8bzo"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="M6/HNBw6"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1791286258;
+	s=mimecast20190719; t=1791286733;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=3R29e74OCsihxaScB7A5LszBTHN9x/Z//RuBavLbJ3M=;
-	b=eLFE8bzoW1uB4tGWVkCxhMgO0KWTzlnbRxk94NAkejnCobAA6NPncZ1GI2WQ7nemZQ2JL2
-	ly6sOh6zhP3Md6ORsZLXX+rBzdWbNt4K4QwSiHlAnT1IzVJEawqMScZaEBaaMw4hgrrO2M
-	0JYFxegEnISCZ8iiqqHOijKZCsGJkSA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=iDW3vzyRoZqymSPRfQkop/cgLakUVwx8htt1ibae5gU=;
+	b=M6/HNBw6KynajF2vBwDBrOWOgLTBJLtXwLDBNx14KOjR272PvcrMkWDzDLza5Uuitpf1Aj
+	FwaaWGip5GQKlBAmQhVFYGziCHgtPZ4e/EsTlFra9veHXh7ohaUnaDFpy63UE4KThzTsrJ
+	2uRYjVepto7vfz4TIl2+cYhrf5Hlh10=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-326-m1m5E-rSO72kRe6afyK8BQ-1; Tue, 06 Oct 2026 07:30:57 -0400
-X-MC-Unique: m1m5E-rSO72kRe6afyK8BQ-1
-X-Mimecast-MFC-AGG-ID: m1m5E-rSO72kRe6afyK8BQ_1791286256
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-4a178ca6072so5300675e9.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 06 Oct 2026 04:30:56 -0700 (PDT)
+ us-mta-665-X4UXBXprPq6PHDI7zvqJsw-1; Tue, 06 Oct 2026 07:38:50 -0400
+X-MC-Unique: X4UXBXprPq6PHDI7zvqJsw-1
+X-Mimecast-MFC-AGG-ID: X4UXBXprPq6PHDI7zvqJsw_1791286729
+Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-48af4a0bd0fso1581079f8f.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 06 Oct 2026 04:38:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791286256; x=1791891056;
+        d=1e100.net; s=20260707; t=1791286729; x=1791891529;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=3R29e74OCsihxaScB7A5LszBTHN9x/Z//RuBavLbJ3M=;
-        b=LAgOTgBPSscp00N2LyUHlpJM8xBe4m6JxL/e3e7MomPk3Iyil56WodNHZ16f9O6fNf
-         WFoNpD/DUoj358KBjot3Vph5KaITs1xt0cCh7nk03yuhwm6uxxshKuQ3lP0+JvDIACzP
-         usDaN1H0kQz0QV+j9ctaecqjmj4h7BXSY5ykIwef7ly+oO3YjqQotU7YWrkDQEWUUhZs
-         Itd9dDoP4VJM+6HQQmQSeoPmB1FqjcaBjruVDWIuQN6VXKhjTJ2/yiEs9iMLtr2cvyi/
-         TD2iO0yws5OH4JJj6zmI053QNDQ2xNzHIX8znBRfumvRsCd+VOlwjemASm0eHHT3/7nZ
-         vKVg==
-X-Gm-Message-State: AFuF++k2HoGQd2ZPZdso9t15wwzzo1pgkrOUHkiYdH7eTV8KpkhesdLI
-	IW/3AkZwtU4QvU9p4j/u7PX7IFFl9TcDvZF+yMJEn+H8hkmFTLE7XKoQZ/2CQGFlDa6rO035kW6
-	qubnb2k22QuhJWgowsCtmohAdxJzXebaUqVRTvpCL5MGCVSdidZiKuLaomAlGnymuIs9eFG8QkX
-	fW2c0EDw2T9UWMQ2SciMXwY4dsqT9tp16Op0LakFuULMUvJNhBAw==
-X-Gm-Gg: AYBFou3G5zUC65zxHn1MbJF2QAf2kpMgK8nVGNweryscn370Q/I6V5JCc4dbivebqyn
-	T7tg1UAHlC7Q4sbEknAD7JG7fta+9C6GkM8znpFNSBif0gyQM9YDzCOiqakdEJmGUrQ3eyF5rpS
-	ww83MnGUUtqqfWYonGAcvi/ldS5mr7b1ZyFiMG7xY1ECV+B2UXdY8S276WEa7YCTNOoXl33C+a/
-	clNn7x56RBKcwmaxs7uRMphVjSUSmGgQzMGlOJ+SG7j5F/fv+ydwRAXCDO1UcfMcpBuSXDH9k4c
-	+yeykf4+l5gc/WRkmuyKAPXQ9E4O5SxOQpF8cHIti/ADudhIRwL+LZTVXkWfGg==
-X-Received: by 2002:a05:600c:3115:b0:49f:cac3:c68a with SMTP id 5b1f17b1804b1-4a168105ddfmr171529495e9.31.1791286255755;
-        Tue, 06 Oct 2026 04:30:55 -0700 (PDT)
-X-Received: by 2002:a05:600c:3115:b0:49f:cac3:c68a with SMTP id 5b1f17b1804b1-4a168105ddfmr171528815e9.31.1791286254840;
-        Tue, 06 Oct 2026 04:30:54 -0700 (PDT)
-Received: from [10.43.3.161] ([213.175.46.86])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a03fef174bsm257722415e9.2.2026.10.06.04.30.53
+        bh=iDW3vzyRoZqymSPRfQkop/cgLakUVwx8htt1ibae5gU=;
+        b=rVpYEKXdmK+ifcaZoqJ+oS1Qud64YA0vwFAjWfrX892qMO1OQ/Hp470927a/SsjcI7
+         bEI5AfA1iwVZuvlCZgpzBEwoQbcwe0IDg0zrBwNJA/FvfTotduqV3b9+3zzExFvxut+W
+         n42QvuVKPyceucNrNDxNkvNfRNHPVYur7dchmkFaY7T8FnUyPuZAQsplf2fQvj9E8XSa
+         FA6wiELb4cfpfWwwdK6LD3KAmeDAUUFRjqah2zbQGAly1t0TOxn0xX01+uMA2hC/GJ7c
+         JdCAnoCe2fdEFK9QMa2b2aEVFYUv3p172X/t6NPMLnYPJRzL/CICtgfxgS+JfBVQf6mP
+         qctw==
+X-Gm-Message-State: AFuF++m4pEhRmPtOxHgnnmMJE20C2hc6CbO5KzXDTOOadUDCDgzwfCoa
+	zC+/DIi1EEzFyn7voh9mQ3S2IxuQFJhhZoOLMOJN60A++pfnLJg4FSA1eoO1tMYuD6ahxz9R0de
+	0LV+yH8aij9JGNvbru8ytOhsqegGmhC+iu6wmWPx0AoeZHcAeLDgo3lZe+HJTJ54e/WZcZ0NIkQ
+	P3Qdf2MQhZl2XkoWeNtesxbBx1QDU9Cm0jZ31PkI3tg87prDP7Vw==
+X-Gm-Gg: AYBFou26gtl6ZZwIfzwQqQwMF9+z84d+HHrbYw54QraTu2TADe1ypZcHVri/r0b44jt
+	PYpanEWLzkMcM0ulP1VnEXcyF0MmyHaVltVzEopD8bpeoBokkeDuXFmf4QQMLZDyb34Tz5j9ZEz
+	2TMv6ElBxZ1kVHRztilgZtesSnjsyHewCo7p9D5liWyRcQGAVajS39DKvXFsKb0BlSmJtn/MQBG
+	K81yv+b97bwOI1X8pKdk4y6LpJuXEggXj5O9qFoBXcU+2VT5DZlN2dw9/U80xIGZq4gYVkfC918
+	XEZX3ah04v7Gs/8gC06Dl6DZ9v+9lp2Q5VthsTqfQ5/mWh0g0dc8JcJ5iCrJaw==
+X-Received: by 2002:a05:600c:4e45:b0:4a1:687b:8f3d with SMTP id 5b1f17b1804b1-4a17b55ad69mr16882365e9.31.1791286728743;
+        Tue, 06 Oct 2026 04:38:48 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e45:b0:4a1:687b:8f3d with SMTP id 5b1f17b1804b1-4a17b55ad69mr16882015e9.31.1791286728262;
+        Tue, 06 Oct 2026 04:38:48 -0700 (PDT)
+Received: from [10.43.3.161] ([213.175.37.14])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a030326132sm341298485e9.0.2026.10.06.04.38.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Oct 2026 04:30:54 -0700 (PDT)
-Message-ID: <ba8144c2-10f5-4448-80f5-d10d786bd8bb@redhat.com>
-Date: Tue, 6 Oct 2026 13:30:52 +0200
+        Tue, 06 Oct 2026 04:38:47 -0700 (PDT)
+Message-ID: <21e0965d-d247-49b2-86fa-041ead3d8558@redhat.com>
+Date: Tue, 6 Oct 2026 13:38:46 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -73,104 +73,89 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH iwl-net 07/10] ice: take the switch rule AQ error from the
- response descriptor
+Subject: Re: [PATCH iwl-net 09/10] ice: program multicast magic wake before
+ tearing down the main VSI
 To: sashiko-reviews@lists.linux.dev
-Cc: intel-wired-lan@lists.osuosl.org, bpf@vger.kernel.org
+Cc: bpf@vger.kernel.org, intel-wired-lan@lists.osuosl.org
 References: <20261002130752.2597259-1-poros@redhat.com>
- <20261002130752.2597259-8-poros@redhat.com>
- <20261002132739.B6C0F1F000FF@smtp.kernel.org>
+ <20261002130752.2597259-10-poros@redhat.com>
+ <20261002132815.D3A771F000FF@smtp.kernel.org>
 From: Petr Oros <poros@redhat.com>
-In-Reply-To: <20261002132739.B6C0F1F000FF@smtp.kernel.org>
+In-Reply-To: <20261002132815.D3A771F000FF@smtp.kernel.org>
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: Rc_Y0vn1NF3hdFC_hL3C9Tu8_AeCqYspWfIX7rjfhN0_1791286256
+X-Mimecast-MFC-PROC-ID: DqJAMdl4ANvD_-MNLSb-l_yKoF6Hu9zsf1wYlCuYs0I_1791286729
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 
-On 10/2/26 15:27, sashiko-bot@kernel.org wrote:
+On 10/2/26 15:28, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] ice: conflated -ENOSPC causes silent MAC filter drop on queue full
+> - [High] ice: Use-After-Free in ice_setup_mc_magic_wake() during concurrent devlink reload
 > --
 >
-> commit 5b00f3f5a2fd8517b295e1041c4e6854bbdcfd81
+> commit 6cf8b519dd4de7f3996192dbff4ffe7afc4d34f8
 > Author: Petr Oros <poros@redhat.com>
 >
-> ice: take the switch rule AQ error from the response descriptor
+> ice: program multicast magic wake before tearing down the main VSI
 >
-> This commit modifies how the driver extracts switch rule AQ errors by directly
-> reading the return code from the descriptor that ice_aq_send_cmd() copies back,
-> rather than from hw->adminq.sq_last_status. This avoids races when other
-> commands complete and overwrite the shared last status variable.
+> This commit moves the ice_setup_mc_magic_wake() call earlier in ice_remove()
+> before device structures are torn down. It fixes an issue where WoL magic
+> packet wake was not set up correctly because it was being called after
+> ice_deinit().
 >
 >> diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+>> index b121faa345c1a..857ba7d92b140 100644
 >> --- a/drivers/net/ethernet/intel/ice/ice_main.c
 >> +++ b/drivers/net/ethernet/intel/ice/ice_main.c
-> [ ... ]
->> @@ -450,7 +448,7 @@ static int ice_vsi_sync_fltr(struct ice_vsi *vsi)
->>   		 * should go into promiscuous mode. There should be some
->>   		 * space reserved for promiscuous filters.
->>   		 */
->> -		if (hw->adminq.sq_last_status == LIBIE_AQ_RC_ENOSPC &&
->> +		if (err == -ENOSPC &&
->>   		    !test_and_set_bit(ICE_FLTR_OVERFLOW_PROMISC,
->>   				      vsi->state)) {
->>   			promisc_forced_on = true;
-> [Severity: High]
-> Does this change unintentionally catch transient software queue exhaustion
-> errors?
->
-> If ice_sq_send_cmd() returns a native software -ENOSPC because the control
-> send queue is temporarily full (e.g., under heavy administrative queue load),
-> this fallback block will now catch it.
->
-> Previously, this block was gated behind the hardware-specific
-> hw->adminq.sq_last_status == LIBIE_AQ_RC_ENOSPC check. By changing it to
-> check err == -ENOSPC, a temporary queue-full condition could be misidentified
-> as a permanent hardware MAC filter limit.
->
-> This would cause the driver to erroneously set the overflow state bit and
-> return success, dropping MAC filters and leaving the hardware permanently out
-> of sync with the OS.
-The send queue can not be temporarily full. Commands are sent one at a
-time under sq_lock and each one waits for its completion, and the queue
-is reclaimed from the FW head pointer. It only fills up once the FW has
-stopped processing the AQ for 191 commands in a row, and at that point
-no filter can be programmed either way.
->
->> diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
->> --- a/drivers/net/ethernet/intel/ice/ice_switch.c
->> +++ b/drivers/net/ethernet/intel/ice/ice_switch.c
-> [ ... ]
->> +	if (status) {
->> +		enum libie_aq_err aq_err = le16_to_cpu(desc.retval) & 0xff;
+>> @@ -5465,6 +5465,8 @@ static void ice_remove(struct pci_dev *pdev)
+>>   	if (!ice_is_safe_mode(pf))
+>>   		ice_remove_arfs(pf);
+>>   
+>> +	ice_setup_mc_magic_wake(pf);
 >> +
->> +		if (opc != ice_aqc_opc_add_sw_rules &&
->> +		    aq_err == LIBIE_AQ_RC_ENOENT)
->> +			status = -ENOENT;
->> +		else if (opc == ice_aqc_opc_add_sw_rules &&
->> +			 aq_err == LIBIE_AQ_RC_ENOSPC)
->> +			status = -ENOSPC;
->> +	}
+>>   	devl_lock(priv_to_devlink(pf));
 > [Severity: High]
-> Will this translation ignore hardware MAC filter exhaustion during rule
-> updates?
+> By moving ice_setup_mc_magic_wake() outside of devl_lock(), is it exposed to
+> concurrent devlink operations like reload?
 >
-> Because the error translation is strictly gated behind
-> opc == ice_aqc_opc_add_sw_rules, if a rule update command (e.g., expanding
-> a VSI list) triggers hardware exhaustion, it appears it will return a generic
-> -EIO rather than -ENOSPC.
-An update modifies an existing rule and the FW does not allocate
-anything for it. The VSI list allocation in that path goes through
-ice_aq_alloc_free_res(), not through ice_aq_sw_rules(), so the
-translation is limited to add on purpose, the same way ca1fdb885e5f
-limited ENOENT to the non-add commands.
+> If a devlink reload operation executes concurrently with the driver's removal
+> routine when Wake-on-LAN is enabled, the reload can call ice_unload() and
+> ice_decfg_netdev(). This unregisters and frees the netdev.
+
+A devlink reload can not run concurrently with ice_remove(). Since
+commit bf6b200bc80d18 ("devlink: Acquire device lock during reload
+command") the reload takes the device lock before the devlink instance
+lock, and both the PCI unbind path and device_shutdown() hold that same
+device lock for the whole of ice_remove().
 
 >
-> Additionally, native software -ENOSPC errors returned directly by
-> ice_sq_send_cmd() will pass through unchanged, leading to the conflation
-> issue mentioned above in ice_vsi_sync_fltr().
-  See above, that needs a send queue the FW stopped draining.
+> When ice_setup_mc_magic_wake() runs unprotected by the devlink lock, can it
+> experience a use-after-free when attempting to read the freed netdev's MAC
+> address?
+>
+> drivers/net/ethernet/intel/ice/ice_main.c:ice_setup_mc_magic_wake() {
+>      ...
+> 	if (vsi->netdev)
+> 		ether_addr_copy(mac_addr, vsi->netdev->dev_addr);
+>      ...
+> }
+>
+> Would it be safer to place the ice_setup_mc_magic_wake() call after acquiring
+> the devlink lock?
+No, the netdev can not go away underneath ice_setup_mc_magic_wake()
+regardless of where the devlink lock is taken in ice_remove().
+
+>
+>>   	ice_dealloc_all_dynamic_ports(pf);
+>>   	ice_deinit_devlink(pf);
+>> @@ -5475,7 +5477,6 @@ static void ice_remove(struct pci_dev *pdev)
+>>   	ice_deinit(pf);
+>>   	ice_vsi_release_all(pf);
+>>   
+>> -	ice_setup_mc_magic_wake(pf);
+>>   	ice_set_wake(pf);
+>>   
+>>   	ice_adapter_put(pdev);
 
