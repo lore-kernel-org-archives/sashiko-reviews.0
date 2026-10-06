@@ -1,43 +1,43 @@
-Received: from smtp-8faf.mail.infomaniak.ch (smtp-8faf.mail.infomaniak.ch [83.166.143.175])
+Received: from smtp-8fac.mail.infomaniak.ch (smtp-8fac.mail.infomaniak.ch [83.166.143.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DA63859DE
-	for <sashiko-reviews@lists.linux.dev>; Tue,  6 Oct 2026 09:57:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.166.143.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7993A7848
+	for <sashiko-reviews@lists.linux.dev>; Tue,  6 Oct 2026 10:05:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.166.143.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791280678; cv=none; b=D5an9A9oEkqa7IPBMq8OuD7yGtl9wCJQccf9SYgmZYtUqq8V03w91Qw6HJm7FBPQYqQikO4NxfbJIOMnuklkhjeopIIlfcxmcW5XjDvbHTwalf5RxbNQuEjxOJ3liP/PqoJFMoG31JyMDT7PBTgXlraSLhEirSOi9DCylk/p+Ic=
+	t=1791281125; cv=none; b=oq9ci9Oke2H4nQzj4BGyD7+w8HydX3VLkaSpT+MYDrU9GlLNBAXDpMKzAM9Joi/taeGGqjDrCurAJu/M6zAeNoH5KBOX7LvsgzS6OoyvEGXpYph/lZ+xPsOiRr6rTS/Dxm+EpQHBYsE7Ur/b6RuzFcQQsIlEcNWFobHY5ipHyl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791280678; c=relaxed/simple;
-	bh=YNcRnPEVP+qc0WGUwQzbE068+g8DJVqvvtACuLU8VXw=;
+	s=arc-20240116; t=1791281125; c=relaxed/simple;
+	bh=YZQu7g3QBp9P4SUelfN9I3/NuwGuO8VwyhtRC4EnDNk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P0OpKTGiYUyGV+q+/TuxaMRuu5qLyCQE9nKtrNl7lAKxheth+CEusYq63ywx4BGGVt7EyjWVKICg7HuMI9iDVuu1W3UHKThb9QX1CTpKJbm2XwjpwNOlygqRhBiPV5/Sj2qReVSrr/uABx9ySnEjSqEMHuEC+pWBrHgc76+EVVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net; spf=pass smtp.mailfrom=digikod.net; dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b=b8xsTaYQ; arc=none smtp.client-ip=83.166.143.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=BDFX6XjEOxv0DIoWqO7aI4yA+U7W7/7Q4PlA5ZlvGCMR6GojxPLXeWxUtK2/S7cuwoji3x5mpp5O5t9g5HcUGIItMhW+CEHa/QKq9E9JAJvckZ+5THKl7ShCcnu6ZyYoWoACMtngVthX/1bnWnILRw3gVJ2KOdxktbd8N56W6Js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net; spf=pass smtp.mailfrom=digikod.net; dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b=AjDyibPm; arc=none smtp.client-ip=83.166.143.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=digikod.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b="b8xsTaYQ"
-Received: from smtp-3-0000.mail.infomaniak.ch (smtp-3-0000.mail.infomaniak.ch [10.4.36.107])
-	by smtp-4-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4hzWs81Lh5zx5k;
-	Tue,  6 Oct 2026 11:57:48 +0200 (CEST)
+	dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b="AjDyibPm"
+Received: from smtp-3-0001.mail.infomaniak.ch (unknown [IPv6:2001:1600:4:17::246c])
+	by smtp-3-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4hzWrH6gp6znjl;
+	Tue,  6 Oct 2026 11:57:03 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=digikod.net;
-	s=20191114; t=1791280668;
-	bh=RbgEgqgxRxR4ygPWO3HOXHZyC2gErfjPlV6vBFA+BJ0=;
+	s=20191114; t=1791280623;
+	bh=1EGI+kI25Q0djPAmscqTq4uRG7U5UWcApAaK3bBnxYU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=b8xsTaYQ6P9x83/R4WxHJhwy2jmu/vN27AU5vx9FtaBWR/JYQrTduw/v/WIShWHT4
-	 sNlEx3cIfzUeDMRWwQFS1KnvZGGB3FZBpdWTZ4yGFekn6a32g7pGOZ4JwDQxILM1x3
-	 3czVhH+XnuAk7nN6iZu9O3PtoFEIruuqzg+ZkeBo=
-Received: from unknown by smtp-3-0000.mail.infomaniak.ch (Postfix) with ESMTPA id 4hzWs73rl3zwgv;
-	Tue,  6 Oct 2026 11:57:47 +0200 (CEST)
-Date: Tue, 6 Oct 2026 11:57:46 +0200
+	b=AjDyibPm+L1cLECcdRE//QhSnp4n49rK+V+gLT+VYMJDe+RLhwqJXQXnlFgBCpOEx
+	 5wisJSR3iwnuUNJTWRQI04NqJ+xU7As75Asff+ZU4RbJd8jwiJsvsc6IN0eQcAWR8M
+	 YHAiId21yEVh4vy/TZYJY0dTPIA1KjFK2GRzseK4=
+Received: from unknown by smtp-3-0001.mail.infomaniak.ch (Postfix) with ESMTPA id 4hzWrH2WJ2zRPh;
+	Tue,  6 Oct 2026 11:57:03 +0200 (CEST)
+Date: Tue, 6 Oct 2026 11:56:59 +0200
 From: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-security-module@vger.kernel.org
-Subject: Re: [PATCH v4 7/8] samples/landlock: Add capability and namespace
- restriction support
-Message-ID: <20261006.FaeKaeteefe4@digikod.net>
+Subject: Re: [PATCH v4 5/8] selftests/landlock: Add namespace restriction
+ tests
+Message-ID: <20261006.tooshaPae6ai@digikod.net>
 References: <20261002124409.1277970-1-mic@digikod.net>
- <20261002124409.1277970-8-mic@digikod.net>
- <20261002125330.A4FA11F000FF@smtp.kernel.org>
+ <20261002124409.1277970-6-mic@digikod.net>
+ <20261002125628.94DE41F00898@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -47,113 +47,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261002125330.A4FA11F000FF@smtp.kernel.org>
+In-Reply-To: <20261002125628.94DE41F00898@smtp.kernel.org>
 X-Infomaniak-Routing: alpha
 
-On Fri, Oct 02, 2026 at 12:53:30PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Low] build: sample landlock fails on systems without libcap-dev
-> - [Low] build: missing fallback for CLONE_NEWTIME breaks build on glibc < 2.33
+On Fri, Oct 02, 2026 at 12:56:28PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] selftests/landlock: Data truncation of 64-bit namespace flags in audit log string matching
 > --
 > 
-> commit c88aebdbd55f6c34b61885d4e3d918bc61983af0
+> commit 5fd29f953c165adc6df65241e36e43cef7dbf0ae
 > Author: Mickaël Salaün <mic@digikod.net>
 > 
-> samples/landlock: Add capability and namespace restriction support
+> selftests/landlock: Add namespace restriction tests
 > 
-> This commit extends the sandboxer sample to demonstrate new Landlock
-> capability and namespace restriction features. It allows parsing allowed
-> namespaces and capabilities using libcap, adding appropriate command line
-> arguments for testing.
+> This commit adds extensive tests for the LANDLOCK_PERMISSION_NAMESPACE_USE
+> restriction, covering namespace creation and entry. It includes rule
+> validation, forward compatibility checks, layer stacking, and audit logging.
 > 
-> > diff --git a/samples/Kconfig b/samples/Kconfig
-> > index a75e8e78330da..b18efc19b85d0 100644
-> > --- a/samples/Kconfig
-> > +++ b/samples/Kconfig
-> > @@ -166,8 +166,10 @@ config SAMPLE_LANDLOCK
-> >  	bool "Landlock example"
-> >  	depends on CC_CAN_LINK && HEADERS_INSTALL
-> >  	help
-> > -	  Build a simple Landlock sandbox manager able to start a process
-> > -	  restricted by a user-defined filesystem access control policy.
-> > +	  Build a Landlock sandbox manager able to start a process restricted
-> > +	  by user-defined filesystem, network, scope, namespace, and capability
-> > +	  policies.  This sample requires the libcap development headers and
-> > +	  library.
-> >  
-> >  config SAMPLE_PIDFD
-> >  	bool "pidfd sample"
+> Link: https://patch.msgid.link/20260726161400.3010511-10-mic@digikod.net
+> 
+> > diff --git a/tools/testing/selftests/landlock/ns_test.c b/tools/testing/selftests/landlock/ns_test.c
+> > new file mode 100644
+> > index 0000000000000..6faafc110844d
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/landlock/ns_test.c
 > 
 > [ ... ]
 > 
-> > diff --git a/samples/landlock/Makefile b/samples/landlock/Makefile
-> > index 5d601e51c2ebf..b30239c8a281c 100644
-> > --- a/samples/landlock/Makefile
-> > +++ b/samples/landlock/Makefile
-> > @@ -3,6 +3,7 @@
-> >  userprogs-always-y := sandboxer
-> >  
-> >  userccflags += -I usr/include
-> > +userldlibs += -lcap
-> 
-> [Severity: Low]
-> Does this unconditional linking cause build failures during make allmodconfig
-> or make samples if the host system lacks the libcap-dev library?
-> 
-> Since the Kconfig does not verify the presence of the libcap library (for
-> example, using a $(success,...) check), the build will unconditionally
-> attempt to link against it and fail when the dependency is missing. Could a
-> dependency check be added in the Kconfig to prevent breaking automated 
-> testing on minimal host environments?
-
-I'll make libcap-dev optional.
-
-> 
-> >  
-> >  .PHONY: all clean
-> 
-> [ ... ]
-> 
-> > diff --git a/samples/landlock/sandboxer.c b/samples/landlock/sandboxer.c
-> > index 030583273f3f7..4a86ae6d4552d 100644
-> > --- a/samples/landlock/sandboxer.c
-> > +++ b/samples/landlock/sandboxer.c
-> > @@ -232,6 +241,166 @@ static int populate_ruleset_net(const char *const env_var, const int ruleset_fd,
-> >  	return ret;
-> >  }
-> >  
-> > +static __u64 str2ns(const char *const name)
+> > +static int matches_log_ns_create(int audit_fd, __u64 ns_type)
 > > +{
-> > +	static const struct {
-> > +		const char *name;
-> > +		__u64 value;
-> > +	} ns_map[] = {
-> > +		/* clang-format off */
-> > +		{ "cgroup",	CLONE_NEWCGROUP },
-> > +		{ "ipc",	CLONE_NEWIPC },
-> > +		{ "mnt",	CLONE_NEWNS },
-> > +		{ "net",	CLONE_NEWNET },
-> > +		{ "pid",	CLONE_NEWPID },
-> > +		{ "time",	CLONE_NEWTIME },
+> > +	static const char log_template[] = REGEX_LANDLOCK_PREFIX
+> > +		" blockers=namespace\\.use namespace_type=0x%x namespace_id=0$";
+> > +	char log_match[sizeof(log_template) + 10];
+> > +	int log_match_len;
+> > +
+> > +	log_match_len = snprintf(log_match, sizeof(log_match), log_template,
+> > +				 (unsigned int)ns_type);
 > 
 > [Severity: Low]
-> Will this missing fallback macro for CLONE_NEWTIME cause compilation failures
-> on older host environments?
-> 
-> The CLONE_NEWTIME macro was added to the glibc sched.h header starting in
-> version 2.33. If the sample is built on a system with an older glibc, it
-> fails to compile. Can we add a fallback preprocessor definition for 
-> CLONE_NEWTIME so the sample can still build on older distributions?
+> Does this format string risk truncating the ns_type value? The ns_type
+> parameter is a 64-bit __u64, but it is explicitly cast to unsigned int
+> and formatted with %x. If a namespace flag exceeding 32 bits is ever
+> tested, the upper 32 bits will be truncated, producing an incorrect audit
+> log match string and causing test failures.
 
-I'll use the kernel headers.
+The cast is intentional and doe snot truncate an emitted audit value
+(which is 32-bit).
 
 > 
-> > +		{ "user",	CLONE_NEWUSER },
-> > +		{ "uts",	CLONE_NEWUTS },
-> > +		/* clang-format on */
-> > +	};
-> > +	size_t i;
+> > +	if (log_match_len >= sizeof(log_match))
+> > +		return -E2BIG;
+> > +
+> > +	return audit_match_record(audit_fd, AUDIT_LANDLOCK_ACCESS, log_match,
+> > +				  NULL);
+> > +}
+> > +
+> > +static int matches_log_ns_setns(int audit_fd, __u64 ns_type, __u64 ns_id)
+> > +{
+> > +	static const char log_template[] = REGEX_LANDLOCK_PREFIX
+> > +		" blockers=namespace\\.use namespace_type=0x%x namespace_id=%llu$";
+> > +	char log_match[sizeof(log_template) + 32];
+> > +	int log_match_len;
+> > +
+> > +	log_match_len = snprintf(log_match, sizeof(log_match), log_template,
+> > +				 (unsigned int)ns_type,
+> > +				 (unsigned long long)ns_id);
+> 
+> [Severity: Low]
+> This seems to have the same truncation issue as matches_log_ns_create()
+> above. The 64-bit ns_type parameter is cast to a 32-bit unsigned int and
+> formatted with %x, which will drop the upper 32 bits.
+
+No issue here as well.
+
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261002124409.1277970-1-mic@digikod.net?part=7
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261002124409.1277970-1-mic@digikod.net?part=5
 > 
