@@ -1,64 +1,146 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7F5547053;
-	Tue,  6 Oct 2026 00:47:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77742FD1DA
+	for <sashiko-reviews@lists.linux.dev>; Tue,  6 Oct 2026 05:02:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791247671; cv=none; b=gVgHgFum7VjbL/I7n/xG810y1VNTzFZmLM31wQieGmEhU7gD7nViRF4F2MC1yFPHjuM69jyA/0mUB5Z1bLBdjmXPm/yjj3aP5fUn1QxkmnwwbFh/cdUf1obumPDfN+kDh1s6IlFAlN/y5RuqBeRWyfT8ODY6cG7zj/NSF/yh+IM=
+	t=1791262946; cv=none; b=A1YdnBI6X4FDT4kayI/tjwW8ymYDxU5cpxQRn1f2cmNUUelK/GR4ZVWYUdmvXtKZHVZuKmVZPV3zAUOUuBcZFPPfCg4pQvnzBWY34OP43IrsnGZIe0zfav1VAu3tecr6RbzwOqn+0l7ySkH2Rq1dxV/oBXA3s11EAWvn7VjSwfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791247671; c=relaxed/simple;
-	bh=1uyx2PR9FyJhmgfj8hhMJrQtMzybWNZgsTSOHcN9jv4=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Cd0GMPl3OByyToI7G1ljzLA/yrVi2jdHbgqAwaEj070zDZgXkFKmFmOII0Ku515no7FZKL8Oj5tDDBw+i8iT8ZBoD1WedBKYuDNlzvpqhJCHFpb237sCc5yQzZCh5LYS5ZLG/2r68g1h47TVrczRueLcOxh/OQMMn3UaYZUpZIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EXt7ULwM; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791262946; c=relaxed/simple;
+	bh=mLp/Te6XovODgA3ctFdIo+GqO0+rWdIhoncf+nOJAk0=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=e606kBgs/+ooMpyS+ObE/k7UF98bKZDph1nvXHJdsj1s0YW79NoGaYzjfJas4lSM13OdmiX/+zAR6X/0qQRUzaR7u/HD+mHI9P4w/OG4cHamYXdl7DDMmGD56vYECFpQUAmxgqE8VpmEPWkeNh8unH4ErU6QeIz3Wt9Cy4aOgnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SDjkLjbE; arc=none smtp.client-ip=209.85.216.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EXt7ULwM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF1A1F00893;
-	Tue,  6 Oct 2026 00:47:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791247669;
-	bh=nsnozgAjynyhVztQP/dM0tRkd3Fkc3G+sIfOOXdNP2w=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=EXt7ULwMXOTOARddnKoEWxMxuvnK3M8gmK9uc4bNxAQnp6W+EiiUql2muNkyZG9KA
-	 /Nm9N58bk2VyGOWkhsYG9H8aNHzDQoUTPNqENe3VPOcemqeQj2VxVX/zy/d//zZFGT
-	 9yZItD6+07nInBz1B8GFim33Y9ohyLmKPVd+QK0k/LfUafDrWc4VN/g3cEg9yvvz37
-	 c0pz4/mg1Os2u8w9Q6u0OlN7Ko2DGHizoAw/0fZ04JQibWxGYhIfJvPmglkxcl52tF
-	 c723m0FfqyZmGyzw1BzswH6wqQi5U7K75yMtg+bkvN8dOSzK6sjbzn9B41zNzxOb/U
-	 mxMG1Z879+URw==
-Date: Mon, 5 Oct 2026 17:47:49 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Alexander Lobakin <aleksander.lobakin@intel.com>
-Cc: <sashiko-reviews@lists.linux.dev>, Tony Nguyen
- <anthony.l.nguyen@intel.com>, <bpf@vger.kernel.org>,
- "netdev@vger.kernel.org" <netdev@vger.kernel.org>
-Subject: Re: [PATCH net-next 1/2] idpf: add flow-based XDP fallback for FWs
- without Tx FIFO support
-Message-ID: <20261005174749.0edcc263@kernel.org>
-In-Reply-To: <e967306a-0505-4f14-9041-5056d00bd8bb@intel.com>
-References: <20260929231305.1515873-1-anthony.l.nguyen@intel.com>
-	<20260929231305.1515873-2-anthony.l.nguyen@intel.com>
-	<20260930231331.1E2051F000FF@smtp.kernel.org>
-	<e967306a-0505-4f14-9041-5056d00bd8bb@intel.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SDjkLjbE"
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3a4aa263a4aso2449044a91.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 05 Oct 2026 22:02:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1791262944; x=1791867744; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=FOXXPBDAovzDD17f2vUafohoPRyevd3vdSD2CvKlr3A=;
+        b=SDjkLjbEinDrLoGCWM8UG3jS0tInTrDCTpC0VXXCr8JiwQ83BAxZQMNqk6mheWJZ6Q
+         DqXsnsHSP6hWTIwHRPq46n3lqBWStVewb3TpUV5tfK1b5UpD6VTt6YlrZEuQLUddWQL/
+         Il8Is2L8eB2eH7HkaIwuSqAEbPWYXdHhsMTAI/l7exbj0tUwYJb7vn3X7MnRhXTgBLUQ
+         pMHbOxeo3tQFb+hOoyV10XKctHzunUUVEIgvhReZrg8KpuxuSTr6xf6egDh0cyIZY6ZV
+         06M72YFcTme2oSgHSaGloGLALzgL8fW0OX3MaguhTuN0uMdltljIdj6Gl7sKzQneNfge
+         QLWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791262944; x=1791867744;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=FOXXPBDAovzDD17f2vUafohoPRyevd3vdSD2CvKlr3A=;
+        b=w3pIVMSA4oimsrhivHIOigtcb9Hqqhk8ExWJlCeo2kF20Ecl9Zi9fJD4gu+cdyxgRj
+         J7G9wW+1w+DveCsN/W71JhIGGqZ/8ZsNWk1S6/3Bo4IRdwYu9+Reo+n29Q9GuXHCJqgu
+         YKkvbnmRl0VIlhFEzNLr8GmxE7AIaCIlsYoMli6rAg/mXVHoLvmW7/zq6NYHLRShT66q
+         aP+BA3/NY4GEQ673SWuDXyggysciJJ8gG5O7H3Ci5Gf0IBmH+DkWfNHUscnWGKCuBf5S
+         zSFJsu1jtFOWzvnLHb/FwtYnOdWywz6db1+U9wIioqdbJjuTsVthRT/MzTbOngu47A01
+         undg==
+X-Gm-Message-State: AFq9FYLVng50bnrg0rvQJrlZlElBtdHLjayJKIJ+gXxXv0wfOVWuN7L2
+	rTpf4iOx/Tz6CHfrKWfD9OfWKWQIuhVqpSWWg7q1CHbjxg0YnmXPhOpRFl/dlv53MctswPZzwOs
+	h5O2mkw==
+X-Received: from pjbdw21.prod.google.com ([2002:a17:90b:955:b0:3a8:4e6f:49e3])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:288c:b0:39e:5b3c:4633
+ with SMTP id 98e67ed59e1d1-3a8735166fbmr234816a91.21.1791262943760; Mon, 05
+ Oct 2026 22:02:23 -0700 (PDT)
+Date: Mon, 5 Oct 2026 22:02:18 -0700
+In-Reply-To: <7fd7a6dc-9429-44d4-94b7-c7930536043a@amd.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <20260824131824.6040-1-shivansh.dhiman@amd.com>
+ <20260824135155.6B0A41F000E9@smtp.kernel.org> <7fd7a6dc-9429-44d4-94b7-c7930536043a@amd.com>
+Message-ID: <asSA2uApsOMMCvgI@google.com>
+Subject: Re: [PATCH] KVM: SVM: Clear VMCB save area instead of entire VMCB on
+ shutdown intercept
+From: Sean Christopherson <seanjc@google.com>
+To: Shivansh Dhiman <shivansh.dhiman@amd.com>
+Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Thu, 1 Oct 2026 17:43:50 +0200 Alexander Lobakin wrote:
-> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> > - [High] idpf: data race on pending_mask and last_ntu in XDP Tx finalize
-> > - [High] idpf: out-of-bounds write in idpf_xdpsq_poll_fb due to unvalidated completion tag
-> > - [Medium] idpf: mixing goto-based cleanup and __free() in idpf_xdpsqs_get  
-> 
-> I think this already appeared earlier and I replied to these a while ago?
+On Tue, Aug 25, 2026, Shivansh Dhiman wrote:
 
-Please ignore the sashiko.dev reviews at the moment.
-netdev isn't even CCed on those :/
+> On 24-08-26 19:21, sashiko-bot@kernel.org wrote:
+> >> diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+> >> --- a/arch/x86/kvm/svm/svm.c
+> >> +++ b/arch/x86/kvm/svm/svm.c
+> > [ ... ]
+> >> @@ -2164,18 +2164,23 @@ static int shutdown_interception(struct kvm_vcpu *vcpu)
+> > [ ... ]
+> >>  	if (!is_sev_es_guest(vcpu)) {
+> >> -		clear_page(svm->vmcb);
+> >> +		struct vmcb_control_area *control = &svm->vmcb->control;
+> >> +
+> >> +		memset(&svm->vmcb->save, 0, sizeof(svm->vmcb->save));
+> >> +		control->int_ctl &= ~GENMASK(15, 0);
+> >> +		control->int_state = 0;
+> > 
+> > [Severity: High]
+> > Since clear_page() was replaced with targeted clearing, do we also need to
+> > clear control->event_inj and control->event_inj_err here?
+> > 
+> > According to the AMD APM, hardware does not clear the EVENTINJ field in the
+> > VMCB on a VM exit, which leaves the VALID bit set if an exit occurs during
+> > event delivery (such as a triple fault leading to SVM_EXIT_SHUTDOWN).
+> > 
+> > If the EVENTINJ field is left intact across this shutdown reset, will KVM
+> > execute the subsequent VMRUN with the stale EVENTINJ_VALID flag still set?
+> > 
+> > Could this cause KVM to spuriously inject the old fault into the newly
+> > reset real-mode vCPU on its first instruction, leading to an immediate
+> > crash or an infinite triple-fault loop?
+> The latest APM says otherwise. The #VMEXIT sequence in APM ends with "clear
+> EVENTINJ field in VMCB". Hardware clears the field on every exit, so there
+> is nothing stale to carry across the shutdown reset and the scenario can't
+> arise.
 
-Reply to the netdev-ai one, until the systems converge and netdev-ai 
-is deprecated. 
+But that seemingly unconditional statement has hidden clauses[*]:
+
+ : >> The second half isn't. Clearing EVENTINJ is not part of injection, it's part of
+ : >> #VMEXIT, and it's unconditional.
+ : > So that doesn't mesh with the above comment, which says:
+ : >
+ : >   Hardware clears EVENTINJ field when it injects an event.
+ : >
+ : > And it begs the question of how this patch is at all useful.  Because all this
+ : > fancy new paranoia is clearly generating #VMEXITs, and if #VMEXIT unconditionally
+ : > clears control->event_inj, I don't see how control->event_inj can be non-zero if
+ : > KVM attempted VMRUN.
+ : >
+ : > I.e. either this is all broken, or the APM is buggy.
+ : 
+ : My wording in the comment is misleading. The clear is part of the #VMEXIT path
+ : out of guest mode, where it is indeed unconditional. However, VMRUN can
+ : terminate even before the guest mode is ever entered. With ESMTP, the hardware
+ : can give out a garden variety of exits at the sync point. In this case we
+ : get a VMEXIT that implies the VMRUN never actually ran any guest code then
+ : EVENTINJ won't be cleared. Since the exit code isn't a reliable discriminator,
+ : a non-zero EVENTINJ is the only way to tell.
+
+Ignoring that IMO the APM needs to be updated to clarify exactly when EVENTINJ
+is cleared and when it isn't, I don't see any point in not manually clearing the
+field on SHUTDOWN.  Common sense would say that it's unnecessary as SHUTDOWN can
+only occur if VMRUN gets into the guest, but the cost is completely neglible and
+there is zero chance EVENTINJ *needs* to be retained, unlike say the PML index.
+
+We can certainly add a comment saying it's paranoid, but I do think we should
+manually clear EVENTINJ and friend, e.g.
+
+	/*
+	 * EVENTINJ is cleared on #VMEXIT, but only if VMRUN fully entered the
+	 * guest.  Manually clear the fields even though it should be redundant,
+	 * as there is no downside to doing so.
+	 */
+	control->event_inj = 0;
+	control->event_inj_err = 0;
+
+[*] https://lore.kernel.org/all/d946de080e3dd34844a665c167179e4910fdc9d4.1789399214.git.prsampat@amd.com
