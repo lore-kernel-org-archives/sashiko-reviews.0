@@ -1,146 +1,142 @@
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77742FD1DA
-	for <sashiko-reviews@lists.linux.dev>; Tue,  6 Oct 2026 05:02:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7849E846A
+	for <sashiko-reviews@lists.linux.dev>; Tue,  6 Oct 2026 05:37:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791262946; cv=none; b=A1YdnBI6X4FDT4kayI/tjwW8ymYDxU5cpxQRn1f2cmNUUelK/GR4ZVWYUdmvXtKZHVZuKmVZPV3zAUOUuBcZFPPfCg4pQvnzBWY34OP43IrsnGZIe0zfav1VAu3tecr6RbzwOqn+0l7ySkH2Rq1dxV/oBXA3s11EAWvn7VjSwfQ=
+	t=1791265027; cv=none; b=stlyaj/Tzxb8qoPgYsQMYpqxnU52lxopisVOWSYbfNC5ucvn+8vwdsZjYydDmti9JBQv3gPlYttwYG/Cd9z4OUxNJ2dIPc0P50i+E+fM2TCTONsNve8OfXzDEBURzmM4sOxtWxurEzchQAgJ2bjEh6NN7yxCGo7rHd8+pr5lCA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791262946; c=relaxed/simple;
-	bh=mLp/Te6XovODgA3ctFdIo+GqO0+rWdIhoncf+nOJAk0=;
+	s=arc-20240116; t=1791265027; c=relaxed/simple;
+	bh=8GHqHHW4P3wMvCdDuwdvXLkRiUFHsX1QeAsDhLHpns4=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=e606kBgs/+ooMpyS+ObE/k7UF98bKZDph1nvXHJdsj1s0YW79NoGaYzjfJas4lSM13OdmiX/+zAR6X/0qQRUzaR7u/HD+mHI9P4w/OG4cHamYXdl7DDMmGD56vYECFpQUAmxgqE8VpmEPWkeNh8unH4ErU6QeIz3Wt9Cy4aOgnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SDjkLjbE; arc=none smtp.client-ip=209.85.216.72
+	 To:Cc:Content-Type; b=neJPVVQs5APKNueQISbMXODJZ165qNXQ0joxFRJwACfD82lMDGLKgGhQTJEXSBXPSkDZ22YAvMLTQKwjAJ7MeKC1OseKhSbFAJPYTWclecg0qa8dh1NzCD88SN+8uOgMdZve1wSSkt503oQGiJH30mtUPklmAGB9FreldmYlVpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=nUmT38Nj; arc=none smtp.client-ip=209.85.215.199
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SDjkLjbE"
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3a4aa263a4aso2449044a91.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 05 Oct 2026 22:02:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nUmT38Nj"
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-cc489e7a701so2753136a12.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 05 Oct 2026 22:37:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1791262944; x=1791867744; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=FOXXPBDAovzDD17f2vUafohoPRyevd3vdSD2CvKlr3A=;
-        b=SDjkLjbEinDrLoGCWM8UG3jS0tInTrDCTpC0VXXCr8JiwQ83BAxZQMNqk6mheWJZ6Q
-         DqXsnsHSP6hWTIwHRPq46n3lqBWStVewb3TpUV5tfK1b5UpD6VTt6YlrZEuQLUddWQL/
-         Il8Is2L8eB2eH7HkaIwuSqAEbPWYXdHhsMTAI/l7exbj0tUwYJb7vn3X7MnRhXTgBLUQ
-         pMHbOxeo3tQFb+hOoyV10XKctHzunUUVEIgvhReZrg8KpuxuSTr6xf6egDh0cyIZY6ZV
-         06M72YFcTme2oSgHSaGloGLALzgL8fW0OX3MaguhTuN0uMdltljIdj6Gl7sKzQneNfge
-         QLWg==
+        d=google.com; s=20251104; t=1791265026; x=1791869826; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=JrZ+9fylt/opwUtHI9ou9/fKWBeNkcZDirBcL4MFEik=;
+        b=nUmT38Nj6BHmkNYFbZL4Uge5QkZWGplGJ1JqaMoaxCcdr2vOzgFt0iqUxp/Xh51o4Z
+         7SajkRYL9TICWfZBQU5N692DxYKIsRWFgMfRx2QLP1TbkQQjDyZXUd0kMuyPS0apamD8
+         zhnj5hJOn5Ajw9ecHTiUasMw31913EqfAnFzp9qFXE+4QJkajTAkA5U2bB3GatwksfzA
+         yubL6JIbHw9NJN+8lStNxuZJdQPA0yW7ZmyezBvuWFyG+oCG6tQmwOb+hpB2JSEuZ6uQ
+         ceoejv5ij2BUEttPqg9kFPSRaorEO3I/vX/u88vjipnT2K+0kW4nqr5RsVOem7nZj/tO
+         Z15A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791262944; x=1791867744;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=FOXXPBDAovzDD17f2vUafohoPRyevd3vdSD2CvKlr3A=;
-        b=w3pIVMSA4oimsrhivHIOigtcb9Hqqhk8ExWJlCeo2kF20Ecl9Zi9fJD4gu+cdyxgRj
-         J7G9wW+1w+DveCsN/W71JhIGGqZ/8ZsNWk1S6/3Bo4IRdwYu9+Reo+n29Q9GuXHCJqgu
-         YKkvbnmRl0VIlhFEzNLr8GmxE7AIaCIlsYoMli6rAg/mXVHoLvmW7/zq6NYHLRShT66q
-         aP+BA3/NY4GEQ673SWuDXyggysciJJ8gG5O7H3Ci5Gf0IBmH+DkWfNHUscnWGKCuBf5S
-         zSFJsu1jtFOWzvnLHb/FwtYnOdWywz6db1+U9wIioqdbJjuTsVthRT/MzTbOngu47A01
-         undg==
-X-Gm-Message-State: AFq9FYLVng50bnrg0rvQJrlZlElBtdHLjayJKIJ+gXxXv0wfOVWuN7L2
-	rTpf4iOx/Tz6CHfrKWfD9OfWKWQIuhVqpSWWg7q1CHbjxg0YnmXPhOpRFl/dlv53MctswPZzwOs
-	h5O2mkw==
-X-Received: from pjbdw21.prod.google.com ([2002:a17:90b:955:b0:3a8:4e6f:49e3])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:288c:b0:39e:5b3c:4633
- with SMTP id 98e67ed59e1d1-3a8735166fbmr234816a91.21.1791262943760; Mon, 05
- Oct 2026 22:02:23 -0700 (PDT)
-Date: Mon, 5 Oct 2026 22:02:18 -0700
-In-Reply-To: <7fd7a6dc-9429-44d4-94b7-c7930536043a@amd.com>
+        d=1e100.net; s=20260707; t=1791265026; x=1791869826;
+        h=content-transfer-encoding:content-type:cc:to:from:subject
+         :message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=JrZ+9fylt/opwUtHI9ou9/fKWBeNkcZDirBcL4MFEik=;
+        b=mGf2JjFhqgXskNsvTO99qRJa1VyHY7oNq6pOUD6V4uP83E4boK2Yx0Ja8PMPRqpjXf
+         ABRpoFDgbfeihbPR9ESM/tKjlmb9so6Fz/f7CUrwYAnJxHnr+3D2pMZgKWT03iaERR8G
+         SQ9d9lXlZkW+RWuaZiRNNvax+y2P5p6uEhKk1mHlwyfZKFf9L7JXvTzrBplhvMfKlG+F
+         oFb7f1uvMgnj6/7NPq2VfrWiWY143wjzapCySk3L85vgsb+DPrx54X6ywS6D6ZQqIw8e
+         PvXwk/N/FyXcmXUsP+hETvfYdXgcBrAfKwibt2EQ2gClV/E2721OOhekFcDAb+iOWz/v
+         LYRw==
+X-Gm-Message-State: AFuF++ka+2u0LraPRzG5+BoBICfZH+BnnstddCvPLu3r78Pz7HCMM6Tg
+	oBD3OyUUzC9M1+USn5MDvlPxuVVDBaRAlOu0IWYZRFXi811iO4L4YZU2MJb2u9MJsRIQvCleZwR
+	gi6M5yA==
+X-Received: from pgap125.prod.google.com ([2002:a63:4283:0:b0:cc7:ac0b:f49d])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a21:1405:b0:3dd:85a8:cb81
+ with SMTP id adf61e73a8af0-3e12472425dmr273047637.36.1791265025528; Mon, 05
+ Oct 2026 22:37:05 -0700 (PDT)
+Date: Mon, 5 Oct 2026 22:37:04 -0700
+In-Reply-To: <CALMp9eRkgiFYeQcTU_aweJQTfrq7ijN5hw+6otKE_RvgGQm=Uw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20260824131824.6040-1-shivansh.dhiman@amd.com>
- <20260824135155.6B0A41F000E9@smtp.kernel.org> <7fd7a6dc-9429-44d4-94b7-c7930536043a@amd.com>
-Message-ID: <asSA2uApsOMMCvgI@google.com>
-Subject: Re: [PATCH] KVM: SVM: Clear VMCB save area instead of entire VMCB on
- shutdown intercept
+References: <20260930173635.3362655-1-seanjc@google.com> <20260930173635.3362655-14-seanjc@google.com>
+ <20260930175237.A8FD21F00898@smtp.kernel.org> <ar1QBSKMGJUFBExK@google.com> <CALMp9eRkgiFYeQcTU_aweJQTfrq7ijN5hw+6otKE_RvgGQm=Uw@mail.gmail.com>
+Message-ID: <asSJAJUuvCAXkCwi@google.com>
+Subject: Re: [PATCH v3 13/21] KVM: selftests: Use KVM's reported TSC KHz as
+ L0's frequency (sanity checked)
 From: Sean Christopherson <seanjc@google.com>
-To: Shivansh Dhiman <shivansh.dhiman@amd.com>
+To: Jim Mattson <jmattson@google.com>
 Cc: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 25, 2026, Shivansh Dhiman wrote:
+On Fri, Oct 02, 2026, Jim Mattson wrote:
+> On Wed, Sep 30, 2026 at 11:23=E2=80=AFAM Sean Christopherson <seanjc@goog=
+le.com> wrote:
+> >
+> > On Wed, Sep 30, 2026, sashiko-bot@kernel.org wrote:
+>=20
+> > > > @@ -212,18 +209,30 @@ static void test_tsc_scaling(u64 l0_tsc_freq,=
+ u64 l1_scale_factor, u64 l2_scale_
+> > > >  int main(int argc, char *argv[])
+> > > >  {
+> > > >     u64 l0_tsc_freq, tsc_start, tsc_end, l1_scale, l2_scale;
+> > > > +   struct kvm_vm *vm;
+> > > >
+> > > >     TEST_REQUIRE(kvm_cpu_has(X86_FEATURE_VMX) ||
+> > > >                  kvm_cpu_has(X86_FEATURE_SVM));
+> > > >     TEST_REQUIRE(kvm_has_cap(KVM_CAP_TSC_CONTROL));
+> > > >     TEST_REQUIRE(sys_clocksource_is_based_on_tsc());
+> > > >
+> > > > +   /*
+> > > > +    * Create a dummy VM to get KVM's default TSC frequency.  All C=
+PUs that
+> > > > +    * support TSC scaling should have a constant TSC, i.e. there's=
+ no need
+> > > > +    * to calibrate the "real" TSC.  But do sanity check that the o=
+bserved
+> > > > +    * TSC is within range of KVM's reported TSC frequency.
+> > > > +    */
+> > > > +   vm =3D vm_create_barebones();
+> > > > +   l0_tsc_freq =3D (u64)__vm_ioctl(vm, KVM_GET_TSC_KHZ, NULL) * 10=
+00;
+> > > > +   TEST_ASSERT(l0_tsc_freq, "vcpu ioctl KVM_GET_TSC_KHZ failed");
+> > >
+> > > [Severity: Low]
+> > > Does this properly catch an ioctl failure? If __vm_ioctl() fails and =
+returns
+> > > -1, casting it to a u64 and multiplying by 1000 results in a very lar=
+ge
+> > > non-zero value (0xfffffffffffffc18).
+> > >
+> > > Since TEST_ASSERT only checks if l0_tsc_freq is non-zero, won't this =
+pass
+> > > using garbage data instead of failing the test?
+> >
+> > Eh, yes and no.  KVM_GET_TSC_KHZ existed long before TSC scaling, and w=
+hile KVM
+> > doesn't sanity check tsc_khz, i.e. KVM_GET_TSC_KHZ could return a "legi=
+timate"
+> > negative frequency (when those ~2.17PHz CPUs come along), in practice c=
+hecking
+> > for a non-zero value is sufficient because any bogus value will quickly=
+ fail the
+> > functional checks.
+> >
+> > Heh, actually, kvm_arch_vm_post_create() *already* validates KVM_GET_TS=
+C_KHZ:
+> >
+> >         r =3D __vm_ioctl(vm, KVM_GET_TSC_KHZ, NULL);
+> >         TEST_ASSERT(r > 0, "KVM_GET_TSC_KHZ did not provide a valid TSC=
+ frequency.");
+> >         guest_tsc_khz =3D r;
+> >
+> > so this is a non-issue.  I agree it's not the prettiest, I just don't c=
+are enough
+> > to clean it up.
+>=20
+> In my best Sashiko passive-aggressive tone:
+>=20
+> Is it possible that vm_create_barebones() bypasses that check?
 
-> On 24-08-26 19:21, sashiko-bot@kernel.org wrote:
-> >> diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-> >> --- a/arch/x86/kvm/svm/svm.c
-> >> +++ b/arch/x86/kvm/svm/svm.c
-> > [ ... ]
-> >> @@ -2164,18 +2164,23 @@ static int shutdown_interception(struct kvm_vcpu *vcpu)
-> > [ ... ]
-> >>  	if (!is_sev_es_guest(vcpu)) {
-> >> -		clear_page(svm->vmcb);
-> >> +		struct vmcb_control_area *control = &svm->vmcb->control;
-> >> +
-> >> +		memset(&svm->vmcb->save, 0, sizeof(svm->vmcb->save));
-> >> +		control->int_ctl &= ~GENMASK(15, 0);
-> >> +		control->int_state = 0;
-> > 
-> > [Severity: High]
-> > Since clear_page() was replaced with targeted clearing, do we also need to
-> > clear control->event_inj and control->event_inj_err here?
-> > 
-> > According to the AMD APM, hardware does not clear the EVENTINJ field in the
-> > VMCB on a VM exit, which leaves the VALID bit set if an exit occurs during
-> > event delivery (such as a triple fault leading to SVM_EXIT_SHUTDOWN).
-> > 
-> > If the EVENTINJ field is left intact across this shutdown reset, will KVM
-> > execute the subsequent VMRUN with the stale EVENTINJ_VALID flag still set?
-> > 
-> > Could this cause KVM to spuriously inject the old fault into the newly
-> > reset real-mode vCPU on its first instruction, leading to an immediate
-> > crash or an infinite triple-fault loop?
-> The latest APM says otherwise. The #VMEXIT sequence in APM ends with "clear
-> EVENTINJ field in VMCB". Hardware clears the field on every exit, so there
-> is nothing stale to carry across the shutdown reset and the scenario can't
-> arise.
-
-But that seemingly unconditional statement has hidden clauses[*]:
-
- : >> The second half isn't. Clearing EVENTINJ is not part of injection, it's part of
- : >> #VMEXIT, and it's unconditional.
- : > So that doesn't mesh with the above comment, which says:
- : >
- : >   Hardware clears EVENTINJ field when it injects an event.
- : >
- : > And it begs the question of how this patch is at all useful.  Because all this
- : > fancy new paranoia is clearly generating #VMEXITs, and if #VMEXIT unconditionally
- : > clears control->event_inj, I don't see how control->event_inj can be non-zero if
- : > KVM attempted VMRUN.
- : >
- : > I.e. either this is all broken, or the APM is buggy.
- : 
- : My wording in the comment is misleading. The clear is part of the #VMEXIT path
- : out of guest mode, where it is indeed unconditional. However, VMRUN can
- : terminate even before the guest mode is ever entered. With ESMTP, the hardware
- : can give out a garden variety of exits at the sync point. In this case we
- : get a VMEXIT that implies the VMRUN never actually ran any guest code then
- : EVENTINJ won't be cleared. Since the exit code isn't a reliable discriminator,
- : a non-zero EVENTINJ is the only way to tell.
-
-Ignoring that IMO the APM needs to be updated to clarify exactly when EVENTINJ
-is cleared and when it isn't, I don't see any point in not manually clearing the
-field on SHUTDOWN.  Common sense would say that it's unnecessary as SHUTDOWN can
-only occur if VMRUN gets into the guest, but the cost is completely neglible and
-there is zero chance EVENTINJ *needs* to be retained, unlike say the PML index.
-
-We can certainly add a comment saying it's paranoid, but I do think we should
-manually clear EVENTINJ and friend, e.g.
-
-	/*
-	 * EVENTINJ is cleared on #VMEXIT, but only if VMRUN fully entered the
-	 * guest.  Manually clear the fields even though it should be redundant,
-	 * as there is no downside to doing so.
-	 */
-	control->event_inj = 0;
-	control->event_inj_err = 0;
-
-[*] https://lore.kernel.org/all/d946de080e3dd34844a665c167179e4910fdc9d4.1789399214.git.prsampat@amd.com
+LOL, *sigh*.  I'll send a patch to add a wrapper, having to manually do the
+assert is annoying.
