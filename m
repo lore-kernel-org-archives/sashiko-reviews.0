@@ -1,189 +1,161 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012042.outbound.protection.outlook.com [52.101.53.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EE51A9FBA;
-	Tue,  6 Oct 2026 15:53:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791301990; cv=none; b=dPIUwpWLjofNBp7EpOpUHafvseSHunBeb744by0n0mlG4bzIbveFvdILWAsQkMLR0+ujvfAcory4tcEFhMdNpbLZwjBAoGB3YBEweNaM0r1JBcdu/DVjiS42jHjltI4eTUJCKtNAgEyui92/AAUVi7NWiYXMxwmIx/OwVjkg8vE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791301990; c=relaxed/simple;
-	bh=pn7qm1GFXxv2t2YD3JT4PZvyalBN6e40CLMDJ4Wc+Gs=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=XkDzckUR/FRgaNaoC+iew2rCtOp9mOGEYgZoIZAzr3RSJzC+qjmutSs7FDp0j3M5W7zhEQfZU2DGzSC0ST9GrRf2QV9Ljz8JUc8WLzSx1VIfBUrFNCM2mNY5h2xCdMhPE40PhKJda37lFfZO3uqIosnTjANgvi425ujrsKhvWiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=F29jcIrY; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2073B3C12
+	for <sashiko-reviews@lists.linux.dev>; Tue,  6 Oct 2026 15:57:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791302228; cv=fail; b=T31GnrCnsXCPdL/THpNKHptuEZDF6tYbg7/RXkTYpve/aJVpOGoGUrlC3ywnxdUq+9r+cJdOJmYyW8krvKNrAbHAoA1UQNIBuRkegWyf5qIAtzXJUij1E2SjcQmjULYuMoVa4JX9DUNZZ5M9OWaHJ0O+2P+q4u2lCyqzKKM7pZo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791302228; c=relaxed/simple;
+	bh=iV3O1SOug3ihUtZHTKqT7+H8JEkOqlwrMXTJruvr8a8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=JsNUuYZwHl5nxBbUDVLLRNMKfH32bbrRvIfTIzL0LOia3ZCLofypnQzTjznlhZAp+57qGOEhHYnPcJYtp9IWcsttEnooOKv8O0QwmZCAlyQAYMB3l80eBY8d27C9mHmN//wRYha9NStpjTgP1ZsEVukg5wtaE2oQ40xdZFxpG1s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=AkNYrV1k; arc=fail smtp.client-ip=52.101.53.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="F29jcIrY"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 696Ea15M3975733;
-	Tue, 6 Oct 2026 15:53:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:to; s=pp1;
-	 bh=G7gu9vB4kO30xa/EfJ9r1Q5RoNzhECU2+Jv5VFgapCw=; b=F29jcIrY/uZo
-	tOc8/ukNo5B0to2QfFx4VdbnzEwqniRfmRbwkz4Kh5fQB++Y84CyE/zNfEMmrBjj
-	p2WdnjmJHL84F80zjzyuuhsByD4SF1yWa8YKr7vircOL9HAAjPoUqVaFvdr8LdJs
-	SPvnAZlVMbSUUj+NJCvZn2kPG8F9/IEbdI+MQtXuTNuNkPMYAKoCDyaZZYOkmmrN
-	XeyZwWh5YTiLz5ibKGzwczy39eK6E7YPwoVn7OGsC7rrozGkR0W7JK/HbjoD+9iE
-	UQOB19YwIMtL7qm974Rvv4QkziT1B12IcsSqW4jz8FHBLpsRje90HEiWjfHwsHjW
-	oFlsVtz6pg==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2se5gvew-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Tue, 06 Oct 2026 15:53:07 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 696EHV6N387143;
-	Tue, 6 Oct 2026 15:53:06 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3d1jtjnr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 Oct 2026 15:53:06 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com [10.39.53.229])
-	by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 696Fr5Gu28508756
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 6 Oct 2026 15:53:05 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 56FFD5805D;
-	Tue,  6 Oct 2026 15:53:05 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 8B4D45805C;
-	Tue,  6 Oct 2026 15:53:04 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
-	by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Tue,  6 Oct 2026 15:53:04 +0000 (GMT)
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="AkNYrV1k"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rTyBBdAYJKUoYSYNWs3nCEijA/M4RVgRp4n+29P3e4UtLumrUapL78SfurLtQnq6hGjExjLh74XETXbMw1iMvHL8fY/siRb9vhUXzr3ab8rmNDperhKSHzG45WoIO83655rIb1+qi6p9/glwJaqZqoGRi/+9eFnkZmnYWl8srkNOfYqKAp/rH/S/Ys/VQtoFzRFJF4+Z/HmN03Ny3H00sRgOvkInnVRQNJNiHvpNESax3CBvrydzbot2XgSOCmELiQXjxp05uqMQJPsm+DHTK8+rcunu40d8JJ8tAsJh/juHtHpkpX1Qgg+tlO+KPiBRDbBbNmhLLGmNz/7cZTE+bA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=N3x6QsDtfBgT/syfzVKOUmxNRmpoweoGRLK3eWbW1cU=;
+ b=ijphS/vj8+4gdq/Tg6khuzMHQOW7DKOoeOfExDYlAzjXst3vylCTsDDK5NT9XDanM/k41ggpLG50yGhEqKuLO9vCUa3s+8FjKUpK0UCP3DtQMdAy2lumuSwUt3g7VFvHs8V4cPymcRS9vngEFhJ3PJvUmb0ePv0PXK++FkogbmEGhkr78CffHQ4Vrjo8hjDfgEUzb20TdA08vW7CTMFQtqBiRrlpEPdAsKhT2LOBG05symlhW9+pb8ANGgE+EZF4FTHO+ZjZBHr5/bYLW5Ft+IVzKZdZvBGXWzIWvW3uFhMUiWLFXOWCnciRnRdaLi6BPrZXiXrugwqBmsUvrZ2gJg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=gmail.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=N3x6QsDtfBgT/syfzVKOUmxNRmpoweoGRLK3eWbW1cU=;
+ b=AkNYrV1kIIvo8ScbVYtgE8Cr2fDGkEVSRiKujGcbrCwiF8qBc+u0O1iA0lr1Gl6Cpg8XoYUw1KBLsO/F04w5FFCj5TqaW4mPDpsEEoKSj3ehZmHtBVHSKuXL69xuc2BSt10gmdZpaSGN1gYvAS1ajIn3WsYpWJbpJLrIZnBTJxk=
+Received: from SJ0PR05CA0094.namprd05.prod.outlook.com (2603:10b6:a03:334::9)
+ by MW4PR12MB5666.namprd12.prod.outlook.com (2603:10b6:303:188::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Tue, 6 Oct
+ 2026 15:57:00 +0000
+Received: from BY1PEPF0001AE1B.namprd04.prod.outlook.com
+ (2603:10b6:a03:334:cafe::94) by SJ0PR05CA0094.outlook.office365.com
+ (2603:10b6:a03:334::9) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.496.5 via Frontend Transport; Tue, 6
+ Oct 2026 15:57:00 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ BY1PEPF0001AE1B.mail.protection.outlook.com (10.167.242.103) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.496.14 via Frontend Transport; Tue, 6 Oct 2026 15:56:59 +0000
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Tue, 6 Oct
+ 2026 10:56:58 -0500
+Received: from [172.19.71.207] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.49 via Frontend
+ Transport; Tue, 6 Oct 2026 10:56:57 -0500
+Message-ID: <7caf722d-79d4-8cef-bbf2-4aedfbb1e1c4@amd.com>
+Date: Tue, 6 Oct 2026 08:56:58 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Tue, 06 Oct 2026 17:53:04 +0200
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Vasily Gorbik <gor@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Heiko
- Carstens <hca@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Holger Dengler
- <dengler@linux.ibm.com>,
-        Finn Callies <fcallies@linux.ibm.com>
-Subject: Re: [PATCH v2] s390/ap: Support new APMLM field with PQAP/TAPQ
- instruction
-Reply-To: freude@linux.ibm.com
-Mail-Reply-To: freude@linux.ibm.com
-In-Reply-To: <20261006150932.5AD671F0089B@smtp.kernel.org>
-References: <20261006145823.8421-1-freude@linux.ibm.com>
- <20261006150932.5AD671F0089B@smtp.kernel.org>
-Message-ID: <a2ef55c1888274840a45b3b5792251ce@linux.ibm.com>
-X-Sender: freude@linux.ibm.com
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: [PATCH] accel/amdxdna: document trusted mailbox ring geometry and
+ drop the power-of-two check
+Content-Language: en-US
+To: Eva Crystal <0xiviel@gmail.com>, Min Ma <mamin506@gmail.com>, Oded Gabbay
+	<ogabbay@kernel.org>
+CC: Max Zhen <max.zhen@amd.com>, <dri-devel@lists.freedesktop.org>,
+	<linux-kernel@vger.kernel.org>, <sashiko-reviews@lists.linux.dev>,
+	<sashiko-bot@kernel.org>
+References: <67698952-6394-44a8-01fe-3e3558b7cb4c@amd.com>
+ <20261002205814.178031-1-0xiviel@gmail.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
+In-Reply-To: <20261002205814.178031-1-0xiviel@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA2MDA2MiBTYWx0ZWRfX7bAeeppo+7TU
- pEEYPy5HItB36esFDaO8C2GE5N5NzU1ydOh3EDfFOvh2R1Cwh/b+KX+zU3i/of7BtreVVqq97fZ
- o9FxH7m42CFcdrmLJ2LKb/NwyGbZoxY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA2MDA2MiBTYWx0ZWRfX5Aim9ulRhW9V
- P19qL53pODQget35Hai3hZNRw16IeeXb89DDjUyEjiQWjGVQ4at9vY55m82ceCjwKFHv3HHm4Vh
- IC8C1p1bGKRqoiSoRwDp86IvAxrSsa/oqDENaHaA1SfQ6XUEWImZFlSGdoOmwwZC3n+jVj/KVfa
- gKp4s9gii5RT8045vffOGYWZC8mBpVN+3CDI8ASU5e46+/YbD1PzPpG8IDkEQhzK7Rmiljj2Vc7
- zKdPqFjLHBaS0GUMsfLPBdhDojFFnz6N4VVdK/gvFOj6gldHkacv5FFXiTdqSu2/+bqQQLA4lnS
- pUC26g40jQlS5l5mZPBrAP7FOElQB+FrfSsx9XI84U6O9DuosR95kc71pf/2n9zbJaz5QP1EqI5
- fO2xTzDIPIvUJZaQG54ThGu7PbdHTVsUovY1ZFEnKn0aaMsPuYWXkhndA4AORahrb0HYoVicy8i
- yQdpZOroORavq7TLMXA==
-X-Proofpoint-GUID: GmsaVqS6m3jzJ1N3QXVo8M0uQhx5S-hy
-X-Authority-Analysis: v=2.4 cv=UNRIjyfy c=1 sm=1 tr=0 ts=6ac51964 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=kj9zAlcOel0A:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=1JiTDhl_BFzrfeVkU7kA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: GmsaVqS6m3jzJ1N3QXVo8M0uQhx5S-hy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-06_04,2026-10-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0
- phishscore=0 clxscore=1015 priorityscore=1501 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610060062
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY1PEPF0001AE1B:EE_|MW4PR12MB5666:EE_
+X-MS-Office365-Filtering-Correlation-Id: 75e6cf85-8e6d-40f3-8051-08df23c274d1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700016|1800799024|82310400026|376014|23010399003|22082099003|18002099003|10067099003|13003099007|4143699003|5023799004|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	PMcQ6Zbuo27zM3okRSOHwtmMzHD9w8agUZloh2IDxQOfyGCZ2ny+A4Hqiejh7bJJOvhv0ZdZo9CEe+o0Ul2VeItLqTU4mkjyvpZW8wr9nyJH2CUtBUhOLhq3YCM2Ywwwy4c5KBmZQWvmYI16d79RjTr5yj4kSOduN6WE+YmBIn0zRBuqCg9U/wMi9zV6oEQYa1FZiFIpprYmNVkPcm1NV5iPnC7Mz/QKXsAH65rdERbv29WpTMGJ63eb5pJ+gyT8WUP8HRcPaaRmZ5+Ld22X5CXl4pdJi/Xum9dYSGR7Ggwq/XKDpDXLDYswEY1GbvlpDncqHWTKaMbSM98bonNVC8eFnr6ZJZ9Xtf+ilLYreajlA5ldj+foJ1gzV5/AsqfSpid1cRxJ3N/3laXkBOKEXNfFYkOjOgfmDHhJkjSKtZkZQxcZ3lVchQYYAAsbd7J2bC/pzhm5y38c9yeBPHE/d8tJQCFzQ4LoH69LBCZpFiu9Smt/LBtYME8Oo3BYpEKrgT6cZYVqxEjIMA60P/pOnZ+uwmM2m5Vd8N9ioaMViqjFrwk23VbFkInfzXPQFuAeBCkpN0dse+bfIdKW5fSSdoo1P9OoZIKJtPxTyJ4aZT7owjzIX3EfPq/bFlLG085TAP8sXdKZ6CccPZqavqlIna6212H4i9K3/+s4rANyLsE=
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(1800799024)(82310400026)(376014)(23010399003)(22082099003)(18002099003)(10067099003)(13003099007)(4143699003)(5023799004)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	48CElgeCcNkyLfdWDY5A7b+Ywl/mxZc6Es5GDf9ZCV864tLqmzODc3WhRHSCsMAsFztQTishyDT8bytRtKrPWQeuM8t5Y2qar7TisPxOQldg36BNsYADoFIEYrSYmqicZJHuYRNu4Zpg7AuTdcd65j7d80YdvZGH2rXHv5Ie6whBnOBfx5VAHvELOuvk54YwgpjXcFnz9r8pF1QW9t6syOCHMI0NTbnopsCWiM6bTpSmHp67KjrtD2wqGXinGfVIELdmtpbjmBprVT+9j6XB1HAH/pWeFLVjhMrwmIrFxTeZMcmtILTIBPluBr3h+mXTqsM/N1jk5swPboiZwBvmfGcM0b9p+exa+bSYVBvdNNg+fyavszzV1sE9QBx3xuIXi6pjmqIRUXaZnWZM9RmH6HXgihelIDmsrQgwSUEV8c1ZzABXNxiWo0Cog3cox2qg
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2026 15:56:59.9142
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 75e6cf85-8e6d-40f3-8051-08df23c274d1
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BY1PEPF0001AE1B.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5666
 
-On 2026-10-06 17:09, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue(s) to consider:
-> - [High] s390/ap: order-8 kmalloc allocation causes DoS for crypto 
-> requests
-> --
-> 
-> commit c12ee44fe3064032047e06539777b0c95c7b1201
-> Author: Harald Freudenberger <freude@linux.ibm.com>
-> 
-> s390/ap: Support new APMLM field with PQAP/TAPQ instruction
-> 
-> This commit adds support for the new AP message limit multiplier field 
-> in the
-> GR2 register for the PQAP instruction. It updates the HWINFO mask and
-> modifies the formula used to calculate the AP maximum message limit.
-> 
->> diff --git a/drivers/s390/crypto/ap_card.c 
->> b/drivers/s390/crypto/ap_card.c
->> --- a/drivers/s390/crypto/ap_card.c
->> +++ b/drivers/s390/crypto/ap_card.c
->> @@ -242,7 +242,8 @@ struct ap_card *ap_card_create(int id, struct 
->> ap_tapq_hwinfo hwinfo,
->>  	ac->hwinfo = hwinfo;
->>  	ac->id = id;
->>  	ac->maxmsgsize = hwinfo.ml > 3 ?
->> -		hwinfo.ml * AP_TAPQ_ML_FIELD_CHUNK_SIZE : AP_DEFAULT_MAX_MSG_SIZE;
->> +		hwinfo.ml * (hwinfo.mlm + 1) * AP_TAPQ_ML_FIELD_CHUNK_SIZE :
->> +		AP_DEFAULT_MAX_MSG_SIZE;
-> 
-> [Severity: High]
-> Will this scaling of the maximum message size cause order-8 physically
-> contiguous memory allocation failures?
-> 
-> By introducing the hwinfo.mlm multiplier, the maximum message size can 
-> now
-> scale up to around 960KB. This value is used to set the global maximum 
-> message
-> size.
-> 
-> However, looking at how messages are allocated in
-> drivers/s390/crypto/ap_bus.c in ap_init_apmsg():
-> 
-> void ap_init_apmsg(...)
-> {
->         ...
->         maxmsgsize = atomic_read(&ap_max_msg_size);
->         ap_msg->msg = kmalloc(maxmsgsize, GFP_KERNEL);
->         ...
-> }
-> 
-> And similarly in drivers/s390/crypto/zcrypt_queue.c in 
-> zcrypt_queue_alloc():
-> 
->         zq->reply.msg = kmalloc(reply_buf_size, GFP_KERNEL);
-> 
-> Since these functions unconditionally use kmalloc() for the maximum 
-> size,
-> user-space crypto requests will trigger massive order-8 allocations. On 
-> a
-> system with fragmented memory, these physically contiguous allocations 
-> are
-> highly likely to fail. This could lead to a reliable denial of service 
-> for
-> hardware cryptographic services since the underlying AP instruction 
-> operates
-> on absolute memory addresses requiring physically contiguous memory.
-> 
-> Is there a plan to adjust the allocation strategy alongside this limit
-> increase, or otherwise cap the unconditional allocation sizes?
 
-Hm this leads to the question if there should be an upper limit for this
-AP max message size. However this is then a protection against malicious
-firmware as the both fields ml and mlm are provided via TAPQ from 
-firmware.
-
-@Holger, @Finn any suggestions ?
+On 10/2/26 13:58, Eva Crystal wrote:
+> The mailbox ring buffer geometry comes from AMD signed firmware, through
+> the management or mailbox information block, or through the CREATE_CONTEXT
+> response, and the driver trusts it by design.
+>
+> The power-of-two test on rb_size was a firmware debugging aid. Nothing in
+> the driver derives a mask, a shift or a modulo from rb_size, so no code
+> depends on the property it tested. The ring index wrap is handled by the
+> explicit comparisons in mailbox_send_msg() and mailbox_get_msg().
+>
+> Replace the test with a comment that records the design, so that
+> automated review does not flag the absence of a bound here again.
+>
+> Suggested-by: Lizhi Hou <lizhi.hou@amd.com>
+> Link: https://lore.kernel.org/all/67698952-6394-44a8-01fe-3e3558b7cb4c@amd.com/
+> Signed-off-by: Eva Crystal <0xiviel@gmail.com>
+> ---
+> The pkg_size check in xdna_mailbox_send_msg() is left in place on
+> purpose: it bounds a driver-supplied size, and with Max Zhen's pool
+> patch (20261002161122.1350075-1-max.zhen@amd.com) it is the only bound
+> on the write into a pre-allocated message slot.
+>
+>   drivers/accel/amdxdna/amdxdna_mailbox.c | 12 +++++++-----
+>   1 file changed, 7 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/accel/amdxdna/amdxdna_mailbox.c b/drivers/accel/amdxdna/amdxdna_mailbox.c
+> index 05c3786de135..c4a36858668f 100644
+> --- a/drivers/accel/amdxdna/amdxdna_mailbox.c
+> +++ b/drivers/accel/amdxdna/amdxdna_mailbox.c
+> @@ -513,11 +513,13 @@ xdna_mailbox_start_channel(struct mailbox_channel *mb_chann,
+>   {
+>   	int ret;
+>   
+> -	if (!is_power_of_2(x2i->rb_size) || !is_power_of_2(i2x->rb_size)) {
+> -		pr_err("Ring buf size must be power of 2\n");
+> -		return -EINVAL;
+> -	}
+> -
+> +	/*
+> +	 * The ring buffer geometry, rb_start_addr and rb_size for both the
+> +	 * x2i and the i2x channel, comes from AMD signed firmware, through
+> +	 * the management or mailbox information block, or through the
+> +	 * CREATE_CONTEXT response. The driver trusts those values by design
+> +	 * and does not bound them against the mapped region.
+> +	 */
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+>   	mb_chann->msix_irq = mb_irq;
+>   	mb_chann->iohub_int_addr = iohub_int_addr;
+>   	memcpy(&mb_chann->res[CHAN_RES_X2I], x2i, sizeof(*x2i));
