@@ -1,85 +1,157 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B4537FF46;
-	Tue,  6 Oct 2026 14:46:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572F548CD63
+	for <sashiko-reviews@lists.linux.dev>; Tue,  6 Oct 2026 14:58:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791297987; cv=none; b=YyfCWCzsmPjfaqRsUikoEjGYl7OHg0Q7RA0t/AtW4jFEeRE2fTcV8P3YRGJTr8MCYoUQ/2Uueyrj+mKA52uMMpTQXYCDh6w70DUV8GtaW76oXEPCssfF8FpvHpTpnQ5++MunueO89cN5RAPF2lABCqmMKjo4f4LjF4W2REEvQik=
+	t=1791298702; cv=none; b=BwoRV6hUUGO7v1GTIWpGPiPV/fM7O19jjcEm7+vbSizXEYpoxRK+PKjO7U3EqjSS8QJddQ/hMwj64bM2Q/PYjy/OpDeX3rFyfNtsG1eFnZ2Fxei2aZQki5vC1XZ7Ho6Jmj/dAFf6yU3OcqOX9Pvtj+59S1pjEkiAtFMA2cIO700=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791297987; c=relaxed/simple;
-	bh=zamFwhdLiuEW4kitGtycKJPuFi8Vryp8GQZC7CK22vE=;
+	s=arc-20240116; t=1791298702; c=relaxed/simple;
+	bh=rC3FgFtHopZe9bkYKYGHaMtLlbqNScHvoCGayOGsaLE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eD+8hGhdEnpV+16BirmU9tOm0XIleoqI4128m9r8sajp8qmdUSS7TPvtYiNr++VeaiAsJ2E+FWxeWkZrqiOjWSf40B2FBMjJjsgr8Qefy7Bi3NhxBLMt8xbSTojo7EwyAyjW9YRALdF6+nwaLdxvMsKHAR3swnxMqw0XPobDsd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IKU03Imf; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=QpPE/ttpI1bvrpz2mx6Kr5x2BPe0W7GPJD4MJ8FX9wMqe8OvpNE+X9SaCu6zRSeHaNwjrXPLs+YezTGTxxYr62er8L5QcHxOtEYwqGdDfcgWjB6E+5XONB72zFy1DEnaAYxWzRy5mxTd5W4x59aMq/zz8p9dq0toZjAaSKwhaFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rCtYtmtk; arc=none smtp.client-ip=74.125.224.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IKU03Imf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3776F1F0089B;
-	Tue,  6 Oct 2026 14:46:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791297986;
-	bh=jrEgrOy1SQblcRUZ/5k3rGkL+cG0qO8/Q38RH6jd7Xg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=IKU03ImfddeGvNot7jJLJdZS1YuxH9AEqSIcffHp32XrXx1FHK1v+dUCV4Lz+dnYA
-	 JtOrtP49ShX6RdQQ0plKmhwXWXJCYmVtLICdD6c410tIlSVGWPSz0TGOLg4S/qnStc
-	 tmc+6HVI/8cyujJMIYlcSsUrQZE/7WIvaHr5DdK9O0vaXBrruT1jzXgpN6X08CLErO
-	 KAQ0d+b3t8VN3X6nazn/jzOKNipxB9Wi1I5PoztGhnprZMitGitwakWEccUM61wjc6
-	 EWjLKvaT0d8eFezPlW6EHsnTUmEV4UHbFBNXGL1IAHmYX3EpVkH932CE7SmfBps1r0
-	 Y1XTreYqse3yQ==
-Date: Tue, 6 Oct 2026 09:46:25 -0500
-From: Rob Herring <robh@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rCtYtmtk"
+Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-676858d42f8so767945d50.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 06 Oct 2026 07:58:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791298699; x=1791903499; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=VNKYt0wTzE6E0GOCR28wscOUy/GatbkKqCnu23L+CJY=;
+        b=rCtYtmtkDxyX4oLqBZEMWeCGLTW4YTlwpp5GpNa0p7kDaoKhq9XNbL+tf5FTXlKwtK
+         hOmNxx1Lu5tUmdduTC9MXwsASwO5CcyzAWa3fBXEYDTflI+nOUrQRxZoYrJuhzWIn/0i
+         rI8gLbqr2fdq8qlI9qeo509nj2VvOZT7CJMf4D7UIyoIkujBVmytd3Pgn+A1mE5QwdwJ
+         P268abAmwGKUvL45djhZgiHlwY5RDWQeK7r6rEwKE3fTs6ULso3MM/GJBE6TDFhmUuBd
+         X1p0R/IGPKUL8nIsWmxcbNCO5mXM5h3v+Bm2rd3KjEXEydUKYYR+dpAOOEDyEKscdj+5
+         uzNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791298699; x=1791903499;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=VNKYt0wTzE6E0GOCR28wscOUy/GatbkKqCnu23L+CJY=;
+        b=tc6faZzmhXL1Jd8/un9HJCGeMN40Ju3Eds0amwwbqGIHIp+RChCQktp8c3FIQRdHHN
+         qh19DSldbja1Eq2EUp854v0HsolIbchWgaz8sFFowlZrMRgWRpsVbAFo4nQFAQ1qIgwM
+         1xd5JWeX9/xKPV+OSlUZy8bs7qXRobglqE0wGTNNTNF1LGlHzNuky4jCXZIJDIkSaxRk
+         opgt70Re4u/QpZeyWFeiSFFuKEzqw8sBeiI1Ms5yYw5KULYMmBp3KYRvunYeDz2Svh7u
+         Hj195xUDNt/dLyVcmQHkA88/DiJKNlTBK0moaGIeS7KWZ3BKW7vm1fQZb+rafyWi9WI9
+         578Q==
+X-Gm-Message-State: AFq9FYITsjik17PIwCEkmKDu8IFJmY5Pw6kIELczyJxaiZ8Ons+fYICE
+	mXFwGzZI/uQWDHcbxOQKDnqQT7CKfNe7lWKlS37NP5ygmnQ3WqYgYuSAakaxUw==
+X-Gm-Gg: AYBFou2fZS8GKdOuM57r4GlK3p6CHhu2TT2+QM+sBbgWEOdDxnlxROp60zR0QonL72Z
+	wD/yP+3H8BhCGdpzZ7e/JIG+kAa5Dhsmmzyqdn5pdMcugglfUHRuo4YBoEMwo/Paox76a4Pqglu
+	XR5s2B+NKu7xey+TtkYJBnlI3f/HO5/ieVjPQFtzlQS1MERAtGDRRN4AjQo9QCyhevxdN+GEo2y
+	qYmu6FMxg8ighvbGLFsWCITdLGCjw3TWExCsNBIAo3Wj6La+fsKao6UI+4fVGz7bhPpLPeCJhKZ
+	CfuiZZNf0xk66cGwf87+r75D4XpH17yK9rz8KOqJ51z2v5b2soNtQ82AvNOU3osNN15lXgl7UpP
+	yeoVqJH/rw0IvhsmTwHxAElfDXatzdShTDfCyFbjtsyLfV2Z3R7KZL3r5HW4+WEWg8ycOshISpy
+	PkVdpw7V2VEKujIsIK4NLnTFBenTdh2FvQCbSqW1qxtDO8NWD/Q7rK0t+F4FhCnZ6BULXqqrrSF
+	G0=
+X-Received: by 2002:a53:ac90:0:b0:677:af43:e268 with SMTP id 956f58d0204a3-678fce62364mr739752d50.113.1791298699090;
+        Tue, 06 Oct 2026 07:58:19 -0700 (PDT)
+Received: from zenbox ([2600:1700:18fb:6011:6dc9:4ffd:1851:60b1])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-677c1b4a383sm4708693d50.7.2026.10.06.07.58.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Oct 2026 07:58:18 -0700 (PDT)
+Date: Tue, 6 Oct 2026 10:58:18 -0400
+From: Justin Suess <utilityemal77@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: bus: Add HiSilicon local bus
-Message-ID: <20261006144625.GA2194299-robh@kernel.org>
-References: <20261005205310.2079198-1-robh@kernel.org>
- <20261005210035.1FD341F000FF@smtp.kernel.org>
+Cc: linux-security-module@vger.kernel.org, bpf@vger.kernel.org
+Subject: Re: [RFC PATCH bpf-next 10/12] bpf: support "__uninit" iterator
+ arguments in generic kfuncs
+Message-ID: <asUK2i4229DNzXLI@zenbox>
+References: <20261006002020.2890858-1-utilityemal77@gmail.com>
+ <20261006002020.2890858-11-utilityemal77@gmail.com>
+ <20261006003716.CC7791F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20261005210035.1FD341F000FF@smtp.kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261006003716.CC7791F000FF@smtp.kernel.org>
 
-On Mon, Oct 05, 2026 at 09:00:34PM +0000, sashiko-bot@kernel.org wrote:
+On Tue, Oct 06, 2026 at 12:37:16AM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] dt-bindings: missing `required` block allows nodes without `reg` to pass
+> - [Medium] bpf: aliased __uninit and __iter arguments bypass verifier initialization checks
 > --
 > 
-> commit 31cf8e8c992601dbcd36de1b649ef5c513febf6f
-> Author: Rob Herring (Arm) <robh@kernel.org>
+> commit e08b0892f34d46a76c048cb46111b4956bcddfe8
+> Author: Justin Suess <utilityemal77@gmail.com>
 > 
-> dt-bindings: bus: Add HiSilicon local bus
+> bpf: support "__uninit" iterator arguments in generic kfuncs
 > 
-> This commit introduces a new device tree binding schema for the HiSilicon local
-> bus. It sets up validation constraints for the compatible string and registers.
+> This commit allows generic kfuncs to initialize iterator arguments by
+> recognizing the __uninit suffix. It updates process_iter_arg() to treat
+> these marked arguments similarly to how bpf_iter_<type>_new() operates on
+> uninitialized iterator state.
 > 
-> > diff --git a/Documentation/devicetree/bindings/bus/hisilicon,hisi-localbus.yaml b/Documentation/devicetree/bindings/bus/hisilicon,hisi-localbus.yaml
-> > new file mode 100644
-> > index 0000000000000..cd9ecea88269f
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/bus/hisilicon,hisi-localbus.yaml
+> > diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+> > index 066c4b838b858..3294b2a431674 100644
+> > --- a/kernel/bpf/verifier.c
+> > +++ b/kernel/bpf/verifier.c
 > 
 > [ ... ]
 > 
-> > +properties:
-> > +  compatible:
-> > +    items:
-> > +      - const: hisilicon,hisi-localbus
-> > +      - const: simple-bus
+> > @@ -8363,8 +8386,16 @@ static int process_iter_arg(struct bpf_verifier_env *env, struct bpf_reg_state *
+> >  	t = btf_type_by_id(meta->btf, btf_id);
+> >  	nr_slots = t->size / BPF_REG_SIZE;
+> >  
+> > -	if (is_iter_new_kfunc(meta)) {
+> > -		/* bpf_iter_<type>_new() expects pointer to uninit iter state */
+> > +	/*
+> > +	 * Whether this argument is the iterator the call initializes, rather
+> > +	 * than an initialized one it operates on.
+> > +	 */
+> > +	init = is_iter_new_kfunc(meta) ||
+> > +	       is_kfunc_arg_iter_init(meta, arg,
+> > +				      &btf_params(meta->func_proto)[arg]);
 > > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +unevaluatedProperties: false
+> > +	if (init) {
+> > +		/* expects a pointer to uninit iter state */
 > 
-> [Severity: Low]
-> Should this schema include a required array to enforce the presence of the
-> compatible and reg properties?
+> [Severity: Medium]
+> Is there a risk of bypassing verifier initialization checks if a BPF program
+> passes aliased registers for these arguments?
+> 
+> When check_func_args() evaluates kfunc arguments sequentially, an __uninit
+> argument will set init to true here, and process_iter_arg() will immediately
+> mark the stack slots as initialized via mark_stack_slots_iter().
+> 
+> If a subsequent __iter argument to the same kfunc aliases those exact same
+> stack slots, its is_iter_reg_valid_init() check will incorrectly pass because
+> the previous argument just marked them as initialized. This could allow
+> uninitialized stack memory to be passed where an initialized iterator is
+> expected.
+> 
+> While this is mitigated in this patch series because the newly introduced
+> kfunc uses different BTF types for its iterators (causing the bypass to fail
+> strict BTF ID checks), does this structure need to be fixed to prevent future
+> issues when kfuncs use matching iterator types?
+> 
+> Should state modifications like mark_stack_slots_iter() be deferred until
+> all arguments are successfully validated, similar to how
+> ARG_PTR_TO_UNINIT_MEM is handled?
+>
+I can't think of a case where someone would try to make an iter transform 
+kfunc like this with the same BTF types for the args. So this is a
+theoretical nothingburger bug for a theorectical weird kfunc.
 
-compatible is implied, but will add 'reg' when applying.
+Not actioning this for now.
 
-Rob
+Justin
+> >  		if (!is_iter_reg_valid_uninit(env, reg, nr_slots)) {
+> >  			verbose(env, "expected uninitialized iter_%s as %s\n",
+> >  				iter_type_str(meta->btf, btf_id), reg_arg_name(env, argno));
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261006002020.2890858-1-utilityemal77@gmail.com?part=10
