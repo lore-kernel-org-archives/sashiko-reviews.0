@@ -1,54 +1,43 @@
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtp-42ad.mail.infomaniak.ch (smtp-42ad.mail.infomaniak.ch [84.16.66.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A772F3B841F
-	for <sashiko-reviews@lists.linux.dev>; Tue,  6 Oct 2026 07:57:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0495632A3C9
+	for <sashiko-reviews@lists.linux.dev>; Tue,  6 Oct 2026 09:57:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.16.66.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791273469; cv=none; b=FnR7VVDEa4PtkFPcKseQu410QdwkbNI1HGGfjFDpejdCe682MCWA2rh5Hvi1ertK6ubtHMrJaFDkK7u8BIhgBxAgpMoRkv9FhwqRTL1uFzfPrVkWqa69anvhwfZn7vGpR7o7vGRTHGZMlE3FGITdr+7mFlFVwlNMig/4/5runAc=
+	t=1791280643; cv=none; b=TiPS7dnik674t0iqvXq6EDFEby/jjbiEsDNfagvlgZV8cCUHkutCKsPLqFV9t58h55Yfe6A4b3QcGUzJt5NbVcq3caHJ2y6XMRMvDW3mnT7K9q30SjcGCQs+w/YElgfqnuO9zPgvcm+nmEon8tlZ60gRQuVflTeABeyY07H5I5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791273469; c=relaxed/simple;
-	bh=Ba8SRvLUlDgJylfpuGchatFp660PUxF7wpMiaEDu7lg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=az6WezOpmVCCF2tbLVY+I9874jgR5lCWPFGfNDFBQv27H22Qvk+r+AU7mU+Yguf2BSpkJzrqBkD+XU56955NibpPIQgYqreTmdTU96S8Jwst0jLs7jdDxWEwkQ9AWKhyDZv4WfxA7TrXU1WEKyrwxXREuZK1/7BiGolAmpSHHLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=UaM579DS; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1791280643; c=relaxed/simple;
+	bh=5FvX3R3n4RdU9wFxznbPNeNOZI/GS9a34u0SrJPI0AI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UHo/NsobH4USKUeSivAw8hs3RIDkeqGABjEXP7nv2pvMJgbUlvifRzdezILF3e6xbM8VU5CNB+xPoUXc4ckzeNlAyNd0ZTHPbBq0+ycGVVYucvF65VJURlGL8libHn/kjEiEaOdKi/sxBvLUekwFe6JKqqKJOtai/O7uMBKaNhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net; spf=pass smtp.mailfrom=digikod.net; dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b=ZtVuWqox; arc=none smtp.client-ip=84.16.66.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=digikod.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="UaM579DS"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 4FAF21A1187;
-	Tue,  6 Oct 2026 07:57:46 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 1CE3D6074B;
-	Tue,  6 Oct 2026 07:57:46 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 8A01B103308A6;
-	Tue,  6 Oct 2026 09:57:42 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1791273465; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=Ba8SRvLUlDgJylfpuGchatFp660PUxF7wpMiaEDu7lg=;
-	b=UaM579DS36zpJx7g3lKSM4QpM5nBYHlxvcvaOVnta3Ap9MrrQBcuRiq1Ke/vL5be3uCWZv
-	G650XIEWWrxkYxTSxqB2fr8+91dX+KUk0+rZr287zBi3eBAij68sbjMqLoaITgwS3wXkHP
-	hMviIYfK3yJOKJweqA+v1Do4Nc8mV7jbbc4MP+GlZA/2wCWrkHyaSvvtE4JFbHCZVyO3vM
-	ikaw5V6CxG+4T2oIBgEAYGrquOeIP67zJWe//Gww/0JQ0yapGHdYR7OhgULiDwE5P/7VL1
-	f/MKgrV3n9qkZLs0NcZDz0z0mHNYa6BAO9PspAGxjpoUT0Md6ojXNsFKWPppLg==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: Jerome Brunet <jbrunet@baylibre.com>
-Cc: sashiko-bot@kernel.org,  sashiko-reviews@lists.linux.dev,
-  conor+dt@kernel.org,  linux-clk@vger.kernel.org,  robh@kernel.org,
-  devicetree@vger.kernel.org
-Subject: Re: [PATCH v8 5/7] clk: nuvoton: ma35d1: Reparent SYSPLL correctly
-In-Reply-To: <1jjynw7bp8.fsf@starbuckisacylon.baylibre.com> (Jerome Brunet's
-	message of "Mon, 05 Oct 2026 11:12:35 +0200")
-References: <20261004-perso-ma35d1-upstream-clk-v8-0-e1a106a128c0@bootlin.com>
-	<20261004-perso-ma35d1-upstream-clk-v8-5-e1a106a128c0@bootlin.com>
-	<20261004205551.6279C1F000FF@smtp.kernel.org>
-	<87zewti2pf.fsf@bootlin.com>
-	<1jjynw7bp8.fsf@starbuckisacylon.baylibre.com>
-User-Agent: mu4e 1.12.12; emacs 30.2
-Date: Tue, 06 Oct 2026 09:57:37 +0200
-Message-ID: <87cxtni7m6.fsf@bootlin.com>
+	dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b="ZtVuWqox"
+Received: from smtp-4-0000.mail.infomaniak.ch (smtp-4-0000.mail.infomaniak.ch [10.7.10.107])
+	by smtp-4-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4hzWrR4sTgz11FR;
+	Tue,  6 Oct 2026 11:57:11 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=digikod.net;
+	s=20191114; t=1791280631;
+	bh=ZF+MKPbdq/xFeDXJK7jHWQeOjWVlrjdMKc5KKTcUjl0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ZtVuWqoxufXOtjmhAgOrQEUwevtgNtcGMa3UmuZq5UhjSl/SHNwdnh5rQFetxDPGj
+	 YvIYAvuYaaBMVIdT0RMW9ajS3OAqsBBkGBCrDoSvUZ6eXc1ue6HQ/9S5Rg7imxoeBA
+	 HrXU2cY4rKSIZuI3A9YT528FVDY2FXTwi2UECeVo=
+Received: from unknown by smtp-4-0000.mail.infomaniak.ch (Postfix) with ESMTPA id 4hzWrR0NT2zt5g;
+	Tue,  6 Oct 2026 11:57:11 +0200 (CEST)
+Date: Tue, 6 Oct 2026 11:57:10 +0200
+From: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-security-module@vger.kernel.org
+Subject: Re: [PATCH v4 6/8] selftests/landlock: Add capability restriction
+ tests
+Message-ID: <20261006.Aiwohkeel3ee@digikod.net>
+References: <20261002124409.1277970-1-mic@digikod.net>
+ <20261002124409.1277970-7-mic@digikod.net>
+ <20261002125356.4C1321F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -56,33 +45,77 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261002125356.4C1321F000FF@smtp.kernel.org>
+X-Infomaniak-Routing: alpha
 
-On 05/10/2026 at 11:12:35 +02, Jerome Brunet <jbrunet@baylibre.com> wrote:
+On Fri, Oct 02, 2026 at 12:53:55PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] selftests/landlock: host hostname modification in cap_without_nnp test failure
+> --
+> 
+> commit 359c59ecc043d1cac20779ee8cc6bc19e3b8e705
+> Author: Mickaël Salaün <mic@digikod.net>
+> selftests/landlock: Add capability restriction tests
+> 
+> This commit adds tests to exercise capability restrictions enforced by
+> Landlock. It covers various standard capability evaluations, stacking
+> combinations, and non-standard contexts such as enforcing a domain
+> without no_new_privs.
+> 
+> > diff --git a/tools/testing/selftests/landlock/cap_test.c b/tools/testing/selftests/landlock/cap_test.c
+> > new file mode 100644
+> > index 0000000000000..8673934aac11e
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/landlock/cap_test.c
+> [ ... ]
+> > +TEST(cap_without_nnp)
+> > +{
+> > +	int ruleset_fd;
+> > +
+> > +	disable_caps(_metadata);
+> > +
+> > +	ruleset_fd = create_cap_ruleset();
+> > +	ASSERT_LE(0, ruleset_fd);
+> > +
+> > +	/* Allow CAP_SYS_CHROOT but not CAP_SYS_ADMIN. */
+> > +	ASSERT_EQ(0, add_cap_rule(ruleset_fd, CAP_SYS_CHROOT));
+> > +
+> > +	/*
+> > +	 * Enforce WITHOUT NNP: landlock_restrict_self() succeeds when the
+> > +	 * caller has CAP_SYS_ADMIN (checked before the new domain takes
+> > +	 * effect).
+> > +	 */
+> > +	set_cap(_metadata, CAP_SYS_ADMIN);
+> > +	ASSERT_EQ(0, landlock_restrict_self(ruleset_fd, 0));
+> > +	EXPECT_EQ(0, close(ruleset_fd));
+> > +
+> > +	/*
+> > +	 * CAP_SYS_ADMIN is still in effective set but Landlock denies it:
+> > +	 * cap_capable() returns 0, then hook_capable() returns -EPERM.
+> > +	 */
+> > +	EXPECT_EQ(-1, sethostname("test", 4));
+> 
+> [Severity: Medium]
+> Will this modify the host system's hostname if the test fails?
+> 
+> The cap_without_nnp test does not appear to isolate its UTS namespace via
+> unshare(CLONE_NEWUTS) before verifying the sethostname() restriction. If the
+> Landlock enforcement does not block the operation during a failing test run,
+> could the sethostname("test", 4) call succeed and unexpectedly change the
+> test machine's global hostname?
 
-> On Sun 04 Oct 2026 at 23:19, Miquel Raynal <miquel.raynal@bootlin.com> wr=
-ote:
->
->> On 04/10/2026 at 20:55:50 GMT, sashiko-bot@kernel.org wrote:
->>
->>> Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
->>> - [Low] clk: nuvoton: ma35d1: Modification of global static state
->>> during probe
->>
->> There is a single clock controller. Should never be a problem. I can
->> certainly move it in to more local scope if someone asks, but it's not
->> practically needed.
->
-> I may be missing something key here but why is not in your defined
-> indexes like the rest of the clocks ?
+I'll fix these issues.
 
-SYSPLL and its parent (HXT_GATE) are in the hws[] array. Are you
-suggesting to use the hw_clk pointer directly there instead of using the
-parent data structure as an envelope? Because the issue raised is the
-global definition of the struct clk_parent_data and then its
-modification (since I need to reference the hws[SYSPLL] pointer inside).
-
-Thanks,
-Miqu=C3=A8l
+> 
+> > +	EXPECT_EQ(EPERM, errno);
+> > +
+> > +	/* CAP_SYS_CHROOT is allowed by the rule. */
+> > +	set_cap(_metadata, CAP_SYS_CHROOT);
+> > +	EXPECT_EQ(0, chroot("/"));
+> > +}
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261002124409.1277970-1-mic@digikod.net?part=6
+> 
