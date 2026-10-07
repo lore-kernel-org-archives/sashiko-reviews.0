@@ -1,166 +1,114 @@
-Received: from bkemail.birger-koblitz.de (bkemail.birger-koblitz.de [23.88.97.239])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13592D3A7C
-	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 03:55:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.88.97.239
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20E03B9D80
+	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 05:19:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791345356; cv=none; b=htXtipjNKhTopI9d0XRxkTW1GPdnd3eeWVOHmNeArGKXdyrozTNv8cxh4PxmpM4QdD3NfF3oipGM7cX7uqflkk+Al4yh8wke1p86DHgY7Z1TqY6DQRg60RYKzRERG/cSgGt7lBQoAeasv6lvy5aOJviTLiv/UxCXgZfm2x9eXCo=
+	t=1791350375; cv=none; b=srDU9bxDGZRgK4GL8EztbDOr7BVaY+LCa6oboDsrqtAPQGwW/DEW1hftHQpoVned8vMskkoLPnYAmBATThOsZav66IjEq7abtcoL8pgOYSYwz10P+pcVevhRcX0lc3TRD4C7eDLWOKwCz7EgqT5KJg7p4OSNhaNuMeIgLbgd3u4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791345356; c=relaxed/simple;
-	bh=OA+c6qF7VPkn8ThHr8lw+f+5qKzOxzMCYR2MS2BBU9k=;
-	h=Message-ID:Date:MIME-Version:Subject:References:From:To:Cc:
-	 In-Reply-To:Content-Type; b=hi8n4t9weu3j9ghMGRTUmg4JURwQ0Y+dJgw7QILZ82zLM41oouJj9oo2UlWa2hVszA7c5r2ac5bhA8PIHF2VkE6M6e5LwbDsigwe3LhgOPT51jhHDa4hKq4Vn9Rw+1henieLCUODuVSZupmgu5uq3UEq34io6RVn3JGj77YTXGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=birger-koblitz.de; spf=pass smtp.mailfrom=birger-koblitz.de; dkim=pass (2048-bit key) header.d=birger-koblitz.de header.i=@birger-koblitz.de header.b=c+ClTHfZ; dkim=pass (2048-bit key) header.d=birger-koblitz.de header.i=@birger-koblitz.de header.b=c+ClTHfZ; arc=none smtp.client-ip=23.88.97.239
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=birger-koblitz.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=birger-koblitz.de
+	s=arc-20240116; t=1791350375; c=relaxed/simple;
+	bh=pEBGEIuvQXUOhw2qs60K5A3Yyo97btH1M39qmx8g1LA=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=VFcNV37JT+XiyDY4CsBa+sT9thjprO1zOxTazYt+4VUVKmZLG+74aHVYY9kuECgvUFSalB9vl4/qZKaqD7q3+P6AJEUGlezTTuQz1lxzaSQEUyKtT2/uDITXldEEZgmhE9fChHEE93jf7aqFX6zlv0sfdmEfbAA4jGdgMp7zsJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OQwTz8gR; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=birger-koblitz.de header.i=@birger-koblitz.de header.b="c+ClTHfZ";
-	dkim=pass (2048-bit key) header.d=birger-koblitz.de header.i=@birger-koblitz.de header.b="c+ClTHfZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=birger-koblitz.de;
-	s=default; t=1791345346;
-	bh=OA+c6qF7VPkn8ThHr8lw+f+5qKzOxzMCYR2MS2BBU9k=;
-	h=Date:Subject:References:From:To:Cc:In-Reply-To:From;
-	b=c+ClTHfZZHkeXPE07OuKrp3hGqAKcI4h6Z3RcYZb9wFq/wjxJcDEUt/iADmn1A38W
-	 D3O1q4F05XaRzJPOCPTYuiN5bA2d7jqgs63QcpQCLAA/20KIYLUEgqbpeat+Od8EmY
-	 WzfF4JnDp3yJecMVgV64/OHiu103M76HDkH98bS4rnuMoUhpHPIWNHhgoo/DHn2Tq8
-	 el9p+rvBeCb9ybucVSx9pD6E6N3RUWOPIIM4bxZGk9196k3RFwDpm1POrw28Iy01Sj
-	 bl/m4mXq88YtIF4sxM9qeI42zNHOxAQog9/pDo9fPcJPPSfrw28PxfY2fmWpbC4aqi
-	 WTH6AZitALHmQ==
-Received: by bkemail.birger-koblitz.de (Postfix, from userid 109)
-	id ED9BF3F31A; Wed,  7 Oct 2026 03:55:46 +0000 (UTC)
-X-Spam-Level: 
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=birger-koblitz.de;
-	s=default; t=1791345346;
-	bh=OA+c6qF7VPkn8ThHr8lw+f+5qKzOxzMCYR2MS2BBU9k=;
-	h=Date:Subject:References:From:To:Cc:In-Reply-To:From;
-	b=c+ClTHfZZHkeXPE07OuKrp3hGqAKcI4h6Z3RcYZb9wFq/wjxJcDEUt/iADmn1A38W
-	 D3O1q4F05XaRzJPOCPTYuiN5bA2d7jqgs63QcpQCLAA/20KIYLUEgqbpeat+Od8EmY
-	 WzfF4JnDp3yJecMVgV64/OHiu103M76HDkH98bS4rnuMoUhpHPIWNHhgoo/DHn2Tq8
-	 el9p+rvBeCb9ybucVSx9pD6E6N3RUWOPIIM4bxZGk9196k3RFwDpm1POrw28Iy01Sj
-	 bl/m4mXq88YtIF4sxM9qeI42zNHOxAQog9/pDo9fPcJPPSfrw28PxfY2fmWpbC4aqi
-	 WTH6AZitALHmQ==
-Received: from [192.168.2.51] (p4fd59501.dip0.t-ipconnect.de [79.213.149.1])
-	by bkemail.birger-koblitz.de (Postfix) with ESMTPSA id 757BD3F318;
-	Wed,  7 Oct 2026 03:55:46 +0000 (UTC)
-Message-ID: <0ecfa5e9-f68d-47ad-8486-1523cb599dde@birger-koblitz.de>
-Date: Wed, 7 Oct 2026 05:55:38 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OQwTz8gR"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a180fbeef5so1743745e9.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 06 Oct 2026 22:19:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791350372; x=1791955172; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=pEBGEIuvQXUOhw2qs60K5A3Yyo97btH1M39qmx8g1LA=;
+        b=OQwTz8gR6YMlsFtja1k7IWElLhPsbyrTDwQFYfGPCWnvwWFRb5HjJZWw+6z9BLETjF
+         6Fj5nxMUFLzXNRImv7fIQKjOb13m50A0MEViOFCjNvy/ga2M82rb5B9ossx5EQ4jWtHX
+         4WAWw3NrhzCjPkX/80g5e8Lm28lpe9HaYZed1pZ2ahQDYJij0Pd2ILqj2EtHNOGIDnRo
+         o6fbxOFNLNnWRulY+O6cl5AVJW93kW7CLXe9+/p96VCy6iJ3UfHRAxcEaQibLS4JR4KH
+         EZszA8N64Hez5RRRG73magQJuvYTkIg7f4c0nAH4CNwWN9VmGEPuuXEuREY21/Qtepnn
+         nJbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791350372; x=1791955172;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=pEBGEIuvQXUOhw2qs60K5A3Yyo97btH1M39qmx8g1LA=;
+        b=WdXO3sHVcfAr73bGha2Snq8MpzEFnDN5aTicQFFWxQ4+5CYjeBKyQx4NAZ3TM0+ZrX
+         OfG+cq9sdC/nWHa5eDCriKMih5monVusUA6RbAMi8UMEy+CIx6o/oZCbap+UPFcLdSym
+         FYr+EWWLDoxFfhj+ltlsp7FNUs7qFn84JvXv/5lYvcUhSw2wtnyV/YEOSOfwRkRJXBUz
+         uWXZXCCJJDxzQcmkwTq7rjJW1cFHwqtYiBEvWgPuQoMrjrO27SAe1yp/HrRQm09FTLfE
+         L+SQkFylJQAkezhgrDygDdCYrHpQq+ZU3aPmc3/PMU0OP4sbGcHpZqXrsVovyKDRUptD
+         ER7g==
+X-Gm-Message-State: AFuF++kHBMRS6j5H8lNhEZX1b7KmgygHjiD8f6YL/uDZS4aSuyd9URZh
+	dFiAJVn7SW5yMPQmgsso7TkVhXD9IpeFvfhsOS0bqA0T242amL6v8BgMnonBYr/l
+X-Gm-Gg: AYBFou2NGdrxY67/3WPRcxLhlSu58RoXuaKr5C546cZFXhJUl15fle08jAoXiL/2MDU
+	QzVw4XRQj9RIZpvE/LyULdUpO6NUC2+cH5fy9Kq6q3ZJ2hq2Otf/SQ6ihh2lD7Zh1ztf+hfJvh/
+	4vDYcVOrB6hygvEUEUWrMAzh7U7YNWzW8aPV9asq8aMkN7ze8r2YWHFB/KEhXoBcLEKVwhNghjo
+	vlMA8J/Cy7nd+8WANWnZ/uFOXr8Ze1otGIKIYvJO2Cu1q2cX1OWU55m9SspLi//fWL7EoFCQKhf
+	rDcuFRbq/w1aSfP0X6rGaIQSxWD2kNk11t80SRJTrbn7K1oseLkiTMTtc3zmIWufGQeOEeAeuEC
+	/jL8d3IHuPmjmgrGBkQzGubBbbBAwY2OitXkZZDmiqA5nAP0+xGqKt1hkR9Pi8aQavJEbAPZGuQ
+	dZIqoGcfsAxolMZ0XEK1vDskdu5WJjtUPK+tinNmWa7/W0n2a+Zd+LonsDDlWt6yc2i2RUVG8Kg
+	k6DqN7Zs1W15KFZRwiylOEypI04pHz7DuoT5SFxZ9XGVhMOntDP4h9OMuhnjplh2TKYg7A+8rNy
+	q0RA18P3y0fMaW+hQadmdZIkSJRc05ouMhmCZaG65KvoFQev+4tnEBNjVUI8KZS6MvqNcKiIQdU
+	iy6Hgjxk=
+X-Received: by 2002:a05:600c:8105:b0:4a0:20c7:6d4c with SMTP id 5b1f17b1804b1-4a180085f90mr13193475e9.0.1791350371849;
+        Tue, 06 Oct 2026 22:19:31 -0700 (PDT)
+Received: from localhost.localdomain (dynamic-2a02-3100-a1e1-2201-60f4-32e0-4d59-5772.310.pool.telefonica.de. [2a02:3100:a1e1:2201:60f4:32e0:4d59:5772])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a178a175aesm156822265e9.2.2026.10.06.22.19.30
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 06 Oct 2026 22:19:31 -0700 (PDT)
+From: Karl Mehltretter <kmehltretter@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Karl Mehltretter <kmehltretter@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	sashiko-bot@kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Jianfeng Liu <liujianfeng1994@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFT 3/5] drm/msm: Extract out map/unmap helpers
+Date: Wed,  7 Oct 2026 07:19:24 +0200
+Message-Id: <20261007051924.39963-1-kmehltretter@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20261006131920.6870D1F000FF@smtp.kernel.org>
+References: <20261006131000.81501-1-robin.clark@oss.qualcomm.com> <20261006131000.81501-4-robin.clark@oss.qualcomm.com> <20261006131920.6870D1F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Fwd: [PATCH net-next v17 01/13] phylink: Add phylink_mac_interrupt
-References: <sashiko-outbox-162605@kernel.org>
-From: Birger Koblitz <mail@birger-koblitz.de>
-Content-Language: en-US
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: linux-usb@vger.kernel.org, Birger Koblitz <mail@birger-koblitz.de>,
- sashiko-reviews@lists.linux.dev
-In-Reply-To: <sashiko-outbox-162605@kernel.org>
-X-Forwarded-Message-Id: <sashiko-outbox-162605@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hi Andrew,
+> Does this error path miss an IOTLB flush?
 
-I have the feeling that this is again rather excessive, but I do not 
-understand enough of phylinks inner workings to counter the argument. 
-Could you help me with this?
+Yes. msm_iommu_pagetable_unmap() called iommu_flush_iotlb_all() after
+rollback. __do_map() now calls __do_unmap() directly and loses that
+flush.
 
-Thanks,
-   Birger
+An arm64 QEMU/SMMUv3 test:
 
--------- Forwarded Message --------
-Subject: Re: [PATCH net-next v17 01/13] phylink: Add phylink_mac_interrupt
-Date: Wed, 07 Oct 2026 03:05:42 +0000
-From: sashiko-bot@kernel.org
-Reply-To: sashiko-reviews@lists.linux.dev
-To: Birger Koblitz <mail@birger-koblitz.de>
-CC: linux-usb@vger.kernel.org
+- mapped one 4 KiB page,
+- hit -EEXIST on the second page, and
+- verified that rollback removed the first PTE.
 
-Thank you for your contribution! Sashiko AI review found 1 potential 
-issue(s) to consider:
-- [High] phylink: Use-After-Free in phylink_mac_interrupt() on SFP unplug
---
+No stale translation was observed because the device had not accessed
+the mapping. This tested the low-level IOMMU sequence, not the MSM driver
+or Qualcomm hardware.
 
-commit 30d7b430d60b3d4dc2e6d650aaf0ceaacfbadbce
-Author: Birger Koblitz <mail@birger-koblitz.de>
+Restoring iommu_flush_iotlb_all() on this error path preserves the old
+behavior.
 
-phylink: Add phylink_mac_interrupt
-
-This commit adds the phylink_mac_interrupt() function to phylink, allowing
-MAC drivers to pass link-change interrupts directly to phylib instead of
-relying on polling.
-
-> diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
-> index a7d086cdc9b25..a3ca7993eb7e0 100644
-> --- a/drivers/net/phy/phylink.c
-> +++ b/drivers/net/phy/phylink.c
-
-[ ... ]
-
-> @@ -1612,6 +1612,26 @@ static bool phylink_link_is_up(struct phylink *pl)
->  	return pl->netdev ? netif_carrier_ok(pl->netdev) : pl->old_link_state;
->  }
->  
-> +/**
-> + * phylink_mac_interrupt() - wrapper for phy_mac_interrupt()
-> + * @pl: a pointer to a &struct phylink returned from phylink_create()
-> + *
-> + * Passes a link-change interrupt received by the MAC to phylib.
-> + * This function may be called in interrupt context, and therefore cannot take
-> + * a mutex. However, it is safe to assume that the reference to phy does not
-> + * disappear during the call, as only an SFP module may be unplugged to make a
-> + * PHY disappear. SFP modules however do not support interrupts.
-> + */
-> +void phylink_mac_interrupt(struct phylink *pl)
-> +{
-> +	struct phy_device *phy;
-> +
-> +	phy = pl->phydev;
-> +	if (phy)
-> +		phy_mac_interrupt(phy);
-
-[Severity: High]
-Can this sequence lead to a use-after-free if an SFP module is unplugged
-concurrently?
-
-The docstring mentions that SFP modules do not support interrupts, but if a
-MAC driver detects a Loss of Signal and calls phylink_mac_interrupt(),
-couldn't the SFP subsystem concurrently detect the unplug and trigger
-phylink_disconnect_phy()?
-
-If that happens, phylink_disconnect_phy() takes phydev_mutex, clears
-pl->phydev, and calls phy_disconnect() which drops the object reference and
-frees the phy_device.
-
-Since pl->phydev is read locklessly here, is it possible for
-phylink_mac_interrupt() to read a non-NULL pointer, but hand it to
-phy_mac_interrupt() after it has been freed?
-
-CPU1 (SFP unplug)                 CPU2 (MAC Interrupt)
-phylink_disconnect_phy()
-   mutex_lock(&pl->phydev_mutex)
-   phy = pl->phydev
-   pl->phydev = NULL
-   phy_disconnect(phy)
-                                   phy = pl->phydev; (Reads old pointer)
-     phy_detach()
-       phy_device_free()
-                                   if (phy)
-                                     phy_mac_interrupt(phy)
-                                       phy_trigger_machine(phy)
-                                         mod_delayed_work(...)
-
-This could then cause list corruption when phy_trigger_machine() queues work
-on the freed phydev->state_queue.
-
-> +}
-> +EXPORT_SYMBOL_GPL(phylink_mac_interrupt);
-
--- 
-Sashiko AI review · 
-https://sashiko.dev/#/patchset/20261006-ax88179a-v17-0-252814fe35ea@birger-koblitz.de?part=1
+Karl
