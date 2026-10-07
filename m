@@ -1,40 +1,50 @@
-Received: from nick.sneptech.io (nick.sneptech.io [178.62.38.78])
+Received: from bkemail.birger-koblitz.de (bkemail.birger-koblitz.de [23.88.97.239])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBDE3379998
-	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 02:39:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.62.38.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13592D3A7C
+	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 03:55:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.88.97.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791340744; cv=none; b=cXcUtOu1mF7U4YMxpcTioE5TpHJqdnd+zxN3O0/9USGBtAQkOZw4wI81WhidRz44ocuI5qLjwrfkzpR7Mu9HN6kNZTY73t9eXXbUC8mYCXsFX55wE8v5PLoCJEzvXlU9GZVkh4C8Q1sOS4XzaZI/r1rA4urxiHwjjiXeVowlPYo=
+	t=1791345356; cv=none; b=htXtipjNKhTopI9d0XRxkTW1GPdnd3eeWVOHmNeArGKXdyrozTNv8cxh4PxmpM4QdD3NfF3oipGM7cX7uqflkk+Al4yh8wke1p86DHgY7Z1TqY6DQRg60RYKzRERG/cSgGt7lBQoAeasv6lvy5aOJviTLiv/UxCXgZfm2x9eXCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791340744; c=relaxed/simple;
-	bh=i4UhY2qc9M17skJLr2fYEhO7HgzEu4FqpkX+EObdfv8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=c8yhbCr8GuPG5LY63M1TX/i8TKsEpwd3gOl6nk8gH/dHNmuuKoKKmO+7VnTNPGA3txKNunKwaaEZWh/IUhnClFEBAV1/DJ7hpgvFWO1tkfJhZ/YFj5IP2pfLo3b9Vxafm6yd9pqGLR29WjYTN8gRInpBK3E0WW0hSg8VTUaYAJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=philpem.me.uk; spf=pass smtp.mailfrom=philpem.me.uk; dkim=pass (1024-bit key) header.d=philpem.me.uk header.i=@philpem.me.uk header.b=YgHsxKna; arc=none smtp.client-ip=178.62.38.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=philpem.me.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=philpem.me.uk
+	s=arc-20240116; t=1791345356; c=relaxed/simple;
+	bh=OA+c6qF7VPkn8ThHr8lw+f+5qKzOxzMCYR2MS2BBU9k=;
+	h=Message-ID:Date:MIME-Version:Subject:References:From:To:Cc:
+	 In-Reply-To:Content-Type; b=hi8n4t9weu3j9ghMGRTUmg4JURwQ0Y+dJgw7QILZ82zLM41oouJj9oo2UlWa2hVszA7c5r2ac5bhA8PIHF2VkE6M6e5LwbDsigwe3LhgOPT51jhHDa4hKq4Vn9Rw+1henieLCUODuVSZupmgu5uq3UEq34io6RVn3JGj77YTXGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=birger-koblitz.de; spf=pass smtp.mailfrom=birger-koblitz.de; dkim=pass (2048-bit key) header.d=birger-koblitz.de header.i=@birger-koblitz.de header.b=c+ClTHfZ; dkim=pass (2048-bit key) header.d=birger-koblitz.de header.i=@birger-koblitz.de header.b=c+ClTHfZ; arc=none smtp.client-ip=23.88.97.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=birger-koblitz.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=birger-koblitz.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=philpem.me.uk header.i=@philpem.me.uk header.b="YgHsxKna"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=philpem.me.uk;
-	s=mail; t=1791340739;
-	bh=i4UhY2qc9M17skJLr2fYEhO7HgzEu4FqpkX+EObdfv8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YgHsxKnasRd7H0CpqYyXJ2t2JsxMaAbLGaNBbj1kT/tPqv0fLoPlSmaRUAMPIjQSv
-	 7uSVD8CPhGvoSZL8LI7EA6qhXqQlZJXfE2Jv2totHyfrlbVyQBYo7J/wHwq4CsFh5q
-	 ejMNELudOhGYu/vewT4pGwG5bkrgiBzZGc0iR/Qw=
-Received: from wolf.philpem.me.uk (81-187-163-148.ip4.reverse-dns.uk [81.187.163.148])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: mailrelay_wolf@philpem.me.uk)
-	by nick.sneptech.io (Postfix) with ESMTPSA id F0CC0BD05A;
-	Wed,  7 Oct 2026 02:38:58 +0000 (UTC)
-Received: from [10.0.0.32] (cheetah.homenet.philpem.me.uk [10.0.0.32])
-	by wolf.philpem.me.uk (Postfix) with ESMTPSA id 52C8F5FBAF;
-	Wed,  7 Oct 2026 03:38:58 +0100 (BST)
-Message-ID: <d9b7bfbe-d0d3-4513-a1ff-330a6b660093@philpem.me.uk>
-Date: Wed, 7 Oct 2026 03:38:57 +0100
+	dkim=pass (2048-bit key) header.d=birger-koblitz.de header.i=@birger-koblitz.de header.b="c+ClTHfZ";
+	dkim=pass (2048-bit key) header.d=birger-koblitz.de header.i=@birger-koblitz.de header.b="c+ClTHfZ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=birger-koblitz.de;
+	s=default; t=1791345346;
+	bh=OA+c6qF7VPkn8ThHr8lw+f+5qKzOxzMCYR2MS2BBU9k=;
+	h=Date:Subject:References:From:To:Cc:In-Reply-To:From;
+	b=c+ClTHfZZHkeXPE07OuKrp3hGqAKcI4h6Z3RcYZb9wFq/wjxJcDEUt/iADmn1A38W
+	 D3O1q4F05XaRzJPOCPTYuiN5bA2d7jqgs63QcpQCLAA/20KIYLUEgqbpeat+Od8EmY
+	 WzfF4JnDp3yJecMVgV64/OHiu103M76HDkH98bS4rnuMoUhpHPIWNHhgoo/DHn2Tq8
+	 el9p+rvBeCb9ybucVSx9pD6E6N3RUWOPIIM4bxZGk9196k3RFwDpm1POrw28Iy01Sj
+	 bl/m4mXq88YtIF4sxM9qeI42zNHOxAQog9/pDo9fPcJPPSfrw28PxfY2fmWpbC4aqi
+	 WTH6AZitALHmQ==
+Received: by bkemail.birger-koblitz.de (Postfix, from userid 109)
+	id ED9BF3F31A; Wed,  7 Oct 2026 03:55:46 +0000 (UTC)
+X-Spam-Level: 
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=birger-koblitz.de;
+	s=default; t=1791345346;
+	bh=OA+c6qF7VPkn8ThHr8lw+f+5qKzOxzMCYR2MS2BBU9k=;
+	h=Date:Subject:References:From:To:Cc:In-Reply-To:From;
+	b=c+ClTHfZZHkeXPE07OuKrp3hGqAKcI4h6Z3RcYZb9wFq/wjxJcDEUt/iADmn1A38W
+	 D3O1q4F05XaRzJPOCPTYuiN5bA2d7jqgs63QcpQCLAA/20KIYLUEgqbpeat+Od8EmY
+	 WzfF4JnDp3yJecMVgV64/OHiu103M76HDkH98bS4rnuMoUhpHPIWNHhgoo/DHn2Tq8
+	 el9p+rvBeCb9ybucVSx9pD6E6N3RUWOPIIM4bxZGk9196k3RFwDpm1POrw28Iy01Sj
+	 bl/m4mXq88YtIF4sxM9qeI42zNHOxAQog9/pDo9fPcJPPSfrw28PxfY2fmWpbC4aqi
+	 WTH6AZitALHmQ==
+Received: from [192.168.2.51] (p4fd59501.dip0.t-ipconnect.de [79.213.149.1])
+	by bkemail.birger-koblitz.de (Postfix) with ESMTPSA id 757BD3F318;
+	Wed,  7 Oct 2026 03:55:46 +0000 (UTC)
+Message-ID: <0ecfa5e9-f68d-47ad-8486-1523cb599dde@birger-koblitz.de>
+Date: Wed, 7 Oct 2026 05:55:38 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -42,42 +52,115 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 07/11] ata: libata-scsi: convert dev->sdev to per-LUN
- array
-To: sashiko-reviews@lists.linux.dev
-Cc: cassel@kernel.org, linux-scsi@vger.kernel.org, dlemoal@kernel.org,
- linux-ide@vger.kernel.org
-References: <20261006234202.1139018-1-philpem@philpem.me.uk>
- <20261006234202.1139018-8-philpem@philpem.me.uk>
- <sashiko-outbox-162543@kernel.org>
-Content-Language: en-GB
-From: Phil Pemberton <philpem@philpem.me.uk>
-In-Reply-To: <sashiko-outbox-162543@kernel.org>
+Subject: Fwd: [PATCH net-next v17 01/13] phylink: Add phylink_mac_interrupt
+References: <sashiko-outbox-162605@kernel.org>
+From: Birger Koblitz <mail@birger-koblitz.de>
+Content-Language: en-US
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: linux-usb@vger.kernel.org, Birger Koblitz <mail@birger-koblitz.de>,
+ sashiko-reviews@lists.linux.dev
+In-Reply-To: <sashiko-outbox-162605@kernel.org>
+X-Forwarded-Message-Id: <sashiko-outbox-162605@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 07/10/2026 00:58, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
-> - [High] ata: UAF in ata_acpi_uevent() accessing freed scsi_device kobject
+Hi Andrew,
 
-This is pre-existing. I've prepared a separate fix which should resolve 
-this issue and will submit it separately.
+I have the feeling that this is again rather excessive, but I do not 
+understand enough of phylinks inner workings to counter the argument. 
+Could you help me with this?
 
-> - [Medium] of: memory leak in ata_scsi_assign_ofnode() due to missing of_node_put()
+Thanks,
+   Birger
 
-Pre-existing again. I think this is also best handled as a separate 
-independent fix.
+-------- Forwarded Message --------
+Subject: Re: [PATCH net-next v17 01/13] phylink: Add phylink_mac_interrupt
+Date: Wed, 07 Oct 2026 03:05:42 +0000
+From: sashiko-bot@kernel.org
+Reply-To: sashiko-reviews@lists.linux.dev
+To: Birger Koblitz <mail@birger-koblitz.de>
+CC: linux-usb@vger.kernel.org
 
-> - [Medium] ata: libata-zpodd: stale from_notify flag in zpodd_wake_dev() causes unintended tray ejection
+Thank you for your contribution! Sashiko AI review found 1 potential 
+issue(s) to consider:
+- [High] phylink: Use-After-Free in phylink_mac_interrupt() on SFP unplug
+--
 
-Noted, fixed in my local v10, will wait for other reviewers' comments.
+commit 30d7b430d60b3d4dc2e6d650aaf0ceaacfbadbce
+Author: Birger Koblitz <mail@birger-koblitz.de>
 
-> - [Medium] ata: redundant scsi_resume_device() calls on already-resumed LUNs due to shared device flag
+phylink: Add phylink_mac_interrupt
 
-Noted and fixed as above
+This commit adds the phylink_mac_interrupt() function to phylink, allowing
+MAC drivers to pass link-change interrupts directly to phylib instead of
+relying on polling.
 
+> diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
+> index a7d086cdc9b25..a3ca7993eb7e0 100644
+> --- a/drivers/net/phy/phylink.c
+> +++ b/drivers/net/phy/phylink.c
+
+[ ... ]
+
+> @@ -1612,6 +1612,26 @@ static bool phylink_link_is_up(struct phylink *pl)
+>  	return pl->netdev ? netif_carrier_ok(pl->netdev) : pl->old_link_state;
+>  }
+>  
+> +/**
+> + * phylink_mac_interrupt() - wrapper for phy_mac_interrupt()
+> + * @pl: a pointer to a &struct phylink returned from phylink_create()
+> + *
+> + * Passes a link-change interrupt received by the MAC to phylib.
+> + * This function may be called in interrupt context, and therefore cannot take
+> + * a mutex. However, it is safe to assume that the reference to phy does not
+> + * disappear during the call, as only an SFP module may be unplugged to make a
+> + * PHY disappear. SFP modules however do not support interrupts.
+> + */
+> +void phylink_mac_interrupt(struct phylink *pl)
+> +{
+> +	struct phy_device *phy;
+> +
+> +	phy = pl->phydev;
+> +	if (phy)
+> +		phy_mac_interrupt(phy);
+
+[Severity: High]
+Can this sequence lead to a use-after-free if an SFP module is unplugged
+concurrently?
+
+The docstring mentions that SFP modules do not support interrupts, but if a
+MAC driver detects a Loss of Signal and calls phylink_mac_interrupt(),
+couldn't the SFP subsystem concurrently detect the unplug and trigger
+phylink_disconnect_phy()?
+
+If that happens, phylink_disconnect_phy() takes phydev_mutex, clears
+pl->phydev, and calls phy_disconnect() which drops the object reference and
+frees the phy_device.
+
+Since pl->phydev is read locklessly here, is it possible for
+phylink_mac_interrupt() to read a non-NULL pointer, but hand it to
+phy_mac_interrupt() after it has been freed?
+
+CPU1 (SFP unplug)                 CPU2 (MAC Interrupt)
+phylink_disconnect_phy()
+   mutex_lock(&pl->phydev_mutex)
+   phy = pl->phydev
+   pl->phydev = NULL
+   phy_disconnect(phy)
+                                   phy = pl->phydev; (Reads old pointer)
+     phy_detach()
+       phy_device_free()
+                                   if (phy)
+                                     phy_mac_interrupt(phy)
+                                       phy_trigger_machine(phy)
+                                         mod_delayed_work(...)
+
+This could then cause list corruption when phy_trigger_machine() queues work
+on the freed phydev->state_queue.
+
+> +}
+> +EXPORT_SYMBOL_GPL(phylink_mac_interrupt);
 
 -- 
-Phil.
-philpem@philpem.me.uk
-https://www.philpem.me.uk/
+Sashiko AI review · 
+https://sashiko.dev/#/patchset/20261006-ax88179a-v17-0-252814fe35ea@birger-koblitz.de?part=1
