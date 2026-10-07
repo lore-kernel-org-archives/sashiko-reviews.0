@@ -1,56 +1,63 @@
-Received: from LO0P265CU003.outbound.protection.outlook.com (mail-uksouthazon11022128.outbound.protection.outlook.com [52.101.96.128])
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010013.outbound.protection.outlook.com [40.93.198.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0EF37CD39
-	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 15:46:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.96.128
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBED3481ABB
+	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 16:04:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.13
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791387996; cv=fail; b=n0n7taM8cuO58P1j4nhmWBE5x740EszJmEPfNVmkRwRO5PqG6peRK1RGLs1nLUB48Sz5zQ27dkkCOuQxI1N/sRoYFF5IWCVhP/W6wKLDAmhNJyFW9UMRTFhp6Y/J4bXucyD9L+FFvDeqIh0RhGciZVanPI/tRTXWRk9UfK+KnWM=
+	t=1791389044; cv=fail; b=nWiaqpBI6XJWwYJeG0CA6/vyCJkVp5P7jFlFX+YVAE5KraZM7mf/Nup/FRazausqU+QFGTmfpsCtSOF+Flc6CNELqorT5JI+xsjvhEdj9WqkmnxTc2DoD2PJr/SgHpdWsxfWNMVRLW6PRK3S3nomRPw3470S8LbmvgZBF8f66Bc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791387996; c=relaxed/simple;
-	bh=N7yjPZV8Iy56YsZMjc36TCev8X520BHhY7H7ZevXK9Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=T8sgPQJRQ/BLW9W8WjpDqOS00wQxNygYz+6YbDpnONADS1ivvwMt2UuthYhRfMgwa2I9R02JLx+5RoVsv2jUjHGfSk3Mw+knupnfgSaozE53WY/MaS8ohQV+XJ4enYZRQiXAY4sQ2WkGBYt6+X/Q5zU/XO4+hBX/lmXo3IBRPxc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com; spf=pass smtp.mailfrom=atomlin.com; arc=fail smtp.client-ip=52.101.96.128
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
+	s=arc-20240116; t=1791389044; c=relaxed/simple;
+	bh=A1EhJNPX7OMeplvHF88xUc+5qdM8HxbUwJDrXBLBC6g=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=fDi6FSqhYd+uYZ/A0s+JHseBV9HYk7pCWMjnwFPlIMrqHvANeLuZt5W3HTOPDMMVsJ2kZKlAcl48h1XPmGAd4Wu0eL06rvtGvyhfPnwtGpLa10hwGneg66QceJdHL8PIc4B9E+SSaqT18n24sqQl6ybvYU1jlPIjprWkC2aW7+4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=vT8CtAXl; arc=fail smtp.client-ip=40.93.198.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="vT8CtAXl"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V4cbwKBD1dkRSWsJfqpOMB9aQZMQwlq2MGXtbqv0TTZQWx1osAbYeRX5ChLWJLIZwgorIPt1gRNjulaTjeNTvFxsIXE/79F2VUEO04WDiyJkIe6h2xGVDLtYNoeh4802B91jRy1f1bd+xg4WsKgVBOpVwrQc3FYnY/FnDAmpUzmGL8h6NUps4bgtuMP5u9PAYpl7O9Ey8JN7ITxP2h/2/4pFmiYutoZl2H5JqcbcJWOfoCU67KdVVeaRxm/TL6JB91jXhYFdDqINEAgXC9rH6BPo1IQVlMj4UlXHRa5oZfNowsqIkzsh9sNo7gno6DCGwxGMLfnrG6KBoS18qiKWkQ==
+ b=QB1zxWp/aCyuW/zM2DWmUHXfomQUiUzggBtSfcRm9CRaw8Jduqcvd8psUXTSqkZO6Sv7oStTwJDqGbMc2qlzYCq3lv1oSTFammzgNzLMm3erBbX8kUtUO/lVcvyOgeFldOrYHkSlKV3pSPOO3gQJ0UkkFzt0oKhlHG3u7dwMa3jHf7wvRPI46Us5aKuARVlFAIUQHVdc7eBwpdAx7/dBBSRM6NbW2mHPolo6xH8qfi8PBqgTCD0N2f+/EAYlyJNJRw6sZh8pNcTfOzy7cy0r68MYQAclk2HiKxfHLhCOGd/nqOIECd0eoECu9cgm2BxecO2RdfC6yWtXE3u+90E+xw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
- bh=ziBBFTqgEZvSCtvG3XTDPA1N2gU7GfvK85ReeV7l32s=;
- b=YC8dNy+ahGO5nDVnZgQ4LuAAglIxq3zl8m7HahvrBfYU64vcYb2nFQSk+su6rF4ioQ9HBZkCZGdT1QQrdGD2Z9fc0OV+m8dwUMeER+RFaBwAaSQ85MSnhpo6/Qi/2MXETlwc7SLGUpQDuMpPfiHqEwvy3ALdIc73C2McuPZGoZ6DCaYVITjiKXEsMSefwD6ya519sbnw0kJ2GR9Kveh13LsJErrdXaGVw9b7osnwtW40Ce/h0h5e0k11qmUtSI3jgpHgmrVqjmJtOSq610wIvKt/VOGo/OBHxdkNIRad/WmAxd/ktZnI1S+9+G3x9EtZN0RBUtZYkon3n3y5qf6few==
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GiU54Xwzzyz9TNTKxWelIBs6buw35ZcAOju1Yr7GMxM=;
+ b=nf1c4kBJnue/sydwA0syCvqkVeYYR7mEK/ArbH4qS0x9d1qg0+w3kgTZcDHs5ZBHY146EIhKy/3DUbKvyh5rGCTwtvhEjnfabqp+Qv0c0NGJH7b5sdWTuOZdHOcnAE3k6evbttw1xGGUqFjigLino0+II5Xg/wTXUY+21VOmKcp6YWE0CRlVZ2G7CvYg10EF3XrZUuSd7GwRITzoSW0MBOzCy+iRTK29cNpKYjYpPLWbWJMcGyNzbXsrf9D9IdzYVjjjLLAulnKAUr3vF5szTkwQdAeThBJcnZUE4a5b69tSUW4nXzFxEeiGv7n5biJ08jN+m6dNG4F8hdrUHk17sw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
- dkim=pass header.d=atomlin.com; arc=none
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GiU54Xwzzyz9TNTKxWelIBs6buw35ZcAOju1Yr7GMxM=;
+ b=vT8CtAXlJOGun2NmeWImoScfbp/vNRBb61+Hk0DSy0rNAN3V1Xz3F8OvzxXxXAMoltl14kCg6UPqWOTjKJDim+uLtJGazWG5n7epgKN/UTVmmYh6RyEphhwihDDKjJgNaMi53+YVCKkQMrddFCaRDboZgETXyFsq8aiEDolQPOg=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=atomlin.com;
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:183::5)
- by LO0P123MB4283.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:16c::6) with
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DM4PR12MB5721.namprd12.prod.outlook.com (2603:10b6:8:5c::10) by
+ CC6PR12MB283837.namprd12.prod.outlook.com (2603:10b6:170:209::18) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Wed, 7 Oct
- 2026 15:46:29 +0000
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230]) by CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230%4]) with mapi id 15.21.0496.015; Wed, 7 Oct 2026
- 15:46:29 +0000
-Date: Wed, 7 Oct 2026 11:46:27 -0400
-From: Aaron Tomlin <atomlin@atomlin.com>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.16; Wed, 7 Oct
+ 2026 16:03:57 +0000
+Received: from DM4PR12MB5721.namprd12.prod.outlook.com
+ ([fe80::8fe3:c3d1:a057:fd24]) by DM4PR12MB5721.namprd12.prod.outlook.com
+ ([fe80::8fe3:c3d1:a057:fd24%4]) with mapi id 15.21.0496.015; Wed, 7 Oct 2026
+ 16:03:57 +0000
+Message-ID: <38529f6b-448d-443b-bbc2-182a379cf590@amd.com>
+Date: Wed, 7 Oct 2026 21:33:51 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] perf/x86/amd/uncore: Extend num_umc_pmc to fix UMC
+ discovery
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH perf-tools-next v2 1/4] perf ftrace: Optimise
- __cmd_ftrace() stack frame with strbuf streaming
-Message-ID: <4aeowvntpaa5mwidjrcghxo7sqxfpvgitxsipvybbee5rwk3nd@3vknropgc5ep>
-References: <20261006232756.65620-1-atomlin@atomlin.com>
- <20261006232756.65620-2-atomlin@atomlin.com>
- <sashiko-outbox-162513@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-162513@kernel.org>
-X-ClientProxiedBy: VIVP296CA0103.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:355::17) To CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:400:183::5)
+References: <20261007152746.3658877-1-sandipan.das@amd.com>
+ <sashiko-outbox-163154@kernel.org>
+Content-Language: en-US
+From: Sandipan Das <sandipan.das@amd.com>
+In-Reply-To: <sashiko-outbox-163154@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MA5PR01CA0098.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1a8::10) To PH7PR12MB5712.namprd12.prod.outlook.com
+ (2603:10b6:510:1e3::13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -58,130 +65,134 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CWLP123MB6607:EE_|LO0P123MB4283:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7625bab5-257a-4d58-28c9-08df248a2728
+X-MS-TrafficTypeDiagnostic: DM4PR12MB5721:EE_|CC6PR12MB283837:EE_
+X-MS-Office365-Filtering-Correlation-Id: bfb95308-211c-4de5-a799-08df248c9748
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|4143699003|10067099003|56012099006|18002099003|22082099003|6133799003;
+	BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|6133799003|22082099003|10067099003|18002099003|4143699003|11063799006|56012099006|5023799004;
 X-Microsoft-Antispam-Message-Info:
-	fGRap7OfnBnewcc0UNFyOyDXJljC5MsIWA8EkQpQUHPb9/TkqUvZn1Cr+GBZY+9aC6ZlIcaoNpJolzJMygj6kZVjZ+oaVzN26PvpZl3bFAwIRxGsaiFazdKi3G+857mj1xK/E5eIrQHvp49on/4TquEYL9TXASun1JwMbGo7TxClwBiPF5/4Sw4Z7UrC+x0Ygmiw2d2TxXe6cSQXt1SRoda49ijAJRtSwZ/bady0X9MTTST1R+vZODomDrkJUcFHISGAp7kumWZW12hKvtlIP0rnBEmdB+52eH43PswLtPGpUOYIpJkgEd5oDLwIHabSgedmtKVTLAxekMwx4gKyE/9I1mEtGPqVl7HqqrAiZljJTNlRf97MyvWB5NXTF2+jKR44ZcomFMG7GzzF0BzEinsC+RwnvpgASDiSV8Ei2HUTSsV805lNmuwUi12iDXbouK7CEBm1rdGQcFv6y1izRiPtIeKqY98lTZ9ueqDTv0nsKjcGkAPUWT1+9PvBqeHTWKO8XmwGUT8JgD0QpdFsre9Gf4VVkOvfXJD2Vpu4PVQ2/1AjoPGqHUbAIzHJPgsP3lxH9AMbnTcpKvvrDRhzxAWD3kVZ2COfmjstffB5DsQ=
+	XvcXm9m50394h0iSG2eDFWb84yd3QRa/OU2ogCs8D00jmTidU1EpyhJIVXyfJtuAXIyWtWUnU9uHwoFdSIXOk2wh+50mFzGXTy4j4ufGejb0RkWvkfpDtpni/zsnbDzzLzKRnB0pE1llKf3JYFocd5tUtTLKLtcLJ5nTQ5l82/hvNfRnBRFUG99jr8KDIR9l7dMdxUnK7UqTDJYzkqxpsjqWZj5aToFc5QkKEPSDH9tbpi1ZXx8QGKaSnMzUkEJ628EuZ1FxLLCgiS9vO+15bbMJPQNzmIuO108T7Vku9rGhGrr+ldFhx6yuJQDVdctVSFk85FutZ2ndKt7XdwDMIlAsEVtcf5L8klrVhnP838p+u+t23+zphaD7YkubNyTFN2x9hXOZxkjU3cREDrC4Tbh2Memac+Uxh61trwzwJSgDqFtXBYBC1PJpWxPpsSwjEp+4KtsjwMVzqcpB3eLeDE0+yoq6JYFzI2N2uh3KHyFobu0t0icB3Xexaxwme5pY5ogvcuufDJ4xHCMyZ/uW09LBfmQUoIj/M77T9UxszejSdytl77bq57XUPhrBSRi8lLoTmyzlP8K9bGorLHTV9G1yjVTmt1kPyOBGGV0qVBN9URrPAptegMvCvcSigt31Xlr5kaPiHJ5eokMos6qtbi2Wrcjf/tORpEP7X8eXsIE=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(4143699003)(10067099003)(56012099006)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR12MB5721.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(6133799003)(22082099003)(10067099003)(18002099003)(4143699003)(11063799006)(56012099006)(5023799004);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?dVh6eEVVTkY3WlU4Y1NxREN6Vk1NRGtVOXZZbmtMQjRydDNvbmZ5RWpieEtT?=
- =?utf-8?B?Mit4SXJlY1JVYTlZdzJVa2hmTk94Z3Z1VDZLV2c2WGlaL0F3NXpjTnVRMU84?=
- =?utf-8?B?MWpIQkZab1gwNzdGUVVzU1JQTjNPVnV5cHlMQUNKU01jWUVPZ0hPZGJna0k2?=
- =?utf-8?B?Qk5JZGZoMnp3MmNOa0dDdnM0K0c0aGdpaUwwcWRoYlFZSnBOMzhBQTlDMzFy?=
- =?utf-8?B?bEZxREJ4NmZPc2Y0eDFUNzNBOGhhMUFVdmc2Z2x4bmJXWk1mZnhOV2QwM2RJ?=
- =?utf-8?B?ZUhySG4xRmg1RmxDdFpEVnNUenBxbTFOWThWcXZpeVZrcmtxWEo1TkdDSmVR?=
- =?utf-8?B?a203NGsxM1JlZ3FrSHovdCtqNEUvbVJEUmUzWk9MeVV6bCtPbnpCL2xnRTcv?=
- =?utf-8?B?YkZWVGRzMVVSS0M0bERlVGg4dTVGTnoxam16QmNWZnlIY2VPZHJRajR2WU1U?=
- =?utf-8?B?MjJFS3BFdWNWVjE3UXZwUlFxa1g4TllUZWw1R1Mvdm5EcWxwNnJGVG5NeEVu?=
- =?utf-8?B?N0xZT2tKa1FRREQ4a3I3cE04SndYN2FJUXBXVktnOGFGRW0xaUtsbnlSREs4?=
- =?utf-8?B?bThwYjlFWk1OdW1hN3Y4eXUwc2dHSjdlRHQvNCtTQXNKRWtpOTh3b1RQcDFk?=
- =?utf-8?B?bVduL2hMM2NsKzZNZkMvNGlVU2piOTNhcDJpUnQvbzZ5T3Y1ekdVV0lIWDNE?=
- =?utf-8?B?VGZhbXFkKzk5dFQrME5HVGZWWS80QVNQZ3M1VTgrTFFBNDQzRTNzNi9rUlJX?=
- =?utf-8?B?QklBZ0NBR3A0Nk1mU2FuZTMyVEwzbmR6aFZ6NzVaNTJ0RE5ZcU1acUFzQXdV?=
- =?utf-8?B?c1IxLzlWVkoyeVRVVkV2bGxGWks3VkVtL2tKQnU5UDNPMW8yZEsrZGMxcURl?=
- =?utf-8?B?VXlvclJDUWRwMFY5N2pXR1VzbjJyWXZaNitXb0xsN25ncVpsUm92cVZiTmk0?=
- =?utf-8?B?eExwSER1cERUT2RBVmdETlJZN0pMamRXNXJHaUk2YmtiRUQ5MkpSS2F0Q2pk?=
- =?utf-8?B?ZHlLdU9BOWlKdWFJdUtuZ204WllWSUk2eG1yTVVKc2R3bTFpdFplQjduc3Rq?=
- =?utf-8?B?NjlsVDZNM2VkZnhIdkRvRzRWQ3dSak5wbU1SbHVXeG5PWWJSd1YvdWJTWGNL?=
- =?utf-8?B?NjM3MWlJUGhieUhOM1hJUGJibnhHdUV6T3lYRDRwdCtUNVVMZmVHbEt5dGky?=
- =?utf-8?B?aEV3K0hZcmlOcW9wTjNxbFlzenJ5ZkJnUXpMSmZmSTZ6dytZZkpwNEV1bFJU?=
- =?utf-8?B?ZTRxMTRKNWM5WTA1bUVaS1h6dWczVUZmOS8ya3dERjhIWWc0RVc4dEVyL3JS?=
- =?utf-8?B?TjdDNTFzdFRoTWhVdmxLMWhOSXFGUGRkTUd5K1ZPYnc0TC92UERiZndlV0dO?=
- =?utf-8?B?R1E2dTdqYThNRytzWG5DbXA4Y0VYOHRpa2RPWDJoaVBGUVJaLzdhVUtLNyt5?=
- =?utf-8?B?ZEE0TitJcGt0YlBjMk14SVZFRzROejQzdlBJS29NVkdTODFoMlk3anJLT0xi?=
- =?utf-8?B?RW9tZVkwbEpJVkdkbk1vVE9hZlNDSHFobS9MdFhTM3BLUEhaeStnYVoyZVdQ?=
- =?utf-8?B?bitiT1hRV0U5RjI5NUVsRWRXTXo5MWlDL29pTVQ2dUo4ZFdMaUF0VTk3ekhM?=
- =?utf-8?B?cDZxTndxWGxVODR2VHJkTyt2ajJZVDVmdmEzcXhxMC9Pa0dzVGhUNjVqcjVh?=
- =?utf-8?B?Vi9yMEJyMVJha093SjlJbm1CK1l2eEUxSk5TYjBPcVZTSy9ZVzJzS1FSZklp?=
- =?utf-8?B?dGJSMU9Va3YwYU8yak51Nlhldk0rYzlSaDI3QjhsTkc3cmxCNlF3OWh0aDFE?=
- =?utf-8?B?Nko1QnFhWG9oK1d3a2FyWHZidysyZmNsUjBGYUJyYUVTZnJ5TXJhcmtsTlZx?=
- =?utf-8?B?THRQVGFLaGhoQllBTUdYRWFzTnUwRWdRU2pRMWNsSDdFV0xuMDFPWlFhZzhv?=
- =?utf-8?B?aWtRRlRoMEJkNWtDbjJqVFpDdENYejB6L2d3RWN4TTg3SEJ0bmNGNVFzL29o?=
- =?utf-8?B?SlVrWmRPTlA4SHZKQ3I3TTNuZWhEOFo3SEZDZUZBT05mQTVQYTZxWUM2L2JE?=
- =?utf-8?B?V0syZkk0YzRPY2dzZnc3WURvTW9iM3g3OU83T2JQMFRscmZ4d1FEYnM2WFpu?=
- =?utf-8?B?OUd1dFNDTzR4V3IvYWRNZFBXbU9jNzlCTEpQaGZxek9vdTdNZkVIeDBwTWQ3?=
- =?utf-8?B?ZDUwcXcvMENHKzQ0ZzNzNU1sSENpYzFCM0l4bFdPaytjaFl5MVVmcGtkZUdZ?=
- =?utf-8?B?cW1MU0tLTmtRRUt0QTFNcjRud2lwVU51WTVGTlp2TE1rNy91NnpyRHpDT2Rw?=
- =?utf-8?B?cUpjTDA2RlA0MmI4WFNrRlJXcDlGOGdJQlg4WDdtRnZMRFQ1eEJsQT09?=
-X-OriginatorOrg: atomlin.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7625bab5-257a-4d58-28c9-08df248a2728
-X-MS-Exchange-CrossTenant-AuthSource: CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+	=?utf-8?B?M1diU216UndVUWlkYzJDQXh0MzNDby8yR1FXNzhRVnpiZVZuN0owK2pqMWZO?=
+ =?utf-8?B?dnE4MWtrWnozcVRnNVpBVFFEd1NJSHFpRVhVMFhtNyttQlI0RUR6R0EzbVJx?=
+ =?utf-8?B?OEU2djdLajNQNlBVMjdPWkx1N1dKaUREUnJRdzduTmNoTDVjMThJTkwzZkwx?=
+ =?utf-8?B?T1ZicWM3ZlRENFBQYlhhMjhpUHlHajZWbjh5d2tNRUhwTEhQT2RIWXlvUC9T?=
+ =?utf-8?B?RU1obnV2YjhNK1R6NVZKQXkxQlFEMFdqbGpMSU0vWHRIU2RnSkhLUXV3VmRZ?=
+ =?utf-8?B?dVh5UU8vUUZWT3FySWU1ODExUXRIVEV2QmR4d3JBNzVSS1VSbkVsZEdFaGJ5?=
+ =?utf-8?B?aFU3M1lXUUVsSktOaTFrOXNqcWVWL1hSc3JmYnFqd05DSkY5YXJhYXdtNllX?=
+ =?utf-8?B?WVN1WXVFNTNreHdvOEdEUEpUKzF1MzhtZDA5QzRaRVVqSE15empTU1ovTXZ4?=
+ =?utf-8?B?R1FyWWVXSEpycEd4cXFQY1BIYlJpZ1JBYU14cG1iUGhHUVEzMjFwTHE4YVBk?=
+ =?utf-8?B?QVJNYW9TREh4ZExvWHBSUDl1a0k1aisvYS85WktvRTYzeEZlVkdUVSs5cCtt?=
+ =?utf-8?B?MnhtckZybDBPNVVCL2wrc3FVbkJRRWtJcGxNanN3eVR2TllhRFVydkNGMlUx?=
+ =?utf-8?B?dllhd3A5RS9JT1kzcUs1TWtFdng2RTQ1OUNRYlF4b3hyaTQxOGNTOHBYR2gv?=
+ =?utf-8?B?T2NrNi8wTVlkRWhJN3laZFpkSExiRHdLMnNMdXdQVXJIYVh4cm9UVS9nSVY1?=
+ =?utf-8?B?cVVsQVM3UFVZYlI1L09wZVJRbkxYWWZoMUYvb1B0dDVGOS9paEliNVAyQWRr?=
+ =?utf-8?B?UUc4RllENWV4OCtoWUdKMHE1ak54T05EOGNjdjl0N3J3VDlzYkp3QXdCRzJO?=
+ =?utf-8?B?TTdYNndnKzllb1p3aE85aVpxRE9UUG1rSlRGdEVXS3hWWWhXdExGT2QzeXJQ?=
+ =?utf-8?B?c3lsM0ZITlRSQWlTZlJQbFNnS0FHVGpidkxWckNwR3B2a2JYREdPbEhqMWpj?=
+ =?utf-8?B?Z2o5UFdYQjdIT2Q2MHY0UHQrOGNFcXZKczlCNmlZdjFzblRXSFpVRS8rNmJZ?=
+ =?utf-8?B?WEgzOFBJUGtnQU55aklnem5DT01DbzRvTHZGVExFb1NJQUY1MTZ0Y2FoSlBy?=
+ =?utf-8?B?VzRsSlpFOGtDZHY5bmQ3bnJ6amVyNUVLb3FKMy91NThFUnFEYmExQ1JVVDFv?=
+ =?utf-8?B?WGlDbkV1bGJmZVRBMytoSmN0Z0FUQ1JBeG5oeE5NVjc0TzRVcWt5VFpvM3V3?=
+ =?utf-8?B?d0pPQzhLQmRLM3o3OHVISGxVbjFscWJHd0lWTnRNWDJsby9mQXJqVVhvbFM4?=
+ =?utf-8?B?Y1J0clduYWsxeFhxSGoxckl0eVJhZFdwbkRJSzlVajc1MElXQkpHTjIzb0Jy?=
+ =?utf-8?B?enh5MzlwWmh1SG9ENkJXTEZHbUxFclJoejN4dmZSVzhJV21nQlZ4VWlWVmw1?=
+ =?utf-8?B?Z00xR0VRRGNrR1ZrU3gvQm50U0ZCa2JLYlV0NXJIc1VKVWV4a3dtaXFqazRh?=
+ =?utf-8?B?MWZIZDZWWkh2NHV2eXk5MENVVnJvTnltNi95c3VaTzFUQ09abloyd2luUWpV?=
+ =?utf-8?B?alV6YjRySDd1ZTQ4SWV4SEJaNmFkZzIxNlNLY1RSdFlacUVrc1MzV1Q1aHJa?=
+ =?utf-8?B?Z0xaZkFqL3pGdEFta2libTFtUjV0MmsvdHl4R1gzaEJQK3BqS3laMmk0allZ?=
+ =?utf-8?B?YTRUcXNobk9mMGkrQnpOOS9RUDZ2TzFUT0ZNTnM0RnhlSy9vc0JkWW1Xd29O?=
+ =?utf-8?B?clZYVXVxUGtsNlVOUDFOVWVLcGRESWpIemVrcFhTdElaR00weVdRK3oxek4z?=
+ =?utf-8?B?bGVhZ1hrcWJmYXkvazJNL1g1dSt2VmJSTVRZTm1pUVVoa1pXZlNpelY2RUwr?=
+ =?utf-8?B?aUNFeldJcVErYVZyb25oVUFBZDZaSXdoN3JiczFCaTd2dTF6VEw3M2FNd01M?=
+ =?utf-8?B?TXpWekcvNzdBUzN3Z0pFSUxSSGcyTG1ub0RiaUdxUTMzVUdMYjlMUWNHM3Rt?=
+ =?utf-8?B?ZVBGZEZRSnZoVi9IVGpoanZkUmtpcVJwTzBIWFg2SzBFQjVNZjgvRExHVWxV?=
+ =?utf-8?B?VFhNeVJvTHZSQ3Z6aFBqNWJTODZreko1RUd2N1F3NzlTQUZvMlJobVNkM0Ni?=
+ =?utf-8?B?S0d5RVVuRGUyek54QnhPVmQxaHlJU3NYd0o2WkVlUWxDMWczMUxNZzA3VzIy?=
+ =?utf-8?B?TXh2cXFqUXY2akFRRzZmVlBVMHY1dmhHbnhYaVpqMWdibk1Uand4TCtaK0dz?=
+ =?utf-8?B?RTRmeTlJbnU4TEtrZFBsUFlJb25mZFp4T3hKK0xVWUNnM1VDV2h6ZFRhUjhx?=
+ =?utf-8?Q?Wx132ECyn8WyLEfEWJ?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bfb95308-211c-4de5-a799-08df248c9748
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5712.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 15:46:29.3515
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Oct 2026 16:03:57.5877
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: np5f7rNB5aFnoskrtbM9BXDKt8Hf+tSho2FYu2jLPeKHV4kNGEfulCaDKy0dtlSr8QwGD9ptY/iTwEpVQlGepA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO0P123MB4283
+X-MS-Exchange-CrossTenant-UserPrincipalName: G3s4ILnIiof6bDfRAr0U32MlbW8OdrjmWsJPVnE6UdoK96P7EyK06OY3xEMPmpp8J6tFetfopF8za1offHgMzg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CC6PR12MB283837
 
-On Tue, Oct 06, 2026 at 11:35:44PM +0000, sashiko-bot@kernel.org wrote:
+On 07-10-2026 21:10, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] perf: Memory leak of buf and linebuf on early ftrace setup error paths
+> - [High] perf/x86/amd: OOB write on active_mask via unvalidated CPUID
 > --
 > 
-> commit e5886f5c4e0cc584a5a7ac05c7c069ab1b80f135
-> Author: Aaron Tomlin <atomlin@atomlin.com>
+> commit 00612d17a5d2f57d4e77167b7e9d6303f0e776ac
+> Author: Sandipan Das <sandipan.das@amd.com>
 > 
-> perf ftrace: Optimise __cmd_ftrace() stack frame with strbuf streaming
+> perf/x86/amd/uncore: Extend num_umc_pmc to fix UMC discovery
 > 
-> This commit refactors __cmd_ftrace() to use a dynamically allocated buffer
-> and a string buffer for streaming trace data instead of a fixed stack array.
+> The commit extends the width of the num_umc_pmc bitfield from six bits
+> to eight bits to match Zen 5 documentation. This allows discovery of
+> Unified Memory Controller (UMC) counters up to 64 in fully-populated
+> Zen 6 configurations.
 > 
-> > diff --git a/tools/perf/builtin-ftrace.c b/tools/perf/builtin-ftrace.c
-> > index 6017493ff1797..4e77a0b2513f8 100644
-> > --- a/tools/perf/builtin-ftrace.c
-> > +++ b/tools/perf/builtin-ftrace.c
+>> diff --git a/arch/x86/include/asm/perf_event.h b/arch/x86/include/asm/perf_event.h
+>> index 1eb13673e889f..d419b26086b22 100644
+>> --- a/arch/x86/include/asm/perf_event.h
+>> +++ b/arch/x86/include/asm/perf_event.h
+>> @@ -293,7 +293,7 @@ union cpuid_0x80000022_ebx {
+>>  		/* Number of Data Fabric Counters */
+>>  		unsigned int	num_df_pmc:6;
+>>  		/* Number of Unified Memory Controller Counters */
+>> -		unsigned int	num_umc_pmc:6;
+>> +		unsigned int	num_umc_pmc:8;
 > 
-> [ ... ]
+> [Severity: High]
+> Does this expansion allow values up to 255 from CPUID to propagate unchecked?
 > 
-> > @@ -767,6 +771,13 @@ static int __cmd_ftrace(struct perf_ftrace *ftrace)
-> >  
-> >  	setup_pager();
-> >  
-> > +	buf = malloc(TRACE_BUF_SIZE);
-> > +	if (!buf) {
-> > +		pr_err("failed to allocate trace buffer\n");
-> > +		goto out_reset;
-> > +	}
-> > +	strbuf_init(&linebuf, 512);
-> > +
-> >  	trace_file = get_tracing_instance_file("trace_pipe");
-> >  	if (!trace_file) {
-> >  		pr_err("failed to open trace_pipe\n");
+> When the field was 6 bits, the natural boundary limited it to 63, which fit
+> safely inside NUM_COUNTERS_MAX (64). With an 8-bit width, a hypervisor could
+> supply a value greater than 64 in EBX.NumPerfCtrUmc.
 > 
-> [Severity: Medium]
-> If get_tracing_instance_file("trace_pipe") returns NULL, or if the subsequent
-> open(trace_file, O_RDONLY) fails within __cmd_ftrace() in
-> tools/perf/builtin-ftrace.c, the error path executes goto out_reset.
-> 
-> Because the out_reset label completely skips the resource teardown label
-> out_close_fd:
-> 
-> out_close_fd:
-> 	free(buf);
-> 	strbuf_release(&linebuf);
-> 	close(trace_fd);
-> out_reset:
-> 	exit_tracing_instance();
-> 
-> Does this permanently leak the heap-allocated buf (TRACE_BUF_SIZE bytes) and
-> the internal buffer of linebuf on these early ftrace setup error paths?
 
-Yes. I will address this in the next iteration. Since buf and linebuf are
-allocated before attempting to resolve and open trace_pipe, taking 'goto
-out_reset' bypassed the resource teardown and leaked both heap allocations.
+Uncore counters are generally not visible to guests.
 
+> This value gets propagated down during initialization without validation:
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261006232756.65620-1-atomlin@atomlin.com?part=1
+> arch/x86/events/amd/uncore.c:amd_uncore_umc_ctx_init() {
+>     ...
+>     pmu->num_counters = group_num_pmcs[gid] / group_num_pmus[gid];
+>     ...
+> }
+> 
+> If pmu->num_counters exceeds NUM_COUNTERS_MAX, can it cause an
+> out-of-bounds write when starting the event?
+> 
 
-Kind regards,
--- 
-Aaron Tomlin
+Not for real hardware since each UMC PMU has at most 4 PMCs.
+
+> arch/x86/events/amd/uncore.c:amd_uncore_umc_start() {
+>     ...
+>     __set_bit(hwc->idx, ctx->active_mask);
+>     ...
+> }
+> 
+> Since ctx->active_mask is sized by BITS_TO_LONGS(NUM_COUNTERS_MAX), writing
+> a bit greater than 63 might overflow into the adjacent nr_active and
+> hrtimer fields in struct amd_uncore_ctx.
+> 
+> Should we cap pmu->num_counters against NUM_COUNTERS_MAX during
+> initialization to prevent this regression?
+> 
+>>  	} split;
+>>  	unsigned int		full;
+>>  };
+> 
+
