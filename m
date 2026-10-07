@@ -1,87 +1,148 @@
-Received: from mailout4.samsung.com (mailout4.samsung.com [203.254.224.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.aperture-lab.de (mail.aperture-lab.de [116.203.183.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD9F242D84
-	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 01:09:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDD0239068
+	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 01:13:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.183.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791335346; cv=none; b=GIcnu4N4251JOOlIQs8bxtSFf4QmXCcm+E0CHA4C+3Gfi2AAbOUmuXzJ2axhzsHYQmfXmxY+uFcO/xbq78dZbkCli3WNkkmiUW++a66TtFZpl5EihXLMSY+lO45E1nBtnqDjCFJF91P7QuDE//USZ0HmSF5WXWC+sO8WByw2qFs=
+	t=1791335620; cv=none; b=aQboi6bL9KAZ+KcVMSKyzTr9PY19znDjL8pROBPWZaQB7MaZowyvsSN6bROSodk0rJ/Jq0ewu4Ey+7DrE0UfqkWU+qWuODmKnvZxsdHsXbhI9Dr/AK2OEJFyH19KxK2uyog56YUY+7aoeIN6n9CwK/sflGYjC5ksI0H4B9Hp5wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791335346; c=relaxed/simple;
-	bh=lZ1xbaoJxl7g2bXHCuYLctZ0kdEBBGSEco5/kK4gTLA=;
-	h=Mime-Version:Subject:From:To:CC:In-Reply-To:Message-ID:Date:
-	 Content-Type:References; b=n/cQR/0SnqE8B8ap2iVexaHIbqCtaiii6mQsX3NghAfO2H7pkp8QgRT7Cg+uz+5BuU4jX6Mk8Fk7mJSZxnvAtdOVVAQyN7FFDnoQLHHcZpQfVeCqfNhKy/J9V72ERGy+rFOOjk8rlDVE57JRmD2+Ux0NBubfX7D8njHIK5NmBUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=qpE4JPBk; arc=none smtp.client-ip=203.254.224.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="qpE4JPBk"
-Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
-	by mailout4.samsung.com (KnoxPortal) with ESMTP id 20261007010902epoutp04ef1a03bc2000f39b1835b2c4c0155983~cGgCuI6yp2784027840epoutp04c
-	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 01:09:01 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com 20261007010902epoutp04ef1a03bc2000f39b1835b2c4c0155983~cGgCuI6yp2784027840epoutp04c
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1791335342;
-	bh=lZ1xbaoJxl7g2bXHCuYLctZ0kdEBBGSEco5/kK4gTLA=;
-	h=Subject:Reply-To:From:To:CC:In-Reply-To:Date:References:From;
-	b=qpE4JPBk4y4ZFNxJu2qiUDUyOXJPxETVVtG498kYHXiCKPEJgyD6YzorxEYWrFn4u
-	 e2saNB+YoVIeKlt4HyxRv5aLyHUDymsFmHEw4JMoRJosx/b2SulAmyis09mrxo27rr
-	 5Yd7xypN7vtHIzVKlwTlR+fqI8OkS6/R1fHxmbH4=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
-	epcas2p2.samsung.com (KnoxPortal) with ESMTPS id
-	20261007010901epcas2p205378bb3b6bdd3060b4fa834a41ec355~cGgCTm3CE1562815628epcas2p2N;
-	Wed,  7 Oct 2026 01:09:01 +0000 (GMT)
-Received: from epcas2p2.samsung.com (unknown [182.195.38.209]) by
-	epsnrtp02.localdomain (Postfix) with ESMTP id 4hzw4Y2NQBz2SSKZ; Wed,  7 Oct
-	2026 01:09:01 +0000 (GMT)
+	s=arc-20240116; t=1791335620; c=relaxed/simple;
+	bh=fQP1OwswE3OJUY42u89IjQ9Z6vXG8Bj2/UIL7LWsd2M=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=q87u7JyhsHI9YY5CCW2f+8c0Vraf/FZyUrR+bgGV1XVuUkGHkyY/9NXLaO/VLMM2214oNvghHTDb1Ij7STD/C/66JufZs+UmIyH/aLyGM68fO7U44ypKzV1AJMuiIijSjDaygbqmPBPiktKvIl9zQMcIyIGzJ0ERP+vI+0/ORoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=c0d3.blue; spf=pass smtp.mailfrom=c0d3.blue; arc=none smtp.client-ip=116.203.183.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=c0d3.blue
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=c0d3.blue
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C2FC920649;
+	Wed, 07 Oct 2026 03:08:04 +0200 (CEST)
+Date: Wed, 7 Oct 2026 03:08:03 +0200
+From: Linus =?utf-8?Q?L=C3=BCssing?= <linus.luessing@c0d3.blue>
+To: b.a.t.m.a.n@lists.open-mesh.org, sashiko-reviews@lists.linux.dev
+Cc: sven@narfation.org, marek.lindner@mailbox.org, sw@simonwunderlich.de,
+	antonio@mandelbit.com
+Subject: Re: [batadv,v14 5/5] batman-adv: avoid superfluous DAT DHT_PUT
+ additions to local DAT
+Message-ID: <asWbc64vRQgTKt9E@sellars>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Subject: RE:(2) [PATCH 2/2] ext4: track zeroed out blocks of unwritten
- extents for fast commit
-Reply-To: daejun7.park@samsung.com
-Sender: Daejun Park <daejun7.park@samsung.com>
-From: Daejun Park <daejun7.park@samsung.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "tytso@mit.edu" <tytso@mit.edu>, "linux-ext4@vger.kernel.org"
-	<linux-ext4@vger.kernel.org>, "jack@suse.cz" <jack@suse.cz>, Daejun Park
-	<daejun7.park@samsung.com>
-X-Priority: 3
-X-Content-Kind-Code: NORMAL
-In-Reply-To: <sashiko-outbox-162556@kernel.org>
-X-CPGS-Detection: blocking_info_exchange
-X-Drm-Type: N,general
-X-Msg-Generator: Mail
-X-Msg-Type: PERSONAL
-X-Reply-Demand: N
-Message-ID: <20261007010900epcms2p66e3f6b8e14468cf399e14cea7d107c9e@epcms2p6>
-Date: Wed, 07 Oct 2026 10:09:00 +0900
-X-CMS-MailID: 20261007010900epcms2p66e3f6b8e14468cf399e14cea7d107c9e
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-X-CPGSPASS: Y
-X-CPGSPASS: Y
-cpgsPolicy: CPGSC10-223,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20261007005529epcas2p241745ac48b13e8e684666ae6b0e46f53
-References: <sashiko-outbox-162556@kernel.org>
-	<20261007-ext4-fc-zeroout-v1-0-b86de6439431@samsung.com>
-	<20261007-ext4-fc-zeroout-v1-2-b86de6439431@samsung.com>
-	<CGME20261007005529epcas2p241745ac48b13e8e684666ae6b0e46f53@epcms2p6>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261006185037.27163-6-linus.luessing@c0d3.blue>
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Wed, Oct 07, 2026 at 00:55:24 +0000, sashiko-bot@kernel.org wrote:
-> Unlike ext4_zeroout_es(), ext4_split_extent_zeroout() does not update the ES
-> tree, so the outer zeroed blocks remain EXTENT_STATUS_UNWRITTEN in the cache.
+On Tue, Oct 06, 2026 at 07:02:00PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] batadv: CPU exhaustion DoS via O(N) candidate selection in softirq
 
-Mostly a false positive. The failed split drops the extent from the ES
-tree, and it is then re-inserted as written, or left uncached so that
-the fast commit falls back to a full commit. A stale unwritten entry can
-remain only for blocks that were just zeroed out, so replay gives the
-same contents.
+I think we have this situation already for ARP Replies, even without
+this patchset (though limited to the local node)? And avoiding that
+seems like it would need quite some rework.
 
-Daejun
+Besides, at least in Gluon we have ARP ratelimiting via
+ebtables anyway, as we've had some devices, probably some funny
+mobile apps, scanning the full /20 IP range, leading to a lot of
+ARP traffic:
+https://github.com/freifunk-gluon/gluon/tree/main/package/gluon-ebtables-limit-arp
+So we wouldn't be (that) affected and I think any larger and especially
+publically accessible batman-adv network should configure such
+rate-limiting via netfilter anyway.
+
+
+> - [Medium] batadv: UAPI source compatibility breakage via reserved field rename
+
+I would have thought that for a field called "reserved" it would
+be clear that it'd be subject to change in the future.
+
+Or should I introduce a "struct batadv_unicast_4addr_v2_packet"?
+
+
+> --
+> 
+> commit ad436b7e22433bb29047a461fbcafbd08d11c4a3
+> Author: Linus Lüssing <linus.luessing@c0d3.blue>
+> 
+> batman-adv: avoid superfluous DAT DHT_PUT additions to local DAT
+> 
+> This commit adds a flag to DHT_PUT messages to indicate which pair is
+> supposed to be added to the local DHT. This avoids populating the local
+> DHT with unnecessary entries that will likely never be queried.
+> 
+> > diff --git a/include/uapi/linux/batadv_packet.h b/include/uapi/linux/batadv_packet.h
+> > index 32436560ecc8b..2a7928fa5195a 100644
+> > --- a/include/uapi/linux/batadv_packet.h
+> > +++ b/include/uapi/linux/batadv_packet.h
+> 
+> [ ... ]
+> 
+> > @@ -445,13 +445,13 @@ struct batadv_unicast_packet {
+> >   * @u: common unicast packet header
+> >   * @src: address of the source
+> >   * @subtype: packet subtype
+> > - * @reserved: reserved byte for alignment
+> > + * @flags: packet subtype specific flags
+> >   */
+> >  struct batadv_unicast_4addr_packet {
+> >  	struct batadv_unicast_packet u;
+> >  	__u8 src[ETH_ALEN];
+> >  	__u8 subtype;
+> > -	__u8 reserved;
+> > +	__u8 flags;
+> 
+> [Severity: Medium]
+> Does renaming the reserved field to flags in the UAPI structure
+> batadv_unicast_4addr_packet break source compatibility? Any user-space
+> applications referencing the old reserved field name might fail to compile
+> after this change.
+> 
+> >  	/* "4 bytes boundary + 2 bytes" long to make the payload after the
+> >  	 * following ethernet header again 4 bytes boundary aligned
+> >  	 */
+> > diff --git a/net/batman-adv/distributed-arp-table.c b/net/batman-adv/distributed-arp-table.c
+> > index 0acb129cf4c5f..3c96c42153685 100644
+> > --- a/net/batman-adv/distributed-arp-table.c
+> > +++ b/net/batman-adv/distributed-arp-table.c
+> 
+> [ ... ]
+> 
+> > @@ -562,6 +565,20 @@ static inline void
+> >  batadv_dat_dht_entry_add(struct batadv_priv *bat_priv, __be32 ip,
+> >  			 u8 *mac_addr, unsigned short vid)
+> >  {
+> > +	/* Happens if a new node just beat us as a candidate, an old node
+> > +	 * does not have the more specific candidate selection enhancements yet
+> > +	 * or if future protocol enhancements, which this node does not have
+> > +	 * yet, added new/other candidate selections. For compatibility reasons
+> > +	 * do not bail out here.
+> > +	 */
+> > +	if (!batadv_dat_dht_check_self_is_candidate(bat_priv, ip, vid)) {
+> 
+> [Severity: High]
+> Does calling batadv_dat_dht_check_self_is_candidate() unconditionally in
+> batadv_dat_dht_entry_add() during the receive path introduce a denial of
+> service vector?
+> 
+> Looking at batadv_dat_dht_check_self_is_candidate(), it calls
+> batadv_dat_select_candidates() which performs a GFP_ATOMIC allocation and
+> iterates over the originator hash. Since batadv_dat_dht_entry_add() can be
+> triggered from softirq context when processing incoming packets, could an
+> attacker send a flood of DHT_PUT messages to exhaust CPU resources and memory?
+> 
+> > +		batadv_inc_counter(bat_priv,
+> > +				   BATADV_CNT_DAT_DHT_ADD_NOT_CANDIDATE);
+> > +		batadv_dbg(BATADV_DBG_DAT, bat_priv,
+> > +			   "Adding %pI4 %pM (vid: %d), although we are not a candidate\n",
+> > +			   &ip, mac_addr, batadv_print_vid(vid));
+> > +	}
+> > +
+> >  	batadv_dat_entry_add(bat_priv, bat_priv->dat.dht_hash, ip, mac_addr,
+> >  			     vid, "dht");
+> >  }
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261006185037.27163-1-linus.luessing@c0d3.blue?part=5
