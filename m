@@ -1,184 +1,280 @@
-Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11022087.outbound.protection.outlook.com [52.101.53.87])
+Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACEA3839AC
-	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 10:41:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.87
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791369742; cv=fail; b=Y07AloW7j4ijXCqysur8id6VMsHFHHHptc8dkq+ZZwznpfOXdUR5KJckwavz9PUUv05mjxfdKOqMRPfLin4UBXHAS0kg3LR6IwZCpj+nNW1b2KRiad2YkN0QaCNySzUs4R1nRhxxYo1N/iM6UjZ4kpG4+zAIgFMxjwFkzUqk88M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791369742; c=relaxed/simple;
-	bh=vRGlMjpVf9beO41MQGDbzAf1daBX/en7Q4OPj4BmpIg=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=idKcMdADxVzHfpQrKtB9tCwZ65VpK8apfidOaB7ovnTVp0aVfDZ7fLxXKFf9pjLnsSJNKZ8Ao2IWzeFnq4TAbIT/mJUDVmIaqsvAJAfCT3bbt+4kUX+9kRVFLewOFDYHqMitNqG3T8uUnzvs3uItPHO8bM8GJffmkJDe4UUJF54=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gatech.edu; spf=pass smtp.mailfrom=gatech.edu; dkim=pass (2048-bit key) header.d=gatech.edu header.i=@gatech.edu header.b=CJ9GiAqn; arc=fail smtp.client-ip=52.101.53.87
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gatech.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gatech.edu
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A38B47CA6D
+	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 11:32:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.160.73.56
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791372778; cv=none; b=AHHDjcM0Fsyw6j32/u5EeBquuNVxUbXiKfbUvBGs1ij5QET881UDU+1oMd9P04ZmIfWWhWhn1GFwYtlGvgCn2YBTQRaibF+JjcBhZzAK0r9mkn7Ckrw89w7xQe2svacyqx4JcKZYcFSJHIkSvGUrN/AXmH7AJrG9P060SBCStQk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791372778; c=relaxed/simple;
+	bh=Lx1d0PFUN4E9JCU1vP3d4yRmf5vo3vZRlaKuKdSu3bc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=CbxrhEXBuYUw7yTv1nLxbU+FgIeAr6ibmcOlDyqdcZtclOcB0nQ41lilCjBNvS7wy6a2V6lxYnAx2Ft+RSjVkOLz/WAZz10WmLXTvPxW8F/+4KMYmcBs5Di6uVto8bqHvdMzM4scJixK5Uq/CelSWvx18T+pCs00M+pYTerz/sA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org; spf=pass smtp.mailfrom=narfation.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=kXF3P1+/; arc=none smtp.client-ip=213.160.73.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=narfation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gatech.edu header.i=@gatech.edu header.b="CJ9GiAqn"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nGbzUxzgxaknBzFTSTVPk5z6m3wqkxBZh9qFe19RGgMeY1+z5MA+rGefJ7yA7Z0mvc+qEDGyscGN28d/PRSO6iMhF86l9P+oMz6bpB/WsCGfRGcvmvwCg8d1nBQDfmNVIyQEo9ZiTCKn+nxkCSHMWw1zekP8Hc+9k8QTOkzs3xsd4ouUjnSjx8sz0XzzS4BSgbq+ewFaiH0So1NHXzAI+eH638IfnP62w4ucziPa8Y8Bk2ZOz3oJhe6Dkm1/571CKDr575NYxDkK3WqQ8x8AvzPMh+N6s1gLFmhNj6A+S+5VrG6dGbQjjjmUfwdWmjSAtFkPCJXNl1fO8jOolirfJw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vRGlMjpVf9beO41MQGDbzAf1daBX/en7Q4OPj4BmpIg=;
- b=gJYZD4uBkgV5CD2PQsvA3ILPqjMYanBt4Uoxkh0uW7OjfYAhVh2qnuym0b8Ef3NAJ6kEJ5el7PLnnanPkzOTCiTHkTySIL7Ab84CztqmCdpSZI60SMilH9aZu1h3c0epQPqfgM2bvGRriAubQpfaFzfcxo48Iqhqm9KzOImRVc6s5c16zt5FY1mmnoHgCWPzWvZBgkybyY9dxgRanbSEjpk2XgE5AqW1OV8+EBLs8pJ0BYXa2DhviupkfKysWHxGkuCXelBweHKAdsMWbLfqcwz5rAOE2meHUKM27+eOy5vjWcagRD3HC1bO0CZbayQhlSXchiWqENrkxMxTLzpz/Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gatech.edu; dmarc=pass action=none header.from=gatech.edu;
- dkim=pass header.d=gatech.edu; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gatech.edu;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vRGlMjpVf9beO41MQGDbzAf1daBX/en7Q4OPj4BmpIg=;
- b=CJ9GiAqnzvysf521+AHJ2Ke5V616dtEbT3eF6Dbp6e56GHGMjbWw/VE+Z7LCIpGxZciYFxJrvLLu3M4W92za/3fSumIILHNyMrqkOWKrxYGLV2RCoFcDsVJKzqPA8hfz8QIm94Q2iihCJAtFMNO9XjlvKxD0ypX/Pgk7Q67huNL68vynlRa2Hz+Yo+FmO6hfvc1Lo8MTmNpoUKMNT7GZNErBA4BtyAr7WoxQXNFKv9+ZqRNdOmqRmkxU327FtxDBj/v3pVRoVDAaXYMYRYYPffs85koa9daxY8fswEcfnEE43YLaQQ2t3H3AKW2naex3QsYPUZo66gdLB27J0A3g+A==
-Received: from CH3PR07MB9958.namprd07.prod.outlook.com (2603:10b6:610:1ae::19)
- by LV3PR07MB10137.namprd07.prod.outlook.com (2603:10b6:408:23c::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.20; Wed, 7 Oct
- 2026 10:41:49 +0000
-Received: from CH3PR07MB9958.namprd07.prod.outlook.com
- ([fe80::d6b8:e067:4377:97da]) by CH3PR07MB9958.namprd07.prod.outlook.com
- ([fe80::d6b8:e067:4377:97da%4]) with mapi id 15.21.0496.010; Wed, 7 Oct 2026
- 10:41:49 +0000
-From: "Masalkhi, Abd Alrhman" <abd.masalkhi@gatech.edu>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "linux-raid@vger.kernel.org" <linux-raid@vger.kernel.org>,
-	"yukuai@fygo.io" <yukuai@fygo.io>
-Subject: Re: [RFC PATCH v2 4/4] md: add a control device for array management
-Thread-Topic: [RFC PATCH v2 4/4] md: add a control device for array management
-Thread-Index: AQHdVkh0HTAb3CbfckCSZKnmeGGVSQ==
-Date: Wed, 7 Oct 2026 10:41:49 +0000
-Message-ID: <m2jyntbxn8.fsf@gmail.com>
-References: <20261001125611.943731-1-abd.masalkhi@gmail.com>
- <20261001125611.943731-5-abd.masalkhi@gmail.com>
- <20261001131958.E1E6C1F000FF@smtp.kernel.org>
-In-Reply-To: <20261001131958.E1E6C1F000FF@smtp.kernel.org>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gatech.edu;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR07MB9958:EE_|LV3PR07MB10137:EE_
-x-ms-office365-filtering-correlation-id: 57606ad2-829f-4aa1-8585-08df245f9774
-x-gt-tenant: 042d12d7-75fe-4547-b5b6-0573f80f829d
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|23010399003|786006|1800799024|376014|366016|6133799003|18002099003|10067099003|22082099003|38070700021|4143699003|260925022911599003|260925021311599003|260925021911599003|56012099006|11063799006;
-x-microsoft-antispam-message-info:
- q1rlNj7C50j+2jFxmkaPvC4OfSJMRJGXYAlQMSp625wYtALpMEeMxBJl1LLuMahsaFn9gElItQyj605uLuDsdv00eyqlgePHmYP+6c6hAlzZ0WT8lrjGnCz9sH7CelEjY9HPK+XHYiRCA46cI2D+7QMPcyVLbgMmOlN0vEDXnKpfatH0uu7HN4k3EdJF/OviNG+IgHID3gAK6y2DlUgC/ORHTihUbMIDceXmhXZP8WZh33FiNwtZPKlIJRfNgcB1U8RjvJEAkpg/NKyBmia+R0paJThAvD4jL6cuFckIu5JZwSAVf65pTOdoJ/y2lU4OJlO3oXC8XweW58GSD+lFD7F4BL7hAZBYOalHauInspSZihhE5pfFe5yzDpUOK/VbnCO2mAnWrSzdKwPIdYRDXspONX61Uu1eBxpYORdNpqPnmQwN4ry5DSUXyDCdA6wLL4lvLt/C65E4s/3fja/x7kleKJh/KPIfwgoACC2RNob/yPUNelR18f7YvipFDIFPOJD7Tli+wCyl8oBP6qpXT0UPn/mNniaF7txn4hPadx8q63EMbIxWBDfC4nbKYhxmAQDphHhM3LqZsgCF1ZguzHLmi8eDUo0wLc181W0s+Ir7FBMXaGBc+8syM/LkKyd6Jm+akaLbqfmrBYI1huvWkGoHJzebTmDUut9ssQJ8Jl4=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR07MB9958.namprd07.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(786006)(1800799024)(376014)(366016)(6133799003)(18002099003)(10067099003)(22082099003)(38070700021)(4143699003)(260925022911599003)(260925021311599003)(260925021911599003)(56012099006)(11063799006);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?RFRqWE9rK0xidlVKOVhYYnluNk1PeG5Ia0pzcEYzeEVlaHd3RWNnV0J2eExY?=
- =?utf-8?B?ZmR5ZXkyd1NrOUljdTd6OW9aaU5XalRVZUVxb0pDbTh0Z1RPblZZbnJTMUZa?=
- =?utf-8?B?eVREQ1dRSlR6SFRabU5PSk0xcGZ4UHpZNCtESVRoREVLK29MczV5RXJWZHZv?=
- =?utf-8?B?K2hkankxbmpHRUQxUkh5eVIxM08rd1FBWmFHenBqQmJyV29zYkNTbkcwL2x5?=
- =?utf-8?B?eHF6SlpFc2JubERRTk5YU1ZBcE5xaDB0eXZBUFowRy9VSCtVcUNJTStQQlhF?=
- =?utf-8?B?ckhMTkMwdFptcExmUTN0aHY2ZExibnp0cnBicXlOSUtBdEl2SWJBV2lXaU12?=
- =?utf-8?B?bmFPblNDd0ZMSEkrV2ROcm51WDRzUVRSNS9iRDY0ejdSdlVxbHRvZ2hkdWVl?=
- =?utf-8?B?VklycTZIbUIwSHVlSzVzMmYxbzUzTGpKVnFlTmtJdG15dDREYm9nRjNndktW?=
- =?utf-8?B?TmRxVWJMME1vTmp5aTFQRXcxUnJBeWpGZW41dGt1WGM1SFdjejBqMEtrTzBp?=
- =?utf-8?B?UzFBVXdZM1Z4cEpnTkE1SW4ydDRHZmN1YzlRblNrM2hQNmMreUU2eWtuTkcv?=
- =?utf-8?B?cjBNdmdUV2JnMEdzTTNhQVVWQVpHZnFselkvU1FWK21rMHZwNTNUeE80Ym1X?=
- =?utf-8?B?bzhkYTVHWUJ6Q3pINmlmRXIxVTNoN1V1Z2J2c2N0b3NJZ1BxSGxKeFVINWZy?=
- =?utf-8?B?T0JWK2wxb1BhK3MyQVJtSXZncnQrSVVyRHdJMXhmNW0xOUxKdElUMDU2UjVh?=
- =?utf-8?B?Y1pBR1JqK0lRMWRkQWd5blYreklWNUxvTTNTVWVDdzArTXFiRi9TUXZvVjQx?=
- =?utf-8?B?Q0NOODVFWlY3OEw4VXdsSHdESkNORCtSVkxESzhNYUEyZ0dlUkRDbVlSdlZD?=
- =?utf-8?B?TVQrQUpMTkQ0RWlZNVZxZ0Z0MWc1WFFFOXk2a2lHellNaFVVaUYxbVZ0SHQy?=
- =?utf-8?B?bnBTbkdKNFlNeFlIYVRncEJma0tFWTI0amQybE9SNlhYWURIa1hoc0I5Zyt4?=
- =?utf-8?B?MnVtMERpK0twbEtlNThTdEhIOGdZY1ZnekZjR1hNMDJTTllQcmNkVU5mZElG?=
- =?utf-8?B?SEF4WGgwNTQ5WDlqaTY2Z0xLY3FueE56NFR1K3BjdWIxZmdNcjd4N0hRRVBs?=
- =?utf-8?B?SUJBN3VmdUFhTWZkUHFBb0VRcmhDYlZqaWpvME5ER2Q4a1d0dksxVDFIOHFm?=
- =?utf-8?B?M1BYOS9Oc0hQZkpCNXRiTUs0OEs0eU1GVWU0Y3dCK3hCWkhoOHp2WHV3eUdh?=
- =?utf-8?B?T1JJOTJzMEYydk1ZcDhaK0ozUGkrdTlVdDgzQ3pmUjMrWWdTaTdYUDlSbzZs?=
- =?utf-8?B?Z092Zm5pbG85RXVkajFhRVJBMVkxL1hvbHBmMitNeFF1RkxsQ1FDT3pPeXVu?=
- =?utf-8?B?emZBR1dwWnhhU0ZnY0dJTnU0b2lNQk1WUDRSY2pKVWs0L2N3aTlGdHVJQzhC?=
- =?utf-8?B?aVVHMHVjY0RVRjVmZEJVSCs0cjFJcmxWaVhaSUxBQUpveXdSSTZLZHppS1ox?=
- =?utf-8?B?ZDBUY3dBRVBYOFBvdTRYREVabG0vL2NPK0NvQjNUbnV2Q2hveFowRWFQUXQv?=
- =?utf-8?B?c3BHY04zYjg1aWRrWWhtZXQ4NGVsVXkvWjdlYlcrcmRidlZ6Z05jeG9WUi8y?=
- =?utf-8?B?Y2c4T1hvZEpiM2tNRXd0eWdNdHROUis0RE9YbVJGeDBFSWFTVWgrY1ZjaGx6?=
- =?utf-8?B?RmY0YVAvVmxYRXRxQzJ0dnRnWm54bmEvb3ZaVjljUmtzR2hlUXF1YjN5MUhh?=
- =?utf-8?B?ZEY3YTZGb3RrZ3FNNnZCNS84NkV6MWlsUE1FZ1N1a1Z0THg4eW82WFVYaFQ5?=
- =?utf-8?B?YWFWSHZHeFNaYzNRZkQxOUF1R0pzMDJYM09WZHZ6OHhkWlpkRkhHSnlwNHVN?=
- =?utf-8?B?UXg2aldSaC9hQ1pLYUJkaUkvYlVsV1VUTk4rNnFKV0QwRHJKOVQxNSszQkt5?=
- =?utf-8?B?eTcxV1hmY0loL2R6cTRQZW5qVGRUZ1lnbTgyenU0ZHlIRFJTeW1NY05QbytY?=
- =?utf-8?B?TFBKaEZwSFYzY2EwejRDYzEwUWN2dnIwWDliODE5VlRNbW96Y1ZSdHdGbm1T?=
- =?utf-8?B?TVAvR3BGSTYwNk9kbEtQLzFYN0ZpbDhObzhVVXk5ZXlsSkZQREJucFRhNndJ?=
- =?utf-8?B?YzY4Wm83Yk9UQ0tYN2pqemJvY1gxTGZ1aGpBa0ZKZGJYc1BMSEVybWw4OVB6?=
- =?utf-8?B?cnBTdmZiRk00SHBXTmtFb2pCNWVLQzVUTVFTRXlSRTltQS9adTJ4bjJseEN4?=
- =?utf-8?B?bEtqTUpZVGFaTzR0RkxJUnBiVmM0dnkvTSt1VzZHSHVrbCtCN1N6enVPaUtH?=
- =?utf-8?Q?YBvl8FCdxdJsWH7ADH?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <504F50684106B04A880C59E6808FCD8C@namprd07.prod.outlook.com>
-Content-Transfer-Encoding: base64
+	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="kXF3P1+/"
+Received: by dvalin.narfation.org (Postfix) id EEC1E205A6;
+	Wed, 07 Oct 2026 11:32:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
+	s=20121; t=1791372757;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=vz04Eb2/pqjyUHQ2BJmXstIhHtluuH1DN1ZtMn0iV7c=;
+	b=kXF3P1+/VW6rGSYtP1tf5XvNwSbdCS47LHppC65zClQb3EvZkFKHmHyoXgi2geFzKqmpQF
+	WS6VOT2z9dDdHjDx0UN771aG1+NY2YqoRgMviRdBjEkEbnzMalYdsZXMmaYCMaNMLGXIaE
+	ZrR0P2gLlF7V5RoI8+gC9W+saoNKMnk=
+From: Sven Eckelmann <sven@narfation.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: antonio@mandelbit.com, b.a.t.m.a.n@lists.open-mesh.org
+Subject:
+ Re: [PATCH batadv 2/4] batman-adv: tt: only update flags for TT events
+Date: Wed, 07 Oct 2026 13:32:27 +0200
+Message-ID: <5328232.31r3eYUQgx@sven-l14>
+In-Reply-To: <sashiko-outbox-162887@kernel.org>
+References:
+ <20261007-tt-avoid-unhashed-event-v1-0-01c763657916@narfation.org>
+ <20261007-tt-avoid-unhashed-event-v1-2-01c763657916@narfation.org>
+ <sashiko-outbox-162887@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: gatech.edu
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR07MB9958.namprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 57606ad2-829f-4aa1-8585-08df245f9774
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Oct 2026 10:41:49.1133
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 482198bb-ae7b-4b25-8b7a-6d7f32faa083
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: nZ//bCtDsSahUJE0GWIOa93n2Uzr62IaNIBbbWtVdroOFVO97DmqtAY9UsBt6JIPsvRCj0AVFj3/eHdFag8uqw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR07MB10137
+Content-Type: multipart/signed; boundary="nextPart4959648.LvFx2qVVIh";
+ micalg="pgp-sha512"; protocol="application/pgp-signature"
 
-SGkgS3VhaSwKCk9uIFRodSwgT2N0IDAxLCAyMDI2IGF0IDEzOjE5ICswMDAwLCBzYXNoaWtvLWJv
-dEBrZXJuZWwub3JnIHdyb3RlOgo+IFRoYW5rIHlvdSBmb3IgeW91ciBjb250cmlidXRpb24hIFNh
-c2hpa28gQUkgcmV2aWV3IGZvdW5kIDIgcG90ZW50aWFsIGlzc3U9KHMpIHRvIGNvbnNpZGVyOgo+
-IC0gW0hpZ2hdIG1kOiBNRF9DTE9TSU5HIGZsYWcgaXMgbm90IGNsZWFyZWQgb24gZXJyb3Igb3Ig
-Uk8gdHJhbnNpdGlvbgo+IC0gW01lZGl1bV0gbWQ6IHN0cmljdCBib3VuZGFyeSBjaGVjayBvbiBV
-QVBJIG5hbWUgZmllbGQgcmVqZWN0cyB2YWxpZAo+IGlucHV0cwpJIHdpbGwgZml4IHRob3NlIGlu
-IHYzLgoKPiAtLQo+Cj4gY29tbWl0IGMyZDYzNTFiZjc1YmJlMjVhNTczNGIxNzYzOGQxNDMxNzEz
-NDg4NmMKPiBBdXRob3I6IEFiZC1BbHJobWFuIE1hc2Fsa2hpIDxhYmQubWFzYWxraGlAZ21haWwu
-Y29tPgo+Cj4gbWQ6IGFkZCBhIGNvbnRyb2wgZGV2aWNlIGZvciBhcnJheSBtYW5hZ2VtZW50Cj4K
-PiBUaGlzIGNvbW1pdCBpbnRyb2R1Y2VzIGEgbmV3IG1pc2MgY2hhcmFjdGVyIGRldmljZSwgL2Rl
-di9tZC1jb250cm9sLCB0byBoPW5kbGUKPiBtZCBtYW5hZ2VtZW50IGlvY3RscyB3aXRob3V0IHJl
-cXVpcmluZyBhbiBvcGVuIGZpbGUgZGVzY3JpcHRvciB0byB0aGUgbWQgPWxvY2sKPiBkZXZpY2Ug
-aXRzZWxmLiBUaGlzIHByZXZlbnRzIHJhY2VzIGR1cmluZyBhcnJheSBzdG9wIGFuZCByZWNvbmZp
-Z3VyYXRpb24gPWhlbgo+IG11bHRpcGxlIHRhc2tzIHNoYXJlIHRoZSBzYW1lIGZpbGUgZGVzY3Jp
-cHRvciB0YWJsZS4gVGhlIGV4aXN0aW5nIGJsb2NrIGQ9dmljZQo+IGlvY3RscyBhcmUgcHJlc2Vy
-dmVkIGZvciBjb21wYXRpYmlsaXR5IGJ1dCB0cmlnZ2VyIGEgd2FybmluZyByZWNvbW1lbmRpbmc9
-bgo+IHVwZ3JhZGUgdG8gbWRhZG0uCj4KPj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvbWQvbWQuYyBi
-L2RyaXZlcnMvbWQvbWQuYwo+PiAtLS0gYS9kcml2ZXJzL21kL21kLmMKPj4gKysrIGIvZHJpdmVy
-cy9tZC9tZC5jCj4gWyAuLi4gXQo+PiBAQCAtODYwMiw2ICs4NjA4LDYyMyBAQCBzdGF0aWMgaW50
-IG1kX2NvbXBhdF9pb2N0bChzdHJ1Y3QgYmxvY2tfZGV2aWNlICo9ZGV2LCBibGtfbW9kZV90IG1v
-ZGUsCj4gWyAuLi4gXQo+PiArc3RhdGljIHN0cnVjdCBtZGRldiAqbWRjdGxfZ2V0X21kZGV2X25h
-bWUoY29uc3QgY2hhciAqbmFtZSkKPj4gK3sKPj4gKwl1bnNpZ25lZCBsb25nIG1pbm9yOwo+PiAr
-CXN0cnVjdCBtZGRldiAqbWRkZXYsICpyZXQgPSBFUlJfUFRSKC1FSU5WQUwpOwo+PiArCj4+ICsJ
-aWYgKHN0cm5jbXAobmFtZSwgIm1kIiwgMikgfHwgbmFtZVtNRF9OQU1FX0xFTiAtIDFdKQo+PiAr
-CQlyZXR1cm4gcmV0Owo+Cj4gW1NldmVyaXR5OiBNZWRpdW1dCj4gV2lsbCB0aGlzIHN0cmljdCBi
-b3VuZGFyeSBjaGVjayByZWplY3QgdmFsaWQgdXNlciBpbnB1dD8gSWYgYSB1c2Vyc3BhY2UKPiBw
-cm9ncmFtIHBvcHVsYXRlcyB0aGUgbmFtZSBmaWVsZCB3aXRoIGEgc2hvcnQsIHByb3Blcmx5IG51
-bGwtdGVybWluYXRlZAo+IHN0cmluZyBidXQgbGVhdmVzIHRoZSB0cmFpbGluZyBwYWRkaW5nIGJ5
-dGVzIHVuaW5pdGlhbGl6ZWQgb24gdGhlIHN0YWNrLAo+IHRoaXMgY2hlY2sgd2lsbCBmYWlsIGJl
-Y2F1c2UgdGhlIGFic29sdXRlIGxhc3QgYnl0ZSBpc24ndCB6ZXJvLiBDb3VsZAo+IHRoaXMgYmUg
-cmVsYXhlZCB0byBlbnN1cmUgdGhlIHN0cmluZyBpcyBudWxsLXRlcm1pbmF0ZWQgYW55d2hlcmUg
-d2l0aGluCj4gdGhlIGJ1ZmZlciBpbnN0ZWFkPwo+Cj4gWyAuLi4gXQo+PiArc3RhdGljIGxvbmcg
-bWRjdGxfaW9jdGwoc3RydWN0IGZpbGUgKmZpbHAsIHVpbnQgY21kLCB1bG9uZyB1KQo+PiArewo+
-IFsgLi4uIF0KPj4gKwlpZiAoY21kID09IE1EX1NUT1BfQVJSQVkpIHsKPj4gKwkJLyogTmVlZCB0
-byBmbHVzaCBwYWdlIGNhY2hlLCBhbmQgZW5zdXJlIG5vIG9wZW5lcnMgKi8KPj4gKwkJZXJyID0g
-bWRkZXZfc2V0X2Nsb3NpbmdfYW5kX3N5bmNfYmxvY2tkZXYobWRkZXYsIDApOwo+PiArCQlpZiAo
-ZXJyKQo+PiArCQkJZ290byBvdXQ7Cj4+ICsJfQo+IFsgLi4uIF0KPj4gK291dDoKPj4gKwltZGRl
-dl9wdXQobWRkZXYpOwo+PiArCXJldHVybiBlcnI7Cj4+ICt9Cj4KPiBbU2V2ZXJpdHk6IEhpZ2hd
-Cj4gRG9lcyB0aGlzIGV4aXQgcGF0aCBuZWVkIHRvIGNsZWFyIHRoZSBNRF9DTE9TSU5HIGZsYWcg
-aWYgaXQgd2FzIHNldAo+IGVhcmxpZXI/IFdoZW4gYSBwcml2aWxlZ2VkIHVzZXIgY2FsbHMgTURf
-U1RPUF9BUlJBWSBhbmQgdGhlIGFycmF5IGlzCj4gYnVzeSBvciB0cmFuc2l0aW9ucyB0byByZWFk
-LW9ubHksIE1EX0NMT1NJTkcgaXMgc3VjY2Vzc2Z1bGx5IHNldCwgYnV0Cj4gdGhlIGlvY3RsIG1h
-eSBsYXRlciBqdW1wIHRvIG91dCBvciByZXR1cm4gYW4gZXJyb3IuIFNpbmNlIHRoZSBmbGFnIGlz
-Cj4gbmV2ZXIgY2xlYXJlZCBvbiB0aGVzZSBwYXRocyBpbiBtZGN0bF9pb2N0bCgpLCB3b3VsZCB0
-aGlzIGxlYXZlIHRoZQo+IGJsb2NrIGRldmljZSBwZXJtYW5lbnRseSBsb2NrZWQgb3V0IGZyb20g
-ZnV0dXJlIG9wZW5zIHVudGlsIHJlYm9vdD8KPgo+IC0tIAo+IFNhc2hpa28gQUkgcmV2aWV3IMK3
-IGh0dHBzOi8vc2FzaGlrby5kZXYvIy9wYXRjaHNldC8yMDI2MTAwMTEyNTYxMS45ND03MzEtMS1h
-YmQubWFzYWxraGlAZ21haWwuY29tP3BhcnQ9NAoKLS0gCkJlc3QgUmVnYXJkcywKQWJkLUFscmht
-YW4K
+--nextPart4959648.LvFx2qVVIh
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
+From: Sven Eckelmann <sven@narfation.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: antonio@mandelbit.com, b.a.t.m.a.n@lists.open-mesh.org
+Date: Wed, 07 Oct 2026 13:32:27 +0200
+Message-ID: <5328232.31r3eYUQgx@sven-l14>
+In-Reply-To: <sashiko-outbox-162887@kernel.org>
+MIME-Version: 1.0
+
+On Wednesday, 7 October 2026 12:54:50 CEST sashiko-bot@kernel.org wrote:
+[...]
+> [Severity: High]
+> While this masks BATADV_TT_CLIENT_ROAM for the incremental event, doesn't the
+> flag remain corrupted in the local TT entry (common->flags)?
+> 
+> Earlier in batadv_tt_local_refresh(), there is this structure:
+> 
+>                 if (common->flags & BATADV_TT_CLIENT_PENDING) {
+>                         ...
+>                         common->flags &= ~BATADV_TT_CLIENT_PENDING;
+>                         announce = true;
+>                 } else if (common->flags & BATADV_TT_CLIENT_ROAM) {
+>                         ...
+>                         common->flags &= ~BATADV_TT_CLIENT_ROAM;
+>                         *roamed_back = true;
+>                 }
+> 
+> When a client roams away, batadv_tt_local_mark_removed() sets both
+> BATADV_TT_CLIENT_ROAM and BATADV_TT_CLIENT_PENDING.
+> 
+> When the client returns, batadv_tt_local_refresh() clears the PENDING flag
+> but skips the else if branch. This leaves BATADV_TT_CLIENT_ROAM set
+> locally and *roamed_back as false.
+> 
+> Consequently, won't any full TT dump (batadv_tt_tvlv_generate) erroneously
+> announce the returning client as roaming, causing other nodes to mistakenly
+> purge their originators for this client or blackhole traffic?
+> 
+> Furthermore, does the skipped roamed_back assignment prevent
+> batadv_tt_local_add_roam() from freeing the global entry and reclaiming the
+> client?
+
+Antonio,
+
+this is exactly what I meant in 
+https://lore.kernel.org/batman/20261007-tt-avoid-unhashed-event-v1-0-01c763657916@narfation.org/T/#m35e1aeec45790b26b17d4f4297d77bd8d5b90450 
+and which was also previously reported at 
+https://www.open-mesh.org/issues/482#change-1886
+
+
+Maybe needed steps are:
+
+
+Clear ROAM for pending clients after readd (from local and whenever the global 
+still has the client_roam set):
+
+
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index e46040fd745ea8ed0d5b3b497e86b6f37c9c8e25..89098976e31d178829fb575546679178b0d7d0eb 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -865,13 +865,18 @@ static void batadv_tt_local_add_roam(struct batadv_priv *bat_priv,
+ 		return;
+ 
+ 	/* Check whether it is a roaming, but don't do anything if the roaming
+-	 * process has already been handled
++	 * process has already been handled.
++	 *
++	 * A client which roamed back must always be reclaimed from the
++	 * originator(s) which sent the ROAMING_ADV. The global entry created by
++	 * this ROAMING_ADV might still carry BATADV_TT_CLIENT_ROAM because the
++	 * new originator did not yet announce the client.
+ 	 */
+-	scoped_guard(spinlock_bh, &tt_global->common.flags_lock) {
+-		if (tt_global->common.flags & BATADV_TT_CLIENT_ROAM)
+-			return;
++	if (!roamed_back) {
++		scoped_guard(spinlock_bh, &tt_global->common.flags_lock) {
++			if (tt_global->common.flags & BATADV_TT_CLIENT_ROAM)
++				return;
+ 
+-		if (!roamed_back) {
+ 			/* The global entry has to be marked as ROAMING and has to be
+ 			 * kept for consistency purpose.
+ 			 *
+@@ -939,6 +944,7 @@ static bool batadv_tt_local_add_existing(struct batadv_priv *bat_priv,
+ 					 bool *roamed_back)
+ {
+ 	struct batadv_tt_common_entry *common = &tt_local->common;
++	bool readded = false;
+ 
+ 	tt_local->last_seen = jiffies;
+ 
+@@ -953,10 +959,14 @@ static bool batadv_tt_local_add_existing(struct batadv_priv *bat_priv,
+ 			 * flag can be reset like it was never enqueued
+ 			 */
+ 			common->flags &= ~BATADV_TT_CLIENT_PENDING;
+-
+-			return true;
++			readded = true;
+ 		}
+ 
++		/* a pending client can also carry the ROAM flag when it was
++		 * removed because of a roaming_advertisement. It must not keep
++		 * it after being re-added or it would no longer be considered
++		 * as served by this node
++		 */
+ 		if (common->flags & BATADV_TT_CLIENT_ROAM) {
+ 			batadv_dbg(BATADV_DBG_TT, bat_priv,
+ 				   "Roaming client %pM (vid: %d) came back to its original location\n",
+@@ -971,7 +981,7 @@ static bool batadv_tt_local_add_existing(struct batadv_priv *bat_priv,
+ 		}
+ 	}
+ 
+-	return false;
++	return readded;
+ }
+ 
+ /**
+
+
+
+
+
+Only transmit ROAM events with DEL:
+
+
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index 89098976e31d178829fb575546679178b0d7d0eb..b14593b6ec6d52986bbb23647420391520e37dc5 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -696,9 +696,17 @@ static void __batadv_tt_local_event(struct batadv_priv *bat_priv,
+ 	ether_addr_copy(tt_change_node->change.addr, common->addr);
+ 	tt_change_node->change.vid = htons(common->vid);
+ 
+-	tt_change_node->change.flags = flags;
+ 	del_op_requested = flags & BATADV_TT_CLIENT_DEL;
+ 
++	/* the ROAM flag is only meaningful for the receiver in combination
++	 * with a DEL. An ADD with ROAM would be interpreted as a roaming
++	 * advertisement
++	 */
++	if (!del_op_requested)
++		flags &= ~BATADV_TT_CLIENT_ROAM;
++
++	tt_change_node->change.flags = flags;
++
+ 	/* check for ADD+DEL, DEL+ADD, ADD+ADD or DEL+DEL events */
+ 	spin_lock_bh(&bat_priv->tt.changes_list_lock);
+ 	changes = READ_ONCE(bat_priv->tt.local_changes);
+@@ -3405,8 +3413,12 @@ static bool batadv_tt_local_valid(void *entry_ptr,
+ 	if (tt_flags & BATADV_TT_CLIENT_NEW)
+ 		return false;
+ 
++	/* the entry is (still) announced. A ROAM flag of an entry which is
++	 * pending to be removed must not be transmitted. Otherwise, the
++	 * receiver would handle it like a roaming advertisement
++	 */
+ 	if (flags)
+-		*flags = tt_flags;
++		*flags = tt_flags & ~BATADV_TT_CLIENT_ROAM;
+ 
+ 	return true;
+ }
+
+
+
+
+Ignore ROAM for an ADD received for a global entry update via event:
+
+
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index b14593b6ec6d52986bbb23647420391520e37dc5..8dd5822c9c7128e67cd8abdb4ddce5dc0c6eec9e 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -3996,22 +3996,31 @@ static void _batadv_tt_update_changes(struct batadv_priv *bat_priv,
+ 				      struct batadv_tvlv_tt_change *tt_change,
+ 				      u16 tt_num_changes, u8 ttvn)
+ {
++	u8 flags;
+ 	int roams;
+ 	int i;
+ 
+ 	for (i = 0; i < tt_num_changes; i++) {
+-		if ((tt_change + i)->flags & BATADV_TT_CLIENT_DEL) {
+-			roams = (tt_change + i)->flags & BATADV_TT_CLIENT_ROAM;
++		flags = (tt_change + i)->flags;
++
++		if (flags & BATADV_TT_CLIENT_DEL) {
++			roams = flags & BATADV_TT_CLIENT_ROAM;
+ 			batadv_tt_global_del(bat_priv, orig_node,
+ 					     (tt_change + i)->addr,
+ 					     ntohs((tt_change + i)->vid),
+ 					     "tt removed by changes",
+ 					     roams);
+ 		} else {
++			/* an announced client cannot have roamed away from
++			 * orig_node. Only a ROAMING_ADV is allowed to add a
++			 * global entry with the ROAM flag
++			 */
++			flags &= ~BATADV_TT_CLIENT_ROAM;
++
+ 			if (!batadv_tt_global_add(bat_priv, orig_node,
+ 						  (tt_change + i)->addr,
+ 						  ntohs((tt_change + i)->vid),
+-						  (tt_change + i)->flags, ttvn))
++						  flags, ttvn))
+ 				/* In case of problem while storing a
+ 				 * global_entry, we stop the updating
+ 				 * procedure without committing the
+
+--nextPart4959648.LvFx2qVVIh
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCasYtywAKCRBND3cr0xT1
+ywlFAQD0zQxsdEGVH60C435hHvRPKRNO6aHcZloeuWWI4CRJaQEA5Mw/qzH3XtLp
+2tFkkQ2uylfCrO85zEYZJudpp36pWQw=
+=1sWo
+-----END PGP SIGNATURE-----
+
+--nextPart4959648.LvFx2qVVIh--
+
+
+
