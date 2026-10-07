@@ -1,229 +1,246 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8512A145B27
-	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 20:17:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791404276; cv=pass; b=FoP6RwMkrS/RSh+P3Hr+J1x0HJRzN+W9oEY3Gnngv/y0fLQAn5x8OOMdCsNnpANRXz+ionY5Th/qdZMcdnEAW9q2cN+CfMVZvqFQkPAmOzJWbR6b5/qZ4zux0PNnNbXFoW/CCrdwe/YwHs+sIuGfvf7AjsgeUapD4T8ZgVn2Sok=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791404276; c=relaxed/simple;
-	bh=ZpW5g8r9t5xJkjvPBNV+VsBm7xzRF3J03gqyN8PT7+4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n8sS0nATu04orgJ4huM9BP+pgw0doce4La3b9wyQSKo+vCkJEpbvqY5/79UoURGoQBMUvkR4sRGXHjGTVJGurM1bVFRGyAGTbMx1e02q5aXD1Ev8lQ0JDiUBW3U5AeLAZvaOzSKv4YI+MfKLx0upluOIXPzb8oCVea20apG0yH4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iaHcsNGU; arc=pass smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D1D3D300E;
+	Wed,  7 Oct 2026 20:18:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791404341; cv=none; b=KffU8DFPIzmrIfGqVVr6kAfErahN6I9DKwC6rBJ4Le8J+D/DlPjEpC6jxOnUpne5WeidXbFFXLMR4EzYljWfwZ4tJx1dtulhIR+t541AjDJz3JOK92pEff0OAIDolxiHuBG5rqS6tWrud+jJM+ihFfo+RK3aN7X9lcKxxHCCw1A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791404341; c=relaxed/simple;
+	bh=jaGjbCX30IP5gcZuGZBSN6s16ZJT+L28jz5NfrXrq10=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=N2NdDwpUv90jTFFifv7EgsH6kASto9s0S4scPjj+7tTg41pVT7N+fAiXBlpTi+B5zFkbRfv37o+79zaQBRLAj3dX31ubFoJkTBYRJ4aZh9ri5TIQoOoW4TiIrv8Gh3EWIPlRowmBebabf3UFWO63W+gGTEdYWIzyyquM3KjKgV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=IJ2A46Gr; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iaHcsNGU"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-48af4d4e61fso1482144f8f.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 07 Oct 2026 13:17:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791404273; cv=none;
-        d=google.com; s=arc-20260327;
-        b=mIB5YkeLsPbUWFLeAU9HrD7PXgwen5RJd/TBFhSQ8isoEfqS4sC7lqfwqviVLnlZq/
-         XCKMiVO7L39DpIBB/GPHOYg4xUePbcPL9C13zhgYlIJjfoO3uFc8pjbNgwofCdDqPKAK
-         W4gFiTj4HVB1boOLvwW8n7MQpku8pzgqlJFxJtmrKZ6oxvC4f7OhdPaDrtMmdk6NgRL7
-         auHm1PPMwYX5slnvAyoKgyJKmKrWHt+pyhUAkQKjQILQU1Ak+eH0rOWdEH6yYxDwJUAa
-         nLel1IBHTz007BrxgWMR6K8/m1MyEUA3L1z1AcGwrLEm1nQg0PrxiTgIUDbajlJhgD5f
-         XrEg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=GYcofiYrlKd3iFMYbYc9JyZNgDUHZ+Vq0ErILDfAy7Q=;
-        fh=OPZT2YEd2rm3K/EaPE+F10PwLVDuYQrF8eTcruWimkQ=;
-        b=ScewmuxJZQ/tHBwm0CbZkaTOeEdt/rPV1hTYLlicLs/jggk/+ysWHZ1wqJnhLXDjUn
-         wSWFP9BejiTl1RqbdvBVTSwBJcbR4CrI9DxhZeLJaA9WW472s4g67xp0LKtaUb5Uspmd
-         rSAA1bAzgc/zwbQK2Cn3fMjAvenGbwyqid9cllavQF29v50F5oolgoa6AlBhFc6xucD3
-         XErj9572S+XO+zj5pB0DFlAFoE8B0eFrqHQLmU3S/eYn4Hevw/ot2TIIlSbCJ3v+Sxkh
-         2wJKbHwX7pn2PjkOkmZBdelWaPO4R9uFFkIDKGrCW0OnP1tq1kuhGXJA/Qekv3PmholT
-         ZzHQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791404273; x=1792009073; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=GYcofiYrlKd3iFMYbYc9JyZNgDUHZ+Vq0ErILDfAy7Q=;
-        b=iaHcsNGUZvRH2q0ML461F6I+68+p1Ye2Rke19tf8e/LKKl2sd87sa8WI4wrCwfqOpi
-         0fix/h50ZnOMF3CDVAxsckKFAyYp07ZneMzgjotHlfFNDd9skf+1/tUkxzT1TDZBN2J1
-         5JPrfdjHOkKai2S5xupjAV83t46YrO4/ohQMpKyVMSXL5ANxfIc2sTbk/jigS/RFH/kT
-         gPmQrmuNmjsG9Bm7rvhsZjOyrwGGHHXRd3exKT5+Ln/o7bE7Qn8aesLmB9QmkWKCNY7M
-         /DZyMKxpe/rjKrt2/2MRliDfhQ0QbcIv+flh07YyeTatZmci/flCnOaAn4nluzYivShI
-         p8Mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791404273; x=1792009073;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=GYcofiYrlKd3iFMYbYc9JyZNgDUHZ+Vq0ErILDfAy7Q=;
-        b=zq3SActeh9idzyIArMD8JdkoY4AsFxdtxk6qFmxdPdBvs5Hn9zq46H/MhxG1obwiw2
-         8y/76qNikY9vmI/a2QCIGTkromSDtbJCoLBPPN+G3VQiFDMPgBuyoOu8p+T2QdTkR4PT
-         FGlIkw5uRf9wjmUSKiiDYVcaV9trqmJti3BVQVpVBXM1nWITe79NIahx/XZPjzBv2AbF
-         8T3Lu7PiM5BpL3YuW3ZWp93kkDwX7l1FIj1uyPOXs0AH76PdXkiPMQjuB7sIGps/ks4p
-         TnS0ybs1Y4VlogRtOGHMqu3mm0M1xzBtphuPGX6z8g6sO9KxvVaePk0pbR43PQr75ie5
-         6GPQ==
-X-Gm-Message-State: AFq9FYJtPsOxBK4G/GzmXwaETk5dwO2nmiTodWPqnXqJ5fXavMLEqw//
-	+2R4mWW8XyRLLV1W41ahNadnUJ9MS9wDo3dO4ZygYYvvy5h7Jwp8FW05fAHiXYpyKfRLhQNvQJa
-	bvVsBlZRXnFhdhPx+vHegzH/E5YY9Ezp5SkEleuQ=
-X-Gm-Gg: AYBFou0pFdjMebAzLYWjPpZBot451S2ZYvvj7yaDbplvPDLiAbOIGGmbxnQNL8evAh/
-	HPxYc5LUJHOtgWAtTV5rH/Xy7FXfjvK+5szI1UYhYtKwFKNpaK479Lqy6qZRW9/TtObt0SI1kBB
-	qbqAxQzAYZuM816Iq59MkZrLAZOrbup1erjRnGc1eSb0AAzp2xFS3oizDO/clHI5PKVgcAQbVut
-	st7LgKOtyXJGU/YTYnMGSi8OvVcc9TEOwN8sxwrs3Os5pbrAaJoQaEjs2itwVpwRg1Dw/UA5tKC
-	DM7sMfVfBrzM52uT+0PYMkYkiOr2Z0A4nttdDveqAVwS740lKziU39K466TiFbDxc4VGWp3R0L3
-	1RytJVWI+X6bGTjY3HnbpVQi2lc1D/kg/yLs05n1JSJShApi3SooIZXy8LiUZ/JpWHF+su1jEow
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="IJ2A46Gr"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 697IZneP2078525;
+	Wed, 7 Oct 2026 20:18:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=F/w4Ei
+	7m1ijZDtGV38HNzmkRzX9bVVn03kEKk6+et2k=; b=IJ2A46GrFJd7H2DOb8ebNs
+	lc+daCxsTUkstT2jpyk9n7EYk6vd6F+3Y/dp3erZFX36MsMh6qZizP7SOuywqw3/
+	8JrM7fOBBQVZc8cwCnmISLotos7xx8v11OJ5D5LYVxVeQp9chwDuCbcWpYH7qBUa
+	zB+AM9mS7kYDk/BHTHwo6iMfvBkrgHWZvI0o9YzTgquxXCOosl26wJb9sazUqMiW
+	TGYsw9GNB1wM/t0AdOEfPoFrPms7DYxfarpx1MuZPfbt+OiE5gKC6txt42XiK2NY
+	unsbEFpN5yTf1t03oVyjphFk8laUyeWitnHXv8ccMD7PhbzpWOctQYEqSMyyoSvw
 	==
-X-Received: by 2002:a5d:6f18:0:b0:48a:fcec:2a1e with SMTP id
- ffacd0b85a97d-48c727714d3mr6260131f8f.20.1791404272542; Wed, 07 Oct 2026
- 13:17:52 -0700 (PDT)
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2r4g6uvw-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Wed, 07 Oct 2026 20:18:45 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 697IHapf2245375;
+	Wed, 7 Oct 2026 20:18:45 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h58d5mhhm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 07 Oct 2026 20:18:45 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com [10.39.53.228])
+	by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 697KIi4Y66585066
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 7 Oct 2026 20:18:44 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 353B55804B;
+	Wed,  7 Oct 2026 20:18:44 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4472E58063;
+	Wed,  7 Oct 2026 20:18:43 +0000 (GMT)
+Received: from [9.61.89.182] (unknown [9.61.89.182])
+	by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Wed,  7 Oct 2026 20:18:43 +0000 (GMT)
+Message-ID: <694c1e08-820f-4275-988e-2be331070766@linux.ibm.com>
+Date: Wed, 7 Oct 2026 16:18:42 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261007190654.452376-1-prabhakar.mahadev-lad.rj@bp.renesas.com> <sashiko-outbox-163308@kernel.org>
-In-Reply-To: <sashiko-outbox-163308@kernel.org>
-From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
-Date: Wed, 7 Oct 2026 21:17:25 +0100
-X-Gm-Features: AclHuK-7omXDfGhEXLWYnCdLZKCtqKAKNSUkEbMcNdvgyEuSNK7SrMKq2L59HWg
-Message-ID: <CA+V-a8v5wOc=wMuGK=ztfU2bomcWgc1uBBzUXCZzfLQ71qEjYw@mail.gmail.com>
-Subject: Re: [PATCH v2] phy: renesas: rcar-gen3-usb2: Keep OTG VBUS disabled
- until role is known
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 07/15] s390/vfio-ap: File ops called to save the vfio
+ device migration state
 To: sashiko-reviews@lists.linux.dev
-Cc: olteanv@gmail.com, linux-phy@lists.infradead.org, vkoul@kernel.org, 
-	neil.armstrong@linaro.org, wsa+renesas@sang-engineering.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: Heiko Carstens <hca@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Vasily Gorbik
+ <gor@linux.ibm.com>, kvm@vger.kernel.org,
+        linux-s390@vger.kernel.org,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Jason Herne <jjherne@linux.ibm.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20260807221834.562851-1-akrowiak@linux.ibm.com>
+ <20260807221834.562851-8-akrowiak@linux.ibm.com>
+ <20260807223752.4A6F21F000E9@smtp.kernel.org>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20260807223752.4A6F21F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=TOPQ2Fla c=1 sm=1 tr=0 ts=6ac6a925 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=c9lllFr1qAdO0OxGiBcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA4MCBTYWx0ZWRfX7/HVTDstNQiy
+ dOdaP2yZDuDjPYr1nKsXL2u8+tZ+YKCEgHPaItzMNw5fx7qMEJw/gt99YvHaNWOF7vM03RfzYrd
+ LCGX3p8C3rOOhYva17x6+J21y4R2EBAWUbCrD33VWSa832ws2fOpk4DrExe3PVMrhx1i0I3E7rM
+ Z0hXPSrdtbT4NHbRu9RtgeNq2egVH7BX2er1CtwJU38gihWxSDZ0qD94C131zdNhocfcRBRomc0
+ yYSwaOiLq42hmUq2JkybNLulV7jcC/gbJzuTkyDqGosyKZOrgdf+D3MeEff9Fr1b+5CaRDxPOBh
+ VlKOiN9mMhhWXokZ8ayuQYKG6iKacx/lgwAFDv4zrbVEpsbP8whJc1kLz/5l+v8GdpBAJ1EIYxU
+ wVIwS1mGNhb/Eeb+IyA7aGTDw+lzCgg5i/5mvblbpPjZyxGRmDTaT2D36TgCoiwk4VY1wBvwfQO
+ 7HhFvpHzSawLkm4I0Bw==
+X-Proofpoint-GUID: 0KAoQC5oYcB86BVxjRotqwTvFp24cF5A
+X-Proofpoint-ORIG-GUID: 0KAoQC5oYcB86BVxjRotqwTvFp24cF5A
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA4MCBTYWx0ZWRfXzvQqT/SDDPoe
+ yytbFJRbkrhD7MbUNHs/HePQDJ/1x2TeHxbcbyyN+ncnHakzjOCOGRN0p54qFM3YfYJta2sedT5
+ 3/aH0N8a0pwFz/LNe/d3AVfou93f9Ow=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-07_06,2026-10-06_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 priorityscore=1501 spamscore=0 adultscore=0 clxscore=1015
+ lowpriorityscore=0 impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070080
 
-Hi,
 
-On Wed, Oct 7, 2026 at 8:20=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] phy: renesas: Probe fails with -EOPNOTSUPP for generic VBUS regu=
-lators
-> - [Medium] phy: renesas: dangling regulator enable reference on regulator=
-_is_enabled failure
-> --
->
-> commit a95e43cc86d79f16f418ebb877687c2d3024260e
-> Author: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
->
-> phy: renesas: rcar-gen3-usb2: Keep OTG VBUS disabled until role is known
->
-> This commit addresses an issue on SoCs without ADP control where the VBUS
-> regulator was unconditionally enabled at probe, potentially back-powering=
- an
-> external host. It reuses the reference handed over by an exclusive get if=
- the
-> regulator is already enabled, registers a devm cleanup action, and uses
-> regulator_hardware_enable() to turn off the physical VBUS output until th=
-e
-> port role is known.
->
-> > diff --git a/drivers/phy/renesas/phy-rcar-gen3-usb2.c b/drivers/phy/ren=
-esas/phy-rcar-gen3-usb2.c
-> > index b5ba751805aae..3481505dea2e8 100644
-> > --- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
-> > +++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+
+On 8/7/26 6:37 PM, sashiko-bot@kernel.org wrote:
+
+All three findings were consequences of the lock-drop around 
+|vfio_ap_store_queue_info()|and the 
+unlock-before-|copy_to_user()|pattern, both of which were removed.
+
+>> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
+>> index de693b308925d..50781b61f7f18 100644
+>> --- a/drivers/s390/crypto/vfio_ap_migration.c
+>> +++ b/drivers/s390/crypto/vfio_ap_migration.c
+
+All three findings below are consequences of the lock-drop around
+vfio_ap_store_queue_info() and the unlock before copy_to_user()
+pattern. The mdevs_lock will be held for the duration of the
+vfio_ap_stop_copy_read() function in the next version of
+the series.
+
 > [ ... ]
-> > @@ -1133,17 +1132,35 @@ static int rcar_gen3_phy_usb2_vbus_regulator_ge=
-t_exclusive_enable(struct rcar_ge
-> >               return 0;
-> >       }
-> >
-> > -     if (enable) {
-> > +     ret =3D regulator_is_enabled(channel->vbus);
-> > +     if (ret < 0)
-> > +             return ret;
->
-> [Severity: Medium]
-> If devm_regulator_get_exclusive() acquired a regulator that was already
-> enabled (e.g. by the bootloader), the regulator core implicitly sets the
-> enable_count to 1.
->
-> If regulator_is_enabled() then fails due to an intermittent I2C communica=
-tion
-> error and we return early here, does this leak the enable reference since=
- we
-> bypassed the registration of the devm_add_action_or_reset() disable actio=
-n
-> below?
->
-If there is intermittent I2C communication that would mean the system
-is already in a bad state. Handling such a case will just add more
-dead code!
-
-> This unbalanced count could trigger a WARN_ON() in the regulator core dur=
-ing
-> regulator_put() when devres tears down the probe state.
->
-> > +
-> > +     if (!ret) {
-> >               ret =3D regulator_enable(channel->vbus);
-> >               if (ret)
-> >                       return ret;
-> >       }
-> >
-> > -     if (regulator_is_enabled(channel->vbus))
-> > -             return devm_add_action_or_reset(dev, rcar_gen3_phy_usb2_v=
-bus_disable_action,
-> > -                                             channel->vbus);
-> > +     /*
-> > +      * An exclusive get of an enabled regulator already holds a refer=
-ence, so
-> > +      * add a cleanup action to disable it when the device is released=
-.
-> > +      */
-> > +     ret =3D devm_add_action_or_reset(dev, rcar_gen3_phy_usb2_vbus_dis=
-able_action,
-> > +                                    channel->vbus);
-> > +     if (ret)
-> > +             return ret;
-> >
-> > -     return 0;
-> > +     /*
-> > +      * The regulator is enabled only so that the regulator core holds=
- a
-> > +      * reference to it. Do not drive VBUS until the port's role is kn=
-own;
-> > +      * rcar_gen3_enable_vbus_ctrl() switches it from then on.
-> > +      *
-> > +      * The VBUS regulator used on these SoCs implement the .enable/.d=
-isable
-> > +      * ops, so regulator_hardware_enable() cannot fail with -EOPNOTSU=
-PP here
-> > +      * and no special handling for it is needed.
-> > +      */
-> > +     return regulator_hardware_enable(channel->vbus, false);
->
+>> @@ -150,6 +144,279 @@ static int vfio_ap_release_mig_file(struct inode *file_inode, struct file *filp)
+>>   	return 0;
+>>   }
+> [ ... ]
+>> +static int vfio_ap_get_config(struct ap_matrix_mdev *matrix_mdev)
+>> +{
+> [ ... ]
+>> +	ap_configuration = kvzalloc(ap_config_size, GFP_KERNEL_ACCOUNT);
+>> +	if (!ap_configuration)
+>> +		return -ENOMEM;
+> [ ... ]
+>> +	/*
+>> +	 * Unlock the mdevs_lock so other mdevs are not precluded from being
+>> +	 * accessed while a potentially long running operation is performed.
+>> +	 */
+>> +	mutex_unlock(&matrix_dev->mdevs_lock);
+>> +	ret = vfio_ap_store_queue_info(mdev_name, ap_configuration);
+>> +	mutex_lock(&matrix_dev->mdevs_lock);
+>> +	if (ret) {
+>> +		kvfree(ap_configuration);
+>> +		return ret;
+>> +	}
+>> +
+>> +	if (!matrix_mdev->mig_data) {
+>> +		kvfree(ap_configuration);
+>> +		return -ENODEV;
+>> +	}
+>> +
+>> +	matrix_mdev->mig_data->stop_copy_mig_file.ap_config = ap_configuration;
 > [Severity: High]
-> Does this actually fail probe unconditionally with -EOPNOTSUPP for generi=
-c
-> VBUS regulators?
+> Can two concurrent reads cause a memory leak here?
 >
-As mentioned in the comment above the regulators currently used in the
-SoCs implement enable/disable callbacks; adding these checks would
-mean adding more dead code.
+> Since mdevs_lock is temporarily dropped above, both threads might observe
+> that ap_config is NULL in vfio_ap_stop_copy_read(), and both would allocate
+> an ap_configuration buffer.
+>
+> When they reacquire the lock here, they will both blindly overwrite
+> matrix_mdev->mig_data->stop_copy_mig_file.ap_config with their respective
+> allocations, permanently leaking the buffer allocated by the first thread.
+>
+>> +	matrix_mdev->mig_data->stop_copy_mig_file.config_sz = ap_config_size;
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static ssize_t vfio_ap_stop_copy_read(struct file *filp, char __user *buf,
+>> +				      size_t len, loff_t *pos)
+>> +{
+> [ ... ]
+>> +	matrix_mdev = filp->private_data;
+>> +	mig_file = &matrix_mdev->mig_data->stop_copy_mig_file;
+>> +
+>> +	if (!mig_file->ap_config) {
+>> +		ret = vfio_ap_get_config(matrix_mdev);
+> [Severity: High]
+> Could the cached mig_file pointer become stale and cause a use-after-free?
+>
+> Because vfio_ap_get_config() temporarily drops mdevs_lock, a concurrent
+> thread could potentially free and reallocate the mig_data structure. When
+> vfio_ap_get_config() returns, the stack-cached mig_file pointer might still
+> point to the old, freed mig_data structure.
+>
+>> +		if (ret) {
+>> +			mutex_unlock(&matrix_dev->mdevs_lock);
+>> +			return ret;
+>> +		}
+>> +	}
+>> +
+>> +	/*
+>> +	 * Compute the offset and clamped length fully under the lock so that
+>> +	 * concurrent read()s on this stream file each see a consistent view of
+>> +	 * the current position.  *pos is advanced here while we still hold the
+>> +	 * lock; copy_to_user() then uses the snapshot read_pos.  This prevents
+>> +	 * two threads from calculating the same offset and both copying the
+>> +	 * same region (or one reading past the end of the buffer).
+>> +	 */
+>> +	if (*pos >= mig_file->config_sz) {
+>> +		mutex_unlock(&matrix_dev->mdevs_lock);
+>> +		return 0;
+>> +	}
+>> +
+>> +	len = min_t(size_t, mig_file->config_sz - *pos, len);
+>> +	if (len == 0) {
+>> +		mutex_unlock(&matrix_dev->mdevs_lock);
+>> +		return 0;
+>> +	}
+>> +
+>> +	read_pos = *pos;
+>> +	*pos += len;
+>> +
+>> +	/*
+>> +	 * Drop the lock only for the copy_to_user().  The ap_config buffer is
+>> +	 * stable: it is allocated once in vfio_ap_get_config() and freed only
+>> +	 * in vfio_ap_release_stop_copy_file() which requires mdevs_lock.
+>> +	 * Since we already advanced *pos above, no other thread will compute an
+>> +	 * overlapping region.
+>> +	 */
+>> +	mutex_unlock(&matrix_dev->mdevs_lock);
+>> +
+>> +	if (copy_to_user(buf, (char *)mig_file->ap_config + read_pos, len))
+> [Severity: Critical]
+> Is it safe to access mig_file and its ap_config here without the lock?
+>
+> Once mdevs_lock is dropped, a concurrent thread could close the VFIO device
+> or issue a reset, which acquires mdevs_lock and frees both the ap_config
+> buffer and the mig_data struct.
+>
+> If that happens before or during copy_to_user(), it could result in reading
+> freed kernel memory and leaking it to userspace, or crashing the kernel.
+>
+>> +		return -EFAULT;
+>> +
+>> +	return len;
+>> +}
 
-Cheers,
-Prabhakar
-
-> Upstream device trees like r9a07g044c2-hummingboard-ripple.dts use
-> renesas,rzg2l-usb2-phy (which sets no_adp_ctrl =3D true) and map vbus-sup=
-ply to
-> a generic GPIO regulator-fixed (vbus1).
->
-> For these generic regulators, fixed_voltage_ops does not provide explicit
-> .enable/.disable callbacks since GPIOs are handled internally by the regu=
-lator
-> core. In this case, regulator_hardware_enable() returns -EOPNOTSUPP and w=
-ould
-> cause rcar_gen3_phy_usb2_probe() to unconditionally fail.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261007190654.45=
-2376-1-prabhakar.mahadev-lad.rj@bp.renesas.com?part=3D1
