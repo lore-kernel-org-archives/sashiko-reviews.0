@@ -1,178 +1,148 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844C93DAAD2;
-	Wed,  7 Oct 2026 19:22:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2A33783CC;
+	Wed,  7 Oct 2026 19:52:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791400957; cv=none; b=LrbEr2LwHA7ekSlGKBgnjXF+m0yl+1GjVQC2JCGGwmX6vAQpJ2/E7fSlrTnOfOf6eRtKk8wd9yE72GtNtCcCnLhenhzouNAfVR3h0Zm8qGdegY2Y1/mkT5b0z/RbpvXAha9QoWRRa37K+jG9SjOPMx4hd0nBSZRZjcKepobfuAs=
+	t=1791402748; cv=none; b=phW4yhhxANVaHUijzpv3FwZ4V9c98QoR+VVU6DjfskF5c2e1PTwxGh4PDIndr09SsvSPrW8KQ6NW8IGCEZrpfcYThkcARNkTM7lIcc2GEsRWdTONghF2QVyGUznVYzJk1ABJRQm3fvwlFctbFmSaylP2vErSbSGQKbmBtYY8M5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791400957; c=relaxed/simple;
-	bh=EBv+bmpOjW84niDSOeA22RRBhR28nmW1Gk9EMDEwYz4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=amYvfrNtuGjjK0VjhBlsDjkyDUL4PicH4njAsGzgHIkJ956Kef/837PnXgtJIK7i3ppQIiGfpXfIowe4ndB8bFOlpg46ts1B9vYMLhT1BAjf21X0r/7p995v0bZOkffZ/ORuennPyq9qQWkDRqt13Du6CytdJZpHZixuRhJoJe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=XknvvGxo; arc=none smtp.client-ip=148.163.156.1
+	s=arc-20240116; t=1791402748; c=relaxed/simple;
+	bh=Gw9twuohb3+sej2zMbWh2El2rEQ4f7pxJsQKxrwHok8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ob5yGwjsgCfJdOzGj0J93HJJrQUlzPVr1YeDv3zjn+4S6ESV2rZjCVjuvZ2+mafVbzVtkriL99j9jxTz/QgGXpzDOv6oQryAMXmLm0hDBlramwoE+e8l7qQxsaEH8nBlpAuoqg5kx+BM8Gptt6cZjbEv2ku90W6X6UPOnsFSHFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Dmn1l79x; arc=none smtp.client-ip=148.163.158.5
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="XknvvGxo"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 697IZPjx3356409;
-	Wed, 7 Oct 2026 19:22:35 GMT
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Dmn1l79x"
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 697IZZP73153330;
+	Wed, 7 Oct 2026 19:52:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=+oPKf8
-	szb4wyjb8A3Cm41T1jdnmda4EAW9uO9NKDYVk=; b=XknvvGxoX47la9pjYEGJGC
-	/SSNDzLDZUO4BDL+JtXhDxEVzAFsUKW3YbezOEWjdR95vnW5CxckqPTxK+sM9ygb
-	pavxAIy8QCUkYhIH5W3RjhRNhlRY83TzDhaJL6nIbsfLIT6ABzl/idVloDE7Yqtm
-	I5Ftjh1Bhr7HoJw1NurevUtpAHweYfc1Aer6tXEzVI/U2iEqtZGItBVLhVmqnHbN
-	AnL32eqG8HfpgMPH/m3XX6slUHFkI5E7GifU1uiLBS4cZx9AgbqhY4AZjnL/ya3c
-	toX/NlFReaXSklO1Q4yf40yeMM33pk8LsMVyv01xklYAsJ53KzTV8XAUDbfx4G1A
-	==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2s74yjw2-1
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=dKRScO5r615KZAfb7svv7nu/uZyCJ9
+	6iLwurAz89e8o=; b=Dmn1l79x+HV1myDWZKBf3faEJJJrtrw6C7eiRL+kdbwYHw
+	T4fZD4pl+NgqotIWPsivEd0NS3QrVg7Uax/+kGXB4Q0jIVnzz0jMOZ/qT/8s9K67
+	6T64/kKUhYu2cOk2FmNmzPlIqx4qtxB3GvvkVnH5MwOhR4bHjn5Dr7bs/tqHpFIG
+	VwVB1jW3x+ISZtmniHFdpyqG89mSNFpJVwFd6BvphvQxhwYuCowjnJXif0hREWlk
+	HitEOlL10E64DJxRbSseYEawI5gnB84Ey6TB7+so9vneBWA2CwvufdlITGnw9uPI
+	ujWg0Ume2Fu0Q8izjt1S1h03mIzEgHhh912w9Hxg==
+Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2q4jy07s-1
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Wed, 07 Oct 2026 19:22:35 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 697IHelu2265523;
-	Wed, 7 Oct 2026 19:22:34 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h58ek4a63-1
+	Wed, 07 Oct 2026 19:52:24 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 697IHVXM2301990;
+	Wed, 7 Oct 2026 19:52:24 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h5a6dm3bu-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 Oct 2026 19:22:34 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
-	by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 697JMVpF12255672
+	Wed, 07 Oct 2026 19:52:24 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
+	by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 697Jpcmp17302068
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 7 Oct 2026 19:22:31 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id E8F8020043;
-	Wed,  7 Oct 2026 19:22:30 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 162CA20040;
-	Wed,  7 Oct 2026 19:22:30 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
-	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Wed,  7 Oct 2026 19:22:29 +0000 (GMT)
-Date: Thu, 8 Oct 2026 01:00:43 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Amit Machhiwal <amachhiw@linux.ibm.com>, kvm@vger.kernel.org
-Subject: Re: [PATCH v4 2/3] KVM: PPC: Book3S HV: Add preempt_disable() around
- virtual-mode HPTE bit-lock users
-Message-ID: <20261008005700.c78e5a18-dc-amachhiw@linux.ibm.com>
-Mail-Followup-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-References: <20261007182116.12479-1-amachhiw@linux.ibm.com>
- <20261007182116.12479-3-amachhiw@linux.ibm.com>
- <sashiko-outbox-163301@kernel.org>
+	Wed, 7 Oct 2026 19:51:38 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4E82D5805E;
+	Wed,  7 Oct 2026 19:52:23 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3357A58056;
+	Wed,  7 Oct 2026 19:52:23 +0000 (GMT)
+Received: from d (unknown [9.16.59.154])
+	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+	Wed,  7 Oct 2026 19:52:23 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v13 11/11] scsi: ibmvfc: handle extended FPIN events
+In-Reply-To: <sashiko-outbox-163310@kernel.org> (sashiko-bot@kernel.org's
+	message of "Wed, 07 Oct 2026 19:33:54 +0000")
+References: <20261007-ibmvfc-fpin-support-v13-0-b816abfa4fcc@linux.ibm.com>
+	<20261007-ibmvfc-fpin-support-v13-11-b816abfa4fcc@linux.ibm.com>
+	<sashiko-outbox-163310@kernel.org>
+Date: Wed, 07 Oct 2026 14:52:22 -0500
+Message-ID: <87o6d5b85l.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-163301@kernel.org>
+Content-Type: text/plain
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: T4PTW3pnENmozDTc5dlJAS-ZpNw5mqjT
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA3NiBTYWx0ZWRfX1Nok+YejS322
- uXiOJ4vXaXfpWtnfBF9QdR5wtV8jkOFy32El7iTlMWso8NznqysZkuZwomKjs2M2SmxMUnH60ML
- xGcwuakyEkdA3sZ7MpZF+Qrz/XpARZ8=
-X-Proofpoint-GUID: T4PTW3pnENmozDTc5dlJAS-ZpNw5mqjT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA3NiBTYWx0ZWRfX5ipEONDjzex+
- NbYMXeqD+ZXy9VLeQ4URx3loB0tzq1GLoVbQMZhrsV5xlEXq39j0jOVGZi+JyeISw7PTDo2x2N+
- 5azIFBKxx24o52GekwTRj1gxAYAKXjVWqY5O1Vi6p6yWwIEoJ50q0yOc2wl0Q8QXy0LvJ/vNFph
- j9AFArkHpxKWJmIn+8MGgFVYY3Z+csP0Qr+DOQ9N/lE5Ui0sUsbraFRMiZgG3HUjShjBDhMfrQ+
- 4fpWkFvk0fVLkqRd0MWy6pJW7zYVZQwTIq9wFSV92WS+ZdNUQIHLfEX55EoisKmjcgeWMN8RK/S
- kw0WmHHHv4MznIOb7NnqbBw+pko2K32YzrRqn7GzPxW/97aAHgqf1mi+f0XrGSistz1v0yrC3Mo
- LMZkJYYvj0FqWOWM9FGC9Jp0NZwHRe/pgAgO0nOQOauQGmtJXPeu2dwd71O48pWmkMwboY4RWcf
- cOan0dHVo+oqfsS6qrg==
-X-Authority-Analysis: v=2.4 cv=fM2sTpae c=1 sm=1 tr=0 ts=6ac69bfb cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=8nJEP1OIZ-IA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=c92rfblmAAAA:8
- a=VnNF1IyMAAAA:8 a=VwQbUJbxAAAA:8 a=DKcAYAtLK8KsSAPX9gUA:9 a=3ZKOabzyN94A:10
- a=wPNLvfGTeEIA:10 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-ORIG-GUID: 1XDo8Ik7WrQsy_DczPE3eHZTLMSQPF9Z
+X-Proofpoint-GUID: 1XDo8Ik7WrQsy_DczPE3eHZTLMSQPF9Z
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA3OCBTYWx0ZWRfXzhkqJik5gdnH
+ AyLp+DR7t8RTCM7ezDKo0X3Vi6OW4USuGf50oJj3dbB7u48mOug8EjIfNcFct6NBG2R7RDsRt26
+ Wc6qNyLIr9MBkW0f4BJcvzIzfnZjMfU=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA3OCBTYWx0ZWRfX1I05mh9SuVzc
+ L10+52Jt8AJ/I3X8yhTY4Tq3tQTFBgDm1ZOYA+XrkZH5gmAUHpcgCfUV9TQ2Q75Oj6aTpy9+hxx
+ lYrH7WsRh+qM9W+rGxouBzq0HZEXgc0AHsP1AUqznd8oBZcIzd1ezKrxdiSjpsyYby5r3LQ6kVq
+ Rue/AeSHVar7i8+lEOoLswVRIYZzZnnN+U88GGk7f0LT+quFlDi7SS4fJ1HDA00KvKMGf5Vit/N
+ UZWAo6AEztk7nGuzSNSpp3vCNUleidgO9oZXzQcgzIUK8MXtE9jkPlAue1bokTPK0fAecuE39RL
+ rx4AN4QZ6bYlNX2AQGr2yn8+NdvlO4BvItxh72XGwMJzLdZAAMTQwKWCKWXwbzYh7MGRmeELOnb
+ QGUHUL0dxZlHPR+MRsdvQhsZ1PRhN7aYJDqU/oLViEgEaYS5HPsO1XN3amRoNE7+ecxJ83yvmBj
+ vc1wn+6GepbNuZgDrew==
+X-Authority-Analysis: v=2.4 cv=eYeo7LEH c=1 sm=1 tr=0 ts=6ac6a2f8 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=QWrK6ewHXOknnRczYwsA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-07_06,2026-10-06_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0
- phishscore=0 adultscore=0 malwarescore=0 clxscore=1015 suspectscore=0
+ adultscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ spamscore=0 malwarescore=0 priorityscore=1501 impostorscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070076
+ reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070078
 
-On 2026/10/07 06:47 PM, sashiko-bot@kernel.org wrote:
+sashiko-bot@kernel.org writes:
+
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] kvm: deadlock in kvm_test_age_rmapp() due to missing preempt_disable()
+> - [Low] scsi: ibmvscsi: unused list head variable `evt_doneq` in test
 > --
-> 
-> commit 6b1add31442320e6307f450d080fd72f64ee2368
-> Author: Amit Machhiwal <amachhiw@linux.ibm.com>
-> 
-> KVM: PPC: Book3S HV: Add preempt_disable() around virtual-mode HPTE bit-lock users
-> 
-> This commit enforces that threads acquiring HPTE or RMAP bit-locks run with
-> preemption disabled to prevent CPU hangs. It adds preempt_disable() and
-> preempt_enable() pairs around various bit-lock acquisition paths.
-> 
-> > diff --git a/arch/powerpc/kvm/book3s_64_mmu_hv.c b/arch/powerpc/kvm/book3s_64_mmu_hv.c
-> > index 2ccb3d138f46c..e8f73c8f97803 100644
-> > --- a/arch/powerpc/kvm/book3s_64_mmu_hv.c
-> > +++ b/arch/powerpc/kvm/book3s_64_mmu_hv.c
-> > @@ -890,6 +913,7 @@ static bool kvm_age_rmapp(struct kvm *kvm, struct kvm_memory_slot *memslot,
-> >  
-> >  	rmapp = &memslot->arch.rmap[gfn - memslot->base_gfn];
-> >   retry:
-> > +	preempt_disable();
-> >  	lock_rmap(rmapp);
-> >  	if (*rmapp & KVMPPC_RMAP_REFERENCED) {
-> >  		*rmapp &= ~KVMPPC_RMAP_REFERENCED;
-> 
-> [Severity: High]
-> Does kvm_test_age_rmapp() also need to disable preemption before acquiring
-> the rmap lock?
-> 
-> Looking at arch/powerpc/kvm/book3s_64_mmu_hv.c:kvm_test_age_rmapp():
-> 
-> 	lock_rmap(rmapp);
-> 	if (*rmapp & KVMPPC_RMAP_REFERENCED)
-> 		goto out;
+>
+> commit 7276d45825dded3ce9d906eb91c3d06e314dc430
+> Author: Dave Marquardt <davemarq@linux.ibm.com>
+>
+>     scsi: ibmvfc: handle extended FPIN events
+>
+> This commit implements support for extended FPIN messages via the
+> asynchronous sub-queue. It introduces new capabilities and unit tests for
+> extended FPIN event handling.
+>
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc_kunit.c b/drivers/scsi/ibmvscsi/ibmvfc_kunit.c
+>> index d2ef35e928eae..cc6e6d0b5f963 100644
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc_kunit.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc_kunit.c
+>
+> [ ... ]
+>
+>> +/**
+>> + * ibmvfc_extended_fpin_test - unit test for extended FPIN events
+>> + * @test: pointer to kunit structure
+>> + *
+>> + * Return: void
+>> + */
+>> +static void ibmvfc_extended_fpin_test(struct kunit *test)
+>> +{
+>> +	enum ibmvfc_ae_fpin_status fs;
+>> +	struct ibmvfc_async_subq_fpin crq;
+>> +	struct ibmvfc_target *tgt;
+>> +	struct ibmvfc_host *vhost;
+>> +	struct fc_host_attrs *fc_host;
+>> +	struct fc_rport *rport;
+>> +	LIST_HEAD(evt_doneq);
+>
+> [Severity: Low]
+> Is the evt_doneq list head needed? The variable is declared and initialized
+> at the beginning of ibmvfc_extended_fpin_test(), but it doesn't appear to be
+> used anywhere else in the test function body.
 
-This is not an issue on powerpc; here is why.
+I agree, evt_doneq is not needed. I will fix in a v14 series or we can
+let this in and I'll fix it separately afterwards.
 
-kvm_test_age_rmapp() has exactly one call site:
-
-    kvm_test_age_gfn_hv()                 [book3s_64_mmu_hv.c:1020]
-      <- kvm_test_age_gfn()               [book3s.c:896]
-        <- kvm_mmu_notifier_test_young()  [virt/kvm/kvm_main.c:864]
-
-Inside kvm_handle_hva_range(), the handler is invoked only after
-KVM_MMU_LOCK(kvm) at kvm_main.c:626, which on powerpc expands to
-spin_lock(&kvm->mmu_lock).  mmu_lock is a spinlock_t
-(include/linux/kvm_host.h:774), and spin_lock() calls preempt_disable()
-internally.  By the time kvm_test_age_rmapp() acquires lock_rmap(), preemption
-is already disabled by the outer mmu_lock acquisition.
-
-The lockless path in kvm_handle_hva_range() (line 625, gated on
-CONFIG_KVM_MMU_LOCKLESS_AGING) would bypass KVM_MMU_LOCK and reach the handler
-with preemption still enabled.  However, CONFIG_KVM_MMU_LOCKLESS_AGING is
-selected only by x86 and s390; powerpc does not select it, so this branch is
-dead code on powerpc at compile time.
-
-No additional preempt_disable() is needed in kvm_test_age_rmapp().
-
-~ Amit
-
-> 
-> This MMU notifier callback still acquires the KVMPPC_RMAP_LOCK_BIT without
-> disabling preemption.
-> 
-> If a thread is preempted while holding this bit-lock, and another thread on
-> the same CPU begins spinning for the same lock with preemption disabled
-> (such as in the newly patched paths), couldn't this result in a permanent
-> CPU hang?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261007182116.12479-1-amachhiw@linux.ibm.com?part=2
+-Dave
