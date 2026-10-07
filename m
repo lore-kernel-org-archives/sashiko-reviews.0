@@ -1,240 +1,174 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11021074.outbound.protection.outlook.com [40.107.208.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09644C8FE6;
-	Wed,  7 Oct 2026 16:21:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791390085; cv=none; b=BqKWpBOUoE0UZ8Db4yf5EJamdgu8gSpyKwKJGDQydD8tj1+5RB5kcOjkJD3etQcyxBhmK7RNOzC0jZQx2NozxNB7ry/Llk90E1jrqgqmyWttS7qS3VnxUtd1yRzC8/nbLmpQWIq4FslZwJIYr411+Uuvl09cQ1I6cZMz6P2ETDY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791390085; c=relaxed/simple;
-	bh=KLXiY9/UgqFjWDtgeUfveOwf7I+TL11jAHE0FrWbfYI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aHVPD7RUNk6J97op4qtnB+xmeLiT7J1vgO0ADSQrhJmSuAu7Q0bP4YYH2G7MJRQXV9h1aT5TmUYJszQyXYoM7XS0rU+Zy+OSNFT7G8lnv2c14AefijS74Kq2I1MTi8MOhh6zPwjAy/1T2ne+GhVQ4ALeDwS5DtnFtJqjmLg9y3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=QBBivA98; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918833BE146
+	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 18:09:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.74
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791396567; cv=fail; b=aAMRI4JmHHZ4HXaqPPE3M+qBTrBWefa6masXF9rVAY8e47kVwt7d0WGDaSJTam4kj9b5YjBxuhcxfJF6Tk5kOwAd4tJL7SB81CIc8aAEOwMyYvZb5+JgeQk5IfNlWB9dUxbt9IxLQk17pWN874kc1M51eLZneo3sDdvLm/MYDrE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791396567; c=relaxed/simple;
+	bh=NrCYAwdj7SoA2J9plihDMXdxnYmqo3RvPopiMkLNDWg=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=kWv/wM+ChspAQoWOhllED9L1h4NSNLS1fReIa9MIfVgeW2CrUOyBbVCYg7Xgh7lX8d5Q/dLGssIFUgn+AAGxc1ZZD1XbJl+rXZzQtNuFFoNCBhdeQxbdKa1xmbANJ/awAxExcusW8Yri3vl5VeGMS9AWVb5+8G893YjQ7gjURq0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gatech.edu; spf=pass smtp.mailfrom=gatech.edu; dkim=pass (2048-bit key) header.d=gatech.edu header.i=@gatech.edu header.b=U3dUVwBL; arc=fail smtp.client-ip=40.107.208.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gatech.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gatech.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="QBBivA98"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 697F5SNQ2910922;
-	Wed, 7 Oct 2026 16:21:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=AkARvk
-	SskQdVvXfjnLWTDuuTebmu2z6MRFCUIE5BxKk=; b=QBBivA98CQNY87YyfpLd1M
-	SQfO/2vmJhZokwyxMiVqxhXL9AWN5S0zm+C4bsbg7a6bP8h8HACPQR8rxCXXrTSY
-	HD26yXmOKMYcsEdRmQbRRDxa0QuxObexHpXMnjlvQfctggDrqcDJAwDNdm8eA9eH
-	AJMmMI+/YVLWRkI2Gut2jDHR8U9Jxnw0uvgCKkqgLLB59Y9XIzw8Id/J3SclT6Fc
-	YD+zgFb7LiZmW+bVD2s3NHHobPMRI7stHOj8QSPmqZSa1IRnN8iufEOMlV01Ufjm
-	d9BfwAGYX3Tzm5tICN6J/6mmjK3UeePQCjpuhrsmZFFN+KK+V2TA9FE8XOy7IaMw
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2s74xk7p-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Wed, 07 Oct 2026 16:21:18 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 697FooTr2074568;
-	Wed, 7 Oct 2026 16:21:17 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h5s34r3ue-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 Oct 2026 16:21:17 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com [10.39.53.233])
-	by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 697GKVal23986850
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 7 Oct 2026 16:20:31 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 6098158054;
-	Wed,  7 Oct 2026 16:21:16 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 8730A5803F;
-	Wed,  7 Oct 2026 16:21:15 +0000 (GMT)
-Received: from [9.61.15.56] (unknown [9.61.15.56])
-	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Wed,  7 Oct 2026 16:21:15 +0000 (GMT)
-Message-ID: <9e3894fa-0a1e-432b-ba1d-76ea34d4f648@linux.ibm.com>
-Date: Wed, 7 Oct 2026 12:21:15 -0400
+	dkim=pass (2048-bit key) header.d=gatech.edu header.i=@gatech.edu header.b="U3dUVwBL"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=B28QZSwi8fNOjUw7nW7Te+qh5gFxjOcFNmRiob1bHlXp4oBIr3oXPwM91aCbaLwYhcr7hypjJnavFzKz9A42PCfW0MFjWiD4btalFLUKiogbTTGm0PDfFqbocy8Oy7wZweWYlgwnLKdLG4EMk37aZ3PZogjf0qWDhwZnrmTPBgnG7mq/pcVJZmkDuu7i57OYjCsWPG/RUps/ZnQ9iUXSSEy+wK6U+P0aYg5OQfU7+t0ebC5C5s0RYEwd1okluSaemsdYBko5eA2Yl3cLvqt1Bxt0Df4NzeTU83bCbmFkrJn2DZpWAlJsZGuIWU9x3kYfjSk0o3jQPf2avs5LqnrSDA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NrCYAwdj7SoA2J9plihDMXdxnYmqo3RvPopiMkLNDWg=;
+ b=Y5jOPpNP8Skh33uF6SQW18JTY8HUkGORB4p5JM7JYGcPQMFpgGItDixHWfaScrwBYDoWl/VyBBD+UEpaRD6OjUXcQ4vthL8l5XS2GIeQo0k2vy/z4v5qoPLedTZB498eVVcQGixUGXWV74zIfIko4tQgselZ5JqPHp1XMwNP9LAb+ehJkqmCuxpzGJE65Wc1XIkgLxwz4mrZTWE6PuN35LFzVYCYnbHjwEPKZsDWaGNvYGu8tfOPFfr1RFMaxA2DMKa+EBNwogHZerQLu5ni/5jVji3O+Vl4EJOmZjRBpHGvNl6zz9ztDiRVvDx8EmgGkKLafecfogbABzMpLqMMRg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=gatech.edu; dmarc=pass action=none header.from=gatech.edu;
+ dkim=pass header.d=gatech.edu; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gatech.edu;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NrCYAwdj7SoA2J9plihDMXdxnYmqo3RvPopiMkLNDWg=;
+ b=U3dUVwBLSZ5j06VYsI9qsPDgyhcx9eSXYWWVHOi22q77atfcXntEtexApEMFGzQw64+oAjEIGr+Up255qNbB1l1EkZgR/DkBgABUIynPWAywCM6uubr8nRN1qSIDvg2cO66tayjQBD2pFQ3oCYhiDV6iXmrv0FKS3x0L8zjsDSj1Mn0cCjnBktdj4RVlCFd48AeOIvZPx4sH6hPr2YrCsomKKpimedzsULXU3R8fiumXK/uWUALny8Oqq5ofcPWBgearSFtB1o4/xwXWHv1fXwYN9hry+MWRf+WlbihLWJeORJhTHjl2uMXPRB2WGRNlP+WBsD0TJPZnBAAqqcdBkw==
+Received: from CH3PR07MB9958.namprd07.prod.outlook.com (2603:10b6:610:1ae::19)
+ by MN7PR07MB629411.namprd07.prod.outlook.com (2603:10b6:208:632::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.16; Wed, 7 Oct
+ 2026 18:09:23 +0000
+Received: from CH3PR07MB9958.namprd07.prod.outlook.com
+ ([fe80::d6b8:e067:4377:97da]) by CH3PR07MB9958.namprd07.prod.outlook.com
+ ([fe80::d6b8:e067:4377:97da%4]) with mapi id 15.21.0496.010; Wed, 7 Oct 2026
+ 18:09:22 +0000
+From: "Masalkhi, Abd Alrhman" <abd.masalkhi@gatech.edu>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "yukuai@fygo.io" <yukuai@fygo.io>, "linux-raid@vger.kernel.org"
+	<linux-raid@vger.kernel.org>
+Subject: Re: [RFC PATCH v3 4/4] md: add a control device for array management
+Thread-Topic: [RFC PATCH v3 4/4] md: add a control device for array management
+Thread-Index: AQHdVlJIcjwKT2hWx0a13yUeO9vukLbx/NGAgABkfoA=
+Date: Wed, 7 Oct 2026 18:09:22 +0000
+Message-ID: <m2h5ixbcxa.fsf@gmail.com>
+References: <20261007115104.13884-1-abd.masalkhi@gatech.edu>
+ <20261007115104.13884-5-abd.masalkhi@gatech.edu>
+ <sashiko-outbox-162977@kernel.org>
+In-Reply-To: <sashiko-outbox-162977@kernel.org>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=gatech.edu;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR07MB9958:EE_|MN7PR07MB629411:EE_
+x-ms-office365-filtering-correlation-id: f1aa77e1-613d-4b98-035d-08df249e1d86
+x-gt-tenant: 042d12d7-75fe-4547-b5b6-0573f80f829d
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|786006|1800799024|23010399003|376014|366016|10067099003|56012099006|5023799004|11063799006|4143699003|3023799007|18002099003|22082099003|38070700021;
+x-microsoft-antispam-message-info:
+ e0ebtobx0RQaRMr12IMT6vGLB/fX3Tvmf2vjYYt6kaFAPEK904YuJT0Dk1OQ1ya6X0pyltiGd2Z06x4iKG8DJy2ahAxSe6Ek7b32c7+BFdA1Hdz+2Oi5I+ApvgAmsSOVnyKiXvWapj+7hsYpj9ER9Xlo2umfv4UDDSH2DzN2ZzdCu1uglpaisrtOfUEHRFEAYZLUG9vvK1ImImBQQFYSEAVfKQ7IoVHieO2/sZYgnV9V19p2+bdTEI7LXoddYHqOl87FgE/FJNAybYIoK1Or6pexjDwt7u/9hHaLMQhOkMlVfl96QI0LpwgCFdogoN15bPj5/WwdHhGRgim09QJn165HKHITc7fdG0LWVTc7YNOfN5OmFlS17ymAshKOn8lUSUl/NPwbVx0kdHBqrwIwgkHMeTNwyYGyxdIBxB7SvGycAsxdBUULhNobMc5SZh8lKW6+32nGOAG7WuDJqnDEBBB6sqfia5Zuo83mVhDRH6VVEPP2k00aYgxhmPyK+8v4md3tCaMPurMzyYnul8IRhD34eGwp9HA2XG3JMpQeqeq4gfyfxEtRgpAIb1rguYq5Jamlu/5nGzOvAWwiE/7V/5TS/srjZZG3A0FgjEu3y5oagbJ9Ta2lVEwrYIth9SLTfyWr6VqVADfbpUwEamMstnOIvuy/R1fRIoXjrJpAdus=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR07MB9958.namprd07.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(786006)(1800799024)(23010399003)(376014)(366016)(10067099003)(56012099006)(5023799004)(11063799006)(4143699003)(3023799007)(18002099003)(22082099003)(38070700021);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?S1dQN3BLckVmR2QwaEVVY25VSXI4YmdQU2ZoUnpCWkx3RDJqd0h4V0xCWDFQ?=
+ =?utf-8?B?eGhQVE0vemNTdVFYcWJ4R3QzRkZlL1RPbjJ0QmNOaVNYajdQMVN1U1kwT2hO?=
+ =?utf-8?B?Ykl1TmdEcHV2NEFsb213NTJVOE8rVjhsZHcrNDB1UEFxTVJ4WVVDZzVlRWJn?=
+ =?utf-8?B?YVFUbDJYbitFS1owZEtNTkd3YjdXVGp6bnVQMmxWUk1BTFN4QnRxbHo1QlZu?=
+ =?utf-8?B?YUhvdldRMVdWZHE3WkxqRjVRS3M1anlnbUlNVGFOWGFNbCtqeHphYWJUUkJZ?=
+ =?utf-8?B?S1BBVWxlWWp5SXdPQ0JHeGxWa0lWN2RlSE85UW9md0FkMlk1K3JGNFNwZnU5?=
+ =?utf-8?B?Y2cydHFIQUhaWmlZRm9XVlJzT0tRV0lORGU2K2RZbWtGSWJQTFFSdWNvUkh2?=
+ =?utf-8?B?dnhHbThaTlFPc1BtNnJwUlhxb2JrdWhGbjZIT3lDUW9Obmd3emtvUEtZeFRo?=
+ =?utf-8?B?bEZvR09YUi8rK21KeCtnbHYycThuamVSWkV5R2pWVllHeDlFRkRDbjFFa1ZB?=
+ =?utf-8?B?NVVJazJEN25vM2c0eHZHb2MvS1NHS3ZJTFMrL21TTmVKdHJ5Qi9KWThaVEZh?=
+ =?utf-8?B?NXllREhmb0NrNGJEbjh4ZFBMT1loMGh0NEZzK3ZYWXlORmlsQ0Q2eGtnb0xQ?=
+ =?utf-8?B?M3pRVHNUZlNYQXZHeVBNcHA1V25vbStlNXdlMllRSFVMaFZMYlhML3U4OFBw?=
+ =?utf-8?B?eTdKd3VwWTJaUzVQeVhXbHNlMlc1WC93bnd3cHJIKy92ekVCV1JzL3NGMFFK?=
+ =?utf-8?B?czAxc1cvRHdObmJPR1FTUkczRVZWSVVFQ2ZKdXcwVjBZL1RES3J1WjNVLzg3?=
+ =?utf-8?B?K2NmaS9PWXlma3FQcWI2cElZZVpKcXdWb0xXNnN4N3pmeEVMdXpybkU0cXFy?=
+ =?utf-8?B?Tjd5bCt5elVvSGtRNWFlUHI3bXNxL2hBdVAzeEFzZ08zMkZvaEFjR0Vya296?=
+ =?utf-8?B?WGxQOVQ2M2YybUQ1L3dRKzc0cE9Mc2hOSVdNcDMxMXRCNFpKRHBpZHNpd3Jp?=
+ =?utf-8?B?VGpSVTUwd0tDYk5lRm5Yb1VyR0JnWEVMZGRnNkswSnJTNWM3OERwdFk0T0M3?=
+ =?utf-8?B?UEhxNUlkTloveG9YVkEwSnRyZXB0L0xuUzVHOUpEd3l1cDZKQlVHSnh6ZzFX?=
+ =?utf-8?B?YVkzVndhQ3BpRVFZWTZKcENjbkpEeHhBcXFDa0hneTRqUG1GWHNrTnd3bHUv?=
+ =?utf-8?B?a1Z1eWRoU2pqSnNiNHBDeG9VQVJyemM3Y3YreTdlVjlQS3Y4WjNPamhINTNz?=
+ =?utf-8?B?aGIzOTJNNlNLN01pYm5zNThYdTFsaWxwVDdnTDVHQ2dKeks5T3hGZVM0Q3Vu?=
+ =?utf-8?B?anloaGJkc3NEUGhUdGRrV1FuaG1VdWo3NkQvdVcrNWlhc0MxM0dqMlNCNEU5?=
+ =?utf-8?B?cngvZHlCRkNpRUk5ZS9wTzE1VHQvQ3dBbmRmQTRiam8ySTVpRVRpWnFKNHhr?=
+ =?utf-8?B?eWlzUm92VHpFblladmpPY1ZNNG4xMWI5V3JJMy9IUnl2NXFQOTJwOEZVd0dy?=
+ =?utf-8?B?RGNaN1ExeEU4cXFnbU9JVDd1Y3ptM05EY3pKMUc4eXRCdXJFLzZSL083VnVh?=
+ =?utf-8?B?TC85eVJiUmdkd0s3M2gyc0o1MU4xM3BkbHMvaU1OS09kM1E3a0JCN3pxM3ZT?=
+ =?utf-8?B?ZlFDZHFVamQ3R3pVUTU2UUl3d3d3cEtpSTh3VnFYV0dRbnJ0M2FyVmZNWUpu?=
+ =?utf-8?B?ZERlMWcvYUpvM3FweDNaL3h1OWltWDAvNVd1emNYK0dSOFF5MTE1bWVYdDhu?=
+ =?utf-8?B?ZUdsOWN3MFpxSlcxNUUzRW11Z0NnWEkxNlNvT2JITjlHU3g2R210SjEvODdX?=
+ =?utf-8?B?dENIalVSaVZaTVBTYmp2bnNGVEtid3lRSnovdlNrZFZQc25GNHFuaFo2NXBY?=
+ =?utf-8?B?L2RUZU43azlmR3NiamZHZ2l5Q2Fiem40dTBRRGl6eGt2clpvYmxOWFhCd1N0?=
+ =?utf-8?B?YkVPVTNneHhBV2dpMTFtU2puMVJ5Zk9ENGJKckFwRTcrUVZXeWdSblY5TERV?=
+ =?utf-8?B?ZUNTQXh6YnNhSUYycTJkdy80dXRBNExGODB6WURIRnlsT0xGTnZ2ZnlKSVFa?=
+ =?utf-8?B?K2UvcGhkL2pmVHp3a0xrU29iWE4wdktxSDEvL3VyOTByRW4vMWNGbm1rYzZh?=
+ =?utf-8?B?Qnp1THZGb0czNmcxNStTNkRoZFJJRkJ0aDQ0K21tU2VUNzNDdUo3NjlVTzBZ?=
+ =?utf-8?B?TGswS2hLKzJYZVh0Sk5ITW16TitUbzBWNDFMakN3eFJ6SDdqV0hpVy9hVjFi?=
+ =?utf-8?B?N254NTI2VFdmWWNocURXbFlWVUtFSXlTdERHdEFLNjBKVnpRSVpyU0k4NUZ2?=
+ =?utf-8?B?d1J1a1dqTm9DNU5Gc3h4aW0xZjkvVUY5YkNXT0gzb3c1NVdOZGZRUT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <9F5B488BCB74A440A557E11D402F30DF@namprd07.prod.outlook.com>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] s390/pci: Use 32-bit fh outside of inline asm
-To: Gerd Bayer <gbayer@linux.ibm.com>, sashiko-reviews@lists.linux.dev,
-        Niklas Schnelle <schnelle@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>
-References: <20261007-rpcit_trcfh_upstream-v1-0-8a2718cfb90b@linux.ibm.com>
- <20261007-rpcit_trcfh_upstream-v1-2-8a2718cfb90b@linux.ibm.com>
- <sashiko-outbox-162922@kernel.org>
- <8086f631ce7ce60f1763171c8f05b050ff6c73fd.camel@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <8086f631ce7ce60f1763171c8f05b050ff6c73fd.camel@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: BjrJsvZNyjM5Rk1QPNjm_2HVl1cfsngr
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA2NCBTYWx0ZWRfXz0kIyMbGmQkv
- viuw5Z/9KT+sBb/5aOfZDSla9Tsw1WT+lozv3PTUDUFo7jCd5Sk2cmvzHV12bb2ikgVzI5wtIHc
- IhFswVERFdOCyjmmkjeElpdgECducKE=
-X-Proofpoint-GUID: BjrJsvZNyjM5Rk1QPNjm_2HVl1cfsngr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA2NCBTYWx0ZWRfX9aeVsm4N+rZx
- lzgOHea4tItpq7dDcVSESE7mlLJIit5WaNZlvNiB1tRnXTY6rZ/m9Cuq38daXiFDFqFgvFrF76d
- dB9a8T9ME9/PhnFNYRYkcUVGj0SN+dQnz9391YRoFl/ZLMamDzqdXAy3cAuJf/F8ZTbGGnvg7eG
- gBiGLhJQWXZ5qmEwEi8Rw4+I/pWVFlvExN28GgrhjtPlOUDKg1zkbeQwxAFyT4OHP6JNBQF4k7s
- mlEtzV9qkScneW5tM6YA68wLYHHTWD8ZQ9NHstxMff2ZY02hRhBOnZdOWoCQbRzppI9OzwFogTv
- /p7Z7aDnPUN5jMCQXSptYezEO2GfKZEgP6Mze3lwOgR2MxfuoqYHt/zknLYHIsQONNPrbCjMO+Q
- +Gmi3HKEonQZ0M71Q6YafkKNHFr5OI3+XcOwG+9FXOjAzI0rlXGs+hSjAxbz3hN6TNHv3N4uI+Z
- PSYfdPGxaLN228LxUUg==
-X-Authority-Analysis: v=2.4 cv=fM2sTpae c=1 sm=1 tr=0 ts=6ac6717e cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=i2SW2bYGNGrD0rdaJRgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-07_05,2026-10-06_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0
- phishscore=0 adultscore=0 malwarescore=0 clxscore=1015 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070064
+X-OriginatorOrg: gatech.edu
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR07MB9958.namprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f1aa77e1-613d-4b98-035d-08df249e1d86
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Oct 2026 18:09:22.8036
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 482198bb-ae7b-4b25-8b7a-6d7f32faa083
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: RPG8g84hMn82bvd2bsSZx2NYk+UP8wON4dAyufmYDPJHTyJr0SrlRV+kgc2KZeTHbkR+51XDixCoCxEvqVhmAA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN7PR07MB629411
 
-On 10/7/26 10:46 AM, Gerd Bayer wrote:
-> On Wed, 2026-10-07 at 11:19 +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [High] s390/pci: infinite loop in zpci_refresh_trans on CC=2
->> --
->>
->> commit 1c8706bb963f0d551da7d8535f804ca9f9b4305a
->> Author: Gerd Bayer <gbayer@linux.ibm.com>
->>
->> s390/pci: Use 32-bit fh outside of inline asm
->>     
->> zpci_refresh_trans() declared the PCI function handle as a u64 type just
->> because the actual RPCIT machine instruction required that in a 64bit
->> register, while the function handle is architected as a 32bit type and
->> defined as such in the zpci_dev struct.
->>
->>> diff --git a/arch/s390/pci/pci_insn.c b/arch/s390/pci/pci_insn.c
->>> index 2ba787e2304b5..053afb3e7a990 100644
->>> --- a/arch/s390/pci/pci_insn.c
->>> +++ b/arch/s390/pci/pci_insn.c
->>> @@ -117,13 +117,14 @@ static inline u8 __rpcit(u64 fn, u64 addr, u64 range, u8 *status)
->>>  	return CC_TRANSFORM(cc);
->>>  }
->>>  
->>> -int zpci_refresh_trans(u64 fn, u64 addr, u64 range)
->>> +int zpci_refresh_trans(u32 fh, u64 addr, u64 range)
->>>  {
->>> +	u64 req = ZPCI_CREATE_REQ(fh, 0, 0);
->>>  	bool retried = false;
->>>  	u8 cc, status;
->>>  
->>>  	do {
->>> -		cc = __rpcit(fn, addr, range, &status);
->>> +		cc = __rpcit(req, addr, range, &status);
->>>  		if (cc == 2) {
->>>  			udelay(ZPCI_INSN_BUSY_DELAY);
->>
->> [Severity: High]
->> Does this retry loop risk causing an infinite loop or CPU stall when handling
->> large DMA spaces?
->>
-
-This should really have been flagged as a pre-existing issue vs a new
-regression, it is not a behavior introduced (or changed) by your patch.
-
->> When the s390x RPCIT instruction sets CC=2, it indicates that it cannot complete
->> the operation in the allotted time. It then updates the address and range
->> registers to reflect the remaining uncompleted portion.
-> 
-> I've re-read the relevant ISA documentation a couple times now. I don't
-> find any mention of address and range being modified after RPCIT was
-> executed - regardless of condition code or status.
-> 
-> Maybe @Niklas or @Matt have an idea where this allegation of "CC=2
-> means partial completion and one should retry with an updated
-> iova/range" comes from?
-
-FWIW, it's not coming from QEMU -- we don't even have a CC=2 return case
-for RPCIT today, and we never update the iova/range on return.
-
-Perhaps, lacking access to the ISA documentation, it made an assumption
-that the range would be updated to shorten the next RPCIT as this would
-allow us to converge towards a smaller and smaller range each attempt to
-potentially not hit the busy condition eventually - sounds logical anyway?
-
-But I also find nothing that indicates the range will/should be updated
-on CC=2 (or otherwise) from RPCIT; so it does just sound like a bad
-assumption.
-
-> 
->> However, in __rpcit(), addr_range is passed using an input-only constraint ("d"
->> instead of "+d"), and the arguments are passed by value:
->>
->> arch/s390/pci/pci_insn.c:__rpcit() {
->> 	union register_pair addr_range = {.even = addr, .odd = range};
->> 	...
->> 		: [addr_range] "d" (addr_range.pair)
->> }
->>
->> Because the hardware's partial progress updates to addr and range are discarded,
->> this loop continually re-invokes __rpcit() with the unmodified original
->> addr and range.
-
-That matches your observation:  we indeed aren't taking updates to the
-range in __rpcit().  But as you say: there aren't supposed to be any.
-
->>
->> If scanning the initial portion consistently exhausts the hardware time slice
->> (such as during IOMMU TLB flushes on devices with large DMA spaces in
->> zpci_refresh_all()), will the operation fail to advance and loop infinitely?
-> 
-
-That concern sounds valid at face value; if we tried something and it
-couldn't be completed in time, from a linux perspective we are simply
-trying it again without changing anything and hoping everything works
-for the best this time.
-
-> I see that all the PCI related instructions in this file may retry
-> indefinitely (with delay) on CC=2. However, the architecture guarantees
-> that at some point the instruction will end with any of the other
-> condition codes.
-
-I think that is the rub.  Sashiko couldn't possibly know that such an
-architecture guarantee exists.
-
-I suspect the question is also a bit theoretical: what happens if the
-range is so big that it's impossible for the RPCIT to process it before
-the CC2 trigger point due simply to how big the range provided is?  Then
-you're guaranteed to hit it every time unless you 'chip away' at it by
-shrinking the range after each attempt.
-
-I would assume/hope that the SDMA-EDMA range limitation we impose on the
-aperture size already ensures that it is easily possible to handle a
-RPCIT from SDMA thru EDMA without tripping CC=2.
-So then the CC=2 case becomes purely situational vs a guaranteed result
-even for the largest possible RPCIT request.  That already makes it far
-more reasonable to simply try it again.
-
-So: assuming that architecture guarantee stands (we know RPCIT can
-possibly complete for the largest possible range SDMA-EDMA, and we have
-some architected guarantee that the loop will be broken otherwise e.g.
-architecture says it won't keep giving us CC2s forever) then it sounds
-like nothing to fix, but maybe worth a comment in a future patch that
-explains these guarantees, based on what you find in the ISA.
-
-I suppose we can consider whether linux should have its own redundancy
-here or not in addition to those guarantees.  That sounds well beyond
-the scope of this series and goes back to what I mentioned at the start:
- this is pre-existing bevahior and should not hold up this patch either way.
-
-Thanks,
-Matt
+SGkgS3VhaSwKCk9uIFdlZCwgT2N0IDA3LCAyMDI2IGF0IDEyOjA5ICswMDAwLCBzYXNoaWtvLWJv
+dEBrZXJuZWwub3JnIHdyb3RlOgo+IFRoYW5rIHlvdSBmb3IgeW91ciBjb250cmlidXRpb24hIFNh
+c2hpa28gQUkgcmV2aWV3IGZvdW5kIDEgcG90ZW50aWFsIGlzc3U9KHMpIHRvIGNvbnNpZGVyOgo+
+IC0gW0hpZ2hdIG1kOiBNRF9DTE9TSU5HIG11dHVhbCBleGNsdXNpb24gYnJva2VuIGluIG1kY3Rs
+X2lvY3RsCj4gLS0KPgo+IGNvbW1pdCBmZTc1MDJlYjM4NjYyODcwZThlY2YyODg4MGYzMDU1YTMz
+OTUxZDJhCj4gQXV0aG9yOiBBYmQtQWxyaG1hbiBNYXNhbGtoaSA8YWJkLm1hc2Fsa2hpQGdhdGVj
+aC5lZHU+Cj4KPiBtZDogYWRkIGEgY29udHJvbCBkZXZpY2UgZm9yIGFycmF5IG1hbmFnZW1lbnQK
+Pgo+IFRoaXMgY29tbWl0IGFkZHMgYSBtaXNjIGNoYXJhY3RlciBkZXZpY2UsIC9kZXYvbWQtY29u
+dHJvbCwgdG8gaGFuZGxlIG1kCj4gbWFuYWdlbWVudCBpb2N0bHMgd2l0aG91dCBvcGVuaW5nIHRo
+ZSBtZCBibG9jayBkZXZpY2UuIFRoaXMgYWltcyB0byByZXNvbD1lCj4gYW4gaXNzdWUgd2hlcmUg
+U1RPUF9BUlJBWSByYWNlcyB3aXRoIGNvbmN1cnJlbnQgd3JpdGVzIGZyb20gdGFza3Mgc2hhcmlu
+Zwo+IHRoZSBzYW1lIGZpbGUgZGVzY3JpcHRvciB0YWJsZS4KPgo+PiBkaWZmIC0tZ2l0IGEvZHJp
+dmVycy9tZC9tZC5jIGIvZHJpdmVycy9tZC9tZC5jCj4+IC0tLSBhL2RyaXZlcnMvbWQvbWQuYwo+
+PiArKysgYi9kcml2ZXJzL21kL21kLmMKPiBbIC4uLiBdCj4+ICtzdGF0aWMgbG9uZyBtZGN0bF9p
+b2N0bChzdHJ1Y3QgZmlsZSAqZmlscCwgdWludCBjbWQsIHVsb25nIHUpCj4+ICt7Cj4gWyAuLi4g
+XQo+PiArCWlmIChjbWQgPT0gTURfU1RPUF9BUlJBWSkgewo+PiArCQkvKiBOZWVkIHRvIGZsdXNo
+IHBhZ2UgY2FjaGUsIGFuZCBlbnN1cmUgbm8gb3BlbmVycyAqLwo+PiArCQllcnIgPSBtZGRldl9z
+ZXRfY2xvc2luZ19hbmRfc3luY19ibG9ja2RldihtZGRldiwgMCk7Cj4+ICsJCWlmIChlcnIpCj4+
+ICsJCQlnb3RvIG91dDsKPj4gKwl9Cj4gWyAuLi4gXQo+PiArb3V0Ogo+PiArCWlmIChjbWQgPT0g
+TURfU1RPUF9BUlJBWSkKClNvcnJ5IEkgZG8gbm90IGZpeCBpdCBjb3JyZWN0bHkuIEknbGwgZml4
+IGl0IGluIHRoZSBuZXh0IHZlcnNpb24uCgo+PiArCQljbGVhcl9iaXQoTURfQ0xPU0lORywgJm1k
+ZGV2LT5mbGFncyk7Cj4+ICsKPj4gKwltZGRldl9wdXQobWRkZXYpOwo+PiArCXJldHVybiBlcnI7
+Cj4+ICt9Cj4KPiBbU2V2ZXJpdHk6IEhpZ2hdCj4gRG9lcyB0aGlzIHVuY29uZGl0aW9uYWwgY2xl
+YXJhbmNlIG9mIE1EX0NMT1NJTkcgZGVzdHJveSBtdXR1YWwgZXhjbHVzaW9uID1vcgo+IGNvbmN1
+cnJlbnQgc3RvcCBhdHRlbXB0cz8KPgo+IElmIHR3byB0YXNrcyBjYWxsIG1kY3RsX2lvY3RsKCkg
+d2l0aCBNRF9TVE9QX0FSUkFZIGNvbmN1cnJlbnRseToKPgo+IFRhc2sgQSBzdWNjZWVkcyBpbiBt
+ZGRldl9zZXRfY2xvc2luZ19hbmRfc3luY19ibG9ja2RldigpLCB3aGljaCBzZXRzCj4gTURfQ0xP
+U0lORy4KPgo+IFRhc2sgQiBmYWlscyBpbiBtZGRldl9zZXRfY2xvc2luZ19hbmRfc3luY19ibG9j
+a2RldigpIGJlY2F1c2UgTURfQ0xPU0lORyA9cwo+IGFscmVhZHkgc2V0LCByZXR1cm5pbmcgLUVC
+VVNZIGFuZCBqdW1waW5nIHRvIG91dC4KPgo+IFRhc2sgQiB0aGVuIHVuY29uZGl0aW9uYWxseSBj
+bGVhcnMgTURfQ0xPU0lORyBhdCB0aGUgb3V0IGxhYmVsLgo+Cj4gVGhpcyBjbGVhcnMgdGhlIGZs
+YWcgd2hpbGUgVGFzayBBIGlzIHN0aWxsIHJlbHlpbmcgb24gaXQgdG8gcHJldmVudAo+IGNvbmN1
+cnJlbnQgb3BlbmVycyBvciBvcGVyYXRpb25zLCBwb3RlbnRpYWxseSBjaXJjdW12ZW50aW5nIHRo
+ZSBwcm90ZWN0aW89cwo+IHRoaXMgcGF0Y2ggYWltcyB0byBwcm92aWRlLiBTaG91bGQgdGhpcyBi
+aXQgb25seSBiZSBjbGVhcmVkIGlmIHRoZSB0YXNrCj4gYWN0dWFsbHkgc2V0IGl0LCBvciByZW1v
+dmVkIGVudGlyZWx5IGlmIHRoZSBvbGQgbWRfaW9jdGwoKSBkaWRuJ3QgbmVlZCB0bwo+IGNsZWFy
+IGl0IGhlcmU/Cj4KPiAtLSAKPiBTYXNoaWtvIEFJIHJldmlldyDCtyBodHRwczovL3Nhc2hpa28u
+ZGV2LyMvcGF0Y2hzZXQvMjAyNjEwMDcxMTUxMDQuMTM9ODQtMS1hYmQubWFzYWxraGlAZ2F0ZWNo
+LmVkdT9wYXJ0PTQKPgoKLS0gCkJlc3QgUmVnYXJkcywKQWJkLUFscmhtYW4K
