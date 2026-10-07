@@ -1,198 +1,182 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB5245D911;
-	Wed,  7 Oct 2026 14:46:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791384399; cv=none; b=nowVTQ1DOTftGu8okxTJXSiizRWf03FbQeqQGzXq0mFZJjup5jqnvLxXfG5kzkRn73B1T1ZyaYqmkpjnfj1Aqw9ZbrRG6M1qKdKvvs0/jYwovd6yjdExvWYdzBqbXfw7Grxmfd5UNN+rn5Ww6x6FsUdJTYNIZaX+PKLdHMyMyaU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791384399; c=relaxed/simple;
-	bh=Y2Ev2HiyMYwYoIMW4j0En0vbcmthH1wrfFA395620pU=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=sKJ8Gx5OYGK93/frGQ716HmF01U3oFM08RCxJAtxUdIAHJcUZoJi3l2O3hJAyH2pixmwksp0Mux6iGD9/VqALNX26hCiuUHit+uIp/T2VBGJmxwWX/gYg+BU8KFKnWLeCEA/pMrXdQPj57kF9sTWyB+EFxF1XzsoTtC/YZnvIQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=AuAJetCy; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3DD40BCA1
+	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 15:13:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.220.180.131
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791386007; cv=pass; b=oKyJrozORJFPWaNwEGDAmequzYdNsqVez3jObHAoNKJZah5wpfwJinQe8iPleUYWFJM4i6ngOyNeDv833jh4mNvstXggzRJVYmwnJkgXrzDcpaIa80XlpB6n2/bZ5GEhWIDRGXPc9xOWjQq6w3Uy4XKid6H+en1MtPZLFEabfH0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791386007; c=relaxed/simple;
+	bh=5Y3mvlPgWnVhVrSmLRzbDGbZ/FvqqdhHvWuSdDemWX0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oGs0maMwNIwq31WieevytWOL5Qa7nz06nsJMEzxctfDyadGI6lJCw+Flinixlr2OH2E8ZBuhlzlYX0JszKCAo9gBYVklaaNGQywO1vlYmuG6MI6L4ayBqEfGtdzFNnQd4SkIxZEjrxDYEbaz1AM6RDrwweO9u3VZOjpGuHpQymc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kSi98iNB; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ZH4wcAWW; arc=pass smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="AuAJetCy"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 697BZv1t597116;
-	Wed, 7 Oct 2026 14:46:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=jjNPSV
-	mKr6c89WAa8C3C9erw+H/tJYWvkub40Ba8IYA=; b=AuAJetCynVE0iA9VcPw3eq
-	6BfrfcE/HVKJXQXcJ9xL8bHRB6YH8oNl6GSpcIqK/Ixljf85q4RleTQpFgVezSeQ
-	giEe4ed6nW3mcdZwJgG7MtQWk5zl18XMoeNWKv2795arM5qPac2caQ9wVExu6zEq
-	7EJB8e3d+fap2oow12eHqveHiuzYlyjLRUcf485S3H3EI/ErSpYOXO3eHkUyh3hx
-	RJzmQQ72QvmQ6j26YSUYlmL0VuLnoE+0gMayjYmEMIbg7jn+45vWoicn9h+jc1+c
-	negKxZhkOLi7KfI0yHRXLI0DlrhXxYc74/c6iSitnGBu4QjcN/FPJ4QBe7cbOBkQ
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2scrp03e-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Wed, 07 Oct 2026 14:46:29 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 697BlYeX1808456;
-	Wed, 7 Oct 2026 14:46:28 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h3cdvy3hw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 Oct 2026 14:46:28 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
-	by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 697EkNNH44892606
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 7 Oct 2026 14:46:24 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id D594520043;
-	Wed,  7 Oct 2026 14:46:23 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 9825D20040;
-	Wed,  7 Oct 2026 14:46:23 +0000 (GMT)
-Received: from [9.224.92.241] (unknown [9.224.92.241])
-	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Wed,  7 Oct 2026 14:46:23 +0000 (GMT)
-Message-ID: <8086f631ce7ce60f1763171c8f05b050ff6c73fd.camel@linux.ibm.com>
-Subject: Re: [PATCH 2/3] s390/pci: Use 32-bit fh outside of inline asm
-From: Gerd Bayer <gbayer@linux.ibm.com>
-To: sashiko-reviews@lists.linux.dev, Niklas Schnelle
- <schnelle@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
-        Vasily Gorbik	
- <gor@linux.ibm.com>, linux-s390@vger.kernel.org,
-        Christian Borntraeger	
- <borntraeger@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Gerd Bayer
-	 <gbayer@linux.ibm.com>
-Date: Wed, 07 Oct 2026 16:46:23 +0200
-In-Reply-To: <sashiko-outbox-162922@kernel.org>
-References: <20261007-rpcit_trcfh_upstream-v1-0-8a2718cfb90b@linux.ibm.com>
-	 <20261007-rpcit_trcfh_upstream-v1-2-8a2718cfb90b@linux.ibm.com>
-	 <sashiko-outbox-162922@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (3.60.2-2.fc44) 
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kSi98iNB";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ZH4wcAWW"
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 697Etfbl3909073
+	for <sashiko-reviews@lists.linux.dev>; Wed, 7 Oct 2026 15:13:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=
+	qcppdkim1; bh=5Y3mvlPgWnVhVrSmLRzbDGbZ/FvqqdhHvWuSdDemWX0=; b=kS
+	i98iNBmpK6Komj36szarrvC6suf5CZ6Kh4dWhgWXLkJV0G2t+T6qpoKtysNp++3W
+	WwU7aaKSyy23XxzoNCgSgrGfSY3JI7mO6jnnDNdRuTzRzpRvDmLOz8Bqu/LIzyOW
+	4ez2LJUjPNvThA0bBhKHXuD0azIyDa82lU7GgthU8JLqda60ozoc85hwHRUxhIjx
+	/+xThhJglZUlX8gBMTrSxMujIzO3HX959eQ3Urfx/gxgTiL4y+Q+v8Eg4XBjygQA
+	53rpeVrMxoxRXi6I6n6JDOzNvQ7jXUecS3YL8fm/BC7fGrhsspy+14LGX5Hm4kRE
+	aL59suyZS6LmvK9RavVA==
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com [209.85.210.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5c67ap6h-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 07 Oct 2026 15:13:21 +0000 (GMT)
+Received: by mail-ot1-f72.google.com with SMTP id 46e09a7af769-81b20bea169so3903079a34.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 07 Oct 2026 08:13:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791386001; cv=none;
+        d=google.com; s=arc-20260327;
+        b=GG1yqNkVVOdzOCJ0LVB8RjVX0VBSDzEfZ56IBJlqrH1x8sL4nIe1+CfeyMJm9yxYba
+         sd+Gc7Y9JQpkv2+T4v/9YyVk4Lv3LuoTLHo9kO1fSzYgc5M1n7cr/r7MlP9tOiPPEPb9
+         zHENGmNxK8iddl/9vRTbwjh+Ios+L3ldTCcdDxWV2DmbwchRumYm7O60bLrrc8j+IcuH
+         FPZLzFSaQJsqo2i1XgcZ+BHZB92YbvMevXqHyvF6rEVMVwQVVu8tvIArmSTILqyhAFBu
+         YkyBjqotiX95cS+yVv4JKyffXrXeAAq+I0Kq7pEJblgwVVjls7Qc2cyRH/o5L4iJgQOy
+         CcYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:dkim-signature;
+        bh=5Y3mvlPgWnVhVrSmLRzbDGbZ/FvqqdhHvWuSdDemWX0=;
+        fh=UK2y+21//5URiNrnA0tm3tTV008Q6/xQaADiU/bio1w=;
+        b=dAG0EBRTXrZY37W5QtK5WWarnNWeyCeE/codFZa93xRGb6TLHGDaZv8TDz8vQVW4n/
+         +LxCLwDrZhzu56xRMN9RkqljOTEcybdwn8rdWbdE8TbIt4O9uroqePV7/kr1vUH+DF5L
+         +NCzZIouJ+V2LdOH8jsSKMbSIEcQaENi7UKjuedVoP0Qn+uYEOFBH+f3eOzAdJv2yNS7
+         pWkDxPQ3aTNAqRis/kp0QwFO/FFNIQC1k2iT9Q6nansV4yQZPbfVQqybE3dNXcoOjmtn
+         WxiRyV8VnbG82e5VDe8kRu8/TbBESJSPey9MIgEm3W1II/h7pD6YINXBmH+rjk2Ry8Ym
+         fpIg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1791386001; x=1791990801; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=5Y3mvlPgWnVhVrSmLRzbDGbZ/FvqqdhHvWuSdDemWX0=;
+        b=ZH4wcAWWr10X/vG0w5aBe+LLRl3Zwdclhj0hwdPYyhmwc0MmZZpAhxerWAMvTuBKpF
+         QEUHIiZ1JgmncoMnR1IPI0WL0QhHjqo99I2jM7EBwi8lZeYFtGECZy6bmpJ/Fl5FeZ+Y
+         6/YaOEsxXyn8KAtuxUp7jTlH5mkVHctCoy9Zf5rLbCelaFtH98Y+iafPSmrZXC0Whmo2
+         bhbPNIVyQo/mYsf4nhgl22GVeJCEi5wJs7amTMQZtoO/QV4am3r5T+VxfXjpiWftgm+W
+         doXUqlNJt0qFiv4wvdou88ey0RnlDsLMvTO9JFw9PBv+xtR08DnjOHLQiAsqRXG6Sp+G
+         3a+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791386001; x=1791990801;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=5Y3mvlPgWnVhVrSmLRzbDGbZ/FvqqdhHvWuSdDemWX0=;
+        b=NEXjnk2yatnGIbMyMmJ2jhrO9Bnrl3GAW+dJUNHvyfISVUxcxWE7Q1iEqrue6cTd2I
+         c4SSfM3GENuLxwzkLjHWSeVAd44gRpfuhmvxOgwpixhEoKUCi6b1H8a6cqNMdiJEFjtE
+         5+EBJsZa+9VupSf+cuGYkdbGIiWYdAOvmX4DJHX10bWYiBemytsYb26Io2HK8rVJfEQy
+         SPvM9aNPJLY1jrodnct1OAtxBG8WN2MvAyw7HYife9HT5/GE+c5E+c/3wns8/+irOJ9A
+         mpIFutzrVpzRSOWLmXQpa7tjOcHm6OyzJY6TZKGox2bRui/LBymkmN5uXM2+di1okZaU
+         X8AA==
+X-Gm-Message-State: AFuF++mO5HF1m5WOQ1LaFcU6Z+DBPvq8FD5rblMiaXgGgj+YZ27TzSJJ
+	jlgAntDuF0eoRpCxSJJrLwbuD6ioTFhTP6iAtAZvdjQTYwzSFI6TtaXqmmfjrnMtO8F0w2Phs4X
+	8CeMdHRK7+nViBJ53bTQXvuaeY86ROS7VZ8QBLrdZdBTqXQS5nSN0ndA1VF2dRJl6e2A01lgrwz
+	3rmtlu71Vf0VbbJAxpFbIubLhPxeatcAK5HT7CB2oDKI/wlw==
+X-Gm-Gg: AYBFou2RMMnjYVOQRp4dfCTsySr1qgWCY/mhAaGdUCBrvAZkNuKGZ3hJv/RYDKEm2BA
+	iXG7gc9KPc28dq9+Hxal5bLCNqugyJRKzLTybGGHYPwtIxkvytKKhMI1THfc9f2GO5kYuDom2dZ
+	KhaRBiZUMJnNZuyfKTT10rBKv7AduY12Iv9VzVxET5UJMDm9Pn4Ivw0aD1
+X-Received: by 2002:a05:6820:200a:b0:6b3:61fa:102 with SMTP id 006d021491bc7-6e7a8ce1653mr2316136eaf.34.1791386000861;
+        Wed, 07 Oct 2026 08:13:20 -0700 (PDT)
+X-Received: by 2002:a05:6820:200a:b0:6b3:61fa:102 with SMTP id
+ 006d021491bc7-6e7a8ce1653mr2316108eaf.34.1791386000412; Wed, 07 Oct 2026
+ 08:13:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA1OCBTYWx0ZWRfX88t/axGTpOeP
- WekNQtOpQIB6OLkh3ujl/9zC7anGTX7YMNs5/JWm37C/Q3bJNYaVpHoGMU1bjkV90Frrm6qjE7k
- CJlMeqcKCEpUPkzMM7MOkyjPi6HP5R0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA1OCBTYWx0ZWRfX5T8QPesWOYlW
- FShx5TBUhXVsmKw6QVyG2FdLqNGR/N08EeZOSTYIOPZK/iDvug35QpKwYcnpHltJEg4OaOC64/a
- YPfnUpr3/F2wKjdy9H9s54O3Gkpz5JkiHaBwzRutA+ZomPpH/lrxsPCQCleg+Az9YgdaqKfPDBn
- e9MAofJctcO+1P6DL3y6Nua3LyKyUzgif7BQr7buJ6HVed2K32RIY/O0kNOFU8T7+3i0XkTfPJC
- OF1wWOicPCbCz1MNN7zW9myuRcnIYNLDVsZlMUO31asqeaHckohYHaZIDObslNkdsKvis0btlSA
- 5tAyqy+mqxiR+1Zq7YPkhcmUhfRo+6CZNgW+nWg403aokj5zSV0pbKGI6gNg7aQ8p+fWKfYnCl4
- gdFEnUIJPfqIIvBZZTdsKaJJ9VJw/x/4lObH6u/u1ArdyCSEaxwME0eTG2teu0OErtg4Ia4BlSt
- uxd9Ku5AqsutaN8pKSQ==
-X-Proofpoint-GUID: XdEtSc4rshbH5GSEUTF4GqwY55HMGiUX
-X-Proofpoint-ORIG-GUID: XdEtSc4rshbH5GSEUTF4GqwY55HMGiUX
-X-Authority-Analysis: v=2.4 cv=B7osQ+tM c=1 sm=1 tr=0 ts=6ac65b45 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=C1r-qKCkr2Mr0rMjA-sA:9 a=QEXdDO2ut3YA:10
+References: <20261006131000.81501-1-robin.clark@oss.qualcomm.com>
+ <20261006131000.81501-4-robin.clark@oss.qualcomm.com> <20261006131920.6870D1F000FF@smtp.kernel.org>
+ <20261007051924.39963-1-kmehltretter@gmail.com>
+In-Reply-To: <20261007051924.39963-1-kmehltretter@gmail.com>
+Reply-To: rob.clark@oss.qualcomm.com
+From: Rob Clark <rob.clark@oss.qualcomm.com>
+Date: Wed, 7 Oct 2026 08:13:09 -0700
+X-Gm-Features: AclHuK-DPg5smaCdEYcgCX8G5Ae8CeG9zJ66mUOBvXkaQs85IPOEuKUidxy3v_Q
+Message-ID: <CACSVV00nzPAOEe2yTrt1n7_fpQTLmdxnP34Mm3ovG7rKZsnbTQ@mail.gmail.com>
+Subject: Re: [RFT 3/5] drm/msm: Extract out map/unmap helpers
+To: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Jianfeng Liu <liujianfeng1994@gmail.com>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA2MCBTYWx0ZWRfXzsMACdL50+RM
+ mhLl+wIL2FOQM1J+qu3TiMbpoVsmzcg9JT3HegnqBz5VKYjtrS0JqGoCDwTK0FHEHynmDbHuMHh
+ pdF6ZbDVXK4xkG+fVvKFBGcK4k8VG+M=
+X-Proofpoint-ORIG-GUID: SUAIKp-04Z6NL1Q7P3STs5nGSULEY2cI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA2MCBTYWx0ZWRfX8lKs86trQMzr
+ PuDimSp4Dn93yq3n3bEYAx3YesSjUtI2HilQ/QulZzMh+EGYIKThl17FGeB2veu1ytH6ln+f3xC
+ WsfpEDDiBDZG62YYW25Vg8Vj/bKaaLBMdQSzuGdpIBwxudBZUbTJ5EZ5gnrvQa3BGSSXX4MjqnV
+ TAyNXcbdB+ytJpw57br2CYfvc2fe9UW3KPHVKiS2ZZ6RZhKL1L53n5ybf32Pe7XSMsksypSsEEr
+ 7C8+HoIcPfVC/j3rQOSG3ssAi9Zfg/5lIxyK389i86bEBuID5jLdOcF8V9IheBG/UjsoOVDyQVJ
+ 1oooH36QwXCQ9PQyGXXXgcUg7WaY7jhlzPC27xuCszYm5ispQln7vAXILqkqjb9R0oATmd4t6MK
+ vej+89iMN7GMD9rPPhVjlgYgvnez6IlU+HAHXdvSWqEQTHYKTWjC5CSG2fTfhnYvdZkBPCWxMod
+ ejjcvav2nTNAqVVP3Lg==
+X-Authority-Analysis: v=2.4 cv=OfcNnRTY c=1 sm=1 tr=0 ts=6ac66191 cx=c_pps
+ a=+3WqYijBVYhDct2f5Fivkw==:117 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=ZpdpYltYx_vBUK5n70dp:22 a=pGLkceISAAAA:8 a=z0c7nXvavwv_fPd8bKcA:9
+ a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10 a=eYe2g0i6gJ5uXG_o6N4q:22
+X-Proofpoint-GUID: SUAIKp-04Z6NL1Q7P3STs5nGSULEY2cI
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-07_04,2026-10-06_03,2025-10-01_01
+ definitions=2026-10-07_05,2026-10-06_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 malwarescore=0 impostorscore=0 phishscore=0
- clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070058
+ phishscore=0 spamscore=0 malwarescore=0 bulkscore=0 clxscore=1011
+ adultscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2610070060
 
-On Wed, 2026-10-07 at 11:19 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] s390/pci: infinite loop in zpci_refresh_trans on CC=3D2
-> --
->=20
-> commit 1c8706bb963f0d551da7d8535f804ca9f9b4305a
-> Author: Gerd Bayer <gbayer@linux.ibm.com>
->=20
-> s390/pci: Use 32-bit fh outside of inline asm
->    =20
-> zpci_refresh_trans() declared the PCI function handle as a u64 type just
-> because the actual RPCIT machine instruction required that in a 64bit
-> register, while the function handle is architected as a 32bit type and
-> defined as such in the zpci_dev struct.
->=20
-> > diff --git a/arch/s390/pci/pci_insn.c b/arch/s390/pci/pci_insn.c
-> > index 2ba787e2304b5..053afb3e7a990 100644
-> > --- a/arch/s390/pci/pci_insn.c
-> > +++ b/arch/s390/pci/pci_insn.c
-> > @@ -117,13 +117,14 @@ static inline u8 __rpcit(u64 fn, u64 addr, u64 ra=
-nge, u8 *status)
-> >  	return CC_TRANSFORM(cc);
-> >  }
-> > =20
-> > -int zpci_refresh_trans(u64 fn, u64 addr, u64 range)
-> > +int zpci_refresh_trans(u32 fh, u64 addr, u64 range)
-> >  {
-> > +	u64 req =3D ZPCI_CREATE_REQ(fh, 0, 0);
-> >  	bool retried =3D false;
-> >  	u8 cc, status;
-> > =20
-> >  	do {
-> > -		cc =3D __rpcit(fn, addr, range, &status);
-> > +		cc =3D __rpcit(req, addr, range, &status);
-> >  		if (cc =3D=3D 2) {
-> >  			udelay(ZPCI_INSN_BUSY_DELAY);
->=20
-> [Severity: High]
-> Does this retry loop risk causing an infinite loop or CPU stall when hand=
-ling
-> large DMA spaces?
->=20
-> When the s390x RPCIT instruction sets CC=3D2, it indicates that it cannot=
- complete
-> the operation in the allotted time. It then updates the address and range
-> registers to reflect the remaining uncompleted portion.
+On Tue, Oct 6, 2026 at 10:19=E2=80=AFPM Karl Mehltretter <kmehltretter@gmai=
+l.com> wrote:
+>
+> > Does this error path miss an IOTLB flush?
+>
+> Yes. msm_iommu_pagetable_unmap() called iommu_flush_iotlb_all() after
+> rollback. __do_map() now calls __do_unmap() directly and loses that
+> flush.
+>
+> An arm64 QEMU/SMMUv3 test:
+>
+> - mapped one 4 KiB page,
+> - hit -EEXIST on the second page, and
+> - verified that rollback removed the first PTE.
+>
+> No stale translation was observed because the device had not accessed
+> the mapping. This tested the low-level IOMMU sequence, not the MSM driver
+> or Qualcomm hardware.
+>
+> Restoring iommu_flush_iotlb_all() on this error path preserves the old
+> behavior.
 
-I've re-read the relevant ISA documentation a couple times now. I don't
-find any mention of address and range being modified after RPCIT was
-executed - regardless of condition code or status.
+I have a fixup, but haven't sent a v2 yet.. current series is still
+enough to verify whether there is more work needed on older
+pre-arm-smmu hw or not
 
-Maybe @Niklas or @Matt have an idea where this allegation of "CC=3D2
-means partial completion and one should retry with an updated
-iova/range" comes from?
-
-> However, in __rpcit(), addr_range is passed using an input-only constrain=
-t ("d"
-> instead of "+d"), and the arguments are passed by value:
->=20
-> arch/s390/pci/pci_insn.c:__rpcit() {
-> 	union register_pair addr_range =3D {.even =3D addr, .odd =3D range};
-> 	...
-> 		: [addr_range] "d" (addr_range.pair)
-> }
->=20
-> Because the hardware's partial progress updates to addr and range are dis=
-carded,
-> this loop continually re-invokes __rpcit() with the unmodified original
-> addr and range.
->=20
-> If scanning the initial portion consistently exhausts the hardware time s=
-lice
-> (such as during IOMMU TLB flushes on devices with large DMA spaces in
-> zpci_refresh_all()), will the operation fail to advance and loop infinite=
-ly?
-
-I see that all the PCI related instructions in this file may retry
-indefinitely (with delay) on CC=3D2. However, the architecture guarantees
-that at some point the instruction will end with any of the other
-condition codes.
-
-Net: I think this review finding is not valid. Feel free to convince me
-otherwise.
-
-Thanks,
-Gerd
+BR,
+-R
