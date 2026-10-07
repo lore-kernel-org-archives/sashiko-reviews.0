@@ -1,115 +1,132 @@
-Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1E340803B
-	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 07:24:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.160.73.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FF03CEBB8
+	for <sashiko-reviews@lists.linux.dev>; Wed,  7 Oct 2026 08:33:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791357873; cv=none; b=X7REu7EyIEwSx3Nxn3tnT65dB0Oc5X+kx+AaC88cp7Nwhor8LrvlZqYO4PwKLvBIocOpJ/CQvd/l60wtRnHLZ/g3uN8kzfTJSlpTI7hL32Y9icJ55eMQmdhhL68j30Y+TIXFMlTc3aaS6/byfeOi+GKAL0rsN8sEzDLoN9OJDzQ=
+	t=1791362015; cv=none; b=cfEYgsUSNbP902sofEqlguD0L3kV7mlIqyyifIWYMrklhf7gw/gi4LzRk26RC1GvlRXLoHlq8cDZe4s/Z/t6pXRKAYOm7VYHtgb82QDuG5cyweV9m1vv15TII5MPB+M+KYZudD38WhF/A1FOfn38nC/9wEwJCZH8XNwGGej60cQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791357873; c=relaxed/simple;
-	bh=iztJqddBeYql7gf7GpijGLUjFFUdkizrK/koGWWZ7F0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jFr/dZTjrvtPltxFwi19h2lmDyfPR2ceobKqMUf0Wll3AM5cZDfyc8i4q3X7AH2N84tuhCDNb6wxV3PE+LzNOhE0vwo37u/xN/EuNoDd6N3TJyPOnXv+Y6kuqBAo5cnoaKTlSXxM7c5K7GGMUPhSWZRQD1H+wbgaT6ZNI3n7p+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org; spf=pass smtp.mailfrom=narfation.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=OSPQWt56; arc=none smtp.client-ip=213.160.73.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=narfation.org
+	s=arc-20240116; t=1791362015; c=relaxed/simple;
+	bh=nAWvF0NRtn6Rb1Gw9Fb5LrsP6FPPefqqvmqVqbv1Jcc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AuKbs8SDIO+gBR5KhUNvjvGAgCCQNaLR3NkxQiSrR9h9NHE9Jy5q2DC8tLVLObeZSsrh6wWbfQcBVAMjI4qlial8u2TDIR6E1BT3rKK72Ph0EuTwV8cqfuDHwZHQPfwP5Ofs1iQDrPM++u/LGY4zdhXnYQAtSfPZahFaJPG0mHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=lCGuMMgY; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="OSPQWt56"
-Received: by dvalin.narfation.org (Postfix) id 1C0A81FD5A;
-	Wed, 07 Oct 2026 07:24:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
-	s=20121; t=1791357869;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tEMbHhbyIhW8QfQ6FUYDsU+PwblYw5z4o/SY7zb4OIg=;
-	b=OSPQWt56SzWiPiIHdb1nQ5xO25GCgU0eBrpuYcztKDDDEZVwYyKftyBe115IkrgQNkPduf
-	bWU5lxDThZVvjTxG+GAZYXAjollc1OlTys5yJQfOnHthjd/hz55dQEh0abHGB8N5cXlGXW
-	1QtVHQ2EEclLdrE9p/uJczWSgA0SJVU=
-From: Sven Eckelmann <sven@narfation.org>
-To: b.a.t.m.a.n@lists.open-mesh.org, sashiko-reviews@lists.linux.dev,
- Linus =?UTF-8?B?TMO8c3Npbmc=?= <linus.luessing@c0d3.blue>
-Cc: marek.lindner@mailbox.org, sw@simonwunderlich.de, antonio@mandelbit.com
-Subject:
- Re: [batadv,v14 5/5] batman-adv: avoid superfluous DAT DHT_PUT additions to
- local DAT
-Date: Wed, 07 Oct 2026 09:24:23 +0200
-Message-ID: <5152412.GXAFRqVoOG@sven-desktop>
-In-Reply-To: <asWbc64vRQgTKt9E@sellars>
-References: <asWbc64vRQgTKt9E@sellars>
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="lCGuMMgY"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-48870973bddso951424f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 07 Oct 2026 01:33:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1791362009; x=1791966809; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=XxcGgnejISp1+VB6bpLIgoBBJ18yCkjKzQQ5g+qkFis=;
+        b=lCGuMMgYFS0zB0dTsj4sj+UGYBj/MMyrSv6e/Yd4J828fiA3R6k8yp2UWsDAQRZ47j
+         izaZwt4m5LsZAfpgpty19ujUtejOb0TPFrlPDztm3UaN5AoF1vYuDYIcZL04uDuJoT5h
+         9sihnZ58SgbyeDwLduhZQ1FoUyOgRvyUhSacEbWzNLjBzTrEAxiBjRH2xObZPTUnhmYH
+         qkn2HYu6GZ9APL/f/f+EnJCgx34wbnUbjxHIJ6bF3c0UDOHPkP3nW/ANgAPsQ6qFVHEu
+         pLJwTLAnSP0z0uuebaCzAaQBxO/1K2cdR8teVF8DEA+0JpaxBZ9Y7KxXXctM1C+7LNa7
+         MwQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791362009; x=1791966809;
+        h=content-transfer-encoding:content-type:mime-version:message-id:date
+         :references:in-reply-to:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=XxcGgnejISp1+VB6bpLIgoBBJ18yCkjKzQQ5g+qkFis=;
+        b=g1hBXM7eG3B5O9swyP9EHlMGNebizwenV3tEDQgh4VFcXX5qHPQvAnT6Xs4uaUfMlO
+         iR0VQ0erOrQPNOZ8o1RZI5+Bd+QWvKOXZ9QQfTSPrM66MpJFrgmaurNhtk1sOVbA/os8
+         ZGHfEr8/IHs/kg29DLDojiXFfJ8oXQ+apqc/8JUjZ3bKlvSj/dyWmVL1WLuwPIcmHeFu
+         QlpjvsQWKV8qTy39s7MWTzmsNfpweoUl3YByofFmuYfhS7E2dsEKAtZnMQRRkvHJdysc
+         72C8zItUTKkl643NuP/kIKaohOnqVT5x5Zp9ppj6ffcR4Frbubhp492LhuouH2Ispewo
+         S9qw==
+X-Gm-Message-State: AFq9FYI3ZMcj4cGatAVw98F1geuQa79DYtLrx3qltylAxd/O0nSK9aSH
+	kObHdDuvdwR6Vc2Tis9LGIt9HLxBEPiRqFiLlKlYe6SzGgc8rwgbydN2yWmA38dAGKjOmqnW97Z
+	9FrGe44s=
+X-Gm-Gg: AYBFou3tSr43iWwcvEjaJtWA3bc4Ag+gkMQubwblmrUMD/QlC2k4UFjEJ4KIfTX1aWB
+	3veKEiGblvbiomwf+45eGFy0iFWK5v3q9BRvltonE/9jglhdMxdxWy4K9awftKEnR60S/K/KPTQ
+	B2DHKrHBjzcvUDLpvm3hO7KQ89gvs8PTGeERUsjxpY5EngFxno/OWKvltF9I3XBsIPbIRtedq1F
+	X11XKn9xVOszK6fuKGd5gNRUS09ITu1nPjViG9OVJxt9gEiv3yBKazYJrfm7HoR+LLxNAp0rz3B
+	xgA9aLKWRSzQ1hIuZzdCbKJ+wz94FIJn3ADb3G7D/28TbIfmy8d0N+7uncDvNiX754/7yhzaRh1
+	8cMLLQlzLltjMCS/MX+MpFwcebexIUDz98AFWzfMmE8oKrd2LrfgKfnpBDoBhyU4nnQKoVtcfh8
+	5qq7pMN8wgy/VXBj5Nl626KNauFPgM0xvRGPIbvYqn2irYxeRXSpiXaoBRIn7NdXN11yx14TnOF
+	aPkt5GDWgFsbnY=
+X-Received: by 2002:a05:6000:3cd:b0:48c:69b3:6114 with SMTP id ffacd0b85a97d-48c69b362fdmr9482875f8f.3.1791362009297;
+        Wed, 07 Oct 2026 01:33:29 -0700 (PDT)
+Received: from localhost (90-182-211-1.rcp.o2.cz. [90.182.211.1])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48c71d3b502sm4290158f8f.52.2026.10.07.01.33.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Oct 2026 01:33:28 -0700 (PDT)
+From: Jerome Brunet <jbrunet@baylibre.com>
+To: sashiko-reviews@lists.linux.dev, Valerio Setti <vsetti@baylibre.com>
+Cc: robh@kernel.org, neil.armstrong@linaro.org,
+ linux-amlogic@lists.infradead.org, conor+dt@kernel.org,
+ devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 4/7] ASoC: meson: add AUDIN driver
+In-Reply-To: <20261001162313.4333D1F000FF@smtp.kernel.org>
+References: <20261001-audin-v4-0-2476646118b5@baylibre.com>
+ <20261001-audin-v4-4-2476646118b5@baylibre.com>
+ <20261001162313.4333D1F000FF@smtp.kernel.org>
+Date: Wed, 07 Oct 2026 10:33:27 +0200
+Message-ID: <1jbj95zz8o.fsf@starbuckisacylon.baylibre.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart2015193.tdWV9SEqCh";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
-
---nextPart2015193.tdWV9SEqCh
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: Sven Eckelmann <sven@narfation.org>
-Date: Wed, 07 Oct 2026 09:24:23 +0200
-Message-ID: <5152412.GXAFRqVoOG@sven-desktop>
-In-Reply-To: <asWbc64vRQgTKt9E@sellars>
-References: <asWbc64vRQgTKt9E@sellars>
-MIME-Version: 1.0
 
-On Wednesday, 7 October 2026 03:08:03 CEST Linus L=C3=BCssing wrote:
-> > - [Medium] batadv: UAPI source compatibility breakage via reserved fiel=
-d rename
->=20
-> I would have thought that for a field called "reserved" it would
-> be clear that it'd be subject to change in the future.
-
-To play the devils advocate: But programs would still fail when they=20
-manually initialize this field to 0.
-
-> Or should I introduce a "struct batadv_unicast_4addr_v2_packet"?
-
-Usually, you have a couple of bytes marked as a reserved array. And then th=
-ey=20
-reduce the number of bytes by X and add a new field. You can discuss if thi=
-s=20
-is correct or not (because then suddenly the new field would no longer be=20
-initialized).
-
-But for example, in commit c07d3aede2b2 ("fscrypt: add support for hardware-
-wrapped keys") or commit 38a435800945 ("habanalabs: expose device security=
-=20
-status using info ioctl") or 91233ad71186 ("vhost: support ASID in IOTLB=20
-API"), exactly your approach was taken.
-
-You could in theory (to make it compile in all situations), also use an=20
-anonymous union around flags and reserved to ensure the byte can be accesse=
-d=20
-with both names.
-
-To also support your point, please check=20
-https://docs.kernel.org/dev-tools/checkuapi.html - which also considers=20
-"reserved" as ok:
-
- 95         # Common padding field names which can be expanded into
- 96         # without worrying about users.
-
-Regards,
-	Sven
---nextPart2015193.tdWV9SEqCh
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCasXzpwAKCRBND3cr0xT1
-y1l0AP9yhPxWl77/OwJTFpAy6UFrvQedoFCAuG+HysXp2Um5SQD8C4EJw40rEddj
-L67A9mess7x9Lzdmk9eFsmugzeXOwwU=
-=YG2O
------END PGP SIGNATURE-----
-
---nextPart2015193.tdWV9SEqCh--
+On Thu 01 Oct 2026 at 16:23, sashiko-bot@kernel.org wrote:
 
 
+>> diff --git a/sound/soc/meson/audin.c b/sound/soc/meson/audin.c
+>> new file mode 100644
+>> index 0000000000000..808e7d4fd31a2
+>> --- /dev/null
+>> +++ b/sound/soc/meson/audin.c
+> [ ... ]
+>> +static const struct regmap_config audin_regmap_cfg =3D {
+>> +	.reg_bits	=3D 32,
+>> +	.val_bits	=3D 32,
+>> +	.reg_stride	=3D 4,
+>> +	.max_register	=3D 0x148,
+>> +};
+>
+> [Severity: Medium]
+> Will hardware state like the channel mask and endianness be lost across
+> system suspend and resume cycles?
 
+It is a good question but I'd consider this a pre-existing issue, if it
+is one.
+
+Amlogic audio drivers have seen very little testing, if any, when it
+comes to suspend/resume, because the suspend support from the platforms
+them self was very limited too. I have no idea if the situation has
+improved lately but the subject is definitely not limited to this driver.
+
+IOW, the issue might exist (or not) but I do not think it should be a
+blocking point ATM.
+
+>
+> ALSA calls the driver's prepare() callback to recover a suspended stream,
+> but not hw_params(). Because this regmap lacks a cache configuration, it
+> cannot automatically restore the register state configured during hw_para=
+ms()
+> when the system resumes.
+>
+> --=20
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261001-audin-v4=
+-0-2476646118b5@baylibre.com?part=3D4
+>
+> _______________________________________________
+> linux-amlogic mailing list
+> linux-amlogic@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-amlogic
+
+--=20
+Jerome
