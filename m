@@ -1,273 +1,181 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from DUZPR83CU001.outbound.protection.outlook.com (mail-northeuropeazon11012048.outbound.protection.outlook.com [52.101.66.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FE43D6690;
-	Wed,  7 Oct 2026 21:50:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791409802; cv=none; b=nOqAPf3WAuw46qDxe6LiQUQ0ZwXckNvWfqIUyBidOdTJ6g5oqNILEcGL55L5pgEgEa5vG5Bb9Vhe26AFAC23iVb2pLumTUBeqnW+yOU6Zw94kF6cLxqG1kd/wTS3bNSdjpYKZWMgf8lzsOIln2GmYBLu7H8k/xL8EyLY2ddn7Q8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791409802; c=relaxed/simple;
-	bh=/GC6QauhpyYqXDU3b3DCofG+sF1iN/cvT2by7GGEi9c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eZvhAC/DWGbAsL1zTT/NXOSKa2wWVbbLBOhF0y/dt8GPFgyyxJfY9PyOZz1ZDK7gMPtsFJ8i83cPCt/CZEpUe8qOZpM5y3My4ZCXTX1VzzOtGqBVbmBz7fjkJzWtVdKRstAmqiwNgJajtg7bVV8iUwNrRq3IuoHR7D1360FpIiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=cZeIDxDd; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C0A27466A;
+	Thu,  8 Oct 2026 03:27:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791430034; cv=fail; b=kf1MeNsEa+lNqYqsNuBue+ON4/fQIZkTnCPuyvVbArKzykeiyhRdQSGK8p6YLWp+D647K4HjQkrsEaldYkLYMjGp8yyUD+s8Clh7We3x4tNk+dIoQmw+AoFFFAhjR6RPSygqTMY0rX2LpFrwQC5B2DF1MJVGwxDxHHpwtXui3MQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791430034; c=relaxed/simple;
+	bh=9DPDkq0k8BKpPun+nLeS0H3JM3AVYc6N8Ea6o9XM0ug=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=Q88k1eWX9IgDbDOffkciQmbUmbGCGuC39Qer+/5p1VZl9WQpiJSVIqHy7hK31HlYNqOY0/b+6vczX2VFc/eDxmJGddGE3c9RWwnUSAGhQiyMwfwKapPFaGsGx9iBHDLqHzxi4fn3hwqMDVHadeGhiRQxVoarUxw1UWFh2K7aTfc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=YchOURAW; arc=fail smtp.client-ip=52.101.66.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="cZeIDxDd"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 697LZUjZ3628784;
-	Wed, 7 Oct 2026 21:50:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=UcX2zV
-	kYeiN/yci9+ngSsc7wJ65G2UirwwZaxntU2pQ=; b=cZeIDxDdmpVCeyL+zDud3f
-	ZlwAN1LIpV034efm2BR1BGvAgzz+qpADrjsGW536sWe6LKjuM31san5qH4BY/JH7
-	UnYmjh96Wb2QfldXFfmZu9eA2nZSmX09sOUVyJ2m1HH6duqCPUH9VY4KU9tZRiVr
-	k4dprLZlD3oQFn7lVzxHKGLHns62sq1yqp78WRpdzzSDj4Ehi9YjatsqaXhsOXvi
-	1QRJ6d7psNOsdyMB4SNsYzhKs/at/AiJNusfHI5XtwWPxoRFrVVE7LReFxfXl54P
-	AuUeEhjT09bY/707knHccSVga+MHIgF648hJ6baq4pSnhE8b00AWI/imCUTV9tzw
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h2se5r2y7-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Wed, 07 Oct 2026 21:49:59 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 697LlOLF2476247;
-	Wed, 7 Oct 2026 21:49:59 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h5s34s95y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 Oct 2026 21:49:59 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com [10.39.53.228])
-	by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 697Lnvi37144442
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 7 Oct 2026 21:49:57 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C1E6C58055;
-	Wed,  7 Oct 2026 21:49:57 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 21E095804B;
-	Wed,  7 Oct 2026 21:49:57 +0000 (GMT)
-Received: from [9.61.89.182] (unknown [9.61.89.182])
-	by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Wed,  7 Oct 2026 21:49:57 +0000 (GMT)
-Message-ID: <14a9fc54-d1be-47dc-8f60-5e99c44f8ddf@linux.ibm.com>
-Date: Wed, 7 Oct 2026 17:49:56 -0400
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="YchOURAW"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=U0HnAiicEOkPoTZ0rovo4S4lbYJvLlYiwzV8wDw/FRSnfSQ+1RH9dYeJJQ+uJImCcbUueHDWkJd33e4Ob+78xuOKNzyzPYGc93IAkQzBnJUfAhTdKH0JFrzqfVGuXfObSNRPnVRPIUVzRdjrc5KTvlgb/GAPWJRoZlbOO3lRf0Y+93ws+9UQlTjs+VAa1nm1bElDSX6h5Bt7yg1hMfRdOJHZfcWpjgUfA5ugj0pxjlQKbajqY70mJPa9rwQDb1Ihq3yQ+xZMlYKOXnW2fvaETmP++/152TYSWhC7SLaWqg/SObQ/d1ZgT26Es937D3cOw+dK7ldGHLHph2/ykctmtg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9DPDkq0k8BKpPun+nLeS0H3JM3AVYc6N8Ea6o9XM0ug=;
+ b=FVnoZjptQi+TK5v4AI2ZR9donCM3ZcuOoymmfYEaAxksFqwEydQy/hQlw/+wUofeInEKEHVyysGoH5Bj4bSCByfhtdoBsr+SoMPkAIivhWCTBmHjHsaXX+g1lqrHXCB29LqDrnxrVzNOKVUGYqCsTwVtFxbuDSkGwiamb703YxsdGF6l9W1F2nbbS/54VMh5+jMgJCHaJmDdnjtDpit3WJMPEBt3G1DWIXAg8OYkUjvol7zLwVL/GjP6Tp38nZwutmKIIpeiPZ5qwbabjc+lGsb8uu8dbqcO3vqFu8VoR/KWexjJkQVejFzjeOfTtYPQ84fZOaALd3loSs+Zw+C17g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9DPDkq0k8BKpPun+nLeS0H3JM3AVYc6N8Ea6o9XM0ug=;
+ b=YchOURAWOoXR1bUDZJBjYoF986/9oi18lAsavpOPhQxguAXB7h7hlSTBwoFkSiBs5fUaJSn7sr5B68yyc6U4TTss9S7I09Dz4pu+Yhz7vxsZ5lvIVEAEdjI9f0cDTJx1oBTnkAhecGIXMAMIz+zkltfmd79Ho3GzlY70XjTNuniIcYpE1oKjAZsEeowHm4z1oZQZPq93x17cxbWmDvwWaqZHnxf7+r4KlO893W8e1q+DuE4Cb3r2MyI4RQb10xmiqN0xg/20A8CmHXmf2K3IC8Uf2ypb7dLN/h6vB96jGaZZxiSYjJfeVrg/hO/RUVjZXFRUEGl6cLjhplqocsEDyA==
+Received: from AS4PR04MB9338.eurprd04.prod.outlook.com (2603:10a6:20b:4e6::17)
+ by AM9PR04MB7570.eurprd04.prod.outlook.com (2603:10a6:20b:281::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.17; Thu, 8 Oct
+ 2026 03:27:10 +0000
+Received: from AS4PR04MB9338.eurprd04.prod.outlook.com
+ ([fe80::7c4c:9c56:8552:f680]) by AS4PR04MB9338.eurprd04.prod.outlook.com
+ ([fe80::7c4c:9c56:8552:f680%6]) with mapi id 15.21.0496.010; Thu, 8 Oct 2026
+ 03:27:10 +0000
+From: Wei Fang <wei.fang@nxp.com>
+To: Marek Vasut <marex@nabladev.com>, "sashiko-reviews@lists.linux.dev"
+	<sashiko-reviews@lists.linux.dev>
+CC: "Frank.Li@kernel.org" <Frank.Li@kernel.org>, "imx@lists.linux.dev"
+	<imx@lists.linux.dev>
+Subject: RE: [net-next,PATCH] enetc: Set eMDIO MDC rate to 2.5 MHz only on
+ i.MX95
+Thread-Topic: [net-next,PATCH] enetc: Set eMDIO MDC rate to 2.5 MHz only on
+ i.MX95
+Thread-Index: AQHdUfXK300phESj5kSdvLl0aM8yprbrCqGAgAAoJICAB9KzMA==
+Date: Thu, 8 Oct 2026 03:27:10 +0000
+Message-ID:
+ <AS4PR04MB93380800DF5CFFEE1F5D8ECF88932@AS4PR04MB9338.eurprd04.prod.outlook.com>
+References: <20261001223947.60189-1-marex@nabladev.com>
+ <20261003013406.536AF1F00898@smtp.kernel.org>
+ <20232ace-d9a8-4082-b553-8e029ab63963@nabladev.com>
+In-Reply-To: <20232ace-d9a8-4082-b553-8e029ab63963@nabladev.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AS4PR04MB9338:EE_|AM9PR04MB7570:EE_
+x-ms-office365-filtering-correlation-id: f7be8d8b-065d-4d4a-b231-08df24ec099a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|19092799006|1800799024|366016|376014|23010399003|18002099003|22082099003|10067099003|4143699003|11063799006|38070700021|56012099006;
+x-microsoft-antispam-message-info:
+ vu1Nk5HzyF2qs8lkhc4ks+JyuBrt6WH9+oct+xh+NmlOVnKJ5UYPq3b9W9Wo29YmyFwehxkVuiBO1yYjFRGd2+lONna8XwFYkXvPwGN91daeSpvGkNV2uA1gejb7Mh0iKnMwAwxDPAfmQUmhslUVeu88w4kwtGqTVLOggpJP8MEziwRNP1vt3Rbx7L3M6VSSj2qO+vbyDhMyAxnGmzrzNiWG4BcenrcnWRNjAZaN1Bbij24MwNEc2sVvVAxTHZm5V7J8O5gZoGhAWnwrbEPLkav9M14tI1Du2jDZDPzQz8y2wDu/gYsc/9HubBtoCmLWbOLt7eBA+tny0gFVh2PMC4z4y2UG0NHZTYonXB5xavIZbLjY+Asan+v5UCoLn7SR64yqGw/KqP3OC5ibv//JcKrk1yN+AuWBSp9Jd4IRqI3Pa4Jf6huv9ZuxWY3BXl7qpSTqDayJ5SUUNbf6wWCix3EJr8lBZECEzclLohTKLNbKmRc0kiHJaqMkjY3vHBo0RWqrA2J4qTV4UkG4JSl4Qe52q22enWTs5iC5pRw/cZ3yjEQxHnWHt8nBZ2tjbkW9m0VqCaDmMyo4Fr+5sj0PovOTFmG6ZqFJ3fj0vH1tWnwOYIVGRoC1O9Az7Ew755LnE190mOehvqUUK0Ivj6RS8vemgnwEt+F4jNoXAYxntlafZJaN1dOxve6eEe4bUKDMoGxCGFVFPxLiRXNwCLfev9WClMBisLaCKKliF8jE+6g=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS4PR04MB9338.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(1800799024)(366016)(376014)(23010399003)(18002099003)(22082099003)(10067099003)(4143699003)(11063799006)(38070700021)(56012099006);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?bTVaZWZPV0hqQUpSOUtDdThmcVljQVJ0ekFFWnRLY3ZFSVloeGNZeGtlSHdU?=
+ =?utf-8?B?cjJwN0ErNXROdFNhUEhOVDk2b1hFT0Y4THZUREV6Q0t1R0ZXc0ZSTnhFZURJ?=
+ =?utf-8?B?M2tCWG1TUnM2ZFU3dTRabVRvSEZ0dGtxUURJVzBtOTYzVnl6NjlCbFBzSE9j?=
+ =?utf-8?B?bmhKRGl0clhQUkN0d0l3bGp1T2c5d1l2OW5oTS9DSEtpeUd6MVJ5Y2hmS1Zv?=
+ =?utf-8?B?RmlhVENwbUlZa1JnTDVMbS9yTjMrY0dHVDNrQ3BpUHlRZ1NqWXNFb2tRYnBr?=
+ =?utf-8?B?dGVUQktuRmVPWGNvZCsrM1hmM3lqSElhM2w5MnFSbDRxS1BrNjYxVlFVa1pv?=
+ =?utf-8?B?WUIrb0p5WmkwMTZQdTdJU3Y3QVdrTGJHTUFhYW9oZXNlK2pUSHNlWTNYMFl5?=
+ =?utf-8?B?ZlNqeFJFN3BRMzNsUFM1MDcyM0xJZGJhRFN3eFRxQ3U3M3o5OGpNM2JZWlh5?=
+ =?utf-8?B?Ym5Ba2t5Q1o1TWJXdzFuaTBZT3dNYXJZK0NIMEtHbXZCSjIySnhnV2ZOd1U3?=
+ =?utf-8?B?aUpDZlgyODhFVFg2aVZ0ZU1qRVJ0WWpOR01oMzhDekFvSnYyQlVranVSSDgx?=
+ =?utf-8?B?cmFtY3g1bk9WeXZRRE9qMXIwWWpPRjc5NTBtUDhQUDFNZG9OdVFjWDdkSHBE?=
+ =?utf-8?B?Q20wU25PM2hYVzRNWitFUVpJQTJ3YnFWTmo2VmRiRUl1eHNkMkhZSUtWbTBm?=
+ =?utf-8?B?YUVGVnZ2NzZZRWE5V0ZxbVcyNWdzY1M2QSt1cHNubVBpOCszYVRrZy9aYW1t?=
+ =?utf-8?B?TlllcDg0SXg2SlRjelFSU3lyNmJnVk5rNWFLcXVoQWNrWks0M2kvSWxCRzFZ?=
+ =?utf-8?B?WkIzeG10emJaU292eGxWMG92djBKNDlnakRBWjFHY0UvRk9nMllZZTMxVmJ0?=
+ =?utf-8?B?M3QvbzNYalhkYzZGNnEybjNmKzd2b0NpbTZvbWFDQ1k0Tm1PWG84NzdiZDRy?=
+ =?utf-8?B?UGErdzFnRzRueGJxc3d4QVRGbWU4Mm5kRUZyZmc4c1dlejNEM0hqU213RVJl?=
+ =?utf-8?B?VmpuS1pvMHlzYkt4TGJVQ3NwNWtMUGQzbnV1c1Bkb0ZNSmx6MDVKL2pVK0J3?=
+ =?utf-8?B?eDZJVGJzSTc5cWEybVZDelREK0pBL2ZFTzJIZ09sUmxSM3IrWEkyendhdnB6?=
+ =?utf-8?B?MnFycHJIS3Y3eUgzTnVudTlBa3RKVXo2bjFKUmw2MjJGNjhEdHBDUVRpNXJL?=
+ =?utf-8?B?UDBUVUc1NndVTUVlMDMrelVUcGxtQzk4eXJKSStQVFMyYUNMaFFIQktEbDcy?=
+ =?utf-8?B?TVBqZ2R3Z1NFTmlsMGlCOXhkNmxvNzNSQ3dpU0FscEk0ZEhwNkxyZkt6NW1L?=
+ =?utf-8?B?c3hOdk1ESEpmNHRqSk1iZFB4MXNqMkloZjJ1S29DeVozZk5rN1VsY1dSdHlV?=
+ =?utf-8?B?L2s1YWRIZURWbTNLdWJsdjFUL1FzWFVyUnltVit4TjF4SThPT0N4Ump1WFBT?=
+ =?utf-8?B?QVpLTStVVFNKVmVzdjl6N0czL1BtSHJjVWdkWVRzYk1YYXhGT2RuRERzZ1U0?=
+ =?utf-8?B?TWVRb01neXNBUnM4cndpUDhHQjVkZmhJZEZ2M05iUVJGWWJNVzdpdmdnbXVT?=
+ =?utf-8?B?RHNvanp1Qm1zeGlweEppRGhzQXowbk1lZ05mWEJKOG9YWEFRbFRtM28xa1la?=
+ =?utf-8?B?Uytpa1JaUUg3ZUIzbE1pWVMzLzAyd1Fwa1Y0VWc4NXBNd2dFSW93VmJBQnZy?=
+ =?utf-8?B?T29kS1d2amRaeit1NWQyNWdYbEVHVEZncGVhc21pQ1Y4VzBZTE5vRnlDSVZi?=
+ =?utf-8?B?YTZPdnBCYU95TFZFa0w5WUhnZmRBUVRsRUoxVkNldW1pVllJbE8wNFU4QmdO?=
+ =?utf-8?B?dGo4c1cvaVl5dUJJN2Zwd29JQTVXNTRxQWtXOVpuekhUK2QzOGp0V1dueVJ4?=
+ =?utf-8?B?QUwxeHFYSWJlMldSYklOMmtHb2NUVW1qS1ByMTVCMHZRTHF6R1JLZWR0SEQ5?=
+ =?utf-8?B?YUZ2QjZzaFFyUFEraitJcVVXYlhjV3lHc0laRFFyN1hUWCs4dVJWaHJOQklj?=
+ =?utf-8?B?aTlVWldYdWpadld1T0VFWDRwdGEyekpRZ0Rnc0dmUE42MVNseSt4NWx0eHE1?=
+ =?utf-8?B?bmNLYnZxeGNhUVkxS3E3QkhQVmV2bmxMSlZvUXFidEtpWW5xU1pmeXBqaC9K?=
+ =?utf-8?B?SnpFZWVzQ05MU0QyV2xBck1oTzJDU3prbGpYd0pZWGhZdVI1NThacWtENmJq?=
+ =?utf-8?B?UXZOVGRxZHR5Ty9CeEtCT2ZBdEYwTGFWRTFQS3FDdHVTL3BodXorVXFiL1pu?=
+ =?utf-8?B?bVRiNjB6d0ZSWDNyQ2lVd1ZCeXFVMmwxUGJsdnNWUk1mWWNhK3E0RnpqMTE2?=
+ =?utf-8?Q?3rEE3CTbzYgqy8ZpfS?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 03/15] s390/vfio-ap: Functions to initialize/release
- vfio device migration data
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-s390@vger.kernel.org, Alexander Gordeev <agordeev@linux.ibm.com>,
-        kvm@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>
-References: <20260807221834.562851-1-akrowiak@linux.ibm.com>
- <20260807221834.562851-4-akrowiak@linux.ibm.com>
- <20260807223840.4FCA41F000E9@smtp.kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260807223840.4FCA41F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA3MDA4NiBTYWx0ZWRfX3AKLNrHhPTON
- QtQsUFczSqz8Mg63HWPYmHBkQLfQ+4QUfVwlCIOEx3nSiA2GnLH4WDJ8fNhPpFng6dq1fyBfDhW
- sFEKlGe/63R2KRICdte6ea4g9SZ2Yck=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA3MDA4NiBTYWx0ZWRfX1xvg8OaFZGX/
- OYk1e1d/jnQ1mNKfIhLLqtRbGS4CM4NJZbIbxfyZ7q4jmBFl5Lo51UFSb1miK5Rus8Vyo8I8p3V
- 4gYgcS+tZp2Dx77ZEy1v01tU/58zogaGRFQm60g8monJ3gX3if5QkNFr7V/ZgNQKNV2874d4ZxP
- N8WA55nqMVcTuoprODFH7C0bDul6L3jAXO7mWAujoFfcorrb15HlhXqGsjBG/7nvmyhXlc/gqRO
- A0+4RJG+KbcDoUmpU+YjLv/t9Uzqhb3gqeu77WaFg5c6KwEYwRbDNGinwnGx0wrXcz812R+f8ol
- 734mI54GOh+roYFNFowG4Wmsxkhy6aaAnfOHen6oewKZ2gmM/H901OjAexJZZGomao38BoRW+J7
- Q64n2ni0Rmvgi4GiyEFOsM0GXZbnqXFkdU/SlEGxAy8WBL/he1sWU0vWSmAoPJTxLjTVJRg6eJ3
- ez6WSq0yCaca8qePbsQ==
-X-Proofpoint-GUID: iTXmfkd1I1UQyNPAUkABhtlxNnRUmvD7
-X-Authority-Analysis: v=2.4 cv=UNRIjyfy c=1 sm=1 tr=0 ts=6ac6be87 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=uomwIFa1Vr5aimEL9vgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: iTXmfkd1I1UQyNPAUkABhtlxNnRUmvD7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-07_07,2026-10-06_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0
- phishscore=0 clxscore=1015 priorityscore=1501 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2610070086
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AS4PR04MB9338.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f7be8d8b-065d-4d4a-b231-08df24ec099a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Oct 2026 03:27:10.1364
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Vtp7SzcnvTRvLKS85d3rvjIQBKj3ydt+dv0OePknTDmugbKfah0pGGk+ob5b4uZJD/aHmSR/ZtexKFSECOxt9w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB7570
 
-
-
-On 8/7/26 6:38 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review fosund 4 potential issue(s) to consider:
->
-> New issues:
-> - [High] The patch exposes the VFIO_MIGRATION_STOP_COPY capability to userspace before the actual migration data transfer logic is implemented, causing silent migration failures.
-> - [High] An open migration FD can access a newly allocated migration session if the VFIO device is closed and reopened, bypassing the intended `NULL` check.
->
-> Pre-existing issues:
-> - [High] Unconditional NULL assignments to `req_trigger` and `cfg_chg_trigger` in `probe` can overwrite valid eventfd contexts set by concurrent ioctls, causing a memory leak and breaking interrupts.
-> - [High] The mediated device is exposed to userspace before it is fully initialized and added to the driver's tracking lists, allowing multiple mdevs to attach to the same KVM guest.
-> --
->
-> --- Patch [3]: [PATCH v7 03/15] s390/vfio-ap: Functions to initialize/release vfio device migration data ---
-> commit 04c1b466fec62cf9e53c2d6610cde9ecbf5fefad
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
->
-> s390/vfio-ap: Functions to initialize/release vfio device migration data
->
-> This commit provides the initialization and release functions for the data
-> structures used during live guest migration of vfio-ap devices. It introduces
-> stubs for the migration operations that will be fully implemented in
-> subsequent patches.
->
->> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
->> index 374d3a67cb214..cf303d228a0a5 100644s
->> --- a/drivers/s390/crypto/vfio_ap_migration.c
->> +++ b/drivers/s390/crypto/vfio_ap_migration.c
-> [ ... ]
->> +static struct file *vfio_ap_set_state(struct vfio_device *vdev,
->> +				      enum vfio_device_mig_state  new_state)
->> +{
->> +	return NULL;
->> +}
-> [ ... ]
->> +void vfio_ap_init_migration_capabilities(struct ap_matrix_mdev *matrix_mdev)
->> +{
->> +	if (ap_is_se_guest())
->> +		return;
->> +
->> +	matrix_mdev->vdev.migration_flags = VFIO_MIGRATION_STOP_COPY;
->> +	matrix_mdev->vdev.mig_ops = &vfio_ap_migration_ops;
->> +}
-> [Severity: High]
-> Will advertising the VFIO_MIGRATION_STOP_COPY capability to userspace before
-> the actual migration data transfer logic is implemented cause silent failures?
->
-> If vfio_ap_set_state() returns NULL for the VFIO_DEVICE_STATE_STOP_COPY
-> transition, won't the VFIO core interpret this as a successful transition
-> that does not require a data stream? This could cause QEMU to silently
-> succeed on the source side without transferring any device state, leaving
-> the AP subsystem broken for the guest on the target side.
-
-This is just one of a series of 15 patches that implement VFIO migration of
-vfio-ap devices. The rest of the series fills in the blanks.
-
->
->> +/**
->> + * vfio_ap_release_mig_files:
->> + *
->> + * Free the ap_config buffers for any open migration FDs. Although a
->> + * migration FD may still be held open by userspace, it is safe to free
->> + * mig_data here because:
->> + *
->> + *   1. matrix_mdev remains valid for the lifetime of any open migration
->> + *      FD via the vfio_device registration reference taken in
->> + *      vfio_ap_open_file_stream() and dropped in
->> + *      vfio_ap_release_mig_file().
->> + *
->> + *   2. mig_data is only accessed by the migration file ops
->> + *      (vfio_ap_stop_copy_read, vfio_ap_resuming_write) under
->> + *      mdevs_lock. Once mig_data is set to NULL by the caller, those
->> + *      paths will see NULL and return -ENODEV before dereferencing it.
->> + *
-> [Severity: High]
-> Does this lifecycle design handle the case where the VFIO device is closed
-> and reopened while a migration FD is kept open?
->
-> If userspace keeps the migration FD open, closes the VFIO device, and then
-> reopens it, vfio_ap_mdev_open_device() will allocate a new mig_data. When the
-> old migration FD subsequently performs read or write operations, won't it
-> bypass the NULL check and incorrectly access the mig_data belonging to the
-> new session?
-
-This patch (03/15) introduces the initialization and teardown functions
-for the migration lifecycle, while subsequent patches in the series
-implement the full data streaming operations and validation checks:
-
-- Patch 07/15 ("s390/vfio-ap: File ops called to save the vfio device
-   state") implements validate_stop_copy_read_parms().
-- Patch 10/15 ("s390/vfio-ap: File ops called to resume the vfio device
-   state") implements validate_resuming_write_parms().
-
-In those handlers, both read and write operations verify under mdevs_lock
-that the passed struct file * matches the active migration stream
-pointer for the current session (mig_data->stop_copy_mig_file.filp or
-mig_data->resuming_mig_file.filp).
-
-When the device is closed and reopened, open_device allocates a fresh
-mig_data with NULL file pointers. If a stale migration FD from a
-previous session attempts to perform read or write operations, the
-equality check against the current session's filp fails (-EINVAL or
--ENXIO), safely preventing access to the new session's mig_data.
-
->
->> diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
->> index 36786d70a88f5..90b0fce0123b5 100644
->> --- a/drivers/s390/crypto/vfio_ap_ops.c
->> +++ b/drivers/s390/crypto/vfio_ap_ops.c
-> [ ... ]
->> @@ -797,13 +809,28 @@ static int vfio_ap_mdev_probe(struct mdev_device *mdev)
->>   	if (IS_ERR(matrix_mdev))
->>   		return PTR_ERR(matrix_mdev);
->>   
->> +	/*
->> +	 * Migration capabilities must be initialized before calling
->> +	 * vfio_register_emulated_iommu_dev; otherwise, the VFIO core
->> +	 * will see mig_ops as NULL during the registration. This could
->> +	 * prevent the VFIO core from properly setting up migration
->> +	 * infrastructure like debugfs entries.
->> +	 *
->> +	 * This must be done before acquiring mdevs_lock to avoid an ABBA
->> +	 * deadlock: vfio_register_emulated_iommu_dev() acquires dev_set->lock
->> +	 * internally, while vfio_ap_mdev_open_device() is called by the VFIO
->> +	 * core with dev_set->lock already held and then acquires mdevs_lock.
->> +	 */
->> +	vfio_ap_init_migration_capabilities(matrix_mdev);
->> +
->>   	ret = vfio_register_emulated_iommu_dev(&matrix_mdev->vdev);
->>   	if (ret)
->>   		goto err_put_vdev;
->> +
->> +	mutex_lock(&matrix_dev->mdevs_lock);
->>   	matrix_mdev->req_trigger = NULL;
->>   	matrix_mdev->cfg_chg_trigger = NULL;
-> [Severity: High]
-> This is a pre-existing issue, but does exposing the device to userspace
-> before setting these triggers to NULL introduce a race condition?
->
-> If userspace immediately opens the device after
-> vfio_register_emulated_iommu_dev() and configures interrupts, it will
-> allocate and set valid eventfd contexts for req_trigger and cfg_chg_trigger.
-> When the probe thread continues and overwrites these with NULL, won't it leak
-> the eventfd contexts and break guest interrupts?
-
-This was fixed with commit 7fa61c29850d in response to this same comment
-in another review. 7fa61c29850d
-
->
->>   	dev_set_drvdata(&mdev->dev, matrix_mdev);
->> -	mutex_lock(&matrix_dev->mdevs_lock);
->>   	list_add(&matrix_mdev->node, &matrix_dev->mdev_list);
-> [Severity: High]
-> This is also a pre-existing issue, but does calling
-> vfio_register_emulated_iommu_dev() before list_add() allow multiple mediated
-> devices to attach to the same KVM guest?
->
-> If two mdevs are probed and opened concurrently before they are added to
-> mdev_list, won't they bypass the conflict detection logic in
-> vfio_ap_mdev_set_kvm() and violate KVM uniqueness invariants?
-
-This will be fixed with a standalone patch since it is not related to this
-series.
-
->
-
+PiBPbiAxMC8zLzI2IDM6MzQgQU0sIHNhc2hpa28tYm90QGtlcm5lbC5vcmcgd3JvdGU6DQo+ID4g
+VGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBBSSByZXZpZXcgZm91bmQg
+MSBwb3RlbnRpYWwgaXNzdWUocykgdG8NCj4gY29uc2lkZXI6DQo+ID4gLSBbSGlnaF0gbmV0OiBl
+bmV0YzogdW5pbml0aWFsaXplZCBtZGNfZGl2IGJyZWFrcyBNRElPIGZvciBub24tUENJDQo+ID4g
+dXNlcnMNCj4gPiAtLQ0KPiA+DQo+ID4gY29tbWl0IDMyNGVlYWNjMmVjMGNiMWZkOThlOWYzYWM5
+NmYyZmU3ZjY1M2FlNzgNCj4gPiBBdXRob3I6IE1hcmVrIFZhc3V0IDxtYXJleEBuYWJsYWRldi5j
+b20+DQo+ID4NCj4gPiBlbmV0YzogU2V0IGVNRElPIE1EQyByYXRlIHRvIDIuNSBNSHogb25seSBv
+biBpLk1YOTUNCj4gPg0KPiA+IFRoZSBjdXJyZW50IGVNRElPIE1EQyByYXRlIGlzIDIuNSBNSHog
+b24gaS5NWDk1IEIwLiBJdCB3YXMgcG9pbnRlZCBvdXQNCj4gPiBieSBOWFAsIHRoYXQgdGhlIE1E
+QyByYXRlIGlzIGRpdmlkZWQgZG93biBmcm9tIGNsb2NrIG9mIGRpZmZlcmVudA0KPiA+IGZyZXF1
+ZW5jeSBhbmQgdXNpbmcgZGlmZmVyZW50IGRpdmlzaW9uIHJhdGlvIG9uIGRpZmZlcmVudCBTb0Nz
+Lg0KPiA+IENvbmZpZ3VyZSB0aGUgaS5NWDk1IGVNRElPIE1EQyByYXRlIHRvIDIuNSBNSHogdG8g
+bWF0Y2ggdGhlIDgwMi4zDQo+ID4gc3BlY2lmaWNhdGlvbiBhbmQgcmVpbnN0YXRlIHByZXZpb3Vz
+IGRpdmlkZXIgcmF0aW8gZm9yIGFsbCBvdGhlciBTb0NzLg0KPiA+DQo+ID4+IGRpZmYgLS1naXQg
+YS9kcml2ZXJzL25ldC9ldGhlcm5ldC9mcmVlc2NhbGUvZW5ldGMvZW5ldGNfbWRpby5jDQo+ID4+
+IGIvZHJpdmVycy9uZXQvZXRoZXJuZXQvZnJlZXNjYWxlL2VuZXRjL2VuZXRjX21kaW8uYw0KPiA+
+PiBpbmRleCBhOTBhMDRhNDdiZWZkLi43ZWQ5YjkxMjBmNDQ3IDEwMDY0NA0KPiA+PiAtLS0gYS9k
+cml2ZXJzL25ldC9ldGhlcm5ldC9mcmVlc2NhbGUvZW5ldGMvZW5ldGNfbWRpby5jDQo+ID4+ICsr
+KyBiL2RyaXZlcnMvbmV0L2V0aGVybmV0L2ZyZWVzY2FsZS9lbmV0Yy9lbmV0Y19tZGlvLmMNCj4g
+PiBbIC4uLiBdDQo+ID4+IEBAIC02Myw3ICs2Myw3IEBAIGludCBlbmV0Y19tZGlvX3dyaXRlX2My
+MihzdHJ1Y3QgbWlpX2J1cyAqYnVzLCBpbnQNCj4gcGh5X2lkLCBpbnQgcmVnbnVtLA0KPiA+PiAg
+IAl1MTYgZGV2X2FkZHI7DQo+ID4+ICAgCWludCByZXQ7DQo+ID4+DQo+ID4+IC0JbWRpb19jZmcg
+PSBFTkVUQ19FTURJT19DRkc7DQo+ID4+ICsJbWRpb19jZmcgPSBFTkVUQ19FTURJT19DRkcobWRp
+b19wcml2LT5tZGNfZGl2KTsNCj4gPg0KPiA+IFtTZXZlcml0eTogSGlnaF0NCj4gPiBEb2VzIHRo
+aXMgY29kZSBicmVhayBNRElPIGNvbW11bmljYXRpb24gZm9yIG5vbi1QQ0kgdXNlcnM/DQo+ID4N
+Cj4gPiBUaGUgbWRpb19wcml2IHN0cnVjdCBpcyBhbGxvY2F0ZWQgYW5kIHplcm8taW5pdGlhbGl6
+ZWQgYnkgZHJpdmVycyBzdWNoDQo+ID4gYXMgdGhlIGVuZXRjIFBGIGRyaXZlcg0KPiA+IChkcml2
+ZXJzL25ldC9ldGhlcm5ldC9mcmVlc2NhbGUvZW5ldGMvZW5ldGNfcGZfY29tbW9uLmMNCj4gPiBp
+biBlbmV0Y19tZGlvX3Byb2JlKCkgYW5kIGVuZXRjX2ltZGlvX2NyZWF0ZSgpKSwgdGhlIERTQSBO
+RVRDIGRyaXZlcg0KPiA+IChkcml2ZXJzL25ldC9kc2EvbmV0Yy9uZXRjX21haW4uYyBpbiBuZXRj
+X3BvcnRfY3JlYXRlX2VtZGlvX2J1cygpKSwNCj4gPiBhbmQgdGhlIE9jZWxvdCBkcml2ZXIgKGRy
+aXZlcnMvbmV0L2RzYS9vY2Vsb3QvZmVsaXhfdnNjOTk1OS5jIGluDQo+ID4gdnNjOTk1OV9tZGlv
+X2J1c19hbGxvYygpKSB2aWEgZGV2bV9tZGlvYnVzX2FsbG9jX3NpemUoKSBvcg0KPiA+IG1kaW9i
+dXNfYWxsb2Nfc2l6ZSgpLg0KPiA+DQo+ID4gU2luY2UgdGhpcyBwYXRjaCBvbmx5IGluaXRpYWxp
+emVzIG1kY19kaXYgaW4gZW5ldGNfcGNpX21kaW9fcHJvYmUoKSwNCj4gPiBtZGNfZGl2IHJlbWFp
+bnMgMCBmb3IgdGhlc2Ugb3RoZXIgZHJpdmVycy4NCj4gPg0KPiA+IFdoZW4gZW5ldGNfbWRpb193
+cml0ZV9jMjIoKSBhbmQgb3RoZXIgTURJTyBhY2Nlc3NvcnMgdXNlDQo+ID4gRU5FVENfRU1ESU9f
+Q0ZHKG1kaW9fcHJpdi0+bWRjX2RpdiksIHRoZSBNREMgY2xvY2sgZGl2aXNvciB3aWxsIGJlIHNl
+dA0KPiA+IHRvIDAgaW5zdGVhZCBvZiBhIHZhbGlkIHZhbHVlIChsaWtlIDY2KS4gVGhpcyByZXN1
+bHRzIGluIGEgY2xvY2sgcmF0ZQ0KPiA+IHRoYXQgdmlvbGF0ZXMgdGhlIElFRUUgODAyLjMgMi41
+IE1IeiBsaW1pdCwgYnJlYWtpbmcgUEhZIHByb2JpbmcgYW5kDQo+ID4gbGVhdmluZyBuZXR3b3Jr
+IGludGVyZmFjZXMgdW51c2FibGUuDQo+ICtDQyBXZWkgLS0gdGhpcyBpcyBub25zZW5zZSwgcmln
+aHQgPyBPY2Vsb3QgaXNuJ3QgZXZlbiBOWFAgPw0KDQpObywgT2NlbG90IHN3aXRjaCBpcyBpbnRl
+Z3JhdGVkIGluIExTMTAyOEEsIGFzIGEgUENJZSBmdW5jdGlvbiBvZiBORVRDIElQLg0KDQo=
