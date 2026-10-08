@@ -1,104 +1,98 @@
 Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1425D4D0CF0
-	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 15:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005BD4D8DB8
+	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 15:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.160.73.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791471785; cv=none; b=IepZxMtzIwLBJ6FZYRr4VW3YOZdy3S9pXePHUAeaa6XLdXoPpPd3eHVmyDe57jW2DCIJzIlSQzuZ0cWoESImSo8sf49/gh9ItZCPkwsxNp8A0O0qdFb6c8l71IFMphK3VkKpu55Lm0Fug+moWrYMwRGNwCUXcdVPbKgSrZAIei8=
+	t=1791472437; cv=none; b=TyjQAn8NAqrvS61QMQ/+rvkGOlbzO7Axq8hDH74aYRbcGmma5/mCdgvWbsTgO1zSklWzp84aqtQQr1QOTjFZDl2nrTO2aubuloOfRdVoPeXIOZNa0K227cRYrHpvd0RkIMUa3dM2wn7fOoJIyP9IA1+uLPh2hGnaGDw3wxhBUvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791471785; c=relaxed/simple;
-	bh=cG5+u2ztQmnyY0auAcYMKDcJdKF7cewJJOqR3gKL644=;
+	s=arc-20240116; t=1791472437; c=relaxed/simple;
+	bh=dOY0Y18nMCwfoZHDoHM/dIe8og8xf0/IT8gpWup5aIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uZ0nSKWrKGhQX4WbO47YL7k5ffXMzQRvJqwBb4XiR4peyMbjaR1iLAm9rnkiTO8Xrh6d1V713nqStTBxVylX08/jpvaHb8MNWI5xcSwYZNvjZ/++g2xWg8GefnZ4UjZ5k6fCer5zCX+By6pRn5Tv50kWzgpUH3DiX+0DqRJUU6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org; spf=pass smtp.mailfrom=narfation.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=wy0poUvv; arc=none smtp.client-ip=213.160.73.56
+	 MIME-Version:Content-Type; b=MnsYy3xFzGA8VW6ZIEiIZEUqV8PBU2bnxr1AAvkBwMs3ZNzrRr7VVovHJ5XrcZDwc2a8mIRj+ed/r6lHbqBZJvXiGLYg5icp3d96mk4IjShV147wc/OpAkUQdZDoQlg6DkBGtVlfPZNO9OAYwAflDIqA2jnl6PdmSSQVTbQtQK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org; spf=pass smtp.mailfrom=narfation.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=JyPLHH/F; arc=none smtp.client-ip=213.160.73.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=narfation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="wy0poUvv"
-Received: by dvalin.narfation.org (Postfix) id 96F09202AD;
-	Thu, 08 Oct 2026 15:02:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="JyPLHH/F"
+Received: by dvalin.narfation.org (Postfix) id E6CB92049B;
+	Thu, 08 Oct 2026 15:13:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
-	s=20121; t=1791471767;
+	s=20121; t=1791472429;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=SILCkbtizl+1dIUDMgYel266LwW7VTv/Av9ol3+4Shc=;
-	b=wy0poUvvaegemyZRDdeKiGUvxfapaulrv8K6/0mCUTusjTKtLzlCsSEr4sbUB1EnGlVUHf
-	Fer5oVvon6L9beZ66+HTDARZkkbWy9RS5WE6TJZTpfQ/dYbTSRaW9gl1Xoa+p441KIUxTi
-	jVYigfJzUqL92rvDaDzWNBtG4dtBzXM=
+	bh=9zqyAUXTCmHML//7dA6W07y4wqyOLiR+6T722Jgzub0=;
+	b=JyPLHH/F+p+d4sirSq2cHJUF3/UwIJV5B23disprnHE8RxrsZcK1lUMgPrsnDjDdFcKl77
+	QlDpIxlrogbVPR6UMXfhXUkJuk57uPhTWv96B9vfz1dxa9sI2duO2S8NnFkqdCfO4qZ+FK
+	FkBd1ynXofAQi2uExM+oePzTV6VVnTw=
 From: Sven Eckelmann <sven@narfation.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: marek.lindner@mailbox.org, antonio@mandelbit.com, sw@simonwunderlich.de,
+Cc: sw@simonwunderlich.de, antonio@mandelbit.com, marek.lindner@mailbox.org,
  b.a.t.m.a.n@lists.open-mesh.org
 Subject:
- Re: [PATCH batadv v2 5/8] batman-adv: tt: only update flags for TT events
-Date: Thu, 08 Oct 2026 17:02:35 +0200
-Message-ID: <13182561.O9o76ZdvQC@sven-desktop>
-In-Reply-To: <sashiko-outbox-164321@kernel.org>
+ Re: [PATCH batadv v2 6/8] batman-adv: tt: don't queue local events for
+ unhashed entries
+Date: Thu, 08 Oct 2026 17:13:45 +0200
+Message-ID: <5334040.31r3eYUQgx@sven-desktop>
+In-Reply-To: <sashiko-outbox-164327@kernel.org>
 References:
  <20261008-tt-avoid-unhashed-event-v2-0-7c4eed81606d@narfation.org>
- <20261008-tt-avoid-unhashed-event-v2-5-7c4eed81606d@narfation.org>
- <sashiko-outbox-164321@kernel.org>
+ <20261008-tt-avoid-unhashed-event-v2-6-7c4eed81606d@narfation.org>
+ <sashiko-outbox-164327@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart6232773.DvuYhMxLoT";
+Content-Type: multipart/signed; boundary="nextPart4965436.LvFx2qVVIh";
  micalg="pgp-sha512"; protocol="application/pgp-signature"
 
---nextPart6232773.DvuYhMxLoT
+--nextPart4965436.LvFx2qVVIh
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
 From: Sven Eckelmann <sven@narfation.org>
 To: sashiko-reviews@lists.linux.dev
-Date: Thu, 08 Oct 2026 17:02:35 +0200
-Message-ID: <13182561.O9o76ZdvQC@sven-desktop>
-In-Reply-To: <sashiko-outbox-164321@kernel.org>
+Date: Thu, 08 Oct 2026 17:13:45 +0200
+Message-ID: <5334040.31r3eYUQgx@sven-desktop>
+In-Reply-To: <sashiko-outbox-164327@kernel.org>
 MIME-Version: 1.0
 
-On Thursday, 8 October 2026 16:43:32 CEST sashiko-bot@kernel.org wrote:
-[...]
-> [Severity: High]
-> Does this code introduce a permanent loss of concurrent TT events due to a
-> TOCTOU race in batadv_tt_tvlv_container_update()?
+On Thursday, 8 October 2026 16:51:45 CEST sashiko-bot@kernel.org wrote:
+> [Severity: Low]
+> Should this update include an atomic_inc(&hash->generation) similar to how it
+> is handled in batadv_tt_local_remove_now()?
 > 
-> Looking at batadv_tt_tvlv_container_update(), it reads
-> bat_priv->tt.local_changes locklessly to determine tt_diff_entries_num and
-> allocates memory for the TT diff payload:
+> If batadv_tt_local_dump() is preempted during a netlink dump and resumes
+> in the middle of a hash bucket while batadv_tt_local_purge_pending_clients()
+> concurrently removes an entry, the dump offset will be shifted.
 > 
-> net/batman-adv/translation-table.c:batadv_tt_tvlv_container_update() {
->     ...
-> 	tt_diff_entries_num = READ_ONCE(bat_priv->tt.local_changes);
->     ...
-> }
-> 
-> Between this read and acquiring bat_priv->tt.changes_list_lock, a concurrent
-> call to __batadv_tt_local_event() can add a new TT event to
-> bat_priv->tt.changes_list and increment local_changes.
+> Without incrementing the hash generation counter here, cb->seq remains
+> unchanged and netlink won't set NLM_F_DUMP_INTR. Does this allow userspace
+> to silently skip elements in the dump without being warned of the
+> inconsistency?
 
-Pre-existing issue and not introduced by this change.
-https://www.open-mesh.org/issues/483
+Pre-existing problem and not introduced in this change.
+https://patchwork.open-mesh.org/project/b.a.t.m.a.n./patch/20261008-tt-hash-generatopn-v1-1-5aa687343ce1@narfation.org/
 
 Regards,
 	Sven
-
---nextPart6232773.DvuYhMxLoT
+--nextPart4965436.LvFx2qVVIh
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part.
 Content-Transfer-Encoding: 7Bit
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCasewiwAKCRBND3cr0xT1
-y4WKAQDHy/2SPPlYXNTMRUsG251Uwv6yxxzqUR2SDrDPIhg3RwEAlSsYERN9JX9L
-iug1cJL0DVhbSzLmcMRFrxle5Ti5GAQ=
-=/X2Q
+iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCasezKQAKCRBND3cr0xT1
+y9YqAQDVp/rkuHJ26wPbqg2d4Dtpbh9yR4OSc9xdb2EQON42HQEAnLEMAIsZIMFW
+WvOpAhmEF+cRdTynoBntkxDkhkfHbgw=
+=4SjA
 -----END PGP SIGNATURE-----
 
---nextPart6232773.DvuYhMxLoT--
+--nextPart4965436.LvFx2qVVIh--
 
 
 
