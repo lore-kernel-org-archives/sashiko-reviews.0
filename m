@@ -1,220 +1,104 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from dvalin.narfation.org (dvalin.narfation.org [213.160.73.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F8049F110
-	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 13:52:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1425D4D0CF0
+	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 15:03:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.160.73.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791467567; cv=none; b=ay1NO160BNpAgLD1l4gpimFDJ4n/zPayITxm9SvF8FdaByyS/g7Qg6dFaY0HKzVckZ12dapj29xpjw7kxa5yziqrtWIuGwNgT7jZUGgZ6IY0exF2XFO27QZGFeoyhvE8ClnWiPo+xmfi/Nc6yq+tcEyoT/xX46YHuPLZ6Gqsc9M=
+	t=1791471785; cv=none; b=IepZxMtzIwLBJ6FZYRr4VW3YOZdy3S9pXePHUAeaa6XLdXoPpPd3eHVmyDe57jW2DCIJzIlSQzuZ0cWoESImSo8sf49/gh9ItZCPkwsxNp8A0O0qdFb6c8l71IFMphK3VkKpu55Lm0Fug+moWrYMwRGNwCUXcdVPbKgSrZAIei8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791467567; c=relaxed/simple;
-	bh=qs6Zkfa0UYwfam2Iz5kiY041lfid0v55471eBxyhrcY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O0nD5PW6FhjabJyXMH0PbzIkSuC9P0F2EQ9nDiw5ZZE59QPJK3KQ23vBjpPndT1XgoFcDnzun0blSdLW6fjwsldDlP93unbgEzLHz/DeHa9ds/w7NRDMgbWT7NwIQkEJirnN1zMTTeFSV8FS9owWybcbfVkIR995ENguMDrE2og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VRVpc3Ky; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Y1yA4Fry; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1791471785; c=relaxed/simple;
+	bh=cG5+u2ztQmnyY0auAcYMKDcJdKF7cewJJOqR3gKL644=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uZ0nSKWrKGhQX4WbO47YL7k5ffXMzQRvJqwBb4XiR4peyMbjaR1iLAm9rnkiTO8Xrh6d1V713nqStTBxVylX08/jpvaHb8MNWI5xcSwYZNvjZ/++g2xWg8GefnZ4UjZ5k6fCer5zCX+By6pRn5Tv50kWzgpUH3DiX+0DqRJUU6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org; spf=pass smtp.mailfrom=narfation.org; dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b=wy0poUvv; arc=none smtp.client-ip=213.160.73.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=narfation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=narfation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VRVpc3Ky";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Y1yA4Fry"
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 698BKBEb1269545
-	for <sashiko-reviews@lists.linux.dev>; Thu, 8 Oct 2026 13:52:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=g1ajShL5hmrzGWgmQJawATgi
-	FWxzPKfgeC+DpQwr2bY=; b=VRVpc3KyYMp4R4uK0E4C3w62OUECuiWPeSNTQi9V
-	dADXbuthWvDJt9lWQNbqEMwUj1jer1HUcWZPNGRydQao53uprRX8jVfTWLcmgw6F
-	rzB1tJO+c3gVqvlIH9vkX84B4ggAg+W6RIKrxhVL39yN3p668+zs0SDK6zzZ0Ytk
-	DgItnoxVNjtaVUZ7VKoatDwDAj9D0Y+VnuijNQNAwKS+Xhl+Oc0v5JWSejDphZuY
-	ko+1BYHblMT9OuE0G4VzH7bZB/G7f+2lzJo6E1vjElDcoRpuSmo+Vtdf06mcJRfB
-	jCMJKWUUIWVSDPtxBobvyOcw0EMvMGDMsB/k7RRa5bVJyw==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h5xe332sc-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Thu, 08 Oct 2026 13:52:41 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-91789a9107fso123404656d6.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 08 Oct 2026 06:52:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1791467561; x=1792072361; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=g1ajShL5hmrzGWgmQJawATgiFWxzPKfgeC+DpQwr2bY=;
-        b=Y1yA4FryBxTV7u6tGNjIXjFhfADYuRLXFu/rRM1spOkXg3WkorXfittJ58+qKTEr52
-         TLE8leFYwMpf2ya2R8r6aNr702Hv8z/5yZvaeyfro4UfFhrq43tdXe1rrEHoQmNSOYgY
-         Oi49puU4BgHpwgIGHixhD4zp7VBCaOBUplmOyVtPsRfSNU1k6Lcrj4E3ggnvjCKLlZQV
-         TyjRPflddIT5X5VD/1lusLzBuhWft146QuOgESqkFafLwISHmgtLJ1pkxOWqifbC7rJt
-         rPQshjrTlrNptJm/gKyeWlE+LUxWLQRGk2b95uH0pPk/tRzaJ/WdNZuJ81U/n9nAGyVT
-         gc4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791467561; x=1792072361;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=g1ajShL5hmrzGWgmQJawATgiFWxzPKfgeC+DpQwr2bY=;
-        b=iddALA4uGtjaK+VNKXbzqvLLr+iga1o6f/WSBbMAn3eHZWAGRNoWu7Z3qfvVucXZUb
-         tujGBnyJj8hIuPSN05gfFg2d157jUoLt64mE6lLWvlW7Xmft84+VONOCcCAqWw6HMlqR
-         OMKeMVFjhw55rIyqRf2uVKvvOdR1n/5mWp6oruJzaFbbG4tHDMbtIjXla6C6M8IgfUN7
-         84A3tcq8cmz5RibzouWKgVQiiq0O51lqrBDfUcLEXdc61TuiPeXVWvNQHm+M8D+YWFJC
-         DZcPRItLX6KPgkavssEFrhAjHF4ipxz2XH5rAjkFvp6oG+BnXxBK7w5XmukZJj1O/23O
-         So3g==
-X-Gm-Message-State: AFuF++lhe4eqnmxFFRaRxx+KDTjfzErMvxtd9eN/nxJ0z+MBXQMDTKno
-	2ZIi5eg7RZbFsK6OZlwJVNwUy764UjhO063yF7SG3R43RcxOz0UIHci9iqNIQlYX+2ON77scJeE
-	u2GjGxRYHK7PAdJvQDjcjBXPl0bzWOr9kICk5QLUH91dAOwxajVkRosLNLS/wvDJIWvSH/USZLu
-	IhSWJVwQ==
-X-Gm-Gg: AYBFou210mSwMWL46QB/zaySWzW30DTCzp7OHlxfv5MXhqy1KUXFSmFVvMKSga+/9HI
-	1mi6pgXiND65HppRFR+8bbPC1XswRixfxlKr0MnU9TKVC6WfxOOMm2FpkPgaTaV2SpEbEH+pQaM
-	ptYtZG8t3qmbWstdLLyYzKvVTyWmGjeOGC7nSYKrXpojRIV5CKh3RHqncUS41iLrO2W7Pdo++ny
-	cDgAaJsBCtUFsc0UrsHtnzMFm9nOgNGnsw+za/7FxZr4MXBYUbXTfiQ+jRHoq/779qH7+ioK4HC
-	QoENuHWk2B5LFX4yXTdT3HycmB9VUez/kDTBIG6WaF6T4cgPFeRNSAgbzlZKZklgxn+C9Dm/SQX
-	xqnXS6msG46kJwYWIu+JJtlzSTgh/Qj8Gvw2Cgyq8BG58fvHq1zYR5B+6M4+vvJDLcuPyhcxTER
-	MYnyCsVl/VWfO6
-X-Received: by 2002:a05:620a:628e:b0:93c:8544:6adc with SMTP id af79cd13be357-93e9b76c7a4mr1088660185a.18.1791467560577;
-        Thu, 08 Oct 2026 06:52:40 -0700 (PDT)
-X-Received: by 2002:a05:620a:628e:b0:93c:8544:6adc with SMTP id af79cd13be357-93e9b76c7a4mr1088651285a.18.1791467559710;
-        Thu, 08 Oct 2026 06:52:39 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5bcd30833d2sm1274813e87.42.2026.10.08.06.52.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Oct 2026 06:52:36 -0700 (PDT)
-Date: Thu, 8 Oct 2026 16:52:33 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+	dkim=pass (1024-bit key) header.d=narfation.org header.i=@narfation.org header.b="wy0poUvv"
+Received: by dvalin.narfation.org (Postfix) id 96F09202AD;
+	Thu, 08 Oct 2026 15:02:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=narfation.org;
+	s=20121; t=1791471767;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=SILCkbtizl+1dIUDMgYel266LwW7VTv/Av9ol3+4Shc=;
+	b=wy0poUvvaegemyZRDdeKiGUvxfapaulrv8K6/0mCUTusjTKtLzlCsSEr4sbUB1EnGlVUHf
+	Fer5oVvon6L9beZ66+HTDARZkkbWy9RS5WE6TJZTpfQ/dYbTSRaW9gl1Xoa+p441KIUxTi
+	jVYigfJzUqL92rvDaDzWNBtG4dtBzXM=
+From: Sven Eckelmann <sven@narfation.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH v4 03/10] drm/msm: release scanout framebuffers only
- after a vblank
-Message-ID: <ztvgomgdl7hzfhwf5z5llwlv67246brexy2mfblb7nnixvuij4@agaiyj5bfys7>
-References: <20261003-fd-kms-fix-smmu-v4-0-2a44d4d8ac77@oss.qualcomm.com>
- <20261003-fd-kms-fix-smmu-v4-3-2a44d4d8ac77@oss.qualcomm.com>
- <20261003013429.DF7271F000FF@smtp.kernel.org>
+Cc: marek.lindner@mailbox.org, antonio@mandelbit.com, sw@simonwunderlich.de,
+ b.a.t.m.a.n@lists.open-mesh.org
+Subject:
+ Re: [PATCH batadv v2 5/8] batman-adv: tt: only update flags for TT events
+Date: Thu, 08 Oct 2026 17:02:35 +0200
+Message-ID: <13182561.O9o76ZdvQC@sven-desktop>
+In-Reply-To: <sashiko-outbox-164321@kernel.org>
+References:
+ <20261008-tt-avoid-unhashed-event-v2-0-7c4eed81606d@narfation.org>
+ <20261008-tt-avoid-unhashed-event-v2-5-7c4eed81606d@narfation.org>
+ <sashiko-outbox-164321@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261003013429.DF7271F000FF@smtp.kernel.org>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA4MDA1NSBTYWx0ZWRfX42ggd93PkUd3
- 1Fgt+KfpOOmGS0SSqhST8vNs8RTYmTAGFXx1X76T/q+EpRAvawKlmztPHekugZjdKdVgxg+diQ5
- O+Q44RoZXfSkz/b7NjrtNe+FS+GTSxvZuVQpkDZaNAYOIswpD5jzfaJjCKekJiFzTbkusqVgfhN
- gT3sZywIloIFIl7qsgzdrlzTN3iJvWXJwywqWyfEj17gUnVPVfmXDJ+sSj+vZlY0t1qPI01LXVZ
- A7r9SXfGBHLFpUyAijOOIyDiRAnYfrerbvSKYUqxX9UJ+mHxtHjXQ6+XZYhbpp5BGVoLK/bLFVI
- nbOY7jcYy3hDqDC/t7SRdQ4kfqpBIyrV4xQIt0QgW+7p7XDu5uiFjdsamL3MwC7LdtnTA8fuyVf
- S4DdK4rUping9FG2dTDk889Q586Ck339RYbien4KMpmq2SkPyUQ3jkbw3LhDWf5veLdbaGfZJQK
- +Gcjp1kaAbwsJ62pmwA==
-X-Proofpoint-ORIG-GUID: x09GVqU_IeLnX1h4nbwZlPmUdeNUAeuj
-X-Proofpoint-GUID: x09GVqU_IeLnX1h4nbwZlPmUdeNUAeuj
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA4MDA1NSBTYWx0ZWRfXyJQEkdrcv68s
- cQPyzdcGk2E/YOTF1uKFkGAxQfoBJXbzTBPEcvt0oy72FknCKNyyJHHFF+SmakalnP/EmHAw7Cs
- vV8yC0SrANz6WDgpBRon/4uHWps3Tyg=
-X-Authority-Analysis: v=2.4 cv=KcdHIgYD c=1 sm=1 tr=0 ts=6ac7a029 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=G3YaYXDeKChVjLYJJ7oA:9 a=CjuIK1q_8ugA:10
- a=OIgjcC2v60KrkQgK7BGD:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-08_04,2026-10-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
- phishscore=0 priorityscore=1501 clxscore=1015 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610080055
+Content-Type: multipart/signed; boundary="nextPart6232773.DvuYhMxLoT";
+ micalg="pgp-sha512"; protocol="application/pgp-signature"
 
-On Sat, Oct 03, 2026 at 01:34:29AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] drm/msm: premature unpin of framebuffers causing IOMMU fault
-> --
-> 
-> commit 86394032733ab2293f0e387866c3cbd603bc3285
-> Author: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Subject: drm/msm: release scanout framebuffers only after a vblank
-> 
-> This commit defers scanout framebuffer release until a vblank by handing them
-> to a drm_vblank_work per CRTC. On CRTC disable, pending works are flushed and
-> framebuffers are unpinned directly from msm_crtc_vblank_off().
-> 
-> > diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
-> > index 7e1df472592d3..cb497d419ab83 100644
-> > --- a/drivers/gpu/drm/msm/msm_kms.c
-> > +++ b/drivers/gpu/drm/msm/msm_kms.c
-> [ ... ]
-> > +/*
-> > + * The crtc stops fetching here, and with it the vblanks the pending works are
-> > + * waiting for, so release the framebuffers directly.
-> > + */
-> > +static void msm_kms_fb_unpin_release_all(struct msm_kms_fb_unpin *pending)
-> > +{
-> [ ... ]
-> > +		drm_vblank_work_cancel_sync(&unpin->base);
-> > +		msm_kms_fb_unpin_release(unpin);
-> > +	}
-> > +}
-> > +
-> > +void msm_crtc_vblank_off(struct drm_crtc *crtc)
-> > +{
-> > +	struct msm_drm_private *priv = crtc->dev->dev_private;
-> > +	struct msm_kms *kms = priv->kms;
-> > +	unsigned int idx = drm_crtc_index(crtc);
-> > +
-> > +	if (kms && idx < ARRAY_SIZE(kms->fb_unpin))
-> > +		msm_kms_fb_unpin_release_all(&kms->fb_unpin[idx]);
-> > +
-> > +	drm_crtc_vblank_off(crtc);
-> > +}
-> [ ... ]
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > index 77a2d1f6700d0..35daf46fc4257 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > @@ -1213,7 +1213,7 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
-> >  	}
-> >  
-> >  	/* Disable/save vblank irq handling */
-> > -	drm_crtc_vblank_off(crtc);
-> > +	msm_crtc_vblank_off(crtc);
-> 
+--nextPart6232773.DvuYhMxLoT
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
+From: Sven Eckelmann <sven@narfation.org>
+To: sashiko-reviews@lists.linux.dev
+Date: Thu, 08 Oct 2026 17:02:35 +0200
+Message-ID: <13182561.O9o76ZdvQC@sven-desktop>
+In-Reply-To: <sashiko-outbox-164321@kernel.org>
+MIME-Version: 1.0
+
+On Thursday, 8 October 2026 16:43:32 CEST sashiko-bot@kernel.org wrote:
+[...]
 > [Severity: High]
-> Can this lead to an IOMMU context fault if the display hardware is still 
-> fetching the frame?
+> Does this code introduce a permanent loss of concurrent TT events due to a
+> TOCTOU race in batadv_tt_tvlv_container_update()?
 > 
-> When a userspace application issues an async plane update followed closely by 
-> a CRTC disable, the ongoing hardware fetch might hit an IOMMU fault because 
-> the memory is unmapped immediately during the disable sequence.
+> Looking at batadv_tt_tvlv_container_update(), it reads
+> bat_priv->tt.local_changes locklessly to determine tt_diff_entries_num and
+> allocates memory for the TT diff payload:
 > 
-> Because msm_crtc_vblank_off() now synchronously unpins and unmaps all pending 
-> framebuffers via msm_kms_fb_unpin_release_all(), executing this before the 
-> hardware is done fetching creates a race window.
-> 
-> Looking at dpu_crtc_disable(), we wait for the hardware to finish its current 
-> frame fetch much later in the function:
->
-> drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c:dpu_crtc_disable() {
+> net/batman-adv/translation-table.c:batadv_tt_tvlv_container_update() {
 >     ...
->     msm_crtc_vblank_off(crtc);
->     ...
->     if (_dpu_crtc_wait_for_frame_done(crtc))
->         DPU_ERROR(...);
+> 	tt_diff_entries_num = READ_ONCE(bat_priv->tt.local_changes);
 >     ...
 > }
 > 
-> Does this sequence leave a race window where the display is left reading 
-> unmapped memory?
+> Between this read and acquiring bat_priv->tt.changes_list_lock, a concurrent
+> call to __batadv_tt_local_event() can add a new TT event to
+> bat_priv->tt.changes_list and increment local_changes.
 
-I think it is not a problem: the atomic helpers disable the encoders
-before the CRTCs. dpu_encoder_virt_atomic_disable() waits for the
-pending kickoffs to complete and dpu_encoder_phys_vid_disable() turns
-off the timing engine and waits for the vsync which latches the to the
-hardware. For the MDP5 driver mdp5_vid_encoder_disable() does the same.
-After that the interface no longer fetches when dpu_crtc_disable() calls
-msm_crtc_vblank_off(). Any async update is flushed by ->wait_flush() at
-the start of msm_atomic_commit_tail(), before the disables.
+Pre-existing issue and not introduced by this change.
+https://www.open-mesh.org/issues/483
 
--- 
-With best wishes
-Dmitry
+Regards,
+	Sven
+
+--nextPart6232773.DvuYhMxLoT
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQS81G/PswftH/OW8cVND3cr0xT1ywUCasewiwAKCRBND3cr0xT1
+y4WKAQDHy/2SPPlYXNTMRUsG251Uwv6yxxzqUR2SDrDPIhg3RwEAlSsYERN9JX9L
+iug1cJL0DVhbSzLmcMRFrxle5Ti5GAQ=
+=/X2Q
+-----END PGP SIGNATURE-----
+
+--nextPart6232773.DvuYhMxLoT--
+
+
+
