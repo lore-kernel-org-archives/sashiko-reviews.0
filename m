@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C131471255
-	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 09:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53334908A7
+	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 09:47:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791452684; cv=none; b=Az82tX/8TEp+VUh9EUZUrdyRvD2+348DGdOns2hTWetlez4CF0KcLe0g9sO3nepIstipYDDFBRsKk+FFavTUn6hemhEpsjmhh78VIQLUgZfrBuNf8l+Geoj6yk7dotMa9xNQqCPU6BOrJ1JS7gzp2QTnSiBkPxswEs1h2T0OZks=
+	t=1791452871; cv=none; b=NJJQWd4Jlo2H08NXTAnSlKrin4Gi21kHVTR3a1WN6ThCXSKmJtzzJD0mYsKChmFbA0gf3jNfG8YLMu1MTj3FdkUfkjIVjekeL+UzX3V3I2Q2IBkyIM9wD34JiJgEAlA7ejSMDiRYpUfmK+KXwwVTH/KKp0M7euqcSi3voZShAT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791452684; c=relaxed/simple;
-	bh=lPpL7DLSPBNvx4CQPBmrtqwVDLiWiURRjczeOm1+9UI=;
+	s=arc-20240116; t=1791452871; c=relaxed/simple;
+	bh=dOROKu/Jdh1bOFXKKsQNfb5RwuuQe3PJaydRgSyfO4s=;
 	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mk3UuKfvb+UbDO4L8bz0VgJPf2c9069bJ3kymkklMOnOib6KgsepRlg8pCzZtMx4LIZiEj/iyiPXQec50dHMrEBJyElWds6kbM/uHNrjAdOkp0SyBfXZtFvyEeK+Sw5UDetxH9dKlYakxhU8qFQXYaHCT8GWQnstJvnvQ2ZzoL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RSrb1v7o; arc=none smtp.client-ip=100.103.45.18
+	 To:Cc:Content-Type; b=raZYcZV/y3ZOWHGt9MxtLP9EWqgyJ78avDYFc5nLn4cUHBeQQQ9AM6iXapbGsjohVA1srNa11bqmEl2gExm+MqoWWVENFBOPIoNZdQt/lzy2JB8SS7uBXWELyT1dEfmvAn7uF/s61p52hTb9n1HndaVCX4T84CRhgclGjrS6t+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CzlgXUgO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RSrb1v7o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E03D1F0089B
-	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 09:44:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CzlgXUgO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A781F0089A
+	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 09:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791452683;
-	bh=fVN+gUpteuWjtPy+WZnu3PxqrcHtKZz8bFfOA06AIzM=;
+	s=k20260515; t=1791452870;
+	bh=6wo/iEkiI8dCsPMnG7O/ng6DNPxf3ORx/tnngp4WQLI=;
 	h=From:In-Reply-To:References:Date:Subject:To:Cc;
-	b=RSrb1v7oR3nMf06nQSOunlHETOzAwb1F4M6bA2rUdVU9YQAdpsZAeXCp5wu2xX+oh
-	 HpAVry+mcSnbo9cwity67pTBFVXCfRnlg4gsLaJMEMozZJYaPoG05k0s52fTGO7raZ
-	 8XMdZh4hK3Pa++8ZYrY9AhxUb59trtZhqX8FA60W65PVpUoRs35AnyxgFyheEZ4gzA
-	 JWX2cgEv6sWbDdm69RGFYb9zNEOZ4jE/l5JTmfYXMBTTkT9ky3JUl2IJReUgJxI3UF
-	 Xp/houiN4PnQTK3/8RZuHtfOAYu83nwkABL9kXxeVa8n1teQdq/iDCKE7qqseGjRHE
-	 sD6BQUhbf5SXA==
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-3a9761758adso22537641fa.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 08 Oct 2026 02:44:43 -0700 (PDT)
-X-Gm-Message-State: AFq9FYJVZ2uggArTV5a6n+dVfSSj+N/fzhpc3ZB3SHXjI44WljCWNeDL
-	3O5vpI0wZZ76I9h6DxB2tmD8JvyVXABAka0/geVq56XbF02CcP7a0SIGHlvwt2SxsyaKva4VWp1
-	oCwuxICBK3XkxojZrI8rK7bIXDwkLJWqSx4KXkmwbJg==
-X-Received: by 2002:a05:651c:555:b0:3a6:553d:cb1c with SMTP id
- 38308e7fff4ca-3a9a2cdf2a8mr11341451fa.12.1791452681941; Thu, 08 Oct 2026
- 02:44:41 -0700 (PDT)
+	b=CzlgXUgO5uRcDPFW9CcejBaCCjmYw8WfkgAfzbgzQ0VAraVk3RkE4ZUQ+re+dImYD
+	 JW9oKXXCjrSlmJ8wjfpABwQDLBwOqpywXJWeVXnH/K+LXwPkFRKkvmyNZ6Tj4YHP+K
+	 IFwkrNHWpyWNapCyaneuRjzWXK9sxtmQfahB52kYmukotpnuPMmqK4dscQN8oprM7C
+	 GZeQ+U+GrlnVc19yBwnITPy0DuEOTbybvA0SxjrvUiDgLtni+y/qUT1NAFp9iAL1Ho
+	 K8elxpSx37raNOvCx72w424i0LpRb1suRDlYmHETPuOot0rIGRDcqRXcsVJaz9z7Ad
+	 1DJSxNavfwzCw==
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5bcb440d1cbso1872154e87.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 08 Oct 2026 02:47:50 -0700 (PDT)
+X-Gm-Message-State: AFq9FYLNa9jXOlIdvJo+rqhAj9YPAwXowF6KGQWIIFlCCsaRxRf3Z7B0
+	CGrmTB/JFBTJBAqF94pOoTgGd5WV9eM5JLnJkbESkt0Ux0pmpi8RgYzRm/TQBF+VeRcymcaEcjb
+	rji0yo0xvIGH9OQPXszfcRieOjd6RjtdxD50+NUmp/A==
+X-Received: by 2002:a05:6512:a89:b0:5ba:3e55:88ce with SMTP id
+ 2adb3069b0e04-5bcd43b4282mr529479e87.21.1791452869354; Thu, 08 Oct 2026
+ 02:47:49 -0700 (PDT)
 Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 8 Oct 2026 09:44:40 +0000
+ HTTPREST; Thu, 8 Oct 2026 04:47:48 -0500
 Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 8 Oct 2026 09:44:40 +0000
+ HTTPREST; Thu, 8 Oct 2026 04:47:48 -0500
 From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <sashiko-outbox-162895@kernel.org>
+In-Reply-To: <sashiko-outbox-162899@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -47,55 +47,67 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20261007-gpio-mxc-cleanup-v4-0-c9f5a8b50df9@nxp.com>
- <20261007-gpio-mxc-cleanup-v4-1-c9f5a8b50df9@nxp.com> <sashiko-outbox-162895@kernel.org>
-Date: Thu, 8 Oct 2026 09:44:40 +0000
-X-Gmail-Original-Message-ID: <CAMRc=MdkYcyCMTz7jf79AiwtYZhTd6riboZ6XV-0+ti_GENQKA@mail.gmail.com>
-X-Gm-Features: AclHuK-xW1IC5E5tMUmeNXw2ZYoOm0QGB-pVQWNlcCjPaLvZpqXXP1E1CDnGRYQ
-Message-ID: <CAMRc=MdkYcyCMTz7jf79AiwtYZhTd6riboZ6XV-0+ti_GENQKA@mail.gmail.com>
-Subject: Re: [PATCH v4 01/10] gpio: mxc: fix race between chained IRQ handler
- install and probe completion
+ <20261007-gpio-mxc-cleanup-v4-6-c9f5a8b50df9@nxp.com> <sashiko-outbox-162899@kernel.org>
+Date: Thu, 8 Oct 2026 04:47:48 -0500
+X-Gmail-Original-Message-ID: <CAMRc=McOb8Yh3h2oPn4GU-hnSff3UBd8WZzO0PirXm7U=+G56w@mail.gmail.com>
+X-Gm-Features: AclHuK8uHoJTfsuyiDOmuhhtt28Djq0F_--GfUBbPO6hroMZ2z51SR254dKguTU
+Message-ID: <CAMRc=McOb8Yh3h2oPn4GU-hnSff3UBd8WZzO0PirXm7U=+G56w@mail.gmail.com>
+Subject: Re: [PATCH v4 06/10] gpio: mxc: convert probe error handling to devres
 To: sashiko-reviews@lists.linux.dev
-Cc: sashiko-bot@kernel.org, linux-gpio@vger.kernel.org, imx@lists.linux.dev, 
-	Frank.Li@kernel.org, "Peng Fan (OSS)" <peng.fan@oss.nxp.com>
+Cc: "Peng Fan (OSS)" <peng.fan@oss.nxp.com>, sashiko-bot@kernel.org, 
+	linux-gpio@vger.kernel.org, Frank.Li@kernel.org, imx@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 7 Oct 2026 12:57:13 +0200, sashiko-bot@kernel.org said:
+On Wed, 7 Oct 2026 12:59:26 +0200, sashiko-bot@kernel.org said:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] gpio: mxc: data race on mxc_gpio_ports list during concurrent probe and shared IRQ
+> - [High] pm: usage counter underflow due to mixed devm and manual autosuspend
 > --
 >
-> commit bd719d33a26c1f816073bbdb04f543bc3f5ed730
+> commit dc287cc46ea891b838f3b39a1fd6ed65d627a965
 > Author: Peng Fan <peng.fan@nxp.com>
 >
-> gpio: mxc: fix race between chained IRQ handler install and probe completion
+>     gpio: mxc: convert probe error handling to devres
 >
-> mxc_update_irq_chained_handler() is called before the IRQ domain, the
-> generic IRQ chip, and the port list entry are set up. If an interrupt
-> arrives in that window, it leads to a crash or missing port. This commit
-> moves the handler installation after all dependencies are ready.
+>     This patch converts the driver's probe error handling to use devres. It
+>     replaces irq_domain_create_legacy() with devm_irq_domain_instantiate()
+>     and updates the PM runtime initialization to use devm_ variants, eliminating
+>     the need for manual cleanup labels.
 >
 >> diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
->> index 7e2690d92df6f..e05f276a50e8d 100644
+>> index 5da603569d88d..54b09f1a4b509 100644
 >> --- a/drivers/gpio/gpio-mxc.c
 >> +++ b/drivers/gpio/gpio-mxc.c
+>> @@ -484,9 +485,13 @@ static int mxc_gpio_probe(struct platform_device *pdev)
+>>  	if (IS_ERR(port->clk))
+>>  		return PTR_ERR(port->clk);
+>>
+>> -	pm_runtime_get_noresume(&pdev->dev);
+>> -	pm_runtime_set_active(&pdev->dev);
+>> -	pm_runtime_enable(&pdev->dev);
+>> +	err = devm_pm_runtime_get_noresume(&pdev->dev);
+>> +	if (err)
+>> +		return dev_err_probe(&pdev->dev, err, "Failed to get PM runtime\n");
+>> +
+>> +	err = devm_pm_runtime_set_active_enabled(&pdev->dev);
+>> +	if (err)
+>> +		return dev_err_probe(&pdev->dev, err, "Failed to enable PM runtime\n");
 >
 > [ ... ]
 >
->> @@ -525,6 +523,8 @@ static int mxc_gpio_probe(struct platform_device *pdev)
->>
->>  	list_add_tail(&port->node, &mxc_gpio_ports);
->>
+>> @@ -558,14 +567,6 @@ static int mxc_gpio_probe(struct platform_device *pdev)
+>>  	pm_runtime_put_autosuspend(&pdev->dev);
 >
 > [Severity: High]
-> For fsl,imx21-gpio devices, all ports share a single parent IRQ. After the
-> first port probes, the shared chained handler (mx2_gpio_irq_handler)
-> becomes active.
+> Since devm_pm_runtime_get_noresume() increments the usage counter and queues
+> a devres action to drop it on unbind, will this manual call to
+> pm_runtime_put_autosuspend() cause an issue?
 >
-> When a subsequent port is probed, list_add_tail() mutates the global
-> mxc_gpio_ports list without any spinlocks or RCU primitives.
+> Because the devres action remains queued, when the device is unbound (e.g.,
+> via device tree overlay removal or hot-unplug), the devres cleanup will
+> execute and decrement the usage counter a second time. Could this cause a PM
+> usage counter underflow, corrupting the device and parent power state?
 >
 
-I think we should switch to list_add_tail_rcu() and list_for_each_entry_rcu()
-first across the driver.
+Sounds right, please remove this call.
 
 Bart
