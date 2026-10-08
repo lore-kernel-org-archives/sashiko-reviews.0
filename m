@@ -1,177 +1,193 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011061.outbound.protection.outlook.com [52.101.70.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB533280309
-	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 19:56:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791489393; cv=none; b=eGmhZFGaH/5qi09s4lhJl7aTQADLDTiPQwziDLKXsFoADQtV5905cgGwnCfLEaQhTyHBr+pHMWThFpmWKlx2GvTRHRk08T60pLEF2xooKFie3uuKntbFAwzbqpuoWvTIFZtTNWP1wncNMLavFPxvWcx3DAZii/DMCBpV4SPTwcE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791489393; c=relaxed/simple;
-	bh=jGrURUcFHDA0+GbueQInVLfJCt4hwt/v2A3U6hHZjXE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PiVurpmtsZ8xQU8vitrprFSiks+r1s+rtYsn0pA37nEoxtHi8wB8PndFZHI4FN8Rt7OKYlOwLejGC7DneO09mUpcy3jonAnVGR8+UZubftYxc9EaX56IKRRxGvVDezeK+OX+snkrecxZOKbowIMG+BlTJRH+1PPedE6AJyESAkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ragnatech.se; spf=pass smtp.mailfrom=ragnatech.se; dkim=pass (2048-bit key) header.d=ragnatech.se header.i=@ragnatech.se header.b=Mt4zpc0O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bEsqLIl3; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ragnatech.se
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ragnatech.se
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630A33A3E73;
+	Thu,  8 Oct 2026 20:46:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.61
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791492374; cv=fail; b=eH0EJfyA9HettiWrmsz0k7GwszZRUsPrL5SK4/gbTMxNbyqCrI9HXpavMxAcpZHS7R0EPWdR/jL3fVDovnV22u9XifACvSSBYsEGNiws7pwBWRMu22Xo9FAOZEnznrOaXjS4cIb7Bhpo1pT8WFiJ5msbQQWHyT85eLS1wzutANE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791492374; c=relaxed/simple;
+	bh=6tcLTJlf126j8UYxCqaae17hyCe8QmHPvNmwbjT9l0g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Jv6FOke0O67K34j00jIYfw1Nk6t+zUXTw3qVMRlh1lgT0SxXQAXvHCctZLQLti547LMnGAuuLZy5pY/FpmymToUkYQX8eigYRK5yAb+Z+LKsD1Rx/Z05xMiUVNo0H/3kVAZLlNRqzGd/8n5+Tt1ZnNhAilohYAb94DHnvfOEoS0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=ACo7cnPQ reason="signature verification failed"; arc=fail smtp.client-ip=52.101.70.61
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ragnatech.se header.i=@ragnatech.se header.b="Mt4zpc0O";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bEsqLIl3"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 14F3B14001AE
-	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 15:56:31 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 08 Oct 2026 15:56:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ragnatech.se; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1791489391;
-	 x=1791575791; bh=N7SBK0vh3ULmPqqgzaG+2tmusZDnFNTt0FJGRL2fTag=; b=
-	Mt4zpc0Ol5cLHdfk0AWhgfAPXAIXE+xy/qMjb/P3tz0E6uohm/bE+Il0Sz2NfEXi
-	vD5zCf4hmryP6p9cAPgbPp6BtNJnvrOVNMq/VZO/jQhwSftVYrSdvn/7tG1kWj/2
-	cTB/YDY3pCBsY1cYGE54uV8kfR39UEQNiiy4Zt40zPkczUNng4UWhP+zP6rafby1
-	LjQA/YrQaIdZBiSOjJewAAXci1gGM0o87Drcibi4RBqWC1TkyPjW/K8tfswKaWzG
-	fuF4AEkiE1WfZ266LhT/Kk+rT2pnJEv47YQc86RGeidDnczcNd71exOpuL/piI8T
-	EOG85w1U5I++5eNdVS9J4Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1791489391; x=
-	1791575791; bh=N7SBK0vh3ULmPqqgzaG+2tmusZDnFNTt0FJGRL2fTag=; b=b
-	EsqLIl3V5ECJxNTTb3OedAqnm1Y1Q3aY/TJD/bedyHA3gKlhciYRR1lh4jp6Sp43
-	+/5LiOmr3OpXQ2XQqvUFgeuFpxwDyfJr+8oJfhBi0kvzeDOyZznJXMxNmm7M0+BH
-	hXCBSUVlDqkJn645mTQR9afDHcABvWLYyBgIKeJVJBthHOLeGIVw5dGEYgfZ8TiU
-	W+EriJ8YFBYEozhgZh7Nx3RTP5kCIxTqBuB9v0KJKbLGPX1rga+918e0AhunKYj8
-	CPYWSx3qUruBVbLdJZpSXu9HHM+uG/h67COvdcaLapTZf4ZnrOME1BY7E+ukvFN5
-	fobeXg6OFLjBtVlJ5JScw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=sign d=ragnatech.se a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1791489391; d=ragnatech.se;
-	mf=PG5pa2xhcy5zb2Rlcmx1bmQrcmVuZXNhc0ByYWduYXRlY2guc2U+;
-	rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
-	s=fm1:rsa-sha256:gtlavcJ1wpiPzfN6Kw8ZfDenzYIb26sXJK61lxuggdRPti4
-	fWszrgV9qTri0tDKC/eCYjhSxsmt0HNq/sx1SDQLNYhR01AiwRJush73PTkVAfxq
-	wOkmjo48nQgOQG/G71wE0j7nLeJa51WE9dLjkO0JHkPacLmaE0gtmzA7Ap2+91MM
-	g2wOJo/gTDwDTOyNgHXDGXMbxwApd8IJQWomFowoEJEixdh0IHs8yFiRmH3kDBKC
-	40j2Fgi/lMwuMx/E/xEbKNUQ/QNtTF9KOa8sFvORWsgSEGaf9B5FvKiNR4shE8Tf
-	ZgiIWj4Sm1g4h4sDjOCATTzgjAtZkK1hBSD/CzA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
-	repo=github.com/dkim2wg/interop; date=2026-10-04; sw=lmtpprox;
-	action=mi-m=1; hc=13;
-	hn=cc,content-disposition,content-transfer-encoding,
-	content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:4vLTtmz9no8NlirtoArdP6sjsXesZgvradwDROJyMj8=:jGrURUcFHDA0+GbueQInVLfJCt4hwt/v2A3U6hHZjXE=;
-X-ME-Sender: <xms:bvXHanKjDQyfz2RffJZlpFlqgebs58aqBr2zUUSvWacmPZKHkHFCsg>
-    <xme:bvXHasotYHH8uYJAqvB1NVc3-ErKkwvw7k6Lx-KpJBiHxlPm3wdHA0OvcGqAZnos0
-    FQHDwDnrIlbshQHcIkbRMf8hJ6MKRDN3CfT8LZ513UpPpDaahLP49JX>
-X-ME-Received: <xmr:bvXHavy3ZEZi0RE-TVa1KZg63BCRBPYY1ZCWJ12kSU7H7hxbxiusBZ8nNbbqsU1djLYMGkk43azbtLAu1QLEjxjazN9TQ9o>
-X-ME-Proxy-Cause: dmFkZTFFjWIW6/RUJWMYmeco20bLf3m00dfBRlgVLOq+QkzpXnRLihf2wO9KpbocSPGeCz
-    uNr4EAbVC35KUTCAH49UiyN01U/YQqKAltiCVbZy/a94JHTFhYR1G2+w1Or7qYOYs1adiP
-    b+sMA0DkE4TuU7Ja8lq1/OoARUzcb+X+U8E7YbnSZorGHE3CQz7lqGJ3L/+fpf1nOtnH+p
-    tZHL8RqcLbBRN0HG9NuB0vePXBlUeGJcjfDLvE8If+shIhqL3iSHxADGhs8drjeIGVhYsD
-    r6pnoXokzbWbJU9hV0/3foriGGm3xXIss25NSpMQ2qjCgFmFVBFtQh1M59sy6pS0lKj/dp
-    ekMDyXVWGzOqFMBrBeQb6iaMFQE853FfpzAmuYcVfOekqta+U9tgPh0jwkCVc9MfaPuegc
-    21x/JKpVGoMgv30gEkAUcIsXnQxSOm2x9sIttFrttV1MqO55m3by942OsCQh4aGHyfyfqz
-    tdaemnHc7B7OeQPRiSxX4FPuFdVvm+M4E+BGcDjYpMgf3AfkJFwY9aT29RU6iZAaJzfo34
-    xSjwNDeAnrDzxAHweG64xKDzsg2AdHJ+2YmsSCq0+SfpKXL2D+pHxLV3e5oDFIpAGHtDf/
-    JGgRyVUutPXeAh3WXcWxG0R3CsM3c0TG8qPUSGZG2e0Wn2KTVRC1pQDqVxUw
-X-ME-Proxy: <xmx:bvXHagMYe57Z186YAL8X61r_63NbszHGp3kRO2YYJvKRrcGGomhMMg>
-    <xmx:bvXHak4z-SQEnZeaw3pajGn0YGnbZotOtjopldmz82cJxhjqHENWvw>
-    <xmx:bvXHapktjInx_PmGQFtW9UvLl-0rriwIcwqpJzaBwvA2DLjjx9-Iog>
-    <xmx:bvXHatQ6doEjbhLI-2GRfzb2AHsrrq6l8KOwUTnjEKTJ8DOBLNQdOw>
-    <xmx:b_XHaiYFStlp2rUysNRjuveXp0qVbKSq4FdGnwS5PtX8jSxzSlwNbhy9>
-Feedback-ID: i80c9496c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Oct 2026 15:56:30 -0400 (EDT)
-Date: Thu, 8 Oct 2026 21:56:24 +0200
-From: Niklas =?utf-8?Q?S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="ACo7cnPQ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=EI/7JAoNIgyDbKlrpUPWg7zcTBnvk2xKd9EAO8w+hoxC349v4e9yBVn1ArWUGaGTuvrlWxLYKO8axv8ReIA1vlcwPO4myYshA8CFgY6SuZQSkYBUfOy91yRt9j0JFHaYKx8AvjHiAeS9RbvMzt5pagWR2z338Gr8FNwQWoVmRacmxZWffmnUolPXN5NUxBj0Botris1OYx0g3Jb/KjpDuW8jP8/RRPNBe5j24G0FfYDiVhvBU9L3Bap93Y0w1xhW/iNPTWk0UTBOA+gBjH4e9FnJ9fyLM7O4U9hmpRiaFKrku9769v0LFc1IyLv/m6DS1APpBofhlx6CKrq5gWkJ6A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=N1pM54oSKVvF+mfEacRXNyw4eZLatuFUP918KTeDigA=;
+ b=W0bQX/35ex2sS5tg9LiJm60ezguoepvfPXN1401vsDGcnAuxZmc3+7Ai1YK4SQPCoFuhVQoQazneC1wq30/ch8fimQB/BDn7TwgMId2nFl4Egt7SUyiu6KfBdr8277r9BjeDNW1pn73KanoyfvJFZS+BG1dlLZ+J7bcwC2Y1t41pJZenY+NhAbtd3H3IhHh3KG1koGaH8lbWTkGgTxv6OAYt+YzPWi/sqOJwO2r/AJYoKd23inD1hfQp7o/z3a/FZfWY2kmaUz8+D9EnjnwZ+7bBvJ6mT0wfhWQqPPQACsE+R6NNdOhOpHal6Eq0sglKbXd7y0nclp1p/rPyWUvrVg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=N1pM54oSKVvF+mfEacRXNyw4eZLatuFUP918KTeDigA=;
+ b=ACo7cnPQl4gsfWhSDdmcsuAA+wmzUuEq2AE/GSGeoIwuN0O1RnTDBNJ6CgHL9Jaku8CMPBgOWmyyxJsk1pedArz/vQ8yO64xqZh9vi6wWjkQCJCukVB4/UxTpXgt34JHpJdE6YQUaIvSfIBX0JLhlVSETJxEvx1jS0W62O3h48A8z1PNA/6yGPNkWeeSQZ8oFSWhqw70Uk4QLnGrhpvXOwG0YcH4Yibp5ckwnwyEGvSZj4H6QrpeECun1WKO74djmnjOCyfdepOmk33hqb3JBbsRTvQ7i8vLEAFHMAJRfLALnjECW8EGCQZ/d7G+DBgnzJs1GAMveRV0KrkNnjByqQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by VI1PR04MB10025.eurprd04.prod.outlook.com (2603:10a6:800:1e0::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.16; Thu, 8 Oct
+ 2026 20:46:08 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0496.015; Thu, 8 Oct 2026
+ 20:46:08 +0000
+Date: Thu, 8 Oct 2026 15:46:04 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, wsa+renesas@sang-engineering.com,
-	devicetree@vger.kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH net-next v7 1/3] dt-bindings: ptp:
- renesas,rcar-gen4-gptp: Add R-Car Gen4
-Message-ID: <20261008195624.GA474315@ragnatech.se>
-References: <20261007185920.4042783-1-niklas.soderlund+renesas@ragnatech.se>
- <20261007185920.4042783-2-niklas.soderlund+renesas@ragnatech.se>
- <sashiko-outbox-164484@kernel.org>
+Cc: Zhipeng.wang_1@oss.nxp.com, imx@lists.linux.dev, Frank.Li@kernel.org
+Subject: Re: [PATCH v6 4/9] irqchip/imx-irqsteer: Convert to
+ devm_pm_runtime_set_active_enabled()
+Message-ID: <asgBDAfInvaIGbYL@SMW015318>
+References: <20261008090231.796511-1-Zhipeng.wang_1@oss.nxp.com>
+ <20261008090231.796511-5-Zhipeng.wang_1@oss.nxp.com>
+ <sashiko-outbox-163926@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-163926@kernel.org>
+X-ClientProxiedBy: FR0P281CA0146.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:96::20) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-164484@kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VI1PR04MB10025:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3ca19631-83d6-4ebf-d0d3-08df257d2da7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|23010399003|19092799006|1800799024|366016|4143699003|5023799004|11063799006|6133799003|10067099003|56012099006|22082099003|18002099003|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	VjB/wiUxezP8kf9rVs0+mKhfWg/KyzuI3oMjVV9BEZyIbXkV0FvOtwEUFDliixUBMhXsmM3rLUxJgDzpSQZRIL8gO9TokpazuDjfKGggwvIP0DwizMhJOwTciTIqzOn11BZ4ECDNnguL73IshwYhtz7ferGoXPxA2ROBcWV0JpJkmr6mH8+s+OJJEn6CzTW0ailm+mc8cZo8ESAdtYVahSfeSpIEcXP6k1dG3gZH2UuM2uJBYUnrpnYgj0oAm+9tP93zVjDPlv7bQkoIqS9ur/7p6RM2bgfSXo3TJUXujoxp3Hgh0ghiOMwYuX3hm+dMhzS/UNBYI8DuBr1iTWZUu3YMDTfbFc5IgKZ986pplkkDCeh/BVP6oiy/+n1v8XLGMlefKWo6Hym1RhUz1Rv6hsFZwFUSqA3Dg6FCSinym5AcxatVjkfyGE9tfj4w+Uub5iqLY5VWuq3KMNCEPbLYnuRxlgEDBik1df8WxU+iZ0TWRdZUoMgPftMH2RcJkZCnTdrzFY/AOWDCCsE+ojbKvXSkPrbbQJOSsdbdccVQWQaSyIQ4rM+NqCBdPpEqf37wHdEpd/7/IEh3zHoyoDbfSchp+4rJoeHmU8gQlgj3ywY=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(19092799006)(1800799024)(366016)(4143699003)(5023799004)(11063799006)(6133799003)(10067099003)(56012099006)(22082099003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?lRZkxbX2M0To+ee0/l4WLb/GJdsljbSGpi+Pe/3J1oOYKYNj/c/b/L/UdM?=
+ =?iso-8859-1?Q?qLLhs7LriPZ6gxC8EQPAsDd9RvUob8+DwJwjNbu4bSi/LIpHgapU7u5mXX?=
+ =?iso-8859-1?Q?I+zcYw1ZvdttROnnXW0Gt7JLYobDHMZhnDxHjpK+OJowyctIU6wb4k54KR?=
+ =?iso-8859-1?Q?rMfwCD2YuXwHYJl9k2wHOyev9R5C35e9Rbx2+YckU4hknYw2uIZVCHtumv?=
+ =?iso-8859-1?Q?pYiV4RpdIZB1a5PPx88fm9bZyzZMBqvrW/YPpfQ9TQRqS+NuAJYCl4/YRd?=
+ =?iso-8859-1?Q?odAyp/4mCNcte+u4uRSpu8K6cVebMnOjmpUM00R+AlyFfYYKOhpHr57fLm?=
+ =?iso-8859-1?Q?W6TkU8+MKnoTSK1WI7Hk9kyqeUAdERsAj+UKjCrH6dqDB95AYlTbH+K/2H?=
+ =?iso-8859-1?Q?tOcAwteqVzJ2KdvUHZoZwcK+/TLtfPvqPr5Vo7g1ro1jNsmZVZnSNUCme2?=
+ =?iso-8859-1?Q?ojdTc3Lg1ufPxx6/ziuaxzr2c911MgGUWcVmxuqv3PdYD0yd99E4/OUtpV?=
+ =?iso-8859-1?Q?DSAkZd/Ro7pDFhmP/lTx79t+Oq7W/7km4Mvx7hpqdXQ2R7jxx5KQP+x9DL?=
+ =?iso-8859-1?Q?gx+MPYbil0vuf7Txg/g5Hx/WeBa2OkwU2+BKpYsuYjIOo4TBdi08/dFTcV?=
+ =?iso-8859-1?Q?scFbZGmVdNsWa4j6ZrLyCBBRtzmqGUniGneVJGhhqVp2djGMjghwa6zJwv?=
+ =?iso-8859-1?Q?OmBRQnqOyzLtUZ35KW0QTph4UuJ0vQkeyoy0PcMeZOxa2M8bwiZu4vmUFt?=
+ =?iso-8859-1?Q?/2Nw/fNbAgfm3qz46Fm6W6NgnPTPPrrrO4H46lmvVXCwwvTcdAJVnM+KJe?=
+ =?iso-8859-1?Q?28LPV3HxNdkFoKEpzOZqEbC+rIkLWQjfn9dHN9pvDNSY+dKsj9fM+UC8BU?=
+ =?iso-8859-1?Q?tgWISQAqgSvfZ+/IgoSz/wfw+9CrHEpJguB/s+6hfc8Yjl/zJkLAy+lRAn?=
+ =?iso-8859-1?Q?+03Q8FLH1W+BkHa5OA24x5L0uIZPFyaQkr2dAoNy9HKzp1eTkBog2JDBng?=
+ =?iso-8859-1?Q?cbAZq8sC4hbpFyfeH2g/K4Jyv4tXwy52p8/43kJ38vAA4X1bxnnkLjjfCL?=
+ =?iso-8859-1?Q?OJ6dE/m0LFLc5Y1UXsZsSbMEy34nGylyzLDveVoE1nCgMst+rarCOS/Tgm?=
+ =?iso-8859-1?Q?80EKsEKpd2IXgV/BMWU5mQzfHpmWeQ5oSIchM21g3m/qjYlxLkBEzExcaK?=
+ =?iso-8859-1?Q?o/xGMxGipc/e077r0xXM0FuWe6UIdO6BVQlfEqGVUFcOP9DsMuU6EPxOjS?=
+ =?iso-8859-1?Q?wYZJHZBZAvxaW6P29r4macCvQwD3YTVf9macCSyfL7HZMhLK0N2xiEoA3+?=
+ =?iso-8859-1?Q?vOZNbFiIPOUbiXlSZLDCofrnPXhVhx0/Ao4Gs/RmEd7XMoFzK0MHpTsJOu?=
+ =?iso-8859-1?Q?pa5Azu5oiNb8C4cWahEP1doR81Tks7Z/0vY5oi1JQvLdSLct5+tfzKO2yQ?=
+ =?iso-8859-1?Q?qSve+98OXnZzNyQJQgR5YubUoW9UFlxHtv+WxYrC2BMq2NSCVbpbkKIFca?=
+ =?iso-8859-1?Q?Z5n5/5K3ezoipwwN/qPr5uE2VM+DxLg0k3hu78QR7bkK70xpXsjZsXwQSk?=
+ =?iso-8859-1?Q?zLIeTSbZvAs8v4n4c58THDs8/TiIo5x1Sw750OGPlqDx7XJTp5w9tDOJp5?=
+ =?iso-8859-1?Q?vXAZE079zlg8vxPMNkXaf/JnWTCCnthJBdpERhRnguVj4SuzTdlSTP9mB2?=
+ =?iso-8859-1?Q?tnV7shFmV4VKm9/8Ywb6VMqFBj2u8trVbFlzxdkRtWsAH402dPlbuNKIHE?=
+ =?iso-8859-1?Q?xXRwsjeoJbwnwubBZ8ze7q2pqO2Tr6dDBdAUwho54OoxSCx5Pw73pLmkVY?=
+ =?iso-8859-1?Q?Ffb8nULoykHispDM1MlByJxme+oho8icugR2nBZRAU2mjX+iYwRK?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3ca19631-83d6-4ebf-d0d3-08df257d2da7
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Oct 2026 20:46:07.9081
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: mhGGNfQS2/g0bW5MjwFXc9hwoTm5NAvbKgbGUvsytW1IQAzVf0W77QE/2P/ryZXVYRHYzZvCfNWVF3uPuRZxpkRwnb9Lt6IxLbhr8Xj0btdXy2hPrDzYyC/EGEkVczsg
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR04MB10025
 
-On 2026-10-08 19:00:01 +0000, sashiko-bot@kernel.org wrote:
+On Thu, Oct 08, 2026 at 09:21:24AM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] ptp: devm_ioremap_resource() conflict with rtsn Ethernet driver
+> - [High] irqchip/imx-irqsteer: NULL pointer dereference in suspend due to early PM enable
 > --
-> 
-> commit 2999d29f8c3c04d8ff6cdf49a3fa0d43c2a42ee4
-> Author: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-> 
-> dt-bindings: ptp: renesas,rcar-gen4-gptp: Add R-Car Gen4
-> 
-> This commit adds device tree bindings for the R-Car Gen4 gPTP timer. The
-> timer provides clock synchronization and is shared among different Ethernet
-> devices across Gen4 platforms.
-> 
-> > diff --git a/Documentation/devicetree/bindings/ptp/renesas,rcar-gen4-gptp.yaml b/Documentation/devicetree/bindings/ptp/renesas,rcar-gen4-gptp.yaml
-> > new file mode 100644
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/ptp/renesas,rcar-gen4-gptp.yaml
-> 
-> [ ... ]
-> 
-> > +examples:
-> > +  - |
-> > +    #include <dt-bindings/clock/r8a779g0-cpg-mssr.h>
-> > +    #include <dt-bindings/power/r8a779g0-sysc.h>
+>
+> commit 5322ea0be538e254fa9c813752002c35702c23cf
+> Author: Zhipeng Wang <zhipeng.wang_1@nxp.com>
+>
+> irqchip/imx-irqsteer: Convert to devm_pm_runtime_set_active_enabled()
+>
+> imx_irqsteer_probe() enables runtime PM with pm_runtime_enable(), but
+> imx_irqsteer_remove() never disables it. Runtime PM therefore stays
+> enabled after the device is unbound, and rebinding it triggers an
+> unbalanced pm_runtime_enable warning. This commit uses
+> devm_pm_runtime_set_active_enabled() to automatically disable runtime PM
+> on unbind, fixing the imbalance.
+>
+> > diff --git a/drivers/irqchip/irq-imx-irqsteer.c b/drivers/irqchip/irq-imx-irqsteer.c
+> > index d05de3d26fb28..5acc04504e520 100644
+> > --- a/drivers/irqchip/irq-imx-irqsteer.c
+> > +++ b/drivers/irqchip/irq-imx-irqsteer.c
+> > @@ -239,6 +239,10 @@ static int imx_irqsteer_probe(struct platform_device *pdev)
+> >  	if (irqsteer_has_chanctrl(data->devtype_data))
+> >  		writel_relaxed(BIT(data->channel), data->regs + CHANCTRL);
+> >
+> > +	ret = devm_pm_runtime_set_active_enabled(&pdev->dev);
+> > +	if (ret)
+> > +		goto out;
 > > +
-> > +    ptp@e6449000 {
-> > +            compatible = "renesas,r8a779g0-gptp", "renesas,rcar-gen4-gptp";
-> > +            reg = <0xe6449000 0x500>;
-> 
+>
 > [Severity: High]
-> Does this new node's memory region conflict with the existing Ethernet TSN
-> driver?
+> Does moving the PM runtime enablement before platform_set_drvdata() introduce
+> a race condition?
+>
+> The PM runtime is now enabled early, and the IRQ domain is subsequently
+> created and exposed globally.
+>
+> If a concurrent child device or userspace sysfs bind maps, requests, and
+> releases an IRQ from this domain before platform_set_drvdata() is reached,
+> releasing the IRQ invokes irq_bus_sync_unlock().
+>
+> This in turn calls pm_runtime_put_autosuspend(), dropping the usage count to
+> zero and queuing a runtime suspend which invokes imx_irqsteer_suspend().
+>
+> Since platform_set_drvdata() has not been called yet, will dev_get_drvdata()
+> return NULL in the suspend callback and cause a NULL pointer dereference when
+> passed to imx_irqsteer_save_regs()?
 
-Yes it does, please read the cover letter to see why.
+Please fix this problem also
 
-> 
-> The existing renesas,ethertsn binding also claims this exact same memory
-> region for the generalized Precision Time Protocol target.
-> 
-> During probe in drivers/net/ethernet/renesas/rtsn.c:rtsn_probe(), the
-> existing Ethernet driver requests this region:
-> 
->         res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "gptp");
->         ...
->         priv->gptp = devm_ioremap_resource(&pdev->dev, res);
-> 
-> Because both drivers use devm_ioremap_resource(), which attempts to acquire
-> exclusive access to the underlying physical memory via
-> devm_request_mem_region(), whichever driver probes second will fail with
-> -EBUSY. This will cause a driver probe failure and make the device unusable.
-> 
-> How should this shared memory resource be managed so both drivers can probe
-> successfully?
-> 
-> > +            clocks = <&cpg CPG_MOD 2723>;
-> > +            power-domains = <&sysc R8A779G0_PD_ALWAYS_ON>;
-> > +            resets = <&cpg 2723>;
-> > +    };
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261007185920.4042783-1-niklas.soderlund+renesas@ragnatech.se?part=1
+Frank
 
--- 
-Kind Regards,
-Niklas Söderlund
+
+>
+> >  	data->domain = irq_domain_create_linear(dev_fwnode(&pdev->dev), data->reg_num * 32,
+> >  						&imx_irqsteer_domain_ops, data);
+>
+> [ ... ]
+>
+> > @@ -260,9 +264,6 @@ static int imx_irqsteer_probe(struct platform_device *pdev)
+> >
+> >  	platform_set_drvdata(pdev, data);
+> >
+> > -	pm_runtime_set_active(&pdev->dev);
+> > -	pm_runtime_enable(&pdev->dev);
+> > -
+> >  	return 0;
+>
+> --
+> Sashiko AI review � https://sashiko.dev/#/patchset/20261008090231.796511-1-Zhipeng.wang_1@oss.nxp.com?part=4
