@@ -1,36 +1,36 @@
-Received: from mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
+Received: from mta0.migadu.com (out-18.mta0.migadu.com [91.218.175.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8864DD3BD
-	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 15:58:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0569A37F00B
+	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 16:19:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791475119; cv=none; b=FeE8u2vuJg8P8cvN0zOQJPC5hFLUjBxXgMeOfeymjrlrV86jzhQRsFpZ1Wpjr7ydL4rjvy0mGNO5dmv0YciNSxmn1HPYZnbA7kvxIx5IAnkjtaEkbrT73u1TFOdw+D3jtOgSBrPlf2ornmafOsIt7h/9xOj6fG8QnV4ketksZF0=
+	t=1791476381; cv=none; b=MvdwQiucCun38Nxx0R0HJItOMzuzydA/7jAD2YoqnmCFswo5rFeirLzhco5y+kf4zDdvyId/qsfn+m+r1qm8TlYvtp2wZhzxtlfLBYEFJ9JfwaGXRb+Ub+jFz14os/cPy53hoeM97zgQdvLJZ4PEPRamurBpt2glHCWwQNEwTsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791475119; c=relaxed/simple;
-	bh=ZVUiW/1nP2zUt3FbgBmMgYG2aB8NNhzx4UIMz7G+lEc=;
+	s=arc-20240116; t=1791476381; c=relaxed/simple;
+	bh=Vv6HjlkKaEcNeGM1J49gHvZyK7qtW1yuFOX7CcfX/ig=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TjymEqcynRN7chywyzKi/b4UqTcJ6tzq3RhnuoKhCaj+aSNLUNzFsLJgjsTfeDXMPIV9BJlpZXnrqQKL/ZjK7Z4BOpT3GpNvVlj6PzgTfb/6sefJLdxmHh1JQXmH3FyGwKK6wlyPy5q/lfVTAMmAzC1DjJe15RtkMwj12+C/nuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=K6wbqH9b; arc=none smtp.client-ip=95.215.58.179
+	 In-Reply-To:Content-Type; b=TaAYaAhEGImTA0tLvjFu1+tNRu29Xp5MvbBq0hBQ/2dfVsV03Zdix0hRueOyl8HPupUvqYYa038wrRp862mI09nWTRR4HgBj1ZxZq/9B6cEOJ4wTjBznLUC6xDRW55zFfgxlIDmE6p6hmy6qw+H4Mmbof0BtVdNLfuvmhtk9qAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=c2N3Sqx/; arc=none smtp.client-ip=91.218.175.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="K6wbqH9b"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="c2N3Sqx/"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=ZVUiW/1nP2zUt3FbgBmMgYG2aB8NNhzx4UIMz7G+lEc=;
+DKIM-Signature: a=rsa-sha256; bh=Vv6HjlkKaEcNeGM1J49gHvZyK7qtW1yuFOX7CcfX/ig=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791475113; v=1; x=1792079913;
- b=K6wbqH9bKwsOEhfbETNtk/tgCdeR6rC4tRolK5jW3vGWF7zkQ6Wotwrs1b2X8qA5wYT8SUQd
- 3o/zcP7CffwGL2TrrLc7zZMHNgiCx4zwJofQdfIDiQEv3U8Fs/Xovv/SWalCzY1miQrR0YM0pa5
- zH3BS1WCmkbDfunFHmgDvZnQ=
+ t=1791476377; v=1; x=1792081177;
+ b=c2N3Sqx/YNOCnK1nWcD58sk364gp0b7mM1nRTl6VjJQDR1yxP6M4dnz8l2eCHw8jXEWAPNU8
+ 198MJOHD8F8BeNSCYjsDI/X50yjOvT0gYDXUaEXI3tmp40/24mUw1h8YBZlGRrHNS3RJo7Nw5XW
+ 9GBQrzgfqydJ0delucka91+o=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 91a68359b3fdaedd;
-	Thu, 08 Oct 2026 15:58:33 +0000
-X-Mizu-Trace-ID: 91a68359b3fdaedd
+Received: by smtp.migadu.com with ESMTPS id f9536f640e83e639;
+	Thu, 08 Oct 2026 16:19:37 +0000
+X-Mizu-Trace-ID: f9536f640e83e639
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <47ea84dd-47df-4b9c-80d4-3422a3a53f03@linux.dev>
-Date: Thu, 8 Oct 2026 17:58:33 +0200
+Message-ID: <673d4d17-72ed-4909-8858-d05c4e9c5e7d@linux.dev>
+Date: Thu, 8 Oct 2026 18:19:33 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,96 +38,136 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v9 04/23] bpf: Keep a call site's landing pad in
- insn_aux_data, add lookups
+Subject: Re: [PATCH bpf-next v9 12/23] bpf: Refuse a trampoline that calls a
+ subprog that can unwind
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20261008074959.2993751-1-yonghong.song@linux.dev>
- <20261008075020.2996443-1-yonghong.song@linux.dev>
- <sashiko-outbox-163795@kernel.org>
+ <20261008075101.3001371-1-yonghong.song@linux.dev>
+ <sashiko-outbox-163811@kernel.org>
 Content-Language: en-GB
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <sashiko-outbox-163795@kernel.org>
+In-Reply-To: <sashiko-outbox-163811@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
 
 
-On 10/8/26 10:01 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] bpf: adjust_insn_aux_data() fails to shift cleanup_pad for BPF_PATCH_MOVE_TARGET
+On 10/8/26 10:14 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Critical] bpf: x86 exception unwinder passes wrong return address pointer causing stack corruption
+> - [High] bpf: Missing trampoline restriction for bpf_throw() leads to NULL pointer deref
 > --
 >
-> commit 1bdc64eca7dc9ba53a20b6b6c4d0e4448bdd4aa8
+> commit 554b5300d0510c78440f3ee71cad1d363c75cfaf
 > Author: Yonghong Song <yonghong.song@linux.dev>
 >
-> bpf: Keep a call site's landing pad in insn_aux_data, add lookups
+> bpf: Refuse a trampoline that calls a subprog that can unwind
 >
-> A call site's landing pad, if any, is kept in insn_aux_data as
-> cleanup_pad, so the three places that move instructions --
-> bpf_patch_insn_data(), verifier_remove_insns() and bpf_opt_remove_nops()
-> -- keep it in step. Add lookups for it and for calls to bpf_unwind() and
-> bpf_unwind_resume(); their users come in later patches.
+> This patch refuses fexit, fmod_ret, and fsession trampoline attachments
+> to subprograms marked with might_unwind, preventing bpf_unwind() from
+> tripping over unexpected trampoline frames.
 >
->> diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
->> index 206cc9a614a95..64baee1a37e60 100644
->> --- a/kernel/bpf/fixups.c
->> +++ b/kernel/bpf/fixups.c
->> @@ -244,11 +244,18 @@ static void adjust_insn_aux_data(struct bpf_verifier_env *env,
->>   			data[i].non_stack_access =
->>   				data[off + cnt - 1].non_stack_access;
->>   			data[off + cnt - 1].non_stack_access = false;
->> +			data[i].cleanup_pad = data[off + cnt - 1].cleanup_pad;
->> +			data[off + cnt - 1].cleanup_pad = 0;
->>   		} else if (bpf_is_mem_insn(insn + i)) {
->>   			data[i].non_stack_access = true;
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 668d811d4e4cb..3692d9b163d43 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
+> [ ... ]
+>
+>> @@ -21600,6 +21600,22 @@ int bpf_check_attach_target(struct bpf_verifier_log *log,
+>>   				prog_extension ? "Extension" : "Tracing");
+>>   			return -EINVAL;
 >>   		}
->>   	}
->>   
->> +	if (env->cleanup_info_cnt)
->> +		for (i = 0; i < prog_len; i++)
->> +			if (data[i].cleanup_pad > off + 1)
->> +				data[i].cleanup_pad += cnt - 1;
-> [Severity: Medium]
-> Does this logic fail to adjust the landing pad when mode is
-> BPF_PATCH_MOVE_TARGET?
+>> +		/*
+>> +		 * A trampoline that calls its target stays as a frame between a
+>> +		 * subprog and its caller, and bpf_unwind() cannot walk past it:
+>> +		 * the frames below would return after their calls rather than at
+>> +		 * their landing pads. fentry leaves no frame, and the main
+>> +		 * program's caller is below where the walk stops.
+>> +		 */
+>> +		if (aux->func && subprog && aux->func[subprog]->aux->might_unwind &&
+>> +		    (prog->expected_attach_type == BPF_TRACE_FEXIT ||
+>> +		     prog->expected_attach_type == BPF_MODIFY_RETURN ||
+>> +		     prog->expected_attach_type == BPF_TRACE_FSESSION)) {
+> [Severity: High]
+> Does this logic also need to check for bpf_throw()?
 >
-> By unconditionally using off + 1, this appears to assume
-> BPF_PATCH_KEEP_TARGET semantics.
+> The patch correctly prevents attachments for bpf_unwind(), which is tracked
+> by might_unwind. However, bpf_throw() seems to be missed. It uses an
+> independent might_throw flag which does not appear to be propagated to
+> bpf_prog_aux or checked here.
+
+In the above, we have aux->func[subprog]->aux->might_unwind. If it is true,
+that means bpf_throw() will be rejected. So I think we should be okay.
+
 >
-> If bpf_patch_insn_data() is called with BPF_PATCH_MOVE_TARGET and the landing
-> pad is located exactly at the patched instruction, data[i].cleanup_pad would
-> be equal to off + 1 (the 1-based index). The condition
-> data[i].cleanup_pad > off + 1 evaluates to false, meaning the landing pad
-> index is not shifted.
+> If a subprogram calls bpf_throw() and has a tracing program attached
+> (like fexit), bpf_stack_walker() encounters the trampoline frame. At that
+> point, bpf_prog_ksym_find() will return NULL, and since ctx->cnt > 0, it aborts
+> the walk before setting ctx->aux:
 >
-> As a result, the landing pad remains pointing at the newly inserted
-> instructions instead of following the original instruction shifted to
-> off + cnt - 1.
+> kernel/bpf/helpers.c:bpf_stack_walker() {
+>      ...
+>      if (!prog)
+>          return !ctx->cnt;
+>      ...
+> }
 >
-> Could this cause the unwinder to jump to the wrong instruction offset,
-> potentially leading to state corruption during an exception unwind?
+> Because the walk is aborted early, ctx.aux remains NULL, which leads to a
+> kernel panic when dereferenced later in bpf_throw():
+>
+> kernel/bpf/helpers.c:bpf_throw() {
+>      ...
+>      ctx.aux->bpf_exception_cb(cookie, ctx.sp + ctx.aux->stack_arg_sp_adjust,
+>                                ctx.bp, 0, 0);
+>      ...
+> }
+>
+>> +			bpf_log(log,
+>> +				"Cannot attach fexit, fmod_ret or fsession to %s, which can unwind\n",
+>> +				tname);
+>> +			return -EINVAL;
+>> +		}
+>>   		conservative = aux->func_info_aux[subprog].unreliable;
+>>   		if (prog_extension) {
+> [Severity: Critical]
+> I also have a question about the x86 exception unwinding implementation added
+> earlier in this series. Can the x86 unwinder corrupt the stack by passing the
+> wrong return address pointer?
+>
+> In arch_bpf_stack_walk_ra(), the unwinder passes the current frame's return
+> address pointer to the callback:
+>
+> arch/x86/net/bpf_jit_comp.c:arch_bpf_stack_walk_ra() {
+>      ...
+>      ra = unwind_get_return_address_ptr(&state);
+>      if (!ra)
+>          break;
+>      if (!consume_fn(cookie, (u64)addr, (u64)state.sp, (u64)state.bp, (u64 *)ra))
+>      ...
+> }
+>
+> However, bpf_unwind_rewrite() seems to expect the return address pointer
+> of the previous frame, so it can make the previous frame return directly into
+> the current frame's cleanup pad.
+>
+> By passing the current frame's return address instead, bpf_unwind_rewrite()
+> overwrites the current frame's return address with its own pad or epilogue:
+>
+> kernel/bpf/helpers.c:bpf_unwind_rewrite() {
+>      ...
+>      rec = bpf_exc_pad_for_ip(prog, ip);
+>      *ra = rec ? rec->pad : prog->aux->epilogue_ip;
+>      ...
+> }
+>
+> On x86, this causes the pad to execute after the current frame has already
+> returned via leave and ret, corrupting the caller's stack frame. For the main
+> program, its return address is overwritten with its own epilogue, leading to
+> a double-epilogue execution.
 
-This won't happen. The below is v7 reply to sashiko. v8 does not pop
-up this issue. and now v9 it comes back.
-
-====
-
-Okay, commit "bpf: Retarget indirect jump targets across prologue prepends"
-introduced BPF_PATCH_MOVE_TARGET and merged last Friday. It solved three
-cases for ops->gen_epilogue, ops->gen_prologue || env->seen_direct_write, and
-stack slots for subprogs. ops->gen_epilogue has been rejected in patch 5.
-We cannot allow ops->gen_epilogue since it may silently exit.
-For other cases in "bpf: Retarget indirect jump targets across prologue prepends",
-The above commit should already handle this.
-
-For the other two, cleanup_pad == off + 1 cannot happen, because MOVE only
-patches an entry insn and a landing pad cannot start at insn 0: the entry is
-always walked outside a pad first, so reaching it again from an unwind
-fails bpf_exc_check_insn() with "insn %u runs both inside and outside a
-landing pad". Pads after off are shifted by the existing `> off + 1`, and a
-covered call at off moves with its insn_aux_data.
-
-====
+The issue here seems more appropriate for commit
+"bpf: Dispatch cleanup pads by rewriting return addresses". I didn't
+find any issues. Selftest results match expectations (manually checked).
 
 
