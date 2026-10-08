@@ -1,36 +1,36 @@
-Received: from mta0.migadu.com (out-18.mta0.migadu.com [91.218.175.18])
+Received: from mta0.migadu.com (out-152.mta0.migadu.com [91.218.175.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0569A37F00B
-	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 16:19:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16EF384CE1
+	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 16:25:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791476381; cv=none; b=MvdwQiucCun38Nxx0R0HJItOMzuzydA/7jAD2YoqnmCFswo5rFeirLzhco5y+kf4zDdvyId/qsfn+m+r1qm8TlYvtp2wZhzxtlfLBYEFJ9JfwaGXRb+Ub+jFz14os/cPy53hoeM97zgQdvLJZ4PEPRamurBpt2glHCWwQNEwTsY=
+	t=1791476744; cv=none; b=P+OgOMSYqq4WYB/EDDbU4Iw4PA7sq6/9KJlBpFCfD1i330ePlSNfpz7fXRHN8HfCH7Xm5y1mF4VSpQoNFUYuVdJvzY9Y2bXD7zQU2JRRVBeBK/8SnI9HgrU9I17eByeVonnQUVWmoLe245C+hTfmgITlUT3Cwpb/w7/PnArrGdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791476381; c=relaxed/simple;
-	bh=Vv6HjlkKaEcNeGM1J49gHvZyK7qtW1yuFOX7CcfX/ig=;
+	s=arc-20240116; t=1791476744; c=relaxed/simple;
+	bh=ffGNYFCBbGGa3Wx6jWOWR1W1yjnohc36RFEcJ9LsM1k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TaAYaAhEGImTA0tLvjFu1+tNRu29Xp5MvbBq0hBQ/2dfVsV03Zdix0hRueOyl8HPupUvqYYa038wrRp862mI09nWTRR4HgBj1ZxZq/9B6cEOJ4wTjBznLUC6xDRW55zFfgxlIDmE6p6hmy6qw+H4Mmbof0BtVdNLfuvmhtk9qAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=c2N3Sqx/; arc=none smtp.client-ip=91.218.175.18
+	 In-Reply-To:Content-Type; b=MDOxu3YS1zte9cJbCitJfa6zdcIcStidPnZ5RGoNRAsMCa+b4b6V6Lea697ZDFdUwvwC8gP0bKciIiyfCAzmsDOnNLUZqmb+n9D5uyzTyDbJ93lST8tqLNZ+sbeR9bHg+xq0y8hd2VU9xtVvSB8Fab/t7AkajAH3+H0Ugc71en0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=RyfiZMV/; arc=none smtp.client-ip=91.218.175.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="c2N3Sqx/"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="RyfiZMV/"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=Vv6HjlkKaEcNeGM1J49gHvZyK7qtW1yuFOX7CcfX/ig=;
+DKIM-Signature: a=rsa-sha256; bh=ffGNYFCBbGGa3Wx6jWOWR1W1yjnohc36RFEcJ9LsM1k=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791476377; v=1; x=1792081177;
- b=c2N3Sqx/YNOCnK1nWcD58sk364gp0b7mM1nRTl6VjJQDR1yxP6M4dnz8l2eCHw8jXEWAPNU8
- 198MJOHD8F8BeNSCYjsDI/X50yjOvT0gYDXUaEXI3tmp40/24mUw1h8YBZlGRrHNS3RJo7Nw5XW
- 9GBQrzgfqydJ0delucka91+o=
+ t=1791476741; v=1; x=1792081541;
+ b=RyfiZMV/QZ/OZm51qMgLp2gzOAUOgFq4gqdJ5c/wvtCSaVNNvtErmGh9LtwjVCAm4Y5sjfe7
+ h/q2IEZ07PuhFxqJdOJqOPigOzgiME0i7iT+cgQyUDu+1zsqstwVCe8v56MMuXnfl8Kxo3IOItK
+ O2VrjXEHe1aZEdWqE9PAqTjU=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id f9536f640e83e639;
-	Thu, 08 Oct 2026 16:19:37 +0000
-X-Mizu-Trace-ID: f9536f640e83e639
+Received: by smtp.migadu.com with ESMTPS id 1d44a88433cb8400;
+	Thu, 08 Oct 2026 16:25:37 +0000
+X-Mizu-Trace-ID: 1d44a88433cb8400
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <673d4d17-72ed-4909-8858-d05c4e9c5e7d@linux.dev>
-Date: Thu, 8 Oct 2026 18:19:33 +0200
+Message-ID: <cd3f0e94-96dc-4164-a10e-94b8a62dbba5@linux.dev>
+Date: Thu, 8 Oct 2026 18:25:35 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,136 +38,72 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v9 12/23] bpf: Refuse a trampoline that calls a
- subprog that can unwind
+Subject: Re: [PATCH bpf-next v9 16/23] libbpf: Add cleanup_info to
+ bpf_prog_load_opts
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
 References: <20261008074959.2993751-1-yonghong.song@linux.dev>
- <20261008075101.3001371-1-yonghong.song@linux.dev>
- <sashiko-outbox-163811@kernel.org>
+ <20261008075121.3005539-1-yonghong.song@linux.dev>
+ <sashiko-outbox-163808@kernel.org>
 Content-Language: en-GB
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <sashiko-outbox-163811@kernel.org>
+In-Reply-To: <sashiko-outbox-163808@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 
 
-On 10/8/26 10:14 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Critical] bpf: x86 exception unwinder passes wrong return address pointer causing stack corruption
-> - [High] bpf: Missing trampoline restriction for bpf_throw() leads to NULL pointer deref
+On 10/8/26 10:12 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] bpf: libbpf misaligned cleanup_info read during verifier log retry
 > --
 >
-> commit 554b5300d0510c78440f3ee71cad1d363c75cfaf
+> commit 44e841423bd633c0b2885ef9ad198f15d3871fba
 > Author: Yonghong Song <yonghong.song@linux.dev>
 >
-> bpf: Refuse a trampoline that calls a subprog that can unwind
+> libbpf: Add cleanup_info to bpf_prog_load_opts
 >
-> This patch refuses fexit, fmod_ret, and fsession trampoline attachments
-> to subprograms marked with might_unwind, preventing bpf_unwind() from
-> tripping over unexpected trampoline frames.
+> This commit adds cleanup_info fields to bpf_prog_load_opts to allow
+> callers to pass an exception cleanup table to the kernel during program load.
+> The new fields are propagated to union bpf_attr for the BPF_PROG_LOAD syscall.
 >
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index 668d811d4e4cb..3692d9b163d43 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
+>> diff --git a/tools/lib/bpf/bpf.c b/tools/lib/bpf/bpf.c
+>> index b49822d212aed..b4031f62bdee5 100644
+>> --- a/tools/lib/bpf/bpf.c
+>> +++ b/tools/lib/bpf/bpf.c
 > [ ... ]
+>> @@ -370,6 +370,10 @@ int bpf_prog_load(enum bpf_prog_type prog_type,
+>>   	attr.fd_array = ptr_to_u64(OPTS_GET(opts, fd_array, NULL));
+>>   	attr.fd_array_cnt = OPTS_GET(opts, fd_array_cnt, 0);
+>>   
+>> +	attr.cleanup_info = ptr_to_u64(OPTS_GET(opts, cleanup_info, NULL));
+>> +	attr.cleanup_info_rec_size = OPTS_GET(opts, cleanup_info_rec_size, 0);
+>> +	attr.cleanup_info_cnt = OPTS_GET(opts, cleanup_info_cnt, 0);
+>> +
+> [Severity: Medium]
+> If the first sys_bpf_prog_load() fails with -E2BIG, the kernel can mutate
+> attr.cleanup_info_rec_size to a smaller size.
 >
->> @@ -21600,6 +21600,22 @@ int bpf_check_attach_target(struct bpf_verifier_log *log,
->>   				prog_extension ? "Extension" : "Tracing");
->>   			return -EINVAL;
->>   		}
->> +		/*
->> +		 * A trampoline that calls its target stays as a frame between a
->> +		 * subprog and its caller, and bpf_unwind() cannot walk past it:
->> +		 * the frames below would return after their calls rather than at
->> +		 * their landing pads. fentry leaves no frame, and the main
->> +		 * program's caller is below where the walk stops.
->> +		 */
->> +		if (aux->func && subprog && aux->func[subprog]->aux->might_unwind &&
->> +		    (prog->expected_attach_type == BPF_TRACE_FEXIT ||
->> +		     prog->expected_attach_type == BPF_MODIFY_RETURN ||
->> +		     prog->expected_attach_type == BPF_TRACE_FSESSION)) {
-> [Severity: High]
-> Does this logic also need to check for bpf_throw()?
+> During the verifier log retry block later in bpf_prog_load():
 >
-> The patch correctly prevents attachments for bpf_unwind(), which is tracked
-> by might_unwind. However, bpf_throw() seems to be missed. It uses an
-> independent might_throw flag which does not appear to be propagated to
-> bpf_prog_aux or checked here.
+> 	if (log_level == 0 && log_buf) {
+> 		...
+> 		attr.log_level = 1;
+> 		fd = sys_bpf_prog_load(&attr, attr_sz, attempts);
+>
+> If attr.cleanup_info_rec_size was mutated, the retry uses the smaller size
+> while attr.cleanup_info still points to the user's original array with the
+> larger stride.
+>
+> Does this cause the kernel to perform misaligned reads starting from the
+> second record and parse garbage exception info?
 
-In the above, we have aux->func[subprog]->aux->might_unwind. If it is true,
-that means bpf_throw() will be rejected. So I think we should be okay.
+This is the first time we introduced cleanup_info_rec_size. There is no
+need to retry by changing attr.cleanup_info_rec_size. If users have
+a bigger cleanup_info_rec_size and causing -E2BIG, it is users' problem.
 
 >
-> If a subprogram calls bpf_throw() and has a tracing program attached
-> (like fexit), bpf_stack_walker() encounters the trampoline frame. At that
-> point, bpf_prog_ksym_find() will return NULL, and since ctx->cnt > 0, it aborts
-> the walk before setting ctx->aux:
->
-> kernel/bpf/helpers.c:bpf_stack_walker() {
->      ...
->      if (!prog)
->          return !ctx->cnt;
->      ...
-> }
->
-> Because the walk is aborted early, ctx.aux remains NULL, which leads to a
-> kernel panic when dereferenced later in bpf_throw():
->
-> kernel/bpf/helpers.c:bpf_throw() {
->      ...
->      ctx.aux->bpf_exception_cb(cookie, ctx.sp + ctx.aux->stack_arg_sp_adjust,
->                                ctx.bp, 0, 0);
->      ...
-> }
->
->> +			bpf_log(log,
->> +				"Cannot attach fexit, fmod_ret or fsession to %s, which can unwind\n",
->> +				tname);
->> +			return -EINVAL;
->> +		}
->>   		conservative = aux->func_info_aux[subprog].unreliable;
->>   		if (prog_extension) {
-> [Severity: Critical]
-> I also have a question about the x86 exception unwinding implementation added
-> earlier in this series. Can the x86 unwinder corrupt the stack by passing the
-> wrong return address pointer?
->
-> In arch_bpf_stack_walk_ra(), the unwinder passes the current frame's return
-> address pointer to the callback:
->
-> arch/x86/net/bpf_jit_comp.c:arch_bpf_stack_walk_ra() {
->      ...
->      ra = unwind_get_return_address_ptr(&state);
->      if (!ra)
->          break;
->      if (!consume_fn(cookie, (u64)addr, (u64)state.sp, (u64)state.bp, (u64 *)ra))
->      ...
-> }
->
-> However, bpf_unwind_rewrite() seems to expect the return address pointer
-> of the previous frame, so it can make the previous frame return directly into
-> the current frame's cleanup pad.
->
-> By passing the current frame's return address instead, bpf_unwind_rewrite()
-> overwrites the current frame's return address with its own pad or epilogue:
->
-> kernel/bpf/helpers.c:bpf_unwind_rewrite() {
->      ...
->      rec = bpf_exc_pad_for_ip(prog, ip);
->      *ra = rec ? rec->pad : prog->aux->epilogue_ip;
->      ...
-> }
->
-> On x86, this causes the pad to execute after the current frame has already
-> returned via leave and ret, corrupting the caller's stack frame. For the main
-> program, its return address is overwritten with its own epilogue, leading to
-> a double-epilogue execution.
-
-The issue here seems more appropriate for commit
-"bpf: Dispatch cleanup pads by rewriting return addresses". I didn't
-find any issues. Selftest results match expectations (manually checked).
-
+>>   	if (log_level) {
+>>   		attr.log_buf = ptr_to_u64(log_buf);
+>>   		attr.log_size = log_size;
 
