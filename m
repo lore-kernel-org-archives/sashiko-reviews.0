@@ -1,91 +1,193 @@
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013024.outbound.protection.outlook.com [40.93.196.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607DE3AFCF0
-	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 17:17:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791479871; cv=none; b=o9FKcwPh0AGkJZtpj38l3vJrKOyWwP88S/tAJDLrUH3PPeSylJT5QreTb3LlyokYvD9GAuUucMIv2XpjNlykmeBu9dKCNg8z5LJHZo8WzAkpuJlZtvRnjLeIZmbSxE+wFpO6bJgRjbtiX7fLAlXVwSJ8Q6K45X8enO+1QIyyEh0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791479871; c=relaxed/simple;
-	bh=18ppHiNkWdrfkvUG18hcUeZYoOypIbeiVdUwByTYuvM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SkQV2R4GxOnohpnqkpQJx1TlHxFfRRRK9Mcy7boLBLl+0e0uZsYmlYevfW5gApCpkZ/OPM4DY0NK1Do2quI8RVDGiQSzuCwbagRudUIDt0XUh6d0s0WVZrpzEqns/YoYR41gLa+d5NN/Qsdw33oLkMCixuj/fCT2jxs3vcBAIa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GDGRFCOb; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105423AD518
+	for <sashiko-reviews@lists.linux.dev>; Thu,  8 Oct 2026 17:25:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.24
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791480320; cv=fail; b=fueWY7B42OvKCeP50i5gdPqn4rcyIh9Q0TI5peOMBjhjRpYbsaMVk6rEb91RoUoW3daR1Il5UjNfIEKCeejtS397+TLRmSGvnulBIvEa0upWboEEVUmkWX21B+bazfSHkYRQ3uQ/H3WYzcLUG16nyXDLUiGHWgwGIgHkOtNkD+E=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791480320; c=relaxed/simple;
+	bh=SbdWu9HibsM0JsyKxpGcnZsEME85UTjKo1iN4yD9QGs=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=iHTVs6pwxPE9D5l3niuqqtxsG5mpGvj4bvgWS93uG9jNei86KQk9vBBuFFPLfVmVnbL5HJ0ymz3vIcPVGTYS4kFJboUsxCREHl8029KX/nyADijk3gj/WICJIXkUV5jaYI1xn+IY0VC01m4HwoONKxKH/fLPIXeMaFNS07IAoGU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=IxGbtWFM; arc=fail smtp.client-ip=40.93.196.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GDGRFCOb"
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-3a75f960be4so24423461fa.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 08 Oct 2026 10:17:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791479868; x=1792084668; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=mGNnZ3lh/82Ool9Pw0Js9vegW0LbnM2AKPqkWKOhgzw=;
-        b=GDGRFCObPhbzi/LtRmAki9huKfLnhTUSStNa8IHGLB2BbRsi+jAEEsPvss/B8DJAHw
-         VoJ+6LuZyk8rxHdf3qgJiatpexp78a9z4v4+fh+1/0gxHV0TKIFDwyHbCKMX8HeqljWj
-         hU8v8kxCUpxAzRW4DToFl6dxWTy3HHj5GaaYTR2Zyi9VCMxlm+qebXJcnmb2KmoRXsgU
-         //fCGdlOdkgiED3uuAqPEFilaFwcQYUJWpFUCLym0bZtc/CQx5gqbixWi1pVGcah8kd9
-         l0RROoMkv/KmJQtpa1iblYIn4grHAgeYCL/qeobNqiTz/XsAGo3Zs5NOEIUBXaZD9pHk
-         uNsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791479868; x=1792084668;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=mGNnZ3lh/82Ool9Pw0Js9vegW0LbnM2AKPqkWKOhgzw=;
-        b=jSCMRMAgwo9AMiQEf8RCfj6xJQOCzZaGaOFdLvnYuHcQSRMlfAXv+GOONzCmmvXLjN
-         eqY4bzcZFz2gDCgRXlx1RqxAAP+s5woIV++K7hrlPdh80Vci6LK6eQJaQ/Y/6l/1oTfq
-         PIse9yAEZHJK79zoSOpxgk8bodvftBv3tAHQBnOnpnzGzTRLP7uS5Voe8SGmPp6DNlCP
-         gThqEYIGA5L24ponjVXSrPP9+ziV6S17HLyS5uOvWwRKSdUy+/tFXjdwil++mQIqOuWm
-         x/hlcDaqguGX2tkjYGJBVvvWbP+d6yHZBcHt5dzCQNNwFQm3ixBep2kpAho9KEEch9gV
-         mBbw==
-X-Gm-Message-State: AFq9FYJmfwikrRxB7ULG2MoIdGen3Wv/jhvqWxP4RisJllMegMPkABsJ
-	n/I3UConK7F9mzIpxl/MAw9uA0lM4Bcia3ffWLRSMzVGudpnzL7XHstUce1F0Z8lM1g=
-X-Gm-Gg: AYBFou1kbFNezJWOMoZvBbTDBKFhwxpiJv0wQkwSuqYKDCqKD5FjMaa6m2XyCtJnfH1
-	+dowe8pEdelBHMfbzTYfZwSa+N05xuLHCXKJBpDgMM2msGwHYIxnrqFXpCDbUh7x+p7bqf5LLUT
-	CK4q4afubaHe98yXKdT4O2S26zd6XeKmOeaoxmF0lheWrwqf/gLJ8dFdRT2qNBwCLEyLsrGbcd1
-	AqsORG3ZiPFviaq/6qHQ64QDCvLUo+J3ZAkVxqtD/bYaqq4t9E7sH6NPV4PnEpmqbn5zUbimszn
-	pO6HcwehAG+H9ek7rDlg64291qslfQgaQ6AATn1eLG1oRx/qVbIC6LWA8hggIZuDtE3WYTsWAyU
-	+a2tiexXXhW7WWy8y2dfZYsVaiKS4T5Yvpu6j+8jMjDZouVqo1awUmEn2Yjt8VfMoftc+8tNPD5
-	a4GpCvEsOzHDwKlcILL7SnY7jB2OfS8S8IVhoC633Fqj9QGjSBrWR6h9KRFDjZECUNmYM/r/pFo
-	XWkhKXjFIb1GWhQPQNdoGpS7UsPVFcYROwECC5eAnlm/ToFoCC8
-X-Received: by 2002:a05:651c:2106:b0:3a6:47b8:c8a4 with SMTP id 38308e7fff4ca-3a9a2d6a739mr15029421fa.29.1791479868310;
-        Thu, 08 Oct 2026 10:17:48 -0700 (PDT)
-Received: from localhost.localdomain (95-24-167-79.broadband.corbina.ru. [95.24.167.79])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3a9c13e6530sm1193631fa.9.2026.10.08.10.17.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Oct 2026 10:17:47 -0700 (PDT)
-From: Maxim Skokov <skokovmaksimevg@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Maxim Skokov <skokovmaksimevg@gmail.com>,
-	bpf@vger.kernel.org
-Subject: Re: [PATCH bpf 2/2] selftests/bpf: Cover test_run csum validation after bpf_skb_change_tail()
-Date: Thu,  8 Oct 2026 20:17:37 +0300
-Message-ID: <20261008171740.47837-1-skokovmaksimevg@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <sashiko-outbox-163281@kernel.org>
-References: <sashiko-outbox-163281@kernel.org>
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="IxGbtWFM"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HALhl0nbKrfQL37vnBu5WTOjGKfHcX6i6adKvkawBzGw9fNx4PPULtq1M3qfWhOQlmpQNeX+xCopSzsDT3t312Ot+vxwA16TVb+XVgDLavJK4kkrN12CtA+4ZLs3S7Nf16W3v74570YPjUuLgRQFv0+2frsh/kOwyGzXvrN++XutDQQ3fsz7NlFi2ZJj9VtseccmgDJ4E3j88F1DJWrac8PI0K+4/YeMg+oaBiDmXkQa+eHRpxkRo6Yz5GB9CQ/NcL6Qmfxqw8sjFLSrJAoWpjjJCPDNsxkh4WYxDounZj2+d2qFvfPTBb4bfokC+laDJfPGyOiqT8rLoDIOxHle6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/nMwtoFpbQDY7gyv9bOunWvkXTfkHM8RDy8rYfQmSKc=;
+ b=HscrcJCqLST3CbAnIwIabZTKDboFybPBUg9JAgjyzaf30mGTX/WeFHRfdoVxUb1j+VXBlAnyOiuD6ikGUoIN04+WFP6bRaqvzO5TMEnlmPHzaFpkGfW2u/FgcrJu0R9C2ZcCn3D4oHzXwSk+ObOE6qspNGzqvfkeHe952GIqDTiJf0BMHcoUN9xqogNYciqH5NCwf90vYS5uHF5cwqkviV3b5Xh/qSjeiVHOSGuJmuQKW42Ub8cRV0HgHRDRLgpFWSbZb56YGbwjwPZu2AboX4+iJOdF8TcQonsvdO8gtWvdz27dx+lWjhwYqjBYJ9emxWYCWcnp4pVYy7CsRB33Pw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/nMwtoFpbQDY7gyv9bOunWvkXTfkHM8RDy8rYfQmSKc=;
+ b=IxGbtWFMVeblBL94tkmjQ+L8JDl4t7IFcYFg2TudcmTQ+inmWMIeuitIcsQotsYtuv52Z2lv3kBMvgKIwx+sSnhcwmwDPr013PVJBIO+/+Q9xdw37vpVTJaSuuh2ZkY/G27vmYYiN/9TAL8nXmoqPJWPe3HidpebYvkwunaCItw=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from IA1PR12MB9062.namprd12.prod.outlook.com (2603:10b6:208:3aa::14)
+ by DS0PR12MB7994.namprd12.prod.outlook.com (2603:10b6:8:149::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.35; Thu, 8 Oct
+ 2026 17:25:14 +0000
+Received: from IA1PR12MB9062.namprd12.prod.outlook.com
+ ([fe80::28c6:3cbd:6e97:5257]) by IA1PR12MB9062.namprd12.prod.outlook.com
+ ([fe80::28c6:3cbd:6e97:5257%6]) with mapi id 15.21.0496.015; Thu, 8 Oct 2026
+ 17:25:14 +0000
+Message-ID: <dea37d3a-a66c-4620-b6c5-032b27e9c43c@amd.com>
+Date: Thu, 8 Oct 2026 10:25:08 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 05/19] accel/amdxdna: Add NPU3 classic device support
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+Cc: "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>
+References: <yidong.zhang@amd.com>
+ <20261008032348.2044667-1-yidong.zhang@amd.com>
+ <20261008032348.2044667-6-yidong.zhang@amd.com>
+ <sashiko-outbox-163576@kernel.org>
+Content-Language: en-US
+From: "Zhang, Yidong (David)" <yidong.zhang@amd.com>
+In-Reply-To: <sashiko-outbox-163576@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ0PR13CA0201.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c3::26) To IA1PR12MB9062.namprd12.prod.outlook.com
+ (2603:10b6:208:3aa::14)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR12MB9062:EE_|DS0PR12MB7994:EE_
+X-MS-Office365-Filtering-Correlation-Id: c2b46e76-8277-4ef4-535c-08df25611d13
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|11063799006|56012099006|4143699003|10067099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	xGliV/YUBUiuTxIGRuF6Rp4jVTPpYRxj2zI/McNwZDmTPEcdJBKNEsLkjGmx4VU6vgA7e+eyJZFaLmh1gBV6/asWh8KRebtshlrdp1YLFA0898i1ygySO7ZQvmtLTXB3HIn6FYCcg5sdwR5BJ4vcFxoOk+BRUWWv2aR5pdUzTQlJZsxgI2B33Rm/4jtBk51pCmuvcS/XI7rJ5m95v8QUgoBsAdH2l5GWtgoAXLjhAJPheQriKxenJqRYnDEL50qR5kIyrrsYZh8RHFvWAz76wtoeLtC1d7QjTgM3hjsFCB4V//IAIiIIyz44iHUhdeI+PTTiLoLt1X+YHTXmW1+L0f1t7nUxnm0knQVfUp1ItJxXv3uTaSykdSZRe4wb5kdcgClWf2CylAIJ/Sn8yhd1E0Ayv2P4d8id6XT+GG0aIJDcTMq6tkk/vAQtiOJxY3B9kwfM8dW2ww5B/uB6FMOD98N4kmrr4B4LyXZwVvLV0LRn/5SzOfJZZroIvmtRJmjn0GycfbmBHheb3R1jb6LnhJ3Zexlb4NyYWgPWN72Md/xSiYgCckXSTMGzJm7v2NpN+4d4YdZ2Qope4OvL1NP+JiOsjMBQcUrIWy7//eWvDoWhfh/vexufqjlEB56bF53ROpawU3PngZxt296zSZ2K5343kTY7JZvuy3wni/rD1pw=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR12MB9062.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(11063799006)(56012099006)(4143699003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?T0dhdGV1TWhqQ1p5QmQ0bUE5d1VLVHQxRVhMdXVUdDcxZ3ppU3ZXVFFLVW5w?=
+ =?utf-8?B?T0lDbm5ZUCtaYmNQNVl1NWRHVGN5OExpdmY4d1dYSythdkluczNaQzQ1L0ZD?=
+ =?utf-8?B?SlJ5OWUxNHJFVDFseDFUUXgwZ2M2Nm1KbGxFdWhYZkZ1ZEVMdkpDd0FGNFBJ?=
+ =?utf-8?B?WmpCc3hBdURrVGR6ZTZyaWUwb1FaOVM0WlRsY01sbHdCTHF6SUVkWFZJQWFF?=
+ =?utf-8?B?Q0FjS3ZpdGRiY0hsMjZrc0tBMFlZWmNMUHZsanZNK3JheUJ6bkVRZTJBNTVz?=
+ =?utf-8?B?Q0s4SS9rSlljUVA4dFAxNkxBaGVvWlhTRm9jcXNMTThPZmxscS93aU96dVV6?=
+ =?utf-8?B?RWU4RVczVTlMRi95OWxNK0trdlY3MTRpd2ZaenhaT2NZOVZUSmVuWHZZRnc0?=
+ =?utf-8?B?NEp4cmtTNHp3ZlQ3cENsdTZ6UkNFWFlsWVBCT2c0MzdWcjRqelBvVU5BeWwr?=
+ =?utf-8?B?MHk1djU3UjFJYjhkYWJ2WHBHRldBbkdsL0JqUWl1YU93SWhCdXEwWElObzJ2?=
+ =?utf-8?B?OTU0S3JmNkNtcFQ4aHJiOEpBb1ZMR0lWU1JKYThLbC83eFMrNkovanFWZjgw?=
+ =?utf-8?B?RU9SUWNETW9xak42cVZCMlRqVDVYVVhocGZWSERnVm1aOUQxbWJKMmdYd0RN?=
+ =?utf-8?B?dERrU2xES3dBQWhZNTVrWmNRQkZLVEZPeEV1R0VmVU9wNUlGMHArVm5NQklI?=
+ =?utf-8?B?OS83dG5UMWQwd3hQQ0RDUDFnWVovLzdES0Z4ZkVqVzBVblh6b2labEZZL2d2?=
+ =?utf-8?B?d3FvZE51N2ZJK1Q0aXJ2MFcvTkdxM2gzU2dzckhxUXE0RTRnd3pHRDd6dGRo?=
+ =?utf-8?B?YnA4bm5wdVZYMmhIVzRFT01NSFFJclFlWWY1V3dVMFlHM0tSUjJiVUltY2VN?=
+ =?utf-8?B?Y0FweEN0T0ZBY1ArN2g2dDVYaWo3SDAvK3JwRDVTQUc5RkhFOW9zM0o2VlR1?=
+ =?utf-8?B?MU5WL0MzVjh2QUNUZmFWSmx0S3prU0JaZ3hwZzFXeW9uZm5RZnh4Yk1qSXRE?=
+ =?utf-8?B?dlZKVVJXZ01HWFpUVGdGRUNmWVQ2NzlhdDhVdk1tYzVzbXhPMi9ISHVNRzBZ?=
+ =?utf-8?B?RGRmMzBzYXV3b1I0MVptK2poU0xHK2o3QXpjVEdBRXA3OHFrTnNtSmNwalBZ?=
+ =?utf-8?B?L2NvOFBnckVybGltVVdMdDE1QVdLWkJEclI0THpUUEZIWmdVUU1hK290OEdY?=
+ =?utf-8?B?NmlncHNrRkk1TWRoQWc0OGtnMkpISEEwblUrZFNiYllXTDJiaVJ3alBPMkNO?=
+ =?utf-8?B?cGVxc2hCc1Q2L21hb2k4NCt0VTdmRjB1YisvUmNZbFpWTlIwRkg4UVRyZkxB?=
+ =?utf-8?B?eml4YWdBeE96NWFSSXRtbkNrUk14WVNWMzQxNjFhMis1MkZENGNMNXJ4OFp1?=
+ =?utf-8?B?RjIrOXVVN2w1RFFqN05RbUhGQmE1S2FXV0k3Y1IzRHZNSmVBQlJKcENwLysw?=
+ =?utf-8?B?cktJS01CdHRZWi9EcDdxYXdZVkllU3hBbFlOWEF2ZkwycW9SNWMzY3hCUnh0?=
+ =?utf-8?B?SUtvaDltZm80WWRaMHhpejc2R1ZqaW9SOWd1RS9zbEI0b3F0WU5lTCtzWHA1?=
+ =?utf-8?B?TU5SVUg5T1RNZ1BTWnFJMCs4eUk5Q1BPTlppanFKOEtTQklnaWtURXhyc21i?=
+ =?utf-8?B?TTJNUElJcWl4VGNSTzRLZkxTNkNaNW9hbVZsZ2loZU1GMllvVzFrYlh6eTNS?=
+ =?utf-8?B?dXhqeHduVEdjVEErZVkvOVNSM2FWaVVpSE1CN2lVRWhlZ2hHYTlUMWNMNDJz?=
+ =?utf-8?B?MDZ5N2Y4ZW02Y2xKOUU1UDk3WjNaUFBSWXU3M05HeTlzdm9yZ1o4ZjFNZEJO?=
+ =?utf-8?B?emFod2lKZzR6dy9aTFdVaWN4RUZGTnp2Z0ZIa3F0V2ZTZ3g3cS9EU3ZNMm5p?=
+ =?utf-8?B?TUlRVVZZV3diWFpHa2NXWEF3Z1JxQU1pWkt6Nlg2ZWpOemtCSUs1ZytmbEZ4?=
+ =?utf-8?B?bnFWc0VDUVJCNTVFbUZlYTA4eDcwaTdKT2NHYnFvdjBhMHZvMDBzc2o2Y3Bl?=
+ =?utf-8?B?cUxORllOdjk0RWZaS2JXdWtBaTRoK0JQM0p0RGMxMkF5QlBPU3I0YnY5NjlH?=
+ =?utf-8?B?YlVlcFJGTVJnd0J4cFZwZ1ZYTXBNd0I4eGNldlVNNk4xL1ZGYzJxL1dBWlhl?=
+ =?utf-8?B?aVJ1dkw5Y3NKOTBScDkralU2SFF0ekpjekIrczNjY25QbHNFUjNiMHlPa2pF?=
+ =?utf-8?B?VXBKRFkyK3hpUGV2Yld0Si9VSFAxQTI3aDN5bCsyd01lWnpwMlRyQ2NUbGRI?=
+ =?utf-8?B?bWUxMjdBQndwaVg3a1MxNEUrMWo1Z3RZcEtCM3FwbjBROG56aUpML3N1MURw?=
+ =?utf-8?B?UVAxTll5eWk2blVJRjJUQWp6ajdqRW4zNzdrWE45azFudHFNSlZLdz09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c2b46e76-8277-4ef4-535c-08df25611d13
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB9062.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Oct 2026 17:25:14.1261
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 758MQ2hwNOXx6VbxFTRlH95qrW/3xbGJXO6zxynVdunKkXT8UmJF6avtvx0+ISbHt3GCRawdXcaT5LTwAzUDYg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7994
 
-On Wed, Oct 07, 2026 at 06:18 PM +0000, sashiko-bot@kernel.org wrote:
->> +	/* Drops CHECKSUM_COMPLETE. skb->csum still covers the trimmed bytes,
->> +	 * which hold the non-zero tcp.urg_ptr of pkt_v4, so it no longer
->> +	 * matches the packet.
->> +	 */
+
+On 10/7/2026 8:44 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] amdxdna: user-triggerable WARN_ON due to 0 dev_mem_size on NPU3
+> --
 >
-> This isn't a bug, but does this multi-line comment follow the preferred BPF
-> subsystem style? The global guidelines mandate that multi-line comments in BPF
-> files should have the opening '/*' on its own line, with the comment text
-> starting on the next line.
+> commit f86aaf866bc504bcba674227ac3b36c9902b057f
+> Author: David Zhang <yidong.zhang@amd.com>
+>
+> accel/amdxdna: Add NPU3 classic device support
+>
+> This commit adds NPU3 classic device operations, register definitions, PCI
+> device IDs, and firmware declarations. It also guards device heap memory
+> initialization against a zero-sized device heap, since NPU3 does not
+> configure a dedicated device memory heap.
+>
+>> diff --git a/drivers/accel/amdxdna/npu3_regs.c b/drivers/accel/amdxdna/npu3_regs.c
+>> index 93f749acb5d5d..c82433d629012 100644
+>> --- a/drivers/accel/amdxdna/npu3_regs.c
+>> +++ b/drivers/accel/amdxdna/npu3_regs.c
+> [ ... ]
+>
+>> @@ -105,3 +105,17 @@ const struct amdxdna_dev_info dev_npu3_vf_info = {
+>>   	.cert_feature_tbl	= npu3_cert_feature_table,
+>>   	.ops			= &aie4_vf_ops,
+>>   };
+>> +
+>> +const struct amdxdna_dev_info dev_npu3_classic_info = {
+>> +	.mbox_bar		= NPU3_MBOX_BAR,
+> [Severity: Medium]
+> Since this struct leaves dev_mem_size uninitialized (defaults to 0),
+> can this cause a user-triggerable WARN_ON?
+>
+> When an unprivileged user space client calls the DRM_IOCTL_AMDXDNA_CREATE_BO
+> ioctl with args.type == AMDXDNA_BO_DEV_HEAP, the handler delegates to
+> amdxdna_drm_create_dev_heap_bo() without verifying if the device actually
+> supports a heap.
+>
+> In amdxdna_drm_create_dev_heap_bo():
+>
+>          WARN_ON(!is_power_of_2(xdna->dev_info->dev_mem_size));
+>
+> Since dev_mem_size is 0, is_power_of_2(0) evaluates to false, causing the
+> WARN_ON to execute. This allows any local user with DRM node access to
+> flood the kernel log or potentially trigger a crash if panic_on_warn is
+> enabled.
 
-Right, will move the opening /* to its own line in v2, for both comments
-here and for the one in patch 1.
+Yes, will fix this with a single patch.
+
+/David
+
+>> +	.sram_bar		= NPU3_MBOX_BUFFER_BAR,
+>> +	.psp_bar                = NPU3_PSP_BAR_INDEX,
+>> +	.smu_bar		= NPU3_SMU_BAR_INDEX,
+>> +	.doorbell_bar		= NPU3_DOORBELL_BAR,
+>> +	.default_vbnv		= "RyzenAI-npu3",
+>> +	.device_type		= AMDXDNA_DEV_TYPE_UMQ,
+>> +	.dev_priv		= &npu3_dev_priv,
+>> +	.fw_feature_tbl		= npu3_fw_feature_table,
+>> +	.cert_feature_tbl	= npu3_cert_feature_table,
+>> +	.ops			= &aie4_classic_ops,
+>> +};
