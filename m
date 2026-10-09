@@ -1,50 +1,60 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406412EBBAF
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 14:52:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C105681ACD;
+	Fri,  9 Oct 2026 14:53:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557565; cv=none; b=BIn33hgawNfnum97dp3I69udnVNsLP0EPEpUVRyCZ+DGLb8lduTL95UW9XgqwxedFjKgDvnBsK97zxHx+w3ifB8T00KYsenQXA93HKzeS8wh5U6vu4TKKpkUdQqApW2d4O7kPupJvPcmNSGkbm+IAByEEl+ycax0hu9MA9E7vCU=
+	t=1791557588; cv=none; b=kK2FI/lC7EHnW7erGVlt73eInXKm3iz1Zmluj+oiH0TTAN4exk8frR40fSTX+Z6BMS15QVDsVyHZou5ZH6FgoaUAe/fG6pfUf1qkngA9pUHrSgNEV8WbWR3gJCeq5EL8wwFA1b8/EIC0xoSH8ZpmXI5/7sRZvBu/SKRB14m4X6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557565; c=relaxed/simple;
-	bh=j/W0rjMStjXwrznsrjwLG2IWM+mP8O7kgmoVpAqOLYg=;
+	s=arc-20240116; t=1791557588; c=relaxed/simple;
+	bh=xXiZJI19t2BA0FYSWVIyLlTrY8NqL1Ai0Csb6G7N9o0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=crHIrtjPeUVXn5zpUyOlXTNjR/DYP9Pt8PUV6UQqlm1WgdOl5ZLo72rBWwFDFegIshVOVz/tBnjILtSVit5ap/fgMKcokH91nXyXfgKl7jZD+8dFf2KsM0TSIEkaVa1H9zkjt2B6GXlrE1gXFYAkYDRw6OF7dCvG2npk3WMXZrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AsmJQNfK; arc=none smtp.client-ip=192.198.163.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	 In-Reply-To:Content-Type; b=CF4bmfRNjAdbJGUOiD/3v4ZAd6cca+fR1nwg1IoWWTozlqqyKjf8Nrep7irn+5uYTmpYCDr8bSEcWFO2suUnbAZl89rGCewljYeAXi/fOode1fHhiLqAQEbpjTCgfDfYZvKxsBj+Q5TZc6Smf6Kp0zoprRf3cFRfGnDTye+/VV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=qtiF1Cj9; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AsmJQNfK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1791557564; x=1823093564;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=j/W0rjMStjXwrznsrjwLG2IWM+mP8O7kgmoVpAqOLYg=;
-  b=AsmJQNfKB0lqunvNJlRJZRjmYC137ymACr0Epeutaf9vwdVgb07uSpTI
-   tip58JE/fccdqrYG/DeZXxVyn9vlGOrmHh8MOBGagewaZmGeZXNG/d/2g
-   3wuf/ml9xKIuCmfLQ5lctlAWF/BbvcBcMRO+ajrGSjNOJDpXz10Vn2Wyc
-   px/JsiEuT3DyDRxRqnINbKlpkuBp3WYcMmUaxTMS/B2viu6VhJBWPe7Ah
-   GU/WQzfwafFqAoLb3EFEPdH8xda6CXzce8viO0yKhfrgfVF2Dp24aghp7
-   jg5DdJjtc5KZdnXsG8hSiFRZjLhpjkApCEhvnn3x4DN2IyaIAJWcZfoU/
-   g==;
-X-CSE-ConnectionGUID: pBdTtfEIR6+8MID9JHx06A==
-X-CSE-MsgGUID: CZlJkrPBRnON0+oew/BNsA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11930"; a="263598"
-X-IronPort-AV: E=Sophos;i="6.27,148,1787036400"; 
-   d="scan'208";a="263598"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2026 07:52:43 -0700
-X-CSE-ConnectionGUID: Qe6ZRDtxSHCTqViaRVuDnQ==
-X-CSE-MsgGUID: 6Vt01TD9QnuHGjRf0IPSoA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,148,1787036400"; 
-   d="scan'208";a="263218"
-Received: from ettammin-mobl2.ger.corp.intel.com (HELO [10.245.244.17]) ([10.245.244.17])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2026 07:52:42 -0700
-Message-ID: <b74c1110-6c36-4863-a40c-5a515e3ed107@linux.intel.com>
-Date: Fri, 9 Oct 2026 17:52:39 +0300
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="qtiF1Cj9"
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 699DZNax197757;
+	Fri, 9 Oct 2026 14:53:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=q2dHoc
+	oKIIizrqreF9TIj1rRfwKC7TlQb28MXruAj0E=; b=qtiF1Cj9p2DvC74S6rcX77
+	JsBL8xf5ktcb/LVEwR+GRRI5B3xoeHDg4Jx/F1zi7Ob42KkDxlheDrWLJMzrzzjR
+	4+yWzU+0HOpT5qEqLEY4SAyTPem/tai7DI23N9qIL7A9Rh3uUQ+nORCysZiUl6wg
+	mQcyKYV0ysRPfZJR49Sjs7DJUYCyImZuFlBQyzh45wBlnDzOVcvDQjMHCxyaZCbT
+	L3Eduh19lrFe7exSkUJDny225iZ9xmsDTk1tmC7Pu90t9R7x8Pz3Fomih04PhRYF
+	gfymaz6fSBYkLKksjTAy1hNGLGq2Sm7qgMse8xOM36V1J+dISjpVh+IPA3clS9cg
+	==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjvkbqr-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Fri, 09 Oct 2026 14:53:06 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 699DWTsu924007;
+	Fri, 9 Oct 2026 14:53:06 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h6v76sbut-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 09 Oct 2026 14:53:06 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 699Er2JK52429248
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 9 Oct 2026 14:53:02 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 73F5C2004B;
+	Fri,  9 Oct 2026 14:53:02 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3F12920040;
+	Fri,  9 Oct 2026 14:53:02 +0000 (GMT)
+Received: from [9.224.77.173] (unknown [9.224.77.173])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Fri,  9 Oct 2026 14:53:02 +0000 (GMT)
+Message-ID: <95c55fab-cd04-497f-9266-6c30353d73e4@linux.ibm.com>
+Date: Fri, 9 Oct 2026 16:53:01 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,190 +62,80 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/14] early: usb: xhci-dbc: Handle out of bounds
- xhci-xdbc capability
+Subject: Re: [GIT PULL 3/6] KVM: x86: Use file_to_kvm_x86() in SEV
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-usb@vger.kernel.org, Umang Jain <uajain@igalia.com>,
- Greg KH <gregkh@linuxfoundation.org>
-References: <20261009095834.561578-1-mathias.nyman@linux.intel.com>
- <20261009095834.561578-2-mathias.nyman@linux.intel.com>
- <sashiko-outbox-165202@kernel.org>
+Cc: kvm@vger.kernel.org, Alexander Gordeev <agordeev@linux.ibm.com>,
+        linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>
+References: <20261009142749.186650-1-borntraeger@linux.ibm.com>
+ <20261009142749.186650-4-borntraeger@linux.ibm.com>
+ <sashiko-outbox-165722@kernel.org>
 Content-Language: en-US
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
-In-Reply-To: <sashiko-outbox-165202@kernel.org>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+In-Reply-To: <sashiko-outbox-165722@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: btnWzFcfH2OKsHQMuq3zJvSqtowcfbkt
+X-Proofpoint-ORIG-GUID: btnWzFcfH2OKsHQMuq3zJvSqtowcfbkt
+X-Authority-Analysis: v=2.4 cv=H8NOUOYi c=1 sm=1 tr=0 ts=6ac8ffd2 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=FcIQ4akS4mhgl6oufq0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA5MDA1OCBTYWx0ZWRfXxqiL2kNn+X6b
+ gBT56dSwzfyD7YvQNUNW9IyzQ4X2Bci3ZHspUi8H3ABlSKaj1ub36EViw3ol6HbzZSZv2ylyyi1
+ thax9pbzGntUcYoNcvKh57Wjkja3fDNE6DsHPnQB50mgxAbx4n7ZtIHw0SA4TiMUyIutA72wBBi
+ VzLIPWIrVeD27Ns7AZDOjwMgnykqsInk5yO0ayvytvcFxOgVIw57Xxw5nIgJH/ik3+mFkMKyszy
+ C9iy7LzIQj+uJuE7l1HrQTPQQJplj8BZPBPh2brQcbLysFQCXpYydA/6MhvXPXjD7Dcy9LNa5Di
+ BrNQ8+TmGkXdH7GxiTl0cgJC9sOcnSjfo5JADoQ+ZS5TE8UANEL4I3/RBLSibvXa3+gVNiIpPVy
+ FR97Ma/PuS324yhuYxjLBu2I8P7yDv17nSOyHa4/UrS+nf3ob3GpEiH1OcYMnfoYm5LUEjQskmZ
+ MpOr9eLlWkKf8fkbzGw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA5MDA1OCBTYWx0ZWRfX/D9TGLLz9fwX
+ O/Kr5CqEUv9tjFcvRcFB8bygOCCKUKwDZkVxgGUkFswDNBQfDIH52mJTqi0Gr1xhsP/DisrJ9HU
+ v4ihnA2XY+qv8cjcZCwCI2RbsppkyIo=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-09_04,2026-10-08_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
+ clxscore=1015 spamscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610090058
 
-On 10/9/26 13:11, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
-> - [High] usb: xhci-dbc: OOB MMIO read during capability traversal via truncated early_ioremap
-> - [High] usb: xhci-dbc: strictly requiring optional LEGACY capability breaks valid hardware
-> - [High] usb: xhci-dbc: missing bounds check allows OOB access to LEGACY capability registers
-> - [High] usb: xhci-dbc: lockless unmap on ioremap failure causes UAF with active console
-> - [Medium] usb: xhci-dbc: off-by-one check incorrectly rejects capabilities ending at fixmap boundary
-> - [Medium] usb: xhci-dbc: missing offset=0 check processes base registers as capability
+
+
+Am 09.10.26 um 16:36 schrieb sashiko-bot@kernel.org:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] kvm: build failure due to missing definition of file_to_kvm_x86()
 > --
 > 
-> commit c5569785c857fd1c3eacf9d2844609e296560040
-> Author: Umang Jain <uajain@igalia.com>
+> commit 10a7cd7a1613201c02ffd0500ecb15453fab9d30
+> Author: Steffen Eiden <seiden@linux.ibm.com>
 > 
-> early: usb: xhci-dbc: Handle out of bounds xhci-xdbc capability
+> KVM: x86: Use file_to_kvm_x86() in SEV
 > 
-> This commit handles the case where the PCIe memory IO size exceeds the
-> fixed boot time mappings dictated by NR_FIX_BTMAPS. It ensures that the
-> xHCI debug capability can still be queried by mapping the base address
-> up to the fixmap size and querying capabilities within that range. It also
-> introduces xhci_base_length to track the early_ioremap() mapped size.
+> This commit replaces the open-coded file check and private_data cast
+> with a new arch-namespaced helper file_to_kvm_x86().
 > 
->> diff --git a/drivers/usb/early/xhci-dbc.c b/drivers/usb/early/xhci-dbc.c
->> index 41118bba91978..f2ed8e52cc56c 100644
->> --- a/drivers/usb/early/xhci-dbc.c
->> +++ b/drivers/usb/early/xhci-dbc.c
-> 
-> [ ... ]
-> 
->> @@ -85,7 +98,59 @@ static void __iomem * __init xdbc_map_pci_mmio(u32 bus, u32 dev, u32 func)
+>> diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
+>> index 944aaea6501f2..2787b832c9e0f 100644
+>> --- a/arch/x86/kvm/svm/sev.c
+>> +++ b/arch/x86/kvm/svm/sev.c
+>> @@ -2121,10 +2121,10 @@ int sev_vm_move_enc_context_from(struct kvm *kvm, unsigned int source_fd)
+>>   	if (fd_empty(f))
+>>   		return -EBADF;
 >>   
->>   	xdbc.xhci_start = val64;
->>   	xdbc.xhci_length = sz64;
->> -	base = early_ioremap(val64, sz64);
->> +
->> +	fixmap_size = NR_FIX_BTMAPS << PAGE_SHIFT;
->> +	if (sz64 < fixmap_size) {
->> +		xdbc.xhci_base_length = sz64;
->> +		return early_ioremap(val64, sz64);
->> +	}
->> +
->> +	/*
->> +	 * Base address size is greater than fixed size boot time mappings
->> +	 * hence, map maximum allowed fixmap size from base address and
->> +	 * determine if the required extended capabilities lies within the
->> +	 * fixmap.
->> +	 */
->> +	base = early_ioremap(val64, fixmap_size);
->> +	if (!base)
->> +		return NULL;
->> +
->> +	offset = xhci_find_next_ext_cap(base, 0, 0);
->> +
->> +	while (offset < fixmap_size) {
->> +		val = readl(base + offset);
+>> -	if (!file_is_kvm(fd_file(f)))
+>> +	source_kvm = file_to_kvm_x86(fd_file(f));
 > 
-> [Severity: Medium]
-> If xhci_find_next_ext_cap() returns 0 (indicating no capabilities found),
-> doesn't this loop unconditionally enter because 0 < fixmap_size?
-> 
-> Inside the loop, readl(base + 0) would read the base xHCI Capability
-> Registers rather than an extended capability header. XHCI_EXT_CAPS_ID(val)
-> could then mistakenly extract the CAPLENGTH byte, potentially misinterpreting
-> it as an extended capability ID like XDBC_CAP_FLAG_LEGACY.
-> 
-> Should there be an explicit check for offset == 0 before entering the loop?
+> [Severity: Low]
+> Is file_to_kvm_x86() defined anywhere in the kernel source tree at this
+> commit? It appears to be missing, which will cause an implicit
+> declaration compiler error here in sev_vm_move_enc_context_from().
+> Could it be that the patch introducing this helper was omitted from the
+> series or ordered after this patch?
 
-will fix, but not a real world issue as all xHC hosts have extended capabilities.
-without extended capabilities host won't have any ports.
-
-> 
->> +		switch (XHCI_EXT_CAPS_ID(val)) {
->> +		case XHCI_EXT_CAPS_DEBUG:
->> +			if (offset + XDBC_MAPPING_SIZE < fixmap_size)
-> 
-> [Severity: Medium]
-> If the 64-byte DEBUG capability struct ends exactly at the fixmap_size
-> boundary (offset + XDBC_MAPPING_SIZE == fixmap_size), it is fully mapped
-> and safe to access.
-> 
-> Does the strict less-than operator here incorrectly reject a perfectly valid
-> capability that ends exactly at the boundary?
-> 
-
-will fix, this just rejects a border case that could work.
-
->> +				cap_flags |= XDBC_CAP_FLAG_DEBUG;
->> +			break;
->> +		case XHCI_EXT_CAPS_PROTOCOL:
->> +			cap_flags |= XDBC_CAP_FLAG_PROTOCOL;
->> +			break;
->> +		case XHCI_EXT_CAPS_LEGACY:
->> +			cap_flags |= XDBC_CAP_FLAG_LEGACY;
->> +			break;
-> 
-> [Severity: High]
-> This accepts the LEGACY capability without ensuring its extended registers
-> fit within the mapped fixmap region.
-> 
-> If the LEGACY capability header is located at fixmap_size - 4, the while
-> condition (offset < fixmap_size) is satisfied, and the header is read.
-> However, later in xdbc_bios_handoff(), the code accesses the control register
-> at offset + XHCI_LEGACY_CONTROL_OFFSET (offset + 4).
-> 
-> Will this result in an out-of-bounds MMIO read when offset + 4 equals
-> fixmap_size?
-> 
-
-will fix, size of legacy capability is 8 bytes. Odd and extremely unlucky
-if these 8 bytes would cross the NR_FIX_BTMAPS << PAGE_SHIFT limit.
-
->> +		}
->> +
->> +		if ((cap_flags & XDBC_CAP_FLAG_DEBUG) &&
->> +		    (cap_flags & XDBC_CAP_FLAG_PROTOCOL) &&
->> +		    (cap_flags & XDBC_CAP_FLAG_LEGACY)) {
->> +			found_all_caps = true;
->> +			break;
->> +		}
-> 
-> [Severity: High]
-> According to Section 7.1 of the xHCI specification, the "USB Legacy Support
-> Capability" is strictly optional.
-> 
-> By requiring XDBC_CAP_FLAG_LEGACY to be present here, does this patch
-> introduce a regression that breaks DbC initialization on valid, compliant
-> hardware that safely omits it?
-
-Not an issue. No regression.
-
-This patch adds early dbc support for more hosts. Doesn't remove support.
-
-> 
->> +
->> +		offset = xhci_find_next_ext_cap(base, offset, 0);
-> 
-> [Severity: High]
-> Does this blindly request the next offset without verifying bounds beforehand?
-> 
-> Inside xhci_find_next_ext_cap(), the helper computes the offset to the next
-> capability and immediately dereferences it:
-> 
-> xhci_find_next_ext_cap():
->      do {
->          ...
->          next = XHCI_EXT_CAPS_NEXT(val);
->          offset += next << 2;
->      } while (next);  // loops back to readl(base + offset)
-> 
-> If the computed offset exceeds fixmap_size, readl() will access unmapped
-> MMIO memory and cause a kernel page fault BEFORE xhci_find_next_ext_cap()
-> returns.
-> 
-> The offset < fixmap_size check at the top of the loop is too late to prevent
-> this out-of-bounds access.
-
-True, this was actually a good find.
-
-xhci_find_next_ext_cap(base, offset, 0) does unnecessarily read the next
-capability even if we don't care about the content (the capability id)
-
-xhci_find_next_cap() was never designed to work with a limit size mmio map
-of this PCI device.
-
-Could be somewhat easily fixed in xhci_find_next_ext_cap(), but I don't want
-to touch it at this stage without properly testing.
-It's used everywhere, and risk of regression is high.
-
-I'll drop this until properly fixed.
-
-Thanks
-Mathias
+false positive, see patch1.
 
 
