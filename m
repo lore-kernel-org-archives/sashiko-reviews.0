@@ -1,185 +1,181 @@
-Received: from mta1.migadu.com (out-101.mta1.migadu.com [95.215.58.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender5-op-o11.zoho.com (sender5-op-o11.zoho.com [165.173.182.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE9F3C09F5
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 17:38:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.101
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791567526; cv=none; b=YcfwqR0FDL2xAI50pT+FaopmWh67m6hAGBm7PeKAcG9YK+C3CU03FpMK792ePJZN0qYBHk3qOqiqaVKoQk+XMHS9LjGrdOIEpODDZssOCaBfPovZOlfwtJsZyb8+Es+DDZgm8BM4ao4Q/9AzfWyerdzwSIeAT2tL7cmnn2Rbiwo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791567526; c=relaxed/simple;
-	bh=zHUuzKnIPNhWiXNI+dpd0f8/Q7kFufm5tGlpb3pCMPc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Jxr8HqVaHZtkJ2DjFawibebWtnxmLaDlL1BZTsRGb/brUT0uk0SsxzX1MySAckiyIX+7hUTUMvNQkwtdoPM0MV/AzFCvohIh/bp7DI+OZlqJGwmrmgeNz/1qqqN3BdnjJbwHLDkzXE86PQJXdJcM+OEL9AKNGAxkEdo6PXSsvaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Wyojo/YE; arc=none smtp.client-ip=95.215.58.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D038E472068
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 17:39:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.182.11
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791567568; cv=pass; b=FDSJ96Y9PScbapzfChR7PnPoU7iPpg0S1reNS6LvsHrFn2gMZ9kz++/I4k5LqJNQpbHsRRCETGYxuFLKijf4JAfbC5LSUXeQGoCaGpZsozp6iTO100oudoq9pTrtBb071rx/eZyUs4d/j7V3zs9/l/FY2XSAgmkJlslj/goV9Vg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791567568; c=relaxed/simple;
+	bh=qzcT6qYje4sTTAgqTEl0t5dBA8W8kQg7XXcN3EpCiOE=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=MWOa0l67X/kqqhJyyle5yjsRcsRigO3/k/N0PSITaM3TVG8TCgux0wwJNhGjnxb6J2D0OgOtraylbieBFOlYS8REsnetcJ++RIj/l0ULjteWv8Q9Kx/55Pmiyv2VAcaoEiY20QC10uzeUrhhWZdO2alSN2GnxDxJDkqzHKSlTNU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=daniel.almeida@collabora.com header.b=Yr3ERYzM; arc=pass smtp.client-ip=165.173.182.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Wyojo/YE"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=zHUuzKnIPNhWiXNI+dpd0f8/Q7kFufm5tGlpb3pCMPc=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791567520; v=1; x=1792172320;
- b=Wyojo/YEw4IxsClYNWoFkzNk5n0dcfqHt7qGqzDwMwXKExl+x3hSYusKvMZsVwfskpxgN7RW
- K2rZ9v6kncLMAhqjIRlaDsncYuXnoQqWxX4iJsvcVRdoEIpOo0/poeW3shb7Mj8VBzPrAFhcuDw
- Uj/LTtEr+PCx3bZa3cy1Iy1A=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id e32b73b4469d334d;
-	Fri, 09 Oct 2026 17:38:40 +0000
-X-Mizu-Trace-ID: e32b73b4469d334d
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <ea470d9c-de17-4b1c-9cbe-174e30c44f88@linux.dev>
-Date: Fri, 9 Oct 2026 19:38:39 +0200
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=daniel.almeida@collabora.com header.b="Yr3ERYzM"
+ARC-Seal: i=1; a=rsa-sha256; t=1791567564; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=aFKK2jtCkxadHKQCDvVf5dnKU+isNv5s0xjCR+l2EkdE275cXGCi5pq2TrpLLvbcErXugOuj5q9Ylo7E/leGwtKMf7qDbbci/t17VbIz8QD7Jd8EweyV4suM5OLIdPJ6O7G0XvnjFriHysmwTNUgifhWfY6dJB5OU6Aq+fy7V7A=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1791567564; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=t3G3vXPPdNIpz8RR0v8taZMHAiuT2sSRJwChXCRd0dE=; 
+	b=Pt0VOvIbuovuqFuHyac2WvuI9PRO7YUFfOk6WW4DhWiENFg0zrAzVATjR+bQhnkOAA22IJSTLvyJNdxtwWAJbYHV37O5ufHYY/h86/Qg8vuV1OWMzLeDHApvZfSStZYWMZvJQab0+L9AVd8sT5CUQp8RutG1NlWzHSFZZMu/+20=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=daniel.almeida@collabora.com;
+	dmarc=pass header.from=<daniel.almeida@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1791567564;
+	s=zohomail; d=collabora.com; i=daniel.almeida@collabora.com;
+	h=Content-Type:Mime-Version:Subject:Subject:From:From:In-Reply-To:Date:Date:Cc:Cc:Content-Transfer-Encoding:Message-Id:Message-Id:To:To:Reply-To;
+	bh=t3G3vXPPdNIpz8RR0v8taZMHAiuT2sSRJwChXCRd0dE=;
+	b=Yr3ERYzMEGMjItiZxawJVRWJZwnk/YfDMxUAtYhKDJ8oNOvhOxYRzv+kPfufokY0
+	tdoyhsq1IlQqdXXrIoKXQ0QjRKbkpSuHA+fimQWTALfk2nAYOFpLpyfT+GbsuDDi8E9
+	0lmh/s/haQ5Oxzgn+jiCw+8gUO6vDDvNU66MK5J0=
+Received: by smtp.zohomail.com with SMTPS id 1791567563263601.7843812794108;
+	Fri, 9 Oct 2026 10:39:23 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 3/5] bpf, x86: Place trampoline arguments by the
- x86-64 calling convention
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
+Subject: Re: [PATCH 2/7] rust: drm: gem: gate open/close callbacks with
+ RegistrationGuard
+From: Daniel Almeida <daniel.almeida@collabora.com>
+In-Reply-To: <20260814232106.01AA71F000E9@smtp.kernel.org>
+Date: Fri, 9 Oct 2026 14:39:08 -0300
+Cc: Danilo Krummrich <dakr@kernel.org>,
+ Alexandre Courbot <acourbot@nvidia.com>,
+ ojeda@kernel.org,
+ dri-devel@lists.freedesktop.org,
+ rust-for-linux <rust-for-linux@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E989BBD7-DF97-4384-AFC1-3D7448A1C747@collabora.com>
+References: <20260814230923.1292966-1-dakr@kernel.org>
+ <20260814230923.1292966-3-dakr@kernel.org>
+ <20260814232106.01AA71F000E9@smtp.kernel.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20261009064206.1238047-1-yonghong.song@linux.dev>
- <20261009064221.1240081-1-yonghong.song@linux.dev>
- <sashiko-outbox-164976@kernel.org>
-Content-Language: en-GB
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <sashiko-outbox-164976@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-Mailer: Apple Mail (2.3901.100.1.1.11)
+X-ZohoMailClient: External
 
 
 
-On 10/9/26 9:08 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] bpf, x86: stack arguments offset mismatch and misalignment with BPF_TRAMP_F_TAIL_CALL_CTX
-> - [Medium] bpf: info leak of uninitialized kernel stack memory due to missing garbage cleanup
+> On 14 Aug 2026, at 20:21, sashiko-bot@kernel.org wrote:
+>=20
+> Thank you for your contribution! Sashiko AI review found 2 potential =
+issue(s) to consider:
+> - [High] Bypassing `T::close` when the DRM device is unregistered =
+leaks driver-specific resources and software state allocated in =
+`T::open`.
+> - [High] Wrapping the entire `open` and `close` callbacks in =
+`RegistrationGuard` introduces a severe AB-BA deadlock hazard with the =
+device unplug path.
 > --
->
-> commit ffb54c9ff7ace6fffcfc471ab2c2927e34131e44
-> Author: Yonghong Song <yonghong.song@linux.dev>
->
-> bpf, x86: Place trampoline arguments by the x86-64 calling convention
->
-> This commit updates the BPF trampoline to place on-stack arguments
-> according to the x86-64 calling convention. It introduces a backfill
-> mechanism using bpf_jit_place_args() to handle arguments like __int128
-> that may span stack slots and create alignment holes.
->
->> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
->> index 083fcd6cf15b7..0fc7715e569b5 100644
->> --- a/arch/x86/net/bpf_jit_comp.c
->> +++ b/arch/x86/net/bpf_jit_comp.c
-> [ ... ]
->> @@ -3472,8 +3479,35 @@ static void save_args(const struct btf_func_model *m, u8 **prog,
->>   		 *
->>   		 * the arg1-5,arg7 will be passed by regs, and arg6 will
->>   		 * by stack.
->> +		 *
->> +		 * An argument aligned to 16 bytes, an __int128 or a struct
->> +		 * holding one, also starts at an even stack slot, which can
->> +		 * leave a hole before it. bpf_jit_place_args() worked out
->> +		 * where each eightbyte is.
->>   		 */
->> -		if (nr_regs + arg_regs > 6) {
->> +		for (j = 0; j < arg_regs; j++, slot++, bargs_off -= 8) {
->> +			u8 pos = pos_of_slot[slot];
->> +			u32 src;
+>=20
+> --- Patch [2]: [PATCH 2/7] rust: drm: gem: gate open/close callbacks =
+with RegistrationGuard ---
+> commit 56b4431da0d3b7c0798814690d882352e01b7d71
+> Author: Danilo Krummrich <dakr@kernel.org>
+>=20
+> rust: drm: gem: gate open/close callbacks with RegistrationGuard
+>=20
+> Wrap the GEM object open and close callbacks with a RegistrationGuard
+> (drm_dev_enter / drm_dev_exit) to ensure the driver callbacks only run
+> while the parent bus device is bound.
+>=20
+> If the device has been unbound, open returns -ENODEV and close =
+silently
+> returns. This prevents driver code from accessing device resources =
+after
+> unbind and is a prerequisite for making drm::Driver::File
+> lifetime-parameterized.
+>=20
+>> diff --git a/rust/kernel/drm/gem/mod.rs b/rust/kernel/drm/gem/mod.rs
+>> index 80d8f524f9d57..560403ca8e38f 100644
+>> --- a/rust/kernel/drm/gem/mod.rs
+>> +++ b/rust/kernel/drm/gem/mod.rs
+>> @@ -128,6 +128,14 @@ extern "C" fn open_callback<T: DriverObject>(
+>>     raw_obj: *mut bindings::drm_gem_object,
+>>     raw_file: *mut bindings::drm_file,
+>> ) -> core::ffi::c_int {
+>> +    // SAFETY: `raw_obj` is a valid pointer to a `struct =
+drm_gem_object` with a valid `dev`.
+>> +    let dev: &drm::Device<T::Driver, drm::Userspace> =3D
+>> +        unsafe { drm::Device::from_raw((*raw_obj).dev) };
 >> +
->> +			if (!x86_arg_on_stack(pos)) {
-> [ ... ]
->> +			/* copy function arguments from origin stack frame
->> +			 * into current stack frame.
-> [ ... ]
->> +			 *
->> +			 * The area for the origin call mirrors the incoming
->> +			 * one, hole and all; only the bpf program takes the
->> +			 * arguments packed.
->>   			 */
->> -			for (j = 0; j < arg_regs; j++) {
->> -				emit_ldx(prog, BPF_DW, BPF_REG_0, BPF_REG_FP,
->> -					 nr_stack_slots * 8 + stack_args_off);
->> -				if (arena_arg)
->> -					emit_arena_arg_conv(prog, BPF_REG_0, nullable,
->> -							    (u32)arena_base);
->> -				emit_stx(prog, BPF_DW, BPF_REG_FP, BPF_REG_0,
->> -					 -stack_size);
->> -
->> -				if (!nr_stack_slots)
->> -					first_off = stack_size;
->> -				stack_size -= 8;
->> -				nr_stack_slots++;
->> -			}
->> +			off = x86_arg_stack_off(pos);
->> +			doff = for_call_origin ? stack_size - off : bargs_off;
->> +			emit_ldx(prog, BPF_DW, BPF_REG_0, BPF_REG_FP,
->> +				 stack_args_off + off);
->> +			if (arena_arg)
->> +				emit_arena_arg_conv(prog, BPF_REG_0, nullable,
->> +						    (u32)arena_base);
->> +			emit_stx(prog, BPF_DW, BPF_REG_FP, BPF_REG_0, -doff);
->> +
->> +			if (!nr_stack_slots)
->> +				first_off = doff;
->> +			nr_stack_slots++;
->>   		}
->>   	}
->>   
->>   	clean_stack_garbage(m, prog, nr_stack_slots, first_off);
->>   }
-> [Severity: Medium]
-> Does this code leak uninitialized kernel stack memory?
->
-> The x86-64 ABI allocates 8-byte stack slots for arguments, but compilers
-> frequently use 32-bit instructions to place 32-bit arguments, leaving the upper
-> 4 bytes of the slot uninitialized.
->
-> Since clean_stack_garbage() explicitly returns early when nr_stack_slots != 1,
-> copying the full 64 bits with emit_ldx(..., BPF_DW, ...) captures this
-> uninitialized kernel memory into the BPF context. Can this leak kernel stack
-> memory to privileged BPF users if there are multiple stack arguments?
-
-We probably will be okay since for bpf program, the return value will be
-narrowed based on return type.
-
->
-> [ ... ]
->> @@ -4011,8 +4014,8 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *rw_im
->>   	}
->>   
->>   	if (flags & BPF_TRAMP_F_CALL_ORIG) {
->> -		restore_regs(m, &prog, regs_off);
->> -		save_args(m, &prog, arg_stack_off, true, flags, 0);
->> +		restore_regs(&prog, pos_of_slot, nr_regs, regs_off);
->> +		save_args(m, &prog, pos_of_slot, arg_stack_off, true, flags, 0);
->>   
->>   		if (flags & BPF_TRAMP_F_TAIL_CALL_CTX) {
->>   			/* Before calling the original function, load the
+>> +    let Some(_guard) =3D dev.registration_guard() else {
+>=20
 > [Severity: High]
-> Are stack arguments misaligned here if BPF_TRAMP_F_TAIL_CALL_CTX is active?
->
-> When __arch_prepare_bpf_trampoline() executes, it checks for
-> BPF_TRAMP_F_TAIL_CALL_CTX and emits a push rax instruction (pushing 8 bytes)
-> after sub rsp, stack_size, which permanently shifts RSP down by 8 bytes.
->
-> However, the updated save_args() calculates the stack argument offsets based on
-> the original stack_size (doff = stack_size - off) without accounting for this
-> extra 8-byte shift.
->
-> Because the push rax is unpopped before call orig_call, the original function
-> will read its first stack argument from [RSP + 8]. Due to the 8-byte shift,
-> this points to the tail call counter pointer instead of the actual first stack
-> argument, corrupting all on-stack arguments.
->
-> Additionally, doesn't this 8-byte shift break the required 16-byte stack
-> alignment on function entry for x86-64?
+> Could this cause an AB-BA deadlock with the device unplug path?
+>=20
+> If an unbind thread acquires a driver-specific lock and then calls
+> drm_dev_unplug(), it will block in synchronize_srcu(&drm_unplug_srcu)
+> waiting for SRCU read sections to finish.
+>=20
+> Concurrently, if a userspace thread opens a GEM handle, this
+> registration_guard() call takes the drm_unplug_srcu read lock.
+>=20
+> When the callback proceeds to call T::open(), the driver might try to
+> acquire the same driver-specific lock held by the unbind thread, =
+deadlocking
+> the system.
+>=20
+>> +        return ENODEV.to_errno();
+>> +    };
+>> +
+>>     // SAFETY: `open_callback` is only ever called with a valid =
+pointer to a `struct drm_file`.
+>>     let file =3D unsafe { DriverFile::<T>::from_raw(raw_file) };
+>=20
+> [ ... ]
+>=20
+>> @@ -148,6 +156,14 @@ extern "C" fn close_callback<T: DriverObject>(
+>>     raw_obj: *mut bindings::drm_gem_object,
+>>     raw_file: *mut bindings::drm_file,
+>> ) {
+>> +    // SAFETY: `raw_obj` is a valid pointer to a `struct =
+drm_gem_object` with a valid `dev`.
+>> +    let dev: &drm::Device<T::Driver, drm::Userspace> =3D
+>> +        unsafe { drm::Device::from_raw((*raw_obj).dev) };
+>> +
+>> +    let Some(_guard) =3D dev.registration_guard() else {
+>> +        return;
+>=20
+> [Severity: High]
+> Is it safe to return early here without calling T::close()?
+>=20
+> If a GEM object is created while the device is bound, and the device =
+is then
+> hot-unplugged, the guard check will fail.
+>=20
+> Returning early skips the software cleanup in T::close(), which could
+> permanently leak driver-specific memory and state (like tracking lists =
+or IDR
+> entries) allocated during T::open().
 
-This patch just allows 16-byte aligned parameters with possible holes. The
-rest of change should be the same as the original code. Here you mentioned
-a 'push rax' before calling orig_call. These should be okay, 16-byte aligned
-parameters may have holes but it should not damage the 'push rax' or calling
-orig_call. I will see whether we can add some tests for this.
+I wonder if this is a problem in practice? And if so, would passing a =
+e.g.:
+Option<&File> be a solution?
+
+=46rom a purely logical perspective, I do agree that a balanced =
+open()/close()
+makes more sense than silently skipping close() though.
+
+>=20
+>> +    };
+>> +
+>>     // SAFETY: `open_callback` is only ever called with a valid =
+pointer to a `struct drm_file`.
+>>     let file =3D unsafe { DriverFile::<T>::from_raw(raw_file) };
+>>=20
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/20260814230923.1292966-1-dakr@kernel.org?pa=
+rt=3D2
 
