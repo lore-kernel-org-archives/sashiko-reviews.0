@@ -1,190 +1,190 @@
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013043.outbound.protection.outlook.com [52.101.72.43])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A9F33B96B;
-	Fri,  9 Oct 2026 02:28:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791512905; cv=fail; b=Tk45XlL4oUBcKh2SW5hxUuN+N+xxwlIXBOd2E6dF+upH7Tr1mjNDFhVfWj+2KpbY0xQgJWhzU4JVTlpO7xr+Dgbw1ZZ9Uw9V+dEwgWiMOlf8ORiB/zMYDAIy7GPql0wS4R+QS0HrJxCqpJV75U+bbzgd1gLmF4oHLtINyY7/DT8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791512905; c=relaxed/simple;
-	bh=nbfAo1hkgWaSC5QlvEKREMwjvn1gWK5pV+pWLTLJV/o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=ed1+HE9u/ApimofzrCV4ZAahqi3bvGejVLNHY9iMa1EE1lPrptSAS6uF9/eQ+o33/2NeUYvdKyEKs3SySEGrETagkjW3r8b/ewJjWzUxd+cDtfOodR3WbOmKbwkIHPxBbUEUkkWPdlflZ9RhjByv/kFVpQS0pS2St1xn0/SJTr4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=SMjyyQ2Z reason="signature verification failed"; arc=fail smtp.client-ip=52.101.72.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DEAA3B5DED
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 04:30:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791520204; cv=none; b=ma5oFDupSLV2eulayU6g25IuwIS26gpIDSWFmr4ELNGmB5yTLlti19ydhnLfnsYd8tADDhGNV/CSoGcTevNUhC+yuAAC/Uq3zP4Mol5TtrOGSI32n3Rh5xa8Mkiaf+D+KkejA3W91WTt7y79DrmU0rb3hk4MI3Jbg5cs06PbUPI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791520204; c=relaxed/simple;
+	bh=ZxFy9Ks6hr9y+sK6ocw96HGvPf3rS2Q3AX6EMwyjfds=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=VaWTaV69WidjwaSRifsymu6tKJEvBS+uRe4qbZljUVSD0QaYJf1NKX1Adn4ndYA2S5T4fqKYBS4juIVU2ZcNQZi/GeVsd37sFUPFaP3YDVyPW8G1VcLgjewvbGMKeoG7Iosi0kVg/k6YEzFWbxQWfGRwriVA9DoiUFDDLPeZ/Bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=none smtp.mailfrom=linux-m68k.org; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KEx2Ocgs; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux-m68k.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="SMjyyQ2Z"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CM5h0ecSt2aJLzUhDtr7bfqo86cLkgNU7uI3S+eZ0kdiMbt4QwbN7hBO7ljSneCMXYAzO6z7cOlY/xT/zdxTRxFbY8zIN9R68uPooL+bFvYUX393VjCIwrczqmVsZnF2U+YyQlztOEd67kJtDh6Ig7MeDiuKWsTRAlDYgSv8uz0zf/GG5b+CSc1CK5iWfXG6fZuh3/LCqPZzwTNBb5YizQuMK2Fc8whQnOnUl7zh1C0bxvGCBW9ki6pDJcMFtsHFSrD8tyITf0kKxeweODrt3xGVfXvttFCv/xP0GRP7c8cYjhvtiJgsNmMvLGfL09p1k7TyTtWFD9QYkXMCs/51tQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PlPMwcivZjWfXi1/1ENQaO3XF06zP0KqUVenmKD7fm8=;
- b=S64Wa0v8E1JZLtW6AAGbEAmEsXjizk/FeHuAiJBR3BkN8IDTDeeZBS84ByctRKp0RFZluylde5WbTiYUf4rHQ+ctZmaxp7W8V8aC/APZe2nlGvOW6xhZD1iN4ApJMrczFYognIIhW2bF4IrnLJZ8Wh+uh40XkP46nHis1Y/yDXGt2sx+r3CCzYhcr9u8ff+a+Y+OW63QL426mqmsjUf5pQjDEp0XUKM3Si07Oj9FEw6jmf/1OVWPhvmF69hTfosn/YqAagbfgngqrrveEhL7gNwyZTL9KNRBoYVxupNKG81c0zsYGkhTMo12Ycc5f8fbhiCzvxschcvxL4T1P9Sj9Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PlPMwcivZjWfXi1/1ENQaO3XF06zP0KqUVenmKD7fm8=;
- b=SMjyyQ2ZxnB2BgX7ys8vzXiWCRhzTTDsmCUml/Ku43hyOBFQAWMWDrXYIX9ZQlpujCjHTyvandQTodjyc/wR1xwv29lKm7QlgJHwFUOxinigL5XfeVPrLZKD43gc3WgeT4BIfA3+rvaA97XDn6QZ+efsu70JtWOMoWi470uEScI/L6364RCRxgJMOQ+0yS0VjVt4NIEugitj8YjdVaoLIK/f6pgo9//OdI2MbtOObVY/X1UpOx5NNgjgg5RMH4KOneurHjUDQ8oC4HPkajClClTXNar1NI5rvJdrVARhJ8II6vIxjM5iRTWHesqzsYlXs7Nzom/mVUKX2jhlWleAtQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from AM8PR04MB7874.eurprd04.prod.outlook.com (2603:10a6:20b:24d::9)
- by DBAPR04MB7269.eurprd04.prod.outlook.com (2603:10a6:10:1a4::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.16; Fri, 9 Oct
- 2026 02:28:08 +0000
-Received: from AM8PR04MB7874.eurprd04.prod.outlook.com
- ([fe80::ac38:1699:6f18:c5d9]) by AM8PR04MB7874.eurprd04.prod.outlook.com
- ([fe80::ac38:1699:6f18:c5d9%6]) with mapi id 15.21.0496.010; Fri, 9 Oct 2026
- 02:28:08 +0000
-Date: Fri, 9 Oct 2026 10:32:41 +0800
-From: Peng Fan <peng.fan@oss.nxp.com>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KEx2Ocgs"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9D5D87A007D;
+	Fri,  9 Oct 2026 00:30:00 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Fri, 09 Oct 2026 00:30:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1791520200; x=1791606600; bh=V5a9/OCCPWacxhkVSOnVTcZO1ek/QwI9y7Q
+	wUqqyeGM=; b=KEx2OcgsqrDKlfgORq+/SeBibe08OjzOoq52MuZGkZccFdCsXPj
+	f61LrrisyUdHmi/0wWJjZuenV1iGLCliUT6xebTOWkqjxeD8wyaAFflQaxetlakt
+	TAgbkou6xZ5pu64JLPJRYqA/yULw+zeWHhZgJcsuf4qfQ5ZpuKVwn/3V4WcuhcMK
+	w/R57McSQAJzhFUfnzbtiQCnzuStjX3+CTlX8jOUpqTT8hVQOVdL2RNuWCpHolym
+	g9E5DgpwR07Ht41A6Mnq3EtgVArheSdApXtiBqRcoD6F2HCGM0VwI28RULE+hfuK
+	ngxRLQqf6o5VW0luHT41WDwF9qzKfGw1ZAA==
+X-ME-Sender: <xms:yG3Iaup_VZj7CWpsU8WdWa9DmkOfwvS2nEQdmdaTm4Pv_QQufItpYA>
+    <xme:yG3Iaqn75aw77ZsEzwdIfakYdWJIi-7_P2OCQa15eJu1LvDy2-riqbh1ziqS1QoaV
+    yIPcGqrb-xdFXPDNjDhjwlyWOUHlfMpySJg_zcCgOtPB3L7_Y87XBA>
+X-ME-Received: <xmr:yG3Iaqx6mLXg5_egKuDmwXodXUxJXdeyNdeBxXsj0iqRt2bQyQ2fKAo-AmVyXVSrKqZCL8LyYgcxK3eBtmtuMBuLTBMVH4JrZYo>
+X-ME-Proxy-Cause: dmFkZTF4xB3TiXIWyYzufbyBatBGZnc9Y2MKvNcSMamc3PWHBRLLleZg38gcnFlGpiK9zS
+    oS8vPC4Cdf3lcCs9LfjMiIYMduw/7Yi5wjxlmbnRBldW1VU+MYpDayGX6ofynq0A1tKBvx
+    sUWKp7j7sHmm7hRONChuq/PAHUbjn10aemgm8VxKlBtMC/iOxI+wVYb5rs7QmEYknQLwB7
+    5yEr+A3CO7i7BT2HTSV7MeLSHKynqvQ+Z6A6J/t+DMXaYdyI5yhOcZM6Um8dhoNnoB46ej
+    x9pTJa/wwT47Oe6cJ3saqfRJJRN8m6Fn1Cbfd1O3mmi7SzK8eFS7FsNg+leLVYie6baUTS
+    iVqy0E4CfBi49gSMSyLgaasnbsr3HEWxE5+w615Nripq2RHu7ucVzaQq4iyZaWj5Ez0fBd
+    /WkkD/Vbtwj+JRuFkauzxW8hPhjAwE/L/cvZPiPz/KygNx9gF+5TJ+FmYxg9e+ZlpoSbDX
+    ldDrcasl98GIRO7QofKS2oHQk8Ti+AcQ7eweJYisd38cR7TZRjfABwFR7QkJY1y4q3myg2
+    X0z4fZefTzTmj2ix59q4l2/oub8nwNO9zZ01C9NQ/rJpY4+JazGn43//tYOQzyyNp8Bd+N
+    6Jeh8lcpUjNh4R3p85HXbvmu1/KOwx5Ek0I0PeBcyJMfyoEWhBnIzkK55RMw
+X-ME-Proxy: <xmx:yG3IaqmuSiykCR3VqB2txLmhCOA8W6oQR6iMkVbdalOZfpUAi6OjBA>
+    <xmx:yG3IarfmGGKk5OpWqnfJqdjjYNUtlQaS7LBHNZEpMPgG9RLAIjQwDg>
+    <xmx:yG3IaoqdaDiFoSHFp7kySwu1TEKpXp1YB5zyLNylyP6HYSAGVlZMRA>
+    <xmx:yG3Iah4Yyx1E4eQpJy4Oqwj8F6HvM6idgT23nFFhg_-kqmAY6fePxA>
+    <xmx:yG3Iaohy9MGFJ8urD2mkpQyxLZ-KrxkCFYyCusfilfoQlsR280aeYZUn>
+Feedback-ID: i58a146ae:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 9 Oct 2026 00:29:57 -0400 (EDT)
+Date: Fri, 9 Oct 2026 15:29:52 +1100 (AEDT)
+From: Finn Thain <fthain@linux-m68k.org>
 To: sashiko-reviews@lists.linux.dev
-Cc: imx@lists.linux.dev, Frank.Li@kernel.org, linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v4 10/10] gpio: mxc: use BIT() macro for single-bit
- operations
-Message-ID: <ashSSVN6mxvzy0JO@shlinux89>
-References: <20261007-gpio-mxc-cleanup-v4-0-c9f5a8b50df9@nxp.com>
- <20261007-gpio-mxc-cleanup-v4-10-c9f5a8b50df9@nxp.com>
- <sashiko-outbox-162890@kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-162890@kernel.org>
-X-ClientProxiedBy: MA5P287CA0230.INDP287.PROD.OUTLOOK.COM
- (2603:1096:a01:1b1::14) To AM8PR04MB7874.eurprd04.prod.outlook.com
- (2603:10a6:20b:24d::9)
+cc: linux-scsi@vger.kernel.org
+Subject: Re: [PATCH] scsi: qla2xxx: Rework BUILD_BUG_ON() assertion
+In-Reply-To: <sashiko-outbox-164665@kernel.org>
+Message-ID: <93e35f60-e465-7f76-0043-f997fe2ec8c7@linux-m68k.org>
+References: <4808a5dc1a71528ffa3360868561009744277450.1791502886.git.fthain@linux-m68k.org> <sashiko-outbox-164665@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM8PR04MB7874:EE_|DBAPR04MB7269:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2a4183e4-afe3-424f-9e0d-08df25acf4fc
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|1800799024|19092799006|23010399003|11063799006|56012099006|4143699003|10067099003|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	+PC7lqgzxCDMYFONL4QlMX70tZ8T+cQxJGXjjpNGLO4iyRdHFhTJ73rpAslN9KxxRLqzc4dlq6UqT1ma8BaAsq7j3uRC6jZ7LJ4yRXr71CLyrpMDbcssE/cuOwRME+XPOjjrweGH4se4UG2KZG7tptznmeU58lUWsxSCvhAsRpVO+CZ0V9nLQ8SkoI9NXNSWQeoDGyDkHsfOHIoCbfgDo7WSWWM/rmiwnYaJ2Fdm5XyJyQhWKpdC6DbY0XgOLm9lpwDG4+GMMsWxqyyRPVF9J7skIWfz2q/lk6ZVs/30AwQTpUzbcUoGw86cBmAXg9GPba6fcjun7ZEMOX1xz2WS9QJ/FIbbo5W0icWZjrk3Mc7IV9RyJoiO60O1OMlo2dlEcx/BMnZxdzjPYc/JD3hOzrlvPX/CABfuLYaUMAsEvChA8deS1ppdTBAbz9uxVGE6/SxJuBZ6qm9vHM1hFTikvRvaQhG/gTcvVNtvmDSKyaNtnE7pv/NL9tD5AQZ6TtdhKHxiiFXCdXJeoCN8wdwZQ4mqgTTgfyuVE6cH6egxT2whktIwGWOGpQNUZiPAtaZyGUGZZn5L/bFVbT1a4m88NF+6s7a8WHAF3/HPqF2JQ/I=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM8PR04MB7874.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(19092799006)(23010399003)(11063799006)(56012099006)(4143699003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?p20XKlWgJx6rTtF7CEQu0h8ScOX6rmURyqIPz6TULuO08h6Vvbv5+6VmWo?=
- =?iso-8859-1?Q?QwJdQmEselg3AJnSh+ysvaL5hjPAGQ0fsYhZtdRgeLSxbz1UJZwt4ux6WB?=
- =?iso-8859-1?Q?HvD7468AfCorbQq0/g918xgyLLrZ+/1V1vzySBnNIC1m80O4XgTiIzE3OV?=
- =?iso-8859-1?Q?mPrHMwmybHxJQCHQRH6pNE3eh4mpkAMUklG3WBNmFR/mfnG+ROZGspiSV/?=
- =?iso-8859-1?Q?9KqnxiJSjQw00v1fy6OoWH5tmgoNUOM7mzYnFaCHWuwk2Zkz7b9Ztmur8K?=
- =?iso-8859-1?Q?4Oicj7N4HqqnR2dOjAqXKs7ynpH77h6twh/i/YoB8+VXVs04puLX3t/JjV?=
- =?iso-8859-1?Q?JSxAGEKohQZ6ffGamnxanvAg0vSjJP4DniN0R+g9TGWo+ZxX38CSePAg5u?=
- =?iso-8859-1?Q?OKg/yF8sH4ZTsgLpwn2TZK9MdIVcqBUc1FR7O3Kyz5kFMwxo9swohIa+4B?=
- =?iso-8859-1?Q?D42+Q8xAb0bSRKBI/+jBrsqwW0H+okPFWNX8H3wmKq9HDTFq5uxgnyZs+k?=
- =?iso-8859-1?Q?2iDbZMSWNvMT5O46TTKWs8lFldp4y+zSheMdQYlSqqLgEQ9d5b8x+jLe7M?=
- =?iso-8859-1?Q?7o5i41c/kHh4VJU+eRUHXbvLs4eqdjwR3B7CUMyVpxY6Z09a+PztoD71Qv?=
- =?iso-8859-1?Q?gEtmt7HIOiW0l1l/g+uNKItGx7U/Y15WSxKJ0mWRjV1ucJ9xJvkGh3huHR?=
- =?iso-8859-1?Q?dgLAqrhR2a0BtBHEaJ8YdmNmIGtoTY7RIPX58rwR+Za1orAmxKLq8braey?=
- =?iso-8859-1?Q?RNSyLvU1vqwt6YRTmxt7JEhy6GSGRlkNx4wuFS3s6WF1473+WJxsmfN038?=
- =?iso-8859-1?Q?TZGjWHETkEZSGaDIWPwWO/jBQbH7pbemcgLhBhI5fbcCT15A5HeLTYo2Xm?=
- =?iso-8859-1?Q?4CHhk1iU2k98wEcAOUuA0eCw17hLYRZ2P8+60iU76NXDhugFZFfQzhicI4?=
- =?iso-8859-1?Q?6pDkQMdiiDZfXrGnyJhSYmfATTRx98uPOc7aCryCAyezhCU6LroPvnSP/k?=
- =?iso-8859-1?Q?NQ83AYc7k98igfGjJJOG4KpASSTwfiql1LOFY+ZwtXU2MOuLmuX04xW49K?=
- =?iso-8859-1?Q?vFHoDdqbSNZ+SYICqTfhExQaheNtrY7+M14Gt0dLBVBjkZNTxFpfizeTxs?=
- =?iso-8859-1?Q?TflgkZ+4oHDU2q1wt3oqqjRfxdJxAn5QnQLguCYpifRklo/CNVFwU6gbiE?=
- =?iso-8859-1?Q?N2bSoimWEM3kyGcSjnmufsY9hGJYzKF+x2NnCFEZdU/xGoejUGdlIQZT/n?=
- =?iso-8859-1?Q?UZwOyuKCIF9dr1wP4ROwHkhKjx3fO4qtGHNS70RouodSQjrLdm03A4F4Xk?=
- =?iso-8859-1?Q?MG4K90fEc7bNONKRIt7kFiIkMOOlMB3e6PZkeKdfW3BJR3QcJEuyq5owxN?=
- =?iso-8859-1?Q?6SFCCf+qYCmPDZdUpdyGqaBHmUABkyB06oN9yOabzRgMFwTBEAY6udWmd0?=
- =?iso-8859-1?Q?druKVDKzqAkEJ6hj8cAvblmY792Ar6vt+aSxxTyeXSEg9FbbUwh27Oc6M3?=
- =?iso-8859-1?Q?bw0bF4fmLP5EZZVSqGTpzIXmkYE7PyYGBwMpR6X1J4YGCvqpcx+NmXbOO6?=
- =?iso-8859-1?Q?MzDGE8AsYev7fY84R/mZNYbnJqToUGhH8NkinP7pP10lVUDrBR12hsZwJE?=
- =?iso-8859-1?Q?y2IY55PwpXxeFTqeATsdWw7WGM9j3s3oyOziTcnpqJ4T0A7jUNGd/3n4We?=
- =?iso-8859-1?Q?sHz3BKFKijn6vS4Ve4qFhKeqwd8VS/T7YEVP3mNgQ5BdofpHMY8mtWzMzp?=
- =?iso-8859-1?Q?Qd2FBXwtmqaaPiEuhxv97CQw4xKfgIIZymEs8cKaCgWFLnmj1Vc3e4iE4S?=
- =?iso-8859-1?Q?EpKWx6ca1tXb7yq/anVnpYdw6EetZxkuO0uBzaXmKWClHWobsOsb?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2a4183e4-afe3-424f-9e0d-08df25acf4fc
-X-MS-Exchange-CrossTenant-AuthSource: AM8PR04MB7874.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Oct 2026 02:28:08.7647
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /tZ49YWN0U74pLwRJyqCxvzdaGgHd+9tk6NovR/nkQo0ZgEocIRDemJpN9FgMeasY6Z75bJKpn/N0qX0repABSOdzRp9SEfaVQcK2pC3DEMg8iuGlvrMZKmd7wv+mP8S
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBAPR04MB7269
+Content-Type: text/plain; charset=us-ascii
 
-On Wed, Oct 07, 2026 at 10:56:01AM +0000, sashiko-bot@kernel.org wrote:
->Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->- [Medium] gpio: mxc: race condition in gpio_set_irq_type updating port->both_edges
->--
->
->commit 71b368728fc9ada85f870f46f968a6583a740b0c
->Author: Peng Fan <peng.fan@nxp.com>
->
->gpio: mxc: use BIT() macro for single-bit operations
->
->This commit replaces open-coded shifts with the BIT() macro to avoid potential
->signed-shift issues and improve consistency. No functional changes are
->intended.
->
->> diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
->> index 39de616cd434f..ad50b602c4a16 100644
->> --- a/drivers/gpio/gpio-mxc.c
->> +++ b/drivers/gpio/gpio-mxc.c
->> @@ -209,7 +209,7 @@ static int gpio_set_irq_type(struct irq_data *d, u32 type)
->>  	int edge;
->>  	void __iomem *reg = port->base;
->>  
->> -	port->both_edges &= ~(1 << gpio_idx);
->> +	port->both_edges &= ~BIT(gpio_idx);
->
->[Severity: Medium]
->Could this unprotected read-modify-write on the shared port bitmask lead to a
->race condition?
 
-This is a pre-existing issue. I need to use a separate patch to address it.
+On Thu, 8 Oct 2026, sashiko-bot@kernel.org wrote:
 
-Regards
-Peng
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] scsi: qla2xxx: FORTIFY_SOURCE field-spanning write warning in qlt_queue_unknown_atio
+> - [High] scsi: qla2xxx: UBSAN/FORTIFY overflow in add_cdb array accesses
+> --
+> 
+> commit 4d96d5f0f41af34ce19bfbd80ce5e059ab28cd98
+> Author: Finn Thain <fthain@linux-m68k.org>
+> 
+> scsi: qla2xxx: Rework BUILD_BUG_ON() assertion
+> 
+> The LKP bot reported a build failure with CONFIG_COLDFIRE=y together with
+> CONFIG_SCSI_QLA_FC=y. The failure is caused by an incorrect BUILD_BUG_ON()
+> assertion in qlt_queue_unknown_atio(). To resolve this, a flex array is
+> placed at the end of struct qla_tgt_sess_op.
+> 
+> Closes: https://lore.kernel.org/oe-kbuild-all/202603030747.VX0v4otS-lkp@intel.com/
+> Closes: https://lore.kernel.org/oe-kbuild-all/202609301230.CauIUXCF-lkp@intel.com/
+> 
+> > diff --git a/drivers/scsi/qla2xxx/qla_target.h b/drivers/scsi/qla2xxx/qla_target.h
+> > index 71bc1affb1bc9..b27bd3aecbf8e 100644
+> > --- a/drivers/scsi/qla2xxx/qla_target.h
+> > +++ b/drivers/scsi/qla2xxx/qla_target.h
+> > @@ -309,7 +309,8 @@ struct atio7_fcp_cmnd {
+> >  	/*
+> >  	 * add_cdb is optional and can absent from struct atio7_fcp_cmnd. Size 4
+> >  	 * only to make sizeof(struct atio7_fcp_cmnd) be as expected by
+> > -	 * BUILD_BUG_ON in qlt_init().
+> > +	 * BUILD_BUG_ON in tcm_qla2xxx_init(). See also, BUILD_BUG_ON in
+> > +	 * qlt_queue_unknown_atio().
+> >  	 */
+> >  	uint8_t  add_cdb[4];
+> 
+> [Severity: High]
+> Since add_cdb is explicitly declared as a fixed-size 4-byte array here, does
+> the current code cause UBSAN array bounds violations and FORTIFY_SOURCE read
+> overflow panics when accessing elements beyond these bounds?
+> 
+> For instance, in memcpy_atio() when len > 0, it accesses
+> &src->u.isp24.fcp_cmnd.add_cdb[len * 4] which is out-of-bounds, and reading
+> 4 bytes triggers the overflow panic:
+> 
+> drivers/scsi/qla2xxx/qla_target.c:memcpy_atio() {
+> ...
+>     memcpy(&dst->u.isp24.fcp_cmnd.add_cdb[0],
+>            &src->u.isp24.fcp_cmnd.add_cdb[len * 4],
+>            4);
+> ...
+> }
+> 
+> Similarly, get_datalen_for_atio() accesses the array out-of-bounds when
+> len > 0:
+> 
+> drivers/scsi/qla2xxx/qla_target.h:get_datalen_for_atio() {
+> ...
+>     return get_unaligned_be32(&atio->u.isp24.fcp_cmnd.add_cdb[len * 4]);
+> ...
+> }
+> 
+> [ ... ]
+> 
 
->
->Concurrent updates to the shared port->both_edges bitmask could cause one CPU
->to overwrite and lose the IRQ edge configuration of another pin, potentially
->leading to missed interrupts or stuck IRQ lines.
->
->This can happen during parallel device probing or via userspace GPIO
->configuration (e.g., libgpiod/sysfs) when two CPU cores concurrently call
->gpio_set_irq_type() for different GPIO pins on the same port.
->
->The IRQ subsystem serializes irq_set_type() on a per-pin basis (via
->desc->lock), not per-port.
->
->While the driver correctly takes the port-wide lock later in this function via
->scoped_guard(gpio_generic_lock_irqsave, &port->gen_gc) for its MMIO register
->updates, it performs read-modify-write operations on the shared
->port->both_edges software mask completely outside of this critical section.
->
->[ ... ]
->
->> @@ -229,7 +229,7 @@ static int gpio_set_irq_type(struct irq_data *d, u32 type)
->>  				edge = GPIO_INT_HIGH_LEV;
->>  				pr_debug("mxc: set GPIO %d to high trigger\n", gpio_idx);
->>  			}
->> -			port->both_edges |= 1 << gpio_idx;
->> +			port->both_edges |= BIT(gpio_idx);
->
->[Severity: Medium]
->This appears to be a second unprotected modification in the IRQ_TYPE_EDGE_BOTH
->path.
->
->-- 
->Sashiko AI review · https://sashiko.dev/#/patchset/20261007-gpio-mxc-cleanup-v4-0-c9f5a8b50df9@nxp.com?part=10
->
+Yes, add_cdb[len * 4] is OOB, but it's deliberately OOB so not a bug. This 
+patch is not intended to fix either of those pre-existing theoretical 
+run-time checker failures. That's out-of-scope and would seem to require 
+access to the relevant QLA2xxx hardware as well as appropriate toolchain, 
+.config, workload etc.
+
+> > @@ -845,7 +846,11 @@ struct qla_tgt_sess_op {
+> >  	struct rsp_que *rsp;
+> >  
+> >  	struct atio_from_isp atio;
+> > -	/* DO NOT ADD ANYTHING ELSE HERE - atio must be last member */
+> > +	/*
+> > +	 * DO NOT ADD ANYTHING ELSE HERE.
+> > +	 * atio.u.isp24.fcp_cmnd.add_cdb may extend past end of atio.
+> > +	 */
+> > +	uint8_t atio_u_isp24_fcp_cmnd_add_cdb[];
+> >  };
+> 
+> [Severity: High]
+> Since this patch introduces the flexible array atio_u_isp24_fcp_cmnd_add_cdb[]
+> to legally hold the trailing data, shouldn't the memcpy() in
+> qlt_queue_unknown_atio() be updated to target it?
+> 
+
+No, because atio_u_isp24_fcp_cmnd_add_cdb[] is only added as a sentinel. 
+It's an attempt to coax the compiler into helping discourage the same kind 
+of mistake that FORTIFY_SOURCE and UBSAN are supposed to detect.
+
+> drivers/scsi/qla2xxx/qla_target.c:qlt_queue_unknown_atio() {
+> ...
+>     u = kzalloc(sizeof(*u) + add_cdb_len, GFP_ATOMIC);
+>     ...
+>     memcpy(&u->atio, atio, sizeof(*atio) + add_cdb_len);
+> ...
+> }
+> 
+> Because the destination is typed strictly as &u->atio, copying more than
+> 64 bytes (sizeof(*atio)) when add_cdb_len > 0 causes a FORTIFY_SOURCE
+> intra-object write overflow panic.
+> 
+
+That's also a pre-existing theoretical failure (and not a real bug, since 
+it's deliberately OOB) and is also out-of-scope for this patch. This patch 
+just addresses the build failure caused by the struct padding change.
+
+Thanks for your review.
+
+P.S. my preferred solution (and the first patch* I sent) to fix this build 
+failure simply removed the BUILD_BUG_ON(). Sashiko-bot's criticism seems 
+to support that preference, IMHO.
+
+*
+https://lore.kernel.org/linux-m68k/550e7d7bb8c2620ca4f6c9e809a4f853bdfa4c67.1772751689.git.fthain@linux-m68k.org/
