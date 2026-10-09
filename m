@@ -1,16 +1,16 @@
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BB84EB876
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 16:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DF04EBAE6
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 16:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791562708; cv=none; b=OnZ4K7qnvZz1Uk8s/Flfw/t9f7Nj1mN9xwC4CYWxTrtnggv6Z8x9y86lPi9FcSIo02NAEEXpLLbzJITLAHY+K3P/lmcGT7UXF4BECDAyE7nLvBZZTm2LItV/rmK1C/sl8uVGYlLJfw5zylzurXQJMX/hDp6/VmZZjJA+vdzo+Sw=
+	t=1791562715; cv=none; b=hrO+Z0u5Kij/fMhJh7Mw+d4+qwZ0+6sTDLT07o2PrwnpinkzWzR3s340gpkqJwzEb1mLEO2SsZtO5H6LiKVvYVaDs/ZAejlJjzMXqoyT81osU1JVWPfpOMoMGspzevjJsliUn8KI4Czaw/c5k0mlQzt6tASL07UTtXOs3XjOjMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791562708; c=relaxed/simple;
-	bh=Oz7hpJnp/lZQtLuta8tPeybNFunQTSdkR9IfsVowbt8=;
+	s=arc-20240116; t=1791562715; c=relaxed/simple;
+	bh=JC0wX/dHVgdu/NiMeLt0Jle18mgDFB6B2Fnfjezn/Yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kKndcqaagP4Y01AkZuZO8gn4hIZtv3sOKC8HKfvB2SsZjNrPSaRrZhIi+a1QBa1Yx/tRAEXwrJYXkj9J5kkylPMrLU+hIgAtcs7aLi0NmMUECftkzO2hz0dz4GZvnokwDJkeC3S3Q6b/HsyoThRKyUERpn+wmZ412ID/DhndaTU=
+	 MIME-Version; b=JGqnf/rMRt1jfSb/lDSC+nj/UwFHakze64b+WMHPQ0XsRNCVFb/9EWYYu6oh+HzrvPWLMZIZ6rEWpdyaR/+RfiJOV9Srhdz257Ec7MyzfAnlhgk9IIGEtxkTGJB7NHrU8C/5wY2WSG55IriU3nPhLWaB+qYcnqp9/xbRIoFvjBU=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; arc=none smtp.client-ip=195.135.223.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
@@ -18,7 +18,7 @@ Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 45CD61F7E4;
+	by smtp-out2.suse.de (Postfix) with ESMTPS id C8BB21F7E6;
 	Fri,  9 Oct 2026 16:18:17 +0000 (UTC)
 Authentication-Results: smtp-out2.suse.de;
 	none
@@ -26,12 +26,12 @@ Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E7A2C13978;
-	Fri,  9 Oct 2026 16:18:16 +0000 (UTC)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 774AB13978;
+	Fri,  9 Oct 2026 16:18:17 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id +fTjLccTyWrkFwAAD6G6ig:T4
-	(envelope-from <tzimmermann@suse.de>); Fri, 09 Oct 2026 16:18:16 +0000
+	id +fTjLccTyWrkFwAAD6G6ig:T6
+	(envelope-from <tzimmermann@suse.de>); Fri, 09 Oct 2026 16:18:17 +0000
 From: Thomas Zimmermann <tzimmermann@suse.de>
 To: deller@gmx.de,
 	adaplas@gmail.com,
@@ -41,9 +41,9 @@ Cc: linux-fbdev@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	sashiko-reviews@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 3/5] fbdev/sa1100fb: Remove comment on VESA DPMS modes
-Date: Fri,  9 Oct 2026 18:05:37 +0200
-Message-ID: <20261009161814.120480-4-tzimmermann@suse.de>
+Subject: [PATCH 5/5] fbdev/xilinxfb: Use FB blanking constants
+Date: Fri,  9 Oct 2026 18:05:39 +0200
+Message-ID: <20261009161814.120480-6-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261009161814.120480-1-tzimmermann@suse.de>
 References: <20261009161814.120480-1-tzimmermann@suse.de>
@@ -57,70 +57,42 @@ Content-Transfer-Encoding: 8bit
 X-Rspamd-Pre-Result: action=no action;
 	module=Unknown lua;
 	unknown reason
-X-Spam-Flag: NO
 X-Spamd-Bar: /
-X-Rspamd-Queue-Id: 45CD61F7E4
+X-Rspamd-Queue-Id: C8BB21F7E6
 X-Rspamd-Pre-Result: action=no action;
 	module=Unknown lua;
 	unknown reason
 X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spam-Level: 
-X-Spamd-Result: default: False [0.00 / 50.00]
+X-Spam-Flag: NO
 X-Spam-Score: 0.00
+X-Spam-Level: 
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [0.00 / 50.00]
 
 Fbdev and its drivers use FB_BLANK constants for controlling the
 display's blanking state. Semantics differ to similar VESA blanking
 constants.
 
-Remove the comment on VESA constants from sa1100fb. It's misleading at
-best, as the driver should never use the VESA constants for blanking.
+Replace the VESA constant in xilinxfb with FB_BLANK.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 ---
- drivers/video/fbdev/sa1100fb.c | 29 -----------------------------
- 1 file changed, 29 deletions(-)
+ drivers/video/fbdev/xilinxfb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/sa1100fb.c b/drivers/video/fbdev/sa1100fb.c
-index fea0172c45b5..8102ab7d51e6 100644
---- a/drivers/video/fbdev/sa1100fb.c
-+++ b/drivers/video/fbdev/sa1100fb.c
-@@ -491,35 +491,6 @@ sa1100fb_set_cmap(struct fb_cmap *cmap, int kspc, int con,
- }
+diff --git a/drivers/video/fbdev/xilinxfb.c b/drivers/video/fbdev/xilinxfb.c
+index 0a6e05cd155a..462fe2e94d55 100644
+--- a/drivers/video/fbdev/xilinxfb.c
++++ b/drivers/video/fbdev/xilinxfb.c
+@@ -376,7 +376,7 @@ static void xilinxfb_release(struct device *dev)
+ 	struct xilinxfb_drvdata *drvdata = dev_get_drvdata(dev);
+ 
+ #if !defined(CONFIG_FRAMEBUFFER_CONSOLE) && defined(CONFIG_LOGO)
+-	xilinx_fb_blank(VESA_POWERDOWN, &drvdata->info);
++	xilinx_fb_blank(FB_BLANK_POWERDOWN, &drvdata->info);
  #endif
  
--/*
-- * Formal definition of the VESA spec:
-- *  On
-- *  	This refers to the state of the display when it is in full operation
-- *  Stand-By
-- *  	This defines an optional operating state of minimal power reduction with
-- *  	the shortest recovery time
-- *  Suspend
-- *  	This refers to a level of power management in which substantial power
-- *  	reduction is achieved by the display.  The display can have a longer
-- *  	recovery time from this state than from the Stand-by state
-- *  Off
-- *  	This indicates that the display is consuming the lowest level of power
-- *  	and is non-operational. Recovery from this state may optionally require
-- *  	the user to manually power on the monitor
-- *
-- *  Now, the fbdev driver adds an additional state, (blank), where they
-- *  turn off the video (maybe by colormap tricks), but don't mess with the
-- *  video itself: think of it semantically between on and Stand-By.
-- *
-- *  So here's what we should do in our fbdev blank routine:
-- *
-- *  	VESA_NO_BLANKING (mode 0)	Video on,  front/back light on
-- *  	VESA_VSYNC_SUSPEND (mode 1)  	Video on,  front/back light off
-- *  	VESA_HSYNC_SUSPEND (mode 2)  	Video on,  front/back light off
-- *  	VESA_POWERDOWN (mode 3)		Video off, front/back light off
-- *
-- *  This will match the matrox implementation.
-- */
- /*
-  * sa1100fb_blank():
-  *	Blank the display by setting all palette values to zero.  Note, the
+ 	unregister_framebuffer(&drvdata->info);
 -- 
 2.55.0
 
