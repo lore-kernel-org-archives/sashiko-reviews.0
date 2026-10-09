@@ -1,67 +1,49 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C0C3783AD
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 15:48:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210FD4D0CFD
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 16:06:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791560936; cv=none; b=np27XQGffCPPsV0/9MPZXwIJ5Psy9uR3KaYcX3KOgCdszyyxG1L7jTiuZkTvYccXdBvkncX0YfgHORkvexVFah9L7GbKVa/Md/juHXUKeGvEu3aW+QGLsmRgDgRPcTx3zqK2BgfOxu0kvuws2cxCWyBYU8hSZPBZ/wSF8nqfa0o=
+	t=1791561987; cv=none; b=cNcWYw9daPC8zEvFiFAn6shdi8yhgSObHPAPzYDmchi6wkviE/D7zzqI58w9Q2x0eYxpPzYcKpvvFxMxKV5m/jmRnvqCRn+7X7kWFp8gLuzkAXytUGkxt1l0bCehafZ1PYJvRmi3BYl7Ie0VjSkKr8V3KvIVuI+tdTURApme018=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791560936; c=relaxed/simple;
-	bh=s9N4SJWPym+C4tYVnt9KaGPrfIXadQwubQeB0Il//RM=;
+	s=arc-20240116; t=1791561987; c=relaxed/simple;
+	bh=WHf77Yd5DASFhOAaaOdf6g+ghry/Kw8R/boOFhyWaRE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OWcBSpQcx8tOuKzitlWlC0e560xlPi8MuxUSHuCygyV8eoTaiyP9LZCJxAY0+ecRnmn3dTPJuWNBN/n72zHZsTdaI5iaGgH+2qp7tetXTIgABGK/xcQ4dm0injo2xrCyB8OilqLqCqcUByctHi+rY6iYpZfP7/oZikr2Q55wJKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z+leaE0N; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=qR4P5cO3YKCtOhV6YGV1MmQj9Pz/mkq6R+UhhVnrXytiddjYNHXrbIsRc1bmXlz7JqJ8vgZfgWfN9SGaLI8eGR9g5d3pH0biRYKEKmvamtACisd0KEvX/lfg16hEDqtusqAfA9s2E0You9LIJY3CYVxwiB55Wy3XlRNjj3SDwG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=UKgLYkPe; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z+leaE0N"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4998b5a63e2so64987555e9.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 09 Oct 2026 08:48:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791560932; x=1792165732; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=JXF2z4vyGmmSKHlETLZ0cQ9sneHBE6Aoyzr8KR9FOqU=;
-        b=Z+leaE0N+8x6wF45Gw3AoRkpQGq1WJMjTq1R5qNPUrk1R0R+OKCNfOBDq/rWpKi1Kz
-         LAXOZaKFIkkfw1cJSKbP2GGxoxPJXrqTIFpDUA7Vrykw2rlXYy4i7pC7ld06l5GqLGWW
-         P4ePBa3d4mGlbo/QRH8z4KxpuK+w9TIL3L9YCVuz9bPqCBdhibaqZB124tmJxvqYNB+J
-         ymhJPs4c8e3eUXQipbsoZEHYZSolW0/tL6bqeE4y3WC6Tm7bFBHICfo1nEjdqee32ZoO
-         LvkdrpdkBMRc2U2sal0dAs3HSvnHkpZRiXZehQ7G00YD57dameLgo7s1RvreG/Ncs9Q1
-         3tVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791560932; x=1792165732;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=JXF2z4vyGmmSKHlETLZ0cQ9sneHBE6Aoyzr8KR9FOqU=;
-        b=HUDGXcykHJqw6ny2YMbC2IY7VnGamEwrec9fGiCmaMwkuUp/gReGDidRyukJsc3RF/
-         Ldgdy7BvieF9sGFVWlG/NKRBmMP31TkC/8IpAkC9bmSYgRI+mHJryxB4G/z89kw+GRln
-         b1CQ7tH4Nlmh25OL0UNyVCKGXLKwFLUtdBtky1dd2knqyuiiY3I96udk+dhXazWgi4Td
-         tszYN1hvtXP1FBD2XNeuISL691KemP6HkIZrVGOlbUGVlj8fIHP6pX6M+KJQsz6U73rB
-         g9ditnrM91swUsLp53InnHiPvHz40dYfly7MaN/PeR5hY8IoyucRCwSdmiRdBmsa1Q69
-         ljWA==
-X-Gm-Message-State: AFuF++lBZR4ei6MmcEl0ppXelfsimWO28dpl6D1uEL2DqQ9UlKpZ5vJs
-	s98xu6UtGNEtVdZ9vWbOpnLe7xQZm7j7BURB/pYLOYrMwUotRXWnJsyxjTzEPxUo
-X-Gm-Gg: AYBFou0AK8Njb5Zy1dFz0QiCdwBnjJMmEs7u30FV0wQgSoneIQM7JpyzP16kFQo94Dn
-	8Rf0NSDXvQtGYF6uYuAy7p7YlOXK0FJwuV+wTWH6kCk0tDPbQg0YjOuIzhdxkA6vbmoGy/FMkIE
-	/ZnMIJT5+bQMcuFAOxKj1rtm086w2Mtf/NBLNAgYOOGeoiFlsuxJFGqCAsFEOfT4wcQx7e5q/91
-	4yEx37SZbtYK85WmS6XN2XjFQVV2hy3smYTdmW7dgQ3V8FjwOyLGPuMPkKbK3JJsfSB5pi6Ef9h
-	3dEbEWYlxMrm0zEVDK/CHedr0oO2CJy6sCzJC0pKlefTr/ly9jhlYQc25uc9Xceo+03XnlwtuVB
-	NlPEGabhxUigDJe/t9/BvBzkZI7WLIZk426rkDz6wUJxc7YwdZfAgG1e7e3MJRsKmBteeaVC0lb
-	sha50KOSa+kHtjv7sUeT4DJ7xChOanG+gtRmnGPnWeyQmoXDMgrfiRdwgbyT0t1j8wcXX9yZAqd
-	rbGVPpKG7/8Vch7XMY=
-X-Received: by 2002:a05:600c:3e8f:b0:4a0:263c:704f with SMTP id 5b1f17b1804b1-4a18e4a3fbdmr46298095e9.16.1791560931844;
-        Fri, 09 Oct 2026 08:48:51 -0700 (PDT)
-Received: from [192.168.18.21] ([46.197.185.71])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a18bf2343asm120627275e9.9.2026.10.09.08.48.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Oct 2026 08:48:51 -0700 (PDT)
-Message-ID: <cc9f0c2d-7f41-477b-a1dc-9d5a7146af71@gmail.com>
-Date: Fri, 9 Oct 2026 18:48:50 +0300
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="UKgLYkPe"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1791561985;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=UWLmuV+VOitmDREu5SKD8TR8ZykYME/n6JVVWgUeAEU=;
+	b=UKgLYkPeB6rraFuwuFgjGB5xMuIUerZzujlB9YxzYkb9JW3x8iHq2IK4jpzkaCjyutTuwZ
+	mqRFGcO1jzHRMAyTJopAYThV3zMKuOxFZtwbXTJ0y86j2W6ks9jC5wLlXI6K/ALtRNT2wC
+	zzf8xXuvo23jQhVwUc3dny9vXW/lo7k=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-29-fPBwmwcGP_-ruLyfe5J9dQ-1; Fri,
+ 9 Oct 2026 16:06:21 +0000
+X-MC-Unique: fPBwmwcGP_-ruLyfe5J9dQ-1
+X-Mimecast-MFC-AGG-ID: fPBwmwcGP_-ruLyfe5J9dQ_1791561978
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 89F4F18021EA;
+	Fri,  9 Oct 2026 16:06:18 +0000 (UTC)
+Received: from [100.90.56.12] (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
+	by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 9DB3A1956042;
+	Fri,  9 Oct 2026 16:06:16 +0000 (UTC)
+Message-ID: <4944d4a4-cb8d-4c46-aa84-c0050991cffb@redhat.com>
+Date: Fri, 9 Oct 2026 18:06:14 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,65 +51,132 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net v3] usbnet: fix EVENT_RX_PAUSED race in
- usbnet_skb_return()
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-usb@vger.kernel.org
-References: <20261007220311.113827-1-omermetekaya0@gmail.com>
- <sashiko-outbox-164620@kernel.org>
+Subject: Re: [GIT PULL 4/6] KVM/vfio: Use file-based reference counting for
+ KVM
+To: sashiko-reviews@lists.linux.dev,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: kvm@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
+ Heiko Carstens <hca@linux.ibm.com>,
+ Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org
+References: <20261009142749.186650-1-borntraeger@linux.ibm.com>
+ <20261009142749.186650-5-borntraeger@linux.ibm.com>
+ <sashiko-outbox-165746@kernel.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <sashiko-outbox-165746@kernel.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Mimecast-MFC-PROC-ID: 1_1aladw_NcA6qe6tqy7ARUpkpTjB_CPRUmBqlK7gB8_1791561978
+X-Mimecast-Originator: redhat.com
 Content-Language: en-US
-From: =?UTF-8?Q?=C3=96mer_Mete_Kaya?= <omermetekaya0@gmail.com>
-In-Reply-To: <sashiko-outbox-164620@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+On 10/9/26 16:56, sashiko-bot@kernel.org wrote:
+>> -static void vfio_device_file_set_kvm(struct file *file, struct kvm *kvm)
+>> +static void vfio_device_file_set_kvm(struct file *file, struct file *kvm)
+>>   {
+>>   	struct vfio_device_file *df = file->private_data;
+>> +	struct file *old;
+>> +
+>> +	if (kvm)
+>> +		get_file(kvm);
+> 
+> [Severity: Critical]
+> Does taking a strong reference to the KVM file here create a circular
+> reference cycle?
+> 
+> When userspace adds a VFIO device to a KVM VM, kvm_vfio_file_add() takes a
+> reference to the VFIO file. If vfio_device_file_set_kvm() then takes a
+> reference to the KVM file, both files hold references to each other.
+> 
+> Because both file descriptors hold each other's references, their f_count
+> will never reach 0 when userspace closes the FDs, permanently leaking the
+> KVM VM and the VFIO structures.
+
+False positive, the reference to VFIO is in the KVM-VFIO device file and 
+not in the KVM file descriptor itself.  Using variable names, there is 
+one reference from kvf to vfio and one from vfio to kvm.
+
+(Right? :))
+
+Paolo
 
 
 
-On 10/9/26 01:03, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] net: out-of-order packet delivery during RX resume
-> --
-> 
-> commit 7148b0b2b0b945f31b2120d7f4cbc269acf91635
-> Author: Ömer Mete Kaya <omermetekaya0@gmail.com>
-> 
-> usbnet: fix EVENT_RX_PAUSED race in usbnet_skb_return()
-> 
-> This commit addresses a race condition in usbnet_skb_return() by protecting
-> the EVENT_RX_PAUSED flag check and enqueue operations with a double-check
-> pattern under the rxq_pause lock. It also protects the clear_bit() operation
-> in usbnet_resume_rx() under the same lock.
-> 
->> diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
->> index a19ecf718f36a..d1ec3ba1e10e6 100644
->> --- a/drivers/net/usb/usbnet.c
->> +++ b/drivers/net/usb/usbnet.c
 > [ ... ]
->> @@ -700,15 +705,16 @@ void usbnet_resume_rx(struct usbnet *dev)
->>  	int num = 0;
->>  
->>  	local_bh_disable();
->> +	spin_lock(&dev->rxq_pause.lock);
->>  	clear_bit(EVENT_RX_PAUSED, &dev->flags);
->> -
->> +	spin_unlock(&dev->rxq_pause.lock);
 > 
-> [Severity: Medium]
-> If a new packet arrives concurrently on another CPU via usbnet_skb_return(),
-> could it observe EVENT_RX_PAUSED as false here?
+>> diff --git a/virt/kvm/vfio.c b/virt/kvm/vfio.c
+>> index 6cdc4e9a333a3..19548a4309426 100644
+>> --- a/virt/kvm/vfio.c
+>> +++ b/virt/kvm/vfio.c
+>> @@ -144,6 +144,7 @@ static int kvm_vfio_file_add(struct kvm_device *dev, unsigned int fd)
+>>   {
+>>   	struct kvm_vfio *kv = dev->private;
+>>   	struct kvm_vfio_file *kvf;
+>> +	struct file *kvm_file __free(fput) = NULL;
+>>   	struct file *filp __free(fput) = NULL;
+>>   
+>>   	filp = fget(fd);
+>> @@ -154,6 +155,10 @@ static int kvm_vfio_file_add(struct kvm_device *dev, unsigned int fd)
+>>   	if (!kvm_vfio_file_is_valid(filp))
+>>   		return -EINVAL;
+>>   
+>> +	kvm_file = get_file_active(&dev->kvm->file);
 > 
-> If so, it would bypass the pause queue and immediately deliver the new SKB
-> to the network stack via netif_rx().
+> [Severity: High]
+> Does struct kvm contain a member named 'file'? Looking at
+> include/linux/kvm_host.h, it doesn't appear to exist, which would cause a
+> compilation error here.
 > 
->>  	while ((skb = skb_dequeue(&dev->rxq_pause)) != NULL) {
->>  		usbnet_skb_return(dev, skb);
->>  		num++;
->>  	}
+>> +	if (!kvm_file)
+>> +		return -ENOENT;
+>> +
+>>   	guard(mutex)(&kv->lock);
+>>   
+>>   	list_for_each_entry(kvf, &kv->file_list, node) {
+>> @@ -168,7 +173,7 @@ static int kvm_vfio_file_add(struct kvm_device *dev, unsigned int fd)
+>>   	kvf->file = get_file(filp);
+>>   	list_add_tail(&kvf->node, &kv->file_list);
+>>   
+>> -	kvm_vfio_file_set_kvm(kvf->file, dev->kvm);
+>> +	kvm_vfio_file_set_kvm(kvf->file, kvm_file);
 > 
-> This seems like it would cause the newly arrived packet to be delivered before
-> the older packets in the rxq_pause queue are fully drained by this while loop,
-> leading to out-of-order delivery which can degrade TCP performance.
+> [Severity: Critical]
+> This is where KVM takes its strong file reference on the VFIO device file,
+> which completes the reference cycle discussed above.
 > 
-The out-of-order delivery window between clear_bit() and the drain loop
-is a pre-existing issue in the original code, not introduced by this
-patch.
+
