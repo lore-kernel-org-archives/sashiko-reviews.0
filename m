@@ -1,160 +1,140 @@
-Received: from mta1.migadu.com (out-79.mta1.migadu.com [95.215.58.79])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D6E4E7814
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 15:39:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.79
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF584EB843;
+	Fri,  9 Oct 2026 15:43:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791560398; cv=none; b=m++xDVtk6fQyclbix8EWx6Ey3QM5LQm0wwqGcVLbZf066O7dL/QW3kznInmPvEjBBipCcnYc9VgxdsJJ96WOPNFJBWJrk9DM+psbWQFP9Bk0B+2hwJHKAMT6X8kQ3fhvSJW/Q7Xj4o7Gs4IZR05rvjBXhysioNT8uUGgRlkC9Hg=
+	t=1791560606; cv=none; b=H3HMUNBZTYzlcJ3rID2XcnHPxUi3BdVdpN/gaWBH0N8iPTKR5tU6rKL8CbhPXkAUushLJJCj5K91gxfwyqu4imeZmTkUUi84nY2i18aGzS2EBErdj9wG/jH3CMcBC08qs3TYHEAemwDPrUsg3YX7ecfI6I1t3Aq4eKTrc8WaC/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791560398; c=relaxed/simple;
-	bh=rNzYCUi6Npjhu4k9ajSJaAwpRCRGSH4iyjFMgHGkDkA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Wk1cYbFMdq5tCfE0ecFulOjugqbyiQCICUjHZm9CIA7jV8CWVjifJuUdhuIQYW3PYcPkCxevkCYuqQr8jt01NRxKYc/m+Kx+qZIpmwo80Z1ZDXExERz0TGLdM6CJSLtmwAS3MxOaVXAHMHNsFGr60u8767qSSbWWletg2FFYEqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qIwo7oaI; arc=none smtp.client-ip=95.215.58.79
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1791560606; c=relaxed/simple;
+	bh=FBrjgH0x5EGOlSJEOcDQAUei+hDRBQyVthD5BGCwepk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iJm0sNhHnAsvuvQiDYF+LX3zsI7YmO/KDHvancutPuLwMoth1WJhSWdr0dRzu+suc3QHSmq5ERtPKUi8bwds0ePPPUkfZqiLywft8BNyOEUKuuC22Pas8xQtFPF4Px7kt17lnfZWnjLM9xmgUOKqm/eey5LPr/GmNd4B6paloTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WzcdNITb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qIwo7oaI"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=rNzYCUi6Npjhu4k9ajSJaAwpRCRGSH4iyjFMgHGkDkA=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791560391; v=1; x=1792165191;
- b=qIwo7oaIL0hZz9cQpC4Y/wcJz+4vg6eb+cQTISlZ7Oj5qZoHb4JM64tXjYFANXzx5c2h3Dna
- 5o1ptf4qWWNrAP92nvGJ/fdqPqcZbPBjgM6XXAN87K+epS+jVTcVdD7hcaizlQa3pWgYP3BhXtT
- m8ytzxM4J5AdvvcRi3WNacbw=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 9b1b0e4ddc4cf102;
-	Fri, 09 Oct 2026 15:39:00 +0000
-X-Mizu-Trace-ID: 9b1b0e4ddc4cf102
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <d4e436fa-818c-458d-b6bd-8028a2bb414f@linux.dev>
-Date: Fri, 9 Oct 2026 17:38:59 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WzcdNITb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D431F000FF;
+	Fri,  9 Oct 2026 15:43:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791560605;
+	bh=z/6mVlzTEA0Dl8rq6Hoos2CSyNWP/SuVbaIeD5VNGEI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=WzcdNITbKeO9FKZtpp5MUxAlGFSPUIK5SadAWH5Eiv3vT7pyFxLkWL4EVPr4I1GTf
+	 TmiNvy4aOiqBVPD67/mW5lhuLF/Q6YkO5scvldsDec8+VZsePgKQLl5+1Lw34t2nwI
+	 0FH4SHmQF3rYK27UnEYq01LNnK8BL0JzmlbBHzwVshtLapLCyXdTJmXjrXaEUfUTFY
+	 ozmjz1lVBJ3rSmt8YiwOmzmr+Z0Ohi4xHTeR/Ofc728kdRGu/YnQUd7dUP4967dOtP
+	 qpIqoPjgS7DcCJoxXcPMeRNiHPfItTQwvJiZkRbT2NmnEBncWr+EaW4WWovi9TIvOE
+	 PzKWSIhATsxPQ==
+Date: Fri, 9 Oct 2026 15:43:23 +0000
+From: Yosry Ahmed <yosry@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Subject: Re: [PATCH v2 13/29] KVM: nSVM: Add a placeholder ASID for L2
+Message-ID: <askLA0KB-A5V3bSa@google.com>
+References: <20261008001425.2458927-1-yosry@kernel.org>
+ <20261008001425.2458927-14-yosry@kernel.org>
+ <sashiko-outbox-163478@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v10 10/24] bpf: Do not use a private stack for a
- program that can unwind
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20261009041447.17092-1-yonghong.song@linux.dev>
- <20261009041539.28288-1-yonghong.song@linux.dev>
- <sashiko-outbox-164850@kernel.org>
-Content-Language: en-GB
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <sashiko-outbox-164850@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-163478@kernel.org>
 
-
-
-On 10/9/26 6:45 AM, sashiko-bot@kernel.org wrote:
+On Thu, Oct 08, 2026 at 12:42:00AM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] bpf: bpf_prog_may_unwind misses might_throw, causing private stack corruption
+> - [High] kvm/svm: SEV migration leaves vmcb01 without SEV flags if in guest mode
 > --
->
-> commit 38438f251d7fce91364c50842e5e55c25b6033f4
-> Author: Yonghong Song <yonghong.song@linux.dev>
->
-> bpf: Do not use a private stack for a program that can unwind
->
-> This patch aims to prevent BPF programs that can unwind from using a private
-> stack. A private stack keeps its frame pointer in %r9 on x86-64, and an
-> unwind skips the restore, leading to stack addressing issues. The fix forces
-> NO_PRIV_STACK for programs that might unwind.
->
->> diff --git a/kernel/bpf/exception.c b/kernel/bpf/exception.c
->> index 2b9640099269e..f45dd3157f7fb 100644
->> --- a/kernel/bpf/exception.c
->> +++ b/kernel/bpf/exception.c
+> 
+> commit a990122c49d4a9878fc605ac4ab62f79ce50bdad
+> Author: Yosry Ahmed <yosry@kernel.org>
+> 
+> KVM: nSVM: Add a placeholder ASID for L2
+> 
+> This commit introduces a placeholder ASID for L2 that is initially the same
+> as L1's ASID to facilitate future ASID separation. It also updates SEV VM
+> migration to copy the new SEV ASID into asid02 and vmcb02 if nested is
+> already initialized on the destination vCPU.
+> 
 > [ ... ]
->
->> @@ -183,6 +183,16 @@ static void mark_call_sites(struct bpf_verifier_env *env)
->>   	}
->>   }
->>   
->> +bool bpf_prog_may_unwind(const struct bpf_verifier_env *env)
->> +{
->> +	u32 i;
->> +
->> +	for (i = 0; i < env->subprog_cnt; i++)
->> +		if (env->subprog_info[i].might_unwind)
+> 
+> > diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
+> > index 99577859e1aab..b2e6acfbb081f 100644
+> > --- a/arch/x86/kvm/svm/sev.c
+> > +++ b/arch/x86/kvm/svm/sev.c
+> > @@ -2041,6 +2041,15 @@ static void sev_vcpu_migrate_asid(struct vcpu_svm *dst_svm,
+> >  	 */
+> >  	free_asid(dst_svm->asid);
+> >  	dst_svm->asid = asid;
+> > +
+> > +	/*
+> > +	 * If nested is already initialized on the destination vCPU, also update
+> > +	 * the nested ASID to match the new SEV ASID.
+> > +	 */
+> > +	if (dst_svm->nested.vmcb02.ptr) {
+> > +		dst_svm->nested.asid02 = asid;
+> > +		dst_svm->nested.vmcb02.ptr->control.asid = asid;
+> > +	}
+> >  }
+> >  
+> >  static void sev_migrate_from(struct kvm *dst_kvm, struct kvm *src_kvm)
+> 
 > [Severity: High]
-> Does bpf_prog_may_unwind() miss the might_throw condition?
->
-> Since might_unwind and might_throw are tracked separately in
-> bpf_subprog_info, it appears a BPF program using bpf_throw() would bypass
-> this check and still be compiled with a private stack.
+> Does this migration path leave vmcb01 without SEV flags if the destination
+> vCPU is in guest mode?
+> 
+> During SEV migration, sev_migrate_from() calls sev_init_vmcb() shortly after
+> sev_vcpu_migrate_asid() updates the ASID:
+> 
+> arch/x86/kvm/svm/sev.c:sev_migrate_from() {
+>     ...
+> 		sev_vcpu_migrate_asid(dst_svm, dst->asid);
+> 		sev_init_vmcb(dst_svm, false);
+>     ...
+> }
+> 
+> If userspace restores nested state before the migration ioctl, the vCPU could
+> be in guest mode with svm->vmcb pointing to vmcb02.
+> 
+> In this scenario, sev_init_vmcb() modifies svm->vmcb, effectively leaving
+> vmcb01 uninitialized for SEV:
+> 
+> arch/x86/kvm/svm/sev.c:sev_init_vmcb() {
+>     ...
+> 	svm->vmcb->control.misc_ctl |= SVM_MISC_ENABLE_SEV;
+> 	clr_exception_intercept(svm, UD_VECTOR);
+> 
+> 	WARN_ON_ONCE(svm->asid != sev_get_asid(vcpu->kvm));
+> 	svm->vmcb->control.asid = svm->asid;
+>     ...
+> }
+> 
+> When the vCPU exits nested mode, it will run L1 as a normal (non-SEV) guest.
+> Since KVM still expects an SEV/SEV-ES guest (is_sev_es_guest() is true), KVM
+> will skip loading guest state but the hardware will execute vmcb01 as a normal
+> guest. Can this cause a guest crash or hypervisor confusion (e.g. unexpected
+> intercepts triggering KVM warnings)?
+> 
+> Should the migration path ensure vmcb01 is updated with the SEV flags and
+> new ASID regardless of whether the vCPU is currently in nested guest mode?
 
-If only might_throw (bpf_throw), private stack can be used.
-Here, we have might_unwind() as well, in such cases, we have
+This seems like a pre-existing issue. sev_init_vmcb() (and some of its
+callees) already operate on the current VMCB, which would be vmcb02 if
+the vCPU is in guest mode.
 
-         if (env->cleanup_info_cnt || bpf_prog_may_unwind(env)) {
-                 ret = bpf_exc_check_prog(env);
-                 if (ret)
-                         goto skip_full_check;
-         }
+This series (but not this patch, but patch 7) adds another
+initialization in the current VMCB to sev_init_vmcb(), which arguably
+makes things a bit worse, but it's already broken.
 
-and bpf_exc_check_prog(env) will reject bpf_throw(), i.e., if
-bpf_unwind() and bpf_throw() co-exist, verification will fail.
+So I am leaning to not doing anything in this series, and migrating SEV
+vCPUs in guest mode (or disallowing that?) can be done separately
+if/when needed.
 
->
->> +			return true;
->> +	return false;
->> +}
->> +
->>   int bpf_exc_check_prog(struct bpf_verifier_env *env)
->>   {
-> [ ... ]
->
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index 59b275bfc949d..35013a5d84019 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
-> [ ... ]
->
->> @@ -5801,6 +5801,17 @@ static int check_max_stack_depth(struct bpf_verifier_env *env)
->>   		}
->>   	}
->>   
->> +	/*
->> +	 * A private stack keeps its frame pointer in %r9 on x86-64, restored
->> +	 * by a pop after the call that an unwind skips. A frame resumed at a
->> +	 * pad then addresses its stack through a stale pointer, and a frame
->> +	 * sent to its epilogue instead pops its callee-saved registers one
->> +	 * slot off. Do not use a private stack for any program that can
->> +	 * unwind, on every arch for now.
->> +	 */
->> +	if (env->cleanup_info_cnt || bpf_prog_may_unwind(env))
->> +		priv_stack_mode = NO_PRIV_STACK;
-> [Severity: High]
-> Will this leave programs that throw exceptions vulnerable to stack shifting
-> in check_max_stack_depth()?
->
-> If a program uses bpf_throw() and is compiled with a private stack
-> (PRIV_STACK_ADAPTIVE), the x86 JIT pushes the private frame pointer (%r9)
-> before every call.
->
-> When bpf_throw() is called, the ORC unwinder calculates the boundary frame's
-> stack pointer as the value of %rsp before the call, which includes the
-> un-popped %r9 (shifting it by -8 bytes). Then bpf_exception_cb() uses this
-> value to restore the boundary frame's callee-saved registers.
->
-> Because of the unaccounted %r9 push, the stack pointer is off by 8 bytes.
-> Could this cause pop_callee_regs to pop the stale %r9 into a callee-saved
-> register, shift all other registers by one slot, and ultimately corrupt the
-> callee-saved registers?
-
-See above, bpf_throw() and bpf_unwind() cannot co-exist in the same bpf prog.
-
->
->> +
->>   	if (priv_stack_mode == PRIV_STACK_UNKNOWN)
->>   		priv_stack_mode = bpf_enable_priv_stack(env->prog);
->>
-
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261008001425.2458927-1-yosry@kernel.org?part=13
