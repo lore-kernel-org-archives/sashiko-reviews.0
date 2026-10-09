@@ -1,133 +1,177 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-88.mta0.migadu.com [91.218.175.88])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA7B3932E8;
-	Fri,  9 Oct 2026 18:06:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438F14F4CED
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 18:12:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.88
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791569181; cv=none; b=S3OVsnQhFASEMGzS18YvNFR+Xv1Fg8m81nyt9MgTXRU/exNzWEaY0CcxI92gVkSPnuP40viE5gy4zYG5XHxV/ro6Fp8TGVrj8oB2k8QI2cUoFVkgqgII/B7SYVaZ2K8w8v87atYo+xAUnAhX0Ymp+jZqvWVWAQnlCP3ryZ9GWFI=
+	t=1791569578; cv=none; b=T2z8zB6JIg/TF2MtTpZ3ub40hv3WjOeQM7wtyX4D+UKjGcZeL0/NRIo6TiOwV5VBSYrMLvNdeo7TYE80UreyA//QjSATJKa7p8mhjCNsgisO1DhvJcQIfx9Ewr/lYfN3iC1uAQigSMr7/sUNMJ3pYhzbCojFF/mJJljW6N5zVFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791569181; c=relaxed/simple;
-	bh=C9Q5hU4ku+0Hikd5pgxNzMWxrzl3TUuLyju5+BhZIso=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TND7CDLSZv0WkQoLybgY6jSBMfhsfAIg26JAnkwYeBa8DdwhjEqcdM6vLW+q90BviCriDbPqKOqMyEfv7Aq7ZXZiCX2/ouYZlU/Pms17mCInLrF5NlnEy8CY4Xwf0n904pHTsuhAdZdfzNpujyHDSqiuvxDbldu7Ki1+7UPIxlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ejh9neJv; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791569578; c=relaxed/simple;
+	bh=8QryxlV+6DrDBD5DgfUI2UwSedPXiMspTrjhKUVcm1c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HbVS83UUYykIf2XSjBALIrg1fNEccZyC/gWubWgVTDzRwz/yue99o/h4vASpl2XL7j7xww+MEEs1UpZ5UNelNLO5IS6Ijmjxs1ckfiNEujRUSS1IyKzQsDoI6ZMkf4f4BWjyCXVmce52C4PoYEc9xRSRcvfiTNgfwoBV9GUNU5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=sJ75LbMl; arc=none smtp.client-ip=91.218.175.88
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ejh9neJv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B70B1F000FF;
-	Fri,  9 Oct 2026 18:06:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791569180;
-	bh=7UO7u3Rlks4Xr0m9WPSJaXncgWxsa4cYwD0eG14r0Z0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=ejh9neJvdyQj8ItYF4rvDxJV5UjixafgroU3YI8IEAnEe0cwxB7MWlQqJQ0bz6AJx
-	 bo8wkuaX+SVma3godgiWiq00qiXr3PxBOxtRPdPcSwrS3Pcbc0NKoe4oxtgpjCkUkx
-	 KSeWVKFDw2h1dqyEzzG0KXWPZLmxtMmehJcmd3II7JU0heFk3DBCb/eUVwmcYuQHm2
-	 0S68NaBxJG3DheM0bMU+CZvOxB9DSYVQOA4CW6t7L19BuYhMBnyDPf9+slLHzA+XSJ
-	 oJcA5VW5uc8FA4RCSYCnzkp57Z64EVQb/MeWSLW3fIQsZJuxjPLiEZVgPZbVXm5n/t
-	 g0WAhvbiAPatA==
-Date: Fri, 9 Oct 2026 18:06:18 +0000
-From: Yosry Ahmed <yosry@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Subject: Re: [PATCH v2 29/29] KVM: selftests: Add a test for nested TLB
- flushes
-Message-ID: <asktCBk0LcdYGdDW@google.com>
-References: <20261008001425.2458927-1-yosry@kernel.org>
- <20261008001425.2458927-30-yosry@kernel.org>
- <sashiko-outbox-163475@kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="sJ75LbMl"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=8QryxlV+6DrDBD5DgfUI2UwSedPXiMspTrjhKUVcm1c=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791569574; v=1; x=1792174374;
+ b=sJ75LbMlG5FepUFr6/sXTjo9AAN5GuTwQYKqM6d6aGUr2tXOZqYtkT9HYkBOBRMdwAbK5u1/
+ BoV1WVbFR7K2ZvpSpS3Roz+Jv8ACv/+Fc7IrfFs1PyjtuH3gJ2o4G8xN7+0X4kqWRghIb61UVgZ
+ cMARta2/yys8VaPRXyV09d/I=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id b8f0ae7a855160db;
+	Fri, 09 Oct 2026 18:12:53 +0000
+X-Mizu-Trace-ID: b8f0ae7a855160db
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <1547e6f7-9944-411c-9701-3b7f504fe576@linux.dev>
+Date: Fri, 9 Oct 2026 20:12:53 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next 4/5] selftests/bpf: Test trampoline args around a
+ 16-byte aligned stack arg
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20261009064206.1238047-1-yonghong.song@linux.dev>
+ <20261009064228.1240628-1-yonghong.song@linux.dev>
+ <sashiko-outbox-164968@kernel.org>
+Content-Language: en-GB
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <sashiko-outbox-164968@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-163475@kernel.org>
 
-On Thu, Oct 08, 2026 at 12:35:35AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] kvm: selftests: missing memory clobber in invlpga() allows reordering
+
+
+On 10/9/26 8:51 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] bpf: endianness mismatch when reading __int128 in selftests on big-endian
+> - [Medium] selftests/bpf: data race on bpf_testmod_test_struct_arg_result
 > --
-> 
-> commit c21865242d0952d01a007708f2fbf08ce2550486
-> Author: Yosry Ahmed <yosry@kernel.org>
-> 
-> KVM: selftests: Add a test for nested TLB flushes
-> 
-> Add a test that exercises most common scenarios for TLB flushes. The
-> test is split into guest-triggered and KVM-triggered TLB flushes.
-> 
-> > diff --git a/tools/testing/selftests/kvm/include/x86/svm.h b/tools/testing/selftests/kvm/include/x86/svm.h
-> > index c8539166270ea..7644e37c7042c 100644
-> > --- a/tools/testing/selftests/kvm/include/x86/svm.h
-> > +++ b/tools/testing/selftests/kvm/include/x86/svm.h
-> [ ... ]
-> > @@ -316,4 +316,9 @@ struct __attribute__ ((__packed__)) vmcb {
-> >  
-> >  #define SVM_CR0_SELECTIVE_MASK (X86_CR0_TS | X86_CR0_MP)
-> >  
-> > +static inline void invlpga(unsigned long addr, u32 asid)
-> > +{
-> > +	asm volatile("invlpga %0, %1" : : "a"(addr), "c"(asid));
-> > +}
-> > +
-> >  #endif /* SELFTEST_KVM_SVM_H */
-> 
+>
+> commit 44831c6b1a0172e1d0713d17a8e105c4b30d6d64
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> selftests/bpf: Test trampoline args around a 16-byte aligned stack arg
+>
+> This commit introduces two new bpf_testmod functions to test trampoline
+> argument handling for 16-byte aligned stack arguments, specifically targeting
+> __int128 structures. It also adds fentry and fexit programs to verify that
+> arguments are correctly packed in the context array according to BPF
+> conventions on x86-64 and arm64.
+>
+>> diff --git a/tools/testing/selftests/bpf/progs/tracing_struct_int128.c b/tools/testing/selftests/bpf/progs/tracing_struct_int128.c
+>> index 4638dfec1f38e..5520ee500c01d 100644
+>> --- a/tools/testing/selftests/bpf/progs/tracing_struct_int128.c
+>> +++ b/tools/testing/selftests/bpf/progs/tracing_struct_int128.c
+>> @@ -15,4 +15,49 @@ int test_int128_arg_fexit(unsigned long long *ctx)
+>>   	return 0;
+>>   }
+>>   
+>> +/*
+>> + * The arguments come packed in the BPF convention whatever holes the
+>> + * kernel convention left between them: an eightbyte each, and two for the
+>> + * struct holding an __int128.
+>> + */
+>> +long s_g, s_h_lo, s_h_hi, s_i, s_ret;
+>> +
+>> +SEC("fentry/bpf_testmod_test_int128_stack")
+>> +int test_int128_stack_fentry(unsigned long long *ctx)
+>> +{
+>> +	s_g = ctx[6];
+>> +	s_h_lo = ctx[7];
+>> +	s_h_hi = ctx[8];
 > [Severity: Medium]
-> Does this inline assembly need a "memory" clobber?
-> 
-> Unlike the VMX counterparts invvpid and invept introduced in this patch, this
-> inline assembly lacks a "memory" clobber. This might allow the compiler to
-> reorder prior memory stores past the TLB flush instruction.
-> 
-> > diff --git a/tools/testing/selftests/kvm/x86/nested_tlb_flush_test.c b/tools/testing/selftests/kvm/x86/nested_tlb_flush_test.c
-> > new file mode 100644
-> > index 0000000000000..fb32b7bf6b19f
-> > --- /dev/null
-> > +++ b/tools/testing/selftests/kvm/x86/nested_tlb_flush_test.c
+> Will this little-endian assumption cause the selftest to fail on big-endian
+> systems? On big-endian arm64 (aarch64_be), the high 64 bits of the 16-byte
+> struct would be at the lower memory address, so reading ctx[7] as the low
+> 64 bits and ctx[8] as the high 64 bits might be reversed.
+
+Okay, I will use __BYTE_ORDER__ to guard. The same for below.
+
+>
+>> +	s_i = ctx[9];
+>> +	return 0;
+>> +}
+>> +
 > [ ... ]
-> > +static void l1_guest_code(void *data)
-> > +{
-> > +	gpa_t gpa;
-> > +	int i;
-> > +
-> > +	prepare_l2(data, l2_guest_code);
-> > +
-> > +	/*
-> > +	 * Alternately switch the PTE (or TDP PTE) mapping TEST_VADDR between
-> > +	 * two pages containing VAL1 and VAL2, flush TLBs, and verify that L2
-> > +	 * reads the expected value.
-> > +	 */
-> > +	for (i = 0; i < NR_ITERATIONS; i++) {
-> > +		gpa = test_gpa[i % 2];
-> > +
-> > +		*pte_gva &= ~PHYSICAL_PAGE_MASK;
-> > +		*pte_gva |= gpa & PHYSICAL_PAGE_MASK;
-> > +
-> > +		WRITE_ONCE(l2_expected_val, (i % 2 == 0) ? VAL1 : VAL2);
-> > +		run_l2(data, i == 0);
-> 
+>
+>> +long b_f_a, b_f_b, b_g, b_h, b_i_lo, b_i_hi, b_ret;
+>> +
+>> +SEC("fentry/bpf_testmod_test_int128_backfill")
+>> +int test_int128_backfill_fentry(unsigned long long *ctx)
+>> +{
+>> +	b_f_a = ctx[5];
+>> +	b_f_b = ctx[6];
+>> +	b_g = ctx[7];
+>> +	b_h = ctx[8];
+>> +	b_i_lo = ctx[9];
+>> +	b_i_hi = ctx[10];
 > [Severity: Medium]
-> Can the compiler execute the *pte_gva assignments after the TLB flush inside
-> run_l2()?
-> 
-> Because the invlpga() inline assembly lacks a "memory" clobber, and there is no
-> other compiler barrier between the assignment and invlpga(), the compiler is
-> legally permitted to reorder the memory store to execute after the invlpga()
-> instruction.
-> 
-> If this reordering occurs, the hardware will flush the TLB while the old PTE is
-> still in memory, which could allow a speculative hardware page walk to re-cache
-> the old PTE before the store completes. When L2 resumes, it may use the stale
-> TLB entry, causing the test to spuriously fail. The "memory" clobber in the
-> run_guest() wrapper only ensures both operations complete prior to VM-entry; it
-> does not enforce their relative execution order.
+> Does this have the same endianness mismatch on big-endian architectures?
+> Extracting the 16-byte struct here from ctx[9] and ctx[10] also seems to
+> assume a little-endian memory layout.
+>
+>> +	return 0;
+>> +}
+>> diff --git a/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c b/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
+>> index 54a5fc39e0e27..23a2c88d3e7c1 100644
+>> --- a/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
+>> +++ b/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
+> [ ... ]
+>
+>> +noinline long
+>> +bpf_testmod_test_int128_stack(u64 a, u64 b, u64 c, u64 d, u64 e, u64 f,
+>> +			      u64 g, struct bpf_testmod_struct_int128 h, u64 i)
+>> +{
+>> +	bpf_testmod_test_struct_arg_result = a + b * 2 + c * 3 + d * 4 + e * 5 +
+>> +		f * 6 + g * 7 + (u64)h.a * 8 +
+>> +		(u64)((unsigned __int128)h.a >> 64) * 9 + i * 10;
+>> +	return bpf_testmod_test_struct_arg_result;
+>> +}
+> [Severity: Medium]
+> Can concurrent execution of tests (like test_progs -j) lead to a data race on
+> this global variable? If one test thread computes the result in
+> bpf_testmod_test_int128_stack() and another thread overwrites
+> bpf_testmod_test_struct_arg_result in a different function before the first
+> returns, it could cause the BPF fexit hook to read an incorrect return value
+> into s_ret, leading to flaky ASSERT_EQ failures.
 
-Will add the "memory" clobber.
+I will double check this. One thing we could do is to have the *same* inputs.
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261008001425.2458927-1-yosry@kernel.org?part=29
+>
+>> +
+>> +/*
+>> + * x86-64 has no register left for f after e, so f goes to the stack and g
+>> + * takes R9 back; h goes to the third stack slot and i, aligned to 16
+>> + * bytes, to the fifth and sixth. arm64 has registers up to g, puts h in
+>> + * the first stack slot and i in the third and fourth.
+>> + */
+>> +noinline long
+>> +bpf_testmod_test_int128_backfill(u64 a, u64 b, u64 c, u64 d, u64 e,
+>> +				 struct bpf_testmod_struct_arg_2 f, u64 g, u64 h,
+>> +				 struct bpf_testmod_struct_int128 i)
+>> +{
+>> +	bpf_testmod_test_struct_arg_result = a + b * 2 + c * 3 + d * 4 + e * 5 +
+>> +		f.a * 6 + f.b * 7 + g * 8 + h * 9 + (u64)i.a * 10 +
+>> +		(u64)((unsigned __int128)i.a >> 64) * 11;
+>> +	return bpf_testmod_test_struct_arg_result;
+> [Severity: Medium]
+> Since this function also writes to the unprotected global variable
+> bpf_testmod_test_struct_arg_result and immediately returns it, could this
+> contribute to the same data race when multiple test processes run
+> trigger_module_test_read() concurrently?
+>
+>> +}
+>>   #endif
+
