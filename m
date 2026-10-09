@@ -1,49 +1,67 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B40A36E478
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 15:46:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C0C3783AD
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 15:48:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791560814; cv=none; b=VwmhKu7tsHU4c3T+jRlLBssCaEtQUMcukJR97Ttd8L3HO0PaSrl/ioGWa8dpKLob9xv+fgFX0GjNO27nP7c6hhL2kim6zcKrn3BVTMD3IFCZDLNXGu9lZTGZc14b5VOe0HwasvnckT3tp1/iJ3bzrQGXcM6FG92BLQ9tgWEe108=
+	t=1791560936; cv=none; b=np27XQGffCPPsV0/9MPZXwIJ5Psy9uR3KaYcX3KOgCdszyyxG1L7jTiuZkTvYccXdBvkncX0YfgHORkvexVFah9L7GbKVa/Md/juHXUKeGvEu3aW+QGLsmRgDgRPcTx3zqK2BgfOxu0kvuws2cxCWyBYU8hSZPBZ/wSF8nqfa0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791560814; c=relaxed/simple;
-	bh=UIm2pePcYRi/8Aj5Prr2k7pKSPs+SmbGZFmjTly8otU=;
+	s=arc-20240116; t=1791560936; c=relaxed/simple;
+	bh=s9N4SJWPym+C4tYVnt9KaGPrfIXadQwubQeB0Il//RM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nWCVVvsBPA/9onnlA+1d7Bgpd3TQvYBgRQwyFe+4AyXLwg9caHbAbu1hKKjM2t9mG4SoA1+o72PKgEucWjyqUpKZH5GsDGeNqkw8N/l7LigAl+GZesvMUb92gbP1LCN+rcTRGsBFeSnpkaZMuwdSgMeFGMQvRTkbwYyz61+twaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Soz9+HZc; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	 In-Reply-To:Content-Type; b=OWcBSpQcx8tOuKzitlWlC0e560xlPi8MuxUSHuCygyV8eoTaiyP9LZCJxAY0+ecRnmn3dTPJuWNBN/n72zHZsTdaI5iaGgH+2qp7tetXTIgABGK/xcQ4dm0injo2xrCyB8OilqLqCqcUByctHi+rY6iYpZfP7/oZikr2Q55wJKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z+leaE0N; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Soz9+HZc"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1791560812;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=8rY0vC8jvVJKMFFkSI/zD4784A03yPUpYp4C+Q0WhYg=;
-	b=Soz9+HZcHAAzpcjYM/NxX5QrIzGAgqvE/3oFH5Jf0M5xDyBJKv+Y0LkPk2fALCGoYw6R/S
-	mf21huUceALPWwfzYQRYq1vJCo7EFkTLrEbSKzpGt8MpOG88KyoFUjJzfgJHKbCoVSqK8f
-	ogariM6xVVcaRLhv7arIR6pCNQ6bmRE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-112-RQ2khdY6MNGqmr08iW5qEQ-1; Fri,
- 9 Oct 2026 15:46:48 +0000
-X-MC-Unique: RQ2khdY6MNGqmr08iW5qEQ-1
-X-Mimecast-MFC-AGG-ID: RQ2khdY6MNGqmr08iW5qEQ_1791560808
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id CF98D180266C;
-	Fri,  9 Oct 2026 15:46:47 +0000 (UTC)
-Received: from [100.90.56.12] (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
-	by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 1809118004D2;
-	Fri,  9 Oct 2026 15:46:46 +0000 (UTC)
-Message-ID: <88e268d7-c55b-4109-9b08-51e1102391e3@redhat.com>
-Date: Fri, 9 Oct 2026 17:46:45 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z+leaE0N"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4998b5a63e2so64987555e9.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 09 Oct 2026 08:48:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791560932; x=1792165732; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=JXF2z4vyGmmSKHlETLZ0cQ9sneHBE6Aoyzr8KR9FOqU=;
+        b=Z+leaE0N+8x6wF45Gw3AoRkpQGq1WJMjTq1R5qNPUrk1R0R+OKCNfOBDq/rWpKi1Kz
+         LAXOZaKFIkkfw1cJSKbP2GGxoxPJXrqTIFpDUA7Vrykw2rlXYy4i7pC7ld06l5GqLGWW
+         P4ePBa3d4mGlbo/QRH8z4KxpuK+w9TIL3L9YCVuz9bPqCBdhibaqZB124tmJxvqYNB+J
+         ymhJPs4c8e3eUXQipbsoZEHYZSolW0/tL6bqeE4y3WC6Tm7bFBHICfo1nEjdqee32ZoO
+         LvkdrpdkBMRc2U2sal0dAs3HSvnHkpZRiXZehQ7G00YD57dameLgo7s1RvreG/Ncs9Q1
+         3tVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791560932; x=1792165732;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=JXF2z4vyGmmSKHlETLZ0cQ9sneHBE6Aoyzr8KR9FOqU=;
+        b=HUDGXcykHJqw6ny2YMbC2IY7VnGamEwrec9fGiCmaMwkuUp/gReGDidRyukJsc3RF/
+         Ldgdy7BvieF9sGFVWlG/NKRBmMP31TkC/8IpAkC9bmSYgRI+mHJryxB4G/z89kw+GRln
+         b1CQ7tH4Nlmh25OL0UNyVCKGXLKwFLUtdBtky1dd2knqyuiiY3I96udk+dhXazWgi4Td
+         tszYN1hvtXP1FBD2XNeuISL691KemP6HkIZrVGOlbUGVlj8fIHP6pX6M+KJQsz6U73rB
+         g9ditnrM91swUsLp53InnHiPvHz40dYfly7MaN/PeR5hY8IoyucRCwSdmiRdBmsa1Q69
+         ljWA==
+X-Gm-Message-State: AFuF++lBZR4ei6MmcEl0ppXelfsimWO28dpl6D1uEL2DqQ9UlKpZ5vJs
+	s98xu6UtGNEtVdZ9vWbOpnLe7xQZm7j7BURB/pYLOYrMwUotRXWnJsyxjTzEPxUo
+X-Gm-Gg: AYBFou0AK8Njb5Zy1dFz0QiCdwBnjJMmEs7u30FV0wQgSoneIQM7JpyzP16kFQo94Dn
+	8Rf0NSDXvQtGYF6uYuAy7p7YlOXK0FJwuV+wTWH6kCk0tDPbQg0YjOuIzhdxkA6vbmoGy/FMkIE
+	/ZnMIJT5+bQMcuFAOxKj1rtm086w2Mtf/NBLNAgYOOGeoiFlsuxJFGqCAsFEOfT4wcQx7e5q/91
+	4yEx37SZbtYK85WmS6XN2XjFQVV2hy3smYTdmW7dgQ3V8FjwOyLGPuMPkKbK3JJsfSB5pi6Ef9h
+	3dEbEWYlxMrm0zEVDK/CHedr0oO2CJy6sCzJC0pKlefTr/ly9jhlYQc25uc9Xceo+03XnlwtuVB
+	NlPEGabhxUigDJe/t9/BvBzkZI7WLIZk426rkDz6wUJxc7YwdZfAgG1e7e3MJRsKmBteeaVC0lb
+	sha50KOSa+kHtjv7sUeT4DJ7xChOanG+gtRmnGPnWeyQmoXDMgrfiRdwgbyT0t1j8wcXX9yZAqd
+	rbGVPpKG7/8Vch7XMY=
+X-Received: by 2002:a05:600c:3e8f:b0:4a0:263c:704f with SMTP id 5b1f17b1804b1-4a18e4a3fbdmr46298095e9.16.1791560931844;
+        Fri, 09 Oct 2026 08:48:51 -0700 (PDT)
+Received: from [192.168.18.21] ([46.197.185.71])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a18bf2343asm120627275e9.9.2026.10.09.08.48.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Oct 2026 08:48:51 -0700 (PDT)
+Message-ID: <cc9f0c2d-7f41-477b-a1dc-9d5a7146af71@gmail.com>
+Date: Fri, 9 Oct 2026 18:48:50 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -51,80 +69,65 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] KVM: x86/mmu: Cope with the SS bit being set in #NPF exit
- codes
+Subject: Re: [PATCH net v3] usbnet: fix EVENT_RX_PAUSED race in
+ usbnet_skb_return()
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20261009130450.361690-1-pbonzini@redhat.com>
- <sashiko-outbox-165619@kernel.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <sashiko-outbox-165619@kernel.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-X-Mimecast-MFC-PROC-ID: wMLx-8u9-0rgfNwb-Z-J1qGop-7OtmSQQnYzLpzE9kg_1791560808
-X-Mimecast-Originator: redhat.com
+Cc: linux-usb@vger.kernel.org
+References: <20261007220311.113827-1-omermetekaya0@gmail.com>
+ <sashiko-outbox-164620@kernel.org>
 Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: =?UTF-8?Q?=C3=96mer_Mete_Kaya?= <omermetekaya0@gmail.com>
+In-Reply-To: <sashiko-outbox-164620@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 10/9/26 15:20, sashiko-bot@kernel.org wrote:
->> +	unsigned int pfec = access & ~PFERR_SS_MASK;
->> +	if (WARN_ON_ONCE(pfec & ~(PFERR_PRESENT_MASK | PFERR_WRITE_MASK |
->> +				  PFERR_USER_MASK | PFERR_FETCH_MASK)))
+
+
+On 10/9/26 01:03, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] net: out-of-order packet delivery during RX resume
+> --
 > 
-> [Severity: High]
-> Does this strict whitelist introduce a way for unprivileged nested guests
-> to panic the host?
-
-No, SEV-SNP does not support nested virtualization and vice versa.  It 
-would have to be fixed if one supported nesting SEV-SNP VMs into non-SNP 
-hypervisors, but the WARN would still exist and be valuable.
-
->> -	errcode |= write_fault | user_fault;
->> +	errcode |= access & (PFERR_WRITE_MASK | PFERR_USER_MASK | PFERR_SS_MASK);
+> commit 7148b0b2b0b945f31b2120d7f4cbc269acf91635
+> Author: Ömer Mete Kaya <omermetekaya0@gmail.com>
 > 
-> [Severity: Low]
-> Does this change leave user_fault unused?
+> usbnet: fix EVENT_RX_PAUSED race in usbnet_skb_return()
 > 
-> Because user_fault is declared at the top of FNAME(walk_addr_generic):
+> This commit addresses a race condition in usbnet_skb_return() by protecting
+> the EVENT_RX_PAUSED flag check and enqueue operations with a double-check
+> pattern under the rxq_pause lock. It also protects the clear_bit() operation
+> in usbnet_resume_rx() under the same lock.
 > 
->      const int user_fault  = access & PFERR_USER_MASK;
-
-Yes, dropped.
-
-Paolo
-
+>> diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
+>> index a19ecf718f36a..d1ec3ba1e10e6 100644
+>> --- a/drivers/net/usb/usbnet.c
+>> +++ b/drivers/net/usb/usbnet.c
+> [ ... ]
+>> @@ -700,15 +705,16 @@ void usbnet_resume_rx(struct usbnet *dev)
+>>  	int num = 0;
+>>  
+>>  	local_bh_disable();
+>> +	spin_lock(&dev->rxq_pause.lock);
+>>  	clear_bit(EVENT_RX_PAUSED, &dev->flags);
+>> -
+>> +	spin_unlock(&dev->rxq_pause.lock);
+> 
+> [Severity: Medium]
+> If a new packet arrives concurrently on another CPU via usbnet_skb_return(),
+> could it observe EVENT_RX_PAUSED as false here?
+> 
+> If so, it would bypass the pause queue and immediately deliver the new SKB
+> to the network stack via netif_rx().
+> 
+>>  	while ((skb = skb_dequeue(&dev->rxq_pause)) != NULL) {
+>>  		usbnet_skb_return(dev, skb);
+>>  		num++;
+>>  	}
+> 
+> This seems like it would cause the newly arrived packet to be delivered before
+> the older packets in the rxq_pause queue are fully drained by this while loop,
+> leading to out-of-order delivery which can degrade TCP performance.
+> 
+The out-of-order delivery window between clear_bit() and the drain loop
+is a pre-existing issue in the original code, not introduced by this
+patch.
