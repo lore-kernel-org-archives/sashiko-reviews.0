@@ -1,163 +1,129 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C73422157B
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 22:46:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791585983; cv=pass; b=a8EwyYWAaXnBY7iztZ0hDOoU6GzNLKaxaFhNtjYsAx3tD2PBTSuX0rBBQ0nbJlUQR5iYiOx3imIVQ/TL6PhP17PhHGCIHCX2HI1okBnu/qgz4JGoXeuyo4L14q1gmKAlTm2HX/hl1fZ5uScA1xF5/OaSi51uDiPTU2ru0UW08XE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791585983; c=relaxed/simple;
-	bh=4KLRhiuXd6vs87HrQdRYKVSaRN0S916uaxbSgL9ZNic=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DWpV661jQEp6Vd7LWrlkHtUeymExVSSFy/9m6E/z9NfR9jGQtcgPDRoJLx2sA3tCcXPynCLguQMR0wYH2oTBgDtb0ds/VRi7fWm6hbyzpaCTGDz+O/OAjDdu1st6cxeoVml/CrAVwGRBcq71iy/u5Q9MnYUOJHqOWZzFtKejdmQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nnF+dfWR; arc=pass smtp.client-ip=209.85.210.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F13922157B
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 22:47:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791586030; cv=none; b=f1rRHOn3W0DvuOSR2wmy2hdBiBx7668TZnrZQdywjw8Mcmg9EHIW7/VHlYddhqQEEZ3hkXRpPqRwRiks9Uln4nrzdxgr7Ncdr8prEHhdJuvzAut4759wBtT2j7z4/cvFxYNDlckuuCmlXuoU9HoRWiwld9KRCSO9uwMqhETzcVs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791586030; c=relaxed/simple;
+	bh=5wi7ZJzipJpQm3rsTVf/R+Fm2rYcMtyXpJFz9CmEVg0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kSg37cJmo7l/zLnBrlM679mwDg7odfyvx4OQTCFzHhfpWqT8Dovijq372gtEWKKwu668GreqebxuX1NFFUUYyYJpLFwVSTXSVdlnK8Q2duddezj7eY6jCfFOsU/Nwo7UA686M9sKJSSwDHSZuE+gW6AwZhx+R5AmSNCxJB7eNwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SW9hy3rt; arc=none smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nnF+dfWR"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-8198a3a54d7so2160674a34.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 09 Oct 2026 15:46:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791585981; cv=none;
-        d=google.com; s=arc-20260327;
-        b=ekVbCy3WFXHUT/X2kAsZcRalYBZHQIglMnbtogtThkKKwQsA7o1va50GLMFdEEfGYd
-         6v+q3vQXVrQE35lQkSbgjwqNPjKDXMT0AXaeSiv1MlWWj2KoTE0F6ZkTNfozv0U/h0ds
-         suC91q6QRHWd3U13Rx7Jc33gjHOeXHGXJSZBdWsESYdr2OWkZprBWCqS0auPrU8Fv5yT
-         Q1trTEBfNXiRxkTENFCiuBpf/UrDkWOPZ37g+QaOcwbELVW9LsqFa8dil/+z0WqHKAgT
-         xL00bZ6Tb2e+p4khRM+FqfX8xvyf5aHhPpKFKYhGQFWBT8xOW5eltGnjHaOj5EI0e1wE
-         ULow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=4ehjg9tbNZBPJeJol3tfp+R4B/4a7dVHLZ3bjJzX334=;
-        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
-        b=U/mFEa3MDKTw0B184zfwqMdu8kWjlrHl8QQY3kt66XjxKZbhmoQRfUKt6IwB9YGFsW
-         NQ8AP25Y9eOnkUtaPOYzpyjlo5L+dNJyl7lwmiQB22KqyfAiNNqPDT9yp2TX9q7BloCI
-         A5xweJOj6DIO1rRjh7aDC68D+7XYYAGOz93VR5X+CJhaNh1PbEItXVVE9cH/4gr+OgFI
-         3AIDM4DiamK8a1X8vFsId2hpRL+t1pmHcm+OstYURj66tpimBjucrSWafI3YI5hTkcPq
-         6QJPncbGLq9v0Zj7YtvSRjr519gkp3u+SdpdDXSm8SEdfCVw6sT+eCEEbC8PkEibctxz
-         3ZWA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791585981; x=1792190781; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=4ehjg9tbNZBPJeJol3tfp+R4B/4a7dVHLZ3bjJzX334=;
-        b=nnF+dfWRQlZA6y7epeR+iITeoL64F+FbWqHF+NzNIPgdR3iyrdPrT084m+tYjbwdod
-         Bvc6yriDsuwci2FRPWUJiZl24jmWnVxjaktVjub0y8egiKnQfgZAFlLnikgfA/IJpCzJ
-         DUimRc1tMEskNcOp+mMRTKkLz5nrtkGlK8S36WQ/fsj6X3FDw4qaZGdXTo74AsLzU4Iq
-         nBYfJHa+4+m5X0gz8czE62uSsAxjz4FLHj7W1gvBCI7Ba4Y29iCeVkqwx5QmhqBekqzn
-         5k46OkuouK3u+GDMcafIpZF2o6zGBiNTedAIFw1/57E0GWPifWAG89Z70inTdk14ujUm
-         IZRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791585981; x=1792190781;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=4ehjg9tbNZBPJeJol3tfp+R4B/4a7dVHLZ3bjJzX334=;
-        b=ary8jqCypQ3vWnVZ7gn3s8DrqN/iEZVe2jv0dwMdQzXFRoXFwKg9Viv2vfyNA6cp+P
-         oVV+sBNmkXlqAtSUpXItl1TCEGK8moEbZuglSrxlw04kbrp6mY19Tq/lwPO0Hj8W3WKQ
-         Wb5tYaSGfqAqRQarzs8Ldxj4VXIWEbgSw8xHMf6PpTdDju2daVPn4VVy3dVvcWlm7zgF
-         BwwMniCCXny8q/cfhUxzbQVPQM9Ze5up8a8tpRtFfPdtWvcMt7M5Fbj9j3zIta5/LqTa
-         I59z5rmE6RuGxFqZgYFwWBJOAD0f6CUQA5yvvpDg1WL1dfqemDvEE/by3vmKUlUjDkqv
-         VImQ==
-X-Gm-Message-State: AFuF++nPu3bBfMiKWOpnkIzVbdlbaLPb1LuCYIV+IX54fawwYHSVjxp0
-	Fyr3skRFIh0tuQVmVmwPiKZ4tlQjRtIzuM16A2y4PEe2um6gfIRODpRKjNzhgRH3S6o0OIAiyoa
-	/oF6OSIPFjFJzyzMH4aDiEc35CRrGdYNRpmNYesQ=
-X-Gm-Gg: AYBFou3mGLb3UGJzzu87Q5CCJEcYAjScyKz6PIiQ735INkT8NjnhAwVpBX9aBN0ttg9
-	MtUiBhoRs9rj8SRsmOkd4wbgQX1/9ksazeLT7UXsjOr84m9LwnAhIV+3MsFjKVD3ddmrSGEHRlH
-	fpLwPu1Nb5Zu/nE0keUxC5Nf1Mf5ZHcP5RCt6yOXkYrJnQClcm5EXowy5yYGwZr77oyt3NSyWy8
-	aQVmGbXU2aZFT/vBNfKfSqA5gaF/eWQY0AWZ0ZZzXbSxQFxOqtKEvi6HmVXjq7kTGG/fqQgSylA
-	i/DP6tt7Mz03akKH70EuwassC0R7mfd0sziKu1kK9YYMGnvkx5EqfR0LvtbpNCRc1n3/nF23pBl
-	vVFLQqoHJ4tIkAA==
-X-Received: by 2002:a05:6808:238f:b0:4af:aaca:7be3 with SMTP id
- 5614622812f47-50b5c9bb14emr2445879b6e.12.1791585981270; Fri, 09 Oct 2026
- 15:46:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SW9hy3rt"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1791586029; x=1823122029;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=5wi7ZJzipJpQm3rsTVf/R+Fm2rYcMtyXpJFz9CmEVg0=;
+  b=SW9hy3rtnFFwWzBx15g4BinKRhPQRYrN2YpGIyKm32Mk+pU/bqY4+Z6D
+   4FO/3RB1z64MCTjhKVe0zeQet7OIH6zKl2WuZl9xymnZrTOWmjr55y0SO
+   2pzyAhpbaTP3gc18T1OHBs2Sohq5ABLAsH48vx1Fof3uj5zVBr4XQrys0
+   KTtg1YUOlBE1hStUz3PKUpyMO9ZE8Nu1AbOJ9GnDiPbclLEGgYh3vbdKQ
+   5oTg2YneRsZLR2L3LA+EIIg0IJbySz3y8BaxlnonP9E3fR2qYzNontX/U
+   gz3/IO/uh83nptOv+bP9r574Rsmd9c7byziMUA7lknacD+lppHIWo6CUo
+   Q==;
+X-CSE-ConnectionGUID: H4Y/jkOwQ76cOFeNpKtRgA==
+X-CSE-MsgGUID: SZbLIwoDS6SHA0TkoeQTWQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11930"; a="384892"
+X-IronPort-AV: E=Sophos;i="6.27,149,1787036400"; 
+   d="scan'208";a="384892"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2026 15:47:09 -0700
+X-CSE-ConnectionGUID: LQ0eEaqBSBKAi1GmdrLvaw==
+X-CSE-MsgGUID: Pqn6d0WuSxaRqnlidqtsrg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,149,1787036400"; 
+   d="scan'208";a="508263"
+Received: from ettammin-mobl2.ger.corp.intel.com (HELO [10.245.244.17]) ([10.245.244.17])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2026 15:47:08 -0700
+Message-ID: <2b9e7969-bb78-4874-b5e0-0321d31d3beb@linux.intel.com>
+Date: Sat, 10 Oct 2026 01:47:05 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261009214404.722628-1-mmyangfl@gmail.com> <20261009214404.722628-2-mmyangfl@gmail.com>
- <sashiko-outbox-166096@kernel.org>
-In-Reply-To: <sashiko-outbox-166096@kernel.org>
-From: David Yang <mmyangfl@gmail.com>
-Date: Sat, 10 Oct 2026 06:45:44 +0800
-X-Gm-Features: AclHuK9BjguRECGBQxK9DXsJst-8IVoz5PwlgnNbwjYRPBtx-f5QOL3eB7nDJO4
-Message-ID: <CAAXyoMMwUqwgyPXyG=zKqn1hkWeg769bPrwwWF=fNo0G7dzoNg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] regulator: dt-bindings: add hi3798cv200 regulator
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 11/11] xhci: Prevent invalid vdev dereference during
+ sideband unregister
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: linux-usb@vger.kernel.org
+References: <20261009151624.618967-1-mathias.nyman@linux.intel.com>
+ <20261009151624.618967-12-mathias.nyman@linux.intel.com>
+ <sashiko-outbox-165777@kernel.org>
+Content-Language: en-US
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
+In-Reply-To: <sashiko-outbox-165777@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Oct 10, 2026 at 5:52=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
-
-> [Severity: Medium]
-> Will this strict constraint reject device trees for the other supported S=
-oCs?
->
-> The description explicitly mentions support for multiple HiSilicon STB So=
-Cs
-> (Hi3798cv200/mv100/mv200) which have different voltage reference designs.
-> However, restricting the compatible property to a single exact value
-> (hisilicon,hi3798cv200-regulator) rejects device trees that use SoC-speci=
-fic
-> compatible strings (e.g., hisilicon,hi3798mv200-regulator) or fallback li=
-sts.
->
-> This prevents the proper representation of the other supported hardware v=
-ariants
-> without failing schema validation (dt_binding_check).
-
-No intend to introduce more compatibles; follows
-hisilicon,hi3798cv200-pcie conventions.
-
+On 10/9/26 18:30, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] xhci: TOCTOU race and Use-After-Free in sideband registration
+> --
+> 
+> commit 7085c7c59881c747b14aeec07262203621aaa8b5
+> Author: Mathias Nyman <mathias.nyman@linux.intel.com>
+> xhci: Prevent invalid vdev dereference during sideband unregister
+> 
+> This commit prevents the reallocation of the xhci virtual device in the setup
+> device error path if a sideband is registered. It aims to fix a kernel oops
+> caused by dereferencing a stale vdev pointer during USB audio disconnect.
+> 
+> Closes: https://lore.kernel.org/linux-usb/TYUPR06MB6217000B59003EDF233D7246D2B22@TYUPR06MB6217.apcprd06.prod.outlook.com/
+> 
+>> diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+>> --- a/drivers/usb/host/xhci.c
+>> +++ b/drivers/usb/host/xhci.c
+>> @@ -4435,10 +4435,13 @@ static int xhci_setup_device(struct usb_hcd *hcd, struct usb_device *udev,
+>>   		dev_warn(&udev->dev, "Device not responding to setup %s.\n", act);
+>>   
+>>   		mutex_unlock(&xhci->mutex);
+>> -		ret = xhci_disable_and_free_slot(xhci, udev->slot_id);
+>> -		if (!ret) {
+>> -			if (xhci_alloc_dev(hcd, udev) == 1)
+>> -				xhci_setup_addressable_virt_dev(xhci, udev);
+>> +
+>> +		if (!virt_dev->sideband) {
+>> +			ret = xhci_disable_and_free_slot(xhci, udev->slot_id);
+> 
 > [Severity: High]
-> Does the lack of hardware calibration properties here cause overvoltage
-> in the driver?
->
-> By not including properties to describe the physical hardware bounds (e.g=
-.,
-> duty-cycle mappings or pwm-regulator integration), strict validation prev=
-ents
-> defining these board-specific calibration values in the device tree.
->
-> As a result, the follow-up commit "regulator: histb: add voltage regulato=
-r
-> driver" relies on the standard OS policy constraints (regulator-min-micro=
-volt
-> and regulator-max-microvolt) as physical 100% and 0% duty cycle calibrati=
-on
-> boundaries:
->
-> drivers/regulator/histb-regulator.c:histb_regulator_probe() {
->     ...
->         priv->min_uV =3D init_data->constraints.min_uV;
->         priv->max_uV =3D init_data->constraints.max_uV;
->     ...
-> }
->
-> If a device tree author specifies a tighter policy constraint to protect
-> hardware (e.g., a maximum of 1.0V when the physical maximum is 1.15V),
-> a legitimate request for 1.0V outputs a 0% duty cycle:
->
-> drivers/regulator/histb-regulator.c:histb_regulator_set_voltage() {
->     ...
->         if (min_uV >=3D priv->max_uV)
->                 duty =3D 0;
->     ...
-> }
->
-> This configures the hardware to physically deliver the unconstrained maxi=
-mum
-> of 1.15V, completely bypassing the intended safety bounds and potentially
-> damaging connected components.
+> Can this lockless check introduce a Time-Of-Check to Time-Of-Use (TOCTOU)
+> race condition leading to a use-after-free?
+> 
+> If an asynchronous caller like snd_usb_rediscover_devices() calls
+> xhci_sideband_register() concurrently, it acquires xhci->lock, reads
+> xhci->devs[slot_id], and attaches the sideband.
+> 
+> If this lockless check evaluates to true just before the sideband is
+> attached, we proceed to xhci_disable_and_free_slot() without the lock:
+> 
+> xhci_setup_device()
+>      if (!virt_dev->sideband) {
+>          xhci_disable_and_free_slot()
+>              xhci_free_virt_device()
+>                  xhci->devs[slot_id] = NULL;
+>                  kfree(dev);
+> 
+> Because xhci_free_virt_device() does not hold xhci->lock, it can free the
+> device immediately after xhci_sideband_register() attaches the sideband,
+> leaving the sideband with a dangling pointer to a freed vdev.
 
-pwm-regulator.yaml: This mode uses the regulator's maximum and minimum
-supplied voltages specified in the regulator-{min,max}-microvolt
-properties to calculate appropriate duty-cycle values.
+Not an issue, or extremely unlikely.
+
+This xhci_setup_device() codepath is called during usb device (re-)enumeration.
+In this case problematic case is after a failed usb port resume calling reset-resume.
+
+This means that the suspended audio class interface driver would have to register
+audio sideband before the audio class interface itself resumed, and do this
+while the parent port is mid resume.
+
+Mathias
