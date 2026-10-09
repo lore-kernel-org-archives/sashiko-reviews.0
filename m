@@ -1,124 +1,160 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-79.mta1.migadu.com [95.215.58.79])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96CDD3D9041;
-	Fri,  9 Oct 2026 15:37:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D6E4E7814
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 15:39:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.79
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791560234; cv=none; b=bml4wT2kLEo7pVWGxvCrQ9HyPscpUu9bGeoM6JZ2OQbAMYOVk0rJUIuRHVwL+Nb2OHRKiPVQoXSyaufAIS3w3hvby79nIMEqVbgC5F8CvPst72YDyufR5wN0bfLCzEyjYYzUSElCKaIDASuD7dKGzysGSMZYkviV/P6tmbSHA84=
+	t=1791560398; cv=none; b=m++xDVtk6fQyclbix8EWx6Ey3QM5LQm0wwqGcVLbZf066O7dL/QW3kznInmPvEjBBipCcnYc9VgxdsJJ96WOPNFJBWJrk9DM+psbWQFP9Bk0B+2hwJHKAMT6X8kQ3fhvSJW/Q7Xj4o7Gs4IZR05rvjBXhysioNT8uUGgRlkC9Hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791560234; c=relaxed/simple;
-	bh=IGlPNmrB/Z90+HzxJnCaiTCIJxJUyx5rp3tKMxTivao=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KtXyrrRrvbqmlnYi7P5MNgWI7dWsFVBKgDmghDGvPOgda8LsCb+Y011QxFPpBQnyckXoY61YAEdrUsHqaKP5/0NT8LbXK63sTM314TBt5yQrQGHW9uV0Tm5Lrx3CkwdE0rOV9nT2utWl33oxPIRcr6GZsifVws3cK9MRYw6ldtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hReb8JI9; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791560398; c=relaxed/simple;
+	bh=rNzYCUi6Npjhu4k9ajSJaAwpRCRGSH4iyjFMgHGkDkA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Wk1cYbFMdq5tCfE0ecFulOjugqbyiQCICUjHZm9CIA7jV8CWVjifJuUdhuIQYW3PYcPkCxevkCYuqQr8jt01NRxKYc/m+Kx+qZIpmwo80Z1ZDXExERz0TGLdM6CJSLtmwAS3MxOaVXAHMHNsFGr60u8767qSSbWWletg2FFYEqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=qIwo7oaI; arc=none smtp.client-ip=95.215.58.79
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hReb8JI9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A69E1F000FF;
-	Fri,  9 Oct 2026 15:37:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791560232;
-	bh=Xv752NAWDTrmgKkOMZ6ZHqlt730yvRMedMOd086PMbc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=hReb8JI9l1RQti47ixxKMTdfri9n+Ii2s4XtlPk8OdrTi5VbUr8DBQD3HPj9sh1/3
-	 oWrNP67EasnhZ0hszJhksUfa84wGuRW7qe8xWTm2GJTGviWqkJ79dtkTtXKotacCqp
-	 0Te+fRiemL0yw3TNZRdkOLEpf1PmFBlENnN7TiJHlewyAj8y924XNAICkzHZWoVOSo
-	 UrRPlmkGP4HZ+9D2KY+txPhW3YyKqYB9Si0eaRoVjZxrdll+hkEVmAVdGUlxN8WdZx
-	 cKqi1pwoZA2e65gZUfU6hJMCMTVENdhccncbiWe7xGpP1G7B+nGrpyH2SHcoCkCayw
-	 o+ECAVXsuAYvw==
-Date: Fri, 9 Oct 2026 15:37:10 +0000
-From: Yosry Ahmed <yosry@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Subject: Re: [PATCH v2 11/29] KVM: SVM: Only flush the fallback ASID when
- used by a different vCPU
-Message-ID: <askKBLY9vTQSh3uE@google.com>
-References: <20261008001425.2458927-1-yosry@kernel.org>
- <20261008001425.2458927-12-yosry@kernel.org>
- <sashiko-outbox-163474@kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="qIwo7oaI"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=rNzYCUi6Npjhu4k9ajSJaAwpRCRGSH4iyjFMgHGkDkA=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791560391; v=1; x=1792165191;
+ b=qIwo7oaIL0hZz9cQpC4Y/wcJz+4vg6eb+cQTISlZ7Oj5qZoHb4JM64tXjYFANXzx5c2h3Dna
+ 5o1ptf4qWWNrAP92nvGJ/fdqPqcZbPBjgM6XXAN87K+epS+jVTcVdD7hcaizlQa3pWgYP3BhXtT
+ m8ytzxM4J5AdvvcRi3WNacbw=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 9b1b0e4ddc4cf102;
+	Fri, 09 Oct 2026 15:39:00 +0000
+X-Mizu-Trace-ID: 9b1b0e4ddc4cf102
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <d4e436fa-818c-458d-b6bd-8028a2bb414f@linux.dev>
+Date: Fri, 9 Oct 2026 17:38:59 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v10 10/24] bpf: Do not use a private stack for a
+ program that can unwind
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20261009041447.17092-1-yonghong.song@linux.dev>
+ <20261009041539.28288-1-yonghong.song@linux.dev>
+ <sashiko-outbox-164850@kernel.org>
+Content-Language: en-GB
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <sashiko-outbox-164850@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-163474@kernel.org>
 
-On Thu, Oct 08, 2026 at 12:33:14AM +0000, sashiko-bot@kernel.org wrote:
+
+
+On 10/9/26 6:45 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] kvm: data race on sd->fallback_asid_vcpu between pre_svm_run and svm_vcpu_free
+> - [High] bpf: bpf_prog_may_unwind misses might_throw, causing private stack corruption
 > --
-> 
-> commit aa8eca89b8d60f642d17b3f8439f52f2e1ae951d
-> Author: Yosry Ahmed <yosry@kernel.org>
-> 
-> KVM: SVM: Only flush the fallback ASID when used by a different vCPU
-> 
-> This commit optimizes the fallback ASID flushing logic by only flushing
-> when the last vCPU that used the fallback ASID on the pCPU changes. It
-> adds a per-CPU tracker fallback_asid_vcpu to determine when this occurs.
-> 
-> > diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-> > index 8f27722bc4faf..0dbb1962d32b6 100644
-> > --- a/arch/x86/kvm/svm/svm.c
-> > +++ b/arch/x86/kvm/svm/svm.c
-> 
+>
+> commit 38438f251d7fce91364c50842e5e55c25b6033f4
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> bpf: Do not use a private stack for a program that can unwind
+>
+> This patch aims to prevent BPF programs that can unwind from using a private
+> stack. A private stack keeps its frame pointer in %r9 on x86-64, and an
+> unwind skips the restore, leading to stack addressing issues. The fix forces
+> NO_PRIV_STACK for programs that might unwind.
+>
+>> diff --git a/kernel/bpf/exception.c b/kernel/bpf/exception.c
+>> index 2b9640099269e..f45dd3157f7fb 100644
+>> --- a/kernel/bpf/exception.c
+>> +++ b/kernel/bpf/exception.c
 > [ ... ]
-> 
-> > @@ -1422,6 +1424,11 @@ static void svm_vcpu_free(struct kvm_vcpu *vcpu)
-> >  	svm_vcpu_free_msrpm(svm->msrpm);
-> >  
-> >  	free_asid(svm->asid);
-> > +
-> > +	for_each_possible_cpu(cpu) {
-> > +		sd = per_cpu_ptr(&svm_data, cpu);
-> > +		cmpxchg(&sd->fallback_asid_vcpu, vcpu, NULL);
-> > +	}
-> >  }
-> 
+>
+>> @@ -183,6 +183,16 @@ static void mark_call_sites(struct bpf_verifier_env *env)
+>>   	}
+>>   }
+>>   
+>> +bool bpf_prog_may_unwind(const struct bpf_verifier_env *env)
+>> +{
+>> +	u32 i;
+>> +
+>> +	for (i = 0; i < env->subprog_cnt; i++)
+>> +		if (env->subprog_info[i].might_unwind)
+> [Severity: High]
+> Does bpf_prog_may_unwind() miss the might_throw condition?
+>
+> Since might_unwind and might_throw are tracked separately in
+> bpf_subprog_info, it appears a BPF program using bpf_throw() would bypass
+> this check and still be compiled with a private stack.
+
+If only might_throw (bpf_throw), private stack can be used.
+Here, we have might_unwind() as well, in such cases, we have
+
+         if (env->cleanup_info_cnt || bpf_prog_may_unwind(env)) {
+                 ret = bpf_exc_check_prog(env);
+                 if (ret)
+                         goto skip_full_check;
+         }
+
+and bpf_exc_check_prog(env) will reject bpf_throw(), i.e., if
+bpf_unwind() and bpf_throw() co-exist, verification will fail.
+
+>
+>> +			return true;
+>> +	return false;
+>> +}
+>> +
+>>   int bpf_exc_check_prog(struct bpf_verifier_env *env)
+>>   {
 > [ ... ]
-> 
-> > @@ -3884,8 +3892,11 @@ static int pre_svm_run(struct kvm_vcpu *vcpu)
-> >  	if (is_sev_guest(vcpu))
-> >  		return pre_sev_run(svm, vcpu->cpu);
-> >  
-> > -	if (unlikely(svm->vmcb->control.asid == fallback_asid))
-> > +	if (unlikely(svm->vmcb->control.asid == fallback_asid &&
-> > +		     sd->fallback_asid_vcpu != vcpu)) {
-> >  		vmcb_set_flush_asid(svm->vmcb);
-> > +		sd->fallback_asid_vcpu = vcpu;
-> 
-> [Severity: Low]
-> Will this concurrent access to sd->fallback_asid_vcpu trigger a KCSAN data
-> race splat?
-> 
-> In svm_vcpu_free(), when a vCPU is being destroyed, it iterates over all
-> physical CPUs and modifies sd->fallback_asid_vcpu via cmpxchg() across CPUs.
-> 
-> Concurrently, another vCPU running on one of those CPUs will execute
-> pre_svm_run() and perform plain reads and writes of its local
-> sd->fallback_asid_vcpu.
-> 
-> Per the LKMM (C11 memory model), if an atomic RMW is used on one side
-> of a concurrent access, at least one side must use READ_ONCE() or
-> WRITE_ONCE() to prevent the compiler from fusing loads or reordering
-> plain stores.
-> 
-> Should the reads and writes in pre_svm_run() use READ_ONCE() and
-> WRITE_ONCE() to avoid this race?
+>
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 59b275bfc949d..35013a5d84019 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
+> [ ... ]
+>
+>> @@ -5801,6 +5801,17 @@ static int check_max_stack_depth(struct bpf_verifier_env *env)
+>>   		}
+>>   	}
+>>   
+>> +	/*
+>> +	 * A private stack keeps its frame pointer in %r9 on x86-64, restored
+>> +	 * by a pop after the call that an unwind skips. A frame resumed at a
+>> +	 * pad then addresses its stack through a stale pointer, and a frame
+>> +	 * sent to its epilogue instead pops its callee-saved registers one
+>> +	 * slot off. Do not use a private stack for any program that can
+>> +	 * unwind, on every arch for now.
+>> +	 */
+>> +	if (env->cleanup_info_cnt || bpf_prog_may_unwind(env))
+>> +		priv_stack_mode = NO_PRIV_STACK;
+> [Severity: High]
+> Will this leave programs that throw exceptions vulnerable to stack shifting
+> in check_max_stack_depth()?
+>
+> If a program uses bpf_throw() and is compiled with a private stack
+> (PRIV_STACK_ADAPTIVE), the x86 JIT pushes the private frame pointer (%r9)
+> before every call.
+>
+> When bpf_throw() is called, the ORC unwinder calculates the boundary frame's
+> stack pointer as the value of %rsp before the call, which includes the
+> un-popped %r9 (shifting it by -8 bytes). Then bpf_exception_cb() uses this
+> value to restore the boundary frame's callee-saved registers.
+>
+> Because of the unaccounted %r9 push, the stack pointer is off by 8 bytes.
+> Could this cause pop_callee_regs to pop the stale %r9 into a callee-saved
+> register, shift all other registers by one slot, and ultimately corrupt the
+> callee-saved registers?
 
-I am not sure if this can cause any problems in practice, but I think
-annotating with READ_ONCE()/WRITE_ONCE() is probably cheap enough and
-this isn't the common case anyway.
+See above, bpf_throw() and bpf_unwind() cannot co-exist in the same bpf prog.
 
-> 
-> > +	}
-> >  
-> >  	return 0;
-> >  }
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261008001425.2458927-1-yosry@kernel.org?part=11
+>
+>> +
+>>   	if (priv_stack_mode == PRIV_STACK_UNKNOWN)
+>>   		priv_stack_mode = bpf_enable_priv_stack(env->prog);
+>>
+
