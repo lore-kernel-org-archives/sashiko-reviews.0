@@ -1,190 +1,190 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DEAA3B5DED
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 04:30:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791520204; cv=none; b=ma5oFDupSLV2eulayU6g25IuwIS26gpIDSWFmr4ELNGmB5yTLlti19ydhnLfnsYd8tADDhGNV/CSoGcTevNUhC+yuAAC/Uq3zP4Mol5TtrOGSI32n3Rh5xa8Mkiaf+D+KkejA3W91WTt7y79DrmU0rb3hk4MI3Jbg5cs06PbUPI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791520204; c=relaxed/simple;
-	bh=ZxFy9Ks6hr9y+sK6ocw96HGvPf3rS2Q3AX6EMwyjfds=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=VaWTaV69WidjwaSRifsymu6tKJEvBS+uRe4qbZljUVSD0QaYJf1NKX1Adn4ndYA2S5T4fqKYBS4juIVU2ZcNQZi/GeVsd37sFUPFaP3YDVyPW8G1VcLgjewvbGMKeoG7Iosi0kVg/k6YEzFWbxQWfGRwriVA9DoiUFDDLPeZ/Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=none smtp.mailfrom=linux-m68k.org; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KEx2Ocgs; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux-m68k.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445633DDAE0
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 05:21:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791523273; cv=pass; b=kGth98/CNbGhY9PDZtcvoLLXVewxQTEJofARepP02FyRrvc0NdLXS/G7yz1VwinpgZGa/SWhCnnd2dlhi2ZjEBIhW75/7dGAxeYaDWLFZDAPoHJEhU8P+gX5NRPqiRf2uSKhY2JE7i6Rpys7AXrTCg321KpL1zCgNjpmvAHVe9o=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791523273; c=relaxed/simple;
+	bh=Stb/CwH5dz2x9JkQRPEB2Gqhr3MjteQSh8JHCWdSHY8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MBaYFw0hvnLrkMiNwkvalwmkoUE/XP042b1lUUdmF+6CAey+x5AdSVf/Vb5nWAapB1D1/S2lTVx26hiaYtEHbQ2dEZ9LTWYwPimJIkRJ9XLcpcQ+a8/Xgvt+mPEKDOaaIW5k68ZJBEG7MXjzZKUz3c7eGFrEbaGPVHnfIFlJAC4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NzD5veVK; arc=pass smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KEx2Ocgs"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9D5D87A007D;
-	Fri,  9 Oct 2026 00:30:00 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 09 Oct 2026 00:30:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1791520200; x=1791606600; bh=V5a9/OCCPWacxhkVSOnVTcZO1ek/QwI9y7Q
-	wUqqyeGM=; b=KEx2OcgsqrDKlfgORq+/SeBibe08OjzOoq52MuZGkZccFdCsXPj
-	f61LrrisyUdHmi/0wWJjZuenV1iGLCliUT6xebTOWkqjxeD8wyaAFflQaxetlakt
-	TAgbkou6xZ5pu64JLPJRYqA/yULw+zeWHhZgJcsuf4qfQ5ZpuKVwn/3V4WcuhcMK
-	w/R57McSQAJzhFUfnzbtiQCnzuStjX3+CTlX8jOUpqTT8hVQOVdL2RNuWCpHolym
-	g9E5DgpwR07Ht41A6Mnq3EtgVArheSdApXtiBqRcoD6F2HCGM0VwI28RULE+hfuK
-	ngxRLQqf6o5VW0luHT41WDwF9qzKfGw1ZAA==
-X-ME-Sender: <xms:yG3Iaup_VZj7CWpsU8WdWa9DmkOfwvS2nEQdmdaTm4Pv_QQufItpYA>
-    <xme:yG3Iaqn75aw77ZsEzwdIfakYdWJIi-7_P2OCQa15eJu1LvDy2-riqbh1ziqS1QoaV
-    yIPcGqrb-xdFXPDNjDhjwlyWOUHlfMpySJg_zcCgOtPB3L7_Y87XBA>
-X-ME-Received: <xmr:yG3Iaqx6mLXg5_egKuDmwXodXUxJXdeyNdeBxXsj0iqRt2bQyQ2fKAo-AmVyXVSrKqZCL8LyYgcxK3eBtmtuMBuLTBMVH4JrZYo>
-X-ME-Proxy-Cause: dmFkZTF4xB3TiXIWyYzufbyBatBGZnc9Y2MKvNcSMamc3PWHBRLLleZg38gcnFlGpiK9zS
-    oS8vPC4Cdf3lcCs9LfjMiIYMduw/7Yi5wjxlmbnRBldW1VU+MYpDayGX6ofynq0A1tKBvx
-    sUWKp7j7sHmm7hRONChuq/PAHUbjn10aemgm8VxKlBtMC/iOxI+wVYb5rs7QmEYknQLwB7
-    5yEr+A3CO7i7BT2HTSV7MeLSHKynqvQ+Z6A6J/t+DMXaYdyI5yhOcZM6Um8dhoNnoB46ej
-    x9pTJa/wwT47Oe6cJ3saqfRJJRN8m6Fn1Cbfd1O3mmi7SzK8eFS7FsNg+leLVYie6baUTS
-    iVqy0E4CfBi49gSMSyLgaasnbsr3HEWxE5+w615Nripq2RHu7ucVzaQq4iyZaWj5Ez0fBd
-    /WkkD/Vbtwj+JRuFkauzxW8hPhjAwE/L/cvZPiPz/KygNx9gF+5TJ+FmYxg9e+ZlpoSbDX
-    ldDrcasl98GIRO7QofKS2oHQk8Ti+AcQ7eweJYisd38cR7TZRjfABwFR7QkJY1y4q3myg2
-    X0z4fZefTzTmj2ix59q4l2/oub8nwNO9zZ01C9NQ/rJpY4+JazGn43//tYOQzyyNp8Bd+N
-    6Jeh8lcpUjNh4R3p85HXbvmu1/KOwx5Ek0I0PeBcyJMfyoEWhBnIzkK55RMw
-X-ME-Proxy: <xmx:yG3IaqmuSiykCR3VqB2txLmhCOA8W6oQR6iMkVbdalOZfpUAi6OjBA>
-    <xmx:yG3IarfmGGKk5OpWqnfJqdjjYNUtlQaS7LBHNZEpMPgG9RLAIjQwDg>
-    <xmx:yG3IaoqdaDiFoSHFp7kySwu1TEKpXp1YB5zyLNylyP6HYSAGVlZMRA>
-    <xmx:yG3Iah4Yyx1E4eQpJy4Oqwj8F6HvM6idgT23nFFhg_-kqmAY6fePxA>
-    <xmx:yG3Iaohy9MGFJ8urD2mkpQyxLZ-KrxkCFYyCusfilfoQlsR280aeYZUn>
-Feedback-ID: i58a146ae:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Oct 2026 00:29:57 -0400 (EDT)
-Date: Fri, 9 Oct 2026 15:29:52 +1100 (AEDT)
-From: Finn Thain <fthain@linux-m68k.org>
-To: sashiko-reviews@lists.linux.dev
-cc: linux-scsi@vger.kernel.org
-Subject: Re: [PATCH] scsi: qla2xxx: Rework BUILD_BUG_ON() assertion
-In-Reply-To: <sashiko-outbox-164665@kernel.org>
-Message-ID: <93e35f60-e465-7f76-0043-f997fe2ec8c7@linux-m68k.org>
-References: <4808a5dc1a71528ffa3360868561009744277450.1791502886.git.fthain@linux-m68k.org> <sashiko-outbox-164665@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NzD5veVK"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-8ac8a2ac52bso14934437b3.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 08 Oct 2026 22:21:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791523271; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Q/jO1bbp6hhzzH2Heg2marPY6f8Go92rMj+Qtx4b3BCyDww2z8jBMPE9xlUx2B7iRP
+         2ipRBL/LEw+yunrqHowJS2aXGlGF2tIhY3CcVOeIz5kwXmrP/42tpiYTwD3LwxqY0JCD
+         LmPrAkI3fYd9cxdiTmgaqsy/ivG/jv8OkAn9C/NykWLyZQ+0QQTQswbGqB9KjNkvpmiL
+         /0B3rLh5BHbyr3wJZIg/BH8BmX3aYlIwTbfBA+ciL1tohbbpF4s20YWBulbjPh9G3lYD
+         UThcntapCXQ3pftoDwiSmEiXqoEVPG0cLnF3NKeE8fcQ4rJd3I5sQrTZqReXAMbuhCRT
+         Omzg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=852odP3csbx4LeSuXbwMzl1y7NAMBr9FUIKGeegNeVo=;
+        fh=OrnvA1a4t3/HPwWwQh2a6uxugalKSabxDHPY5ooI2bY=;
+        b=pos8RhVe5fUkl4iVf6Zfig5KtfTQfPfpTBoED5Q7ZWv+R1XvwCA6aNwT1pmjpOfZkL
+         CRAtrlr8lTB489QQfj32CuFuDGfz8EpGZ4FjshmO67P7o/n+jJNmaXZRGz2VmnNjbkR3
+         9ivJ4Xdo69SF+/bfRWX2Z7V63ZsQrKEQR+i9istUeqeJ+hh2j3Vm4MRJ3ZWGwvFaghXV
+         mOlGc7z+CotOXrqzkUkjz/kOPYjG/W/uZsp3gYcqyCRDk/AHUD9VNZSuXDANJs70p9G1
+         8iuMIptncGmaP+wAPhvTiGaDWltuBQ2FBH/FgZvHbmpl4ENzMexSDQG/MlsKoLKx7SSY
+         zsaQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791523271; x=1792128071; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=852odP3csbx4LeSuXbwMzl1y7NAMBr9FUIKGeegNeVo=;
+        b=NzD5veVKwvCIMbwQPB/WJW98+HhFt8XwGv1+jMK+t2ElDHMZMpGEINzvC6hZXKXmxV
+         dVTc30uwjRUN4qFxv/ApwauhLX5d6IoicgBfqzlSSwNw7VoG1HOKLUd9tEx9DaP9XRaw
+         19Xph+M/WtG8+ViYGmVox96qN0HbO9MfLfxWg0HfV6zyJxSQbHivM9I2aTYVkq9Ko65F
+         oVdY8XSPHrqe+a1Jjp6cvHdTwi9ULcckIsyC9VOgV2s34l5g4frzTLvWl4dTr0Wy1Qre
+         TYvF+2iISvd1PWoi/etTRlbCDdFXw5xoLIYnv2J9rcZP6hlo3faUa7lKOOj4YamAErPk
+         UiMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791523271; x=1792128071;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=852odP3csbx4LeSuXbwMzl1y7NAMBr9FUIKGeegNeVo=;
+        b=LrtT/xEFUfA/FCk4fT7ItuKPjIbjcp7rAbTgxBprZZR+yrGwBYaDL+0nKv2BTnPc0R
+         lID3e0Pst324CfQ3TSECOHU4UHbtjiqEtF4V4OjRpdB4CNccn9qED+XzI2JqjK/D8WZs
+         wLGJA9K+erJkrCpR80ByiwNXEX2avAJmG7cXvFdOSm3cjFX647NHim0lLwIqZcVJdPxX
+         p2PGFsGwof8Qv9vbuvjug8fmkO9UNsXa9WR+kfZxKuiJZkfoNUVSZC8BXZZEJAP+rgZh
+         m+R8mLnY6zzOuLa/4sY0MaRk9xseSDoLvBkwIVhcOQUwCOhsGmcFmL2xAIGcKa4IEZMX
+         /3EA==
+X-Gm-Message-State: AFq9FYIEKA2dfmhPKeXqNP/K+6VjRIp5pyOGFFQ4rF4V8tsgvudQ4hJc
+	Z4J3nD3117M1DebRWnVs92mq/+oPQ8xMo/NqXgiC65CGoRA4IlArZ9FIWKmHgOx/+4KhFTVVnMi
+	zAxg2EOPzYgy1nSsnAx/ZwRWUzeXsdnFpCj31MVzciQ==
+X-Gm-Gg: AYBFou2pENVBEQd3Arihx+hDV+VGN1pAky1h4btxhZYMIkljdy8UBMYUnhvlyVJMpJ+
+	yYUAwfyHQNrrIV4SY9xZ27jgmF7T6QrwZnsS2UW4dlucKIDbHh/Q2yzZOTTf0RaBeiQstQ3R3Mt
+	AG2w1kKIDz8WoIN3Kik4diTrr+QXgaxo9iiBZyKNZ+KEs0RzCwOinBZgQJmmy61hmpE/i/6VK0L
+	7ggDdis2R8PwmIepqDEMPtX2tmPWSm82wFMxWKohWm7OkMVP0P+HbGtFF3yXo9VvwE/YdMrtQZB
+	Ahoq/GK+i41kYWzWIM9udCk9zBWGniqaTmj59Ym/rDTqjoTpM3m86cWM7Q==
+X-Received: by 2002:a05:690c:c4fa:b0:81e:fdf7:bfbd with SMTP id
+ 00721157ae682-8b07d3f34bcmr3829677b3.15.1791523271037; Thu, 08 Oct 2026
+ 22:21:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+References: <pm-ocfs2-objects-candidate-0058-v1-177573785904d0ea43c7@gmail.com>
+ <sashiko-outbox-164704@kernel.org>
+In-Reply-To: <sashiko-outbox-164704@kernel.org>
+From: Cen Zhang <zzzccc427@gmail.com>
+Date: Fri, 9 Oct 2026 13:20:59 +0800
+X-Gm-Features: AclHuK92qIoqNG0MkBBlGXX2dFLxfXGdSHBepuW05cjCXU4iOmEN_7GLCeUlGLg
+Message-ID: <CAFRLqsUiCiCpgYkc+6BLLz=p+gw3hRHmxN-1LC9j7zkmiv7OpQ@mail.gmail.com>
+Subject: Re: [PATCH] ocfs2/heartbeat: Unlink live slots when their node is missing
+To: sashiko-reviews@lists.linux.dev
+Cc: Mark Fasheh <mark@fasheh.com>, Joel Becker <jlbec@evilplan.org>, 
+	Joseph Qi <joseph.qi@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi,
 
-On Thu, 8 Oct 2026, sashiko-bot@kernel.org wrote:
+Thanks for the review. The reported race is real: v1 closed the unlink
+path, but o2hb_check_slot() could still admit a slot with a NULL node
+after the last live slot in another region was removed, queuing an UP
+event that hits the BUG_ON in o2hb_queue_node_event().
 
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] scsi: qla2xxx: FORTIFY_SOURCE field-spanning write warning in qlt_queue_unknown_atio
-> - [High] scsi: qla2xxx: UBSAN/FORTIFY overflow in add_cdb array accesses
+v2 will add the missing admission-side guard.
+
+<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B410=E6=9C=889=E6=97=A5=E5=91=
+=A8=E4=BA=94 09:51=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Critical] ocfs2: BUG_ON triggered by TOCTOU race in o2hb_check_slot af=
+ter node removal
 > --
-> 
-> commit 4d96d5f0f41af34ce19bfbd80ce5e059ab28cd98
-> Author: Finn Thain <fthain@linux-m68k.org>
-> 
-> scsi: qla2xxx: Rework BUILD_BUG_ON() assertion
-> 
-> The LKP bot reported a build failure with CONFIG_COLDFIRE=y together with
-> CONFIG_SCSI_QLA_FC=y. The failure is caused by an incorrect BUILD_BUG_ON()
-> assertion in qlt_queue_unknown_atio(). To resolve this, a flex array is
-> placed at the end of struct qla_tgt_sess_op.
-> 
-> Closes: https://lore.kernel.org/oe-kbuild-all/202603030747.VX0v4otS-lkp@intel.com/
-> Closes: https://lore.kernel.org/oe-kbuild-all/202609301230.CauIUXCF-lkp@intel.com/
-> 
-> > diff --git a/drivers/scsi/qla2xxx/qla_target.h b/drivers/scsi/qla2xxx/qla_target.h
-> > index 71bc1affb1bc9..b27bd3aecbf8e 100644
-> > --- a/drivers/scsi/qla2xxx/qla_target.h
-> > +++ b/drivers/scsi/qla2xxx/qla_target.h
-> > @@ -309,7 +309,8 @@ struct atio7_fcp_cmnd {
-> >  	/*
-> >  	 * add_cdb is optional and can absent from struct atio7_fcp_cmnd. Size 4
-> >  	 * only to make sizeof(struct atio7_fcp_cmnd) be as expected by
-> > -	 * BUILD_BUG_ON in qlt_init().
-> > +	 * BUILD_BUG_ON in tcm_qla2xxx_init(). See also, BUILD_BUG_ON in
-> > +	 * qlt_queue_unknown_atio().
-> >  	 */
-> >  	uint8_t  add_cdb[4];
-> 
-> [Severity: High]
-> Since add_cdb is explicitly declared as a fixed-size 4-byte array here, does
-> the current code cause UBSAN array bounds violations and FORTIFY_SOURCE read
-> overflow panics when accessing elements beyond these bounds?
-> 
-> For instance, in memcpy_atio() when len > 0, it accesses
-> &src->u.isp24.fcp_cmnd.add_cdb[len * 4] which is out-of-bounds, and reading
-> 4 bytes triggers the overflow panic:
-> 
-> drivers/scsi/qla2xxx/qla_target.c:memcpy_atio() {
-> ...
->     memcpy(&dst->u.isp24.fcp_cmnd.add_cdb[0],
->            &src->u.isp24.fcp_cmnd.add_cdb[len * 4],
->            4);
-> ...
-> }
-> 
-> Similarly, get_datalen_for_atio() accesses the array out-of-bounds when
-> len > 0:
-> 
-> drivers/scsi/qla2xxx/qla_target.h:get_datalen_for_atio() {
-> ...
->     return get_unaligned_be32(&atio->u.isp24.fcp_cmnd.add_cdb[len * 4]);
-> ...
-> }
-> 
-> [ ... ]
-> 
-
-Yes, add_cdb[len * 4] is OOB, but it's deliberately OOB so not a bug. This 
-patch is not intended to fix either of those pre-existing theoretical 
-run-time checker failures. That's out-of-scope and would seem to require 
-access to the relevant QLA2xxx hardware as well as appropriate toolchain, 
-.config, workload etc.
-
-> > @@ -845,7 +846,11 @@ struct qla_tgt_sess_op {
-> >  	struct rsp_que *rsp;
-> >  
-> >  	struct atio_from_isp atio;
-> > -	/* DO NOT ADD ANYTHING ELSE HERE - atio must be last member */
-> > +	/*
-> > +	 * DO NOT ADD ANYTHING ELSE HERE.
-> > +	 * atio.u.isp24.fcp_cmnd.add_cdb may extend past end of atio.
-> > +	 */
-> > +	uint8_t atio_u_isp24_fcp_cmnd_add_cdb[];
-> >  };
-> 
-> [Severity: High]
-> Since this patch introduces the flexible array atio_u_isp24_fcp_cmnd_add_cdb[]
-> to legally hold the trailing data, shouldn't the memcpy() in
-> qlt_queue_unknown_atio() be updated to target it?
-> 
-
-No, because atio_u_isp24_fcp_cmnd_add_cdb[] is only added as a sentinel. 
-It's an attempt to coax the compiler into helping discourage the same kind 
-of mistake that FORTIFY_SOURCE and UBSAN are supposed to detect.
-
-> drivers/scsi/qla2xxx/qla_target.c:qlt_queue_unknown_atio() {
-> ...
->     u = kzalloc(sizeof(*u) + add_cdb_len, GFP_ATOMIC);
+>
+> commit d6d3e4144add75ad80b3ba9eaf567ae43865596c
+> Author: Cen Zhang <zzzccc427@gmail.com>
+>
+> ocfs2/heartbeat: Unlink live slots when their node is missing
+>
+> o2hb_shutdown_slot() returns immediately when its node is no longer
+> in the configfs registry. A slot can still be linked in o2hb_live_slots
+> when that lookup fails. Region teardown or startup-error cleanup then
+> frees the slot array without removing its embedded list member.
+>
+> > diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.=
+c
+> > index a4c8ea695f5cf..43d98b4dce7da 100644
+> > --- a/fs/ocfs2/cluster/heartbeat.c
+> > +++ b/fs/ocfs2/cluster/heartbeat.c
+> > @@ -880,8 +880,11 @@ static void o2hb_shutdown_slot(struct o2hb_disk_sl=
+ot *slot)
+> >       int queued =3D 0;
+> >
+> >       node =3D o2nm_get_node_by_num(slot->ds_node_num);
+> > -     if (!node)
+> > -             return;
+> > +     /*
+> > +      * The node may have been removed from the node table while this
+> > +      * region's slot is still linked.  The list member must still be
+> > +      * removed before the region releases its slot array.
+> > +      */
+> >
+> >       spin_lock(&o2hb_live_lock);
+> >       if (!list_empty(&slot->ds_live_item)) {
+>
+> [Severity: Critical]
+> If a remote node is removed from configfs but still heartbeating in multi=
+ple
+> regions (e.g., A and B), o2nm_get_node_by_num() returns NULL.
+>
+> In Region A, o2hb_check_slot() evaluates the node. The node is NULL.
+> It checks o2hb_live_node_bitmap and finds it true (since Region B conside=
+rs
+> it live). Region A drops o2hb_live_lock and proceeds.
+>
+> Concurrently, Region B shuts down. With this patch, o2hb_shutdown_slot()
+> successfully removes the node's last live item from o2hb_live_slots and
+> clears the bitmap, even though node =3D=3D NULL.
+>
+> Region A resumes, increments ds_changed_samples past O2HB_LIVE_THRESHOLD,
+> and re-acquires o2hb_live_lock in o2hb_check_slot().
+>
+> Region A checks list_empty(&o2hb_live_slots[slot->ds_node_num]). Since Re=
+gion
+> B just emptied it during the TOCTOU window, this evaluates to true.
+>
+> Region A calls o2hb_queue_node_event(..., O2HB_NODE_UP_CB, node, ...).
+>
+> Since node is NULL, this directly triggers the explicit BUG_ON in
+> o2hb_queue_node_event():
+>
+> fs/ocfs2/cluster/heartbeat.c:o2hb_queue_node_event() {
 >     ...
->     memcpy(&u->atio, atio, sizeof(*atio) + add_cdb_len);
-> ...
+>     BUG_ON((!node) && (type !=3D O2HB_NODE_DOWN_CB));
+>     ...
 > }
-> 
-> Because the destination is typed strictly as &u->atio, copying more than
-> 64 bytes (sizeof(*atio)) when add_cdb_len > 0 causes a FORTIFY_SOURCE
-> intra-object write overflow panic.
-> 
-
-That's also a pre-existing theoretical failure (and not a real bug, since 
-it's deliberately OOB) and is also out-of-scope for this patch. This patch 
-just addresses the build failure caused by the struct padding change.
-
-Thanks for your review.
-
-P.S. my preferred solution (and the first patch* I sent) to fix this build 
-failure simply removed the BUILD_BUG_ON(). Sashiko-bot's criticism seems 
-to support that preference, IMHO.
-
-*
-https://lore.kernel.org/linux-m68k/550e7d7bb8c2620ca4f6c9e809a4f853bdfa4c67.1772751689.git.fthain@linux-m68k.org/
+>
+> Will this regression cause a kernel panic due to the BUG_ON when the race
+> condition is met?
+>
+> While the race theoretically existed prior to the patch via the node dead
+> timeout path, this patch directly triggers it during normal region teardo=
+wn
+> or startup-abort by deliberately allowing o2hb_live_slots to be emptied
+> while node =3D=3D NULL.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/pm-ocfs2-objects-=
+candidate-0058-v1-177573785904d0ea43c7@gmail.com?part=3D1
