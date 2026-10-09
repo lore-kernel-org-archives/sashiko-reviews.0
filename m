@@ -1,152 +1,172 @@
 Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287802868AB
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 08:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2833AE706;
+	Fri,  9 Oct 2026 08:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791534077; cv=none; b=k8jCnVMyVK9+/5BvQ0mp5Ke068nCGf+uNjJHRubqNMKTyELu0HEhg15L2OAH1K0aFvhCelnyDLU83R3Ky1pfiNXY+hbG/2b7O+QVtziQAdmbIvcfe7nNhciXfXf2yES6Th7Cmkx5erSyMoYUTOf+XAd6YLnF/bqTQPKJZ+/2ZlI=
+	t=1791534139; cv=none; b=jikEMwQZMQRfjOLRzGr1CgyzFpAbsKjxOPe1UKJWNB3ClLSr7D9mKsMuilrZ8+exXYYZJw343WFxck7qC070NDInMmqge+LEtV51ixwz7TQ2yFqXTHCm94UAuMSYNIBrSLA7Qpau9dRoSVx3Y5taRgH+HxFcAApgS8drrSTWHsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791534077; c=relaxed/simple;
-	bh=7NX2Tcj00ESmCKdE+4gjub5XJfqX21W272pBIID4UNs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IGMciqZFrZdaXOqNTea1DHiVXfOJSPLeFCCZkCL4POFqMICXDDaQop9h8afvVufxH6K6/NDFTaVuCZYWIeO6o1TZErA6557a6uVB1z6y1qFFownPgAIGZCoNC2m1CaNU/KshiSCDfe8h1EVQhEOf+nyV3UHbjYxSygvSaoqjKQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=DAnEm91B; arc=none smtp.client-ip=148.163.158.5
+	s=arc-20240116; t=1791534139; c=relaxed/simple;
+	bh=ukFQ4/ui1VqVugfxgHKsFxlK4ETWJ4ATSqk+TWaBVkQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=H1El9r1jUTJZ8cpxab4hROnxIE2nJ0oQtgdMo/9b8tQH86GhYU/eAjEzNKIciHhgn7LfXUImlutR81MTwbYzJlxp2fIwfuU9xdPqaqoe6OeUOa9yKb7Mx8ScDj2wqH/cd2GjD1MOIXo1B2oXTZJjVRf0evGf1aFLLp/O/bCAY1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=LHOMbMFq; arc=none smtp.client-ip=148.163.158.5
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="DAnEm91B"
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="LHOMbMFq"
 Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6993ZXkx3209136;
-	Fri, 9 Oct 2026 08:21:15 GMT
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6993ZkAn3209544;
+	Fri, 9 Oct 2026 08:22:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=hY8FSnfUfzlRPPNGy71tUlOb+ePsVA
-	7YZyLQAXOTbUg=; b=DAnEm91Bo5y9xoPTTXSQeLRxtLrrw6phm9lhPG2UVwkv8C
-	hTCNqOfyr3dnXQNAROSYaTSyt9oDotF8TW83w2Ag1tnmLiZLcE3BnXHZgyYo6NKH
-	zYT9RT5WoaYKjfz4rRfMNNAHZqEgk04XjLlGmWfNhXaP9v20UHPCikwYFm6PTG7N
-	xbNSJQqssjny01klGsWZ9CDhJaw55tJR+yMXcgg+AdRlRHef+dI6oiCOCQ0XgcSd
-	fLK28Twencp0U+Y85smx6hjXx9ApRC6fUPLpHmS0r64ROCopEl3+PvUDjxUwus2w
-	DzqMH+Geqj6OKTArXjwjdOrV/+T/9rHUN9HTGcSA==
-Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjvrr08-1
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=EuWLKM
+	W3bqup8A4VClXUJqRwXNdNmqTMrZ+827ab/No=; b=LHOMbMFqhivXfjaGKHK4l8
+	5TG3AxFi0gzKj3Rw6SqA/zeHLshqMRnx1rIjPy9UiBOxV2/vlzf7T45JwgBoZrXK
+	TvED4Xaldu8vF/+83AvEFCW6ROh+4gaEyye2M9BnmNUeEI1KFrwGX8nwbILirgYe
+	whJaVmT8uFGlc5CeXfKBdtxzsjlS1tQiG6ml1LIgNNDQCWW6yjj8POijRCvnmMLK
+	vX7HyR459EoYjdb/8krjUVQHT5iOPMhpzg32C7L9JI1GTledS3uhaug6WLauZbjq
+	jeo4sdQgjlEjB8GJkhFlvScsyl3B/UvVW78JfWXt6p1CGCl+QR0krj9J6WnEIwEw
+	==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjvrr61-1
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Fri, 09 Oct 2026 08:21:14 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6998I0GY620189;
-	Fri, 9 Oct 2026 08:21:14 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
-	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h5a6du27s-1
+	Fri, 09 Oct 2026 08:22:16 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 6998I3wC621424;
+	Fri, 9 Oct 2026 08:22:16 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h6hsnj67t-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 09 Oct 2026 08:21:14 +0000 (GMT)
+	Fri, 09 Oct 2026 08:22:16 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
-	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6998LCsw34668826
+	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 6998MCjI46793044
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 9 Oct 2026 08:21:12 GMT
+	Fri, 9 Oct 2026 08:22:12 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 375E820040;
-	Fri,  9 Oct 2026 08:21:12 +0000 (GMT)
+	by IMSVA (Postfix) with ESMTP id 251562004B;
+	Fri,  9 Oct 2026 08:22:12 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 181292004E;
-	Fri,  9 Oct 2026 08:21:11 +0000 (GMT)
-Received: from li-fbf77acc-29ba-11b2-a85c-e8e934f50a46.ibm.com (unknown [9.39.24.32])
-	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Fri,  9 Oct 2026 08:21:10 +0000 (GMT)
-Date: Fri, 9 Oct 2026 13:51:08 +0530
-From: Gautam Menghani <gautam@linux.ibm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, linuxppc-dev@lists.ozlabs.org
-Subject: Re: [PATCH 2/3] KVM: PPC: Book3S HV: XICS: Update irq_type for
- cleanup to work
-Message-ID: <asiitdl00RI1Zoa2@li-fbf77acc-29ba-11b2-a85c-e8e934f50a46.ibm.com>
-References: <20261001100208.1271628-1-gautam@linux.ibm.com>
- <20261001100208.1271628-3-gautam@linux.ibm.com>
- <20261001101052.42CBB1F000FF@smtp.kernel.org>
+	by IMSVA (Postfix) with ESMTP id C04C420040;
+	Fri,  9 Oct 2026 08:22:11 +0000 (GMT)
+Received: from localhost (unknown [9.111.170.212])
+	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Fri,  9 Oct 2026 08:22:11 +0000 (GMT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261001101052.42CBB1F000FF@smtp.kernel.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 09 Oct 2026 10:22:11 +0200
+Message-Id: <DM05UI42G3Y8.M70PK5HKUNKQ@linux.ibm.com>
+Cc: "Heiko Carstens" <hca@linux.ibm.com>, <linux-s390@vger.kernel.org>,
+        "Vasily Gorbik" <gor@linux.ibm.com>,
+        "Alexander Gordeev"
+ <agordeev@linux.ibm.com>,
+        "Christian Borntraeger"
+ <borntraeger@linux.ibm.com>
+Subject: Re: [PATCH v3 4/8] s390/pci: Fix use-after-free race in zpci
+ floating interrupt cleanup
+From: "Tobias Schumacher" <ts@linux.ibm.com>
+To: <sashiko-reviews@lists.linux.dev>, "Tobias Schumacher"
+ <ts@linux.ibm.com>
+X-Mailer: aerc HEAD-0d169b7
+References: <20261009-s390_irq_domain_fixes-v3-0-ced19028da3c@linux.ibm.com>
+ <20261009-s390_irq_domain_fixes-v3-4-ced19028da3c@linux.ibm.com>
+ <sashiko-outbox-164948@kernel.org>
+In-Reply-To: <sashiko-outbox-164948@kernel.org>
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: AIdLPwtHnKJomSIpz-l8bbXvXfFV_5qT
-X-Proofpoint-ORIG-GUID: AIdLPwtHnKJomSIpz-l8bbXvXfFV_5qT
-X-Authority-Analysis: v=2.4 cv=FoOQbGrq c=1 sm=1 tr=0 ts=6ac8a3fa cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=kj9zAlcOel0A:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=Q5Jx9UpPnlvGt3Uw_04A:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA5MDAzMiBTYWx0ZWRfXwOaOhNGIOcw1
- yL4uTntRjYJ10xSZC9XTr0ZgsZ4WvdhaXk7l6gxgOrK3G/FeBuagUUFhrqTpPJ/TeeaSd669ZBW
- jtj6DUVbjM9YnplHrtZXXDAzQfF7GX8=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA5MDAzMiBTYWx0ZWRfX+CWQXtSPYVrc
- 46HuuOiLR4xEqTxz9LYrjgHt+5lGVnTY8lBD0M8+S5O0fR+uCqWltpEBLgGXEE0wpei+6wqDsIa
- p0E8etBIC0ZR36ARyCTyPMLAxUmeNAXSNvwwUiXDTWkd4uwcnqbcRGTjmaKzfEDVaYv34tEQey0
- 9da518IwsKXKBDairKL+COaqEZ2RDPFhyjLQB+fsC1QNHiKnpHP6dY53yKRGeU126qJOX36IUEz
- Q7s/bLa7hTSetWPgb2zrIIFOQ0EapVAO+YpNR4ITIQT+FCeuEc3dKMTAW2qgLy63Ph1Jo4c5lth
- KPvrXPIivtB/6PuOUeB5A+X/ZX0zCw44J2YvDpXggGtyKygT3g/XzVMWf7RMwvAkHgdOSD+22Hj
- pCoNMCi5J2C1KPT2S2CZ6Shy+nxaWRiNW6yqUcA/DiERBXJuWlgtqCa1YidwojeZae0cK05XW4w
- 8otfLKMaGKNS6hSRSjw==
+X-Proofpoint-GUID: hQdDAD7RQ96NT9ZNk20_0skjkKTxf9G7
+X-Proofpoint-ORIG-GUID: hQdDAD7RQ96NT9ZNk20_0skjkKTxf9G7
+X-Authority-Analysis: v=2.4 cv=FoOQbGrq c=1 sm=1 tr=0 ts=6ac8a438 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=ImQPJegGMbh94QW6gX0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA5MDAzMiBTYWx0ZWRfXwbo50nDOzbfN
+ 3ekn2Z8NqP5rY0t+AxalBR2Ui2t5wazRaa9Mcsvyf6jAXarBS5rTVFLtUYsvyhVfE9hZZTbuKfC
+ OJq1cpvuBqj738mGQHgXemn5yxdaFBQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA5MDAzMiBTYWx0ZWRfX8OdwkDtVLEXA
+ xuIjMq6KukTf9QHi7iGn/PDrgZpda/v5ssR+EXnPjjPRDlqxcvjO4n4v19o9XZq7X/ePRA4eniT
+ uuLtZ02BXQKdNsXTMzhLb3TiSd5iZxtvWVUkYKda+B/iD0AwsMlZ+94LD3iLWJb9g/zc4AoGYzG
+ UkgYw0xioiVf1p1rWC+kvc4zdCJt98MkA3bRvWiwE9q+CUuBgPK0SHuYf2kuAhkLCL4XWA5HAVk
+ Sc1HGhI0jddEkg2KHYkWJoHYsnZh5wY/MQHjYIU/Rtcx1XhoqHAsTcNtnA2Jjwe7YGccXpKLQrv
+ TMNw2CmHYAjVLF/sOed7CBk4dQFCCb53OFKtDlZOEYaPBk73i0vMzUHzMI7HxgDngr1aKAhKyqG
+ mj1xuunzP6SchHUgguhOE3SJAwnjIXlxfra/a1CuHrlJM7/FDV55J1RM3Bs+MHQ/bYIcKe79YtC
+ mWdgQuk+GquzK0QCvqg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-09_02,2026-10-08_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 clxscore=1011 lowpriorityscore=0 bulkscore=0
+ impostorscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0
  adultscore=0 priorityscore=1501 spamscore=0 phishscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610090032
 
-On Thu, Oct 01, 2026 at 10:10:51AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] xive: host kernel panic in kvmppc_xive_cleanup_vcpu() due to uninitialized eoi_mmio
+On Fri Oct 9, 2026 at 8:32 AM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] s390/pci: pending directed MSIs cause spurious interrupts on rea=
+llocation
 > --
-> 
-> commit 2d2dc3956268ca839bb2cf6d3521ccdcf2a1831b
-> Author: Gautam Menghani <gautam@linux.ibm.com>
-> 
-> KVM: PPC: Book3S HV: XICS: Update irq_type for cleanup to work
-> 
-> This commit updates the assignment of vcpu->arch.irq_type to occur before
-> vcpu configuration starts. This is intended to ensure that
-> kvmppc_xive_cleanup_vcpu() can properly execute if early setup failures are
-> encountered during kvmppc_xive_connect_vcpu().
-> 
-> > diff --git a/arch/powerpc/kvm/book3s_xive.c b/arch/powerpc/kvm/book3s_xive.c
-> > index 1d67237783b71..67219044fb8c7 100644
-> > --- a/arch/powerpc/kvm/book3s_xive.c
-> > +++ b/arch/powerpc/kvm/book3s_xive.c
-> > @@ -1937,6 +1937,7 @@ int kvmppc_xive_connect_vcpu(struct kvm_device *dev,
-> >  	xc->vp_id = vp_id;
-> >  	xc->mfrr = 0xff;
-> >  	xc->valid = true;
-> > +	vcpu->arch.irq_type = KVMPPC_IRQ_XICS;
-> 
-> [Severity: Critical]
-> Could this cause a regression where an early failure leads to a host
-> kernel panic?
-> 
-> If xive_native_get_vp_info() or xive_native_alloc_irq() fails shortly after
-> this assignment, the code jumps to the bail label and calls
-> kvmppc_xive_cleanup_vcpu(). 
-> 
-> Because irq_type is now KVMPPC_IRQ_XICS, kvmppc_xive_cleanup_vcpu() no
-> longer bails out early, and unconditionally attempts to mask the VP IPI:
-> 
-> kvmppc_xive_cleanup_vcpu()
->     /* Mask the VP IPI */
->     xive_vm_esb_load(&xc->vp_ipi_data, XIVE_ESB_SET_PQ_01);
-> 
-> Since xive_native_populate_irq_data() has not been successfully executed yet,
-> xc->vp_ipi_data.eoi_mmio is still uninitialized. When xive_vm_esb_load()
-> is called:
-> 
-> xive_vm_esb_load()
->     val = __raw_readq(__x_eoi_page(xd) + offset);
-> 
-> Would this dereference the uninitialized eoi_mmio pointer and cause a
-> fatal page fault?
+>
+> commit 125383b5f8790de7f1cbeff916db7b71f9226ee6
+> Author: Tobias Schumacher <ts@linux.ibm.com>
+>
+> s390/pci: Fix use-after-free race in zpci floating interrupt cleanup
+>
+> This commit splits directed vectors from floating vectors into a separate
+> zpci_dibv array and adds RCU synchronization to zpci_msi_teardown_floatin=
+g()
+> to prevent use-after-free issues. It also annotates zpci_ibv with __rcu t=
+o
+> ensure safe access to floating vectors during teardown.
+>
+>> diff --git a/arch/s390/pci/pci_irq.c b/arch/s390/pci/pci_irq.c
+>> index d5763c5feb097..c5fabad381395 100644
+>> --- a/arch/s390/pci/pci_irq.c
+>> +++ b/arch/s390/pci/pci_irq.c
+> [ ... ]
+>> @@ -342,13 +343,16 @@ static struct airq_struct zpci_airq =3D {
+>>
+>>  static void zpci_msi_teardown_directed(struct zpci_dev *zdev)
+>>  {
+>> -	airq_iv_free(zpci_ibv[0], zdev->msi_first_bit, zdev->msi_nr_irqs);
+>> +	airq_iv_free(zpci_dibv[0], zdev->msi_first_bit, zdev->msi_nr_irqs);
+>
+> [Severity: High]
+> Does this code leave pending DMA bits on remote CPUs intact?
+>
+> Only CPU 0's vector is passed to airq_iv_free() here, which clears the
+> physical vector bits on CPU 0 but leaves them untouched on remote CPUs.
+>
+> If a hardware adapter interrupt was pending on a remote CPU in
+> zpci_dibv[N]->vector, the bit remains set. Furthermore, there is no
+> synchronization (such as synchronize_rcu() or draining) to ensure remote
+> CPUs have finished processing the old bit before it is freed.
+>
+> When a new device allocates the same MSI bit, it will overwrite the ptr a=
+nd
+> data fields across all CPUs without memory barriers. If a remote CPU then
+> processes its delayed interrupt, it will read the newly populated ptr and
+> data, resulting in a spurious interrupt delivered to the wrong device or =
+a
+> potential kernel panic from an inconsistent domain/hwirq pair.
 
-Yes, this is a valid bug. I'll fix it in v2.
+The only change this patch makes to zpci_msi_teardown_directed() is the
+rename from zpci_ibv to zpci_dibv. Freeing the directed bits only in
+CPU 0's vector goes back to the original commit introducing directed
+interrupts. A stale bit on a remote CPU could in theory end up as a
+spurious interrupt for a device that later gets the same bit, but until
+the bit is reused, the cleared pointer makes the lookup fail harmlessly.
+
+I'll have a look at clearing the bits on all CPUs separately from this
+series.
+
+Thanks
+Tobias
+
