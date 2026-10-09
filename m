@@ -1,36 +1,36 @@
-Received: from mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
+Received: from mta1.migadu.com (out-101.mta1.migadu.com [95.215.58.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347CA28315D
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 16:55:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE9F3C09F5
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 17:38:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791564911; cv=none; b=NHwS+FNxCZ+R3QAHHiG+2Bu/2rpL1tcey8LIwV7PEmM7uzuxJG5bV8lbO5bvMuni8M5DO77p74GZz/dG9P7mBwPmCLA7xihZIPF3c6A4E6DwNR8n4TcM8BsNIbmw1mneg6ZJKoKVssGj2iXllEqbbzIZBozS3f7B/vcZCWfpTI4=
+	t=1791567526; cv=none; b=YcfwqR0FDL2xAI50pT+FaopmWh67m6hAGBm7PeKAcG9YK+C3CU03FpMK792ePJZN0qYBHk3qOqiqaVKoQk+XMHS9LjGrdOIEpODDZssOCaBfPovZOlfwtJsZyb8+Es+DDZgm8BM4ao4Q/9AzfWyerdzwSIeAT2tL7cmnn2Rbiwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791564911; c=relaxed/simple;
-	bh=HzLQm8yceXsU5YEI2nQ/qHhRGvX9rm0DubbnNySS5yI=;
+	s=arc-20240116; t=1791567526; c=relaxed/simple;
+	bh=zHUuzKnIPNhWiXNI+dpd0f8/Q7kFufm5tGlpb3pCMPc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Gu+54jvd5Kn1ewr4pO5SeW/NEUyTN4zfHEAwRHBLzwRbRKNTHl68Eqs5KR7kQE/nOCGfsVe0spEQ2pRFalSLebU1TJShiqrW60qG41Rsew710X2T62Z0uQNNakgGPy/WwxmYwgZd2DubkSyAX656uUTO0LdQWwkv+a5qWWXf0+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=g9D90MrY; arc=none smtp.client-ip=95.215.58.180
+	 In-Reply-To:Content-Type; b=Jxr8HqVaHZtkJ2DjFawibebWtnxmLaDlL1BZTsRGb/brUT0uk0SsxzX1MySAckiyIX+7hUTUMvNQkwtdoPM0MV/AzFCvohIh/bp7DI+OZlqJGwmrmgeNz/1qqqN3BdnjJbwHLDkzXE86PQJXdJcM+OEL9AKNGAxkEdo6PXSsvaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Wyojo/YE; arc=none smtp.client-ip=95.215.58.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="g9D90MrY"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Wyojo/YE"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=HzLQm8yceXsU5YEI2nQ/qHhRGvX9rm0DubbnNySS5yI=;
+DKIM-Signature: a=rsa-sha256; bh=zHUuzKnIPNhWiXNI+dpd0f8/Q7kFufm5tGlpb3pCMPc=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791564907; v=1; x=1792169707;
- b=g9D90MrYOTnWJhSxszRCRf0Kz2Sj1SnNT5dfigiqgIhpZtW0s3hh9XlpqqQFAGn68QXlfied
- w+n8ThrSXlw3pfiGM2Ew8f1lLYyNlvHbDPKyhTGYnbw3RIw1/HaUUSQ4/MyRORulRwb35QXB1bV
- ko9bCBNDjPwdhPyCLSNUFoF4=
+ t=1791567520; v=1; x=1792172320;
+ b=Wyojo/YEw4IxsClYNWoFkzNk5n0dcfqHt7qGqzDwMwXKExl+x3hSYusKvMZsVwfskpxgN7RW
+ K2rZ9v6kncLMAhqjIRlaDsncYuXnoQqWxX4iJsvcVRdoEIpOo0/poeW3shb7Mj8VBzPrAFhcuDw
+ Uj/LTtEr+PCx3bZa3cy1Iy1A=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 9c78e18c0828b795;
-	Fri, 09 Oct 2026 16:55:06 +0000
-X-Mizu-Trace-ID: 9c78e18c0828b795
+Received: by smtp.migadu.com with ESMTPS id e32b73b4469d334d;
+	Fri, 09 Oct 2026 17:38:40 +0000
+X-Mizu-Trace-ID: e32b73b4469d334d
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <6b77fcc9-93d0-47e6-be94-6087fa96e2ee@linux.dev>
-Date: Fri, 9 Oct 2026 18:55:06 +0200
+Message-ID: <ea470d9c-de17-4b1c-9cbe-174e30c44f88@linux.dev>
+Date: Fri, 9 Oct 2026 19:38:39 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,80 +38,148 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v10 15/24] bpf, arm64: Dispatch exception cleanup
- pads at run time
+Subject: Re: [PATCH bpf-next 3/5] bpf, x86: Place trampoline arguments by the
+ x86-64 calling convention
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org
-References: <20261009041447.17092-1-yonghong.song@linux.dev>
- <20261009041605.33513-1-yonghong.song@linux.dev>
- <sashiko-outbox-164834@kernel.org>
+References: <20261009064206.1238047-1-yonghong.song@linux.dev>
+ <20261009064221.1240081-1-yonghong.song@linux.dev>
+ <sashiko-outbox-164976@kernel.org>
 Content-Language: en-GB
 From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <sashiko-outbox-164834@kernel.org>
+In-Reply-To: <sashiko-outbox-164976@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 10/9/26 6:30 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] arm64/bpf: PAC modifier mismatch for bpf_throw's C frame causes FPAC panic
+On 10/9/26 9:08 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] bpf, x86: stack arguments offset mismatch and misalignment with BPF_TRAMP_F_TAIL_CALL_CTX
+> - [Medium] bpf: info leak of uninitialized kernel stack memory due to missing garbage cleanup
 > --
 >
-> commit 2f751c03b321c9d53d97196968f653cf6c3fa289
+> commit ffb54c9ff7ace6fffcfc471ab2c2927e34131e44
 > Author: Yonghong Song <yonghong.song@linux.dev>
 >
-> bpf, arm64: Dispatch exception cleanup pads at run time
+> bpf, x86: Place trampoline arguments by the x86-64 calling convention
 >
-> This commit adds arm64 support for unwinding BPF frames and redirecting
-> their return addresses to cleanup pads. It signs the modified return
-> addresses using PAC when address authentication is enabled.
+> This commit updates the BPF trampoline to place on-stack arguments
+> according to the x86-64 calling convention. It introduces a backfill
+> mechanism using bpf_jit_place_args() to handle arguments like __int128
+> that may span stack slots and create alignment holes.
 >
->> diff --git a/arch/arm64/kernel/stacktrace.c b/arch/arm64/kernel/stacktrace.c
->> index 3ebcf8c53fb04..56d1310eca323 100644
->> --- a/arch/arm64/kernel/stacktrace.c
->> +++ b/arch/arm64/kernel/stacktrace.c
+>> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+>> index 083fcd6cf15b7..0fc7715e569b5 100644
+>> --- a/arch/x86/net/bpf_jit_comp.c
+>> +++ b/arch/x86/net/bpf_jit_comp.c
 > [ ... ]
->
->> +/* PACIASP's modifier is the entry sp, record + 16 for a BPF prologue. */
->> +static void bpf_unwind_store_ra(unsigned long record, u64 ra)
->> +{
->> +	struct frame_record *rec = (struct frame_record *)record;
+>> @@ -3472,8 +3479,35 @@ static void save_args(const struct btf_func_model *m, u8 **prog,
+>>   		 *
+>>   		 * the arg1-5,arg7 will be passed by regs, and arg6 will
+>>   		 * by stack.
+>> +		 *
+>> +		 * An argument aligned to 16 bytes, an __int128 or a struct
+>> +		 * holding one, also starts at an even stack slot, which can
+>> +		 * leave a hole before it. bpf_jit_place_args() worked out
+>> +		 * where each eightbyte is.
+>>   		 */
+>> -		if (nr_regs + arg_regs > 6) {
+>> +		for (j = 0; j < arg_regs; j++, slot++, bargs_off -= 8) {
+>> +			u8 pos = pos_of_slot[slot];
+>> +			u32 src;
 >> +
->> +	/*
->> +	 * Whether the slot holds a signed address is a property of the build,
->> +	 * not one to be read off the value: a PAC can come out equal to the
->> +	 * bits stripping puts back, and a signed address would then be taken
->> +	 * for an unsigned one. What signs is CONFIG_ARM64_PTR_AUTH_KERNEL --
->> +	 * the prologue here, and -mbranch-protection for everything the
->> +	 * compiler emits.
->> +	 */
->> +	if (IS_ENABLED(CONFIG_ARM64_PTR_AUTH_KERNEL) &&
->> +	    system_supports_address_auth())
->> +		ra = bpf_unwind_sign_ra(ra, record + sizeof(struct frame_record));
-> [Severity: High]
-> Will this hardcoded PAC modifier cause an FPAC panic when returning from
-> bpf_throw()?
-
-bpf_throw() cannot go together with bpf_unwind().
-
->
-> The unwinder uses bpf_unwind_store_ra() to redirect the return address for
-> the first BPF frame. The caller of this first BPF frame is the C function
-> bpf_throw().
->
-> While record + sizeof(struct frame_record) correctly assumes a strict BPF
-> JIT prologue where the entry SP is FP + 16, bpf_throw() is a compiled C
-> function. Its actual frame size is compiler-dependent and may be larger
-> than 16 bytes due to local variables.
->
-> When bpf_throw() returns, its epilogue will authenticate the return address
-> using its actual entry SP. If we sign it here using FP + 16 instead of the
-> actual entry SP, could authentication fail and trigger a kernel panic on
-> PAC-enabled kernels?
->
->> +	WRITE_ONCE(rec->lr, ra);
->> +}
+>> +			if (!x86_arg_on_stack(pos)) {
 > [ ... ]
+>> +			/* copy function arguments from origin stack frame
+>> +			 * into current stack frame.
+> [ ... ]
+>> +			 *
+>> +			 * The area for the origin call mirrors the incoming
+>> +			 * one, hole and all; only the bpf program takes the
+>> +			 * arguments packed.
+>>   			 */
+>> -			for (j = 0; j < arg_regs; j++) {
+>> -				emit_ldx(prog, BPF_DW, BPF_REG_0, BPF_REG_FP,
+>> -					 nr_stack_slots * 8 + stack_args_off);
+>> -				if (arena_arg)
+>> -					emit_arena_arg_conv(prog, BPF_REG_0, nullable,
+>> -							    (u32)arena_base);
+>> -				emit_stx(prog, BPF_DW, BPF_REG_FP, BPF_REG_0,
+>> -					 -stack_size);
+>> -
+>> -				if (!nr_stack_slots)
+>> -					first_off = stack_size;
+>> -				stack_size -= 8;
+>> -				nr_stack_slots++;
+>> -			}
+>> +			off = x86_arg_stack_off(pos);
+>> +			doff = for_call_origin ? stack_size - off : bargs_off;
+>> +			emit_ldx(prog, BPF_DW, BPF_REG_0, BPF_REG_FP,
+>> +				 stack_args_off + off);
+>> +			if (arena_arg)
+>> +				emit_arena_arg_conv(prog, BPF_REG_0, nullable,
+>> +						    (u32)arena_base);
+>> +			emit_stx(prog, BPF_DW, BPF_REG_FP, BPF_REG_0, -doff);
+>> +
+>> +			if (!nr_stack_slots)
+>> +				first_off = doff;
+>> +			nr_stack_slots++;
+>>   		}
+>>   	}
+>>   
+>>   	clean_stack_garbage(m, prog, nr_stack_slots, first_off);
+>>   }
+> [Severity: Medium]
+> Does this code leak uninitialized kernel stack memory?
 >
+> The x86-64 ABI allocates 8-byte stack slots for arguments, but compilers
+> frequently use 32-bit instructions to place 32-bit arguments, leaving the upper
+> 4 bytes of the slot uninitialized.
+>
+> Since clean_stack_garbage() explicitly returns early when nr_stack_slots != 1,
+> copying the full 64 bits with emit_ldx(..., BPF_DW, ...) captures this
+> uninitialized kernel memory into the BPF context. Can this leak kernel stack
+> memory to privileged BPF users if there are multiple stack arguments?
+
+We probably will be okay since for bpf program, the return value will be
+narrowed based on return type.
+
+>
+> [ ... ]
+>> @@ -4011,8 +4014,8 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *rw_im
+>>   	}
+>>   
+>>   	if (flags & BPF_TRAMP_F_CALL_ORIG) {
+>> -		restore_regs(m, &prog, regs_off);
+>> -		save_args(m, &prog, arg_stack_off, true, flags, 0);
+>> +		restore_regs(&prog, pos_of_slot, nr_regs, regs_off);
+>> +		save_args(m, &prog, pos_of_slot, arg_stack_off, true, flags, 0);
+>>   
+>>   		if (flags & BPF_TRAMP_F_TAIL_CALL_CTX) {
+>>   			/* Before calling the original function, load the
+> [Severity: High]
+> Are stack arguments misaligned here if BPF_TRAMP_F_TAIL_CALL_CTX is active?
+>
+> When __arch_prepare_bpf_trampoline() executes, it checks for
+> BPF_TRAMP_F_TAIL_CALL_CTX and emits a push rax instruction (pushing 8 bytes)
+> after sub rsp, stack_size, which permanently shifts RSP down by 8 bytes.
+>
+> However, the updated save_args() calculates the stack argument offsets based on
+> the original stack_size (doff = stack_size - off) without accounting for this
+> extra 8-byte shift.
+>
+> Because the push rax is unpopped before call orig_call, the original function
+> will read its first stack argument from [RSP + 8]. Due to the 8-byte shift,
+> this points to the tail call counter pointer instead of the actual first stack
+> argument, corrupting all on-stack arguments.
+>
+> Additionally, doesn't this 8-byte shift break the required 16-byte stack
+> alignment on function entry for x86-64?
+
+This patch just allows 16-byte aligned parameters with possible holes. The
+rest of change should be the same as the original code. Here you mentioned
+a 'push rax' before calling orig_call. These should be okay, 16-byte aligned
+parameters may have holes but it should not damage the 'push rax' or calling
+orig_call. I will see whether we can add some tests for this.
 
