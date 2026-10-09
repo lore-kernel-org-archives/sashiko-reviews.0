@@ -1,60 +1,36 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-123.mta1.migadu.com [95.215.58.123])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6151938736F
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 16:46:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FAF1F09AD
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 16:51:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.123
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791564404; cv=none; b=k8BVwEIoW5UD6XHcHESIlo89OKyX7uDKfNKOon1500Uh9Cnk/+imS8LaVD/VRJrunshr0aDKAryspiriMK5ZqpAVAVX959kiUB3svuWgECtDjXs2sW6xtoX6jV/6H1PDpg2lIDagM+3kugdCxmpZbSrdXbhZWfb4gtKbfKNlMmc=
+	t=1791564683; cv=none; b=eu29ztSqwx3em6ib1fS2wTiz88VqEZ+ssSAAeF2VnWf6NpckuscdsroPfkrUYppXV8te21cRa1ITZFmQ2P2bBaT/mB72ysr+rn53mjQl8NOOoCipb0012qJjMFow+MAIfZvNeQ3CM9qrjp/L58zGhzQtFtUSLaGZl8krrkjiPno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791564404; c=relaxed/simple;
-	bh=//xgIxxqrD/FpqFYoZmGQCojUYP8arDp708R8VVmMIo=;
+	s=arc-20240116; t=1791564683; c=relaxed/simple;
+	bh=tte+tOazSKFbgiuBdk0SlwZ7ABZperORPF00Son0gpw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=L9uhzatSxmGT3ONvh4CL4XlRwr3WTOzN/Y/M4iLQh/Y1AK5oq0/LoSaaBiK9Qc2qwR+gHE6WJgonMi7FdH+5uZVxS426Gp/bOvticXccYK6SRYToCttL3qoVp2Sy8jjH7oJX6yHzaOrbk5LC2IwIiYCL0txVMArYI8aB0pAFkYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=hyGDSIbG; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	 In-Reply-To:Content-Type; b=S6JtHtPttAprHRgUk0HAQ5AbsdQJWhoJmStPF8gv4MVerBgNeKG21Ss3SgGBf31pUbAuWbJQKQVcHMdXPBaJrPehrCQShsgMWbQZ4GgzrRNvVwoeSqyy111EkN2uRS+CaZrGzyaEzr90q/btCT0OqLB7pCZc9S9W77mpw4KnSyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=pqDSdyJT; arc=none smtp.client-ip=95.215.58.123
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="hyGDSIbG"
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 699GZYUi3587669;
-	Fri, 9 Oct 2026 16:46:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=GYUoFt
-	ri3BnOvXdFV/grz+KG5/wd0LatKMpaSoeWkPA=; b=hyGDSIbGu6yNkxL8deEMYx
-	AmRCouly2i+3xN9Y7mYhyNDuTjMZiK7PAGh6m6szCmcQD/CTfVa4AKh20ID4ff59
-	LOfgrZA+U/c/ofr94MqxvDhrNWlNSeeQALLk/+z9PnkR13AchItFlnYWaQq238/p
-	JMEOg1WpNlkStbzwaKt+47+pjUK3uKeGqIHWYgkEsul+MmkJJbTMoLLrUiAsEexR
-	vvSTdl2wz+KAXhC4L5ImJvh6lUuOv3VBXYXbnWwFxz2BQYM4nX7zlOfcKxq4ol9d
-	cm5LMD4+rX4CQyNWidnGPc0F/N8OUshmwUrhA/99wMC52J1xT1FEJb2ZOsWwbuCA
-	==
-Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xk1k2g6-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Fri, 09 Oct 2026 16:46:41 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 699GJK9o1147086;
-	Fri, 9 Oct 2026 16:46:41 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
-	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h6x1y9b7w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 09 Oct 2026 16:46:41 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
-	by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 699GkaL950987398
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 9 Oct 2026 16:46:37 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id D148220043;
-	Fri,  9 Oct 2026 16:46:36 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 8A4E820040;
-	Fri,  9 Oct 2026 16:46:36 +0000 (GMT)
-Received: from [9.111.13.15] (unknown [9.111.13.15])
-	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Fri,  9 Oct 2026 16:46:36 +0000 (GMT)
-Message-ID: <f73f015a-1d2e-4a61-82b6-0c47a2ae66ca@linux.ibm.com>
-Date: Fri, 9 Oct 2026 18:46:36 +0200
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="pqDSdyJT"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=tte+tOazSKFbgiuBdk0SlwZ7ABZperORPF00Son0gpw=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791564679; v=1; x=1792169479;
+ b=pqDSdyJT/zLm/ZWB8ZyzJDB+U+hCymDoHZfXTtvRCxfnuzJ+5w/LBufCw0gfFahAduR4tk7b
+ dCigFXkXkIUAUJrccthxHKVJ7LLNTTOSRp/CiOSDoLFN3ds32GP2mR6mIqevb6EqtFFFsMZW33K
+ RO7ks+9s1/Xx77zwlh8l8zto=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 0d2a5a1f762400ce;
+	Fri, 09 Oct 2026 16:51:18 +0000
+X-Mizu-Trace-ID: 0d2a5a1f762400ce
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <9bdd26b6-9c31-4dc5-bcc3-6484a45f9dac@linux.dev>
+Date: Fri, 9 Oct 2026 18:51:17 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -62,81 +38,99 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [GIT PULL 4/6] KVM/vfio: Use file-based reference counting for
- KVM
-To: Paolo Bonzini <pbonzini@redhat.com>, sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org
-References: <20261009142749.186650-1-borntraeger@linux.ibm.com>
- <20261009142749.186650-5-borntraeger@linux.ibm.com>
- <sashiko-outbox-165746@kernel.org>
- <4944d4a4-cb8d-4c46-aa84-c0050991cffb@redhat.com>
-Content-Language: en-US
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-In-Reply-To: <4944d4a4-cb8d-4c46-aa84-c0050991cffb@redhat.com>
+Subject: Re: [PATCH bpf-next v10 14/24] bpf, x86: Dispatch exception cleanup
+ pads at run time
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20261009041447.17092-1-yonghong.song@linux.dev>
+ <20261009041559.31116-1-yonghong.song@linux.dev>
+ <sashiko-outbox-164841@kernel.org>
+Content-Language: en-GB
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <sashiko-outbox-164841@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=YtCa1IYX c=1 sm=1 tr=0 ts=6ac91a72 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=qsEgGoFHUdzIM0miMNAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA5MDA2NiBTYWx0ZWRfX7QlGtN6F4KnS
- sDzCBegzMDDe0LQ5qEFU1qA9l1JQj5SgSycqHAiyqJHvCWqsB4wrCwvjKNtRzsd2/gaxvU0cZrQ
- o5tPK2uhZyFb7ENaoDNjtkprmAMTcBOKVKfMt7Uj/O6yEkJLHeJmwmL1nJdb8B2NeM2tvW2y7HG
- /Bwb4CUl2F0nudtju7KdiNBi2tg5rH+Q/LCWhdALHQjtb8Gw6xXuA4lEv2rRaCjJY7AAJaTuHwA
- ddi0PX3eBBWDlaRCw7m+dwqKNGVRJsRDGHbzWCQFZSCJlwLeyh8lbo/nbDhD0QndRNI18vvsVfP
- 0C2837r67wwIlvk9Wx/mYVFWxh2+PJUDIOT79RMP4WuD6ZbmhQCgCj2hpLsihFLQwLFWK1W4O68
- 1MFdyOfOJFakCRszPUHAu8dm526AlayINKl0WVZdNU5vrl5bb0v1kSFNipyd4ItK5h8cJDxmBbH
- EcXgHFPzOvufGquHCbw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA5MDA2NiBTYWx0ZWRfX39oi5IP0oBzd
- Tl2A0klxnhXL+o4zBfhPsYhaTsOcSZBAt8qLH9ARm+0mSPDwN/JBGIp16+VyCRHw2XXxcOwAv4o
- igj5d2ybv58+LCWZ+Sr2+qnXoJ5ps6k=
-X-Proofpoint-GUID: z9r7cvkcJmYrnNwxlJtBDh1r-7SxVnj3
-X-Proofpoint-ORIG-GUID: z9r7cvkcJmYrnNwxlJtBDh1r-7SxVnj3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-09_04,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
- lowpriorityscore=0 suspectscore=0 malwarescore=0 adultscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610090066
+Content-Transfer-Encoding: 7bit
 
 
 
-Am 09.10.26 um 18:06 schrieb Paolo Bonzini:
-> On 10/9/26 16:56, sashiko-bot@kernel.org wrote:
->>> -static void vfio_device_file_set_kvm(struct file *file, struct kvm *kvm)
->>> +static void vfio_device_file_set_kvm(struct file *file, struct file *kvm)
->>>   {
->>>       struct vfio_device_file *df = file->private_data;
->>> +    struct file *old;
->>> +
->>> +    if (kvm)
->>> +        get_file(kvm);
->>
->> [Severity: Critical]
->> Does taking a strong reference to the KVM file here create a circular
->> reference cycle?
->>
->> When userspace adds a VFIO device to a KVM VM, kvm_vfio_file_add() takes a
->> reference to the VFIO file. If vfio_device_file_set_kvm() then takes a
->> reference to the KVM file, both files hold references to each other.
->>
->> Because both file descriptors hold each other's references, their f_count
->> will never reach 0 when userspace closes the FDs, permanently leaking the
->> KVM VM and the VFIO structures.
-> 
-> False positive, the reference to VFIO is in the KVM-VFIO device file and not in the KVM file descriptor itself.  Using variable names, there is one reference from kvf to vfio and one from vfio to kvm.
-> 
-> (Right? :))
-> 
-Yes, already addressed here.
+On 10/9/26 6:32 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] bpf: Exception unwinder cleanup pad executes in caller's stack frame context
+> --
+>
+> commit 9d03eddc4bc6be397e72d866390a80929337af59
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> bpf, x86: Dispatch exception cleanup pads at run time
+>
+> Add what bpf_unwind() relies on to send each frame of a program to its
+> landing pad or its epilogue on x86-64. This includes arch_bpf_stack_walk_ra(),
+> aux->epilogue_ip assignment, and bpf_exc_fill_native_ranges() call.
+>
+>> diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+>> index 083fcd6cf15b7..d434871b5a11c 100644
+>> --- a/arch/x86/net/bpf_jit_comp.c
+>> +++ b/arch/x86/net/bpf_jit_comp.c
+> [ ... ]
+>> @@ -3279,6 +3280,8 @@ static int do_jit(struct bpf_verifier_env *env, struct bpf_prog *bpf_prog, int *
+>>   			seen_exit = true;
+>>   			/* Update cleanup_addr */
+>>   			ctx->cleanup_addr = proglen;
+>> +			/* Where an unwind sends a frame with no pad. */
+>> +			bpf_prog->aux->epilogue_ip = (u64)image + proglen;
+>>   			if (bpf_prog_was_classic(bpf_prog) &&
+>>   			    !ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN)) {
+>>   				if (emit_spectre_bhb_barrier(&prog, ip, bpf_prog))
+>>   					return -EINVAL;
+>>   			}
+>>   			/* Deallocate outgoing args 7+ area. */
+>>   			emit_add_rsp(&prog, outgoing_rsp);
+>>   			if (bpf_prog->aux->exception_boundary) {
+>>   				pop_callee_regs(&prog, all_callee_regs_used);
+>>   				pop_r12(&prog);
+>>   			} else {
+>>   				pop_callee_regs(&prog, callee_regs_used);
+>>   				if (arena_vm_start)
+>>   					pop_r12(&prog);
+>>   			}
+>>   			EMIT1(0xC9);         /* leave */
+>>   			bpf_prog->aux->ksym.fp_end = prog - temp;
+>>   
+>>   			emit_return(&prog, image + addrs[i - 1] + (prog - temp));
+> [Severity: High]
+> Does this execute the cleanup pad in the wrong stack frame context?
+>
+> During exception unwinding, arch_bpf_stack_walk_ra() walks the stack and
+> yields the return address pointer (ra) for the current frame N, which
+> points to the instruction in frame N-1.
+>
+> In bpf_unwind_rewrite(), *ra is overwritten with the address of frame N's
+> cleanup pad or epilogue_ip:
 
-https://lore.kernel.org/kvm/b49ec974-6937-4057-869b-a6e2d5958c6d@linux.ibm.com/
+We should be okay. Here, the address is from frame N-1 and the address is
+filled in frame N. Not as in the above mentioned that the overwritten with
+the address of frame N's cleanup pad or epilogue_ip.
 
-
+>
+> kernel/bpf/helpers.c:bpf_unwind_rewrite() {
+>      ...
+>      rec = bpf_exc_pad_for_ip(prog, ip);
+>      *ra = rec ? rec->pad : prog->aux->epilogue_ip;
+>      ...
+> }
+>
+> This forces frame N to jump to its cleanup pad when it returns.
+>
+> However, the JIT epilogue executes "leave" before "ret". The "leave"
+> instruction completely tears down frame N's stack and restores frame N-1's
+> stack pointer and frame pointer.
+>
+> The "ret" instruction then pops the modified return address and jumps
+> to frame N's pad. As a result, the pad executes while frame N-1's context
+> is active.
+>
+> Can this cause any stack accesses inside the pad (using rbp, mapped to r10
+> in BPF) to incorrectly access frame N-1's stack variables, leading to
+> memory corruption, use-after-free, or garbage reads during cleanup?
+>
 
