@@ -1,49 +1,36 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-223.mta1.migadu.com [95.215.58.223])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210FD4D0CFD
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 16:06:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2124E06CF
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 16:12:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.223
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791561987; cv=none; b=cNcWYw9daPC8zEvFiFAn6shdi8yhgSObHPAPzYDmchi6wkviE/D7zzqI58w9Q2x0eYxpPzYcKpvvFxMxKV5m/jmRnvqCRn+7X7kWFp8gLuzkAXytUGkxt1l0bCehafZ1PYJvRmi3BYl7Ie0VjSkKr8V3KvIVuI+tdTURApme018=
+	t=1791562347; cv=none; b=l47sDgWTAcnTyQBIDuiHmtGnCAveS6nnCddP/m2v8S88Zq09SjvsBp9bGz8RcIMtpX5cWTmqWHv901DgJ2y94GQDbP9G2mOw7PX3j2hTWqTP8TL4gvqMPahw7QoRIW/yuMTm9vXafq+j5QfrrxbWxtela3+CwSw4HliAOAHOShk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791561987; c=relaxed/simple;
-	bh=WHf77Yd5DASFhOAaaOdf6g+ghry/Kw8R/boOFhyWaRE=;
+	s=arc-20240116; t=1791562347; c=relaxed/simple;
+	bh=747TmAvyl8viWqs5riM3RgFcXeMoyHrrMImVgSIWeCY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qR4P5cO3YKCtOhV6YGV1MmQj9Pz/mkq6R+UhhVnrXytiddjYNHXrbIsRc1bmXlz7JqJ8vgZfgWfN9SGaLI8eGR9g5d3pH0biRYKEKmvamtACisd0KEvX/lfg16hEDqtusqAfA9s2E0You9LIJY3CYVxwiB55Wy3XlRNjj3SDwG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=UKgLYkPe; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	 In-Reply-To:Content-Type; b=V9vfoUcCI4mfBtYmisdQBqHWCh6WetIhOh31JGdgKSPiJA8729s7f4dzfarKik+84R5Ee6Qdhldz2pOJVovI6nFIkTWI/8fqwOvvUXcf9J26YivgtiJOwqKDA2o7D/iufWpjPPq5Vd7l4hQIcsxEZ+zcZ4OFSm7skiHLTzBvJEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=X+TeH90e; arc=none smtp.client-ip=95.215.58.223
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="UKgLYkPe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1791561985;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=UWLmuV+VOitmDREu5SKD8TR8ZykYME/n6JVVWgUeAEU=;
-	b=UKgLYkPeB6rraFuwuFgjGB5xMuIUerZzujlB9YxzYkb9JW3x8iHq2IK4jpzkaCjyutTuwZ
-	mqRFGcO1jzHRMAyTJopAYThV3zMKuOxFZtwbXTJ0y86j2W6ks9jC5wLlXI6K/ALtRNT2wC
-	zzf8xXuvo23jQhVwUc3dny9vXW/lo7k=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-29-fPBwmwcGP_-ruLyfe5J9dQ-1; Fri,
- 9 Oct 2026 16:06:21 +0000
-X-MC-Unique: fPBwmwcGP_-ruLyfe5J9dQ-1
-X-Mimecast-MFC-AGG-ID: fPBwmwcGP_-ruLyfe5J9dQ_1791561978
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 89F4F18021EA;
-	Fri,  9 Oct 2026 16:06:18 +0000 (UTC)
-Received: from [100.90.56.12] (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
-	by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 9DB3A1956042;
-	Fri,  9 Oct 2026 16:06:16 +0000 (UTC)
-Message-ID: <4944d4a4-cb8d-4c46-aa84-c0050991cffb@redhat.com>
-Date: Fri, 9 Oct 2026 18:06:14 +0200
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="X+TeH90e"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=747TmAvyl8viWqs5riM3RgFcXeMoyHrrMImVgSIWeCY=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791562342; v=1; x=1792167142;
+ b=X+TeH90ec8NeojvqWB16YdLhz/Hu+TFMeWJl33Ye7y15uifANz6YwP7fUjdEUOmJj1VXOXVY
+ 2kksspB5lF+V0chFQzvMGGnJ9ya3yZOAZiCMEKyBJhqDRYHuIrRJW5UKKJyHfj1AQWLCypd4R/3
+ uCoAejgCx2o7khfIx6fq2vcA=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id a2c0977c8bee8875;
+	Fri, 09 Oct 2026 16:12:22 +0000
+X-Mizu-Trace-ID: a2c0977c8bee8875
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <2bf493a9-a910-43ca-8008-bff5f03a55f8@linux.dev>
+Date: Fri, 9 Oct 2026 18:12:18 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -51,132 +38,107 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [GIT PULL 4/6] KVM/vfio: Use file-based reference counting for
- KVM
-To: sashiko-reviews@lists.linux.dev,
- Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: kvm@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
- Heiko Carstens <hca@linux.ibm.com>,
- Alexander Gordeev <agordeev@linux.ibm.com>, linux-s390@vger.kernel.org
-References: <20261009142749.186650-1-borntraeger@linux.ibm.com>
- <20261009142749.186650-5-borntraeger@linux.ibm.com>
- <sashiko-outbox-165746@kernel.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <sashiko-outbox-165746@kernel.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-X-Mimecast-MFC-PROC-ID: 1_1aladw_NcA6qe6tqy7ARUpkpTjB_CPRUmBqlK7gB8_1791561978
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
+Subject: Re: [PATCH bpf-next v10 11/24] bpf: Prepare JITed programs for
+ dispatching cleanup pads
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20261009041447.17092-1-yonghong.song@linux.dev>
+ <20261009041544.29907-1-yonghong.song@linux.dev>
+ <sashiko-outbox-164846@kernel.org>
+Content-Language: en-GB
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <sashiko-outbox-164846@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-
-On 10/9/26 16:56, sashiko-bot@kernel.org wrote:
->> -static void vfio_device_file_set_kvm(struct file *file, struct kvm *kvm)
->> +static void vfio_device_file_set_kvm(struct file *file, struct file *kvm)
->>   {
->>   	struct vfio_device_file *df = file->private_data;
->> +	struct file *old;
->> +
->> +	if (kvm)
->> +		get_file(kvm);
-> 
-> [Severity: Critical]
-> Does taking a strong reference to the KVM file here create a circular
-> reference cycle?
-> 
-> When userspace adds a VFIO device to a KVM VM, kvm_vfio_file_add() takes a
-> reference to the VFIO file. If vfio_device_file_set_kvm() then takes a
-> reference to the KVM file, both files hold references to each other.
-> 
-> Because both file descriptors hold each other's references, their f_count
-> will never reach 0 when userspace closes the FDs, permanently leaking the
-> KVM VM and the VFIO structures.
-
-False positive, the reference to VFIO is in the KVM-VFIO device file and 
-not in the KVM file descriptor itself.  Using variable names, there is 
-one reference from kvf to vfio and one from vfio to kvm.
-
-(Right? :))
-
-Paolo
+Content-Transfer-Encoding: 8bit
 
 
 
+On 10/9/26 6:35 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] bpf: backward jump offsets in bpf_exc_patch_unwind_calls are corrupted by bpf_adj_branches
+> --
+>
+> commit b2a75ebf7c80cc3231a5eb34881ba1928dafcd3b
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> bpf: Prepare JITed programs for dispatching cleanup pads
+>
+> This patch prepares JITed programs to dispatch exception cleanup pads.
+> It updates the verifier to patch bpf_unwind() calls with a sequence that
+> clears r0 and jumps to the exception pad or exits.
+>
+>> diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
+>> index 64baee1a37e60..1cc025c45ecda 100644
+>> --- a/kernel/bpf/fixups.c
+>> +++ b/kernel/bpf/fixups.c
 > [ ... ]
-> 
->> diff --git a/virt/kvm/vfio.c b/virt/kvm/vfio.c
->> index 6cdc4e9a333a3..19548a4309426 100644
->> --- a/virt/kvm/vfio.c
->> +++ b/virt/kvm/vfio.c
->> @@ -144,6 +144,7 @@ static int kvm_vfio_file_add(struct kvm_device *dev, unsigned int fd)
->>   {
->>   	struct kvm_vfio *kv = dev->private;
->>   	struct kvm_vfio_file *kvf;
->> +	struct file *kvm_file __free(fput) = NULL;
->>   	struct file *filp __free(fput) = NULL;
->>   
->>   	filp = fget(fd);
->> @@ -154,6 +155,10 @@ static int kvm_vfio_file_add(struct kvm_device *dev, unsigned int fd)
->>   	if (!kvm_vfio_file_is_valid(filp))
->>   		return -EINVAL;
->>   
->> +	kvm_file = get_file_active(&dev->kvm->file);
-> 
-> [Severity: High]
-> Does struct kvm contain a member named 'file'? Looking at
-> include/linux/kvm_host.h, it doesn't appear to exist, which would cause a
-> compilation error here.
-> 
->> +	if (!kvm_file)
->> +		return -ENOENT;
+>> @@ -1733,6 +1805,48 @@ static int may_goto_expand(struct bpf_insn *insn_buf, int off, int stack_off,
+> [ ... ]
+>> +/*
+>> + * Follow each bpf_unwind() call with 'r0 = 0; exit', or with
+>> + * 'r0 = 0; goto pad' where a record covers the call.
+>> + */
+>> +int bpf_exc_patch_unwind_calls(struct bpf_verifier_env *env)
+>> +{
+>> +	int insn_cnt = env->prog->len;
+>> +	struct bpf_insn insn_buf[3];
+>> +	struct bpf_prog *new_prog;
+>> +	int i, off, delta = 0;
 >> +
->>   	guard(mutex)(&kv->lock);
->>   
->>   	list_for_each_entry(kvf, &kv->file_list, node) {
->> @@ -168,7 +173,7 @@ static int kvm_vfio_file_add(struct kvm_device *dev, unsigned int fd)
->>   	kvf->file = get_file(filp);
->>   	list_add_tail(&kvf->node, &kv->file_list);
->>   
->> -	kvm_vfio_file_set_kvm(kvf->file, dev->kvm);
->> +	kvm_vfio_file_set_kvm(kvf->file, kvm_file);
-> 
-> [Severity: Critical]
-> This is where KVM takes its strong file reference on the VFIO device file,
-> which completes the reference cycle discussed above.
-> 
+>> +	if (!bpf_prog_may_unwind(env))
+>> +		return 0;
+>> +
+>> +	for (i = 0; i < insn_cnt; i++) {
+>> +		int call = i + delta, pad;
+>> +		struct bpf_insn *insn = env->prog->insnsi + call;
+>> +
+>> +		if (!bpf_is_unwind_kfunc(insn))
+>> +			continue;
+>> +
+>> +		insn_buf[0] = *insn;
+>> +		insn_buf[1] = BPF_MOV64_IMM(BPF_REG_0, 0);
+>> +		insn_buf[2] = BPF_EXIT_INSN();
+>> +		pad = bpf_exc_pad_of_call(env, call);
+>> +		if (pad >= 0) {
+>> +			/* The goto is at call + 2; a pad after the call moves down by 2. */
+>> +			if (pad > call)
+>> +				pad += 2;
+>> +			off = pad - (call + 3);
+>> +			insn_buf[2] = off == (s16)off ? BPF_JMP_A(off) : BPF_JMP32_A(off);
+> [Severity: High]
+> Does this manually calculated offset get corrupted if the landing pad is located
+> before the unwind call (pad < call)?
+
+I think this cannot happen. See below.
+
+>
+> bpf_patch_insn_data() is called immediately after this, which delegates to
+> bpf_adj_branches() to adjust all relative offsets in the program.
+>
+> When bpf_adj_branches() processes the newly inserted goto instruction, it
+> evaluates it as if it were a shifted original instruction (because
+> curr >= end_new evaluates to true). If the jump is backwards,
+> bpf_adj_branches() might erroneously subtract the insertion delta (2) from the
+> already-correct offset.
+>
+> Could this result in the jump target being shifted 2 instructions before the
+> actual landing pad, potentially leading to the execution of unintended or
+> unverified bytecode during exception unwinding?
+
+The offset is already right, and no change for bpf_adj_branches().
+The goto is inside the patch [call, call + 3). bpf_adj_delta_to_off()
+only rewrites a jump that sits before pos or at or after end_new,
+i.e. one that was outside the patch.
+
+>
+>> +		}
+>> +
+>> +		new_prog = bpf_patch_insn_data(env, call, insn_buf, 3);
+>> +		if (!new_prog)
+>> +			return -ENOMEM;
+>> +		delta += 2;
+>> +		env->prog = new_prog;
+>> +	}
+>> +	return 0;
+>> +}
 
