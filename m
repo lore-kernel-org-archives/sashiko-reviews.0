@@ -1,177 +1,179 @@
-Received: from mta0.migadu.com (out-88.mta0.migadu.com [91.218.175.88])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438F14F4CED
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 18:12:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.88
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E95A502566;
+	Fri,  9 Oct 2026 18:34:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791569578; cv=none; b=T2z8zB6JIg/TF2MtTpZ3ub40hv3WjOeQM7wtyX4D+UKjGcZeL0/NRIo6TiOwV5VBSYrMLvNdeo7TYE80UreyA//QjSATJKa7p8mhjCNsgisO1DhvJcQIfx9Ewr/lYfN3iC1uAQigSMr7/sUNMJ3pYhzbCojFF/mJJljW6N5zVFI=
+	t=1791570878; cv=none; b=U7RbpUIKsck62i7UYNO7t0Sy1T514Xb6qth4vE25JeUnatiDuZx87TjXKKN4pkl6YN+hBGQ+ERRH9YMNUsVtQ5Cgg3vGTdjtEXxjC22v4FQw512viP+2GMFvpX4VbE80HadcjGeEX5VszoMDZApmf7Ef8jdeAGuxv0BqecYojAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791569578; c=relaxed/simple;
-	bh=8QryxlV+6DrDBD5DgfUI2UwSedPXiMspTrjhKUVcm1c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HbVS83UUYykIf2XSjBALIrg1fNEccZyC/gWubWgVTDzRwz/yue99o/h4vASpl2XL7j7xww+MEEs1UpZ5UNelNLO5IS6Ijmjxs1ckfiNEujRUSS1IyKzQsDoI6ZMkf4f4BWjyCXVmce52C4PoYEc9xRSRcvfiTNgfwoBV9GUNU5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=sJ75LbMl; arc=none smtp.client-ip=91.218.175.88
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1791570878; c=relaxed/simple;
+	bh=dFSsQS/OnQ+Ipn9WS84kWOyWVIZbLjGCISb+AIfKXx4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Vt8zshvJSbZaB1PtK+WWLsdXXmxrjhaksPwIjKj1wurK4bjMbYqIVFCV0fw51/JByHvwA9B5T4Dj/6H0TyjF3tEAC9xJWOC//hywtpwnzn8gDTOar5rh1T7BD/ebmftT5ai/rCCcHekx5sRBBiAb7tvpPzs8cMhvL4aOH5ZDwwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=H/j0yQq4; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="sJ75LbMl"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=8QryxlV+6DrDBD5DgfUI2UwSedPXiMspTrjhKUVcm1c=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791569574; v=1; x=1792174374;
- b=sJ75LbMlG5FepUFr6/sXTjo9AAN5GuTwQYKqM6d6aGUr2tXOZqYtkT9HYkBOBRMdwAbK5u1/
- BoV1WVbFR7K2ZvpSpS3Roz+Jv8ACv/+Fc7IrfFs1PyjtuH3gJ2o4G8xN7+0X4kqWRghIb61UVgZ
- cMARta2/yys8VaPRXyV09d/I=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id b8f0ae7a855160db;
-	Fri, 09 Oct 2026 18:12:53 +0000
-X-Mizu-Trace-ID: b8f0ae7a855160db
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <1547e6f7-9944-411c-9701-3b7f504fe576@linux.dev>
-Date: Fri, 9 Oct 2026 20:12:53 +0200
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="H/j0yQq4"
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 699HZwas699031;
+	Fri, 9 Oct 2026 18:34:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=fzhQGVurYEC30EOm3SygksIRKzVMnH
+	m/ENouoV/nkd0=; b=H/j0yQq4EzUsMdLvquYvLeyNn9+pBR0rIDGsJfzoG3GstX
+	emOYsaVxDqHxrOLzm6pO/6SVTdBulaNQULR/e+tCln+7/Il00gJG2uakxVxLG88l
+	WqyoTue0LWA0S/9U+EDknmy6B0IjbmditbLzYz13h+AVh6LBhSBYK0ew942txrg+
+	CVNXmbpvo4iFyuMedln9k3POvhJin/fnbMxI/3we9H7MUKi6rDxR4AJH/f77ynkd
+	GqtR9NWhITk8ftbzjzNUwDjLsQOXe+FQ9lFRSitOGwsc22cU2XkyOG9U0dK6Yn/a
+	/9wKX2cFMujHtXHXdZwGBcthXpbNeBuJhEMGGKHA==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h74ter9m4-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Fri, 09 Oct 2026 18:34:32 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 699H8Eq01142910;
+	Fri, 9 Oct 2026 18:34:31 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h6udd2byc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 09 Oct 2026 18:34:31 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com [10.39.53.228])
+	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 699IYVQa24904420
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 9 Oct 2026 18:34:31 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id EB95F58063;
+	Fri,  9 Oct 2026 18:34:30 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id ADA6D5804B;
+	Fri,  9 Oct 2026 18:34:30 +0000 (GMT)
+Received: from d (unknown [9.61.186.115])
+	by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+	Fri,  9 Oct 2026 18:34:30 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v13 03/11] scsi: ibmvfc: fix potential NULL pointer
+ dereference on failed queue allocation
+In-Reply-To: <sashiko-outbox-163321@kernel.org> (sashiko-bot@kernel.org's
+	message of "Wed, 07 Oct 2026 19:44:41 +0000")
+References: <20261007-ibmvfc-fpin-support-v13-0-b816abfa4fcc@linux.ibm.com>
+	<20261007-ibmvfc-fpin-support-v13-3-b816abfa4fcc@linux.ibm.com>
+	<sashiko-outbox-163321@kernel.org>
+Date: Fri, 09 Oct 2026 13:34:30 -0500
+Message-ID: <871p9yn2o9.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 4/5] selftests/bpf: Test trampoline args around a
- 16-byte aligned stack arg
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20261009064206.1238047-1-yonghong.song@linux.dev>
- <20261009064228.1240628-1-yonghong.song@linux.dev>
- <sashiko-outbox-164968@kernel.org>
-Content-Language: en-GB
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <sashiko-outbox-164968@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA5MDA3MiBTYWx0ZWRfX2uQlBU4X9p8t
+ fx0WUFHp4Xlg3vt/VLsygT5DuRls8fT9iCZxAOauSZ4sKTogRVXorD5o5VOZECYgNDjsumJmAjO
+ n1PuUorQBwWZ3l+K3FaSD4jLnR2pwyM=
+X-Proofpoint-GUID: P9Yw8I3lIqNDUAN_JJqXFFdctffG6ilN
+X-Authority-Analysis: v=2.4 cv=P42vFSAu c=1 sm=1 tr=0 ts=6ac933b8 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=MPx-HvhaHCjr5pnxk8wA:9
+X-Proofpoint-ORIG-GUID: P9Yw8I3lIqNDUAN_JJqXFFdctffG6ilN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA5MDA3MiBTYWx0ZWRfX+ABqe2SXNaPc
+ K+ePce8/l5KuU80lxkoxjs5BPJhZKqqm/RddorPYzjm2W2BdY/igL3YeyKNtzEaZI+S52Iy3KgG
+ oegO6m/QxOtDN6ZrH7HIhUERwLRRzL5vrmnoKnyg5lWBtCQa3K0Xx8yrulaHy6QhBWWoeQir/oI
+ ZMCiWKZLUVdyumKQerT46odx9aXJjUdIK5VZJ+lb7keILasaqSXaU7skrs6q4N7AFI7VkP974Yb
+ bTefW7ics9wrcRsvZ2mzUndSMr2YHcMTlo2rthAkEQUitVbfKhBJNUYZZb5BAEyYN7oGGxjfpoa
+ VzovkTF+SpjbcrHWDFSHRZBS5rsSPBnO/l6Gl6jok173wFvsiqwOy6GpO4yT/c6p7gnWIlT17R9
+ Wg+AYOCSViEi5TgeBk2K8Yg1CZx18KlyNZyccFuqx7PxcOwhy+MGx0ZkSS6L9NghZ6uQxrkmLuN
+ 0ncRcF/hNshDtX3XWWg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-09_05,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 priorityscore=1501 suspectscore=0 spamscore=0 phishscore=0
+ lowpriorityscore=0 adultscore=0 clxscore=1015 impostorscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610090072
 
+sashiko-bot@kernel.org writes:
 
-
-On 10/9/26 8:51 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] bpf: endianness mismatch when reading __int128 in selftests on big-endian
-> - [Medium] selftests/bpf: data race on bpf_testmod_test_struct_arg_result
+> - [High] scsi: ibmvfc: double free of sub-CRQs on partial registration failure
+> - [Low] scsi: ibmvfc: unprotected H_FREE_SUB_CRQ on uninitialized or double-freed queues
 > --
 >
-> commit 44831c6b1a0172e1d0713d17a8e105c4b30d6d64
-> Author: Yonghong Song <yonghong.song@linux.dev>
+> commit 0fde5959dd5d7f8887aa67ee2fa7032b0dd6353a
+> Author: Tyrel Datwyler <tyreld@linux.ibm.com>
 >
-> selftests/bpf: Test trampoline args around a 16-byte aligned stack arg
+> scsi: ibmvfc: fix potential NULL pointer dereference on failed queue allocation
 >
-> This commit introduces two new bpf_testmod functions to test trampoline
-> argument handling for 16-byte aligned stack arguments, specifically targeting
-> __int128 structures. It also adds fentry and fexit programs to verify that
-> arguments are correctly packed in the context array according to BPF
-> conventions on x86-64 and arm64.
+> Guard the memset() in ibmvfc_deregister_channel() behind a check of
+> scrq->msgs.handle to prevent a NULL dereference when the function is
+> called on a queue that was never allocated, such as async_sub_crq when
+> multi-queue is disabled or initialization failed before
+> ibmvfc_alloc_queue() was reached.
 >
->> diff --git a/tools/testing/selftests/bpf/progs/tracing_struct_int128.c b/tools/testing/selftests/bpf/progs/tracing_struct_int128.c
->> index 4638dfec1f38e..5520ee500c01d 100644
->> --- a/tools/testing/selftests/bpf/progs/tracing_struct_int128.c
->> +++ b/tools/testing/selftests/bpf/progs/tracing_struct_int128.c
->> @@ -15,4 +15,49 @@ int test_int128_arg_fexit(unsigned long long *ctx)
->>   	return 0;
->>   }
->>   
->> +/*
->> + * The arguments come packed in the BPF convention whatever holes the
->> + * kernel convention left between them: an eightbyte each, and two for the
->> + * struct holding an __int128.
->> + */
->> +long s_g, s_h_lo, s_h_hi, s_i, s_ret;
->> +
->> +SEC("fentry/bpf_testmod_test_int128_stack")
->> +int test_int128_stack_fentry(unsigned long long *ctx)
->> +{
->> +	s_g = ctx[6];
->> +	s_h_lo = ctx[7];
->> +	s_h_hi = ctx[8];
-> [Severity: Medium]
-> Will this little-endian assumption cause the selftest to fail on big-endian
-> systems? On big-endian arm64 (aarch64_be), the high 64 bits of the 16-byte
-> struct would be at the lower memory address, so reading ctx[7] as the low
-> 64 bits and ctx[8] as the high 64 bits might be reversed.
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> index 145d559041f12..6a42d15db9ec5 100644
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> @@ -6480,8 +6480,10 @@ static void ibmvfc_deregister_channel(struct ibmvfc_host *vhost,
+>>  		dev_err(dev, "Failed to free sub-crq[%d]: rc=%ld\n", index, rc);
+>
+> [Severity: High]
+> Can a partial registration failure lead to a double-free of the sub-CRQ
+> resource?
+>
+> In ibmvfc_reg_sub_crqs(), if registration fails midway, it deregisters the
+> already registered queues by calling ibmvfc_deregister_channel():
+>
+> drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_reg_sub_crqs() {
+>     ...
+> 	for (i = 0; i < channels->max_queues; i++) {
+> 		if (ibmvfc_register_channel(vhost, channels, i)) {
+> 			for (j = i; j > 0; j--)
+> 				ibmvfc_deregister_channel(vhost, channels, j - 1);
+>     ...
+> }
+>
+> However, ibmvfc_deregister_channel() doesn't zero scrq->cookie, and
+> vhost->mq_enabled remains true. 
+>
+> When a subsequent adapter reset or teardown occurs, ibmvfc_dereg_sub_crqs()
+> loops over all queues and calls ibmvfc_deregister_channel() again on the
+> same queues, potentially causing a double-free at the hypervisor level.
+>
+> Could scrq->cookie be cleared after successfully freeing the sub-CRQ to
+> prevent this?
+>
+>>  	/* Clean out the queue */
+>> -	memset(scrq->msgs.crq, 0, PAGE_SIZE);
+>> -	scrq->cur = 0;
+>> +	if (scrq->msgs.handle) {
+>
+> [Severity: Low]
+> Is the H_FREE_SUB_CRQ hypercall safe to execute on uninitialized queues?
+>
+> The memset() is now properly guarded by scrq->msgs.handle, but the
+> H_FREE_SUB_CRQ hypercall just above this block continues to run
+> unconditionally.
+>
+> If a queue was never registered or was already deregistered (such as during
+> the ibmvfc_reg_sub_crqs() rollback), the unconditional hypercall will fail
+> and generate a spurious "Failed to free sub-crq..." error message.
+>
+> Should the hypercall logic also be protected against uninitialized or already
+> freed queues?
 
-Okay, I will use __BYTE_ORDER__ to guard. The same for below.
+Both of these issues will be resolve by check scrq.cookie. In the "never
+registered" case, cookie is still 0 from the initial allocation by
+kzalloc_obj(). Clearing scrq.cookie on deregistration will be added in
+ibmvfc_deregister_channel(), and calling the hypervisor will also be
+conditional on scrq.cookie != 0.
 
->
->> +	s_i = ctx[9];
->> +	return 0;
->> +}
->> +
-> [ ... ]
->
->> +long b_f_a, b_f_b, b_g, b_h, b_i_lo, b_i_hi, b_ret;
->> +
->> +SEC("fentry/bpf_testmod_test_int128_backfill")
->> +int test_int128_backfill_fentry(unsigned long long *ctx)
->> +{
->> +	b_f_a = ctx[5];
->> +	b_f_b = ctx[6];
->> +	b_g = ctx[7];
->> +	b_h = ctx[8];
->> +	b_i_lo = ctx[9];
->> +	b_i_hi = ctx[10];
-> [Severity: Medium]
-> Does this have the same endianness mismatch on big-endian architectures?
-> Extracting the 16-byte struct here from ctx[9] and ctx[10] also seems to
-> assume a little-endian memory layout.
->
->> +	return 0;
->> +}
->> diff --git a/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c b/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
->> index 54a5fc39e0e27..23a2c88d3e7c1 100644
->> --- a/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
->> +++ b/tools/testing/selftests/bpf/test_kmods/bpf_testmod.c
-> [ ... ]
->
->> +noinline long
->> +bpf_testmod_test_int128_stack(u64 a, u64 b, u64 c, u64 d, u64 e, u64 f,
->> +			      u64 g, struct bpf_testmod_struct_int128 h, u64 i)
->> +{
->> +	bpf_testmod_test_struct_arg_result = a + b * 2 + c * 3 + d * 4 + e * 5 +
->> +		f * 6 + g * 7 + (u64)h.a * 8 +
->> +		(u64)((unsigned __int128)h.a >> 64) * 9 + i * 10;
->> +	return bpf_testmod_test_struct_arg_result;
->> +}
-> [Severity: Medium]
-> Can concurrent execution of tests (like test_progs -j) lead to a data race on
-> this global variable? If one test thread computes the result in
-> bpf_testmod_test_int128_stack() and another thread overwrites
-> bpf_testmod_test_struct_arg_result in a different function before the first
-> returns, it could cause the BPF fexit hook to read an incorrect return value
-> into s_ret, leading to flaky ASSERT_EQ failures.
-
-I will double check this. One thing we could do is to have the *same* inputs.
-
->
->> +
->> +/*
->> + * x86-64 has no register left for f after e, so f goes to the stack and g
->> + * takes R9 back; h goes to the third stack slot and i, aligned to 16
->> + * bytes, to the fifth and sixth. arm64 has registers up to g, puts h in
->> + * the first stack slot and i in the third and fourth.
->> + */
->> +noinline long
->> +bpf_testmod_test_int128_backfill(u64 a, u64 b, u64 c, u64 d, u64 e,
->> +				 struct bpf_testmod_struct_arg_2 f, u64 g, u64 h,
->> +				 struct bpf_testmod_struct_int128 i)
->> +{
->> +	bpf_testmod_test_struct_arg_result = a + b * 2 + c * 3 + d * 4 + e * 5 +
->> +		f.a * 6 + f.b * 7 + g * 8 + h * 9 + (u64)i.a * 10 +
->> +		(u64)((unsigned __int128)i.a >> 64) * 11;
->> +	return bpf_testmod_test_struct_arg_result;
-> [Severity: Medium]
-> Since this function also writes to the unprotected global variable
-> bpf_testmod_test_struct_arg_result and immediately returns it, could this
-> contribute to the same data race when multiple test processes run
-> trigger_module_test_read() concurrently?
->
->> +}
->>   #endif
-
+-Dave
