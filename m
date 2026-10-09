@@ -1,60 +1,36 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-133.mta0.migadu.com [91.218.175.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C105681ACD;
-	Fri,  9 Oct 2026 14:53:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CE7457E7A
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 15:10:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791557588; cv=none; b=kK2FI/lC7EHnW7erGVlt73eInXKm3iz1Zmluj+oiH0TTAN4exk8frR40fSTX+Z6BMS15QVDsVyHZou5ZH6FgoaUAe/fG6pfUf1qkngA9pUHrSgNEV8WbWR3gJCeq5EL8wwFA1b8/EIC0xoSH8ZpmXI5/7sRZvBu/SKRB14m4X6U=
+	t=1791558620; cv=none; b=ei8boYi98o4chs575Q+xTPh7TWzvezS9QZsAziC2ZADHWvUF79bVUbnZhW9vVVQ1a/oLyOpcvQlGxuYfP+sFddK04wYXnHRzGxEKANrjlzh1q5GA1bnYqgkLpzQU7EkZ61gaNk8OHdcX3hRUMSbzMdBXvYTiZCTo7WMaYH5zMdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791557588; c=relaxed/simple;
-	bh=xXiZJI19t2BA0FYSWVIyLlTrY8NqL1Ai0Csb6G7N9o0=;
+	s=arc-20240116; t=1791558620; c=relaxed/simple;
+	bh=JXHbvHdJ+pNlt3vZOl2uWCmVdhCz9quuyejIJCOTWEg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CF4bmfRNjAdbJGUOiD/3v4ZAd6cca+fR1nwg1IoWWTozlqqyKjf8Nrep7irn+5uYTmpYCDr8bSEcWFO2suUnbAZl89rGCewljYeAXi/fOode1fHhiLqAQEbpjTCgfDfYZvKxsBj+Q5TZc6Smf6Kp0zoprRf3cFRfGnDTye+/VV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=qtiF1Cj9; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	 In-Reply-To:Content-Type; b=RI7k393FdoLCOcyFlnFOnK/Ng9lBFal4aBXgfym7K9jgCaIv++U/YRmoMuwcfJItK7yFxdDvKlvuQ27rAfX9h/I+w4EwMBX/eecEt9FPq/QTVr8Rq3D3t21KLKUF2364+mWf6CSGYkV8vFIwjCFp6bRPo9VD/LqzxoPghcNKLyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=uzTR9S3t; arc=none smtp.client-ip=91.218.175.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="qtiF1Cj9"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 699DZNax197757;
-	Fri, 9 Oct 2026 14:53:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=q2dHoc
-	oKIIizrqreF9TIj1rRfwKC7TlQb28MXruAj0E=; b=qtiF1Cj9p2DvC74S6rcX77
-	JsBL8xf5ktcb/LVEwR+GRRI5B3xoeHDg4Jx/F1zi7Ob42KkDxlheDrWLJMzrzzjR
-	4+yWzU+0HOpT5qEqLEY4SAyTPem/tai7DI23N9qIL7A9Rh3uUQ+nORCysZiUl6wg
-	mQcyKYV0ysRPfZJR49Sjs7DJUYCyImZuFlBQyzh45wBlnDzOVcvDQjMHCxyaZCbT
-	L3Eduh19lrFe7exSkUJDny225iZ9xmsDTk1tmC7Pu90t9R7x8Pz3Fomih04PhRYF
-	gfymaz6fSBYkLKksjTAy1hNGLGq2Sm7qgMse8xOM36V1J+dISjpVh+IPA3clS9cg
-	==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h5xjvkbqr-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Fri, 09 Oct 2026 14:53:06 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 699DWTsu924007;
-	Fri, 9 Oct 2026 14:53:06 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h6v76sbut-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 09 Oct 2026 14:53:06 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
-	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 699Er2JK52429248
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 9 Oct 2026 14:53:02 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 73F5C2004B;
-	Fri,  9 Oct 2026 14:53:02 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 3F12920040;
-	Fri,  9 Oct 2026 14:53:02 +0000 (GMT)
-Received: from [9.224.77.173] (unknown [9.224.77.173])
-	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Fri,  9 Oct 2026 14:53:02 +0000 (GMT)
-Message-ID: <95c55fab-cd04-497f-9266-6c30353d73e4@linux.ibm.com>
-Date: Fri, 9 Oct 2026 16:53:01 +0200
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="uzTR9S3t"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=JXHbvHdJ+pNlt3vZOl2uWCmVdhCz9quuyejIJCOTWEg=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791558614; v=1; x=1792163414;
+ b=uzTR9S3tWdpmvKVi/POT6bcg+A6ayDsw4977BA3XTL+L0h9ilP8S2B75Xde/MPGpkXNBo5Bc
+ b2hVESuIpPx+YbWqKm4fBs+CjznOjHGW3g+n4vhjuv6/V3sjXYSjIkIh07zN/Biu9JJuza6flMS
+ /kRRsurbsNOHJ0aLI9h0Q+EY=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 6ffb09638a1a6eac;
+	Fri, 09 Oct 2026 15:10:13 +0000
+X-Mizu-Trace-ID: 6ffb09638a1a6eac
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <6a42f97c-66ac-4f44-90be-79e3359b2444@linux.dev>
+Date: Fri, 9 Oct 2026 17:10:12 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -62,80 +38,98 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [GIT PULL 3/6] KVM: x86: Use file_to_kvm_x86() in SEV
+Subject: Re: [PATCH bpf-next v10 04/24] bpf: Keep a call site's landing pad in
+ insn_aux_data, add lookups
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, Alexander Gordeev <agordeev@linux.ibm.com>,
-        linux-s390@vger.kernel.org, Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>
-References: <20261009142749.186650-1-borntraeger@linux.ibm.com>
- <20261009142749.186650-4-borntraeger@linux.ibm.com>
- <sashiko-outbox-165722@kernel.org>
-Content-Language: en-US
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-In-Reply-To: <sashiko-outbox-165722@kernel.org>
+Cc: bpf@vger.kernel.org
+References: <20261009041447.17092-1-yonghong.song@linux.dev>
+ <20261009041508.23246-1-yonghong.song@linux.dev>
+ <sashiko-outbox-164829@kernel.org>
+Content-Language: en-GB
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <sashiko-outbox-164829@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: btnWzFcfH2OKsHQMuq3zJvSqtowcfbkt
-X-Proofpoint-ORIG-GUID: btnWzFcfH2OKsHQMuq3zJvSqtowcfbkt
-X-Authority-Analysis: v=2.4 cv=H8NOUOYi c=1 sm=1 tr=0 ts=6ac8ffd2 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=FcIQ4akS4mhgl6oufq0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDA5MDA1OCBTYWx0ZWRfXxqiL2kNn+X6b
- gBT56dSwzfyD7YvQNUNW9IyzQ4X2Bci3ZHspUi8H3ABlSKaj1ub36EViw3ol6HbzZSZv2ylyyi1
- thax9pbzGntUcYoNcvKh57Wjkja3fDNE6DsHPnQB50mgxAbx4n7ZtIHw0SA4TiMUyIutA72wBBi
- VzLIPWIrVeD27Ns7AZDOjwMgnykqsInk5yO0ayvytvcFxOgVIw57Xxw5nIgJH/ik3+mFkMKyszy
- C9iy7LzIQj+uJuE7l1HrQTPQQJplj8BZPBPh2brQcbLysFQCXpYydA/6MhvXPXjD7Dcy9LNa5Di
- BrNQ8+TmGkXdH7GxiTl0cgJC9sOcnSjfo5JADoQ+ZS5TE8UANEL4I3/RBLSibvXa3+gVNiIpPVy
- FR97Ma/PuS324yhuYxjLBu2I8P7yDv17nSOyHa4/UrS+nf3ob3GpEiH1OcYMnfoYm5LUEjQskmZ
- MpOr9eLlWkKf8fkbzGw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDA5MDA1OCBTYWx0ZWRfX/D9TGLLz9fwX
- O/Kr5CqEUv9tjFcvRcFB8bygOCCKUKwDZkVxgGUkFswDNBQfDIH52mJTqi0Gr1xhsP/DisrJ9HU
- v4ihnA2XY+qv8cjcZCwCI2RbsppkyIo=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-09_04,2026-10-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- clxscore=1015 spamscore=0 priorityscore=1501 malwarescore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610020000 definitions=main-2610090058
+Content-Transfer-Encoding: 8bit
 
 
 
-Am 09.10.26 um 16:36 schrieb sashiko-bot@kernel.org:
+On 10/9/26 6:28 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] kvm: build failure due to missing definition of file_to_kvm_x86()
+> - [High] bpf: adjust_insn_aux_data fails to shift cleanup_pad for BPF_PATCH_MOVE_TARGET
 > --
-> 
-> commit 10a7cd7a1613201c02ffd0500ecb15453fab9d30
-> Author: Steffen Eiden <seiden@linux.ibm.com>
-> 
-> KVM: x86: Use file_to_kvm_x86() in SEV
-> 
-> This commit replaces the open-coded file check and private_data cast
-> with a new arch-namespaced helper file_to_kvm_x86().
-> 
->> diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
->> index 944aaea6501f2..2787b832c9e0f 100644
->> --- a/arch/x86/kvm/svm/sev.c
->> +++ b/arch/x86/kvm/svm/sev.c
->> @@ -2121,10 +2121,10 @@ int sev_vm_move_enc_context_from(struct kvm *kvm, unsigned int source_fd)
->>   	if (fd_empty(f))
->>   		return -EBADF;
+>
+> commit 8654da066c194611f7e2de5fef00da7ac62a0070
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> bpf: Keep a call site's landing pad in insn_aux_data, add lookups
+>
+> This commit tracks a call site's landing pad in insn_aux_data as cleanup_pad.
+> It updates adjust_insn_aux_data(), verifier_remove_insns(), and
+> bpf_opt_remove_nops() to keep this data in sync when instructions are patched
+> or removed.
+>
+>> diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
+>> index 206cc9a614a95..64baee1a37e60 100644
+>> --- a/kernel/bpf/fixups.c
+>> +++ b/kernel/bpf/fixups.c
+> [ ... ]
+>
+>> @@ -244,11 +244,18 @@ static void adjust_insn_aux_data(struct bpf_verifier_env *env,
+>>   			data[i].non_stack_access =
+>>   				data[off + cnt - 1].non_stack_access;
+>>   			data[off + cnt - 1].non_stack_access = false;
+>> +			data[i].cleanup_pad = data[off + cnt - 1].cleanup_pad;
+>> +			data[off + cnt - 1].cleanup_pad = 0;
+>>   		} else if (bpf_is_mem_insn(insn + i)) {
+>>   			data[i].non_stack_access = true;
+>>   		}
+>>   	}
 >>   
->> -	if (!file_is_kvm(fd_file(f)))
->> +	source_kvm = file_to_kvm_x86(fd_file(f));
-> 
-> [Severity: Low]
-> Is file_to_kvm_x86() defined anywhere in the kernel source tree at this
-> commit? It appears to be missing, which will cause an implicit
-> declaration compiler error here in sev_vm_move_enc_context_from().
-> Could it be that the patch introducing this helper was omitted from the
-> series or ordered after this patch?
+>> +	if (env->cleanup_info_cnt)
+>> +		for (i = 0; i < prog_len; i++)
+>> +			if (data[i].cleanup_pad > off + 1)
+>> +				data[i].cleanup_pad += cnt - 1;
+> [Severity: High]
+> Does this check properly account for the BPF_PATCH_MOVE_TARGET patch mode?
+>
+> When bpf_patch_insn_data() is called with BPF_PATCH_MOVE_TARGET (for example,
+> when inserting a prologue), the original instruction is shifted to the end of
+> the newly inserted sequence. If a landing pad points exactly to the patched
+> instruction:
+>
+>      data[i].cleanup_pad == off + 1
+>
+> This condition would evaluate to false, leaving the cleanup_pad unadjusted.
+>
+> As a result, if a subprogram with a landing pad at its first instruction
+> receives a prologue, wouldn't the unwinder incorrectly jump to the prologue
+> instead of the original instruction?
+>
+> Could this lead to stack or frame pointer corruption by re-executing prologue
+> stack setups during unwinding? Other locations handling jumps typically use a
+> ternary to handle this, such as checking if it is greater than:
+>
+>      (mode == BPF_PATCH_MOVE_TARGET) ? off : off + 1
 
-false positive, see patch1.
+Looks like there are no new change with BPF_PATCH_MOVE_TARGET, so I think
+we do not need to do the above. The below is the comment in v9:
 
+====
+
+Okay, commit "bpf: Retarget indirect jump targets across prologue prepends"
+introduced BPF_PATCH_MOVE_TARGET and merged last Friday. It solved three
+cases for ops->gen_epilogue, ops->gen_prologue || env->seen_direct_write, and
+stack slots for subprogs. ops->gen_epilogue has been rejected in patch 5.
+We cannot allow ops->gen_epilogue since it may silently exit.
+For other cases in "bpf: Retarget indirect jump targets across prologue prepends",
+The above commit should already handle this.
+
+For the other two, cleanup_pad == off + 1 cannot happen, because MOVE only
+patches an entry insn and a landing pad cannot start at insn 0: the entry is
+always walked outside a pad first, so reaching it again from an unwind
+fails bpf_exc_check_insn() with "insn %u runs both inside and outside a
+landing pad". Pads after off are shifted by the existing `> off + 1`, and a
+covered call at off moves with its insn_aux_data.
+
+====
 
