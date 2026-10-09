@@ -1,82 +1,82 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DEDF2F9D85
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 21:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE443630BA
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 21:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791581728; cv=none; b=e4T27m2DKdiYO02fzU8x8lWv/iA0/Bt8Hbc45Gn10Hq1PfR8ufZL1W2TLxXtdUs++ddVxIMbI0a9LD57T1MPCNXILAmpTKTqweCfNGByZE8zSVzOP1bj4MraEflomwhs0XVzEDMB8BocZdHn4hIVOmPHZah7oIhL69y4s0L8qQE=
+	t=1791582517; cv=none; b=RoQpbVhrCVdzT7ICNbENacHf7f8IRFhQqLJRcQOePgPkJgLGlzV1kSsMJ3seAzVMkPH2cBkoPV5SSH5lNAnDmFYqvzUPKO2TAmtHeoOQjszqMAu8mKx3V7e/5LBAp1ZV+F1xAEG8j1t3uvPVue/cuwvCynhgsdEDzkjerQxQVf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791581728; c=relaxed/simple;
-	bh=2XYfCKasrJS3bo70qdG/Jf9BEWoeG0DpFS1+eLaefAk=;
+	s=arc-20240116; t=1791582517; c=relaxed/simple;
+	bh=AgwAttBawwe7fMjD4WDOWaQlErByDMoTSd/NvVzjRhQ=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dZiK+EsZBIU5hFa4RV5zoTYPQg1dDTiO0MPxENe6e5RioOVJekSq4mVTmZgLWRQDVPR5J/k++pjBMUJr44i4ClAti3tSKYR8Y6tO6lwYOB3sKUcjzyDNGpjir7K1+ZQX+IyqGw0TFYzILBCjRVtXtbVOLZMYee7fSnmu8mclrJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=SJRYGG/n; arc=none smtp.client-ip=170.10.129.124
+	 MIME-Version:Content-Type; b=alNJ1OFbY1XxX1fwf7P72CBKZzn9mNPFnvrUA1cJNY/WY2mHx5koonlFuraZmW4Qj5OHIQm33SFZngpoz4O1DUTENQ5ZO7MSBYXKUBnp49YC/uwRxbqKJD911u6pwnBuDSsZjtVTjqsdJKWVv413NIrO6J5ljyfM6YuLsp0CEIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=MPohEe/B; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="SJRYGG/n"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="MPohEe/B"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1791581726;
+	s=mimecast20190719; t=1791582513;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=2XYfCKasrJS3bo70qdG/Jf9BEWoeG0DpFS1+eLaefAk=;
-	b=SJRYGG/nl7zT9WDyVTcylCzERTddm3goDXxK1h6UXDG9Elx+n/8kYlPeayihzi2xzrzV2R
-	STHVrqCZHREBUN+jMle41zrMP9oMIqRBDjxfq2VJXpvg4lLH2GdpvVeiK5georaepjJr5f
-	DxfF8XVlSNLzWQu3yUxpt0IGthqgbws=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=AgwAttBawwe7fMjD4WDOWaQlErByDMoTSd/NvVzjRhQ=;
+	b=MPohEe/BMNkiBL0k60KW2DXOL5TaGHWwr7yeQOz21prhktbwQLumezPEIMLEw/VA2uHB0d
+	MwdfeHWWmrc1vNRD68cMkKapKsMrF91L2mvnDbR3L8HD68VZGCyDQRl9QjwdI58S9xWGzl
+	o5xXsJRYN8r0U6EBC8kmmWzOC786i5U=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-205-Y3fvwLl-M8eICBjU1eqS6Q-1; Fri, 9 Oct 2026 21:35:25 +0000
-X-MC-Unique: Y3fvwLl-M8eICBjU1eqS6Q-1
-X-Mimecast-MFC-AGG-ID: Y3fvwLl-M8eICBjU1eqS6Q_1791581724
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-91b529a8610so6135766d6.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 09 Oct 2026 14:35:24 -0700 (PDT)
+ us-mta-471-OH2ClYtrN9SfwWA9OjGTiA-1; Fri, 9 Oct 2026 21:48:32 +0000
+X-MC-Unique: OH2ClYtrN9SfwWA9OjGTiA-1
+X-Mimecast-MFC-AGG-ID: OH2ClYtrN9SfwWA9OjGTiA_1791582511
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-917bab67568so8666886d6.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 09 Oct 2026 14:48:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791581724; x=1792186524;
+        d=1e100.net; s=20260707; t=1791582511; x=1792187311;
         h=mime-version:user-agent:content-transfer-encoding:content-type
          :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=7qrnbWCiEvCZxzwHJXj+vDALX5giaXNbTIm72EEdEPc=;
-        b=I6ra+L6/c3zs4JdblKuaARffvcdBS0jRKAK3jU3An1sJDg3wc86g9NlcDUxhtjRBZ/
-         +ClT2kOkZYklZyx7P2JA/j+HekjxcEv+6TpF8E0FVkja/m7zHy8G0zotZVMLq80zKkFc
-         /siM6912QOr/3ejaDvVkkeqKVMRRzQkye9WLb8QWIZnJ7QPCouH5yZ4ts9mRwgrhGsXk
-         xyWFD+5eskKtn+AWrcEh/XNnMTQmhOuk/nphlr5Yr6uxcFZtiJR0fWj7TNJIZT2qGdhX
-         OBmAThggOEq9BLs4vRPgAXQXgbwx9E8lRJhNxItTf7xp50fxzuwZ5Jq3FKdlfSWiSbWG
-         fSZQ==
-X-Gm-Message-State: AFq9FYJBpS32kzfUd8tXbW4dSFjp/nz9VhCGf7iTrbeQYTVQ+uf/uNtZ
-	Z3VsgCaT2+0zHU2GYYFLlpxtNQfDdq/BLv+3hVvKB5usm0IgT0pjXV4eJVC8FQC1Z1PAhTXSFJB
-	61ZGxeGU8b81JCWvJKgRvgkY0KvUKwmhLZAObqCIHF9awJx2KplnHpCN/yFgJBOE8fbi2VziyhB
-	CrDEu3tvSJ4ckTG+ZXs7GhEzoe4h6tQ0+QhOkRbel2jWzUDIy1ucXiXA==
-X-Gm-Gg: AYBFou2yjlvOVxlQOuSOyF0x894ohWE/f0L5iOAhsNAObkgkeGfxSYHy9YYpqxtlYKr
-	EXp6Ip5w+eZ/71eJ9ns81onxNqDHY7aJhgpabjvEEAV+g+hIr3QucP7F02ktBzJjbtK1bk7hXOT
-	JrdeVvmdFBn5gg4+Pc8HoK/1sxCx4ECRqLLjXo0JCXc412gUqowxEM14fi2DQ7KPmBpFKaVx5wN
-	gxpqdCVBzQiNp/tl77iLXjaHtFIKD/EX2IoBZpp+WMr/L6Gi1H/wRbJ/2wQUc2pUq+cZNVTijLd
-	MWcAL/HGQdJz7582MB9RnkdSWUARRXAdaCL0iL9AhS3LlGG7N1tthw2DyPvnf+O1BCcrf2O4nTR
-	+LSFBX5O+Go+h9QmHWC2JqfRZ+Qis5/ruB0TA5eJ1JdCFGQgtCyOtmglP/4igPCCx2D+/Z/6MuO
-	ge/jQmF+cq
-X-Received: by 2002:a05:6214:5f0a:b0:919:867b:5215 with SMTP id 6a1803df08f44-91b55334746mr52190026d6.3.1791581724311;
-        Fri, 09 Oct 2026 14:35:24 -0700 (PDT)
-X-Received: by 2002:a05:6214:5f0a:b0:919:867b:5215 with SMTP id 6a1803df08f44-91b55334746mr52189576d6.3.1791581723628;
-        Fri, 09 Oct 2026 14:35:23 -0700 (PDT)
+        bh=mGgqFDCfD+EtiLU0tPlWyAake8xNIynE3W4jW4V1afM=;
+        b=SIkfpTTbQYMtKUpm7jiEj6f32KWMc/nWeRYt48bxCvio8/3hNKHvkDLfxoRVq16/MQ
+         et2PmqvM2h+szbOdkVKDAZRgd87jIR+1PF9YLizCqigdi7gmr9o8rEyQac/FwFXhQvzO
+         XT4r4v9HTeUUMBh9eLy9jBqSI315rHxStqVOkyuQn+p/SQIQ31v18GVQevWRulOIZiVQ
+         tMLsZbVSTjA9qsJ9bV1I3z4pQGZxf9wZSw58amvZipDdY9IOoRnRoxPngj04Z2HZzkib
+         /SxZIreMvo89vtnn54ix3nzeLbHOjN2FtsUj6nJHDWx10XzUL9ODTQqaRT2lSe4MACgz
+         Xz8A==
+X-Gm-Message-State: AFq9FYJYcp87o1LNLOwHiqJi8rqsezQR9VRnobmYzA7DnT7kMoa75j8k
+	VsWPFtkMNw+L1DS4rG8RJ5PWCxlLj7pmAsrPJ/LVXRx55Bqbu4HJ3fNZH03yp4T6fOsOQRdmeD6
+	D2nm39crQiEMZ0vS9e2HRDHggnn+BFIxmRgDFevqpYm1MGInff99vbRm6wd4UgQAZrt6F5QimOI
+	mDnWSMY73ddzNvcRkbNCn5UtsJ8zxb26jzttvZ8uSUCTcDN0Yr027kBg==
+X-Gm-Gg: AYBFou08Xg8+YQyVVI4tBQHOHPsluiqF0yMdIAx11dwyWgyYTcxVCI9zxH9EcR9w+SD
+	6kWIsqf3TfYnzv+TgOwOp8ziNWmLXmUEoClHQ5rpUgvpWYydBlsy20CdvxDNHpO8sQ46U5TEsvP
+	hBuPuAdo6gdPtC28uo/4X8Gnfkydbz/IeX10d2iuGPPYQukppj+J2MaGiHGiPPONtPZTE0qUHCX
+	VLe3MFPlReczQ1w8RWpKNZfVn/knq/gL1xg8QA/Bvo9kFshjo7qC2O50pWlJMLsx4Q2JVdbvur4
+	dOQPNe/JCLwHGq5Y9s/ftAOuUIKS+wiK22CyuJf7bXyOwbxNb7tgILEzL5UfZPxMhirPE/HHCVY
+	2AdL1MDipjunsCaDRZPtD7xdF2Egw5hEd9tKsdh1PPfiQJv4MXyUfj60y9p9ExMtul2SWdBt4fk
+	W28nHEQ9Yk
+X-Received: by 2002:a05:620a:468b:b0:93c:6fa0:9813 with SMTP id af79cd13be357-93ebd24ba2cmr594926785a.43.1791582511477;
+        Fri, 09 Oct 2026 14:48:31 -0700 (PDT)
+X-Received: by 2002:a05:620a:468b:b0:93c:6fa0:9813 with SMTP id af79cd13be357-93ebd24ba2cmr594922085a.43.1791582510880;
+        Fri, 09 Oct 2026 14:48:30 -0700 (PDT)
 Received: from mlevitsk-thinkpadt14gen3.ibmmarkh.csb (pool-173-33-204-162.cpe.net.cable.rogers.com. [173.33.204.162])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91b550e177csm28434456d6.47.2026.10.09.14.35.22
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93eb984845csm282095385a.14.2026.10.09.14.48.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Oct 2026 14:35:23 -0700 (PDT)
-Message-ID: <c1eac67937b1f625a251e910f3b85000bf7a7504.camel@redhat.com>
-Subject: Re: [PATCH 1/2] KVM: nVMX: don't check PIR.ON when processing
- nested posted interrupts
+        Fri, 09 Oct 2026 14:48:30 -0700 (PDT)
+Message-ID: <a836b841e730db8ded250a34748bef7573e8932c.camel@redhat.com>
+Subject: Re: [PATCH 2/2] KVM: nVMX: avoid losing the posted notification
+ interrupt when exiting L2
 From: "mlevitsk@redhat.com" <mlevitsk@redhat.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: kvm@vger.kernel.org
-Date: Fri, 09 Oct 2026 17:35:22 -0400
-In-Reply-To: <sashiko-outbox-166078@kernel.org>
+Date: Fri, 09 Oct 2026 17:48:28 -0400
+In-Reply-To: <sashiko-outbox-166067@kernel.org>
 References: <20261009205036.672523-1-mlevitsk@redhat.com>
-	 <20261009205036.672523-2-mlevitsk@redhat.com>
-	 <sashiko-outbox-166078@kernel.org>
+	 <20261009205036.672523-3-mlevitsk@redhat.com>
+	 <sashiko-outbox-166067@kernel.org>
 User-Agent: Evolution 3.60.2 (3.60.2-2.fc44)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -85,124 +85,123 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: tYd6eqNvXULEx0IWPtHz852ClOv4hoGFJ-YoBH-E7pE_1791581724
+X-Mimecast-MFC-PROC-ID: paro-wNrqTuS8bHoi3sRLXuRmrRvVg0UKfcsU4pY18M_1791582511
 X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, 2026-10-09 at 21:04 +0000, sashiko-bot@kernel.org wrote:
+On Fri, 2026-10-09 at 21:03 +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [High] kvm: spurious vector 255 injected due to TOCTOU race in PIR upda=
-te
-> - [High] KVM: nVMX: missing compiler barrier after pi_clear_on() leads to=
- lost L2 interrupts
+> - [Critical] kvm: x86: out-of-bounds write in kvm_lapic_set_irr due to u1=
+6 promotion bypass
+> - [High] kvm: x86: guest-triggerable WARN_ON_ONCE and pi_pending state le=
+ak
 > --
 >=20
-> commit 3c2cccabb927f653f71a7a79b1d1600d4fb5f728
+> commit 00e061d66b6985b4612f371acc0c5f41a6c597b6
 > Author: Maxim Levitsky <mlevitsk@redhat.com>
 >=20
-> =C2=A0=C2=A0=C2=A0 KVM: nVMX: don't check PIR.ON when processing nested p=
-osted interrupts
+> KVM: nVMX: avoid losing the posted notification interrupt when exiting L2
 >=20
-> This commit modifies nested posted interrupt processing to no longer requ=
-ire
-> the PIR.ON bit to be set. It achieves this by replacing the conditional
-> pi_test_and_clear_on() check with a direct pi_clear_on() call.
+> This commit detects if a posted notification interrupt is pending during
+> a nested VM exit. If the target vCPU is about to exit to L1, the
+> interrupt is injected into L1's APIC to avoid losing it.
 >=20
 > > diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-> > index ddf6df7bee93b..11362aad2bc8a 100644
+> > index 11362aad2bc8a..66c4cf7f6e00f 100644
 > > --- a/arch/x86/kvm/vmx/nested.c
 > > +++ b/arch/x86/kvm/vmx/nested.c
-> > @@ -4033,8 +4033,11 @@ static int vmx_complete_nested_posted_interrupt(=
-struct kvm_vcpu *vcpu)
+> > @@ -2445,7 +2445,7 @@ static void prepare_vmcs02_early(struct vcpu_vmx =
+*vmx, struct loaded_vmcs *vmcs0
+> > =C2=A0=09=09=09 ~PIN_BASED_VMX_PREEMPTION_TIMER);
 > > =C2=A0
-> > =C2=A0=09vmx->nested.pi_pending =3D false;
-> > =C2=A0
-> > -=09if (!pi_test_and_clear_on(vmx->nested.pi_desc))
-> > -=09=09return 0;
-> > +=09/*
-> > +=09 * Don't test the value of PID.ON.
-> > +=09 * It is valid to trigger a posted interrupt without setting this b=
-it
-> > +=09 */
-> > +=09pi_clear_on(vmx->nested.pi_desc);
+> > =C2=A0=09/* Posted interrupts setting is only taken from vmcs12.=C2=A0 =
+*/
+> > -=09vmx->nested.pi_pending =3D false;
+> > +=09WARN_ON_ONCE(vmx->nested.pi_pending);
 >=20
 > [Severity: High]
-> Does this change introduce a missing compiler barrier that could result
-> in lost L2 interrupts?
+> Is it possible for an L1 guest to maliciously trigger this warning and cr=
+ash
+> the host if panic_on_warn is set?
+>=20
+> Since the patch no longer clears pi_pending, could this state leak occur =
+if a
+> nested VM-entry fails early after enter_guest_mode() is called? For examp=
+le,
+> in nested_vmx_enter_non_root_mode(), the failure path
+> vmentry_fail_vmexit_guest_mode calls leave_guest_mode() and returns to L1
+> without executing __nested_vmx_vmexit(). This would leave pi_pending
+> uncleared.
 
 >=20
-> Replacing pi_test_and_clear_on() (which uses test_and_clear_bit(),
-> providing a full memory and compiler barrier) with pi_clear_on() (which
-> uses clear_bit()) removes the implicit compiler barrier. On x86,
-> clear_bit() uses inline assembly without a memory clobber, providing
-> no compiler barrier.
+> Additionally, could there be a store-load race here? During normal VM exi=
+t,
+> leave_guest_mode() clears HF_GUEST_MASK, but there is no memory barrier
+> enforcing visibility before pi_pending is checked further down in
+> __nested_vmx_vmexit(). A concurrent posted interrupt delivery might read
+> guest_mode =3D=3D true and set pi_pending =3D true, while the exit path r=
+eads
+> pi_pending =3D=3D false.
 
-Yes, this makes sense, I will fix.
+Then I'll clear it on both VM entry and VM exit to avoid these cases.
+
 
 >=20
-> Without an explicit smp_mb__after_atomic(), could the compiler reorder th=
-e
-> earlier vmx->nested.pi_pending =3D false store to after the ON bit is
-> cleared?
->=20
-> If reordered, the CPU could execute the PIR read inside
-> pi_find_highest_vector() before committing the pi_pending =3D false store=
-.
-> If a concurrent software IPI triggers
-> vmx_deliver_nested_posted_interrupt() on another CPU during this window:
->=20
-> - It will set the new PIR bit.
-> - It will set the ON bit.
-> - It will assert vmx->nested.pi_pending =3D true.
->=20
-> The delayed pi_pending =3D false store would then silently overwrite the
-> concurrent true signal. Since the PIR was already read prior to the new
-> bit being set, KVM would miss and permanently lose the interrupt.
->=20
-> > =C2=A0
-> > =C2=A0=09max_irr =3D pi_find_highest_vector(vmx->nested.pi_desc);
-> > =C2=A0=09if (max_irr > 0) {
+> In both cases, pi_pending remains true when returning to L1, triggering t=
+his
+> warning on the next nested VM-entry.
 >=20
 > [ ... ]
 >=20
-> > =C2=A0=09=09__kvm_apic_update_irr(vmx->nested.pi_desc->pir,
-> > =C2=A0=09=09=09vapic_page, &max_irr);
-> > =C2=A0=09=09status =3D vmcs_read16(GUEST_INTR_STATUS);
-> > =C2=A0=09=09if ((u8)max_irr > ((u8)status & 0xff)) {
-> > =C2=A0=09=09=09status &=3D ~0xff;
-> > =C2=A0=09=09=09status |=3D (u8)max_irr;
-> > =C2=A0=09=09=09vmcs_write16(GUEST_INTR_STATUS, status);
-> > =C2=A0=09=09}
+> > @@ -5151,6 +5151,14 @@ void __nested_vmx_vmexit(struct kvm_vcpu *vcpu, =
+u32 vm_exit_reason,
+> > =C2=A0=09kvm_clear_exception_queue(vcpu);
+> > =C2=A0=09kvm_clear_interrupt_queue(vcpu);
+> > =C2=A0
+> > +=09if (lapic_in_kernel(vcpu) && vmx->nested.pi_pending) {
+> > +=09=09vmx->nested.pi_pending =3D 0;
+> > +=09=09if (!WARN_ON_ONCE(vmx->nested.posted_intr_nv =3D=3D -1)) {
+> > +=09=09=09kvm_lapic_set_irr(vmx->nested.posted_intr_nv, vcpu->arch.apic=
+);
 >=20
-> [Severity: High]
-> Could this execution path erroneously inject a spurious interrupt vector
-> 255 into the L2 guest?
+> [Severity: Critical]
+> Does this guard actually protect against injecting an invalid vector?
 >=20
-> By removing the pi_test_and_clear_on() gate, the code now unconditionally
-> falls through to __kvm_apic_update_irr() whenever max_irr > 0 and
-> pi_pending is true.
+> Looking at struct nested_vmx in arch/x86/kvm/vmx/vmx.h, posted_intr_nv is
+> defined as a u16. When it is assigned -1 in prepare_vmcs02_early(), it
+> truncates to 65535.
 
-This is true regardless if ON is set or not, guest can do the same with ON =
-bit set.
+Yes, the fact that vmx->nested.posted_intr_nv is u16 wasn't noticed by me, =
+because
+it set in several places to -1.
+I''ll switch to a more robust check.
 
 >=20
-> If an L1 guest concurrently modifies its PIR/IRR memory structures during
-> L2 posted interrupt processing, clearing the PIR and IRR in guest memory,
-> __kvm_apic_update_irr() can update max_irr to -1.
+> Due to C integer promotion rules, the expression
+> vmx->nested.posted_intr_nv =3D=3D -1 compares the u16 value 65535 to the =
+int
+> literal -1, which evaluates to false. This bypasses the safety guard beca=
+use
+> !WARN_ON_ONCE(false) is true.
 >=20
-> When max_irr is -1, the code subsequently casts it to u8:
-> ((u8)(-1) =3D=3D 255)
+> If pi_pending was leaked as described above and PI is subsequently disabl=
+ed by
+> L1, wouldn't kvm_lapic_set_irr() be called with vector 65535? Inside
+> kvm_lapic_set_irr(), calculating the bit offset for 65535 falls far outsi=
+de
+> the 4KB APIC register page, which could result in a severe out-of-bounds =
+write
+> into adjacent host memory.
+
+
 >=20
-> Since 255 is typically greater than the current RVI, KVM would write 255
-> to GUEST_INTR_STATUS. Can this cause L2 guest crashes or undefined
-> behavior by injecting vector 255?
-
-I guess if the L1 corrupts PIR and that crashes L2, it gets to keep the bot=
-h pieces.
-However here could be a pre-existing bug, I'll take a look later.
-
-Best regards,
-=09Maxim Levitsky
+> > +=09=09=09kvm_make_request(KVM_REQ_EVENT, vcpu);
+> > +=09=09}
+> > +=09}
+> > +
+> > =C2=A0=09vmx_switch_vmcs(vcpu, &vmx->vmcs01);
+> > =C2=A0
+> > =C2=A0=09kvm_nested_vmexit_handle_ibrs(vcpu);
 
