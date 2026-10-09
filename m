@@ -1,194 +1,112 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617A34CC63C
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 11:39:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791545972; cv=pass; b=jF1GzwBsExwctVBK8BBmGGmyBUXwHRJ7ppIUOijGkUOT7Begva6LjmuJH8f6t22IXkSu7xCvqFSvMkG3kFiwT8A7DWLRI4MvrR3PLEfBS4Qe37R42O6W1Pgqq3AfSXIzl/EIv3mtge+r6MzBLT6sxnYzpJpUcIlVTSfeNGIoHOY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791545972; c=relaxed/simple;
-	bh=C53y5eHVm02NRhVf3GQWkstdsW5FKQKH/LzQH4a4y1s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qP3vFceExikYNcr0ciVsY6SNDvf8zoYe/1ltoKC3VX94RCdPQMkfWs0wFz1slhsk8ehGgvv0Vm23qH1J+aO7QA+KRbRVmG5EsW3NVJf4h6g8HF/GeMthYF3gpE6SNkoyaZsPgwUgxXBqkW8SsXB7bkas648MWF2BLKpzuCiBjWA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nAXC+XVE; arc=pass smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D594CE68B
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 12:15:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791548130; cv=none; b=g2wDGCDVVTL2nV3qOqv8kTFmjjUnvZc5+0MMoppH0e+zf0WKDHswEvGCbDgB94w9npRafiXFvXN55aVjx04q70YJh+NLYVpnWe2VO8937QGAPkd3FOs3pXxyEgeDlrrOq7Qlts8ioeqlPzKv7GX9qkRyovBkUGXCrZYH+XAAtuk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791548130; c=relaxed/simple;
+	bh=vceZL3VaGhIq5Kh7FR6bjm/0yZMX2sL9Ve9SakQb4Q8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VZ/4HY7iviOEgXyY94UV5IdpKaMemyIRVdpOofnvJnG7S/e99QtXZJ1yRAwb2l1TWZ3AbzJATBKoWmI0irYUsTXPlPh5V9YiR4JA2kbXQ+pPQ+M9pi9wlCbErykxsz7Ej5d44kXFvJ9Za1/Go/G9Ag2n3idarT1z+X+DBiQtdn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UaqpWdgr; arc=none smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nAXC+XVE"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-48b02b1b4cfso1180913f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 09 Oct 2026 04:39:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791545960; cv=none;
-        d=google.com; s=arc-20260327;
-        b=pz52CFkcWdb6c1htoO/4qVs4F6cRe3uJ+enpWpwwzXGNqAYR5QSjxZL0d5Z53A4+b5
-         FAa8tKhhg2GcooQ1sGcWV36dPdwnuu1rVLo0J8OwIsW7cBHjYwMroJgpPxFLrVXEBDaS
-         PFnKgdpwIlDvGfyyT0cH/Ikj9K/oH6Ud9jmcKOqCFy7Fxnsev6AOQIYEznkq50Pjx2V3
-         XCCdMC0GFRps/oUy9V0foPEX6CiSX0wDGG4GmiEDpaXXPubBnJ8hEQwOO+/x7GjRjH9r
-         aaGT3iOElDNjQnzhUKFIL4jgfUnkFeqihXh4qi+cKPhNS0SpFGCTNKmZ9RScuPAhNSfo
-         sIgw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Zimi7cKuxcUlgp7UpEfU2fGEv64UYy0GKgKjfilsD2U=;
-        fh=RU8nSI2EijC2y8B6rypEW77WbkjZMPjN4LQs4UIPXKo=;
-        b=DDShmHlQFWgwnLD6fwdRmL0RDbp1SaYeIKDhC944uRL7WUgPV146S5I2t38WrRp0Pw
-         lvDdnG3DLizD34bcipjRd+rgPaf5qhktJVUDoMyyy3eekouRwtBRdglYzvc86NeexaLl
-         sxH9kBI2FkqT2duSSe1VZRQ0h6FVt2w0mova9P5EU5mngReQl0PkkicA/YYiv76obqj0
-         5wzmRPTH0jgzFKGJQPbxeXTtWLTjFIqCKa+tWwQFJXsBelO5DRkdRafu+BpO+w7g+e4N
-         lmb+a93a4XrrJdzSML94L983VJRtb576tKKaRDB2DURUHBIGnRPTLBidQdACEce8KqLm
-         rZvA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791545960; x=1792150760; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Zimi7cKuxcUlgp7UpEfU2fGEv64UYy0GKgKjfilsD2U=;
-        b=nAXC+XVEoIhUEu/apjFoXc7v/5QgdL6SvEQMJP7dvnBk6O7NNKO8mbmPgP1Su5gUgo
-         VTw72Bnb7mvD6kTArRCI4t6N2zGpW+55WKiFKS77E58ddTFCt9ASo1ozDPmyMC3b0ndC
-         Gkr2xCV1yTDKwSfwCs7+0KpqAstwpvTPv+Ut2CbAY/A+y93TZC0v3NpezQuCrETZMfgY
-         OIxcxq3440H/sIdwvGfcJWN7js1d4fLUIAU2Nu8MnEznBJt0aNN7b84wB4SLWV68mhjz
-         75aQmFiDGxG1RXZTJaUc6q86u2vXiNA33F+Ug1YjRxvh2pTnOhnEg9wglDeedTTr9v+1
-         JPYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791545960; x=1792150760;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Zimi7cKuxcUlgp7UpEfU2fGEv64UYy0GKgKjfilsD2U=;
-        b=kel8k9XBNK1HgqttRqnFgbmcPjrMWSyz2DNlnOKnKTo1XAvpbcS/Y6LjXniV4QKbJr
-         ED1HKsxNNOe2Q805exX4UxtONKE6kNoZn7Y7r/rpAqWq0+oDIrB69Ld5CXNtNv4b/CrV
-         morrNDga/kalpLsKh+KManvKie3bhIJSDvDRhb1nCMugdN1SYKDSVJjAkVWPOizFSEdw
-         OOD78LY2kIb11Ret1hfqR/HAHRlGiLAw2/877YMESp5E2h0MEdOjgCKuC57N/++aBbz7
-         n/Cq/dKPMB+lVjqBO1ZAmJW7/pB1lTFC5KeVe0exbhQYNfSQBf7aC+mUJhnxfq1eM2Yq
-         FF5w==
-X-Gm-Message-State: AFuF++nm0IjRzq8UMpfan86eL4mpOI/GCJ2BDVPxNKVatqdIFcO/6ONY
-	KqAn9p1X1nbzONqV1TPUyzCh5ex+SwtPVgHEIJDBDtzecgJTuj3/DBKpFQ5By664Xe4IjvN8eLm
-	/GXiSqp3eG1EIrN9Oj3tT/QPBlagkSNtiIK81fok=
-X-Gm-Gg: AYBFou0NXdmVWoe4yFtGzvJg9+K0rML7NdCXrtAoOsb0GNYzyHhtewEAdpQpeFo6BL6
-	oayd+9OV3otB/G3i8dnBIPfOr4rHzjDtXTPqHBtEz0GKugRMDLWM6tkkvv4gSUGfvume8vQQ2cl
-	i3N/T5TLu73rsFgKzeAk/L/uD9q7GCHOqHJNHh4K3hPkXHTdezggi0+N7TLkyImm3S3T8C7z+mt
-	rBfWk+b32cyqa8TloDEyTjBZU2t9/CCOtnS4aDOHGnmVblvy0BrF+7p5MeQWVKlPUUyepwwng72
-	FlypZU8KT+aDFGXgsSeI3sWq6bb3fGFDR7e2anAUfyF1bBSdpoWzxOquzG8Mkm/lUUap8zkhdgw
-	98CEHMjhFGsheAbNGXbEcr6/TC0y75TsJH7yvp3MZucRMV9QsCiH9eFq5ZZo1ej2OQENloe/8BQ
-	==
-X-Received: by 2002:a05:600c:a219:b0:49d:2589:d8e9 with SMTP id
- 5b1f17b1804b1-4a18dcc9696mr23982235e9.11.1791545960167; Fri, 09 Oct 2026
- 04:39:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UaqpWdgr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1791548114; x=1823084114;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=vceZL3VaGhIq5Kh7FR6bjm/0yZMX2sL9Ve9SakQb4Q8=;
+  b=UaqpWdgrTJxS4pzvfzg/+XNFVMvLfaecwKVKayq89AK6PKuGL1p29sVI
+   +NzvoSZIdSyCSc9+nhxJDAcxb9ixRjlQqQeakIXhSq/PLnlyfTDINLkbK
+   +Q13iXegzAXKlG8JuQc4zXkczqwxMkzshPBmb18KVPFZ6+IRRos70cAPF
+   W6cIC6RMqOerYVYvQMd/+pnNqy6qGxdWtxfPwxeGH76OAxCNhrwNULcuP
+   qa43PKO+8CLhX1ACQP+BHnvdoiIAwcMQ9lkMfTBT7OS562QbY21AQIPV1
+   8/uG+G/nEESerZ15c45eWhiiaK7IjzFVg5EOajP+2gAOOADbc+nsI7mNP
+   A==;
+X-CSE-ConnectionGUID: o3kX6IdBSheOXk2/Q/0Tlw==
+X-CSE-MsgGUID: zV50E113QyW5Y47DjEBe2g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11929"; a="353770"
+X-IronPort-AV: E=Sophos;i="6.27,148,1787036400"; 
+   d="scan'208";a="353770"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2026 05:15:13 -0700
+X-CSE-ConnectionGUID: EhRb7/94ScigYto//i6wcA==
+X-CSE-MsgGUID: JwXNypyHSfaeqLq8N59uvA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,148,1787036400"; 
+   d="scan'208";a="237116"
+Received: from ettammin-mobl2.ger.corp.intel.com (HELO [10.245.244.17]) ([10.245.244.17])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2026 05:15:11 -0700
+Message-ID: <f09ce7f2-b721-469b-9cb3-5127826f7e9a@linux.intel.com>
+Date: Fri, 9 Oct 2026 15:15:08 +0300
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260929124248.237032-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20260929124248.237032-5-prabhakar.mahadev-lad.rj@bp.renesas.com> <20260929125807.35C131F000FF@smtp.kernel.org>
-In-Reply-To: <20260929125807.35C131F000FF@smtp.kernel.org>
-From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
-Date: Fri, 9 Oct 2026 12:38:52 +0100
-X-Gm-Features: AclHuK8-9CW2XbXbQxya7GHaAMIQisQ-m3E94Ic3jTqTyMe54MVLfxYt1EYvEIQ
-Message-ID: <CA+V-a8v-s_zQLfG-Vm7z465ZEEH=XFdnjhGCsMF_Z-eRw4gHBA@mail.gmail.com>
-Subject: Re: [PATCH 4/8] iio: adc: rzt2h: Add optional reset support
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/14] usb: xhci-pci: Add TUSB73x0 definitions
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, 
-	wsa+renesas@sang-engineering.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: linux-usb@vger.kernel.org, Fabio Estevam <festevam@gmail.com>,
+ Greg KH <gregkh@linuxfoundation.org>
+References: <20261009095834.561578-1-mathias.nyman@linux.intel.com>
+ <20261009095834.561578-9-mathias.nyman@linux.intel.com>
+ <sashiko-outbox-165196@kernel.org>
+Content-Language: en-US
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
+In-Reply-To: <sashiko-outbox-165196@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
-
-On Tue, Sep 29, 2026 at 1:58=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] iio: pm: shared reset_control deassert_count leak on driver unbi=
-nd
+On 10/9/26 13:07, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] usb: incomplete refactoring of TUSB73x0 PCI ID magic number
 > --
->
-> commit 2c9879cdb042266b9cb867be82cd949d29dd6f14
-> Author: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
->
-> iio: adc: rzt2h: Add optional reset support
->
-> Prepare the driver for RZ/V2H(P), where the ADC has a module reset line
-> that is not present on RZ/T2H. Asserts the optional reset when the ADC is
-> runtime-suspended and deasserts it on runtime resume before calibration.
-> Uses a shared reset control to support SoCs where the reset line is share=
-d.
->
-> > diff --git a/drivers/iio/adc/rzt2h_adc.c b/drivers/iio/adc/rzt2h_adc.c
-> > index f1a830da6f9b7..4726f892da232 100644
-> > --- a/drivers/iio/adc/rzt2h_adc.c
-> > +++ b/drivers/iio/adc/rzt2h_adc.c
+> 
+> commit 876cce743788b879e20245be68d1112387a5be14
+> Author: Fabio Estevam <festevam@gmail.com>
+> 
+> usb: xhci-pci: Add TUSB73x0 definitions
+> 
+> This patch introduces definitions for the TUSB73X0 PCI ID, USB_CTRL register
+> address, and PWRON_POLARITY. This replaces the hard-coded values in the
+> code to improve readability.
+> 
+>> diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+>> index a8889081ae824..c580e0b860118 100644
+>> --- a/drivers/usb/host/xhci-pci.c
+>> +++ b/drivers/usb/host/xhci-pci.c
 > [ ... ]
-> > @@ -706,6 +708,10 @@ static int rzt2h_adc_probe(struct platform_device =
-*pdev)
-> >
-> >       platform_set_drvdata(pdev, adc);
-> >
-> > +     adc->rstc =3D devm_reset_control_get_optional_shared(dev, NULL);
-> > +     if (IS_ERR(adc->rstc))
-> > +             return PTR_ERR(adc->rstc);
-> > +
-> >       ret =3D rzt2h_adc_parse_properties(adc);
-> >       if (ret)
-> >               return ret;
-> [ ... ]
-> > @@ -767,10 +773,22 @@ static const struct of_device_id rzt2h_adc_match[=
-] =3D {
-> >  };
-> >  MODULE_DEVICE_TABLE(of, rzt2h_adc_match);
-> >
-> > +static int rzt2h_adc_pm_runtime_suspend(struct device *dev)
-> > +{
-> > +     struct rzt2h_adc *adc =3D dev_get_drvdata(dev);
-> > +
-> > +     return reset_control_assert(adc->rstc);
-> > +}
->
-> [Severity: High]
-> Does this driver leak the shared reset control's deassert count when unbo=
-und?
->
-> If the driver is unbound (e.g., via sysfs or module unload) while the dev=
-ice
-> is in the RPM_ACTIVE state, devm_pm_runtime_enable() merely calls
-> pm_runtime_disable() which forcibly cancels pending autosuspends without
-> invoking the runtime suspend callback.
->
-That's not true; see the code below:
+>> @@ -95,6 +98,8 @@
+>>   #define PCI_DEVICE_ID_ASMEDIA_3042_XHCI			0x3042
+>>   #define PCI_DEVICE_ID_ASMEDIA_3242_XHCI			0x3242
+>>   
+>> +#define PCI_DEVICE_ID_TI_TUSB73X0			0x8241
+> 
+> [Severity: Low]
+> Does this code leave an incomplete refactoring of the magic number 0x8241?
+> 
+> In drivers/usb/host/pci-quirks.c:quirk_usb_handoff_xhci(), the TI TUSB73X0 PCI
+> device ID is still hard-coded:
+> 
+> drivers/usb/host/pci-quirks.c:quirk_usb_handoff_xhci() {
+>      ...
+>      if ((pdev->vendor == PCI_VENDOR_ID_TI && pdev->device == 0x8241) ||
+>      ...
+> }
+> 
+> Should PCI_DEVICE_ID_TI_TUSB73X0 be placed in a shared header so it can replace
+> the hard-coded value in both files?
+> 
 
-static void pm_runtime_disable_action(void *data)
-{
-        pm_runtime_dont_use_autosuspend(data);
-        pm_runtime_disable(data);
-}
+Sure, dropping this patch for now. It only added some definitions
 
-The action disables autosuspend and calls runtime disable which will
-asserts the reset back.
-
-Cheers,
-Prabhakar
-
-> This RPM_ACTIVE state is reliably reached if unbind happens while the IIO
-> buffer is active (where IIO core triggers an asynchronous
-> pm_runtime_put_autosuspend), or within 300ms (the autosuspend delay) afte=
-r a
-> single-channel read_raw operation.
->
-> Since the driver lacks a .remove callback or custom devm action to
-> synchronously suspend the device on teardown, this
-> rzt2h_adc_pm_runtime_suspend() is completely bypassed and
-> reset_control_assert() is missed.
->
-> Will this cause a permanent denial of service for shared hardware resourc=
-es,
-> preventing the physical reset line from being asserted for other ADC inst=
-ances
-> until a reboot?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260929124248.23=
-7032-1-prabhakar.mahadev-lad.rj@bp.renesas.com?part=3D4
+Thanks
+Mathias
