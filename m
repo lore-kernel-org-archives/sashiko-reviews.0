@@ -1,74 +1,71 @@
-Received: from sender-op-o17.zoho.eu (sender-op-o17.zoho.eu [136.143.169.17])
+Received: from canpmsgout06.his.huawei.com (canpmsgout06.his.huawei.com [113.46.200.221])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C4C220698
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 00:52:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.17
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791507172; cv=pass; b=aqgvisthcyHbc73RpSL/y6nWZLNLVU4S5qKcGntToJpj9531mz4OmqMemBTeCjo1ea5igA6U3ww8xromvDTgRqjivR57q/cbyOASSOdxi1ffL/xleDawWqk7zxorUiwwhYos4B1fOQUkE347qAFVcCDDokorTaMZTYdonBkQBGE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791507172; c=relaxed/simple;
-	bh=rda02Gc68Kl74aLnTEh3OCGRglkdPe0qoMqyF8ilaJQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 Content-Type:MIME-Version; b=BZzqXZqIXuTZtZIYwyU2gwUl4mM7OwwFW7mPs5vgQ4zwqD907sVMO1pjhDCV8uYNSjE6Wc07BnfVaNlb/BgG0SsmGdTxVm2Bl5N4nxH9cWcTjnbHeTs4d9WMvbgO7QLNPfRzf59nf3OdD2SV8I2AKoaxwj6/nWflBl3Ft8JoQcg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iav.lv; spf=pass smtp.mailfrom=iav.lv; dkim=pass (1024-bit key) header.d=iav.lv header.i=iav@iav.lv header.b=Gp0kSxNx; arc=pass smtp.client-ip=136.143.169.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iav.lv
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iav.lv
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDCF1AC45D
+	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 01:01:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.221
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791507674; cv=none; b=WiBrt21SDMr0YKY/aLJyUs3cxnSQXVPXT5Fxg4VfhCB42hKnisBU1FJW7pZIOE7KlNqYttPA2guIVc+cpYDvoRx77xF3jIb3grAKTQ/uXWbr16OvFzygkzRb3pD6RFCw4GQodIw0+/oQ3/PfpCBJMfVP+I/B0X3DvYvTPGvzJB0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791507674; c=relaxed/simple;
+	bh=bj0m0c1iSFU7Thu/rm144aRLD29y5aSW4d3R4TQ5Qns=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=I2NuQnvR9E6ja8980iNsJgPbrR6d1Nopa6jPZ4YR/CudYLStENpUFRtBnz0Z0k9fuM2LnhTdbyleV70TPka6/6GIs0MZfsWks5GTmvmC5V5aZFVmOeRFR/mTIZB+yirpc2akU10+Mybkj11HRqs9E0uqvhRgbLbU9XhecU9Gsc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=h-partners.com; dkim=pass (1024-bit key) header.d=h-partners.com header.i=@h-partners.com header.b=ppjLpn3B; arc=none smtp.client-ip=113.46.200.221
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=h-partners.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iav.lv header.i=iav@iav.lv header.b="Gp0kSxNx"
-ARC-Seal: i=1; a=rsa-sha256; t=1791507154; cv=none; 
-	d=zohomail.eu; s=zohoarc; 
-	b=VEFxDxRU3N6c2y5xEyriWFwc3v1F+9vo5rYzynqQcN581vaKmA6+aJtA+Lt0FPXa9gqU6EUbU22+Lr5hfJvXWJsNX6djwd8Plpem7inpE3V8a17LHyWleeI+eZSrgTI2YGHUkGlGAqBRsxckW8rRoREUGx/b9uOaEGO34vl87oA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
-	t=1791507154; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=rda02Gc68Kl74aLnTEh3OCGRglkdPe0qoMqyF8ilaJQ=; 
-	b=IFXBwAh8PFQPPo1birbNlqW8GAJDkrdC2fzsJKLjdv5bgSzWIKw9CYx8VpTSxTONngWPKZA90ttIesY26JLf8nrjz/eXHufJmLHdFGF9kslGDWlAy9xYPkx70DbvWQ1w5MY6SFtqb7WH1eP9q5gCb5sBAhAA3w0KuZI5o58cxl0=
-ARC-Authentication-Results: i=1; mx.zohomail.eu;
-	dkim=pass  header.i=iav.lv;
-	spf=pass  smtp.mailfrom=iav@iav.lv;
-	dmarc=pass header.from=<iav@iav.lv>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1791507154;
-	s=zoho; d=iav.lv; i=iav@iav.lv;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:In-Reply-To:Date:Date:Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Message-Id:Reply-To;
-	bh=rda02Gc68Kl74aLnTEh3OCGRglkdPe0qoMqyF8ilaJQ=;
-	b=Gp0kSxNxlSkVAUuTYYBLPw2Jbmll1dOlqhZTGzYnGO3MUsZ3gCaN6PJ+Q6Yfcz+o
-	j8I9mxhsWf1iuOx4kkCkClcLmHLB2xDfF2OWB3MXAr6peVNA0MdkWrCaE7FoJaGhGFB
-	+wH90u9JGK/JZZmM8L3g8XSuMENSXKNUm6tVzozo=
-Received: by smtp.zoho.eu with SMTPS id 179150715145367.99786079727983;
-	Fri, 9 Oct 2026 02:52:31 +0200 (CEST)
-From: Igor Velkov <iav@iav.lv>
-To: Heiko Stuebner <heiko@sntech.de>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-kernel@vger.kernel.org, sashiko-reviews@lists.linux.dev,
- Igor Velkov <iav@iav.lv>
-Subject: Re: [PATCH] arm64: dts: rockchip: Add the front panel LEDs to Kobol Helios64
-In-Reply-To: <sashiko-outbox-164681@kernel.org>
-References: <20261009-helios64-leds-v1-1-6c58a66bf0c6@iav.lv>
- <sashiko-outbox-164681@kernel.org>
-Date: Fri, 09 Oct 2026 03:52:02 +0300
-Message-ID: <1791507122667359270.h64-leds-sashiko@iav.lv>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	dkim=pass (1024-bit key) header.d=h-partners.com header.i=@h-partners.com header.b="ppjLpn3B"
+dkim-signature: v=1; a=rsa-sha256; d=h-partners.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=bj0m0c1iSFU7Thu/rm144aRLD29y5aSW4d3R4TQ5Qns=;
+	b=ppjLpn3ByUXhJkilnxqX+9BZmTP/1/HxcMLyce7Kq7A8YdiRJWM8p7hwr9J93SnDVt8Bqyeng
+	V3US7YO1/wmmW16HDBDoZN/j0eYeT+QkwdW/as2rxU24H/jCPov92Tf/K6AwlUxigWz5I1ulZYy
+	4e+HyUExuKjQoR4GuR2iMXc=
+Received: from mail.maildlp.com (unknown [172.19.162.223])
+	by canpmsgout06.his.huawei.com (SkyGuard) with ESMTPS id 4j17XR0FhqzRhjW;
+	Fri,  9 Oct 2026 08:48:55 +0800 (CST)
+Received: from kwepemp100008.china.huawei.com (unknown [7.202.194.221])
+	by mail.maildlp.com (Postfix) with ESMTPS id 43E0F40561;
+	Fri,  9 Oct 2026 09:01:06 +0800 (CST)
+Received: from kwepemp500015.china.huawei.com (7.202.195.9) by
+ kwepemp100008.china.huawei.com (7.202.194.221) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Fri, 9 Oct 2026 09:01:05 +0800
+Received: from [10.67.120.108] (10.67.120.108) by
+ kwepemp500015.china.huawei.com (7.202.195.9) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Fri, 9 Oct 2026 09:01:05 +0800
+Message-ID: <3eb013eb-800d-468b-b2a8-2a9fb7db121b@huawei.com>
+Date: Fri, 9 Oct 2026 09:01:05 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.1
+Subject: Re: [PATCH v2 3/4] scsi: hisi_sas: Clear PHY error counts on phyup
+Content-Language: en-CA
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-scsi@vger.kernel.org>
+References: <20261008032605.2853026-1-yangxingui@huawei.com>
+ <20261008032605.2853026-4-yangxingui@huawei.com>
+ <sashiko-outbox-163572@kernel.org>
+From: yangxingui <yangxingui@huawei.com>
+In-Reply-To: <sashiko-outbox-163572@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
+ kwepemp500015.china.huawei.com (7.202.195.9)
 
-On Fri, Oct 09, 2026 at 00:44 UTC, sashiko-bot@kernel.org wrote:
-> The commit message lists a total of 7 LEDs being added (one network, one USB,
-> and five SATA error LEDs). However, this code block adds an 8th LED for SATA
-> activity on gpio4 RK_PD4.
->
-> Was this SATA activity LED intended to be included in this patch, and if so,
-> could the commit message be updated to mention it?
 
-Yes, it was. The eighth one is LED5 on the board, "HDD Activity" in the
-Kobol wiki [1]; the panel has no such LED. GPIO4_D4 only gates it: the
-JMB585 activity outputs light it, and a low GPIO keeps it dark
-(schematic, sheet 30). Hence default-state = "on".
 
-[1] https://wiki.kobol.io/helios64/led/
+On 2026/10/8 11:41, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] scsi: hisi_sas: incomplete error clearance on phyup leaves software counters stale
+> - [Low] scsi: hisi_sas: missing clear of DWS_LOST and RESET_PROB error counts
+
+The suggestion from Sashiko is appropriate, update it in the next version.
