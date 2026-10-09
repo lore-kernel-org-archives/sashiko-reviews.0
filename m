@@ -1,181 +1,133 @@
-Received: from sender5-op-o11.zoho.com (sender5-op-o11.zoho.com [165.173.182.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D038E472068
-	for <sashiko-reviews@lists.linux.dev>; Fri,  9 Oct 2026 17:39:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.182.11
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791567568; cv=pass; b=FDSJ96Y9PScbapzfChR7PnPoU7iPpg0S1reNS6LvsHrFn2gMZ9kz++/I4k5LqJNQpbHsRRCETGYxuFLKijf4JAfbC5LSUXeQGoCaGpZsozp6iTO100oudoq9pTrtBb071rx/eZyUs4d/j7V3zs9/l/FY2XSAgmkJlslj/goV9Vg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791567568; c=relaxed/simple;
-	bh=qzcT6qYje4sTTAgqTEl0t5dBA8W8kQg7XXcN3EpCiOE=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=MWOa0l67X/kqqhJyyle5yjsRcsRigO3/k/N0PSITaM3TVG8TCgux0wwJNhGjnxb6J2D0OgOtraylbieBFOlYS8REsnetcJ++RIj/l0ULjteWv8Q9Kx/55Pmiyv2VAcaoEiY20QC10uzeUrhhWZdO2alSN2GnxDxJDkqzHKSlTNU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=daniel.almeida@collabora.com header.b=Yr3ERYzM; arc=pass smtp.client-ip=165.173.182.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA7B3932E8;
+	Fri,  9 Oct 2026 18:06:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791569181; cv=none; b=S3OVsnQhFASEMGzS18YvNFR+Xv1Fg8m81nyt9MgTXRU/exNzWEaY0CcxI92gVkSPnuP40viE5gy4zYG5XHxV/ro6Fp8TGVrj8oB2k8QI2cUoFVkgqgII/B7SYVaZ2K8w8v87atYo+xAUnAhX0Ymp+jZqvWVWAQnlCP3ryZ9GWFI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791569181; c=relaxed/simple;
+	bh=C9Q5hU4ku+0Hikd5pgxNzMWxrzl3TUuLyju5+BhZIso=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TND7CDLSZv0WkQoLybgY6jSBMfhsfAIg26JAnkwYeBa8DdwhjEqcdM6vLW+q90BviCriDbPqKOqMyEfv7Aq7ZXZiCX2/ouYZlU/Pms17mCInLrF5NlnEy8CY4Xwf0n904pHTsuhAdZdfzNpujyHDSqiuvxDbldu7Ki1+7UPIxlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ejh9neJv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=daniel.almeida@collabora.com header.b="Yr3ERYzM"
-ARC-Seal: i=1; a=rsa-sha256; t=1791567564; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=aFKK2jtCkxadHKQCDvVf5dnKU+isNv5s0xjCR+l2EkdE275cXGCi5pq2TrpLLvbcErXugOuj5q9Ylo7E/leGwtKMf7qDbbci/t17VbIz8QD7Jd8EweyV4suM5OLIdPJ6O7G0XvnjFriHysmwTNUgifhWfY6dJB5OU6Aq+fy7V7A=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1791567564; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=t3G3vXPPdNIpz8RR0v8taZMHAiuT2sSRJwChXCRd0dE=; 
-	b=Pt0VOvIbuovuqFuHyac2WvuI9PRO7YUFfOk6WW4DhWiENFg0zrAzVATjR+bQhnkOAA22IJSTLvyJNdxtwWAJbYHV37O5ufHYY/h86/Qg8vuV1OWMzLeDHApvZfSStZYWMZvJQab0+L9AVd8sT5CUQp8RutG1NlWzHSFZZMu/+20=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=daniel.almeida@collabora.com;
-	dmarc=pass header.from=<daniel.almeida@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1791567564;
-	s=zohomail; d=collabora.com; i=daniel.almeida@collabora.com;
-	h=Content-Type:Mime-Version:Subject:Subject:From:From:In-Reply-To:Date:Date:Cc:Cc:Content-Transfer-Encoding:Message-Id:Message-Id:To:To:Reply-To;
-	bh=t3G3vXPPdNIpz8RR0v8taZMHAiuT2sSRJwChXCRd0dE=;
-	b=Yr3ERYzMEGMjItiZxawJVRWJZwnk/YfDMxUAtYhKDJ8oNOvhOxYRzv+kPfufokY0
-	tdoyhsq1IlQqdXXrIoKXQ0QjRKbkpSuHA+fimQWTALfk2nAYOFpLpyfT+GbsuDDi8E9
-	0lmh/s/haQ5Oxzgn+jiCw+8gUO6vDDvNU66MK5J0=
-Received: by smtp.zohomail.com with SMTPS id 1791567563263601.7843812794108;
-	Fri, 9 Oct 2026 10:39:23 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ejh9neJv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B70B1F000FF;
+	Fri,  9 Oct 2026 18:06:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791569180;
+	bh=7UO7u3Rlks4Xr0m9WPSJaXncgWxsa4cYwD0eG14r0Z0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ejh9neJvdyQj8ItYF4rvDxJV5UjixafgroU3YI8IEAnEe0cwxB7MWlQqJQ0bz6AJx
+	 bo8wkuaX+SVma3godgiWiq00qiXr3PxBOxtRPdPcSwrS3Pcbc0NKoe4oxtgpjCkUkx
+	 KSeWVKFDw2h1dqyEzzG0KXWPZLmxtMmehJcmd3II7JU0heFk3DBCb/eUVwmcYuQHm2
+	 0S68NaBxJG3DheM0bMU+CZvOxB9DSYVQOA4CW6t7L19BuYhMBnyDPf9+slLHzA+XSJ
+	 oJcA5VW5uc8FA4RCSYCnzkp57Z64EVQb/MeWSLW3fIQsZJuxjPLiEZVgPZbVXm5n/t
+	 g0WAhvbiAPatA==
+Date: Fri, 9 Oct 2026 18:06:18 +0000
+From: Yosry Ahmed <yosry@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Subject: Re: [PATCH v2 29/29] KVM: selftests: Add a test for nested TLB
+ flushes
+Message-ID: <asktCBk0LcdYGdDW@google.com>
+References: <20261008001425.2458927-1-yosry@kernel.org>
+ <20261008001425.2458927-30-yosry@kernel.org>
+ <sashiko-outbox-163475@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
-Subject: Re: [PATCH 2/7] rust: drm: gem: gate open/close callbacks with
- RegistrationGuard
-From: Daniel Almeida <daniel.almeida@collabora.com>
-In-Reply-To: <20260814232106.01AA71F000E9@smtp.kernel.org>
-Date: Fri, 9 Oct 2026 14:39:08 -0300
-Cc: Danilo Krummrich <dakr@kernel.org>,
- Alexandre Courbot <acourbot@nvidia.com>,
- ojeda@kernel.org,
- dri-devel@lists.freedesktop.org,
- rust-for-linux <rust-for-linux@vger.kernel.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <E989BBD7-DF97-4384-AFC1-3D7448A1C747@collabora.com>
-References: <20260814230923.1292966-1-dakr@kernel.org>
- <20260814230923.1292966-3-dakr@kernel.org>
- <20260814232106.01AA71F000E9@smtp.kernel.org>
-To: sashiko-reviews@lists.linux.dev
-X-Mailer: Apple Mail (2.3901.100.1.1.11)
-X-ZohoMailClient: External
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-163475@kernel.org>
 
-
-
-> On 14 Aug 2026, at 20:21, sashiko-bot@kernel.org wrote:
->=20
-> Thank you for your contribution! Sashiko AI review found 2 potential =
-issue(s) to consider:
-> - [High] Bypassing `T::close` when the DRM device is unregistered =
-leaks driver-specific resources and software state allocated in =
-`T::open`.
-> - [High] Wrapping the entire `open` and `close` callbacks in =
-`RegistrationGuard` introduces a severe AB-BA deadlock hazard with the =
-device unplug path.
+On Thu, Oct 08, 2026 at 12:35:35AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] kvm: selftests: missing memory clobber in invlpga() allows reordering
 > --
->=20
-> --- Patch [2]: [PATCH 2/7] rust: drm: gem: gate open/close callbacks =
-with RegistrationGuard ---
-> commit 56b4431da0d3b7c0798814690d882352e01b7d71
-> Author: Danilo Krummrich <dakr@kernel.org>
->=20
-> rust: drm: gem: gate open/close callbacks with RegistrationGuard
->=20
-> Wrap the GEM object open and close callbacks with a RegistrationGuard
-> (drm_dev_enter / drm_dev_exit) to ensure the driver callbacks only run
-> while the parent bus device is bound.
->=20
-> If the device has been unbound, open returns -ENODEV and close =
-silently
-> returns. This prevents driver code from accessing device resources =
-after
-> unbind and is a prerequisite for making drm::Driver::File
-> lifetime-parameterized.
->=20
->> diff --git a/rust/kernel/drm/gem/mod.rs b/rust/kernel/drm/gem/mod.rs
->> index 80d8f524f9d57..560403ca8e38f 100644
->> --- a/rust/kernel/drm/gem/mod.rs
->> +++ b/rust/kernel/drm/gem/mod.rs
->> @@ -128,6 +128,14 @@ extern "C" fn open_callback<T: DriverObject>(
->>     raw_obj: *mut bindings::drm_gem_object,
->>     raw_file: *mut bindings::drm_file,
->> ) -> core::ffi::c_int {
->> +    // SAFETY: `raw_obj` is a valid pointer to a `struct =
-drm_gem_object` with a valid `dev`.
->> +    let dev: &drm::Device<T::Driver, drm::Userspace> =3D
->> +        unsafe { drm::Device::from_raw((*raw_obj).dev) };
->> +
->> +    let Some(_guard) =3D dev.registration_guard() else {
->=20
-> [Severity: High]
-> Could this cause an AB-BA deadlock with the device unplug path?
->=20
-> If an unbind thread acquires a driver-specific lock and then calls
-> drm_dev_unplug(), it will block in synchronize_srcu(&drm_unplug_srcu)
-> waiting for SRCU read sections to finish.
->=20
-> Concurrently, if a userspace thread opens a GEM handle, this
-> registration_guard() call takes the drm_unplug_srcu read lock.
->=20
-> When the callback proceeds to call T::open(), the driver might try to
-> acquire the same driver-specific lock held by the unbind thread, =
-deadlocking
-> the system.
->=20
->> +        return ENODEV.to_errno();
->> +    };
->> +
->>     // SAFETY: `open_callback` is only ever called with a valid =
-pointer to a `struct drm_file`.
->>     let file =3D unsafe { DriverFile::<T>::from_raw(raw_file) };
->=20
+> 
+> commit c21865242d0952d01a007708f2fbf08ce2550486
+> Author: Yosry Ahmed <yosry@kernel.org>
+> 
+> KVM: selftests: Add a test for nested TLB flushes
+> 
+> Add a test that exercises most common scenarios for TLB flushes. The
+> test is split into guest-triggered and KVM-triggered TLB flushes.
+> 
+> > diff --git a/tools/testing/selftests/kvm/include/x86/svm.h b/tools/testing/selftests/kvm/include/x86/svm.h
+> > index c8539166270ea..7644e37c7042c 100644
+> > --- a/tools/testing/selftests/kvm/include/x86/svm.h
+> > +++ b/tools/testing/selftests/kvm/include/x86/svm.h
 > [ ... ]
->=20
->> @@ -148,6 +156,14 @@ extern "C" fn close_callback<T: DriverObject>(
->>     raw_obj: *mut bindings::drm_gem_object,
->>     raw_file: *mut bindings::drm_file,
->> ) {
->> +    // SAFETY: `raw_obj` is a valid pointer to a `struct =
-drm_gem_object` with a valid `dev`.
->> +    let dev: &drm::Device<T::Driver, drm::Userspace> =3D
->> +        unsafe { drm::Device::from_raw((*raw_obj).dev) };
->> +
->> +    let Some(_guard) =3D dev.registration_guard() else {
->> +        return;
->=20
-> [Severity: High]
-> Is it safe to return early here without calling T::close()?
->=20
-> If a GEM object is created while the device is bound, and the device =
-is then
-> hot-unplugged, the guard check will fail.
->=20
-> Returning early skips the software cleanup in T::close(), which could
-> permanently leak driver-specific memory and state (like tracking lists =
-or IDR
-> entries) allocated during T::open().
+> > @@ -316,4 +316,9 @@ struct __attribute__ ((__packed__)) vmcb {
+> >  
+> >  #define SVM_CR0_SELECTIVE_MASK (X86_CR0_TS | X86_CR0_MP)
+> >  
+> > +static inline void invlpga(unsigned long addr, u32 asid)
+> > +{
+> > +	asm volatile("invlpga %0, %1" : : "a"(addr), "c"(asid));
+> > +}
+> > +
+> >  #endif /* SELFTEST_KVM_SVM_H */
+> 
+> [Severity: Medium]
+> Does this inline assembly need a "memory" clobber?
+> 
+> Unlike the VMX counterparts invvpid and invept introduced in this patch, this
+> inline assembly lacks a "memory" clobber. This might allow the compiler to
+> reorder prior memory stores past the TLB flush instruction.
+> 
+> > diff --git a/tools/testing/selftests/kvm/x86/nested_tlb_flush_test.c b/tools/testing/selftests/kvm/x86/nested_tlb_flush_test.c
+> > new file mode 100644
+> > index 0000000000000..fb32b7bf6b19f
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/kvm/x86/nested_tlb_flush_test.c
+> [ ... ]
+> > +static void l1_guest_code(void *data)
+> > +{
+> > +	gpa_t gpa;
+> > +	int i;
+> > +
+> > +	prepare_l2(data, l2_guest_code);
+> > +
+> > +	/*
+> > +	 * Alternately switch the PTE (or TDP PTE) mapping TEST_VADDR between
+> > +	 * two pages containing VAL1 and VAL2, flush TLBs, and verify that L2
+> > +	 * reads the expected value.
+> > +	 */
+> > +	for (i = 0; i < NR_ITERATIONS; i++) {
+> > +		gpa = test_gpa[i % 2];
+> > +
+> > +		*pte_gva &= ~PHYSICAL_PAGE_MASK;
+> > +		*pte_gva |= gpa & PHYSICAL_PAGE_MASK;
+> > +
+> > +		WRITE_ONCE(l2_expected_val, (i % 2 == 0) ? VAL1 : VAL2);
+> > +		run_l2(data, i == 0);
+> 
+> [Severity: Medium]
+> Can the compiler execute the *pte_gva assignments after the TLB flush inside
+> run_l2()?
+> 
+> Because the invlpga() inline assembly lacks a "memory" clobber, and there is no
+> other compiler barrier between the assignment and invlpga(), the compiler is
+> legally permitted to reorder the memory store to execute after the invlpga()
+> instruction.
+> 
+> If this reordering occurs, the hardware will flush the TLB while the old PTE is
+> still in memory, which could allow a speculative hardware page walk to re-cache
+> the old PTE before the store completes. When L2 resumes, it may use the stale
+> TLB entry, causing the test to spuriously fail. The "memory" clobber in the
+> run_guest() wrapper only ensures both operations complete prior to VM-entry; it
+> does not enforce their relative execution order.
 
-I wonder if this is a problem in practice? And if so, would passing a =
-e.g.:
-Option<&File> be a solution?
+Will add the "memory" clobber.
 
-=46rom a purely logical perspective, I do agree that a balanced =
-open()/close()
-makes more sense than silently skipping close() though.
-
->=20
->> +    };
->> +
->>     // SAFETY: `open_callback` is only ever called with a valid =
-pointer to a `struct drm_file`.
->>     let file =3D unsafe { DriverFile::<T>::from_raw(raw_file) };
->>=20
->=20
-> --=20
-> Sashiko AI review =C2=B7 =
-https://sashiko.dev/#/patchset/20260814230923.1292966-1-dakr@kernel.org?pa=
-rt=3D2
-
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261008001425.2458927-1-yosry@kernel.org?part=29
