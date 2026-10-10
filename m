@@ -1,126 +1,111 @@
-Received: from sender6-pp-e105.zoho.com (sender6-pp-e105.zoho.com [165.173.180.105])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F9813B58C;
-	Sat, 10 Oct 2026 17:09:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.180.105
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791652195; cv=pass; b=MzDaIUVabU1qX+OD1xxVOvYIkr3JljTJzxFmZvtaHG6Ch4xI2AsQEcuHHV0hk3qnxPbCBwumLJRkEPIgZaUlJOm3qRGmuSs+G4o9k64s1IVeG+BuZcARgbDSXFiq1wzQcGmI4UODJSIN9IwsIDkMwnxp0URWyX2GyWZgZbzHN8o=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791652195; c=relaxed/simple;
-	bh=/zxAKR58iJyDSi4nZh1eLUziL2e+4QGrhKQGoOdfmBc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=MgIYDEJpWCpieYnIm2w3mk01Tb7gPkUiP4QGRoBR9mzoGxa2QtPcX4hoWhLg631viCPqdpTZovR4p0twCual931Rnqkm6GqvOT8WEvcsXIJltmIuD8kn8cTn8OP7RfIJAXJycB1IVmkkfiIjyF7QSdfELXipHZ2uCj2ZcM2lXW0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=U/uWeRZU; arc=pass smtp.client-ip=165.173.180.105
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6344D30CD95
+	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 17:47:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791654435; cv=none; b=guR0RdYNr/B67apMSAAgt/vmhPoPiygUgWqNIImlvwWuvfNAiUyFcbelEd9iJ5z+fXZMbRyB7qyFnusOo6DFEvZAXu2PO9bQCIYLE0OlUUtRLKIl7h9zZLqbkj2CmWDuM8IWIVAfsVdcimPHWW8oz4m+rRu8uRd5RFDOkTjrjoI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791654435; c=relaxed/simple;
+	bh=0pDEB726iZux5u7NawPt1O2YXLRnxNu6qkge1CUmHkY=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=ZaBl/t8ldGsXejtcokQkYl65LiLxwuCP0F+e3Or3BrRGFAGGOfrcJnwlk/QHNkSDIItWVyBbwscjWIg6tmztDQM0OZ/7T45CIi4F+VWdlWqC2beZhp4c86AFity4yf/jFQ8qRqojuatKz/uvzr6FSKllmSuzcBaEW5LMDcFFd+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=TKnVyIjU; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="U/uWeRZU"
-ARC-Seal: i=1; a=rsa-sha256; t=1791652187; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=nxr8HfIDUaKsX7L7P2AxOfgY4psqViDeVGoegqIogZQOCSUxXSZFW0e4nQXm29ZP3qhS5FaKvcIm7zdlCldhPmgjPwpIe3b5VzjYF2+IHl7S5agdKtiKLdDIrn0a548WDmtjV7vMGwVs/OYD8Ji+APf67G6Lt0sYWFu/uQeX9rA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1791652187; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=XI2lMiI9M516ZvoW8NXLevRqWxxdnnNPZ68nblQAcz4=; 
-	b=fvFfD9tw0tqtdPanfbTOQHdUjQt9R0DPBYZq6ZBm1hd9pY6yKrSQumieJ2gr9jTxefjYdAfbBKN12ULVw+c47xuull4Sc51LBZoPcfmyCEiMCKLO0owpZHcwxU13YC0udX6Iz9G7YBE+x6eyaVI9RDLsOOsM0jzTxozCoI0at/s=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=pigmoral.tech;
-	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
-	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1791652187;
-	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
-	h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Date:Message-Id:Message-Id:Cc:Cc:Subject:Subject:From:From:To:To:In-Reply-To:Reply-To;
-	bh=XI2lMiI9M516ZvoW8NXLevRqWxxdnnNPZ68nblQAcz4=;
-	b=U/uWeRZUbmG6wRKALxODvJSXgzS7bSV5sVSz9yby4ojZfFMCsBPHat9mMzMFjQY6
-	Q9L7stQjMHmXwDy8PDJ691RvJ1avRR2Xx9j6Qgfl9ks2dZbX2nIyaJilhkeDat33UKG
-	DI5WV9VUZRknYv8lr1WBB5pLM/IHN1hhLWsP6UQU=
-Received: by smtp.zohomail.com with SMTPS id 179165218602419.75079290365079;
-	Sat, 10 Oct 2026 10:09:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="TKnVyIjU"
+Received: from mail01.layka.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id A177E82BFB;
+	Sat, 10 Oct 2026 19:47:09 +0200 (CEST)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id FS1pE1VIQjhE; Sat, 10 Oct 2026 19:47:09 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1791654429; bh=0pDEB726iZux5u7NawPt1O2YXLRnxNu6qkge1CUmHkY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=TKnVyIjUi57rNM2lIben3ytf3m5eVx5jvXrrFJ1SZI3UMWwPeokA2y294OpRcH34U
+	 cI9oiMaIOMCKQrmmoOXv/+Y8Zeg7YfpsUp7ycHkblUYSSymaPXE9c9EV1I0/j3a37M
+	 gGCJkb1aiH+lSXaOc2qDVp4yofQGnGRtUVOzRXsXFM71VFVMFI1ITw8cwygAfJZ5CP
+	 AmHfLF2qi/4sLemk3ZgKNU7D7jK5n/bO5EtCfyLpXFKvp5zE91XYn/gyHsDWwak8R1
+	 39unfK8BQDdoIjnO63XGwBkMCkGL5kyVObb6OBvTtnYfEgW3hhQ3BeulxDHpItD4EW
+	 MQabYtoQzDMvA==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 11 Oct 2026 01:09:39 +0800
-Message-Id: <DM1BOWOKF9OM.21QWSA1L8WH3U@pigmoral.tech>
-Cc: <linux-clk@vger.kernel.org>, <robh@kernel.org>, <conor+dt@kernel.org>,
- <devicetree@vger.kernel.org>, <linux-sunxi@lists.linux.dev>
-Subject: Re: [PATCH v6 7/8] clk: sunxi-ng: a733: Add bus clock gates
-From: "Junhui Liu" <junhui.liu@pigmoral.tech>
-To: <sashiko-reviews@lists.linux.dev>, "Junhui Liu"
- <junhui.liu@pigmoral.tech>
-X-Mailer: aerc 0.22.0
-References: <20261009-a733-clk-v6-0-ae8178fce7e8@pigmoral.tech>
- <20261009-a733-clk-v6-7-ae8178fce7e8@pigmoral.tech>
- <sashiko-outbox-166706@kernel.org>
-In-Reply-To: <sashiko-outbox-166706@kernel.org>
-X-ZohoMailClient: External
+MIME-Version: 1.0
+Date: Sat, 10 Oct 2026 17:47:08 +0000
+From: Rustam Adilov <adilov@disroot.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-gpio@vger.kernel.org
+Subject: Re: [PATCH] pinctrl: single: add big endian support
+In-Reply-To: <sashiko-outbox-166741@kernel.org>
+References: <20261010161545.62959-1-adilov@disroot.org>
+ <sashiko-outbox-166741@kernel.org>
+Message-ID: <2091eb9e8e54cfb30664c3bdfe8eb685@disroot.org>
+X-Sender: adilov@disroot.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Sat Oct 10, 2026 at 11:54 PM CST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] clk: sunxi-ng: ahb_store_clk is missing CLK_IS_CRITICAL flag
+On 2026-10-10 16:32, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] api: undefined readl_be/writel_be macros break generic build
 > --
->
-> commit f3ca9c131f39f726826090f6af6752e7b39c004c
-> Author: Junhui Liu <junhui.liu@pigmoral.tech>
->
-> clk: sunxi-ng: a733: Add bus clock gates
->
-> This commit adds bus clock gates that control access to the device regist=
-er
-> interfaces on the Allwinner A733 SoC. It also intends to mark the ahb-sto=
-re,
-> mbus-store, and ahb-cpus clocks as critical to prevent access breakage to
-> boot and storage devices.
->
->> diff --git a/drivers/clk/sunxi-ng/ccu-sun60i-a733.c b/drivers/clk/sunxi-=
-ng/ccu-sun60i-a733.c
->> --- a/drivers/clk/sunxi-ng/ccu-sun60i-a733.c
->> +++ b/drivers/clk/sunxi-ng/ccu-sun60i-a733.c
->
-> [ ... ]
->
->> +static SUNXI_CCU_GATE_HWS(ahb_msi_lite0_clk, "ahb-msi-lite0", ahb_hws,
->> +			  0x5c0, BIT(16), 0);
+> 
+> commit 37f4a78fd7a9ab63fc123070591147a5473d3fdf
+> Author: Rustam Adilov <adilov@disroot.org>
+> 
+> pinctrl: single: add big endian support
+> 
+> This commit adds big-endian support for pinctrl-single to handle big-endian
+> device tree properties. It implements custom I/O accessor functions for 
+> big-endian MMIO access, intended to support MIPS platforms like RTL930X.
+> 
+>> diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
+>> index e0eb7240a9859..001a0c157d6a0 100644
+>> --- a/drivers/pinctrl/pinctrl-single.c
+>> +++ b/drivers/pinctrl/pinctrl-single.c
+>> @@ -265,6 +265,26 @@ static void pcs_writel(unsigned int val, void __iomem *reg)
+>>  	writel(val, reg);
+>>  }
+>>  
+>> +static unsigned int pcs_readw_be(void __iomem *reg)
+>> +{
+>> +	return readw_be(reg);
+>> +}
 >> +
->> +/* This gate controls access to the storage controller MMIO registers. =
-*/
->> +static SUNXI_CCU_GATE_HWS(ahb_store_clk, "ahb-store", ahb_hws,
->> +			  0x5c0, BIT(24), 0);
->
-> [Severity: High]
-> The commit message notes that the ahb-store clock should be marked as
-> critical, but the definition of ahb_store_clk here uses 0 for its flags
-> parameter instead of CLK_IS_CRITICAL.
-
-Oops, I forgot to update the commit message accordingly. I will send a
-new version to update it.
-
->
-> During late boot, the Common Clock Framework automatically disables any
-> clocks that have no active consumers holding a reference to them.
->
-> Could this omission allow the framework to inadvertently gate the storage
-> controller MMIO registers, leading to a system freeze or storage probe
-> failures?
-
-ahb_store_clk has already been set as the parent of the NAND, MMC, SPI,
-SPIF and UFS bus gates. Therefore, when any storage-related peripheral is
-in use, ahb_store_clk will be enabled through the clock dependency, so it
-no longer needs the CLK_IS_CRITICAL flag.
-
->
->> +static const struct clk_hw *ahb_store_hws[] =3D { &ahb_store_clk.common=
-.hw };
+>> +static unsigned int pcs_readl_be(void __iomem *reg)
+>> +{
+>> +	return readl_be(reg);
+>> +}
 >> +
->> +/* Keep enabled for access to the CPUS domain registers. */
->> +static SUNXI_CCU_GATE_HWS(ahb_cpus_clk, "ahb-cpus", ahb_hws,
->> +			  0x5c0, BIT(28), CLK_IS_CRITICAL);
+>> +static void pcs_writew_be(unsigned int val, void __iomem *reg)
+>> +{
+>> +	writew_be(val, reg);
+>> +}
+>> +
+>> +static void pcs_writel_be(unsigned int val, void __iomem *reg)
+>> +{
+>> +	writel_be(val, reg);
+>> +}
+> 
+> [Severity: Low]
+> Will this break the build on architectures like ARM and ARM64?
+> 
+> The macros readw_be, readl_be, writew_be, and writel_be are strictly
+> architecture-specific and do not exist in standard generic headers like
+> <asm-generic/io.h>. Since pinctrl-single is a generic driver heavily used on
+> architectures like ARM and ARM64, compiling these macros will result in build
+> failures due to undefined reference or implicit declaration errors.
+> 
+> Should this use the generic kernel APIs ioread32be / iowrite32be (and their
+> 16-bit equivalents ioread16be / iowrite16be) for big-endian MMIO access
+> instead?
 
---=20
-Best regards,
-Junhui Liu
+Interesting that these macros are not in generic files... Why then this is a
+low severity if it will cause build issue on some architectures is questionable
+to me but i will change the patch to use the the mentioned functions instead.
