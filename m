@@ -1,116 +1,232 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9CB363C43;
-	Sat, 10 Oct 2026 19:02:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E72025228D
+	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 22:45:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791658965; cv=none; b=QFU1dMxIyrTs1wz2DAze/scLnoCh4AX2ZKTHDfP091L4Cy6dgizt6ODuF9DEGzGwEaBui6fZ0R82MNpjEC+vlS2eZTYY2Hwv0A4qlGn+HIZtOogrcjxWDV5CXcEgWTWDMa8ymrmb4lV6PDwy9HR+M3/LB1bE0JiOXI94+Gmxnnk=
+	t=1791672330; cv=none; b=umX116hSwUk6GvVSsiGsDFYInnY/SvmR7Z9Z8hW939/jqCtongBb2qAhPohZJ21EDRr9vkqrr4Yy4Wzr/QisDKdlQxJqMB5PMngVWR0ZiXyp4xpTl9h9BNhQdXsMhrGueEpZ3yxyN6pv9rZQ86EXpB7pQ8qzL2GVtIQXzrrJIps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791658965; c=relaxed/simple;
-	bh=/VMte0ffuAZ1bosOQRduKeracz6dH8KUEQKvDmnfsDw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VmQwGCOKmHLwqUMtxn8Ca+4iVrx/tnqC7f48vsrbtKxe1corkfZqxJdQXmHYJXSMxwnBP3FUgSRmmxYV/DgvdaQMAnTF7yrjlNe1syVdJJxgLnWJWC7hLhFPVlqqZwgc8rVTIEoz36EIF0e4Z7WJEjrJFtqVU/Yx5Nb8U2CN/5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hGAf1a1O; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791672330; c=relaxed/simple;
+	bh=wTgGw8DHW6xFD4B4hl4ywDHhFyN1oJ4qHHPGEJTEyaE=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IqST6zg/ZjbbkBVURwH1nTWXDVZeXX9IXgBNgEhfpDosuNT8W+Q0TlT2bg0VGA/gmKfZN2ZVQiBmsPtEh+ASOF12dRrSZWjhFT8gUAmeMYbQuhdg2xPHAdML7Q7cKKfBJF6zweHZ16oLRZ5rIS51sDzoRcl0IjPsLC8OxeD+ReU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=csrLb1rH; arc=none smtp.client-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hGAf1a1O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26FF91F000FF;
-	Sat, 10 Oct 2026 19:02:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791658964;
-	bh=ZBD94Bjwda+F367RH96wAT8/ImLjLZBk225gVxmnTPY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=hGAf1a1OViU/NTMk1uWwjJpCfe7JWVgvsC7BcZ4nOK81r5MaCPeGcJJiiNO6uQe9p
-	 LLffCn3PHnb61Qx14lgDoH2c88eB+ZdwTeklT5UwRaMhM4WWiv/rEUMOQ8a9o9yfT9
-	 1jtIID7cnrc/IRp0wGMMxyORVhFA/2KmXPsk0f97sxAVfzUXZ7GVwL+SFrablFvk3k
-	 tqvkcIFA6Cr7pAx/s10WBaXcLTf3O+Bskeu+bVWczj0WmGXvjNxRqVBTUZqwHmjAhf
-	 TAhL1nVDbtfvxDgbyYJwHDpA2WTvIvMjoZgGiCkjWTru6DYwpjVAct+126FK7R520h
-	 6OxSQbzOJAOEg==
-Date: Sat, 10 Oct 2026 12:02:42 -0700
-From: Namhyung Kim <namhyung@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="csrLb1rH"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-ccce6d9abfeso499654a12.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 15:45:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791672329; x=1792277129; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=xivJcQZ1ooou86Bqdwfy9/e7A6VmVxGxUj1fMYYNf5s=;
+        b=csrLb1rHvLeMZDwIFU3cXPo5/xR1r0YeegRR4Gw4OaLGRSAjdkQe0HP4ZuB3KJ8Jo9
+         k8zLt1DJ3dkaeMDrgCSACl/I06lcuUoXTNsbVFBl+dCW/cwpgcxhvihjsy5VFfN8/+ul
+         QaUh9E1VRaO0kCtAjjWMGN1xHSjzdXsJNiNf3JSGOIeLi8EMt7X0fw1MAFPcXey5jqVg
+         x1y0GTlMJlvdDsZN1t8tNOOunES6yD94u4C4OMkBhv6lkmu3cmnEUcRlOYJEsgW+5zND
+         uDDB3fDzc9De0u19T1zrltQ80qaSqgnq30djiD44Hnxz0Mpz9Im15zkXtfSTEKLCQOl/
+         hJDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791672329; x=1792277129;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:date
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=xivJcQZ1ooou86Bqdwfy9/e7A6VmVxGxUj1fMYYNf5s=;
+        b=uF2HDSZ29wFDoOkBSA+A3l5fd+iAeIe00YiSXxhO46MML/xRxt45ijTaxIQb8g1eST
+         hyv9I8Upa9Rc7BCb92SVQWqvYAbkyHSDdAvs2zBMv0P7zJBOMXOV44bEGICwsweGHfp0
+         lPgbKzsDh687Y/lwXRiOArSzu/QOJk6qXSpyl3V7BUrxpLhTxA6BEaml566DLlsgdTI3
+         qM6YL3Gd8h14B3n4mCIk+10kYRAa6sLN8YcIAC6P7m8OP4oN1AsVNOAhp2sWQueqaqEF
+         WyqsHqB15cmuunDBfeY7NESDJkwWLoIuAdopm5sTX3rMuUN5u6bYYyL/cC3Lxu13ihmN
+         Lmqg==
+X-Gm-Message-State: AFq9FYJEqGQV4xYon20K371gsoQVCkGPmqc+yfwDCVPS/KCw6kO+18vw
+	LjMBe1saCu3Z3q+hbMfXwAvHIy4dnKggj4tqbiFjHzSp4Ns61/+WM90QLS0IpN/h
+X-Gm-Gg: AYBFou3o830gh5BZVpGAGB9ShIeUxwLldK7c/jom40OvRaS798PpCAtYzu2r0zckDda
+	4AZcxxiDrXO27tvLUABGZw1qpjeUYUHNkPSSNbFpMefqHijH1Fhm1reBIjxKa6GucBaLYAp4HMB
+	VaHVBuGVxjkKaqrpf0we5Vwo18+eTTtGO9JLPDcc7jO9R9YcQjrW1rE25SSdw0gDYycth396sSn
+	0ap8fjOWkPA3xNAqUzzwTg/gi4kPc214HY4e1eEG/a7mfZEaPHY6feoeqCN30+JjjTIHHfOzcEv
+	TN3IVrqmkkcyPUEeqrXGN9qYGxSXVanZGqL+sEEp78R5yCHuKSsqeLZcoiLpJN7JtJlwsb0nR53
+	qAwSAG9rMt3SnnDdth/FjCRAmXSa0+A4yUdBnau1q9mw3v1xS4s3X862+EwpIGuOx/3zm/UN24t
+	y7BILcerwxFshl2gaxO2ahwnotdLVesxvKZ4iH7OVpjFiSY8rDtd2vmgvf9pIQmn3LdQIA/Zctz
+	aDDf2sEdFtsI2D7Igam+pVBpg==
+X-Received: by 2002:a17:90b:5486:b0:39e:6a7f:1dcd with SMTP id 98e67ed59e1d1-3ab3ab1d56cmr5351273a91.41.1791672328538;
+        Sat, 10 Oct 2026 15:45:28 -0700 (PDT)
+Received: from cxlqual ([220.120.90.131])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ab39822051sm4431351a91.4.2026.10.10.15.45.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Oct 2026 15:45:28 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Sun, 11 Oct 2026 07:47:21 +0900
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] perf symbol: Set dso symtab type for libbfd
-Message-ID: <asqL0l19OLRbQ6VG@z2>
-References: <20261010182439.9732-1-namhyung@kernel.org>
- <20261010182439.9732-3-namhyung@kernel.org>
- <sashiko-outbox-166825@kernel.org>
+Cc: Anisa Su <anisa.su887@gmail.com>, linux-cxl@vger.kernel.org,
+	nvdimm@lists.linux.dev
+Subject: Re: [PATCH v15 3/8] cxl/cdat: Gather DSMAS data for DCD partitions
+Message-ID: <asrAecwfhRU7kMLm@cxlqual>
+References: <20261007201828.952-1-anisa.su@samsung.com>
+ <20261007201828.952-4-anisa.su@samsung.com>
+ <sashiko-outbox-163342@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-166825@kernel.org>
+In-Reply-To: <sashiko-outbox-163342@kernel.org>
 
-On Sat, Oct 10, 2026 at 06:34:40PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] perf: double-free and state confusion in libbfd fallback path
+On Wed, Oct 07, 2026 at 08:33:12PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] cxl: Ineffective DCD disablement leaves partially configured partitions exposed
+> - [Medium] cxl: QoS class 0 incorrectly overwrites CXL_QOS_CLASS_INVALID
+> - [Low] cxl: Lockless modification of DPA partition attributes exposes torn reads
 > --
 > 
-> commit 8791c82124897f35132a0fe029d993b2dcd4a6bc
-> Author: Namhyung Kim <namhyung@kernel.org>
+> commit 6722908eab4fa5c8dd9820d34f1ec3beb729c8f0
+> Author: Ira Weiny <iweiny@kernel.org>
 > 
-> perf symbol: Set dso symtab type for libbfd
+> cxl/cdat: Gather DSMAS data for DCD partitions
 > 
-> It missed to set the dso symtab type when the symbols are loaded by
-> libbfd.  When it happens both syms_ss and runtime_ss may not be set
-> and won't call dso__load_sym().
+> Additional DCD partition (AKA region) information is contained in the
+> DSMAS CDAT tables, including performance, shareable and read-only
+> attributes. Match DCD partitions with DSMAS tables and store the meta
+> data.
 > 
-> > diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-> > index 5e63c3477570c..debd0a66f9669 100644
-> > --- a/tools/perf/util/symbol.c
-> > +++ b/tools/perf/util/symbol.c
-> > @@ -1929,6 +1929,7 @@ int dso__load(struct dso *dso, struct map *map)
-> >  				symsrc__destroy(syms_ss);
-> >  				syms_ss = NULL;
-> >  			}
-> > +			dso__set_symtab_type(dso, symtab_type);
-> >  			ret = 1;
-> >  			break;
-> >  		}
+> > diff --git a/drivers/cxl/core/cdat.c b/drivers/cxl/core/cdat.c
+> > index 5c9f072625135..07aedff657d9e 100644
+> > --- a/drivers/cxl/core/cdat.c
+> > +++ b/drivers/cxl/core/cdat.c
+> [ ... ]
+> > @@ -219,6 +226,13 @@ static int cxl_port_perf_data_calculate(struct cxl_port *port,
+> >  	xa_for_each(dsmas_xa, index, dent) {
+> >  		int qos_class;
+> >  
+> > +		/* No DSLBIS for this DSMAS; nothing to hand the QTG _DSM */
+> > +		if (!dent->cdat_coord[ACCESS_COORDINATE_CPU].read_bandwidth &&
+> > +		    !dent->cdat_coord[ACCESS_COORDINATE_CPU].write_bandwidth &&
+> > +		    !dent->cdat_coord[ACCESS_COORDINATE_CPU].read_latency &&
+> > +		    !dent->cdat_coord[ACCESS_COORDINATE_CPU].write_latency)
+> > +			continue;
+> 
+> [Severity: Medium]
+> When this continue statement is taken, dent->qos_class remains 0 (from
+> kzalloc_obj zero-initialization).
+> 
+> If at least one other entry succeeds, cxl_memdev_apply_dsmas() will be called
+> with CXL_DSMAS_APPLY_FLAGS_PERF, which unconditionally calls update_perf_entry()
+> and overwrites part->perf.qos_class (previously CXL_QOS_CLASS_INVALID) with 0.
+> 
+> Since 0 is a valid QoS class in CXL, does this falsely advertise a QoS class of
+> 0 to userspace for partitions lacking DSLBIS performance coordinates?
+> 
+Fixed. dsams_entry.qos_class is initialized to CXL_QOS_CLASS_INVALID in
+cdat_dsmas_handler().
+
+> > +
+> >  		cxl_coordinates_combine(dent->coord, dent->cdat_coord, ep_c);
+> >  		dent->entries = 1;
+> >  		rc = cxl_root->ops.qos_class(cxl_root,
+> [ ... ]
+> > @@ -255,35 +269,90 @@ static void update_perf_entry(struct device *dev, struct dsmas_entry *dent,
+> >  		dent->coord[ACCESS_COORDINATE_CPU].write_latency);
+> >  }
+> >  
+> > -static void cxl_memdev_set_qos_class(struct cxl_dev_state *cxlds,
+> > -				     struct xarray *dsmas_xa)
+> > +/*
+> > + * A DCD shall describe its DC partition in a DSMAS entry (CXL r4.0 9.13.3).
+> > + * Without one the partition's attributes are unknown, so disable DCD.
+> > + */
+> > +static void cxl_dcd_dsmas_missing(struct cxl_dev_state *cxlds, const char *why)
+> > +{
+> > +	struct cxl_memdev_state *mds;
+> > +
+> > +	if (cxlds->type != CXL_DEVTYPE_CLASSMEM)
+> > +		return;
+> > +
+> > +	mds = to_cxl_memdev_state(cxlds);
+> > +	if (!cxl_dcd_supported(mds) ||
+> > +	    !cxl_part_size(cxlds, CXL_PARTMODE_DYNAMIC_RAM))
+> > +		return;
+> > +
+> > +	dev_warn(cxlds->dev, "DC partition has no valid DSMAS entry (%s), disabling DCD\n",
+> > +		 why);
+> > +	cxl_disable_dcd(mds);
 > 
 > [Severity: High]
-> When dso__load_bfd_symbols() succeeds and sets ret = 1, this explicit
-> destruction of syms_ss does not remove the struct from the ss_ array because
-> ss_pos remains unmodified.
+> Does clearing the mds->dcd_supported flag effectively disable the partition?
 > 
-> Does this lead to a double-free later in the cleanup loop?
+> Since cxl_configure_dcd() and cxl_dpa_setup() have already executed during
+> cxl_pci_probe(), the DCD partition is permanently added to cxlds->part and its
+> DPA resource is registered.
 > 
-> tools/perf/util/symbol.c:dso__load() {
->     ...
-> 	for (; ss_pos > 0; ss_pos--)
-> 		symsrc__destroy(&ss_[ss_pos - 1]);
->     ...
-> }
+> Because mds->dcd_supported is never evaluated again during region creation or
+> sysfs access, does the partition remain fully exposed and usable by userspace
+> without valid DSMAS attributes?
 > 
-> Additionally, since runtime_ss is not cleared here, can execution incorrectly
-> fall through to dso__load_sym() and overwrite the successful ret = 1 value
-> from libbfd?
+Nothing is exposed in sysfs by this series. The rest of the series that does
+adds those capabilities will hide the memdev dynamic_ram group and refuse the
+decoder mode if dcd is not supported.
+> > +}
+> > +
+> > +enum cxl_dsmas_apply {
+> > +	CXL_DSMAS_APPLY_FLAGS,		/* shareable etc.; no QTG data */
+> > +	CXL_DSMAS_APPLY_FLAGS_PERF,	/* perf coordinates and qos_class */
+> > +};
+> > +
+> > +/*
+> > + * DSMAS flags such as shareable are properties of the CDAT entry and are
+> > + * applied regardless; perf data is applied only if the QTG lookup produced
+> > + * recommendations.
+> > + */
+> > +static void cxl_memdev_apply_dsmas(struct cxl_dev_state *cxlds,
+> > +				   struct xarray *dsmas_xa,
+> > +				   enum cxl_dsmas_apply attrs)
+> >  {
+> >  	struct device *dev = cxlds->dev;
+> >  	struct dsmas_entry *dent;
+> > +	bool dc_matched = false;
+> >  	unsigned long index;
+> >  
+> >  	xa_for_each(dsmas_xa, index, dent) {
+> >  		bool found = false;
+> >  
+> >  		for (int i = 0; i < cxlds->nr_partitions; i++) {
+> > -			struct resource *res = &cxlds->part[i].res;
+> > +			struct cxl_dpa_partition *part = &cxlds->part[i];
+> [ ... ]
+> > +			if (attrs == CXL_DSMAS_APPLY_FLAGS_PERF)
+> > +				update_perf_entry(dev, dent, &part->perf);
+> > +			if (part->mode == CXL_PARTMODE_DYNAMIC_RAM) {
+> > +				part->shareable = dent->shareable;
+> > +				part->read_only = dent->read_only;
+> > +				dc_matched = true;
+> > +			}
+> 
+> [Severity: Low]
+> Are these partition attributes being modified locklessly?
+> 
+> The CXL memdev and its sysfs attributes are registered and visible during
+> cxl_pci_probe(), while this CDAT parsing happens later in
+> cxl_endpoint_port_probe().
+> 
+> If part->perf, part->shareable, and part->read_only are updated without holding
+> the cxl_rwsem.dpa lock, can concurrent userspace sysfs readers observe
+> intermediate, torn, or partially updated performance states?
+> 
+update_perf_entry() is the function that writes to part->perf and not
+touched by this series.
 
-I don't expect it sets runtime_ss, but I'll make sure it's cleared.
+shareable and read-only are bools, so stores are atomic.
 
-Thanks,
-Namhyung
-
-> 
-> tools/perf/util/symbol.c:dso__load() {
->     ...
-> 	if (runtime_ss && !syms_ss) {
-> 		syms_ss = runtime_ss;
-> 	}
-> 
-> 	/* We'll have to hope for the best */
-> 	if (!runtime_ss && syms_ss)
-> 		runtime_ss = syms_ss;
-> 
-> 	if (syms_ss)
-> 		ret = dso__load_sym(dso, map, syms_ss, runtime_ss, kmod);
->     ...
-> }
+> > +			break;
+> >  		}
 > 
 > -- 
-> Sashiko AI review Â· https://sashiko.dev/#/patchset/20261010182439.9732-1-namhyung@kernel.org?part=3
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261007201828.952-1-anisa.su@samsung.com?part=3
