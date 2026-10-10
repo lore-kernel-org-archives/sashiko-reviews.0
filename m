@@ -1,278 +1,189 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx2-f3.google.com (mail-yx2-f3.google.com [74.125.224.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0577D3DB339;
-	Sat, 10 Oct 2026 06:17:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791613054; cv=none; b=aATsMbLgRIrAY/srxeZ8qly5epOBq1Wd7vOPkJhM509zjXytIapHkZyTXkaHZSdKzE/gsvi2eTgSA6GB2JEl5l+qoixnfBfhyxnSPbhyc4bGDHe2MAf1sCbw//BcG3i960yc/VUzI5p4VahA3BhRGaj2EAE32ey0gBO4uioiChI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791613054; c=relaxed/simple;
-	bh=FHJ4RVTHAL5gluEXvSuk7IeZavIdXwDKFq/azqlRNxI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E7JqiT7iR25DdXGtVyk+ygezqaE/sse9v4ZQczSdKpNkG/5xAnkDQlZsRH7MDZt8HpWPLZvzfYVxNoVKjsqVKDSWa3xAPmq/ir/FD94RPLwY6LP4hNf0NVdsrKg7jG7mDW1UDWItlYZCcbyNVIIIg3IxW78IbVGhGK4E+WQjxqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eVv0yOJw; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C3B41A506
+	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 06:28:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.131
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791613727; cv=pass; b=icpnBHLtzZZfeW1Acukge7wwV4TcSiWx5sJJKOdDhLj/QNy53Bi5zY6YWAWhJrtuS3pMgxHs8hqakj4yS3lW9QAr+aioZHwNVlBHCa7oR8flZDArk5NV81DsyvSeyXeXORLkwCyUiI3sTUU62F4AHC99Yn2QWY00IG/8rB2IsaY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791613727; c=relaxed/simple;
+	bh=TVZtiMrwIJrKKjnD9I3HLVYJjK51LW2y9AKV94uNdoc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VWgRlWjJYOBgmQz5EGOhutInMyjdb7JKTsLY84oLbj5XP9E6A4KDqyPbWAVvBt2C5WuDqKTQM8GpAE+kRZVCdO+CCIhbDCHILFy1n282G54WnOCak8LnfzQwKtH7tw2vWZrWApMmdkWZVo+CClC94/XWYWteEsOKCQqzWB1+XGk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=igmi3Lgm; arc=pass smtp.client-ip=74.125.224.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eVv0yOJw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 984FE1F000FF;
-	Sat, 10 Oct 2026 06:17:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791613052;
-	bh=ZHsF2GeLo6AkCk4gfce6QNZ0PAb0MSQ8P4lbIU6s91o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=eVv0yOJwI5tIzQ4PActSEURBBUWga2gke6w75afmjU2GAUHymEVIRMTCD/BXG1RsS
-	 z6vIq80pR0+AJxjEbwIVoO6JtgEOukBYAG6E7yIYb0TaJBW4JU+rY4yyREXkEAVO2P
-	 MZAzJbihfK2IP/TIkYVjzQtzilz5tndDPy5daekcA8gkLhPimny/nRWrrpl/HloG3u
-	 fH0ITRz4uk2SfuNmwbIZ+nsGJrJgDqOD7R+hZ9jOXH58jcNFxxyhXfh31gGDgLko4X
-	 KA5iU4Q9Vz/2KR9gtc3doJuc+3y3xwKeBU8SS5t5HOlcU4RCXq5BwMkUy7XWvXpIU1
-	 sw5kfuohyIVXA==
-Date: Fri, 9 Oct 2026 23:17:31 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v2 06/10] perf tools: Factor out dso__find_binary_type()
-Message-ID: <asnYe2GTSVTItnkd@z2>
-References: <20261006234315.920817-1-namhyung@kernel.org>
- <20261006234315.920817-7-namhyung@kernel.org>
- <sashiko-outbox-162548@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="igmi3Lgm"
+Received: by mail-yx2-f3.google.com with SMTP id 956f58d0204a3-66fd0af9eb0so75432d50.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 09 Oct 2026 23:28:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791613716; cv=none;
+        d=google.com; s=arc-20260327;
+        b=VSi398Sqc0GiW3nmRzS8MI9OJb/J0dR3gbQrV5h2Eqvyi1yaPc7t5N6fPqJJmAmSzX
+         DDcGL9gJSXUU6tM/eA8OiLLt4bPmREn/afWajRuqTU6xxuOBNUGO0dWEmPFSsHOvPYUd
+         MS4b0upR4RA/H55KHqITkozmGGSgSYmx9qmS1tYtEab4UspSWcCW6GYVfw492mQ64mEd
+         bmh5c6KpFKy4p+lkzSX6IqHR3yOhvf6mACfk3v+cbz0z/8rhJFttCkBXjbAihMO/uvHR
+         LykmyO7QISVeKgkUupJDLuL3Z/6Az4eZKPZbR3QJn2Cq+qXXvCM7ag9Jdhs5EtWeWu2A
+         0Y7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=DwjOp8d2EARQ4rsUqkbDKMHg5qE5GmsnR+L4gVDcC2w=;
+        fh=m74ElSqHazzSng+Mltoi5J3j8qED2+GBqGz/HsIcJkA=;
+        b=RPdEevvz48AYHEorACs8IIVJlVhB582v7ydyhDJu6ZllE8q5GGpJg0MeYdiZlV05dl
+         vlHTv1evCFK3fEFpbmcayzRb7Bs+i3Ua/1bbXt8IRdFx76PVngYGP/b8mrP7IC/JOOWA
+         L/seCrRSCZaeTMKbgwDbSkBJS+UiHGgUIYrG4UJa2IRTcDWcJHKLrc5tm+UMEHDNl9fR
+         jBc9QwTThCr1hgl7cv8RNS+KRQsW5bUeolNpdl8wwz+gswnXF0KGAXl5fK13hjB0l29J
+         kBi+DWFKY8QQI0TCinwtxzIbLcexNNC5W5gQAyD21dD4E5BXE4EBJZ5xVz5iT+BPorHV
+         Yb8Q==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791613716; x=1792218516; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=DwjOp8d2EARQ4rsUqkbDKMHg5qE5GmsnR+L4gVDcC2w=;
+        b=igmi3LgmMB2l/mJ5CmK9GwKqG1hfyKu5QG9ziHmCisfTM+jbQnprLq+CTmlRdPzs3y
+         Ria75okgXCXTUs4s/Kv/xY+qD2JNSdH7ePupm19uMZ+Ral+8FI9DRV3rdip7I6C2m94i
+         Yg7n9hPO8sV4Hga75BuV2VDQxTPnUiMAswAHj6NCbM/BOuRUnoTDp3CVtt0jBf/qed/r
+         hpg9tnIcPConenLW97TZFVkVGV7B+iIu8RTWOGzlJKT4sCarCJFTvR47N28C42wPSiZK
+         lp3QfguCpak6PCIgMzsmToBgpOL4GOz3zCMY0q3Ai0w4w/347oJgiD5T5KI58bB+DaYI
+         OTww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791613716; x=1792218516;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=DwjOp8d2EARQ4rsUqkbDKMHg5qE5GmsnR+L4gVDcC2w=;
+        b=TZuSVLQ9VOypxWURGcEcjEaKiuXhqdDb+3XrjxeQhFEC0o/ypGwtnaebAY24BdOK4A
+         THCD6twOJ8nrf1jUZ3yMZu8xzpW0SZRh8OP/Uzwj403ufEMoeVVPZBvO2C7M6igWMBwg
+         AN9UGkBBHm1Zb4uJjFyPzXZ22i3OlR1PXTdYyojGr3XbGgP3PG8jqwcCEdudOVVi0VXA
+         2wHvDT+AMmGuYcxiOIIf3mgtlOTylyJBdtEkRTXTltCyyE/zBWxPNXsSbBxT4H5+srlH
+         dElkakFvcBab3+SN8cv7oOaYvS8gA4w3Sw/QwiLvElbhimV6DLC2psvObgpX0ypGHFHs
+         scDw==
+X-Gm-Message-State: AFq9FYJV/e8mi/beccOcFCcd23LFq0ljoZSQ2sKdlyOBgkLk69MYg4Cp
+	pA9+UnXf2YUn7Jc1XmP3eQ7hlqMYK6ZgbG01msqQFat72Dzkh0YR4g1+EiDogEWs/Zy9+drIcnd
+	3lNR+AXxCW1A0I/+c46suqBdAC5wiwGS1M+NOuoiuXOd9upw=
+X-Gm-Gg: AYBFou1BxVTPYCP1+/gZhQ5Sf6bC5xXzVqacs5LEY/GcX8H9DnVvMCRRIPqZEBD61yt
+	OnD7dJVJC9zehgx+Sd8Fg2Ga1danHm3hhSIjiUeOTHvZGlyeXhKU+xxr2vI9R9/oa26TWJPngUf
+	KjlbZr7dv8dHE/0rK1EREh4ZPUK+3YeKdUEhoXRsHZQu9KTLR6rMwtmglMWt5aFhRFcWfmfVGTn
+	u/yVv2ZKDySyNF8nnKK2o+0fd0k3pjJ6kw/ps965OuhTTaAPwzKcFp0ZkyS42VdM5zVvo5+K9zB
+	EisMBv6fQ6SIhWcNAKA6O6XUlCuln5tnr2kzzlrf6HmFmm7xtk2PZRk=
+X-Received: by 2002:a05:690e:458a:10b0:672:f620:3552 with SMTP id
+ 956f58d0204a3-67936298daemr1027115d50.98.1791613716226; Fri, 09 Oct 2026
+ 23:28:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-162548@kernel.org>
+References: <20261010021010.19575-1-jianyungao89@gmail.com> <sashiko-outbox-166211@kernel.org>
+In-Reply-To: <sashiko-outbox-166211@kernel.org>
+From: Jianyun Gao <jianyungao89@gmail.com>
+Date: Sat, 10 Oct 2026 14:28:24 +0800
+X-Gm-Features: AclHuK9B38RfzpVynqHn6-1KOLXXUajPRzRGr-IbjmyS0zOcCV7zJ1AXl01LH8I
+Message-ID: <CAHP3+4DveBJxaWK7cGgjHvOUio55zrj7drgh5Eqq+0Pe+pG17g@mail.gmail.com>
+Subject: Re: [PATCH] dax: fix wrong error code returned from dax_dedupe_file_range_compare()
+To: sashiko-reviews@lists.linux.dev
+Cc: nvdimm@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 07, 2026 at 12:04:51AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 7 potential issue(s) to consider:
-> - [High] perf: Guest kernel modules fail to open due to hardcoded root_dir
-> - [High] perf: Strict .text section check breaks data-only DSOs and NO_LIBELF builds
-> - [High] perf: Concurrent Read-Modify-Write data race on struct dso bitfields
-> - [High] perf: Use-After-Free of dso->nsinfo in __dso__find_binary_type due to missing dso__lock
-> - [Medium] perf: Explicitly resolved binary types are unconditionally overwritten
-> - [Medium] perf: Bypassing do_open() permanently caches EMFILE failures as NOT_FOUND
-> - [Low] perf: Redundant double decompression of compressed kernel modules
+Thank you for the review! You are correct that dax_range_compare_iter() pas=
+ses
+ALIGN(pos1 + len, PAGE_SIZE) as the size argument to dax_iomap_direct_acces=
+s(),
+which is an absolute file offset rather than a length. This is indeed
+a bug that I will fix
+in a follow-up patch.
+
+However, this is a pre-existing issue unrelated to the bug this patch
+addresses.
+The purpose of this patch is to fix the error path in
+dax_dedupe_file_range_compare(),
+where return ret can leak a positive value from iomap_iter() and cause
+vfs_dedupe_file_range_compare() to misinterpret an error as success.
+Changing return ret
+to return status ensures the actual error from
+dax_range_compare_iter() is correctly propagated,
+regardless of what that error happens to be.
+
+On Sat, Oct 10, 2026 at 10:24=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] dax: dax_range_compare_iter() passes absolute offset instead of =
+size
 > --
-> 
-> commit 8b41de1355b0e2f1d37b604c80238237fc833f0f
-> Author: Namhyung Kim <namhyung@kernel.org>
-> 
-> perf tools: Factor out dso__find_binary_type()
-> 
-> Separate out the logic to detect binary type of a DSO.  It checks if the
-> candidate file contains ".text" section.  It should be called under the
-> _dso__data_open_lock.
-> 
-> Introduce bintype_searched flag and it accessors to prevent repeated
-> (failed) search.
-> 
-> > diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-> > index 913877b84b2d4..f5054c18a2e93 100644
-> > --- a/tools/perf/util/dso.c
-> > +++ b/tools/perf/util/dso.c
-> > @@ -833,7 +833,7 @@ void dso__data_close(struct dso *dso)
-> >  	mutex_unlock(dso__data_open_lock());
-> >  }
-> >  
-> > -static void try_to_open_dso(struct dso *dso, struct machine *machine)
-> > +static enum dso_binary_type __dso__find_binary_type(struct dso *dso)
-> >  	EXCLUSIVE_LOCKS_REQUIRED(_dso__data_open_lock)
-> >  {
-> >  	enum dso_binary_type binary_type_data[] = {
-> > @@ -842,25 +842,103 @@ static void try_to_open_dso(struct dso *dso, struct machine *machine)
-> >  		DSO_BINARY_TYPE__NOT_FOUND,
-> >  	};
-> >  	int i = 0;
-> > -	struct dso_data *dso_data = dso__data(dso);
-> > +	char *path;
-> > +	bool found = false;
-> > +	bool decomp = false;
-> >  
-> > -	if (dso_data->fd >= 0)
-> > -		return;
-> > +	if (dso__bintype_searched(dso))
-> > +		return dso__binary_type(dso);
-> > +	dso__set_bintype_searched(dso);
-> 
+>
+> commit a30afa39f06e5d921895421d92a26f1823e65cbd
+> Author: Jianyun Gao <jianyungao89@gmail.com>
+>
+> dax: fix wrong error code returned from dax_dedupe_file_range_compare()
+>
+> This commit modifies dax_dedupe_file_range_compare() to return the actual
+> error status from dax_range_compare_iter() rather than leaking a positive
+> return value. This prevents vfs_dedupe_file_range() from misinterpreting
+> an error as a success.
+>
+> > diff --git a/fs/dax.c b/fs/dax.c
+> > index 08adeaed2baf1..97b6212bfa898 100644
+> > --- a/fs/dax.c
+> > +++ b/fs/dax.c
+> > @@ -2254,7 +2254,7 @@ int dax_dedupe_file_range_compare(struct inode *s=
+rc, loff_t srcoff,
+> >               status =3D dax_range_compare_iter(&src_iter, &dst_iter,
+> >                               min(src_iter.len, dst_iter.len), same);
+> >               if (status < 0)
+> > -                     return ret;
+> > +                     return status;
+>
 > [Severity: High]
-> Does this code introduce a data race on the struct dso bitfields?
-> 
-> The dso__set_bintype_searched() function modifies the bintype_searched
-> bitfield under the global _dso__data_open_lock. However, adjacent bitfields
-> like debuginfo_searched and long_name_allocated share the same memory
-> location and are modified under different locks (dso__lock(dso) and
-> dsos->lock).
-> 
-> Concurrent execution could cause compiler-generated read-modify-write
-> operations to overlap, resulting in dropped flags or memory leaks if
-> long_name_allocated is clobbered.
-
-I was hoping it was fine just to grab _dso__data_open_lock but it seems
-it should take dso__lock anyway.  I'll update the code.
-
-> 
-> [ ... ]
-> 
-> > +	case DSO_BINARY_TYPE__SYSTEM_PATH_DSO:
-> > +	case DSO_BINARY_TYPE__BUILD_ID_CACHE:
-> > +		/* We don't expect these are set; fall through */
-> > +	case DSO_BINARY_TYPE__NOT_FOUND:
-> > +		/* Let's find it out (for user DSOs or kernel modules) */
-> > +		break;
-> 
-> [Severity: Medium]
-> Does this fall-through discard valid binary types that have already been
-> resolved elsewhere in the system?
-> 
-> When symbol.c successfully resolves and sets the binary type (such as
-> DSO_BINARY_TYPE__SYSTEM_PATH_DSO or DSO_BINARY_TYPE__BUILD_ID_CACHE),
-> this switch statement deliberately falls through. The loop below then
-> unconditionally overwrites the previously valid binary type.
-
-As I said in the comment, I don't expect for user binaries and kernel
-modules to set the binary_type before this function - I'll remove one
-in the dso__load() later in this series as it may not be correct.
-
-> 
-> If the fallback types lack a .text section (such as data-only DSOs), the
-> state is permanently left as NOT_FOUND, preventing perf from reading them.
-
-I'm not sure if we have a use case to access contents of data-only DSOs.
-If so, I can add a check for ".data" section later.
-
-> 
-> [ ... ]
-> 
-> >  	do {
-> >  		dso__set_binary_type(dso, binary_type_data[i++]);
-> >  
-> > -		dso_data->fd = open_dso(dso, machine);
-> > -		if (dso_data->fd >= 0)
-> > -			goto out;
-> > +		path = dso__get_filename(dso, "", &decomp, dso__binary_type(dso));
-> 
-> [Severity: High]
-> Does hardcoding the root directory to an empty string break path resolution
-> for guest kernel modules?
-> 
-> When the fallback logic looks up types like DSO_BINARY_TYPE__GUEST_KMODULE,
-> it passes "" to dso__get_filename() instead of machine->root_dir.
-> 
-> This causes dso__get_filename() to construct an invalid path missing the
-> guest's root directory. The file cannot be found, filename__has_section()
-> fails, and subsequent calls to open_dso() will fail.
-
-This is another concern.  IMHO we handle guest samples poorly and
-there's no good way to access to the guest DSOs.  Only perf kvm command
-has options to access to the guest mount directory where it assumes
-sshfs is available under a pid for the VMM that controls the guest.
-
-This code is not touched for a while, and I doubt if there are any
-users.  We need a better way to track guest info.
-
-Until then, I don't want to make the APIs complex unnecessarily and just
-use the hard-coded empty root directory for now.
-
-> 
-> [Severity: High]
-> Does calling dso__get_filename() without holding dso__lock(dso) cause a
-> use-after-free of dso->nsinfo?
-> 
-> The new __dso__find_binary_type() helper executes with only the global
-> _dso__data_open_lock held. It calls dso__get_filename(), which invokes
-> dso__filename_with_chroot() and dereferences dso->nsinfo to read the
-> process ID.
-> 
-> Concurrently, another thread could call dso__set_nsinfo() (which acquires
-> dso__lock(dso)), replacing the nsinfo pointer and freeing the old one via
-> nsinfo__put(). Since this read path ignores dso__lock(dso), it can read
-> the freed pointer.
-
-Ack, will grab the dso lock.
-
-> 
-> > +		if (path == NULL)
-> > +			continue;
-> > +
-> > +		found = filename__has_section(path, ".text");
-> 
-> [Severity: High]
-> Does this strict .text section check break data-only DSOs and NO_LIBELF
-> builds?
-> 
-> Prior to this patch, try_to_open_dso() discovered the DSO by calling
-> open_dso(). If the file existed and was readable, the open succeeded. This
-> patch introduces a strict requirement that a DSO must contain a .text
-> section.
-> 
-> Perf commonly profiles memory data accesses (like perf mem or perf c2c)
-> hitting data-only DSOs. For these files, filename__has_section() evaluates
-> to false, forcing the binary type to NOT_FOUND. Furthermore, if perf is
-> compiled without libelf (NO_LIBELF=1), filename__has_section() is stubbed
-> to unconditionally return false, breaking user DSO loading entirely.
-
-As I said in another reply, I think it's ok to ignore data-only DSOs.
-
-For NO_LIBELF=1 case, it didn't implement symbol loading.  So I don't
-think it'd need binary data access for a DSO.  Since the primary use
-case is perf annotate which works for symbols, I think it's ok not to
-implement filename__has_section() in util/symbol-minimal.c
-
-But it'd be not so hard to do it anyway.  We can add it later if it's
-really needed.
-
-> 
-> [Severity: Medium]
-> Can this bypass of do_open() permanently cache EMFILE failures as NOT_FOUND?
-> 
-> The filename__has_section() function uses a raw open() without the FD limit
-> (EMFILE) handling and LRU eviction logic normally provided by do_open() and
-> close_first_dso().
-> 
-> If perf hits RLIMIT_NOFILE, open() returns -1, and filename__has_section()
-> silently returns false. __dso__find_binary_type() then assumes the binary
-> is invalid, sets bintype_searched = 1, and permanently caches
-> DSO_BINARY_TYPE__NOT_FOUND, breaking data access to the DSO for the rest
-> of the execution.
-
-Good point.  Maybe it need to save the errno and restore it before
-return from filename__has_section().  Then the caller can check the
-errno and retry as it can be called from dso__data_get_fd().
-
-> 
-> [ ... ]
-> 
-> > +static void try_to_open_dso(struct dso *dso, struct machine *machine)
-> > +	EXCLUSIVE_LOCKS_REQUIRED(_dso__data_open_lock)
-> > +{
-> > +	struct dso_data *dso_data = dso__data(dso);
-> > +
-> > +	if (dso_data->fd >= 0)
-> > +		return;
-> > +
-> > +	__dso__find_binary_type(dso);
-> > +	dso_data->fd = open_dso(dso, machine);
-> 
-> [Severity: Low]
-> Does this result in redundant double decompression of compressed kernel
-> modules?
-> 
-> The call to dso__get_filename() in __dso__find_binary_type() decompresses
-> a compressed kernel module to a temporary file. After checking for a .text
-> section, dso__put_filename() unlinks this temporary file.
-> 
-> Immediately after returning, try_to_open_dso() calls open_dso(), which
-> ultimately calls dso__get_filename() again, forcing a second decompression
-> of the exact same kernel module.
-
-Yep, but __dso__find_binary_type() would run only once.
-
-Thanks,
-Namhyung
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261006234315.920817-1-namhyung@kernel.org?part=6
+> Does returning status here expose a bug in dax_range_compare_iter()
+> where it passes an absolute file offset as a relative size?
+>
+> Looking at dax_range_compare_iter():
+>
+> fs/dax.c:dax_range_compare_iter() {
+>     ...
+>     ret =3D dax_iomap_direct_access(smap, pos1, ALIGN(pos1 + len, PAGE_SI=
+ZE),
+>                                   &saddr, NULL);
+>     ...
+>     ret =3D dax_iomap_direct_access(dmap, pos2, ALIGN(pos2 + len, PAGE_SI=
+ZE),
+>                                   &daddr, NULL);
+>     ...
+> }
+>
+> The third argument to dax_iomap_direct_access() is a size, but it is
+> passed ALIGN(pos1 + len, PAGE_SIZE) and ALIGN(pos2 + len, PAGE_SIZE),
+> which are absolute file offsets rounded up to the page size.
+>
+> For large file offsets, this requests a massive access size. The underlyi=
+ng
+> dax_direct_access() call computes nr_pages =3D PHYS_PFN(size), translatin=
+g
+> the absolute offset into a huge page count.
+>
+> This will overflow a 32-bit unsigned int for offsets >=3D 2TB. Additional=
+ly,
+> driver-level bad block scans like __pmem_direct_access() will iterate ove=
+r
+> this massively inflated range.
+>
+> If any hardware poison exists anywhere in the remainder of the device,
+> it can spuriously return -EHWPOISON. By propagating this error status to
+> userspace, will this cause deduplication to spuriously fail?
+>
+> >               src_iter.status =3D dst_iter.status =3D status;
+> >       }
+> >       return ret;
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261010021010.19=
+575-1-jianyungao89@gmail.com?part=3D1
