@@ -1,111 +1,91 @@
-Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6344D30CD95
-	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 17:47:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D674B205A;
+	Sat, 10 Oct 2026 19:00:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791654435; cv=none; b=guR0RdYNr/B67apMSAAgt/vmhPoPiygUgWqNIImlvwWuvfNAiUyFcbelEd9iJ5z+fXZMbRyB7qyFnusOo6DFEvZAXu2PO9bQCIYLE0OlUUtRLKIl7h9zZLqbkj2CmWDuM8IWIVAfsVdcimPHWW8oz4m+rRu8uRd5RFDOkTjrjoI=
+	t=1791658805; cv=none; b=WWi9ygKWbzioDHoPAIcNKcmV9JXfnKkhOXRfQKPOdC6JNXBoZFY9pfUN6YM+7AVnRi4rLLrSBwvr6exunawMkMmuJj2hofGi3quybb9xRaDVexV2/5hAu6sCqpWf1cRME8CixN8BzGi6RN5ryvwGC7SWDoCQOCXx7LJgR6XwvbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791654435; c=relaxed/simple;
-	bh=0pDEB726iZux5u7NawPt1O2YXLRnxNu6qkge1CUmHkY=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=ZaBl/t8ldGsXejtcokQkYl65LiLxwuCP0F+e3Or3BrRGFAGGOfrcJnwlk/QHNkSDIItWVyBbwscjWIg6tmztDQM0OZ/7T45CIi4F+VWdlWqC2beZhp4c86AFity4yf/jFQ8qRqojuatKz/uvzr6FSKllmSuzcBaEW5LMDcFFd+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=TKnVyIjU; arc=none smtp.client-ip=178.21.23.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
+	s=arc-20240116; t=1791658805; c=relaxed/simple;
+	bh=We7Ws7GgfVwgHG/dU/JrvOSiX38qQnvz9Bv5pMjJEGs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PLGNELfwxrlXyOan5iNjYMaJk377h4OYF6ksO3NbJmT3ZPG3oH2lUVP09yWq4iPInHQ2art/xjPQfJayK7r8iU+Tm+KMu2wHH9hW83te2n8tL0DIFhskZpspyWJFWptHlefz2WzLdP84p8963ziMDOODPPbYCIhdzul9c6c8Vy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BI/14aSD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="TKnVyIjU"
-Received: from mail01.layka.lan (localhost [127.0.0.1])
-	by disroot.org (Postfix) with ESMTP id A177E82BFB;
-	Sat, 10 Oct 2026 19:47:09 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id FS1pE1VIQjhE; Sat, 10 Oct 2026 19:47:09 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
-	t=1791654429; bh=0pDEB726iZux5u7NawPt1O2YXLRnxNu6qkge1CUmHkY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=TKnVyIjUi57rNM2lIben3ytf3m5eVx5jvXrrFJ1SZI3UMWwPeokA2y294OpRcH34U
-	 cI9oiMaIOMCKQrmmoOXv/+Y8Zeg7YfpsUp7ycHkblUYSSymaPXE9c9EV1I0/j3a37M
-	 gGCJkb1aiH+lSXaOc2qDVp4yofQGnGRtUVOzRXsXFM71VFVMFI1ITw8cwygAfJZ5CP
-	 AmHfLF2qi/4sLemk3ZgKNU7D7jK5n/bO5EtCfyLpXFKvp5zE91XYn/gyHsDWwak8R1
-	 39unfK8BQDdoIjnO63XGwBkMCkGL5kyVObb6OBvTtnYfEgW3hhQ3BeulxDHpItD4EW
-	 MQabYtoQzDMvA==
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BI/14aSD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318491F000FF;
+	Sat, 10 Oct 2026 19:00:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791658804;
+	bh=p7rPAFjR46L/1frr9rFRB4pQNe6D2dNu88rARccMfWw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=BI/14aSDZcsgaJMaxoQuzJSzqz+emhQ7wo1JpEqnqmeeUvsVXA+Wd21VFy6TX/Uah
+	 3C0ntUsbfl/4oORkTCAOWJozBzW1CGYP28Cic3LItjskhuT7SUco37rrJUclt6fpNc
+	 QswCsXyDHqikYuxs+okPR7auBaatW1Y/CuPTqE5wB/K308UrOIPd7EyAPNl4p5sn6N
+	 hPYhttaMaAYozD7OVZPE3qx6KnoerplcqODa5QrAKoxTQfiT3uWNN86oVtUzJ3FF+H
+	 rzgYGxPSCnoj9d/VD9n4rgNAUeKKiRBUyLfODetFQl+m7VtqthUhtO0Alp6VR4pR8m
+	 tyjPoeBWswYpA==
+Date: Sat, 10 Oct 2026 12:00:01 -0700
+From: Namhyung Kim <namhyung@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] perf symbol: Fix symbol loading from libbfd
+Message-ID: <asqLMeHEdlOHOfp9@z2>
+References: <20261010182439.9732-1-namhyung@kernel.org>
+ <sashiko-outbox-166827@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Sat, 10 Oct 2026 17:47:08 +0000
-From: Rustam Adilov <adilov@disroot.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-gpio@vger.kernel.org
-Subject: Re: [PATCH] pinctrl: single: add big endian support
-In-Reply-To: <sashiko-outbox-166741@kernel.org>
-References: <20261010161545.62959-1-adilov@disroot.org>
- <sashiko-outbox-166741@kernel.org>
-Message-ID: <2091eb9e8e54cfb30664c3bdfe8eb685@disroot.org>
-X-Sender: adilov@disroot.org
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-166827@kernel.org>
 
-On 2026-10-10 16:32, sashiko-bot@kernel.org wrote:
+On Sat, Oct 10, 2026 at 06:36:17PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] api: undefined readl_be/writel_be macros break generic build
+> - [Medium] perf test: pe-file-parsing breaks due to dso__load_bfd_symbols() return value change
 > --
 > 
-> commit 37f4a78fd7a9ab63fc123070591147a5473d3fdf
-> Author: Rustam Adilov <adilov@disroot.org>
+> commit 5ad4f779ca47fdb7586a43ebe4942962c3038922
+> Author: Namhyung Kim <namhyung@kernel.org>
 > 
-> pinctrl: single: add big endian support
+> perf symbol: Fix symbol loading from libbfd
 > 
-> This commit adds big-endian support for pinctrl-single to handle big-endian
-> device tree properties. It implements custom I/O accessor functions for 
-> big-endian MMIO access, intended to support MIPS platforms like RTL930X.
+> This commit modifies dso__load_bfd_symbols() to return a positive number
+> representing the number of loaded symbols instead of 0 on success. The caller
+> in dso__load() is also updated to check for this positive return value.
 > 
->> diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
->> index e0eb7240a9859..001a0c157d6a0 100644
->> --- a/drivers/pinctrl/pinctrl-single.c
->> +++ b/drivers/pinctrl/pinctrl-single.c
->> @@ -265,6 +265,26 @@ static void pcs_writel(unsigned int val, void __iomem *reg)
->>  	writel(val, reg);
->>  }
->>  
->> +static unsigned int pcs_readw_be(void __iomem *reg)
->> +{
->> +	return readw_be(reg);
->> +}
->> +
->> +static unsigned int pcs_readl_be(void __iomem *reg)
->> +{
->> +	return readl_be(reg);
->> +}
->> +
->> +static void pcs_writew_be(unsigned int val, void __iomem *reg)
->> +{
->> +	writew_be(val, reg);
->> +}
->> +
->> +static void pcs_writel_be(unsigned int val, void __iomem *reg)
->> +{
->> +	writel_be(val, reg);
->> +}
+> Closes: https://lore.kernel.org/r/sashiko-outbox-162540@kernel.org
+> Fixes: eac9a4342e5447cad ("perf symbols: Try reading the symbol table with libbfd")
 > 
-> [Severity: Low]
-> Will this break the build on architectures like ARM and ARM64?
+> > diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
+> > index 33dc6158b2b1f..c2462b54b0e56 100644
+> > --- a/tools/perf/util/libbfd.c
+> > +++ b/tools/perf/util/libbfd.c
+> > @@ -411,7 +411,7 @@ int dso__load_bfd_symbols(struct dso *dso, const char *debugfile)
+> >  	symbols__fixup_duplicate(dso__symbols(dso));
+> >  	dso__set_adjust_symbols(dso, true);
+> >  
+> > -	err = 0;
+> > +	err = dso__has_symbols(dso);
 > 
-> The macros readw_be, readl_be, writew_be, and writel_be are strictly
-> architecture-specific and do not exist in standard generic headers like
-> <asm-generic/io.h>. Since pinctrl-single is a generic driver heavily used on
-> architectures like ARM and ARM64, compiling these macros will result in build
-> failures due to undefined reference or implicit declaration errors.
+> [Severity: Medium]
+> Does this change break the pe-file-parsing perf test?
 > 
-> Should this use the generic kernel APIs ioread32be / iowrite32be (and their
-> 16-bit equivalents ioread16be / iowrite16be) for big-endian MMIO access
-> instead?
+> Looking at the pe-file-parsing test in tools/perf/tests/pe-file-parsing.c
+> inside run_dir(), it still expects the old 0 return value for success:
+> 
+>     ret = dso__load_bfd_symbols(dso, debugfile);
+>     TEST_ASSERT_VAL("Failed to load symbols", ret == 0);
+> 
+> Since dso__has_symbols() evaluates to a positive number when symbols exist,
+> won't this cause the test suite to unconditionally fail when analyzing valid
+> PE files?
 
-Interesting that these macros are not in generic files... Why then this is a
-low severity if it will cause build issue on some architectures is questionable
-to me but i will change the patch to use the the mentioned functions instead.
+Oops, completely missed that.  Will update.
+
+Thanks,
+Namhyung
