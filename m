@@ -1,177 +1,240 @@
-Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9717839D6D6
-	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 05:02:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.174
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791608582; cv=none; b=M1ne0KCJluTj3/b0OOyENetMK3DodPwmQz71Akupm3VFqvp24DjwUrwmhZtSyf4VOHqNg2LigjkFnJ0ic3eDLOlcmsaT5t9GFZZAWM1WOiA2XOa3PYV8lxXuvJAe2pN+n2Y78hCIKtcNmm+uSI3oX6KbHnh77W573mZEahrk7lk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791608582; c=relaxed/simple;
-	bh=hIt0fix7U4Ug7V1Poe/TVuBEz3XvwXLxdfPz6owQiu8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X5AnTGEFBAiHR+w+tST4Pup6scB+mXV5aIRAeIWcSmzbN3tKFOlVlRDP72V+SLiwvY0bhdBNSjk+5NuVS6XI23Dt77CLDuglZaGNuBZ6Cq0Ysqdd1AmCBM0MfqqiFv6ScrY8WwH8BnFoS7Yrup8ykSY10qYWEK71LJBaijbHVqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B4TZL+/x; arc=none smtp.client-ip=74.125.82.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92AA3C9EE4
+	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 05:14:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.17
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791609277; cv=fail; b=EiZl098/PxUg+b6IdEef+TMvzx+kh/CNUTxrM2J3WNRmkrj3nwep/OsVLzx5V7IhKx8RtOSpgcpNG+FiZMPTbLRD14OLekRFUayB2RxZUe2aKxfBf6nJzw4vvOgyfQ2SZoAegaYl6Qxq4DBsOB+Q0E5+d8A/PWhalAjqkPX9h/U=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791609277; c=relaxed/simple;
+	bh=elKJHarFqyRhbMnGnoWTp53YpEA7Wvz1qMorkkCI1Zk=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=IfbCF9IqUDqBqhnWu6PwOhEVu9NZl+ePfr0hXL8Od5nobTHr5gcoe0St5YmaJCpXe+wL9MQhrIexL13lNL6EpetmSw3rbHZ8HU3wNBDt9ot/0GgxWyQROHNQrn06Yyh5yUm6hr88xMm+VUX1RH25xkMv4DCRAvIs0bfrXO9qSpc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=l7wwkXza; arc=fail smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B4TZL+/x"
-Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-35829219da8so276921eec.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 09 Oct 2026 22:02:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791608576; x=1792213376; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=DW/QQM+SN8lHBKI9RQtMNJfJ5uJuPnqwaUfrmF5FFDI=;
-        b=B4TZL+/xumf010xcEJHsCcUVKNseDsJz0tu/JYg6OqNvIpZqEd9a03g4Q92p53y2jI
-         R9UQWy9iTFHFSZ9ZKFFoceBXw9BfhGNsQV6B4o1OI+cvg1W3KgBz7NFZTp429YihswXk
-         MmuUmj9vDvDmRtm5P8kecpdz1BAXMAeRU2lYbK+lCL3sX7ALgGX7/N+9T95kChnV2FSx
-         EZzEBVX0Fqz+GjYcYMxqRTE084dg3xnVC8EZY7umMJJt9LlYLydJw9wV9HMwHBPvWzYY
-         t09J7KQP4kmKGgdREAimE7r0S4KRQv/qgO7W5KLBZxL5B9hFUj3HK34ZhTlAFxDKCfYv
-         ruXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791608576; x=1792213376;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=DW/QQM+SN8lHBKI9RQtMNJfJ5uJuPnqwaUfrmF5FFDI=;
-        b=qGXvAOtqlgfmaoKZU75MnAXQh2CwSL6UOEF+7hWg7YgqkZoy7XoMhigxAqmUvXxPw9
-         HssApl+9ggLaV2H8c0WHPRMO9Pax68qndcHNyxVwYhkq0keVd9xS5vJZrp7J8BsKJAL/
-         tE9WRz54zxU9hD/+So609QeZ8zBu9pvFvdyelhPsmBHm4f6sum352moZ37bAZbF0Nh9V
-         f9XENK3agNWI6NJYAE9gYbmiz+CgoNNOiuvfTC18S//k3dBirISfhxwGGzVDc4aI7Ul8
-         nytswSvO8+T/iDrayxHm1iAjdOF9GvolLi3h6eT+MelxdWDYp50joj1O10h354SQ9OtQ
-         nStQ==
-X-Gm-Message-State: AFq9FYLi52M2SVO2c2uxVhGMl7PoQKCd39CGInAWNJ2r1QMWpGG3deEz
-	kIgTAArZ3AEqquP7hEzdtjLBEghGUMq9VrvKY7i/5YR5+jB08p5maFjohQXwoKph
-X-Gm-Gg: AYBFou0cLkXqXHAFC8CY/UMdEWghU29qzOOZX3GYg8bIBDKzlPYv5cJ0zGtz0WIq+gR
-	4m/8NAF3RYe4dByU4D8SDcUxPAla/3mMHHkyCOCZnoxJBTHJBeLjevLygX3B93bYXHwNxXrJTVD
-	RY5ptrjm6JHlomRTOH56XMeRyreWoA/f4kOcDVdMOb1bcAc55lbtKoHMloHcldSvhSwpNOjC9ot
-	e7o4xN415RUxs150bYyXOkpYz5Y5Si6IYvZncbdzSABte4ZDnIkqEcMaYokN1dgto+VlAjWnrgw
-	tJt34vUNW1T01MvLjG8+Y2gfmTVehUu/12ugb5pybWkrD5aO7OlsxaiZDeTvCkka8QbMlheyRFX
-	s2GqPCPAD3c4l5YjrhJcjtJAWvqIcCx0eoM6t8HRMwQg7+Lz/K0xw2GNvbAX+xvCFUTUbmyNjti
-	fFeWWlo1AmoMjTdeIZykTrqZ/vU4SjDrlQ2/rSC9aWneGV7TwwM3TACiwNPM9qy4vlUNXBGxeaN
-	+lOr0glLiufauj3Sq02CS5cc3BZSFE9t4b6qdcV
-X-Received: by 2002:a05:7300:aeaf:b0:341:c383:9afb with SMTP id 5a478bee46e88-3536c59ed2amr5265002eec.20.1791608575167;
-        Fri, 09 Oct 2026 22:02:55 -0700 (PDT)
-Received: from google.com ([2a00:79e0:2ebe:8:b7ea:19aa:c6f7:8c02])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3537ca67b21sm11045338eec.11.2026.10.09.22.02.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Oct 2026 22:02:54 -0700 (PDT)
-Date: Fri, 9 Oct 2026 22:02:51 -0700
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org
-Subject: Re: [PATCH] Input: reject parent overrides on managed input devices
-Message-ID: <asnFTCpEdMmOAK-L@google.com>
-References: <asmCc1VxVPLIMgY6@google.com>
- <sashiko-outbox-166252@kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="l7wwkXza"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1791609265; x=1823145265;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=elKJHarFqyRhbMnGnoWTp53YpEA7Wvz1qMorkkCI1Zk=;
+  b=l7wwkXzah7yflKy6IzGzyoyxgvM7BdMqNnvc7Ym3Wv8ZEGkZ2Eqkpyn/
+   Me8Cj/B+p/hI+cDGCMySN0LP9bhDZ65MDo2z2dc1s+Terf6ib1t4H4fHm
+   xfeaIjqiioYXEfLjMpdYLY8UhQMHk2kDIcZ3zS/bZJFc6YypY3o3jaAuB
+   hMAKYxq5mxtK/NgqDx1HaxOjkQwk6CeD7vWoUBEv6P6wTFVIFkJvvydHb
+   0dX+EO0Tuet9VNQFefny5sH4Y1WKCIKgGVd5qjij0yu1ZmVXkksFdwUYc
+   1787do03SoPhyRGrCoharMb8FsCWqOfWM/jQsvKdz56mzDCMfuzv6fup+
+   w==;
+X-CSE-ConnectionGUID: CsJxVLoUS5q5fAuBxxzYdA==
+X-CSE-MsgGUID: xv4MsvO1Tn26djV/7UXrhw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11930"; a="413974"
+X-IronPort-AV: E=Sophos;i="6.27,149,1787036400"; 
+   d="scan'208";a="413974"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2026 22:14:23 -0700
+X-CSE-ConnectionGUID: /N3WvX65TEqhsN8IlT9pow==
+X-CSE-MsgGUID: o7H8eF5gSlK8XqxXley8CQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,149,1787036400"; 
+   d="scan'208";a="434155"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2026 22:14:22 -0700
+Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Fri, 9 Oct 2026 22:14:21 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49 via Frontend Transport; Fri, 9 Oct 2026 22:14:21 -0700
+Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.34) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Fri, 9 Oct 2026 22:14:20 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FNXTuCtgZFIaFDJ0lKqhvOOuPy78TegdZ3jOopqNtl2R9CZc/4BEncK0MX+idTFx/2hrac//MGEma/0C64if2XZ5PJ2QQg93BqHauc8wYIoUfQi8AXM/+N4TD2pmP/NXaBn7CgSOu3halTlIei8pXSQUBig2PK66AC0qiGDApifrj9MCSI+uHYLg2OxhS5hmvCLPR3Vr+TluC8zTIpqGxHrogaFYAnPO2ge/+B6bDidvvuT5ZD0MemwMNn/tkFlgd+wNdooevSLm3yqAw5JLyqUVeEKEravm9BWgcHVNFDWDsblDx6eiJUglWbJRR9V/sQ8Yga0aAnaE3rW6W3z71g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gng0M/s+H19s/RbwLiBJtZyXgCYxdFUy9Pw8hPbQ2iE=;
+ b=FVCs7CcGSPpXxnhy3PuCznzB0KyxaFg7vXW6zG/7K+Ku38Dt7lXEpKcrDQPYklBKfJSmdUg4NjyLOdbLHLuXJkBes9V3xcEmOGYJN1dJm72RruGC2KylKco2S9Z7nSeuS8E68H2fkwi1S1K9+yAtorspTzxQIZ8IUZbGrx1nInptGhFPIw/nkEGbEAlPXOZ5g0cxeuQJ+eTHz6T9Mg3xECEMIXwL3FxNkGkKL5o+7FcvfnZxjaQ4UKmzMzadIOLZ8dsueElIl6HFbBe9phwhgmwR31TM0jRNAXLMQamjx+QJceyXl0RUkPf0/LdppUkC7N5PptpZxniXZnPsaeh8fg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CH8PR11MB852307.namprd11.prod.outlook.com
+ (2603:10b6:610:32c::22) by DS7PR11MB9449.namprd11.prod.outlook.com
+ (2603:10b6:8:266::7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.18; Sat, 10 Oct
+ 2026 05:14:12 +0000
+Received: from CH8PR11MB852307.namprd11.prod.outlook.com
+ ([fe80::5f8e:c1ed:445a:a4b7]) by CH8PR11MB852307.namprd11.prod.outlook.com
+ ([fe80::5f8e:c1ed:445a:a4b7%4]) with mapi id 15.21.0496.017; Sat, 10 Oct 2026
+ 05:14:12 +0000
+Message-ID: <e597a6a2-bcd3-4945-9f50-0b38f8e6dde1@intel.com>
+Date: Sat, 10 Oct 2026 10:44:05 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 01/14] drm/xe/hwmon: Handle pcode read failures of
+ xe_hwmon_pcode_rmw_power_limit
+To: <sashiko-reviews@lists.linux.dev>
+CC: <intel-xe@lists.freedesktop.org>
+References: <20261009120335.52973-1-karthik.poosa@intel.com>
+ <20261009120335.52973-2-karthik.poosa@intel.com>
+ <sashiko-outbox-165502@kernel.org>
+Content-Language: en-US
+From: "Poosa, Karthik" <karthik.poosa@intel.com>
+In-Reply-To: <sashiko-outbox-165502@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MA5PR01CA0306.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:220::18) To CH8PR11MB852307.namprd11.prod.outlook.com
+ (2603:10b6:610:32c::22)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-166252@kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH8PR11MB852307:EE_|DS7PR11MB9449:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3e35418c-5237-4f69-5a82-08df268d523a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|261009223027099003|5023799004|56012099006|11063799006|4143699003|10067099003|22082099003|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info: hd5KzP6L5tSweE1yQ/Hk0nRGg6x1+3A5rHMocIB7cPz+lA6GgsYe1iLtliOPtIIgHvqPPvpecOV5l6qtVBqWbLU4Y7z1BLBIchfy4a/cttctxrVYPBy/nYFYT+NQMK+axuhGpvQSdR2cgmSBHS7Wf6e56V+5FsBuHtoLHZO9mCijknULiqLndt+uT+BipRp3BMbI1p1Cre5yr2shgZ12Wq0bFc9IXHBwz0HSLIOyDEjHNldKirVk2lv0Li2YRXeQUZWRfeTY/KVsZPwn0EA95W95OZ1gOUiMN52WnRuSF6SU9kiwVjAM3M0vj9DwPup/v47lhgb+P5USB7JlU40aM92ECtcEpAZmHjSXHEPt0iCv9fsnKzaKJ1b9MvVSa/7WcLBLoj4Mmjft5kCMbALGO7+sAIkwtV4OChZWFzhHtokuWZjyc2itwOLIyLGrq9aE8mbqpNrMyPIQNtU7glq8Ahj9LQR2WIIOvEyKiuOz9rQJtQd2IcCJ6sIs/YEGvTw8tQU92SUkiW7eSMzOMa4ZuUn3UAAmxjXYSrMRV6RgPVNeJ8A/b5M8ZqXWWt3ivp9X48znFsk5r6fG3qyDv6FVusQspXMWv3LXU4rI7gUZppXMtYiqrZJZ/2+jF0ENQ5h7jR7xF6MuY03WqQtfMtjIBdGi41SAKrnbqUMauJOgt7g=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH8PR11MB852307.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(261009223027099003)(5023799004)(56012099006)(11063799006)(4143699003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SGxvQitHZ2p0ajRISVlENmp5YXhubW1WT3hrVURFQlVtUC9kd3JUaGU4UC9k?=
+ =?utf-8?B?OUtrWlJZd2hFMG9QbmJpNm9MaDBySUtaSUlLTnBnQVd1T0FRNnN1VlV3Nkhx?=
+ =?utf-8?B?VlQzL3BSWDFHTjU3UExDUDhIRjhUbUIyNWhvU2NGSnpQM2F2clE3eWkzTWdt?=
+ =?utf-8?B?MVRVZm4rZnJWNFNkZnJQd0RCL1crRzBHZWxZQ0FYa1kvTjAzaCt5QjRRRGhs?=
+ =?utf-8?B?S0RuUHNMUHJqOHdTQUxGOGVqSEtCUUZZeTZvVUFGMVo2d1Z4aGtuUGM4djJS?=
+ =?utf-8?B?eHBGNUllRkxOZFdvdlVDdU9TR3Y5cEwzRXg0S1RDcWFaRWxPSkpmWjFCWWdi?=
+ =?utf-8?B?eFJVMUJqNnpabUh2bStoSG1GYTllRDBhYTd1TlRWRWdXencyekRHUENtdmpp?=
+ =?utf-8?B?RjZCMStHTGJodVZldTVTVHhaWUVsZ09BNTFmOFIvL0oyZzJ6NnJ5Skhoc1Ar?=
+ =?utf-8?B?ZkNNWkdTZjBDL2I2QktEU3BhTnQyaEx3QUY1RmdCeS9ldmgzYnlLWCtsM3Bz?=
+ =?utf-8?B?bE9ORy9icEliV3BvSjRFNi82TEJVRS9TZFdIRGgwNXJsdmFPa09qWmhDZ2Rk?=
+ =?utf-8?B?TnNMM1ZncVc4eUMwZ2VXYWhST2R0RU1UMFVwRE81UEZwdVJHRUtucm1ERlpL?=
+ =?utf-8?B?QXdXYU1ZV2dmdWhOTlZFRWIrNG9mUlc4blorMEYxQ1AwSVNqUUd0S1hrT05r?=
+ =?utf-8?B?SVlQTlY3WmVFVEYycXUvQ01ZOUNJREdScVE3TTFHMk9Ma0hjdkg0Smg0T2xr?=
+ =?utf-8?B?OWErK2Y5Y2hJRzVSTzFmZ2FiN3JMcGtOUEYwdWxxalB3cEFwN0NZcmNDSndi?=
+ =?utf-8?B?akJLZXNESGhCQjA5N1BVTGt4Q2hDTFNaWWYvVExGY1JobTFBank4dzM1bFZ1?=
+ =?utf-8?B?cTFGUFYwb0tJQmRJWGg1dHlYQUhoWEpzM3YwR21VcmcrV1hHNlh6THdNR2RD?=
+ =?utf-8?B?djhYc1QrQUU1eE5DRnlzRExYajg0Um90Tk1PMFZYam84eGJ1UkZ6VmlNQVc5?=
+ =?utf-8?B?YUZUMHpJMGwzWDg1d2lnT2hIb0lHdzE0MDlGNU95OTNEc2lpTm4xeGFSd0lj?=
+ =?utf-8?B?cjFGd3o0anNKSGF1LzNPc3JNeDR3ZG0wM0hjemFnTlJBazBQcTdMTVdQTWVT?=
+ =?utf-8?B?ZklHenhhdTVFVEpCTTVYcTFZYVIybmdGbWpOR0JLR0RheTVGdDRkWjFZb2Qy?=
+ =?utf-8?B?REk2Yy9NdlhHYVhRTzV1N3pkc0dqRDN4WjNIUjdXemV1OGhXekRMOU9pMVNQ?=
+ =?utf-8?B?L0RjekVhb3Nwd2tXT3JhQlFLMlZ0a1JtNXNvWFhvdzVBTHlreDJLWXNiZEpu?=
+ =?utf-8?B?TjZzcTVJbklwZ3ZOL0pkbHVseFVqY200YTFmN1lEK21LS1l1cGNxMzE4L2h3?=
+ =?utf-8?B?bFRrQ0VDSnZxd0pzdHNEWXdiSlhmM2Eybk1TYTZXTlhqMHF6ZDZNYW1vRXB4?=
+ =?utf-8?B?SzVPNE00QzNXSW1MTHdCUGlsQ1FzVVpqSUtwR3BmYVU5c1pmeXN1eEljN3Rq?=
+ =?utf-8?B?MTNGU21LbnBKcWFSUGJENlZVYThydkdhSE9wVTN0Mi8rTnRpU2VOWFptbFVF?=
+ =?utf-8?B?NS9kdDJtQWxhV0VUeldzQ3hhZFdCbFg4dnZaUVZXTmluSFdBanpsK0h6YTV5?=
+ =?utf-8?B?bDRLL1lWSHZKQXMvcm1VMGlOd0IrclpvTnozdE1CWHRzbmhrUDVGemM3Y2ND?=
+ =?utf-8?B?NlpCQmJVMlRKTm1GSzJIb2hXN2JUb0hFc2VVS0RVYmljUWw5TzUzZndWQTcr?=
+ =?utf-8?B?eGJSRDZHMEdqeVhwTHVrR2swaS9yUUlaRWN1aEFzRCtEWU1mTW5sa2VPL3VS?=
+ =?utf-8?B?bmJyc2JhNktZenRocFVac24wOTlXTDdYbDIyVFhaVnJha2gvQWdMeElmN3Zw?=
+ =?utf-8?B?TFp1ZmswQTJON0NnckcveW1BQ3h2Ly9YZTlKbU5uVTVVd3lQMWJDSXpMV3NL?=
+ =?utf-8?B?QlBwRm5MVldTdmV4Z2tVQzJoYXFTUG5HMkpySS80aklqbmVuWVZObC9INEE5?=
+ =?utf-8?B?Q3dDeXhkcHg5dGpjQ1RMeGJHV2RaTXFDY1BNYTFZUkxSb3BLS29iYk5CM3g2?=
+ =?utf-8?B?M2UyaGd0L1g1UWpYbnNVS3hONWhybHdJYkp6eWVKWWt1MzhGZGxQVWdnUXV0?=
+ =?utf-8?B?VjNQbFdqMStwdUJCbHpMcDdwQ1BIZ0Nvb1kyeGZrK3FZcjMwYUV0NmFlN0t0?=
+ =?utf-8?B?dUVEaGdNYnMyc0Y1L3B6YVJxQW8xZno1TnUrelhKc1B5VDE4a0dDMDJPbkY5?=
+ =?utf-8?B?TjNYYU5zSlRkQ2VoYkQzeUIxZ3pEeVRCdEZEK2lyUTM0UWFJRU5ZQVBUQyt0?=
+ =?utf-8?B?VkZkeU5qa3NDdU9QdzdnYnZuOUNyVmIyUzhHd3o0ajNhSXA4N1VoUT09?=
+X-Exchange-RoutingPolicyChecked: yHqQs8yIGXsw4GXKV2Y+YAwTNwOVZbhac5p8tYzrrbTcv8glm6/lKnf/r3Q9o7ks4sTG5bgax7EcXviMvZaDACgSHoI7oB0X5mjkdJMtptRpr36DVV5WHRlSEZ5Gax3LbCbVNAJJbxvEx28r3uh3x7M+E5Cp5omDYqfwofVk50OhAjgZeNP0G6758SsuDUBC0DMXErxweXi0I77Idgo6CaX+wmb/IuLiEVuLVf4hZGJRUITvA85rxz9oAamyrV/yg9UXU7GlKkobSDVKvTLc9+cHQ0L8+3NtessQOS9d1fh7yeQz0tpP8Uc75FzKK6iCj4GvQq23KNEQdPpM4yGjDg==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3e35418c-5237-4f69-5a82-08df268d523a
+X-MS-Exchange-CrossTenant-AuthSource: CH8PR11MB852307.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Oct 2026 05:14:12.2704
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: n4nsiyQWdldwlANKSEqud66OFPaHWKfrDldaiLVmuYhU/S+9OQPDP81OLwQjJg7Fjmgki3+fhX+vAtSVlyQhZw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR11MB9449
+X-OriginatorOrg: intel.com
 
-On Sat, Oct 10, 2026 at 04:04:42AM +0000, sashiko-bot@kernel.org wrote:
+
+On 09-10-2026 17:44, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] input: newly added parent check breaks existing managed drivers
-> - [High] input: NULL pointer dereference in input_free_device()
+> - [Medium] drm/xe/hwmon: unchecked return value from xe_hwmon_pcode_rmw_power_limit()
+> - [Medium] hwmon: ignored pcode read errors fabricate valid sysfs responses
 > --
-> 
-> commit 5c214b0cacbe95369ec05dede9ca4ab2c7e279f1
-> Author: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-> 
-> Input: reject parent overrides on managed input devices
-> 
-> This commit adds a strict check to ensure that the parent of a managed
-> input device is not overridden or cleared before registration. It returns
-> -EINVAL if the parent does not match the original device that allocated
-> the managed input device. KUnit tests are also added to verify this
-> behavior.
-> 
-> > diff --git a/drivers/input/input.c b/drivers/input/input.c
-> > index 78c10eea7328d..1cca6d48f5977 100644
-> > --- a/drivers/input/input.c
-> > +++ b/drivers/input/input.c
-> > @@ -2396,6 +2396,14 @@ int input_register_device(struct input_dev *dev)
-> >  	}
-> >  
-> >  	if (dev->devres_managed) {
-> > +		if (!dev->dev.parent ||
-> > +		    !devres_find(dev->dev.parent, devm_input_device_release,
-> > +				 devm_input_device_match, dev)) {
-> > +			dev_err(&dev->dev,
-> > +				"Parent of managed input device was overridden, refusing to register\n");
-> > +			return -EINVAL;
-> 
-> [Severity: High]
-> Does this new strict check break existing in-tree drivers that legitimately
-> reparent the input device during probe?
-> 
-> For example, looking at da7280_probe() in drivers/input/misc/da7280.c:
-> 
-> da7280_probe() {
->     input_dev = devm_input_allocate_device(dev);
->     ...
->     input_dev->dev.parent = client->dev.parent;
->     ...
->     error = input_register_device(input_dev);
-> }
-> 
-> Another example is tps6507x_ts_probe() in drivers/input/touchscreen/tps6507x-ts.c:
-> 
-> tps6507x_ts_probe() {
->     poll_dev = devm_input_allocate_device(&i2c->dev);
->     ...
->     poll_dev->dev.parent = tsc->dev;
->     ...
->     error = input_register_device(poll_dev);
-> }
-> 
-> Because these drivers explicitly override dev.parent before registration,
-> wouldn't this new check unconditionally fail with -EINVAL and break their
-> initialization sequence?
+>
+> commit 6cc9575a02c32b9a8a28e257650ff7b17698865f
+> Author: Karthik Poosa <karthik.poosa@intel.com>
+>
+> drm/xe/hwmon: Handle pcode read failures of xe_hwmon_pcode_rmw_power_limit
+>
+> This commit adds a return on read failures inside
+> xe_hwmon_pcode_rmw_power_limit and updates callers to avoid updating
+> power limit settings with invalid data.
+>
+>> diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
+>> index 5edeac961ec33..9884e06f83e59 100644
+>> --- a/drivers/gpu/drm/xe/xe_hwmon.c
+>> +++ b/drivers/gpu/drm/xe/xe_hwmon.c
+>> @@ -232,9 +232,11 @@ static int xe_hwmon_pcode_rmw_power_limit(const struct xe_hwmon *hwmon, u32 attr
+>>   						  READ_PSYSGPU_POWER_LIMIT :
+>>   						  READ_PACKAGE_POWER_LIMIT,
+>>   						  prepare_power_limit_param2(hwmon)), &val0, &val1);
+>> -	if (ret)
+>> -		drm_dbg(&hwmon->xe->drm, "read failed ch %d val0 0x%08x, val1 0x%08x, ret %d\n",
+>> +	if (ret) {
+>> +		drm_err(&hwmon->xe->drm, "read failed ch %d val0 0x%08x, val1 0x%08x, ret %d\n",
+>>   			channel, val0, val1, ret);
+>> +		return ret;
+>> +	}
+> [Severity: Medium]
+> Since this function now returns early on error, skipping the subsequent PCODE
+> writes, could this cause regressions in xe_hwmon_get_preregistration_info?
+>
+> In xe_hwmon_get_preregistration_info, there are four calls to this function
+> that ignore the return value. If these initialization writes fail, the
+> function still sets hwmon->boot_power_limit_read = true.
+>
+> Setting this flag alters the subcommand used for later reads, changing it from
+> READ_PL_FROM_FW to READ_PL_FROM_PCODE. Could this cause userspace to receive
+> incorrect power limit values if the initial writes were aborted?
+>
+> [ ... ]
 
-No drivers should be doing such overrides. I already posted patches
-fixing it up.
+No, This won't cause a regression.
 
-> 
-> [Severity: High]
-> If this error path is triggered, can it lead to a NULL pointer dereference
-> or double-free when the driver cleans up?
-> 
-> When a managed driver's probe fails here, it will typically call
-> input_free_device() in its error path.  However, input_free_device() trusts
-> dev->dev.parent unconditionally:
-> 
-> drivers/input/input.c:input_free_device() {
->     ...
->     if (dev->devres_managed)
->         WARN_ON(devres_destroy(dev->dev.parent,
->                                devm_input_device_release,
->                                devm_input_device_match,
->                                dev));
->     ...
-> }
-> 
-> If dev.parent was cleared to NULL before input_register_device() was called,
-> wouldn't passing NULL to devres_destroy() cause a crash when it tries to
-> lock the devres list?
-> 
-> Alternatively, if the device was reparented to a different device,
-> devres_destroy() would fail to find the devres on the new parent.  Wouldn't
-> this fail to untrack the devres, leading to a double-free later when the
-> original devm owner is unbound?
+boot_power_limit_read is set only after all four READ_PL_FROM_FW reads 
+succeed. Later PCODE failures don't change the cached pl1_on_boot and 
+pl2_on_boot values.
 
-Given that drivers should not be doing it I am not worries about this
-case. They'll get an error message first.
-
-Thanks.
-
--- 
-Dmitry
+If the RMW read fails, nothing is written. If the write fails, PCODE 
+doesn't apply it. Either way, PCODE keeps the firmware defaults.
+>> @@ -394,7 +396,9 @@ static int xe_hwmon_power_max_write(struct xe_hwmon *hwmon, u32 attr, int channe
+>>   		if (hwmon->xe->info.has_mbx_power_limits) {
+>>   			drm_dbg(&hwmon->xe->drm, "disabling %s on channel %d\n",
+>>   				PWR_ATTR_TO_STR(attr), channel);
+>> -			xe_hwmon_pcode_rmw_power_limit(hwmon, attr, channel, PWR_LIM_EN, 0);
+>> +			ret = xe_hwmon_pcode_rmw_power_limit(hwmon, attr, channel, PWR_LIM_EN, 0);
+>> +			if (ret)
+>> +				goto unlock;
+>>   			xe_hwmon_pcode_read_power_limit(hwmon, attr, channel, &reg_val);
+> .
+> [Severity: Medium]
+> Is it intentional that the return value of xe_hwmon_pcode_read_power_limit is
+> discarded right after checking the write failure?
+>
+> If this read fails due to a hardware timeout, it could leave reg_val
+> uninitialized or zeroed, bypassing the disable verification check that follows.
+>
+> Additionally, could the ignored read errors in xe_hwmon_power_max_read
+> fabricate valid sysfs responses? If xe_hwmon_pcode_read_power_limit fails in
+> that function, it returns fake 0 readings instead of propagating the hardware
+> error, which might mislead userspace tools into believing the power limit is
+> disabled.
+Valid points, but they're unrelated to this patch. this shall be handled 
+in separate patch series.
