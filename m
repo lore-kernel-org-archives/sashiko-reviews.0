@@ -1,143 +1,126 @@
-Received: from mail.mindbit.ro (xs1.mindbit.ro [80.86.107.70])
+Received: from sender6-pp-e105.zoho.com (sender6-pp-e105.zoho.com [165.173.180.105])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0642D8378
-	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 15:03:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.86.107.70
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791644603; cv=none; b=Y8nS9QDuCjP2ljEhY4gt/2YMN0kEceKWBAda6tybXT9T+5r31pDtfoN2+j4eWoI/R2RZT341/YRmE33Ldz2NQldI/RJeM7Gb39C5SAW+GNSdUVR6n8BzxDeRO7HjE3S6/jiAThHjXlbYbpalnQF8L7e0x45AdJ9oOqqBwm3L5co=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791644603; c=relaxed/simple;
-	bh=iR14zn64rysPwXESh6dg9xmhrdje895tbO4TCKrwGbs=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=YK9GhdNCLWUOP7WmyXrnQk4xGxW/Df0T2uEqmYx6ifotsbAS470aCmLuJ7CCaSDd0e4kWbTVTmlOF77wz7fvNgmDTAepCE+5b84nuW8brltBKwaJJ7mVdPO/7R4BJ3O1ZBt4JEgcz13/U28bhNMuDRJHZPk0KN93V3SwD7wogfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rendec.net; spf=pass smtp.mailfrom=rendec.net; dkim=pass (2048-bit key) header.d=rendec.net header.i=@rendec.net header.b=GrtDCI+g; arc=none smtp.client-ip=80.86.107.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rendec.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rendec.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F9813B58C;
+	Sat, 10 Oct 2026 17:09:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.180.105
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791652195; cv=pass; b=MzDaIUVabU1qX+OD1xxVOvYIkr3JljTJzxFmZvtaHG6Ch4xI2AsQEcuHHV0hk3qnxPbCBwumLJRkEPIgZaUlJOm3qRGmuSs+G4o9k64s1IVeG+BuZcARgbDSXFiq1wzQcGmI4UODJSIN9IwsIDkMwnxp0URWyX2GyWZgZbzHN8o=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791652195; c=relaxed/simple;
+	bh=/zxAKR58iJyDSi4nZh1eLUziL2e+4QGrhKQGoOdfmBc=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=MgIYDEJpWCpieYnIm2w3mk01Tb7gPkUiP4QGRoBR9mzoGxa2QtPcX4hoWhLg631viCPqdpTZovR4p0twCual931Rnqkm6GqvOT8WEvcsXIJltmIuD8kn8cTn8OP7RfIJAXJycB1IVmkkfiIjyF7QSdfELXipHZ2uCj2ZcM2lXW0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=U/uWeRZU; arc=pass smtp.client-ip=165.173.180.105
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rendec.net header.i=@rendec.net header.b="GrtDCI+g"
-Received: from dog.kanata.rendec.net (pool-174-112-193-187.cpe.net.cable.rogers.com [174.112.193.187])
-	by mail.mindbit.ro (Postfix) with ESMTPSA id E8893D19E4;
-	Sat, 10 Oct 2026 18:03:09 +0300 (EEST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.mindbit.ro E8893D19E4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rendec.net;
-	s=default; t=1791644591;
-	bh=UbS7Kdi94gS4s+B/t67W2xIrAQZTkTP4OBN6Zzly8aM=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-	b=GrtDCI+g3nYFFBMNtmWJBExxK1VOf4/Jwpkih0zvV6TcLBcC/Y1BSMdGfiWwxIKrJ
-	 ow0moHN/JoWvhVFmVEnCIA0uQAvAQQj8bFqbNUbVX54Rn2B3JXLHOZVhvv7zvI6F+l
-	 OIV1SVKDizp3cgfFJpKUEbFjxA7VKLIRB5zHI7qygzPpKiOJW+9XWOVSPCE9OGhHJJ
-	 7tqQLQGJ9nmoetBAFy2Chghy57ORTTJqkuvUf92oDbZULp2XZXMBYi5VBHgKXqtQYS
-	 PFAOjwbq/gh+111PeTyKiBjLqI2NwDQs84A/9bbyx8VJnA3DJbKosj6eAG47oirV9Q
-	 XUxLBcA//B9AA==
-Message-ID: <4c8807594fff7f44dab85b96acb266101c03f164.camel@rendec.net>
-Subject: Re: [PATCH] of/irq: Document of_irq_init() device node refcount
- contract
-From: Radu Rendec <radu@rendec.net>
-To: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@kernel.org>
-Cc: Eliav Farber <farbere@amazon.com>, Thomas Gleixner <tglx@kernel.org>, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	sashiko-reviews@lists.linux.dev, conor+dt@kernel.org
-Date: Sat, 10 Oct 2026 11:03:07 -0400
-In-Reply-To: <sashiko-outbox-164696@kernel.org>
-References: <20261009011324.1503697-1-radu@rendec.net>
-	 <sashiko-outbox-164696@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-2.fc43) 
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="U/uWeRZU"
+ARC-Seal: i=1; a=rsa-sha256; t=1791652187; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=nxr8HfIDUaKsX7L7P2AxOfgY4psqViDeVGoegqIogZQOCSUxXSZFW0e4nQXm29ZP3qhS5FaKvcIm7zdlCldhPmgjPwpIe3b5VzjYF2+IHl7S5agdKtiKLdDIrn0a548WDmtjV7vMGwVs/OYD8Ji+APf67G6Lt0sYWFu/uQeX9rA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1791652187; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=XI2lMiI9M516ZvoW8NXLevRqWxxdnnNPZ68nblQAcz4=; 
+	b=fvFfD9tw0tqtdPanfbTOQHdUjQt9R0DPBYZq6ZBm1hd9pY6yKrSQumieJ2gr9jTxefjYdAfbBKN12ULVw+c47xuull4Sc51LBZoPcfmyCEiMCKLO0owpZHcwxU13YC0udX6Iz9G7YBE+x6eyaVI9RDLsOOsM0jzTxozCoI0at/s=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=pigmoral.tech;
+	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
+	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1791652187;
+	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
+	h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Date:Message-Id:Message-Id:Cc:Cc:Subject:Subject:From:From:To:To:In-Reply-To:Reply-To;
+	bh=XI2lMiI9M516ZvoW8NXLevRqWxxdnnNPZ68nblQAcz4=;
+	b=U/uWeRZUbmG6wRKALxODvJSXgzS7bSV5sVSz9yby4ojZfFMCsBPHat9mMzMFjQY6
+	Q9L7stQjMHmXwDy8PDJ691RvJ1avRR2Xx9j6Qgfl9ks2dZbX2nIyaJilhkeDat33UKG
+	DI5WV9VUZRknYv8lr1WBB5pLM/IHN1hhLWsP6UQU=
+Received: by smtp.zohomail.com with SMTPS id 179165218602419.75079290365079;
+	Sat, 10 Oct 2026 10:09:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 11 Oct 2026 01:09:39 +0800
+Message-Id: <DM1BOWOKF9OM.21QWSA1L8WH3U@pigmoral.tech>
+Cc: <linux-clk@vger.kernel.org>, <robh@kernel.org>, <conor+dt@kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-sunxi@lists.linux.dev>
+Subject: Re: [PATCH v6 7/8] clk: sunxi-ng: a733: Add bus clock gates
+From: "Junhui Liu" <junhui.liu@pigmoral.tech>
+To: <sashiko-reviews@lists.linux.dev>, "Junhui Liu"
+ <junhui.liu@pigmoral.tech>
+X-Mailer: aerc 0.22.0
+References: <20261009-a733-clk-v6-0-ae8178fce7e8@pigmoral.tech>
+ <20261009-a733-clk-v6-7-ae8178fce7e8@pigmoral.tech>
+ <sashiko-outbox-166706@kernel.org>
+In-Reply-To: <sashiko-outbox-166706@kernel.org>
+X-ZohoMailClient: External
 
-On Fri, 2026-10-09 at 01:19 +0000, sashiko-bot@kernel.org wrote:
+On Sat Oct 10, 2026 at 11:54 PM CST, sashiko-bot wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] of/irq: false API contract documentation encourages use-after-=
-free
+> - [High] clk: sunxi-ng: ahb_store_clk is missing CLK_IS_CRITICAL flag
 > --
->=20
-> commit 553b68f6aa4fe4b4ead9f98bb63dfba3cbd9c9a9
-> Author: Radu Rendec <radu@rendec.net>
->=20
-> of/irq: Document of_irq_init() device node refcount contract
->=20
-> This commit adds documentation to of_irq_init() claiming that the device
-> node refcount is intentionally never dropped upon successful initializati=
-on.
->=20
-> > diff --git a/drivers/of/irq.c b/drivers/of/irq.c
-> > index ef1ed9743907b..bf277781cdb6c 100644
-> > --- a/drivers/of/irq.c
-> > +++ b/drivers/of/irq.c
-> > @@ -647,6 +647,15 @@ struct of_intc_desc {
-> > =C2=A0 *
-> > =C2=A0 * This function scans the device tree for matching interrupt con=
-troller nodes,
-> > =C2=A0 * and calls their initialization functions in order with parents=
- first.
-> > + *
-> > + * The initialization functions are called while holding a refcount on=
- the
-> > + * device node corresponding to the device that is being initialized (=
-passed
-> > + * as the first parameter). If an initialization function is successfu=
-l, the
-> > + * device node refcount is *not* dropped (ever); this is intentional a=
-nd
-> > + * guarantees that the pointer passed to the initialization function i=
-s valid
-> > + * not only while the function runs, but also for the rest of the kern=
-el
-> > + * lifetime (i.e. it is safe for a driver to store the device node poi=
-nter
-> > + * and use it *after* the initialization function returns).
-> > =C2=A0 */
-> > =C2=A0void __init of_irq_init(const struct of_device_id *matches)
-> > =C2=A0{
->=20
-> [Severity: Medium]
-> Does this documentation accurately reflect the code's behavior?
->=20
-> Looking at the end of of_irq_init() in drivers/of/irq.c, there is a clean=
-up
-> loop that explicitly drops the device node refcounts for successfully
-> initialized controllers remaining in the parent list:
->=20
-> 	list_for_each_entry_safe(desc, temp_desc, &intc_parent_list, list) {
-> 		list_del(&desc->list);
-> 		of_node_put(desc->interrupt_parent);
-> 		of_node_put(desc->dev);
-> 		kfree(desc);
-> 	}
->=20
-> Any successfully initialized leaf interrupt controller, and any sibling
-> controllers remaining in intc_parent_list when intc_desc_list becomes emp=
-ty,
-> will have their references dropped by this final drain loop.
+>
+> commit f3ca9c131f39f726826090f6af6752e7b39c004c
+> Author: Junhui Liu <junhui.liu@pigmoral.tech>
+>
+> clk: sunxi-ng: a733: Add bus clock gates
+>
+> This commit adds bus clock gates that control access to the device regist=
+er
+> interfaces on the Allwinner A733 SoC. It also intends to mark the ahb-sto=
+re,
+> mbus-store, and ahb-cpus clocks as critical to prevent access breakage to
+> boot and storage devices.
+>
+>> diff --git a/drivers/clk/sunxi-ng/ccu-sun60i-a733.c b/drivers/clk/sunxi-=
+ng/ccu-sun60i-a733.c
+>> --- a/drivers/clk/sunxi-ng/ccu-sun60i-a733.c
+>> +++ b/drivers/clk/sunxi-ng/ccu-sun60i-a733.c
+>
+> [ ... ]
+>
+>> +static SUNXI_CCU_GATE_HWS(ahb_msi_lite0_clk, "ahb-msi-lite0", ahb_hws,
+>> +			  0x5c0, BIT(16), 0);
+>> +
+>> +/* This gate controls access to the storage controller MMIO registers. =
+*/
+>> +static SUNXI_CCU_GATE_HWS(ahb_store_clk, "ahb-store", ahb_hws,
+>> +			  0x5c0, BIT(24), 0);
+>
+> [Severity: High]
+> The commit message notes that the ahb-store clock should be marked as
+> critical, but the definition of ahb_store_clk here uses 0 for its flags
+> parameter instead of CLK_IS_CRITICAL.
 
-This is correct. At the time when I sent the patch, commit 30724547b221
-("of/irq: Fix remaining refcount leaks in of_irq_init()") hadn't been
-merged yet (or it had very recently and I hadn't picked it up yet).
+Oops, I forgot to update the commit message accordingly. I will send a
+new version to update it.
 
-Sorry for the noise!
+>
+> During late boot, the Common Clock Framework automatically disables any
+> clocks that have no active consumers holding a reference to them.
+>
+> Could this omission allow the framework to inadvertently gate the storage
+> controller MMIO registers, leading to a system freeze or storage probe
+> failures?
 
-By the way, I manually re-added the email addresses I had used on the
-initial email. It looks like sashiko replies to a fixed list of
-addresses.
+ahb_store_clk has already been set as the parent of the NAND, MMC, SPI,
+SPIF and UFS bus gates. Therefore, when any storage-related peripheral is
+in use, ahb_store_clk will be enabled through the clock dependency, so it
+no longer needs the CLK_IS_CRITICAL flag.
 
-> The documentation appears to mistake a pre-existing memory leak (where pa=
-rent
-> controllers popped during the while loop leak their references) for an
-> intentional, universal API contract, while ignoring this final drain loop=
- that
-> cleans up the remaining nodes.
->=20
-> If driver authors rely on this newly documented contract, they might assu=
-me
-> they do not need to take their own reference on the device node. Could th=
-is
-> lead to a use-after-free when the final loop drops the reference?
+>
+>> +static const struct clk_hw *ahb_store_hws[] =3D { &ahb_store_clk.common=
+.hw };
+>> +
+>> +/* Keep enabled for access to the CPUS domain registers. */
+>> +static SUNXI_CCU_GATE_HWS(ahb_cpus_clk, "ahb-cpus", ahb_hws,
+>> +			  0x5c0, BIT(28), CLK_IS_CRITICAL);
 
+--=20
+Best regards,
+Junhui Liu
