@@ -1,163 +1,177 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2A2369D72
-	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 04:59:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9717839D6D6
+	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 05:02:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791608368; cv=none; b=aV/ECua4huISHN7ycDoGU+/IfcqAkM6N4rNq4cbWSGrHI5LnZJAmSV1Df5Lllve/JgMF4OCxQJ4DbtFBmtTobhlUIKZ+LBTX98H+XcLIBvhwu01HXKMsS4n9qQY7ljS3BCq5rocvAdc5fT+7dVEo3VmOUKA8KzdUhXq7ZGswa8A=
+	t=1791608582; cv=none; b=M1ne0KCJluTj3/b0OOyENetMK3DodPwmQz71Akupm3VFqvp24DjwUrwmhZtSyf4VOHqNg2LigjkFnJ0ic3eDLOlcmsaT5t9GFZZAWM1WOiA2XOa3PYV8lxXuvJAe2pN+n2Y78hCIKtcNmm+uSI3oX6KbHnh77W573mZEahrk7lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791608368; c=relaxed/simple;
-	bh=2rdp7m3bJ4T9PCD3Munhreg/l5VHoEdxQ/PPaJ4Fz3Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ff9yYZcid77+svv6AcDk6ry0PSNpFklmi71msxugB9dmrdzAk6QrTl3DZhBotkBVImdEmWSEisAXWWrGd+xj73SwEoorMm83GwJGZjpdqrOyJUA5GbEmnaCmeM1Ph1jGAtHknudJx6IV4VE1pVUlqg+T2VIk9GvgogQEuWFR2p4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qAlaHh6A; arc=none smtp.client-ip=209.85.214.180
+	s=arc-20240116; t=1791608582; c=relaxed/simple;
+	bh=hIt0fix7U4Ug7V1Poe/TVuBEz3XvwXLxdfPz6owQiu8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X5AnTGEFBAiHR+w+tST4Pup6scB+mXV5aIRAeIWcSmzbN3tKFOlVlRDP72V+SLiwvY0bhdBNSjk+5NuVS6XI23Dt77CLDuglZaGNuBZ6Cq0Ysqdd1AmCBM0MfqqiFv6ScrY8WwH8BnFoS7Yrup8ykSY10qYWEK71LJBaijbHVqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B4TZL+/x; arc=none smtp.client-ip=74.125.82.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qAlaHh6A"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2dd76b1361dso1892975ad.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 09 Oct 2026 21:59:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B4TZL+/x"
+Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-35829219da8so276921eec.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 09 Oct 2026 22:02:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791608367; x=1792213167; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Vm+JPX0zlMDidpG2yBei0vOBYyCXOCTpBD+z4xlRLJk=;
-        b=qAlaHh6AJvR1SYeNmWrk3ev2u2QegGQYlcFyqXxLuXlcNhgXaY4Kek6sKHRxSG0edU
-         rvX2aNnfwHEGFHOOWfgeN2+JbKIZ/EznoA2gwwoElEvHk2hZGhAQCXcmNTZFa4Tt+zTQ
-         2SkmClKA3Pak14IJcpeZTmI2s58FEnQBY7geLAo9mu8YvvY8drSxuKfFvlo2Q4PxhYbR
-         76bSBTgawJC0U5sgNImEqAXciINAxz5PjGDnNWlvawA8g4g8T5oSmPZY+mUYm27umaVI
-         36AjOqGxlVpj7j50sOhBthOD6FvBuciW76KK5wy/frRkHYgr7QsN5bYsU10iEloQJTDP
-         wMXA==
+        d=gmail.com; s=20251104; t=1791608576; x=1792213376; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=DW/QQM+SN8lHBKI9RQtMNJfJ5uJuPnqwaUfrmF5FFDI=;
+        b=B4TZL+/xumf010xcEJHsCcUVKNseDsJz0tu/JYg6OqNvIpZqEd9a03g4Q92p53y2jI
+         R9UQWy9iTFHFSZ9ZKFFoceBXw9BfhGNsQV6B4o1OI+cvg1W3KgBz7NFZTp429YihswXk
+         MmuUmj9vDvDmRtm5P8kecpdz1BAXMAeRU2lYbK+lCL3sX7ALgGX7/N+9T95kChnV2FSx
+         EZzEBVX0Fqz+GjYcYMxqRTE084dg3xnVC8EZY7umMJJt9LlYLydJw9wV9HMwHBPvWzYY
+         t09J7KQP4kmKGgdREAimE7r0S4KRQv/qgO7W5KLBZxL5B9hFUj3HK34ZhTlAFxDKCfYv
+         ruXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791608367; x=1792213167;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Vm+JPX0zlMDidpG2yBei0vOBYyCXOCTpBD+z4xlRLJk=;
-        b=rwCUX5kMLg5+LMhaKzl72l9//WWpbIl7FUDUZjYE/QRqADCluYn1ix2YDN11s1yChG
-         sYKgejwZbqGM+W+VDsjek/jQE89C0ROzHiynztxz049rt4PimhJGezILjRyecn/mDkGd
-         ++xY2jfM4EV1VsJZcjSYqdJQaFD2ts5BGe/UnQfsEDXD8Pob8sqJDuWd6TTGKKM9jGWR
-         QzitALKRjb0fNSJsB0UETZrEMNrvIgkwo7GshHYxO3z/fbJ3dWZqlwV1Sen+Ow/D5Qyw
-         OQH6XpdIFlUUfh3rbSleLYXOdNFC4h/KCog/RB1025m3V7u5iPwkfZhpJqtq5iJRhV/H
-         SPFw==
-X-Gm-Message-State: AFq9FYLKe4/SCu68JAe2ZtTRcbqAP70IuWx7nXg+Dzba3Pvxm1MPTPCO
-	eADZHbo+qysG3/NaQknvNL2dL3ti9U1UyTJ6u5CKISUZAPZ20YtbjNL7SAy5NA==
-X-Gm-Gg: AYBFou2oHT/DxA9BrTfZVvmE+9yVPEJOrXDOcRZlRYk5tnlRC58PqMFLJGQxNY0UzIp
-	QMtsn4qCGCD6TssGggtCr53VLLPJZuTjZoMuiLIyI0cVy4psM5GNOwTy3QvNGwJdWpd1N7OSGcv
-	8AYrqjz5Lu7wmmx/b92BK9OON/xGNNcjH+WFf5w1YpemIO3uZDFgb+Ily2F4VvM+qhpx6VKEFaM
-	aX2niK9BQ7YEx9TjsR4g6t41URoEjZUKVMYF4NCbEE25WYvtVCm3oNMui19vBgtUkEkPgVXeE5z
-	TNDdjg+eFniB1JqvXXPuDO/E5qakrZEPZSbMIb4Ph3tY2Va+/4zk+OWlD6pz9nWwZ8k/mKJv7Zw
-	fEqOuQCq8xs+PS1VBPxv+G0ldO1Z/NuHYlrlFpJ9HVAhpRZ3elMkurGl1QAi+WW3h5Ewy1Ls0qX
-	j5yOHuFggDI584vu0hhvkWthlmWsVG8BqJLApV9QM4MkUqmQGoOrYTg5q2t4X5PgMKtY93sJrgx
-	H64Y+LG9qG96BRIMJw=
-X-Received: by 2002:a17:90b:2784:b0:3a8:1cc5:c1be with SMTP id 98e67ed59e1d1-3ab3a7a0ef0mr3424805a91.28.1791608366640;
-        Fri, 09 Oct 2026 21:59:26 -0700 (PDT)
-Received: from [100.125.248.95] ([124.70.231.46])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ab8a393666sm1203907a91.15.2026.10.09.21.59.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Oct 2026 21:59:26 -0700 (PDT)
-Message-ID: <b1a31381-e71f-4826-9857-a369117c8094@gmail.com>
-Date: Sat, 10 Oct 2026 12:59:20 +0800
+        d=1e100.net; s=20260707; t=1791608576; x=1792213376;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=DW/QQM+SN8lHBKI9RQtMNJfJ5uJuPnqwaUfrmF5FFDI=;
+        b=qGXvAOtqlgfmaoKZU75MnAXQh2CwSL6UOEF+7hWg7YgqkZoy7XoMhigxAqmUvXxPw9
+         HssApl+9ggLaV2H8c0WHPRMO9Pax68qndcHNyxVwYhkq0keVd9xS5vJZrp7J8BsKJAL/
+         tE9WRz54zxU9hD/+So609QeZ8zBu9pvFvdyelhPsmBHm4f6sum352moZ37bAZbF0Nh9V
+         f9XENK3agNWI6NJYAE9gYbmiz+CgoNNOiuvfTC18S//k3dBirISfhxwGGzVDc4aI7Ul8
+         nytswSvO8+T/iDrayxHm1iAjdOF9GvolLi3h6eT+MelxdWDYp50joj1O10h354SQ9OtQ
+         nStQ==
+X-Gm-Message-State: AFq9FYLi52M2SVO2c2uxVhGMl7PoQKCd39CGInAWNJ2r1QMWpGG3deEz
+	kIgTAArZ3AEqquP7hEzdtjLBEghGUMq9VrvKY7i/5YR5+jB08p5maFjohQXwoKph
+X-Gm-Gg: AYBFou0cLkXqXHAFC8CY/UMdEWghU29qzOOZX3GYg8bIBDKzlPYv5cJ0zGtz0WIq+gR
+	4m/8NAF3RYe4dByU4D8SDcUxPAla/3mMHHkyCOCZnoxJBTHJBeLjevLygX3B93bYXHwNxXrJTVD
+	RY5ptrjm6JHlomRTOH56XMeRyreWoA/f4kOcDVdMOb1bcAc55lbtKoHMloHcldSvhSwpNOjC9ot
+	e7o4xN415RUxs150bYyXOkpYz5Y5Si6IYvZncbdzSABte4ZDnIkqEcMaYokN1dgto+VlAjWnrgw
+	tJt34vUNW1T01MvLjG8+Y2gfmTVehUu/12ugb5pybWkrD5aO7OlsxaiZDeTvCkka8QbMlheyRFX
+	s2GqPCPAD3c4l5YjrhJcjtJAWvqIcCx0eoM6t8HRMwQg7+Lz/K0xw2GNvbAX+xvCFUTUbmyNjti
+	fFeWWlo1AmoMjTdeIZykTrqZ/vU4SjDrlQ2/rSC9aWneGV7TwwM3TACiwNPM9qy4vlUNXBGxeaN
+	+lOr0glLiufauj3Sq02CS5cc3BZSFE9t4b6qdcV
+X-Received: by 2002:a05:7300:aeaf:b0:341:c383:9afb with SMTP id 5a478bee46e88-3536c59ed2amr5265002eec.20.1791608575167;
+        Fri, 09 Oct 2026 22:02:55 -0700 (PDT)
+Received: from google.com ([2a00:79e0:2ebe:8:b7ea:19aa:c6f7:8c02])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3537ca67b21sm11045338eec.11.2026.10.09.22.02.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Oct 2026 22:02:54 -0700 (PDT)
+Date: Fri, 9 Oct 2026 22:02:51 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-input@vger.kernel.org
+Subject: Re: [PATCH] Input: reject parent overrides on managed input devices
+Message-ID: <asnFTCpEdMmOAK-L@google.com>
+References: <asmCc1VxVPLIMgY6@google.com>
+ <sashiko-outbox-166252@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 26/31] ext4: clear DISKSIZE_GROW_PENDING on truncate or
- error
-To: sashiko-reviews@lists.linux.dev, Zhang Yi <yi.zhang@huaweicloud.com>
-Cc: tytso@mit.edu, linux-ext4@vger.kernel.org
-References: <20261009103033.2920530-1-yi.zhang@huaweicloud.com>
- <20261009103033.2920530-27-yi.zhang@huaweicloud.com>
- <sashiko-outbox-165341@kernel.org>
-Content-Language: en-US
-From: Zhang Yi <yizhang089@gmail.com>
-In-Reply-To: <sashiko-outbox-165341@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-166252@kernel.org>
 
-On 10/9/2026 7:16 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] fs: missing DISKSIZE_GROW_PENDING clear during nlink > 0 eviction
+On Sat, Oct 10, 2026 at 04:04:42AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] input: newly added parent check breaks existing managed drivers
+> - [High] input: NULL pointer dereference in input_free_device()
 > --
 > 
-> commit b90813716147a7864ab2f3a3c46c2814d0084c2b
-> Author: Zhang Yi <yi.zhang@huawei.com>
+> commit 5c214b0cacbe95369ec05dede9ca4ab2c7e279f1
+> Author: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 > 
-> ext4: clear DISKSIZE_GROW_PENDING on truncate or error
+> Input: reject parent overrides on managed input devices
 > 
-> This commit clears the disksize-grow-pending state on various paths where a
-> zeroed EOF block is discarded before writeback completes. It also adds a
-> warning in destroy_inode to catch any inodes that missed clearing the state.
+> This commit adds a strict check to ensure that the parent of a managed
+> input device is not overridden or cleared before registration. It returns
+> -EINVAL if the parent does not match the original device that allocated
+> the managed input device. KUnit tests are also added to verify this
+> behavior.
 > 
->> diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
->> --- a/fs/ext4/inode.c
->> +++ b/fs/ext4/inode.c
-> [ ... ]
->> @@ -266,6 +266,8 @@ void ext4_evict_inode(struct inode *inode)
->>   
->>   	if (ext4_should_order_data(inode))
->>   		ext4_begin_ordered_truncate(inode, 0);
->> +	if (ext4_inode_buffered_iomap(inode))
->> +		ext4_iomap_clear_disksize_pending(inode);
->>   	truncate_inode_pages_final(&inode->i_data);
+> > diff --git a/drivers/input/input.c b/drivers/input/input.c
+> > index 78c10eea7328d..1cca6d48f5977 100644
+> > --- a/drivers/input/input.c
+> > +++ b/drivers/input/input.c
+> > @@ -2396,6 +2396,14 @@ int input_register_device(struct input_dev *dev)
+> >  	}
+> >  
+> >  	if (dev->devres_managed) {
+> > +		if (!dev->dev.parent ||
+> > +		    !devres_find(dev->dev.parent, devm_input_device_release,
+> > +				 devm_input_device_match, dev)) {
+> > +			dev_err(&dev->dev,
+> > +				"Parent of managed input device was overridden, refusing to register\n");
+> > +			return -EINVAL;
 > 
-> [Severity: Medium]
-> When an inode with nlink > 0 is evicted and still has dirty pages (such as
-> during a forced unmount or after a failed sync_filesystem), ext4_evict_inode()
-> logs a data loss warning and forcefully truncates the page cache using
-> truncate_inode_pages_final() before jumping to the no_delete label.
+> [Severity: High]
+> Does this new strict check break existing in-tree drivers that legitimately
+> reparent the input device during probe?
 > 
-> Because the pages are discarded immediately without initiating writeback, the
-> writeback error path is never invoked, meaning the
-> EXT4_STATE_DISKSIZE_GROW_PENDING bit is never cleared.
+> For example, looking at da7280_probe() in drivers/input/misc/da7280.c:
 > 
-> Since the added state clearing logic is placed after the nlink > 0 block, does
-> this bypass clearing the bit for those inodes entirely?
+> da7280_probe() {
+>     input_dev = devm_input_allocate_device(dev);
+>     ...
+>     input_dev->dev.parent = client->dev.parent;
+>     ...
+>     error = input_register_device(input_dev);
+> }
+> 
+> Another example is tps6507x_ts_probe() in drivers/input/touchscreen/tps6507x-ts.c:
+> 
+> tps6507x_ts_probe() {
+>     poll_dev = devm_input_allocate_device(&i2c->dev);
+>     ...
+>     poll_dev->dev.parent = tsc->dev;
+>     ...
+>     error = input_register_device(poll_dev);
+> }
+> 
+> Because these drivers explicitly override dev.parent before registration,
+> wouldn't this new check unconditionally fail with -EINVAL and break their
+> initialization sequence?
 
-Under normal circumstances, it is already an unexpected state for an
-inode with nlink > 0 to still have dirty folios left when it is evicted,
-and in that case the "data will be lost" warning is already triggered,
-so I think the later warning about the bit not being cleared is also
-expected behavior. That said, if we feel the WARN_ON_ONCE() in
-ext4_destroy_inode() is too heavy, it could indeed be considered for
-removal, but for now I'd suggest keeping things as it is.
-
-Thanks,
-Yi.
+No drivers should be doing such overrides. I already posted patches
+fixing it up.
 
 > 
-> [ ... ]
->> diff --git a/fs/ext4/super.c b/fs/ext4/super.c
->> --- a/fs/ext4/super.c
->> +++ b/fs/ext4/super.c
->> @@ -1497,6 +1497,14 @@ static void ext4_destroy_inode(struct inode *inode)
->>   			 "Inode %llu (%p): i_reserved_data_blocks (%u) not cleared!",
->>   			 inode->i_ino, EXT4_I(inode),
->>   			 EXT4_I(inode)->i_reserved_data_blocks);
->> +
->> +	if (!(EXT4_SB(inode->i_sb)->s_mount_state & EXT4_ERROR_FS) &&
->> +	    !ext4_emergency_state(inode->i_sb) &&
->> +	    WARN_ON_ONCE(ext4_test_inode_state(inode,
->> +				EXT4_STATE_DISKSIZE_GROW_PENDING)))
+> [Severity: High]
+> If this error path is triggered, can it lead to a NULL pointer dereference
+> or double-free when the driver cleans up?
 > 
-> [Severity: Medium]
-> Can this assertion be reliably triggered when unmounting a filesystem while
-> writeback is blocked or fails, since the pending bit is not cleared during
-> nlink > 0 eviction? This might potentially crash systems with panic_on_warn
-> enabled.
+> When a managed driver's probe fails here, it will typically call
+> input_free_device() in its error path.  However, input_free_device() trusts
+> dev->dev.parent unconditionally:
 > 
->> +		ext4_msg(inode->i_sb, KERN_ERR,
->> +			 "Inode %llu (%p): EXT4_STATE_DISKSIZE_GROW_PENDING not cleared!",
->> +			 inode->i_ino, EXT4_I(inode));
->>   }
->>   
->>   static void ext4_shutdown(struct super_block *sb)
+> drivers/input/input.c:input_free_device() {
+>     ...
+>     if (dev->devres_managed)
+>         WARN_ON(devres_destroy(dev->dev.parent,
+>                                devm_input_device_release,
+>                                devm_input_device_match,
+>                                dev));
+>     ...
+> }
 > 
+> If dev.parent was cleared to NULL before input_register_device() was called,
+> wouldn't passing NULL to devres_destroy() cause a crash when it tries to
+> lock the devres list?
+> 
+> Alternatively, if the device was reparented to a different device,
+> devres_destroy() would fail to find the devres on the new parent.  Wouldn't
+> this fail to untrack the devres, leading to a double-free later when the
+> original devm owner is unbound?
 
+Given that drivers should not be doing it I am not worries about this
+case. They'll get an error message first.
+
+Thanks.
+
+-- 
+Dmitry
