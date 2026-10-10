@@ -1,109 +1,162 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mta1.migadu.com (out-208.mta1.migadu.com [95.215.58.208])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6BE1FBC8C
-	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 03:23:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791602612; cv=pass; b=kEyTjBsfb/rflFoqyyC0Gh50xgMtG5R4B5wTOxpYvOxMOltyzOEp6c76qqSECBCSC8EpvjfU970ksq9z3J+FaviBFNX6SB91FL3hC+F4PAnjkKnwms4hjmQCs+IUcmpzHGlw3rYqKrTe1wnh/QjlJsF0n5bVju7JfTyuPZPeRxw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791602612; c=relaxed/simple;
-	bh=JiaH124cSDLttBgBQlt+Y+ep5vqL86rm+g7iJIspyxk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Fs4yFQeaiWjJ5xN1s8cf1N4AO3O+zKkMbDjElxQz37NnJmQAnEdjc+fDtnwUcDNowUh+t7tTKTyJqm9DK/H8e0xMXaEl30AIdCy47gUywhRS/rShLk+uydXYpROqR9A8XYacVrlboNCMU+ax0UZ3xZdgZ07C50kEOFTErmNAD+k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VqQTkbkk; arc=pass smtp.client-ip=209.85.215.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19569389E04
+	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 03:26:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.208
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791602791; cv=none; b=CrHmjeDrZixC1aCG11IG5i9JS8H3a0C48GaLZbQHsOuuvk9iJOp2xx/rmIshp4eVufpQ1DC2QZjELd0nhFuxYAyxmUjLB9I8Vqx/y7GH54/VMBpVlz/EQ7QpbOjICdvwB3IXpcmEi8lAGCpwDxYrSuLoeU+bl6rEsOEvFWouumw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791602791; c=relaxed/simple;
+	bh=dd5rpigs8f/4x3ODO9ldllk8EvDxjO0sd65Ja1LqU74=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BiHrqrhPIOMKYo9MGnWt+5HpqKlIh0AgVaTF4LX+BzPjbYHbPWZH4qUZgE0MNsgnwn5Jb3m/Y805GjFsbBPmsEsTC7DPgrfXheTdxLBShDtXl9c1EtYK3B1pchGKxqJlJANEoD0yVLMAVDt4o4qgn0mKp5TLVK1DtqcUg6AXbqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=LLub8a+3; arc=none smtp.client-ip=95.215.58.208
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VqQTkbkk"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-cd5c9e52398so107181a12.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 09 Oct 2026 20:23:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791602610; cv=none;
-        d=google.com; s=arc-20260327;
-        b=UlB8ur9t3X8p+/TVHBj/nD5UjJ7ulTBvHGVrA48eyc++i9r6uu4OarlPBbRuN9veHH
-         vQJMkqWcLlCcIJwd+RdeyUk9Uo4mX13BLKFY8JSZ0hWdyk0k+jtY2faYCBHhbe4SLWB0
-         6fCpfEqMj9jtPD4RhZJnn49vUKG+n5cfgJADeInn/hSQ+7a8fHNYTdFzSA8du9hN68Bn
-         Gz+AedPpT3FuCWguh6Y7xrhn30FgbZNmeo4tPAfcRf6dAn/JNvm+EHMUf2euH+Gx/OsZ
-         vO1m5IQhxIG3yBN3Yvu9xRyRTJGgw9shRe54JF4MMMMuDTRpER1w7XfB9+nI//VsAjar
-         5SpQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=JiaH124cSDLttBgBQlt+Y+ep5vqL86rm+g7iJIspyxk=;
-        fh=8s/m3WFbgYWSrFq8O6qnuwJh8MouRhxqinKYkPkfiw0=;
-        b=FbkmtOWmBeHk0A6oDECXBf0L0zM6qzb9FSDZVdSdNdLFcfnzpPvfeOhAd/3OWdylxM
-         gdytcQxsaL+nUYCc/YucjCv1Rc8RW6izZsxam+igBsro+1VYe8HPvF5Vk7BZYs4LX1lI
-         5Cuag8f9RN5czaFOUaG19GfiPEEBQu/5fdeDLs/lFeJ/hstBYjlpAZo5MiVKXGgCUsEV
-         BtiHkz6IEN6ayAAzpmLZRunoHJZ+8wgY8/reWTYuxJs9tWfZveKimtzQeQMYc9fXi107
-         9CtPFtYi6XIPqOGZrSD8JAx41JiOqy6h59Y8bBcfgT1mCzWEN17vgBbVLAR1kjlqCjEO
-         OU5g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791602610; x=1792207410; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=JiaH124cSDLttBgBQlt+Y+ep5vqL86rm+g7iJIspyxk=;
-        b=VqQTkbkkfCvuOiQUpedQT8ZL++1aZM8ZYHlJr87MxdXTXus+ZdYLvc8rYhyksaPJyq
-         lrs/yYX00RlobZ7Y69Bn2PbZr/UPa5a6WND9Sn1o8zWKonPe1xmuLNTUkEfNP4HfW4cu
-         +iPr7Qv8EMTWvLOpGFd9tDKN2v5SXx7zEQv4GmeDQVSGEYjUsWfcNkhNbBA5bTT0K8Qx
-         RD9gWUKmB3w1ozaQopkR0eUZGxTAD80Nv5ujx1ubhoIqrHgZ+VvGXz3tFVTaEJ6auxjk
-         28dk4tSetkOudNgOf14DtTqgkc3BzeXu05dQC3wBSXE2cSPvSfUrhclbEjGlcnVb7JaT
-         TGcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791602610; x=1792207410;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=JiaH124cSDLttBgBQlt+Y+ep5vqL86rm+g7iJIspyxk=;
-        b=l22Cnm+qnMsDf1CFtrbIJToGsQLECyCD4H5Bv2aCynKaFZWuHXAglhQfgGAMGCvd7G
-         Ne/oTincXwo6BX4KnH8dJj+LmOQTQpQjN6j98eCvpmeUygPoyS3GisqMxqnSvuiGxktU
-         GZ7ifN3DY+8vbaDaShRcG7p8+fSfbZ3ZM3NPp7KZWKd5Y9L1nVg3O5zn9aQZyVy1tm+A
-         Nl3ieQp59L7H9oZxiXeqUPgrbH4baJJY3huAUssTT+mxZg0DVFXtWqqvv2w0qWAFaAAe
-         ScGG9aUrMTi1muAJXohei+jIcYe4dzEZx3CDcpTKWjDllyM0fxKBMl0mNa/e2wyT9vQB
-         JYGA==
-X-Gm-Message-State: AFq9FYLDiVhdGFCcPXBYNb8scydWlzkGdiOMowYdFCSYK3EPWwI1rJpW
-	SpQnD1DzOCyZnCYTc1GGYh+rjNK4exBIJQFMG6pvgRCEGBiH5TPkdxC3wCMZNu/4yXhkfFwt5fu
-	8YCXSMHp4lYrVo9JhrroD8wC2AscQYfk8t1Kb
-X-Gm-Gg: AYBFou2F5qC1BzTztnXX0MIxQV0okq0YeGfgfiqQb8ADfaNKnyBepW5ik7ja6I+gRjS
-	22St3jwhAXi7pmUsrOWUmHDjT1s6U2WM0TTYLTzgEuUsFp4+F75poN+rmNwpRJsg0zxrhks/HhA
-	kKhYtySc0Gcaxrte5PZFV20cpYxbSLNZafaSBljzslFRLTIZIuImXeLWN42SkT0lMTdrGy2u416
-	E0rDmf42wqKaLdYu91sgfzykYy0ldMibz6rMxC74sOrjYiLzhOeNFsliAkm6mWP+jvMoneJvjH7
-	BLVr0dGtAvlKYVZja2t5WWAUETenJNgjN68nZl1zthCxE6K4UIhnsz8BvxMJR+d9SqNIVUqy1m+
-	Y7a1ipyixoHeFDZb765pvUV7H5jgbEHvIZMVEzIs312E0WzaJGGPPoTWxKyH5hp3wuHADM14aRV
-	6I8nicX28b6viJk2vMWyE/ICq9Kw==
-X-Received: by 2002:a05:6a20:d704:b0:3de:44aa:a0fe with SMTP id
- adf61e73a8af0-3e16bf5d3a7mr3520554637.71.1791602610344; Fri, 09 Oct 2026
- 20:23:30 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="LLub8a+3"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=dd5rpigs8f/4x3ODO9ldllk8EvDxjO0sd65Ja1LqU74=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791602784; v=1; x=1792207584;
+ b=LLub8a+3FFpEilN9inRcR9sE1mM+7AjfVNtMtVZ/939dcZRP7S2dlfWtX4sI4LrF5gjJ3+s2
+ xrZBCJ51PW0EmVVd7qkJQzEcEpCIUYQhl34nZIZNPv+wO49QQD1g4dJq+LZbFSE+yNSWoCb8di4
+ A5yTC3U+KXAU066xnJ96fKy0=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id c9c20416fa2a6921;
+	Sat, 10 Oct 2026 03:26:24 +0000
+X-Mizu-Trace-ID: c9c20416fa2a6921
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <75475cb1-7f53-499a-8eb5-3b9a9dec6fd2@linux.dev>
+Date: Fri, 9 Oct 2026 20:26:18 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261009112634.33436-1-phucduc.bui@gmail.com> <sashiko-outbox-165390@kernel.org>
-In-Reply-To: <sashiko-outbox-165390@kernel.org>
-From: Bui Duc Phuc <phucduc.bui@gmail.com>
-Date: Sat, 10 Oct 2026 10:23:19 +0700
-X-Gm-Features: AclHuK_uKif4wq6OZ-W6ppQilaYG0g5of1u7ef6wcj74Tvuv3OR-Tfopp2PgVYk
-Message-ID: <CAABR9nEdvgNo-ENO0BK343bdpXeddw+K79GGEHvZTt383sx8Ug@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: mcp23s08: Propagate reset GPIO errors
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v2 07/11] bpf: Introduce REF_TYPE_FRAME in the
+ verifier
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-gpio@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc: bpf@vger.kernel.org
+References: <20261009202759.50520-1-ihor.solodrai@linux.dev>
+ <20261009202759.50520-8-ihor.solodrai@linux.dev>
+ <sashiko-outbox-166059@kernel.org>
+Content-Language: en-US
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
+In-Reply-To: <sashiko-outbox-166059@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
->
-> [Severity: High]
-> Is ret uninitialized when used here? Looking at mcp23s08_probe_one() in
-> drivers/pinctrl/pinctrl-mcp23s08.c, ret is declared at the top of the
-> function but does not appear to be assigned a value before this point.
->
-> If devm_gpiod_get_optional() fails, will this return a garbage value
-> from the stack instead of the actual error code? Would passing
-> PTR_ERR(mcp->reset_gpio) to dev_err_probe() instead of ret correctly
-> propagate the error?
->
+On 2026-10-09 1:48 p.m., sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] bpf: UAF due to dropped parent_id in dynptr_from_mem for frame-scoped args
+> --
+> 
+> commit 19d3a1bd15552653b24ece884c759a788c6abaf9
+> Author: Ihor Solodrai <ihor.solodrai@linux.dev>
+> 
+> bpf: Introduce REF_TYPE_FRAME in the verifier
+> 
+> This commit introduces REF_TYPE_FRAME to track references owned by a callee
+> frame. It allows a set_callee_state_fn to anchor an argument to a reference
+> which is dropped when the frame is popped.
+> 
+>> diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
+>> index c51083c761cf2..54a4f440c33b3 100644
+>> --- a/include/linux/bpf_verifier.h
+>> +++ b/include/linux/bpf_verifier.h
+>> @@ -272,15 +272,13 @@ struct bpf_stack_state {
+>>   };
+>>   
+>>   struct bpf_reference_state {
+>> -	/* Each reference object has a type. Ensure REF_TYPE_PTR is zero to
+>> -	 * default to pointer reference on zero initialization of a state.
+>> -	 */
+>>   	enum ref_state_type {
+>>   		REF_TYPE_PTR		= (1 << 1),
+>>   		REF_TYPE_IRQ		= (1 << 2),
+>>   		REF_TYPE_LOCK		= (1 << 3),
+>>   		REF_TYPE_RES_LOCK 	= (1 << 4),
+>>   		REF_TYPE_RES_LOCK_IRQ	= (1 << 5),
+>> +		REF_TYPE_FRAME		= (1 << 6),
+>                  ^^^^^^^^^^^^^^
+> 
+> [Severity: Critical]
+> Does this new reference type get ignored when the verifier checks if a register
+> is referenced?
+> 
+> In kernel/bpf/verifier.c, find_reference_state() explicitly skips any
+> reference type other than REF_TYPE_PTR:
+> 
+> kernel/bpf/verifier.c:find_reference_state() {
+> ...
+> 	for (i = 0; i < state->acquired_refs; i++) {
+> 		if (state->refs[i].type != REF_TYPE_PTR)
+> 			continue;
+> 		if (state->refs[i].id == id)
+> 			return true;
+> 	}
+> ...
+> }
+> 
+> Because find_reference_state() ignores REF_TYPE_FRAME, reg_is_referenced()
+> returns false for frame-scoped arguments.
 
+Yes, this is intentional.
 
-I'll return `PTR_ERR(mcp->reset_gpio)` in v2.
+> 
+> Could this lead to a regression if a callback passes a frame-scoped reference
+> (like a PTR_TO_MAP_KEY array key or ringbuf dynptr slice) to a constructor
+> like bpf_dynptr_from_mem() to create a local dynptr?
+
+No, bpf_dynptr_from_mem() accepts only PTR_TO_MAP_VALUE.
+check_helper_call() rejects other types:
+
+	case BPF_FUNC_dynptr_from_mem:
+		if (regs[BPF_REG_1].type != PTR_TO_MAP_VALUE) {
+			[...]
+			return -EACCES;
+		}
+		break;
+
+> 
+> When check_helper_call() processes the constructor, reg_is_referenced()
+> returns false, which leaves meta->ref_obj.id as 0:
+> 
+> kernel/bpf/verifier.c:check_helper_call() {
+> ...
+> 	if (reg_is_referenced(env, reg))
+> 		update_ref_obj(&meta->ref_obj, reg);
+> ...
+> }
+> 
+> Later, mark_stack_slots_dynptr() sets the dynptr's parent_id to this 0:
+> 
+> kernel/bpf/verifier.c:mark_stack_slots_dynptr() {
+> ...
+> 		/* Track parent's id if the parent is a referenced object */
+> 		parent_id = ref_obj->id;
+> ...
+> }
+> 
+> This strips the dynptr of its frame-scoped lifetime tie. When the callback
+> exits, release_frame_references() won't invalidate the dynptr because its
+> parent_id is 0.
+> 
+> Can the caller then extract a pointer from the dynptr using bpf_dynptr_data()
+> and access memory after the callback frame is destroyed?
+> 
+> Is it possible that pointer cast functions like bpf_skc_to_tcp_sock() also
+> suffer from the exact same logic flaw because they rely on
+> find_reference_state(..., meta.ref_obj.id)?
+
+No, bpf_skc_to_tcp_sock() requires ARG_PTR_TO_BTF_ID_SOCK_COMMON. Its
+compatible register types, listed in btf_id_sock_common_types, exclude
+the frame-scoped arguments introduced by this series.
+
+> 
+
