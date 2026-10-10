@@ -1,110 +1,166 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mail-m12797.qiye.163.com (mail-m12797.qiye.163.com [115.236.127.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D615E37E5F5;
-	Sat, 10 Oct 2026 06:48:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0BD41A78A
+	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 07:00:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.236.127.97
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791614910; cv=none; b=G8FSry6oZLWpFK3VaWapFWPHGR3U1pKemJyS0SqSBMf3IEjVIqq1Iq4VdzW4veg50oPcSthvPxE7dIVnQZ6ADNVvS82pDIv0++7kGTzzBKyAvMvr0UTLdMIHnEkB/ZZ+yJGBE8x3q/Mx0fqLNkqUAj0AcznSyGCn0KXh1MBH8/M=
+	t=1791615626; cv=none; b=c70xByNe6zTE8nt1QWygmhAeUk8iXNEfjJfLO7V+3jpUE77Cb4s2i/D66qYNGuyF5Jqi++5n9pUxfuCp/zl7Ex23nfYvvkKiILV2D1XFcE1ss7VFKd6myJXLyMLeEDsik2H6wWe3dgp2cP/+qFKbKEOw6nH+fqMlFNcHBeVWHOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791614910; c=relaxed/simple;
-	bh=basHzKR+/RnPodebMmWqG+h/lGSwn8ytoY9AJr/s4UY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AWye6tMAUW10UcuAKX9H3rE7X9fIjCXGoNUxvyoW6f++u2xZg7oB0yShZE8GlUTcDAbnWa4MiR9YHTCUEDGQaa7SiBUEVmusbElbomS6YT4ts981NchDkYBRYb5XwgcKPHR0YOT3beCduaj+mfctMysy9Q7BSTtcWYisHYnGrBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LA3rhHmH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791615626; c=relaxed/simple;
+	bh=XMxGW0xaJZQeL/KjGG4KZmFQcr7o0ydm0ul4O5LUEhY=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=VO0CHLOG04nBGhhvXoHxUvWZeM5oJOtD2UQcD9U/ikBC49ntEy0e2jK0jZjyHzzgGvfQX+ye6moAdoHUJ/Qa5bXdi5fGUnsLg8h9bETlD0T5Ij6Q+V0ETVYA9SNU8YwUgwAJGJuKpuyKcuXw4dqpCgDuKA+68Vgim4coJ+ZEGTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=NMcUG1Vk; arc=none smtp.client-ip=115.236.127.97
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LA3rhHmH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D78E1F000FF;
-	Sat, 10 Oct 2026 06:48:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791614909;
-	bh=SUpvYjfMaJ0M6jrxLoqe10JiFY1JZNHO4uSBagTyRfc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=LA3rhHmHigZQGYrlK2TzeVrQN70m5o+/Ec5f0kLftt7oYdxPpd/tgalG2RI76chMU
-	 r7FCEAgzRI19rt9+TtWzLP8S0Bt47Z0/I+qSDgKXEQXf2kCvxVrvQSceEvuW/CHqW1
-	 ovwmWtiDWcPguJ4JBReXrZQerfXi31wxygVsjnCkCfIqDriaI1gy30mpehoRmo7JGI
-	 0o/VNPP3ZXM8MgENW79FhGemqy3E32/nFdoDS3+Wres0FQKZJ5fFCsYil/MnyYSigV
-	 5VgLTcEYs/VR25C70hG8mbLACY3H8QOBRcQeRt/Si/KCM+mzJNzzWJbAeNOc2acfJ1
-	 OshtePCrK616Q==
-Date: Fri, 9 Oct 2026 23:48:28 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v2 10/10] perf test: Fix dso data tests
-Message-ID: <asnfvJYJzV7DqNaL@z2>
-References: <20261006234315.920817-1-namhyung@kernel.org>
- <20261006234315.920817-11-namhyung@kernel.org>
- <sashiko-outbox-162544@kernel.org>
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="NMcUG1Vk"
+Received: from [172.16.12.48] (unknown [61.154.14.86])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 5085e5e31;
+	Sat, 10 Oct 2026 11:30:57 +0800 (GMT+08:00)
+Message-ID: <1a06c07e-b29a-4c27-a4eb-9513567c2c8d@rock-chips.com>
+Date: Sat, 10 Oct 2026 11:30:57 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-162544@kernel.org>
+User-Agent: Mozilla Thunderbird
+Cc: shawn.lin@rock-chips.com, linux-pci@vger.kernel.org
+Subject: Re: [PATCH] PCI/ASPM: Fix NULL pointer dereference in sysfs
+ show/store callbacks
+To: sashiko-reviews@lists.linux.dev, Bjorn Helgaas <bhelgaas@google.com>,
+ Manivannan Sadhasivam <mani@kernel.org>
+References: <1791596305-153177-1-git-send-email-shawn.lin@rock-chips.com>
+ <sashiko-outbox-166236@kernel.org>
+From: Shawn Lin <shawn.lin@rock-chips.com>
+In-Reply-To: <sashiko-outbox-166236@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0aa123dd249703a4kunm659ca1ca5c97b
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCHx5LVkwZThoZQk1OSR9IHlYVFA
+	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlNSlVKTk9VSk9VQ01ZV1kWGg8SFR0UWUFZT0tIVUpLSU
+	9PT0hVSktLVUpCS0tZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=NMcUG1VkONXj6A3vtf018GozHOqVVHLoxpnOl+DAWKZFHfhUSESE4LRqQo60Sm0t5lViwvJupIhktArMQ9PPO0/fPdfrQRqUayK1ziaGScSGobkJhsjHm4RbpKKl4cnMxeFod2voKLtem0FfLMNYkSQFr6aCBGBDRxYNMXdMwS0=; c=relaxed/relaxed; s=default; d=rock-chips.com; v=1;
+	bh=TV3G4zHmwkxbumtMUjsoCVMj2L0MmWuDDCVqX9Zax7A=;
+	h=date:mime-version:subject:message-id:from;
 
-On Tue, Oct 06, 2026 at 11:59:03PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] perf test: NULL pointer dereference on dso__new() failure
-> - [Medium] perf: NULL pointer dereference when dso__new() fails
+Hi, Sashiko and maintainers
+
+在 2026/10/10 星期六 11:01, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] pci/aspm: use-after-free race in sysfs callbacks due to lockless pcie_link_state check
 > --
 > 
-> commit 2688b984099e76fca1d46c74193628a04bf63e97
-> Author: Namhyung Kim <namhyung@kernel.org>
+> commit 9e5cf0a1d40aaa7028d286ec96a1c08c4a3dfd68
+> Author: Shawn Lin <shawn.lin@rock-chips.com>
 > 
-> perf test: Fix dso data tests
+>      PCI/ASPM: Fix NULL pointer dereference in sysfs show/store callbacks
+>      
+>      Reading or writing a link state sysfs attribute after the upstream
+>      bridge's pcie_link_state has been freed triggers a NULL pointer
+>      dereference.
 > 
-> This commit fixes the dso data tests by bypassing the ELF check for binary
-> types so that read/write operations on the test file can proceed properly.
+> Cc: stable@vger.kernel.org
 > 
-> > diff --git a/tools/perf/tests/dso-data.c b/tools/perf/tests/dso-data.c
-> > index 46bc3f5972600..5a027ffab541b 100644
-> > --- a/tools/perf/tests/dso-data.c
-> > +++ b/tools/perf/tests/dso-data.c
-> > @@ -138,6 +138,9 @@ static int test__dso_data(struct test_suite *test __maybe_unused, int subtest __
-> >  	dsos__init(&machine.dsos);
-> >  
-> >  	dso = dso__new(file);
-> > +	/* override the binary type for dso data access */
-> > +	dso__set_binary_type(dso, DSO_BINARY_TYPE__SYSTEM_PATH_DSO);
-> > +	dso__set_bintype_searched(dso);
+>> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+>> index f8e64971c6c3d..0e0ba0e677e50 100644
+>> --- a/drivers/pci/pcie/aspm.c
+>> +++ b/drivers/pci/pcie/aspm.c
+>> @@ -1777,6 +1777,9 @@ static ssize_t aspm_attr_show_common(struct device *dev,
+>>   	struct pci_dev *pdev = to_pci_dev(dev);
+>>   	struct pcie_link_state *link = pcie_aspm_get_link(pdev);
+>>   
+>> +	if (!link)
+>> +		return -ENODEV;
+>> +
+>>   	return sysfs_emit(buf, "%d\n", (link->aspm_enabled & state) ? 1 : 0);
+>>   }
 > 
-> [Severity: Medium]
-> Will this crash if dso__new() fails?
+> [Severity: High]
+> Does this locklessly fetch and check the link pointer, leaving it exposed to
+> concurrent freeing?
 > 
-> If memory allocation fails and dso__new() returns NULL, these newly added
-> calls will unconditionally dereference the pointer, causing a segmentation
-> fault instead of allowing dsos__add() to handle the NULL safely and fail
-> the test gracefully.
 
-Ok, will check the return value.
+Sashiko, thanks for reporting it.
 
-> 
-> >  	TEST_ASSERT_VAL("Failed to add dso", !dsos__add(&machine.dsos, dso));
-> >  	TEST_ASSERT_VAL("Failed to access to dso",
-> >  			dso__data_fd(dso, &machine) >= 0);
-> 
-> [ ... ]
-> 
-> > @@ -225,6 +228,9 @@ static int dsos__create(int cnt, int size, struct dsos *dsos)
-> >  
-> >  		TEST_ASSERT_VAL("failed to get dso file", file);
-> >  		dso = dso__new(file);
-> > +		/* override the binary type for dso data access */
-> > +		dso__set_binary_type(dso, DSO_BINARY_TYPE__SYSTEM_PATH_DSO);
-> > +		dso__set_bintype_searched(dso);
-> 
-> [Severity: Medium]
-> Similarly, does this bypass the subsequent NULL check for dso?
-> 
-> By unconditionally dereferencing dso, a failure from dso__new() will cause
-> a crash before reaching the explicit TEST_ASSERT_VAL() check intended to safely
-> handle this exact allocation failure.
+This is not a regression introduced by my patch. Both the NULL
+dereference and the use-after-free pre-exist in the original code, where
+the link pointer is fetched and dereferenced without holding aspm_lock,
+while pcie_aspm_exit_link_state() clears and kfree()s the link state
+under aspm_lock. My patch only covered the NULL dereference (the part I
+could reproduce); it did not touch the existing UAF window.
 
-Ditto.
+The UAF window is extremely narrow and is not reachable by a plain
+userspace sequence, so I'd prefer to keep this patch focused on the NULL
+dereference, which has a reliable reproduction. Serializing the lookup
+against aspm_lock would be a larger change and is not suitable for
+backporting to stable. It can be addressed separately if needed.
 
-Thanks,
-Namhyung
+Hi Bjorn,
+
+Please let know if you'd prefer to address UAF issue in the same patch?
+
+> If another process triggers the removal of function 0 of the downstream
+> component concurrently, pcie_aspm_exit_link_state() could acquire the locks,
+> clear the link state, and free the link after the check but before
+> sysfs_emit() dereferences it. Can this lead to a use-after-free regression?
+> 
+>> @@ -1788,6 +1791,9 @@ static ssize_t aspm_attr_store_common(struct device *dev,
+>>   	struct pcie_link_state *link = pcie_aspm_get_link(pdev);
+>>   	bool state_enable;
+>>   
+>> +	if (!link)
+>> +		return -ENODEV;
+>> +
+>>   	if (kstrtobool(buf, &state_enable) < 0)
+>>   		return -EINVAL;
+>>   
+> 
+> [Severity: High]
+> Could this cause a similar regression here?
+> 
+> The pointer is validated locklessly but dereferenced inside the lock. It can
+> be freed by a concurrent thread while the current thread is waiting for
+> pci_bus_sem or aspm_lock further down in the function.
+> 
+>> @@ -1836,6 +1842,9 @@ static ssize_t clkpm_show(struct device *dev,
+>>   	struct pci_dev *pdev = to_pci_dev(dev);
+>>   	struct pcie_link_state *link = pcie_aspm_get_link(pdev);
+>>   
+>> +	if (!link)
+>> +		return -ENODEV;
+>> +
+>>   	return sysfs_emit(buf, "%d\n", link->clkpm_enabled);
+>>   }
+> 
+> [Severity: High]
+> Does this code have the same use-after-free race condition?
+> 
+> The link pointer is validated outside any locks, but could be freed by a
+> concurrent removal before it is dereferenced in sysfs_emit().
+> 
+>> @@ -1847,6 +1856,9 @@ static ssize_t clkpm_store(struct device *dev,
+>>   	struct pcie_link_state *link = pcie_aspm_get_link(pdev);
+>>   	bool state_enable;
+>>   
+>> +	if (!link)
+>> +		return -ENODEV;
+>> +
+>>   	if (kstrtobool(buf, &state_enable) < 0)
+>>   		return -EINVAL;
+>>   
+> 
+> [Severity: High]
+> Does this demonstrate the same race condition as aspm_attr_store_common()?
+> 
+> The pointer is validated locklessly, but dereferenced inside the lock. It can
+> be freed by a concurrent thread while the current thread is waiting for the
+> locks further down in the function.
+> 
 
