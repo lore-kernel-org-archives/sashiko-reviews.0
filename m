@@ -1,29 +1,87 @@
-Received: from m16.mail.126.com (m16.mail.126.com [220.197.31.6])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE943043CF
-	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 03:00:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEA4399377
+	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 03:00:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791601233; cv=none; b=ErTF02N1rmRgVt9bl9DJsNjpeJcKr8xIEMpl7WXuRKzXs6pyIbb/i76D2xHpIHwGvdQeDdE234NLkvpmZuzUEzuQWWOxXNPuRvlg2mQz+HK4mBEY7SVDbEmZmmc4dbQXgfeSvfgHA7uegW5wPL3JEsVr6lvFGPjlKO/pqSGCdn4=
+	t=1791601236; cv=none; b=UIBbTZQb8zZ1yNm+UkjUkrlVdD+7VS74rZ++h45tam4RvM5mCO44LusdmheI06fez+z2EXHMiIiYm+dBe8s7blrWZ3QrGzAEiM7Q8EdywQDM+ju7Pl/q7M4quprUelV0ANSbx/emSGdNwpwa6BmCcnyC2/i3ulE+nn8iiTbFp0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791601233; c=relaxed/simple;
-	bh=gZ8+k9ufZLowqt442HDCu1oAskLTy/jd5B1QbyqS/bA=;
+	s=arc-20240116; t=1791601236; c=relaxed/simple;
+	bh=9E4ucci8nIPDrzlzliEd3oyN/nOwLsWSVKKoHRh6Xak=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EPgDiAQTDvX69AGZtE7Tp9bXnOwf1tpd5q84U00EYZQH4Mr9bdsV1NQUBt0jYHsZdeG6MVj1BK9hR9byaUMP4BXPp8p3bp5CSrKWEh+Tg23Y/9HhE2bNhB/pJG0gDOKLaahJEXXaiap4eTM1HL+/ku8auPbhdxmY63ofgTZQ3LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=NMof7q+i; arc=none smtp.client-ip=220.197.31.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
+	 In-Reply-To:Content-Type; b=Jw43unYD8LXsL4uLn8HLS763tb/CtAp4rz56GgdE7oAvgTEhgHk0sFzNU+3KiUDLXd6qbhCF4mRVguh6vcj/mQPaZKtwCplUXnkM2lHieXKppV9XsIgJwPPYTI2T0jHS4WnvD31bJlLVPZabudyPqwGdclwbOyUwrxy2+WxvSpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JbSjJX9r; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SI/StD6P; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="NMof7q+i"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=vDtcZj/VCLBdYGH9s88cSPrUid8+FkW8AKAlKKb/4zM=;
-	b=NMof7q+i5PPojy4p4j+CqqWCRAEKTTY9vr+ppDzp0sCB0Lveen23SKe0UUW7b7
-	gXpUVcmkoVMGhP1T0+27944FS3jh26D/GXrIMhIzDE/QtvBNABM88ALy6q4EAejg
-	Lyqi5SDxmgrcBwKtCXd8dC15Y+HCVqJtpe9MlS6ARXk8M=
-Message-ID: <3163779c-c7cf-4727-8b42-499f6d4d4101@126.com>
-Date: Sat, 10 Oct 2026 11:00:23 +0800
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JbSjJX9r";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SI/StD6P"
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69A2fR743283387
+	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 03:00:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	gD0ERVfebnTT1rddUWcpPNF+flaDO5Uk16VHXeNxq9M=; b=JbSjJX9rbaSGDOns
+	8KuVibu2M+dRDXtHsB50jwkhD5c68C8/MA3Vr7qlKxvx6kFHww/KGjeyVRiwAZgX
+	jXMeacVqFJZMvHoSWgQbf6mrsSck3JQ2c9k4MThf0F6tBv/Vt4KMK6nNpfaOFWvN
+	Kv5LCTO+pBuD6gvNNrsUWfgUKMFF1YkMSEAebZ+EmTdhZuBAVqxUjX01rlzCQnlT
+	cAE4Dr3eAxyoFQKH0IWwxC1Nsk0BiAIoiPTIRyHoRw1NbszQJ/Nmm2I6hIBIJIrU
+	xmuQKj8Aw+AAMyk7hcYoohjy87Nt3Q2yp7mT0yJO8HCGdpASar0DTAPbRTBQvmpA
+	9GVw0A==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h7cpgg1sk-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 03:00:33 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2d001671a54so4269065ad.2
+        for <sashiko-reviews@lists.linux.dev>; Fri, 09 Oct 2026 20:00:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1791601232; x=1792206032; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=gD0ERVfebnTT1rddUWcpPNF+flaDO5Uk16VHXeNxq9M=;
+        b=SI/StD6PDi1wD2HOv6irVzr99w9zD+S9Zhi273RqMfdWrv5XgG+ay6TrCT9O4jkOB9
+         PYUZE/+GqBiLnVMKkPlOrIV1B7AY/qoWjM356X/S4uupYZqms7zbZQtkJpkk/pzdYpDh
+         VC+vV7MM2Hizm07ajGOwvChKKr+SxvdMKPKPqX5k8mVmgclH3Q+FsuVUb7YvxIEmE/eS
+         +shpnaGfD5/+WCz9sRQBKzM7tZbDKwSF96LjJT5iheL3IY8NJByRI8LVmRM/7tAhEYEp
+         DlEryXzKLZR3oPAeeV2RSaVTleSxqtOFZ5WWeoTAjHOWPGD7AyEQY33aQEnbr1zH88yH
+         uUqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791601232; x=1792206032;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=gD0ERVfebnTT1rddUWcpPNF+flaDO5Uk16VHXeNxq9M=;
+        b=Y2Vq2k9veK/8FifsQdLORX+dVxKHR5N8Goak8PL3xI/RulXNYNLpjN13tFbKWH2vzh
+         M1nXJtK2A/yl2t3YQ3yEpE12orAFQFSnUi7AVtZSp4hownza/Qu2RqKk6xD9hvBRCO58
+         x4BsIrKaZk/uSVaO12cVCikVwqOx0BtdwlYX1k9j0lnAadBKfp0feWw6ap01lRi+4rUw
+         X8n2AHhEx3AB441ZY4SjkLniAwxZ0WwtyxUPiATjIW374MqR10K4FZ5qUaTCV2m6APcd
+         tZfbAOGmILLLUBw6+oLEksIv8L8gvml64SVczpH+NFmV8R/A92VzjvF2NKyLnyYFPtlO
+         lPfQ==
+X-Gm-Message-State: AFq9FYJm884Jg7ISukSMh5Foz/KUG1mOg0gZmYFNVVmBJZEvYQcPzuZO
+	GUSgHavNfuIrZsKtehQV3gbOubsScf+TKHrwZWsXVeLw4s2bovAygqO+dmzpy66GkocEiaNJYfz
+	tmb4LcZQCwp4vR4oBx9eA+h5molND/sMe+fzsUKBPzUVdsMs1+oBJ8p8LdAKaI2gT4bLz2c68sp
+	R7rLg=
+X-Gm-Gg: AYBFou3SAHEWU2pZDowtt3g8+g2V4B0OFDPORF0kYZwqdI+Rw2VvwVbtU/z/0Th+Efh
+	2LA4RYEZOiAkScQsRm5Czv4PPY2Ym1uMUmAaMsghVLiJ+W4Qhn2Js20r4wskEx5mGYdXRp4qPjR
+	b7eS6vU6+W2uS7mmjUHMGjxJEWEpo/UDZZAsU4DaxG0y0LBfpZIJn5e0l/s5HHWHey1jo8s8Iom
+	3LmMOIqcLFBWy5d+uWgSfLar/mF8L21Pf1T0Nqmz53P9XuH/PTR5pyp0q7+A9kpIi/lRkPRTW5J
+	H5SYqFQFLbVhpuPTzNT8pDCHEeKsGMP4Hvt4SIe9+Nz+wY4B6XHb/sMaH5mSdLmsDYyvXMtV7pM
+	hNaNec2erlihKdo+ju6OM85rB
+X-Received: by 2002:a17:90b:384c:b0:3a7:aa1c:476b with SMTP id 98e67ed59e1d1-3ab3a747d90mr3583198a91.31.1791601232417;
+        Fri, 09 Oct 2026 20:00:32 -0700 (PDT)
+X-Received: by 2002:a17:90b:384c:b0:3a7:aa1c:476b with SMTP id 98e67ed59e1d1-3ab3a747d90mr3583167a91.31.1791601231914;
+        Fri, 09 Oct 2026 20:00:31 -0700 (PDT)
+Received: from [192.168.1.227] ([183.192.31.51])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ab38b9633fsm7555871a91.6.2026.10.09.20.00.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Oct 2026 20:00:31 -0700 (PDT)
+Message-ID: <be474e8f-1921-4789-a373-58321f9b94ba@oss.qualcomm.com>
+Date: Sat, 10 Oct 2026 11:00:28 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -31,179 +89,112 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH iwl-net v3 1/3] ice: attach and detach VF representors
- outside of vf->cfg_lock
+Subject: Re: [PATCH net-next 02/11] net: ethernet: qualcomm: ppe: Fix
+ multicast queue config table index
 To: sashiko-reviews@lists.linux.dev
-Cc: intel-wired-lan@lists.osuosl.org
-References: <20261008125754.3520773-1-xiaolinkui@126.com>
- <20261008125754.3520773-2-xiaolinkui@126.com>
- <sashiko-outbox-165586@kernel.org>
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, robh@kernel.org
+References: <20261008-qcom_ipq5424_ppe-v1-0-16caf43e44ee@oss.qualcomm.com>
+ <20261008-qcom_ipq5424_ppe-v1-2-16caf43e44ee@oss.qualcomm.com>
+ <sashiko-outbox-165731@kernel.org>
 Content-Language: en-US
-From: Linkui Xiao <xiaolinkui@126.com>
-In-Reply-To: <sashiko-outbox-165586@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Jie Luo <jie.luo@oss.qualcomm.com>
+In-Reply-To: <sashiko-outbox-165731@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:PikvCgDXB_pHqslqmAATBQ--.23665S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxuFWftw4DAFy3ZF1fAry8AFb_yoWxuFykpF
-	WFqFyjyrykXrWSg3srZa18WFyj93WrKFy5Gr18KFWSkan8Crn8Jr43Kayj9FW8A393AF1a
-	vF4UZ3s5uF98JaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UhZ2fUUUUU=
-X-CM-SenderInfo: p0ld0z5lqn3xa6rslhhfrp/xtbBlAjJoGrJqkh95gAA3v
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEwMDAxMSBTYWx0ZWRfX2n7JFeYkeX0g
+ UDUzPKx0Vajgp98qSk5JL/X5JDmbwuHwtmTuJQ1mdaSDbobfWBhGbFywbAnhILZJVhtgYhj4Dhq
+ RdLxOSZyxMW+3Xd5j5+JNj/xN0gctXc=
+X-Authority-Analysis: v=2.4 cv=StoFe/O0 c=1 sm=1 tr=0 ts=6ac9aa51 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=N18iw5ntM+1D/B/PUaPCgg==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=alxY7H8S5tj6ej4i5l4A:9 a=QEXdDO2ut3YA:10
+ a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-ORIG-GUID: u176FqPlxKfudV6jBnQrCDcYYdDdV0ik
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEwMDAxMSBTYWx0ZWRfX14g75gqNf3J6
+ VbswyLHJtNUSDHXBdZXQHpVwm5XDayi/ZhUkaxucum/z26BBSTmwaoiri1cNUMjiPk0LwsOvvt5
+ 3wojTS/xmXL6Iw64hg75+Z5INTor0fQgstjhNmNgmUSd5jEKDm6yvpMFbIITEItMNB18wBb5MbJ
+ k2JguO+gt42tQ7fqSRnBKC371pihf//LsumNkPu6qO2CU03QNL5FH+Hcl2cjD2/NBkM7zNJoIkQ
+ uW0iQkXEDtkeeMCrP5fB5w1igP2t4dyAdEtG2poHf+xrYOPfN6Ut23eofr1sxckCv0OxWqJL+vZ
+ cjER/fKg4TpKXWEJo5+etJAyLXVjuh4E8E3yAhJzacN/BdzqFSQF8KzjNCLP6+cWRIZlG5JJKen
+ Sc+KCx7+N58Tvil/LM8i1MnErn1Ifg/xP4N7a+UWILR92BEIxeq4EmaZDsXoAdTgcMLwTE1FtMv
+ L3w9xrIa3SdUibTwMvg==
+X-Proofpoint-GUID: u176FqPlxKfudV6jBnQrCDcYYdDdV0ik
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-10_01,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 spamscore=0 lowpriorityscore=0 adultscore=0
+ phishscore=0 clxscore=1015 impostorscore=0 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610100011
 
 
 
-On 2026/10/9 21:05, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] ice: UAF in NAPI Rx path due to missing RCU grace period after xa_erase
-> - [Medium] net/ice: silent failure to apply VF MAC/VLAN to hardware due to TOCTOU race
+On 10/9/2026 10:52 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] net: ethernet: qualcomm: out-of-bounds regmap access due to incorrect multicast_queue_cfg size
 > --
 > 
-> commit 32649319eb3be01d6b10e730f49f29871e5cb572
-> Author: Linkui Xiao <xiaolinkui@kylinos.cn>
+> commit e63c30c06634bbba4d742f77aae5726bcf70fb62
+> Author: Luo Jie <jie.luo@oss.qualcomm.com>
 > 
-> ice: attach and detach VF representors outside of vf->cfg_lock
+> net: ethernet: qualcomm: ppe: Fix multicast queue config table index
 > 
-> This patch moves the detach and attach of VF representors outside of
-> the vf->cfg_lock to resolve a lock inversion between cfg_lock, the
-> devlink instance lock, and RTNL.
+> PPE queues 0-255 are unicast queues and queues from 256 onwards are
+> multicast queues. The multicast queue configuration table has its own
+> index, starting from 0 for the first multicast queue. The driver previously
+> used the absolute queue ID as the index, which was out of range. This commit
+> fixes it by converting the queue ID to the correct multicast table index.
 > 
->> diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
->> --- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
->> +++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
->> @@ -789,9 +789,21 @@ void ice_reset_all_vfs(struct ice_pf *pf)
->>   
->>   	/* free VF resources to begin resetting the VSI state */
->>   	ice_for_each_vf(pf, bkt, vf) {
->> +		/* Detach the representor before cfg_lock and attach it after
->> +		 * releasing it again: both take the devlink instance lock and
->> +		 * then RTNL, while __ice_set_vf_mac(), ice_set_vf_port_vlan()
->> +		 * and the representor ethtool reset take cfg_lock under RTNL.
->> +		 * Take cfg_lock once ahead of the detach to wait out a reset
->> +		 * that is already inside the lock; ICE_VF_DIS, raised above,
->> +		 * keeps later ones out.
->> +		 */
->>   		mutex_lock(&vf->cfg_lock);
->> +		mutex_unlock(&vf->cfg_lock);
->>   
->>   		ice_eswitch_detach_vf(pf, vf);
-> 
-> [Severity: High]
-> Does this code leave a window for a use-after-free in the NAPI Rx path?
-> 
-> During teardown, ice_eswitch_detach() calls unregister_netdev() which
-> waits for existing RCU readers. However, the representor pointer remains
-> in the eswitch.reprs XArray during and after unregister_netdev().
-> 
-> Because the pointer is still in the XArray, a concurrent NAPI Rx thread
-> calling ice_eswitch_get_target() can successfully fetch it via xa_load()
-> even after unregister_netdev() completes.
-> 
-> The teardown path then removes the pointer via xa_erase() and immediately
-> calls ice_repr_destroy(), executing free_netdev() and kfree() with no
-> additional RCU grace period. If a NAPI thread fetched the pointer just
-> before xa_erase(), it will dereference freed memory.
-> 
->> +
->> +		mutex_lock(&vf->cfg_lock);
->> +
->>   		vf->driver_caps = 0;
->>   		ice_vc_set_default_allowlist(vf);
->>   
->>   		ice_vf_fdir_exit(vf);
->>   		ice_vf_fdir_init(vf);
->>   		/* clean VF control VSI when resetting VFs since it should be
->>   		 * setup only when VF creates its first FDIR rule.
->>   		 */
->>   		if (vf->ctrl_vsi_idx != ICE_NO_VSI)
->>   			ice_vf_ctrl_vsi_release(vf);
->>   
->>   		ice_vf_pre_vsi_rebuild(vf);
->>   		if (ice_vf_rebuild_vsi(vf)) {
->>   			dev_err(dev, "VF %u VSI rebuild failed, leaving VF disabled\n",
->>   				vf->vf_id);
->>   			mutex_unlock(&vf->cfg_lock);
->>   			continue;
->>   		}
->>   		ice_vf_post_vsi_rebuild(vf);
->>   
->> +		mutex_unlock(&vf->cfg_lock);
+>> diff --git a/drivers/net/ethernet/qualcomm/ppe/ppe_config.c b/drivers/net/ethernet/qualcomm/ppe/ppe_config.c
+>> index 125b73be92b13..8a553902ffad1 100644
+>> --- a/drivers/net/ethernet/qualcomm/ppe/ppe_config.c
+>> +++ b/drivers/net/ethernet/qualcomm/ppe/ppe_config.c
+>> @@ -1530,8 +1530,13 @@ static int ppe_config_qm(struct ppe_device *ppe_dev)
+>>  				if (ret)
+>>  					goto qm_config_fail;
+>>  			} else {
+>> +				/* The multicast queue table is indexed from 0 for
+>> +				 * the first multicast queue, which follows the
+>> +				 * unicast queues.
+>> +				 */
+>>  				reg = PPE_AC_MULTICAST_QUEUE_CFG_TBL_ADDR +
+>> -				      PPE_AC_MULTICAST_QUEUE_CFG_TBL_INC * queue_id;
+>> +				      PPE_AC_MULTICAST_QUEUE_CFG_TBL_INC *
+>> +				      (queue_id - PPE_AC_UNICAST_QUEUE_CFG_TBL_ENTRIES);
+>>  
+>>  				ret = regmap_bulk_read(ppe_dev->regmap, reg,
+>>  						       multicast_queue_cfg,
+>>  						       ARRAY_SIZE(multicast_queue_cfg));
 > 
 > [Severity: Medium]
-> Does this sequence leave a window where a concurrent VF MAC or VLAN update
-> can silently fail to apply to the hardware?
+> In ppe_config_qm(), multicast_queue_cfg is declared as a 5-element array:
 > 
-> If a user configures the VF MAC, __ice_set_vf_mac() calls
-> ice_check_vf_ready_for_cfg() before acquiring vf->cfg_lock.
+>     u32 multicast_queue_cfg[5];
 > 
-> If a PF reset occurs simultaneously, ice_reset_all_vfs() sets ICE_VF_DIS
-> globally. If this happens right after __ice_set_vf_mac() passes its check,
-> __ice_set_vf_mac() will wait to acquire vf->cfg_lock.
+> This means ARRAY_SIZE(multicast_queue_cfg) evaluates to 5 words (20 bytes).
+> However, the hardware table entry increment
+> (PPE_AC_MULTICAST_QUEUE_CFG_TBL_INC) is only 4 words (16 bytes).
 > 
-> As seen in the lines above, ice_reset_all_vfs() acquires vf->cfg_lock and
-> rebuilds the VF VSI using the old MAC address. After ice_reset_all_vfs()
-> releases the lock, __ice_set_vf_mac() acquires it, updates the software
-> MAC, and calls ice_reset_vf().
+> Since this patch changes the index to correctly target the multicast queue
+> configuration table, does this regmap_bulk_read() over-read by 1 word into
+> the next queue's entry?
 > 
-> Because ICE_VF_DIS is still set by the PF reset, ice_reset_vf() aborts
-> the hardware reprogram. __ice_set_vf_mac() then returns success based on
-> its earlier check, leaving the hardware enforcing the old MAC while
-> software tools report the new one.
+> Additionally, a few lines later, regmap_bulk_write() also writes 5 words:
 > 
-Thank you.  Both reports are about code this series does not touch: the
-series only edits ice_sriov.c and ice_vf_lib.c, ice_eswitch.c and
-ice_repr.c are unchanged.
+>     ret = regmap_bulk_write(ppe_dev->regmap, reg,
+>                             multicast_queue_cfg,
+>                             ARRAY_SIZE(multicast_queue_cfg));
+> 
+> For the final queue in the loop, wouldn't writing 20 bytes overflow the
+> 16-byte boundary and write 4 bytes past the end of the entire multicast
+> queue configuration table?
+> 
+> Can this out-of-bounds register access trigger a bus error or system abort
+> on the SoC?
+> 
 
- > [High] ice: UAF in NAPI Rx path due to missing RCU grace period after
- > xa_erase
-
-The window is real, but it lives in ice_eswitch_detach(), which neither
-this patch nor the other two change:
-
-	ice_eswitch_stop_reprs(pf);
-	repr->ops.rem(repr);                    /* unregister_netdev() */
-	xa_erase(&pf->eswitch.reprs, repr->id);
-	...
-	ice_repr_destroy(repr);                 /* free_netdev() + kfree() */
-
-That order is deliberate, and it was chosen for this class of problem:
-commit e9942bfe4931 ("ice: Fix use after free during unload with ports in
-bridge") moved unregister_netdev() ahead of xa_erase() so that a lookup
-racing with the teardown still finds the repr while it is being
-unregistered.  Moving that pair, or adding a grace period between the
-erase and the destroy, is a change to ice_eswitch_detach() with its own
-Fixes: history, not something a cfg_lock ordering fix should carry.
-
-One correction on the mechanism.  ice_eswitch_get_target() is a plain
-xa_load() reached from ice_process_skb_fields() when ICE_RX_FLAGS_MULTIDEV
-is set on the ring, and a NAPI poll is not an RCU read-side section:
-__napi_poll() calls n->poll() directly, and neither net_rx_action() nor
-napi_threaded_poll() takes rcu_read_lock().  xa_load() also takes no
-reference on the object it returns, so an extra grace period after
-xa_erase() would not close this window as the code stands.  The lookup
-itself has to be made safe first, and that is a different patch.  I can
-send it if you want it.
-
-What this series changes is when ice_eswitch_detach_vf() is called, and
-that does not widen the lookup: the NAPI Rx path never took vf->cfg_lock,
-so it raced with the detach both before and after.
-
- > [Medium] net/ice: silent failure to apply VF MAC/VLAN to hardware due
- > to TOCTOU race
-
-The sequence is right, including the outcome: both handlers throw away
-the return value of ice_reset_vf(), so once ICE_VF_DIS is up they still
-report success while the MAC or VLAN only exists in software.  But every
-part of it is baseline.  __ice_set_vf_mac() and ice_set_vf_port_vlan()
-call ice_check_vf_ready_for_cfg() outside cfg_lock, ice_reset_vf()'s
-ice_is_vf_disabled() test sits after the lock is taken, and ice_free_vfs()
-and ice_reset_all_vfs() raise ICE_VF_DIS before entering the loop; the
-patch does not move any of the three.  The same window is reachable today
-with "echo 0 > sriov_numvfs" in place of a PF reset.
-
-Closing it means changing those two handlers, and probably how the reset
-result is reported, which is unrelated to where the detach and the attach
-are placed.  I would rather send that on its own than fold it into an
--net series that fixes a lock inversion.
-
-No code change in this series for either report.
-
+Each multicast queue config entry has only 3 words of configuration at a
+16-byte stride. I will fix it in the next version by accessing only the
+3 words of each entry.
