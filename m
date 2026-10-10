@@ -1,98 +1,98 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92AA3C9EE4
-	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 05:14:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33BA376BE0
+	for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 05:19:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.18
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791609277; cv=fail; b=EiZl098/PxUg+b6IdEef+TMvzx+kh/CNUTxrM2J3WNRmkrj3nwep/OsVLzx5V7IhKx8RtOSpgcpNG+FiZMPTbLRD14OLekRFUayB2RxZUe2aKxfBf6nJzw4vvOgyfQ2SZoAegaYl6Qxq4DBsOB+Q0E5+d8A/PWhalAjqkPX9h/U=
+	t=1791609591; cv=fail; b=m3p3mSmDvbRFWTtbhcjfit8ApUgQf8b5SMeSNOqoLewLtEHh0ylqf1hBeS+aP12jZ0aUtu+j0Qu1t5ta1j812c4MHSiYQRDiw8XYCRhD1yQjUXnHCivFeOKOnIYGGmN/Y6E3gKjPubH0mGKXQyv29hQ/nG414RikzUXDm5rcjJQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791609277; c=relaxed/simple;
-	bh=elKJHarFqyRhbMnGnoWTp53YpEA7Wvz1qMorkkCI1Zk=;
+	s=arc-20240116; t=1791609591; c=relaxed/simple;
+	bh=NJfJFbQ3DeXHpAU+WOw0n8tgCPpIvLjqqRsvliLZ17I=;
 	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=IfbCF9IqUDqBqhnWu6PwOhEVu9NZl+ePfr0hXL8Od5nobTHr5gcoe0St5YmaJCpXe+wL9MQhrIexL13lNL6EpetmSw3rbHZ8HU3wNBDt9ot/0GgxWyQROHNQrn06Yyh5yUm6hr88xMm+VUX1RH25xkMv4DCRAvIs0bfrXO9qSpc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=l7wwkXza; arc=fail smtp.client-ip=198.175.65.17
+	 Content-Type:MIME-Version; b=WmJgHlrSpoHB2Zeb0bCpiY1fcxTblpfhXw+Rm0kDoEVIjW2lSFAcSPZoVbWAlZnckBuud1gcFwZPmk8md7fF4FgnUVPUIjlaCycNF7h2170E+5g1WCnuVkEEcNLUwhntIKfwh+TcKN59PoeJyv81jDwo4jF2g8KuAlNO38PZyr8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=e5Pue4TG; arc=fail smtp.client-ip=198.175.65.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="l7wwkXza"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="e5Pue4TG"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1791609265; x=1823145265;
+  t=1791609590; x=1823145590;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=elKJHarFqyRhbMnGnoWTp53YpEA7Wvz1qMorkkCI1Zk=;
-  b=l7wwkXzah7yflKy6IzGzyoyxgvM7BdMqNnvc7Ym3Wv8ZEGkZ2Eqkpyn/
-   Me8Cj/B+p/hI+cDGCMySN0LP9bhDZ65MDo2z2dc1s+Terf6ib1t4H4fHm
-   xfeaIjqiioYXEfLjMpdYLY8UhQMHk2kDIcZ3zS/bZJFc6YypY3o3jaAuB
-   hMAKYxq5mxtK/NgqDx1HaxOjkQwk6CeD7vWoUBEv6P6wTFVIFkJvvydHb
-   0dX+EO0Tuet9VNQFefny5sH4Y1WKCIKgGVd5qjij0yu1ZmVXkksFdwUYc
-   1787do03SoPhyRGrCoharMb8FsCWqOfWM/jQsvKdz56mzDCMfuzv6fup+
-   w==;
-X-CSE-ConnectionGUID: CsJxVLoUS5q5fAuBxxzYdA==
-X-CSE-MsgGUID: xv4MsvO1Tn26djV/7UXrhw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11930"; a="413974"
+  bh=NJfJFbQ3DeXHpAU+WOw0n8tgCPpIvLjqqRsvliLZ17I=;
+  b=e5Pue4TGpAXG2lS0AWBf7q12gJaHnzL2ChuBhCP2b+pAPuT/VfWULyUt
+   PkECraui7O1ROzkb9wicapEr6nNoX49izA9IOZo+0GOiCdD1kMWc1FX8c
+   PHgQwtGqxxJ6b495gCDUwk1nWEl7LWjWg6fniKqLKT2jvY/cuLHc1ouXt
+   //8+cJBpLjZVyD6iQgW0SJZ3P5oMK0GJxF7E7mt8DOuy+FsVa8SOIF8xw
+   uM8yc3ofGbrp4LHT15P815BFXomFdlx79y4BQZRxVT/TEq5/SyrS4adNF
+   s6Eeu/H/PuyymOQ26JWVDnUSokZYVtH/alwKF9K36QLmhuMfTh+Rvm2pN
+   Q==;
+X-CSE-ConnectionGUID: Bri/u66lSduc9H8L5jpt/w==
+X-CSE-MsgGUID: U3g9EaCvRYe2V99UPXOYdg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11930"; a="407917"
 X-IronPort-AV: E=Sophos;i="6.27,149,1787036400"; 
-   d="scan'208";a="413974"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2026 22:14:23 -0700
-X-CSE-ConnectionGUID: /N3WvX65TEqhsN8IlT9pow==
-X-CSE-MsgGUID: o7H8eF5gSlK8XqxXley8CQ==
+   d="scan'208";a="407917"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2026 22:19:50 -0700
+X-CSE-ConnectionGUID: 6n8SptxsRRuv4FKhKHZOpQ==
+X-CSE-MsgGUID: vgvfKVpfQHK9V5J4W4f6LA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,149,1787036400"; 
-   d="scan'208";a="434155"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
-  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2026 22:14:22 -0700
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+   d="scan'208";a="453492"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Oct 2026 22:19:50 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Fri, 9 Oct 2026 22:14:21 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ 15.2.2562.49; Fri, 9 Oct 2026 22:19:48 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49 via Frontend Transport; Fri, 9 Oct 2026 22:14:21 -0700
-Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.34) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ 15.2.2562.49 via Frontend Transport; Fri, 9 Oct 2026 22:19:48 -0700
+Received: from CH4PR04CU002.outbound.protection.outlook.com (40.107.201.25) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Fri, 9 Oct 2026 22:14:20 -0700
+ 15.2.2562.49; Fri, 9 Oct 2026 22:19:48 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FNXTuCtgZFIaFDJ0lKqhvOOuPy78TegdZ3jOopqNtl2R9CZc/4BEncK0MX+idTFx/2hrac//MGEma/0C64if2XZ5PJ2QQg93BqHauc8wYIoUfQi8AXM/+N4TD2pmP/NXaBn7CgSOu3halTlIei8pXSQUBig2PK66AC0qiGDApifrj9MCSI+uHYLg2OxhS5hmvCLPR3Vr+TluC8zTIpqGxHrogaFYAnPO2ge/+B6bDidvvuT5ZD0MemwMNn/tkFlgd+wNdooevSLm3yqAw5JLyqUVeEKEravm9BWgcHVNFDWDsblDx6eiJUglWbJRR9V/sQ8Yga0aAnaE3rW6W3z71g==
+ b=NU4OIdI1qZqknA1QVy80gVWdFForptuSLN7XftyPAL/fdkkgbLYCoTW0eMAi3nB2wqiVHyfqQe+FV1fDQbLA0XSB1s0AHw973UGrzV18EByQnCBdfbH03XRniD/BzCO1alcmGo8M9oAOiLC+FlujzhQ015sP+yyjWBiwvV1Yzg0FCIiwNDnimM8hv2u9G7vyJeYTelYs3GNnSvL1ZtQIZkbhTpr/FyWNd9/SU3RKllMORnA9833RGzEKa9W3xTHPPubeZ3K0tsF1Nwwh6u1kX5rlQb5LHUt6QMOu/t4SVPhxngDFYBSe3MCxfi1Eru9+cYhflphaskQJun3KPQ5AoQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gng0M/s+H19s/RbwLiBJtZyXgCYxdFUy9Pw8hPbQ2iE=;
- b=FVCs7CcGSPpXxnhy3PuCznzB0KyxaFg7vXW6zG/7K+Ku38Dt7lXEpKcrDQPYklBKfJSmdUg4NjyLOdbLHLuXJkBes9V3xcEmOGYJN1dJm72RruGC2KylKco2S9Z7nSeuS8E68H2fkwi1S1K9+yAtorspTzxQIZ8IUZbGrx1nInptGhFPIw/nkEGbEAlPXOZ5g0cxeuQJ+eTHz6T9Mg3xECEMIXwL3FxNkGkKL5o+7FcvfnZxjaQ4UKmzMzadIOLZ8dsueElIl6HFbBe9phwhgmwR31TM0jRNAXLMQamjx+QJceyXl0RUkPf0/LdppUkC7N5PptpZxniXZnPsaeh8fg==
+ bh=NrOBVkWWkf9XgVnWGUzNOvxBp1MQ2XFxa3YiIC4xJrk=;
+ b=i0j5gPNWgZ9619zqgSD6i+zEhwTnb4NAeu6Kns+E7MUuqJSFg2zyd1vo+XaJW9z75xdTXZ5sOW/9hgIauPVFmYb4P2aFEj6e97W5WUHCfZAz1BaPAjb261xx5eJOt2FnAlWxNKeApdYHkIVET2tfmgbezESuA8bau2F03pi/ttwD1t05SjAFhOpeYMwPl9FzSWpb+HhGNFdIkK+ii1StjGVuprCjxRkPNpLRdJceD5IGox9yhYqwGipfJkT04ezVYbr4XHL7zts/7ZNl1WH9XuDgUt/CNibC53+H9MTuzgw2knQPxkP7Tdm8HgBRs4+3/sAbDI4BBKCalt+oS8w7kQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 Received: from CH8PR11MB852307.namprd11.prod.outlook.com
- (2603:10b6:610:32c::22) by DS7PR11MB9449.namprd11.prod.outlook.com
- (2603:10b6:8:266::7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.18; Sat, 10 Oct
- 2026 05:14:12 +0000
+ (2603:10b6:610:32c::22) by DS6PR11MB139798.namprd11.prod.outlook.com
+ (2603:10b6:8:4a5::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.17; Sat, 10 Oct
+ 2026 05:19:40 +0000
 Received: from CH8PR11MB852307.namprd11.prod.outlook.com
  ([fe80::5f8e:c1ed:445a:a4b7]) by CH8PR11MB852307.namprd11.prod.outlook.com
  ([fe80::5f8e:c1ed:445a:a4b7%4]) with mapi id 15.21.0496.017; Sat, 10 Oct 2026
- 05:14:12 +0000
-Message-ID: <e597a6a2-bcd3-4945-9f50-0b38f8e6dde1@intel.com>
-Date: Sat, 10 Oct 2026 10:44:05 +0530
+ 05:19:40 +0000
+Message-ID: <612a321d-9bf9-41cf-a4a9-aa17af0e6163@intel.com>
+Date: Sat, 10 Oct 2026 10:49:34 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 01/14] drm/xe/hwmon: Handle pcode read failures of
- xe_hwmon_pcode_rmw_power_limit
+Subject: Re: [PATCH v9 07/14] drm/xe/hwmon: Consolidate temperature sensor
+ availability checks
 To: <sashiko-reviews@lists.linux.dev>
 CC: <intel-xe@lists.freedesktop.org>
 References: <20261009120335.52973-1-karthik.poosa@intel.com>
- <20261009120335.52973-2-karthik.poosa@intel.com>
- <sashiko-outbox-165502@kernel.org>
+ <20261009120335.52973-8-karthik.poosa@intel.com>
+ <sashiko-outbox-165508@kernel.org>
 Content-Language: en-US
 From: "Poosa, Karthik" <karthik.poosa@intel.com>
-In-Reply-To: <sashiko-outbox-165502@kernel.org>
+In-Reply-To: <sashiko-outbox-165508@kernel.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MA5PR01CA0306.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:220::18) To CH8PR11MB852307.namprd11.prod.outlook.com
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MA5PR01CA0303.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:220::14) To CH8PR11MB852307.namprd11.prod.outlook.com
  (2603:10b6:610:32c::22)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -101,140 +101,192 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH8PR11MB852307:EE_|DS7PR11MB9449:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3e35418c-5237-4f69-5a82-08df268d523a
+X-MS-TrafficTypeDiagnostic: CH8PR11MB852307:EE_|DS6PR11MB139798:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9b76952e-abfd-4624-9a96-08df268e15c0
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|261009223027099003|5023799004|56012099006|11063799006|4143699003|10067099003|22082099003|18002099003|6133799003;
-X-Microsoft-Antispam-Message-Info: hd5KzP6L5tSweE1yQ/Hk0nRGg6x1+3A5rHMocIB7cPz+lA6GgsYe1iLtliOPtIIgHvqPPvpecOV5l6qtVBqWbLU4Y7z1BLBIchfy4a/cttctxrVYPBy/nYFYT+NQMK+axuhGpvQSdR2cgmSBHS7Wf6e56V+5FsBuHtoLHZO9mCijknULiqLndt+uT+BipRp3BMbI1p1Cre5yr2shgZ12Wq0bFc9IXHBwz0HSLIOyDEjHNldKirVk2lv0Li2YRXeQUZWRfeTY/KVsZPwn0EA95W95OZ1gOUiMN52WnRuSF6SU9kiwVjAM3M0vj9DwPup/v47lhgb+P5USB7JlU40aM92ECtcEpAZmHjSXHEPt0iCv9fsnKzaKJ1b9MvVSa/7WcLBLoj4Mmjft5kCMbALGO7+sAIkwtV4OChZWFzhHtokuWZjyc2itwOLIyLGrq9aE8mbqpNrMyPIQNtU7glq8Ahj9LQR2WIIOvEyKiuOz9rQJtQd2IcCJ6sIs/YEGvTw8tQU92SUkiW7eSMzOMa4ZuUn3UAAmxjXYSrMRV6RgPVNeJ8A/b5M8ZqXWWt3ivp9X48znFsk5r6fG3qyDv6FVusQspXMWv3LXU4rI7gUZppXMtYiqrZJZ/2+jF0ENQ5h7jR7xF6MuY03WqQtfMtjIBdGi41SAKrnbqUMauJOgt7g=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH8PR11MB852307.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(261009223027099003)(5023799004)(56012099006)(11063799006)(4143699003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|6133799003|261009223027099003|10067099003|18002099003|22082099003|4143699003|11063799006|5023799004|56012099006;
+X-Microsoft-Antispam-Message-Info: B/EPk6M5ECgTIFwKE4DjeHdjsLFhXwlXsaDZd00MGk/RIOh3gKF8g8FFfCFUkEPbggWifC+FqLfZTGNuIVLAsFo9N+GarD6OM+aizgoK5oyD0fktseQ8dfKSepzEFYkmMW+q+N5aBQYg2jVf0NMcnSJ81MFWNd7O5WWUW82RZ44+D6WOCWkwrwIcGeENon2p5pj6xmamlGlMtCKv3krKBCQXiNH3p3wFuAK+QqOmP38+zz0Of4ELR9tWprzqiUlJIA3JdJGjE05SmQcYepIbVz/LMXJ6laD7TeyHOHC5vE27m6uoyqHqc25rZwPAW06F4/tHrIQz0ou7cN8rWVo12BIM+DCzGAfMWSbiyiRsH/WdZFS5xYfc/VstTZHoBSt7NFCAHdBfrQnC55RogXwsG/rYI5UTGXFu3iyO3dfkclpkmHPt/Jox354Lp1uu4vzMkPFKR14s46ZCIceulhwluWm9jbUyfENmPAtXSwmVqJFm0T9vddGDfTcLGH9lBMcDHIJawOwfYMeJBGKkS5RLLFy9EtuaGyPsP4zlSfbW+mLX/o6d/k4j0izHPbF9lFZzXhnzSXsjrKZU1OLF3SKAxe6QzMA7YgFurQ6C8yl25TQUPqL7og2CM8N89LnbdV0NF4Vyf7mTEIMHKWWVRUlCPO6XfkgTbHl7VJow/HBGRJY=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH8PR11MB852307.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(6133799003)(261009223027099003)(10067099003)(18002099003)(22082099003)(4143699003)(11063799006)(5023799004)(56012099006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SGxvQitHZ2p0ajRISVlENmp5YXhubW1WT3hrVURFQlVtUC9kd3JUaGU4UC9k?=
- =?utf-8?B?OUtrWlJZd2hFMG9QbmJpNm9MaDBySUtaSUlLTnBnQVd1T0FRNnN1VlV3Nkhx?=
- =?utf-8?B?VlQzL3BSWDFHTjU3UExDUDhIRjhUbUIyNWhvU2NGSnpQM2F2clE3eWkzTWdt?=
- =?utf-8?B?MVRVZm4rZnJWNFNkZnJQd0RCL1crRzBHZWxZQ0FYa1kvTjAzaCt5QjRRRGhs?=
- =?utf-8?B?S0RuUHNMUHJqOHdTQUxGOGVqSEtCUUZZeTZvVUFGMVo2d1Z4aGtuUGM4djJS?=
- =?utf-8?B?eHBGNUllRkxOZFdvdlVDdU9TR3Y5cEwzRXg0S1RDcWFaRWxPSkpmWjFCWWdi?=
- =?utf-8?B?eFJVMUJqNnpabUh2bStoSG1GYTllRDBhYTd1TlRWRWdXencyekRHUENtdmpp?=
- =?utf-8?B?RjZCMStHTGJodVZldTVTVHhaWUVsZ09BNTFmOFIvL0oyZzJ6NnJ5Skhoc1Ar?=
- =?utf-8?B?ZkNNWkdTZjBDL2I2QktEU3BhTnQyaEx3QUY1RmdCeS9ldmgzYnlLWCtsM3Bz?=
- =?utf-8?B?bE9ORy9icEliV3BvSjRFNi82TEJVRS9TZFdIRGgwNXJsdmFPa09qWmhDZ2Rk?=
- =?utf-8?B?TnNMM1ZncVc4eUMwZ2VXYWhST2R0RU1UMFVwRE81UEZwdVJHRUtucm1ERlpL?=
- =?utf-8?B?QXdXYU1ZV2dmdWhOTlZFRWIrNG9mUlc4blorMEYxQ1AwSVNqUUd0S1hrT05r?=
- =?utf-8?B?SVlQTlY3WmVFVEYycXUvQ01ZOUNJREdScVE3TTFHMk9Ma0hjdkg0Smg0T2xr?=
- =?utf-8?B?OWErK2Y5Y2hJRzVSTzFmZ2FiN3JMcGtOUEYwdWxxalB3cEFwN0NZcmNDSndi?=
- =?utf-8?B?akJLZXNESGhCQjA5N1BVTGt4Q2hDTFNaWWYvVExGY1JobTFBank4dzM1bFZ1?=
- =?utf-8?B?cTFGUFYwb0tJQmRJWGg1dHlYQUhoWEpzM3YwR21VcmcrV1hHNlh6THdNR2RD?=
- =?utf-8?B?djhYc1QrQUU1eE5DRnlzRExYajg0Um90Tk1PMFZYam84eGJ1UkZ6VmlNQVc5?=
- =?utf-8?B?YUZUMHpJMGwzWDg1d2lnT2hIb0lHdzE0MDlGNU95OTNEc2lpTm4xeGFSd0lj?=
- =?utf-8?B?cjFGd3o0anNKSGF1LzNPc3JNeDR3ZG0wM0hjemFnTlJBazBQcTdMTVdQTWVT?=
- =?utf-8?B?ZklHenhhdTVFVEpCTTVYcTFZYVIybmdGbWpOR0JLR0RheTVGdDRkWjFZb2Qy?=
- =?utf-8?B?REk2Yy9NdlhHYVhRTzV1N3pkc0dqRDN4WjNIUjdXemV1OGhXekRMOU9pMVNQ?=
- =?utf-8?B?L0RjekVhb3Nwd2tXT3JhQlFLMlZ0a1JtNXNvWFhvdzVBTHlreDJLWXNiZEpu?=
- =?utf-8?B?TjZzcTVJbklwZ3ZOL0pkbHVseFVqY200YTFmN1lEK21LS1l1cGNxMzE4L2h3?=
- =?utf-8?B?bFRrQ0VDSnZxd0pzdHNEWXdiSlhmM2Eybk1TYTZXTlhqMHF6ZDZNYW1vRXB4?=
- =?utf-8?B?SzVPNE00QzNXSW1MTHdCUGlsQ1FzVVpqSUtwR3BmYVU5c1pmeXN1eEljN3Rq?=
- =?utf-8?B?MTNGU21LbnBKcWFSUGJENlZVYThydkdhSE9wVTN0Mi8rTnRpU2VOWFptbFVF?=
- =?utf-8?B?NS9kdDJtQWxhV0VUeldzQ3hhZFdCbFg4dnZaUVZXTmluSFdBanpsK0h6YTV5?=
- =?utf-8?B?bDRLL1lWSHZKQXMvcm1VMGlOd0IrclpvTnozdE1CWHRzbmhrUDVGemM3Y2ND?=
- =?utf-8?B?NlpCQmJVMlRKTm1GSzJIb2hXN2JUb0hFc2VVS0RVYmljUWw5TzUzZndWQTcr?=
- =?utf-8?B?eGJSRDZHMEdqeVhwTHVrR2swaS9yUUlaRWN1aEFzRCtEWU1mTW5sa2VPL3VS?=
- =?utf-8?B?bmJyc2JhNktZenRocFVac24wOTlXTDdYbDIyVFhaVnJha2gvQWdMeElmN3Zw?=
- =?utf-8?B?TFp1ZmswQTJON0NnckcveW1BQ3h2Ly9YZTlKbU5uVTVVd3lQMWJDSXpMV3NL?=
- =?utf-8?B?QlBwRm5MVldTdmV4Z2tVQzJoYXFTUG5HMkpySS80aklqbmVuWVZObC9INEE5?=
- =?utf-8?B?Q3dDeXhkcHg5dGpjQ1RMeGJHV2RaTXFDY1BNYTFZUkxSb3BLS29iYk5CM3g2?=
- =?utf-8?B?M2UyaGd0L1g1UWpYbnNVS3hONWhybHdJYkp6eWVKWWt1MzhGZGxQVWdnUXV0?=
- =?utf-8?B?VjNQbFdqMStwdUJCbHpMcDdwQ1BIZ0Nvb1kyeGZrK3FZcjMwYUV0NmFlN0t0?=
- =?utf-8?B?dUVEaGdNYnMyc0Y1L3B6YVJxQW8xZno1TnUrelhKc1B5VDE4a0dDMDJPbkY5?=
- =?utf-8?B?TjNYYU5zSlRkQ2VoYkQzeUIxZ3pEeVRCdEZEK2lyUTM0UWFJRU5ZQVBUQyt0?=
- =?utf-8?B?VkZkeU5qa3NDdU9QdzdnYnZuOUNyVmIyUzhHd3o0ajNhSXA4N1VoUT09?=
-X-Exchange-RoutingPolicyChecked: yHqQs8yIGXsw4GXKV2Y+YAwTNwOVZbhac5p8tYzrrbTcv8glm6/lKnf/r3Q9o7ks4sTG5bgax7EcXviMvZaDACgSHoI7oB0X5mjkdJMtptRpr36DVV5WHRlSEZ5Gax3LbCbVNAJJbxvEx28r3uh3x7M+E5Cp5omDYqfwofVk50OhAjgZeNP0G6758SsuDUBC0DMXErxweXi0I77Idgo6CaX+wmb/IuLiEVuLVf4hZGJRUITvA85rxz9oAamyrV/yg9UXU7GlKkobSDVKvTLc9+cHQ0L8+3NtessQOS9d1fh7yeQz0tpP8Uc75FzKK6iCj4GvQq23KNEQdPpM4yGjDg==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3e35418c-5237-4f69-5a82-08df268d523a
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?d0lFa3dSakNvdlVmZVNHTTNJdEw1eHgxZ092S0xxVVhZb2xnZnJyRm5KN3lH?=
+ =?utf-8?B?elRnY0pndHdyK2p2ZTIwQXdIMUNZbUpSZWRPaFI1WnhJU1dnMzJKV3RIK3Zy?=
+ =?utf-8?B?NUVDdVhQUlhQOUxlV21vUUxER2lrdDNyZ1dkNXNycGsyOEkwbStPRzZTajdr?=
+ =?utf-8?B?eWpPdUFwREVjUlhVTTdudUJGNXZvejZxdVRDZHFIdGpNbm4vV013V0lEVG0y?=
+ =?utf-8?B?aGtVTE8xQml2cTRmSU5BOXNpc2NRSEZWTkRGWUNuMDBmUjBYMnkzTnczczRM?=
+ =?utf-8?B?K2dycmc5Q2ZWaHgyTGEvVmhIcStKajdndnlvWnVZTE9XQlo3UkZwamFZYnRY?=
+ =?utf-8?B?dWZPYStZVnduRmdsQ2g2TnNXdXRlenJtRnZNVHk1VE5GUGExb2grcG9XT0lP?=
+ =?utf-8?B?V1JsZHBaSmdaOFo3ZVBuOG0yU0JlR1Y3QksrN3FFaFpwOVhnbTRuMWNqOGZ4?=
+ =?utf-8?B?amdXSjcwcEl5bGxHYUdDR2FFSUFvcTY4OUxEQlduTUUyclBNaW5uMVozTEZX?=
+ =?utf-8?B?SXFOQm96cVJ4UGx1dkE0VzR3MmhScmh5Sy9sSnlqVE9LR2NVY2o1Z05SV05a?=
+ =?utf-8?B?MmF6Nzh2VE1Zc0h3UWxuWkd0RHppbmhqcll3a0d6MWNaT3J6cmtaaWZ0NWp2?=
+ =?utf-8?B?Y0NwK0lkMDlMdU4xSFEwbmwyWmNvbFBacEhDNWpqVWhjdG9VdGNiVXVvcytO?=
+ =?utf-8?B?SnpDNUJ4bS9YUXI4T3dFVmdlaU1VZVdlY0hxRW1NeVF2cTRKZ2VCdUdtZ0tM?=
+ =?utf-8?B?OVptc0hOQWZPR2hDRFVTaUd4cXVsQXBhQXo5N3VXa3ZtRGhYell6T0JtZFhz?=
+ =?utf-8?B?Q21ITTVIYnZvYlE3UUZ6YkV5RC80S3pReGtOZmVPMjV0RFFFVll5bDBVWWRE?=
+ =?utf-8?B?ZzI2YUtrNHlnM05SQ0dPT0dHaVE3YWU4WVVla0g4VURsSnlQYmlMNmQ2WnBY?=
+ =?utf-8?B?U0s4d3BTRlhSM0UvNFYwekFBc2lpZHNRQWNrdHlvOFdFVHViUi9MV1hCcnZV?=
+ =?utf-8?B?WURrWVBUUVg5d3ZLbmNsb24vVWF4YkZIdVN5WTRpazN6eG82Tlk1K0R1TmlJ?=
+ =?utf-8?B?a2cxYW1KNCtvelJBbnIyVk85bTlLUnYyNExscmhrT2pUMG9mYUpoeGJYTTNz?=
+ =?utf-8?B?c0JPY1JEQytYeEJqQ3FqOTgxK3d2cjFjekd2RkhBUDJCNUc5dzRVU0ErSi93?=
+ =?utf-8?B?dFdJR3lRUVNZdE9NaVJYVHpJdmY5azkyVUJEeU9iTFlKajJKZ3FaN3plSy9W?=
+ =?utf-8?B?V0huMC9nUnJ0NEdFSUxpR1Q0OUpnK29xaGoxeHMrbUNQUVZhWlVsaE9LSG5S?=
+ =?utf-8?B?blNjSjZFb2NnMDIxR0ovZ2lOdHlURnl2MnFyVXZ2eDExaFFlTStld1ViaFl6?=
+ =?utf-8?B?WlJQOVBrclJMelJObEJ4QkxraU95T3kzOGZ6U2VHNzAvUHdCQ1o1SUpxanN3?=
+ =?utf-8?B?eFFYbHg4eWZjekQxWHBmRjNvWkRhRnlhVUt4ck1vSTB1WDdxdlpQV2dtSHc5?=
+ =?utf-8?B?ZVJLR05jNlV3SGN4SDZzY0t6YnQyRStsbW9JRG12UFZLeVpkMzFobm5tNkk3?=
+ =?utf-8?B?MzlIZHEzeS9YQmxuUG85M3NqUUc4bDRUTzdob3Qrc0RSZXNZdXFnV0wrMVBn?=
+ =?utf-8?B?UlU1S2tITXIvUUgvVEhFbkhIQWpBWi94dEN4dWkxbnZiL2kwWnFEVjdtdDg2?=
+ =?utf-8?B?WG1jUE0xUDJ5bUlLQllxUTdNa3NxZ01lM0JmUTRkNXBWV21ZZmhWMkpYYkgw?=
+ =?utf-8?B?VThFOVAwWk0vcVlWM3QwNENDUU5seURpMFQ4aVFGc0lsVitVTkV3T0k1RHZ5?=
+ =?utf-8?B?cVFYbGNHYlcweSt3RWg3dmVXU3JkUzB4MjR1R3hCTktEc2E0VTlTT29mTjAx?=
+ =?utf-8?B?VExSSm1PMndSam5LTFZsdHp2L2JPYkRSelAzeVBCZ0dzclJTMythb0tONDVq?=
+ =?utf-8?B?TnZrM2U5dlIvNWU4aHFicmdlNXc3RktjSVZLQzBuOHBXOVJXRHNTWk42WG9T?=
+ =?utf-8?B?Z1NRU3lwMTVRNy9ESzQ0enBBWVdDMFcrTEI3MFcySVBDbTZsSC9nSEtCbDBU?=
+ =?utf-8?B?clRkcko4ZkcvNFc4RWlodXZKWWdKNTJPMmI2a0N5VUFRVnJtYjZVaUFWL3dW?=
+ =?utf-8?B?V3FTWjl1bmRoT1RhazRyUVEzQ2RqaHpXS2JsYVJnKzVvZElLY0tGZStQTzJH?=
+ =?utf-8?B?dzNqTjBnaHpNTTZNdncxQnVyL3VwdEZqVENDVjllSnN1eFZjK1dHMFRTSmxD?=
+ =?utf-8?B?QVpVdzI2YnkzZU1PS3F1aFp2SDJSSUZFSE9TNkZoVWdZSXJtbzFFQmg3OWd0?=
+ =?utf-8?B?c0Z3SlhXVlViU2hsMkdxUEl5R2tyenhnT2ZFTFdqUThGaUpZVUkrQT09?=
+X-Exchange-RoutingPolicyChecked: WlUu0qxaX9/PSCkZ24TVfBxq2nr3HzbOr/JS26vNei/ALWGP9wZC91F048VRePBvjgJHvDx4xrVfSUQtFrVQjxAgwa7JBoBZxSonPwy5CuDG5HyzgGHhcvHKvn7VUQEiVSjHkEJ3PS3SCaUu0Jz4BYlAfG5mJpgrDrdfhuxmiRpkoW4b/mfJOprY610i0eo2QWX0Z4NULovs+5vYZaZ7l4GqjpmG0hchvoQg6vBzLBIG/SM7D848S8Jjb76Uf791LkYSfjz+FbTm46MWpWxyft56uM8u7vOqNDHR4HYI9P3qoZSjqGEQmPDi9xFlYJqqgwvCE2U6nUond6bArInqJg==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9b76952e-abfd-4624-9a96-08df268e15c0
 X-MS-Exchange-CrossTenant-AuthSource: CH8PR11MB852307.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Oct 2026 05:14:12.2704
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Oct 2026 05:19:40.4960
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: n4nsiyQWdldwlANKSEqud66OFPaHWKfrDldaiLVmuYhU/S+9OQPDP81OLwQjJg7Fjmgki3+fhX+vAtSVlyQhZw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR11MB9449
+X-MS-Exchange-CrossTenant-UserPrincipalName: HGGfM/GG56hA3XzaybU6RMbDD8X8HXT3asgOi8VwA7JRs273P5nXDZcO6bg+Yks3HP57PlZCiFtZxmrE2fWI0Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS6PR11MB139798
 X-OriginatorOrg: intel.com
 
 
-On 09-10-2026 17:44, sashiko-bot@kernel.org wrote:
+On 09-10-2026 17:46, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] drm/xe/hwmon: unchecked return value from xe_hwmon_pcode_rmw_power_limit()
-> - [Medium] hwmon: ignored pcode read errors fabricate valid sysfs responses
+> - [Medium] drm/xe/hwmon: live hardware read during probe permanently hides sysfs attributes on transient failure
+> - [Medium] drm/xe/hwmon: endianness bug when extracting thermal limits via union
 > --
 >
-> commit 6cc9575a02c32b9a8a28e257650ff7b17698865f
+> commit bbb594b78c17c03bdb11a59f0ce797f39d14c3e9
 > Author: Karthik Poosa <karthik.poosa@intel.com>
+> Subject: drm/xe/hwmon: Consolidate temperature sensor availability checks
 >
-> drm/xe/hwmon: Handle pcode read failures of xe_hwmon_pcode_rmw_power_limit
->
-> This commit adds a return on read failures inside
-> xe_hwmon_pcode_rmw_power_limit and updates callers to avoid updating
-> power limit settings with invalid data.
+> This commit replaces is_vram_ch_available() with a generalized
+> is_temp_available() function that validates multiple sensor types using new
+> helpers. It uses this new function during hwmon registration to ensure
+> attributes for absent sensors are not exposed.
 >
 >> diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
->> index 5edeac961ec33..9884e06f83e59 100644
+>> index accccadbe3e67..62e341ef37e9b 100644
 >> --- a/drivers/gpu/drm/xe/xe_hwmon.c
 >> +++ b/drivers/gpu/drm/xe/xe_hwmon.c
->> @@ -232,9 +232,11 @@ static int xe_hwmon_pcode_rmw_power_limit(const struct xe_hwmon *hwmon, u32 attr
->>   						  READ_PSYSGPU_POWER_LIMIT :
->>   						  READ_PACKAGE_POWER_LIMIT,
->>   						  prepare_power_limit_param2(hwmon)), &val0, &val1);
->> -	if (ret)
->> -		drm_dbg(&hwmon->xe->drm, "read failed ch %d val0 0x%08x, val1 0x%08x, ret %d\n",
->> +	if (ret) {
->> +		drm_err(&hwmon->xe->drm, "read failed ch %d val0 0x%08x, val1 0x%08x, ret %d\n",
->>   			channel, val0, val1, ret);
->> +		return ret;
->> +	}
-> [Severity: Medium]
-> Since this function now returns early on error, skipping the subsequent PCODE
-> writes, could this cause regressions in xe_hwmon_get_preregistration_info?
->
-> In xe_hwmon_get_preregistration_info, there are four calls to this function
-> that ignore the return value. If these initialization writes fail, the
-> function still sets hwmon->boot_power_limit_read = true.
->
-> Setting this flag alters the subcommand used for later reads, changing it from
-> READ_PL_FROM_FW to READ_PL_FROM_PCODE. Could this cause userspace to receive
-> incorrect power limit values if the initial writes were aborted?
->
 > [ ... ]
-
-No, This won't cause a regression.
-
-boot_power_limit_read is set only after all four READ_PL_FROM_FW reads 
-succeed. Later PCODE failures don't change the cached pl1_on_boot and 
-pl2_on_boot values.
-
-If the RMW read fails, nothing is written. If the write fails, PCODE 
-doesn't apply it. Either way, PCODE keeps the firmware defaults.
->> @@ -394,7 +396,9 @@ static int xe_hwmon_power_max_write(struct xe_hwmon *hwmon, u32 attr, int channe
->>   		if (hwmon->xe->info.has_mbx_power_limits) {
->>   			drm_dbg(&hwmon->xe->drm, "disabling %s on channel %d\n",
->>   				PWR_ATTR_TO_STR(attr), channel);
->> -			xe_hwmon_pcode_rmw_power_limit(hwmon, attr, channel, PWR_LIM_EN, 0);
->> +			ret = xe_hwmon_pcode_rmw_power_limit(hwmon, attr, channel, PWR_LIM_EN, 0);
->> +			if (ret)
->> +				goto unlock;
->>   			xe_hwmon_pcode_read_power_limit(hwmon, attr, channel, &reg_val);
-> .
+>
+>> @@ -1008,19 +1008,39 @@ static void xe_hwmon_get_voltage(struct xe_hwmon *hwmon, int channel, long *valu
+>>   	*value = DIV_ROUND_CLOSEST(REG_FIELD_GET(VOLTAGE_MASK, reg_val) * 2500, SF_VOLTAGE);
+>>   }
+>>   
+>> -static inline bool is_vram_ch_available(struct xe_hwmon *hwmon, int channel)
+>> +static bool is_temp_available(struct xe_hwmon *hwmon, int channel)
+>>   {
+>>   	struct xe_mmio *mmio = xe_root_tile_mmio(hwmon->xe);
+>> -	int vram_id = channel - CHANNEL_VRAM_N;
+>> -	struct xe_reg vram_reg;
+>> +	struct xe_reg reg;
+>> +	u32 reg_val;
+>>   
+>> -	vram_reg = xe_hwmon_get_reg(hwmon, REG_TEMP, channel);
+>> -	if (!xe_reg_is_valid(vram_reg) || !xe_mmio_read32(mmio, vram_reg))
+>> -		return false;
+>> +	switch (channel) {
+>> +	case CHANNEL_PKG:
+>> +	case CHANNEL_VRAM:
+>> +	case CHANNEL_VRAM_N...CHANNEL_VRAM_N_MAX:
+>> +		reg = xe_hwmon_get_reg(hwmon, REG_TEMP, channel);
+>> +		if (!xe_reg_is_valid(reg))
+>> +			return false;
+>> +
+>> +		reg_val = xe_mmio_read32(mmio, reg);
+>> +		if (!mmio_temp_valid(hwmon, reg_val)) {
 > [Severity: Medium]
-> Is it intentional that the return value of xe_hwmon_pcode_read_power_limit is
-> discarded right after checking the write failure?
+> Since this function is called during hwmon registration to determine attribute
+> visibility, does this live hardware read risk permanently hiding sysfs
+> attributes if the hardware is transiently busy or uninitialized?
 >
-> If this read fails due to a hardware timeout, it could leave reg_val
-> uninitialized or zeroed, bypassing the disable verification check that follows.
+> If the sensor returns 0 (which mmio_temp_valid treats as invalid) during
+> driver probe, the attribute will be hidden for the entire boot cycle.
+device is expected to be ready by this time, so this is not an issue.
 >
-> Additionally, could the ignored read errors in xe_hwmon_power_max_read
-> fabricate valid sysfs responses? If xe_hwmon_pcode_read_power_limit fails in
-> that function, it returns fake 0 readings instead of propagating the hardware
-> error, which might mislead userspace tools into believing the power limit is
-> disabled.
-Valid points, but they're unrelated to this patch. this shall be handled 
-in separate patch series.
+>> +			drm_dbg(&hwmon->xe->drm,
+>> +				"channel %d temperature unavailable, val 0x%x\n", channel, reg_val);
+>> +			return false;
+>> +		}
+>> +
+>> +		if (channel >= CHANNEL_VRAM_N)
+>> +			sprintf(hwmon->temp.vram_label[channel - CHANNEL_VRAM_N],
+>> +				"vram_ch_%d", channel - CHANNEL_VRAM_N);
+>>   
+>> -	/* Create label only for available vram channel */
+>> -	sprintf(hwmon->temp.vram_label[vram_id], "vram_ch_%d", vram_id);
+>> -	return true;
+>> +		return true;
+>> +	case CHANNEL_MCTRL:
+>> +		return hwmon->temp.count && !get_mc_temp(hwmon, NULL);
+> [Severity: Medium]
+> Similar to the MMIO read above, could this PCODE mailbox read cause
+> attributes to be permanently hidden?
+>
+> If the PCODE mailbox transiently times out during driver probe,
+> get_mc_temp() will return an error, causing the MCTRL attribute to be
+> permanently hidden for the duration of the boot cycle.
+
+pcode mailbox reads use a default timeout of 10 ms, and the mailbox is 
+expected to complete within that time.
+
+If it doesn't, that's an issue to debug, not a transient condition to 
+retry. So we treat it as a failure and keep the attribute hidden.
+
+>
+>> +	case CHANNEL_PCIE:
+>> +		return hwmon->temp.count && !get_pcie_temp(hwmon, NULL);
+>> +	default:
+>> +		return false;
+>> +	}
+>>   }
+>>   
+>>   static umode_t
+>> @@ -1030,14 +1050,13 @@ xe_hwmon_temp_is_visible(struct xe_hwmon *hwmon, u32 attr, int channel)
+>>   	case hwmon_temp_emergency:
+>>   		switch (channel) {
+>>   		case CHANNEL_PKG:
+>> -			return hwmon->temp.limit[TEMP_LIMIT_PKG_SHUTDOWN] ? 0444 : 0;
+>> -		case CHANNEL_VRAM:
+>> -			return hwmon->temp.limit[TEMP_LIMIT_MEM_SHUTDOWN] ? 0444 : 0;
+>>   		case CHANNEL_MCTRL:
+>>   		case CHANNEL_PCIE:
+>> -			return hwmon->temp.count ? 0444 : 0;
+>> +			return (is_temp_available(hwmon, channel) &&
+>> +				hwmon->temp.limit[TEMP_LIMIT_PKG_SHUTDOWN]) ? 0444 : 0;
+> [Severity: Medium]
+> Does extracting thermal limits this way introduce an endianness bug?
+>
+> While looking at how the limits are accessed here, the xe_hwmon_thermal_info
+> struct aliases u8 arrays with u32 arrays:
+>
+>          union {
+>                  u8 limit[TEMP_LIMIT_MAX];
+>                  u32 data[DIV_ROUND_UP(TEMP_LIMIT_MAX, sizeof(u32))];
+>          };
+>
+> If the driver reads 32-bit values from PCODE into the u32 arrays, extracting
+> individual 8-bit limits by indexing into the u8 arrays assumes a little-endian
+> memory layout. On big-endian architectures, index 0 will map to bits 24:31
+> instead of bits 0:7, potentially causing the driver to extract incorrect
+> thermal limits.
+>
+>> +		case CHANNEL_VRAM:
+>>   		case CHANNEL_VRAM_N...CHANNEL_VRAM_N_MAX:
+>> -			return (is_vram_ch_available(hwmon, channel) &&
+>> +			return (is_temp_available(hwmon, channel) &&
+>>   				hwmon->temp.limit[TEMP_LIMIT_MEM_SHUTDOWN]) ? 0444 : 0;
