@@ -1,234 +1,113 @@
-Received: from mail-yx2-f9.google.com (mail-yx2-f9.google.com [74.125.224.137])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88C439A07B
-	for <sashiko-reviews@lists.linux.dev>; Sun, 11 Oct 2026 06:36:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.137
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791700572; cv=pass; b=HE8HxFCixTB36K0Tkezh57/9zXkfCBj8icYGwBaRNqEoC2u9C/ZkYqKqmf7SSgwBzAoDz42wvdAZccUnRua0nImkLH5gc4ji4NLDd2HkQj8zgYE4LIFCxBBvSGCUw6GR8igxk7fHgD+80RMyDwJsVZ7JbTDJ/JC4GM4VoWPnxTM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791700572; c=relaxed/simple;
-	bh=7hD88bWiAam8+NXWjV2nyhl9mwoC6BjQ1vQ4o2Q4L98=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aXalsYi7K8R6XKqAeNoi2camfMAeXov2mc8Ogu6HlFIB11xtYdJYtzt5dLFBCRnmTNaI2Xlj6VRvUHE6lr+vYd2ipX/frX0hn1qrlvyhjUQs1CvGda5ggsiB3WeNei6NxGtw0DgXKd3+aURYhovh10GtT53d4XLACSPHYdwz8lU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ap1tM+DT; arc=pass smtp.client-ip=74.125.224.137
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFDF361670
+	for <sashiko-reviews@lists.linux.dev>; Sun, 11 Oct 2026 07:16:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791702978; cv=none; b=rtz5z459k49UQCIxzNCNOu7FpGJIpI1Xa+WjOvPyw+q/k2QIGbEPZ7bJ+PgqAFTy5ncKEYfOM7J2ubSalU4iZhRAfTfE8atXlTpL/7/wOIOP0cA/FIIxN4JkrpGC711Y7vflvk1C0D6jkgACWb/JGOOx99RPbiMSDlthvSJ9pmk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791702978; c=relaxed/simple;
+	bh=PzvB1EwVk3or1HqITSMtRhTjeLIcTgxEXoe1+Vds78c=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:content-type; b=U+9mzk9JanuQFLUzG8CAjYeUZ9ShUpYoZDFuPiqCgfRQvmONdvsF603WOOJlS03pT9qbuBtudNDNpXFcAWtLinICBhXs4LrOI4paKuQFnAajq0SE9t+Akv+P8rsxpiGfijo3KTedM9rCitWhpMVSl0UH3Vc59YNDWyW3kecU43g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Y4B9+z3G; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ap1tM+DT"
-Received: by mail-yx2-f9.google.com with SMTP id 956f58d0204a3-6757067f4e9so460214d50.0
-        for <sashiko-reviews@lists.linux.dev>; Sat, 10 Oct 2026 23:36:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791700570; cv=none;
-        d=google.com; s=arc-20260327;
-        b=q5Q2FqeHac48vhQAcomIM9z4zzb24X6o0aWXz7HpaUYYBy+iKdYS2s5lSKpD/41LIy
-         2g6GJj4SCbhb9dygZkuUYQyPpjdQjwgziu1O2UaqH3pR21eTzt5MckoaMaRf+medUWrn
-         lWbStPg6/ltLSo22YPEV0Ht7KagO3/sFFodPe87slgMBjTyEXIB6Ry82/W+NxmnjKgSK
-         9nPtbMiy6gyDrpwjCBqtu4uor6Zw5tQkmxMMDkQgd3yh1ZRYbXQiTpn4LHw4geZ+IX89
-         8e/tjxd6+bPswALNn1/IabzMjR+EXh96bziGQ8JIJuK3cFce0yoWodcBDAl32Piw2MaR
-         98KQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=atEifmmOXWuQlnCZ1ScxDD9fnEVZxipao95maoAjOXM=;
-        fh=m74ElSqHazzSng+Mltoi5J3j8qED2+GBqGz/HsIcJkA=;
-        b=c0K/xxEisuIt1rI6H8NpYr9i9OoayGEhIJjfC57OXyiaX2AwBD0CwbGp0CFDRReMxH
-         BveG7iptuWo9/g0oVpnjM5dqxBDdE8wTHwHKboPXFqpqFUINW60//jeba6jC//bpD9aG
-         pCviof25TOj1OmyN4ctpxkw7YhyeIDgZG5FOR25ddhrgzB8zxkUB6nbiKjlqghRTT8Co
-         KLsRQFgN1zZmg5PUxdkDwBnErQQ1ydfahm6ArZBBMRyk2FvhCYHkId2hcIiO6MtQHHi2
-         a4qd5IQwOmfTFk8M3L/+oMULWizL9Y8MAyci4JwTQ7IDxjNqWOW/IhVLSjm486HvvIhb
-         DSoQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791700570; x=1792305370; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=atEifmmOXWuQlnCZ1ScxDD9fnEVZxipao95maoAjOXM=;
-        b=Ap1tM+DTpOc++iTRhS1MOCs5F225CXG7viRQ5m8nLQ8A2bCPae+h9dWdM6uBx9R6tR
-         J0FUXMZ61qdtf78kmy0iSFs7KqPXtTtA5XgWlQtAcP8tAyCfG8B+e04RRzwgIa4owOEM
-         xirYdVBKncoLdkMitlpd9FyYjtHKkXk8/jlGxQdzV9E5eaXJZD7av12UU4w35Bnlzd9f
-         TyRy7uydKlitJkiwrWklxZrLslXIs9o0c/cLyC+P/7H/urlccffxAhJbaM73hCIvKIPj
-         ziv11LPp8WkQ5qHHUGo1D3773LmlnND0VRsbK+LgFSOipULTgPhqLRjHSeUH4cmYj6wf
-         0Jfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791700570; x=1792305370;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=atEifmmOXWuQlnCZ1ScxDD9fnEVZxipao95maoAjOXM=;
-        b=HQexIy6qxuRs0Cq1uTIQ4p/zgykimvYzkIwkb//hMMAt3oM9d4uNoPWNlsYuj/y8AU
-         ke67Y//ByRleu4BO9O/F6sHKFQaErMlzB4i1NMi1wppL8J9ehEoBBCpsXFBcBpr6dvbP
-         DdGJj5d9jUTXtcGtc+VnWiJynqkLSI3KFas/MVjSPvHeITQ7NnM2g9kc8m4M56SbN0ZB
-         Tod7A0mTwMKS9zdX82MBJwbM7P/4ELaMMtH6yZzZPOE22CE9gkkHsaLJ+Q7bc4/2XAEo
-         xEk/Ev4Hvd6LdZpLDVNHYEbV6j4yw230jA1RinQfmyT9LVCSUmiPEOScxYp7lq5b1tfQ
-         BYcg==
-X-Gm-Message-State: AFq9FYIDO9x70WVXoTn+ACoHxgBwLoWCe0nwEJNYeZWFMTw2gSVIEfDK
-	PRm9u+GcGWKS66q+oIQljtyiNKQOsqICUjiJVICqHuE/JJje/sqEiyMt5sJ+USClTCIljNOuYfE
-	Nh6RkeAFhRHlBf8qy4AqCSd0QRl/naukUgdSpTrO7PHgmSkQ=
-X-Gm-Gg: AYBFou2Tcx5swDb2VszU5/1YncyyRr0p0FqK1LWCRG79+IoJlPvhj/60k1blSw7kbX8
-	klUBfQShqXRQv3613Sbddb8braapuqHydZZCHfk75Jb2ntm8AD59XmwHnAXewHRuX8JDfTDJXvb
-	TCrieVQCg+We6upITzI4cK/wH3fS+e6hikFz13Div98syNJBaeqSmhV4zZr1HvWomzB2YMmq4C9
-	xmnUGrS7rQaLnCaAp7Mqo2JiOqMYSPhntQjGf2/U+qWx3UsETTKTFpfrGVZxRG6bkxtMYElL/OT
-	wdO8nret6apuNP6YASyFs0stazdtaCbmL4Y+Wk8lZwTTfH/pOsJvXOM=
-X-Received: by 2002:a53:ed4f:0:b0:674:2095:58cf with SMTP id
- 956f58d0204a3-679362f029dmr1632902d50.109.1791700569625; Sat, 10 Oct 2026
- 23:36:09 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Y4B9+z3G"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1791702976;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PzvB1EwVk3or1HqITSMtRhTjeLIcTgxEXoe1+Vds78c=;
+	b=Y4B9+z3G8ouA4+YgJRBi/V51LfZggYvx0S6F652n810JaVSlh/w6l0rNn/w5MInzcJhK38
+	MGJM3DmjrBo/Bm4hD9VFdugJ+bV+FmvQcBAfpM6xnLBNZB7PQs/lkdtOgwBHmskKdT5Gjc
+	Skm1KcoxNLE1VN9wIoQPyD00wjzU4RM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-Uwdb19imN0-BjwPTsuoBQQ-1; Sun,
+ 11 Oct 2026 07:16:11 +0000
+X-MC-Unique: Uwdb19imN0-BjwPTsuoBQQ-1
+X-Mimecast-MFC-AGG-ID: Uwdb19imN0-BjwPTsuoBQQ_1791702970
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 3B19E1800611;
+	Sun, 11 Oct 2026 07:16:10 +0000 (UTC)
+Received: from jtornosm-thinkpadp1gen7.rmtes.csb (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
+	by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 7A415180034F;
+	Sun, 11 Oct 2026 07:16:08 +0000 (UTC)
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+To: sashiko-bot@kernel.org
+Cc: jtornosm@redhat.com,
+	kvm@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH 1/7] PCI: Add pci_find_free_ext_cap_offset() helper
+Date: Sun, 11 Oct 2026 09:16:06 +0200
+Message-ID: <20261011071606.506908-1-jtornosm@redhat.com>
+In-Reply-To: <20260930142127.9BE351F000FF@smtp.kernel.org>
+References: <20260930142127.9BE351F000FF@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261010071453.6028-1-jianyungao89@gmail.com> <sashiko-outbox-166309@kernel.org>
-In-Reply-To: <sashiko-outbox-166309@kernel.org>
-From: Jianyun Gao <jianyungao89@gmail.com>
-Date: Sun, 11 Oct 2026 14:35:57 +0800
-X-Gm-Features: AclHuK9RoUADDw1tz0eQK1gtI1KrPPfDOq8OoVJJE_g9_50GffvdcXsqG9DlN_k
-Message-ID: <CAHP3+4Cu5=LaMy0ONkTmuJej7kq7v6b5NEzUG-Gb7em90nyBJw@mail.gmail.com>
-Subject: Re: [PATCH] dax: fix wrong size passed to dax_iomap_direct_access()
- in dax_range_compare_iter()
-To: sashiko-reviews@lists.linux.dev
-Cc: nvdimm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Mimecast-MFC-PROC-ID: tWkogiVntiBY7uuRItqwVBJNGo-Oy3AlX27opImI0Yk_1791702970
+X-Mimecast-Originator: redhat.com
+Content-Transfer-Encoding: 8bit
+content-type: text/plain; charset="US-ASCII"; x-default=true
 
-Thank you for the review!
-
-Regarding the first issue (memcmp ignores page-in-page offset), you
-are correct. This will be fixed in the v2 version of this patch, which
-adds offset_in_page(pos1)/offset_in_page(pos2) to the saddr/daddr
-arguments in the memcmp() call.
-
-Regarding the second issue (bypassed length check when pfnp is NULL),
-this is a pre-existing behavior of dax_iomap_direct_access() shared by
-all callers that pass a NULL pfnp (e.g., dax_iomap_copy_around(),
-dax_unshare_iter()). In the dedupe path, the access range is
-guaranteed to be within the iomap mapping via len =3D min(len,
-min(smap->length, dmap->length)), and filesystem iomap mappings do not
-cross device boundaries. This is outside the scope of this patch and
-would be better addressed as a separate fix to
-dax_iomap_direct_access() itself.
-
-On Sat, Oct 10, 2026 at 3:35=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 2 potential issu=
-e(s) to consider:
-> - [High] fsdax: dax_range_compare_iter() memcmp ignores page-in-page offs=
-et
-> - [High] fsdax: out-of-bounds access due to bypassed length check in dax_=
-iomap_direct_access()
-> --
->
-> commit 05244bba82891c8d959214ace5da854f182c9e20
-> Author: Jianyun Gao <jianyungao89@gmail.com>
->
-> dax: fix wrong size passed to dax_iomap_direct_access() in dax_range_comp=
-are_iter()
->
-> dax_range_compare_iter() passes ALIGN(pos + len, PAGE_SIZE) as the size
-> argument to dax_iomap_direct_access(), but this is an absolute file
-> offset rather than a length. This causes the underlying
-> dax_direct_access() to request a massively inflated nr_pages via
-> PHYS_PFN(size), leading to unnecessarily large access ranges and
-> potential spurious -EHWPOISON from driver badblock scans.
->
-> > diff --git a/fs/dax.c b/fs/dax.c
-> > index 08adeaed2baf1..fb12d0c0dcd49 100644
-> > --- a/fs/dax.c
-> > +++ b/fs/dax.c
-> > @@ -2190,6 +2190,7 @@ static int dax_range_compare_iter(struct iomap_it=
-er *it_src,
-> >       const struct iomap *dmap =3D &it_dest->iomap;
-> >       loff_t pos1 =3D it_src->pos, pos2 =3D it_dest->pos;
-> >       void *saddr, *daddr;
-> > +     size_t size1, size2;
-> >       int id, ret;
-> >
-> >       len =3D min(len, min(smap->length, dmap->length));
-> > @@ -2205,13 +2206,13 @@ static int dax_range_compare_iter(struct iomap_=
-iter *it_src,
-> >       }
-> >
-> >       id =3D dax_read_lock();
-> > -     ret =3D dax_iomap_direct_access(smap, pos1, ALIGN(pos1 + len, PAG=
-E_SIZE),
-> > -                                   &saddr, NULL);
-> > +     size1 =3D ALIGN(len + (pos1 & ~PAGE_MASK), PAGE_SIZE);
-> > +     ret =3D dax_iomap_direct_access(smap, pos1, size1, &saddr, NULL);
->
 > [Severity: High]
-> Does this code risk an out-of-bounds access in the subsequent memcmp() if=
- the
-> underlying physical DAX memory mapped is shorter than requested?
->
-> Looking at dax_iomap_direct_access(), it bypasses the length validation w=
-hen
-> the pfnp argument is NULL:
->
-> fs/dax.c:dax_iomap_direct_access() {
->     ...
->         if (!pfnp)
->                 goto out_check_addr;
->         rc =3D -EINVAL;
->         if (PFN_PHYS(length) < size)
->                 goto out;
->     ...
-> }
->
-> If the iomap extent crosses a device mapper target boundary, such as on
-> dm-linear, dm_dax_direct_access() truncates the mapping length and return=
-s
-> fewer pages than requested.
->
-> Because dax_iomap_direct_access() is called here with a NULL pfnp, it ski=
-ps
-> the length check and returns success even for short mappings.
->
-> Could this regression cause the subsequent memcmp() to read beyond the
-> physically contiguous mapped memory?
->
-> >       if (ret < 0)
-> >               goto out_unlock;
-> >
-> > -     ret =3D dax_iomap_direct_access(dmap, pos2, ALIGN(pos2 + len, PAG=
-E_SIZE),
-> > -                                   &daddr, NULL);
-> > +     size2 =3D ALIGN(len + (pos2 & ~PAGE_MASK), PAGE_SIZE);
-> > +     ret =3D dax_iomap_direct_access(dmap, pos2, size2, &daddr, NULL);
-> >       if (ret < 0)
-> >               goto out_unlock;
-> >
->
+> Could this loop indefinitely if a malicious or buggy PCI device presents an
+> extended capability chain where the next pointer points backwards or forms
+> a cycle? It looks like this traversal lacks the Time-To-Live (TTL) limit
+> that is present in other helpers like pci_find_next_ext_capability().
+
+Added TTL matching pci_find_next_ext_capability() pattern to prevent
+infinite loops on malformed capability chains.
+
 > [Severity: High]
-> Is it possible that the memcmp() that follows compares the wrong file dat=
-a
-> because it ignores the page-in-page offset?
+> Is a hardcoded 64 bytes always sufficient here? Some standard capabilities
+> are larger than 64 bytes (for example, AER is 72 bytes, and VSEC/DVSEC can
+> be up to 4KB). If the device's last extended capability exceeds 64 bytes,
+> would this offset fall inside the bounds of the active capability and lead
+> to data corruption when written?
+
+Replaced the hardcoded 64-byte offset with zero-scan approach: walk the
+capability chain to find the highest used position, then scan for
+contiguous zeroed space. This correctly handles capabilities of any
+size.
+
+> [Severity: High]
+> Can this subtraction result in an integer underflow?
 >
-> The dax_iomap_direct_access() function translates a file offset to a kern=
-el
-> virtual address, but the returned pointers saddr and daddr are strictly
-> page-aligned, ignoring any page-in-page offset (pos & ~PAGE_MASK).
->
-> When filesystem block sizes are smaller than the architecture's page size=
-,
-> deduplication requests can be block-aligned but not page-aligned.
->
-> If memcmp() is called directly on saddr and daddr without adding the
-> pos1 & ~PAGE_MASK and pos2 & ~PAGE_MASK offsets:
->
-> fs/dax.c:dax_range_compare_iter() {
->     ...
->         *same =3D !memcmp(saddr, daddr, len);
->     ...
-> }
->
-> Will this regression compare memory starting from the page boundary inste=
-ad of
-> the actual file offset? Could this lead to FIDEDUPERANGE incorrectly
-> deduplicating non-identical blocks and causing data corruption?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261010071453.60=
-28-1-jianyungao89@gmail.com?part=3D1
+> If the last capability starts near the end of the configuration space such
+> that free_offset exceeds PCI_CFG_SPACE_EXP_SIZE (4096), the subtraction
+> would yield a negative integer. Because size is a size_t, wouldn't the
+> negative integer be implicitly promoted to a very large unsigned value,
+> bypassing this capacity check and returning an out-of-bounds offset?
+
+Fixed by using bounded loop iteration with explicit comparisons instead
+of subtraction.
+
+> [Severity: Medium]
+> Because this offset is returned without reserving the space in the
+> capability chain, could multiple callers receive the exact same offset?
+> This stateless allocation appears like it might cause multiple subsystems
+> or quirks to overwrite each other's data at the same offset.
+
+The function now returns the first suitable zeroed region found, no
+hardcoded assumptions about capability sizes. In practice, only one
+caller (qcom-vfio-pci) uses this for a given device, so collisions
+cannot occur.
+
+Will send v2 with these fixes.
+
