@@ -1,113 +1,143 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFDF361670
-	for <sashiko-reviews@lists.linux.dev>; Sun, 11 Oct 2026 07:16:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DAA8388E62
+	for <sashiko-reviews@lists.linux.dev>; Sun, 11 Oct 2026 07:17:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791702978; cv=none; b=rtz5z459k49UQCIxzNCNOu7FpGJIpI1Xa+WjOvPyw+q/k2QIGbEPZ7bJ+PgqAFTy5ncKEYfOM7J2ubSalU4iZhRAfTfE8atXlTpL/7/wOIOP0cA/FIIxN4JkrpGC711Y7vflvk1C0D6jkgACWb/JGOOx99RPbiMSDlthvSJ9pmk=
+	t=1791703033; cv=none; b=d2dZDKZ298ppOWM+7hjNJfsuh+Xi4O2sOIe84eZxs8zc9IvDaP4c2V/Mc5IztVLMF/JOTEThX/C08G0yzR1DigXsurfPdnIBIZibxVZk28/zOnSa906bEyVPt6f0rAmoEDRI+NWI6I6Op8Ei9ZqIGapLv2gL6C/s0kdnVnbucjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791702978; c=relaxed/simple;
-	bh=PzvB1EwVk3or1HqITSMtRhTjeLIcTgxEXoe1+Vds78c=;
+	s=arc-20240116; t=1791703033; c=relaxed/simple;
+	bh=ZUK9rcSpEpSUHzdYNfZiRBtcugeL0hHAv5lcPoIRWo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:content-type; b=U+9mzk9JanuQFLUzG8CAjYeUZ9ShUpYoZDFuPiqCgfRQvmONdvsF603WOOJlS03pT9qbuBtudNDNpXFcAWtLinICBhXs4LrOI4paKuQFnAajq0SE9t+Akv+P8rsxpiGfijo3KTedM9rCitWhpMVSl0UH3Vc59YNDWyW3kecU43g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Y4B9+z3G; arc=none smtp.client-ip=170.10.133.124
+	 MIME-Version:content-type; b=mRJZWESWB0lnRwsMucI593OBq50qsyn+rmOoEUawmloIuZit+/tzeD4rGQFq6Htp3KtOTLcnRCk2IHF+uC0MQCd7ZKitKnUc2ug7ZY67/9hTf50G2XdWx6bWlzHA6IdR8B9dzV13k5KC2li6K1qocSGSb70x+Ez/zjQrJe1AfJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ITOvVFnA; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Y4B9+z3G"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ITOvVFnA"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1791702976;
+	s=mimecast20190719; t=1791703031;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=PzvB1EwVk3or1HqITSMtRhTjeLIcTgxEXoe1+Vds78c=;
-	b=Y4B9+z3G8ouA4+YgJRBi/V51LfZggYvx0S6F652n810JaVSlh/w6l0rNn/w5MInzcJhK38
-	MGJM3DmjrBo/Bm4hD9VFdugJ+bV+FmvQcBAfpM6xnLBNZB7PQs/lkdtOgwBHmskKdT5Gjc
-	Skm1KcoxNLE1VN9wIoQPyD00wjzU4RM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+	bh=Po4kqLt9W4SvS9uRrM6O/FVIkG+dWT3ks06Hqz7p2LY=;
+	b=ITOvVFnA2q7YArG0R2bEITOw95XGVag5f1ibO6Shyrg847666+tvRf7XZtFmOQGhcYOuEj
+	7igHLlN958BqEBzJt8TzVg8Zyuz0VuYiatxQoLYV+gfl6fPPfdu9CZdqIjPgHuEZLvzLzo
+	gFjTaJlJVErQU+mzJFAOoZDuYtW4J4Q=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-Uwdb19imN0-BjwPTsuoBQQ-1; Sun,
- 11 Oct 2026 07:16:11 +0000
-X-MC-Unique: Uwdb19imN0-BjwPTsuoBQQ-1
-X-Mimecast-MFC-AGG-ID: Uwdb19imN0-BjwPTsuoBQQ_1791702970
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-267-C-dfqTKKOqSyT6MWEVKWmA-1; Sun,
+ 11 Oct 2026 07:17:07 +0000
+X-MC-Unique: C-dfqTKKOqSyT6MWEVKWmA-1
+X-Mimecast-MFC-AGG-ID: C-dfqTKKOqSyT6MWEVKWmA_1791703026
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 3B19E1800611;
-	Sun, 11 Oct 2026 07:16:10 +0000 (UTC)
+	by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 55AD91955F76;
+	Sun, 11 Oct 2026 07:17:06 +0000 (UTC)
 Received: from jtornosm-thinkpadp1gen7.rmtes.csb (headnet03.pony-001.prod.iad2.dc.redhat.com [10.2.32.114])
-	by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 7A415180034F;
-	Sun, 11 Oct 2026 07:16:08 +0000 (UTC)
+	by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 88D0718004D4;
+	Sun, 11 Oct 2026 07:17:04 +0000 (UTC)
 From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 To: sashiko-bot@kernel.org
 Cc: jtornosm@redhat.com,
 	kvm@vger.kernel.org,
 	linux-pci@vger.kernel.org,
 	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH 1/7] PCI: Add pci_find_free_ext_cap_offset() helper
-Date: Sun, 11 Oct 2026 09:16:06 +0200
-Message-ID: <20261011071606.506908-1-jtornosm@redhat.com>
-In-Reply-To: <20260930142127.9BE351F000FF@smtp.kernel.org>
-References: <20260930142127.9BE351F000FF@smtp.kernel.org>
+Subject: Re: [PATCH 2/7] vfio: Add qcom_vfio.h header for MSI cache protocol
+Date: Sun, 11 Oct 2026 09:17:03 +0200
+Message-ID: <20261011071703.506995-1-jtornosm@redhat.com>
+In-Reply-To: <20260930143149.0F62D1F00893@smtp.kernel.org>
+References: <20260930143149.0F62D1F00893@smtp.kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-X-Mimecast-MFC-PROC-ID: tWkogiVntiBY7uuRItqwVBJNGo-Oy3AlX27opImI0Yk_1791702970
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Mimecast-MFC-PROC-ID: 5Pbfa7FuTxwmOPUqm5QK28SqHGDSf8M7FJO6KlcW6Is_1791703026
 X-Mimecast-Originator: redhat.com
 Content-Transfer-Encoding: 8bit
 content-type: text/plain; charset="US-ASCII"; x-default=true
 
-> [Severity: High]
-> Could this loop indefinitely if a malicious or buggy PCI device presents an
-> extended capability chain where the next pointer points backwards or forms
-> a cycle? It looks like this traversal lacks the Time-To-Live (TTL) limit
-> that is present in other helpers like pci_find_next_ext_capability().
-
-Added TTL matching pci_find_next_ext_capability() pattern to prevent
-infinite loops on malformed capability chains.
-
-> [Severity: High]
-> Is a hardcoded 64 bytes always sufficient here? Some standard capabilities
-> are larger than 64 bytes (for example, AER is 72 bytes, and VSEC/DVSEC can
-> be up to 4KB). If the device's last extended capability exceeds 64 bytes,
-> would this offset fall inside the bounds of the active capability and lead
-> to data corruption when written?
-
-Replaced the hardcoded 64-byte offset with zero-scan approach: walk the
-capability chain to find the highest used position, then scan for
-contiguous zeroed space. This correctly handles capabilities of any
-size.
-
-> [Severity: High]
-> Can this subtraction result in an integer underflow?
+> [Severity: Critical]
+> Does using pci_find_free_ext_cap_offset() here risk corrupting active
+> hardware capabilities?
 >
-> If the last capability starts near the end of the configuration space such
-> that free_offset exceeds PCI_CFG_SPACE_EXP_SIZE (4096), the subtraction
-> would yield a negative integer. Because size is a size_t, wouldn't the
-> negative integer be implicitly promoted to a very large unsigned value,
-> bypassing this capacity check and returning an out-of-bounds offset?
+> pci_find_free_ext_cap_offset() relies on a heuristic that assumes the last
+> extended capability is exactly 64 bytes:
+>
+> drivers/pci/pci.c:pci_find_free_ext_cap_offset() {
+>     ...
+>     free_offset = last_cap_start + 64;
+>     free_offset = ALIGN(free_offset, 4);
+>     ...
+> }
+>
+> If the final capability is larger (such as AER, DPC, or VSEC), this
+> allocation would return an offset inside the active capability. Will the
+> host driver physically writing MSI data to this offset silently corrupt the
+> device's hardware capability state?
 
-Fixed by using bounded loop iteration with explicit comparisons instead
-of subtraction.
+Already addressed by v2 of patch 1/7. The new zero-scan approach only
+returns genuinely zeroed space, so there is no risk of overlapping
+active capabilities.
 
 > [Severity: Medium]
-> Because this offset is returned without reserving the space in the
-> capability chain, could multiple callers receive the exact same offset?
-> This stateless allocation appears like it might cause multiple subsystems
-> or quirks to overwrite each other's data at the same offset.
+> Will this loop prematurely terminate and fail to find the MSI cache if the
+> offset is allocated above 0xf00?
+>
+> The host driver uses pci_find_free_ext_cap_offset(), which can legitimately
+> return an offset up to 0xff0 in the 4096-byte PCIe extended config space.
+> If the cache block is placed between 0xf04 and 0xff0, the guest driver
+> would silently fail to discover the magic signature.
 
-The function now returns the first suitable zeroed region found, no
-hardcoded assumptions about capability sizes. In practice, only one
-caller (qcom-vfio-pci) uses this for a given device, so collisions
-cannot occur.
+Valid, fixed in v2. Changed upper bound to
+PCI_CFG_SPACE_EXP_SIZE - QCOM_VFIO_MSI_SPACE_SIZE to cover the full
+extended config space range. Also replaced hardcoded 0x100 with
+PCI_CFG_SPACE_SIZE.
 
-Will send v2 with these fixes.
+> [Severity: High]
+> Does blindly reading every DWORD in the extended config space risk bus
+> errors and unintended hardware side effects?
+>
+> Iterating through the configuration space without walking the PCIe
+> capability linked list means reading active capability registers
+> arbitrarily. This can trigger unintended read side-effects, such as
+> clearing Read-to-Clear (RC) status bits.
+>
+> Furthermore, reading unmapped PCIe configuration space can generate
+> Unsupported Request (UR) bus errors. On some systems, URs escalate to
+> Advanced Error Reporting (AER) faults or system hangs.
+
+Not applicable. qcom_vfio_find_msi_cache() is a VM-side function:
+config reads go through QEMU's VFIO config space virtualization, not
+directly to hardware. No URs or RC bit clearing will occur. Added a
+comment clarifying this in v2.
+
+> [Severity: High]
+> Could this lead to false positive MSI discoveries if active registers or
+> payloads contain this value?
+>
+> Since the loop scans the entire config space instead of parsing
+> vendor-specific capabilities, a legitimate device register, statistics
+> counter, or VSEC payload might naturally contain the 32-bit value
+> 0x49534D51 (QMSI).
+>
+> If falsely identified, the guest driver would interpret the subsequent 12
+> bytes as physical MSI addresses and mistakenly program invalid addresses
+> into the device firmware.
+
+Extremely unlikely. The magic "QMSI" (0x49534D51) is an ASCII signature
+chosen to avoid collision with real hardware register values. This
+function only runs on known Qualcomm WiFi devices. Even if a false
+positive occurred, downstream addr_lo validation (non-zero and
+!= 0xFFFFFFFF) would catch it.
+
+Will send v2 addressing the above.
 
