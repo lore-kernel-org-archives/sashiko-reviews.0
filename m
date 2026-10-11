@@ -1,66 +1,99 @@
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150C143E4BE
-	for <sashiko-reviews@lists.linux.dev>; Sun, 11 Oct 2026 12:54:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C971F3BF692
+	for <sashiko-reviews@lists.linux.dev>; Sun, 11 Oct 2026 14:07:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791723299; cv=none; b=G/+7e9QVg+URV1LJOC+durrysDmlTFiU1pvzc8HuTIVjzq2QwwZ6mdOZOvB5pkuCgrPmaMj8Zsagf/FDeKbW1I4LIaqSnqUEYTR8Li6+F2Mde78zQGZVSr9uUxLgq4JM0zxpdTHvbPPh4LfF3Sm+DtowmTCEh11K7N6pvxlXhfY=
+	t=1791727632; cv=none; b=WmofVjWQsTDR8J3fiqGxV74xJJ1CGV95nOKRbOs1FJkVKxdWvzBFcqOu9tolAXqiGtbT9/6lNrKVEys0AOfmCokioX0CfwIJIGH5TJn7A5VDoImTfyNwf9xJ3yMg0PL0yExjEIuKCin65UC6p/35e1A2djs7y+AftKkMBo85B0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791723299; c=relaxed/simple;
-	bh=VHyARekaathNQ5Zci7oOBsg7sj2Qlf9OcQZbK7UdEsw=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Subject:Cc:From:
-	 References:In-Reply-To; b=lapUfojGrvw7lCt2l1fiZwCkaRehOi+d3SN77Rc2TwZbAXGARiCU713s+nrzzFPhb6pc166kDv/TA8FhWAZXg797SjNM3vSaKk6Z/GcduFTjUI7MI1MzAk5RQ70BGVYtsBa1wMWcMIpX44pMZM71mOeiDaBeTxO9Q+ufRem+bis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rcpassos.me; spf=pass smtp.mailfrom=rcpassos.me; dkim=pass (2048-bit key) header.d=rcpassos.me header.i=@rcpassos.me header.b=C4jbCrFE; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=fjn9nKcy; arc=none smtp.client-ip=34.202.193.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rcpassos.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rcpassos.me
+	s=arc-20240116; t=1791727632; c=relaxed/simple;
+	bh=iCK9cClrvayo1HAZYrDC48KsSNt/dqvABNvPzrr23O8=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=SbIdq42exsFWpxtRvc/3GuRTM6eQSjt/ACdh9JAIHPIHs1VEvFFvmnYB4F5i1DHQNsHgRbzwadVbNZ/Wj3L9qyfnkHPrYDuz8y0ykdR0CwFlpQ6VTMyI6X0Gd9sAbylwe5160HBdye2txLPM4FDqEVYYVMcCduEG0dfQSOmotvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YpKryXN4; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rcpassos.me header.i=@rcpassos.me header.b="C4jbCrFE";
-	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="fjn9nKcy"
-DKIM-Signature: a=rsa-sha256; b=C4jbCrFE/W12TPc1ILoUvwd+datRx7yDbFEc6sLiaaFu2kWECpnBn7Jlvsmz1FJcLt4ZbAnBRZuvx72djY0ke1kvTSBYe+OtBsNfJiu8kXwU8yVvso60ElYJ93wjPO6BIFlKKJIiz7tH6e7+xMeUxntX2ihXz0PB3Dns1TwVbQlNLUQiO9oyMCvI901yrYYW/2/V8BZZrYOlHSAcX5jjpBODSesHnBnTIWczeBQOFKqDrdhnPRsBHpceG5ujfTfKlQC/S6SfbOt/aKoWlpDMh7H6ysaJ+ztYZ/uO52UVMmB4ULgvpmdjAlxwBbfopJvo2jBa/7DKqp56JFp8o2KgoQ==; s=purelymail2; d=rcpassos.me; v=1; bh=VHyARekaathNQ5Zci7oOBsg7sj2Qlf9OcQZbK7UdEsw=; h=Received:Date:To:Subject:From;
-DKIM-Signature: a=rsa-sha256; b=fjn9nKcyS5XDM6aVmVm28CAnUulrTLkrAd4UBA7ClS97y49iHL8HgD9ZuYGbHX3EdBiA3Fut+Q2W66tWyB+NegxQ/4Dn+TNmBNJMMC58U0ug3AoIbN6MxtZndfRibobODAdHxY+Rfv6NlRXvrSlzsP4qQ9wutZuihPvIvuSHpJqrEFMYKtNgufaHC8oC8bnSNidtW/J+4i/D+ujnuk9qGoq8b2sTTdWEOshbOgLQDBOs7fp4cZS+gv06Eh0mPwo0A/NDQ+dgG+l0UIltIMbLQoJPmfo4O+MDmGyveed8ATP2BxV7jEQD3vGdfb2IcsYZhPP3JS3fUTrYLnZhlq+2gQ==; s=purelymail2; d=purelymail.com; v=1; bh=VHyARekaathNQ5Zci7oOBsg7sj2Qlf9OcQZbK7UdEsw=; h=Feedback-ID:Received:Date:To:Subject:From;
-Feedback-ID: 45355:7809:null:purelymail
-X-Pm-Original-To: sashiko-reviews@lists.linux.dev
-Authentication-Results: purelymail.com; auth=pass
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -581114090;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Sun, 11 Oct 2026 12:54:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YpKryXN4"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-891d19d00ceso280751b3a.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 11 Oct 2026 07:07:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791727631; x=1792332431; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=iCK9cClrvayo1HAZYrDC48KsSNt/dqvABNvPzrr23O8=;
+        b=YpKryXN4IT+HbYJYaDQDwour/+h9nJ3fMpZJEFnVoRbgroOsscaim8DIYMknQm/RTU
+         pNkLOMSQ2djCDoeWQSLuUMLc1qbQOinIxJSbCtF6y1WM5qiwu0PCBjtnBgswmmCjWvRe
+         hYAZR9zHFyVLc++ExDrNUeCGTjbH/p/g8kArbLhMhIVDYULyk2Oxv1CYZb/IbR4BIaJx
+         Dc/rFHA+AknZKXDMO/Z0A+vSRx2jXRu2MocQnHm1qUtl5x21CXkirrEiylrI2IYZpgkj
+         yRTorN6TRM5PHP1ohaeEqIXO9ydLl0h+VoyICoaEQmPNUdojqpDzcIgyIVeHBDG5lHnt
+         LW1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791727631; x=1792332431;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to:content-type;
+        bh=iCK9cClrvayo1HAZYrDC48KsSNt/dqvABNvPzrr23O8=;
+        b=mVe5fxVBhnDB1I21j78qcQ4mE5mbYSe9m2uH8CfQLg19w+ddPWeaVBA6G4MJHNUQhK
+         yTJx/brWYMv2jZpQ1UjsVuE6+vRPx3eOjIGkyp755Ciw2SMsTClhVYJDOL/q4tJmTy7M
+         2rrhQgyWGLQBlx0jXKhbtI05oe/fkP/sK6U4IVymP/PjWuSqqsr4gNCJ/WWGwZfj1oZ4
+         p2RWqntlW1prWfIZRKHuNhxM4czvYHBUW1pUQj8bmCxD62Zvo6GoIYKWp/32/N35zy1U
+         ysywvNVJpEdmVo2AWJMmLx6YWrFpVhzjWSQNI+kDvjnPQGJBMUc3w6C7d+GOmGeu1O6f
+         YVMA==
+X-Gm-Message-State: AFq9FYLaxlsW23btjijdyaYn/9hZLhDq36xcWHyDZ3AFTDNtQgt46ccp
+	10wrDh+7Se1b0BuiA1wGHOF0z/kzqMKU5aT/1p6PAHdTTi5fxnpyjvOLTqrsm1wg
+X-Gm-Gg: AYBFou1Tg1IhQa2/MqnMWaoaEEjEhev3wsKzrtIu+oQZgmSbLBFfhCDTnu6h+gKgPOm
+	0uLr6kNRSew5QK35k5T9Durb2cR1EwAiR1vgKZAJ6Y9IcLPvbD5J/NNAO4kkOeSvPZoLxWs3Scq
+	L7RBc74g9UslEsxxlqxaiPDI04KURrn/5zvgAoVSKhzncMu7HpJuU8JZbb6IfldXuEgDddPMQ3P
+	kz/5La8qubEJXRBdc9fvhZVE+Pec6o3zTrCPYlWXAJfik7JlIliHojA9b+vfPtmM3nZef3iWJic
+	Ry2lQ+eD3TSj87epgN9E1R81bubPRaNobWlwYmV060+JawGDmIi53qHmB+SXqEHX/dqeyFdqH3n
+	ZSEnjv0t09TPLenWA6YvxZkzAQU/bh/kGLG7q3+Vkq9ZrilaEg4i//Z/ShSH6chI4h6tTlX1N4a
+	UnT0fIi284plX5+3UGf4/t4wvBhv+VdtbMwJDeOwP9LOQ8JDN7gI9LRD0ZvWRjoDF5NrhhS/o8w
+	9iCMQol7ibZ7w==
+X-Received: by 2002:a05:6a00:420b:b0:891:8c46:7bb1 with SMTP id d2e1a72fcca58-897c78da72fmr6086369b3a.56.1791727630902;
+        Sun, 11 Oct 2026 07:07:10 -0700 (PDT)
+Received: from DESKTOP-NM9EKIA ([125.134.240.130])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-896b68ef2easm3165938b3a.7.2026.10.11.07.07.08
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Oct 2026 07:07:09 -0700 (PDT)
+From: Joonhoe Kim <26rote@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v2] drm/msm/dp: hold one runtime PM reference per plugged state
+Date: Sun, 11 Oct 2026 23:07:10 +0900
+Message-ID: <20261011140710.722-1-26rote@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.5
+In-Reply-To: <sashiko-outbox-163186@kernel.org>
+References: <20261007155848.106-1-26rote@gmail.com> <sashiko-outbox-163186@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 11 Oct 2026 09:54:55 -0300
-Message-Id: <DM20WF04H7JK.2HBWS4KGUBW19@rcpassos.me>
-To: <sashiko-reviews@lists.linux.dev>, "Rafael Passos" <rafael@rcpassos.me>
-Subject: Re: [PATCH v5 2/3] HID: wiimote: replace spinlock pairs with
- scoped_guard
-Cc: <linux-input@vger.kernel.org>, <dmitry.torokhov@gmail.com>
-From: "Rafael Passos" <rafael@rcpassos.me>
-X-Mailer: aerc 0.22.0
-References: <20261009022844.2790778-1-rafael@rcpassos.me>
- <20261009022844.2790778-3-rafael@rcpassos.me>
- <sashiko-outbox-164733@kernel.org>
-In-Reply-To: <sashiko-outbox-164733@kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Oh well, I dont know how this happened.
+On Wed, 07 Oct 2026 16:12:16 +0000, sashiko-bot@kernel.org wrote:
+> When a physical unplug occurs, msm_dp_bridge_detect() fails to read DPCD
+> caps and sets priv->plugged = false.
+[...]
+> Because the plugged flag was already cleared in
+> detect(), the unplug handler immediately early-returns:
 
-I will wait for reviews in the rest of the patchset before sending a new ve=
-rsion...
+Both of these are in the tree without this patch: detect() clears
+plugged on a failed DPCD read, and the unplug handler returns early
+when plugged is clear. The patch does not change either; it only drops
+the reference that detect() used to leak in that case.
 
-On Thu Oct 8, 2026 at 11:44 PM -03, sashiko-bot wrote:
-> [Severity: Low]
-> This isn't a bug, but could we remove the leading spaces before these #in=
-clude
-> directives? The extra indentation violates the standard kernel coding sty=
-le.
->
->> + #include <linux/seq_file.h>
->> + #include <linux/spinlock.h>
->> + #include <linux/uaccess.h>
->> + #include "hid-wiimote.h"
+The controller can now runtime-suspend in that case, but not under an
+active display or audio stream: the enable path holds its own
+reference until atomic_post_disable(), which first notifies audio and
+clears audio_enabled and power_on, the flags the audio callbacks check.
 
+Whether detect() should leave the unplug teardown to the unplug handler
+is a separate question, and I would rather not change it in this fix.
 
+Thanks,
+Joonhoe Kim
