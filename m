@@ -1,104 +1,66 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0B335C68E;
-	Sun, 11 Oct 2026 09:29:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150C143E4BE
+	for <sashiko-reviews@lists.linux.dev>; Sun, 11 Oct 2026 12:54:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791710955; cv=none; b=ekjxQJhW46ph70IoEyR5HVcdnLEjjBvAENGFk1G834HjuKj2WXc4GKHcciN65f7/tKpQyQqYkZrFrI61+eBPRck3zuypc65qTscJKABzHDNltZXyIbHWtv49JUNOy6mJPO8oHFu+dR2ThamxuCahN1b6B9rvCeRnRKfD54G8zgE=
+	t=1791723299; cv=none; b=G/+7e9QVg+URV1LJOC+durrysDmlTFiU1pvzc8HuTIVjzq2QwwZ6mdOZOvB5pkuCgrPmaMj8Zsagf/FDeKbW1I4LIaqSnqUEYTR8Li6+F2Mde78zQGZVSr9uUxLgq4JM0zxpdTHvbPPh4LfF3Sm+DtowmTCEh11K7N6pvxlXhfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791710955; c=relaxed/simple;
-	bh=tjKCD/UgPXZT6/Gv9jQi+NjM8n1cIcngOIOrfDSjoKA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hJ0oiqZIW0KwYZGaB9rUGi9yqb2ZPhcVRHNt/C1iBQ2sWWHQKKkgDAFubm3U1hkWXCKOj9TzZPczG8fIdv5LKgI51sMwbQA3KjEv0aPNrBuQ7qp4FwQ43b3M2UItsYaAakj1I0WbEHELFks5cnfelz1LpTJ+SEwV70g01TwoD5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TN7s9f76; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791723299; c=relaxed/simple;
+	bh=VHyARekaathNQ5Zci7oOBsg7sj2Qlf9OcQZbK7UdEsw=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Subject:Cc:From:
+	 References:In-Reply-To; b=lapUfojGrvw7lCt2l1fiZwCkaRehOi+d3SN77Rc2TwZbAXGARiCU713s+nrzzFPhb6pc166kDv/TA8FhWAZXg797SjNM3vSaKk6Z/GcduFTjUI7MI1MzAk5RQ70BGVYtsBa1wMWcMIpX44pMZM71mOeiDaBeTxO9Q+ufRem+bis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rcpassos.me; spf=pass smtp.mailfrom=rcpassos.me; dkim=pass (2048-bit key) header.d=rcpassos.me header.i=@rcpassos.me header.b=C4jbCrFE; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=fjn9nKcy; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rcpassos.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rcpassos.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TN7s9f76"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7A61F0089B;
-	Sun, 11 Oct 2026 09:29:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791710953;
-	bh=lpIGyyCWDD/zI/UQp+NeFwes0h8dnSFc3ToBKXZ4dLU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=TN7s9f76u8WjDASCCDfB/pO8toMcKQNR2eU/yEoCjl0/9BpbHthGoJadniaHODATd
-	 o+eNDXJE0EHncZMEUY4LMub7owimNLxN+guHRy1xI3vACxsUkMxo5wLO0A17Xc1aOw
-	 56AH2dLjjCwz/yaiEA+PYWoWUMPnnvflxWBRDXbK9Lpophd6V3NFhb7gV5GHJaKhU7
-	 zmbMqhhTMjZdwhTCst51W/bLlxCLOZjrYL9pQn6hYnVx3UvjScBq45q9oGrO7ZGpfS
-	 c/9UJxVsc7OagIxAK82dVHxLoByncI00e6mKAVzTfepgYSkdFoyy6nQIIfeus6/u85
-	 l/PQgEbvT7dJw==
-Message-ID: <2d5eb34b-ba75-476e-a424-2c01a5622bf8@kernel.org>
-Date: Sun, 11 Oct 2026 11:29:11 +0200
+	dkim=pass (2048-bit key) header.d=rcpassos.me header.i=@rcpassos.me header.b="C4jbCrFE";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="fjn9nKcy"
+DKIM-Signature: a=rsa-sha256; b=C4jbCrFE/W12TPc1ILoUvwd+datRx7yDbFEc6sLiaaFu2kWECpnBn7Jlvsmz1FJcLt4ZbAnBRZuvx72djY0ke1kvTSBYe+OtBsNfJiu8kXwU8yVvso60ElYJ93wjPO6BIFlKKJIiz7tH6e7+xMeUxntX2ihXz0PB3Dns1TwVbQlNLUQiO9oyMCvI901yrYYW/2/V8BZZrYOlHSAcX5jjpBODSesHnBnTIWczeBQOFKqDrdhnPRsBHpceG5ujfTfKlQC/S6SfbOt/aKoWlpDMh7H6ysaJ+ztYZ/uO52UVMmB4ULgvpmdjAlxwBbfopJvo2jBa/7DKqp56JFp8o2KgoQ==; s=purelymail2; d=rcpassos.me; v=1; bh=VHyARekaathNQ5Zci7oOBsg7sj2Qlf9OcQZbK7UdEsw=; h=Received:Date:To:Subject:From;
+DKIM-Signature: a=rsa-sha256; b=fjn9nKcyS5XDM6aVmVm28CAnUulrTLkrAd4UBA7ClS97y49iHL8HgD9ZuYGbHX3EdBiA3Fut+Q2W66tWyB+NegxQ/4Dn+TNmBNJMMC58U0ug3AoIbN6MxtZndfRibobODAdHxY+Rfv6NlRXvrSlzsP4qQ9wutZuihPvIvuSHpJqrEFMYKtNgufaHC8oC8bnSNidtW/J+4i/D+ujnuk9qGoq8b2sTTdWEOshbOgLQDBOs7fp4cZS+gv06Eh0mPwo0A/NDQ+dgG+l0UIltIMbLQoJPmfo4O+MDmGyveed8ATP2BxV7jEQD3vGdfb2IcsYZhPP3JS3fUTrYLnZhlq+2gQ==; s=purelymail2; d=purelymail.com; v=1; bh=VHyARekaathNQ5Zci7oOBsg7sj2Qlf9OcQZbK7UdEsw=; h=Feedback-ID:Received:Date:To:Subject:From;
+Feedback-ID: 45355:7809:null:purelymail
+X-Pm-Original-To: sashiko-reviews@lists.linux.dev
+Authentication-Results: purelymail.com; auth=pass
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -581114090;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Sun, 11 Oct 2026 12:54:47 +0000 (UTC)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] serial: 8250_lpss: do not touch uninitialized line in
- ehl_serial_exit()
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-serial@vger.kernel.org
-References: <cover.1791524724.git.jirislaby@kernel.org>
- <ef47d676a44346e058f29a00c8701484db722831.1791524724.git.jirislaby@kernel.org>
- <sashiko-outbox-166267@kernel.org>
-Content-Language: en-US
-From: Jiri Slaby <jirislaby@kernel.org>
-Autocrypt: addr=jirislaby@kernel.org; keydata=
- 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
-In-Reply-To: <sashiko-outbox-166267@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 11 Oct 2026 09:54:55 -0300
+Message-Id: <DM20WF04H7JK.2HBWS4KGUBW19@rcpassos.me>
+To: <sashiko-reviews@lists.linux.dev>, "Rafael Passos" <rafael@rcpassos.me>
+Subject: Re: [PATCH v5 2/3] HID: wiimote: replace spinlock pairs with
+ scoped_guard
+Cc: <linux-input@vger.kernel.org>, <dmitry.torokhov@gmail.com>
+From: "Rafael Passos" <rafael@rcpassos.me>
+X-Mailer: aerc 0.22.0
+References: <20261009022844.2790778-1-rafael@rcpassos.me>
+ <20261009022844.2790778-3-rafael@rcpassos.me>
+ <sashiko-outbox-164733@kernel.org>
+In-Reply-To: <sashiko-outbox-164733@kernel.org>
 
-On 10. 10. 26, 7:46, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] tty: serial: 8250_lpss: race in remove path corrupts reallocated port DMA
-> - [High] tty: serial8250: UAF due to dangling dma pointer on register failure or unregister
+Oh well, I dont know how this happened.
 
-These appear to be valid, but separate issues. I am not going to fix 
-those at this point.
+I will wait for reviews in the rest of the patchset before sending a new ve=
+rsion...
 
-thanks,
--- 
-js
-suse labs
+On Thu Oct 8, 2026 at 11:44 PM -03, sashiko-bot wrote:
+> [Severity: Low]
+> This isn't a bug, but could we remove the leading spaces before these #in=
+clude
+> directives? The extra indentation violates the standard kernel coding sty=
+le.
+>
+>> + #include <linux/seq_file.h>
+>> + #include <linux/spinlock.h>
+>> + #include <linux/uaccess.h>
+>> + #include "hid-wiimote.h"
+
+
