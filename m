@@ -1,139 +1,132 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013070.outbound.protection.outlook.com [40.107.159.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BFD48F856;
-	Mon, 12 Oct 2026 14:43:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791816212; cv=none; b=JYEOw2SjWFZ4SoaAzro6g8erM++6gzUwx8JUM6ai6JyO3Hxf9PU5q8cRzBMxYKmOa9EdQUsE4hBVfOaogFmIqJ7YHTReXIF7iDU6DEWc412gPZ9petv1l7Hal9QQu3vbxzg0ohkOFA00Itcq1fxUtPVelycd63L0ErUzrbjlKDs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791816212; c=relaxed/simple;
-	bh=vja9f80kKdriS8q5Ufpwmpcgz5B4qE3CigKeA1xzsB8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nUbeITcJ6o3Yh6IbCsY5muxm/H8ADP/5eeaoz96luPqblpoZgxGjy8+mzmSgXhLqCzl2eoAECcVneSGJUXjyt9t+nsy2tOvFEdPVuDVzh4jmlI9MZTedfgvlh1z/lmwEsD1HtJ2UqLDYPREY09A3JwHrvxblq8GFD3zfd+EcHow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IM1g2mg+; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF619496D51
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 15:10:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.70
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791817855; cv=fail; b=Sf4fiRNjeqPxy9pi3TnHc28o95jZnJUq7AonJbugMBwP466C1LVzE52wTHMH6VPPF12cO9muXa48StLPWogX/VryYPGq4PB0yWulhPMExWs8JSFQEsFqPevlw7Wv3mcGZ2EuCZKig5K9H27AoijfjFJl1Bizt0n3XL9s2J2liLg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791817855; c=relaxed/simple;
+	bh=T7giXeldWN1KauqdqkTZNr3N7Krbc8708IjqGc5ZrNI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=POtErDIQ+f3rxxO2ejGKLvU9thZecZS9xn2e57jnVpwRpCY36mTX2PMqK0haq+i83S1fSs9vIjBlUSO7Zp2gY1OwNN/0i1+rnuZ9ZxTrk7sKzdQMYO0Lz8ssEsfNxKVTU1iR+7GqQz8dgv3UmDeot9J97cVAs7uiV8nZDlntnQc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=fjy9xjwF; arc=fail smtp.client-ip=40.107.159.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IM1g2mg+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F02D1F0089B;
-	Mon, 12 Oct 2026 14:43:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791816211;
-	bh=kQsn0vmJ9Enc8KpOevs5GF67ZaQJBMeRFwUmu6G9Q+U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=IM1g2mg+0ZjCqewi5D/5jQ6yvlDnaIY7CfHe3fekAL1P7K2B1Pdazo6RlILpbXA/m
-	 OKWqYFRZbakcWW8wvl/IGx3jKOfhx6gG9grJCMyYTTPOO54lwG11SzZLFmYUzoHepz
-	 Bifnke+sfu3+fO6tag2ROronuIV/kBdId1F4OR+RJKfkp1MNdS/0oTCG5yW7dFPBz3
-	 8Pf5fLzzyjx313sPM1FT9MsaEQoe6yqsWVffDnKvbjyTeb1r8C7W54xPayKybSWynm
-	 Go1/udLGAdEhxwHvF3Aq2Z7HlKWiDk2AsjEAtagV7WI5uVTJoAmPH0KF7nRtxv5YPs
-	 FLSSDzFuIMwJQ==
-From: Pratyush Yadav <pratyush@kernel.org>
-To: sashiko-bot@kernel.org
-Cc: "Sourabh Jain" <sourabhjain@linux.ibm.com>,
-  sashiko-reviews@lists.linux.dev,  "Hari Bathini"
- <hbathini@linux.ibm.com>,  kexec@lists.infradead.org,  "Pratyush Yadav"
- <pratyush@kernel.org>,  "Michael Ellerman" <mpe@ellerman.id.au>,
-  linux-kernel@vger.kernel.org,  "Alexander Graf" <graf@amazon.com>,
-  linuxppc-dev@lists.ozlabs.org,  "Madhavan Srinivasan"
- <maddy@linux.ibm.com>,  "Mahesh Salgaonkar" <mahesh@linux.ibm.com>,
-  "Shivang Upadhyay" <shivangu@linux.ibm.com>,  "Andrew Morton"
- <akpm@linux-foundation.org>,  "Baoquan He" <baoquan.he@linux.dev>,
-  "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,  "Shrikanth Hegde"
- <sshegde@linux.ibm.com>,  "Aditya Gupta" <adityag@linux.ibm.com>,  "Mike
- Rapoport" <rppt@kernel.org>,  "Christophe Leroy (CS GROUP)"
- <chleroy@kernel.org>,  "Pasha Tatashin" <pasha.tatashin@soleen.com>,
-  "Nicholas Piggin" <npiggin@gmail.com>
-Subject: Re: [PATCH v1 2/2] powerpc: add support for Kexec HandOver (KHO)
-In-Reply-To: <20260928084310.10CDB1F00893@smtp.kernel.org>
-	(sashiko-bot@kernel.org's message of "Mon, 28 Sep 2026 08:43:09 +0000")
-References: <20260928083226.107807-1-sourabhjain@linux.ibm.com>
-	<20260928083226.107807-3-sourabhjain@linux.ibm.com>
-	<20260928084310.10CDB1F00893@smtp.kernel.org>
-Date: Mon, 12 Oct 2026 16:43:26 +0200
-Message-ID: <2vxzbj8zj7xt.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="fjy9xjwF"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CbjgdfmZjMwt3YlGsuGNsTYxL2LyI7psJBZtbWDX8gy839OwfmENdTCE0hXs0rOOUlPoHAL0I3F4kFBYxaEaaoumoOjxodQYK2tWM1LLObv+uMn5ko8wLxbyNxRcFHFEDZ7LkoQeDd4kK78fHpiPzKDNcp/UC5l4aSV4hLdcWWk9eneGlfztp5Gi6rYUBwFyz/yvsKzPRwIMKDerTS/YwvXZLyS3DU2hIc9lGUY4wO+HQLKRtfOfWCEEW6IOz0oKPySWRSfFDIrL6IJSFN2gzfuyznqRSIz6UGyG6Cf/0vBgGhn3/uMIdbiP77vn2HcLx+gwlWCQq3jtl524FLNP+Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=T7giXeldWN1KauqdqkTZNr3N7Krbc8708IjqGc5ZrNI=;
+ b=MfA8NIem3ivOKazcQRPVfZl7ly+v2CwgfgmR9Slr3FAskMGB9JDp2yCjmfaY0hMsJDn5VKj2XLdo9dfrToiUGruPhy551NBk/lShb6Ucx4ZhiyAYmXzq/H/KdM7hJaPSZ0AxjphPYCPYb8gvJov/lbSoneUIqtsZNvh0gD+OLJWeu887LH6+cURfTRBlh7ZDVuRu9Ni3S4xTwu5HHFCpvfGjukvG8RLRiPsajhcS2dUWsMNJopgPaYKZwNDUnQvnvdfg0Op1GMOKCklnd3fNSPCHLsfPuQjFjvMuQMDT3VXfZnNnbwiosEZC9cNUQDtVA2iMstRnAHLD49AOVAv71Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=T7giXeldWN1KauqdqkTZNr3N7Krbc8708IjqGc5ZrNI=;
+ b=fjy9xjwFDXxxsAI+Yw1PycGStlr8Z2lCIQEABN9Pe8vQWtTV3rkx4vrCw1/ulbCjNQB5hy+VVLMVFDg9//iXwF80fnDk3wNxjggygzoFvBNnKL4xnUNpW3wBlP3t70ZqX6v+mcH6pDQHINhFcNv8Bh1Nx3MEHKDoZfIHvaPxPPibtyeIRytGG2xttQT6XkRYIvFOo2jAVZrb1WpeB3aXh+4RtKkOiTU88dfPB0Ze3oEKxnxYH1KJaKNODPuSMzlr78Dp5aoTO42wy5T8YeLQSG1KVMH9iSn8lBUQ9wBJdlbJlvqAIdnZfbtlYkRT/PCZJTzbLKfS7jhEcIeffwKV2A==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by PAXPR04MB8926.eurprd04.prod.outlook.com (2603:10a6:102:20d::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.21; Mon, 12 Oct
+ 2026 15:10:51 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0496.020; Mon, 12 Oct 2026
+ 15:10:51 +0000
+Date: Mon, 12 Oct 2026 10:10:43 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Jelly Jia <Jelly.Jia@cixtech.com>, devicetree@vger.kernel.org,
+	Frank.Li@kernel.org, dmaengine@vger.kernel.org, conor+dt@kernel.org,
+	vkoul@kernel.org, robh@kernel.org
+Subject: Re: [PATCH v3 2/6] dmaengine: arm-dma350: Add slave and cyclic
+ transfer support
+Message-ID: <asz4c0Bd4XZlEM_V@SMW015318>
+References: <20261012084155.2547480-1-Jelly.Jia@cixtech.com>
+ <20261012084155.2547480-3-Jelly.Jia@cixtech.com>
+ <sashiko-outbox-167869@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-167869@kernel.org>
+X-ClientProxiedBy: CYXPR03CA0039.namprd03.prod.outlook.com
+ (2603:10b6:930:d2::24) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PAXPR04MB8926:EE_
+X-MS-Office365-Filtering-Correlation-Id: 19a62293-db0a-4549-290b-08df287300f8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|23010399003|1800799024|366016|376014|10067099003|22082099003|18002099003|11063799006|4143699003|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	beqacpF9Jk7LzD6asi7oGsHsO4wYljKZrTKni83ts2uPXrIFLzJfgdGg4Xo3Rt4ynBk81ByGozbt5kokhiQWrOH+ZS67b+dUKGBBh8aqw3hNncUaVqaB7I59gx649hff/AFWG9dGJOrzXO/FyNd0mvGV4x+i0pYcUGPedD0Zvg/06zgE3VO2C0ewnWRSJ7/hEhMIE7CblvM5zDi30PGpky536cgzLAO/QvQaUJ2Mv5q2KNaZwbZKAPUVlo2G+gL3j30VtS2NzNgMHfEXJIp8pzvGb3opECMutRvO4pqlhtp4wxL7ViNRNS/9CdgLCW27oefUNViBvr2oCepZ0S1xQsGC8yszo0yfE2BtjLAL8TPhEejNZ74QaQwHYP5FnwyvOQoP5WOTAPYK6q7xY0sHXph/4D40Dc/rOUxAKmpRnPIGAoO+leiAYqC8w7Vffl4keKGnW4iAYzioMAlL2wRzG0boNABr9Dv/+QkC+X271g5HkiChwGnkzHFwb+lG+4f1vvoLQzqmFho6THJ1OEKRB6qRAQ0EYZPrkUKxbeATS3xcOnFH6QWMqd9TABoq7r0Qka1ZvlHw5nUg1j5QIl7R5TgTiTuZCHM2HO5yqqlgtUO2lHqCtuCcVH27qULdjVFtbU5683Ro/+PCvc0FDRHdYbn1/O1ojsWzQhTenP03Nmo=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(1800799024)(366016)(376014)(10067099003)(22082099003)(18002099003)(11063799006)(4143699003)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?rLYXyESS/NM9ozQ77BNNaW9/GJgeJJLr/GqGsIhEcnrsI3cQCxdEF4PvdOE1?=
+ =?us-ascii?Q?BXLEbGybBorEE4afWW3xDDBdOWuTCnh6SooOk0so97q+uMz5NhqLA6KMJkyL?=
+ =?us-ascii?Q?CK7Szi3FBaxnq1qIIQTyxEnVwpyDuQIzoK7Bp3pm3ndBOnLh0prRjntuU955?=
+ =?us-ascii?Q?tG07AcEAg1vEMhQXC63ccRtvvW3vOOLoc3D+h9FiJ6OVxd3Y7LSf36NhqhQl?=
+ =?us-ascii?Q?w6qLygJqT1bx81lejbUAebbp3PnsICVSmPRr49IJukve50UG9YyOsl9JfLsl?=
+ =?us-ascii?Q?68tnFrh4pPscYdhW8wOWyeJeKtFQOvdl7s0RE7c9sDjLJFkgcrVgwOYbu4+Y?=
+ =?us-ascii?Q?nWqiT5L4+XlBjQeCeAnt6mz+R435ysYdTNXLCGLAqf4S309W+/APhV3KNpv0?=
+ =?us-ascii?Q?f5enq495+6VUuXX0jvFQauSJo50IR2MWBKTOag3kK6E4Bhhc5WgKQR3S0EUi?=
+ =?us-ascii?Q?/2FYwTrmxQwl9lBsgOSmSQBwwqoLVanIwE2WXzyA7ptlCW2Iqy5B+zF8wYXM?=
+ =?us-ascii?Q?++9k6uruaFSI6/TPs7pDs18MhxKjiMLHc48JHwF3W4xSCCAb9q2hmgr5jpuM?=
+ =?us-ascii?Q?gYRQa5UWERNJV8SHU765gxyxdcRUvhX+riZY/hDbRnjMQ/Zdrh5MI+hOgfis?=
+ =?us-ascii?Q?DKFtTCHJwCLIncxvTR/3k+uuQWpJ8GblER7LdJQhzjZY6r7+eWahcbQYk4LD?=
+ =?us-ascii?Q?WIGFYULGpBQBMXI6/DZY2JwoWILoLKY8sZ7VKt6nw1Tvdl+4x+J591bgllRA?=
+ =?us-ascii?Q?2ehU6EmSOug11SUDEbqVLqRg8e1tfh/CamgxjAYwPRzZ8rYBne+/2uVwWDWj?=
+ =?us-ascii?Q?sm50ou5l9/oK1e49KKm4mJAWfxpegnscRDE5jpgFcPc63NYz7gBhcXqb1wM1?=
+ =?us-ascii?Q?H9FlhyJaV64k7zqsUmLdvNGBabvioQo8WIJXjtPeXp6kehGIwI2Z34peutlV?=
+ =?us-ascii?Q?q0sRJc2ByYEuo2KvauM3bjakkLL5h3bew6+ujg5g8EtrPXPdLT2RQZvyix/9?=
+ =?us-ascii?Q?OE6IPZg8SpZJG9Ok5ByKWSNiUCTLt2cbfs3m6fQ/6ZO+RhBwQo5XkUJkx0Ri?=
+ =?us-ascii?Q?b/qut+gxskhIbf8FB2XYXWFi5/a7hCPaGSrI6qUuAAJvVrxfgIbsecZunwny?=
+ =?us-ascii?Q?favUAwqQN+eWc91zlxNRfwGo/z6ixhpKsEj0rou0qLKIjzYkPp4jNEKfaYaH?=
+ =?us-ascii?Q?R2r8p3ubuj6jHRwKnL165M6KYzcDVyCXF7iuJnhu/qn6YW0RpuYUOKMWE4iw?=
+ =?us-ascii?Q?SeaMlRCXX/4X6UTg7SrGGQAaeZ3PbzHBcaHktFCGIcuWzJ38O4y1nXkLhlYz?=
+ =?us-ascii?Q?EU9Vl6pI+9Ax8IBt0Iy9p4ERcFiBUSJbp7k7WUtCJ2OUEFRcsMl/T2SaBb6K?=
+ =?us-ascii?Q?6kU4mD/unGYdmJR2VHoDnKLsTuXWJqviyh1aPOhSPzppoeQlyGr70Spfk+nz?=
+ =?us-ascii?Q?OAw5ySGhAPTW7QLPrI7wUQ7KZVZgot52Uyk+p+vExFa/DCw2oBBKVnZ6HW6t?=
+ =?us-ascii?Q?ra1yq69wIUkapACeGD/j4uuIpmdgXDBHMMdNNHAguqyU9eYK7o0cGopyBF/s?=
+ =?us-ascii?Q?JsfeKYpLWSuGObhLx32meKD01W3/7ppVP6K/9FQ/cxUQI01jqyEL1nIsvGKl?=
+ =?us-ascii?Q?CSD2Nkb6oYOPndsPeaoyGSxQeDqIz/dwU/AStnsFdllKjFrucsHVu6f2S4PD?=
+ =?us-ascii?Q?S+2Pv8Yoj1+DJk37MDfDBFkLjt/T5d93Jq6036MGYJQdmxS2b2pcx+6RFUfD?=
+ =?us-ascii?Q?sJ1I2D3/cbFIV9vaifSOv+J1IfqXKMN04E9r1aEhcJlNXhw33XpY?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 19a62293-db0a-4549-290b-08df287300f8
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2026 15:10:51.4077
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: YMo628DqLnraX5lZjpiNEsz96g2GoXBtux9wOC7ajpBGUxX6nkcPro0CVCxyNt0zd8kp83GGt3PT2ya2HEtcVvJJZCVQg4WRKgSeYNr2xYI7crwX0BnXYWM9/Z90OUH3
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8926
 
-On Mon, Sep 28 2026, sashiko-bot@kernel.org wrote:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] boot: late KHO initialization allows memblock to clobber preserved memory
+On Mon, Oct 12, 2026 at 08:52:14AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] dma: Premature peripheral unmap in d350_map_resource destroys queued mappings
+> - [Medium] dma: Cyclic residue calculation rewinds position on race fallback
 > --
->
-> commit 2f581dec390379323e7a0b4e4badb03487eea55f
-> Author: Sourabh Jain <sourabhjain@linux.ibm.com>
->
-> powerpc: add support for Kexec HandOver (KHO)
->
-> Add architecture bits to enable CONFIG_KEXEC_HANDOVER on powerpc. This
-> patch checks for KHO information in the device tree before unflattening it,
-> allowing a kernel booted via KHO kexec to recover the FDT and scratch region.
-> It also moves early_init_dt_check_kho() to be called from setup_arch().
->
->> diff --git a/arch/powerpc/kernel/setup-common.c b/arch/powerpc/kernel/setup-common.c
->> index 4afaba19b5867..53c2f1897bfe1 100644
->> --- a/arch/powerpc/kernel/setup-common.c
->> +++ b/arch/powerpc/kernel/setup-common.c
->> @@ -923,6 +923,8 @@ void __init setup_arch(char **cmdline_p)
->>  	/* Set a half-reasonable default so udelay does something sensible */
->>  	loops_per_jiffy = 500000000 / HZ;
->>  
->> +	early_init_dt_check_kho();
->> +
->>  	/* Unflatten the device-tree passed by prom_init or kexec */
->>  	unflatten_device_tree();
->
-> [Severity: High]
-> Does calling early_init_dt_check_kho() in setup_arch() happen too late to
-> protect against early memblock allocations clobbering preserved KHO memory?
->
-> The Kexec HandOver (KHO) mechanism uses a scratch memory region to strictly
-> confine early boot memory allocations in the successor kernel. This prevents
-> them from overwriting memory pages preserved by the previous kernel, and is
-> enforced when kho_populate() invokes memblock_set_kho_scratch_only().
->
-> However, setup_arch() is invoked from start_kernel() long after early_setup()
-> completes. During early_setup(), substantial dynamic memblock allocations occur
-> before KHO scratch memory confinement is enforced.
->
-> For example, move_device_tree() allocates memory for the FDT:
->
-> arch/powerpc/kernel/prom.c:move_device_tree() {
-> 	...
-> 	p = memblock_alloc_raw(size, PAGE_SIZE);
-> 	...
-> }
->
-> This is called via early_init_devtree() from early_setup():
->
-> arch/powerpc/kernel/setup_64.c:early_setup() {
-> 	...
-> 	early_init_devtree(__va(dt_ptr));
->
-> 	allocate_paca_ptrs();
-> 	allocate_paca(boot_cpuid);
-> 	... 
-> 	early_init_mmu();
-> 	...
-> }
->
-> Because KHO scratch-only mode has not yet been enforced during these early
-> allocations, could they use standard memblock policies and overwrite preserved
-> KHO memory state, corrupting the handover?
 
-Sashiko seems to have a point. early_init_devtree() (called from
-early_setup()) already does a lot of initialization that x86's
-setup_arch() does, including making memblock allocations, allowing
-resize, etc.
+Please fix all sashiko report problem or provide explain.
 
-So perhaps you need to move this early_init_dt_check_kho() call to
-early_setup()?
-
--- 
-Regards,
-Pratyush Yadav
+Frank
