@@ -1,87 +1,24 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mail-m205210164250.xmail.ntesmail.com (mail-m205210164250.xmail.ntesmail.com [205.210.164.250])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C40134EEFD
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 06:59:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0A343CE58
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 07:01:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.210.164.250
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791788391; cv=none; b=U8xRcGdIrLnMlmWh9IiHl+qiiDe5tqjtE+tCb+6LqHgFPj6hPUOQZXy3VWCNe/KQ3o1VUTgbOhB4dlvgqaiZ2DQVd23sYuzAZpqmSkCu5xDIseqCYB1i3NyHgo4vYugMefvEOrfAlX5sbqs9tcTqtu22mFxvwEjPRdS2cSeWh+s=
+	t=1791788483; cv=none; b=Ao6KdW/8NuxPvzFj9YrgiYCgnB+VSdBu3mBFpUghA+m07uuUDB8i/eZQEMVw1XTGw00hPXMukP9DYLub7PWLyATG3EL8k0P+hiPonghJ5Z/reXMM7ltkoJ2H3XU/xqyLDNAlC+ztFG+hDlJI+pBDt5mGsHjurTIYcuP83DFq6YQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791788391; c=relaxed/simple;
-	bh=XyNUnqIeGkrl2sN+87qAS40ppnV7noHEstsY3QW47jo=;
+	s=arc-20240116; t=1791788483; c=relaxed/simple;
+	bh=Swfzze0oyPNk0q11WcBJrldWQfuQEsFL30ZS9DVbM+8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FTu5tcK0BBYqbdwlvgvAU86sqN4+RuPzZ1CNVuueIAFAZqctyqPHFF+Y862Ao7GN6bBPSpmJ6Xzp2C9QwjKZqSDhMuRz7FsNlF6di7XJWYUaAx0Wi1if+8uaM0pMX+3BBj2DNLseHW6o2ShkAxikdrM4ekCbBwl6S/d3X0E4JgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aX+Eoz0k; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CyxV4lkq; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aX+Eoz0k";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CyxV4lkq"
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69C55c4g1314446
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 06:59:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JaW2KGhD8Vzo1irLVSwbI7B2RgRHueLNyNGlF/CbcPs=; b=aX+Eoz0kjufQEhsV
-	kW0OtNreGrxBpIbeB1qWSlr8Is/d8vE07/FyqD33U3zWNrnH+L7ck3hEFkFeIeMC
-	imTfb/irx2SiOS66yDMw+fmYwYj5xBJwrd2+wXkjJuks1cenW16rvNP3ToedbpmH
-	7gqSL62LAz1v6EObv+sbF6xtEwoMS7QQjKGmLyMnMUOKDEpYUECktvtnk2aQxKQv
-	mp9dB0uq0eYVfBfUXuS2nhxFPc4Yc6O8H5q7NNhP1qMRK4bIwXM7zSs2KtGrZKmA
-	794WVhayetXuTpbLr9MPSiOvc5Jh3qR1TYNZbAeOWSL13GQFf1+t4DbPvW6sActb
-	s7Dwlw==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h8j711f2x-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 06:59:48 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-cc7e0321ec1so2066820a12.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 11 Oct 2026 23:59:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1791788388; x=1792393188; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=JaW2KGhD8Vzo1irLVSwbI7B2RgRHueLNyNGlF/CbcPs=;
-        b=CyxV4lkqFgn0WA2K6DOutLy950dfRSRu+bK7ieHDycHtmZOdffeqKDeVWeGmAZbhv7
-         Tpi5dDmq8J2rwmbUSZDImGZZvCRQ9z5/LqLgKBvRxVuiIU9hK93Ek0cqYtCVZzM52cSJ
-         p+UkqU++BW3ZUDiPs+V9ecBnS5aMVXPf+j1zcTmrt/agTKVIfy2x9+gjAPWnR4vcEeu/
-         /13PdHz9tqSp3oouqolZ8C8nLGd+uEPCQN32gh524igb8oUqxYzSaddYK2Nhxy39xe9E
-         VI8Xs450plEu2PB67ccmavfQ3S7SSn1fsTLBKttkqnCQCMXk1qRPymyfiwUEmDdLOWbb
-         kJUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791788388; x=1792393188;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=JaW2KGhD8Vzo1irLVSwbI7B2RgRHueLNyNGlF/CbcPs=;
-        b=sb4TWx4s65hxHgpJX1BZrnZ93/oxR7e+0aKIYJD67BGH0/qmlecQIDn1UQ5DzOP6Tz
-         ldFihcLHwBs3r1xFu/S5w1VCb/8FMViTctrvzRG5whOYmVcyNpXHAFh4OtCx2q3hLNA3
-         AtHirM0G+tH/y1xqDiPoparZGb1j9h0T7PHrrhMRbg+zqrUJ1d7GcyC+mwuMkzJiiOci
-         52wOlDt++1kK5Zv7ebcXHCGSKQeMdXIK5dmgeMCjEIhjyKFte1VP3VCIorss2Y0iLETM
-         jRnqju0PWa6E0TPfG2ZHPEW0IhzPPEF5D6/QmY3YMym3o5SZQ9lGrgSXe5M8+8beMqsP
-         D0WQ==
-X-Gm-Message-State: AFq9FYKlueuNJsscL4uqLvZw1jjwlvRQPnF3n/wi6KZtZ/U4NBl6TGAZ
-	tScTEn1qhMp+hKfcGrc1BnNNKioTbs7vMVmqPifrBuVDRqXFJN0kAVAma3OQn+0FSghiRL0TtM+
-	OIMsMsnwvN+jY56Lb5um8YNCSnuY4l0nwOU9M4NSn5NeIZK5gegZ3F9YPGBkD0dtPNmX/HL1IKA
-	ycqUY+0Q==
-X-Gm-Gg: AYBFou12GXahxnmecqwhnYprhevncqJenmUBlz68NSvbnQTieKXQzeppaSHowCOPrDr
-	wdgJYJofmoKXSHM+T0XVbQwiGx3pikSiVpIv+7pZvdAUNY/syAFRs/U/nEEFl8D+3qcjHW+V46z
-	Q9hQ37yA/TfHrui6X1d8QaDLikAt1iNiMsPWeG9lsoK/KHi9u8c0fMqRX89BZWk5jis1WuHkPg9
-	Pr4Rjz9mRHXjoCUS7BUV4AlENNo//l9U7j1t+EarhX+cKsNYxNeZ1LRbU3LlPWbgCcodPHO35Qz
-	8TzTHv+SXBuvslbai2I6qnU2MxY7LZ4o9Eaa21vp62CjR5zgoT7xUbSZJpMdqDROGFFw8zQt3qI
-	Ww2/mtAG0IRCBhy2SovKHHzq5pR7ukpai4cIWykNJ85OsANOBLCvHEdaax9Qu7MY=
-X-Received: by 2002:a17:90b:48c7:b0:3ab:8b2:72bf with SMTP id 98e67ed59e1d1-3ab3a928525mr7530716a91.50.1791788387837;
-        Sun, 11 Oct 2026 23:59:47 -0700 (PDT)
-X-Received: by 2002:a17:90b:48c7:b0:3ab:8b2:72bf with SMTP id 98e67ed59e1d1-3ab3a928525mr7530698a91.50.1791788387341;
-        Sun, 11 Oct 2026 23:59:47 -0700 (PDT)
-Received: from [192.168.1.6] ([117.143.161.217])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ab38f4863esm17720151a91.11.2026.10.11.23.59.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 11 Oct 2026 23:59:47 -0700 (PDT)
-Message-ID: <6c7bb574-74c9-45e3-954b-b572342f9946@oss.qualcomm.com>
-Date: Mon, 12 Oct 2026 14:59:43 +0800
+	 In-Reply-To:Content-Type; b=DOSX76dSl7rgZJTo2gQQUmIWWhkuj2MHDrFvVT+Nzrzd5OgRsEjOLbc2S1Juc7dAYxP0aUlngMObXDKuGDS8RQy/CAt3v+uNEqUzCO77L2vkVjpyAZKv6dZveioKjwGT4fFV/xejc5kJnp4q2ZbetBYWna4nup1p/BrnTlRa6V4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easystack.cn; spf=pass smtp.mailfrom=easystack.cn; arc=none smtp.client-ip=205.210.164.250
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easystack.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=easystack.cn
+Received: from [192.168.0.59] (unknown [218.94.118.90])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 1ff53ae1d;
+	Mon, 12 Oct 2026 15:01:10 +0800 (GMT+08:00)
+Message-ID: <d6a4a451-0a6d-415b-a1cb-92d72f345044@easystack.cn>
+Date: Mon, 12 Oct 2026 15:01:09 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -89,125 +26,119 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v21 14/14] arm64: dts: qcom: kaanapali-mtp-camera-s5kjn5:
- Add DT overlay
+Subject: Re: [PATCH 4/6] mm/page_owner: add bpf_page_owner_get_nid() kfunc
 To: sashiko-reviews@lists.linux.dev
-Cc: vkoul@kernel.org, media-ci@linuxtv.org, robh@kernel.org, olteanv@gmail.com,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        conor+dt@kernel.org, neil.armstrong@linaro.org
-References: <20261011-kaanapali-camss-v21-0-04fd28d815c6@oss.qualcomm.com>
- <20261011-kaanapali-camss-v21-14-04fd28d815c6@oss.qualcomm.com>
- <sashiko-outbox-167757@kernel.org>
-Content-Language: en-US
-From: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-In-Reply-To: <sashiko-outbox-167757@kernel.org>
+Cc: bpf@vger.kernel.org
+References: <20261009112308.240769-1-zhen.ni@easystack.cn>
+ <20261009112308.240769-5-zhen.ni@easystack.cn>
+ <sashiko-outbox-165521@kernel.org>
+From: "zhen.ni" <zhen.ni@easystack.cn>
+In-Reply-To: <sashiko-outbox-165521@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDAyNyBTYWx0ZWRfX5c1kCRunThV3
- OfmTvd4dYIB1M9OGxuhwHmo/BupEgcUcepAFWglix1ej1gMDMjsg2cawVTrQPvzwV8m5pns/xdi
- 3Z3sPhesKEpCJwReOM6DnC0gzcUcmlc=
-X-Proofpoint-GUID: 7AQzqTqPagzz65F-ZK9twr3VAl1hPhta
-X-Proofpoint-ORIG-GUID: 7AQzqTqPagzz65F-ZK9twr3VAl1hPhta
-X-Authority-Analysis: v=2.4 cv=ePGGH3p1 c=1 sm=1 tr=0 ts=6acc8564 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=K/RrOd38U9TixX+j9hIN8g==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=GJQVe2W2MQrxmwjxaooA:9 a=QEXdDO2ut3YA:10
- a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDAyNyBTYWx0ZWRfX7riTAwHE6hTm
- 3bD0LqlxlL9Dtgof580csdxWMrrkwX6lNtPZaTWLhWkVK72caWfk6G9RFtVUhPyfH7Yx8H1tiXq
- WhAdaOKKX7mFH3tk+WDrI4kdsDiFA0rXlSRk1kPIcwh3df58bNOxg95HpmswkugmkBYAjM8KuSM
- LiHo2vCbpkb0JjWQufhW2D50MtlUoDUpV+1EzZCgmSrLxrP0uW0AogjyL3V0lHOABZCWexxBws7
- mviAB0HHRPVcy+jRb1xpaaQm5lWsYtCwmDP0hQ/WVbjjsb7Fnmxrfw5d5TyY3J4e3nvbOpApEn9
- vsR/8x2tSFKnK5pScXhjmYGDem6YE8LGxevzV3LjIyTx5b+16IIK3pw7bdgM/kvt2p/sK12I8pf
- 2/GVDghyWYckUfqZoqRy4cK4bstJ/xfdaWs79bkOSw78AeqJBEE8fX1tUyohIFxYXph7e+563LU
- mWZpekALgXQScToNTfQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-12_02,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0
- bulkscore=0 phishscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610120027
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0aa12eea4eea0229kunmb8911f515906f0
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFJQjdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkaGR4eVh1DTRpKS0NKQx5JGFYVFA
+	kWGhdVGRETFhoSFyQUDg9ZV1kYEgtZQVlJSkNVQk9VSkpDVUJLWVdZFhoPEhUdFFlBWU9LSFVCQk
+	lOS1VKS0tVSkJLQlkG
 
-On 10/12/2026 2:57 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] dts: qcom: missing vddm-supply in s5kjn5 camera node
+
+在 2026/10/9 20:20, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] bpf: arbitrary kernel memory read via page_owner_scan stack aliasing
+> - [High] bpf: bpf_page_owner_get_nid() oops on unmapped struct page
 > --
 > 
-> commit c1df83521b79d78bdf83d4c496be4b0e82a9f05c
-> Author: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+> commit 86f6fa9f642d356a9518f6b22fec24555b1e1568
+> Author: Zhen Ni <zhen.ni@easystack.cn>
 > 
-> arm64: dts: qcom: kaanapali-mtp-camera-s5kjn5: Add DT overlay
+> mm/page_owner: add bpf_page_owner_get_nid() kfunc
 > 
-> This commit enables the S5KJN5 image sensor via CCI on the Kaanapali MTP
-> board. It adds a device tree overlay for the camera module connected to
-> the CSIPHY2 interface in four lane mode.
+> This commit extracts the NUMA node lookup from read_page_owner() into a shared
+> page_owner_get_nid() helper. It then exposes this helper to BPF programs via a
+> new bpf_page_owner_get_nid() kfunc.
 > 
->> diff --git a/arch/arm64/boot/dts/qcom/kaanapali-mtp-camera-s5kjn5.dtso b/arch/arm64/boot/dts/qcom/kaanapali-mtp-camera-s5kjn5.dtso
->> new file mode 100644
->> index 0000000000000..d0e39855e0e62
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/kaanapali-mtp-camera-s5kjn5.dtso
+>> diff --git a/mm/page_owner.c b/mm/page_owner.c
+>> index eb420803a434a..43a722678accf 100644
+>> --- a/mm/page_owner.c
+>> +++ b/mm/page_owner.c
 > [ ... ]
->> +&cci0_i2c1 {
->> +	#address-cells = <1>;
->> +	#size-cells = <0>;
->> +
->> +	camera@10 {
->> +		compatible = "samsung,s5kjn5";
->> +		reg = <0x10>;
->> +
->> +		reset-gpios = <&tlmm 3 GPIO_ACTIVE_LOW>;
->> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&cam_mclk2_default &cam_reset2_default>;
->> +
->> +		clocks = <&cambistmclkcc CAM_BIST_MCLK_CC_MCLK2_CLK>;
->> +		assigned-clocks = <&cambistmclkcc CAM_BIST_MCLK_CC_MCLK2_CLK>;
->> +		assigned-clock-rates = <19200000>;
->> +
->> +		vddio-supply = <&vreg_l4n_1p8>;
->> +		vddd-supply = <&vreg_l1m_1p0>;
->> +		vdda-supply = <&vreg_l4m_2p2>;
->> +		vddio1p2-supply = <&vreg_l2n_1p2>;
->> +		afvdd-supply = <&vreg_l7m_2p8>;
+>> @@ -711,6 +711,19 @@ void __dump_page_owner(const struct page *page)
+>>   	page_ext_put(page_ext);
+>>   }
+>>   
+>> +/*
+>> + * NUMA node of @page, bypassing PF_POISONED_CHECK() in page_to_nid() to
+>> + * avoid VM_BUG_ON on poisoned pages; -1 for poisoned pages.
+>> + */
+>> +int page_owner_get_nid(struct page *page)
+>> +{
+>> +	memdesc_flags_t page_flags = READ_ONCE(page->flags);
 > 
 > [Severity: High]
-> Does this device tree node omit the vddm-supply property?
+> Can this trigger a kernel oops on an unmapped struct page?
 > 
-> Looking at the s5kjn5 driver in drivers/media/i2c/s5kjn5.c, it
-> unconditionally requires the "vddm" regulator during probe:
+> The KF_SLEEPABLE flag on bpf_iter_page_owner_next() allows the BPF program to
+> be preempted or to explicitly sleep while holding the scan object.
 > 
-> static const char * const s5kjn5_supply_names[] = {
-> 	"vddio",
-> 	"vddd",
-> 	"vddm",
-> 	"vdda",
-> 	"vddio1p2",
-> 	"afvdd",
-> };
+> If memory is hot-removed while the program sleeps, the vmemmap region backing
+> the struct page pointer inside the scan object could be unmapped.
 > 
-> Missing this property in the DT overlay will cause the driver probe to
-> fail with -ENODEV, or if the regulator core substitutes a dummy regulator,
-> the physical MIPI PHY power domain may remain unpowered, causing the sensor
-> to fail to stream.
+> When the program wakes up and calls bpf_page_owner_get_nid(), this raw
+> READ_ONCE(page->flags) would dereference the potentially unmapped pointer and
+> crash the kernel.
 > 
+> Should bpf_page_owner_get_nid() use copy_from_kernel_nofault() or BPF probe
+> read semantics to safely probe the memory instead?
+> 
+
+The pfn->page dereference racing memory hot-remove is pre-existing: the
+debugfs read path already does READ_ONCE(page->flags) the same way. But
+a standalone sleepable kfunc does widen the window, since the program
+can sleep between next() and get_nid() while holding the page pointer.
+
+Rather than harden that kfunc, I'll drop it -- the NUMA node can be
+computed inside page_owner_next_eligible() at hit time, while the page
+is still valid and inside the walk, and stored in a new scan->nid field.
+
 >> +
->> +		port {
->> +			s5kjn5_out_ep: endpoint {
->> +				data-lanes = <1 2 3 4>;
->> +				link-frequencies = /bits/ 64 <1248000000>;
->> +				remote-endpoint = <&csiphy2_in_ep>;
->> +			};
->> +		};
->> +	};
->> +};
+>> +	if (page_flags.f == PAGE_POISON_PATTERN)
+>> +		return -1;
+>> +	return memdesc_nid(&page_flags);
+>> +}
+>> +
+> 
+>> diff --git a/mm/page_owner_iter.c b/mm/page_owner_iter.c
+>> index 80693d4174077..907517a291443 100644
+>> --- a/mm/page_owner_iter.c
+>> +++ b/mm/page_owner_iter.c
+> [ ... ]
+>> @@ -165,4 +165,9 @@ __bpf_kfunc int bpf_page_owner_stack_snprint(depot_stack_handle_t handle,
+>>   	return stack_depot_snprint(handle, buf, buf_size, 0);
+>>   }
+>>   
+>> +__bpf_kfunc int bpf_page_owner_get_nid(struct page_owner_scan *scan)
+>> +{
+>> +	return page_owner_get_nid(scan->page);
+>> +}
+> 
+> [Severity: High]
+> Is there a risk of an arbitrary kernel memory read here?
+> 
+> Because the scan object physically resides on the BPF program's stack (as
+> returned by bpf_iter_page_owner_next()), a BPF program can overwrite the
+> scan->page pointer with an arbitrary kernel address using normal BPF stack
+> pointers (PTR_TO_STACK).
+> 
+> If the program then passes the aliased PTR_TO_BTF_ID to
+> bpf_page_owner_get_nid(), wouldn't this kfunc blindly dereference the forged
+> pointer, bypassing verifier safety checks?
 > 
 
-vddm is an optional power supply and on this JN5 daughter card we don't 
-this power rail.
+See the message above for the fix.
 
----
-Best Regards,
-Hangxiang
+
+Thanks,
+Zhen
+
