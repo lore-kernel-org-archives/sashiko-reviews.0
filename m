@@ -1,179 +1,151 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEFF296BBC
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 05:17:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9D43AE18A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 05:53:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.180
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791782260; cv=pass; b=O3OM1QDh9GnRCGqRy23C/Efv4utV1LueMxjjIfTpSilxuJ3zh67CUWZ694cHx94aRVVzdZ8OQht7WjkXxgkfV8D0sxvoPxFL6x6IxdW+ORJZWTmMhSKlkOk35YSSiMaqTt6pKn9paOCEdodfca8gxamQ/Daf/cgMA2RT18pbzAI=
+	t=1791784431; cv=pass; b=YJbW8xmZVFEthbTEXO3EN4GwhBzjukMqvWpGRxjjy2dF3OrTgrT/LlA7Qhr4CUdRKaVuN17o58X3veRfz1n5q1jYKi+u+OSlx6vCfHhTMLqVjmP1P+3SmM//ZiN7UZZInMOqpY6zkFZZD3gWhhtcAyBIB/7q7ftku/f/oHdJTKo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791782260; c=relaxed/simple;
-	bh=eR+fmL22lupP1pDQ/Am7C6byc7i0RQGsHO+PHaoUMS8=;
+	s=arc-20240116; t=1791784431; c=relaxed/simple;
+	bh=3SgrV3BQIpw/BKeX2coBnxDkspQuXkrqKJSDqrsxklo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HQt6+HAz8ctdKSNpzS5BcU6k30eYsoLx87+3kGOA80HbKFxJ4OxJ833GogBV43ialqP3DbBASRgWdOyTon2pWxl3EfOzsG6PhFq5AuYZujUcTiol3+K6ayw342PWvKAI1a3kk/9jZHUBvF4ZDSx9RseWsj/bM+89KHZ1FJ1bRJg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JMBCb5YQ; arc=pass smtp.client-ip=209.85.222.177
+	 To:Cc:Content-Type; b=dg/C/zFepe0LpWQ47dfcfmyirXXvt9mxSh4vmkWzo9J8nFqOhgNHSpwAX3SloMEcZU6RI78CmElFOC70jXvsBFwUgsc5nlMns+MHhLmSc1uk1telZbgeaLOpqQJAlHFw2sL7HT+81GVmYbyv/L4zctvrBwdYaU3D8bMG04mrjt0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FB1DGtGT; arc=pass smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JMBCb5YQ"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-93c5b7f5bfaso720413885a.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 11 Oct 2026 22:17:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791782258; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FB1DGtGT"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-88bd2b44f3aso620480b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 11 Oct 2026 22:53:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791784429; cv=none;
         d=google.com; s=arc-20260327;
-        b=qVKROZoQSfBpon/fvE7lXv+pOeS/SRhAwabFfaSOWkSvmaD4JE5MkRO4z5i+DQqIg5
-         5p5OFwJY3GM1kekBbZcxcxgwVYr215yJv6lqofnLmgCq4XRz4XSp6/+Ig6DPsVGiFVhf
-         Afomffbg+lfJZDYb6rvMl5ilhgcP3HeT+gwoqZgkFTmWY1G+iWzcu876uwWN8qHXnI4u
-         XnhQ2bcCQ3i5S6AltRNHmAZpRpPMDD5MjwMs6p6/5kXIS5dlfSHXjWJc98s+J+nwdcDq
-         WEqgxxptBAAItu/n+0kja+XLVav6zfiop9CTQmW/UBO9fQ3jbW0uLAxS6XYg1luXRxH3
-         G9xw==
+        b=T1SrZByteDeBGzxQjb8+JjcATucSHsatOjX4MFHRVY5hvg+7LTJVPxjsV/QdjCU+s0
+         0DGVPTMrHLNI2WfjQiKX3a3Siiq2ki7GDrP/7QGWN5fZjqvCvKRVpCKx77T2CMgRK8r6
+         Qh/j8aArLiaqA4TIprJr/tmsB4oBEfBYhi6O8TxGanHqyAi2xc4bKmabw3fDhoGRS/gS
+         xp3WS2RULGLnlNWoPXKPBW2f1hob0WFBS0c2vKg7qCMysQ9AocLO8IppykOeFzyD4/wP
+         5gGtZSll2P2IimnjHFpyVkHEwFFJHII1Iv29I1IcpwX3GWUBb+xFL0ef/UeYdlGILNmq
+         a+Pw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=fgfFsidpQQCyeZD6VQBMcPL9jH+HS8umBdgVKZVkXdA=;
-        fh=HrRLF2UV/6Wehm0QGnmf0WSyoTrnzAu/4xRsd50CIds=;
-        b=M1yK5fPiXWbSNZib2tq671wUMe2n9zCHRlBJr1JQocniZy/lq3bDEarhvRhMwPxwun
-         R3Q3hP8C1zhc0n2v7SPBXcWGrLW8Tkz+6DhBWSGVmi7hcJw5+eiTNym96gXA7WnXipAP
-         yWc4BmbguPcPzld51l21AMVzIxcyi6T6aMgRaxcmSH8UQw74qNEB+oVTO3NfdX/IGuZK
-         fH4tryTYDFbboqo2mlYh6XmKPWL7L0Kwoi0cnHXKEA4uzmZrI7TBWf2QpiKIlXfvrcRt
-         uIAURgqR+L70VYPJeUp82oAHRSmJBNe4De/aGLfBDOKc2Ya3WRNLW9mOPHy7s9iNPTyP
-         9hzw==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=ZO2SHHnYvNeqH5LGzfvAAyT6x/fjDGlAXnTAwdDQ/Q4=;
+        fh=2X+7ByAkRO1QUnLaoP6/vLuZ9I3/VniOzD48dugxJcU=;
+        b=UEjdkhbCT3Fa+Zc88f2E/6TpeOXbi8azZpBnGt+Bl0LWOVoB4mdqN8G9xET/ArVkoN
+         +sO9mRHxSoU9Pi5UerK+12hj3V9RY/SZn8ue0fChXbdNVntqFt1aNcWIp5xB/skNeyzU
+         zdOcxLhLQGeOsVWZYP175JKO86N357JgGO5pCS4IEBNdkKaT88ALTXFMxXz1tuz3WeLL
+         UJCuWw/wZOM5R56Ww8IPVzOlgxh9wgfVhXFKlYhv6+pCF5wLGBpDahh+0pV76g+V3Nk9
+         dY+0lqTfVI+Dr7RG69Y+iB8s7bh3BEeSR9aBsWYDW5qlsha2LXOGnGLfk5Q/g09LyXd2
+         tXEA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791782258; x=1792387058; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=fgfFsidpQQCyeZD6VQBMcPL9jH+HS8umBdgVKZVkXdA=;
-        b=JMBCb5YQ3WBdl/nIM0E8HjsJmhxHtVEzlZwhjiJ/YmrtLII+zX6Wl43B0FNEJhtF9a
-         QqUev1HQTdZaa0sFEvcMsqIg8G9Gi1ZHGkoo1kI4OYRjq4ivEO/D/lHRy5RhbhAbxiWp
-         mhMUUZeZ7R6cDr2zoQ2XkPJQg+WQ9j3/43FWq2NLUP4r0aOtLrYI5+5yNWAiMGfTVYhe
-         YNSgTzVB0tvyjgdcd8/8TnhL2Dz8SSYJ8uvj0rBwQqvCe1DqSTVPTY69/iNV6HXw1M7b
-         i1WT1i2VeSpRzIl2Ekm80HunHYAcaxU9HZb3/B5C+asbLVW0jRY9rHczeaoGg+5+y6Vf
-         P+8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791782258; x=1792387058;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1791784429; x=1792389229; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=fgfFsidpQQCyeZD6VQBMcPL9jH+HS8umBdgVKZVkXdA=;
-        b=MnWnKXRoH2c7mnhTkzyhYARZEtMFMtcbzWMuJnysbDYTGstT2xA0TETmWWYeZhApWI
-         Y5oCNaTDxPTDmVAK1SNtHbsp18PQcwn3I4ZA6UwkUU6/98UZ/jTa7AUK5t8IbGc38E0L
-         ZjahbjYt0md8mbeDw8rP+PA+u1H467KnYPwPxhGZ4MvxErA//JSHCeS+fjIBCJJZx9h0
-         qr8BBvhwEYdBAMAD1nMAYbP0dG1cQylb/Z/GJRdfqXKo2CGTS6SdzItKYpPqwXtH9WPI
-         bAOGGKOCUv1oL7JcOSU6oEg5Dj5glfn0/dAJBJvO1QRnVWkdayNTvJHxTCdLNCLjoSbI
-         Oh/w==
-X-Gm-Message-State: AFq9FYJxErTc4dPvkc1SUIHgknxWWfakppVcBdumpiYYITJX1LU8t4fn
-	CTsRffHjYQXbdFJwuNvhRjVEPO92FDwOhw5dBWR4W2okFZDy3IApylVe5B90RbVuj9kY8DAZyh6
-	MJ94j5UssC2dhhPKnWYpbksmP4dttEfusDlcN
-X-Gm-Gg: AYBFou05Qn2KWKgpaevyyrwMHM0oBuWWYeBaCpocBmX2RZzMXI+1OBOgWhaDW41IB1B
-	kPwxcOx2lu0FaynrNE1d4hx8MQKJ5+zIwR77Luo98cIUmbbaHZj9OT48ltM9d6BDwRlmZp5pIMi
-	00DQ/U0MS4wjFzfZ4JzN5rJO4oVwN3rB8mY7zphfIxmT/mddAShkaZ8vI8k/tpP2wc3BIHJGuoe
-	/XVoPkqLWISrQVaXX/qLFPWK/eT3lIs4k5hb3b/ylxVajKHa78B9Z5SnQH9Au9HQgl8NvBHM3in
-	JgL3v1SFJoLY9qoNzqkEUKs9kJxYC6c1uxodXb/UYNp0NKbUo4XdrDxxVh5V3bpvRQI=
-X-Received: by 2002:a05:620a:468d:b0:93e:c173:f694 with SMTP id
- af79cd13be357-93ec173f895mr1213489685a.40.1791782257577; Sun, 11 Oct 2026
- 22:17:37 -0700 (PDT)
+        bh=ZO2SHHnYvNeqH5LGzfvAAyT6x/fjDGlAXnTAwdDQ/Q4=;
+        b=FB1DGtGTMH7oY+p4zUM5Niju3QeDF64Gl/tsAoyBMUbWp0hkqp69CXjOP1behc+wNg
+         hWhAhcBCArRK6svS5IcVJ3EB3Tw+rs6dmsepAUSIUSk4oJ1+GCo9skr01Gey/c7+40Sj
+         QkiGjjqalf2JbZLIM/gDmyPtDu+szvU3CyOWViMW+ZoDWpI3ID2byGlsJH3XS7t4GZkk
+         YOw+Zp0UArrJTo2k5c2G91gGit8IfuNwhiKKycWGtQrP10dEvev7YvxhBTrxit4KiV1l
+         t8DoXC0C4lymjyjx58A4HPZ289PpCCqkVH3GzVJKCV1QRcKC6iaPTK4OEWGpkc6Z/Hcz
+         XIRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791784429; x=1792389229;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=ZO2SHHnYvNeqH5LGzfvAAyT6x/fjDGlAXnTAwdDQ/Q4=;
+        b=avj30I87PshK4S+dkFfZaa5mpEbA2Mj6T/G6Kjw7eduIbeBgl466Y7OLnKXi8x06my
+         mXiY7xvZZhT8wUjtGDj7vSWGGk37fwVCWDbjXcz5ldH6K7hVjOTA6BgeF3UbbdBon+Qk
+         yhMbqKsvW0W5+plGMlT+hO4S/GQKm4ezrrm2t19lwLH+/oVu+a5Q0UOV7xonDsLYbmiR
+         iEWJ6oxV0ESl/LDxLxJeLI8crC55w+Cv687Jbts6tVeh3VplT8M/7pLt8xXS4Wq31hF7
+         QLCgOd2b4iSneg7jp7HhBcGWnoSDQd/B/Zpnw/ypU6ZmvxWfoZRpbdPIFFW17p/PPBev
+         bjEw==
+X-Gm-Message-State: AFq9FYLXCWVUEOw5FayX1ubQk/IgiDH0tqFZPZ5bncW1rxtangrh4Nrk
+	oE7je8ZNp/vKwZPq5RWeVDduxWA8oSvYwfZj2fQwdhyLe6Lw2N/+wyed2FZ7X02DigTDamtXrbC
+	xZYqwCZctF/L2HjtN+uUc4MQjeoXyAWZemBrf
+X-Gm-Gg: AYBFou2lJJyBKDydNmIoGP9i6oPInloYRU0bmvgcaaT5Zt1Ry+QI9+s5KWk7WYjy8nn
+	PyJIK/p4BjrA2W96q+KQ9CSgpV0JKJdLRPzdHCbfbiztJeUtdG/+SDTLpLLv+nnDdwoTKmckCle
+	Nv7ntpu6kW8KqU+kd4A6/eDv2UXfQEcC7m5hr3EAFLRysrUjescJ5cPsl3G7bh1IX6lYpG/dHqi
+	liBKOtQCGayzAZbGqDT/5fjaIecK6XMvtBv6uhGW3fidRkPopiQ5ZPg9yzhIMBBQXxz+7sU8pFc
+	ftscIPFXu/dU98zAhkarO96hxshTq5FF4uGLhSBKD52TZRXzcLyhngOahnS+yb+IyiMs5b40xLt
+	W3oINeMmEB+CJZ0XHVIs96bOoCP3LqIVfII+iDojY6o2JGLVnIBL6Nh7MlPsosVvPTwQ=
+X-Received: by 2002:a05:6a20:b78a:b0:3de:8825:15b with SMTP id
+ adf61e73a8af0-3e16be899c6mr7214244637.12.1791784429226; Sun, 11 Oct 2026
+ 22:53:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261011014803.100454-1-physicalmtea@gmail.com> <sashiko-outbox-167544@kernel.org>
-In-Reply-To: <sashiko-outbox-167544@kernel.org>
-From: Jia Jia <physicalmtea@gmail.com>
-Date: Mon, 12 Oct 2026 13:17:00 +0800
-X-Gm-Features: AclHuK-lnMJpW1Hk4QztCSGXZUH1H-mtHMg6D6LOi_sK5vUMHTywqi2KmYQFORE
-Message-ID: <CAJwVaMK8MOfKjhWHH_MA3WqxxraQkQyeeN1RqUoANxZSnDJ2Dg@mail.gmail.com>
-Subject: Re: [PATCH v2] vhost-scsi: do not count PI bytes in the data length
-To: sashiko-reviews@lists.linux.dev
-Cc: Eugenio Perez <eperezma@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, kvm@vger.kernel.org, 
-	virtualization@lists.linux.dev
+References: <20261012015433.6155-1-phucduc.bui@gmail.com> <sashiko-outbox-167547@kernel.org>
+In-Reply-To: <sashiko-outbox-167547@kernel.org>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Mon, 12 Oct 2026 12:53:37 +0700
+X-Gm-Features: AclHuK8accYR9YlUU51RFCxSlQ8XGVvYal9shsHWXg0w-Rp09FTRK_kAe2k46dE
+Message-ID: <CAABR9nHKxOze0wryK1XjSdJVA7rsMXiSt=-S8W2QsGdQqP1Evg@mail.gmail.com>
+Subject: Re: [PATCH v2] pinctrl: mcp23s08: Propagate reset GPIO errors
+To: sashiko-reviews@lists.linux.dev, Linus Walleij <linusw@kernel.org>
+Cc: linux-gpio@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Critical] vhost-scsi: missing validation of prot_bytes alignment allow=
-s OOB access
-> --
+> [Severity: High]
+> Does this cause a regression for multi-chip SPI configurations by aborting the
+> probe due to -EBUSY?
 >
-> commit a2683cd412935b122ac2e93ce16af9655a892639
-> Author: Jia Jia <physicalmtea@gmail.com>
+> In the SPI driver, multiple physical chips can share a single SPI chip select.
+> This is handled in drivers/pinctrl/pinctrl-mcp23s08_spi.c:mcp23s08_probe() by
+> iterating over spi_present_mask and calling mcp23s08_probe_one() for each:
 >
-> vhost-scsi: do not count PI bytes in the data length
+> drivers/pinctrl/pinctrl-mcp23s08_spi.c:mcp23s08_probe() {
+>         ...
+>         for_each_set_bit(addr, &spi_present_mask, MCP_MAX_DEV_PER_CS) {
+>                 ...
+>                 ret = mcp23s08_probe_one(data->mcp[addr], dev, MCP23S08_SPI_BASE | (addr << 1),
+>                                          info->type, -1);
+>                 if (ret < 0)
+>                         return ret;
+>         }
+>         ...
+> }
 >
-> This commit updates the expected data length passed to the target core
-> by omitting the protection information (PI) bytes. It adjusts the length
-> so that protected read and write operations take their length directly
-> from the CDB, preventing issues when the data scatterlist is smaller
-> than the total length.
+> Because all logical chips share the same SPI device, the same struct device
+> *dev pointer is passed to every mcp23s08_probe_one() call.
 >
-> > diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
-> > index 885fac5ed042e..8b32caa7ec294 100644
-> > --- a/drivers/vhost/scsi.c
-> > +++ b/drivers/vhost/scsi.c
-> > @@ -1534,9 +1534,13 @@ vhost_scsi_handle_vq(struct vhost_scsi *vs, stru=
-ct vhost_virtqueue *vq)
-> >                * vhost_scsi_queue_data_in() and vhost_scsi_queue_status=
-()
-> >                */
-> >               cmd->tvc_vq_desc =3D vc.head;
-> > +             /*
-> > +              * exp_data_len is the data sgl. prot_bytes already sit i=
-n
-> > +              * the protection sgl. Protected READ and WRITE replace
-> > +              * data_length from the CDB in sbc_check_prot().
-> > +              */
-> >               vhost_scsi_target_queue_cmd(nexus, cmd, cdb, lun, task_at=
-tr,
-> > -                                         data_direction,
-> > -                                         exp_data_len + prot_bytes);
-> > +                                         data_direction, exp_data_len)=
-;
+> During the first iteration, the reset GPIO is successfully requested
+> exclusively.
 >
-> [Severity: Critical]
-> Does this code allow an out-of-bounds access when prot_bytes is not align=
-ed?
+> During the second iteration, devm_gpiod_get_optional() is called again on the
+> same dev pointer for the same "reset" connection ID. The GPIO core will
+> attempt to request the same descriptor again, which will return -EBUSY because
+> it is already requested and does not use GPIOD_FLAGS_BIT_NONEXCLUSIVE.
 >
-> In vhost_scsi_handle_vq(), prot_bytes is extracted from the virtqueue ele=
-ment:
+> Prior to this patch, the -EBUSY error was ignored, allowing the second and
+> subsequent chips to probe successfully (which was safe since the reset line
+> was already asserted and deasserted by the first chip).
 >
->     prot_bytes =3D vhost32_to_cpu(vq, v_req_pi.pi_bytesin);
->
-> There doesn't appear to be validation ensuring it is a multiple of the 8-=
-byte
-> T10 PI tuple size before it dictates the length of the protection scatter=
-list.
->
-> When the target core later processes this command, functions like
-> sbc_dif_generate() in drivers/target/target_core_sbc.c loop over the
-> scatterlist length using 8-byte increments:
->
->     for (j =3D 0; j < psg->length; j +=3D sizeof(*sdt)) {
->
-> If psg->length is not a multiple of 8, does the last iteration read or wr=
-ite
-> past the end of the mapped scatterlist element? A malicious guest could p=
-rovide
-> an unaligned pi_bytesin or pi_bytesout length, potentially causing an
-> out-of-bounds access into an adjacent physical page on the host.
+> >
+> >       /* verify MCP_IOCON.SEQOP = 0, so sequential reads work,
+> >        * and MCP_IOCON.HAEN = 1, so we work with all chips.
 >
 
-This issue is not introduced by the current patch. I have previously
-sent related patches to fix similar issues. I personally believe that
-this kind of issue should not be fixed in the transport layer.
 
-https://lore.kernel.org/all/20261006093338.27342-5-physicalmtea@gmail.com/
-https://lore.kernel.org/all/20261006093338.27342-6-physicalmtea@gmail.com/
-https://lore.kernel.org/all/20261006093338.27342-7-physicalmtea@gmail.com/
 
-> >               ret =3D 0;
-> >  err:
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261011014803.10=
-0454-1-physicalmtea@gmail.com?part=3D1
+I looked at how the cs35l35 and aic3x drivers handle -EBUSY
+when the reset GPIO is shared:
+- cs35l35: https://elixir.bootlin.com/linux/v7.3-rc6/source/sound/soc/codecs/cs35l35.c#L1524
+- aic3x: https://elixir.bootlin.com/linux/v7.3-rc6/source/sound/soc/codecs/tlv320aic3x.c#L1815
+
+I think handling -EBUSY similarly to cs35l35 may be more
+appropriate here, preserving the existing behavior for shared
+reset GPIOs while propagating other errors.
+
+Linus, could you confirm whether this approach would be OK for
+mcp23s08?
+
+Best regards,
+Phuc
