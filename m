@@ -1,123 +1,173 @@
-Received: from host3.o27bbn.ondsl.gr (host3.o27bbn.ondsl.gr [79.129.74.131])
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010033.outbound.protection.outlook.com [40.93.198.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E1E3EDE6C
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 11:11:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.129.74.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791803494; cv=none; b=bZHsW2NFZLMsznbWT4zCVmjgjkKmiACWGVHIwS0bzwitL06wexAZc+o1FOjrfVysE+6kWKCBrbT4RPtKeT0gdusdRPryqto3Xlpil0KdRsIOTolC6AudXhMGmOhwHPPRtA3niJjmv4SI2JQH40mD65ITeL3IRZBEkW48pIqQreM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791803494; c=relaxed/simple;
-	bh=s/nbx3qbIU4IiDZU3Yebh2f0jNKVyPUGAepgCs/yc7k=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=n8gtR6PocB4ro7IaTDqGKJElgYJlK5+128UBE3UXcr3Xvv4zcanbU63YD9UFE4y3guasziFqz8WYreqyh7MEmzR5QvNAMAEeUATxKNz6vrOXVhtRHK7ZNEIVK9LqmJVTvDdDnmd/i8VFBVWJGilSjWqBT6ayuV9MR9/jJ+wvhq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=e-psn.eu; spf=pass smtp.mailfrom=e-psn.eu; dkim=pass (2048-bit key) header.d=e-psn.eu header.i=@e-psn.eu header.b=pdjVKaMB; arc=none smtp.client-ip=79.129.74.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=e-psn.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=e-psn.eu
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889AF372EF0
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 11:11:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.33
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791803517; cv=fail; b=VrnQNh9sviH4xf5VuqnJyL377w9hluwQaC6EJPGFwp40B/NwUXFZr/Z63D9mTjJQGnuLfLE6+krmcYQkAtqm7uz2FEYtaK8VmHGjywN+FWO9/OXoaiZcLINLSMyRH0rvyVdtJIHaKunA8qxAv8+JgbnzvXchYHLSRmBg8EqABic=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791803517; c=relaxed/simple;
+	bh=WiomK08UfiTWbQ4byKS+8BkHoL7+KAbc5JVf/s7mEj4=;
+	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=irnfdycxC033aHaxpbUZMBrkv78RxKnzorLeAxWkl6Zmp13nVE4249svtWpgyJ31AfHO6AJwXL72U9sqOoryfFyYMEkdIg4H17Gi5hdLXQtSpAMDu3pPSr+2EdJfEZ2dMcsoXr33cj1HSwpHII1ZsrGBCO8cUOxVERtOyPDtUhg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=KWbylUao; arc=fail smtp.client-ip=40.93.198.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=e-psn.eu header.i=@e-psn.eu header.b="pdjVKaMB"
-Received: from mail.e-psn.eu (cluster-localnode [10.200.210.1])
-	by mail.e-psn.eu (Postfix) with ESMTPA id 3033E3842BC7;
-	Mon, 12 Oct 2026 11:11:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=e-psn.eu; s=default;
-	t=1791803488; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
-	 content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+fh4+TCDGqb+p1deMexiH2CF0uJZ6hXG1cZ+wkTnl+Y=;
-	b=pdjVKaMBO6v6SiMg+NTkQeeIgnNkJbnkmmOhm3vl0u96JAclj74hMaB+S7HOn7eb2EgJ/S
-	t+evWk5VoTUmJvRkYNRGEQ+Dqm+IbgdmI6aYL/aqgghicFK2AONfhn6HOp8gmQ/x1aLJpI
-	D9UphRF+Z1319a7sNsHODZjKfG9qc69FVE8JbcD/ThtZl6i6OYdr8KKZ5U0GOH23IJFKiU
-	qQIEgND9Ghfbg6AWvKwnKUX8f3AG2HvxB/JkNciahhzPYnc5uMtClWC4VohNNgd4oULoVE
-	YJTkh9gDut6rbxmkjAJuWhG7LKVZpeo9JnaMmm3ZOBBng/HJ1O+AtuJTXMJ3kQ==
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="KWbylUao"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ChQNj4EdGdMv1ddyGyardemD57+aWihgZPjL3Pu1z4XIjOOxwwg07E92bLzScQY+FdsFk6xv4l/6XbMbIUzabBDvWZCBUlWgw9ZG4xbTE/1aICxaT+QtDWKz+1cuCTPK/zytVT4CQgbAIkxadIaPww8dhy4yOvdGSdoaoWtm6v49Mv4aDJrkRCC5TyeH1jyTCHLlcJg7qprcWoL2YCuyLttNIAgvQMqJZzid5d91yosctoB0prRQPQLWxXjOEOMsCj1P/J/KHc4gBWLyZK7ZghvXLgLfJwWvCYinjBTdYLCu5i7sxIkJ1ZMdZ4H/hcAQ1QgyIR2IAf/VMAbe2yzR/A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ObGmyymNZ4U6QgqTMeyWMz14ynVLZ4cDvdnmdu83gVE=;
+ b=gIj2cYms8UyrGcqKpUzCqkDNuiGqyFzefkSbYzL8xcKOzx4KuwjzEmJFUBkXBTTG82eZWIkdoZFDiktSCJ+DjUg00CTUc9U+8z6QT3FSMA7z8RJQ3Pl1EmazMOq3xiD69p00tjmpwLLkj2HhUhiOgU/lc291f9/XJXcc4ek9pioqfupFsVq7IRFojD4dWcn4s0CYWOYPdz603Rma2OgahxFFiPy/N/Y5YDfaCSV69IxhBXPNd6lV0b16j00rtqbjctqARBtufZ0ugCocnmy0OyPwi6xnCDQRM2Kp5asxpe5ArMu6cXorzYJIKW3sFYSEoua31hn/DziBADwgdHDT9A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ObGmyymNZ4U6QgqTMeyWMz14ynVLZ4cDvdnmdu83gVE=;
+ b=KWbylUaoOtQcnWN5r7yGxGeXgwkdSoY6Cud0PXGNJEL/XcD022NidV0s4VRHz52uavrGuf4hiftI2MfZag2WvJ3uUCf7zxi2JbDp/L84lQCbdGBiVs85//IWu3njjnJ/OvZ32wN1u5hFLorKx3pUZnxcVz3NFOalCXb1BMImqzE=
+Received: from CH0PR03CA0052.namprd03.prod.outlook.com (2603:10b6:610:b3::27)
+ by LV8PR12MB9335.namprd12.prod.outlook.com (2603:10b6:408:1fc::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.21; Mon, 12 Oct
+ 2026 11:10:10 +0000
+Received: from DM2PEPF00003FC4.namprd04.prod.outlook.com
+ (2603:10b6:610:b3:cafe::1d) by CH0PR03CA0052.outlook.office365.com
+ (2603:10b6:610:b3::27) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.496.5 via Frontend Transport; Mon, 12
+ Oct 2026 11:10:09 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ DM2PEPF00003FC4.mail.protection.outlook.com (10.167.23.22) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.522.6 via Frontend Transport; Mon, 12 Oct 2026 11:10:09 +0000
+Received: from [192.168.1.3] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Mon, 12 Oct
+ 2026 06:10:02 -0500
+Message-ID: <8685c8b9-620a-46a5-b06c-a3eec6635c5e@amd.com>
+Date: Mon, 12 Oct 2026 16:39:54 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Mon, 12 Oct 2026 14:11:28 +0300
-From: Constantinos Chalkias <cch@e-psn.eu>
-To: sashiko-reviews@lists.linux.dev
-Cc: intel-xe@lists.freedesktop.org, dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH] drm/xe/hwmon: refresh Battlemage thermal telemetry under
- force-wake
-Reply-To: cch@e-psn.eu
-Mail-Reply-To: cch@e-psn.eu
-In-Reply-To: <sashiko-outbox-168001@kernel.org>
-References: <20261012104245.2108030-1-cch@e-psn.eu>
- <sashiko-outbox-168001@kernel.org>
-Message-ID: <4f2e9bd1da1964bb014e5b3fa4fe83eb@e-psn.eu>
-X-Sender: cch@e-psn.eu
-Organization: E-PSN
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+User-Agent: Mozilla Thunderbird
+CC: <sarunkod@amd.com>, <kvm@vger.kernel.org>
+Subject: Re: [PATCH v4 1/2] x86/uaccess: Extend CMPXCHG user helpers to
+ 128-bit operands
+To: <sashiko-reviews@lists.linux.dev>
+References: <20260908074739.10748-1-sarunkod@amd.com>
+ <20260908074739.10748-2-sarunkod@amd.com>
+ <20260908081928.2D7D21F00A3A@smtp.kernel.org>
+From: Sairaj Kodilkar <sarunkod@amd.com>
+Content-Language: en-US
+In-Reply-To: <20260908081928.2D7D21F00A3A@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Flag-Threshold: 6
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM2PEPF00003FC4:EE_|LV8PR12MB9335:EE_
+X-MS-Office365-Filtering-Correlation-Id: b6d0f2be-b5cc-4028-e851-08df2851613d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|23010399003|376014|36860700016|82310400026|56012099006|11063799006|5023799004|4143699003|261009223027099003|10067099003|22082099003|18002099003|6133799003|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	6sB59jSYDOhn8prW1z1jx5V3uU6fa10tfworbCTuxpxaoySDyaFrCAIg6TDiFF9tq9nEXPV9RGdWNWNGX7fXt5PpWng0AxtM1GImxYJXINE3mCYoE5dTOn9cLM2qybao0AzheUogfxK8T6sszYpdoBqcg4nzpsNC+Lpr6psstIo5OiBpaCSm+qOTu6esycjNujl10zfcmFwIbmGkzsjiM+lYVUWWniVv2Hh2LK+cDSMkZdkPCyphQ2RQNeXtdCB0vLI6eIHUgXnYsBUynwRkJd0t9nujdSLsmrQNzHwSLoejLd8oazww9Wc3JtNc6jq8FOvsph8MUw4KL+WwjI6bTpEXwmk2PCEs/cP2xLB/d5yGRiwNl798e00VqKshftH2GbiCCAIYQYp19N1WvvSlI5Re4D9aH4o/R8iOS8C/bHHN0Y89FF610gDEtbV6AKMK8gUUkOK+xO1FblVd27zIs3aj+FGK/PcbbiDVxiPxaaZhM9p57sPKtVLQ2ZnK0226+XzCNolnlTt3V19eA4bnYE4mpBu/9tkDs8L5BcziL3O5jrnpf7W6/VUmhpQyOngWyUkCqAUrpkK3PXeddPC2D4oAdJlCmaq4ArfVzR1NivK0OD6voLrba1kw2f8ChHwidINDnQwsinC1RR1aXPa7VaokWi9F8tSuzdY4HRpIS+Bnnwe9YNzx01vfPsl6Zih1
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(36860700016)(82310400026)(56012099006)(11063799006)(5023799004)(4143699003)(261009223027099003)(10067099003)(22082099003)(18002099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	vJMkAWro3e+jmfk5s7AWIs9f99eBuz53VcwZq/17O4bfNncSb3WMwe7U2hyMn5OcZepkPklnWmz/hkpriiGOhK/Bl+iNPSS0HAO46/1fFdgHp1MxLM0ZnMjujTC/YMIYilLbGkYOiIuvn3oIcf9KXfEzkcen3fo7du8Y4Eqiw4jFV1US2bSZpKqZJtlIUIDtjvYXDEdWPpDf3mCFmoH1CgYtiRAChwZz0Map0Tg6Wo1THNnfX7rEVHo54OjyMmJxzMGp6d9tWs1cd7HnZx6hZItGuVnyo2v8CTc1gkAx+VqcQX08jt+EykkL0mTItfT/x1b7I+yxNvfJZccDSbzax7DYbEu3vQ943i+EYWIguBnXN3p0SW7gXgv7DFhgwMC8DuOkWPdnTwCAGFsp2+qtRxJ+GHO3h8UxCr7cn2Rhi6AkgX+PglGnNbDL52ln8k9z
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2026 11:10:09.8125
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b6d0f2be-b5cc-4028-e851-08df2851613d
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DM2PEPF00003FC4.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9335
 
-Thanks for catching this.
-On the B70 I observed two distinct symptoms after a sustained workload:
-- package/VRAM temperature values could remain stale while the physical 
-blower stayed elevated even after the device had returned to idle;
-- fan1_input could independently report implausibly low or zero RPM 
-while the physical blower was still running fast.
-This patch only addresses the temperature MMIO path. Holding XE_FW_GT 
-for a short settling interval before the temperature read causes the 
-temperature telemetry to refresh and, in my testing, the physical blower 
-then settles normally as well.
-The REG_FAN_SPEED path remains a separate direct MMIO read and can still 
-show unreliable values, so the current patch should not be read as 
-fixing fan RPM telemetry itself.
-I can reword the commit message in a v2 to make that distinction 
-explicit, and investigate the fan telemetry path separately.
 
-On 2026-10-12 13:59, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential 
-> issue(s) to consider:
-> - [Medium] drm/xe: fan telemetry lacks Battlemage thermal force-wake 
-> workaround
+
+On 9/8/2026 1:49 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] When the host CPU lacks CX16 support, the 16-byte fallback returns a mismatch without updating the old value pointer, violating the cmpxchg API contract and causing infinite retry loops.
 > --
 > 
-> commit a9faaf30cbf789280ad52add1cf188270e8ccad9
-> Author: Constantinos Chalkias <cch@e-psn.eu>
+> commit 5f4dae7c1efaa8622accc402392f8d8a532481b4
+> Author: Sairaj Kodilkar <sarunkod@amd.com>
 > 
-> drm/xe/hwmon: refresh Battlemage thermal telemetry under force-wake
+> x86/uaccess: Extend CMPXCHG user helpers to 128-bit operands
 > 
-> This commit works around stale thermal telemetry on Battlemage by
-> acquiring the GT force-wake domain and waiting 500-1000 us before
-> reading temperature registers.
+> This commit extends the user CMPXCHG helpers to support 16-byte operands
+> on x86-64 using cmpxchg16b. KVM uses this to atomically emulate guest
+> cmpxchg16b on guest RAM mapped via userspace addresses.
 > 
->> drm/xe/hwmon: refresh Battlemage thermal telemetry under force-wake
->> 
->> On Battlemage, thermal telemetry can remain stale after the GT returns
->> to RC6 following sustained workloads.
->> 
->> On an Intel Arc Pro B70, package and VRAM temperature telemetry may 
->> stop
->> refreshing after a long inference workload. Fan telemetry can also
->> become invalid while the physical blower remains elevated.
+>> diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
+>> --- a/arch/x86/include/asm/uaccess.h
+>> +++ b/arch/x86/include/asm/uaccess.h
+> [ ... ]
+>> @@ -580,6 +634,14 @@ extern void __try_cmpxchg_user_wrong_size(void);
+>>  	case 8:	__ret = __try_cmpxchg64_user_asm((__force u64 *)(_ptr), (_oldp),\
+>>  						 (_nval), _label);		\
+>>  		break;								\
+>> +	case 16:								\
+>> +		if (boot_cpu_has(X86_FEATURE_CX16))				\
+>> +			__ret = __try_cmpxchg128_user_asm(			\
+>> +					(__force u128 *)(_ptr),			\
+>> +					(_oldp), (_nval), _label);		\
+>> +		else								\
+>> +			__ret = 0;						\
 > 
-> [Severity: Medium]
-> The commit message states that fan telemetry can become invalid, but 
-> the
-> patch only applies the force-wake and delay workaround to temperature 
-> and
-> VRAM channels via xe_hwmon_temp_mmio_read().
+> [Severity: High]
+> Does setting __ret to 0 here on hardware without CX16 support violate the
+> cmpxchg API contract?
 > 
-> Does xe_hwmon_fan_input_read() also need this workaround? Currently, it
-> continues to read REG_FAN_SPEED directly via xe_mmio_read32() without
-> acquiring force-wake or delaying:
+> When boot_cpu_has(X86_FEATURE_CX16) is false, it returns 0 (mismatch) but
+> fails to fetch the actual memory value and write it into _oldp.
 > 
-> drivers/gpu/drm/xe/xe_hwmon.c:xe_hwmon_fan_input_read() {
->     ...
-> 	mutex_lock(&hwmon->hwmon_lock);
+> If a guest executes cmpxchg16b on an MMIO address (forcing KVM emulation),
+> KVM's emulator decodes it and invokes unsafe_try_cmpxchg_user. Because
+> it returns 0 without updating the pointer, x86_emulate_insn skips
+> writeback_registers() and returns EMULATION_OK. 
 > 
-> 	reg_val = xe_mmio_read32(mmio, xe_hwmon_get_reg(hwmon, REG_FAN_SPEED, 
-> channel));
-> 	time_now = get_jiffies_64();
->     ...
-> }
+> The guest registers remain unchanged while EFLAGS shows failure (ZF=0).
 > 
-> Will fan telemetry still remain susceptible to staleness on Battlemage
-> without the workaround?
+> Can this cause a denial of service where the guest endlessly retries the
+> instruction with the same stale registers?
+> 
+> Should this instead use goto _label; to cleanly abort the unsupported
+> operation, which would cause KVM to properly abort the emulation?
+> 
+
+The caller __try_cmpxchg_user() flips the return value, so 0 means
+failure from unsafe_try_cmpxchg_user(). Hence writeback_registers() will
+fail with X86EMUL_CMPXCHG_FAILED which will halt the guest.
+
+Thanks
+Sairaj
+
+>> +		break;								\
+>>  	default: __try_cmpxchg_user_wrong_size();				\
+>>  	}									\
+>>  	__ret;						})
+> 
+
