@@ -1,212 +1,171 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73D274570D1;
-	Mon, 12 Oct 2026 09:39:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534AC331ECC
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 09:41:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791797957; cv=none; b=WGo1IMTNM7AZlhG7+ax2w20HaNUcDs12beStPhaaHPs8zSLwbPQVmH+KluuM7svGFZJtlh13O5ivN30c0Kccna0rmFpt5eoPWXRctYcxFod3p7DY4Z/rC0w9Hs5Cf0jzLlZnTtTnvzpbHH8xnVXRW1mEIWPp9PlMAay/g+dhLxU=
+	t=1791798081; cv=none; b=De7/GlVog0O8Hx0NnxlHIdrc8Vy9ADgtjpu77DHtaobi6ysre9K48vqanZ27Pm8WxkCsxQimCEee7iNr6x4jv0HuQFrMPvdZA3VknmjzZola/EY9yKcQDLOp1Hg8d9VFUQCyqQPZdOzaayDcF+9ZhGHmDcV+rmb8gygXDGZItTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791797957; c=relaxed/simple;
-	bh=nZndpXnXWRtkLdimM7Adpe9MgXmm/i7kOdL28BmGSe8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VVryVY1qqlMikX92zQRNLDdTPP3PMynxiahyA01CfL93LzmpULR8b2rEwxPQfqr4att2F0NI10ILHWQoKosRs/hVJR79IoXdiZDO4ExN6PnmoL7PBazAfLHcb/6MZ3lK11Jyoy/jofv+rF8bgYDR8psWY6C1pjLK82m7PpPnOQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [10.20.42.102])
-	by gateway (Coremail) with SMTP id _____8CxPtPBqsxqi+gUAA--.60747S3;
-	Mon, 12 Oct 2026 17:39:13 +0800 (CST)
-Received: from [10.20.42.102] (unknown [10.20.42.102])
-	by front1 (Coremail) with SMTP id qMiowJDxRs2+qsxqq2UrAA--.13156S2;
-	Mon, 12 Oct 2026 17:39:12 +0800 (CST)
-Message-ID: <489cbda7-ef80-4bb7-a9dc-5fb293d075eb@loongson.cn>
-Date: Mon, 12 Oct 2026 17:36:27 +0800
+	s=arc-20240116; t=1791798081; c=relaxed/simple;
+	bh=PdlP18nBDjAvBRvvus9niiB+c4f4AJsdjcgnqSheA3Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cJ3EWM2FCVBABf7C+FG32FdzLEyy9ojtnUcZK5wXm6RxM5rReMKP1onsRHU7Yex3R4lDwZ/r8xKzBD+CuK/1W1QyBtML1uVrW+T+uVd/j8kwmWxcDNrRNalBDJNapx3fNzJwTFl1DMOIl5Xl1EoW1BmSgc7Me6ZhNuK9H1nc6KM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=fXjw5plW; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=XcwjQeiB; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=fXjw5plW; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=XcwjQeiB; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="fXjw5plW";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="XcwjQeiB";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="fXjw5plW";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="XcwjQeiB"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 36E9F1F76C;
+	Mon, 12 Oct 2026 09:41:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1791798078; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=bJNeydmS+Bv5T0KGL6oxtmcxHWfJHOsLHVT649w3VS4=;
+	b=fXjw5plWuJzANw3j/2tiwepo4C6KajON2cNmDs4mKXYym7X6gS54MZstFxJUKxDpkMvGud
+	6939hb//vvYE0hXf8P0nTI8zTrG5zA9QXto5xAPt9Px6lH9YXTghf512yDqdKipZL3dh/4
+	hn8W4PSuf69B8W30dNSZ35PWWaVPEBs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1791798078;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=bJNeydmS+Bv5T0KGL6oxtmcxHWfJHOsLHVT649w3VS4=;
+	b=XcwjQeiB47qMxcY2WRJBRbpCynk4T3r3dDcpdkaJv3KQTd1Hh0GffH8Mo48aLIX1N4YLiD
+	sm6hvKp0oFnc5nDQ==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=fXjw5plW;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=XcwjQeiB
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1791798078; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=bJNeydmS+Bv5T0KGL6oxtmcxHWfJHOsLHVT649w3VS4=;
+	b=fXjw5plWuJzANw3j/2tiwepo4C6KajON2cNmDs4mKXYym7X6gS54MZstFxJUKxDpkMvGud
+	6939hb//vvYE0hXf8P0nTI8zTrG5zA9QXto5xAPt9Px6lH9YXTghf512yDqdKipZL3dh/4
+	hn8W4PSuf69B8W30dNSZ35PWWaVPEBs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1791798078;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=bJNeydmS+Bv5T0KGL6oxtmcxHWfJHOsLHVT649w3VS4=;
+	b=XcwjQeiB47qMxcY2WRJBRbpCynk4T3r3dDcpdkaJv3KQTd1Hh0GffH8Mo48aLIX1N4YLiD
+	sm6hvKp0oFnc5nDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C2B2D13314;
+	Mon, 12 Oct 2026 09:41:17 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id vPIGKD2rzGr6dgAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Mon, 12 Oct 2026 09:41:17 +0000
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: gregkh@linuxfoundation.org,
+	jirislaby@kernel.org,
+	deller@gmx.de,
+	James.Bottomley@HansenPartnership.com,
+	simona@ffwll.ch
+Cc: linux-kernel@vger.kernel.org,
+	linux-serial@vger.kernel.org,
+	linux-fbdev@vger.kernel.org,
+	linux-parisc@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 0/2] vt: Simplify console-blanking interface
+Date: Mon, 12 Oct 2026 11:27:37 +0200
+Message-ID: <20261012094114.38549-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 2/2] mfd: loongson-se: Fix miscellaneous issues
-To: sashiko-reviews@lists.linux.dev, Qunqin Zhao <zhaoqunqin@163.com>,
- lee@kernel.org
-Cc: mfd@lists.linux.dev
-References: <20261008073151.15808-1-zhaoqunqin@163.com>
- <20261008073151.15808-3-zhaoqunqin@163.com>
- <sashiko-outbox-163780@kernel.org>
-Content-Language: en-US
-From: Qunqin Zhao <zhaoqunqin@loongson.cn>
-In-Reply-To: <sashiko-outbox-163780@kernel.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJDxRs2+qsxqq2UrAA--.13156S2
-X-CM-SenderInfo: 52kd01pxqtx0o6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoW3GFyrGw4DWw4fKryxAr45twc_yoWxWw4kpF
-	W293yYkFWDJr10kwn0qa1rZFyYv395JF9xC3Z3tFW8CFn8Cw10gry5tF1UW3y3urn8GF1j
-	qFWvga1ku3WkCagCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUyEb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
-	6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
-	Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
-	14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwI
-	xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
-	Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7
-	IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k2
-	6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
-	AFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1EksDUUUUU==
+X-Rspamd-Action: no action
+X-Spam-Score: -3.01
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-3.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	TO_DN_SOME(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FREEMAIL_TO(0.00)[linuxfoundation.org,kernel.org,gmx.de,HansenPartnership.com,ffwll.ch];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	MIME_TRACE(0.00)[0:+];
+	URIBL_BLOCKED(0.00)[suse.de:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	ARC_NA(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	FREEMAIL_ENVRCPT(0.00)[gmx.de]
+X-Spam-Level: 
+X-Rspamd-Queue-Id: 36E9F1F76C
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+
+The vt subsystem calls con_blank with what appears to be non-sensical
+value. This is because the values and the type of the blank argument
+do not match: it mixes up console blank state and monitor DPMS levels
+for powersaving. The implmentations of con_blank in various consoles
+suffer from the same problem. Update con_blank to a clearer interface.
+Also update the consoles.
+
+Patch 1 does a bit of preparation. It converts a boolean parameter
+from int to bool, so that its meaning is clearer.
+
+Patch 2 updates con_blank. The callback's blank parameter now controls
+blanking in general. The new blank_mode parameter controls the monitor
+status and related powersaving.
+
+Tested with vgacon on a SiS 6202 VGA and with fbcon on a Matrox G200
+VGA device. The latter also ran fbcon via DRM fbdev emulation. Its easy
+to test this with setterm, like this
+
+  setterm --blank force                        # blank
+  setterm --blank poke                         # unblank
+  setterm --blank force --powersave powerdown  # blank and turn off monitor
+
+Blanking and unblanking still works in all tested cases.
+
+Thomas Zimmermann (2):
+  vt: Use boolean as parameter to do_blank_screen() and
+    do_unblank_screen()
+  vt: Distinguish between blanking and VESA blank mode in con_blank
+
+ drivers/tty/vt/vt.c                 | 25 ++++++++--------
+ drivers/tty/vt/vt_ioctl.c           | 12 ++++----
+ drivers/video/console/dummycon.c    |  4 +--
+ drivers/video/console/newport_con.c |  4 +--
+ drivers/video/console/sticon.c      |  4 +--
+ drivers/video/console/vgacon.c      | 44 +++++++++++++++--------------
+ drivers/video/fbdev/core/fbcon.c    | 23 +++++++--------
+ include/linux/console.h             |  9 ++++--
+ include/linux/vt_kern.h             |  5 ++--
+ 9 files changed, 69 insertions(+), 61 deletions(-)
 
 
-在 2026/10/8 15:45, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] mfd: loongson-se: hardware wedging due to interruptible wait in engine commands
-> - [Medium] mfd: loongson-se: Bespoke parent-child accessors and inter-driver callbacks violate MFD API
-> --
->
-> commit 6e6ed05719359ac0c5fefbfd5ea2f85ac87b10f6
-> Author: Qunqin Zhao <zhaoqunqin@loongson.cn>
-> mfd: loongson-se: Fix miscellaneous issues
->
-> This commit addresses multiple historical driver issues discovered by the
-> Sashiko Automation system within the loongson_se_probe() initialization flow
-> and the driver's interrupt service routines. It adds bounds checks,
-> initializes completion structures, and handles errors more robustly.
->
-> Link: https://lore.kernel.org/all/20260618095949.GB1672911@google.com/ [1]
->
->> diff --git a/drivers/mfd/loongson-se.c b/drivers/mfd/loongson-se.c
->> index 969378518065b..2fb5da85b2479 100644
->> --- a/drivers/mfd/loongson-se.c
->> +++ b/drivers/mfd/loongson-se.c
-> [ ... ]
->> @@ -70,18 +101,31 @@ static int loongson_se_send_controller_cmd(struct loongson_se *se,
->>  	if (err)
->>  		return err;
->>  
->> -	return wait_for_completion_interruptible(&se->cmd_completion);
->> +	/*
->> +	 * Wait for the controller to complete the command.  Use a bounded
->> +	 * non-interruptible wait: a pending signal must not leave the
->> +	 * controller running while its DMA buffers are being torn down.
->> +	 * One second is far more than any controller command should take,
->> +	 * while still bounding the wait if the hardware wedges.
->> +	 */
->> +	if (!wait_for_completion_timeout(&se->cmd_completion, HZ))
->> +		return -ETIMEDOUT;
->> +
->> +	return 0;
->>  }
->>  
->>  int loongson_se_send_engine_cmd(struct loongson_se_engine *engine)
->>  {
->> +	int err;
->> +
->> +	loongson_se_reinit_completion(engine->se, &engine->completion, BIT(engine->id));
->> +
-Hi,
-
-Thanks for the review.
-
-Note that both issues below are pre-existing in this driver and are not
-introduced by this series. If it's fine with you, I'd like to address them
-in a separate follow-up series to keep this one focused.
->> [Severity: Medium]
->> This might not be a direct bug, but does exporting this driver-level callback
->> violate the MFD subsystem API guidelines?
->>
->> The MFD architectural guidelines specify that sibling or parent/child drivers
->> should not use inter-driver callbacks. Instead of providing direct callbacks,
->> child drivers should retrieve parent data using standard APIs and interact
->> via standard subsystems like regmap.
->>
->> Could this be refactored to align with the standard subsystem APIs rather
->> than continuing to use this architectural pattern?
-A question here: exporting driver-level symbols is fairly common across
-many MFD drivers. Is this report's guidance (that all inter-driver
-callbacks should go through standard subsystems like regmap) a hard rule,
-or a suggestion? If it is reasonable for this driver, I'm happy to refactor
-it in a follow-up series.
->
-> [Severity: High]
-> This patch successfully fixes a hardware desynchronization flaw for
-> controller commands above by switching to wait_for_completion_timeout(),
-> but the engine command wait in loongson_se_send_engine_cmd() is left as
-> wait_for_completion_interruptible().
->
-> If wait_for_completion_interruptible() is interrupted by a signal, it returns
-> -ERESTARTSYS without stopping the hardware engine, and the hardware continues
-> performing DMA operations.
->
-> Could this cause a race condition where an unprivileged user-space process
-> sending a TPM command receives a signal (e.g., SIGINT), aborting the wait?
-> When the TPM core releases its mutex, the application could immediately issue
-> a new command:
->
-> drivers/char/tpm/tpm_loongson.c:tpm_loongson_send() {
->     ...
->     cmd->data_len = count;
->     memcpy(tpm_engine->data_buffer, buf, count);
->
->     return loongson_se_send_engine_cmd(tpm_engine);
-> }
->
-> This would overwrite engine->data_buffer and engine->command while the
-> hardware is still processing the previous request.
->
-> Can this easily triggerable path lead to DMA stream corruption and hardware
-> wedging? Should loongson_se_send_engine_cmd() also use a bounded
-> non-interruptible wait?
-Agreed there is a real race here, but I don't think switching the engine
-wait to a bounded non-interruptible wait is the right fix. Even with a
-timeout, the hardware may still be running DMA when the wait expires, and a
-subsequent command from the application can then overwrite the buffers while
-the engine is still processing the previous request. I think the proper fix
-belongs in the TPM driver: use two separate buffers for send and receive so
-a new command cannot clobber the in-flight one. I'll address this in a
-follow-up series.
->
->>  	/*
->>  	 * After engine initialization, the controller already knows
->>  	 * where to obtain engine commands from. Now all we need to
->>  	 * do is notify the controller that the engine needs to be started.
->>  	 */
->> -	int err = loongson_se_poll(engine->se, BIT(engine->id));
->> -
->> +	err = loongson_se_poll(engine->se, BIT(engine->id));
->>  	if (err)
->>  		return err;
->>  
->> @@ -92,12 +136,17 @@ EXPORT_SYMBOL_GPL(loongson_se_send_engine_cmd);
->>  struct loongson_se_engine *loongson_se_init_engine(struct device *dev, int id)
->>  {
->>  	struct loongson_se *se = dev_get_drvdata(dev);
->> -	struct loongson_se_engine *engine = &se->engines[id];
->> -	struct loongson_se_controller_cmd cmd;
->> +	struct loongson_se_engine *engine;
->> +	struct loongson_se_controller_cmd cmd = {0};
-> [Severity: Medium]
-> Does the use of this bespoke accessor function also conflict with the MFD API
-> guidelines?
->
-> The MFD subsystem architectural guidelines prohibit writing bespoke accessors
-> or helper functions in the parent MFD driver to pass state to child devices.
-> Child drivers should retrieve parent data directly using standard APIs like
-> dev_get_drvdata(pdev->dev.parent) and initialize their own resources.
->
-> Could this be refactored so child devices directly handle their own
-> initialization instead of relying on the parent to export this custom helper?
-
-This follows a similar logic to the issue mentioned above.
-
-Thanks,
-
-Qunqin
-
->> +
->> +	/* Engine 0 does not exist and its data buffer is reused for commands */
->> +	if (id <= 0 || id >= SE_ENGINE_MAX)
->> +		return NULL;
->> +
+base-commit: b0bd9fb9e92aae2a653efa1d0407daa2aabe99d0
+-- 
+2.55.0
 
