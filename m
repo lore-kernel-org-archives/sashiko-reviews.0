@@ -1,198 +1,229 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6910448035A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 12:24:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791807889; cv=none; b=qqjY8gRN+X0SuqvJb4Ta0oRsjhn1wPv1FaZ/Soh8yL2xp4cHynafLCneQ1GUTyZIAGkF/414iPr/Q94HX1RvBmcQfeHdcev1cZj+WS7NewydbdOlyeT0Wh48wuJXr1p1coUuStUC0CNhuEyV/XRXU+OAAuvmlKkZpjrUWDZ+AnM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791807889; c=relaxed/simple;
-	bh=H5rSxCEa8nPGc8Jt/z5JkUPV4TKxgSMCMm1I2PZ27mc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rIyv1QIYNlIkJRTfIC/6XakiesjaM7ulBbEuCyXwoWpi+PE+6OhIdLFJ8UBkUIspNzIY3Adkyf/JNhLyPZ7v60Hl/b7TTyEknD1AI17C0PCC/fPSfY2ogPLfPhgHrq9e+ji0cgtV4WjUWobOGD9/mz86okufnF6M/zRT6RfWLzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=C/3W2iUO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=cc5SP9nx; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D13488DAE
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 12:25:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.16
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791807930; cv=fail; b=V+voxh1Q/MikzaM9lKloSiScIW4GhnFa20P+200yZA3InsVwS7cJJTOmJz4yYVXZxe7mRYCehiAR93MHBfmDA4ct8QT+zTjV/z/3GGWBYtnturQUoZlwYgcLXpQO5wTjaNz6AeZoS8Rugtb3zQqEia2NvEiBksSamkNFtDc6aOA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791807930; c=relaxed/simple;
+	bh=lOi8ovjwK+/YhX/jV127a8KBku5C5KDTF+5HYmAaUKU=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=HvZU7cAwnRlyCG+zguyT+oQpNtffRsb3Z6SKdjDSUlcHE0mQoxw56hrvisMi5Wyfdexq/w2VkPPyHbMAOy2VFIW44X972L+KgQ5cja7814Q9vsWz5TR2Dl1VfpOo324QIWWD+sARTpwsLBTL6dwqVf4URY9q964BXbHb1usoXTQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XltwQr3d; arc=fail smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="C/3W2iUO";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="cc5SP9nx"
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69CC0bkM2679930
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 12:24:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=GJT/DkiIpi+sKlIcqZxCDbCI
-	/Dpo/QRPmr7TBBKi1E8=; b=C/3W2iUOkR2KCADsqS/uhtOy8u4bS5D0ffQCMWHb
-	uUch9DZW/R9u2TKkBKf95zq3R8DbXA2NSSTTHmz/DKnWb9Dcp5Nym25rgVi+c1s1
-	EgZ5/U8VWpc0biuiG7rBPd7fgiR57Bj10sdsVXRe9c2Z7B1QoxvcmxiPMeIMEFlR
-	ynPMx+L2a94kcISVeIPsGonCnW0OQh8DQ5LHBnTQr5JT4DhlXjUqpREFAF3djC1c
-	iJ9Sxj551YfMtbGKjbWjxnBEP7vfMMaNBFo7xtyI12ieJSJq/x2VPNkchu3T9nW1
-	U4hMF7As0zR1+NTi7UQKeK/zHpjPAfwR/XX4iEHscb1gqA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h8sd1svxf-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 12:24:47 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-93cbf2fd504so327871285a.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 05:24:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1791807886; x=1792412686; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=GJT/DkiIpi+sKlIcqZxCDbCI/Dpo/QRPmr7TBBKi1E8=;
-        b=cc5SP9nxXthaYN7mq6SBSE7hM+EGO8pHUq+iGlrSYsPORW3acSYT4lQLmcRwskLubb
-         OS7trmMGH5xmErsQhKAuqK9H0Xy9M8NFXiYWIovXzuVQq6g4MXdn4SkfIhVnBJVH959k
-         uY5wew0V6bzf6aKQ67P2UMhlm0oGYQJOTSW7dU7tne+Lbo7P+hqq1Bk5hznhIzLhUp1M
-         vt7HMBiqe/mUlZ4n2+skJT++HB9weofSHaeB17ptOfkb56SvYxgTG8ZcP8eIwI40535f
-         HsYc50wF7OrHkbZ1b1UT0Zz5OQndp6pBEobQucMwWlKvkAepcFLXusMWXd4w4LfldMKj
-         UueA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791807886; x=1792412686;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=GJT/DkiIpi+sKlIcqZxCDbCI/Dpo/QRPmr7TBBKi1E8=;
-        b=H333uxHJHSmsIAA7Wv4EbFmAMDbUkUqolUfFoetVX5OoZp2Vu0vE4tdAzVTyxaHZAI
-         7q5qNuKt+4Pkj7Y2njT4dpDCe9LlTMdhCFyYYZKRpjsnHwCzGBVJ9qrPlFovIyKY0tdN
-         LA8e6r2acaE5YnBwvUKqOQQzOwV8MXUbaKuDUXIdPmkUQv8rZseATH9Vcj9Df4UqbDxy
-         bWf3hPVGaAEkNJE/XvmFhb8HGMhcvwJSRkacXUZlKeBucGE1CVE/Wh1AmnrDBQOMB6XA
-         im+IBEMMMdkGpl042FXHRHUXQHrd1BejeoNdguLz0ufQvzy0CnldCR2EVHmQAEtlqa1P
-         ECQQ==
-X-Gm-Message-State: AFq9FYLh+pa+cswbhUbYxeu+1896oQ4bSll5hWFBCoSmOjfCViXLU9UG
-	PT4H5/3HOcwvIKigUnrvzzlkWqvh8xeUEuAgLNBT6cFX+EkphIH1E1hV/xYhVVm/AkwsRiMgpid
-	pszl5iwx9i2tpvVdxyEN1fK0SsgsuUXS9q1vYOQqozoPsPdAnDYpQBL+pEVymGgCY93ISbBc=
-X-Gm-Gg: AYBFou0iVC2ENFHZF3eMLxVFjkD4eX2iAaA6xU8M2QAMRiO5B1mk0cYFGEYvNkV7HnU
-	O7YYMcJBdvIydvVHGJKB9l8ws3YJkizG5J4pm3gsWJwoCKYroEbrJ1/3GqxPYtASW/lcZBSrkSI
-	76F0c/6P6ppmGpkQXAPAf+xXMha2BunmpVrlmbOu3aPXaLkbUP7U9WXdq3HhySf3nd1zX6c1CmN
-	VCr+ezB+EFuuW/UwscOWBONGl2Wv0t1rzi/q8GO0gfNcqs91tLFe87b9R/YwfcmtDi9gwQ0JV5M
-	4ZQCwpQseTF94TSBh9cayc1N7vbKM+pqf+4BSUett3sFrkT/vXybsFnF4zD7shwKIMprLPY8LmL
-	zLX2ZEOXZep2eNUUgCESkx+/W00mL8XLTTf3rXPe6kMJeKQtFMgGctKA/t0JVtAhdUwUd7/gs5x
-	muTgoaM7mxYhAH
-X-Received: by 2002:a05:620a:a0c1:10b0:93e:c12c:4415 with SMTP id af79cd13be357-93ec12c4ac9mr1057654685a.81.1791807886427;
-        Mon, 12 Oct 2026 05:24:46 -0700 (PDT)
-X-Received: by 2002:a05:620a:a0c1:10b0:93e:c12c:4415 with SMTP id af79cd13be357-93ec12c4ac9mr1057652985a.81.1791807885921;
-        Mon, 12 Oct 2026 05:24:45 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3a9dcdf4545sm13169001fa.25.2026.10.12.05.24.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Oct 2026 05:24:44 -0700 (PDT)
-Date: Mon, 12 Oct 2026 15:24:41 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Cc: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH v7 12/35] drm/msm/dp: add support for sending VCPF
- packets in DP controller
-Message-ID: <rd73b5ovrmqlanussaj5cugi4fx5yzuvwam2kzcizdiusmxzib@ko5xasxrjrzx>
-References: <20260929-msm-dp-mst-v7-0-4b81473185e7@oss.qualcomm.com>
- <20260929-msm-dp-mst-v7-12-4b81473185e7@oss.qualcomm.com>
- <20260929045000.55AE01F000FF@smtp.kernel.org>
- <t3klzrnzq3oicg6djkv6ixwy6oteo6c6zvnpddbqk5pjhsodoh@qz7pcou23no7>
- <f7e864e9-8500-430c-8f02-915a162bd2a2@oss.qualcomm.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XltwQr3d"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1791807928; x=1823343928;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=lOi8ovjwK+/YhX/jV127a8KBku5C5KDTF+5HYmAaUKU=;
+  b=XltwQr3daCVdEsgTd64nZM5S2xkLkriUGHReseD07AQIrXJdBRlgggX7
+   7xoIS4AXUGc0qiX5F5QE5RK+caVA7m9wJMqgmkLqq1gEfEhtNwTqFdVAJ
+   2Z2BLrpK77dNCy22QepseNiIaKby9Q7GeGFQQK4FYs02OmRqQDza/b7FZ
+   ZYYbQptTSU1FELYMut8WEd+y9Sa+HK9YCHLD0vm98TFYxsHmotoS5kGW8
+   BEb3Hep5ZhOJgCSfOvSkexvTf3sFi3VeT/13hfe4rfs9cnFpA6A46Hdfi
+   vmhpu6qPlYaRFP4JJGshUoK13AkoRuN5vX6njZaSsvIFjbUy7DgKHImIu
+   w==;
+X-CSE-ConnectionGUID: CQ0xTELgTju6OJGFCd3ASw==
+X-CSE-MsgGUID: iPoXWsOqQd2wzsCX1Lz1ug==
+X-IronPort-AV: E=McAfee;i="6800,10657,11932"; a="523541"
+X-IronPort-AV: E=Sophos;i="6.27,153,1787036400"; 
+   d="scan'208";a="523541"
+Received: from fmviesa013.fm.intel.com ([10.60.135.153])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2026 05:25:27 -0700
+X-CSE-ConnectionGUID: vw5yvHcKSpK+gMI4cfofWA==
+X-CSE-MsgGUID: U6L5DVRIRQak/IFpoF9tqg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,153,1787036400"; 
+   d="scan'208";a="2652251"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by fmviesa013.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2026 05:25:28 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Mon, 12 Oct 2026 05:25:27 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49 via Frontend Transport; Mon, 12 Oct 2026 05:25:27 -0700
+Received: from CH5PR02CU005.outbound.protection.outlook.com (40.107.200.29) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Mon, 12 Oct 2026 05:25:26 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=mmrtRFZozCXzhfIX3e+tyMEFoRvOqOXCun+R39nILS3kb7qRs/VyzdTj3m8b1tgMqJvstxc634L+TC/FywTmVA/rpWc6xDPT785ZS6gn91gKjDgWyGbgchYRsfxGHPxQb11EvSvhuPnA3h+dQ1KsSE/9HN+gpUdHBsaKIVlHAHBqv82oJk8NIevjoGP8M7v0YZjj7M+N/IAc0ErZN93jQhGW04CSMiYRXqjIVieVbWH+65CAJ/Rhfozk6sfJ9/Bz9BBxMGP6Hj1rEAs0kdD0LPNeUCyLetRDlQOMSPN5awwHApvVMXGOqy9/fpenYE1y04bRj0gRdp7hQWxzSTOrhA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=h10eeJonfR+OijLKu+LLcR2XEL94/Y3GScSgTkgCCIc=;
+ b=uiMOGd4abYVX+MmZNU56Di52PvmWX+dR/GJktVd59RIObVYHog4nSB5zQVC4XZDXLqu8x71kDUNVuXps9vSA1fYn9bcDncbRvlLQe37+g6N2sWi9jspAYHZ24nv7nQjfgCgENr1MgVMUSrwu03SZRSNNz+5EIbcuxlKF09+rD3QDOd5b43tkEpOw79OyW00uZeqfftRtdvTKK553yx+8+ZhkSfNVQYdJt9HL7U4D5V6kiWSOr7iU7a4caf8eNkMJ4GcNaaG7zvws14Mo77RiQx4zjgyCza+Fgwm+Ju7gS4IH4rlKrkIGF2nxFUxhqSHrVTyEpYFJNg3GOdF4iMGExA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from PH8PR11MB6974.namprd11.prod.outlook.com (2603:10b6:510:225::16)
+ by PH8PR11MB6612.namprd11.prod.outlook.com (2603:10b6:510:1cf::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.472.15; Mon, 12 Oct
+ 2026 12:25:24 +0000
+Received: from PH8PR11MB6974.namprd11.prod.outlook.com
+ ([fe80::44a4:1ecf:f303:d08f]) by PH8PR11MB6974.namprd11.prod.outlook.com
+ ([fe80::44a4:1ecf:f303:d08f%5]) with mapi id 15.21.0496.015; Mon, 12 Oct 2026
+ 12:25:24 +0000
+Date: Mon, 12 Oct 2026 17:55:17 +0530
+From: "Vivekanandan, Balasubramani" <balasubramani.vivekanandan@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <intel-xe@lists.freedesktop.org>
+Subject: Re: [PATCH] drm/xe/i2c: Fix use-after-free on driver unload
+Message-ID: <aszRrQMKGNnrAqY8@bvivekan-mobl1>
+References: <20261009164241.923756-2-balasubramani.vivekanandan@intel.com>
+ <sashiko-outbox-165849@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-165849@kernel.org>
+X-ClientProxiedBy: MA5P287CA0323.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:a01:222::13) To PH8PR11MB6974.namprd11.prod.outlook.com
+ (2603:10b6:510:225::16)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f7e864e9-8500-430c-8f02-915a162bd2a2@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: QDo_yzYMfBKiSB9Dk1R94ceed2PBbrLs
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDA0OSBTYWx0ZWRfX3vQdolAQ3yXB
- 62L44+g8x8F5ZPFCVqTP3iXUbnglWSYV2FzlXZRjKaiS7vIJP3Da34+4fYDSL94SwmjFRmmA1wQ
- f1xG0URIfr68Sj+CeHIKyVCimYy0p4A=
-X-Authority-Analysis: v=2.4 cv=QtHLTlyd c=1 sm=1 tr=0 ts=6accd18f cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=VwQbUJbxAAAA:8
- a=COk6AnOGAAAA:8 a=eQdJkE7PAM9i5_T_09wA:9 a=CjuIK1q_8ugA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: QDo_yzYMfBKiSB9Dk1R94ceed2PBbrLs
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDA0OSBTYWx0ZWRfX/TwcufLJlOlh
- PCtnW8lFvNXn19yjnPau0SbYUWkmbUNAfxo64I8DEY7l/CaSKE31UR7/ARjNOr8GLSnuk+kWG1v
- F+yY+zz3zbqMeFibHdf/F9XC0p/yNeIK5/9c71Hcl85Mw+xN/Z24PYA51BPWNkAiTziq/Hdip61
- 9bZheoVvL+ESbmMLq7YWN8lz3b1vsTTNvmPaLJwsmCjIRrnq59yPGfxYYEIAYAXjNBuym3+A2kd
- w7/iGmLtCKFlvhUpp+rnhmE9ld0MBVqAvm1T/eWDkEwoCLZ3YuIZy8b9CADClmdWYuU2NxxquL8
- lU+izY1kUVYnn+7ReagMxiYgjz3laP8lUWOWQWGwBh8LSNxOuGZAYqdI8hKYKcrYtrQOOH6H6q9
- FBJCTKJRRBM9a2b7eMgldvDiU4VSGuIGsB6sDiowjzSuJgFIUx1bs9vdbEWxWMStXcPU5Z/QspW
- lNqc9UJfbqNhiehlSZw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-12_04,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 suspectscore=0 impostorscore=0 phishscore=0 adultscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610120049
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH8PR11MB6974:EE_|PH8PR11MB6612:EE_
+X-MS-Office365-Filtering-Correlation-Id: a7c96b65-a906-4dce-1f7e-08df285be3b7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|1800799024|366016|376014|6133799003|22082099003|10067099003|261009223027099003|18002099003|4143699003|260925022911599003|260925021911599003|260925021311599003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info: dEj/4ckvlbrlu09dDjyVxkwTaVExjJdfk0lj1nsyo1eE9s4/KmWaUpBKQ2becBKEv1HNcdrfyTU/A4ks2oHwQ/Ea/wIvxF/wVjX/Atrh0xuMD9y911hGLeKZUSHIx/dzcnRGqYOxq8qq3m0PTngW1z7j7WZcDXXy3BIg6bPe5zf+KcuoYbIneTdUzk4fo/QlY8RzIEktK615Sbg5PVQoXyqnHVFPCFrjfI8ZyA3OHTnfXw8qzy/qxlfBXGQs67L+34ZkFcbdX3V83Df7QyuPBWdhZik2vySfrEcb9XzFAfV0Iutn5MHznhnPztW4wN5qTrKZ7EAoIx0kmRFkhbdhzDhWq54rQMnaplbKhM2tzPdQv0sYTKvAjCbQCF+g+axh9TDtVecxkbkxFaqjbeJ7EDjzsk3Xugu4fnYN6dnkn/XNXIBjkSSBeC07md9ceP4z24sbXf35uJKQhEIqv9eGqEnOHJFo6zy1I9QxCLeqPW6ztAUCOx3PJQedrHWuzBVJGlUqOzLbN8ZC4gz+6LcqB4rc8tA0xZ3sZmF54te9n73B/K8Jj0ZtmodFORbn37JjQreXAla0KxBn9MM9VYUtkGius3Aua5XgJc/1c1KmUuc=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR11MB6974.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(6133799003)(22082099003)(10067099003)(261009223027099003)(18002099003)(4143699003)(260925022911599003)(260925021911599003)(260925021311599003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TGdkK2lWSFZXVHVaaEJtQmxmMkMzcEtEZ29YSnBkOER1SkRMb04vMmd0REVR?=
+ =?utf-8?B?QXNNZkVVSXBpY2E4U1ljbDE0aUhFam5ydis4MjBsazcxOVhOaDFaM0FuUFJJ?=
+ =?utf-8?B?WWE2T2FuWFpkMGpMSWZzZ0l0NTdpNnA2Q0N5eGxwMlZFZHJOSGZER0hVVVdr?=
+ =?utf-8?B?VWh0NlFoc3pQcXlINUtzQUpEVEJjeDF5ckJ3NUlhLyswVEoyMXJWMTUvdFF0?=
+ =?utf-8?B?MUhoaUhjVktLRDJibk5qSkRHaDVGOEFwUXZGdkpraWVzSTNPWThMakY5U3ZS?=
+ =?utf-8?B?QktvOTNUczlpUkppc3Z6S0E0b0E0dmE0SUJxRWNKdVlsVmFqa3YzSjRPV3c5?=
+ =?utf-8?B?d0dtaEtMZGg2S25rMlZFdmJkRk91a3FTWDRsRlhwSlNqZ3pNMWNlNmY5MFY5?=
+ =?utf-8?B?MmcwQjFpWTdKUGd0cjN5eGJHcHh4QUpuckxTRU1sSmlzaDZCZkxNem9mejBM?=
+ =?utf-8?B?d2ViZndvdEx3blplUXFpOTZLZGpmcFpRSlhnQVV0KzQwZ0JnT2xXcmJiVWJ3?=
+ =?utf-8?B?U1pnRlg3OWVNMC9CQjdhbUlkVUlnQ2VYSnBlWmxoaHFyeWpINm15RDFNWUdn?=
+ =?utf-8?B?dlBLT1R5b21BdzE5Y0xWNW1JY0FxbW8wdUU1U09kaHRDYUVORzFtVFpjM2xO?=
+ =?utf-8?B?NjF6cjJETDhkZ3dMUDZ2OElXNzZkQTMxbVFzQnpCVmY5R215UHdyMEU3ajJ5?=
+ =?utf-8?B?N2VQU0lZbFliK21FZFFTNVl1Nm5aeSs2dVJKbUFvb0dWdGFuZE1jNFg5WFNo?=
+ =?utf-8?B?eTVKZkRXeFBWdXdzcVFkbWwydFRZRFdveFp0LytlY3VRYkJtVzRybDhiMVht?=
+ =?utf-8?B?OG9Jd0lpOWlTc2xDZUp2VVR2TGE3V2VMWnQ1RWp2TTJmSWNoRlpaWlIyazVt?=
+ =?utf-8?B?K3V3cUxVVDY1eWRFeTRWS0NKQVl4YkZLUGc5am8zNmpXYWxpNHJ5UjUxNWdz?=
+ =?utf-8?B?RFlhbndGY0dFVnRkYVdjRWFVc0xPSVJHQ1RZcWhJNHRVbkZ1ay9QMk1RV1pV?=
+ =?utf-8?B?SDVMbldsNktQb1MrVzdaQnBNd3MybTVQd3hPSGpQdFNhZTFZbDZlaHBFVENr?=
+ =?utf-8?B?RHZxUlpUWHVEVWQ0Y2VZUm5zRmxJR21BR2xrdmFweGtXc24xYmorZjlpR2d3?=
+ =?utf-8?B?SEJtc1liSWxBTHZCOEpPSjVMWkN6TjAyTjBWb1ZZN1lwa0laMDBDZGxqWU5B?=
+ =?utf-8?B?ZVZrU3pTamJRWm5BZXFXVFB4VG9WM0gzYmphUkh5RndBWGhoWTdCdHgrY2g2?=
+ =?utf-8?B?VkpwS1g2WTBpam00Q2t5ck5FZm5oV0Z3RjY2aWRmSnorTzYvcU56bmdKWGpW?=
+ =?utf-8?B?V3ZxSGdGazdSN01OM3dLWlI2dG1BbVlraElWbDVWUW1EcVVNcUw1RVI2VFIx?=
+ =?utf-8?B?ZXZwSnBJNm1yL2VvNEd0MFZTeWlBVHFoWit6RlRJWkgxUEdtWmFtMWtsOW9x?=
+ =?utf-8?B?dGtiV2VibnpXaTNWbkZheFlYWktHdDVLTDFFenEyQTBoL3laTjgwTVA0eU94?=
+ =?utf-8?B?RVk2bUQxVHRyZVRoK1VORzZIUjFCMk1PTjB3Q3g1MUJjQnprWGtaVFJaL2hq?=
+ =?utf-8?B?ODhhclBidTA4a010ODdvTWhrZVJFSEM5MVBRY3E5bHZPZEYrOWl6czBQNHhu?=
+ =?utf-8?B?b2NueXQ4VXVPZXVIaDRRNG9rcWxhaktFeHpQS0xmV3Mwc2Q3eko5LzJ0QVRO?=
+ =?utf-8?B?Wm1kdndtdHY0MGR1dlFmZDEyRnVYRGpTbjJ3MDZaNng2MzJyUndJVi9QOWtZ?=
+ =?utf-8?B?MXFvRjJsSFdNTW5GK1NleWoxQ0QzcjUrRndHZU80Nm5Jb1pqd20xZVo2TUtZ?=
+ =?utf-8?B?U3FXL0VyejVINVhYazgyc0Foa1Z0N1p6VmwrNTZCNWZQVUtWRDhwYXVzb0pQ?=
+ =?utf-8?B?Q3hXL3JDVXRjK29Yc1BleHVORHZIeFZEUEIrUkN1QTZpTlE5UmU4bTZDTmdI?=
+ =?utf-8?B?U3QzdjU3UmxCcHpSS2ttZEFqUXdGRmpkaHB5YUlPVzB4aUh5NmdXNFdZSjFp?=
+ =?utf-8?B?aGNvNzRDZkovcjUvOUl2MW0rQlVrUGU3d25EMHIralV2SEhDeDNMenFNNWoz?=
+ =?utf-8?B?SVFmZ1cxZlN6eGdKNXl5Wnk2azE4Y0tEUHZmUTNEeE9uWlJxSjQ0SkpMKzIz?=
+ =?utf-8?B?QnJQUzJRS0dZWVNmNEdVOHFHV3g2U3Z4SWNsQ2Vpb1QwQ3RndzVONXRwaWhv?=
+ =?utf-8?B?SjVqVFdWLzJhWHVSbXhUcDlZeEdmL0sxN01XVTltVG1PWmxCcFlpVDNRNkZG?=
+ =?utf-8?B?NmdZSUttbFpXaWlmZkFqblhRZ2d0Z1h6bTJWbytSdVlVbk1nT1Z4YWRJR2Nz?=
+ =?utf-8?B?VldubEYzY3ZPR0oreFBWY1ZDejN0MjRJWjBacjJOdElsajJOQTMxQnc4clpU?=
+ =?utf-8?Q?lzSrQbIELbpKhX4T/NdFgYwz0nGkWrCsXaHJQ?=
+X-Exchange-RoutingPolicyChecked: Vt+sf6LwrWoKkhj0YlnHLgDDmHoy3kFysMSLYbSBhHLDVPYDOKTUTSE3oPaszhIg8jPp2zdl7XiwU/1i8mcI4EmJRH9WwqL4MNExcIR/5RdKxMMq3nKMvN1wckHkTFUPloLxsaUkcqlOWJ9yklvJl99AtdlJCK8bQd+pkBfJtaxJdvA2x8DV9C35+61SNRkhs0IdpkSxvOfNGa4L0gcSW8+fp+PBlyEAw28oCSdDvLWLTFkvs5L1D8SEDQUepafmQW8VOVYhTvXsvbivOHl/nEinIDQXEh5+Ax+dDJxTUESB5TiuFXFEkuMofhHW/ouZqJDOGBdHEuGDcYR9PIMOuw==
+X-MS-Exchange-CrossTenant-Network-Message-Id: a7c96b65-a906-4dce-1f7e-08df285be3b7
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB6974.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2026 12:25:24.0598
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: MCXJgzJOeVFAZyMlAtApeQiKQl4RkBCBwLSPVLJdhyBA36YXP+5rNd3Q+67eqjmx1cZ5K0NG+r78+Ng4FArbbnQtMkPg9e0TwejQ24hmfeMQSdGLV7vu+oIrlJ2PcGtb
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR11MB6612
+X-OriginatorOrg: intel.com
 
-On Mon, Oct 12, 2026 at 05:08:53PM +0800, Yongxing Mou wrote:
+On 09.10.2026 16:47, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] drm/xe/i2c: UAF on client devices when i2c_designware is unbound
+> --
 > 
+> commit acaaddc70630047a3af20f747eb4eed375a715a1
+> Author: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
 > 
-> On 10/1/2026 6:34 PM, Dmitry Baryshkov wrote:
-> > On Tue, Sep 29, 2026 at 04:49:59AM +0000, sashiko-bot@kernel.org wrote:
-> > > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > > - [Medium] drm/msm/dp: bitwise OR of STATUS5 and STATUS7 without masking in ISR
-> > > --
-> > > 
-> > > commit 987123505b6cfcc4664c72feae6b070ad91b79a8
-> > > Author: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> > > 
-> > > drm/msm/dp: add support for sending VCPF packets in DP controller
-> > > 
-> > > This commit adds support for sending VC Payload Fill (VCPF) sequences in the
-> > > MSM DP controller when stream symbols are absent. It introduces interrupt
-> > > handling for streams 0-3 using the STATUS5 and STATUS7 registers to signal
-> > > VCPF completion.
-> > > 
-> > > > diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> > > > index 9a0c9737e6d00..929e0f94f8ddb 100644
-> > > > --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> > > > +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> > > 
-> > > [ ... ]
-> > > 
-> > > > @@ -2801,6 +2877,16 @@ irqreturn_t msm_dp_ctrl_isr(struct msm_dp_ctrl *msm_dp_ctrl,
-> > > >   		ret = IRQ_HANDLED;
-> > > >   	}
-> > > > +	isr = msm_dp_ctrl_get_mst_vcpf_interrupt_0_1(ctrl);
-> > > > +	if (ctrl->num_pixel_clks > DP_STREAM_2)
-> > > > +		isr |= msm_dp_ctrl_get_mst_vcpf_interrupt_2_3(ctrl);
-> > > > +
-> > > > +	if (isr & (DP_INTR_MST_DP0_VCPF_SENT | DP_INTR_MST_DP1_VCPF_SENT |
-> > > > +		   DP_INTR_MST_DP2_VCPF_SENT | DP_INTR_MST_DP3_VCPF_SENT)) {
-> > > 
-> > > [Severity: Medium]
-> > > Does this bitwise OR of two different status registers cause false positives?
-> > > 
-> > > The msm_dp_ctrl_get_mst_vcpf_interrupt_*() functions return the unmasked
-> > > register values. Since the values from REG_DP_INTR_STATUS5 and
-> > > REG_DP_INTR_STATUS7 are ORed together here, bits from one register could
-> > > overlap with the VCPF bits checked for the other.
-> > > 
-> > > For example, if an unrelated interrupt sets bit 18 in REG_DP_INTR_STATUS5,
-> > > and it gets ORed into `isr`, the condition will see bit 18 set and assume
-> > > it's DP_INTR_MST_DP2_VCPF_SENT (which is bit 18 of REG_DP_INTR_STATUS7).
-> > > 
-> > > This could cause a spurious completion of ctrl->idle_comp during a VCPF push,
-> > > allowing the driver to proceed while the hardware is still executing the
-> > > pattern.
-> > > 
-> > > Should the return values of msm_dp_ctrl_get_mst_vcpf_interrupt_*() be masked
-> > > against their respective VCPF bits before returning, or should they be checked
-> > > independently instead of ORing them together?
-> > 
-> > Please respond to this comment.
-> > 
->  Thanks for pointing this out. The issue is valid, and we will fix it in the
-> next revision. >>
+> drm/xe/i2c: Fix use-after-free on driver unload
+> 
+> This patch fixes a use-after-free during driver unload by replacing the managed
+> software node with a static struct software_node. It also modifies
+> xe_i2c_notifier() to match against the parent device instead of using i2c->dev,
+> removing a dependency in the two-step platform device creation sequence.
+> 
+> > diff --git a/drivers/gpu/drm/xe/xe_i2c.c b/drivers/gpu/drm/xe/xe_i2c.c
+> > index f4f3819882897..f0566129b7e70 100644
+> > --- a/drivers/gpu/drm/xe/xe_i2c.c
+> > +++ b/drivers/gpu/drm/xe/xe_i2c.c
+> [ ... ]
+> > @@ -98,7 +102,7 @@ static int xe_i2c_notifier(struct notifier_block *nb, unsigned long action, void
+> >  	struct device *dev = data;
+> >  
+> >  	if (action == BUS_NOTIFY_ADD_DEVICE &&
+> > -	    adapter && dev->parent == &i2c->pdev->dev) {
+> > +	    adapter && dev->parent && dev->parent->parent == i2c->drm_dev) {
+> >  		i2c->adapter = adapter;
+> >  		schedule_work(&i2c->work);
+> >  		return NOTIFY_OK;
+> >  	}
+> >  
+> >  	return NOTIFY_DONE;
+> >  }
+> 
+> [Severity: High]
+> Does this missing BUS_NOTIFY_DEL_DEVICE handler leave dangling pointers if the
+> i2c-designware driver is manually unbound? 
+> 
+> If the adapter is unbound (e.g. via sysfs), the I2C core will unregister and
+> free all connected I2C client devices. Because this notifier doesn't handle
+> device removal, i2c->adapter and i2c->client[i] are never cleared and become
+> dangling pointers.
+> 
+> Later during module teardown, the xe_i2c_remove() devm action executes:
+> 
+> drivers/gpu/drm/xe/xe_i2c.c:xe_i2c_remove() {
+> 	...
+> 	for (i = 0; i < XE_I2C_MAX_CLIENTS; i++) {
+> 		i2c_unregister_device(i2c->client[i]);
+> 		i2c->client[i] = NULL;
+> 	}
+> 	...
+> }
+> 
+> Will this explicitly call i2c_unregister_device() on already freed client
+> pointers, causing a use-after-free crash? Additionally, if the unbind occurs
+> before xe_i2c_client_work() executes, could the workqueue dereference the freed
+> i2c->adapter pointer?
 
-Please respond to other Sashiko comments too. You got a review. It's a
-nice practice to respond to them (unless you agree to all of them and
-are going to fix all of the findings in the next revision).
+This needs to be addressed. But it is not a regression from this patch.
+It was existing earlier. Need to be fixed in a separate patch.
 
--- 
-With best wishes
-Dmitry
+Regards,
+Bala
+
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261009164241.923756-2-balasubramani.vivekanandan@intel.com?part=1
