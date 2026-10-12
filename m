@@ -1,172 +1,212 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AE9397694;
-	Mon, 12 Oct 2026 09:38:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73D274570D1;
+	Mon, 12 Oct 2026 09:39:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791797883; cv=none; b=O/pv1z3nzZTan6Xg12qWaglXqB1TQYbbqyM2C7R07VpArRawX2I0pgQ/M8Q8xXkEOdBFH6P+X5cgeM3I75Qfs+Pa59IgExDacLD2ZAUfB0Ge576tt5ElSrKifvZ5QtXoQtBBCaqiWV1BcpqLt53m7MvV9PkrNR1Yfc4VdqoYFZE=
+	t=1791797957; cv=none; b=WGo1IMTNM7AZlhG7+ax2w20HaNUcDs12beStPhaaHPs8zSLwbPQVmH+KluuM7svGFZJtlh13O5ivN30c0Kccna0rmFpt5eoPWXRctYcxFod3p7DY4Z/rC0w9Hs5Cf0jzLlZnTtTnvzpbHH8xnVXRW1mEIWPp9PlMAay/g+dhLxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791797883; c=relaxed/simple;
-	bh=/qeI+mcky6POL+dlz67XlDlJlP/m1BDsglDrCc5muCs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rZdJ1/cU5tZHt71ZVJN3b0bOIb/d2k06ZE88rbaEbGQIygwTyL3wHc3kCTwwIpMcsIYnI/ysoqVepkHIcPqQjT/Q8oxXAEYkj9s5Yiq2XRiIPBbQCnsUoz6bVS7zQHX4EV844trci0+g1gW1jr5DpOqAghyIk6expYIwqwaPJO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JVUsClFs; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JVUsClFs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2418B1F0089B;
-	Mon, 12 Oct 2026 09:37:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791797881;
-	bh=0C26uGtxqGDVfiyGSgCVeY4+duEFxvfuAlVAP2wPEcs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=JVUsClFsxTuCO4Jmd/9nLXrOUsWXPkEOYrHSWzLp38vEwjWv6WeveWcOoSAiqD+B7
-	 iX7iS8E2mZWedWmZdX7CIAkLrcRPOWzzHNhK9PviT4ai91qeuWwwwH9FH+yDgS4Hwh
-	 v0AKgicoMJ5QsJxyFN5cBUoNcPr/dx0KskoGKRVv7sD+PjZ+dC54aPEEtzPXT3PnZC
-	 hE2jzEmeYQrptnVWB6sNTpEh+EUjWI2HrWgpnoFqJ5wSn5WJKETtmGBXWr5zTQq8ve
-	 6irzeFMcu1iQTEpLcu9SeEKi23bSH4YEnt2UX60BwUeND8Pnj3R8PTJcAO5JTJWcBI
-	 O+0nwsD7XMWMg==
-X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
-From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
-To: sashiko-reviews@lists.linux.dev, iommu@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>
-Cc: kvm@vger.kernel.org, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v7 13/16] iommufd/viommu: Select vIOMMU operations
- before allocation
-In-Reply-To: <sashiko-outbox-163690@kernel.org>
-References: <20261008055955.4014342-1-aneesh.kumar@kernel.org>
- <20261008055955.4014342-14-aneesh.kumar@kernel.org>
- <sashiko-outbox-163690@kernel.org>
-Date: Mon, 12 Oct 2026 15:07:57 +0530
-Message-ID: <yq5azewj45u2.fsf@kernel.org>
+	s=arc-20240116; t=1791797957; c=relaxed/simple;
+	bh=nZndpXnXWRtkLdimM7Adpe9MgXmm/i7kOdL28BmGSe8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VVryVY1qqlMikX92zQRNLDdTPP3PMynxiahyA01CfL93LzmpULR8b2rEwxPQfqr4att2F0NI10ILHWQoKosRs/hVJR79IoXdiZDO4ExN6PnmoL7PBazAfLHcb/6MZ3lK11Jyoy/jofv+rF8bgYDR8psWY6C1pjLK82m7PpPnOQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [10.20.42.102])
+	by gateway (Coremail) with SMTP id _____8CxPtPBqsxqi+gUAA--.60747S3;
+	Mon, 12 Oct 2026 17:39:13 +0800 (CST)
+Received: from [10.20.42.102] (unknown [10.20.42.102])
+	by front1 (Coremail) with SMTP id qMiowJDxRs2+qsxqq2UrAA--.13156S2;
+	Mon, 12 Oct 2026 17:39:12 +0800 (CST)
+Message-ID: <489cbda7-ef80-4bb7-a9dc-5fb293d075eb@loongson.cn>
+Date: Mon, 12 Oct 2026 17:36:27 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 2/2] mfd: loongson-se: Fix miscellaneous issues
+To: sashiko-reviews@lists.linux.dev, Qunqin Zhao <zhaoqunqin@163.com>,
+ lee@kernel.org
+Cc: mfd@lists.linux.dev
+References: <20261008073151.15808-1-zhaoqunqin@163.com>
+ <20261008073151.15808-3-zhaoqunqin@163.com>
+ <sashiko-outbox-163780@kernel.org>
+Content-Language: en-US
+From: Qunqin Zhao <zhaoqunqin@loongson.cn>
+In-Reply-To: <sashiko-outbox-163780@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qMiowJDxRs2+qsxqq2UrAA--.13156S2
+X-CM-SenderInfo: 52kd01pxqtx0o6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoW3GFyrGw4DWw4fKryxAr45twc_yoWxWw4kpF
+	W293yYkFWDJr10kwn0qa1rZFyYv395JF9xC3Z3tFW8CFn8Cw10gry5tF1UW3y3urn8GF1j
+	qFWvga1ku3WkCagCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUyEb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+	6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+	Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
+	14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwI
+	xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
+	Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7
+	IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k2
+	6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
+	AFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1EksDUUUUU==
 
-sashiko-bot@kernel.org writes:
 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Critical] iommu: type confusion in iommufd_viommu_alloc_ioctl() parent domain
-> - [High] iommu: dead code because amd_iommu_alloc_domain_nested is not assigned
-> - [Low] iommu: missing viommu_type validation in amd_iommufd_get_viommu_ops
+在 2026/10/8 15:45, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] mfd: loongson-se: hardware wedging due to interruptible wait in engine commands
+> - [Medium] mfd: loongson-se: Bespoke parent-child accessors and inter-driver callbacks violate MFD API
 > --
 >
-> commit ea74b8b169fc38edaee15fa883c362684ddec72d
-> Author: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
-> Subject: iommufd/viommu: Select vIOMMU operations before allocation
+> commit 6e6ed05719359ac0c5fefbfd5ea2f85ac87b10f6
+> Author: Qunqin Zhao <zhaoqunqin@loongson.cn>
+> mfd: loongson-se: Fix miscellaneous issues
 >
-> This commit introduces a new get_viommu_ops callback to select vIOMMU
-> operations based on the device and requested type before allocation. It
-> moves the size and initialization callbacks into iommufd_viommu_ops and
-> converts multiple physical IOMMU drivers to use the new interface.
+> This commit addresses multiple historical driver issues discovered by the
+> Sashiko Automation system within the loongson_se_probe() initialization flow
+> and the driver's interrupt service routines. It adds bounds checks,
+> initializes completion structures, and handles errors more robustly.
 >
->> diff --git a/drivers/iommu/amd/iommufd.c b/drivers/iommu/amd/iommufd.c
->> index 52300b867c1f2..c1e132382adc7 100644
->> --- a/drivers/iommu/amd/iommufd.c
->> +++ b/drivers/iommu/amd/iommufd.c
->> @@ -32,13 +32,21 @@ void *amd_iommufd_hw_info(struct device *dev, u32 *length, enum iommu_hw_info_ty
->>  	return hwinfo;
->>  }
->>  
->> -size_t amd_iommufd_get_viommu_size(struct device *dev, enum iommu_viommu_type viommu_type)
->> +static size_t amd_iommufd_get_viommu_size(struct device *dev,
->> +		enum iommu_viommu_type viommu_type)
->>  {
->>  	return VIOMMU_STRUCT_SIZE(struct amd_iommu_viommu, core);
->>  }
->>  
->> -int amd_iommufd_viommu_init(struct iommufd_viommu *viommu, struct iommu_domain *parent,
->> -			    const struct iommu_user_data *user_data)
->> +const struct iommufd_viommu_ops *
->> +amd_iommufd_get_viommu_ops(struct device *dev, enum iommu_viommu_type viommu_type)
->> +{
->> +	return &amd_viommu_ops;
->> +}
+> Link: https://lore.kernel.org/all/20260618095949.GB1672911@google.com/ [1]
 >
-> [Severity: Low]
-> Does this function need to validate the requested viommu_type?
->
-> Currently, amd_iommufd_get_viommu_ops() unconditionally returns the ops
-> structure without checking the type argument. If a user requests an arbitrary
-> type like IOMMU_VIOMMU_TYPE_ARM_SMMUV3 on an AMD device, the core iommufd
-> framework might track the vIOMMU under a mismatched architectural type
-> identifier.
->
-> The ARM and selftest backends appear to validate this argument against their
-> supported hardware types before returning the operations.
->
+>> diff --git a/drivers/mfd/loongson-se.c b/drivers/mfd/loongson-se.c
+>> index 969378518065b..2fb5da85b2479 100644
+>> --- a/drivers/mfd/loongson-se.c
+>> +++ b/drivers/mfd/loongson-se.c
 > [ ... ]
->
+>> @@ -70,18 +101,31 @@ static int loongson_se_send_controller_cmd(struct loongson_se *se,
+>>  	if (err)
+>>  		return err;
+>>  
+>> -	return wait_for_completion_interruptible(&se->cmd_completion);
+>> +	/*
+>> +	 * Wait for the controller to complete the command.  Use a bounded
+>> +	 * non-interruptible wait: a pending signal must not leave the
+>> +	 * controller running while its DMA buffers are being torn down.
+>> +	 * One second is far more than any controller command should take,
+>> +	 * while still bounding the wait if the hardware wedges.
+>> +	 */
+>> +	if (!wait_for_completion_timeout(&se->cmd_completion, HZ))
+>> +		return -ETIMEDOUT;
+>> +
+>> +	return 0;
+>>  }
+>>  
+>>  int loongson_se_send_engine_cmd(struct loongson_se_engine *engine)
+>>  {
+>> +	int err;
+>> +
+>> +	loongson_se_reinit_completion(engine->se, &engine->completion, BIT(engine->id));
+>> +
+Hi,
 
-No vIOMMU type has been added for any IOMMU other than Arm. The
-documentation also considers IOMMU_VIOMMU_TYPE_DEFAULT reserved.
+Thanks for the review.
 
->> @@ -73,5 +79,7 @@ static void amd_iommufd_viommu_destroy(struct iommufd_viommu *viommu)
->>   * struct iommufd_viommu_ops - vIOMMU specific operations
->>   */
->>  static const struct iommufd_viommu_ops amd_viommu_ops = {
->> +	.get_viommu_size = amd_iommufd_get_viommu_size,
->> +	.viommu_init = amd_iommufd_viommu_init,
->>  	.destroy = amd_iommufd_viommu_destroy,
->>  };
+Note that both issues below are pre-existing in this driver and are not
+introduced by this series. If it's fine with you, I'd like to address them
+in a separate follow-up series to keep this one focused.
+>> [Severity: Medium]
+>> This might not be a direct bug, but does exporting this driver-level callback
+>> violate the MFD subsystem API guidelines?
+>>
+>> The MFD architectural guidelines specify that sibling or parent/child drivers
+>> should not use inter-driver callbacks. Instead of providing direct callbacks,
+>> child drivers should retrieve parent data using standard APIs and interact
+>> via standard subsystems like regmap.
+>>
+>> Could this be refactored to align with the standard subsystem APIs rather
+>> than continuing to use this architectural pattern?
+A question here: exporting driver-level symbols is fairly common across
+many MFD drivers. Is this report's guidance (that all inter-driver
+callbacks should go through standard subsystems like regmap) a hard rule,
+or a suggestion? If it is reasonable for this driver, I'm happy to refactor
+it in a follow-up series.
 >
 > [Severity: High]
-> Is the alloc_domain_nested callback missing from this operations structure?
+> This patch successfully fixes a hardware desynchronization flaw for
+> controller commands above by switching to wait_for_completion_timeout(),
+> but the engine command wait in loongson_se_send_engine_cmd() is left as
+> wait_for_completion_interruptible().
 >
-> The commit message and comments in amd_iommu_alloc_domain_nested() indicate
-> it should be assigned to the viommu operations. However, it is omitted here.
+> If wait_for_completion_interruptible() is interrupted by a signal, it returns
+> -ERESTARTSYS without stopping the hardware engine, and the hardware continues
+> performing DMA operations.
 >
-> If a user attempts to allocate an AMD nested domain using IOMMU_HWPT_ALLOC,
-> won't the core framework reject it with -EOPNOTSUPP because
-> viommu->ops->alloc_domain_nested is NULL?
+> Could this cause a race condition where an unprivileged user-space process
+> sending a TPM command receives a signal (e.g., SIGINT), aborting the wait?
+> When the TPM core releases its mutex, the application could immediately issue
+> a new command:
 >
-
-It is unclear whether nested domain support is fully integrated for AMD.
-I see amd_iommu_alloc_domain_nested(), but cannot find any callers.
-
->> diff --git a/drivers/iommu/iommufd/viommu.c b/drivers/iommu/iommufd/viommu.c
->> index f3d5b5a7eb4a4..e95138ae71d5b 100644
->> --- a/drivers/iommu/iommufd/viommu.c
->> +++ b/drivers/iommu/iommufd/viommu.c
-> [ ... ]
->> @@ -103,16 +105,12 @@ int iommufd_viommu_alloc_ioctl(struct iommufd_ucmd *ucmd)
+> drivers/char/tpm/tpm_loongson.c:tpm_loongson_send() {
+>     ...
+>     cmd->data_len = count;
+>     memcpy(tpm_engine->data_buffer, buf, count);
+>
+>     return loongson_se_send_engine_cmd(tpm_engine);
+> }
+>
+> This would overwrite engine->data_buffer and engine->command while the
+> hardware is still processing the previous request.
+>
+> Can this easily triggerable path lead to DMA stream corruption and hardware
+> wedging? Should loongson_se_send_engine_cmd() also use a bounded
+> non-interruptible wait?
+Agreed there is a real race here, but I don't think switching the engine
+wait to a bounded non-interruptible wait is the right fix. Even with a
+timeout, the hardware may still be running DMA when the wait expires, and a
+subsequent command from the application can then overwrite the buffers while
+the engine is still processing the previous request. I think the proper fix
+belongs in the TPM driver: use two separate buffers for send and receive so
+a new command cannot clobber the in-flight one. I'll address this in a
+follow-up series.
+>
+>>  	/*
+>>  	 * After engine initialization, the controller already knows
+>>  	 * where to obtain engine commands from. Now all we need to
+>>  	 * do is notify the controller that the engine needs to be started.
 >>  	 */
->>  	viommu->iommu_dev = iommu_dev;
+>> -	int err = loongson_se_poll(engine->se, BIT(engine->id));
+>> -
+>> +	err = loongson_se_poll(engine->se, BIT(engine->id));
+>>  	if (err)
+>>  		return err;
 >>  
->> -	rc = ops->viommu_init(viommu, hwpt_paging->common.domain,
->> +	rc = ops->viommu_init(viommu, idev->dev,
->> +			      hwpt_paging->common.domain,
->>  			      user_data.len ? &user_data : NULL);
+>> @@ -92,12 +136,17 @@ EXPORT_SYMBOL_GPL(loongson_se_send_engine_cmd);
+>>  struct loongson_se_engine *loongson_se_init_engine(struct device *dev, int id)
+>>  {
+>>  	struct loongson_se *se = dev_get_drvdata(dev);
+>> -	struct loongson_se_engine *engine = &se->engines[id];
+>> -	struct loongson_se_controller_cmd cmd;
+>> +	struct loongson_se_engine *engine;
+>> +	struct loongson_se_controller_cmd cmd = {0};
+> [Severity: Medium]
+> Does the use of this bespoke accessor function also conflict with the MFD API
+> guidelines?
 >
-> [Severity: Critical]
-> Is there a missing check to ensure the domain is owned by the same driver
-> before passing it to viommu_init?
+> The MFD subsystem architectural guidelines prohibit writing bespoke accessors
+> or helper functions in the parent MFD driver to pass state to child devices.
+> Child drivers should retrieve parent data directly using standard APIs like
+> dev_get_drvdata(pdev->dev.parent) and initialize their own resources.
 >
+> Could this be refactored so child devices directly handle their own
+> initialization instead of relying on the parent to export this custom helper?
 
+This follows a similar logic to the issue mentioned above.
 
-The viommu_init callback needs to perform this check. For example, the
-Arm implementation does:
+Thanks,
 
-	ret = arm_smmu_validate_parent(smmu, parent_domain);
-	if (ret)
-		return ret;
+Qunqin
 
+>> +
+>> +	/* Engine 0 does not exist and its data buffer is reused for commands */
+>> +	if (id <= 0 || id >= SE_ENGINE_MAX)
+>> +		return NULL;
+>> +
 
-
-> In iommufd_viommu_alloc_ioctl(), hwpt_paging->common.domain is passed directly
-> to the device driver's viommu_init callback. Unlike in
-> iommufd_hw_pagetable_alloc() which checks if parent->common.domain->owner
-> matches the ops, this check appears to be omitted here.
->
-> If a user allocates a paging HWPT for a mock device, and then calls
-> IOMMU_VIOMMU_ALLOC passing an AMD device ID but the mock HWPT ID, could the
-> receiving driver blindly cast the mismatched domain? For instance, AMD's
-> viommu_init uses to_pdomain() on the parent domain. This looks like it could
-> lead to type confusion and out-of-bounds accesses on the domain structure.
->
-
--aneesh
