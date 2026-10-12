@@ -1,87 +1,42 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF61443C29
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 07:25:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106C336D9EB
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 07:39:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791789912; cv=none; b=H7QY2FJDK0QinArk/3EGq6WTTvPghlSd5h/Ma3LnoWujyBqAjAaMCi3M949xqb8PbLtFVktIDr2mNQP/qQKsuh0jMetIJJoG/TJsl9CsB3sTjEVuVK4paEfSrqP5hd2xP7eoeS6T7fgroor9S76brLuLASTeuZd+N+4iaWbzN2U=
+	t=1791790799; cv=none; b=EWO+SZ0iSTgVOWRmKyCEy0VVV2QuOKKtwjl4lynMZRMui8fC7KPl6eV1BY1KHMZfzIOvUvKO1Rid0l3jQdWDTf4vm0/m/O3paqTIeFLhwZqLEIM2JEZyclHIv68bpuXsUSdMZnnQIjtkFwVWcfpSLwew5nDrLk8Km4g6Ajs3kwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791789912; c=relaxed/simple;
-	bh=hEdQqbGZT1mBs074Be6CoQP3CZwoEub5t70to2oEx74=;
+	s=arc-20240116; t=1791790799; c=relaxed/simple;
+	bh=1ROz++nxzeSJw9hJvLouiBd1sEKan4/LpKWnB4+vXNY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F8BYzf4UXI859jdfga1qpiYaYqlhgvdCRmQESqu9Rf6VLwsou7LEEKuBB6bj9eJ8qepmAo0Vxypy9aZNbpg8ReDnqQoY1cnKRjuiO/Ckgbbg1uioAIBzp18E0nmRX7VEr2puk6FEJTEZ+AE2g8wOwClf2EToa1eWB6B1IlK5Z2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MuC05lsR; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=AhopYd7w; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	 In-Reply-To:Content-Type; b=QNGIn/FG9LNPwn8V+FlkKLXAWIdPErqea6VdkI3L5u9HCRrdkt+2cjymXqnniTXvhnOikXLxU2xA/0DVaFAjwkfJn8VAOPjVp5oMJciv5njHGxSyi8xMRF+JARB5l4y6colILiauJ39beqlaXfj/Yl9alvy9WPHA/sOioh63afc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=alexander.hoelzl@gmx.net header.b=Ncejk3VI; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MuC05lsR";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="AhopYd7w"
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69C55pCe302995
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 07:25:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	hOLBtsjSgsUhKw91rtETWlZx1b7vowcBkkj5e27BbJ8=; b=MuC05lsRPOh01+Of
-	nw58vjwozJMOfVbOoe6pVTiD0TCWH0iuZbvpen7NXuZrL7n22EsvQN3h6gX5IFFo
-	fUZneOmOe/SVJ8PgXmWfN1Len3DR1DdQGrBIreOGhomF8ZZbrOufK5v23sCxP01z
-	ZB7tFZkKCeSC2unqOfZ6Xr8qAxFYFNkXEsNj3VVoWxSGZ6VvQ2ei6PbMI0n9Tmiy
-	CsmRTjxSVgg9561Ht3PHy2Q7VQmaJ1tQfXl9kRFLJHHAJ6A8uTLATzYiXDJf8WeM
-	r/Gvv8eLik1JdmRKetXtCC7NCtfRK8kzB3w+v0iqwydg+PtYFyJoXjk9L1iMsPbl
-	dChteQ==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h8j6dhj3d-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 07:25:09 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-38f97b3f853so2217610a91.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 00:25:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1791789909; x=1792394709; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=hOLBtsjSgsUhKw91rtETWlZx1b7vowcBkkj5e27BbJ8=;
-        b=AhopYd7wyYteC29ib9UFOlrHPLzpW4r2hgbwxqA/UrsIHjgwccILZ/T3Cvk49riwOG
-         OsFaMLH8wgHQHQFxTlCyuh9EoSR5MsqaSVwKpaj1OxuHFWcc+m2nu7tjVKzBgSfaHK1H
-         mmZEv5aBok6nw5jibpWcxxEe9eglmQ8MqYjsG+VJbXcnvddWm6x8jweQ0KThatmBaZxy
-         bbzFtinUkkxii5zxnPrBImGfTckfYxYAES6/HE6gIe0ud+R7Jrz5YFErh24aoH6elzLG
-         jO3I4ljWIBi0jJl6pj5VxhED3E+OKCl8Wq+cPq86GnASKPtAoVDdsvcTk+H2Zqcba6WH
-         zKLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791789909; x=1792394709;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=hOLBtsjSgsUhKw91rtETWlZx1b7vowcBkkj5e27BbJ8=;
-        b=V3oR8+BAm2cFZRVXrUg6E8/4tXR9S7k5ZoEiZeuB6L0AMnFPnkuzlnT2NbUVU7vW2v
-         seVxINytgEn8XwNEoxpT53Dq9a5eWc5uNUXN1YSDNrZurHQhqtk+ajXNUD4C0fuykRTR
-         k5f1s8yB/tvfnmBvsgUT4XiANDKq2tNyWHfV17+Ukomy1J/HxJ2hdje5vZHZh0tiRo6d
-         ZWpeMIXGaFlll/xCyoV110aIx2YUWo4USO3CUrhL4gXkrX8B52z2So/fmrtViFoLIQB5
-         tcbVg3jh3dlL6HBBOp/IIIEGbdxYAWuGxOgalXvKWwZEu99kjMii6RXbGX1UrAc2lovG
-         qsqg==
-X-Gm-Message-State: AFq9FYJsvxr1H8qDmvg7floOO1LCagUmRV7MKvsfjECHfVqVt/S9bkVN
-	LMBVebXXYyP0MlayE3qweyZGsVx0r+9ejtkfqRG1P1wITFkAyg6fGNBPhNbv0fZ2yaijUMqL/kP
-	6rwCU5z2N8cmFuxFWWDa8gmGR4Fk2urZK9DiM9y6XlHzvoe/nefjKOMiof3WRWB9MhOwOzT9fh2
-	6+VTw=
-X-Gm-Gg: AYBFou2H+d1HW6i5mUvO3ZOweDjXeFqCouVdPL7WAOhQ6h0hFNi8np6Mra7L14QnjZh
-	MqwpfZo48uLPTnYtb/vE1YZYHE6i7tJ829qKBbqKGrAVo+r9LacUBnMuRCwoUUJ9zlL/Lo6j/dP
-	LVXolPGq5vv1Qk147DyPWcu+9b+xDTGQ5fyhwxjd6SuaL6HDypJcdHMsenJ+fcGWQ65SMj1tOJ8
-	beLeyfezMBzZukllGG1N3jE2780X13V4M9kEn9IATP/1lXPhna/An9pkC7Ha9wJ8EJahjjBwuOJ
-	IK933+R6+31NND+N2tDmf0vkI3X6yZo/CBRjK2VfSU12Aabv9QvUsdtQ0KTVxodlxHXekVfI3KB
-	qECVT5PHpUq2Jm6pS+CWgbR/ro1mBB8hrzg==
-X-Received: by 2002:a17:90b:4d86:b0:3a6:d851:21e5 with SMTP id 98e67ed59e1d1-3ab3a2fe72dmr6631476a91.4.1791789908518;
-        Mon, 12 Oct 2026 00:25:08 -0700 (PDT)
-X-Received: by 2002:a17:90b:4d86:b0:3a6:d851:21e5 with SMTP id 98e67ed59e1d1-3ab3a2fe72dmr6631459a91.4.1791789907913;
-        Mon, 12 Oct 2026 00:25:07 -0700 (PDT)
-Received: from [10.152.193.243] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ab39238608sm15769738a91.17.2026.10.12.00.25.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Oct 2026 00:25:07 -0700 (PDT)
-Message-ID: <67892660-8ad2-4d53-9b87-dcd81d06e746@oss.qualcomm.com>
-Date: Mon, 12 Oct 2026 12:55:03 +0530
+	dkim=pass (2048-bit key) header.d=gmx.net header.i=alexander.hoelzl@gmx.net header.b="Ncejk3VI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
+	s=s31663417; t=1791790794; x=1792395594;
+	i=alexander.hoelzl@gmx.net;
+	bh=RN/peupoZJcjuQQgPOaj3ZYysJE4/CqRlG0N/BFljJk=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=Ncejk3VI845RwuXqoDumFguDCfZjPSHb7HzsRPYpGWoLEa0cmmWf3MWc75fB0wKo
+	 uNJ228xkUQzmoaOXjZjJVx2xBltKEP7XcKIX0Cp/z6kLL41OfXaNq7ktBH0m/ocdw
+	 REPNEFadVofe9kfnM7zIEEb0KNp/BUxnL+6TcWnY2C1BrQFXOgYs1w0HeLvvThE0Y
+	 n+i4AVuZUNjbtG4A7V2a4xq7a+JvneEeQKfmGIaLsW8mS7qAM6nmTpeZINJ1hsf96
+	 J6lwHfNklQln6Q7++8W6vd3riAQjWuCzX3xw/4D110BZ9bP4k1YEI8ozW2gp0iY/f
+	 s+Z2VqQyG9fCvboDcw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MCKBm-1xPYIy2L3a-00BvTp; Mon, 12
+ Oct 2026 09:39:54 +0200
+Message-ID: <287eb29c-6c38-4259-9e77-9a93084e59a3@gmx.net>
+Date: Mon, 12 Oct 2026 09:39:53 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -89,143 +44,194 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH ath-next 09/17] wifi: ath12k: add support for unified
- data-region memory allocation
+Subject: Re: [PATCH v3] can: j1939: fix potential race condition in BAM
+ segmentation
 To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org, devicetree@vger.kernel.org, conor+dt@kernel.org
-References: <20261008-mpp_bringup-v1-0-2c5797b5e4ac@oss.qualcomm.com>
- <20261008-mpp_bringup-v1-9-2c5797b5e4ac@oss.qualcomm.com>
- <sashiko-outbox-164021@kernel.org>
+Cc: linux-can@vger.kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>,
+ Oleksij Rempel <o.rempel@pengutronix.de>,
+ Vincent Mailhol <mailhol@kernel.org>,
+ Oliver Hartkopp <socketcan@hartkopp.net>
+References: <20261011153119.120302-1-alexander.hoelzl@gmx.net>
+ <sashiko-outbox-167306@kernel.org>
 Content-Language: en-US
-From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
-In-Reply-To: <sashiko-outbox-164021@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDAyOSBTYWx0ZWRfX6aM/9/6hsMke
- jd0DDeAAbDiZcyXuKip+69kb2yY/ZLKxZniZZHLNNj2BqbEoiQRqjxQ7K+55LVLZTWQ1euEvw3T
- auVeJIHwE5usO0sRe0fR5c/8qROoAbv8pu3GMzGY4/l4gX7BEdD7VcVAnbwfacbbCwaeom/zl2q
- hamrZZ578RoTAX2StReJq+qKTp+Ku8SWpqtPVc7f4AktO9/mu2pmtgygL1n6qYVha47WrEPGvHF
- KGLIaktvU4ZFsDI6zVa2D4PKQynH1Q9na9B9zEBsTT7k9kd48CEzxu6s/LmVDXgWgzAp7VuoUp+
- QWEh2mgtMzGqdGvLPfQo4+XXhrrIQ1nBI84qcHSlv84NTrkk9yeoSlcECFWq6f6Wl7C1g3Xy49s
- yAixXYccPIc6CNeCUPhoqK5UBMMk0AxboM1sR5gYunkDf0mXdaMwx7vWSZ3/wYb4ewaxIhVIx3C
- hJgF+zRLDricOXyY9vQ==
-X-Authority-Analysis: v=2.4 cv=aK5lOr9m c=1 sm=1 tr=0 ts=6acc8b55 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=LXZuLjuy80gFrzuPV9sA:9 a=QEXdDO2ut3YA:10
- a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-GUID: VnEAl5s6meSLg6XsEtGw38bPQhDnsT4r
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDAyOSBTYWx0ZWRfX4BIqFuYN0Lmh
- 7RyzvRAefJxulaTgeW5TGp8Zg1p3Z9eV51jpcGRP3RcQ6FsU93sA6ZL4LIdlOuvHzwaqlN327rM
- gF6qQ4a/T6DGEwYyiOdy+OP7oHaRGss=
-X-Proofpoint-ORIG-GUID: VnEAl5s6meSLg6XsEtGw38bPQhDnsT4r
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-12_02,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 bulkscore=0 impostorscore=0 spamscore=0
- suspectscore=0 lowpriorityscore=0 clxscore=1011 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610120029
+From: =?UTF-8?Q?H=C3=B6lzl=2C_Alexander?= <alexander.hoelzl@gmx.net>
+In-Reply-To: <sashiko-outbox-167306@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:Q/vGpLzvRkkUPwxtYr9fv8UWfsmo3mmVJOw0iP9EzOosZRTibM8
+ vNwAps5AuaTgbgNnvcZJAiS4cqvgn8m1fYZ2W+oKVv5sOiDqjT5tAHCX/HRTlRT855Ob8z3
+ /yqz8XSQHQ4Q7inIiMWydNzE3LyRYZi7BA1Mz9RCjBJwnAlV1W9xgVy+581SpsEHpVRvRTi
+ sw+V3E4CbbQV7meFFw+/g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:nLyRtc0bMrE=;UNBpeLTW0qn4FIxjtL8tzvzamg8
+ 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
 
 
 
-On 10/8/2026 4:05 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] wifi: ath12k: qmi target mem data-region misallocation
+Am 11.10.2026 um 17:48 schrieb sashiko-bot@kernel.org:
+> Thank you for your contribution! Sashiko AI review found 1 potential iss=
+ue(s) to consider:
+> - [High] can: j1939: session reference leak on concurrent txtimer schedu=
+ling
 > --
-> 
-> commit 889e203c71e56c91154908ff956ce486dc098cf4
-> Author: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
-> 
-> wifi: ath12k: add support for unified data-region memory allocation
-> 
-> Add support for devices such as QCN6432 that provide the M3 and
-> calibration memory through a unified data-region reserved-memory node.
-> If the data-region is found, allocate each memory chunk from it sequentially.
-> 
->> diff --git a/drivers/net/wireless/ath/ath12k/qmi.c b/drivers/net/wireless/ath/ath12k/qmi.c
->> index 817bd820623d2..cc488cfe2b2fb 100644
->> --- a/drivers/net/wireless/ath/ath12k/qmi.c
->> +++ b/drivers/net/wireless/ath/ath12k/qmi.c
-> 
+>=20
+> commit 8433158f9fc2fee1a98accad978bba5e01cfc621
+> Author: Alexander H=C3=B6lzl <alexander.hoelzl@gmx.net>
+>=20
+> can: j1939: fix potential race condition in BAM segmentation
+>=20
+> This patch addresses a race condition in segmented BAM messages by movin=
+g
+> the tx timer scheduling such that it is scheduled when the tx ack is
+> received. This aims to prevent session stalls when a BAM frame is stuck =
+and
+> fixes the behavior for consecutive data frames.
+>=20
+>> diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
+>> index 8fcfd13e5e6f8..c61a021880c01 100644
+>> --- a/net/can/j1939/transport.c
+>> +++ b/net/can/j1939/transport.c
 > [ ... ]
-> 
->> @@ -2851,6 +2871,48 @@ static int ath12k_qmi_assign_target_mem_chunk(struct ath12k_base *ab)
->>  	const char *rname;
->>  	int i, idx, ret;
->>  
->> +	ret = of_reserved_mem_region_to_resource_byname(np, "data-region", &res);
->> +	if (ret && ret != -ENODATA)
->> +		return ret;
->> +
->> +	if (!ret) {
->> +		avail_rmem_size = resource_size(&res);
->> +		for (i = 0, idx = 0; i < ab->qmi.mem_seg_count; i++) {
->> +			chunk = &ab->qmi.target_mem[i];
->> +
->> +			if (chunk->type == CALDB_MEM_REGION_TYPE) {
->> +				ret = ath12k_qmi_map_target_mem(ab, idx, 0, chunk->size,
->> +								chunk->type);
-> 
-> [Severity: High]
-> The commit message indicates that calibration memory is allocated sequentially
-> from data-region. However, paddr 0 is passed here and the region's offset is
-> not consumed. Is CALDB intended to be allocated from the data-region or
-> mapped to 0?
-> 
-
-Since ath12k does not currently support cold boot calibration, the firmware is
-expected to provide a paddr of 0 for the calibration memory in this case.
->> +				if (ret)
->> +					goto out;
->> +
->> +				idx++;
->> +				continue;
->> +			}
->> +
->> +			if (offset > avail_rmem_size ||
->> +			    avail_rmem_size - offset < chunk->size) {
->> +				ath12k_err(ab, "failed to assign mem type %u req size %u avail size %zu\n",
->> +					   chunk->type, chunk->size,
->> +					   offset > avail_rmem_size ? 0 :
->> +					   avail_rmem_size - offset);
->> +				ret = -EINVAL;
->> +				goto out;
->> +			}
->> +
->> +			ret = ath12k_qmi_map_target_mem(ab, idx, res.start + offset,
->> +							chunk->size, chunk->type);
-> 
-> [Severity: High]
-> This loop maps every chunk type (other than CALDB) sequentially into the
-> data-region without filtering by chunk type.
-> 
-> Since the commit message states the device tree continues to provide
-> separate q6-region and mlo-global-mem regions, won't this incorrectly map
-> types like HOST_DDR_REGION_TYPE and MLO_GLOBAL_MEM_REGION_TYPE into the
-> data-region instead of their dedicated DT regions?
-> 
-
-The data-region is defined for QCN6432, and MLO is not currently supported for
-QCN6432 on the AHB platform. Therefore, the firmware is not expected to request
-the MLO_GLOBAL_MEM_REGION_TYPE at present.
-HOST_DDR_REGION_TYPE is expected to be allocated from the data-region. The intention
-is to allocate firmware memory requests from the data-region, except for
-MLO_GLOBAL_MEM_REGION_TYPE, which requires separate handling.
-
-The MLO-specific memory allocation can be addressed as part of the MLO enablement series for
-AHB devices.
- >> +			if (ret)
->> +				goto out;
->> +
->> +			offset += chunk->size;
->> +			idx++;
+>> @@ -1961,6 +1974,12 @@ static void j1939_xtp_rx_dat_one(struct j1939_se=
+ssion *session,
+>>   	} else if (remain) {
+>>   		if (!session->transmission)
+>>   			j1939_tp_set_rxtimeout(session, 750);
+>> +		else if (j1939_cb_is_broadcast(&session->skcb)) {
+>> +			/* cancel the txtimer to avoid leaking session references */
+>> +			j1939_session_txtimer_cancel(session);
+>> +			j1939_tp_schedule_txtimer(session, J1939_TP_BAM_FRAME_SPACING_MS);
+>> +			j1939_tp_set_rxtimeout(session, J1939_TP_BAM_ECHO_TIMEOUT_MS);
 >> +		}
->> +
->> +		ab->qmi.mem_seg_count = idx;
->> +		return 0;
->> +	}
-> 
+>>   	} else if (do_cts_eoma) {
+>>   		j1939_tp_set_rxtimeout(session, 1250);
+>>   		if (!session->transmission)
+>>   			j1939_tp_schedule_txtimer(session, 0);
+>=20
+> [Severity: High]
+> Does this do_cts_eoma path leak session references when multiple packets=
+ are
+> processed rapidly?
+
+This review I don't really know how to react to. This is not code I have=
+=20
+modified so even if it addresses an existing issue it should not be=20
+handled in this commit.> When a receiver session processes data packets=20
+in j1939_xtp_rx_dat_one(), it
+> evaluates do_cts_eoma =3D true if pkt.rx >=3D pkt.last. Because pkt.last=
+ is
+> initialized to 0 and never updated for receiver sessions, this condition=
+ is
+> true for every data packet.
+>=20
+This is also not a correct statement as pkt.last is updated in=20
+j1939_xtp_rx_cts_one even for receiving sessions?> Consequently,=20
+j1939_tp_schedule_txtimer(session, 0) is called for every
+> packet without first cancelling any pending timer.
+>=20
+> Since j1939_tp_schedule_txtimer() unconditionally calls
+> j1939_session_get(session) before starting the timer, calling it multipl=
+e
+> times before the timer fires (e.g. in a NAPI batch) will re-arm the time=
+r
+> and leak the extra references, as the timer callback only drops a single
+> reference.
+>=20
+> Should this path also call j1939_session_txtimer_cancel(session) first,
+> similar to the new block added above for remain?
+>=20
+>>   	} else {
+>=20
+
 
