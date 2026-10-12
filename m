@@ -1,191 +1,98 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8A6472083
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 09:30:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07643A1691;
+	Mon, 12 Oct 2026 09:37:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791797415; cv=none; b=Af6A64V6iDt3Tgp9aqFDFeelnQuB4r7ADZEEcUA4TMJH/NbfcizSXv+ILKS8vzpaoUIGEXEaVTgLAIpuy+ZXaFeqpAFeLsWKaHBYlLW9Nj7GK4EQnbrEaP3F1myk3d1X1iqE/6Wb/SYNUI10sltYRi6RYv4993dPv+mTVjznzog=
+	t=1791797873; cv=none; b=kRsog6yYJUpJ4WxhRFo/VawEo03afe0VZi2U95k5s5Z4IGpT8u04dxlsivAj/tEy7pflPGXh7zurHELDZLGwWqi7g6L7+WSC5iJTACgrtDHvGZyF1Ar66+ZrZ6HMu6NkoCPgudCWQH3tFX3KADhwuwRsgmNafDlF/WuyGNGbTv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791797415; c=relaxed/simple;
-	bh=nSEDDkMvf0CoQFcM6UdUDxw2hKwIxxKtenAQDFeWcfM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f3HFuuHBFh3C+ikjDK1c18qAMqzUXmIrUGcqQO+hD69uAu+tvfAvcV1NKhrUYsvbAKy+17kqEghuthYCS8DwSYd5TDgb/ZZazdKVZ5kLzk/X1hodxHNwLvwHKpL55tpFU827zYoY55qu9+tYgevm222tdyGmLY/er4qSbBMRAq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KrLvWbo7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XULRgVKP; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1791797873; c=relaxed/simple;
+	bh=3KO2zrZQqRdD9YjsPoal8BLBSYxWEmDj4/ZBDvXs8xg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ixhxczqg65tSBAL5sFmKMCeWQ1HOkheBFWrMe5LWnUvg6gw5gjEFJNC+y8MwS+qfyvgvDNIc/f4DaHRJsJVKfnqN5ZjYe3GqrNa9pP8sKKA/s3PRonelmKaV4gN73JEVsJq0vjuCd1oTN4NHOAn8MmIG9aA4Sq15TsqqKG06e7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=X1JtDlog; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=P2uzdqiL; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KrLvWbo7";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XULRgVKP"
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69C8KcPs1592776
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 09:30:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Ct9Vpo8ZetqKaTi6+3Fm1GsfolL1MvhsjrlhMMlUG7I=; b=KrLvWbo7X5W+Zize
-	9wroe5MhzcgpwBGp9+O5CvvuWGnfSXpCBggd/q1zX/j5QxvXUHKXwVUC9ncuedvy
-	Z6r4xoxGBwKJfk0hINtl9JZg+J+3J1GgRMaDr4XuI4lM7wxWHUkL3/xXdU0wJ3ll
-	Sq7FeUS8TuSBGsQ6IWITrDRwJN5LN1JNZZdNPFxSUEE7Q1SgD0OeocfuA/SSVptC
-	4+MMF9sYcdILxyj0zvg9QfpwgBBZaFtwbP7RyTmcBOtm6Fec/Iw+U3lfgMZmiznV
-	q4mQ9CIcIDGvmvX6AJNlll/yGah7vGWlO7MgfSByeBSSCUJEbN7hb2cEaOCKxL1W
-	KqbqXQ==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h8sgu110n-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 09:30:12 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-cc4ac5feaa4so929388a12.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 02:30:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1791797411; x=1792402211; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Ct9Vpo8ZetqKaTi6+3Fm1GsfolL1MvhsjrlhMMlUG7I=;
-        b=XULRgVKPfazW4J1OCE+DK4bNFjNTu0ZiNbPu9CXtZC9v0TbU8zhSzu+UzXMRRoQ84G
-         G7gqt/DAwjbri+TRH1DOa1aIOWQMuHjLcHwQ7ADZuBnXbZ6mECsw5jYJO+5FGJc2ulsw
-         dLvSVKWcbqVvubTkhm15nKRWC/XgwTCYgUvGrMM3UDw59zayuKdpbOFlZJ9kHgPm99Rb
-         o8sefKxV6I/0lHaxQKrz9Y2/tNLFBfDYZK8itSjMW2r/rTHS90EpVfNIDIsZWW+kcjUp
-         owX8QZlU5X+RiGf93fXXnPPxG7HrKVfakD2wRUV05ZFLw8Na8g10h3Qymyb/0YrurbxS
-         w+Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791797411; x=1792402211;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Ct9Vpo8ZetqKaTi6+3Fm1GsfolL1MvhsjrlhMMlUG7I=;
-        b=NEypwpPJ7Dw2UwvWhqDzihrVjvX6mNFhl2rtpuJ+0njWslRjkebKSyxv8Yj5/cyE8J
-         zisWxkGHf2QYtVLDJtK3kssXho8Rv1uMnb3QCOx8ul8Zt+mC95DRBf8zH4/q3PwNP3z5
-         OgDLNCWHRoDksVWwDU+H1pQlE0qHDJIqo+B72AepwtkrH3wIbdk4GDpeCIEW53ZzbL1j
-         Ktmn+ARxphrBz7fKaJ2k4G0PEeGDXnhnCjVf7x7ON0CNvTZOuNFGqf0g9Y3lXtEXqgy7
-         uJvz+pP3+RmYTWyYWO6Z5qG+cHGZJ+pvL35XwwCDGpeh2oWF7OK32NJpbptA1KGXtJZL
-         5Bqg==
-X-Gm-Message-State: AFq9FYJu4p9RXnWjTpL2hS2HD7PaFdrtbcbEFrvH0l/BdZ6t8CG2an/I
-	oKk4QT/1Lpwx7PLrhUt41bb8kTend3YVu83pUCSJLT9Wo3Ql8gTdmLokMaqNekUZl6gCz0Bveaj
-	R1vr30iE/Gr60s7iia9hnEb+XdLmu2gvOLOitLyExOEG6FgmDyECM3j/ywGAoBHJPuHKgwXIDgn
-	7W/RQ=
-X-Gm-Gg: AYBFou3qmwncUwubwLGMXESBU0dU37VzsEWInaH4LovOvuLtxzW9JQxUQR6GcGIMvFp
-	+ptvRgQkL8S1bLTrDEystCcp+VVlaq5Z1d8PevUJ57evzwpfZ50cHy84dHOFaoXgZPzpTwtopcO
-	UJEDen0iPWEii69OQFHzayNJR/Z3lXiwLN90PupWI1ihSn1/PPeuTNaNKPHb9CC+05Tq3UA1Vwp
-	JQ25PeEbkT+IKWnhFzljwEVZwbXLQ4BbNelrrVAjG9qMg/c2SKMiJfHOOk14XFFZpBWK7AJtnrP
-	kbx36JPRUqUDtYOEq6TUioqdfhHvHruNOmEgGANY/jwXSgB4v5phX1Tyf6fEpjicDfo5jSOGqQy
-	bS4czfhmjz2QX3Y4pem3h6bnRL4PGzK6E/w==
-X-Received: by 2002:a17:903:240c:b0:2e8:1ec2:a8c4 with SMTP id d9443c01a7336-2e8428a2092mr67121835ad.14.1791797411292;
-        Mon, 12 Oct 2026 02:30:11 -0700 (PDT)
-X-Received: by 2002:a17:903:240c:b0:2e8:1ec2:a8c4 with SMTP id d9443c01a7336-2e8428a2092mr67121645ad.14.1791797410751;
-        Mon, 12 Oct 2026 02:30:10 -0700 (PDT)
-Received: from [10.152.193.243] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2e8422b8c6esm39087925ad.61.2026.10.12.02.30.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Oct 2026 02:30:10 -0700 (PDT)
-Message-ID: <954f820f-63f1-4148-a22e-bd85961c88fe@oss.qualcomm.com>
-Date: Mon, 12 Oct 2026 15:00:06 +0530
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="X1JtDlog";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="P2uzdqiL"
+Date: Mon, 12 Oct 2026 11:37:49 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1791797870;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=L4uJOodi+FZ4tJ1FsHukg1PiHCMKFXTy7eV6EJag2V4=;
+	b=X1JtDlogZkmamoZfmYvV8E9ukSU4SOFcioN2yIXeYYB24WJ6Yxn9tCxxAetu8UHBVLsw0e
+	gCuV276owqiyTLpF1GD+qOuB7fAgJlQszwFMkLNm1EFkPOx7ykphn1Ci13ilo8um0XYdWF
+	3sz8wmvYWptPKfSVTSVJ+4Fiet4BUDGiOnNF7puNE2qnLM5cv/Fl6cVFbsEZgUN5WMx8fz
+	if7vDJ6c8s7vaWB2Tk/auVWU0C+tdNB5NP5EQJg7V69oKFofNJn+DhdemeXIXw/BRZa2pC
+	0A5DG4oIlR661HXk4D+0y82T44vdayUfY7pRMhXtnAldLUF5zqP0hhdJAQ/7BA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1791797870;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=L4uJOodi+FZ4tJ1FsHukg1PiHCMKFXTy7eV6EJag2V4=;
+	b=P2uzdqiLqfTDgK5G0ovUosQxYIMFr7B0OsSKeZgORmENnC+i+EwPk0edwJ9QAnTiBo4lyR
+	95x+NUQJUqPVRRDQ==
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org, linux-perf-users@vger.kernel.org,
+	linux-rt-devel@lists.linux.dev
+Subject: Re: [PATCH v4] ARM, ARM64, LONGARCH, XTENSA: Delay HW BP
+ notification to task_work()
+Message-ID: <20261012093749.aPWUGJ1a@linutronix.de>
+References: <20261012090431.TF3iVDsk@linutronix.de>
+ <sashiko-outbox-167891@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH ath-next 16/17] wifi: ath12k: Resolve userPD ID per device
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
-References: <20261008-mpp_bringup-v1-0-2c5797b5e4ac@oss.qualcomm.com>
- <20261008-mpp_bringup-v1-16-2c5797b5e4ac@oss.qualcomm.com>
- <sashiko-outbox-164038@kernel.org>
-Content-Language: en-US
-From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
-In-Reply-To: <sashiko-outbox-164038@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=QdzzLcbv c=1 sm=1 tr=0 ts=6acca8a4 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=QAkOWx1MTCGqTjxtplQA:9 a=QEXdDO2ut3YA:10
- a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEyMDAzNyBTYWx0ZWRfX38IZN/mih2At
- LJqv5X1tsFyNJ9/X6MN1tPH6dzeEyHkVaN1+FpDHYCjdD+1Kh3xa5JE207Zcyg8+JdoVykJI9Ey
- gXGv4rW5hK2A1+YyOfvWyy0YN7S9cE0pnZg5aZwYsCrWicgZlAWIMsz74RDAWBsSNBXq9LcBDan
- cAceA+M8CFcd5IvyKbJaUq9yPFeHidHM43Q6sE+RkAURdg2Og/y9jnUqRm1jFojp2bvDlNALMRT
- wURqWE2bAHE2nBFakSp4Bls2e9EpxwLpEZPRMQq0Iuz2ZqNegzWc96aISeob1irbpZ2kAgfwvML
- eFpL4e0U6aAUp6cRIXlck8ayFuTzfVRzOyIZFJVhA5kv8JSOVrb8jN22lorWUobZUjBBwjMKUff
- +pClMCE7kHNFXbEzknkqmm4pqZy4jqxlEGXHqmArPoqU6YaGutK+Uem+vxpXmpX4ksQispMpU+t
- UAPYABoA2xf/vCmzTIA==
-X-Proofpoint-ORIG-GUID: WOI1gcSndIS5qHruQ2zFU-DoR44ewXsx
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEyMDAzNyBTYWx0ZWRfX/5nrXtnii1GG
- rPy60rPu3m1LwAphwA8y8FrByYvDKK8FJlnzMISuSLUipp/ChrgFJryWhrB9aZH2X2K0QD5CjNL
- pzo/Yfp21UtdxwMZLV46439G3MTGrTE=
-X-Proofpoint-GUID: WOI1gcSndIS5qHruQ2zFU-DoR44ewXsx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-12_03,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 phishscore=0 spamscore=0 suspectscore=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 malwarescore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610120037
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-167891@kernel.org>
 
+On 2026-10-12 09:18:30 [+0000], sashiko-bot@kernel.org wrote:
+> > diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
+> > --- a/include/linux/perf_event.h
+> > +++ b/include/linux/perf_event.h
+> > @@ -215,6 +215,10 @@ struct hw_perf_event {
+> >  
+> >  	/* Last sync'ed generation of filters */
+> >  	unsigned long			addr_filters_gen;
+> > +#ifdef ARCH_NEED_PERF_HW_NOTIFY
+> > +	struct callback_head		arch_hw_notif;
+> > +	int				arch_hw_notif_busy;
+> > +#endif
+> 
+> [Severity: Critical]
+> Does this cause an ABI mismatch and One Definition Rule violation across
+> the kernel?
 
+So you learned a new thing.
 
-On 10/8/2026 4:13 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] style: inefficient NULL check inside resource loop
-> --
+> The ARCH_NEED_PERF_HW_NOTIFY macro is defined in architecture-specific
+> headers like arch/arm64/include/asm/hw_breakpoint.h, but it is used here
+> in the generic include/linux/perf_event.h header.
 > 
-> commit 1ba3501c64845782d9fd054ea266b2485861b530
-> Author: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+> Because linux/perf_event.h does not universally include asm/hw_breakpoint.h,
+> translation units that include linux/perf_event.h without previously
+> including the architecture hardware breakpoint header will evaluate
+> struct hw_perf_event without these fields. Since struct hw_perf_event
+> is embedded in struct perf_event, this alters the size and member offsets
+> of struct perf_event across different subsystems.
 > 
-> wifi: ath12k: Resolve userPD ID per device
-> 
-> This commit resolves the userPD ID based on the device address rather than
-> hardcoding it during AHB probe, which is necessary for multi-PD platforms.
-> It also sets multi-PD support based on the AHB device descriptor.
-> 
->> diff --git a/drivers/net/wireless/ath/ath12k/wifi7/ahb.c b/drivers/net/wireless/ath/ath12k/wifi7/ahb.c
->> index bff48b2fe124d..86359ed1eeb2b 100644
->> --- a/drivers/net/wireless/ath/ath12k/wifi7/ahb.c
->> +++ b/drivers/net/wireless/ath/ath12k/wifi7/ahb.c
-> 
-> [ ... ]
-> 
->> @@ -43,6 +47,26 @@ static const struct of_device_id ath12k_wifi7_ahb_of_match[] = {
->>  
->>  MODULE_DEVICE_TABLE(of, ath12k_wifi7_ahb_of_match);
->>  
->> +static u32 ath12k_wifi7_ahb_get_userpd_id(struct ath12k_base *ab)
->> +{
->> +	const struct ath12k_ahb_userpd_map *map;
->> +	struct resource *res;
->> +	size_t i;
->> +
->> +	res = platform_get_resource(ab->pdev, IORESOURCE_MEM, 0);
->> +
->> +	for (i = 0; i < ARRAY_SIZE(ath12k_wifi7_ahb_userpd_map); i++) {
->> +		map = &ath12k_wifi7_ahb_userpd_map[i];
->> +
->> +		if (res) {
-> 
-> [Severity: Low]
-> This isn't a bug, but could the NULL check for res be moved outside the loop?
-> 
-> Since res is retrieved before the loop and does not change during the iteration
-> in ath12k_wifi7_ahb_get_userpd_id(), checking it on every pass is redundant.
-> Returning early if res is NULL might make this slightly cleaner.
-> 
+> Can this lead to memory corruption when perf_event objects are passed
+> between translation units with mismatched struct definitions? Should these
+> conditional fields be driven by a globally visible Kconfig symbol instead?
 
-Thanks for the suggestion. I'll move the NULL check outside the loop and return
-early if the resource is unavailable.
+This header file includes the mentioned header files defining
+ARCH_NEED_PERF_HW_NOTIFY. The condition upon which the header file is
+included does not change while the kernel is built. This could be moved
+to Kconfig but I don't see the need for this.
 
->> +			if (map->io_start == res->start)
->> +				return map->upd_id;
->> +		}
->> +	}
->> +
->> +	return 0;
->> +}
-> 
-
+Sebastian
