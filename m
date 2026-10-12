@@ -1,24 +1,32 @@
-Received: from mail-m49213.qiye.163.com (mail-m49213.qiye.163.com [45.254.49.213])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7EE29AAFA
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 06:46:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.213
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 846E63B8105
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 06:50:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791787594; cv=none; b=N+ue/wDjHcTqVGJrN3Se1NQSSZAvnVbbm/wuGW9r1VsZJBVeGfcf1k7G0yIDOm3uQKagAVWszFdpRf3bjVK6VcMYuPP9NlAHSjVYMHHZE242xhf8Yo+C/TwLI+6XPHfSdUa7DHMpSWE8FcTFOhvEzghMOKT1zgrHmCg+bHp0qa4=
+	t=1791787826; cv=none; b=C0rBbGS43pTDaISMlv1Rc4vmJkTUflOpYSu2/4/ZymPcCkoAJtDutXNbJ//cJ8QrPafqTEOxCIH1hc71M+WRKfUc9J9f8o+8A6i94SLVl5DLMKDHkjSa813pKui5Kagv61MonqJZ7cnvmUYFIeKU+JPbVd6/RrSqevNd5OTHids=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791787594; c=relaxed/simple;
-	bh=qq24gq8xOODGxEvRZIzQk13CKpmloXCbSVQeI82A8GY=;
+	s=arc-20240116; t=1791787826; c=relaxed/simple;
+	bh=egOGF2YMkY84SdQDfFHKr5RvMlJFcDVp/9ho6j2nLyM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Smq/1ZUdTZYC0sd/pUUouJI8FctlujF697dGEj0msPVE8a2vI+s84U6ysYU7BoQyYGYpsoXJZyDFc58pN9DtRXJD+5vKC6vZ8e0FMy0sXXvtr+2eEsbEzrwrCHBW2+PKlHHX2lJPQBrucl85r+fKaBcC9CMaR3+GeeawgMdIEAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easystack.cn; spf=pass smtp.mailfrom=easystack.cn; arc=none smtp.client-ip=45.254.49.213
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easystack.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=easystack.cn
-Received: from [192.168.0.59] (unknown [218.94.118.90])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 1ff4ec573;
-	Mon, 12 Oct 2026 14:41:15 +0800 (GMT+08:00)
-Message-ID: <d64b6ea9-20a6-47bf-b0ff-1f63d9c8ca20@easystack.cn>
-Date: Mon, 12 Oct 2026 14:41:14 +0800
+	 In-Reply-To:Content-Type; b=LVLnCJNL3bchr609wEbTbSGkc4+V9C8ybs+ahrUwr2ch00m6Mk2ldbrtXrDr7oU2/4JjuaUQaDxgzYeWq92wRg/bEblmQaRt2KdG981qO2E7tXP+4UBeT+Vajr6lC/iUjDTQteH7Lhur3Pwxb21SiKexmqgfdPvT5GiecwiHeXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=VMT2kDNf; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="VMT2kDNf"
+Received: from [10.26.7.43] (unknown [4.213.232.22])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 858EC20B7166;
+	Sun, 11 Oct 2026 23:50:18 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 858EC20B7166
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1791787819;
+	bh=+9iUhCEphPPg92ggxJrYeydbG+8hPQiyIc2GjHpFHhk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=VMT2kDNfdSpfat5+iShIN0Ec0JtqA/xMw+bZIn+9cvA5iQg5HzG+wMeLNBOwX1g/X
+	 0RG8g7HaaINYVaxxa1UBmq3fZZ7+YFKvkIKYwQ70TqWXPLpzC6d7uHbevsJTELBQot
+	 9bRkJ+wIJVmQw7F0CZXczCyQXvD/nGUIpQ2LVL28=
+Message-ID: <b884be07-3e76-4256-a8e6-70b8540ab492@linux.microsoft.com>
+Date: Mon, 12 Oct 2026 12:20:18 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -26,103 +34,142 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] mm/page_owner: add open-coded page_owner iterator
+Subject: Re: [PATCH net-next] net: mana: Add support to process throttled EQEs
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20261009112308.240769-1-zhen.ni@easystack.cn>
- <20261009112308.240769-4-zhen.ni@easystack.cn>
- <sashiko-outbox-165462@kernel.org>
-From: "zhen.ni" <zhen.ni@easystack.cn>
-In-Reply-To: <sashiko-outbox-165462@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0aa12ed8141e0229kunm8bb9177258ed1e
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFJQjdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlDTh1CVk4fHUJIGRhMGUoZTlYVFA
-	kWGhdVGRETFhoSFyQUDg9ZV1kYEgtZQVlJSkNVQk9VSkpDVUJLWVdZFhoPEhUdFFlBWU9LSFVCQk
-	lOS1VKS0tVSkJLQlkG
+Cc: linux-rdma@vger.kernel.org, linux-hyperv@vger.kernel.org,
+ weh@linux.microsoft.com
+References: <20261008083315.306076-1-sahilchandna@linux.microsoft.com>
+ <sashiko-outbox-165094@kernel.org>
+Content-Language: en-US
+From: Sahil Chandna <sahilchandna@linux.microsoft.com>
+In-Reply-To: <sashiko-outbox-165094@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-在 2026/10/9 20:00, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Critical] bpf: buffer overflow in bpf_page_owner_stack_snprint() due to missing __sz suffix
-> - [High] bpf: Panic DoS and OOB read via untrusted stack depot handle in bpf_page_owner_stack_snprint()
+On 09-10-2026 14:03, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] mana: RDMA queue stalls due to dropped throttle events
 > --
 > 
-> commit f5344767004d7fb48b115dd782835818e60504bc
-> Author: Zhen Ni <zhen.ni@easystack.cn>
+> commit 49b4827fa426b6ae0b8759a5984d01f44b8db5e1
+> Author: Sahil Chandna <sahilchandna@linux.microsoft.com>
 > 
-> mm/page_owner: add open-coded page_owner iterator
+> net: mana: Add support to process throttled EQEs
 > 
-> This commit adds an open-coded bpf_iter for pages eligible for page_owner
-> output. It also introduces a bpf_page_owner_stack_snprint() kfunc to render
-> the stack trace for a stack_depot handle into a caller-provided buffer.
+> This commit adds support for processing throttled EQEs of type 4 when an
+> event queue nears full capacity. The driver advertises the
+> GDMA_DRV_CAP_FLAG_1_THROTTLED_EVENT_QUEUE capability and attempts to schedule
+> the CQs associated with a throttled EQE. CQs are tracked in a new child_cq
+> array initialized when creating a CQ.
 > 
->> diff --git a/mm/page_owner_iter.c b/mm/page_owner_iter.c
->> index 33dc9dcd59dec..80693d4174077 100644
->> --- a/mm/page_owner_iter.c
->> +++ b/mm/page_owner_iter.c
-> [ ... ]
->> @@ -114,3 +115,54 @@ int page_owner_iter_register(void)
-> [ ... ]
->> +__bpf_kfunc int bpf_page_owner_stack_snprint(depot_stack_handle_t handle,
->> +					     char *buf, u32 buf_size)
+>> diff --git a/drivers/net/ethernet/microsoft/mana/gdma_main.c b/drivers/net/ethernet/microsoft/mana/gdma_main.c
+>> index ae0ed700b3b93..b8e5ad2c6d312 100644
+>> --- a/drivers/net/ethernet/microsoft/mana/gdma_main.c
+>> +++ b/drivers/net/ethernet/microsoft/mana/gdma_main.c
+>> @@ -747,6 +747,18 @@ void mana_gd_free_service_wq(struct gdma_context *gc)
+>>  	gc->service_wq = NULL;
+>>  }
+>>  
+>> +static void mana_gd_schedule_eq_cqs(struct gdma_queue *eq)
 >> +{
+>> +	struct gdma_queue *cq;
+>> +	u8 i;
+>> +
+>> +	for (i = 0; i < GDMA_EQ_MAX_CHILD_CQ; i++) {
+>> +		cq = rcu_dereference(eq->eq.child_cq[i]);
+>> +		if (cq && cq->cq.callback)
+>> +			cq->cq.callback(cq->cq.context, cq);
 > 
-> [Severity: Critical]
-> Does this kfunc bypass the verifier's bounds checking for the buffer?
-> 
-> Because the buffer size argument is named buf_size instead of using the
-> required __sz or __szk suffix (such as buf__sz), the BPF verifier treats it
-> as an independent integer scalar. It only validates that the buffer points to
-> a memory region of at least 1 byte.
-> 
-> If a BPF program passes a 1-byte valid buffer along with a maliciously large
-> buf_size, stack_depot_snprint() will blindly write past the end of the buffer,
-> which can corrupt adjacent stack, heap, or map memory.
-> 
-
-The size argument will be renamed to buf__sz.
-
 > [Severity: High]
-> Is it safe to accept an untrusted depot_stack_handle_t directly from the
-> BPF program here?
+> When a GDMA_EQE_THROTTLE event is processed, this function attempts to notify
+> the CQs. Will RDMA CQs receive these notifications?
 > 
-> Since the BPF verifier does not track scalar bounds for opaque handles, a
-> program could pass a forged handle. If depot_fetch_stack() receives an
-> invalid pool index, it unconditionally triggers a kernel warning:
+> RDMA CQs do not appear to be added to child_cq, which might cause their
+> notifications to be entirely dropped and result in RDMA queue stalls.
 > 
-> lib/stackdepot.c:depot_fetch_stack() {
-> 	if (pool_index >= pools_num_cached) {
-> 		WARN(1, "pool index %d out of bounds (%d) for stack id %08x\n",
-> 		     pool_index, pools_num_cached, handle);
-> 		return NULL;
-> 	}
-> 	...
-> }
-> 
-> This can panic systems configured with panic_on_warn=1.
-> 
-> Even if the index is valid, a maximized offset could cause the stack pointer
-> to point near the end of the pool allocation. Accessing the stack size and
-> entries would then result in an out-of-bounds read past the allocated pool.
-> This can cause a hard page fault panic, or format arbitrary kernel pointers
-> into the BPF-provided buffer, which the program could then exfiltrate.
-> 
-> Would it be better to change this kfunc to accept a trusted
-> struct page_owner_scan *scan instead of a raw scalar?
-> 
->> +	return stack_depot_snprint(handle, buf, buf_size, 0);
+>> +	}
 >> +}
 >> +
->> +__bpf_kfunc_end_defs();
 > 
 
-I will take the trusted struct page_owner_scan * returned by
-bpf_iter_page_owner_next() and use scan->po_snap.handle.
+The issue for RDMA CQ handling were highlighted in internal AI reviews
+as well and I discussed this with Wei Hu from RDMA about this.
 
+Before the patch, all throttled EQEs were getting dropped, the patch
+aims to address this gap by handling the throttled EQE which were
+reproduced in internal testing.The RDMA side throttling is going to be
+handled separately by Wei.
 
+> [ ... ]
+> 
+>> @@ -1063,17 +1080,41 @@ static void mana_gd_create_cq(const struct gdma_queue_spec *spec,
+>>  			      struct gdma_queue *queue)
+>>  {
+>>  	u32 log2_num_entries = ilog2(spec->queue_size / GDMA_CQE_SIZE);
+>> +	struct gdma_queue *parent;
+>> +	u8 i;
+>>  
+>>  	queue->head |= INITIALIZED_OWNER_BIT(log2_num_entries);
+>> -	queue->cq.parent = spec->cq.parent_eq;
+>> +	parent = spec->cq.parent_eq;
+>> +	queue->cq.parent = parent;
+>>  	queue->cq.context = spec->cq.context;
+>>  	queue->cq.callback = spec->cq.callback;
+>> +
+>> +	if (!parent)
+>> +		return;
+>> +
+>> +	/* For throttled EQE store the child CQ */
+>> +	for (i = 0; i < GDMA_EQ_MAX_CHILD_CQ; i++)
+>> +		if (!rcu_access_pointer(parent->eq.child_cq[i])) {
+>> +			rcu_assign_pointer(parent->eq.child_cq[i], queue);
+>> +			return;
+>> +		}
+> 
+> [Severity: High]
+> Does this logic handle RDMA CQs correctly?
+> 
+> RDMA CQs are created with a NULL parent_eq (via mana_ib_create_kernel_queue),
+> which causes this function to return early without populating the child_cq
+> array.
+> 
+> Additionally, if an EQ has more than GDMA_EQ_MAX_CHILD_CQ (which is 2) CQs
+> attached, which is common in RDMA workloads, this loop will silently return
+> without adding the additional CQs. Can this lead to lost completions?
+> 
+>>  }
+> 
+The handling of RDMA CQ and attaching to parent EQ will be done in
+separate series, as discussed.> [ ... ]
+> 
+>> diff --git a/include/net/mana/gdma.h b/include/net/mana/gdma.h
+>> index c610fc1067e0d..03fe9395604d6 100644
+>> --- a/include/net/mana/gdma.h
+>> +++ b/include/net/mana/gdma.h
+>> @@ -776,7 +785,8 @@ enum {
+>>  	 GDMA_DRV_CAP_FLAG_1_HANDLE_STALL_SQ_RECOVERY | \
+>>  	 GDMA_DRV_CAP_FLAG_1_EQ_MSI_UNSHARE_MULTI_VPORT | \
+>>  	 GDMA_DRV_CAP_FLAG_1_DYN_INTERRUPT_MODERATION | \
+>> -	 GDMA_DRV_CAP_FLAG_1_NON_CONTIGUOUS_BUFFERS)
+>> +	 GDMA_DRV_CAP_FLAG_1_NON_CONTIGUOUS_BUFFERS | \
+>> +	 GDMA_DRV_CAP_FLAG_1_THROTTLED_EVENT_QUEUE)
+> 
+> [Severity: High]
+> Since this patch globally advertises throttling support, the hardware might
+> send throttle events on RDMA EQs when they are heavily loaded.
+> 
+The cap bit does not enable throttle events. The device generates
+THROTTLE EQEs for any EQ created with throttle_limit, whether or not the
+driver sets cap bits so the RDMA throttle would not be a consequence of
+this patch.
 
-Thanks,
-Zhen
+> Given that RDMA EQs are initialized with a log2_throttle_limit in
+> mana_ib_create_eqs(), will enabling this capability cause RDMA workloads to
+> stall if their throttle events are dropped due to the missing child_cq mapping
+> in mana_gd_create_cq()?
+> Yes, it is possible but it is not tied to capability bits, and handling
+of RDMA throttled events is a planned task to be handled in separate
+series.
+
+Regards,
+Sahil
