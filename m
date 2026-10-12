@@ -1,67 +1,67 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B994548EC8A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 17:01:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE38F4B95C5
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 17:01:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791824497; cv=none; b=Xk9qeiHgjVnJF7j2+myMEaXOa4ukpHJxr16DR5yQcrPXF2Z1rE4U8PMpEL54d6w8R4wLzGariasVmvTZKRBNNUuF/vojRwSQjmGNMF0+Vf8nvutddZ6uw0D9N+0xYC9ajNwuxfVb1qM0HVeorp9hk2M45j2z92DI80Ns5baPodQ=
+	t=1791824522; cv=none; b=qbWhdNhVWHr1k7b0TgvDlCtdlwvP91OaAVI02FxG/HeCpkeeIRo2T3pODgOgm7jH53/FVU7SsxrMnwKPZvbJLF+d5oEj+AtKSuSOGC/voeB3Mf0/wOsFNxWXaAJXRxvqoVen3FBEbbUEMPP35fTJkX8hPA6KLd6LAHNgIxdu+OI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791824497; c=relaxed/simple;
-	bh=rZNYSXMqrn0GxiCZb4XSIaPOfilJGvalM6+xmVDt7+g=;
+	s=arc-20240116; t=1791824522; c=relaxed/simple;
+	bh=pc5hKW3Rl+BujC0Y21fvHrisrTvPnKUkQmx9hxWwQ3k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=py8h2qx2Ix2xn31CTgecmm/b/jRvKVxM5261Gs8r1oxuk0Q3PThV96p8Kz8pMsdrqE+IlYwURGtABIJ0bGDqJ7kRihxIWQjmRUAG2cWcvhrRULffly6q2HZE4SKWDZ4Le3K0Io3qTb5lglK1ZjHmZBU4jeT6xIki0k+DIIKD70w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=EsPqCn+a; arc=none smtp.client-ip=209.85.219.43
+	 In-Reply-To:Content-Type; b=FfjeclmRGqyPVrXOWAAwnY8Mcc+FUto4uioOhH2hANwc8VQdQ6fAD4rb4PK+uxCKm6ApnKvLyqEv261sVIs9xeVmmACJDqMBiyIpRg2YBB3X0cNf0kn2ZtRSQCGDbVgrudngDo20R9GDGYkb7vS6/bXfMCnv1rjoIwjDH15ydcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=JciUZQGO; arc=none smtp.client-ip=209.85.160.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="EsPqCn+a"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-9178aabd30dso22337426d6.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 10:01:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="JciUZQGO"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-5337fb43c16so23773001cf.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 10:01:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1791824494; x=1792429294; darn=lists.linux.dev;
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1791824509; x=1792429309; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=+IBoroqX0yymjVNw3YzKwxIQ75HHooWwrz0PZ7J/ZT8=;
-        b=EsPqCn+aV1vpsET0Ek4uyb9hniGjMURib3PlHbl3o9VeOfVtsV3toekYKu4s4H1Ptt
-         378XDpZvW8PYtjL9enQuIDyvLIYS6gs6hH/UFG1avurZ3budKwwO4W9FOA2BzMabiGX4
-         WFGzYMPgkZOJQYJ52ydct31BPrxRDBcEiVHmRozUot8GPwQWrObYfdnRQhbro7l7ISut
-         j1WsUC9eEW4Vig85R62m0JxBkGxEbMOBz58FtGfB6Y1fTHJPqUNJVMUPj3P6KwBar1H1
-         W1jbkOBNFDCOBqClED7i21JGH9cF3aQPoJbrA6yvrI3M8EcFM5lhtan5FmyUlMNkjtPm
-         Y95A==
+        bh=O3wiTGTDliud7Ln/IFjDUiuTj441xbuhKgaztxNYZhg=;
+        b=JciUZQGOlRucoWqnS5nzapAYHiI+X8+VkqSECLAwIlgKqWI//yHC9ejdZKEliTK/av
+         kF7XgGR1E66iOz+CaeAbWmuATGLyxd7SoPLfz94l8ob6doMuBGArVYsqmggwGJ/UZ+Ov
+         vu12ZYca47EY57x4gyiD/nDTDfMXBsFlRFX3aJAc140tJ7HbuC2SX/DlkAbvOFe4KOIF
+         8cWT2kFYQTOmKDuK4JfM9lAYLYcaleJaKfZnr/lcfsIlXUu1ebzxzbZIjnr0/M0V/lFZ
+         fzD09yU2BxKQbLNOgx1GFJAAgtj4zTVKDSLCILIyOeNJcqVRAWskVsdsnG0oXpAsNF+f
+         ZRkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791824494; x=1792429294;
+        d=1e100.net; s=20260707; t=1791824509; x=1792429309;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=+IBoroqX0yymjVNw3YzKwxIQ75HHooWwrz0PZ7J/ZT8=;
-        b=gLoRvaGZNw2X8GPxEUGkV+Ag+LRqda4r3kQ0SW946KIB0Oj7kScqRkKoHAuO+laLQL
-         SiPpbiGh1l925teW2kqcL7JDoa2FdWGHZDyrcBgIp1GiiL0mXgmm07b0nlFUf7m88gUo
-         +xML7sb/OXstqzvTZMfp5sTeRiRspKOAjR4bZPMP+Xk+kxOv3to/VUv1h1Ma+hkH9sXK
-         uEFiQH2QVj/eW97eNLCm5P/kt/AOohvkwXdE6hUUO0q1EUjoJIenQPQx0yDPUB1Xvcm0
-         cbfnB5dp77vQ0ofBH3QsmArgxk/7ZgIfe/U40F2o/p36QyocBO33Li6RQl94Ty8s4orX
-         6Fcw==
-X-Gm-Message-State: AFq9FYKWwCB0uEyDrij5l3RcZy1tjmlaSwLDbMQM9Z/QgyyPUGBaCyrZ
-	L6wokeaG/et1iXnrm0pBSLhuD+zEytqacRg0DtQnxgdDJRBSfM9Qi+bJ6Xu159UchdzqVsq2bVl
-	ADpDWSzo=
-X-Gm-Gg: AYBFou0+I1+pJygJpaCHPmqJ7t/aTLzpi84OvEa7fFVLyayikh6GHJMNEYfAN06wYvc
-	OMXtUR4K7JHs1BDvsnMrO6MCC8ISti707QAHuZKUpyZ4sDizWwMCSP6kjio7GCUQ9GEOnsj5doy
-	zA2MEqLwiocR7SzNX8yWfhogBXcjx0KOT78Ijdw8pEMLVcQDuOIw2T31cD0l/0LWUYyBNie7MU5
-	sNKlfY4Z/+qegfoEbd0wVkLr9DaV69jbt5iQGD4za1Zd5wB1j1ReUJUv3yTX5VYoIVrRyW76FdF
-	bd1lRCzH6DBuye5amJ8h3wriyS4ztY+n4IoucaAMpjVDgcOaHB1M6ipXSnQrngpsqXfrMfiIIr8
-	xxtUtURRpeUcgRQiz9PlAOihXHI/Z8X99UvID6nZUmzHWRArdXHLxta+oZFl7S/gQkJiDTGpkS+
-	NAKufVhVRgJXiUvSENivKQ+1CPPxTWwq+htNNra5ofoSmzMN9T5rRFm3Ftvj5oIAYPPZmWBP8=
-X-Received: by 2002:a05:6214:ca4:b0:91b:5d3b:4abf with SMTP id 6a1803df08f44-91b5d3b4de1mr165556636d6.52.1791824493549;
-        Mon, 12 Oct 2026 10:01:33 -0700 (PDT)
+        bh=O3wiTGTDliud7Ln/IFjDUiuTj441xbuhKgaztxNYZhg=;
+        b=SH6JEjqk3oXaj+nsN7wauccqIsLJf0tJSvBKvFhddxK9OU4E2/+Jl0QhwQWDdgpaTf
+         eBYTNCtKyg4FeKXQq1wNrsJzTPL7itl5lJhNPGTVhpSitmyI5+zBLvtb/KMo9R0mKe2Y
+         H6FZBQRL/3o8AQp4c0Wwor4rLy+Sj56NaHglpiKwVT+GjcjMrHCIsyypJGu8OXL8qDEa
+         UmEh3nNPVLGsGOTgUDGuh16DcGT1eVonrrDV4sDDbUM+zTlbBQx0QDhVL+W3GjnBOWSR
+         YXokMHdo2kWlKZSlY3cDvV1Y8bldeRJ/CM37GfrGW93m+yqy7MC/cBZcV7CZBTF+6dSE
+         zMiQ==
+X-Gm-Message-State: AFq9FYJ2OI/KLInI4Tpuw605/SBb2CbigX3fAdZPL88RyjbmCXOvMnX5
+	bDEScIl98DNxhRblNnJ0E1UGcRNanm9HOvBUqjpVOOvCu6iMh9NXoHOr6KcPx39s93y+ql4rbCK
+	zvYECElE=
+X-Gm-Gg: AYBFou2UQYCoC8rsgXEg11DwXJNslMDSVOZhawkc1MeoPubuY7q1n0eazW5pAdrIrwA
+	w4D8XW1Luar3RfeIyB9jjYqbhrXysAb324sDCk8+qhFXngzBQo7alUIQW+GMjZA+bFM50ecw2Dq
+	j3bakyfPQBS+H1l1PduNVIrV4Pqyf33QMDApFaOL44ZxtQyBFDvEd2wG9wsgSUR0dhB0d0Kkltk
+	LUdmTZJkdt8WdFcQFOH+9R8wlw0FHYEdSVGtihUoECogMoDr7mXs/OfS7tr24zOOl9k5r3hwTwC
+	ZvTNXpliZka3m3ka8BZwnrN/aCSIeKPfh/qaGE0b/wUwxoKSzfGmJvsvNLv/gibkbYv//3WlK9w
+	5jUPg6yVg8uwWWSKtu0iV84m6hW84x5SFq/jdlKFR34A/KjHmxL4DKUNGIChTRGy4KxDyXLnHP8
+	zh/dPtMXj21xiRJXBJ0bh57u8OwoHBZFUaYlCBh5RhkwNSKnRlCg+2drH4HHP0DzmaG/uJ/YKB
+X-Received: by 2002:ac8:5e4c:0:b0:535:1111:d00c with SMTP id d75a77b69052e-5359f06784bmr179957871cf.0.1791824509473;
+        Mon, 12 Oct 2026 10:01:49 -0700 (PDT)
 Received: from [172.22.22.28] ([73.62.185.64])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91b97c4a7cesm2108436d6.48.2026.10.12.10.01.32
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5359b79a2easm81681521cf.21.2026.10.12.10.01.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Oct 2026 10:01:33 -0700 (PDT)
-Message-ID: <da75c8e4-cf45-49c5-86c6-4fd8151683e2@riscstar.com>
-Date: Mon, 12 Oct 2026 12:01:32 -0500
+        Mon, 12 Oct 2026 10:01:49 -0700 (PDT)
+Message-ID: <ecab492b-dfe6-4f45-8474-cc710cfe3dff@riscstar.com>
+Date: Mon, 12 Oct 2026 12:01:48 -0500
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -69,81 +69,109 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: reset: introduce
- toshiba,tc9564-reset.yaml
+Subject: Re: [PATCH 2/2] reset: toshiba: introduce a TC9564 SoC reset driver
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+Cc: robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
 References: <20261012164354.3872326-1-elder@riscstar.com>
- <20261012164354.3872326-2-elder@riscstar.com>
- <sashiko-outbox-168431@kernel.org>
+ <20261012164354.3872326-3-elder@riscstar.com>
+ <sashiko-outbox-168439@kernel.org>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <sashiko-outbox-168431@kernel.org>
+In-Reply-To: <sashiko-outbox-168439@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/12/26 11:48 AM, sashiko-bot@kernel.org wrote:
+On 10/12/26 11:54 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Low] dt-bindings: syscon missing hardware-specific compatible in example
-> - [Low] dt-bindings: incorrect node name 'reset' instead of 'reset-controller'
+> - [High] reset: tc9564: hardware state initialized after reset controller registration
+> - [High] reset: tc9564: active consumers forcibly reset during driver removal
 > --
 > 
-> commit 86eb967be387fadac7b22aba279d8ed01983af26
+> commit 504236856b96e78b9064b4d58c3ef7ba166341e3
 > Author: Alex Elder <elder@riscstar.com>
 > 
-> dt-bindings: reset: introduce toshiba,tc9564-reset.yaml
+> reset: toshiba: introduce a TC9564 SoC reset driver
 > 
-> This commit defines the binding for the reset controller functionality present
-> in the Toshiba TC9564 SoC. It includes a new YAML schema, a header file for
-> the reset IDs, and updates the MAINTAINERS file.
+> Defines a new platform driver that manages reset signals implemented by the
+> Toshiba TC9564 SoC. The state of the resets is controlled via MMIO to a
+> region managed by a system controller.
 > 
->> diff --git a/Documentation/devicetree/bindings/reset/toshiba,tc9564-reset.yaml b/Documentation/devicetree/bindings/reset/toshiba,tc9564-reset.yaml
+>> diff --git a/drivers/reset/reset-tc9564.c b/drivers/reset/reset-tc9564.c
 >> new file mode 100644
+>> index 0000000000000..0243c2e0efd54
 >> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/reset/toshiba,tc9564-reset.yaml
+>> +++ b/drivers/reset/reset-tc9564.c
 > 
 > [ ... ]
 > 
->> +examples:
->> +  - |
->> +    #include <dt-bindings/reset/toshiba,tc9564.h>
-
-
-Unfortunately I hadn't noticed this before I sent it.
-Krzysztof pointed out in the clock series, including this
-here is unnecessary, because its contents are not actually
-used in the example.  I will remove this for version 2.
-
+>> +static int tc9564_reset_probe(struct platform_device *pdev)
+>> +{
+>> +	struct device *dev = &pdev->dev;
+>> +	struct tc9564_resets *resets;
 >> +
->> +    syscon@0 {
->> +        compatible = "syscon", "simple-mfd";
-> 
-> [Severity: Low]
-> Does this example fail dt_binding_check validation? The core syscon.yaml
-> schema typically requires a hardware-specific compatible string to precede
-> generic fallbacks like "syscon" and "simple-mfd".
-
-It did not fail dt_binding_check validation for me, however I
-am rarely surprised to discover there are errors in my bindings...
-
->> +        reg = <0x0 0x2000>;
+>> +	if (!dev_of_node(dev))
+>> +		return dev_err_probe(dev, -EINVAL, "no devicetree node\n");
 >> +
->> +        reset {
+>> +	resets = tc9564_reset_init(dev);
+>> +	if (IS_ERR(resets))
+>> +		return dev_err_probe(dev, PTR_ERR(resets),
+>> +				     "failed to initialize resets\n");
+>> +
+>> +	/* Force all resets to be initially asserted */
+>> +	tc9564_reset_assert_all(resets);
 > 
-> [Severity: Low]
-> Should this node be named "reset-controller" instead of "reset"? The core
-> reset.yaml schema enforces the ^reset-controller(@.*)?$ naming convention
-> for nodes providing resets (identified by the #reset-cells property).
+> [Severity: High]
+> Does this cause a race condition with consumer drivers?
 
-Yes it should.  I corrected this in my private DTS file but
-neglected to correct it in the binding example.  I will fix
-this when I send version 2.
+I hadn't thought of that, but yes, this is a good point.
+We would like to ensure this is the initial state, but I will
+rework this so that all defined resets will be asserted
+initially by "directly" writing registers through the regmap,
+rather than doing so using the reset API.
+
+> 
+> tc9564_reset_init() globally registers the reset controller via
+> devm_reset_controller_register(). Once registered, consumers can
+> immediately probe and deassert their reset lines.
+> 
+> If a consumer driver deasserts its reset right after registration,
+> will this subsequent call to tc9564_reset_assert_all() overwrite the
+> consumer's hardware state and unexpectedly yank running hardware back
+> into reset?
+> 
+>> +
+>> +	platform_set_drvdata(pdev, resets);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static void tc9564_reset_remove(struct platform_device *pdev)
+>> +{
+>> +	struct tc9564_resets *resets = platform_get_drvdata(pdev);
+>> +
+>> +	/* Leave all resets asserted when done */
+>> +	tc9564_reset_assert_all(resets);
+> 
+> [Severity: High]
+> Does this unexpectedly assert resets for active consumers?
+
+I suppose that's possible, and it's easy enough to simply
+omit this remove callback (and the assert-all call).
+
+I will adjust this for version 2.
 
 					-Alex
 
->> +            compatible = "toshiba,tc9564-reset";
->> +            #reset-cells = <1>;
->> +        };
->> +    };
+> 
+> Since the reset controller is registered using devm_reset_controller_register(),
+> the devres subsystem will unregister the controller only after this remove
+> callback completes.
+> 
+> This means the controller is still active and consumers might be actively
+> using their deasserted reset lines when tc9564_reset_assert_all() is called
+> here. Should the driver coordinate with consumers or unregister itself first
+> before forcing all lines into reset?
+> 
+> [ ... ]
 > 
 
