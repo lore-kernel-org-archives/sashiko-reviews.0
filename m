@@ -1,343 +1,154 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3323CEB9E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 13:56:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7033E3F5BDC
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 13:58:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.44
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791813407; cv=pass; b=gxvyLnAL8HASO043aMoyFEWoQaaFuaPoj8srO8Zsu2AMqakAbi7G5l97l3iko414ReiTgXLX2SUKtZ4HXP6F+pwf09jeqDDG4W9OdruGKW+5y8Thw7SUaRIOa81TJeQGEZWRQZJlPUJMFwH/XMylphkp60rHCsOeEk3P5M1rxtk=
+	t=1791813542; cv=pass; b=sxASXNLcXQCGGbkzneT4ifGWWYcD1v3gWORSNjjnaJRm8O7/pIVLYx9XVccLmNK9QdDylKwAWhIRz94pXsN3Aln/TgFSsAZa9CGlRDnTqSb0aWywOlCo22DS7iGq0hEtobVpY5zQy7ystppxoTeDAwk2TnVmODeAhh/PXVfxSqI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791813407; c=relaxed/simple;
-	bh=AXk7YQzZGdPsV1Y19stqR/+N6Eth+uynV8aOKDjd7qQ=;
+	s=arc-20240116; t=1791813542; c=relaxed/simple;
+	bh=LMmir0HmZ23Puyo2gqH/t9MEo+O+DOZlRlLJwQiQ8RI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pC4sJs/UbHyIx1Pe6TagDxjn/KnpeXCVeZQrTuqg407sQ6nxDXuFMZdvjqpS9/sOslCv6B7mgr40UY+4G5oJP4hd4r3o4BJp/vfjmZnlhJJEeM+aycY4cW10+B8P+5l1uxbncwRgeWcI8p8MQd1dNyrPdRjyCbOrkn8c1aqYoaM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mpn436Lr; arc=pass smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=DDYlzLa8VqIH5uU/tdICuHTu3eolmTnEyO5vng7itT0eqlvZl6z6nixZN5ws4hj7z21dIdarWN4vuAyZ7oarKRoW0hTUrHeHhMRwCcg3hs4jiRf+u0Zm6IMjmHj6VQXJ+gWcmoQObakI/oVMSCRDKtrWJcG9e0UNZVvWqN71Nec=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=rkQ3bFzE; arc=pass smtp.client-ip=74.125.82.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mpn436Lr"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-8ac9d666d4eso12294327b3.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 06:56:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791813405; cv=none;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="rkQ3bFzE"
+Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-16079d54c17so2223700c88.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 06:58:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791813538; cv=none;
         d=google.com; s=arc-20260327;
-        b=pwV9JuNjYlccSU/jOEygANsTT7xch/WDxKPaK6UvUcmJUeXBCfVU06NIIVH1N7LuAe
-         cvYf7jjqwa/Iv1H4AWnoRjFGPUBjPzKmXaX2OBjKo/mCSdZKMah77tvWYfV1vm+8YJjS
-         NNhX42/HWeZz3/gPs8Xr8ZFpQi/NM5tUv7DG+0qbyS+LsX/ZV8yfSi754Uw/dxOg5PyD
-         TC1VpKIDFupEUvaVKIya5e0n3YGyzri7bR/aCcmj/91uPKZm24Pu4B/bwm/ye+CXIk4b
-         rM6YenZlJm6JydIWkY5UyrYEVCk8Lc8u1dc3oHmDnu9DeYaUXLugfLAYYDbe9oihWVdh
-         M4Nw==
+        b=VoLq24H5a0PpsUaAnDfQ4qvV+VhRhlu4yVTyVOwTHXCG0H6C2/504Wcdsuuohm3Tke
+         ONlYZeOxDsped58fenwRuxba5nI/DLa+OrJlS3XtvclEu4o3qEf+uwkOlOrqmH+9ZaiE
+         xBlxo2UupexwsqcLnHnzPAK3oU7dzQc4FG9sCOSW0TZSpmt/uDaqf9T+aTSqTDYY/wr8
+         Tz22HnsA5+ZuozQvq1Tpj0NsbhoUnNCbHnE8bvysyv+MhyEhIBw2ucreADhme8HQb/oO
+         ILKaU02is0ryyKUYt/KOgUZd2tLTm8gvNotsmOJyUvQozouzYN4Sn8/ih19YHao9Kb2E
+         xnSQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=zUSJf6l0CJa1NnRQ8xG0jpJk1bJoecmuqzqR9c6U0fY=;
-        fh=DmtMrhf/F7icu9kWVbA50OX2nW3SfqLC9TWo/aumy44=;
-        b=BVSFLgY412ExjN5EDTbLegN1WCcVVdruTG/7n3pSwHjMI+troH7iyZ95JS9RXDk6oJ
-         +QSvMNl5ZQtkjq28939PWlxG6DDr6XoXXEhEvobx7KM1Rnu5Tfnj3JM1hKeLZH/IN6OX
-         e9ZiqtERHpQ/hqXvRvLZ5eU8bm+h///40tNT67T9tZVy0+nxBebEvDhW+KDrSa8FZtNh
-         jdUoSCShmq4cOHVbHXolrEXxIKDLAfqzI923M6qywA1EMC1R1/vFm+4bo0WETNL0Xvrz
-         MtZxprBE54W7xHNpTzQKRZ7l3ZNBgAc/c73ZfaC84WAGi3+D3gvCm/c7j/rudifx+mMT
-         qYIQ==;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=sHYRw+qOWt0iWlP6HZhTVJV9uI77ylRKv2kaKbdnTFE=;
+        fh=WIM7ERB0BbB/ChriDigA69b8uZCFpAzJm3H53mgmAFw=;
+        b=SBvqfyLDwbxMwVYTw6THfjmRTJCCzJvtIT4v4luNzLj3TldEvXzQb+qsTxZ3/au/gQ
+         l6+ChsPgk9byiSCz89pi61xqR/qzXM+PeftrmIO7Fe0AcPxQ3ui58+loxiAI7IKDOIbf
+         offxYngoYB7pPLuy0oh4ZIe+z5kZ7NJtykK3hEKx518Wa7dI9D/iO3ZkeXoahF/OVyLO
+         rTRDOaQFhYarKmZMAs2utlH6z86w92SrLBFwtdyMC7dNy0bJC/zDzVLjRPKxrIhdPCBl
+         uHcOYtFo3hJMgrHHtIBpwXF3sryyShPpvsKihvXnd76TIds3pA1P+fO6tfvxPhp+TuYb
+         I9ZA==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791813405; x=1792418205; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=zUSJf6l0CJa1NnRQ8xG0jpJk1bJoecmuqzqR9c6U0fY=;
-        b=Mpn436LrMWBdbZ/ARGrvbrimqIx1Qb1RS0mtk7E9j2/xD80utCnx7p0Qcmf0DT2wUe
-         hp8WfuO3H1zNFeWb1pgne30FPrYUYLVd5Hg6XXUJQmwZjc70FmGadIg3ZiDEU81e7TB4
-         kAnl6WW5jeGm8L+rdPiV5VTxE6fE0dzvfHnvzsIhdSRCFcFnw/iW3cDloNeTzvEN46uB
-         JyrkLMGSk+kufMTgZp+bApv9xRW3ZzHJFMcWk24P9Z89kAuHpZAMATT22RaGf0KSpHcN
-         KKGNwdChU7zAWPJbc0rl6LNEOfUDCM47RFGDF1J2sjWwqKxTDddc0/pWQ7uL8nXqtmOS
-         6AIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791813405; x=1792418205;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=google.com; s=20251104; t=1791813538; x=1792418338; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=zUSJf6l0CJa1NnRQ8xG0jpJk1bJoecmuqzqR9c6U0fY=;
-        b=cU5NFB6BLwlLpLQSbjOs/WeeubiSx+F16h1l+3duVVQkbVVQCkPX7k/vwP84eASVmT
-         Q+lqJSRmIARD9lHDBzAIDDS9gLIsWuw9DmVz1CzowUirnCKc2QlQchw5UJT7CplDg0sT
-         NHTr82PO3j7KnGPYBe6pxYhy46sSmLIQ68epSbZGxdNE/Wqe0ttzM2+2EjRnfkiiZ1UH
-         OntWQfhl1l3H29GBWREumI4K4BNktaz6lCmmecsVbwMJr6pnP9dOmt0/KFHJxpOO7BGi
-         7Iu0+PUF5S7XoazjS2XsjdsTpGvndMxn4gnUMx8rMzq0Vi1yQhSkX5J1p9WdrjeeboIT
-         IdzA==
-X-Gm-Message-State: AFq9FYKso1Plf3M79A0f1xkTJHNv4cAd2HsKDlVFLoVSeE9uIASi/r/T
-	f5JmfbwsATPeNA2P8laGyD5qeHu/jF65cXcKYmVLazJ1wHScLmH61QsdonZABPVnTXVOSsz9M7a
-	Lx7d41ZbNvT0Id4dIbq9LGSdaITkrd87c520SCO8=
-X-Gm-Gg: AYBFou09Vq1odm/F3YEe+wHUZFQ6RSkBKaH3s8yRgmQUGFnhTnwA7MUExu+Fq8fFZJw
-	OeeAhZxLwNVAO25mzo1gkpmr3tF8ew7OrLwvTO/QW5sDLkcFOGO77kffz3+rSCieycevRHimpT2
-	vHcouuFuTEs59hFZNAXyig2LkZSwZKNx/AO2697b1tPdktQ2sZedIFTaKYd2KbEvoa6py5LxYoD
-	iye24wumQ6CyF2Va5mHgKyc72s8RmMEw4COhVdd+58gTYmkmqzKQigl74ng6TZBwwky9of+0b0b
-	v9tyZyDxWrYbmPxxpdw5tGUnqycP9YDnDiuOdoFFbbQtTDR0bv/2YWzzwoUDrMByBcctzgSukEQ
-	cdekNnxdotw==
-X-Received: by 2002:a05:690c:c3b7:b0:8b0:702f:1169 with SMTP id
- 00721157ae682-8b07edb7254mr19201297b3.38.1791813403774; Mon, 12 Oct 2026
- 06:56:43 -0700 (PDT)
+        bh=sHYRw+qOWt0iWlP6HZhTVJV9uI77ylRKv2kaKbdnTFE=;
+        b=rkQ3bFzEoUoh2JONJ3oqNwaGyv6sg++EiYtLdWqd2/c2Ke5goVKptFEBbk/LR59TCf
+         ZdIRqfPuahQsIDFd31AwIyon85xZ0u/KyqlhVAGcJ/Pzo/I4tPdOLG3nwHnllTQ7SLzD
+         UW178GO8NScNLbo210MMW06YygSu70lpwZLo8kiTiMjhwX2/hOpcLnCFj3sYoGDKN8fh
+         YmbKRAp++N0fjpohiNl8RUD/Ceuk0HWNyHTf7ebhDMglWpuldOWvcUK2foTGCD8r29+m
+         Saejr6fEXWdvseaQPMyY03kQytmZTWytyNDqBvd/bok1D+6vRZ7VbZyU4UAQbVkDewsI
+         D07Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791813538; x=1792418338;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=sHYRw+qOWt0iWlP6HZhTVJV9uI77ylRKv2kaKbdnTFE=;
+        b=sE55NJ1Hz8g3sIYjAA4sCex8oNS+DHjbIaSovFOk57GOiPqK9nHqS1ptHxwm2AbmzP
+         camZPKmYUdlMI86Sx6pEf28O2NldYcfdkVzJUBmW2rtYtqDuRnFoiheh3cEwkjkLPwxB
+         O3QLl0bSWMC8c28ny53wgxaCf0Seos9/jOPcH8YlHHPUyf8v/x0LHEh2F992Tsrbxtkh
+         TVk0BGSIFu5+g7w0+94wKVfuIhNjGsFth4KUP011XibSeYVbHgqKVD0fzfoRGB3ObBch
+         mcO7Z3WxOFa3ofT2hyQMHkSLIjf0lhWpLpd2ttoNIop4k5tAowvBh1kJ+GB47UdIu4s7
+         sLwQ==
+X-Gm-Message-State: AFq9FYJI4wwe2JD93gnAKJJY0Azp/5xOKhLAUOKw7RqBX5VUrMFFwhIY
+	gD6lq9qKV2B2fv+bU2gIjkoLyVefwBBrc7KASWWGdXHyfIjiC39YxmTmj8jptcu3quiJxTI/8Q/
+	97c5VvE7OS+zX2PsZQk+3vILuHznXAfewc31LqMNPO53tdb3+2pQOYVOn
+X-Gm-Gg: AYBFou0bJvnpPnPBt6xvjDKWZNJ1S3ygZPWTngboIGHcP5eiisNJXLnCgNayB4akaeV
+	/6zHuf0Jt71UOJQ68qvrkvhfe65Iroho1KZ1IUMFCT+KYXHqi4yb9kdMEvbcqtMl7T7pFcgLTTk
+	jpPsdv4fr5Obd6C6hItq/RiluIHzen6UW3pIiVp7GAnBtaz3+B+Wsw2G93tvC1Os6cr85EZz+Ve
+	jI6XXN8hdN33LbSMm9dAZOy79jGJwnwm4hRzv6P3i5g3ktjX9g9MJrVVH8XOLJrrMhDLdD6TouH
+	eJoktXI9meHLLZmo9ZVl/ApaNgm1JG9u6yvkDGbnd9mVIEPAE6yY7A7jxpe9Wgpajhv1WRb2teh
+	Wt60hbp1c/x7RJV8YmDfnpA==
+X-Received: by 2002:a05:701b:2707:b0:144:c127:dd1b with SMTP id
+ a92af1059eb24-16a5fe7c188mr14567084c88.39.1791813537404; Mon, 12 Oct 2026
+ 06:58:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261012120438.52849-1-laoar.shao@gmail.com> <20261012120438.52849-3-laoar.shao@gmail.com>
- <sashiko-outbox-168093@kernel.org>
-In-Reply-To: <sashiko-outbox-168093@kernel.org>
-From: Yafang Shao <laoar.shao@gmail.com>
-Date: Mon, 12 Oct 2026 21:55:54 +0800
-X-Gm-Features: AclHuK_hWKERSs8YM5btLTPqoL7z0K5nG8ilNCIMeTV20zODt-3yd-QFVAUCxgQ
-Message-ID: <CALOAHbADKfZRuJD=B0bcBz_=QQ96dA=YKj_xvPZpsxF5V5A-xw@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 2/3] sched: add per-cgroup NUMA balancing mode
- selection via BPF
+References: <20261012134159.912183-1-elver@google.com> <20261012134159.912183-2-elver@google.com>
+ <sashiko-outbox-168220@kernel.org>
+In-Reply-To: <sashiko-outbox-168220@kernel.org>
+From: Marco Elver <elver@google.com>
+Date: Mon, 12 Oct 2026 15:58:19 +0200
+X-Gm-Features: AclHuK8e8JhbZ24FOiq4rpedvqYHhg1NUZ4g_NHA7tPWQ0dLtjatTIdFonOjJcI
+Message-ID: <CANpmjNPDKZKCWc0ubCGATLE05gwefwpR=n4D6E0FKAvsi9DCVw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] rust: kcsan: add KUnit test for data race detection
 To: sashiko-reviews@lists.linux.dev
-Cc: tj@kernel.org, mkoutny@suse.com, hannes@cmpxchg.org, bpf@vger.kernel.org
+Cc: gary@garyguo.net, ojeda@kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 12, 2026 at 8:25=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Mon, 12 Oct 2026 at 15:53, <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 4 potential issu=
-e(s) to consider:
-> - [High] mm: folio_can_map_prot_numa() disables NORMAL NUMA balancing on =
-top-tier nodes when TIERING is active
-> - [High] sched: AB-BA deadlock in bpf_numab_mode (rq->lock -> pi_lock)
-> - [High] bpf: missing __nullable annotation in bpf_numab_ops leads to ker=
-nel panic
-> - [Medium] sched: BPF NUMA balancing opt-in ignored by LLC scheduling
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] kcsan: tight spin loops cause soft lockups and test failure on UP
 > --
 >
-> commit 3975a69bbe7653d443a34c5ce6984dadc110d558
-> Author: Yafang Shao <laoar.shao@gmail.com>
+> commit 8ac72d90aef2333ef5245e04889d3d20386d5d6c
+> Author: Marco Elver <elver@google.com>
 >
-> sched: add per-cgroup NUMA balancing mode selection via BPF
+>     rust: kcsan: add KUnit test for data race detection
 >
-> Global NUMA balancing is all-or-nothing: kernel.numa_balancing and
-> kernel.numa_balancing_mode pick the mode for every workload. A
-> latency-sensitive service wants the scheduler's NUMA statistics but
-> not tiering's promotion machinery. This patch adds a bpf_numab_ops
-> struct_ops to allow policies attached to a cgroup to pick a mode.
+>     Add a minimal KUnit test that checks that KCSAN detects data races in
+>     Rust code: two threads concurrently increment a shared counter without
+>     synchronization, and a probe on the console tracepoint waits for the
+>     KCSAN report.
 >
-> > diff --git a/include/linux/bpf_numab.h b/include/linux/bpf_numab.h
+> > diff --git a/rust/kernel/kcsan_test.rs b/rust/kernel/kcsan_test.rs
+> > new file mode 100644
+> > index 0000000000000..5ddc9090cd6ef
 > > --- /dev/null
-> > +++ b/include/linux/bpf_numab.h
+> > +++ b/rust/kernel/kcsan_test.rs
 > [ ... ]
-> > +struct bpf_numab_ops {
-> > +     /**
-> > +      * numab_mode - request a NUMA balancing mode
-> > +      * @p: task the NUMA balancing machinery is about to act on, or N=
-ULL
-> > +      * @folio: folio whose NUMA balancing semantics are being decided=
-,
-> > +      *         or NULL
-> > +      *
-> > +      * Exactly one of @p and @folio is set. The kernel passes @p when
-> [ ... ]
-> > +      * Return: bits from enum bpf_numab_mode.  Other bits are dropped=
-.
-> > +      */
-> > +     u32 (*numab_mode)(struct task_struct *p, struct folio *folio);
->
-> [Severity: High]
-> Could the lack of a __nullable annotation here lead to a NULL pointer
-> dereference in user BPF programs?
-
-Nice catch.
-
-It should be
-u32 (*numab_mode)(struct task_struct *p__nullable, struct folio
-*folio__nullable);
-
->
-> The BPF verifier relies on the __nullable suffix on struct_ops stub
-> arguments to mark them as PTR_MAYBE_NULL. Without it, the verifier assume=
-s
-> they are strictly non-NULL and optimizes away any user-provided NULL chec=
-ks.
-> When the kernel passes a NULL argument (as designed, since only one of p =
-or
-> folio is set), the executing BPF program will crash the system.
->
-> > +};
-> [ ... ]
-> > diff --git a/include/linux/sched/numa_balancing.h b/include/linux/sched=
-/numa_balancing.h
-> > --- a/include/linux/sched/numa_balancing.h
-> > +++ b/include/linux/sched/numa_balancing.h
-> [ ... ]
-> >  static inline bool task_numab_enabled(struct task_struct *p)
-> >  {
-> > +     u32 state =3D bpf_numab_mode(p, NULL);
+> > +        let worker = ctx.clone();
+> > +        workqueue::system_unbound().try_spawn(GFP_KERNEL, move || {
+> > +            while !worker.stop.load(Relaxed) {
+> > +                racy_inc();
+> > +            }
+> > +            worker.done.complete_all();
+> > +        })?;
 > > +
-> > +     /* A policy can always opt out, regardless of the global state. *=
-/
-> > +     if (state & BPF_NUMAB_DISABLED)
-> > +             return false;
-> > +     if (state & (BPF_NUMAB_NORMAL | BPF_NUMAB_TIERING))
-> > +             return true;
-> >       return static_branch_unlikely(&sched_numa_balancing);
-> >  }
+> > +        let start = Instant::<Monotonic>::now();
+> > +        while !OBSERVED.load(Relaxed) && start.elapsed() < Delta::from_secs(10) {
+> > +            racy_inc();
+> > +        }
 >
 > [Severity: Medium]
-> Is this BPF opt-in overlooked by the LLC scheduling logic?
-
-Right, LLC scheduling was overlooked on my end. Will fix in v2.
-
+> Will these tight loops monopolize the CPU for up to 10 seconds on kernels
+> configured with CONFIG_PREEMPT_NONE=y?
 >
-> This new helper allows workloads to opt into NUMA balancing even when glo=
-bal
-> NUMA balancing is disabled. However, functions like get_pref_llc() and
-> get_scan_cpumasks() still check the global static key sched_numa_balancin=
-g
-> directly instead of using task_numab_enabled(p). For a workload that
-> explicitly opts in via BPF, its numa_preferred_nid and CPU scan masks wil=
-l
-> be skipped.
+> Neither the worker thread's loop nor the main thread's loop invokes
+> cond_resched(), cpu_relax(), or any other CPU yielding mechanism. This could
+> trigger soft lockup panics and RCU stall warnings.
 >
-> [ ... ]
-> > diff --git a/kernel/sched/bpf_numab.c b/kernel/sched/bpf_numab.c
-> > --- /dev/null
-> > +++ b/kernel/sched/bpf_numab.c
-> [ ... ]
-> > +static u32 numab_mode_stub(struct task_struct *p, struct folio *folio)
-> > +{
-> > +     return BPF_NUMAB_GLOBAL;
-> > +}
->
-> [Severity: High]
-> Should this stub function also include the __nullable suffix on its
-> arguments?
+> Furthermore, on single-CPU systems, could the main thread completely starve
+> the worker thread and prevent the data race from ever occurring?
 
-I will add the __nullable here as well.
+If CONFIG_KCSAN_INTERRUPT_WATCHER=n. But if CONFIG_KCSAN_STRICT=y
+that's not a problem. It's the same as with the C kunit test, and I'd
+rather be able to run the test and get a test failure because the
+system was misconfigured, than no indication that something is wrong.
 
->
-> As mentioned in include/linux/bpf_numab.h, omitting the __nullable suffix
-> (e.g., p__nullable) prevents the verifier from recognizing the arguments =
-as
-> optional. This leads to dead-code elimination of user NULL checks and a
-> subsequent system crash.
->
-> [ ... ]
-> > +u32 bpf_numab_mode(struct task_struct *p, struct folio *folio)
-> > +{
-> [ ... ]
-> > +     bpf_cgroup_struct_ops_foreach(ops, item, cgrp, CGROUP_NUMAB_OPS) =
-{
-> > +             if (ops->numab_mode)
-> > +                     acc |=3D ops->numab_mode(p, folio) & BPF_NUMAB_VA=
-LID_MASK;
-> > +     }
-> > +
-> > +     cgroup_bpf_put(cgrp);
->
-> [Severity: High]
-> Could dropping the cgroup BPF reference here trigger an AB-BA deadlock?
->
-> The scheduler path calls task_tick_fair() under rq->lock, which invokes
-> bpf_numab_mode(). Dropping the cgroup BPF reference here via
-> cgroup_bpf_put() can trigger queue_work() if this is the final reference
-> while the cgroup is being offlined.
->
-> queue_work() acquires pool->lock and wakes up a worker by acquiring its
-> pi_lock. Because standard wakeup paths acquire pi_lock before rq->lock, t=
-his
-> inverted rq->lock -> pool->lock -> pi_lock sequence leads to a deadlock.
->
-> Since this code is already protected by rcu_read_lock(), is the reference
-> counting strictly necessary here?
+> The Kconfig notes that 2 CPUs are required to reliably observe a data race,
+> but there does not seem to be a runtime check (such as verifying if online
+> CPUs are >= 2) to skip the test on uniprocessor systems, which would cause
+> the test to unconditionally time out and fail.
 
-Nice catch.
-
-The walk needs no refcount on cgrp->bpf: the cgroup itself is only
-freed after an RCU grace period (css_free_rwork_fn() runs through
-queue_rcu_work()), and the effective prog array is freed through
-bpf_prog_array_free() (kfree_rcu), so rcu_read_lock() keeps both
-alive for the whole walk -- the same protection bpf_tcp_ops_call()
-relies on.
-
-While removing it I noticed the copy from the memcg_ext series
-missed a warning its walk carries: it is only v1-safe because
-memory.high happens to be v2-only, and a hook on a path v1 can
-reach needs its own cgroup_on_dfl() test -- a v1 cgroup has an
-uninitialised bpf.refcnt and a NULL effective array.  The folio
-surface here can reach v1 memcgs on a hybrid system, so the walk
-now reads:
-
-    rcu_read_lock();
-
-    if (p) {
-            cgrp =3D task_dfl_cgroup(p);
-    } else {
-            memcg =3D folio_memcg(folio);
-            cgrp =3D memcg ? memcg->css.cgroup : NULL;
-    }
-
-    /* Only the default hierarchy has a cgroup_bpf. */
-    if (!cgrp || !cgroup_on_dfl(cgrp))
-            goto out;
-
-    bpf_cgroup_struct_ops_foreach(ops, item, cgrp, CGROUP_NUMAB_OPS) {
-            if (ops->numab_mode)
-                    acc |=3D ops->numab_mode(p, folio) &
-                           BPF_NUMAB_VALID_MASK;
-    }
-out:
-    rcu_read_unlock();
-    return acc;
-
->
-> > +out:
-> > +     rcu_read_unlock();
-> > +     return acc;
-> > +}
-> [ ... ]
-> > diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-> > --- a/mm/mempolicy.c
-> > +++ b/mm/mempolicy.c
-> > @@ -884,11 +884,10 @@ bool folio_can_map_prot_numa(struct folio *folio,=
- struct vm_area_struct *vma,
-> >               return false;
-> >
-> >       /*
-> > -      * Skip scanning top tier node if normal numa
-> > -      * balancing is disabled
-> > +      * Skip scanning top tier memory whose owner participates in
-> > +      * tiering: hinting faults on it would buy nothing.
-> >        */
-> > -     if (!(sysctl_numa_balancing_mode & NUMA_BALANCING_NORMAL) &&
-> > -         node_is_toptier(nid))
-> > +     if (folio_numab_mode_tiering(folio) && node_is_toptier(nid))
-> >               return false;
->
-> [Severity: High]
-> Does this unconditionally disable NORMAL NUMA balancing on top-tier nodes
-> when TIERING is active?
->
-> Previously, this skipped hinting faults on top-tier nodes only if
-> NUMA_BALANCING_NORMAL was explicitly disabled. The new logic skips top-ti=
-er
-> scanning entirely if tiering is enabled.
-
-You are right, this is a regression.
-I will fix it by introducing a new folio_numab_mode_normal().
-
->
-> When the global sysctl_numa_balancing_mode is 3 (both NORMAL and TIERING
-> enabled), folio_numab_mode_tiering() returns true. This breaks standard N=
-UMA
-> page placement optimization for fast memory on tiered systems by dropping
-> all top-tier scanning.
->
-> >
-> >       if (folio_use_access_time(folio))
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261012120438.52=
-849-1-laoar.shao@gmail.com?part=3D2
-
-
-
---=20
-Regards
-Yafang
+The race is expected to happen very quickly, unless something is wrong
+with the instrumentation. So in the common case, there's no risk of
+soft lockup or stall warning.
