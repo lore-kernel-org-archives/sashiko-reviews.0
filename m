@@ -1,173 +1,164 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010033.outbound.protection.outlook.com [40.93.198.33])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889AF372EF0
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 11:11:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.33
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791803517; cv=fail; b=VrnQNh9sviH4xf5VuqnJyL377w9hluwQaC6EJPGFwp40B/NwUXFZr/Z63D9mTjJQGnuLfLE6+krmcYQkAtqm7uz2FEYtaK8VmHGjywN+FWO9/OXoaiZcLINLSMyRH0rvyVdtJIHaKunA8qxAv8+JgbnzvXchYHLSRmBg8EqABic=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791803517; c=relaxed/simple;
-	bh=WiomK08UfiTWbQ4byKS+8BkHoL7+KAbc5JVf/s7mEj4=;
-	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=irnfdycxC033aHaxpbUZMBrkv78RxKnzorLeAxWkl6Zmp13nVE4249svtWpgyJ31AfHO6AJwXL72U9sqOoryfFyYMEkdIg4H17Gi5hdLXQtSpAMDu3pPSr+2EdJfEZ2dMcsoXr33cj1HSwpHII1ZsrGBCO8cUOxVERtOyPDtUhg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=KWbylUao; arc=fail smtp.client-ip=40.93.198.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE0043175;
+	Mon, 12 Oct 2026 11:29:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791804556; cv=none; b=eP8D41fmHKDHU3k4BeEET6Oq6rwQiO+lBMHtLu4/MXLrBpVg/oQiVfaCaY7wL9CI6dv16hSayboM2hBgFjkCJeE6PrcVPBcVKvXfys009rYwS0qVYYiOufcx64Z0fZQSPT/FJJ7O2+YC5tetT9MFGFaKRzWNSH6U/ZEdNNNXJDo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791804556; c=relaxed/simple;
+	bh=ZO3/qRJ8XAW5vKBDQW47sBH25Xfi0FHJc2hFILruI1E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qItNPnId/7WD2YGWfFox+xQMdAnOcnvNjIpUeexyxwDgacV4KIfV2lvvyLigylnrNOUst3p6biukDa9PiGLNGVbJrX3gaJsqVW5GUsxLax6J2+ulA0KXgRN7t9NrfZTY9zEKdk/pGHqCFCEm3QFTsnFNVYM8PFYicN+iUxrTnEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWpZN6xN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="KWbylUao"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ChQNj4EdGdMv1ddyGyardemD57+aWihgZPjL3Pu1z4XIjOOxwwg07E92bLzScQY+FdsFk6xv4l/6XbMbIUzabBDvWZCBUlWgw9ZG4xbTE/1aICxaT+QtDWKz+1cuCTPK/zytVT4CQgbAIkxadIaPww8dhy4yOvdGSdoaoWtm6v49Mv4aDJrkRCC5TyeH1jyTCHLlcJg7qprcWoL2YCuyLttNIAgvQMqJZzid5d91yosctoB0prRQPQLWxXjOEOMsCj1P/J/KHc4gBWLyZK7ZghvXLgLfJwWvCYinjBTdYLCu5i7sxIkJ1ZMdZ4H/hcAQ1QgyIR2IAf/VMAbe2yzR/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ObGmyymNZ4U6QgqTMeyWMz14ynVLZ4cDvdnmdu83gVE=;
- b=gIj2cYms8UyrGcqKpUzCqkDNuiGqyFzefkSbYzL8xcKOzx4KuwjzEmJFUBkXBTTG82eZWIkdoZFDiktSCJ+DjUg00CTUc9U+8z6QT3FSMA7z8RJQ3Pl1EmazMOq3xiD69p00tjmpwLLkj2HhUhiOgU/lc291f9/XJXcc4ek9pioqfupFsVq7IRFojD4dWcn4s0CYWOYPdz603Rma2OgahxFFiPy/N/Y5YDfaCSV69IxhBXPNd6lV0b16j00rtqbjctqARBtufZ0ugCocnmy0OyPwi6xnCDQRM2Kp5asxpe5ArMu6cXorzYJIKW3sFYSEoua31hn/DziBADwgdHDT9A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ObGmyymNZ4U6QgqTMeyWMz14ynVLZ4cDvdnmdu83gVE=;
- b=KWbylUaoOtQcnWN5r7yGxGeXgwkdSoY6Cud0PXGNJEL/XcD022NidV0s4VRHz52uavrGuf4hiftI2MfZag2WvJ3uUCf7zxi2JbDp/L84lQCbdGBiVs85//IWu3njjnJ/OvZ32wN1u5hFLorKx3pUZnxcVz3NFOalCXb1BMImqzE=
-Received: from CH0PR03CA0052.namprd03.prod.outlook.com (2603:10b6:610:b3::27)
- by LV8PR12MB9335.namprd12.prod.outlook.com (2603:10b6:408:1fc::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.21; Mon, 12 Oct
- 2026 11:10:10 +0000
-Received: from DM2PEPF00003FC4.namprd04.prod.outlook.com
- (2603:10b6:610:b3:cafe::1d) by CH0PR03CA0052.outlook.office365.com
- (2603:10b6:610:b3::27) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.496.5 via Frontend Transport; Mon, 12
- Oct 2026 11:10:09 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- DM2PEPF00003FC4.mail.protection.outlook.com (10.167.23.22) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.522.6 via Frontend Transport; Mon, 12 Oct 2026 11:10:09 +0000
-Received: from [192.168.1.3] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Mon, 12 Oct
- 2026 06:10:02 -0500
-Message-ID: <8685c8b9-620a-46a5-b06c-a3eec6635c5e@amd.com>
-Date: Mon, 12 Oct 2026 16:39:54 +0530
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWpZN6xN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AC91F0089C;
+	Mon, 12 Oct 2026 11:29:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1791804554;
+	bh=MyQJDlMEh2BzZoV7sZh4ZKAA/Oy8fdURAy82AESJ0iE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=dWpZN6xNbtw4XXAk4T3LT1lV+e16wresSobW9KcBU/+zqDtkLfjkD3LFDv/Vc51bJ
+	 Jr3K7uThOboCkYF3+ksXx2Yov9VtPRU6kOjpUd8JDHRnbis+bZaU+R9YcUKr08c97U
+	 bDAoK49kXMJYqEipWt0WSiKsFKxjEjrb8vziwnUs=
+Date: Mon, 12 Oct 2026 13:29:20 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: jirislaby@kernel.org, deller@gmx.de,
+	James.Bottomley@hansenpartnership.com, simona@ffwll.ch,
+	linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+	linux-fbdev@vger.kernel.org, linux-parisc@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH 2/2] vt: Distinguish between blanking and VESA blank mode
+ in con_blank
+Message-ID: <2026101255-extending-concrete-2fc7@gregkh>
+References: <20261012094114.38549-1-tzimmermann@suse.de>
+ <20261012094114.38549-3-tzimmermann@suse.de>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-CC: <sarunkod@amd.com>, <kvm@vger.kernel.org>
-Subject: Re: [PATCH v4 1/2] x86/uaccess: Extend CMPXCHG user helpers to
- 128-bit operands
-To: <sashiko-reviews@lists.linux.dev>
-References: <20260908074739.10748-1-sarunkod@amd.com>
- <20260908074739.10748-2-sarunkod@amd.com>
- <20260908081928.2D7D21F00A3A@smtp.kernel.org>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-Content-Language: en-US
-In-Reply-To: <20260908081928.2D7D21F00A3A@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM2PEPF00003FC4:EE_|LV8PR12MB9335:EE_
-X-MS-Office365-Filtering-Correlation-Id: b6d0f2be-b5cc-4028-e851-08df2851613d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|23010399003|376014|36860700016|82310400026|56012099006|11063799006|5023799004|4143699003|261009223027099003|10067099003|22082099003|18002099003|6133799003|3023799007;
-X-Microsoft-Antispam-Message-Info:
-	6sB59jSYDOhn8prW1z1jx5V3uU6fa10tfworbCTuxpxaoySDyaFrCAIg6TDiFF9tq9nEXPV9RGdWNWNGX7fXt5PpWng0AxtM1GImxYJXINE3mCYoE5dTOn9cLM2qybao0AzheUogfxK8T6sszYpdoBqcg4nzpsNC+Lpr6psstIo5OiBpaCSm+qOTu6esycjNujl10zfcmFwIbmGkzsjiM+lYVUWWniVv2Hh2LK+cDSMkZdkPCyphQ2RQNeXtdCB0vLI6eIHUgXnYsBUynwRkJd0t9nujdSLsmrQNzHwSLoejLd8oazww9Wc3JtNc6jq8FOvsph8MUw4KL+WwjI6bTpEXwmk2PCEs/cP2xLB/d5yGRiwNl798e00VqKshftH2GbiCCAIYQYp19N1WvvSlI5Re4D9aH4o/R8iOS8C/bHHN0Y89FF610gDEtbV6AKMK8gUUkOK+xO1FblVd27zIs3aj+FGK/PcbbiDVxiPxaaZhM9p57sPKtVLQ2ZnK0226+XzCNolnlTt3V19eA4bnYE4mpBu/9tkDs8L5BcziL3O5jrnpf7W6/VUmhpQyOngWyUkCqAUrpkK3PXeddPC2D4oAdJlCmaq4ArfVzR1NivK0OD6voLrba1kw2f8ChHwidINDnQwsinC1RR1aXPa7VaokWi9F8tSuzdY4HRpIS+Bnnwe9YNzx01vfPsl6Zih1
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(376014)(36860700016)(82310400026)(56012099006)(11063799006)(5023799004)(4143699003)(261009223027099003)(10067099003)(22082099003)(18002099003)(6133799003)(3023799007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	vJMkAWro3e+jmfk5s7AWIs9f99eBuz53VcwZq/17O4bfNncSb3WMwe7U2hyMn5OcZepkPklnWmz/hkpriiGOhK/Bl+iNPSS0HAO46/1fFdgHp1MxLM0ZnMjujTC/YMIYilLbGkYOiIuvn3oIcf9KXfEzkcen3fo7du8Y4Eqiw4jFV1US2bSZpKqZJtlIUIDtjvYXDEdWPpDf3mCFmoH1CgYtiRAChwZz0Map0Tg6Wo1THNnfX7rEVHo54OjyMmJxzMGp6d9tWs1cd7HnZx6hZItGuVnyo2v8CTc1gkAx+VqcQX08jt+EykkL0mTItfT/x1b7I+yxNvfJZccDSbzax7DYbEu3vQ943i+EYWIguBnXN3p0SW7gXgv7DFhgwMC8DuOkWPdnTwCAGFsp2+qtRxJ+GHO3h8UxCr7cn2Rhi6AkgX+PglGnNbDL52ln8k9z
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2026 11:10:09.8125
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b6d0f2be-b5cc-4028-e851-08df2851613d
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DM2PEPF00003FC4.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9335
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261012094114.38549-3-tzimmermann@suse.de>
 
+On Mon, Oct 12, 2026 at 11:27:39AM +0200, Thomas Zimmermann wrote:
+> The con_blank callback in struct consw encodes blanking and display
+> blank mode in a single parameter named blank. Its semantics equal
+> the FB_BLANK constants from the fbdev subsystems. Yet it is of type
+> enum vesa_blank_mode, which describes VESA DPMS levels of the attached
+> monitor. Although related, this is something else.
+> 
+> For this reason, calls to con_blank fill the blank parameter with
+> values that appear non-sensical at first. For example, to blank the
+> console, but keep the monitor on, vt passes VESA_VSYNC_SUSPEND (eq '1').
+> This is because consoles interpret '1' as pixels-off-but-monitor-on.
+> The constant VESA_VSYNC_SUSPEND actually means monitor-vsync-off. And
+> the argument used for monitor-vsync-off is VESA_VSYNC_SUSPEND+1.
+> 
+> To fix this by splitting blank into two parameters, blank and blank_mode.
+> The new blank is a boolean to control the display blanking. If cleared,
+> the console creates display output, if set the console does not. The
+> new parameter blank_mode specifies the VESA blank mode for the monitor
+> and equals VESA DPMS levels. If blank is set, blank_mode gives a hint
+> to the console, on how to set up the signal to the monitor.
+> 
+> The actual interpretation is up to the console. Newportcon and sticon
+> only handle blank or not-blank. Fbcon and vgacon implement blank plus
+> the VESA DPMS handling. The implementation of both consoles is again
+> somewhat confusing because types and values do not match. Clean up
+> both with the new blank/blank_mode logic.
+> 
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
+>  drivers/tty/vt/vt.c                 | 11 ++++----
+>  drivers/video/console/dummycon.c    |  4 +--
+>  drivers/video/console/newport_con.c |  4 +--
+>  drivers/video/console/sticon.c      |  4 +--
+>  drivers/video/console/vgacon.c      | 44 +++++++++++++++--------------
+>  drivers/video/fbdev/core/fbcon.c    | 19 +++++++------
+>  include/linux/console.h             |  9 ++++--
+>  7 files changed, 51 insertions(+), 44 deletions(-)
+> 
+> diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
+> index 9e7b4419b422..f762c965351d 100644
+> --- a/drivers/tty/vt/vt.c
+> +++ b/drivers/tty/vt/vt.c
+> @@ -4671,7 +4671,7 @@ void do_blank_screen(bool entering_gfx)
+>  	if (console_blanked) {
+>  		if (blank_state == blank_vesa_wait) {
+>  			blank_state = blank_off;
+> -			vc->vc_sw->con_blank(vc, vesa_blank_mode + 1, false);
+> +			vc->vc_sw->con_blank(vc, true, vesa_blank_mode, false);
 
+I hate adding random bool to function parameters as now you need to go
+look them up to try to determine exactly what happened.
 
-On 9/8/2026 1:49 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] When the host CPU lacks CX16 support, the 16-byte fallback returns a mismatch without updating the old value pointer, violating the cmpxchg API contract and causing infinite retry loops.
-> --
-> 
-> commit 5f4dae7c1efaa8622accc402392f8d8a532481b4
-> Author: Sairaj Kodilkar <sarunkod@amd.com>
-> 
-> x86/uaccess: Extend CMPXCHG user helpers to 128-bit operands
-> 
-> This commit extends the user CMPXCHG helpers to support 16-byte operands
-> on x86-64 using cmpxchg16b. KVM uses this to atomically emulate guest
-> cmpxchg16b on guest RAM mapped via userspace addresses.
-> 
->> diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
->> --- a/arch/x86/include/asm/uaccess.h
->> +++ b/arch/x86/include/asm/uaccess.h
-> [ ... ]
->> @@ -580,6 +634,14 @@ extern void __try_cmpxchg_user_wrong_size(void);
->>  	case 8:	__ret = __try_cmpxchg64_user_asm((__force u64 *)(_ptr), (_oldp),\
->>  						 (_nval), _label);		\
->>  		break;								\
->> +	case 16:								\
->> +		if (boot_cpu_has(X86_FEATURE_CX16))				\
->> +			__ret = __try_cmpxchg128_user_asm(			\
->> +					(__force u128 *)(_ptr),			\
->> +					(_oldp), (_nval), _label);		\
->> +		else								\
->> +			__ret = 0;						\
-> 
-> [Severity: High]
-> Does setting __ret to 0 here on hardware without CX16 support violate the
-> cmpxchg API contract?
-> 
-> When boot_cpu_has(X86_FEATURE_CX16) is false, it returns 0 (mismatch) but
-> fails to fetch the actual memory value and write it into _oldp.
-> 
-> If a guest executes cmpxchg16b on an MMIO address (forcing KVM emulation),
-> KVM's emulator decodes it and invokes unsafe_try_cmpxchg_user. Because
-> it returns 0 without updating the pointer, x86_emulate_insn skips
-> writeback_registers() and returns EMULATION_OK. 
-> 
-> The guest registers remain unchanged while EFLAGS shows failure (ZF=0).
-> 
-> Can this cause a denial of service where the guest endlessly retries the
-> instruction with the same stale registers?
-> 
-> Should this instead use goto _label; to cleanly abort the unsupported
-> operation, which would cause KVM to properly abort the emulation?
-> 
+Why not just 2 different callbacks:
 
-The caller __try_cmpxchg_user() flips the return value, so 0 means
-failure from unsafe_try_cmpxchg_user(). Hence writeback_registers() will
-fail with X86EMUL_CMPXCHG_FAILED which will halt the guest.
+> -static bool vgacon_blank(struct vc_data *c, enum vesa_blank_mode blank,
+> +static bool vgacon_blank(struct vc_data *c, bool blank, enum vesa_blank_mode blank_mode,
+>  			 bool mode_switch)
+>  {
+> -	switch (blank) {
+> -	case VESA_NO_BLANKING:		/* Unblank */
+> +	if (blank) {
+> +		switch (blank_mode) {
+> +		case VESA_NO_BLANKING:	/* Normal blanking */
+> +			if (!mode_switch && vga_video_type == VIDEO_TYPE_VGAC) {
+> +				vga_pal_blank(&vgastate);
+> +				vga_palette_blanked = true;
+> +				return 0;
+> +			}
+> +			vgacon_set_origin(c);
+> +			scr_memsetw((void *)vga_vram_base, BLANK,
+> +				    c->vc_screenbuf_size);
+> +			if (mode_switch)
+> +				vga_is_gfx = true;
+> +			return 1;
+> +		default:		/* VESA blanking */
+> +			if (vga_video_type == VIDEO_TYPE_VGAC) {
+> +				vga_vesa_blank(&vgastate, blank_mode);
+> +				vga_vesa_blanked = blank_mode;
+> +			}
+> +			return 0;
+> +		}
+> +	} else { /* Unblank */
+>  		if (vga_vesa_blanked) {
+>  			vga_vesa_unblank(&vgastate);
+>  			vga_vesa_blanked = VESA_NO_BLANKING;
+> @@ -814,24 +834,6 @@ static bool vgacon_blank(struct vc_data *c, enum vesa_blank_mode blank,
+>  		vga_is_gfx = false;
+>  		/* Tell console.c that it has to restore the screen itself */
+>  		return 1;
+> -	case VESA_VSYNC_SUSPEND:	/* Normal blanking */
+> -		if (!mode_switch && vga_video_type == VIDEO_TYPE_VGAC) {
+> -			vga_pal_blank(&vgastate);
+> -			vga_palette_blanked = true;
+> -			return 0;
+> -		}
+> -		vgacon_set_origin(c);
+> -		scr_memsetw((void *) vga_vram_base, BLANK,
+> -			    c->vc_screenbuf_size);
+> -		if (mode_switch)
+> -			vga_is_gfx = true;
+> -		return 1;
+> -	default:		/* VESA blanking */
+> -		if (vga_video_type == VIDEO_TYPE_VGAC) {
+> -			vga_vesa_blank(&vgastate, blank - 1);
+> -			vga_vesa_blanked = blank;
+> -		}
+> -		return 0;
+>  	}
 
-Thanks
-Sairaj
+This can be vgacon_blank() and vgacon_unblank(), right?  That way we
+have a hint as to what is happening and don't have to try to remember
+that a bool as parameter 2 is blank/unblank.
 
->> +		break;								\
->>  	default: __try_cmpxchg_user_wrong_size();				\
->>  	}									\
->>  	__ret;						})
-> 
+thanks,
 
+greg k-h
