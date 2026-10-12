@@ -1,77 +1,77 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39AB438466
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 12:03:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D333F8707
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 12:04:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791806616; cv=none; b=iKsLfezb3DLR6ufdVHc8KLtJ2WaLaY4dR3oKuMzglP8Kj/a5T7EmoeJkQgeQ2+CTLtWNhrIyHwkpm4PUvoDCVh4sQxIns8Rqondva54uEYyrR6oh2u/bZVAhwrFQomf5O3++/OiTWqHiGcFuCj7gHskm5FFbjbIgU0kLc4iZjCc=
+	t=1791806659; cv=none; b=sWsYrOaW5ZYSdbeCCpDZaFOeuYKvABgY3mkD2/nMu0ypFK6drhUFLrDm16PP6Ht18v4vkih7B6s28R3LjGmIEUu0tMxa5wehvH4lANhm3EArUzxlpJX0KlLq3vi44aMOtU+qya5FUnCemVt4pMIbmwb9Vka7bQLjU8h1LXIPxmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791806616; c=relaxed/simple;
-	bh=c2WauqA1rN3CFp8HwFYIcwS8fSlQMcIi3l9nCjLJYwg=;
+	s=arc-20240116; t=1791806659; c=relaxed/simple;
+	bh=Agg4QPystQPs2JjR4AaaDRI7V4S04XaGdJsO2+SBdZk=;
 	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q9XT/KrL58Ypi7JbWS6zlFh8vSVx96keEwTwTrAhOFiRSdGFwzc+yLKivKuG1lShgHoE/s+ZksimCh7lkjeo3cwEb6/Zu7CyfIO+EG4H1NCRF8irq+3jFybA/gXpS3yWJL/+ml4Oa1KzZ4NLpzBWpCbriw8vLWXz7WAJ75ShvYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lGPAGzCd; arc=none smtp.client-ip=209.85.128.52
+	 Content-Type:Content-Disposition:In-Reply-To; b=E1hOEK7TD74L9M3JkfCWSpfnhIdYvnj9vKHo9EKso0YkLmaIkhs3wbujOWqpHTFE5W2mWllB18EZhg0DP3GPsQQdrJmbddiObyIB0DcVA3GhddtuMDbfdN+Cf1P8zSq1mEobR3T3E0E8BxwFj+KqXBmIdA8q+ZaqDTPrQ0FJLSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pjd0FR5d; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lGPAGzCd"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4a19cba5c14so11171405e9.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 05:03:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pjd0FR5d"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-486e8faff03so754891f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 05:04:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791806613; x=1792411413; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1791806656; x=1792411456; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:subject:cc:to:from:date
          :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=POtm/b4o0WrfuoXD0v62t4luuE1aVmfrnI+9DSSx1WM=;
-        b=lGPAGzCd6dHkamoCQQGvzbGisVDlBQGGNtEAEL8ZHZt/jn+4V0HYPdxf4WcbBzGjcH
-         aVl0KqobHbcpd1rOjhUW7otQffglCwDiwAX257CocdxDWd6HdslqYgNI8fWGYmKMsBZO
-         68L4PKkPwDLSFFIVrOVAAVEeRm2g0frCTrS8sMwk4aTd6tDn8nZQ5sSPEabrwYJadVoq
-         MuobHAqb5Co26CQhrnv3Hvp389UWbbzOHj1O6EvRpcTtscLtEgd2SS+A48Sg6P/H1W1M
-         jCju78f6eonmIifiZTiIbCxi++asf3kT4SaBByUVbY57YN/zEAckBqYlB+UQ7oCGEJNp
-         iZCw==
+        bh=XyTvhmMauWVTWc68u+mhiwkWRE9BPuGcFcjBW1ldEgg=;
+        b=pjd0FR5d0+slkAMVgDHCmU+6jUWwMQKQLD6RzQCYkA+G6MXlyVkDnu/SwvkIulh4l9
+         AbP/m3uHb7g67xMm9FHpxyl83Xbvn54tM/NvXb87pn9tMN1Gnx6I/GiFKChZ+RmosCTo
+         ox3lF96yjjz/4r2+YHqgUh/WZleLcXULv6J1CfI5p2KwOp0+8fkEWRYGeifhjSVEERyL
+         Qi6tUwAhXnoDhLKjgVc+sgCyGX4pojP2y1OKzIm0Ys6ymnNrZHASZDL7aUcr3Z97Qj8R
+         tdgoMOoXwzDjJkzYapI1q6M3n4O8pj6ZH/aRQLt37Tizc3vpz91H68lRbXY5UvuEHYuG
+         Y5fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791806613; x=1792411413;
+        d=1e100.net; s=20260707; t=1791806656; x=1792411456;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:subject:cc:to:from:date
          :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=POtm/b4o0WrfuoXD0v62t4luuE1aVmfrnI+9DSSx1WM=;
-        b=OtZqAJ8xsdBSvIUHLCgmtmIKRc+d9sEOVt/QlQCJcp9aSP7tVZdD5YagIlW6HwqtOb
-         8v/fW+CKjD7Z5YhFGOkNIIG484vPFlC5sso/AQB73706X1rRlrdAajcASNwM3sGg/b8U
-         qL8vE5Zqkp4ISNLvv4oSTuQdvNr6NBZeo0G7TM5EsVStSWWe3uLsHnu5/cXRt9ABhlKZ
-         7AQgFHShqQr6PVHorhGGACYOkuMF5/opPsJGEAtSQCnix7NrEj1xA4REq30eapKNtgZI
-         ePssMt99F7Yj0bIDslqCN8F7tK2UEPzhh/4pSsswFqqzCSoRxJAp5rG0dhYyPKxNDdw1
-         UqNg==
-X-Gm-Message-State: AFq9FYIUr9AUEEaPFu2Tka4QhgXjl3PFdM8qD6Kg6dJxwX0KctOwB/eJ
-	eHrUj/FESrztAQJ98lbKRx9c170pt8Gwt+fp222PUCCufVLZki6oj0IMW/MYqA==
-X-Gm-Gg: AYBFou18CC06SdQlGQDtV9xO1DElOFm9JS689+yZoXGOp1V5a+vq/IOGIrgSjDfWZjc
-	QQtabJ/9ngFZnYIBf1hpt9KB41NFOmOHhO/Xs6Grxtv7xn0chKlXVg+2xR38pjxFCGd0L0si8L+
-	MZzJ5OP3q6PtwN4E/U6xqYrY0h+HKIDaTeCYcN5WC8N/w3qgFQFXKTiTA/QPTsv6MKdLdgL7Y5Q
-	UGSSZQtgW2tYS29HSDhielh8MNOJn5vnHpnbOC968n/gvRtwEhnEE8vo9rFTQmrATW0nMoRvYpL
-	IipolP8EBzPg+U/zCNhArbzpJ1HINM9YSdNYuJMjO89yJLZQHE+1e8G2bHAvx0LG6M5PG6QqEs3
-	s0dPfvd+4CBe2m5+rpa78XH0APyT7KCwI6LwfcAevZdxQ/f0J0ZBQXZRoH84MUK+JCXIL33XoyX
-	cMnqv7w5kVDmmcGRNCgNYruWAOrkIf+0eH6kKhuB9ISVR1oRrs41Pnw/abbO1xixopo415G9OC5
-	rXK/kpTKxbDVp2xuuxri5MJxlngBjeveQwtV10kr+QkwkBgk0nitWTbjkx+dpM9FdUqI9kSwRKw
-	pUQw4A==
-X-Received: by 2002:a05:600c:3e8d:b0:4a1:7701:f863 with SMTP id 5b1f17b1804b1-4a18e4aeae4mr164627205e9.15.1791806612385;
-        Mon, 12 Oct 2026 05:03:32 -0700 (PDT)
+        bh=XyTvhmMauWVTWc68u+mhiwkWRE9BPuGcFcjBW1ldEgg=;
+        b=RwBv0+EGT9ESNqMRC3bbW4wjs5SEZgP4s3XvQI1PQZf8NPSyAukJn+aFQp19J8Jeng
+         +wjtW5Hg+0C6SLoPyio0uuNTjB2Aya33kekZhowvnhI1cm0H4vhfu6cdLKSHAzcK5TTm
+         h3sR+JpN82h60buxE1YBzsfuN1reUizcHuJM+K/g4CWBZpx0V+SbQAHut9D+AOJIP6cP
+         iOWR5eFotgXB4Ahv42q96ytvQdasVdEv/QTb4qoeD/H3r1vH0uXYe3bgkDMDLjRH84Q2
+         UyrvOl3HEdJ4KD2XcCarSzCaUe32w4KRHPEYjSPenIXwIvFONQIj4WYTSJEvmZwMPJcb
+         aXNQ==
+X-Gm-Message-State: AFq9FYJcT5xUT+909EJU6Lsjw/KD+QGa6v0mBKS4yCKDtI4BkbmutZ7b
+	2O9tgnocs86mJdB29MVU9P3sryk/93Yw4vo1BT628hl3V+s8Jg7e+KkkHcvnFA==
+X-Gm-Gg: AYBFou3QYzYiXhuCDYkceKvn6L8elhkF8IcWPhVEuUd8GhMYPMTu/CzD7esleVSjT7I
+	gz2PaLggtkdffsUNEHUr+rhiPMpWl9N7ptGJ3xE/LYLTqc0UZHaPp3OcObIUdJUEihntMEj6jrl
+	xW5NE+EhhTUdG/JyPMmdD/Xm5IQq9HB/kH+Wh8U/GaGCtiYvjoh51NV7OjRwI8ujODIefoCEv2r
+	K+V/Uq+IUDNaqMLgEqycv8hYpdbiWT51DY24MY7w9MqpnvSNXet+z30bUEXSZ6lYLJhTTjfPzlC
+	hOHD/xOPWWr69wrrNafnuqt3spvyg7prFEmyxdtCI9Bqaj54wW4Us9K2EUcyfdWVe11i3ijr5Lu
+	e1O1NVHpiX68DaOLndYeHl4iiqtpP3YLrx0X3Ol146bnxYeWmreSU5DeEDUjlFFxOu/i+QFQT4e
+	2dkAzqRbmLeAGZj08KFRZL8tskTh7flJHlZ7SCFq1EpXqgTquhuaa3i4L3/G90K0JeDnna9db80
+	vhkyFlN/9+0kZTolhR4jn+928LdUqrtkbJidij09eBGlRlOWEakPwUGJjaFynqKUyriGKdbwGLz
+	saXLhgrgoXCosKM=
+X-Received: by 2002:a05:600c:3146:b0:49d:1fd8:b874 with SMTP id 5b1f17b1804b1-4a18e4af3a8mr186999115e9.19.1791806655972;
+        Mon, 12 Oct 2026 05:04:15 -0700 (PDT)
 Received: from Ansuel-XPS. (host-95-235-252-189.retail.telecomitalia.it. [95.235.252.189])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a198c80cb3sm116458295e9.3.2026.10.12.05.03.31
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48db9abd574sm19738733f8f.34.2026.10.12.05.04.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Oct 2026 05:03:31 -0700 (PDT)
-Message-ID: <6acccc93.5808c898.2889ef.c057@mx.google.com>
-X-Google-Original-Message-ID: <aszMkVq-GgiR1qMD@Ansuel-XPS.>
-Date: Mon, 12 Oct 2026 14:03:29 +0200
+        Mon, 12 Oct 2026 05:04:15 -0700 (PDT)
+Message-ID: <6accccbf.a6a2e554.42efe.05b4@mx.google.com>
+X-Google-Original-Message-ID: <aszMvJmPGCC5LVLW@Ansuel-XPS.>
+Date: Mon, 12 Oct 2026 14:04:12 +0200
 From: Christian Marangi <ansuelsmth@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: mfd@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org,
-	devicetree@vger.kernel.org, lee@kernel.org
-Subject: Re: [PATCH net-next v25 05/10] net: phy: Add Airoha AN8855 Internal
- Switch Gigabit PHY
+Cc: mfd@lists.linux.dev, conor+dt@kernel.org, devicetree@vger.kernel.org,
+	robh@kernel.org, lee@kernel.org
+Subject: Re: [PATCH net-next v25 06/10] net: dsa: tag_mtk: add Airoha variant
+ usage of this TAG
 References: <20261009161102.38961-1-ansuelsmth@gmail.com>
- <20261009161102.38961-6-ansuelsmth@gmail.com>
- <sashiko-outbox-166720@kernel.org>
+ <20261009161102.38961-7-ansuelsmth@gmail.com>
+ <sashiko-outbox-166718@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -81,136 +81,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-166720@kernel.org>
+In-Reply-To: <sashiko-outbox-166718@kernel.org>
 
-On Sat, Oct 10, 2026 at 04:11:39PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] net: phy: air_an8855: phy_write_mmd clobbers adjacent reserved fields
-> - [Medium] net: phy: air_an8855: Array linear search underflow causes valid high efuse values to fall back to default
+On Sat, Oct 10, 2026 at 04:11:37PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] net: dsa: airoha/mtk eth: hardware offload broken for AIROHA tag protocol
 > --
 > 
-> commit e8cc9bb475e2accd40605a3774a8e659a3156338
+> commit feed6f0245d293aabba2178225f4097258a1d66c
 > Author: Christian Marangi <ansuelsmth@gmail.com>
 > 
-> net: phy: Add Airoha AN8855 Internal Switch Gigabit PHY
+> net: dsa: tag_mtk: add Airoha variant usage of this TAG
 > 
-> Add support for Airoha AN8855 Internal Switch Gigabit PHY. This is a
-> simple PHY driver to configure and calibrate the PHY for the AN8855
-> Switch with the use of NVMEM cells.
+> This commit adds a new DSA tag protocol variant for Airoha switches,
+> updating the Mediatek tag driver, Kconfig, and Makefile. It also adds
+> comments explaining the differences between Airoha AN8855 and the Mediatek
+> tag bitmap.
 > 
-> > diff --git a/drivers/net/phy/air_an8855.c b/drivers/net/phy/air_an8855.c
-> > new file mode 100644
-> > index 0000000000000..bc22256fd5f95
-> > --- /dev/null
-> > +++ b/drivers/net/phy/air_an8855.c
-> > @@ -0,0 +1,275 @@
-> 
+> > diff --git a/include/net/dsa.h b/include/net/dsa.h
+> > index 5d12191b6f6f5..9824c63ad50b3 100644
+> > --- a/include/net/dsa.h
+> > +++ b/include/net/dsa.h
 > [ ... ]
+> > @@ -76,6 +77,7 @@ enum dsa_tag_protocol {
+> >  	DSA_TAG_PROTO_KSZ9893		= DSA_TAG_PROTO_KSZ9893_VALUE,
+> >  	DSA_TAG_PROTO_LAN9303		= DSA_TAG_PROTO_LAN9303_VALUE,
+> >  	DSA_TAG_PROTO_MTK		= DSA_TAG_PROTO_MTK_VALUE,
+> > +	DSA_TAG_PROTO_AIROHA		= DSA_TAG_PROTO_AIROHA_VALUE,
 > 
-> > +static const u8 dsa_r50ohm_table[] = {
-> > +	127, 127, 127, 127, 127, 127, 127, 127, 127, 127,
-> > +	127, 127, 127, 127, 127, 127, 127, 126, 122, 117,
-> > +	112, 109, 104, 101,  97,  94,  90,  88,  84,  80,
-> > +	78,  74,  72,  68,  66,  64,  61,  58,  56,  53,
-> > +	51,  48,  47,  44,  42,  40,  38,  36,  34,  32,
-> > +	31,  28,  27,  24,  24,  22,  20,  18,  16,  16,
-> > +	14,  12,  11,   9
-> > +};
-> > +
-> > +static int an8855_get_r50ohm_val(struct device *dev, const char *calib_name,
-> > +				 u8 *dest)
-> > +{
-> > +	u32 shift_sel, val;
-> > +	int ret;
-> > +	int i;
-> > +
-> > +	ret = nvmem_cell_read_u32(dev, calib_name, &val);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	shift_sel = FIELD_GET(AN8855_SWITCH_EFUSE_R50O, val);
-> > +	for (i = 0; i < ARRAY_SIZE(dsa_r50ohm_table); i++)
-> > +		if (dsa_r50ohm_table[i] == shift_sel)
-> > +			break;
-> > +
-> > +	if (i < 8 || i >= ARRAY_SIZE(dsa_r50ohm_table))
-> > +		*dest = dsa_r50ohm_table[25];
-> > +	else
-> > +		*dest = dsa_r50ohm_table[i - 8];
+> [Severity: High]
+> Does adding this new protocol ID require updating the ethernet MAC and PPE
+> drivers to recognize it as well?
 > 
-> [Severity: Medium]
-> Can a valid high efuse value cause an array search underflow here?
+> For example, looking at airoha_get_dsa_tag() in
+> drivers/net/ethernet/airoha/airoha_eth.c:
 > 
-> Since dsa_r50ohm_table contains 17 occurrences of 127 at the beginning of the
-> array, a forward linear search for 127 breaks at i = 0.
+> 	if (dev->dsa_ptr->tag_ops->proto != DSA_TAG_PROTO_MTK)
+> 		return 0;
 > 
-> The subsequent logic if (i < 8) intercepts i = 0 as an error. Consequently, an
-> input of 127 falls back to index 25 (94), whereas an input of 126 correctly
-> matches at index 17 and maps to table[17-8] (127). The forward search breaks
-> the - 8 shift algorithm for saturated values.
+> And mtk_uses_dsa() in drivers/net/ethernet/mediatek/mtk_eth_soc.c:
+> 
+> 	return netdev_uses_dsa(dev) &&
+> 	       dev->dsa_ptr->tag_ops->proto == DSA_TAG_PROTO_MTK;
+> 
+> If these are not updated to also accept DSA_TAG_PROTO_AIROHA, will hardware
+> tag extraction and PPE hardware flow offloading (like in __mtk_ppe_check_skb()
+> and mtk_flow_get_dsa_port()) fail because the strict protocol checks against
+> DSA_TAG_PROTO_MTK no longer match?
 >
 
-This is exaclty the logic used by the original driver and how EFUSE are
-fused on the PHY.
+This is irrelevant for this series and can be handled later. I'm not sure
+offload can work with the AN8855 external switch.
  
-> > +
-> > +	return 0;
-> > +}
-> 
-> [ ... ]
-> 
-> > +static int an8855_config_init(struct phy_device *phydev)
-> > +{
-> 
-> [ ... ]
-> 
-> > +	/* Apply values to reduce signal noise */
-> > +	ret = phy_modify_mmd(phydev, MDIO_MMD_VEND1, AN8855_PHY_TX_PAIR_DLY_SEL_GBE,
-> > +			     AN8855_PHY_CR_DA_TX_PAIR_DELAY_SEL_A_GBE |
-> > +			     AN8855_PHY_CR_DA_TX_PAIR_DELAY_SEL_C_GBE,
-> > +			     FIELD_PREP(AN8855_PHY_CR_DA_TX_PAIR_DELAY_SEL_A_GBE, 0x4) |
-> > +			     FIELD_PREP(AN8855_PHY_CR_DA_TX_PAIR_DELAY_SEL_C_GBE, 0x4));
-> > +	if (ret)
-> > +		return ret;
-> > +	ret = phy_set_bits_mmd(phydev, MDIO_MMD_VEND1, AN8855_PHY_RXADC_CTRL,
-> > +			       AN8855_PHY_RG_AD_SAMPLE_PHSEL_A |
-> > +			       AN8855_PHY_RG_AD_SAMPLE_PHSEL_C);
-> > +	if (ret)
-> > +		return ret;
-> > +	ret = phy_write_mmd(phydev, MDIO_MMD_VEND1, AN8855_PHY_RXADC_REV_0,
-> > +			    FIELD_PREP(AN8855_PHY_RG_AD_RESERVE0_A, 0x1));
-> 
-> [Severity: Medium]
-> Does this inadvertently clear the adjacent reserved fields for pair B?
-> 
-> phy_write_mmd() unconditionally overwrites the entire 16-bit register. By
-> writing FIELD_PREP(AN8855_PHY_RG_AD_RESERVE0_A, 0x1), this inadvertently zeroes
-> out the adjacent 8-bit field AN8855_PHY_RG_AD_RESERVE0_B (bits 7:0). Should
-> phy_modify_mmd() be used here instead?
-> 
-
-No this is intended.
-
-> > +	if (ret)
-> > +		return ret;
-> > +	ret = phy_write_mmd(phydev, MDIO_MMD_VEND1, AN8855_PHY_RXADC_REV_1,
-> > +			    FIELD_PREP(AN8855_PHY_RG_AD_RESERVE0_C, 0x1));
-> 
-> [Severity: Medium]
-> Similarly, does this inadvertently clear the adjacent reserved fields for
-> pair D (AN8855_PHY_RG_AD_RESERVE0_D)?
-> 
-
-Intended.
-
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	return 0;
-> > +}
-> 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261009161102.38961-1-ansuelsmth@gmail.com?part=5
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261009161102.38961-1-ansuelsmth@gmail.com?part=6
 
 -- 
 	Ansuel
