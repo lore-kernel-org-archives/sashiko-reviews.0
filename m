@@ -1,226 +1,118 @@
-Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012010.outbound.protection.outlook.com [40.107.209.10])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C03499F20
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 17:48:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.10
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791827289; cv=fail; b=WXqZI5bV/BeK0B5cyXb1QfyrTfLT279LYTqy2Y5O0SghFeBpA6oRILiDQ7c0IffKjVccOfFQW6zIyCIrhSUCT9R/0pqA81ylNWOa4gFvPJdICMCwqWxlUcWe6c2zXp61Bw4H+b44K3HlCDDtbOMLorZTBAFrfcIYMT4SXKCSVL4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791827289; c=relaxed/simple;
-	bh=5zW8ZIJousg3JuOPY5IW9gbjE3VCQDFh40j4pchXmIg=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=fSWduOXWWrQoAbyIfGL7a4XHLsya025daccL2cDoJZa7YCPQmNcU8gq2z3Oo/mDUdxYuarMHo3I11vVp4ubcdbTmeFgsmdz814qkAEq/qswkC0RgTDnaS0Whiug6HPVFxKDtmdsuvlAWf8nRcRABcH0NVgN6/8Wus7dfNcam5sw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=s9chMa9o; arc=fail smtp.client-ip=40.107.209.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334C24B44C7;
+	Mon, 12 Oct 2026 18:08:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791828500; cv=none; b=gDmazvVzbAWiPBQls7qsGl9pQvfc1JMTMtQ32Uhh8nuaihWImUe/irpvTGMXXOuCTgsy91cAi8kczHMI6hH5KKCULnjexYhw0vRHKVrf4Ra1o5zbDE4EPYWB7GG8RPWfqsZtmFcdHG8FFLIdtnce5N5y0udBwgpfGJ7KgSMF0Ng=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791828500; c=relaxed/simple;
+	bh=dsWGzcaV65hPX0Jv8TnHyGTn8G4TDRaclE2SMbj2a2Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=G4Afl78fWxN19PEJ8CmOB7O33H+CfMotvm6srgL9Mf4smIeRTTpjpPOI+RFARhblinefPzuKUzEzXC1UtM/aglIlaw0So4tzZAhpBH3IGnSakdPe5WxTWw7Jc7feEFEpnh12Zxf43pWHvmQqPI9NWPivFzUeJOXGLDHqKPfDEq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fMGkuOuA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="s9chMa9o"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=E6ubZ3eg3dYWEKZ4nmu8J1aYakgHQUTBIAN2xp+QYUgJVc/fM8i/bNXZzxO4PZzgX99ObufwZUvqZ77Kg9MC9S5268/L5ZoF09SaVDfRKx91xwAchhoW8gEY7pqroHTNayOPxv8Qwk/bdee/HAZ50O2Hd4uHy3pJznVruBNU+W4av3Kek8vHQYuBO6ZAzdDT3W98kPqMJ3eWqajYDo6qF2DS4HkkT3xESMEWyuIFEQe4Pq8gT7Oy0qcqW9G8sk0TWbDryH6a/jLdF33tC4cLjPlpxkeZHgegf7hDfNj31PUxJf+D2klyctIc1wCojRCwSHebFB2lmIyRfur0Qk+J5Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FUFW3W42+cJngosDuqrX18JKcNe2oC6c3dCujeLONtg=;
- b=ipa5lNBqQQivfzzwWZn05HQEUliE76veoQpUuBKRbJEDOQUINAPVkfq0jehQ8Ye8DZLQfXlSsvFGEQYhAkrRaXHIssKVoGYROOGENuU3ishLrwvCDV0niCcnxnxys+NL7d0kObE9wC0tvAmf1GpGkiqCEF7b7Iar2P+xOOuPCXWa5s9MMhOogNhcLmFYGUfcWx4HF7WVIUk6bKpjuVIT1nYYkxWdWLAOPoiJGf6hanjy8KfB7qb8FTUjYFcfDlZIfmIXvOK0ThPyEKnATvdwLHtnRcsFBC9z76Dj2jJ+uCctyURnOIl+yRM9IjOaMNsS0fJ9VIsdTEc5zFfCO0evUA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FUFW3W42+cJngosDuqrX18JKcNe2oC6c3dCujeLONtg=;
- b=s9chMa9oEZTPQVvjd7FOdWrQCFAppkVU1d7qbKssWJn/5qZMPgsgwq40GbAcQWl22GBzgyqzknsTkQar5JbsNieMLx3NnY447eLO7zeOs2iF0obJ539HhkYdm8Zymi1ofylR0eJo+pRDwooYkunBnSrxDDSEKUfGBQHsiumtloY=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from PH7PR12MB5685.namprd12.prod.outlook.com (2603:10b6:510:13c::22)
- by CY8PR12MB8338.namprd12.prod.outlook.com (2603:10b6:930:7b::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Mon, 12 Oct
- 2026 17:48:04 +0000
-Received: from PH7PR12MB5685.namprd12.prod.outlook.com
- ([fe80::ce69:cfae:774d:a65c]) by PH7PR12MB5685.namprd12.prod.outlook.com
- ([fe80::ce69:cfae:774d:a65c%3]) with mapi id 15.21.0496.020; Mon, 12 Oct 2026
- 17:48:04 +0000
-Message-ID: <072d1780-1f69-40fe-8a6e-a588a7967a99@amd.com>
-Date: Mon, 12 Oct 2026 19:48:00 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] dma-buf: Annul dmabuf->file on file release
-To: Matt Evans <matt@ozlabs.org>, Alex Deucher <alexander.deucher@amd.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fMGkuOuA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077291F0089B;
+	Mon, 12 Oct 2026 18:08:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791828498;
+	bh=3Wli0lXL90p/q6Zd9jQ+LYY2qQ0nlHmU0EB751vWIvA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=fMGkuOuA3HU0J2PUfACwqrLFc+hgMOiO+i+u8Svb2tKub0WK8gV8k05j4iY+pS7qE
+	 EXoj2YjTUxO5M1xmqx2o8vDpWs66kAxY1FjO0y/DzxNFg0MOssq+btJLsm9Mguxt/0
+	 FL6F0VAWBH1pqVUq4hMYZjq/L/dbREWmsLerVdme0SoCdHE3BOQ4bsdCR2AtHpkPpR
+	 r+RfomPlMoTL187ySIPYb8PS/3ujv3L+kcjIi30RYNeyFI9zjOq+i/AArNb77EA2MS
+	 zuiPmsJE7LMu8sWqmXc/yj52mbp19oPs2yHz2w8uRsDfcOg6G0jagvTgh9siQageES
+	 p+uBEmUK6PtDg==
+Date: Mon, 12 Oct 2026 21:08:13 +0300
+From: Leon Romanovsky <leon@kernel.org>
+To: sashiko-reviews@lists.linux.dev
 Cc: media-ci@linuxtv.org, dri-devel@lists.freedesktop.org,
- sashiko-reviews@lists.linux.dev
-References: <20261009123601.94079-1-matt@ozlabs.org>
- <20261009123601.94079-3-matt@ozlabs.org> <sashiko-outbox-165603@kernel.org>
- <749905e4-52ea-490b-98c7-3923655a52ba@ozlabs.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-In-Reply-To: <749905e4-52ea-490b-98c7-3923655a52ba@ozlabs.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR2P281CA0087.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:9b::6) To PH7PR12MB5685.namprd12.prod.outlook.com
- (2603:10b6:510:13c::22)
+	linux-rdma@vger.kernel.org, linux-pci@vger.kernel.org,
+	kvm@vger.kernel.org
+Subject: Re: [PATCH v10 17/18] PCI/P2PDMA: Evaluate the ATS path for clients
+ with ATS enabled
+Message-ID: <20261012180813.GI219304@unreal>
+References: <20261012-fix-p2p-acs-v4-0-v10-0-6ffe7b7a4517@nvidia.com>
+ <20261012-fix-p2p-acs-v4-0-v10-17-6ffe7b7a4517@nvidia.com>
+ <sashiko-outbox-168177@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5685:EE_|CY8PR12MB8338:EE_
-X-MS-Office365-Filtering-Correlation-Id: d27fa8d0-3982-4271-3c1a-08df2888f740
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|56012099006|261009223027099003|10067099003|11063799006|4143699003|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	hDXUW8y2m6SDJpd+yKsNQ6FePf8vi9jAmJIiXZ/LzDGhnKslbX5cAocjP+dq9Yk8ZRyQVN+R/AleB3aLW4tjclIjjHDOPGj61cU/yOC4I4ojJgJcP0Qg3elqtL04R5fcVTA+rlJkZ+JX1iZvoFZ9NDyB/As+V5kcxsOSGAbhjGyu6m0MNcGzOyL73RJK3URsKl7V0nOygMxiHVVDsNSc/hgkAWJkjmikMEfZHZzEolypRrnkJfI+lwocTdY+5icQMmvqFncQGkG1zpARB46an0Sn337fUaJyX/39mcigAv8F5OFUqxHS4qf6p/Ji+ur9BYFE6q6Kk9Lrqf9F0X8N7Gda4Eoraa8AdRUuVTKz7VfR2yevYXYST5GfRx8EohVBcoCxzmcV04phZnDiZHVskx/F8WjoIBCPTohONLiA0CyqQK97YgVdrSNeUgUbuC5+3lDLgTPLqOaL3iRC+Yt2lbwrXqLbninPxvnNMCYmujwAlVcLdZXRIv+UaNtlS7XGscxaISophpoieXOfVuqNWMgYkhwLAH8Kg453x6a/bu2zDZ2LPPNziIP/xbjV9C3AHxeSdfTTUb/1tzuzJWBp6pqCigRLa727FRP2KRodfha1gHMj/plMFTa++EEsoeoLN3uVPmmKoJ0oGDQuwWLZxTUW4ovgU0plO+lSMWNa4CQ=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5685.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(56012099006)(261009223027099003)(10067099003)(11063799006)(4143699003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NFpydGdXNjVGN3FJc3FOS2J1cmhPNUxHeG9rU3JRazkxeFlLNmdHZWMzRERy?=
- =?utf-8?B?bzg3TFNUMEV2MzMvbXFoZzV5TS9xaExsem1kRFlpTmtaVDZQOThaMllLSElX?=
- =?utf-8?B?a0hnSWlZV1lXK0c4a1l1N3dzTlZXVHdGMkJMV3IvSkJQSkRrSDBXL3N6QTBy?=
- =?utf-8?B?aWlJMU9Kb1FlMmJ2R1daMHBUU2ZIMGFxbmRFdHBTNG4rbFo3OEtLcyt2Skpj?=
- =?utf-8?B?VThQWmdwYzlVWlRJNW5FY1l3S0s5ZnIrWFB2cXplaWljb0E4MXlJdVE2MEZT?=
- =?utf-8?B?U3hHZlVmYVdQQWFVcnVFbDdjZFpMbDB1Zk5OeW04Zkd0c0dodk1zRFZkMFBY?=
- =?utf-8?B?MjBJbU8rQ3lkaTJVaVk5alFKR21OekhUYS9uNnphUEc4YnN6dmp5Ky9IVlJI?=
- =?utf-8?B?djI2ZnZ0S29tVU4yNDJGRG9PblVPMktlRHlCOFFhbFFKWGZManBZV0lDenV0?=
- =?utf-8?B?QXc4ZTdtSlk5ZVFCbTloVWxlbm1sUWJWMVUraWtkakhpVVhHMzFKTndQTUxU?=
- =?utf-8?B?TXFlMmV2N0cySytXZmt6VmRQbHFCeXZxQk1IV2tidXRjSVpkOFlhWVo4dE9t?=
- =?utf-8?B?WFdTUnhzaHg4azZnVnJYZC9IY2RwdmlaQ0ZyNjBSMlBFdjR4WUdWQnlxeUpI?=
- =?utf-8?B?UU9CM2YrTER5SVR0ZE0rV0IvZGMyUkU5dzJvdUpHcHN2TXVNVmlzWDZsTExK?=
- =?utf-8?B?YTdTanpJY1p1cEc4Z29ZdHArSk0wUmw4QzRFZzJwckMrZTJINm93Y1RLMTJx?=
- =?utf-8?B?bTRFN08xaVZkeGJyN284bHJheXI5ZjZKUlNVWDRjSm9BZDQzRDV5S290TDZu?=
- =?utf-8?B?ZXdCaS9yUHNrSmxPMGw3cEcxSTNsRlQrbFVXOGh2dVV5UEJnOVlKMEp2eTBP?=
- =?utf-8?B?ZVJUSWEwTzNRNmlNeUp5TXhmbEhlRzhmTU9SVFNlYTVuSVFwVjBKNkxBKzJT?=
- =?utf-8?B?ckZOT05tbkYwTWpsN1hFcEY1Qm5ZZWdITWk3Y0Vrb2EwVllWTEdKQjFHTURr?=
- =?utf-8?B?UlZiejZucVBnTm5hVVFGazRhMUNwUENHMGROWUxSSEVaRE5FNEV4ckJvaEtD?=
- =?utf-8?B?SzhPR2NaVkQ2QVZ1RDk5L2VNN3doZEgwTnJ0T2pMdEQ1SWd1WTdFcVBpd1ow?=
- =?utf-8?B?TFlwWTJPdjNwV1lSeVF0UTlSQmRVZTZTN1I4Nld6VHU2c3NraG5uMGpvMmN4?=
- =?utf-8?B?K2dMM2trZkkvYWpsZnFSZVQxNy9tc0JhMWFCZitrOGxNMlZyZXprbFlJSERZ?=
- =?utf-8?B?RUlXM0ZnRVJRUTVoYzNCejRydWFLMStsenRsT09yL3VCTmN5RVVMOWhTcEJH?=
- =?utf-8?B?UUk2VGhKbEhVN2EzWE84NFVFUGJ0bXMrVFRTVWd0bEZmOHcvejBaeUxGOUl0?=
- =?utf-8?B?YnZjdlM2MTB3UloyMzNuR1QwaFMzVGw2Uk00TndmZEduNms3OUdPTEpmcWtS?=
- =?utf-8?B?VHFLS3UrYzJvNXJCVUgxb256TXR2VC81MnFRb3c3NWh0TGNaY1RIMkFkZTlG?=
- =?utf-8?B?NzJTQnVGUnUvMTNhSG5tUlBheGkzZ202Y0dGc3FHNXI1eWkwSVVJd0V2allZ?=
- =?utf-8?B?QVdYbE10MkdzT3QrRWRiajR0ZE1LK2dFQ2sycFNwSHBVeG4vYzdGQnoyUmtt?=
- =?utf-8?B?OS93VzZ3SXY2R0tUQlpsR3p5TEsrZTVjQkdkdER0VGhwVGYyaElSTWRSckM3?=
- =?utf-8?B?U2J5WHV3RW8rUlFMYnBhMlh2ZldNbUtYQ09EVTZCUm1aWXg3MHE3Z1Z2dlg0?=
- =?utf-8?B?RGMvYUowNG9URmRFSGxEcm43aEx0cmJYMUFucXB4VkZhOTBMNWVqVjRNWnox?=
- =?utf-8?B?RVpwOGM1c1dHb2RLWHE4eUFXR2J1cXEzd2lCdnF0Ti81NUtKSG1QcGphQllM?=
- =?utf-8?B?bldjUWRhK3U0RC9aZkUwcStuajB6cDFMejBtRk1ScnRobGlkVlhSSVJHQ0Vy?=
- =?utf-8?B?VTRXYjhLRS9hYTFCTWFuKzdvSllPamdqYUNnbXlHWUo4ZXVaUGRtUmlaRjhy?=
- =?utf-8?B?V3NJUVk3dkVTNDJoWm9ST3NHSDZWbzJ5TmJ4UVRlSG1LN2ZVdmJKeTVhTTYr?=
- =?utf-8?B?Yk5ucE84VnR0aDJ5N1dwMzF2R2ZxUU5RdytOM0R5ZkE3ZGVqNzBzZ0RtcG1Q?=
- =?utf-8?B?QkVIdkVxNFRyejFmV09iYVFwNFpLWitSd0NLdkFDYXEreXdEcFViYTRYMkRM?=
- =?utf-8?B?RE9vdFljL3JQS2Y3T0dsbCtBSFJueUlWMTNkczJYRTNtMVRZcGU2VmMrT2s1?=
- =?utf-8?B?RmpaTGVtMVIvRXIzS3BpQ3BPaHdzOGZJWDlHV2RrOXY5blVtNGdnaXZEOTRN?=
- =?utf-8?Q?IR4VF0Fb0mU5N+jqXP?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d27fa8d0-3982-4271-3c1a-08df2888f740
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5685.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2026 17:48:04.0586
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: janVpDq9CZ/97JVSIdw3lcH2axSDQ9LiKmBRpsb3v8cOAFZjFK4sT/LlSvK8v3OU
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB8338
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-168177@kernel.org>
 
-On 10/12/26 17:27, Matt Evans wrote:
-> Hi Christian, Alex,
+On Mon, Oct 12, 2026 at 01:27:12PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] pci: pci_p2pdma_distance_many() evaluates compatibility without applying client ATS constraints
+> --
 > 
-> I'd be very grateful for your help on this:
+> commit 254b102fe424913edc3d5f94f8d41bc5d0de2b20
+> Author: Leon Romanovsky <leon@kernel.org>
 > 
-> On 09/10/2026 14:11, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [High] dma-buf: NULL pointer dereference of dmabuf->file in exporter drivers
->> -- 
->>
->> commit b5be810d5fa3244638a9bad8503cacb8ca86027e
->> Author: Matt Evans <matt@ozlabs.org>
->>
->> dma-buf: Annul dmabuf->file on file release
->>
->> This patch sets dmabuf->file to NULL in dma_buf_file_release() to prevent a
->> use-after-free window if the dentry outlives the file. By clearing the
->> pointer, exporters using get_file_active() can safely observe that the file
->> is closed.
->>
->>> diff --git a/drivers/dma-buf/dma-buf.c b/drivers/dma-buf/dma-buf.c
->>> index 36cdc342627ee..d0f8b766e8fd1 100644
->>> --- a/drivers/dma-buf/dma-buf.c
->>> +++ b/drivers/dma-buf/dma-buf.c
->>> @@ -193,11 +193,26 @@ static void dma_buf_release(struct dentry *dentry)
->>>     static int dma_buf_file_release(struct inode *inode, struct file *file)
->>>   {
->>> -    if (!is_dma_buf_file(file))
->>> -        return -EINVAL;
->>> +    struct dma_buf *dmabuf = file->private_data;
->>> +
->>> +    if (!dmabuf)
->>> +        return 0;
->>>   -    __dma_buf_list_del(file->private_data);
->>> +    __dma_buf_list_del(dmabuf);
->>>   +    /*
->>> +     * As the file is being closed, dmabuf->file is no longer
->>> +     * valid and NULL replaces an otherwise stale pointer.  If a
->>> +     * reference to the file isn't already held, the file can be
->>> +     * closed at any time, including before dmabuf->ops->release()
->>> +     * happens: dmabuf->file _must not_ be accessed directly.  An
->>> +     * exporter should use get_file_active(&dmabuf->file) which
->>> +     * atomically tests and acquires a reference to the file (or
->>> +     * returns NULL if the file has closed).  The barrier ensures
->>> +     * get_file_active() observes the store before file_free()
->>> +     * frees the memory.
->>> +     */
->>> +    smp_store_mb(dmabuf->file, NULL);
->>
->> [Severity: High]
->> Does setting dmabuf->file to NULL here cause a NULL pointer dereference in
->> exporter drivers that still hold a reference to the dma_buf?
->>
->> For example, if a GEM object is exported to a DMA-BUF and the file descriptor
->> is closed, the dma_buf is kept alive by the GEM object. If a user then reads
->> the debugfs file, amdgpu_bo_print_info() in
->> drivers/gpu/drm/amd/amdgpu/amdgpu_object.c dereferences dmabuf->file:
->>
->>         seq_printf(m, " imported from ino:%llu", file_inode(dma_buf->file)->i_ino);
->>     else if (dma_buf)
->>         seq_printf(m, " exported as ino:%llu", file_inode(dma_buf->file)->i_ino);
->>
->> Similarly, during cleanup, amdgpu_ualink_cleanup_imp_xa_node() in
->> drivers/gpu/drm/amd/amdgpu/amdgpu_ualink.c attempts to read the file count:
->>
->>     dev_dbg(adev->dev,
->>         "IMP-CLEANUP: dmabuf free for NPA:%llx handle:%llx:%llx, fc:%lu\n",
->>         imp_xa_node->npa_addr, imp_xa_node->handle.handle_hi,
->>         imp_xa_node->handle.handle_lo,
->>         file_count(imp_xa_node->dmabuf->file));
->>
->> Could these routines trigger a kernel panic when dmabuf->file is NULL?
+> PCI/P2PDMA: Evaluate the ATS path for clients with ATS enabled
 > 
-> I am out on a limb here, being the first time I've read this driver. :-I  It _looks_ like there's a live dmabuf->file because a get_dma_buf()-style reference is held here (so a false positive from Sashiko).  But I'm quite uncertain.
+> P2PDMA assumes every client issues Untranslated Requests. A device with
+> ATS enabled may translate any address it is handed, including a bus
+> address, and Translation Blocking can reject its Translated Requests on
+> a route the Untranslated answer called usable.
 > 
-> Christian, that you hadn't already mentioned this hints to me that this is safe, is that fair?
+> > diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
+> > index e38081f797611..a5fc622e3114f 100644
+> > --- a/drivers/pci/p2pdma.c
+> > +++ b/drivers/pci/p2pdma.c
+> 
+> [ ... ]
+> 
+> > @@ -1660,10 +1706,10 @@ pci_p2pdma_map_type_tlp(struct p2pdma_provider *provider, struct device *dev,
+> >  		 pci_p2pdma_map_type_name(type), type, provider_state);
+> >  
+> >  	if (type == PCI_P2PDMA_MAP_UNKNOWN)
+> > -		return calc_map_type_and_dist(pdev, client, &dist, tlp_flags,
+> > +		type = calc_map_type_and_dist(pdev, client, &dist, tlp_flags,
+> >  					      true);
+> >  
+> > -	return type;
+> > +	return pci_p2pdma_client_map_type(pdev, client, per_mapping, type);
+> >  }
+> 
+> [Severity: High]
+> Does pci_p2pdma_distance_many() also need to apply these new ATS constraints?
+> 
+> While this patch successfully updates pci_p2pdma_map_type_tlp() to evaluate ATS
+> routing constraints for P2PDMA clients, pci_p2pdma_distance_many() continues
+> to evaluate mapping compatibility without them:
+> 
+> drivers/pci/p2pdma.c:pci_p2pdma_distance_many() {
+>     ...
+> 		pci_client = find_parent_pci_dev(clients[i]);
+> 		if (!pci_client) {
+>     ...
+> 		map = calc_map_type_and_dist(provider, pci_client, &distance, 0,
+> 					     verbose);
+>     ...
+> }
+> 
+> If a client has ATS enabled and its Untranslated route is usable but its
+> Translated route is blocked by Translation Blocking (or lacks a whitelisted
+> host bridge), pci_p2pdma_distance_many() evaluates the Untranslated mapping
+> with tlp_flags=0, and incorrectly returns success. 
+> 
+> When the driver subsequently attempts to map memory, the ATS-aware mapping
+> logic will return PCI_P2PDMA_MAP_NOT_SUPPORTED and fail unexpectedly at
+> runtime, breaking the API contract of the distance validation.
 
-The Sashiko comment is nonsense. Each GEM object which has a DMA-buf (either through import or export) holds a reference to the DMA-buf file.
+Yes, Sashiko is right, I'll send new version :(.
 
-The only case where it is temporarily not holding the reference is during the destruction dance, e.g. handle ref goes to zero, DMA-buf is released and freed, GEM object is released and freed.
-
-Additional to that this is for debugfs which is meant to be used for debugging only and is not really stable. We literally have tons of debugfs files which do very questionable things with locks and/or RCU and sometimes just returns random data because the object in question is about to be destroyed.
-
-A NULL pointer deref is a bit more problematic. But in general most people don't care much, it's debugfs.
-
-Regards,
-Christian.
+Thanks
 
 > 
-> 
-> Thanks,
-> 
-> 
-> Matt
-
+> -- 
+> Sashiko AI review � https://sashiko.dev/#/patchset/20261012-fix-p2p-acs-v4-0-v10-0-6ffe7b7a4517@nvidia.com?part=17
