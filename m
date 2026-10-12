@@ -1,408 +1,172 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0F933ADBA
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 09:41:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8884E485929;
+	Mon, 12 Oct 2026 09:56:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791798082; cv=none; b=j/nEmnCL/q/8Y5I6ceVGRnf7R2u8tvs5lO9W+4ef3PoMYxYSVKZxO6KrHbm/8C6EJhinNjBOj+6p3AW9SGvAvPCbn0vTosHXLZqR5SG6ogzVzbWaDuC9kw6PN5Pb3jHvMZRPRVzPfa9Eok5tAQxwRuJozgnF0u7lQbap1ASb/Dw=
+	t=1791798973; cv=none; b=WbJ9FDhgU9q1p39L0MT1KnCTs05FziTNTNt7t5MI6Lh734BkARsBUxlN9Md/gCKO7rBydSMcYKAbGb1ogQSBn8fxtby15x88hwvsw6UYeHKEuObE84F1I461NBogpG6A5fEPX9ImzH22ryVuYRXefyBxwpirBTdKfKDUF9PgFd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791798082; c=relaxed/simple;
-	bh=pXrtYxHmiro9JBT4aUg+cLeimZFMsHTHKshBSEbcQmA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OyNooO7IFhwdRKTZV2iXkQQ1amB+FfwCCTVSD2kshpSdC+MYfnTw6UYnVP9FYQxZzWCDBoHeARc8NKXTCC4mFHC71rSI6jynoteoNTYwBQoVVDQ5j10imdApP+5ZxOa6I0Z6M1kPYODHTBWgAOPMpOkl5zoTMZ20+uIiAOxGaX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=b50S5vfV; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=4We06Ar0; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=b50S5vfV; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=4We06Ar0; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1791798973; c=relaxed/simple;
+	bh=tbvAgt7Rd/DjnZNw9Uj0KdhXn3qgAaBAfIoU8Po2k14=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=H8fUbCA21dBlsmh14UqJn6+SS3n1Pkgtfzdf4DTht9rdFcoRC7Op6H0USedNEaZy3Dm7Cn/53C+jg2z5vubfK0KFGolDoAISfkU8+pqR3ECLHfIdhwaV6BM+9rDsYs90KCd5WvJGx7qtYFJvYofJF08owsEXBKhkPJjh7nuagY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FVIHtgRX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="b50S5vfV";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="4We06Ar0";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="b50S5vfV";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="4We06Ar0"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id D2B4821E69;
-	Mon, 12 Oct 2026 09:41:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1791798078; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Y0iODFkuYRmj0jeuiVHk+xppSK1jEbAaNPxjpNdcyGw=;
-	b=b50S5vfVvP/bWltspX7IYudmcYlnfBPOJ2bYO4+W5wBuV/bkVUdWG0MUX0aHlIOfQPbbyB
-	L6sdGenNKjJXliWU5hzYIUOv2oAmx/7CV3rmIED0vTJYr2PJ1eZrZie3ASvBgaDSItQnRY
-	2oIAaqlmNpXHAlFrGNe9oPXGlFWitsA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1791798078;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Y0iODFkuYRmj0jeuiVHk+xppSK1jEbAaNPxjpNdcyGw=;
-	b=4We06Ar0o6q1lDpKRDYgXIWHg+nsxJun4izEe8pozfElpf4Kt6Efr+tc7RSJPJSV0CRJNp
-	nHZ+Vz5h7KoN0FCg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1791798078; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Y0iODFkuYRmj0jeuiVHk+xppSK1jEbAaNPxjpNdcyGw=;
-	b=b50S5vfVvP/bWltspX7IYudmcYlnfBPOJ2bYO4+W5wBuV/bkVUdWG0MUX0aHlIOfQPbbyB
-	L6sdGenNKjJXliWU5hzYIUOv2oAmx/7CV3rmIED0vTJYr2PJ1eZrZie3ASvBgaDSItQnRY
-	2oIAaqlmNpXHAlFrGNe9oPXGlFWitsA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1791798078;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Y0iODFkuYRmj0jeuiVHk+xppSK1jEbAaNPxjpNdcyGw=;
-	b=4We06Ar0o6q1lDpKRDYgXIWHg+nsxJun4izEe8pozfElpf4Kt6Efr+tc7RSJPJSV0CRJNp
-	nHZ+Vz5h7KoN0FCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 71375139B0;
-	Mon, 12 Oct 2026 09:41:18 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id vPIGKD2rzGr6dgAAD6G6ig:T3
-	(envelope-from <tzimmermann@suse.de>); Mon, 12 Oct 2026 09:41:18 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: gregkh@linuxfoundation.org,
-	jirislaby@kernel.org,
-	deller@gmx.de,
-	James.Bottomley@HansenPartnership.com,
-	simona@ffwll.ch
-Cc: linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org,
-	linux-fbdev@vger.kernel.org,
-	linux-parisc@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 2/2] vt: Distinguish between blanking and VESA blank mode in con_blank
-Date: Mon, 12 Oct 2026 11:27:39 +0200
-Message-ID: <20261012094114.38549-3-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261012094114.38549-1-tzimmermann@suse.de>
-References: <20261012094114.38549-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FVIHtgRX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB741F0089C;
+	Mon, 12 Oct 2026 09:56:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791798964;
+	bh=CVHrQuAJ61cQxXtDbuatkxXHw1nLvVEknlTPc5E36UA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=FVIHtgRXxZRhYE6maSjehRkWuBF2HH0RayYfx/krs1AI5oe31QO1pDX+lBMY86byq
+	 YJjaq/QKQAVJW7RXLCS/vht2HZmd3c10JMx1r96e8YrN5itL+Ua1TBc16aZkEQFmgf
+	 2Q/6fDJAjHcscVS1BpvBPrxrTREc/AMpDUXXXZNBLLAxKjKTcKJZpjP2FNTX+Ftb+T
+	 B19geR2QBjNTYHqQqyyffgqW0FviJXuqrjWaYmMpqdxUMdOQRwYZErvT22E26fTOBx
+	 j3JRi6xV0/xcht6VLYJJ3IgCwWNa46TQyf0NHPGhyIMG6o6EtrWyqiFhVzW8yv9hRh
+	 VCjhYDFwXA5OQ==
+X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+To: sashiko-reviews@lists.linux.dev, iommu@lists.linux.dev,
+	linux-coco@lists.linux.dev, Jason Gunthorpe <jgg@nvidia.com>
+Cc: kvm@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v7 14/16] iommufd/viommu: Allow PCI TSM backends to
+ provide vIOMMU operations
+In-Reply-To: <sashiko-outbox-163680@kernel.org>
+References: <20261008055955.4014342-1-aneesh.kumar@kernel.org>
+ <20261008055955.4014342-15-aneesh.kumar@kernel.org>
+ <sashiko-outbox-163680@kernel.org>
+Date: Mon, 12 Oct 2026 15:25:59 +0530
+Message-ID: <yq5awlrn4500.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[linuxfoundation.org,kernel.org,gmx.de,HansenPartnership.com,ffwll.ch];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmx.de]
-X-Spam-Score: -2.80
-X-Spam-Level: 
-X-Spam-Flag: NO
+Content-Type: text/plain
 
-The con_blank callback in struct consw encodes blanking and display
-blank mode in a single parameter named blank. Its semantics equal
-the FB_BLANK constants from the fbdev subsystems. Yet it is of type
-enum vesa_blank_mode, which describes VESA DPMS levels of the attached
-monitor. Although related, this is something else.
+sashiko-bot@kernel.org writes:
 
-For this reason, calls to con_blank fill the blank parameter with
-values that appear non-sensical at first. For example, to blank the
-console, but keep the monitor on, vt passes VESA_VSYNC_SUSPEND (eq '1').
-This is because consoles interpret '1' as pixels-off-but-monitor-on.
-The constant VESA_VSYNC_SUSPEND actually means monitor-vsync-off. And
-the argument used for monitor-vsync-off is VESA_VSYNC_SUSPEND+1.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] pci/tsm: Use-After-Free of tsm_dev due to missing device reference count
+> --
+>
+> commit 45c3cda47ad9fdb8464c2ba275fcaa5077625b75
+> Author: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+>
+> iommufd/viommu: Allow PCI TSM backends to provide vIOMMU operations
+>
+> This commit allows a vIOMMU implementation to be provided by a TEE Security
+> Manager (TSM) rather than the physical IOMMU driver. It queries the TSM
+> associated with the target PCI device and resolves the PCI TSM association
+> under pci_tsm_rwsem while pinning the module.
+>
+>> diff --git a/drivers/pci/tsm.c b/drivers/pci/tsm.c
+>> index dca9634f8d5eb..c8603867e09df 100644
+>> --- a/drivers/pci/tsm.c
+>> +++ b/drivers/pci/tsm.c
+>
+> [ ... ]
+>
+>> @@ -36,6 +38,25 @@ static const struct pci_tsm_ops *to_pci_tsm_ops(struct pci_tsm *tsm)
+>>  	return tsm->tsm_dev->pci_ops;
+>>  }
+>>  
+>> +struct tsm_dev *pci_tsm_get_device(struct pci_dev *pdev)
+>> +{
+>> +	const struct pci_tsm_ops *ops;
+>> +	struct tsm_dev *tsm_dev;
+>> +
+>> +	guard(rwsem_read)(&pci_tsm_rwsem);
+>> +	if (!pdev->tsm)
+>> +		return NULL;
+>> +
+>> +	tsm_dev = pdev->tsm->tsm_dev;
+>> +	ops = tsm_dev->pci_ops;
+>> +	if (!ops->viommu_get_ops)
+>> +		return NULL;
+>> +	if (!try_module_get(ops->owner))
+>> +		return ERR_PTR(-ENODEV);
+>> +	return tsm_dev;
+>> +}
+>
+> [Severity: High]
+> Does this code need to take a kobject reference on the device via
+> get_device(&tsm_dev->dev)?
+>
+> The tsm_dev pointer is returned and stored in viommu->tsm_dev for the
+> lifetime of the vIOMMU, relying solely on the module pin. 
+>
+> The doc comment for tsm_get_device() states that backends must not unregister
+> their TSM independently of module unload. However, in the Linux device model,
+> a module pin only prevents module removal; it does not prevent a PCI device
+> from being unbound via sysfs (unbind or remove) or hardware hot-unplug.
+>
+> If the device is unbound, the driver core forces the driver remove callback
+> to run, which calls tsm_unregister().
+>
 
-To fix this by splitting blank into two parameters, blank and blank_mode.
-The new blank is a boolean to control the display blanking. If cleared,
-the console creates display output, if set the console does not. The
-new parameter blank_mode specifies the VESA blank mode for the monitor
-and equals VESA DPMS levels. If blank is set, blank_mode gives a hint
-to the console, on how to set up the signal to the monitor.
+An additional device reference is not strictly needed for the current
+CCA backend. arm-cca-host registers the TSM device, and the vIOMMU pins
+that module. Sysfs unbind is disabled, and the SMCCC device has no
+hot-unplug path, so the TSM remains registered while the vIOMMU exists.
 
-The actual interpretation is up to the console. Newportcon and sticon
-only handle blank or not-blank. Fbcon and vgacon implement blank plus
-the VESA DPMS handling. The implementation of both consoles is again
-somewhat confusing because types and values do not match. Clean up
-both with the new blank/blank_mode logic.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/tty/vt/vt.c                 | 11 ++++----
- drivers/video/console/dummycon.c    |  4 +--
- drivers/video/console/newport_con.c |  4 +--
- drivers/video/console/sticon.c      |  4 +--
- drivers/video/console/vgacon.c      | 44 +++++++++++++++--------------
- drivers/video/fbdev/core/fbcon.c    | 19 +++++++------
- include/linux/console.h             |  9 ++++--
- 7 files changed, 51 insertions(+), 44 deletions(-)
+But, taking a device reference makes it explicit that the vIOMMU owns a
+reference to the TSM device until it is destroyed. I'll add this in the
+next revision.
 
-diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
-index 9e7b4419b422..f762c965351d 100644
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -4671,7 +4671,7 @@ void do_blank_screen(bool entering_gfx)
- 	if (console_blanked) {
- 		if (blank_state == blank_vesa_wait) {
- 			blank_state = blank_off;
--			vc->vc_sw->con_blank(vc, vesa_blank_mode + 1, false);
-+			vc->vc_sw->con_blank(vc, true, vesa_blank_mode, false);
- 		}
- 		return;
- 	}
-@@ -4680,7 +4680,7 @@ void do_blank_screen(bool entering_gfx)
- 	if (entering_gfx) {
- 		hide_cursor(vc);
- 		save_screen(vc);
--		vc->vc_sw->con_blank(vc, VESA_VSYNC_SUSPEND, true);
-+		vc->vc_sw->con_blank(vc, true, VESA_NO_BLANKING, true);
- 		console_blanked = fg_console + 1;
- 		blank_state = blank_off;
- 		set_origin(vc);
-@@ -4701,8 +4701,9 @@ void do_blank_screen(bool entering_gfx)
- 
- 	save_screen(vc);
- 	/* In case we need to reset origin, blanking hook returns 1 */
--	i = vc->vc_sw->con_blank(vc, vesa_off_interval ? VESA_VSYNC_SUSPEND :
--				 (vesa_blank_mode + 1), false);
-+	i = vc->vc_sw->con_blank(vc, true,
-+				 vesa_off_interval ? VESA_NO_BLANKING : vesa_blank_mode,
-+				 false);
- 	console_blanked = fg_console + 1;
- 	if (i)
- 		set_origin(vc);
-@@ -4753,7 +4754,7 @@ void do_unblank_screen(bool leaving_gfx)
- 	}
- 
- 	console_blanked = 0;
--	if (vc->vc_sw->con_blank(vc, VESA_NO_BLANKING, leaving_gfx))
-+	if (vc->vc_sw->con_blank(vc, false, VESA_NO_BLANKING, leaving_gfx))
- 		/* Low-level driver cannot restore -> do it ourselves */
- 		update_screen(vc);
- 	if (console_blank_hook)
-diff --git a/drivers/video/console/dummycon.c b/drivers/video/console/dummycon.c
-index 7d02470f19b9..50aaccffcccf 100644
---- a/drivers/video/console/dummycon.c
-+++ b/drivers/video/console/dummycon.c
-@@ -79,7 +79,7 @@ static void dummycon_putcs(struct vc_data *vc, const u16 *s, unsigned int count,
- 	raw_notifier_call_chain(&dummycon_output_nh, 0, NULL);
- }
- 
--static bool dummycon_blank(struct vc_data *vc, enum vesa_blank_mode blank,
-+static bool dummycon_blank(struct vc_data *vc, bool blank, enum vesa_blank_mode blank_mode,
- 			   bool mode_switch)
- {
- 	/* Redraw, so that we get putc(s) for output done while blanked */
-@@ -99,7 +99,7 @@ static void dummycon_putc(struct vc_data *vc, u16 c, unsigned int y,
- 			  unsigned int x) { }
- static void dummycon_putcs(struct vc_data *vc, const u16 *s, unsigned int count,
- 			   unsigned int ypos, unsigned int xpos) { }
--static bool dummycon_blank(struct vc_data *vc, enum vesa_blank_mode blank,
-+static bool dummycon_blank(struct vc_data *vc, bool blank, enum vesa_blank_mode blank_mode,
- 			   bool mode_switch)
- {
- 	return false;
-diff --git a/drivers/video/console/newport_con.c b/drivers/video/console/newport_con.c
-index ecbbe2e4e2a6..90e6d70f94bb 100644
---- a/drivers/video/console/newport_con.c
-+++ b/drivers/video/console/newport_con.c
-@@ -476,12 +476,12 @@ static bool newport_switch(struct vc_data *vc)
- 	return true;
- }
- 
--static bool newport_blank(struct vc_data *c, enum vesa_blank_mode blank,
-+static bool newport_blank(struct vc_data *c, bool blank, enum vesa_blank_mode blank_mode,
- 			  bool mode_switch)
- {
- 	unsigned short treg;
- 
--	if (blank == VESA_NO_BLANKING) {
-+	if (!blank) {
- 		/* unblank console */
- 		treg = newport_vc2_get(npregs, VC2_IREG_CONTROL);
- 		newport_vc2_set(npregs, VC2_IREG_CONTROL,
-diff --git a/drivers/video/console/sticon.c b/drivers/video/console/sticon.c
-index 6f58e6a9e76a..00e5f86dd35a 100644
---- a/drivers/video/console/sticon.c
-+++ b/drivers/video/console/sticon.c
-@@ -299,10 +299,10 @@ static bool sticon_switch(struct vc_data *conp)
-     return true;	/* needs refreshing */
- }
- 
--static bool sticon_blank(struct vc_data *c, enum vesa_blank_mode blank,
-+static bool sticon_blank(struct vc_data *c, bool blank, enum vesa_blank_mode blank_mode,
- 			 bool mode_switch)
- {
--    if (blank == VESA_NO_BLANKING) {
-+    if (!blank) {
- 	if (mode_switch)
- 	    vga_is_gfx = 0;
- 	return true;
-diff --git a/drivers/video/console/vgacon.c b/drivers/video/console/vgacon.c
-index 536e7fe4d142..a3a45b6956df 100644
---- a/drivers/video/console/vgacon.c
-+++ b/drivers/video/console/vgacon.c
-@@ -797,11 +797,31 @@ static void vga_pal_blank(struct vgastate *state)
- 	}
- }
- 
--static bool vgacon_blank(struct vc_data *c, enum vesa_blank_mode blank,
-+static bool vgacon_blank(struct vc_data *c, bool blank, enum vesa_blank_mode blank_mode,
- 			 bool mode_switch)
- {
--	switch (blank) {
--	case VESA_NO_BLANKING:		/* Unblank */
-+	if (blank) {
-+		switch (blank_mode) {
-+		case VESA_NO_BLANKING:	/* Normal blanking */
-+			if (!mode_switch && vga_video_type == VIDEO_TYPE_VGAC) {
-+				vga_pal_blank(&vgastate);
-+				vga_palette_blanked = true;
-+				return 0;
-+			}
-+			vgacon_set_origin(c);
-+			scr_memsetw((void *)vga_vram_base, BLANK,
-+				    c->vc_screenbuf_size);
-+			if (mode_switch)
-+				vga_is_gfx = true;
-+			return 1;
-+		default:		/* VESA blanking */
-+			if (vga_video_type == VIDEO_TYPE_VGAC) {
-+				vga_vesa_blank(&vgastate, blank_mode);
-+				vga_vesa_blanked = blank_mode;
-+			}
-+			return 0;
-+		}
-+	} else { /* Unblank */
- 		if (vga_vesa_blanked) {
- 			vga_vesa_unblank(&vgastate);
- 			vga_vesa_blanked = VESA_NO_BLANKING;
-@@ -814,24 +834,6 @@ static bool vgacon_blank(struct vc_data *c, enum vesa_blank_mode blank,
- 		vga_is_gfx = false;
- 		/* Tell console.c that it has to restore the screen itself */
- 		return 1;
--	case VESA_VSYNC_SUSPEND:	/* Normal blanking */
--		if (!mode_switch && vga_video_type == VIDEO_TYPE_VGAC) {
--			vga_pal_blank(&vgastate);
--			vga_palette_blanked = true;
--			return 0;
--		}
--		vgacon_set_origin(c);
--		scr_memsetw((void *) vga_vram_base, BLANK,
--			    c->vc_screenbuf_size);
--		if (mode_switch)
--			vga_is_gfx = true;
--		return 1;
--	default:		/* VESA blanking */
--		if (vga_video_type == VIDEO_TYPE_VGAC) {
--			vga_vesa_blank(&vgastate, blank - 1);
--			vga_vesa_blanked = blank;
--		}
--		return 0;
- 	}
- }
- 
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index 274f6bf6e165..7f75b4f5da74 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -2287,18 +2287,19 @@ static void fbcon_generic_blank(struct vc_data *vc, struct fb_info *info,
- 	}
- }
- 
--static bool fbcon_blank(struct vc_data *vc, enum vesa_blank_mode blank,
-+static bool fbcon_blank(struct vc_data *vc, bool blank, enum vesa_blank_mode blank_mode,
- 			bool mode_switch)
- {
- 	struct fb_info *info = fbcon_info_from_console(vc->vc_num);
- 	struct fbcon_par *par = info->fbcon_par;
-+	int blank_state = !blank ? FB_BLANK_UNBLANK : blank_mode + 1;
- 
- 	if (mode_switch) {
- 		struct fb_var_screeninfo var = info->var;
- 
- 		par->graphics = 1;
- 
--		if (!blank) {
-+		if (!blank_state) {
- 			var.activate = FB_ACTIVATE_NOW | FB_ACTIVATE_FORCE |
- 				FB_ACTIVATE_KD_TEXT;
- 			fb_set_var(info, &var);
-@@ -2308,16 +2309,16 @@ static bool fbcon_blank(struct vc_data *vc, enum vesa_blank_mode blank,
- 	}
- 
- 	if (fbcon_is_active(vc, info)) {
--		if (par->blank_state != blank) {
--			par->blank_state = blank;
--			fbcon_cursor(vc, !blank);
--			par->cursor_flash = (!blank);
-+		if (par->blank_state != blank_state) {
-+			par->blank_state = blank_state;
-+			fbcon_cursor(vc, !blank_state);
-+			par->cursor_flash = (!blank_state);
- 
--			if (fb_blank(info, blank))
--				fbcon_generic_blank(vc, info, blank);
-+			if (fb_blank(info, blank_state))
-+				fbcon_generic_blank(vc, info, blank_state);
- 		}
- 
--		if (!blank)
-+		if (!blank_state)
- 			update_screen(vc);
- 	}
- 
-diff --git a/include/linux/console.h b/include/linux/console.h
-index 502d1abe3f50..19f80556e9b2 100644
---- a/include/linux/console.h
-+++ b/include/linux/console.h
-@@ -56,8 +56,10 @@ enum vc_intensity;
-  * @con_switch: notifier about the console switch; it is supposed to return
-  *		true if a redraw is needed.
-  * @con_blank:  blank/unblank the console. The target mode is passed in @blank.
-- *		@mode_switch is set if changing from/to text/graphics. The hook
-- *		is supposed to return true if a redraw is needed.
-+ *		@blank_mode contains the requested level of power saving
-+ *		if @blank is true. @mode_switch is set if changing from/to
-+ *		text/graphics. The hook is supposed to return true if a redraw
-+ *		is needed.
-  * @con_font_set: set console @vc font to @font with height @vpitch. @flags can
-  *		be %KD_FONT_FLAG_DONT_RECALC. (optional)
-  * @con_font_get: fetch the current font on @vc of height @vpitch into @font.
-@@ -97,7 +99,8 @@ struct consw {
- 			unsigned int bottom, enum con_scroll dir,
- 			unsigned int lines);
- 	bool	(*con_switch)(struct vc_data *vc);
--	bool	(*con_blank)(struct vc_data *vc, enum vesa_blank_mode blank,
-+	bool	(*con_blank)(struct vc_data *vc, bool blank,
-+			     enum vesa_blank_mode blank_mode,
- 			     bool mode_switch);
- 	int	(*con_font_set)(struct vc_data *vc,
- 				const struct console_font *font,
--- 
-2.55.0
+>
+>> diff --git a/drivers/virt/coco/tsm-core.c b/drivers/virt/coco/tsm-core.c
+>> index f791359861020..2fce341ff9231 100644
+>> --- a/drivers/virt/coco/tsm-core.c
+>> +++ b/drivers/virt/coco/tsm-core.c
+>
+> [ ... ]
+>
+>> @@ -16,6 +26,29 @@ static const struct class tsm_class = {
+>>  };
+>>  static DEFINE_IDA(tsm_ida);
+>>  
+>> +/**
+>> + * tsm_get_device() - Pin the TSM attached to a device
+>> + * @dev: device whose TSM is to be pinned
+>> + *
+>> + * A successful lookup pins the backend module. Backends providing vIOMMU
+>> + * operations must not unregister their TSM independently of module unload.
+>> + * Return: NULL if no vIOMMU-capable TSM is attached, an error if the module
+>> + * cannot be pinned, or the TSM device associated with the pinned backend.
+>> + */
+>> +struct tsm_dev *tsm_get_device(struct device *dev)
+>> +{
+>> +	if (!dev_is_pci(dev))
+>> +		return NULL;
+>> +	return pci_tsm_get_device(to_pci_dev(dev));
+>> +}
+>> +EXPORT_SYMBOL_GPL(tsm_get_device);
+>> +
+>> +void tsm_put_device(struct tsm_dev *tsm_dev)
+>> +{
+>> +	module_put(tsm_dev->pci_ops->owner);
+>> +}
+>
+> [Severity: High]
+> Can this dereference freed memory?
+>
+> When tsm_unregister() is called during an unbind or hot-unplug event, it
+> invokes put_device(&tsm_dev->dev). Because no extra reference was held when
+> acquiring the device in pci_tsm_get_device(), the reference count drops to zero
+> and the tsm_dev object is freed via kfree().
+>
+> Later, when the vIOMMU is destroyed, iommufd_viommu_destroy() calls
+> tsm_put_device(viommu->tsm_dev). This dereferences the freed memory to access
+> tsm_dev->pci_ops->owner, resulting in a use-after-free crash.
+>
 
+This path is not reachable with the current CCA backend: sysfs unbind is
+disabled, the SMCCC device has no hot-unplug path, and the module pin
+prevents unload.
+
+-aneesh
