@@ -1,102 +1,139 @@
-Received: from angie.orcam.me.uk (angie.orcam.me.uk [78.133.224.34])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC65948F856
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 14:37:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.133.224.34
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BFD48F856;
+	Mon, 12 Oct 2026 14:43:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791815826; cv=none; b=M/vydLkZ5VsHJaz2WtxbGarFBer29OC7w5oB+ihThQFnfhQs26pmVQYp3hXOT0NUa7ts6OEmym3P3zYxdMoXHNO1My3f5MT0i2XuVKk97rleyuTn2qB36o9N9ZWwqRQLRlQKXbClt67XuIV3hopulP971nvkQ1QGn4TrT67su4E=
+	t=1791816212; cv=none; b=JYEOw2SjWFZ4SoaAzro6g8erM++6gzUwx8JUM6ai6JyO3Hxf9PU5q8cRzBMxYKmOa9EdQUsE4hBVfOaogFmIqJ7YHTReXIF7iDU6DEWc412gPZ9petv1l7Hal9QQu3vbxzg0ohkOFA00Itcq1fxUtPVelycd63L0ErUzrbjlKDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791815826; c=relaxed/simple;
-	bh=bAAr7Hex5s8qzqHsZGd/mU74yHKFKF82kjf2B7R9+ig=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=H3hQJ72oAqHLDsq1M5O5SaYyja79S7cLn/Vn0OSLYyvTPZ7J/6vWnRqICu/Is/AGhV++8h6OdRPMIf+L1xRppIBr1W6Vu1C1SHpsR4nduZPG8VJXXmGa9LQ7MY2g5sK5vOw2Mk3esUrGnirmglCzd5qLUgZx3XaZ/VVWPnv/8bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=orcam.me.uk; spf=none smtp.mailfrom=orcam.me.uk; arc=none smtp.client-ip=78.133.224.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=orcam.me.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=orcam.me.uk
-Received: by angie.orcam.me.uk (Postfix, from userid 500)
-	id DB23192009D; Mon, 12 Oct 2026 16:37:01 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by angie.orcam.me.uk (Postfix) with ESMTP id D81CE92009C;
-	Mon, 12 Oct 2026 15:37:01 +0100 (BST)
-Date: Mon, 12 Oct 2026 15:37:01 +0100 (BST)
-From: "Maciej W. Rozycki" <macro@orcam.me.uk>
-To: sashiko-reviews@lists.linux.dev
-cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-    Jiri Slaby <jirislaby@kernel.org>, 
-    Hugo Villeneuve <hvilleneuve@dimonoff.com>, Kees Cook <kees@kernel.org>, 
-    Lukas Wunner <lukas@wunner.de>, John Ogness <john.ogness@linutronix.de>, 
-    Jiayuan Chen <jiayuan.chen@shopee.com>, Gerhard Engleder <eg@keba.com>, 
-    linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] serial: core: Don't clobber the baud rate on
- hangup via B0
-In-Reply-To: <sashiko-outbox-167551@kernel.org>
-Message-ID: <alpine.DEB.2.21.2610121325280.55767@angie.orcam.me.uk>
-References: <alpine.DEB.2.21.2610120150230.55767@angie.orcam.me.uk> <alpine.DEB.2.21.2610120231550.55767@angie.orcam.me.uk> <sashiko-outbox-167551@kernel.org>
-User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+	s=arc-20240116; t=1791816212; c=relaxed/simple;
+	bh=vja9f80kKdriS8q5Ufpwmpcgz5B4qE3CigKeA1xzsB8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nUbeITcJ6o3Yh6IbCsY5muxm/H8ADP/5eeaoz96luPqblpoZgxGjy8+mzmSgXhLqCzl2eoAECcVneSGJUXjyt9t+nsy2tOvFEdPVuDVzh4jmlI9MZTedfgvlh1z/lmwEsD1HtJ2UqLDYPREY09A3JwHrvxblq8GFD3zfd+EcHow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IM1g2mg+; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IM1g2mg+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F02D1F0089B;
+	Mon, 12 Oct 2026 14:43:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791816211;
+	bh=kQsn0vmJ9Enc8KpOevs5GF67ZaQJBMeRFwUmu6G9Q+U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=IM1g2mg+0ZjCqewi5D/5jQ6yvlDnaIY7CfHe3fekAL1P7K2B1Pdazo6RlILpbXA/m
+	 OKWqYFRZbakcWW8wvl/IGx3jKOfhx6gG9grJCMyYTTPOO54lwG11SzZLFmYUzoHepz
+	 Bifnke+sfu3+fO6tag2ROronuIV/kBdId1F4OR+RJKfkp1MNdS/0oTCG5yW7dFPBz3
+	 8Pf5fLzzyjx313sPM1FT9MsaEQoe6yqsWVffDnKvbjyTeb1r8C7W54xPayKybSWynm
+	 Go1/udLGAdEhxwHvF3Aq2Z7HlKWiDk2AsjEAtagV7WI5uVTJoAmPH0KF7nRtxv5YPs
+	 FLSSDzFuIMwJQ==
+From: Pratyush Yadav <pratyush@kernel.org>
+To: sashiko-bot@kernel.org
+Cc: "Sourabh Jain" <sourabhjain@linux.ibm.com>,
+  sashiko-reviews@lists.linux.dev,  "Hari Bathini"
+ <hbathini@linux.ibm.com>,  kexec@lists.infradead.org,  "Pratyush Yadav"
+ <pratyush@kernel.org>,  "Michael Ellerman" <mpe@ellerman.id.au>,
+  linux-kernel@vger.kernel.org,  "Alexander Graf" <graf@amazon.com>,
+  linuxppc-dev@lists.ozlabs.org,  "Madhavan Srinivasan"
+ <maddy@linux.ibm.com>,  "Mahesh Salgaonkar" <mahesh@linux.ibm.com>,
+  "Shivang Upadhyay" <shivangu@linux.ibm.com>,  "Andrew Morton"
+ <akpm@linux-foundation.org>,  "Baoquan He" <baoquan.he@linux.dev>,
+  "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,  "Shrikanth Hegde"
+ <sshegde@linux.ibm.com>,  "Aditya Gupta" <adityag@linux.ibm.com>,  "Mike
+ Rapoport" <rppt@kernel.org>,  "Christophe Leroy (CS GROUP)"
+ <chleroy@kernel.org>,  "Pasha Tatashin" <pasha.tatashin@soleen.com>,
+  "Nicholas Piggin" <npiggin@gmail.com>
+Subject: Re: [PATCH v1 2/2] powerpc: add support for Kexec HandOver (KHO)
+In-Reply-To: <20260928084310.10CDB1F00893@smtp.kernel.org>
+	(sashiko-bot@kernel.org's message of "Mon, 28 Sep 2026 08:43:09 +0000")
+References: <20260928083226.107807-1-sourabhjain@linux.ibm.com>
+	<20260928083226.107807-3-sourabhjain@linux.ibm.com>
+	<20260928084310.10CDB1F00893@smtp.kernel.org>
+Date: Mon, 12 Oct 2026 16:43:26 +0200
+Message-ID: <2vxzbj8zj7xt.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain
 
-On Mon, 12 Oct 2026, sashiko-bot@kernel.org wrote:
+On Mon, Sep 28 2026, sashiko-bot@kernel.org wrote:
 
-> > @@ -514,10 +514,12 @@ uart_get_baud_rate(struct uart_port *port, struct ktermios *termios,
-> >  		 * Special case: B0 rate.
-> >  		 */
-> >  		if (baud == 0)
-> > -			return max(min, 9600);
-> > +			return port->hup_speed;
-> 
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] boot: late KHO initialization allows memblock to clobber preserved memory
+> --
+>
+> commit 2f581dec390379323e7a0b4e4badb03487eea55f
+> Author: Sourabh Jain <sourabhjain@linux.ibm.com>
+>
+> powerpc: add support for Kexec HandOver (KHO)
+>
+> Add architecture bits to enable CONFIG_KEXEC_HANDOVER on powerpc. This
+> patch checks for KHO information in the device tree before unflattening it,
+> allowing a kernel booted via KHO kexec to recover the FDT and scratch region.
+> It also moves early_init_dt_check_kho() to be called from setup_arch().
+>
+>> diff --git a/arch/powerpc/kernel/setup-common.c b/arch/powerpc/kernel/setup-common.c
+>> index 4afaba19b5867..53c2f1897bfe1 100644
+>> --- a/arch/powerpc/kernel/setup-common.c
+>> +++ b/arch/powerpc/kernel/setup-common.c
+>> @@ -923,6 +923,8 @@ void __init setup_arch(char **cmdline_p)
+>>  	/* Set a half-reasonable default so udelay does something sensible */
+>>  	loops_per_jiffy = 500000000 / HZ;
+>>  
+>> +	early_init_dt_check_kho();
+>> +
+>>  	/* Unflatten the device-tree passed by prom_init or kexec */
+>>  	unflatten_device_tree();
+>
 > [Severity: High]
-> Does this risk a division by zero panic?
-> 
-> If a new struct uart_port is initialized, port->hup_speed defaults to 0.
-> If a B0 rate is requested before any valid rate is set (such as via
-> console=ttyS0,0 or an early tcsetattr with B0), this returns 0.
-
- Yeah, this has glimpsed in my mind and then I lost it.  Indeed we need to 
-keep the fallback 9600/min logic after all for the initial setup.  Easily 
-fixed since it's not in the hot path.
-
-> >  
-> > -		if (baud >= min && baud <= max)
-> > +		if (baud >= min && baud <= max) {
-> > +			port->hup_speed = baud;
-> 
-> [Severity: Medium]
-> Could this result in a data race on port->hup_speed?
-> 
-> In the standard uart_set_termios() path, uart_get_baud_rate() is called
-> holding only port->mutex and termios_rwsem, not port->lock.
-> 
-> At the same time, atomic console write paths execute asynchronously from
-> hardirq or NMI holding only the nbcon lock. For example:
-> 
-> drivers/tty/serial/8250/8250_port.c:serial8250_console_restore() {
+> Does calling early_init_dt_check_kho() in setup_arch() happen too late to
+> protect against early memblock allocations clobbering preserved KHO memory?
+>
+> The Kexec HandOver (KHO) mechanism uses a scratch memory region to strictly
+> confine early boot memory allocations in the successor kernel. This prevents
+> them from overwriting memory pages preserved by the previous kernel, and is
+> enforced when kho_populate() invokes memblock_set_kho_scratch_only().
+>
+> However, setup_arch() is invoked from start_kernel() long after early_setup()
+> completes. During early_setup(), substantial dynamic memblock allocations occur
+> before KHO scratch memory confinement is enforced.
+>
+> For example, move_device_tree() allocates memory for the FDT:
+>
+> arch/powerpc/kernel/prom.c:move_device_tree() {
 > 	...
-> 	baud = serial8250_get_baud_rate(port, &termios, NULL);
+> 	p = memblock_alloc_raw(size, PAGE_SIZE);
 > 	...
 > }
-> 
-> This calls into uart_get_baud_rate() without holding port->mutex. A
-> concurrent tcsetattr() and atomic console write can trigger an unprotected
-> data race on port->hup_speed. A torn read or write on this variable could
-> yield a garbage baud rate and lead to hardware misconfiguration.
+>
+> This is called via early_init_devtree() from early_setup():
+>
+> arch/powerpc/kernel/setup_64.c:early_setup() {
+> 	...
+> 	early_init_devtree(__va(dt_ptr));
+>
+> 	allocate_paca_ptrs();
+> 	allocate_paca(boot_cpuid);
+> 	... 
+> 	early_init_mmu();
+> 	...
+> }
+>
+> Because KHO scratch-only mode has not yet been enforced during these early
+> allocations, could they use standard memblock policies and overwrite preserved
+> KHO memory state, corrupting the handover?
 
- This seems like the only exception across all the serial drivers in the 
-use of uart_get_baud_rate().  Since this is always called to restore the 
-most recent baud rate setting only, perhaps the path of least resistance 
-would be just to refrain from updating port->hup_speed if called with the 
-port lock held?
+Sashiko seems to have a point. early_init_devtree() (called from
+early_setup()) already does a lot of initialization that x86's
+setup_arch() does, including making memblock allocations, allowing
+resize, etc.
 
- Otherwise it would require rewriting all the 60+ call sites to use the 
-port lock to guard the whole sequence from a call to uart_get_baud_rate() 
-through to the write of the settings obtained to the port registers, which 
-seems an overkill to me and asking for trouble with some odd hardware.
+So perhaps you need to move this early_init_dt_check_kho() call to
+early_setup()?
 
- I'll experiment with the idea outlined or will be happy with any hints 
-otherwise.
-
-  Maciej
+-- 
+Regards,
+Pratyush Yadav
