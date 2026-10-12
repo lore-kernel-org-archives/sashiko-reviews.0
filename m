@@ -1,193 +1,157 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2289847A0A9
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 11:54:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791806047; cv=pass; b=c4N4jxkp61sNz0Ff6IbEgHDyC/RKeRazadb59Ok8CMJZfwUi997MLu5Hh9pq55bTEXHvXYdgZ4pGvxAJKiPFVselURSznYduP3l0ScBZmxzQ55b+xDPEb7Oh9tB8/ElqR8gYRl2n/apOfZ8/bOzI4751jybkXtc/+MupQWUXN8E=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791806047; c=relaxed/simple;
-	bh=W+yrOJzDyJ5PqiI4NfkV+QKWr+nkMYZHtZnIaIFG8QA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XaDnACz14jUPci6kvATevXK2T/r4T3KMJ7vnIlXbyEfaIQF7PDhOrb3UcwgCwxIq5sUO7u9UjcSy8A7Ax1s/UBnBTTeqDD97wPneSzPW87B83I76tlbrqgRImlkkaSjmkKh4OqSZbMjzrj1bK+IrAw1sRyx9m30XZcVboAGNki8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QxXeoS2M; arc=pass smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E031466B1F
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 12:02:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791806546; cv=none; b=ZgRzAEsRw1uIM9C/s7snSZHVulqHYUonjVsDryNNBmTs1swr7wQl6ai0uOnYvyDGsYMrczIK2P0zjgGZfsISnhCZWOJDZLGUAw8X0wuvMv76T5GmEGAqt3BKCioJhp64IoD6yvi16AOeSQKCdEQRzXZa0LZros4O75V3xAJczYE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791806546; c=relaxed/simple;
+	bh=LhdrDr3n+heBp+EYcLVua5HPQEX1Sbf9QjYWaMoeB3w=;
+	h=Message-ID:Date:From:To:Cc:Subject:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pteIYZhqkpvdNqeur9sSDN8Ug6QzW+Smu0kWat5afr57xvmUhrGmI7fo7NE9J63KVuiWvuWu9HqhCqsIoheOzJCRngPIbYEDzdJkZPFqN5gt/6j9QzTlsHkm1GlOaVi3T9oHEbbmFVfTYYJKytxM0cA2XoCNbmefveRHIi0jGjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E/x+PwVi; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QxXeoS2M"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-6afac79b3a3so9309a12.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 04:54:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791806044; cv=none;
-        d=google.com; s=arc-20260327;
-        b=j0q0oh4eue9jNRKOc/2D3LIxrKIkYWGShd+wnzzsitBfx90B764Z+eamyfwy/cGpuh
-         NjKfUULWY/uHcTLJT+hKvyjLXTuGaGRfFNZLuj8ty95n//lthcKiZGSjceEgu3D05jZY
-         bWdQ2bdDYnm5pWyELdCgTV7Ah2MdG5/pf44C3mNxAbisfIuMbv6bFatmyahXbimLR/Gl
-         5qwI8O4s1pqV4Pq7IyCSWHYQb/EVE2rf2yj3hFkdeVmE92PJdBX/ervCVd0eITs+IAh0
-         sO54JxNZE7DKHlhd3+gg4Y5Mnyhl/7izVxmMv/nULL/AEWNtt5ZxJJXp9vQtp6mP0cyF
-         yfVw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=X0xFSevncYFBAZwCKQnA0WXvbjVSUftRrMQuoOTk7P0=;
-        fh=2E8G5L5HRIhYv0SLHRh0bmuG4bK/RxhrEd6+zC1U6gY=;
-        b=gnpCQS03yyrUQXtOa6vQDAxozdis+p7SXTSYXlSmFOk7toeQt73e+TacfVFCW78oP0
-         gkVNdpP4eHV8048tZ83/6DfHtoQe5eNHNbYByfC8o03H6UqGBA+YYyvUBb3fh2Ch1JmD
-         RCOIEhKwBeYrlO/EbfS/iJdu5uKIXb6d33VTaX1SkvmFmVL/kR+WjheF7ugRNTrmtmmu
-         p8ou47D6EOz5BTi1hYfpgj1cgc+6Qab3Tgew8o+xbGO4uS+lPSNHRhl0525QhlIxrTp0
-         UT2dpZAYdHzOmkWkGE281FSeLTCKeFbFVImPWRZbLSU4kLAZtJ40eGEm51vfGTHap/YB
-         N3Fw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E/x+PwVi"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4a1688d7769so14909185e9.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 05:02:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1791806044; x=1792410844; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=X0xFSevncYFBAZwCKQnA0WXvbjVSUftRrMQuoOTk7P0=;
-        b=QxXeoS2MxFGQC3kpmuo7gb+gBZYh+RHso7oHzDEnZkFuV0XzTEwvcvwu+itRLTWX23
-         /6U9qlYxEXPHaxqs2EGEgGYtAF0iqiD/G8hGlgrMts2UZ0Bwmnic+Bo2f2Yo1cA7Fe84
-         b5UO77O9lPEPnfgUEc1ZFVKAP+wqL7BF1+ixSVNhq2l5x3rmPEZta3QhZfT4e1VKN+9B
-         MLgWh0CBl4Q2Jv1n14rIv5gV9q5WBk5mpIhqq0j7GeyJzjApph+fsTAHEXugl0G+c6kM
-         wfvuxya2XpLCeTNJZoULUbd4hfw45GzMEEyR78semKALPg+2J83WehLbPo4iGWRObbEN
-         ZPig==
+        d=gmail.com; s=20251104; t=1791806544; x=1792411344; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:subject:cc:to:from:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=kddTvWvhF+27bMv7g9Zho7YBUmupNxBjMAfrRSgPbzw=;
+        b=E/x+PwViiolL9bKfG95H5Sijk/YdJxuZdd/OZGQkUOeZGUJbOngpz7i4U0eJxhHFUz
+         xHEFnx1xjDIiGOOd/7vnIManKRafa0TwSXuMr/y4YeRnyhBvxygq70vdekJfkoqEqzph
+         3lvQb01lmXvlNFdezd/IrwHJZojcKaNCCcBg+G4jh6n1Qvwx5LCMaEQJt2luObpOxt9y
+         UkE1LpTwITtz1wJGiip4wHv6XOdECeab19PWEKAcz9uy50MwRjlRr7CuCF6Yq+VPqxtr
+         Uf9PhYilHzGl78VL6pskhbG8V01lVr39tgxGc4llKFRU3bpFS3DYh9JzTxQgM0HDAdiS
+         hijQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791806044; x=1792410844;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=X0xFSevncYFBAZwCKQnA0WXvbjVSUftRrMQuoOTk7P0=;
-        b=wI3Mw4DpI8Fz6H+5jrCs5hKvNsQwgWn8f9amAZwic+DYhnspXKbH95CMoiJWR5qTV3
-         ZaLAC+EuYpbBuqiYqXMxhbWCuE/9VHgDCiinCbMloYv+1GXcQveMoeoncuhxmGNK4REV
-         2hun5FBS2WxFYHAirNgyRh2xGlwgQvqQBPbX11NYNh6ONl56mt+arDNQODp+D45G3MM+
-         Y9cEaZKQZEg1nRyph2qx5F8PAnD0tZkTyTQj+M2LV4ke/6CUklhfHr1bKpfJ+XGcYuJk
-         jja7s5rixmmYdFxt9H+NqxiyrCcOxvJKkIuPRpFdWX1j1t9jGw43Lqi3TuqQSzBxJPGL
-         SvMA==
-X-Gm-Message-State: AFq9FYJ5/O0OKx6zqD2tDouqv6csW37T/C30DLYzH772aBj44uU0BwDi
-	gR399+dqKuGgKqxWtct75ddpvYWygvLO8UbAcfqoDXM9Ic+blYN/Qav271p5OZvSoLqV40/xzfK
-	BeaUVDjZKRR6/nlqDAP4elbNvSR9fHbETtqO6PAKJSu2+nJHI3My7yIQK
-X-Gm-Gg: AYBFou0RvtxA1izdQfCp2vpLUO/sDSslabWOAcvHxRkQL2qfKpSDryvPOghQE15TwnJ
-	d1YGvberzunAoGd+viNUY2mEyUFwo3JBI2ElqH3gQa78/WoYrzL9fnw6LBQ6laadJ3U0LgF19RT
-	zusWeEFmMuYnLicB71xhQOWNuL3cb8gG2TZCk6xD2z0cCFn1AaYk2wlm0CZZN6ZJyHqIP0N5ShW
-	3cnGWb2qhsbWvQaTNf4jD87sZ6mWh6DoLl5Cm9IK7miiqaatkrKbJ2wGPXXh5b6G4R5kXTfPcmJ
-	1AzgNJUxfpwFI32ATDbj9Sv8KR+dsvFg2Kzf/KlWzdO97fbxLwppjyxxaNqGQK+EzLiNpMGuz3H
-	itv/HrtQacQ==
-X-Received: by 2002:a05:6402:c4ce:10b0:6af:97a9:224a with SMTP id
- 4fb4d7f45d1cf-6b19883993fmr48978a12.2.1791806043720; Mon, 12 Oct 2026
- 04:54:03 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1791806544; x=1792411344;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:subject:cc:to:from:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=kddTvWvhF+27bMv7g9Zho7YBUmupNxBjMAfrRSgPbzw=;
+        b=qtoeLzmUsCul16/5hCbzZlmYF94iFPqurmhw3695VVLPM+b2HwW+FojSu2PZzWyvdk
+         sPnpQEQ1yW+5wq0owlxlN3IWYWIiF0Mnzg1FH3/qpe7wcGpGGtvot5wdCX7luGOQIPig
+         ykeY6b/PaIYai7xj1vCr1YG2sH3a9CVRZrqovC+GRD7MAwJlqP1Nh6u5ogqXvV39RIqj
+         Mb6ujdCV71AJGLzDs9AWe/pVKZQQ/Qcz0OwmgADFvd20g50/jhSVJ4vMDd0VlNcQa0L4
+         JqEDjaExPFuhvQEah98BDVc/JzYw0YVAL4AmluwmP3LablV6Z3JoZFHViTJVXDZ6TW4j
+         UXMA==
+X-Gm-Message-State: AFq9FYIJPi4JT3zgajRnoZcgNrrOCXc1yE3h1eUXMIrLaUANF6vG4EUQ
+	F4YF8BLmz+t6uhkuMU7XkAZaDAcE8m8XW8Qg4Fs4/PZfWEk/rcC1A5HgsVcXqQ==
+X-Gm-Gg: AYBFou2vj9rlZRHv3k8lCDoPOAu/8/tFFuQW/FT+ZIt4lvfLVJgRaXOYbQ50ZpC1XP/
+	5JQbjqtnoxgDX4sYjs1csJYw4vGInNqn1USrvgtzKL7ewM6wzYuKxb93AYKOQP3G/OeSFo8V2Vc
+	KQ10ld5WHVMvu7SwhH9JLtlYBRE2xDpvY+I8Y8nLLWwvB2xyGdS1FKDQlLOMIksVD+tNOfCYyuE
+	pXRT/ydrZRGfdDb7zDxfA9qYLwlFWelhQDAJLw6cawTa29wIDyxGMx1XljyAV8uRGgaQYq5qSnx
+	3GFkl9Bo+9tXTmzxtKozUqtP7misPo6sz9jc5hF72ym7XDO+Hq2v8kRTlvI2k0Lehkeb5fN45xa
+	AQaGZpDCrNGH+ixcDZm6UQgu2KJh58mc9PzCZj+8rrhcv8RgGpeqzvxn4YuWmz2qy0L2r/wix88
+	EDwN0r0DvZ4Zk2u2IQNFG09agK67/4otA9AvIAX5N7n6jG/HLsyJCvVPJC6WioNleuoBouHOJys
+	Vgbvl4Q6HyjsuECLPUcJ26nrApS3gVoq4n/RVsGRwq0s94nor8Svb3i8mBi/awIAbHUqphCAhSg
+	Ja/b4oumhfiMWAg=
+X-Received: by 2002:a05:600c:4ecb:b0:4a1:6916:798 with SMTP id 5b1f17b1804b1-4a18e4a3f69mr171571165e9.14.1791806543307;
+        Mon, 12 Oct 2026 05:02:23 -0700 (PDT)
+Received: from Ansuel-XPS. (host-95-235-252-189.retail.telecomitalia.it. [95.235.252.189])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a19ba624b3sm150533075e9.2.2026.10.12.05.02.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Oct 2026 05:02:22 -0700 (PDT)
+Message-ID: <6acccc4e.4c22a69b.132624.271f@mx.google.com>
+X-Google-Original-Message-ID: <aszMSyMGUIPNvy1J@Ansuel-XPS.>
+Date: Mon, 12 Oct 2026 14:02:19 +0200
+From: Christian Marangi <ansuelsmth@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: lee@kernel.org, mfd@lists.linux.dev, conor+dt@kernel.org,
+	devicetree@vger.kernel.org, robh@kernel.org
+Subject: Re: [PATCH net-next v25 04/10] mfd: an8855: Add support for Airoha
+ AN8855 Switch
+References: <20261009161102.38961-1-ansuelsmth@gmail.com>
+ <20261009161102.38961-5-ansuelsmth@gmail.com>
+ <sashiko-outbox-166721@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261012114213.1757207-1-mclapinski@google.com> <sashiko-outbox-168028@kernel.org>
-In-Reply-To: <sashiko-outbox-168028@kernel.org>
-From: =?UTF-8?B?TWljaGHFgiBDxYJhcGnFhHNraQ==?= <mclapinski@google.com>
-Date: Mon, 12 Oct 2026 13:53:52 +0200
-X-Gm-Features: AclHuK_IudBD0PSNt8K_aewjV-AkAYybXJ2qyIG4OhunkQvG5CHoSq9_LjtJiv0
-Message-ID: <CAAi7L5eN7p42d-5tEgGkhBUDCw7Q2gWfys9qLvqp5yMbfLJnBA@mail.gmail.com>
-Subject: Re: [PATCH RESEND] PCI/DOE: Poll briefly for a response before sleeping
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-166721@kernel.org>
 
-On Mon, Oct 12, 2026 at 1:51=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] pci/doe: CPU busy loop when HZ=3D100 due to PCI_DOE_POLL_INTER=
-VAL=3D0
+On Sat, Oct 10, 2026 at 04:11:40PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] mfd: overlapping regmap readable ranges for General Purpose and GPU timers
+> - [Low] mfd: structure and variable naming violates MFD API guidelines
 > --
->
-> commit 16e5277536bbca37386848082d18257e2ffa71dd
-> Author: Michal Clapinski <mclapinski@google.com>
->
-> PCI/DOE: Poll briefly for a response before sleeping
->
-> doe_statemachine_work() waits for a response by sleeping
-> PCI_DOE_POLL_INTERVAL (PCI_DOE_TIMEOUT / 128) between status reads,
-> which is 7 ms at HZ=3D1000 and 4 ms at HZ=3D250. Exchanges are served fro=
-m
-> the device's local mailbox logic and typically complete within tens of
-> microseconds, so nearly all of that sleep is wasted. Every DOE-capable
-> endpoint pays it once per supported feature during enumeration.
->
-> > diff --git a/drivers/pci/doe.c b/drivers/pci/doe.c
-> > index 6b5d9ba8e9697..5e93d78a1a97e 100644
-> > --- a/drivers/pci/doe.c
-> > +++ b/drivers/pci/doe.c
-> > @@ -27,6 +27,9 @@
-> >  /* Timeout of 1 second from 6.30.2 Operation, PCI Spec r6.0 */
-> >  #define PCI_DOE_TIMEOUT HZ
-> >  #define PCI_DOE_POLL_INTERVAL        (PCI_DOE_TIMEOUT / 128)
->
-> [Severity: Medium]
-> When HZ=3D100, does this integer division truncate to 0?
->
-> If PCI_DOE_POLL_INTERVAL evaluates to 0, it permanently breaks the fallba=
-ck
-> sleep mechanism.
->
-> > +#define PCI_DOE_POLL_FAST_MIN_US     20
-> > +#define PCI_DOE_POLL_FAST_MAX_US     50
-> > +#define PCI_DOE_POLL_FAST_TRIES              40
->
+> 
+> commit 05d4dc95b969f0fcf66d11398aafad3e7eb7c7f1
+> Author: Christian Marangi <ansuelsmth@gmail.com>
+> 
+> mfd: an8855: Add support for Airoha AN8855 Switch
+> 
+> This commit adds support for the Airoha AN8855 Switch which provides
+> a DSA switch and a NVMEM provider. It utilizes the mdio-regmap driver
+> and registers a regmap for each internal PHY.
+> 
+> > diff --git a/drivers/mfd/airoha-an8855.c b/drivers/mfd/airoha-an8855.c
+> > new file mode 100644
+> > index 0000000000000..a2778511dfefc
+> > --- /dev/null
+> > +++ b/drivers/mfd/airoha-an8855.c
 > [ ... ]
->
-> > @@ -525,10 +528,25 @@ static void doe_statemachine_work(struct work_str=
-uct *work)
-> >                       signal_task_abort(task, -EIO);
-> >                       return;
-> >               }
-> > -             rc =3D pci_doe_wait(doe_mb, PCI_DOE_POLL_INTERVAL);
-> > -             if (rc) {
-> > -                     signal_task_abort(task, rc);
-> > -                     return;
-> > +             /*
-> > +              * Exchanges are served from the device's local mailbox
-> > +              * logic and usually complete in tens of microseconds, fa=
-r
-> > +              * below the jiffies granularity of PCI_DOE_POLL_INTERVAL=
-.
-> > +              * Poll for up to ~2 ms before falling back to it.
-> > +              */
-> > +             if (tries++ < PCI_DOE_POLL_FAST_TRIES) {
-> > +                     if (test_bit(PCI_DOE_FLAG_CANCEL, &doe_mb->flags)=
-) {
-> > +                             signal_task_abort(task, -EIO);
-> > +                             return;
-> > +                     }
-> > +                     usleep_range(PCI_DOE_POLL_FAST_MIN_US,
-> > +                                  PCI_DOE_POLL_FAST_MAX_US);
-> > +             } else {
-> > +                     rc =3D pci_doe_wait(doe_mb, PCI_DOE_POLL_INTERVAL=
-);
->
+> > +static const struct regmap_range an8855_readable_ranges[] = {
+> [ ... ]
+> > +	regmap_reg_range(0x10009000, 0x10009fff), /* PDMA */
+> > +	regmap_reg_range(0x1000a100, 0x1000a2ff), /* General Purpose Timer */
+> > +	regmap_reg_range(0x1000a200, 0x1000a2ff), /* GPU timer */
+> 
 > [Severity: Medium]
-> Does passing 0 to this wait function when HZ=3D100 trigger a tight spin b=
-ug
-> instead of yielding the CPU?
+> Is this range definition correct? The General Purpose Timer range
+> (0x1000a100 to 0x1000a2ff) fully overlaps with the GPU timer range
+> (0x1000a200 to 0x1000a2ff).
+> 
+> Could this be a typo in the hardware memory map definition? It seems like
+> the General Purpose Timer range might have been intended to end at
+> 0x1000a1ff to avoid overlapping and potential register access boundary
+> issues.
 >
-> Since wait_event_timeout() immediately returns without sleeping when the
-> timeout is 0, this regression results in a tight CPU busy loop spinning o=
-ver
-> pci_read_config_dword() continuously for up to 1 second during enumeratio=
-n
-> for affected hardware.
 
-Yes, but it's a preexisting issue.
+I have to double check this from documentation, but if possible I would
+like to fix this with a followup patch.
+ 
+> [ ... ]
+> > +static int an8855_core_probe(struct mdio_device *mdiodev)
+> > +{
+> > +	struct an8855_phy_bus phy_bus_infos[AN8855_MAX_PHY_PORT] = { };
+> > +	struct device *dev = &mdiodev->dev;
+> > +	struct an8855_core *priv;
+> > +	struct regmap *regmap;
+> > +	int num_phys;
+> > +	int i, ret;
+> > +
+> > +	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+> 
+> [Severity: Low]
+> This isn't a bug, but does this variable and structure naming align with MFD
+> subsystem conventions?
+> 
+> The MFD guidelines suggest avoiding generic variable names like priv, and
+> instead recommend using ddata for the instance variable. Also, should the
+> struct name itself avoid hardcoding implementation details like core?
+> Naming it something closer to struct an8855 might better adhere to the
+> subsystem guidelines.
+> 
 
-> > +                     if (rc) {
-> > +                             signal_task_abort(task, rc);
-> > +                             return;
-> > +                     }
-> >               }
-> >               goto retry_resp;
-> >       }
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261012114213.17=
-57207-1-mclapinski@google.com?part=3D1
+I already updated the struct, is it needed to also update the local
+variables?
+
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261009161102.38961-1-ansuelsmth@gmail.com?part=4
+
+-- 
+	Ansuel
