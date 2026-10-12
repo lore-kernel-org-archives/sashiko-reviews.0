@@ -1,118 +1,125 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334C24B44C7;
-	Mon, 12 Oct 2026 18:08:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A174D0A0D
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 18:23:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791828500; cv=none; b=gDmazvVzbAWiPBQls7qsGl9pQvfc1JMTMtQ32Uhh8nuaihWImUe/irpvTGMXXOuCTgsy91cAi8kczHMI6hH5KKCULnjexYhw0vRHKVrf4Ra1o5zbDE4EPYWB7GG8RPWfqsZtmFcdHG8FFLIdtnce5N5y0udBwgpfGJ7KgSMF0Ng=
+	t=1791829386; cv=none; b=P5sMEOUTIolA7n0YJZdoQ1+yEIQuJhKXZAlyqcqRFaltHAZIZ1aCNAhj298ihiJ+vfAirDnfGHRMBZHwakiiM/jI1L/CDHOJWC22I4ANfHnRCOnUtWgHvWd/+hrIQ8QWqAGNczxrWuaOGH1InfOg0T0wIXc8PEoCelpetiu6wD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791828500; c=relaxed/simple;
-	bh=dsWGzcaV65hPX0Jv8TnHyGTn8G4TDRaclE2SMbj2a2Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G4Afl78fWxN19PEJ8CmOB7O33H+CfMotvm6srgL9Mf4smIeRTTpjpPOI+RFARhblinefPzuKUzEzXC1UtM/aglIlaw0So4tzZAhpBH3IGnSakdPe5WxTWw7Jc7feEFEpnh12Zxf43pWHvmQqPI9NWPivFzUeJOXGLDHqKPfDEq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fMGkuOuA; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791829386; c=relaxed/simple;
+	bh=Rv23X6bDaEgg7e13p58gKtt260VDqekwLQbSEoisScE=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=PKksDov+bI6RtociX0GYbDm0FgVLuYrFCA/96W+gDVJbHQNut/h4qB1SJ2ZFjPgeOr50qNukV0zTUSWDcYdTRkzCk+CFZU4KFBVf+TxjH9ZCksHXwKLLw/ohCzS+byDXWzKbZW6c8bORUY2+rI7U/OynVHmxCKlK4fR8ZIO8Pi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=fh67C8oa; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fMGkuOuA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077291F0089B;
-	Mon, 12 Oct 2026 18:08:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791828498;
-	bh=3Wli0lXL90p/q6Zd9jQ+LYY2qQ0nlHmU0EB751vWIvA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=fMGkuOuA3HU0J2PUfACwqrLFc+hgMOiO+i+u8Svb2tKub0WK8gV8k05j4iY+pS7qE
-	 EXoj2YjTUxO5M1xmqx2o8vDpWs66kAxY1FjO0y/DzxNFg0MOssq+btJLsm9Mguxt/0
-	 FL6F0VAWBH1pqVUq4hMYZjq/L/dbREWmsLerVdme0SoCdHE3BOQ4bsdCR2AtHpkPpR
-	 r+RfomPlMoTL187ySIPYb8PS/3ujv3L+kcjIi30RYNeyFI9zjOq+i/AArNb77EA2MS
-	 zuiPmsJE7LMu8sWqmXc/yj52mbp19oPs2yHz2w8uRsDfcOg6G0jagvTgh9siQageES
-	 p+uBEmUK6PtDg==
-Date: Mon, 12 Oct 2026 21:08:13 +0300
-From: Leon Romanovsky <leon@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: media-ci@linuxtv.org, dri-devel@lists.freedesktop.org,
-	linux-rdma@vger.kernel.org, linux-pci@vger.kernel.org,
-	kvm@vger.kernel.org
-Subject: Re: [PATCH v10 17/18] PCI/P2PDMA: Evaluate the ATS path for clients
- with ATS enabled
-Message-ID: <20261012180813.GI219304@unreal>
-References: <20261012-fix-p2p-acs-v4-0-v10-0-6ffe7b7a4517@nvidia.com>
- <20261012-fix-p2p-acs-v4-0-v10-17-6ffe7b7a4517@nvidia.com>
- <sashiko-outbox-168177@kernel.org>
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="fh67C8oa"
+Received: from mail01.layka.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id 5D3BB80928;
+	Mon, 12 Oct 2026 20:22:57 +0200 (CEST)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id yYmsGjDpRsO4; Mon, 12 Oct 2026 20:22:56 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1791829376; bh=Rv23X6bDaEgg7e13p58gKtt260VDqekwLQbSEoisScE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=fh67C8oaLsS/4xnwtkIocLnNrL/frc9M3JglJVQCHpP6igU1YZo5Jj6ezTL55XIGz
+	 uPmoCRvAC9hkUEAkrIESXMFcvWYew2hmwyxAOiG9Uzc13XHl6A0z+z303JSraD9Rth
+	 8QR9vPqm83umVIhB3uy4UvS3BkAfBY20IHkyhyaS6k9pDJtm4dtV3s4E8lfY7HXeXu
+	 EzEVWXRDeh23XGQOb7QqYjmxgVNJzqn+gXtBmCFDojLL3K9AiQQwNvJ20/gswcuiux
+	 LtLaAWF/+Z+/GtU1Bmpjt46XbWzXF4/AZsIE2fc3Iuzq6uiRdPKgUdz51lUYv/ifb7
+	 PGKu4ZW4ph9Xw==
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-168177@kernel.org>
+Date: Mon, 12 Oct 2026 18:22:56 +0000
+From: Rustam Adilov <adilov@disroot.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-phy@lists.infradead.org, vkoul@kernel.org,
+ neil.armstrong@linaro.org, olteanv@gmail.com
+Subject: Re: [PATCH v8 1/6] phy: realtek: usb2: introduce phy_reg_desc struct
+ to the driver
+In-Reply-To: <sashiko-outbox-168495@kernel.org>
+References: <20261012173739.36377-1-adilov@disroot.org>
+ <20261012173739.36377-2-adilov@disroot.org>
+ <sashiko-outbox-168495@kernel.org>
+Message-ID: <8af219f842092d37b57100bd25e7c5b6@disroot.org>
+X-Sender: adilov@disroot.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Mon, Oct 12, 2026 at 01:27:12PM +0000, sashiko-bot@kernel.org wrote:
+On 2026-10-12 17:49, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] pci: pci_p2pdma_distance_many() evaluates compatibility without applying client ATS constraints
+> - [Medium] phy: realtek: data race between debugfs and PHY ops corrupts hardware state
 > --
 > 
-> commit 254b102fe424913edc3d5f94f8d41bc5d0de2b20
-> Author: Leon Romanovsky <leon@kernel.org>
+> commit d16c7943f8b3fd4b0cfe55fc75ec12d09511eaf4
+> Author: Rustam Adilov <adilov@disroot.org>
 > 
-> PCI/P2PDMA: Evaluate the ATS path for clients with ATS enabled
+> phy: realtek: usb2: introduce phy_reg_desc struct to the driver
 > 
-> P2PDMA assumes every client issues Untranslated Requests. A device with
-> ATS enabled may translate any address it is handed, including a bus
-> address, and Translation Blocking can reject its Translated Requests on
-> a route the Untranslated answer called usable.
+> This commit introduces a phy_reg_desc struct to the realtek usb2 driver. It
+> stores per-SoC differences such as register offsets and busy bits. This
+> avoids duplication in driver data for RTL9607C and RTD SoCs.
 > 
-> > diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
-> > index e38081f797611..a5fc622e3114f 100644
-> > --- a/drivers/pci/p2pdma.c
-> > +++ b/drivers/pci/p2pdma.c
+>> diff --git a/drivers/phy/realtek/phy-rtk-usb2.c b/drivers/phy/realtek/phy-rtk-usb2.c
+>> index 248550ef98cab..e8d0f0119ec0a 100644
+>> --- a/drivers/phy/realtek/phy-rtk-usb2.c
+>> +++ b/drivers/phy/realtek/phy-rtk-usb2.c
 > 
 > [ ... ]
 > 
-> > @@ -1660,10 +1706,10 @@ pci_p2pdma_map_type_tlp(struct p2pdma_provider *provider, struct device *dev,
-> >  		 pci_p2pdma_map_type_name(type), type, provider_state);
-> >  
-> >  	if (type == PCI_P2PDMA_MAP_UNKNOWN)
-> > -		return calc_map_type_and_dist(pdev, client, &dist, tlp_flags,
-> > +		type = calc_map_type_and_dist(pdev, client, &dist, tlp_flags,
-> >  					      true);
-> >  
-> > -	return type;
-> > +	return pci_p2pdma_client_map_type(pdev, client, per_mapping, type);
-> >  }
+>> @@ -190,29 +199,31 @@ static int rtk_phy_write(struct phy_reg *phy_reg, char addr, char data)
+>>  	unsigned int val;
+>>  	void __iomem *reg_wrap_vstatus = phy_reg->reg_wrap_vstatus;
+>>  	void __iomem *reg_gusb2phyacc0 = phy_reg->reg_gusb2phyacc0;
+>> +	const struct phy_reg_desc *reg_desc = phy_reg->desc;
+>>  	int shift_bits = phy_reg->vstatus_index * 8;
+>>  	int ret = 0;
+>>  
+>>  	/* write data to VStatusOut2 (data output to phy) */
+>> -	writel((u32)data << shift_bits, reg_wrap_vstatus);
+>> +	writel((u32)data << shift_bits,
+>> +	       reg_wrap_vstatus + reg_desc->vstatus_offset);
+>>  
+>> -	ret = utmi_wait_register(reg_gusb2phyacc0, PHY_VSTS_BUSY, 0);
+>> +	ret = utmi_wait_register(reg_gusb2phyacc0, reg_desc->vstatus_busy, 0);
+>>  	if (ret)
+>>  		return ret;
+>>  
+>> -	/* VCtrl = low nibble of addr, set PHY_NEW_REG_REQ */
+>> -	val = PHY_NEW_REG_REQ | (GET_LOW_NIBBLE(addr) << PHY_VCTRL_SHIFT);
+>> +	/* VCtrl = low nibble of addr, set reg_desc->new_reg_req */
+>> +	val = reg_desc->new_reg_req | (GET_LOW_NIBBLE(addr) << PHY_VCTRL_SHIFT);
+>>  
+>>  	writel(val, reg_gusb2phyacc0);
 > 
-> [Severity: High]
-> Does pci_p2pdma_distance_many() also need to apply these new ATS constraints?
+> [Severity: Medium]
+> Can this multi-step state write be interrupted and corrupted by concurrent
+> debugfs accesses?
 > 
-> While this patch successfully updates pci_p2pdma_map_type_tlp() to evaluate ATS
-> routing constraints for P2PDMA clients, pci_p2pdma_distance_many() continues
-> to evaluate mapping compatibility without them:
+> A user with root privileges reading the debugfs file parameter via
+> rtk_usb2_parameter_show() in drivers/phy/realtek/phy-rtk-usb2.c repeatedly
+> calls rtk_phy_set_page() and rtk_phy_read() without acquiring any
+> driver-specific lock:
 > 
-> drivers/pci/p2pdma.c:pci_p2pdma_distance_many() {
->     ...
-> 		pci_client = find_parent_pci_dev(clients[i]);
-> 		if (!pci_client) {
->     ...
-> 		map = calc_map_type_and_dist(provider, pci_client, &distance, 0,
-> 					     verbose);
->     ...
-> }
+>     /* Set page 0 */
+>     phy_data_page = phy_cfg->page0;
+>     rtk_phy_set_page(phy_reg, 0);
 > 
-> If a client has ATS enabled and its Untranslated route is usable but its
-> Translated route is blocked by Translation Blocking (or lacks a whitelisted
-> host bridge), pci_p2pdma_distance_many() evaluates the Untranslated mapping
-> with tlp_flags=0, and incorrectly returns success. 
+> If the kernel concurrently executes a PHY state change (such as
+> rtk_phy_connect() or rtk_phy_init()), could their register accesses collide
+> and corrupt the PHY's internal register access state machine?
 > 
-> When the driver subsequently attempts to map memory, the ATS-aware mapping
-> logic will return PCI_P2PDMA_MAP_NOT_SUPPORTED and fail unexpectedly at
-> runtime, breaking the API contract of the distance validation.
+> Additionally, since struct rtk_phy lacks a reference to struct phy, it
+> appears the debugfs callback cannot acquire phy->mutex. Is there another way
+> to synchronize these accesses?
 
-Yes, Sashiko is right, I'll send new version :(.
-
-Thanks
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261012-fix-p2p-acs-v4-0-v10-0-6ffe7b7a4517@nvidia.com?part=17
+This goes into a pre-existing issue territory, i.e not related to this patch
+series at all.
