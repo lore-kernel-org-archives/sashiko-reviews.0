@@ -1,70 +1,99 @@
-Received: from sender-op-o16.zoho.eu (sender-op-o16.zoho.eu [136.143.169.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29101371067
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 01:26:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.16
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791768388; cv=pass; b=STwCCpVXtorI3VFpQgY7zTOAwngYOdIg8BwewiqJkwE4JxWR6K6dtyv8L3lHNL6m2rpYV6R4hqlnU0MUGUnK9OFtK6JUjAmJhFVQwnTJMWRm2IwGRfgieN8hS6RdKq1zdVDQvKoAyq7t5aYIPP1pQSiGo/1wsN3vWwSv4THhn0s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791768388; c=relaxed/simple;
-	bh=uFqd5kbTdJ6yJj6B3F26YPfKVNGzZTBsrSZzCuB3RJc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=FXJxpkcwDVTge6gqbwlPV3tVWE0Vyyljb4MhkARcnSUHcJELu6f+D/X/lX596YlHmjooGvFKAU2tP6iA/4TbdBJeKmz1SyCQmxoRmAF2/BsM+qtMPS6zZ1Ik3lqSH7qXt/e+2BiNrGLumZQAxV1yB+hdD7xh2e1q+Ktnv9FbJ7I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iav.lv; spf=pass smtp.mailfrom=iav.lv; dkim=pass (1024-bit key) header.d=iav.lv header.i=iav@iav.lv header.b=PYh2HFuy; arc=pass smtp.client-ip=136.143.169.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iav.lv
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iav.lv
+Received: from ultrarisc.com (unknown [218.76.62.146])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2BAF2DC791
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 03:09:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791774571; cv=none; b=KT5cnl8IUlClKxYgo108oP6+XH/0FIwh8Tz8fYf2YavAWLVuMGXCJRZm6VcQAdaUl842++v0F7pdlMEhXd6+xtraPM2IlUJgsKf9hp7+JxeLT+BJkMkDJNsAPFa1U5D0IL6OJOnf0zhShWjtczRnYoEy2flDO12LxhL85X2Fa7E=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791774571; c=relaxed/simple;
+	bh=FA7IJ8y1g44u2q72KpqUerXvklYzPv4lbagS5NmzIwY=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=ZOByOTqB3H11TPooERq/NtzZJSABTWJkMPWEiL1Nc/J7dKnq9lYQHSFboL8SaW2E3pUc9GZOpIgpisG7DtW17PpXym9rflSO3etptLHlQkwbfsYNuJ5IO7ymqUp48eRU9g4cJSfuYfn+DcGsOc78IKqcQcGqJvtlglLFNvPPGnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=awwMU4ZF; arc=none smtp.client-ip=218.76.62.146
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iav.lv header.i=iav@iav.lv header.b="PYh2HFuy"
-ARC-Seal: i=1; a=rsa-sha256; t=1791768374; cv=none; 
-	d=zohomail.eu; s=zohoarc; 
-	b=OfdmVW5wdAKufLhZwAAt3SF60k6dzmaShY9nFyGYIp9VduN+W0Sgor/SRWDqtX91GucA2oh6l4ez6yLcLCDoSmfX4X5K3Zix3vBtnMwWpGA4yLoxlaayIKH5hZJxptTBBmN67XjN23gMfF3rXJnyMkeLxE01tuBG2MtJpvzGeEc=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
-	t=1791768374; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=uFqd5kbTdJ6yJj6B3F26YPfKVNGzZTBsrSZzCuB3RJc=; 
-	b=ILM4yeaL4WLtqOEm3tleYxE5Uoy6fX/7ilennevXl+x0pdOYsNxZ/gJ/nIIEjoAcmi6wAKL8IqNSZx6m9Uatdavy42rSDw+EcOo+0sC/RRvIUhSmANwd+kj1cooEUU1zktWuoFhR7rI4cg6dzYePe77rQ/BQxfWqo1+kHSDI17o=
-ARC-Authentication-Results: i=1; mx.zohomail.eu;
-	dkim=pass  header.i=iav.lv;
-	spf=pass  smtp.mailfrom=iav@iav.lv;
-	dmarc=pass header.from=<iav@iav.lv>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1791768374;
-	s=zoho; d=iav.lv; i=iav@iav.lv;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:Content-Type:Content-Transfer-Encoding:MIME-Version:Message-Id:Reply-To;
-	bh=uFqd5kbTdJ6yJj6B3F26YPfKVNGzZTBsrSZzCuB3RJc=;
-	b=PYh2HFuyCBsjyT8mzoVrs+yGKMw6RCj56MjzeFIBLVciUvBDcNk8MGv2qESJVstI
-	5atdFoqFzc9At1eGC4h46mdjWFKrzPIGpp6Bi2ZsDHumoor+HfVZNOCj2tA8FQUP6Ha
-	yBnuQUCHBDMYnhyHd/ABcId+P9AtSNZDcXLkjmDo=
-Received: by smtp.zoho.eu with SMTPS id 179176837190232.44867149174149;
-	Mon, 12 Oct 2026 03:26:11 +0200 (CEST)
-From: Igor Velkov <iav@iav.lv>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-watchdog@vger.kernel.org, Guenter Roeck <linux@roeck-us.net>,
- Wim Van Sebroeck <wim@linux-watchdog.org>, Igor Velkov <iav@iav.lv>
-Subject:
- Re: [PATCH v2 1/2] watchdog: orion_wdt: load the pretimeout counter on Armada 370/XP start
-Date: Mon, 12 Oct 2026 04:24:57 +0300
-Message-ID: <179176829726.3995625.orion-v2-sashiko@iav.lv>
-In-Reply-To: <sashiko-outbox-167534@kernel.org>
-References: <20261012-orion-wdt-suspend-v2-0-f13cf71443ba@iav.lv>
- <20261012-orion-wdt-suspend-v2-1-f13cf71443ba@iav.lv>
- <sashiko-outbox-167534@kernel.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="awwMU4ZF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	References:Date:Message-Id; bh=b+vDvRRipTrI1T/VEnrSBjhQ4lBtUbOzg
+	EdM1A6Isms=; b=awwMU4ZFTUj8fgNItL8kTtgoPgoWAGZ5hIZcgp3KQALrb7dHT
+	RsFX2q+Gk9vDAxdh+LVWc9EiuZNwKGvldVf7c4jHgPhn2pMksns4PP4GWGn/hMn0
+	+9Jo1n3f+YlDYrUyA2g5jMT2NUt79Nj81Kcux7AYxaOOS2ZGoc209kbRS0=
+Received: from [127.0.0.1] (unknown [192.168.100.1])
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwDnrwb0TsxqFNUBAA--.934S2;
+	Mon, 12 Oct 2026 11:08:01 +0800 (CST)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v2 08/10] riscv: dts: ultrarisc: Add initial device
+ tree for UltraRISC DP1000
+From: Xincheng Ji <jixincheng@ultrarisc.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Jia Wang <wangjia@ultrarisc.com>, devicetree@vger.kernel.org, 
+ conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org, 
+ dmaengine@vger.kernel.org, robh@kernel.org
+In-Reply-To: <20260907101304.368E71F00A3A@smtp.kernel.org>
+References: <20260907-ultrarisc-dts-v2-0-5eb4c97477c5@ultrarisc.com>
+ <20260907-ultrarisc-dts-v2-8-5eb4c97477c5@ultrarisc.com>
+ <20260907101304.368E71F00A3A@smtp.kernel.org>
+Date: Mon, 12 Oct 2026 11:07:30 +0800
+Message-Id: <179177445093.2537254.1384669594502107966.b4-reply@b4>
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1791774451; l=1085;
+ i=jixincheng@ultrarisc.com; s=20260922; h=from:subject:message-id;
+ bh=FA7IJ8y1g44u2q72KpqUerXvklYzPv4lbagS5NmzIwY=;
+ b=ao2vMfGgIhJvOsEkfRD2rSyS9wNv15SFnwsrM4aVkJx2+fYHm+Abo4gtErAMBhbZpt82t8dGy
+ /BEGb+x5AJaDyx1UvcYiPKdMVshqlbD0CEvz+7d8LgxqmnSCDYdqagX
+X-Developer-Key: i=jixincheng@ultrarisc.com; a=ed25519;
+ pk=n848dcS5D6g0vLad/rjp4Gf/1eedTe1a3pYUrkt2260=
+X-CM-TRANSID:AQAAfwDnrwb0TsxqFNUBAA--.934S2
+X-Coremail-Antispam: 1UD129KBjvdXoW7GFyDury5Wry3CF48ZFW5Wrg_yoWDZFX_ur
+	909w17Ww4DJ340kanFkr1YvF12kFsxKry3Jwsrtry3Kr97Xw45CrZ29rZav3WxK3yxWFyk
+	Cr9xXFWFvw1a9jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUb3xYjsxI4VWDJwAYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I
+	6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+	8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0
+	cI8IcVCY1x0267AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r1j6r4UM28EF7xvwVC2z2
+	80aVCY1x0267AKxVWUJVW8JwAIcxvE14x267AKxVWUJVWUGwAS0I0E0xvYzxvE52x082IY
+	62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7V
+	C2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JMxkF
+	7I0En4kS14v26r126r1DMxkIecxEwVCm-wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7x
+	kEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E
+	67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCw
+	CI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1x
+	MIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvf
+	C2KfnxnUUI43ZEXa7IU0go2UUUUUU==
+X-CM-SenderInfo: pml0x0xfkh0wg6xo325dul2uoofrz/1tbiAQAJDmq-VKkAAgADsv
 
-> - [Medium] watchdog: orion_wdt: global orion_wdt_info struct contamination
-> - [Low] watchdog: orion_wdt: TIMER1 clock rate mismatch for pretimeout on Armada 370/375
+  Hi,
 
-Both are pre-existing. orion_wdt_info gets WDIOF_PRETIMEOUT in probe
-since e07a4c79ca75, and armada370_start() already enabled TIMER1 on
-that flag, so this patch does not widen it. On the TIMER1 rate: no
-in-tree Armada 370 or 375 DT has the pretimeout interrupt, and XP/38x
-set TIMER1_FIXED_ENABLE_BIT in armadaxp_wdt_clock_init(). I'll leave
-both outside this series.
+  I'm temporarily taking over this patch series from Jia Wang.
+  On 2026-09-07 10:13 +0000, sashiko-bot@kernel.org wrote:
+> [Severity: High]
+> Does this reg size limit of 0x400 provide enough space for 8 DMA channels?
+> 
+> The Synopsys DW AXI DMA IP driver (dw-axi-dmac-platform.c) maps channel
+> registers starting at chip->regs + 0x100 + i * 0x100. For 8 channels, the
+> maximum base offset is 0x800 (channel 7).
+> 
+> In axi_dma_hw_init(), the driver iterates over these channels and writes to
+> their registers (e.g., CH_INTSTATUS_ENA at offset 0x080, hitting offset
+> 0x880). Since the reg property defines a window of only 0x400 bytes,
+> accesses for channels 3 through 7 will fall completely outside the declared
+> memory region, leading to out-of-bounds memory accesses. 
+ 
+  After checking the hardware register map, I confirmed that the DMA
+  register range specified in the device tree is incorrect. Thank you
+  for catching this issue. I'll correct the range in v3.
 
-Igor
+  Best regards,
+  Xincheng Ji
+
+-- 
+Xincheng Ji <jixincheng@ultrarisc.com>
+
