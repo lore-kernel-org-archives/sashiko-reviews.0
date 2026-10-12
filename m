@@ -1,117 +1,67 @@
-Received: from out30-130.freemail.mail.aliyun.com (out30-130.freemail.mail.aliyun.com [115.124.30.130])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A603BCD05
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 07:50:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDED440627
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 08:05:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791791424; cv=none; b=XD2sh8XXiu0zSoygHzQHrSnLISuwhv9UOaVt1aWFEpTpI0QXuuXfNGIrrsAwLPBPdwnALkkdm37/6IaJIt55X64XJAqu8PeOh0stZOXrZwsNzb8yPYZAh2/nnyY7kWGpN0c8FMPpZJ+8zwBUFCgbctNYyiaHejyxk84J4d2cWtI=
+	t=1791792312; cv=none; b=fZFRlFvkWYjELurpzFRAUBufGLFhDECfF1l0EoD1j4yYSMHGIbANIiJN+nLW/biPTcKDNRMTQ+0Iso2waV/RhP8aWN5snuuV8jLS+h2/n3XaYKJrAsc3LeaJZLiFpKZxc8X+BIKqhXWbvV2HUTFxEKg1fUsy3KHkCMUo/Qf5AJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791791424; c=relaxed/simple;
-	bh=C50LJ3Vdsia6GXxtYUqtD+r3BibR95E6noBXKAs8UUE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NXGxTwWbPyVr+/z08jtFlDP8P9k9pZuPpTC2RrsmVQWxCt4rUlAmere7uxkBjhHusH9cKnwS/nf8zV/W1oS9m5sEhXUpF02jslkyDdCuQNurGi1kPjdjt5wfkYcBoDHaQU2ApUFjdaWuLigWT5FMAtIqrsQwEy7M2ynZq8poZIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=pVvixb49; arc=none smtp.client-ip=115.124.30.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+	s=arc-20240116; t=1791792312; c=relaxed/simple;
+	bh=fBwpQrscKG2MNu6DtML6mpRhuMqbND/8kAIqBtzxt70=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KA4K+2CZ1oWwyHWTdJO23j3K0CeaA2KwPZQjgMcUKcuOCZ5qlfpl78DMFG6HJmwfre+GprtScS8ja/JVIe57JEHbR2e1hntLis3ULpyj/ooi71VqQ8mjsZhlot2Az7uHJYHxvC846klBvJaoGTy+o3btSoVAqQ8+nrG41Hr9Nxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dyKP/1RQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="pVvixb49"
-DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=linux.alibaba.com; s=default;
-	t=1791791419; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
-	bh=nyvz0mMuh4bqfbMaOFn6ymiAv9PJ0j5FQKUNYH4alZ0=;
-	b=pVvixb49ewWJMizZQ27INjqKAkP7cwieO0xtH+nyLfLjwBLGC+2oozXKrMnQO8bAi3mivreHWXAl3DVc7vip3A9HFi7xpUmabKd9gp4bBQIu/FlOlKfNjsC6DU0WLGSsV9MnBIA3V2DuPbCxdZAgDr9TMS4Apn1joZqe9gAoJpU=
-X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R111e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam011083073210;MF=libaokun@linux.alibaba.com;NM=1;PH=DS;RN=20;SR=0;TI=SMTPD_---0XCclAy1_1791791415;
-Received: from 30.221.130.114(mailfrom:libaokun@linux.alibaba.com fp:SMTPD_---0XCclAy1_1791791415 cluster:ay36)
-          by smtp.aliyun-inc.com;
-          Mon, 12 Oct 2026 15:50:17 +0800
-Message-ID: <bda10a43-5ff3-4f8d-b9a7-e63161e0fb4b@linux.alibaba.com>
-Date: Mon, 12 Oct 2026 15:50:15 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dyKP/1RQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A731F0089B
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 08:05:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791792311;
+	bh=fBwpQrscKG2MNu6DtML6mpRhuMqbND/8kAIqBtzxt70=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=dyKP/1RQx3ArMyGVqDcXNAppN/owjaT1MS2VjY/Nse6XeLef9vaodufU76h0NgM2c
+	 y2uklV6DlG2YlK1OV1okEVyjbFSP20EpdMh0l/2yolHpxora210x5qNEydfuXQ28/z
+	 chUAJGF9jfEFH3Jm2eR1GT2r9hcNqAFkPvYkinC/sGrXRyCesdx0wVjkYXOMMUGnKQ
+	 jy6Hip6BWQoN0lCmBXVmjMrGi6QVQueMtg3CK3V9FATvLJ1GTEHu03rYZ2XAc+uMxe
+	 7lZhhXmdW0PqqjnHF8Uu7JI8oG2WcH2XPWCrnNl2aiqSSys+5KGghkog/UwTPx1O5W
+	 eqCiq81tzuVng==
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-3a5a26c8412so15881141fa.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 01:05:11 -0700 (PDT)
+X-Gm-Message-State: AFq9FYK7u2TNPPTbn2WelnGbE37+5MEn6C8ZEc3ygzUbrKSgK3/0B4BU
+	aIFNp4/++VezEvfcGjyD9tRp2vUnfbZYMy2kUakG/XKjnGaoNMtxMsxvOiD9cmTNL1JgdbWSaah
+	xDN+f445RqWEoPSbMbglRA4KQiW2deRA=
+X-Received: by 2002:a2e:a9a3:0:b0:3a9:a2fd:5931 with SMTP id
+ 38308e7fff4ca-3a9c55db070mr18556191fa.6.1791792310210; Mon, 12 Oct 2026
+ 01:05:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/13] blk-crypto: reject fallback data unit sizes it
- can't handle
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-ext4@vger.kernel.org, linux-fscrypt@vger.kernel.org, tytso@mit.edu,
- linux-fscrypt@vger.kernel.org, linux-block@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, linux-xfs@vger.kernel.org,
- ebiggers@kernel.org, jaegeuk@kernel.org, axboe@kernel.dk, hch@lst.de,
- djwong@kernel.org, brauner@kernel.org, tytso@mit.edu, berto@igalia.com,
- adilger.kernel@dilger.ca, jack@suse.cz, yi.zhang@huawei.com,
- ojaswin@linux.ibm.com, ritesh.list@gmail.com, stable@vger.kernel.org
-References: <20261011170958.1759230-1-libaokun@linux.alibaba.com>
- <20261011170958.1759230-4-libaokun@linux.alibaba.com>
- <sashiko-outbox-167341@kernel.org>
-Content-Language: en-US
-From: Baokun Li <libaokun@linux.alibaba.com>
-In-Reply-To: <sashiko-outbox-167341@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20261012015433.6155-1-phucduc.bui@gmail.com> <sashiko-outbox-167547@kernel.org>
+ <CAABR9nHKxOze0wryK1XjSdJVA7rsMXiSt=-S8W2QsGdQqP1Evg@mail.gmail.com>
+In-Reply-To: <CAABR9nHKxOze0wryK1XjSdJVA7rsMXiSt=-S8W2QsGdQqP1Evg@mail.gmail.com>
+From: Linus Walleij <linusw@kernel.org>
+Date: Mon, 12 Oct 2026 10:04:58 +0200
+X-Gmail-Original-Message-ID: <CAD++jLkwM6KY-DsYU5-rJSisX17OwNzcq6xNrrw7uRkRCbEcYg@mail.gmail.com>
+X-Gm-Features: AclHuK8NzHYGDfIcjnpzczSW68YihUIiM9-DfvkM2k3b8qWCvW0U7vvOxNAQ2k4
+Message-ID: <CAD++jLkwM6KY-DsYU5-rJSisX17OwNzcq6xNrrw7uRkRCbEcYg@mail.gmail.com>
+Subject: Re: [PATCH v2] pinctrl: mcp23s08: Propagate reset GPIO errors
+To: Bui Duc Phuc <phucduc.bui@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, linux-gpio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2026/10/12 01:20, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] block: NULL pointer deref in blk_crypto_fallback_evict_key() on setup failure
-[...]
-> [Severity: High]
-> Does this early return bypass blk_crypto_fallback_init() and leave
-> blk_crypto_fallback_profile as NULL?
->
-> If this is the first fallback usage, returning here means we haven't
-> initialized the profile. If downstream callers (like dm-inlinecrypt) handle
-> this -EOPNOTSUPP error by attempting to evict the partially initialized key,
-> can it lead to a NULL pointer dereference?
->
-> When target teardown calls blk_crypto_evict_key(), it will eventually call
-> blk_crypto_fallback_evict_key(), which passes the uninitialized profile
-> directly:
->
-> block/blk-crypto-fallback.c:blk_crypto_fallback_evict_key() {
-> 	return __blk_crypto_evict_key(blk_crypto_fallback_profile, key);
-> }
->
-> This unvalidated profile pointer is then dereferenced when checking the number
-> of slots:
->
-> block/blk-crypto-profile.c:__blk_crypto_evict_key() {
-> 	...
-> 	if (profile->num_slots == 0) {
-> 	...
-> }
->
-> Could this cause a kernel panic if a user with device mapper access requests
-> an unsupported data unit size?
->
+On Mon, Oct 12, 2026 at 7:53=E2=80=AFAM Bui Duc Phuc <phucduc.bui@gmail.com=
+> wrote:
 
-The early return does leave blk_crypto_fallback_profile uninitialized,
-but the NULL dereference that follows is a pre-existing issue, unrelated
-to this series: the same eviction path is reachable on the base tree,
-and the two flows below trigger a NULL dereference or a use-after-free:
+> Linus, could you confirm whether this approach would be OK for
+> mcp23s08?
 
-  dm-inlinecrypt ctor            # first use of the fallback
-   ├─ blk_crypto_init_key()      # succeeds, ctx->key.size != 0
-   ├─ blk_crypto_start_using_key()
-   │   ├─ return -EOPNOTSUPP     # uninit profile, will NULL deref
-   │   └─ blk_crypto_fallback_start_using_key()
-   │      └─ blk_crypto_fallback_init() fails
-   │         └─ kfree(profile)   # not NULLed, will UAF
-   ├─ goto bad
-   └─ inlinecrypt_dtr()          # evicts whenever key.size is set
-      └─ blk_crypto_evict_key()
-         └─ blk_crypto_config_supported_natively() = false
-            └─ blk_crypto_fallback_evict_key()
-               └─ __blk_crypto_evict_key(blk_crypto_fallback_profile)
-                  └─ profile->num_slots # BOOM!!!
+I don't understand Sashiko's fringe use-case rambling here,
+I think the patch is fine.
 
-If this series doesn't need a V2, I'll send the fix as a standalone
-bugfix.  If a V2 is needed, I'll include it in the series before this
-patch.
-
-
-Thanks,
-Baokun
-
+Yours,
+Linus Walleij
