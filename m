@@ -1,177 +1,101 @@
-Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F351544AB95
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 08:54:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5EC46D0B0
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 09:02:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791795269; cv=none; b=LFP+SU/YhuSa/0bkFWRkN8NPfszIRgxAUuNI8j1DDHcv25BhUG10M199wc+efq1aO/R2xbXWq6qpAOvNpUjv6sr5XiqfFzBYLZRH0VyyOIYCplIR8MPDNp6cGSg66V94AWxPQh/wrs2RrHHt/HWydLHk0G7iJsHa9OUc49BchZ8=
+	t=1791795752; cv=none; b=Rgz+hFKt5dAIDQW2uMo6fSYlgL7nOUutvwSWxMfODVcq4NDbye8wcs9xQu0G5rx52AmbLBxSMVrNW4mgSxpol/4J6nSigxO8rLr9T07mwa06EIc/H8mc0wtKmG6T2eQhLCsLs2B9IJtxnPncZTjic77UjBTiogAUDGH+GDhx/Xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791795269; c=relaxed/simple;
-	bh=b/I9uv6tQpG7A/DkHfe5jFSqN3iCjdym1oHayjrFrdc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HcYiwobxEw+2cOPhzKxecGIMmvqPoWaN2XGjMT7jXNKQ4a8pkw+eONuDAy+rx1fQASOIa4X+ohBwxaV9NbXITiMMAGSGUPR7UclnP8WbWvnoazLK7QvX1m02cQW3UkFB4OtHnBR7KBCeGCBZSjDNH6TqFzIo4eRzTEAjuLv/HKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=iM5qQkUt; arc=none smtp.client-ip=117.135.210.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
+	s=arc-20240116; t=1791795752; c=relaxed/simple;
+	bh=bjF/sClYqCGL939pnFf+kLQX8zKbUrhgCJZgeEGIDLE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=kArsK6/eoiBy7JO6oB946cp2Ex1tv327i6ra5M68k31ntn0BGapnTfAve9rF2usEuSKaUpNDIjN9ehFWJsMnGk60ynx1G6yaK7OaOQmFauBchf3Gas9hdU3e5y+iMWJ+Z7ZrI4ZgykMvWTVojrbf4mwQnkysGGLW7RJs9VHko/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=isslab.korea.ac.kr; spf=none smtp.mailfrom=isslab.korea.ac.kr; dkim=pass (2048-bit key) header.d=isslab-korea-ac-kr.20251104.gappssmtp.com header.i=@isslab-korea-ac-kr.20251104.gappssmtp.com header.b=JJVObZcp; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=isslab.korea.ac.kr
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=isslab.korea.ac.kr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="iM5qQkUt"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=BJxenIXhdUqi9K52gMrSLjgLCaVLYoX3mxZ0/mSG73Y=;
-	b=iM5qQkUtnmRfurR4SEl7gFzbI+fELaJvsrHpjL7Ut01XlmZG/SxCLYxnii5oZH
-	4YCleWZiV7XUPnRNevE5LfShrLedB2m4LhcPxE1J/IO95bXfr420KcxdTwNluXtP
-	glCDioV7z7eLZ1RNbKAvdjM/QEn4vVz1G7q6mqk/9M/L0=
-Message-ID: <33c171df-0687-4fbc-9650-1b692dfab3b1@126.com>
-Date: Mon, 12 Oct 2026 16:54:21 +0800
+	dkim=pass (2048-bit key) header.d=isslab-korea-ac-kr.20251104.gappssmtp.com header.i=@isslab-korea-ac-kr.20251104.gappssmtp.com header.b="JJVObZcp"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3856d6fbcb3so815582a91.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 02:02:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=isslab-korea-ac-kr.20251104.gappssmtp.com; s=20251104; t=1791795750; x=1792400550; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=la0yUppRKkBOXKqJrbZxqUja+1YySJSF4z3IR3acabQ=;
+        b=JJVObZcpIoXKHI6Z1AT/atXMkxqU/cgybJyHCfmBKsJSEi6quYls8Oa/wd7lfIxAT2
+         NNFmC8aflcoT7Cl1TaysNzJJERRmxE9uEWkN0vo4cXulU0XPegJSRcjua3LJxZ9D+kyd
+         7ayxRXrIXye8htdxH8jJC/2jN9rIXTb0f/oNOOaaaQmYKmBJdlROR4fh/9cgxaacw5EM
+         64xXLtvqUzPFgvZaSXQiYcE5zwX1C2h7QwGDgu8nslb2OAXzyIIAx7qCkqC+SDFgDFxp
+         HhslZzYQNYaUJTDRN6u9+eLHazVXxDE4RQ4YWdTKyTdLkFKB6015TYa979zQnw5qfgHw
+         v9Mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791795750; x=1792400550;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=la0yUppRKkBOXKqJrbZxqUja+1YySJSF4z3IR3acabQ=;
+        b=zrtHsWHYE0eL+z/8CGOhmIZxfVjXsV/9R5nLZgbGNHTrmRIoxpBr0KATBMdeVgS8gd
+         m9ZVh58mZrENDrUkO4ypmGXj42yofKFeJEfiHemr/GWVz0HlG7DdJhAqovdGKSjYtUXa
+         F2OWHP0DKhjgcK0I1gXpvNGwNRrUDG1M/qjK19zHJ+7ahIRO9ilo06h2lu51/bLJFq+x
+         SwK5+vJR/ltoganz3SrtksRH+Kd4B0U/9HM5HEbe22dX3g+JK2a+MbrSor9SYtuiCzIr
+         EZ6abaFcuekKiGh3WoFHWbW7XlGXAeAPPCUxBN9E4v98HF/IwUnEDjBLyyJq1pojeMlY
+         6R4w==
+X-Gm-Message-State: AFq9FYKvPH0FBmqmupB3GyMUODvAGxD2eVovT4/RinV3M4ER1aaf4jTR
+	OyEPmELVLzCjHRVYRdXQw2yq5NTcGda3IS6Nn2Sreon+xTYI5Qt8232KGUu2J+13tUe8p5WLLr7
+	i4/tXDTY=
+X-Gm-Gg: AYBFou0NSTl38h+vQ+ZFpkwbMeanN52iQs+humDIjgDBGBrxy6jaSwznW1ymJB5OlzZ
+	KQ8VT33poy8MrbdC26MWevTJMZAMHa5RYqZp7xr+a+KLLCbhllb/5+d1h9heARsWBKJjr12moLR
+	97pWffTKPqfaxDl6u5ldj0FLRit7KZ2wwfW1XYShx4ZUCIjkT8tiJuM8ljFH3i0P+jRvYbpF40p
+	mW18eEDf/ZiF29j6Xe+2tP/XgZ0nSZREbqFWKk5xxEY5tZY6FIVRAZYMFSwOiGpkgCokmqt6rjM
+	hRHt/S2rQnZgfYflfOlydR51OXwaqLCx+uULWVOJmlw5WqLKU/kG850Gye6RZpusIrVfM4V+Oz4
+	4hWvEL5DApJhd9xhWWN0XHwuo9ve/FDKPoovKWxZfIj0ISrt6jkbDtK7cHtv9kb5ZfG6NZJi/o2
+	B0cfqByGC9TCB7f5CT+kdNRDH6cCVbMQt+GwJ1p7GTJb6bUQpD08r6bvW2XLRA3sUmiX4ifjKNy
+	Ry7pA==
+X-Received: by 2002:a17:90a:d2ce:b0:3a9:9f13:e960 with SMTP id 98e67ed59e1d1-3ab3a98f4e3mr7312162a91.60.1791795749920;
+        Mon, 12 Oct 2026 02:02:29 -0700 (PDT)
+Received: from yhlee-960QFG.. ([125.131.91.97])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ab3962f771sm7291898a91.2.2026.10.12.02.02.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Oct 2026 02:02:29 -0700 (PDT)
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-scsi@vger.kernel.org,
+	ching2048@areca.com.tw,
+	mkp@kernel.org,
+	James.Bottomley@HansenPartnership.com,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Subject: Re: [PATCH 2/3] scsi: arcmsr: check the completion index the adapter reports
+Date: Mon, 12 Oct 2026 18:02:21 +0900
+Message-ID: <20261012090222.2286418-1-yhlee@isslab.korea.ac.kr>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <sashiko-outbox-167808@kernel.org>
+References: <cover.1791789900.git.yhlee@isslab.korea.ac.kr> <f0e71746bcdaabb1e105297ed86ddcf2245b0c86.1791789900.git.yhlee@isslab.korea.ac.kr> <sashiko-outbox-167808@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH iwl-net v3 1/3] ice: attach and detach VF representors
- outside of vf->cfg_lock
-To: sashiko-reviews@lists.linux.dev
-Cc: intel-wired-lan@lists.osuosl.org
-References: <20261008125754.3520773-1-xiaolinkui@126.com>
- <20261008125754.3520773-2-xiaolinkui@126.com>
- <sashiko-outbox-165586@kernel.org>
-Content-Language: en-US
-From: Linkui Xiao <xiaolinkui@126.com>
-In-Reply-To: <sashiko-outbox-165586@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_____wD31wQ9oMxqhvfGBA--.54952S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxuryDKw47ur1rtF4fGF4fGrg_yoW7JFykpa
-	95XFWjkrykXr1Ig3srXw4UuFy0934rKFy5Gr1rKF4S9an8Cr1DAr47KFWjvFy8A3s3A3Wa
-	vr4DZwn5ZF98JaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UhXocUUUUU=
-X-CM-SenderInfo: p0ld0z5lqn3xa6rslhhfrp/xtbBqB4F22rMoD6pmAAA3h
+Content-Transfer-Encoding: 8bit
 
+Thanks for the review.
 
+On the interrupt storm: you are right.  Breaking out of the loop left
+the completion consumer index unadvanced, so the adapter would keep the
+postqueue interrupt asserted and the handler would re-enter on the same
+entry.  v2 skips the bad entry and continues so the consumer index
+advances past it, clearing it to 0xffff on type F as the normal path
+does; the queue drains instead of stalling.
 
-On 2026/10/9 21:05, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] ice: UAF in NAPI Rx path due to missing RCU grace period after xa_erase
-> - [Medium] net/ice: silent failure to apply VF MAC/VLAN to hardware due to TOCTOU race
-> --
-> 
-> commit 32649319eb3be01d6b10e730f49f29871e5cb572
-> Author: Linkui Xiao <xiaolinkui@kylinos.cn>
-> 
-> ice: attach and detach VF representors outside of vf->cfg_lock
-> 
-> This patch moves the detach and attach of VF representors outside of
-> the vf->cfg_lock to resolve a lock inversion between cfg_lock, the
-> devlink instance lock, and RTNL.
-> 
->> diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
->> --- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
->> +++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
->> @@ -789,9 +789,21 @@ void ice_reset_all_vfs(struct ice_pf *pf)
->>   
->>   	/* free VF resources to begin resetting the VSI state */
->>   	ice_for_each_vf(pf, bkt, vf) {
->> +		/* Detach the representor before cfg_lock and attach it after
->> +		 * releasing it again: both take the devlink instance lock and
->> +		 * then RTNL, while __ice_set_vf_mac(), ice_set_vf_port_vlan()
->> +		 * and the representor ethtool reset take cfg_lock under RTNL.
->> +		 * Take cfg_lock once ahead of the detach to wait out a reset
->> +		 * that is already inside the lock; ICE_VF_DIS, raised above,
->> +		 * keeps later ones out.
->> +		 */
->>   		mutex_lock(&vf->cfg_lock);
->> +		mutex_unlock(&vf->cfg_lock);
->>   
->>   		ice_eswitch_detach_vf(pf, vf);
-> 
-> [Severity: High]
-> Does this code leave a window for a use-after-free in the NAPI Rx path?
-> 
-> During teardown, ice_eswitch_detach() calls unregister_netdev() which
-> waits for existing RCU readers. However, the representor pointer remains
-> in the eswitch.reprs XArray during and after unregister_netdev().
-> 
-> Because the pointer is still in the XArray, a concurrent NAPI Rx thread
-> calling ice_eswitch_get_target() can successfully fetch it via xa_load()
-> even after unregister_netdev() completes.
-> 
-> The teardown path then removes the pointer via xa_erase() and immediately
-> calls ice_repr_destroy(), executing free_netdev() and kfree() with no
-> additional RCU grace period. If a NAPI thread fetched the pointer just
-> before xa_erase(), it will dereference freed memory.
-> 
->> +
->> +		mutex_lock(&vf->cfg_lock);
->> +
->>   		vf->driver_caps = 0;
->>   		ice_vc_set_default_allowlist(vf);
->>   
->>   		ice_vf_fdir_exit(vf);
->>   		ice_vf_fdir_init(vf);
->>   		/* clean VF control VSI when resetting VFs since it should be
->>   		 * setup only when VF creates its first FDIR rule.
->>   		 */
->>   		if (vf->ctrl_vsi_idx != ICE_NO_VSI)
->>   			ice_vf_ctrl_vsi_release(vf);
->>   
->>   		ice_vf_pre_vsi_rebuild(vf);
->>   		if (ice_vf_rebuild_vsi(vf)) {
->>   			dev_err(dev, "VF %u VSI rebuild failed, leaving VF disabled\n",
->>   				vf->vf_id);
->>   			mutex_unlock(&vf->cfg_lock);
->>   			continue;
->>   		}
->>   		ice_vf_post_vsi_rebuild(vf);
->>   
->> +		mutex_unlock(&vf->cfg_lock);
-> 
-> [Severity: Medium]
-> Does this sequence leave a window where a concurrent VF MAC or VLAN update
-> can silently fail to apply to the hardware?
-> 
-> If a user configures the VF MAC, __ice_set_vf_mac() calls
-> ice_check_vf_ready_for_cfg() before acquiring vf->cfg_lock.
-> 
-> If a PF reset occurs simultaneously, ice_reset_all_vfs() sets ICE_VF_DIS
-> globally. If this happens right after __ice_set_vf_mac() passes its check,
-> __ice_set_vf_mac() will wait to acquire vf->cfg_lock.
-> 
-> As seen in the lines above, ice_reset_all_vfs() acquires vf->cfg_lock and
-> rebuilds the VF VSI using the old MAC address. After ice_reset_all_vfs()
-> releases the lock, __ice_set_vf_mac() acquires it, updates the software
-> MAC, and calls ice_reset_vf().
-> 
-> Because ICE_VF_DIS is still set by the PF reset, ice_reset_vf() aborts
-> the hardware reprogram. __ice_set_vf_mac() then returns success based on
-> its earlier check, leaving the hardware enforcing the old MAC while
-> software tools report the new one.
-> 
-Hi,
+On maxFreeCCB: also correct.  arcmsr_get_firmware_spec() can raise
+acb->maxFreeCCB above the 1024-entry pccb_pool, so v2 bounds the index
+against ARCMSR_MAX_FREECCB_NUM instead.
 
-Thanks for the review. I did not modify the original patch, but both issues
-reported here are now addressed by separate patches sent to netdev:
+On the uncleared cmdSMID in arcmsr_hbaE_polling_ccbdone(): this predates
+the change -- the polling path never writes 0xffff back for type F even
+on the normal consume path -- so it is independent of the index bound
+and I will address it separately rather than fold it into this fix.
 
-[High] UAF in NAPI Rx path:
-   https://lore.kernel.org/all/20261012072959.254206-1-xiaolinkui@126.com/
-
-   This patch erases the xarray entry first, then adds synchronize_net()
-   before the representor is freed, and holds the RCU read lock around the
-   netdev usage in ice_process_skb_fields().
-
-[Medium] silent failure to apply VF MAC/VLAN due to TOCTOU race:
- 
-https://lore.kernel.org/netdev/20261012082910.283229-1-xiaolinkui@126.com/
-
-   This patch addresses the race between 
-__ice_set_vf_mac()/ice_set_vf_port_vlan()
-   and the PF reset path.
-
-Both patches are independent of the original series and were not included in
-a repost of it.
-
-Thanks,
-Linkui
-
+v2: https://lore.kernel.org/linux-scsi/cover.1791792888.git.yhlee@isslab.korea.ac.kr/
