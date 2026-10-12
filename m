@@ -1,110 +1,116 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B2B4ACC94;
-	Mon, 12 Oct 2026 16:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0234AC143
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 16:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791821624; cv=none; b=dEgyAAOKc+Wi0mg5S0EJL9ibDzuWUghH9LkJEvaD77WAEYHbCi1Jex7LllPkffiuZfLVk3ShuF8US6OLUe4YmR6vZWf0FGEqqfNWj6772n8xRvlfa0zI5pZ8ewEv22giPXFwWhcJFz242J68QpSUcAql6z6gd7fFOXSmbc9PpKY=
+	t=1791822236; cv=none; b=cAdOqae1gLjrM07bIcg95N7e2khOU/PQgdCUYe4WYR7gdf5As5tnjwe2E4Z9Y6K0fx0rA1hDAmW+2tiPXwObQECug5k4cTQSud6Mym/MUGxbyKHz36hJ73AQ73UjSkD6n/KRttVPn+fGmbfvKvy6fY/YBO1qBAA7MUG+dL/Jv38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791821624; c=relaxed/simple;
-	bh=VnUgvhekT2CkIj8Wza4EB/CsgfDSyBd0FRK4QXOUaZg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q2B6oFxXPNbtgSHb/Dk5QqRBnXV4EV222xSK5yj2NHHC2z5fnYb5O8wmTM+1gsznqeaKsSE05vA8fG7S9t9Ju88LBgM3ojyPEDNXOVO62AP9PWFsV2SMBAuav/R7kZrT06cr0Ln7K58UWnUCJcq8jQ0vqNx6sPdKK5kv+WcA2mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v04EPpsI; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791822236; c=relaxed/simple;
+	bh=+K1XIz46GJ404dJ+A2h7se6kaFw8wz7isoVls2hjwTs=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Bem76tnN13aEJE9xiswXu46hxCYdcf6Lo6trkWeec+myzc17d5fBIAJsBAqOiRSEhjjADR2p3Rd8GvzHHboFziWRDLAFi7ACb6pUBiiSFHKe1WJ5OvJ+XuQry90qlFwMoA+UQH1Za06q0m1WEcmiqRcuotObExLk1Ur5Yu7/fJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i0iI8pLB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v04EPpsI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F851F0089B;
-	Mon, 12 Oct 2026 16:13:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1791821623;
-	bh=IEvo9ENkwkWplxj1NTic5h2muwUJVN5MraC5LTJMp7w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=v04EPpsIsX8PrEAYKxATrJcP3IWbDkWFyn2LdFg8UMvzpT4gvhNCKzmuZJ8Onuz/+
-	 nI5aj/Zn66c06jh2WmiwdHNnL789ocz1m5L/rzJ5M5cApB2ZQaR+u0S+CSuQofcQ/H
-	 M4KG8eeZJGm3z8/ZqYjLySPjQ0XYshgelzCxAdw0=
-Date: Mon, 12 Oct 2026 18:13:48 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: jirislaby@kernel.org, deller@gmx.de,
-	James.Bottomley@hansenpartnership.com, simona@ffwll.ch,
-	linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
-	linux-fbdev@vger.kernel.org, linux-parisc@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH 1/2] vt: Use boolean as parameter to do_blank_screen()
- and do_unblank_screen()
-Message-ID: <2026101205-deserve-flinch-d584@gregkh>
-References: <20261012094114.38549-1-tzimmermann@suse.de>
- <20261012094114.38549-2-tzimmermann@suse.de>
- <2026101228-unfreeze-drearily-670f@gregkh>
- <1ad9f380-7efe-4323-acbc-a3cca3420184@suse.de>
- <6f774188-86ef-4a84-84c9-d8e45fa3db45@suse.de>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i0iI8pLB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDFF51F0089D
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 16:23:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791822234;
+	bh=8mUsVhEO8X0riRfn9RAaQkAs5HEGM5yagnRl+IHqAg8=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc;
+	b=i0iI8pLBMsgae6c6nDWDdYWHHJ0zXoTC3ScTVdgn1MlGOeB3NQL4GKdx7WYrHLH8R
+	 zJhvrs3W68nmLkVATdvQvhiuRGmIb/SeNjTGBdx24nXoM0TDJAhSCiFqqcHMssBpi9
+	 qu9h9yCusHEXfbA8PkLLMKNmWKKOm5VpW4euBJ3n3XxLvNn39Ot1KTrhhgNjLoXuoo
+	 sxUhRSyslWnqp1BTANKGVv48UpjlFZHXRhuLyxA5KnjqDSEwbVP0h9rALPCiVcB8TJ
+	 04zIKWEX0gTWA1xJtPZK81KvrT8sz2Chl1INUAtmUxYnr1mr6NLMFliB+Y/9mZr0OY
+	 4QkREZdj7n9rw==
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5ba3b1199f6so1682649e87.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 09:23:54 -0700 (PDT)
+X-Gm-Message-State: AFq9FYJ+GKaQIu5rnRsQquWwBcBdNlnMhYAbx0PWsFjb+qhm8sx+PhZy
+	/8bykOW1dWBqszg6Y4BY4V8tjbwPMk+j5RcmmH141Zr5VXMmAhnKcRdsNfuh4SgYmzI5vu92cwT
+	KRqmjOuGV2DAuFch+tVSdNjU+SXOjXZ6PJbJlUXDkNQ==
+X-Received: by 2002:a05:6512:3a95:b0:5b6:183b:d21c with SMTP id
+ 2adb3069b0e04-5bcde8d5c24mr3156378e87.67.1791822233454; Mon, 12 Oct 2026
+ 09:23:53 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 12 Oct 2026 09:23:52 -0700
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 12 Oct 2026 09:23:52 -0700
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <sashiko-outbox-168284@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6f774188-86ef-4a84-84c9-d8e45fa3db45@suse.de>
+References: <20261012-gpio-kunit-plat-lookup-v2-0-553b0d6446b9@oss.qualcomm.com>
+ <20261012-gpio-kunit-plat-lookup-v2-4-553b0d6446b9@oss.qualcomm.com> <sashiko-outbox-168284@kernel.org>
+Date: Mon, 12 Oct 2026 09:23:52 -0700
+X-Gmail-Original-Message-ID: <CAMRc=Md=TJ1A=uaFCqzFRM-Ph+G95a0vzL2bn-TOBks8r_LT+A@mail.gmail.com>
+X-Gm-Features: AclHuK_Gr0IM3Bam-xX7rdAQVjbsQEE7izB36uR9CV2cGSfK-0Gl1et_FcffzbM
+Message-ID: <CAMRc=Md=TJ1A=uaFCqzFRM-Ph+G95a0vzL2bn-TOBks8r_LT+A@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] gpio: kunit: add a test case for platform lookup tables
+To: sashiko-reviews@lists.linux.dev
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, sashiko-bot@kernel.org, 
+	linux-gpio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Oct 12, 2026 at 02:41:34PM +0200, Thomas Zimmermann wrote:
-> 
-> 
-> Am 12.10.26 um 14:28 schrieb Thomas Zimmermann:
-> > Hi
-> > 
-> > Am 12.10.26 um 13:30 schrieb Greg KH:
-> > > On Mon, Oct 12, 2026 at 11:27:38AM +0200, Thomas Zimmermann wrote:
-> > > > The parameters to do_blank_screen() and do_unblank_screen() signal
-> > > > whether the call is part of a switch between text and graphics mode.
-> > > > Convert to boolean. No functional changes.
-> > > > 
-> > > > Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> > > > ---
-> > > >   drivers/tty/vt/vt.c              | 20 ++++++++++----------
-> > > >   drivers/tty/vt/vt_ioctl.c        | 12 ++++++------
-> > > >   drivers/video/fbdev/core/fbcon.c |  4 ++--
-> > > >   include/linux/vt_kern.h          |  5 +++--
-> > > >   4 files changed, 21 insertions(+), 20 deletions(-)
-> > > > 
-> > > > diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
-> > > > index 57edf37495a8..9e7b4419b422 100644
-> > > > --- a/drivers/tty/vt/vt.c
-> > > > +++ b/drivers/tty/vt/vt.c
-> > > > @@ -3374,7 +3374,7 @@ static void console_callback(struct
-> > > > work_struct *ignored)
-> > > >           scrollback_delta = 0;
-> > > >       }
-> > > >       if (blank_timer_expired) {
-> > > > -        do_blank_screen(0);
-> > > > +        do_blank_screen(false);
-> > > Same type of comment here, this bool doesn't really tell what is
-> > > happening at all (not your fault, 0/1 doesn't either.)
-> > > 
-> > > I'm all for this patch but shouldn't this be fixed up to be 2 different
-> > > named functions entirely?
-> > 
-> > Can you elaborate?  Do you mean there should be a separate helper and
-> > callback for switching between KD_TEXT and KD_GRAPHICS?
-> > 
-> > Looking through the *_blank_screen() helpers and the console
-> > implementations, I think we'd mostly duplicate code. Mode-switching and
-> > blanking are tightly coupled.  Semantics get a bit cleaner with the
-> > change you proposed to patch 1, I think.
-> 
-> And looking even further, it's not entirely clear why consw.con_blank even
-> receives the mode_switch parameter.  The consoles track it with some
-> internal state, but all of the mode information is available in struct
-> vc_data.vc_mode as well.  I think mode_switch and similar booleans could be
-> replaced with using vc_mode directly.
+On Mon, 12 Oct 2026 16:48:15 +0200, sashiko-bot@kernel.org said:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] gpio: kunit: test failure due to missing wait_for_device_probe()
+> --
+>
+> commit 743d1cf187f180e4ac825a86d7858ccb06076671
+> Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+>
+> gpio: kunit: add a test case for platform lookup tables
+>
+> Add a kunit test-case for retrieving GPIOs using platform lookup tables.
+>
+>> diff --git a/drivers/gpio/gpiolib-kunit.c b/drivers/gpio/gpiolib-kunit.c
+>> index b662be88a0871..5d04b134d5774 100644
+>> --- a/drivers/gpio/gpiolib-kunit.c
+>> +++ b/drivers/gpio/gpiolib-kunit.c
+> [ ... ]
+>> @@ -828,11 +829,110 @@ static struct kunit_suite gpio_swnode_hog_test_suite = {
+> [ ... ]
+>> +static void gpio_lookup_table_global(struct kunit *test)
+>> +{
+>> +	struct platform_device_info pdevinfo;
+>> +	struct platform_device *pdev;
+>> +	struct gpio_desc *desc;
+>> +	int ret;
+>> +
+>> +	ret = kunit_gpiod_add_lookup_table(test, &gpio_test_lookup_table_global);
+>> +	KUNIT_ASSERT_EQ(test, ret, 0);
+>> +
+>> +	pdevinfo = (struct platform_device_info){
+>> +		.name = GPIO_TEST_PROVIDER,
+>> +		.id = PLATFORM_DEVID_NONE,
+>> +	};
+>> +
+>> +	pdev = kunit_platform_device_register_full(test, &pdevinfo);
+>> +	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pdev);
+>> +
+>> +	desc = gpiod_get_index(NULL, "foo", 0, GPIOD_OUT_HIGH);
+>> +	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, desc);
+>
+> [Severity: Medium]
+> Will this test sporadically fail if the kernel is booted with system-wide
+> asynchronous probing enabled (e.g., driver_async_probe=*)?
+>
+> The test queries the GPIO immediately after registering the provider device.
+> If the provider's probe function runs concurrently, gpiod_get_index() could
+> execute before the GPIO chip is registered and return -EPROBE_DEFER, failing
+> the assertion.
+>
+> Is a call to wait_for_device_probe() or gpio_test_device_check_bound() needed
+> here before calling gpiod_get_index() to ensure the probe completes?
+>
 
-Yeah, that would be best overall, as the structure has the "state"
-needed, no need to keep it separate in random variables.  This is some
-old code before we all learned not to have global variables :)
+Yes, it is.
 
-thanks,
-
-greg k-h
+Bart
