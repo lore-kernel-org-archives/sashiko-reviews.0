@@ -1,61 +1,84 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from sender5-op-o11.zoho.com (sender5-op-o11.zoho.com [165.173.182.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E521339022E
-	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 15:47:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791820042; cv=none; b=INExhX5uT/QV2An87421R+1TerjhKHTZoHInT6gfBNygwoLvnIERzKN/jX+XiuL2F96P08hYz/cOe75lbkk08pB0IpZPVaz5g7Eo1/yAhfSr5xuZoJmSvvS1agbF1Ha4DqByAezZF5Uy01vXlloRkEzMr6CUjyPgpIITdUYb4GU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791820042; c=relaxed/simple;
-	bh=gg3v6Zu7CS0roSzZxbxDcfm+QoLt6swDhD+BPAtEzBs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EkYWKbCiUx9v27khjZxDPf3GnOYt75yXKjpw/Ij8ZNPJhreTK8WJqVaoaomtcXfTm9Pi+SBsgvY0r0oM9ybiNqaNqPY4iTn0gSaAyYLZB3ZMbyYD6p/GIUIiv7rI+s7iDr4JJ1shvToebCEFz8rEk1ocTCSVFcuf7NU6bSjeZsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hQ3uh/oW; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2B7496D51
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 16:06:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.182.11
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791821204; cv=pass; b=S98O/dyh9HDXxcmEjm6AQI9HuTcweo1NK4MbeVqLQtr3dFrIPpO28YaoMjwalcclnp5ocL+rLVuu/ApGZwkt4R/oBLXlrhUIG8oY/vClZABWuax4hpncDGp7A1A6efAFEDYQ5Ous3CIyrO/wfWedlIi+apLjcxqdWNxoZMSFCu4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791821204; c=relaxed/simple;
+	bh=2YY5M56GxFF0JFDP2oDui1enuzFvW89M/UK+HgLJX7o=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=UbLqdUcPpBS0q0eJbsdlBEXoDa4Gw4Dx6H+urluv7+vaUdrksVkhKqdUYwYtakR2pGbdr3KHtUVQdfd70BlSp2J5KNp0Zx8PcmMYv4e9w3GdBGUIXB7hdJLJeipmhHFznUn4Ux4sWCrcQhAXa0rr+R5yWgOazmapP+loW4KBY0w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=daniel.almeida@collabora.com header.b=jS4AGKSb; arc=pass smtp.client-ip=165.173.182.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hQ3uh/oW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E69D1F0089B;
-	Mon, 12 Oct 2026 15:47:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791820041;
-	bh=tLHUTormw7i88mv9EGIlHHpt/mJ5WU9EyhPCn8+LmvQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=hQ3uh/oWoraIzUuGdH7mOgj2uWc4X68WFMaSsINwc17q26uUqWAa/djYDrrqTPOqJ
-	 CkdFmr7/PgnH5y8MLr5AjXyYzhXaETd4zzV/xfL0Wy2RxoQ+dvrTdRBZwrXDEgN5sU
-	 QvjP8wsXEBHiNcttj5MEr2L2y5g6d1GabVVTlvVU8h5GKAoQgyE1HcTMTuL89BkFxw
-	 u9uzc9D3LhOdH6Uqtjl7tu7OtDTzvRuwF8egTYo0UQ6aLAeg1zIkfgy5mLFnO1S3xH
-	 cITA8pRHCKhe/1L0M0ykNhclMQwi0r7F6qZXeNw+WQdihTdPx9Fv4BQCy4FTYLweHw
-	 ZeRuUO7MTQr+A==
-Date: Mon, 12 Oct 2026 21:17:14 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Oleg Keri <okerixx@gmail.com>, sashiko-reviews@lists.linux.dev
-Cc: linux-phy@lists.infradead.org, neil.armstrong@linaro.org, 
-	olteanv@gmail.com, vkoul@kernel.org
-Subject: Re: [PATCH v3 2/2] phy: qcom: qmp-combo: check qmp_combo_com_init()
- in the typec callbacks
-Message-ID: <as0A5HpetS75fJrO@debian>
-References: <20260916133814.3977-1-okerixx@gmail.com>
- <20260916133814.3977-3-okerixx@gmail.com>
- <20260916135026.AE6401F000FF@smtp.kernel.org>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=daniel.almeida@collabora.com header.b="jS4AGKSb"
+ARC-Seal: i=1; a=rsa-sha256; t=1791821196; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=TnTzHKL6in7wiqhrDLUMWWDHjHrPlHE8ZmymRpr4mNr2C1YzpFqXb+IX56VyIJ3uk/F2HvHpLYrHlMs1FYzpsAV/g0DPFweZRbm7IvGzIhu4TlK02jc23ssfedDGSsWcxNVqj4T6XiPSTUY4xSGaWFqmZSH7dR+l+XWHYH8n/6s=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1791821196; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=kpl7bgQq54ugqONoh1i3qk1kF/nXr2JA7OnourSb7I4=; 
+	b=FTSVgT2utbFHnxaYt6a9SNVnHeYl11kZECO74fpCgPG9ryBlpYg2sLGsi+sIUilo/PttkkkeSUpC4BSDoJw7lAfQxk1kJzBJZ/ILrRAOcC0iak1BqxdBiZnzXQQ082CKcmPS/803LmYy2YH2WTi8ZsdPEtCHreHLcMaJw40sGQU=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=daniel.almeida@collabora.com;
+	dmarc=pass header.from=<daniel.almeida@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1791821196;
+	s=zohomail; d=collabora.com; i=daniel.almeida@collabora.com;
+	h=Content-Type:Mime-Version:Subject:Subject:From:From:In-Reply-To:Date:Date:Cc:Cc:Content-Transfer-Encoding:Message-Id:Message-Id:To:To:Reply-To;
+	bh=kpl7bgQq54ugqONoh1i3qk1kF/nXr2JA7OnourSb7I4=;
+	b=jS4AGKSbFD/PUfeheC1u/TG9n1rxRB9yGNaYOyP+hIVHe0JTwiJJa4tcfqgcDqhH
+	9gwBCKsQDnHJLNVrDzOHtvKo+jrNlxWfjyJId8tulfZ93WvdjAG3x8c5v7mSLAOWOwe
+	/5UDHzhoHf81zq6wljzwoDeELPVY5JyVgCOTebeQ=
+Received: by smtp.zohomail.com with SMTPS id 1791821195310505.8212225900496;
+	Mon, 12 Oct 2026 09:06:35 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260916135026.AE6401F000FF@smtp.kernel.org>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
+Subject: Re: [PATCH 2/7] rust: drm: gem: gate open/close callbacks with
+ RegistrationGuard
+From: Daniel Almeida <daniel.almeida@collabora.com>
+In-Reply-To: <DM22LS0S86HB.2G9NWE78JHV0@kernel.org>
+Date: Mon, 12 Oct 2026 13:06:20 -0300
+Cc: sashiko-reviews@lists.linux.dev,
+ Alexandre Courbot <acourbot@nvidia.com>,
+ ojeda@kernel.org,
+ dri-devel@lists.freedesktop.org,
+ rust-for-linux <rust-for-linux@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <0CA5ABE5-C198-45D5-B393-50AA219D6F14@collabora.com>
+References: <20260814230923.1292966-1-dakr@kernel.org>
+ <20260814230923.1292966-3-dakr@kernel.org>
+ <20260814232106.01AA71F000E9@smtp.kernel.org>
+ <E989BBD7-DF97-4384-AFC1-3D7448A1C747@collabora.com>
+ <DM22LS0S86HB.2G9NWE78JHV0@kernel.org>
+To: Danilo Krummrich <dakr@kernel.org>
+X-Mailer: Apple Mail (2.3901.100.1.1.11)
+X-ZohoMailClient: External
 
-On Wed, Sep 16, 2026 at 01:50:26PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] phy: qmp-combo: unclocked MMIO access on teardown or retry after init failure
-> - [Medium] phy: qmp-combo: double disable of clocks and regulators on retry
 
-Please take a look at these two issues.
+>=20
+> close() is a pure optimization callback, e.g. to unmap memory that =
+userspace
+> can't reference anymore anyway.  For the reasons mentioned above, =
+providing it
+> to the driver after the DRM device is unregistered is pointless, and =
+calling it
+> when unregistering the DRM device would be pointless too, as any data =
+it could
+> ever access is dropped at this point anyway.
 
-- Mani
 
--- 
-மணிவண்ணன் சதாசிவம்
+So you=E2=80=99re saying that close() can be removed entirely? Or did I =
+misunderstand?
+
+=E2=80=94 Daniel=
