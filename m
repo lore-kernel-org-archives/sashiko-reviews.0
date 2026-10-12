@@ -1,197 +1,187 @@
-Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011028.outbound.protection.outlook.com [52.101.65.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo2-f2.google.com (mail-oo2-f2.google.com [74.125.231.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721841A724C;
-	Mon, 12 Oct 2026 04:10:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D944B30ACF1
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 04:55:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.231.130
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791778210; cv=fail; b=Q4eMsIKvDChuaRWgp40dHLrduxp1lxHQnwBFSWrGWKkC5ubemQrIRalhILEhnuZeTKzeaqKMhSylv/iJP7coZgBb73KujMFoUxCcghsw5l0+kWpfyRRjiOWTDRumxS7oSaY8wvJVl9Mtnbkc40D7Y4uNN9538o3G/++GQJMcoUo=
+	t=1791780910; cv=pass; b=s2xHpGtfFx3FkLPY82xR4lSV4FizNthpF9nbs64ZP4N7UkNkSkScMhjeTWZcxXqNNEDX5/r9ODEySr3vokIduM1MZXjfIo7gGOb6WSZVR91rnmKc25HY5IBlFKIMd79Czy2lG+kiAARPZVub68vRByRGa4AXwHEkhXRyzuPuJno=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791778210; c=relaxed/simple;
-	bh=YEkYh8b75rQr14/+iYReb7uu0S2tyDS+cWFZ0H9SNbU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=ElbJtgdm/fpN38t0jiB4fSPjYIedb0LPWpkOMHQ1L+1O+mVctNEzL337+ueOOa5E0M4jxxyiFdA99S8QCl4aR1zIndrcOkQPfioPRjcXuOreNDzdzqFqdDcsGoJOqGVHYbZU7tsjc2z7qTbXz9D546/yuz9hLQwxsm4NnSkTfyA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=suzPjP62 reason="signature verification failed"; arc=fail smtp.client-ip=52.101.65.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	s=arc-20240116; t=1791780910; c=relaxed/simple;
+	bh=9vx/VYo+6G8iZ3jiBXE658v2YHNsnAQSc4/dQn2+zkA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tfY05iL/oiiymjbtKjxU9tnaguvQ1LnY3AVHhF2Gl90c2A9pZ2y9Zw6P0x27Sw8FgLptylpm1XwfEtTfHi0+zg4FpX7C6E3s1A5yD2L60Llr+M5TD8foYIpZ1/snyQ8fZBpVAZMQ5fFisnV8xyI4vp8YJMsB2oB+mtiivFj/PjM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=htkAznzG; arc=pass smtp.client-ip=74.125.231.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="suzPjP62"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=K7llccQwr8Dx0rgBFXCGYSXew4MOD2+ZAxRYhBp+6Otp6QDs65w1Rvkmck4oyUyfvCs1ZJJNmmjq1QxhIhfPchpwaf29BmAsamBR0kNAQQ2MeMM2NRJkzSd57CJdbm0HU1hILvmB+nm3rVvbr16kQTn6DvvG6q4ligDMRGUFKC6pq3V4OKWoFtLZY7QAeVOv0T7VnRBHXBMWMwBacDEvqeoX/dTl4INeKYfuVSc4BG0KLP7Bu3wYvuo4Qn1tFzLgnDEto77ueONByUVQQTvf54ZInXFlYm3fJum3/GZpPHYPVwZEGH+Tg94sVd8e4T/VXjM+w8/iZBN68HFjMQludw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=S8kg7+vIWks7oek28fxtelQ13v/vkxN0Jd6c1g0zv0w=;
- b=dmguHNEQEr4fO7m5O6MQNlU6mI9LQ0ES3w6pUJr+6La63n2lJRyQkyr4C/gbeG/GQmzoqHyAaNmQVCObY1exShf8ry1bzZTmKBXCeyTzGIjolhAzoIxw8jTlG17YTvUsPtRGR9JNzghSU5HzVcaK+G6l4/Vf93hVpa1N06gqBkYI+93EpKuN3irtNALIhdLa3Gr7PQNtNUQHWwdBZg8gHAmAgsXyaRodaB5qA8TJZ/BzPCIGPfIJSocdy7WpY16WeisVJzIZr04tkBMd0zts/ylpRKA6XT/kKut+25xRd0gsmMiJcRdsbOYBGqqpo7YrN9pqf9SNy0UnYkHOKQtmkQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=S8kg7+vIWks7oek28fxtelQ13v/vkxN0Jd6c1g0zv0w=;
- b=suzPjP62405JXkfEt9JqvW8x0G2DcntKdmC96nuW1EsqAifPrtKK3rya9Rbxuf3riR/ILAYS95lmqxUmNE19pCZvSxxg/G5QNq9sQykjf7PEdRbjP/laVb7iv4qvDzVbDcO7F7KZg5V5KXvpWGyZBfym++WBdvkaZznNjqhZ4q0rCmM5Rtuf5uSx7azuRsxZJdy7IfsKFKM//ul8lbNsWMnDiRZ+dtaOF7y5rJNBFmq00qQ+pVjpEj/Zavt4aS4Rpvr4acvW/7mgYIsA0RB+MGf6I0CkWfPh9Aum9t8LGmiNJv7COXPYcbdm+UCw6E+KzpmlAEJ9Du1/rh0zxe+T6A==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from AM8PR04MB7874.eurprd04.prod.outlook.com (2603:10a6:20b:24d::9)
- by AS8PR04MB8707.eurprd04.prod.outlook.com (2603:10a6:20b:42a::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.21; Mon, 12 Oct
- 2026 04:10:07 +0000
-Received: from AM8PR04MB7874.eurprd04.prod.outlook.com
- ([fe80::ac38:1699:6f18:c5d9]) by AM8PR04MB7874.eurprd04.prod.outlook.com
- ([fe80::ac38:1699:6f18:c5d9%6]) with mapi id 15.21.0496.020; Mon, 12 Oct 2026
- 04:10:07 +0000
-Date: Mon, 12 Oct 2026 12:14:41 +0800
-From: Peng Fan <peng.fan@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-gpio@vger.kernel.org, Frank.Li@kernel.org, imx@lists.linux.dev
-Subject: Re: [PATCH v6 01/13] gpio: mxc: fix race between chained IRQ handler
- install and probe completion
-Message-ID: <asxesWmhPRSeI63z@shlinux89>
-References: <20261011-gpio-mxc-cleanup-v6-0-cb47ce2ad758@nxp.com>
- <20261011-gpio-mxc-cleanup-v6-1-cb47ce2ad758@nxp.com>
- <sashiko-outbox-167213@kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-167213@kernel.org>
-X-ClientProxiedBy: MA5P287CA0229.INDP287.PROD.OUTLOOK.COM
- (2603:1096:a01:1b1::9) To AM8PR04MB7874.eurprd04.prod.outlook.com
- (2603:10a6:20b:24d::9)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="htkAznzG"
+Received: by mail-oo2-f2.google.com with SMTP id 46e09a7af769-824413e10dcso604662a34.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 11 Oct 2026 21:55:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791780908; cv=none;
+        d=google.com; s=arc-20260327;
+        b=PR63xMmEKdK0zo5TYQQyMc+r8cwW0yfdy5pS/cHXHr06lpevYlemZIATUmS2e6oyAf
+         McYALDrFAGeEhZpIQSaLl/4g/jXWifLl6Aa+WKjbdGT6UTuCA7urw+NbOQl98EHGlroP
+         T54p+FRK2zz22uhXmurcmvWAHLuSZ57QYPlf7YoqRuBvT9sf6M7LIMlscDQTw/VttOSy
+         uRLYm0niqHICHCtSJxH8ZzCJh+jOQPMwjm5hIHd2DUHzEPyHRL2n4e6Qv6wQ8NVYk67O
+         BO7n0LuSTRwHmdpLi7TJhdrj6czRWqFloaZiyqa6r3NkQmmIcHZ5b6EqThAnBlEicUlx
+         B2Lg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=aqvyDxeOl1wvCDEtRUYDI2YTDHjt1RCV2NsQZH4A4Cs=;
+        fh=/XafWwXInU6xSAMitUKTVJtcnn7zkW/jx5Qszu7SSug=;
+        b=cexuQLBA8PQUQ+LDS9La1NUEdqKg/9+I2wcu3b5JBpbJGqsezWgnlbDsTM7qBW6Ods
+         nyVjBerxtozMlakRpRhNEaekr7PfHx52uIcMtPhBBJF9hjwHuOEIpx4IO8PI6IhYq1ZL
+         wjPSwEUFfoaY33J3eFPPsAzCIVT3qZYVHMlRt5j5fvg/+c8SVoQLlJQlvDVplvKmo3di
+         kWY2z6WEgl/QLCvnP5KHIHg2s0P8JF0oVFsZcph5XNaZmmfxgRDKaoM7cC7+NCKiQ0KL
+         ISsLuUmmD5P6O/TdRrJwwY09USGg0pijfAQl2lYecLPSJ28rmS87zx4Ray1XBtNRwlAB
+         CKsw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791780908; x=1792385708; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=aqvyDxeOl1wvCDEtRUYDI2YTDHjt1RCV2NsQZH4A4Cs=;
+        b=htkAznzGFtY+o8mVH9se7CtQCeWC/7sHHMxbDNuYNuE+PX9ufE97B2ToRweU5jNWc0
+         9jYDoSx1ipp0NZNBneHDiWV7PFt3f/swx79JEN17NldEcxobG3lnhnKvRhcoaBNiXrqV
+         GoZ/pZtbginNdJ1ov1yF1sFAG7b82bMLGf36EVTQ8rxDYLA7mH4HyxupMiU57WtPePjX
+         n2w9WQvJsh1IVRP/t0CORDbhixAg8Zw4F0MSH4qax8v0QJ+/d/GIHF1wFW9kkrNOZY0o
+         S68udUZ4vJ6J01HN+7OE95CetzNNP473wJGW3h2LKwTxI4qps4pRlYZplx1M6dk3tr+F
+         ci/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791780908; x=1792385708;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=aqvyDxeOl1wvCDEtRUYDI2YTDHjt1RCV2NsQZH4A4Cs=;
+        b=wtPn1ayJAoJKp8aKRapXmdAlRYx8H95/2+koPe52RmsIIi0lNPmK2WCF1re2c0Rc59
+         kKzQveyus2f4DmRtLGRTCbgSWPWuT/Xsn590SV3Dt1EDgwGw/NJobDoY5ELFCeFtZ3B9
+         0wlqR4lkLkorVU6zsGdWyl5r/OGQhC4S2+mpXHchQV7tyCnWOOtncQyYNXXYIvEaK4WI
+         uNUbeA7+A1rCFisWt2sJRtrrvZnzNMkfZL6SdHL6jfNbD91mRX1L9C0vMgWQdLsLJi0R
+         BSA9XEfngdKsooxvzXuVlAcuvT9V8A4NEY+kuEDerQvb3Kn/j/6183WQv2KW5gHSE5/s
+         TXhQ==
+X-Gm-Message-State: AFq9FYLWCM0dTEQ4vUYLEd6hPmx7kh3lRJkg126KsDK5IRb6Y67TR/jd
+	c+UYdKnmYo0C4cI3e5NMxL04BRJ2G3bZRxFRwO9HqD6cDgGEkUoB/3ru1P4/cr6lxV6l0J7J5/P
+	CRTjrQYYthLfSXzbtyu4BGOkwfsGgYZZHWzQQ+4DKEA==
+X-Gm-Gg: AYBFou153XAjNIwpbXQkQog3+cxNMBZEgc9u4ULYlA4MNiFTfr67lpVbDM9dvdZqjyX
+	wTqeyvroWK7tph6/P4cs7nc1AoOjEkYR94XYXKswiu/yLiSRubxJ/dFk2Ry/YUyix+I556RBhD8
+	05Wt6jdXdwDUXVED/WLvh2uHSSpSJJdU10KfZGja3JZxnp3AT3PQvp4+r4YWEiFNUqibQEH2i3J
+	bXGyFTq2+V6KaSlisklf4fIztz56NRhEYZ7GX05UzxeBBgyXhEJjrzRhfWxrrJgQSPDNE1bbqFH
+	16k1WtzojERY5GuT3Qr45wl6YT3zyaOx5G3fF9GHQgjVaUgL/KbLIuoK4Do5CnQOHUZZMCpWy0I
+	7uGD59UKJD0OsZw==
+X-Received: by 2002:a05:6808:308b:b0:4e8:e664:f268 with SMTP id
+ 5614622812f47-50c52f1b32bmr8648086b6e.25.1791780907663; Sun, 11 Oct 2026
+ 21:55:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM8PR04MB7874:EE_|AS8PR04MB8707:EE_
-X-MS-Office365-Filtering-Correlation-Id: d638d370-d9c6-4a72-3710-08df2816b327
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|23010399003|1800799024|376014|366016|6133799003|22082099003|18002099003|10067099003|261009221227099003|261009223027099003|4143699003|5023799004|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	7w3rdBddJS1gDPRiisMiB+PBTyjPT5+BEd1chxO79Jil7K2YtSuo32CUIx1PT5zckvBjVb/xEjdTeefjdkEP7B6D2UbmRWK1rmPXAp2ShZLKyNq9RRKvnZhmlHgiiVIJbRjkE+Gs/Y66WFJa13wV1TIJEXaa05NvaPv9Bg6jfaQCeiNcbXHA+FegFUzDwnsz77+xYecqzSErd+2T70mch9aeZ+bUWkr3BxtNUyAlmnx78Dl3ca9r7nmG0QJEbs3VngTvW+4FSEf/EyWW+8tg6+60q7yyhZ3s4ViAqOu6IWRwPnUIOpf9ULMsMBZu+KufRfzl0rfSwxbDUbPzLcQm36KamhL3L5GATG+DwHXPNkCpG3Ta3RjCrtypE51ejGPt9OyQ524Nt/oXcxohQYkq9DaU8lWzZFEheb/yvBCnPc2bxk6TxT+U+cIwBNHdYkhKb6pUxWp40ckdJde3DzAatGUQsOA7qsz/cFe6dkCKeBTy2YYBOlf5+sTkVPb6dUtLY1uw8HVhpbYA2EI8jIJKTcrSYobH5Qb83SAiH/lhJonvZCMi8em8nmkB+LIHU45YmLO+3RP0QYGTKTur/mr9r07I5fMKWR5T1OuTzPsZjlw=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM8PR04MB7874.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(1800799024)(376014)(366016)(6133799003)(22082099003)(18002099003)(10067099003)(261009221227099003)(261009223027099003)(4143699003)(5023799004)(11063799006)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?IjMSLFGiTwJknL5VIFACqx2jJ86sOcaDtlgiBdj54Ch579K3IDmKRL2lBX?=
- =?iso-8859-1?Q?sezhnoseTAAu5j/77GmaYOq00tZqt2tiF1EsRaY/9vZn0BMNPuxHwlNTqm?=
- =?iso-8859-1?Q?DLkW0sw1tEMbEAjz/PpLUaN8LF4Dd05AEP2kbDRWrVKKK9Db5ByDSxrFMP?=
- =?iso-8859-1?Q?/e0Ty2dZzgUM4Pj2TyOkBVuoFvF49ngIOCQKy2dPxq7ntoLtiNNoCli5VJ?=
- =?iso-8859-1?Q?NaDD5SQPrHWpVwWHWgQQmNopanwvXK0CC2uyX73oG8Tld0iG9AZ+f0tqND?=
- =?iso-8859-1?Q?J84MftmxLa8XYGBqsGRc+zdm03DcRShaIoNaO10Vx2NRAJqGbRr13IR8pl?=
- =?iso-8859-1?Q?BrpYKpmDJHv3AU1t3w7KVhKuDrIhfZ+AAfOxWIzAfoKXsEQ2h9kM1Pjqln?=
- =?iso-8859-1?Q?2pOJfJXHe+nbk5apYWMXIr17clNLzlSfjvgwI8dXUaJyPn23VSR4yvAxaz?=
- =?iso-8859-1?Q?/6MUYwVqrcA+yeODndk6yEYYiF0VZd4HSTge3JT9VVcZG7MfnMyP5jahTG?=
- =?iso-8859-1?Q?aWrj3MljlE3gVKe8UGI5mGr7CCIyGgXck7txqDp3iSHowt0N4a76wsgg+a?=
- =?iso-8859-1?Q?2ljZ/o+ML5Y0nTaa6zcVPx8p/k2XCIrRxfAa4S6WpHg3/rzI61KDLAo+8k?=
- =?iso-8859-1?Q?J72wnMMcgJrM2r4x1Xa63hRfR6WiaBr0gsUVAh2TW+0rgCTMkAPqMmojBt?=
- =?iso-8859-1?Q?TX2Oo7kgRe13vSbEdJ4BshP6Qmgm+raD0Y02YwdavK43umg6XNd4DdL7Tj?=
- =?iso-8859-1?Q?GQyH17qJubiHn0kvaBNuyiFyP+2VautZNcs36SsPh+HE+zPLQqOOSAFzql?=
- =?iso-8859-1?Q?9H20PaHko8CTFKfWs9p7rPH0owZbTk7V8xMG2ZBKqv8uKFJdhnYmQhX98s?=
- =?iso-8859-1?Q?qttZBVH6vVt2/3mV3XMWfdavud6aTA+f1z7n/S2ttPSfEC30orDNercPV5?=
- =?iso-8859-1?Q?k+5oz6PMJZjPuXAH+5tzwXDL0xaBHoaUTfh/7NgJD0FDDR/7i65Zj43MPD?=
- =?iso-8859-1?Q?QTCIvWAiD0B+nG1mhCG+cSX5LNOLrN2MwSqdGkF61lXx/rago75iBH0rWW?=
- =?iso-8859-1?Q?tsY3oLxa1HHqB8KltiagbiPqKylh1/swz+JUcTQiwfy+rwLegKYwexWK6M?=
- =?iso-8859-1?Q?U7bVPmIfeZ9Jf1bKKZBVD1Nh9HhUtt9lt+Mt14GsLlQzMriqhsPJZ0ygbV?=
- =?iso-8859-1?Q?IMMLdD3V8+EBgl/ZK3Zh0/4A5WbEI0KClbExl/mcZedeEyYA/8IVE/k9yx?=
- =?iso-8859-1?Q?oP3tJKd/hht3SPskmo/FnQN+2qdT9uS6yK1cOc/KM0sBvEIgbrRXOChkEv?=
- =?iso-8859-1?Q?SOLlnx4J8AZUwLhsFaw0AXOIxnwf83ZmbIuPptQie4MDfcEor/BsustARE?=
- =?iso-8859-1?Q?T+T89c6MbLQvhsR4lBUdz80QUs+bi4AFvJxz/fKeTjMg2JCtfDbKO4YUF6?=
- =?iso-8859-1?Q?Hr2hKrAmW5IkTyhpFzFlYGqhtjXnzQy0cjogyzuGyt9QQF07O9w+gj6s/l?=
- =?iso-8859-1?Q?yrhpa1z4r+4wz+8O6SZ+MD6bi3ZTHDX0FvVnIImNWKYh06bQaAiZ7MulNe?=
- =?iso-8859-1?Q?uCM9/7c0oVbqahI6m5mG4Y5ZTO3cZUnnaghI2mAyFsTPzB/c815rpxjU0y?=
- =?iso-8859-1?Q?iqJ1WuuZv48bOTI+egeFtp1pLTjyx8V8DcKDy+UVu3FQHIpGx97sYqUzfW?=
- =?iso-8859-1?Q?5auDKsVFLaVPnsEKF8ZIt2/JQsEjIZIHfx7xh18StlTSPhvcxSybJZg50e?=
- =?iso-8859-1?Q?MDcIZwjQ+R+gFo30FjXsDsntynRl5VrU3pVewrk1ddwByTa/2v6P0oY/aY?=
- =?iso-8859-1?Q?IPhy1ZZgew/+u23WBN7HkDVvmuLc1Y7U8ko28XinRhGlNNRtOjvm?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d638d370-d9c6-4a72-3710-08df2816b327
-X-MS-Exchange-CrossTenant-AuthSource: AM8PR04MB7874.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Oct 2026 04:10:07.1154
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CWOQ2mSvB75XWSXKLaIpMGtfULucLzoV2XpV50vuS+DMxpQnN4g+yIWVyU+1G3SSJuJXwsOJ/XEzUjmJiJDFtHudEaw78jvAg0pB0oBS6ZBlL7Uah7Ve/Wq7uBmSRK9R
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8707
+References: <20261011035150.53315-1-xinsheng.zhu.ny@gmail.com> <sashiko-outbox-167584@kernel.org>
+In-Reply-To: <sashiko-outbox-167584@kernel.org>
+From: Xinsheng Zhu <xinsheng.zhu.ny@gmail.com>
+Date: Mon, 12 Oct 2026 00:54:55 -0400
+X-Gm-Features: AclHuK9wQ_vVEXntxeqyIN1mfTO85kGFLtSXc3BvcstRXkNZqeUsWwxQu9E5AfQ
+Message-ID: <CAFGKm+xW=UW66mQim2oLywHvv+pNdppAg-4qB9ZhhLKqAta8Ew@mail.gmail.com>
+Subject: Re: [PATCH net v2] net: usb: cdc_ncm: reject short GET_NTB_PARAMETERS responses
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-usb@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Oct 11, 2026 at 12:05:47PM +0000, sashiko-bot@kernel.org wrote:
->Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->- [High] gpio: mxc: data race on mxc_gpio_ports list during concurrent probe/interrupt
->--
->
->commit f3eaabd7240ce61fd8c78877e57457bbc5ad25e0
->Author: Peng Fan <peng.fan@nxp.com>
->
->gpio: mxc: fix race between chained IRQ handler install and probe completion
->
->This commit defers chained IRQ handler registration in mxc_gpio_probe() to
->avoid executing the handler before mxc_gpio_ports is updated and other
->probe steps complete.
->
->> diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
->> index 7e2690d92df6f..e05f276a50e8d 100644
->> --- a/drivers/gpio/gpio-mxc.c
->> +++ b/drivers/gpio/gpio-mxc.c
->
->[ ... ]
->
->> @@ -525,6 +523,8 @@ static int mxc_gpio_probe(struct platform_device *pdev)
->>  
->>  	list_add_tail(&port->node, &mxc_gpio_ports);
->>  
->> +	mxc_update_irq_chained_handler(port, true);
->> +
->
->[Severity: High]
->Is there a remaining data race here during probe for shared interrupts?
+Thanks for the review.
 
-As replied before [1], this is false alarm.
+> Pre-errata devices typically return a 26-byte structure
+> instead of the full 28-byte structure.
 
-[1] https://lore.kernel.org/all/asg749Hk%2Fhaiis%2Fi@shlinux89/
+The NTB parameter structure was already 28 bytes before the CDC
+NCM 1.0 Errata. Issue K of CDC NCM 1.0 Errata [1] repurposed the
+existing two-byte reserved field at offset 26 as wNtbOutMaxDatagrams;
+it did not extend the structure from 26 to 28 bytes.
 
-Regards
-Peng
+The driver comment says that "devices prior to NCM Errata shall set
+this field to zero", not omit it from the response. A complete 28-byte
+response with the last two bytes set to zero still passes the new length
+check to avoid short read and uses the existing tx_max_datagrams
+fallback later.
 
+The patch does reject an actual 26-byte response, so compatibility
+would be a concern if devices previously supported by the driver
+return exactly that length of 26 bytes. However, the quoted
+comment does not establish that such a response is the pre-errata
+format.
+
+This response was assisted by LLM.
+
+[1] CDC NCM 1.0 Errata, Issue K:
+https://www.usb.org/sites/default/files/NCM10_012011.zip
+
+Thanks,
+Xinsheng
+
+On Sun, Oct 11, 2026 at 11:51=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
->On i.MX21 compatible SoCs, all GPIO ports share the same parent IRQ. When the
->first GPIO port finishes probing, the chained IRQ handler becomes active. 
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] usbnet: cdc_ncm: strict 28-byte length check breaks pre-errata 2=
+6-byte hardware
+> --
 >
->When the second GPIO port probes, it modifies the global list:
+> commit 21684fc876b53044a42f2941b653d84cd5d8ed14
+> Author: Xinsheng Zhu <xinsheng.zhu.ny@gmail.com>
+> net: usb: cdc_ncm: reject short GET_NTB_PARAMETERS responses
 >
->mxc_gpio_probe() {
->    ...
->    list_add_tail(&port->node, &mxc_gpio_ports);
->    ...
->}
+> This patch updates the initialization sequence to strictly validate the
+> length of the GET_NTB_PARAMETERS response. Instead of only checking for
+> negative errors, it requires the response to exactly match the 28-byte
+> size of the ncm_parm structure to avoid using zero-filled parameters.
 >
->If a shared interrupt fires concurrently (either preempting the probe or
->running in parallel), mx2_gpio_irq_handler() traverses this list in hardirq
->context:
+> Link: https://lore.kernel.org/netdev/20261005041525.49111-1-xinsheng.zhu.=
+ny@gmail.com/
 >
->mx2_gpio_irq_handler() {
->    ...
->    list_for_each_entry(port, &mxc_gpio_ports, node) {
->        ...
->    }
->}
+> > diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
+> > --- a/drivers/net/usb/cdc_ncm.c
+> > +++ b/drivers/net/usb/cdc_ncm.c
+> > @@ -524,9 +524,9 @@ static int cdc_ncm_init(struct usbnet *dev)
+> >                             |USB_RECIP_INTERFACE,
+> >                             0, iface_no, &ctx->ncm_parm,
+> >                             sizeof(ctx->ncm_parm));
+> > -     if (err < 0) {
+> > +     if (err !=3D sizeof(ctx->ncm_parm)) {
 >
->Since the traversal is done without any synchronization or RCU reader
->protection, and list_add_tail() is called without locks or RCU primitives,
->could the interrupt handler observe partially updated list pointers and
->trigger a kernel panic?
+> [Severity: High]
+> Could this exact length check unconditionally fail on pre-errata CDC NCM =
+1.0
+> devices?
 >
->>  	platform_set_drvdata(pdev, port);
->>  	pm_runtime_put_autosuspend(&pdev->dev);
->>
+> According to the driver's fallback logic further down in cdc_ncm_init(),
+> "devices prior to NCM Errata shall set this field to zero" when referring=
+ to
+> wNtbOutMaxDatagrams. Pre-errata devices typically return a 26-byte struct=
+ure
+> instead of the full 28-byte structure.
 >
->-- 
->Sashiko AI review · https://sashiko.dev/#/patchset/20261011-gpio-mxc-cleanup-v6-0-cb47ce2ad758@nxp.com?part=1
+> Previously, with the leniency of checking if err is negative, a 26-byte r=
+ead
+> would succeed and the kzalloc-backed ctx would safely leave the trailing
+> missing fields as zero. By requiring exactly 28 bytes, does this patch
+> unintentionally reject valid 26-byte responses from legacy hardware with =
+-EIO,
+> preventing probe entirely on those devices?
 >
+> >               dev_err(&dev->intf->dev, "failed GET_NTB_PARAMETERS\n");
+> > -             return err; /* GET_NTB_PARAMETERS is required */
+> > +             return err < 0 ? err : -EIO; /* GET_NTB_PARAMETERS is req=
+uired */
+> >       }
+> >
+> >       /* set CRC Mode */
 >
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261011035150.53=
+315-1-xinsheng.zhu.ny@gmail.com?part=3D1
