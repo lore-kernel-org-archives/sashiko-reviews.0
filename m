@@ -1,90 +1,70 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from sender-op-o16.zoho.eu (sender-op-o16.zoho.eu [136.143.169.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7831F38F92D;
-	Sun, 11 Oct 2026 23:58:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791763116; cv=none; b=AgLv66zZMGw1I+zLel70R5RsK0nwvnccj5JF3n3xC5yGRsl3FKwF/ej1x9NDeXLK/lo/GoGepN503Lvvyt8ic1pybh7u/4A7Nsovv9DfJ2/MXZkWEJ/EZOn4+CRknpVqN12pzQMazeqb59fBtjDkxD2ZRTkGBjzjP+o3kJv+IRE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791763116; c=relaxed/simple;
-	bh=hLEsQpBs7QL7OqRDPzIQ39cz72I8Y4conVmCTtv9nLY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Cw0QlgN91ErcvaBIzBahNyJL0gTGVsFOBmhwxFLiCOT/YHjNExemO8+2GzztZ0P80GeR5ZbOynBKRXHS8VseO/3FWclvNKuMIcdKe4c6HtQs+/nul8SoLBw+FcS3Tz3NN5Sm4h8cU0cfxj3vOoqSFmL7DzeDQqU8DofsfxGorps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dNT/oclY; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29101371067
+	for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 01:26:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.169.16
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791768388; cv=pass; b=STwCCpVXtorI3VFpQgY7zTOAwngYOdIg8BwewiqJkwE4JxWR6K6dtyv8L3lHNL6m2rpYV6R4hqlnU0MUGUnK9OFtK6JUjAmJhFVQwnTJMWRm2IwGRfgieN8hS6RdKq1zdVDQvKoAyq7t5aYIPP1pQSiGo/1wsN3vWwSv4THhn0s=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791768388; c=relaxed/simple;
+	bh=uFqd5kbTdJ6yJj6B3F26YPfKVNGzZTBsrSZzCuB3RJc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=FXJxpkcwDVTge6gqbwlPV3tVWE0Vyyljb4MhkARcnSUHcJELu6f+D/X/lX596YlHmjooGvFKAU2tP6iA/4TbdBJeKmz1SyCQmxoRmAF2/BsM+qtMPS6zZ1Ik3lqSH7qXt/e+2BiNrGLumZQAxV1yB+hdD7xh2e1q+Ktnv9FbJ7I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iav.lv; spf=pass smtp.mailfrom=iav.lv; dkim=pass (1024-bit key) header.d=iav.lv header.i=iav@iav.lv header.b=PYh2HFuy; arc=pass smtp.client-ip=136.143.169.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iav.lv
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iav.lv
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dNT/oclY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1791F0089B;
-	Sun, 11 Oct 2026 23:58:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791763115;
-	bh=QCCntHCgy7VbEHLAJo6UOCr0OwmulBO/v13/0zhFZrE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=dNT/oclYnh1ac4Q10wCAhu0/giJaa1Caw8cpQTp537/LfnmOQlvBLu93n+HV/allW
-	 E10dJc8Umu4uy72/Hvw0mswCoG9Ac/V4pc9bUlNEANSoCb5ZVDFgYDF8s01tBqxdyU
-	 xHaTA1pC6UnyXPeIHBY509eusGo3LV/tGs/L9nxKY2q2iFy9637KWOPTopIr2us8oJ
-	 ETQEATNKmONslO5PnNAtajIKQVPTSOGljipBj8MipM8WUByc/+oY1OsC5NsSoPWyx0
-	 NMsjM43/TnkeiMTCKC1gYpt0dbTHFMM/9C/xcLpYdBieQWn8E5zNj6YvxLGyIlAc7m
-	 5/X1TnAP0PwOg==
-Date: Sun, 11 Oct 2026 19:58:33 -0400
-From: Sasha Levin <sashal@kernel.org>
+	dkim=pass (1024-bit key) header.d=iav.lv header.i=iav@iav.lv header.b="PYh2HFuy"
+ARC-Seal: i=1; a=rsa-sha256; t=1791768374; cv=none; 
+	d=zohomail.eu; s=zohoarc; 
+	b=OfdmVW5wdAKufLhZwAAt3SF60k6dzmaShY9nFyGYIp9VduN+W0Sgor/SRWDqtX91GucA2oh6l4ez6yLcLCDoSmfX4X5K3Zix3vBtnMwWpGA4yLoxlaayIKH5hZJxptTBBmN67XjN23gMfF3rXJnyMkeLxE01tuBG2MtJpvzGeEc=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.eu; s=zohoarc; 
+	t=1791768374; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=uFqd5kbTdJ6yJj6B3F26YPfKVNGzZTBsrSZzCuB3RJc=; 
+	b=ILM4yeaL4WLtqOEm3tleYxE5Uoy6fX/7ilennevXl+x0pdOYsNxZ/gJ/nIIEjoAcmi6wAKL8IqNSZx6m9Uatdavy42rSDw+EcOo+0sC/RRvIUhSmANwd+kj1cooEUU1zktWuoFhR7rI4cg6dzYePe77rQ/BQxfWqo1+kHSDI17o=
+ARC-Authentication-Results: i=1; mx.zohomail.eu;
+	dkim=pass  header.i=iav.lv;
+	spf=pass  smtp.mailfrom=iav@iav.lv;
+	dmarc=pass header.from=<iav@iav.lv>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1791768374;
+	s=zoho; d=iav.lv; i=iav@iav.lv;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:Content-Type:Content-Transfer-Encoding:MIME-Version:Message-Id:Reply-To;
+	bh=uFqd5kbTdJ6yJj6B3F26YPfKVNGzZTBsrSZzCuB3RJc=;
+	b=PYh2HFuyCBsjyT8mzoVrs+yGKMw6RCj56MjzeFIBLVciUvBDcNk8MGv2qESJVstI
+	5atdFoqFzc9At1eGC4h46mdjWFKrzPIGpp6Bi2ZsDHumoor+HfVZNOCj2tA8FQUP6Ha
+	yBnuQUCHBDMYnhyHd/ABcId+P9AtSNZDcXLkjmDo=
+Received: by smtp.zoho.eu with SMTPS id 179176837190232.44867149174149;
+	Mon, 12 Oct 2026 03:26:11 +0200 (CEST)
+From: Igor Velkov <iav@iav.lv>
 To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH] tools/dma: fix building from the top level with O=
-Message-ID: <aswiqUfbA9840hgo@laps>
-References: <20261011223358.2327625-4-sashal@kernel.org>
- <sashiko-outbox-167498@kernel.org>
+Cc: linux-watchdog@vger.kernel.org, Guenter Roeck <linux@roeck-us.net>,
+ Wim Van Sebroeck <wim@linux-watchdog.org>, Igor Velkov <iav@iav.lv>
+Subject:
+ Re: [PATCH v2 1/2] watchdog: orion_wdt: load the pretimeout counter on Armada 370/XP start
+Date: Mon, 12 Oct 2026 04:24:57 +0300
+Message-ID: <179176829726.3995625.orion-v2-sashiko@iav.lv>
+In-Reply-To: <sashiko-outbox-167534@kernel.org>
+References: <20261012-orion-wdt-suspend-v2-0-f13cf71443ba@iav.lv>
+ <20261012-orion-wdt-suspend-v2-1-f13cf71443ba@iav.lv>
+ <sashiko-outbox-167534@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-167498@kernel.org>
 
-On Sun, Oct 11, 2026 at 10:43:33PM +0000, sashiko-bot@kernel.org wrote:
->Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->- [Low] tools/dma: incomplete fix for out-of-tree (O=) builds
->--
->
->commit f9ebfb989b6d469df7135b7ea719817656f0b606
->Author: Sasha Levin <sashal@kernel.org>
->
->tools/dma: fix building from the top level with O=
->
->This commit attempts to fix the out-of-tree build for tools/dma when using
->O=<dir> by correctly setting the srctree variable. It ensures that srctree
->is worked out even when it is empty or when building_out_of_srctree is set.
->
->> diff --git a/tools/dma/Makefile b/tools/dma/Makefile
->> index e4abf37bf020c..b5fe6e2625eef 100644
->> --- a/tools/dma/Makefile
->> +++ b/tools/dma/Makefile
->> @@ -7,7 +7,13 @@ bindir ?= /usr/bin
->>  # isn't set and when invoked from selftests build, where srctree
->>  # is set to ".". building_out_of_srctree is undefined for in srctree
->>  # builds
->> +ifeq ($(srctree),)
->> +update_srctree := 1
->> +endif
->>  ifndef building_out_of_srctree
->> +update_srctree := 1
->> +endif
->> +ifeq ($(update_srctree),1)
->>  srctree := $(patsubst %/,%,$(dir $(CURDIR)))
->>  srctree := $(patsubst %/,%,$(dir $(srctree)))
->>  endif
->
->[Severity: Low]
->Does this commit completely fix the out-of-tree (O=) builds?
->
->While this resolves the srctree issue to successfully locate Makefile.include,
->an out-of-tree build via O=<dir> will still fail immediately afterwards.
+> - [Medium] watchdog: orion_wdt: global orion_wdt_info struct contamination
+> - [Low] watchdog: orion_wdt: TIMER1 clock rate mismatch for pretimeout on Armada 370/375
 
-This was fixed in a different patch here: https://lore.kernel.org/r/20261011223358.2327625-3-sashal@kernel.org
+Both are pre-existing. orion_wdt_info gets WDIOF_PRETIMEOUT in probe
+since e07a4c79ca75, and armada370_start() already enabled TIMER1 on
+that flag, so this patch does not widen it. On the TIMER1 rate: no
+in-tree Armada 370 or 375 DT has the pretimeout interrupt, and XP/38x
+set TIMER1_FIXED_ENABLE_BIT in armadaxp_wdt_clock_init(). I'll leave
+both outside this series.
 
--- 
-Thanks,
-Sasha
+Igor
