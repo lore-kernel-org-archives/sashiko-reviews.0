@@ -1,62 +1,62 @@
 Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F98F372B2F;
-	Tue, 13 Oct 2026 02:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3311846D559;
+	Tue, 13 Oct 2026 02:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791856891; cv=none; b=s28oduV1W/MYBVtW/Ov7ePVa82B17GTtLOd6t6+d5Zcv1tw0u8of5Avdn6NZbM1ugexrLVvd2DaMknrAwGnZ0AeaCbD9BvaxyITwXDtmqJgdcX/LmBjq1UwncJ3yfWllwT6g3tDscS7LZJlsDJACkwtdbLWBvv6DhDMW7wqRdrY=
+	t=1791859106; cv=none; b=KB4X1A5Wpsd4kp+bBUHBjGaUhSmeHX9IF/th4JFMHJFQOwEZ/NIJWUIioovufAyJAq3xGW6PEPKBW6WgC39mcpf52clTNCX0VEUdOPBdc2Nv0pdMn0Hjo7DEG6/5BcQGOwkY/MBL24PyqQu+9skrvK1woLH4ZKryTk2tnxXcq84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791856891; c=relaxed/simple;
-	bh=2fXF/uCBfuby26BhLyasZUPCtHYNbZOliZo5iduxnXQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=j089PZTvXv7nsacDD+ibhp2z8rmIH66j55bepGxz61DU5VhF7HpHf9nw6xfe3czwn3+F7d7rIWGbHL1Ongb2jREHbSGlFlnsXm1+I5ChrEWF0P+G8RzDIriMVitWNgPeCoc4IOBoPZ7JumqrRqbrxath2Y+87Y1+hkZmHjda7CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=IJ6ly9XV; arc=none smtp.client-ip=148.163.156.1
+	s=arc-20240116; t=1791859106; c=relaxed/simple;
+	bh=ry2tLjlCCUg9iJpD9vbWobmF4kmdBrxpbvWKdY6SuMQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DhsaPdv4sFx2OdYWwc8nB+ku9u730UQoZ6TZXM5Z4rfcXe3Z4FGnaqlaVNm3yQ2H/fuEPnJ0ZmXlN35pSXacN4r3fG9aRmfrRj5YSqtDyAGYYd5zMHEbeibwGt2AjxLPTz0aAVxvb477rQhTjjVPVp1SFyCr5RuQIXyrioEyHas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ffLBgyDg; arc=none smtp.client-ip=148.163.156.1
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="IJ6ly9XV"
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69CJiXxJ1106203;
-	Tue, 13 Oct 2026 02:01:29 GMT
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ffLBgyDg"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69D2Elxs2017511;
+	Tue, 13 Oct 2026 02:38:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
 	:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=pp1; bh=nMwBKSYzIb3s65dJlzeOtx7mcRu7jDJm/DZqJx0JJ
-	Pw=; b=IJ6ly9XVi0KzcpSq8hfRT8XQgiKxhD3UcP/cJFE1gbb2KE7CQDQ/iz9En
-	azUlZ0BG8RWpcaeTrNuElA1XDroAH2QyDF4P5/J8XzPIuiD7dNFIqQ0cYUaVoC+2
-	1mFccHJ5YzB7BRNlPbpwhdka0POP7WzAR6cvKDN7XLrKrCk/A8BiBO1beYolZr4q
-	b+1UmPSv475pUcQ/jjUfho05q6SRhL+zQD6p5W9985Asj62+KKopET/B6qmcgjqF
-	AufqCkzzyrql/uprtmFRUL+CwAV2EHgdCJw5VeK4CnGgebTB/VDvcmHs6gvskHYg
-	nN3jaZ/1phHX8YwzKnCOS25526sZQ==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dv3bp67-1
+	:subject:to; s=pp1; bh=LwzIMv+v61w0U/2hCYlBDMbYIjA0ljf5HnMuVnm5X
+	i0=; b=ffLBgyDghlUJp5Rj4DQamEs/98IBv2KY3FCHCmjZuST0Z2xJ4Eb88tbhi
+	X/s4AlKd8cstMutwQMEaaUTNQS4E/CpskIX4jO0Cqqy3zmDYcKDOG4BQXdRKzS9u
+	FbjNH5/YpQydVitK3FNzIvGizN/GxrJqiDD3YBQa/FDpW6XRaBlDqmqH1Hw4gKsB
+	IZ2HgPu+UcTrg7BSqUbcUEKYDr6DMaEyoqk7Qjj//z8dePDNSnaZE5mH1jM6Si8c
+	US7fAortpyvJOoEQd8Yeon1vbZt+qy4YaRCkWR9AVsevDpI0yN234QX893JrdX1j
+	6vxRAmdUNejTSlk7ZGowFKCBXhvKg==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dugbsjg-1
 	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Tue, 13 Oct 2026 02:01:29 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69D0FmTk1861267;
-	Tue, 13 Oct 2026 02:01:28 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h816gypne-1
+	Tue, 13 Oct 2026 02:38:24 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69D251ou2227415;
+	Tue, 13 Oct 2026 02:38:23 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h80pjqumm-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 Oct 2026 02:01:28 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
-	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69D21OnQ38928738
+	Tue, 13 Oct 2026 02:38:23 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com [10.20.54.101])
+	by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69D2cJea48431450
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 13 Oct 2026 02:01:24 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 701BA20049;
-	Tue, 13 Oct 2026 02:01:24 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 5B27A20040;
-	Tue, 13 Oct 2026 02:01:24 +0000 (GMT)
+	Tue, 13 Oct 2026 02:38:19 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3481420043;
+	Tue, 13 Oct 2026 02:38:19 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 1C7AB20040;
+	Tue, 13 Oct 2026 02:38:19 +0000 (GMT)
 Received: from tuxmaker.lnxne.boe (unknown [9.87.85.9])
-	by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 13 Oct 2026 02:01:24 +0000 (GMT)
+	by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Tue, 13 Oct 2026 02:38:19 +0000 (GMT)
 From: Ajaykumar Rajappa <ajaykr@linux.ibm.com>
 To: linux-s390@vger.kernel.org, sashiko-reviews@lists.linux.dev
 Cc: Ajaykumar Rajappa <ajaykr@linux.ibm.com>
 Subject: [PATCH v6] zfcp: Fix integer underflow in status read buffer payload length
-Date: Tue, 13 Oct 2026 04:01:22 +0200
-Message-ID: <20261013020122.48495-1-ajaykr@linux.ibm.com>
+Date: Tue, 13 Oct 2026 04:38:17 +0200
+Message-ID: <20261013023817.1468967-1-ajaykr@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -66,32 +66,31 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: F1XeqR8CRlyDbUJVfxMK_IEe7YwBitgz
-X-Proofpoint-ORIG-GUID: F1XeqR8CRlyDbUJVfxMK_IEe7YwBitgz
-X-Authority-Analysis: v=2.4 cv=aqInmiZV c=1 sm=1 tr=0 ts=6acd90f9 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Authority-Analysis: v=2.4 cv=Cr0q4X4D c=1 sm=1 tr=0 ts=6acd99a0 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=qmIv0YdgS3vTPs6jRXgA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDAwNiBTYWx0ZWRfX+Uz/4FljRY7E
- t/EewzkzuWhp7Qgsm/uGDvrtq757ba0u3t+SUjQosngQo98xmiFe2iAkJsNNQBEKnjrjTxHtJnM
- Ha9ydhNUVj7XcLOd6fHBENJ8mMIKkkY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDAwNiBTYWx0ZWRfX2YXeojA/4UgE
- 2ifRKRgpSZ2hc0piKqnwocCa8B9Nd4SSjz66mAiIHGQzqe5HcV0XprPnTrB0J7Bs6hTfmu+TW11
- 0wqWINo1s3jRVGNMweqXZI1et9IKribxiVwlvJeleCmdLihOQixyhGUJmxGCxBOUW4GxtQpdZsD
- abFIb/rUq6JKTJie/15Kz+1937qJsVY4FbX10DIU5iaaaJ2nE6gTIyveDm71DaGtG582dfMvcbP
- 5BukoCO3N+vzTjceiwbZ1NqfGjeK7L9Aq7LNXoTcKmI7W6tqnRApTeqaF/um1aONzHOiir57Vha
- Ev294U3rEwkW11kdjDHidoesRz/ELHjSQtOgi5qebeVONca777icL/3KzeGwEXeogrBcd4EfFBS
- bX1PKrwsEmpttfvHba83ZSEZBIMYti7ZYBxcwxuyV09755mAS92MMs+mPFGH8BrcKTn34+z/GfM
- KRaRDI4VJ5nm4t438zw==
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=qmIv0YdgS3vTPs6jRXgA:9
+X-Proofpoint-GUID: n1U-Y1TSUYHc3GrTP7LSrEkJ_n3cQRWJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDAwOCBTYWx0ZWRfX4eC2Thku/PI7
+ w5qjs6N7B6rSgO5WOj56CPINBP5a+KP/MSfH1/M2jDYk4Y7P+YhAV1QpxeypYxcd/1mF9ePewXK
+ RVU/W4OG4Pf1ox04cMrmKMkgij3tI5DOlG/BsXkQUI3adnMx3lvWvV4n7Je6tdcw4f/ZdUFIF4i
+ WZ0YG9Ym2L5EDX94h71kTtGWKepvuFYDrRIl+DZ4tU3CKYwQI+Vz4PkuhPLOHnZG8Ecxu7zTspb
+ fD0nhGlk0m93kNm1BG23ozw4giOmJ+psZJsZDy3N93CC4m+yWTV2s0rEGVlWNBo7xaeqJvY91BC
+ mQvJHjcuGLRYMP9xVVH0DfUl/fxeqwA9dY1aE4eX75XjTbltlVndf+JcFumh6ygKgUwlyUX2its
+ /oGNg2126AdIKh0sfFFFE9Gto0cb07ttJGHI0k8Ewl6oXjZl0d03qZ3wiifygxtV6wwbAMABpiP
+ HqNV0SqPDRiCb6m6liQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDAwOCBTYWx0ZWRfXyo7UcVKjV/H7
+ vtnNtfw1NYeJ0jgE0/sGWk0kyYdnr9aacL1DEKfq2G58ouXoJkMp1wGwMfdxvrxPZSiYeu/HUKp
+ 5WcKGKnyq+zboQ8z/44RFY7Qp9mgBto=
+X-Proofpoint-ORIG-GUID: n1U-Y1TSUYHc3GrTP7LSrEkJ_n3cQRWJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-12_06,2026-10-09_01,2025-10-01_01
+ definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 spamscore=0 malwarescore=0 suspectscore=0
- bulkscore=0 adultscore=0 impostorscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610130006
+ bulkscore=0 spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0
+ malwarescore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610130008
 
 zfcp_dbf_hba_fsf_uss() only guards against a zero-length status read
 buffer. If srb->length is smaller than the fixed header size of
@@ -110,14 +109,14 @@ Fixes: a54ca0f62f95 ("[SCSI] zfcp: Redesign of the debug tracing for HBA records
 Fixes: 2c55b750a884 ("[SCSI] zfcp: Redesign of the debug tracing for SAN records.")
 Signed-off-by: Ajaykumar Rajappa <ajaykr@linux.ibm.com>
 ---
- drivers/s390/scsi/zfcp_dbf.c | 103 +++++++++++++++++++++++++++++++----
- 1 file changed, 91 insertions(+), 12 deletions(-)
+ drivers/s390/scsi/zfcp_dbf.c | 104 +++++++++++++++++++++++++++++++----
+ 1 file changed, 92 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/s390/scsi/zfcp_dbf.c b/drivers/s390/scsi/zfcp_dbf.c
-index 81fb8af408e9..a71dc0696d80 100644
+index 81fb8af408e9..b4afb3989363 100644
 --- a/drivers/s390/scsi/zfcp_dbf.c
 +++ b/drivers/s390/scsi/zfcp_dbf.c
-@@ -65,6 +65,47 @@ void zfcp_dbf_pl_write(struct zfcp_dbf *dbf, void *data, u16 length, char *area,
+@@ -65,6 +65,48 @@ void zfcp_dbf_pl_write(struct zfcp_dbf *dbf, void *data, u16 length, char *area,
  	spin_unlock(&dbf->pay_lock);
  }
  
@@ -159,13 +158,14 @@ index 81fb8af408e9..a71dc0696d80 100644
 +	     raw_len <= sizeof(*srb)))
 +		return;
 +
-+	zfcp_dbf_pl_write(dbf, &raw_len, sizeof(raw_len), "fsf_len", req_id);
++	zfcp_dbf_pl_write(dbf, &raw_len, sizeof(raw_len), "fsf_len", req_id,
++			  ZFCP_DBF_PAY_LEVEL);
 +}
 +
  /**
   * zfcp_dbf_hba_fsf_res - trace event for fsf responses
   * @tag: tag indicating which kind of FSF response has been received
-@@ -223,6 +264,7 @@ void zfcp_dbf_hba_fsf_uss(char *tag, struct zfcp_fsf_req *req)
+@@ -223,6 +265,7 @@ void zfcp_dbf_hba_fsf_uss(char *tag, struct zfcp_fsf_req *req)
  	struct zfcp_dbf_hba *rec = &dbf->hba_buf;
  	static int const level = 2;
  	unsigned long flags;
@@ -173,7 +173,7 @@ index 81fb8af408e9..a71dc0696d80 100644
  
  	if (unlikely(!debug_level_enabled(dbf->hba, level)))
  		return;
-@@ -253,13 +295,30 @@ void zfcp_dbf_hba_fsf_uss(char *tag, struct zfcp_fsf_req *req)
+@@ -253,13 +296,30 @@ void zfcp_dbf_hba_fsf_uss(char *tag, struct zfcp_fsf_req *req)
  	rec->u.uss.s_id = ntoh24(srb->s_id);
  	memcpy(&rec->u.uss.res4, &srb->res4, sizeof(rec->u.uss.res4));
  
@@ -199,8 +199,8 @@ index 81fb8af408e9..a71dc0696d80 100644
 -				  "fsf_uss", req->req_id, ZFCP_DBF_PAY_LEVEL);
 +		if (cap_len > FSF_STATUS_READ_PAYLOAD_SIZE)
 +			cap_len = FSF_STATUS_READ_PAYLOAD_SIZE;
-+		zfcp_dbf_pl_write(dbf, srb->payload.data, cap_len,
-+				  "fsf_uss", req->req_id);
++		zfcp_dbf_pl_write(dbf, srb->payload.data, cap_len, "fsf_uss",
++				  req->req_id, ZFCP_DBF_PAY_LEVEL);
 +	}
 +	/* pl_len is only 16 bit: keep the raw length for out-of-range cases.
 +	 * Done only here as this runs for every status read buffer, including
@@ -210,7 +210,7 @@ index 81fb8af408e9..a71dc0696d80 100644
  log:
  	debug_event(dbf->hba, level, rec, sizeof(*rec));
  	spin_unlock_irqrestore(&dbf->hba_lock, flags);
-@@ -714,17 +773,37 @@ void zfcp_dbf_san_in_els(char *tag, struct zfcp_fsf_req *fsf)
+@@ -714,17 +774,37 @@ void zfcp_dbf_san_in_els(char *tag, struct zfcp_fsf_req *fsf)
  	struct zfcp_dbf *dbf = fsf->adapter->dbf;
  	struct fsf_status_read_buffer *srb =
  		(struct fsf_status_read_buffer *) fsf->data;
