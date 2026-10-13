@@ -1,73 +1,72 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66004FD279
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 17:56:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC1D5304A7
+	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 18:00:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791914213; cv=none; b=YKeIMelpHBsY4pZUkfU5tb9e9vOnnfkFT0gzTbaf2423TlqA0hu62rq6SaKglrESoNOnu1QYZN/vsvDjOHxvTOif3ls8yj+a772Hx2YnbGGEUf+yxy/KyRUB8N3jsh38X1+XrzxcNrwQdeZ5+nJU6qwDAWr1XsjGIrr/yc3qYCA=
+	t=1791914411; cv=none; b=r+6aY/mdm/Z6i0urBItXKAmxE+8zxW5hg5itmYno2dzlzktgY+yrjIdU9t3xu6X9eXEAOAM1iTdIkqr3Q5R0EKbO/XovLWYZeDAQKPwWY8bfCDCjHrdJJbpJhC7NMNlNVR0+EfiYKHYP4RDd5b4IwgugamtnxQyZb6O1zhTJmuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791914213; c=relaxed/simple;
-	bh=9+xzVzStH5jySgGJiobWKMn8FjA+vNjP/UnkeGKkeQg=;
+	s=arc-20240116; t=1791914411; c=relaxed/simple;
+	bh=nbgDcnVzZy5v+9x+VotHTcVXQOcWBOh+8O66h1RlO+8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ba8f6ihdKhS96u3VIwyFo1gxKAalENcZoWqkK5mAenuJoh7+eVqQrHHN/A+4cdEoM4Kv667qKUXvHZP5sZhuNeX910ScgOiTaYxLM7ksrog+OWGvh+p2rrekbyfVZQVB/liGkDfBfwUuCmeGtTJhSCt7CkizQIDYqvcvGe8IZX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qtqyLYRs; arc=none smtp.client-ip=209.85.128.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=EDNOuqCqrM5ug2SIu3hmmd6erbdZ8V/ncSkCexWnsVrpn/UpDoIjon3q+BUpBS/ORybeN7g4AeAh86eCjfXL0mJ6xUBPUbgNYTlToE1Owz4lX+2YSjTGme8ZKtdxNE1t8PYT9g9B3YHz6EXIgSeewSAHLiipb03o0hNh/nsnp+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s9a7n9OY; arc=none smtp.client-ip=74.125.224.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qtqyLYRs"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-8b0a28a720aso19899597b3.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 10:56:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s9a7n9OY"
+Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-67687f279b3so2646059d50.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 11:00:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791914211; x=1792519011; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1791914409; x=1792519209; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=I3urwFIjeTZMI3nHLcO9T0M+7OUsQOTZbc1ClGXMTLY=;
-        b=qtqyLYRsRluUSKUexcoKruqRwH2YVtieQ7qKG4RtAg6NQzh1g2zPJL/dh5+hj8nRpm
-         Xn6NkhK7KAtUn5itbEUS6Z13eZKQXltEMV187u1zQ/ZEBRH2SL2nTu+iDDouOZ+JVECY
-         37ybz22cbpOv2jlqUIsbbjowYaIxKAjtrAkxa8DKyk5aLHchY6PKBCfvmEP+h3+qJUzJ
-         08+AYXA4kLR2hZpq302xJ9odG8xmF+oqf6mvYDcDyq2stkiLh1Q6OS1Dex1yQ83JiDTU
-         P1vk5FQH205klffsYQc7UHL7OTygq0toSxhYO0hG7XDtchpkrhUtVWbxmUSSfTd/REOX
-         KRZA==
+        bh=h9AuHP9q1EYZ5Uls4Fabp/S6p+sv4isxWlypix7WhUQ=;
+        b=s9a7n9OYtCTxZ5hsdgsq73Wfzsd7j2VLlAoinyNGV+gWHLNCSkXTFdrMlA8TWID4jb
+         lZa/4GYBAN8qeRQOilKMoJFjonHT6t5H05iupDtGMT8wMIVvex9mwZHqWBvAH/AUEURY
+         y5eKIXW/sJUtOcvHfdf+LcP7kDgDUSLmi1Fan4F9zbkvz5SQDp7HPtHxyCjbsc2hRN5Z
+         lkbaLL2//F/fIFyQc0nqSbRfDsepw1Dw+r2W27F9Kxw5JF95hah+77OVtCdYFdiQfMq/
+         Wa5TuMmg7ikRniQLMbAtxRDiimL0ldatUYRUI+1YdaWTQ86RskizLV6QVnwgItRLZBFI
+         er+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791914211; x=1792519011;
+        d=1e100.net; s=20260707; t=1791914409; x=1792519209;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=I3urwFIjeTZMI3nHLcO9T0M+7OUsQOTZbc1ClGXMTLY=;
-        b=NKuBs/nW29OQ+Re1lAFNxqCb0DJh7Vp4Oeou9y3VVxSjkJGGbdVFjKVwLFbldmogxz
-         oh9HvEdZBxkxcfF7xT8HATF2x4EghFM9EsboTU9gYlhZJUOhkgKkmyKJ9kbnWcSsHNsP
-         l+TPmZX+KvZKf8PFCm+pcb2hvx8z39CW9OOqIk10BpEEzybXf7cfose0pvVybV2ViN0Z
-         HoyeVjdNzgBjTlejibY3md52pMl9pxwAQwjBp9/wN8Yrri0k5GMlWdqeaeA4g/tkOG+f
-         bFe8aRsmN/F8Co/qmwfDXZjay9MDN2E84zdv4NDLQkNSaJvgqHPispDuW+d7P8gMlIg1
-         KRWw==
-X-Gm-Message-State: AFq9FYK5t29PMGC133L0RLMHdV3FvZTAoAqGWnAnfRZh0Pbw60Z8Jdp5
-	NvFdcKQz4ztRxQhVJPPthAaCRVa7u73mvsIZ/t+VuCmU7D14wMAcLFjFfQ6U3g==
-X-Gm-Gg: AYBFou1SRKrGnzKDY0OZ488vLz17iZqFi3AwctaHh2aGT4rpe2H5SYYYRDP9PKRNKeD
-	Sy2E/6lzzcdqHN0SWOLfmfm5/0bTuq3Krb6atWUstESSm+Izb+tuuaHPGPfgUO6ooG6KvMig2Tv
-	cuILZlefXXq36Iry9WPHi78akDn8k9PEo4xTaW8AT/c9lEm3qEjcSEAxz1zEg0KlQyzfo48Sl/e
-	G4GiASPOeoH8PiKs+n5tX7nvkKFWBOba3WmxhIR6GEmGOa6u4+EfzXTdvmJFolAFCTbdXVC6OwW
-	PyUjHf2tsOuNbynBnZyqZn7yAnUy/E2rMyjPInkYSJ110ubvIVPhOb4wA/HecS5RYeR2Yzdhd0X
-	nqoOFwhhFol6RvcmCQrbEW2FN1R6RUPPFyMCraDRuQVDbbwCTi8AqIm4Z64W6XUC2tvTOXUippo
-	WqXosZBvh+vazIiGSqSXSdUSGztavPprLAAhAoI7u51nJW7WKuQli9yaorqx7mdA49RCwP5Ao=
-X-Received: by 2002:a05:690c:c505:b0:8b0:a957:80c4 with SMTP id 00721157ae682-8b0a95786f5mr22590897b3.45.1791914210764;
-        Tue, 13 Oct 2026 10:56:50 -0700 (PDT)
+        bh=h9AuHP9q1EYZ5Uls4Fabp/S6p+sv4isxWlypix7WhUQ=;
+        b=0oGNwxUtpF9vF+VDctPX40GDfOIc+GYVEM3cftCcvZH7azXLmLi5vZDIU+I/BKJ3WJ
+         kGYYpeq9134t751IAq9L4vtsRKfQbjewp1zFoLVusJS7eNLzT1mzD7LpQElYlRSaZNuN
+         LHG3hWfX5Zg6UUQRpbh+fClbbSbY9Vn53MleMxrDlnGLzUTlau0DfqPgcKJw+dS7LNAj
+         RDoxbVhy1BEfyp9DEHIWWVvg4HOj44aZ8uysJhDAl7ecHE4ac6gxbrdsUDgGslntPdas
+         du+P79lyF0IItMJlr0z5qw3aDypqfyLMDV4o3M+8MB3IhwMx/39Wi4gQC27Ifc4OW7Vy
+         oMTw==
+X-Gm-Message-State: AFq9FYK7hufAyKHtu/YqLX5ok8imYxh/e03tQtE165PWSxyaDv/KmIib
+	5BH/iBDlQyfFqykHHsQsX4Oj48KPw+K7Uu6W4IsWo8CcFkWULR2UxABMKZcJkg==
+X-Gm-Gg: AYBFou2kQHtFryOo03nBmZ4NZzu0cS1ni1EZ/omTLMVenBm90tSHnHAh0C8zM3dERB0
+	rjAqc3zH69fExzFlrIjDvSGlxtPOCYHazFTaeHkmgudE1Ww4OTy36KyrLDLHu9h5gD1iqtjOIVy
+	mxMKqfIbCJej+VVqimSfSvGltBqO/s7Wjn67/ZILdZKj55HiNMjPiqYDe4gL+jnu8HaHv0wdRFP
+	E3iUv5RAJ4+ZQvuR9eDoay/T5IFx6EUgMhADzuga/yMgPLOBYV93WQRijicVZsz+wpAe+YRyrhw
+	XOSsxeFd+6MHbXkxFWRjZxU+vmG+BOFy22JDKtpzTBlbf+Uwffsi59nTq+UwooIRWib121ZakWx
+	hf7H+ENuEZgfsDvjiBcM0dabWx/CEIb/JIJD+/u1QE7hc/YIFQvBfMaZvZecqEohiApjC4yQDlc
+	noAVmARfH7bhVWxrKh4NP/QlYSiZmrkQGoSb8A8XuV0glKJRs/TPYhiJEqoEjO/xVC/Et7yt0=
+X-Received: by 2002:a05:690e:1183:b0:672:ede8:d1f4 with SMTP id 956f58d0204a3-67936062f7cmr4971148d50.62.1791914409230;
+        Tue, 13 Oct 2026 11:00:09 -0700 (PDT)
 Received: from zenbox ([2600:1700:18fb:6011:d326:f863:5ae3:683])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b07f2508e0sm48386227b3.38.2026.10.13.10.56.50
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67986a15c13sm145635d50.7.2026.10.13.11.00.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Oct 2026 10:56:50 -0700 (PDT)
-Date: Tue, 13 Oct 2026 13:56:49 -0400
+        Tue, 13 Oct 2026 11:00:08 -0700 (PDT)
+Date: Tue, 13 Oct 2026 14:00:07 -0400
 From: Justin Suess <utilityemal77@gmail.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: bpf@vger.kernel.org, linux-security-module@vger.kernel.org
-Subject: Re: [PATCH bpf-next v1 08/11] namei: add an rcu-walk mode to the
- ancestor walk
-Message-ID: <as5v6B-8O2QQw3zC@zenbox>
+Subject: Re: [PATCH bpf-next v1 05/11] bpf: add a path ancestor iterator
+Message-ID: <as5w8lY-3Z6sVlxe@zenbox>
 References: <20261013164800.2906577-1-utilityemal77@gmail.com>
- <20261013164800.2906577-9-utilityemal77@gmail.com>
- <sashiko-outbox-170183@kernel.org>
+ <20261013164800.2906577-6-utilityemal77@gmail.com>
+ <sashiko-outbox-170194@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -77,68 +76,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-170183@kernel.org>
+In-Reply-To: <sashiko-outbox-170194@kernel.org>
 
-On Tue, Oct 13, 2026 at 05:01:26PM +0000, sashiko-bot@kernel.org wrote:
+On Tue, Oct 13, 2026 at 05:11:54PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] vfs: TOCTOU race in vfs_walk_handover() sequence validation
+> - [High] bpf: deadlock in bpf_iter_path_ancestors_next due to GFP_KERNEL under VFS locks
 > --
 > 
-> commit 1f35bee40e8028ac4b024dd5a54b6bbdbb5b8521
+> commit 0d24b2f0561971ff2a9d89456692d9ec1ea13279
 > Author: Justin Suess <utilityemal77@gmail.com>
 > 
-> namei: add an rcu-walk mode to the ancestor walk
+> bpf: add a path ancestor iterator
 > 
-> This commit introduces an rcu-walk mode for the stepwise ancestor walk.
-> It adds lockless progression using sequence validation and provides
-> vfs_walk_handover() to transition an unreferenced RCU walk into a
-> referenced walk.
+> This commit introduces a sleepable BPF iterator for evaluating a path's
+> ancestry using the stepwise vfs_walk_ancestors() engine. It adds kfuncs
+> to manage the iterator and hands each position to the program as an
+> acquired reference by allocating a copy of the path structure.
 > 
-> > diff --git a/fs/namei.c b/fs/namei.c
-> > --- a/fs/namei.c
-> > +++ b/fs/namei.c
-> 
+> > diff --git a/fs/bpf_fs_kfuncs.c b/fs/bpf_fs_kfuncs.c
+> > index 08f0847c49708..02398f5a46d5a 100644
+> > --- a/fs/bpf_fs_kfuncs.c
+> > +++ b/fs/bpf_fs_kfuncs.c
 > [ ... ]
-> 
-> > +bool vfs_walk_handover(struct vfs_ancestor_walk *to,
-> > +		       struct vfs_ancestor_walk *from)
+> > +__bpf_kfunc struct path *
+> > +bpf_iter_path_ancestors_next(struct bpf_iter_path_ancestors *it)
 > > +{
-> > +	struct path pos = from->pos;
-> > +	int err;
+> > +	struct bpf_path_ancestors_kern *kit = (void *)it;
+> > +	struct path *pos = bpf_path_ancestors_step(kit);
+> > +	struct path *held;
 > > +
-> > +	err = __legitimize_mnt(pos.mnt, from->m_seq);
-> > +	if (unlikely(err)) {
-> > +		if (err < 0)
-> > +			mnt_undo_legitimize(real_mount(pos.mnt));
-> > +		goto dead;
-> > +	}
-> > +	if (unlikely(read_seqcount_retry(&pos.dentry->d_seq, from->seq) ||
-> > +		     !lockref_get_not_dead(&pos.dentry->d_lockref))) {
+> > +	if (!pos)
+> > +		return NULL;
+> > +	/*
+> > +	 * The position must outlive the walk's own view of it, so it gets a
+> > +	 * reference and a struct path of its own to live in: struct path is
+> > +	 * a value type, with nothing a BPF reference could be taken on
+> > +	 * otherwise.  Sleepable, so no atomic allocation.
+> > +	 */
+> > +	held = kmalloc_obj(*held);
 > 
 > [Severity: High]
-> Is there a time-of-check to time-of-use race window here due to the
-> validation order?
+> Can this allocation cause a deadlock if the iterator is used from a sleepable
+> LSM hook?
 > 
-> Evaluating read_seqcount_retry() before lockref_get_not_dead() seems to leave
-> a gap. If a concurrent rename or unlink mutates the dentry and increments the
-> seqcount right after the sequence check, the subsequent lockref_get_not_dead()
-> might still blindly succeed on the active d_count.
+> If a sleepable BPF LSM program is attached to a hook like
+> security_inode_setattr or security_inode_unlink, it is called by the VFS
+> with the inode's i_rwsem held. 
 > 
-> This would yield a stale and unvalidated path position to the referenced
-> walk. Should the lockref acquisition strictly precede sequence validation to
-> ensure the sequence hasn't changed during the reference acquisition?
+> The kmalloc_obj() macro appears to default to GFP_KERNEL allocations, which
+> includes the __GFP_FS flag. Under memory pressure, this could trigger direct
+> memory reclaim.
+> 
+> If reclaim attempts to write back dirty pages or shrink the dcache/icache,
+> it might try to acquire the same i_rwsem, resulting in a deadlock.
 >
-This is intended and explained in the cover letter note,
-"stuff not changed" bullet one.
+Direct reclaim never takes i_rwsem. So this is incorrect.
+
+(Also if that were the case, the mkdir selftest would splat with lockdep)
 
 Justin
-> > +		mnt_undo_legitimize(real_mount(pos.mnt));
-> > +		goto dead;
+> > +	if (!held) {
+> > +		kit->step = -ENOMEM;
+> > +		return NULL;
 > > +	}
-> > +	to->pos = pos;
-> > +	to->flags = 0;
-> > +	to->pos_flags = from->pos_flags;
-> > +	return true;
+> > +	*held = *pos;
+> > +	path_get(held);
+> > +	return held;
+> > +}
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261013164800.2906577-1-utilityemal77@gmail.com?part=8
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261013164800.2906577-1-utilityemal77@gmail.com?part=5
