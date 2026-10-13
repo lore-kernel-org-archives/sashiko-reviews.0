@@ -1,183 +1,103 @@
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4141388396;
-	Tue, 13 Oct 2026 09:37:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CD447F3B8
+	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 09:38:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791884273; cv=none; b=vAPC1qYDAg2kSc2M9lA1xPBLL3hOEA/WP5CqLHc6HzQzMr9WxIT+Jd9owL/PIrYM7jZQgJ3U9A7d+gb4be84RjqowPRVvDs7sG4MYsPOdCsWfHPqqlNXM8u9+bi5eIJ2BVnJVWf5PDd8wHvJWCNQVV6nEKKMXJXjs8BZ7Ctvf+8=
+	t=1791884318; cv=none; b=hlFFhl4YEM6WtvHBvIoakkJkuP3yHnjlD+P7KcdrZzYu0Q3gOpFflowc0Z0RWGPLP7ZwVbXraLtbgTKiP0JTpjInLz/W7lxFkiPpGpnX9IqtQeXgSx4F6lNfECda+lpaswRU3sn3vRJtScJxHoDkgZNhge5kNcdDy5kP+qPqyU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791884273; c=relaxed/simple;
-	bh=2ayAFFb+DUz96xoDh3MBAGQTWLWO2Yi4jW89/kvabEc=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=RxtfSCTuRNIn3Uqsi+KGCRCLrXrV4bkhsfZP6u6tbQm7kzStQubtSu4On9xgePBsLGyHPLSFsYMiF3tHbYhUl6bWMSPq1Os/j8V8t2oiDiOsgWT+g9K18J3GBg/j4Ic704Wrtq8vZZppiStxF2aDDzVL+QDt8Aje6W0sG4jDmOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=skhEaINj; arc=none smtp.client-ip=185.171.202.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	s=arc-20240116; t=1791884318; c=relaxed/simple;
+	bh=iXKHtTcO3OzXfeUrwOHsqSVNmwXV/F74AKan+YlAHVE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Aasi1GEAtMx07IC7o1GkWB9vhvJQ+M9iYsi2PmorM0aH6tgf33zL6T/yq0KELf0C0J5R4lW7b/V6tKX1+OPLKcUN4ccrE8+Dvucw4uU7La5O+EWAcW0WG0iouzjMUkcucw4Yyt/NYvLhKEO9GZpdQ/O/jpO1sSK/Iv7X5KJ7Oeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EnIoRITJ; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="skhEaINj"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 650AAC653E5;
-	Tue, 13 Oct 2026 09:38:45 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id DC11560362;
-	Tue, 13 Oct 2026 09:37:49 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id D19F811D703F1;
-	Tue, 13 Oct 2026 11:37:43 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1791884265; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references:autocrypt;
-	bh=u2mEZ3XIqrqWo6anRB/8NKALcH+wjEUwjzjiCXOic6I=;
-	b=skhEaINji+2Nx23tj0+vlVC+INBRqHuBEvOpI2GawllaxCVDWyN+Qywh+0RB9mojqG1a4p
-	zNXxzbsrL5xabJySIFeqzN9/VYmZrQIncPaHdPqHeBIPjgEUDvglc8xgQEnIk/LHGs3gyh
-	PagqOsWmOQoAjtaciZ2Ct33NgxOXoiYalRiffBBZPlKY3ruud10NKqXDXzxpV3W//2vFjd
-	z65cSTnHGG98vfUKkzOrnK/3oEGSY7lK2BJ9aMsHjClFBTbzYM/JjHeKGzO+S7O+gvLOXi
-	M6IWttiBNTMYM+GuJgJFRVmNPTRgqHqUvtb06dlM/qxlNehu6ouh4Y+MnX4pNA==
-Message-ID: <7d6b1e81114dd98b5ff5f2c71f577c951af14250.camel@bootlin.com>
-Subject: Re: [PATCH v8 5/5] watchdog: aaeon: Add watchdog driver for
- SRG-IMX8P MCU
-From: Thomas Perrot <thomas.perrot@bootlin.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EnIoRITJ"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4a0286c981dso23305935e9.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 02:38:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791884315; x=1792489115; darn=lists.linux.dev;
+        h=content-type:content-transfer-encoding:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=098vSxKVV3TqG4547pdZNiDtttbybP63ryH0G1e7pgk=;
+        b=EnIoRITJgzDIcys8h1gWETViZbytCK+c177PccmRhFhNiB4f4vwsyytSBK7m5/zpiP
+         JCLzCyXkj1SZbTRiTo/aXurFdVr/XB/2x+fydVpOptxRiHhLoBuXXFHj3I02rr9p05YC
+         Y7cCcLTd9UtI0hjQBHjYiFpqR72nVAXWFdcM0hsHjrSScaIfcyZkN5SIU1HlC50Fx465
+         fE1OBGVqIZsgEovpxjuiZbqPpi3q5Z37EhPfEp/qpkiHOYcBLr0AChkiAuMFJHLlNWJ6
+         4qAaOI23fpXApBhs2Z+FaPKHhunCRYy1B7dUuU6/5CTxk/57NPL1yOf7jOLLMH2V35Y2
+         2loQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791884315; x=1792489115;
+        h=content-type:content-transfer-encoding:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=098vSxKVV3TqG4547pdZNiDtttbybP63ryH0G1e7pgk=;
+        b=j3LhmOrcm7YOPZNMSxyOCQxKWcKdmPCzRCDGUhbmRHPZZa1K0MBnIxEfi/NLsS+ius
+         DbFJlPh4/hleAobOozwNmmMPOMIsu9kf+/t2o/e1R6AJAp0tUzhKm+BYNEAfdchNfaIe
+         4cOBTOoxCaI5BL8f9Px8QgwZyKJQCdynJpEah8qZ0ACduwkCksQbC8yBU/36QF2fLYva
+         aG2UNb7mrKouS1KAQE4XroBomSkKpfp86M5P6P205s4QqJhxg2jc7yXzJnMIutWaN41a
+         fWXYoZVU2JP9hDx7jmIO1kJ7BLWfGZk3G3AVPXqL2uYJGcDUrnbMoE1MfhU1cPnvUMgU
+         0O7A==
+X-Gm-Message-State: AFq9FYKoE00/H+dx/W2c1am1OAFkSL8AeBYp8kM9eMzxPUudyo9IfH9e
+	uRG6uB1sFPQV9Wkz3tuzH06UNGGuFdYuCl+WiVfqD2WOw2dYID6k3EtX+WXiposq
+X-Gm-Gg: AYBFou1IhYq2uVekdPwY/8c9/XZmffYBsVgu+/0xXBGh7sSZUd/ZnpbaYp1NeYekfIt
+	QqCgbcGQNl36rVSqgGo/DGGBeqrbbVlU1efxkZc5tZtnZs5Kfj4cIMw8Kj0rX0Nq/D6mR4PfnlD
+	T/F1/3MItLgT3FAlsnLGZNpAYY6zvwaOdCNrjwMbozR8UYHNsHhiv0q+i0TTIirjpRLrBr4HcQw
+	bYJnHG8Eml6HPwKNYVKyHB3iOKVN8INErul/NHfXharHITiE1PCI4WX+R1BzfOn4TTbRpJ2tlc0
+	x7SMKzxePNgrywQSKCXPZJklSDkIGuSBTfLVZlD2UsyRaqyuuDmF8KvjhUBCafORxQ27Pu372sN
+	fzD5AjITsCm5FpJFv8Pz2OvnqnKaaU+HBf78M/IGGxCpTI+Sb0yaXVn9ZO1YKcesz+mdLiir765
+	9MntzzGJYtt74EoSdet49z7eU1SJhKk6ZvsXFChtY4+UShQOBgEWH0zQjg/3VAkxX+XZZJTks40
+	F7OmtocyKDMpWWcX1u6NUNPWmqZyAF6XqsfgL4qqrfO9nGhkg==
+X-Received: by 2002:a05:600d:82e4:b0:4a1:a49e:a925 with SMTP id 5b1f17b1804b1-4a1a49ea94bmr80614835e9.35.1791884314640;
+        Tue, 13 Oct 2026 02:38:34 -0700 (PDT)
+Received: from rillian-arch.localnet ([2a00:23a8:8f4:6a01:5ffc:da36:c891:cd3c])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a19471edd5sm450468805e9.11.2026.10.13.02.38.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Oct 2026 02:38:34 -0700 (PDT)
+From: Rillian Grant <rillian.grant@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: thomas.perrot@bootlin.com, conor+dt@kernel.org, 
-	linux-watchdog@vger.kernel.org, imx@lists.linux.dev, robh@kernel.org, 
-	devicetree@vger.kernel.org, Frank.Li@kernel.org
-Date: Tue, 13 Oct 2026 11:37:42 +0200
-In-Reply-To: <20260731100434.195B51F000E9@smtp.kernel.org>
-References: <20260731-dev-b4-aaeon-mcu-driver-v8-0-9ab00e80df2a@bootlin.com>
-	 <20260731-dev-b4-aaeon-mcu-driver-v8-5-9ab00e80df2a@bootlin.com>
-	 <20260731100434.195B51F000E9@smtp.kernel.org>
-Autocrypt: addr=thomas.perrot@bootlin.com; prefer-encrypt=mutual;
- keydata=mQGNBF+/ZOUBDAC2DghCjZvmgYcve02OG7dGZ7Iy58uEwne3LB7w7nRwdAxKw7ZaiVqwY
- O+yNGVi+GVx7oA6Wn4pv46z+QDRLQiq6OseuXhkSGCg7U/yBCUq12B/GRGO1Qt2Qi1mJJT1s+1qZ5
- Gxv6Nypz9qKVn94GM2bR1hXBga0t87vBpebThOHmX5d/0dqIcVxRCM7onNb0dDyRoVgLS5rBhQzrL
- CMrJaCy39xZUy0J1SOlH4Mgk6EhJIPYY4wlzikGX6urg+Tc9EjGd78ry0e0p5U5qgjFR5QGJDy1Gn
- U3CfwbT9sowdCASDbQDUoltlv2iWJCLa0xl97KVchCa0pr7HKbFA3J5SLKqFYUBCkFL+5WudYlz2n
- XxiUgyviMQxyK+ij66kEi6/2zFDAecd43pHV7790ptqZBC3Jc67Emj7Vo3ShX6RXPPxxbeCTOF2uk
- I45aJ9XcVFH/MFE96NjXj8uahnIsiTPyuCUoJu8tj7TSQyue874qJqVQvqlFyt2aZYJZ8ruq8AEQE
- AAbQpVGhvbWFzIFBlcnJvdCA8dGhvbWFzLnBlcnJvdEBib290bGluLmNvbT6JAc4EEwEIADgCGwMF
- CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQSHQHfGpqMKIwOoEiGfwAsFcf4K7QUCX79mdwAKCRCfw
- AsFcf4K7fhbC/wP0kSl6id2E/K3+UdXk6CLMVRbCFLCREzQs5WFpQ6l/I0WGOamhrOgegdszheiVF
- orlUP8d37XSpFAqydhKGaN78V5Dps0Wmwm4lIlS4MtQXJtSLUHXDJLIZLW0pw8tiPLKsd1o/yDkXE
- dnpsjJTRG6SdDSHnyOB2/gh4p+yTaLytFdARk/r4/P26+L+FiH0fFl+RnBt19LPklfKgeDc7GwIif
- ja+nIWpp3W23DAUuI6xduEut25Q89yu7Ci8CliLfAiLy9bIGjBQWU2Y+1/j/7KuPj6VbBsZWLTZY0
- hUmpJSTnWAqc9SMsNxo7NSQuddgviz5e2tqucaRqxP02FGzNa8U4NAKdWaXrlHG5Dglj9XH0DK+SH
- +c96qqFewYD8VPQ6XAGxQcXbrtJmiMor1R2DfziispLRvJcfYs8xqabbCtoS3ouXB9XRi8hn7A2kh
- ME1ryS+Oh63JshXHnw6bmjCpVd/p+fGLIGU6A47pJOpviKR4jEO84pl2ejtDZ3Tc=
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-Kr1WNLVwttji5ffo0/h/"
-User-Agent: Evolution 3.60.2 (3.60.2-2.fc44) 
+Cc: linux-leds@vger.kernel.org, lee@kernel.org, conor+dt@kernel.org,
+ devicetree@vger.kernel.org, robh@kernel.org
+Subject:
+ Re: [PATCH v3 3/4] leds: flash: lm3643: Describe the LED of ACPI boards
+ without LED nodes
+Date: Tue, 13 Oct 2026 10:38:33 +0100
+Message-ID: <37Wk96VpSLOh-P0MeN457Q@gmail.com>
+In-Reply-To: <sashiko-outbox-167402@kernel.org>
+References:
+ <20261011191026.149338-1-rillian.grant@gmail.com>
+ <20261011191026.149338-4-rillian.grant@gmail.com>
+ <sashiko-outbox-167402@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+
+> [Severity: High]
+> Is there a potential race condition here when multiple devices probe
+> concurrently?
+> 
+> If two threads execute lm3643_add_dmi_leds() simultaneously (for example,
+> during concurrent sysfs bind or async probe of two LM3643 devices matching
+> the same DMI table), they both might pass the lockless
+> software_node_fwnode(nodes[0]) check before either registers the nodes.
+
+This condition is currently unreachable. It would require two LM3643
+instances on the same DMI entry.
+
+I'd be happy to add a static mutex if preferred, or alongside any future
+DMI entry for a board with more than one LM3643.
+
+-- 
+Rillian Grant
 
 
---=-Kr1WNLVwttji5ffo0/h/
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hello,
-
-On Fri, 2026-07-31 at 10:04 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue(s) to consider:
-> - [Medium] Contradiction between driver code and DT binding regarding
-> timeout-sec property
-> --
->=20
-
-I=E2=80=99ll add "timeout-sec: true" to the binding and reword the descript=
-ion
-in v9.
-
-Kind regards,
-Thomas Perrot
-
-> --- Patch [5]: [PATCH v8 5/5] watchdog: aaeon: Add watchdog driver
-> for SRG-IMX8P MCU ---
-> commit fca789df9bd6f6279b387ae274aa7dc26fa4cecd
-> Author: Thomas Perrot (Schneider Electric)
-> <thomas.perrot@bootlin.com>
->=20
-> watchdog: aaeon: Add watchdog driver for SRG-IMX8P MCU
->=20
-> Add watchdog driver for the Aaeon SRG-IMX8P embedded controller.
-> This driver provides system monitoring and recovery capabilities
-> through the MCU's watchdog timer.
->=20
-> > diff --git a/drivers/watchdog/aaeon_mcu_wdt.c
-> > b/drivers/watchdog/aaeon_mcu_wdt.c
-> > new file mode 100644
-> > index 0000000000000..661d14393c6ec
-> > --- /dev/null
-> > +++ b/drivers/watchdog/aaeon_mcu_wdt.c
-> [ ... ]
-> > +static int aaeon_mcu_wdt_probe(struct platform_device *pdev)
-> > +{
-> [ ... ]
-> > +	/*
-> > +	 * The MCU firmware has a fixed hardware timeout of 25
-> > seconds that
-> > +	 * cannot be changed. The watchdog core handles automatic
-> > pinging to
-> > +	 * support software timeouts longer than the hardware
-> > limit. The default
-> > +	 * software timeout of 240 seconds can be overridden via
-> > the DT
-> > +	 * timeout-sec property or the watchdog_timeout kernel
-> > boot parameter.
-> > +	 */
-> > +	wdt->timeout =3D AAEON_MCU_WDT_TIMEOUT;
-> > +	wdt->min_timeout =3D AAEON_MCU_WDT_MIN_TIMEOUT;
-> > +	wdt->max_hw_heartbeat_ms =3D AAEON_MCU_WDT_HEARTBEAT_MS;
-> > +	watchdog_init_timeout(wdt, timeout, dev->parent);
->=20
-> [Severity: Medium]
-> Will this cause device tree validation failures when users specify
-> the
-> timeout-sec property?
->=20
-> The driver code and comment indicate that the timeout can be
-> overridden via
-> the DT timeout-sec property on the parent node. However, the DT
-> schema for
-> the parent MFD (Documentation/devicetree/bindings/mfd/aaeon,srg-
-> imx8p-mcu.yaml)
-> enforces additionalProperties: false and does not define the timeout-
-> sec
-> property.
->=20
-> If a user follows the driver's instructions and adds the timeout-sec
-> property
-> to the MFD parent node, dtbs_check will fail. Should the timeout-sec
-> property
-> be added to the DT binding?
-
---=20
-Thomas Perrot, Bootlin
-Embedded Linux and kernel engineering
-https://bootlin.com
-
---=-Kr1WNLVwttji5ffo0/h/
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAABCAAdFiEEh0B3xqajCiMDqBIhn8ALBXH+Cu0FAmrN++YACgkQn8ALBXH+
-Cu25yAv+K91gmW41FZGVkEKepYv1T/G7POoLs3EWiP9U5GngGOC8QKvVjPc4Fupu
-CjOOnlXxz8oVUDziimHtPtFs36753Gd5ansCDLbnsTc22vsN7qm7cx9gU22nNiQd
-+a8kt0HpMpj2nl2N1ki6AKHuLoYXM0ThY1HAgchZKt2Vfk0BtJH/EWGUBklATw5d
-wEqbgjstnPL48WozVUsgo8C4kz/6Rf+t5eAOZTB6oXe+2BH4YUmUOODrL4Ylz3Kn
-DinT+rxVaFRNncFoe5A7UvJjIauN5LxKjHT6yU65NRozt0Z46bevv4Sn8Xlt6AjP
-Art5kFD2BWHDbvUnzpG4/9mFC1TtrgF28CftD9mTXqxWDu1peCZcZy1A8ewXm5/B
-EaRUEuv/GaAucE0P0hPj33icKSsAE8S7iYgHFs6GJmaI2MbpQAE/tzQ8kxTSEJ6x
-4l02V1cLmYjfYkR72mHS0VsbEpWOrjA7pfpq4ZffFOA8o01n7mUQWCbRCk3OX6uX
-XD3Xxyod
-=Jyec
------END PGP SIGNATURE-----
-
---=-Kr1WNLVwttji5ffo0/h/--
