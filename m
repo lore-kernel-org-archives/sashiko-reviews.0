@@ -1,150 +1,179 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11D6E5581F3
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 21:33:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791927221; cv=none; b=h17lxxiYaf+WC9ozdNxCaKXTOR0wyDM9CqPDs9tN6b1JTFSRlmhMfmiW7d3v+m3BNunXt/4MsN6rgqvYShH5SEuIklmp5NH32UMyPVOeYiIV01YSPB9jqIhQhH65befTLBvQ6nR91BL02mZ/K4u/RCIaosBFVbumX1EdGcXKu4o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791927221; c=relaxed/simple;
-	bh=57xzde7LKVyT+5dEhJ3U9H7Qvgs5czE/fqoC5+UI7Es=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Omk/km53smKV1z1jQhD3ImnOFmuTLiXWAXIi7rF8QxlTL657T7k7wRu5FXylM/zJcvJ/5D1j2LRb8RvdNWSd/PnIifS1KzCG5JnvJuWENeM466zdHQd+xaEKSzWoMzxepz4mGmHybmchv07yrJd1YdnP4RCqYusBJpMe4KPJsWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=b0GswWpG; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013027.outbound.protection.outlook.com [40.107.162.27])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044C12F7F0A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 21:48:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.27
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791928095; cv=fail; b=LKkohEc4O36Gm4n7Ew/I05jjqBEm4aRnYBRvKtxXDtV4zJvT+L3Bi0J7vxzf+g8ay3sZeXmbnjOworDsnGjQeVkdA8X1rtikQBv8rCW3QpPhTDyLcmsaibLh33qtc3qft7GQdSfDr1J+APDcmlNo6jGK1+JgMy98h4v2ScAXhLk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791928095; c=relaxed/simple;
+	bh=9nsN8Xd4p+gJK2vOhb54hBWA6qVGKfXxIo6DOUjdIMc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=u/u1lklsOu7+wbQpsPADmimnljp590Kw38WNFBtmBd5MIzYMEWxmvchx2EH9ngXJpRJGHtiM4h66fX6/4cIlo2ArDWkAN3nWgVe+b8gk1j2wp57PsBXoqLY158Xtbdzqpt/UnMQvT6oJB7qhTkxUo87S4UJaISydNKlY82MXPRA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=hjtLhIeW reason="signature verification failed"; arc=fail smtp.client-ip=40.107.162.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="b0GswWpG"
-Received: by linux.microsoft.com (Postfix, from userid 1216)
-	id 7218920B7166; Tue, 13 Oct 2026 14:33:36 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7218920B7166
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1791927216;
-	bh=NHHcpzSsvfNUuPz0eZVfWMSfnqUEPcgsZ5z4/sE2fKo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=b0GswWpG6bz8CT+CHM08RfAT9Ufu6dOAF5SbUUaasGOtewB7/5s/0/rRt//imN67U
-	 04WDqBsDm2OkIyzCC1HT2u0RmEGzjTa1guwyQRR7HoObr/Y4U98a7Ml4fXNVvx0qwm
-	 QNihCuX//V0TpmBbvURjpXPFUl8+VdZwX9PqOdFE=
-Date: Tue, 13 Oct 2026 17:33:36 -0400
-From: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="hjtLhIeW"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=hgtXSr9ZKvV3CxHN2aKXuDe/1naLOeLBVLQnDZDNkxqurjs/Q6F5vvp1tzrLHjujsiH6UyJbMIpUjW3KRxKnhQjjmv7hRalaVtUkYVdipR8oVBVuVExGgL+oxcUd2ttJIs1KS3V5+aoC98w0AHSl7JwcnbRXOKf30kHZBhS9vmLgf5dKEO9iMgnpII2qtIA8AeKfpnjSD5x/rMohDPpWpwoWyBlua4HRSG43oaNy/WBb+muRTWLWEMHJYi14T1QkEfI0z1KRiWgIn7B3YRjEOGjU/HbpGyOGdv9UPBlgibFm5WI0LgO9SMvibJ3bW7PUMR/ja6LE90Dkawui4o5JAg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=CqykZOwF5njgh5x6BuYV2Odw4efhFGX7hpUnMmqN1dQ=;
+ b=t47hsGrvtRcGilX0rmMjgw87GV9S1Uzyjs3R7Ci+WeeZIqe+a849S5k4oR0OC2WK2lUnoAgn7mHSa02BgG7+g7Hh1yFD4mM964sl0i5KmAJdQyCknThyr7nIfl4rcOl2HDITLsNsZ4t53liplX02cNwagCFNSthcnHQKSjqcneUF+KaxFeOWv7GSbbipo5eE6F8LzUL9y4g6xG8JNOsFvunSvDMMsy630bNF82k37eNoVsgMsF+pv5NukNEXhVW2RRfzoJfHfMRVRX2KFdxlLJs0TLg+li2SgrJnI/d5FvhkABE6/JuEGZtmAyC8mx096DnYVotNl17ysihbcbxI2w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CqykZOwF5njgh5x6BuYV2Odw4efhFGX7hpUnMmqN1dQ=;
+ b=hjtLhIeW8aFL2JgeyeP5eZ2VyFivL4q76hVHxVTp68iKD8yJE1vLB5aJ1ekXs0f19CAZW8PLEbYQf5Ko6gFc8bFfTjyutVS+s90nDRlBX9l8YRkN4k5sSXpNNcgA3qOZwUGGHJo7IoZcyvZanw0d/Xaa0P53luq/FVcQsdnzPEMFrsNiHkxa2W7hdXBf8aAPfHfKpSlCmb18l9kI7UzXGNbmB4pPvJKkTxOhtYI4JwLDR2V5ze++d3kT6+TJ8j6oOOApz6UfGVIVrUOxtDuWcvfR8wSRw/oFVpvZcphDMifJpP2G9fKXMpKHGJPTw+j3DktnV4/5ftwBIBw5LdRn1Q==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by VI0PR04MB11818.eurprd04.prod.outlook.com (2603:10a6:800:2ee::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.23; Tue, 13 Oct
+ 2026 21:48:09 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0522.011; Tue, 13 Oct 2026
+ 21:48:09 +0000
+Date: Tue, 13 Oct 2026 17:48:02 -0400
+From: Frank Li <Frank.li@oss.nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org
-Subject: Re: [PATCH net-next v2] net: mana: add BQL support
-Message-ID: <as6jsPc+D3EJIMQT@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20261012193325.4071665-1-hamzamahfooz@linux.microsoft.com>
- <sashiko-outbox-170395@kernel.org>
+Cc: Praveen Talari <praveen.talari@oss.qualcomm.com>,
+	dmaengine@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+	vkoul@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH v3 2/2] dmaengine: qcom: gpi: Convert dev_dbg() calls to
+ tracepoints
+Message-ID: <as6nEloHzo_YkEW9@lizhi-Precision-Tower-5810>
+References: <20260926-add-trace-support-gpio-v3-0-8572bf7456b2@oss.qualcomm.com>
+ <20260926-add-trace-support-gpio-v3-2-8572bf7456b2@oss.qualcomm.com>
+ <20260925210244.D6D5F1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260925210244.D6D5F1F000FF@smtp.kernel.org>
+X-ClientProxiedBy: CY5PR19CA0011.namprd19.prod.outlook.com
+ (2603:10b6:930:15::13) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-170395@kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|VI0PR04MB11818:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4d4d0a6a-99b8-4259-3902-08df2973ac24
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|366016|19092799006|23010399003|11063799006|56012099006|4143699003|261009223027099003|10067099003|22082099003|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	5lJG3ZZpvyNlk9+w9dcA7+DkysfBwyvRu6CDZ0pRalLX0vi4bNyzL+h580q6BHhV4w7iMmHZ+/T0FoTjuN5nreNsBDFCKSDIZCihR5Xrf/ahfTGZNNUnB83FtwnqV2q+tY6kj8mQeOp/hRFeIT55118j52YaIiFYGIg0xQmi21PLERqg85F37jBrYWqHGCmvKzVcWGgvQjhVb5klxRqWOPRJ2EcPBXizN01GRw4yReuuWLDhEhGxO7drD5sKoVLJGIK2QWyZTPAoheXcApWhpQz0flBWiOt8hWhOkdNC4Iab87zI21So7iY82ZFMza24jzQP/wVZZCOQHHXTbDYblIdNXVAc6VPlJ4ui8aXBgPu67/PjUAsEdY/irQeB9tFyLBgAGR7FiKwhxP3rmH/BSNjO8iaTfIhNu11e0/uYAXSFban3fNqyIPP6SahwhE5L74ntaSbMZv2s/ULmZUljhCa75CnCy1T/gLyJlSmNqQeq+N2u5CtNB6teD2v9WlfQG3+CdPWUtg2L0LxjN3Q12hYFoGOyNQ3Jx17hhfAE5WN8ivLmpMM0F1M/gE3tDDf/jjoN3BlI086B5UHXXUJNVUtgY45oqf4WgKKFJ5k3y4I=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(19092799006)(23010399003)(11063799006)(56012099006)(4143699003)(261009223027099003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?65K0nsTaM6VfPQJkfLhjfGSHmD08PseScJHZGSnwyE5zv+Gi+GPbj/A+57?=
+ =?iso-8859-1?Q?MJWIPj11yYwal342LeTd/2Ep+QxFNSRm2gO/yNqDaMhmQ5qRctRtCUvZ6h?=
+ =?iso-8859-1?Q?zosMUpF53oO0SZtRAgEAwWwVIddbbajeBY6vsMiPXrLT7wtOEczFxfVuxO?=
+ =?iso-8859-1?Q?KqjR2NA2JE9TzIQXunkwZ2ec7rqEzV3st5QrWjQ/75FCgaf8hbxwZbuvPe?=
+ =?iso-8859-1?Q?aum09t/7oC+wCPMJm1V1NLx01EQVckyIVUPrynHfvQasVbrBR85v7D2Zi7?=
+ =?iso-8859-1?Q?P9aHxtZCeiJ9V1GrE/qUycNXZ5Y29ww0W+HAUr6kkcXVQt9dFn4HiKMYfA?=
+ =?iso-8859-1?Q?jnhaI3KP+Btb9Poz/19FEB8mWXkicF90yrdSo/O3XNudC4uw+9dBV4gxNw?=
+ =?iso-8859-1?Q?SDITGkLU3iCsnSgkfYhVcZJ+07VZsx8zugYomsImEr9KWw5k3a0sC8DSq7?=
+ =?iso-8859-1?Q?lHCXQ8hHsSkB0kzb5snM6ZQq0ffaic/qgJGihVSSX+fqqzgf+oS35dVt6N?=
+ =?iso-8859-1?Q?29oShkQJtuv+87gm5cFr9yq9Gdc0JOqFpJwm5sFBbF+7nKVDG+E43PCQyp?=
+ =?iso-8859-1?Q?yslvwk4xWf884AuqjpJL65bX+RW4KRsWZYm40tmBuyoJxKrwK+MQjvFNTp?=
+ =?iso-8859-1?Q?FdVlZb8f8SdUkQdnmZKZK5jUbn4KZvJTjc0FxSeWtMC38seuCAyPCRJD3Z?=
+ =?iso-8859-1?Q?G+FAw+LEatFE14bVJO3B0me77wL8RjB56TAcsAtlsQNMVaEekTWGIXYT4U?=
+ =?iso-8859-1?Q?qz6zAHXi5g2kVjPlw6y/u/E6dSewfWCuAJRrznJxQq6gZiHURqjJQXLWV0?=
+ =?iso-8859-1?Q?PsC+jTiW08vPBbbqSgVMSsaYv1uWuJnZzjB+cYtyT/Iyg8jT23zrMWG8M/?=
+ =?iso-8859-1?Q?C5HsPOGrPUeVgLpcG43zTr6Jo9uLbOwAj6Ehc30r0ordUBZnzyUx06Bdq2?=
+ =?iso-8859-1?Q?xsfGSd4KrAppkIdGARvu8aISBUGxU7/glMfeTgYACAV6Ug7bW4BmLXhw8t?=
+ =?iso-8859-1?Q?RQqOQJPta8NGQm3aLL2arq1ScLifPZ3J9M2CZezoajxTgUHix740Qm12Mz?=
+ =?iso-8859-1?Q?91DiSpkLz7F7p+rCJvg9YEYXy3fIYQC/IkhUZ6BYg+dqD3jkkyQLARdml3?=
+ =?iso-8859-1?Q?PEm/zflkAM4hS93OM+ho2habOZsxh60hdw5NU0qRGpHfL5028Gv1w2sZ1P?=
+ =?iso-8859-1?Q?F6IbBjOHWtsSIuN+MePoFAjSP45Hi7FjL2cHo8EmcE5dUziwVM9vZURDQJ?=
+ =?iso-8859-1?Q?kLFoaT2I7UnPJWOybMPVN8wWbOFGMVSemBxhxViLVL6UqNIlLLtFUbpUkB?=
+ =?iso-8859-1?Q?8hJ5zCmghqW4s5F35yfdHh3bPv5S/J/2uPt7RlZxw/7yOc5MNO9JYDllk1?=
+ =?iso-8859-1?Q?Y4Iu/CAS1WFQAYta61rK5I6IpH/r5lpcqSFf7Rad985BgftBhEVtME32YT?=
+ =?iso-8859-1?Q?M3SNr2PRnVptOOOjjOhXKWBe33hneo2hgSeCGByN09Swies0ExPWkDPxqE?=
+ =?iso-8859-1?Q?kOwQtH/UndFHPX8U1UM/ExLC59axJQ+7klOHtsuQ0kWool/3hJ+FbwUFSW?=
+ =?iso-8859-1?Q?0fW4UGzztrHt4lvVMD09/ZYuGGI3AeyARiCMAaD6FmZllSiTWnLQ4lxAfI?=
+ =?iso-8859-1?Q?p42oS5iehU1AhPm1SUfY6iGaN7RLxQuyN7emzdf5kks7NmDjLQKyWaPLMO?=
+ =?iso-8859-1?Q?TG5MvhwIcZSdoelq2Ry/n1MzFSUZ2fSaMXDza4eosuRsrFCO8JvpI83DAs?=
+ =?iso-8859-1?Q?vx8KdUOPqAy8fHc7NuzEODhbiQ69BMw5M/kf+pV0notE9B4O7i418EAwvZ?=
+ =?iso-8859-1?Q?DLjHg6pL2wUanbVZJpaG5X7ukwrGKx9IH26AbRkdnt+7GdbNo7gr?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4d4d0a6a-99b8-4259-3902-08df2973ac24
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Oct 2026 21:48:09.7611
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: pdhpwQUHsgSWMtTUH491aAJqas0iTPiwmeW5f/iWMh9okJA7KFmKeDzBLrIm9JfFXFVoA3p8LfTxchIih+feb5EQwEI1wiOTL8VLvXVuz9XMadP4WHLjVNA+JmUnOlDh
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI0PR04MB11818
 
-On Tue, Oct 13, 2026 at 07:35:27PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] mana: false positive TX watchdog timeout on XDP due to bypassed trans_start
-> - [High] net: mana: missing memory barrier allows Dekker's algorithm race stalling TX queue
+On Fri, Sep 25, 2026 at 09:02:44PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] dmaengine: qcom: gpi: unused variable gpi_ev_state_str causes compiler warning
 > --
-> 
-> commit 9321c04ed33bbb92ceb52c62c2cef3faad2705da
-> Author: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-> 
-> net: mana: add BQL support
-> 
-> The patch introduces Byte Queue Limits (BQL) support to the MANA network
-> driver to prevent high latency and improve AQM interactions.
-> 
-> > diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-> > index 489558176a5de..7f081c2d16d03 100644
-> > --- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-> > +++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-> > @@ -543,6 +543,16 @@ netdev_tx_t mana_start_xmit(struct sk_buff *skb, struct net_device *ndev)
-> >  	err = NETDEV_TX_OK;
-> >  	atomic_inc(&txq->pending_sends);
-> >  
-> > +	/* Account the skb in BQL before the doorbell lets the hardware
-> > +	 * complete it. The XDP paths send even when the queue is stopped,
-> > +	 * only count the bytes then, since stopping the queue again would
-> > +	 * refresh its trans_start and keep the TX watchdog from firing.
-> > +	 */
-> > +	if (netif_xmit_stopped(net_txq))
-> > +		__netdev_tx_sent_queue(net_txq, len, true);
-> > +	else
-> > +		netdev_tx_sent_queue(net_txq, len);
-> > +
-> 
-> [Severity: High]
-> Could this logic cause a false positive TX watchdog timeout on XDP workloads?
-> 
-> When XDP traffic pushes packets directly, it ignores BQL limits. If the
-> traffic sustains without hitting the physical queue limit, trans_start is
-> never updated here since __netdev_tx_sent_queue(net_txq, len, true) is
-> called.
-> 
-> Because the physical limit isn't hit, netif_tx_stop_queue() is also never
-> called, leaving trans_start entirely frozen. Will this trigger a watchdog
-> timeout after 5 seconds?
-> 
-
-Ya, this does seem founded, I'm siding with just keeping XDP out of the
-BQL equation entirely.
-
-> >  	mana_gd_wq_ring_doorbell(gd->gdma_context, gdma_sq);
-> >  
-> >  	/* skb may be freed after mana_gd_post_work_request. Do not use it. */
-> 
+>
+> commit 16ff3240f7873902688743d98570cd5eebf13594
+> Author: Praveen Talari <praveen.talari@oss.qualcomm.com>
+>
+> dmaengine: qcom: gpi: Convert dev_dbg() calls to tracepoints
+>
+> This commit replaces dev_dbg() based debug logging in the GPI DMA driver
+> with tracepoints, providing structured runtime visibility.
+>
+> > diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> > index fafe6ac848d94..6aff2a0d54161 100644
+> > --- a/drivers/dma/qcom/gpi.c
+> > +++ b/drivers/dma/qcom/gpi.c
 > [ ... ]
-> 
-> > @@ -2038,10 +2048,12 @@ static void mana_poll_tx_cq(struct mana_cq *cq)
-> >  	gdma_wq = txq->gdma_sq;
-> >  	avail_space = mana_gd_wq_avail_space(gdma_wq);
-> >  
-> > +	net_txq = txq->net_txq;
-> > +	netdev_tx_completed_queue(net_txq, pkt_transmitted, tx_bytes);
-> > +
-> >  	/* Ensure tail updated before checking q stop */
-> >  	smp_mb();
-> >  
-> > -	net_txq = txq->net_txq;
-> >  	txq_stopped = netif_tx_queue_stopped(net_txq);
-> 
-> [Severity: High]
-> Does this memory barrier fully prevent a Dekker's algorithm race with the TX
-> thread?
-> 
-> In mana_start_xmit(), netif_tx_stop_queue() stops the queue using set_bit(),
-> which is atomic but doesn't imply a memory ordering barrier. It then checks
-> hardware space again:
-> 
-> mana_start_xmit()
->     if (!mana_can_tx(gdma_sq)) {
->         netif_tx_stop_queue(net_txq);
->         ...
->     }
->     ...
->     if (netif_tx_queue_stopped(net_txq) && mana_can_tx(gdma_sq)) {
->         netif_tx_wake_queue(net_txq);
->         ...
->     }
-> 
-> Because the TX thread lacks an smp_mb() or smp_mb__after_atomic(),
-> architectures with relaxed memory ordering could reorder the read of the tail
-> pointer before the store to the queue state.
-> 
-> If that read is hoisted, both threads could miss each other's updates:
-> 
-> - TX thread sees an old full queue.
-> - CQ thread sees an unstopped queue.
-> 
-> Could this leave the queue permanently stopped?
+> > @@ -887,15 +883,14 @@ static irqreturn_t gpi_handle_irq(int irq, void *data)
+> >  				ev_state = DEFAULT_EV_CH_STATE;
+> >
+> >  			gpii->ev_state = ev_state;
+> > -			dev_dbg(gpii->gpi_dev->dev, "setting EV state to %s\n",
+> > -				TO_GPI_EV_STATE_STR(gpii->ev_state));
+> > +			trace_gpi_ev_ctrl_irq(gpii->gpi_dev->dev, gpii_id, ev_ch_irq,
+> > +					      gpii->ev_state);
+>
+> [Severity: Low]
+> Is it possible that this change in gpi_handle_irq() within
+> drivers/dma/qcom/gpi.c leaves the gpi_ev_state_str static array and
+> TO_GPI_EV_STATE_STR macro as orphaned dead code?
+>
+> Since trace_gpi_ev_ctrl_irq() only takes the integer value, the final
+> consumer of the macro is removed. Could this regression trigger a
+> -Wunused-variable compiler warning for the unreferenced static array
+> when compiling the driver with standard kernel warning flags enabled?
+>
+> For reference, the array is defined earlier in the file as:
+>
+> static const char *const gpi_ev_state_str[MAX_EV_STATES] = {
+> 	[EV_STATE_NOT_ALLOCATED] = "NOT ALLOCATED",
+> 	[EV_STATE_ALLOCATED] = "ALLOCATED",
+> };
 
-No, the patch doesn't modify the driver's stop and wake logic, and
-BQL stops and wakes the queue with its own barriers, in
-netdev_tx_sent_queue() and netdev_tx_completed_queue().
+Please Remove dead code also.
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261012193325.4071665-1-hamzamahfooz@linux.microsoft.com?part=1
+Frank
+
+>
+> #define TO_GPI_EV_STATE_STR(_state) (((_state) >= MAX_EV_STATES) ? \
+> 				    "INVALID" : gpi_ev_state_str[(_state)])
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260926-add-trace-support-gpio-v3-0-8572bf7456b2@oss.qualcomm.com?part=2
