@@ -1,134 +1,174 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C78451DDEF
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 16:56:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB50522EF9
+	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 17:10:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791910610; cv=none; b=rt1mgbcJ4JoqoOXT6lWptYHKyx9JwEa3UltQdy7vtoltrI9eidbN9q+z17SBjd419ixRsOguftc+1oRgvavfJrWpXgUunfPFR0No8aAEtlgWe9vEaeR2NcjTs9VNM/uBsaoWVpUNEjfmIsd9jm3L0kSSR/blW77XXOXhAmYGYr4=
+	t=1791911429; cv=none; b=tqdBA71kPvTJLNcxCpM5NTEDz58642A6pnb7tEPJh8ThcvpGecpx/ImEPWxQSTUNasOiDt6J4MGNpECgViQoydHclVqNaznZ3W4DNsBiJ4KFtrm87SczAtKEoc930kemtG/Mm6WBczn8xPrhMbUt+b2wT+uq4kQZQzIVCcAqu8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791910610; c=relaxed/simple;
-	bh=YYJTbwy0HtrIEhdzcWsomzA4nphoQkU7Pn2YJRhRN3E=;
+	s=arc-20240116; t=1791911429; c=relaxed/simple;
+	bh=8Mnb9rp0/KendOgopy9yG9eEoskvig2agjZXLTmvHSo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RTrO4/LLN/g5a/L/Gu4UAuxS6tIrM9Z5lWcrAPcPP5VyiJKjK9vlnupCB5GIHoFF68PhyrSu7CF8dpVSW+CwA9OTVpWc/oDl+wUVscSPk51gtkarlf0C/erJs4J1Kidz4+9zra6g3pozVLQbLjIl9VOaGIpyUMk/FZMsxD7FCS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=RvymkDoq; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=DYc5M51cOAyohfQ16RcuPKC49GQ19Ru/BlXUfQvxd86DkeYAOomgrquzdtX0/huusA8OOsXgzGny5Qqy64qeHmeze0lI/OT7/f2ganVOvCqe9P48Yu+SXwSrN96CSj+ZpHcJ/WCrEbTCCSorQGVniltP/6JzhJH844l7ww4gzkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OZ6gaMAY; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="RvymkDoq"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2e836252e1dso26134735ad.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 09:56:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OZ6gaMAY"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-487049569b6so2277500f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 10:10:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1791910609; x=1792515409; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=Di8aE6KdoZOnEQFh34NIGAtRDEHWCfZKwuwkHlmj2kM=;
-        b=RvymkDoqL1gdJBYtUgwTJ0LlWADpOjR4Y3y4O7WN/qSTbiyz5EE3xNxPJXWdEIyMyq
-         hy2CICIiHw7gFMJZSd2EmVAZw8WL3XNejukPIsVz6pPJBeHlF3YMfTP+598Ek1QVjxvM
-         GInbo3dvsYimU7tcM5LQpjifAeSupHi38vgwNMtPi+YrjZJXNDOHeqDeucRIMynvC4yQ
-         DToZticsDaDQjnD3hdiQIQU6Pt+oF4iBewePnuv5nLy6xSkP6wSBwjQy2Uy7ux5+Jo6D
-         /DRPEVmva5DjjN/vrV6Hbz5OjbI52SObm63wnS3dbb1JO56COY46xeM4TugG70NHKK/A
-         GPgg==
+        d=gmail.com; s=20251104; t=1791911425; x=1792516225; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=o0KDBwBs4i6tsVXtOM7HjXD+EUyQMAjasdWbMXcJZLA=;
+        b=OZ6gaMAYSZxrN4/MEn8pEPTRQqD+x8fmktO60uHsIaR8ch+XglJY9IkT6b6l1ASxyq
+         uFE5nYPsZIA9aNcA5NaeoOjevqI46AnBErVagkNq/i4QhSVmDqBZqd52kFzQx7Em++y7
+         Knyu9OOQzWfQAQE9Mr0mBQ81ilIraZf4QtwIuTAznkWgbW8hYlB9iU5hcl8BsB85zPow
+         aKy1sOpzbovM+48DpNc5oevkqYVRXWyVtJpKPmL6yAKdBgzQB70iSYAJ26wU6wLtb/rj
+         qoYFxpAT9UZNozj++1NrriGdVKNFxjtc9WFzRoFOKmWQOXdlcEhQmu6uksTVZrAzX23Z
+         48Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791910609; x=1792515409;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Di8aE6KdoZOnEQFh34NIGAtRDEHWCfZKwuwkHlmj2kM=;
-        b=DP5d763ff3P7qdJM/tp2h0YWqfVZUviS7FDgIBN12Y1+8C+Rp7KObYXAcVBXD7677G
-         5+SfI0Mw9YNLwSl4mtLLJSIE2Mjp71mtov8Nhe8P90AejbdD+G2svGa9yVe5pfxcBfhp
-         ZFCzppawA2oOyTl3qEJHr2uRckSvbVfpZFa7dgJYJICacULedZoUaM9awCrMqk8hjqXh
-         p8kDPrv9wB9xoBLQiZfC+cxfdARyYRDvOGmH21d9qKG3u2s+aSHkuNZE7RGzgloTwp1l
-         lB5oL2+M11qGVEcJqZgeiD0nksXcK0bE+PCJ+AEQkVmrutkmpgGw6E7IKRO6UOjIDO6s
-         WBCQ==
-X-Gm-Message-State: AFq9FYLH85qA/QMtOz8RJxqY3DnfSueCOTUJnfUJCWE4qKyupotl/pyh
-	/rTXcyefYbVt+CORc/xD7+e2/5dd17nS2L8+vzjula2RkuoQX0PQJ5dzpzpYhJvkmmFRYLm+yb5
-	yEr9z3Ack
-X-Gm-Gg: AYBFou3lEMa9owZl6jNVGMfZzfu9z0nD/0xF26735J3sCYxY8PlMleYLcW9jH3xT02l
-	7KhEtu/2OSFKH2PeOsMpCGXblpDTIycpvsiKf9KMKnKtNuNiywI94NgKMgBtmlBP3d1VlVEy4dT
-	PQs4lELyapsFn4myKz8qpui/C5oEEovHEo3oG92tznsj62YitX/VLe8BaM2uNPB++BPuMBnyqeE
-	KHeFdqRHWFIuiboYLTLZBNyJsj6XeGvsWKa6Oe1a3b/OoA6rfVKAPrd0deHaOl0rKQPM0hmX7vr
-	wZOFbb+R8Wp8BrlSYQayh1zzSh9VtD8kU8xnz/G8Oe+Bs6TE6ERTWw05aZQ22E+ReFS+TzaMxRL
-	YSK/b5ZjMJkYVVzYm9ldEwjParZyjM9SvbvnvqkuRsFnoEXnkNfGu7nO+3mP0fjmkBv9pk07f4X
-	HKUK/O6JgvOMRK6OBKTmGEFSqiKbbnal1ddwIfUFEXLPFeq3YRC8wBnbVrIbSXxBDlxWN0gBTEW
-	3B6jx6KtDorhWtHLGuqkISg3Q71mqSbFiE=
-X-Received: by 2002:a17:902:f612:b0:2e7:c821:3789 with SMTP id d9443c01a7336-2e842ce1b19mr106967855ad.43.1791910607036;
-        Tue, 13 Oct 2026 09:56:47 -0700 (PDT)
-Received: from google.com (64.75.127.34.bc.googleusercontent.com. [34.127.75.64])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2e841a04012sm60860835ad.1.2026.10.13.09.56.46
+        d=1e100.net; s=20260707; t=1791911425; x=1792516225;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=o0KDBwBs4i6tsVXtOM7HjXD+EUyQMAjasdWbMXcJZLA=;
+        b=d3klJt3DNf3RyhWuXRx9UhaURADwnPhfEV+Eh88TLP3hDlPZ6+aF7hrfH/iqmx258X
+         kxP/26ffXCUHFbBrS+NPs/JcpGH5L47UpBU2d8Cky5OB5l9TngBFHl5Xq5h3Yf1Hydi/
+         mAlii7APcj9fcnjtU0BVuOvaMbGHkwm0fX2InAF0vlx5lO35bMJ5gLoNNGvx/9+9LFRt
+         wLKZCGsBFl76JpjlQ7qaiD1a71AFx1daGbXzSzRi3PfWmuKVIc2B0MKhztvTX1cXyuK/
+         hf3rxsV9M8UQjhUhpYxe5DozYdLhz6/qfbVDbhFL/ZiRbP6971Yep0pq+dzfMGjL801o
+         eKww==
+X-Gm-Message-State: AFq9FYLza3tgn1gnLAsjZyD07e6N7rrTDR9s159nTOV9MsBEy7+R3RsC
+	479Mu10KggcL14uVNZEmjw624+1iv27Tl55ZbP6wvG83D1nmS9FqU0R+IP9THSuOB3w=
+X-Gm-Gg: AYBFou1sgG39Lr5roSwbHX3NZYPIXV6rRu4TMmZoo3THZkotW5yKh7alnw7NbsKMEUO
+	3Rly4s4bzlYsF4yGa6QOqgr9Mz8WSblSAu729ZAI0I2jR0iP2vjG7a7apIgyWJC8rFcyGdxVFEa
+	nWGkKOd4ISgCf3JMUzDH9C6r8edbMaGodnPokepYs7F0Wpcby+J06i14EcmxE20D/MA5pte6G6I
+	sE8juqKpjVjXF5RCOgSkZ2npHRuGoSTe8OFUdMSyhBz6dhyieX0Z4gD2nW6whFSRthTJ+t3/W+D
+	Wgc60a8s+8iRiVTiSEMqtBvfe8X/vKKshzefGGXPKG2r5YGvuFc5EbfB3TXLjh4YTFjrDP53GRM
+	v6LqSHarmRHybAlNFz2eik9FWx62Wgi6JmHGiJBXLHtw/kk0mC+Bu+soeTeA9GScMCKUrm5g6UT
+	oynm+1gZ7JZKkbTytCEs0sB+vEphoCZ5BdQJZXVs7gFamrkBGhfsmfUiGCYNaslVa4HS7FkO1Y7
+	BCi+wdWEI/gMiOawqfKvy+Jbrc5oF7jYFdTbWmHps4K+fg=
+X-Received: by 2002:a05:6000:440e:b0:487:13f:f612 with SMTP id ffacd0b85a97d-48dbacdbd23mr18284968f8f.37.1791911425160;
+        Tue, 13 Oct 2026 10:10:25 -0700 (PDT)
+Received: from gmail.com (deskosmtp.auranext.com. [195.134.167.217])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48de77b35b5sm599458f8f.21.2026.10.13.10.10.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Oct 2026 09:56:46 -0700 (PDT)
-Date: Tue, 13 Oct 2026 16:56:42 +0000
-From: David Matlack <dmatlack@google.com>
+        Tue, 13 Oct 2026 10:10:24 -0700 (PDT)
+Date: Tue, 13 Oct 2026 19:10:22 +0200
+From: Mahe Tardy <mahe.tardy@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: kexec@lists.infradead.org, linux-pci@vger.kernel.org,
-	Adithya Jayachandran <ajayachandra@nvidia.com>,
-	Alexander Graf <graf@amazon.com>,
-	Alex Williamson <alex@shazbot.org>,
-	Bjorn Helgaas <bhelgaas@google.com>, Chris Li <chrisl@kernel.org>,
-	David Rientjes <rientjes@google.com>,
-	Jacob Pan <jacob.pan@linux.microsoft.com>,
-	Jason Gunthorpe <jgg@nvidia.com>, Jonathan Corbet <corbet@lwn.net>,
-	Josh Hilke <jrhilke@google.com>,
-	Leon Romanovsky <leonro@nvidia.com>, Lukas Wunner <lukas@wunner.de>,
-	Mike Rapoport <rppt@kernel.org>, Parav Pandit <parav@nvidia.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Vipin Sharma <vipinsh@google.com>, William Tu <witu@nvidia.com>,
-	Yi Liu <yi.l.liu@intel.com>
-Subject: Re: [PATCH v10 03/13] PCI: liveupdate: Track incoming preserved PCI
- devices
-Message-ID: <as5iyt9-8btokzCo@google.com>
-References: <20261013162529.1928093-1-dmatlack@google.com>
- <20261013162529.1928093-4-dmatlack@google.com>
- <sashiko-outbox-170133@kernel.org>
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH bpf-next] bpf: allow ksock kfuncs call from wq
+Message-ID: <as5l_nMk7EV_dUs6@gmail.com>
+References: <20261013163101.205638-1-mahe.tardy@gmail.com>
+ <sashiko-outbox-170139@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-170133@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-170139@kernel.org>
 
-On 2026-10-13 04:40 PM, sashiko-bot@kernel.org wrote:
-> > +    if (READ_ONCE(dev->liveupdate.incoming))
-> > +        pci_WARN(dev, 1, "Destroying incoming-preserved device!\n");
->
+On Tue, Oct 13, 2026 at 04:42:13PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] bpf: bpf_ksock_create causes NULL pointer deref on task exit
+> - [High] bpf: bpf_ksock_create in workqueue escapes network namespace
+> --
+> 
+> commit 34ed977b7943eebacf7e605dc8f26f2576ba2664
+> Author: Mahe Tardy <mahe.tardy@gmail.com>
+> 
+> bpf: allow ksock kfuncs call from wq
+> 
+> This commit relaxes the constraints on ksock kfuncs by removing the check
+> that ensures they are executed in a user task context. This change was
+> made to allow ksock kfuncs to be invoked from asynchronous workqueues,
+> bypassing the original LSM hook considerations.
+> 
+> > diff --git a/net/core/bpf_ksock.c b/net/core/bpf_ksock.c
+> > index e9943aeeadd32..21d5fd1eb403d 100644
+> > --- a/net/core/bpf_ksock.c
+> > +++ b/net/core/bpf_ksock.c
+> > @@ -73,16 +64,6 @@ bpf_ksock_create(const struct bpf_ksock_create_opts *opts, u32 opts__sz,
+> >  	struct bpf_ksock *ks;
+> >  	int err;
+> >  
+> > -	/*
+> > -	 * sock_create() derives the network namespace, credentials, and cgroup
+> > -	 * from current. Kernel threads, including BPF workqueue callbacks, do
+> > -	 * not carry the context of the task that invoked the BPF program.
+> > -	 */
+> > -	if (!bpf_ksock_has_user_task_context()) {
+> > -		err = -EOPNOTSUPP;
+> > -		goto err_out;
+> > -	}
+> > -
+> 
 > [Severity: High]
-> Does this code risk silent memory corruption by only warning instead of
-> panicking?
->
-> When an incoming preserved device is destroyed, it is dropped from the
-> kernel's resource tracking. However, the device may still be live and
-> performing DMA if it was handed over by the previous kernel.
+> Does removing this check expose us to a NULL pointer dereference during task
+> exit?
+> 
+> If a sleepable BPF program running via task_work during do_exit() calls
+> bpf_ksock_create() after exit_nsproxy_namespaces() has cleared
+> current->nsproxy, it appears this could trigger a kernel panic.
+> 
+> Without the bpf_ksock_has_user_task_context() guard, bpf_ksock_create() will
+> now unconditionally call sock_create():
+> 
+> net/socket.c:sock_create() {
+> 	return __sock_create(current->nsproxy->net_ns, family, type, protocol, res, 0);
+> }
+> 
+> Is it safe to allow sock_create() to dereference current->nsproxy here without
+> checking if it is NULL?
 
-The device is not dropped from tracking. Its struct pci_dev_ser stays
-in the incoming FLB with a non-zero refcount, so if the device is
-enumerated again it is treated as incoming-preserved again, and if it
-never finishes, pci_check_all_devices_finished() still catches it. Bus
-numbers also cannot be reassigned, since the preserved upstream bridges
-keep theirs.
+Indeed, in do_exit(), it seems we have this ordering:
 
-As for MMIO resources such as BAR locations, they are not preserved
-today. That will be handled in a future series.
+	exit_nsproxy_namespaces(tsk);
+	exit_task_work(tsk);
 
-> > +        pci_liveupdate_cleanup_device(dev);
->
+The first line will put nsproxy to NULL and the second will schedule any
+remaining work and call the bpf callback set up with the wq. So this is
+valid.
+
+The fix would be to add some NULL check to prevent the panic in this
+specific case (or see the next point).
+
+> 
 > [Severity: High]
-> Can an incoming preserved device that fails enumeration here cause a resource
-> conflict?
+> Additionally, does this change allow containerized workloads to escape their
+> network namespace?
+> 
+> When bpf_ksock_create() is invoked from a workqueue callback, the executing
+> context is a kthread.
+> 
+> Because sock_create() uses current->nsproxy->net_ns, a kthread will resolve
+> this to the host namespace (init_net), causing the socket to be created in the
+> host namespace rather than the container's netns.
+> 
+> Could this allow BPF programs inside containers to bypass container routing
+> and firewall policies by creating host-namespace sockets?
 
-A preserved device coming back with an unknown header type means the
-hardware is probably broken. The PCI core cannot manage the device
-either way, its state stays in the incoming FLB, and its upstream
-bridges keep their bus numbers. I don't think it's necessary to panick
-the entire host in this scenario.
+Also agree, maybe socket creation should still be behind the check, I
+think it's still useful to be able to connect and send from a workqueue
+but preventing to create via workqueues might be a good limitation.
+
+Let me send a v2 with create still using the runtime check, that should
+fix this and the above issue.
+
+> 
+> >  	if (!opts || opts__sz != sizeof(struct bpf_ksock_create_opts)) {
+> >  		err = -EINVAL;
+> >  		goto err_out;
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261013163101.205638-1-mahe.tardy@gmail.com?part=1
