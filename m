@@ -1,187 +1,251 @@
-Received: from e234-51.smtp-out.ap-northeast-1.amazonses.com (e234-51.smtp-out.ap-northeast-1.amazonses.com [23.251.234.51])
-	(using TLSv1.2 with cipher AES128-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646104718CB
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 02:54:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=23.251.234.51
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791860096; cv=none; b=rftURPQt3qBfjuuqmceLhaGIuNz9WaVtxY+bc0eQen6xIEXPW0ulXl6UMBu3vzFu9J+oy8MYLpoKXs9Xy1Bfz8y+A3Vrklo3ZzWrfMvd0iTyVelvMsVAFTyaeplSBLEx9hJ6JhGqo75y1MyToW2EpK4MQcCsDad5qu0q2I3dCaM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791860096; c=relaxed/simple;
-	bh=R5dUOAP4FxM0ylbvQIr1OGrrL2192Rwy0KCDgnHxHf4=;
-	h=In-Reply-To:References:From:To:Cc:Subject:Message-ID:Date:
-	 MIME-Version:Content-Type; b=nDgnsMRX7A2HeZGMOk7gz5lk7L7FRcmUxC9YaUD+3EicBfiSa0IVXBYYLKB0Ud+Ue764xd9lvSfTz7BIray9Fr9X4YInUttOdqc9iL/TDsqq4Ai+hN7t4+HAzMv95JhbAY35v+8t3mOOmc6SKUCw1N4oaahOpoCxr2Ap17l2UKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fqwqf.xyz; spf=pass smtp.mailfrom=send.fqwqf.xyz; dkim=pass (1024-bit key) header.d=fqwqf.xyz header.i=@fqwqf.xyz header.b=6VL0XphO; dkim=pass (1024-bit key) header.d=amazonses.com header.i=@amazonses.com header.b=DbHmXFu4; arc=none smtp.client-ip=23.251.234.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fqwqf.xyz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=send.fqwqf.xyz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1173344DB1
+	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 03:07:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.19
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791860856; cv=fail; b=FVCcMAEtAr88tW+vSvLcAPs4olcpaC1Z65cYdnVxKzHtiJK1cAfcUU4LzIEFCrlNxtNn+iSloaQmlaplA32+KjYFdQDQGb5mEXNma5nF+blf2cYz0oPwTu4ub9dYz0e5IEyILs/mbbERhyIABo6mhBx6SRCa+MwDF5nnlbxwILE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791860856; c=relaxed/simple;
+	bh=7FRSZ1MKDH0yoU26mp3DLnTeSCatQHLv+6GagsVSUeA=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=JD64CBZ7RtBESdyugD7Q7Q7rzjEkT2DJY7vqSOuDLe8ZmLp9QaD7oLhoKQoJYlbrO1Hox3JKS1vnbdb2vzLQDZuf88nkdkWKr0Dl8rWxNnHXF8mgMyQSA5ECSgOug7+quuCLeZX0AjQqnmpQiIojanoHINFlFBhejI2qRiH6WhU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TfOUY3vw; arc=fail smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=fqwqf.xyz header.i=@fqwqf.xyz header.b="6VL0XphO";
-	dkim=pass (1024-bit key) header.d=amazonses.com header.i=@amazonses.com header.b="DbHmXFu4"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple; s=resend;
-	d=fqwqf.xyz; t=1791860094;
-	h=In-Reply-To:References:From:To:Cc:Subject:Message-ID:Content-Transfer-Encoding:Date:MIME-Version:Content-Type;
-	bh=R5dUOAP4FxM0ylbvQIr1OGrrL2192Rwy0KCDgnHxHf4=;
-	b=6VL0XphOYUcNFSyr3gumygH+LJYIDRlZzxmD9eqX5VQV7PhRHMPEbTjId42jUVpr
-	opkrEvFa20OYuYJfXFAjA8pTLk3UzCr7fb7B0ZTuZe7OpsCmDRMpfD7dns81zGrqywV
-	Z2vU9ScuWTeB1J2JaHZf6YNjGwuLXLTrr4olNnek=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-	s=zh4gjftm6etwoq6afzugpky45synznly; d=amazonses.com; t=1791860094;
-	h=In-Reply-To:References:From:To:Cc:Subject:Message-ID:Content-Transfer-Encoding:Date:MIME-Version:Content-Type:Feedback-ID;
-	bh=R5dUOAP4FxM0ylbvQIr1OGrrL2192Rwy0KCDgnHxHf4=;
-	b=DbHmXFu4cx2dckbJu8Tadik+98oDobw6QcqVjmKciH+ruRMV+Uf2wkx+siR13uBr
-	IZLSmS77MLHm+4DnQwPSO37TR7phd1DtHv2+qrjUDqtyOHo15AlvMHzUp9QJuXxtfH/
-	bKzHRpi2fTKfRrf0GKAdygFyvDpVBM+Om7P320Mo=
-In-Reply-To:
- <010601a1251fbfb9-9afc4070-5194-4714-86b1-5358791e7770-000000@ap-northeast-1.amazonses.com>
-References:
- <010601a1251fbfb9-9afc4070-5194-4714-86b1-5358791e7770-000000@ap-northeast-1.amazonses.com>
-X-Mailer: git-send-email 2.53.0
-From: Jizhou Tong <fqwqf@fqwqf.xyz>
-To: Bryan O'Donoghue <bod@kernel.org>
-Cc: vkoul@kernel.org, linux-phy@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, 
-	sashiko-reviews@lists.linux.dev
-Subject: [RFC PATCH v2] phy: qcom-mipi-csi2: round the requested settle
- interval up
-Message-ID: <010601a1332f343c-b1381230-9344-4bef-a709-99e07b18d513-000000@ap-northeast-1.amazonses.com>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 13 Oct 2026 02:54:54 +0000
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TfOUY3vw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1791860851; x=1823396851;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=7FRSZ1MKDH0yoU26mp3DLnTeSCatQHLv+6GagsVSUeA=;
+  b=TfOUY3vwAt038dTFhdGd/GcDRxgOAmA2jXFpjLBzR2V+J5Cmm8R1LPF2
+   LbAp+GfFgxuO7wvyPno0kdDIZ8FnpXl79XctQsPAEOSFCUqUh92aZUF1t
+   zFhZ37t859MIIJTmEzmTgde0t6+GJtYGCFVjhgNGvATtqc0klDfVQjlQi
+   KuiyXebdzrcoGVEulfFPyhEvkzZi4I/vJYgtZlmPWDRoSDu3+G4gs0fdC
+   Bz9IUT9xFiwEFyeMMCxjZJ5sPqrf8sFAmx8MfnD7AkvfiAtSBHndi8b30
+   RhneNkPajiKH6exMvYnomtbsyWa4/nN//ljql9HkYphjCCbzdjPONtet4
+   Q==;
+X-CSE-ConnectionGUID: G3xpQ5QjSBuDABzIW8YXRQ==
+X-CSE-MsgGUID: +SSCQDK8TkKk2Aom0IYmsw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11933"; a="607748"
+X-IronPort-AV: E=Sophos;i="6.27,154,1787036400"; 
+   d="scan'208";a="607748"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2026 20:07:30 -0700
+X-CSE-ConnectionGUID: MyO2VRNsT/Oe1PZT+AtR3A==
+X-CSE-MsgGUID: vKdAHspFTKKpL3f3XpN7nw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,154,1787036400"; 
+   d="scan'208";a="1368805"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+  by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2026 20:07:28 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Mon, 12 Oct 2026 20:07:27 -0700
+Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49 via Frontend Transport; Mon, 12 Oct 2026 20:07:27 -0700
+Received: from CH1PR05CU001.outbound.protection.outlook.com (52.101.193.6) by
+ edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Mon, 12 Oct 2026 20:07:26 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bFBtr8kBEYEFuZuqUKJmUaLvmMKJn5ILcIbs51YRygtlBQEzaOPDkGFldtlcHhlhLeOQu+eb/BjgMWzeihFUpDXsG100XKfDZqUuPtx+T5TSTtBkvC084tfd3JbaKws5pB2+f3nbNpoIOi3bze1W1wr4HAQnJHK8SvCfQqdZEb2aQjsb0xisLfbBNv8Us/6acorUZyHJMvnS2i0vRZJbxS473Gs96gCpvBKRyh39FcPqe0y86y0q21jEKc9glqqhO28S5AeS3+vCeMzVHVDdW4hEmaiw6df8Q+gOpp3haPFZDFP5gFB64DrZWMC+1D2IAmXUrwrb0bo1J7LQZfgzqw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fqCC8+cOJ1cyRsgcruT5bmAcjQiB6wVadx/DTDi/C10=;
+ b=kpr5YteItJG98x5wfEAPrsgdiVV0HIuoMZ8/BkuMM/0xCQ1xu+zEYHVb4/lRbeglLRvh+zvI5skNCtLLauhF56a+ndL+USOuV/ioW/cqx/Zhf3HhtDiyTnng0jAwcaj1kiEgwc5EBdbExrkwMZp02H99jHAnVQ0glnAXU+sHe/cNz/lwrSQusWgUuwoOT4q/MrbpDVOh/rXH0o+utnO9sM4vzRAkaI/cnO+PgZoq2rDH9WWsIZbtTHJgR1xy+DNbno0+CEzhqWMIFMioka7F16MJPlsoDzodvWhlDjEchnoO+c/Cr+NR9zntOaFQx7wl2T7EcR0UTDeMt9gZgwhilw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CO1PR11MB4787.namprd11.prod.outlook.com (2603:10b6:303:95::23)
+ by SJ2PR11MB7501.namprd11.prod.outlook.com (2603:10b6:a03:4d2::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.23; Tue, 13 Oct
+ 2026 03:07:20 +0000
+Received: from CO1PR11MB4787.namprd11.prod.outlook.com
+ ([fe80::e7eb:a872:53d1:21fd]) by CO1PR11MB4787.namprd11.prod.outlook.com
+ ([fe80::e7eb:a872:53d1:21fd%4]) with mapi id 15.21.0496.021; Tue, 13 Oct 2026
+ 03:07:20 +0000
+Date: Mon, 12 Oct 2026 20:07:18 -0700
+From: Matthew Brost <matthew.brost@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: Daniel Charles <daniel.charles@intel.com>,
+	<intel-xe@lists.freedesktop.org>
+Subject: Re: [PATCH 3/3] drm/xe: Synchronously wait for queue kill on FD close
+Message-ID: <as2gZomTraTJsZNh@gsse-cloud1.jf.intel.com>
+References: <20261013023442.206915-1-daniel.charles@intel.com>
+ <20261013023442.206915-4-daniel.charles@intel.com>
+ <sashiko-outbox-168881@kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-168881@kernel.org>
+X-ClientProxiedBy: SJ0PR05CA0011.namprd05.prod.outlook.com
+ (2603:10b6:a03:33b::16) To CO1PR11MB4787.namprd11.prod.outlook.com
+ (2603:10b6:303:95::23)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Feedback-ID: :1.ap-northeast-1.6BGMgStFQE7EJYq5syaCRzdneEHVt/+DAaGDrqUmDs9QLO4/SllUBZ3fHvnZ8rcAX/3IjUyTRgi5JFZsWrikFHwlPJqCkqEMlxDFM4JXh+ycxH/J5Tudg5bGdz6h4331g1L1EFsGR8kuYNfGLsrxz4Nym4YXoPcZxeVkrHry4Zx21n8vEVLEjc7s+OCM8PU9:1.ap-northeast-1.DTXDV/V9GPBWozcllKo8innbNB2qs2O/3F8XZSzd9ZM=:AmazonSES
-X-SES-Outgoing: 2026.10.13-23.251.234.51
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PR11MB4787:EE_|SJ2PR11MB7501:EE_
+X-MS-Office365-Filtering-Correlation-Id: 216d3f02-59b6-46bc-52e5-08df28d718a9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016|23010399003|56012099006|11063799006|4143699003|261009223027099003|10067099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info: Irxi7X6rkMmTTaV0RY1tVN7/qiuUGsXMz3xGmRgp6lDxEIY5PDKKQARX6+FdVkwJuGjbg72r6Br4vJf7Qs4nO/WzQ9Gc8WrZzXbVx9n2bWF/XAVay9wNQxcisCU7CtXzOhqGYpSeeP4dF/EztrzkBOdTnlHDTc5InURNf4ZZGGVZaILYCQwDR05edc4qQpOTfXu3ZYZfrdqvsuDufYpTrQhRLeM9zW0CH8eytzMcr1IgiRvwP8lki+C7yaKpYztdDY5ufmYjs+CsGCJLeBj/f58VVFM27Ft/cfL/8406qRzEJ6/iRGU3zNX5q1258H5jSUMhjopvAGWFMtQUaSiAAoeE/s3EkesOfD4DPRKP1Nhij+MDX/QRl2BzwNjWIFB9Q2O01wbfgQzq5SD9lACLKwWtl8bJQRzAVroBZoM+Gcr8yCxBoLQGLJSz1zKOxZDAEfm7rUAlBjL3sRvwrQYHaSyKnaZjmQpn8kfTOm7Lz34HUoe3gHQbaO+qV0r6fZ5DKpO2hJA7tQRR6OyaAWIW1nWK8vYFA4K8ugBpLpMpRlWbqG4NTYxdq5KrFS0Woxh6VmneGov1HxLjks15sSG1pn1gArghQmcsLyMzY35URIg=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB4787.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(56012099006)(11063799006)(4143699003)(261009223027099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?7ydgSP1Rn3aTabKSTAYahRAONq+VAn9dQoxg/lKtWzv3S8qpJUJMCDJXfa?=
+ =?iso-8859-1?Q?Cj3kIXI7jIIEe5z9jv1xpNg8zuHg/4x4MynKFDl3Emc+aePaU6TcCEDE+Z?=
+ =?iso-8859-1?Q?thV8WCXH0qaHyPSMIOPwEQ6SOAKOfrjvlM6uadCoCjesYLuSYPtGfeEd/v?=
+ =?iso-8859-1?Q?ZITzKRnMnZB8N70LSuqGOG+48C1iv/VNlee7x1vBeQYIMuBCzCvZwDSJzA?=
+ =?iso-8859-1?Q?0B9V4KrRSLwKlKR3UBgnhRIu6C0UHd7NOSMb6xPnaVeSMNpTMSCHIYNVCM?=
+ =?iso-8859-1?Q?eDuZNLmnDl2mp8gfhjs0i3mbxH+w6pKb70JLcYiCAROkkHMa9Xo7gf6RxH?=
+ =?iso-8859-1?Q?g4Po1h0PJr6cMgEoYlwiJ9+oOceQkZAZ+dD5II0UYXPXF2NCvuPJXhJ8Hq?=
+ =?iso-8859-1?Q?dQ60QF2pYz4gXETc7k+odWLbYFO4jiZtILv6SIA/yee3zknOToxRD5hPfZ?=
+ =?iso-8859-1?Q?AoNZ85fyRxqiITugQkHGvQw45BAnXqGcVb10pnAibGW8qRLBIkKUyd2m9q?=
+ =?iso-8859-1?Q?OggxY4vruiIXaf0gl/71qw70RDVJitiE2tsxMjmejK+wNSZ/+Ipipd3Wye?=
+ =?iso-8859-1?Q?/mRR8CMsAOOR5DVn9s/OQft92Z5fzbGxrMc1X0vsGu1b9Bn1gnClVpONS6?=
+ =?iso-8859-1?Q?znG8mQWD6roXMoTiqYit6hI4EC8F8b45IHpBAmbz7/Y/tP+GoKIVY3AwYb?=
+ =?iso-8859-1?Q?+IAghmWuALGZyywlZX1wEvRLddIbvjvZGhmCP3ziYrm6VcxjPu8UpA7zwX?=
+ =?iso-8859-1?Q?1ocieeD7VLyl8hZGM4/YVom+8pEifYNl0xdAtCGOrHmC+/ujvF6jITEnze?=
+ =?iso-8859-1?Q?m/h1HEbaqcwp/6LXj0I2AvfTy9lQ5PtuBn2kks+HtuAHfgx3PU6zHxfonR?=
+ =?iso-8859-1?Q?5T4vCKzmulIZuRqfPELnAOdWJlTTzrXlVFDoPCc+JB+aAZBEiPHL8LLjrV?=
+ =?iso-8859-1?Q?axDEPmFSK0zuzH729pPeLVubPu/ZCYbnSGNYPAnIFlhROK8Desggd5HD8M?=
+ =?iso-8859-1?Q?OI4m3jw4cQDf2B0L79Pi/9XFF6sbmtmR+iO1rXx+LPyAKAJlxrdYt6qCI/?=
+ =?iso-8859-1?Q?BUZCKD8Awek5M9qSPh0STMquAcQbnAyL5O2MoMw4pJhdYQ59rfFAF3SlRr?=
+ =?iso-8859-1?Q?d8s1ev+uI9kK2hZ0meC2ByVqkQmEIHltBLQNkdKn7PMkDcTzNB3Yn2URpd?=
+ =?iso-8859-1?Q?rT7GlK4kFqJssdETgmeHlDJ1p4wOOiRn2Y29WRJONlY/I+qVjhHo801vCw?=
+ =?iso-8859-1?Q?6orOxh5xA8KtgJdisBiY/sg4Sba1/kVGN2V3eB5jSuiYe0/SOlNq39FDCC?=
+ =?iso-8859-1?Q?81mrjdzKDGUn4JPNj3S/L+z2aVMYVKy/RbdzO0WQop6zODa3CYbM+JZPHU?=
+ =?iso-8859-1?Q?61HPxAKIhzXG98cbekIt1BVC5Blmlo6rWeh1rDQWrfnjNJeJIc04lb+CIn?=
+ =?iso-8859-1?Q?EVrJaj6NddolZmG/MrRjLyHfj/cLsdGoHrRpyN4/SJOL5I2gXkOy/yWjxo?=
+ =?iso-8859-1?Q?wGJf7CC6hraJKT7+Sq5ZlcTdLeZn8zHpWkDh6eE4DDby3SL+s6otH+7hFq?=
+ =?iso-8859-1?Q?ktxCh/si+Q+3mSf3CNr4SYA5wwJUUhXwIT70EyqyHzREYd+bo94U0I5HV7?=
+ =?iso-8859-1?Q?h8QUNLOSfEQtlx4yh6NlkDOQ/HMkqRCNVBhrk1q9/BvXmrAYBeC07URR6W?=
+ =?iso-8859-1?Q?A2cHMRqAYT7W7aCWud0FgjMXinXmNByjSiSX/f7LmmSlp4AolDrHAKivH7?=
+ =?iso-8859-1?Q?xxXuAenTKiyryWE/XBwyZSBIJxxavoR16xhm+ZPN6xaLgGgHKGPt/pYp1v?=
+ =?iso-8859-1?Q?T0rmP79SDj9Dd5vEoIjiiIYcb9h5l7c=3D?=
+X-Exchange-RoutingPolicyChecked: Yt8N+nYrcK3xyeDnq1LeK5uG8vVggr+G67cyFIFzT22XIxdVVfkPdMv2Nggt9EuRou8r8B95JmB8ytdXmZxMS2wXYVIDc25cd3orahvqTGeyIxMOicHA22CzJGOeADmDu4cgGz1Pv3pQgf5JJHww+9yYh8K4W7vYBhixnsrjPDWwPnecdPJT/DyWx1i7dvbEoKVbgP2lBvdZbiM3SfdU+76aZ/uBhV+VBG9/nmP81kfa2qHOhwlLMGDUvNvC44uO5QpuRVgEY7TR6DoJvomovumuJxLVdcREDA6oGKBWOZjze/u8HDDOMeeRzXoTm0cmxjy1wsQDfT8RQu5iAQS/dg==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 216d3f02-59b6-46bc-52e5-08df28d718a9
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB4787.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Oct 2026 03:07:20.8059
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: JP827VoswMzjg62scRNnmeSMpNJKxgkOPtfUjUwtKNLMHoFtMSmTaaMxIqLcOsSan8DFAz1OaUFZDBrkPZuW1g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB7501
+X-OriginatorOrg: intel.com
 
-The settling counter represents the requested interval in timer ticks,
-with the existing six-tick hardware offset. Truncating the division
-programs fewer ticks than requested when the interval is not an exact
-multiple of the timer period.
+On Tue, Oct 13, 2026 at 02:59:42AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] drm/xe: Infinite wait in guc_exec_queue_kill_sync() if GuC hangs
+> - [High] xe: missing queue kill synchronization in teardown paths
+> --
+> 
+> commit 85f52ae759a601199a902ba124e22498f6e78a14
+> Author: Daniel Charles <daniel.charles@intel.com>
+> 
+> drm/xe: Synchronously wait for queue kill on FD close
+> 
+> The early KILL message disables GuC scheduling outside the serialized
+> TDR path, but xe_file_close() does not wait for it to complete before
+> dropping queue references. Split FD close teardown into two passes:
+> first kill every queue, then wait using xe_exec_queue_kill_sync().
+> 
+> > diff --git a/drivers/gpu/drm/xe/xe_exec_queue.c b/drivers/gpu/drm/xe/xe_exec_queue.c
+> > index 7ade915c59a85..af5d9e8f0b16e 100644
+> > --- a/drivers/gpu/drm/xe/xe_exec_queue.c
+> > +++ b/drivers/gpu/drm/xe/xe_exec_queue.c
+> [ ... ]
+> > @@ -1623,6 +1623,19 @@ void xe_exec_queue_kill(struct xe_exec_queue *q)
+> > +/**
+> > + * xe_exec_queue_kill_sync() - Wait for queue scheduling to stop
+> > + * @q: The exec queue
+> > + *
+> > + * This function waits for the backend to finish stopping the queue after
+> > + * xe_exec_queue_kill(). It is safe to call multiple times.
+> > + */
+> > +void xe_exec_queue_kill_sync(struct xe_exec_queue *q)
+> > +{
+> > +	if (q->ops->kill_sync)
+> > +		q->ops->kill_sync(q);
+> > +}
+> 
+> [Severity: High]
+> Does this code leave other teardown paths vulnerable to CAT errors?
+> 
+> While xe_file_close() was updated to use this new sync function, it appears
+> xe_exec_queue_destroy_ioctl() and xe_vm_close_and_put() both still call
+> xe_exec_queue_kill() followed immediately by xe_exec_queue_put() without
+> waiting.
+> 
+> If userspace destroys a user queue and then destroys its VM,
+> xe_vm_close_and_put() synchronously destroys the VM's page tables while GuC
+> is still actively scheduling the queue. Similarly, for the internal kernel
+> bind queue (vm->q), xe_vm_close_and_put() kills it and proceeds to destroy
+> the page tables. This results in GuC scheduling contexts with torn-down
+> page tables, causing IOMMU CAT errors and unrecoverable engine resets.
+> 
 
-Rounding the final division alone is =
-insufficient: the earlier unit
-interval calculation already rounds down =
-before multiplying by six.
-At a 599.9 MHz link frequency and a 100 MHz =
-timer, the exact requested
-interval is approximately 90000.833 ps. The =
-truncated unit interval
-produces 89998 ps, so even a rounded-up final =
-division programs nine
-ticks (90000 ps) instead of the required ten.
+I think we assume aside from an unexpected file close (segfault on user
+app, ctrl-c), a user shall be well behavied (it is) and at worst it
+spams dmesgs on debug levels.
 
-Compute the complete six-unit-interval term as 3 / link_freq and round
-it up to picoseconds with a 64-bit divisor. Then round up the conversion
-to timer ticks. Retain the timer-period calculation, minimum counter
-handling and six-tick hardware offset.
+> [ ... ]
+> > diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
+> > index 609af66b343d5..36c8c3766f5fa 100644
+> > --- a/drivers/gpu/drm/xe/xe_guc_submit.c
+> > +++ b/drivers/gpu/drm/xe/xe_guc_submit.c
+> [ ... ]
+> > +static void guc_exec_queue_kill_sync(struct xe_exec_queue *q)
+> > +{
+> [ ... ]
+> > +	wait_event(guc->ct.wq,
+> > +		   (!exec_queue_enabled(primary) &&
+> > +		    !exec_queue_pending_disable(primary) &&
+> > +		    !exec_queue_pending_enable(primary)) ||
+> > +		   xe_guc_read_stopped(guc) ||
+> > +		   vf_recovery(guc) ||
+> > +		   exec_queue_wedged(primary));
+> > +}
+> 
+> [Severity: High]
+> Can this wait hang forever if the GuC firmware silently drops the H2G DISABLE
+> message or hangs without triggering a global watchdog wedge?
+> 
 
-Link: https://lore.kernel.=
-org/all/sashiko-outbox-166399@kernel.org/
-Signed-off-by: Jizhou Tong =
-<fqwqf@fqwqf.xyz>
----
-Changes in v2:
-- Round the complete 6 * UI term up =
-instead of truncating UI first.
-- Use 64-bit division for the =
-link-frequency denominator and interval.
-- Add the 599.9 MHz counterexample=
- and rational-boundary regression tests.
+This is right, would have a reasonable timeout even though eventually a
+GT reset pops us out here if the GuC stops responding.
 
-v1: https://lore.kernel.=
-org/all/010601a1251fbfb9-9afc4070-5194-4714-86b1-5358791e7770-000000@ap-nor=
-theast-1.amazonses.com/
-Review: https://lore.kernel.=
-org/all/sashiko-outbox-166399@kernel.org/
+Matt
 
-Rechecked against media-next =
-d7e7bca71698 on 12 October 2026, which
-contains the v18 CSI2 PHY driver and=
- still truncates this calculation.
-The base/prerequisite metadata also =
-permits applying this increment
-on Linux 7.3-rc5 plus the original v18 PHY =
-changes.
-
-Validation: ARM64 W=3D1 driver-object build and 128482 ASan/UBSan=
- test
-cases using the actual C function against independent rational bounds=
-.
-The v1 calculation fails 410 cases, including 599.9 MHz / 100 MHz.
-
-This remains an RFC for confirmation of the hardware counter's rounding
-policy and existing six-tick offset. The timer-period convention is
-unchanged. The v2 arithmetic has software/build coverage; it has not
-yet been isolated in a new SL7 hardware test.
-
- .../phy/qualcomm/phy-qcom-m=
-ipi-csi2-3ph-dphy.c    | 15 ++++++---------
- 1 file changed, 6 =
-insertions(+), 9 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-m=
-ipi-csi2-3ph-dphy.c b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c
-index 966d79c98f9b21e1a235b8397c4c84b25d869427..f07699ba1fde63536b4d63cc400=
-8ff936f78cc7d 100644
---- a/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy=
-.c
-+++ b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c
-@@ -9,6 +9,7 @@
- #include <linux/delay.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
-+#include <linux/math64.h>
- #include <linux/time64.=
-h>
-=20
- #include "phy-qcom-mipi-csi2.h"
-@@ -220,23 +221,19 @@ static void =
-phy_qcom_mipi_csi2_reset(struct mipi_csi2phy_device *csi2phy)
-  */
- static u8 phy_qcom_mipi_csi2_settle_cnt_calc(s64 link_freq, u32 =
-timer_clk_rate)
- {
--	u32 t_hs_prepare_max_ps;
- 	u32 timer_period_ps;
--	u32 t_hs_settle_ps;
-+	u64 t_hs_settle_ps;
- 	u8 settle_cnt;
--	u32 ui_ps;
-=20
--	ui_ps =3D div64_u64(PSEC_PER_SEC, link_freq);
--	ui_ps /=3D 2;
--	t_hs_prepare_max_ps =3D 85000 + 6 * ui_ps;
--	t_hs_settle_ps =3D =
-t_hs_prepare_max_ps;
-+	/* Round the complete 6 * UI term up, avoiding an =
-intermediate truncation. */
-+	t_hs_settle_ps =3D 85000 + =
-DIV64_U64_ROUND_UP(3 * PSEC_PER_SEC, link_freq);
-=20
- 	timer_period_ps =3D div_u64(PSEC_PER_SEC, timer_clk_rate);
-=20
--	if ((t_hs_settle_ps / timer_period_ps) < 6)
-+	if (div_u64(t_hs_settle_ps,=
- timer_period_ps) < 6)
- 		return 0;
-=20
--	settle_cnt =3D t_hs_settle_ps / =
-timer_period_ps - 6;
-+	settle_cnt =3D DIV_U64_ROUND_UP(t_hs_settle_ps, =
-timer_period_ps) - 6;
-=20
- 	return settle_cnt;
- }
-
-base-commit: =
-72d3fcf802c45d00b300f25b848a93c3a2bd7c7e
-prerequisite-patch-id: =
-ab0db8f40ef87320e67543686702109ac045784f
-prerequisite-patch-id: =
-d6b3dab26f8a95822465a176f691280a5610c22e
---=20
-2.53.0
-
+> If called on an idle queue (no pending jobs), the Time-out Driven Recovery
+> (TDR) will not fire. xe_sched_tdr_queue_imm() calls
+> drm_sched_tdr_queue_imm(), which only schedules the timeout worker if there
+> are pending jobs. Even if the worker runs, drm_sched_job_timedout() exits
+> early if the pending list is empty.
+> 
+> Since this uses an unbounded wait_event() without a timeout, it could cause
+> the close() syscall to hang forever in uninterruptible sleep (D state),
+> leading to an unkillable process. Other functions like enable_scheduling()
+> and disable_scheduling_deregister() use wait_event_timeout() and manually
+> trigger xe_gt_reset_async() on timeout to prevent this.
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261013023442.206915-1-daniel.charles@intel.com?part=3
