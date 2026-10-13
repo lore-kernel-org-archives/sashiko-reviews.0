@@ -1,90 +1,84 @@
-Received: from www62.your-server.de (www62.your-server.de [213.133.104.62])
+Received: from sender6-op-o15.zoho.com (sender6-op-o15.zoho.com [165.173.180.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF00853E2E3;
-	Tue, 13 Oct 2026 19:15:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.133.104.62
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791918961; cv=none; b=fTXjBiOxRL3vzXHUUlR3CqnRrKPPfa9tTf9/ChLOVQyzBP1mtvsrrdX2lbeYU/z4ZfC9DZhyM6VvLEYePN/cG7TEbuhJ8jehcijbhC6uLqmQAM1vRXVLlWWmns8aifZZGtk6WQNw8i+Wi1dx/bD7UK+RO3Dv34XT3EB46Rx7smA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791918961; c=relaxed/simple;
-	bh=zUf0b8OC49/Pzg+LXsQP703933gm7oXIgq1vUyRIKe0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Lb3tRsKOOGwLB7E2QlyXy3SSf/xz8AeGkg+JY6yZhd0ysaLIa2AxOUF9ZAPBxSJ0Ox9XjFo+hfmq4puC5lXnkCB48CVHGJl/evwQIBy8egJJ/yUwPQfP9CKUBdioI6WzEQiY4WJv+7fTc/SlkbBxQg8or/U1imY2WuYPy623vaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net; spf=pass smtp.mailfrom=iogearbox.net; dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b=oaMdQZEA; arc=none smtp.client-ip=213.133.104.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iogearbox.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iogearbox.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD494395AD2
+	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 19:30:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=165.173.180.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791919846; cv=pass; b=lKJg68Rcmyo/FvBz/PuckXqrrTOXwXC1Q/Qi/ySQdvimCYw1sCkK3qg1xizKvgNgYr21DHS6VObsMkTuPqZsM813gurTvP6jetlCpeyesiZN9totdelclQ9rAgxg828WOP0nT/QTLxQub6GiQlzemn6TGrX7GHoQQ84mBwSid+8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791919846; c=relaxed/simple;
+	bh=VHJDeE/xiYLLJMsXP9ehvKKGvrpJ0QiernYxGm7v34M=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=kw3cn7jeSQBfZmMoMf6iQGYOd83L4sLvJevePlIiUGUF5+kNNjEt2ATBTzYQvn0Etobkw/gezwvN+vPlbm/x2sRR0rZJDlMFhuJ5doS7ZcizQL1Hh1RkgMXZdsTFkmg2vTLzvLcziZdnOe3jxry9DU7t1BXCZMYmSlKF2UnWSeE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=yiyuzhou.io; spf=pass smtp.mailfrom=yiyuzhou.io; dkim=fail (0-bit key) header.d=yiyuzhou.io header.i=yiyu@yiyuzhou.io header.b=QxFZLUL9 reason="key not found in DNS"; arc=pass smtp.client-ip=165.173.180.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=yiyuzhou.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yiyuzhou.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iogearbox.net header.i=@iogearbox.net header.b="oaMdQZEA"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=lNVu3SidayKSnfaFfufRCwE/EdZVl+S09Mc3SjWBxfM=; b=oaMdQZEAqtw4XKZAEkL9C4HwZJ
-	3YCZN2tsCxkc2vaqA1xLB+6L7Bf30QtRBDnXH7j2G3FkM8KsYvl9Xk+b0KOPTm2N9aoNLj80qnPqC
-	5VchyQCm2Z5X/9ZsXiAa5vWNl1WVDR603eUWPipSO5lLmxAwBqhWPl3kPuyOZ7+KsZKDEBqe5w5Jc
-	p+SS1Fdza/H4TXOyL/clT38rOZfDYBr7m9m5vqAOBWPjQIA6aSNgVxzhICMF5PbSY8g0a+ZNh5Y4H
-	XXocSdi6yYNsCYw2XINQdCSNSdPc/ixDTR4dA2suby86Grlzt8wezMFr8d49o2XGqm1eyArgQC0gy
-	RRGZJUTw==;
-Received: from sslproxy06.your-server.de ([78.46.172.3])
-	by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1xGhyf-0002xQ-2y;
-	Tue, 13 Oct 2026 21:15:58 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy06.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <daniel@iogearbox.net>)
-	id 1xGhyf-0003BJ-1j;
-	Tue, 13 Oct 2026 21:15:57 +0200
-Message-ID: <b59d91a6-d9a4-4d8e-8a3a-db94c2b3c25c@iogearbox.net>
-Date: Tue, 13 Oct 2026 21:15:57 +0200
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=yiyuzhou.io header.i=yiyu@yiyuzhou.io header.b="QxFZLUL9"
+ARC-Seal: i=1; a=rsa-sha256; t=1791919842; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=mtFFaOYYXS66svnJV2b0zJnTncPXHcypHS6h3GxkI4e+EZj5kubhTwP4tYZx+5yXrzb8Wbm2VgTdrHucau3799L3CQ+E150Hzx4IPktUhhgYkWcZS1DEmV6NvjZmRTa8GqomOinkZwykdRvAbd1QCJ4KZwzzb0OSCjb6nqnOJdQ=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1791919842; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=vEWGKweXaxp9UAp/GPiX9vZOgNgNRvicpkf5lD2FIgA=; 
+	b=gOKDh3rlbKm9FvUHbzndhj3jOhqy071iH0K2mAikVOikBdXAS1v9bVFpJrjrDKfJl8ji/mzQOyjsfP8Dtdkx+le+zn+XKI5HKD76trpAE6RrSPtD93Z6lG/GMk6EMCj4PyFLXf0eAGiQisj5tnaZwz1AbsS3pyA8YZhovJ2CkcA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=yiyuzhou.io;
+	spf=pass  smtp.mailfrom=yiyu@yiyuzhou.io;
+	dmarc=pass header.from=<yiyu@yiyuzhou.io>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1791919842;
+	s=zmail; d=yiyuzhou.io; i=yiyu@yiyuzhou.io;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=vEWGKweXaxp9UAp/GPiX9vZOgNgNRvicpkf5lD2FIgA=;
+	b=QxFZLUL9zoA98C8LHviRcqcchaSxfabKGSh7ZUF4Dq3J8Dlx3yB7Nev0YGpXA9I/
+	JcOJ2t6chOvCkJzIen4ixePLToETx926377t2/ONk6H8p/Aj/JXjhNij3kHbS766tEr
+	harh3nA2V9A2Q81tEDkjWPQigZMh4BZW3tJHuJ/Q=
+Received: by smtp.zohomail.com with SMTPS id 1791919840215816.831791075335;
+	Tue, 13 Oct 2026 12:30:40 -0700 (PDT)
+From: Yiyu Zhou <yiyu@yiyuzhou.io>
+To: sashiko-reviews@lists.linux.dev
+Cc: Yiyu Zhou <yiyu@yiyuzhou.io>,
+	mathias.nyman@intel.com,
+	michal.pecio@gmail.com,
+	linux-usb@vger.kernel.org
+Subject: Re: [PATCH v2] xhci: give back all TDs when skipping endpoint reset after disconnect
+Date: Tue, 13 Oct 2026 12:29:34 -0700
+Message-ID: <20261013192948.1326642-1-yiyu@yiyuzhou.io>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <sashiko-outbox-169215@kernel.org>
+References: <330c34fd-1d1c-44e8-b949-ad2f5fb51f00@linux.intel.com> <20261013073825.17962-1-yiyu@yiyuzhou.io> <sashiko-outbox-169215@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 14/18] bpf, x86: Multiply by 3, 5 and 9 with lea
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20261013171230.523677-1-daniel@iogearbox.net>
- <20261013171230.523677-15-daniel@iogearbox.net>
- <sashiko-outbox-170282@kernel.org>
-Content-Language: en-US
-From: Daniel Borkmann <daniel@iogearbox.net>
-In-Reply-To: <sashiko-outbox-170282@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28152/Tue Oct 13 08:26:14 2026)
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-On 10/13/26 7:58 PM, sashiko-bot@kernel.org wrote:
+On Tue, 13 Oct 2026 07:56:11 +0000, sashiko-bot@kernel.org wrote:
+> Can this newly added call to xhci_kill_endpoint_urbs() leak bounce buffer
+> DMA mappings?
 [...]
-> Does this code silently drop the arena base pointer if index_reg is
-> X86_REG_R12?
-> 
-> When index_reg is X86_REG_R12 (which has a value of 4), the SIB index field
-> becomes 100b. On x86-64, an index of 100b is interpreted as 'no index
-> register', so the CPU completely ignores the R12 base.
-> 
-> For BPF programs utilizing arena memory (e.g., via BPF_PROBE_MEM32),
-> functions like emit_ldx_r12(), emit_stx_r12(), and emit_st_r12() explicitly
-> pass X86_REG_R12 as the index register to emit_insn_suffix_SIB().
-> 
-> Because the R12 index is ignored, the kernel will incorrectly dereference
-> the user-provided 32-bit offset directly instead of adding it to the arena
-> base. This could allow a BPF program to read and write arbitrary user-space
-> memory, bypassing arena bounds.
+> TDs that were unlinked by xhci_invalidate_cancelled_tds() are removed from
+> ring->td_list but remain on ep->cancelled_td_list. If the device disconnects
+> before they are processed by xhci_giveback_invalidated_tds(), this new call
+> to xhci_kill_endpoint_urbs() will process them.
 
-False positive. SIB index 100b is "no index" only with REX.X = 0. Callers emit
-the REX byte via add_3mod(), which sets REX.X for R12, so the encoding is e.g.
-4a 8b 04 20 = mov rax,[rax+r12*1]. The SIB byte is byte-identical to the pre-
-series code, and jit_insns_arena selftest exercises arena loads and stores with
-a zero offset which runs through this code, and full test_progs run passes all
-arena tests.
+I do not believe this can occur from the new call site.  All callers
+of xhci_invalidate_cancelled_tds() give back TD_CLEARED TDs
+immediately, so unlinked TDs remain on cancelled_td_list only while a
+Set TR Deq command is pending.  During that window the endpoint is
+stopped, SET_DEQ_PENDING blocks the doorbell, and xhci_urb_dequeue()
+queues no Stop Endpoint command, so xhci_handle_halted_endpoint() is
+not reached.  Any cancelled TD the new call encounters is therefore
+still on td_list, where xhci_kill_ring_urbs() unmaps its bounce buffer.
 
-Thanks,
-Daniel
+The missing unmap in the cancelled_td_list loop predates this patch;
+previously, xhci_kill_endpoint_urbs() was only called from
+xhci_hc_died().  Mathias, I can fix it in a separate patch if you
+prefer.
+
+Regards,
+Yiyu
