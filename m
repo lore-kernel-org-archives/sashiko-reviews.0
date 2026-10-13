@@ -1,164 +1,122 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444224AC143
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 06:17:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7BE4ACC94;
+	Tue, 13 Oct 2026 06:19:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791872271; cv=none; b=bYbVMsbNBVy3oCeKfc8iazIxLtEAyaSthLaipNsvFY6KYwqcKQ0kOk41kSJLjhB/b6dx51EpDM6eis+MnVCtH6iiisTHX4f1DklL809waJdGMwaNeSiUPTNl6OmkuBhHDCVi6c2fPIyIqQ6P0z643ZENWOppwZvZpadS4jqsz0U=
+	t=1791872343; cv=none; b=Wg5wMwKF7U8Ms5GGUn5/3fg5Sg4MwWRtgwORK5ErL+k783MHY6kbLn9vzGf0mwMF0U2S6Xp4Rw+uL1p8G72WiGQEVkWwlyZNkDQQ5+CqkSs3PwnequTJ7qtsijb5c+sr5ndnxstsLjVMpfHeHpFnDVlTrIdHTN9r01e8ehh1K2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791872271; c=relaxed/simple;
-	bh=FVwBJ0XxtavJnHWXRkxE/FkYbjHVK32IY3330Ht+Vxw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IEY9K5hNfmFunTGj5VroWhtf+8ak8ZbVNfvslydXQY/I5vroHm5PQiEJWBENUAQHd5wIbFRM4sGnYsP0jJWilUv4fAS5jOQYqJgh1i98VLgxKDqs040V/vVC7lYCms473b951IXtLa8Yz5GHlyW7TJ87MFXzpR9nKcnihuuxVUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=na1/QD+3; arc=none smtp.client-ip=117.135.210.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1791872343; c=relaxed/simple;
+	bh=HtJBiEA4ucAvLpfC4a4n1A6tMLh+eQMfiLiFLLNUD5Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B7FunKyUMtTLsAAliJOaVPSCrDgF2GAGfE35Fp5/REUQG+JL6XQ1YcUXJuS0pdEx0TnJaCMmuwUhXkG6PWr9xjm69YqWYppJuvCr7F164P9wjAgoOY2KNCecLXNLq2NeulGQOw36RpyhB7hjPdo0LWtLR6N9RSYzu0vMpZYH4Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aycQ4xCH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="na1/QD+3"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=oicUmdbvkZlAAkWakT1cZEuj/Xikbl8f+gS9yOj4TKQ=;
-	b=na1/QD+3OEal1K3e/46GtgK7J3eLycJdZW5cSZdlVGp874nXCIcheK94rB+3zp
-	VDVMkZX1K68xr0pT18mrXnd9rYIIv6gAWg42uayIxvQ8Gk7ehuRxJOAYrnRXd7vV
-	GE8W8AuAo2ahBFpFJoTz5ZJgF33TWzKniEFlI6o+hVm/4=
-Message-ID: <79b7f28d-2013-4dcb-8f1a-aef7366c9aa5@163.com>
-Date: Tue, 13 Oct 2026 14:17:43 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aycQ4xCH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84FED1F000FF;
+	Tue, 13 Oct 2026 06:19:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791872341;
+	bh=F7ejl3Qk2kHBe5/UeSkwIn+slHSDKD72lOz9G5tCbZo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=aycQ4xCHkXgaaAy2pUxsJMWciAGHoV2hAGFQUfdrXP4yjjEuaIy/xS9oqFhL4kkjK
+	 FmDWjH69CgBifEcuJ5ciCZVGCcC1MIo8KlbnELuwUBlquQeB+1fBKWk2gwkYuFluiH
+	 5Dn2myW9bRnHRrUaBmDeSLK8m8QMZBXqUYIxI3dilwdDPSxb4BkTJxJkL1aTv5gP6+
+	 zDi5Q+ww3Q1raR+03p4aXNNeomiBrLvJflkHI+jMQJXjSDcsVZQ1UHNvrvqoA4ZdRc
+	 agD1Bv1VHftc5hv7a59EGdnl9TqVKoMkkO3+KY9NcuiKoq5Nsw858F0GCmfqrgL+m5
+	 0/FAj7hfQMnYg==
+Date: Mon, 12 Oct 2026 23:18:59 -0700
+From: Namhyung Kim <namhyung@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v4 08/10] perf symbol: Do not set binary type from symtab
+ type
+Message-ID: <as3NUyJxJvIyFC50@z2>
+References: <20261012234654.60666-1-namhyung@kernel.org>
+ <20261012234654.60666-9-namhyung@kernel.org>
+ <sashiko-outbox-168778@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v7 3/4] bpf: Prevent task work context reuse
- while irq_work is busy
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20261012061915.231254-1-luyun_611@163.com>
- <20261012061915.231254-4-luyun_611@163.com>
- <sashiko-outbox-167741@kernel.org>
-Content-Language: en-US
-From: luyun <luyun_611@163.com>
-In-Reply-To: <sashiko-outbox-167741@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:PSgvCgAXH68Hzc1qPonODw--.2174S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxAF17try7WFWkGw4fJrWxCrg_yoWrCr1rpF
-	Wrtr1Yyw4kJa4IvF12vw4xWFySgwsYya45Grn5Kryayr15Wrn2yryIkF1jqF45urs5JF12
-	vr4qva93Cw1UuFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRYNtsUUUUU=
-X-CM-SenderInfo: pox130jbwriqqrwthudrp/xtbC6wiDUmrNzQhY1wAA3f
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-168778@kernel.org>
 
-
-在 2026/10/12 14:34, sashiko-bot@kernel.org 写道:
+On Tue, Oct 13, 2026 at 12:08:12AM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] bpf: UAF in task_work/timer callbacks due to async context re-init on deleted map elements
+> - [Medium] perf: fully stripped executables falsely rejected for data access
 > --
-Hi,
-I reproduced this issue with KASAN on qemu/kvm.
-
-After the map value is deleted, a stale value pointer can still re-publish
-a context and schedule a task work through it (the schedule succeeds, no
-error). Callbacks that have not entered RUNNING yet are cancelled by the
-final allocator destructor and are safe. The gap is a callback that is
-already RUNNING when the freeing grace period completes: the destructor
-only publishes FREED without waiting, and the callback keeps using
-ctx->map_val after the element has been kfree:
-
-   BUG: KASAN: slab-use-after-free in bpf_repro_probe_tw
-   Read of size 1 at addr ffff88800d999558 by task uaf_repro/89
-
-   Call Trace:
-     bpf_repro_probe_tw          <- debug-only probe, scratch build
-     process_work_cb             <- BPF task work callback
-     bpf_task_work_callback
-     task_work_run
-
-   Freed by task 11:
-     kfree
-     free_all
-     __free_rcu
-     srcu_invoke_callbacks       <- bpf_mem_cache freeing grace period
-
-This is not introduced by this series: fetch_ctx(), schedule(),
-cancel_and_free() and the callback are identical to the pre-series base,
-and patch 3 only moves init_irq_work() around. I hit the same reinstall
-path on the submitted tree with no modifications.
-
-The fix has to stop retired elements from re-publishing async work and
-keep elements alive while a callback still runs on them, so I'd rather fix
-
-it in a separate series than grow this patch set.
-
----
-
-Thanks.
-Yun Lu
-
-> commit 580f53f590a0a7077f231292b13de90213f646c5
-> Author: Yun Lu <luyun@kylinos.cn>
->
-> bpf: Prevent task work context reuse while irq_work is busy
->
-> This commit fixes a race condition where a task work context could return to
-> standby before its scheduling irq_work handler completes. It initializes the
-> irq_work during context creation and checks for the BUSY state before reusing
-> it to prevent overlapping invocations.
->
->> diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
->> index 028fc6796b597..350269b8646e4 100644
->> --- a/kernel/bpf/helpers.c
->> +++ b/kernel/bpf/helpers.c
->> @@ -4553,6 +4553,7 @@ static struct bpf_task_work_ctx *bpf_task_work_fetch_ctx(struct bpf_task_work *t
->>   	memset(ctx, 0, sizeof(*ctx));
->>   	refcount_set(&ctx->refcnt, 1); /* map's own ref */
->>   	ctx->state = BPF_TW_STANDBY;
->> +	init_irq_work(&ctx->irq_work, bpf_task_work_irq);
->>   
->>   	old_ctx = cmpxchg(&twk->ctx, NULL, ctx);
-> [Severity: High]
-> Can a newly allocated context be installed on a deleted map element here?
->
-> If a concurrent map deletion calls bpf_task_work_cancel_and_free(), it
-> synchronously clears the context:
->
-> bpf_task_work_cancel_and_free(struct bpf_task_work *tw) {
->      ...
->      ctx = xchg(&twk->ctx, NULL);
->      ...
+> 
+> commit 6b9e46855d4e0d8df1dcaaed600da2f693471adb
+> Author: Namhyung Kim <namhyung@kernel.org>
+> 
+> perf symbol: Do not set binary type from symtab type
+> 
+> This commit separates tracking of the DSO binary type from the symtab type.
+> It removes the explicit setting of the binary type during symbol loading,
+> deferring it until the DSO is actually opened.
+> 
+> > diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
+> > index 4a8c298039447..116870595f75c 100644
+> > --- a/tools/perf/util/symbol.c
+> > +++ b/tools/perf/util/symbol.c
+> > @@ -1943,19 +1943,6 @@ int dso__load(struct dso *dso, struct map *map)
+> >  
+> >  		if (next_slot) {
+> >  			ss_pos++;
+> > -
+> > -			/*
+> > -			 * The binary type is used to find the file containing
+> > -			 * the executed instructions, so prefer the types that
+> > -			 * refer to the actual object over debug-only files such
+> > -			 * as DSO_BINARY_TYPE__DEBUGLINK.
+> > -			 */
+> > -			if (dso__binary_type(dso) == DSO_BINARY_TYPE__NOT_FOUND ||
+> > -			    symtab_type == DSO_BINARY_TYPE__BUILD_ID_CACHE ||
+> > -			    (symtab_type == DSO_BINARY_TYPE__SYSTEM_PATH_DSO &&
+> > -			     dso__binary_type(dso) != DSO_BINARY_TYPE__BUILD_ID_CACHE))
+> > -				dso__set_binary_type(dso, symtab_type);
+> > -
+> 
+> [Severity: Medium]
+> Will removing this explicit assignment cause fully stripped executables to be
+> falsely rejected during data access operations like perf annotate?
+> 
+> By leaving the DSO binary type as NOT_FOUND here, disassembly paths are forced
+> to fall back to dso__find_binary_type_locked() to identify the file type.
+> That logic attempts to verify the file using filename__has_section() for the
+> .text section:
+> 
+> tools/perf/util/dso.c:dso__find_binary_type_locked() {
+>     ...
+>     found = filename__has_section(path, ".text");
+>     ...
 > }
->
-> Since it doesn't leave a poison value, a concurrent BPF program running under
-> RCU read lock that calls bpf_task_work_schedule() would see twk->ctx as NULL
-> and successfully cmpxchg the newly allocated context into the deleted element.
->
-> [ ... ]
->
->> @@ -4644,7 +4657,6 @@ static int bpf_task_work_schedule(struct task_struct *task, struct bpf_task_work
->>   	ctx->map = map;
->>   	ctx->map_val = (void *)tw - map->record->task_work_off;
->>   	init_task_work(&ctx->work, bpf_task_work_callback);
->> -	init_irq_work(&ctx->irq_work, bpf_task_work_irq);
->>   
->>   	irq_work_queue(&ctx->irq_work);
->>   	return 0;
-> [Severity: High]
-> Could this lead to a use-after-free if the element was concurrently deleted?
->
-> If bpf_task_work_fetch_ctx() re-initializes a context on a deleted element as
-> described above, ctx->map_val captures a pointer to the element's memory:
->
-> bpf_task_work_schedule(...) {
->      ...
->      ctx->map_val = (void *)tw - map->record->task_work_off;
->      ...
->      irq_work_queue(&ctx->irq_work);
-> }
->
-> Since the deleted map element will be freed after the RCU grace period, but
-> the newly initialized asynchronous irq_work remains armed, could the later
-> execution of this callback access the freed element memory through
-> ctx->map_val?
->
+> 
+> For stripped executables (which have had their section headers removed but
+> still have valid PT_LOAD segments), this check returns false. Previously,
+> because dso__load() set the binary type directly when locating the system
+> path DSO, it bypassed the strict .text check.
+> 
+> Consequently, tools like objdump that can parse PT_LOAD segments are never
+> invoked, and operations fail with COULDNT_DETERMINE_FILE_TYPE.
+
+Hmm.. ok.  But I don't think this is a common case and we have many
+places to check section headers.  So practically we require section
+headers to support it.
+
+> 
+> Additionally, could this cause debuginfo files to be incorrectly selected for
+> data reads, since their SHT_NOBITS .text sections might falsely satisfy the
+> check?
+
+The function never tries such debuginfo file types.  But probably better
+to chek section types.
+
+Thanks,
+Namhyung
 
