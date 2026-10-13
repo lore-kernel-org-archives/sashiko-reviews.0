@@ -1,180 +1,220 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF0653FD51
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 21:18:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B325855C1B0
+	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 21:22:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.169
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791926341; cv=fail; b=FRQrXuRWzb25bWebhOJYgC3Z80cQ8Ln6lJkKnfQOLw3OYhGN+J60XP/Y+atKahLJaFqaOCeEk396bpfehtUYH7qIAzxyA1Gbm+0HBbBOX9RjJ3hrIod9+9fA4oQLxShyX01eX29vPhdjQ3SYXlOTZ818CQBOO2er0gQLTfP+/HI=
+	t=1791926535; cv=pass; b=UYrvToF3PjgqFrJtyHKGsTqECH2jVKmFdMvS6rX7D7TROO4jlZClAv0l4yTho0U7j5mnrTwuvrfJGa/iljyLo8o6Ma4zK+Wi+HHyIdCtGaHktGu0QbC6DqJIQbpY/gaEAx/hLpAs4LRLRFeAa0aDFgtuPNOAFukiw3vZj/kyY7g=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791926341; c=relaxed/simple;
-	bh=0kBpUjBqSIvTpMhRTZ8srpmDUqM8OFCxMcgouJFPA6I=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=Tuq8sNTc+hh1DodR2V2JNuK1LPHzaqgKMyiT2H6AIOE87eKSy8rA2Or1h3ZV0GzyWzvXkQc2Mabd5VEU3xYWm7NdSW80O183KAxNpKGiiTdZ8cBD5bA6PlnXnbypTtllXzxHFT7H2gN5t90yKkv77aAAW1Bsat44iuNgLgwp/iw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Tf+tE688; arc=fail smtp.client-ip=198.175.65.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1791926535; c=relaxed/simple;
+	bh=sf30vAcaJ++DLttGm/TNinMSo0jN9WDVolmb3olSr0M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mnl7sUwOACTBPKVG7xnGz/jW1kcSIjHeYXXG97F7UiOUKPsQnf5ST4JhXOT2UhRqTsh46QuUqCOYEu1jSkwDmgzGQxXG/UVP8YZTqdI3fXpFehhFKQnl8jiEDWV5303hxvgjEGkty4Q5GK17t7oqkvjC3ipHg6ftxUxfYcyRdpg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=nGfZo48a; arc=pass smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Tf+tE688"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1791926339; x=1823462339;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-id:content-transfer-encoding:
-   mime-version;
-  bh=0kBpUjBqSIvTpMhRTZ8srpmDUqM8OFCxMcgouJFPA6I=;
-  b=Tf+tE688nPweDiWGt9XH2dGv0/GrvxFohCmN4YYC/OQAS9ZZUHGKyJ9x
-   0UxadMhEUGrE36B2gWz29N8itxV1Lq49n1rnuiCmYofi25CxYHUdxo+v+
-   magDBtkMYWeKYbl4tYFTbiXGPyyvwsZy+jGkho9fk278TJNCk4+pn4C+z
-   7Mw0znDUxutKT5DGQr+VPpFUNkbpVJ/MI7iNHjgjPCXzWzSeIAqhDIdtu
-   DNr8Pwh9Jop2yfen8+BHc33WpNmmkcFqOaIwGPF33FtiC5jqUeHVV8LZS
-   YavqKgN+TvhjnPgVWiFzwsulDIewM10JUVin7ww0Dh4PS0ZeGJiwvYAlv
-   A==;
-X-CSE-ConnectionGUID: K6wjQTs5RI6W0tuy92VhNg==
-X-CSE-MsgGUID: zfBq5N0CT0678DBMut+x7A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11934"; a="675235"
-X-IronPort-AV: E=Sophos;i="6.27,156,1787036400"; 
-   d="scan'208";a="675235"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2026 14:18:58 -0700
-X-CSE-ConnectionGUID: MysOEYBUS42YrcNwxVuoVA==
-X-CSE-MsgGUID: 0cKExBnAS422cA+ejAd6og==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,156,1787036400"; 
-   d="scan'208";a="1463920"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
-  by fmviesa001.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2026 14:18:58 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Tue, 13 Oct 2026 14:18:57 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49 via Frontend Transport; Tue, 13 Oct 2026 14:18:57 -0700
-Received: from PH0PR06CU001.outbound.protection.outlook.com (40.107.208.67) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Tue, 13 Oct 2026 14:18:57 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pxh+FixekyeBlxwjYi1QMPWXcP31iXDrBjbU6sNCdKLQnjhheWtIgmuG17B+ItNgKueyLTPi3STfj0rbFKmCQowp9SC1KI/1BR3iQRCZwqS8wh+t5Du/ApRGcPJCkp538id20ZK6HXliiQoent+SYtVxzXiwROgdTGADHpSABIe5JrI2SOJLxKcmr/meFxaR77TGSyo8swPmMY4pOewmUDu9yEylG97MsJ6dDjS/EQSMya4jCGA3oJWvlCuQJcRClGj1vzjUBJNOi/EM7RL+r6Lw+sr6zCsKgHolzNiZxT+OXCbRbpRBDETZEXazZUlrOOBEbDvVrizf83qndLmGgA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0kBpUjBqSIvTpMhRTZ8srpmDUqM8OFCxMcgouJFPA6I=;
- b=LFcZH3kuYf/VGdM99J4wjyzwgNlKGgkOJIYdPAB0cMn5kVG4HMYPdpK+kEW3u8/9tjdmAjJ65VyLgJVM+Sk4AO2bzB464rB8hETL3VvDw5y22UB4e75unAV3pTjHI8GMA8bVVodFca9bVi3uqJUskFm37V4iqrCXHCyVb794YytWVFKoeHmwpN2/OW1MgZSV28+kCRXDwa42dvmh9dbnDjRFfTPfAMCjErptCsn10os+SstepClbXxpaDuSeftNqWVF7nzKVj7PAzybYIIZ1ICMg+YTWP5p0K7A1rZziGXTcNhL0BZkD3TzhuoZuJ/nWjRTLPqLVhmSMdonhN4+jZA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from LVWPR11MB9883.namprd11.prod.outlook.com (2603:10b6:408:3c0::11)
- by DSVPR11MB9718.namprd11.prod.outlook.com (2603:10b6:8:34d::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.21; Tue, 13 Oct
- 2026 21:18:50 +0000
-Received: from LVWPR11MB9883.namprd11.prod.outlook.com
- ([fe80::310:e83f:69b8:e11e]) by LVWPR11MB9883.namprd11.prod.outlook.com
- ([fe80::310:e83f:69b8:e11e%4]) with mapi id 15.21.0496.021; Tue, 13 Oct 2026
- 21:18:43 +0000
-From: "Teres Alexis, Alan Previn" <alan.previn.teres.alexis@intel.com>
-To: "Vivi, Rodrigo" <rodrigo.vivi@intel.com>,
-	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
-CC: "intel-xe@lists.freedesktop.org" <intel-xe@lists.freedesktop.org>
-Subject: Re: [PATCH v10 3/3] drm/xe/guc: Add dump_cache to optimize GuC CT/Log
- compression flow
-Thread-Topic: [PATCH v10 3/3] drm/xe/guc: Add dump_cache to optimize GuC
- CT/Log compression flow
-Thread-Index: AQHdVbtgahmdFU4+I0i1KI1pj09x/bbwzu2AgAsZUYCAAB0igA==
-Date: Tue, 13 Oct 2026 21:18:43 +0000
-Message-ID: <c07dd84dd81bf3a645fd2a6ef860bef944d1ca7e.camel@intel.com>
-References: <20261006175129.3366784-5-alan.previn.teres.alexis@intel.com>
-	 <20261006175129.3366784-8-alan.previn.teres.alexis@intel.com>
-	 <sashiko-outbox-162316@kernel.org> <as6HwRY4HvjFPB7N@intel.com>
-In-Reply-To: <as6HwRY4HvjFPB7N@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-user-agent: Evolution 3.52.3-0ubuntu1.1 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: LVWPR11MB9883:EE_|DSVPR11MB9718:EE_
-x-ms-office365-filtering-correlation-id: 45ac002c-cc51-4088-e48a-08df296f8f45
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|6133799003|22082099003|18002099003|10067099003|11063799006|4143699003|38070700021|56012099006;
-x-microsoft-antispam-message-info: Yil/03/wWMIFT4raGQgB3SrxFmOCZ/DV6lsnrVcOO1Nb7xYYA0F7SMChhG0MwJCLAIuWm45RZEITH8ceD/gxFMVXtTVLO30+nTul3896dodgwh7oukCxLgoEv4+H1MPdgwgSYdIlgvverFVQdQKmIdgm1uYCGvYXGU5+u79fjR6e3Y/a7K4Eb3vOUrAZPw6l050Za4CcuYdG4GpjwSbWMNlaekF+NJy8qZNjy1wonH5ALkBP/N1muIJ7wvkQMlIk/FygJ7h5DH+aTsFUA4J9fcZvYimB8oU4Nk9SgNo76+IE/VofvU3Yj8/O4H33jw8ouY2DNmIOs3NogqYj7G0mJ41467yzczO71kcItERsQGI1DZgW6NztjxrgIASm7u1xyBpIF/+lIOs1vbT3Zqor5uKdhQ4Drror0zXKNOVoD5lAJH6u/50BKDq8e0PI5YR0PA0iEs0yodT5/9sgzVdXNHapMGlTElgUE47ayCxNoIUJyC/3G5kDx79KZN+v3nSkCa3t8PZUIzfxHg3kIogsI2KvHHECmcRcoPVcdrAT2ASSSfc7fUbvkr8X6W2Ii0aTZlSAzueNqPlL5p71Puv0IIItRD1yq6zX0+pbeeiasC3zS/CnXpcQ1W4Co4ecbERSmj6aTt64YGcbs3Sw9TLKs4HXht5p762RtlgJcOJgiT90r2gMwenWwgPQTSreowvHU6mE6aKveBvghv1kMmU7aU6NmcilMDdwgOAQ6R0v6LA=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LVWPR11MB9883.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(6133799003)(22082099003)(18002099003)(10067099003)(11063799006)(4143699003)(38070700021)(56012099006);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?dVovMW0reGZRTEU3RlBOcmtESExLWFU5V2hQNTJHcG5KY0ZGRG5ZWDQ0WkVF?=
- =?utf-8?B?V20vWUdXVnhtN1BjTkVLRlZ1Ym9lNDkzSTlCRkp1dEJxZlJNclh2RGtXN0wv?=
- =?utf-8?B?bEhKSjBucG12NWE5QmFobzNnOUlsNEZydHZRLzBWZG5wSjI2UzBSc0JJU2lH?=
- =?utf-8?B?aTVCaEZIZEpkTUI5b2hPcGhiOUk2YjFEZnFodlc4QWlmc2tBWEFFMWh6WGVX?=
- =?utf-8?B?TzhabEdoYlBiMGRBUWhWWHdmL3o3SVYzMU0vOE1DRFlHeHhLM09aeDRMT2tC?=
- =?utf-8?B?MDBnV3pVaGJQMEdOWkxtVXZOSjM1RVNLU2o4WlhaR05DV3Ric3RrS015Z1hQ?=
- =?utf-8?B?S2pabVZVNzZENFkzeC9TTGpHYVU5YWNJdStRcEUyZVlGdWNOUStSWFBpN3NN?=
- =?utf-8?B?YVpzVWdxRUNiYnNIV0lySEVDeTJ1N0tMd09ubWtjUmYwLzAyR1BHcUZzRXJI?=
- =?utf-8?B?cXVlYWJFRzJBS0xMWkgrVkxIRzBqaXNObUZBRW5nQnJRTWt0d1ZCY3RYM1Ja?=
- =?utf-8?B?QlJKTFVVSnBRY0x3SGplcGVyTXFiU3I1RC9Ma1h0U0VOdVhreUpuRWdaUmQ3?=
- =?utf-8?B?blRQZzJWUGc5aTJnNnAvdWIvUGM0K1NiVHRObmgxc014YTE4dkdlUzZoYUVK?=
- =?utf-8?B?UTZ2S3ptOFVib2FuNWRONUVlNmhHVVJjTWdUbWlBOGY1eXNVUlhMZkVsQzJw?=
- =?utf-8?B?U0lXcURjWXJyWFpmb09GaWt0SjNBUFZ5YVdlejJpUWkwMjJuOVlIMmZYTGRy?=
- =?utf-8?B?NXY0Rk1ndXFsTC9HSk5WbnZCT2xTdkJpcXV0Q3ZQN2Z2ZzR6Yk4wN1g5VWt2?=
- =?utf-8?B?YUdkUlYyd1YxSVZhRGtJeC9UMmtycU1CZVFNaEkyZFkwSFJkRTRZbzI5TnV0?=
- =?utf-8?B?Y0xGVWh1MFJTZ2wwUnFVRVhoWGlGbDRGWW1GbC81QkN2QXZUVnhMbmJpTFVX?=
- =?utf-8?B?VjlETnBOaGpCRGlmakk5cFVCaEpmd2ZvNGRmVmtLeG91bGpSbWxaT2VrSmZu?=
- =?utf-8?B?N2NHNzhBN1pSTGt4OTY5NUd6d1RDcXVGK2Z5MG1Dd1QrVWRvZUxZZ1RqVkd4?=
- =?utf-8?B?M2JYYTVpREhGVUYzcDF4d0ZRejBCRmFKVXhHSzdKNllRcG1mNldNbmMxWnhi?=
- =?utf-8?B?Q0dDM3VNb2NaWTZLK1RQZ2NaSjFBQXhMS1M4WHFrWGQyU20xRHI2bXJ2dEFn?=
- =?utf-8?B?dWpxa2d0ZkpRUkY1Rk1lTmNzV0tOTGVPbnFZN0sxRm1YL3hMS3pDQVJKWk16?=
- =?utf-8?B?YWcrbUMxeDh2dGt2QmFwYWZnYUpMRzJURVZJb3E2QzZqbjhZRFQrd1JHZllo?=
- =?utf-8?B?QnZ6cDA2eElmb0ViMGJZcU1xdkpyVmJBYkV0TGE1NGtlYWNnaHNva1VCVFMr?=
- =?utf-8?B?UlpicHZ2Y0kwL3JldFUwOHVRbm9TVnJuVGllckFHb093R20zT0h0ZkEzQW5Z?=
- =?utf-8?B?b250SVN0ejBMbktRd1UrU1hrOGU5T3hMSjViUElITndEcFFlODhMUmwrVjd3?=
- =?utf-8?B?VCtXV3c3K2VhNDdwUjNjTFEydzNXaU5Pc3FIZ1RXaXNBMEFHRElpbk8yTmZE?=
- =?utf-8?B?R0k2bmFpQjY1eUd6Yzg1cnNUelhoQXVNNzVjNnZ6QTdOVjdMSktTMnBBYWtX?=
- =?utf-8?B?V1JrbDg3WGVhNmRJaVN0QzN5Mk1qMEpkQUVtTi81WGNjOVFNVG9uVk5QUFVj?=
- =?utf-8?B?L2oxbXFMNzBPUXRZQ0liaGFaUmdac0d6U2NFekkzaW1ob3NoNVpwcU1iVzJt?=
- =?utf-8?B?ZlBmbG5Ea3FPVStPc0F1aXR6TlpkSXMvcGVNWWtkK1lyNnRhcnhNUTdFckZ4?=
- =?utf-8?B?RmMwa1R0bUl5bVA1WVVBRG9iVTVqQXVFKysxNVhlYTZ1TlNwOU1XTmdDUDRV?=
- =?utf-8?B?WnhJQjcxaUFHZHE4QnhrbTNMYkRuNGhESDJ1WkpEYk5IdU5sSkY5azNVVzdT?=
- =?utf-8?B?NXVLSHJ1aHEySEFuVGkzbGh4bmo0YW0wSE0rSTM1RG9PMjQxMUVlZGJCRXp3?=
- =?utf-8?B?b1NSRTd1eXhBc0NYU3EweTUwbXpWUVUxNmRrQmZZYW0rL09JMUU2NmxqOGdi?=
- =?utf-8?B?NjJvZFh5VDdzc2NaUk5SVVk4WmVSMHB0Vk84V053S29qVjl4VEd0T080azJu?=
- =?utf-8?B?eUx0TDQ0dUV0c1F6cnhQN2ZxcHQ1WFg5d2kxZHdEMUV4cTZJUnh2NjZvdk5o?=
- =?utf-8?B?WkIwMXNibk5WK2xsTkRDWFFqTCtVbWU2VjduTU5aVjh4RzBxT21wQlAzTSt0?=
- =?utf-8?B?UTUwODZuSE91eTE2VHk2R3l0Wi9VVVk2TityRkliNU9rSzg1dWJsVUNkcGJp?=
- =?utf-8?B?SWtGWEFjYTNtNFBLYUczblVkMnZHUGx4dW5GUUlDR0dWS215U0w1RmJvQUxo?=
- =?utf-8?Q?Eoa1t/eYbxdwHJw39euBT4uNuNQxvdNuw4Nu6?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <B73BD76B4D9CE14B8CCA1827C6D36D62@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: base64
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="nGfZo48a"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-836c8bde2dcso22746267b3.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 14:22:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791926528; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Av5cJ6035+Uasd+KUgHtlkuLjTPxqHBJxmrXTkQKwslpXdXfJ0J40D046z3IyiXt5S
+         JOFo7UDuDYtxlphYjxxoZG37m3qHwYjfjgfw8uEM1LY/ZiJoc1wQWncSOggwg9JoNaOv
+         qYaytmqSI1Lwe0AXqVd025zLmlzDuYYWnP/M1eZOnTVecOtsOl2jP5d2Qbc55eccJgaR
+         TLmC5Xc1W/90zzLIkL7nsr2D7DhVI08g2LxOrEGwyidnJYaglfSdjspXJiata4RKGDNN
+         hphCj49karGdhyFETq2JwGnxVTor9WK3lflVLLjxfnToAok1/nTiRTs2LoBkk2xkopz5
+         4qNg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=tW1MH59A22+8G0RbZ3B3dj8ln/Mz2H51o5N7Shhczv4=;
+        fh=uRbUWIF7UQoC4wlCZDqhIC9/I5L3d7Tjlt7qH4q9Mnc=;
+        b=cLPl7XiyS1R3OsDzHLA3VYQjGjgswCQmk/XZrWRJJ24fk+PlDtinEas3VRX+FqZt8G
+         btCrub0GODOOogr4LL4VFPgA4M+v2nGY9qB6jwe8SmFBC7iG/H8ro9A0srtpun0KZkY4
+         28nZEPtWB8Y5iX93Y3GuyWyOdgoidUJTCUJWvhF+s7nM1pkj8yoKyc/p3XHeewBmXu09
+         f0dx40SoR3IbLGjvuisd0rW8+2EUU+60fzaOtfww/GCeirsjY4kVAkLDccPoRLrhnNHn
+         ebqs6P4CEzq7U4hXdBXEPbf1mOY/ntGRS8Rne6JhRfXSQuuJENqcbiSUe0LWpDB7D5Yt
+         7Wmw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1791926528; x=1792531328; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=tW1MH59A22+8G0RbZ3B3dj8ln/Mz2H51o5N7Shhczv4=;
+        b=nGfZo48agiu6Bc7iCPt/XI4ZjbnajTuF1th+XaR/nVSGJ8zMQ08jr3OQtouXTwshJD
+         SnngPLww8yD7JgCjPLodCczcZZqAXxsAup/zqD3nEQCl5W/Cug503PNKU+5KHAWghGiD
+         2mvEkMcglveSAVQr4VDWvi+Hg73Za3qnXZdCQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791926528; x=1792531328;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=tW1MH59A22+8G0RbZ3B3dj8ln/Mz2H51o5N7Shhczv4=;
+        b=BdwDHnjomh5OQItxMFcbJK/pX7iMT7WYvUSswjiEctJXpWzEHb+a6YaZTBBV3wpFWc
+         CdDr7DsimqGsOQRNWIBaG0WrA4F1hlLEY+Hn0GtP8PQYV+I2XkGlHfeDHuzqC3bICfaV
+         EdugZx+X6wIUd4APjVU/grDFz1wY4KJEz4MnmvW8rKQbkiTMflej5f/T5Tv1irbDjMqI
+         GuOkIbWZX8bVWhTd6IADVDzGaiJoo14E/ct//TMsIza3Q0/+Xvs45BXwqwMEvAfNGCSu
+         221ARitGCMBopAC908oZXe3oV8CSU/Gf/mDGsNYftHvrxeg+3JCyt1P6ea5uZtqpc1ji
+         mXBQ==
+X-Gm-Message-State: AFq9FYI2tzpNNbO0gHzyufe9v65CUwFIWWLAHtdSG6NcKxq92nCt49dY
+	bGOKBzkJ6M7qwFAe8YhkAkq6q7xAO/g221PV3HIe3OF3nrDeoSm/aibEAEfQD3JNM+EhSQxiF8d
+	y8/fOVdDYTJWvWbqf3sQtuDCLrqBlCXYJsS1FEPTGv9km4LTnF2gUXA==
+X-Gm-Gg: AYBFou2+PUAEVyGNGzgbQqWsY/ISRWjXvM5Xc34EyxPvHrxUFUrMD+x0ekVwt093Yu+
+	pU9AIFvGVeWBXCwRA9BWM2blxLym4mcxEHufOd7QgbUAhPM7du1frshWoYSJGndQ9U9xFY74Acu
+	XNsolhS1s4jW99hfuJKkkyuENmmrb/+NyNNItV+naowKOqDbjuFtXQiVlO+QJXHJCJdCVDHbeOO
+	wk0Iy6/ZMKDYp78GnewFOIp+L4xpKyzX178my9icGSRI4+1seuzhTSg1byfp5PCtvPeKFYlgqmi
+	1ju1Gk5TZC6r2XsSLF9o+E826cGgJwmWSGPgbOfpoPjcWCOW5pJyx5CpD4i4uDJNsHo7d4dQCMJ
+	2h1ynU/M6tg==
+X-Received: by 2002:a05:690c:4d4a:b0:887:f4fc:ee35 with SMTP id
+ 00721157ae682-8b07ed1fb6cmr47618147b3.19.1791926528330; Tue, 13 Oct 2026
+ 14:22:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: SYFtGp6qtKSiXUFOMl43HuETnUSymJfWaRW+98IENZTZIYsbAOOTZl5x3KtZzwkp//PEknxXzWcrlhTRSK/vriR4TvFngNsPenVXSvB0R5paUupVlp/nBbVSneS4RGX4lIxPajV2Dal+WbiycIVzDOI16DfhpuWIyjA8KsQELgLnd+8yzLgUwWGVRulRK46IXEhxk7k81Nn2On27GtqUdugUaVXNepxeALQbZkiqRdeJOvTgzaoJvUxul/tkem0ibXWFmxyRDJIR2JsEd9jRQ+H/IJ505X+O18KC7BUVcqJvkgsIiO3+F7e3EH/EWSUpj8BjA8aiRR21eHd2rze92w==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LVWPR11MB9883.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 45ac002c-cc51-4088-e48a-08df296f8f45
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Oct 2026 21:18:43.1342
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: OuAW5e62l+z1qBQ2Zeev9EHM0J8LCv2OtTbAdBei9+06tCjXSJRnaadmHQi6X/jHX9l19U5OacG9kW+WeHPsR+EmVblYhp76JbZI6yTVjUVDx2uz+mePB1lEH7ic+aXT
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DSVPR11MB9718
-X-OriginatorOrg: intel.com
+References: <20261009-send-upstream-v5-0-384af01da3ee@chromium.org>
+ <20261009-send-upstream-v5-4-384af01da3ee@chromium.org> <sashiko-outbox-166154@kernel.org>
+In-Reply-To: <sashiko-outbox-166154@kernel.org>
+From: Jingyuan Liang <jingyliang@chromium.org>
+Date: Tue, 13 Oct 2026 14:21:57 -0700
+X-Gm-Features: AclHuK8vj_2CnW3lS7fdTlkJRR8RuhSwUE7H_CFag_-G2v-URCUG4IFSzD-lQgw
+Message-ID: <CAEe3GZH-QD4vj71c2AR6Y0VFhchBARBctYtfmur07nrgK5xBWQ@mail.gmail.com>
+Subject: Re: [PATCH v5 04/11] HID: spi-hid: add spi-hid driver HID layer
+To: sashiko-reviews@lists.linux.dev
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org, 
+	dmitry.torokhov@gmail.com, linux-input@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-T24gVHVlLCAyMDI2LTEwLTEzIGF0IDE1OjM0IC0wNDAwLCBSb2RyaWdvIFZpdmkgd3JvdGU6DQo+
-IE9uIFR1ZSwgT2N0IDA2LCAyMDI2IGF0IDA2OjA0OjU3UE0gKzAwMDAsIHNhc2hpa28tYm90QGtl
-cm5lbC5vcmcgd3JvdGU6DQo+ID4gVGhhbmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2Fz
-aGlrbyBBSSByZXZpZXcgZm91bmQgMSBwb3RlbnRpYWwgaXNzdWUocykgdG8gY29uc2lkZXI6DQo+
-ID4gLSBbSGlnaF0gbG9ja2luZzogU2xlZXBpbmcgaW4gYXRvbWljIGNvbnRleHQgd2hlbiBmcmVl
-aW5nIHZtYWxsb2MnZCBkdW1wIGNhY2hlIHVuZGVyIHNwaW5sb2NrDQo+IA0KPiBwZXJoYXBzIHdv
-cnRoIHNwbGl0dGluZyB0aGlzIHNlcmllcyBhbmQgcmVzZW5kaW5nIHBhdGNoZXMgMSBhbmQgMiBm
-b3IgbWVyZ2luZw0KPiB0aGVtPyB3aGlsZSByZWZhY3RvcmluZyB0aGlzIG9uZT8NCj4gDQoNCmFs
-YW46IGRlcGVuZGluZyBvbiB0aGUgZGlyZWN0aW9uLCB3ZSBtaWdodCBuZWVkIGEgZml4dXAgb24g
-cGF0Y2gyLiBhcG9sb2dpZXMgZm9yIHRoZSBkZWxheS4uLiB3aWxsIGZpeCB0aGlzIEFTQVAuDQo=
+On Fri, Oct 9, 2026 at 3:42=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] hid: output_report callback sleeps in atomic context
+> --
+>
+> commit 954a3684cea1bad33a85c00ff6725f7553c75027
+> Author: Jingyuan Liang <jingyliang@chromium.org>
+>
+>     HID: spi-hid: add spi-hid driver HID layer
+>
+>     Add HID low level driver callbacks to register SPI as a HID driver, a=
+nd
+>     an external touch device as a HID device.
+>
+> > diff --git a/drivers/hid/spi-hid/spi-hid-core.c b/drivers/hid/spi-hid/s=
+pi-hid-core.c
+> > index 02a7608c4b882..fca7a44eeb9f9 100644
+> > --- a/drivers/hid/spi-hid/spi-hid-core.c
+> > +++ b/drivers/hid/spi-hid/spi-hid-core.c
+> [ ... ]
+> > +static int spi_hid_send_output_report(struct spi_hid *shid,
+> > +                                   struct spi_hid_output_report *repor=
+t)
+> > +{
+> > +     guard(mutex)(&shid->output_lock);
+> > +     return __spi_hid_send_output_report(shid, report);
+> > +}
+> > +
+> > +static int __spi_hid_sync_request(struct spi_hid *shid,
+> > +                               struct spi_hid_output_report *report)
+> > +{
+> > +     struct device *dev =3D &shid->spi->dev;
+> > +     int error;
+> > +
+> > +     reinit_completion(&shid->output_done);
+> > +
+> > +     error =3D __spi_hid_send_output_report(shid, report);
+> > +     if (error)
+> > +             return error;
+> > +
+> > +     error =3D wait_for_completion_interruptible_timeout(&shid->output=
+_done,
+> > +                                                       msecs_to_jiffie=
+s(SPI_HID_RESP_TIMEOUT));
+> > +     if (error =3D=3D 0) {
+> > +             dev_err(dev, "Response timed out\n");
+> > +             return -ETIMEDOUT;
+> > +     }
+> > +     if (error < 0)
+> > +             return error;
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static int spi_hid_sync_request(struct spi_hid *shid,
+> > +                             struct spi_hid_output_report *report)
+> > +{
+> > +     guard(mutex)(&shid->output_lock);
+> > +     return __spi_hid_sync_request(shid, report);
+> > +}
+> [ ... ]
+> > +static int spi_hid_ll_output_report(struct hid_device *hid, __u8 *buf,
+> > +                                 size_t len)
+> > +{
+> > +     struct spi_device *spi =3D hid->driver_data;
+> > +     struct spi_hid *shid =3D spi_get_drvdata(spi);
+> > +     struct device *dev =3D &spi->dev;
+> > +     struct spi_hid_output_report report =3D {
+> > +             .report_type =3D OUTPUT_REPORT,
+> > +             .content_length =3D len - 1,
+> > +             .content_id =3D buf[0],
+> > +             .content =3D &buf[1],
+> > +     };
+> > +     int error;
+> > +
+> > +     if (!test_bit(SPI_HID_READY, &shid->flags)) {
+> > +             dev_err(dev, "%s called in unready state\n", __func__);
+> > +             return -ENODEV;
+> > +     }
+> > +
+> > +     if (shid->desc.no_output_report_ack)
+> > +             error =3D spi_hid_send_output_report(shid, &report);
+> > +     else
+> > +             error =3D spi_hid_sync_request(shid, &report);
+>
+> [Severity: High]
+> Can this code sleep in an atomic context?
+>
+> The HID subsystem requires the output_report callback to be asynchronous =
+because
+> it can be invoked from atomic contexts, such as softirqs for LED triggers=
+ or
+> force feedback.
+>
+> Both spi_hid_send_output_report() and spi_hid_sync_request() acquire a mu=
+tex,
+> which will sleep. Furthermore, spi_hid_sync_request() blocks by calling
+> wait_for_completion_interruptible_timeout() in __spi_hid_sync_request() w=
+hile
+> waiting for the response.
+>
+> Will calling these synchronous primitives from the output_report callback=
+ lead
+> to a scheduling while atomic BUG and cause a kernel panic?
+>
+> > +
+> > +     if (error) {
+> > +             dev_err(dev, "failed to send output report\n");
+> > +             return error;
+> > +     }
+> > +
+> > +     return len;
+> > +}
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261009-send-ups=
+tream-v5-0-384af01da3ee@chromium.org?part=3D4
+
+Not really. HID core doesn't call ->output_report() from atomic context
+(LED updates are sent from a workqueue), and as noted in my reply
+on the documentation patch, USB-HID and I2C-HID already sleep in
+this callback too.
