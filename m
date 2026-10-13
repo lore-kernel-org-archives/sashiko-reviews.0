@@ -1,131 +1,144 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E160048D890
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 17:37:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66004FD279
+	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 17:56:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791913076; cv=none; b=KMVdJoBAW11t1Z6Oqr+CJWQ9VUg1vmRRC3g2bdtBDE1A+KqJqHkZPyH+U4ghQMib0vtsHsUcLvTYyrrjdEIYNvB4KGk5NEHdsxg6VIYvDLMq+tnDaGMgm2PsyNVC748/bfqCLphCA/vvnbAmgIMP1sssT+lxMcAyjdqFnH/kXzc=
+	t=1791914213; cv=none; b=YKeIMelpHBsY4pZUkfU5tb9e9vOnnfkFT0gzTbaf2423TlqA0hu62rq6SaKglrESoNOnu1QYZN/vsvDjOHxvTOif3ls8yj+a772Hx2YnbGGEUf+yxy/KyRUB8N3jsh38X1+XrzxcNrwQdeZ5+nJU6qwDAWr1XsjGIrr/yc3qYCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791913076; c=relaxed/simple;
-	bh=IBWm8OoDuOOoK6QNsoCkV6oJjvsDZlll7v/MDvILjss=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=alC0+IgmaH9X2t60/IgKrEOSsRTG+SAL1jW27+aR0KNBHtGtFqpcGnrsIKSHw/c9MCamuiBEXJP4c+n4aT/gqEoCmL1ZD2Y2iN8UufaAgDRw7I2znFx8r+iZ2lCTuihBSb+bIrQoxwYlGiiApGgC780tMJ+wBnFMnk02a6qqpwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=D4Yj/Tdp; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1791914213; c=relaxed/simple;
+	bh=9+xzVzStH5jySgGJiobWKMn8FjA+vNjP/UnkeGKkeQg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ba8f6ihdKhS96u3VIwyFo1gxKAalENcZoWqkK5mAenuJoh7+eVqQrHHN/A+4cdEoM4Kv667qKUXvHZP5sZhuNeX910ScgOiTaYxLM7ksrog+OWGvh+p2rrekbyfVZQVB/liGkDfBfwUuCmeGtTJhSCt7CkizQIDYqvcvGe8IZX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qtqyLYRs; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="D4Yj/Tdp"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4a16c399641so32668855e9.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 10:37:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qtqyLYRs"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-8b0a28a720aso19899597b3.2
+        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 10:56:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1791913073; x=1792517873; darn=lists.linux.dev;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
-         :content-transfer-encoding:content-type:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=kwog7Istc+fIBrJkEcS1h+8HETAF7LvLAVFr6xgg7kM=;
-        b=D4Yj/Tdp49q4zwwBnkIfVvttZt3Y24s2MgjagP2C6Bz3xllZk6sGaNpXAhurxwKhVa
-         S15zHvbMDuNWF2r6CDNZ1r5cZf0WWf+Du1UIu+sGerHSAWLfQSg534sYvcAVInZ3wmab
-         Dh+Sbg0fgG3QPcSKMyJd/cuVhguiUsJ3kC2g1Ino40eSHQ5hwdfPDuWVUSVwuNvUxp/G
-         eOmo1bQ0hzcPSbhCT6E5yNT7X56j1DtP3Mwijcfhht66BsokiLuysE8VZ6ToWQ2cAnlq
-         IpF1Z7zde4EyDgte/U8/APuoA05EoGVb0A8YWNkG6z4AQN8VRfusBL2o2QCLN5lB6e8x
-         avbw==
+        d=gmail.com; s=20251104; t=1791914211; x=1792519011; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=I3urwFIjeTZMI3nHLcO9T0M+7OUsQOTZbc1ClGXMTLY=;
+        b=qtqyLYRsRluUSKUexcoKruqRwH2YVtieQ7qKG4RtAg6NQzh1g2zPJL/dh5+hj8nRpm
+         Xn6NkhK7KAtUn5itbEUS6Z13eZKQXltEMV187u1zQ/ZEBRH2SL2nTu+iDDouOZ+JVECY
+         37ybz22cbpOv2jlqUIsbbjowYaIxKAjtrAkxa8DKyk5aLHchY6PKBCfvmEP+h3+qJUzJ
+         08+AYXA4kLR2hZpq302xJ9odG8xmF+oqf6mvYDcDyq2stkiLh1Q6OS1Dex1yQ83JiDTU
+         P1vk5FQH205klffsYQc7UHL7OTygq0toSxhYO0hG7XDtchpkrhUtVWbxmUSSfTd/REOX
+         KRZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791913073; x=1792517873;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
-         :content-transfer-encoding:content-type:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=kwog7Istc+fIBrJkEcS1h+8HETAF7LvLAVFr6xgg7kM=;
-        b=VpPsx1ujkrFtDcHFzWABeJ0Yv+6gPwlh1qG6pVx1rLPzy1Cfm0/mSw490VcVEsXtUd
-         RXm9YyfFNHbsiOmIFxfvEfcu7yHXExa9W/OoPUpdMaK9AXJ8fhAkyj8p5kHdpxURKpF+
-         pFaU2HkgTbLMi8cBSK2ZAmo9l5N7hazpjF/gxxh653aO80FbRW73vxmkuUrn5ArKgaIH
-         sHmHJQ38rlCTZCRqIkPqobh8JIeGk5RJv7FwYUsWmlkcdQaflKxF+jqvSu87jcv7P1F8
-         l4jFhdO/xpQy/un4MV5HNTJzt9c4fQMK93USNPVfB5QGVyZfGwlU27h9ZSnXVjAtQIM7
-         iyLg==
-X-Forwarded-Encrypted: i=1; AKwUvBzL4Anzc5P8dLDPYJHA4pNhSN5ZQ3wCJti/2VTituZiAwO4V/AT1myxvwQuRUAWBmxvokiB6j/ZzGHdLZ0GKWc=@lists.linux.dev
-X-Gm-Message-State: AFq9FYLV4gh2/Hqlq21UJnVu2AIT2//2dW3oYAe2vAfDquLk1KCoI6WO
-	CkMt/oeCVRObZIHD2FHJa/erkg2VuMqrgyitLFhJXGL6Mr34dvRS/Y/UCz/lA0DOgPLVYKz3Tl4
-	MNO2pa7A=
-X-Gm-Gg: AYBFou3dfvYJOH1fLeS3XXxbLoQzbVKZHkQAiAWprSRnfbiF8vhnEMP+9sZYJZH10ld
-	ApGHont3k8XxUKLDTbeE5aQB4Ic+WAA9bDdqBIl6hPHMdCtZx/PR6B7LDEivM/NNS1L6IuFmp2V
-	YyK7KgaSbriI7d/X3CPmuRVAFh2NBpBPFh7mQJHL66bFCFt2CbX9g/yPjq+pCH6hpSZr2KiOBsU
-	fTOc9oZFvKxReakXaMSvBZBCSz9ug5QdVRVFZDuavGy+49LImufkJODWn41CiX2TYo4uD9Vh9Lk
-	7Ipc58GggD/8VryekcMpqmfj5RKM+tjW5IT74Z0BlKge8KaObSn5JTd+VCYvVAbkA4gHOFtmIx2
-	XPGz2pPRz0qgU7qvLywO9jOiJINAAvXzJgaHuTylY8XkbhbePIOrw8zxEBP7PbJ4fzfqvN8s/UP
-	zGV/CiM0JexGQMLmHZpnFskWQHZqrK88WnSpY/HtzHJBcrE7OPOUsjvrav2yQr+goKerq2TFdYG
-	/l9FC25z6YqOVyAEYvl7x5X/z1H
-X-Received: by 2002:a05:600c:4fcb:b0:4a1:811c:8083 with SMTP id 5b1f17b1804b1-4a18e4c3600mr260249025e9.33.1791913073155;
-        Tue, 13 Oct 2026 10:37:53 -0700 (PDT)
-Received: from localhost (82-67-6-57.subs.proxad.net. [82.67.6.57])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a19303d518sm350899745e9.0.2026.10.13.10.37.52
+        d=1e100.net; s=20260707; t=1791914211; x=1792519011;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=I3urwFIjeTZMI3nHLcO9T0M+7OUsQOTZbc1ClGXMTLY=;
+        b=NKuBs/nW29OQ+Re1lAFNxqCb0DJh7Vp4Oeou9y3VVxSjkJGGbdVFjKVwLFbldmogxz
+         oh9HvEdZBxkxcfF7xT8HATF2x4EghFM9EsboTU9gYlhZJUOhkgKkmyKJ9kbnWcSsHNsP
+         l+TPmZX+KvZKf8PFCm+pcb2hvx8z39CW9OOqIk10BpEEzybXf7cfose0pvVybV2ViN0Z
+         HoyeVjdNzgBjTlejibY3md52pMl9pxwAQwjBp9/wN8Yrri0k5GMlWdqeaeA4g/tkOG+f
+         bFe8aRsmN/F8Co/qmwfDXZjay9MDN2E84zdv4NDLQkNSaJvgqHPispDuW+d7P8gMlIg1
+         KRWw==
+X-Gm-Message-State: AFq9FYK5t29PMGC133L0RLMHdV3FvZTAoAqGWnAnfRZh0Pbw60Z8Jdp5
+	NvFdcKQz4ztRxQhVJPPthAaCRVa7u73mvsIZ/t+VuCmU7D14wMAcLFjFfQ6U3g==
+X-Gm-Gg: AYBFou1SRKrGnzKDY0OZ488vLz17iZqFi3AwctaHh2aGT4rpe2H5SYYYRDP9PKRNKeD
+	Sy2E/6lzzcdqHN0SWOLfmfm5/0bTuq3Krb6atWUstESSm+Izb+tuuaHPGPfgUO6ooG6KvMig2Tv
+	cuILZlefXXq36Iry9WPHi78akDn8k9PEo4xTaW8AT/c9lEm3qEjcSEAxz1zEg0KlQyzfo48Sl/e
+	G4GiASPOeoH8PiKs+n5tX7nvkKFWBOba3WmxhIR6GEmGOa6u4+EfzXTdvmJFolAFCTbdXVC6OwW
+	PyUjHf2tsOuNbynBnZyqZn7yAnUy/E2rMyjPInkYSJ110ubvIVPhOb4wA/HecS5RYeR2Yzdhd0X
+	nqoOFwhhFol6RvcmCQrbEW2FN1R6RUPPFyMCraDRuQVDbbwCTi8AqIm4Z64W6XUC2tvTOXUippo
+	WqXosZBvh+vazIiGSqSXSdUSGztavPprLAAhAoI7u51nJW7WKuQli9yaorqx7mdA49RCwP5Ao=
+X-Received: by 2002:a05:690c:c505:b0:8b0:a957:80c4 with SMTP id 00721157ae682-8b0a95786f5mr22590897b3.45.1791914210764;
+        Tue, 13 Oct 2026 10:56:50 -0700 (PDT)
+Received: from zenbox ([2600:1700:18fb:6011:d326:f863:5ae3:683])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-8b07f2508e0sm48386227b3.38.2026.10.13.10.56.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Oct 2026 10:37:52 -0700 (PDT)
+        Tue, 13 Oct 2026 10:56:50 -0700 (PDT)
+Date: Tue, 13 Oct 2026 13:56:49 -0400
+From: Justin Suess <utilityemal77@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org, linux-security-module@vger.kernel.org
+Subject: Re: [PATCH bpf-next v1 08/11] namei: add an rcu-walk mode to the
+ ancestor walk
+Message-ID: <as5v6B-8O2QQw3zC@zenbox>
+References: <20261013164800.2906577-1-utilityemal77@gmail.com>
+ <20261013164800.2906577-9-utilityemal77@gmail.com>
+ <sashiko-outbox-170183@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v8 5/7] clk: nuvoton: ma35d1: Reparent SYSPLL correctly
-From: Jerome Brunet <jbrunet@baylibre.com>
-To: Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: Jerome Brunet <jbrunet@baylibre.com>, sashiko-bot@kernel.org, 
- sashiko-reviews@lists.linux.dev, conor+dt@kernel.org, 
- linux-clk@vger.kernel.org, robh@kernel.org, devicetree@vger.kernel.org
-In-Reply-To: <87ld81v8y1.fsf@bootlin.com>
-References: <20261004-perso-ma35d1-upstream-clk-v8-0-e1a106a128c0@bootlin.com>
- <20261004-perso-ma35d1-upstream-clk-v8-5-e1a106a128c0@bootlin.com>
- <20261004205551.6279C1F000FF@smtp.kernel.org> <87zewti2pf.fsf@bootlin.com>
- <1jjynw7bp8.fsf@starbuckisacylon.baylibre.com>
- <87cxtni7m6.fsf@bootlin.com>
- <179181904945.33566.17882786294681341398.b4-reply@b4>
- <87ld81v8y1.fsf@bootlin.com>
-Date: Tue, 13 Oct 2026 19:37:51 +0200
-Message-Id: <179191307176.266355.13493126045902473311.b4-reply@b4>
-X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1115; i=jbrunet@baylibre.com;
- h=from:subject:message-id; bh=vwYzSJnJvZdAYWxZfVM9vG2ExZs8LLQUp+M4wnaHYLA=;
- b=owGbwMvMwCW2VtK+WnvWU3HG02pJDFnncvKjl3suKowPOtp5+qSoXF5T18EXvDv/W8V/7Xjrt
- 14gsle3o5SFQYyLQVZMkaWGu1r8naTWl1nTdW7DzGFlAhnCwMUpABOJN2Nk2GKoapzC1Ly2w+Wu
- 5vXmWObm6B65iODHAm93OqTnlmlPZfhnuvOiacDxqbXP1Tl0pFKOX85fd7Vr7bZFM57m5izU5nr
- OCgA=
-X-Developer-Key: i=jbrunet@baylibre.com; a=openpgp;
- fpr=F29F26CF27BAE1A9719AE6BDC3C92AAF3E60AED9
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-170183@kernel.org>
 
+On Tue, Oct 13, 2026 at 05:01:26PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] vfs: TOCTOU race in vfs_walk_handover() sequence validation
+> --
+> 
+> commit 1f35bee40e8028ac4b024dd5a54b6bbdbb5b8521
+> Author: Justin Suess <utilityemal77@gmail.com>
+> 
+> namei: add an rcu-walk mode to the ancestor walk
+> 
+> This commit introduces an rcu-walk mode for the stepwise ancestor walk.
+> It adds lockless progression using sequence validation and provides
+> vfs_walk_handover() to transition an unreferenced RCU walk into a
+> referenced walk.
+> 
+> > diff --git a/fs/namei.c b/fs/namei.c
+> > --- a/fs/namei.c
+> > +++ b/fs/namei.c
+> 
+> [ ... ]
+> 
+> > +bool vfs_walk_handover(struct vfs_ancestor_walk *to,
+> > +		       struct vfs_ancestor_walk *from)
+> > +{
+> > +	struct path pos = from->pos;
+> > +	int err;
+> > +
+> > +	err = __legitimize_mnt(pos.mnt, from->m_seq);
+> > +	if (unlikely(err)) {
+> > +		if (err < 0)
+> > +			mnt_undo_legitimize(real_mount(pos.mnt));
+> > +		goto dead;
+> > +	}
+> > +	if (unlikely(read_seqcount_retry(&pos.dentry->d_seq, from->seq) ||
+> > +		     !lockref_get_not_dead(&pos.dentry->d_lockref))) {
+> 
+> [Severity: High]
+> Is there a time-of-check to time-of-use race window here due to the
+> validation order?
+> 
+> Evaluating read_seqcount_retry() before lockref_get_not_dead() seems to leave
+> a gap. If a concurrent rename or unlink mutates the dentry and increments the
+> seqcount right after the sequence check, the subsequent lockref_get_not_dead()
+> might still blindly succeed on the active d_count.
+> 
+> This would yield a stale and unvalidated path position to the referenced
+> walk. Should the lockref acquisition strictly precede sequence validation to
+> ensure the sequence hasn't changed during the reference acquisition?
+>
+This is intended and explained in the cover letter note,
+"stuff not changed" bullet one.
 
-> > So 2 possibilities:
-> > * You just need the .hw then I don't really get why you are doing it differently
-> >   for this clock ?
+Justin
+> > +		mnt_undo_legitimize(real_mount(pos.mnt));
+> > +		goto dead;
+> > +	}
+> > +	to->pos = pos;
+> > +	to->flags = 0;
+> > +	to->pos_flags = from->pos_flags;
+> > +	return true;
 > 
-> True.
-> 
-> > * OR, this is one of the those clock where you want to check DT first then
-> 
-> It is not.
-> 
-> >   fallback to a fixed clock, then yes you need parent_data. don't forget
-> >   the fw_name (which I did not see here) and use a local variable for that,
-> >   not a global
-> >
-> > Did I miss something ?
-> 
-> You got it absolutely right, and while implementing the change I
-> remember why I used the name instead of the hw pointer:
-> 
->      clk_hw_register_fixed_rate_parent_hw() exists, but
-> devm_clk_hw_register_fixed_rate_parent_hw() did not.
-> 
-> So since it looks like most of these helpers have their devm_
-> counterpart, I will add this new helper in clk-provider.h. I plan on
-> doing that addition in this commit because I think that is what Boyd
-> used to prefer, but I can add it in a preparation patch that is your own
-> preference, I don't mind.
-
-Separate patch for the new helper please. Same series is fine.
-
--- 
-Jerome
-
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261013164800.2906577-1-utilityemal77@gmail.com?part=8
