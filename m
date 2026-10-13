@@ -1,108 +1,164 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49C948FF8E;
-	Tue, 13 Oct 2026 06:11:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444224AC143
+	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 06:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791871925; cv=none; b=Hy3bf7XiXBOzhwpCAdwGgNuowWZ2O82l8BqjWW+yWMz1JdD3dG1SDC6bANYxFJeBLSK92lPpuGLRi33Zet8hkLU+vWZlID5Y/bCZDm/lAw3Y1HYguRZfewv8jPJeej2Kn6JSLD6nzbOx/zsiS/LNKKB+LamvJizfQ36GAwmBXdg=
+	t=1791872271; cv=none; b=bYbVMsbNBVy3oCeKfc8iazIxLtEAyaSthLaipNsvFY6KYwqcKQ0kOk41kSJLjhB/b6dx51EpDM6eis+MnVCtH6iiisTHX4f1DklL809waJdGMwaNeSiUPTNl6OmkuBhHDCVi6c2fPIyIqQ6P0z643ZENWOppwZvZpadS4jqsz0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791871925; c=relaxed/simple;
-	bh=b6MvNpFXEObBiq5CA+Gf1P0Jl1RL8SJBVRArPNr8Fl4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GOfdNquKorM28uy9SCS6lW4wkRrDYzl3xNn5xcCCpJ7pqkw1pEP/vKCD+j3h1RvBIwzDFdOkEcm2aa08yfIzeaJtUg4E9jNtXnpO3JXxIGJauBn0Vh2vBB1kppvCz2MBWsaktR0dA3GHwe6KnE8BXAm9bJ3Vs0dhT2WmxKBHqQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LCpWK1SX; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791872271; c=relaxed/simple;
+	bh=FVwBJ0XxtavJnHWXRkxE/FkYbjHVK32IY3330Ht+Vxw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IEY9K5hNfmFunTGj5VroWhtf+8ak8ZbVNfvslydXQY/I5vroHm5PQiEJWBENUAQHd5wIbFRM4sGnYsP0jJWilUv4fAS5jOQYqJgh1i98VLgxKDqs040V/vVC7lYCms473b951IXtLa8Yz5GHlyW7TJ87MFXzpR9nKcnihuuxVUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=na1/QD+3; arc=none smtp.client-ip=117.135.210.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LCpWK1SX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7731F000FF;
-	Tue, 13 Oct 2026 06:11:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791871917;
-	bh=VVvB9PbNSwKcmJ/R/qjFJVO/hR+RbVDtIyccYc+dWR8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=LCpWK1SXzJCmxkjppYqz9Ut9KdZ1B8F1iIVVol7iqNscStZCvF6Aj6rMSYdPMspGs
-	 qMGDJDQqujZTRTmAaLO+22RdH99MsaqdncPo5k9fVlRzsJUjueIoJ94DjSTauZ2DSZ
-	 0JCz+/D3Upn/Q51o5uk3wFWITB9VoMDZw6NPgGoeR3TCRXUn3lkZiVoUkzckmnuj9h
-	 i79cxnzx9AdIu5Bs6IzEdIi1XQue7cVB7rhdyaz2kiehM/uuNDIREhBUYIB/4SU+D+
-	 kjVS1hq9j5nvgTOa/qdGAUq/PqSO6yp+oazIlKLMR9pkXgt+MfWZBtCe7ykm7f5Yjt
-	 fU3ujUgRn0C2Q==
-Date: Mon, 12 Oct 2026 23:11:56 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v4 06/10] perf tools: Factor out dso__find_binary_type()
-Message-ID: <as3LrGychTiScvBE@z2>
-References: <20261012234654.60666-1-namhyung@kernel.org>
- <20261012234654.60666-7-namhyung@kernel.org>
- <sashiko-outbox-168759@kernel.org>
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="na1/QD+3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
+	Content-Type; bh=oicUmdbvkZlAAkWakT1cZEuj/Xikbl8f+gS9yOj4TKQ=;
+	b=na1/QD+3OEal1K3e/46GtgK7J3eLycJdZW5cSZdlVGp874nXCIcheK94rB+3zp
+	VDVMkZX1K68xr0pT18mrXnd9rYIIv6gAWg42uayIxvQ8Gk7ehuRxJOAYrnRXd7vV
+	GE8W8AuAo2ahBFpFJoTz5ZJgF33TWzKniEFlI6o+hVm/4=
+Message-ID: <79b7f28d-2013-4dcb-8f1a-aef7366c9aa5@163.com>
+Date: Tue, 13 Oct 2026 14:17:43 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v7 3/4] bpf: Prevent task work context reuse
+ while irq_work is busy
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20261012061915.231254-1-luyun_611@163.com>
+ <20261012061915.231254-4-luyun_611@163.com>
+ <sashiko-outbox-167741@kernel.org>
+Content-Language: en-US
+From: luyun <luyun_611@163.com>
+In-Reply-To: <sashiko-outbox-167741@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-168759@kernel.org>
+X-CM-TRANSID:PSgvCgAXH68Hzc1qPonODw--.2174S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxAF17try7WFWkGw4fJrWxCrg_yoWrCr1rpF
+	Wrtr1Yyw4kJa4IvF12vw4xWFySgwsYya45Grn5Kryayr15Wrn2yryIkF1jqF45urs5JF12
+	vr4qva93Cw1UuFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRYNtsUUUUU=
+X-CM-SenderInfo: pox130jbwriqqrwthudrp/xtbC6wiDUmrNzQhY1wAA3f
 
-On Mon, Oct 12, 2026 at 11:58:48PM +0000, sashiko-bot@kernel.org wrote:
+
+在 2026/10/12 14:34, sashiko-bot@kernel.org 写道:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] perf: spurious FD-eviction and DSO failure due to uninitialized errno
+> - [High] bpf: UAF in task_work/timer callbacks due to async context re-init on deleted map elements
 > --
-> 
-> commit 00af7deeab2857b031fe6b82dcee452b2fe4afb8
-> Author: Namhyung Kim <namhyung@kernel.org>
-> 
-> perf tools: Factor out dso__find_binary_type()
-> 
-> This commit separates out the logic to detect the binary type of a DSO by
-> checking if the candidate file contains a .text section. It ignores
-> data-only DSOs and adds handling to retry with the DSO data open lock if the
-> search fails due to hitting the open file limit.
-> 
-> > diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-> > index 913877b84b2d4..c42ad0c5c66a7 100644
-> > --- a/tools/perf/util/dso.c
-> > +++ b/tools/perf/util/dso.c
+Hi,
+I reproduced this issue with KASAN on qemu/kvm.
+
+After the map value is deleted, a stale value pointer can still re-publish
+a context and schedule a task work through it (the schedule succeeds, no
+error). Callbacks that have not entered RUNNING yet are cancelled by the
+final allocator destructor and are safe. The gap is a callback that is
+already RUNNING when the freeing grace period completes: the destructor
+only publishes FREED without waiting, and the callback keeps using
+ctx->map_val after the element has been kfree:
+
+   BUG: KASAN: slab-use-after-free in bpf_repro_probe_tw
+   Read of size 1 at addr ffff88800d999558 by task uaf_repro/89
+
+   Call Trace:
+     bpf_repro_probe_tw          <- debug-only probe, scratch build
+     process_work_cb             <- BPF task work callback
+     bpf_task_work_callback
+     task_work_run
+
+   Freed by task 11:
+     kfree
+     free_all
+     __free_rcu
+     srcu_invoke_callbacks       <- bpf_mem_cache freeing grace period
+
+This is not introduced by this series: fetch_ctx(), schedule(),
+cancel_and_free() and the callback are identical to the pre-series base,
+and patch 3 only moves init_irq_work() around. I hit the same reinstall
+path on the submitted tree with no modifications.
+
+The fix has to stop retired elements from re-publishing async work and
+keep elements alive while a callback still runs on them, so I'd rather fix
+
+it in a separate series than grow this patch set.
+
+---
+
+Thanks.
+Yun Lu
+
+> commit 580f53f590a0a7077f231292b13de90213f646c5
+> Author: Yun Lu <luyun@kylinos.cn>
+>
+> bpf: Prevent task work context reuse while irq_work is busy
+>
+> This commit fixes a race condition where a task work context could return to
+> standby before its scheduling irq_work handler completes. It initializes the
+> irq_work during context creation and checks for the BUSY state before reusing
+> it to prevent overlapping invocations.
+>
+>> diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+>> index 028fc6796b597..350269b8646e4 100644
+>> --- a/kernel/bpf/helpers.c
+>> +++ b/kernel/bpf/helpers.c
+>> @@ -4553,6 +4553,7 @@ static struct bpf_task_work_ctx *bpf_task_work_fetch_ctx(struct bpf_task_work *t
+>>   	memset(ctx, 0, sizeof(*ctx));
+>>   	refcount_set(&ctx->refcnt, 1); /* map's own ref */
+>>   	ctx->state = BPF_TW_STANDBY;
+>> +	init_irq_work(&ctx->irq_work, bpf_task_work_irq);
+>>   
+>>   	old_ctx = cmpxchg(&twk->ctx, NULL, ctx);
+> [Severity: High]
+> Can a newly allocated context be installed on a deleted map element here?
+>
+> If a concurrent map deletion calls bpf_task_work_cancel_and_free(), it
+> synchronously clears the context:
+>
+> bpf_task_work_cancel_and_free(struct bpf_task_work *tw) {
+>      ...
+>      ctx = xchg(&twk->ctx, NULL);
+>      ...
+> }
+>
+> Since it doesn't leave a poison value, a concurrent BPF program running under
+> RCU read lock that calls bpf_task_work_schedule() would see twk->ctx as NULL
+> and successfully cmpxchg the newly allocated context into the deleted element.
+>
 > [ ... ]
-> > +	do {
-> > +		dso__set_binary_type(dso, binary_type_data[i++]);
-> >  
-> > -		dso_data->fd = open_dso(dso, machine);
-> > -		if (dso_data->fd >= 0)
-> > -			goto out;
-> > +		path = dso__get_filename(dso, "", &decomp, dso__binary_type(dso));
-> > +		if (path == NULL) {
-> > +			if (errno == EMFILE)
-> > +				goto open_err;
-> 
-> [Severity: Medium]
-> Could this lead to spurious FD evictions and failure to find the binary type
-> if errno is already EMFILE from a prior, unrelated operation?
-> 
-> If dso__get_filename() returns NULL for a normal reason (such as a missing
-> build-id cache) without touching errno, it appears a stale EMFILE would cause
-> an early abort to the open_err label.
-> 
-> Since the caller __dso__find_binary_type() evicts a DSO and retries up to 3
-> times, and errno would remain EMFILE across those retries, it seems this might
-> permanently mark the DSO binary type as NOT_FOUND.
-> 
-> Would it make sense to clear errno before calling dso__get_filename()?
+>
+>> @@ -4644,7 +4657,6 @@ static int bpf_task_work_schedule(struct task_struct *task, struct bpf_task_work
+>>   	ctx->map = map;
+>>   	ctx->map_val = (void *)tw - map->record->task_work_off;
+>>   	init_task_work(&ctx->work, bpf_task_work_callback);
+>> -	init_irq_work(&ctx->irq_work, bpf_task_work_irq);
+>>   
+>>   	irq_work_queue(&ctx->irq_work);
+>>   	return 0;
+> [Severity: High]
+> Could this lead to a use-after-free if the element was concurrently deleted?
+>
+> If bpf_task_work_fetch_ctx() re-initializes a context on a deleted element as
+> described above, ctx->map_val captures a pointer to the element's memory:
+>
+> bpf_task_work_schedule(...) {
+>      ...
+>      ctx->map_val = (void *)tw - map->record->task_work_off;
+>      ...
+>      irq_work_queue(&ctx->irq_work);
+> }
+>
+> Since the deleted map element will be freed after the RCU grace period, but
+> the newly initialized asynchronous irq_work remains armed, could the later
+> execution of this callback access the freed element memory through
+> ctx->map_val?
+>
 
-Ok, I'll add that too.
-
-Thanks,
-Namhyung
-
-> 
-> > +			continue;
-> > +		}
-> > +
-> > +		errno = 0;
-> > +		found = filename__has_section(path, ".text");
-> [ ... ]
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261012234654.60666-1-namhyung@kernel.org?part=6
