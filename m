@@ -1,134 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050C849DB83;
-	Tue, 13 Oct 2026 06:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49C948FF8E;
+	Tue, 13 Oct 2026 06:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791871893; cv=none; b=inQbnw54mIiUpHcS4M7fjyB6c5QuxNffflhsD+oQkbIyYP3LSEyFDOEaiO2GZxGNM0jYFhlYv1xVudSTcTCWWIsYC5urg/v8iZZXYVjhsfjc4rQ7aV3tAS7N3JWZfBOnS9ICcJ2S+5eoWMmaLDjFF30rSpzIc8ocUHANNcjKjUs=
+	t=1791871925; cv=none; b=Hy3bf7XiXBOzhwpCAdwGgNuowWZ2O82l8BqjWW+yWMz1JdD3dG1SDC6bANYxFJeBLSK92lPpuGLRi33Zet8hkLU+vWZlID5Y/bCZDm/lAw3Y1HYguRZfewv8jPJeej2Kn6JSLD6nzbOx/zsiS/LNKKB+LamvJizfQ36GAwmBXdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791871893; c=relaxed/simple;
-	bh=LiJbY3k5up5aLOd7Bcg4qH560hdJKOEuwg8jCmB5OzI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mc6TsvYbk21zFFyd+7HdBb2MaHYbyNPqGE/vNicC9+IyAQnrvGjesZEX8+FLKgaJq3QULBXckgfLRiIczWcmI+fPb1wixexj/swzt7vXwK+I3YSkOXtrKjUDeDCz9aHaFemthg+tGZD/EMk1WM4QjNY6b0Qu4nmDTKK2y+bqtMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YALk6qqK; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791871925; c=relaxed/simple;
+	bh=b6MvNpFXEObBiq5CA+Gf1P0Jl1RL8SJBVRArPNr8Fl4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GOfdNquKorM28uy9SCS6lW4wkRrDYzl3xNn5xcCCpJ7pqkw1pEP/vKCD+j3h1RvBIwzDFdOkEcm2aa08yfIzeaJtUg4E9jNtXnpO3JXxIGJauBn0Vh2vBB1kppvCz2MBWsaktR0dA3GHwe6KnE8BXAm9bJ3Vs0dhT2WmxKBHqQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LCpWK1SX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YALk6qqK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB561F000FF;
-	Tue, 13 Oct 2026 06:11:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LCpWK1SX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7731F000FF;
+	Tue, 13 Oct 2026 06:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791871890;
-	bh=XNxt7wwex7pUWDMg9V+3M/jTcecLEnREYVs82yyM9aI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=YALk6qqKtPdpcsxHCEb6uvpb2E11q490MxJK0iGJMqeSZ3yQudydI0b2f/myBLVIM
-	 C6BF8rcCphjTDwvNOShHrnWejq1NYMLJri+gXA9wNepU0ucFeHZLUf7Bna2ZGGNY8R
-	 h2x+hPM80NwNThLC6pSawUKDuhzNukpeE6VlTzW8siz/raPskdFnhHFTz+ldkR9Qz+
-	 IuEh/gK1V3bV9FlML/ekBHhNT3VyWXZCp1Jxb1+yyVO1Gza/+2hJbY8so2bCazACHz
-	 dLLzWrNKLPyG5KWe20GdJcSSQuRMm64KgoruGc7/kEA1SIDtL+vy2ruCUIzISQlWNu
-	 dURRJrJm5hlpA==
-X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
-From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
-To: sashiko-reviews@lists.linux.dev, Jason Gunthorpe <jgg@nvidia.com>,
-	linux-coco@lists.linux.dev
-Cc: Marc Zyngier <maz@kernel.org>, dri-devel@lists.freedesktop.org,
-	media-ci@linuxtv.org, kvmarm@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>
-Subject: Re: [RFC PATCH v8 06/14] dma-pool: Allocate CoCo atomic pools using
- CoCo shared memory allocator
-In-Reply-To: <20260924101945.95D7F1F000FF@smtp.kernel.org>
-References: <20260924100529.1398790-1-aneesh.kumar@kernel.org>
- <20260924100529.1398790-7-aneesh.kumar@kernel.org>
- <20260924101945.95D7F1F000FF@smtp.kernel.org>
-Date: Tue, 13 Oct 2026 11:41:25 +0530
-Message-ID: <yq5aqzhuqgdu.fsf@kernel.org>
+	s=k20260515; t=1791871917;
+	bh=VVvB9PbNSwKcmJ/R/qjFJVO/hR+RbVDtIyccYc+dWR8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=LCpWK1SXzJCmxkjppYqz9Ut9KdZ1B8F1iIVVol7iqNscStZCvF6Aj6rMSYdPMspGs
+	 qMGDJDQqujZTRTmAaLO+22RdH99MsaqdncPo5k9fVlRzsJUjueIoJ94DjSTauZ2DSZ
+	 0JCz+/D3Upn/Q51o5uk3wFWITB9VoMDZw6NPgGoeR3TCRXUn3lkZiVoUkzckmnuj9h
+	 i79cxnzx9AdIu5Bs6IzEdIi1XQue7cVB7rhdyaz2kiehM/uuNDIREhBUYIB/4SU+D+
+	 kjVS1hq9j5nvgTOa/qdGAUq/PqSO6yp+oazIlKLMR9pkXgt+MfWZBtCe7ykm7f5Yjt
+	 fU3ujUgRn0C2Q==
+Date: Mon, 12 Oct 2026 23:11:56 -0700
+From: Namhyung Kim <namhyung@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH v4 06/10] perf tools: Factor out dso__find_binary_type()
+Message-ID: <as3LrGychTiScvBE@z2>
+References: <20261012234654.60666-1-namhyung@kernel.org>
+ <20261012234654.60666-7-namhyung@kernel.org>
+ <sashiko-outbox-168759@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-168759@kernel.org>
 
-sashiko-bot@kernel.org writes:
-
+On Mon, Oct 12, 2026 at 11:58:48PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] dma-pool: atomic_pool_expand() falsely returns success on failure
+> - [Medium] perf: spurious FD-eviction and DSO failure due to uninitialized errno
 > --
->
-> commit 7de8bc3a8ea9e2bbef83e09d72fa88999ce898b9
-> Author: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
->
-> dma-pool: Allocate CoCo atomic pools using CoCo shared memory allocator
->
-> This commit modifies atomic DMA pools to use the CoCo shared memory allocator.
-> It prevents allocation fallback below the required shared granule size, and
-> uses the cc_make_shared() helper to transition the backing allocations in a
-> sleepable context.
->
->> diff --git a/kernel/dma/pool.c b/kernel/dma/pool.c
->> index 70b7f64b17ab5..f059312c15aa5 100644
->> --- a/kernel/dma/pool.c
->> +++ b/kernel/dma/pool.c
+> 
+> commit 00af7deeab2857b031fe6b82dcee452b2fe4afb8
+> Author: Namhyung Kim <namhyung@kernel.org>
+> 
+> perf tools: Factor out dso__find_binary_type()
+> 
+> This commit separates out the logic to detect the binary type of a DSO by
+> checking if the candidate file contains a .text section. It ignores
+> data-only DSOs and adds handling to retry with the DSO data open lock if the
+> search fails due to hitting the open file limit.
+> 
+> > diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
+> > index 913877b84b2d4..c42ad0c5c66a7 100644
+> > --- a/tools/perf/util/dso.c
+> > +++ b/tools/perf/util/dso.c
 > [ ... ]
->> @@ -85,6 +85,9 @@ static bool cma_in_zone(gfp_t gfp)
->>  static int atomic_pool_expand(struct dma_gen_pool *dma_pool, size_t pool_size,
->>  			      gfp_t gfp)
->>  {
->> +	struct cc_shared_layout layout;
->> +	unsigned long attrs = 0;
->> +	unsigned int min_order = 0;
->>  	unsigned int order;
->>  	struct page *page = NULL;
->>  	bool leak_pages = false;
->> @@ -92,6 +95,17 @@ static int atomic_pool_expand(struct dma_gen_pool *dma_pool, size_t pool_size,
->>  	int ret = -ENOMEM;
->>  	pgprot_t prot __maybe_unused;
->>  
->> +	if (dma_pool->cc_shared) {
->> +		ret = cc_shared_calc_layout(pool_size, &layout);
->> +		if (ret)
->> +			goto out;
->
-> [Severity: High]
-> If cc_shared_calc_layout() succeeds, it returns 0 and overwrites the initial
-> ret = -ENOMEM. Could this cause the function to falsely return 0 (success) on
-> subsequent failures?
->
-> For instance, if page allocation fails below, the function jumps to out and
-> returns the current value of ret:
->
->     if (!page)
->         goto out;
->
-> Similarly, if remapping fails later in the function:
->
->     addr = dma_common_contiguous_remap(...)
->     if (!addr)
->         goto free_page;
->
-> In both cases, ret will be 0 instead of -ENOMEM. Would it be better to reset
-> ret back to -ENOMEM when these failures occur, or use a separate variable
-> for the cc_shared_calc_layout() return value?
->
+> > +	do {
+> > +		dso__set_binary_type(dso, binary_type_data[i++]);
+> >  
+> > -		dso_data->fd = open_dso(dso, machine);
+> > -		if (dso_data->fd >= 0)
+> > -			goto out;
+> > +		path = dso__get_filename(dso, "", &decomp, dso__binary_type(dso));
+> > +		if (path == NULL) {
+> > +			if (errno == EMFILE)
+> > +				goto open_err;
+> 
+> [Severity: Medium]
+> Could this lead to spurious FD evictions and failure to find the binary type
+> if errno is already EMFILE from a prior, unrelated operation?
+> 
+> If dso__get_filename() returns NULL for a normal reason (such as a missing
+> build-id cache) without touching errno, it appears a stale EMFILE would cause
+> an early abort to the open_err label.
+> 
+> Since the caller __dso__find_binary_type() evicts a DSO and retries up to 3
+> times, and errno would remain EMFILE across those retries, it seems this might
+> permanently mark the DSO binary type as NOT_FOUND.
+> 
+> Would it make sense to clear errno before calling dso__get_filename()?
 
-Fixed as
+Ok, I'll add that too.
 
-modified    kernel/dma/pool.c
-@@ -96,9 +96,11 @@ static int atomic_pool_expand(struct dma_gen_pool *dma_pool, size_t pool_size,
- 	pgprot_t prot __maybe_unused;
- 
- 	if (dma_pool->cc_shared) {
--		ret = cc_shared_calc_layout(pool_size, &layout);
--		if (ret)
--			goto out;
-+		int err;
-+
-+		err = cc_shared_calc_layout(pool_size, &layout);
-+		if (err)
-+			return err;
- 		pool_size = layout.shared_size;
- 		min_order = get_order(layout.alignment);
- 		if (min_order > MAX_PAGE_ORDER)
+Thanks,
+Namhyung
 
-
--aneesh
+> 
+> > +			continue;
+> > +		}
+> > +
+> > +		errno = 0;
+> > +		found = filename__has_section(path, ".text");
+> [ ... ]
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261012234654.60666-1-namhyung@kernel.org?part=6
