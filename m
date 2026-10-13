@@ -1,164 +1,121 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44302EEE60;
-	Tue, 13 Oct 2026 09:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420AE45516A;
+	Tue, 13 Oct 2026 09:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791882712; cv=none; b=IVh7W/p78qD6otVp2tF+ugEI4iDV0ePeigqrC3VhUOzs/C8y7Nzr3uyXXwOQSzZCpopRQfR84iWSdXUtu+k0QaEKi7DMS/mBzJm2FSrtI4hH6Dcdfzn69gl/UIWJZyxxm80naPLBIE6zv1rlN8TAlGtsd9+4tC3Adg8e9P62Gvs=
+	t=1791883155; cv=none; b=sse+8ZaBtMuCiyvYzP4K5VTrwLsG9JtIdSSM3lxnn2ZAtKo/KKyqX+hWs2XQ+HlMdSKpI3JRjt8fNO1bmMb2gDDEHijiATd5m+T1dUPTEUXzy85nOdBJ1V/Kwr3j6Ju1cG49vz317YIVjw8cHTbFlwih6jecwNAOtUAS2TOAFtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791882712; c=relaxed/simple;
-	bh=1GDEdYYiTGxrYqK/ynxihYv50FV3RVHXamEOPKTbEmY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=shaZ75owZsU+11C3KYFwVluj2E3kJARwcwnzfE38A0JmRCNTrRJRk2cSZQrgdNq87u4K2aHy1OZVTyzoIQYz2cCd5OGXd2y+rmsgzsXTidQcduY62XbVzZjaA3XABHtx5S/0qpuJX3moLBwYBHSV5bqAJmKjq0S5581k17Y4QY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e+CmNDNm; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791883155; c=relaxed/simple;
+	bh=gEDqM2iaB/iy0jV6OeA63adVFBP0Bz/0BRTlXlf/JD0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lqn5aVPT/LCDah4Adiqj2mi6ogNW29FR4eB9n31GOK4ZfECVUAQS2QcMtvx8kBOkAs7Rxm3UHZv5CX1bvEkSgKOQW1cli82j1Hxx7S00bMc+FY+NGD/XrfdvDy/NIAWKgOk6K2GlnH/hsERvDmQCFDBTyUmiahPzCsUIJ0ZELbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m2UwO3YD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e+CmNDNm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8591F000FF;
-	Tue, 13 Oct 2026 09:11:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m2UwO3YD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6991F000FF;
+	Tue, 13 Oct 2026 09:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791882711;
-	bh=/dPrLzH4NXCTERzYwyjyTc4ohsgaQKqLbZfNj0bQRMI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=e+CmNDNm3jmp6bRulMaLPV48yxWsHF78sjT3i2w2kVLtU5qiNU03SDD2TVH/RS1gZ
-	 33rOTWPp2Yf4BaGN0qM20fHspQWSIUWXgR0XkY60QNTfcJAAzd6I28HNS3y5+Terbz
-	 HmP1ku4zb9gQbEyKr2zo/f/rz9u3MVx8W86xh0PMOin5dVx5I5vb1zrPAVBxDYBXOf
-	 r/eQ4nVCSUVBwTGTIVxCnG6NXr2kw/u54zcDb7/2QUtWsKVZaUfadFICTXDbD/+B1X
-	 LlGy5RfhOd7TqFepg4Q38Q2V9ZGgH4FyxRDi45NaerpQDJxl07ircU6/ZL6BHuEskC
-	 Z82R2aERMdW2g==
-X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
-From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: sashiko-reviews@lists.linux.dev, iommu@lists.linux.dev,
-	kvm@vger.kernel.org, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v7 13/16] iommufd/viommu: Select vIOMMU operations
- before allocation
-In-Reply-To: <20261012130516.GL13920@nvidia.com>
-References: <20261008055955.4014342-1-aneesh.kumar@kernel.org>
- <20261008055955.4014342-14-aneesh.kumar@kernel.org>
- <sashiko-outbox-163690@kernel.org> <yq5azewj45u2.fsf@kernel.org>
- <20261012130516.GL13920@nvidia.com>
-Date: Tue, 13 Oct 2026 14:41:46 +0530
-Message-ID: <yq5aik36q819.fsf@kernel.org>
+	s=k20260515; t=1791883153;
+	bh=o34QbmfjAAT4ADTs3ougGRHwgWEvqXtag3mgOn6QjeM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=m2UwO3YDjCMptXLJ91xmtq0Uz3H2e0P2q7o07vCdR8ZQWwbh5UMqcSegN3OaElwbj
+	 sJDc2sQVy8Vf7g3L3Juqj7X0GJnJX/mnv9Fqb1RVNST5uE3wJsQAwUIe3ESGi1RCBX
+	 ZrZWQ7Jvb3OfezBGNkjAkTQIUKyQFnvfek+6a5mxyr2dv+za67/AebtkRs7513HzxC
+	 rL+fv7Hy+JZSj3yL3lwxfKOgo1G840tavCOAt7rUmPzEsymeaZMQeGwxuN2Fa92bot
+	 8WK6Vb48cDJgLTUzatktZBC1dJZe8N7wrrXnJ5E3ctRJrCFSSXXp8lbrJQZqbc9ELQ
+	 WD1zyhe2PgWCA==
+Date: Tue, 13 Oct 2026 10:19:10 +0100
+From: Lee Jones <lee@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH] tracing/histograms: Reject non-stacktrace fields for
+ synthetic stacktrace fields
+Message-ID: <20261013091910.GD199624@google.com>
+References: <20261012155805.1103972-1-lee@kernel.org>
+ <sashiko-outbox-168379@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-168379@kernel.org>
 
-Jason Gunthorpe <jgg@nvidia.com> writes:
+On Mon, 12 Oct 2026, sashiko-bot@kernel.org wrote:
 
-> On Mon, Oct 12, 2026 at 03:07:57PM +0530, Aneesh Kumar K.V wrote:
->> > Currently, amd_iommufd_get_viommu_ops() unconditionally returns the ops
->> > structure without checking the type argument. If a user requests an arbitrary
->> > type like IOMMU_VIOMMU_TYPE_ARM_SMMUV3 on an AMD device, the core iommufd
->> > framework might track the vIOMMU under a mismatched architectural type
->> > identifier.
->> >
->> > The ARM and selftest backends appear to validate this argument against their
->> > supported hardware types before returning the operations.
->> >
->> 
->> No vIOMMU type has been added for any IOMMU other than Arm. The
->> documentation also considers IOMMU_VIOMMU_TYPE_DEFAULT reserved.
->
-> This is a bug in the AMD driver we need to fix, send a patch? It
-> should only accept DEFAULT, not every type.
->
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] tracing: check_synth_field regression for __bitmask and stacktraces
+> - [High] tracing: arbitrary memory read via scalar to string synthetic field mapping
 
-But the comment says "Reserved"
+Fixing now - v2 to follow shortly.  Bear with.
 
- * @IOMMU_VIOMMU_TYPE_DEFAULT: Reserved for future use
+> --
+> 
+> commit 4813d717e995df13871068dd6fd996711ca8965d
+> Author: Lee Jones <lee@kernel.org>
+> 
+> tracing/histograms: Reject non-stacktrace fields for synthetic stacktrace fields
+> 
+> In check_synth_field(), when a synthetic event field is a stacktrace
+> and the histogram field is not a "long[" stacktrace array, validation falls
+> through to the generic size and signedness comparison.  This allows any
+> 8-byte signed scalar histogram field to pass the fallback check and be
+> dereferenced as a kernel stacktrace pointer.  This commit attempts to reject
+> these mismatches by enforcing that field->is_stack matches the "long[" type.
+> 
+> > diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+> > index 8af97fd4ee2d5..b09f5043e1543 100644
+> > --- a/kernel/trace/trace_events_hist.c
+> > +++ b/kernel/trace/trace_events_hist.c
+> > @@ -3946,7 +3946,10 @@ static int check_synth_field(struct synth_event *event,
+> >  	    && field->is_dynamic)
+> >  		return 0;
+> >  
+> > -	if (strstr(hist_field->type, "long[") && field->is_stack)
+> > +	if (!!strstr(hist_field->type, "long[") != field->is_stack)
+> > +		return -EINVAL;
+> 
+> [Severity: High]
+> Does this heuristic falsely match the long[ substring in __data_loc unsigned
+> long[] from __bitmask and __cpumask fields?
+> 
+> If is_stack == false, this logic seems to falsely reject valid mappings.
+> 
+> If is_stack == true, this appears to bypass validation and allow a 32-bit
+> __data_loc integer to be passed as the field value. Could this 32-bit integer
+> then be cast to a pointer and dereferenced in
+> trace_events_synth.c:get_field_size() and trace_stack(), potentially causing
+> a kernel panic?
+> 
+> > +
+> > +	if (field->is_stack)
+> >  		return 0;
+> >  
+> >  	if (strcmp(field->type, hist_field->type) != 0) {
+> >  		if (field->size != hist_field->size ||
+> >  		    (!field->is_string && field->is_signed != hist_field->is_signed))
+> >  			return -EINVAL;
+> >  	}
+> 
+> [Severity: High]
+> It looks like this fallback logic fails to reject a scalar-to-string mapping.
+> 
+> When creating a dynamic string synthetic field, its size is set to sizeof(u64)
+> and is_string is true.  Because field->size equals hist_field->size (8 bytes)
+> and !field->is_string short-circuits the type/signedness check, will an 8-byte
+> scalar successfully map to a dynamic string?
+> 
+> If an attacker-controlled scalar is passed, can it be cast to a kernel pointer
+> in trace_events_synth.c:trace_string() and used with fetch_store_strlen() to
+> arbitrarily read kernel memory?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261012155805.1103972-1-lee@kernel.org?part=1
 
-What is unclear is what using that type on Arm means. Does it imply
-IOMMU_VIOMMU_TYPE_ARM_SMMUV3?.
-
->
->> >> @@ -73,5 +79,7 @@ static void amd_iommufd_viommu_destroy(struct iommufd_viommu *viommu)
->> >>   * struct iommufd_viommu_ops - vIOMMU specific operations
->> >>   */
->> >>  static const struct iommufd_viommu_ops amd_viommu_ops = {
->> >> +	.get_viommu_size = amd_iommufd_get_viommu_size,
->> >> +	.viommu_init = amd_iommufd_viommu_init,
->> >>  	.destroy = amd_iommufd_viommu_destroy,
->> >>  };
->> >
->> > [Severity: High]
->> > Is the alloc_domain_nested callback missing from this operations structure?
->> >
->> > The commit message and comments in amd_iommu_alloc_domain_nested() indicate
->> > it should be assigned to the viommu operations. However, it is omitted here.
->> >
->> > If a user attempts to allocate an AMD nested domain using IOMMU_HWPT_ALLOC,
->> > won't the core framework reject it with -EOPNOTSUPP because
->> > viommu->ops->alloc_domain_nested is NULL?
->> >
->> 
->> It is unclear whether nested domain support is fully integrated for AMD.
->> I see amd_iommu_alloc_domain_nested(), but cannot find any callers.
->
-> There is a series on the list to complete more of this, it is fine the
-> way you have it.
->
->
->> >> diff --git a/drivers/iommu/iommufd/viommu.c b/drivers/iommu/iommufd/viommu.c
->> >> index f3d5b5a7eb4a4..e95138ae71d5b 100644
->> >> --- a/drivers/iommu/iommufd/viommu.c
->> >> +++ b/drivers/iommu/iommufd/viommu.c
->> > [ ... ]
->> >> @@ -103,16 +105,12 @@ int iommufd_viommu_alloc_ioctl(struct iommufd_ucmd *ucmd)
->> >>  	 */
->> >>  	viommu->iommu_dev = iommu_dev;
->> >>  
->> >> -	rc = ops->viommu_init(viommu, hwpt_paging->common.domain,
->> >> +	rc = ops->viommu_init(viommu, idev->dev,
->> >> +			      hwpt_paging->common.domain,
->> >>  			      user_data.len ? &user_data : NULL);
->> >
->> > [Severity: Critical]
->> > Is there a missing check to ensure the domain is owned by the same driver
->> > before passing it to viommu_init?
->> 
->> The viommu_init callback needs to perform this check. For example, the
->> Arm implementation does:
->
-> No, the check is missing. If a domain is being used then the core code
-> needs to check it, not the driver.
->
-> When the ops is first obtained it should be checked along with the
-> domain to be sure it is compatible.
->
-> The NULL parent domain on the TSM path should be enforced in the core
-> code since there is nothing to check there.
->
-
-So, if IOMMUFD_VIOMMU_NO_HWPT is not set, the HWPT must have been
-created with IOMMU_HWPT_ALLOC_NEST_PARENT, and its domain owner must
-match iommu_dev->ops?
-
-Something like:
-
-	idev = iommufd_get_device(ucmd, cmd->dev_id);
-	iommu_dev = iommufd_device_get_iommu_dev(idev);
-
-	if (ops->flags & IOMMUFD_VIOMMU_NO_HWPT) {
-		if (cmd->hwpt_id) {
-			rc = -EINVAL;
-			goto out_put_idev;
-		}
-	} else {
-		hwpt_paging = iommufd_get_hwpt_paging(ucmd, cmd->hwpt_id);
-		if (IS_ERR(hwpt_paging)) {
-			rc = PTR_ERR(hwpt_paging);
-			goto out_put_idev;
-		}
-		if (!hwpt_paging->nest_parent || !iommu_dev ||
-		    hwpt_paging->common.domain->owner != iommu_dev->ops) {
-			rc = -EINVAL;
-			goto out_put_hwpt;
-		}
-	}
-
--aneesh
+-- 
+Lee Jones
