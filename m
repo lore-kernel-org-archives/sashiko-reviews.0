@@ -1,170 +1,194 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11011023.outbound.protection.outlook.com [40.107.130.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E40F3C1419;
-	Tue, 13 Oct 2026 09:50:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791885002; cv=none; b=JRG5tGfT2nHFKiBsXu8RPUyD+JsL1Hte0CDJtgznCgZF5YUUzsPLB0q3uwZeau1aSr3Tc8iWkZAMTF05zEgCSplisjpLc30cD0q/xXMXWARSQqyJaIPBGUjCTVVNoLTqWYsaBFensMROUPCNWyvIkMNjwAck6Z85WlCTQiNtLks=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791885002; c=relaxed/simple;
-	bh=idIl52e02jXTxRAG8R7Otgm6OgjBgSuRfL7EacxHpYU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HA4OZqFEoreYfMiuVXBixY4oReTf7H21QE0QgeK3ru20mT8SPk7sSq9T8xCT2XkWkUqU0YbP28rRD5BoskDDV1RHpC9A4hompouXqIGC6ztro+raMh0MilXqc1PXa62xRcprkOWdXDWjvBJsykDlrtiLvdMcb+igH9Vhlse2aPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C3K2649V; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DA33F54B7;
+	Tue, 13 Oct 2026 10:19:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.23
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791886761; cv=fail; b=rRJYJr0sa1cJ6uayCbh0MEYVqwY7dJvVfL2Ud9Ba18/O/AjdLlTdRSn2xYEbTTytROZIO4Cz6tjd80A8LJNV9xyvvafpYmxR9hcDzarFXTW7vnCoNddaAqG7JyXD5KHFAIrLFdInpVsrGtCauVd+TnRpcMzXE/SMyeQbYRF7174=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791886761; c=relaxed/simple;
+	bh=3O1g81HN1X2tvobqJeBM+IsKIdbSO/qeSNUigkTW588=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=SS/WrQ07CEua6g3dit+4VG/QXX81VxRyQRnPhaLfdfNxDJX/PwTkjiXjg/3U7nJeSirtOZz+6BmyuLXUHXhoDjtESJn5F9tV7/eXdk1kC9x4o3HuCOMihFmu74f168GTRiPtNCFLSS+/cp4iSm1JhEXTDFFAIoQ81ys3a4Gs6ys=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=YwsN9pIc; arc=fail smtp.client-ip=40.107.130.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C3K2649V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A0A1F000FF;
-	Tue, 13 Oct 2026 09:49:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791885000;
-	bh=2kWuPYcAL6kOilfqJn43FNi9ku5creI58f/N2ytqYz4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=C3K2649VPixC4TS0l/sU7HD47yxSIFjA5pf3aMdt6mWl89U+gLWLgTVJQWBuV16rc
-	 pFn5vFTRCXDq102JGUIo9EfWpFLToPbGDvHWBevzUXFJKJjONn+svohMzTCDrIMHDh
-	 IZ/bytDkSbiVnwVglm0xLtIO36kCayHDVc8u/nq2nsyTTDNyxmakJ0Cew00KTgUF04
-	 ebJ6dXp5z6uefmEtJYwNzWT0evCDxi3lMEVKqkgAsVMcX8Qn19E71AcBd3zHta76wK
-	 YpogugwmfsWidvb4AyN/VqBsClJ+RPAafmLyB9Y8cEtdzZTjwkasMQsTd18cNmXgFI
-	 yyQll6xL+Rj0g==
-Date: Tue, 13 Oct 2026 02:49:54 -0700
-From: Oliver Upton <oupton@kernel.org>
+	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="YwsN9pIc"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Srtu/i2KMVIVb1JAsSIyCvIEMGlabxa4Ly+eUbeGF5/bz8lp243hEYvcmNxJaXOL4E7+r68kVDUe5e38A4fl5LDJBBLD8ILGI9EsOnIRAFQb+csmZDOIDfA1prgd6u5zDlusq3G387EHbVoi+JXvGfZUJh/jgTkMrJaqS+Gsv0p0f8QfYK2DA/Pb3zaiuWTXfWRcIyWIscJ0Rx3qjOKQ9aQUnF3B1pNVOmKeoaIljY+gHiG4xMMal32Vod47wjC+5D+waDS632tGPokdYTnNE960UK6hC7SphEXYLfr/97DlgUF/xGAjpIW/y1nek5MOcdVYIEN8YW8zaf45j+DXDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lj6wyNb9UyuzaRcMjTIkR/mmS+z89kLpD6QcDiZRy98=;
+ b=NNNNb55ljKBAZ7DSwHf+Q/TCPv9qZAGjcExT7KYUWdlAq0Kan87v3mqm1Conr1t84Ic+Bk1b55zHY1RB6wPLTfRBu/qyINsojFmUTBezwst9K6gBhXD13Y/LRwavcNvZCTRkHvkELws7RDNFwrlSEQh1U6PXNYzcg9++BlI4aTOmaxFCEHG7JBwjyDpwSj5DagckXHflolbGUhg0GSjgik12cLde6UvnqdpMmTxiOUH+subY6/KYVpbfS3BDA4tezlQd/uRjSnr3M/T7PgYKXb5+OgWn8Tf7RYiQQASmNuVE0Ma31u0EM3UiUw5pJ/nrd/mc62bDvmTM+TOexTRLUw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lj6wyNb9UyuzaRcMjTIkR/mmS+z89kLpD6QcDiZRy98=;
+ b=YwsN9pIcvVLf5AP28y+c/AWfqxu8y3ekwhudY4OsIy9+INhuZLPQEfTZuFCaH5vH6FGRnQYpov5tyEP+787EONnINE5UsWwN8voJofUznWPW8hODcdj2QAhts6NtAHbyrGP/MAISIxz7YFsZsluTx6lDcxv1/CjG/Sx9rL39SgB45u9AothrW7XAxuZVttPHenSKM0PlNWdZY4H2Vw8olmIgJKU+vqANDEZxf+GW+Na1w45xMj8Ec3k1Bj2jP436R1lLL97CuLHj8XYafgjneNBx79eogQpgIS0RzoOgITVa+SjO+zYgVzo2c0kVqf50LrOynaMZGsBF0Vc3gd6IhA==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB12558.eurprd04.prod.outlook.com
+ (2603:10a6:150:368::10) by AM9PR04MB8438.eurprd04.prod.outlook.com
+ (2603:10a6:20b:411::17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.12; Tue, 13 Oct
+ 2026 10:19:16 +0000
+Received: from GV2PR04MB12558.eurprd04.prod.outlook.com
+ ([fe80::cd9f:102:ea58:4c49]) by GV2PR04MB12558.eurprd04.prod.outlook.com
+ ([fe80::cd9f:102:ea58:4c49%6]) with mapi id 15.21.0496.021; Tue, 13 Oct 2026
+ 10:19:16 +0000
+Message-ID: <9aa3d6f2-ee0a-4403-874e-8b47f4f8c425@oss.nxp.com>
+Date: Tue, 13 Oct 2026 13:19:13 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 09/12] scsi: ufs: Add NXP S32N79 UFS host controller
+ driver
 To: sashiko-reviews@lists.linux.dev
-Cc: Fuad Tabba <fuad.tabba@linux.dev>, kvmarm@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v2 2/2] KVM: arm64: vgic-its: Remove the pending state of
- a discarded LPI
-Message-ID: <as3-wkYnyOxu-Xlh@kernel.org>
-References: <20261013081646.933312-1-fuad.tabba@linux.dev>
- <20261013081646.933312-3-fuad.tabba@linux.dev>
- <sashiko-outbox-169278@kernel.org>
+Cc: conor+dt@kernel.org, linux-scsi@vger.kernel.org, Frank.Li@kernel.org,
+ robh@kernel.org, devicetree@vger.kernel.org, imx@lists.linux.dev
+References: <20260929100946.693962-1-larisa.grigore@oss.nxp.com>
+ <20260929100946.693962-10-larisa.grigore@oss.nxp.com>
+ <20260929102142.A35F71F00893@smtp.kernel.org>
+Content-Language: en-US
+From: Larisa Ileana Grigore <larisa.grigore@oss.nxp.com>
+In-Reply-To: <20260929102142.A35F71F00893@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR0P281CA0004.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:15::9) To GV2PR04MB12558.eurprd04.prod.outlook.com
+ (2603:10a6:150:368::10)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-169278@kernel.org>
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB12558:EE_|AM9PR04MB8438:EE_
+X-MS-Office365-Filtering-Correlation-Id: 977f885b-b8fe-4fed-b048-08df29136f5f
+X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|23010399003|1800799024|376014|366016|6133799003|10067099003|22082099003|18002099003|260925021311599003|260925021911599003|260925022911599003|11063799006|4143699003|261009223027099003|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	KYitB6K1PzTKCG7mbjkdni+f1jD3QB1gvHTA8Kbi76nJWPek3V+F8m3/pzBFgURhY5qleBQO6hGTAR+dTsTwAO4sUMy10NcKIyqT3CzuJGufZSO/ceoU8sigVj261+EhfuKeFUtdy+vso/oCQ98SyhppHdjXzU8YQpL0UaNesGhYwVOd21eRROUTgfeeBvGq9xtT6ebn4MeLDS8U6srxLCh64lwf4F1GLByBRXx7Yb3FcxQK4iaJbFZS4MkmPdbpBScE1MsayiLsPzqZGTApiBIrnxydd7wfN7uVobgs4iJB5MY8odU0QBBoYjI81706jkLKI4P72odQSmaqAH14nYheJOwFVSOkf9mdWYt12xz703HMVUe1LdP/4KiT77E0oSf1DcRZcM7QbntXkNQ70yUe0OoQLsE8v5BAiTghqWKzczJLPG3/eJnEQy57YaDvKs+gsP/Ot3v0pkeKBXo7EoliiM2Icagkl1gILaUsjZRivmReRwvG0Ml2rb2kIAsE+v07xUBrN71Nu58A/RLO7wON8irdgVAA2Ru8SDDaEQvtUrCJ+gtarfs8yKkZdvDDyJc/McmGUw+aWE61RpsY9LWZ1+Xx32/KXzI70X3iBJP1xiSWvk6d4d1CiQFI+rK5VvK+w9kVg7Fh2lthXB7ssKn6nbkVyD5+gmQSN7NQYh0=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB12558.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(1800799024)(376014)(366016)(6133799003)(10067099003)(22082099003)(18002099003)(260925021311599003)(260925021911599003)(260925022911599003)(11063799006)(4143699003)(261009223027099003)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?WFlJaGM4TGxwcktqd2U5MUVIVkp6aGtRZzJiTExHTVVqc1Vob3VadHpyOG0x?=
+ =?utf-8?B?T0lXVXFTUGZycWJYTEk4dHRkWCtmMG84UStucTRBRDJUcHBUUDE3OWRnbzQx?=
+ =?utf-8?B?Q25hR28zWDJYei8rUDBzRm55cFlyZ3ZTUkZSTGFweWptZVJhRHA5UzQxWWZh?=
+ =?utf-8?B?YWlHdVFWTG9rQ3V5Q3hSUmFZRldINERzSHR6OHBoYURWb29VdUxSQUI1ek5k?=
+ =?utf-8?B?c3d0L3ZtdTNrZFVQeU96RUxGd2NZOEV5Nzg0ZDk3aHY5WEhXUXFGQ1FPOFUw?=
+ =?utf-8?B?dEIxL2pBaFQxTGJCZ3VKRlFKUjEweEZ0WEV0NEx2K2tMWCs0QzJWVUtIZDVD?=
+ =?utf-8?B?d1g3bTFJancyaE5yV2VObklpYlVPWWFSNUpmeWxzS2hBTkxHbWNsZkZkNDh1?=
+ =?utf-8?B?TENpblVDYzg3LzRPcnBhWGt6QmpoVk5SQkFxTE16aU9xMEpadE51SERYYTU1?=
+ =?utf-8?B?aDFLbGorK2ZiKytsbTN3QmVzRTBzaEtra2lvMHlUNWV4M2ZZY0NiRmNHSTJl?=
+ =?utf-8?B?RExUYmJtbDVsdFZZZ0VuZEpudDV6cEJrS011RDdJNjBQTWd2QnVOSXN4bk9i?=
+ =?utf-8?B?eTV5M1EzdUR4OFRFeHV2RmFnWGNFN1Nhc3N0c1YrVHNmY3lEWkl6LzNVeTcw?=
+ =?utf-8?B?d0psMnp6TTVYNjhMYzI3cXYvV3Myay92NjJaWmRhOFFQLy9Oc0x2UTB2eE9p?=
+ =?utf-8?B?aHpDKzN6dTBBdEs4NHdlMDZwREc1MHcySVlKaTJGQ0FyT3A2OTJkbVVaMDgr?=
+ =?utf-8?B?eFphb3NOU1NPbTNRak5KeVc0bjdsZjlUV1dIL2tRbWZuWHNCSmtudEdXc3Bw?=
+ =?utf-8?B?eFZCU2JpUFJPbldlcHZIWlB2bFpRSWh1UllaMlppTUZRZCtITStFeFNsakFi?=
+ =?utf-8?B?azk0emFXejIvSG53bEdhdnRIT3oySEFKUzNLSU5SczdNL25ZT2xMb0o3L1I0?=
+ =?utf-8?B?SlFXaEJQN0lrV09TWm9VOGJjekk0eXNZN1N0WVQwQklsclBtYk5rYUlndDJE?=
+ =?utf-8?B?N2tCOWp5Ni8vcnRRYXVONDZ0bEpxRTFKZ0VjaSs3M2tyVG9La0M0U1Z4dGNW?=
+ =?utf-8?B?eE0zd1R2WWlwQWlRNHl3TlAyMHk5UHFBY0JTTlZiUkR2U2RmZVAwaVgwbnBs?=
+ =?utf-8?B?WnpncXl5YXQzd010OU50OUhnekgvUTQ3SDM5RXoxVlN0YVlLRjRDRkNtTGcw?=
+ =?utf-8?B?Nk5Dc3NOcVFpUHRwbnFXTmxwMkpTTHdqdE5xTlE3dkZxOVhVY3Y2LzZ5cWdS?=
+ =?utf-8?B?QWl5N1B3azRURmZLM0JmK1NlU0p3ZXVaYWdzREt0aDM2dXVpc0RUYldxazhV?=
+ =?utf-8?B?dFZ6TVpSamVGZkdTUDRWZUlpNWhoc0FJTlFTbkVzTUJrWFFrS0dTVk1KdVFN?=
+ =?utf-8?B?Qmd4UGVXK1FZUmxxSnREbjZoNEdnVm5tMUVqRjM4bnBSc29NeE1RSkhpRjZB?=
+ =?utf-8?B?MlpSaXlMaDhLS3ZCUU5COWZiOU1ieExxRXdZeHRVUkhxeEJUS3pFMVN6S1pE?=
+ =?utf-8?B?R203RytpK3lmWGJMSGRoTDkxVkovOWJwSTdHT1pLK0F3WTVqWEhLTU5nZll3?=
+ =?utf-8?B?bk1GUE4wc0txUWw3WVFUQzVCdmdXTElQbHlNRXBmd2ZzYXVhcFprZ1pQQi9i?=
+ =?utf-8?B?ZU1CQ21vekt4WHJFcTA2cy9RVGx0Y2J3SGI1cVRQaSs2ZExVSUlzaVJtbWJw?=
+ =?utf-8?B?R0EwdXRFVWJwTW91a21xUTg5Y2xLeHFDckwrV2c5anVDM0tGTzBzZzFQNHpY?=
+ =?utf-8?B?bThwUkUrRUNkVTNxekFuajNVZmNxWVR3ekxIVGt6dVgvOEUwczJFd2VvQ0lZ?=
+ =?utf-8?B?QjBTa2VPV0lZS0Q3ZU9pbTZSSDVZL25ndHVESjFQVzJISDlVZXUwSURoSmFG?=
+ =?utf-8?B?cGFBazB4TFVadk1aaUljdXZieGFxNjc4TGt2eDlZdWZHajF1SGh4TDd2WUVC?=
+ =?utf-8?B?c0lHQXNtUkNVU295Z0pyOHhzQlRJMzQvVC9NLzVOWDFBdDdZUDhrWit6Wmpo?=
+ =?utf-8?B?V01aejcyY2tSU3l3cnBybVh1dTBPV0JOZWdjYjFOZGJKQlJWRFdvTHRmVGdB?=
+ =?utf-8?B?eStmMU1IVHNlK25ZbVVXZ2s5cTI5T25BcGlHMytnWWJiOWxDY2tpRXhUWkhy?=
+ =?utf-8?B?UHNHNDFKeUd6Vko3VWRCcFdrL1JHK0wrMjR4M2I3bFd5WUVwZVQvazVFcGg4?=
+ =?utf-8?B?V3dtMlk3Y3pqV0ttS2x6dlg4MnRmVm94a29ENE9JQzM4VjY0amptTzJsN3ZE?=
+ =?utf-8?B?bFJTa2xlaWgxanE0YmxQZUwyVHZjajMxQTJMUisxWk1wOSt6cldXcENVcXJp?=
+ =?utf-8?B?enpTMUJVNFV1b2p3RHZjeXpBMjgwZUVKcXp1dWlkS1d6TCtYM05ldz09?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 977f885b-b8fe-4fed-b048-08df29136f5f
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB12558.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Oct 2026 10:19:16.1722
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: qs+Q1SCIp0dkdlLGoTKMK/WqJLi0ivB8IKqYrYDqXcRXe4ozwdwdGb1CabruxX+qpGPANCqNGW9v8Th9MqqITw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8438
 
-On Tue, Oct 13, 2026 at 08:50:51AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] kvm: arm64: vgic-its: TOCTOU race resurrects discarded LPI due to IPI skip
-> - [High] kvm: arm64: vgic-its: Race on vcpu->arch.pause breaks mutual exclusion
-> - [Medium] kvm: arm64: vgic-its: Global VM halt on DISCARD causes Denial of Service
+On 9/29/2026 1:21 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] ufs: core_clk remains permanently enabled during PM suspend states
 > --
 > 
-> commit 4bb7971d12d2fa6f1083c9f2ddc383b8d63483fb
-> Author: Fuad Tabba <fuad.tabba@linux.dev>
-> KVM: arm64: vgic-its: Remove the pending state of a discarded LPI
+> commit aea859e7e22ef8d785ddf1572d56548e903ae544
+> Author: Larisa Grigore <larisa.grigore@oss.nxp.com>
+> scsi: ufs: Add NXP S32N79 UFS host controller driver
 > 
-> This commit ensures the pending state of a queued LPI is cleared when handling
-> an ITS DISCARD command. It halts the guest before clearing the pending state if
-> the LPI is queued on a running vCPU.
+> This commit adds support for the UFS host controller on the NXP S32N79 SoC,
+> built on the Synopsys DesignWare architecture. It introduces platform glue
+> and specific initialization routines for clock scaling, M-PHY calibration,
+> and device hibernation transitions.
 > 
-> > diff --git a/arch/arm64/kvm/vgic/vgic-its.c b/arch/arm64/kvm/vgic/vgic-its.c
-> > --- a/arch/arm64/kvm/vgic/vgic-its.c
-> > +++ b/arch/arm64/kvm/vgic/vgic-its.c
-> > @@ -829,12 +829,26 @@ static int vgic_its_cmd_handle_discard(struct kvm *kvm, struct vgic_its *its,
-> >  		struct its_device *device = find_its_device(its, device_id);
-> >  		int ite_esz = vgic_its_get_abi(its)->ite_esz;
-> >  		gpa_t gpa = device->itt_addr + ite->event_id * ite_esz;
-> > +		struct vgic_irq *irq = ite->irq;
-> > +		bool queued;
-> > +
-> > +		vgic_its_invalidate_cache(its);
-> > +
-> >  		/*
-> > -		 * Though the spec talks about removing the pending state, we
-> > -		 * don't bother here since we clear the ITTE anyway and the
-> > -		 * pending state is a property of the ITTE struct.
-> > +		 * A queued LPI can be pending in a running vCPU's list register,
-> > +		 * which the exit path folds back: halt the guest before clearing.
-> >  		 */
-> > -		vgic_its_invalidate_cache(its);
-> > +		scoped_guard(raw_spinlock_irqsave, &irq->irq_lock)
-> > +			queued = irq->vcpu;
-> > +
-> > +		if (queued)
-> > +			kvm_arm_halt_guest(kvm);
+>> diff --git a/drivers/ufs/host/ufs-nxp-s32n7.c b/drivers/ufs/host/ufs-nxp-s32n7.c
+>> new file mode 100644
+>> index 0000000000000..5374662763b6e
+>> --- /dev/null
+>> +++ b/drivers/ufs/host/ufs-nxp-s32n7.c
+> [ ... ]
+>> +static int ufs_s32n7_init(struct ufs_hba *hba)
+>> +{
+> [ ... ]
+>> +	/*
+>> +	 * The core reference clock is not managed by the UFS core (the DT node
+>> +	 * has no clock-names/freq-table-hz, so it is never added to
+>> +	 * hba->clk_list_head).
+>> +	 */
+>> +	ufs->core_clk = devm_clk_get_enabled(dev, NULL);
+>> +	if (IS_ERR(ufs->core_clk))
+>> +		return dev_err_probe(dev, PTR_ERR(ufs->core_clk),
+>> +				     "Failed to get and enable core clock.\n");
+>> +
+>> +	ufshcd_set_variant(hba, ufs);
+>> +
+>> +	return 0;
+>> +}
+> [ ... ]
+>> +static const struct dev_pm_ops ufs_s32n7_pm_ops = {
+>> +	SYSTEM_SLEEP_PM_OPS(ufshcd_system_suspend, ufshcd_system_resume)
+>> +	RUNTIME_PM_OPS(ufshcd_runtime_suspend, ufshcd_runtime_resume, NULL)
+>> +	.prepare	= pm_sleep_ptr(ufshcd_suspend_prepare),
+>> +	.complete	= pm_sleep_ptr(ufshcd_resume_complete),
+>> +};
 > 
 > [Severity: Medium]
-> Does this introduce a denial of service if a guest spams DISCARD commands?
+> Because the core clock is unconditionally enabled via devm_clk_get_enabled()
+> in ufs_s32n7_init() and is explicitly excluded from the UFS core's PM logic,
+> will this clock remain permanently enabled across all low-power states?
 > 
-> Because kvm_arm_halt_guest() forces all vCPUs in the VM to exit, a guest
-> rapidly issuing DISCARD commands for a single vCPU's LPI could repeatedly
-> lock up the entire VM and cause host starvation. Could we restrict the
-> synchronization strictly to the target irq->vcpu where the LPI is queued?
+> Since these power management ops map directly to the generic UFS core hooks
+> and the UFS variant ops don't implement suspend or resume callbacks, there
+> does not appear to be a mechanism to disable ufs->core_clk during system
+> suspend or runtime idle. Could this lead to unnecessary power consumption?
+> 
+This is correct. I will add operating-points-v2 to address this issue.
 
-A guest has chosen to shoot itself in the foot, why should we care? The
-whole point of pausing the VM is to flush state and block the vCPU
-threads...
-
-> > +
-> > +		scoped_guard(raw_spinlock_irqsave, &irq->irq_lock)
-> > +			irq->pending_latch = false;
-> 
-> [Severity: High]
-> Is there a window here where an exiting vCPU might overwrite the cleared
-> latch and resurrect the LPI?
-> 
-> If the target vCPU is just exiting when kvm_arm_halt_guest() broadcasts
-> KVM_REQ_SLEEP, the vCPU sets vcpu->mode = OUTSIDE_GUEST_MODE before folding
-> its hardware state in kvm_arch_vcpu_ioctl_run().
-> 
-> Because kvm_request_needs_ipi() checks:
-> 
-> virt/kvm/kvm_main.c:kvm_request_needs_ipi() {
->     if (req & KVM_REQUEST_WAIT)
->         return mode != OUTSIDE_GUEST_MODE;
-> }
-> 
-> The IPI is skipped and kvm_arm_halt_guest() returns immediately without
-> waiting for the vCPU to sync. The DISCARD thread then clears
-> irq->pending_latch = false.
-> 
-> Concurrently, the exiting vCPU executes kvm_vgic_sync_hwstate(), reads the
-> still-pending state from the hardware LR, and unconditionally overwrites the
-> cleared latch back to true:
-> 
-> arch/arm64/kvm/vgic/vgic-v3.c:vgic_v3_fold_lr() {
->     if (irq->config == VGIC_CONFIG_EDGE && (val & ICH_LR_PENDING_BIT))
->         irq->pending_latch = true;
-> }
-> 
-> Could we coordinate with the vCPU's state folding sequence to ensure the
-> discard isn't lost?
-
-https://lore.kernel.org/kvmarm/20260929093548.3598547-1-maz@kernel.org/
-
-> > +
-> > +		if (queued)
-> > +			kvm_arm_resume_guest(kvm);
-> 
-> [Severity: High]
-> Can concurrent DISCARD commands on different ITS instances break the mutual
-> exclusion of vcpu->arch.pause?
-> 
-> vgic_its_cmd_handle_discard() executes holding the per-ITS its->its_lock.
-> If a VM has multiple ITS devices, two DISCARD commands could run concurrently
-> and both call kvm_arm_halt_guest(), which sets vcpu->arch.pause to true
-> across all vCPUs.
-> 
-> The first thread to finish will call kvm_arm_resume_guest(), which does:
-> 
-> arch/arm64/kvm/arm.c:kvm_arm_resume_guest() {
->     kvm_for_each_vcpu(i, vcpu, kvm) {
->         vcpu->arch.pause = false;
->         __kvm_vcpu_wake_up(vcpu);
->     }
-> }
-> 
-> This unconditionally clears the pause flag and wakes up all vCPUs while the
-> second thread is still modifying VGIC state assuming the guest is fully
-> halted.
-> 
-
-https://lore.kernel.org/kvmarm/20260929093548.3598547-1-maz@kernel.org/
-
-Thanks,
-Oliver
+Regards,
+Larisa
