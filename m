@@ -1,220 +1,188 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B325855C1B0
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 21:22:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.169
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791926535; cv=pass; b=UYrvToF3PjgqFrJtyHKGsTqECH2jVKmFdMvS6rX7D7TROO4jlZClAv0l4yTho0U7j5mnrTwuvrfJGa/iljyLo8o6Ma4zK+Wi+HHyIdCtGaHktGu0QbC6DqJIQbpY/gaEAx/hLpAs4LRLRFeAa0aDFgtuPNOAFukiw3vZj/kyY7g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791926535; c=relaxed/simple;
-	bh=sf30vAcaJ++DLttGm/TNinMSo0jN9WDVolmb3olSr0M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mnl7sUwOACTBPKVG7xnGz/jW1kcSIjHeYXXG97F7UiOUKPsQnf5ST4JhXOT2UhRqTsh46QuUqCOYEu1jSkwDmgzGQxXG/UVP8YZTqdI3fXpFehhFKQnl8jiEDWV5303hxvgjEGkty4Q5GK17t7oqkvjC3ipHg6ftxUxfYcyRdpg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=nGfZo48a; arc=pass smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5C140B10C;
+	Tue, 13 Oct 2026 21:33:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791927200; cv=none; b=AgJl34W0HhrGPfznkygV/TCakDBy3dwLpi7O43naiDASDc9AvrupYATDVXmbpgf6oxYHko+adr0O7MmF/lqUchB0Ek7HDRCG3SQrAszGiG4NTvAnB7/xTxvZ2G5pDzbBZf7KFtAeqjiV4/0t7HteyoND7mjOhnQ7fMg1Utx/kPU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791927200; c=relaxed/simple;
+	bh=tRGzNeCb85QoX5ahl1eL3IJUP/ZUE36Fc8rnlq3bCy0=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=Idk0wHONdIFXexj44j26dv/1L8lVYoTebGkrlxw6oxmw0HimPGDiOHU31WqNI6zJTmi+uSD70KgeGVLcFIc+pntvOnJEsszefHI0sTUUZMexXXFaovrgnr8DzDto5jk5amj46n2EBsZpKPvhg7Jjc4nJrdBFEIM89y/VBskwNCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=casper.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=NxTCWMhj; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=casper.srs.infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="nGfZo48a"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-836c8bde2dcso22746267b3.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 14:22:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791926528; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Av5cJ6035+Uasd+KUgHtlkuLjTPxqHBJxmrXTkQKwslpXdXfJ0J40D046z3IyiXt5S
-         JOFo7UDuDYtxlphYjxxoZG37m3qHwYjfjgfw8uEM1LY/ZiJoc1wQWncSOggwg9JoNaOv
-         qYaytmqSI1Lwe0AXqVd025zLmlzDuYYWnP/M1eZOnTVecOtsOl2jP5d2Qbc55eccJgaR
-         TLmC5Xc1W/90zzLIkL7nsr2D7DhVI08g2LxOrEGwyidnJYaglfSdjspXJiata4RKGDNN
-         hphCj49karGdhyFETq2JwGnxVTor9WK3lflVLLjxfnToAok1/nTiRTs2LoBkk2xkopz5
-         4qNg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=tW1MH59A22+8G0RbZ3B3dj8ln/Mz2H51o5N7Shhczv4=;
-        fh=uRbUWIF7UQoC4wlCZDqhIC9/I5L3d7Tjlt7qH4q9Mnc=;
-        b=cLPl7XiyS1R3OsDzHLA3VYQjGjgswCQmk/XZrWRJJ24fk+PlDtinEas3VRX+FqZt8G
-         btCrub0GODOOogr4LL4VFPgA4M+v2nGY9qB6jwe8SmFBC7iG/H8ro9A0srtpun0KZkY4
-         28nZEPtWB8Y5iX93Y3GuyWyOdgoidUJTCUJWvhF+s7nM1pkj8yoKyc/p3XHeewBmXu09
-         f0dx40SoR3IbLGjvuisd0rW8+2EUU+60fzaOtfww/GCeirsjY4kVAkLDccPoRLrhnNHn
-         ebqs6P4CEzq7U4hXdBXEPbf1mOY/ntGRS8Rne6JhRfXSQuuJENqcbiSUe0LWpDB7D5Yt
-         7Wmw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1791926528; x=1792531328; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=tW1MH59A22+8G0RbZ3B3dj8ln/Mz2H51o5N7Shhczv4=;
-        b=nGfZo48agiu6Bc7iCPt/XI4ZjbnajTuF1th+XaR/nVSGJ8zMQ08jr3OQtouXTwshJD
-         SnngPLww8yD7JgCjPLodCczcZZqAXxsAup/zqD3nEQCl5W/Cug503PNKU+5KHAWghGiD
-         2mvEkMcglveSAVQr4VDWvi+Hg73Za3qnXZdCQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791926528; x=1792531328;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=tW1MH59A22+8G0RbZ3B3dj8ln/Mz2H51o5N7Shhczv4=;
-        b=BdwDHnjomh5OQItxMFcbJK/pX7iMT7WYvUSswjiEctJXpWzEHb+a6YaZTBBV3wpFWc
-         CdDr7DsimqGsOQRNWIBaG0WrA4F1hlLEY+Hn0GtP8PQYV+I2XkGlHfeDHuzqC3bICfaV
-         EdugZx+X6wIUd4APjVU/grDFz1wY4KJEz4MnmvW8rKQbkiTMflej5f/T5Tv1irbDjMqI
-         GuOkIbWZX8bVWhTd6IADVDzGaiJoo14E/ct//TMsIza3Q0/+Xvs45BXwqwMEvAfNGCSu
-         221ARitGCMBopAC908oZXe3oV8CSU/Gf/mDGsNYftHvrxeg+3JCyt1P6ea5uZtqpc1ji
-         mXBQ==
-X-Gm-Message-State: AFq9FYI2tzpNNbO0gHzyufe9v65CUwFIWWLAHtdSG6NcKxq92nCt49dY
-	bGOKBzkJ6M7qwFAe8YhkAkq6q7xAO/g221PV3HIe3OF3nrDeoSm/aibEAEfQD3JNM+EhSQxiF8d
-	y8/fOVdDYTJWvWbqf3sQtuDCLrqBlCXYJsS1FEPTGv9km4LTnF2gUXA==
-X-Gm-Gg: AYBFou2+PUAEVyGNGzgbQqWsY/ISRWjXvM5Xc34EyxPvHrxUFUrMD+x0ekVwt093Yu+
-	pU9AIFvGVeWBXCwRA9BWM2blxLym4mcxEHufOd7QgbUAhPM7du1frshWoYSJGndQ9U9xFY74Acu
-	XNsolhS1s4jW99hfuJKkkyuENmmrb/+NyNNItV+naowKOqDbjuFtXQiVlO+QJXHJCJdCVDHbeOO
-	wk0Iy6/ZMKDYp78GnewFOIp+L4xpKyzX178my9icGSRI4+1seuzhTSg1byfp5PCtvPeKFYlgqmi
-	1ju1Gk5TZC6r2XsSLF9o+E826cGgJwmWSGPgbOfpoPjcWCOW5pJyx5CpD4i4uDJNsHo7d4dQCMJ
-	2h1ynU/M6tg==
-X-Received: by 2002:a05:690c:4d4a:b0:887:f4fc:ee35 with SMTP id
- 00721157ae682-8b07ed1fb6cmr47618147b3.19.1791926528330; Tue, 13 Oct 2026
- 14:22:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="NxTCWMhj"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+	In-Reply-To:Date:To:From:Subject:Message-ID:Sender:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=tRGzNeCb85QoX5ahl1eL3IJUP/ZUE36Fc8rnlq3bCy0=; b=NxTCWMhjVu+eV0C4AL8sPZdxDK
+	xKDFtRLAMFPOd5b7vFJYJtAr0IGh6T3uw1p+Ccuyam042N0Y8RTOzeNObrSSG/bYJhamagoOKokSj
+	mSPlAb7On27K/CvpFWGx2yBbOjJQs56SDEzdjhtpLUak38d4CFKc6VNUmSvkvhG8OlTpSYw/5CrO5
+	7U2j0B2S2c7r/NIRtknoZsb0K2dG4dV58jTd/4xGU40SC9Hvkjae/yiHQJPC3qQagYeqL8ad42LkO
+	022ZOSBvCDo39fsR6veprfHqTNsF67untn3fujlelOIVtzY2TKPKBGSgYoSKi4neqhOi9wonY752S
+	9ZkLGpYw==;
+Received: from 54-240-197-238.amazon.com ([54.240.197.238] helo=u09cd745991455d.ant.amazon.com)
+	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
+	id 1xGk7Y-0000000G0Mp-3TOT;
+	Tue, 13 Oct 2026 21:33:16 +0000
+Message-ID: <eac60eac6ad92fb6236bd4cf592819973a203a3d.camel@infradead.org>
+Subject: Re: [PATCH 03/10] KVM: x86/xen: Wait out memslot updates in the Xen
+ attribute ioctls
+From: David Woodhouse <dwmw2@infradead.org>
+To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Date: Tue, 13 Oct 2026 22:33:19 +0100
+In-Reply-To: <sashiko-outbox-170507@kernel.org>
+References: <20261013204824.454208-1-dwmw2@infradead.org>
+	 <20261013204824.454208-4-dwmw2@infradead.org>
+	 <sashiko-outbox-170507@kernel.org>
+Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
+	boundary="=-G5rzt8H46NmqehnnKyZG"
+User-Agent: Evolution 3.62.0-0ubuntu1~ppa1~24.04 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261009-send-upstream-v5-0-384af01da3ee@chromium.org>
- <20261009-send-upstream-v5-4-384af01da3ee@chromium.org> <sashiko-outbox-166154@kernel.org>
-In-Reply-To: <sashiko-outbox-166154@kernel.org>
-From: Jingyuan Liang <jingyliang@chromium.org>
-Date: Tue, 13 Oct 2026 14:21:57 -0700
-X-Gm-Features: AclHuK8vj_2CnW3lS7fdTlkJRR8RuhSwUE7H_CFag_-G2v-URCUG4IFSzD-lQgw
-Message-ID: <CAEe3GZH-QD4vj71c2AR6Y0VFhchBARBctYtfmur07nrgK5xBWQ@mail.gmail.com>
-Subject: Re: [PATCH v5 04/11] HID: spi-hid: add spi-hid driver HID layer
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org, 
-	dmitry.torokhov@gmail.com, linux-input@vger.kernel.org, 
-	linux-trace-kernel@vger.kernel.org
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
+
+
+--=-G5rzt8H46NmqehnnKyZG
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 9, 2026 at 3:42=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+On Tue, 2026-10-13 at 21:04 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [High] hid: output_report callback sleeps in atomic context
+> - [High] kvm: UAF and lockdep splat in kvm_gpc_check() due to dropped SRC=
+U lock
+> - [High] kvm: x86/xen: 3-way AB-BA-CA deadlock between srcu, xen_lock, an=
+d slots_lock
 > --
->
-> commit 954a3684cea1bad33a85c00ff6725f7553c75027
-> Author: Jingyuan Liang <jingyliang@chromium.org>
->
->     HID: spi-hid: add spi-hid driver HID layer
->
->     Add HID low level driver callbacks to register SPI as a HID driver, a=
-nd
->     an external touch device as a HID device.
->
-> > diff --git a/drivers/hid/spi-hid/spi-hid-core.c b/drivers/hid/spi-hid/s=
-pi-hid-core.c
-> > index 02a7608c4b882..fca7a44eeb9f9 100644
-> > --- a/drivers/hid/spi-hid/spi-hid-core.c
-> > +++ b/drivers/hid/spi-hid/spi-hid-core.c
-> [ ... ]
-> > +static int spi_hid_send_output_report(struct spi_hid *shid,
-> > +                                   struct spi_hid_output_report *repor=
-t)
-> > +{
-> > +     guard(mutex)(&shid->output_lock);
-> > +     return __spi_hid_send_output_report(shid, report);
-> > +}
-> > +
-> > +static int __spi_hid_sync_request(struct spi_hid *shid,
-> > +                               struct spi_hid_output_report *report)
-> > +{
-> > +     struct device *dev =3D &shid->spi->dev;
-> > +     int error;
-> > +
-> > +     reinit_completion(&shid->output_done);
-> > +
-> > +     error =3D __spi_hid_send_output_report(shid, report);
-> > +     if (error)
-> > +             return error;
-> > +
-> > +     error =3D wait_for_completion_interruptible_timeout(&shid->output=
-_done,
-> > +                                                       msecs_to_jiffie=
-s(SPI_HID_RESP_TIMEOUT));
-> > +     if (error =3D=3D 0) {
-> > +             dev_err(dev, "Response timed out\n");
-> > +             return -ETIMEDOUT;
-> > +     }
-> > +     if (error < 0)
-> > +             return error;
-> > +
-> > +     return 0;
-> > +}
-> > +
-> > +static int spi_hid_sync_request(struct spi_hid *shid,
-> > +                             struct spi_hid_output_report *report)
-> > +{
-> > +     guard(mutex)(&shid->output_lock);
-> > +     return __spi_hid_sync_request(shid, report);
-> > +}
-> [ ... ]
-> > +static int spi_hid_ll_output_report(struct hid_device *hid, __u8 *buf,
-> > +                                 size_t len)
-> > +{
-> > +     struct spi_device *spi =3D hid->driver_data;
-> > +     struct spi_hid *shid =3D spi_get_drvdata(spi);
-> > +     struct device *dev =3D &spi->dev;
-> > +     struct spi_hid_output_report report =3D {
-> > +             .report_type =3D OUTPUT_REPORT,
-> > +             .content_length =3D len - 1,
-> > +             .content_id =3D buf[0],
-> > +             .content =3D &buf[1],
-> > +     };
-> > +     int error;
-> > +
-> > +     if (!test_bit(SPI_HID_READY, &shid->flags)) {
-> > +             dev_err(dev, "%s called in unready state\n", __func__);
-> > +             return -ENODEV;
-> > +     }
-> > +
-> > +     if (shid->desc.no_output_report_ack)
-> > +             error =3D spi_hid_send_output_report(shid, &report);
-> > +     else
-> > +             error =3D spi_hid_sync_request(shid, &report);
->
-> [Severity: High]
-> Can this code sleep in an atomic context?
->
-> The HID subsystem requires the output_report callback to be asynchronous =
-because
-> it can be invoked from atomic contexts, such as softirqs for LED triggers=
- or
-> force feedback.
->
-> Both spi_hid_send_output_report() and spi_hid_sync_request() acquire a mu=
-tex,
-> which will sleep. Furthermore, spi_hid_sync_request() blocks by calling
-> wait_for_completion_interruptible_timeout() in __spi_hid_sync_request() w=
-hile
-> waiting for the response.
->
-> Will calling these synchronous primitives from the output_report callback=
- lead
-> to a scheduling while atomic BUG and cause a kernel panic?
->
-> > +
-> > +     if (error) {
-> > +             dev_err(dev, "failed to send output report\n");
-> > +             return error;
-> > +     }
-> > +
-> > +     return len;
-> > +}
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261009-send-ups=
-tream-v5-0-384af01da3ee@chromium.org?part=3D4
 
-Not really. HID core doesn't call ->output_report() from atomic context
-(LED updates are sent from a workqueue), and as noted in my reply
-on the documentation patch, USB-HID and I2C-HID already sleep in
-this callback too.
+Meh, I thought I'd dealt with all the Sashiko feedback locally.
+
+Will redo it and post v2 anon.
+
+--=-G5rzt8H46NmqehnnKyZG
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCE8Ew
+ggWvMIIEl6ADAgECAhANkOKMSmGXhF5eMl0rsRhvMA0GCSqGSIb3DQEBDAUAMGUxCzAJBgNVBAYT
+AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
+BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBHMjAeFw0yNDAzMTMwMDAwMDBaFw0zNDAz
+MTIyMzU5NTlaMGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
+AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTCCAiIw
+DQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOfSIeC0vv1xPQ+dgSxbIIrkaru6skAWJYaGFzmv
+q4Kq+2wU2jxhcWlJg/JeP5jEkq/LM3pn5aaLao79j+XRmS7J1ZpJKUODJVoM4s9MQJhTMvo4qS5Z
+S64g6QR7Obkz3I1Lr3aWeSBmDDEyzue+NKtuWZ1Cxy3RdXo/w5HgRc3l2AercOM3Gt1XonTzEtTb
+Z/Hwc0Sn9Gz8RmGRK6Ka4hVDl8q/2l110KaV233Kh5etP0csXS8MIMdVRfRu3sc5hp13DG7lCKzK
+72a2GEpI8Wpl26G6I1/LMzz/98T+FqjTqxsdquk7Cj7m2vKGLW1BorpQH7WFGPdJQXJe1hfbfiZA
+CcVdCtl4nAacFacmsiArZBfX7AQGL7isvHUwwYFEtcApyGW4p2Lt+t8nvU0CANA6BHOpOz1xOP8W
+mAESbUriIjyuTUf3fJ9oDNCurVqhASMJCDaWI3lYX/QAoiAzt6akqbbZxo2ujW7mGGqc0KxqE2cs
+h2T79v7pC8aUtHBfwNrTR19GnZVxE0eQ7ViIQhR6mpSaUQFA9sG+cmD2G8TnCgYsLa0q8De6F61a
+CBevQGHNzrbZ3JAMneveYg/Jy1XxQHDRcvrMfWKe0jjcWbdKYlaGVPm5V1ILwYz7Yv5ewo3NUrxI
+GJiywe9qPhuJSDZs7VehTuI0FxGIsgKzVjgbAgMBAAGjggFcMIIBWDASBgNVHRMBAf8ECDAGAQH/
+AgEAMB0GA1UdDgQWBBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAfBgNVHSMEGDAWgBTOw0q5mVXyuNtg
+v6l+vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEMG
+CCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURS
+b290RzIuY3J0MEUGA1UdHwQ+MDwwOqA4oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdp
+Q2VydEFzc3VyZWRJRFJvb3RHMi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUA
+A4IBAQA+b8Uw53sDspdZgukU+qzLyyHkcjlxGGhHlP+zrmDLKm1wEFvCRS2pili3Hy67i8N4N5NU
+vw5Rg6kv3lxb9S9Rktxk43k+tvm68pl7OxQE55ZjVY87P0lUPGwEqOOwLLyH02ZQcsfq5p5LrOH9
+0JvmvZ1yy73HS+VpDAqOlytE0NSvTIRqFFkKQGQwfjvtql9YflujuNNvJztjBaHKYZsnNSg+J38o
+jYq4TP3pSg3UdVH0PncVjPQyqxC9xef5Xae92Kbkzol3x7Nel3A1bwAkalrDMspvTHvey6LfiBks
+FIqviTnoy7fgjaRAJgHS+RXx/cmuRd3rUAclSVVrYu8RMIIHAzCCBOugAwIBAgIQAzUotrsybJHx
+HTjKOIVdIDANBgkqhkiG9w0BAQsFADBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQs
+IEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
+MjAyNCBDQTEwHhcNMjYwNzE4MDAwMDAwWhcNMjgwMTA0MjM1OTU5WjAeMRwwGgYDVQQDDBNkd213
+MkBpbmZyYWRlYWQub3JnMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2pYux73kdbYX
+sWF8f1u6DJP91qcqaZetsyfPkZk0B+MmXmAEv0kVes5n15V2mbDThOnpoPFly0UugQO9JYqLfrtD
+tKD5yL58fgrDB9Dw+LQikgrHafl6YSCds5AvUu/8hw2J6noKrcOLJpKlKn9Fl/4IB9Q3JIdLx5aa
+EtTqMalIPqHFOlgrJ7s+aua8xbB8YQ9ahqYBXWRJNv3P/2b1DYtdrz1oqZPE3CcB8Pc6Gf2a1Tcm
+6TAgtEx7Cf1BFcrsrMz7TWHmGQITieNb2r9UYWSc2Gp+GtYFNJCgT0JJXKUBIauPMKBLteYrL8Fo
+ff/uY44dC/mDWjdCP/5x0qelPQjlBvWdHL5zvBTOj06rJ0m3HNI/hnIcDh0Qu2j9reb9rLVcdym6
+bWmBM4uDEB8Zv9Ph0KTBFSy1IosyakuD1j1Os30EzjGfbi0EUXIvnOcYbTBAbM5UAzrxEHMhBvoX
+Pvnx+OyvjJmc9tWxTX6AcSz+m40esbT17URBeZS18afgieiikm5TynlUYP1LciR3hSgGVzvGXnKO
+02VDFR5itGWdRKZ2W5wIShNfWfhSa0D0K5UdIDt5Qc7sjzwK1Yb1sY5Tu0uA5mhIS82q1ov83uxB
+sFkriNnhGv/M1NCDVLBiOMsHu73qUM+yKmgKLwF9Hfn9WI25glbAMI4S5r3hYzcCAwEAAaOCAfcw
+ggHzMB8GA1UdIwQYMBaAFPebok7Tl8X0NA9DDoGFzpGTMq/5MB0GA1UdDgQWBBRcYhqbcGzn1jrT
+JOZaB8O7qllDpzAwBgNVHREEKTAngRNkd213MkBpbmZyYWRlYWQub3JngRBkYXZpZEB3b29kaG91
+LnNlMBQGA1UdIAQNMAswCQYHZ4EMAQUBAjAOBgNVHQ8BAf8EBAMCBeAwHQYDVR0lBBYwFAYIKwYB
+BQUHAwIGCCsGAQUFBwMEMIGpBgNVHR8EgaEwgZ4wTaBLoEmGR2h0dHA6Ly9jcmwzLmRpZ2ljZXJ0
+LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsME2gS6BJ
+hkdodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZT
+SEEzODQyMDI0Q0ExLmNybDCBjQYIKwYBBQUHAQEEgYAwfjAkBggrBgEFBQcwAYYYaHR0cDovL29j
+c3AuZGlnaWNlcnQuY29tMFYGCCsGAQUFBzAChkpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20v
+RGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZTSEEzODQyMDI0Q0ExLmNydDANBgkqhkiG9w0B
+AQsFAAOCAgEAocabrh1cPd5s3vY5rnlBVQSTc7zs2ZWs67dAIltR+05WELrYClVzzUhMs/LOJPlr
+EUo45UDDomXq38DxFepaPd9+iNLjXfn33EX/IG44j04lU/oF/Rg9VeQILkYLbCZ/x9wOjNHZc4SN
+ydY7Dhvf/sT5aBz88u7D5+azZJ7Qf1U57wYseCH1Mt0nDrtr5y19IJ8D9xJJ33RFL6vfpHZBBAQ8
++3RqkKNxLoV2aFvQhxdhjNLDqTv3LjUIdicwPraN7JkxEu7CV2Lka7eRqJgkWL7SK0YmBjGpRafs
++icP/ON5RCCKTTb6VlX8eTG2sJJfsFhvJNCCt6xexbWzWtIrfP7NvPBvwBB737AyEGBZkS5aNizT
+McURJGTv9UKvBh1LF/+tNhYtLvPCN7oecGzhCHht9jcwSkygTo3Y6YlK3QgOu+ncmiBbfeuwlLZ1
+LxbYvG6hgNqXv7u6YyADbYajAQJXJ2OQen39pm3Q/AQSyLYG+B8lDglWsM8tYXPlEdrYJcksGK6F
+nqIX6Bumn43rBooLJdiZp4WmfWdL2pxe+LxRDjprmqu1WprixDxULSTOKJZoqTlugs6y3Bc+if+s
+gHnBBtz9WQ6MtPHkh7zONDAFIKcBmv8OqPQCx0F3Wv3OEybwMpXx0OsKgK8wLldaX1pXcMuyDgTL
+Sqs0AV0OHUgwggcDMIIE66ADAgECAhADNSi2uzJskfEdOMo4hV0gMA0GCSqGSIb3DQEBCwUAMGIx
+CzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQg
+QXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTAeFw0yNjA3MTgwMDAwMDBa
+Fw0yODAxMDQyMzU5NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqG
+SIb3DQEBAQUAA4ICDwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZe
+YAS/SRV6zmfXlXaZsNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2z
+kC9S7/yHDYnqegqtw4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qG
+pgFdZEk2/c//ZvUNi12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41va
+v1RhZJzYan4a1gU0kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0c
+vnO8FM6PTqsnSbcc0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PW
+PU6zfQTOMZ9uLQRRci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXt
+REF5lLXxp+CJ6KKSblPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQr
+lR0gO3lBzuyPPArVhvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7Iq
+aAovAX0d+f1YjbmCVsAwjhLmveFjNwIDAQABo4IB9zCCAfMwHwYDVR0jBBgwFoAU95uiTtOXxfQ0
+D0MOgYXOkZMyr/kwHQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3
+bXcyQGluZnJhZGVhZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEC
+MA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgakGA1UdHwSB
+oTCBnjBNoEugSYZHaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcyU01J
+TUVSU0E0MDk2U0hBMzg0MjAyNENBMS5jcmwwTaBLoEmGR2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNv
+bS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsMIGNBggrBgEF
+BQcBAQSBgDB+MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wVgYIKwYBBQUH
+MAKGSmh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNB
+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
+W0xUkZ+hDHtzsH0O0YqJD1IAAAAAAAA=
+
+
+--=-G5rzt8H46NmqehnnKyZG--
