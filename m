@@ -1,115 +1,131 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A20485518;
-	Tue, 13 Oct 2026 06:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD80339890A;
+	Tue, 13 Oct 2026 06:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791872739; cv=none; b=oafCnu936hNeHhj2JmeN7a/Wo5ebZV6vsJQIgUmNy1PFBxpMCcqByHf2FrRCmK/OcKvF5AdEK5M9eZw0PMbFOqJ3oeFBbgZhmSxKmJwPiX78AGoWK8vd/AWFJgj7X1FrhmAF5OexNbzVjV8oFf6yGtJP1kzTIDluNiAPe0llwsM=
+	t=1791874007; cv=none; b=bbJCcZHMYKrLPT8ud1jplQL3GAx0EIqT4Zy+VvTtm9URrtNqr/QGmaQ6uPxPrd3cl7SXeK+UWfSg4OkXvsQ1cm9Z22sEGdIQfn2Rjpdu352SX8XjBKVLATIt3fLahNVJA0i0wGqpeVbUt5tEREIJpvYKmKH/J/wkGYhR4mlCOpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791872739; c=relaxed/simple;
-	bh=qrZLh87ur3FkaGxrB3RPum5lo1hDfJXAhMC/MOhTpRs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ELtx7bgWVH8IR6dOYYHWcqqPMRGBr/47++M1JZ9GDHqmlMbW8Y/771eX987qaXOMtJS0e/dHh22QqwcqR8oyWtm/9r25FT5P2vVCpLvQ3SQat9PbGhUj+s7wLlJ7oU6uFN5kscBbEPmzBinJhHGNpU8J3SZO5/CXKSYPq9X30oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vf9pupUx; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791874007; c=relaxed/simple;
+	bh=pH93kqBmOwBI52TYN3NXCYhYrkC2g7AYW458mWnIn8c=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=m1OpTVuWz1o/Osm8bOF37Vaa1sNJjm9DOQ8u3q9bvCHyhrxJh03LiN2XKDZRgQHGulMA8gsL+ZLeCD3vpmcMpZVmNJe8jbmPg379la54JgKnS/UImO3Tz7exViZ17nQeoBT1A8JQeSBWtuoetO26hwKjnkNZIEbfDm+zD/PEwXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kJwA7B9U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vf9pupUx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FB91F000FF;
-	Tue, 13 Oct 2026 06:25:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kJwA7B9U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52B91F000FF;
+	Tue, 13 Oct 2026 06:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791872738;
-	bh=SgEkBOwLkQS74ZX4hqcdr3y7JHHJf27TkH4XNjPv/y8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Vf9pupUxXxYpnDEGYIKlhLZ5i1E8RK9junDrzRnJnsJ26/XHYgQ8+N88MiIbFg7Bh
-	 SXMaadFd/kAhZ8BhlKzNpk8+fiPNRxwudxHpQNYaMhbHUcEO7F4g7Up6KoqhsNSeny
-	 8hPNfK8Wwk1YFIaZ3i72JNItD3kUeLAUbWnMFKsOg9puBd4V9LflQ1HpiTDKsnSWog
-	 B4EbcpBIwoHzOPLkksqi4I8zxR0pnM6vFRxdDYKaZqgJrpiZ/v3oPOG0nP5cA1ev3x
-	 6LwvUiWl+CPpdSZy3JihZcAd7Vx8tw0pSxIK3+S6+LIsFSLsxgpQcbmEpXaSBxnUhm
-	 AB5mqIJgciuiA==
-Date: Mon, 12 Oct 2026 23:25:36 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v3 4/4] perf test: Update PE file test for other locations
-Message-ID: <as3O4IjPoB9v_Srl@z2>
-References: <20261012235938.87912-1-namhyung@kernel.org>
- <20261012235938.87912-4-namhyung@kernel.org>
- <sashiko-outbox-168781@kernel.org>
+	s=k20260515; t=1791874006;
+	bh=2JJcHZm2wlX4VUk8I+EW0Bm36MPCTKsLvSSStPnKLN0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=kJwA7B9UiFHkL/DnvAVg/frvpkp4oL/S9lgGhHVKRZzRt5WsKpMe/3OMvBVw+Fluf
+	 A5YhHmVw1ksQsazXm8wt2EoWcot4gQsM/J+/Ah9xOtXFeGKWFsz0/H8bbJz0UiDZ5a
+	 A6TgRhf/rHEVy54YT+pySEx7GNZbrgBDYwnOSjRbgj/FCtAZV+1zRqRYabFA7/QBSz
+	 A1fKwzqL/jhxJsO3UgLFvvC/q7z1YTi8J05eee5nu2E8hvv2/3llFwjtzP7Yedrm30
+	 KD7tN4ClcHEWon5AWGuTfrEb/SuYs1hEJyxcJnRACCOyDQ6xvE54dI4E4HwHbUZ4M+
+	 4kQGg/V6uNXFA==
+X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+To: sashiko-reviews@lists.linux.dev, linux-coco@lists.linux.dev,
+	Jason Gunthorpe <jgg@nvidia.com>
+Cc: media-ci@linuxtv.org, kvmarm@lists.linux.dev,
+	dri-devel@lists.freedesktop.org,
+	Oliver Upton <oupton@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: Re: [RFC PATCH v8 08/14] swiotlb: Align shared IO TLB pools to the
+ shared granule size
+In-Reply-To: <20260924102254.60C431F00893@smtp.kernel.org>
+References: <20260924100529.1398790-1-aneesh.kumar@kernel.org>
+ <20260924100529.1398790-9-aneesh.kumar@kernel.org>
+ <20260924102254.60C431F00893@smtp.kernel.org>
+Date: Tue, 13 Oct 2026 12:16:39 +0530
+Message-ID: <yq5ao6cyqer4.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-168781@kernel.org>
+Content-Type: text/plain
 
-On Tue, Oct 13, 2026 at 12:08:54AM +0000, sashiko-bot@kernel.org wrote:
+sashiko-bot@kernel.org writes:
+
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] perf test: unconditional leak of get_argv_exec_path() and NULL deref
+> - [Medium] mm: infinite loop in swiotlb_init_late() when remap fails
 > --
-> 
-> commit 9107444f4267d3db60d0e4c357f3b28957bdb1bc
-> Author: Namhyung Kim <namhyung@kernel.org>
-> 
-> perf test: Update PE file test for other locations
-> 
-> This commit updates the PE file parsing test to check multiple directory paths
-> for the test data. The logic is modified to try other paths similar to the
-> shell_tests__dir_fd() fallback mechanism.
-> 
-> > diff --git a/tools/perf/tests/pe-file-parsing.c b/tools/perf/tests/pe-file-parsing.c
-> > index 3979f38bf127c..190520ffc3ad6 100644
-> > --- a/tools/perf/tests/pe-file-parsing.c
-> > +++ b/tools/perf/tests/pe-file-parsing.c
-> > @@ -74,17 +74,20 @@ static int test__pe_file_parsing(struct test_suite *test __maybe_unused,
-> >  {
-> >  	struct stat st;
-> >  	char path_dir[PATH_MAX];
-> > -
-> > -	/* First try development tree tests. */
-> > -	if (!lstat("./tests", &st))
-> > -		return run_dir("./tests");
-> > -
-> > -	/* Then installed path. */
-> > +	const char * const tests_dirs[] = {
-> > +		"./tools/perf/tests",
-> > +		"./tests",
-> > +		"./source/tests",
-> > +		path_dir,
-> > +	};
-> >  	snprintf(path_dir, PATH_MAX, "%s/tests", get_argv_exec_path());
-> 
-> [Severity: Low]
-> Can this code in test__pe_file_parsing() lead to a memory leak and a potential
-> NULL pointer dereference?
-> 
-> The get_argv_exec_path() function returns a dynamically allocated string that
-> must be freed by the caller. Passing it directly to snprintf() inline causes
-> the pointer to be permanently lost.
-> 
-> Additionally, since the patch moved this snprintf() call before the directory
-> search loop, it now unconditionally allocates this string even if an earlier
-> directory in the tests_dirs array would have succeeded.
-> 
-> Furthermore, if get_argv_exec_path() fails under memory pressure and returns
-> NULL, snprintf("%s") could crash on strictly compliant libcs like musl.
+>
+> commit 9e7f1b72520615870ee21508117e4c5c7e0eb684
+> Author: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+>
+> swiotlb: Align shared IO TLB pools to the shared granule size
+>     
+> This commit aligns and sizes the early memblock pool to the common CoCo
+> shared granule, leaving the slot count unchanged. It replaces the default
+> and dynamic pool set_memory calls with helpers to keep alignment validation
+> and architecture dispatch centralized. Pages are intentionally leaked if
+> their private state cannot be restored safely.
+>
+>> diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
+>> index ded7016a46a71..394db93b7eb96 100644
+>> --- a/kernel/dma/swiotlb.c
+>> +++ b/kernel/dma/swiotlb.c
+>
+> [ ... ]
+>
+>> @@ -578,7 +578,7 @@ int swiotlb_init_late(size_t size, gfp_t gfp_mask,
+>>  		swiotlb_adjust_nareas(num_possible_cpus());
+>>  
+>>  retry:
+>> -	order = get_order(nslabs << IO_TLB_SHIFT);
+>> +	order = get_order(ALIGN(nslabs << IO_TLB_SHIFT, cc_shared_granule_size()));
+>>  	nslabs = SLABS_PER_PAGE << order;
+>
+> [Severity: Medium]
+> If remap() fails later in this function, nslabs is halved and the code jumps
+> back to the retry label to try a smaller allocation:
+>
+> kernel/dma/swiotlb.c:swiotlb_init_late() {
+>     ...
+> 	if (remap)
+> 		rc = remap(vstart, nslabs);
+> 	if (rc) {
+> 		free_pages((unsigned long)vstart, order);
+>
+> 		nslabs = ALIGN(nslabs >> 1, IO_TLB_SEGSIZE);
+> 		if (nslabs < IO_TLB_MIN_SLABS)
+> 			return rc;
+> 		retried = true;
+> 		goto retry;
+> 	}
+>     ...
+> }
+>
+> Does the new ALIGN macro at the retry label risk inflating the halved size
+> back to its original value if cc_shared_granule_size() is >= 2MB?
+>
+> If so, this would restore nslabs to its original failing value, overriding
+> the shrinking mechanism and creating an infinite loop.
+>
 
-These are pre-existing issues, will fix separately.
+We don't expect cc_shared_granule_size() > 2MB. But i can also add a
+check. 
 
-Thanks,
-Namhyung
-
-> 
-> >  
-> > -	if (!lstat(path_dir, &st))
-> > -		return run_dir(path_dir);
-> > +	for (size_t i = 0; i < ARRAY_SIZE(tests_dirs); ++i) {
-> > +		if (!lstat(tests_dirs[i], &st))
-> > +			return run_dir(tests_dirs[i]);
-> > +	}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261012235938.87912-1-namhyung@kernel.org?part=4
+modified    kernel/dma/swiotlb.c
+@@ -719,8 +719,13 @@ int swiotlb_init_late(size_t size, gfp_t gfp_mask,
+ 		free_pages((unsigned long)vstart, order);
+ 
+ 		nslabs = ALIGN(nslabs >> 1, IO_TLB_SEGSIZE);
+-		if (nslabs < IO_TLB_MIN_SLABS)
+-			return rc;
++		if (nslabs <= IO_TLB_MIN_SLABS)
++			return rc;
++
++		/* Avoid infinite loop */
++		if (WARN_ON(nslabs < (cc_shared_granule_size() >> IO_TLB_SHIFT)))
++			return rc;
++
+ 		retried = true;
+ 		goto retry;
+ 	}
