@@ -1,116 +1,123 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-220.mta1.migadu.com [95.215.58.220])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F4F3F39ED
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 14:25:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58DF502556
+	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 14:26:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.220
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791901529; cv=none; b=CvdoC+dVs4fDo/qXSB5O4yYX90E5zwa3EK7hDIFujoWz7qMqTX9xYRx1hZhV6v14mBoADxzoZ4ptLcgpwxS8UH7OKjk1InqtKwh6tjFR0F0X6BAVCCJ5VGK6MGsy178XREoX0wKgacQ/jbnKC5ut51/mC9ZcXu7LkM16/BTn8uI=
+	t=1791901566; cv=none; b=ivjrNMxQA4Xqc+4T9Z/qIu6YbvKBVUvO/3SFxHru+QbBUO0TFNc0NNGROtr+/FOulDsETMH8syYj3NIlQBAUPS0wAz8hTvZv+LnCFy/5G8q9BjFNTIX27fzOhbq0pO+vJrKhsqtvHHWVuDz+K2yynGifsOZoW7+DPOtS2wGzhSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791901529; c=relaxed/simple;
-	bh=W/jSc+WrS1ATArodzscBQo4guiiRlHRB+HWRJS+e0pY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LsNMAfxjexqfuY8jgaYDDmdC88PlNMr4UfFuod7nB9+wFJrPlBtsCjNM7uvnTykfDmL0isj+enGTNJOXw8oqKcFIXs0G7+TMQC/OdRvxSAqzemPDB+Zg38l8Zq9SeQ4b4sLWpdM01lNtqJvDGXIRbmfNfSheTtZw9Qt+xl7rOIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WKMtzjbJ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791901566; c=relaxed/simple;
+	bh=NyLlmoJrUzrbPSJQk0ZNFoepQqGUbwDRoFt1ZJcd/EM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bM3LrsZdjLQxjcDu4Z86I/dG9ry8ZqMfNWvkvAPDzrSMzkU76ubyPOS3IPoNWEANa+LgwIqjBmvW87U4oZhL6bGivNLHHUCiduz3aidjXG9o0/nmTRwlTJUhO9Sj93AEZS08XH20xQ9xciMdEljmKCpDjLSXeta0ThAt/zTMmwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Yg+CTecB; arc=none smtp.client-ip=95.215.58.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WKMtzjbJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9FA1F00893
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 14:25:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791901526;
-	bh=88+HFEK0E176EzbC4QEVRjmLfytSU2OlquqEF4DJOMA=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=WKMtzjbJSNNJ1SVL9L1NKLqqkQnmDX9JXNTj1JtwCbqQWCOJolfN/QlntsSGE6zaZ
-	 UL5zOcrdSc2/gWROSIVlFzg3f3TS5fA5QlmFjFr0sT6fq3dPOEfbJRkYlZA+OcY0KJ
-	 dS3PMXjrafcvAmQbOAwynx1b33lnwcGY+lmKP33VFcDVHhGUPpwWZ744ef/FxFd0To
-	 bmlO5SALhO5h8bW4lQwiWfHIEWvIh74YhTAKuvcgwUNPfYenOdQ1TYAumD9JcYBpwj
-	 +Ih7vTGfPOxyWAs7onK/YbfE6sDMQRRL2usiYyaPPxEN2tgM3gD/SqstMRGAgekB4U
-	 CJ+8WIW1Z8Nbg==
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6b1aa4d71e7so2179150a12.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 07:25:26 -0700 (PDT)
-X-Gm-Message-State: AFq9FYKbtLgdF13RAlmMzRgYTZaUnEQFLuTI6nNpbiZh41CoUk1PL/cV
-	VKRrEkOauk+s/ypMlkH592RKYNuH4pI0/rKMnkYQwmd6lwulJpuKfaPRBltEfPgjfu/LaPjL4uE
-	hbOgQenW2sN9PiwAvPm6DkqP76WhSr88=
-X-Received: by 2002:a17:907:d27:b0:c2e:801e:48c8 with SMTP id
- a640c23a62f3a-c31a9a04df1mr1215213666b.5.1791901525645; Tue, 13 Oct 2026
- 07:25:25 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Yg+CTecB"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=NyLlmoJrUzrbPSJQk0ZNFoepQqGUbwDRoFt1ZJcd/EM=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791901561; v=1; x=1792506361;
+ b=Yg+CTecBAyt/B5NexlmwMiE1DkpLv4NKVOOqfBXnmnwplVYiruGJVjX/MqvDf8Fb9n1xssCP
+ kcoV33HZiiVejTap9lMLRGk2GzFHXG5hBa7JnHC/LWUuHCEp7AyBwaWeUGlO7msYHkwer1DFuO1
+ l8jkfBMyZUFOw7pIhMFoNXt8=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id e0d2199c220c93f6;
+	Tue, 13 Oct 2026 14:26:01 +0000
+X-Mizu-Trace-ID: e0d2199c220c93f6
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <4c2cf439-63b2-43c8-87f9-7c51125c3cc7@linux.dev>
+Date: Tue, 13 Oct 2026 07:25:59 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261012233638.2546339-1-yosry@kernel.org> <20261012233638.2546339-14-yosry@kernel.org>
- <sashiko-outbox-168763@kernel.org>
-In-Reply-To: <sashiko-outbox-168763@kernel.org>
-From: Yosry Ahmed <yosry@kernel.org>
-Date: Tue, 13 Oct 2026 07:25:12 -0700
-X-Gmail-Original-Message-ID: <CAO9r8zM-MTNYcAcT_v4gb1YJi+YduSFBudkK6nB9gDoeq-Q8zw@mail.gmail.com>
-X-Gm-Features: AclHuK8UCS2S1Vamwa_ZokuqDc2aH1k3NkAFdmQpRzhMH4KOK2K87H-0Py9YSys
-Message-ID: <CAO9r8zM-MTNYcAcT_v4gb1YJi+YduSFBudkK6nB9gDoeq-Q8zw@mail.gmail.com>
-Subject: Re: [PATCH v3 13/27] KVM: nSVM: Add a placeholder ASID for L2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v2 09/11] selftests/bpf: Test trampolines on more
+ BPF functions with stack args
 To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: bpf@vger.kernel.org
+References: <20261013003429.1853052-1-yonghong.song@linux.dev>
+ <20261013003515.1860439-1-yonghong.song@linux.dev>
+ <sashiko-outbox-168817@kernel.org>
+Content-Language: en-GB
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <sashiko-outbox-168817@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Oct 12, 2026 at 5:01=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] kvm: nSVM: missing vmcb_mark_dirty() when updating L2 ASID in SE=
-V migration
+
+
+On 10/13/26 2:51 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] bpf: check_unreliable_func_args incorrectly counts slots, allowing corrupting trampoline
 > --
 >
-> commit c8f241845a6790f522df58195167e95ce8fea046
-> Author: Yosry Ahmed <yosry@kernel.org>
+> commit c87f5bcaff5cc54c864fa434bbfefe8d6bff2bbc
+> Author: Yonghong Song <yonghong.song@linux.dev>
 >
-> KVM: nSVM: Add a placeholder ASID for L2
+> selftests/bpf: Test trampolines on more BPF functions with stack args
 >
-> This commit adds a placeholder ASID for L2 to prepare for future changes
-> where L1 and L2 will use different ASIDs. It also updates the SEV migrati=
-on
-> path to copy the new ASID into asid02 and vmcb02 if nested is already
-> initialized on the destination vCPU.
+> Add two functions to the BPF target program of the int128_tgt_prog test.
+> callee_split() takes a struct holding an __int128 after five u64s, so
+> on x86-64 it is passed split between r9 and the stack.
 >
-> > diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-> > index 99577859e1aab..b2e6acfbb081f 100644
-> > --- a/arch/x86/kvm/svm/sev.c
-> > +++ b/arch/x86/kvm/svm/sev.c
+>> diff --git a/tools/testing/selftests/bpf/prog_tests/tracing_struct.c b/tools/testing/selftests/bpf/prog_tests/tracing_struct.c
+>> index ad46eabe784f8..e68fd5627ec1c 100644
+>> --- a/tools/testing/selftests/bpf/prog_tests/tracing_struct.c
+>> +++ b/tools/testing/selftests/bpf/prog_tests/tracing_struct.c
 > [ ... ]
-> > @@ -2041,6 +2041,15 @@ static void sev_vcpu_migrate_asid(struct vcpu_sv=
-m *dst_svm,
-> >        */
-> >       free_asid(dst_svm->asid);
-> >       dst_svm->asid =3D asid;
-> > +
-> > +     /*
-> > +      * If nested is already initialized on the destination vCPU, also=
- update
-> > +      * the nested ASID to match the new SEV ASID.
-> > +      */
-> > +     if (dst_svm->nested.vmcb02.ptr) {
-> > +             dst_svm->nested.asid02 =3D asid;
-> > +             dst_svm->nested.vmcb02.ptr->control.asid =3D asid;
->
+>> +/*
+>> + * A static function whose BTF is unreliable gets a trampoline that only knows
+>> + * of the register arguments, so one taking stack arguments must be refused.
+>> + */
+>> +static void test_tgt_prog_unreliable(void)
+>> +{
+> [ ... ]
+>> +	err = bpf_program__set_attach_target(tracer->progs.unreliable_entry, fd,
+>> +					     "callee_unreliable");
+>> +	if (!ASSERT_OK(err, "set_attach_target"))
+>> +		goto out;
+>> +
+>> +	err = tracing_struct_int128_tracer__load(tracer);
+>> +	ASSERT_ERR(err, "tracer__load");
+>> +	ASSERT_HAS_SUBSTR(log_buf, "unreliable BTF and stack arguments", "log");
 > [Severity: High]
-> Does this code need a call to vmcb_mark_dirty(dst_svm->nested.vmcb02.ptr,=
- VMCB_ASID)?
+> While this test accurately checks callee_unreliable() which takes 6 scalar
+> arguments, is there a potential issue in the verifier's
+> check_unreliable_func_args() when dealing with struct arguments that occupy
+> multiple slots?
 >
-> If userspace creates a non-SEV VM, runs it in nested SVM (allocating vmcb=
-02
-> and caching it on a physical CPU), and then uses it as the destination fo=
-r
-> an intra-host migration, the migration path updates the ASID here.
+> In kernel/bpf/verifier.c:check_unreliable_func_args(), if
+> btf_distill_func_proto() fails (e.g. because an argument is a struct larger
+> than 16 bytes), the fallback path counts the number of arguments instead
+> of 8-byte slots:
 >
-> If the vCPU is scheduled back onto the same physical CPU, pre_svm_run() s=
-kips
-> vmcb_mark_all_dirty(). Since the VMCB_ASID clean bit might still be set f=
-rom
-> the last exit from L2, could the CPU ignore the new ASID in memory and
-> incorrectly reuse the old non-SEV ASID from its internal VMCB cache?
+> 	if (btf_distill_func_proto(NULL, btf, func_proto, tname, &m)) {
+> 		/* at least a slot for each argument */
+> 		nslots = btf_type_vlen(func_proto);
+> 	}
+>
+> For a BPF subprogram taking a 32-byte struct by value and 4 other arguments
+> (5 arguments total), the actual slot count is 1 + 1 + 1 + 1 + 4 = 8 slots
+> (meaning 3 slots are on the stack). But the fallback calculates nslots = 5.
 
-If the migrated SEV has nested enabled, restoring the nested state
-should mark vmcb02 dirty in svm_set_nested_state(). But yeah we should
-probably mark VMCB_ASID dirty here. Not sure if this is worth
-respinning for it tho.
+The compiler should already change 32-byte struct to a pointer to struct,
+so the actual slot count should be 5. So we should be okay.
+
+>
+> Since 5 <= MAX_BPF_FUNC_REG_ARGS (5), check_unreliable_func_args()
+> incorrectly returns 0, permitting attachment.
+>
+> The generated trampoline will not save or restore the stack arguments.
+>
+> Does this cause the target BPF subprogram to read uninitialized stack
+> memory from the trampoline frame as its arguments, leading to data corruption
+> and undefined behavior?
+>
+
