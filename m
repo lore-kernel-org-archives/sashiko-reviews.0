@@ -1,213 +1,282 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED490415B8D;
-	Tue, 13 Oct 2026 22:02:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791928950; cv=none; b=OWwJZ/NDu0nW+oAYsJbkXoGe/8j5/b7FmY3//hmz41F7XpFp+dA1X+ZI9vZGUGmEnOMEANhuX0s2KWoPrcLeEhEpuzBkekqMDcp0Rn31dehBnQHT+7AF4wJsDyaX3tuRzu8O5gsmX1Vc1EyagSiZB59joRnZc6PKUoU4x0PVIbE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791928950; c=relaxed/simple;
-	bh=OK/EsuNv00L0Y4JX482L+kf0TNIBxs4e6ZbS2ZT12Pk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VMMJCg/9lkilrTUXgzMX+NnO9hwj6BQIEEENyl3YGl5IueK0oTMs7i3LKq7yGNIhUHRDXd9/OSICn7McbsSXOsRf5ZRC2pbtRVWMef65mVgYeCo/IuzEi8IJFOKG6VmMz90odm+XHrDUxmCs2rJKkbL8ixfj536l5HgdYKAIjX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=NNhC4EA1; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89661450415
+	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 22:07:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.180
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791929236; cv=pass; b=mSJl7uNaWzdJmDxehMsZTzlho4ls5pskxsZiGVP3zMtwICwFM1lNWjngHtL4AlbqsXoSm+aZrQvRgSjrhiL2sa01fkHXdxXGQHAP/ooTpNiU/d9+g2M6EjCT93fBflftlWOjtLHAAd5Fy5jeIFGr4G2UoBbQctQKZ4AsVlRgF88=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791929236; c=relaxed/simple;
+	bh=t3LBPAFHnhQ1u7O0ECQtw6w9DPC/4CEOsts9RgS3xwo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gjyLC5wVT5X9Lu0/HnqcgfXNa/iegX4ZesEZqwnQLI9iAtn5sQ6hVIwzfAqM+BvcZeCoNaxdfrloYrZA20MxSL3AzThBEkt2QTb0kMUfsXxLxfv4J+9df37zJFC1KTMuH0ilvP0K6SIE3AwiCjZBH88RfiW1iuevBHrqsH1plSE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=YQJgwxdO; arc=pass smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="NNhC4EA1"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69DLqj2u2017848;
-	Tue, 13 Oct 2026 22:02:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=NHnOFQUdTE+bIspnZ6rqBCWheBXRes
-	FS1mxh8ZLb4Dk=; b=NNhC4EA1pmMCvivmaJwIa9acUQMNyD3pdKoP+ZiJHsOiGw
-	HiKUES/DSF3QuZvzewr/Z01u3vQlLlyq4+0yTR9fPDWGREthRXrhJ1WTYAHdKz+A
-	RzSLM6ghEgGczQ1swYDVuPgkkBe8baVi2fn2QDMvM9X/qV9vS1BBX7Ksqh4kPlcp
-	8N3xEHIYHtTixUM+VkMLg3y6PB1Vi10cfbCGhPx8jiF4UFBg0y9wXAHZLmt9NJFG
-	CpjqMFtLCqCq253bRKt0Mtr3ox1UV0Nqr10fkOF36uD/uYNRDvgPjqwlltr9Qbam
-	k5iGJot2DKGEcSCs7q2PBH+CLYU7RCcIAj/mVk5w==
-Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dugh5vb-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Tue, 13 Oct 2026 22:02:26 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69DL5lF73303974;
-	Tue, 13 Oct 2026 22:02:25 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
-	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h9qb6sxp0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 Oct 2026 22:02:25 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com [10.241.53.105])
-	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69DM2PeP27066982
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 13 Oct 2026 22:02:25 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 5BFED58055;
-	Tue, 13 Oct 2026 22:02:25 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4045E58059;
-	Tue, 13 Oct 2026 22:02:25 +0000 (GMT)
-Received: from d (unknown [9.16.59.154])
-	by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTPS;
-	Tue, 13 Oct 2026 22:02:25 +0000 (GMT)
-From: Dave Marquardt <davemarq@linux.ibm.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v13 10/11] scsi: ibmvfc: register and use asynchronous
- sub CRQ for events
-In-Reply-To: <sashiko-outbox-163319@kernel.org> (sashiko-bot@kernel.org's
-	message of "Wed, 07 Oct 2026 19:42:45 +0000")
-References: <20261007-ibmvfc-fpin-support-v13-0-b816abfa4fcc@linux.ibm.com>
-	<20261007-ibmvfc-fpin-support-v13-10-b816abfa4fcc@linux.ibm.com>
-	<sashiko-outbox-163319@kernel.org>
-Date: Tue, 13 Oct 2026 17:02:24 -0500
-Message-ID: <87ik35b6of.fsf@linux.ibm.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="YQJgwxdO"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-8726acc5eadso27649937b3.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 15:07:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791929232; cv=none;
+        d=google.com; s=arc-20260327;
+        b=G3Yudcb0ooUOHfnT3U64zpIhTKP/JyhLhl8urgKW96KRZeCgawwrCJl64xLXiWsUCT
+         tZOLmC35a/9HUBsZQFN2R4uh9rEY3nAV7QMLHTakUlIixzp1o19XtPnRm9j2yfrc86IJ
+         aApUOc/JnAXGIWCm9E14V3z10EdaGZ6ekBHadGsTJKuw3VZkgOt0RCjo/QzgMzTh2LZ6
+         d9zbmD+OUpRzEY111XQPsz4qfJ+bWc2hz9cMFRxoFHIrQ9SuQ0z9D6cJYXAUCPeavXrW
+         xaphvMyW6HeLMkI8NUUC+Fc7H9LTBVqLwT3ZTkxp/RbD7JiuvecOTOPoyRqWLCUZc6sk
+         dZ8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=3V04dj+1E4Q2ne6jooiMIXl4K+a/cJClSlFVSPgO3gA=;
+        fh=ewVYb1buN4xdRIlKTNNvXszcZ13tdJXwh5m2LoMQFCs=;
+        b=L1Ks8opXv5HI8WeUDaHeExZvcop3TO6XzvUQ2cDYoK3kGn8045ZR3HeCHwVQOETydr
+         yf3lbE6k2yAG1X5M61TA7ORgRNnlvhJMSEm8YmfLTVNsUZ2F9lF65uZfyAkfGSNYKNY/
+         nR3y0I+uiAZGjZm6skRuObSGUwSxlLtk8++j7UvDfwYyT86p91skADDAGIeeEtEMSEUh
+         cN38osDnwQVBzpVXrAkkQSQHffZ7RQMtLtRy66Nh2jC0FtvDsbeygzoabERfzH7IL6ut
+         3d+35KeSPS9pPTNoBz5qV7aRtB9cUjAbRl2JAyf4Rwqkb4H8QwdGc8/2pOD0mLbPktfw
+         JMLA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1791929232; x=1792534032; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=3V04dj+1E4Q2ne6jooiMIXl4K+a/cJClSlFVSPgO3gA=;
+        b=YQJgwxdOH0Ng8AaTtSrIloNaN2oVCqDmLnr7SdrL7CaU8BK1ONiD2NfiGS5JwglTwT
+         Tl9upnZUzY89bekMWa3LLuTJKwKp5Nrd9dlIVLJ9UO9FH2W+JMMQe30/lWpzHzlRuzU/
+         DPF42/02VCpPIUD9bE8EkvA6c8ZFNU5/r1YiE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791929232; x=1792534032;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=3V04dj+1E4Q2ne6jooiMIXl4K+a/cJClSlFVSPgO3gA=;
+        b=iaud+mp41nB0cSIPYff8qMZBnC9ordUkZoenJW7Zbc+LaHeSnw3OeWBpxc3dhzarSs
+         KM/CDR34WPzCIgrIh6J1lUgMx5DtTDvDF16MQ5gOeTymEBiiwGpG+BCuir3EctMFaPvs
+         X8B5BnQ6BBEccUrXdVihIp3B/9hIDUbZHhdP+AZGzje9pLTwwm/wbHsERCpUHZ4aQY4p
+         mghxezl03jXGNkbuShsw4H4ti/LTpb6WIy4J2g1lxfd492HDuUswM+mFrmWNRErZSlPv
+         sv+AGxRh38D4HMNppKNATFVA/G7IEf3G6b6afYqVrgFsDr9n4H9ZgC7pFChxspvZ79mh
+         eahg==
+X-Gm-Message-State: AFq9FYI7gcdaRrnNiiq9EnDwGlyB1TFdPoxE6vEoByURTd60/vpkas4v
+	q0tzvIxVznVJNQIONSHqE51Dbi1KhZM9nJ+mORRWyIczqIXLngS1kiDRDucqbW3+ZbP5GzSYctA
+	bL0kTnIwDe8O1gUGJmWiQqzzVnniCSDPGWG9q+lvRaTmVoINKBNG/3Q==
+X-Gm-Gg: AYBFou027rbCapdejCPzpvpteww3jC/mHw7EekHsqdmUkhj7vvQcrqOQntgb9Vpigh7
+	N9+8nxTzBxvV19DiFPQCKF9/CdCxvdB3ayNRxMoTHTH4A0zfZOjgdmxsyik41YspUo+6ftwEJHr
+	5gboa1yVkYXKn9IbQJNKSYcdLtn5D2Tal9G01AFtPYN312KUylWKFDC1EvqgKc08GYe2pkgUNyA
+	HE9QjIRD6PJn541Ob6r/cDfFRAy9wJmliUs58D4qGdTC17zahqIMpGdJUJjTeqppM5nbOKjSZgf
+	6SpvadcjRs9kt8fe0noOGPwIciM+uQIzzcA398l8BYjyBids19/PYkr/WsnjVf2V+LRMT+EQo4x
+	nf+9aMMivyoA=
+X-Received: by 2002:a05:690c:112:b0:8b0:b12d:6c3c with SMTP id
+ 00721157ae682-8b0b12d703emr16903837b3.43.1791929232182; Tue, 13 Oct 2026
+ 15:07:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Cr0q4X4D c=1 sm=1 tr=0 ts=6aceaa72 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=ci5VvnE7D6JisPpjIkMA:9
-X-Proofpoint-GUID: yLGxfJ1kG5IF19FU3LJWJONwsaQa_ZxI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDA4NiBTYWx0ZWRfX9zCN79dd9WGT
- LuIAP76FGAPUIWBAE6Z8Pz2zSvLXRpjFbK+HuRaoMAfVy7TJ2o5fHxKdVjoxPtzakUpRNV9mCXC
- D4iQtppd1ageqMhQ/rVfxxAFR43VFdJPaqij65FKOy2CO9sKigCjC3ICaZm+ROQr10Ss39XKn3P
- ovZTHJ180rLWRRH9akBgd9CNy4t2dX0609D86dwDO/FuYw2pT/Ghlx1iBvQWIZLw30gpWi9h+nE
- EPbn/8tZKCaF7PG5MglJuz1sXi3NOHd0ADFBpFMRZIcZwXKiwWABRnao0sYeg5pgpOyQHq6yxO7
- jeylNj2DjdTCBNcXpdGeOncPCtxIJaeJLyml6+aXeocV6QnS1BDsIWPXq6OFwOCaPMV9DgITGgb
- +4EiNJQVh+XIKYimB0zhxJLFQ2gxnd27FqQ4+MUPNXZnlEhixrYDHIzpLgkLUg1Thh7ulxFdsB3
- LoW07IyIMp7qqaUKw0Q==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDA4NiBTYWx0ZWRfX+nMUJaKW3SzB
- /6RkbVMURG4xHu+YjOy6rFksTuZxEO+2x1+smtj1YDpQ6ifOFj2ojo7ogaMgsHc1BBNpgELjRMN
- 5cMqFXl2CJxTwBfiKDrWjf5zVTNypGY=
-X-Proofpoint-ORIG-GUID: yLGxfJ1kG5IF19FU3LJWJONwsaQa_ZxI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0
- malwarescore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610130086
+References: <20261009-send-upstream-v5-0-384af01da3ee@chromium.org>
+ <20261009-send-upstream-v5-5-384af01da3ee@chromium.org> <sashiko-outbox-166153@kernel.org>
+In-Reply-To: <sashiko-outbox-166153@kernel.org>
+From: Jingyuan Liang <jingyliang@chromium.org>
+Date: Tue, 13 Oct 2026 15:07:00 -0700
+X-Gm-Features: AclHuK8JEhgVWod97Oeyuxy5mtDaH6c72Kz69Kz8EDN-ZL4874rxGG-gecFiSkY
+Message-ID: <CAEe3GZFWJ45Up6=4UbW=MQAPmc3BEdVHqkMYnDM3FfNYvuFRjQ@mail.gmail.com>
+Subject: Re: [PATCH v5 05/11] HID: spi-hid: add HID SPI protocol implementation
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, linux-trace-kernel@vger.kernel.org, 
+	conor+dt@kernel.org, linux-input@vger.kernel.org, dmitry.torokhov@gmail.com, 
+	robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-sashiko-bot@kernel.org writes:
-
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] scsi: ibmvfc: host state machine stall if ibmvfc_reg_sub_crqs() fails
-> - [High] scsi: ibmvfc: NULL pointer deref in channel setup when mq_enabled=0
+On Fri, Oct 9, 2026 at 3:42=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 4 potential issu=
+e(s) to consider:
+> - [High] hid: sleeping in atomic context via synchronous output_report
+> - [High] spi: dma: unaligned DMA transfer buffers cause memory corruption
+> - [High] hid: spi-hid: use-after-free of transport buffers on concurrent =
+realloc
+> - [Medium] hid: spi-hid: SPI_HID_REFRESH_IN_PROGRESS breaks hid_device_io=
+_start() during probe
 > --
 >
-> commit 3dd02df8d62690f440ff03238afa2613397c578a
-> Author: Dave Marquardt <davemarq@linux.ibm.com>
+> commit 4647f83267b811c038d6b541aee03ea186664da4
+> Author: Jingyuan Liang <jingyliang@chromium.org>
+> Subject: HID: spi-hid: add HID SPI protocol implementation
 >
-> scsi: ibmvfc: register and use asynchronous sub CRQ for events
->     
-> Wire the async sub-CRQ into the sub-CRQ lifecycle so it is allocated,
-> registered, and freed alongside the SCSI channel queues. Updates
-> ibmvfc_set_login_info() to advertise related capabilities.
+> This commit adds a new driver for the HID over SPI protocol. It supports
+> basic input and output reports but omits features like multi-fragment
+> reports and power states.
 >
->> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> index 76246002ac724..acc11f3a237e1 100644
->> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+> > diff --git a/drivers/hid/spi-hid/spi-hid-core.c b/drivers/hid/spi-hid/s=
+pi-hid-core.c
+> > --- a/drivers/hid/spi-hid/spi-hid-core.c
+> > +++ b/drivers/hid/spi-hid/spi-hid-core.c
 > [ ... ]
->> @@ -5821,6 +5828,7 @@ static void ibmvfc_channel_setup_done(struct ibmvfc_event *evt)
->>  		for (i = 0; i < nvme->active_queues; i++)
->>  			nvme->scrqs[i].vios_cookie =
->>  				be64_to_cpu(setup->channel_handles[scsi->active_queues + i]);
->> +		async->scrqs[0].vios_cookie = be64_to_cpu(setup->async_sub_crq_handle);
+> > +static int spi_hid_input_sync(struct spi_hid *shid, void *buf, u16 len=
+gth,
+> > +                           bool is_header)
+> > +{
+> > +     int error;
+> > +
+> > +     shid->input_transfer[0].tx_buf =3D is_header ?
+> > +                                      shid->read_approval_header :
+> > +                                      shid->read_approval_body;
+> > +     shid->input_transfer[0].len =3D SPI_HID_READ_APPROVAL_LEN;
+> > +
+> > +     shid->input_transfer[1].rx_buf =3D buf;
 >
 > [Severity: High]
-> Can this cause a NULL pointer dereference when the module parameter mq_enabled
-> is 0?
+> Could this cause memory corruption on non-cache-coherent architectures?
 >
-> If mq_enabled is 0, ibmvfc_init_sub_crqs() returns early and skips allocation,
-> leaving async->scrqs as NULL but vhost->do_enquiry as 1.
+> The read_approval_body is a 5-byte array that immediately follows
+> read_approval_header in struct spi_hid. Since it starts at an unaligned
+> 5-byte offset, passing it as tx_buf to the DMA sync path violates
+> architecture DMA API rules.
 >
-> If the VIOS later advertises IBMVFC_CAN_SUPPORT_CHANNELS during NPIV login,
-> ibmvfc_npiv_login_done() sees do_enquiry is true and issues a channel enquiry.
-> When that completes, we reach this code and unconditionally dereference the
-> unallocated async->scrqs array.
+> The rx_buf parameter also receives unaligned memory when buf is passed as
+> shid->input->body later in the IRQ handler, which starts 4 bytes after th=
+e
+> dynamically allocated input header. This can trigger CONFIG_DMA_API_DEBUG
+> warnings or corrupt adjacent memory.
 
-Yes, it is a problem! I will fix in v14. 
+I don't think so. The read approvals are TX-only and never change
+after probe, and the RX body only shares a cacheline with the input
+header, which isn't touched during the body transfer.
 
+>
 > [ ... ]
->> @@ -5880,6 +5889,7 @@ static void ibmvfc_channel_setup(struct ibmvfc_host *vhost)
->>  		for (i = 0; i < nvme_channels; i++)
->>  			setup_buf->channel_handles[scsi_channels + i] =
->>  				cpu_to_be64(nvme->scrqs[i].cookie);
->> +		setup_buf->async_sub_crq_handle = cpu_to_be64(async->scrqs[0].cookie);
->>  	}
+> > +static int __spi_hid_send_output_report(struct spi_hid *shid,
+> > +                                     struct spi_hid_output_report *rep=
+ort,
+> > +                                     u8 expected_response)
+> > +{
+> > +     struct spi_hid_output_buf *buf =3D shid->output;
+> > +     struct device *dev =3D &shid->spi->dev;
+> > +     u16 report_length;
+> > +     u16 padded_length;
+> > +     u8 padding;
+> > +     int error;
+> > +
+> > +     lockdep_assert_held(&shid->output_lock);
 >
 > [Severity: High]
-> Similarly, can this unconditional access to async->scrqs[0].cookie trigger a
-> NULL pointer dereference when mq_enabled is 0?
+> Is there a potential use-after-free here if the output buffer is realloca=
+ted
+> concurrently?
+>
+> When the HID core calls spi_hid_ll_start() dynamically from userspace or
+> BPF, it expands the transport buffers by calling spi_hid_alloc_buffers()
+> if the report sizes have increased. This reallocation uses devm_krealloc(=
+)
+> to free shid->output and replace it.
+>
+> However, spi_hid_ll_start() does not appear to acquire shid->output_lock
+> before reallocating. If a spontaneous device reset interrupt schedules
+> reset_work on a global worker thread:
+>
+> spi_hid_reset_work()
+>   spi_hid_reset_response()
+>     spi_hid_sync_request()
+>       __spi_hid_send_output_report()
+>
+> This path can execute concurrently, accessing the freed shid->output buff=
+er
+> under the lock, leading to a use-after-free when writing the header and
+> payload.
 
-Yes.
+Thank you. I will fix it in v6.
 
+>
 > [ ... ]
->> @@ -7023,17 +7039,38 @@ static int ibmvfc_alloc_channels(struct ibmvfc_host *vhost,
-> [ ... ]
->>  static void ibmvfc_init_sub_crqs(struct ibmvfc_host *vhost)
->>  {
->>  	ENTER;
->>  	if (!vhost->mq_enabled)
->>  		return;
->>  
->> -	if (ibmvfc_alloc_channels(vhost, &vhost->scsi_scrqs)) {
->> -		vhost->do_enquiry = 0;
->> -		vhost->mq_enabled = 0;
->> -		return;
->> -	}
->> +	/* register async_sub_crq channel */
->> +	if (ibmvfc_alloc_channels(vhost, &vhost->async_scrqs))
->> +		goto out;
->> +
->> +	ibmvfc_reg_sub_crqs(vhost, &vhost->async_scrqs);
+> > +static int spi_hid_send_output_report(struct spi_hid *shid,
+> > +                                   struct spi_hid_output_report *repor=
+t)
+> > +{
+> > +     guard(mutex)(&shid->output_lock);
+> > +     return __spi_hid_send_output_report(shid, report, 0);
+> > +}
+> > +
+> > +static int __spi_hid_sync_request(struct spi_hid *shid,
+> > +                               struct spi_hid_output_report *report)
+> > +{
+> > +     struct device *dev =3D &shid->spi->dev;
+> > +     int error;
+> > +
+> > +     error =3D __spi_hid_send_output_report(shid, report,
+> > +                                          spi_hid_response_type(report=
+->report_type));
 >
 > [Severity: High]
-> Does this cause a host state machine stall if ibmvfc_reg_sub_crqs() fails?
+> Does this sleeping lock violation trigger scheduling while atomic warning=
+s?
 >
-> If ibmvfc_reg_sub_crqs() fails internally, it clears vhost->do_enquiry but
-> leaves vhost->mq_enabled set to 1. Because mq_enabled remains true,
-> ibmvfc_set_login_info() continues to advertise IBMVFC_CAN_USE_CHANNELS to
-> the VIOS.
+> According to the HID subsystem guidelines, the low-level output_report
+> callback is used for high-throughput data on the interrupt channel and
+> must be asynchronous.
 >
-> When the VIOS responds with IBMVFC_CAN_SUPPORT_CHANNELS,
-> ibmvfc_npiv_login_done() enters the multi-queue branch, but because
-> do_enquiry is now 0, it skips calling ibmvfc_channel_enquiry().
->
-> It also bypasses the fallback block that would normally set
-> IBMVFC_HOST_ACTION_QUERY and wake up vhost->work_wait_q:
->
-> drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_npiv_login_done() {
->     if (ibmvfc_check_caps(vhost, IBMVFC_CAN_SUPPORT_CHANNELS)) {
->         if (ibmvfc_check_caps(vhost, IBMVFC_SUPPORT_SCSI))
->             vhost->do_scsi_login = 1;
->         if (ibmvfc_check_caps(vhost, IBMVFC_SUPPORT_NVMEOF))
->             vhost->do_nvme_login = 1;
->         if (vhost->do_enquiry)
->             ibmvfc_channel_enquiry(vhost);
->     } else {
->         vhost->do_enquiry = 0;
->         ibmvfc_set_host_action(vhost, IBMVFC_HOST_ACTION_QUERY);
->         wake_up(&vhost->work_wait_q);
->     }
-> }
->
-> Will this cause the initialization process to stall indefinitely in
-> IBMVFC_HOST_ACTION_INIT_WAIT?
+> When spi_hid_ll_output_report() calls spi_hid_send_output_report() or
+> spi_hid_sync_request(), these helpers immediately acquire shid->output_lo=
+ck
+> (a sleeping mutex) and perform a synchronous, blocking SPI transfer. Sinc=
+e
+> the callback can be invoked from atomic contexts (like updating LED state=
+s
+> from an input event handler), sleeping here may cause panics.
 
-Yes, this appears to cause a stall.
+No. hid-input defers LED updates from input events to a workqueue, so
+->output_report() isn't called from atomic context there, and USB-HID
+and I2C-HID already sleep in this callback too.
 
--Dave
+>
+> [ ... ]
+> > +static int spi_hid_input_report_handler(struct spi_hid *shid,
+> > +                                     struct spi_hid_input_buf *buf)
+> > +{
+> > +     struct device *dev =3D &shid->spi->dev;
+> > +     struct hid_device *hid;
+> > +     struct spi_hid_input_report r;
+> > +     int error =3D 0;
+> > +
+> > +     scoped_guard(mutex, &shid->io_lock) {
+> > +             if (!test_bit(SPI_HID_READY, &shid->flags) ||
+> > +                 !test_bit(SPI_HID_STARTED, &shid->flags) ||
+> > +                 test_bit(SPI_HID_REFRESH_IN_PROGRESS, &shid->flags) |=
+| !shid->hid) {
+> > +                     dev_dbg(dev, "HID not ready (flags 0x%lx), droppi=
+ng input report\n",
+> > +                             shid->flags);
+> > +                     return 0;
+> > +             }
+>
+> [Severity: Medium]
+> Will this prevent drivers from receiving input reports during probe?
+>
+> When spi_hid_refresh_device() is executed, it sets the
+> SPI_HID_REFRESH_IN_PROGRESS flag before tearing down the old HID device
+> and creating the new one:
+>
+> spi_hid_refresh_device()
+>   set_bit(SPI_HID_REFRESH_IN_PROGRESS, ...)
+>   spi_hid_create_device()
+>     hid_add_device()
+>       -> driver probe()
+>
+> During this entire time, the input report handler will drop all incoming
+> reports. This conflicts with the HID core API contract, which explicitly
+> allows a driver to receive inputs during its probe phase by calling
+> hid_device_io_start(). A driver that requires a firmware handshake or
+> data during probe could hang or fail upon device refresh.
+
+Thank you. I will fix it in v6.
+
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261009-send-ups=
+tream-v5-0-384af01da3ee@chromium.org?part=3D5
