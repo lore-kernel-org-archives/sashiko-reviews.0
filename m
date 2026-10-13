@@ -1,148 +1,91 @@
-Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC1D5304A7
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 18:00:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B1E515970;
+	Tue, 13 Oct 2026 18:08:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791914411; cv=none; b=r+6aY/mdm/Z6i0urBItXKAmxE+8zxW5hg5itmYno2dzlzktgY+yrjIdU9t3xu6X9eXEAOAM1iTdIkqr3Q5R0EKbO/XovLWYZeDAQKPwWY8bfCDCjHrdJJbpJhC7NMNlNVR0+EfiYKHYP4RDd5b4IwgugamtnxQyZb6O1zhTJmuk=
+	t=1791914938; cv=none; b=qXgP6bbnHCQEh5h18JxgMrCrsL6BnmL1n3aKdyofdFDYTAVQApiE+QcPmqCd4IZkQMQZ8wrZRb38+z0kDSi4EPTzeD4ItT0gUcxSNcmASHEqhRojKc+uSdwhuAfar89RHCi5e1eKlA8guYRT/EzvEpgK56cWgDxUOKMgRu3WREs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791914411; c=relaxed/simple;
-	bh=nbgDcnVzZy5v+9x+VotHTcVXQOcWBOh+8O66h1RlO+8=;
+	s=arc-20240116; t=1791914938; c=relaxed/simple;
+	bh=ajqVS35To9kSmN1YMYuT3ceYlljDNzroG3lNSh4VqlY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EDNOuqCqrM5ug2SIu3hmmd6erbdZ8V/ncSkCexWnsVrpn/UpDoIjon3q+BUpBS/ORybeN7g4AeAh86eCjfXL0mJ6xUBPUbgNYTlToE1Owz4lX+2YSjTGme8ZKtdxNE1t8PYT9g9B3YHz6EXIgSeewSAHLiipb03o0hNh/nsnp+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=s9a7n9OY; arc=none smtp.client-ip=74.125.224.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=smrZ5BOMQB7azPX4+dSF7JNbMbkr+5ZF54eBCeavWf2fHHJbfOuDs5bfTJYeO5xjXoAobkZ5RTlIYXGNZnA+oE7cEuNs+qXYcqVv2aq1bRZ1bf0EBSQJjlOOQGNqstFSxABocgcIwl3yHsrSoQM3sWaMgXdNjcZ+g/zNZwsgX3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=aaMgl3Ax; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s9a7n9OY"
-Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-67687f279b3so2646059d50.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 11:00:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791914409; x=1792519209; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=h9AuHP9q1EYZ5Uls4Fabp/S6p+sv4isxWlypix7WhUQ=;
-        b=s9a7n9OYtCTxZ5hsdgsq73Wfzsd7j2VLlAoinyNGV+gWHLNCSkXTFdrMlA8TWID4jb
-         lZa/4GYBAN8qeRQOilKMoJFjonHT6t5H05iupDtGMT8wMIVvex9mwZHqWBvAH/AUEURY
-         y5eKIXW/sJUtOcvHfdf+LcP7kDgDUSLmi1Fan4F9zbkvz5SQDp7HPtHxyCjbsc2hRN5Z
-         lkbaLL2//F/fIFyQc0nqSbRfDsepw1Dw+r2W27F9Kxw5JF95hah+77OVtCdYFdiQfMq/
-         Wa5TuMmg7ikRniQLMbAtxRDiimL0ldatUYRUI+1YdaWTQ86RskizLV6QVnwgItRLZBFI
-         er+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791914409; x=1792519209;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=h9AuHP9q1EYZ5Uls4Fabp/S6p+sv4isxWlypix7WhUQ=;
-        b=0oGNwxUtpF9vF+VDctPX40GDfOIc+GYVEM3cftCcvZH7azXLmLi5vZDIU+I/BKJ3WJ
-         kGYYpeq9134t751IAq9L4vtsRKfQbjewp1zFoLVusJS7eNLzT1mzD7LpQElYlRSaZNuN
-         LHG3hWfX5Zg6UUQRpbh+fClbbSbY9Vn53MleMxrDlnGLzUTlau0DfqPgcKJw+dS7LNAj
-         RDoxbVhy1BEfyp9DEHIWWVvg4HOj44aZ8uysJhDAl7ecHE4ac6gxbrdsUDgGslntPdas
-         du+P79lyF0IItMJlr0z5qw3aDypqfyLMDV4o3M+8MB3IhwMx/39Wi4gQC27Ifc4OW7Vy
-         oMTw==
-X-Gm-Message-State: AFq9FYK7hufAyKHtu/YqLX5ok8imYxh/e03tQtE165PWSxyaDv/KmIib
-	5BH/iBDlQyfFqykHHsQsX4Oj48KPw+K7Uu6W4IsWo8CcFkWULR2UxABMKZcJkg==
-X-Gm-Gg: AYBFou2kQHtFryOo03nBmZ4NZzu0cS1ni1EZ/omTLMVenBm90tSHnHAh0C8zM3dERB0
-	rjAqc3zH69fExzFlrIjDvSGlxtPOCYHazFTaeHkmgudE1Ww4OTy36KyrLDLHu9h5gD1iqtjOIVy
-	mxMKqfIbCJej+VVqimSfSvGltBqO/s7Wjn67/ZILdZKj55HiNMjPiqYDe4gL+jnu8HaHv0wdRFP
-	E3iUv5RAJ4+ZQvuR9eDoay/T5IFx6EUgMhADzuga/yMgPLOBYV93WQRijicVZsz+wpAe+YRyrhw
-	XOSsxeFd+6MHbXkxFWRjZxU+vmG+BOFy22JDKtpzTBlbf+Uwffsi59nTq+UwooIRWib121ZakWx
-	hf7H+ENuEZgfsDvjiBcM0dabWx/CEIb/JIJD+/u1QE7hc/YIFQvBfMaZvZecqEohiApjC4yQDlc
-	noAVmARfH7bhVWxrKh4NP/QlYSiZmrkQGoSb8A8XuV0glKJRs/TPYhiJEqoEjO/xVC/Et7yt0=
-X-Received: by 2002:a05:690e:1183:b0:672:ede8:d1f4 with SMTP id 956f58d0204a3-67936062f7cmr4971148d50.62.1791914409230;
-        Tue, 13 Oct 2026 11:00:09 -0700 (PDT)
-Received: from zenbox ([2600:1700:18fb:6011:d326:f863:5ae3:683])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-67986a15c13sm145635d50.7.2026.10.13.11.00.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Oct 2026 11:00:08 -0700 (PDT)
-Date: Tue, 13 Oct 2026 14:00:07 -0400
-From: Justin Suess <utilityemal77@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org, linux-security-module@vger.kernel.org
-Subject: Re: [PATCH bpf-next v1 05/11] bpf: add a path ancestor iterator
-Message-ID: <as5w8lY-3Z6sVlxe@zenbox>
-References: <20261013164800.2906577-1-utilityemal77@gmail.com>
- <20261013164800.2906577-6-utilityemal77@gmail.com>
- <sashiko-outbox-170194@kernel.org>
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="aaMgl3Ax"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=IU1T78eCbWyZUQW7m8vr5TOKdpnyuWUre19SSGbiODo=; b=aaMgl3Ax+rJVPTzlpCS+CX2ZDN
+	GECWVBcD57zs+f25xxpXb7DmLVeG/J3xp1CoHpTrrWeKqUikMrZoK2T2BOGfpLloCbuItwLU44Q97
+	JMtvzW0mjiGTJ2uUa7PUpZ+5OEocnbBu8tfPSPk/qHsTmIuuBG+xEw0fj5jsH10XM6qw=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1xGgvl-00AZbL-BR; Tue, 13 Oct 2026 20:08:53 +0200
+Date: Tue, 13 Oct 2026 20:08:53 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Conor Dooley <conor@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, Xincheng Ji <jixincheng@ultrarisc.com>,
+	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v3 7/7] riscv: dts: ultrarisc: Add Milk-V Titan board
+ device tree
+Message-ID: <d184f986-7bdd-465b-9ec6-31fe1975aec1@lunn.ch>
+References: <20261013-ultrarisc-dts-v3-0-5ff3ebb2a90d@ultrarisc.com>
+ <20261013-ultrarisc-dts-v3-7-5ff3ebb2a90d@ultrarisc.com>
+ <sashiko-outbox-169511@kernel.org>
+ <20261013-siesta-starship-f078a51d2389@spud>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-170194@kernel.org>
+In-Reply-To: <20261013-siesta-starship-f078a51d2389@spud>
 
-On Tue, Oct 13, 2026 at 05:11:54PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] bpf: deadlock in bpf_iter_path_ancestors_next due to GFP_KERNEL under VFS locks
-> --
+On Tue, Oct 13, 2026 at 06:34:28PM +0100, Conor Dooley wrote:
+> +CC Andrew Lunn <andrew@lunn.ch>
 > 
-> commit 0d24b2f0561971ff2a9d89456692d9ec1ea13279
-> Author: Justin Suess <utilityemal77@gmail.com>
-> 
-> bpf: add a path ancestor iterator
-> 
-> This commit introduces a sleepable BPF iterator for evaluating a path's
-> ancestry using the stepwise vfs_walk_ancestors() engine. It adds kfuncs
-> to manage the iterator and hands each position to the program as an
-> acquired reference by allocating a copy of the path structure.
-> 
-> > diff --git a/fs/bpf_fs_kfuncs.c b/fs/bpf_fs_kfuncs.c
-> > index 08f0847c49708..02398f5a46d5a 100644
-> > --- a/fs/bpf_fs_kfuncs.c
-> > +++ b/fs/bpf_fs_kfuncs.c
-> [ ... ]
-> > +__bpf_kfunc struct path *
-> > +bpf_iter_path_ancestors_next(struct bpf_iter_path_ancestors *it)
-> > +{
-> > +	struct bpf_path_ancestors_kern *kit = (void *)it;
-> > +	struct path *pos = bpf_path_ancestors_step(kit);
-> > +	struct path *held;
-> > +
-> > +	if (!pos)
-> > +		return NULL;
-> > +	/*
-> > +	 * The position must outlive the walk's own view of it, so it gets a
-> > +	 * reference and a struct path of its own to live in: struct path is
-> > +	 * a value type, with nothing a BPF reference could be taken on
-> > +	 * otherwise.  Sleepable, so no atomic allocation.
-> > +	 */
-> > +	held = kmalloc_obj(*held);
-> 
-> [Severity: High]
-> Can this allocation cause a deadlock if the iterator is used from a sleepable
-> LSM hook?
-> 
-> If a sleepable BPF LSM program is attached to a hook like
-> security_inode_setattr or security_inode_unlink, it is called by the VFS
-> with the inode's i_rwsem held. 
-> 
-> The kmalloc_obj() macro appears to default to GFP_KERNEL allocations, which
-> includes the __GFP_FS flag. Under memory pressure, this could trigger direct
-> memory reclaim.
-> 
-> If reclaim attempts to write back dirty pages or shrink the dcache/icache,
-> it might try to acquire the same i_rwsem, resulting in a deadlock.
->
-Direct reclaim never takes i_rwsem. So this is incorrect.
+> On Tue, Oct 13, 2026 at 10:31:35AM +0000, sashiko-bot@kernel.org wrote:
+> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> > - [Medium] dts: incorrect RGMII phy-mode causes double clock delay
+> > --
+> > 
+> > commit 471320732fb47362c8b5d5e16472052117a95204
+> > Author: Jia Wang <wangjia@ultrarisc.com>
+> > 
+> > riscv: dts: ultrarisc: Add Milk-V Titan board device tree
+> > 
+> > This commit introduces the device tree for the Milk-V Titan board, an ITX
+> > motherboard based on the UltraRISC DP1000 SoC.
+> > 
+> > Link: https://milkv.io/docs/titan/overview
+> > 
+> > > diff --git a/arch/riscv/boot/dts/ultrarisc/dp1000-milkv-titan.dts b/arch/riscv/boot/dts/ultrarisc/dp1000-milkv-titan.dts
+> > > new file mode 100644
+> > > index 0000000000000..59edd8157221a
+> > > --- /dev/null
+> > > +++ b/arch/riscv/boot/dts/ultrarisc/dp1000-milkv-titan.dts
+> > 
+> > [ ... ]
+> > 
+> > > +&ethernet {
+> > > +	phy-handle = <&phy0>;
+> > > +	/*
+> > > +	 * The PCB does not add RGMII TX or RX clock delays. The DP1000
+> > > +	 * integration adds fixed delays in both directions.
+> > > +	 */
+> > > +	phy-mode = "rgmii-id";
 
-(Also if that were the case, the mkdir selftest would splat with lockdep)
+If the PCB does not add delays, rgmii-id is correct. What is important
+is how the MAC driver handles this, it needs to mask the value passed
+to the PHY. Assuming this has been tested on real hardware, it
+probably does.
 
-Justin
-> > +	if (!held) {
-> > +		kit->step = -ENOMEM;
-> > +		return NULL;
-> > +	}
-> > +	*held = *pos;
-> > +	path_get(held);
-> > +	return held;
-> > +}
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261013164800.2906577-1-utilityemal77@gmail.com?part=5
+	 Andrew
