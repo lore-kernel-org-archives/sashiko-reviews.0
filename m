@@ -1,156 +1,135 @@
-Received: from www537.your-server.de (www537.your-server.de [188.40.3.216])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-63.mta1.migadu.com [95.215.58.63])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209F52D738F;
-	Tue, 13 Oct 2026 14:05:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.40.3.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB393D16F1
+	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 14:07:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.63
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791900318; cv=none; b=KjyNhV8gfpwXbOLi1xbMJWnziO5ihneIhdblWdKv1G08D3WNYF35qe9xWd0WsG0SUVtkvKi3p5xHH+X8VdIrkr3mTWRc5PVHOMS1SG+xXyNhktjRCiQrcsIq2gYhztPg4u98kdj75vq/zUN+riCHIjyLE5Mlb1HgmXouKImWRWw=
+	t=1791900454; cv=none; b=Sk/jBzyv/5RZBPqH+004ahgBklijKJpCZGSrOJnpJMmSOVhoG5lYEgGY7JjoXGATKb9agUN1RICnCeW8nQI6GXXRy23tiGAdbQt1atF9X6EJHLiUgNEaTsXCHf/rH793KkOV01ctNQij4G3BichkBJ4QBGGF7UJ6xmm/lzrqyOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791900318; c=relaxed/simple;
-	bh=uEQ2tY9xTG8yKAecuC6cIO200KOxqrXCYwFmpV3eRv8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AYzEX5egdYa1WytnV0yvuWPKCAERhtgdTkrLqh2IGce3H/oHvTUy8PWkziTLjDvU26HcgQQ4CjiXYlV7QdA+kgeDqsw1jg0ie+hdeMz+p95lnmOLYo1EqwqksunFNh/NoYzdLG53MJ49/BHuGhaH7K9N8o81IrnlSsA/ry2aNWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com; spf=pass smtp.mailfrom=ew.tq-group.com; dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b=b7EnCqfg; arc=none smtp.client-ip=188.40.3.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ew.tq-group.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ew.tq-group.com
+	s=arc-20240116; t=1791900454; c=relaxed/simple;
+	bh=5BlXIF0AyB1kJAXhkN5mj6wdVNbcBMnSUOhsmJfw7hs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZOKaP8urPRhCBsgNDf8TWR8RTmjo5DNeQjpt8+aw75ud89OMRzmFU9o0HmDbzq3kXRCtGUqyYNUoHi8mOVHoXRkQs2QvFfZ7xBrWu7y0wEXiFrsDMcoua+szAlGfd7AFhZjCkkLxOAKrnMFYK+xnQArj2nGAhGbUSsBhrn6gXhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=omcr5yoR; arc=none smtp.client-ip=95.215.58.63
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ew.tq-group.com header.i=@ew.tq-group.com header.b="b7EnCqfg"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=ew.tq-group.com; s=default2602; h=Content-Type:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=plEBybSZs17ofMuAql8ugZTiTKQWX5rpFZ+CNp+rQ5I=; b=b7EnCqfgNyAuiYM2hWQuUcSZ/9
-	BazouujCmceVJE8w4EpCnRZg+p6ycrKpM6mhEQnCeDHNoEXey019Q9kv6q5rqeolY0reFBvRQjYmh
-	fFjVULtGgjdPnFfJyduak3ySqj+qiQF8nhJ8l4XeIENiOYDZB//9TVD6g4sAktGeBMhDlQqftVTQC
-	HdgN1p8mmK131FimY2kkYRhP0F0YKkfYrUDFe/FFGWuqev6sPLEdB394NCQ6KWBJwt1r7+y88fdk7
-	6QohO8bc652qdCPf/yfDqgOxiW7iESqOMbW5n16hvnPg+b5rEummT59mo4BFDDkaQiN5RpIcIqapK
-	1L1LqAeQ==;
-Received: from sslproxy03.your-server.de ([88.198.220.132])
-	by www537.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <alexander.stein@ew.tq-group.com>)
-	id 1xGd7x-000L1C-34;
-	Tue, 13 Oct 2026 16:05:14 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy03.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <alexander.stein@ew.tq-group.com>)
-	id 1xGd7x-000HRa-1z;
-	Tue, 13 Oct 2026 16:05:13 +0200
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: imx@lists.linux.dev, devicetree@vger.kernel.org, robh@kernel.org,
- conor+dt@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH 2/5] arm64: dts: imx8qxp: Add display controller subsystem
-Date: Tue, 13 Oct 2026 16:05:12 +0200
-Message-ID: <5866247.LvFx2qVVIh@steina-w>
-Organization: TQ-Systems GmbH
-In-Reply-To: <sashiko-outbox-169627@kernel.org>
-References:
- <20261013111737.998282-1-alexander.stein@ew.tq-group.com>
- <20261013111737.998282-3-alexander.stein@ew.tq-group.com>
- <sashiko-outbox-169627@kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="omcr5yoR"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=5BlXIF0AyB1kJAXhkN5mj6wdVNbcBMnSUOhsmJfw7hs=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791900449; v=1; x=1792505249;
+ b=omcr5yoRLuxNp/8lY2PqupyZRLBeff4lfU1Fbq3x0BX+7BHosJ4CuDeDyK5IM6U1ACN0f0aJ
+ Af842HB/sE/pYFRezaA6pQs4zJfYGLyI1rxqHKm3K5cv2fdw6tMjgcgWgEsheREgym9CAJJujgs
+ tvBXR1hlDB7+JSXr5O55Y088=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 1dd4546aa31d3090;
+	Tue, 13 Oct 2026 14:07:29 +0000
+X-Mizu-Trace-ID: 1dd4546aa31d3090
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <4193e7d0-ce1b-4732-bc8f-00badbfd08fd@linux.dev>
+Date: Tue, 13 Oct 2026 07:07:25 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-X-Virus-Scanned: Clear (ClamAV 1.4.3/28152/Tue Oct 13 08:26:14 2026)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v2 06/11] selftests/bpf: Test trampoline args
+ around a 16-byte aligned stack arg
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20261013003429.1853052-1-yonghong.song@linux.dev>
+ <20261013003459.1857895-1-yonghong.song@linux.dev>
+ <sashiko-outbox-168812@kernel.org>
+Content-Language: en-GB
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <sashiko-outbox-168812@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Am Dienstag, 13. Oktober 2026, 13:29:55 Mitteleurop=C3=A4ische Sommerzeit s=
-chrieb sashiko-bot@kernel.org:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] arm64: dts: Missing power-domains and compatible override for =
-dc0_irqsteer
+
+
+On 10/13/26 2:43 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] bpf: endianness assumption causes selftest failure on aarch64 big-endian
 > --
->=20
-> commit ae70e9d2f5935bf44872ed0bd30be554653b06e0
-> Author: Liu Ying <victor.liu@nxp.com>
->=20
-> arm64: dts: imx8qxp: Add display controller subsystem
->=20
-> Add display controller subsystem in i.MX8qxp SoC.
->=20
-> > diff --git a/arch/arm64/boot/dts/freescale/imx8-ss-dc0.dtsi b/arch/arm6=
-4/boot/dts/freescale/imx8-ss-dc0.dtsi
-> > new file mode 100644
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/freescale/imx8-ss-dc0.dtsi
+>
+> commit df1efd6b9c0e934bad453d07e6efe674bda8e1e6
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> selftests/bpf: Test trampoline args around a 16-byte aligned stack arg
+>
+> This commit adds tests for bpf_testmod functions taking a 16-byte aligned
+> struct containing an __int128. It checks that the BPF trampoline packs
+> these arguments correctly according to the BPF calling convention.
+>
+>> diff --git a/tools/testing/selftests/bpf/prog_tests/tracing_struct.c b/tools/testing/selftests/bpf/prog_tests/tracing_struct.c
+>> index 8086586d3e196..a2da219e14769 100644
+>> --- a/tools/testing/selftests/bpf/prog_tests/tracing_struct.c
+>> +++ b/tools/testing/selftests/bpf/prog_tests/tracing_struct.c
 > [ ... ]
-> > +dc0_subsys: bus@56000000 {
+>> @@ -141,6 +143,20 @@ static void test_int128_args(void)
+>>   	ASSERT_EQ(skel->bss->t_c, 3, "t:c");
+>>   	ASSERT_EQ(skel->bss->t_ret, 6, "t ret");
+>>   
+>> +	ASSERT_EQ(skel->bss->s_g, 7, "s:g");
+>> +	ASSERT_EQ(skel->bss->s_h_lo, 8, "s:h.lo");
+>> +	ASSERT_EQ(skel->bss->s_h_hi, 9, "s:h.hi");
+> [Severity: Low]
+> Does this code assume a little-endian memory layout for the __int128
+> argument?
+>
+> The test passes a 16-byte struct containing ((__int128)9 << 64) | 8.
+> On big-endian architectures like aarch64 (when configured with
+> CONFIG_CPU_BIG_ENDIAN), the most significant 64 bits (9) are placed at the
+> lowest address, and the least significant bits (8) at the higher address.
+> This hardcoded expectation for the little-endian layout appears to cause the
+> test_int128_args selftest to fail its assertions on big-endian systems.
+
+Ok, will fix due to possible arm64 big endian.
+
+>
+>> +	ASSERT_EQ(skel->bss->s_i, 10, "s:i");
+>> +	ASSERT_EQ(skel->bss->s_ret, 385, "s ret");
 > [ ... ]
-> > +	dc0_irqsteer: interrupt-controller@56000000 {
-> > +		compatible =3D "fsl,imx-irqsteer";
-> > +		reg =3D <0x56000000 0x1000>;
-> > +		interrupt-controller;
-> > +		interrupt-parent =3D <&gic>;
-> > +		#interrupt-cells =3D <1>;
+>> diff --git a/tools/testing/selftests/bpf/progs/tracing_struct_int128.c b/tools/testing/selftests/bpf/progs/tracing_struct_int128.c
+>> index 4638dfec1f38e..5520ee500c01d 100644
+>> --- a/tools/testing/selftests/bpf/progs/tracing_struct_int128.c
+>> +++ b/tools/testing/selftests/bpf/progs/tracing_struct_int128.c
 > [ ... ]
-> > +		clocks =3D <&dc0_lis_lpcg IMX_LPCG_CLK_4>;
-> > +		clock-names =3D "ipg";
-> > +		fsl,channel =3D <0>;
-> > +		fsl,num-irqs =3D <512>;
-> > +	};
->=20
-> [Severity: Medium]
-> Is the dc0_irqsteer node missing a power-domains property?
->=20
-> If it lacks power-domains =3D <&pd IMX_SC_R_DC_0>;, could this trigger a =
-bus
-> fault (SError) during boot or suspend/resume cycles if the irqsteer driver
-> accesses its registers when the IMX_SC_R_DC_0 power domain is off?
+>> @@ -15,4 +15,49 @@ int test_int128_arg_fexit(unsigned long long *ctx)
+>>   	return 0;
+>>   }
+>>   
+>> +/*
+>> + * The arguments come packed in the BPF convention whatever holes the
+>> + * kernel convention left between them: an eightbyte each, and two for the
+>> + * struct holding an __int128.
+>> + */
+>> +long s_g, s_h_lo, s_h_hi, s_i, s_ret;
+>> +
+>> +SEC("fentry/bpf_testmod_test_int128_stack")
+>> +int test_int128_stack_fentry(unsigned long long *ctx)
+>> +{
+>> +	s_g = ctx[6];
+>> +	s_h_lo = ctx[7];
+>> +	s_h_hi = ctx[8];
+> [Severity: Low]
+> Is this direct array indexing in test_int128_stack_fentry() subject to the
+> same endianness assumption?
+>
+> When the BPF trampoline projects the struct onto the u64 ctx[] array on a
+> big-endian system, ctx[7] receives 9 and ctx[8] receives 8, rather than the
+> little-endian projection expected here.
 
-I cannot test suspend/resume but adding the power-domain is reasonable.
-Will be added in v2.
+Ok, will fix due to possible arm64 big endian.
 
-> > diff --git a/arch/arm64/boot/dts/freescale/imx8qxp-ss-dc.dtsi b/arch/ar=
-m64/boot/dts/freescale/imx8qxp-ss-dc.dtsi
-> > new file mode 100644
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/freescale/imx8qxp-ss-dc.dtsi
-> > @@ -0,0 +1,236 @@
-> > +// SPDX-License-Identifier: GPL-2.0+
-> > +/*
-> > + * Copyright 2024 NXP
-> > + */
-> > +
-> > +&dc0 {
-> > +	compatible =3D "fsl,imx8qxp-dc";
-> > +};
->=20
-> [Severity: Medium]
-> Should there be an override for &dc0_irqsteer in this file to set its
-> SoC-specific compatible string?
->=20
-> For example, setting compatible =3D "fsl,imx8qxp-irqsteer", "fsl,imx-irqs=
-teer";
-> here would ensure the node matches correctly. Omitting the SoC-specific
-> compatible string might mask the missing power domain violation from
-> dtbs_check and prevent SoC-specific driver quirks from applying.
-
-This is a good idea. I removed the "default" compatible, similar to the
-other dc nodes.
-
-> &dc0_irqsteer {
-> 	compatible =3D "fsl,imx8qxp-irqsteer", "fsl,imx-irqsteer";
-> };
-
-This is added in imx8qxp-ss-dc.dtsi instead in v2.
-
-Best regards,
-Alexander
-=2D-=20
-TQ-Systems GmbH | M=C3=BChlstra=C3=9Fe 2, Gut Delling | 82229 Seefeld, Germ=
-any
-Amtsgericht M=C3=BCnchen, HRB 105018
-Gesch=C3=A4ftsf=C3=BChrer: Detlef Schneider, R=C3=BCdiger Stahl, Stefan Sch=
-neider
-http://www.tq-group.com/
-
+>
+>> +	s_i = ctx[9];
+>> +	return 0;
+>> +}
 
