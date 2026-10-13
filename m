@@ -1,78 +1,78 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89661450415
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 22:07:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05035625F0
+	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 22:15:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.128.171
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791929236; cv=pass; b=mSJl7uNaWzdJmDxehMsZTzlho4ls5pskxsZiGVP3zMtwICwFM1lNWjngHtL4AlbqsXoSm+aZrQvRgSjrhiL2sa01fkHXdxXGQHAP/ooTpNiU/d9+g2M6EjCT93fBflftlWOjtLHAAd5Fy5jeIFGr4G2UoBbQctQKZ4AsVlRgF88=
+	t=1791929716; cv=pass; b=PdTfC0S0WuFqkdEs7PyakJghe+pUG839b16Zlcx6JqlLzJ4Te/iucKeNNbuLpX2E1AfMXeU0EmQkvKX7jRmYxb9ktpLNm1xseR99RtBI7kD0/2ACrDMUdRGSuhqqIaiVkvpe2cZmULrAonMgTKCDlP/HWYb6bDNUJ3vM4yXZiL4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791929236; c=relaxed/simple;
-	bh=t3LBPAFHnhQ1u7O0ECQtw6w9DPC/4CEOsts9RgS3xwo=;
+	s=arc-20240116; t=1791929716; c=relaxed/simple;
+	bh=YoOftzpeEReVb6O4VclP/t8iOYPrrpNMFEoppDguHGo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gjyLC5wVT5X9Lu0/HnqcgfXNa/iegX4ZesEZqwnQLI9iAtn5sQ6hVIwzfAqM+BvcZeCoNaxdfrloYrZA20MxSL3AzThBEkt2QTb0kMUfsXxLxfv4J+9df37zJFC1KTMuH0ilvP0K6SIE3AwiCjZBH88RfiW1iuevBHrqsH1plSE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=YQJgwxdO; arc=pass smtp.client-ip=209.85.128.180
+	 To:Cc:Content-Type; b=ByNeGZxMr3+gaxSjuU9oFErw69f3NdJA62yJjDMpxPhJ38REvY5JbZJ2bl1qEctGMaFywu7Y2jkuBFMFo/y3Dzmz5Xso65l/bjvLQWgSe66G/IBsRm7Y489b3t7KWCe8DPuoU7SO3WpW97d3Qf3B74ttQnoZWNoduLsm9Vepz6A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Apk5kxWN; arc=pass smtp.client-ip=209.85.128.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="YQJgwxdO"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-8726acc5eadso27649937b3.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 15:07:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791929232; cv=none;
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Apk5kxWN"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-885cf67963eso27774617b3.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 15:15:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791929712; cv=none;
         d=google.com; s=arc-20260327;
-        b=G3Yudcb0ooUOHfnT3U64zpIhTKP/JyhLhl8urgKW96KRZeCgawwrCJl64xLXiWsUCT
-         tZOLmC35a/9HUBsZQFN2R4uh9rEY3nAV7QMLHTakUlIixzp1o19XtPnRm9j2yfrc86IJ
-         aApUOc/JnAXGIWCm9E14V3z10EdaGZ6ekBHadGsTJKuw3VZkgOt0RCjo/QzgMzTh2LZ6
-         d9zbmD+OUpRzEY111XQPsz4qfJ+bWc2hz9cMFRxoFHIrQ9SuQ0z9D6cJYXAUCPeavXrW
-         xaphvMyW6HeLMkI8NUUC+Fc7H9LTBVqLwT3ZTkxp/RbD7JiuvecOTOPoyRqWLCUZc6sk
-         dZ8Q==
+        b=GIfeuS7vGypYtwfBKJg+TVgpnFjY0lbr5ECk8SpfkxbvI95RVnstovj1K2CR4IVgGH
+         70oKOe0W2Rs/Qd0NbBAMvCrwgU7GD4c95IliMWjcbfXXFEApf/JwxpPQtWhC6SoyRjO8
+         J1gA6ygUuBqrnTeykX80m951mWoDPHTwvGgtHW4IC3vpNlTFHdwLJwx0uxlonnxb51mZ
+         DuziSfEot6f9y0KkQ1MrqXDUB6Cvnqb9oy3nVJgY/FrPetseEshFtqgwXJbX4egrU4z9
+         xaPBqepTvt0QxcqQt4mGI3/vHIo107KcGa3eWHrd0rcu9/55vwB/z+LOv+Ab+hC8V5No
+         onEg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=3V04dj+1E4Q2ne6jooiMIXl4K+a/cJClSlFVSPgO3gA=;
-        fh=ewVYb1buN4xdRIlKTNNvXszcZ13tdJXwh5m2LoMQFCs=;
-        b=L1Ks8opXv5HI8WeUDaHeExZvcop3TO6XzvUQ2cDYoK3kGn8045ZR3HeCHwVQOETydr
-         yf3lbE6k2yAG1X5M61TA7ORgRNnlvhJMSEm8YmfLTVNsUZ2F9lF65uZfyAkfGSNYKNY/
-         nR3y0I+uiAZGjZm6skRuObSGUwSxlLtk8++j7UvDfwYyT86p91skADDAGIeeEtEMSEUh
-         cN38osDnwQVBzpVXrAkkQSQHffZ7RQMtLtRy66Nh2jC0FtvDsbeygzoabERfzH7IL6ut
-         3d+35KeSPS9pPTNoBz5qV7aRtB9cUjAbRl2JAyf4Rwqkb4H8QwdGc8/2pOD0mLbPktfw
-         JMLA==;
+        bh=Gu1pMEg3izEfc/rQ67eSbYz040q7y2e9OLH8nvi7wBU=;
+        fh=NuuKE6esldo7sF4YAuFYYwAwPAwD6tMqJju31BduIZ4=;
+        b=IP0dWBUEXpbGYQN6E9yiSAN2e/Nw0n8iZwYP4FCvf1y0dX11h/fedZmJ5j6B5ZcAzZ
+         GFlhUQib+BLHTHxvWDqRag65GpaB6QCay9eTnE0Y5HvDtr08Msqu6KVPtHGbYpNLIATc
+         HBvgxg/Fc9kkcp0e2G9zyoXFJGEeB05fGOVv+miaZLR5X5f5UDN94Oj4IkkuxEGkV/Lg
+         fjbFrfzeaYmpQKbjIwWfzqi2PhqbJuIBna250dr1YInGXJXZYvfh7bsex3QsOI8qjEhI
+         08LnOVzLi9h7c3L8rs2FDNsujyamhD+4rK5lryLpaeHYD/PRKBqFi6W7aOSAgmJcu0RR
+         GoDg==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1791929232; x=1792534032; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1791929712; x=1792534512; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=3V04dj+1E4Q2ne6jooiMIXl4K+a/cJClSlFVSPgO3gA=;
-        b=YQJgwxdOH0Ng8AaTtSrIloNaN2oVCqDmLnr7SdrL7CaU8BK1ONiD2NfiGS5JwglTwT
-         Tl9upnZUzY89bekMWa3LLuTJKwKp5Nrd9dlIVLJ9UO9FH2W+JMMQe30/lWpzHzlRuzU/
-         DPF42/02VCpPIUD9bE8EkvA6c8ZFNU5/r1YiE=
+        bh=Gu1pMEg3izEfc/rQ67eSbYz040q7y2e9OLH8nvi7wBU=;
+        b=Apk5kxWNtE2jHo4UetblcpOT7HfRfa8TxHlsglMDCN+9g+PheG3wKAAEg5llBp3Cxu
+         3E0PvOiWYhnrDZ9MYRxfSW0+0rwL/f3MjRIVzXt3BFCSHJbcYb5C4X4rXKKtkhgwQ4Rk
+         RBGyBp9tTD6fsNz/LXCPR+CZ73RVOMy0EehEM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791929232; x=1792534032;
+        d=1e100.net; s=20260707; t=1791929712; x=1792534512;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=3V04dj+1E4Q2ne6jooiMIXl4K+a/cJClSlFVSPgO3gA=;
-        b=iaud+mp41nB0cSIPYff8qMZBnC9ordUkZoenJW7Zbc+LaHeSnw3OeWBpxc3dhzarSs
-         KM/CDR34WPzCIgrIh6J1lUgMx5DtTDvDF16MQ5gOeTymEBiiwGpG+BCuir3EctMFaPvs
-         X8B5BnQ6BBEccUrXdVihIp3B/9hIDUbZHhdP+AZGzje9pLTwwm/wbHsERCpUHZ4aQY4p
-         mghxezl03jXGNkbuShsw4H4ti/LTpb6WIy4J2g1lxfd492HDuUswM+mFrmWNRErZSlPv
-         sv+AGxRh38D4HMNppKNATFVA/G7IEf3G6b6afYqVrgFsDr9n4H9ZgC7pFChxspvZ79mh
-         eahg==
-X-Gm-Message-State: AFq9FYI7gcdaRrnNiiq9EnDwGlyB1TFdPoxE6vEoByURTd60/vpkas4v
-	q0tzvIxVznVJNQIONSHqE51Dbi1KhZM9nJ+mORRWyIczqIXLngS1kiDRDucqbW3+ZbP5GzSYctA
-	bL0kTnIwDe8O1gUGJmWiQqzzVnniCSDPGWG9q+lvRaTmVoINKBNG/3Q==
-X-Gm-Gg: AYBFou027rbCapdejCPzpvpteww3jC/mHw7EekHsqdmUkhj7vvQcrqOQntgb9Vpigh7
-	N9+8nxTzBxvV19DiFPQCKF9/CdCxvdB3ayNRxMoTHTH4A0zfZOjgdmxsyik41YspUo+6ftwEJHr
-	5gboa1yVkYXKn9IbQJNKSYcdLtn5D2Tal9G01AFtPYN312KUylWKFDC1EvqgKc08GYe2pkgUNyA
-	HE9QjIRD6PJn541Ob6r/cDfFRAy9wJmliUs58D4qGdTC17zahqIMpGdJUJjTeqppM5nbOKjSZgf
-	6SpvadcjRs9kt8fe0noOGPwIciM+uQIzzcA398l8BYjyBids19/PYkr/WsnjVf2V+LRMT+EQo4x
-	nf+9aMMivyoA=
-X-Received: by 2002:a05:690c:112:b0:8b0:b12d:6c3c with SMTP id
- 00721157ae682-8b0b12d703emr16903837b3.43.1791929232182; Tue, 13 Oct 2026
- 15:07:12 -0700 (PDT)
+        bh=Gu1pMEg3izEfc/rQ67eSbYz040q7y2e9OLH8nvi7wBU=;
+        b=mgTuB0xnfdg+QiUSUxW4slIhQqjyuQWsh0G8XXeNAOeyZ1H/H4ylieEOoUMh5gJFDD
+         29reDAXigDUDl3sFn8XaadgrTd4saPmGh0Rm1g0zoWKqo1sYvyJ6DPaW0VQyh9rHpVwd
+         oKNUsGtiw0+q76hT/Ri2b55RBpTpUZiSdueQ5ooip7hcCD+cIKdIMaJY8szSrz6K2cbj
+         Apxzama+4w9WTpoocbNeNt+fhWb5BjOuCkO1DoVj2/4+DxUFV8IHkjcUZ19yonDBTZN0
+         ddvEQS5LePe7CeS3xR81lxxhFRZaw3zcht7Ng6fA0vAKqNvICb3XEfS8LmzsZrE6yNxM
+         NUvQ==
+X-Gm-Message-State: AFq9FYIGbs5Vb6Lfg50tOddmiy2+flhRdhhSmZKo8C7mCpvkueI4uyjY
+	2u7G+1nvLHcKXgwof4BzP6DLdlHiM4bf4J3AcWTRcRhjGrHZ/o5sx0P3uu/eKeOziuHUG9jEKU4
+	3FkErEntWCyAvyXaTmvdKUDeFZFyGgdv7v60Knc5R0gTjxS5dulEEEg==
+X-Gm-Gg: AYBFou0xOHZ0ZFyBjMMFMfOg14fmPiIfxVIAwkrhYRaKc/RwfCUUnJo0JcCAF9fIKqQ
+	rVRdmfD21tJypo2S1ib2pClf5JLQ42t+meOwT4g34QDads3Lul1aKgF8UuMFwP++XTxh/YeRRBK
+	GlZ0v/k7q26wyDvWLbrMcmidtBYKMhP3jcr9tIFhLjQ9PmCJVpcDHkesPc0v07qXgBFLcJuwJWX
+	gWIsOB6eTbHv2MybkpLw/C1wDCSJIZfBXxP9RnFVdiN9WeZaexNs9qBpj3ZF9ofY+5wwYw8oJX1
+	VWejLfoyYV/aG3z5D3OqRQXy1NGo41tHl5nXRn5416ZR9ybMXuSflLEyh/MIjCyWNAlWBToFN97
+	7uu6LjfACxA==
+X-Received: by 2002:a05:690c:e1d9:10b0:8ae:dfee:cd30 with SMTP id
+ 00721157ae682-8b07ee80677mr35220177b3.56.1791929712213; Tue, 13 Oct 2026
+ 15:15:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -80,203 +80,94 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20261009-send-upstream-v5-0-384af01da3ee@chromium.org>
- <20261009-send-upstream-v5-5-384af01da3ee@chromium.org> <sashiko-outbox-166153@kernel.org>
-In-Reply-To: <sashiko-outbox-166153@kernel.org>
+ <20261009-send-upstream-v5-7-384af01da3ee@chromium.org> <sashiko-outbox-166152@kernel.org>
+In-Reply-To: <sashiko-outbox-166152@kernel.org>
 From: Jingyuan Liang <jingyliang@chromium.org>
-Date: Tue, 13 Oct 2026 15:07:00 -0700
-X-Gm-Features: AclHuK8JEhgVWod97Oeyuxy5mtDaH6c72Kz69Kz8EDN-ZL4874rxGG-gecFiSkY
-Message-ID: <CAEe3GZFWJ45Up6=4UbW=MQAPmc3BEdVHqkMYnDM3FfNYvuFRjQ@mail.gmail.com>
-Subject: Re: [PATCH v5 05/11] HID: spi-hid: add HID SPI protocol implementation
+Date: Tue, 13 Oct 2026 15:15:00 -0700
+X-Gm-Features: AclHuK8LY0flPJXmLlCRmm3TtT6hKXqXYTxefNgnCBXeN5jvcX9L7jCw_bXXSqQ
+Message-ID: <CAEe3GZFCEBXTQqGw+JdppYm7hCwuoBTXuAf104ru5nArKwes9A@mail.gmail.com>
+Subject: Re: [PATCH v5 07/11] HID: spi-hid: add ACPI support for HID over SPI
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-trace-kernel@vger.kernel.org, 
-	conor+dt@kernel.org, linux-input@vger.kernel.org, dmitry.torokhov@gmail.com, 
-	robh@kernel.org
+Cc: dmitry.torokhov@gmail.com, linux-input@vger.kernel.org, 
+	conor+dt@kernel.org, devicetree@vger.kernel.org, 
+	linux-trace-kernel@vger.kernel.org, robh@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 9, 2026 at 3:42=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Fri, Oct 9, 2026 at 3:41=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 4 potential issu=
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] hid: sleeping in atomic context via synchronous output_report
-> - [High] spi: dma: unaligned DMA transfer buffers cause memory corruption
-> - [High] hid: spi-hid: use-after-free of transport buffers on concurrent =
-realloc
-> - [Medium] hid: spi-hid: SPI_HID_REFRESH_IN_PROGRESS breaks hid_device_io=
-_start() during probe
+> - [Low] spi-hid: data race on bus_error_count in spi_hid_error_handler
 > --
 >
-> commit 4647f83267b811c038d6b541aee03ea186664da4
-> Author: Jingyuan Liang <jingyliang@chromium.org>
-> Subject: HID: spi-hid: add HID SPI protocol implementation
+> commit a262e333d16eb58c8aa593f81c7497790c2b01b7
+> Author: Angela Czubak <acz@semihalf.com>
 >
-> This commit adds a new driver for the HID over SPI protocol. It supports
-> basic input and output reports but omits features like multi-fragment
-> reports and power states.
+> HID: spi-hid: add ACPI support for HID over SPI
+>
+> Detect SPI HID devices described in ACPI.
 >
 > > diff --git a/drivers/hid/spi-hid/spi-hid-core.c b/drivers/hid/spi-hid/s=
 pi-hid-core.c
+> > index 83678e6835818..f4e9b4e1294ed 100644
 > > --- a/drivers/hid/spi-hid/spi-hid-core.c
 > > +++ b/drivers/hid/spi-hid/spi-hid-core.c
-> [ ... ]
-> > +static int spi_hid_input_sync(struct spi_hid *shid, void *buf, u16 len=
-gth,
-> > +                           bool is_header)
-> > +{
-> > +     int error;
-> > +
-> > +     shid->input_transfer[0].tx_buf =3D is_header ?
-> > +                                      shid->read_approval_header :
-> > +                                      shid->read_approval_body;
-> > +     shid->input_transfer[0].len =3D SPI_HID_READ_APPROVAL_LEN;
-> > +
-> > +     shid->input_transfer[1].rx_buf =3D buf;
->
-> [Severity: High]
-> Could this cause memory corruption on non-cache-coherent architectures?
->
-> The read_approval_body is a 5-byte array that immediately follows
-> read_approval_header in struct spi_hid. Since it starts at an unaligned
-> 5-byte offset, passing it as tx_buf to the DMA sync path violates
-> architecture DMA API rules.
->
-> The rx_buf parameter also receives unaligned memory when buf is passed as
-> shid->input->body later in the IRQ handler, which starts 4 bytes after th=
-e
-> dynamically allocated input header. This can trigger CONFIG_DMA_API_DEBUG
-> warnings or corrupt adjacent memory.
-
-I don't think so. The read approvals are TX-only and never change
-after probe, and the RX body only shares a cacheline with the input
-header, which isn't touched during the body transfer.
-
 >
 > [ ... ]
-> > +static int __spi_hid_send_output_report(struct spi_hid *shid,
-> > +                                     struct spi_hid_output_report *rep=
-ort,
-> > +                                     u8 expected_response)
-> > +{
-> > +     struct spi_hid_output_buf *buf =3D shid->output;
-> > +     struct device *dev =3D &shid->spi->dev;
-> > +     u16 report_length;
-> > +     u16 padded_length;
-> > +     u8 padding;
-> > +     int error;
-> > +
-> > +     lockdep_assert_held(&shid->output_lock);
 >
-> [Severity: High]
-> Is there a potential use-after-free here if the output buffer is realloca=
-ted
-> concurrently?
+> > @@ -327,8 +303,21 @@ static void spi_hid_error_handler(struct spi_hid *=
+shid)
+> >
+> >       shid->power_state =3D HIDSPI_ON;
+> >
+> > -     shid->ops->deassert_reset(shid->ops);
+> > +     error =3D shid->ops->deassert_reset(shid->ops);
+> > +     if (error) {
+> > +             dev_err(dev, "failed to deassert reset: %d\n", error);
+> > +             shid->bus_error_count++;
+> > +             shid->bus_last_error =3D error;
+>                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 >
-> When the HID core calls spi_hid_ll_start() dynamically from userspace or
-> BPF, it expands the transport buffers by calling spi_hid_alloc_buffers()
-> if the report sizes have increased. This reallocation uses devm_krealloc(=
-)
-> to free shid->output and replace it.
+> [Severity: Low]
+> Does this introduce a data race with other updaters of bus_error_count?
 >
-> However, spi_hid_ll_start() does not appear to acquire shid->output_lock
-> before reallocating. If a spontaneous device reset interrupt schedules
-> reset_work on a global worker thread:
+> Userspace sending an output report via __spi_hid_send_output_report() che=
+cks
+> SPI_HID_READY locklessly. If SPI_HID_READY is read as 1 just before
+> spi_hid_error_handler() clears it, the output report path proceeds to acq=
+uire
+> io_lock and invoke spi_hid_output(), which updates bus_error_count on err=
+or
+> (under io_lock).
 >
-> spi_hid_reset_work()
->   spi_hid_reset_response()
->     spi_hid_sync_request()
->       __spi_hid_send_output_report()
->
-> This path can execute concurrently, accessing the freed shid->output buff=
-er
-> under the lock, leading to a use-after-free when writing the header and
-> payload.
+> Because spi_hid_error_handler() updates bus_error_count here without hold=
+ing
+> io_lock, both threads can execute shid->bus_error_count++ concurrently, w=
+hich
+> can lead to lost increments or torn reads via sysfs.
 
-Thank you. I will fix it in v6.
+This is harmless in practice: bus_error_count and bus_last_error are
+only debug counters shown in sysfs, and losing an increment would
+need two failures at the same moment.
 
 >
-> [ ... ]
-> > +static int spi_hid_send_output_report(struct spi_hid *shid,
-> > +                                   struct spi_hid_output_report *repor=
-t)
-> > +{
-> > +     guard(mutex)(&shid->output_lock);
-> > +     return __spi_hid_send_output_report(shid, report, 0);
-> > +}
-> > +
-> > +static int __spi_hid_sync_request(struct spi_hid *shid,
-> > +                               struct spi_hid_output_report *report)
-> > +{
-> > +     struct device *dev =3D &shid->spi->dev;
-> > +     int error;
-> > +
-> > +     error =3D __spi_hid_send_output_report(shid, report,
-> > +                                          spi_hid_response_type(report=
-->report_type));
->
-> [Severity: High]
-> Does this sleeping lock violation trigger scheduling while atomic warning=
-s?
->
-> According to the HID subsystem guidelines, the low-level output_report
-> callback is used for high-throughput data on the interrupt channel and
-> must be asynchronous.
->
-> When spi_hid_ll_output_report() calls spi_hid_send_output_report() or
-> spi_hid_sync_request(), these helpers immediately acquire shid->output_lo=
-ck
-> (a sleeping mutex) and perform a synchronous, blocking SPI transfer. Sinc=
-e
-> the callback can be invoked from atomic contexts (like updating LED state=
-s
-> from an input event handler), sleeping here may cause panics.
-
-No. hid-input defers LED updates from input events to a workqueue, so
-->output_report() isn't called from atomic context there, and USB-HID
-and I2C-HID already sleep in this callback too.
-
->
-> [ ... ]
-> > +static int spi_hid_input_report_handler(struct spi_hid *shid,
-> > +                                     struct spi_hid_input_buf *buf)
-> > +{
-> > +     struct device *dev =3D &shid->spi->dev;
-> > +     struct hid_device *hid;
-> > +     struct spi_hid_input_report r;
-> > +     int error =3D 0;
-> > +
-> > +     scoped_guard(mutex, &shid->io_lock) {
-> > +             if (!test_bit(SPI_HID_READY, &shid->flags) ||
-> > +                 !test_bit(SPI_HID_STARTED, &shid->flags) ||
-> > +                 test_bit(SPI_HID_REFRESH_IN_PROGRESS, &shid->flags) |=
-| !shid->hid) {
-> > +                     dev_dbg(dev, "HID not ready (flags 0x%lx), droppi=
-ng input report\n",
-> > +                             shid->flags);
-> > +                     return 0;
-> > +             }
->
-> [Severity: Medium]
-> Will this prevent drivers from receiving input reports during probe?
->
-> When spi_hid_refresh_device() is executed, it sets the
-> SPI_HID_REFRESH_IN_PROGRESS flag before tearing down the old HID device
-> and creating the new one:
->
-> spi_hid_refresh_device()
->   set_bit(SPI_HID_REFRESH_IN_PROGRESS, ...)
->   spi_hid_create_device()
->     hid_add_device()
->       -> driver probe()
->
-> During this entire time, the input report handler will drop all incoming
-> reports. This conflicts with the HID core API contract, which explicitly
-> allows a driver to receive inputs during its probe phase by calling
-> hid_device_io_start(). A driver that requires a firmware handshake or
-> data during probe could hang or fail upon device refresh.
-
-Thank you. I will fix it in v6.
-
+> > +             /*
+> > +              * Without a successful reset the device will not send a =
+reset
+> > +              * response, so no IRQ would trigger another recovery att=
+empt.
+> > +              * Retry from here; reset_attempts bounds the number of t=
+ries.
+> > +              */
+> > +             set_bit(SPI_HID_ERROR, &shid->flags);
+> > +             schedule_work(&shid->reset_work);
+> > +     }
+> >
+> > +     /* Balance disable_irq() above; a retry disables it again. */
+> >       enable_irq(shid->spi->irq);
+> >  }
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261009-send-ups=
-tream-v5-0-384af01da3ee@chromium.org?part=3D5
+tream-v5-0-384af01da3ee@chromium.org?part=3D7
