@@ -1,140 +1,128 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A938A51DDED
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 16:50:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A5A51588E
+	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 16:53:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791910210; cv=none; b=AKK7NtvFy8HIHTZMiOmYxnlx1BGUjjW2a+8ffN8OQvajfwWJyvzJSKrhNG2UmE86KQivyxd8tBcXrXpxFPV3zDCAmfVGRN7kGMVKz3wk6S5bqEljsZLN6jvJbuph1vsdTGrLLJGyG5BxJiWW3T+w/35cKzb9RjzmCrzoJcjpTxc=
+	t=1791910411; cv=none; b=AsxiR//+1izOLxD6os3Gyq8/UoSGso7b9MolR7F9/8p/i5JylBugW5AaQH1auRuV29Ygkhkcmt9gfbluuoTpcXhVtegmlUkO1WgV2sD4+FTzxMOeKckoOcCEtOtQ5cyFKmVKrALOPUKmeZq+qIB6E4RgmgjtC413nC0koYbVlCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791910210; c=relaxed/simple;
-	bh=7nzPH+spIl+VFhBQ0La9/DW0fBZ1+V8PlC/sPvoM04Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BlOaGqGRxCktexcon4d8cTV5/ANOOOAaeRr5U76X7/FFZFPwCDm6T16fm2CXKPHu4mA/9Vh8i9z/v3qRjfFCU9Jme796ctx7W0mMiqY6w50dqLH5XRfuH+VsLkGa3KBjgo9P2hgVJoM8r52NT4AlAggBxOovW3+0Rog/7hFR4sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=XBpqft46; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1791910411; c=relaxed/simple;
+	bh=Bf1+cUNbE5qkVcTONyft5tgSlgcrjgq5df40Ua6ahf0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sbVu8HMFI11XKzF+CvMW4tJk+J24veOiDMtHfSXM7X2sk8xB0rF52P1jCuogyfvD4Na8Vl+csEzPHIPQYJ+4aT5E9sQ7QR/qVzs7uU2yelLaNSFzfo8vbiMqsUKwpULSrnVekNMc1Vt/AUgCSz17tK0+ZiURB7CoDiM+6Mccyl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=GWxRcSJq; arc=none smtp.client-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XBpqft46"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-3ab8309dcbaso2329533a91.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 09:50:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1791910209; x=1792515009; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=GqaPQWFTpGy6Tato4Cnm3u7MBWIxvKK7hZ5Hxsyu9Wg=;
-        b=XBpqft46zbajAfTOrWFc/x+7xLpf/2DLOiSYS3MuvkURzNgeFiEjk08HLhHQeXDEL4
-         J8NXx6AAwJ9SLwL1xh/WCw7tK5cjy69peU7UnmbAdClo6nDblcZi8g0gwv+/YKCIInNs
-         pG6ARGdh0iwpQs/JlZZPfZPOG/JvsvOWiu9FhQY8iIGHoJrKZMk3NhKHKm6cK45oTByA
-         CVhQP+pDTI0YFwKEER5xHuHB4h5TLutEbgS8n0SAY3g47c9UUNjL3VFUt4Z//2pXqgZ/
-         pTx7efu2RlATT7Imzr155bcwzmHr3Jw1IgnhBfOF/E3ISzQFI7+p6H/F9M4U9hjDGtuq
-         tH+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791910209; x=1792515009;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=GqaPQWFTpGy6Tato4Cnm3u7MBWIxvKK7hZ5Hxsyu9Wg=;
-        b=HgPyQjNLqzfZHax3NQz1PxmdqoZi1yAgSm5bYaUVmEMBnNBOVCrV+6lgMZlOdV8QCL
-         Vn3vPBAu5evs/7/x7+dBc0bp3OdCAI1KPbntE72Ow3s3EaWopvG8c4XPRtofNqt1QbRA
-         f0Lq70TAApcaiS8tehAAW4DtOgKVVuDK9eaYJhd6UVwphTSrWRHCKkNyWoZe7h7CMplb
-         ThBgoOdNAWjIVrQmtK64nGQOiVQ4iOKBHA+vOhqZ3XCZ2Jos9ofXXeEgNM9orYbRK6mH
-         6nVEFhrptBRsCFe4KCn/JSpEhNA3Y19UpOpqyNwxeBelTc9GJhZqiVuJTSwzV/2I4A2Z
-         +kkQ==
-X-Gm-Message-State: AFq9FYI8hegXwd4xweWWiKOaArCqIIsozXSIrLV+H/Bc1ldNgnKqnLpI
-	9EY1gzXdRkZ0PvGHNG1vFe4spC6obP4R4r5DpHiMxVNBGBl81KlWANSGW4ZIAYB2ECYjEYr+0Ee
-	8IxB0aYSH
-X-Gm-Gg: AYBFou0NdkmoIwk73QnXxdGUVlmZICKrRl8Qdy/LmWIKz6wujYWsYwiCo06cIIkKHnL
-	HS3PDEozXdvD7rwLWPctNUhxa+yQ9U80y+X4t2+65elOGB1joS/ZDQODOzEEDaU/Qp48qNPQrbj
-	T8bm2XobS+uTGVzlo3UFMWxCUy0OoQNJ7JYXwmnBayXUJlqC6nuIYk6k+s2UXkprth8pz8jFlMH
-	BAOVJoHcvDtXuKUpcEPuo9hJcALeU0JU1ma5tt99r0kVWNrFHq+GmPaMm5pUa+doKZEYT7j4lBe
-	caAU8bWICAxJbeiS0b9rweSt0Q3ORy5rmoOLz9U1c3POlUu0vQiGCj/agcdl+WzhHBDWIQmweHn
-	Ro1+fA4s7+wuMAvBatrHgOH6SQPSGu4A7UAbduUtIK5P9F0FEk1uMX9j16gdXoL5sPykIXnPuqw
-	6dw835dxHFxAKGEZw+dTISfbQnhQyJWsx4/w55BNG7Fp77RZ2eL4rHCqwpV5rb38mv+Sxjkn7hQ
-	DX5nbulafcNSn6NCmsNM4HhmICj059laFc=
-X-Received: by 2002:a17:90b:1dd1:b0:3a0:c85a:ee12 with SMTP id 98e67ed59e1d1-3ab3aceba09mr7658162a91.41.1791910208352;
-        Tue, 13 Oct 2026 09:50:08 -0700 (PDT)
-Received: from google.com (64.75.127.34.bc.googleusercontent.com. [34.127.75.64])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ac5f3db2f5sm410850a91.1.2026.10.13.09.50.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Oct 2026 09:50:07 -0700 (PDT)
-Date: Tue, 13 Oct 2026 16:50:03 +0000
-From: David Matlack <dmatlack@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kexec@lists.infradead.org, linux-pci@vger.kernel.org,
-	Adithya Jayachandran <ajayachandra@nvidia.com>,
-	Alexander Graf <graf@amazon.com>,
-	Alex Williamson <alex@shazbot.org>,
-	Bjorn Helgaas <bhelgaas@google.com>, Chris Li <chrisl@kernel.org>,
-	David Rientjes <rientjes@google.com>,
-	Jacob Pan <jacob.pan@linux.microsoft.com>,
-	Jason Gunthorpe <jgg@nvidia.com>, Jonathan Corbet <corbet@lwn.net>,
-	Josh Hilke <jrhilke@google.com>,
-	Leon Romanovsky <leonro@nvidia.com>, Lukas Wunner <lukas@wunner.de>,
-	Mike Rapoport <rppt@kernel.org>, Parav Pandit <parav@nvidia.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Vipin Sharma <vipinsh@google.com>, William Tu <witu@nvidia.com>,
-	Yi Liu <yi.l.liu@intel.com>
-Subject: Re: [PATCH v10 11/13] PCI: liveupdate: Freeze preservation status
- during shutdown
-Message-ID: <as5hO15vdv3fnMeh@google.com>
-References: <20261013162529.1928093-1-dmatlack@google.com>
- <20261013162529.1928093-12-dmatlack@google.com>
- <sashiko-outbox-170132@kernel.org>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="GWxRcSJq"
+Received: from smtpout-01.galae.net (unknown [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 83A62C653F4;
+	Tue, 13 Oct 2026 16:54:19 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id C8E0C60362;
+	Tue, 13 Oct 2026 16:53:13 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 2DEFC11D714FD;
+	Tue, 13 Oct 2026 18:53:10 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1791910393; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=iHPYa0/Oq6Fpvpu0NFhqnH64bHq9AyO4cfaAIVmzVx8=;
+	b=GWxRcSJqpJ5YCykL6qTYMGDEn0XCoERbh0ikqwcc6yyyRszBgdjVQGKdChUUcGFShmyabe
+	DSqTyY0aYRmeU1Zpk4lft2mzq1TuNaQ8rsthI1FjPFy1zDjmtcIz/iPUEwdpumRh9mrUO4
+	GDNdgoEA2snHF6tq5huO0590iJ5XfWhPHl8MNNomdBUqRM/W6MbqjQJystixnI2CI1J+Qi
+	m2A1LAVky0xJF7LSAwFqMAtlKjZrkGvR8sqFTiFevttr/weqyI22xM9cQRDTSPmThlXuTv
+	SoDuur1irMzuW5DAghll4CuZBFc1HJoFscp9xmOcbNZzyyS1sMQGBlyC+1xpvw==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Jerome Brunet <jbrunet@baylibre.com>
+Cc: sashiko-bot@kernel.org,  sashiko-reviews@lists.linux.dev,
+  conor+dt@kernel.org,  linux-clk@vger.kernel.org,  robh@kernel.org,
+  devicetree@vger.kernel.org
+Subject: Re: [PATCH v8 5/7] clk: nuvoton: ma35d1: Reparent SYSPLL correctly
+In-Reply-To: <179181904945.33566.17882786294681341398.b4-reply@b4> (Jerome
+	Brunet's message of "Mon, 12 Oct 2026 17:30:49 +0200")
+References: <20261004-perso-ma35d1-upstream-clk-v8-0-e1a106a128c0@bootlin.com>
+	<20261004-perso-ma35d1-upstream-clk-v8-5-e1a106a128c0@bootlin.com>
+	<20261004205551.6279C1F000FF@smtp.kernel.org>
+	<87zewti2pf.fsf@bootlin.com>
+	<1jjynw7bp8.fsf@starbuckisacylon.baylibre.com>
+	<87cxtni7m6.fsf@bootlin.com>
+	<179181904945.33566.17882786294681341398.b4-reply@b4>
+User-Agent: mu4e 1.12.12; emacs 30.2
+Date: Tue, 13 Oct 2026 18:53:10 +0200
+Message-ID: <87ld81v8y1.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-170132@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Last-TLS-Session-Version: TLSv1.3
 
-On 2026-10-13 04:39 PM, sashiko-bot@kernel.org wrote:
-> [Severity: High]
-> If a user task exits or closes the Live Update session fd during system shutdown,
-> the LU core tears down the preservation session.
-> 
-> When dev->liveupdate.frozen is true, pci_liveupdate_unpreserve_device()
-> returns -EINVAL and leaves dev->liveupdate.outgoing pointing to the FLB memory.
-> 
-> However, the LU core ignores this failure and unconditionally drops the FLB
-> reference:
-[...]
-> Will this leave a dangling pointer in dev->liveupdate.outgoing?
-> 
-> Since pci_device_shutdown() relies on this pointer to skip disabling Bus Master,
-> could this result in the old kernel leaving DMA enabled while the next kernel
-> treats the device as unpreserved, creating a risk of memory corruption?
+On 12/10/2026 at 17:30:49 +02, Jerome Brunet <jbrunet@baylibre.com> wrote:
 
-This can't happen during a Live Update kexec.
+> On 2026-10-06 09:57 +0200, Miquel Raynal wrote:
+>> On 05/10/2026 at 11:12:35 +02, Jerome Brunet <jbrunet@baylibre.com> wrot=
+e:
+>>=20
+>> > On Sun 04 Oct 2026 at 23:19, Miquel Raynal <miquel.raynal@bootlin.com>=
+ wrote:
+>> >
+>> >> On 04/10/2026 at 20:55:50 GMT, sashiko-bot@kernel.org wrote:
+>> >>
+>> >>> Thank you for your contribution! Sashiko AI review found 1 potential=
+ issue(s) to consider:
+>> >>> - [Low] clk: nuvoton: ma35d1: Modification of global static state
+>> >>> during probe
+>> >>
+>> >> There is a single clock controller. Should never be a problem. I can
+>> >> certainly move it in to more local scope if someone asks, but it's not
+>> >> practically needed.
+>> >
+>> > I may be missing something key here but why is not in your defined
+>> > indexes like the rest of the clocks ?
+>>=20
+>> SYSPLL and its parent (HXT_GATE) are in the hws[] array. Are you
+>> suggesting to use the hw_clk pointer directly there instead of using the
+>> parent data structure as an envelope? Because the issue raised is the
+>> global definition of the struct clk_parent_data and then its
+>> modification (since I need to reference the hws[SYSPLL] pointer inside).
+>
+> The problem sashiko is pointing at is that you are creating a global and =
+then use
+> it as a local variable, just assigning the the .hw
+>
+> So 2 possibilities:
+> * You just need the .hw then I don't really get why you are doing it diff=
+erently
+>   for this clock ?
 
-kernel_kexec() calls liveupdate_reboot() before device_shutdown().
-liveupdate_reboot() calls luo_session_serialize(), which takes
-luo_session_serialize_rwsem for write and, on success, never releases
-it. luo_session_release() and the session ioctls all take that rwsem
-for read, so once sessions are serialized, nothing can unpreserve a file
-until the kexec. If serialization fails, kernel_kexec() bails out before
-device_shutdown(), so no device is ever frozen.
+True.
 
-So during a Live Update kexec, unpreserve cannot race with devices
-being frozen, and the outgoing FLB cannot be freed out from under
-pci_device_shutdown().
+> * OR, this is one of the those clock where you want to check DT first then
 
-On a non-kexec reboot or poweroff, LUO is not serialized, so the
-unpreserve can fail as described and leave a stale pointer in
-dev->liveupdate.outgoing. But nothing dereferences it at that point.
-The only visible effect is the "Cannot unpreserve device after it is
-frozen!" warning, which seems appropriate for a session being torn down
-in the middle of shutdown.
+It is not.
 
-So I don't think any change is needed here.
+>   fallback to a fixed clock, then yes you need parent_data. don't forget
+>   the fw_name (which I did not see here) and use a local variable for tha=
+t,
+>   not a global
+>
+> Did I miss something ?
+
+You got it absolutely right, and while implementing the change I
+remember why I used the name instead of the hw pointer:
+
+     clk_hw_register_fixed_rate_parent_hw() exists, but
+devm_clk_hw_register_fixed_rate_parent_hw() did not.
+
+So since it looks like most of these helpers have their devm_
+counterpart, I will add this new helper in clk-provider.h. I plan on
+doing that addition in this commit because I think that is what Boyd
+used to prefer, but I can add it in a preparation patch that is your own
+preference, I don't mind.
+
+Thanks for all the guidance!
+Miqu=C3=A8l
