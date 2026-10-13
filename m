@@ -1,158 +1,228 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCF851A136
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 14:42:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791902538; cv=none; b=HBVpqPHxO+C7sMK24z0H338fG+3mCakWieJ+2OAS+Cc+6ABVJkHKM3xJZn2o7NZhfRGeGEPxDU32jKBk/kcWGeIfbL7vsObh6sNab7iBKOBzHkEUIzCIItoX0hrkN2DinpbFxpsxPa2boHAlRSU9HRLhahn6hKWtGIl3LJTNHew=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791902538; c=relaxed/simple;
-	bh=EDID393fC7tukPZfvcocCPsPfhIQrWG/1PsKk2F4FBU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WQhAqdj5pLlpnyKSXxnn6dgNfXpPk7lA21wWA/oK/fxwNBWBILzlrULk+nFaJ9rdF+5umsJVxVP4bSBCBUiclMaHvzcKTy7iRgb0gq6Kjvgb4z7mI3uFtI7cc/pEvyKYJkCBt+3U23UngE8qgaWe57JMT1Z5WXIFRTajFMCf7o4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JvMVnYcD; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E503D47BD
+	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 14:55:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.17
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791903317; cv=fail; b=VXt425ys2ACgYrmpY9vAIIi+ZcXkybi8HqEvSQuUI4dHjSUWySAp+8TrLj6MI+kcfopWKCIoGWLBSDuALzr7d/71A0jG+AJZ/tSuKA1VoHtNcX9cnK9oWnB8E5a4pEyXa8sTPppF95OYlrSa9pN0mjtoPaMIJeuKrkOeNaBGGN0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791903317; c=relaxed/simple;
+	bh=UI9PTqnuWtvLJvL6gatcs/S63HJ9+GRpMNMZBFUs1IQ=;
+	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=e2QxJm/TEv3ozlh0cfCGa5U8G1s3YR6ggpygx4Z8LvHQ7LPGxvgLciHvU6zz+lscEashik3Sq7pXZQnjE4CDOvtdHEqFr4Sy8iBKBAbl8gKHXuXwUENiT7Hs1+MgIPTBOATQffrwTmsq5Qrg1VACfJ8jpPpe6FkElYvbh/uwP5c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WiKycCLe; arc=fail smtp.client-ip=192.198.163.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JvMVnYcD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6317B1F000FF
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 14:42:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791902537;
-	bh=07oJOGeS5FhE8zN/c2ze/F/oAB3LVitexCPC6Cj5leQ=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=JvMVnYcDyjf5RrQ419cPeGJ4FIYvjLCKrTvdfIooUZM0Mk/5LCnlMc/KQRLoKmo99
-	 m4HFZZ+/LEuv/Qleo/iIuVwQZQo4IblWEPHNMiIAu+HW1V2n9DUBHoqwhzMctz9dmI
-	 0ai4LvhGAkd6Tomw0eFdpJOUEQFqqjqnY5vtG6HZNS4IkHH01Ft6k7GacS8ynGlvNi
-	 kLKz2Su5Ipk1N3v7uTpujzRBiVR7hSLoT8kRWnA5WxbkRbHSAxjRrdj/mJ4McM7XhE
-	 5CF2pGNdYRDWA7Hx9ly4W5w3Qc2NUHoqU1dEYs7mSZLKdmt/HYU8h/MsrtN1VlFxeg
-	 HDtPZRxNcO/wg==
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-93e6f83f0bbso284769985a.2
-        for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 07:42:17 -0700 (PDT)
-X-Gm-Message-State: AFq9FYJ4wzfa9OjH5JjX6pjVGdVSJqK/3V3YTkTqzFalLsTwqzfN8O7g
-	uT6KKZnb3RMGRH5nM9MnPh13blnrrq3xcxGTJt8fn7bHsPeqQUAssA8CNR8a0JEGe+OWWPzXsef
-	tKObBPZRgR7+W0fSoRvOLxFppP2uDzEQ=
-X-Received: by 2002:a05:620a:8389:b0:93b:d79a:c463 with SMTP id
- af79cd13be357-93ebd26b5e0mr2066173285a.59.1791902536734; Tue, 13 Oct 2026
- 07:42:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WiKycCLe"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1791903317; x=1823439317;
+  h=message-id:date:subject:to:references:from:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=UI9PTqnuWtvLJvL6gatcs/S63HJ9+GRpMNMZBFUs1IQ=;
+  b=WiKycCLe8VRTkUC6+nv1JzFHprBC4obxYNCfKbwVMUqlL5aby0/me98R
+   4pqQHSoSyn47RwTpZi2h3IPhcwrj7M56N+FvNukg9IdAhkh9txBRwAvqn
+   4OV6SPfSItnkJzyQtUwmJRyUTft3GVTI+EyMROMjyeyqrT3chY+hlCRxI
+   S62UQyaLGrl6GDa7ajH/mnY1nvcLmuc9SUCi7R2cjF4/Kdeo4RFwAbb1h
+   LIOd9PaqODjzCSbsrIbtZ7TvgiMfkwvOFh5SWUQxPi8cZ3yR0FhMPa6Rs
+   5y9Q9mAIkoa7CqREHZam4OgMPf9siHNy5IyTv3vsyH3jymvG0FvwGFbAV
+   A==;
+X-CSE-ConnectionGUID: q/F2wlDcT7C/0pk2J9oO2Q==
+X-CSE-MsgGUID: FeydC2OeQvi2T59to+l6GQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11934"; a="638225"
+X-IronPort-AV: E=Sophos;i="6.27,155,1787036400"; 
+   d="scan'208";a="638225"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2026 07:55:16 -0700
+X-CSE-ConnectionGUID: qsvM4lixQSK+6vUx6Ss1bA==
+X-CSE-MsgGUID: qir12uhuRQqFfivGlhQLIg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,155,1787036400"; 
+   d="scan'208";a="1267633"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2026 07:55:16 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Tue, 13 Oct 2026 07:55:15 -0700
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49 via Frontend Transport; Tue, 13 Oct 2026 07:55:15 -0700
+Received: from BYAPR05CU005.outbound.protection.outlook.com (52.101.85.53) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Tue, 13 Oct 2026 07:55:15 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FxsfdlQBPbQBtRq9bZB8UiYt4BqeogLJcXDon1bGNgvO6TVhKY8GvjbQHuBE19E3ID1SZoKo4r2Dd//5HhI4AywPtGn+EkuW6AqOaCxz/80EYjqzfpn/++EzjzJCfd8d89jtYxAlsvU5LOK3Jp17B8UlsZypRpHC2SJO7kccGk2tj1JuGCTgyZGzuo5j8F56DDBOPZVuqgOKjePpdbfFl+Fwue5x8KmTz+YtDdPPyzCI7dipwTeNRML7Riv3vOA4ne2ZC6D8rOtpJ/ZIR1kVPht2IOy+QbYwxVed6BatCWbJncfVDI3qsjyPpgKZsbBB6VLY2FbIJEjeZop2Txt5hQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1VWtHfkomVT5mRj9I5iNO1jg5EA51xxBP3VeFjMrhLk=;
+ b=hG8pRNylYO5im4dxYAs3FOpHSNf2a/zF7DmlBTkSSJBk/oHsNwXQamNG3z61nezQfxvXAPN2ui/81eaUpU5eTS+9ZKe5zdrEtKS6iOmhX6drOXxeCW89wYqD4S0+nCAZ+jryERZiKTsdlKsCux7rSZXJddHPzVL1Mb5xbzmmZO9t8pDfWp/BNOdoLH69gxF6icmzg0UhhEiK2sz3t4z//SEv0cTJ/qzcH/o0xMHGZE72vgOgN4u8OPJP3CU7R3tp28jIrvAkHHIZC6NHm4Wy0oNwSprBHJ/UTPOTUf4b0lx3F2xFXZYPMMqWZR28s4FnxA7pk2FGWDXmiiDHsv2gCg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CH8PR11MB852307.namprd11.prod.outlook.com
+ (2603:10b6:610:32c::22) by DSSPR11MB9644.namprd11.prod.outlook.com
+ (2603:10b6:8:374::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.23; Tue, 13 Oct
+ 2026 14:55:02 +0000
+Received: from CH8PR11MB852307.namprd11.prod.outlook.com
+ ([fe80::5f8e:c1ed:445a:a4b7]) by CH8PR11MB852307.namprd11.prod.outlook.com
+ ([fe80::5f8e:c1ed:445a:a4b7%4]) with mapi id 15.21.0522.011; Tue, 13 Oct 2026
+ 14:55:02 +0000
+Message-ID: <2afa1046-2520-4aee-9015-48aca9e27e83@intel.com>
+Date: Tue, 13 Oct 2026 20:24:53 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 04/16] drm/xe/hwmon: Add helpers to validate thermal
+ sensor readings
+To: <sashiko-reviews@lists.linux.dev>, <intel-xe@lists.freedesktop.org>
+References: <20261013020636.447620-1-karthik.poosa@intel.com>
+ <20261013020636.447620-5-karthik.poosa@intel.com>
+ <sashiko-outbox-168870@kernel.org>
+Content-Language: en-US
+From: "Poosa, Karthik" <karthik.poosa@intel.com>
+In-Reply-To: <sashiko-outbox-168870@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MA5P287CA0020.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:a01:179::8) To CH8PR11MB852307.namprd11.prod.outlook.com
+ (2603:10b6:610:32c::22)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261012233638.2546339-1-yosry@kernel.org> <20261012233638.2546339-16-yosry@kernel.org>
- <sashiko-outbox-168758@kernel.org>
-In-Reply-To: <sashiko-outbox-168758@kernel.org>
-From: Yosry Ahmed <yosry@kernel.org>
-Date: Tue, 13 Oct 2026 07:42:02 -0700
-X-Gmail-Original-Message-ID: <CAO9r8zNTeScHRbhJjHBtpOXbfGhs81S7tOb9H4xNLzFC4JO+CQ@mail.gmail.com>
-X-Gm-Features: AclHuK85-y1lkn532bqr0UIR87iPcHfYX8c1ypiqANOa5r9BBRqaBCSnuNm_l4M
-Message-ID: <CAO9r8zNTeScHRbhJjHBtpOXbfGhs81S7tOb9H4xNLzFC4JO+CQ@mail.gmail.com>
-Subject: Re: [PATCH v3 15/27] KVM: x86: hyper-v: Allow purging all TLB flush FIFOs
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH8PR11MB852307:EE_|DSSPR11MB9644:EE_
+X-MS-Office365-Filtering-Correlation-Id: ab464b5a-e8e4-4bdc-8a31-08df2939f563
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|18002099003|10067099003|22082099003|11063799006|4143699003|261009223027099003|56012099006;
+X-Microsoft-Antispam-Message-Info: SJQCKmNSFbeBTZ+NQi1GDrUTL6GgkfGz2DUvouv2ztAIfdoqug9Q2AkcwRr0VHFK26wY0Fq3Q74Zzu1kWih+/5koSbAC4gpI+zm2pxF+XFA1cBdOiWw9MgT3l72hEeRhZJ+FhuNB4s/hHL2pjr0s+E8B6lvMRT3vjKQAWucZJ7/3HoLL1Frv9PAfVP+gIuzCgL4gMHTLz8sY6F114GXltus3KkrUkqqcN0UOoCbhAYZ9J1OnV3//hc7i8bQbbaSYOwOUe/cnELgF8MBJQ883uv2cf0H8rUyJDPJI/Ub8JhuZ0Hg8ZRbrzWdpqvPajMSi4wFNJm9m7JGXa6rO0u3mfoy5SkDQfYFR6wdhYgz+4opvIcIL4d+Irk3msVc8kkWPOfl48Ric2buGrCGHeaVDECmNKnPMY4bOClmRtbHCAImahIdr+3FoMdaYgmgwz/kWO868UcH8MFRUkADqTiY7RTvrTms0UEF/czgvlFSG6b+vMovjKRGW/NDYvhA3YWvkUoNc1lYd/Mu62hGatIoWiHGfiSK6CslNis1m0nFAXxGWl8j++LpnS6O6DgtngCtpX6CoNXHgmZLKIH0fBjHsIQviWwJOxXV+5ng+yu2Y7osEixKdSMdKwnGxYPF5O6O7KDoaH7oB1iTnxBM6t0CknpGFFvZFQC77oBzQ1wP1IYM=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH8PR11MB852307.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(18002099003)(10067099003)(22082099003)(11063799006)(4143699003)(261009223027099003)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UmRhaDFZWHBlR2twQklhWitxUmJCRG55NnI2blpyQkJlbElpYUQzVUdTVWww?=
+ =?utf-8?B?M0tKWlNXNzJnL000RXIrVFMydkFQdDVkdU44S09CZlNkb2E4K3Jvb3k2bVlE?=
+ =?utf-8?B?N0JMNGFZb1hic1NYbjlVODJJZUcvN003MVhpdkFNSitLa0pNcXNaMWVCWU9J?=
+ =?utf-8?B?ZTZQaDBuWE5WaWxTektYZWpFU2RvaFV5MHE3bnZIZkNxV09VRkxqQlJ1SzFt?=
+ =?utf-8?B?STlseHBHN0JIL29wSkorVlVoN1JYS2dkWGNjcm1yWkhHRGlrN3JVbVFMVGFY?=
+ =?utf-8?B?ZzVkUlhvSHdza1d2ZE1teEFYS3JSa2VyQ0czTFRqSldTK3o5ZFFseHpYMzRr?=
+ =?utf-8?B?UjlsV1kvN3cxM2tNbkQwckNFcUxZekFMaHhqeUYwd1RuemZDSitISkJ0Y1Mv?=
+ =?utf-8?B?UUU4ak44UzV4dWJPT0d1S3l1Yy9WOUhYOUpDMGVKeTQvb0hjaHUwOHZhQW1T?=
+ =?utf-8?B?S2xia3RPZ3pUUW4vRTFOY3RhckRmMFdUbGZZcFNXMGp5SFJpbGRSUzZ6cUh4?=
+ =?utf-8?B?OVFoV1Zxb1RBWUg1eTV6c0t4eUVSK3cwQ2xQVVBGZ3dwd2FsVlRtVTV5RUpN?=
+ =?utf-8?B?YjdtQzJJNFo2bDlrTDIwVkFnQkJsM1lEd2REM2FNRENRVXQ3eEtZNWJrZnJU?=
+ =?utf-8?B?MlI3U1h2ZHM1TWN5UTZlZ0pqai9ZdWdaM3BnKzVVdlY0bDh2WitXQWN4UGdM?=
+ =?utf-8?B?d1N3Y2xrejJndUczRkgxZEp1Y24rYlcrdktuM2VnM3h2WUZnK2FxakEyN0Nm?=
+ =?utf-8?B?eHhyOEhRQjFrMXllMHhjNlQ5ZjdkYU1MR2xOZkV2cUpOTmgyeUNrMzNYcFVH?=
+ =?utf-8?B?WFBpVjYyenUwSzhFbmdQT1djTHdyWFpqa01MQlFkcWtkZHczWnVMbDQvMklL?=
+ =?utf-8?B?WW1jeFR4Ukt6OERGbndpVWxHdjZXUWVWeHFhYlQ5UHhPNTRuNVluOFpYaDBj?=
+ =?utf-8?B?V0JuR01GK1pwTG4zSGNTZUNzWUt1OWRTNXlydEo4WXNoVHRBRkJSUDFxREta?=
+ =?utf-8?B?VElFYnpybEd3czhZYmlVNE1uWDY1Y3NJZEkwVVR3ZDB3ZVFoaFRXS2VtT3lm?=
+ =?utf-8?B?UTF0dER1M2d6bC8zNjBRNXlKSDVjNUFkRVpMMjgrQ0wzL1RHdDBxMDZ3YzBp?=
+ =?utf-8?B?Ty9ycnQ1cEVlRTFWeTR5bHlzK3Y5UVlMeDRBOGMvdzBRc1FpM002Umhyd3Zp?=
+ =?utf-8?B?dVJSNDMwSnk4SG5OK2ttMkpMUnJFT3hHeDNrZVcrc2cyVUU5elhrUUZ1VWlV?=
+ =?utf-8?B?NHlOWVFYWXFoZXpQRmVYcWZBazhtcnhYQkU1WWFTMzZtUC9qaXhBbXhFb2lP?=
+ =?utf-8?B?N3U2UGtPQXhkUHVJSElHUW5yaEh5dGFkajBaR1locDRadjRtL1lsNFJWY09I?=
+ =?utf-8?B?bitBb2k2NWFrYWRZc0o3VXgrWVVYSy83ZEl2RlUrclRnY2xUdTdNUHNPOTV5?=
+ =?utf-8?B?OFhTVE1VVnYrUTFFS0pFaFhQZVpPZktnNE9IZDVwUGsyNlEyMGt5N3NSOUxB?=
+ =?utf-8?B?U21MOEJOWnVWdkhsSGZ2Smo5Qk8rY3IxdkE5R3h3VGR2alZtUHh1R0srU2VZ?=
+ =?utf-8?B?MEo3aHA3VDM3TXNSNUh4bFVpMkI1OXJCbmZtc3Z3Nm94SGZmenhUa3RBNGxB?=
+ =?utf-8?B?SU5CR3cwVExSclJ6cmdGdGpPNWtFVWVmMFZVemk4aVBLd3dMVGpPeWlSRGpX?=
+ =?utf-8?B?WHozKzNBU3U5TlA3T0VEWFpjbU5mUjBkaURGc0xaK3poUnArcEM1a0lXaE9P?=
+ =?utf-8?B?SUxxV1pyUWJaM1RTZ0dEUko2T3l5UGpFU1FlVDdobUx3MlRCVmpjQ2x4OUVw?=
+ =?utf-8?B?aDJKTlRjTjA3UVE1RXU4dSt6UXk3SG8rOFIxWWg1ZnFEZUNiT0gwTXpTYlhm?=
+ =?utf-8?B?V1YzZmE5OGY2RG9pVWRIU0tuVGEzVWNqSHovaEpsYmQwclVqWlBDV2t4emls?=
+ =?utf-8?B?ZkFCbXQwdnNObnVrRGZaSCtscTdQNFh6QUlpbXVhVDdNK1BXYnhHYVNjMXo0?=
+ =?utf-8?B?MVNNTWdDbFhZWTJBZG9PYi91WnNlT3lXcnYxenVtWU9GSVlTSG9tR0pVZWpY?=
+ =?utf-8?B?Y0RkRm1jUkMzbmJOUWhkVmdWemdlajF0V2pnMG9naVNXelJOK29Db3A3blVE?=
+ =?utf-8?B?UXRwYXZDYTJQQ003dEI3WmtRLy95SGk0RWxSSXhnYkcyTTlmSVhkdFE0Qk1v?=
+ =?utf-8?B?OHZxRzJxYno0T3NjUHZnODFwdHUvQVg5LzdsVkZrcHlRa3o5Uy95b1BBd01X?=
+ =?utf-8?B?ZEpxM01la2V3TGxYcVVWazdjSC9qZlNKbFd4L05pQmo2cE1obEdGaEZLQWtv?=
+ =?utf-8?B?TW5oVnV6Wk5KVjlTbjFNK1FGbG9jbk5vY2lYcUw4dzJQdGRWOVRJdz09?=
+X-Exchange-RoutingPolicyChecked: YsSyH2TP2K04dj3WtRCZzSp+fasPTmyChJVRPqqtVsKRJnyU3KUa6rT6JZK8ic3WBf9DKd5LHOF6KALogXNUXW3oWuOJrGv9UiWX1TyjY7ooi3SRGGC/myQXJ7ZuBubREL9omYm/ymF76foQzzX7owcKfmXINazg3dRekNLfJspnEm0xzd8Up1RGWTIvIGk/NR7qFIiOS18mTRgf+rVfogdEerjoYaZSx79iQoby6cWjB0a9wLKu5Q0kIfcYfOn4YCRhUOaFeKcIZtVu4a74uVthXt1i7ecnZ4nkihl71HFKgH8i/Tchwp4JMcJy2CZr9/uEJ0IrCtP7wJdv0Z/siw==
+X-MS-Exchange-CrossTenant-Network-Message-Id: ab464b5a-e8e4-4bdc-8a31-08df2939f563
+X-MS-Exchange-CrossTenant-AuthSource: CH8PR11MB852307.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Oct 2026 14:55:02.0132
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /tUhQmYYBId00d//T5NaAFMea11dT8mOWuouF2+TckmXB3uphJDDMLF35U8PxpMa46j9IWD+eLoidj1/NzbTsw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DSSPR11MB9644
+X-OriginatorOrg: intel.com
 
-On Mon, Oct 12, 2026 at 4:56=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] x86/kvm: redundant guest TLB flush due to uncleared KVM_REQ_HV_TL=
-B_FLUSH
+
+On 13-10-2026 07:54, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] hwmon: MMIO read errors (U32_MAX) are treated as valid temperatures on legacy platforms
 > --
 >
-> commit fd7f6324f98d1c559f015e78c148b1f3ca58d78f
-> Author: Yosry Ahmed <yosry@kernel.org>
+> commit 30c789d23390d6abf7d18b4ec4f037b60404f1b9
+> Author: Karthik Poosa <karthik.poosa@intel.com>
 >
-> KVM: x86: hyper-v: Allow purging all TLB flush FIFOs
+> drm/xe/hwmon: Add helpers to validate thermal sensor readings
 >
-> This commit refactors kvm_hv_purge_tlb_flush_fifo() by introducing an
-> inner helper __kvm_hv_purge_tlb_flush_fifo() to allow purging a specific
-> FIFO or all FIFOs. The refactoring delegates the KVM_REQ_HV_TLB_FLUSH
-> request check to the inner helper, which is now skipped if no FIFO is fou=
-nd.
+> This commit introduces mmio_temp_valid() and mbx_temp_valid() to check
+> whether a temperature sensor reading is valid. It gates these checks behind
+> the has_temp_sentinel flag.
 >
-> > diff --git a/arch/x86/kvm/hyperv.h b/arch/x86/kvm/hyperv.h
-> > index 03cc65f8cc52d..a23ef05c1075c 100644
-> > --- a/arch/x86/kvm/hyperv.h
-> > +++ b/arch/x86/kvm/hyperv.h
+>> diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
+>> index 2d1fa9159c58b..712a21a996362 100644
+>> --- a/drivers/gpu/drm/xe/xe_hwmon.c
+>> +++ b/drivers/gpu/drm/xe/xe_hwmon.c
 > [ ... ]
-> > @@ -312,18 +312,29 @@ static inline struct kvm_vcpu_hv_tlb_flush_fifo *=
-kvm_hv_get_tlb_flush_fifo(struc
-> >       return &hv_vcpu->tlb_flush_fifo[i];
-> >  }
-> >
-> > -static inline void kvm_hv_purge_tlb_flush_fifo(struct kvm_vcpu *vcpu)
-> > +/* Purge pending TLB flushes in @fifo, or in all FIFOs if @fifo is NUL=
-L */
-> > +static inline void __kvm_hv_purge_tlb_flush_fifo(struct kvm_vcpu *vcpu=
-,
-> > +                                              struct kvm_vcpu_hv_tlb_f=
-lush_fifo *fifo)
-> >  {
-> [ ... ]
-> > +static inline void kvm_hv_purge_tlb_flush_fifo(struct kvm_vcpu *vcpu)
-> > +{
-> > +     struct kvm_vcpu_hv_tlb_flush_fifo *fifo;
-> >
-> > -     kfifo_reset_out(&tlb_flush_fifo->entries);
-> > +     fifo =3D kvm_hv_get_tlb_flush_fifo(vcpu, is_guest_mode(vcpu));
-> > +     if (fifo)
-> > +             __kvm_hv_purge_tlb_flush_fifo(vcpu, fifo);
-> >  }
 >
-> [Severity: Low]
-> Does this change inadvertently leave the KVM_REQ_HV_TLB_FLUSH bit unclear=
-ed
-> when fifo is NULL?
+>> @@ -825,6 +828,23 @@ static int xe_hwmon_pcode_read_thermal_info(struct xe_hwmon *hwmon)
+>>   	return ret;
+>>   }
+>>   
+>> +static inline bool mmio_temp_valid(const struct xe_hwmon *hwmon, u32 value)
+>> +{
+>> +	/*
+>> +	 * On platforms lacking temperature sentinel support, a value of 0 is treated
+>> +	 * as invalid. While 0°C is theoretically possible, it is highly unlikely for
+>> +	 * a discrete GPU in normal environments, making it a reasonable fallback
+>> +	 * indicator for invalid or uninitialized temperature readings.
+>> +	 */
+>> +	return hwmon->xe->info.has_temp_sentinel ? value != U32_MAX : value != 0;
+> [Severity: Medium]
+> Does this inadvertently treat PCIe MMIO read errors as valid temperatures on
+> legacy platforms?
 >
-> Prior to this patch, kvm_hv_purge_tlb_flush_fifo() unconditionally evalua=
-ted
-> and cleared kvm_check_request(KVM_REQ_HV_TLB_FLUSH, vcpu) before returnin=
-g
-> early if the vCPU lacked an initialized Hyper-V state.
+> When a PCIe target abort or link failure occurs, xe_mmio_read32() returns
+> U32_MAX (0xFFFFFFFF). If the platform lacks has_temp_sentinel support, the
+> condition evaluates value != 0. Because 0xFFFFFFFF is not 0, this returns
+> true.
 >
-> With this update, if a Hyper-V VM-wide TLB flush sets the request bit on =
-a
-> vCPU without initialized Hyper-V state, kvm_hv_get_tlb_flush_fifo() retur=
-ns
-> NULL. The helper __kvm_hv_purge_tlb_flush_fifo() is skipped entirely,
-> meaning the request bit remains uncleared.
+> Later, in xe_hwmon_temp_read(), this U32_MAX value will be blindly decoded:
 >
-> If a standard guest TLB flush request arrives and triggers the purge path
-> in kvm_service_local_tlb_flush_requests(), the uncleared Hyper-V request =
-bit
-> will still be pending when execution reaches vcpu_enter_guest():
+> *val = (s32)REG_FIELD_GET(TEMP_MASK_VRAM_N, reg_val) *
+>          (REG_FIELD_GET(TEMP_SIGN_MASK, reg_val) ? -1 : 1) *
+>          MILLIDEGREE_PER_DEGREE;
 >
-> arch/x86/kvm/x86.c:vcpu_enter_guest() {
->         ...
->         if (kvm_check_request(KVM_REQ_HV_TLB_FLUSH, vcpu) &&
->             kvm_hv_vcpu_flush_tlb(vcpu))
->                 kvm_vcpu_flush_tlb_guest(vcpu);
->         ...
-> }
+> This could result in absurd temperature readings like -8,388,607 or 255
+> instead of correctly propagating an error code when the hardware fails.
 >
-> Since kvm_hv_vcpu_flush_tlb() fails (returns -EINVAL) for a vCPU without
-> Hyper-V state, would this fallback path execute a second, redundant
-> kvm_vcpu_flush_tlb_guest() operation?
+> Should U32_MAX be universally treated as invalid, regardless of the
+> has_temp_sentinel flag?
+An all-ones read means the PCIe link has failed, which is a device-level
+condition handled outside hwmon. Once the device is unavailable,
+xe_mmio_read32() returns 0, which is already treated as invalid.
 
-Yes, this one seems to be real, although it's not a big deal IIUC.
-
-I defaulted to checking hv_vcpu first as to skip the expensive request
-check if it's NULL:
-
-if (!hv_vcpu || !kvm_check_request(KVM_REQ_HV_TLB_FLUSH, vcpu))
-
-But I think we need to do the opposite to maintain the existing behavior, i=
-.e.:
-
-if (!kvm_check_request(KVM_REQ_HV_TLB_FLUSH, vcpu) || !hv_vcpu)
-
-I won't respin for this for now, will wait for more feedback. It can
-also be folded in probably.
-
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261012233638.25=
-46339-1-yosry@kernel.org?part=3D15
+mmio_temp_valid() is only used at probe, not in xe_hwmon_temp_read(). In the
+next version I'll can add the check to the MMIO read path and return 
+-ENXIO, to
+match the mailbox sensors.
+>> +}
+>> +
+>> +/* Mailbox temperature is sign-magnitude (bit 7 sign, bits 6:0 magnitude). */
+>> +static inline bool mbx_temp_valid(const struct xe_hwmon *hwmon, u8 value)
