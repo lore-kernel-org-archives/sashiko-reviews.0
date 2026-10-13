@@ -1,148 +1,259 @@
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA68414430
-	for <sashiko-reviews@lists.linux.dev>; Tue, 13 Oct 2026 01:36:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791855394; cv=pass; b=XcOd/KL7ax5hQCaXbCpQUZMOyTkzFQyJrR59odCuZAv0Nax7cpQtgnkfUU4R+Ny7GgFCiqnFbpn76oTCBFwwZ96UPzanhLk4MLAd7/KgB1MSjlr3UATutMuGeYpOsVyF7fpBcGTlw1+iVXZWQz5xw1QdnSd7HAcBsG4nwiWwx9g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791855394; c=relaxed/simple;
-	bh=EkzJMcykE7vjth+duXi+zPnQKK1JLwAYUVof6xmbNqY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ebXTdmvzkB8mz8RsD58aQ4V7NneRYzQZZ/L1ZKxBy1cra0n85m156ORNiSuQ+XCB2G8o/Mwj8Ff6nIiwloSso0BBJfNhLO6BLTPW2Gw7M5ggmwauSdLY2p2xJguYj7oEFYF4c7xcEVq+rec+DHsTKNawLGQ4CzdkyGysXTOtz9Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=PD4vVFX+; arc=pass smtp.client-ip=209.85.161.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F98F372B2F;
+	Tue, 13 Oct 2026 02:01:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791856891; cv=none; b=s28oduV1W/MYBVtW/Ov7ePVa82B17GTtLOd6t6+d5Zcv1tw0u8of5Avdn6NZbM1ugexrLVvd2DaMknrAwGnZ0AeaCbD9BvaxyITwXDtmqJgdcX/LmBjq1UwncJ3yfWllwT6g3tDscS7LZJlsDJACkwtdbLWBvv6DhDMW7wqRdrY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791856891; c=relaxed/simple;
+	bh=2fXF/uCBfuby26BhLyasZUPCtHYNbZOliZo5iduxnXQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=j089PZTvXv7nsacDD+ibhp2z8rmIH66j55bepGxz61DU5VhF7HpHf9nw6xfe3czwn3+F7d7rIWGbHL1Ongb2jREHbSGlFlnsXm1+I5ChrEWF0P+G8RzDIriMVitWNgPeCoc4IOBoPZ7JumqrRqbrxath2Y+87Y1+hkZmHjda7CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=IJ6ly9XV; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PD4vVFX+"
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-6de2f213b7aso991185eaf.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 12 Oct 2026 18:36:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791855392; cv=none;
-        d=google.com; s=arc-20260327;
-        b=PV0bSCigl5od55n6jV8EH6ZcwBvRC5JmaVQ8P6PHF1wOXP87rtYf76jh4Gq896meLh
-         MEgQHyarDY/J4WGrVg+V371qKW9r9Cjk3wy9JwWuS2RSMjXd+tcfs4aQarshx0W5aDmk
-         azvt24gBSGNrZEqgWCz55CexayRmwBtAqXgY1u0uU38gVNtcVqKWgyZ0qy3jYrv5U9WV
-         Hv90QV0mXk+mXxz5OWHNVTT0rUtzsis/jY7YrcokVEwgonSK8QHX8ikZYUVIv07v/wy4
-         85sIWlnDDOucb3ymfVKg99yWjYBNyfVZlyNy6KpZjlRQm/3mOT48N4iqtCy+LImSw7nx
-         VmlA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=pKqXzmebTfUCdHJlGAfv7ABK7ZHzZC9G3vJbb2Gw7Zs=;
-        fh=hsEM7tOxqCFzgJ1ZuSj9IrmC8wyOC5gEKAFLAgc3jnE=;
-        b=MCz+scsDDnLzta6hBQ2qOhUw6HrrJeo1kgo8HgiVR5O3Y8DCBlAdf5yO6zOIzvo6h6
-         lSsCy5OLfP3aRURCunsau0Su7Pxf7S5bD9EDaWTBuyXC7G/h8aGVyTWb4FDoc4sw7HY2
-         rcZtnD9L5BSf2hwo67AHZApZ+1kV6TkD35TBJPAd6d6eo52FdgGUe6oDwPNAqtJ+L1JB
-         cQ1ohebhDsPKTgLEt3ccZVB/fS4Nt6ET1Rpw0vLbYxV3PDgjysrP9fWe0PbeiW0A2qMs
-         fX9LLm2fmHidSJM5PpYIFxxjcVfolQ1xyeje/rxydcIczS6GEKY2msYwIXjZhhy2iLwN
-         bCoQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1791855392; x=1792460192; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=pKqXzmebTfUCdHJlGAfv7ABK7ZHzZC9G3vJbb2Gw7Zs=;
-        b=PD4vVFX+HjECAIK/pg2vXCl2iqS4u9+uMAMW75E+hMuI5P81O/rzWX1Q/Y/GCoBopq
-         gZYvm1+MvJiyRJQ3voKyeVb67AfqWPKencNWBeO6DlFLNFlPN4JDCxrPuiOGE4WM1+Te
-         kAgmdzn/Rn+d7oWQ78A/RjCmlJfNbH31QdeIm4SkTdTJPEYW+ddjr2o/ump8gmnyy8ae
-         IfKi/R34qIcZH1/PR6uzlmad4N7hgkCkP6rnv9oOFsFUh5j5B9Jk4lqrf7cci/yte7hg
-         ZJ0L96DtJZnzH+bpcsO9kSdM+Q45Xlh929kZzTo3Izn9Ka+7mYZho09VhnVz7XUC8W47
-         fvxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791855392; x=1792460192;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=pKqXzmebTfUCdHJlGAfv7ABK7ZHzZC9G3vJbb2Gw7Zs=;
-        b=zBZowZEhpRTBjPShICbHc5o24mBtAyItLD23lx1y+RcQxLtwqp/vwt8xx5CzkwBvkk
-         0aGJQroYTltuFO8ccB+XdOgFW28XZpf+RORGMhpmrdAMy7WDInfIKnDwGdUjir12eExn
-         n4f41XxRh9hl9b/s82u3phLQOIRujRxTIuF5QqxRBGGZHzKuIJEUBrQ6Yw3s/JWWtmww
-         TXZAZ+pgR+66X3/d9c6Jq/4+Ze1eRKNfTTkIL9Z0Mg9U9IZVBjWOHlxfqSxsKtsuTphC
-         5cPbXci+VPdd1LkfCF/9bS9QIQ7vvz6JN0wlhxqbxmehS8Fs20kiqwLdrodvLcjrgIbJ
-         qNFg==
-X-Gm-Message-State: AFq9FYJDGn4LUd8/1p0/2qQDJdvSYuVLEd8y5IJs7qXC+bfXrOSnCpLq
-	l/tDqS0tp/XkezlJhWtkAkmjPSUMQJulp2McLckURZLycoF6AeGqBxFIaHuYSYTio3q60nOOxLi
-	X0VGP0Dk6uzJipk/F1DdwhyYIm5gfKeq1PvnkF6AlXMmUvxdFXK7IvyvsoIg=
-X-Gm-Gg: AYBFou1L617KnkyNijwS+10t/Z1aLvvTkxtgTv3NTrch0IGz6mxYq8TcY0C0Z1x++6j
-	o75iaeJ8o2NUX2n1yr5TazzopYDqDNfHkEIZH4vXqSCt3Luftbfmm7m4c2wc3m+rtRQKK/nJ34x
-	IAEYcUAQl6LzUpvBOeiuUl08UA7n5eZAcu5PiLtxUsSWvtmsXQrxxIqxq+rvBw2XdrBWjf8T6n/
-	1hGBPYuUGWjUvfhCqPp1SnvHrFro41eTU8x65iIcV1qRFlSz5stEQg5BbVwPXHWldZwKV+9kglf
-	3QUsj+POFgkTcs/Fgtvf66IgFOMDXNaHsd2zKSTY6un+9ckw7lUv/oXZ/Oc9OWXda/vQ4M//ALN
-	e1QrPEY7dBnwOROmwiYDgz+oh
-X-Received: by 2002:a05:6820:f016:b0:6f9:59ee:cfa3 with SMTP id
- 006d021491bc7-6f959eedee0mr915580eaf.32.1791855391403; Mon, 12 Oct 2026
- 18:36:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="IJ6ly9XV"
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69CJiXxJ1106203;
+	Tue, 13 Oct 2026 02:01:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=pp1; bh=nMwBKSYzIb3s65dJlzeOtx7mcRu7jDJm/DZqJx0JJ
+	Pw=; b=IJ6ly9XVi0KzcpSq8hfRT8XQgiKxhD3UcP/cJFE1gbb2KE7CQDQ/iz9En
+	azUlZ0BG8RWpcaeTrNuElA1XDroAH2QyDF4P5/J8XzPIuiD7dNFIqQ0cYUaVoC+2
+	1mFccHJ5YzB7BRNlPbpwhdka0POP7WzAR6cvKDN7XLrKrCk/A8BiBO1beYolZr4q
+	b+1UmPSv475pUcQ/jjUfho05q6SRhL+zQD6p5W9985Asj62+KKopET/B6qmcgjqF
+	AufqCkzzyrql/uprtmFRUL+CwAV2EHgdCJw5VeK4CnGgebTB/VDvcmHs6gvskHYg
+	nN3jaZ/1phHX8YwzKnCOS25526sZQ==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dv3bp67-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Tue, 13 Oct 2026 02:01:29 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69D0FmTk1861267;
+	Tue, 13 Oct 2026 02:01:28 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h816gypne-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 Oct 2026 02:01:28 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
+	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69D21OnQ38928738
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 13 Oct 2026 02:01:24 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 701BA20049;
+	Tue, 13 Oct 2026 02:01:24 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5B27A20040;
+	Tue, 13 Oct 2026 02:01:24 +0000 (GMT)
+Received: from tuxmaker.lnxne.boe (unknown [9.87.85.9])
+	by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Tue, 13 Oct 2026 02:01:24 +0000 (GMT)
+From: Ajaykumar Rajappa <ajaykr@linux.ibm.com>
+To: linux-s390@vger.kernel.org, sashiko-reviews@lists.linux.dev
+Cc: Ajaykumar Rajappa <ajaykr@linux.ibm.com>
+Subject: [PATCH v6] zfcp: Fix integer underflow in status read buffer payload length
+Date: Tue, 13 Oct 2026 04:01:22 +0200
+Message-ID: <20261013020122.48495-1-ajaykr@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261012161135.494544-1-metze@samba.org> <sashiko-outbox-168385@kernel.org>
-In-Reply-To: <sashiko-outbox-168385@kernel.org>
-From: Jacob Moroni <jmoroni@google.com>
-Date: Mon, 12 Oct 2026 21:36:19 -0400
-X-Gm-Features: AclHuK-jVCvZe8_OBvJgwJYuqaxwdrpyyQzaU__GwwI_h3hVSQDw_8kD632addk
-Message-ID: <CAHYDg1SOnqkLT6rfJCu8=gB=s_NY4xR-BpbpN9E4VS-h_nRaoQ@mail.gmail.com>
-Subject: Re: [PATCH v2] RDMA/irdma: always route IB_WR_REG_MR through the
- allocated PBL
-To: sashiko-reviews@lists.linux.dev
-Cc: Stefan Metzmacher <metze@samba.org>, linux-rdma@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: F1XeqR8CRlyDbUJVfxMK_IEe7YwBitgz
+X-Proofpoint-ORIG-GUID: F1XeqR8CRlyDbUJVfxMK_IEe7YwBitgz
+X-Authority-Analysis: v=2.4 cv=aqInmiZV c=1 sm=1 tr=0 ts=6acd90f9 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=qmIv0YdgS3vTPs6jRXgA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDEzMDAwNiBTYWx0ZWRfX+Uz/4FljRY7E
+ t/EewzkzuWhp7Qgsm/uGDvrtq757ba0u3t+SUjQosngQo98xmiFe2iAkJsNNQBEKnjrjTxHtJnM
+ Ha9ydhNUVj7XcLOd6fHBENJ8mMIKkkY=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDEzMDAwNiBTYWx0ZWRfX2YXeojA/4UgE
+ 2ifRKRgpSZ2hc0piKqnwocCa8B9Nd4SSjz66mAiIHGQzqe5HcV0XprPnTrB0J7Bs6hTfmu+TW11
+ 0wqWINo1s3jRVGNMweqXZI1et9IKribxiVwlvJeleCmdLihOQixyhGUJmxGCxBOUW4GxtQpdZsD
+ abFIb/rUq6JKTJie/15Kz+1937qJsVY4FbX10DIU5iaaaJ2nE6gTIyveDm71DaGtG582dfMvcbP
+ 5BukoCO3N+vzTjceiwbZ1NqfGjeK7L9Aq7LNXoTcKmI7W6tqnRApTeqaF/um1aONzHOiir57Vha
+ Ev294U3rEwkW11kdjDHidoesRz/ELHjSQtOgi5qebeVONca777icL/3KzeGwEXeogrBcd4EfFBS
+ bX1PKrwsEmpttfvHba83ZSEZBIMYti7ZYBxcwxuyV09755mAS92MMs+mPFGH8BrcKTn34+z/GfM
+ KRaRDI4VJ5nm4t438zw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-12_06,2026-10-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 clxscore=1015 spamscore=0 malwarescore=0 suspectscore=0
+ bulkscore=0 adultscore=0 impostorscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610130006
 
-Hi,
+zfcp_dbf_hba_fsf_uss() only guards against a zero-length status read
+buffer. If srb->length is smaller than the fixed header size of
+struct fsf_status_read_buffer, subtracting the payload offset
+underflows and can lead to an out-of-bounds read.
 
-Nice find. I was curious why I have not hit this and I think it's because
-the problem might be elsewhere. Or rather, there may be two
-problems. Looking at ctrl.c:
+zfcp_dbf_san_in_els() has the same issue, where the underflowed value
+is used as the scatterlist payload length.
 
-    set_64bit_val(wqe, 8,
-        FIELD_PREP(IRDMAQPSQ_FIRSTPMPBLIDXHI, temp) |
-        FIELD_PREP(IRDMAQPSQ_PBLADDR >> IRDMA_HW_PAGE_SHIFT,
-info->reg_addr_pa));
+Fix both cases by validating payload access against the payload offset.
+If the reported buffer length does not reach the payload area, suppress
+payload reads and avoid constructing a scatterlist for non-existent
+payload data.
 
-I bet that second FIELD_PREP is supposed to be shifting
-`info->reg_addr_pa` and not `IRDMAQPSQ_PBLADDR`.
+Fixes: a54ca0f62f95 ("[SCSI] zfcp: Redesign of the debug tracing for HBA records.")
+Fixes: 2c55b750a884 ("[SCSI] zfcp: Redesign of the debug tracing for SAN records.")
+Signed-off-by: Ajaykumar Rajappa <ajaykr@linux.ibm.com>
+---
+ drivers/s390/scsi/zfcp_dbf.c | 103 +++++++++++++++++++++++++++++++----
+ 1 file changed, 91 insertions(+), 12 deletions(-)
 
-That incorrectly chops off the upper 12 bits of the DMA addr that the
-HW uses when in direct mode for FRWRs. I think it just so happens
-to work as long as your DMA addresses/IOVAs are all less than 52 bits
-and the lower 12 bits are 0.
+diff --git a/drivers/s390/scsi/zfcp_dbf.c b/drivers/s390/scsi/zfcp_dbf.c
+index 81fb8af408e9..a71dc0696d80 100644
+--- a/drivers/s390/scsi/zfcp_dbf.c
++++ b/drivers/s390/scsi/zfcp_dbf.c
+@@ -65,6 +65,47 @@ void zfcp_dbf_pl_write(struct zfcp_dbf *dbf, void *data, u16 length, char *area,
+ 	spin_unlock(&dbf->pay_lock);
+ }
+ 
++/**
++ * zfcp_dbf_srb_pl_len - payload length to be traced for a status read buffer
++ * @srb: status read buffer as received from the channel
++ *
++ * A length of 0 (buffer not filled, e.g. dismissed request) means no payload.
++ * Otherwise the payload length is srb->length without the header. A bogus
++ * srb->length below the header size wraps to a large value and is thereby
++ * distinguishable from a genuine empty payload.
++ */
++static inline u16 zfcp_dbf_srb_pl_len(struct fsf_status_read_buffer *srb)
++{
++	if (!srb->length)
++		return 0;
++	return (u16)(srb->length -
++		     offsetof(struct fsf_status_read_buffer, payload));
++}
++
++/**
++ * zfcp_dbf_srb_len_trace_if_bogus - trace raw SRB length if out of range
++ * @dbf: debug feature of the adapter
++ * @srb: status read buffer as received from the channel
++ * @req_id: request ID used to correlate with the HBA and SAN trace records
++ *
++ * The u16 pl_len in the trace records cannot hold the full 32-bit
++ * srb->length. Unless the length is 0 or within the header plus payload
++ * array size, write the raw 32-bit value as a separate "fsf_len" pay record.
++ */
++static void zfcp_dbf_srb_len_trace_if_bogus(struct zfcp_dbf *dbf,
++					    struct fsf_status_read_buffer *srb,
++					    u64 req_id)
++{
++	u32 raw_len = srb->length;
++
++	if (!raw_len ||
++	    (raw_len >= offsetof(struct fsf_status_read_buffer, payload) &&
++	     raw_len <= sizeof(*srb)))
++		return;
++
++	zfcp_dbf_pl_write(dbf, &raw_len, sizeof(raw_len), "fsf_len", req_id);
++}
++
+ /**
+  * zfcp_dbf_hba_fsf_res - trace event for fsf responses
+  * @tag: tag indicating which kind of FSF response has been received
+@@ -223,6 +264,7 @@ void zfcp_dbf_hba_fsf_uss(char *tag, struct zfcp_fsf_req *req)
+ 	struct zfcp_dbf_hba *rec = &dbf->hba_buf;
+ 	static int const level = 2;
+ 	unsigned long flags;
++	const u32 pay_offset = offsetof(struct fsf_status_read_buffer, payload);
+ 
+ 	if (unlikely(!debug_level_enabled(dbf->hba, level)))
+ 		return;
+@@ -253,13 +295,30 @@ void zfcp_dbf_hba_fsf_uss(char *tag, struct zfcp_fsf_req *req)
+ 	rec->u.uss.s_id = ntoh24(srb->s_id);
+ 	memcpy(&rec->u.uss.res4, &srb->res4, sizeof(rec->u.uss.res4));
+ 
+-	/* status read buffer payload length */
+-	rec->pl_len = (!srb->length) ? 0 : srb->length -
+-			offsetof(struct fsf_status_read_buffer, payload);
++	/* pl_len is the payload length (srb->length - pay_offset) as long as
++	 * srb->length is valid. For a bogus srb->length it is only derived
++	 * from it and the raw length is traced as "fsf_len" below.
++	 */
++	rec->pl_len = zfcp_dbf_srb_pl_len(srb);
++
++	/* Only access payload bytes when srb->length actually covers them.
++	 * Bounds are checked on the full 32-bit value (before any u16
++	 * truncation). An oversized srb->length is not dropped: the payload
++	 * is traced up to the end of the payload array (diagnostic value).
++	 */
++	if (srb->length > pay_offset) {
++		u32 cap_len = srb->length - pay_offset;
+ 
+-	if (rec->pl_len)
+-		zfcp_dbf_pl_write(dbf, srb->payload.data, rec->pl_len,
+-				  "fsf_uss", req->req_id, ZFCP_DBF_PAY_LEVEL);
++		if (cap_len > FSF_STATUS_READ_PAYLOAD_SIZE)
++			cap_len = FSF_STATUS_READ_PAYLOAD_SIZE;
++		zfcp_dbf_pl_write(dbf, srb->payload.data, cap_len,
++				  "fsf_uss", req->req_id);
++	}
++	/* pl_len is only 16 bit: keep the raw length for out-of-range cases.
++	 * Done only here as this runs for every status read buffer, including
++	 * incoming ELS which is traced again by zfcp_dbf_san_in_els().
++	 */
++	zfcp_dbf_srb_len_trace_if_bogus(dbf, srb, req->req_id);
+ log:
+ 	debug_event(dbf->hba, level, rec, sizeof(*rec));
+ 	spin_unlock_irqrestore(&dbf->hba_lock, flags);
+@@ -714,17 +773,37 @@ void zfcp_dbf_san_in_els(char *tag, struct zfcp_fsf_req *fsf)
+ 	struct zfcp_dbf *dbf = fsf->adapter->dbf;
+ 	struct fsf_status_read_buffer *srb =
+ 		(struct fsf_status_read_buffer *) fsf->data;
+-	u16 length;
++	u16 pl_len, cap_length = 0;
+ 	struct scatterlist sg;
++	const u32 pay_offset = offsetof(struct fsf_status_read_buffer, payload);
+ 
+ 	if (unlikely(!debug_level_enabled(dbf->san, ZFCP_DBF_SAN_LEVEL)))
+ 		return;
+ 
+-	length = (u16)(srb->length -
+-			offsetof(struct fsf_status_read_buffer, payload));
+-	sg_init_one(&sg, srb->payload.data, length);
+-	zfcp_dbf_san(tag, dbf, "san_els", &sg, ZFCP_DBF_SAN_ELS, length,
+-		     fsf->req_id, ntoh24(srb->d_id), length);
++	/* pl_len is the payload length as reported by the channel (same
++	 * mapping as in zfcp_dbf_hba_fsf_uss()). It is passed as "len" so
++	 * that zfcp_dbf_san() can skip the separate pay record when the
++	 * payload fits into rec->payload. The raw length of a bogus
++	 * srb->length is traced as "fsf_len" by zfcp_dbf_hba_fsf_uss().
++	 *
++	 * cap_length is the number of payload bytes that may actually be
++	 * read: bounds are checked on the full 32-bit srb->length and an
++	 * oversized value is clamped to the payload array size, so the
++	 * readable part is still traced.
++	 */
++	pl_len = zfcp_dbf_srb_pl_len(srb);
++	if (srb->length > pay_offset) {
++		u32 cap = srb->length - pay_offset;
++
++		if (cap > FSF_STATUS_READ_PAYLOAD_SIZE)
++			cap = FSF_STATUS_READ_PAYLOAD_SIZE;
++		cap_length = cap;
++		sg_init_one(&sg, srb->payload.data, cap_length);
++	}
++
++	zfcp_dbf_san(tag, dbf, "san_els", cap_length ? &sg : NULL,
++		     ZFCP_DBF_SAN_ELS, pl_len, fsf->req_id,
++		     ntoh24(srb->d_id), cap_length);
+ }
+ 
+ /**
+-- 
+2.53.0
 
-If that was fixed, then I think the direct mode would work fine
-as long as the MR was originally allocated as PBLE_LEVEL_1.
-
-However, if it was allocated with PBLE_LEVEL_2 (as it would be
-for smbdirect which uses max_num_sg == 2048), then it ends up
-using a completely incorrect value for `reg_addr_pa` because
-`*palloc->level1.addr` ends up being the leaf PBL's HMC index
-rather than the page's DMA address like in the level 1 case.
-
-So, I think if you did:
-
--  FIELD_PREP(IRDMAQPSQ_PBLADDR >> IRDMA_HW_PAGE_SHIFT, info->reg_addr_pa));
-+ FIELD_PREP(IRDMAQPSQ_PBLADDR, info->reg_addr_pa >> IRDMA_HW_PAGE_SHIFT));
-
-and made the post_send like:
-
-    if (iwmr->npages <= IRDMA_MIN_PAGES_PER_FMR) {
-        stag_info.reg_addr_pa = (palloc->level == PBLE_LEVEL_1) ?
-            *palloc->level1.addr : *palloc->level2.leaf[0].addr;
-    } else if (palloc->level == PBLE_LEVEL_2) {
-        stag_info.chunk_size = 3;
-        stag_info.first_pm_pbl_index = palloc->level2.root.idx;
-    } else {
-        stag_info.chunk_size = 1;
-        stag_info.first_pm_pbl_index = palloc->level1.idx;
-    }
-
-...then it may all just work, and we don't have to give up the direct
-mode optimization.
-
-I'll give it a try later.
-
-Thanks,
-Jake
