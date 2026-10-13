@@ -1,134 +1,134 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639C62D781B;
-	Tue, 13 Oct 2026 06:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050C849DB83;
+	Tue, 13 Oct 2026 06:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791871740; cv=none; b=hKw/aXgav6+GqTmrVMqXS1QAW1lXmVI80yKlUw27YBKNs3qLWL7sXOj/uQvb6BPnBsvz7P0c4DUDu7uBPO2yGx5cLSGR4oE22S0Agufi/92le2zPwpgx6YKiRU9y5XWmDTdTilh86IWh6wa/jwNKyMR0FClVXqEi8JsIT8OYCvw=
+	t=1791871893; cv=none; b=inQbnw54mIiUpHcS4M7fjyB6c5QuxNffflhsD+oQkbIyYP3LSEyFDOEaiO2GZxGNM0jYFhlYv1xVudSTcTCWWIsYC5urg/v8iZZXYVjhsfjc4rQ7aV3tAS7N3JWZfBOnS9ICcJ2S+5eoWMmaLDjFF30rSpzIc8ocUHANNcjKjUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791871740; c=relaxed/simple;
-	bh=V7qRHE0sOrWr4VC7L91xmtp55pEJEvWv0LKfm+CCxcM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hl75Fir+jeBS67a/J5zUPEV27IxnDJAyH8d06vSUb6OtWI+H6dyOiUtZMWcm1OUYXnLStcemfKmhe7kNV7Mfgb1o2cFFE9v+MYtEm5h9CJivrZ0xBA1cXfFw72bHDXWWNkbQ2YJl//vOcFDx6iQ7ss072lMU1AtLNZNIoL+VFmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QksThlLw; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791871893; c=relaxed/simple;
+	bh=LiJbY3k5up5aLOd7Bcg4qH560hdJKOEuwg8jCmB5OzI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mc6TsvYbk21zFFyd+7HdBb2MaHYbyNPqGE/vNicC9+IyAQnrvGjesZEX8+FLKgaJq3QULBXckgfLRiIczWcmI+fPb1wixexj/swzt7vXwK+I3YSkOXtrKjUDeDCz9aHaFemthg+tGZD/EMk1WM4QjNY6b0Qu4nmDTKK2y+bqtMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YALk6qqK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QksThlLw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9AC61F00893;
-	Tue, 13 Oct 2026 06:08:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YALk6qqK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB561F000FF;
+	Tue, 13 Oct 2026 06:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791871737;
-	bh=IFA7dz2BYrwwtS/JAKMCH+rnVUO2VvT1RVtokajLe6M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=QksThlLwfZISNMtKdB9MQrilm7oAJLI0+/mcPr7gBEce5dLYqdQ4G74IPUggufjWU
-	 Ad3fbFvXsKibKdHDJr/P1QuEFKXm0qxOtzXaKG3gK6R8mkecFdvatsYO7EvdOQJBAl
-	 4RA0rVvBvwIiO7XIoEFjPWmDZh137Hyv5SG5e0G8vRgEl8xis418Cye0CGHTYB8YTs
-	 ov+u/7hRzEIlcZi7N82zUN8662ytSCYL/UXKwzVY1qE0amPkwUkO3CrZysnlWKKfei
-	 Ww4jufZw6QKIAypmbGLlVBpV6UyuxFk7xOGS7tGV30wIDBBTKsB+Ip1MTqd8Fwk2I3
-	 odOotBdqdskBA==
-Date: Mon, 12 Oct 2026 23:08:56 -0700
-From: Namhyung Kim <namhyung@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH v4 02/10] perf tools: Try linked debug files for DSO
- debug info
-Message-ID: <as3K-Pf9thcqGknr@z2>
-References: <20261012234654.60666-1-namhyung@kernel.org>
- <20261012234654.60666-3-namhyung@kernel.org>
- <sashiko-outbox-168757@kernel.org>
+	s=k20260515; t=1791871890;
+	bh=XNxt7wwex7pUWDMg9V+3M/jTcecLEnREYVs82yyM9aI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=YALk6qqKtPdpcsxHCEb6uvpb2E11q490MxJK0iGJMqeSZ3yQudydI0b2f/myBLVIM
+	 C6BF8rcCphjTDwvNOShHrnWejq1NYMLJri+gXA9wNepU0ucFeHZLUf7Bna2ZGGNY8R
+	 h2x+hPM80NwNThLC6pSawUKDuhzNukpeE6VlTzW8siz/raPskdFnhHFTz+ldkR9Qz+
+	 IuEh/gK1V3bV9FlML/ekBHhNT3VyWXZCp1Jxb1+yyVO1Gza/+2hJbY8so2bCazACHz
+	 dLLzWrNKLPyG5KWe20GdJcSSQuRMm64KgoruGc7/kEA1SIDtL+vy2ruCUIzISQlWNu
+	 dURRJrJm5hlpA==
+X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+To: sashiko-reviews@lists.linux.dev, Jason Gunthorpe <jgg@nvidia.com>,
+	linux-coco@lists.linux.dev
+Cc: Marc Zyngier <maz@kernel.org>, dri-devel@lists.freedesktop.org,
+	media-ci@linuxtv.org, kvmarm@lists.linux.dev,
+	Oliver Upton <oupton@kernel.org>
+Subject: Re: [RFC PATCH v8 06/14] dma-pool: Allocate CoCo atomic pools using
+ CoCo shared memory allocator
+In-Reply-To: <20260924101945.95D7F1F000FF@smtp.kernel.org>
+References: <20260924100529.1398790-1-aneesh.kumar@kernel.org>
+ <20260924100529.1398790-7-aneesh.kumar@kernel.org>
+ <20260924101945.95D7F1F000FF@smtp.kernel.org>
+Date: Tue, 13 Oct 2026 11:41:25 +0530
+Message-ID: <yq5aqzhuqgdu.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-168757@kernel.org>
+Content-Type: text/plain
 
-On Mon, Oct 12, 2026 at 11:56:52PM +0000, sashiko-bot@kernel.org wrote:
+sashiko-bot@kernel.org writes:
+
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] perf dso: DEBUGLINK path resolution flaws in dso__read_binary_type_filename
+> - [High] dma-pool: atomic_pool_expand() falsely returns success on failure
 > --
-> 
-> commit 0c61bd07a4d26ed6f7bfc347b3ec0fe6ffc13ca0
-> Author: Namhyung Kim <namhyung@kernel.org>
-> 
-> perf tools: Try linked debug files for DSO debug info
-> 
-> This commit modifies dso__find_dbginfo_type() to include
-> DSO_BINARY_TYPE__DEBUGLINK in its search array. This allows perf to follow
-> .gnu_debuglink to locate debug information in separate files.
-> 
-> > diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-> > index df03f84c97235..913877b84b2d4 100644
-> > --- a/tools/perf/util/dso.c
-> > +++ b/tools/perf/util/dso.c
-> > @@ -2111,6 +2111,7 @@ void dso__find_dbginfo_type(struct dso *dso)
-> >  		DSO_BINARY_TYPE__OPENEMBEDDED_DEBUGINFO,
-> >  		DSO_BINARY_TYPE__BUILDID_DEBUGINFO,
-> >  		DSO_BINARY_TYPE__SYSTEM_PATH_DSO,
-> > +		DSO_BINARY_TYPE__DEBUGLINK,
-> 
-> [Severity: Medium]
-> Enabling DSO_BINARY_TYPE__DEBUGLINK here exposes path resolution regressions in
-> dso__read_binary_type_filename().
-> 
-> If the filename lacks slashes, does this logic create an empty string for
-> dso_dir, breaking relative paths?
-> 
-> tools/perf/util/dso.c:dso__read_binary_type_filename() {
-> 	...
-> 	last_slash = filename + len;
-> 	while (last_slash != filename && *last_slash != '/')
-> 		last_slash--;
-> 
-> 	strncpy(dso_dir, filename, last_slash - filename);
-> 	dso_dir[last_slash-filename] = '\0';
-> 	...
-> }
+>
+> commit 7de8bc3a8ea9e2bbef83e09d72fa88999ce898b9
+> Author: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+>
+> dma-pool: Allocate CoCo atomic pools using CoCo shared memory allocator
+>
+> This commit modifies atomic DMA pools to use the CoCo shared memory allocator.
+> It prevents allocation fallback below the required shared granule size, and
+> uses the cc_make_shared() helper to transition the backing allocations in a
+> sleepable context.
+>
+>> diff --git a/kernel/dma/pool.c b/kernel/dma/pool.c
+>> index 70b7f64b17ab5..f059312c15aa5 100644
+>> --- a/kernel/dma/pool.c
+>> +++ b/kernel/dma/pool.c
+> [ ... ]
+>> @@ -85,6 +85,9 @@ static bool cma_in_zone(gfp_t gfp)
+>>  static int atomic_pool_expand(struct dma_gen_pool *dma_pool, size_t pool_size,
+>>  			      gfp_t gfp)
+>>  {
+>> +	struct cc_shared_layout layout;
+>> +	unsigned long attrs = 0;
+>> +	unsigned int min_order = 0;
+>>  	unsigned int order;
+>>  	struct page *page = NULL;
+>>  	bool leak_pages = false;
+>> @@ -92,6 +95,17 @@ static int atomic_pool_expand(struct dma_gen_pool *dma_pool, size_t pool_size,
+>>  	int ret = -ENOMEM;
+>>  	pgprot_t prot __maybe_unused;
+>>  
+>> +	if (dma_pool->cc_shared) {
+>> +		ret = cc_shared_calc_layout(pool_size, &layout);
+>> +		if (ret)
+>> +			goto out;
+>
+> [Severity: High]
+> If cc_shared_calc_layout() succeeds, it returns 0 and overwrites the initial
+> ret = -ENOMEM. Could this cause the function to falsely return 0 (success) on
+> subsequent failures?
+>
+> For instance, if page allocation fails below, the function jumps to out and
+> returns the current value of ret:
+>
+>     if (!page)
+>         goto out;
+>
+> Similarly, if remapping fails later in the function:
+>
+>     addr = dma_common_contiguous_remap(...)
+>     if (!addr)
+>         goto free_page;
+>
+> In both cases, ret will be 0 instead of -ENOMEM. Would it be better to reset
+> ret back to -ENOMEM when these failures occur, or use a separate variable
+> for the cc_shared_calc_layout() return value?
+>
 
-Then it'd be a separate, pre-existing issue.  Will handle it
-independently.
+Fixed as
 
-> 
-> Additionally, does this direct host filesystem I/O bypass the container mount
-> namespace (/proc/<pid>/root/) fallback context?
-> 
-> tools/perf/util/dso.c:dso__read_binary_type_filename() {
-> 	...
-> 	if (!is_regular_file(filename)) {
-> 		ret = -1;
-> 		break;
-> 	}
-> 
-> 	ret = filename__read_debuglink(filename, symfile, PATH_MAX);
-> 	...
-> }
-> 
-> Finally, does this inject the symfs-prefixed dso_dir into the middle of the
-> /usr/lib/debug path, searching the host filesystem instead of the symfs
-> chroot?
+modified    kernel/dma/pool.c
+@@ -96,9 +96,11 @@ static int atomic_pool_expand(struct dma_gen_pool *dma_pool, size_t pool_size,
+ 	pgprot_t prot __maybe_unused;
+ 
+ 	if (dma_pool->cc_shared) {
+-		ret = cc_shared_calc_layout(pool_size, &layout);
+-		if (ret)
+-			goto out;
++		int err;
++
++		err = cc_shared_calc_layout(pool_size, &layout);
++		if (err)
++			return err;
+ 		pool_size = layout.shared_size;
+ 		min_order = get_order(layout.alignment);
+ 		if (min_order > MAX_PAGE_ORDER)
 
-Also this is known, separate issue.  Let me handle it in a separate
-series after this.
 
-Thanks,
-Namhyung
-
-> 
-> tools/perf/util/dso.c:dso__read_binary_type_filename() {
-> 	...
-> 	for (i = 0; i < ARRAY_SIZE(debuglink_paths); i++) {
-> 		snprintf(filename, size,
-> 				debuglink_paths[i], dso_dir, symfile);
-> 	...
-> }
-> 
-> >  		DSO_BINARY_TYPE__NOT_FOUND,
-> >  	};
-> >  	const enum dso_binary_type *type;
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261012234654.60666-1-namhyung@kernel.org?part=2
+-aneesh
