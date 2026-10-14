@@ -1,127 +1,95 @@
-Received: from canpmsgout07.his.huawei.com (canpmsgout07.his.huawei.com [113.46.200.222])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDBE3385B9
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 06:48:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.222
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2B047F2C3;
+	Wed, 14 Oct 2026 06:49:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791960535; cv=none; b=peiQdqmjhnPi/xsTvXdSArOJZsw+zIfUCWnU4oOQKZdSSbyV1tmYw6x06VtTC8g2RoVHfkdqG9jf3ltelbdm0eDpvWMvtZsZFqy7PaB+0jQ9kLabT3GZby2pYVqkiGGM0xVUdvlkpCpyssJbQKEwZo2oKCC9dOj+Kr+l6WtQDQQ=
+	t=1791960591; cv=none; b=XM/OGWWe9ECT+XHX41tawn4irm1+XbBK4AazCzAreSegXHvVayqYI/+IKySgLNymTfbfCOXsm5zxCugSLqwvah/LPC8sdWKVjswo9tod8DNgpgVc0CMUob27FxmzaI1sHMyk+hZGu024/R6DpnkyN0Ml3YgFkZ2e9E/SYNFqAFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791960535; c=relaxed/simple;
-	bh=EP7l9HabhIYWdjdyftrk8jEcq9qhBc2BPemuKEg8jGc=;
-	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=M3xDhnqalkiMUXpRaherVlOwt40lmzoSDauHI4v6cG3AEh7FCiStLf8WVPPe1i0ThyGsTxPyRAa4cibv//yFRxfDf7+3c8f14r9ajkm/XwdELo0XxJQsjuRUfdMhEBpzDo+WRm7pEDX6IKpFj49bBjBKSV+h0ocnvsvQ1toO1WE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=fQVk/6u/; arc=none smtp.client-ip=113.46.200.222
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1791960591; c=relaxed/simple;
+	bh=q1KAHEw6AACqCmLZ/y5Jpihuik2HD14mSRZzJQpHIyk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rR6W9ec4mYO51yag/DUF6uFp/qx6diOneoENg5COUOINAEpz2lXZpBCrUUxssbw3Mt80bFW+yUPoQBHWdZylU3N15hCAhntUZBuGJ7hmN4ieTrxfKgZ2QXMC84v7KjhNQNxoa8u1FxzcuqAIpPRe6DB2ZOtAoxvqy0ekEc9TmaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mVJlbiM/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="fQVk/6u/"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=P62B/G2yUQzIczTqNN38f1tFI+QwgusdaQGIcmFGMoM=;
-	b=fQVk/6u/wYAdyWPC9GaxaA2hnizBClV4wZYkjScwWXMsVzmOQUH/+q5PItdAjp0AB+7DtxyRq
-	S2repipLV0OUt8ZFdStor9Xhn2uvArrPU5Lc7IjrPF3skWjLiM0prYxE5vD9Zwmf/8qhNXjnHYI
-	T/2qip4jBgibvL727tR2qjw=
-Received: from mail.maildlp.com (unknown [172.19.163.163])
-	by canpmsgout07.his.huawei.com (SkyGuard) with ESMTPS id 4j4M183NXMzLlSh;
-	Wed, 14 Oct 2026 14:36:28 +0800 (CST)
-Received: from whupemo200011.china.huawei.com (unknown [7.152.185.179])
-	by mail.maildlp.com (Postfix) with ESMTPS id C27FA4048B;
-	Wed, 14 Oct 2026 14:48:46 +0800 (CST)
-Received: from [10.174.178.46] (10.174.178.46) by
- whupemo200011.china.huawei.com (7.152.185.179) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Wed, 14 Oct 2026 14:48:45 +0800
-Subject: Re: [PATCH 1/2] ubifs: tnc_delete: Don't free zero-branch znodes if
- memory allocation fails
-To: <sashiko-reviews@lists.linux.dev>, <richard@nod.at>,
-	<ext-adrian.hunter@nokia.com>
-CC: <linux-mtd@lists.infradead.org>, <yangerkun@huawei.com>,
-	<yi.zhang@huawei.com>
-References: <20261014060252.3531356-1-chengzhihao1@huawei.com>
- <20261014060252.3531356-2-chengzhihao1@huawei.com>
- <sashiko-outbox-170861@kernel.org>
-From: Zhihao Cheng <chengzhihao1@huawei.com>
-Message-ID: <e439faa2-8c43-e996-302b-11abee7e0e26@huawei.com>
-Date: Wed, 14 Oct 2026 14:48:44 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mVJlbiM/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7831F000FF;
+	Wed, 14 Oct 2026 06:49:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1791960589;
+	bh=HsruFh9QO1GPcgzHM/eIN4QvMcLaW/LA6gWESnfZHSs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=mVJlbiM/EP8ys9nyQRDJQ8sn/T7DsLfHRZN3r21zlTQW1lbP8DSx8EyerYncpPuIr
+	 gA8I/QGeDH/hEoLd1e+zjbQBZxG7gm8HTOMZljFD7QZTLouzkmL0DxR9Ce798ft153
+	 TNzQNikJIS5F92B+DeqacWEJVvLtcSRxU6tplhlM1ezsfZXiCx6dsF7Fk+/SH62Zo0
+	 PSrKysfbHH/CqRs960H2nixrrskAKRkm/4JMCreLuuzBC2PB8eq8zqS89yOaOofyQ+
+	 0pHTvN3JbWdeu49VRw0MT1hERXmPdsfhqdxp7bb8nSE4upQ3Od/TBgGvPoqsjF2M+E
+	 /3rft81V54rEw==
+Date: Wed, 14 Oct 2026 09:49:46 +0300
+From: Leon Romanovsky <leon@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-pci@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	linux-rdma@vger.kernel.org, kvm@vger.kernel.org,
+	media-ci@linuxtv.org
+Subject: Re: [PATCH v11 01/19] PCI/P2PDMA: Honor device-specific ACS
+ redirection
+Message-ID: <20261014064946.GU219304@unreal>
+References: <20261013-fix-p2p-acs-v4-0-v11-0-72cf8c96e617@nvidia.com>
+ <20261013-fix-p2p-acs-v4-0-v11-1-72cf8c96e617@nvidia.com>
+ <sashiko-outbox-169930@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <sashiko-outbox-170861@kernel.org>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
- whupemo200011.china.huawei.com (7.152.185.179)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-169930@kernel.org>
 
-在 2026/10/14 14:28, sashiko-bot@kernel.org 写道:
+On Tue, Oct 13, 2026 at 02:44:37PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] ubifs: assertion failure on lookups due to zero-child znode after tnc_delete() error
+> - [High] pci/p2pdma: deadlock in calc_map_type_and_dist() calling xa_store() from softirq
 > --
 > 
-> commit 5c1854483c2d06b6fd3fc46791b422fcd958956f
-> Author: Zhihao Cheng <chengzhihao1@huawei.com>
+> commit 6120f97b22446453f3e4fa09135e1a44135ecfe8
+> Author: Leon Romanovsky <leon@kernel.org>
 > 
-> ubifs: tnc_delete: Don't free zero-branch znodes if memory allocation fails
+> PCI/P2PDMA: Honor device-specific ACS redirection
 > 
-> This commit delays the freeing of zero-branch znodes in tnc_delete()
-> until after all insert_old_idx_znode() calls succeed. It introduces a
-> local stack list to track znodes to be freed, aiming to prevent a
-> use-after-free race condition when traversing the TNC tree.
+> This commit updates PCI P2PDMA to respect device-specific ACS redirection
+> quirks for switches and ports that redirect peer-to-peer traffic without a
+> standard ACS capability. It queries quirks to set Request and Completion
+> Redirect flags and modifies how affected ports are warned about.
 > 
->> diff --git a/fs/ubifs/tnc.c b/fs/ubifs/tnc.c
->> --- a/fs/ubifs/tnc.c
->> +++ b/fs/ubifs/tnc.c
+> > diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
+> > index 45260423dfb09..ba94b0f339285 100644
+> > --- a/drivers/pci/p2pdma.c
+> > +++ b/drivers/pci/p2pdma.c
 > [ ... ]
->> @@ -2542,15 +2543,20 @@ static int tnc_delete(struct ubifs_info *c, struct ubifs_znode *znode, int n)
->>   		atomic_long_dec(&c->dirty_zn_cnt);
->>   
->>   		err = insert_old_idx_znode(c, znode);
->> -		if (err)
->> +		if (err) {
->> +			zn = free_head.fnext;
->> +			while (zn) {
->> +				struct ubifs_znode *next = zn->fnext;
->> +
->> +				zn->fnext = NULL;
->> +				zn = next;
->> +			}
->>   			return err;
+> > @@ -782,15 +867,8 @@ calc_map_type_and_dist(struct pci_dev *provider, struct pci_dev *client,
+> >  		goto done;
+> >  	}
+> >  
+> > -	if (verbose) {
+> > -		/* Drop the final semicolon; the list is not empty here */
+> > -		if (!seq_buf_has_overflowed(&acs_list))
+> > -			acs_list.buffer[acs_list.len - 1] = '\0';
+> > -		pci_warn(client, "ACS redirect is set between the client and provider (%s)\n",
+> > -			 pci_name(provider));
+> > -		pci_warn(client, "to disable ACS redirect for this path, add the kernel parameter: pci=disable_acs_redir=%s\n",
+> > -			 seq_buf_str(&acs_list));
+> > -	}
+> > +	if (verbose)
+> > +		pci_p2pdma_warn_redir(client, provider, &acs_list, &quirk_list);
+> >  
+> >  map_through_host_bridge:
+> >  	if (!cpu_supports_p2pdma() &&
 > 
 > [Severity: High]
-> If insert_old_idx_znode() returns an error like -ENOMEM, does this early
-> return leave the zero-child znode linked in the TNC tree?
-> 
-> Because we return before removing the znode from its parent's zbranch array,
-> the tree retains a node with child_cnt == 0. If a subsequent read operation
-> (which is permitted even after the filesystem is forced to read-only mode)
-> traverses this znode, it will call ubifs_search_zbranch():
-> 
-> fs/ubifs/tnc_misc.c:ubifs_search_zbranch() {
->          int beg = 0, end = znode->child_cnt, mid;
->          int cmp;
->          const struct ubifs_zbranch *zbr = &znode->zbranch[0];
-> 
->          ubifs_assert(c, end > beg);
-> ...
-> }
-> 
-> With end == 0 and beg == 0, this will trigger the assertion failure, which
-> can panic the kernel if mounted with assert=panic. Does this error path need
-> to remove the znode from its parent's zbranch, or otherwise mark it to
-> prevent lookups from tripping the assertion?
-> 
+> Does calling xa_store() further down in this function risk a deadlock?
 
-Hi, the insert_old_idx_znode() makes tnc_delete return immediately even 
-level0_znode->child_cnt becomes zero, which could trigger following 
-assertion failure in ubifs_search_zbranch(), this is an already existed 
-process.
-This issue is not severe because after the insert_old_idx_znode error 
-occurs, UBIFS has already switched to read-only mode and issued an 
-alarm. Subsequent ubifs_assert is merely printing more alarms, unless 
-the mount option uses assert=panic.
+Not in the current code base, I failed to find any reliable path for it.
+
+Thanks
