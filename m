@@ -1,64 +1,98 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11021121.outbound.protection.outlook.com [52.101.70.121])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF74501F54
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 13:15:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.121
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A460851476C
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 13:19:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.8
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791983726; cv=fail; b=kzMzdthDDOc5jvzQTdJhYpdDilg1KXISxUo2nkoFNTi6mQrkeivsUlkTXgPkX0j5lTi1GrgGOstyFb3nbfR4lifSma/9F/Xo+Bk65PnX8X8mRRbIxrywnqqad+ouLpf8Mu2dOW23Px+/sifawMA5n/0ZJFe6DmzJDSa4Ueuq9ok=
+	t=1791983947; cv=fail; b=Rgnrk/CcXsR8sh36c003YNQApLVf7kc2iDksxB1wNKDA+/QPSugWvWfTQeS3HH1nHNK5hm2L8a+qHcdlAdGiEhCzjbGasvrIXxkWPUSWea3jkgfelKDD/99yVLci18XxAthU8S0EqKOz4JlNjN07IqtOHswVuS1lat4wmvT4fCw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791983726; c=relaxed/simple;
-	bh=IgFJeU0fRsYobv2PASSNNIH2rQ/iK05bkakxvzwP8Lw=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=hAZMtbXkTqWQILFUV4DVqzehVl6vsGhAIKmGi7d203U2UdTXCq9at9fTTAsyAlmQ2Wl39L5ZY5T220AO1+ho+5dmLL19id0Mu6pNOBGkidoH7iSLWjzeqoYfFRqWPntPu5Dk4s2NikUDw/zUq/UXrbl7k+vIGo/8VWlOYxJMEEM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=virtuozzo.com; spf=pass smtp.mailfrom=virtuozzo.com; dkim=pass (2048-bit key) header.d=virtuozzo.com header.i=@virtuozzo.com header.b=KkYf5o35; arc=fail smtp.client-ip=52.101.70.121
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=virtuozzo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=virtuozzo.com
+	s=arc-20240116; t=1791983947; c=relaxed/simple;
+	bh=xfPTSAUGQrLlW4pD0WLuFf8R4tWQk3cj4RtY984Drms=;
+	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=MbCpAAtAO00jKHYdnQAPzcefMAChJQps40oSmH9xJ+eCy6CxS+UpGPyEfRLdWw0qduxK7P76WjACjOuj3bKYB4/GGWiNM3Zs72vK4GGMk+gpK8leMhPUARVW/WknYeDP7CTmv4p1YXbZ5D6tDK4yMbvgjc71n1EURvusoaPD3Os=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=e9kWUIh2; arc=fail smtp.client-ip=192.198.163.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=virtuozzo.com header.i=@virtuozzo.com header.b="KkYf5o35"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="e9kWUIh2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1791983945; x=1823519945;
+  h=message-id:date:subject:to:references:from:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=xfPTSAUGQrLlW4pD0WLuFf8R4tWQk3cj4RtY984Drms=;
+  b=e9kWUIh25GIUi3vP5DCpLq9okwUcrPkPxWtDyU9iKvNWa+X5mf45voF1
+   rkaz1rh0/854K+W66u7SSV3C32kHXNBeMPqOw+vJLufKMkCns33SuTx12
+   xsMxriWWpsIwcm2oinMneSTGPUXErnkWsxjjnFxmr6wWIiHqTzPRj4n7E
+   CXSYYVXmsYPxKBPojh4dzLYULP4A3azayH1Jx3Lrbr8wGhNGNHXQh40iq
+   djDdIKGgYZXAwZNF60LbPz/LpT13cRVv84gqcMp1pDf5z7T/SN6JbbBHF
+   l9QLjWh7ynZPqp0j4NyHAzmhj4AXNzNl8RFQO1oZlgBp+FSzgkti7en+A
+   A==;
+X-CSE-ConnectionGUID: CxVCpr/XR+WImzqflIqQ9g==
+X-CSE-MsgGUID: EfHRK3QxQNuhL4cUVUJb6Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11934"; a="629306"
+X-IronPort-AV: E=Sophos;i="6.27,157,1787036400"; 
+   d="scan'208";a="629306"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2026 06:19:04 -0700
+X-CSE-ConnectionGUID: xNeCQ9oSRRm9LFN2deFzmQ==
+X-CSE-MsgGUID: zBPOCe71Rd2VIyb2197Xvg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,157,1787036400"; 
+   d="scan'208";a="1339935"
+Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
+  by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2026 06:19:03 -0700
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Wed, 14 Oct 2026 06:19:03 -0700
+Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49 via Frontend Transport; Wed, 14 Oct 2026 06:19:03 -0700
+Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.6) by
+ edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Wed, 14 Oct 2026 06:19:02 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hQi9DYqaKicKSx8l/yhbvO/Ugy8aI19GWD0KQ5oXZ9tB7d+7SVW6affLt7/iSqfFPjPpAX9ZPmLo6nvHa+NhgOPP3/0GXQ3ddvkG58LlKZ6QO5IM8fKQCWt2B2BMLiyna+3L5aWieJAdHRLyGQ0/px1ZFIiwSRk/n/q9iBKqdhi13hzlQAvSrQXQ9wr+Itc08M0xJoX/8wsnrNsYo3NBPbzgcMZJ2xdJeooS2YvRwVYpJ7Bgflu77TXjlugwVktCBIohmyABZmplNnqGmwAeb4/5K8RudpRRhRbn3vcBWoO+kDZOx4CDBjmz9RH8gN9+THON9y/oMTNCXEwrNyf8FQ==
+ b=A04CzTo48NLO7UyUbVxVJuYtyIsRbM4Cz7mbiC2NTjOCroOS1FWWOrxIyS2fKKh5X67XAZkzWTmwOBIjyyQYJrwpzXfXTk4Ei0eGO4v6eBRneET9pSDK6j1zxY7gqgphhHDJWr1Vrt/QjlAZlDtlWa7WZfgRf5lxxulX8vxegPlykkl2CMy0zqCZXDw58H/U0kVVetANvrXIdp6JH78r6fazwkOlC5zHatVYPu5nfpDmU+J1HfzzW8/WMj6EuNRIMqtqxNqDnI27i0b3z02hiZpOirzhonAfYXeT0snHtg2WTJUNg3/1aS6usxVbs0Qdn1NQ2btqRZw8RblYtR/omQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3MwilO3ptPoghCNspXfhkYCu4LizynKKr/YLWXGEepg=;
- b=t6wtFNqJE5tUA5QVAFiXdNaPny7dVLGU9UwrFRcvZMLF3bIzR21voYyOSa0yHe0eEdqyff7IJs5/tP/fVcTpVLpxpJKCKNerLIlMXIwXG/8v2SO/IbaXdJVTAREdn+hIrhYBQ/mEk8ZBt3xVUTtpQWd4EGwlRdefNyo2kRO4+k7YmDTvwFnHMHNUsTHYQxD6waH5hZVcGzEIwEprajpw9Ke/PrgkpuI5JSiy3SiS25sU0UULDb5ptgjRbNI4HRV/sMiB+z3VMDubPLd3ufcPX1qPb3q1a8am8iDwapjnJD7IBmu0hiIhxQuXmB13U/4Kmy7IyFpR0NHnV0IT9ehIMw==
+ bh=zHOarHycZNE98V6ZFT38dpOF7qeMJwowAOlOAdhamTY=;
+ b=lQmqF/j01XUMMGV0Nkmor9kC1XtlcuCYdz+hMeaaBqCGt3l4ArX4nCeUDG8EwralLT3wO34q46FUkPUeGAt8YChBAZh4qR60A/6Ob7sOsqRm13PLN294WZjidpXuOqW97/IZDSncf5tOqJWKU8K7IBQYz8Lyy/w4HIbYZVfCqiwHyNC538oC4qPqt83FFRWPLr4r/FJ89BPlTasd7+NyrWDSECyVRnsKMSZZAsL2w61jwni9dXlz84DINKFjS6hv4YdPJn/pGV4//XAf/vC+seMNsrd6p4YZ+V5y4/oGqaTCpPKfL5tfUyb4DKoqvLCWVrwLm3djOh6E0T29psk0hQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3MwilO3ptPoghCNspXfhkYCu4LizynKKr/YLWXGEepg=;
- b=KkYf5o354TQQdj81hDqFTOMgkTmW1jfJyPOSVoTdP5AC9cWARQkODMsWRNTf9vvp2byH6bkv6YVsC2q3Vi/l/gL0Nq7GPnKUcnu4SFImAtsZtFxPNoj1yp6cgeQwvEwGXKN0NpMcYIgm3maXNrkWk5Pa4o7kaIS8fucNk7dzbT5ZiG8X09N14a5oWCvok21nvAFJaZWgqA38uPnyhZSOqyx78UOQsS4OpmGSnaQY0PvDX4sGnN5YamVYJtJDrLVw8H6Z5PjC1CdwwsSVGAr6Dt10qy2u35OLbam5zfX6nMKUdtCf2AY97dS2uqg1HwBOol1+bQSdpyhhBy+rjW3Q6A==
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from PA6PR08MB10708.eurprd08.prod.outlook.com
- (2603:10a6:102:3c7::20) by ZR6PR08MB999901.eurprd08.prod.outlook.com
- (2603:10a6:910:d2::23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.11; Wed, 14 Oct
- 2026 13:15:20 +0000
-Received: from PA6PR08MB10708.eurprd08.prod.outlook.com
- ([fe80::1999:c6db:dc55:494a]) by PA6PR08MB10708.eurprd08.prod.outlook.com
- ([fe80::1999:c6db:dc55:494a%5]) with mapi id 15.21.0522.011; Wed, 14 Oct 2026
- 13:15:19 +0000
-Message-ID: <a63c77db-4b1c-440e-b9d2-cc4d7507e096@virtuozzo.com>
-Date: Wed, 14 Oct 2026 15:15:18 +0200
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CH8PR11MB852307.namprd11.prod.outlook.com
+ (2603:10b6:610:32c::22) by CH8PR11MB280672.namprd11.prod.outlook.com
+ (2603:10b6:610:32d::5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Wed, 14 Oct
+ 2026 13:17:10 +0000
+Received: from CH8PR11MB852307.namprd11.prod.outlook.com
+ ([fe80::5f8e:c1ed:445a:a4b7]) by CH8PR11MB852307.namprd11.prod.outlook.com
+ ([fe80::5f8e:c1ed:445a:a4b7%4]) with mapi id 15.21.0522.012; Wed, 14 Oct 2026
+ 13:17:10 +0000
+Message-ID: <2348ff5c-6d98-4f9f-b4f5-1ca164920ddf@intel.com>
+Date: Wed, 14 Oct 2026 18:47:01 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/huge_memory: recheck a special PMD under the lock in
- copy_huge_pmd()
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, dri-devel@lists.freedesktop.org
-References: <20261014-b4-prep-vstor-149847-copy_huge_pmd-recheck-special-pmd-v1-1-d225c60bc316@virtuozzo.com>
- <sashiko-outbox-171250@kernel.org>
-Content-Language: en-US, ru, sr
-From: Konstantin Khorenko <khorenko@virtuozzo.com>
-In-Reply-To: <sashiko-outbox-171250@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v13 04/16] drm/xe/hwmon: Add helpers to validate thermal
+ sensor readings
+To: <sashiko-reviews@lists.linux.dev>, <intel-xe@lists.freedesktop.org>
+References: <20261014115806.831459-1-karthik.poosa@intel.com>
+ <20261014115806.831459-5-karthik.poosa@intel.com>
+ <sashiko-outbox-171241@kernel.org>
+Content-Language: en-US
+From: "Poosa, Karthik" <karthik.poosa@intel.com>
+In-Reply-To: <sashiko-outbox-171241@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR2P281CA0043.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:92::16) To PA6PR08MB10708.eurprd08.prod.outlook.com
- (2603:10a6:102:3c7::20)
+X-ClientProxiedBy: MA0PR01CA0014.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:80::21) To CH8PR11MB852307.namprd11.prod.outlook.com
+ (2603:10b6:610:32c::22)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -66,172 +100,120 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PA6PR08MB10708:EE_|ZR6PR08MB999901:EE_
-X-MS-Office365-Filtering-Correlation-Id: a7930007-fbf2-4b65-2a60-08df29f53249
+X-MS-TrafficTypeDiagnostic: CH8PR11MB852307:EE_|CH8PR11MB280672:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0fc35469-9b98-4833-db35-08df29f573e0
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|56012099006|4143699003|261009223027099003|260925021911599003|10067099003|260925022911599003|18002099003|22082099003|260925021311599003;
-X-Microsoft-Antispam-Message-Info:
-	BIz6Yiv2F2qHgFbjZZMFLW6K+DxbXsRDmb1+M1w8tMkBd50ZX9IH21ecaEMXquNGuyIwjbWUmQuMxyUXiIIIlWv6E2WN//caCnu7VpAxzzBBAT/ga3nk5z4x47GhWqbxlKBbWaLWiAF+2hLwNlHKbf0ISXRexFlxvaQPas4sOE1CXP8naPj1yUyWdF3mHJwW9CZruv9HYSESsWyM+RmvJPvNDuVs5cchurbgPxomY0ClfV6a/QWGUjCoz8D+OiOZzdAX03Ii0z+NqSeN2CvY6AzSnlQsIC6fikVf4SQObSJGwcGxIxbjE76LR/ohw+LRpcE2Llu6ARrkwxx1CfeiM+UiI2TV1l4Nsc22TsUXqGY6+aDw8Jgl54QWn5hOJr+DznTd5dax1cauYSxXVMwPRFrkE9nx4QZoCciNjW1+eLA9Qzzettbccr51O2whQwcj/zvBP9+VqfHWtqZMs3mzpIDBHGAZ+q9IJIBUMOwTJSUEdkNswH5xqqz1xRvZQ00/cYQLSX3zqsN1TfSgHAlml6WIOHANRjp4q3R1B93LCjaMjpzd4wUrXmOOi85UROWT5nBzbg9DFXJ5/hx/+F26FdW1MMF4IyL+9feSDGz7xws=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA6PR08MB10708.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(56012099006)(4143699003)(261009223027099003)(260925021911599003)(10067099003)(260925022911599003)(18002099003)(22082099003)(260925021311599003);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|23010399003|366016|56012099006|11063799006|4143699003|261009223027099003|10067099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info: izT2sWX6oo6G86/2EwSJSlyawCdHeFRmTOKwyOslX4IAv1yJVJHcVxoBgGKzR7OqH7waHFYz0fXYpVJq/WLAr+PyQuOsognyxmFx9/FvQucXrsWpRt53nYGa+/4OzXY/mXPPDU5/ILlKO+2cJRm2kv4NUG0XF63QkjLEb6TaxE0qKWYYa9u/D/eG88alSyMgu0j1qMaQSy36xHnFjwUwYws/27DQJttq2FZ8vRQOOCKpYRp1N9CQcOVIcQU/O53Nd/aJVNBEf14sNH0ThwwCyV7IgEmQuJdHKWQzZKTvyFs0J1Z3oU5wFZsL4ht3/oLjC/OecYHXgHS2h/jmuDfNRMIWtDlSbILjwgKImWYrxY9cT/AdLJ167k+GHWDKRofnPj56FsbGcJalqjfvj3PTygcegBkuGF11sh9Xn00rvkHslPiHzP6DMih86enaYAkNtHMgJxRu5ECUfKhKclMCVJkR1AQmBl9By9yB+VAnoAv6z3IYAc7RpfijHP5Q3+phn+SBnIYLT9xIK4DH68+wqyTYjpvBBVBhuVbo+VVa00xeeNG6c+1wIfIDYuWFDPwkucWHzL1lTDM0xiJwg3FgozGWRVaAVPJ+DazIqLaKFge3lq+yPzqfNR7uOYqWmScbp2kvlkOlZb+QEP1pmeWLJDokV1QVJjsojTzjdmOdmf0=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH8PR11MB852307.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(56012099006)(11063799006)(4143699003)(261009223027099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?LzdGYlpxNWJMbGtOeDhTb3RqN3liOTVtVFJ2VkNqbDBWeURaeE40UjlIbHVu?=
- =?utf-8?B?cEljMk42bzZmQW5ENkh2TDgvREp2a1p2VXNjN1F0SkFwYi9QVytjcGhaSW9U?=
- =?utf-8?B?SnJEdGRYc01MMDNWRWpxM0RMNmFtMU01VXZzU2wwUFB4eWl5U3dIbldnNmZl?=
- =?utf-8?B?akhrUG9sNUJac1crUTFtdklyTllzTGZld0h4eEdoYVl6YTgzWDJtS0lnWDNm?=
- =?utf-8?B?cVdlOTJ4WllRZGRpalNGUFJNazJtek9pcGhWZkM4cCthZWVPTDRvckhGaWpi?=
- =?utf-8?B?a0Z5WnB0bTJ2TkppM0lMNlE3L2U1djM2QzZjb2tsbnlIYjM0WUpXNHZmRzl5?=
- =?utf-8?B?RFF0VzgvQ0UwandsQVVselVLOWtON0JKWDhJSEd1T091MEtsaWZiL3pPTVlr?=
- =?utf-8?B?UG5XRGNqUWZGRVVZamVoRDZ4MlhkRU1iWlVMSW50NTJGb3NyZGFWMk1jRU0v?=
- =?utf-8?B?c3hpRHU1TkF2d2ZQRDV0d0xqVlhNYW93L1ZRdCszUy96YU5HMWF4Q2pmdWZt?=
- =?utf-8?B?ajZ1MHZDNkUwekMwOVhaN0h6M3ZaQUVubmJsYXRZeWErak43RWJzTS8wcXVN?=
- =?utf-8?B?cGlMYjJiQXl2YWhDM0J3eUUvakU0VnhSeVVnSHJHa0JBMFJOZ0xETFNmTXkw?=
- =?utf-8?B?L0dzZTkxVitWNXU3b2lkdi9XeHlFZEJFZHdLQTU3UUdSNHNUTzZuK2pRR2NV?=
- =?utf-8?B?YmRxUXFMaG5USS9vaUJFZGRJTUhNL1cvb0tIM3JUREQyd2hDVGpwTnhMRk9l?=
- =?utf-8?B?UTRQcUFzRXNsUGNiZlFxcHhkeEd2OGRPMGY3c1hibkxyNGY3WGdwd3Y0UGFj?=
- =?utf-8?B?cXd1cUtFbDVOTGdwc09OMzFqL0pGeHl6enFwWnlaa2VnaGlsQi8zSUwrcXk3?=
- =?utf-8?B?d2kvbkY2Um55eG9NQi9EYzV5cGJhWnVCdXhEM1ZDTUpRRHI2S05iYzU5WkFp?=
- =?utf-8?B?bWNxY3lzbUJUS3NBemo5YXRJZ1lIV2xlZnhyTlcwZW9oKy9ScTV6K090WTlG?=
- =?utf-8?B?cG5CdU5HSjhYTUdhYjY4WVVsb3A3V0QvZUtmTkg0dGVILzVFZHJaREFYUE5Z?=
- =?utf-8?B?M2RoUFV4TFE5Si9EOE9xTWMyMHo0ZUxLbWJ2TXNCRVlDd3dGTXpNQXNSazVQ?=
- =?utf-8?B?TlNyRVp1eDBlckUyZUo0YzBHODRDVHVESDYvS01JTy8rTWNLQysxeUFYRFJz?=
- =?utf-8?B?UUthZ2dVUXFhMG9xdFViRnBFaFJZT0dCcExYSXQ3SjBTdjVqUzYvUWREZFli?=
- =?utf-8?B?TmRRdENiUVZXRUY4OGZrSlM1ZHpiWnp4T093d2Q5RUZJdXhiYmVMUWlnOGlq?=
- =?utf-8?B?STA3Tzk0WDJpOXIycUxGODgxUnc2VFU5bHN1ak9mcmZVZ2pXZGR1cTY2Q2V0?=
- =?utf-8?B?WkxpSGFHRUQzaVB0M1FMVmxkTHZoak1GYnBNdTNhbFd5dS9uY25LUGZZNXNR?=
- =?utf-8?B?N3hzeUpOZXdDaWJ5REhhakFOS0dZZHN0azJXVWVCK21EZ0FSSitJajlvVm5W?=
- =?utf-8?B?c1pLMDdVR3h3amdzZ05TMDVER1pGYk5zZmhBTWMwMEhrcU1aTmx3cE5RZ2Vp?=
- =?utf-8?B?ZGVVOWdQcW9EYWpPc0J4eVRYVC9yTXV2a0NYSzVFMmpFYXltRG5EWE9yRm5W?=
- =?utf-8?B?aGI5UHQ2Z1RJWi9EUk1TUDVoRytjOVY0OG5MSC91SmhCK2lqeDgxYzZ0emNI?=
- =?utf-8?B?SEdCaS9IWllvQTBYUFZNTkNsTjkzZGMvNVlrc1I0WXRIOUtkWW5HRUxJRFA2?=
- =?utf-8?B?a0xtZGV0aXRLUXVOSk1xeFJpcEtSdWlpN2VDeFpOenZnOVp4RjBYbUtlUmpo?=
- =?utf-8?B?a09mZ1lBamtOQUd1UXY4TDVWZDhrTGZER2o2Ky9TZEhyUXRQWTM0L0c3OTM2?=
- =?utf-8?B?T1pjNURVQ0lNUUx6bDlMNGpyMDVWQmRudXdMRXZnaXMremRjc2NHSUYxOUtx?=
- =?utf-8?B?Rkx4OE9OZWpLN3A5S2NaanlIOWFXMEhKQ3RINXgwdnl2OTdmUlV2em56OXc2?=
- =?utf-8?B?Nzl0b0dMbld3QXV5ZHVMbGovZWNQdzJqbEZRZGJRZnlXSlRGbks1aUhoV2Mx?=
- =?utf-8?B?NWFoQzE2Mlh3dDRmRCtITTZyUFAxSFRKeHVRS0Y4STlvYUVjcmpPZ3h5UTEx?=
- =?utf-8?B?akJRRnFGcG93eFV0SzI3RzVWSStqbTFwNjhaY3BxQ2wvbTNvSG5vTEJrejNI?=
- =?utf-8?B?NXA4NmF3Y1NVNjY2a3VjS3dlSldiVEVnQUY0dHVsZURLN2VOTkU1bFcySDd3?=
- =?utf-8?B?ZmdUcFh1NHpXeWd4OXhrM2oxblNhUi9rNnZzaHp6ZmREZmlHNnNhbEFaQ3RX?=
- =?utf-8?B?cWY1UHo0dzQ3VUtjektIcU5XYnNUbHI3U2ZrVnJFM1ZTN2x1TkxQQT09?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a7930007-fbf2-4b65-2a60-08df29f53249
-X-MS-Exchange-CrossTenant-AuthSource: PA6PR08MB10708.eurprd08.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ak96QTV0Uk82VDFWT1ZlU2lET3lLUVM5elF2WFdzSzNFbjV4WTRhcmc2Yy9k?=
+ =?utf-8?B?cUtueFpXT3VmRnZRL0RKbVF5bW4rbG9icjN3Nm1rdGtib09LL3FZVVBrT3p0?=
+ =?utf-8?B?M2ExZXpxY3dOQklUY1dwR1lDTFhycmZoOElTclRDZ1RQaW1mQUxIR2wrNVkw?=
+ =?utf-8?B?LzY1Q1pTUThQZWloODNtOHFDOU8zY3VMcUpqRkVYUEdVbmlnT1ZlVnFZdGpW?=
+ =?utf-8?B?VEs2Y256RGVTMkh0RkN4NG4vc0ZxRXFkUm1xZ2xTSnV6Z1lhb0pES2pYTmEw?=
+ =?utf-8?B?L2pCdVZvOUk3S3pOQkQ1MGI1K0xnLzZvZTlOVkl5TEhhdGVyVVEwRHh4RkZ6?=
+ =?utf-8?B?SzdIUURtc3hWNnJLOEJBb3ZoNmhTSTFNL1NielR6N0JxUWp0T0tNN0d1blVL?=
+ =?utf-8?B?cGRqdWFGenpzTFNLNExtWDFUR1BnQmlzY2R6WHBCUmtUbWZyc3N1TFc2aFVy?=
+ =?utf-8?B?cTNKSFBRKzQxREtzcWtSQ3luenN6NGxTOS84aFJyNi9mOGlWejVOazdQNnVH?=
+ =?utf-8?B?N0ZVOWhiRWxQZFhYdjZ0b210NXU1QW4wVS8rTDdBZW56dXE1SHNmQTZpQXBv?=
+ =?utf-8?B?MlBvcS8zbUllZU42a09MUEpxbHI5VnJGOEl5aW1MSEk3V0JIYjU4UnFMRXVU?=
+ =?utf-8?B?Q3dVY21CWGxwWTU3M0xjSUcwU0MvRVMwM1dBM0l2SHlYK0QweFVmNjRvRk5L?=
+ =?utf-8?B?UUJoVCs0V1UzbE56MEh6Vmpkam1jL1A0V2pMbk5INVB3OTBvU2FxMzk5amJ1?=
+ =?utf-8?B?K0VLeks4OWE2OUw0M0ZRVTdCRGN1ZlY1N2VLSzRQelhOQ05ZZDVMdC9vM21u?=
+ =?utf-8?B?Y0NhamVaYVg4VUZiajRkSTZoK1dXK01aRW5SR0RQQkpWRTZhbk5wN1U0cVl0?=
+ =?utf-8?B?LzhzLzlmRTA0U3VQQUtHTXJKZUxleFArY2s2ZUx1TUsvMUFQeVh1RHErOWtt?=
+ =?utf-8?B?YnFQdHA0aXdsRmNBQUpzUURxcngzamppdHhPT3ZNRktZZ2FtMUd3ZmdPZEZp?=
+ =?utf-8?B?VEhEd3lsN0VKLzhYakFiTCtxM1RMTFVLUGJ6bXdMM1FSMkFOYUZMNWhsRjQr?=
+ =?utf-8?B?dXMxTEpNVWM3SkljclViMk1XU2IzcG5CdC9Cc2F0dGFJT25VaC9kOGVPVDA5?=
+ =?utf-8?B?RkhjblMzNXhvQWdnWHYzeEtYVkNGTzJBZmRSOTEyTVdWRWFWZzJiSXUzSEtU?=
+ =?utf-8?B?UURPNVViVHpnaEpGcjRtMGtCaWd0RTNkbjNaaUlmQlFzSTIxNUpKb2lWV09y?=
+ =?utf-8?B?N2d3MEp3bE45djBzdmJ1cTNLY3dINTJNUWZ4MkdHblZmZTlwNTJqQUp0MWsv?=
+ =?utf-8?B?dDVSTGZtQVRNZVdWbU5NT1ozaG9EZC9zWWVZNW5tb0J2VTBVMEJkSUIrZ3RP?=
+ =?utf-8?B?eE0xTHhwSUNqcGtRWUVvRlBMWm83M0lNOU56QnJxaDFpa1FINWFQUDFaR0sz?=
+ =?utf-8?B?YUNEeCtkWXN1VmNEQ0lWb004d2ZhOHhYNlpwL01RczI0WSttWVQ1ZGcvbC9q?=
+ =?utf-8?B?dzRvOWdxUjNMNWJhcDcySzhWVHoxd3FIU1hkenAyNGd0dTg1TDF5VTNKOUV5?=
+ =?utf-8?B?Ykt5TDlNTEthRXpuN0NmRVE2c0NISVJOZFZDb2lDRzJnUmN6L3ZEMDJ1MkQ3?=
+ =?utf-8?B?NEpRaXdOUG1kNm5QaEVGWFRjNkxublZNRyt6OHVvcGpjUDRiNmlRVnVPb0Fk?=
+ =?utf-8?B?SkVJNUJjZWlicDhLZFNZdWpZWXdZS3V5TjlKY2pJam5NMS9YMng3OElkQUZ1?=
+ =?utf-8?B?UElQQ0huLzlsUGFOUnY4Z1hNeTgzK1ZLQlFtUnJ1ekRMWXhrNjlnNnppRkJi?=
+ =?utf-8?B?Q3lsU2k2U1A5dmdrWTE1emRkS2VOS0V5cko0aHZGdVo0QWNZRFVUem92OTA5?=
+ =?utf-8?B?bU81dmVoSEtraWNHMGpFM0hMcnZ3R3lzNWFCQkExdi9QSWsybHZTN0o4YXNO?=
+ =?utf-8?B?Tm9kKzRIMWJmL21BTzRTdS9QTllYbnd2cXRqcW15VXpLUHl6RE4reVBuS2xE?=
+ =?utf-8?B?UExadGZXZkVjS08wRXRVRldySTBpRXpqREU5WHZLaExLYkY2dlh2Tmd2M1Nw?=
+ =?utf-8?B?RVZYV0ZuK29hSUdyNlNTem5lUHhjSzhmL2xGa29mM0Z5Z2VOWll6L1VHalF4?=
+ =?utf-8?B?dWFMbmdXZmJxQTNVN2FZVDFTUTRlb1lwMVpuRTVOT2JKQzB4TC9vM0pJeEpT?=
+ =?utf-8?B?cWVUK3FRUGw5TThObkJEdFVlMnRkQXdvbFhiZmlsVnVTdEtpVUx6VEdUbDBN?=
+ =?utf-8?B?RC90SjhGcGUyT1M5YUNpM1c5NEE2N0MvT3BqZGdxTnBLN1pZRS9rd2VBU0pS?=
+ =?utf-8?B?Vk1UbXJocVFyYXBKMDdWV29qWHJsd0RQVTZBTXVicG9zbzBFZnAzQT09?=
+X-Exchange-RoutingPolicyChecked: 3h6Hp0Q5VTEdSMggZonj5cM15keBj2bbMwWXqSY/cwg/MEC2V0CMUzkgB56dSyyOpjR5SAz7JSdmPGk5fcsL1nDYbBrI1Pr3cmaT180c96ZuG4kOH5XvgZW2P68IAG0q826a+90Kn87ig+ypErnr3VLBBUmkNmf2XIntXdP0XzbunPvyQdhUl7vbACL268YzuOJU5M1LK18Ah7I7DBO2aYTV7UGdx1SJiVteXH20ixQnnIBWdt4qolSvfB+Re9fhnsV74Km/FOF8X1lxwU7Ch9RtGwcBwTJ01TZ9ixD+nTOSJIcbJxvmTDXGeBKtojsTnuAw89BhVcLnLu3FWW9IWw==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0fc35469-9b98-4833-db35-08df29f573e0
+X-MS-Exchange-CrossTenant-AuthSource: CH8PR11MB852307.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 13:15:19.8622
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 13:17:09.8565
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ruxztXe2ApOQTOabwuyKaYOcJuB0hNT9faiDQJR2JMWebAym9cbmeTKHpYP9upTUJfAEzI/x2F6VUKDIg1YUnQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR6PR08MB999901
+X-MS-Exchange-CrossTenant-UserPrincipalName: b4i7r0gk324tDI2NRhSrsFOMm+Ka6i5UPQtiSTompB8X7V6aj6i0yrn65Ff0ydgb0o3k4Nb2FA+PEBWuYtPVgg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH8PR11MB280672
+X-OriginatorOrg: intel.com
 
-On 10/14/26 14:15, sashiko-bot@kernel.org wrote:
+
+On 14-10-2026 17:41, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] mm: NULL pointer dereference in zap_huge_pmd() for special PMDs on PowerPC
+> - [Low] drm/xe/hwmon: mbx_temp_valid() fails to reject 0x80 (-0°C) as invalid
 > --
-> 
-> commit 5100f57130de5473973d1370273238b4778fae24
-> Author: Konstantin Khorenko <khorenko@virtuozzo.com>
-> 
-> mm/huge_memory: recheck a special PMD under the lock in copy_huge_pmd()
-> 
-> copy_huge_pmd() reads the source PMD without the page table lock and,
-> for a special PMD, installs that value in the child without reading it
-> again under the lock. This commit reads the PMD again under the lock to
-> ensure it wasn't cleared concurrently by unmap_mapping_range().
-> 
->> diff --git a/mm/huge_memory.c b/mm/huge_memory.c
->> index 1e5d68acf62a5..fcea98f0d8865 100644
->> --- a/mm/huge_memory.c
->> +++ b/mm/huge_memory.c
->> @@ -1965,13 +1965,22 @@ int copy_huge_pmd(struct mm_struct *dst_mm, struct mm_struct *src_mm,
->>  		src_ptl = pmd_lockptr(src_mm, src_pmd);
->>  		spin_lock_nested(src_ptl, SINGLE_DEPTH_NESTING);
->>  		/*
->> -		 * No need to recheck the pmd, it can't change with write
->> -		 * mmap lock held here.
->> -		 *
->> -		 * Meanwhile, making sure it's not a CoW VMA with writable
->> -		 * mapping, otherwise it means either the anon page wrongly
->> -		 * applied special bit, or we made the PRIVATE mapping be
->> -		 * able to wrongly write to the backend MMIO.
->> +		 * The mmap and VMA write locks of the source keep faults
->> +		 * out, but unmap_mapping_range() does not take the mmap
->> +		 * lock and may have cleared the pmd since the lockless
->> +		 * read. Let copy_pmd_range() skip it then.
->> +		 */
->> +		pmd = pmdp_get(src_pmd);
->> +		if (unlikely(!pmd_present(pmd) || !pmd_special(pmd))) {
->> +			spin_unlock(src_ptl);
->> +			spin_unlock(dst_ptl);
->> +			return -EAGAIN;
->> +		}
->> +		/*
->> +		 * Make sure it's not a CoW VMA with writable mapping,
->> +		 * otherwise it means either the anon page wrongly applied
->> +		 * special bit, or we made the PRIVATE mapping be able to
->> +		 * wrongly write to the backend MMIO.
->>  		 */
->>  		VM_WARN_ON_ONCE(vma_is_cow_mapping(src_vma) && pmd_write(pmd));
->>  		goto set_pmd;
-> [Severity: High]
-> Does this code cause a NULL pointer dereference on PowerPC when a special
-> PMD is unmapped by the child?
-> 
-> Because the jump to set_pmd bypasses pgtable allocation and deposition
-> for the child process's new special PMD, no pgtable is deposited.
-> Later, when the child unmaps the VMA or exits, zap_pmd_range() calls
-> zap_huge_pmd().
-> 
-> On architectures like PowerPC (hash mode) where
-> arch_needs_pgtable_deposit() is true, this leads to:
-> 
-> mm/huge_memory.c:zap_huge_pmd() {
->     ...
->     if (has_deposit)
->         zap_deposited_table(mm, pmd);
->     ...
-> }
-> 
-> This will unconditionally assume a deposited table exists and try to
-> withdraw it. Then in zap_deposited_table():
-> 
-> mm/huge_memory.c:zap_deposited_table() {
->     ...
->     pgtable = pgtable_trans_huge_withdraw(mm, pmd);
->     pte_free(mm, pgtable);
->     ...
-> }
-> 
-> Since no page table was ever deposited, pgtable_trans_huge_withdraw()
-> returns NULL, and passing NULL to pte_free() leads to a kernel crash.
-
-Thanks, that is a real bug, but it is not introduced by this patch: the
-special PMD branch of copy_huge_pmd() has never deposited a page table
-for the child, since commit bc02afbd4d73 ("mm/fork: accept huge pfnmap
-entries"). This patch only rereads the PMD under the lock in that
-branch and does not change what it installs.
-
-It is also worse than the zap: on ppc64 in hash mode the child's first
-hash fault on that PMD already dereferences the missing table, in
-__hash_page_thp() through get_hpte_slot_array(), and the zap then hits
-the memset() in hash__pgtable_trans_huge_withdraw() before pte_free().
-
-I will send a v2 with a separate patch on top of this one that
-allocates and deposits the table when arch_needs_pgtable_deposit() is
-true, as insert_pmd() does.
-
---
-Best regards,
-
-Konstantin Khorenko,
-Virtuozzo Linux Kernel Team
-
-> 
-> -- Sashiko AI review · https://sashiko.dev/#/patchset/20261014-b4-prep-vstor-149847-copy_huge_pmd-recheck-special-pmd-v1-1-d225c60bc316@virtuozzo.com?part=1
-> 
+>
+> commit cc835292455ece8a38adb02fe6e4c345fc3aa89a
+> Author: Karthik Poosa <karthik.poosa@intel.com>
+>
+> drm/xe/hwmon: Add helpers to validate thermal sensor readings
+>
+> This commit adds mmio_temp_valid() and mbx_temp_valid() to validate
+> temperature sensor readings. It uses the has_temp_sentinel flag to gate
+> these checks and rejects 0xFF for mailbox and 0xFFFFFFFF for MMIO.
+>
+>> diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
+>> index 1b4efbf4ac999..883a0ae1d90e3 100644
+>> --- a/drivers/gpu/drm/xe/xe_hwmon.c
+>> +++ b/drivers/gpu/drm/xe/xe_hwmon.c
+> [ ... ]
+>> @@ -834,6 +837,30 @@ static int xe_hwmon_pcode_read_thermal_info(struct xe_hwmon *hwmon)
+>>   	return ret;
+>>   }
+> [ ... ]
+>> +/* Mailbox temperature is sign-magnitude (bit 7 sign, bits 6:0 magnitude). */
+>> +static inline bool mbx_temp_valid(const struct xe_hwmon *hwmon, u8 value)
+>> +{
+>> +	if (value == TEMP_MBX_INVALID)
+>> +		return false;
+>> +
+>> +	return hwmon->xe->info.has_temp_sentinel || value != 0;
+> [Severity: Low]
+> Does this raw byte check fail to reject 0x80?
+>
+> Since 0x80 represents -0 degrees Celsius in the sign-magnitude format (sign
+> bit 7 is set, magnitude bits 6:0 are zero), it evaluates to true here
+> because 0x80 is not equal to 0.
+hardware will not send 0x80, so this case is not expected in practice.
+>
+>> +}
+>> +
+>> +/* Decode an 8-bit sign-magnitude mailbox temperature to degrees Celsius. */
+>> +static int mbx_temp_decode(u8 value)
+>> +{
+>> +	int temp = value & TEMP_MBX_MAG;
+>> +
+>> +	return (value & TEMP_MBX_SIGN) ? -temp : temp;
+> If 0x80 is passed here, it decodes to 0 degrees Celsius.
+>
+> This means the fallback safety logic in mbx_temp_valid() intended to reject
+> uninitialized 0 degrees Celsius readings can be bypassed if the hardware
+> returns 0x80 instead of 0x00. This could fold invalid readings into the
+> temperature average.
+>
+>> +}
+same as above
 
