@@ -1,163 +1,174 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013009.outbound.protection.outlook.com [52.101.83.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB923A83BF
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 20:11:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792008717; cv=none; b=peQmQJS/hLKn0rrq8TPLuJPX1y1SUAz1ymA/Hf5DDgT9UPB10BSoUaHVRtiFNNfg2iOG/eRSZIHG7Nale3RP2O/jSf2i1mz2GXOKvr8gO7XQJLtj/EPVUFRFnPSbU3xKth0XC+lhLJLxLUlO2SviBrK8emCJ5aPTWto9awxI62s=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792008717; c=relaxed/simple;
-	bh=S8jHugwfc5mGzTXcxYeryvcS4QP8GMhXuGrtWSeI97U=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=sxc3P7K1ZedC5IifuLrZQ9+pt6/WB0IAOmtpaz3D67MGzLA5OI6l/0YMlqRDD1Tc1YV/TDocrn1ryt71GCZuprOd/BKLpmbWonUZB+pcgZn55QFSZexf2YUPbKeBvByILbLDiLJi2gPYliqYdeQwXCgf8mIRr9/oHccK4xs48WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kg15kc6G; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7773E4A92ED;
+	Wed, 14 Oct 2026 20:45:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.9
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792010742; cv=fail; b=mnQs1DVIisVDCzqX+yJin2BUK5YeeWhdNK9XohHUPdIa1wXyE6/kNXjMwFHk5hppPQbF+VIo0rJ91xANJ/r9UBv0w4RPhLj0k68ZDSA76vX2YW5ys9mwfskkB4dY4MLAwTwXsEUkSjM44kfRJNc+DMdoXlgnIlg0z8mSlrKYigs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792010742; c=relaxed/simple;
+	bh=ZWepgVx/GARjSjnW8hstZRfri8juiEVyL4WfAqLyZUU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=AMCB0fI9pFCJZxpbVCh/1uyQpi2hB7C+dBIbrgxlND3ETxonxl89Ob5S2xfrRMgfq43vTcYeJT2JAiYdb98CCEjm/565vBQjw1VFhtMh9rkwwPbUiB60CEx+j4sq+yGoNCmXV0fOAgIN2awmaO93C2yH1znp+xoZUTcQAhpkl+I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=vOjqxXVM reason="signature verification failed"; arc=fail smtp.client-ip=52.101.83.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kg15kc6G"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c37b612635bso221179866b.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 13:11:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792008714; x=1792613514; darn=lists.linux.dev;
-        h=in-reply-to:references:from:to:cc:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=B3NN1XmnvWDLl28EZgPw9HFna8foW+yV6qgfgucgqcE=;
-        b=kg15kc6GGz52y2S7iHuSNbb/UFTqLWz+aQ0f9NIitgBMnfQgWdp0MicbxMUkL4oJiV
-         pbfFZnMRadVXF/H0Kxmx20m1StK703RXIfiP1Tsd8ZHTYR9XQo0Gc7onDKyTfRPc13cz
-         Lr7fmvrs9XblQNLMfvnUbw6EGML6Ayz0DpQ97MjvNy7MhBAzctbr1IUyHAN3bTp8mb7D
-         qGQkH47GlXxRbcYVEc4Ab5Vzqq0M/KD6plGuiegrY0bJaWkz/hjC//n3VM4i1u8fnIZx
-         e2y+NMeXh8zmKNzEhrpjNIdwmw3XEDVwfhRFEYEPj6h8xU+8uB6ulWbZdLKQiCwT/OVZ
-         a7cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792008714; x=1792613514;
-        h=in-reply-to:references:from:to:cc:subject:message-id:date
-         :content-type:content-transfer-encoding:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=B3NN1XmnvWDLl28EZgPw9HFna8foW+yV6qgfgucgqcE=;
-        b=km0tkxXKvU2TOHc+f7lMa8ZpmJSOsx+G6jf7WJehiMiLhYe2efw99Oj76sAydrJhNz
-         Sc0lZYe4UkqwNrPu7NxldVT9ojIKXiGlS+CDxpYPgq2yvQtw0Zacw21TMk7Ui5YJ3LXM
-         16ViiRGU7NsD1C9WmD6xHLUwndYHgqI2LxYELSS+N/6mEmjtOI8C86h6DnfZuUIr2Ix6
-         b6hW+rHDsH06tId/ilAjfu6j7+Mbm1EYBC0eTUWELNEIBypr2keHXc65J36XQnZWOzDy
-         HEZFBwEcghcux0JjW5yIdCjKThWAbnW+OAjM5DGBHu19qIznrTSYsZRPzGZXsg91GKiK
-         gFUw==
-X-Gm-Message-State: AFq9FYI7jdw2PdmRtv5pUgrYsXBVDZSThq7L4rA1NXzcMKvmxOoxNSBJ
-	6pz1MngVTZrzs3MGvu37tbmvNlU0QGonc6GLsdOblaoRNg6u1NqYO8JmwtqYS6tR
-X-Gm-Gg: AYBFou0go1O8c0G3vWoKmfUM52vHHQcIIvOHGbr1TIvm+s6CMtd4H1o1x4ADJ/NFlBf
-	7Z+IlbPYvxNzDukwEUpCyd9hOCfG6nK3kp06XSZ9+PYKEdDwb6W8cfcKqmgOfrXYZfr2jPGGYIo
-	iuuqZ4rn7xhYXMXp4Ovx0aiFgra+K9c/4XvO1jWRN7ZQkH/VU9wkKw3Cqd0fX3vGhCZ+URwEfnk
-	iz/c+/oALsmi1iTHTh88hdPZyNkezMeDOcY7hooBfuYqQGGm9J2r+MzJe340qD1GP3hEBDmdYZn
-	v4YeeeQ2Uv5oXlzBxdwUW9e0114FcvRrweEYKTGbO/NZBQ+hVEsBocXIL5Eji0+2t1Y3QEeUYag
-	eWhVSuSUc7yLHDhHvdxE/AcIa5eWDu1yN/QnRx6zdJdYTFIObnAKDi/PjF9f3JpLq4wBmO+qxas
-	yVXtVV95v6ocsw+0WdWok8enMt6gPolwo1PYt84PukD3DGGgEmAWvcedGTkqPQKI3z+R2ICbVvm
-	1C7YVT8X7C9OA==
-X-Received: by 2002:a17:906:ba8c:b0:c29:cfce:1946 with SMTP id a640c23a62f3a-c31a9b0d1ebmr1511912966b.15.1792008713693;
-        Wed, 14 Oct 2026 13:11:53 -0700 (PDT)
-Received: from localhost ([2001:4bb8:148:f08c:b8ea:248e:71e0:692c])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c3eda042c0csm24638166b.50.2026.10.14.13.11.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Oct 2026 13:11:53 -0700 (PDT)
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="vOjqxXVM"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=B1SVpLKStKLuVhB2uTDkfTpXcNX8ECkB9PqTMXwH3XTap3hU89gLbuCA+5vE6Jr6Fg5HWjA8iTxv5cEVESLetiAP9VYGf5KARBvAtsafYfyyvd3Tn7Nfi6jt5iKVyl6XDzYlwuTPT8qFqAvX6N1JtmrKbzxiFNZV3kI2kMyNxQWeoI7lylO635H7Cm0gV4iKoV88/zGH0r4UdJw9QDz7YN528eDbNG2NhrFiTdWXGnQV1YXKaqw9IRGPi4dOZnvtBacdd+U83oSzFJhQaBQ/eefzB6hAl8zUhOd9yEegLuh9uIZrH9BY0UAxpV74sof7DMAuMHTQ5g/jXBVQgXK2eA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=p3+fwEf9UuRce2zmqC+RsnEnpmC4PrwbvEQOEIW8XSs=;
+ b=piMpPbbYxgDkcT9Xq878VhKRBOejVWepHLwd27mfMBk8/3t/RYwwVzhDQ305uEJrAsPRgazJqDtZaYJP+RO4cHu2627X8Py8/D8pVVuGgCjQBsegZCD82OY9qBMqKpSuMrFjmlQRBbPEK+u6FoWHHi1x4+3kW2y4VfC95qSdju7D9VibvTfmnvOwepVsTNTR0CJatPYfqmRPx7RU+kccjaD1bNlVpg0REz5lNPyk2ksAKjlYc7wOQoR4x8Q1NCRDUuQKbtCpVeNewcudK8fsRwSVRaaWexirxWy5obN2sekXLMzEI+enveLTfLG865ugZIbZCU7/2GuhK0BWEBlTVQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=p3+fwEf9UuRce2zmqC+RsnEnpmC4PrwbvEQOEIW8XSs=;
+ b=vOjqxXVMBdtBhc3xFVklikzAHhZ354GS6WBrh/gyReWYUcJhu+y8VaXqUPMQ5JZMSEPcwGj6B+Ydz41yictBbCa3U/NQKCC8msSnSVXOlIUmazE4StLHMHsX6e4w6+j6/l9luIby27/F0AfP88sG8k0FqVGK7sJGzet0AZH0sLGXM4gjuMCWpqnVc5g9wH/b91Y6F7PuCN+ajKHdpn+Y02VqEQPWP7KXkW9WoJ9QVz7fFerzXIN5PdXwSKr+hsSp77vUbxmdx3sn3s/RNP4XTgECCT5IOGlJwSDRwgnL9xe/69zBv4tmW600pLzijrEMUBIgQoKVX+1hrOV3wny0ag==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by PA1PR04MB10179.eurprd04.prod.outlook.com (2603:10a6:102:460::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Wed, 14 Oct
+ 2026 20:45:37 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0522.012; Wed, 14 Oct 2026
+ 20:45:37 +0000
+Date: Wed, 14 Oct 2026 15:45:28 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" <dmaengine@vger.kernel.org>,
+	imx@lists.linux.dev, vkoul@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH 1/1] dma: ppc4xx: adma: remove unused async_tx.h include
+Message-ID: <as_p6Ee1u0wT1HXA@SMW015318>
+References: <20261014201221.1806634-1-Frank.Li@oss.nxp.com>
+ <sashiko-outbox-171853@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-171853@kernel.org>
+X-ClientProxiedBy: PH8PR02CA0054.namprd02.prod.outlook.com
+ (2603:10b6:510:2da::14) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 14 Oct 2026 22:11:51 +0200
-Message-Id: <DM4U2L9VCAD7.2DJ6C8P1LAR8@gmail.com>
-Subject: Re: [PATCH v3 02/11] hwmon: chipcap2: fix off-by-one in command
- mode retry loop
-Cc: <linux-hwmon@vger.kernel.org>
-To: <sashiko-reviews@lists.linux.dev>, "Javier Carrasco"
- <javier.carrasco.cruz@gmail.com>
-From: "Javier Carrasco" <javier.carrasco.cruz@gmail.com>
-X-Mailer: aerc 0.21.0
-References: <20261014-chipcap2_locks-v3-0-27ebfc2c5b9e@gmail.com>
- <20261014-chipcap2_locks-v3-2-27ebfc2c5b9e@gmail.com>
- <sashiko-outbox-171645@kernel.org>
-In-Reply-To: <sashiko-outbox-171645@kernel.org>
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA1PR04MB10179:EE_
+X-MS-Office365-Filtering-Correlation-Id: e2df5141-6913-4483-5497-08df2a3419a6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|23010399003|19092799006|1800799024|56012099006|11063799006|4143699003|261009223027099003|18002099003|10067099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	ZJjAgitacHb/mLONOPyBMIawmy+CFfCa6pGyrlrln7Byj8V84+ZNCeNYQHydnMXR67o0JRvVP09ZlGY+3ivWPHpsi2mFhDZlQbzE7wF7FOPaooQGNIQ3su0enQYw7mx57XnDop88dxDZ1NO8x+gRYHxpfTNAHkahtIEAN2KANBgN5shlHaw+jGtqYz1p6SbgytGL1Fpj+g7oIrs9Uqtq9rVdPqBDoG6BtxsfDxjHkIZ3kLU1q3i6gLR4R+qDmbAClIUEtc8OavGP3qHEzvn7KLwDiaLQIK7WAV1D73QlGJFDwKa5Ug0IQCWzCEn+QHEpYvscG50tAhs8xib0E/Pc1kzqMJtMVCrDOEf2kBiHmV9tFd+1Wha982Z1WWan21jpDp2hG6QhBKyTw5SIbC6105Se5srdcHh1r9cAxeUnALytm10b8j85wyh7tmArdq7A1wpNi1EITdhV4D9PVYlmeI6ZjHybfRQ9PLKHYkiMLgbgErxZYAhxEVMjcDeGS2GxhZp3uj+OcyIvKHhM2mim0hv1IHHdwKKFXmTgX/V7ClhMFTnxi8h5jfw5jA/HiCx8KkFClawI8pohZQDEeQc0Val/IkCfgtM5Irjli8iGyKk=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(23010399003)(19092799006)(1800799024)(56012099006)(11063799006)(4143699003)(261009223027099003)(18002099003)(10067099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?2mlHUC9QcPp8ajr0F+71/xObiYVfGucY7R44JuALaqy4CQEJIpmCC8RO3K?=
+ =?iso-8859-1?Q?Wf0sRvYO6Ma8dFx/Ik/6TooqWSWUGtb0OV9DhmvBZKR8OWssQijoct+nfU?=
+ =?iso-8859-1?Q?3ac9vr+ao5oQQibT+X97zTcLYA+jrwrAcecRCrBNCjDr6MPlhsz60aFM+O?=
+ =?iso-8859-1?Q?HEwl3WuoRUf5mEWGZn39BhrG70EknGlJCCs547W627aMWUS0jAzKzBncDo?=
+ =?iso-8859-1?Q?2Zxq9athGbw1kw9YJHM/n6yfxz4oGlMFxhtX6Hd5CTfyaOoH/rOLwGZ4u2?=
+ =?iso-8859-1?Q?+bfChIFJDaewcKtA/2VmfIGM+1/5rJAla2VXZ+S5BNp7XeHpJ3DI1Uyj2k?=
+ =?iso-8859-1?Q?rYyBnbz/HJiGbIRB19DQQCAZXbU4WX2uDpXxYTSqJJQmXIiPj9QVdLduqS?=
+ =?iso-8859-1?Q?JOOxUrzzxu+FMe1SEKla4lGkw16bmFXL0Znx4zKL0SHfofIn4CzXHANkCk?=
+ =?iso-8859-1?Q?y94EgMjr+lEPvBYgv5YB49aDXIC7UUj2P/bhjPk/uvT/OFLwJiJojT7Tzk?=
+ =?iso-8859-1?Q?KJeoZpXhtFZdHra9twXJmgrTir6pggH20nLN0OLvNidLgZCbBS6V+EvN5m?=
+ =?iso-8859-1?Q?pVFhxSJCSYepD0MTjdV40ZtTPOOND3I5mmInTy1/IV9FDWutJeDTtr/FO8?=
+ =?iso-8859-1?Q?SfABtjYMNEM5lxj/MBsfmXQeDyz40HvXS6p9BropmxwV+zO9XoPra/YSJs?=
+ =?iso-8859-1?Q?UTVkMhJpUy3J6FvBzp1DIgT6EVWii/gzuAV6F5D7bqdmC0L6lo46D2z06r?=
+ =?iso-8859-1?Q?50NkZu/IipSwuTZwajjmkmjNhPiNvcZNCjYw1kbaAmOOhHtppXdMD4LFzo?=
+ =?iso-8859-1?Q?GnbxmIrFaIJs6h8XO8xclckx/E+GdxKnHWZeCELuWk5hnrTrFWtCQ9DSJr?=
+ =?iso-8859-1?Q?uRAs/pa7Ows6B6WwGGeQ6oIRh9CBq9yqc1q6hRfvA9rtwtaprbl5ETFgPW?=
+ =?iso-8859-1?Q?XxDRNEGruSYk3zNWRKdOia6gAJ9IYdz4XWucR0Jl6xJKIxgMXr42fei3qO?=
+ =?iso-8859-1?Q?tpN9lLzGZhhgwrQeSxgO0pkA10/PzvXfTcaqdBWMbgfyFnlNKM+7Ebo5Pq?=
+ =?iso-8859-1?Q?aTojxwOq/SqNFA7rvSd92kjj6HvnVIbKVzlTw+W31jyh8Kzozq7Iaul0ia?=
+ =?iso-8859-1?Q?nrNcD047++2Kg7WE0x4R5NadFbPx+l045pJlEx5fRzGfEBGL+G7qZnAqtu?=
+ =?iso-8859-1?Q?vOYh6+l2vERRbnJD8mznP3fCOmanisBtR5SsPk3yBmr1Dx+oNVQhKnUL+/?=
+ =?iso-8859-1?Q?rSazp2plV4JAh5MPTMA1gwKe0CkqmrvLe4mHJk/47GmTpIRi0URI3Y6TDJ?=
+ =?iso-8859-1?Q?b0XDp4LFOPuBZN7dUTU8aIF6c22W+S4XLLvoiZaJvw7D6TBHM8sRCo1Wzf?=
+ =?iso-8859-1?Q?WjYnlqiwu86fw8Ex4548f/DS/dfkNl6Jsgg5sNHrL9OVhBhboO5mkmZXom?=
+ =?iso-8859-1?Q?NzF2acTXrCEUo7lEv936k3rSU7JAq6RcrynuVuzgqO+u4+vy9SQyfoZdin?=
+ =?iso-8859-1?Q?DLUBmDV2E3nfr5OTjkmgPDrz4I2kdLnPtRVrYxYNiU1TVBjciXOvOsd9BX?=
+ =?iso-8859-1?Q?IiSAxi0huXYxcbvBO26r1COriGYfvj3nuOZoMwzJZFwJOWiwaI03X/20QY?=
+ =?iso-8859-1?Q?PQHGLCVJtKYnSYGQP7eJ8AOle5vlR2yy11Scn//nr2Q3CS3vTU9RaDnVcR?=
+ =?iso-8859-1?Q?fnmJQL/RaFGk1+SlXC6AhDbzbZ+KZI568id5hH65pxXmIQUqIvRyk7GhDD?=
+ =?iso-8859-1?Q?Z2Bj0NZ6ydOQO0/L+VULREe+Duk2Odl+hZ51jtYcplqT9GWA/alVJQniVB?=
+ =?iso-8859-1?Q?26Hddi1uxFpRWldZYvKQZL4Fs9G9bZs2WchdQOc71h5KDdn//Y6h?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e2df5141-6913-4483-5497-08df2a3419a6
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 20:45:36.9709
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: st00KAmW7Zcew++w3mIb2JCkGlnyXbXsF0HrEvdta0vyVmz4zLzTIL1r5VKV2rkYFdC3fgr3Vkmyb3tQy0CWQF4LEYsKgZ6JYgfrqfYXuNjRvflENL0mz36c7GFlkrAC
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR04MB10179
 
-On Wed Oct 14, 2026 at 8:01 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] hwmon: chipcap2: premature timeout due to 1-jiffy wait_for_compl=
-etion_timeout
+On Wed, Oct 14, 2026 at 08:18:18PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] dma: ppc4xx: missing prototype for ppc440spe_async_tx_find_best_channel()
 > --
 >
-> commit 529f4f489744495e9cdde8072b4894cc25895048
-> Author: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+> commit 9b901f64606c940ade9457f8242fc8c04d2f5fa6
+> Author: Frank Li <Frank.Li@nxp.com>
 >
-> hwmon: chipcap2: fix off-by-one in command mode retry loop
+> dma: ppc4xx: adma: remove unused async_tx.h include
 >
-> i =3D=3D CC2_CM_RETRIES can never be true inside the loop, since it
-> only runs while i < CC2_CM_RETRIES. Use CC2_CM_RETRIES - 1 so the
-> last failed retry breaks out immediately instead of doing a useless
-> disable + 80 ms power-cycle delay before the loop condition ends it
-> anyway.
+> The async_tx.h header is not directly used in adma.c; all required
+> types and functions come from dmaengine.h which is already included.
+> Remove the redundant include.
 >
->> diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
->> index 8550578928523..8102b6851d3d1 100644
->> --- a/drivers/hwmon/chipcap2.c
->> +++ b/drivers/hwmon/chipcap2.c
->> @@ -226,7 +226,7 @@ static int cc2_command_mode_start(struct cc2_data *d=
-ata)
->>  				     2 * CC2_RESP_START_CM_US);
->>  		}
->>  		ret =3D cc2_read_command_status(data->client);
->> -		if (ret !=3D -ETIMEDOUT || i =3D=3D CC2_CM_RETRIES)
->> +		if (ret !=3D -ETIMEDOUT || i =3D=3D CC2_CM_RETRIES - 1)
+> > Reduce async_tx.h user to prepare deprecate aysnc_tx framework.
 >
-> [Severity: High]
-> Can this still cause premature timeouts during device initialization and =
-reads?
+> This isn't a bug, but there is a typo (aysnc_tx) in the commit message.
 >
-> Looking at cc2_command_mode_start() just above this check, the timeout
-> calculation evaluates to exactly 1 jiffy on standard HZ configurations
-> (e.g., HZ=3D100 or HZ=3D250), because 200 microseconds is significantly l=
-ess
-> than one tick:
+> > diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
+> > index bcc54d584e2bf..05041b99581a1 100644
+> > --- a/drivers/dma/ppc4xx/adma.c
+> > +++ b/drivers/dma/ppc4xx/adma.c
+> > @@ -17,7 +17,6 @@
+> >
+> >  #include <linux/init.h>
+> >  #include <linux/module.h>
+> > -#include <linux/async_tx.h>
 >
-> 	timeout =3D usecs_to_jiffies(2 * CC2_RESP_START_CM_US);
-> 	ret =3D wait_for_completion_timeout(&data->complete, timeout);
->
-> When a 1-jiffy timeout is passed to wait_for_completion_timeout(), it can
-> expire almost instantly if the next timer interrupt occurs immediately af=
-ter
-> the call.
->
-> This can cause the driver to prematurely abort the device initialization
-> without triggering a retry, returning -ETIMEDOUT sporadically. This leads
-> to random failures in device communication and user-space reads even if
-> the device properly signals completion within its 100-microsecond window.
->
-> This same 1-jiffy timeout issue also affects the EEPROM read sequence in
-> cc2_read_reg():
->
-> 	timeout =3D usecs_to_jiffies(2 * CC2_RESP_EEPROM_R_US);
-> 	ret =3D wait_for_completion_timeout(&data->complete, timeout);
->
->>  			break;
->>
->>  		/* command window missed, prepare for a retry */
+> [Severity: Low]
+> Does removing this include cause a missing prototype warning for
+> ppc440spe_async_tx_find_best_channel()?
 
-This is a separate issue from what the patch addresses, which is the
-off-by-one error in the retry loop, but it makes sense.
+This is exiting problem. include/asm/async_tx.h is not included in previous
+code at all.
 
-I have never observed a timeout during communication with the device,
-but statistically, this seems plausible given the conversion from
-microseconds to jiffies.
+Frank
 
-The most sensible approach would be to send a follow-up patch that
-ensures the timeout is at least 2 jiffies, regardless of the HZ
-configuration, using something like:
-
-timeout =3D max(usecs_to_jiffies(2 * CC2_RESP_START_CM_US), 2UL);
-
-The same change would apply to the EEPROM read timeout in cc2_read_reg().
-
-Best regards,
-Javier
+>
+> This function is globally defined and exported via EXPORT_SYMBOL_GPL() later
+> in this file, but its only prototype declaration appears to be in
+> arch/powerpc/include/asm/async_tx.h, which was previously pulled in by this
+> include.
+>
+> Without a matching prior prototype declaration, this could trigger a build
+> warning (-Wmissing-prototypes) when compiling drivers/dma/ppc4xx/adma.c.
+>
+> >  #include <linux/delay.h>
+> >  #include <linux/dma-mapping.h>
+> >  #include <linux/spinlock.h>
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261014201221.1806634-1-Frank.Li@oss.nxp.com?part=1
