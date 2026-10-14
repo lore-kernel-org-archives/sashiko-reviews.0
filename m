@@ -1,232 +1,163 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9885837E5D7;
-	Wed, 14 Oct 2026 19:53:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB923A83BF
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 20:11:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792007617; cv=none; b=CKM4ktFKUVcpdkEFli89Pr2PnK01RFAg17NKxz6sB5pRacHm/QK8xzyu5pkbp4MDQMNhh6SZs7q98yY2hhgx1z83/QqEMYRX4LCqUlOLylQzBVO+SU3KN7HtnWJCCjVZcRa+TJXt2yWs6by5XT+pjtltyjmaexKFwhmLMJf0xsU=
+	t=1792008717; cv=none; b=peQmQJS/hLKn0rrq8TPLuJPX1y1SUAz1ymA/Hf5DDgT9UPB10BSoUaHVRtiFNNfg2iOG/eRSZIHG7Nale3RP2O/jSf2i1mz2GXOKvr8gO7XQJLtj/EPVUFRFnPSbU3xKth0XC+lhLJLxLUlO2SviBrK8emCJ5aPTWto9awxI62s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792007617; c=relaxed/simple;
-	bh=VTAoWVOCdIp/EVRjNBbfSU0WcCjzISApELWwH9sb07o=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=UWwV8p7cbnuGALyEqnS8dHJxyUEX3bgTT/CP8njCWBgQKdB/2TdXu8OueOsjaoiLs4I1kNez0EJmXXC8BKpBqYoGYsbhmppJFgGQ5EQpxN5EuMFZPnm52ByJeLoSLVDvoz7vfgW2J4XNsYHpTDvbB5YRLZB9amYg+FRjDv0V9ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=jRtNLkKg; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1792008717; c=relaxed/simple;
+	bh=S8jHugwfc5mGzTXcxYeryvcS4QP8GMhXuGrtWSeI97U=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
+	 References:In-Reply-To; b=sxc3P7K1ZedC5IifuLrZQ9+pt6/WB0IAOmtpaz3D67MGzLA5OI6l/0YMlqRDD1Tc1YV/TDocrn1ryt71GCZuprOd/BKLpmbWonUZB+pcgZn55QFSZexf2YUPbKeBvByILbLDiLJi2gPYliqYdeQwXCgf8mIRr9/oHccK4xs48WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kg15kc6G; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="jRtNLkKg"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69EEiUWt695300;
-	Wed, 14 Oct 2026 19:53:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=osQWi+
-	x3dCVtRDk5d4sxyNoA2fuvURWOk0pEbZ6z7Bk=; b=jRtNLkKgRZTDolUhmh/Otg
-	8TA6z/j0obnIyMgBRkvOKnt+b1LVR4Wk80zkRy3HeSLbfQZbnrexvk7ShtLNyYR9
-	v1ethDm9SO8lD9eHN1nI9Kcg/g+Xbp56eiUQgbTRx6q/IznZjKbRz5KibuoSKRHv
-	BP3hYUga43/+YFi+1Zk/gxl5yooGLJ8pePvrlIlpmAAMsrGRGPg2QTYfubjWjr6e
-	fO8IIkd2068wNGzHkA5aq01H8boQ75pIy+NANtQ28IM/y2nuWI0SiSxqKyXyIxwa
-	vnfJiC4PdwyfJqgzI9gqkmMppCKs0JXNP+r79MrJFXGlq2GJLERL+CuaJlL1lBaw
-	==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dwhpfud-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Wed, 14 Oct 2026 19:53:35 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69EIYQJJ3639707;
-	Wed, 14 Oct 2026 19:53:34 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4h9wvg47kk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Oct 2026 19:53:34 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com [10.241.53.105])
-	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69EJrXit31523348
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 14 Oct 2026 19:53:34 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id E1E4258055;
-	Wed, 14 Oct 2026 19:53:33 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4104158059;
-	Wed, 14 Oct 2026 19:53:33 +0000 (GMT)
-Received: from [9.61.132.24] (unknown [9.61.132.24])
-	by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Wed, 14 Oct 2026 19:53:33 +0000 (GMT)
-Message-ID: <f0195620-30c2-4dbf-8c38-b6343a92c9f9@linux.ibm.com>
-Date: Wed, 14 Oct 2026 15:53:32 -0400
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kg15kc6G"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c37b612635bso221179866b.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 13:11:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792008714; x=1792613514; darn=lists.linux.dev;
+        h=in-reply-to:references:from:to:cc:subject:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=B3NN1XmnvWDLl28EZgPw9HFna8foW+yV6qgfgucgqcE=;
+        b=kg15kc6GGz52y2S7iHuSNbb/UFTqLWz+aQ0f9NIitgBMnfQgWdp0MicbxMUkL4oJiV
+         pbfFZnMRadVXF/H0Kxmx20m1StK703RXIfiP1Tsd8ZHTYR9XQo0Gc7onDKyTfRPc13cz
+         Lr7fmvrs9XblQNLMfvnUbw6EGML6Ayz0DpQ97MjvNy7MhBAzctbr1IUyHAN3bTp8mb7D
+         qGQkH47GlXxRbcYVEc4Ab5Vzqq0M/KD6plGuiegrY0bJaWkz/hjC//n3VM4i1u8fnIZx
+         e2y+NMeXh8zmKNzEhrpjNIdwmw3XEDVwfhRFEYEPj6h8xU+8uB6ulWbZdLKQiCwT/OVZ
+         a7cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792008714; x=1792613514;
+        h=in-reply-to:references:from:to:cc:subject:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=B3NN1XmnvWDLl28EZgPw9HFna8foW+yV6qgfgucgqcE=;
+        b=km0tkxXKvU2TOHc+f7lMa8ZpmJSOsx+G6jf7WJehiMiLhYe2efw99Oj76sAydrJhNz
+         Sc0lZYe4UkqwNrPu7NxldVT9ojIKXiGlS+CDxpYPgq2yvQtw0Zacw21TMk7Ui5YJ3LXM
+         16ViiRGU7NsD1C9WmD6xHLUwndYHgqI2LxYELSS+N/6mEmjtOI8C86h6DnfZuUIr2Ix6
+         b6hW+rHDsH06tId/ilAjfu6j7+Mbm1EYBC0eTUWELNEIBypr2keHXc65J36XQnZWOzDy
+         HEZFBwEcghcux0JjW5yIdCjKThWAbnW+OAjM5DGBHu19qIznrTSYsZRPzGZXsg91GKiK
+         gFUw==
+X-Gm-Message-State: AFq9FYI7jdw2PdmRtv5pUgrYsXBVDZSThq7L4rA1NXzcMKvmxOoxNSBJ
+	6pz1MngVTZrzs3MGvu37tbmvNlU0QGonc6GLsdOblaoRNg6u1NqYO8JmwtqYS6tR
+X-Gm-Gg: AYBFou0go1O8c0G3vWoKmfUM52vHHQcIIvOHGbr1TIvm+s6CMtd4H1o1x4ADJ/NFlBf
+	7Z+IlbPYvxNzDukwEUpCyd9hOCfG6nK3kp06XSZ9+PYKEdDwb6W8cfcKqmgOfrXYZfr2jPGGYIo
+	iuuqZ4rn7xhYXMXp4Ovx0aiFgra+K9c/4XvO1jWRN7ZQkH/VU9wkKw3Cqd0fX3vGhCZ+URwEfnk
+	iz/c+/oALsmi1iTHTh88hdPZyNkezMeDOcY7hooBfuYqQGGm9J2r+MzJe340qD1GP3hEBDmdYZn
+	v4YeeeQ2Uv5oXlzBxdwUW9e0114FcvRrweEYKTGbO/NZBQ+hVEsBocXIL5Eji0+2t1Y3QEeUYag
+	eWhVSuSUc7yLHDhHvdxE/AcIa5eWDu1yN/QnRx6zdJdYTFIObnAKDi/PjF9f3JpLq4wBmO+qxas
+	yVXtVV95v6ocsw+0WdWok8enMt6gPolwo1PYt84PukD3DGGgEmAWvcedGTkqPQKI3z+R2ICbVvm
+	1C7YVT8X7C9OA==
+X-Received: by 2002:a17:906:ba8c:b0:c29:cfce:1946 with SMTP id a640c23a62f3a-c31a9b0d1ebmr1511912966b.15.1792008713693;
+        Wed, 14 Oct 2026 13:11:53 -0700 (PDT)
+Received: from localhost ([2001:4bb8:148:f08c:b8ea:248e:71e0:692c])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c3eda042c0csm24638166b.50.2026.10.14.13.11.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Oct 2026 13:11:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 11/15] s390/vfio-ap: File ops called to resume the vfio
- device migration
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-To: sashiko-reviews@lists.linux.dev, linux-s390@vger.kernel.org,
-        kvm@vger.kernel.org
-Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Jason Herne <jjherne@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20261013153219.3534306-1-akrowiak@linux.ibm.com>
- <20261013153219.3534306-12-akrowiak@linux.ibm.com>
- <sashiko-outbox-170099@kernel.org>
- <35a8a596-ffe8-4b7a-89cc-f82465a9dd26@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <35a8a596-ffe8-4b7a-89cc-f82465a9dd26@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA3OCBTYWx0ZWRfX5igSh93F5sED
- /1cHu/FbyhhyocUwrPSeWx+ThNgdf2R0OaGi6Q6+egqnHBPW3Ur3a1Y0PWvN/dinbAWAQYBA3S1
- mODcdKkieTrbZwdiVP30V0TLyNSM9ug=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA3OCBTYWx0ZWRfX/J6AapGvwdm+
- HnW1s5Z5PrJkM7C8GMwvipP/cNbv21BKRcOJhR4spP1MG3dA57GSOgHdvhoWY7RwmCCOTN/Dj1L
- 9kAWs/rZWilcSVqgCAXpz10DjT8ARHuiTy/UsZK12wKt7wK/tTkbjUNVPzVKXUjbbuXeIwafCmi
- tM/rAf+enRrC9pRFsry71CXTgqS0My9xAGyPRTmcoyZyZEChjfDTKWjRjFV7NCMZC3jLR78Tbqt
- /jTGaTnz/4zI9rRoBXhqHr1rMVhQLElvD723q3K+gHnzyQoq52xLXiHr1IYmflJ3v+GmFqmu2T2
- 4IurcP2hhrDqUzc6lkzEFc3niP875FMw0Nsax0l4EAmOS3A29qoKFKWdliZTHitfAtPutorv9Gm
- dR3Xyv8oSrBaY2QOIhxWrBSJZdNKttWdw+kyBku7IOSHT0fg/JaCNVR2XLoqeqwYwP4/jC6xj66
- Ly39CIENa4nGsWakffw==
-X-Proofpoint-GUID: f40qlw7HclvtUX9o6rBt_CsE2PWIlE6a
-X-Authority-Analysis: v=2.4 cv=RoFQvymK c=1 sm=1 tr=0 ts=6acfddbf cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=YTg-7m8nlAKSPyv0w3QA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: f40qlw7HclvtUX9o6rBt_CsE2PWIlE6a
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 phishscore=0 adultscore=0 bulkscore=0
- impostorscore=0 suspectscore=0 malwarescore=0 clxscore=1015
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610140078
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 14 Oct 2026 22:11:51 +0200
+Message-Id: <DM4U2L9VCAD7.2DJ6C8P1LAR8@gmail.com>
+Subject: Re: [PATCH v3 02/11] hwmon: chipcap2: fix off-by-one in command
+ mode retry loop
+Cc: <linux-hwmon@vger.kernel.org>
+To: <sashiko-reviews@lists.linux.dev>, "Javier Carrasco"
+ <javier.carrasco.cruz@gmail.com>
+From: "Javier Carrasco" <javier.carrasco.cruz@gmail.com>
+X-Mailer: aerc 0.21.0
+References: <20261014-chipcap2_locks-v3-0-27ebfc2c5b9e@gmail.com>
+ <20261014-chipcap2_locks-v3-2-27ebfc2c5b9e@gmail.com>
+ <sashiko-outbox-171645@kernel.org>
+In-Reply-To: <sashiko-outbox-171645@kernel.org>
 
+On Wed Oct 14, 2026 at 8:01 PM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] hwmon: chipcap2: premature timeout due to 1-jiffy wait_for_compl=
+etion_timeout
+> --
+>
+> commit 529f4f489744495e9cdde8072b4894cc25895048
+> Author: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+>
+> hwmon: chipcap2: fix off-by-one in command mode retry loop
+>
+> i =3D=3D CC2_CM_RETRIES can never be true inside the loop, since it
+> only runs while i < CC2_CM_RETRIES. Use CC2_CM_RETRIES - 1 so the
+> last failed retry breaks out immediately instead of doing a useless
+> disable + 80 ms power-cycle delay before the loop condition ends it
+> anyway.
+>
+>> diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
+>> index 8550578928523..8102b6851d3d1 100644
+>> --- a/drivers/hwmon/chipcap2.c
+>> +++ b/drivers/hwmon/chipcap2.c
+>> @@ -226,7 +226,7 @@ static int cc2_command_mode_start(struct cc2_data *d=
+ata)
+>>  				     2 * CC2_RESP_START_CM_US);
+>>  		}
+>>  		ret =3D cc2_read_command_status(data->client);
+>> -		if (ret !=3D -ETIMEDOUT || i =3D=3D CC2_CM_RETRIES)
+>> +		if (ret !=3D -ETIMEDOUT || i =3D=3D CC2_CM_RETRIES - 1)
+>
+> [Severity: High]
+> Can this still cause premature timeouts during device initialization and =
+reads?
+>
+> Looking at cc2_command_mode_start() just above this check, the timeout
+> calculation evaluates to exactly 1 jiffy on standard HZ configurations
+> (e.g., HZ=3D100 or HZ=3D250), because 200 microseconds is significantly l=
+ess
+> than one tick:
+>
+> 	timeout =3D usecs_to_jiffies(2 * CC2_RESP_START_CM_US);
+> 	ret =3D wait_for_completion_timeout(&data->complete, timeout);
+>
+> When a 1-jiffy timeout is passed to wait_for_completion_timeout(), it can
+> expire almost instantly if the next timer interrupt occurs immediately af=
+ter
+> the call.
+>
+> This can cause the driver to prematurely abort the device initialization
+> without triggering a retry, returning -ETIMEDOUT sporadically. This leads
+> to random failures in device communication and user-space reads even if
+> the device properly signals completion within its 100-microsecond window.
+>
+> This same 1-jiffy timeout issue also affects the EEPROM read sequence in
+> cc2_read_reg():
+>
+> 	timeout =3D usecs_to_jiffies(2 * CC2_RESP_EEPROM_R_US);
+> 	ret =3D wait_for_completion_timeout(&data->complete, timeout);
+>
+>>  			break;
+>>
+>>  		/* command window missed, prepare for a retry */
 
+This is a separate issue from what the patch addresses, which is the
+off-by-one error in the retry loop, but it makes sense.
 
-On 10/14/26 3:08 PM, Anthony Krowiak wrote:
->
->
-> On 10/13/26 12:14 PM, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 2 potential 
->> issue(s) to consider:
->> - [High] fortify: __counted_by() traps on memcpy() of ap_config 
->> causing kernel panic
->> - [Low] build: incompatible pointer type warning for num_queues in 
->> vfio_ap_get_config()
->> -- 
->>
->> commit 1f3606fec30cc37e82a55e4d85b768771f43fc2f
->> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
->>
->> s390/vfio-ap: File ops called to resume the vfio device migration
->>
->> This commit implements the write callback function for the file stream
->> created to restore the state of the vfio-ap device on the destination 
->> system.
->> Userspace reads the source guest's saved vfio-ap device state and 
->> writes it
->> to this file stream. The write callback copies each chunk into a 
->> pre-allocated
->> vfio_ap_config structure and validates it against the destination host's
->> configuration.
->>
->>> --- a/drivers/s390/crypto/vfio_ap_migration.c
->>> +++ b/drivers/s390/crypto/vfio_ap_migration.c
->> [ ... ]
->>
->>> @@ -284,7 +340,7 @@ static int vfio_ap_get_config(struct 
->>> ap_matrix_mdev *matrix_mdev)
->>>         lockdep_assert_held(&matrix_dev->mdevs_lock);
->>>   -    ap_config_size = vfio_ap_config_size(matrix_mdev, (int 
->>> *)&num_queues);
->>> +    ap_config_size = vfio_ap_config_size(matrix_mdev, &num_queues);
->> [Severity: Low]
->> Is it possible this causes a build failure? vfio_ap_config_size() 
->> expects
->> an int pointer for its second argument, but num_queues is declared as an
->> unsigned int. Passing an unsigned int pointer here introduces an
->> incompatible pointer type warning which breaks the build under
->> CONFIG_WERROR.
->
-> The async bit in the AP queue status word indicates that the response
-> code was reported asynchronously. Per the architecture, the only
-> response code for which GR2 (hwinfo) is guaranteed to be populated
-> is AP_RESPONSE_NORMAL (0x00). For all other response codes, including
-> AP_RESPONSE_DECONFIGURED, AP_RESPONSE_CHECKSTOPPED, and any code with
-> the async bit set, the architecture states that all fields except the
-> response-code field are set to zeros, so hwinfo is not valid.
->
-> AP_RESPONSE_BUSY and AP_RESPONSE_RESET_IN_PROGRESS are transient
-> conditions; the function will be updated to retry up to 5 times with
-> a 10ms delay between attempts, consistent with how other vfio_ap
-> operations handle these response codes. All other non-NORMAL response
-> codes will return -EIO. The async path in the default branch that
-> returned 0 will be removed.
+I have never observed a timeout during communication with the device,
+but statistically, this seems plausible given the conversion from
+microseconds to jiffies.
 
-The above response was intended for patch 07/15.
-The signature for vfio_ap_config_size() will change the type of the 
-num_queues
-parameter to unsigned int. This will be done, however, in patch 07/15 where
-the function is introduced.
+The most sensible approach would be to send a follow-up patch that
+ensures the timeout is at least 2 jiffies, regardless of the HZ
+configuration, using something like:
 
->
->>
->> [ ... ]
->>
->>> +static ssize_t vfio_ap_resuming_write(struct file *filp, const char 
->>> __user *buf,
->>> +                      size_t len, loff_t *pos)
->>> +{
->> [ ... ]
->>
->>> +    ret = validate_resuming_write_parms(filp, len);
->>> +    if (ret)
->>> +        goto out_unlock;
->>> +
->>> +    ap_config = matrix_mdev->mig_data->resuming_mig_file.ap_config;
->>> +
->>> +    memcpy((char *)ap_config + *pos, kbuf, len);
->> [Severity: High]
->> Does this memcpy() trigger a fortify panic? The struct vfio_ap_config
->> utilizes the __counted_by(num_queues) annotation for its flexible array.
->> During the resuming phase, ap_config is allocated with num_queues 
->> initialized
->> to 0.
->>
->> Because memcpy() is fortified, it evaluates the maximum size of the
->> destination object using __builtin_dynamic_object_size(). At the time of
->> this memcpy(), ap_config->num_queues is still 0, so the compiler 
->> evaluates
->> the destination capacity strictly as the struct header size.
->>
->> If userspace writes the migration data in a chunk larger than the header
->> size, the bounds check will fail before num_queues can be overwritten,
->> triggering a panic and crashing the system.
->
-> The memcpy() destination is (char *)ap_config + *pos — a char * into
-> the raw allocation, not an access through the flexible array member
-> qinfo[]. The __counted_by annotation on qinfo[] constrains accesses
-> expressed as ap_config->qinfo[i]; it does not restrict a char * byte
-> copy into the same allocation.
->
->>
->>> +    *pos += len;
->>> +
->>> +    /*
->>> +     * Check whether we have received all the data.  We know the total
->>> +     * expected size once num_queues has arrived, i.e. once *pos is 
->>> past
->>> +     * the fixed header.  Until then keep accumulating.
->>> +     */
->>> +    if (*pos >= offsetofend(struct vfio_ap_config, num_queues)) {
->
->
+timeout =3D max(usecs_to_jiffies(2 * CC2_RESP_START_CM_US), 2UL);
 
+The same change would apply to the EEPROM read timeout in cc2_read_reg().
+
+Best regards,
+Javier
