@@ -1,137 +1,208 @@
-Received: from CWXP265CU010.outbound.protection.outlook.com (mail-ukwestazon11022114.outbound.protection.outlook.com [52.101.101.114])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0292A36F429
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 18:14:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.101.114
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792001646; cv=fail; b=dtrUkFGQkICWtgrMo5jOi51F/Rr4NInJmNgvE9FRJ9sivpIl7c3b0oaxWujQiN6LW2D6s2gj+Sn1/CwgRqpdKJ5fRn9/YOc0hVzViruR5tjEAN3EQBKoxEO1uMFRVSqNlSDxGl0kwZbuFlUxA/uVcJbVekTAhu25KOVte458wuc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792001646; c=relaxed/simple;
-	bh=U2HluvUPqDsBPStc/CeVQkYPo7SgnWL/8kSmOBWnANE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=So1lXMMLEw7D7U1wx4QCUgHr7eeQzOhWnfBXJsM0jjCXEivg11aMFH3N77ot3uOpq5BGGx678lNAROn5h84+Hr6dW9m/zdRlNtbm0eBOicwRRreXPRApWoSuhBx8IbpKCxiR4lgqpkG5p1XvM6ShUhLoVDQ74/n6bYREekk7q5o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com; spf=pass smtp.mailfrom=atomlin.com; arc=fail smtp.client-ip=52.101.101.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oBugw8bYn1x/XRw2fjXw5Su+uEYtlgbiHmIOb45uvo256sKdiZce8WQP6bnfCQpD9f5a0OdsbefH4G5PONE5kWmMCWjIIvliNbuSqBQrj7+CfOlLtTRkxkDl9RQCi3yXnKJC8Do8yF7HoFtGR5gtUu3BpBUDOMc0OqroWNdejR3g3aBtz/BUMOM+in1zsg2niRttlx0viVeP8vapQc68Mv9qMDG0Kbv8EH8UCW9NwByOaWwHMaaQ/gdTuBSBqGE0JuLhsIZaxucvU5t8Kay3pw5Ido5/UbhyCInpoWFqEEZUUIAa5Anho3jl2tzhF6iYPwQnqvZ5IhUs2FEyzV480g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
- bh=4dDycUp9QVeXu0+gnr1ekBjpDRprCViQfAurJWnF/iI=;
- b=ojrLYWQg/AUUkBlNejSrBHjDBiqlhY8nCDTpXDHnr5/xb71iY3VefL6u3bb44qLgxPvGYrTNAo1bLyADepYM5+PNyzm6UVJkEbLNL6CjYN+J/nMLoWXcNTFbfWpj+uatqv+MglIePGIwbaMp/TQA9aXh9eyyHYZsyVaPVAI0BB/jDI4T07QI0iEXNSVtrismcT7929N8g8gz5pegBYqzl0peENEPJMda6L84vGMKIXC/zG1x3YsO9WjyamNGqODZoA+Rw3opGLGFn3086v1Lh15NKyEis2h32Bj4vcrZbJTMT4y2m3JcpL17ruKtNmsMAOpBwRKmZnr4FlCgB5lzng==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
- dkim=pass header.d=atomlin.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=atomlin.com;
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:183::5)
- by CWLP123MB3233.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:5f::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.23; Wed, 14 Oct
- 2026 18:14:01 +0000
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230]) by CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230%4]) with mapi id 15.21.0522.012; Wed, 14 Oct 2026
- 18:14:01 +0000
-Date: Wed, 14 Oct 2026 14:13:57 -0400
-From: Aaron Tomlin <atomlin@atomlin.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH perf-tools-next v4 2/5] perf ftrace: Support filtering
- return address comments
-Message-ID: <ooxbuadvpfsqjkmc2yocosnpb7wr44p7w4dqc5gdw6nxdp6ahw@2ah7ob62eh37>
-References: <20261014161457.373253-1-atomlin@atomlin.com>
- <20261014161457.373253-3-atomlin@atomlin.com>
- <sashiko-outbox-171524@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-171524@kernel.org>
-X-ClientProxiedBy: MN0P223CA0014.NAMP223.PROD.OUTLOOK.COM
- (2603:10b6:208:52b::26) To CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:400:183::5)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B743B05B2;
+	Wed, 14 Oct 2026 19:08:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792004908; cv=none; b=iSA9M+KHaH6vD9StF09CECa3eDpMsER25FVbzNhJK6xmkmUgtCgX/oujp0zRaiu2oXIsZMzwwAhe4prmrrGfQdrfAnLLnGobGl4fdJWBuyEErcXZNRqvt/Xe6ELhY+uBE/yIkBsWyQs1yMiNXVXsxdiECWckZZD1gmQ5kPd+zi0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792004908; c=relaxed/simple;
+	bh=Uv7UthX6eHfk1uJ15uCh+BOEUFvwtA3DILIGfDRdUrs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pF60iQ7QwUoVxguy2HJv2Z0Dmu7nPA4qP/UFgEr//r3Z2ZkfTyy3ENePrZ9Q8NsEz31Q9VXc0/iKnpYkCZB/TKZUWNXR4ZeDv9DTY42JYXR9iFbS6ogXbtFOUr79hTU5gsCy8JsoF3IYzPheASPca2OtVGs1Q/KYIS1VhvUjzzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=phMz1UZL; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="phMz1UZL"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69EEj2GP1271549;
+	Wed, 14 Oct 2026 19:08:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=ARQKtf
+	2cjv0SFyALl6Est+Z2sJTqNDSOnGPiZzxreeI=; b=phMz1UZLVzukiKS/lBtj/V
+	4nmcpgz2SDz5VcFp+1sxRxA3s1ngNvXakT6fsnJFpJHQBphkdzmoCOmRd0vm6oM9
+	MIOarb2obpgLEuSnDphx8whVlpgS7966xdKXQ91AtB/9Pz16Zp0t6NL7SC7W1RzF
+	q6RNO4EySk3Ntrpg4lFulxzZQSvMaPuBR6u48cC42fDKS/l3qD7i0rsoCk/SKwLU
+	t9e49hVQCsKvrFt8vtVNQ3elCqBkLt3qDZijLVESI3dlcpHr6iiCMyYEK73t+PHq
+	ba0VfZBzD7UtB26IJeRWi2EQzStlu/ex7lbjJrkwSRmNfsozAxb7xjN9r22Dselw
+	==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dv0nq1w-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Wed, 14 Oct 2026 19:08:25 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69EIZ4EZ702814;
+	Wed, 14 Oct 2026 19:08:25 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h816h8spg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Oct 2026 19:08:25 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com [10.241.53.105])
+	by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69EJ7baL25428574
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 14 Oct 2026 19:07:38 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 1020758055;
+	Wed, 14 Oct 2026 19:08:24 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4EAB558043;
+	Wed, 14 Oct 2026 19:08:23 +0000 (GMT)
+Received: from [9.61.132.24] (unknown [9.61.132.24])
+	by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Wed, 14 Oct 2026 19:08:23 +0000 (GMT)
+Message-ID: <35a8a596-ffe8-4b7a-89cc-f82465a9dd26@linux.ibm.com>
+Date: Wed, 14 Oct 2026 15:08:22 -0400
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CWLP123MB6607:EE_|CWLP123MB3233:EE_
-X-MS-Office365-Filtering-Correlation-Id: a751af2f-3c08-4bad-033f-08df2a1eec10
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|376014|366016|10067099003|261009223027099003|3023799007|4143699003|6133799003|22082099003|56012099006|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	fy8vfAoIKek+DpeRMvaXBndrKBxM5OgllvHagzgrM43+wEMGdgrFj+8Ayuh852bH+vfIIIOsWgjp68gLDVoyCkcC23ywkYm/n+pY+yz34eM98kcQxrowvOsM2Nnn7ohX2J1QDiZf4+EUpq1RKNUNLGQK6qe1c9CkTQ50DnKglWJ4ovc9oT4lZKelM8Fd/QRm7+TgthQw39YWBs81iZQoG+jkhVJYd30zT0LwjhJmgjRA5KBNPQgbL3uRZ2NF0VCA4cKbw4nxNXwxkjM5ZAjDQmQbvk+84yx+eKURfv63Q30IUeA4HhwXw5uNss2mXIBL9lQDXhReFDp0hYnk0/wS1lMSGmrOJoDZifiKYzh6jha+ap+8N0hufubICuycUTW+A4bz87XN9VDThkR0Z79+P9ICum5W/xzNlGePPZSg16cyu07LvDYU+viYmuEJmDP15HboQrMMIDeCffO8a8G/nG2+oojIy91nPgaGXl+cUkMWqmlNs/JH84mWR93IzIUVv9rrDcMflrp8FWS7AjKc+iyv7hcRpUGUwLcOcA/bheleG002QKPChWRZwLGwZZi58/2tgDRn+N8zGu0lYKKd3XL7qV2wNTNSeZ4jNvc7PQTkTcK3I08S+yoBNZI050yVG/G14KPjvkQth5NA2rH0fFZQheaKiKQ4s7WJSa5Q6oA=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(10067099003)(261009223027099003)(3023799007)(4143699003)(6133799003)(22082099003)(56012099006)(18002099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NGpFMnBOOVZLVEtBSTd0UlhmMnUrL3pwbVN4TEN0ZzhZczJubVlWeHFBWk1z?=
- =?utf-8?B?QkVZdUd1R25hRUhRMDdYRmNIek5qMHZnM3FvK1FST3NPZkxYeFFQTEEyc2VS?=
- =?utf-8?B?S3pEVzlRRnc1UDR0cWJaKzhUNzJ0MTUyNGhsNGJFb0ZjVjlCYjZtUzdOZzZp?=
- =?utf-8?B?WEowdTVKZnFuenVWWUllT3RFK2x2a3BXYTIxWWV4ejRtcGRpbVlMOURWc3dz?=
- =?utf-8?B?V1NwS1hsdm1xL3M5ZWRPVkpXSVdPZXlOcGFEQVVHeVZ5SjRUV2ttTVRGd1V6?=
- =?utf-8?B?bEJ0ZWIxUmR0aVBDc0dvcGhPT25vZmNHenVHYXdqSFhQQlVXY082MHQ1WGht?=
- =?utf-8?B?TXlWZFRoYzJQNnFCSmpuNDg5SDdGck9xMXdYWGhjdVYrbEQ5V21EcHgvVWpt?=
- =?utf-8?B?cGx3dW9nTVhiY2l2WlIxb0hFdHFrT0pEdWgzVWlYVHZOOWo2d0ZDbklpZjlB?=
- =?utf-8?B?dDRPUUdRcUNLWDk2MklMQytnUnhmV2RSVzhyRkNXSXZtbXJDdWpzaTMzQlNa?=
- =?utf-8?B?SkVJUFhiL0pqdTgwYlVnTUJNQmNqODF5YTcyK2lqTEJKcWN0N2o2Z2VBSE9s?=
- =?utf-8?B?SDZUOElraHJFc0xmNG1vUFFLcFJsV2d5YVRrWmFITmxESHFDclp6bk9ZaWVF?=
- =?utf-8?B?d0xVTGJhd1JtaE13T1hFaWxWaTBqRDNrUk1sNDJvZHdhV0dYS1kzd0Rvb2gw?=
- =?utf-8?B?T2RhZGxCUEVhVHBZbUZLUys2NzZ3blNxSWJrRE83bnlPQklwYzZib0pHOGgz?=
- =?utf-8?B?YU5nSnBEMTRrbDB4MUlRaE5VQTRORVJ3VUJaUzRzNE16TGhRMXBzZEV5cGFG?=
- =?utf-8?B?UHZyOUxjektDTEpPRkxUQjE5YnhQSlBWQ3YybHpob0pocmFPMGVsTnFURTN5?=
- =?utf-8?B?NTZpWGRVcDdoSi9yR2ZPbTNRWk13N2QzK3hMOWl3RlV0czZwWFFaZDJGR09Z?=
- =?utf-8?B?M3dIN0xEbHp2ZjhJRFp2a29sRWtxeSsweEJiMnJqbTlnbmVTbXR5VlUra1Jj?=
- =?utf-8?B?OWs3S3VySDlFZzBCV1doQUR5aE9nZFhmMkNxZ3JLSm14VFhmaFdzSCtBOGdl?=
- =?utf-8?B?WXNxWGFhbWw5UmlmcUs5bTRCY3JIQlEvYVo2R2hRK3Izdm5FS2hFK3ZqQ2Ja?=
- =?utf-8?B?elFCTHV5alQ4ZjJUS2hlVmZBU3lia21hei81anpZcHZxNmtPRzlLY3hBRkZ0?=
- =?utf-8?B?Z25GdVdTcXFUY1Rqa1VabDFkWGR4dUVvVGltSFRuQ1JBUDVMeWJTeXNSSUdo?=
- =?utf-8?B?QllVNjNrZDRYeGRPeXcreEYwMUF4QnhXL2s0MUp5WkhXaGZFbTZjZTBuKzUw?=
- =?utf-8?B?UERvVkF1UmV2Z29BdkRjaHVzUXRDQ2MrV3YwT2NUcmFZRW4vV2JvRTBTQUg5?=
- =?utf-8?B?ajhFdWc2eXd4ZUJRNTB4a2Z2MlNRdEVZZjhEcWR6NXV0cE1zblhFQ21EWWE2?=
- =?utf-8?B?YXNTTTFZUDlzQWFjTjJUVnZEY3ZuQ3Vxd0psVUZjM1g3bkNZSTI5aHl3Z2l3?=
- =?utf-8?B?QXZoSmpoWFh2aWwxQkpMRk55MXBUNUFMcmNKeHZQTEExNkUrZjdidXgxS1Na?=
- =?utf-8?B?YzN3aGhiZURGNk9keEdqaVdpTVFvRVlac0Nlc3Z5dDQ2ZlJSY0VWdUZBcDlk?=
- =?utf-8?B?NFVjOW1uRWlFLzhndE11QVZzaTJyYTREd0Y2RHRhRlQ4a0toY3hkTDNaWTA0?=
- =?utf-8?B?ZXBMc0xPUEtobjh1SnFqREF0d2hMN0dCMCtLcEY5NDhwVkdTbW40Q09WZjBq?=
- =?utf-8?B?NjVkWXl0NUNnSVYrMUpmZ2wvYTdDNXpnMEVFTGd1c3ZVaHVjWUxYa04yZVNY?=
- =?utf-8?B?NWNOekJmRkdrY3d0UTBzNUxVaVgvU2NNa3FrcHQ3eFo2bzd5Q2ZFN3ZTYmJx?=
- =?utf-8?B?MllOckIrcSt0UHBxT042V2dMV2FaQ2NITUg2Wm5adUcrSDQvZ040REJYb3Fp?=
- =?utf-8?B?dHhhS0lNMVB4TlFGa2JLWTJ4RllnQXZsRXNvQ09TQVRqNklnL2pEZHNqZk5m?=
- =?utf-8?B?ZlcrcmhVeHNIdkloa2Fxd2ZQZVV1eW45ekpBcTA2Uk40a2Nva3pNR1N3dmp4?=
- =?utf-8?B?bmxmd0g4Q3VoeWdhOWdhQ1hsVFVhVHg5SjRJYnhPdWU1cmw2UzZMWXhhVUpi?=
- =?utf-8?B?WVJDbDJ3dXNoSGF0U2JCeDAyZHdGYjNCdUlFT3VVTytiYjFPb1ZPUEVaV0ht?=
- =?utf-8?B?MVdhSjZ0K1FGL0NjemdSMnoyNnZ6cks4eFh6Smo0aERBZW5YV05kekxnYUll?=
- =?utf-8?B?b0ZBdFdreFJOdkNTaURIM3JuZXhSRUljRGNSWjF4Zjc4Q0ZJWDVJMUkrb1h1?=
- =?utf-8?B?SEptZzNaY0RSYUtUL3l4UFFWL3hGTXM0RmxQTjVpN24yUEF5bHhQUT09?=
-X-OriginatorOrg: atomlin.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a751af2f-3c08-4bad-033f-08df2a1eec10
-X-MS-Exchange-CrossTenant-AuthSource: CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 18:14:00.9583
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: IU8HfTVRvVey2phsAhAWAa3E/ddaQHhA/IWpClYtDJz7RDZ0ZeJUsiMa5yyNaHLuE+O4PluMSJIiAlZe7VfDhQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWLP123MB3233
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 11/15] s390/vfio-ap: File ops called to resume the vfio
+ device migration
+To: sashiko-reviews@lists.linux.dev, linux-s390@vger.kernel.org,
+        kvm@vger.kernel.org
+Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Jason Herne <jjherne@linux.ibm.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20261013153219.3534306-1-akrowiak@linux.ibm.com>
+ <20261013153219.3534306-12-akrowiak@linux.ibm.com>
+ <sashiko-outbox-170099@kernel.org>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <sashiko-outbox-170099@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE0MDA3NCBTYWx0ZWRfXwBDbEAqkzkgX
+ GXBRNWqdPkepDCqHirtpp6GZpqDx0M7+qA/C6nDrSWbCtVm5AZ2rv7+xpV9PaAxzRrEq7Y3Aipy
+ gOZsFfaidjiGgj8SZ47uqBZrS3x0TZIUOoai8L2ahx/GN5/3819Qgg2N3icWz2asMj++9cqiXjO
+ NNNrBX2qq5dTKIP2MX+MwV+7Kgm7DsBsGlKov8dznWxsXhjBGCtxx8skxkB1kJ0C4CwVbrwiv/D
+ yRAkAbmkt+J7PgI6BIOBpGrVH0F+wxQMkIw3aJ9moNJ4OOIFXC5Wz8pgwKSf4r8wJNckC0zZaFd
+ OYY0Ojx0UusXRqDTr+kYySDi4mIRuQr5cX5MzcIEuXzN2L2OTRBvhL/n7brDO9sAc9ztsfpcg2o
+ ln1s0T/cOGFDiH8sS23O7cspxwhrWaoHB8wfr1SJBeRjgH7fSUQb8jDcxZE7hZjTdjNckxsLSxH
+ xm1xFFGrMBzFIeFjkNw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE0MDA3NCBTYWx0ZWRfX9+iiSq47jiVM
+ vM5DNrOJj2UKYQkxAogZasfF1wRTRVtFeRFIvfWKWZPsSLwD/ePARdtXLc7QWxB4oWJXcEcJUTM
+ g4iCVzU3aivQwVF2dnAdArRZq+5un24=
+X-Proofpoint-ORIG-GUID: AQ7mQuzZTm83IbxjaPxW7o5J8wRuQXcl
+X-Authority-Analysis: v=2.4 cv=a6KlZkSF c=1 sm=1 tr=0 ts=6acfd329 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=2rxGisQGleF7859r0JcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: AQ7mQuzZTm83IbxjaPxW7o5J8wRuQXcl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-13_01,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0 clxscore=1015
+ phishscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610140074
 
-On Wed, Oct 14, 2026 at 04:24:14PM +0000, sashiko-bot@kernel.org wrote:
+
+
+On 10/13/26 12:14 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] fortify: __counted_by() traps on memcpy() of ap_config causing kernel panic
+> - [Low] build: incompatible pointer type warning for num_queues in vfio_ap_get_config()
+> --
+>
+> commit 1f3606fec30cc37e82a55e4d85b768771f43fc2f
+> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
+>
+> s390/vfio-ap: File ops called to resume the vfio device migration
+>
+> This commit implements the write callback function for the file stream
+> created to restore the state of the vfio-ap device on the destination system.
+> Userspace reads the source guest's saved vfio-ap device state and writes it
+> to this file stream. The write callback copies each chunk into a pre-allocated
+> vfio_ap_config structure and validates it against the destination host's
+> configuration.
+>
+>> --- a/drivers/s390/crypto/vfio_ap_migration.c
+>> +++ b/drivers/s390/crypto/vfio_ap_migration.c
+> [ ... ]
+>
+>> @@ -284,7 +340,7 @@ static int vfio_ap_get_config(struct ap_matrix_mdev *matrix_mdev)
+>>   
+>>   	lockdep_assert_held(&matrix_dev->mdevs_lock);
+>>   
+>> -	ap_config_size = vfio_ap_config_size(matrix_mdev, (int *)&num_queues);
+>> +	ap_config_size = vfio_ap_config_size(matrix_mdev, &num_queues);
 > [Severity: Low]
-> Will this cause a build failure due to an unused variable?
-> 
-> The tools/perf build system enables -Werror by default, which elevates
-> -Wunused-but-set-variable to a build failure. The local variable endptr
-> is written to by strtoull() but is never subsequently read or evaluated.
-> 
-> Could we pass NULL to strtoull() instead to resolve this and avoid
-> breaking the build?
+> Is it possible this causes a build failure? vfio_ap_config_size() expects
+> an int pointer for its second argument, but num_queues is declared as an
+> unsigned int. Passing an unsigned int pointer here introduces an
+> incompatible pointer type warning which breaks the build under
+> CONFIG_WERROR.
 
-Indeed. This will be resolved in the next iteration.
+The async bit in the AP queue status word indicates that the response
+code was reported asynchronously. Per the architecture, the only
+response code for which GR2 (hwinfo) is guaranteed to be populated
+is AP_RESPONSE_NORMAL (0x00). For all other response codes, including
+AP_RESPONSE_DECONFIGURED, AP_RESPONSE_CHECKSTOPPED, and any code with
+the async bit set, the architecture states that all fields except the
+response-code field are set to zeros, so hwinfo is not valid.
 
--- 
-Aaron Tomlin
+AP_RESPONSE_BUSY and AP_RESPONSE_RESET_IN_PROGRESS are transient
+conditions; the function will be updated to retry up to 5 times with
+a 10ms delay between attempts, consistent with how other vfio_ap
+operations handle these response codes. All other non-NORMAL response
+codes will return -EIO. The async path in the default branch that
+returned 0 will be removed.
+
+>
+> [ ... ]
+>
+>> +static ssize_t vfio_ap_resuming_write(struct file *filp, const char __user *buf,
+>> +				      size_t len, loff_t *pos)
+>> +{
+> [ ... ]
+>
+>> +	ret = validate_resuming_write_parms(filp, len);
+>> +	if (ret)
+>> +		goto out_unlock;
+>> +
+>> +	ap_config = matrix_mdev->mig_data->resuming_mig_file.ap_config;
+>> +
+>> +	memcpy((char *)ap_config + *pos, kbuf, len);
+> [Severity: High]
+> Does this memcpy() trigger a fortify panic? The struct vfio_ap_config
+> utilizes the __counted_by(num_queues) annotation for its flexible array.
+> During the resuming phase, ap_config is allocated with num_queues initialized
+> to 0.
+>
+> Because memcpy() is fortified, it evaluates the maximum size of the
+> destination object using __builtin_dynamic_object_size(). At the time of
+> this memcpy(), ap_config->num_queues is still 0, so the compiler evaluates
+> the destination capacity strictly as the struct header size.
+>
+> If userspace writes the migration data in a chunk larger than the header
+> size, the bounds check will fail before num_queues can be overwritten,
+> triggering a panic and crashing the system.
+
+The memcpy() destination is (char *)ap_config + *pos — a char * into
+the raw allocation, not an access through the flexible array member
+qinfo[]. The __counted_by annotation on qinfo[] constrains accesses
+expressed as ap_config->qinfo[i]; it does not restrict a char * byte
+copy into the same allocation.
+
+>
+>> +	*pos += len;
+>> +
+>> +	/*
+>> +	 * Check whether we have received all the data.  We know the total
+>> +	 * expected size once num_queues has arrived, i.e. once *pos is past
+>> +	 * the fixed header.  Until then keep accumulating.
+>> +	 */
+>> +	if (*pos >= offsetofend(struct vfio_ap_config, num_queues)) {
+
