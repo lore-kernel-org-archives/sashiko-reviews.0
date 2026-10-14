@@ -1,168 +1,152 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11021078.outbound.protection.outlook.com [52.101.65.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5A21F78E6
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 07:14:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791962098; cv=none; b=VLu1aY8/+rfTnLMs7aoY/hP6DgPTCG0LeTtFae4espQ9An0V3oQ0TxvKSh1mgwVxsftOFHqqz0bblmqpvJ4srbXlwkf8Ag7mAozA3skERQCrlWzrmKL+YYyj/DYYOrcB2svV4z4TaXB039g7nXJY4vQVpEv5Rao66uE/Nx45zOs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791962098; c=relaxed/simple;
-	bh=1Lwf+hhmpw3w8k79pyJRhisqrrz0H2X4UofZTveLYwo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mBiebucRfXPAESEMiuYHpR6zA7lhttHiw6QkGoByADRE0i2Ppq108BwcDYKzw2YAcipcDlmZiA0bod9OvFuxzLrAqq7Uk5o9YjADYGz3ezCCOI2+6NU5vTvAyQVMkyMN1M3iv2HD5wFrB2T50ucYQEVx+rhZvjKSN39FKEgLnTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AO5Q5IEl; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5BC44A409
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 07:17:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.78
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791962282; cv=fail; b=jojp99EORixVVe8nfTDv5sMsAHMIbe6SMDso90QrehxlDmw3HQTt8vf79YU/pz+Lpa4I2qFg6n2a8zZUQSHnYRj1RvZDI/Adh+Y0Q8SOU9TuzViANI9V9Y54EobCoh5VTuOBj0c4KnaYyXO4x6b8RtesKDfhaC9F++llqRVApNU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791962282; c=relaxed/simple;
+	bh=CODzgFVed4/MwlLUN2xRcklEdm1OHlah/yRVxx3BNIo=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=TxdRBUh6wH9cwAOYQvwNMNtJGs++50xpLxIUcprSnfGle9czQQ5SPb0CSHMZBrDYboZiZrqTGwEV4PaB1+PQLMiu37Ozb/S607DReNcgOTPhJsAUcn3KROpL4mi3K8tUejydPyuqxtvEjaIhEtyWs53V2lnpFhgOsBAtWXh80ho=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=vaisala.com; spf=pass smtp.mailfrom=vaisala.com; dkim=pass (2048-bit key) header.d=vaisala.com header.i=@vaisala.com header.b=ZCxfqEbW; arc=fail smtp.client-ip=52.101.65.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=vaisala.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vaisala.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AO5Q5IEl"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-398a4dcf289so1985795a91.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 00:14:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791962093; x=1792566893; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3mxOyqRIlc5Dtk9kMZ9pDtG3G34SgarEZsbcWS6t2oE=;
-        b=AO5Q5IElWzWgPvSbhhnPPDVlRTeiTe8njYakiVKHx4CXispPvFKGp7d+BKKO4Wx0eI
-         ItQgjlMRi8PNcwoXFB9CKiDHv8Q0QJ92ELxxIFgqMRbPTFwnObNQ/u55m+sOutPdUxi/
-         EUffFBoG+YlwLRKNADJI+vDWeQSjvsO0eaBmxaBOSiqQJPGjtOz417GolauygmgM5jnW
-         zTxRDgZp11yEAsMjgorWBEV/7Qr5oZYMkwzddzn+967vEJgKN5JYjNrffI/MJjyxmMq/
-         BfS/fyKSyLA55YDokSGiGdfEOtCBR08JXtZ7yJmIc2Ryj7q76L+E6La1xq6ECHRdMToS
-         f3oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791962093; x=1792566893;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=3mxOyqRIlc5Dtk9kMZ9pDtG3G34SgarEZsbcWS6t2oE=;
-        b=sUNCZMslR9PHUZQXzHY9x1EIID2jULQcH8N0MKNX/0/GVDgvFvtR5P9OVIhEC7ZszD
-         0QRokTxFY+TS7HD9FHDeh+z3y4I0tUfmOt3pDqsnspDFnZI2fvYp55aYOlcKsvgVBOii
-         H2GL9fPj25ROhGCU8W5k0W39BxUX1x3O2YGEI+V+h1LSutfZviRHlQa7yd5VXlw4czHk
-         mPUUykPx51ZPDIT/+azu93MZ7h1fUQt6XmGnO6u65i4B+GnGfbzFR6v7XSbauhesXjDp
-         1qDRNeD6cwLkvobXLzQIUwT2PqqbBR5GFSGLTCT5Gsqx6EUrpJDovaNiccMIno3WqYJq
-         xS4g==
-X-Gm-Message-State: AFq9FYLjyBHQdyMy90MDzgs96GLfiddlbut0/LfIM+B09mTHJYq07EAT
-	Qcnn57VGqSCHzp+AXAwpcfir7TEfdzpUSE1XQppGQPj8VBzsZlJG0UgIyFq5/adkqHk=
-X-Gm-Gg: AYBFou1+y5vhmRfw8rKmsLKWSaejkOqXIyiv8lOHEYfStaa1dYStiYfW+2/u8/0VLJH
-	4g8hjNUiybgfKRBGuB2nn+bqOh/5bR21NOOpFax1kyuSr3EgjaxtxDBlwHitU0SH1bSP9W/5V1x
-	1h+RklIeKcio3LLLqNT8xYUoaFTVXWZ1OJ+Pxusu/5NbfOYlWSH/ScB77kaTyCFmFQxTzFepPEe
-	ArwAvDK8hdbw9yKzVLHrDlt0egftvw1ifXXaVnOt6Cu7oYryFxWpqrpjvRPfjHKLq80WOd9ahw5
-	kQ3ikAMKuPKqC5VpIOqqZkFApUcNQ9GabaaOz7V/0rceNOnZ/ZtDnpSevNS/qcwe0HQ1DdXSBHv
-	G6+boJ7Mtr8Ofsp6RDQllWEhKMQo2Vopt3xRlNmR5jMkJzPGIexLIDp+Rso50dEz7WVeVzKbVMy
-	INAsLU61VrXofHK4HDPM5O2/DBtSfVJ1YyqrA9duoxG9JKHm9cPqpUp8WqTRw1UQG3bZaXetvTk
-	bTcEbtA7lZHIAl3yjA=
-X-Received: by 2002:a17:90b:5444:b0:3a8:5d57:a5e7 with SMTP id 98e67ed59e1d1-3ab3ab32b3cmr10599306a91.28.1791962092870;
-        Wed, 14 Oct 2026 00:14:52 -0700 (PDT)
-Received: from [100.125.248.95] ([124.70.231.46])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ac61171feesm3027261a91.17.2026.10.14.00.14.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Oct 2026 00:14:52 -0700 (PDT)
-Message-ID: <53a4ffd5-3ea5-483d-ac11-74b95b5d37ed@gmail.com>
-Date: Wed, 14 Oct 2026 15:14:45 +0800
+	dkim=pass (2048-bit key) header.d=vaisala.com header.i=@vaisala.com header.b="ZCxfqEbW"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gDMWcpGm4+MFiZzLwyd56y2++B0ZRWHMBhHyTNY01oZSoMEQlfBnIAAR1tBUneIIbDzskFXT72cvq2xQZN3FYAa/0IXEQ62Knm1PnUYopKJpqUXX4d4skRlpTzgTfylqG+IQ4tP4zsm4ljmAnlKJoK2qq9eRa1UD5x7+XGoJeaqoSBurTXGqT7UZTFpXYrhcA4Feu+hzO7WDfygM5uujbhTFJX+oi/HjltY7aIomaLJeuB9mGg3reCq4wRYKtgw0zliQXvn0qp3GXUGF8hc3tAXoRVtNTCEaNEgPwDEUiWO6LKbLMEm1vGs8LL8GEJ5/sZHMHxehuQLKeC+lkiurWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=aGYwwKxQGOf80jEcwH5l5UNDmoBajClUYu2jAfCW9tU=;
+ b=PE6kZj+1DqkXx2jGwzQrwOWSeZ6WmcaLwV582I4em6qxy4NKrFnWCq+ee/mfsNpk468EV0K8GxcT9LBCEqBjx+9gVMd6+0pqJjEdIYLELJOF4C52COZgfIRbgUDJHnb7rmsr/8m5oGunaHWVFjBGAbbMGodH17hm9tNWnaMz//B1R/VAP+RAJfK5WJxBG87i0ijbCjVbAjopkhCY0jpqozRRzakI4A/wSylIMBFMuQ4lYfXRyoC26zjlek/XuiLsPdra+WHUuZREY31yd7Mj83NYSoB/MHukIafZgXFpvaa8rroV6ieFOtPhVj/gm7HMZgXumbMJf2j/2Sex6FD/Qg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vaisala.com; dmarc=pass action=none header.from=vaisala.com;
+ dkim=pass header.d=vaisala.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vaisala.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=aGYwwKxQGOf80jEcwH5l5UNDmoBajClUYu2jAfCW9tU=;
+ b=ZCxfqEbWk3i5UyPyVa2qqw3lzFCZCLQhFHyM4GDoug5kI6EJ0iLh+bKwDvyYrjwckG1dBr5ekFCIr3imFGT++4GEgRHY67d7guJ2aRC6xEYnToLnlnjKXpHmDIKUsrjipPaPShiz8XNHTBBPp7N1LmQ7YL7KL71nM43sDL03TiVGESiT7/AtxM/WN08Fkue6ovMlIqnLEnzCFoUONED4nzwTSuXWu8eGZmBD2LvPS6EC8cK8ZOhB2tPL9+4xsaG9o20mcn3F+6u6LPyyycVEsyzJ5mkKRTwvYIyOqor+VwtMtiTJSuZEog41WzyKmQDl2S9H+kARzVZonkVH3Q086A==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vaisala.com;
+Received: from AM9PR06MB7907.eurprd06.prod.outlook.com (2603:10a6:20b:3a6::23)
+ by DU4PR06MB10410.eurprd06.prod.outlook.com (2603:10a6:10:61d::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Wed, 14 Oct
+ 2026 07:17:54 +0000
+Received: from AM9PR06MB7907.eurprd06.prod.outlook.com
+ ([fe80::a597:33a7:d4e2:1b17]) by AM9PR06MB7907.eurprd06.prod.outlook.com
+ ([fe80::a597:33a7:d4e2:1b17%4]) with mapi id 15.21.0522.011; Wed, 14 Oct 2026
+ 07:17:54 +0000
+Message-ID: <6bed8bd2-0104-4803-869f-3d3aa8aee697@vaisala.com>
+Date: Wed, 14 Oct 2026 10:17:52 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 9/9] serial: max310x: don't transmit while an RS485
+ reconfigure is pending
+To: sashiko-reviews@lists.linux.dev
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>, linux-kernel@vger.kernel.org,
+ Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+ Maarten Brock <Maarten.Brock@sttls.nl>,
+ Tapio Reijonen <tapio.reijonen@kolumbus.fi>, linux-serial@vger.kernel.org
+References: <20261008-max310x-rs485-sw-delay-v8-0-6ba881f81e1f@vaisala.com>
+ <20261008-max310x-rs485-sw-delay-v8-9-6ba881f81e1f@vaisala.com>
+ <sashiko-outbox-163985@kernel.org>
+Content-Language: en-US
+From: Tapio Reijonen <tapio.reijonen@vaisala.com>
+In-Reply-To: <sashiko-outbox-163985@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BE1P281CA0386.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:b10:80::28) To AM9PR06MB7907.eurprd06.prod.outlook.com
+ (2603:10a6:20b:3a6::23)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ext4: fix extent status cache clearing when truncating
- inline data
-To: sashiko-reviews@lists.linux.dev, Zhang Yi <yi.zhang@huaweicloud.com>,
- linux-ext4@vger.kernel.org
-Cc: tytso@mit.edu
-References: <20261014021714.2382353-1-yi.zhang@huaweicloud.com>
- <sashiko-outbox-170745@kernel.org>
-Content-Language: en-US
-From: Zhang Yi <yizhang089@gmail.com>
-In-Reply-To: <sashiko-outbox-170745@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR06MB7907:EE_|DU4PR06MB10410:EE_
+X-MS-Office365-Filtering-Correlation-Id: beb61996-fdb5-41d6-b84a-08df29c343b5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|1800799024|376014|366016|22082099003|18002099003|10067099003|11063799006|4143699003|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	5Qd/3BOmSDV6DDFeJwnzFTICE5K0W8JDRr0C++rJidHpLxK34yXVhcjHrB1iLLcDKO8k+o5SeBhRoOIMBChuJaRA/IQqiIVaP0eEAZ5UOsdV+jazF6OvE5z9lVoxP+SbrDfw/G7xD5Y8Np7VPK5bjYUT0KWzJv+nlQWEyPSjNWiy8DwHdFcjPQME2cWLQ/ztjpB04ns6lNjILQo8Kg3bgMOaAQyBnoIkwiWcO0R1r4pSfmUMExjk1fVXh6/rRhABqCB/Tnth4W9+N7O9h1QyAtJzM8MLpetOwjgLIHTw2vuhY/MPTgrM+8BzkcXMnrAsM3oXp8lhkfs8lbeOhQjE/+oxoTcIOs6KeOGWqK963AaXDePqdbaUOFNV2Der57G/G3X3KZys2Y2Tppe22+xFswXGUult0pks/aiBKAtCgWJREytiMHTUSg/zhAGfljfWHPsesfKeTctRE1pESlGj+Vq9kePVORTTyCXlWTI7QbdrvkGb0p3S4H7dTE2YVqG052T39edtUhiuz1a/JWhabCBolBJu+8HenMSQwfSN6nnrrg0IHyPNvzf2iLNFjepK5qMxRxZgpiUzK7dj4dxpaVE2LBmwNICPOoHxtJ4XChbFHuevkui0oHzhC45GCkZDgll0c9gmjNRtFOLkAWY8Eh5KJmfsUGUX9igY4t0Yf18=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM9PR06MB7907.eurprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(22082099003)(18002099003)(10067099003)(11063799006)(4143699003)(56012099006);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?aDZtQWxRZmxIbVBuS2hlRmFEV1g4OFZHcFFkdko3Q1VOa3dGREk4c2t2VWFD?=
+ =?utf-8?B?QzFEUTc0UzNsZkFCT3pFaFB6QU13dlp0Tnp3WU01WWxqSkxRT21JRDRzMEpr?=
+ =?utf-8?B?N1E2UTZ0MldWUG5PQkhUbmJoUWdnV0FudzQyc1huaDZnb0x2Mkg5R0FONDZy?=
+ =?utf-8?B?NGJsYXlPcEFTdklQR1M2QmtKUHRBRGFPMllnd0tyUHNmYnQrandVY08vV3Ni?=
+ =?utf-8?B?UHJwWjdlOEM5WkdjekVpWVhuUG9EWlpDYks4bmo2V3o2N0duRHRvc1BpblJm?=
+ =?utf-8?B?RDdRZVUrNFk1TGVXSUN4SHZMeVBHSTgwSWppeTR1aTZVSGZLcmJSa3pQWDlQ?=
+ =?utf-8?B?bnRhUnBaOE9NZDNrdVhaME1lU1I4Z1RaWVJMOE5LakJYKzhQc01ERXVtSEFN?=
+ =?utf-8?B?Z3RsUnBtdnl5dXIyMHBMN25lU2NUNXpMOUJLRzVvNmJKdjdDWnlRVFY0dUt6?=
+ =?utf-8?B?cUV5YnIxRnAvOG5NTGYzaDAvNlZvSlhJd2had01KS1dFdWJxMGVmcm9ZdjlX?=
+ =?utf-8?B?MkV4TGRSdGp3dHVJYi9OM2NvMFdjV2I5L3NIY1Bvam5xZGNGajZCUlRCWkV4?=
+ =?utf-8?B?UEtCQ00xRFg3ZkZCRTJrVnBXQ3A4NFpUQkZmL3RldHNoRUg2N2FzcS9FVXc0?=
+ =?utf-8?B?WUxaeGJxemhRYnVuNTc0ZE5uODhLYzhpamgwTjdRU2JrV09EaXNBcVpLL3lz?=
+ =?utf-8?B?eG9MVlcraHdxMndTbzluN25VMG9LNHp1bHZ2Qi9PRGprY0tNc3JQVVZjZTMw?=
+ =?utf-8?B?T3N0RGo3OUttWS92ZUx6R1JRbVQweGVkcHFuZGMvTmJxQ1ZKT3RRdFh0NUE4?=
+ =?utf-8?B?YUpHbXBGbFlqTG1qdWFEZXFkcFZNU0RhdUVhbzl5VVZKM1dGZ2J5TnE4N25B?=
+ =?utf-8?B?bDhmTlJPOER6Q3RIeWdBejFsVUx4YXBjOHJrQnZPWks5cXpURHlxZ05ZcTJr?=
+ =?utf-8?B?dEo0S1NVNTZSL0prS3BuM0gwR1BpYkZiZmFVNnE5cGkyREVrUFZpcDNxTEVU?=
+ =?utf-8?B?bHlQWXY0enYySE0rZDVpTXk3U00veDRoUHh0bnZPSHNPMk5aQUNCaFBZM1Jw?=
+ =?utf-8?B?REFaREVlckhMbkN3YjFIQVF3NW1aU1ZRdVh6UW41RnZBcDNMKzNubFpVZnBz?=
+ =?utf-8?B?eGpGUzltZGl3bnFRR0czTk9DQ1Y1SVNaM09aN1VJSjN3TzFReTVwYlhGNEZQ?=
+ =?utf-8?B?L3M3S0RGRWNrSXFEeDdHeFdEN2hWRm4yQjlXbnZIZ09mbWMxbVl1WEdlNTQ4?=
+ =?utf-8?B?UWE5ZW1MVGVsOWIxaWM5d0JBTmtYVm4zNm0rWmhFbTE5dnNDQ3NnSW1BdGpy?=
+ =?utf-8?B?M0QwU3BxMnoxUEo0aXovd0UySjNXeUlxK0pEMkY0NWRrY2V4NVVDYWlEV0xy?=
+ =?utf-8?B?dnVkcnFhVDJlOEhadDl5dHd5MGFnWHJhMGJ0UGpWZ2pSbXlRdFVPeWU5UDNz?=
+ =?utf-8?B?bndDUjJPSWRzU0Q0bVJkalA5QXEzcGh3V21DOWhpcFRjRXE3Q3cwNWpReEpz?=
+ =?utf-8?B?UkNOS3dYWHN2WmFEcFczR0ZBclZoL2xFY2x1VkpsQnpNYi9VMC9XaXJ3dHhl?=
+ =?utf-8?B?WGJBSVNUTmdreXFCVHJxUUVLVitEcmpzbG1JODJPN1JOZlZIRzJOeVpUZlcz?=
+ =?utf-8?B?M0phamRGcTdGZ1FQOU5TNHVVZG5WeDJaQUFaWFlhVnJXVEx3VloyTUw2OHBM?=
+ =?utf-8?B?NGE0YVNlRDU5ZS90Qk16aG91TUxVNGR0N3dhYWFEV3RyMHBEajl5bDRoTkdr?=
+ =?utf-8?B?dnhzeTNtOXMxQjB3eStWY3hIL1ZRRklmQjVxb1FuVFhlSFRieCswZ2JzbU9W?=
+ =?utf-8?B?QUM1bStZOXhzNFlHTlF6cXE1VW9QQWRCVE1PWE5WaCs2ckZYTy9DWnFBbldY?=
+ =?utf-8?B?WDFBeWtqNThLSmxjTkhNL3VFUy9NeTlKVFNlSE1UbXZqaUIxVnpXTVplaXVl?=
+ =?utf-8?B?WDA0WS92MTRYc0t4Tzl6WGt3RjN5c0pwZVVjd0hVeEJ1VWNNTWpHcHo2VVdB?=
+ =?utf-8?B?cGNPZ0V5VnRISi9CajNwWTNVbDYweVk5VXl2VFFCejY1aFRtd2t1S3NIUlV0?=
+ =?utf-8?B?Y1N5eUtXaDlmQVF6ckRaak9iQ3h2NEFxVWRua2RwdE5HdFdOamgrdkZibU5E?=
+ =?utf-8?B?QnUzZW9NcVRGeXh1cHB4L2ExVk84SDlwWkZwREJ3Mk14V1J2d05wdmt6RGFX?=
+ =?utf-8?B?WWhRejJpbUNUTmdycU5pam1neitTUmQvRUd1RjhSVk1pRlNlOW5aTGExd0c3?=
+ =?utf-8?B?bjJCNnd3RmJsa1ZyMERONWp2TGxGN01RVFM1cW1STlloMmVNcHJlSlRVSUZy?=
+ =?utf-8?B?Vys4TGVpeXFzcm9wcDhrWXpaZmNTWno1TVV2WnlDY0tQR0ZaMis1ejZsYW9C?=
+ =?utf-8?Q?L3yjLIAqKYUF+/h0=3D?=
+X-OriginatorOrg: vaisala.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: beb61996-fdb5-41d6-b84a-08df29c343b5
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR06MB7907.eurprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 07:17:54.3665
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 6d7393e0-41f5-4c2e-9b12-4c2be5da5c57
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: GE9DDMh17zX0Z/YtwfEVOPis8k8LP0Gx5iCWttNPedstYIMo57fmNj128FLlxqaOLIXaLPs0i+AOfQAr1OZhiCks1YAw5GGK8oycH9GOmZ8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR06MB10410
 
-On 10/14/2026 10:42 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] ext4: integer truncation of i_size in ext4_inline_data_truncate()
-> --
-> 
-> commit dadd6832c867f600a26266f1d17a57f7cfd12f24
-> Author: Zhang Yi <yi.zhang@huawei.com>
-> Subject: ext4: fix extent status cache clearing when truncating inline data
-> 
-> This commit restricts the extent status cache clear range during inline data
-> truncation. Instead of dropping the whole extent status tree, it clears only
-> the blocks that are actually truncated away to prevent inconsistencies with
-> dirty, mapped, and delayed buffers.
-> 
-> Link: https://lore.kernel.org/linux-ext4/20261009103033.2920530-9-yi.zhang@huaweicloud.com/
-> Link: https://lore.kernel.org/linux-ext4/6ac92a4c.70ed5d86.2ac85.0072.GAE@google.com/
-> 
->> diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
->> index ceee69a66482b..b630e56815bb5 100644
->> --- a/fs/ext4/inline.c
->> +++ b/fs/ext4/inline.c
-> [ ... ]
->> @@ -1905,8 +1905,12 @@ int ext4_inline_data_truncate(struct inode *inode, int *has_inline)
->>   		 * the extent status cache must be cleared to avoid leaving
->>   		 * behind stale delayed allocated extent entries
->>   		 */
->> -		if (!ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA))
->> -			ext4_es_remove_extent(inode, 0, EXT_MAX_BLOCKS);
->> +		if (!ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA)) {
->> +			ext4_lblk_t lblk = EXT4_B_TO_LBLK(inode, i_size);
->> +
->> +			ext4_es_remove_extent(inode, lblk,
->> +					      EXT_MAX_BLOCKS - lblk);
->> +		}
-> 
-> [Severity: High]
-> Does this calculation inadvertently drop valid delayed allocation extents on
-> 32-bit architectures for files larger than 4GB?
-> 
-> Looking at ext4_inline_data_truncate(), the local variable i_size is
-> declared as a size_t:
-> 
-> fs/ext4/inline.c:ext4_inline_data_truncate() {
->          size_t i_size;
->          ...
->          i_size = inode->i_size;
->          EXT4_I(inode)->i_disksize = i_size;
->          ...
-> }
-> 
-> On 32-bit architectures, size_t is 32-bit, while inode->i_size is a 64-bit
-> loff_t.
-> 
-> If a file with inline data is extended beyond 4GB via a delayed allocation
-> write, inode->i_size successfully updates to >4GB. A subsequent failed write
-> past EOF (e.g., from ENOSPC) triggers ext4_truncate_failed_write(), which
-> calls ext4_inline_data_truncate().
-> 
-> Because i_size is a 32-bit size_t, the 64-bit inode->i_size wraps around
-> (e.g., 4GB + 10 truncates to 10). When this patch uses the truncated i_size
-> to calculate lblk, lblk incorrectly evaluates to a block near 0. This
-> results in dropping valid delayed allocation extents across the entire >4GB
-> file.
-> 
-> Additionally, the preexisting code assigns this truncated 32-bit i_size to
-> the 64-bit EXT4_I(inode)->i_disksize, corrupting the on-disk size. Should
-> i_size be changed to loff_t to prevent both the incorrect extent removal
-> introduced here, and the disk size corruption?
-> 
 
-This is not reachable today.  ext4_inline_data_truncate() is only called
-from ext4_truncate() when the inode still has inline data, and ext4
-keeps the size of such an inode below the inline capacity.  Every path
-that can grow the size past it converts the inline data to extents first,
-which destroys the inline data, so the inode cannot carry inline data
-any more. So a file that still has inline data when
-ext4_inline_data_truncate() runs has a size of at most a few bytes.
 
-That said, in the future it would indeed be more appropriate to change
-i_size to loff_t, but this patch doesn't need it.
+On 10/8/26 13:03, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
 
-Thanks,
-Yi.
+- tx_work continuing through a pending reconfigure is an in-flight
+  transfer, which the reconfigure helper adopts with RTS held - the
+  gate's documented scope is transmissions that have not started;
+- max310x_handle_tx() has exactly one consumer, tx_work, so the kfifo
+  single-consumer contract holds;
+- rs_work not being cancelled in shutdown() predates this series
+  (2016); it belongs to the same teardown-ordering follow-up as the
+  patch-7 note.
 
+Tapio
