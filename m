@@ -1,159 +1,76 @@
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C0A348896
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 08:50:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F7C1DDC38
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 08:56:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791967806; cv=none; b=Fj4kQc3xUJBMD5UM+3iomF6TI5NVN9mw8AI099gESHvE9sUdKR2fPCgg7Q1UFgtrEzP6Y80VefjI7McwI3loKvpNt51qjPTQAEG6hVxOOdaw9HI0OrsEPL4O4AcwKdRwcbspGFE1X2HgE61uoKpV2tcUEdHL/kqw1HRTpddqXDA=
+	t=1791968220; cv=none; b=s4n6jboky0wok/D20L+HL8vg2wkAhWF89pfrk6U/izJiBR+WKQQ4A1HowtulKcTwk1zdxNJmRv8+OY9teJHn5f/pxF1uiRAMiWrPXSeQ4eGru17EZRZq5jFJ7wAVgmMVuT1q6UujlM5KuHDu/OR6gTdjSG7JQiF8EMLeFt15BM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791967806; c=relaxed/simple;
-	bh=KvFKHfqFV+5ISK8Sy/EfB9jKmh86Ren2blvG613txhU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uKwzHnRj3JftQWS+hEC8uJJVM8Wce8QhPXjFBnkeKevzqMDXUdTXLXfHnE6z2RS7RIAgos1GeWmc1iaSqbEbqMSpJNDXIENFegLyhHPbfLdYAInpnwBKd58nqP+ZibS1osTJ6C9ehBRHHCfPXipbQvFVNza4AdcGudzeWxrZOG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.170])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4j4PyC72HBzYQtKy
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 16:49:07 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id A82F440561
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 16:50:00 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP4 (Coremail) with UTF8SMTPA id gCh0CgAXS+o4Qs9qAI2VAQ--.24749S2;
-	Wed, 14 Oct 2026 16:50:00 +0800 (CST)
-Message-ID: <4154959f-8202-4abd-8f1e-4f3643e5eefc@huaweicloud.com>
-Date: Wed, 14 Oct 2026 16:50:00 +0800
+	s=arc-20240116; t=1791968220; c=relaxed/simple;
+	bh=QXEXhFBvt4F4QT67cXrgn/2jcAONBRGyvL007IxDRsY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=U9hVe2lyg72vZMCEdoatOiCSAWZcuZUP2CPgzZvI1pJxy0WBQPn+EgFYuJX9urfxCL09bt1FRlskjaQL3YnEUFXUFBPwXiE7EsuJDEhmMt0lg7R7Lyr4VCkUbqrb48WLOeWmTnLB/fUAslMqfF6rXrAn0g8nLRzLd6SnWXMmXsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=rCFDiC6P; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="rCFDiC6P"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 33DBA4E4120B;
+	Wed, 14 Oct 2026 08:56:57 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 086C860368;
+	Wed, 14 Oct 2026 08:56:57 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id B7F98103286A7;
+	Wed, 14 Oct 2026 10:56:53 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1791968216; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=QXEXhFBvt4F4QT67cXrgn/2jcAONBRGyvL007IxDRsY=;
+	b=rCFDiC6Pd5sxTy0QeydLhT83XQRzmar+QdOIA+cYjU0cWFzoJ2nj6GP/iHgJPDdwUTPtvT
+	ssy9Ep2wplciyZH5IX3PyBTJPImiGgSiHNBu9/wYRD/wZXb2PhxOyv6NvCJddVRjYY+7uk
+	oI0SkqgVa/2ZVzb1arcpbzw1lICkL1/mNK5JThABjdYeH0KVfdDih5LkUIcG/JqJBJsWFr
+	ykGSo7vjFQ0KT3WvT6fYThkaxnRmXQurdGQCMOEKOpSNJOCXJPtA4gMh/LFq4Oaj4/iC8b
+	sb5+X0FBtAtaJoCfXVOOJp9e6T8s7mMJzwZ9+DF78yj81HAQxEhvXyFmzW32sg==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: sashiko-bot@kernel.org
+Cc: "Pratyush Yadav" <pratyush@kernel.org>,  "Michael Walle"
+ <mwalle@kernel.org>,  "Takahiro Kuwano" <takahiro.kuwano@infineon.com>,
+  "Richard Weinberger" <richard@nod.at>,  "Vignesh Raghavendra"
+ <vigneshr@ti.com>,  sashiko-reviews@lists.linux.dev,  "Thomas Petazzoni"
+ <thomas.petazzoni@bootlin.com>,  "Steam Lin" <STLin2@winbond.com>,
+  linux-mtd@lists.infradead.org
+Subject: Re: [PATCH v3 08/17] mtd: spi-nor: Fix WRSR with ODTR chips
+In-Reply-To: <sashiko-outbox-170165@kernel.org> (sashiko-bot@kernel.org's
+	message of "Tue, 13 Oct 2026 16:51:49 +0000")
+References: <20261013-winbond-master-spi-nor-w35t-v3-0-6dde1d513df8@bootlin.com>
+	<20261013-winbond-master-spi-nor-w35t-v3-8-6dde1d513df8@bootlin.com>
+	<sashiko-outbox-170165@kernel.org>
+User-Agent: mu4e 1.12.12; emacs 30.2
+Date: Wed, 14 Oct 2026 10:56:53 +0200
+Message-ID: <87a4ogzmlm.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 15/15] perf annotate-arm64: Support 'mrs' instruction
- to track 'current' pointer
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <cover.1791629326.git.wutengda@huaweicloud.com>
- <0615c314accfce4f3db561db1b1e02efcc5fd66b.1791629326.git.wutengda@huaweicloud.com>
- <sashiko-outbox-169878@kernel.org>
-Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <sashiko-outbox-169878@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:gCh0CgAXS+o4Qs9qAI2VAQ--.24749S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxurykuw1xJFyrZw15KF4kWFg_yoW5Cw4xpa
-	95u395Ka17Xr42qrsxXFWxZr9Ygw4xGr1DCrn0yF4IyFZFkr1fKas2gFW7uF4rGr95Cr1U
-	Aw1DtFZrZw48CaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x
-	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
-	6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
-	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
-	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
-	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
-	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
-	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIev
-	Ja73UjIFyTuYvjxUwmhFDUUUU
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Last-TLS-Session-Version: TLSv1.3
 
+On 13/10/2026 at 16:51:49 GMT, sashiko-bot@kernel.org wrote:
 
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] spi-nor: Unconditional -EINVAL for 2-byte writes in DTR mode
+> breaks flash unlocking
 
-On 2026/10/13 22:03, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] perf annotate-arm64: missing lifetime cleanup in update_mrs_insn_state()
-> --
-> 
-> commit 084f7875323701c8124c43b96de264a478df7634
-> Author: Tengda Wu <wutengda@huaweicloud.com>
-> 
-> perf annotate-arm64: Support 'mrs' instruction to track 'current' pointer
-> 
-> This patch extends update_insn_state_arm64() to handle the mrs instruction.
-> It enables tracking the current task pointer in the kernel, which is
-> typically accessed via the sp_el0 system register.
-> 
->> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
->> index 5683215f07708..6da558f7e8648 100644
->> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
->> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
-> [ ... ]
->> @@ -1030,6 +1032,71 @@ static void update_adrp_insn_state(struct type_state *state,
->>  		     insn_offset, tsr->imm_value, dreg);
->>  }
->>  
->> +static void update_mrs_insn_state(struct type_state *state,
->> +				  struct data_loc_info *dloc, Dwarf_Die *cu_die,
->> +				  struct disasm_line *dl,
->> +				  struct annotated_op_loc *dst)
->> +{
->> +	struct type_state_reg *tsr;
->> +	Dwarf_Die type_die;
->> +	u32 insn_offset = dl->al.offset;
->> +	int dreg = dst->reg1;
->> +	Dwarf_Die func_die;
->> +	Dwarf_Attribute attr;
->> +	u64 ip, pc;
->> +	struct strbuf sb;
->> +	char *type_name;
->> +
->> +	if (!has_reg_type(state, dreg))
->> +		return;
->> +
->> +	tsr = &state->regs[dreg];
->> +	tsr->copied_from = -1;
->> +
->> +	/* Handle case difference: LLVM (SP_EL0) vs objdump (sp_el0) */
->> +	if (!dso__kernel(map__dso(dloc->ms->map)) ||
->> +	    strcasecmp(dl->ops.source.raw, "sp_el0")) {
->> +		invalidate_reg_state(tsr);
->> +		return;
->> +	}
-> [ ... ]
->> +	if (!type_name || strcmp(type_name, "struct task_struct*")) {
->> +		invalidate_reg_state(tsr);
->> +		goto out_free;
->> +	}
->> +
->> +	tsr->type = type_die;
->> +	tsr->kind = TSR_KIND_TYPE;
->> +	tsr->offset = 0;
->> +	tsr->imm_value = 0;
->> +	tsr->ok = true;
-> 
-> [Severity: Medium]
-> Are we missing a cleanup of the previous lifetime state for the destination
-> register here?
-> 
-> If the target register previously held a variable with an active Dwarf
-> lifetime, the lifetime_active flag remains true. Upon a subsequent function
-> call, the register tracking logic skips invalidating caller-saved registers
-> that have an active lifetime.
-> 
-> This could cause the target register (e.g., x0 holding current) to
-> incorrectly survive the function call in the analysis state, even though
-> the hardware register is clobbered by the callee.
-> 
-> Should this path clear tsr->lifetime_active and tsr->lifetime_end, or
-> perhaps call invalidate_reg_state() earlier before assigning the new
-> properties?
-> 
+Yes, I have never encountered ODTR chip with that capability, so it is
+future proof to simply prevent any ODTR chip from using that in the
+general path. This is intentional and should remain.
 
-OK, this patch has the same issue. I missed that too. Will fix it.
+Won't fix, until we get a new chip that has an actual problem with it.
 
-Tengda
-
->> +
->> +	pr_debug_dtp("mrs [%x] sp_el0 -> reg%d", insn_offset, dreg);
->> +	pr_debug_type_name(&type_die, tsr->kind);
->> +
->> +out_free:
->> +	free(type_name);
->> +}
-> 
-
+Miqu=C3=A8l
