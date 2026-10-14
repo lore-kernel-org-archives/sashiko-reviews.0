@@ -1,133 +1,209 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA694F402E
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 10:49:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791974973; cv=none; b=hvlY58kDNyKFXe+ROZjg8W447/CYF3HSafGdqluiKP6he85+OM/bjh/WRXY1Whs6/A/F1NYaOwmFEfgGYW6lvHvnIjL+zPO5hoTnI/oOv1Qp3XiGmPjPpjYR3vylchoJ5SVyVHZCA616CTf8/EaktxxxcN9Z9zd3ey5wh2CEZlA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791974973; c=relaxed/simple;
-	bh=DbFxwQnZYV5xBXzmlZTBkJtG4z48TGWo+5a2dmYo0Xk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Hs2/TUPEqN70iABKa3r22ys56YGkTFZTIC1Lzf/pxklNnC+KeUWkCHfl+gxwcc8MEGFcO6RGhU+pqYyHij/l+Am6nb/InaDojb8P0cx/cBFxW9CM0DDDCghEm9Aj9rYKlotOqBtU5pWyWHVVPLl8I+bnizVoGzYymn0JcbpOvtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UTWoj9ag; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14343AC0D9
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 11:50:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791978644; cv=pass; b=jR1m52p4cx13OfwmjFvGYnn0qnRKV8sv7Y5xlZgjRE84yakxkIgiHx+8waKnQy1x3xt2tPfA8FcQ0TpXr7mH/wAbhyEoZjPcnIVXJh3k0RPdnYfGkcp2mee2lA0A02OMdQoGGNOTovEojDjhUA7+AxCSV7X7zHOH1rWsDxYIRl8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791978644; c=relaxed/simple;
+	bh=YzE367kx9h5ucZyKgNsjxCV6DacyE/ZX6U4dDTaRoHQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Fn3VteBeeCEPGTvaKV24THi3Z/xPiwDlmBapPds/jtlUgEQysH6SPp1/LiT2K4rlGtyWN1X7Qb17tsFuea4JZScpdgIn4I47OPHu9LaD75PRUSaGTYdg7UU3KKL5ldUMhxozD2G0VFXLaHQIs0VgeLw90yqMmOvcpYdfQNEadTg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HloNjEUG; arc=pass smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UTWoj9ag"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4a020e65269so25756225e9.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 03:49:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HloNjEUG"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-48df0fa43c5so28236f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 04:50:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791978635; cv=none;
+        d=google.com; s=arc-20260327;
+        b=WEqp2TBqALh28Fj9umvMIo1eB346YrT8epUf2ALCY0/di51x5OkIOUluyrmtWhxDta
+         6rHodBKETb20Tpg234A5ks5V1RO6tEENWChBFhv8yy/lfPdUiJ0gyhyIg9vc+ixUBgrH
+         iLYN2Og3CBVUdQ1WW8YEmAalbprJqs97tKq8Qf5estwxwT0xWxwCQ8dsz/b10T0QqrAF
+         GcHm4Pn3BUN0D6awBWimkIuEVuMt1xb1XuTqchrIo78ysS5vMyt+sP3nPE/8WEcatU+8
+         P20d5PqjYs/qMR1m9GVkMPKN+N0/sJWJNKvbMpM8uEJIO73r86JHDS3fXSLsJ2BIr0FB
+         eTmA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=gsB6r14qi7ICCBa3crZHyjHVyyF0McKRspvIoEcEfgQ=;
+        fh=wiyUzaAORhvND/cCxIQVPhmBs2QyjRjA0wGO9ExJtKQ=;
+        b=iBmXsjd0kBpNZbfE6a1OQemWzBomL9l5qSc/Yilfnc7TIgY+ejjgDS1EyMNB7oS6Bu
+         Tq7SfV0JitHljt2yl4/Etdj1ycNpSSS7y/xQ3vQUAkoHEBBxuDX7GxRljwihEhAB51E/
+         vkCCUizXEc8uE4ZTPCMnTps69jKH7DdjMz81tQIZS4M1ojRF0ZAgeO7FTh55aIMhWsv7
+         tXmVerCWrFfrrblROKvcUdLPz4tlRLqB0Hq4Iqolwc1V9aHfK1iKBtOg6LXBEPwH4lcA
+         O9hTmh/vCuiuKB7nKy+H3EYcslWM0omeHEIfx6uItb9UdcjuEdhqAzVgBjGVdyVaDnKu
+         apew==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791974969; x=1792579769; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=u2nQL6bRnFw36T6f08+48z7f5+GEhSRGAmBKimZJZ1g=;
-        b=UTWoj9agm03V3nHdcyp+nCJaS/G/6t2KYXWFe1OUg3Xlvhqr5XUMBIW8R0SSZJ2Mey
-         Pu0bTI+RXeCmuoVGjmyxs1dZQkCUPDxrizL6J0buANwYTHQqipnj7NUsZB1GKPgiAVni
-         R5GCn1W32tCj3tFbaM/kP1rZF1hvFJSqQjZ7QTRJ8zt3ZPm/WmzYThSLJ7TT16SFzLiz
-         6FgAlNgKtx4Li5bY5ssXQU26XXIA6QLAPg4lcqRqSmBdXUmrL52UMgbGb9ohAPVpfyzY
-         L0+Nuv8Qh/yU9TFSU+CSTc3Tp1QPpDW3a3I1exp8/trU3NW98Pk2XrStOmO9PLk8n8JW
-         vfhQ==
+        d=gmail.com; s=20251104; t=1791978635; x=1792583435; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=gsB6r14qi7ICCBa3crZHyjHVyyF0McKRspvIoEcEfgQ=;
+        b=HloNjEUGdlK97VspGJuSH0tt+rdWeZDHFVFV/DXoWLtLGiKekIc5C1Mzqfdnho47T8
+         mUM7BoSslPAsG2wtVSP0T1RRmCKKPOWyc2fx6avonOZ3qUVPUmt37eYtly9M2tuZvyd5
+         xeP5gbhl4NVk5pJTX+TtaxorGmQOotCHqD8CEQswI7DUMDwMZRCtPEQMEkZsRMXc/oqV
+         LKpPn9e3UKlGj9FEdpswbK+N+03v7matAZo2R5f3Ms0TaYCOw+gIRqlbXw7n1qX8O5mb
+         9ccAy9eXqUJLiuCJz5jJiys2r7imdOGPkTV03gnG7AHC0+jzT2EVZopGp9bsyWvFuKNb
+         qsHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791974969; x=1792579769;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=u2nQL6bRnFw36T6f08+48z7f5+GEhSRGAmBKimZJZ1g=;
-        b=fU7MdEKJbaq79fLm+brtH76uJ+BhLjKHirZWAyPX56q7Elq+XmaoEW+rwrPLG8m4Qh
-         obX4ieAAQsAMC8jkzZ5MrK4XcTZK6FVvLK9DFFG3ykEgA+CxfnmkfdTmQmdQoXzo5Zx8
-         frBeQ/oTCIsHbbBNakhroUkecIMjM2H7UkTRQzLKoUj6k/xeWwVPZKNOePWqGcsP/uGx
-         Fgp7wTB3Z2p5gqR1SDVQGh3rpwJjFLTOpUKY1W5r12HW1Yno+1fePPsLXUhIjNq81wWa
-         GbIL4WBpSNGZkkaF/TswNSMtF6ToZc7ZNG7X17Dpza0ckMIeTHoKAx6tP/WDTovzWTsU
-         Rahg==
-X-Gm-Message-State: AFq9FYIEHaa4Ei/ok17IXqAn5voQpkKZ+QVQGhELjZpGEEtFjmuJpwl3
-	iOsO90rpSijY62zz4TCCcildWn18BMXDoHye6vupM+pC5sVTDFnDUOj+lnGBxw==
-X-Gm-Gg: AYBFou3MXWNP5M2BrW86BT4Q43oXm2cdW3OuoFJCIl+himXK0x5f/kmgqTMz+0p9Zws
-	wkN90eQ83fp4j18mo0pLvdUqPK+XNqMZL2f5Fps1p2TyJ6LcOsxb1ErkFwCzU3NsnN+p4sGnZ1M
-	3jgGAVeuomKqNhZ6Nrx5uxzIGvlilfanyNB4hr2dJTXUgmlp6VJrRBtWyF0vPftrqy3ZyUbsNsK
-	YbuR0vhpcAhNm0SfsKLx1mVAE9j2JLUKIN/PBMFuT3zpiCh5oUru2/0pGWkKHUuFl/NOui3NqQn
-	BM7TEolXtzSY/EqhCvTrBnS9B/z9Utc6tisHM/utBZ2cQUDQaX3BnHVtyuKblFpHrYyUhQtdrik
-	SFya9BztBbwlVega6lV4dXgun5VP4i0DWdyOn/ab4DckGNZePogycTgleY0cYiF5QYTDiLl8ywC
-	hdZV/TXr+0Nc8r/9j6tsYdRXAuCG/PAOyybjIYK3VZJrj2RIJs1kgshpuSHRd40K3NU8q75v0Kx
-	w9z+CNFAPn7JXBUTDhYpbVhS0CIGGRMpYeWGl66ni/jgjJGRuIZ3X1Dzr8eLd02Aydxz1eeUzqf
-	pmk2YvqsdnkqSLZKl8299xniL1nsVH2ohATfeig6Uz6QJiKR9jktrgVAd/c=
-X-Received: by 2002:a05:600c:1911:b0:49f:faa3:3ca2 with SMTP id 5b1f17b1804b1-4a18e4aae7emr326111685e9.13.1791974969558;
-        Wed, 14 Oct 2026 03:49:29 -0700 (PDT)
-Received: from ?IPV6:2a01:4b00:bd21:4f00:7cc6:d3ca:494:116c? ([2a01:4b00:bd21:4f00:7cc6:d3ca:494:116c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48de0bd733fsm11231494f8f.58.2026.10.14.03.49.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Oct 2026 03:49:28 -0700 (PDT)
-Message-ID: <f430200a-c6a9-4e7b-b257-51b3968c2933@gmail.com>
-Date: Wed, 14 Oct 2026 11:49:27 +0100
+        d=1e100.net; s=20260707; t=1791978635; x=1792583435;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=gsB6r14qi7ICCBa3crZHyjHVyyF0McKRspvIoEcEfgQ=;
+        b=RPR7wmn+Ge0DzQiGFtyKNuBNyJ7Ag7KFlVixPYitD2fHiTsmwCtyst3HYiBFWTOB3O
+         YoAEVSpMCHuVervsud6t0AKF+HWp47WoYFzjisByY3vSiPvDLwJYoAC+h4D1CuyIeCyX
+         /B3rdXB3Rc9eP5eprhqFaT/1MMsPzXZ0TmQj+qktOZz0Pcf/eRbaVFuiE6/ErTGesm3y
+         jMqJ7u/GJmCgOJYY2X2x/v2O+0hyNBGHWiXhz67jZW073Xzjh90GjlTbKUSeb3Ytqm6l
+         pPgGf6AufTmUoXA61xirmRt1FEA5wOSk87oaaRb8NE+oyp5sFJf5fYwSt5EShm46wgED
+         YFDQ==
+X-Gm-Message-State: AFq9FYJsjmCnDD5mpVV468SlwovAW2Bjy6QcDYTw77zqr+ZWwBuHn3YG
+	toGJArFEBTmNgzmK63tBF8tj5YDD5y6G1LA/ECXiOJmbvBiiZRDSAokctnVN/5vqckpB1vJSo3A
+	jpm9i2TP728L2r9ZIj2l/l+JEX2zG5C8tRBnIrdM=
+X-Gm-Gg: AYBFou1laXAZxfGHaQ06/YY2HvqATvCkSacAH9h5w0cFs6BbTA5IkHkZzvIooLFNw+x
+	zLlbvrtiQPLTeCwim0vWh5qVGUUCU2qfR/XMQ2fsNnN5kIZZordxNUiFc8ly8Eqnw0DUrzzAzJR
+	fUv3Dmch1W7aAd0a/OUBKfTTD2Xjf86Yiil9o8ynwZNH/YH200HDjcUdDUN6c+Sl9f+QNkmqho8
+	lzHOgFR7aAepU2Ih7mWSM26bXgpXhtOLffNQkPR8XhzsbzP5pzs6iSF20vlTQ5wlx2L93rSyMqL
+	TPp9SANn9sIAHgYmjI3Q0TqvZL0hLmoqXjc19mlp8haBUIdaJyLLG2poz/MvwAnsDQ5ZbxCLGp3
+	K8MlquQ1bz13sF/w2WSGXekz/I5jkx+WuOb3eLFfut51yUU4lOpPGANF7H1kJsgABfVc8wK1Djw
+	==
+X-Received: by 2002:a05:6000:2506:b0:48b:946:c1f7 with SMTP id
+ ffacd0b85a97d-48db94bb90bmr29562583f8f.31.1791978634671; Wed, 14 Oct 2026
+ 04:50:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 07/13] nvme-pci: implement dma-buf backed requests
+References: <20261001154326.754314-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+ <20261001154326.754314-5-prabhakar.mahadev-lad.rj@bp.renesas.com> <20261003013310.D30A61F000FF@smtp.kernel.org>
+In-Reply-To: <20261003013310.D30A61F000FF@smtp.kernel.org>
+From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+Date: Wed, 14 Oct 2026 12:50:08 +0100
+X-Gm-Features: AclHuK-yCqqeOjMwwFQaMKLml8XUsF3SK8FdUMhRnNk9iZskJVvyr9TZ3F42bUI
+Message-ID: <CA+V-a8u-xhSopVPya+tZRZrn8mSWYzsEAXHpRC6eTwCk4DUmnQ@mail.gmail.com>
+Subject: Re: [PATCH net-next v2 04/12] dt-bindings: net: dsa:
+ renesas,rzn1-a5psw: Add RZ/T2H and RZ/N2H ETHSW support
 To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, media-ci@linuxtv.org
-References: <cover.1791924581.git.asml.silence@gmail.com>
- <a8c9ff112d4295e7a3f7c361e03f03ee5eb42e74.1791924581.git.asml.silence@gmail.com>
- <sashiko-outbox-170530@kernel.org>
-Content-Language: en-US
-From: Pavel Begunkov <asml.silence@gmail.com>
-In-Reply-To: <sashiko-outbox-170530@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org, 
+	wsa+renesas@sang-engineering.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 10/13/26 22:23, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] nvme: missing controller state check allows attaching DMA-BUF to dead PCI device
+Hi,
+
+On Sat, Oct 3, 2026 at 2:33=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [Medium] dt-bindings: net: dsa: a5psw: globally requiring interrupts br=
+eaks backward ABI
+> - [Low] dt-bindings: net: dsa: a5psw: missing port count restriction for =
+ETHSW variant
 > --
-> 
-> commit 6741fe43dc1132ae4f51db272567ac5b56987f17
-> Author: Pavel Begunkov <asml.silence@gmail.com>
-> 
-> nvme-pci: implement dma-buf backed requests
-> 
-> This patch implements DMA-BUF backed requests for the NVMe PCI driver. It
-> allows mapping DMA-BUFs on registration and storing them as a PRP list to
-> initialize requests. Attached contexts are tracked in a new list
-> synchronized with a lock.
-> 
->> diff --git a/drivers/nvme/host/pci-dmabuf.c b/drivers/nvme/host/pci-dmabuf.c
->> new file mode 100644
->> index 0000000000000..8dab59d936507
->> --- /dev/null
->> +++ b/drivers/nvme/host/pci-dmabuf.c
-> 
+>
+> commit ac61e34c73e390592b92437f35f98d8807997f55
+> Author: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+>
+> dt-bindings: net: dsa: renesas,rzn1-a5psw: Add RZ/T2H and RZ/N2H ETHSW su=
+pport
+>
+> This commit extends the A5PSW DSA binding to cover the ETHSW variant used=
+ on
+> newer Renesas SoCs. It updates the schema with new compatible strings, mo=
+difies
+> interrupt and clock properties, and accounts for the 4-port topology.
+>
+> > diff --git a/Documentation/devicetree/bindings/net/dsa/renesas,rzn1-a5p=
+sw.yaml b/Documentation/devicetree/bindings/net/dsa/renesas,rzn1-a5psw.yaml
+> > index fab6aa6237e93..863633185912f 100644
+> > --- a/Documentation/devicetree/bindings/net/dsa/renesas,rzn1-a5psw.yaml
+> > +++ b/Documentation/devicetree/bindings/net/dsa/renesas,rzn1-a5psw.yaml
 > [ ... ]
-> 
->> +static int nvme_init_io_ctx_locked(struct nvme_ctrl *ctrl,
->> +		struct nvme_dma_buf_list *buf_list,
->> +		struct dma_buf_io_ctx *ctx)
->> +{
->> +	struct nvme_dma_buf_io_ctx *nvme_ctx;
->> +	struct dma_buf_attachment *attach;
->> +
->> +	nvme_ctx = kzalloc_obj(*nvme_ctx);
->> +	if (!nvme_ctx)
->> +		return -ENOMEM;
->> +
->> +	attach = dma_buf_dynamic_attach(ctx->dmabuf, ctrl->dev,
->> +					&nvme_dmabuf_importer_ops, ctx);
-> 
-> [Severity: High]
-> Does this code allow attaching a DMA-BUF to a tearing-down or dead PCI device?
-> 
-> If the PCI device is hot-unplugged or its driver is unbound, nvme_remove()
-> calls nvme_dev_disable() which cleans up existing DMA-BUF contexts via
-> nvme_pci_remove_dmabuf().
+> > @@ -73,14 +145,48 @@ properties:
+> >                phandle pointing to a PCS sub-node compatible with
+> >                renesas,rzn1-miic.yaml#
+> >
+> > -unevaluatedProperties: false
+> > -
+> >  required:
+> >    - compatible
+> >    - reg
+> >    - clocks
+> >    - clock-names
+> >    - power-domains
+> > +  - interrupts
+> > +  - interrupt-names
+>
+> [Severity: Medium]
+> Does adding interrupts and interrupt-names to the top-level required arra=
+y
+> cause a regression by breaking backward compatibility for legacy device t=
+rees?
+>
+No, because the existing SoCs already have the interrupts and
+interrupt-names properties in the SoC DTSI.
 
-Looks legit. Going to send a v11.
+> Existing device trees for the older renesas,rzn1-a5psw hardware that do n=
+ot
+> specify the interrupts property will now fail validation. Since the Linux
+> driver does not currently utilize interrupts, it is perfectly valid and
+> functional for older device trees to omit them.
+>
+> Should these properties only be required conditionally within the then bl=
+ock
+> for the new hardware variant?
+>
+> > +
+> > +allOf:
+> > +  - $ref: dsa.yaml#/$defs/ethernet-ports
+> > +
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            const: renesas,r9a09g077-ethsw
+> > +    then:
+> > +      properties:
+> > +        interrupts:
+> > +          minItems: 24
+> > +        interrupt-names:
+> > +          minItems: 24
+> > +        clocks:
+> > +          minItems: 3
+> > +        clock-names:
+> > +          minItems: 3
+> > +      required:
+> > +        - resets
+>
+> [Severity: Low]
+> Does this conditional block need to restrict the port count for the new
+> ETHSW variant?
+>
+> The global patternProperties for ethernet-ports allows
+> "^(ethernet-)?port@[0-4]$", which globally permits up to 5 ports. This is
+> correct for the older A5PSW variant but incorrect for the new 4-port ETHS=
+W
+> variant.
+>
+Agreed, I will add a check to validate this.
 
--- 
-Pavel Begunkov
+Cheers,
+Prabhakar
 
+> Without a port count restriction here (e.g., overriding and disabling por=
+t@4),
+> device trees with invalid 5-port configurations for the new variant will
+> silently pass schema validation.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261001154326.75=
+4314-1-prabhakar.mahadev-lad.rj@bp.renesas.com?part=3D4
