@@ -1,168 +1,211 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE0D4A64EA
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 22:25:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B708481AA9;
+	Wed, 14 Oct 2026 22:44:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792016728; cv=none; b=AiBBtJF+v07STKxBzzcwX3T9T+mwe8rE3AbgqleWEAxf9z84ihY62po3Gi3K75R+hqLrof5Zex9rsJTvo0BP1+snRk48IJRql/UsyZY4CGob0CvF8XR3ZikulDlKtC7CxwsvOtlf/+nWZ3RCmfrR2TiObATZsWSocsEW29e1+WI=
+	t=1792017901; cv=none; b=Cao27tusq3/bxOvY0qHL2mfKo06H0mBQczxL95OJX/+tTn2Bq14iCuv8yQXHZyyg4lywAY1N94WUJUP/8zRGA2HJaUt+tSdqwbZJwNswBXOCzFH4DL28VMvaoRDANEOxl1rHd6yS9XS9uPU++UW1RsNVy+LlH3GeQ3pR8af7Kj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792016728; c=relaxed/simple;
-	bh=nQ8YG2vU7S0uYgtAkMzTRmzK3bGvs4pmiPwIKEQvb2s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Mosme/F5yZnNwwrAB/MFE3BYY4nerjrVO2W40NJ0w/sWTMzlT9l9fw33tKMUXSwwZS1tWa67f/EH1QyjjB/tgQK93Q932LOQmGLfSkiAcFqQWPKP7d1aQ+TJr8JkC2lD6kOrTbuMCzfAE2BDbRuJr9SAgEOuGqHO+nWkhefraAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dvALibTC; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1792017901; c=relaxed/simple;
+	bh=AYUDyFQFO5O13F649CoM/J3ewtnD0UW0h+rzj813COI=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=Dy0VELS7hHCEwcHFKd4z0pT+WTmIszCSJQrK779gQIsvvDpajShliO0/uFAWvWG84TjxDmiKuKNBVEB3f216FMtyl1w0Wo/18cLuSch8YfrwmBk8HXWZKJBhLib4god3R5agxgH+F957RgPZoT2S9ZSV7E/HKcsiYowRa0PoM6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=casper.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=O15r7reT; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=casper.srs.infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dvALibTC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792016726; x=1823552726;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=nQ8YG2vU7S0uYgtAkMzTRmzK3bGvs4pmiPwIKEQvb2s=;
-  b=dvALibTCHEg2MiU3JwesNeVXV9Yv9jJlNty6yDOZVc8Bju/Imjs/v1/p
-   NX0OA0T5WWS+qYpRTSBt5VBxoAVpCCFHHNMLtnRn2fMHk2U0AY4BEKh1e
-   Ca4G3PFJ5yngpDtpCTj/J/evQSMX61qoweMZkbGyxEOWHASKxFKFLdDAx
-   bRDn53xEJnT1QOOP0sjBr6Rlj27RiBOkWDL6qmouzt1NqW4GABqCBJvlT
-   tST/AnqwZNsBKOStCGtRySnWG20RCCSxlSF4yWM9baSP6VsC9MPweHQ+P
-   x970oj1hUm6/Xpbwvsh60GaPuQ3wjJNACCFZT8KI6GVTVRMenJR7DFCch
-   g==;
-X-CSE-ConnectionGUID: ZVZX+TGKReGz0BKckk1c8g==
-X-CSE-MsgGUID: XRpMRlapRoW8ubXA4cgIUg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11935"; a="781548"
-X-IronPort-AV: E=Sophos;i="6.27,158,1787036400"; 
-   d="scan'208";a="781548"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2026 15:25:25 -0700
-X-CSE-ConnectionGUID: VTXhgDE8QKKkAVhtKK0piA==
-X-CSE-MsgGUID: a/7Fo/zyQUude/g0YTkJww==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,158,1787036400"; 
-   d="scan'208";a="1551368"
-Received: from vcostago-desk1.jf.intel.com (HELO vcostago-desk1) ([10.241.243.117])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2026 15:25:26 -0700
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH 6/6] dmaengine: idxd: Do not release interrupt handles
- on terminate_all
-In-Reply-To: <sashiko-outbox-168653@kernel.org>
-References: <20261012-wt-idxd-fixes-v1-0-30a35a445077@intel.com>
- <20261012-wt-idxd-fixes-v1-6-30a35a445077@intel.com>
- <sashiko-outbox-168653@kernel.org>
-Date: Wed, 14 Oct 2026 15:25:25 -0700
-Message-ID: <87cxtbj4x6.fsf@intel.com>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="O15r7reT"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+	In-Reply-To:Date:To:From:Subject:Message-ID:Sender:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=AYUDyFQFO5O13F649CoM/J3ewtnD0UW0h+rzj813COI=; b=O15r7reTnmJzvArNKxXJn4aCOi
+	xIjQ5pO0lhOQipd4Z8rPv3t/mQsxc795MZlhE91LZ/a+nk9hfNeQWnSCoWjy8emilaL+aopSulZ8K
+	NwnAhpX0gX9OCHhqyp4OQ4mXD/W5LW08AWQB7BGVK18z182fjh7wpxs8I6nBf+Gh7uvhhvWsXSp+4
+	1zQho8kHmn3/fmRzPhhhYWdryg91c+5X/2OicGILW3ZIu5djjJcEv9oKukp8+9ZzktRj6yl0lICIS
+	wHMvStGVDNHt/z+jEpTcp+pBh/jIrmNRgqjoae9DyhqUp7RDKjEgrPrGNnYMALbMhxfWMVThAnMww
+	JCkfWD7w==;
+Received: from 54-240-197-227.amazon.com ([54.240.197.227] helo=u09cd745991455d.ant.amazon.com)
+	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
+	id 1xH7iT-0000000837G-2gQg;
+	Wed, 14 Oct 2026 22:44:57 +0000
+Message-ID: <a8628db1c85feba299e2ddd8a41ceca4e9fb7d63.camel@infradead.org>
+Subject: Re: [PATCH v2 06/11] KVM: x86/xen: Retry event channel delivery
+ which races a memslot update
+From: David Woodhouse <dwmw2@infradead.org>
+To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+Date: Wed, 14 Oct 2026 23:44:57 +0100
+In-Reply-To: <sashiko-outbox-171965@kernel.org>
+References: <20261014220508.518772-1-dwmw2@infradead.org>
+	 <20261014220508.518772-7-dwmw2@infradead.org>
+	 <sashiko-outbox-171965@kernel.org>
+Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
+	boundary="=-S/v5IeUbWUmJTsqYprYF"
+User-Agent: Evolution 3.62.0-0ubuntu1~ppa1~24.04 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
 
-sashiko-bot@kernel.org writes:
 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] dma: idxd: sleep in atomic context in device_terminate_all()
-> - [High] dmaengine: idxd: Hardware UAF and IOMMU faults due to flushing active WQ without disable
-> - [Medium] dmaengine: idxd: missing check for INVALID_INT_HANDLE in release
-> --
->
-> commit dc7ea0d446f4b8c4e4f29fa4595acabcca6b297f
-> Author: Vinicius Costa Gomes <vinicius.gomes@intel.com>
->
-> dmaengine: idxd: Do not release interrupt handles on terminate_all
->
-> This commit splits the interrupt handle teardown from the descriptor
-> flushing in idxd_wq_flush_descs(). This prevents the interrupt handle
-> from being incorrectly released during dmaengine terminate_all, which
-> was causing subsequent runs to time out.
->
->> diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
->> index 131138483b877..06299f40f5312 100644
->> --- a/drivers/dma/idxd/device.c
->> +++ b/drivers/dma/idxd/device.c
->> @@ -1349,6 +1349,16 @@ void idxd_wq_free_irq(struct idxd_wq *wq)
->>  }
->>  
->>  void idxd_wq_flush_descs(struct idxd_wq *wq)
->> +{
->> +	guard(mutex)(&wq->wq_lock);
->> +
->> +	if (wq->state != IDXD_WQ_ENABLED || wq->type != IDXD_WQT_KERNEL)
->> +		return;
->> +
->> +	idxd_flush_pending_descs(&wq->ie);
->> +}
->
-> [Severity: High]
-> Does this code introduce a sleep-in-atomic bug when called via the
-> dmaengine termination path?
->
-> The dmaengine API allows dmaengine_terminate_async() to be called from
-> atomic context (such as an interrupt handler or while holding a spinlock).
->
-> This routes to idxd_dma_terminate_all(), which then calls
-> idxd_wq_flush_descs().
->
-> Because idxd_wq_flush_descs() unconditionally acquires wq->wq_lock using
-> a sleepable mutex, terminating an asynchronous transfer from atomic
-> context could trigger a scheduling-while-atomic panic.
->
+--=-S/v5IeUbWUmJTsqYprYF
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ugh, bad one. Worried that my lockdep tests didn't catch this one. Will
-fix.
-
-> [Severity: High]
-> Can this flush implementation cause a use-after-free and IOMMU faults?
->
-> By calling idxd_flush_pending_descs() without first disabling or halting
-> the hardware workqueue, the software descriptors are completed, freed,
-> and client memory is unmapped while the hardware may still be actively
-> processing them.
->
-> Since the hardware continues to execute DMA operations into buffers that
-> have already been unmapped, can this result in memory corruption and
-> IOMMU faults?
->
->> +
->> +void idxd_wq_release_int_handle(struct idxd_wq *wq)
->>  {
->>  	struct idxd_irq_entry *ie = &wq->ie;
->>  	struct idxd_device *idxd = wq->idxd;
->> @@ -1358,7 +1368,6 @@ void idxd_wq_flush_descs(struct idxd_wq *wq)
->>  	if (wq->state != IDXD_WQ_ENABLED || wq->type != IDXD_WQT_KERNEL)
->>  		return;
->>  
->> -	idxd_flush_pending_descs(ie);
->>  	if (idxd->request_int_handles)
->>  		idxd_device_release_int_handle(idxd, ie->int_handle,
->> IDXD_IRQ_MSIX);
-
-Another pre-existing one. And another potential to be in another series.
-I think I might have caught a consequence of this bug when testing
-iaa-crypto. Let's see if the fix fits on v2.
-
->
+On Wed, 2026-10-14 at 22:20 +0000, sashiko-bot@kernel.org wrote:
 > [Severity: Medium]
-> Is it possible for ie->int_handle to be INVALID_INT_HANDLE here?
->
-> If a previous operation leaves the handle as INVALID_INT_HANDLE (-1) but
-> the workqueue remains in the IDXD_WQ_ENABLED state, this code will
-> unconditionally issue a release command to the hardware using -1 (0xffff).
->
-> Should this function include a check for ie->int_handle ==
-> INVALID_INT_HANDLE before calling idxd_device_release_int_handle(),
-> similar to how it is handled in idxd_wq_free_irq()?
->
->>  	idxd_device_clear_perm_entry(idxd, ie);
->
+> Will this newly distinguishable -EAGAIN error cause a guest #GP on hyperc=
+all
+> page WRMSR racing with a memslot update?
 
-Will fix.
+It always could. It was just -EFAULT before instead of -EAGAIN.
+
+It's just never mattered because the guest isn't going to be doing
+anything else that modifies memslots at the point in early boot where
+it's still setting the hypercall page. And userspace really ought to be
+using the _HVA shinfo which is immune anyway.
+
+But now I've redone the ordering of xen_lock vs. kvm->srcu I think it
+can just set the 'wait' flag. I'll check and do that in v3.
+
+> [Severity: High]
+> Does this expose a host denial of service to unprivileged userspace threa=
+ds?
+>=20
+> An unprivileged userspace process can create a KVM VM and set up an IRQ
+> routing entry for a Xen event channel using KVM_SET_GSI_ROUTING. The proc=
+ess
+> then forks, passing the VM file descriptor to the child process, which no=
+w
+> runs with a different mm (current->mm !=3D kvm->mm).
+
+There's a gate on both kvm_vm_ioctl() and kvm_vcpu_ioctl() which will
+return -EIO in that case, isn't there?
+
+You could pass an *eventfd* to another process and trigger it there,
+but that would only invoke kvm_xen_set_evtchn_fast() directly, and fall
+back to the workqueue (with !current->mm) if needed.
+
+I can't see how this one could happen.
+
+--=-S/v5IeUbWUmJTsqYprYF
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCE8Ew
+ggWvMIIEl6ADAgECAhANkOKMSmGXhF5eMl0rsRhvMA0GCSqGSIb3DQEBDAUAMGUxCzAJBgNVBAYT
+AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
+BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBHMjAeFw0yNDAzMTMwMDAwMDBaFw0zNDAz
+MTIyMzU5NTlaMGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
+AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTCCAiIw
+DQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOfSIeC0vv1xPQ+dgSxbIIrkaru6skAWJYaGFzmv
+q4Kq+2wU2jxhcWlJg/JeP5jEkq/LM3pn5aaLao79j+XRmS7J1ZpJKUODJVoM4s9MQJhTMvo4qS5Z
+S64g6QR7Obkz3I1Lr3aWeSBmDDEyzue+NKtuWZ1Cxy3RdXo/w5HgRc3l2AercOM3Gt1XonTzEtTb
+Z/Hwc0Sn9Gz8RmGRK6Ka4hVDl8q/2l110KaV233Kh5etP0csXS8MIMdVRfRu3sc5hp13DG7lCKzK
+72a2GEpI8Wpl26G6I1/LMzz/98T+FqjTqxsdquk7Cj7m2vKGLW1BorpQH7WFGPdJQXJe1hfbfiZA
+CcVdCtl4nAacFacmsiArZBfX7AQGL7isvHUwwYFEtcApyGW4p2Lt+t8nvU0CANA6BHOpOz1xOP8W
+mAESbUriIjyuTUf3fJ9oDNCurVqhASMJCDaWI3lYX/QAoiAzt6akqbbZxo2ujW7mGGqc0KxqE2cs
+h2T79v7pC8aUtHBfwNrTR19GnZVxE0eQ7ViIQhR6mpSaUQFA9sG+cmD2G8TnCgYsLa0q8De6F61a
+CBevQGHNzrbZ3JAMneveYg/Jy1XxQHDRcvrMfWKe0jjcWbdKYlaGVPm5V1ILwYz7Yv5ewo3NUrxI
+GJiywe9qPhuJSDZs7VehTuI0FxGIsgKzVjgbAgMBAAGjggFcMIIBWDASBgNVHRMBAf8ECDAGAQH/
+AgEAMB0GA1UdDgQWBBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAfBgNVHSMEGDAWgBTOw0q5mVXyuNtg
+v6l+vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEMG
+CCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURS
+b290RzIuY3J0MEUGA1UdHwQ+MDwwOqA4oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdp
+Q2VydEFzc3VyZWRJRFJvb3RHMi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUA
+A4IBAQA+b8Uw53sDspdZgukU+qzLyyHkcjlxGGhHlP+zrmDLKm1wEFvCRS2pili3Hy67i8N4N5NU
+vw5Rg6kv3lxb9S9Rktxk43k+tvm68pl7OxQE55ZjVY87P0lUPGwEqOOwLLyH02ZQcsfq5p5LrOH9
+0JvmvZ1yy73HS+VpDAqOlytE0NSvTIRqFFkKQGQwfjvtql9YflujuNNvJztjBaHKYZsnNSg+J38o
+jYq4TP3pSg3UdVH0PncVjPQyqxC9xef5Xae92Kbkzol3x7Nel3A1bwAkalrDMspvTHvey6LfiBks
+FIqviTnoy7fgjaRAJgHS+RXx/cmuRd3rUAclSVVrYu8RMIIHAzCCBOugAwIBAgIQAzUotrsybJHx
+HTjKOIVdIDANBgkqhkiG9w0BAQsFADBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQs
+IEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
+MjAyNCBDQTEwHhcNMjYwNzE4MDAwMDAwWhcNMjgwMTA0MjM1OTU5WjAeMRwwGgYDVQQDDBNkd213
+MkBpbmZyYWRlYWQub3JnMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2pYux73kdbYX
+sWF8f1u6DJP91qcqaZetsyfPkZk0B+MmXmAEv0kVes5n15V2mbDThOnpoPFly0UugQO9JYqLfrtD
+tKD5yL58fgrDB9Dw+LQikgrHafl6YSCds5AvUu/8hw2J6noKrcOLJpKlKn9Fl/4IB9Q3JIdLx5aa
+EtTqMalIPqHFOlgrJ7s+aua8xbB8YQ9ahqYBXWRJNv3P/2b1DYtdrz1oqZPE3CcB8Pc6Gf2a1Tcm
+6TAgtEx7Cf1BFcrsrMz7TWHmGQITieNb2r9UYWSc2Gp+GtYFNJCgT0JJXKUBIauPMKBLteYrL8Fo
+ff/uY44dC/mDWjdCP/5x0qelPQjlBvWdHL5zvBTOj06rJ0m3HNI/hnIcDh0Qu2j9reb9rLVcdym6
+bWmBM4uDEB8Zv9Ph0KTBFSy1IosyakuD1j1Os30EzjGfbi0EUXIvnOcYbTBAbM5UAzrxEHMhBvoX
+Pvnx+OyvjJmc9tWxTX6AcSz+m40esbT17URBeZS18afgieiikm5TynlUYP1LciR3hSgGVzvGXnKO
+02VDFR5itGWdRKZ2W5wIShNfWfhSa0D0K5UdIDt5Qc7sjzwK1Yb1sY5Tu0uA5mhIS82q1ov83uxB
+sFkriNnhGv/M1NCDVLBiOMsHu73qUM+yKmgKLwF9Hfn9WI25glbAMI4S5r3hYzcCAwEAAaOCAfcw
+ggHzMB8GA1UdIwQYMBaAFPebok7Tl8X0NA9DDoGFzpGTMq/5MB0GA1UdDgQWBBRcYhqbcGzn1jrT
+JOZaB8O7qllDpzAwBgNVHREEKTAngRNkd213MkBpbmZyYWRlYWQub3JngRBkYXZpZEB3b29kaG91
+LnNlMBQGA1UdIAQNMAswCQYHZ4EMAQUBAjAOBgNVHQ8BAf8EBAMCBeAwHQYDVR0lBBYwFAYIKwYB
+BQUHAwIGCCsGAQUFBwMEMIGpBgNVHR8EgaEwgZ4wTaBLoEmGR2h0dHA6Ly9jcmwzLmRpZ2ljZXJ0
+LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsME2gS6BJ
+hkdodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZT
+SEEzODQyMDI0Q0ExLmNybDCBjQYIKwYBBQUHAQEEgYAwfjAkBggrBgEFBQcwAYYYaHR0cDovL29j
+c3AuZGlnaWNlcnQuY29tMFYGCCsGAQUFBzAChkpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20v
+RGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZTSEEzODQyMDI0Q0ExLmNydDANBgkqhkiG9w0B
+AQsFAAOCAgEAocabrh1cPd5s3vY5rnlBVQSTc7zs2ZWs67dAIltR+05WELrYClVzzUhMs/LOJPlr
+EUo45UDDomXq38DxFepaPd9+iNLjXfn33EX/IG44j04lU/oF/Rg9VeQILkYLbCZ/x9wOjNHZc4SN
+ydY7Dhvf/sT5aBz88u7D5+azZJ7Qf1U57wYseCH1Mt0nDrtr5y19IJ8D9xJJ33RFL6vfpHZBBAQ8
++3RqkKNxLoV2aFvQhxdhjNLDqTv3LjUIdicwPraN7JkxEu7CV2Lka7eRqJgkWL7SK0YmBjGpRafs
++icP/ON5RCCKTTb6VlX8eTG2sJJfsFhvJNCCt6xexbWzWtIrfP7NvPBvwBB737AyEGBZkS5aNizT
+McURJGTv9UKvBh1LF/+tNhYtLvPCN7oecGzhCHht9jcwSkygTo3Y6YlK3QgOu+ncmiBbfeuwlLZ1
+LxbYvG6hgNqXv7u6YyADbYajAQJXJ2OQen39pm3Q/AQSyLYG+B8lDglWsM8tYXPlEdrYJcksGK6F
+nqIX6Bumn43rBooLJdiZp4WmfWdL2pxe+LxRDjprmqu1WprixDxULSTOKJZoqTlugs6y3Bc+if+s
+gHnBBtz9WQ6MtPHkh7zONDAFIKcBmv8OqPQCx0F3Wv3OEybwMpXx0OsKgK8wLldaX1pXcMuyDgTL
+Sqs0AV0OHUgwggcDMIIE66ADAgECAhADNSi2uzJskfEdOMo4hV0gMA0GCSqGSIb3DQEBCwUAMGIx
+CzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQg
+QXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTAeFw0yNjA3MTgwMDAwMDBa
+Fw0yODAxMDQyMzU5NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqG
+SIb3DQEBAQUAA4ICDwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZe
+YAS/SRV6zmfXlXaZsNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2z
+kC9S7/yHDYnqegqtw4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qG
+pgFdZEk2/c//ZvUNi12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41va
+v1RhZJzYan4a1gU0kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0c
+vnO8FM6PTqsnSbcc0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PW
+PU6zfQTOMZ9uLQRRci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXt
+REF5lLXxp+CJ6KKSblPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQr
+lR0gO3lBzuyPPArVhvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7Iq
+aAovAX0d+f1YjbmCVsAwjhLmveFjNwIDAQABo4IB9zCCAfMwHwYDVR0jBBgwFoAU95uiTtOXxfQ0
+D0MOgYXOkZMyr/kwHQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3
+bXcyQGluZnJhZGVhZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEC
+MA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgakGA1UdHwSB
+oTCBnjBNoEugSYZHaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcyU01J
+TUVSU0E0MDk2U0hBMzg0MjAyNENBMS5jcmwwTaBLoEmGR2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNv
+bS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsMIGNBggrBgEF
+BQcBAQSBgDB+MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wVgYIKwYBBQUH
+MAKGSmh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNB
+NDA5NlNIQTM4NDIwMjRDQTEuY3J0MA0GCSqGSIb3DQEBCwUAA4ICAQChxpuuHVw93mze9jmueUFV
+BJNzvOzZlazrt0AiW1H7TlYQutgKVXPNSEyz8s4k+WsRSjjlQMOiZerfwPEV6lo9336I0uNd+ffc
+Rf8gbjiPTiVT+gX9GD1V5AguRgtsJn/H3A6M0dlzhI3J1jsOG9/+xPloHPzy7sPn5rNkntB/VTnv
+Bix4IfUy3ScOu2vnLX0gnwP3EknfdEUvq9+kdkEEBDz7dGqQo3EuhXZoW9CHF2GM0sOpO/cuNQh2
+JzA+to3smTES7sJXYuRrt5GomCRYvtIrRiYGMalFp+z6Jw/843lEIIpNNvpWVfx5Mbawkl+wWG8k
+0IK3rF7FtbNa0it8/s288G/AEHvfsDIQYFmRLlo2LNMxxREkZO/1Qq8GHUsX/602Fi0u88I3uh5w
+bOEIeG32NzBKTKBOjdjpiUrdCA676dyaIFt967CUtnUvFti8bqGA2pe/u7pjIANthqMBAlcnY5B6
+ff2mbdD8BBLItgb4HyUOCVawzy1hc+UR2tglySwYroWeohfoG6afjesGigsl2JmnhaZ9Z0vanF74
+vFEOOmuaq7VamuLEPFQtJM4olmipOW6CzrLcFz6J/6yAecEG3P1ZDoy08eSHvM40MAUgpwGa/w6o
+9ALHQXda/c4TJvAylfHQ6wqArzAuV1pfWldwy7IOBMtKqzQBXQ4dSDGCBCAwggQcAgEBMHYwYjEL
+MAkGA1UEBhMCVVMxFzAVBgNVBAoTDkRpZ2lDZXJ0LCBJbmMuMTowOAYDVQQDEzFEaWdpQ2VydCBB
+c3N1cmVkIEcyIFNNSU1FIFJTQTQwOTYgU0hBMzg0IDIwMjQgQ0ExAhADNSi2uzJskfEdOMo4hV0g
+MA0GCWCGSAFlAwQCAQUAoIIBezAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
+BTEPFw0yNjEwMTQyMjQ0NTdaMC8GCSqGSIb3DQEJBDEiBCAC+CPY+2k53PifLn8BatXzo9qwzxpp
+V1XbVU5ry1cX+zCBhQYJKwYBBAGCNxAEMXgwdjBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGln
+aUNlcnQsIEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBT
+SEEzODQgMjAyNCBDQTECEAM1KLa7MmyR8R04yjiFXSAwgYcGCyqGSIb3DQEJEAILMXigdjBiMQsw
+CQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFz
+c3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQgMjAyNCBDQTECEAM1KLa7MmyR8R04yjiFXSAw
+DQYJKoZIhvcNAQEBBQAEggIAhqJFWFeCK2UPF8aLk0Dw/hlOgtH1N7Z9+CVyq9U6Aw8hicaGWNZY
+7mRHCGitLtUleCH4+YerlLkXplZwIRKwDXBqfvaGl6kRXeeBftcxrGj5ewzDxunxCDr6T2xGVCkS
++7mDLmB0wbCCYvlp91db61EyJn/j/WF1KXxYln1izriwOlLj2HXgqZpamflKssUXa4ZkUf0lCTr7
+w583NyHTUqODVj2DqEJclVpG9yz4JC9gQc40h02il3+RK+PLyGa979H0zLbcIiy+4q1YFHFGIZqB
+smB9+ZsJm4vi4TUcwuW8fVPapx79AY7jXE82PvEWo2YoOi6t0n5DOht6ljshYKtiqPixV4KvSDUF
+xtgLRWuOxbcvQEZGF8p8qujOmyRiOR2VnIvRWKxIoQv3b72zHrZ7yOLaue2cJrPdXTxutmN6/mu3
+AZ7mIjkxQI9yHyqmgOELVPmWMf+6lZ933nQV4Wbp0Hw7r4dXitBQrancIuvUnehirvl2yKVegkqj
+u0ps5KUPyiIqP7sxN9oYSoBUw5nlidXDknDaai316cyxfM2W/y9JoaTcT1zTzfrZRJfq644U0LFu
+1jzcM1fazG481Q7XRgkVuNZl6NBH8GURNoKVrnXqHRB2/rOj9iOJZYAkCwwLKX4frpKcFIcNcwba
+FKW1F4uVYlCw9ZkXd+cXQuwAAAAAAAA=
 
 
-Cheers,
--- 
-Vinicius
+--=-S/v5IeUbWUmJTsqYprYF--
