@@ -1,157 +1,237 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11021121.outbound.protection.outlook.com [52.101.70.121])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD41A502795
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 13:03:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791983032; cv=none; b=WlySG0hQ0O1BnCo0Q4U7GvrM/spa8lU1iOK5FuzsJYxpCT51v0a3aOy/pixjwwAF6547fYfCGAubGqZNzGIbGj2JADsp0h5RjzsjxV55/U4tQtccPHbjMfEjjSByiZOFiUpwoox1+L2/cpxj7hH8lKFbVWnBqM3FmAeMNjTTLas=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791983032; c=relaxed/simple;
-	bh=stUaWFjUWKA2F9KXHsSkTF8gPmVnoMOi+831xrj2Fts=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NEu6EnUs1Blz1AdqPprwH/XVj3PCdeJS0ab189j0DrXUf1CYZVsuTe5wVZXTO7dHuPG/vwOrCOJB2tyoOyM32vphYkzgWiBpHAKyJUFEE2q3PIboxER73z/4dgFw38xDx9vXBfsFnUvXRGBzVGQD1c5hVS9rsdCfvqm3SLFKWb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TotblA+E; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF74501F54
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 13:15:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.121
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1791983726; cv=fail; b=kzMzdthDDOc5jvzQTdJhYpdDilg1KXISxUo2nkoFNTi6mQrkeivsUlkTXgPkX0j5lTi1GrgGOstyFb3nbfR4lifSma/9F/Xo+Bk65PnX8X8mRRbIxrywnqqad+ouLpf8Mu2dOW23Px+/sifawMA5n/0ZJFe6DmzJDSa4Ueuq9ok=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1791983726; c=relaxed/simple;
+	bh=IgFJeU0fRsYobv2PASSNNIH2rQ/iK05bkakxvzwP8Lw=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=hAZMtbXkTqWQILFUV4DVqzehVl6vsGhAIKmGi7d203U2UdTXCq9at9fTTAsyAlmQ2Wl39L5ZY5T220AO1+ho+5dmLL19id0Mu6pNOBGkidoH7iSLWjzeqoYfFRqWPntPu5Dk4s2NikUDw/zUq/UXrbl7k+vIGo/8VWlOYxJMEEM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=virtuozzo.com; spf=pass smtp.mailfrom=virtuozzo.com; dkim=pass (2048-bit key) header.d=virtuozzo.com header.i=@virtuozzo.com header.b=KkYf5o35; arc=fail smtp.client-ip=52.101.70.121
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=virtuozzo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=virtuozzo.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TotblA+E"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6af9a90e4bbso4352150a12.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 06:03:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791983026; x=1792587826; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=hySBp28FH7LStZX4dSOECc4b5G1QoNxWR9lw3M8ZY3c=;
-        b=TotblA+ELqRYAZ/4AFaTQrNq9rbeW7DWxUZZENAUbrivmSI8lpzEHhHMAC6LqGrf8o
-         oFrFmebAC7KSjzRXTLDc8iZ78YR+Mt94g6KM7d1PVeNh7avI9SFVpIzU+uiy9yLYx/BR
-         Eg1Yyjnz2CVwXcwzf5ZOrqWjzuQw7C0pUv1vP8hfCFuzDGy4R+ijBl0rLGyq6oWKJciM
-         CRPzRHHTZ0jCVuMyqNsSVg6URVvSjICn8adtQVrBw4frGaQ8uZlj6lO4O1eZEA32TSXr
-         bHJl415NYTJpzEx11iyYsB3NGnJ16BvGZgfrDiCGXyc+/FF19fOTZ/uWm6OE/wVtQwA0
-         q+vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791983026; x=1792587826;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=hySBp28FH7LStZX4dSOECc4b5G1QoNxWR9lw3M8ZY3c=;
-        b=hOzBfzTd754ZRS6CLVzh3Z5t8LD9bWeJqQTJ7tTKMO+au7Gi8ZaFbJupWTuluoZwW8
-         lP7m1CM9Nsy0t3XhAONfVyCCFDvqydSlxrNRIqC4kA6m8vMAZSLzTQ7ANxWxWecnEj6V
-         P8TInOB9dDIUMPtnXYnx6bhciUtIZt0o2r0MizILGAmOI1z5r7R6DFZ+k8q+dDCD6DFl
-         0rEKkVZpd0vV9Et2DOmRbnR+jYsUqDnAv6GiuShvj6ZdGGdiN5CsIYhJK6NEYzweeYSA
-         bpBNmv8V7FWOZhRgOwPBPX1bFfQK0liBVYGgX6UjmMamb+87XW5AEHa9mN8MNfwmSoS1
-         I0sA==
-X-Gm-Message-State: AFq9FYKfPf5Kf5oFyrz0yrXijz11hei4ICR6AIOa9zzslitRxEIitBRc
-	4huxl0AWwtlYz2TT7yG6BdEg8v4xRKMB7SGctiofbRS+vy8rJl8jGBB4CvsiTg==
-X-Gm-Gg: AYBFou0u9Y3V1hqv7m+/zDI1sFqsqK2/xF1jIadL2EIzNzK+5Njz8S3q0nK1uTbd8as
-	KrVeske04gqw8rdI8cshIEi7iwoOBJDanPlp7O7OjnFtUjn8Z+oP0uvB4e2labtMupySdh8WDLF
-	IzmAo0+Pji0YQbDiUz5rH/QY1Pn1rkQhjfxo4YIz1QpndfHx2rLrVQOaKQ1XwTNBJ2/9rugR/dH
-	WpKOKPtzLDMsswRtSZLcTqHU9dqoqo3awQH++lnlx0vjNRI0yu87hqrL2e6bfKvdQ717NQkHVgD
-	aiMrXto9JoGdeskU+7ChjmvDRcv1EUee0bfoF06DzEZ0q24ZGAjw+EhH1hgCBPOjJcuhwZFlTWM
-	7jVNRdYacXzTrUnQfSJR55JBWn/ySLM0C4Tk2XNH9h0u3wg+zTp/Twslm/LCDIpEjx4bvUEMrtZ
-	pLIJCMiQnecwVV0gTGcPjfu6/3D9Ci4Bw+t0BGC5hwX5YbRfJ2DCanj71EDhaoDAmIBeOoA1+u1
-	kf7gjQjhsQDP7PsBsJl7Wgu9/F2VzIbz25BwFVFD04OwWfDLBKPijachsfsX1dfAaKp17JaZPI+
-	kYfNeGCeG9cCMYPmdnrk/lOkr+SCd5LxsjH4TgDdec0LRE0b
-X-Received: by 2002:a17:907:3e1e:b0:c2e:411c:c617 with SMTP id a640c23a62f3a-c31a9a0528amr1439559166b.5.1791983025610;
-        Wed, 14 Oct 2026 06:03:45 -0700 (PDT)
-Received: from ?IPV6:2a01:4b00:bd21:4f00:7cc6:d3ca:494:116c? ([2a01:4b00:bd21:4f00:7cc6:d3ca:494:116c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48de0bc6ddcsm11570622f8f.52.2026.10.14.06.03.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Oct 2026 06:03:44 -0700 (PDT)
-Message-ID: <8b834c2b-d8a1-4481-85e3-cbea9784f53e@gmail.com>
-Date: Wed, 14 Oct 2026 14:03:43 +0100
+	dkim=pass (2048-bit key) header.d=virtuozzo.com header.i=@virtuozzo.com header.b="KkYf5o35"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=hQi9DYqaKicKSx8l/yhbvO/Ugy8aI19GWD0KQ5oXZ9tB7d+7SVW6affLt7/iSqfFPjPpAX9ZPmLo6nvHa+NhgOPP3/0GXQ3ddvkG58LlKZ6QO5IM8fKQCWt2B2BMLiyna+3L5aWieJAdHRLyGQ0/px1ZFIiwSRk/n/q9iBKqdhi13hzlQAvSrQXQ9wr+Itc08M0xJoX/8wsnrNsYo3NBPbzgcMZJ2xdJeooS2YvRwVYpJ7Bgflu77TXjlugwVktCBIohmyABZmplNnqGmwAeb4/5K8RudpRRhRbn3vcBWoO+kDZOx4CDBjmz9RH8gN9+THON9y/oMTNCXEwrNyf8FQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3MwilO3ptPoghCNspXfhkYCu4LizynKKr/YLWXGEepg=;
+ b=t6wtFNqJE5tUA5QVAFiXdNaPny7dVLGU9UwrFRcvZMLF3bIzR21voYyOSa0yHe0eEdqyff7IJs5/tP/fVcTpVLpxpJKCKNerLIlMXIwXG/8v2SO/IbaXdJVTAREdn+hIrhYBQ/mEk8ZBt3xVUTtpQWd4EGwlRdefNyo2kRO4+k7YmDTvwFnHMHNUsTHYQxD6waH5hZVcGzEIwEprajpw9Ke/PrgkpuI5JSiy3SiS25sU0UULDb5ptgjRbNI4HRV/sMiB+z3VMDubPLd3ufcPX1qPb3q1a8am8iDwapjnJD7IBmu0hiIhxQuXmB13U/4Kmy7IyFpR0NHnV0IT9ehIMw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3MwilO3ptPoghCNspXfhkYCu4LizynKKr/YLWXGEepg=;
+ b=KkYf5o354TQQdj81hDqFTOMgkTmW1jfJyPOSVoTdP5AC9cWARQkODMsWRNTf9vvp2byH6bkv6YVsC2q3Vi/l/gL0Nq7GPnKUcnu4SFImAtsZtFxPNoj1yp6cgeQwvEwGXKN0NpMcYIgm3maXNrkWk5Pa4o7kaIS8fucNk7dzbT5ZiG8X09N14a5oWCvok21nvAFJaZWgqA38uPnyhZSOqyx78UOQsS4OpmGSnaQY0PvDX4sGnN5YamVYJtJDrLVw8H6Z5PjC1CdwwsSVGAr6Dt10qy2u35OLbam5zfX6nMKUdtCf2AY97dS2uqg1HwBOol1+bQSdpyhhBy+rjW3Q6A==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from PA6PR08MB10708.eurprd08.prod.outlook.com
+ (2603:10a6:102:3c7::20) by ZR6PR08MB999901.eurprd08.prod.outlook.com
+ (2603:10a6:910:d2::23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.11; Wed, 14 Oct
+ 2026 13:15:20 +0000
+Received: from PA6PR08MB10708.eurprd08.prod.outlook.com
+ ([fe80::1999:c6db:dc55:494a]) by PA6PR08MB10708.eurprd08.prod.outlook.com
+ ([fe80::1999:c6db:dc55:494a%5]) with mapi id 15.21.0522.011; Wed, 14 Oct 2026
+ 13:15:19 +0000
+Message-ID: <a63c77db-4b1c-440e-b9d2-cc4d7507e096@virtuozzo.com>
+Date: Wed, 14 Oct 2026 15:15:18 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mm/huge_memory: recheck a special PMD under the lock in
+ copy_huge_pmd()
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org, dri-devel@lists.freedesktop.org
+References: <20261014-b4-prep-vstor-149847-copy_huge_pmd-recheck-special-pmd-v1-1-d225c60bc316@virtuozzo.com>
+ <sashiko-outbox-171250@kernel.org>
+Content-Language: en-US, ru, sr
+From: Konstantin Khorenko <khorenko@virtuozzo.com>
+In-Reply-To: <sashiko-outbox-171250@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR2P281CA0043.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:92::16) To PA6PR08MB10708.eurprd08.prod.outlook.com
+ (2603:10a6:102:3c7::20)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 04/13] block: introduce dma map backed bio type
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, media-ci@linuxtv.org
-References: <cover.1791975048.git.asml.silence@gmail.com>
- <39b964cf7510f42755188563da63d3d5acaf2aa9.1791975048.git.asml.silence@gmail.com>
- <sashiko-outbox-171194@kernel.org>
-Content-Language: en-US
-From: Pavel Begunkov <asml.silence@gmail.com>
-In-Reply-To: <sashiko-outbox-171194@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PA6PR08MB10708:EE_|ZR6PR08MB999901:EE_
+X-MS-Office365-Filtering-Correlation-Id: a7930007-fbf2-4b65-2a60-08df29f53249
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|56012099006|4143699003|261009223027099003|260925021911599003|10067099003|260925022911599003|18002099003|22082099003|260925021311599003;
+X-Microsoft-Antispam-Message-Info:
+	BIz6Yiv2F2qHgFbjZZMFLW6K+DxbXsRDmb1+M1w8tMkBd50ZX9IH21ecaEMXquNGuyIwjbWUmQuMxyUXiIIIlWv6E2WN//caCnu7VpAxzzBBAT/ga3nk5z4x47GhWqbxlKBbWaLWiAF+2hLwNlHKbf0ISXRexFlxvaQPas4sOE1CXP8naPj1yUyWdF3mHJwW9CZruv9HYSESsWyM+RmvJPvNDuVs5cchurbgPxomY0ClfV6a/QWGUjCoz8D+OiOZzdAX03Ii0z+NqSeN2CvY6AzSnlQsIC6fikVf4SQObSJGwcGxIxbjE76LR/ohw+LRpcE2Llu6ARrkwxx1CfeiM+UiI2TV1l4Nsc22TsUXqGY6+aDw8Jgl54QWn5hOJr+DznTd5dax1cauYSxXVMwPRFrkE9nx4QZoCciNjW1+eLA9Qzzettbccr51O2whQwcj/zvBP9+VqfHWtqZMs3mzpIDBHGAZ+q9IJIBUMOwTJSUEdkNswH5xqqz1xRvZQ00/cYQLSX3zqsN1TfSgHAlml6WIOHANRjp4q3R1B93LCjaMjpzd4wUrXmOOi85UROWT5nBzbg9DFXJ5/hx/+F26FdW1MMF4IyL+9feSDGz7xws=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA6PR08MB10708.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(56012099006)(4143699003)(261009223027099003)(260925021911599003)(10067099003)(260925022911599003)(18002099003)(22082099003)(260925021311599003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?LzdGYlpxNWJMbGtOeDhTb3RqN3liOTVtVFJ2VkNqbDBWeURaeE40UjlIbHVu?=
+ =?utf-8?B?cEljMk42bzZmQW5ENkh2TDgvREp2a1p2VXNjN1F0SkFwYi9QVytjcGhaSW9U?=
+ =?utf-8?B?SnJEdGRYc01MMDNWRWpxM0RMNmFtMU01VXZzU2wwUFB4eWl5U3dIbldnNmZl?=
+ =?utf-8?B?akhrUG9sNUJac1crUTFtdklyTllzTGZld0h4eEdoYVl6YTgzWDJtS0lnWDNm?=
+ =?utf-8?B?cVdlOTJ4WllRZGRpalNGUFJNazJtek9pcGhWZkM4cCthZWVPTDRvckhGaWpi?=
+ =?utf-8?B?a0Z5WnB0bTJ2TkppM0lMNlE3L2U1djM2QzZjb2tsbnlIYjM0WUpXNHZmRzl5?=
+ =?utf-8?B?RFF0VzgvQ0UwandsQVVselVLOWtON0JKWDhJSEd1T091MEtsaWZiL3pPTVlr?=
+ =?utf-8?B?UG5XRGNqUWZGRVVZamVoRDZ4MlhkRU1iWlVMSW50NTJGb3NyZGFWMk1jRU0v?=
+ =?utf-8?B?c3hpRHU1TkF2d2ZQRDV0d0xqVlhNYW93L1ZRdCszUy96YU5HMWF4Q2pmdWZt?=
+ =?utf-8?B?ajZ1MHZDNkUwekMwOVhaN0h6M3ZaQUVubmJsYXRZeWErak43RWJzTS8wcXVN?=
+ =?utf-8?B?cGlMYjJiQXl2YWhDM0J3eUUvakU0VnhSeVVnSHJHa0JBMFJOZ0xETFNmTXkw?=
+ =?utf-8?B?L0dzZTkxVitWNXU3b2lkdi9XeHlFZEJFZHdLQTU3UUdSNHNUTzZuK2pRR2NV?=
+ =?utf-8?B?YmRxUXFMaG5USS9vaUJFZGRJTUhNL1cvb0tIM3JUREQyd2hDVGpwTnhMRk9l?=
+ =?utf-8?B?UTRQcUFzRXNsUGNiZlFxcHhkeEd2OGRPMGY3c1hibkxyNGY3WGdwd3Y0UGFj?=
+ =?utf-8?B?cXd1cUtFbDVOTGdwc09OMzFqL0pGeHl6enFwWnlaa2VnaGlsQi8zSUwrcXk3?=
+ =?utf-8?B?d2kvbkY2Um55eG9NQi9EYzV5cGJhWnVCdXhEM1ZDTUpRRHI2S05iYzU5WkFp?=
+ =?utf-8?B?bWNxY3lzbUJUS3NBemo5YXRJZ1lIV2xlZnhyTlcwZW9oKy9ScTV6K090WTlG?=
+ =?utf-8?B?cG5CdU5HSjhYTUdhYjY4WVVsb3A3V0QvZUtmTkg0dGVILzVFZHJaREFYUE5Z?=
+ =?utf-8?B?M2RoUFV4TFE5Si9EOE9xTWMyMHo0ZUxLbWJ2TXNCRVlDd3dGTXpNQXNSazVQ?=
+ =?utf-8?B?TlNyRVp1eDBlckUyZUo0YzBHODRDVHVESDYvS01JTy8rTWNLQysxeUFYRFJz?=
+ =?utf-8?B?UUthZ2dVUXFhMG9xdFViRnBFaFJZT0dCcExYSXQ3SjBTdjVqUzYvUWREZFli?=
+ =?utf-8?B?TmRRdENiUVZXRUY4OGZrSlM1ZHpiWnp4T093d2Q5RUZJdXhiYmVMUWlnOGlq?=
+ =?utf-8?B?STA3Tzk0WDJpOXIycUxGODgxUnc2VFU5bHN1ak9mcmZVZ2pXZGR1cTY2Q2V0?=
+ =?utf-8?B?WkxpSGFHRUQzaVB0M1FMVmxkTHZoak1GYnBNdTNhbFd5dS9uY25LUGZZNXNR?=
+ =?utf-8?B?N3hzeUpOZXdDaWJ5REhhakFOS0dZZHN0azJXVWVCK21EZ0FSSitJajlvVm5W?=
+ =?utf-8?B?c1pLMDdVR3h3amdzZ05TMDVER1pGYk5zZmhBTWMwMEhrcU1aTmx3cE5RZ2Vp?=
+ =?utf-8?B?ZGVVOWdQcW9EYWpPc0J4eVRYVC9yTXV2a0NYSzVFMmpFYXltRG5EWE9yRm5W?=
+ =?utf-8?B?aGI5UHQ2Z1RJWi9EUk1TUDVoRytjOVY0OG5MSC91SmhCK2lqeDgxYzZ0emNI?=
+ =?utf-8?B?SEdCaS9IWllvQTBYUFZNTkNsTjkzZGMvNVlrc1I0WXRIOUtkWW5HRUxJRFA2?=
+ =?utf-8?B?a0xtZGV0aXRLUXVOSk1xeFJpcEtSdWlpN2VDeFpOenZnOVp4RjBYbUtlUmpo?=
+ =?utf-8?B?a09mZ1lBamtOQUd1UXY4TDVWZDhrTGZER2o2Ky9TZEhyUXRQWTM0L0c3OTM2?=
+ =?utf-8?B?T1pjNURVQ0lNUUx6bDlMNGpyMDVWQmRudXdMRXZnaXMremRjc2NHSUYxOUtx?=
+ =?utf-8?B?Rkx4OE9OZWpLN3A5S2NaanlIOWFXMEhKQ3RINXgwdnl2OTdmUlV2em56OXc2?=
+ =?utf-8?B?Nzl0b0dMbld3QXV5ZHVMbGovZWNQdzJqbEZRZGJRZnlXSlRGbks1aUhoV2Mx?=
+ =?utf-8?B?NWFoQzE2Mlh3dDRmRCtITTZyUFAxSFRKeHVRS0Y4STlvYUVjcmpPZ3h5UTEx?=
+ =?utf-8?B?akJRRnFGcG93eFV0SzI3RzVWSStqbTFwNjhaY3BxQ2wvbTNvSG5vTEJrejNI?=
+ =?utf-8?B?NXA4NmF3Y1NVNjY2a3VjS3dlSldiVEVnQUY0dHVsZURLN2VOTkU1bFcySDd3?=
+ =?utf-8?B?ZmdUcFh1NHpXeWd4OXhrM2oxblNhUi9rNnZzaHp6ZmREZmlHNnNhbEFaQ3RX?=
+ =?utf-8?B?cWY1UHo0dzQ3VUtjektIcU5XYnNUbHI3U2ZrVnJFM1ZTN2x1TkxQQT09?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a7930007-fbf2-4b65-2a60-08df29f53249
+X-MS-Exchange-CrossTenant-AuthSource: PA6PR08MB10708.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 13:15:19.8622
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ruxztXe2ApOQTOabwuyKaYOcJuB0hNT9faiDQJR2JMWebAym9cbmeTKHpYP9upTUJfAEzI/x2F6VUKDIg1YUnQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR6PR08MB999901
 
-On 10/14/26 12:21, sashiko-bot@kernel.org wrote:
+On 10/14/26 14:15, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] block: type confusion in blk_rq_cur_bytes() due to bio_has_data() including REQ_DMABUF
+> - [High] mm: NULL pointer dereference in zap_huge_pmd() for special PMDs on PowerPC
 > --
 > 
-> commit 338a7d60f029eb7fdd6fca422f1d54a04222c016
-> Author: Pavel Begunkov <asml.silence@gmail.com>
+> commit 5100f57130de5473973d1370273238b4778fae24
+> Author: Konstantin Khorenko <khorenko@virtuozzo.com>
 > 
-> block: introduce dma map backed bio type
+> mm/huge_memory: recheck a special PMD under the lock in copy_huge_pmd()
 > 
-> This patch introduces a dma map backed bio type to support pre-mapped
-> buffers without requiring a generic bio_vec. It repurposes the bi_io_vec
-> space in struct bio to store a dma_buf_io_map when the REQ_DMABUF flag
-> is set. It also adds specific splitting logic based on the minimum
-> segment size provided by the map.
+> copy_huge_pmd() reads the source PMD without the page table lock and,
+> for a special PMD, installs that value in the child without reading it
+> again under the lock. This commit reads the PMD again under the lock to
+> ensure it wasn't cleared concurrently by unmap_mapping_range().
 > 
-> [ ... ]
-> 
->> diff --git a/include/linux/blk_types.h b/include/linux/blk_types.h
->> index 98e21b4cbf328..0cc09b975d8ff 100644
->> --- a/include/linux/blk_types.h
->> +++ b/include/linux/blk_types.h
->> @@ -233,7 +233,12 @@ struct bio {
->>   	atomic_t		__bi_remaining;
->>   
->>   	/* The actual vec list, preserved by bio_reset() */
->> -	struct bio_vec		*bi_io_vec;
->> +	union {
->> +		struct bio_vec		*bi_io_vec;
->> +		/* Driver specific dma map, valid IFF REQ_DMABUF is set */
->> +		struct dma_buf_io_map	*bi_dmabuf_map;
->> +	};
->> +
-> 
+>> diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+>> index 1e5d68acf62a5..fcea98f0d8865 100644
+>> --- a/mm/huge_memory.c
+>> +++ b/mm/huge_memory.c
+>> @@ -1965,13 +1965,22 @@ int copy_huge_pmd(struct mm_struct *dst_mm, struct mm_struct *src_mm,
+>>  		src_ptl = pmd_lockptr(src_mm, src_pmd);
+>>  		spin_lock_nested(src_ptl, SINGLE_DEPTH_NESTING);
+>>  		/*
+>> -		 * No need to recheck the pmd, it can't change with write
+>> -		 * mmap lock held here.
+>> -		 *
+>> -		 * Meanwhile, making sure it's not a CoW VMA with writable
+>> -		 * mapping, otherwise it means either the anon page wrongly
+>> -		 * applied special bit, or we made the PRIVATE mapping be
+>> -		 * able to wrongly write to the backend MMIO.
+>> +		 * The mmap and VMA write locks of the source keep faults
+>> +		 * out, but unmap_mapping_range() does not take the mmap
+>> +		 * lock and may have cleared the pmd since the lockless
+>> +		 * read. Let copy_pmd_range() skip it then.
+>> +		 */
+>> +		pmd = pmdp_get(src_pmd);
+>> +		if (unlikely(!pmd_present(pmd) || !pmd_special(pmd))) {
+>> +			spin_unlock(src_ptl);
+>> +			spin_unlock(dst_ptl);
+>> +			return -EAGAIN;
+>> +		}
+>> +		/*
+>> +		 * Make sure it's not a CoW VMA with writable mapping,
+>> +		 * otherwise it means either the anon page wrongly applied
+>> +		 * special bit, or we made the PRIVATE mapping be able to
+>> +		 * wrongly write to the backend MMIO.
+>>  		 */
+>>  		VM_WARN_ON_ONCE(vma_is_cow_mapping(src_vma) && pmd_write(pmd));
+>>  		goto set_pmd;
 > [Severity: High]
-> Does this union introduce type confusion when existing block layer helpers
-> check bio_has_data()?
+> Does this code cause a NULL pointer dereference on PowerPC when a special
+> PMD is unmapped by the child?
 > 
-> Because REQ_DMABUF is a flag rather than an operation type, bio_has_data() in
-> include/linux/bio.h will still return true for read/write requests carrying
-> this flag.
+> Because the jump to set_pmd bypasses pgtable allocation and deposition
+> for the child process's new special PMD, no pgtable is deposited.
+> Later, when the child unmaps the VMA or exits, zap_pmd_range() calls
+> zap_huge_pmd().
 > 
-> When a driver partially completes a REQ_DMABUF request, blk_update_request()
-> calls blk_rq_cur_bytes() in include/linux/blk-mq.h to verify the size of the
-> remaining segment:
-
-IIUC, blk-mq.c doesn't do partial updates with blk_update_request(), and
-so that recalc shouldn't be reachable for nvme. Would be good to update,
-but should be reasonable to do it a bit later.
-
+> On architectures like PowerPC (hash mode) where
+> arch_needs_pgtable_deposit() is true, this leads to:
 > 
-> include/linux/blk-mq.h:blk_rq_cur_bytes() {
->      ...
->      if (!bio_has_data(rq->bio))
->          return rq->bio->bi_iter.bi_size;
->      return bio_iovec(rq->bio).bv_len;
+> mm/huge_memory.c:zap_huge_pmd() {
+>     ...
+>     if (has_deposit)
+>         zap_deposited_table(mm, pmd);
+>     ...
 > }
 > 
-> Since bio_has_data() is true, blk_rq_cur_bytes() invokes
-> bio_iovec(rq->bio).bv_len. This macro treats the bio->bi_dmabuf_map pointer
-> as an array of struct bio_vec, reading bv_len from the overlapping bytes of
-> the dma_buf_io_map struct.
+> This will unconditionally assume a deposited table exists and try to
+> withdraw it. Then in zap_deposited_table():
 > 
-> If this garbage value is larger than the remaining blk_rq_bytes(req), it
-> corrupts req->__data_len and can trigger out-of-bounds memory access or
-> panics when the request resumes. Should bio_has_data() be updated to
-> exclude REQ_DMABUF, or is there another way to prevent blk_rq_cur_bytes()
-> from blindly dereferencing the dma map as a bio_vec?
+> mm/huge_memory.c:zap_deposited_table() {
+>     ...
+>     pgtable = pgtable_trans_huge_withdraw(mm, pmd);
+>     pte_free(mm, pgtable);
+>     ...
+> }
 > 
+> Since no page table was ever deposited, pgtable_trans_huge_withdraw()
+> returns NULL, and passing NULL to pte_free() leads to a kernel crash.
 
--- 
-Pavel Begunkov
+Thanks, that is a real bug, but it is not introduced by this patch: the
+special PMD branch of copy_huge_pmd() has never deposited a page table
+for the child, since commit bc02afbd4d73 ("mm/fork: accept huge pfnmap
+entries"). This patch only rereads the PMD under the lock in that
+branch and does not change what it installs.
+
+It is also worse than the zap: on ppc64 in hash mode the child's first
+hash fault on that PMD already dereferences the missing table, in
+__hash_page_thp() through get_hpte_slot_array(), and the zap then hits
+the memset() in hash__pgtable_trans_huge_withdraw() before pte_free().
+
+I will send a v2 with a separate patch on top of this one that
+allocates and deposits the table when arch_needs_pgtable_deposit() is
+true, as insert_pmd() does.
+
+--
+Best regards,
+
+Konstantin Khorenko,
+Virtuozzo Linux Kernel Team
+
+> 
+> -- Sashiko AI review · https://sashiko.dev/#/patchset/20261014-b4-prep-vstor-149847-copy_huge_pmd-recheck-special-pmd-v1-1-d225c60bc316@virtuozzo.com?part=1
+> 
 
