@@ -1,212 +1,174 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960CB5218B5
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 13:42:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFF54E1C9B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 14:02:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.172
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791985342; cv=fail; b=c9b4dYBHOCbzZ7xWxfY4I6iHkANcutjvQNgbKy0LEqPM2d85YrFYdVAlpriT2fJxYBUoaGqeNehFgv6IRniec70nT8vLcAGqgJohZWET34sUAxSfmZqqoDA3lw8jKiW7Mc5J4M8u8MIUGlMG0q2q5gunU+cF84hUPdl81TIjNS8=
+	t=1791986572; cv=pass; b=Czcd/Uklrya0Prft6HbB2i9R2VI8AuFFu8vJIkeYH2AVvR5L05GA1pGi209SruBA/wkNFTwYjCsGHeeGFiqmFX6JqvhZALczDU4DAhpN1Xre34Y/SpyY43tNpMz9XUXlrnsCqRDOE088MK8b+2AP+89ZBGfhORwTjVXU9LtQ+gY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791985342; c=relaxed/simple;
-	bh=vq4fB+SnqYbacyoL1g85+00CuOg5q8WytkIySdhzDEE=;
-	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=dS/VlxulyGS2SrbMGOSpIdW9FVE7hLKa9Qo5AP6C0FMNAXetsoTGoVimznGgAbtb4eXjycg93X10F7DCqQgyhGtaCE5cx04nvN1z2I2R8OiwqCa9cIQVJUwKZaDsEn+K7RKhPbgfU3pIA6TTQECmq+ttmgItWGsQ1wpWhBXh5iI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UwpU+NH2; arc=fail smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1791986572; c=relaxed/simple;
+	bh=YEOv0lkDuDfe1/lH4QgCR9CxwKBKYUyc20EQrB/D8SU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WUtPDXMIM5Kjxz6A7ZQucnVRvJ8z/gC/1Xihn8LAY/4ly+ZltFeri72Sw1VQCC7z5WHA8KsUs2dN+6sifYU9lxCgO/jpFrI/QWc94GrRCOi2lK3h9S2Jk4+pYz3XiR8Zf3MZbOBH1zT4eLKgFu/zngbUmB0CbU/rAikeW19TC8Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=paul-moore.com; spf=pass smtp.mailfrom=paul-moore.com; dkim=pass (2048-bit key) header.d=paul-moore.com header.i=@paul-moore.com header.b=L7e1NRYe; arc=pass smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=paul-moore.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=paul-moore.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UwpU+NH2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1791985340; x=1823521340;
-  h=message-id:date:subject:to:references:from:in-reply-to:
-   content-transfer-encoding:mime-version;
-  bh=vq4fB+SnqYbacyoL1g85+00CuOg5q8WytkIySdhzDEE=;
-  b=UwpU+NH2Y5KXYOt85j8vKxJ77xZQa1gxMvHF19J5FBgvv/3CgRW1hZaY
-   E/uurzJ5cQHTaARVexpWXB02/UnJvkgAz9cXx/AJBQsVuG3GDT/pEi/G/
-   eZMDOFlIF1oezRnmPi+gwdftXNabe7h00HedebHmVhspo+yrNUOqJt8HF
-   K5DFSgxpV6s2735doWUU4ACjEqSHdg/pTiuz+fJQ6M6u1FfDBNDJj6vCN
-   z32QSM/xUB07FE6jp/TI7lZfl1fT9i6O/bOPNaUHePT+CMK8Zc1mxkzqg
-   7wYlPYZsWodn1mT4fx44vZjlLvzqXbt0N4kVB6pUOqLf8ej/x7X5QpLEy
-   Q==;
-X-CSE-ConnectionGUID: i1y3MUdnQamjCK9eL3IGOQ==
-X-CSE-MsgGUID: issER/bSTlaH6j10qa+cIw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11934"; a="616706"
-X-IronPort-AV: E=Sophos;i="6.27,157,1787036400"; 
-   d="scan'208";a="616706"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2026 06:42:20 -0700
-X-CSE-ConnectionGUID: o/NZMzUlSLSb2wiZDLmfgQ==
-X-CSE-MsgGUID: x2c3uvpTRjqj8uc5TIZl3w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,157,1787036400"; 
-   d="scan'208";a="1538418"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2026 06:42:20 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Wed, 14 Oct 2026 06:42:19 -0700
-Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49 via Frontend Transport; Wed, 14 Oct 2026 06:42:19 -0700
-Received: from CH5PR02CU005.outbound.protection.outlook.com (40.107.200.4) by
- edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Wed, 14 Oct 2026 06:42:19 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=o0XqWTQ96SHfrLE1oiQat+Ub+5D21jokjdF0xoD3pIvhmWkXiWhAKmmiB4+sq4lRcRQK3OzdkT54fMJ5RrKYD69PUR+SRu2j5wlTFRluDCgB8NCaITmgMhsBqOScENdbkIIBfvQB3mvzvJLM5xQn3nX42utBs5SEGGU7zAdZkn24x1TeagX/2tg5I/0oD8se+NRmoQ5AL0i8z7PBTaaAH+5xc/mp/eIIrcnk6YEIdAupzmLgH8i9tY8xyaOrmNeOmefUtIGXYClsb4Obx9IZRU5dLFgRrfb/RKCb682T/0HmASLcT1EIABFMYdmWnBYia5Igl2e1Lo/df5dy1tHUpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZgataE58GBtcuOXyT27iuGIvR3HFyG/KaE6ciw/MSuY=;
- b=y6iaqWcZritPJobjjEcPwADM2qCMKjJoOPPmzD6PHHTnwCQoGWx2LzC6trRExyz80ONrZh7Th1VLCHFpvoliSfkOzc39Xep32R2wT7Z9cc2SJxXwRRkf9BvnVKZOiMXUxAH5PBQgNQRAnI05eTxsCIQmMGK5+E4RFXJnNjCDgbmpzWFoYYoKJoeMOrNDS2lKURiGnQQ2K55MYbE22eqbl6qXcrmbzzFGzGqMA+3TSSMAz+FA87wU1DVJprqCnkqWTLOUdoAHPif8RVAPuwQf3q8oeapL7M176p43s2gAU+3sy5SR2KWH1CLnROCZkbicsbM+Deowz65KhnBRegIWIg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CH8PR11MB852307.namprd11.prod.outlook.com
- (2603:10b6:610:32c::22) by SJ5PPF8F93806F5.namprd11.prod.outlook.com
- (2603:10b6:a0f:fc02::845) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Wed, 14 Oct
- 2026 13:42:16 +0000
-Received: from CH8PR11MB852307.namprd11.prod.outlook.com
- ([fe80::5f8e:c1ed:445a:a4b7]) by CH8PR11MB852307.namprd11.prod.outlook.com
- ([fe80::5f8e:c1ed:445a:a4b7%4]) with mapi id 15.21.0522.012; Wed, 14 Oct 2026
- 13:42:16 +0000
-Message-ID: <bcaceb82-a306-482b-875d-237e43e24644@intel.com>
-Date: Wed, 14 Oct 2026 19:12:07 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 03/16] drm/xe/hwmon: Fix thermal sensor data handling
-To: <sashiko-reviews@lists.linux.dev>, <intel-xe@lists.freedesktop.org>,
-	"Vivi, Rodrigo" <rodrigo.vivi@intel.com>
-References: <20261014115806.831459-1-karthik.poosa@intel.com>
- <20261014115806.831459-4-karthik.poosa@intel.com>
- <sashiko-outbox-171260@kernel.org>
-Content-Language: en-US
-From: "Poosa, Karthik" <karthik.poosa@intel.com>
-In-Reply-To: <sashiko-outbox-171260@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MA5P287CA0183.INDP287.PROD.OUTLOOK.COM
- (2603:1096:a01:1b6::13) To CH8PR11MB852307.namprd11.prod.outlook.com
- (2603:10b6:610:32c::22)
+	dkim=pass (2048-bit key) header.d=paul-moore.com header.i=@paul-moore.com header.b="L7e1NRYe"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-873a4edb243so432179b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 07:02:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791986565; cv=none;
+        d=google.com; s=arc-20260327;
+        b=tAiN3W0y8qCDUSWFufuASVscAzzvxICwybtLjel8kd9hwL8OnDACYdz8h+O3GPl+7s
+         LvUzZ0ZXHc8il/H0oTLL4Q0tVFStm6zAeGtYv9wnM2ReEuuM/OYzPNFA7kPxKlRqy78P
+         Nge9unjz6Hq3uf9Pd9/8OBZhVNiJYlKgqV4UOFq23K1m9DqpRD8CuLOuCds2ttc7e45x
+         5IoXE5n9j/VIXtO+BTK6NHe+XFKk9w7HgiNsWXHjx/CDit0HQWdxyjbBqh5T64YPprz8
+         r2I4ap/YCCIzpdBwyitkLJ8r28GVt6v1JhPi1wOOzF2zJUmTG5c21Ho64Dv3Q/mKS4zX
+         npkw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=UQUVLUG7DltcFgXT3o9WfFA1jOm16iz6IC0qdjR5XQk=;
+        fh=wGIfM4SDsvwXTYm+1UMI8PCP4gvc4mmOjGq8ffGSMew=;
+        b=WWNWFwstIMN/SblXVKIMytFRvYzVhHatrQ1XN5fUd1j7Jfnh78Q8LSiNfKd7bvGDEW
+         YiV10vZsTqAVx/jSOfHeqxgq1zvNZUB8ZEUOhSXQzuYiCjkm89f3tuB0kz1UzzU+yc0u
+         vTZ7ocMkek3vWKZRQSA6VD/kBOTMlo8yJ/BN4KzOMTS9RRTZVbIWQXGazeLLsVWfUxYI
+         CEgK60sNzQvm/N3qTqqMGhMngmlSocuPg3yMuyJhI8lGGN2yp0Ma3hNX6w2iGZwvpeAt
+         r6ITlZ+6RK+EeOIHzSbNkuOddUD+iHfUwWK/WqMeeaghujZxbV4x0l1cQMahrSK7Uegq
+         AB/w==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=paul-moore.com; s=google; t=1791986565; x=1792591365; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=UQUVLUG7DltcFgXT3o9WfFA1jOm16iz6IC0qdjR5XQk=;
+        b=L7e1NRYelrqxzMR6BgYz4yBbqGGOCpkm50/xx3UCZOVRc+6UMeZyK/dNsHHzIJBSyC
+         0tXT6ifBwC+tH85WCWVtEkBiDSsRXDg1qDZvU21RT+TgLv6lvps8htAaXBGIbvk+n4hE
+         E/h7hvRuiogfVM3nEXlH5r2/iK6Y34bt/pwuN/5VKakzYAjTTutnX4PJSDs/r+i+A+du
+         AjUKEIQmIO+nKQktrwbJ7lsEtI+VXSY5KzIFkX4RDRDSSdt84r0QQYJpEplk24vUaUoV
+         reZ5VrOsl//otVZoflj+OnwOrJoNbR+TSrgV7+0KLcr8sk5MLzZLN3RjaJuf3fKVAiNU
+         fP+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791986565; x=1792591365;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=UQUVLUG7DltcFgXT3o9WfFA1jOm16iz6IC0qdjR5XQk=;
+        b=XL9k720NgNCGUyTFLmqEJnxTQLj4H6ULo9MBnQE1eR6h4WhFM8IVJdndRlNHlVF7jx
+         4WQcacpXt/G4a9cM9YmUDqiCELzt/m025IDIYTLpresC4+RmvFVKveZuQp7CsDlzXk2R
+         XqPPUtNM4whGNb0QKnh9rkWShBZFyUm+3Y6qREuIQU4XYuAA1BlB8F78xucSvtQM2aec
+         HOWQvZfvhDeRsW9ucParLJ45rvauD55xq9OJj6iXkb2lsXDTIXZOK04EoeDRPtfsztw3
+         GrMXYp1KOYDbsMmIA3YS1dHMT6GegtIKdBT2/0KFKK3hJVxv1rdJ9pLXVzL50dqh5wT/
+         dOwg==
+X-Gm-Message-State: AFq9FYJG+JauZ2PJuUK0BuGCxUBneNgU6xwYJo+CQYJtD6aDtJWpgUHb
+	uRkePOfZkwtB3fjRoSE8w9rDGg0ljZ5suJLzCTw7dekXFFBrT2LsP3Q33Jr5WzOZAw3HbdCAkD0
+	bonMtcOyYNMynLvPwtQrX+RP0RrNeLvuibfzMTOw1Yd+CsiOK+GxwwBvO
+X-Gm-Gg: AYBFou3DlICq7r0FoNkwu8UuySbVNeaWD1oW6NkEPGOXMb/qkqcGx3FwSKJ/l6GhSRU
+	gTBrpc1Cbuavg5Kfc1fOBWlPz+LXCj5e8COdHg9zFgArTvbSRGAUK5i5z84M50W2pn3QrFlFXEk
+	dbwwF6rifPoZCIeOCioHKNEcg9SlqgHiLyWPDfWuvnCp1gsrq8E9YePGj3DwHz4SV1UnkZ5n4wu
+	1rd5OZhFRSdnC+ulGNQusnbSUR15LtKDunECwVrC/csjj3nl408nGusyVCZoQFHku1WdTeyEC6k
+	rqRJwWdsqKjcEKWalHeCLWDqMYGk+mZ9728C5IpbPRKxP3D06J0V6/3nXRtk3KOQ8J2QzD4gefz
+	YT5JlTxx5PT4=
+X-Received: by 2002:a05:6a00:808e:b0:89d:e6e2:b2a6 with SMTP id
+ d2e1a72fcca58-89de6e2b696mr1267507b3a.45.1791986565407; Wed, 14 Oct 2026
+ 07:02:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH8PR11MB852307:EE_|SJ5PPF8F93806F5:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5dcf9fc9-9846-484b-d278-08df29f8f5a0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|1800799024|376014|366016|6133799003|10067099003|18002099003|22082099003|4143699003|261009223027099003|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info: oakokoaO4s36jv6SZQ/FFaRuEybvHtW2ZH43OfUaZrLo5OL/RjsCJ/HE46quI+R8eyFBO+uKSlCEXY7I+6a4+9RdLXhKgpaV1u+Z7eSq6pNNw0ih6XsnmnY99vNZBSeuAazASg/TW5qpb0mnujowLbOLIeOfrNVd4GroMtBUIcjSkThr09H3oEEeHa/nQC67a4x38SixyMGUvrBD7x737FlF00PtOfqwKasbfDPBKqBuCGJdW0yOi6oyiWR13GqCA82DOIz9XBPtSFo/oeynW15MewqP8VGVMXFqzKrv9cBUuSYBAD+dngxo3PJmR40Llf2M1NtVjRA6t3FbZXeXD/V3Sgvrg4aEam4ZYIehGEmGub1t/zUlUO6oP8opZ8xfmqYktcBlgmody4H/at+OXbmDtoowGJfJPsU/HawJZdIVIhHQSnt1WXyCUVt2gRm7jU9Q2u+rimo/7U9zkABbrCYUoxbUG+5qJeR7yZfYxPLMDv3TF/exeK32gPnF+1RyYQAvgx1/+rhH9rJdXfefPiuKxIW2ukjdFep3D1fIhZ/KJXd/QazEzU6ZzZTVe4IVvpCaaDjyZlIAXkGJxYf8/7uHgpF1wHMwh+Gtwo+lCJxUfT+f+rbelyPqDTC7n3CraW6C9frTmJACe1wCwNhZGLMxfrmYp8w4GuBOdODptAk=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH8PR11MB852307.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(6133799003)(10067099003)(18002099003)(22082099003)(4143699003)(261009223027099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SXNRbG13MC9GYm1KRStrUmwyTVZiSjdvK2xPc0dxeEVpYndDSElkU1VFUE5N?=
- =?utf-8?B?TXBaQ045Z2ZTQUxYTlJ6bHZFRTMyNjVIVXpScG15UkM2YnZJMUtsWHVTNGZs?=
- =?utf-8?B?bnJmMzF2bmEzME53enhhd1E2b29Uck9Gbmw1STkrOFNheEd2SGlXa1dhR2tF?=
- =?utf-8?B?bitCS2phcmgxeWQ3akFsUE1lYkpldG5Xeit5eFNtTVZuK0RGN2ZoNmhTNUhn?=
- =?utf-8?B?VTUxNEhpMVJkZDU3MHFMZmhKZjA2ckFONitrQmdVeE1IVW95ekNlN21JU0xQ?=
- =?utf-8?B?eWhMUzNKRUUwbm1hdGZlTVdqemIwVTZyUDNtSWp5STRtVHF3OURCbTBKZW1X?=
- =?utf-8?B?b0J1Yjg5aStPZUloMGtKek8xOERsV0s1Ylhjck1JeFJtd3FPZm5KbWJ2d1Vr?=
- =?utf-8?B?RnpEWHpmRkZYWk9CSnZwYks5bkdxQ0lITlVYN2o3Y3k2OVhXTGdCMDhqUlZ6?=
- =?utf-8?B?RHZZOURtTDV6ckdRcEdrK21IT2hIUXNsdFQxam55WlBHbGJpZ000eUF1SVVJ?=
- =?utf-8?B?WnNPOTR4Z29oc0FxOVN0M2toTFdvSUcrM1J1bFIyM0I3VkFxN2NLQzJneXkw?=
- =?utf-8?B?c1dtRS9Jd0xRWjhrMmZ3MnY1Yk1EZG0xZG9KS0ZkdUVVV1NGbHp3Q3NyR3dM?=
- =?utf-8?B?OUtuUTNCR1pZeHV5QTdaYUFyWG9OQ2ZTbU5WbkgzRUZIVHUvODRXWDNQWmFu?=
- =?utf-8?B?WXpQd2RyRENNcjIwUUM1ek9iSkRqSEVpb0MxaXVHaEVmZVg0cUdTaWVJQlpz?=
- =?utf-8?B?NU9MRXlWYml0QytLNk1lcnpzUUJVaFFOeTE5bGhyN2xYMXVPWmtUVWRtdldE?=
- =?utf-8?B?SE9BNDBtUWZINkxoWjBRczNKS2RZLy9wZ3NKaUhvV3BKc2ljRWgzOTNjKzI0?=
- =?utf-8?B?NnBIZFJYVHh2YlIzcHhYSFU3UzNJNTdnZVJueTFzRWExZHQ4Y3FVb2pDZlh4?=
- =?utf-8?B?Wm5rQ3hxaE5udFMzYTV2aC9DeEhVYy9FbVJQaUNNTGdjZ0FJWDVQWHFBL2JX?=
- =?utf-8?B?ZUFFR29IQkJEY1JmZ0J1Z1VRZHlJN3NnMHRId1IwZVFnNVZlSk9oaDBwd0Rr?=
- =?utf-8?B?eURCWmhGcGd6azhqbTNPdStEL1ViQUxVQm9QY3BtWHhvM3d1VW1xQXdmQUtB?=
- =?utf-8?B?YWlsUlZhcWtKN25qM2FhTkxrdWhhRzROZC9zVE5mVVlqMWR1N0ltRExuUnlj?=
- =?utf-8?B?TjRPai8rQjgzTldHaWhkMmxBbDJub1pSYkRoZDlhK3pDVGd4dWdXWGZsNzhu?=
- =?utf-8?B?cEt0eDFoYjBWRlZsMUxySWxzOC8xSi9SUll6VVJZbzA3djZtWDR1ZE9yZWJj?=
- =?utf-8?B?UUlGdVVibmd3ckRyNUV1eDRnN3dIVW16TXpyQ0svOGdubFUxckd0MTZJZjdL?=
- =?utf-8?B?ZEFvSmVsVTdKSUx3ZHgyUlRBM2Y5MS9pbkdXWnc1eTAzZzVaUHljc3JDMlpi?=
- =?utf-8?B?L1BRbXd0WVBGVEc5UHJKQTA1SmNwOTVJVEFtUmcxMjBnTEkzNGUwTHoySVB2?=
- =?utf-8?B?cHZqS1BOSkxSUFY4VEphbXBaOTZucVRuYk9hMGxSMzVTLzZjSjI0MVgxS0Yv?=
- =?utf-8?B?VE9XMlZBaGVINmdBS2VFVEUzQzJQWWd3K0xXeWpZbTFRR3k5RXhEMTJhN2hN?=
- =?utf-8?B?a2tqd1BIaVhkYkRLdENsUTB5Yko0M1BrdXl1MEhxYkdtVTZKYjFhQzlkV2lD?=
- =?utf-8?B?LzB5WjZ6TGdZbHhUT1JDd2phTnFGQ1VvUGp4anAzVnI1anAwM2FpbTZKRFRC?=
- =?utf-8?B?c2s4YTNwVWN1LzcrTENSeFVyNGVsRERTWURDVHpuR01QVjIxcTEvSWFJcUdi?=
- =?utf-8?B?WkE5allCS01kZGk1SmxzWUJqc1B5bEs0VTZVQ0tsVGFncCtDeDBCMUpWU05v?=
- =?utf-8?B?T3Noem5GYy96QjRzV216amgxdEExQktFazRnRTVmd09aQkw0RnFScG5HUlZ6?=
- =?utf-8?B?ZW9UQzVGcHRmYUJjV1A2cm5YdkN5aTBTWitXQTJSSWFuSzJoNkVPakY3NHVX?=
- =?utf-8?B?TWkzQTBRZHVQV2JXNUV3bit2YmRwbzJxNDB1VGJGMzNWZC8yc0loZUdPZU5T?=
- =?utf-8?B?dVg3bnRCMEV0L21VbmVTY1BBSjd2RzRjYVFLUGMwTzlONm9yWWRhWW1qVUwx?=
- =?utf-8?B?YzlIaEFCZXJnZjJxTWV4MUl3MWRaT0x1QzBLSyttUFc0ZjYwT2Y3NlpTN011?=
- =?utf-8?B?SHBSbFlSakdCay8vYWdBWC9GcGwrTktXcVZ1OU9wdDV2RXl5b0IyVTE4Vmc1?=
- =?utf-8?B?NTc5ZFBSMDBsZjE3MHczamNxdzd4aXBuZWZJbUt0UnlWczlJVnZyWGhTdmxa?=
- =?utf-8?B?S0xkUW9DbU1iaHZuZ1JGcmZMQnN6bTFwcXB1bjE0SmljNnprQWFwQT09?=
-X-Exchange-RoutingPolicyChecked: AORozLhkuOcFDgvBuVE67/KPPN//58TiYStsudxyjX4FwvkbhRpLFavbq9r/g7bc7/qGxYKIGxQRT7e/PVgqYZ7pcG/WyhwhTdHPDafSm7qwlXS5VY7oJYBt5ODkQ35NGtG5vxdopjQN94W7OO9zNamJ7dZZH5Wmi3OtfUqXNI+5QVeneGoiBnRJVks2q378Mkn4wXTARZ3WEOBOCKEIAoRgvTdMyImhlQMOy+Vi9Vo8lyWGKe144/V4BrVxL9zYSfokYWgLhzLSESN1whZSyP23GR1okMtIfAjob1nVz86YJ4lB7TbR757yvAY7isZEQL9NCCUHBXMxfWhvX6E9WQ==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5dcf9fc9-9846-484b-d278-08df29f8f5a0
-X-MS-Exchange-CrossTenant-AuthSource: CH8PR11MB852307.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 13:42:16.2633
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: IL7L1GXlDqTY4nC9QdoHkKjIUF1+h/wSqhTBYYV5ogHBhjuiz+2a0ZrO6l/uJRlcjO4ew8oYFlS7s1oMfq1t0Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF8F93806F5
-X-OriginatorOrg: intel.com
+References: <179147329205.58079.5847298721173675285@gmail.com> <sashiko-outbox-165773@kernel.org>
+In-Reply-To: <sashiko-outbox-165773@kernel.org>
+From: Paul Moore <paul@paul-moore.com>
+Date: Wed, 14 Oct 2026 10:02:32 -0400
+X-Gm-Features: AclHuK8TuxrF8-DsjOzDAUY_v3JLgEdrFU4cDHorWjqtWqZ-YeQ0FatFCmw8g4g
+Message-ID: <CAHC9VhS+bdL_YnLQtd0sPmKKfy9BvS-LWV_6EhAuu4qfUFe_mw@mail.gmail.com>
+Subject: Re: [PATCH net v2] calipso: update payload_len when removing the
+ CALIPSO option
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-security-module@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On 14-10-2026 17:46, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] hwmon: Subsystem API Violation - Driver uses private custom mutex instead of hwmon_lock()
+On Fri, Oct 9, 2026 at 11:32=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] ipv6: calipso_skbuff_delattr corrupts MAC header on bridged pack=
+ets
 > --
 >
-> commit 5b607ffd1e7d970e08aa24f25b6f029c27e76b6d
-> Author: Karthik Poosa <karthik.poosa@intel.com>
+> commit 9797bee2d14350b4afedb726df3172b004b7badd
+> Author: Joas Antonio dos Santos <joasantonio108@gmail.com>
 >
-> drm/xe/hwmon: Fix thermal sensor data handling
+> calipso: update payload_len when removing the CALIPSO option
 >
-> This commit reads required thermal groups in get_mc_temp() and stores them
-> in a dword-aligned buffer, avoiding unaligned pcode accesses. It also stores
-> the pcode thermal data and thermal limit words as little-endian.
+> This commit updates calipso_skbuff_delattr() to adjust the IPv6 payload
+> length after removing a CALIPSO option. The patch prevents forwarded pack=
+ets
+> from being dropped as truncated by subtracting the removed length, while
+> leaving BIG TCP packets unchanged.
 >
->> diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
->> index 382bf9625a8bd..1b4efbf4ac999 100644
->> --- a/drivers/gpu/drm/xe/xe_hwmon.c
->> +++ b/drivers/gpu/drm/xe/xe_hwmon.c
-> [ ... ]
->> @@ -840,16 +845,20 @@ static int mbx_temp_decode(u8 value)
->>   static int get_mc_temp(struct xe_hwmon *hwmon, long *val)
->>   {
->>   	struct xe_tile *root_tile = xe_device_get_root_tile(hwmon->xe);
->> -	u32 *dword = (u32 *)hwmon->temp.value;
->>   	s32 average = 0;
->>   	int ret, i;
->>   
->> -	for (i = 0; i < DIV_ROUND_UP(TEMP_LIMIT_MAX, sizeof(u32)); i++) {
->> +	guard(mutex)(&hwmon->hwmon_lock);
-> [Severity: Low]
-> Does this violate the hardware monitoring subsystem locking requirements?
+> > diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
+> > index c6a34334e657e..5a42db4f87472 100644
+> > --- a/net/ipv6/calipso.c
+> > +++ b/net/ipv6/calipso.c
+> > @@ -1428,6 +1428,10 @@ static int calipso_skbuff_delattr(struct sk_buff=
+ *skb)
+> >               skb_pull(skb, delta);
+> >               memmove((char *)ip6_hdr + delta, ip6_hdr, size);
+> >               skb_reset_network_header(skb);
 >
-> The hwmon subsystem documentation states that drivers implementing locking
-> required for interrupt handling or for attributes registered by any other
-> means must use the hwmon_lock() and hwmon_unlock() APIs.
->
-> Can we use the hwmon subsystem's locking API here instead of the
-> driver-specific hwmon_lock mutex?
+> [Severity: High]
+> When a bridged IPv6 packet with a CALIPSO option is forwarded, br_netfilt=
+er
+> feeds it to the NF_INET_FORWARD hook where SELinux may call
+> calipso_skbuff_delattr() in net/ipv6/calipso.c. Does shifting the IPv6 he=
+ader
+> forward by delta bytes here without repositioning the MAC header create a=
+ gap
+> that corrupts the MAC header on bridged packets?
 
-The mutex here protects driver-internal concurrent accesses and does not 
-provide synchronization required by the hwmon core callbacks.
+I haven't chased down the bridging code to confirm if the problem
+identified by Sashiko is true, but I do think that in the bridging
+case we don't want to change the label on the packet as we might do in
+the routing case (depending on the runtime config).
 
-Therefore, I don't believe this falls under the case requiring 
-hwmon_lock() / hwmon_unlock().
+This would need to be tested, but I believe we could simply add a
+nf_bridge_info_exists() check to selinux_ip_forward() prior to calling
+into selinux_netlbl_skbuff_setsid().  We would need to add dummy
+nf_bridge_info_exists() when CONFIG_BRIDGE_NETFILTER=3Dn to
+netfilter_bridge.h but I can't imagine the netdev folks being opposed
+to such a change; I'm sure they will let us know either way.
 
-@rodrigo, can you share your comment on this.
+> Because bridged packets bypass L3 routing and do not go through
+> neigh_output(), the bridge's transmission function br_dev_queue_push_xmit=
+()
+> unconditionally calls skb_push(skb, ETH_HLEN). Since skb->data is shifted
+> by delta bytes during the pull, this incorrectly frames the transmitted M=
+AC
+> header starting delta bytes into the original MAC header.
+>
+> Could this result in the transmission of gap bytes and the loss of the
+> destination MAC address, causing severe packet corruption and drops on
+> L2 forwarded packets?
+>
+> > +             ip6_hdr =3D ipv6_hdr(skb);
+> > +             /* BIG TCP packets have payload_len =3D=3D 0 */
+> > +             if (ip6_hdr->payload_len)
+> > +                     be16_add_cpu(&ip6_hdr->payload_len, -delta);
+> >       }
+> >
+> >       return 0;
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/179147329205.5807=
+9.5847298721173675285@gmail.com?part=3D1
 
->> +
->> +	for (i = 0; i < DIV_ROUND_UP(hwmon->temp.count, sizeof(u32)); i++) {
+--=20
+paul-moore.com
