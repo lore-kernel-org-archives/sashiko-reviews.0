@@ -1,98 +1,63 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from OS0P286CU011.outbound.protection.outlook.com (mail-japanwestazon11020092.outbound.protection.outlook.com [52.101.228.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91FC2931FB
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 05:27:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0179217F27;
+	Wed, 14 Oct 2026 05:41:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.228.92
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791955652; cv=fail; b=MSI/B1+Q2jw2nCBM0zELGXFDU+qVjZEusxXQ4IFOHNoEzv16b7jhe00CEQ7AakS6YEJWj7o6Hiis7Xp2UeuJU3xSKHA/Eh3WMf7R+Zc7gBqrmOOmlpsPjNyosY0ozD5BMHgrWXTOL59ZLBII4y2Fsl2P5EY/mQ70VrlzSvQX2yc=
+	t=1791956472; cv=fail; b=QKTO6dJwAopcq2Xz+07vCrtoVBt011b69CBUjLxvusX/mua/mn8t+DLtuDtOf7iNZt+vvgQKjPkVT+kG4gOfkjJ/MGaXthtjIL2jt1maF5LwW6HwYb00T5pYsIVosOw9Xu/NsXwZtPix1zSNPkJgHQcJhvpv79AtjGaCFxVjbaI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791955652; c=relaxed/simple;
-	bh=IN9pql4LYuyXIFdh0RCwv8ReAJVOYgmomr0ljf8ZPWA=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=NIMnfdWr0G6Fb6g1OTMChlrhwpGXotVSTKRi9raIsDXLLIfgQfebjE7sugebLSL8aDHTyFj1wlE3ONs7JgS2KS+outYYMmKJDa2d8XJU1EmB51r27H2yHAw926N1JadGL3fy8brL5Nl+SML3VVu2ttJjpoungxaxtcdYWS3dk18=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=N9kFXd7p; arc=fail smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1791956472; c=relaxed/simple;
+	bh=evpbpboSUD2GI5yS6PRDoWSI9nUuZF0F6B+JkqyTZrE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=FGP3OzOYmYL62V4/pknheamzijA/a9m8NbL4RwH6T3ba8PiDHAewGxvW8vIo9Hz6BiIuTzXJF5l5jDFRi7GW68KND7oQfhuFdXHNAQDFdk4XvaV3oXSrPhCSDpM6fjcMaFIqaDRTFDF0n0mLWiweMe49F7eKgdbgrKCQulOxrYU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp; spf=pass smtp.mailfrom=valinux.co.jp; dkim=fail (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b=GmMKhRvJ reason="signature verification failed"; arc=fail smtp.client-ip=52.101.228.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="N9kFXd7p"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1791955650; x=1823491650;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=IN9pql4LYuyXIFdh0RCwv8ReAJVOYgmomr0ljf8ZPWA=;
-  b=N9kFXd7pingH+BjtjIKSn03SoSNg46YSZ6ovcMm6c1UQEO71B4Viv6xk
-   0PWoYIbw03ZhCrJ/0hL0bOWqWJyT136azMVJ/cwRT6IKHc7hbk+wNabue
-   DubTDUjMd5IqjmCWAaaXDVeL6GcCQKQD7xDuehLw2Af3IxwzWLoKE0ehV
-   OOZKuF3bQs5PH+DpmftcTODc43f9BgM/aVNKVGFEWwSmEo1Z/mVd7lTbj
-   tqbJ4f/Wte8xYsE2koz8LaUQK/FgI2E06dIdV8PcUVOpPJ/RQ0UWs0lpQ
-   dOYY6HgPM7XXZ6vllUZD5BCI22PfC9lYGZwJZFRpeGB6PXfkzyOVCFIBQ
-   Q==;
-X-CSE-ConnectionGUID: bahPr4IeQ9iY+Q1lb+o9Fw==
-X-CSE-MsgGUID: yKywtr7rSP+ZizHo64svow==
-X-IronPort-AV: E=McAfee;i="6800,10657,11934"; a="593491"
-X-IronPort-AV: E=Sophos;i="6.27,157,1787036400"; 
-   d="scan'208";a="593491"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2026 22:27:29 -0700
-X-CSE-ConnectionGUID: GYCQ68BrT8OxFVdKsSFhjg==
-X-CSE-MsgGUID: JeaTjn7sQEuAS2aOfxYucQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,157,1787036400"; 
-   d="scan'208";a="1300305"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
-  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Oct 2026 22:27:29 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Tue, 13 Oct 2026 22:27:28 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49 via Frontend Transport; Tue, 13 Oct 2026 22:27:28 -0700
-Received: from CH4PR04CU002.outbound.protection.outlook.com (40.107.201.34) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Tue, 13 Oct 2026 22:27:28 -0700
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=valinux.co.jp header.i=@valinux.co.jp header.b="GmMKhRvJ"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iQ+UWtKL6LDaP62NoeEt6LJxbjJlWqz1d4wiEDD64jz/BDcaL5wZWEuKjLLoSsEWT9Ij41pfiimnXM+mU7ZkNe2zkWOA68FXce2dqqb5VoMcWaOlvjYflPpFgap/oeYjhlsz9MWYSE6UQV4EmzBYhV4nLsYMXGyNWZtj60b6yAhuLRi0zS06pwx+2aHDEsSO84sEwTsojri+BGp262nCKTzH+aacLEJjiHijfnPJ0b74AdztFHsqVQBHlhKXc9r3opGFZLCsSchELphZET0xAaP6m80ny/60+zDYCvZ10dBtFvvYCgM0/UgPLYdoFPjcSuAtC3Ou6xh+t0HMc26f+w==
+ b=H4dmBQ463/ROVqxTeddx05x4ME3/6rxJaMZlckvOcVkvubwF+uf8CNQgob5wrZw2yNfGLGMmK6vuCS24Q4udzQcu0qPMAsgX3YNhNMj/n/eBgbCBoab40wkodGhJiYMz1n4MY4tanNHpU+Z/WNMhhyPJxhv8UwGfc2Zd96WvCc87IHkxnJJmMXEHbvh72aTPhuLwRdrTrzqfTUbx2aBC+/7A8Jmic9okxJjA67x8M17K02Oi6nvi5ncRaX9ilxBp4P4pRXAWPVnuQYWPP3mi72EEqsyCCncR8gB4vU3ZUKqBdjUwhjWCluMmKW/jYpoXk/8uQhR+OCEbsJeftzAALQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rrA5LtJ+IO0tjqBEZFLDRhsNWJWbjeZ9w0ZZ8A/Q7Hs=;
- b=HgCQRydU7hxOzl1C0GDAZYTtC6kV2sUzYsll54S1vJr8w6jJx93kfDrZAIjr5xrQtC8IwqSrPZr3BsLh6w2yIQcV4fkaM4vP34PQLN9hNmXBY+zI8zdWF9eaBSJSlLNnu+AlVL9gEmnGO5hgvEpTizopN5xNTC1UqH5ehzUeJpNhrTt3r/LXAy0vcVjBITYBRNI2IwR0AI6qKDbaasU99knpsBeKMccBGGqus8bygG74VTyiPwDV3XrpCVtQaSjoYPKIP6+kDhKiC7oPaPHvqTPt79QVDbvcEKPcG1oFcQe+22tTX6hRahbKinj8gOHZcek2gO9KO8bdt47UrEicJA==
+ bh=c0CMPiKW8q0EJfOf0+3Xp4ErQxZELUvP/MMcpR+NEB8=;
+ b=YiMj2v3J1piDj9humPMco07mtm0rlvsW3bjJMczRQ29lugnaHk52fcpuwugaCIwVn7cp4I4KzzM0F5FZnSWj6xHX7sUnPn/jH3sK6jWaUVodvG4RDLu/WoGAewwDMVpl3XBQ4w6RIlMmm2SzFjGWnrV/dYl4JGQ6xGA2ZMjy8G41ePg7dEG7jRnaPAhgzqPshQvlemt4CfQtxroeVYSaxrVd2f1hk0Srew1kqlqx9O0PtkARX49thb0DFtJSrgPTtJR+YbKwLAN/icPTOiscxfHaUgptK06xyg3hht7muRzUN9hAbGHmRt9fhvG1bfRWiyUdh53UIDGaJWiP8S64+w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
+ smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
+ header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=c0CMPiKW8q0EJfOf0+3Xp4ErQxZELUvP/MMcpR+NEB8=;
+ b=GmMKhRvJ8gspJ33ONjtAE5rv8qUGWq8vDmIRl78T7YOD6Bq/2JlGR7nx7hSbcrxzyRPdya/2zvim+UW9hVYj2qjSYOa97EAJTj9QCRfPFNL1DL856Iae4T3hvntfL3mMZEglerHK6WSv5MKTzm41mIM6cHRWkUxqA99ak+Ntdlo=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com (2603:10b6:f:fc02::9)
- by IA1PR11MB8198.namprd11.prod.outlook.com (2603:10b6:208:453::20) with
+ header.d=none;dmarc=none action=none header.from=valinux.co.jp;
+Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:325::11)
+ by TYCP286MB2720.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:247::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Wed, 14 Oct
- 2026 05:27:26 +0000
-Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::6fbf:c112:d0a8:f1a8]) by DS4PPF0BAC23327.namprd11.prod.outlook.com
- ([fe80::6fbf:c112:d0a8:f1a8%5]) with mapi id 15.21.0522.012; Wed, 14 Oct 2026
- 05:27:25 +0000
-Date: Tue, 13 Oct 2026 22:27:16 -0700
-From: Alison Schofield <alison.schofield@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: Richard Cheng <icheng@nvidia.com>, <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH v8 3/4] cxl/region: Start unmapped poison scan at the
- committed decoder boundary
-Message-ID: <as8StBu5tupammk1@aschofie-mobl2.lan>
-References: <20260922101129.52794-1-icheng@nvidia.com>
- <20260922101129.52794-4-icheng@nvidia.com>
- <20260922103000.88A861F00893@smtp.kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
+ 2026 05:41:06 +0000
+Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::cce5:2aa8:53f9:dba9]) by TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+ ([fe80::cce5:2aa8:53f9:dba9%5]) with mapi id 15.21.0522.012; Wed, 14 Oct 2026
+ 05:41:06 +0000
+Date: Wed, 14 Oct 2026 14:41:05 +0900
+From: Koichiro Den <den@valinux.co.jp>
+To: sashiko-reviews@lists.linux.dev
+Cc: Manivannan Sadhasivam <mani@kernel.org>, 
+	Frank Li <Frank.Li@kernel.org>, ntb@lists.linux.dev, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v3] PCI: endpoint: pci-epf-vntb: Honor MSI-X selection
+Message-ID: <lngkres6bp75exobxiohld275gawygrw3gm5p4wt57mupaa7d3@kv7g5jew5ooa>
+References: <20260919172021.1055451-1-den@valinux.co.jp>
+ <20260919173451.C177E1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260922103000.88A861F00893@smtp.kernel.org>
-X-ClientProxiedBy: SJ0PR03CA0213.namprd03.prod.outlook.com
- (2603:10b6:a03:39f::8) To DS4PPF0BAC23327.namprd11.prod.outlook.com
- (2603:10b6:f:fc02::9)
+In-Reply-To: <20260919173451.C177E1F000FF@smtp.kernel.org>
+X-ClientProxiedBy: TYWP286CA0013.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:178::9) To TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:405:325::11)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -100,170 +65,143 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS4PPF0BAC23327:EE_|IA1PR11MB8198:EE_
-X-MS-Office365-Filtering-Correlation-Id: e0fbf702-ba7e-43d4-a67e-08df29b3d48d
+X-MS-TrafficTypeDiagnostic: TY7P286MB6866:EE_|TYCP286MB2720:EE_
+X-MS-Office365-Filtering-Correlation-Id: 948d103a-5266-43b3-f814-08df29b5bdcf
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|56012099006|11063799006|5023799004|4143699003|261009223027099003|10067099003|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info: upPU1Sf91vXiwe4IUNabkLbxgtN0oF9apRtbHhWqjkx90j/7/RPWxaznUH0yNMRg5GoGLzM5D67ZIT5fBVBJ0ErYNYFgIEMvwYrQJZzI9YorBG7UVUTk1DbBG/qbCqPJX5jXxkndhd7XLGcgpt0lv4e5wrHXptuLn0owXdtbgsmHlH9pZZ8ArH2e33iydtMBbsXyI7nRt/H7dw77zCzaGPLXRA7TfvdR/0cnq5ggKJYQNkWe+55WzuLb176TG27c/qw+XRNWcrEZBvFLVtWT3V3Yxq9vn9lddm2Ce0BU5vNX/ErbeFGnHCPO9Nau6Jz4y1KL6JDgb0SmQBeaBQ1UDeSmFjoC1PDoa4sPwHe/AlCQEQM9ve2dz2pYikJfejfbr4aeIwufVJUrknsBwQau9S8GugZcfA0MyikKbDu12eb6Z3xs7RMBxubjiqM3m+MxnDFSw5zuDNLOYvzZhqKGqsRV/f+EVTRz+L0o9yopL0kJSidJL/xWjJ23gx4IeXnugUgYOUwbkbxfQ+O367hI83EnnHHSnRB4DuEdOK6iDIKbZxo1+K1ZMKBr9hmS3vOdihlx3itdzZinDGOTBDlGzRhStOsmHj0HVG7j3oyuOKw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF0BAC23327.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(56012099006)(11063799006)(5023799004)(4143699003)(261009223027099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|10070799003|1800799024|376014|366016|23010399003|56012099006|5023799004|4143699003|261009223027099003|10067099003|22082099003|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	6Pej9e9PPYxjJM4bHR7aQmuYeIlqk4l5qFnAAlFI+aI3KTkdZIvDpNPt5gXmBxkDma/OwZbNAqOSoAWBEDe6+YQr7AkXnmmSiyqnSkvBi3RuCNQaxoB9SILuzRS0dj6tCuTqdm59vQ6Qm0idFF20NqS7sKUdy+fOdQSoLzS1HDO9x7nQQYfhbZCFvT38uKKa4x37B2iUpqYy0ESo3Mnmyut5rvnSRAch1AFNzGTJT+9oHkbNNPwR1aeheAx3zukh57FxjuV5e47udTDw2flwOBIeCT10JURWrEGKEBivRkBt9pIvROeW1nHYpDm3qfEtumE+Ssr3rbcRFPNmD2XAjV3PhmbCEVleXBSwPq6PD73b4kRvRowv+EvNU8LqVyt2YnLqUdxH1oR9aIfQBjOk9jg94TzbZXUeHzUxe0Owl697v5VU150woDEwjY6Py6hfmbX65A1f2+RfeSBDlLpqD73R7SpfiJJOUlx8v6nSnW9ghzg4pdZYj4olW7F/5z4LqYmBffa94ANJ+sCC6mJlrH3U6DXkFpRK3Zpxmsm7EIlmQl/W66vTSF21iDdjETc8nIl0D2uSto5ezBqz9MfsEi5PUYcweMEKYrF89iOGlyY=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(1800799024)(376014)(366016)(23010399003)(56012099006)(5023799004)(4143699003)(261009223027099003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?gXUx1Gg3oCdQ12TM7WBR9hJv3QBn4hmtSUcLzGWqvwBcK/eNssJGhJ+hEC?=
- =?iso-8859-1?Q?XE0lSgp9wEfEQ7+h84jFFTmRrMKB3St660oDjCWwnzbmGhLvkyxbbZie7d?=
- =?iso-8859-1?Q?ee6s/+vWyHe+mDXpkTRD0tB5A0tsoZKclud145S/XM3vX6TE8uYj9bcS7j?=
- =?iso-8859-1?Q?uhuwE2LPgfYn5zgb9AHvCUMJRGHnIKPpQPGHMwcP6p/b+rWx858UKqGlHI?=
- =?iso-8859-1?Q?etyjHAm1HdoEahAKU89qT3hdX1/C9RDqqF53u57F+xTUgBQxkjmOHXQCmT?=
- =?iso-8859-1?Q?ZJsnDKKONOPgV3Fh8y/cyh1233hio8d0uiNN1+wJm9ENJont8GoGsMiQo0?=
- =?iso-8859-1?Q?8oFS7WcQ1JhTciko40RlFtpJ2XgozGgv5UBTFu5m72JSBDDQtyVlagtSgE?=
- =?iso-8859-1?Q?vY8FuuSwtCzHCB0Qy//y1ap1iZ8gmOjsPTuLXSzb/eEKnLcNeScs9ZP8JF?=
- =?iso-8859-1?Q?HzV8f8i4wrL1h7gb3jOjnankwWLg2ZRP4cPLQkbj1aW2NLDd8um+rrAeVt?=
- =?iso-8859-1?Q?M+IYThRv3eT+DefGyt1uRvVIOIExwuxCfL1jFMLieF4hR7fNlvSSxxHUIr?=
- =?iso-8859-1?Q?857i7G6qCzZ+pU4rL24xGCZmeJo+waJKEv5vpGWgBKEOhpVS7GJDDlOuR/?=
- =?iso-8859-1?Q?FCXeGL1CMdwAWPk6v8TsH0ikBcRD1IjG0UcgCP0Cfy5b3drH3IlM4lvQ+2?=
- =?iso-8859-1?Q?T4XkUCjNX/9kfKfG+SBuD+gzgajYDVqQuFwEN8Lwa+Omorw5wl23dgvx8Z?=
- =?iso-8859-1?Q?G+bw41fop4zjQyGy8hNfqbIJCo7PYox+2EzS0KnwMXsg/+jztMt2BLS9cr?=
- =?iso-8859-1?Q?PES5G+SK8/b8/VrdZsWJVXZr3yqoSyQgZgisDDzpV+1yrGXlw6QsGj+8bp?=
- =?iso-8859-1?Q?THxD3BKwB36WkdV0ZSDt1+U75LQ0EwoXg9UNTO1Qmqp0CHfSoKZ9uHbUlB?=
- =?iso-8859-1?Q?Dh8oWIMTft08joWMaBIRGipyb7Wo4WDd/99fsj9I9hFlpVeg3GR/nVJ04u?=
- =?iso-8859-1?Q?7+gSqfzoEdPUjdy4oljaKpuG+eU9gTnd0+IeC06exwazw0tImXiLVdoXqZ?=
- =?iso-8859-1?Q?BDSIo+FVOuZJ/L5sompaklmyg/bdKaStikmaGmSkxHyJ2oAxdxQxOJM2yR?=
- =?iso-8859-1?Q?ZJkCFgmixTv3EUlQ1xHOJgyQflfBCr+NmZR7De9znWA8dvbRJkhnsbd6HK?=
- =?iso-8859-1?Q?lgOJUXPfscVGcnbFCbZpGFq80B/Pn3CfmDQk66+1RS6z/RPMwTFChVBX8Y?=
- =?iso-8859-1?Q?Qa/oOqnVUG2E8fMlSCoV9s70QKBpI0zJ3J6GcSCG6VqjKy1hfBm5rofLvl?=
- =?iso-8859-1?Q?a9pSFWCmZn1iVTdXD9ltu2YGi91B5wuCHXF7ypC8xvxONYbE2v8TgWrPeE?=
- =?iso-8859-1?Q?MQAXValbg3Hr2KiWoJiYdRI+4lrVOq3hDhdeycU90Aur5jXPHgtpWVahfG?=
- =?iso-8859-1?Q?kgpZ/1Utnglyn2A9BvC2wL4+12/ZqJQfj2bMqJBXCnd2zVKBGW4g65VOYQ?=
- =?iso-8859-1?Q?vzcWvl26sG6qAh+XRmBbes6VBFUB7WL/IH8M1C2WB8VEzGagf5uMZSgjwS?=
- =?iso-8859-1?Q?Qp8IHav11q/J/3YyaJte49/O5m59AHQAf37uVA+ec+iHpvROrXrMatoC2d?=
- =?iso-8859-1?Q?p2riMH4qeJsYlXi/i5VeOjmC8lwWyiKAZ+XG0YEdaEFhvbQsi2KVoZ4cEg?=
- =?iso-8859-1?Q?1OV/l4+JO2hFolJnGOHRIVwK4XDh/4AAb8ABEARfqOgk1kId2gZUhl9qeZ?=
- =?iso-8859-1?Q?mUys86i+A0uyqylblS3pWZJWBpgcTW4KgdPHCWOWOjEGpWlrOmq5hkWrfh?=
- =?iso-8859-1?Q?Q4YKRlKklCLPTC8bkuPYOrpGM2tIKj4=3D?=
-X-Exchange-RoutingPolicyChecked: y32PPZj5VLGgA6lRy6Jf5c+oDtcdN1n6UYRXYCj69vkmG3CoaeaJkyNW8dWI8/VV17KJUM3KuRBbz0hDnwcKMLQbxiQQOEeyjkWPtFxwlXo18ngZoqAMlj1sQlGNDUXe/1YIXJJyU1TU6D52JxnEpfUr5cRMLIvHYjJvnsWXpaCz5P5LGWPcX1MaZ7k4IiB6A0LPPLAF16cYNTZUK7vutnN/aiPUvqh2g9KnPloUIXUm20SoVjilckJRKNXfBiuXhGdGd7qE+NE9nlW3iJeSy5IpBw4whGSzEhzgZ0qzXWHEDH9JBcWum6Blda3Jk6+jnIChKVstou3ZjZjFgTKa7w==
-X-MS-Exchange-CrossTenant-Network-Message-Id: e0fbf702-ba7e-43d4-a67e-08df29b3d48d
-X-MS-Exchange-CrossTenant-AuthSource: DS4PPF0BAC23327.namprd11.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?J1P+eWffLSIPYnMkj/k0VcKfK29ItWA24i9xDbq87T0o7x2A3KNJf/eyQV?=
+ =?iso-8859-1?Q?6JlsIjDzHy6sSmYQqO52UcKHCQg/gvmSFUGZ5P5l81TXBJLFF/YGffsnnm?=
+ =?iso-8859-1?Q?vM6NOYT0AwUVrE5PJhS+tiCVtkKI2dqiOpZWCN08Br9KchZYfZMbuAiErR?=
+ =?iso-8859-1?Q?eSJjjC05/q9YwbrbupkJ4hdNWaOyy3/6lG4f++BTGyF/AGOmiDMDEyHc8h?=
+ =?iso-8859-1?Q?SXyOwjyXAU6RTkLBV7B7cOq0jHNYiffjq6bFJKYaHagwnybgZxNFveDLMY?=
+ =?iso-8859-1?Q?sBPh0lPiEOnT6dgYwfVl/+aAYjKtkn3OBh13taqMgAcU8wwhjm3RcF2sH+?=
+ =?iso-8859-1?Q?WWWjEc34UYNobU0WOvLWfqd8P6UR/ItwCoyoJ8t0eooFnSHCzss3/9d48w?=
+ =?iso-8859-1?Q?qzPEwK559bzGTIirUqeQBVS2N46qkKB29VA3YEsgJFxdrFElctTULcjFd+?=
+ =?iso-8859-1?Q?DHOmx1lzDxG9MxEjjNPKfWjhHEFzLQzQ3fYe5p0Ujg/LmnEOIiyMXTrvl7?=
+ =?iso-8859-1?Q?NneLToYOn5OUtIOOA8uKImiCDPcXLlc674LECkarGXOKgJMvXq4HJInR9A?=
+ =?iso-8859-1?Q?J8/uLxOE6DDsLzQPxhAoZQyfxom0tyivv+zETrhl9u/OAkUKS7OEgSMVPn?=
+ =?iso-8859-1?Q?VUIG3vZAHt+VAoEj5bOPLNCXnN7sp9UMJK7HdQnGH1rSGqj2aQdnIFvYaJ?=
+ =?iso-8859-1?Q?e85JpgrpiX4WXgeOYcyMJSQOvhZOZBIP3WcX+rFclFGHb7IaDsNDGkZ7Nj?=
+ =?iso-8859-1?Q?78eczaNaXc6JF/4KQAA2ZM58D63ribR7kZkaEerJbt5uyxcHKYedLHJmpd?=
+ =?iso-8859-1?Q?QrCw8ZNQsFLabpgAXq6S8ffQM1pfYvRSXC88q2KvkZpUX1hegJmcbUYGld?=
+ =?iso-8859-1?Q?9Q5O3rMdHWE8qaf+NOd8Z4Crjf48MPh2YUG3T8WN+PnqWzeETKLEXc4QLB?=
+ =?iso-8859-1?Q?V1mlZm2TEdcl0bA/xOsagWcXyIDlX5XKX3FzkFiLM5LouC6ra6j333b8d4?=
+ =?iso-8859-1?Q?0R2Or+TDK17jdO3JdzpI2osUwB+Gz3wzH1q9xc5fRiVocvsO7hY9BKHWLD?=
+ =?iso-8859-1?Q?iPwefLhdBVJzADeBTX62U05YpP0Hye+cNA00VAu5p4iuw5n7kVcbkL/rTz?=
+ =?iso-8859-1?Q?ndTgml53HEOdi3rz3NRlWUvTMwnorrwBcIjTpQ9dF9O4WppO9zgPgzFVEa?=
+ =?iso-8859-1?Q?arXHLZWyQL8QHqBDPSF3cmERQDmJXzfIOQehWI/UXvHkuOVuhXEirrILkW?=
+ =?iso-8859-1?Q?W+D4l2SNR6m91bnjOURUJX3vz1EM5S/hYHSpuv6jwDvlKwrKRO+yj8LrkK?=
+ =?iso-8859-1?Q?sTQNxJrJyfkX7URZCvzxsz0Y/JM2wCrDUpV8oAb/1hjnfnyOrRaAPK+g5F?=
+ =?iso-8859-1?Q?htZrFMKRqixYDV+ks+Jz6KH8HjAlsQ/EVoxpGouodh8VRsjLqYVFf1Elda?=
+ =?iso-8859-1?Q?aOfMx62ePi6Al8yUQFCWPhTDLNJvFcQrxpuB2dyM87HMV9wef/WGm8vqsg?=
+ =?iso-8859-1?Q?jNUyjEya1kqWlS/imh0zPHZCluJ5+ukmqiuxcsvj3g82ZeR9R1e2HA5Ejv?=
+ =?iso-8859-1?Q?49MXYJWcl5XOEb9WV4DN37O/EMoKHKbp7KuKpGDHSsNo49c7Iv3az2Sxsa?=
+ =?iso-8859-1?Q?k+xcobmdQBFebOJP3I78I7MiZtxIlixfi6pSvn1c5yu0LsI6HGOtq8juc+?=
+ =?iso-8859-1?Q?TiPuln+VrBB2nobnPxum3kFMlndood/T+c+gdq4b0pBzh2cD6ojWdaKS0O?=
+ =?iso-8859-1?Q?Ol+wssX24ZW3M2tHk7BefomPT+bJp0L3VK9rwPc2bPuHomZL1dWZxkvqb7?=
+ =?iso-8859-1?Q?j/FgNkPMu6gmIlx6qIagdnXfkh77c4+GCkylpTITj0qTdWe0rg9g?=
+X-OriginatorOrg: valinux.co.jp
+X-MS-Exchange-CrossTenant-Network-Message-Id: 948d103a-5266-43b3-f814-08df29b5bdcf
+X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 05:27:25.4561
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2026 05:41:06.1696
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OSxzCqgymh9SoUS2EhgCkiU18qmoxcRk9m0eD6zb5q+9vs09XovJBImHy8Ie9ICT2RJGauurMbqrOBok1Bn2+AUe7MQufle8OabXuMkXtTU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB8198
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-UserPrincipalName: z/++1PJTBlBCHqKW3x9YqKLI/+ISagP1oepZtF2awUcIGO1RC1QirZQaezbZtmTiw8aFhJrxndlSFD7D1A0OLg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCP286MB2720
 
-On Tue, Sep 22, 2026 at 10:29:59AM +0000, sashiko-bot@kernel.org wrote:
+On Sat, Sep 19, 2026 at 05:34:51PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] cxl: integer underflow in cxl_get_poison_unmapped() from unmapped decoder offset
+> - [High] pci: epf-vntb: missing msix_capable check leads to remote DoS
+
+Thanks for the catch. IMO this is a fair concern, and the check is
+straight-forward. I've respun and added it in v4:
+https://lore.kernel.org/r/20261014053256.2378817-1-den@valinux.co.jp/
+
+Best regards,
+Koichiro
+
 > --
 > 
-> commit 8602a2ffbae3a910b43392bb444acb65b6b365e7
-> Author: Richard Cheng <icheng@nvidia.com>
+> commit f3657c59adbc44294a8ce54de921ee0a386471b0
+> Author: Koichiro Den <den@valinux.co.jp>
+> Subject: PCI: endpoint: pci-epf-vntb: Honor MSI-X selection
 > 
-> cxl/region: Start unmapped poison scan at the committed decoder boundary
+> This commit modifies the vNTB endpoint function to configure MSI-X when
+> supported by the hardware and uses the selected type for peer doorbells.
+> It allocates the MSI-X Table and PBA in the config BAR and configures
+> db_count entries.
 > 
-> poison_by_decoder() stops at the last committed decoder and records the
-> handoff in ctx->offset, but cxl_get_poison_unmapped() ignores it and
-> starts after the highest DPA allocation instead. Allocation exist for
-> uncommitted decoders too, so their DPA is skipped by both phases and
-> poison there is never reported. Resume the scan at ctx->offset, and scan
-> later partitions in full, restoring the pre-rewrite behavior.
-> 
-> > diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-> > index 042356c71ed79..4869cdd6a3d48 100644
-> > --- a/drivers/cxl/core/region.c
-> > +++ b/drivers/cxl/core/region.c
+> > diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> > --- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> > +++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
 > 
 > [ ... ]
 > 
-> > @@ -2944,10 +2943,8 @@ static int cxl_get_poison_unmapped(struct cxl_memdev *cxlmd,
-> >  	 */
-> >  	for (int i = ctx->part; i < cxlds->nr_partitions; i++) {
-> >  		res = &cxlds->part[i].res;
-> > -		for (p = res->child, last = NULL; p; p = p->sibling)
-> > -			last = p;
-> > -		if (last)
-> > -			offset = last->end + 1;
-> > +		if (i == ctx->part)
-> > +			offset = ctx->offset;
-> > +		else
-> > +			offset = res->start;
-> >  		length = res->end - offset + 1;
+> > @@ -308,6 +310,7 @@ static void epf_ntb_cmd_handler(struct work_struct *work)
+> >  
+> >  	switch (command) {
+> >  	case COMMAND_CONFIGURE_DOORBELL:
+> > +		ntb->peer_msix = argument & MSIX_ENABLE;
 > 
 > [Severity: High]
-> Does this code risk an integer underflow if offset is greater than res->end?
+> Does this allow the remote host to unconditionally enable MSI-X locally?
 > 
-> If poison_by_decoder() encounters a zero-sized commit_end decoder, it can
-> set ctx->part = -1 and ctx->offset = cxled->dpa_res->end + 1. If that
-> decoder was configured by firmware with a large skip value, ctx->offset can
-> be strictly greater than the end of the first partition (part[0].res.end).
+> Since this takes the MSIX_ENABLE flag directly from the remote host's 
+> argument, could it bypass the local endpoint's hardware capabilities check 
+> for epc_features->msix_capable?
 > 
-> Later, cxl_get_poison_by_endpoint() forces ctx.part = 0 before calling
-> cxl_get_poison_unmapped():
+> >  		ctrl->command_status = COMMAND_STATUS_OK;
+> >  		break;
+> >  	case COMMAND_TEARDOWN_DOORBELL:
 > 
-> drivers/cxl/core/region.c:cxl_get_poison_by_endpoint() {
->     ...
-> 	if (rc == 1) {
-> 		/* ... */
-> 		if (ctx.part < 0)
-> 			ctx.part = 0;
-> 		rc = cxl_get_poison_unmapped(to_cxl_memdev(port->uport_dev),
-> 					     &ctx);
-> 	}
->     ...
-> }
+> [ ... ]
 > 
-> Because ctx.offset is not reset to part[0].res.start, offset is assigned
-> the out-of-bounds ctx->offset when i == 0. This causes the length
-> calculation to underflow in unsigned 64-bit arithmetic to an enormous
-> positive value.
+> > @@ -1540,6 +1561,7 @@ static void vntb_epf_peer_db_work(struct work_struct *work)
+> >  
+> >  	func_no = epf->func_no;
+> >  	vfunc_no = epf->vfunc_no;
+> > +	irq_type = ntb->peer_msix ? PCI_IRQ_MSIX : PCI_IRQ_MSI;
+> >  
+> >  	/*
+> >  	 * Drain doorbells from peer_db_pending in snapshots (atomic64_xchg()).
 > 
-> Could this underflow bypass the !length check and result in sending an
-> invalid mailbox command to the hardware?
+> [ ... ]
 > 
-> A massive out-of-bounds length passed directly to cxl_mem_get_poison() may
-> cause the CXL device to hang, time out, or process out-of-bounds requests,
-> leading to system instability.
-
-I (with the help of another non-Sashiko AI) looked into this.
-The precondition is not reachable. An empty decoder is assigned the
-partition containing its base, request_skip() fails if the skip extends
-beyond the partitions, so ctx->offset <= res->end + 1.
-
-I do think this is worth closing down anyway, to avoid revisiting this
-again and again and again.
-
-I looked at 2 places to clamp this.
-
-My second choice is in cxl_mem_get_poison() but all of its callers are in
-the kernel and have worked out the range from the partition layout.
-
-My first choice is below, right in this patch - 
-
-I wonder if DaveJ will do this upon applying, pretty please :)
-
- --- a/drivers/cxl/core/region.c
-  +++ b/drivers/cxl/core/region.c
-  @@ -3032,8 +3032,10 @@ int cxl_get_poison_by_endpoint(struct cxl_port *port)
-                   * (every committed decoder is zero-size): scan all
-                   * partitions in full.
-                   */
-  -               if (ctx.part < 0)
-  +               if (ctx.part < 0) {
-                          ctx.part = 0;
-  +                       ctx.offset = 0;
-  +               }
-                  rc = cxl_get_poison_unmapped(to_cxl_memdev(port->uport_dev),
-                                               &ctx);
-          }
-
-
-
--- Alison
-
-
-
+> > @@ -1573,7 +1595,7 @@ static void vntb_epf_peer_db_work(struct work_struct *work)
+> >  			db_bits &= ~BIT_ULL(db_bit);
+> >  
+> >  			ret = pci_epc_raise_irq(epf->epc, func_no, vfunc_no,
+> > -						PCI_IRQ_MSI, interrupt_num);
+> > +						irq_type, interrupt_num);
+> 
+> [Severity: High]
+> Can this cause a crash in the endpoint controller driver if MSI-X is not
+> actually supported locally?
+> 
+> If the remote host requests MSI-X but the local endpoint does not support
+> it, pci_epc_set_msix() will never be called to initialize the local MSI-X
+> table.
+> 
+> When vntb_epf_peer_db_work() later calls pci_epc_raise_irq() with
+> PCI_IRQ_MSIX based on the unvalidated ntb->peer_msix flag, will
+> the underlying controller drivers (like DesignWare) attempt to read
+> uninitialized hardware BIR and table offsets? Could this result in
+> dereferencing a NULL or out-of-bounds ep_func->epf_bar[bir]?
+> 
+> >  			if (ret)
+> >  				dev_err(&epf->dev,
+> >  					"Failed to raise IRQ for interrupt_num %u: %d\n",
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260922101129.52794-1-icheng@nvidia.com?part=3
-> 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260919172021.1055451-1-den@valinux.co.jp?part=1
