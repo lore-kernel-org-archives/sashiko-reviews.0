@@ -1,125 +1,148 @@
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F271B3F0A9B
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 08:24:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406194A4410
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 08:43:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791966302; cv=none; b=NYCObpLrKlUOJ/FDnRpmnL+tldsS2C+jMxp5P6vrThhpPjyZipZ7qxhiDWrnIr20bRIv/S3xsxEW1QPTBibr0S/m8ynQt0sFyULtYVJrI7e19EiGjxbtDEYyRpFdMCkWsoOA2XM59PlkwDtA33bjHkdQiTVuwXHp1Ffqr+aCxf0=
+	t=1791967439; cv=none; b=mk9iXOTuITuzqUELe0H7UgsxbE6qOtGg4RjIAE0hbUBzGMItY+PiNy4XbH735WUwQs8nWIszhXzpy1UjPkCYbEGW1gcjEvplIIGKam5hMoVit1LLr0+Fe7/p9e+qXhwnDdKZdboEPgL4oq9uQ+Jf2/X6dMXnrdtyAPSO5OBGh3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791966302; c=relaxed/simple;
-	bh=uG3TpedY1vEs460u4nd+AVx4nLwUfNy/KQRVBXilNb4=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=EdE53z3cgXij+v72XkxpH3+VRKOyrWVKG5mmku+TReWFbx1PCIT0fe/LdlwP1KBmY0LwM2Yl3/FzL6lX1ho/VmQYRsbU5zEerji6GkzDiWsGEQKxCNaKpMinrg25wIw+kvT9xM/JNhwwUThCR0DUJoVDqBA9w+F1GjZvNj5vb9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=vT5EQd1M; arc=none smtp.client-ip=185.171.202.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="vT5EQd1M"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id D0FA8C63440;
-	Wed, 14 Oct 2026 08:25:53 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id EDFC560368;
-	Wed, 14 Oct 2026 08:24:57 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 580D410328AD7;
-	Wed, 14 Oct 2026 10:24:48 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1791966296; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=71Unaai47oG9YWYzUALaY8suroh2hCKw55TRbaM+FLs=;
-	b=vT5EQd1MnqSBdw1Q7dPnBerAu3+c0LwJ5E1sTPFCAz/lrxhWfp0OghOLqG/V0lTbA/Q86g
-	ogJQYwENzzJ8G3wmxtpYlwhZZD0E1Qq5v/YJ6Cypn0DfQLxB2IE2IF/TOwxzzUeYC8MI2S
-	STWXHN0eRen4GTraP/AcqTOPi0KD4oZ0YkeeW+YdHnXZukhQNe/6qwnVuyIZdvetF0ajVX
-	kaaqD7qZ8Se0ZAbWXSqAE1sLs2wVb0RL1H+X23Qp4CjFH8aIHdXqvBphuAA5htbP4y2crq
-	jepoS3URyqUY70n1NZGwNU9GT5U7kF3/oy/pU6xkhR4z//ZQvDrQc2PZ8YtQHA==
-Message-ID: <73139fed463dc3c32ccccfddb84d0f500066401f.camel@bootlin.com>
-Subject: Re: [PATCH v2 1/7] spi: spi-mem: Add support for panic mem writes
-From: Paul Cercueil <paul.cercueil@bootlin.com>
-To: Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: sashiko-reviews@lists.linux.dev, Pratyush Yadav <pratyush@kernel.org>, 
- Michael Walle <mwalle@kernel.org>, Takahiro Kuwano
- <takahiro.kuwano@infineon.com>, Richard Weinberger	 <richard@nod.at>,
- Vignesh Raghavendra <vigneshr@ti.com>, Mark Brown	 <broonie@kernel.org>,
- Thomas Petazzoni <thomas.petazzoni@bootlin.com>, Kees Cook
- <kees@kernel.org>, Tony Luck <tony.luck@intel.com>, "Guilherme G . Piccoli"
-	 <gpiccoli@igalia.com>, linux-mtd@lists.infradead.org, Bharat Bhushan	
- <bbhushan2@marvell.com>, Sunil Kovvuri Goutham <sgoutham@marvell.com>, 
- Tanmay Jagdale <tanmay@marvell.com>
-Date: Wed, 14 Oct 2026 10:24:45 +0200
-In-Reply-To: <87wlrlvbix.fsf@bootlin.com>
-References: <20261013141350.189996-1-paul.cercueil@bootlin.com>
-		<20261013141350.189996-2-paul.cercueil@bootlin.com>
-		<sashiko-outbox-169898@kernel.org>
-		<4a8f6d2bff13967288cbff72d1c3e8fcb4ca9f8d.camel@bootlin.com>
-	 <87wlrlvbix.fsf@bootlin.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2-0+deb13u1 
+	s=arc-20240116; t=1791967439; c=relaxed/simple;
+	bh=sAaVW0Mv3JknQcPFPCt09Wnvobj8sQA3tanlq10VrwI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=caOUxQj27h923wMD2cWVapHgEhcEoFDEqrIhGk+1YZkiL8y+uEIQkbRiaFjOR9EB874IujYTp3s/kWl8YRoKtX28Frsy+qY8WUoj6dnG29bfONNpluq22b3qRsTeeBZNtt6hzST6VciebYUaeo32wlt14TGv/zmaj8qKbA3F4ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=45.249.212.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.170])
+	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4j4Pq12lDJzKHMbf
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 16:42:53 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id 7128A4056D
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 16:43:53 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP2 (Coremail) with UTF8SMTPA id Syh0CgC3PPK_QM9qJSiRAQ--.18858S2;
+	Wed, 14 Oct 2026 16:43:53 +0800 (CST)
+Message-ID: <c9f7d080-7e54-4ea8-90fd-4b3017a1f576@huaweicloud.com>
+Date: Wed, 14 Oct 2026 16:43:43 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Last-TLS-Session-Version: TLSv1.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 06/15] perf annotate-arm64: Support store instruction
+ tracking
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+References: <cover.1791629326.git.wutengda@huaweicloud.com>
+ <eb44bbf4b74555bc43f3659f4733faff403debbf.1791629326.git.wutengda@huaweicloud.com>
+ <sashiko-outbox-169829@kernel.org>
+Content-Language: en-US
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <sashiko-outbox-169829@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:Syh0CgC3PPK_QM9qJSiRAQ--.18858S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDAr4xCFW8CF13AF4fZrb_yoW5uw13pr
+	98Cw1rKa1Utr40qFn3XF4j9r9xua1ft39rCr1Dt397ArsFkr93Krn3KayagFWUJr98uw1U
+	tF4v9rn7WFWFyaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgvb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x
+	0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG
+	6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFV
+	Cjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY
+	6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
+	CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
+	0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
+	AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIev
+	Ja73UjIFyTuYvjxUzsqWUUUUU
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-Hi Miqu=C3=A8l,
 
-Le mardi 13 octobre 2026 =C3=A0 17:57 +0200, Miquel Raynal a =C3=A9crit=C2=
-=A0:
-> Hi Paul,
->=20
-> On 13/10/2026 at 17:33:32 +02, Paul Cercueil <paul.cercueil@bootlin.com>
-> wrote:
->=20
-> > Hi Sashiko,
->=20
-> :-)
->=20
-> > > > -		ret =3D spi_mem_access_start(mem);
-> > > > +		if (!op->panic_write)
-> > > > +			ret =3D spi_mem_access_start(mem);
-> > > > +		else if (ctlr->auto_runtime_pm)
-> > > > +			ret =3D pm_runtime_get_if_active(ctlr-
-> > > > >dev.parent);
-> > > > =C2=A0		if (ret)
-> > > > =C2=A0			return ret;
-> > >=20
-> > > [Severity: High]
-> > > Is it safe to call pm_runtime_get_if_active() here during a kernel pa=
-nic?
-> > >=20
-> > > pm_runtime_get_if_active() relies on pm_runtime_get_conditional(), wh=
-ich
-> > > unconditionally acquires dev->power.lock via spin_lock_irqsave(). In =
-a
-> > > panic
-> > > context with NMIs or IRQs disabled, trying to acquire a spinlock that=
- may
-> > > be
-> > > held by a halted CPU causes an infinite spin. On PREEMPT_RT,
-> > > spin_lock_irqsave()
-> > > maps to a sleeping rt_mutex, which is strictly forbidden in atomic
-> > > context.
-> >=20
-> > ACK, I'll just drop pm_runtime_get_if_active() here, and restore the re=
-turn
-> > -
-> > EOPNOTSUPP that was in v1 when ctlr->auto_runtime_pm is set.
->=20
-> This is tricky but automatically rules out about 1/6th of the
-> controllers (45 controllers set this boolean out of +300). I don't like
-> it much. I guess it deserves a comment in case someone ever wants to
-> enable this feature on their auto-RPM-enabled controller, to understand
-> why this is not possible. My gut feeling is that the runtime PM layer
-> lacks its own understanding of what a panic is. We should, I believe, be
-> able to query the usage_count of a controller without taking the lock
-> during a panic write.
->=20
-> Nevertheless, let's move forward and return an error for now.
 
-I guess I can use pm_runtime_active() then?
+On 2026/10/13 21:36, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] perf annotate-arm64: Stale type tracking on status register in exclusive stores
+> --
+> 
+> commit e02fcbc321646663dec228cbae05f99e569cc5a5
+> Author: Tengda Wu <wutengda@huaweicloud.com>
+> 
+> perf annotate-arm64: Support store instruction tracking
+> 
+> Extend update_insn_state_arm64() to handle standard store instructions
+> (str, stur, stlr, stp). Exclusive stores (e.g., stxr, stxp) are omitted
+> as they exhibit different operand semantics. The patch also updates
+> pre-index and post-index addressing modes for the destination register.
+> 
+>> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
+>> index fb48bf95b32ff..54d9928b536fd 100644
+>> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
+>> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
+>> @@ -661,6 +661,20 @@ static void update_load_insn_state(struct type_state *state,
+>>  	adjust_reg_index_state(state, dloc, dl, src);
+>>  }
+>>  
+>> +/*
+>> + * Match standard store variants (str, stur, stlr, stp) that follow
+>> + * straightforward store semantics: source registers on the left (read-only)
+>> + * and memory target on the right. Excludes exclusive stores (stxr, stxp, etc.)
+>> + * which have status/result register side effects.
+>> + */
+>> +static bool is_standard_store_insn(const char *name)
+>> +{
+>> +	return !strncmp(name, "str", 3)  ||  /* str, strb, strh */
+>> +	       !strncmp(name, "stur", 4) ||  /* stur, sturb, sturh */
+>> +	       !strncmp(name, "stlr", 4) ||  /* stlr, stlrb, stlrh */
+>> +	       !strncmp(name, "stp", 3);     /* stp */
+>> +}
+> 
+> [Severity: Medium]
+> Will this result in stale type tracking for the status registers modified
+> by exclusive store instructions?
+> 
+> Since exclusive stores like stxr are excluded here, they fall through and
+> are ignored.  However, because arm64__insn_is_target_on_right("stxr")
+> places the memory operand in dst (so dst->mem_ref is true), the generic
+> invalidation block in update_insn_state_arm64() is also completely bypassed:
+> 
+> 	if (has_reg_type(state, dst->reg1) && !dst->mem_ref &&
+> 	    !is_standard_load_insn(dl->ins.name)) {
+> 		...
+> 
+> For an instruction like "stxr w0, x1, [x2]", the CPU modifies the status
+> register (w0, parsed into src->reg1). Since it skips both standard store
+> processing and the generic invalidation block, does the tracker leave the
+> status register's type state unaltered and allow stale types to propagate?
+> 
 
-Cheers,
--Paul
+Yes, indeed. And instructions like swp and cas may have the same problem. I'll fix it.
+
+Tengda
+
+> [ ... ]
+> 
+>> @@ -742,6 +756,17 @@ static void update_insn_state_arm64(struct type_state *state,
+>>  	/* Memory to register transfers */
+>>  	if (is_standard_load_insn(dl->ins.name))
+>>  		update_load_insn_state(state, dloc, dl, src, dst);
+>> +	/* Register to memory transfers */
+>> +	else if (is_standard_store_insn(dl->ins.name)) {
+>> +		/*
+>> +		 * Ignore transfers since it'd set a value in a struct
+>> +		 * and won't change the type.
+>> +		 *
+>> +		 * Needs to update the pre-index and post-index addressing
+>> +		 * modes for the destination register.
+>> +		 */
+>> +		adjust_reg_index_state(state, dloc, dl, dst);
+>> +	}
+>>  }
+>>  #endif
+>>
+> 
+
