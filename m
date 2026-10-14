@@ -1,116 +1,87 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
+Received: from out203-205-221-202.mail.qq.com (out203-205-221-202.mail.qq.com [203.205.221.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1B51A9F90
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 03:52:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AD8348C75
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 04:35:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791949978; cv=none; b=savtzc730QZXWZtrhhqna2XA0aRBmTApvhRwVIh+2Ozu7AqvhdekWQeCwQtjQchxL+QDYqdsnGK2aVG8FxpKO7fTEol1oajzm0ULBZesY5YS+rx0xdimp6sBL//iPDFBSOxzWKoJHHI4tYPIGKoNep7FX+JxrFBUuy88ZBn0Xbw=
+	t=1791952541; cv=none; b=EhqHEMAukgh+E8z9gDqGNhOKII1bgdMU+sB8bv2qjLypWptq1JITbC1fTgmexf/dDutTFBSRbHN6x8Iif+/5fx9UGbYwzu0d/OMPBNOnyKi+lM9Jn39WZHXY4FYmWAWdSQ4ujL7uDSBVsPXRBjDToFbUg0mmczcLEWpEUsxAMCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791949978; c=relaxed/simple;
-	bh=nNNGU7o40tC7QXU/COOaQkrPnEkNW/BqTs/t6WVz1Rk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YMO+ZGg/fqrJvjAlF58sKP1Ii1x4TjnFF4m6llci5QiQALi77HVDwQg8BLquHfnh+jasD/lYowVzAg9KoZLq/8D7uV5hwlmkLvaU2mpqr+9NmWmiO8I8FMjnAf7hqOVEC/oMyiZi/udZh73Sx2D5HY0WFt8UGv1EzWcVsQRgDvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=Buev6srr; arc=none smtp.client-ip=220.197.31.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1791952541; c=relaxed/simple;
+	bh=6ujtAJlGmqR5wqVhWDRituefF2TemEcF244dZ9ui1nk=;
+	h=From:To:Cc:Subject:Mime-Version:Content-Type:Date:Message-ID:
+	 References:In-Reply-To; b=a/VL5CmD6xGgaSqptJ01HOpfYU0f85FG4CB0BpeMNYSFWGpeh9rj2GxoCahRy8jK4kVsaF6EU6tPLqn5PCeM/BbdUfgMQruhoV5o7hW3O0kTzaWRFkyztzbKPlLOtUUb5S+k8HZNcpZ+sALnuGkHpKYPNsVNCoiO2tz3Nl9SBUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=bhCSWMmZ; arc=none smtp.client-ip=203.205.221.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="Buev6srr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=2+
-	+tFfM9B8L7twSBvgop9sHGqKoD1BT9lh1zNIeJBBg=; b=Buev6srrsrHKqgNz9E
-	/fOv9uryMc/p8/yAe/VdQ81Zdprd7NeHqXFG+hFNoUGzmDx6nb8zurDhJakvoQgO
-	B7n54YhLIEbGB5on+Fz+EH5E1dS1tReAasLh72KCB/uQ4O/Ox754YpQfS5KB6u0y
-	cR407qnB3jlasjaACtf6XD7Lo=
-Received: from localhost.localdomain (unknown [])
-	by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id _____wDnhW54_M5qIvm3EQ--.3735S2;
-	Wed, 14 Oct 2026 11:52:25 +0800 (CST)
-From: Haolong Wang <18766350203@163.com>
-To: Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Pratyush Yadav <pratyush@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	kexec@lists.infradead.org,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v2 1/2] mm/memfd_luo: carry the sealed exec-bit state in the preserved record
-Date: Wed, 14 Oct 2026 11:52:16 +0800
-Message-ID: <20261014035216.473794-1-18766350203@163.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <sashiko-outbox-170776@kernel.org>
-References: <sashiko-outbox-170776@kernel.org>
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="bhCSWMmZ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1791952535; bh=6ujtAJlGmqR5wqVhWDRituefF2TemEcF244dZ9ui1nk=;
+	h=From:To:Cc:Subject:Date:References:In-Reply-To;
+	b=bhCSWMmZrMh46WAZ4Zn+/7n+5VMA9aygPQKNpJv8jLqgAFi33zkvF4d2CkpRNvgGS
+	 ttkE3TzEDT4UUJ3tF7BGxW79hFeVtxk5v+C/6JwBSfxCNru9BD2MFLl8KO1jNkdwob
+	 Nit9volqUEYpu1RZ7ZzUiRm3jeOSN1WMFylCbW+4=
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+X-QQ-XMAILINFO: M7n9VusxZAlPbKpGXT+gLDlP4d9Xq1lq4eob0AwV0Sb0fVjn/OilceMXWXZ2um
+	 r1pFtgqOs6ss+cOji0kTbqdQ2CebYmuL2d+hj1hDWffek7Gl0KcvIAMJ4AezGW6FqkqKLUN/08QKN
+	 PBLmdAnsdAUy/DLepnCsbdts2M+UFcx18/YhCkVsR5nZwWjwqdvJd4yT8VHlKXXPvm2+j4aV8AmIW
+	 96L3fON5LMxktnLV7UL4GdAGigBNd2Tttfu+a209v7V9+use+XWSsJVbH6MmZGUBNroT4UQUscSwQ
+	 6TCzBQZSTZXamvMkQmW42vLxTsboRGLKzIOPk8pCfhbNLmDlOXgfT2AmtYjOknGMlO77c3sEgd5Vp
+	 +1hSLGdqvMa8mCLEj5jU2RkTr1tbobWrM67OwFpEgeXMzxnOuAaEZzdj881jin8BH7NYqYoQ++que
+	 BZzpuG+CUKU1qYTDajP1UOF8RiBiWrpPzXXjOEHw+pOBHdBFr6AfBquyo7GOyEzBuNVARG9vwBREd
+	 0JH8yrl34VAs2CaRUfxNCIOGvvw0cxlJN723HO8ExPNQYIM5NEvTDgp2qMcIiz0pFFE25CSjWvSGp
+	 w6xhce5TTO98Yd+LHSciiI9lg/zS/gNeNIsvJzjKoUZTqEl/zOOnKr94rsrcp4EBio4B2cZcXpE3p
+	 Cw3PyvnVwKTtJKSRWB7GksM7dAzegHqWcOjZ7I1ZBhgVXxQBFfFsUOgy1z21qTTB8aEC53GAy4kHm
+	 0XwazqM57t0Fg4xAtM3daOf7kT6y1xIfNALRDsK44CWjoTXhSFKAkCpPOuyVkk3Uvpjd/MYj3tzCD
+	 luesG5vhZ7FpWNhMQdgZ2TtbPAVVUFlMNbBFNGdPGQyKYIWnHqu/alK/dNDkLKatuEDy45pSSMzDb
+	 9TQKK+wTQrPRWzBpcCdE+5WXS/vMqYOsFLI7Agh2iCujmAbT6DqMJMBtev6diGbidolFdVghEQQfO
+	 swp0nyj5MYElCZMOUAbnTvPr74TchqH5r3Uj0LXPNnf7/u8QQLECvpgJqVb2VNUKmrCTAJRul2EYK
+	 YYp2dIi7VIt3exkYzQoEbSZ12+NFgjgLLBoQPuAt7jBnzdesACZPEH27ia3bQsb/c6MY4
+From: "=?utf-8?B?Q3VuaGFvIEx1?=" <1579567540@qq.com>
+To: "=?utf-8?B?c2FzaGlrby1yZXZpZXdz?=" <sashiko-reviews@lists.linux.dev>
+Cc: "=?utf-8?B?bGludXgtY2Fu?=" <linux-can@vger.kernel.org>, "=?utf-8?B?TWFyYyBLbGVpbmUtQnVkZGU=?=" <mkl@pengutronix.de>, "=?utf-8?B?T2xpdmVyIEhhcnRrb3Bw?=" <socketcan@hartkopp.net>, "=?utf-8?B?VmluY2VudCBNYWlsaG9s?=" <mailhol@kernel.org>, "=?utf-8?B?T2xla3NpaiBSZW1wZWw=?=" <o.rempel@pengutronix.de>
+Subject: Re: [PATCH net v2 3/3] can: rockchip_canfd: cancel bus-off restart before closing the device
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wDnhW54_M5qIvm3EQ--.3735S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxXr47Wr4ktr18tF1kGF17Wrg_yoW5Ww4Upr
-	Z8ta45tFWkKFyIv3yxAr18ZFyrAa1fAr4ak3s0grs5AFn8urn2vF1IgFyqv3WDJFZ7Wa90
-	yw4Uury7Kw4UArJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07US_M-UUUUU=
-X-CM-SenderInfo: jpryllawtvijiqt6il2tof0z/xtbC9hmrc2rO-HkpgwAA38
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+Date: Wed, 14 Oct 2026 12:35:33 +0800
+X-Priority: 3
+Message-ID: <tencent_B9EC467C023611B7FC189AA06892648C1209@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+References: <20261014-rockchip-canfd-restart-close-v2-0-c8fbdfad1803@qq.com>
+ <tencent_B15E13184DA04C4382F48848C006A2B51F06@qq.com>
+	<sashiko-outbox-170754@kernel.org>
+In-Reply-To: <sashiko-outbox-170754@kernel.org>
+X-QQ-mid: xmsezb41-0t1791952533td804daax
 
-Thanks, this is valid, and it covers the pre-existing bit as well.
-
-SysV SHM is created through shmem_kernel_file_setup(), which is the wrapper
-that passes S_PRIVATE down to __shmem_file_setup():
-
-    shmem_kernel_file_setup() -> __shmem_file_setup(..., S_PRIVATE)
-    shmem_file_setup()        -> __shmem_file_setup(..., 0)
-
-Both end in clear_nlink(), so the inode is unlinked either way and the
-existing predicate
-
-    return shmem_file(file) && !inode->i_nlink;
-
-admits the segment.  A descriptor obtained through /proc/<pid>/map_files/
-refers to the same inode, so it reaches the preserve ioctl, and the flags
-word it then shares is the one SHMEM_F_LOCKED lives in: shmem_lock() states
-it itself ("What serializes the accesses to info->flags?  ipc_lock_object()
-when called from shmctl_do_lock()"), while the LUO side holds the inode
-lock.  That mismatch is older than this series -- SHMEM_F_MAPPING_FROZEN
-was already updated the same way, so the new seal-state freeze only adds
-another bit to it.
-
-I will add a preparatory patch that rejects kernel-private shmem inodes
-from the memfd LUO handler:
-
-    return shmem_file(file) && !IS_PRIVATE(inode) && !inode->i_nlink;
-
-Real memfds come from shmem_file_setup() without S_PRIVATE, so memfd
-support is untouched.  What the check removes is exactly the
-shmem_kernel_file_setup() set: SysV SHM, big_key payloads, the XFS buffer
-and scrub files, and the anonymous /dev/zero mapping file.  Because
-SHMEM_F_LOCKED is only maintained for SysV segments, dropping those also
-removes the handler's only concurrent writer of that word.  That is why
-this does not need the flags word synchronized or the shmem_lock()
-read-modify-writes turned into atomic bit operations: both sides would have
-to change for that to help (one atomic side still loses against one plain
-read-modify-write side), and it would be a patch for the shmem and ipc
-maintainers rather than for this series.
-
-One thing I am not claiming: this does not narrow the handler to
-memfd_create() objects.  Unlinked non-private shmem files, a deleted tmpfs
-file for example, keep being accepted; they are simply not part of this
-race.
-
-Measured on the same tree, with CONFIG_CHECKPOINT_RESTORE and CONFIG_SYSVIPC
-enabled so that a segment descriptor is reachable, running the preserve
-ioctl on the descriptor taken from /proc/self/map_files (memfd_luo is the
-only file handler registered in that configuration):
-
-  kernel                SysV SHM fd        memfd     unlinked tmpfs
-  without the patch     accepted (0)       accepted  accepted
-  with the patch        -ENOENT (errno 2)  accepted  accepted
-
-The sysv descriptor reads back as "/SYSV00000000 (deleted)"; the two other
-objects are the controls that show the ioctl path still works and that the
-check is limited to kernel-private files.
-
-v3 will follow as a separate thread: the new patch first, then the two
-patches of v2 unchanged.
+SGksCgo+IFtTZXZlcml0eTogTWVkaXVtXQo+IElzIGl0IHNhZmUgdG8gY2FsbCBkaXNhYmxl
+X2lycSgpIGhlcmUgb24gYSBzaGFyZWQgaW50ZXJydXB0IGxpbmU/Cj4gCj4gSW4gcmtjYW5m
+ZF9vcGVuKCksIHRoZSBJUlEgaXMgZXhwbGljaXRseSByZWdpc3RlcmVkIGFzIHNoYXJlZDoK
+PiAKPiAgICAgZXJyID0gcmVxdWVzdF9pcnEobmRldi0+aXJxLCBya2NhbmZkX2lycSwgSVJR
+Rl9TSEFSRUQsIG5kZXYtPm5hbWUsIHByaXYpOwo+IAo+IE1hc2tpbmcgYSBzaGFyZWQgSVJR
+IGxpbmUgZ2xvYmFsbHkgZGVsYXlzIG9yIGRyb3BzIGludGVycnVwdHMgZm9yIGFsbCBvdGhl
+cgo+IGRldmljZXMgc2hhcmluZyB0aGF0IGxpbmUuCj4gCj4gQ291bGQgdGhpcyBkcml2ZXIg
+aW5zdGVhZCB1c2UgYSBzb2Z0d2FyZSBmbGFnIHBhaXJlZCB3aXRoIHN5bmNocm9uaXplX2ly
+cSgpCj4gb3Igc3BpbmxvY2tzIHRvIGV4Y2x1ZGUgdGhlIGhhbmRsZXIsIHJhdGhlciB0aGFu
+IGRpc2FibGluZyB0aGUgcGh5c2ljYWwgbGluZT8KPiAKPiA+ICAgcmtjYW5mZF9jaGlwX3N0
+YXJ0KHByaXYpOwo+ID4gICBya2NhbmZkX2NoaXBfaW50ZXJydXB0c19lbmFibGUocHJpdik7
+Cj4gPiArIGVuYWJsZV9pcnEobmRldi0+aXJxKTsKPiA+ICAgbmV0aWZfd2FrZV9xdWV1ZShu
+ZGV2KTsKPiA+ICAgYnJlYWs7CgpJIGFncmVlIHRoYXQgZGlzYWJsZV9pcnEoKSBhZmZlY3Rz
+IGFsbCB1c2VycyBvZiB0aGUgc2hhcmVkIElSUSBhbmQKc2hvdWxkIGJlIGF2b2lkZWQgaGVy
+ZS4KClRoZSBpbnRlbnQgd2FzIHRvIGV4Y2x1ZGUgdGhlIElSUSBoYW5kbGVyIHdoaWxlIHJl
+aW5pdGlhbGl6aW5nIHRoZQpjb250cm9sbGVyLiBNYXNraW5nIHRoZSBjb250cm9sbGVyJ3Mg
+b3duIGludGVycnVwdCBzb3VyY2VzIGFuZCBjYWxsaW5nCnN5bmNocm9uaXplX2lycSgpIGFs
+b25lIHdvdWxkIG5vdCBiZSBzdWZmaWNpZW50OiBhbm90aGVyIGRldmljZSBvbiB0aGUKc2hh
+cmVkIGxpbmUgY291bGQgc3RpbGwgaW52b2tlIHJrY2FuZmRfaXJxKCkgZHVyaW5nIHJlaW5p
+dGlhbGl6YXRpb24uCgpJIHdpbGwgZml4IHRoaXMgaXNzdWUgaW4gdjMuCgpSZWdhcmRzLApD
+dW5oYW8gTHUK
 
