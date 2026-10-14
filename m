@@ -1,209 +1,196 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14343AC0D9
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 11:50:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291B01C84AB
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 12:33:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791978644; cv=pass; b=jR1m52p4cx13OfwmjFvGYnn0qnRKV8sv7Y5xlZgjRE84yakxkIgiHx+8waKnQy1x3xt2tPfA8FcQ0TpXr7mH/wAbhyEoZjPcnIVXJh3k0RPdnYfGkcp2mee2lA0A02OMdQoGGNOTovEojDjhUA7+AxCSV7X7zHOH1rWsDxYIRl8=
+	t=1791981229; cv=pass; b=djOpSK6ugcw3sg7NU89mwZpxM7IcOtb5Ax5yccefcNOmG6VgQoKEABtweTH2u4x82Boyh1lCHYm7/9a7OVrryqApXY0DBnvhsk7MtzdhQmFACjL50v5qvDpfA8ecOygpBcBlBF/+kbPN61LUDGHJdsNnWSedBXA3a9VGqx6NNbc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791978644; c=relaxed/simple;
-	bh=YzE367kx9h5ucZyKgNsjxCV6DacyE/ZX6U4dDTaRoHQ=;
+	s=arc-20240116; t=1791981229; c=relaxed/simple;
+	bh=5LQu2scU6Wzy7H+0+F4mLdz9KrGpX5VTW+VuvPiHq2A=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Fn3VteBeeCEPGTvaKV24THi3Z/xPiwDlmBapPds/jtlUgEQysH6SPp1/LiT2K4rlGtyWN1X7Qb17tsFuea4JZScpdgIn4I47OPHu9LaD75PRUSaGTYdg7UU3KKL5ldUMhxozD2G0VFXLaHQIs0VgeLw90yqMmOvcpYdfQNEadTg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HloNjEUG; arc=pass smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=RRS+CtGK7MD6eGti4WaTI3580ySg6ucpYrW7NFV3vUG0zVpLkvzwmcVbzXlhq6rd2WHM91Y6fQ+mK26Xbua9OBJX4Jy/SRjbhvANUbEqj9ORr3uveF7uPvGB4yanlJK9LJPsGjzhqgCHLX17nZLY8K7lbNyf0zF7JD+YbOlSyOE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cloud.ionos.com; spf=pass smtp.mailfrom=ionos.com; dkim=pass (2048-bit key) header.d=cloud.ionos.com header.i=@cloud.ionos.com header.b=ITzHfcpy; arc=pass smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cloud.ionos.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ionos.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HloNjEUG"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-48df0fa43c5so28236f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 04:50:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1791978635; cv=none;
+	dkim=pass (2048-bit key) header.d=cloud.ionos.com header.i=@cloud.ionos.com header.b="ITzHfcpy"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-c2e38b61974so71419766b.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 05:33:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1791981225; cv=none;
         d=google.com; s=arc-20260327;
-        b=WEqp2TBqALh28Fj9umvMIo1eB346YrT8epUf2ALCY0/di51x5OkIOUluyrmtWhxDta
-         6rHodBKETb20Tpg234A5ks5V1RO6tEENWChBFhv8yy/lfPdUiJ0gyhyIg9vc+ixUBgrH
-         iLYN2Og3CBVUdQ1WW8YEmAalbprJqs97tKq8Qf5estwxwT0xWxwCQ8dsz/b10T0QqrAF
-         GcHm4Pn3BUN0D6awBWimkIuEVuMt1xb1XuTqchrIo78ysS5vMyt+sP3nPE/8WEcatU+8
-         P20d5PqjYs/qMR1m9GVkMPKN+N0/sJWJNKvbMpM8uEJIO73r86JHDS3fXSLsJ2BIr0FB
-         eTmA==
+        b=iG7C6ouGyMwjiStTbrXSdV2aem6pfXLWtsz9M5HfVCtxQODTl06xjazuQFNewzkudH
+         5Ee3XHnE69RxgOkgoIBFDTJY1iGBMqBoHXuv+C0eRqdTJx4I8iOhe66xcpvxshz8FgyS
+         Am1cPHWntFgBMyrND315GSRMApFKo0AgLfzqK8NcFu8EF0Q2C+NW+MLjwqmp+O0uxN/d
+         t6IKqsP5WlpODcF1jAx7nTMmtgmvmI1mCSdZv2SS04VkFv1UTc/YMbmex4PsJwInYXTV
+         OFVcrPdcL9RuhM5MwPV/QSYwYZ3x925TLRMfjNhf7Hm8cf67A0ZVMwKPhhmMdFSMpxvp
+         sRyw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=gsB6r14qi7ICCBa3crZHyjHVyyF0McKRspvIoEcEfgQ=;
-        fh=wiyUzaAORhvND/cCxIQVPhmBs2QyjRjA0wGO9ExJtKQ=;
-        b=iBmXsjd0kBpNZbfE6a1OQemWzBomL9l5qSc/Yilfnc7TIgY+ejjgDS1EyMNB7oS6Bu
-         Tq7SfV0JitHljt2yl4/Etdj1ycNpSSS7y/xQ3vQUAkoHEBBxuDX7GxRljwihEhAB51E/
-         vkCCUizXEc8uE4ZTPCMnTps69jKH7DdjMz81tQIZS4M1ojRF0ZAgeO7FTh55aIMhWsv7
-         tXmVerCWrFfrrblROKvcUdLPz4tlRLqB0Hq4Iqolwc1V9aHfK1iKBtOg6LXBEPwH4lcA
-         O9hTmh/vCuiuKB7nKy+H3EYcslWM0omeHEIfx6uItb9UdcjuEdhqAzVgBjGVdyVaDnKu
-         apew==;
+        bh=xc6OYIsIblBkxyIfP1OcMrgJAKJXZ0gf3E+YejrIirI=;
+        fh=mTP6TkWV1IhQRgyhsEpYqIpiXvhDlZKdHAfNRdOTDjk=;
+        b=B1vatt0ENCnMsrEh1L8K7ql/smHPNH1Le5HQOjQRnad5oQw2Yd2ZEMT6Yd5H3xvats
+         VvVXMpIVNlO547LJUXKfDJtvFrC5gR55018IYaTTR5G61nUKk//1BBRgBTJGccWtS1Qf
+         cHG18Jd5hngkG9ENveXL0GyyXmhYLwQyA/HI7fAEbOzPxCUDVqL3SxMqR+lOtO3NLh+x
+         ERDNoC/Qah7pyNmV6Uxdhw7twaHN+EdEPbcRPdA0QufHSxwff7PpX2qTN7MbX9YKkRnQ
+         Q8KsxN+oXLIXIqieeEkbzae4fJ0pK5AVUrZl3NlievZeO8K9VdQwPY3Fw6fyCWatrJQu
+         S/nw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791978635; x=1792583435; darn=lists.linux.dev;
+        d=cloud.ionos.com; s=google; t=1791981225; x=1792586025; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=gsB6r14qi7ICCBa3crZHyjHVyyF0McKRspvIoEcEfgQ=;
-        b=HloNjEUGdlK97VspGJuSH0tt+rdWeZDHFVFV/DXoWLtLGiKekIc5C1Mzqfdnho47T8
-         mUM7BoSslPAsG2wtVSP0T1RRmCKKPOWyc2fx6avonOZ3qUVPUmt37eYtly9M2tuZvyd5
-         xeP5gbhl4NVk5pJTX+TtaxorGmQOotCHqD8CEQswI7DUMDwMZRCtPEQMEkZsRMXc/oqV
-         LKpPn9e3UKlGj9FEdpswbK+N+03v7matAZo2R5f3Ms0TaYCOw+gIRqlbXw7n1qX8O5mb
-         9ccAy9eXqUJLiuCJz5jJiys2r7imdOGPkTV03gnG7AHC0+jzT2EVZopGp9bsyWvFuKNb
-         qsHA==
+        bh=xc6OYIsIblBkxyIfP1OcMrgJAKJXZ0gf3E+YejrIirI=;
+        b=ITzHfcpy+LcY1RF5rblVooeOhR7h49U3ONNqC1+F+9q31+tPYMcF8SzbdplUlrLwC/
+         6IsSGRYP0RkZq+nqulmwYML/CuUN3u1dTaugrt1HT2czbdC4OgoyxYLARp0s1BKz1/DB
+         ii6xDfemCIuu5CjcV1TiHlXAq6wGAVPMjOlhazzy1LjuqrbCmBV0AqUxZ/JmDSSoE32N
+         1VYWZJLqhHq3rybIt05ei1Pm6NePaGnNCpBOl5jehb9uYrf363Ybd9U3Pp6OyraHLPCX
+         N4NHmuDNb8zB0JCoewq6y/mBamG8qvQyKHEx5g9TAO7Zk9wlM61IoKVtec6h7BW+iE2K
+         IV6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791978635; x=1792583435;
+        d=1e100.net; s=20260707; t=1791981225; x=1792586025;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=gsB6r14qi7ICCBa3crZHyjHVyyF0McKRspvIoEcEfgQ=;
-        b=RPR7wmn+Ge0DzQiGFtyKNuBNyJ7Ag7KFlVixPYitD2fHiTsmwCtyst3HYiBFWTOB3O
-         YoAEVSpMCHuVervsud6t0AKF+HWp47WoYFzjisByY3vSiPvDLwJYoAC+h4D1CuyIeCyX
-         /B3rdXB3Rc9eP5eprhqFaT/1MMsPzXZ0TmQj+qktOZz0Pcf/eRbaVFuiE6/ErTGesm3y
-         jMqJ7u/GJmCgOJYY2X2x/v2O+0hyNBGHWiXhz67jZW073Xzjh90GjlTbKUSeb3Ytqm6l
-         pPgGf6AufTmUoXA61xirmRt1FEA5wOSk87oaaRb8NE+oyp5sFJf5fYwSt5EShm46wgED
-         YFDQ==
-X-Gm-Message-State: AFq9FYJsjmCnDD5mpVV468SlwovAW2Bjy6QcDYTw77zqr+ZWwBuHn3YG
-	toGJArFEBTmNgzmK63tBF8tj5YDD5y6G1LA/ECXiOJmbvBiiZRDSAokctnVN/5vqckpB1vJSo3A
-	jpm9i2TP728L2r9ZIj2l/l+JEX2zG5C8tRBnIrdM=
-X-Gm-Gg: AYBFou1laXAZxfGHaQ06/YY2HvqATvCkSacAH9h5w0cFs6BbTA5IkHkZzvIooLFNw+x
-	zLlbvrtiQPLTeCwim0vWh5qVGUUCU2qfR/XMQ2fsNnN5kIZZordxNUiFc8ly8Eqnw0DUrzzAzJR
-	fUv3Dmch1W7aAd0a/OUBKfTTD2Xjf86Yiil9o8ynwZNH/YH200HDjcUdDUN6c+Sl9f+QNkmqho8
-	lzHOgFR7aAepU2Ih7mWSM26bXgpXhtOLffNQkPR8XhzsbzP5pzs6iSF20vlTQ5wlx2L93rSyMqL
-	TPp9SANn9sIAHgYmjI3Q0TqvZL0hLmoqXjc19mlp8haBUIdaJyLLG2poz/MvwAnsDQ5ZbxCLGp3
-	K8MlquQ1bz13sF/w2WSGXekz/I5jkx+WuOb3eLFfut51yUU4lOpPGANF7H1kJsgABfVc8wK1Djw
-	==
-X-Received: by 2002:a05:6000:2506:b0:48b:946:c1f7 with SMTP id
- ffacd0b85a97d-48db94bb90bmr29562583f8f.31.1791978634671; Wed, 14 Oct 2026
- 04:50:34 -0700 (PDT)
+        bh=xc6OYIsIblBkxyIfP1OcMrgJAKJXZ0gf3E+YejrIirI=;
+        b=ORCoM238skmk77uCUVxR9zx2pchkNFlyNkNHNh5/hwh1ppj7myHB+JjhjMfNxb0w2o
+         HNRYQW1NcDFi2IkIIhtA8ny3UUc5vsTQ9tkFtq770c+Qqz66dh9BW1WIBO2yM6aX1L9R
+         rnPmG9zL+mcqG71JETCR2FOWwS3vVFKOOfXvZr0EBjo791b6EyxWxJEFnKfqdty16IWr
+         WTXzBnofJj2evkKEUt3XxRcNVnHUjQK/XlhLaCV4DLyebBTCP2Bfu2T51CKu8qJOqDVS
+         ZFH72bheVXulzU9iSr/PjHtNCh8YvVS6k4584eB//0ASTj946qhodO42EAEu/e9gCn0X
+         8F8A==
+X-Gm-Message-State: AFq9FYKFwl3AOv/pYBgECPHA20OeWaA9hh9aBzzfb1/9mx8yd0HmcoQP
+	xrsoyCxYPl6Oux74JWXe5KB/mYa14n5Ub7ESaR1p2ZM3kW9rTYxHWlPnovpnSx88Cfaie3akNli
+	DDJpiHVbcmM5vHjNfqYWz3jQyUEYlQwQHf9SM41lQ5ffQUazmNOGBhWYPZw==
+X-Gm-Gg: AYBFou1q/PePwFGlBviNT7BGxroQGTCC/QS2HU/30V3bH/C/r8zFQWlGE6ycj5KmZvf
+	h/iKyBXA8qVlkWmwv0T6SDPtndwZ+mbVsV2jNa2rDz7qOD5mMDC3957ICmNJACqM/7k0n3+sqLN
+	oME2Qdpi1sI0MGiJemjDFubSjeeJYGFsoeypKbHGuRn3ewJCEQiAinnWmKWXazljMRoKkwV+SVK
+	5Ws8kQGJ0jmAtMAKgl6Rc8ZTIX0SZWLqRArYqoZbyWe4CrjMdHpNyayGtG5LUUXhKR66jlcZJPC
+	/gFHov4bKNm3Umwl9OoNGb5jwklq2ryqJRSkcaJ/FG+utamgg4xxlrUAerIVM5ZPmA==
+X-Received: by 2002:a17:906:c10b:b0:c29:5172:c532 with SMTP id
+ a640c23a62f3a-c31a9f90cf0mr1591771666b.4.1791981225241; Wed, 14 Oct 2026
+ 05:33:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261001154326.754314-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
- <20261001154326.754314-5-prabhakar.mahadev-lad.rj@bp.renesas.com> <20261003013310.D30A61F000FF@smtp.kernel.org>
-In-Reply-To: <20261003013310.D30A61F000FF@smtp.kernel.org>
-From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
-Date: Wed, 14 Oct 2026 12:50:08 +0100
-X-Gm-Features: AclHuK-yCqqeOjMwwFQaMKLml8XUsF3SK8FdUMhRnNk9iZskJVvyr9TZ3F42bUI
-Message-ID: <CA+V-a8u-xhSopVPya+tZRZrn8mSWYzsEAXHpRC6eTwCk4DUmnQ@mail.gmail.com>
-Subject: Re: [PATCH net-next v2 04/12] dt-bindings: net: dsa:
- renesas,rzn1-a5psw: Add RZ/T2H and RZ/N2H ETHSW support
+References: <20261014114830.615589-1-jinpu.wang@ionos.com> <sashiko-outbox-171234@kernel.org>
+In-Reply-To: <sashiko-outbox-171234@kernel.org>
+From: Jinpu Wang <jinpu.wang@cloud.ionos.com>
+Date: Wed, 14 Oct 2026 14:33:34 +0200
+X-Gm-Features: AclHuK-VUY2tO56miFi14QNouGTHw5CYl_-Mcn4FjH6FftaHezCVW9gFtUZ8ChM
+Message-ID: <CAMGffEk1GDMquLszFvDC-KPn1827QjA-J9rVoKoHQm_H3Su3FA@mail.gmail.com>
+Subject: Re: [PATCH] md: allow growing logical_block_size on a running array
 To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org, 
-	wsa+renesas@sang-engineering.com
+Cc: linux-raid@vger.kernel.org, yukuai@fygo.io
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
-
-On Sat, Oct 3, 2026 at 2:33=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+On Wed, Oct 14, 2026 at 2:00=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [Medium] dt-bindings: net: dsa: a5psw: globally requiring interrupts br=
-eaks backward ABI
-> - [Low] dt-bindings: net: dsa: a5psw: missing port count restriction for =
-ETHSW variant
+> - [High] md: Unbalanced mutex unlock on mddev_lock() failure in lbs_store=
+()
+This one is fixed in
+https://lore.kernel.org/linux-raid/20261013141241.2257621-1-yukuai@kernel.o=
+rg/T/#u
+> - [High] md: TOCTOU race in lbs_store() bypasses opener check and deadloc=
+ks via queue freeze
+Second is valid, seems no simple solution, safer to lbs change when
+array is inactive. I will drop the patch
 > --
 >
-> commit ac61e34c73e390592b92437f35f98d8807997f55
-> Author: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+> commit 4267b7426d911d22ecfdc4aa203d879ce4f9a759
+> Author: Jack Wang <jinpu.wang@cloud.ionos.com>
 >
-> dt-bindings: net: dsa: renesas,rzn1-a5psw: Add RZ/T2H and RZ/N2H ETHSW su=
-pport
+>     md: allow growing logical_block_size on a running array
 >
-> This commit extends the A5PSW DSA binding to cover the ETHSW variant used=
- on
-> newer Renesas SoCs. It updates the schema with new compatible strings, mo=
-difies
-> interrupt and clock properties, and accounts for the 4-port topology.
+>     Growing logical_block_size on a running array required stopping it
+>     first. Handle it directly in lbs_store(), similar to
+>     mddev_set_closing_and_sync_blockdev(): under open_mutex, refuse with
+>     -EBUSY if the array is closing or has openers, otherwise apply the
+>     bigger LBS.
 >
-> > diff --git a/Documentation/devicetree/bindings/net/dsa/renesas,rzn1-a5p=
-sw.yaml b/Documentation/devicetree/bindings/net/dsa/renesas,rzn1-a5psw.yaml
-> > index fab6aa6237e93..863633185912f 100644
-> > --- a/Documentation/devicetree/bindings/net/dsa/renesas,rzn1-a5psw.yaml
-> > +++ b/Documentation/devicetree/bindings/net/dsa/renesas,rzn1-a5psw.yaml
+> > diff --git a/drivers/md/md.c b/drivers/md/md.c
+> > index 680b34a63cb3d..c885d405bf466 100644
+> > --- a/drivers/md/md.c
+> > +++ b/drivers/md/md.c
+>
 > [ ... ]
-> > @@ -73,14 +145,48 @@ properties:
-> >                phandle pointing to a PCS sub-node compatible with
-> >                renesas,rzn1-miic.yaml#
-> >
-> > -unevaluatedProperties: false
-> > -
-> >  required:
-> >    - compatible
-> >    - reg
-> >    - clocks
-> >    - clock-names
-> >    - power-domains
-> > +  - interrupts
-> > +  - interrupt-names
 >
-> [Severity: Medium]
-> Does adding interrupts and interrupt-names to the top-level required arra=
-y
-> cause a regression by breaking backward compatibility for legacy device t=
-rees?
+> > @@ -6026,8 +6026,36 @@ lbs_store(struct mddev *mddev, const char *buf, =
+size_t len)
+> >       if (mddev->pers) {
 >
-No, because the existing SoCs already have the interrupts and
-interrupt-names properties in the SoC DTSI.
-
-> Existing device trees for the older renesas,rzn1-a5psw hardware that do n=
-ot
-> specify the interrupts property will now fail validation. Since the Linux
-> driver does not currently utilize interrupts, it is perfectly valid and
-> functional for older device trees to omit them.
+> [Severity: High]
+> Since this check of mddev->pers is performed locklessly, can a concurrent
+> thread starting the array race with it?
 >
-> Should these properties only be required conditionally within the then bl=
+> If mddev->pers is null, we fall through to the bottom path and block on
+> mddev_lock(mddev). Concurrently, another thread executing do_md_run() cou=
+ld
+> acquire reconfig_mutex, set mddev->pers to non-null, start the array, and
+> release the lock.
+>
+> When lbs_store() wakes up and acquires reconfig_mutex, it does not re-ver=
+ify
+> mddev->pers or check atomic_read(&mddev->openers) > 0 before calling
+> mddev_set_logical_block_size():
+>
+> drivers/md/md.c:lbs_store() {
+>     ...
+>         if (mddev->pers) {
+>         ...
+>                 return len;
+>         }
+>
+>         err =3D mddev_lock(mddev);
+>         if (err)
+>                 goto unlock;
+>
+>         err =3D mddev_set_logical_block_size(mddev, lbs);
+>     ...
+> }
+>
+> Does this blindly apply a new logical block size to a running array with
+> active openers? Furthermore, since mddev_set_logical_block_size() invokes
+> queue_limits_commit_update_frozen() which waits for all active I/O to dra=
+in
+> while holding reconfig_mutex, could this deadlock if active I/O completio=
+n
+> requires reconfig_mutex?
+>
+> [Severity: High]
+> If mddev_lock() fails (e.g., interrupted by a signal, returning -EINTR),
+> does it jump to an unbalanced unlock?
+>
+> drivers/md/md.c:lbs_store() {
+>     ...
+>         err =3D mddev_lock(mddev);
+>         if (err)
+>                 goto unlock;
+>
+>         err =3D mddev_set_logical_block_size(mddev, lbs);
+>
+> unlock:
+>         mddev_unlock(mddev);
+>         return err ?: len;
+> }
+>
+> Because mddev_lock() failed, reconfig_mutex was not acquired, but the unl=
 ock
-> for the new hardware variant?
->
-> > +
-> > +allOf:
-> > +  - $ref: dsa.yaml#/$defs/ethernet-ports
-> > +
-> > +  - if:
-> > +      properties:
-> > +        compatible:
-> > +          contains:
-> > +            const: renesas,r9a09g077-ethsw
-> > +    then:
-> > +      properties:
-> > +        interrupts:
-> > +          minItems: 24
-> > +        interrupt-names:
-> > +          minItems: 24
-> > +        clocks:
-> > +          minItems: 3
-> > +        clock-names:
-> > +          minItems: 3
-> > +      required:
-> > +        - resets
->
-> [Severity: Low]
-> Does this conditional block need to restrict the port count for the new
-> ETHSW variant?
->
-> The global patternProperties for ethernet-ports allows
-> "^(ethernet-)?port@[0-4]$", which globally permits up to 5 ports. This is
-> correct for the older A5PSW variant but incorrect for the new 4-port ETHS=
-W
-> variant.
->
-Agreed, I will add a check to validate this.
-
-Cheers,
-Prabhakar
-
-> Without a port count restriction here (e.g., overriding and disabling por=
-t@4),
-> device trees with invalid 5-port configurations for the new variant will
-> silently pass schema validation.
+> label unconditionally calls mddev_unlock(mddev) to release it. Could this
+> attempt to unlock an unheld mutex and trigger a lockdep splat or kernel
+> panic?
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261001154326.75=
-4314-1-prabhakar.mahadev-lad.rj@bp.renesas.com?part=3D4
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261014114830.61=
+5589-1-jinpu.wang@ionos.com?part=3D1
