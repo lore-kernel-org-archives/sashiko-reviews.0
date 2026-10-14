@@ -1,76 +1,98 @@
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+Received: from mail-m12773.qiye.163.com (mail-m12773.qiye.163.com [115.236.127.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F7C1DDC38
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 08:56:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A804A8A18
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 08:58:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.236.127.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791968220; cv=none; b=s4n6jboky0wok/D20L+HL8vg2wkAhWF89pfrk6U/izJiBR+WKQQ4A1HowtulKcTwk1zdxNJmRv8+OY9teJHn5f/pxF1uiRAMiWrPXSeQ4eGru17EZRZq5jFJ7wAVgmMVuT1q6UujlM5KuHDu/OR6gTdjSG7JQiF8EMLeFt15BM4=
+	t=1791968322; cv=none; b=pADXPuRyzqZg51l9lWMZeCLFMudMo3TOMb2yNUIG+Arq6Q6Ou0wEExOHGAh5NJSNpanTyNJMx44QHP6J+HinFpDCSclqhLawPNVyQhxEsJBkyIsDOu5UJY5pZhfwRfQRXMr1tuGEHwYEoNZYolWE5sC8afOac651JrFuSQ3v238=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791968220; c=relaxed/simple;
-	bh=QXEXhFBvt4F4QT67cXrgn/2jcAONBRGyvL007IxDRsY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U9hVe2lyg72vZMCEdoatOiCSAWZcuZUP2CPgzZvI1pJxy0WBQPn+EgFYuJX9urfxCL09bt1FRlskjaQL3YnEUFXUFBPwXiE7EsuJDEhmMt0lg7R7Lyr4VCkUbqrb48WLOeWmTnLB/fUAslMqfF6rXrAn0g8nLRzLd6SnWXMmXsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=rCFDiC6P; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="rCFDiC6P"
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 33DBA4E4120B;
-	Wed, 14 Oct 2026 08:56:57 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 086C860368;
-	Wed, 14 Oct 2026 08:56:57 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id B7F98103286A7;
-	Wed, 14 Oct 2026 10:56:53 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1791968216; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=QXEXhFBvt4F4QT67cXrgn/2jcAONBRGyvL007IxDRsY=;
-	b=rCFDiC6Pd5sxTy0QeydLhT83XQRzmar+QdOIA+cYjU0cWFzoJ2nj6GP/iHgJPDdwUTPtvT
-	ssy9Ep2wplciyZH5IX3PyBTJPImiGgSiHNBu9/wYRD/wZXb2PhxOyv6NvCJddVRjYY+7uk
-	oI0SkqgVa/2ZVzb1arcpbzw1lICkL1/mNK5JThABjdYeH0KVfdDih5LkUIcG/JqJBJsWFr
-	ykGSo7vjFQ0KT3WvT6fYThkaxnRmXQurdGQCMOEKOpSNJOCXJPtA4gMh/LFq4Oaj4/iC8b
-	sb5+X0FBtAtaJoCfXVOOJp9e6T8s7mMJzwZ9+DF78yj81HAQxEhvXyFmzW32sg==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: sashiko-bot@kernel.org
-Cc: "Pratyush Yadav" <pratyush@kernel.org>,  "Michael Walle"
- <mwalle@kernel.org>,  "Takahiro Kuwano" <takahiro.kuwano@infineon.com>,
-  "Richard Weinberger" <richard@nod.at>,  "Vignesh Raghavendra"
- <vigneshr@ti.com>,  sashiko-reviews@lists.linux.dev,  "Thomas Petazzoni"
- <thomas.petazzoni@bootlin.com>,  "Steam Lin" <STLin2@winbond.com>,
-  linux-mtd@lists.infradead.org
-Subject: Re: [PATCH v3 08/17] mtd: spi-nor: Fix WRSR with ODTR chips
-In-Reply-To: <sashiko-outbox-170165@kernel.org> (sashiko-bot@kernel.org's
-	message of "Tue, 13 Oct 2026 16:51:49 +0000")
-References: <20261013-winbond-master-spi-nor-w35t-v3-0-6dde1d513df8@bootlin.com>
-	<20261013-winbond-master-spi-nor-w35t-v3-8-6dde1d513df8@bootlin.com>
-	<sashiko-outbox-170165@kernel.org>
-User-Agent: mu4e 1.12.12; emacs 30.2
-Date: Wed, 14 Oct 2026 10:56:53 +0200
-Message-ID: <87a4ogzmlm.fsf@bootlin.com>
+	s=arc-20240116; t=1791968322; c=relaxed/simple;
+	bh=JCu+SmE7DaT4V8bV1ux3Fq22uikv5xMskoz7V+kge5o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BXhsFPo1/t2bI9nGbWMN043twUNosjhiYvQHKkP9o+pfzeLMUywGNccnnnQgqgXu0vbq0pXhMigQdBnD5Dvb/5I0WO/V1nG0dn023ODkK3R75mXn/kpoR6BtETAD6WPh6Ft/TpTQLUOGPpZeSCR2C3xNKZG3mSs+1aNxycaKMBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easystack.cn; spf=pass smtp.mailfrom=easystack.cn; arc=none smtp.client-ip=115.236.127.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easystack.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=easystack.cn
+Received: from [192.168.0.59] (unknown [218.94.118.90])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 200da6bab;
+	Wed, 14 Oct 2026 16:53:19 +0800 (GMT+08:00)
+Message-ID: <3856c10f-6e18-4dda-8b3a-085f246e3bbd@easystack.cn>
+Date: Wed, 14 Oct 2026 16:53:19 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: TLSv1.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/6] selftests/bpf: add tests for the page_owner
+ bpf_iter target
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20261013122125.843451-1-zhen.ni@easystack.cn>
+ <20261013122125.843451-7-zhen.ni@easystack.cn>
+ <sashiko-outbox-169725@kernel.org>
+From: "zhen.ni" <zhen.ni@easystack.cn>
+In-Reply-To: <sashiko-outbox-169725@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0aa1399db6500229kunm51b7ee5849e2b
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFJQjdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkaTkofVkhCH09KTU9DGUkYQ1YVFA
+	kWGhdVGRETFhoSFyQUDg9ZV1kYEgtZQVlJSkNVQk9VSkpDVUJLWVdZFhoPEhUdFFlBWU9LSFVCQk
+	lOS1VKS0tVSkJLQlkG
 
-On 13/10/2026 at 16:51:49 GMT, sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] spi-nor: Unconditional -EINVAL for 2-byte writes in DTR mode
-> breaks flash unlocking
 
-Yes, I have never encountered ODTR chip with that capability, so it is
-future proof to simply prevent any ODTR chip from using that in the
-general path. This is intentional and should remain.
+在 2026/10/13 20:38, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] bpf/selftests: hardcoded errno values break architecture portability
+> --
+> 
+> commit d63d4254b64f243f696e8d9b4ca8b07f371d8139
+> Author: Zhen Ni <zhen.ni@easystack.cn>
+> 
+> selftests/bpf: add tests for the page_owner bpf_iter target
+> 
+> This commit adds a sleepable BPF program and a userspace runner to test
+> the seq_file and open-coded page_owner iterators. It verifies iterator
+> parity, output matching, and kfunc contracts including memcg classification.
+> 
+>> diff --git a/tools/testing/selftests/bpf/progs/bpf_iter_page_owner.c b/tools/testing/selftests/bpf/progs/bpf_iter_page_owner.c
+>> new file mode 100644
+>> --- /dev/null
+>> +++ b/tools/testing/selftests/bpf/progs/bpf_iter_page_owner.c
+> [ ... ]
+>> +char memcg_pathbuf[4096];
+>> +char memcg_first_path[4096];
+>> +char memcg_first_name[80];
+>> +
+>> +#define MEMCG_ENODATA 61
+>> +#define MEMCG_EOPNOTSUPP 95
+>> +
+>> +#define MEMCG_F_ONLINE	(1 << 0)
+>> +#define MEMCG_F_OBJCG	(1 << 1)
+> 
+> [Severity: Medium]
+> Will these hardcoded errno values cause a regression in the selftests on
+> certain architectures?
+> 
+> The bpf_page_owner_get_memcg_info() kfunc returns standard kernel error
+> codes like -ENODATA and -EOPNOTSUPP. However, these error codes vary by
+> architecture. For example, ENODATA is 111 on SPARC and 86 on Alpha, while
+> EOPNOTSUPP is 122 on MIPS.
+> 
+> When the test runs on these architectures, the kfunc will return the
+> architecture-specific error code. This will fail the hardcoded comparison
+> in check_memcg(), incorrectly incrementing memcg_bad and causing the
+> selftest to fail.
+> 
 
-Won't fix, until we get a new chip that has an actual problem with it.
+I'll use `-ENODATA`/`-EOPNOTSUPP` instead of the hardcoded.
+Will fix it.
 
-Miqu=C3=A8l
+
+Thanks,
+Zhen
