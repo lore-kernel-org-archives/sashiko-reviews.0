@@ -1,131 +1,96 @@
-Received: from mail-m127169.xmail.ntesmail.com (mail-m127169.xmail.ntesmail.com [115.236.127.169])
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AF440D588
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 08:14:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.236.127.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F89F4A4F00
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 08:16:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791965685; cv=none; b=LGudFZYtJMtww988fiYyACEzffg0eYMBb4y4Bc3/+5J2iFfbk7HyexZSRL/oZDKzfOizJvHjYPiOG0anbyOLbqk6BiwpW8Whl4b6bgmNZPCsSyN+r8a7PsDpnzF9lDun9Odtw7vkRVfoqeHey0q8jOa45IJQtubJI/VshUcTEkw=
+	t=1791965795; cv=none; b=IL4j03PpjhmfNwbKigz4vJblmey2L+40pYxmW/xDkLPcnAbwxkvlwHQ900HD1bcfPijnJYz9FuUiGaSxDk3jvD3TMAzibfgE3EW7eMdvFxFe7SG0b+R77pyYn1zeTszJhkDTNeTXai8hRN3NMBrjoEPKNK3g6cEeMzSy2PP+sDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791965685; c=relaxed/simple;
-	bh=5NxZ3jqPtSVvxlH3v7WZVAP9ycsJzX19jO5a6ZOv88A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mwT3B1QBk36kPWcbuk4TUeeVETjEkD27g5utR/RZBGYwfPWUbsrbx2I3mUZKFuvp1SugFZ1PbBCaMMw/mWvg8DJEW83jZwyMo5bmeMu0+oiIkNWt7zXOE/bTwnf6bmv7Xq/fJo93PqNf+uIfw9XCGXiErFIpOEoW7FQquh+b3+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easystack.cn; spf=pass smtp.mailfrom=easystack.cn; arc=none smtp.client-ip=115.236.127.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easystack.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=easystack.cn
-Received: from [192.168.0.59] (unknown [218.94.118.90])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 200c960fd;
-	Wed, 14 Oct 2026 15:39:15 +0800 (GMT+08:00)
-Message-ID: <f3b6f574-197c-4c19-94dc-463eef134236@easystack.cn>
-Date: Wed, 14 Oct 2026 15:39:15 +0800
+	s=arc-20240116; t=1791965795; c=relaxed/simple;
+	bh=hZLSLpYUceXqeAlJs1SGFXHUEaMZIiBDD2tfloV6vso=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bFxRujpyXmTEZ4fUhrWtnpQxzuXV2VvW6o9BcAAgfRLcpjr47/VlFnXYoN0E2dcdwupMr3Gbtj9e5zhF7oyyhsKzTX+FJKdPMGXsGNkNHCTY25bbBFA7HnVjfr1fhsuI+dYj9S2bw1RcdHhlqxb4WriZ2EQhGa2h5JnhyVcPrLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=jTsGER6I; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="jTsGER6I"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id E1F451A1224;
+	Wed, 14 Oct 2026 08:16:28 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id B512B60368;
+	Wed, 14 Oct 2026 08:16:28 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 7915110328695;
+	Wed, 14 Oct 2026 10:16:26 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1791965788; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=9fBzjBWFBjrwNdZrnia/P5F26SGcdCw5WRLx/ScX9aM=;
+	b=jTsGER6Is2Gtt4G7H9qOMqU2QJ/f/voeHAhMisOmdNc1lpUuttpvz6+k9vtIyGSsC/6OER
+	zaqN6+pfJM3pUtb+j2zbLkeoRVaW0m8XJPV1/c9EqOR+f0QLZpwxTpWpxtm8sc2trbUyx+
+	5XnafQhcy1AIBkKmqKvB21krSl7saadyEXvJ6IzMLHMGgJ0hP9LKr1OtRbHbJGQl5beGn8
+	mEm+y75JkXID+PpF4n2P0Mzy0PCMsebeynIaku2uz9dYJ7i6lAscBR9XDYW1I3Dj6Moag2
+	J15qhW8fuwQ1b7h8CBNMhyNZJrmWXVDXeNs9qVu7lfq5co1trqbp5VIUdh7f3w==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Jerome Brunet <jbrunet@baylibre.com>
+Cc: sashiko-bot@kernel.org,  sashiko-reviews@lists.linux.dev,
+  conor+dt@kernel.org,  linux-clk@vger.kernel.org,  robh@kernel.org,
+  devicetree@vger.kernel.org
+Subject: Re: [PATCH v8 5/7] clk: nuvoton: ma35d1: Reparent SYSPLL correctly
+In-Reply-To: <179191307176.266355.13493126045902473311.b4-reply@b4> (Jerome
+	Brunet's message of "Tue, 13 Oct 2026 19:37:51 +0200")
+References: <20261004-perso-ma35d1-upstream-clk-v8-0-e1a106a128c0@bootlin.com>
+	<20261004-perso-ma35d1-upstream-clk-v8-5-e1a106a128c0@bootlin.com>
+	<20261004205551.6279C1F000FF@smtp.kernel.org>
+	<87zewti2pf.fsf@bootlin.com>
+	<1jjynw7bp8.fsf@starbuckisacylon.baylibre.com>
+	<87cxtni7m6.fsf@bootlin.com>
+	<179181904945.33566.17882786294681341398.b4-reply@b4>
+	<87ld81v8y1.fsf@bootlin.com>
+	<179191307176.266355.13493126045902473311.b4-reply@b4>
+User-Agent: mu4e 1.12.12; emacs 30.2
+Date: Wed, 14 Oct 2026 10:16:25 +0200
+Message-ID: <8733u81yue.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] mm/page_owner: record the NUMA node in the scan
- cursor
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20261013122125.843451-1-zhen.ni@easystack.cn>
- <20261013122125.843451-5-zhen.ni@easystack.cn>
- <sashiko-outbox-169722@kernel.org>
-From: "zhen.ni" <zhen.ni@easystack.cn>
-In-Reply-To: <sashiko-outbox-169722@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0aa13959e6a90229kunm9f52cc4343f02
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFJQjdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlDSUMYVhkfQ0MdSUNMHkIYQlYVFA
-	kWGhdVGRETFhoSFyQUDg9ZV1kYEgtZQVlJSkNVQk9VSkpDVUJLWVdZFhoPEhUdFFlBWU9LSFVCQk
-	lOS1VKS0tVSkJLQlkG
+Content-Type: text/plain
+X-Last-TLS-Session-Version: TLSv1.3
 
+On 13/10/2026 at 19:37:51 +02, Jerome Brunet <jbrunet@baylibre.com> wrote:
 
-在 2026/10/13 20:36, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] mm: incomplete fix leaves page_owner vulnerable to unmapped page dereference
-> --
-> 
-> commit 7b174b26adeea5712aaa10bd465514b5ce7dbe36
-> Author: Zhen Ni <zhen.ni@easystack.cn>
-> Subject: mm/page_owner: record the NUMA node in the scan cursor
-> 
-> This commit computes the page's NUMA node in page_owner_next_eligible()
-> and stores it in the scan cursor to avoid dereferencing a potentially
-> unmapped page later. It updates the debugfs nid filter and BPF program
-> to use this stored node value.
-> 
->> diff --git a/mm/page_owner.c b/mm/page_owner.c
->> index 617346a4ab22a..113e4e7e0b3a1 100644
->> --- a/mm/page_owner.c
->> +++ b/mm/page_owner.c
-> [ ... ]
->> @@ -810,18 +824,8 @@ read_page_owner(struct file *file, char __user *buf, size_t count, loff_t *ppos)
->>   	/* Find an allocated page */
->>   	while (page_owner_next_eligible(&scan)) {
->>   		if (state->nid_filter_enabled) {
->> -			int nid;
->> -			memdesc_flags_t page_flags =
->> -				READ_ONCE(scan.page->flags);
->> -
->> -			/*
->> -			 * Bypass PF_POISONED_CHECK() in page_to_nid() to avoid
->> -			 * VM_BUG_ON when accessing poisoned pages.
->> -			 */
->> -			if (page_flags.f == PAGE_POISON_PATTERN)
->> -				goto skip_continue;
->> -			nid = memdesc_nid(&page_flags);
->> -			if (!node_isset(nid, state->nid_filter))
->> +			if (scan.nid < 0 ||
->> +			    !node_isset(scan.nid, state->nid_filter))
->>   				goto skip_continue;
->>   		}
->>   
-> 
-> [Severity: High]
-> Does this fix leave scan.page vulnerable to an unmapped page dereference
-> shortly after this block?
-> 
-> Although this patch successfully avoids dereferencing scan.page when checking
-> the node filter, page_owner_next_eligible() drops the RCU lock via
-> page_ext_put() before returning.
-> 
-> Just below the quoted block in read_page_owner(), scan.page is still
-> passed directly to print_page_owner():
-> 
-> read_page_owner() {
->      ...
->      while (page_owner_next_eligible(&scan)) {
->          ...
->          return print_page_owner(buf, count, scan.pfn, scan.page,
->                                  &scan.po_snap, scan.po_snap.handle, state);
->      ...
-> }
-> 
-> Inside print_page_owner(), the pointer is dereferenced by scnprintf using
-> the %pGp formatter on &page->flags.f.
-> 
-> If a concurrent memory hot-remove operation frees the vmemmap backing this
-> struct page after the RCU lock is dropped, will this %pGp format access
-> trigger a kernel panic?
-> 
-> Additionally, a follow-up patch in this series (Patch 5) appears to introduce
-> get_page_memcg_info() which also unconditionally dereferences scan.page
-> outside the RCU lock from read_page_owner(). Does that face the same
-> use-after-free risk?
-> 
+>> > So 2 possibilities:
+>> > * You just need the .hw then I don't really get why you are doing it differently
+>> >   for this clock ?
+>> 
+>> True.
+>> 
+>> > * OR, this is one of the those clock where you want to check DT first then
+>> 
+>> It is not.
+>> 
+>> >   fallback to a fixed clock, then yes you need parent_data. don't forget
+>> >   the fw_name (which I did not see here) and use a local variable for that,
+>> >   not a global
+>> >
+>> > Did I miss something ?
+>> 
+>> You got it absolutely right, and while implementing the change I
+>> remember why I used the name instead of the hw pointer:
+>> 
+>>      clk_hw_register_fixed_rate_parent_hw() exists, but
+>> devm_clk_hw_register_fixed_rate_parent_hw() did not.
+>> 
+>> So since it looks like most of these helpers have their devm_
+>> counterpart, I will add this new helper in clk-provider.h. I plan on
+>> doing that addition in this commit because I think that is what Boyd
+>> used to prefer, but I can add it in a preparation patch that is your own
+>> preference, I don't mind.
+>
+> Separate patch for the new helper please. Same series is fine.
 
-The page_ext RCU lock does not pin the underlying struct page. The 
-dereference
-in print_page_owner() predates this series and is not introduced by these
-changes.
-
-
-
-Thanks,
-Zhen
-
+Ack, thanks.
