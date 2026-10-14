@@ -1,163 +1,131 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D2F4DF4AC
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 09:30:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866F73ED3D8
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 09:37:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791970215; cv=none; b=rIasuF+1WXVuzjLDrQvgtjgFoMRZa9rV8u2vHLSr4JN8NYbU5RYbB1tkXHGw4UmVc4OSBMDOd3F9PQzHczEsywFRyUBkaI/HHiJUgvhEwU+Tg9xsxKhhae6jv0zLkVDM6jUbMSYCR0wyAOnoJfqO9rYcposH5YP1Um5FDQzB8fs=
+	t=1791970657; cv=none; b=LyDQOwmXIdkOoLAWpwIPpxZGv3btaQ7LJWia8QfVCYla8kreGLQ8k50VNxoySpiSf7oMlDpKoD220xZhELE5pSd85q4IUZMOlezK6NTqOoaA9REVxpJKqu5TrFdZDjNGzIjMn5Ol6A/c/ibuaRCvnWai/RBOBeaCpORANHdufKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791970215; c=relaxed/simple;
-	bh=ABm72ANkX+YOL6wJl0dy+W6rqpbTdAsXa0r+DYkIRxk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZJXzpS9H3KNXfDIZhHQFSayhWhh/SFF7oMPunQOa5rbSxdzKzvonCzNXJQpFo6WIc6E3dJj//xiRgF/NZsFzL36BbpvV0n04qc5o7UNWe8Zo7kf0Tq4jeygV3biTcCfbNs6c6R0CANA9D6qVJZHUtaDxw/kwYtWL+Rw6JQAGs6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FreWnBcH; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1791970657; c=relaxed/simple;
+	bh=2JqF29mdIDBiDoEAPp3FTW8LA4BFk/t8vIBM6YPijak=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VKdWrXpE3bxMBXxkevxIms7Bun68bZQtvhCFtNJTDT0Kv9Nxy5HNtMyh5vKjJctjTyYE+M6hoeeB89Lxz7DOp1Madt/uXugsng9shRQ2VEMYsfYCrgMMXsa1b1q07hg+zUGxRUMIj3ffczSH43SMZf8UkcyNqhJHwFJr/BaMqOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=PRoTlTlO; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FreWnBcH"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4a16c1608faso50398765e9.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 02:30:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791970211; x=1792575011; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=l3atJF10Fv+uKvn/ZG4Hw3Hv137TFtSEFfSHB7ENlq8=;
-        b=FreWnBcHAtsUs7z+wigcHl+CnB7Uwo8b7aMPSFX0mf5TZQkoHlArSzy9nOwXh8QvOn
-         OQBJmSjDMWDErnQFi0JiKTxMaGu7kIUnzoptwmTTdr3eIkQuwqxJY6LK6+UT4dWX6jA6
-         7ZAOcsty/lTYliBM1pqLoUrHCV4m30YsqATnkw1EfZJ2Y6g4qu4VD4kky3cHpui75TkK
-         FlGdsnae/VlHLn0hnT1GXpEjSP5A6OpGfaHDkKY2jjp20An5iGe2R1Cj5yr2lb4mbPUH
-         XYrkYda/98xtK/x1ZVc7BMJMgBLltwNDuQX4CzPxJR7c6yqLOITaFLk7OVmp7vyJmbmH
-         ob7A==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="PRoTlTlO"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1791970655;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=DZHWlhTDhL5WqiNRs5JbrYvHrkANNCynzraFMjRCOYs=;
+	b=PRoTlTlO7Ujl99t2HWs4AD9wMoGhiK7dF9n8xAoz5HijljibqxUSMzFk4R11HrmM/A2vfy
+	pBbmioW7AHMkJPpOuw0MsPDULQWl2mfHgJqlupl0sxqwQoDveu+7TonJbEiHPIN2lNUM+x
+	KEZQSv5ZKIHnLdeujb0WwbwfE+0Kw1w=
+Received: from mail-yx1-f72.google.com (mail-yx1-f72.google.com
+ [74.125.224.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-346-PrEmITA8NASucu-oyrzQGg-1; Wed, 14 Oct 2026 09:37:34 +0000
+X-MC-Unique: PrEmITA8NASucu-oyrzQGg-1
+X-Mimecast-MFC-AGG-ID: PrEmITA8NASucu-oyrzQGg_1791970653
+Received: by mail-yx1-f72.google.com with SMTP id 956f58d0204a3-67901cb4b08so6062063d50.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 02:37:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791970211; x=1792575011;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=l3atJF10Fv+uKvn/ZG4Hw3Hv137TFtSEFfSHB7ENlq8=;
-        b=IdhVzygNGwSeILet5cndLde9vqiwnTPK3dYV3AlH0gXqPCm8uPQ6JqMDIJzw1Cw52e
-         /Rc0U4iSXiGl/snlT4ylx+TpLpfpinS8j6VF9YunSonVqWjNg6xIcyOOIjgkYnaqfuEE
-         fUGn44vPVLSKMNLMMLFovvIBtDs5uJ87CcHcUtgqjU7cUZANcIjtGVZi4+xWqmH+a5u6
-         696Z3atqog1FRL2H422j6KJpniTtYIRO0zIxmOidG/milrjsy/HsAjTjiC71t0w/0bxc
-         sxV1ipoKADI+yJ4fxJ/81lolQ5lzP+v47pqSqleuhpd6ZydedZ+CNXjyP/NBXnicjy85
-         hj4Q==
-X-Gm-Message-State: AFq9FYJ6XAtTsUvsSloU+rzqhqgZJXZ63hPJ66fqMFTh1mHuqwotqPQP
-	/MQN88xN/7pVFNHq/wraKVc2SaLQ8ZTXDLu8CTNLHct7ZBuM18DQ8xEYy/u0eddd8hI=
-X-Gm-Gg: AYBFou2GCumWTGufLxXIQJk/0sW2z9LQ/1b5yPENXkYrGH6ozYS5/fWHZWevDqMvX1p
-	k9qapr2rBm3lv3gAhD9/iSDSBVyQ+/tSPXtweuDRSpkAyG8tSFSTz5GBFtF2T/0BfRnJmxMNx7F
-	eELTKhpSiH7AOGrbQ14KFFOVQGnHefXmDJYzplMT7peHs/mC9Kv0ox6W8MjaicwYSyh8YEsUpcW
-	YkYojJuXO+zzgSODybhjXSMjcCb1HnGfTyz7bxw+VojDT1RFqi90qPZdyBY06TGrwY4Wx0bn+4Q
-	nkTwDeY4hH1e3mDEfBgzEAn1VLw6+gguCMl3W5VxyUJ+eaN4zmtObFufrkdARMGdG5Nvx4dzg7W
-	7wKn1YYI6ac3/NHvpuw9fxpvTyJTFyNCi15rL4boBcoXDU9/x+hHzy//gpJP8hB2Z7V6IlcXVLQ
-	2pZoHv03AqOwL/DuVldz23edrWZ56amTbpU4YccFiitNP11Lczj2g8xDpFfz1dAhfq3MRU1sazZ
-	UKOHtuOG64ZwZnRln9uyg==
-X-Received: by 2002:a05:600c:4e92:b0:49e:63cc:6324 with SMTP id 5b1f17b1804b1-4a18e4837e7mr300689535e9.6.1791970211150;
-        Wed, 14 Oct 2026 02:30:11 -0700 (PDT)
-Received: from gmail.com (deskosmtp.auranext.com. [195.134.167.217])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1b2e9791csm37734665e9.1.2026.10.14.02.30.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Oct 2026 02:30:10 -0700 (PDT)
-Date: Wed, 14 Oct 2026 11:30:08 +0200
-From: Mahe Tardy <mahe.tardy@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-Subject: Re: [PATCH bpf-next v3] bpf: allow ksock connect/send calls from wq
-Message-ID: <as9LoIKMYXAW5IMP@gmail.com>
-References: <20261014091450.19107-1-mahe.tardy@gmail.com>
- <sashiko-outbox-171070@kernel.org>
+        d=1e100.net; s=20260707; t=1791970653; x=1792575453;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=DZHWlhTDhL5WqiNRs5JbrYvHrkANNCynzraFMjRCOYs=;
+        b=VQFnZEOH3yhAgUeGr7JNp5jJiXboqHGQ3rHJ6CU+Pt+wDSK2tlT879mBm2x6IEA/GU
+         wf8Ak2jjAgB9BZF52dIBJ0oyPsv0aQao10xXp8LM4cZo0GiwllMTTuf2RfMZBvLMMHTG
+         8d19NJLEJzaweg+tJu6+IYpw3064VNaszbL+P5AwM0r+THVYcgr7ILlhpGDL821OA3Ex
+         C4tGUmUhHjC6nZdOs8vx41yLhRgpJAa+fAvtdOjePTNCPivYzr+AUZzmRla3a5dZguAA
+         jPIq5fyBYda4Qu9HDo+pBMTJxoVukHKJ9JlCIpc32KQSLPU55xEYLPVHVYawIlZC9zxj
+         QIPw==
+X-Gm-Message-State: AFq9FYIgtIrTLikiQR3/TzBjWlu/vI2ayK7ex4/L6Stfuv+YClqg/ZcT
+	YJ3q4V6K3vbSng/bO1UJp3KTfmOqNq7zwqC5tqPWhGVbMQh5BgCctFytBoLavHI63OD6R7HDeia
+	EkRnjg/9TP9faditb6oOFMOxOJWTL2PH5sy4Ijp0M6TJHoE2KTjxEkaD+d9JCqERR0u6vKCg/c0
+	TBWmRGQDkVd6U05ws92R9agb+Ht5F4YxpvhI/RNcvRn0di
+X-Gm-Gg: AYBFou15mfd6kv9RkG65gOBytxyBmQ6ST+ho4AiiDbQOT/y8TYBfvfdWm0FkAvQmGl8
+	cFKAGf7tUcXpNVTWeDKxAk3fV9g5lZwwuGMB+nsCYbqp+8dW3whpypa0Jqgp645rP3KOfYDzcoz
+	PQqcTjIt+jiX+SkSWCUmFt8AANx56M6oQ/8mf5I/Y0WihTHCApS+lj
+X-Received: by 2002:a05:690e:bcb:b0:679:8e30:440e with SMTP id 956f58d0204a3-6798e304456mr345320d50.158.1791970653448;
+        Wed, 14 Oct 2026 02:37:33 -0700 (PDT)
+X-Received: by 2002:a05:690e:bcb:b0:679:8e30:440e with SMTP id
+ 956f58d0204a3-6798e304456mr345307d50.158.1791970652857; Wed, 14 Oct 2026
+ 02:37:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-171070@kernel.org>
+References: <20261008112004.1899560-1-mszeredi@redhat.com> <20261008112004.1899560-9-mszeredi@redhat.com>
+ <sashiko-outbox-164097@kernel.org>
+In-Reply-To: <sashiko-outbox-164097@kernel.org>
+From: Miklos Szeredi <mszeredi@redhat.com>
+Date: Wed, 14 Oct 2026 11:37:22 +0200
+X-Gm-Features: AclHuK9oudbuDKSUqa_bJ75j7x9Hwi3mgbzizDj7pqL1HcfMX3cGRTRtlrqqQvI
+Message-ID: <CAOssrKd-ACNEo8uOddmyCaGBsF-GYTNsnOq8PML991Gqq0E4Ag@mail.gmail.com>
+Subject: Re: [PATCH v4 8/9] fuse: add extent map I/O support
+To: John Groves <john@groves.net>
+Cc: sashiko-reviews@lists.linux.dev, fuse-devel@lists.linux.dev, 
+	Amir Goldstein <amir73il@gmail.com>, "Darrick J . Wong" <djwong@kernel.org>, 
+	Vishal Verma <vishal.l.verma@intel.com>, Dave Jiang <dave.jiang@intel.com>, 
+	Alison Schofield <alison.schofield@intel.com>, linux-cxl@vger.kernel.org, 
+	nvdimm@lists.linux.dev
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: 76ac8h1aDNCw-B3fh4VR2hp6VoAH1drlkZnrAUrBrWg_1791970653
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 14, 2026 at 09:26:39AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] bpf: selftests: u64 map key mismatch causes ksock_wq failure on big-endian
-> --
-> 
-> commit e40a8841b185289348c211758c8754c0959c28bd
-> Author: Mahe Tardy <mahe.tardy@gmail.com>
-> 
-> bpf: allow ksock connect/send calls from wq
-> 
-> This commit relaxes the constraint on not using the workqueues for ksock 
-> connect() or send() kfuncs. It also updates the selftests to verify this 
-> behavior.
-> 
-> > diff --git a/tools/testing/selftests/bpf/progs/ksock_wq.c b/tools/testing/selftests/bpf/progs/ksock_wq.c
-> > index 16a1873d132ed..290736e219e1d 100644
-> > --- a/tools/testing/selftests/bpf/progs/ksock_wq.c
-> > +++ b/tools/testing/selftests/bpf/progs/ksock_wq.c
-> > @@ -14,15 +15,19 @@ struct ksock_wq_value {
-> >  
-> >  struct {
-> >  	__uint(type, BPF_MAP_TYPE_ARRAY);
-> > -	__uint(max_entries, 1);
-> > +	__uint(max_entries, 2);
-> >  	__type(key, u32);
-> >  	__type(value, struct ksock_wq_value);
-> >  } work_map SEC(".maps");
-> 
-> [ ... ]
-> 
-> > @@ -43,20 +73,40 @@ static int ksock_wq_callback(void *map, int *key, void *value)
-> >  SEC("syscall")
-> >  int ksock_wq_start(void *ctx)
-> >  {
-> > +	struct bpf_ksock_create_opts opts = {
-> > +		.family = AF_INET,
-> > +		.type = SOCK_DGRAM,
-> > +		.protocol = IPPROTO_UDP,
-> > +	};
-> >  	struct ksock_wq_value *value;
-> > -	u32 key = 0;
-> > -	int err;
-> > +	struct bpf_ksock *ks;
-> > +	u64 key = 0;
-> > +	int err = 0;
-> >  
-> > -	value = bpf_map_lookup_elem(&work_map, &key);
-> > -	if (!value)
-> > -		return -ENOENT;
-> > -	err = bpf_wq_init(&value->work, &work_map, 0);
-> > -	if (err)
-> > +	ks = bpf_ksock_create(&opts, sizeof(opts), &err);
-> > +	if (!ks)
-> >  		return err;
-> > -	err = bpf_wq_set_callback(&value->work, ksock_wq_callback, 0);
-> > +	err = ksock_ctx_insert(ks);
-> >  	if (err)
-> >  		return err;
-> > -	return bpf_wq_start(&value->work, 0);
-> > +	for (key = 0; key < 2; key++) {
-> > +		value = bpf_map_lookup_elem(&work_map, &key);
-> 
-> [Severity: Medium]
-> Could this cause failures on big-endian systems?
-> 
-> In ksock_wq_start(), the key variable was changed from u32 to u64, but
-> work_map is defined as a BPF_MAP_TYPE_ARRAY with a u32 key.
-> 
-> When &key is passed to bpf_map_lookup_elem(), big-endian systems will read
-> the first 4 bytes of the u64 (which will be 0 for both iterations in the
-> loop).
-> 
-> This would cause the lookup to return the element at index 0 multiple times,
-> leading to double-initialization of the same workqueue via bpf_wq_init()
-> and subsequent failures.
+On Thu, Oct 8, 2026 at 1:36=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 
-Oh no :facepalm:, I sent the v2 again instead of the v3 with the u32
-change... Sorry for the spam, I'll send the proper v3 as v4 in a while
-to avoid sending too many emails on the same patchset at once.
+> > diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+> > index b5bef7b9e466e..77d7a54066e47 100644
+> > --- a/fs/fuse/file.c
+> > +++ b/fs/fuse/file.c
+> > @@ -551,6 +551,17 @@ static int fuse_fsync(struct file *file, loff_t st=
+art, loff_t end,
+> >       if (fuse_is_bad(inode))
+> >               return -EIO;
+> >
+> > +     if (IS_DAX(inode) && !fuse_inode_vdax(inode)) {
+> > +             /*
+> > +              * Note: the DAX fault path calls this via dax_finish_syn=
+c_fault()
+> > +              * and taking inode lock in that context is prohibited.
+> > +              *
+> > +              * FIXME: need to flush CPU caches for the DAX memory ran=
+ge
+> > +              * FIXME: need to sync metadata to the server
+> > +              */
+> > +             return 0;
+>
+> [Severity: High]
+> Can this cause silent data loss on fsync() for DAX extent-mapped files?
+>
+> When an application calls fsync() on a FUSE DAX extent-mapped file, this
+> bypasses flushing the CPU caches for the DAX memory range or syncing meta=
+data
+> to the server, while still returning 0 (success).
+>
+> Because the operation falsely reports success, applications relying on fs=
+ync()
+> or MAP_SYNC (via dax_finish_sync_fault()) to ensure data durability will =
+not
+> take fallback actions. Could this lead to silent data loss on a power fai=
+lure
+> or crash?
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261014091450.19107-1-mahe.tardy@gmail.com?part=1
+John, what's up with CPU caches on mapped writes?
+
+Thanks,
+Miklos
+
