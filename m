@@ -1,160 +1,107 @@
-Received: from mail-m19731113.qiye.163.com (mail-m19731113.qiye.163.com [220.197.31.113])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4BF485CE9
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 07:53:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.113
+Received: from ultrarisc.com (unknown [218.76.62.146])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6DCB37D133
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 07:53:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791964388; cv=none; b=oNYtpZzuzmbCJxKp9X56znsAYCQQbYhG8QdhMYAJFLgt8SiWFPL7/9xVbDruOrEG/79rAzJM6y8cZXX3Kc2kclXvmBlPlpMGqDg+cJGSdLrMcxvzTRjUttlcprPkKjubuGzx25jtm+pdXCpgg6nZmuzcGoMmPH8BHT8eD55gK2w=
+	t=1791964413; cv=none; b=BTjJadGBaOgFUgGvdrcSClfYrV1xCkHjyd2kUywUY7d1tZYDegkl/Tn15z1Qn33nFdFlC/EXFmueOrs1iiW4oS6q05J1qFzaCmoyw58wwlrxv3jy0s16vLgz4bd1EyRD6kMmeeGfqcvN5gOuJ8ZiPbva5yvKdpVMWr+676O+K+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791964388; c=relaxed/simple;
-	bh=nJZBGhEUFLqdeoEdfpk2eQt5LVvAlCH8oD3JwwCKG6Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Rds/fPbFB5s6GJi0NPTJt701AlHqeMjTWdCoMCrz6o8K2hZ4Yayya1HNMRAAEKwwjzxNaIFe2aZpT9uUgPukJjqMvoF6MYsJhN9cJs7Z+5Wsqx2+GCwAtO6zN96c/2Oc1m1t9OIQLZ5Z1dwZ0n4eQBZh2SvXUaG964Ppb6x0e4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easystack.cn; spf=pass smtp.mailfrom=easystack.cn; arc=none smtp.client-ip=220.197.31.113
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easystack.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=easystack.cn
-Received: from [192.168.0.59] (unknown [218.94.118.90])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 200ca9f7c;
-	Wed, 14 Oct 2026 15:47:45 +0800 (GMT+08:00)
-Message-ID: <774f27c4-8c73-47d1-831d-0b827c0f3be5@easystack.cn>
-Date: Wed, 14 Oct 2026 15:47:44 +0800
+	s=arc-20240116; t=1791964413; c=relaxed/simple;
+	bh=gWnFIumBNB38GLNiC2esLxbYtH3AlO3I5H/ucrrclsw=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=kvEtXGZ3+skQYnOs3xVLBL801IYBlIL6xNmDMQxo7U9SC7c2AbmcNJwkKHedqolRkpXIWXQf8Bs+yn7MbRIknfC8j4VgTZ8a8d2iWzXxwi6lIXPSjQAdUP4uUIDwVH4JWi3Abh9XLehBIfuGp0IX7sTvewY6r8J66Xy4yRlQTbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=none smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=Eq/m0WJ/; arc=none smtp.client-ip=218.76.62.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="Eq/m0WJ/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	References:Date:Message-Id; bh=NePItArx6fu3hQGx/oeADV7VFrP4JQGPe
+	LFVzL2Fp8k=; b=Eq/m0WJ/DcUrb4ZAAphIT+keAYzhm57YtiYYGkmQJCtS3LkYs
+	WApGaMoR0C75SthM84qGPVBrVseYaJ43CRO3tlG6Ei9RUEpd0B6ChpgcgcxU25ar
+	1ko0AmC6ZHdxb/omhV2l1Pb4VlWwiUTl157O7flFGp8RyXohEqGl2FuKNM=
+Received: from [127.0.0.1] (unknown [192.168.100.1])
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwCnYwXhNM9qAgUCAA--.681S2;
+	Wed, 14 Oct 2026 15:53:05 +0800 (CST)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] mm/page_owner: add bpf_page_owner_get_memcg_info()
- kfunc
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20261013122125.843451-1-zhen.ni@easystack.cn>
- <20261013122125.843451-6-zhen.ni@easystack.cn>
- <sashiko-outbox-169738@kernel.org>
-From: "zhen.ni" <zhen.ni@easystack.cn>
-In-Reply-To: <sashiko-outbox-169738@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0aa13961ad3c0229kunm6bb54fc9449bf
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFJQjdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCSxlKVh0ZSh1OTR1OS09DSFYVFA
-	kWGhdVGRETFhoSFyQUDg9ZV1kYEgtZQVlJSkNVQk9VSkpDVUJLWVdZFhoPEhUdFFlBWU9LSFVCQk
-	lOS1VKS0tVSkJLQlkG
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v3 7/7] riscv: dts: ultrarisc: Add Milk-V Titan board
+ device tree
+From: Xincheng Ji <jixincheng@ultrarisc.com>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Conor Dooley <conor@kernel.org>, sashiko-reviews@lists.linux.dev, 
+ Xincheng Ji <jixincheng@ultrarisc.com>, devicetree@vger.kernel.org, 
+ robh@kernel.org, conor+dt@kernel.org
+In-Reply-To: <d184f986-7bdd-465b-9ec6-31fe1975aec1@lunn.ch>
+References: <20261013-ultrarisc-dts-v3-0-5ff3ebb2a90d@ultrarisc.com>
+ <20261013-ultrarisc-dts-v3-7-5ff3ebb2a90d@ultrarisc.com>
+ <sashiko-outbox-169511@kernel.org>
+ <20261013-siesta-starship-f078a51d2389@spud>
+ <d184f986-7bdd-465b-9ec6-31fe1975aec1@lunn.ch>
+Date: Wed, 14 Oct 2026 15:53:04 +0800
+Message-Id: <179196438407.4116447.10264692072060845573.b4-reply@b4>
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1791964384; l=954;
+ i=jixincheng@ultrarisc.com; s=20260922; h=from:subject:message-id;
+ bh=gWnFIumBNB38GLNiC2esLxbYtH3AlO3I5H/ucrrclsw=;
+ b=EB9r5MSkJmjQhSGVrtz0iXbxpdoT1+OYxZXZyETcDdwj2SQNenddd7FKmfV5+ws1Be0SVXxyQ
+ P6u2V3IbXZ8A+qXaDzsOCBAV8f0VdR+11goHUNnHiy+maL0AA/CLC2N
+X-Developer-Key: i=jixincheng@ultrarisc.com; a=ed25519;
+ pk=n848dcS5D6g0vLad/rjp4Gf/1eedTe1a3pYUrkt2260=
+X-CM-TRANSID:AQAAfwCnYwXhNM9qAgUCAA--.681S2
+X-Coremail-Antispam: 1UD129KBjvdXoWruF15ArWktFWktw1fGr13CFg_yoWfGFc_ur
+	WI9rsrCw1kJrn7Xan3Kr15Jan2kwn7Xr18KF4Yqr4jq3s8JF95JFyjqr1FvF48JrsxArnx
+	Xr90vFW3GFs0vjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbIkFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Jr0_
+	Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr0_Gr
+	1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
+	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v26r12
+	6r1DMxkIecxEwVCm-wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s
+	026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_
+	JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20x
+	vEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE
+	14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf
+	9x0JUBVbkUUUUU=
+X-CM-SenderInfo: pml0x0xfkh0wg6xo325dul2uoofrz/1tbiAQAJDmq-VKkAAgAhsN
 
+  Hi Andrew,
 
+  On 2026-10-13 20:08 +0200, Andrew Lunn wrote: 
+> > > > +&ethernet {
+> > > > +	phy-handle = <&phy0>;
+> > > > +	/*
+> > > > +	 * The PCB does not add RGMII TX or RX clock delays. The DP1000
+> > > > +	 * integration adds fixed delays in both directions.
+> > > > +	 */
+> > > > +	phy-mode = "rgmii-id";
+> 
+> If the PCB does not add delays, rgmii-id is correct. What is important
+> is how the MAC driver handles this, it needs to mask the value passed
+> to the PHY. Assuming this has been tested on real hardware, it
+> probably does.
+> 
+> 	 Andrew
+ 
+  Yes, this has been tested on real DP1000 hardware.
 
-在 2026/10/13 20:49, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] bpf: TOCTOU race in bpf_page_owner_get_memcg_info() leads to page fault
-> - [High] mm: wild pointer dereference in get_page_memcg_info() for tail pages
-> --
-> 
-> commit ab0ccc33a4ab8ccdaacb5f6b2dca8722bf6d6123
-> Author: Zhen Ni <zhen.ni@easystack.cn>
-> 
-> mm/page_owner: add bpf_page_owner_get_memcg_info() kfunc
-> 
-> This commit exposes per-page memcg information to BPF programs.
-> It splits memcg info collection out of print_page_owner_memcg() into
-> a new get_page_memcg_info() function and adds the
-> bpf_page_owner_get_memcg_info() kfunc.
-> 
-> Link: https://lore.kernel.org/linux-mm/20261009112308.240769-6-zhen.ni@easystack.cn/
-> 
->> diff --git a/mm/page_owner.c b/mm/page_owner.c
->> index 113e4e7e0b3a1..664121be66863 100644
->> --- a/mm/page_owner.c
->> +++ b/mm/page_owner.c
->> @@ -538,16 +538,22 @@ void pagetypeinfo_showmixedcount_print(struct seq_file *m,
-> 
-> [ ... ]
-> 
->> +int get_page_memcg_info(struct page *page, struct memcg_info *info,
->> +			char *buf, int size)
->>   {
->>   	unsigned long memcg_data;
->>   	struct obj_cgroup *objcg;
->>   	struct mem_cgroup *memcg;
->> +	int ret = -ENODATA;
->> +
->> +	*info = (struct memcg_info){};
->>   
->>   	rcu_read_lock();
->>   	memcg_data = READ_ONCE(page->memcg_data);
->> +	if (!memcg_data)
->> +		goto out_unlock;
-> 
-> [Severity: High]
-> Does removing the PageTail() guard here expose a wild pointer dereference?
-> 
-> In struct folio, the first tail page's _nr_pages field aliases exactly with
-> the memcg_data offset when CONFIG_MEMCG is enabled. Due to a lack of memory
-> barriers in __update_page_owner_handle(), page_owner_next_eligible() can
-> observe PAGE_EXT_OWNER_ALLOCATED before page_owner->order is updated,
-> yielding a tail page.
-> 
-> If a tail page is passed here, the non-zero _nr_pages value (e.g., 512 for a
-> large folio) will bypass the !memcg_data check and be dereferenced as an
-> obj_cgroup pointer later in the function, leading to a kernel panic.
-> 
+  The DP1000 MAC integration provides the fixed RGMII TX/RX delays and
+  masks the delay flags before passing the interface mode to the PHY.
+  With `phy-mode = "rgmii-id"`, link establishment and network traffic
+  work correctly in our testing.
 
-The `PageTail(page)` check is not removed. get_page_memcg_info() still
-reads:
+  Thanks,
+  Xincheng
 
-         memcg_data = READ_ONCE(page->memcg_data);
-         if (!memcg_data || PageTail(page))
-                 goto out_unlock;
+-- 
+Xincheng Ji <jixincheng@ultrarisc.com>
 
-Won't fix.
-> [ ... ]
-> 
->> diff --git a/mm/page_owner_iter.c b/mm/page_owner_iter.c
->> index a2b90c8748520..86e0b4b52bfc7 100644
->> --- a/mm/page_owner_iter.c
->> +++ b/mm/page_owner_iter.c
->> @@ -177,4 +177,21 @@ __bpf_kfunc int bpf_page_owner_stack_snprint(struct page_owner_scan *scan,
->>   				   0);
->>   }
->>   
->> +__bpf_kfunc int bpf_page_owner_get_memcg_info(struct page_owner_scan *scan,
->> +					      struct memcg_info *info__uninit,
->> +					      char *buf__uninit, u32 buf__sz)
->> +{
->> +	/* Guard against the section being offlined after scan. */
->> +	struct page *page = pfn_to_online_page(scan->pfn);
->> +
->> +	if (!page) {
->> +		*info__uninit = (struct memcg_info){};
->> +		if (buf__uninit && buf__sz)
->> +			buf__uninit[0] = '\0';
->> +		return -ENODATA;
->> +	}
->> +
->> +	return get_page_memcg_info(page, info__uninit, buf__uninit, buf__sz);
->> +}
-> 
-> [Severity: High]
-> Is this vulnerable to a time-of-check to time-of-use race with memory
-> hot-remove?
-> 
-> The pfn_to_online_page() check and subsequent get_page_memcg_info()
-> dereference occur without holding get_online_mems(). Because this is a
-> sleepable BPF kfunc (KF_SLEEPABLE), the thread can be preempted between the
-> check and the dereference.
-> 
-> If memory hot-remove offlines and removes the memory section concurrently, it
-> tears down the vmemmap backing the struct page. When the thread resumes and
-> get_page_memcg_info() attempts to read page->memcg_data, it will fault on the
-> unmapped address.
-> 
-
-pfn_to_online_page() here is meant to close a window that the iterator
-would otherwise widen, not to fully serialize against memory hot-remove.
-
-
-
-Thanks,
-Zhen
