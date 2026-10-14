@@ -1,223 +1,163 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B760347FB14
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 09:27:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D2F4DF4AC
+	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 09:30:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791970077; cv=none; b=IT4+yLh+fbCiuYtqbRBNgDjHzLV9IEPKFkuLuC4WnsIkX2VmwlKab12ieNmWPsyiB89TfIo66N9/KUgLIPHnlO/DX/Z6rlIl6uJmzuVGcrWKLS36nQ9V66jUzSt+FBYP8yFntc/3gVhjo0i/3i2qsdhI8ZxIEsjVQmdYIFXRSao=
+	t=1791970215; cv=none; b=rIasuF+1WXVuzjLDrQvgtjgFoMRZa9rV8u2vHLSr4JN8NYbU5RYbB1tkXHGw4UmVc4OSBMDOd3F9PQzHczEsywFRyUBkaI/HHiJUgvhEwU+Tg9xsxKhhae6jv0zLkVDM6jUbMSYCR0wyAOnoJfqO9rYcposH5YP1Um5FDQzB8fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791970077; c=relaxed/simple;
-	bh=C30qpkaH8LIUhfjK2L/ypTsQTkkn1faO5lFawrOlBuQ=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PkiMX/ty8k38QLi+IaEAZn/BQevVQxHX/dzTPfK9kJ0KT1mjCRQmxWJb9v68MUEHm9Hsu0mOEgOcnH1VnFrLjw7FCKGpR5UjBK0Bib6aX/oi3z3GYllFHmLuGWXwmlLrbT2LCtZlqisVLGimN0zLsNwgvTsY8SKjQaIyBDwKD/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UQwOAt64; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791970215; c=relaxed/simple;
+	bh=ABm72ANkX+YOL6wJl0dy+W6rqpbTdAsXa0r+DYkIRxk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZJXzpS9H3KNXfDIZhHQFSayhWhh/SFF7oMPunQOa5rbSxdzKzvonCzNXJQpFo6WIc6E3dJj//xiRgF/NZsFzL36BbpvV0n04qc5o7UNWe8Zo7kf0Tq4jeygV3biTcCfbNs6c6R0CANA9D6qVJZHUtaDxw/kwYtWL+Rw6JQAGs6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FreWnBcH; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UQwOAt64"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E36F1F00898
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 09:27:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791970074;
-	bh=3eRZKbn1Ge1Ub2VHoa52iVTY2xAhSDHMuK2JDQBIThk=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc;
-	b=UQwOAt64FsZuJ0SzlVSyVpnuT5BGDM8UXc6hPx2RaqCuMY6rE/pr9WtEatmJSRE+F
-	 m2TBpPk/fMXhsRSv+p7IDhgTf2ZGEWxOSohfifcwqSnF4j1YFVHAYcblCE5yBqHlNZ
-	 T8TJC0bivSQPfqqDwndYSWw5AxhCYEuxeNbAFvbd0Z8V26deCkA/Meo48YK6/pb9AL
-	 8s72UatVyV6phV9e0n+SiDeOqnwSpWmrkt0jDXIyUQkb4Qtym2fHg4+ci8h83tHAzz
-	 HyvamdOtw4JSFtG7soQhYatXh8GB+2M7VlZYc73YPJb8UfmkbnXGe4Kor9mHxCecQv
-	 Gk9OcZ/0syGfg==
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5b8b3c8c4bbso924806e87.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 02:27:54 -0700 (PDT)
-X-Gm-Message-State: AFq9FYLQd9FiUgc9dA1eGrOkWHaD/+8WqzV9uPABkqGYDbQi2CuOClqk
-	DVT+ecL5UhIs/jAns2zeyEtQBT7iJzTMKj8uXX9uDzYA1p8yLmvRl9UHIR3RSZpkt0jLbagxgGW
-	cvHmbDepa/x7vUCy58HIAn75VaAGVxH+uSH7h37pA7Q==
-X-Received: by 2002:a05:6512:3a88:b0:5b8:f94a:4d32 with SMTP id
- 2adb3069b0e04-5bcdd536cd0mr4458424e87.34.1791970073091; Wed, 14 Oct 2026
- 02:27:53 -0700 (PDT)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 14 Oct 2026 02:27:49 -0700
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 14 Oct 2026 02:27:49 -0700
-From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <sashiko-outbox-169821@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FreWnBcH"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4a16c1608faso50398765e9.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 02:30:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1791970211; x=1792575011; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=l3atJF10Fv+uKvn/ZG4Hw3Hv137TFtSEFfSHB7ENlq8=;
+        b=FreWnBcHAtsUs7z+wigcHl+CnB7Uwo8b7aMPSFX0mf5TZQkoHlArSzy9nOwXh8QvOn
+         OQBJmSjDMWDErnQFi0JiKTxMaGu7kIUnzoptwmTTdr3eIkQuwqxJY6LK6+UT4dWX6jA6
+         7ZAOcsty/lTYliBM1pqLoUrHCV4m30YsqATnkw1EfZJ2Y6g4qu4VD4kky3cHpui75TkK
+         FlGdsnae/VlHLn0hnT1GXpEjSP5A6OpGfaHDkKY2jjp20An5iGe2R1Cj5yr2lb4mbPUH
+         XYrkYda/98xtK/x1ZVc7BMJMgBLltwNDuQX4CzPxJR7c6yqLOITaFLk7OVmp7vyJmbmH
+         ob7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791970211; x=1792575011;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=l3atJF10Fv+uKvn/ZG4Hw3Hv137TFtSEFfSHB7ENlq8=;
+        b=IdhVzygNGwSeILet5cndLde9vqiwnTPK3dYV3AlH0gXqPCm8uPQ6JqMDIJzw1Cw52e
+         /Rc0U4iSXiGl/snlT4ylx+TpLpfpinS8j6VF9YunSonVqWjNg6xIcyOOIjgkYnaqfuEE
+         fUGn44vPVLSKMNLMMLFovvIBtDs5uJ87CcHcUtgqjU7cUZANcIjtGVZi4+xWqmH+a5u6
+         696Z3atqog1FRL2H422j6KJpniTtYIRO0zIxmOidG/milrjsy/HsAjTjiC71t0w/0bxc
+         sxV1ipoKADI+yJ4fxJ/81lolQ5lzP+v47pqSqleuhpd6ZydedZ+CNXjyP/NBXnicjy85
+         hj4Q==
+X-Gm-Message-State: AFq9FYJ6XAtTsUvsSloU+rzqhqgZJXZ63hPJ66fqMFTh1mHuqwotqPQP
+	/MQN88xN/7pVFNHq/wraKVc2SaLQ8ZTXDLu8CTNLHct7ZBuM18DQ8xEYy/u0eddd8hI=
+X-Gm-Gg: AYBFou2GCumWTGufLxXIQJk/0sW2z9LQ/1b5yPENXkYrGH6ozYS5/fWHZWevDqMvX1p
+	k9qapr2rBm3lv3gAhD9/iSDSBVyQ+/tSPXtweuDRSpkAyG8tSFSTz5GBFtF2T/0BfRnJmxMNx7F
+	eELTKhpSiH7AOGrbQ14KFFOVQGnHefXmDJYzplMT7peHs/mC9Kv0ox6W8MjaicwYSyh8YEsUpcW
+	YkYojJuXO+zzgSODybhjXSMjcCb1HnGfTyz7bxw+VojDT1RFqi90qPZdyBY06TGrwY4Wx0bn+4Q
+	nkTwDeY4hH1e3mDEfBgzEAn1VLw6+gguCMl3W5VxyUJ+eaN4zmtObFufrkdARMGdG5Nvx4dzg7W
+	7wKn1YYI6ac3/NHvpuw9fxpvTyJTFyNCi15rL4boBcoXDU9/x+hHzy//gpJP8hB2Z7V6IlcXVLQ
+	2pZoHv03AqOwL/DuVldz23edrWZ56amTbpU4YccFiitNP11Lczj2g8xDpFfz1dAhfq3MRU1sazZ
+	UKOHtuOG64ZwZnRln9uyg==
+X-Received: by 2002:a05:600c:4e92:b0:49e:63cc:6324 with SMTP id 5b1f17b1804b1-4a18e4837e7mr300689535e9.6.1791970211150;
+        Wed, 14 Oct 2026 02:30:11 -0700 (PDT)
+Received: from gmail.com (deskosmtp.auranext.com. [195.134.167.217])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1b2e9791csm37734665e9.1.2026.10.14.02.30.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Oct 2026 02:30:10 -0700 (PDT)
+Date: Wed, 14 Oct 2026 11:30:08 +0200
+From: Mahe Tardy <mahe.tardy@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH bpf-next v3] bpf: allow ksock connect/send calls from wq
+Message-ID: <as9LoIKMYXAW5IMP@gmail.com>
+References: <20261014091450.19107-1-mahe.tardy@gmail.com>
+ <sashiko-outbox-171070@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261013-gpio-shared-fwnode-lookup-v3-0-4553c1a7d80f@oss.qualcomm.com>
- <20261013-gpio-shared-fwnode-lookup-v3-3-4553c1a7d80f@oss.qualcomm.com> <sashiko-outbox-169821@kernel.org>
-Date: Wed, 14 Oct 2026 02:27:49 -0700
-X-Gmail-Original-Message-ID: <CAMRc=Mfm9QjRtMOU=9QL+X-9C8wqnZ7-Wf6XU2U-sN4x3V_EBA@mail.gmail.com>
-X-Gm-Features: AclHuK8ZHVCW4gWyDkxO68PTSzbMOWefobWxoXTSY5fyI5N8AmKEw56P6jRgMKA
-Message-ID: <CAMRc=Mfm9QjRtMOU=9QL+X-9C8wqnZ7-Wf6XU2U-sN4x3V_EBA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] gpio: shared: detach the proxy device from struct gpio_shared_ref
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-gpio@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, sashiko-bot@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-171070@kernel.org>
 
-On Tue, 13 Oct 2026 15:31:53 +0200, sashiko-bot@kernel.org said:
-> Thank you for your contribution! Sashiko AI review found 4 potential issu=
-e(s) to consider:
-> - [Critical] gpio: shared: race returns wrong GPIO desc on uninitialized =
-proxy_fwnode
-> - [High] gpio: shared: teardown unconditionally dereferences NULL proxy_d=
-ev
-> - [High] gpio: shared: NULL pointer evaluation misidentifies virtual chip=
-s as proxies
-> - [Medium] gpio: shared: memory leak of dynamically allocated proxy devic=
-es on error path
+On Wed, Oct 14, 2026 at 09:26:39AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] bpf: selftests: u64 map key mismatch causes ksock_wq failure on big-endian
 > --
->
-> commit 5669c21b32e82fcb8daf60473942426be156bbb3
-> Author: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
->
-> gpio: shared: detach the proxy device from struct gpio_shared_ref
->
-> This commit moves the auxiliary device struct out of the shared reference
-> structure and dynamically allocates its memory during proxy setup. It als=
-o
-> renames the field to proxy_dev to better reflect its purpose.
->
->> diff --git a/drivers/gpio/gpiolib-shared.c b/drivers/gpio/gpiolib-shared=
-.c
->> index 8c9ac9d933049..a57a2dd5ca00e 100644
->> --- a/drivers/gpio/gpiolib-shared.c
->> +++ b/drivers/gpio/gpiolib-shared.c
+> 
+> commit e40a8841b185289348c211758c8754c0959c28bd
+> Author: Mahe Tardy <mahe.tardy@gmail.com>
+> 
+> bpf: allow ksock connect/send calls from wq
+> 
+> This commit relaxes the constraint on not using the workqueues for ksock 
+> connect() or send() kfuncs. It also updates the selftests to verify this 
+> behavior.
+> 
+> > diff --git a/tools/testing/selftests/bpf/progs/ksock_wq.c b/tools/testing/selftests/bpf/progs/ksock_wq.c
+> > index 16a1873d132ed..290736e219e1d 100644
+> > --- a/tools/testing/selftests/bpf/progs/ksock_wq.c
+> > +++ b/tools/testing/selftests/bpf/progs/ksock_wq.c
+> > @@ -14,15 +15,19 @@ struct ksock_wq_value {
+> >  
+> >  struct {
+> >  	__uint(type, BPF_MAP_TYPE_ARRAY);
+> > -	__uint(max_entries, 1);
+> > +	__uint(max_entries, 2);
+> >  	__type(key, u32);
+> >  	__type(value, struct ksock_wq_value);
+> >  } work_map SEC(".maps");
+> 
 > [ ... ]
->> @@ -511,10 +522,11 @@ int gpio_shared_add_proxy_lookup(struct device *co=
-nsumer, struct fwnode_handle *
->>  	return -ENOENT;
->>  }
->>
->> -static void gpio_shared_remove_adev(struct auxiliary_device *adev)
->> +static void gpio_shared_remove_proxy_dev(struct gpio_shared_ref *ref)
->>  {
->> -	auxiliary_device_delete(adev);
->> -	auxiliary_device_uninit(adev);
->> +	auxiliary_device_delete(ref->proxy_dev);
->
-> [Severity: High]
-> Does this code crash if ref->proxy_dev is NULL?
->
-> If a shared GPIO entry has 1 or fewer consumers, gpiochip_setup_shared() =
-skips
-> creating the proxy device, leaving ref->proxy_dev as NULL. Alternatively,=
- if a
-> GPIO controller probes before gpio_shared_init populates the list, proxy_=
-dev
-> remains NULL. Later, when the controller is removed,
-> gpio_device_teardown_shared() unconditionally calls
-> gpio_shared_remove_proxy_dev().
->
-> Because dev is at offset 0 of struct auxiliary_device, &auxdev->dev evalu=
-ates
-> to NULL, and device_del(NULL) dereferences NULL->parent, causing a panic.
->
-
-That's not true. If an entry has 1 or fewer consumers, we remove the refere=
-nce
-from the list in gpio_shared_free_exclusive(). We'll never call
-gpio_shared_remove_proxy_dev() in this case.
-
->> +	auxiliary_device_uninit(ref->proxy_dev);
->> +	ref->proxy_dev =3D NULL;
->>  }
->>
->>  int gpiochip_setup_shared(struct gpio_chip *gc)
->> @@ -527,7 +539,7 @@ int gpiochip_setup_shared(struct gpio_chip *gc)
->>
->>  	list_for_each_entry(entry, &gpio_shared_list, list) {
->>  		list_for_each_entry(ref, &entry->refs, list) {
->> -			if (gdev->dev.parent =3D=3D &ref->adev.dev) {
->> +			if (gdev->dev.parent =3D=3D &ref->proxy_dev->dev) {
->
-> [Severity: High]
-> Can this evaluate to NULL =3D=3D NULL and incorrectly identify virtual co=
-ntrollers
-> as shared proxies?
->
-> Because ref->proxy_dev is initially NULL before setup, and dev is at offs=
-et 0,
-> &ref->proxy_dev->dev evaluates to NULL. If a virtual GPIO controller like
-> gpio-mockup or gpio-sim probes with no parent device, gdev->dev.parent is=
- also
-> NULL. This early return would abort the actual shared setup.
->
-
-This is a pre-existing issue, will fix in a follow-up.
-
->>  				/*
->>  				 * This is a shared GPIO proxy. Mark its
->>  				 * descriptor as such and return here.
-> [ ... ]
->> @@ -592,7 +604,7 @@ int gpiochip_setup_shared(struct gpio_chip *gc)
->>  				 fwnode_get_name(ref->fwnode) ?: "(no fwnode)",
->>  				 ref->con_id ?: "(none)");
->>
->> -			ret =3D gpio_shared_make_adev(gdev, entry, ref);
->> +			ret =3D gpio_shared_make_proxy_dev(gdev, entry, ref);
->>  			if (ret) {
->>  				gpiod_free_commit(desc);
->>  				return ret;
->
+> 
+> > @@ -43,20 +73,40 @@ static int ksock_wq_callback(void *map, int *key, void *value)
+> >  SEC("syscall")
+> >  int ksock_wq_start(void *ctx)
+> >  {
+> > +	struct bpf_ksock_create_opts opts = {
+> > +		.family = AF_INET,
+> > +		.type = SOCK_DGRAM,
+> > +		.protocol = IPPROTO_UDP,
+> > +	};
+> >  	struct ksock_wq_value *value;
+> > -	u32 key = 0;
+> > -	int err;
+> > +	struct bpf_ksock *ks;
+> > +	u64 key = 0;
+> > +	int err = 0;
+> >  
+> > -	value = bpf_map_lookup_elem(&work_map, &key);
+> > -	if (!value)
+> > -		return -ENOENT;
+> > -	err = bpf_wq_init(&value->work, &work_map, 0);
+> > -	if (err)
+> > +	ks = bpf_ksock_create(&opts, sizeof(opts), &err);
+> > +	if (!ks)
+> >  		return err;
+> > -	err = bpf_wq_set_callback(&value->work, ksock_wq_callback, 0);
+> > +	err = ksock_ctx_insert(ks);
+> >  	if (err)
+> >  		return err;
+> > -	return bpf_wq_start(&value->work, 0);
+> > +	for (key = 0; key < 2; key++) {
+> > +		value = bpf_map_lookup_elem(&work_map, &key);
+> 
 > [Severity: Medium]
-> Does this leak memory and IDA identifiers if a subsequent consumer alloca=
-tion
-> fails?
->
-> If gpio_shared_make_proxy_dev() fails, the function immediately returns
-> without rolling back the dynamically allocated proxy devices from earlier
-> iterations in the loop. Also, in the caller gpiochip_add_data_with_key(),
-> a failure here jumps directly to err_remove_irqchip, bypassing
-> err_teardown_shared and permanently leaking the auxiliary devices.
->
+> Could this cause failures on big-endian systems?
+> 
+> In ksock_wq_start(), the key variable was changed from u32 to u64, but
+> work_map is defined as a BPF_MAP_TYPE_ARRAY with a u32 key.
+> 
+> When &key is passed to bpf_map_lookup_elem(), big-endian systems will read
+> the first 4 bytes of the u64 (which will be 0 for both iterations in the
+> loop).
+> 
+> This would cause the lookup to return the element at index 0 multiple times,
+> leading to double-initialization of the same workqueue via bpf_wq_init()
+> and subsequent failures.
 
-GPIO core calls gpio_teardown_shared() on failure in this function. We can
-treat it as a potential improvement.
+Oh no :facepalm:, I sent the v2 again instead of the v3 with the u32
+change... Sorry for the spam, I'll send the proper v3 as v4 in a while
+to avoid sending too many emails on the same patchset at once.
 
-> [Severity: Critical]
-> Does setting the shared flag earlier in this function expose an uninitial=
-ized
-> proxy to concurrent consumers?
->
-> Since the provider is already on the gpio_devices list, setting
-> GPIOD_FLAG_SHARED before creating the proxy device can allow a concurrent
-> gpiod_get() to enter gpio_shared_get_proxy().
->
-> Because the proxy and its fwnode are not yet initialized, the consumer wi=
-ll
-> read NULL. It then calls gpio_device_find_by_fwnode(NULL). In
-> gpio_chip_match_by_fwnode(), the condition:
->     return node && node->secondary =3D=3D fwnode;
-> evaluates to node->secondary =3D=3D NULL, incorrectly matching the first =
-GPIO
-> controller in the system that has a primary fwnode but no secondary. This
-> could return an unrelated GPIO descriptor and cause cross-device hardware
-> corruption.
->
-
-Pre-existing, adding to the TODO list.
-
->>  			}
->> @@ -624,7 +636,7 @@ void gpio_device_teardown_shared(struct gpio_device =
-*gdev)
->>  				ref->lookup =3D NULL;
->>  			}
->>
->> -			gpio_shared_remove_adev(&ref->adev);
->> +			gpio_shared_remove_proxy_dev(ref);
->>  		}
->>  	}
->>  }
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261013-gpio-sha=
-red-fwnode-lookup-v3-0-4553c1a7d80f@oss.qualcomm.com?part=3D3
->
->
-
-Bart
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261014091450.19107-1-mahe.tardy@gmail.com?part=1
