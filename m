@@ -1,103 +1,143 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EFE51E432
-	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 13:45:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.178
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792071935; cv=pass; b=o8uy/gm8wz2YTCVKJBKCqjMbSx1zA7QKmbaBVgZCkvPUlXV+Y3COvFCNqCYkRwKWKtDwYXH7kxT2eCvOgJaGe78OKMNxPd+ganuVz3CK2mLFi2560lmKd++81Hdic2lw9hvNeagfAKlapo3g+6bezCPRDlTAIOAnKAHQAp7Boyc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792071935; c=relaxed/simple;
-	bh=d34ENdl7sUX1mC2XCxpsqQKP7Xbch1vuzKqxkOWiBNk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rD4AVfsc1cZmS0exQLAik9gkp50fMfYqggReH6EAANK7kwH/A68fTcL3D7XLkYAgDZ1cxcMR2J4/1pZyAlxvecCYsZ7+aub/k+zaqsdwBz7VqrCmINiKfnTiUFuW1kRq+01KfG/gLTD3s7k09w9fuvfDHGRLfXKT6b+yhtHyWKo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fooishbar.org; spf=pass smtp.mailfrom=fooishbar.org; dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b=hGp/XIST; arc=pass smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fooishbar.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fooishbar.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43FF52ED50
+	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 14:01:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792072910; cv=none; b=f+P47lVePXvKT3pcC5VmripCV3RsMbkrBFmD+OfEN+V3T842GEU4qzwEBPUmOp70eAIBVmznjxBu4gnf19903IVfjjO1+4oFsx/dpK0xPT5rNNx9ES07lMHIODQ95gvd1JXCOR1B5rVzYV7qGLD2qseo59iCXuY8Ll1dAepOfu4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792072910; c=relaxed/simple;
+	bh=F9D4NtGx2BASRaM0QdP9rN+CHp9G1qOy0hyNSwDNx9k=;
+	h=Message-ID:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=BEDAZu8xMbnZb+LZO6DZ/b7OyLT6iJz94gnORZLmqU9AT/QNm9v6+c/fgIte3mTBq0zZOn5TFY0RrqD+cT0tA6NJm2AlSGpQXvQ/aTmayYprhqToJWBHQdkvBu6vj9Pus15NoEqvLOnHTFaL3qzkjHBzPIxAtJvRKYm7Z+Wndsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T7uLmpgJ; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b="hGp/XIST"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2e87c66e556so22752855ad.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 06:45:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792071932; cv=none;
-        d=google.com; s=arc-20260327;
-        b=fgGD22n+Kp1Vz5FvAxC8J0SolOx1kTQxVGE+eeK1gjmSIChk2HNJ0TvANFhg1ssBDG
-         EVucuNnl57FYKNf/QeZsT4P/wilWy9QaWMeiAH5dk6ZUPrCOPJ7WxuodA7a4lT4DU/8M
-         iHaJ6Rocib9yo6C808iSbG0ffWipNmcwiU9kMuzVPVAjo660Zp44xtEnW0WFPZ6frxpg
-         O7DqsUFAceCqUfUD3RSM6ZjebhcsFetP4+gwhJpoAgfbNquBHKw8Xph4yoKRtHSTLdCT
-         2QAgyhjSRHhbHVEx/SLonFytBPV2wPgCOCwB8xKYMl4IliRsL6UGJ+kUUiJEeXcoHHAu
-         WRDA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=d34ENdl7sUX1mC2XCxpsqQKP7Xbch1vuzKqxkOWiBNk=;
-        fh=HpejU3OWQ2WGMLC30SR8o7u2r4zVlbVw3CLQsqSjj2g=;
-        b=rNOMEMuuqnCcxwMQXwhrMWP2mADw0qETJAOoB3wiusicK8X3mj2hPgG4b49/hDg/Yd
-         yDvqM1mP8aclnHGxsOmJCRGgY7E7kbrCTdpzXzliHoVSlfUOTwH0Gywg3dn/aEg5boqe
-         a1umquEjTbL8h5daGbrRuh0PUZYdImmpgy6xziauUPchAygnMsn6rcwqLJM53wIY+rov
-         4CAIcqMpjOBIhIBBn/eysVO5+gYtN7oyoo/qdyme0KdtDyrRS5N/4baHUu42X+eDu2n6
-         GEOkT7UtSCCHuMjBWuv/eSEbevd6IqAwMJB2shABnlwbB1UCouK6yfbXwOAd2ym84n6C
-         vYJQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T7uLmpgJ"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2dd76b1361dso15000705ad.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 07:01:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fooishbar.org; s=google; t=1792071932; x=1792676732; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=d34ENdl7sUX1mC2XCxpsqQKP7Xbch1vuzKqxkOWiBNk=;
-        b=hGp/XISTRKChZ8cweLrPbiB9DTfy6nq9Ra/lYvYAdbiqyG9K9Z/fndEPMAg+3dDTQe
-         waa5xjNyVkVqfV7fHEXYvDQpRSkuf3U2pvx6Ru/wbpbFZjFUpqws1odY1cOL5hQEMUe2
-         9c4MPev3RH+f/ZL7CG+IYKcp3bAXR7XHC62pFTU+3S8s378TnkJATguzJjOUMcsaZOEP
-         kEqFburGhTVzdX/6mvIyCadSxy4KZOrLMTuphzbqxvBCtBGywWBjklfI8Tx1IA1Zsbvw
-         q+GDDHjXJSNxVYMNg9hpZBlTB8VfsojZufbAlyUXzMcKKHMibrDZnJMWFRTYuZwBREaR
-         4YDQ==
+        d=gmail.com; s=20251104; t=1792072908; x=1792677708; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:subject:cc:to:from:date:message-id:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=LY9l4g61tf1ixC3MFomKzzwAunnhCUNKSY6ylI9RPFQ=;
+        b=T7uLmpgJMnsx0vpUcbWFQ0uOwzJ8Tg7Bk+FkUBCeT/0ww6eKlAIlw17AlSy6f9gw+2
+         RcLvQEbcSIYLp8AEHjKikP6GXBzU8UYPLD2rViRWfVVUYohUv+qRjc9+oTIPPWsEn+od
+         okDBTbAy2KVLOSyK/Z7WWnoP0aOGxT3mP4FWsVt7dm+ivDjfQ2jD6x6b23hKVaSP5ca9
+         8s7qHWFXP/Y4E540wrj+HmZi1LAc+bD3u/CCUw98enWJ+SihzCeao3fGhwaoFH5ANHMU
+         XYEd8wDk3rw9DLghX1tVDLYN14mwAhRKaTel2/1hcS1AYBsdcM/rP6aBXrNluWqV0WcE
+         V0iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792071932; x=1792676732;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=d34ENdl7sUX1mC2XCxpsqQKP7Xbch1vuzKqxkOWiBNk=;
-        b=SpZgs6TM8O1aGY9FgmjtzSGMsA2QOL1COlbCKF9nzLARH1rk69/skGjRuCYFKOOHqW
-         kyJn/ZVI1vh5xyvBXFDOlAnv0MXdshlWbiBZftIr4RQiEtp1tByXfVsNQ9xcoGQd1RX5
-         D5J+n/cvj2x77uUYrWiSrMqzqI26NFK+8vck4M4i3caYu/gTO/22u+B7emtbJGpqu7L3
-         27dQjVRYpNOBofResCE7UUs+r/rvAU90OG9+qJ1kDWKx67BgD/+NZ3hBpcWtnMopcswY
-         lK3mpvOUobi3hqXA2TMIGYfap3jqCZ3EpQncgt5yopXyMKPsbMWUlZYg6UgkZ0ruJ+Ko
-         JrUg==
-X-Gm-Message-State: AFq9FYLXZVpGM1WkxaVNg1zFfuAg8L4uoc9XbKVoGUITsTBr9cYj3Skn
-	pzNYA1Fs/dhZQDwsv5SU4XdvyPOyqv/+ePGkQxFSnDkdZB0+pK/FO3maruPmrZZY/7AAxNYJt2j
-	Xh5CnrzrDPjgG5K7b4yUGz9yyI8hbQV2iVgVbjLt7FKnvL42S5YKyJ+4=
-X-Gm-Gg: AYBFou1w2epTXRnknCi4P2m/qhAnFW8rgGYA1ficQK4DdJPlLymW/oxyMMjMKVyqrEI
-	mFW1CWwyox/SYjy2dR12z9IDTKELrXiIa/puCh9isaWmGWU7MkzUmhIkp6B2Lh3D/V40RfWybtE
-	D2WyQutuyCh/WlKpFBWjW5I/0nyXmiTgmOQvQ1T6kClOfVRoxZD7ftV6lwuyE7w7vdEhf0+dUCc
-	W77pd9tJ/zXxc+cUb4e7dAwAXE7crX6r7+wJiyI/Ggb9Hs8AABnYqxD3KqUYA6gRpq6zgDUePa4
-	yjvUqc3r15/BGzTSmQO08S+3Vv3EhtjNszAO2AbDOwRgxteueVqRn3s=
-X-Received: by 2002:a17:903:15c8:b0:2e9:29ec:f894 with SMTP id
- d9443c01a7336-2e97756f34dmr280475ad.31.1792071932367; Thu, 15 Oct 2026
- 06:45:32 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792072908; x=1792677708;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:subject:cc:to:from:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=LY9l4g61tf1ixC3MFomKzzwAunnhCUNKSY6ylI9RPFQ=;
+        b=eYmBUbBte5DZMa8/TAKrC6EsRoWpNg8o1ARiIu7o1XCMvqzzjXVVAw4EdD54ah9xQI
+         JW6u5rq8bxzNaY7NlKpXfkIvgF4ci9D0b9LZIaBegXnRuh5lYn7I1jgdDKVw6XD1DC8X
+         HTWE6lMkks+izeEr65ejCwNnIgWmTZ75CVerPGbrbboQeZAlmwE1UXarC/yeyNbfFejZ
+         wo45w557AP4ADHYVaJn4WlOqpCL2W3AOY1HR5y2DaZF+82/NxZBbERHtmEwboUl/YB2d
+         U8K/P/tO7/HT4VgLI56Zle5U+kv8h60u4vDOkmXRCDhiV8k4hyv+7NDaUalqgQE48itR
+         DVnw==
+X-Forwarded-Encrypted: i=1; AKwUvBy9xHeDbXzRKqGkXbnoswSL6oNfR8b0RQQtu2KfX9SIVnIKE5JDjvmFEtWA/n+6T8qly8VIFGpsk9Oy4v943F4=@lists.linux.dev
+X-Gm-Message-State: AFq9FYI5sw8sH9cemtJ3JuZc1swAoE0xJeOI6XontKKi77rkN59tyxtx
+	5FVwmIcsQskQlmg/XBBETNZhJpny7SeBCXqXPcXe/5YezteeK4ZDEtkx
+X-Gm-Gg: AYBFou07b4GUlbw7sllHtGnbtQDpDSXrA2McSqVomzXUc/4PI59oVSgOR/43Bstmzmq
+	hUlBQDaAwl11e1GHnG67WZB9rOsniDVStIJmHu87fEhWc9qX/4xMfY95XlIy6XRfsW3ynTrxJ8Z
+	ynfyjUsdVzWjVD45Ii48582fa3EVNUX7A8ulUFqRtp9dK/VGw6s54WeXvF3By2NKdRluYxBijt6
+	J5kYaInIHQxNQvcyfj2kYZWMHwOTZ5D33UdAd9AnYbiaNnlnb9lHZjqOr5dILTjTmgmI7kOQ5sd
+	FV+C3NVAe5b7H5Pb/ZcA8YB2DOB2OCAH/UjOJevOfzANe3t0CihSowjWeN75Dj47FOXwNQq2sCL
+	EOP+E02wwIrvkFJduWTFKz4qvt/1K6X1t7tuA75pucawU4KKN0kj9AQ4n4iqWDMEeApd2fmIP33
+	DQtwplbNY6eX6KutxSxgMz4Ak5WB4bufE4zkAiKge6Rcb9GLVTzbSzDI60E4KIo+eLVL4U6A==
+X-Received: by 2002:a17:903:2309:b0:2e5:38bf:cb43 with SMTP id d9443c01a7336-2e8427f0c01mr176866815ad.2.1792072907655;
+        Thu, 15 Oct 2026 07:01:47 -0700 (PDT)
+Received: from [127.0.1.1] ([240e:b8f:977f:f400:ec2a:b15e:fef8:70a])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2e94ba30f6asm16779985ad.57.2026.10.15.07.01.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Oct 2026 07:01:46 -0700 (PDT)
+Message-ID: <6ad0dcca.e4f0a24b.cac3b.c1fe@mx.google.com>
+Date: Thu, 15 Oct 2026 07:01:46 -0700 (PDT)
+From: Liang Haowen <nbg2974@gmail.com>
+To: Lee Jones <lee@kernel.org>
+Cc: linux-leds@vger.kernel.org, Pavel Machek <pavel@kernel.org>,
+ Martin K . Petersen <mkp@kernel.org>, linux-scsi@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Denis Benato <denis.benato@linux.dev>, Armin Wolf <W_Armin@gmx.de>,
+ Hans de Goede <hansg@kernel.org>,
+ Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>,
+ Marco Scardovi <scardracs@disroot.org>, sashiko-reviews@lists.linux.dev
+Subject: Re: [RFC v9 1/1] leds: asus-aura-scsi: Add ASUS Aura RGB LED driver
+ for ROG NVMe enclosures
+In-Reply-To: <20261015115043.GA1863739@google.com>
+References: <20260925134010.2815025-1-nbg2974@gmail.com>
+ <20260925134010.2815025-2-nbg2974@gmail.com>
+ <179198503855.839288.7797731903424311774@kernel.org>
+ <20261015115043.GA1863739@google.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261015131301.711153-1-daniels@collabora.com>
- <20261015131301.711153-3-daniels@collabora.com> <sashiko-outbox-172908@kernel.org>
-In-Reply-To: <sashiko-outbox-172908@kernel.org>
-From: Daniel Stone <daniel@fooishbar.org>
-Date: Thu, 15 Oct 2026 14:45:20 +0100
-X-Gm-Features: AclHuK8waALSrdB4EhLPtv8GlX23W-lExWqq8q2cI2vUC4GU2EE7toXsccGM2Ac
-Message-ID: <CAPj87rN_iucmsrZhNK=xNgZrOSxBcmHEm9hEkwQn10LQQsj24A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] drm/panthor: Delegate neural power domain to CSF when present
-To: sashiko-reviews@lists.linux.dev
-Cc: Daniel Stone <daniels@collabora.com>, dri-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 15 Oct 2026 at 14:18, <sashiko-bot@kernel.org> wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] panthor: resource leak due to incorrect LIFO label ordering in error path
-> - [Medium] panthor: incorrect hardware teardown order and duplicate TILER power-off
-> - [Low] panthor: build failure due to returning a label identifier
+On Thu, 15 Oct 2026, Lee Jones wrote:
 
-Well, that's tremendously embarrassing. Will follow up with v2 sent
-from the branch that both builds and works, not the one full of rebase
-detritus.
+> A driver source file without 'Kconfig' or 'Makefile' integration is dead co=
+de in
+> the tree.  Either wire it up now or hold off on submitting until the rest o=
+f the
+> pieces are ready.
+
+v10 wires it up: the drivers/leds/rgb/Kconfig and Makefile entries
+are in, and the series is posted as a new thread under the same
+subject.
+
+Your 25 Sep note never reached me: neither it nor the copy
+kernel.org relayed on 14 Oct is in any folder of my mailbox. I
+first saw its content today, quoted in this mail. The three week
+gap was delivery, not silence; this is my first chance to answer
+it.
+
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(=
+s) to consider:
+> - [Low] leds: asus-aura-scsi: undefined function kzalloc_obj() causes build=
+ failure
+> - [Low] leds: asus-aura-scsi: blk_rq_map_kern() missing required request_qu=
+eue argument
+> - [Low] leds: asus-aura-scsi: strscpy() called with missing size argument
+>
+> Was this even tested?
+
+Yes. The driver builds with clang (LLVM=3D1) against 7.2.4 with zero
+warnings, loads on the enclosure, and was exercised today: the four
+LED zones driven to independent colours and checked by eye, 60
+sequential and 100 concurrent updates, the sdev deleted mid-write
+(zero splats, clean detach), rmmod, and a fresh attach through a
+host scan.
+
+All three findings assume a tree older than v7.0:
+
+- kzalloc_obj() has existed since v7.0 (Kees Cook's series,
+  include/linux/slab.h).
+- blk_rq_map_kern() takes four arguments on current kernels; the
+  queue comes from the request itself, and scsi_execute_cmd()
+  calls it the same way.
+- strscpy() with two arguments is backed by __strscpy0 in
+  include/linux/string.h, which infers sizeof(dst) and rejects
+  non-array destinations. v10 passes the size explicitly anyway,
+  since it costs nothing.
+
+kzalloc_obj() has now been reported by the bot in all nine of
+its reviews and blk_rq_map_kern() in eight, and the answer has
+not changed since the first time. If sashiko could review
+against a current tree, or drop those two checks, the noise
+would stop.
+
+Best regards,
+Liang
