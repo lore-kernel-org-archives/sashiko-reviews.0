@@ -1,105 +1,65 @@
-Received: from mta0.migadu.com (out-133.mta0.migadu.com [91.218.175.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.cjdns.fr (mail.cjdns.fr [5.135.140.105])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B8E3A5438
-	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 15:45:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6503853ED04
+	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 15:53:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.135.140.105
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792079158; cv=none; b=aCaFbtO2dX676Hx1auLX/yvExtHanzzbOSJID0oXS+uWkit0fELbhbOJgctG9Bqe7HJ3zH9LDULs3nvAXSQpzStjUFUMVoVlXmssD/fBBRaTbtJZVBYQbJru7oT5rsIVrmI0bxiFh2CE3IPZ6Uzxhr4Ne6h9B7t3++3DPsHhCJ0=
+	t=1792079614; cv=none; b=dHxBTHgCjGae1ZtFXkGBAxh8VoJrX6tKVfuX3THFO+U5roRn5y5D2KDcbbHUy6DVb/JZbyu6LdC0wePsj6z0iGrA69uM3wECwiFF0Z1r+gY79NVBY+Om7rnYjizyMwDjj+2j8WXwVPFvRK83q2vncSiC21KNmraazvyTPBI/8qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792079158; c=relaxed/simple;
-	bh=POooulujnIkLHWEyPmLNc//oQqLDg4iHcaq7ZUi7onw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=RMaKoSHzBt3f5M7i6ZHLDJD8KiVtcaEjpJV0qmjZsgmjrpgEzy6EMCUaDrnwZjfPrjBdvxLja/l8JPEWO9FsO1SgG/4oEFBEtQwBVVKLtq3S/lDPP375DHwiH55C0IEF6ddhHpu8DSu+HBcPbci7TnlDkKeWOvStGHixhk/sw5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=pAlV+3N8; arc=none smtp.client-ip=91.218.175.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1792079614; c=relaxed/simple;
+	bh=66s3jvwhXqXMXCR9Ls2z2H5ucQRaoo+W9r2EZWBUsio=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gREnQyHsdXimS37fUWAsPAsKywiwsw56/TG6m69mVV6e2JUg6QlZTih0UiY3X8T7lf0tCL1cesKVHAQGVbrGGk3FM3xdcg/k4GIpI3YAdy5LxtWESeMgYMi3F1Q8IEtvpXbQX1EpY1H2QCuQwEABoD058BM0x0I7DDsoFLu34Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr; spf=none smtp.mailfrom=cjdns.fr; dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b=k/SJP5mZ; arc=none smtp.client-ip=5.135.140.105
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cjdns.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=cjdns.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="pAlV+3N8"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=POooulujnIkLHWEyPmLNc//oQqLDg4iHcaq7ZUi7onw=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1792079146; v=1; x=1792683946;
- b=pAlV+3N8RGhjha4fdNsbNMPKaARDsE/Gn65r6Q8SD+susVQHY+soiM6YGSbNTXhC1MNX6YnL
- 40TLg0Fpm3CqdP3w1cp+G7kfhqbf6CIX4fimzaUpesFU8WWAnU1UV/dGqSpJbaEfGRv6DeSLVzX
- Pz2w878LUAGO02CQS6E234IA=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id a8122fc183ca982b;
-	Thu, 15 Oct 2026 15:45:31 +0000
-X-Mizu-Trace-ID: a8122fc183ca982b
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <9562d352-61f6-43c3-8ed3-3dc89140d317@linux.dev>
-Date: Thu, 15 Oct 2026 08:45:25 -0700
+	dkim=pass (2048-bit key) header.d=cjdns.fr header.i=@cjdns.fr header.b="k/SJP5mZ"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 0CBFC5B0F43;
+	Thu, 15 Oct 2026 17:53:18 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cjdns.fr; s=dkim;
+	t=1792079599; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=P8uMpuYezBqzKJmVmRZehSXeoBOm5K3zdA8eRcmME8Q=;
+	b=k/SJP5mZk4iEscs/wlZ5U0GxL9O/sHgGanrzEjZpi0KAuKcemTfNifRSSjJf+2Cj/8IzgR
+	Be/bZ3cNCGEJRLx9FG6Rv2s8E8u4PHt+wfXhnBJnHNpnUeVfkooKTdp08CFq1r39wFJGgo
+	UY/d4Uu4CVZ328PlKIJxm+luvPXAYpjxS65Hao7SnqOk328F+FMqQTE8MFa3o+0H5+H5EA
+	/yoOXjMXWc7JE2XwtWj1N4t9hOiyX0SoJAsvp6k1sNrz5R7/BnFd1f5HiP6qattRUGtJ83
+	hGtcRXeBXqEWUR3pLBXGz6eNEugkM//5zzIf5umKfSuAk20I53a8jYCV0UbIBA==
+Message-ID: <dd85a784-aa07-4b17-84b4-16a138c3e4e1@cjdns.fr>
+Date: Thu, 15 Oct 2026 17:53:17 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v11 19/26] libbpf: Add cleanup_info to
- bpf_prog_load_opts
-To: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-References: <20261015040143.854070-1-yonghong.song@linux.dev>
- <20261015040321.864586-1-yonghong.song@linux.dev>
- <sashiko-outbox-172238@kernel.org>
-Content-Language: en-GB
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <sashiko-outbox-172238@kernel.org>
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH v10 4/5] clocksource/timer-econet-en751221: Support
+ EN751627 without percpu IRQ
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20261015145331.453837-1-cjd@cjdns.fr>
+ <20261015145331.453837-5-cjd@cjdns.fr> <sashiko-outbox-173087@kernel.org>
+Content-Language: en-US
+From: Caleb James DeLisle <cjd@cjdns.fr>
+In-Reply-To: <sashiko-outbox-173087@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-
-
-On 10/14/26 9:13 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] bpf: multi-line comment style violation in bpf_prog_load_opts
-> --
->
-> commit 7622c492adc459370a78a700a25047031969a083
-> Author: Yonghong Song <yonghong.song@linux.dev>
->
-> libbpf: Add cleanup_info to bpf_prog_load_opts
->
-> This commit expands bpf_prog_load_opts to include an exception cleanup
-> table. It adds cleanup_info_cnt, cleanup_info, and cleanup_info_rec_size
-> fields, which are then passed to the kernel via bpf_prog_load.
->
-> [ ... ]
->
->> diff --git a/tools/lib/bpf/bpf.h b/tools/lib/bpf/bpf.h
->> index 826d9cc9ab65d..64699e0e4e1a8 100644
->> --- a/tools/lib/bpf/bpf.h
->> +++ b/tools/lib/bpf/bpf.h
->> @@ -128,9 +128,17 @@ struct bpf_prog_load_opts {
->>   
->>   	/* if set, provides the length of fd_array */
->>   	__u32 fd_array_cnt;
->> +
->> +	/* exception cleanup table: cleanup_info_cnt records of
->> +	 * cleanup_info_rec_size bytes each (struct bpf_cleanup_info),
->> +	 * holding instruction indices into insns
->> +	 */
+>> +		return -EINVAL;
+>> +	}
+>> +	if (cd->irq <= 0) {
+>> +		pr_err("%s: missing IRQ for CPU %d\n", cd->name, cpu);
 > [Severity: Low]
-> This isn't a bug, but does this multi-line comment follow the preferred
-> BPF subsystem style? The subsystem guidelines strictly require that the
-> opening /* for multi-line comments be placed on its own line.
->
-> Could this be formatted as follows to match the standard?
->
-> /*
->   * exception cleanup table: cleanup_info_cnt records of
->   * cleanup_info_rec_size bytes each (struct bpf_cleanup_info),
->   * holding instruction indices into insns
->   */
+> Similarly, could cd->name be uninitialized here for skipped CPUs?
 
-This is a format issue. Can be a follow up or as is.
 
->
->> +	__u32 cleanup_info_cnt;
->> +	const void *cleanup_info;
->> +	__u32 cleanup_info_rec_size;
->>   	size_t :0;
->>   };
+This is an easy fix, I'll send a v11 for this.
+
+
+Caleb
+
 
