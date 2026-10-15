@@ -1,225 +1,117 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D823E2AB0;
-	Thu, 15 Oct 2026 21:47:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A457139D3C0
+	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 21:53:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792100837; cv=none; b=GVkqVd71rG6aydKZC/HU7ZFAfMnLou5vv7CgJG4bg7KzUTYTzJhviFOvC6ollOzajUBwyHlsMp273osljfc9Pvi8NfIBd30/J6bMAClunrZAqZMNzDKT3nXYb9MQYh9OprQYquKKR2w+q96zbZIcf0mn3+Mm7EuNFIZPpNIbIeA=
+	t=1792101188; cv=none; b=HGX9TcU1tx4yk9iveg9bVF8loCZHf4oJ03W6pVrpbqX0HfBXkR6MLhJjmXrVKxlepzNnsWI9CB7v2I7Qx4By9I8683htdAIsN+ImIA4PtPMVHZGKW9LRe5Z29ZAnyAiYliGVfSKoLCLwlFQ/5Dn/Pj4RnoX/Sz2meMQs9TajK0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792100837; c=relaxed/simple;
-	bh=P29+bjs79eC7BpoPjQ3+Px+lGsPYirb9IdhOIGwDoc4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Dnrn6Zrv6N8BK3CVTzoJS13KuYxeM9M8ZCBjiVIa+LUzRi+I4LgT/4LiGseNCXlkBfgq71t81Bqesxj+M0b8Gq5Efg2KrNjknWLWS4yhJ8g0Zi6TNBC/2v7nUt2REd9yv45f3iTMk2EEfTZuDXoQ7FvEsq7Cbi6dLq97b8uVbPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=epkmS+sk; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	s=arc-20240116; t=1792101188; c=relaxed/simple;
+	bh=uP49FBvXzxwQaoH3/H+q5gaTQYkqJhRlFh0JRBmezWk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eO2wm7n43sTdwSitTSjBL7p9UT7MivnEie4kYuC39rIaiK/KmXF77yW0rbXAc1gkTH23O80TJXNXljcVXIbpwSe9/ztlzXHRT/3rjy1ErbskqykketXAPSkEAZ0fFGMSWD6u/G4zT/DHsCcqDTry+WJvzPBwYmjUyggYNrAl5TI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net; spf=pass smtp.mailfrom=gourry.net; dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b=c0eYWTh0; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gourry.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gourry.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="epkmS+sk"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69FJVteH668033;
-	Thu, 15 Oct 2026 21:47:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=BH19KyJqtSSCvigcQRoHapTgOvCYSB
-	z+5OPWhCYEZJc=; b=epkmS+skueIcYs3DfsjXStOku8ndpi6H28tGfqHMdxWLz/
-	O7PMjcCbapv3FOD1VASuWfLR0H9wtdGjkqvVoxUI75BKhkvdQ1ylfNitft/4Okl1
-	I72DM2XRZiObvtsXU38ZBYBiQWNhefluJro1wp46uez1AlKb1wr0rXse6ukg7Cds
-	FpznC6NEjX2kMCcmIYbRhC1EhJbnAdg0KiUsgQmq4GVwXGQduGgWGMrg/5H2Ejtg
-	mjL4agUkIzyZcexPaixRmkFhrBHkTsmFI+nwgTXw6qe4pgmjoSrYVLMqBbvesUAM
-	ffZBdhiI5PXi2+6E/09KiVErQgdjZgT48YrryHkQ==
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dugvamt-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Thu, 15 Oct 2026 21:47:13 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69FJ6mX12057773;
-	Thu, 15 Oct 2026 21:47:12 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hawqwt6w5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 15 Oct 2026 21:47:12 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
-	by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69FLlCsK29229664
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 15 Oct 2026 21:47:12 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id E7F0A5805E;
-	Thu, 15 Oct 2026 21:47:11 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id CF4415805A;
-	Thu, 15 Oct 2026 21:47:11 +0000 (GMT)
-Received: from d (unknown [9.16.59.154])
-	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
-	Thu, 15 Oct 2026 21:47:11 +0000 (GMT)
-From: Dave Marquardt <davemarq@linux.ibm.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v14 04/11] scsi: ibmvfc: add basic FPIN support
-In-Reply-To: <sashiko-outbox-173047@kernel.org> (sashiko-bot@kernel.org's
-	message of "Thu, 15 Oct 2026 15:18:34 +0000")
-References: <20261015-ibmvfc-fpin-support-v14-0-a0b063b8d825@linux.ibm.com>
-	<20261015-ibmvfc-fpin-support-v14-4-a0b063b8d825@linux.ibm.com>
-	<sashiko-outbox-173047@kernel.org>
-Date: Thu, 15 Oct 2026 16:47:11 -0500
-Message-ID: <878q3yd4bk.fsf@linux.ibm.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gourry.net header.i=@gourry.net header.b="c0eYWTh0"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-91054f537ccso67856756d6.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 14:53:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gourry.net; s=google; t=1792101185; x=1792705985; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=GoZFyFHEBIbbXLJkNjI5j8IRtrjCYfTrNzWJlPEfUWI=;
+        b=c0eYWTh0YB4/8ahMHzF1OkUhDit76mm4siwXtacAHZD5wdVZ509gll53ZLdxlJUjiz
+         u6mkLBm9f5GDKuAvLFeKsdf1fbc3TkGksVcJsealXBX0C8y6kAfjHEII2LPTh6DfPbaC
+         L6icrNxFTnzwC1NWkbajO42qwQ40T4J7ULSaiKcwVyYgUL0ANNYnwCpWfcWoTl4olWw/
+         jMO2AV6zelaqok+clYfzPkvvkRQjY4xg62fAEaDJhR99frPF42n56QDXIzebcHqwDiz6
+         u8QQXFAv+jbYZ9jQK7aKp9T6gIUhejlih+qhHmseric2h4ywkTIUeA8nUFvatuynOaW6
+         rExw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792101185; x=1792705985;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=GoZFyFHEBIbbXLJkNjI5j8IRtrjCYfTrNzWJlPEfUWI=;
+        b=OJxQxdcf5INdNYflf78TO7ZOUXb1z3yrOX00Kpf0ubH3oZ6Ck5hf6pD1JvvxFW9HBs
+         NjJLZ60/OFeQmX4W5jog7jYwjno93FeCxfwvQ9U8u78VjiNfWN5WnzapuVpYPz/0X/lb
+         XJVRw4Jh8Nn3c3qhfst66kd9SeN10KrJ8VsLTjVljz/r6djqzL71Pb7adzI2TpV+od/Q
+         h93t6+8IPFt6+7HTGIrNr0iTHI0/JP/XMe2HuANILn2H1ayUdb9l2KhLeMVngcOUP9It
+         ecfZuHfTOeRngXHxtoK52QrhnAbXgzf2LMfwA36pB6nLz2TIzDFpI0EmDxrnEGCAgG28
+         cXyQ==
+X-Gm-Message-State: AFq9FYK5IkERwjkvSB6EOPsEhHe093DWlwje+L+AnUs/vYbb1VP2XVOJ
+	QDCUCUDHOnE/eSAUYpG4nWiSA+wxcbIT5pwIdpUOS8mtDbi7LSS5+AFBkyImGDk8ESlTHN4MS8p
+	mPuO/r6o=
+X-Gm-Gg: AYBFou1zi7sZMT8mOhc64ezJA1CaY1XOqguDpqvnT7jbSj1ruy99nB/nbp5OqSSORGe
+	2dGzj8CCHy9Z+Ekum3TJkwEDDgaZ3lbMikzNbdJJLzz6Durly/CRycyJ7/FIjuzlevgBAencRKv
+	GWTKpJ04Ns822UsGQCR48udSntbdaiX1DpbTPlYKMJKJz+1YXGQWA9cDQaR3udFSahtrfls8e2W
+	OsXLXx2fxOhecKKPs1DY6t0CuG/dr6ti3QsRzs9tssY1jaTubk2dNdmQ9GLX1JqCKZgbWs0wYBt
+	mBLtdCAkq7MTqzBGd7Dej3IKevOqHBezLZFoBzY/A9eY1Aq4JJDF4TFh3THTTxrIdOo+WLAbhFZ
+	3oTkOw0V94s6ocp7AXmzVlmb9PjehRm7coSWitPN8gUnz0lfG9mAa9xba8R6010vOr7oQ3BzBqt
+	QFGMo/O+mPgEJ/BCydE1HHDtkoz0/Ixk1U1O8c0PIzyPB9Qb5ddTBkAPIiqeYZ8tpSWt6cPleda
+	ReurPBEp6cXSBPpEmd+gOsnHEzKFLPWuQDTfXRJNBw+dlVTxRzQvj0=
+X-Received: by 2002:a05:6214:410a:b0:917:c904:4ae7 with SMTP id 6a1803df08f44-91b5555df66mr379187676d6.42.1792101185337;
+        Thu, 15 Oct 2026 14:53:05 -0700 (PDT)
+Received: from gourry-fedora-PF4VCD3F (pool-173-79-60-52.washdc.fios.verizon.net. [173.79.60.52])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91bcbaae54fsm6259516d6.19.2026.10.15.14.53.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Oct 2026 14:53:04 -0700 (PDT)
+Date: Thu, 15 Oct 2026 17:53:03 -0400
+From: Gregory Price <gourry@gourry.net>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-rtc@vger.kernel.org, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: Re: [RESEND PATCH 1/2] rtc: cmos: Disable ACPI RTC event before
+ handling it
+Message-ID: <atFKh05sL0FpV8Q4@gourry-fedora-PF4VCD3F>
+References: <20261015173029.3091872-1-gourry@gourry.net>
+ <20261015173029.3091872-2-gourry@gourry.net>
+ <sashiko-outbox-173261@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Cr0q4X4D c=1 sm=1 tr=0 ts=6ad149e1 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=RCS4FwQSR9ayVb6XPsUA:9
-X-Proofpoint-GUID: CMgX1n8pNVb5oYxOGOIpwVZQ8FujT2Nx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE1MDA4NiBTYWx0ZWRfX+fazdbFvP7Lk
- cU+wUSoW8mIoA9GCs+r8rFqn+g46RdBnXFd1QQQMeUO/r0Yr5ZENo0zIGn1D0RF3KIRmvbVNkbo
- pRZ7SgrYI0AEXd2/2OAXUpPS5H+TWv73sJ5+vM5cpwSHXkK50pGQQdwcT8N6a3hIkQCf6pjo5CE
- S9oDczHBm3n+cOp8pyO4ZsOy/p/HU2SZIWcDlphzJ7s24mnzswLJ/wz/EsEy+rsv0efl7DVLVCU
- e7QMyt7g3ydzqf1ZjfWp3kclTXiZWMseFIX62D+VoKwBkr9dT0LuZv6Z6qlMTPRv+CSsCZN89rL
- NMQm+bGL4q22H1heNTtEPOrlh2Mn+bk21x6kelKOJnvMUWYoYIW1QqrdrC29uMw2Da9Ft1l2o1+
- HtK9dz/M+72cW8jsKHFxNeloeieYjNjrhah4st7F21LFdYzKjZG2LYp8GW76WFvPiOZZt7UCgqk
- 0sY3rXJ/vZLf4UsmuuA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE1MDA4NiBTYWx0ZWRfX+J5K052wd3CB
- zXjmviYqTYB3qzz9GZLcz1hOqp2ML96r5Oac+mH7yW2PY8ISgm3lykWdNWnHbTU5tvvBH8GCUsE
- HXgDNO0mHukX7XsqV+euzL5MLcmqAqU=
-X-Proofpoint-ORIG-GUID: CMgX1n8pNVb5oYxOGOIpwVZQ8FujT2Nx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-14_01,2026-10-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0
- malwarescore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610150086
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-173261@kernel.org>
 
-sashiko-bot@kernel.org writes:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] scsi: ibmvfc: missing flush of dynamically allocated system_wq items causes UAF
-> --
->
-> commit 170496a5dbc89bab0a780529ef0e294023ca569c
-> Author: Dave Marquardt <davemarq@linux.ibm.com>
->
-> scsi: ibmvfc: add basic FPIN support
->
-> Implement support for a basic level of Fabric Performance Impact
-> Notifications (FPIN) in the ibmvfc driver to enable monitoring of
-> fabric congestion and link integrity events.
->
-> Add async event handler for IBMVFC_AE_FPIN events that offloads FPIN
-> processing via schedule_work(). Convert VIOS FPIN messages to standard
-> fc_els_fpin structures and pass them to fc_host_fpin_rcv() for processing
-> by the FC transport layer.
->
->> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> index 0fe6b6f4260ba..871decab29856 100644
->> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
-> [ ... ]
->> @@ -3261,6 +3266,255 @@ static const char *ibmvfc_get_link_state(enum ibmvfc_ae_link_state state)
->>  	return "";
->>  }
->>  
-> [ ... ]
->> +VISIBLE_IF_KUNIT void ibmvfc_process_async_work(struct work_struct *work)
->> +{
->> +	struct ibmvfc_async_work *aw;
->> +	struct ibmvfc_async_crq *crq;
->> +	struct ibmvfc_target *tgt;
->> +	struct ibmvfc_host *vhost;
->> +	struct fc_els_fpin *fpin;
->> +	unsigned long flags;
->> +
->> +	aw = container_of_const(work, struct ibmvfc_async_work, async_work_s);
->> +	vhost = aw->vhost;
->> +	crq = &aw->crq;
-> [ ... ]
->> +	fpin = ibmvfc_basic_fpin_to_desc(crq, tgt->wwpn);
->> +	if (fpin) {
->> +		fc_host_fpin_rcv(tgt->vhost->host,
->> +				 sizeof(*fpin) + be32_to_cpu(fpin->desc_len),
->> +				 (char *)fpin, 0);
->> +		kfree(fpin);
->> +	} else
->> +		dev_err_ratelimited(vhost->dev, "FPIN event received, unable to process\n");
->> +
->> +	kref_put(&tgt->kref, ibmvfc_release_tgt);
->
-> [Severity: High]
-> Can this untracked async worker drop its reference and trigger the release
-> function on a destroyed mempool?
->
-> If ibmvfc_remove() has already completed and destroyed vhost->tgt_pool,
-> this final kref_put() triggers ibmvfc_release_tgt():
->
-> drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_release_tgt() {
-> 	...
-> 	mempool_free(tgt, tgt->vhost->tgt_pool);
+On Thu, Oct 15, 2026 at 05:42:19PM +0000, sashiko-bot@kernel.org wrote:
+> > diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+> > index fa04ece151b8b..fe514b1aa3433 100644
+> > --- a/drivers/rtc/rtc-cmos.c
+> > +++ b/drivers/rtc/rtc-cmos.c
+> > @@ -758,7 +758,9 @@ static u32 rtc_handler(void *context)
+> >  	unsigned char rtc_intr;
+> >  	unsigned long flags;
+> >  
+> > -
+> > +	/* Quiesce this event before rtc->irqwork can arm the next one. */
+> > +	acpi_clear_event(ACPI_EVENT_RTC);
+> > +	acpi_disable_event(ACPI_EVENT_RTC, 0);
+> 
+> [Severity: Medium]
+> Could this unconditional disablement create a race with concurrent userspace
+> threads setting a new alarm?
+> 
+> If a concurrent userspace thread calls ioctl(RTC_ALM_SET), it acquires the
+> necessary locks and enables the ACPI event for the newly configured alarm:
+> 
+> drivers/rtc/rtc-cmos.c:rtc_wake_on() {
+>         acpi_clear_event(ACPI_EVENT_RTC);
+>         acpi_enable_event(ACPI_EVENT_RTC, 0);
 > }
 >
-> This accesses the destroyed target mempool, causing a Use-After-Free.
+> While the patch successfully resolves a similar race with the worker thread
+> by moving the disablement before cmos_interrupt(), it seems to leave the
+> asynchronous userspace race unhandled.
+> 
 
-Agreed.
+This is a pre-existing issue.
 
->> + free:
->> +	scsi_host_put(aw->vhost->host);
->> +	kfree(aw);
->> +}
->> +EXPORT_SYMBOL_IF_KUNIT(ibmvfc_process_async_work);
->> +
->>  /**
->>   * ibmvfc_handle_async - Handle an async event from the adapter
->>   * @crq:	crq to process
-> [ ... ]
->> @@ -3361,12 +3616,28 @@ static void ibmvfc_handle_async(struct ibmvfc_async_crq *crq,
->>  	case IBMVFC_AE_HALT:
->>  		ibmvfc_link_down(vhost, IBMVFC_HALTED);
->>  		break;
->> +	case IBMVFC_AE_FPIN:
->> +		if (vhost->state == IBMVFC_HOST_OFFLINE)
->> +			break;
->> +		aw = kzalloc_obj(*aw, GFP_ATOMIC);
->> +		if (aw) {
->> +			if (!scsi_host_get(vhost->host)) {
->> +				kfree(aw);
->> +				break;
->> +			}
->> +			INIT_WORK(&aw->async_work_s, ibmvfc_process_async_work);
->> +			aw->vhost = vhost;
->> +			aw->crq = *crq;
->> +			schedule_work(&aw->async_work_s);
->
-> [Severity: High]
-> Does this code risk a Use-After-Free during teardown?
->
-> Since aw is queued to the global system_wq without being tracked,
-> there doesn't seem to be a way to flush it in ibmvfc_remove().
->
-> If ibmvfc_remove() runs concurrently with this pending work item, it calls
-> ibmvfc_free_mem() which unconditionally destroys the target mempool:
->
-> drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_free_mem() {
-> 	...
-> 	mempool_destroy(vhost->tgt_pool);
-> 	...
-> }
->
-> This could lead to a crash when ibmvfc_process_async_work() completes and
-> drops its reference.
->
-> Additionally, because it is untracked on the global workqueue, it can execute
-> after the module is unloaded, leading to a fatal instruction page fault.
-
-Either ibmvfc needs to track its work items on the system work queues
-and flush them all, or use its own work queue and ensure the work is all
-done before calling ibmvfc_free_mem().
-
--Dave
+~Gregory
