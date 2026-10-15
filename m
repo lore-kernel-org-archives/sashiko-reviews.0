@@ -1,148 +1,220 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-100.mta0.migadu.com [91.218.175.100])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA00653D9CF;
-	Thu, 15 Oct 2026 15:26:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA5238B7A7
+	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 15:43:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.100
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792077985; cv=none; b=SszpgaMDMzcV4gOcLJZ9rf7JuKDyReVgXYvIAz8vywWPFbGG4TdulqlQvU9TPD1YJJH9G6We1tqRiXNUuM3PENE33dkzK0ulaEOonSQHDKdIeE6Gl4musKA3NHXstOJHqyXS6jNNAuOmWzc1U/ph5oxQA5zi3lWO6kA6FG3/lEs=
+	t=1792079027; cv=none; b=W+qxD0mO5aSRtIPklP93mayjbX7wh61O5p7IwLzdBw6DvViv5hIzoQVtqsGjIS0KbDDiNWxLTHfrGvvKF2SPlMOwNRvOohUR1Vwq21k+6+jH8HhQu5akwphM++e5U1LpT6vy/G6xk66DT+1GRKa+NCo1FPkb9JwmKnJush2OfZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792077985; c=relaxed/simple;
-	bh=lGFYszG+X9cD1RSaVXN6Cax+Ro7OIJYt6TuOEfxjm4U=;
+	s=arc-20240116; t=1792079027; c=relaxed/simple;
+	bh=O/UcenkZl+cM9HIIrBgU2U8WddAR3guCcZ35M1yAgcw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=ixQ+NQRjO/y53WfOBlK13wWEkjQ+7iENiz2ozj5MSrJ1rxcwEuTfuLMKaDFA67NeNQpj/o6YhCjcF1EvvBMsHvHCH44i8DLLq8aESnn0y9URYT/qKjYCYh+/+QSlFZaWkHpfAU8p8ql5UVVeAw+T3E09xZ2dDBvJR2Epz1U4VPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KnjfDq1v; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=PZW+nUQ0hMNGypDL6s+0qI5SektLJGv5/sZWzqDaxyhNAxaKJ01xouzdFdoz+mAPTeLvIFxaQ1CUntUvg+EfhSM7YHGx7u3vF0Ha+NUW8Kvb334pMVAWOxfXSxHtjUKNRauVOTAjnI7U7+Sl4DYoh3ijBbOLqOVA3Q766qgvMOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=uXnhM5PE; arc=none smtp.client-ip=91.218.175.100
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KnjfDq1v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F18D1F000C4;
-	Thu, 15 Oct 2026 15:26:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792077980;
-	bh=atS3/rapI2FLFaIlwNm0Wvc9CuXO4ChyPjJlfJz6lcA=;
-	h=Date:Subject:To:References:From:In-Reply-To;
-	b=KnjfDq1vehw4BngSjPRpCcDX+AiEYUfHCML1u2RvRBw6Jhuzx3saJUw4Qgg75Vk+h
-	 ZXBATOsCX5lz1wNF6jUf0DXDDhHxbcE47eFX/rJarjh8fjxxmcHZo6yZllCypG0tIr
-	 /cqZhyh2suN1Ld/UILpDmsjhk+mwaY97j9BzVHi2avS2lZNt+BWmCaG7/ycGsUjGF4
-	 OV34vlYLe69GW8nUGd+7295xBTVpv1R5ozVi4N0f8K4sOZ4ENVSMz7aV8oG2jEenjk
-	 X27cuw7P+fu6nGx3r1YEKh82aebAljD6DdfUl88P9ph0Nv1DVyfUtaT4fkhwaKnNbC
-	 bYUnYyLIlb7xw==
-Message-ID: <aaf47447-d27f-4a08-98ce-72815f9401ea@kernel.org>
-Date: Thu, 15 Oct 2026 17:26:18 +0200
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="uXnhM5PE"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=O/UcenkZl+cM9HIIrBgU2U8WddAR3guCcZ35M1yAgcw=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1792079008; v=1; x=1792683808;
+ b=uXnhM5PEmv/2R9q9m2ZDLEiPtHByzfI7QgYLcifErojSKEXjcFBzkXptq9lUVi3QCCtXYPul
+ JF+ksIfC1pJS2jvWLgoQqEh0j5CIHy2kj9o9HQwnMc/i+G9M5s7emGaW1lpIy/cqoS40N1VMfCf
+ uSswip0eh/CNBnVEGdPmiwZk=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id dee80e2dea1db48a;
+	Thu, 15 Oct 2026 15:43:28 +0000
+X-Mizu-Trace-ID: dee80e2dea1db48a
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <3617adcb-de80-4caf-89c8-9bd0e4f7d154@linux.dev>
+Date: Thu, 15 Oct 2026 08:43:26 -0700
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH mptcp-net] mptcp: disconnect: reset first subflow's
- local_id
-Content-Language: fr
-To: sashiko-reviews@lists.linux.dev, MPTCP Linux <mptcp@lists.linux.dev>
-References: <20261015-mptcp-first-disco-id-reset-v1-1-6ae41e8f02c6@kernel.org>
- <sashiko-outbox-172945@kernel.org>
-From: Matthieu Baerts <matttbe@kernel.org>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- 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
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <sashiko-outbox-172945@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v11 07/26] bpf: Verify an unwind through landing
+ pads and epilogues
+To: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
+References: <20261015040143.854070-1-yonghong.song@linux.dev>
+ <20261015040219.858407-1-yonghong.song@linux.dev>
+ <sashiko-outbox-172270@kernel.org>
+Content-Language: en-GB
+From: Yonghong Song <yonghong.song@linux.dev>
+In-Reply-To: <sashiko-outbox-172270@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 15/10/2026 16:05, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] mptcp: NULL pointer dereference in mptcp_disconnect() on unconnected socket
+
+
+On 10/14/26 9:29 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] bpf: precision tracking fails to backtrack from unwind landing pad
+> - [High] bpf: global subprogram unwind pad bypassed if might_throw is true
 > --
-> 
-> commit 79fba9c250462a2f6852b46cf0562a508bcae604
-> Author: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-> 
-> mptcp: disconnect: reset first subflow's local_id
-> 
-> This commit resets the local_id of the first subflow to 0 when disconnecting.
-> This ensures the value is correctly initialized if the subflow is reused
-> after a reconnect.
-> 
-> Link: https://lore.kernel.org/179198834484.434549.4616694240552704738@kernel.org
-> 
->> diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
->> --- a/net/mptcp/protocol.c
->> +++ b/net/mptcp/protocol.c
->> @@ -3654,6 +3654,7 @@ static int mptcp_disconnect(struct sock *sk, int flags)
->>  	 */
->>  	mptcp_do_fastclose(sk);
->>  	mptcp_destroy_common(msk);
->> +	WRITE_ONCE(mptcp_subflow_ctx(msk->first)->local_id, 0);
-> 
-> [Severity: Critical]
-> Does this code cause a NULL pointer dereference in mptcp_disconnect() on an
-> unconnected socket?
-> 
-> If a user creates an MPTCP socket via socket(AF_MPTCP, SOCK_STREAM, 0),
+>
+> commit d697ce1fb72f895b857d6e1eeaa219cab7a013bc
+> Author: Yonghong Song <yonghong.song@linux.dev>
+>
+> bpf: Verify an unwind through landing pads and epilogues
+>
+> The commit adds support for verifying bpf_unwind() through landing pads and
+> epilogues. It updates verifier control flow, state tracking, and precision
+> backtracking to understand these non-linear execution paths.
+>
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 96f5ea8ea8bf8..fe24291260a0e 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
+> [ ... ]
+>> @@ -19674,6 +19682,133 @@ enum {
+>>   	INSN_IDX_UPDATED = 2,
+>>   };
+>>   
+>> +static int unwind_frames(struct bpf_verifier_env *env, bool *do_print_state)
+>> +{
+> [ ... ]
+>> +		/*
+>> +		 * Mark the unwinding insn with the frame it ran in: backtracking
+>> +		 * from the pad comes back to that insn and goes on in that frame.
+>> +		 */
+>> +		err = bpf_push_jmp_history(env, state, INSN_F_UNWIND, 0, frameno, NULL, 0);
+>> +		if (err)
+>> +			return err;
+>> +		clear_caller_saved_regs(env, caller->regs);
+>> +		mark_reg_unknown(env, caller->regs, BPF_REG_0);
+>> +		env->insn_idx = pad;
+>> +		if (do_print_state)
+>> +			*do_print_state = true;
+>> +		return INSN_IDX_UPDATED;
+> [Severity: High]
+> Does this code break precision backtracking?
+>
+> The jmp_history entry is pushed before env->insn_idx is updated to pad. This
+> means the entry's idx will record the unwinding instruction instead of the pad
+> target.
+>
+> During backtracking, when the verifier reaches pad, it calls
+> get_prev_insn_idx() which uses st->jmp_history entries where idx matches the
+> jump target. Because idx was recorded as the unwinding instruction,
+> get_prev_insn_idx() will fail to find it and fall back to linear backtracking
+> (pad - 1) instead of jumping back to the source instruction.
+>
+> Since exception landing pads are typically emitted out-of-line by the compiler,
+> backtracking into pad - 1 jumps into completely unrelated code, corrupting
+> precision tracking.
 
-What? AF_MPTCP???
+Landing pad backtracking into pad - 1 is incorrect.
+In cfg.c, visit_cleanup_pad_edge() calls mark_jmp_point(env, w) on every pad.
+So when backtracking happens, pad will goto unwinding insn instead pad - 1.
 
-> msk->first is initially NULL. If the user then calls connect() with
-> AF_UNSPEC before any connection is made, the networking core handles
-> AF_UNSPEC by directly invoking the socket's disconnect handler,
-> mptcp_disconnect().
+>
+> [ ... ]
+>> +static int process_global_call_unwind(struct bpf_verifier_env *env,
+>> +				      int call_idx, bool *do_print_state)
+>> +{
+>> +	const struct bpf_insn *insn = &env->prog->insnsi[call_idx];
+>> +	int subprog = bpf_find_subprog(env, call_idx + insn->imm + 1);
+>> +	struct bpf_verifier_state *branch;
+>> +	struct bpf_func_state *frame;
+>> +	int pad;
+>> +
+>> +	if (!bpf_subprog_is_global(env, subprog) ||
+>> +	    !env->subprog_info[subprog].might_unwind)
+>> +		return 0;
+>> +
+>> +	/* The call returning normally is walked later. */
+>> +	branch = push_stack(env, call_idx + 1, call_idx, false);
+>> +	if (IS_ERR(branch))
+>> +		return PTR_ERR(branch);
+>> +
+>> +	pad = bpf_exc_pad_of_call(env, call_idx);
+>> +	if (pad < 0)
+>> +		return unwind_frames(env, do_print_state);
+>> +	frame = cur_func(env);
+>> +	clear_caller_saved_regs(env, frame->regs);
+>> +	mark_reg_unknown(env, frame->regs, BPF_REG_0);
+>> +	env->insn_idx = pad;
+>> +	*do_print_state = true;
+>> +	return INSN_IDX_UPDATED;
+>> +}
+> [Severity: High]
+> Can this fail to record the non-linear edge for backtracking?
+>
+> If a landing pad is found (pad >= 0), env->insn_idx is directly set to pad and
+> the function returns. However, it seems a jmp_history entry linking pad back to
+> call_idx is never pushed.
+>
+> Just like in unwind_frames(), this missing history entry causes
+> get_prev_insn_idx() to fall back to linear backtracking (pad - 1) during the
+> backtrack walk, which jumps into unrelated code and can severely corrupt
+> precision tracking.
 
-Arf, I forgot about this weird path... I checked with shutdown() (which
-is not allowed for unconnected sockets). I will add a check and add a
-packetdrill test for this.
+Actually, as mentioned in the first case, there is a mark_jmp_point
+to link call_idx -> pad. So when backtracking happens, pad -> call_idx
+should work properly.
 
-> At this point, msk->first is still NULL. Passing it to mptcp_subflow_ctx()
-> yields an invalid pointer, leading to an immediate page fault when local_id
-> is written.
-> 
->>  
->>  	/* The first subflow is already in TCP_CLOSE status, the following
->>  	 * can't overlap with a fallback anymore
-> 
+>
+> [ ... ]
+>> @@ -19935,8 +20070,14 @@ static int do_check_insn(struct bpf_verifier_env *env, bool *do_print_state)
+>>   				cur_func(env)->no_stack_arg_load = true;
+>>   			if (bpf_is_callx(insn))
+>>   				return check_func_callx(env, insn, &env->insn_idx);
+>> -			if (insn->src_reg == BPF_PSEUDO_CALL)
+>> -				return check_func_call(env, insn, &env->insn_idx);
+>> +			if (insn->src_reg == BPF_PSEUDO_CALL) {
+>> +				int call_idx = env->insn_idx;
+>> +
+>> +				err = check_func_call(env, insn, &env->insn_idx);
+>> +				if (err)
+>> +					return err;
+>> +				return process_global_call_unwind(env, call_idx, do_print_state);
+>> +			}
+> [Severity: High]
+> Does this check inadvertently bypass the unwind pad if the global subprogram
+> can also throw?
+>
+> A global subprogram can be marked with both might_throw = true and
+> might_unwind = true if it can call both bpf_throw() and bpf_unwind().
 
-Cheers,
-Matt
--- 
-Sponsored by the NGI0 Core fund.
+If bpf_unwind() exists in the bpf prog, then
+bpf_throw() will be rejected in bpf_exc_check_prog(env).
+
+-       if (env->cleanup_info_cnt) {
++       if (env->cleanup_info_cnt || bpf_prog_may_unwind(env)) {
+                 ret = bpf_exc_check_prog(env);
+                 if (ret)
+                         goto skip_full_check;
+
+So this is not an issue.
+
+>
+> When verifying a call to such a global subprogram, check_func_call() checks
+> might_throw, pushes the normal return branch, and returns PROCESS_BPF_EXIT
+> (which is non-zero) to simulate the exception exit:
+>
+> check_func_call() {
+>      ...
+>      if (env->subprog_info[subprog].might_throw) {
+>          ...
+>          return process_bpf_exit_full(env, NULL, true);
+>      }
+>      ...
+> }
+>
+> Because check_func_call() returns PROCESS_BPF_EXIT, if (err) evaluates to true
+> here, causing the verifier to return immediately and skip
+> process_global_call_unwind().
+>
+> As a result, the unwind landing pad for this call is never pushed or explored.
+> Dead code sanitization will replace the unvisited pad with a jump to itself
+> (an infinite loop). If the global subprogram unwinds at runtime, it will jump
+> to this unverified pad and enter an infinite loop, causing a kernel denial of
+> service.
+>
 
