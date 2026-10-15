@@ -1,132 +1,115 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79704A384A
-	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 22:54:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F4236A370
+	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 23:14:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792104872; cv=none; b=ljAKunBOU5OJIs1eEsxHd8C79Wne0T7uCnJU9R1X/EvhILV6P9Xnka61YBHDdofRE5CAcrE70eWUQDBg/WBI87mH5cyO9yP453PawW+65XlBjQ801DTsNrHJ8Ft+Z6ve7vegvJXn6G3mDCiyUjkXtBGdFGjnglN6zsy/nVSnhSk=
+	t=1792106068; cv=none; b=neS3bPPHn/waL21X0Dy69q0pma9RWFTeCkIdrv7KY2AKeJ6lL/sMtA06rpKN6Pr5JrtzaSCd9DBxJkXQVbIzW4J3YtR53Aq3VR3tQZtQ9Y6A3hUxhpvXAT+uLWzLgTOaqc0iPLOej5exmLK0MGL54hnlBSpbQQgvYlFteSV4A4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792104872; c=relaxed/simple;
-	bh=lx6vLG67HDPtnRj90OjJRS6Cl5KXBnbsEtkIXD607PM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y9aksXC9gaZEJNe6dvs6I5BWIjdNETeuA+vpOEkqFO4l03XehLXm0lCscqGhGqW+AzPjKUYFz8iV1IG4ZqH8FarFT4HXydHhi39oiAsOOnxrmgKRZLXBAMQyuo5bRww59KGhX/v6AKXhQzQA0j/VqykSTy/HTdXE4Y7uWfZS6fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca; spf=pass smtp.mailfrom=ziepe.ca; dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b=VQG7J4BI; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
+	s=arc-20240116; t=1792106068; c=relaxed/simple;
+	bh=G1VWVzqgtNFSdZ3tdadaIkj4EZd0Y1m8BQMjwsAXmlY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=iw1qXKpjNy42vSbXKprd7upPOdBuyu+fHTy7lwrovCHij10fTtQow5Xoirudn4iPNmUkUpzpSwIhpfU1MVSrnwCwoWC2QQuNNIEgDvE2Q6Roy9VXpx8AIOGrW18eP6Uth7o+yMPOUu95iuB8EocYrDMH8Wv9I77/LUk6qUGGIlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jahLhWE3; arc=none smtp.client-ip=74.125.82.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b="VQG7J4BI"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-5351748222cso17509771cf.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 15:54:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jahLhWE3"
+Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-33bf40b0c8bso878447eec.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 16:14:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google; t=1792104869; x=1792709669; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1792106067; x=1792710867; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=w5g/qpIgvj6wMX7CCQKIX7PAX2lJ6Da0UK3Xl6Ms4Rk=;
-        b=VQG7J4BILA28A5HbsH4rqnnkaSqU9g+2G3JqIeMMtECI1+yVIi+s3iEQcP3YB7Ar++
-         liC1dGTBqc5EoCz3qbK20ltqByUny+UW1xYbwoQgo4k23e89It72oFq5Q4PG1MnZ/tnZ
-         XmqtGt6kr0MEztdbxvNKlcnYlZBFHTO4xOhDdOTGiirDmtmVV+Ad+4YlJzDtX5R+4MRc
-         qxAJ+T/Sda6k6w2jf+x4Am07we6jxbUQWxjrMGk/T2aMgwbLFEg/STX9iY0pie9Dy4T1
-         EoDA/dTFm84lBRtJ7kQPmH4hR76zhPdJ9i8w7IbEqICUuRB8+JukwU17u3c07rf6lKaZ
-         blsQ==
+        bh=jOoDNdgbqEONnRhnyuTwsgaYEHRZvbrYhwZMQUhYOFM=;
+        b=jahLhWE3Elj174/WZ8gu7z8HEQUOiKAnGn2dYo8QVuzyq7ypZnUvCRw0DOZD/udZss
+         VRgNy2iPwvzExLx7f6j9fb3hH7nOqqrNzD/xSTh6l+oVM74Jqo3XeBEvfl9AwU7qzOcQ
+         ROgjIjQ1qHJZlT9aySx0MDB8NIsggB54VMQCQ2v+42UlN7H4Kqg5lxDQM2TXkNgEbhZ6
+         hcgwqRmWG41LoowqVuKDBJ6IWLoq0c5YQxm6pkyF7vwmn84OwD7a7IzHBaspTk3UNW6+
+         9ANZJFbJ/K6uokRxJibDrxV0t/SLVU8tRUr3rINAZlW+jOFmScZVda9tE5MBLw38pS79
+         Sx8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792104869; x=1792709669;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20260707; t=1792106067; x=1792710867;
+        h=mime-version:content-transfer-encoding:content-type:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=w5g/qpIgvj6wMX7CCQKIX7PAX2lJ6Da0UK3Xl6Ms4Rk=;
-        b=yrFViIcr4qqAiTbyptR8X+1R/pLnBjJi2LTH2JwmiMwZqLSYSV2eYqnqzehX89u+71
-         dOBl6hV/wkVWtDXZ68p1u97HNQXQVhKy38LjDeQaNc7Lw+6DzmGTXl1+K3ubduiKEDTX
-         Qbawm5TNZO1TZt48XURYOZt+ZViMVA/FujOOVhLCWSFK3oaq9FBgu4iDQ9bKvrIJ3FQh
-         3aMqxUlC9eXL6hppJI9aRLu/yeqAkkdygYWwCKVZtB8fr+EDySpv3PfbktZ7n33uxOB6
-         ElVwjg0pZI8PVVdyjHnaRiJPVCiK8q1AprptGpM4ksjg8lDwkeAyxOetGe6c2KHlkViw
-         sD5A==
-X-Forwarded-Encrypted: i=1; AKwUvBwph/d38s02StFbgVf7JImfRutpsaDC5VEipzxyfjSZFRMzx6ZaNWEZKEEzJwnUFEHz0HP1jk45KnVAwUccp1g=@lists.linux.dev
-X-Gm-Message-State: AFq9FYINhr9pBytzWcLA1hc9yrCMJhltLWQpuikWRBo0mtbcaVsTDxg2
-	ZO0ygYWI4tkuFecZ+BGXRFK2jv0CJXxvmc/thaD4L+lsDiWFv6iur3vqRAJqUXzBLKw=
-X-Gm-Gg: AYBFou2TgGfEXD+YwZFKMmgxume5gqRohdnEbapoZXFmtuc0ZCgMAoOoBVOxFH7ERmO
-	K3PGaRa9nxHhDdUWHHnY9VJW2NwhbJMFKNwvBYgJuDeNPp2oSADpOfVOKU+/y6zOCX0S4Lf75Ye
-	mzPugPuuUDurg5dgFDJIViJwL1//CAlXohwnnjdaFBWcbxNxx2brLSsUxw8jhReGf3LMU/Rk3bC
-	zR/+zSJKm0HZrP8DB5RmNT4mOpaJPtY8QCh4aaQSqu12/GffkvoWP6omDz6+TovFMDvU06mJpsy
-	4CLwEG2M+NSrpytsu9OL9rRFnJw7nCHLCaokLQpuE05+k6jxGgMGs33y82N8EdED7Et/z3OR0hi
-	wpLpO0IrFYNDT9nZ1JKFCbCt/FRRWq5mS9GgpywXHxo3m/kBDOgfsTFt4QNAFM5+3Tl4DLMNZOs
-	/lfyBs/BJ8YjhN3E+3khuPMWibPqKhaCVkmgEWqehYJ3Zroc24PcS79kQurlmBVipapmDRxrAYs
-	jQznbH9RzMXk+b6K31z3kpLAgLeRFfitqJn8eBHxANwDuGYWdagBe5Z
-X-Received: by 2002:a05:622a:a16:b0:535:10be:7d5e with SMTP id d75a77b69052e-5359fb539bfmr310496441cf.46.1792104869371;
-        Thu, 15 Oct 2026 15:54:29 -0700 (PDT)
-Received: from ziepe.ca (hlfxns010zw-159-2-239-150.pppoe-dynamic.high-speed.ns.bellaliant.net. [159.2.239.150])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91bccc721a8sm5238476d6.12.2026.10.15.15.54.28
+        bh=jOoDNdgbqEONnRhnyuTwsgaYEHRZvbrYhwZMQUhYOFM=;
+        b=UTf+fPusqXv3NAS8WXHQ4KIrfabW759pD/ooGrKHhKqw5+aPW7wbPH38BW+1O0VMOH
+         hvCh3h+F3ERd+1nFK3/QrIphPCbpKqWAoMEhMYhpoYOEWpgQCa/oV3Zn47CLd8TOxqLM
+         OUkqrd4esb9PDNVQ7VHJNlT9LFdKuUAtuEU+l/ABa+UKi3Yj4m9BGwsjs+6RTrrsM0J2
+         qVEwBKBmSIt1PSHmEpy8ecM6W2XJu8CMgRnLv9sDjO3q+1FRFNr0dFx41cuppuTV0mlS
+         q/A+iZUGqSe4911ILiukPAiwcgKHx4OXnHkdgXUew+51RGZgp6oFR3ziMSa9pVmJtmIM
+         EDVA==
+X-Forwarded-Encrypted: i=1; AKwUvBz0Sv/xYYkZeR2oDVvwk/GWzBVtcalRsK1MitJefy7dYoeiJ9V1JVYZPYTCmnFjukhcx27JZKwQof8+9a9PBH4=@lists.linux.dev
+X-Gm-Message-State: AFq9FYIiwNmJJMy1OQlLnZCdPgToYgIheMDCqsjd0BFQHlK9BTA4sQNs
+	pdTh3IOCEiTRdDrvSdlYmmSKv/2i38B3G5aTL4J0ySIKw/CZY4NYcnjz
+X-Gm-Gg: AYBFou2rKPeeMViLuEH9MjcoIEwEQ2PvHAKORHHfhQyIsqoTZnlhowOpf+Hn5wWGu7X
+	eTA+TiDw242Bp3wT1K4N24iDx/9e0jptr6WQfppZymkXgw68HAWdKJRHl1u7h8pSFdkAKSkKAfq
+	S/tknxbtkchvERNqMwhJrcZgpK9FlQC7liu/ktXK+iIfJ8ZhvLe1LB1uIZrAZVTTh/FMeotaBiB
+	NKzSUtsVORdyEg9vsTrxIuzMaVcC6UbiUzNKlJG66uDB/0gDZhpvnOtk4EMxuZMknKRYNO06w+e
+	aj+1hTsk4bLC4j7IPJtn35o6sbnds4JHsULL2FQSTO9vpZV0xkFJ22pdobq//YYmvC2mQI6cYat
+	a0gXl37DnKmnRSXbDI/EyGrDpjFULk51MjZEuVlGdXBzQNKnsm3WZn2v7g2VAit3eh+qy/kMh0p
+	dAM2aFztTeOiICH05fdnHcT0KYHqF/DI2DxeP/xkqbubxTPsd7ptV8EvKzwUnBGAxU5meQk0PHt
+	FqUjQIpCOPL6/kJ70WlEIWmiU5jsCVx0qZJxKiQ2H65vMPbzMq/bt8V6xWIlFvm+DBxjn7hxoPq
+	nZMk3yrvS95B22CUXlayVV0g4UPfLFLvCtSppx4TYFjhwcPsXwa5DrpyKSqGFZYyBb9PjV4=
+X-Received: by 2002:a05:7300:d191:b0:353:7f50:a99b with SMTP id 5a478bee46e88-3537f50ac52mr27374925eec.6.1792106066501;
+        Thu, 15 Oct 2026 16:14:26 -0700 (PDT)
+Received: from 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa ([2804:7f0:b100:ece0:446b:100:5c81:b436])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3607bc950f9sm1262967eec.0.2026.10.15.16.14.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Oct 2026 15:54:28 -0700 (PDT)
-Received: from jgg by wakko with local (Exim 4.97)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1xHULD-000000008uB-2yqn;
-	Thu, 15 Oct 2026 19:54:27 -0300
-Date: Thu, 15 Oct 2026 19:54:27 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Sean Hefty <shefty@nvidia.com>
-Cc: Eric Davis <eric.davis@broadcom.com>,
-	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-	"linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: Re: [PATCH rdma-next 02/13] RDMA/core: add the UET GID types
-Message-ID: <20261015225427.GY14213@ziepe.ca>
-References: <20261014-uet-ib-core-v1-0-a0e626117113@broadcom.com>
- <20261014-uet-ib-core-v1-2-a0e626117113@broadcom.com>
- <sashiko-outbox-171976@kernel.org>
- <CAMouMY+nCYZ1V_-0La4phKNkvYBke7Njhsr+HRwWkAfahgf3pg@mail.gmail.com>
- <20261015173327.GU14213@ziepe.ca>
- <DS6PR12MB53456734E5A7CFFCDD7FBCCC0CBD9C2@DS6PR12MB534567.namprd12.prod.outlook.com>
- <20261015195408.GX14213@ziepe.ca>
- <DS6PR12MB534567DB240CF76594BE5B5D0DBD9C2@DS6PR12MB534567.namprd12.prod.outlook.com>
+        Thu, 15 Oct 2026 16:14:25 -0700 (PDT)
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+To: Paolo Abeni <pabeni@redhat.com>
+Cc: Paul Moore <paul@paul-moore.com>, sashiko-reviews@lists.linux.dev,
+ linux-security-module@vger.kernel.org, network dev <netdev@vger.kernel.org>
+Subject: Re: [PATCH net v2] calipso: update payload_len when removing the
+ CALIPSO option
+Date: Thu, 15 Oct 2026 20:14:21 -0300
+Message-ID: <179210606199.96599.8994346249690707193@gmail.com>
+In-Reply-To: <852c9fb6-6217-440a-968c-b5ab3e22dbc8@redhat.com>
+References: <179147329205.58079.5847298721173675285@gmail.com>
+ <sashiko-outbox-165773@kernel.org>
+ <CAHC9VhS+bdL_YnLQtd0sPmKKfy9BvS-LWV_6EhAuu4qfUFe_mw@mail.gmail.com>
+ <852c9fb6-6217-440a-968c-b5ab3e22dbc8@redhat.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DS6PR12MB534567DB240CF76594BE5B5D0DBD9C2@DS6PR12MB534567.namprd12.prod.outlook.com>
 
-On Thu, Oct 15, 2026 at 09:14:22PM +0000, Sean Hefty wrote:
-> > > > > > Could this cause incoming UET packets to be incorrectly mapped
-> > > > > > to a
-> > > > > > RoCEv2 GID index, breaking the UET transport response?
-> > > > >
-> > > > > On a port that runs both RoCE and UET the MAD traffic is RoCE, so
-> > > > > mapping it to RoCEv2 is correct.
-> > > >
-> > > > You will need seperate ROCE and UET ib_devices with the current
-> > > > state of affairs, we don't support multi-protocol today.
-> > >
-> > > UEC intentionally considered multi-protocol devices, with a vendor deciding
-> > whether it would need to provide separate SW devices.  E.g. using UET for
-> > MPI, but RoCE for storage.  Protocol selection is via GID, same as RoCEv1 vs
-> > v2.
-> > >
-> > > What blocks multi-protocol support?
-> > 
-> > Principally I don't think we have the APIs to discover and link the GUID to
-> > protocol to QP type appropriately..
-> 
-> I'm missing something regarding the GUID comment.
-> 
-> The QP protocol comes from GID index, which is discoverable via
-> ibv_gid_entry::gid_type.  (UET QPs require the GID index on create.)
+On Thu, 15 Oct 2026, Paolo Abeni wrote:
+> The above looks like a pre-existing issue, the patch itself looks
+> correct, right?
 
-Hmm, that's not the normal case, but I see what you are thinking
+Hi Paolo, Paul,
 
-> E.g. a dual RoCE + UET device would report node_type = UNSPECIFIED &
-> transport_type = UNSPECIFIED.  GID entries indicate supported
-> protocols.
+Yes, the issue is pre-existing; the delattr patch doesn't change it.
+The skb_pull()/memmove()/skb_reset_network_header() sequence quoted
+by Sashiko predates this patch, which only adjusts payload_len after
+it.
 
-Ah, that would need some opt in scheme to get there, but I supppose it
-may not be so bad.
+I tested Paul's idea on top of both CALIPSO patches (QEMU, veth +
+br0 with bridge-nf-call-ip6tables=1, SELinux + NetLabel CALIPSO
+DOI 16):
 
-I thought there were other issues like PDs not being entirely
-compatible, MRs, and so on?
+- without it, a bridged CALIPSO packet towards an unlabeled
+  destination reaches the peer with a corrupted Ethernet header
+  (garbage dst MAC, ethertype 0x0000) and is dropped; an unlabeled
+  packet towards a CALIPSO-mapped destination never reaches the peer.
+- with the nf_bridge_info_exists() check in selinux_ip_forward()
+  (plus a stub returning false for CONFIG_BRIDGE_NETFILTER=n),
+  5/5 packets are delivered unmodified in both cases.
+- the routed path is unchanged: delattr 5/5, setattr still adds the
+  option 5/5. W=1 is clean with BRIDGE_NETFILTER=y and =n.
 
-Jason
+Paul, if you like I can send it as a separate selinux patch with your
+Suggested-by.
+
+Thanks,
+Joas
