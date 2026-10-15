@@ -1,75 +1,75 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314AD440A3D
-	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 21:35:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207FE3F9294
+	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 21:37:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792100115; cv=none; b=MJTKHg8xjULHt+KrhtBi8H3BgD22vkKcoW45fKFWlWFR9VGidUjp7f/AStXrvRiLGS/5nGB3KyiGPBwwHJ6eVNXGThdnilVslP//eIVfa7ap38xbblkSrhDrHDwXH/BJIIkMKRDBXNuuXFjSjqI4pFFjKn39zMle82KnE1Jfi34=
+	t=1792100231; cv=none; b=lgsOR+0S+MAxqnO2ZhGb6z7HLgjVmk8I8apHXU9T2ZKWKgWhp//yzLvsGa8IC5VGkyMmgy2Ra/r+g9SE0UX5W50/MvAFRRPMtYru6WxGjAnxkJW8/LDYpaVFSPOvGM3zBkXgh1QmLoE+/gYgQcF76QmkJZy+c9/bvH5NgRQ5xM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792100115; c=relaxed/simple;
-	bh=YLJ+esWXIpOv6zjtmXJDyZYxVF2ULGD/KkT3OdWxOHw=;
+	s=arc-20240116; t=1792100231; c=relaxed/simple;
+	bh=386oVWfTK7j80sjNixNYLJd6ruHZ1xN4lGXGD+O8SHQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CUXYG3LlQgCR7CIPu1eInzLvFApjPnH/sPyPZhVqraBCibeoWQ+9DXJSHv36nu83WZEAN3kNd9sNC/wxQwRcc+9Hl8CJhX/1EYH6exXDUeA70zcHyd5ytXCp0aYh39CKhMUVo+0JngYkOn32KFwF0ULnZOk0O1+nSRR7ZMVCp0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fpNpuxEh; arc=none smtp.client-ip=209.85.128.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=qUDP8y+BvssvEkXfmr2bLzknyUYtTp9cVJoDtSppjczZ4uTOSuLemHn7aYDMUxGD9FYzTJnG+PJajd90SU8S9woUCXRal0xHxu2olWJsb0F1go023pRHQH808SUdfAFX3snYSp6mLS+d12ddzepGIc/i/1LTUMYV2c0Ix6W18nY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=apD5h0qT; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fpNpuxEh"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4a018493d57so22385e9.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 14:35:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="apD5h0qT"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4a18617ae90so23625e9.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 14:37:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1792100112; x=1792704912; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1792100226; x=1792705026; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=eZTNoCVWIGqXbfEtghpL4XvetlCTxSjuBCrt1vW+mNc=;
-        b=fpNpuxEhmYhm88wI/idImKh0dlRiKAxEl2Cfuj1k6XWJ70JoSmUU1H6LPwQCOp4iE7
-         +XERNPVImHLubBaUSVBy94Ie+Bxa0ZPxCssEvM7QJRpAOja9YsW5t/agbGSVvOpmDFU7
-         HTYeU3QYjP+WvBCLX4xYkDGXydqdoW+Ut3U2cgCiTbXKgwiNVC6xwqfoVwq2YuEGKNMz
-         Gr+rE47W203xqEuNpFPXFjLkwRhYF4kxkHn9aTvsM9ltDJKfkSWDuInGIbEcwto5+oht
-         QsrcPVQr5e0Ko5fhgRvdjRly7SHgRXcQv0JxWmfyXhUfCg9IQlaI8neei6RkNcmzAgXm
-         JzTw==
+        bh=3oR7WBo625HYQwcxrhw35THi++ot7WU5ktgUJV6FYhQ=;
+        b=apD5h0qT8EQmyVi+gEZQABtEvEXTk9IqyrNB9fBvMq37IBU5/wEWRzrMfhB0AGn2o6
+         V1ULmLrDFTikGD2dM5MiltdVPR+ylBzeGTfANGUvNmeWG6peBex6jbl8UCuE3OejGtG/
+         M4AG/CQkD6N9qVj63M5lcBIIavv1aEKn2zTqKwHqVamCsCKSNSeoERC35axB5Jvru1uQ
+         ppM2vg6rIjeoEFXjbYU8nUASsxquWeaR0CQtxSj/Xtt9VxZ5tACO5bu7oc3/Iuev459J
+         8gSxFlL7vXBHtZ9iHXVfdgFt0dsJ+3hS+hq2KK/LGNg8NEujxmeffPfZG9pzsIrI4AeE
+         5KCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792100112; x=1792704912;
+        d=1e100.net; s=20260707; t=1792100226; x=1792705026;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :content-type:mime-version:references:message-id:subject:cc:to:from
          :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to:content-type;
-        bh=eZTNoCVWIGqXbfEtghpL4XvetlCTxSjuBCrt1vW+mNc=;
-        b=ZDw63FBttoGq1NpfRNlk0zcyFa7FbsqW6T29QZ0eW44P+JbT5T4kgvhb8fsWZg8S4m
-         A7807fPs+pfCgKXGIIouTNF7Sjf36VISt2bu/kymicQdcDaCPjpnqvpTOslQThzIopcs
-         2WyDzVyxh1k3swAKOhv/opxtgjIjASs3X9GSgQHVJ5N968mrMvUSa7SoXnFltjSuZ+cw
-         kwamy2WOcnSS6KAIMDdipgSiqBxa2RxZkHTQ8/ZX6XgeXOx4iDoynJ+yE7oDVeg911yB
-         vGqCPOEeoFT3bR/Qr4HnNC/0/UmO5MLl9HkvJJniDnVK9P4USEjeVVGxsvJMuHC/n0mO
-         TT8w==
-X-Gm-Message-State: AFq9FYIekkSGkMF+bBFANaRovpvyPCK2J6kPoYJ68TxEfAsb9POP6c+W
-	d1SSscEALUzst4rr29bwv2OJ7P9SuI/SUT1uaKLCOnhI3rA7gSHKPzYHR+7EQsLMQCmspQxCcn5
-	0+uoHQg==
-X-Gm-Gg: AYBFou0M1Grmg43XV3/zXZqW3xFKpJ/L/wkMf2F38CARn8Lt48pus3gwjQtk1dROwBF
-	mlhwIiLxFwcazObZUY8Mpe8ZaUCxWvmBXi7IqemAOIFDHBG/2mlIMNE8OYAe+twrPjoNtf7YmPB
-	jkqMpdl1ImXrEtw09mKZUeP2z2grkdGKTWLr1RhWLzMnK96AXbkhzF2YdPxQWFhEmRVZZ6ZPgOd
-	qKA6I5zIeISfhSQ6zDE5ox7C23oFrBc0qxvqDHwtyfo8v9sipYPVXLateRUgl0DDzE0SFeoDiq4
-	g56k6na+EPl6YWtyFaPg/8m3Ar/MS/vZJC7UjKOjwaXoe3QSEZF56r964+WLLTCOiF3gsiyILPS
-	zj8yJt5lTvDYucTnq7AGCyQteLJFzHNoJH5LLn1IYxWEQ+PlMtFi/lkV3zgK0ymKUVyOrvYgkWQ
-	iKW01oD4bb/Jm9hKzKetqeDxOH7frPa59RkcJ9gTYpwyhXubjzVPjDX2RIkMXVYakLoZM3mkrgh
-	D9+a6BYx+2JKNp2CoKjF9AGNgNEJdJKqV3VXQXY
-X-Received: by 2002:a05:600c:4894:b0:4a1:68a3:9c2e with SMTP id 5b1f17b1804b1-4a1c8517f98mr219715e9.5.1792100111845;
-        Thu, 15 Oct 2026 14:35:11 -0700 (PDT)
+        bh=3oR7WBo625HYQwcxrhw35THi++ot7WU5ktgUJV6FYhQ=;
+        b=Eos3N3PPY1NF37HROhal1vTOydsbgn7ptoUXeNJmVPw50XcJ8dryPmmNp77JTK1IZy
+         jRPw7FgyAI4BmBhLVHJrk+pHtd1HsqVDcfgobvdmaaG8r3kQwMY378EhddpNfV/Xgvfn
+         nb/xdNFMzqkaSkVPGH8G6Bpe/wovjO+jQGnhO5wpkwspKZwaRqcaMyyYzSr7gEr3hjLK
+         9PJF9jN9Zy67jOaqvlxdmdbyLvjw1P7F1C/BypqaRZhZ69cR+ms+nNfgJYUP7YpoG6Sv
+         AQAd/8tCujI/DaqvdOHqPyNYyARtNJQNgaL0Z2zS1IY6I0uTu04RwNo6jvupm2W9PtVS
+         EBVg==
+X-Gm-Message-State: AFq9FYKktk/zHkr8FJfQSbZ0Gu81FTHqthtBjs8p8vQx91UzAO+ZYui3
+	o1YF2LhTwAeKoFk8VdzpvhzSiXJbMojmkKZ7BlQqD70Gt/ZRjzFebYVHgeukVUsRTX2kKuv7ehZ
+	nw3MljQ==
+X-Gm-Gg: AYBFou3LSvbW7oTT3vUjNEzQbBsx5gERQna0habQnhMo9sASfbvJXmD6TIKj6rU6hbN
+	wDtsENTcy8y0C6a4ITdUbiuGJh3nUWgFXp9UbdWSsfEKRPq5wqouA3OVymy8YQlwE5FDYrdw3S1
+	vJoAbyhOq1s8Owh5fvQU0GTiSu7JX5eCnKWw+rSBq2LJKhxmxcdz4b5g/QBvyMyJm2HpbEJn5OE
+	7zMwk7Vj6V14gkXOy+svkrXzMyVKvSaAcsia6eR/GudIDeNK6nXM5hoF22mbQaJJB9j1hite/Sc
+	wefKIJiw/lW6vqKV4mlOIZB9HTdT7Xgz0JjPoutyE3qKSiHqtsLCgNLXHiIVhGjh+wKu986S6MA
+	bXHSHAyrjSa6M8zqrD//qgu3/h4RiqgQI6Qw/SW4v8/21J/5FCqMNzq+yPvLkMK/7DW6nCgPpmP
+	cUrXi51oWHgx2eE5mjbuN4MbOQ6WwRGTgAyMukEGFNr8MUIbSOFFCACGOTNDxpuKMCaapgb7wlQ
+	VYaLVOYwVAmTLOcfy6QlvJ6K6NdFYVd+EvNIbkx
+X-Received: by 2002:a05:600c:34cd:b0:4a1:9034:e9ac with SMTP id 5b1f17b1804b1-4a1c8adefe4mr144145e9.14.1792100225727;
+        Thu, 15 Oct 2026 14:37:05 -0700 (PDT)
 Received: from google.com (250.192.189.35.bc.googleusercontent.com. [35.189.192.250])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1bd91c55bsm88227875e9.0.2026.10.15.14.35.11
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1bd9b8b5fsm106779685e9.9.2026.10.15.14.37.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Oct 2026 14:35:11 -0700 (PDT)
-Date: Thu, 15 Oct 2026 21:35:07 +0000
+        Thu, 15 Oct 2026 14:37:05 -0700 (PDT)
+Date: Thu, 15 Oct 2026 21:37:01 +0000
 From: Mostafa Saleh <smostafa@google.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>,
 	Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v9 23/25] iommu/arm-smmu-v3-kvm: Invalidate the SMMU TLBs
-Message-ID: <atFHCwMBFXQwQocw@google.com>
+Subject: Re: [PATCH v9 24/25] iommu/arm-smmu-v3-kvm: Enable nesting
+Message-ID: <atFHfW4_1ZN1EYlk@google.com>
 References: <20261015200903.2735565-1-smostafa@google.com>
- <20261015200903.2735565-24-smostafa@google.com>
- <sashiko-outbox-173391@kernel.org>
+ <20261015200903.2735565-25-smostafa@google.com>
+ <sashiko-outbox-173401@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -79,152 +79,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-173391@kernel.org>
+In-Reply-To: <sashiko-outbox-173401@kernel.org>
 
-On Thu, Oct 15, 2026 at 08:28:22PM +0000, sashiko-bot@kernel.org wrote:
+On Thu, Oct 15, 2026 at 08:34:42PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] arm-smmu-v3: incorrect WARN_ON usage at EL2 for hardware timeouts and host inputs
-> - [Medium] arm-smmu-v3: guaranteed timeout and hyp panic if host writes reserved bits to CR0
+> - [Critical] iommu/arm-smmu-v3: fatal EL2 panic on host-supplied invalid STE or ENOMEM
+> - [Medium] arm-smmu-v3-kvm: Incorrect EL2 WARN_ON usage for hardware timeout
 > --
 > 
-> commit a876edb8ca1cb558cf1336f7a093e9a259c78f18
+> commit 5625f7b65b03ea88554c9ce7668b1dabbbb068b1
 > Author: Mostafa Saleh <smostafa@google.com>
 > 
-> iommu/arm-smmu-v3-kvm: Invalidate the SMMU TLBs
+> iommu/arm-smmu-v3-kvm: Enable nesting
 > 
-> This commit implements the io-pgtable TLB operations to invalidate the shadow
-> stage-2 entries across all SMMUs in pKVM. It manages invalidation commands
-> and ensures the command queue is active before flushing TLBs.
+> This commit enables stage-2 translation for the ARM SMMUv3 under pKVM
+> by allowing the hypervisor to sanitize and control the stage-2 portion
+> of the Stream Table Entry (STE).
 > 
 > > diff --git a/drivers/iommu/arm/arm-smmu-v3/pkvm/arm-smmu-v3-hyp.c b/drivers/iommu/arm/arm-smmu-v3/pkvm/arm-smmu-v3-hyp.c
+> > index 01f23fce6be50..3562bb222f53e 100644
 > > --- a/drivers/iommu/arm/arm-smmu-v3/pkvm/arm-smmu-v3-hyp.c
 > > +++ b/drivers/iommu/arm/arm-smmu-v3/pkvm/arm-smmu-v3-hyp.c
+> [ ... ]
+> > @@ -443,6 +443,60 @@ static int smmu_init_cmdq(struct hyp_arm_smmu_v3_device *smmu)
+> > +static int smmu_attach_stage_2(struct hyp_arm_smmu_v3_device *smmu,
+> > +			       struct arm_smmu_ste *ste)
+> > +{
+> [ ... ]
+> > +	/* S2 is not advertised, that should never be attempted. */
+> > +	if ((cfg == STRTAB_STE_0_CFG_S2_TRANS) ||
+> > +	    (cfg == STRTAB_STE_0_CFG_NESTED))
+> > +		return -EINVAL;
+> 
+> [Severity: Critical]
+> Can this error return lead to a hypervisor panic?
+> 
+> When smmu_attach_stage_2() returns -EINVAL, the error propagates to
+> smmu_filter_command(), which evaluates it and returns true to indicate
+> the command should be skipped.
+> 
+> The preexisting caller smmu_emulate_cmdq_insert() then processes this
+> skip condition using WARN_ON:
+> 
+> smmu_emulate_cmdq_insert() {
+>     ...
+>     skip = smmu_filter_command(smmu, cmd);
+>     if (WARN_ON(skip))
+>         continue;
+> }
+> 
+> At EL2 under pKVM, WARN_ON expands to a fatal breakpoint. Since the host
+> can supply an invalid STE configuration that triggers this -EINVAL, could
+> this allow the host to maliciously crash the hypervisor?
+> 
+> Similarly, allocating the L2 table in smmu_reshadow_ste() can fail and
+> return -ENOMEM, which also propagates into this same fatal WARN_ON path
+> during an out-of-memory event.
+
+Yes, that is by design as replied previously.
+
 > 
 > [ ... ]
-> 
-> > +static void smmu_tlb_inv_range(unsigned long iova, size_t size, size_t granule,
-> > +			       bool leaf)
+> > +static void smmu_ste_writer_sync_entry(struct arm_smmu_entry_writer *writer)
 > > +{
-> > +	struct hyp_arm_smmu_v3_device *smmu;
+> > +	struct smmu_ste_writer *ste_writer =
+> > +		container_of(writer, struct smmu_ste_writer, writer);
+> > +	struct arm_smmu_cmd cfgi_cmd = arm_smmu_make_cmd_cfgi_ste(ste_writer->sid, true);
 > > +
-> > +	for_each_smmu(smmu) {
-> > +		hyp_spin_lock(&smmu->hw_lock);
-> > +		/*
-> > +		 * Don't bother if CMDQ is disabled, this would be useful for the case
-> > +		 * when RPM is supported to avoid touching the SMMU MMIO when disabled.
-> > +		 * The hypervisor also asserts CMDQEN is enabled before the SMMU is
-> > +		 * enabled. As otherwise the host can prevent the hypervisor from doing
-> > +		 * TLB invalidations.
-> > +		 * When the SMMU is re-enabled the hypervisor cleans the TLBs.
-> > +		 */
-> > +		if (smmu->cmdq_active)
-> > +			WARN_ON(smmu_tlb_inv_range_smmu(smmu, iova, size,
-> > +							granule, leaf));
-> 
-> [Severity: High]
-> Under pKVM at EL2, WARN_ON() expands to a fatal BUG() instruction which
-> crashes the hypervisor.
-> 
-> Could this WARN_ON() trigger a panic if the hardware SMMU is slow to drain
-> its command queue? The call chain goes through smmu_tlb_inv_range_smmu(),
-> smmu_send_cmd(), smmu_sync_cmd(), and ultimately smmu_wait(), which returns
-> -ETIMEDOUT if the hardware polls for too long. Should this gracefully handle
-> the error or ignore it instead of asserting?
-> 
-> > +		hyp_spin_unlock(&smmu->hw_lock);
-> > +	}
+> > +	WARN_ON(smmu_send_cmd(ste_writer->smmu, &cfgi_cmd));
 > > +}
 > 
-> [ ... ]
-> 
-> > @@ -721,6 +821,33 @@ static int smmu_update_ste_shadow(struct hyp_arm_smmu_v3_device *smmu, bool enab
-> >  static void smmu_emulate_enable(struct hyp_arm_smmu_v3_device *smmu)
-> >  {
-> >  	/* Enabling SMMU without CMDQ, means TLB invalidation won't work. */
-> >  	if (WARN_ON(!is_cmdq_enabled(smmu)))
-> >  		return;
-> >  
-> >  	WARN_ON(smmu_update_ste_shadow(smmu, true));
-> > +	/* Clean the TLBs each time the SMMU is enabled. */
-> > +	WARN_ON(smmu_flush_all_tlb(smmu));
-> 
-> [Severity: High]
-> Does this code panic the hypervisor if the SMMU hardware times out during
-> the TLB flush on enablement? Similar to the above, smmu_flush_all_tlb() can
-> return -ETIMEDOUT from smmu_wait() if the hardware is unresponsive.
-> 
-
-No way to recover from -ETIMEDOUT as discussed before, at this HW is
-propably in a really bad state.
-
-> >  }
-> 
-> [ ... ]
-> 
-> > @@ -748,6 +877,13 @@ static void smmu_emulate_cmdq_enable(struct hyp_arm_smmu_v3_device *smmu)
-> >  static void smmu_emulate_cmdq_disable(struct hyp_arm_smmu_v3_device *smmu)
-> >  {
-> > +	/*
-> > +	 * We can not enable the SMMU if the CMDQ is disabled and similarly
-> > +	 * we can not disable the CMDQ if the SMMU is enabled, as that can
-> > +	 * lead to stale TLBs.
-> > +	 */
-> > +	WARN_ON(is_smmu_enabled(smmu));
-> 
-> [Severity: High]
-> Is it safe to panic the hypervisor here based on host-supplied configuration?
-> If the host kernel supplies a CR0 value that disables the CMDQ while the
-> SMMU is still enabled, this will trigger the EL2 WARN_ON() and crash the
-> entire host.
-> 
-
-The kernel can panic itself in many other ways.
-
-> > +
-> >  	WARN_ON(smmu_unshare_pages(smmu->cmdq_host.base_dma,
-> >  				   cmdq_size(&smmu->cmdq_host)));
-> >  }
-> 
-> [ ... ]
-> 
-> > @@ -1033,6 +1169,20 @@ static bool smmu_dabt_device(struct hyp_arm_smmu_v3_device *smmu,
-> >  		else
-> >  			writel_relaxed(val & mask, smmu->base + off);
-> >  
-> > +		/*
-> > +		 * Make sure writes to CR0 are immediately observed, that is important
-> > +		 * when synchronizing with TLB invalidation as reading CR0 is not enough
-> > +		 * to deduce the SMMU state, and we have to enforce the ack with the
-> > +		 * hw_lock acquired.
-> > +		 */
-> > +		if (off == ARM_SMMU_CR0) {
-> > +			u32 cr0 = val;
-> > +
-> > +			WARN_ON(smmu_wait(false,
-> > +					  readl_relaxed(smmu->base + ARM_SMMU_CR0ACK) == cr0));
-> 
 > [Severity: Medium]
-> Can this sequence cause a guaranteed timeout and hypervisor panic if the host
-> writes reserved bits to CR0?
+> Is it safe to use WARN_ON for hardware interactions that might time out?
 > 
-> The variable cr0 holds the raw, unmasked host input val. When the hypervisor
-> writes to the hardware CR0 register, the hardware will update CR0ACK to
-> reflect the accepted state, ignoring any reserved bits.
-> 
-> If the host writes a value with any bit set that the hardware ignores,
-> readl_relaxed(smmu->base + ARM_SMMU_CR0ACK) == cr0 will never evaluate
-> to true. This would cause smmu_wait() to poll until it hits its timeout and
-> return -ETIMEDOUT, triggering the WARN_ON() panic.
-> 
+> If the SMMU command queue is full and smmu_send_cmd() times out waiting
+> for it to drain, it will return -ETIMEDOUT. Because WARN_ON is fatal at
+> EL2 under pKVM, this transforms a transient hardware latency or a heavy
+> command load into a hypervisor panic.
 
-
-Same as above.
+As discussed in the last patch.
 
 Thanks,
 Mostafa
 
-> > +			smmu->cmdq_active = !!(cr0 & CR0_CMDQEN);
-> > +		}
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261015200903.2735565-1-smostafa@google.com?part=23
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261015200903.2735565-1-smostafa@google.com?part=24
