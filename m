@@ -1,167 +1,225 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207FE3F9294
-	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 21:37:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D823E2AB0;
+	Thu, 15 Oct 2026 21:47:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792100231; cv=none; b=lgsOR+0S+MAxqnO2ZhGb6z7HLgjVmk8I8apHXU9T2ZKWKgWhp//yzLvsGa8IC5VGkyMmgy2Ra/r+g9SE0UX5W50/MvAFRRPMtYru6WxGjAnxkJW8/LDYpaVFSPOvGM3zBkXgh1QmLoE+/gYgQcF76QmkJZy+c9/bvH5NgRQ5xM0=
+	t=1792100837; cv=none; b=GVkqVd71rG6aydKZC/HU7ZFAfMnLou5vv7CgJG4bg7KzUTYTzJhviFOvC6ollOzajUBwyHlsMp273osljfc9Pvi8NfIBd30/J6bMAClunrZAqZMNzDKT3nXYb9MQYh9OprQYquKKR2w+q96zbZIcf0mn3+Mm7EuNFIZPpNIbIeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792100231; c=relaxed/simple;
-	bh=386oVWfTK7j80sjNixNYLJd6ruHZ1xN4lGXGD+O8SHQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qUDP8y+BvssvEkXfmr2bLzknyUYtTp9cVJoDtSppjczZ4uTOSuLemHn7aYDMUxGD9FYzTJnG+PJajd90SU8S9woUCXRal0xHxu2olWJsb0F1go023pRHQH808SUdfAFX3snYSp6mLS+d12ddzepGIc/i/1LTUMYV2c0Ix6W18nY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=apD5h0qT; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1792100837; c=relaxed/simple;
+	bh=P29+bjs79eC7BpoPjQ3+Px+lGsPYirb9IdhOIGwDoc4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Dnrn6Zrv6N8BK3CVTzoJS13KuYxeM9M8ZCBjiVIa+LUzRi+I4LgT/4LiGseNCXlkBfgq71t81Bqesxj+M0b8Gq5Efg2KrNjknWLWS4yhJ8g0Zi6TNBC/2v7nUt2REd9yv45f3iTMk2EEfTZuDXoQ7FvEsq7Cbi6dLq97b8uVbPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=epkmS+sk; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="apD5h0qT"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4a18617ae90so23625e9.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 14:37:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1792100226; x=1792705026; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=3oR7WBo625HYQwcxrhw35THi++ot7WU5ktgUJV6FYhQ=;
-        b=apD5h0qT8EQmyVi+gEZQABtEvEXTk9IqyrNB9fBvMq37IBU5/wEWRzrMfhB0AGn2o6
-         V1ULmLrDFTikGD2dM5MiltdVPR+ylBzeGTfANGUvNmeWG6peBex6jbl8UCuE3OejGtG/
-         M4AG/CQkD6N9qVj63M5lcBIIavv1aEKn2zTqKwHqVamCsCKSNSeoERC35axB5Jvru1uQ
-         ppM2vg6rIjeoEFXjbYU8nUASsxquWeaR0CQtxSj/Xtt9VxZ5tACO5bu7oc3/Iuev459J
-         8gSxFlL7vXBHtZ9iHXVfdgFt0dsJ+3hS+hq2KK/LGNg8NEujxmeffPfZG9pzsIrI4AeE
-         5KCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792100226; x=1792705026;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=3oR7WBo625HYQwcxrhw35THi++ot7WU5ktgUJV6FYhQ=;
-        b=Eos3N3PPY1NF37HROhal1vTOydsbgn7ptoUXeNJmVPw50XcJ8dryPmmNp77JTK1IZy
-         jRPw7FgyAI4BmBhLVHJrk+pHtd1HsqVDcfgobvdmaaG8r3kQwMY378EhddpNfV/Xgvfn
-         nb/xdNFMzqkaSkVPGH8G6Bpe/wovjO+jQGnhO5wpkwspKZwaRqcaMyyYzSr7gEr3hjLK
-         9PJF9jN9Zy67jOaqvlxdmdbyLvjw1P7F1C/BypqaRZhZ69cR+ms+nNfgJYUP7YpoG6Sv
-         AQAd/8tCujI/DaqvdOHqPyNYyARtNJQNgaL0Z2zS1IY6I0uTu04RwNo6jvupm2W9PtVS
-         EBVg==
-X-Gm-Message-State: AFq9FYKktk/zHkr8FJfQSbZ0Gu81FTHqthtBjs8p8vQx91UzAO+ZYui3
-	o1YF2LhTwAeKoFk8VdzpvhzSiXJbMojmkKZ7BlQqD70Gt/ZRjzFebYVHgeukVUsRTX2kKuv7ehZ
-	nw3MljQ==
-X-Gm-Gg: AYBFou3LSvbW7oTT3vUjNEzQbBsx5gERQna0habQnhMo9sASfbvJXmD6TIKj6rU6hbN
-	wDtsENTcy8y0C6a4ITdUbiuGJh3nUWgFXp9UbdWSsfEKRPq5wqouA3OVymy8YQlwE5FDYrdw3S1
-	vJoAbyhOq1s8Owh5fvQU0GTiSu7JX5eCnKWw+rSBq2LJKhxmxcdz4b5g/QBvyMyJm2HpbEJn5OE
-	7zMwk7Vj6V14gkXOy+svkrXzMyVKvSaAcsia6eR/GudIDeNK6nXM5hoF22mbQaJJB9j1hite/Sc
-	wefKIJiw/lW6vqKV4mlOIZB9HTdT7Xgz0JjPoutyE3qKSiHqtsLCgNLXHiIVhGjh+wKu986S6MA
-	bXHSHAyrjSa6M8zqrD//qgu3/h4RiqgQI6Qw/SW4v8/21J/5FCqMNzq+yPvLkMK/7DW6nCgPpmP
-	cUrXi51oWHgx2eE5mjbuN4MbOQ6WwRGTgAyMukEGFNr8MUIbSOFFCACGOTNDxpuKMCaapgb7wlQ
-	VYaLVOYwVAmTLOcfy6QlvJ6K6NdFYVd+EvNIbkx
-X-Received: by 2002:a05:600c:34cd:b0:4a1:9034:e9ac with SMTP id 5b1f17b1804b1-4a1c8adefe4mr144145e9.14.1792100225727;
-        Thu, 15 Oct 2026 14:37:05 -0700 (PDT)
-Received: from google.com (250.192.189.35.bc.googleusercontent.com. [35.189.192.250])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1bd9b8b5fsm106779685e9.9.2026.10.15.14.37.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Oct 2026 14:37:05 -0700 (PDT)
-Date: Thu, 15 Oct 2026 21:37:01 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v9 24/25] iommu/arm-smmu-v3-kvm: Enable nesting
-Message-ID: <atFHfW4_1ZN1EYlk@google.com>
-References: <20261015200903.2735565-1-smostafa@google.com>
- <20261015200903.2735565-25-smostafa@google.com>
- <sashiko-outbox-173401@kernel.org>
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="epkmS+sk"
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69FJVteH668033;
+	Thu, 15 Oct 2026 21:47:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=BH19KyJqtSSCvigcQRoHapTgOvCYSB
+	z+5OPWhCYEZJc=; b=epkmS+skueIcYs3DfsjXStOku8ndpi6H28tGfqHMdxWLz/
+	O7PMjcCbapv3FOD1VASuWfLR0H9wtdGjkqvVoxUI75BKhkvdQ1ylfNitft/4Okl1
+	I72DM2XRZiObvtsXU38ZBYBiQWNhefluJro1wp46uez1AlKb1wr0rXse6ukg7Cds
+	FpznC6NEjX2kMCcmIYbRhC1EhJbnAdg0KiUsgQmq4GVwXGQduGgWGMrg/5H2Ejtg
+	mjL4agUkIzyZcexPaixRmkFhrBHkTsmFI+nwgTXw6qe4pgmjoSrYVLMqBbvesUAM
+	ffZBdhiI5PXi2+6E/09KiVErQgdjZgT48YrryHkQ==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dugvamt-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Thu, 15 Oct 2026 21:47:13 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69FJ6mX12057773;
+	Thu, 15 Oct 2026 21:47:12 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hawqwt6w5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 15 Oct 2026 21:47:12 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
+	by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69FLlCsK29229664
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 15 Oct 2026 21:47:12 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E7F0A5805E;
+	Thu, 15 Oct 2026 21:47:11 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id CF4415805A;
+	Thu, 15 Oct 2026 21:47:11 +0000 (GMT)
+Received: from d (unknown [9.16.59.154])
+	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+	Thu, 15 Oct 2026 21:47:11 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v14 04/11] scsi: ibmvfc: add basic FPIN support
+In-Reply-To: <sashiko-outbox-173047@kernel.org> (sashiko-bot@kernel.org's
+	message of "Thu, 15 Oct 2026 15:18:34 +0000")
+References: <20261015-ibmvfc-fpin-support-v14-0-a0b063b8d825@linux.ibm.com>
+	<20261015-ibmvfc-fpin-support-v14-4-a0b063b8d825@linux.ibm.com>
+	<sashiko-outbox-173047@kernel.org>
+Date: Thu, 15 Oct 2026 16:47:11 -0500
+Message-ID: <878q3yd4bk.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-173401@kernel.org>
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Cr0q4X4D c=1 sm=1 tr=0 ts=6ad149e1 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=RCS4FwQSR9ayVb6XPsUA:9
+X-Proofpoint-GUID: CMgX1n8pNVb5oYxOGOIpwVZQ8FujT2Nx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE1MDA4NiBTYWx0ZWRfX+fazdbFvP7Lk
+ cU+wUSoW8mIoA9GCs+r8rFqn+g46RdBnXFd1QQQMeUO/r0Yr5ZENo0zIGn1D0RF3KIRmvbVNkbo
+ pRZ7SgrYI0AEXd2/2OAXUpPS5H+TWv73sJ5+vM5cpwSHXkK50pGQQdwcT8N6a3hIkQCf6pjo5CE
+ S9oDczHBm3n+cOp8pyO4ZsOy/p/HU2SZIWcDlphzJ7s24mnzswLJ/wz/EsEy+rsv0efl7DVLVCU
+ e7QMyt7g3ydzqf1ZjfWp3kclTXiZWMseFIX62D+VoKwBkr9dT0LuZv6Z6qlMTPRv+CSsCZN89rL
+ NMQm+bGL4q22H1heNTtEPOrlh2Mn+bk21x6kelKOJnvMUWYoYIW1QqrdrC29uMw2Da9Ft1l2o1+
+ HtK9dz/M+72cW8jsKHFxNeloeieYjNjrhah4st7F21LFdYzKjZG2LYp8GW76WFvPiOZZt7UCgqk
+ 0sY3rXJ/vZLf4UsmuuA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE1MDA4NiBTYWx0ZWRfX+J5K052wd3CB
+ zXjmviYqTYB3qzz9GZLcz1hOqp2ML96r5Oac+mH7yW2PY8ISgm3lykWdNWnHbTU5tvvBH8GCUsE
+ HXgDNO0mHukX7XsqV+euzL5MLcmqAqU=
+X-Proofpoint-ORIG-GUID: CMgX1n8pNVb5oYxOGOIpwVZQ8FujT2Nx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-14_01,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0 adultscore=0 priorityscore=1501 suspectscore=0
+ malwarescore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610150086
 
-On Thu, Oct 15, 2026 at 08:34:42PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Critical] iommu/arm-smmu-v3: fatal EL2 panic on host-supplied invalid STE or ENOMEM
-> - [Medium] arm-smmu-v3-kvm: Incorrect EL2 WARN_ON usage for hardware timeout
+sashiko-bot@kernel.org writes:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] scsi: ibmvfc: missing flush of dynamically allocated system_wq items causes UAF
 > --
-> 
-> commit 5625f7b65b03ea88554c9ce7668b1dabbbb068b1
-> Author: Mostafa Saleh <smostafa@google.com>
-> 
-> iommu/arm-smmu-v3-kvm: Enable nesting
-> 
-> This commit enables stage-2 translation for the ARM SMMUv3 under pKVM
-> by allowing the hypervisor to sanitize and control the stage-2 portion
-> of the Stream Table Entry (STE).
-> 
-> > diff --git a/drivers/iommu/arm/arm-smmu-v3/pkvm/arm-smmu-v3-hyp.c b/drivers/iommu/arm/arm-smmu-v3/pkvm/arm-smmu-v3-hyp.c
-> > index 01f23fce6be50..3562bb222f53e 100644
-> > --- a/drivers/iommu/arm/arm-smmu-v3/pkvm/arm-smmu-v3-hyp.c
-> > +++ b/drivers/iommu/arm/arm-smmu-v3/pkvm/arm-smmu-v3-hyp.c
+>
+> commit 170496a5dbc89bab0a780529ef0e294023ca569c
+> Author: Dave Marquardt <davemarq@linux.ibm.com>
+>
+> scsi: ibmvfc: add basic FPIN support
+>
+> Implement support for a basic level of Fabric Performance Impact
+> Notifications (FPIN) in the ibmvfc driver to enable monitoring of
+> fabric congestion and link integrity events.
+>
+> Add async event handler for IBMVFC_AE_FPIN events that offloads FPIN
+> processing via schedule_work(). Convert VIOS FPIN messages to standard
+> fc_els_fpin structures and pass them to fc_host_fpin_rcv() for processing
+> by the FC transport layer.
+>
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> index 0fe6b6f4260ba..871decab29856 100644
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
 > [ ... ]
-> > @@ -443,6 +443,60 @@ static int smmu_init_cmdq(struct hyp_arm_smmu_v3_device *smmu)
-> > +static int smmu_attach_stage_2(struct hyp_arm_smmu_v3_device *smmu,
-> > +			       struct arm_smmu_ste *ste)
-> > +{
+>> @@ -3261,6 +3266,255 @@ static const char *ibmvfc_get_link_state(enum ibmvfc_ae_link_state state)
+>>  	return "";
+>>  }
+>>  
 > [ ... ]
-> > +	/* S2 is not advertised, that should never be attempted. */
-> > +	if ((cfg == STRTAB_STE_0_CFG_S2_TRANS) ||
-> > +	    (cfg == STRTAB_STE_0_CFG_NESTED))
-> > +		return -EINVAL;
-> 
-> [Severity: Critical]
-> Can this error return lead to a hypervisor panic?
-> 
-> When smmu_attach_stage_2() returns -EINVAL, the error propagates to
-> smmu_filter_command(), which evaluates it and returns true to indicate
-> the command should be skipped.
-> 
-> The preexisting caller smmu_emulate_cmdq_insert() then processes this
-> skip condition using WARN_ON:
-> 
-> smmu_emulate_cmdq_insert() {
->     ...
->     skip = smmu_filter_command(smmu, cmd);
->     if (WARN_ON(skip))
->         continue;
+>> +VISIBLE_IF_KUNIT void ibmvfc_process_async_work(struct work_struct *work)
+>> +{
+>> +	struct ibmvfc_async_work *aw;
+>> +	struct ibmvfc_async_crq *crq;
+>> +	struct ibmvfc_target *tgt;
+>> +	struct ibmvfc_host *vhost;
+>> +	struct fc_els_fpin *fpin;
+>> +	unsigned long flags;
+>> +
+>> +	aw = container_of_const(work, struct ibmvfc_async_work, async_work_s);
+>> +	vhost = aw->vhost;
+>> +	crq = &aw->crq;
+> [ ... ]
+>> +	fpin = ibmvfc_basic_fpin_to_desc(crq, tgt->wwpn);
+>> +	if (fpin) {
+>> +		fc_host_fpin_rcv(tgt->vhost->host,
+>> +				 sizeof(*fpin) + be32_to_cpu(fpin->desc_len),
+>> +				 (char *)fpin, 0);
+>> +		kfree(fpin);
+>> +	} else
+>> +		dev_err_ratelimited(vhost->dev, "FPIN event received, unable to process\n");
+>> +
+>> +	kref_put(&tgt->kref, ibmvfc_release_tgt);
+>
+> [Severity: High]
+> Can this untracked async worker drop its reference and trigger the release
+> function on a destroyed mempool?
+>
+> If ibmvfc_remove() has already completed and destroyed vhost->tgt_pool,
+> this final kref_put() triggers ibmvfc_release_tgt():
+>
+> drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_release_tgt() {
+> 	...
+> 	mempool_free(tgt, tgt->vhost->tgt_pool);
 > }
-> 
-> At EL2 under pKVM, WARN_ON expands to a fatal breakpoint. Since the host
-> can supply an invalid STE configuration that triggers this -EINVAL, could
-> this allow the host to maliciously crash the hypervisor?
-> 
-> Similarly, allocating the L2 table in smmu_reshadow_ste() can fail and
-> return -ENOMEM, which also propagates into this same fatal WARN_ON path
-> during an out-of-memory event.
+>
+> This accesses the destroyed target mempool, causing a Use-After-Free.
 
-Yes, that is by design as replied previously.
+Agreed.
 
-> 
+>> + free:
+>> +	scsi_host_put(aw->vhost->host);
+>> +	kfree(aw);
+>> +}
+>> +EXPORT_SYMBOL_IF_KUNIT(ibmvfc_process_async_work);
+>> +
+>>  /**
+>>   * ibmvfc_handle_async - Handle an async event from the adapter
+>>   * @crq:	crq to process
 > [ ... ]
-> > +static void smmu_ste_writer_sync_entry(struct arm_smmu_entry_writer *writer)
-> > +{
-> > +	struct smmu_ste_writer *ste_writer =
-> > +		container_of(writer, struct smmu_ste_writer, writer);
-> > +	struct arm_smmu_cmd cfgi_cmd = arm_smmu_make_cmd_cfgi_ste(ste_writer->sid, true);
-> > +
-> > +	WARN_ON(smmu_send_cmd(ste_writer->smmu, &cfgi_cmd));
-> > +}
-> 
-> [Severity: Medium]
-> Is it safe to use WARN_ON for hardware interactions that might time out?
-> 
-> If the SMMU command queue is full and smmu_send_cmd() times out waiting
-> for it to drain, it will return -ETIMEDOUT. Because WARN_ON is fatal at
-> EL2 under pKVM, this transforms a transient hardware latency or a heavy
-> command load into a hypervisor panic.
+>> @@ -3361,12 +3616,28 @@ static void ibmvfc_handle_async(struct ibmvfc_async_crq *crq,
+>>  	case IBMVFC_AE_HALT:
+>>  		ibmvfc_link_down(vhost, IBMVFC_HALTED);
+>>  		break;
+>> +	case IBMVFC_AE_FPIN:
+>> +		if (vhost->state == IBMVFC_HOST_OFFLINE)
+>> +			break;
+>> +		aw = kzalloc_obj(*aw, GFP_ATOMIC);
+>> +		if (aw) {
+>> +			if (!scsi_host_get(vhost->host)) {
+>> +				kfree(aw);
+>> +				break;
+>> +			}
+>> +			INIT_WORK(&aw->async_work_s, ibmvfc_process_async_work);
+>> +			aw->vhost = vhost;
+>> +			aw->crq = *crq;
+>> +			schedule_work(&aw->async_work_s);
+>
+> [Severity: High]
+> Does this code risk a Use-After-Free during teardown?
+>
+> Since aw is queued to the global system_wq without being tracked,
+> there doesn't seem to be a way to flush it in ibmvfc_remove().
+>
+> If ibmvfc_remove() runs concurrently with this pending work item, it calls
+> ibmvfc_free_mem() which unconditionally destroys the target mempool:
+>
+> drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_free_mem() {
+> 	...
+> 	mempool_destroy(vhost->tgt_pool);
+> 	...
+> }
+>
+> This could lead to a crash when ibmvfc_process_async_work() completes and
+> drops its reference.
+>
+> Additionally, because it is untracked on the global workqueue, it can execute
+> after the module is unloaded, leading to a fatal instruction page fault.
 
-As discussed in the last patch.
+Either ibmvfc needs to track its work items on the system work queues
+and flush them all, or use its own work queue and ensure the work is all
+done before calling ibmvfc_free_mem().
 
-Thanks,
-Mostafa
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261015200903.2735565-1-smostafa@google.com?part=24
+-Dave
