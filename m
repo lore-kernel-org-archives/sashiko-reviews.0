@@ -1,98 +1,101 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF80754DADC
-	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 17:30:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C723559CBD
+	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 17:30:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792085418; cv=none; b=gpODXwZwUvAB+WEc9IYVUube2pCMo3LPMKCDOUESmGTwpFBwbDNxsWJ+EhaO3I8Zxi5/yVBN7DOXwQJrHBDP2SEOuinyHL4hCgGGyyvwgjxDDYfYKeZfKqa+IOqh4w1Td5FrjYCw3M9/NeabpMSzdeFbOwicMhoPfeOiHadXSW4=
+	t=1792085468; cv=none; b=qp6RqWWSrdr7/uw5Ok3zQzxldLreXmnoFIFpIXQOjdZE901knM+2c0KS22p6zYw3tl8fSw0W+qYsVLzkhCh9LePwC13jBhOB3rr5ENbn+yqpiw17ctRgnSjoJNO+TCJmnA6jNZuN9OJjYJebHXdMlH2EWkeXihvOEL22RBzBObU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792085418; c=relaxed/simple;
-	bh=a3qw7FpOix6g/wGV5bXQ1nW64xCim7gqGsQjoN0BNjE=;
+	s=arc-20240116; t=1792085468; c=relaxed/simple;
+	bh=+6qqVI+UWHsu25cea9ZmYLujgZ7WSoMAKrVCzT4/W/8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NYlPwH2swhSuatF6YIqhwpEemzTTePgrAl5uHZhM1KwWx7l1/e0M5RzcAsZMetE2uUSrJczSGFzbf3EjHfybUirMOL7YLj0edifrV5IL6/yzXDca+3ODExlqcw8Nd8xEAC4bHY/FyONBjs9i7YsnWFhuFBfpH2OYlxd4Vmz6AxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca; spf=pass smtp.mailfrom=ziepe.ca; dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b=il+1YLhq; arc=none smtp.client-ip=209.85.219.53
+	 Content-Type:Content-Disposition:In-Reply-To; b=KsNOjHYk5QJAAMZw6r36xkSt1F1dOOleU+1VZ4wIgU24KNJHC1m+kun9KGAAzGdQrbXb1u9qXfjt8s3Esm4UD+nKdEj1NnY9oKOrhpW+dtmVwR/pENM9vErYfnkqMWoBWs4Rd9QCi7LpgMRijJJ/+fE8oXafExi6ZCuPbq1YChg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca; spf=pass smtp.mailfrom=ziepe.ca; dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b=Ri0RCbQ4; arc=none smtp.client-ip=209.85.222.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b="il+1YLhq"
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-9178d514951so14706956d6.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 10:30:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b="Ri0RCbQ4"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-930c0f9c1b1so587758885a.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 10:30:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google; t=1792085408; x=1792690208; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=a3qw7FpOix6g/wGV5bXQ1nW64xCim7gqGsQjoN0BNjE=;
-        b=il+1YLhqVlOAjbe90m/Ln+U28ICZckmHtesuWbm9po4tOnojCfxXUDU29X9IsvW6Oi
-         HNynb1BX1afREQAaFyUdQB+JM5XfgE1h33giZTDCNdN8VhVX+2tmPukklRMmnYatUc6X
-         BxVnsEUTCgSN2mLcO9phje/q5qBywVAEVqtHWfN7iSYTmakJW9khoe6r+aWgdmqXmtUK
-         PV2epYPCVoxeUzPxRk2snVHAnlBrwDTVpmU9akTh4hAt/j0mPM/6DAxIuxXO3mUzvbZW
-         VXiw7Dohu6bA3dFRd5Ob9235b1AlyEvd2U6XffHGfcdhXc+LHPETzP/5j+oImPJuf04P
-         EhAg==
+        d=ziepe.ca; s=google; t=1792085457; x=1792690257; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=rSU3k+XuYVS+a9J9Tl+KuvJO6amav+IGeClFbopt0w4=;
+        b=Ri0RCbQ4KRwyD572+CsdovEU1eIHx9yNZlihYLmQMk9LTTka+/Cs8HYstj1Lv8zfIU
+         rpZuwJF1PTnjUx+HCz08L4RcrVDguwOwgzm9/KBj2Hbdr64DSKeuoDgkxw4afYyK24BT
+         Iuam/C1KSa9bMfPIAJmPq29futynJENN8vEI5Wanyo34QBX4hWbBjfVgo89hdDeroPpK
+         pkz7Pm1U7BA/zsmuSJxPJNiRQkhjyT3/d/lYAlC3BdQMI9Y/C5lMoJZGZCk1CDWOgP/Y
+         PhG1OGZltOX6HZdw2n8RKuROcnbVGwE8j5RxVs7Qo2QC8zMou6QdhfIMyTnXm3co2t3+
+         zCjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792085408; x=1792690208;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=a3qw7FpOix6g/wGV5bXQ1nW64xCim7gqGsQjoN0BNjE=;
-        b=lEgMUR/OdSg0UvTbr5eDoalU4ioCt3fxvfDk2SNY/yv44vZkUKoX2FnHCPdEb3ZLjS
-         sjjmLpx/JKO+dfoRFqQHFU8IFwvAafRH1kX1iZXrabkleelR5tGcjvjCW5y5eAf2HZjv
-         PkJLqHRpYB09ITPctlOy4214uxXKeRzeSpr/9k4Dbc4KNNrKHGTg5n4CZPWPY4KgUK9g
-         t+KcZQK8Ql9kajJv8/Oa7OkuMwP0BqJgum5abjMinRQzCPTAuSIj6PFHKmf5Gcr+vP0G
-         s46Otx+fAEEm5YOeWFMYus144R+/pLTuh2RaQolpFFfnN43wfn/Npm/jDT6l+kH7JMYO
-         HlSg==
-X-Gm-Message-State: AFq9FYIPiVhtOKVFCdHXcJPr2o8AVzWR9l/empIx29xzPygItG99l7b3
-	zctDjGkYVz7QFgec8FOgnyJgHCrhRPzpeAsipe4RPLqWjwYdyaLgIloJ4z5/8ovEWKO5qFwf/F7
-	evIPC
-X-Gm-Gg: AYBFou3sK6YVNmJBO55kBFG+yeOlj6qo+c0t4sfw3BIIY7IoJdgTuehw3ZOGMxwCIJO
-	n+J76AGlHzMotaLKoEkEGv/Ff2rumuT8XK6RU7ZH5H3aD0FnzQ+Oe09FMFDH1cn0cpl7++boYdR
-	ahC1Fbsdwp/thfq0/vt4ETfC/80MGVSL86SS+uWIXchqn1VyIJ6JQ+IH4GSez29TiEGlR9QCvTP
-	MHeS8x2N3zuGrrP8t+RQoqpd0ERqzOvKle4XgQLyhOMhhuS0QZaDUFRs6HgY7KeiHNZiDSvu+An
-	kI2bUSELFYMyQCs2pg3YOaMyc5LBnUUBwV2Fu2brwyU7nRRB6snkSIIuXoWfp5dcuvi9njN/P7Z
-	4GAi9jzgrCam29od8Nc0/yD4p5ZQGg10KhqjiAueCee9hkiNRMzSL9yyfIsQMJpd+XK6oPmZgRz
-	416QSN0R/XmQhQubRS6nkrZAHGuJVPde91QKcccVG/BtOBwysRbfzK9dmZ8CqN8URDRsD7quXDH
-	wD2215RpNLLPtnGmjLmJXkKlFevSUyD3vQ38ve7etue+hz86qUpbKLX
-X-Received: by 2002:a05:6214:268e:b0:917:a8ae:26d6 with SMTP id 6a1803df08f44-91b5557f525mr339715216d6.34.1792085408413;
-        Thu, 15 Oct 2026 10:30:08 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792085457; x=1792690257;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=rSU3k+XuYVS+a9J9Tl+KuvJO6amav+IGeClFbopt0w4=;
+        b=x+8Dk52L29A+pU+Ird40My3LYCsfiSOO9xSo6YodPl27bLHd1XraR5nIOfsi7+q66A
+         QFtamVY5ovIZGnS3B1fgd85ScT768bxq0+KejI9gH4KfNGZpBejjcpzhC6vd607Wt9+i
+         Mk1fPyp7r3S2CO6khWRZr5xPnvrbnBWlLHGVmcicunOT+IgqaqNYseGYviNoQfXpa91p
+         1Ygp8nlsTWvEHaIU7tFHXQ4zWhAm4aUqZNf1QLi4BJFwbosX67pszcUlO6Lxua6lWxq1
+         qKKmubWzgo45TWNwgQOvKv+NO8N8cPMqJ6LycRwjWQ4w/5QQ1YlKd8ppRTDFj/cYo1Mk
+         huZQ==
+X-Gm-Message-State: AFq9FYIyUfzNeRnaqYUOhb9Wjqx2pQ9oT8aSPYmBOkdX5VNYtd9w/mAc
+	n29YOyWUeV9XKJ+0KYreJA0tMy2sqzzUccxm5fvJ4uSPMfk3IOsHgHuWat8v9vp6pY8=
+X-Gm-Gg: AYBFou1ms6xHi3l1MKCydPaoYTAOlJy6Be3TgZCA0nvjqzN/FWpS1KfXbXKWPwwxz2F
+	PlWTa+jxKofYai7ulgEHRqhPDfaaHRCNE+p1efc6ue9X8kHSH2IaEGQFO4fJyOZRTTeQp5YQOCy
+	zArPhHvvecOaQm/6M/5eKXiIXTiEMx4QM7ke2kq6J9qj3D7WbCfAg2frlp04Hp7KN8FV6Lu8W8a
+	Q2qOpl1bur45SXvMbyrUwUZYzu+6Sf63+jr0X7K9ywco6w6buBrUC/gkorXNGqg2zcojcitskm2
+	8b9mUu9xpR9XaR0f2jQbvVkl8uwduhUo/bFVSlztQCvJszMKcFCN2QyxyUDudjAkELt9lvKqP2B
+	xHqmXzi1hSI0BNcedeG3/yisAsWeqzKd6wiOrwnrmMaW+SbTGRF7/7YQwBpl/03O/n0uETrEy5Z
+	9COv3FgYiaTZ3RFDhFoeGAPFrRlmdwHxHfP7tR2s6PLIlNXQTsBUQ9DQv90Lz3Zk8QOJg49/3dR
+	b6LKroP9F8FogpEZwPRgG+gBhZG/6l+uISHlmY7OiFS46kI1Y+ftA1T
+X-Received: by 2002:a05:620a:4115:b0:93e:6c02:d181 with SMTP id af79cd13be357-93ebd1e23aamr3396316485a.14.1792085456943;
+        Thu, 15 Oct 2026 10:30:56 -0700 (PDT)
 Received: from ziepe.ca (hlfxns010zw-159-2-239-150.pppoe-dynamic.high-speed.ns.bellaliant.net. [159.2.239.150])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91bcbb80515sm646736d6.44.2026.10.15.10.30.06
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91bcbb1af26sm745476d6.33.2026.10.15.10.30.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Oct 2026 10:30:06 -0700 (PDT)
+        Thu, 15 Oct 2026 10:30:56 -0700 (PDT)
 Received: from jgg by wakko with local (Exim 4.97)
 	(envelope-from <jgg@ziepe.ca>)
-	id 1xHPHJ-0000000H5RJ-36Dw;
-	Thu, 15 Oct 2026 14:30:05 -0300
-Date: Thu, 15 Oct 2026 14:30:05 -0300
+	id 1xHPI7-0000000H5Tx-0ACq;
+	Thu, 15 Oct 2026 14:30:55 -0300
+Date: Thu, 15 Oct 2026 14:30:55 -0300
 From: Jason Gunthorpe <jgg@ziepe.ca>
 To: Eric Davis <eric.davis@broadcom.com>
 Cc: sashiko-reviews@lists.linux.dev, linux-rdma@vger.kernel.org,
 	Leon Romanovsky <leon@kernel.org>
-Subject: Re: [PATCH rdma-next 04/13] RDMA/core: add the reliable unconnected
- queue pair type
-Message-ID: <20261015173005.GS14213@ziepe.ca>
+Subject: Re: [PATCH rdma-next 05/13] RDMA/core: extended address handle
+ attributes
+Message-ID: <20261015173055.GT14213@ziepe.ca>
 References: <20261014-uet-ib-core-v1-0-a0e626117113@broadcom.com>
- <20261014-uet-ib-core-v1-4-a0e626117113@broadcom.com>
- <sashiko-outbox-172001@kernel.org>
- <CAMouMYKADaQjsjeGZZyB+eWvswpf+b_H=aT-VZHVoe=vQFhxZA@mail.gmail.com>
- <CAMouMYKo+z70vA86P5gG-Kz=5TCSUZVfuLS1wAaCLKopze=R=Q@mail.gmail.com>
+ <20261014-uet-ib-core-v1-5-a0e626117113@broadcom.com>
+ <sashiko-outbox-172008@kernel.org>
+ <CAMouMYL6cw6uNMnd_Vjz5WnWypTq7iq-YXHhyk14_taBJhwuug@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAMouMYKo+z70vA86P5gG-Kz=5TCSUZVfuLS1wAaCLKopze=R=Q@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMouMYL6cw6uNMnd_Vjz5WnWypTq7iq-YXHhyk14_taBJhwuug@mail.gmail.com>
 
-On Thu, Oct 15, 2026 at 09:09:20AM -0700, Eric Davis wrote:
-> If it's preferred, v2 can make both post commands return -EOPNOTSUPP for an
-> IB_QPT_RU QP so that is explicit. Let me know.
+On Thu, Oct 15, 2026 at 09:15:56AM -0700, Eric Davis wrote:
+> On Wed, Oct 14, 2026 at 3:50 PM <sashiko-bot@kernel.org> wrote:
+> > Should this use uverbs_copy_from_or_zero() instead, to properly support
+> > trailing zeros and allow future structure extensions?
+> 
+> Agreed, I will fix this in v2. Patch 7's JOB_ADDR_INSERT handler reads the same
+> struct ib_uverbs_ah_attr_ex the same way. v2 will fix both.
 
-I didn't try to undertsand all this ai output, but as a general
-comment if things are not supported please return EOPNOTSUPP rather
-than pretending success.
+Please go through all the uapi stuff and make sure it uses new
+mechanisms and helpers all over. If this was written a while ago it is
+probably out of date.
 
 Jason
