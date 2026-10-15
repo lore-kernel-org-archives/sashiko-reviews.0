@@ -1,72 +1,72 @@
-Received: from mail-pl1-f228.google.com (mail-pl1-f228.google.com [209.85.214.228])
+Received: from mail-pj1-f100.google.com (mail-pj1-f100.google.com [209.85.216.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43693E8357
-	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 16:16:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.228
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2D736A342
+	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 16:19:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.100
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792080999; cv=none; b=ngJV2sqIU3FP5Vk6btztozMSBgjNObu3LexQgfxtAdCqXoQv42CEtNDR8lq1iMYELRvviWB2Bd9iE1233NSAFpPlcG0IM66+CfaKUYl7QObjmUTxDyA4bNKOu/AiZXlqmcWFB0AKo+uC5UDv3YZSPBPyVtjydrGhUpvY9ICelvU=
+	t=1792081161; cv=none; b=MbCLiJ/ZoKdJLH1a7pMcdMvQ1Tgx4mNNskLW5DqZnh4GBvsPCExBlp49Azpaqq4lA6wNNcmlZ0h//z/gmb1+DOseqJ9T3NLiOMi4xTS6LXmtao2P8ym5gmJm/VQYEhpKYLHLUGJRuQIrtlQVad99GU97eNHe1ydevGb/YdbGlZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792080999; c=relaxed/simple;
-	bh=o1gabFrpf6VmQfImB3bNu6kaphA8kAFlNE7Vm4Ieu8A=;
+	s=arc-20240116; t=1792081161; c=relaxed/simple;
+	bh=SkwFzKrSup+dnQK1g6Uwvv23x38zUrJ33UTJpCQIjug=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ja2Oyl2DrwfnU1nSdIkH+M25A+HGc5ViNwqrDHAHUPRGPxTfNUtgmihP/c/4jD3Kb0g7FVDMBvY8c2RhLzXW0GFtABuOQwzLVHdLFfV6X/XN3PK1zYgNOOMEHSkIFrhlhmBENbV7Hss7U7wsDmlJC2UdAv+lVWL6knm7bIgLWvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=gDOmwm/y; arc=none smtp.client-ip=209.85.214.228
+	 To:Cc:Content-Type; b=M7C/RzT1hrTlg6ESNnoocc8g3TxY5HDxyiifa6mvUlH5H0rNzQtQdGZOqK3NKQvaMbzothMP8FSK14yUInKvuB/bEtmKw2k/ha6evtxSr/nYxG10KWJA6a1VVk+yFgrkd2aM8kunHwhNaO8iQBCqyX6OMI13D/U4IM6t14QtoqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=JTRIhFXL; arc=none smtp.client-ip=209.85.216.100
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="gDOmwm/y"
-Received: by mail-pl1-f228.google.com with SMTP id d9443c01a7336-2e86dce4510so28497945ad.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 09:16:27 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="JTRIhFXL"
+Received: by mail-pj1-f100.google.com with SMTP id 98e67ed59e1d1-3a80d1c98f5so1166244a91.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 09:19:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792080987; x=1792685787;
+        d=1e100.net; s=20260707; t=1792081149; x=1792685949;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=o1gabFrpf6VmQfImB3bNu6kaphA8kAFlNE7Vm4Ieu8A=;
-        b=Qgnqe5kd2hz0TZ6qunNhkdn+eACGMV78vYgXdtKZLmQTHfX9ZEPRR9IGYIAj5JsHmM
-         6Q5IW/jgRq7qWY3Aa9xtrGBr7+HFNTQ1XHXSX1FsttZKUK+DOR8Ed8q9YAVfbq+eQczp
-         tH8BFjauyRqGd5RWuBNX8opSrJ6Zy8RXEdtOAn7JNrbAbPeYdgFXO2Ki2pX87Y5FshFy
-         91Q9X9C3cAnYUwBvwCZRhbxHEwx0wUuKMXEU77RbE/AVrEDIDcfvS/Bp54IV5wbz06GO
-         VyXTmEEJ33nZYG23p7bqyzJn13ga+MYcFCcyVR9cLU7+gT8oOpN1tv9w2X2Nlm1oKFtl
-         WbNw==
-X-Gm-Message-State: AFq9FYLaw60V3KWheA0c9Vl+IGmxoZtBCxtQCPmtScFNuNEGMrzNagZF
-	IziKaoCZQhqoKcwQUQsyPKBX+0n+Q9y0AwRCuI9mD1N7gD4O/2mEL0kXGaaR5I7MJkISQeTjx33
-	Bpe9soDqK2lHmC8nctPaeq7VfFBzzB2FP5/sNSn4hYP9Fz6og9b0EODHUuXkYx+84U+kMjvDo5Y
-	ZuC3N3VAsVdiuS63mzWw5D6yCkP5/PuqpEnt56dleM3VWy9a748DUCsZBV9rcF+qThOu3EmvEFS
-	v78ufnD+4Ph6jwmjo8m
-X-Gm-Gg: AYBFou3wenNFT6F+2YZgJqOs1ps2bYwHQqs2m/IMVTH5qnANA12dOFuXZScKxw00JE8
-	xXRM0dPcy+dC3UFqdwMTxYufPQXnTU/ZlDe1jmFQE1mrvHfje/134KNcCBBN4ihAhmTypvOZNh7
-	Itl0BNqU0R/irgFlMS/5nLb13m2KorNuhkbjF92AbvpYw3nkVIvJ6u7eXzPJwpMZFq1zTMXazR0
-	cGWvrbEjtVCQuzkQl/Gkm2tOz3oeHXHw+2F4+S8pwIvD9i1/T64duNmiU+ewLKHMAS2pQxcLG/H
-	9v38bhYjRavvzKT7Ve0Kn8SPWQcWkT+KMwTyeUnEERrQYH3NMLsafYLEsCa4HbLPSND2h4l6glx
-	Fr1smUd/ZEUbBY3v1A1tDuC8COMCV0tUvpoo1CGotaaNdW8b6x8e9XRMKgK5dGOJPBc+qU3uT+E
-	9Yj4WPjQEYt6zW2L/N0JEWLYB7YrZDCCY68gc=
-X-Received: by 2002:a17:902:ea0a:b0:2e9:492e:1688 with SMTP id d9443c01a7336-2e9492e1786mr47697545ad.8.1792080986520;
-        Thu, 15 Oct 2026 09:16:26 -0700 (PDT)
+        bh=SkwFzKrSup+dnQK1g6Uwvv23x38zUrJ33UTJpCQIjug=;
+        b=bxqGOkYRg40eV46RDCz1EXuwSijdUQcUt9clsTKHqueRBVuY/DShJs2fNGDu9RjVnm
+         RoGUKArUPYrDqF7/NfZqVNSXJrQnzfdX7ke8sBQWvu56fKdByHLnmgj0rVmXfYEuS2XX
+         vlBR+xnbHH1tBtAxQesAzfM+IwiGFKt3GQ80HBmsiEXSgVLddglNJjstV8RRifTJU5ri
+         +Ys7h6X+6PBsJBSjpF9VmEySh5bKfYvtrVtEw/0HOXE02/pnwJPOoFuh/grYAAFO3brp
+         nAwJPtwNQFnCiM+zGCqbftVDY7OL2g+4dvq/XKgAM0Y3izhmkRfDazsndMwcereTslaE
+         c1fA==
+X-Gm-Message-State: AFq9FYJZJVG8AhoPWhBu5mnVSZeJTB1Ir+oLhbOgUlOrfPYO5Lv//ej0
+	Z/KAncH5XkEFPykbvWC2gf6UXLLrJ8q2vZ9A9fGbloJnjFPfjWBQgAWslf/lJmyl5OeR6kKyAkv
+	XI4KaJ0+w5ZNoPTlZKxkfk9yu5Wn+4gfuwVD/qGpBon5kTtW9jFmOPK+bRp/fkBhtIQKl6iR+Kq
+	B/bvbUusBnKqBYOBbvxvDIyzqWp05UGsSUyZleWa9Uqrps7u0zdNXmaDhPuMYXX8X2aGV0uyOnr
+	g+KnBLdP038+WhyQLaU
+X-Gm-Gg: AYBFou0qDTVfPWPhhq822rs4bZGRx/s9rSIUBidhrlvpfL4ItPX2uBm7NOND2ijb/2S
+	0TsGSxDzdcYDX00xxqgEIZIKPZyFMkZyycyEs9YXSi9mZU3UEJp8rrB9sIn7UgZjmcIAyqu8d3N
+	mSeki/n4IYAx4PNJDPj/lN2aihXP+FacPQb1bbs3fC1d6oY16kS4Gc02dk9LAjg/JQTEgDTKKvr
+	svGEm75BMz417if/1/G6hT4GFEwLHsOCWKi0XAKaKNHpNP3V8jkCePPhz7tyxTQdrKlO8hjetz8
+	7jVvqKy+YOGORALeIUXgZNA7gAoCQYWAyA1k1osYAkepSeBZ719aJwi8Ulcd0gF3ZzjaKumnb4V
+	ceroi48tGQrkhLHGp5ml0e9OigEmzW0A4S07znatAWb9XDfPbUQR+1HliBpZCtey/GW30ez12xU
+	GZlBKbg3YQfXepYpoJh/DerNXk5RJV7Q5hCuw=
+X-Received: by 2002:a17:90b:384c:b0:3ab:189b:6985 with SMTP id 98e67ed59e1d1-3ab3a9a8d5bmr19464008a91.35.1792081148758;
+        Thu, 15 Oct 2026 09:19:08 -0700 (PDT)
 Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-125.dlp.protect.broadcom.com. [144.49.247.125])
-        by smtp-relay.gmail.com with ESMTPS id 41be03b00d2f7-cd635cd6c59sm159670a12.11.2026.10.15.09.16.25
+        by smtp-relay.gmail.com with ESMTPS id 98e67ed59e1d1-3acbee7ae31sm138685a91.7.2026.10.15.09.19.08
         for <sashiko-reviews@lists.linux.dev>
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 15 Oct 2026 09:16:26 -0700 (PDT)
+        Thu, 15 Oct 2026 09:19:08 -0700 (PDT)
 X-Relaying-Domain: broadcom.com
 X-CFilter-Loop: Reflected
-Received: by mail-ed1-f70.google.com with SMTP id 4fb4d7f45d1cf-6b1c6f567caso5392403a12.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 09:16:25 -0700 (PDT)
+Received: by mail-ed1-f70.google.com with SMTP id 4fb4d7f45d1cf-6a5d57a8d51so6181777a12.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 09:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1792080984; x=1792685784; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1792081147; x=1792685947; darn=lists.linux.dev;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=o1gabFrpf6VmQfImB3bNu6kaphA8kAFlNE7Vm4Ieu8A=;
-        b=gDOmwm/y2o5GXNo3VI/rBmejk02x4NOcxafQOgMrqgP7BPIUhRIVLgseaFSHSH0KlC
-         ZxJw0/JAm3PtqYUgeNPP3Qr1pJV2oC0Zn3iLxINd4SDlrfw1Hg9GZ8rqWTLrb13rlAzQ
-         sOkFn9psXAWISQ70ezu0HVLo+NC6q6Lut9LDA=
-X-Received: by 2002:a05:6402:2748:b0:6b1:c697:3c46 with SMTP id 4fb4d7f45d1cf-6b1e0afc778mr8249638a12.1.1792080984294;
-        Thu, 15 Oct 2026 09:16:24 -0700 (PDT)
-X-Received: by 2002:a05:6402:2748:b0:6b1:c697:3c46 with SMTP id
- 4fb4d7f45d1cf-6b1e0afc778mr8249619a12.1.1792080983794; Thu, 15 Oct 2026
- 09:16:23 -0700 (PDT)
+        bh=SkwFzKrSup+dnQK1g6Uwvv23x38zUrJ33UTJpCQIjug=;
+        b=JTRIhFXLiKWdIE/8kAw8BE+5/jUIOQs7yEhDq1SG/pPuJnwMqKEioval2ac4eRGA58
+         zyV1V52fJJdj7g8rDp3sInJ8gZ01t47LoYSgQhbflU7FUmQOGVNmq++mLwWRUVozt+XP
+         ze0RkxrLMP3aeBEJ+3wDuUm411nSwI4uIdMhA=
+X-Received: by 2002:a05:6402:1e96:b0:6ac:26f0:15a1 with SMTP id 4fb4d7f45d1cf-6b17c2c089fmr15916129a12.36.1792081146733;
+        Thu, 15 Oct 2026 09:19:06 -0700 (PDT)
+X-Received: by 2002:a05:6402:1e96:b0:6ac:26f0:15a1 with SMTP id
+ 4fb4d7f45d1cf-6b17c2c089fmr15916107a12.36.1792081146160; Thu, 15 Oct 2026
+ 09:19:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -74,41 +74,44 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20261014-uet-ib-core-v1-0-a0e626117113@broadcom.com>
- <20261014-uet-ib-core-v1-5-a0e626117113@broadcom.com> <sashiko-outbox-172008@kernel.org>
-In-Reply-To: <sashiko-outbox-172008@kernel.org>
+ <20261014-uet-ib-core-v1-6-a0e626117113@broadcom.com> <sashiko-outbox-171975@kernel.org>
+In-Reply-To: <sashiko-outbox-171975@kernel.org>
 From: Eric Davis <eric.davis@broadcom.com>
-Date: Thu, 15 Oct 2026 09:15:56 -0700
-X-Gm-Features: AclHuK-yYxy046X5qKLMTFY55FEszaL_pLFnsU8uzsMvxnf44BRf3mMNVKY0058
-Message-ID: <CAMouMYL6cw6uNMnd_Vjz5WnWypTq7iq-YXHhyk14_taBJhwuug@mail.gmail.com>
-Subject: Re: [PATCH rdma-next 05/13] RDMA/core: extended address handle attributes
+Date: Thu, 15 Oct 2026 09:18:38 -0700
+X-Gm-Features: AclHuK-ERz1dm7hmCJ6P0oXUp52MqrYqE3LhEQy7nI7L6T3dyt7TQXZMy3mjsfE
+Message-ID: <CAMouMYLE_cKVsdGFuviO=SgDYP1uXgD9FwWsc_cQQ6J8SL2qjg@mail.gmail.com>
+Subject: Re: [PATCH rdma-next 06/13] RDMA/core: query the semantics a queue
+ pair type guarantees
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-rdma@vger.kernel.org, Leon Romanovsky <leon@kernel.org>, 
-	Jason Gunthorpe <jgg@ziepe.ca>
+Cc: linux-rdma@vger.kernel.org, Jason Gunthorpe <jgg@ziepe.ca>, 
+	Leon Romanovsky <leon@kernel.org>
 X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="0000000000007e1c85065de35efd"
+	boundary="0000000000002e6d98065de36830"
 
---0000000000007e1c85065de35efd
+--0000000000002e6d98065de36830
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 14, 2026 at 3:50=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-> Should this use uverbs_copy_from_or_zero() instead, to properly support
-> trailing zeros and allow future structure extensions?
+On Wed, Oct 14, 2026 at 3:34=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+> Is this description accurate for this patch? I notice that a later commit
+> reports this capability via query_device instead.
 
-Agreed, I will fix this in v2. Patch 7's JOB_ADDR_INSERT handler reads the =
-same
-struct ib_uverbs_ah_attr_ex the same way. v2 will fix both.
+Bah! Agreed, the commit message is stale. Whether a region can be attached
+to a QP moved to the device's memory region access capability bits (patch
+13) and the message wasn't updated. In v2 I'll drop that clause. No code wi=
+ll
+be modified for this change.
 
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261014-uet-ib-c=
-ore-v1-0-a0e626117113@broadcom.com?part=3D5
+ore-v1-0-a0e626117113@broadcom.com?part=3D6
 
 Thanks,
 - eric
 
---0000000000007e1c85065de35efd
+--0000000000002e6d98065de36830
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -201,13 +204,13 @@ ZMEsct9jQXibihTD7z9wLTIkXqOHumCc6f53zhsQCRofr8m7Tm0YrckGCHd0BowU12A6oVax5xEQ
 6j1hyszkhFPrlLKAlaFU7VuIwlcjKvN9XYrmOfXfTnYoVV6f1IDwhgbtJNlKnJksqoCzfsbAVd0e
 usA704DOznTCfAYJqjGCAlcwggJTAgEBMGIwUjELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2Jh
 bFNpZ24gbnYtc2ExKDAmBgNVBAMTH0dsb2JhbFNpZ24gR0NDIFI2IFNNSU1FIENBIDIwMjMCDFfq
-Ldxf930IzIe8izANBglghkgBZQMEAgEFAKCBxzAvBgkqhkiG9w0BCQQxIgQgXq+2btKvFOfzUWAD
-Hq0eoXnCdpbLzDb3DgwmeTA12cUwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0B
-CQUxDxcNMjYxMDE1MTYxNjI0WjBcBgkqhkiG9w0BCQ8xTzBNMAsGCWCGSAFlAwQBKjALBglghkgB
+Ldxf930IzIe8izANBglghkgBZQMEAgEFAKCBxzAvBgkqhkiG9w0BCQQxIgQgyaz4bl7ANG9aj/YF
+hvOTL6VuppIvqT4vxIkgV9tcJhowGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0B
+CQUxDxcNMjYxMDE1MTYxOTA3WjBcBgkqhkiG9w0BCQ8xTzBNMAsGCWCGSAFlAwQBKjALBglghkgB
 ZQMEARYwCwYJYIZIAWUDBAECMAoGCCqGSIb3DQMHMAsGCSqGSIb3DQEBBzALBglghkgBZQMEAgEw
-DQYJKoZIhvcNAQEBBQAEggEAXDyHuxCZA1hl16u2FY28IeJ63SD20G1O+D9XR7tyFPPrAypiNdro
-WYHb4w8Q/TBqlObDcgb2EUPSXRUnWF9Z4WoQwHiRf/LJ1RxgGJjlUC8Oa/IB7iXARjOkvodivJYD
-714GGlHSth4yo3UhpTnr21F9vxyjLE9MEmflHoA5Q4qqWeXvuE1vzKZIcBqDbWqiOaYpYyDBXVQ/
-Co+XQ0pNw6ZK+Uz60tzIqbj7y3HVROATauEpKfHRf8qb8oBNnNM2D3/YoAi4AxgUcZ9gAeLZCSN2
-1w4Po5kwKoGdNSVwc/xBF5Vf5/sOLsRtF81w2jAL7dIrQhlvvpE3gzPNck/9xw==
---0000000000007e1c85065de35efd--
+DQYJKoZIhvcNAQEBBQAEggEAkwLCd8sjeSXlxpwo5VKZmDfjCZP3mKsoCOMI99bhSM0mCkmRSXQq
+JMuJ0d+PT03RIemSPnomehLnbPTxLq6+g9XFB291MKjXu+eHifEYml3pXwhLEJiEfIkvmShlUJVJ
+INlrjeYGyFSoUASR6Oqm/kxTYa+XmfR5WcnhPBEYoRAsOqT0t3jivPIIfMMomwRJqCcw7ihZ3VCk
+6EyE7cPpL76Xymsu48ENbEvlbbjMIaPISD7+csKEcDEjYovE/VAuVxx+n+AetoxvLID2u2TlQsCC
+bTbxg9j2Z+pFqhTgSU2DIplwtOa1ZXjbSyiyBBkKoytkqGgBUE1MYY4jpn3PAw==
+--0000000000002e6d98065de36830--
