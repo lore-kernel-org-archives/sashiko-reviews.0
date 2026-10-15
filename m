@@ -1,194 +1,132 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D883F4DC7
-	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 22:18:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.170
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792102694; cv=pass; b=Nl0ICRFyPKKUbKyU8pNrovQkOeNx/xOCTMHVLVFHsJuI897H3790VWD3pTYkQxL0HS7GzaJr8PjRg9D0pKO4UDcCQHu0Xr6R3iwtux0eiiFTf0vYl1ECizsSM1Ac9ZYQ+/zWtATMnPhRPswSf2d4KkjhRU0vLdDxwK+OvD/wB7M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792102694; c=relaxed/simple;
-	bh=tnXbwiJVAR+sXXQiFOdDekhe/PSPH9YMoHLa79Fwqro=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=aphfXMGEbII4XvJGERfzrGPrb1GMNtfmv02CoDt2rQFSgLxLjutgWlDaKItFgH98eN/p9Z5qNZQDnSQDh2/ZZfLHpMwmL2/yqI2CIoW6jTfAyXcHYI5hLntbQlClGxj0FET4n+4HYVBMBYl4oc0R+5R3rQI+XNZ1uzwquo+uBio=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hzkkGJSk; arc=pass smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79704A384A
+	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 22:54:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792104872; cv=none; b=ljAKunBOU5OJIs1eEsxHd8C79Wne0T7uCnJU9R1X/EvhILV6P9Xnka61YBHDdofRE5CAcrE70eWUQDBg/WBI87mH5cyO9yP453PawW+65XlBjQ801DTsNrHJ8Ft+Z6ve7vegvJXn6G3mDCiyUjkXtBGdFGjnglN6zsy/nVSnhSk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792104872; c=relaxed/simple;
+	bh=lx6vLG67HDPtnRj90OjJRS6Cl5KXBnbsEtkIXD607PM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y9aksXC9gaZEJNe6dvs6I5BWIjdNETeuA+vpOEkqFO4l03XehLXm0lCscqGhGqW+AzPjKUYFz8iV1IG4ZqH8FarFT4HXydHhi39oiAsOOnxrmgKRZLXBAMQyuo5bRww59KGhX/v6AKXhQzQA0j/VqykSTy/HTdXE4Y7uWfZS6fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca; spf=pass smtp.mailfrom=ziepe.ca; dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b=VQG7J4BI; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hzkkGJSk"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-3a808f09021so20211121fa.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 15:18:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792102691; cv=none;
-        d=google.com; s=arc-20260327;
-        b=dtncIofN4/OBgA+Ya/0ZhrUdArXWf0Das2heoUyVqnOFFHH7endxZpBXvg96ID02p5
-         nTBQ77YfEtDqatkralTGqxeTE3kqxjuT3ZBJORnkU4HZ2PVkqSH90a4dg9YGNbgwL0/j
-         +0uEICkdnnJsn0vhY/YGbSOppy6YVulrUWSYGqxIwtxlYyuqe4Qhzv/74ohu4oA0oQGh
-         UgTiWyxZqaoj9lXbwSnQeEbG5T6FdOCOr9CpiMMrzWXkL/dzv+52dilLQwTU0fbvWbdf
-         BAEblvoPT6hlUiq8Yv6SpXmg2YCyutPMB3SQIrU570kaG+l4Bs9OUpjWXuWwdxHuVdoi
-         HMfg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=JxythEUSv+YmEJAfBEuFblYrHTHwYsJ/ZoCDzZLeYsA=;
-        fh=UuEIBvKRIq7mzKoTdrHfg8oBqEUwLmUXvEdzs9U2/e8=;
-        b=n8OJ2utTD+3qlv0f5s6lLeXq+w7P4N46iuMRt2cAMiNxjUV14VhbwTEslm98NZpcBK
-         FygdZ6tdEDot8A02Cvj7ySqJJREvFMUv9NjKLUe1JRl2fODxTvXyaeqvUADbeG3yEPfB
-         YBdlq9fQtdj7DEwdRjVTkxexNaRVsrzA+WJh9ssdW+bR+1ieHcpA6BkVI8rAnO0slPis
-         hyM7uX8szUNkb1zQ/DEnSTDv7phpwU+QmTzMu4ZRVONGZFH0Q+N79pzEa7lj2VepVIQf
-         DFZhnZz/DQOWAW1USC7tOygPEv6cKc7+5KzCiQVdx8/HOC/q06RLjEJTEESC6Sd6r78x
-         K1nQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b="VQG7J4BI"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-5351748222cso17509771cf.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 15:54:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792102691; x=1792707491; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=JxythEUSv+YmEJAfBEuFblYrHTHwYsJ/ZoCDzZLeYsA=;
-        b=hzkkGJSkHE6SbIvp+52UQ2eUO19lySTVtS3PyCnYRIdex8SnIqnNoNnhpakhfM+cev
-         OHobBUgYyzfZA/4fYVUNl5vvEM3dxWWM/gd6GO5hm378w/Y/2y6AzFXXxON3UZx6LUKD
-         EIGawFJ6Voim+W0vxiCWlUGVpsF73gWZKhC9ZPVI7j2UGoWcHbt/YL0iZYlrPkMupznF
-         ZpOmafAXOQLOCQ35ML+ALAROx3kIW0pIsRV2vn2rzu+l8mJmzTSWxXAPRzyLqEmJMha7
-         S64D1rmIWa+0QVIBYQ6alpKJkOWQIgx2c8WhJjso3m5JxoqF9CLDzApUn/UzPeo5oumd
-         RXqw==
+        d=ziepe.ca; s=google; t=1792104869; x=1792709669; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=w5g/qpIgvj6wMX7CCQKIX7PAX2lJ6Da0UK3Xl6Ms4Rk=;
+        b=VQG7J4BILA28A5HbsH4rqnnkaSqU9g+2G3JqIeMMtECI1+yVIi+s3iEQcP3YB7Ar++
+         liC1dGTBqc5EoCz3qbK20ltqByUny+UW1xYbwoQgo4k23e89It72oFq5Q4PG1MnZ/tnZ
+         XmqtGt6kr0MEztdbxvNKlcnYlZBFHTO4xOhDdOTGiirDmtmVV+Ad+4YlJzDtX5R+4MRc
+         qxAJ+T/Sda6k6w2jf+x4Am07we6jxbUQWxjrMGk/T2aMgwbLFEg/STX9iY0pie9Dy4T1
+         EoDA/dTFm84lBRtJ7kQPmH4hR76zhPdJ9i8w7IbEqICUuRB8+JukwU17u3c07rf6lKaZ
+         blsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792102691; x=1792707491;
-        h=content-transfer-encoding:content-type:to:subject:message-id:date
-         :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=JxythEUSv+YmEJAfBEuFblYrHTHwYsJ/ZoCDzZLeYsA=;
-        b=yX5i+pw6xySu/9ytCT0lqKtb+cp+nP4CxdTpSOyh/zY4cFINrGTtpxDsJWNQ3n6X70
-         qBiYaoMr622HlLmG/dgCmUp30vEcT/Nt9Gz4pKPEfO1BKJMz6/TMZZ7GsJu2J5VUN0Nj
-         o0ohX/ttTegcrlFt0VpI9Vy4RUjqO+GFb1PpRKoHZJKAUTtQwNb5WqFqpGlPd/aVx6md
-         D/EEDn+KUFYTnahcUoiPw5oVtg8wgjR3pWwnC7YAf4zlBR446RhFUCxRRbW0sZ+sipHG
-         y2kAi29nxa6o7wjGhen9zqYHD0vmc2UJNrAbe3S4UM19tkQXh/XEUQbzwMV63fU2RvG4
-         4YHQ==
-X-Gm-Message-State: AFq9FYKZi6aljw7otrng2LSjC5wjjI3+71uuplfzIlQ9JcrZmQqaZKUw
-	CZCEfSpdZHqvM63UHTPJcTb9QRvwwsGlmQC6Kt70tv5pxQ3CRo0CWOcv7tH3V19gSP5C3YJgT//
-	i5khx1HE5GXzYz51Wyjv4yXTS3KTjaFU8yKVvA0tZkQ==
-X-Gm-Gg: AYBFou03z49pF0ihjhfCLdhwEvOdtO3p24r8E5lqi2pLmK5JGSaNs4NF1RZPi7PJN6L
-	RY7Yk48vbTzCzxYB6/hZIWyMKMivuQ6wX8WOFhG+JoLMN3M0JCSpF16l4vzI1EZ+7Q77QmmyN6j
-	jHpREydslLlmDauntgr3Vfz1xPPhqc+rnPJV6+LNZqnXxh5wZ8ROLTQcOv0n62s0oeJrs5ANPnA
-	v8waPHyzOKWYMKccCmBZ09fCUYvWGn4dmacoptipUW+YUo76CvkPyWHZn8XsxQIOpTql8uJbmrp
-	93yv5UwswkkZ8VqBp5aBPOtd5hRoySvVmK6o5umL+AvaSjCvucJbqGEbsiWdB/DrHmKEo6Ww9Pt
-	skZcDz1FObfw0OBlZQw/RYE5UZSlJJJQEoKxh5xSCrf8Hmi0/caerPhou8pczPdPIH6ij
-X-Received: by 2002:a05:651c:19a4:b0:3a9:c1de:852a with SMTP id
- 38308e7fff4ca-3a9c4ebaaa7mr51644251fa.3.1792102691195; Thu, 15 Oct 2026
- 15:18:11 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792104869; x=1792709669;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=w5g/qpIgvj6wMX7CCQKIX7PAX2lJ6Da0UK3Xl6Ms4Rk=;
+        b=yrFViIcr4qqAiTbyptR8X+1R/pLnBjJi2LTH2JwmiMwZqLSYSV2eYqnqzehX89u+71
+         dOBl6hV/wkVWtDXZ68p1u97HNQXQVhKy38LjDeQaNc7Lw+6DzmGTXl1+K3ubduiKEDTX
+         Qbawm5TNZO1TZt48XURYOZt+ZViMVA/FujOOVhLCWSFK3oaq9FBgu4iDQ9bKvrIJ3FQh
+         3aMqxUlC9eXL6hppJI9aRLu/yeqAkkdygYWwCKVZtB8fr+EDySpv3PfbktZ7n33uxOB6
+         ElVwjg0pZI8PVVdyjHnaRiJPVCiK8q1AprptGpM4ksjg8lDwkeAyxOetGe6c2KHlkViw
+         sD5A==
+X-Forwarded-Encrypted: i=1; AKwUvBwph/d38s02StFbgVf7JImfRutpsaDC5VEipzxyfjSZFRMzx6ZaNWEZKEEzJwnUFEHz0HP1jk45KnVAwUccp1g=@lists.linux.dev
+X-Gm-Message-State: AFq9FYINhr9pBytzWcLA1hc9yrCMJhltLWQpuikWRBo0mtbcaVsTDxg2
+	ZO0ygYWI4tkuFecZ+BGXRFK2jv0CJXxvmc/thaD4L+lsDiWFv6iur3vqRAJqUXzBLKw=
+X-Gm-Gg: AYBFou2TgGfEXD+YwZFKMmgxume5gqRohdnEbapoZXFmtuc0ZCgMAoOoBVOxFH7ERmO
+	K3PGaRa9nxHhDdUWHHnY9VJW2NwhbJMFKNwvBYgJuDeNPp2oSADpOfVOKU+/y6zOCX0S4Lf75Ye
+	mzPugPuuUDurg5dgFDJIViJwL1//CAlXohwnnjdaFBWcbxNxx2brLSsUxw8jhReGf3LMU/Rk3bC
+	zR/+zSJKm0HZrP8DB5RmNT4mOpaJPtY8QCh4aaQSqu12/GffkvoWP6omDz6+TovFMDvU06mJpsy
+	4CLwEG2M+NSrpytsu9OL9rRFnJw7nCHLCaokLQpuE05+k6jxGgMGs33y82N8EdED7Et/z3OR0hi
+	wpLpO0IrFYNDT9nZ1JKFCbCt/FRRWq5mS9GgpywXHxo3m/kBDOgfsTFt4QNAFM5+3Tl4DLMNZOs
+	/lfyBs/BJ8YjhN3E+3khuPMWibPqKhaCVkmgEWqehYJ3Zroc24PcS79kQurlmBVipapmDRxrAYs
+	jQznbH9RzMXk+b6K31z3kpLAgLeRFfitqJn8eBHxANwDuGYWdagBe5Z
+X-Received: by 2002:a05:622a:a16:b0:535:10be:7d5e with SMTP id d75a77b69052e-5359fb539bfmr310496441cf.46.1792104869371;
+        Thu, 15 Oct 2026 15:54:29 -0700 (PDT)
+Received: from ziepe.ca (hlfxns010zw-159-2-239-150.pppoe-dynamic.high-speed.ns.bellaliant.net. [159.2.239.150])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91bccc721a8sm5238476d6.12.2026.10.15.15.54.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Oct 2026 15:54:28 -0700 (PDT)
+Received: from jgg by wakko with local (Exim 4.97)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1xHULD-000000008uB-2yqn;
+	Thu, 15 Oct 2026 19:54:27 -0300
+Date: Thu, 15 Oct 2026 19:54:27 -0300
+From: Jason Gunthorpe <jgg@ziepe.ca>
+To: Sean Hefty <shefty@nvidia.com>
+Cc: Eric Davis <eric.davis@broadcom.com>,
+	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
+	"linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: Re: [PATCH rdma-next 02/13] RDMA/core: add the UET GID types
+Message-ID: <20261015225427.GY14213@ziepe.ca>
+References: <20261014-uet-ib-core-v1-0-a0e626117113@broadcom.com>
+ <20261014-uet-ib-core-v1-2-a0e626117113@broadcom.com>
+ <sashiko-outbox-171976@kernel.org>
+ <CAMouMY+nCYZ1V_-0La4phKNkvYBke7Njhsr+HRwWkAfahgf3pg@mail.gmail.com>
+ <20261015173327.GU14213@ziepe.ca>
+ <DS6PR12MB53456734E5A7CFFCDD7FBCCC0CBD9C2@DS6PR12MB534567.namprd12.prod.outlook.com>
+ <20261015195408.GX14213@ziepe.ca>
+ <DS6PR12MB534567DB240CF76594BE5B5D0DBD9C2@DS6PR12MB534567.namprd12.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261015220126.102766-3-sanjay.govind9@gmail.com> <sashiko-outbox-173441@kernel.org>
-In-Reply-To: <sashiko-outbox-173441@kernel.org>
-From: Sanjay Govind <sanjay.govind9@gmail.com>
-Date: Fri, 16 Oct 2026 11:17:59 +1300
-X-Gm-Features: AclHuK9BXbzxpydIsuzw15HevhHp2BKO5guA6szAc3XSXYAzmR3chPFhWn-7vbw
-Message-ID: <CALQgdA28qTxuV+TD_u6FuqOXSh8qDHyA-xjjcf8tQJMxKPHerg@mail.gmail.com>
-Subject: Re: [PATCH v9] xpad: Overhaul device data for wireless devices
-To: sashiko-reviews@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DS6PR12MB534567DB240CF76594BE5B5D0DBD9C2@DS6PR12MB534567.namprd12.prod.outlook.com>
 
-On Fri, Oct 16, 2026 at 11:12=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] input: data race on x360w pad metadata between URB completion and=
- workqueue
-> --
->
-> commit 623a5a67bf1fb99bf182903ceaa0fbfb964bfc7b
-> Author: Sanjay Govind <sanjay.govind9@gmail.com>
->
-> xpad: Overhaul device data for wireless devices
->
-> This commit updates Xbox 360 wireless controllers to extract and use vend=
-or
-> IDs, subtypes, and product IDs from link and capability reports. It delay=
-s
-> creating the input device until 500ms after the pad is reported present t=
-o
-> ensure this information is available.
->
-> > diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpa=
-d.c
-> > index feb8f368f834e..bcad597b29b4a 100644
-> > --- a/drivers/input/joystick/xpad.c
-> > +++ b/drivers/input/joystick/xpad.c
->
-> [ ... ]
->
-> > @@ -995,18 +1035,98 @@ static void xpad_presence_work(struct work_struc=
-t *work)
-> > -static void xpad360w_process_packet(struct usb_xpad *xpad, u16 cmd, un=
-signed char *data)
-> > +static void xpad360w_process_packet(struct usb_xpad *xpad, u16 cmd, un=
-signed char *data, u32 len)
-> >  {
-> >       struct input_dev *dev;
-> >       bool present;
-> > +     u16 parsed_vid;
-> >
-> >       /* Presence change */
-> >       if (data[0] & 0x08) {
-> >               present =3D (data[1] & 0x80) !=3D 0;
-> >
-> > -             if (xpad->pad_present !=3D present) {
-> > +             if (xpad->pad_present && !present) {
-> > +                     /* Forget everything we learned about the old pad=
- */
-> > +                     WRITE_ONCE(xpad->pad_gen, xpad->pad_gen + 1);
-> > +                     xpad->sub_type =3D 0;
-> > +                     xpad->flags =3D 0;
-> > +                     xpad->wireless_vid =3D 0;
-> > +                     xpad->wireless_pid =3D 0;
-> > +                     xpad->wireless_version =3D 0;
->
-> [Severity: Low]
-> Can these pad metadata fields race with xpad_init_input() during device
-> initialization?
->
-> The URB completion handler xpad360w_process_packet() runs asynchronously =
-in
-> softirq context and modifies these fields without holding any synchroniza=
-tion
-> primitive.
->
-> [ ... ]
->
-> > @@ -1943,8 +2088,60 @@ static int xpad_init_input(struct usb_xpad *xpad=
-)
-> >       usb_to_input_id(xpad->udev, &input_dev->id);
-> >
-> >       if (xpad->xtype =3D=3D XTYPE_XBOX360W) {
-> > -             /* x360w controllers and the receiver have different ids =
-*/
-> > -             input_dev->id.product =3D 0x02a1;
-> > +             if (xpad->wireless_vid)
-> > +                     input_dev->id.vendor =3D xpad->wireless_vid;
-> > +             if (xpad->wireless_pid)
-> > +                     input_dev->id.product =3D xpad->wireless_pid;
->
-> [Severity: Low]
-> Since the delayed xpad_presence_work can execute xpad_init_input() on ano=
-ther
-> CPU concurrently with a disconnect packet or late capabilities report, co=
-uld
-> this read torn, zeroed, or partially updated device identification data?
->
-> The 500ms delay defers the work, but does not serialize it against subseq=
-uent
-> URB completions. This might cause the input device to be momentarily
-> registered with an incorrect ID (e.g., 0000:0000) or name before the
-> subsequent work iteration unregisters it.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261015220126.10=
-2766-3-sanjay.govind9@gmail.com?part=3D1
+On Thu, Oct 15, 2026 at 09:14:22PM +0000, Sean Hefty wrote:
+> > > > > > Could this cause incoming UET packets to be incorrectly mapped
+> > > > > > to a
+> > > > > > RoCEv2 GID index, breaking the UET transport response?
+> > > > >
+> > > > > On a port that runs both RoCE and UET the MAD traffic is RoCE, so
+> > > > > mapping it to RoCEv2 is correct.
+> > > >
+> > > > You will need seperate ROCE and UET ib_devices with the current
+> > > > state of affairs, we don't support multi-protocol today.
+> > >
+> > > UEC intentionally considered multi-protocol devices, with a vendor deciding
+> > whether it would need to provide separate SW devices.  E.g. using UET for
+> > MPI, but RoCE for storage.  Protocol selection is via GID, same as RoCEv1 vs
+> > v2.
+> > >
+> > > What blocks multi-protocol support?
+> > 
+> > Principally I don't think we have the APIs to discover and link the GUID to
+> > protocol to QP type appropriately..
+> 
+> I'm missing something regarding the GUID comment.
+> 
+> The QP protocol comes from GID index, which is discoverable via
+> ibv_gid_entry::gid_type.  (UET QPs require the GID index on create.)
 
-Agreed, this will be addressed in v10 by protecting the x360w state
-with a spinlock and building the input device from a snapshot taken
-under it.
+Hmm, that's not the normal case, but I see what you are thinking
+
+> E.g. a dual RoCE + UET device would report node_type = UNSPECIFIED &
+> transport_type = UNSPECIFIED.  GID entries indicate supported
+> protocols.
+
+Ah, that would need some opt in scheme to get there, but I supppose it
+may not be so bad.
+
+I thought there were other issues like PDs not being entirely
+compatible, MRs, and so on?
+
+Jason
