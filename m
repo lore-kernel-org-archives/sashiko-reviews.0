@@ -1,143 +1,68 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vtj.irix.systems (vtj.irix.systems [82.76.27.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43FF52ED50
-	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 14:01:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7172230C632
+	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 14:08:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.76.27.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792072910; cv=none; b=f+P47lVePXvKT3pcC5VmripCV3RsMbkrBFmD+OfEN+V3T842GEU4qzwEBPUmOp70eAIBVmznjxBu4gnf19903IVfjjO1+4oFsx/dpK0xPT5rNNx9ES07lMHIODQ95gvd1JXCOR1B5rVzYV7qGLD2qseo59iCXuY8Ll1dAepOfu4=
+	t=1792073308; cv=none; b=LaIzpfMVa/wJz9n2K5a/W0mOPOB1shg3IoZcXLspG53KBXjU3e9haOQ9Wrmudxdal3vCFyKnKUV8109IA95BQTgOJmcwib8kx2JgP5a6h+sZCTxLXbMebpFeyklnTyGeHGOCQsw21UlGGjRGF10dUTHys7NKFFttOLPZBi/WWc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792072910; c=relaxed/simple;
-	bh=F9D4NtGx2BASRaM0QdP9rN+CHp9G1qOy0hyNSwDNx9k=;
-	h=Message-ID:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=BEDAZu8xMbnZb+LZO6DZ/b7OyLT6iJz94gnORZLmqU9AT/QNm9v6+c/fgIte3mTBq0zZOn5TFY0RrqD+cT0tA6NJm2AlSGpQXvQ/aTmayYprhqToJWBHQdkvBu6vj9Pus15NoEqvLOnHTFaL3qzkjHBzPIxAtJvRKYm7Z+Wndsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T7uLmpgJ; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1792073308; c=relaxed/simple;
+	bh=QFpk+8sQmhCVU/moICNHTYP8N/ev3pN/k19hfrUS/8g=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=adR9aIaflNy5DXWUmMaTsjNO70osKniEyzr792PTltqqmjltgtiJA3GzLlsZWiaPQ65xseupqoFf9N/jv//cB93Xcu1rNVpnt+H5CyDZpVSFBNeHs6q3+uLY8lkMrJ9Cci1QgxoNzMCenCr/fPl41O7ZCT4tl706w2SkQyj0+z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andrei-z.com; spf=pass smtp.mailfrom=andrei-z.com; dkim=pass (2048-bit key) header.d=andrei-z.com header.i=@andrei-z.com header.b=QXe57afb; arc=none smtp.client-ip=82.76.27.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=andrei-z.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=andrei-z.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T7uLmpgJ"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2dd76b1361dso15000705ad.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 07:01:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792072908; x=1792677708; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:date:message-id:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=LY9l4g61tf1ixC3MFomKzzwAunnhCUNKSY6ylI9RPFQ=;
-        b=T7uLmpgJMnsx0vpUcbWFQ0uOwzJ8Tg7Bk+FkUBCeT/0ww6eKlAIlw17AlSy6f9gw+2
-         RcLvQEbcSIYLp8AEHjKikP6GXBzU8UYPLD2rViRWfVVUYohUv+qRjc9+oTIPPWsEn+od
-         okDBTbAy2KVLOSyK/Z7WWnoP0aOGxT3mP4FWsVt7dm+ivDjfQ2jD6x6b23hKVaSP5ca9
-         8s7qHWFXP/Y4E540wrj+HmZi1LAc+bD3u/CCUw98enWJ+SihzCeao3fGhwaoFH5ANHMU
-         XYEd8wDk3rw9DLghX1tVDLYN14mwAhRKaTel2/1hcS1AYBsdcM/rP6aBXrNluWqV0WcE
-         V0iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792072908; x=1792677708;
-        h=mime-version:content-transfer-encoding:content-type:references
-         :in-reply-to:subject:cc:to:from:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LY9l4g61tf1ixC3MFomKzzwAunnhCUNKSY6ylI9RPFQ=;
-        b=eYmBUbBte5DZMa8/TAKrC6EsRoWpNg8o1ARiIu7o1XCMvqzzjXVVAw4EdD54ah9xQI
-         JW6u5rq8bxzNaY7NlKpXfkIvgF4ci9D0b9LZIaBegXnRuh5lYn7I1jgdDKVw6XD1DC8X
-         HTWE6lMkks+izeEr65ejCwNnIgWmTZ75CVerPGbrbboQeZAlmwE1UXarC/yeyNbfFejZ
-         wo45w557AP4ADHYVaJn4WlOqpCL2W3AOY1HR5y2DaZF+82/NxZBbERHtmEwboUl/YB2d
-         U8K/P/tO7/HT4VgLI56Zle5U+kv8h60u4vDOkmXRCDhiV8k4hyv+7NDaUalqgQE48itR
-         DVnw==
-X-Forwarded-Encrypted: i=1; AKwUvBy9xHeDbXzRKqGkXbnoswSL6oNfR8b0RQQtu2KfX9SIVnIKE5JDjvmFEtWA/n+6T8qly8VIFGpsk9Oy4v943F4=@lists.linux.dev
-X-Gm-Message-State: AFq9FYI5sw8sH9cemtJ3JuZc1swAoE0xJeOI6XontKKi77rkN59tyxtx
-	5FVwmIcsQskQlmg/XBBETNZhJpny7SeBCXqXPcXe/5YezteeK4ZDEtkx
-X-Gm-Gg: AYBFou07b4GUlbw7sllHtGnbtQDpDSXrA2McSqVomzXUc/4PI59oVSgOR/43Bstmzmq
-	hUlBQDaAwl11e1GHnG67WZB9rOsniDVStIJmHu87fEhWc9qX/4xMfY95XlIy6XRfsW3ynTrxJ8Z
-	ynfyjUsdVzWjVD45Ii48582fa3EVNUX7A8ulUFqRtp9dK/VGw6s54WeXvF3By2NKdRluYxBijt6
-	J5kYaInIHQxNQvcyfj2kYZWMHwOTZ5D33UdAd9AnYbiaNnlnb9lHZjqOr5dILTjTmgmI7kOQ5sd
-	FV+C3NVAe5b7H5Pb/ZcA8YB2DOB2OCAH/UjOJevOfzANe3t0CihSowjWeN75Dj47FOXwNQq2sCL
-	EOP+E02wwIrvkFJduWTFKz4qvt/1K6X1t7tuA75pucawU4KKN0kj9AQ4n4iqWDMEeApd2fmIP33
-	DQtwplbNY6eX6KutxSxgMz4Ak5WB4bufE4zkAiKge6Rcb9GLVTzbSzDI60E4KIo+eLVL4U6A==
-X-Received: by 2002:a17:903:2309:b0:2e5:38bf:cb43 with SMTP id d9443c01a7336-2e8427f0c01mr176866815ad.2.1792072907655;
-        Thu, 15 Oct 2026 07:01:47 -0700 (PDT)
-Received: from [127.0.1.1] ([240e:b8f:977f:f400:ec2a:b15e:fef8:70a])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2e94ba30f6asm16779985ad.57.2026.10.15.07.01.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Oct 2026 07:01:46 -0700 (PDT)
-Message-ID: <6ad0dcca.e4f0a24b.cac3b.c1fe@mx.google.com>
-Date: Thu, 15 Oct 2026 07:01:46 -0700 (PDT)
-From: Liang Haowen <nbg2974@gmail.com>
-To: Lee Jones <lee@kernel.org>
-Cc: linux-leds@vger.kernel.org, Pavel Machek <pavel@kernel.org>,
- Martin K . Petersen <mkp@kernel.org>, linux-scsi@vger.kernel.org,
- platform-driver-x86@vger.kernel.org, linux-kernel@vger.kernel.org,
- Denis Benato <denis.benato@linux.dev>, Armin Wolf <W_Armin@gmx.de>,
- Hans de Goede <hansg@kernel.org>,
- Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>,
- Marco Scardovi <scardracs@disroot.org>, sashiko-reviews@lists.linux.dev
-Subject: Re: [RFC v9 1/1] leds: asus-aura-scsi: Add ASUS Aura RGB LED driver
- for ROG NVMe enclosures
-In-Reply-To: <20261015115043.GA1863739@google.com>
-References: <20260925134010.2815025-1-nbg2974@gmail.com>
- <20260925134010.2815025-2-nbg2974@gmail.com>
- <179198503855.839288.7797731903424311774@kernel.org>
- <20261015115043.GA1863739@google.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=andrei-z.com header.i=@andrei-z.com header.b="QXe57afb"
+Received: from MAILGW-DELL.dell.vtj.corp.irix.systems (localhost [127.0.0.1])
+	by vtj.irix.systems (Proxmox) with ESMTP id 5AE9E223B4;
+	Thu, 15 Oct 2026 17:08:23 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=andrei-z.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:from:from:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=sig1; bh=QFpk+8sQmhCVU/moICNH
+	TYP8N/ev3pN/k19hfrUS/8g=; b=QXe57afbtSe1GE3BRLhBOWPMvGxmSuXHZL9Z
+	7IC27ITefId9FeG6JJx5r1nBCmOdthn4u0I+817c8qengN80nq06wUSQxr0/cqnM
+	/s7W2g5sdF969ezMnEdNVwLs/nV4Z62Y+OkZ/TB+beF2M3RoHaD4tEYuMYTbmyuR
+	eBEvidA2feKM/RcGTn9ytwGTZOrgB2hoSMFtkJQreQm8zcAm+3h1Ri7ICbKdTKQ6
+	qClbw/iP3n9v9FIs6tbVeHAermLMilH2uU+cM6Ftzb80UGUT6qBNRy9axQdbOcmR
+	2XQWkGHVLKLpAEHF6LPiYtATkPgK/9mmnpkzUGdoSSrkXZhUHg==
+Received: from VTJ-MX.corp.irix.systems (unknown [10.57.36.6])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by vtj.irix.systems (Proxmox) with ESMTPS id 79522223B0;
+	Thu, 15 Oct 2026 17:08:20 +0300 (EEST)
+Received: from [10.89.11.73] (10.57.8.14) by VTJ-MX.corp.irix.systems
+ (2a02:2f04:1:9c24::6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Thu, 15 Oct
+ 2026 17:08:20 +0300
+From: Andrei-Alexandru Bleortu <me@andrei-z.com>
+To: <linux-rdma@vger.kernel.org>
+CC: Sagi Grimberg <sagi@grimberg.me>, Max Gurtovoy <mgurtovoy@nvidia.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
+	<sashiko-reviews@lists.linux.dev>
+Subject: Re: [PATCH RFC 1/3] IB/iser: Post header-only PDUs inline
+Date: Thu, 15 Oct 2026 17:08:20 +0300
+Message-ID: <20261015170820.3064909-1-me@andrei-z.com>
+In-Reply-To: <20261015163243.3011667-1-me@andrei-z.com>
+References: <20261015125118.2966247-1-me@andrei-z.com>
+ <20261015125118.2966247-2-me@andrei-z.com>
+ <sashiko-outbox-172888@kernel.org>
+ <20261015163243.3011667-1-me@andrei-z.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VTJ-MX.corp.irix.systems (2a02:2f04:1:9c24::6) To
+ VTJ-MX.corp.irix.systems (2a02:2f04:1:9c24::6)
 
-On Thu, 15 Oct 2026, Lee Jones wrote:
+Li RongQing already posted this fix:
+https://lore.kernel.org/all/20260921033949.1803-1-lirongqing@baidu.com/
+I will leave it to that thread.
 
-> A driver source file without 'Kconfig' or 'Makefile' integration is dead co=
-de in
-> the tree.  Either wire it up now or hold off on submitting until the rest o=
-f the
-> pieces are ready.
-
-v10 wires it up: the drivers/leds/rgb/Kconfig and Makefile entries
-are in, and the series is posted as a new thread under the same
-subject.
-
-Your 25 Sep note never reached me: neither it nor the copy
-kernel.org relayed on 14 Oct is in any folder of my mailbox. I
-first saw its content today, quoted in this mail. The three week
-gap was delivery, not silence; this is my first chance to answer
-it.
-
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(=
-s) to consider:
-> - [Low] leds: asus-aura-scsi: undefined function kzalloc_obj() causes build=
- failure
-> - [Low] leds: asus-aura-scsi: blk_rq_map_kern() missing required request_qu=
-eue argument
-> - [Low] leds: asus-aura-scsi: strscpy() called with missing size argument
->
-> Was this even tested?
-
-Yes. The driver builds with clang (LLVM=3D1) against 7.2.4 with zero
-warnings, loads on the enclosure, and was exercised today: the four
-LED zones driven to independent colours and checked by eye, 60
-sequential and 100 concurrent updates, the sdev deleted mid-write
-(zero splats, clean detach), rmmod, and a fresh attach through a
-host scan.
-
-All three findings assume a tree older than v7.0:
-
-- kzalloc_obj() has existed since v7.0 (Kees Cook's series,
-  include/linux/slab.h).
-- blk_rq_map_kern() takes four arguments on current kernels; the
-  queue comes from the request itself, and scsi_execute_cmd()
-  calls it the same way.
-- strscpy() with two arguments is backed by __strscpy0 in
-  include/linux/string.h, which infers sizeof(dst) and rejects
-  non-array destinations. v10 passes the size explicitly anyway,
-  since it costs nothing.
-
-kzalloc_obj() has now been reported by the bot in all nine of
-its reviews and blk_rq_map_kern() in eight, and the answer has
-not changed since the first time. If sashiko could review
-against a current tree, or drop those two checks, the noise
-would stop.
-
-Best regards,
-Liang
