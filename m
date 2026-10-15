@@ -1,177 +1,84 @@
-Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+Received: from out162-62-57-137.mail.qq.com (out162-62-57-137.mail.qq.com [162.62.57.137])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51C0366060
-	for <sashiko-reviews@lists.linux.dev>; Wed, 14 Oct 2026 22:53:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81B0363C46
+	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 01:45:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.57.137
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792018389; cv=none; b=WzBWGbFmkDoFZoS+wj1bxaz4oGRyWNAetf0sEUz1NHZMKq26E2U2HKUGUJFkpi8+A0FYwzfoBd5X5RSysVIFnx+KaiKTePEi+Y+60eCyecZNgds+Q4JpY/5mz/54LaM/iTRdjGWtUI4BbipF/4K45aD9dyGLecwvqBwrnE7wC3Q=
+	t=1792028723; cv=none; b=C4STg0pPzdeR6Us4OEsbOM9Ipce82v9aHh63TjA4Z58EF5a3rMUmAf6hYmgKO4zs+pGQ7jp9oS+fVHxLU8Uy/hd9FF++qLHxJogb8czVVVOzUNZ6whWvDBcFc/EH7jwjGlRyTOg2EU6g3bwAHIIxpT7nG3H/1v4M/xR81pEHh/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792018389; c=relaxed/simple;
-	bh=ljhhs058Uu8LR3r/dfzfqv6gMke2mpfg/ekEjmSu3fI=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=Xt4msd6v5F/0KQw6g8MuGT0dXf5JEjJc2WkZ/YUcdsLlOgigMsFo3isyJTFI4L9UGdiegoX4liHV8fnqoBI5l1mj4o91Wah6rbWF6WA2zMThzdyFBVSwO/0jd/P889caXL32XcqM8oZxbs4Na3V+mJVh8Y0PZ5Y5RXQdwwWYNyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hsal.es; spf=pass smtp.mailfrom=hsal.es; dkim=pass (2048-bit key) header.d=hsal.es header.i=@hsal.es header.b=rjhgCuoO; arc=none smtp.client-ip=80.241.56.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hsal.es
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hsal.es
+	s=arc-20240116; t=1792028723; c=relaxed/simple;
+	bh=q+1jYsWWMZtHo/ThaUj70I3+0mqhQsdzymrgtfRry+o=;
+	h=From:To:Cc:Subject:Mime-Version:Content-Type:Date:Message-ID:
+	 References:In-Reply-To; b=O+CJHEbMaAofLn02+5cLxnKTfwlzLk7eX6ROo8pogObL+RaKdDKfDrvpzN7/+ZE9M9s9ZNZPVBP5aOGqTFZUSmMGvZ8InGlCI1Fndkaj6WKMyNRUpPnIRl/CUOlMCXzMa1NbNIpl5fxqZWbk8OM3Rf3EGgEyNZ/QeqlNU57ULrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=R4Pvodp0; arc=none smtp.client-ip=162.62.57.137
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hsal.es header.i=@hsal.es header.b="rjhgCuoO"
-Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4j4mgr1QdzzKp51;
-	Thu, 15 Oct 2026 00:52:56 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hsal.es; s=MBO0001;
-	t=1792018376;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=S9L2yqehEk5J/KJaDjn0UlKtBv2ZJIvg0h4mE1QYUvg=;
-	b=rjhgCuoO0VHM1hfQ3SvNkdgsBrdaoREphAEyYO56y/MhDpYMztRnLPzs+qazk8oR3cazFu
-	Xf80CYrvzVF75ixQ9oOEb5OoNBpOiWu3yxcS6WkZ4mhLhGJfKxIQg46xe7LUi69lYyL05h
-	qW5pPrwueBx2A2xPvWG43Teqn/XoNmpFg2cUZ2fhpoUmNiX3v0xU7cXzOe9GQgkXNQ9B+s
-	Wy34HBGFFoZDtH8H3+eUhHIpcFQwy2exvGtaBvmfCgnS4EdtNM51TRsaAsYbxBhdSVcelb
-	cxZO7JD8mzg31lIrjOYH0n70WSqJYKQd7D+m4EvOqPrNUDUdAQD9tVoB/G1K/Q==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=none;
-	spf=pass (outgoing_mbo_mout: domain of hugo@hsal.es designates 2001:67c:2050:b231:465::202 as permitted sender) smtp.mailfrom=hugo@hsal.es
-Date: Wed, 14 Oct 2026 23:52:55 +0100 (WEST)
-From: Hugo Sales <hugo@hsal.es>
-To: sashiko-reviews@lists.linux.dev, sashiko-bot@kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Message-ID: <1615886072.1467681.1792018375427@app.mailbox.org>
-In-Reply-To: <sashiko-outbox-171985@kernel.org>
-References: <20261014223041.171317-1-hugo@hsal.es>
- <20261014223041.171317-2-hugo@hsal.es> <sashiko-outbox-171985@kernel.org>
-Subject: Re: [PATCH 1/2] drm/amd/display: Fall back to the native mode, not
- the first, on eDP/LVDS
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="R4Pvodp0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1792028715; bh=q+1jYsWWMZtHo/ThaUj70I3+0mqhQsdzymrgtfRry+o=;
+	h=From:To:Cc:Subject:Date:References:In-Reply-To;
+	b=R4Pvodp0pbQlHBG/TbD+J3GAq9GyfTXXGXnwi2LilTxy7MVgayOxc/kK8ArebBk1/
+	 ZqYzuA1tlWANydVmhO4gwEgJXjmV1VymG2kJvQRdJ7U4oalx25jlnz1wjz8zdjKx0W
+	 2QvpfcCOybeP9BQV5193br+Vy5Mk9NmT4lbwOrCQ=
+X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
+X-QQ-XMAILINFO: N8i9SvusUD3b+dAYyUyG0NvcSPnwCy+TyK+8PlgviyB2FL3SnhetYjF6bA4926
+	 ZC50asIb49oJS5DRDzO81pAkEFKmlwZJJp3GXmEEMvGk9ZMi4h6030HCIC2dma1QCBZElMxopquh+
+	 9Vxg6F4Lx28q9glZTHdXCXIj+R0ASKRNGdFFwox7KwNemgFxp1Sy1g9frB13AxRhSeNy/ZkXmK8pL
+	 2FI1Iud6zVCS1dlk51F9/BYiFANnj0eSkmgnBTPgEYN4tOgbINE4cukvB7Lc4vjKW5Ir4WUuKLAP+
+	 kPGjhEY+kAd/gG30M7qbf6YqPGh8nJV6q91GiCpWIl/9eHDuM4y7T4JujZVwfPBSQZZ++dwtF0gcN
+	 6vLBuiAlRFoVM5Csczz+H72vaCUdfUl7BCXeHgcQIFFFKVOJBk2z9DKeke3CqCpXBLOi9/VXc7sLZ
+	 iR9nDhsGj2ISdgjZDIKJxFEp5GHj/TIYAKguPt32AspUVZBV2Ik7zGPEpwLPKIzJtDjufHashQTNy
+	 3veriM83i27t885LNAXTNjNo5TNJC1b8GeEK/nqSUxmaGWL1ZJDDLh3qI6VT1yjU361eFH5UVn4Oj
+	 cILndqH9dU/7NiHx8PnafLpqF1SNhCUAJIXGFV9111BwDlfsBtibFd/g0OgUjbgjtReSZi8TQtBCD
+	 eLzjw5LcBISXlxd4Ab5/CKm96ctGPjIFOdz34au4kYP9mvBi9crLRbCMeEKIFiuHMClBWE123uI40
+	 1mX83XieC+J9huBngtX9Ypd1n5aV8TpDchQINi0O+yGfH5EF6nfUHmtUJKMUccmP5yOUp6vPMiqO2
+	 ri1/XFMh3aalLkj9LTZqbn15f7D8iIXdIPoLWMgV8iYE3UQzNnfLOuBkNnoX9tMEdAjZUbIfxKwhB
+	 UDbJno/u/8qkSg2a5swiVrEeCsyQpP8v8AZS2eaRV6n6mLB2xgFM/s6P6TusDS7B5+PHj9ho/gz1G
+	 8Cl01ZLTkFeJlm1ByAY0KM0anvJyteitRp2ufxp4/VtWWSvkzK3JL6FWPC8WtgkJSlPW/vADQs3Qp
+	 Xlxm3P0hx1FzN/4vMrSffw2XL5YUphZrB7qjX
+From: "=?utf-8?B?Q3VuaGFvIEx1?=" <1579567540@qq.com>
+To: "=?utf-8?B?c2FzaGlrby1yZXZpZXdz?=" <sashiko-reviews@lists.linux.dev>
+Cc: "=?utf-8?B?bGludXgtY2Fu?=" <linux-can@vger.kernel.org>, "=?utf-8?B?TWFyYyBLbGVpbmUtQnVkZGU=?=" <mkl@pengutronix.de>, "=?utf-8?B?T2xpdmVyIEhhcnRrb3Bw?=" <socketcan@hartkopp.net>, "=?utf-8?B?VmluY2VudCBNYWlsaG9s?=" <mailhol@kernel.org>, "=?utf-8?B?T2xla3NpaiBSZW1wZWw=?=" <o.rempel@pengutronix.de>
+Subject: Re: [PATCH net v3 3/5] can: rockchip_canfd: cancel bus-off restart before closing the device
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+Date: Thu, 15 Oct 2026 09:45:13 +0800
 X-Priority: 3
-Importance: Normal
-X-Mailer: Open-Xchange Mailer v8.52.252
-X-Originating-Client: open-xchange-appsuite
-X-Rspamd-Queue-Id: 4j4mgr1QdzzKp51
+Message-ID: <tencent_3E11F7FD7E9B846806656E12AA46E0025C09@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+References: <20261014-rockchip-canfd-restart-close-v3-0-f0eb41090242@qq.com>
+ <20261014-rockchip-canfd-restart-close-v3-3-f0eb41090242@qq.com>
+	<sashiko-outbox-171362@kernel.org>
+In-Reply-To: <sashiko-outbox-171362@kernel.org>
+X-QQ-mid: xmsezb41-0t1792028713tyyx71sn9
 
-> Should native_mode be zero-initialized or initialized using drm_mode_init=
-()
-> first?
+SGksCgo+IFtTZXZlcml0eTogTWVkaXVtXQo+IExhdGVyIGluIHRoaXMgZnVuY3Rpb24sIHBt
+X3J1bnRpbWVfcHV0KG5kZXYtPmRldi5wYXJlbnQpIGlzIGNhbGxlZC4KPiAKPiBTaW5jZSBw
+bV9ydW50aW1lX3B1dCgpIHF1ZXVlcyBhbiBhc3luY2hyb25vdXMgaWRsZSByZXF1ZXN0LCBp
+dCBjYW4gbGVhdmUgdGhlCj4gaGFyZHdhcmUgYWN0aXZlLgoKWWVzLCB0aGVyZSBpcyBhIHJh
+Y2UgaGVyZS4gSWYgcG1fcnVudGltZV9kaXNhYmxlKCkgY2FuY2VscyB0aGUgcGVuZGluZwpy
+ZXF1ZXN0IGJlZm9yZSBydW50aW1lIHN1c3BlbmQgcnVucywgdGhlIGNsb2NrcyBjYW4gcmVt
+YWluIGVuYWJsZWQgYWZ0ZXIKdGhlIGRyaXZlciBpcyByZW1vdmVkLgoKPiBDb3VsZCB0aGlz
+IGJlIGEgcmVncmVzc2lvbj8gU2hvdWxkIHBtX3J1bnRpbWVfcHV0X3N5bmMoKSBiZSB1c2Vk
+IGluCj4gcmtjYW5mZF9zdG9wKCkgaW5zdGVhZCBvZiBwbV9ydW50aW1lX3B1dCgpIHRvIGVu
+c3VyZSB0aGUgaGFyZHdhcmUgaXMgc3VzcGVuZGVkCj4gYmVmb3JlIHBtX3J1bnRpbWVfZGlz
+YWJsZSgpIGNhbmNlbHMgdGhlIHdvcms/CgpUaGlzIGlzIGFuIGV4aXN0aW5nIGJ1Zy4gVGhl
+IHNhbWUgUE0gY2FsbHMgYW5kIG9yZGVyaW5nIHdlcmUgYWxyZWFkeQpwcmVzZW50IGluIGZm
+NjBiZmJhZjY3ZiAoImNhbjogcm9ja2NoaXBfY2FuZmQ6IGFkZCBkcml2ZXIgZm9yIFJvY2tj
+aGlwCkNBTi1GRCBjb250cm9sbGVyIikuIFRoaXMgc2VyaWVzIGRvZXMgbm90IGNoYW5nZSB0
+aGVtIG9yIG1ha2UgdGhpcyBidWcKd29yc2UuCgpJIHdpbGwgbGVhdmUgdGhpcyBpc3N1ZSBv
+dXQgb2YgdGhlIGN1cnJlbnQgc2VyaWVzIGZvciBub3cuIElmIEkgaGF2ZQp0aW1lIGxhdGVy
+LCBJIHdpbGwgZm9sbG93IHVwIHdpdGggYSBzZXBhcmF0ZSBmaXguCgpUaGFua3MgZm9yIHBv
+aW50aW5nIHRoaXMgb3V0LgoKUmVnYXJkcywKQ3VuaGFvIEx1Cg==
 
-Thanks for the catch. I'll switch to drm_mode_init(), like the mode copy
-a few lines above, in v2
-
-> On 10/14/2026 11:39 PM WEST sashiko-bot@kernel.org wrote:
->=20
-> =20
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] drm: uninitialized stack memory read in create_stream_for_sink=
-()
-> --
->=20
-> commit c9acc168fa3f685b9a0bbaf87f6642a89b782aef
-> Author: Hugo Sales <hugo@hsal.es>
-> drm/amd/display: Fall back to the native mode, not the first, on eDP/LVDS
->=20
-> This commit updates create_stream_for_sink() to fall back to the native
-> mode stored in the encoder when the preferred mode is no longer present
-> in the connector's mode list. This is limited to eDP and LVDS panels wher=
-e
-> amdgpu handles scaling automatically.
->=20
-> Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5983
->=20
-> > diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.=
-c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
-> > index 428a5f9377c62..a1dc3e28764cf 100644
-> > --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
-> > +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
-> > @@ -1470,6 +1472,7 @@ create_stream_for_sink(struct drm_connector *conn=
-ector,
-> >  =09struct dc_stream_state *stream =3D NULL;
-> >  =09struct drm_display_mode mode;
-> >  =09struct drm_display_mode saved_mode;
-> > +=09struct drm_display_mode native_mode;
-> >  =09struct drm_display_mode *freesync_mode =3D NULL;
-> >  =09bool native_mode_found =3D false;
-> >  =09bool recalculate_timing =3D false;
->=20
-> [ ... ]
->=20
-> > @@ -1529,6 +1532,31 @@ create_stream_for_sink(struct drm_connector *con=
-nector,
-> >  =09=09=09break;
-> >  =09=09}
-> >  =09}
-> > +
-> > +=09/*
-> > +=09 * After a probe with size limits smaller than the preferred mode,
-> > +=09 * connector->modes no longer has that mode, and the first mode lef=
-t
-> > +=09 * would become the stream timing. fbdev emulation probes with limi=
-ts
-> > +=09 * that video=3D can set below the native size. The encoder has a c=
-opy of
-> > +=09 * the preferred mode from amdgpu_dm_get_native_mode(), made on eve=
-ry
-> > +=09 * probe before the limits apply, so use that copy. Only do this fo=
-r eDP
-> > +=09 * and LVDS panels, which take only their native timing. On other
-> > +=09 * connectors mode_valid can also reject the preferred mode, and th=
-en
-> > +=09 * the first valid mode is the right one
-> > +=09 */
-> > +=09if (!native_mode_found && aconnector && !aconnector->mst_root && ac=
-onnector->drm_edid &&
-> > +=09    (connector->connector_type =3D=3D DRM_MODE_CONNECTOR_eDP ||
-> > +=09     connector->connector_type =3D=3D DRM_MODE_CONNECTOR_LVDS)) {
-> > +=09=09struct drm_encoder *encoder =3D amdgpu_dm_connector_to_encoder(c=
-onnector);
-> > +
-> > +=09=09if (encoder && to_amdgpu_encoder(encoder)->native_mode.clock) {
-> > +=09=09=09drm_mode_copy(&native_mode, &to_amdgpu_encoder(encoder)->nati=
-ve_mode);
->=20
-> [Severity: Medium]
-> Does this result in an uninitialized stack memory read?
->=20
-> The native_mode variable is declared on the stack without initialization.
-> When passed to drm_mode_copy(), that function starts by attempting to
-> preserve the existing list node pointers of the destination:
->=20
-> void drm_mode_copy(struct drm_display_mode *dst,=20
->                    const struct drm_display_mode *src)
-> {
->         struct list_head head =3D dst->head;
->=20
->         *dst =3D *src;
->         dst->head =3D head;
-> }
->=20
-> Because native_mode is uninitialized, reading dst->head accesses garbage
-> data. While this won't corrupt an active list (since the garbage is writt=
-en
-> back to a local variable that is never linked), it still triggers undefin=
-ed
-> behavior and can cause Kernel Memory Sanitizer (KMSAN) warnings.
->=20
-> Could we initialize native_mode when it is declared to avoid this?
-> For example: struct drm_display_mode native_mode =3D { 0 };
->=20
-> > +=09=09=09drm_mode_set_crtcinfo(&native_mode, CRTC_INTERLACE_HALVE_V);
-> > +=09=09=09preferred_mode =3D &native_mode;
-> > +=09=09=09native_mode_found =3D true;
-> > +=09=09}
-> > +=09}
->=20
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261014223041.17=
-1317-1-hugo@hsal.es?part=3D1
