@@ -1,50 +1,69 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013065.outbound.protection.outlook.com [40.93.196.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBCE635AC07
-	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 05:58:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792043936; cv=none; b=glUkrwO8smitGFjPCqjB2dR1pmNaUysI+YRlXGR0FBXTVC9QOpmN8Cl4vLKAnmCbRSEYTTYvENTUDBJocVFamJfF+bpaX/4gTZbG8sHT/gVdfpMojjo9lQaX4mPdh19T4dZo/pHPD3GvfxugmTj2tqLqoQcuLnpJsNy8rgO4MZM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792043936; c=relaxed/simple;
-	bh=Rumt3rawfRGLPEcwZOpRtwg8iUEMob58Xkt+bqJJ6ew=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=nzffqh/s2XIRgjmXcDIVRugyLFLmNWEA0gJxlObmSCRuqNXpDWX80otJ1c9oyEqjqbMQShwRk8XwSknT6I7cT3Zti3b6faUZR+bqInbKyivOm2wLcIWF/FSndRNQztfgUiZcI1cx2+tu4iO2YMxQ5djcyaYEK728U4OuHUefn/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fAFrqwOQ; arc=none smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B887649B5B6
+	for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 06:49:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.65
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792047000; cv=fail; b=iPodLb+TBmBvfqGBk05k3ItUs9oTB/z7yLDVNYBqiKzDm1pSbG/x3u2kdZHA9JJJaPuzyFdyRTA6pRqMngX2Od6idm3gSInxVi5v08dWMSHkilYA3Z4yYh64fyumJ0BHubn4U/JzTi6AtZzLr2bKIUjj0zJhwXplKxXfzal1e48=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792047000; c=relaxed/simple;
+	bh=SoRAG7tArVJRlNF06mQzIBWuHSvnzpv/GyoxTHNiXqQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=j/Isj/J9EPjB/nCSDV/Q07FtscbRyMpZQ33SM2WsPYfvfO+lU6dEq9LUXcNa+PbWKWyAeXdvR20H46EPNqatSCrhw4xfaYQ28wYtHF5solf6Lz1w7SQQM2KoTVesF6Aahd64Hhxmcjz5pymyJ1S10IwD67F7FA99OI91gMvg0fI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=g5Ro4YAf; arc=fail smtp.client-ip=40.93.196.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fAFrqwOQ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792043934; x=1823579934;
-  h=message-id:date:mime-version:cc:subject:to:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=Rumt3rawfRGLPEcwZOpRtwg8iUEMob58Xkt+bqJJ6ew=;
-  b=fAFrqwOQfohSxCypS+9JMdaUqAMzeXGjNI6pBm7tnV+d/im7vF4cizkh
-   pXutigSHkwecnxtjlWZYN8rz6sw0795OByHnOMm5eNfXFDV1pyTUgEH+H
-   WBfl4CJ8gAlNCn+SP+6wkt9M4Gj/4Lv6JuGZubo/UbE7ZAiVE6v50V8qx
-   ydchDlq+9JZQPMNqa4wx5LlLMqZoPattHdmDtKcnvgutYgyWapetP22RT
-   Q/MYBnWjZECdlOuiqXgsVtPzdUs1VIMbkRYbT2qlDCbR0HOUwthZTt88F
-   3PpJBDYrjF6CBdIYZviwsODTT3wqxl/kw0TOsieQO1pErdkr1s4+kBrs1
-   g==;
-X-CSE-ConnectionGUID: g89KOXGWS02KfmfeqE9bAA==
-X-CSE-MsgGUID: wCMtfmh0QAylS4gha9iCag==
-X-IronPort-AV: E=McAfee;i="6800,10657,11935"; a="814512"
-X-IronPort-AV: E=Sophos;i="6.27,159,1787036400"; 
-   d="scan'208";a="814512"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2026 22:58:53 -0700
-X-CSE-ConnectionGUID: dJZyUifzQtS690Ij6QpqYQ==
-X-CSE-MsgGUID: JSnbhijjSIuvcQcoPxGi7w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,159,1787036400"; 
-   d="scan'208";a="1952941"
-Received: from unknown (HELO [10.238.0.90]) ([10.238.0.90])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Oct 2026 22:58:51 -0700
-Message-ID: <a4f077a0-8b34-4eae-b5a0-567c706d0378@linux.intel.com>
-Date: Thu, 15 Oct 2026 13:58:49 +0800
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="g5Ro4YAf"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Q0XSaCyto1TUu34wigpFdijSFLJ3qKSyAZjMZQzce/rdbXN75yZ8DUIKBPFmoliA3QN4TXw63lYhwqvcLaK/ycP1j7dtF4YRLiGh1UQ8KJUcxMFfkIH2f7E/smMdEd3O/a/A8LsFMzEI72MApej2gnXoFpFeA1W0cOsRDkHRiJpm/hE6vd6K6GrErNO70oQDLR8tthLuJzfLD+YhNxpfVTrWCwo5odIW8n95JmMAWJF/3m+Csc14KXrTEq7HcIuXPKAX/FvRFf1RHB8EUy/3uPkTlnUaRg/GG0Vy95hpIqoPFyvd07lboLUK3lIWwQoQfWRntbkWMWpEmgVD7Xxc0Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5/E3fURLtIzRugzOWyI3bQWFPtXvs9O3C6x7QwmnB3c=;
+ b=hYc8U01RXQEUM/E5t49zKAkw1l9FXj22zX1xuiJk4Y8TAcBJRimWsFcOKgr3EF4B0kL2VyhzidlQ2CRZ8+oAyT7zGIKucvfhmcRn43fPjlA0mFbmmjcJO6UieNK9k2lmwbF2ZUN2j2CctUmLaoAktnkYpiOalyPsMETZ7op2BQgz970raP+v6yPUvz44ci4yVegZbhg4I33EqvyJ+1HXw94IdMkLjJzeZxlUxmEQmsjaSML/UY9YtvQ64ZuoTbYKx0Ga6+n4fbBN3exHo3aCyVcv+lEYPisTaZ45PvcTR9L2dbitBrm/FaYMbvHnqbPhPryFdtzvkVdnMcwMg0DrFg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5/E3fURLtIzRugzOWyI3bQWFPtXvs9O3C6x7QwmnB3c=;
+ b=g5Ro4YAf2PsfpTCuGnYpb4PXRVD79dmoMmlDX1mHyt42TZBKUCcRZLcpZ8k3EPRm+P0DudvBsT+dGg8qlr9TitHUAyTYuWo8d1QlNOFWnPuZ2TOaQA7oDJOtb3zoxReCWGR6lQBqaPbTovctpGJyS7UCsIukrbT7+acJ8TnKUaI=
+Received: from BN9PR03CA0866.namprd03.prod.outlook.com (2603:10b6:408:13d::31)
+ by CH3PR12MB8936.namprd12.prod.outlook.com (2603:10b6:610:179::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.14; Thu, 15 Oct
+ 2026 06:49:54 +0000
+Received: from LV8PEPF00000066.namprd03.prod.outlook.com
+ (2603:10b6:408:13d:cafe::e) by BN9PR03CA0866.outlook.office365.com
+ (2603:10b6:408:13d::31) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.4 via Frontend Transport; Thu, 15
+ Oct 2026 06:49:54 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ LV8PEPF00000066.mail.protection.outlook.com (10.167.248.38) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.522.6 via Frontend Transport; Thu, 15 Oct 2026 06:49:53 +0000
+Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Thu, 15 Oct
+ 2026 01:49:47 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb09.amd.com
+ (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Thu, 15 Oct
+ 2026 01:49:47 -0500
+Received: from [192.168.0.101] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.53 via Frontend
+ Transport; Thu, 15 Oct 2026 01:49:45 -0500
+Message-ID: <b65d8983-aedc-46c3-986c-6353b56e472f@amd.com>
+Date: Thu, 15 Oct 2026 12:19:39 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -52,96 +71,77 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: baolu.lu@linux.intel.com
-Subject: Re: [PATCH v2 4/4] coco/tdx-host: Initialize trusted DMA on all
- capable IOMMUs
-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-References: <20261015010705.1973284-1-baolu.lu@linux.intel.com>
- <20261015010705.1973284-5-baolu.lu@linux.intel.com>
- <sashiko-outbox-172095@kernel.org>
+Subject: Re: [PATCH 3/3] perf/amd/ibs: Simplify event state handling with
+ IBS_CAPS_DIS
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-perf-users@vger.kernel.org>, Ravi Bangoria <ravi.bangoria@amd.com>
+References: <20261015060430.5877-1-ravi.bangoria@amd.com>
+ <20261015060430.5877-4-ravi.bangoria@amd.com>
+ <sashiko-outbox-172339@kernel.org>
 Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <sashiko-outbox-172095@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Ravi Bangoria <ravi.bangoria@amd.com>
+In-Reply-To: <sashiko-outbox-172339@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PEPF00000066:EE_|CH3PR12MB8936:EE_
+X-MS-Office365-Filtering-Correlation-Id: 924ba1a6-4c45-4cff-a2a5-08df2a8884af
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|82310400026|36860700016|1800799024|376014|18002099003|22082099003|10067099003|4143699003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	muQjZ6fe1ba8C11ev9uDUHjK/j7Djr7YiySv/bwfnsUOJf/YdSDZDRSQT9C36ygrgTdQTSsqgGovXuNtwxxO+3D24X6d4kKAetWq0chjoNL9ICBlAMJGG0I7gxaZtMflAfyW5kSrVUEnRJNktjs16noDtXvcTn/fpuPHiiRIK1qEE5roEukLqEkg0NKMlCb1otYNUzk/CD6MTiKnfPHjNCoIxyynyBccRHpOuVes1oSWQJ0oYz3MmK/AtY7FjowNRxFsEprtpdmcc1LjmAOWsfeHEair1/Ww/VZ6AKvEfsCeWS/1f+IfzxihG7x/OBMgEEg5lN9v4SZ2lHyqHqZo9MIVuvJlgjXgQN4AvQEkjhRXIkMGw7tJh3kp2iyhzy1YoJzbplFaEwLEHg8xpnQf89tWhwvkzvT3+BFPfJDkPKsqmKcLkIrhewvUoa6u0GdM+UtW97Kt5D9atMqozC9r6Rnt7MtNEBasjsFA/7mfPuk6FR3yGQpmoqRJ9OubxzhaU+nUEwPR2QUlrqg7eTtjqTMpdYqEGWlNJA1zgpmlpY3HhBgnK4UnvG7+Q77r0wXA3Q9VOEMTpJsTkXvgxeFIM0PvIOMdfMmLED3Xu1acZlr9EXKs7xcqM3RIVwYAT+27HZjbdB8xGgOtfZiFWNtmGrCmfLdAnS72ppkknWSKhW+4PCFtQ0YEzc3kX6b7yNRqTgISYLUExF08ay4HGUzO1g==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(82310400026)(36860700016)(1800799024)(376014)(18002099003)(22082099003)(10067099003)(4143699003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	zsl+zBf7SIKTXZQ7qO9fxTwstRWWe+oDhbERKPEHBPMbfpAEJT49OwuxHhYb9heEtFrdxe3d2yi38sSZv8ckjBzbXQJme7PugwsjH8HM50z04tXkN2BqgXL7+MbgjhJmU6+otM0tVDhWlHRiUgm9sqnNDqiOrhSEOeVMxruPCiydVlZadzskVIRcBWw7VeD2LGauMFixVB3ECamAf/nA4tIIdub2kxSprWH44G5aSvvT/sRqNomZEmYkRc0wZ7XmrwroHxxiNrsUHtk6CTB1BicyGi2HodrpF5Vqot503N60rqrQQ1zLlFgjYqf904K7hJv54xmyknLN77jwuFvns1O1DTsc06yhTIEFs7lKMn3kPApkt6w5wPOA+el8mhJEkMv3yWttdyXjTBkBpZ8iI8ssKvHg7R4nvwkw37fpoOz3ySFQUmegdm+vlP+hSSyD
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Oct 2026 06:49:53.9538
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 924ba1a6-4c45-4cff-a2a5-08df2a8884af
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	LV8PEPF00000066.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8936
 
-On 10/15/2026 9:31 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] virt/coco/tdx-host: desynchronized host/hardware state on xa_insert failure
-> --
-> 
-> commit 83cda44603ec97cb10640905999d9a617eced100
-> Author: Lu Baolu <baolu.lu@linux.intel.com>
-> 
-> coco/tdx-host: Initialize trusted DMA on all capable IOMMUs
-> 
-> Assigning a device to a TD for private memory access requires that DMA
-> from that device be translated by structures the TDX module controls.
-> An Intel IOMMU that implements the trusted DMA extension provides a
-> parallel set of translation and invalidation resources for this purpose.
-> 
->> diff --git a/drivers/virt/coco/tdx-host/iommu.c b/drivers/virt/coco/tdx-host/iommu.c
->> new file mode 100644
->> index 0000000000000..a80e57bf26a12
->> --- /dev/null
->> +++ b/drivers/virt/coco/tdx-host/iommu.c
-> [ ... ]
->> +static int tdx_iommu_setup(struct dmar_drhd_unit *drhd)
->> +{
-> [ ... ]
->> +	state = no_free_ptr(iommu_state);
->> +	state->drhd = drhd;
->> +	state->tdx_iommu_id = tdx_iommu_id;
->> +	state->mt_pages = no_free_ptr(iommu_mt);
->> +	ret = xa_insert(&tdx_iommu_xa, (unsigned long)tdx_iommu_id, state, GFP_KERNEL);
->> +	if (ret) {
->> +		WARN_ON(tdx_iommu_clear(state));
->> +		kfree(state);
->> +		return ret;
->> +	}
+>> +     if (ibs_caps & IBS_CAPS_DIS) {
+>> +             /*
+>> +              *      IBS HW                     SW
+>> +              *
+>> +              *  o Capture sample       o ->stop()
+>> +              *  o Set VAL bit            CTL2[Dis] = 1
+>> +              *  o Raise NMI --.        o ...
+>> +              *                 \       o ->start()
+>> +              *                  \        wrmsr(IBS_{FETCH|OP}_CTL, new value);
+>> +              *                   \       (wrmsr clears the VAL bit)
+>> +              *                    `--> o Receives delayed NMI
+>> +              *                           (Unknown NMI since VAL bit is cleared)
+>> +              *
+>> +              * Handle this with induced delay.
+>> +              */
+>> +             rdmsrq(hwc->config_base, ctl);
+>> +             while ((ctl & perf_ibs->valid_mask) && delay--) {
+>> +                     udelay(1);
+>> +                     rdmsrq(hwc->config_base, ctl);
+>> +             }
 > 
 > [Severity: High]
-> If xa_insert() fails and tdx_iommu_clear(state) also fails, this code
-> unconditionally frees state and returns an error. Does this leave the
-> hardware state desynchronized?
+> What happens if the delayed NMI takes longer than 50us to arrive, for
+> example due to hypervisor scheduling, nested virtualization, or SMIs?
 > 
-> When this function returns an error, the caller dmar_tdxcs_iommu_init_all() in
-> drivers/iommu/intel/dmar.c restores iommu->max_domain_id to its full un-halved
-> range and leaves drhd->tdx_mode = false:
-> 
-> 	ret = setup(drhd);
-> 	...
-> 	if (ret) {
-> 		scoped_guard(mutex, &iommu->did_lock)
-> 			iommu->max_domain_id = ndoms;
-> 		...
-> 		return ret;
-> 	}
-> 
-> Because tdx_iommu_clear() failed, the physical hardware is permanently left in
-> Secure TDX Mode, but the software state now believes it is not. Will this
-> cause hardware faults or fatal domain ID conflicts when the host attempts to
-> use domain IDs that now belong exclusively to TDX?
-> 
-> Unlike tdx_iommu_disable_all() which safely detects a clear failure and leaves
-> tdx_mode true to confine the host to the lower half of the DID space, this
-> error path completely loses track of the hardware state, breaking isolation.
+> If this delay loop expires, the code proceeds to call
+> perf_ibs_enable_event() which clears the VAL and CTL2[Dis] bits. When the
+> delayed NMI eventually arrives, it appears it will be treated as an
+> unhandled NMI.
 
-That's correct in theory, but I don't think the extra complexity is
-worth it here.
-
-The path needs two independent failures happening together:
-
-  - xa_insert() has to fail. In practice that means a small GFP_KERNEL
-    allocation failing, or the TDX module returning a duplicate
-    tdx_iommu_id, which would be a TDX module bug.
-
-  - TDH.IOMMU.CLEAR then has to fail on an IOMMU the TDX module set up
-    successfully moments earlier, with nothing in between.
-
-If both happen, the system is already badly broken, and the WARN_ON()
-makes it loud. Adding more tracking just for this case would complicate
-the code without making a working system more robust.
+A delay exceeding 50us is highly unlikely in practice, and even if it
+occurs, the consequence is "Unknown NMI", which is not fatal.
 
 Thanks,
-baolu
+Ravi
