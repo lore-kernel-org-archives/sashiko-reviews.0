@@ -1,156 +1,299 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011049.outbound.protection.outlook.com [52.101.65.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F7425C818;
-	Fri, 16 Oct 2026 15:53:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792166037; cv=none; b=f8Oql/DSmY3UvcCW0516la3spylK75CDUy3jIueYSH683Q2gAnvHoask+99suRovtjli3vtNIbie5cgy+YOBo+1VTrgP/pIVOGBMfvzwvh0NUERwF3MoLUE3SlW0VbJKuY3xmJsrYZIVfrYPiKrbtas1H4uzdFncdVVJT1FEKRo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792166037; c=relaxed/simple;
-	bh=yjR9YohEk9r0B5Bt/aE1yVkGKeBubww7kAMCTUVyJD8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JF7/MIdGbcAXXzXW8eaWGmPzrj+7BgA4BgNU1t6PT03mhS9I5sWEMv6aM/QMCgapS7uvg7KdbS3sF5SPI/ck3YZJx9HYIn6RkzG+V1y86dI4sVuSNJwIc5g5JUJ9WG0Km7naJEk2N/A4iqg6eg+03XrZFdeEY3eHaAr/JxX7V3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=nzTc+Q3Y; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9EA4EF15C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 16:00:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792166421; cv=fail; b=AAooUdkGV0VrGfOv351615YZJVIZMLQauS98+Femlvhg93zp8bxh90BFoDycgbM0Irwwevm/ZqDYm5GkvzEmmTHsV/Ezp1yFUcV3GCUXRR8sZXurcMJR9YUZCb2ORTGEZuWeMrR/OvIaZuabxBr60RaCJhp+G3qkEmYE9pTkA4w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792166421; c=relaxed/simple;
+	bh=txcfs3doIp+gxtQ5/354sV6OsZyDo+NaSvRQwlUsJ2o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=EBK9vUrcRYrzfBhVhv4KtCmuWyNFkvlEAJi5PlzdiLKjXDO/rOxDxntOg4STvklvP0u1iB07P0OoSxmUcKSCPCzJ0dAuCVFqkNndEtSBuV/4mb4XgyPKBHwIeXH6Rv+PAjlZVC0W9ZIj0JXOM9dWg3FOa5cXXUK667FaKRjdtgA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=r7RfNsWc reason="signature verification failed"; arc=fail smtp.client-ip=52.101.65.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="nzTc+Q3Y"
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69GEEDBN2839646;
-	Fri, 16 Oct 2026 15:53:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=Sus2b9A/FQpep4EebbjSO+xeWNwUuT
-	C8IdCEnIp6SvI=; b=nzTc+Q3YBEuOORkZoDwEhnekXLkPwjnJ8lGT9XC9aeAOsQ
-	Gt5adWY5tI8EXok6hc2J6+BkN4QqCDE/UZbZ6ByILhfb6DY6iaAYDzkW9B/2A+1b
-	Bgw7wGVixrky4m9NXdr7jcO5IG75xCmdmJLXIy7AWINGcZsO1h4Q0OmFrfD+KcbI
-	XWndSn340C9KimWUO32zHCFt5tnYVjZkE0wOkQyF9mKOMPQyFMIkz+LLKeN9P4h0
-	yAbu95EmH/ExeuZCgHZ1RqkvvlP0XoABBmrbD2T0ao1y46EOobUadgnvxHMR8ZfM
-	B4vX/8sqCOaAUEk+zjTmF+nGuwLk3VtpPcc+H7Yg==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dv0yed5-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Fri, 16 Oct 2026 15:53:53 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69GE5hA73752573;
-	Fri, 16 Oct 2026 15:53:52 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hb34mm5qq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Oct 2026 15:53:52 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com [10.39.53.231])
-	by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69GFrq2m26084020
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 16 Oct 2026 15:53:52 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4770F58050;
-	Fri, 16 Oct 2026 15:53:52 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 0414758045;
-	Fri, 16 Oct 2026 15:53:52 +0000 (GMT)
-Received: from d (unknown [9.61.189.254])
-	by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
-	Fri, 16 Oct 2026 15:53:51 +0000 (GMT)
-From: Dave Marquardt <davemarq@linux.ibm.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v14 09/11] scsi: ibmvfc: extend channel reg/dereg
- helpers for async sub-CRQ
-In-Reply-To: <sashiko-outbox-173056@kernel.org> (sashiko-bot@kernel.org's
-	message of "Thu, 15 Oct 2026 15:21:15 +0000")
-References: <20261015-ibmvfc-fpin-support-v14-0-a0b063b8d825@linux.ibm.com>
-	<20261015-ibmvfc-fpin-support-v14-9-a0b063b8d825@linux.ibm.com>
-	<sashiko-outbox-173056@kernel.org>
-Date: Fri, 16 Oct 2026 10:53:51 -0500
-Message-ID: <87qzhpbq0g.fsf@linux.ibm.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="r7RfNsWc"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HepxoJStwgP9ne0102QpEgbBF3TnEyN191UaKzbtbaHSvLnOw7LcktkMSXNblfCs0nkH++OULMDPBplSGdHGYFCJIABr2GAhy9KlGgakDJZiQ6mbFQItfWYz0vcMe5WmJXoJRzOGYbzJqyUzKE8FfBvE/06MOY7pqwLVRtDyuW3kRXN65io2cgsLkz/Ug38mqPlicwf+ggMCjOs9PWFwJx1H6fHvrh6NaVw7cBhe/SdqDNc/TEjWivMbOO2s9dKlh6oVoOvUEScJNcEDox0YsRydt2Bnnp38iuWrk0aiyLxa31+Kv1UTbFoA5mknr2K+kPUi/lM7UCYjFQfQ1TuJJw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QPchw6wPWF3ccsnct3bQqoutCgjVKfNDpmUujKtfZxM=;
+ b=y2nXvDOcei8HMbRhxcTdoMARzEYeFvV1/N1pQ81UoUqqr1+ifL0a4XJHeAnEuyLA0K3f9//4h/ux98j5sRIHxhVdx/8zyMdunQbSU8r5Nndojv9AoGXz4Arjm6a0RbxIyaYiE1ch3Se3ukqDKT9FZnFiKXcSb3v53S6EUqXUbtnweAhHlEMuOfHQrBXQvcLjt660C+NI6g7pckjz8A8PuJnW7Qqx4TYqHlcnkPwbP3DgNgx3zj5smto7kJ2zcWVfUS3rpgPBElDrOS/tNMFuONu778YElaS8IyD5P47b+LAkohUmg1Tr08tItaQhAFDmyYhERYVi5KVm27B96YXCag==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QPchw6wPWF3ccsnct3bQqoutCgjVKfNDpmUujKtfZxM=;
+ b=r7RfNsWctd0i7k6UkGG7tdbAsgcLyGnwiz4XYov3K5Lw5+YMcfBt6qMoyQpyqwJAp2sqTpJBkJHBf9hnAcRngbrHOSIIGAm+GcjYFuanOkgxNP0bio9Nhpn0yZ7ktoqoqLv3fhlfB6WUTLo2FTae6zyicmTve+SGBnIy2pY8DQx5U+rkuDUkAV0Ux3xfX0ZunFR+pn0zJMEM0Ql20qrAoeioAUwh3vIyOXCALQqoVFYEE8CKONe+hpKrfO30j3kGpvEWA+DNl93Ti1azbklXk+zo1nYUH/7C/eOTKKJNv3fy18Ohl//7SlIdZTtG+0NPfp/gxusCyDq1+W7vbeZC1Q==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by GV2PR04MB12630.eurprd04.prod.outlook.com (2603:10a6:150:36a::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.15; Fri, 16 Oct
+ 2026 16:00:15 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0522.013; Fri, 16 Oct 2026
+ 16:00:15 +0000
+Date: Fri, 16 Oct 2026 12:00:09 -0400
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Mayank Mishra <mayankmishraa@google.com>, vkoul@kernel.org,
+	dmaengine@vger.kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH] dmaengine: pl330: Fix NULL pointer dereference in
+ tasklet during channel release
+Message-ID: <atJKCX5dksLRbeAi@lizhi-Precision-Tower-5810>
+References: <20260709125914.1079328-1-mayankmishraa@google.com>
+ <20260709131537.4CA6B1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260709131537.4CA6B1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: DS1P220CA0010.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:8:455::16) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDA2MiBTYWx0ZWRfXzds0Yt7T4a5J
- lG/L+fRGZd6hKUq6ZqA31mtx825M1RLMH0tJFQu36ODmhHm7hVmZp04gmvhnphpwjcql7VS165C
- 9SP7VaTXx4iHNxB1z8yGy1pOuL5c748GisO7aWML6CMJY1ZDm1qN7pCp8UvP1JD+Xwxlk/xJz0d
- HahtJ7ssoYXeA0LmP9kyftyOK77ffZilLgMhKmR7dAivRpzI09cFB6xE4Tw2f2VyMuTg8zg2sbC
- Q6r9c8l5NBK8JlpsKQ30mrWQQQ5khuV6voT5BSjWA3UYTOsxGHWIZyUJqwErB6z6QWSKGQOnr3s
- NY6OGWWlqYK4jHShF43s9o8aFWPb0OmTXCkyLO0m/xP/mfrfZO32/TWapJG3JEKCClNFqvxHaPg
- ezvWCUWKFufM2cArRjE51e4CGuUswIGcO2YyAX7VdWpkxf7FtBL6VC6ATZ+TCfbpdsoHQyle5fD
- xrRc5hfiSEj/1GZg+mw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDA2MiBTYWx0ZWRfX+jdNr9HUk1dZ
- ot+bAu9JNQHpS7mSBFDqrPl4n+FvQORNijXyBtTYWVN2LBnCSX7mJOHmeR594vC0lf6UQflxmd9
- CEgD3Q2pC1xqtwo30M+fxzaRgvkmN9E=
-X-Proofpoint-ORIG-GUID: 8ghDN1npoILsNmHt848mzVjPdiDJrUKG
-X-Authority-Analysis: v=2.4 cv=a6KlZkSF c=1 sm=1 tr=0 ts=6ad24891 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=18-5Fqv7mxGyy7mi-rEA:9
-X-Proofpoint-GUID: 8ghDN1npoILsNmHt848mzVjPdiDJrUKG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-16_02,2026-10-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0 clxscore=1015
- phishscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610160062
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|GV2PR04MB12630:EE_
+X-MS-Office365-Filtering-Correlation-Id: 838dc338-439b-422a-283d-08df2b9e9177
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|19092799006|376014|1800799024|23010399003|6133799003|18002099003|22082099003|260925021311599003|260925022911599003|260925021911599003|10067099003|3023799007|4143699003|11063799006|261009223027099003|261009221227099003|5023799004|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	dz1xSQYVCejknlICESc3eV/0Kh9KRMSOkYDnrLRlTg6cDfYvDP2Y4bHuJpfdggvSSjSp7gzXQaCu/2WYPFC+NAfGKGy+BHDw4SWp9tZbF9fsVPs2JqEi78yaKECO4udiYmMkozwJ1wsxt/Lx+GpmaqyjVVbMQu9IZ092vvd2z8WiM2pUvf6pUTlWJfxiHIz1FyHVS7q4ygyILP7IHkr/FhYYwgGpkf+a3Hyw1Mnbqv7S9cKAa8pBugmLJjZujaDpvS/Uw1OketmJOhJXCd+UQdyJ2Wvp9YEHiVSMSqli/XvBh/hn3IrdkJ4kfsLRYaEFcVuBh6h56EPD+HIqEgSLVoSfG+2QjbP6oc0dgmJOgdwnqKlINPmD2xAzik1G38R6Y/Cx/i57d83MrZSEZjI8/rX9kxsJ1nLRX3Pa5TQ+B/ItQggdfun6hgZfy8OQVgASCVFC5fzb9aZRzToQVTqNPEq778VnM7btgLbK6s2JGqeYshWY5uvdqlx4wZM9tT7DKFm4VKzaYXS729FoeC7UrpXuCORfeR+nTI8p3oyZMm8YkaVDYVKmd9KNAf7GJ6hAnrYuwBSlnrbzbG0MI5abcTFeg/PIXUKzd356JFeL44k=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(19092799006)(376014)(1800799024)(23010399003)(6133799003)(18002099003)(22082099003)(260925021311599003)(260925022911599003)(260925021911599003)(10067099003)(3023799007)(4143699003)(11063799006)(261009223027099003)(261009221227099003)(5023799004)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?h3oZMuurQ1kBPiGfhH6Jh0/77tKskAD1uQwN/qrLvOPh8xdUZvTRwqKMVD?=
+ =?iso-8859-1?Q?hVnt5lBWSnGzuPtAAsvcqnLnc6EmoVSNHIgb6P3wU8540GSj6I2m/H7Cdl?=
+ =?iso-8859-1?Q?tC+gFeuK+rUrtPDg6g77spY7qT9jRR7lhCFPllr59wtuMtoZDa20rPq89d?=
+ =?iso-8859-1?Q?w47nY7LBjywiAlHSNiKZh+doW5CCE43sesHzXwmJtHTp7gwY67ALIu1ens?=
+ =?iso-8859-1?Q?gDR/k6T4g8xH8yU9Ja0I0jzINLHxsemWJdBTMWAChXU2DYBFCop7o+WGue?=
+ =?iso-8859-1?Q?oIH9gmqOhQbx3kK8FSnIoZwjV/TsmmgqAe/vOyNg95zhJEqOEYWiyu7C4c?=
+ =?iso-8859-1?Q?o8HMG2liOZIQhfO0rEFBfbdeEBSFRrDNbSbz156RB0cmiATx9jUdnA4OE3?=
+ =?iso-8859-1?Q?+g6hnT5Z0KjKgzHZg6L2xP1yThcg2H2f+4XdRkqrUU0i4FCRSu2GTOv4ig?=
+ =?iso-8859-1?Q?LLgZ3pbyAP7ptIl5qBv/ZM9lVkgOdvKq7NC28NemWcaCPludPfWUZE9SHY?=
+ =?iso-8859-1?Q?SN+YL2c1jOY85DNwukNryAwlXPOnwE8S5gFOGzY+He0VS/vPnTH22nebez?=
+ =?iso-8859-1?Q?unxLbLwiucEA6gYpJT+jDV7lxVE3ZZopk9strRCoV1TzZCRaBYTyGfqbwF?=
+ =?iso-8859-1?Q?4H1QP1rB3bkUWPctV7IX3nYxKwgnrFhCC8s+ILBnJX6ilLHzAC5wO0rsz5?=
+ =?iso-8859-1?Q?QuJizVhgmTuhtIzFJ+MX4gxIY/6U5UQrKv0ZadTLxGmZNRkiFtD25ZU6c7?=
+ =?iso-8859-1?Q?zg17tVvsoj7Gar/zTUMN1QWgV6QEZUlGV4O3yEC0w+pOyZGYD3UaU2GzYe?=
+ =?iso-8859-1?Q?816+jjNbZ65WMIa1w4HUf7PYGJhBlOj1Ut0LjJruNzl20WVwsRwghnPQyS?=
+ =?iso-8859-1?Q?oMpKB8LzzNNd1x7lmH7FaVWxE7D4LsWoI5HWzt77+S2zADFNSMMQBxrsZn?=
+ =?iso-8859-1?Q?pebCIg4qONieDEeJ8RbAYal4QSzJGoUMaU1YWr93w20tW/AOimikvRhn+f?=
+ =?iso-8859-1?Q?h/zoUR7FOVZiAqgJQN0jw2MtVzYocc2GbZH+lYSFOsrbKizjLri9/xkAbV?=
+ =?iso-8859-1?Q?KL1K6yGeOX104rUtxyI5iLij23XTxWnHGfi5OCctKVX/iy6dc1fYsn8/Qd?=
+ =?iso-8859-1?Q?oc3vgGA+Zk+zarpcj1nIuygib0+iUs0SNOEieOdJqnVeLkPn7RNRLV3WNn?=
+ =?iso-8859-1?Q?7RQQ/5k5/Mc0UKmPLY2CbarrmSa6adMWfJLZ7yyYOB1vOcldDtkvFhmTH6?=
+ =?iso-8859-1?Q?UBw8HEE70HYzVmK8mmB7WgQIs3GvjeJ4qIwUwYQLs2hJLW56o0mKlu03z4?=
+ =?iso-8859-1?Q?scJFbBlDZXIdf8P/6jLwk2b2LaP6eO16edZ6OPT0vk7CEBBKO0lCelJopZ?=
+ =?iso-8859-1?Q?N6v+ItIqB0UZkKnjk2sTIE0Uf4+cZR12JQMBXJqiQwByrN0Q7DzGQOSuuw?=
+ =?iso-8859-1?Q?XLBb2YnaI9GeNJdIKLk24FYL0jk2o879IeSizvuY/HkrqaUYPgUyQzPKJe?=
+ =?iso-8859-1?Q?vNw8axlNMduUJKwGefLlfmlzdpgR6m+UhGKC5EBladIuY/BsAXIFX4qFzd?=
+ =?iso-8859-1?Q?26iW/0+yMXKIAvZ7J8wgjCfxcmJXTKTTMjLv7eu2Vss3Isp5T6kGE6V3r1?=
+ =?iso-8859-1?Q?yl3MnXcECVSKYn9cQCEtH2nkLq99mbRmRkgk9wG1wk/+cXUEp34xyCudl6?=
+ =?iso-8859-1?Q?SgxGQuOYnwKyhA/81O2CbaJ6vfjTf84LWW8D2gbRShLR07jSVa+HzuFBAw?=
+ =?iso-8859-1?Q?E1NJfXccBUc8dwaghnn8VojJPE5s+z2n+ci5ugNvmCEiDE4t1umWPGtZq5?=
+ =?iso-8859-1?Q?fg1FH7FmMXDX5R/UEj8ScRJ+e+zqt0Oj9K8MmpEraXBFDpy6QxPI?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 838dc338-439b-422a-283d-08df2b9e9177
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 16:00:15.6664
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: nJzOywCUeBu9517LifVzIyHuVSNJf6QqnSw4x5IPRtuJIUWk4DZbszRLdvdA2STAQLR7g/ZuaDZtpHu1SeJLbe84K4Nt4MtkQNM12NFkk2obZFTrxnmtKhix0oRWDuZl
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR04MB12630
 
-sashiko-bot@kernel.org writes:
+On Thu, Jul 09, 2026 at 01:15:36PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+>
+> New issues:
+> - [Critical] Newly introduced non-recursive spinlock self-deadlock in pl330_free_chan_resources() when aborting pending descriptors.
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] scsi: ibmvfc: race reading uninitialized hwq_id on early interrupt
+Look like correct, please fix it.
+
+Frank
+
+>
+> Pre-existing issues:
+> - [Critical] Concurrent modifications to the shared `desc_pool` without acquiring `pool_lock` causes linked-list corruption.
+> - [Critical] Client callbacks for aborted descriptors can be invoked asynchronously after the client has freed the channel.
+> - [Critical] Out-of-bounds array access in pl330_update() upon spurious hardware events.
+> - [High] Missing pch->thread validation in fill_queue() leaves a NULL pointer dereference vulnerability, rendering the patch's fix incomplete.
 > --
 >
-> commit 305244f5c1aeffae812f2cadfc3586d45148fbbe
-> Author: Dave Marquardt <davemarq@linux.ibm.com>
+> --- Patch [1]: [PATCH] dmaengine: pl330: Fix NULL pointer dereference in tasklet during channel release ---
+> commit 46db9642cb9437f521f1604962399f1fd25810d2
+> Author: Mayank Mishra <mayankmishraa@google.com>
 >
-> scsi: ibmvfc: extend channel reg/dereg helpers for async sub-CRQ
->     
-> This commit extends ibmvfc_register_channel() and ibmvfc_deregister_channel()
-> to handle IBMVFC_PROTO_ASYNC channels. It removes the __maybe_unused
-> annotation from ibmvfc_interrupt_async_subq and updates error messages to
-> include the channel protocol.
+> dmaengine: pl330: Fix NULL pointer dereference in tasklet during channel release
 >
->> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> index fc69012efccc0..b12655f028879 100644
->> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+> When a DMA transfer aborts, the interrupt handler schedules completion
+> callbacks and marks descriptors as DONE. Subsequent channel release via
+> pl330_free_chan_resources() clears the hardware thread by calling
+> pl330_release_channel(), which sets pch->thread to NULL. This commit
+> adds pch->lock inside pl330_free_chan_resources() to avoid a TOCTOU race
+> condition where pl330_tasklet() dereferences pch->thread after it is set
+> to NULL.
+>
+> > diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
+> > index 25ba84b187041..acb9949f4a626 100644
+> > --- a/drivers/dma/pl330.c
+> > +++ b/drivers/dma/pl330.c
+> > @@ -2086,12 +2086,23 @@ static void pl330_tasklet(struct tasklet_struct *t)
+> >  	fill_queue(pch);
+>
+> [Severity: High]
+> This is a pre-existing issue, but might the missing pch->thread validation
+> in fill_queue() result in a NULL pointer dereference, leaving the patch's fix
+> incomplete?
+>
+> The patch correctly identifies that pch->thread can be set to NULL
+> asynchronously, but it only adds validation checks after fill_queue() is
+> executed inside pl330_tasklet().
+>
+> If the tasklet runs after pch->thread is cleared, fill_queue() iterates over
+> pch->work_list and passes the NULL thread to pl330_submit_req():
+>
+> drivers/dma/pl330.c:fill_queue() {
+>     ...
+>     ret = pl330_submit_req(pch->thread, desc);
+>     ...
+> }
+>
+> Could passing a NULL pch->thread directly lead to a crash when it is
+> dereferenced?
+>
+> >  	if (list_empty(&pch->work_list)) {
+> > -		spin_lock(&pch->thread->dmac->lock);
+> > -		_stop(pch->thread);
+> > -		spin_unlock(&pch->thread->dmac->lock);
+> > -		power_down = true;
+> > -		pch->active = false;
+> > -	} else {
+> > +		/*
+> > +		 * Verify pch->thread is still valid before dereferencing
+> > +		 * it, as it could be set to NULL asynchronously during
+> > +		 * channel release after transfer aborts.
+> > +		 */
+> > +		if (pch->thread) {
 >
 > [ ... ]
 >
->> @@ -6882,7 +6901,8 @@ static int ibmvfc_register_channel(struct ibmvfc_host *vhost,
->>  	rc = request_irq(scrq->irq, scrq->handler, 0, scrq->name, scrq);
+> > @@ -2357,7 +2369,14 @@ static void pl330_free_chan_resources(struct dma_chan *chan)
+> >  	tasklet_kill(&pch->task);
 >
-> [Severity: Low]
-> Is there a potential race condition here when the interrupt is requested?
+> [Severity: Critical]
+> This isn't a bug introduced by this patch, but could client callbacks for
+> aborted descriptors be invoked asynchronously after the client has freed the
+> channel?
 >
-> If a hardware interrupt triggers immediately after request_irq() enables it,
-> the newly bound handler ibmvfc_interrupt_async_subq() could run before
-> scrq->hwq_id is initialized:
+> During channel release, pl330_free_chan_resources() invokes tasklet_kill()
+> early to synchronize. However, pl330_release_channel() subsequently aborts
+> active descriptors and calls dma_pl330_rqcb(), which reschedules the tasklet:
 >
-> ibmvfc_register_channel()
+> drivers/dma/pl330.c:dma_pl330_rqcb() {
 >     ...
->     rc = request_irq(scrq->irq, scrq->handler, 0, scrq->name, scrq);
+>     tasklet_schedule(&pch->task);
 >     ...
->     scrq->hwq_id = index;
+> }
 >
-> If an early interrupt happens, the handler calls ibmvfc_toggle_scrq_irq(),
-> which uses scrq->hwq_id for error logging if the hypervisor call fails.
+> pl330_free_chan_resources() then returns, prompting the client driver to
+> fully free its DMA context. Will the scheduled tasklet execute later and
+> invoke dmaengine_desc_callback_invoke() on the freed client memory?
 >
-> Could this result in reading an uninitialized (zeroed) scrq->hwq_id in the
-> dev_err() message? Would it be safer to initialize scrq->hwq_id before
-> calling request_irq()?
-
-Yes, it would be safer. Consequences, as you say, are low, as hwq_id is
-used for error logging in ibmvfc_toggle_scrq_irq(). In the case
-described, it would log "sub-crq[0]" rather than the correct sub-crq index.
-
-Will fix in v15.
-
--Dave
+> >  	pm_runtime_get_sync(pch->dmac->ddma.dev);
+> > -	spin_lock_irqsave(&pl330->lock, flags);
+> > +	/*
+> > +	 * Acquire pch->lock before pl330->lock to respect the locking hierarchy
+> > +	 * (pch->lock -> pl330->lock) used inside the tasklet. This ensures
+> > +	 * that setting pch->thread to NULL and checking it inside the tasklet
+> > +	 * is fully synchronized, preventing TOCTOU race conditions.
+> > +	 */
+> > +	spin_lock_irqsave(&pch->lock, flags);
+> > +	spin_lock(&pl330->lock);
+> >
+> >  	pl330_release_channel(pch->thread);
+>
+> [Severity: Critical]
+> Will acquiring pch->lock here result in a non-recursive spinlock
+> self-deadlock when aborting pending descriptors?
+>
+> If a client releases a channel with active descriptors,
+> pl330_free_chan_resources() now acquires pch->lock and calls
+> pl330_release_channel(), which attempts to abort active descriptors by
+> calling dma_pl330_rqcb().
+>
+> Looking at dma_pl330_rqcb(), it unconditionally attempts to acquire the exact
+> same non-recursive lock:
+>
+> drivers/dma/pl330.c:dma_pl330_rqcb() {
+>     ...
+>     spin_lock_irqsave(&pch->lock, flags);
+>     ...
+> }
+>
+> Will this cause the executing CPU to hang?
+>
+> >  	pch->thread = NULL;
+> > @@ -2365,7 +2384,8 @@ static void pl330_free_chan_resources(struct dma_chan *chan)
+> >  	if (pch->cyclic)
+> >  		list_splice_tail_init(&pch->work_list, &pch->dmac->desc_pool);
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but is it safe to splice work_list into
+> desc_pool here without acquiring pool_lock?
+>
+> In pl330_free_chan_resources(), pl330_tasklet(), and pl330_terminate_all(),
+> items are spliced or moved into the shared pl330->desc_pool while only
+> holding pch->lock or pl330->lock.
+>
+> The pool_lock appears explicitly required to protect desc_pool, as seen in
+> pluck_desc().
+>
+> Can multiple channels terminating simultaneously corrupt the shared list?
+>
+> > -	spin_unlock_irqrestore(&pl330->lock, flags);
+> > +	spin_unlock(&pl330->lock);
+> > +	spin_unlock_irqrestore(&pch->lock, flags);
+> >  	pm_runtime_put_autosuspend(pch->dmac->ddma.dev);
+> >  	pl330_unprep_slave_fifo(pch);
+> >  }
+>
+> [Severity: Critical]
+> This is a pre-existing issue, but could an unhandled event index trigger an
+> out-of-bounds array access in pl330_update()?
+>
+> If a hardware event fires for an event index 'ev' that is currently
+> unallocated, pl330->events[ev] is set to -1. pl330_update() reads this and
+> uses it directly as an array index without validation:
+>
+> drivers/dma/pl330.c:pl330_update() {
+>     ...
+>     id = pl330->events[ev];
+>     thrd = &pl330->channels[id];
+>     ...
+> }
+>
+> Does this out-of-bounds memory read and subsequent memory write corrupt
+> adjacent kernel structures when thrd->req_running is evaluated?
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260709125914.1079328-1-mayankmishraa@google.com?part=1
