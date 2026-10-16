@@ -1,250 +1,137 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CWXP265CU008.outbound.protection.outlook.com (mail-ukwestazon11020076.outbound.protection.outlook.com [52.101.195.76])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A3339E6FD
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 02:42:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792118525; cv=none; b=gVNfCsDpaDwcx3yq4xmVeDSDhmUK/jpvalw9Ef1atHBJgi3rUAAftiHMnh1s1QjffI4rLncURqrbHewAYR4eRBGhVMmKBaXZKgBPUVRMvPLTWXp1HSVqmK4VzvJANKt9Cffn3vjnlWkdggUDQ0d4Eg3Tu4IJgueAe3pAJHsQx24=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792118525; c=relaxed/simple;
-	bh=R5QvKRD1kd1ywG8Xt9XPMUzDzXmbazFihpojrIpvY00=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dVr1c9BTqqWaAOWzSrKZ73fJVbfs1qYKLgE/pmOcqC47gin/Bu6agYvyUpDvW4uBnG4//o4d67/LuJUXNiVEOClpXEWI6mS3ibD0MCryOBXcKjM4ex/2khOl5TmYaO18j3z1Rij6A0QOZZkGxv0Hw5mVDlMGQSxAL0eRQojAoyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AxdaQUUP; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AxdaQUUP"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-3ab2cb8d577so1899093a91.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 19:42:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792118523; x=1792723323; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=jivYaZtVc5VWvcmUEsRCDj9BC+T6NVyJryDJSgOOOto=;
-        b=AxdaQUUPhuXBjkvRJubJlp8ElV6o5a1FiWZbkSnau2rpC/0FZTLhBs9OD8vjOq2mJX
-         lwRmONxKcYt19VmCvrh1SH5TsbkZMSyPXQsuhYp1Til1mB5nN3sfDONxF68g5i42NBqo
-         qubh4g3xTz89MbSamseV2WLRs/Jk5hHXs7a0v5PinPYnj2J0p3CveTCM7uPiq15Ai5/m
-         OZUtO4L4dyxyXyLShF0JeyAa6HA7L/qbeqpf3Pcfm5jt6J8O/Gqu7d4kUlfH+I+ay7Mg
-         0VUBB4/ZLVP/lMGa7QWhMEH3VXRV+yqyFkg5T3vgoewMXte/n0wbA1IAWpGncFz9iIGh
-         I9sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792118523; x=1792723323;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=jivYaZtVc5VWvcmUEsRCDj9BC+T6NVyJryDJSgOOOto=;
-        b=p7c1Hju82ig9Q29W6bP5radEJr7oepLYJRIJaYz6LK47pbfw88kKxwcGgs1Ih3LJpY
-         uiwGKC9cHKbZ5bA/z4AidFU53ApU/jYHxLJgKRa83xdvL1XfOb3f6lJShmA2d0bjA/VB
-         PIk4Q+CYcn7NgwJNvPV3tb1XZ3jhrnbgK9fBUpctgPG49fTPZpuySgkYtAQXikWH0d66
-         SvvAl/QTmI+rRTahYOckwdX61egP2oT0nlM2OjBJwYCo+Cgnzj1FUqtzUdoIlquLOunm
-         lMyflZuZhVir+IHT1Q4ki4N+4GZSpvVbM3XYwCwNWXQxcu/glsEg2VAp9XnIb8WKRjlw
-         dUGA==
-X-Gm-Message-State: AFq9FYLaNgUKItGLgmf4A6+zpmkP7f3EVzw0MtGVqEtHhNAEdxwvTK5w
-	XID/04TKe6jLWWqfRWA3WnuMWRTGhuBEKyWHNd/IHNB1Vh8BJz+UCnB4Dt2D1Q==
-X-Gm-Gg: AYBFou1o+6veWTZQs96VFqrtzyymUv5N6GJs7nslYcaHNflt64BPgwFZQ/cFJJrWpjY
-	Uh1zk0T12ERV+NoFmAWqEOrEaGneJHW46a9bSWZ50GYzNJJSq2NstFqcqAWWq4zPy3ohRGzcb+/
-	nkjkXfqbj2AZzeP3XXdIcUByczA3esNEU69jpuksfkGSENiUVmWUsKFpV0JP2g9WaFeFrVx+WmS
-	/7Fq450Dt4EmOVIjJjSSbHg7n5v0iZQTWEzcPEfSScXZW37YYq1sNNhz2yT3zlv3OLfDt/dh6FR
-	h/IpUP51+3488YltEPHw1mOSK2jZtD7kbz+nexK/u2FR3fK8938pc6qU2K1GhgY/fKRO43AcvB3
-	uZ0w+ijIjLcbo4m5OLoKbSjHZnn50LT7cGpGaHbZl+SpYX8bmw8W0x0sZMdUiHRwwR/M/8l/qt4
-	sn5fD+9ur+PkD3CbGfNyKv78JkEhPAZDWQRFqxMwkF/pdqHj4F8mQ9UHFYqGET/c1+G9H5ZvCRq
-	R2BNY+3UZcO25bjDJICeuqDY70t2m8nwJNmHCU0niSssA==
-X-Received: by 2002:a17:90b:1d4f:b0:3ab:3384:1a44 with SMTP id 98e67ed59e1d1-3ab3a955e0amr18281855a91.12.1792118523062;
-        Thu, 15 Oct 2026 19:42:03 -0700 (PDT)
-Received: from [172.19.1.48] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ac945e7320sm6716943a91.6.2026.10.15.19.42.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Oct 2026 19:42:02 -0700 (PDT)
-Message-ID: <06b3e996-2eb1-4bc3-9ee7-6780b2d62dd6@gmail.com>
-Date: Fri, 16 Oct 2026 10:41:59 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B303876A9
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 02:58:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.195.76
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792119531; cv=fail; b=lbgjd9IUxYGochKrcHuEuIvOys/FKykriQyinqNyv9RxECHoXWRSURRWrZ8DsaOprOjz8ZtpDQQw8nNtmzS/eS9uIJXRV565Eacivbej/EXWdJhHddWoVQpRTBLRKeX8IP/dA1VxO4e5YaH1H2JNirblGX5IA4CFw+fgvQdjeoI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792119531; c=relaxed/simple;
+	bh=+8ktsYMKQngbtCk9+fW4H7umJwXiYPNgzSe+y1dGXHg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Y1s164pqVrYM6SZpebzfye22U2KcsLB7i2dO8b0BgMvYpk2E60L3YRQKFNSb5MdClraNLHnjwCKZlEqSbnviYCWz1ZKr3Opj+QgRiEU0xErJIX/T6ilsiClNifDfc15AKK213TEjDdW8+gQpngSiBSZwp5/H1r8IyiACOtGLTbA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com; spf=pass smtp.mailfrom=atomlin.com; arc=fail smtp.client-ip=52.101.195.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Rc+WVU/sDpPYg1qQyEgjG0HMzXaFMkE+CrN3I71OKaGSrJoVgO2WMKQiVLZ0QmQnipGKsYGnnsTPVkUVMp3XLqIDcJXs3z6XFvKg/BShkVkcp69z9T0Dla2JgPOHSEwHr220lLj0gk8WQBCreRPCLtvGKv84CcqIvbWpR5MWGkO6Z3XrbCbL/60XDBiazNbfsT10DXI/3ws6fYM3jsum9AJL4RjYC6WqSRlrjOvQEte/goSA6+ssXpAn9hAa4cYhv27EBda5NBxLguMPeKgfQta+9fdP4oJd9292Rd4XfGUEbkz1Ucs0y3Pf3o2Uglw2QqR5RxO2wpdA2kXD+/fYVA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
+ bh=z/zM5V0xMZnGPy/HTQFqMNVf56MrsZMyPCcu4l7v3Og=;
+ b=GmQNuHDlpekTqNojy60ObkiV29p0iKviVmSjv3wY7Pc5pyo4PPCw4uN/8las468wb+70fnDW8sPqh+doLmALOFJFNzQ8Ew/Fsc+sMIwEXSyzeAVrs/MakSsODj4LltSfoybssfxTDZrfFkKegEWtADQybX09B+EtmxCqTsf6mscPHdYCjhK+X2Wxfndrrhv5k/3VoxcmzIQBX6NNgVz0b1106UJdizNYmgaKJVQnO543eJ+PzT8frMrXDpm4FVe1IeGaQScs7noL/FoMOo3Ym6ut9bzM1ZK+3uR6GZcttckt3vcQKWEA+DPxMStvq2KfTGclHDoG9c9fN69DT/ZmgQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
+ dkim=pass header.d=atomlin.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=atomlin.com;
+Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:183::5)
+ by CWLP123MB6331.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:1cc::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.15; Fri, 16 Oct
+ 2026 02:58:45 +0000
+Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+ ([fe80::cec4:77ab:262e:d230]) by CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+ ([fe80::cec4:77ab:262e:d230%5]) with mapi id 15.21.0522.013; Fri, 16 Oct 2026
+ 02:58:44 +0000
+Date: Thu, 15 Oct 2026 22:58:40 -0400
+From: Aaron Tomlin <atomlin@atomlin.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org
+Subject: Re: [PATCH perf-tools-next v5 1/5] perf ftrace: Optimise
+ __cmd_ftrace() stack frame with strbuf streaming
+Message-ID: <gzfztr7g7ecet4wl7vglyp5ybs4soit24ytd52z6vdgzrlkfdu@xoq6e6oyg5pr>
+References: <20261015011155.414667-1-atomlin@atomlin.com>
+ <20261015011155.414667-2-atomlin@atomlin.com>
+ <sashiko-outbox-172085@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-172085@kernel.org>
+X-ClientProxiedBy: BN9PR03CA0411.namprd03.prod.outlook.com
+ (2603:10b6:408:111::26) To CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:400:183::5)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 2/3] i2c: ma35d1: Add Nuvoton MA35D1 I2C driver
- support
-To: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org
-Cc: robh@kernel.org, conor+dt@kernel.org
-References: <20261016010448.324856-1-zychennvt@gmail.com>
- <20261016010448.324856-3-zychennvt@gmail.com>
- <sashiko-outbox-173541@kernel.org>
-Content-Language: en-US
-From: zychen <zychennvt@gmail.com>
-In-Reply-To: <sashiko-outbox-173541@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CWLP123MB6607:EE_|CWLP123MB6331:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5bce5cb3-b3f3-4bda-dd03-08df2b3163f0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|56012099006|4143699003|5023799004|10067099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	bEsIzuBtfwKKrT69d8++z0s7noFwsXgoS0om888uZAn5oGijHV4nak6wvWeaRC4MLbEBJzBcREZsiRZnTiqJ1SrkQVt1Q+uIQkCSZ17zG/VjmMdf2RbUs5wk/GOKknCokh/Qgsu2iEWoOGoy043mQ+Ux4EfQzLvtWMayBvk20ylAqwZFHcr5pQuYhMNFzve1sLJm4nPc7rWyiC8KP9dyGQkZ8nFwXQ+pf4Tmfwimh/rm0PKw9HpCskKJmzBV6xjOsEoGQU5gF1GBG4a9Ou1f6iSNDqiaeosMt01kTk+ad2/WPPMX8TJcVNTxTjR53KuCYhaPxdaUnX3X7hf8MJNiUmYheKRjupRLk+t2DWDu4yKkSdhRNAZ5TnfzKeslAodxhNaXpnIzXYt4FQCMhFL+qWV5tU1naqkt/SkkuAeToUMi8yNDy6RtzCzEH1/oij33D7BoVKFTeTe3rFnZKusLJaucNAkpWDsOQdpm6XMgghz5cTseVGWo/sgAj3MWV1lC4mMHD19F8ZKV0xqOWh4OWPW8JfsOoFUNfmjmAAk0Waoc315jU5S98riqbhVuxK1a3niYXhlaPifLtYTUOmb7K69JDY3WDa1IyHKd0Qj6K02Qvw1kvNAGOQij14Gdo/d3lvthEKx8ipmjE/Tmt1g0lw==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(56012099006)(4143699003)(5023799004)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?QzJNVHZnWWRPUG1KMWJRZXhUdVhzejdBaVVsVXFIaWRoODNoRng3WStuNUxH?=
+ =?utf-8?B?UmxUNnEwL05udnNZUllOaTJvNzM5NitoWFhQK0lyaWVnczZvS0xOOWN5SWNr?=
+ =?utf-8?B?UDJIdDFOd2E2dHkxb0dDdmo5dVJBRTYyaGROeFI0aHdDNTlNclVtaUw1VmxW?=
+ =?utf-8?B?RUk0alNqQmt0RU9lZ3BhRE94bVU4ZHBjRUJMN3lwYnVSUG02a2cvQi9saCta?=
+ =?utf-8?B?dVdVVCs1MjZXOFdKNW14YjhpU2hIekxnQTdhb1BaV2RFbmF2WndreVM2UnVO?=
+ =?utf-8?B?VUR2M1VSV214Z3ZaRkZqOHpsTDVsNjdsejJRMVZ6V3FOTjZsb24vbFVFbWlu?=
+ =?utf-8?B?WkcycUZqY0JTSW51L0dvcmhCNmp2TmQ3NkViTEhIS0liWHJuZmduL3Y5UXVp?=
+ =?utf-8?B?ZGpvRVJvUUdhMERXZGdXWDJyVEZMbk1kNTE0TW9aQVZ6NFp1MnFFNVMxTGF1?=
+ =?utf-8?B?NXpEZlNXVXBCOHdvM0pyeXByRFczZC91aEVQVWJ5d3ZkUGxCWkgvS29CSUIy?=
+ =?utf-8?B?TXJ2MlBLeWloMnhISzdYSDJya2dBMXdoVnNBODVrbjVRcFRRL2p6d3BJeE5G?=
+ =?utf-8?B?MEZXVStwcFJJZWdGTlVObnVwUGZBNjNHZGVYYkViSnNCa2habU9Fc2wvcCtn?=
+ =?utf-8?B?bm1JQ3RpbFUyb2VFMVVUYlhGT1Jzcnk3b1FVVWFka1dyWlZkZVg1Smxlb2Zv?=
+ =?utf-8?B?aHFJTGdUYTBaNWZUSlNPUWZPWm5JQWRwZU0wVnVvMjN0eUhaL0VWT056cXhq?=
+ =?utf-8?B?ME1xODMwZzNNQ0NRb0twYVJPQU04UU1DVUo5M1B5aG1yWUVFaGtub3A2eVhp?=
+ =?utf-8?B?Zm1ncHVZY1JPbG0wYTFjTVUrY0lyRzdjZHMzWW1lbUpVaXBsUG9JcjFialRQ?=
+ =?utf-8?B?MGZWZVNOT3ROYlBITjJqMklnV2JpM3VGdEpnN3Mwc2JIYzV5L0JTTjc2QVRa?=
+ =?utf-8?B?Rk82dDZTbS8rUGt5MmJNaUlSUzg0K1BLdUJxTzdMVDZob2lkb2o0Q21sUDE1?=
+ =?utf-8?B?OXJ6SUlEQjNBWFAzRndpUGM2SHVkTFNPaW8yT3NOTUpxRWRXdFRwNHpXaUpJ?=
+ =?utf-8?B?Rldtdnd1eVZtZTJtaHJHeHhZRnFmSmQ4bStadUdvMzV6MVo5S2E3UUhwU3Yy?=
+ =?utf-8?B?ZlpFeGp3ZisvOFJUWTZQNEpkSnJ3ei9NQXVyOFcrT0Z2QkNONisySFhnNGlY?=
+ =?utf-8?B?NFhudHJ1V1ZHdVYrdmV4bEIzdjlyZU9sTmFlVEFDd0NIQWZpMksrbVgxaFBr?=
+ =?utf-8?B?SGsxQmROelZycVVXZTRwNnBTT09PaEVkaE13SDFzZExIVklXa1FhcWpWZGl4?=
+ =?utf-8?B?N2RLUlA3eFQvZTM3N2JDbHNZTlhpYkFlRXMwZGNMUUFwcTM4U0c4UWg1Wklh?=
+ =?utf-8?B?MVFDdE85R0ZFUUVsLzFGV214YnUyNUNYc3RZRWtoZ0VMMDlPTStIdFNzNG5U?=
+ =?utf-8?B?dHFpWllaWCt6RGxFM2lEUjNodzh2MlNmK2FBY0JlS1dNS2ZGTzUzdVNOaUZP?=
+ =?utf-8?B?S0pKVHQyS3RhR0YwOUkwYVNwanJuS2VaSFVkdmc1MWFOK1hCQy9MaW1yNGht?=
+ =?utf-8?B?VS9jdjNXQy9SajlDS1Q0dWQ0WWJ3dWZJMWZNNFYvQXpvRTU5TWVQTFVGeEpS?=
+ =?utf-8?B?NFd2SjNzKzVBT0ZmTHdzR3hzdkJHZG1sQnd0SndlaGVJU09qWUVIZ2laTEVX?=
+ =?utf-8?B?KzIzbFk5M1JNNHcrRi90ZWYrZWZWWmUyZ3NYdEdUelkraDFDSmtxMGo0Vm9i?=
+ =?utf-8?B?UXJZMXErYXVqTTRKTWFjWmNEOUdvT3EyOGF4UDVJeks2a2hYeDl5YWlpdURF?=
+ =?utf-8?B?cjYrSkh4V3pFQitCZnJxQ0VPSXJUNkNxbHVCam1ybHVkVlVNLzJhT3VPemZQ?=
+ =?utf-8?B?VDJhS1k3RjFoOWNycjlXcVBBS3d2Z0pmeEVJZzc5eGltenk0VSthbktaZUJj?=
+ =?utf-8?B?U2U1WkVMM1dBMFk5bkRkSTJxSXpKdEU0aUNidUNLM01yYTl1ZFNNaXg4S0dt?=
+ =?utf-8?B?V2Y5T3JOOFJqUndKVE9UL3RLaUN2RUVvNDl1WUVwb3hKKzd1alJ0N25PdFNX?=
+ =?utf-8?B?S0FaTHVseXM1RG1UQzZNaGtLblMyY0w5VTZZT2Z4RnRvVzZqa1NUMHVjOWtZ?=
+ =?utf-8?B?dDJtZ0hNRG1hOW43aUFqeWdHbWpuTVFhNHg4ak9wOUQ3OG5BbGM5Mk90cURi?=
+ =?utf-8?B?WXh5NlV5N282ZVo0NGFaWkk4d0VuWTVYbitHb1MxWlpHY3dUTUtEU0FSMHhT?=
+ =?utf-8?B?SVVjZzltdFg3clg0NnVSTURKU042TDB5aGFzdDdvcGZCNDBmdEcyanpyY3Vh?=
+ =?utf-8?B?b0lSbjR1cGdFdjltTnROMWRJNThLZ0FjVnBvNmExekVxY3dsY3VjQT09?=
+X-OriginatorOrg: atomlin.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5bce5cb3-b3f3-4bda-dd03-08df2b3163f0
+X-MS-Exchange-CrossTenant-AuthSource: CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 02:58:44.2059
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Wjy0NR99hz6vUVpdW98djjImjxCHEqBWHb+gtOLbkTFNyPgeqVSv7yYWFWmag1QnPi1rBDo0YmNR/eRe/8o8iA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWLP123MB6331
 
+On Thu, Oct 15, 2026 at 01:20:15AM +0000, sashiko-bot@kernel.org wrote:
+> [Severity: Low]
+> Does this file explicitly include <stdio.h>?
+> 
+> This isn't a runtime bug, but relying on implicit inclusion via other headers
+> for POSIX stdio streams and functions (like stdout, fprintf, fflush, and
+> ferror) violates the perf subsystem guidelines for musl compatibility.
+> 
+> Explicitly including <stdio.h> ensures the code doesn't cause build breakages
+> on libc implementations that strictly separate declarations, like musl.
 
+Acknowledged. This will be resolved in the next iteration.
 
-sashiko-bot@kernel.org 於 2026/10/16 上午 09:17 寫道:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] i2c: ignored return value of I2C_SLAVE_WRITE_RECEIVED breaks flow control
-
-As in the previous reply.
-When MA35D1 reports `MA35_S_RECE_DATA_ACK`, the byte has already been received and ACKed,
-so the driver can no longer NACK it. Propagating the callback error to the next byte is also
-incorrect, as `I2C_SLAVE_WRITE_RECEIVED` applies only to the current byte.
-
-> - [High] i2c: zero-message transfers bypass wait logic causing OOB reads or bus lockups
-
-core rejects transfers with `num < 1` in `__i2c_transfer()` and returns `-EINVAL`
-before calling the adapter's `master_xfer()` callback. 
-
-> - [Medium] i2c: ma35d1: multi-master target arbitration broken by clearing AA bit
-
-The MA35D1 hardware supports both controller and target modes. When a target
-is registered, this driver intentionally clears AA while initiating a controller
-transfer, so it does not accept transactions addressed to its target address
-during that period. Preserving AA would change the current coexistence behavior
-and require validation of the arbitration and target state transitions. We would
-prefer to address that as a separate multi-master enhancement in a follow-up patch.
-> --
-> 
-> commit cb2d83f6d803405066915dfcc01410b98bdff1a8
-> Author: Zi-Yu Chen <zychennvt@gmail.com>
-> 
-> i2c: ma35d1: Add Nuvoton MA35D1 I2C driver support
-> 
-> This commit adds I2C support for the Nuvoton MA35D1 SoC, including standard,
-> fast, and fast-plus modes, and provides controller and target functionality.
-> 
->> diff --git a/drivers/i2c/busses/i2c-ma35d1.c b/drivers/i2c/busses/i2c-ma35d1.c
->> new file mode 100644
->> index 0000000000000..29bed9eb28f67
->> --- /dev/null
->> +++ b/drivers/i2c/busses/i2c-ma35d1.c
-> [ ... ]
->> @@ -125,12 +125,12 @@ static inline bool ma35d1_is_controller_status(unsigned int status)
->>  /*
->>   * ma35d1_i2c_write_ctl - Update the I2C control register
->>   * @i2c: Pointer to the ma35d1 i2c instance
->>   * @ctl: Control bits to set (e.g., MA35_CTL_STA, SI, AA)
->>   *
->>   * Read-modify-write the CTL0 register while preserving unrelated bits.
->>   */
->>  static void ma35d1_i2c_write_ctl(struct ma35d1_i2c *i2c, unsigned int ctl)
->>  {
->>  	unsigned int val;
->>  
->>  	guard(spinlock_irqsave)(&i2c->lock);
->>  	val = readl(i2c->regs + MA35_CTL0);
->>  	val &= ~(MA35_CTL_SI_AA);
->>  	val |= ctl;
-> 
-> [Severity: Medium]
-> Does this unconditionally clear the Assert Acknowledge (MA35_CTL_AA) bit
-> unless it is explicitly passed in the ctl argument?
-> 
-> If arbitration is lost during the START or address phase of a transfer, the
-> controller will read AA as 0 and NACK its own target address, causing the
-> winning master's transfer to fail.
-> 
->>  	writel(val, i2c->regs + MA35_CTL0);
->>  }
-> [ ... ]
->> @@ -262,17 +262,17 @@ static irqreturn_t ma35d1_i2c_irq_target_trx(struct ma35d1_i2c *i2c,
->>  	case MA35_S_TRAN_DATA_NACK:
->>  	case MA35_S_RECE_DATA_NACK:
->>  		/*
->>  		 * Data byte or last data in I2CDAT has been transmitted and NACK received,
->>  		 * or previously addressed with own SLA address and NACK returned.
->>  		 */
->>  		i2c->target_reject = false;
->>  		break;
->>  
->>  	case MA35_S_RECE_DATA_ACK:
->>  		/*
->>  		 * Previously address with own SLA address Data has been received;
->>  		 * ACK has been returned
->>  		 */
->>  		byte = readb(i2c->regs + MA35_DAT);
->>  		i2c_slave_event(i2c->target, I2C_SLAVE_WRITE_RECEIVED, &byte);
-> 
-> [Severity: High]
-> Does this code ignore the return value of i2c_slave_event in
-> ma35d1_i2c_irq_target_trx?
-> 
-> If the backend cannot accept more data, for example when the backend buffer
-> is full, it returns a non-zero value. Because this is ignored, the driver
-> unconditionally writes MA35_CTL_SI_AA at the end of the ISR to ACK the
-> byte, which breaks flow control and allows an external I2C master to
-> overrun the backend buffer.
-> 
-> Should the return value be checked and i2c->target_reject set to true to
-> properly NACK the next incoming byte on error?
-> 
->>  		break;
->>  
->>  	case MA35_ADDR_TRAN_ARB_LOST:
-> [ ... ]
->> @@ -333,13 +333,13 @@ static irqreturn_t ma35d1_i2c_irq_controller_trx(struct ma35d1_i2c *i2c,
->>  	if (unlikely(!i2c->msg)) {
->>  		dev_err(i2c->dev, "Spurious controller interrupt (status: 0x%02lx)\n", i2c_status);
->>  		ma35d1_i2c_restore_idle(i2c);
->>  		return IRQ_HANDLED;
->>  	}
->>  
->>  	switch (i2c_status) {
->>  	case MA35_M_START:
->>  	case MA35_M_REPEAT_START:
->>  		ma35d1_i2c_set_addr(i2c);
->>  		ma35d1_i2c_write_ctl(i2c, MA35_CTL_SI);
-> 
-> [Severity: Medium]
-> Since MA35_CTL_AA is omitted here in ma35d1_i2c_irq_controller_trx, the AA
-> bit is cleared during address transmission. If arbitration is lost during
-> SLA+R/W, will the target fallback fail to ACK its own address?
-> 
->>  		break;
->>  
->>  	case MA35_M_TRAN_ADDR_ACK:
-> [ ... ]
->> @@ -438,15 +438,15 @@ static int ma35d1_i2c_doxfer(struct ma35d1_i2c *i2c, struct i2c_msg *msgs,
->>  			     int num)
->>  {
->>  	unsigned long timeout;
->>  	unsigned int val;
->>  	int ret, err;
->>  
->>  	disable_irq(i2c->irq);
->>  	i2c->msg = msgs;
->>  	i2c->msg_num = num;
->>  	i2c->msg_ptr = 0;
->>  	i2c->msg_idx = 0;
->>  	i2c->err = 0;
->>  
->>  	ma35d1_i2c_write_ctl(i2c, MA35_CTL_STA);
-> 
-> [Severity: Medium]
-> Will this omit the AA bit and thus clear it when initiating a master
-> transfer in ma35d1_i2c_doxfer?
-> 
->>  	enable_irq(i2c->irq);
->>  
->>  	timeout = wait_event_timeout(i2c->wait, i2c->msg_num == 0, HZ * 5);
-> 
-> [Severity: High]
-> If a caller invokes i2c_transfer with num = 0 to probe the bus, does this
-> wait evaluate to true immediately?
-> 
-> When num = 0, i2c->msg_num is set to 0. This causes wait_event_timeout to
-> complete instantly while the hardware is still initiating the START. If msgs
-> is a zero-length array pointer or NULL, the subsequent interrupt could
-> either read out-of-bounds from i2c->msg or fail to assert a STOP condition,
-> leaving the bus permanently locked up in a START state.
-> 
->>  	ret = i2c->msg_idx;
->>  
->>  	if (timeout == 0) {
-> 
-
-Best regards,
-Zi-Yu
+-- 
+Aaron Tomlin
