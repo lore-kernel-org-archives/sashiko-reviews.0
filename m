@@ -1,155 +1,170 @@
-Received: from CWXP265CU008.outbound.protection.outlook.com (mail-ukwestazon11020134.outbound.protection.outlook.com [52.101.195.134])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B7637F01B
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 03:06:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.195.134
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792119979; cv=fail; b=GjT7u42V+0sjZoDnBCJXopzSwzyLGajik2kOb9c6wLVnefL8kIPQ2ReHkhjSzih5aN8IGxwntbS8u3gMWmzRkmp/A4BJWqJR6/MMuAILecEn4M6kwMJ9uLAsADrufQRerjfR2nf6TMHKeAVEPMJNK32fe0JqEWGHSYLJLK9rIlc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792119979; c=relaxed/simple;
-	bh=msa3/eMpQMJF5/u0P43vgomCGfeRXgF+/BTBPpfMeYE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=uhtkBVIp+8sSBOq+wI6PO2KMAcd7typ8Wo7d70kGo5x1l/dC25rQQQqne7P43bPj6Q8VuixWJFJh7R7d1ZnN/cYXl5DwkEDu41XMSpIRFt7j9GNAih6904L8qrRikIb0Aq3lQsaXxf6wLzy5doKoTI3yB9XuJt2T4EWwNVnPGHQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com; spf=pass smtp.mailfrom=atomlin.com; arc=fail smtp.client-ip=52.101.195.134
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kALBRndhhPJVJgsrloGTd3sESM3o5bkBCnJaoeCnCoFfBwcusSe6ph0qYpsT9Ox2fgR96FcPt8trz62EZWZXI1eAUOOCXocWwRaGWraeqcgBRSGF4y7Dywuk7yq0JXEy1yiv38atZLdmmN7PCmmwRfdCDwBjzG444k1ok2oDFEcQ1+rSWRGCQP1UiWltLMtjyphMCptcMRic7EEdAB2yzYTv2ugzq0qV3MM5BLILqDXuocQcld6G3UFu3aaJV2smUvBgBM/gRkzmQrC1ulZ7IUrLJhT3x0WeNF0HX5TEFySuadMTWE6/G3h3/zSXbuSuSufKiqsnJIsqOl8neil7mw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
- bh=tu2Ln+ANl5v8tW2WcIOqvToyN48K8zZTYTGOdPfcrZA=;
- b=jmr6GU53d3vJl41/kQhAab69VNAQv7ZkI0FUk/CiDO4ZS3NK9nSMjmdj6zGTok8D7tVZmFjciz6aDjZiLhujOOj8IU6G6Xtjp5ndqZbp9SQwBAScP498GOEajoeUp8Pr3f8cvJOgaaQGL5YKDB553/jlAUpul7TxAamUi6ihgsoYaDLD6EK2M2HKR7/591SX+ETBxrCyq1zlzZBOuNh/DH6vrtrkv2WbzNEDNirjSp4UN3S3WrCJiSWzgNA+QN7WCYMIVyyRvg+wMjMIzlop7G2iUuCl8fTdb4dVHI24udIaBqXFD7950gYQkKcHALMTS3dSyOl2YQC5mnHIRRe2bg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
- dkim=pass header.d=atomlin.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=atomlin.com;
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:183::5)
- by CW1P123MB8679.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:271::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.15; Fri, 16 Oct
- 2026 03:06:13 +0000
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230]) by CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230%5]) with mapi id 15.21.0522.013; Fri, 16 Oct 2026
- 03:06:13 +0000
-Date: Thu, 15 Oct 2026 23:06:10 -0400
-From: Aaron Tomlin <atomlin@atomlin.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH perf-tools-next v5 3/5] perf ftrace: Support display of
- inlined functions in function graph tracer
-Message-ID: <bw4dfy5nynggysxoqgtvrvpvltbwzfcq4kghj4damvo236cryc@cwxnnu23542d>
-References: <20261015011155.414667-1-atomlin@atomlin.com>
- <20261015011155.414667-4-atomlin@atomlin.com>
- <sashiko-outbox-172087@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-172087@kernel.org>
-X-ClientProxiedBy: BN9PR03CA0769.namprd03.prod.outlook.com
- (2603:10b6:408:13a::24) To CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:400:183::5)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613C8371CE3
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 03:08:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792120101; cv=none; b=LGcJRtl6IjOpaK0/Ndk48M66Efa/c+1HrtQ9YA4c/tCHp0dfv0g6nIcGjX2WERx5MXit+/2NGubqcHNcqg6E3C1P80xclRNaXKJA35ZxPBJzbkctZwJ1gF0wuSWLiwg2qR1PM98E3z+9ZQ6eaxaWSQkL2P8Xt7og3i1wgu+oDYk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792120101; c=relaxed/simple;
+	bh=10nqLsQTTfQgYbUM797LDF87efLT8v1IfDqqCZil33o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UcndfvOSiubdc5/lVSuLg9xmAcUgsUG44AWV+0u0JPxqnh3/T8ttK1gWuubjwLcKsqhZsBlIypK3DtnJNoXYI4+/wjppvMekHg4umeSRBGkJnf/DO6c2DW7ZSUKxpCarX2UNT0MZH6WY6L9KZfcTrQ+7JY+LLziwMaGiMe0C19k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=telaak.dev; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=telaak.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2e87c66e556so3033765ad.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 20:08:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792120100; x=1792724900;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=C7sEcXH37f0tH5wRZjkmvVXjFOaB+9cAQdh/V2489cI=;
+        b=q7pCcv9liifc0CCyCJIQZB/McN9UuC1eyA2kHz4t23yL7xseF0g0p2gYc8Z+viKFaK
+         THSHugwQIXzJnCp5cqztd9ogLWRfybsS1403U9Lwh0B5CP3JJFNPQNhbcy99oVMn18qi
+         EOHO3qzLxCiOp56UJuyGi+hBaMgoUIk2jk/e0/xY1PVSMcF1mUYZeqACXtA2mISFZgsE
+         zGtjiv9vZEojAtCmovuNTzQK9Remucx/4OVthfmOr0N+CY1J1kjWVVjTcA3LBxoCZ40k
+         zr/317ptELoA9+MivPlbYERwMI/BrhHaNi6mv0u7bKHObJaWIu4UOiX6fsYqSPrADqDT
+         dTVQ==
+X-Gm-Message-State: AFq9FYKhQBn5Ck04+D02Eejbr6VcqmTg7eJbHXLd03wPy02boAzrPPoO
+	pt2xfbAH9fk8FjSwNmKDiy8Xq93Oftq0ff/a8OV1BxoyRcg0cGjPqx48WGbfw9fOimA=
+X-Gm-Gg: AYBFou3IJhxJgofXRaB7P0scCmWEt6AUtm8/IYS1H3Fdbw8RQryCtXjv8Y5mHuGILTM
+	60M76ACWuIw75ZMrwtIBwLhcICcdz0Nw/Vu89LjjXo59uvCWpTYQ+Zd1gnSUdxCN4JYpGS0gtbw
+	o0Fmh2VTKQRpT/TVP3GbxrqdaicybZa8ercVFabEAsO5xgyz2QUCbCoahX+VcUyN1NdafdOnH2H
+	MjihVrQiDWgFizjMmKJv6XSGQ/GnHnZ67L8gpR5Zn3L5b4bt8zF+RoCdsRHH7361pnCN2CdBhJq
+	Krp1Hwy2o8SYEsJbXCdgsRw4/9Nqdejh4rDB1pjd9wELd00EcehoEhJuW6yrb3CN/oXBI5Ubvg+
+	JF09x6nV5VWGt26jo+0uK/sclS6ITwJu658xQ1fAtW8eaehu2aBQXvlbjpFKrMt7Xsf5qqgY+7n
+	y4yCz92Od5DcDway+YGwR2nDoRG2WAbGA8gxPl2UvdGSBP2INuVxTo6Lg++goaKjprPLu6y1iBj
+	OZJC+RhDSG5h9uUa5zJR5m9PV8hLo3fk1z5OOtL+RzGrg7k/I1DWj0qXst5xzKFg4Bjs5noAIAJ
+	mq4X2nqCINDPAA==
+X-Received: by 2002:a17:90b:4d8e:b0:3ab:3767:65d1 with SMTP id 98e67ed59e1d1-3acbb8b29a7mr1466952a91.22.1792120099503;
+        Thu, 15 Oct 2026 20:08:19 -0700 (PDT)
+Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com. [74.125.82.179])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cd6549fb556sm401571a12.22.2026.10.15.20.08.18
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Oct 2026 20:08:19 -0700 (PDT)
+Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-35829219da8so665737eec.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 20:08:18 -0700 (PDT)
+X-Received: by 2002:a05:693c:8097:b0:35d:5e81:1d87 with SMTP id
+ 5a478bee46e88-3602ddd6208mr2385682eec.12.1792120098234; Thu, 15 Oct 2026
+ 20:08:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CWLP123MB6607:EE_|CW1P123MB8679:EE_
-X-MS-Office365-Filtering-Correlation-Id: a0217082-6a20-47d8-fea1-08df2b326fee
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|18002099003|22082099003|4143699003|5023799004|10067099003|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	dZT00MI6nxTSKJzVhJxMDnrrWJInP7xy9vJzrLnXNGou1PNgp8XJBp0FsMw9lkdgEYvcEREAgqVUKUo68FjzXTM1qvlJCNys0Yp2mCqQrXsSnGdGJB7YOx8GSswKrT3DIqwUJ9LgRsucjuBMlkMQsDcrjet5nq1zBSHIVDBQGEH8EvA7I8l5LumOdOGEKieDu58MJEYd7laOEEUnzGLKA12f3v/w/4zMY4p7+oRd6d9iLEUkrH9fPZTzozNgfuL3aKGkNdh5A0XbXxdBnhtJXPnP4Onu1OLKS3IxIfsjJ6DCyhUpUxFrYl0uxb/tla8uWYtDO+vWw5gTYvwrOJx+c4SywKQEQ9Z+OEkIDc/YA9VgTTkv52WO4q8bPd0F6fD//tXD6eN74X+tZm+2MXk7GwDSlmDUmStezXFhy+MzCKAFzoTiQPzTI7yHPEjZYdZx1wn2sNnXR3sEAwXh1trO3ug1Kasx9qo46XZgK3nFUR7PKkSRc0grfMnnZuuRkUTBHI6dSXa0MaFB3+9WaWe0LcC6qaqLjgQghlLMZkD1iOSAB9k2vI941r7B0pUvHJxalLzaKEp4CH7zOoPdeGQ4UlGe8o/dGkcWnc86m1ElQrD8V0cCOi30YOD96JKPyZ83+rQHq+rfDmbNq1MFEHHeU9/gwrQ8G5ZLvBupPmbImy8=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(18002099003)(22082099003)(4143699003)(5023799004)(10067099003)(56012099006);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?aUdBSVFPUkZHMzRUYWJGSldBUEdnNVMzZTc3bnVhb1hENjEwQ2U4d0pNa3Yx?=
- =?utf-8?B?MTduY2NSRWpNTTNpSFh0SXY1WEhWd2ZmT0tiRFF2NzhsQTNSZ0VwMFF0bHdo?=
- =?utf-8?B?RUdGVTRPQWozZVVTN0VETlJybDl4Y2xYL2Zkai9kWnBubnhGdWJSaC92Z3Bi?=
- =?utf-8?B?RWNpbEdoWTErNEJkRzVwMUMxcXJXWmZJMEsyR3ZhdGJQUWswazZycnJ5V1RI?=
- =?utf-8?B?WDVSb2pJNmpTZCtLK0hFd2svUU9zVmhyaHJ6NVpHR0RrUW1nUERjRG9QOWps?=
- =?utf-8?B?aWU3MFBFU1l5c0tPT0VsdVRMVUdvT2x0aXEvaGJHL2lWNjQ2a1VOUnF0S3Vs?=
- =?utf-8?B?U1EyQVB4WjBmMnhtVmhXYVVpNjZNbHR2Wk0yNkp4U2l5QVZhMWVKQ2dLM3BI?=
- =?utf-8?B?MXFLZURBOGRjZlp1WUhiTUtEZ0FGMnRqcnY0cW1YNVRkZFpJbjRvalNSdWZi?=
- =?utf-8?B?R010YWNqeFllWUgrNGxIQzJPYTlVV0VCRDFSczZ0VjVETFQvWWsxN1dxZG5N?=
- =?utf-8?B?S0Jhd083N2FYdEI5UFVMZDRYcWJXVUZsMlpJWGxla0RvenVKMmlHaGxBSHA5?=
- =?utf-8?B?a3JwVlhMV2hYSWlkbnNUZWt6NW1ZTS9YWmlENzVWVm9wR0NuQk1sRTlGVUs5?=
- =?utf-8?B?YmJZa3AzS0l6MWhVNzB1UkZRdFozMm03aWIvWVo5c1hHVExtU3ZES28vQ2pW?=
- =?utf-8?B?eTBVc3dLUXQ3MTlpakRvTFJpVi9SdkxvUWhXY3BZazczSGJqMTJLbWdUYzdw?=
- =?utf-8?B?T3ltM2J1dkZxaFZQYkR1emJQUCtQMEN1L2N0REMrWEFCVVNibDBiWFhTUXM3?=
- =?utf-8?B?UDBHUmtjUHlhaVVRbmRVSDltZ2djNWkvOHFjUlpYZHRhNVpsSGtkM3paOWFx?=
- =?utf-8?B?NWRoYmYvN283NXFWaitjeU1MR1UyVXBRTzNZUlFBeXRrelZRSmExcmZjUytQ?=
- =?utf-8?B?V290ZEpRTUlGY1lpcGtKTVlvYTh5N3lLYWpBQlljaVFWcVRlSmkwbGV5VXow?=
- =?utf-8?B?Yk9XcklpWUppN0ljeWljQWlhb0FsbkRjZCtuTUNVVW1JUmRaZmlxUWpIRCtT?=
- =?utf-8?B?UGFKNTRpQURiTzdVb3pGcmtZYWJQVGsrQ3J4Zk1QaHBuSERTRFAvVXR0ZVhx?=
- =?utf-8?B?aVVESU5tbEJZY3hsNnluT2lzdHA4UlVITDhnWkdjRHpiTkh2VG0xT0dzYjN2?=
- =?utf-8?B?V2ExbUY3QnNQUlhFd1BMRUFYdE1vZjk5bmlUc3gxTmozRkZaNkwyY1VSZkxF?=
- =?utf-8?B?RFRMYVVyOUg2NUpZRkI4aDZrWXFhblo5Q3ZUNzJ0VUhyN1V0RXlKd1A4SWpT?=
- =?utf-8?B?anpjK1d2NzI5MW40akVwak1NVnhBaWxBSGdjQW1mbjRFUjNwTmlCWTdxeHdp?=
- =?utf-8?B?cDQ1S2lIcWtQUWgvb0pnYzlrd2VoaFRvd2NQdDlHcEZibHJvT2YyUmdTTjZ1?=
- =?utf-8?B?RTI3RjFJSXEwMU9NSmJrRERFUWZ4K2NHS3JOckNzM0N0WUNOdVMyRWJ6L0ts?=
- =?utf-8?B?c1BaV2o5czNaQ0ZVQjJ6TUczcGxTL3RmZzJKM1plWTh4RUZUZEVKUTN1WlNj?=
- =?utf-8?B?MWtuNWR3cUhNZEQ0T05PNWNnSTd3RURoUVFTeHBzbHdJQmJJKzNHWXlOQXJD?=
- =?utf-8?B?V3RxS2NXUFN1UEtCOUhqd1ZpRUdGT0hmSVJkQ3owNEljcXpndWNRdmlIYTR3?=
- =?utf-8?B?Qy81VWd6QmlJNFkyc3dQeXJLZlo1RkUrcjR2M09nL1cvYlB4UVF4TlgrUUdW?=
- =?utf-8?B?ZUJBLzdGNHQ4S1h2NWl3alMwNnNLS25QUlNCTyszZzhCenloUUVNN09ZZG5T?=
- =?utf-8?B?WG96VTB0T0J4dVYzUGUxWWxNRE9zK2NteXRWT3FNWHNIekgxQXJQV0NkR2dD?=
- =?utf-8?B?S2lOWGdTQmJUc1MxZWFGUnlMNVNkQWlVeTN1eVdKY3FSWTZoTWIrTjZQalla?=
- =?utf-8?B?ZzMvWkVlcG50aHBCTkhZQkFwcklhbmVMZFE4eXRITEppQkJKaEEyZmJuRmpY?=
- =?utf-8?B?cWZCeitNbnNJZ0pvZ1hKQlh0bEtoZ1RVcW1uNVJTUDFIbGZPUGxEdVJ4V1M0?=
- =?utf-8?B?Vm95QVFKK243bEIzS3dEakQvYitYL21QVWp4ZnhvNTIwQWNUTThHODlWNmdT?=
- =?utf-8?B?ZFRtWWNBU0J5UTM5K2tFVFdUeEJLcklQWnFmZ2lWRFA5b3BrcTErc09FcVl5?=
- =?utf-8?B?N01oR1ZMU1ZlWEhUUnFiRjhkbHdteHUya1dsOGtWSllPYko2VGUwVVR2R0tN?=
- =?utf-8?B?L1VwTkFUSFBpMjdqaWhsVnRJMExhM0p3eUQyQXljTmpUL1NCRVlHUmF1NHpT?=
- =?utf-8?B?R2NBTGMrQ0FHTWxWQ0p1TmcrUjNBa3FReG1GR0F5U1poeVlDMmdBUT09?=
-X-OriginatorOrg: atomlin.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a0217082-6a20-47d8-fea1-08df2b326fee
-X-MS-Exchange-CrossTenant-AuthSource: CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 03:06:13.7450
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: gya0QwD6YMnm5i8oDrt1k/yilLhv8BgLbsXF03p80PPlXt+s+eSSHKHusc+RtP2VWSWFS2Vhy1KEO4URPnhfBw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CW1P123MB8679
+References: <20261015-ehci-ce5300-hostpc-v1-1-3cae67c11946@telaak.dev> <sashiko-outbox-173543@kernel.org>
+In-Reply-To: <sashiko-outbox-173543@kernel.org>
+From: Joseph Telaak <joseph@telaak.dev>
+Date: Thu, 15 Oct 2026 23:08:06 -0400
+X-Gmail-Original-Message-ID: <CAPY4CJ7BEa_cmAYiVUdWmRnO4H6ddQJTO_bEZSBSEFh=kChm=w@mail.gmail.com>
+X-Gm-Features: AclHuK-6Dfqf-lD7fob5OF5YK8VRSOSLqirzEsT7JpUiorRplDbN6X4TAeDIG8s
+Message-ID: <CAPY4CJ7BEa_cmAYiVUdWmRnO4H6ddQJTO_bEZSBSEFh=kChm=w@mail.gmail.com>
+Subject: Re: [PATCH] usb: ehci-pci: Set has_hostpc for TDI EHCI on Intel CE5300/CE2600
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-usb@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 15, 2026 at 01:24:43AM +0000, sashiko-bot@kernel.org wrote:
-> [Severity: Low]
-> Does this code leak out_buf if the assertion fails?
-> 
-> The TEST_ASSERT_VAL macro appears to return early upon failure, which would
-> cause the execution to bypass the free(out_buf) call at the end of the
-> function.
+On Fri, 16 Oct 2026 01:22:42 +0000, sashiko-bot@kernel.org wrote:
+> Since this hardware selects host mode via USBMODE_EX (offset 0xc8), the
+> standard USBMODE register (offset 0x68) may read as 0. If it does, will
+> tdi_in_host_mode() falsely return 0?
 
-Acknowledged. I will resolve this as follows in the next iteration:
+Yes. USBMODE reads back 0 on this core even while it is running, so
+tdi_in_host_mode() returns 0 and ehci_halt() returns without stopping
+the controller. I confirmed it on hardware: after ehci_shutdown(),
+USBCMD.RS is still set. v2 will read host mode back from USBMODE_EX
+for this core only, via a new flag set by the CE5300 quirk, so other
+has_hostpc users such as ChipIdea are unaffected.
 
-	if (!strstr(out_buf, "|  base_func() {")) {
-		pr_debug("FAILED %s:%d no indentation drift after stack saturation\n",
-			 __FILE__, __LINE__);
-		free(out_buf);
-		return TEST_FAIL;
-	}
+Testing this also turned up a second problem: ehci-pci reads SBRN and
+the port-wake bits from PCI config 0x60-0x62, which this core doesn't
+have (those bytes shadow a BAR). SBRN reads as 0, so the controller
+reports "USB 0.0" and ehci_shutdown() returns early, which hid the
+issue above. v2 will skip those reads for this core as well.
 
-> [Severity: Medium]
-> Will this cause a build failure or pointer truncation due to a missing
-> declaration for zalloc()?
-> 
-> Since the appropriate header providing the prototype for zalloc() does not
-> seem to be explicitly included, the compiler might implicitly assume it
-> returns an int. 
-> 
-> On 64-bit architectures, this could truncate the returned pointer.
-> Alternatively, modern compilers configured to warn about implicit function
-> declarations may fail the build entirely.
+Thanks,
+Joseph
 
-Acknowledged. Moving forward, I will include: #include <linux/zalloc.h>.
-
--- 
-Aaron Tomlin
+On Thu, Oct 15, 2026 at 9:22=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] usb: ehci: tdi_in_host_mode() fails to check USBMODE_EX
+> --
+>
+> commit 493a630291d0b5961a888e40fa36840fea16fbf5
+> Author: Joseph Telaak <joseph@telaak.dev>
+>     usb: ehci-pci: Set has_hostpc for TDI EHCI on Intel CE5300/CE2600
+>
+> The TransDimension EHCI core in the Intel CE5300 and CE2600 SoCs
+> (192e:0101, revision >=3D 6) has the Moorestown-style register extensions=
+:
+> host mode is selected in USBMODE_EX rather than USBMODE. This commit sets
+> has_hostpc so that USBMODE_EX reads back 0x23 and devices enumerate.
+>
+> > diff --git a/drivers/usb/host/ehci-pci.c b/drivers/usb/host/ehci-pci.c
+> > index bd3a635555942..8c71c3de3082e 100644
+> > --- a/drivers/usb/host/ehci-pci.c
+> > +++ b/drivers/usb/host/ehci-pci.c
+> > @@ -145,8 +145,16 @@ static int ehci_pci_setup(struct usb_hcd *hcd)
+> >                       hcd->has_tt =3D 1;
+> >               break;
+> >       case PCI_VENDOR_ID_TDI:
+> > -             if (pdev->device =3D=3D PCI_DEVICE_ID_TDI_EHCI)
+> > +             if (pdev->device =3D=3D PCI_DEVICE_ID_TDI_EHCI) {
+> >                       hcd->has_tt =3D 1;
+> > +                     /*
+> > +                      * The TDI core in the Intel CE5300/CE2600 (rev >=
+=3D 6)
+> > +                      * selects host mode in USBMODE_EX and reports po=
+rt
+> > +                      * speed in HOSTPC, as on Moorestown.
+> > +                      */
+> > +                     if (pdev->revision >=3D 0x6)
+> > +                             ehci->has_hostpc =3D 1;
+> > +             }
+>
+> [Severity: High]
+> Since this hardware selects host mode via USBMODE_EX (offset 0xc8), the
+> standard USBMODE register (offset 0x68) may read as 0. If it does, will
+> tdi_in_host_mode() falsely return 0?
+>
+> drivers/usb/host/ehci-hcd.c:tdi_in_host_mode() {
+>     ...
+>     tmp =3D ehci_readl(ehci, &ehci->regs->usbmode);
+>     return (tmp & 3) =3D=3D USBMODE_CM_HC;
+> }
+>
+> During driver unbind or system suspend, ehci_halt() relies on
+> tdi_in_host_mode(). A false 0 return causes ehci_halt() to exit
+> immediately and completely bypass the teardown sequence (clearing
+> CMD_RUN and waiting for STS_HALT):
+>
+> drivers/usb/host/ehci-hcd.c:ehci_halt() {
+>     ...
+>     if (ehci_is_TDI(ehci) && !ehci->no_tdi_mode &&
+>         !tdi_in_host_mode(ehci)) {
+>         spin_unlock_irq(&ehci->lock);
+>         return 0;
+>     }
+>     ...
+> }
+>
+> Can this bypassed teardown sequence leave DMA and IRQs active on the
+> newly enabled core, potentially leading to memory corruption or a system
+> panic? Does tdi_in_host_mode() need to check USBMODE_EX if has_hostpc
+> is set?
+>
+> >               break;
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261015-ehci-ce5=
+300-hostpc-v1-1-3cae67c11946@telaak.dev?part=3D1
+>
