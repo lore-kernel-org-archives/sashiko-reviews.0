@@ -1,239 +1,209 @@
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011037.outbound.protection.outlook.com [52.101.70.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4D946F4A6;
-	Fri, 16 Oct 2026 15:37:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B3E4D956C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 15:42:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.170
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792165077; cv=fail; b=X2+WbbXzvEkAd4YPxtUK7OE4G3I9Zt626rjg4X9bRbsYTQOI8N4+7N1gBBtHXqjcKU0sucYfEc8jLwgwRWYKsDbPgKsx7yXztHt9u/yDwI9kZZrZENwKDnqC1p6il/rT/wwMQd/ahNulmveKiCxCWWi3aprPWS4+XdrNDAZpXTw=
+	t=1792165347; cv=pass; b=i+HRKaD0GCMqWhHvAdIGvjBMJqRKL9LfRK4hjDWZMx9bikYpYQVdJTlETFE6oxdZlUER7mYQb13eNmh7MnA3W6HqOix5Mr4d9YxM3ynsJKBjSrO8U12b3a+LooxYfN+5sUlZ9+J3hWorYaMWeQAgVc49FIg+yuE993Xz6JemCmM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792165077; c=relaxed/simple;
-	bh=X5Z+qfr0HA+uv95f3+Pswii7SRo3SFzDciwcLsyFiMg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=oJ6pfbsD2m6TevvNhXfBTZIoNiMjm6nxjv+SWVJlCdsybI8ekGT68LTC79d8wD1PLRaBBjJ8FGM/gEOhQwD1Ub5a7OyAI+/uEhZop4oJW1xXWpIZVXJI9GD2LCwft97wUg/tKifs9THMN3ra6M9KW0RlPa0MkZFS8BS/UPktlwM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=MKyNF3OL reason="signature verification failed"; arc=fail smtp.client-ip=52.101.70.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	s=arc-20240116; t=1792165347; c=relaxed/simple;
+	bh=wEx/7wCNfeHOSauzGB1wU8Hea+BIBDPfoLRDPVD74RA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=huDHbKlttWY7MmWlgtstfsGy3vXnvnpA5seBxEyhX1816TFh2WOMtUeLJOseU2lI7iwSP9gJNoS1MPyPTf+qLBawTlQ5f5ml0zEbAI77XpPQe10cN7nSqnW6rxuTOASNO4DuztfoWS9M/1Ko6dUaPc9LD7qRAiccweTahjsScbQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qTPVuX1V; arc=pass smtp.client-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="MKyNF3OL"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jEGdU4iplBPibdn73uzofUHU0iJDLAzSW/FiT8Qe40mIwlWqVXmwLJP9fWEQXrxneU0t7ffjZVy4wJpiUyGSZ7jrpgWeaVulFeRo4pQjZG0qbHqaZcwx06wzvMsTPOKf3XuwkCw6sCbMZqvju5Y9ARmBPRu3x6xkSXEo02RgisQOBoXWTInPwH8cLY5otZCfBStswkk2e8N3bHZWR96Q0ZYfdCujIPDzzKdVJyj+AXRgZFlzlm3NJQwgVMvZXT6N5+E8W/VEuGBfLdFPdRBu+LiozvupkW3VeZji1kP3zRu8b2li4HvTpYERW4iP033FoWKlNmPhBr6DTLcboQT0ig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RSa1AQio4l2WmT9lvlfCCfzayJeFYnzq6WLvCziz47I=;
- b=gnwRycZxlQJiMTaBArtNP6s/NrZ69I+wavMJwloMAZCfqs+/pgGI8WkVrctJCE12aVSBak0kCCqm/6IJBE215cO8C/tyaLKORWn0N+Azncbayi+It8SvOCNb4QWfY+5VZDsbw2ffJSc4KUICthw98At7nA2nNfdk8DZLvJWfTuWIbqcTViEEw/mEQcS1X2JfVa5WOT59w9z3ZJDQkA/xUEqE6il2tSR418tMCtiQYduYUImx7fnvfDFArDvDa9LUlZfShTddcmlOL8lQiQXjm4o5kOJdAinnX1eQIPy5qUZqR9GBJRyndDCyvLakPJnFtoqJ7skHOKjauCSsSHB5+g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RSa1AQio4l2WmT9lvlfCCfzayJeFYnzq6WLvCziz47I=;
- b=MKyNF3OLK75jBNWyCn1z4+QsWazN3xwV0kvSbRsz1+KJcAN/jEttMYWv/Jj0nwuQNtmMfhSb1IFQPdBqh6c0+ZNRPNMzWHHw3cgf0k/jbvn571xpTiT/h5SDcsKfn3GXA8jVOlf42erAInN3pZleV3meP2XO2IMt0sfhyJqwJFw69/nC4V8KVH45f6OBMG2YCGIsjkXcbhdEp5/DjZ3kje+g9yL6We6lqNVixeoEVO3HnctofzL1VxE2ppXt9aB51aD5mvmhy0FpxmyV8hOEcZ3Vdq/enSz4zxeZLuKJ49fZ7UOIsfGjiNF6dFnbec5YSvPUeSmeM84nIHeBQoYNXA==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by AS1PR04MB043897.eurprd04.prod.outlook.com (2603:10a6:20b:6d2::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.14; Fri, 16 Oct
- 2026 15:37:53 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0522.013; Fri, 16 Oct 2026
- 15:37:53 +0000
-Date: Fri, 16 Oct 2026 11:37:47 -0400
-From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Hongling Zeng <zenghongling@kylinos.cn>, Frank.Li@kernel.org,
-	vkoul@kernel.org, linux-sunxi@lists.linux.dev,
-	dmaengine@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: sun6i: Fix potential deadlock in
- dma_terminate_all and pause
-Message-ID: <atJEy6w9J5_NTLa9@lizhi-Precision-Tower-5810>
-References: <20260705082105.13325-1-zenghongling@kylinos.cn>
- <20260705083134.001491F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260705083134.001491F000E9@smtp.kernel.org>
-X-ClientProxiedBy: DS7P220CA0039.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:8:223::33) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qTPVuX1V"
+Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-30b6dad2382so45956eec.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 08:42:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792165345; cv=none;
+        d=google.com; s=arc-20260327;
+        b=An+pzmzJcCHg8YSMYUaGMKO9PClmREi5GI2nCjOemKOBKFfeKzk32cQIDw5zQ4/qiV
+         9s8LYiPKirPCAcOIWQNqDvSa87lFbvk1wv/hXrDu6GQz36NWDzb9yriC9lWCYLuVDWD+
+         zTZrqe0z+NYbZG+BmqmcFumAiAew8Q0a8aoQh28tMnWJgbnzYRn8ahg98PyZEPnPwusD
+         gsdoiIQm0a/ERJtLL14pIzIY1ZUDnrGrhAwaknf/ZMXgAnKRxGvDtEOTde4oavuJcf+j
+         0otHZd469Bpnd/db0tKL9Qq35baKfzpeQ6GxgM0ywQyFZVH8AQ+ZkGqwQfEUu3FY78ZP
+         Bbxw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=/nYhRj4X6c1IBw/Jup8hasTqp4A+rlYmbM569hgNCOk=;
+        fh=5mf8YdY4GVeb38de+wxxesTeQeQTEBcQCgP1LhGM7j4=;
+        b=XxSB5nm/kNFiybkOVdMIQu/IO8hOlEnKAq6GFuY9etSPhXfE5J8mhRWDD+T3LTyDjl
+         x3xFbs88BYpuuoaNYH6gmIRSGw+/HIMKAfy2w/+Z7JxZ0jjm8WGYpQ5sznGuRaKeDQzl
+         oWjwjwYZtYZg7PDTTF50figfpuJ8Q/CGTIDzAatgUljV7zvFfvCySgADvPWTVxin2Pu1
+         Ms47uJ8OkCuriAT1pK9SeqT6y7ENf2R3BoevBls85dEXPpwZE23xldNnL3BIDg/VolQt
+         qItRBlEqiAVgIgqhiImNg28hNIH3u0NdvJIvR0MpXhEjfkulW01w/nCfIj1GC+PTlnH+
+         XM6A==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1792165345; x=1792770145; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/nYhRj4X6c1IBw/Jup8hasTqp4A+rlYmbM569hgNCOk=;
+        b=qTPVuX1VrInCLcHbXDf6PegFB4rsgplLhj935vALy3FN83eQJgA4KHCHj9BMjgMTHu
+         tCUF1oJ7yyhPYVE8svyFVSpKg+o8n4Uum8AaE5JAdLIBffN9yHQT3xXZPlE57Ots5R6G
+         K1GhkD9tPEglh64eWFfrwtwy22eCs108oppxENGDEgIAX45B+jRQ3wNI8XEXvwyDfjdF
+         qCX95V9hIyRu0zFjDV5CJAi8Dl1umuDvN51KiWz5CMM8Mfyb+EY+wqMfT3vqnzel2HA3
+         aa3OdtdBRTr3fnvqWp99bHsdd0Z80906zf25BV9X5R80rso9gHUHVmJIUdnU1zAe8Gsi
+         Lutw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792165345; x=1792770145;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=/nYhRj4X6c1IBw/Jup8hasTqp4A+rlYmbM569hgNCOk=;
+        b=ZA4yDagDGy4/X5IKuZaG5LK8TVJCMs+mQr8o3v8NrRp9grtIWj3r8g0dfRodEvhpjE
+         Yzwo53Qx5hSRMpy/wIS/vRvDtK0APEdCS1A+BSMvF+PE+wCjvrcYdol8I83aNuKwXeLs
+         xQNmKhD3L21/QHPAVaqq0VEG++00VfxgtxNb8v6BrI/enZKFs7r8YavdKJzr23im1Dts
+         Fr7ujtwvyMV4gFFOF40O5cIHm2UvXrNRnG1bSSf5QC47ghEUFCSzCwrDdgcErWQuYl0W
+         yEydG3wzIqEog8OF3gIxRsnMR+0j4S7ChEJtr2b/g4fpHmbMRhKh3TdZQwzrXS3CPhHe
+         gDUw==
+X-Gm-Message-State: AFq9FYJkEcRuOY8qqmJexLJtRMnprSqcuvHghdITIwAsLdnKOJVMLrJR
+	2THhokujVwUN4yoEnXhMYrM5POPLwUcz0d0MfKcp0XaZg54WhCd3YwonFIgSNfowdopjzU3J1Q6
+	RDlM+/cLLU+HqY/QSE1s8Ddx7dvRkZ/ipoARjoKkx8ZIigSMVwrbLm5fmELM=
+X-Gm-Gg: AYBFou15i8oPNRkiyQTU1KeYZUaGJRjFtd/eKN8P6vul03/cRA0+ZI7+Devrr5tDd68
+	JZOVkCB+4qzfQ7PFhnir4fr6+G9/wPYA/v+8PPU9Tw8k9oa0Rywn9IgU3M2jfpMbv8TLJitfH1x
+	w35mw2cpNx02xkzIZUNA43eYYzKYInG6POHvoWHo87DADZ7pGVCCPbHvDR13FoaYTaXDquwmNK/
+	PS8Nde29A7maje68/2gQpqGXMvzupIfLpbV32eeC+oHMGwl8l3+1+2ZwO4BEA7hTRYYpZzky5WA
+	vnMCNf9UJYKzP3BYpV1xjXh+SNtxE5M2GBBItpMetQM/yu8bu4WY4sE3cUynGUaYh85ZQMmtDQf
+	nWINldBibFLc=
+X-Received: by 2002:a05:701b:2610:b0:143:3da5:cada with SMTP id
+ a92af1059eb24-185152b6b6bmr306225c88.37.1792165343661; Fri, 16 Oct 2026
+ 08:42:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS1PR04MB043897:EE_
-X-MS-Office365-Filtering-Correlation-Id: d500d60c-e8eb-4d67-e62e-08df2b9b718a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|23010399003|19092799006|261009223027099003|56012099006|5023799004|4143699003|11063799006|10067099003|22082099003|18002099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	3hm4oiOYgIaY1g8n7ZSlxONG/3ZTYjdgyyvfcD89yNnt//VPFQJXK7ERJvNVrGlsXdKF4Vk+ZD1q3+/7YaricAMhyBm2yUltLOL9pPTllVtHfV1bi7n0ocQJxx+dnMaOOGtXyAMPYyerFB/clEoh3X2asrnQYGym12lr7qlr8YDO/QmlJYjj/TPOWYXuKf+2o2svLF520liuskWa6/OOQEP4eLSe5OGRGVahOQFExcG92OWctn/DMEyiqEyB26C/pqzBfp8adn21v1bFgBwbLefeebnczf0rXQpdBo8aGgqDtc9PuBZ7gYge1xxppORiU60Y5skVORe98x2rrJErgitkI1BHs086MeF30+G1yHkwJgNc9+sKv3a3JxwqK4+slpQ80uRSlz1dI+vSCgfEZc335nut7bqPMeq+MnpeBdAhO+2E7wHEl7aCYtiNtkpuiuj//+yKql51Cy7qI1NAuNdv59y3Pq/WoSUmA7nM4jPqCYUciRc+E/FOIYNUOeYDYr7QyOT3DxWB1TZUqBoYh5dYpSYJtUNbAwa34MeLllUaWJIrbKdNVYG9WnxmPEalGdg+Qe94C5Hy13Bao4sTaT6NLxZ+2eUp1LBGSpYmlvk=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(19092799006)(261009223027099003)(56012099006)(5023799004)(4143699003)(11063799006)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?O9Jieu6PlFgxuAWunQRF59lFAJqFj8ehI2hAfVFYfrVQBmwAccKdPaS7l4?=
- =?iso-8859-1?Q?GCie2SxFzDzah2tfShYmcemW+ngWsYIb1L+BwHuS9eR88OJAgXcO6u3rBj?=
- =?iso-8859-1?Q?ZUZuLm1Okvv+BLreeILAFa2Fd3GYWsi3IE77rcA1vFYSxsqNTt4HQY1zEg?=
- =?iso-8859-1?Q?NyAkWmxOYpZF3XtmHaim9MULwWhN9Z8ftmdh4rVGY3H3W6+WKdPbS7bH/K?=
- =?iso-8859-1?Q?k72pLYyTXd6SjBVPGkWLlsA5BmjeuRFEi94EBXpCtAqVjTsuvvPdwSLoRz?=
- =?iso-8859-1?Q?ccVEwYn43hqvPajpUOYLpHXCZUhnVFem4W7Vu+yhHhwBRTYMaXDLhHABvc?=
- =?iso-8859-1?Q?CII8Ghuw8sbM3vlaxsM0RoF+TWPcgoIzKT4u8fcdghKR/sQ8rqM1KBPASa?=
- =?iso-8859-1?Q?2y2860Y9/vqQpTexCubP7jFKhQobx1k0Kdpq1ngYF9uRHr8/Yr2bQpSB7Y?=
- =?iso-8859-1?Q?AP0GTRfJXWgH9YJqTXRhRmc7Cr2eKkRKNHq1ELB5Lr50x91hRhr9iMEBbE?=
- =?iso-8859-1?Q?HZSzr5ASgLYtxi9ZwjRPK81hdu2AbNn+Qyx7eS5fVk8ktUgRXCy6GN3uWR?=
- =?iso-8859-1?Q?vBY1RcN/SlidwThvl3B/QW0EDlxKBT/oZMOY9j30MN0LAeeEz5OyE9M9hs?=
- =?iso-8859-1?Q?B4ImWQ0GA4dBqqAsyFebO5B5Gnl52O9LDR8l21gi8DA6CHNZ0zO5eKwiMX?=
- =?iso-8859-1?Q?DJuUfSjAHwClqPpKXEg8v8jcfqBQRVudIXmLdHqRMQ1Wswx42Ow/OddxWz?=
- =?iso-8859-1?Q?b7shdy+TyM8Mdo2paLMf39YtEDxTSIdEKhpiDr9aToxuGO4hpOQ8qrBHyI?=
- =?iso-8859-1?Q?i2oe6yFke5jtKyW3pH7L0csNp49N8w651FrBqxEdG950UvvOx+ZhHJHRCC?=
- =?iso-8859-1?Q?abonZpTK0FE6hCWWXzD4r54WLBRQBIj4ihSc5rW7IqtdnQgZ4ILL3Qil3C?=
- =?iso-8859-1?Q?RoFyDV4izii8I/v/cXIMmc/4igGtw5SUukD8uRfCBply8HSsZczq72kQA+?=
- =?iso-8859-1?Q?fgFrAV6xO+0Gj1eGSKzegArawXZ+1OYKCzxVBkIVRYBpneMAoFjdBIe3Qp?=
- =?iso-8859-1?Q?28u0x3mbMOlupeqbu4ZKh3UQCSoaH5tCpl+BEpJKnt0MNsm63lugpEmSOn?=
- =?iso-8859-1?Q?lKX1qu5eNEEpeZlAz9z4zy8P8FsK7YSTdSK09z2sNCHSYh6E3vznOJ4Z1v?=
- =?iso-8859-1?Q?OIdDn3R+zFCvqeFHRebvlzKnPJl5NDrvi0jskQcPEhkIj0Y0jSKNFp+zYi?=
- =?iso-8859-1?Q?IuQFinOOhIhl7/xhR+mG3YFr23liZQ1cPjX8UKQujeJebGDclD/jCh7q/E?=
- =?iso-8859-1?Q?MOBb4KrnWWa8ySf8vlxmv7ER6L+MIQCnDwUsBd+Mf5rB7Pi/mWWSAZEyYz?=
- =?iso-8859-1?Q?GghdWK1Up2eOF3Gm0DqIM6HpoTk8Ly/XF2QYBx4rd2osP9JwyMKEulebPv?=
- =?iso-8859-1?Q?eHE5DnX7RV4K5dsbLRmtTdnVoL12YGeyIp3X625YWse37Tz/oWqjp1MKqs?=
- =?iso-8859-1?Q?KjNGZy6y8hAmp+bIQdaHAJhLZYBQuxlpwi+HIwSU6kJuWLpo/JGJzSyNeg?=
- =?iso-8859-1?Q?3DeTu2od2A/n+lTGlxeArM45sRuKrSKhAwV2MbhID2czllc67THrCP92Pk?=
- =?iso-8859-1?Q?DXzejwUm3QlHiTEneFvU955B/jH9efnRDXJNjYkronDJcHj+K39d4Y2c5m?=
- =?iso-8859-1?Q?UNK15fXmdhNPO1pSOrip3dX18zAl8BhjJLTXQu309uh51hLYlfznOqjrT1?=
- =?iso-8859-1?Q?PmzbPl+zrJOvXynIWozZlKopPObyftjL/DgVuvsgj4N+Bc7TrmfbHILmDY?=
- =?iso-8859-1?Q?WAMlrmBaF15wbis6SDp2yfrav/KXDC8F06qiWD/l/T1+ho+immyx?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d500d60c-e8eb-4d67-e62e-08df2b9b718a
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 15:37:53.5946
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zZuapq2Dpj6tb6wnlYutKiByxDBkbWnFPGp3PquAauZp7TWH1r1a7bRq2+IS3U6bsiiMy8Gg9o8j48mBwfDbXUQBzLvNuxUvbY5oPXexFz9z30Ig78zp9rLn1uO/rJeS
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS1PR04MB043897
+References: <20261015145714.3327543-1-elver@google.com> <20261015145714.3327543-2-elver@google.com>
+ <sashiko-outbox-174506@kernel.org>
+In-Reply-To: <sashiko-outbox-174506@kernel.org>
+From: Marco Elver <elver@google.com>
+Date: Fri, 16 Oct 2026 17:41:46 +0200
+X-Gm-Features: AclHuK8ATsc8VKpMtjbzGvE2xXlZuEy39NIy8wK_ev4B7i6RuKhKEu9q8cC6eGc
+Message-ID: <CANpmjNMfEXXz+PBd4rquzkNapFs3CGygdz_e_OmjJOtOnZZ5Jg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] rust: kcsan: add KUnit test for data race detection
+To: sashiko-reviews@lists.linux.dev
+Cc: Alexander Potapenko <glider@google.com>, Boqun Feng <boqun.feng@gmail.com>, kasan-dev@googlegroups.com, 
+	Dmitry Vyukov <dvyukov@google.com>, Jonathan Corbet <corbet@lwn.net>, 
+	Shuah Khan <skhan@linuxfoundation.org>, Randy Dunlap <rdunlap@infradead.org>, 
+	Andrew Morton <akpm@linux-foundation.org>, Miguel Ojeda <ojeda@kernel.org>, 
+	Boqun Feng <boqun@kernel.org>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
+	Danilo Krummrich <dakr@kernel.org>, Daniel Almeida <daniel.almeida@collabora.com>, 
+	Tamir Duberstein <tamird@kernel.org>, Alexandre Courbot <acourbot@nvidia.com>, 
+	=?UTF-8?Q?Onur_=C3=96zkan?= <work@onurozkan.dev>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nsc@kernel.org>, 
+	Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, 
+	Justin Stitt <justinstitt@google.com>, Asahi Lina <lina+kernel@asahilina.net>, 
+	Lorenzo Stoakes <ljs@kernel.org>, Yury Norov <ynorov@nvidia.com>, David Gow <david@davidgow.net>, 
+	Joel Fernandes <joelagnelf@nvidia.com>, Alvin Sun <alvin.sun@linux.dev>, 
+	Josh Poimboeuf <jpoimboe@kernel.org>, Petr Mladek <pmladek@suse.com>, linux-kbuild@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, Jul 05, 2026 at 08:31:33AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+Sigh, I'm repeating myself against a bot:
+https://lore.kernel.org/all/CANpmjNPDKZKCWc0ubCGATLE05gwefwpR=n4D6E0FKAvsi9DCVw@mail.gmail.com/
+
+On Fri, 16 Oct 2026 at 16:57, sashiko-bot via kasan-dev
+<kasan-dev@googlegroups.com> wrote:
 >
-> New issues:
-> - [High] Use of spin_lock_irq()/spin_unlock_irq() unconditionally re-enables hardware interrupts, breaking caller atomic contexts.
-
-Please fix this issue
-
-Frank
->
-> Pre-existing issues:
-> - [High] Lockless reads of vchan->phy introduce Time-of-Check to Time-of-Use (TOCTOU) races causing cross-channel interference.
-> - [High] Active, non-cyclic DMA descriptors are leaked upon channel termination.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] kunit: rust: KCSAN test stalls and spuriously fails on UP/PREEMPT_NONE
 > --
 >
-> commit 5ad36fe6cb5ac09d034a98b6efc7e6a3152d1705
-> Author: Hongling Zeng <zenghongling@kylinos.cn>
+> commit 8335c11e7a640669968685ad30c1312fe11f4a68
+> Author: Marco Elver <elver@google.com>
 >
-> dmaengine: sun6i: Fix potential deadlock in dma_terminate_all and pause
+> rust: kcsan: add KUnit test for data race detection
 >
-> This patch addresses a deadlock between process context and the DMA tasklet
-> in softirq context. It replaces plain spin_lock() and spin_unlock() with
-> their irq variants for sdev->lock in sun6i_dma_pause() and
-> sun6i_dma_terminate_all().
+> Add a minimal KUnit test that checks that KCSAN detects data races in
+> Rust code: two threads concurrently increment a shared counter without
+> synchronization, and a probe on the console tracepoint waits for the
+> KCSAN report.
 >
-> > diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-> > index a9a254dbf8cb9..37b143a8f75e2 100644
-> > --- a/drivers/dma/sun6i-dma.c
-> > +++ b/drivers/dma/sun6i-dma.c
-> > @@ -898,9 +898,9 @@ static int sun6i_dma_pause(struct dma_chan *chan)
-> >  		writel(DMA_CHAN_PAUSE_PAUSE,
-> >  		       pchan->base + DMA_CHAN_PAUSE);
-> >  	} else {
-> > -		spin_lock(&sdev->lock);
-> > +		spin_lock_irq(&sdev->lock);
-> >  		list_del_init(&vchan->node);
-> > -		spin_unlock(&sdev->lock);
-> > +		spin_unlock_irq(&sdev->lock);
+> > diff --git a/rust/kernel/Kconfig.test b/rust/kernel/Kconfig.test
+> > index 3bf4194f28c7c..26bcd91a48211 100644
+> > --- a/rust/kernel/Kconfig.test
+> > +++ b/rust/kernel/Kconfig.test
+> > @@ -104,4 +104,15 @@ config RUST_TIME_KUNIT_TEST
+> >
+> >         If unsure, say N.
+> >
+> > +config RUST_KCSAN_KUNIT_TEST
+> > +     bool "KUnit test for KCSAN instrumentation of Rust code" if !KUNIT_ALL_TESTS
+> > +     depends on KCSAN && HAVE_KCSAN_RUSTC && TRACEPOINTS
 >
 > [Severity: High]
-> Does spin_unlock_irq() unintentionally enable hardware interrupts for callers
-> that enter this function with interrupts disabled?
+> Should the RUST_KCSAN_KUNIT_TEST configuration in rust/kernel/Kconfig.test
+> include a depends on SMP requirement?
 >
-> DMA engine API functions like dmaengine_pause() are frequently called by
-> client drivers from atomic contexts where interrupts are already disabled (for
-> example, while holding a lock via spin_lock_irqsave()). Since
-> spin_unlock_irq() unconditionally re-enables hardware interrupts, could this
-> destroy the caller's atomicity and lead to scheduling while atomic panics or
-> deadlocks?
+> The help text notes that the test requires at least 2 CPUs to reliably
+> observe a data race. Without an SMP dependency, the test can be built
+> and may spuriously fail on UP configurations.
+
+That's the point - if someone configures KCSAN and runs it on a system
+where we won't detect any data races, this test is the canary in the
+coalmine. The test will fail loudly and whoever configured their
+system (or VM) will know something is off. That's a good thing.
+
+> > +     default KUNIT_ALL_TESTS
+> > +     help
+> > +       This option enables a KUnit test checking that KCSAN detects data
+> > +       races in Rust code. The test needs at least 2 CPUs to reliably
+> > +       observe a data race.
+> > +
+> > +       If unsure, say N.
+> > +
+> >  endif
 >
-> Would it be safer to use spin_lock_irqsave() and spin_unlock_irqrestore()
-> here instead?
->
+> > diff --git a/rust/kernel/kcsan_test.rs b/rust/kernel/kcsan_test.rs
+> > new file mode 100644
+> > index 0000000000000..24810cf2970a0
+> > --- /dev/null
+> > +++ b/rust/kernel/kcsan_test.rs
 > [ ... ]
->
-> > @@ -939,9 +939,9 @@ static int sun6i_dma_terminate_all(struct dma_chan *chan)
-> >  	unsigned long flags;
-> >  	LIST_HEAD(head);
->
-> [Severity: High]
-> This is a pre-existing issue, but does fetching the physical channel pointer
-> locklessly at the start of this function introduce a race condition?
->
-> At the top of sun6i_dma_terminate_all(), we have:
->
->     struct sun6i_pchan *pchan = vchan->phy;
->
-> If a DMA transfer completes concurrently on another CPU, the tasklet might
-> clear vchan->phy and reassign the same pchan to a different virtual channel.
-> When sun6i_dma_terminate_all() later acquires the lock and calls writel() to
-> stop the channel, could it mistakenly stop an unrelated transfer that was just
-> started on that physical channel?
+> > +    #[test]
+> > +    fn data_race() -> Result {
+> [ ... ]
+> > +        let worker = ctx.clone();
+> > +        workqueue::system_unbound().try_spawn(GFP_KERNEL, move || {
+> > +            while !worker.stop.load(Relaxed) {
+> > +                racy_inc();
+> > +            }
+> > +            worker.done.complete_all();
+> > +        })?;
+> > +
+> > +        let start = Instant::<Monotonic>::now();
+> > +        while !OBSERVED.load(Relaxed) && start.elapsed() < Delta::from_secs(10) {
+> > +            racy_inc();
+> > +        }
 >
 > [Severity: High]
-> This is a pre-existing issue, but does sun6i_dma_terminate_all() leak active
-> non-cyclic descriptors?
+> Could this loop in data_race() lead to a CPU stall or spurious test failure
+> on uniprocessor systems or when PREEMPT_NONE is set?
 >
-> When terminating, the function has logic to rescue cyclic descriptors and move
-> them to the completed list:
+> The main thread spins tightly in kernel mode for up to 10 seconds without
+> yielding. If the worker thread is scheduled on the same CPU, it is prevented
+> from executing.
 >
->     if (vchan->cyclic) {
->         vchan->cyclic = false;
->         if (pchan && pchan->desc) {
->             ...
->             list_add_tail(&vd->node, &vc->desc_completed);
->         }
->     }
+> After 10 seconds, the main thread exits the spin loop, sets the stop flag,
+> and waits for completion. The worker finally runs, sees the stop flag
+> immediately, and exits without performing any concurrent increments. The
+> assert!(OBSERVED.load(Relaxed)) assertion will then spuriously fail.
 >
-> However, for non-cyclic transfers, it ignores the active descriptor entirely
-> and sets pchan->desc = NULL. Because vchan_get_all_descriptors() only grabs
-> descriptors from the tracking lists, the active non-cyclic descriptor is
-> bypassed and lost. Could this lead to a permanent memory leak of sun6i_desc
-> structures and their associated hardware pools when non-cyclic transfers are
-> aborted?
->
-> > -	spin_lock(&sdev->lock);
-> > +	spin_lock_irq(&sdev->lock);
-> >  	list_del_init(&vchan->node);
-> > -	spin_unlock(&sdev->lock);
-> > +	spin_unlock_irq(&sdev->lock);
->
-> [Severity: High]
-> Similar to sun6i_dma_pause(), will this spin_unlock_irq() unconditionally
-> enable hardware interrupts and break the caller's atomic context?
->
-> Also, because it re-enables interrupts before the immediately following
-> spin_lock_irqsave(&vchan->vc.lock, flags) call, could it corrupt the IRQ
-> state saved in flags?
->
-> >
-> >  	spin_lock_irqsave(&vchan->vc.lock, flags);
-> >
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260705082105.13325-1-zenghongling@kylinos.cn?part=1
+> Would it make sense to yield the CPU during this loop, for example, using
+> cond_resched()?
+
+Where KCSAN works correctly, the data race is detected within
+milliseconds. Adding cond_resched() may in fact lead to the data race
+being detected much slower in the common case. If the worker is
+scheduled on the same CPU, the system is misconfigured (likely UP) and
+I want to see a test failure.
