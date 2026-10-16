@@ -1,177 +1,168 @@
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962C84EF152
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 16:08:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792166916; cv=none; b=AEFYfYCfwkTO9ioQaTvTZ/Bh0m6zYPXoNkrRhSYzUL+1Ip4UudANb0sy4/iLWmXqozhKWaO4QL8lK5tdJbrkkdJ6FZV7NPrVpsJGaYjfsABB1qkz9JcJ/siTzj23MdqudT3mG0cINpwPrJ8DnjNFzEoBW7TxTmea8qP8v6v0qGY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792166916; c=relaxed/simple;
-	bh=8A1d+qHHMFQaSJTrPG2tv/uY9JQA2ctyWGVH/vz47R4=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6E44FC8E6
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 16:14:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792167273; cv=pass; b=rAYahMKfIvmQXlAnqiXI2o60kSHjJQtBmEiV6Xqvm0YBopqy7hx9fsKg9Xaz69g0SvFVU3TUks/vUIn6TTDT7iweW8UHc0slse7WuS2pGxE6e6+PWFUAk64krSoqEhA151wAzdzSrVV0Nu0eQvKuVw74gZViW1OWV1YoE+x+wYQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792167273; c=relaxed/simple;
+	bh=XWM0PptT48SHio98kQC9yyK4EB0SbfqQBSb6AQOxOw0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i35J9tKTGBxsI4GpJSal6yNj2JJCgJdE5uWbsGtexuZBgvnOTG+DusPFPIuuybJXkZLs4/ORt/d0wK8EeTEBydXZfD7LiLbQexTul6GMK7gctDiDcu/1Hbjy9orbieTWBAh165/ETHpWT/nn0E5mVs2ulStpwuYUFu/Iv0hstPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.221.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+	 To:Cc:Content-Type; b=BeiTCMTNsM2gcTKh877K2snVo/BWPJVD7Dwi0POsxJt3BPmtyrAQ9DPUUzCyoERi+sLps5l5S8S+O9GJBnlAp7Nmxa8UXWQE8z6E50wUXRLx471+xmVuXR3Ac3D91Q9UvTIAJu6X59uzraPhJlTL03uBx0HRQ7rkcGUCiN56HvE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DbGOF/AC; arc=pass smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-5d4d307fab6so36216e0c.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 09:08:34 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DbGOF/AC"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-3a49a022221so208531fa.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 09:14:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792167269; cv=none;
+        d=google.com; s=arc-20260327;
+        b=coaJTwFzp9B/1+Oa1d26pI3e4B5uoXCjJ7zernq0m+iovM1CHHHxuMYRXQ0Ds4MR/q
+         RsbVXuzQNdJ+dyNRYDAVbVZTFZEYiZMTvck4kH08KakEanfQch5MTZBrSl1qW5XsAvym
+         lZD+0GwcnHFuLTJEK68Cp99cc+sHNoEkv/1amn/QPxeB+KkzBhAJftYkL6cb8YQ5fcmr
+         vN7PS1//7th7VSHM/LOHk6kCOzOdVt9tT6sCSRqHpIvkRDTDCCPLUooBx5x4Uz7VysCF
+         KA6YAaXS4fPzBHgXyXxkKWf8S5uyZuEBdrTC3dJ2csFMrKxTXOekV50p4Yc/UGVTEZ+3
+         w2+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=gZER+Z2hSHjmZyeGIvEluIbU09gJM9ZpLypRSxth3j0=;
+        fh=dfvPRi+t5KvUF1qpgNVmacxvd83mvku6fE8K+/2kbH8=;
+        b=YFULJXVleYgMG+HQNE+gjh3ytyiCyDudUXPxuE/cKHK9oyAKzZQ9dwvQ7SoLZTgXgt
+         Dryd+teR6NEfyr5WWiP0CAYGkLC0kgXqJA2eR1kv/6PUvlzs0WIavVbJM1L411spMhYu
+         McQRapY7NNyBdVFiLPaDjhZUfuQBhqTCbZ4307D+rI7kqf6rpOXIXAH/iCv1ez4bsAJH
+         Nju7f+uIsYJWlmhY4dPx8UmjFrvwfV/N7h+ytKIDgRqOFzBgNwx3/JcSDgjo9kaCTwp4
+         kl5v0v1NBoK89ThLfjxdIipHy7/cKvJr7Yi1J+t6tIIW6IlE3FEdeCvL4KrhgEnut1Gl
+         RgTQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792167269; x=1792772069; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=gZER+Z2hSHjmZyeGIvEluIbU09gJM9ZpLypRSxth3j0=;
+        b=DbGOF/ACgw6LBRG5duknui3eZwFxm+1VvL0jCjB5LoODkqsEvlQcdQqTW/6IAmmRtE
+         mDo+YtjTvPiZS4Xp2/1LRpcP5f8gBI3ihsJSSFcUwDFLjn0I1yhzGOGe2bwU8SS0dKm1
+         gkCyyZS//zjvYk00NuJDeOX5kJ5XqHCKywlL3CKeV2loMK7tl/U5qlrKntdPrdk/S4WF
+         R81KjRTMf51hyEaNqNdVC/7c31r9gmdFew5BJxTZeUjWyUXRtpStg+ml4X6BPfp2nO90
+         xgP15TJ2qQzQKArdGNZqzxSDk7uh2Ar6ySvQiNhl0GIFCbbZOBjcjXNAaMjJJqpqlzMT
+         V2GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792166913; x=1792771713;
+        d=1e100.net; s=20260707; t=1792167269; x=1792772069;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=+EBoejTYsbTcBCosEo6zoo5hOecy+fLbrjfkaXbBdKs=;
-        b=qFMDIiwS86LrUfHSu7fpHdnGGyhk2qBDvIB2B3xbe9x9gKSLm+QJLX1HacSt9a9IuN
-         LD8En0KqeqtFZxQpmQEIRbHjNwO8iabHuHgwY/Lnt9FzC1r6W4Dm6pIFD25dNLkI8UA5
-         gdDU3ZUPbJeDaDgQMQJF3tWjb+20W5GdTvtlR4M2Rc7Q3l2HPYAXcd3uSs0mCCPeny2i
-         0md3WteC/UpDH1aUSpQpyoZot4hk8NXZNW+fJRCtVU9giVfMwE8Q0MxefY99mC55VcwW
-         leHXt64tqpjvmAVE3zcuetSzLMewjsADOLie3P2P/Ee7iT4ezp50lb7gwm/B+MvZilhS
-         Zl/w==
-X-Gm-Message-State: AFq9FYIKTfGL/3u4BXwC22x3tc5L2giQJNq/Rb2Re7IrN44iRBY4a1an
-	o1zrMLq3SDsrN9rzd3xaTf9PwJfdR19j85FDTUMSUOR4sfE2O/+zS1+wGQv1cRW4
-X-Gm-Gg: AYBFou2Or2x1Gncgd+nItfkoEubzb9lTCOkMudIqsuTDnBJsMXCXMidIFkeBwpxT4NY
-	bLvAYzoifrpWU+xJUoGSo+D4vS9NHEtNERP2Onpm7/KPhuCQvyXlyTwk9q0pTEmmHi67Sw0QZqt
-	krAe5RO5oa1olygfEF+y28vK1au2qTMFigX82GBbxBK6B6N6iM/OUjL6L1MG4qC4qWePW5p/rfj
-	D8BtdCAt31YxdsvF0aaAin0gNvOIZ5Y3RuvxGK5YoG7Ya9T8eQ83JQODD3ZeXsct6ddxHMKeZVq
-	j5K9m1d97cTpQ22To7mJWN07i5NS57i1O+h6+8wNdWSKf/vNp+Q6QqsG3j+32dFjuncBwIrvsdi
-	dgpktHSTPQyRvL9upnYJTgGrBWC6pOiEz1u7WyYrq3w/EJuTT8PwOLe2W7U5/qwuNtbzW+nywJ7
-	xrJTaJiASWofIgU55gNUc2ty1sGlcmgH4PC4rT5/l0KEtmDnjmDDuXJ+QIyZluHNcmXN40I+eVw
-	2clxnrt8dKaVDeow+1E8oEi4IRgr+uV7L7lQN7y
-X-Received: by 2002:a05:6122:328f:b0:5c9:a60b:e5d9 with SMTP id 71dfb90a1353d-5eaaa6a3b3bmr275631e0c.19.1792166913496;
-        Fri, 16 Oct 2026 09:08:33 -0700 (PDT)
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com. [209.85.221.170])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5ea9b474b2asm1828423e0c.4.2026.10.16.09.08.32
-        for <sashiko-reviews@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Oct 2026 09:08:33 -0700 (PDT)
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-5d4d307fab6so36207e0c.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 09:08:32 -0700 (PDT)
-X-Received: by 2002:a05:6102:5ccb:b0:7a1:fa0f:1106 with SMTP id
- ada2fe7eead31-7cb3a1baeabmr5620835137.36.1792166912166; Fri, 16 Oct 2026
- 09:08:32 -0700 (PDT)
+        bh=gZER+Z2hSHjmZyeGIvEluIbU09gJM9ZpLypRSxth3j0=;
+        b=ehDparvLAvEImEB0WmZURh2isNryVZLThVi0nc2WrWGyUL/YV8nh4N8G2lh/kAsC7j
+         Ex9hoSauAUqb1G8GAJ9AFnuDvh2lRBoPNg9kUbCIZ2bCshC6nY+P22ZjTcVm0SZsP8rZ
+         luLdKO25d9NlqXclgIieyN4vmXbn1Tsptm9PNXm2VgPOV+M8hnzRhOVpDjR2XJT3PitH
+         MhUog8/1ZlZC+3Px6R+HEozfkfDtz0+6GkWZLrujHt+IZ1+zvlO8vurzpEC7d8XC+19G
+         ykliQ2RxFevTMmvjE64I5YLvm3ObL4lyKA3IiNDetjs+Cl6sHtp2ObNUrCDAZ9dSXmEN
+         h8Sw==
+X-Gm-Message-State: AFq9FYIBJEnoXGqKk45YOB01SqFi33rgK1wKAMgfvUVE+Z8Hq5Mvs7OT
+	Z0kcuFazlbvCsDIB0YWsCHa246gLAWLxSfIyIaykkjm/mSxhC2GEquQngZeufATPFnBlqAeplqt
+	jSSpMwWKZGioOucYienu0z+4n5yLh6WgLX6Cn
+X-Gm-Gg: AYBFou2zG4ROoZUrIhkOZdY/3lL+jZfUQLwLnF8PnF7Tzw4yzEVEX5NgCe6/hu4vgtt
+	JegEsORcdTJZnvu1LXXLIMpDJVMtCUlu/+0DIz/B9SYifDwHSJMF0n7aLb2cl/tx2UgVVAdScdg
+	iq4SuXXPKDvtDrtZzY/94OhzgHJC5Q18rPiDKwzIldd/KCYHenhCZu+FTAUlLMXTuwN7ZE2fIc2
+	0O0rYIuRUMByEdEw9iBsaQ4so9Wc5ga9jf+12tQNrbLlv0ATpZyaFJkIAN03E753NK1EN7Nc0VL
+	nUfxzmPlI1k2nC+ZnD/Ia77hW+hsEOb3HvLzknNCumT82O7l3YBmEe8qqUtO+0/9kxeeiRkXCNZ
+	cCtvUUYEvzrrX
+X-Received: by 2002:a05:651c:1501:b0:3a9:a9f3:1e93 with SMTP id
+ 38308e7fff4ca-3ab29290997mr609181fa.10.1792167268791; Fri, 16 Oct 2026
+ 09:14:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cover.1792163045.git.geert+renesas@glider.be> <b9e68c8df1e545191e0359dba23fe53de31a4ce5.1792163045.git.geert+renesas@glider.be>
- <sashiko-outbox-174595@kernel.org>
-In-Reply-To: <sashiko-outbox-174595@kernel.org>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Fri, 16 Oct 2026 18:08:20 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdWyr7MN3Q_p2xYWukmbwdSPCmR90++AJWohsS7TWqxp-g@mail.gmail.com>
-X-Gm-Features: AclHuK94_MM_qmX3UtowEDModV_nQO7Yoe2DHkKw0PQAKUP0rJtGNhubnONEYfQ
-Message-ID: <CAMuHMdWyr7MN3Q_p2xYWukmbwdSPCmR90++AJWohsS7TWqxp-g@mail.gmail.com>
-Subject: Re: [PATCH v4 4/8] reset: Add reset_control_get_from_provider_exclusive()
+References: <20261016114757.1099300-1-meven@kde.org> <sashiko-outbox-174261@kernel.org>
+In-Reply-To: <sashiko-outbox-174261@kernel.org>
+From: =?UTF-8?B?TcOpdmVu?= <meven29@gmail.com>
+Date: Fri, 16 Oct 2026 18:14:15 +0200
+X-Gm-Features: AclHuK934t3G5978UIGy52jZ8v9DVUSyCs0cEfT2mYhlpX3AVMrgexX3inHtJ8k
+Message-ID: <CAOvFf8NOvVUhuD=Ak=kXUN-e32HJTtUh+qyNG2thTHFf-HjHVA@mail.gmail.com>
+Subject: Re: [PATCH v4] HID: logitech-headset: add a battery driver for the
+ PRO X 2
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-clk@vger.kernel.org, robh@kernel.org, 
-	conor+dt@kernel.org, wsa+renesas@sang-engineering.com
+Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Sashiko,
-
-On Fri, 16 Oct 2026 at 18:02, <sashiko-bot@kernel.org> wrote:
+Le ven. 16 oct. 2026 =C3=A0 13:58, <sashiko-bot@kernel.org> a =C3=A9crit :
+>
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] of: memory leak of device node reference on error path
+> - [Low] kconfig: unmet direct dependency on USB_HID for HID_LOGITECH_HEAD=
+SET
 > --
 >
-> commit 6e1c5e27c808997c3ce5fe5fc257fedbfabb6954
-> Author: Geert Uytterhoeven <geert+renesas@glider.be>
+> commit d9d20c74276791f547d49f85750e9fd359bb8c0c
+> Author: M=C3=A9ven Car <meven29@gmail.com>
+> Subject: HID: logitech-headset: add a battery driver for the PRO X 2
 >
-> reset: Add reset_control_get_from_provider_exclusive()
+> The PRO X 2 LIGHTSPEED receiver does not speak HID++, so
+> hid-logitech-hidpp cannot read its battery. Its report descriptor has a
+> consumer collection for the media keys and two vendor collections, and
+> no report 0x10 or 0x11.
 >
-> This patch introduces reset_control_get_from_provider_exclusive() to allo=
-w
-> looking up and obtaining an exclusive reference to a reset controller fro=
-m
-> a provider. It modifies the existing __reset_control_get_from_provider()
-> helper to support this lookup.
+> > diff --git a/drivers/hid/Kconfig b/drivers/hid/Kconfig
+> > index 0e3a0ccd6901e..60f579be1da69 100644
+> > --- a/drivers/hid/Kconfig
+> > +++ b/drivers/hid/Kconfig
+> > @@ -680,6 +680,7 @@ config HID_LOGITECH_DJ
+> >       depends on HIDRAW
+> >       depends on HID_LOGITECH
+> >       select HID_LOGITECH_HIDPP
+> > +     select HID_LOGITECH_HEADSET
+> >       help
+> >       Say Y if you want support for Logitech receivers and devices.
+> >       Logitech receivers are capable of pairing multiple Logitech compl=
+iant
 >
-> > diff --git a/drivers/reset/core.c b/drivers/reset/core.c
-> > index 0e11f4c81c10d..421bcc4c89cc2 100644
-> > --- a/drivers/reset/core.c
-> > +++ b/drivers/reset/core.c
-> > @@ -1153,18 +1154,30 @@ __reset_control_get_from_provider(const struct =
-fwnode_reference_args *args,
-> >       if (WARN_ON(args->nargs !=3D rcdev->fwnode_reset_n_cells))
-> >               return ERR_PTR(-EINVAL);
+> [ ... ]
+>
+> > @@ -687,6 +688,18 @@ config HID_LOGITECH_DJ
+> >       generic USB_HID driver and all incoming events will be multiplexe=
+d
+> >       into a single mouse and a single keyboard device.
 > >
-> > -     if (rcdev->of_xlate && is_of_node(consumer)) {
-> > -             struct device_node *np =3D to_of_node(consumer);
-> > +     if (rcdev->of_xlate && is_of_node(fwnode)) {
-> > +             struct device_node *np =3D to_of_node(fwnode);
-> >               struct of_phandle_args of_args;
-> >               int ret;
-> >
-> > -             ret =3D of_parse_phandle_with_args(np,
-> > +             if (consumer) {
-> > +                     ret =3D of_parse_phandle_with_args(np,
-> >                                        gpio_fallback ? "reset-gpios" : =
-"resets",
-> >                                        gpio_fallback ? "#gpio-cells" : =
-"#reset-cells",
-> >                                        gpio_fallback ? 0 : index,
-> >                                        &of_args);
-> > -             if (ret)
-> > -                     return ERR_PTR(ret);
-> > +                     if (ret)
-> > +                             return ERR_PTR(ret);
-> > +             } else {
-> > +                     of_args.np =3D of_node_get(np);
-> > +                     of_args.args_count =3D args->nargs;
-> > +
-> > +                     for (unsigned int i =3D 0; i < args->nargs; i++) =
-{
-> > +                             if (args->args[i] > U32_MAX)
-> > +                                     return ERR_PTR(-EINVAL);
+> > +config HID_LOGITECH_HEADSET
+> > +     tristate
+> > +     depends on USB_HID
+> > +     select POWER_SUPPLY
+> > +     help
 >
-> [Severity: Medium]
-> Will this leak the device node reference acquired above?
+> [Severity: Low]
+> Could this select statement in HID_LOGITECH_DJ cause an unmet direct depe=
+ndency
+> warning?
 >
-> When consumer is NULL in __reset_control_get_from_provider(), the code
-> acquires a device node reference via of_args.np =3D of_node_get(np).
+> HID_LOGITECH_DJ unconditionally selects HID_LOGITECH_HEADSET, but
+> HID_LOGITECH_HEADSET specifies a direct dependency on USB_HID.
 >
-> If an argument exceeds U32_MAX, the function immediately returns
-> ERR_PTR(-EINVAL). This early return skips the of_node_put(of_args.np) cal=
-l
-> at the end of the block, permanently leaking the OF node reference count.
-
-Yes it will!
-
-This can easily be fixed by moving the for-loop to the top of the
-branch, i.e. before the of_node_get().
-
-BTW, perhaps the time is ripe for helper functions to convert between
-fwnode_reference_args and of_phandle_args?
-
+> Because Kconfig's select directive forces the symbol on without evaluatin=
+g its
+> dependencies, enabling HID_LOGITECH_DJ in a configuration lacking USB_HID=
+ will
+> produce an 'unmet direct dependencies' build warning.
 >
-> > +
-> > +                             of_args.args[i] =3D args->args[i];
-> > +                     }
-> > +             }
-> >
-> >               rstc_id =3D rcdev->of_xlate(rcdev, &of_args);
-> >               of_node_put(of_args.np);
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1792163045.=
-git.geert+renesas@glider.be?part=3D4
+> Should HID_LOGITECH_DJ inherit the dependency on USB_HID, or should the s=
+elect
+> be conditional?
 
-Gr{oetje,eeting}s,
+HID_LOGITECH_DJ already depends on USB_HID, so it cannot be enabled
+without it, and the select cannot leave HID_LOGITECH_HEADSET with an
+unmet dependency.
 
-                        Geert
+HID_LOGITECH_HIDPP also depends on HID_LOGITECH that itself depends on USB_=
+HID.
 
 --=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
-
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+M=C3=A9ven
