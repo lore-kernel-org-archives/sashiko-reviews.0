@@ -1,324 +1,190 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from dispatch1-us1.ppe-hosted.com (dispatch1-us1.ppe-hosted.com [148.163.129.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500562FD1B3
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 00:54:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792112058; cv=none; b=i0EIgSOWHYvoU665F2BFms7KFa1ABrPyAauZSA/KuBjc7FDMMLph4ptLylR0JQG53i8fWAInq6HLh0jioc2Lb1UrwPs5CCITAfyX6BdJsa3p8HMCAoqO7rQjY/9XCQ5HO7dWTTg7Arj6KVlGGEuMa0lMaI++JFMdKaHmKvb/uUg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792112058; c=relaxed/simple;
-	bh=y2S2p85XrYRMEFaB+AUkeq3zgnM1R+m3ZgZ/S2NwUWk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eUbtgQhOZB9/pZFE2c8NltJxSPDcS4tg5DqprkmHcY1mLkbZSL6VXR/R+iLD+pFAjqmwls2l4rBL51p/TZ4IN1MZB0arBsqHvf8n5Id+RNDBTFiE1xAypriZwimMkRyS3n0kc36T3Qz+TgCHNLifpFz705u0wUL/IAQNdSwuowc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k1gPCReq; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD8064A8C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 00:55:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.129.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792112147; cv=fail; b=RsEeGLoaIXZzUE57I5q6vUKsXGohdaDWJ0DvXjH0sgWFTPF/wubQfiDhwenCh/VmYKZfT3VzrYJ0bkQAV3kf5OZtChBIAMlw5Pj3VaZdj2t+nEtbPbi54jMq01LPlxuO+9vFVFLua1dmrHqN1VTykYw/429pxIxGAFHOzbmUD5U=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792112147; c=relaxed/simple;
+	bh=yZV4bx+gDhfJuAW2U0ClM18zSw+nTrZR9aXQvbP/ZoY=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=pkAWdSacCXMvLNjVxzGOrpVmRcyUL/l8jd2qKWSmN1o269uYyH7vY9amDliSl3iHQyUO9lCcE3t2wjH314AZECBmKmBQTR9QW+TQKmdqbxrLiJAB035B7cvApEOIC/cjy1lqyWiD0RH8dEg7ewUjpyrXmKIJCGlyQjnIzTnnJNM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sitime.com; spf=pass smtp.mailfrom=sitime.com; dkim=pass (2048-bit key) header.d=sitime.com header.i=@sitime.com header.b=NnQhJydC; dkim=pass (2048-bit key) header.d=Sitime.onmicrosoft.com header.i=@Sitime.onmicrosoft.com header.b=uEKXgtcr; arc=fail smtp.client-ip=148.163.129.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sitime.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sitime.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k1gPCReq"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-3ac451e128cso2078859a91.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 17:54:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=sitime.com header.i=@sitime.com header.b="NnQhJydC";
+	dkim=pass (2048-bit key) header.d=Sitime.onmicrosoft.com header.i=@Sitime.onmicrosoft.com header.b="uEKXgtcr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sitime.com;
+ h=cc:cc:content-transfer-encoding:content-transfer-encoding:content-type:content-type:date:date:from:from:in-reply-to:in-reply-to:message-id:message-id:mime-version:mime-version:references:references:subject:subject:to:to;
+ s=mail; bh=yZV4bx+gDhfJuAW2U0ClM18zSw+nTrZR9aXQvbP/ZoY=;
+ b=NnQhJydCANGDadxYjNT4zJ36RYwjTKmsqz8PhDAuXypNOKjIB+BjQ0wFk1BUFyB0XGVWiGAqt09+gga48TcWWsEyaVO/8VGzVvrkxFSCx40Nbn+2TP2ga3B00ZbA6paYxrgYNWG2rdyraqpSNFSZEfDlw38Pip0eXcHjeVB8lfGBJiKI3TLmVg9tMdaASxZ0mzlPWR4vFgxuRT5nmlWiUXW1vRNYbZKZvBtKpTmm5SLv20wR/wsQrJBfBmuN/ugAgXU1WSGXQt3t6f6qs8xnjbAeyFhawuQC+4tptne6GDpPrpl6f1FSQWivlroyD+i4+Zwvt5QTsLaHjfp1RRysyA==
+X-Virus-Scanned: Proofpoint Essentials engine
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11020125.outbound.protection.outlook.com [40.93.198.125])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx1-us1.ppe-hosted.com (PPE Hosted ESMTP Server) with ESMTPS id 4F74CC006F;
+	Fri, 16 Oct 2026 00:55:44 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=d+DaoLVR6nwaxjW6TnC6e25M0mwagvzjdXJ/XzkVRwdDxSlNZi0jFrUuFI3WmQnbuwUiS++zhxu3teedC8LU3P8Zq60fKf81RoNgPXVzbGtc7mT8fQegvtTL+drEN/GxSOoE6FMQfDkbNdqmTP0pVQex3JPnZoW/wIExMRJ+09GKHRaYg1zhbKBP3cBt//qURXC7x11u+BU63fottcUHdnDqhSSxYeb/gez287z19HbGMBIp/aIRpF7j9yy2Afqmw7jUBFOV1WtNeQWcx/wqDTqr9UijSCiYNEKsRFf1KK9FlLWcxrwKV4vvQbK8uQa1nAfH55mmjckphaLqnVedww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yZV4bx+gDhfJuAW2U0ClM18zSw+nTrZR9aXQvbP/ZoY=;
+ b=YlQBWwXl6ZxXcBqrVmxDfjrsgdVflhjEKDmY/9S6SNVL/eDvNKielV7Qc0mla/2toBdelfSq4LmhyJxEiS3u2+UvWRqyB1wUkh/pKfrD3kATtaUEuFghPL/S1e7fB+e/0CnVuAK1lWXOCzp6dibyxjQxR1UZchbGKRad/UUlYpPOTeSYFnHmYsF7lQENlYHQa6hLK9WABOlBfsMKAzTcL7SQyLfqzudD+ime+HxG+yWvJWD8Nrtys1rWlLhBztS6QISm3dNFe27GFyZy5tEfHevOezN0aR97L6c3pFdc97Q7OTOHDyU8yQ3Yw3yhTzn4Y8p3QgqQVqVY2x/hynEP/g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=sitime.com; dmarc=pass action=none header.from=sitime.com;
+ dkim=pass header.d=sitime.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792112056; x=1792716856; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=En6nr/29qMF2MF48NebNTT+fHkP95F8yYos87+u+ZFA=;
-        b=k1gPCReqvBxnoz1ZADQ1+ZvSvgDVeaT5EwD6Yk3A+msM5onnaox2ry/xetC3fpnF0c
-         ftvxkxTaPYtRdfMZVN12xWi9ulfYjuuVscSNISgMEC0Hd4B8eV48PwzpCk/rcuRf0OtG
-         KLqonGOioy/JVl+RKd+Ah5366ki5+vG17PmpuiwbcBXtgGjAVMVh7i2m+c/x9nkwdf32
-         ymHz9u/G4GhG8Z8GzsSDPFaWOq+9BylKfNgXcN8kLSs6EmDBp8MEeJ7LEPqJEU2qCl++
-         Ua3e7IsOdJ8ZR6TX3kL3yVZC5J9D0YAs+MwaMz7y69C0Z+dO7N9ybY6zClji6Xl8leMV
-         3Y5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792112056; x=1792716856;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=En6nr/29qMF2MF48NebNTT+fHkP95F8yYos87+u+ZFA=;
-        b=MdL4Ke9Q6+kvF3L1aCobCNE6vRDXQOrYW0nXb639HYlYLmT7sB5WYVv6MK9Zv0P/DZ
-         JTHwg7qupoq3XmGg3HHlxMnmxeVhFiQUSl3w1WpW9nI6fJXPmOPSE8TMNoEuI1O/TShg
-         JjCa7RXOdk3XrpXQo+ec81XRtf6fEAHO6cL7+lSJNbc8Dq5SGDy4m190SInw/nVUYtl4
-         BeI6V2/2NkOr7Dbfpi9zdNxa4VYqeIQDV8dfvY79qDSdZO2JWl23ATo26Q7zUQPgIXuM
-         0c2lpdSh5R7eeVlEPuFVDe28p2jB+VmL6EuCPDiNHvEZvfmSyjkugtFAHonM93TtrUo8
-         Rz8g==
-X-Gm-Message-State: AFq9FYJ1fEJwPzBmAKsgXkEfkAYJnvjYUkll2nKcRyk2Nyn/kCJ6e4tq
-	66Y+o97bNHYcDJwPOJFZki8laXiEiRwfH8di//CO2z/u4f1J+jF8AdLeO8Gmxg==
-X-Gm-Gg: AYBFou2MXr0horYE3OxBMzlkZqzDWMwFF6jmuUQYRWJWxVAnYO4LQvYWKcmBLzF/qe9
-	CacvqL0lFGNAn1yohAA2hAZ+k1LGKpVcGuGRl47oqwX2vZy1yD/zT6BljyfslFszYt74UCaSiP6
-	JdvfqpEIkk7v4YV+XmDca8Zms6x71gQ0k+DtfwEQv/4YGRDByXGPnkT1j9z+kC+t7jWMoIiFTu1
-	LycUFwIFvTGyvTrqq5MYKZtaSxZziFv8GAX4tbPGwOzAFqpJmln2L1W/lQlqTstf8YWSsOxii36
-	8zzVplPitgEAdRwXJcoii00Hc0beA32fyhMjgcTxviHmv7fqpW7fQQsO/AWhY43i/gLHTFBKk8d
-	QYfjSYS0F6On0QUNf7YLWh2hoxyY11Qj0qB9EJ04tMM8e0L04OxUw9edsAZUJ5UPq3OUsuTkeh3
-	zslqlEaqJMrsJfCTL1EJoyDBfGCEJd6fBz7JrI7TVcSdZQobwqJU2uH1RzGZ28gDWypqDqQBj4Q
-	EwIL5wWLKkWxup/xNNHTi6Uravbj2Qayz9ZbND8pVfYDA==
-X-Received: by 2002:a17:90b:35d0:b0:3ac:450a:fa46 with SMTP id 98e67ed59e1d1-3ac450b7738mr8255081a91.10.1792112056369;
-        Thu, 15 Oct 2026 17:54:16 -0700 (PDT)
-Received: from [172.19.1.48] (60-250-196-139.hinet-ip.hinet.net. [60.250.196.139])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3acc9d266d6sm483645a91.1.2026.10.15.17.54.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Oct 2026 17:54:13 -0700 (PDT)
-Message-ID: <c91448a3-fbb6-45ba-b12e-71a66d4672b1@gmail.com>
-Date: Fri, 16 Oct 2026 08:54:08 +0800
+ d=Sitime.onmicrosoft.com; s=selector1-Sitime-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yZV4bx+gDhfJuAW2U0ClM18zSw+nTrZR9aXQvbP/ZoY=;
+ b=uEKXgtcrmVcFPOWfL/J+yaAOT/KsDQh1teq3JYeL9CNA3ltVuj3DiZddG1EV09xq/5SV61C10fSpkw6WBHkFSf5HJSa6AuyqAtsQXiGNWXyL023hcIAWeZCUn4ZwVWCpfZ6nBr8xmOBURgDX691ntWHDerkuuNcAg2sVxXY3nQIurg7XKggXXFmU8jmfP+wsobrMfZelT0dTjb6loKbaI7qJKnoyZPesWhC85d/n3sminmoMT2Hu78FWsQ9QZTyEauGE9Q9SJiVx/5LRDuq1Pfn6aXYz/v6XImStZV4udj/1pRcPUCVuf+9gEUfJer1mQUQDEsKcnoPGTnIcAPZlng==
+Received: from LVWPR20MB994915.namprd20.prod.outlook.com
+ (2603:10b6:408:3bf::16) by MN0PR20MB4789.namprd20.prod.outlook.com
+ (2603:10b6:208:3c7::11) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Fri, 16 Oct
+ 2026 00:55:42 +0000
+Received: from LVWPR20MB994915.namprd20.prod.outlook.com
+ ([fe80::9551:3864:128b:8c01]) by LVWPR20MB994915.namprd20.prod.outlook.com
+ ([fe80::9551:3864:128b:8c01%4]) with mapi id 15.21.0522.013; Fri, 16 Oct 2026
+ 00:55:42 +0000
+From: Ali Rouhi <arouhi@sitime.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: Jiri Pirko <jiri@resnulli.us>, Vadim Fedorenko
+	<vadim.fedorenko@linux.dev>, Arkadiusz Kubalewski
+	<arkadiusz.kubalewski@intel.com>, Ivan Vecera <ivecera@redhat.com>, Jakub
+ Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring
+	<robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+	<conor+dt@kernel.org>, Lad Prabhakar
+	<prabhakar.mahadev-lad.rj@bp.renesas.com>, Carolina Jubran
+	<cjubran@nvidia.com>, Oleg Zadorozhnyi <Oleg.Zadorozhnyi@devoxsoftware.com>,
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH net-next v13 02/12] dt-bindings: dpll: add SiTime SiT95316
+ clock generator
+Thread-Topic: [PATCH net-next v13 02/12] dt-bindings: dpll: add SiTime
+ SiT95316 clock generator
+Thread-Index: AQHdW2P/9ZE6kK9KDUy1mF8AMssy67b9o5uAgAG3uAA=
+Date: Fri, 16 Oct 2026 00:55:42 +0000
+Message-ID: <20261016005541.11374-1-arouhi@sitime.com>
+References: <20261013224131.27149-1-arouhi@sitime.com>
+ <20261013224131.27149-3-arouhi@sitime.com> <sashiko-outbox-171992@kernel.org>
+In-Reply-To: <sashiko-outbox-171992@kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=sitime.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: LVWPR20MB994915:EE_|MN0PR20MB4789:EE_
+x-ms-office365-filtering-correlation-id: cbe35ef2-2661-4e09-32f3-08df2b20346a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|38070700021|261009223327099003|56012099006|261009223027099003|261009221727099003|4143699003|261009220027099003|261009221227099003|18002099003|10067099003|22082099003|3023799007;
+x-microsoft-antispam-message-info:
+ t4DoXus6R442ZZfH0SOVVA5PWz82P3k9GyLh5BThg81GtGHIa6m+u8UnvHpgtZ7EH0MXip5uUFRtSjm3ptMCbpSdL0s/0RiUzyWfDl+6uVZKwLswUrKuTpi4wx3bTEqRxQ0Cqu2oOdqkaCBLk1UEi9XzrQz8pQ+kmLjeAl8Dmv0hjALyr5dE0w01XtDL2Udk2ECcLj1lQgazmbpWZA9h3cCyNkuuYX6a1ojRHdRH2Y3tObSUnZ94WEBFZmZKKVjNTCc1LvQnSgHHUU68PyweATcpXffRBToMAkv6ZHo4xivxTLPr26NTqQO1+tsafAo13boI1H3hGHlXk6whQU0cgnOtVtG9TF1VeW9w03aafy6TjQJj14EBRWTyzDBstz3M9cnajXU4ymv3jQGn3jznYCsjsRVtZSfvV7Wa/U24KxbvUYMbsbYQjUTwr8vUtwrhLqQhRfHhzy3McZ1H6m/50n8IvJS1pYBE5G0CAPNhBKW2bBa/JnQWK9HT7JgIJxA7DS8drte2/eg55ZHSCHy2INyU5Jsr/HXFpI1KxH6z75610LcizSJcrdyaip6ZA0t+S/el5rSpCzAyDxhvTAV/iCozvNtrvoZaLpwWRPUH4fgsJE20g2lAJyQ1vI9RmPfdQgnICui+JeJN73QTLAPTw3DSTVVa0WT9jvt88o3CKNF6vvCV/9Z8L/KYtkdyovXC9X+wJQBkfGlpj4cHOEjkHA==
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LVWPR20MB994915.namprd20.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(38070700021)(261009223327099003)(56012099006)(261009223027099003)(261009221727099003)(4143699003)(261009220027099003)(261009221227099003)(18002099003)(10067099003)(22082099003)(3023799007);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?ZkhwdjVRZjVJWlQ1WFdXZWgrSFpDWWkxUUNOUm5YWm0xdjY1OE1hUXM2engw?=
+ =?utf-8?B?VHcxOStKUllRRitScGVpMjZjbnkvMC9oSDNWejZldk9Ccjk2VkxIS3BvejhU?=
+ =?utf-8?B?ekljRVMzSnBNNFBOR09aYllZeW01ZDNPei9IUERGT2NBL1I5Q1ppQmUrNUt2?=
+ =?utf-8?B?elhobHk1S2xvMzdUT2VvaXRxeHR0eVJnTmQ4YVhsd2FVMzhSK2VIZ3pzcTZk?=
+ =?utf-8?B?d05hVEs4K1NwbUV3bEM0ZVJJcmlJcmltMDJxNjFiK3E5M053Z2s3VkNaNXh4?=
+ =?utf-8?B?MXdMZlJBZy9TcHBKNUtuc2Z6WjZ4RnhpdFV3M2JIRW5yNkhobkFqN24yNHlT?=
+ =?utf-8?B?SjFNS1dySk55THdJU2pnRDVuQWZSRDM1dWgwVlJDWmphY3VsTUpkWFAvd3Bz?=
+ =?utf-8?B?NW9BaitxWW8wT3FYMkJpeFByNWhIYlNFSnVOejBzdlFwa2ZsTWpRNU9JdmpT?=
+ =?utf-8?B?RjhjUjBDQUg4d21wN0RPVlpieFhWUzZ2NENRY3B5NmMzTmVMTmVYVTBoN2hC?=
+ =?utf-8?B?YWZVZTl6dWtJeUNOT1ZRRzd2bHlmK2kxdXJRaktVRy9ibE5FZDFtOGU3aFY1?=
+ =?utf-8?B?VmlhQy9wR2laV1NYUG1Sams3d0puOStHcmExY2hkRFJpckdsZ1dKeFRjTVIx?=
+ =?utf-8?B?TzArRFVxVGErZWdzR1czSUMycjY4TzJJc3YvWXNCaWwrL2FadjcyanEzM0pu?=
+ =?utf-8?B?dmt3UEl5MVIyY25FQnBzRmQ3WkpRbTVzUzJleEZBWXZKS0JkVjZNVWxlL2pB?=
+ =?utf-8?B?aFlxaWR0L2t5ZkFnY2hwRjZSODRkblA4QitheUd4cktEenZkb2tHemdXN0di?=
+ =?utf-8?B?dE5pN0NvYkFOQjM2WnVWcktxRjNXa1o3Ym1WUG9PZEppYWRMOFJsRld2NG11?=
+ =?utf-8?B?RE0xcGZOZldxdjNiMnRabjE2RFdxZ0F1SU40QThlN042TGRNSW5VVkhqOWpj?=
+ =?utf-8?B?dWdsbHF5V2g0RTlMaWZ2N0FJWXFJaCs5anE2aWozL0RIcUhWTGxJcWNCT1Jy?=
+ =?utf-8?B?WVJOZWFESDJLOHRVL05XQmsxWEdoS0ptSEF5eEl6TXp3bXNCaENobFg4RjhL?=
+ =?utf-8?B?RnRXQkFZd05iTzlBSWFsZlUxUSs0QVplVzdFc3hFVCtZanppblI5bDBFZHRm?=
+ =?utf-8?B?akxyelhKcWhOQXJuNno5S25Ic3Bob0JnTll3QnVzaHcxTzNVVWVueHZKeEJL?=
+ =?utf-8?B?R2xiTDI1RitlQkVxWTVaUXNkMkRDTW5uQ0tHYmJyd0c2dWkzZDJpa1l6eVlt?=
+ =?utf-8?B?aEFJNnZ1dDRsMXA0TGM3b1c1OVRMUFJFQ0tyWWs5TDI3dkhMcUdxTFFLRStL?=
+ =?utf-8?B?WDAwbjJWa1ZBTTkxQTVTb0sxRE52ZFZsTHoxaUtFN21yZG1EL25JcnZMcDJN?=
+ =?utf-8?B?N2l0akVxVWNWVXFGVVZSR2MvSUFaNVNhc2thdnNlYXNqR3U4SjA3MDZXOFFQ?=
+ =?utf-8?B?Um83TVkxeG10bU5KRGpONi9najR1Nlk0WHhwM3U5TGxmWm05OGJmYjlRZHEr?=
+ =?utf-8?B?U0NVRWR6WGwzZHdyVkpzanlrOEdKMWsxeCtwSDltZ2tqZ21Bb0tJLzBQVzlJ?=
+ =?utf-8?B?azE2b0wycHlTVnVWQ1pvWTkwM1Zqb0ZoQWxRQWVBWWxuUTRsQ1JiRG0walc0?=
+ =?utf-8?B?eUVnVnczcE93aGh2MlhiVVFKOGRKNllmMldjRzJZWlNJMndRcU1lUDZ3Tkls?=
+ =?utf-8?B?WWVTbCthZy9LQk1NSXN6blhkOFFqKzRwVmx0eUhjT2Jnc2NUbXlpcmlrTHN4?=
+ =?utf-8?B?KzAwTmJuMTMzNDFFZzREajRQdlBkWllZWXlMQWVNOU02b2lISkRKRFZ0U01I?=
+ =?utf-8?B?THpzNzhhcHlKejZjSmlIY1JEVWRnVUJwbzQvL0taVVYvNWtleDFJNDkrVDBy?=
+ =?utf-8?B?RDV2KzhzNEo5Ly9pTFdYY3dRNXByeXlCR0o1ZFFkTlJZNUtMdG1lMkNEQUhQ?=
+ =?utf-8?B?c1pSZ2R0TmlHVkdjWjlnZWFwZWJVVmtjZUc4Z3ZnYnRXdS9CZ1l5YzhFbGxG?=
+ =?utf-8?B?L2VYNWVoRnlralBwbFI2T09JVDJvT01FOG1IM3pOODZyMkxyalVlcE45YjBr?=
+ =?utf-8?B?dEFlV1lTTEhGcDUvQkRiT21Zd3J3MXR6OHh4bWh6Y0lwOS80RVlnbTFsaTd5?=
+ =?utf-8?B?RVg2TXg4RW8vRlIrOEVxOWJVMzFtZUFGdlA4dmxLb2xxRU5nRmdOcU9GeTNJ?=
+ =?utf-8?B?SlNBWWVRV3ZmVkpKZW5DTHhncmhqb0hsN0NJV3RwY3pVZnpTUFdUNWRzcHU5?=
+ =?utf-8?B?WWpWNENQNFZCK0NLb2JyRFVHMVdGcnZCbE9UUTMxbTJTRE9HSEJBTUd2QTFW?=
+ =?utf-8?Q?hg2sJN6GHhNMwJeHlk?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 2/3] i2c: ma35d1: Add Nuvoton MA35D1 I2C driver
- support
-To: sashiko-reviews@lists.linux.dev
-Cc: conor+dt@kernel.org, robh@kernel.org, devicetree@vger.kernel.org
-References: <20261001075101.489660-1-zychennvt@gmail.com>
- <20261001075101.489660-3-zychennvt@gmail.com>
- <20261001080813.9183C1F000FF@smtp.kernel.org>
-Content-Language: en-US
-From: zychen <zychennvt@gmail.com>
-In-Reply-To: <20261001080813.9183C1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-Exchange-RoutingPolicyChecked:
+	rhJzU6Cqxq+i/ePiWwPjLxbo8e26e83Kknn/2A3ZUHI0TffsRaFnLsvtPnKraJadZDyTdqPLAi28BWL0svlLIwZnJxbY3Ozn4Wd1F03BhOF59SxvCjmAx7hPrvcTtdDNMhxe2ERGbhKkD57o/kREbOxH/WhzBUvZZ0QtmAzki/fYdaoNLXUD0XPhvulVAtqh65qvNIS1PfGbBKRnAFGi8f6ueQrwZZP/4ke0paFOSxAAK7zbeSHby4RAlE8j3KhL5U5elQnMVgUBEGxOKC+fzjqb97+W+faHKdX3Y6ERj5lsnH3yzhyoMc6nhon/HolO5gDGVmD1fQDj4D8eD1ObJA==
+X-OriginatorOrg: sitime.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: LVWPR20MB994915.namprd20.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cbe35ef2-2661-4e09-32f3-08df2b20346a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Oct 2026 00:55:42.6991
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8fb55916-cf10-4b0d-96f4-cf3952657263
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: nXz8e859dK4KTIz7316nDA9c4joD/CPHYAO2MzkdtaRu0HXocGErBadf3JA05du9M6I2qMKJ8JQTT8rqliqWJw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR20MB4789
+X-MDID: 1792112145-JFqd0pXDOLHp
+X-PPE-STACK: {"stack":"us1"}
+X-MDID-O:
+ us1;ut7;1792112145;JFqd0pXDOLHp;<arouhi@sitime.com>;b258b95cf5ef1e870c44c71acb0e4bbc
+X-PPE-TRUSTED: V=1;DIR=OUT;
 
-
-
-sashiko-bot@kernel.org 於 2026/10/1 下午 04:08 寫道:
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
-> - [High] i2c: ma35d1: data race in transfer initialization corrupts state machine
-> - [High] i2c: ma35d1: TOCTOU race in target registration leads to NULL pointer dereference
-> - [Medium] i2c: ma35d1: ignored return value in target receive allows buffer overrun
-> - [Medium] i2c: ma35d1: inconsistent IO accessors for MA35_DAT register
-> - [Medium] i2c: ma35d1: resource leak on suspend error path leaves wake-up enabled
-> - [Medium] i2c: ma35d1: multi-master target mode broken due to unconditional AA bit clear
-> --
-> 
-> commit deb266e66e11836eee266a00ecd16f32efa64cf8
-> Author: Zi-Yu Chen <zychennvt@gmail.com>
-> 
-> i2c: ma35d1: Add Nuvoton MA35D1 I2C driver support
->     
-> Add I2C support for Nuvoton MA35D1 SoC.
-> The controller supports standard, fast and fast-plus modes,
-> and provides controller/target functionality.
-> 
->> diff --git a/drivers/i2c/busses/i2c-ma35d1.c b/drivers/i2c/busses/i2c-ma35d1.c
->> new file mode 100644
->> index 0000000000000..2a4985dc22c6e
->> --- /dev/null
->> +++ b/drivers/i2c/busses/i2c-ma35d1.c
-> [ ... ]
->> +static void ma35d1_i2c_write_ctl(struct ma35d1_i2c *i2c, unsigned int ctl)
->> +{
->> +	unsigned int val;
->> +
->> +	guard(spinlock_irqsave)(&i2c->lock);
->> +	val = readl(i2c->regs + MA35_CTL0);
->> +	val &= ~(MA35_CTL_SI_AA);
->> +	val |= ctl;
->> +	writel(val, i2c->regs + MA35_CTL0);
->> +}
-> 
-> [Severity: Medium]
-> Will this unconditionally clear the Assert Acknowledge (AA) bit during
-> controller transfers?
-> 
-> When ma35d1_i2c_doxfer() calls this with just MA35_CTL_STA, the AA bit is
-> omitted and stripped from the register. In a multi-master environment, if
-> arbitration is lost and another controller addresses this device as a
-> target, won't it fail to ACK its target address and break the multi-master
-> target fallback mechanism?
-> 
-Clearing AA is intentional, not an unintended behavior of controller/target coexistence.
-MA35D1 prioritizes controller transactions, and `ma35d1_i2c_write_ctl()` clears AA when
-starting a controller transfer. Therefore, target requests received during a controller
-transaction are expected to be NACKed. Once the controller transaction completes, the
-driver re-enables AA if a target is registered. This is the intended controller-priority
-policy and does not require changes.
-
-> [ ... ]
->> +static irqreturn_t ma35d1_i2c_irq_target_trx(struct ma35d1_i2c *i2c,
->> +					     unsigned long i2c_status)
->> +{
->> +	unsigned char byte = 0;
->> +	int ret;
->> +
->> +	switch (i2c_status) {
-> [ ... ]
->> +	case MA35_S_RECE_DATA_ACK:
->> +		/*
->> +		 * Previously address with own SLA address Data has been received;
->> +		 * ACK has been returned
->> +		 */
->> +		byte = readb(i2c->regs + MA35_DAT);
->> +		i2c_slave_event(i2c->target, I2C_SLAVE_WRITE_RECEIVED, &byte);
->> +		break;
-> 
-> [Severity: Medium]
-> Is it possible for i2c_slave_event() to return an error here when the backend
-> buffer is full? 
-> 
-> By ignoring the return value, target_reject remains false, causing the
-> controller to blindly ACK subsequent bytes and potentially overrun the backend
-> buffer instead of NACKing the next byte.
-> 
-When MA35D1 reports `MA35_S_RECE_DATA_ACK`, the byte has already been received and ACKed,
-so the driver can no longer NACK it. Propagating the callback error to the next byte is also
-incorrect, as `I2C_SLAVE_WRITE_RECEIVED` applies only to the current byte.
-
-> [ ... ]
->> +static irqreturn_t ma35d1_i2c_irq_controller_trx(struct ma35d1_i2c *i2c,
->> +						 unsigned long i2c_status)
->> +{
->> +	unsigned char byte;
-> [ ... ]
->> +	case MA35_M_TRAN_ADDR_ACK:
->> +	case MA35_M_TRAN_DATA_ACK:
->> +		/* SLA+W has been transmitted and ACK has been received */
->> +		if (i2c_status == MA35_M_TRAN_ADDR_ACK) {
->> +			if (is_last_msg(i2c) && i2c->msg->len == 0) {
->> +				ma35d1_i2c_stop(i2c, 0);
->> +				return IRQ_HANDLED;
->> +			}
->> +		}
->> +
->> +		if (!is_msgend(i2c)) {
->> +			byte = i2c->msg->buf[i2c->msg_ptr++];
->> +			writel(byte, i2c->regs + MA35_DAT);
->> +			ma35d1_i2c_write_ctl(i2c, MA35_CTL_SI);
->> +		} else if (!is_last_msg(i2c)) {
-> 
-> [Severity: Medium]
-> Why is 32-bit writel() used to write data but 8-bit readb() used to read
-> from the exact same MA35_DAT register below? 
-> 
-> If the ARM SoC's peripheral bus dictates 32-bit aligned accesses, could
-> readb() trigger a bus fault or return invalid data? Both paths should use
-> consistent accessor sizes (e.g. readl(reg) & 0xff).
-> 
-The peripheral bus supports byte accesses, and only bits [7:0] of `I2C_DAT`
-contain data. Therefore, using `writel()` to transmit and `readb()` to receive
-is valid on this hardware.
-
-> [ ... ]
->> +	case MA35_M_RECE_DATA_ACK:
->> +	case MA35_M_RECE_DATA_NACK:
->> +		/* DATA has been received and ACK/NACK has been received */
->> +		byte = readb(i2c->regs + MA35_DAT);
->> +		i2c->msg->buf[i2c->msg_ptr++] = byte;
-> [ ... ]
->> +static int ma35d1_i2c_doxfer(struct ma35d1_i2c *i2c, struct i2c_msg *msgs,
->> +			     int num)
->> +{
->> +	unsigned long timeout;
->> +	unsigned int val;
->> +	int ret, err;
->> +
->> +	i2c->msg = msgs;
->> +	i2c->msg_num = num;
->> +	i2c->msg_ptr = 0;
->> +	i2c->msg_idx = 0;
->> +	i2c->err = 0;
->> +
->> +	ma35d1_i2c_write_ctl(i2c, MA35_CTL_STA);
-> 
-> [Severity: High]
-> Does this expose the transfer state to the active interrupt handler before
-> setup is fully complete and protected? 
-> 
-> If a spurious interrupt or bus error fires during this window, the ISR
-> could concurrently modify these fields. The ISR might set msg_num=0 and
-> err=-EIO, which the process context then overwrites with err=0 before
-> sending a START, potentially leaving the hardware hanging.
-> 
-The IRQ is dedicated to this I2C controller and is not shared with other devices.
-Disabling the IRQ while initializing the transfer state prevents the interrupt
-handler from accessing partially initialized transfer data. The IRQ is re-enabled
-after the transfer has been started.
-
-> [ ... ]
->> +static int ma35d1_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
->> +			   int num)
->> +{
->> +	struct ma35d1_i2c *i2c = i2c_get_adapdata(adap);
->> +	int ret;
->> +
->> +	ret = pm_runtime_resume_and_get(i2c->dev);
->> +	if (ret)
->> +		return ret;
->> +
->> +	ret = ma35d1_i2c_doxfer(i2c, msgs, num);
->> +
->> +	if (i2c->target)
->> +		ma35d1_i2c_write_ctl(i2c, MA35_CTL_AA);
->> +	pm_runtime_put_autosuspend(i2c->dev);
->> +
->> +	return ret;
->> +}
-> 
-> [Severity: High]
-> Is there a TOCTOU race condition here?
-> 
-> If ma35d1_unreg_target() clears i2c->target and calls synchronize_irq()
-> right after ma35d1_i2c_xfer() checks it but before it sets the AA bit, this
-> could enable target mode interrupts while i2c->target is NULL. A subsequent
-> target transaction would then fire the ISR and dereference the NULL pointer.
-> 
-The I2C core serializes target registration and removal with controller transfers,
-so unreg_target() should not run concurrently with master_xfer(). 
-
-> [ ... ]
->> +static int ma35d1_unreg_target(struct i2c_client *target)
->> +{
->> +	struct ma35d1_i2c *i2c = i2c_get_adapdata(target->adapter);
->> +	int ret;
->> +
->> +	if (!i2c->target)
->> +		return -EINVAL;
->> +
->> +	writel(0, i2c->regs + MA35_ADDR0);
->> +	/* Clear AA bit */
->> +	ma35d1_i2c_write_ctl(i2c, 0);
->> +
->> +	synchronize_irq(i2c->irq);
->> +	i2c->target = NULL;
-> [ ... ]
->> +static int ma35d1_i2c_suspend(struct device *dev)
->> +{
->> +	struct ma35d1_i2c *i2c = dev_get_drvdata(dev);
->> +	unsigned int val;
->> +	int ret;
->> +
->> +	/* Prepare for wake-up from I2C events if target mode is active */
->> +	if (i2c->target) {
->> +		ma35d1_i2c_write_ctl(i2c, MA35_CTL_AA);
->> +
->> +		/* Setup wake-up control */
->> +		writel(0x1, i2c->regs + MA35_WKCTL);
->> +
->> +		/* Clear pending wake-up flags */
->> +		val = readl(i2c->regs + MA35_WKSTS);
->> +		writel(val, i2c->regs + MA35_WKSTS);
->> +
->> +		ret = enable_irq_wake(i2c->irq);
->> +		if (ret)
->> +			return ret;
->> +		return 0;
->> +	}
->> +	return pm_runtime_force_suspend(dev);
->> +}
-> 
-> [Severity: Medium]
-> If enable_irq_wake() fails, this returns early without clearing MA35_WKCTL. 
-> 
-> Will this leave the hardware wake-up control active during normal runtime,
-> potentially causing spurious wakeups or interrupt storms?
-> 
-Clear the wake-up control register if enabling IRQ wakeup fails, so the hardware
-state is rolled back when the suspend operation cannot proceed.
-
-
-
-Regards,
-Zi-Yu Chen
+T24gV2VkLCAxNCBPY3QgMjAyNiwgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToNCg0KUmVw
+bHkgaW5saW5lLg0KDQo+IFtTZXZlcml0eTogTG93XSBUaGUgZGVzY3JpcHRpb24gc3RhdGVzIHRo
+aXMgbXVzdCBiZSBhIHNpbmdsZSBlbnRyeSwNCj4gYnV0IHNob3VsZCB0aGVyZSBiZSBhIG1heEl0
+ZW1zOiAxIGNvbnN0cmFpbnQgdG8gc3RydWN0dXJhbGx5IGVuZm9yY2UNCj4gdGhpcz8gV2l0aG91
+dCBpdCwgYSBkZXZpY2UgdHJlZSBub2RlIHByb3ZpZGluZyBhbiBhcnJheSBvZiBtdWx0aXBsZQ0K
+PiA2NC1iaXQgZnJlcXVlbmNpZXMgZm9yIGFuIGlucHV0IHBpbiB3aWxsIHNpbGVudGx5IHBhc3Mg
+c2NoZW1hDQo+IHZhbGlkYXRpb24uDQoNCkFncmVlZCwgYW5kIHYxNCBhZGRzIGl0Lg0KDQpUaGUg
+ZXhhbXBsZSB3YXMgdGhlIHByb2JsZW0sIG5vdCB0aGUgc2NoZW1hLiAgVGhlIHJhdGVzIHdlcmUg
+d3JpdHRlbg0KL2JpdHMvIDY0LCBhbmQgc3VwcG9ydGVkLWZyZXF1ZW5jaWVzLWh6IGlzIGEgMzIt
+Yml0IHR5cGUsIHNvIGVhY2ggcmF0ZQ0KZGVjb2RlZCBhcyB0d28gY2VsbHMgYW5kIG1heEl0ZW1z
+OiAxIGZhaWxlZCBvbiB0aGUgZXhhbXBsZSBpdHNlbGY6DQoNCiAgaW5wdXQtcGluczpwaW5AMDpz
+dXBwb3J0ZWQtZnJlcXVlbmNpZXMtaHo6IFtbMF0sIFsxMDAwMDAwMF1dIGlzIHRvbyBsb25nDQoN
+ClJvYiBIZXJyaW5nIGFza2VkIGZvciB0aGUgMzItYml0IHdpZHRoIG9uIHRoaXMgcGF0Y2ggaW5k
+ZXBlbmRlbnRseS4NCldpdGggdGhlIGV4YW1wbGVzIGNvcnJlY3RlZCB0aGUgY29uc3RyYWludCBo
+b2xkcywgYW5kIGl0IGlzIGluIHYxNCBvbg0KdGhlIGlucHV0IHBpbiBsaXN0LiAgVGhlIG91dHB1
+dCBwaW5zIGtlZXAgYW4gdW5ib3VuZGVkIGxpc3QsIHNpbmNlIGFuDQpvdXRwdXQgY2FuIGJlIHNl
+dCB0byBhbnkgb2Ygc2V2ZXJhbCByYXRlcy4NClRoaXMgZW1haWwgbWVzc2FnZSBhbmQgYW55IGF0
+dGFjaG1lbnRzIGFyZSBmb3IgdGhlIHNvbGUgdXNlIG9mIHRoZSBpbnRlbmRlZCByZWNpcGllbnQg
+YW5kIGNvbnRhaW4gcHJvcHJpZXRhcnkgYW5kL29yIGNvbmZpZGVudGlhbCBpbmZvcm1hdGlvbiB0
+aGF0IG1heSBiZSBwcml2aWxlZ2VkIG9yIG90aGVyd2lzZSBwcm90ZWN0ZWQgZnJvbSBkaXNjbG9z
+dXJlLiBBbnkgdW5hdXRob3JpemVkIHJldmlldywgdXNlLCBkaXNjbG9zdXJlLCBjb3B5aW5nIG9y
+IGRpc3RyaWJ1dGlvbiBvZiB0aGUgaW5mb3JtYXRpb24gaW5jbHVkZWQgaW4gdGhpcyBtZXNzYWdl
+IGFuZCBhbnkgYXR0YWNobWVudCBpcyBwcm9oaWJpdGVkIGFuZCBtYXkgYmUgdW5sYXdmdWwuIElm
+IHlvdSBhcmUgbm90IGFuIGludGVuZGVkIHJlY2lwaWVudCwgcGxlYXNlIGNvbnRhY3QgdGhlIHNl
+bmRlciBieSByZXBseSBlbWFpbCBhbmQgcGVybWFuZW50bHkgZGVsZXRlIGFuZCBkZXN0cm95IHRo
+ZSBvcmlnaW5hbCBtZXNzYWdlIGFuZCBhbnkgYXR0YWNobWVudHMsIGFuZCBhbnkgcHJpbnRvdXRz
+IG9yIGNvcGllcyBvZiB0aGUgbWVzc2FnZSBhbmQgYXR0YWNobWVudHMgdG8gdGhlIG9yaWdpbmFs
+IG1lc3NhZ2UuIFRoYW5rIHlvdS4NCg==
