@@ -1,130 +1,111 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB42934D38B
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 03:19:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4417347FC8
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 04:14:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792120785; cv=none; b=IjWvk21av7dUd2Ti0tf9sKJV6xjH1DK4cviv7KtZHFPGSBZuzrnhwzkMqqIXuTBXamyO8hHu2FymaEMc6aMWr6PFRZKLlUNgEThM3kBdJJ3DDwPrV//As1hbb/cLbiz5auUx+1vZIqjHWo9Z0bJ69bdgj5RPWb0K+1TOj5ULBrw=
+	t=1792124073; cv=none; b=mWV6Jm1sbkRLWQeHOJuV4t1NXsPeyZBu/OhoUAyqOXP8oxzena/4djdsQrHO8l8MqD70IIaqV3fa1G4wmDI5udwxxI9+xWsoxYEPktUG0QKeXcg4ddiaBpYPQcfqiVbAjeNMiL4UEstw4KuyJkejk70ZRgp/qE8jIqSHDNbG6Zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792120785; c=relaxed/simple;
-	bh=LectKxnVPgl6kp2WA9jYepcXdH0Or/Oem/uGNpqc0Pk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pe9oUIYUGBREWK+G3gvvdF6+FLHpsO9ei4ZuGltPqTkDaNKILrtZMy1ARJFmkMVZ2vDp0LSO+8k1acI26GRncGnASwCIvytUFU9h6LLK7dnaRrAlPq9LUaXyiwzOOViDn9dce/5+iR0on62Oww6ZCR+Z7VoLfiFfJx4mxJomhzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d4rwpiix; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d4rwpiix"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-3ab4178ee33so3523089a91.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 20:19:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792120784; x=1792725584; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=+TOjkNOOOYODKC3hy+v06oUAuoKTO3qPUXNp5ApotnM=;
-        b=d4rwpiix+Y3zyCUiTPJDF4p89YuOCbHI4Ya1GERsVtygydkZO6TssH7Ic3im7uiQu8
-         ELnu+tzU99MT4BUdQcGJ7lzaEaR7wc+i3l6cdecAtTIdp15+3sHfGAbMUDkH4FwCFcma
-         Y/3qxlMLP4g7vBn5kluibemfonbR3suUWlP4nllH7gV+2/sSP7nerU6suBS0kSivvmoG
-         nCCDbmNyuLz+aI2mG9dlvSeoQm5NGaN+yjMXx3s83QVahv9yyoJTjHyzfh6cJFdD36hE
-         ICVlnPorAc604vGNtyuLUHZjDcvRQFG5pPFc94iREF4Epcrmqy1GGWCOecE5jw5bfesr
-         AY9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792120784; x=1792725584;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=+TOjkNOOOYODKC3hy+v06oUAuoKTO3qPUXNp5ApotnM=;
-        b=m65gbKNd+Fca14baRwAxATVBMmcEJFtpKeYij9bCeHA6bIOD9MozlGtMM28gGRHAeV
-         2vN3pif67GANEiUEfHuJyxPdlxbvGGKIbToJWR5uy6mCaO3Jmb9SNM8L/U6tskD1A0Bs
-         72XImrod0JEO08c2JF0zV5W/uvqcBOdoMgK4y/bspnv6E+9B3Ymsv43+OYOVtU/aLMZ9
-         XmW4/FcitSzJJFRxOFyPNakMTHIN8Z2lZfQM8HPhUlEDunp1padCTqpu2ioBlLCqseI+
-         ioe28HExJnwh6JxINKleNUhxE3WEeB51TEzMbPU6/RSeY1KpjBFKNhM3f6esLo7322Yw
-         /mRQ==
-X-Gm-Message-State: AFq9FYIQqJUwRmeHcB4fQRJLim+uAYwq0FVwXDX8eok8VlvgwGmlxJ+3
-	JT1mEkJYAZyybMDrOlGbNkiskH2E5XVWcm4HWxNXL7HVrKvRLWLZrHzdPJwxXoPi
-X-Gm-Gg: AYBFou3QANOAzE/5HK36Kvp21nAtieX5bxwMlfUwPEbrqpwovmiZa4qwUHTPdBM9qcX
-	xZY16nVFujm7UaHlAfiu6eFIg4J/F0dLIZTsBDQRL2w1VV86Y1yKSfU7+3iGdnvHP4MSWDxhRDC
-	9dygzciiG2OlJgKLzH7sQChJCOmgJnZXb3I+Ux1CF3PMkYpDjAkqXDQrcbSBhMIT3w6mn4t9dGm
-	LW1A60XhYSKuXr4PXXJwVg4YpGizqpxbSe6LV5Trs6C1FL0G+E/pkWvlSfOGm1WBECHc7axQhmQ
-	96ZNC1szwXzUQwEf2LPIZ5sQ4+ZbRtXpqVZhSueC6YezB45RvjldHxxKhzmhcCEM55lCzONWXRJ
-	W6kp/WNqoKqNaQCOWe6vBjMETOxuMF/43A+uep3KoNVbq2Sws6qPQpow7I39YiV/9qvT8tM7tNB
-	jTZ4beEp8P01GsPvQ01lwJn6zI2I3l/is/vwP6VqOYu2pVG5L2QL9Tf/G0hI5zGgDwnCrcow6GR
-	xBsxLBD8UXq5EAV0g78HYLqakUSgK59RmyPICC17F+VTdSCWOq3zawIC+J2SLgH8mZ/3W0y7U9H
-	u3nZXt2HdDcyuG9xv1X8zfIjeSI0oe9lE5k=
-X-Received: by 2002:a17:90a:d44d:b0:3aa:f4af:1e17 with SMTP id 98e67ed59e1d1-3ab3a9d6d17mr15840009a91.39.1792120783938;
-        Thu, 15 Oct 2026 20:19:43 -0700 (PDT)
-Received: from sanjays-pc.govzhome.govindz.co.nz ([139.180.93.36])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3acc46ebe40sm1960144a91.6.2026.10.15.20.19.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Oct 2026 20:19:43 -0700 (PDT)
-From: Sanjay Govind <sanjay.govind9@gmail.com>
+	s=arc-20240116; t=1792124073; c=relaxed/simple;
+	bh=JobKsdQyp0QPl4TgWuf43feGoTA/YjHTrvyExa3MZXc=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=jb022StmhU2ql896CjrLrvOPFH9siu9bHKDmouhvVxZZ4lBAcl7gokK7PkKP2n3gB8dbM+N6M7NoSHLIdZxbj/ObDcdwK1Jjzy+KVtwI8DGPQJEXHDfsXtcoA7gkedEuabrSYGeA24v+aWzPQkqJHMAErugbxA0cBdYua9bVAvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [10.20.42.62])
+	by gateway (Coremail) with SMTP id _____8CxvtKbpNFqVmMWAA--.64970S3;
+	Fri, 16 Oct 2026 12:14:19 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+	by front1 (Coremail) with SMTP id qMiowJAx3c6UpNFql_0sAA--.29236S2;
+	Fri, 16 Oct 2026 12:14:16 +0800 (CST)
+Subject: Re: [PATCH v2] LoongArch: KVM: Add hypercall crash support
 To: sashiko-reviews@lists.linux.dev
-Cc: Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	dmitry.torokhov@gmail.com,
-	linux-input@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] HID: santroller: add driver for Santroller controllers
-Date: Fri, 16 Oct 2026 16:19:37 +1300
-Message-ID: <20261016031937.824565-1-sanjay.govind9@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <sashiko-outbox-173648@kernel.org>
-References: <20261016025403.779635-1-sanjay.govind9@gmail.com> <sashiko-outbox-173648@kernel.org>
+Cc: kvm@vger.kernel.org
+References: <20261016034245.3002859-1-maobibo@loongson.cn>
+ <sashiko-outbox-173719@kernel.org>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <53f3f45b-1e86-1218-ff64-d0968cc8bb9e@loongson.cn>
+Date: Fri, 16 Oct 2026 12:15:32 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+In-Reply-To: <sashiko-outbox-173719@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qMiowJAx3c6UpNFql_0sAA--.29236S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7AF43ZrWDAr48ZFWfAr45twc_yoW8tF13pr
+	n7AF4kXFZ3XF1xCan0v3929w4rWFZ7CryIvrn8CryfAF15KF98Cw1jvFWv9FWkJw1fW3W0
+	vF48tryqv3WktwbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+	6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+	Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
+	14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+	AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+	rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
+	CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+	67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
+	0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8PC
+	zJUUUUU==
 
-On Fri, 16 Oct 2026 03:06:58 +0000, sashiko-bot@kernel.org wrote:
-> > +	for (i = 0; i < SANTROLLER_NUM_PLAYER_LEDS; i++) {
-> > +		if (sc->player_leds[i].brightness) {
-> > +			player = i;
-> > +			break;
-> > +		}
-> > +	}
-> > +
-> > +	guard(spinlock_irqsave)(&sc->lock);
-> > +
-> > +	sc->player = player;
->
-> Since the brightness array is read outside sc->lock, one thread might read a
-> stale array, get preempted, and then overwrite the hardware state with an
-> outdated player index after the other thread has updated the state. Moving
-> the array read inside the lock would prevent this.
 
-Agreed. The LED core only serialises writes to the same LED, so two
-player LEDs can be set at once. I'll move the scan under the lock in
-v2.
 
-> In the driver core, dev_groups assigned to the driver structure are
-> evaluated by device_add_groups() before the driver's probe() function is
-> executed. Because hid_set_drvdata() is only called later inside
-> santroller_probe(), drvdata is strictly NULL when this visibility check
-> is performed. This causes it to return 0 and skip attribute creation.
+On 2026/10/16 上午11:57, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] kvm: new guest-visible KVM_FEATURE_CRASH capability is silently enabled by default
+> --
+> 
+> commit 6d0e897e0c46a79eb02651baa4b7271884b07abb
+> Author: Bibo Mao <maobibo@loongson.cn>
+> LoongArch: KVM: Add hypercall crash support
+> 
+> This commit adds hypercall crash support (KVM_HCALL_CRASH) to LoongArch KVM
+> to provide a more direct, low-level crash notification method. It allows the
+> VMM to capture CPU crash context during exception entry even if the CPU
+> hardware context or kernel stack is corrupted.
+> 
+>> diff --git a/arch/loongarch/kvm/vm.c b/arch/loongarch/kvm/vm.c
+>> index 6dabb227a7321..9bf4b3bb8f25a 100644
+>> --- a/arch/loongarch/kvm/vm.c
+>> +++ b/arch/loongarch/kvm/vm.c
+> 
+> [ ... ]
+> 
+>> @@ -49,8 +49,9 @@ static void kvm_vm_init_features(struct kvm *kvm)
+>>   		kvm->arch.kvm_features |= BIT(KVM_LOONGARCH_VM_FEAT_PMU);
+>>   
+>>   	/* Enable all PV features by default */
+>> -	kvm->arch.pv_features |= BIT(KVM_FEATURE_IPI);
+>> +	kvm->arch.pv_features |= BIT(KVM_FEATURE_IPI) | BIT(KVM_FEATURE_CRASH);
+>>   	kvm->arch.kvm_features |= BIT(KVM_LOONGARCH_VM_FEAT_PV_IPI);
+>> +	kvm->arch.kvm_features |= BIT(KVM_LOONGARCH_VM_FEAT_CRASH);
+> 
+> [Severity: High]
+> Does unconditionally setting BIT(KVM_FEATURE_CRASH) and
+> BIT(KVM_LOONGARCH_VM_FEAT_CRASH) here break live migration and backward
+> compatibility?
+> 
+> If a VM is migrated to a newer kernel with this patch, an older VMM unaware
+> of the capability will not explicitly disable it. If the guest discovers
+> and triggers the new KVM_HCALL_CRASH hypercall, the older VMM will receive
+> an unexpected KVM_EXIT_SYSTEM_EVENT and will likely terminate the VM.
+> 
+> Should new guest-visible capabilities be left off by default and require
+> explicit VMM opt-in through capability negotiation?
+The design idea is that if VMM does not set pv features, kvm will enable 
+all supported features. With VM migration, VMM need set pv features 
+again in post migration stage, so it is the problem of VMM, rather than KVM.
 
-This one is a false positive. really_probe() adds drv->dev_groups
-after call_driver_probe() returns, so drvdata is already set when
-is_visible runs. In testing the attribute is present on the gamepad
-interfaces, and hidden on the configuration interface as intended.
+Regards
+Bibo Mao
 
-> > +	scoped_guard(spinlock_irqsave, &sc->lock)
-> > +		sc->output_enabled = true;
-> > +
-> > +	ret = hid_connect(hdev, HID_CONNECT_DEFAULT);
-> > +	if (ret) {
-> > +		hid_err(hdev, "failed to connect HID device: %d\n", ret);
-> > +		goto err_stop_output;
-> > +	}
->
-> Does this mix goto-based error handling with scope-based cleanup?
-
-The guard can't be jumped across here, but I'll move it into a
-santroller_start_output() helper in v2 so probe only uses goto.
-
-Thanks,
-Sanjay
