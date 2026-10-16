@@ -1,163 +1,240 @@
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.164])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032223368A9
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 12:41:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.164
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792154474; cv=pass; b=FwL4O3cM09yBIlVAssjC3JvbqOi8eDVUc4DbXXIONvYqrppTV7UfQfU+TIusQ3p+93PV86M9BCe190Nk4OPk0UfSi1b9/iZBb8NvTNEPJ/kzqnKCgGh8hQRzyC8clDNTBcxAupVtCury+vmUfP4xBM2CTJCz4sySMs5taU2N/r8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792154474; c=relaxed/simple;
-	bh=+tK7H/Zm6LgGuRIEK4THFuY9B+Y+pdRgbqTkF800OoI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bFGDTBuuZfngTU0+FOWmXR2ingSeaQthS0SK5u6Zc7M+qcD7SViY2UPqW6I/fRGvDRs/85+2h1CHP+qgDGynoqEjeK4HObO9uYI/4KUOIt1LR+SpySE/yVwINrrt50SV5HJeLzNw7mRSwYxMuBh8lj85Y4PEVudLoqDlnUMqcLg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=GIoqyCwz; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=1KGfoDG3; arc=pass smtp.client-ip=81.169.146.164
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D51B42255C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 12:46:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792154794; cv=none; b=Sk0GzBHSX7JvFDkecYG07pJH66ans5nQ+Vs+ZLrVkZmjA0oYURfCnbz7bRoNnqTvFdOH+F/22JpgDuCQd/Y/B1ps2Ru6xOo8XI4wVDrL7hGQvDzprx3AUsaMPYWyI1FGHXqM7ueLeQY/6Vria1m9YROdxAkVotmFnmGyP3GXD08=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792154794; c=relaxed/simple;
+	bh=gVjUEPHa1PYZTI+nIfsEUFd5Y9f2nK15hNfrXyxF6Y8=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=uA7Je2/jhgPjmjVGasyrzhyTSZvihcjhEpIFDLYljIniSziq+D5U6MOKiNa+hqMp5W007zKgYdl3VePR+bcqc6IcqojWRavPJ4AYwI0RVl9JnHszDrmiWy0uLzE+M8F+xIFS7289X9rcbdkzWMIX3BQUYA33ORuS+it9H7Eb31c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=D1D17518; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="GIoqyCwz";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="1KGfoDG3"
-ARC-Seal: i=1; a=rsa-sha256; t=1792154455; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=N4vsqWRq1wt+nolmxKeLmB2cH5+biuVU6Ix4bVU8UZTX4QNtr6EWuB8JIOLcAPqu4i
-    tbgeEltUaV2UMNWJzogHwAgNiVWrqd8sOo4+8Ing3hVJAQfT24s+ktHGQTIk3vmyNY2R
-    kDwWqhVDVbt63yY6Mpd7IvvLlnFI4L3rfmhLE7bjzI70oj3XY1wQYtMD08SdF4NXrpXt
-    wz6MbUIGaFenVEMn5aaNYyqrKpXdkZsVebY5VeCL5JgLuIhCHGONAer3i3a5Gy9O67Pe
-    wgNDyuK7NbFsLYbYd81DdHQjNC8Ya65pK5aXyp90V7Aia326L/HPgNwLdjJ0o53nJJxe
-    h43g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1792154455;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=Q7SySBlCpkZ9vN2XVJZC6nEZNgpb1VEG4CJUSfAj19o=;
-    b=bgCbh1OvWwd6CLUirdEHBtr5NTLo/MEzMSFtxOOc9KYATFBmc8ndUGnKQ88loRoRTt
-    /n4yWWAcPj7SJnSgO3nVM6zo4dTUKFRs8BXiY4Xd78YNDDmq5+yoQgErhiGu6f1wcUIk
-    oss5VDWIFIlojAkUWJ4iHCzbrIc421+kCvDZkWtTHMiXoRvtCEjRzBvQe2mmy5lKlhHZ
-    syXbPgGw2xCyBYj6Z4RRvH54ei9ghJrs3raQMVtL4Gtlhvy4xUF67VSISK7dQfPlJcYm
-    qvDNQXUrVRDUdSv6ZFw0ESiFDFArtS/K3zYiuWowLaOCXi5CCqALBseRjAlAt7ff2PvY
-    aPJQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1792154455;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=Q7SySBlCpkZ9vN2XVJZC6nEZNgpb1VEG4CJUSfAj19o=;
-    b=GIoqyCwzTdTOMKfZPRDbcJtRUX4griRAd7yH7Eqdf+iEtceOf+xLzlitY5EFjETwcx
-    3hB7J8qlSfMQRZ7cdxEVCDFCGeBMhBOEa+1+Y1YiLOoc1fZSK9HAzamthH+8B2pxeLhs
-    xSVsY3wPm4vumbhmezOwVWtqTt+qLOmnOnNRTffyFaK2hsCUxrxFImgyaiNNymBpmhZD
-    HIrEV/aoMFAHjj6lsDtZur7BM5vjwawNBOzulLpX44diOsu5gixwd3RONz1wG81ma9Y8
-    DldRvpM7cuB7Q0BxONotQzI1URkRm0TuhdOml8pKM+o61/Fz8l42faymuNiTdI/mVeag
-    bdDg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1792154455;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=Q7SySBlCpkZ9vN2XVJZC6nEZNgpb1VEG4CJUSfAj19o=;
-    b=1KGfoDG3e4+7WpwePAAfaObYwAdzg5n3P6bha2zv6PTDi/1b8gUdCAiuwW9q9vhiz5
-    gHNxaKMxay/tUzjDSsCg==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
-Received: from [IPV6:2a00:6020:4a38:6810::989]
-    by smtp.strato.de (RZmta 55.6.3 AUTH)
-    with ESMTPSA id Kfdf2a29GCetMMg
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Fri, 16 Oct 2026 14:40:55 +0200 (CEST)
-Message-ID: <6aadd4bb-75a5-4ee1-bacd-704ae5a036c9@hartkopp.net>
-Date: Fri, 16 Oct 2026 14:40:54 +0200
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="D1D17518"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1792154790;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=gVjUEPHa1PYZTI+nIfsEUFd5Y9f2nK15hNfrXyxF6Y8=;
+	b=D1D17518Z163+5v1N9B8phNuGX4M4XtpH3HcOzumEmHuup9DbhcCgIC13HNazvdnQII5Dx
+	giVK2BMvt+LUJxvbLU6UeHVWocICnkawIto5OEf07VvPJD/S3pn0lNs5uEvdRjhZITQXey
+	O81uDF2cwit7kXdABsRB/eTx59kc0Ig=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-651-2C2V-uNXONaQ7-ZzrXlNEA-1; Fri, 16 Oct 2026 12:46:29 +0000
+X-MC-Unique: 2C2V-uNXONaQ7-ZzrXlNEA-1
+X-Mimecast-MFC-AGG-ID: 2C2V-uNXONaQ7-ZzrXlNEA_1792154789
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-93ce7a85f04so1340366885a.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 05:46:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792154788; x=1792759588;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=jXE5vMlJLDULz4QabdUZcN7zMUliDBSGHX5ZEXcYJUA=;
+        b=jhtMxpkE0/hGRdOJ9LYfDAhuKQrfkmorGSj3oL+v7oCoiiRu+PeTBQZlNghc5rgoaL
+         bircVIlREf2QiBcgbVpTQLLr9XiaXS1QA6o87RyKMy4SKop13ij/n9G4xYvZLxxk6w3x
+         VAoF5bYQt2DL2tgA2wQYDPRkiY5e5hf6sEnWFzLVPd4JhjRn1QiCzUs3yZMzn+xHuhWU
+         z+dqmp6ZZR2mSaQJjOHibn71XYlV5Pfrmgm9INv4RdoK94SFrwqKJl08axERHZ1OkcQ9
+         Tgf9L1EHuGurhMAgmQNg2rG9jBD/KXY4dUqTNzdbauf1Ry9mk9iTROTjSRRxWPtwOFg/
+         87NQ==
+X-Gm-Message-State: AFq9FYJSW8qjXdlY0KC3N3R3InxP/hK+cIJou8Mpt3bHP7ifPQO51khI
+	U6lknlBAaRIk9araPJH3T4yM0NZmLUNO68nb0msd/cc+Q+BfEKhlkHmTm/nmz2kAYQhWT6Du+f2
+	Lm6nOzAVESCOwCRYUQ/jEmceg3YrmveG/CLgEc2rqkUUvR/Jg7Hkd3ifgJuJD5Q3B0e8yR+AWk9
+	Cc7XJqPDl1Zs02PYifdANVppIHRBlNS3CyoQTZtyJ+apdrhAAiPnIEvw==
+X-Gm-Gg: AYBFou3UYKN0ybgkegUj1W/H2PhwqCWJ5gDALoB4ty2lZ1Z3x/UVUNqXgbgrm+JSt8y
+	Cs4B1du+u8qUemENGp0kHggqtgC3l8Grx9hkBesbNNsrGR/5GQsxpLkTL7OErD3sHOrsRLVfGvs
+	Qd4SI1Pi0ibImZKYf0YDRYgN0Pesi62G9VBTa9GhnHVqm2a4Ijkw75YQ5HS5pBSz0gQ61cyonoq
+	5Dy2i4w70ZwyXrx+6OwPlrL/WeFu06rp07MkM7g92cYnB91mQJgIKU/KjS70qqC4RNw5REshdB/
+	/00yFmZFk0ZEbShbktGhOJjvb6uFl9kjyLDyJ9KxjZRUzDdDJuuoc2ghlhxsc3AbRUQ5EqoTg5o
+	LN/HXMsm7P9G5BPIlYVwX5fHTkoKC+o7pRrw=
+X-Received: by 2002:a05:620a:198d:b0:93e:66db:69b9 with SMTP id af79cd13be357-93ebd23ab8emr3416425185a.55.1792154788455;
+        Fri, 16 Oct 2026 05:46:28 -0700 (PDT)
+X-Received: by 2002:a05:620a:198d:b0:93e:66db:69b9 with SMTP id af79cd13be357-93ebd23ab8emr3416418785a.55.1792154787746;
+        Fri, 16 Oct 2026 05:46:27 -0700 (PDT)
+Received: from loberman-thinkpadp1gen5.rmtusma.csb ([2600:6c65:2440:d8c:929c:b769:6def:faa3])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-93f1a16b5e4sm201356085a.14.2026.10.16.05.46.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Oct 2026 05:46:26 -0700 (PDT)
+Message-ID: <8e325cc7ca21d607b3664debcaa5f14b273b91b6.camel@redhat.com>
+Subject: Re: [PATCH 1/2] scsi: target: iscsi: Complete an aborted WRITE
+ stuck before the first R2T
+From: Laurence Oberman <loberman@redhat.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-scsi@vger.kernel.org, target-devel@vger.kernel.org
+Date: Fri, 16 Oct 2026 08:46:25 -0400
+In-Reply-To: <sashiko-outbox-171458@kernel.org>
+References: <20261014143932.39453-1-loberman@redhat.com>
+	 <20261014143932.39453-2-loberman@redhat.com>
+	 <sashiko-outbox-171458@kernel.org>
+User-Agent: Evolution 3.60.2 (3.60.2-2.fc44)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH can-next v2] can: replace ARPHRD_CAN type checks with
- can_get_ml_priv()
-To: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: sashiko-reviews@lists.linux.dev, linux-can@vger.kernel.org,
- Vincent Mailhol <mailhol@kernel.org>,
- Oleksij Rempel <o.rempel@pengutronix.de>
-References: <20261016093525.327367-1-socketcan@hartkopp.net>
- <sashiko-outbox-174104@kernel.org>
- <e71563e4-2d8d-4302-a9d1-b0dc34fea3a1@hartkopp.net>
- <179215290023.1285626.1847782701765808982.b4-reply@b4>
-Content-Language: en-US
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <179215290023.1285626.1847782701765808982.b4-reply@b4>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: ELvgE2Tw_FT6D8iyPFuoqWtU-H9Gok6lj5CAKWO_VyY_1792154789
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, 2026-10-14 at 15:10 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue(s) to consider:
+> - [High] iscsi: double completion and workqueue corruption for
+> aborted WRITEs on DataOut path
+> --
+>=20
+> commit 7b04f6989363db2c2b75d8c212ee852153982c8d
+> Author: Laurence Oberman <loberman@redhat.com>
+> =C2=A0=C2=A0=C2=A0=20
+> scsi: target: iscsi: Complete an aborted WRITE stuck before the first
+> R2T
+>=20
+> This patch resolves an issue where an aborted WRITE command that
+> arrives with
+> immediate data exceeding FirstBurstLength gets stuck in
+> TRANSPORT_WRITE_PENDING.
+> It accomplishes this by completing the command in
+> iscsit_execute_cmd() and
+> introducing a new iscsit_claim_completion_locked() helper to avoid a
+> double
+> completion race with iscsit_release_commands_from_conn().
+>=20
+> > diff --git a/drivers/target/iscsi/iscsi_target.c
+> > b/drivers/target/iscsi/iscsi_target.c
+> > index 124ff269b8e75..aab9237a67768 100644
+> > --- a/drivers/target/iscsi/iscsi_target.c
+> > +++ b/drivers/target/iscsi/iscsi_target.c
+> > @@ -4198,10 +4198,18 @@ static void
+> > iscsit_release_commands_from_conn(struct iscsit_conn *conn)
+> > =C2=A0=09=09if (cmd->se_cmd.t_state =3D=3D
+> > TRANSPORT_WRITE_PENDING) {
+> > =C2=A0=09=09=09/*
+> > =C2=A0=09=09=09 * We never submitted the cmd to LIO core,
+> > so we have
+> > -=09=09=09 * to tell LIO to perform the completion
+> > process.
+> > +=09=09=09 * to tell LIO to perform the completion
+> > process --
+> > +=09=09=09 * unless iscsit_execute_cmd() already
+> > did.=C2=A0 t_state
+> > +=09=09=09 * stays TRANSPORT_WRITE_PENDING across
+> > that
+> > +=09=09=09 * completion, so the claim is the only
+> > thing that can
+> > +=09=09=09 * tell us.
+> > =C2=A0=09=09=09 */
+> > +=09=09=09bool claimed =3D
+> > iscsit_claim_completion_locked(cmd);
+> > +
+> > =C2=A0=09=09=09spin_unlock_irq(&se_cmd->t_state_lock);
+> > -=09=09=09target_complete_cmd(&cmd->se_cmd,
+> > SAM_STAT_TASK_ABORTED);
+> > +=09=09=09if (claimed)
+> > +=09=09=09=09target_complete_cmd(&cmd->se_cmd,
+> > +=09=09=09=09=09=09=C2=A0=C2=A0=C2=A0
+> > SAM_STAT_TASK_ABORTED);
+>=20
+> [Severity: High]
+> Does this code miss the DataOut paths?
+>=20
+> Because target_complete_cmd() is called directly in
+> __iscsit_check_dataout_hdr()
+> and target_execute_cmd() is called in iscsit_check_dataout_payload()
+> for aborted
+> commands without setting the completion_claimed flag.
+>=20
+> If a command is aborted on the DataOut path:
+>=20
+> drivers/target/iscsi/iscsi_target.c:__iscsit_check_dataout_hdr() {
+> =C2=A0=C2=A0=C2=A0 ...
+> =09=09if (se_cmd->transport_state & CMD_T_ABORTED) {
+> =09=09=09if (hdr->flags & ISCSI_FLAG_CMD_FINAL &&
+> =09=09=09=C2=A0=C2=A0=C2=A0 --cmd->outstanding_r2ts < 1) {
+> =09=09=09=09iscsit_stop_dataout_timer(cmd);
+> =09=09=09=09target_complete_cmd(se_cmd,
+> SAM_STAT_TASK_ABORTED);
+> =09=09=09}
+> =C2=A0=C2=A0=C2=A0 ...
+> }
+>=20
+> Because completion_claimed is never set, target_complete_cmd()
+> delegates
+> to target_cmd_interrupted() which queues target_abort_work but leaves
+> the command in TRANSPORT_WRITE_PENDING.
+>=20
+> If the connection drops before target_abort_work removes the command
+> from the connection list, iscsit_release_commands_from_conn() will
+> find it,
+> iscsit_claim_completion_locked() will return true, and it will call
+> target_complete_cmd() a second time.
+>=20
+> Can this double call to target_complete_cmd() cause
+> target_cmd_interrupted()
+> to re-initialize and re-queue cmd->work while it is already pending
+> on the
+> workqueue, leading to workqueue linked-list corruption and a use-
+> after-free
+> when target_handle_abort() runs twice?
+>=20
+>=20
+Thanks for the review. I verified the mechanism and it is accurate:
+target_cmd_interrupted() queues target_abort_work and returns true, and
+target_complete_cmd_with_sense() then returns before reaching the
+"cmd->t_state =3D TRANSPORT_COMPLETE; cmd->transport_state |=3D
+CMD_T_COMPLETE" block. The command is left in TRANSPORT_WRITE_PENDING
+with nothing recorded to say it has been completed. The window is also
+not narrow: iscsit_release_commands_from_conn() holds conn->cmd_lock
+across its entire walk and iscsit_aborted_task() needs that same lock
+to
+unlink, so if the work item has not run yet, teardown is guaranteed to
+see the command rather than merely likely to.
 
+Your point about target_execute_cmd() is correct as well, and worth
+spelling out: it calls target_cmd_interrupted() before setting
+cmd->t_state =3D TRANSPORT_PROCESSING, so an aborted command taking the
+DATAOUT_SEND_TO_TRANSPORT path also stays in TRANSPORT_WRITE_PENDING.
 
-On 16.10.26 14:15, Marc Kleine-Budde wrote:
-> On 2026-10-16 12:02 +0200, Oliver Hartkopp wrote:
->>> [Severity: Medium]
->>> A few lines lower in isotp_bind(), the return values of can_rx_register()
->>> are ignored:
->>>
->>> 	if (isotp_register_rxid(so))
->>> 		can_rx_register(net, dev, rx_id, SINGLE_MASK(rx_id),
->>> 				isotp_rcv, sk, "isotp", sk);
->>>
->>> 	/* no consecutive frame echo skb in flight */
->>> 	WRITE_ONCE(so->cfecho, 0);
->>>
->>> 	/* register for echo skb's */
->>> 	can_rx_register(net, dev, tx_id, SINGLE_MASK(tx_id),
->>> 			isotp_rcv_echo, sk, "isotpe", sk);
->>>
->>> If can_rx_register() fails (for example, returning -ENOMEM due to a failed
->>> kmem_cache_alloc()), bind() will succeed but the socket is not fully
->>> registered to receive CAN frames. This leads to a silent failure where
->>> user-space believes the socket is successfully bound, but no traffic will
->>> ever be received.
->>>
->>> Could this regression be prevented by checking the return values and
->>> propagating the error appropriately, or cleaning up any partial
->>> registrations?
->>>
->> When this patch is applied isotp_bind() can only fail with -ENOMEM and
->> nothing breaks. The socket just becomes unusable. And if we have -ENOMEM
->> we have a big problem anyway.
->>
-> 
-> Please run "b4 prep --check" before sending patches:
+However, this exposure is pre-existing rather than introduced here.
+Mainline at that site today is:
 
-I'll use b4 when I start sending the ISO-TP CAN XL patches. It still 
-feels unhandy for the reactive review traffic to me.
+=09if (cmd->se_cmd.t_state =3D=3D TRANSPORT_WRITE_PENDING) {
+=09=09spin_unlock_irq(&se_cmd->t_state_lock);
+=09=09target_complete_cmd(&cmd->se_cmd,
+SAM_STAT_TASK_ABORTED);
+=09=09continue;
+=09}
 
-But I missed checkpatch ... sorry.
+The call is unconditional, so a command already completed by
+__iscsit_check_dataout_hdr() or by target_execute_cmd() is completed a
+second time by teardown as the code stands. This patch gates that call
+on the claim, and for a command arriving from either of those paths the
+claim succeeds, because neither path claims. Behaviour for them is
+therefore identical to mainline. The only change is that the site this
+patch adds in iscsit_execute_cmd() can no longer be double-completed.
 
-> I've taken the patch and fixed the checkpatch warning, but I suspect the
-> netdev sashiko will complain about the missing error handling, too.
-> 
->> If I would provide such a patch the proc pointer removal patch would
->> break next.
-> 
-> I think this is not an argument for sashiko :/
+So the patch removes one reachable double completion and adds none. I
+would rather not extend it to cover the two pre-existing sites: this
+series has 300 reset cycles of customer validation behind it on a
+reproducer that previously failed at 95 and 196 cycles, and widening it
+would mean shipping code that validation never exercised. I am happy to
+post a separate patch for the pre-existing paths, on its own merits.
 
-The check of can_rx_register() in isotp_bind() is neither important nor 
-urgent. I'll address it later.
+The companion finding against patch 2 is a real defect introduced by
+this series and I am fixing it in v2.
 
-It can not be the right way that important and urgent fixes are delayed 
-for weeks when sashiko-bot finds some patch unrelated pre-existing issues.
-
-I generally like assistant systems (also in the car) until they hinder 
-the intended operation. This is like refusing to start because we have 
-freezing temperatures.
-
-Best regards,
-Oliver
-
-> 
->> I have ~20 patches for isotp and its CAN XL support. I will add the
->> isotp_bind() error handling there when these current (can-next) fixes
->> are in mainline.
-> 
-> regards,
-> Marc
-> 
+Thanks
+Laurence
 
