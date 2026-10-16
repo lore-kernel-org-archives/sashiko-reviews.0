@@ -1,167 +1,173 @@
-Received: from mail-dl1-f45.google.com (mail-dl1-f45.google.com [74.125.82.45])
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F3B282F1D
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 07:41:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EC843801B
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 07:47:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792136472; cv=pass; b=Y41YBg6HURr/+zbxTm08e+9zmsRqIfm34T9Ftg7yutBwrBJQsz9DpipoQbMyDforFp+sp4fPm6HJW6pGnIhldV5IgRD+DrxzWfJi5UBfLQPkt+b4yMcBw3fH5PN8gwHQBBOwVh5sEsXJF0DSX19KrxECL7Nvx9WYanEavPiZobo=
+	t=1792136834; cv=pass; b=sxur5nrS5Fp6zrbdNovB3huWkpX2NhSesZWKAvnBssvWpnCv0okttk1FLcrA16cNdDLcRgXxgY3ROr0DRBCOPuzrUZqU/zA6iFAQGGCxm85jEdzybEqQfBlgc/n2AcUVnqTOB9yxWVIwZvKCcJFk7xx0j+mPp01CDaQxZDMsSSI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792136472; c=relaxed/simple;
-	bh=uqgJELiFAnz8uhbY1m8z7u7ftcMcaHbRbpjz8Ro0Dlo=;
+	s=arc-20240116; t=1792136834; c=relaxed/simple;
+	bh=iz50SIIYgNXhoBf+ZNtcTDDxG1l5WEOIvp9iGxEjNrw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Q41IQ/ZyRldJUvXAlrBMHwrt6Ma2/0Ox35hKrCYoyM+402L1TTHubEapepqakYv6fE0azkbGfgnCnMyFM8+3p2dpGMn+apndDz4sMO9dtUIej5r/deARUoh3mA3b7LOBXCYAq1uW912QkQaPZ1G3FRZWyoQeQzsvWnFuxyMKh+s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=cr5inZDc; arc=pass smtp.client-ip=74.125.82.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 To:Cc:Content-Type; b=J9tbilWdfa2eCGhr+cK428pMXCggYFXEQvLzX+NLxwi8LFc2HtO4h9K2lKDu1i0eGJOI9dp7CgPPkR8ycR8wzNr38ETaJOU8U8cu6EuXybbAiZSNpBTk382fgNL1LkqHO7eNzTvFPb3u/CfGdD1oAZaoFH/ux2sJ0A8fFBfpxmg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aS0EIxKP; arc=pass smtp.client-ip=74.125.224.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="cr5inZDc"
-Received: by mail-dl1-f45.google.com with SMTP id a92af1059eb24-15756f82e8aso498175c88.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 00:41:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792136470; cv=none;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aS0EIxKP"
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-679a420b5afso1544475d50.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 00:47:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792136830; cv=none;
         d=google.com; s=arc-20260327;
-        b=qbvzEqyEopkojYsZnJvQKXEqe5+UzlW2vX4v6LTUqC69Q9rQpuRYkw4HkWLZn9PPw4
-         Kmp04+oSkel2AcKXhqCTEko4LpWD1TaMW6ZzPdrtJ17XrG7ojAisWZhpWAM+Ly1F7GW4
-         EF6UeiUBSZ3E8NqMkF3GNl8uBu+Py0DdpMEiRH3nA5DVU4yoksxzjGfCGUO8JnpMFfcu
-         /+HTdsx4AFL6b/6z5ylnG3AldUfRuPWaFErR3nMfSzJ0/2P64i65YGdCDtejLdrskUr6
-         uFeSGvsUhEnBLcf0LF3hPuBg9W3GXMszJDPddEJnto+jfoR1rmtgfgJcG6Huomwo8qLw
-         Oztg==
+        b=anVzV4ZZnrVwcaJmVVPA1R8swdwbdfnPrTV9caadNN8/OCVR0ev9zU4IubbuLKqnGh
+         xA2s+XWLgMc+RaKLTwFHcR8aO6FTus+lTIfVOG8agtd313Og5yCzVppnLleEab/hhH7h
+         WafVPY+zRLyKDGhBo+4KiczC6o4Y9sz3bJca0iuRo3fyRamsnlQZdpXG2qRiIvieUWkM
+         5x4UH0dUE1ZZhR/SeyLqvF4t0paEaD1y2xPeFdGPvYExGoMIn41jTYnOcyavJSboqQwf
+         Wgv8FwoN7FMUgwCBeL6NBT21ngNRIWkePB/D4Zl6z4sa+Ma0scgvmqkF34mB+i75VHp4
+         eoug==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=Gvin5FVSRfORqAgjOiitNjYtjn2LSimhwreeMhLMTao=;
-        fh=E7pV6LqmTvORMIDMVtz2a2PV/Bq0EECv8kpT5WBvl1o=;
-        b=FUfQQ/nVHfYDmjG6w6O5G4QFqz+wxGuUUYWRl8w0/0M6tmGVwavcWFVtvmjT+PAaow
-         1Se6hQlP9nnU59KVFjaA/OptQlMMcsHsC0/gnfbYRnImjCqhkz87hvGaX4ay3WZckksE
-         JdwPuOnFuO2/hoqbRoV7e6CYwWd6yM/6abntLj9ONu4lDPA7H9mwTZjGKxENsxwuVnHX
-         vXViLqLVArpwVkLCm5bMzsxYRmmOgiekTF85XS1cINu85Wq0EvVM0Xv89oKRGkmZUka8
-         dLeiMO4qj5ky7gU7ZLECYEreCk+8pbzNaINBJxbRT9X/7TqvEYf5gB8yjP3t/FWvxHjh
-         3Mlg==;
+        bh=YjWAKtNOnITlaXHSksc6OaQBOzDeD+AdLblBRpND2cY=;
+        fh=jN8VodyhAI7zYna9JzV1QjHjWbE/Mn6J5bWeUXC0oQM=;
+        b=OLXf42IpBBiXYBsKXV6a4omRXMrJ9flyZiVVK/Nc3hFjX7tMHjnuO6B45A6x56Eu/R
+         GfLaQTmh94Ea8Gw1vt3LoKgD0GFDmXBWKbiUwZZVYS9ICIsoR1hVfhGi2YBBX+9794qb
+         pvygJy1N6EE/A5MHsMogORPJ71IKUxWVpWPT7BhIb53rE6eNFezzf1vktyCURSWOavvE
+         CHvD1daXJTYSHwWEEoewqA6HXv8fksSfMwWD7Hx8ei6uIcnKcgQay71NDWECKDrKBe+2
+         4v6+d9sShZI1xaP+mLMFq3mqZojpH3nryN3IVu4kKdYmqQ5pbpVU/ZnW7H8Lz+KpGMZG
+         Ujzg==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1792136470; x=1792741270; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1792136830; x=1792741630; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=Gvin5FVSRfORqAgjOiitNjYtjn2LSimhwreeMhLMTao=;
-        b=cr5inZDcn8oJhr9/+V5pvm4qMgNVvGz76AyzCysBQGkVdX2T7x6P7+NJeo92xFw1OH
-         5iNg0BnEu81NsA9+h/aoJBHsI2oCW2ZOi93ZVdzgV9e+12Gi7N3ZD1/UykAvfEm2MaIg
-         7ONryDE/SVhUOIJdCcvQHguomCxHLtN+o/eXWIl9qFOyIyJKfyLvDdsMOiyW2qL4nl7W
-         6XcCHcy3ly8gpNf1pYr8tFgVlqYXIC4m8VI/5skcRRMP4b+7rzzz3kiuf/vye1NFBOh9
-         0UJFUwP5MgkamPZxciYo5rqJvNzGIv/t1+7ZQt5+d2RS6CxIMxuLkNp6muZ60cO/6wWE
-         bY0A==
+        bh=YjWAKtNOnITlaXHSksc6OaQBOzDeD+AdLblBRpND2cY=;
+        b=aS0EIxKP5H5/oxXtAVsoapUAM02F7/2G2EKZ4vqo4avrhoPlyvabLAAqaNoKuaPmi4
+         Dc18KuEK5C2rv/CFLOtTxq0n0Av2xNnpS0OqUbyUp5NE23IQZ/3FE3dbFlQDaEdR2BIo
+         il+6TMFVVZI4heP0ieNldygkLJLmJda5d44HaiQG7SlpmagzO9pAWv2MpekxbtYjNTp7
+         TuNWEedcooMxhYSXGKiAdN2oNkJphBNbvO9rST6GY8zP5u1kkojS7pIUPlOpxOM9Hr9Q
+         /HALeABABO+c1epKU3x8ZeSebOG7YYA7/gOhVAPWhEBIKj/UzcAuVyEpOWkjLmu9fYJC
+         zRjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792136470; x=1792741270;
+        d=1e100.net; s=20260707; t=1792136830; x=1792741630;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Gvin5FVSRfORqAgjOiitNjYtjn2LSimhwreeMhLMTao=;
-        b=aPQy3kx3+fXAfuTHeLZNwMRF6eL0ixzsDJwCmte6lkUzt1uKrF+AzFHidK8id7y4km
-         lDada44EZKUc78U9QgLaqCpJmvjVqeyk+vOiJTSXKCz+vKLRUvyyklDaKez4l9mKwyjc
-         YwUCD/0eDAUXzH+HnfYl++LwXO610tL+iRph5n7AfpHUUoh/ahBwXqhWSvvCRC2iRtDt
-         XGd+SSQopS041zXIIbS+ciWyoOu/g7PIfeIvlU9nQZXnpFBDIDd9G9NrvjIYcFnii2Rr
-         4PxjlV6wVOuuSoBtX/87pK8C4RhJvNdzI6RoRPKz2uEMqm4uTJSGKo6hr5DqcfEnHz2o
-         fIxw==
-X-Gm-Message-State: AFq9FYLOGiAn5d/eO2C0o0F0SZ/RWz77LsW38ZdnjWmg/TeuwFB8nXXr
-	Wnw+XBsAWupDhj6ZUsnsX+aoLUHdLR9SRoIlMJEBeBI7ntY+6e9yk5FyriEE1VCLA8IImWid8k/
-	zyRRvtGBGZ9XkwlP4DtWtJbzgXaHdrNRcIhMmSGQGD+0Fz4rPFco8FRPnDfvbYw==
-X-Gm-Gg: AYBFou1R1nd/toOH/hebpIx/r8s8pm1rjLnNevBuhbkG068P6WLGN88uoMUVLdTxVCD
-	VZ8GC4FSlbWLJQuOl7owL3dz/59sAZwT37yqlOWvSG2ZCRH1nU5UtNrMYzPwvuZjZOW/V0SKmmz
-	qeLby7RJAIIU88ShulPQ0fQ7ymMN2q5I30pxnstecAdaHMoYb8INN5JpSc1HwYNMVw+lNSLq1e9
-	LESQegfMa+B5/emcgzmyUuirtc28cHc1tAOY7JlZ4baLBeEomWj63oHcYrX88jCmRyWDX5dagxg
-	fKWAsK3d3MKUo4PEO0b8rnGFUHhzMC2NX7Z2ZbLxyvqU04I0sjpNDABUW8wKkjHk59iqOxx2Xeb
-	Mrn7YRUUJ524OCDTpuzWSUkkHK0EukwLwheI8E/UhUNBO7jAVJBzDYUrRrP+1OxCKsY4=
-X-Received: by 2002:a05:7022:b909:b0:183:e184:86b with SMTP id
- a92af1059eb24-183e1840930mr671472c88.5.1792136468619; Fri, 16 Oct 2026
- 00:41:08 -0700 (PDT)
+        bh=YjWAKtNOnITlaXHSksc6OaQBOzDeD+AdLblBRpND2cY=;
+        b=2SgfECLkdES+/czCszmzr/0bt0BSJN4cxcSfMuZPqXhVGdRQ1UVoL3kY3O70FMfkWt
+         fxLNQQ+qzTYB4UDBFxs+zn246f9Vdcsthppf+V9cmGIxDR3UGOJ7UlAq25k5O1sZkJ43
+         fgHPGpyWmYj68T2ZFgFBapzGiLbb2Rp8v+Tzmr1d9adPoEE9RaOYVV/EAb/OiCX4taPn
+         whGXXLfk5M68kVq+mnCLkllMB6JQ+PI6rNNW3DnuR9jwBlMTKeDATfQsB06PPJdRMd9L
+         A6/mzk6eChqZq8mICaUANB+BvyhyOTbOhGRz9G+QME+Fi2IZb/1tER6ih9UrYaxrekhZ
+         t0Xg==
+X-Gm-Message-State: AFq9FYJhETpyROciOIZ+/DaSaxKlraeicEdcicO764VxjLAxCozpyB1Z
+	oODydAv7rhwrGw/7MPN6WSfg9QgTgfDAAOxMPtdzcn23oKGiFWHauE3YG9l2mtJaGvHUUehklWp
+	UTzXu9E5ZW2OvaPmSlaqiDY56hS8d+2WwzvQ6gpk=
+X-Gm-Gg: AYBFou2t8Wsqej1BRPES9G0egzuB874rh5BOwdqKFmWpa6g9GHWPYCw7fAFW5flzB9Q
+	nlKM7x2RLoGDy5QOB4ZRrmi/pKvJc7qPEinoQqhQwLqGe/e1YFTTJSBwOpTiUMMsfBTTQ8Akehk
+	DzbanZA9z0VxPyEINueSEGqpnVflKr3vnVnSacBTTiWGFzdzRCLRCYTLldc8sUB61U4xd3gNMo4
+	S1o0CnmehFBG8YRUZ97IbJF2kHhIz8aAaYuLNp9TN3PhAPciabybJ5/jZp0SdI3tdV9IMrACTW3
+	U2s6VPnqeKHSAM7zy2cnCkwOYBIMXNysSGuOMSPrNEJURae/KoBPbwhtdBvGhKLKKkZScCs37Ci
+	DPQa5fjbLf2+qy8Zi21Lg
+X-Received: by 2002:a05:690e:168b:b0:679:5b51:339f with SMTP id
+ 956f58d0204a3-6795b513803mr4554881d50.132.1792136829876; Fri, 16 Oct 2026
+ 00:47:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261016052811.3085635-1-kuniyu@google.com> <20261016052811.3085635-6-kuniyu@google.com>
- <sashiko-outbox-173832@kernel.org>
-In-Reply-To: <sashiko-outbox-173832@kernel.org>
-From: Kuniyuki Iwashima <kuniyu@google.com>
-Date: Fri, 16 Oct 2026 00:40:55 -0700
-X-Gm-Features: AclHuK_-2Q6ZFfmcgBoRpW5wBrPL25ucpbDYEWMEqQg6KTXcdE2QJWDRe84Bruo
-Message-ID: <CAAVpQUDnBkB0AUteLOP0f6qFaSJXrWm8CHwGXizvMZ0RsmB4wg@mail.gmail.com>
-Subject: Re: [PATCH 5/5] selftests: cgroup: Deflake test_memcg_sock() in test_memcontrol.c.
+References: <20261016053708.47089-1-laoar.shao@gmail.com> <20261016053708.47089-6-laoar.shao@gmail.com>
+ <sashiko-outbox-173837@kernel.org>
+In-Reply-To: <sashiko-outbox-173837@kernel.org>
+From: Yafang Shao <laoar.shao@gmail.com>
+Date: Fri, 16 Oct 2026 15:46:33 +0800
+X-Gm-Features: AclHuK_T9y1mVOiQaEvA1Ds2-qibg0REEpTSP5r7q1epESdWgUdYroFJnwfhLw4
+Message-ID: <CALOAHbCeKtedvb=D=QdQiAXouJ4_dCVsgCP5t_OpA3QG=7xn1w@mail.gmail.com>
+Subject: Re: [PATCH v12 5/9] livepatch: Implement provides and obsoletes for
+ scoped atomic replace
 To: sashiko-reviews@lists.linux.dev
-Cc: tj@kernel.org, hannes@cmpxchg.org, mkoutny@suse.com
+Cc: jpoimboe@kernel.org, jikos@kernel.org, mbenes@suse.cz, pmladek@suse.com, 
+	joe.lawrence@redhat.com, song@kernel.org, live-patching@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 15, 2026 at 10:43=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Fri, Oct 16, 2026 at 1:48=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] selftests: test_memcg_sock test flakiness due to memory.high d=
-rain abort
+> - [Medium] livepatch: memory leak of dynamically allocated patch structur=
+es on klp_enable_patch failure
 > --
 >
-> commit e2cdb9bf5e0d84cc05db8a040ff4bb2ffe26c7cb
-> Author: Kuniyuki Iwashima <kuniyu@google.com>
+> commit 160ccf1ed36fde593c80db0147adb4d9a0aa689f
+> Author: Yafang Shao <laoar.shao@gmail.com>
 >
-> selftests: cgroup: Deflake test_memcg_sock() in test_memcontrol.c.
+> livepatch: Implement provides and obsoletes for scoped atomic replace
 >
-> This commit attempts to deflake test_memcg_sock() by increasing the numbe=
-r
-> of retries in tcp_client() and writing "0" to memory.high to trigger
-> drain_all_stock() and flush cached socket memory charges.
+> This commit replaces the boolean replace flag in klp_patch with provides
+> and obsoletes fields. It introduces a new flexible model to allow multipl=
+e
+> independent livepatch sets to coexist safely on the same system.
 >
-> > diff --git a/tools/testing/selftests/cgroup/test_memcontrol.c b/tools/t=
-esting/selftests/cgroup/test_memcontrol.c
-> > --- a/tools/testing/selftests/cgroup/test_memcontrol.c
-> > +++ b/tools/testing/selftests/cgroup/test_memcontrol.c
-> > @@ -1447,6 +1447,13 @@ static int test_memcg_sock(const char *root)
-> >       if (cg_read_long(memcg, "memory.current") < 0)
-> >               goto cleanup;
+> > diff --git a/scripts/livepatch/init.c b/scripts/livepatch/init.c
+> > index f14d8c8fb35fa..1eb124191cf22 100644
+> > --- a/scripts/livepatch/init.c
+> > +++ b/scripts/livepatch/init.c
+>
+> [ ... ]
+>
+> > @@ -72,15 +75,19 @@ static int __init livepatch_mod_init(void)
 > >
-> > +     /*
-> > +      * Drain per-CPU memcg_stock so cached MEMCG_SOCK deltas in
-> > +      * stock->nr_sock[] are flushed to vmstats.
-> > +      */
-> > +     if (cg_write(memcg, "memory.high", "0"))
+> >       /* TODO patch->states */
+> >
+> > -#ifdef KLP_NO_REPLACE
+> > -     patch->replace =3D false;
+> > -#else
+> > -     patch->replace =3D true;
+> > +#ifdef KLP_PROVIDES
+> > +     patch->provides =3D KLP_PROVIDES;
+> > +#endif
+> > +#ifdef KLP_OBSOLETES
+> > +     patch->obsoletes =3D klp_obsoletes;
+> > +     patch->nr_obsoletes =3D ARRAY_SIZE(klp_obsoletes);
+> >  #endif
+> >
+> >       return klp_enable_patch(patch);
 >
 > [Severity: Medium]
-> Will this reliably drain the stock on a busy system?
+> If klp_enable_patch() fails (e.g., due to patch incompatibility or early
+> -ENODEV) and returns an error code, does this direct return bypass the
+> err_free_objs cleanup path below?
 >
-> When writing to memory.high, memory_high_write() calls drain_all_stock()
-> exactly once per write:
+> The primary structures (patch, objs, and funcs) are allocated with kzallo=
+c()
+> earlier in livepatch_mod_init(). Because the core livepatch error path in=
+side
+> klp_enable_patch() treats these structures as statically provided by the =
+module,
+> it will not kfree() them upon failure.
 >
-> mm/memcontrol.c:memory_high_write() {
->         ...
->         if (!drained) {
->                 drain_all_stock(memcg);
->                 drained =3D true;
->                 continue;
->         }
->         ...
-> }
->
-> However, drain_all_stock() uses a trylock and will silently abort if
-> another process is concurrently draining:
->
-> mm/memcontrol.c:drain_all_stock() {
->         ...
->         /* If someone's already draining, avoid adding running more worke=
-rs. */
->         if (!mutex_trylock(&percpu_charge_mutex))
->                 return;
->         ...
-> }
->
-> Since the thread holding the lock only schedules drain works for its
-> specific root_memcg, our memcg's stock might not get queued for draining.
-> Because memory_high_write() sets drained =3D true and doesn't retry, the
-> subsequent 3-second cg_read_key_long_poll() can time out. Could this
-> introduce a new source of test flakiness?
+> Does this code permanently leak the patch, objs, and funcs structures? Wo=
+uld it
+> be better to save the return status and goto err_free_objs on failure?
 
-All subtests in test_memcontrol run sequentially, and other tests in
-this file (e.g. test_memcg_high() and test_memcg_max()) also rely on
-a single write to memory.high/max to trigger drain_all_stock(), so
-I think this is fine in practice.
+Good catch.
+It seems to be a pre-existing bug, not introduced by this series.
+It could be fixed by the following change:
+
+- return klp_enable_patch(patch);
++ ret =3D klp_enable_patch(patch);
++ if (ret)
++     goto err_free_objs;
++
++ return 0;
+
+--=20
+Regards
+Yafang
