@@ -1,233 +1,136 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC336485507
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 09:34:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A763D3EDACD
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 09:54:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792143251; cv=none; b=dHa1o7HpRyLP0L2dr3ul+NUv6+QeObNv728ivqHzFVcFL8zSlktyOtClDd1xT+p/5ggPS0divgrlB+dNLbMaNIBg6a7nix15jqFEidIWR+TAa2/0rjLIS6bRu+MTzNo2XYhQvhmIuV8cjXdft3ujBOIE0iGpfqQ7EScCZz/FIi8=
+	t=1792144492; cv=none; b=jNR/oGwVPocz8ddZ3+xQr49EuuC815muKzHIOdsN5iGuhuLshha9jRBhkcN0+RQCjBaIKrfBQPkm92BAovlT5VUSoHuWIhT/fGL4YU8QqT/5PyIPjl4lBrJUbLT4c5CRMkTVIpsqWkIpE1ZxUEk2+ifIJ3IoQ45zqWHXUDyzMns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792143251; c=relaxed/simple;
-	bh=Wrs+SVXb9uEFGBb5fL6xASMYt2gFmNuYucTNFgJL56k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=my/fcGmaccZXcN2f6aE8f125gmzXwEw+htbMCyBtqKBhROfETrWRRxQbPZDhFaxsDrKn+djQDzpKof9BR9/Cy+dJqs2E610PA7O+AOZa0IgQHfEf4nHVkiKALjm3xlNueBzcWGKQmXSBF5gKn6xLXTxiRdbb+1SktGTKzV3KbE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=wrYcl0+V; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=VH5OmjJm; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=wrYcl0+V; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=VH5OmjJm; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1792144492; c=relaxed/simple;
+	bh=+GhGoOAkBBz1fzKdP5R0bSo0LpaUHy/fVgbOgRbknRo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Q0n5MecLflc4VMtQBAO2toFwegkqa130p2lj5Cgrmw/LSITiy5yrcY9OPIL5NKTWZYmeBmul3YCNjuKoEXnMZmmUfWGCfCKexbUjroJsecOowhXhcNMzRV/BEnzcTlYmDjU5Lq+zPcbp8v/P7GN4ipwoxxa/REt/n80B7uanBMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dF4+0vy/; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="wrYcl0+V";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="VH5OmjJm";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="wrYcl0+V";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="VH5OmjJm"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id A300621C15;
-	Fri, 16 Oct 2026 09:34:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1792143243; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=IeSoQiQ5ORlTqAZjMneFz0cgyP5LHbAOMi9jVF+Tpt0=;
-	b=wrYcl0+VIfyk/dQrs4OIAmvDeZCYFPIFqA+2RRzdblF46il8iDgBThhIiAGMNjZFemo8Cd
-	Qy4IuUU7BfbQs/kiALKDJVhNwHyXhksOW3ENxzIfQpl85WZS+DBgq6hOntR6kSYcxGOf5+
-	Np4sHzDRcyhwacz9unXcUC0+vuDGVPA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1792143243;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=IeSoQiQ5ORlTqAZjMneFz0cgyP5LHbAOMi9jVF+Tpt0=;
-	b=VH5OmjJmER1RnQ9ceWtR/qaiB1psnXZ2MjGUNU3R8UR2STwZY9HvIbj9XuRD0Y0YhxkOK4
-	2X8ThrwsiiZs5nDA==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=wrYcl0+V;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VH5OmjJm
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1792143243; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=IeSoQiQ5ORlTqAZjMneFz0cgyP5LHbAOMi9jVF+Tpt0=;
-	b=wrYcl0+VIfyk/dQrs4OIAmvDeZCYFPIFqA+2RRzdblF46il8iDgBThhIiAGMNjZFemo8Cd
-	Qy4IuUU7BfbQs/kiALKDJVhNwHyXhksOW3ENxzIfQpl85WZS+DBgq6hOntR6kSYcxGOf5+
-	Np4sHzDRcyhwacz9unXcUC0+vuDGVPA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1792143243;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=IeSoQiQ5ORlTqAZjMneFz0cgyP5LHbAOMi9jVF+Tpt0=;
-	b=VH5OmjJmER1RnQ9ceWtR/qaiB1psnXZ2MjGUNU3R8UR2STwZY9HvIbj9XuRD0Y0YhxkOK4
-	2X8ThrwsiiZs5nDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3958B138A5;
-	Fri, 16 Oct 2026 09:34:03 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 8cgiBonv0WqmHQAAD6G6ig:T7
-	(envelope-from <tzimmermann@suse.de>); Fri, 16 Oct 2026 09:34:03 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: gregkh@linuxfoundation.org,
-	jirislaby@kernel.org,
-	deller@gmx.de,
-	James.Bottomley@HansenPartnership.com,
-	simona@ffwll.ch
-Cc: linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org,
-	linux-fbdev@vger.kernel.org,
-	linux-parisc@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v2 6/7] vgacon: Implement struct consw.con_unblank
-Date: Fri, 16 Oct 2026 11:11:56 +0200
-Message-ID: <20261016093357.33294-7-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261016093357.33294-1-tzimmermann@suse.de>
-References: <20261016093357.33294-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dF4+0vy/"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-48c6955a7c3so1835864f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 02:54:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792144489; x=1792749289; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=JeX5qu0jqIGuN6Nb/UvF9AVHsIrlUZq1NMBeYBrcscU=;
+        b=dF4+0vy/DA5G3QwWDlWxdAxp3UaaKeg2OXepA5SaoChW0UZPTLsshh27z2dGfBYBFo
+         GXIHU+T07ZPkVtEjX3ZDoGOC0WunUiaNrRgMbmlLDOMQ6LGnIF3k0ZmAwjGcsbYmNS0o
+         fV9vbGWTx6KOVKPh4J+fHSHDd4pClZGq8kXPfnOcs8f/2qgpA5TY21vH+jMI3k5Q2b48
+         lJ2sG6Xof38M5M+E/SFikY0g8UksE1A8WtYbSWNwIvlpnuxHFA3BaHyG/6b/T2ReBIV+
+         hLtVxFNHAxXCxayAKE8EOewu6+Tl6LEOkjMD3sjJ81xA/wjRpBLjGSWLIoi8XmYlJ+3Y
+         qVCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792144489; x=1792749289;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=JeX5qu0jqIGuN6Nb/UvF9AVHsIrlUZq1NMBeYBrcscU=;
+        b=eILkYSwFVlxcaowiEfCywDo5/2e8PYKgoMTxps7X0RwuteAkhudz6DzwYWS3kxNqw2
+         gJysVCZf1IJWMkCfwoi4GJIYJr70T9wGbCIrDH8Zey+4YWZLTiZJnHSPGMOWTuZEyVLC
+         x7UTaETGgEBr6xB9Lbj6eo2didrEKtj5ziELl+8IZQXp50MrRlJtElR3QaVqDIOdqpLv
+         tb7Br5nP5P3Io+mXqgRPZIEubhMrx0xA/YC6YnGRNOeKM8PGQSo7jGjX6CwJJE/hBr9u
+         b+bPaI/70R3kvz/uKGgS7vYGE/rNu2y4Gc2J7uz59P1iNHdyRg2pX8GXqNVEl3SxFDai
+         rIgg==
+X-Gm-Message-State: AFq9FYLCblYWMXOjXgd/1Vdn1h/FhPtH3tEgJtQKdPwWqoJaF5W4FBGD
+	SLNmruvXS7eLKUAjR/opGVJRPOwRsNqAorw8avCSxVNqnwCkj4UfNJKCF4sBPw==
+X-Gm-Gg: AYBFou3YYRRz8qdM0PINvjFvO6+Iq9CeJ/rc9NB4klfOwqOHmqxVjFiGBPmkKksKbVG
+	/OfwbeEc88x4hUv5ZE7vtkAsrH7c96MGIpQJCuTrh5PsWH4WhL5qBcGV250BhyCcgzBOgmW10Sk
+	xOe6EQQSY4UUtFwl2NytAKBrYjr/k5gQcczrQbvxgvO2b1ZMP00AXXSr03MsJZBsfCDqMMNHXbO
+	MIpzKsacMAAUDfXNUlTUppInOSMk/EOTrtAxloowOR/aOHM0xkTbJWFZ4PpQllmpGQD3cbeBo27
+	utZ408w47KavY7aeANT6Gz2F7Z+xsfAEOuB4bvNgTaAGpIUyE2RUTaZ31CWralzT6+77VBJix75
+	GFa8Bvn3EULdFcUV9TPmwWiRux0Wfovq6CqSnxJSsiHXAg2IOkH2tAXFiSCIRt3kEXUBCC/YqcB
+	WYdnv6SFOE/gQjt95weNrrWhrOFMS2VhbOx2rQzXQvJl/Tjy7RtonShnev5ZMdb3DhK6a1KxUH4
+	zP6jewDC9THlVFTzAUtWNJeJDDaC/+P2hInoA1cLFm6guChrxiZksbEo7VTJJQKrBVj2c9+us2j
+	cDNSCtNy6Hdg6pncE7PcDAFbyzi+rkhHrKSCGgI/YgtE2f22
+X-Received: by 2002:a05:6000:188a:b0:48b:b1a1:a002 with SMTP id ffacd0b85a97d-48dbacf561dmr47371303f8f.24.1792144488776;
+        Fri, 16 Oct 2026 02:54:48 -0700 (PDT)
+Received: from ?IPV6:2a01:4b00:bd21:4f00:7cc6:d3ca:494:116c? ([2a01:4b00:bd21:4f00:7cc6:d3ca:494:116c])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48dfd409989sm4328469f8f.0.2026.10.16.02.54.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Oct 2026 02:54:48 -0700 (PDT)
+Message-ID: <54387709-f72d-4e4e-aafc-8ebc61a62b52@gmail.com>
+Date: Fri, 16 Oct 2026 10:54:45 +0100
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Spam-Score: -3.01
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-3.01 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RCVD_TLS_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_ENVRCPT(0.00)[gmx.de];
-	FREEMAIL_TO(0.00)[linuxfoundation.org,kernel.org,gmx.de,HansenPartnership.com,ffwll.ch];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Level: 
-X-Rspamd-Queue-Id: A300621C15
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] dma-buf-io: document dma_buf_io_init_map
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, media-ci@linuxtv.org
+References: <cover.1792142927.git.asml.silence@gmail.com>
+ <79e1cc681326365d2105203b318d8a27ed7e90d7.1792142927.git.asml.silence@gmail.com>
+ <sashiko-outbox-174086@kernel.org>
+Content-Language: en-US
+From: Pavel Begunkov <asml.silence@gmail.com>
+In-Reply-To: <sashiko-outbox-174086@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Implement con_unblank from struct consw with the VESA_NO_BLANKING
-case from vgacon_blank(). The new function is called vgacon_unblank().
-Remove the duplicated code from vgacon_blank().
+On 10/16/26 10:41, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] dma-buf: incorrect return value documentation in dma_buf_io_init_map() kerneldoc
+> --
+> 
+> commit b6debb4c02ab1cee94fc3f78293f8425b78664d4
+> Author: Pavel Begunkov <asml.silence@gmail.com>
+> 
+> dma-buf-io: document dma_buf_io_init_map
+> 
+> This commit adds kerneldoc documentation for the dma_buf_io_init_map()
+> function.
+> 
+>> diff --git a/drivers/dma-buf/dma-buf-io.c b/drivers/dma-buf/dma-buf-io.c
+>> index e432194a5dfc0..f724936e223b1 100644
+>> --- a/drivers/dma-buf/dma-buf-io.c
+>> +++ b/drivers/dma-buf/dma-buf-io.c
+>> @@ -43,6 +43,18 @@ static void dma_buf_io_kill_map(struct dma_buf_io_ctx *ctx)
+>>   	dma_buf_io_map_release(map);
+>>   }
+>>   
+>> +/**
+>> + * dma_buf_io_init_map - Initialise the map.
+>> + * @ctx:	[in]	dma-buf I/O context the map is created for
+>> + * @map:	[in]	dma-buf I/O map
+>> + * @sgt:	[in]	the backing scatter-gather table
+>> + *
+>> + * Importer's helper that initialises @map for the provided I/O context
+>> + * and scatter-gather table. The importer should call it once for each map
+>> + * on creation.
+>> + *
+>> + * Returns a map on success, or a negative errno code otherwise.
+> 
+> [Severity: Low]
+> This isn't a bug, but the kerneldoc states this function returns a map,
+> while the actual implementation returns an int (0 on success) and modifies
+> the map argument in place.
 
-Vgacon uses the global state vga_is_gfx in several places to test if
-the console runs on text or graphics mode. Track the mode switches in
-vgacon_blank() and vga_unblank(). As vgacon_unblank() does not have
-a mode_switch parameter, derive the value from vga_is_gfx and vc_mode.
+Slipped through indeed.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/video/console/vgacon.c | 53 ++++++++++++++++++++--------------
- 1 file changed, 31 insertions(+), 22 deletions(-)
+> Could this be updated to accurately reflect the return value and use the
+> standard "Return:" tag format expected by automated kerneldoc tools?
+> 
+>> + */
+>>   int dma_buf_io_init_map(struct dma_buf_io_ctx *ctx, struct dma_buf_io_map *map,
+>>   			struct sg_table *sgt)
+>>   {
+> 
 
-diff --git a/drivers/video/console/vgacon.c b/drivers/video/console/vgacon.c
-index 536e7fe4d142..7f52164c30af 100644
---- a/drivers/video/console/vgacon.c
-+++ b/drivers/video/console/vgacon.c
-@@ -800,39 +800,47 @@ static void vga_pal_blank(struct vgastate *state)
- static bool vgacon_blank(struct vc_data *c, enum vesa_blank_mode blank,
- 			 bool mode_switch)
- {
-+	if (mode_switch)
-+		vga_is_gfx = true;
-+
- 	switch (blank) {
--	case VESA_NO_BLANKING:		/* Unblank */
--		if (vga_vesa_blanked) {
--			vga_vesa_unblank(&vgastate);
--			vga_vesa_blanked = VESA_NO_BLANKING;
--		}
--		if (vga_palette_blanked) {
--			vga_set_palette(c, color_table);
--			vga_palette_blanked = false;
--			return 0;
--		}
--		vga_is_gfx = false;
--		/* Tell console.c that it has to restore the screen itself */
--		return 1;
--	case VESA_VSYNC_SUSPEND:	/* Normal blanking */
-+	case VESA_NO_BLANKING:	/* Normal blanking */
- 		if (!mode_switch && vga_video_type == VIDEO_TYPE_VGAC) {
- 			vga_pal_blank(&vgastate);
- 			vga_palette_blanked = true;
--			return 0;
-+			return false;
- 		}
- 		vgacon_set_origin(c);
--		scr_memsetw((void *) vga_vram_base, BLANK,
--			    c->vc_screenbuf_size);
--		if (mode_switch)
--			vga_is_gfx = true;
--		return 1;
-+		scr_memsetw((void *)vga_vram_base, BLANK, c->vc_screenbuf_size);
-+		return true;
- 	default:		/* VESA blanking */
- 		if (vga_video_type == VIDEO_TYPE_VGAC) {
--			vga_vesa_blank(&vgastate, blank - 1);
-+			vga_vesa_blank(&vgastate, blank);
- 			vga_vesa_blanked = blank;
- 		}
--		return 0;
-+		return false;
-+	}
-+}
-+
-+static bool vgacon_unblank(struct vc_data *c)
-+{
-+	bool mode_switch = vga_is_gfx && c->vc_mode == KD_TEXT;
-+
-+	if (mode_switch)
-+		vga_is_gfx = false;
-+
-+	if (vga_vesa_blanked) {
-+		vga_vesa_unblank(&vgastate);
-+		vga_vesa_blanked = VESA_NO_BLANKING;
- 	}
-+
-+	if (vga_palette_blanked) {
-+		vga_set_palette(c, color_table);
-+		vga_palette_blanked = false;
-+		return false;
-+	}
-+
-+	return true;
- }
- 
- /*
-@@ -1201,6 +1209,7 @@ const struct consw vga_con = {
- 	.con_scroll = vgacon_scroll,
- 	.con_switch = vgacon_switch,
- 	.con_blank = vgacon_blank,
-+	.con_unblank = vgacon_unblank,
- 	.con_font_set = vgacon_font_set,
- 	.con_font_get = vgacon_font_get,
- 	.con_resize = vgacon_resize,
 -- 
-2.55.0
+Pavel Begunkov
 
