@@ -1,135 +1,192 @@
-Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010027.outbound.protection.outlook.com [52.101.56.27])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F9944CAE6
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 09:30:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.56.27
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792143020; cv=fail; b=CakZOMwKkc06RnIESAbUEpfXl9+f9UjE+seg2MPRxqycsaJUOGdt/Quql4lBdip9ywNXh5Nnv9JnyPaPP0b32027r5yyFwb36+Sv+SP1ZhYX/v5HzLnycvB2AZ5zDtUfxg4/SIoTgSBFOQ8LO65/rWWqczRUwEcuMvIa7YdW4Z0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792143020; c=relaxed/simple;
-	bh=OAytWAiMqG+WOiBCFnOLcO09oQ/b+XcRPLd2wcJ7XgI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Gr0643CNs4IL7+PjE26XkuaDN2jsSKoILd1DzWQPJHluQcWp/JTxw5NecRrCZYL8RMEOWAspTPzlrg2miGpDZDvz7SrB/gCU56i2YIcK3i0Rrt9CWXT7n2YUeSOqCkw7vf8vsXJfLtOAAu07h1LzsyheI/f38PT8ritka/DyXeQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=dGCnRoFp; arc=fail smtp.client-ip=52.101.56.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66F1475340
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 09:34:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792143245; cv=none; b=E/r3eiQVmtWInKan3IbkFQ3+fGfln/fWAvrXAhXtxWWUJ4nI5xTbSPzgiCFE2BksptzuF1Hv2DmwEENopfg5Lk+t/Bds/A5suKN0m94AYsjLo42pivCmSsc4TGdaMQFCn8nB3chnxklmrUFgMI8AZYqulrOltsNB5zY9o2jc0rI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792143245; c=relaxed/simple;
+	bh=eBs996wBU0kHSX2CSIOffRXsknCa60ssG5k6VBPzbmI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jq3cLZQ4AQdep85xrmLvtoqQOEkHjG33pEdyYE/evug90PcJxFlCALuQVXkFkx2ip8BSCU303pHyfk6P47r5J8MYPUn/1EqeqnYoc4nMOGvVGhPc7dNDtIp28zdH/Q69frTZ+20YaQ0NfCSjUmMjWJcocXiqSAsSiw2NFQXa3/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=r1GG8J9p; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=l2fn96kt; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=r1GG8J9p; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=l2fn96kt; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="dGCnRoFp"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rwYHqGxHEGExW0hAg3mMWLz5PQUYQwu3VY4hbaqBwI7DUG2f6qqP+ry6NNV5U3wE2zMTqRUgGYoVVUhkfjxaFHtmogel/7ff2Yjo6yyksCskqUhGBO32rmks6CXtQrgMFDXGy5qQek9bgl7tRYNSBZJZMdd2hjlVZqa2gzFzWtiAQOoVKUiO0tGtdET6jTI6L6jfDrhwIiywQqFzs+TK9yNW4HtkpSKhpbRdjGl7iE2EuB7dWxhlFdnOGJVseQU+pYeaTRRCbCZPoyuXs9Rr0emYDih8fJSntKl4fbqG17V0k+bNjNoAZ9PD4zGwhaJFla9gm9kdAolWNaxEekyBHw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OAytWAiMqG+WOiBCFnOLcO09oQ/b+XcRPLd2wcJ7XgI=;
- b=mIDTYfuu9Olm0RKpaMml4Z0mhDAT8URGU6vqE6acWdH4lxNtQwqHsD+NhKSK1JyhZ81F/ANoz8A8JGb15VQMN8W/++Oge3aJCfXtKjnGlpCCN/iiITLAx00eDIGIvY/bjVbZTCHyOS15DW7rFTooczvjTVOfT2PDVv1s6w0kvupLXUwvS9xRXZCOjTk2ssmA1ixFrghJ7dSJa0NGg6UfhzPWyZ1usV5eA6/rCgOM/8Szc5RrZP8XI3lbNqwjDpA1HBqoHcgtAhdx1BILnGSXTKIwzwfeqj92civzqmvAk0uduyRGG3CLCox9fyIKb95/64mgmQQ+DP3MeIrZZPcyZw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OAytWAiMqG+WOiBCFnOLcO09oQ/b+XcRPLd2wcJ7XgI=;
- b=dGCnRoFpYCZCyAmVf5oK1pC+DzwKHz4VewLsU0yJuA0Ka071F8CypicGTH6EW0cvhEszjaX4MBv/W53DMeYalFPz4P7nkwvCVcPwfSxBC6/bZfe45bND14aE1GRUyvjRrW80616mRbprnaVI/JrsAWC7zn9htgukapxXurWOo1zEgx9Dx4/xXqN8xcPRvqdxj4XIQz8TkcrQFfwGH2MYk3KVIDJVGpmtU1YFGnopQSHpqA+RHJ4aHoSp4icHtwyl6qqOAWVmZfiDIJtW5illaGP6ivtBu8kEosq9EfZwgzbdvG4DPHX7xg73FBmWYtiCuwtxoH/2/kYjvTTLH85Hig==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from PH7PR12MB5974.namprd12.prod.outlook.com (2603:10b6:510:1d9::19)
- by BN5PR12MB9539.namprd12.prod.outlook.com (2603:10b6:408:2aa::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.14; Fri, 16 Oct
- 2026 09:28:25 +0000
-Received: from PH7PR12MB5974.namprd12.prod.outlook.com
- ([fe80::f5a5:bbc3:e9da:f8a0]) by PH7PR12MB5974.namprd12.prod.outlook.com
- ([fe80::f5a5:bbc3:e9da:f8a0%3]) with mapi id 15.21.0522.012; Fri, 16 Oct 2026
- 09:28:25 +0000
-From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: robh@kernel.org,
-	linux-gpio@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-usb@vger.kernel.org,
-	conor+dt@kernel.org
-Subject: Re: [PATCH 01/11] dt-bindings: gpio: Add NVIDIA LSTP GPIO
-Date: Fri, 16 Oct 2026 12:28:12 +0300
-Message-ID: <20261016092821.2049721-1-aambrozewicz@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <sashiko-outbox-168484@kernel.org>
-References: <20261012-lstp-usb-adapter-v1-0-aambrozewicz@nvidia.com> <20261012-lstp-usb-adapter-v1-1-aambrozewicz@nvidia.com> <sashiko-outbox-168484@kernel.org>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: ZRAP278CA0004.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:910:10::14) To PH7PR12MB5974.namprd12.prod.outlook.com
- (2603:10b6:510:1d9::19)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="r1GG8J9p";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="l2fn96kt";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="r1GG8J9p";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="l2fn96kt"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id D4C2121C3C;
+	Fri, 16 Oct 2026 09:34:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1792143241; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=cvfh66KwNzqqMN3+fq9Vnd/nlxD4pr4qkY+Ybb0vHOA=;
+	b=r1GG8J9pxxr4ZDQtWgzuoI8uxqRWq+I4PZ34qOZE3DuyDiXlcu1NpomfVKo5zMsjqhk7XC
+	YbltweODGpWoKJrcE4KeWGTzAD37k9KKDU8G/Og3NrYfMBligfkLAtZ/OzBHSgqHu9I6qs
+	YiUlABFAmY7Y1A6qTCLwqqf5oiPUROk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1792143241;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=cvfh66KwNzqqMN3+fq9Vnd/nlxD4pr4qkY+Ybb0vHOA=;
+	b=l2fn96ktXtk4IIKPfptBrgRMx7xM65uuiSzCC3EUAP8gEIpn101i/hKp5r9YVOD8j902ge
+	5wMm1VT1TSQQZcCQ==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=r1GG8J9p;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=l2fn96kt
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1792143241; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=cvfh66KwNzqqMN3+fq9Vnd/nlxD4pr4qkY+Ybb0vHOA=;
+	b=r1GG8J9pxxr4ZDQtWgzuoI8uxqRWq+I4PZ34qOZE3DuyDiXlcu1NpomfVKo5zMsjqhk7XC
+	YbltweODGpWoKJrcE4KeWGTzAD37k9KKDU8G/Og3NrYfMBligfkLAtZ/OzBHSgqHu9I6qs
+	YiUlABFAmY7Y1A6qTCLwqqf5oiPUROk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1792143241;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=cvfh66KwNzqqMN3+fq9Vnd/nlxD4pr4qkY+Ybb0vHOA=;
+	b=l2fn96ktXtk4IIKPfptBrgRMx7xM65uuiSzCC3EUAP8gEIpn101i/hKp5r9YVOD8j902ge
+	5wMm1VT1TSQQZcCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 691031378C;
+	Fri, 16 Oct 2026 09:34:01 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 8cgiBonv0WqmHQAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Fri, 16 Oct 2026 09:34:01 +0000
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: gregkh@linuxfoundation.org,
+	jirislaby@kernel.org,
+	deller@gmx.de,
+	James.Bottomley@HansenPartnership.com,
+	simona@ffwll.ch
+Cc: linux-kernel@vger.kernel.org,
+	linux-serial@vger.kernel.org,
+	linux-fbdev@vger.kernel.org,
+	linux-parisc@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v2 0/7] vt: Simplify console-blanking interface
+Date: Fri, 16 Oct 2026 11:11:50 +0200
+Message-ID: <20261016093357.33294-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5974:EE_|BN5PR12MB9539:EE_
-X-MS-Office365-Filtering-Correlation-Id: f2a2cd86-a4aa-4000-7d16-08df2b67d405
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|23010399003|366016|56012099006|4143699003|11063799006|261009223027099003|260925021311599003|260925022911599003|260925021911599003|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	EsIUbJwCclafOZecZtpnpSgsplgh3zFku2l//iK9Q3JYdR5GmUN45swjdww42bOe/1oNqED2D+aazz4MCAQIfHgP/ChQc+3yQgBmDtdItQvrLNHmoFAHWDI8UJHi1PH3UIxkVHGyfjgNArUuTsopfZH/eWuXkIOLtb3dtI/DT9235DA8JvhQjL0DfMIHCMhKoVB/OszYX2x+8/v5lznhSZR8FYkInMmcDAlIPS52sJlXq90BwuZOJTw1BON52gDlghF1apnHiX5m3DvlP3Y+0YeSyaV9axO7l4PtGPbgRzypZLnjAwOupRbRtL5LJsrUKi1MqCSTPi+9DXRSXxX4HvZDhHiP6YMrKvvz/RTKSVAeyjIwEtwVcJtQAWyeZSsra21OxQ+qU2vd1IVw3X1Q5zVD++lHv6UmUOjk6/TTsOSLZM9hn6NH7LED5MQuBiBWca32lPpArne7s9VeSTCozMVofshyUcKjbBONdJpNJWsjQ4wBvg5APuRMoEDWr0TMBh58gHPcYxhJe09qGGgzRAGjcY83bkcPx5d3SILlgx2Nj6XnC2D3BOGr0Re8l6Im+SPWkOfuT19cgSLv6glOZKfYGjbbVH8m84r2q4TCbzPm+XMSBEvk/Z3/aOxkRZOIwtIMpGgiUGX61SJqRyl0Xk3APIs0YPoIR12NfT02SXY=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5974.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(56012099006)(4143699003)(11063799006)(261009223027099003)(260925021311599003)(260925022911599003)(260925021911599003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?vTAFlH2En5cDREXd9EvcAG05OzmA1n1bfzey+xNvP8RFntOoe4W7oaCFiZl+?=
- =?us-ascii?Q?lLaqshrgBzGzgYb2S1Gw3+7Lfhptmw0sPx6+01fgjMfrWMZi1K801WcPmQkp?=
- =?us-ascii?Q?HoQDeGl6tJNqQVM7NEGfyeKASHvoNkgW4Ym5MSq+CCFfr7nBvXOi5KupmkGv?=
- =?us-ascii?Q?qzA38wXSgwZqYAZdaO5AYoeOCY/QNsuuhfgCpF2RQdPuVFi+DLMRFI6OcPJz?=
- =?us-ascii?Q?fS/b4zaaRsiRG5aS12GjqBP7jG5w+r6x/gJmZtWYwDDazMAMUwDWBSaZaY9y?=
- =?us-ascii?Q?n8KN3ayB1UvQNHVPHfXkLg87Ppv2Z+W63eH6GCAFrmY9592zid4OMYNqQDft?=
- =?us-ascii?Q?B5vo6lGhYHhxUmgHZywtnB++/C16aKRQzjtZ6WkkFc7u01ChZw7Q9bSk8MMy?=
- =?us-ascii?Q?H1G2caRVfivC16p67OQE0wYcgbZmOZile3GHsUoTwl3iZU5FN+A3T+y0Q0Bw?=
- =?us-ascii?Q?IS19akEL3w9Wq2DgGR640uNfCDoOuX110bJTSa1tEPCRLseYDOddNjlrOZU+?=
- =?us-ascii?Q?l+l1ITJ8v4gxPgAjOHxDoTmo4dRaU1+B0ECJF76DjwPOJAewONIeDQScbrOW?=
- =?us-ascii?Q?AgL/pFWid1yBXjU6oz6xs7lpgsH5XCUN8cHzwyre8pyj8Xbzc3FMuhMrXhbk?=
- =?us-ascii?Q?dhx9hO+T2gGzsRRhF8yohqDloR4z35MALxnEV+2PQ+JS+1hD7Ijss7rdWd00?=
- =?us-ascii?Q?qm7gIIyy/rjP4Y7swF0njs3vy+wvpojTS0WooUG+KwZnAHOoPYJvC4H3UOia?=
- =?us-ascii?Q?xtvj9KxRNXKzly+5XZ2cFn+n0NuvDPnVGPEHSIyzf78rY0WaEF4jdll3/uDw?=
- =?us-ascii?Q?s2vUoM7mlGZJ8gu431CuYBub//bZaxL1PPwVNse6mmK6Od2+6QAv+97UOg0a?=
- =?us-ascii?Q?3MpURBNhV/qL8Lj+oDywU3wWTRLwoq08tZnj0spCLWA1muTfkvWZ19TYhUS1?=
- =?us-ascii?Q?ZOhDJ3zPagGMtFxY+7VYNkU+SI7aQH7U7FW5MubWR+mAo/icp0PZ2EgVe+Ug?=
- =?us-ascii?Q?FkFElNNcLmh3rR/zW1NmBl0lvtijr97FXREyNLtBflfotSZiG4GpmcOndc+L?=
- =?us-ascii?Q?vd2nftcTV9PeOslf1xj4qz29dRr6yNsRvktPnHe6Ad2WBMTmWM3xiotPF3jy?=
- =?us-ascii?Q?V7JI89Oo5+gm751bT3U4Xfk5G/p2lCHiLOsBRVe0yPUkVl6uPiDRhwbUEbcW?=
- =?us-ascii?Q?LW259zotw1fWcF8gs0l4M0KxJJtkTCJBIFIjbHh5Z1P29hzyl8WPeVdhpPLC?=
- =?us-ascii?Q?Zl/y6wsNx/FuzJ4fv/moVtZQlAzADrqW6ZN9cI1nHu1jjYf/1XWRvUskikq+?=
- =?us-ascii?Q?X0nY0+4e5dRn1zo+wtJyX/SBani5bfF0VCDz9WDccOsMyupHi65W9+6izR15?=
- =?us-ascii?Q?z4JoX8Q9ZQAFMQgxrutHqdnb0uiW2bulkvfH4Db2BSskwHMzUc9pSoLwRifX?=
- =?us-ascii?Q?AcXzugh27kfkkkHvP67toD8h+gLBZrpAIeIg8qE5Wqgo60+mJ5MoVfUwpHeu?=
- =?us-ascii?Q?a4nzneaJYrPW7ZZCEoMhRsRcJ32xLXpNicPVLlKAiR0hMV5PX4jOJMmKlhNY?=
- =?us-ascii?Q?ib/7PhocA9loTyF8uDF/xQGG3omfgKz73kzO+2dxnaIHBCB4nKKl4etfzOhW?=
- =?us-ascii?Q?SVmRUJEWvHN7/Pg/eRJPI9BV5hf3qXYoEQLnP17h6F+DUrOmmifAjpSANS3R?=
- =?us-ascii?Q?i2XoUaYGRbhXc0lWz03iARUQsrjacNmSxOUjexORyz57WdKPAGw3IaQAJjc9?=
- =?us-ascii?Q?PAdrqVHYgQ=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f2a2cd86-a4aa-4000-7d16-08df2b67d405
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5974.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 09:28:24.9474
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: E7b0hBvVuIevkIv0H1VT3obRVvtCwOhPMckFtbT4x5RF7Ht6tBYOAgA6n+R5L+kVOTffv2COxL9FWtr+R1op3Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN5PR12MB9539
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Action: no action
+X-Spam-Score: -3.01
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-3.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[linuxfoundation.org,kernel.org,gmx.de,HansenPartnership.com,ffwll.ch];
+	ARC_NA(0.00)[];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RCVD_TLS_ALL(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmx.de]
+X-Spam-Level: 
+X-Rspamd-Queue-Id: D4C2121C3C
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
 
-On Mon, Oct 12, 2026 at 05:43:41PM +0000, sashiko-bot@kernel.org wrote:
-> Should interrupt-controller and #interrupt-cells be moved from
-> dependentRequired into this unconditional required list?
+Update con_blank from struct consw to use enum vesa_blank_mode according
+to its intented semantics. Handle unblanking in the separate new callback
+con_unblank. Update all consoles.
 
-Noted. Whether these bindings stay is being discussed on the cover
-letter [1] and in the RFC [2]; I'll handle this together with
-Krzysztof's comments on the bindings once that is settled.
+Some background: the vt subsystem calls con_blank with what at first
+appears to be non-sensical value. This is because the blank value and the
+type of the blank parameter do not match: con_blank mixes up console blank
+state and monitor DPMS levels for power saving in the same argument.
+The implementation of con_blank in various consoles suffers from a similar
+problem: their interpretation of the given blank value often disagrees with
+what the value's type suggests.
 
-[1] https://lore.kernel.org/r/2026101355-species-glance-9ff8@gregkh
-[2] https://lore.kernel.org/r/20261012-lstp-dt-rfc-v1-aambrozewicz@nvidia.com
+Patch 1 adds a new helper con_unblank, which handles all unblanking. This
+allows for changing con_blank to only handle blanking. There's support
+for both semantics while consoles are being converted.
 
-Adrian
+Patches 2 to 6 implement con_unblank for the individual consoles. With
+this, con_blank changes to its new semantics. Each console gets a single
+callback for blanking and a single callback for unblanking. Switching a
+console between text and graphics mode is currently tied to the blanking
+helpers. The mode_switch parameter controls this. As suggested in the
+earlier reviews, rather detect a mode switch from the existing state.
+The mode_switch parameter is deprecated. A later series might rework the
+mode switching entirely.
+
+With all consoles updated, patch 7 removes the old semantics and the
+mode_switch parameter.
+
+Tested with vgacon on a SiS 6202 VGA and with fbcon on a Matrox G200
+VGA device. The latter also ran fbcon via DRM fbdev emulation. It's easy
+to test this with setterm, like this:
+
+  setterm --blank force          # blank
+  setterm --blank poke           # unblank
+  setterm --powersave powerdown  # set VESA DPMS level 3
+  setterm --blank force          # blank and turn off monitor
+  setterm --blank poke           # unblank
+
+Blanking and unblanking still works in all tested cases.
+
+Newport and sticon are built-only, due to a lack of test equipment.
+
+v2:
+- rewrite series with con_unblank (GregKH)
+- drop mode_switch from console implementations
+
+Thomas Zimmermann (7):
+  vt: Add con_unblank callback to struct consw
+  dummycon: Implement struct consw.con_unblank
+  fbcon: Implement struct consw.con_unblank
+  newport_con: Implement struct consw.con_unblank
+  sticon: Implement struct consw.con_unblank
+  vgacon: Implement struct consw.con_unblank
+  vt: Remove old-style con_blank
+
+ drivers/tty/vt/vt.c                 |  9 ++---
+ drivers/video/console/dummycon.c    | 18 +++++++--
+ drivers/video/console/newport_con.c | 27 ++++++-------
+ drivers/video/console/sticon.c      | 27 ++++++++-----
+ drivers/video/console/vgacon.c      | 60 +++++++++++++++++------------
+ drivers/video/fbdev/core/fbcon.c    | 60 ++++++++++++++++++++---------
+ include/linux/console.h             | 12 +++---
+ 7 files changed, 132 insertions(+), 81 deletions(-)
+
+
+base-commit: b0bd9fb9e92aae2a653efa1d0407daa2aabe99d0
+-- 
+2.55.0
+
