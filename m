@@ -1,205 +1,210 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013055.outbound.protection.outlook.com [52.101.72.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147E1551985;
-	Fri, 16 Oct 2026 16:23:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792167825; cv=none; b=CYg0pt47F1pwLk0DAbaFLckzlVGBbdoYFiqkiBDbjlCgFUbTPGVwi4H4cOJ0NDj1USfsbpE4UIJBSiHBnAP57uCQY8hKF3KW/hPEY0B0KRRVdq9jyg35rJnnAKOwsIB/KG3Tr8wD++TnOl4BGrygM2YVmRQeOvKM/zL9taB9KC4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792167825; c=relaxed/simple;
-	bh=HR/+nwfObSLXvSSmTUc1fVmJ959u+lfBWTVbW2gagS0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=c/6RIhoRpmCMFPGRW00iXOEKjXWgrO7lNDnuIbLvJYyvboEpeo4C1ueLu8yJTNcvsQIPSvIEfLvVzuw0CQPucRewII1UTdv8/lbW2rbJ9V+fBk3zKKruuscUui605feLfWcEIGNZMwv3UgpiDm1t6a680XaHXRkmzNvJi1ogRq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=ePdYSyqT; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAD83546FC
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 16:32:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.72.55
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792168341; cv=fail; b=l2b9+Hf18auZFgGTW6aiwoNmwws4ic9by6QQHtCrrMC0XJrrAYJusiQmnqUYb4Ck26C6uKTtlDWSukPuygSPk0H/SXrtPh7HQu9htcI+CSncszQ9wR1zqEqnCtD3y5jYCXNunqEwhE634F9mA8Vexumm+nCAOWUfSaRyRgtuDnk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792168341; c=relaxed/simple;
+	bh=JePWywyNTQtblRyPo4XnqNgzcUMHLKU6QF6jq/PX8us=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=GdNuO3T8LRRZCvUSvci9iZ24ZeiiEbu6Z6eeAgPAM6HrAPtofo1t7sK+nNYixbY1nObXPM5UnqzDuHNzMzldJ5+ETk1KsiS8e4stCf3YxIAJHZu3nRfCqwMgy8SthdNTWnNkw2IvYlXR5E5yc9VJlkgLSBbwhneiFUYG5SOTA0o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=InI8/mcJ reason="signature verification failed"; arc=fail smtp.client-ip=52.101.72.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="ePdYSyqT"
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69GEEEAf2269602;
-	Fri, 16 Oct 2026 16:23:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=5kiEa9fHaMWOgV7RVdeJ7EdoyJCmuJ
-	hmUGRAAvXvGyI=; b=ePdYSyqTioUjDmVfrHcmut7Ml7PBibl/3E+Sl6iCeSL11L
-	N+/1CQNtq9q9h09oiPDK6XgwYUKb+89db4gniSwoiechfAswnpnLnohzy9OCISpc
-	JOcNsLjShM3QzHkIE7haYPFTwuKoFohhrMkuAzYJAtzN8U5Y2UqySuOI3sfEcM6S
-	7/+0xfmFL8lYoaqJW8t60eeEky73cuYhnzRTqCObQrW5aDGeSDYe/9kkH26WRxVI
-	K61PrcC5jbGjy8rBSKO+9RbhhNUK31FRyJyQ4T8yKUKk91wJYqe0Vk9/SqICxH+l
-	5ePym6lzE30OXLX4zTlVGMk/oAVzXnHADelMqyqQ==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4h7dwj0bsw-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Fri, 16 Oct 2026 16:23:38 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69GEKTkJ3785918;
-	Fri, 16 Oct 2026 16:23:38 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4h9ypqc6b5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Oct 2026 16:23:38 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com [10.39.53.229])
-	by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69GGNbI54719164
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 16 Oct 2026 16:23:37 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 8844D5805D;
-	Fri, 16 Oct 2026 16:23:37 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 478D758058;
-	Fri, 16 Oct 2026 16:23:37 +0000 (GMT)
-Received: from d (unknown [9.61.189.254])
-	by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
-	Fri, 16 Oct 2026 16:23:37 +0000 (GMT)
-From: Dave Marquardt <davemarq@linux.ibm.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v14 10/11] scsi: ibmvfc: register and use asynchronous
- sub CRQ for events
-In-Reply-To: <sashiko-outbox-173070@kernel.org> (sashiko-bot@kernel.org's
-	message of "Thu, 15 Oct 2026 15:28:19 +0000")
-References: <20261015-ibmvfc-fpin-support-v14-0-a0b063b8d825@linux.ibm.com>
-	<20261015-ibmvfc-fpin-support-v14-10-a0b063b8d825@linux.ibm.com>
-	<sashiko-outbox-173070@kernel.org>
-Date: Fri, 16 Oct 2026 11:23:36 -0500
-Message-ID: <87mrsdbomv.fsf@linux.ibm.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="InI8/mcJ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=nu8T2ydKI9F6HkbbM9k5mh//2V6d5HVY9t+KKsmiZSIg2vMLrPf0m589Wk6q7HuC3QFDcWqRy+/PRJj7QzZz4W8thv0b99a9fm+k4WdEyPUJsLBXcal7pGfkU7c8OqPjyVr2HXck7G5y0xgCFBsDBxq2H1c1RQV4zy9Escf/FHmtQ+ArdLwTS8na3XSgR20gxwSXW3x4jKgJNJGW06KQWnyt5BxpEuNLaj/8c+9T65qD2q2OYiYzZeyWpQXfyprWkuNrvyqXv6RgFm7X24gyZjRylA68ipOvn+G17jluLfg/0Wh3BVlkYy0a6rVjbiAP8K6gCVvgorj+vPzlIeCTjg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=kR6OgNpoHCEI3nlSmNsPhxbfdNCv6HrNGVSUjDT52iU=;
+ b=e14G3zem2Jyb1NGWrSlZmV5/GWjKHtF7nvV/A6L9O3wR75tcUdNkUwtFbdGh2kXQRaqFeIi1kzmVpAmtmgYTJO5XpP5V0ngaSjmqpnXoJeJpS3RVJ2kSRKUnCziY0pGETlzn0NDcgSYW6OUHzzCrX0Jpy55Dvh5R0BfMl9vCpzSgOTpTx0BSMxC22tIhxJ/NRv5pAmnFbp1GVvWQ5BPB34MpKG/KxmZFy6KRBtpnK2txonJeQsj3VaiHa+V92yIKUOh4dzHo1K8Ja1fRNJwJR7RC22QYQZ13CDtXraYLeLGzgKrm1rI7HysU//Ff0ir45/I6ozqHa9lVhbqeA3LiPw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=kR6OgNpoHCEI3nlSmNsPhxbfdNCv6HrNGVSUjDT52iU=;
+ b=InI8/mcJ8uR9N7YwXhLHPjdRStx8DMFE1jlhGdHZRngjU7aXcK2yijAdHux7catvHYurU+mSs8z6gAc+uh0lQ24ytieL+CZPCU9DQLH35csnW/W5fzmxl3Y9kLyXyIpEXZ86i36LtjTqG5tgVGrG+L+o61YuzwD9Wf21gBqL4Puav2iHkd2u4zbsCOOCGkojBNLetMjXdGj40nPMvZOZsHAdEl70gWQK7lqw/VhIvHSwNQUtO5OkgKwuP51LHIxYgizwa/MxxFLLdLiPssP/3CEhC7fm7H8gicGL+3weJApfE+fILjjJ1W0wO2QmeDgkj6ANb/15QW0YhueLIzJlZg==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by AS8PR04MB8977.eurprd04.prod.outlook.com (2603:10a6:20b:42c::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.15; Fri, 16 Oct
+ 2026 16:32:17 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0522.013; Fri, 16 Oct 2026
+ 16:32:17 +0000
+Date: Fri, 16 Oct 2026 12:32:10 -0400
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Nathan Lynch <nathan.lynch@amd.com>, dmaengine@vger.kernel.org,
+	vkoul@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH 2/4] dmaengine: dmatest: Suppress bogus failures when
+ stopping a run
+Message-ID: <atJRihx8s9iSImNR@lizhi-Precision-Tower-5810>
+References: <20260722-dmatest-fixes-and-fatal-errors-v1-0-8287709987ea@amd.com>
+ <20260722-dmatest-fixes-and-fatal-errors-v1-2-8287709987ea@amd.com>
+ <20260722160949.7ECFB1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260722160949.7ECFB1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: PH8PR05CA0024.namprd05.prod.outlook.com
+ (2603:10b6:510:2cc::12) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDA2NCBTYWx0ZWRfX9iXjKi2hl5E+
- UnHws+RQpPZPlY420Y/ucPnd/zpr1BjkJ2kG7xQh6Hg39Yxi657ts4tq4w45M9QQ5VbYLvnkVw4
- XgvZXkXMJZ71WTZLrJ2Q26DoBcKPvSc=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDA2NCBTYWx0ZWRfX2flXlnI0sk7M
- 0jhnt6+URby/UcAqEJ2K1VVOxSdmcnU3CFU7ImwJiriC+Wpi1rSWik8zcWp5CzPkhIT3yBuTdpE
- RvVJri+mY9bszJY0Z4b9luK8IuA93Oo6iAQ1FydfAmL0MG6NeOyKhimLZ7l3UNMMb2KaNfLT2VF
- S9vbLGbmhiJoL1XKpSTY7bZT6Z8ilbZch53O0Z9J7IRCy82gn7W0Ed1Pwg0xoffWwGfTfQ7TJaf
- UwKmq4z3VlMudd8pHqCxVN9XSaUXUZdqLXI8xxAc7PwGGijIag6wJzUeiPobXGiVxzDp6rTn7pa
- f4eCWNycrs4ZiusQGpCgPb1FgIlefuUO5rFhBo9SSVMrD46Dvv0n/VCLjjBmSFSKHoyBd/KpTN5
- hotpcqaXqXJ+oZDuLwZbPjPlHw/L9P3unPxUNodhf+MxMUsYT3fdl6hYhUbvDcsjv+rC0YD+tD8
- e7wWXUpUO4pCSizapCQ==
-X-Proofpoint-GUID: HnEJ0JJr7iLDbl6tTZbl9YFT5_njgH9i
-X-Authority-Analysis: v=2.4 cv=RoFQvymK c=1 sm=1 tr=0 ts=6ad24f8a cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=UOPc1gLBq9Gu-FjWPGEA:9
-X-Proofpoint-ORIG-GUID: HnEJ0JJr7iLDbl6tTZbl9YFT5_njgH9i
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-16_02,2026-10-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 phishscore=0 adultscore=0 bulkscore=0
- impostorscore=0 suspectscore=0 malwarescore=0 clxscore=1015
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610160064
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|AS8PR04MB8977:EE_
+X-MS-Office365-Filtering-Correlation-Id: 445ee0be-90b0-470a-0431-08df2ba30af7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|23010399003|19092799006|366016|56012099006|260925022911599003|260925021311599003|260925021911599003|4143699003|11063799006|261009223027099003|10067099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	gb7qjecNz5cgA23Q3vCj4AdbLGT2fvhdUMyfsZklObhnNL0BDUoakN/9PEAAbAPytFxmK8EnvprvEgfCI63igzZxzNICP8JKzTJWG/tHpM/lmqVKJXO0uU36Tt5SrkNniUDTx6aG+Kr5mi5iCRIlq3Aif8EogP9jzTQK2eibiFQZVUNYxMyd5CQ6s0JkSp4Z+ezjs47u19xsLZgvGHtzWX6QQ1g6z6Pxb/alkwzkrC8hzS4jAE3A0Yt6UsKvR4pJWlVgpZPudksZj6fKqoMSmU9ejnQIemBh7sQ6iz/Bl8tRwYvrvWPRL9PaSUvfnmK+hgGrP6U4ix9AfCb9lkt78wTULCuB3hirgPSFAwObgcyPgHbC/myuHswLlVF6wKVv+F71u4+noExXj82HaXR1oUZAlQ18nRp7IfjB6MHq7hoREjUW0BndZ2wpWO7XPKX6T4OlmDe9Q7AM4GLV8EfvHfhxtuab3k5tjllsYOfYcrmxITvfTXyvnQAzupQaFD9xnGh/3RU+81rvllEQ79J9NRH2Ju3TTDrAxn32f3Qun2GFLw5Sn35up0MAr25G+NC4tpw1J0QcoIBCk33kkSBBUXb50rxAtBJBJ5g+3h97Mdo=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(19092799006)(366016)(56012099006)(260925022911599003)(260925021311599003)(260925021911599003)(4143699003)(11063799006)(261009223027099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?pqnrz7qHCkZpGlBCQcOzCwafb5wSOlJvffxdO+jjQf0MCYUs0mn/dMd18K?=
+ =?iso-8859-1?Q?pk37cKYaVA3UJG158BqaS1A5dUrEvac7XCeJzAPFwvYB7K4zY+IvwBSeAI?=
+ =?iso-8859-1?Q?+H7SVzjHPyk7FUsMLSqZaCKPZLSNvWagmvAfB+pApr4dvKFqAE0whPYFAk?=
+ =?iso-8859-1?Q?CXy0dZ5O2jVLJGlgolmMo0lMj4QKUdhicmLpMUGoJY2OZ6fdNfoHw6GmSB?=
+ =?iso-8859-1?Q?RrF//YYl4aqK7bgJeoU4QHJT7bzVzTYMyq0bbW7xYeKwZtQcwF42cXiYbB?=
+ =?iso-8859-1?Q?dlniQsDBYrzsLqKDkuZgdFefhqDjvFcTVjoWM8rUpeUbgkMW03AE83YguI?=
+ =?iso-8859-1?Q?c7mHxRfZLA2rYNp6ghntR3+0vB+4EN6TL/8yRhAT4aOnED5OdsZxlrSEWw?=
+ =?iso-8859-1?Q?cDEewOTaqQf36+YwFEC+Gkz1hc5CZVUpoUVRff2eIx921UiqUyoYpBZ3Ne?=
+ =?iso-8859-1?Q?e/f52sccvdap9199SJSoVBD+g74YoPMk0WoePL2W0kOUzyASitDsZHtDsx?=
+ =?iso-8859-1?Q?TihovOpbW4L3VCzLZUSMO8TrwKIdtD0N05U05nLnbaaYikE0UI4dtFotON?=
+ =?iso-8859-1?Q?8R9q+8JaanWcTXfRbLuTrQLxrn5W+l1pIakpEM7AYnY3t12t7XqS4twZCO?=
+ =?iso-8859-1?Q?45pJd7JxtjrlQ1N2B+k7Dpre2g8rZwpkgsk0R4Np8g1a8xryYYhTf9n/qq?=
+ =?iso-8859-1?Q?rRPbPBULOFQLf9tocMlqAOmyR+KOaZcjs9lQ3QENhRxcvTsON5v8m3xmst?=
+ =?iso-8859-1?Q?j6PDmOFq/QywTzZGtT6s9QH66fB5fNBWy/+2ukrfDPPKE8aNThJ0SD86YI?=
+ =?iso-8859-1?Q?kqEqasIRWLB8x7TFFrrO8BJuVGjHUaCtJ6Rv2BR6mqxgkLVLD9f0QeBURR?=
+ =?iso-8859-1?Q?KvoKTbkVbgyYcQH+9P0dwkKUUNfAJF+SiuDBsIsYCDSv9JZL2ki+zfkzu5?=
+ =?iso-8859-1?Q?B7DYfxmZk1cVnbulNUeOvPPnPGz/v1ppJ4vLU0R7rA96+Q9mVT34wstf5n?=
+ =?iso-8859-1?Q?n1W0+ogat5hGgQqVtkg+RWi6ethMvdpsE3rERbVykBmeUROxueB7NjBgbp?=
+ =?iso-8859-1?Q?ypYF6jqrQ6xigv1l+BC4QWxCLzqpp7rnzOb1BBSO6ru/OuglxPx3nNpO7R?=
+ =?iso-8859-1?Q?MVu3/hD0xVQ7NFUewaxXYPibCTIzY8kY0x+fFyAB/bB8Uq0Y9CIYl9wHuF?=
+ =?iso-8859-1?Q?U8IHiilsPK33at46I901tcMRuIc5EPQb+tU4RAO5+tYcm7rhn0gcMxSkmI?=
+ =?iso-8859-1?Q?jnA/iH9RKR+h1AlN12u12mcazxlAYUlo6NDKHEQhUvvGhKTZ9Xy/oC0yxO?=
+ =?iso-8859-1?Q?/N9eivvmJFE85ufLkUMhuMXShefguK490V/8N7TwjmE2GZ1v38UGohGTAt?=
+ =?iso-8859-1?Q?z9ZgVJPtPgpb/hzhpFzk0Pv8gaEx/dDkq/u+P2KSDqaAXVW2VQHkw741hp?=
+ =?iso-8859-1?Q?keTki8REyWPvi1NesOhX7XD7J3JSBBPZiDsMI/joa9C3FjWbl9EaYtuQe9?=
+ =?iso-8859-1?Q?o9Wg+ELdAMcvm5jxc0kR/kpY2DmJ3uRepmdMO8T8UhZU56RKMbiIfuoV0D?=
+ =?iso-8859-1?Q?MkVx8QukCFTvNf0A1GmPyMyHrEvYGEyyn0uPMlB+SDFZLzMSYApINRRSdg?=
+ =?iso-8859-1?Q?oAPMPHRoaEzjm7iUfS5UUZXcZ54W8yIWQ331SZMZ2wwnQFFAUCdElzkUEA?=
+ =?iso-8859-1?Q?k0kw7ESEw0+fINSQSWF46zMwEKhciUa1x1hk8cfAup+rRqDe6LxnsmPlIe?=
+ =?iso-8859-1?Q?dSuIRanALMdoWjARw7IByGukaGB6TNOcFojFXFUCZGYAyadAc4DbgeBt8A?=
+ =?iso-8859-1?Q?3bIfRj6PU+5yf5yAafaqa72JIJmr843B4jmuIxEUEkJwX33yS4J6?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 445ee0be-90b0-470a-0431-08df2ba30af7
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 16:32:17.5714
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: lL0lv4fNQ9K/WpUeuM4ZtEeM+Vs46wrFbvP3R0z1KkEVHSmwIhE34ZP2lNIyzz711Dxy8hNtItPkbBh39NOKzJvMTWjoKJK2ib+fMsdde4AEuRJ4MhL4QXrqYJ9lInMc
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8977
 
-sashiko-bot@kernel.org writes:
+On Wed, Jul 22, 2026 at 04:09:49PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] Bypassing the error path during thread stop prevents dmaengine_terminate_sync() from being called, leading to a Use-After-Free of the dmatest_thread struct by the completion callback.
 
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Critical] scsi: ibmvfc: DMA Use-After-Free due to skipped sub-CRQ deregistration
-> - [High] scsi: ibmvfc: data race on host state bitfields due to lockless mq_enabled write
-> - [High] scsi: ibmvfc: missing bounds check on active_queues causes heap overflow
+Look like make sense. Please check it
+
+Frank
+
+> - [Medium] Bypassed DMA status check when stopping results in unhandled DMA errors.
 > --
 >
-> commit 4d5dd0876862baa994058a6b3ad652d84e0497a5
-> Author: Dave Marquardt <davemarq@linux.ibm.com>
+> --- Patch [2]: [PATCH 2/4] dmaengine: dmatest: Suppress bogus failures when stopping a run ---
+> commit 65f43e5ca342a54064656c1ebe548edaa5c088bd
+> Author: Nathan Lynch <nathan.lynch@amd.com>
 >
-> scsi: ibmvfc: register and use asynchronous sub CRQ for events
+> dmaengine: dmatest: Suppress bogus failures when stopping a run
 >
-> Wire the async sub-CRQ into the sub-CRQ lifecycle so it is allocated,
-> registered, and freed alongside the SCSI channel queues.
+> Writing 0 to the module 'run' attribute stops the test threads with
+> kthread_stop(). This commit introduces checks against kthread_should_stop()
+> to suppress stale failures against transfers that actually succeeded.
 >
->> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> index b12655f028879..594e5f136040a 100644
->> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+> > diff --git a/drivers/dma/dmatest.c b/drivers/dma/dmatest.c
+> > --- a/drivers/dma/dmatest.c
+> > +++ b/drivers/dma/dmatest.c
 > [ ... ]
->> @@ -5817,6 +5824,7 @@ static void ibmvfc_channel_setup_done(struct ibmvfc_event *evt)
->>  		vhost->do_enquiry = 0;
->>  		scsi->active_queues = be32_to_cpu(setup->num_scsi_subq_channels);
->>  		nvme->active_queues = be32_to_cpu(setup->num_nvme_subq_channels);
+> > @@ -848,14 +848,19 @@ static int dmatest_func(void *data)
+> >  					done->done,
+> >  					msecs_to_jiffies(params->timeout));
+> >
+> > -			status = dma_async_is_tx_complete(chan, cookie, NULL,
+> > -							  NULL);
+> > +			stopping = kthread_should_stop();
+> > +			status = stopping ?
+> > +				dma_sync_wait(chan, cookie) :
+> > +				dma_async_is_tx_complete(chan, cookie, NULL, NULL);
+> >  		}
+> >
+> >  		if (!done->done) {
+> > -			result("test timed out", total_tests, src->off, dst->off,
+> > -			       len, 0);
+> > -			goto error_unmap_continue;
+> > +			/* stopping: dma_sync_wait() let the transfer finish, not a timeout */
+> > +			if (!stopping) {
+> > +				result("test timed out", total_tests, src->off,
+> > +				       dst->off, len, 0);
+> > +				goto error_unmap_continue;
+> > +			}
+>
+> [Severity: Medium]
+> By skipping this error path when stopping is true, does this bypass evaluating
+> the status returned from dma_sync_wait()?
+>
+> If a legitimate hardware error or timeout occurs exactly when the thread is
+> stopped, it looks like it would either falsely report a successful test (if
+> noverify is set) or misreport it as a data mismatch.
 >
 > [Severity: High]
-> Does this code overflow scsi->scrqs[] or nvme->scrqs[] if the hypervisor
-> returns a value for setup->num_scsi_subq_channels or
-> setup->num_nvme_subq_channels that is larger than the allocated
-> scsi->max_queues or nvme->max_queues?
+> Could skipping the goto error_unmap_continue here lead to a use-after-free
+> in a delayed callback?
 >
-> The active_queues values are read directly from the hypervisor response
-> without any bounds checking, and are then used as limits in the
-> initialization loops below.
+> If a delayed callback leaves done->done false when stopping, failed_tests
+> won't be incremented. Later, when dmatest_func() exits:
 >
-> If a buggy or malicious hypervisor sends excessively large values, could it
-> cause an out-of-bounds write into the scrqs array or cause page faults on
-> the setup buffer?
-
-I will clamp the values to the minimum of the hypervisor value and the
-max_queues value of the ibmvfc_channel structures.
-
->> +		async->active_queues = (async->scrqs && setup->async_sub_crq_handle) ? 1 : 0;
->>  
->>  		if (flags & IBMVFC_CHANNELS_CANCELED) {
->>  			ibmvfc_dbg(vhost, "Channels Canceled\n");
->> @@ -5832,6 +5840,8 @@ static void ibmvfc_channel_setup_done(struct ibmvfc_event *evt)
->>  		for (i = 0; i < nvme->active_queues; i++)
->>  			nvme->scrqs[i].vios_cookie =
->>  				be64_to_cpu(setup->channel_handles[scsi->active_queues + i]);
->> +		for (i = 0; i < async->active_queues; i++)
->> +			async->scrqs[i].vios_cookie = be64_to_cpu(setup->async_sub_crq_handle);
->>  
->>  		ibmvfc_dbg(vhost, "Using %u SCSI channels\n",
->>  			   scsi->active_queues);
-> [ ... ]
->> @@ -6988,6 +7004,7 @@ static void ibmvfc_reg_sub_crqs(struct ibmvfc_host *vhost,
->>  			for (j = i; j > 0; j--)
->>  				ibmvfc_deregister_channel(vhost, channels, j - 1);
->>  			vhost->do_enquiry = 0;
->> +			vhost->mq_enabled = 0;
+>     if (ret || failed_tests)
+>         dmaengine_terminate_sync(chan);
 >
-> [Severity: High]
-> Since vhost->do_enquiry and vhost->mq_enabled are bitfields, these
-> assignments compile into read-modify-write operations on the containing
-> word.
+> Since failed_tests remained 0, the thread exits without synchronizing the
+> channel. Then dmatest_cleanup_channel() executes:
 >
-> ibmvfc_reg_sub_crqs() is called by worker threads like
-> ibmvfc_reenable_crq_queue() outside of the host_lock.
->
-> If a tasklet concurrently processes an event and calls a completion handler
-> like ibmvfc_channel_setup_done() (which executes under host_lock and writes
-> to another bitfield in the same word, such as vhost->using_channels = 1),
-> could this lockless read-modify-write overwrite the locked modifications
-> and corrupt the host state machine flags?
-
-Yes. I'll add holding the host lock while making these updates.
-
-> [Severity: Critical]
-> If channel registration fails here, vhost->mq_enabled is cleared to 0.
->
-> Since async_scrqs is successfully registered earlier in
-> ibmvfc_init_sub_crqs(), when teardown happens, ibmvfc_release_sub_crqs()
-> will call ibmvfc_dereg_sub_crqs() for async_scrqs.
->
-> However, ibmvfc_dereg_sub_crqs() returns immediately if
-> !vhost->mq_enabled:
->
-> drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_dereg_sub_crqs() {
->     if (!vhost->mq_enabled || !channels->scrqs)
->         return;
->     ...
+>     put_task_struct(thread->task);
+>     kfree(thread);
 > }
 >
-> Will this cause ibmvfc_dereg_sub_crqs() to bypass deregistering the async
-> sub-CRQ, leaving the hypervisor DMA mappings and IRQ handlers active while
-> the memory is subsequently freed by ibmvfc_release_channels()?
-
-Fixed in other patch fixes.
-
--Dave
+> /* terminate all transfers on specified channels */
+> dmaengine_terminate_sync(dtc->chan);
+>
+> Is there a window where a pending tasklet executes dmatest_callback()
+> after kfree(thread) but before dmaengine_terminate_sync() is finally called,
+> leading to a use-after-free on the thread structure?
+>
+> >  		} else if (status != DMA_COMPLETE &&
+> >  			   !(dma_has_cap(DMA_COMPLETION_NO_ORDER,
+> >  					 dev->cap_mask) &&
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260722-dmatest-fixes-and-fatal-errors-v1-0-8287709987ea@amd.com?part=2
