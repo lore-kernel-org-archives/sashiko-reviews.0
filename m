@@ -1,111 +1,123 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4417347FC8
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 04:14:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+Received: from ultrarisc.com (unknown [218.76.62.146])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A099C2C8
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 05:46:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792124073; cv=none; b=mWV6Jm1sbkRLWQeHOJuV4t1NXsPeyZBu/OhoUAyqOXP8oxzena/4djdsQrHO8l8MqD70IIaqV3fa1G4wmDI5udwxxI9+xWsoxYEPktUG0QKeXcg4ddiaBpYPQcfqiVbAjeNMiL4UEstw4KuyJkejk70ZRgp/qE8jIqSHDNbG6Zw=
+	t=1792129598; cv=none; b=nc852fKrJ0rBfLTOgF2+5zHJBDqUvhCtmcYzJZap6Sf4o3V9HWm5IuSlRbmoqJ8jl6utADhUZZoNvWBPK2++whj6eVCHWXUee6644YlBINgTkoSiTzCFcY/SsZrKgEdPoE2n1+YWT9GH0SXpmMAryIP1DwZKj8nu5zGEc9nvscw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792124073; c=relaxed/simple;
-	bh=JobKsdQyp0QPl4TgWuf43feGoTA/YjHTrvyExa3MZXc=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=jb022StmhU2ql896CjrLrvOPFH9siu9bHKDmouhvVxZZ4lBAcl7gokK7PkKP2n3gB8dbM+N6M7NoSHLIdZxbj/ObDcdwK1Jjzy+KVtwI8DGPQJEXHDfsXtcoA7gkedEuabrSYGeA24v+aWzPQkqJHMAErugbxA0cBdYua9bVAvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [10.20.42.62])
-	by gateway (Coremail) with SMTP id _____8CxvtKbpNFqVmMWAA--.64970S3;
-	Fri, 16 Oct 2026 12:14:19 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
-	by front1 (Coremail) with SMTP id qMiowJAx3c6UpNFql_0sAA--.29236S2;
-	Fri, 16 Oct 2026 12:14:16 +0800 (CST)
-Subject: Re: [PATCH v2] LoongArch: KVM: Add hypercall crash support
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20261016034245.3002859-1-maobibo@loongson.cn>
- <sashiko-outbox-173719@kernel.org>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <53f3f45b-1e86-1218-ff64-d0968cc8bb9e@loongson.cn>
-Date: Fri, 16 Oct 2026 12:15:32 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+	s=arc-20240116; t=1792129598; c=relaxed/simple;
+	bh=H/wLC77nyWi4TKzai2xbbOaPR7KYDq5gbSIw52DfucI=;
+	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
+	 References:Date:Message-Id; b=NNZJnpr3hFIlL6kRJXoTE49Q3w6fqU/Yzs8x4u0WT4rFtyZDvTqUvILxEOm0aGVZNAhjkNISmjJq2PhROe3urPzJNxKim0jpdLR0lQvuxeULg2KHNVhsU7OtVtl8D5W5RrbpxwdpN8lY9xk/f74ZcnBUHT3PKXtS0KiY5ga586A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=pass smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=AOu8G//r; arc=none smtp.client-ip=218.76.62.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="AOu8G//r"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	References:Date:Message-Id; bh=au/In2S6Zw9QAy1t6b5ulyOfJEmxfJagH
+	+pXKcr29cE=; b=AOu8G//r+cz1NzGdXe/GViFvzW9kWYbWd+NGxY+aXGImKkgF6
+	65QJXNfJszHKRTUSMSxL4BahB4kdHFb18mI4FkePzLvVw36BWq74F67ZDxjJD8ZR
+	G9Tr6w5TkyevGApdezXQldwGUtbyAhwVCqpay0sRwYGJedMKDpk6C56Img=
+Received: from [127.0.0.1] (unknown [192.168.100.1])
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwD3vwYqutFqSzECAA--.1058S2;
+	Fri, 16 Oct 2026 13:46:28 +0800 (CST)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <sashiko-outbox-173719@kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qMiowJAx3c6UpNFql_0sAA--.29236S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7AF43ZrWDAr48ZFWfAr45twc_yoW8tF13pr
-	n7AF4kXFZ3XF1xCan0v3929w4rWFZ7CryIvrn8CryfAF15KF98Cw1jvFWv9FWkJw1fW3W0
-	vF48tryqv3WktwbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
-	6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
-	Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
-	14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
-	AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
-	rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
-	CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
-	67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
-	0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8PC
-	zJUUUUU==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v3 5/7] riscv: dts: ultrarisc: Add initial device tree
+ for UltraRISC DP1000
+From: Xincheng Ji <jixincheng@ultrarisc.com>
+To: Conor Dooley <conor@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, Xincheng Ji <jixincheng@ultrarisc.com>, 
+ devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+In-Reply-To: <20261014-ramp-dioxide-63e1d5e0499f@spud>
+References: <20261013-ultrarisc-dts-v3-0-5ff3ebb2a90d@ultrarisc.com>
+ <20261013-ultrarisc-dts-v3-5-5ff3ebb2a90d@ultrarisc.com>
+ <sashiko-outbox-169523@kernel.org>
+ <20261014-ramp-dioxide-63e1d5e0499f@spud>
+Date: Fri, 16 Oct 2026 13:46:17 +0800
+Message-Id: <179212957763.1275455.3064080898743829943.b4-reply@b4>
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792129577; l=1889;
+ i=jixincheng@ultrarisc.com; s=20260922; h=from:subject:message-id;
+ bh=H/wLC77nyWi4TKzai2xbbOaPR7KYDq5gbSIw52DfucI=;
+ b=G/dseTYRalYRLNbQPqcmVRTWZCsy+AkMe9cOm4ArIZyIMkcE0sLk+D9xKHIbqkD8euyBJQK3P
+ l06EfeNFhB6BLDH1dOKhT6pd5HxFDm/73W8QfKIJK9+2uReH2ifb8NR
+X-Developer-Key: i=jixincheng@ultrarisc.com; a=ed25519;
+ pk=n848dcS5D6g0vLad/rjp4Gf/1eedTe1a3pYUrkt2260=
+X-CM-TRANSID:AQAAfwD3vwYqutFqSzECAA--.1058S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7tr45KFykWryfZrWxJFykAFb_yoW8WF4xpw
+	s7Ka4UtF4kZr1xCwn2vF1Uu3WIvas7GF4Yqwn5Ww48AryY9r17JFWrKw15ZFy5WryxCr42
+	vF4Fv3yIgws8GaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvI14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r1j
+	6r4UM28EF7xvwVC2z280aVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
+	4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVWU
+	AVWUtwCY02Avz4vE-syl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2
+	IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v2
+	6r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2
+	IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv
+	67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf
+	9x0JUSNtxUUUUU=
+X-CM-SenderInfo: pml0x0xfkh0wg6xo325dul2uoofrz/1tbiAQAJDmq-VKkAAgAtsB
 
+Hi Niklas,
 
+On 2026-10-14 17:53 +0100, Conor Dooley wrote:
+> > > + cpus {
+> > > +         #address-cells = <1>;
+> > > +         #size-cells = <0>;
+> > > +         timebase-frequency = <10000000>;
+> > > +
+> > > +         cpu0: cpu@0 {
+> > > +                 compatible = "ultrarisc,cp100", "riscv";
+> > [ ... ]
+> > > +                 cpu0_intc: interrupt-controller {
+> > > +                         compatible = "riscv,cpu-intc";
+> > > +                         interrupt-controller;
+> > > +                         #interrupt-cells = <1>;
+> > > +                 };
+> > > +
+> > > +                 l2_cache0: l2-cache {
+> >
+> > [Severity: Medium]
+> > Does this incorrectly nest the L2 cache nodes as children of the cpu nodes?
+> >
+> > Standard Devicetree topologies for CPU schemas require cache nodes to be
+> > defined as siblings under the /cpus node or globally, rather than as direct
+> > children of the cpu nodes. Instantiating l2-cache here can cause
+> > dt_binding_check validation failures and break generic kernel cache topology
+> > parsers that expect the cache nodes at the root of /cpus and referenced via
+> > the next-level-cache phandle.
+> >
+> > Should these cache nodes be moved outside of the cpu@0 node?
+>
+> This seems like a fairly reasonable comment from Sashiko. Does keeping it
+> here lead to hwloc incorrectly displaying your topology?
 
-On 2026/10/16 上午11:57, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] kvm: new guest-visible KVM_FEATURE_CRASH capability is silently enabled by default
-> --
-> 
-> commit 6d0e897e0c46a79eb02651baa4b7271884b07abb
-> Author: Bibo Mao <maobibo@loongson.cn>
-> LoongArch: KVM: Add hypercall crash support
-> 
-> This commit adds hypercall crash support (KVM_HCALL_CRASH) to LoongArch KVM
-> to provide a more direct, low-level crash notification method. It allows the
-> VMM to capture CPU crash context during exception entry even if the CPU
-> hardware context or kernel stack is corrupted.
-> 
->> diff --git a/arch/loongarch/kvm/vm.c b/arch/loongarch/kvm/vm.c
->> index 6dabb227a7321..9bf4b3bb8f25a 100644
->> --- a/arch/loongarch/kvm/vm.c
->> +++ b/arch/loongarch/kvm/vm.c
-> 
-> [ ... ]
-> 
->> @@ -49,8 +49,9 @@ static void kvm_vm_init_features(struct kvm *kvm)
->>   		kvm->arch.kvm_features |= BIT(KVM_LOONGARCH_VM_FEAT_PMU);
->>   
->>   	/* Enable all PV features by default */
->> -	kvm->arch.pv_features |= BIT(KVM_FEATURE_IPI);
->> +	kvm->arch.pv_features |= BIT(KVM_FEATURE_IPI) | BIT(KVM_FEATURE_CRASH);
->>   	kvm->arch.kvm_features |= BIT(KVM_LOONGARCH_VM_FEAT_PV_IPI);
->> +	kvm->arch.kvm_features |= BIT(KVM_LOONGARCH_VM_FEAT_CRASH);
-> 
-> [Severity: High]
-> Does unconditionally setting BIT(KVM_FEATURE_CRASH) and
-> BIT(KVM_LOONGARCH_VM_FEAT_CRASH) here break live migration and backward
-> compatibility?
-> 
-> If a VM is migrated to a newer kernel with this patch, an older VMM unaware
-> of the capability will not explicitly disable it. If the guest discovers
-> and triggers the new KVM_HCALL_CRASH hypercall, the older VMM will receive
-> an unexpected KVM_EXIT_SYSTEM_EVENT and will likely terminate the VM.
-> 
-> Should new guest-visible capabilities be left off by default and require
-> explicit VMM opt-in through capability negotiation?
-The design idea is that if VMM does not set pv features, kvm will enable 
-all supported features. With VM migration, VMM need set pv features 
-again in post migration stage, so it is the problem of VMM, rather than KVM.
+Thank you for pointing this out. You are right: after reviewing the
+relevant Devicetree bindings and implementations from other vendors,
+we found that the current L2 cache node placement is not compliant 
+with the standard topology.
 
-Regards
-Bibo Mao
+The L2 cache nodes should be defined as siblings under /cpus (or globally) 
+and referenced via next-level-cache, rather than being children of the CPU 
+nodes. We will fix this in v4.
+
+Thanks,
+Xincheng
+
+-- 
+Xincheng Ji <jixincheng@ultrarisc.com>
 
