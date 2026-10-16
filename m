@@ -1,169 +1,278 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7603C52ED59
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 17:47:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792172831; cv=pass; b=W5yapCc1ufKgdwHWe+II5nDPhyXi1DvEo3+SkZ/SFmQ9/f7eEIqVuheBgvjiDMQ4h8LdFAsHddXRhWZ+15FFSHxHDgnHoKIuwcBavzNPMBySAK8R6MQr4imI+jL/KRGytW1dJf68g7vsCMhTmx+zz7sPRzs+yhbzqqMy9isuwjs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792172831; c=relaxed/simple;
-	bh=uSlajszt+v1CRapk8IvXExaGgd62+VPOnKY9eJlACNY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=J7KX2XBkcs5JEceUdckktLIV4F8Fp7Nm3c0VsoEYrPIheZPOHqfN+Ijie2BLSbio9HDhVr0lRTFLnyT3tpMJ+/tTbLDjfL7Dy+NgT9GKclSSVvIVGrUOEqE57ZvYfVouWu38oa3maib0L/wAxPnW+8mbUUKjzCEaJZZ07S8Krcs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PolLy4In; arc=pass smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6366C48DB58
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 18:19:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792174776; cv=none; b=LF8COcYQ1Qcq3ygOz1i59w7Y2IlqXGVFjU8jhjSnchpYv+j2C3/FhwRDDIuY1PEAdnGrlwlhN5OLtemBNpnfEjSPbtyP+GfnLWnlnY/qlS2rT7NgoNmSSfE1dnTxKYS6XKxl+kM5lFnD6ZWDk/SY7D03vNml6ZBHshtjcuUE5dE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792174776; c=relaxed/simple;
+	bh=TqRikmZ7csnCrB2weXFoz6tgf/kuh932e1T8CMYxEYQ=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=bTPlRJwSydAwedFEEbaFwNFFhWwOFQhfutDqIW84BnyTKCagu1n+O7ujdFA1ogg5q5nk6yqJ79Xr3XWs0xIJmhCWsEnAHCnpbZeuMtaZbpQOkfpmHkBg6Xghml+v516COL+Q+l2o6wMcaVuTiA5fwXfLBD4OVqgVPHNBstRgiH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=GI6vPu+0; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PolLy4In"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-c40f29667e6so29294166b.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 10:47:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792172827; cv=none;
-        d=google.com; s=arc-20260327;
-        b=PC2c/K6Q/AVWd8mQZSCbYZXjEopezmxWVQapqacNexqNCdCe+Co7CuxiulDB1n/VTf
-         QLGpNGfYwk+ITM1Yzy5i8PKtaokBH6gpHMKJuw1j+porilkxlb0ziv9kuxJ+L6fMFOS9
-         ZLaNII1O3P1Szgh7I4dgwKSX5BlERIdySP0KaSfSHrXFoRQQu4vTdA1w75YDE5YY49/q
-         HJ4MREZ16cMXVPnQnPMijXCk4sFyw6SKYgTW6xEgyKc/v2QclWsCr1m7Wc9T2i+iLMyL
-         TKl9VzOKW2Fb7QrZt6PR0oC2bB14CBOA2z/MaP1u7Y/ZnfPGvOx2hko2U1iRh7fQdL/K
-         RHBQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=gHgUB10P5VN5xvPA6XcNoyN3ZPY0VdZiK74UugihdkE=;
-        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
-        b=ZpIi0YqdB7NH32FQtidmwdqwEkp/I87/qzXIblzcBKYY91TQxR2OPmDak8feZNrCHv
-         CR2Yy2tdEujNGVvUnmtGHhfnHh+07h4YCR/e2uoz7z0pNY4zoMeWWXaQBMYHgo5cEEpJ
-         oOO5qcy4Dk53Tay2lzFB+0e+iEEEb6ckWLavEGkXCQgXCgEVxpVin2nnvzZpvh6MYD0O
-         dLBOi3IaZNlc8R3kXYrXo8LaIxBYX+OGcIxF7vucQpD7qsEdgtCgxbXUPPJd8sOAL3Dd
-         SBEjlAYHVKE0EPhsa6mcSABtoQIkMpxtBTnoQdXOkRjHAdxbI9ULWftj5WyqeHtXaPdo
-         NhEQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792172827; x=1792777627; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=gHgUB10P5VN5xvPA6XcNoyN3ZPY0VdZiK74UugihdkE=;
-        b=PolLy4InnTmsZZmsaLMbRsGt80f38IPEVOCfPPMjfltVAE3Ln7kM0aJzxuc2hR4wh6
-         jKvseq8g6BUWqufswyIpQCu0lCahga+MzMuq3aFsAnl9V2NAMbvkdFmHZXNFKr0vkI+s
-         WSOhYrTopyLYiaMQjPQQiR1XUhp1qSwQ+VR2WRFPfBY8cKuHwbvq9mT5+A7X7loHV0FB
-         wEqljmDW26Tvyu4d8Zhqycc9w9gfMo4p/KrY6ztez+CJLrWtXnJyhcH55qM9im4nzIQ9
-         kcGa+zEqM1lK+VuN4Lk12LRJnEn7UF9HEUUFTWMnIFISWsqCniPpWXsRjTrEzLUlgfrN
-         5PHQ==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="GI6vPu+0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1792174773;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=TqRikmZ7csnCrB2weXFoz6tgf/kuh932e1T8CMYxEYQ=;
+	b=GI6vPu+0g0oDv1JMJZdQkY/rylMcwHdht1qniN3NalM4coD2tbTFptUMlzi3TEyD3LAl44
+	tw8+4o/8OSGsUUFlo6exCRw+VMZxBMZ+63xfpe4hmx+nbbQMSt+mhgbniHGtWwH7Kq6GyD
+	tn8MyYWgzHnzet1Lu/hNFA13uRGmNys=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-205-DmO2Q3l9OrCIoZZ-HBTaew-1; Fri, 16 Oct 2026 18:19:32 +0000
+X-MC-Unique: DmO2Q3l9OrCIoZZ-HBTaew-1
+X-Mimecast-MFC-AGG-ID: DmO2Q3l9OrCIoZZ-HBTaew_1792174771
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-53639e47be2so3313811cf.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 11:19:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792172827; x=1792777627;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1792174771; x=1792779571;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=gHgUB10P5VN5xvPA6XcNoyN3ZPY0VdZiK74UugihdkE=;
-        b=ONMlJ7krnBQnWdLHBZsCPQ7BMpe3fyLWGDxVE8E0teljqHCh2znUZG9e3Xw3GI7jAc
-         PgohrliPB5bT1FxhLFSnQlxVd4pNwquknjKBDGcQqEoLMQOaKdk/4l2o9VYV3lUlDD0f
-         pMD7nDtqFCt7KXTRfYPZiOsCYTpNUuTDu/BhmzWj1RQAG3uwAB/yEhKPFxPzeBzKysHH
-         LROPn/PL4fvc+Zm3IZISsa59nGldbkcKZ6hCH8WL7XNlMRW5VNHVO2e4Gbvm3sBX3zJh
-         4noSRSYKLFXxtyHVfsQNFF2BCkbPbx3QYzSa8JW8FnVRZdNY0Lv2B6ZMltgQz/XqdpLJ
-         cZjA==
-X-Gm-Message-State: AFq9FYKBZf1nIczH28KfQRVPyxtpfrj/uIqqTv8TR8WeEtZHkQst/Fii
-	lQkg/0L/0pzOEaP6tEmYgAncZ3T2pEULXq004K/m0MY4cNE3ZQcJNkf9c2aIIG8Bn0tzddIR/H1
-	96nQRe2qRfQogVJ602eR8L0bbHWwRDA9LpnoRQ1jm+w==
-X-Gm-Gg: AYBFou2mudMcZCxT/zNfxBcwr922mnaUubV3QEdsFFtesd3rqXq6l95G9yaX1EFNLii
-	gaXdSVQWKYAxV6o6Nh6fkLsRC6VqFHb9nzAjcOmT/I5VTp7cM/J/Br39+jEO/iB2bVc15UX9jfW
-	IxVBnArXoVu91QCP0MUMLqxb9SWtNSKQ/8yYnW+RL4a9SB2wCE/FjcFADLhBCGrS1gjxMT4f3Uy
-	WWPcTdsMy2u5/bg4YBvBJQgjV2GmAEMr+Rl6r3YuKLKK6y6dKle1/3J/pgjghTh04k0TZaBfVH5
-	F7Oyhf671sUPBcAPy4fL5FXZWch6dq1jsjQHxGefDb8vgl/6vINKxyqVWCiL7voXTi3/NpxAD6G
-	1oPjgNQ4kDIeV
-X-Received: by 2002:a17:907:2d10:b0:c1f:983f:d8a with SMTP id
- a640c23a62f3a-c419e6488bamr43994566b.24.1792172827241; Fri, 16 Oct 2026
- 10:47:07 -0700 (PDT)
+        bh=UdkPrYJMoXNxnJJGpG2AJm7Q5jz36VYFDAVyz4PxPS0=;
+        b=QOmDhQGLa6l92CC36ibPJOhCeOuMovbGvZrRskmzf4ZVG1XqiiTUxXInCMmDscSLSf
+         aTzRSFXDj/sYylJwo0viJOIXveX/4OlM0CaDQZSs+nRHbR7yH27arplFwIZQWAD+c4Dq
+         wW+POq+nFroSbzmf9LYdQdHsbLfHTEeF4T8geWFupperhJYlYwKKNWJ449YaI5ae3o2j
+         jGdJXCuABmlimbCzqjGHqPMLxiNpcYDJZmHKkCqLvePPGLggrWV86htIk6CBK3p2ZI2+
+         NqoIVpPTxpDZ3IhaCtpXoEFIuGCs8Q3fDYnRyMpWqq9fPfBWExuwTgD5r+l6bnBbZ0Tc
+         Qx0Q==
+X-Gm-Message-State: AFq9FYKdOdjKv+UejfXxaK4X1U30nDSePzIFwWp5ktThJzIvEgIJscUK
+	1wHCWNSLq9wVXLHZnhLOLrGMfunDC3xhvBOKbo5mdQWE24NRllV5nMe2HUY55UbgWqtzobhR4RW
+	o8OOx7/HCd7YAFeIDHf5lJt0THovwVXrEPMtf8En9KfasaHZf74raaRsSRVIKEnG6jJTDMlborX
+	n/1QH2F4Lt6w61KEKoe2/v4mj5tzWQxl2Gj8CDISh6YZd6yjrzu+Momg==
+X-Gm-Gg: AYBFou29I5C9Se8FftnhqSFmwGhgA/jPqX+NchfA2mC7IGR1DC5Tvhf4PyzBEywwNw/
+	uZc2y5BQNAKnh0qmdTa3/151bWuvxoEwqH2EAOTAzzyYmO1V5Oel5/48NV9lnvVAuDEUNuGewN3
+	0BWI2BgwYg+mB9I/AsL6IQ94z4ZwXXB+AM/EplrToR81sxMn9By8W7u4TwRZ2jFXExnd+HD/Vwt
+	Nfls5cFWWiGJT75wH9bTW38fXDpcd7kfXhbFJYjD4+2nKo0U6owqUZDUdzELiMCUUcyMizv1tcl
+	DKj/LIomtqpm5pbGCUgPy2maT8OOOc1/014nry8muqVxShSZX/PP8EySOsv5krqOq49kVoS0PtR
+	CgQB34dAD24di30lQMXbNoBhKQeRpXgJx4RRP
+X-Received: by 2002:a05:622a:4897:b0:533:9753:571c with SMTP id d75a77b69052e-53645f6fec2mr4914901cf.19.1792174771257;
+        Fri, 16 Oct 2026 11:19:31 -0700 (PDT)
+X-Received: by 2002:a05:622a:4897:b0:533:9753:571c with SMTP id d75a77b69052e-53645f6fec2mr4914251cf.19.1792174770601;
+        Fri, 16 Oct 2026 11:19:30 -0700 (PDT)
+Received: from loberman-thinkpadp16gen3.rmtusma.csb ([2600:6c65:2440:d8c:aa2b:ddff:fe88:da74])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91bcbb27839sm28848796d6.35.2026.10.16.11.19.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Oct 2026 11:19:29 -0700 (PDT)
+Message-ID: <4bff10e5c6fd926f81dd65b0373ea25e6c6a3d6d.camel@redhat.com>
+Subject: Re: [PATCH v2 2/2] scsi: target: iscsi: Complete an aborted WRITE
+ when a new R2T would be sent
+From: Laurence Oberman <loberman@redhat.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-scsi@vger.kernel.org, target-devel@vger.kernel.org
+Date: Fri, 16 Oct 2026 14:19:29 -0400
+In-Reply-To: <sashiko-outbox-174751@kernel.org>
+References: <20261016175351.126373-1-loberman@redhat.com>
+	 <20261016175351.126373-3-loberman@redhat.com>
+	 <sashiko-outbox-174751@kernel.org>
+User-Agent: Evolution 3.60.2 (3.60.2-2.fc44)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261016171319.1623447-1-puranjay@kernel.org> <20261016171319.1623447-3-puranjay@kernel.org>
- <sashiko-outbox-174717@kernel.org>
-In-Reply-To: <sashiko-outbox-174717@kernel.org>
-From: Puranjay Mohan <puranjay12@gmail.com>
-Date: Fri, 16 Oct 2026 18:46:52 +0100
-X-Gm-Features: AclHuK-9FKtfzxO3GrmHQgPK304wDgBltpq3vhcsxnC8jVAUThtsVhUdr7o1auQ
-Message-ID: <CANk7y0h6hXXihv_x3O81uFyifQtQaupAhmJPZxCQF6tpqcLP6g@mail.gmail.com>
-Subject: Re: [PATCH bpf-next v5 2/3] selftests/bpf: Test fetching AND/OR/XOR
- atomics in arena
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: 7xiDx2me0JGLBTW3vHaVPg7z8GahTDwEojpQlKXRcIs_1792174771
+X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 16, 2026 at 6:26=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] selftests/bpf: uaf test silently passes on ARM64 instead of skipp=
-ing
+On Fri, 2026-10-16 at 18:08 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential
+> issue(s) to consider:
+> - [High] iscsi: double completion due to incomplete CMD_T_ABORTED fix
+> - [Medium] iscsi: data race on cmd->outstanding_r2ts during abort
 > --
->
-> commit a4f52eddc0e670a7a41a5b1939916ca84274f849
-> Author: Puranjay Mohan <puranjay@kernel.org>
->
-> selftests/bpf: Test fetching AND/OR/XOR atomics in arena
->
-> The arena and/or/xor tests never exercised the fetching form of the
-> instruction. Commit 2897b1e2a2f4 ("selftests/bpf: Fix arena_atomics
-> failure due to llvm change") deliberately switched them to
-> __c11_atomic_fetch_*() with memory_order_relaxed, which clang lowers to a
-> non-fetching locked instruction when the result is unused, because
-> x86-64 could not JIT the fetching one against an arena.
->
-> > diff --git a/tools/testing/selftests/bpf/prog_tests/arena_atomics.c b/t=
-ools/testing/selftests/bpf/prog_tests/arena_atomics.c
-> > --- a/tools/testing/selftests/bpf/prog_tests/arena_atomics.c
-> > +++ b/tools/testing/selftests/bpf/prog_tests/arena_atomics.c
-> [ ... ]
-> > @@ -160,6 +199,18 @@ static void test_uaf(struct arena_atomics *skel)
-> >               return;
-> >
-> >       ASSERT_EQ(skel->arena->uaf_recovery_fails, 0, "uaf_recovery_fails=
-");
+>=20
+> commit 538cfb5a3bbcee47d2aa78e30d5cf64fe5bed2fe
+> Author: Laurence Oberman <loberman@redhat.com>
+>=20
+> scsi: target: iscsi: Complete an aborted WRITE when a new R2T would
+> be sent
+>=20
+> This commit adds a check for aborted commands in the DataOut
+> processing
+> path when a new R2T is requested. It ensures the command is safely
+> completed using iscsit_complete_aborted_cmd() to claim the
+> completion.
+> This prevents a race condition where a connection drop could cause a
+> double-completion of the aborted command.
+>=20
+> > diff --git a/drivers/target/iscsi/iscsi_target.c
+> > b/drivers/target/iscsi/iscsi_target.c
+> > index aab9237a67768..3dad7f69f3bae 100644
+> > --- a/drivers/target/iscsi/iscsi_target.c
+> > +++ b/drivers/target/iscsi/iscsi_target.c
+> > @@ -1669,6 +1669,22 @@ iscsit_check_dataout_payload(struct
+> > iscsit_cmd *cmd, struct iscsi_data *hdr,
+> > =C2=A0=09if ((rc =3D=3D DATAOUT_NORMAL) || (rc =3D=3D
+> > DATAOUT_WITHIN_COMMAND_RECOVERY))
+> > =C2=A0=09=09return 0;
+> > =C2=A0=09else if (rc =3D=3D DATAOUT_SEND_R2T) {
+> > +=09=09/*
+> > +=09=09 * A new R2T would never be answered for an
+> > aborted command.
+> > +=09=09 * The CMD_T_ABORTED handling in
+> > __iscsit_check_dataout_hdr()
+> > +=09=09 * does not cover this: it only runs for DataOut
+> > PDUs
+> > +=09=09 * belonging to R2Ts that were already issued, and
+> > +=09=09 * iscsit_dataout_update_r2t() has already
+> > decremented
+> > +=09=09 * outstanding_r2ts for the burst that just
+> > finished.=C2=A0 Guard
+> > +=09=09 * on outstanding_r2ts so that with
+> > MaxOutstandingR2T > 1 the
+> > +=09=09 * completion is still left to the last R2T to
+> > drain.
+> > +=09=09 */
+> > +=09=09if (cmd->se_cmd.transport_state & CMD_T_ABORTED) {
+> > +=09=09=09if (cmd->outstanding_r2ts < 1)
+>=20
+> [Severity: High]
+> This patch introduces iscsit_complete_aborted_cmd() to fix a double-
+> completion
+> race by safely claiming the completion. However, does this still
+> leave two
+> other paths vulnerable to the same issue?
+>=20
+> If cmd->outstanding_r2ts >=3D 1, the patch explicitly leaves completion
+> to
+> __iscsit_check_dataout_hdr(). But __iscsit_check_dataout_hdr() uses
+> target_complete_cmd() directly without claiming the completion:
+>=20
+> __iscsit_check_dataout_hdr() {
+> =C2=A0=C2=A0=C2=A0 ...
+> =09=09if (se_cmd->transport_state & CMD_T_ABORTED) {
+> =09=09=09if (hdr->flags & ISCSI_FLAG_CMD_FINAL &&
+> =09=09=09=C2=A0=C2=A0=C2=A0 --cmd->outstanding_r2ts < 1) {
+> =09=09=09=09iscsit_stop_dataout_timer(cmd);
+> =09=09=09=09target_complete_cmd(se_cmd,
+> SAM_STAT_TASK_ABORTED);
+> =09=09=09}
+> =C2=A0=C2=A0=C2=A0 ...
+> }
+>=20
+> Similarly, if the final payload for an aborted command is received in
+> this
+> function, it reaches DATAOUT_SEND_TO_TRANSPORT and calls
+> target_execute_cmd(),
+> which also queues the abort work without claiming the completion:
+>=20
+> iscsit_check_dataout_payload() {
+> =C2=A0=C2=A0=C2=A0 ...
+> =09} else if (rc =3D=3D DATAOUT_SEND_TO_TRANSPORT) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ...
+> =09=09target_execute_cmd(&cmd->se_cmd);
+> =09=09return 0;
+> =C2=A0=C2=A0=C2=A0 ...
+> }
+>=20
+> Could a connection drop in either of these windows allow
+> iscsit_release_commands_from_conn() to complete the command a second
+> time,
+> resulting in corruption of the target_completion_wq?
+>=20
+>=20
+> [Severity: Medium]
+> Is it safe to read cmd->outstanding_r2ts without holding cmd-
+> >r2t_lock here?
+>=20
+> If iscsit_build_r2ts_for_cmd() encounters an allocation failure, the
+> target
+> core queues the command to qf_work_queue. The worker thread will
+> retry
+> building the R2T asynchronously via transport_write_pending_qf() ->
+> iscsit_build_r2ts_for_cmd(), incrementing the counter under cmd-
+> >r2t_lock:
+>=20
+> iscsit_build_r2ts_for_cmd() {
+> =C2=A0=C2=A0=C2=A0 ...
+> =09=09cmd->outstanding_r2ts++;
+> =09=09first_r2t =3D 0;
+>=20
+> =09=09if (iscsit_add_r2t_to_list(cmd, offset, xfer_len, 0,
+> 0) < 0) {
+> =C2=A0=C2=A0=C2=A0 ...
+> }
+>=20
+> If the command is aborted concurrently, the RX thread processing
+> incoming
+> DataOut PDUs will locklessly decrement the counter in
+> __iscsit_check_dataout_hdr() and locklessly read it here. Could this
+> concurrent non-atomic access cause lost updates, leading to a
+> corrupted
+> counter and a leaked command?
+>=20
+> > +=09=09=09=09iscsit_complete_aborted_cmd(cmd);
+> > +=09=09=09return 0;
+> > +=09=09}
 > > +
-> > +#ifndef __powerpc64__
-> > +     /*
-> > +      * A fault clears the fetched register and leaves the address alo=
-ne. The
-> > +      * powerpc64 JIT does not clear the register of a faulting atomic=
- yet.
-> > +      */
-> > +     ASSERT_EQ(skel->arena->uaf_r1_after_dst_r0, 0, "uaf_r1_after_dst_=
-r0");
-> > +     ASSERT_EQ(skel->arena->uaf_r0_after_dst_r0, skel->arena->uaf_r0_b=
-efore_dst_r0,
-> > +               "uaf_r0_after_dst_r0");
-> > +     ASSERT_EQ(skel->arena->uaf_r0_after_src_r0, 0, "uaf_r0_after_src_=
-r0");
-> > +     ASSERT_EQ(skel->arena->uaf_reread, 0, "uaf_reread");
-> > +#endif
-> >  }
->
-> [Severity: Low]
-> Does this test silently pass on ARM64?
->
-> In the uaf program in arena_atomics.c, the fault testing logic is compile=
-d
-> out when __TARGET_ARCH_arm64 is defined:
->
-> #if defined(ENABLE_ATOMICS_TESTS) && !defined(__TARGET_ARCH_arm64) && \
->         defined(__BPF_FEATURE_ADDR_SPACE_CAST)
->
-> Because the BPF program does nothing on ARM64, the global variables
-> (uaf_r1_after_dst_r0, uaf_reread, etc.) remain untouched and hold their
-> zero-initialized default values. The host runner here unconditionally
-> asserts that these variables equal 0, which makes the assertions
-> tautologically succeed on ARM64.
->
-> Could the BPF program export a flag so the userspace runner can explicitl=
-y call
-> test__skip() when the test is unsupported, instead of silently passing?
+> > =C2=A0=09=09iscsit_set_dataout_sequence_values(cmd);
+> > =C2=A0=09=09conn->conn_transport->iscsit_get_dataout(conn,
+> > cmd, false);
+> > =C2=A0=09} else if (rc =3D=3D DATAOUT_SEND_TO_TRANSPORT) {
 
-The suggested work is correct but the underlying issue is not
-introduced by this patch, so should be done separately.
+Both of these look like repeats or non-issues to me.
+
+On the first: this is the same finding the review raised against patch
+1
+of v1, which I answered on that thread. The exposure in
+__iscsit_check_dataout_hdr() and in the DATAOUT_SEND_TO_TRANSPORT path
+into target_execute_cmd() is pre-existing - mainline calls
+target_complete_cmd() unconditionally in
+iscsit_release_commands_from_conn() today, so both are already
+reachable
+without this series. v2 does not widen them. I have offered to post a
+separate patch routing those two sites through the claim, and that
+offer
+stands.
+
+On the second: r2t_lock is indeed the lock for outstanding_r2ts, and
+six
+of the seven accesses in the subsystem hold it - the increment in
+iscsit_build_r2ts_for_cmd(), the decrement in
+iscsit_dataout_update_r2t(), and the three TMR sites. The one that does
+not is the --cmd->outstanding_r2ts in __iscsit_check_dataout_hdr(),
+which
+is pre-existing and is the only unlocked read-modify-write of the
+field.
+
+The line this patch adds is a read, not an RMW, so it cannot contribute
+to the lost update described. A stale read is also harmless here: if it
+reads low, iscsit_complete_aborted_cmd() takes the claim and the later
+completion in __iscsit_check_dataout_hdr() becomes a no-op; if it reads
+high, the completion is left to that path or to connection teardown.
+Exactly one completion happens either way, which is what the claim is
+for.
+
+Taking r2t_lock for the read would not help and cannot be done as
+written: iscsit_complete_aborted_cmd() calls
+iscsit_stop_dataout_timer(),
+which sleeps in timer_delete_sync(), so the lock would have to be
+dropped
+before the completion and the value could change in that gap
+regardless.
+
+The inconsistent locking on that pre-existing decrement is a fair
+observation and I will fold it into the follow-up patch for the two
+unclaimed sites.
+
+Given how much testing went into this set of two patches, 300 attempts
+and was stable I am inclined to just make the v2 change and that's it.
+
+Thanks
+Laurence
+
