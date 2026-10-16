@@ -1,65 +1,41 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010035.outbound.protection.outlook.com [40.93.198.35])
+Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE5D3B42CD
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 10:39:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.35
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792147148; cv=fail; b=G4fKgKYmuSOHiMnTtKnBf/jxt+Zr/rFySHeS8LvAyq//DDmlfofBZacicHHmWUx+k0UwErl7QalDkEb3hvhkTR2n/y8OeDtOHs06Yxse9vvOweaQXQee+8loBDwMaQSrocfA8I+LGyVyJL1Mn2HKFiI02vXt37a2fd4YzGwUsYk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792147148; c=relaxed/simple;
-	bh=F5EcBaoXU4Sd4YO6VQ8IdbY79b0qIpnlEUE5AUCP+ac=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Nqzz9+w48jnN/xogKIsBCQrJlJSSFrIMey10raD8KGixlE0apxWntY7us0pAV0cnFHHfPqtSp3nE7KFb2SVT/5lZFCL9PGMQEtsKZ+pkBO5dgtobmP9l3fH3pXloI9WuOTyrQ0sKmo+TdWpBqH25T3bsvlwepZlSwdzO4XXBBm4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=nFt5bsVK; arc=fail smtp.client-ip=40.93.198.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DCE63B83E0
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 11:27:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792150057; cv=none; b=s9kCRyzM/hUf3bUNNqEY2SIggGEm0PH85rmsirx48RaDNhfCsuFvNg8ENVAPdj+kytVaL32+uJFa5+2hU/tawrFHgey7nIQ8vtgpQ6Nc6cTUQm+/eSgPcv42kEhnU4EVdc6W0XO5Orq0N936Ak9G7hDNzmuJWkoCBYO1CD+xT4o=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792150057; c=relaxed/simple;
+	bh=GhyQN17VWd7SoAjtlip9xuFKJIo9rp2AytN0LvK4U9k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mXbwMfLXO7wzWoAwX+gzrRQrkUYrgu58FLMe8huVnrc5LK1909ccsZaAIDYId7OIVsp9W+qMaSG/BrlshrN25jPuCVO9szy6xDmwJ7FfX8LS+pdTG2maomQrusHCU0s0u2Io9pgMtnS2v2dF4eOBWJPw4CbcEisRqZPAP54AWP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=ru6SnttG; arc=none smtp.client-ip=80.241.56.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="nFt5bsVK"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jI6MU3x0gchxGIGtX+QiSoHNpFmnab9eVamMKy8wiIGX9YEpZEBuX1jnm+e/U2svfkIJBIkX4kyByCoh/YKMO6o1756aI8NlNery+wxzAJKuhNF3gs+salVCedWKaww+BWSGRW5vsbKqy9Fn5uLIfsYb7L79tJbeEXNk8Rm0VhVLw+YyZguTiwLSY6IKWV+4ujtJCJZnqgkktkcA2CoZTV5C9KzjiB3huVgLghx78/Zpji0arWZxgsBzHBgrxDZJFajfxo29QbIiLHtllBbpSMFZTLDHGDdc61/Bq6GSq8o7il8XZzeIvvzOpYBetceQczZ4LpSXkcwewLRUGZSNRg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eEbaut86T+lGsmrmBvx8bdufd+jsfFMDnk8KkDJXnPA=;
- b=KkQqX9k/Dj8AwRMh3oWLNmL/VTLIQgbYD5Hr13s6XfEzET6ls6CHYTp4pfuGgA5WadHtNsFn67KzbiG/dfM8CBPO3DOQMTphPPqR8oZ7Gjmw57HTDQPaDcRiUeKATuxY7SZsFwTeItBqEpISsuwnQIY9PovymUhJ8tVLJTKDkJ7ReMA9qvlA89JkVBTsNDdyYIapGzOZsRwxhi+V8M3/G1Wp/fechXFsyIKRUWEl50gm0xBIadyGvucsgEHimPuTfzDf7GgOfoWJ1wQt4/MXeHkwxy/pm8xBYGclwr9lILCJ4E+8MVJnSBR743Lwhkm/AUf1NLgMbvhnOR18DeE11g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eEbaut86T+lGsmrmBvx8bdufd+jsfFMDnk8KkDJXnPA=;
- b=nFt5bsVK59M/bwIps2365VVVouFRF5MStzP3lvKMOCoqPIVsdaJbUNJVdiJZOmEonVsyy2HTHRsJuJg9kKlxcoyrXYV8XJKcwZtvNNJoKvhausx8/WansxObyJNnhkkJPvGn8Clva11e/wh0YFYLOz1kaUIPjyhpE/rg1O8q/kw=
-Received: from BN0PR07CA0019.namprd07.prod.outlook.com (2603:10b6:408:141::9)
- by CY5PR12MB6347.namprd12.prod.outlook.com (2603:10b6:930:20::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.14; Fri, 16 Oct
- 2026 10:39:00 +0000
-Received: from BN2PEPF000044A7.namprd04.prod.outlook.com
- (2603:10b6:408:141:cafe::81) by BN0PR07CA0019.outlook.office365.com
- (2603:10b6:408:141::9) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.496.5 via Frontend Transport; Fri, 16
- Oct 2026 10:38:59 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- BN2PEPF000044A7.mail.protection.outlook.com (10.167.243.101) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.522.6 via Frontend Transport; Fri, 16 Oct 2026 10:38:59 +0000
-Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Fri, 16 Oct
- 2026 05:38:53 -0500
-Received: from [192.168.0.102] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.53 via Frontend
- Transport; Fri, 16 Oct 2026 05:38:52 -0500
-Message-ID: <bfb2c3e7-cd80-498e-a4aa-7b46b56b3363@amd.com>
-Date: Fri, 16 Oct 2026 16:08:51 +0530
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="ru6SnttG"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4j5jMz0Gj6z8tyR;
+	Fri, 16 Oct 2026 13:27:27 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1792150047;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zmG3vMARJIZwqxyiykSt3n/8NHm7T43hsxGEbT9x4MM=;
+	b=ru6SnttGuBZforc1QjhHsCRqyZt3SATyEzV2jvy4Li3rBk/ou4I3Z4E3CON2jGH7ZbALOA
+	12K/tY51uQvp0ENPgY18LI31RgLcS/VxEguWlQmUq1s6yHjS/0yILRe5NmNPv43wSGXTmJ
+	TpJq6DjV/prHE7MLV0torsxtrahYXjfVm4cIKSYUCuUKnumVnIkoznqMGfrrP1TXd2waon
+	Mg6yWk/Fzlhjr1tgUMQjps6jSfavieBw+IXgOeL2ANs7K8c6cu5J0N2U+Ok+VEMFvTRbjw
+	yowif3EjUbmWQWf7uJ1v1dFzaZfIf+hmIiZ52N+2S3KNnTAA4VGC3hpcHJs3MQ==
+Message-ID: <a5cbdf4e-ad1d-4e54-84b7-15f7841c414c@mailbox.org>
+Date: Fri, 16 Oct 2026 12:54:55 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -67,101 +43,77 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/5] KVM: x86/mmu: Log dirty GPAs only for the nested
- GPA walk
-To: <sashiko-reviews@lists.linux.dev>, <kvm@vger.kernel.org>
-References: <20261015103933.2088307-1-nikunj@amd.com>
- <20261015103933.2088307-2-nikunj@amd.com> <sashiko-outbox-172691@kernel.org>
+Subject: Re: [PATCH v5] PCI: rcar-gen4: Add missing PM ops
+To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+ sashiko-reviews@lists.linux.dev
+Cc: Marek Vasut <marek.vasut+renesas@mailbox.org>,
+ wsa+renesas@sang-engineering.com, linux-pci@vger.kernel.org,
+ robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
+References: <20261004011851.866833-1-marek.vasut+renesas@mailbox.org>
+ <20261004013131.0C7D81F0089B@smtp.kernel.org>
+ <179214090624.63727.1877053108500595755.b4-reply@b4>
 Content-Language: en-US
-From: "Nikunj A. Dadhania" <nikunj@amd.com>
-In-Reply-To: <sashiko-outbox-172691@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+From: Marek Vasut <marek.vasut@mailbox.org>
+In-Reply-To: <179214090624.63727.1877053108500595755.b4-reply@b4>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF000044A7:EE_|CY5PR12MB6347:EE_
-X-MS-Office365-Filtering-Correlation-Id: 36921a5e-963e-4ea3-88b0-08df2b71b059
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|23010399003|82310400026|1800799024|376014|6133799003|18002099003|22082099003|10067099003|13003099007|4143699003|261009223027099003|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	G059h7ZAbKJy9SqvT4v9fU0WXa4mzRhwSDksBrEMLGaLRTKps+ypt7BEsL8Y3d6IX3yyrjsR2lAImPQlY6/9iSu5TBxLJ5qWGTRDdeGHwihUmoKZul8HXybLDkWvRa1xO5oSdQr2QxuLbFNDQFhbEH/QK4vf9i8MOD3nT5Au6JUu+ULfdUN641UbEMoRtOI7StUYo4Ab67XkKWu2mSqycX6bGkXKGu6vK8AqPy6cdaKQp2an2f/I5MexXuwvfej9Jp554ciEwwo9oJuwTqSx1+tidac7iZQAzjwFrp59kfUogUIgqFNO1vvIusAqSwDKo7figmIAYL9UNlVPbPocNYCZWm3jwHRSk9v+qtqneV8bPGzRKREUMWoaiIYOssDHX0vU58gY6qrehzRoXKK+uZbbGRsJTymfxjEl4v6Xd0AOwECvviawF4K+caqub2TimvSl/zpmsntjlo9J8L5zE85XqIIjXyDgxefQ6mnTwFUrgsEAqrldfYlNNXMA2AipbpdPA3sNLzhv11EmwAvhR9bjnbLHsIYvcFiqEKtY97N6/uDS576REoa+MVt9cv9UjMgnAtXziBu3ycPgnr58Jr0WGr8+6xZwSCNubhyc3Ca/CPjshhsuIO2m7tlWDx3eJXXrjQ0glYkJoDY8yYvVef5bBvB03Aoh/t79j7GoecCMTTsLXp/c9PVh11mO9TxQZZPilFmMaBbAhY2xkPQFYA==
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(23010399003)(82310400026)(1800799024)(376014)(6133799003)(18002099003)(22082099003)(10067099003)(13003099007)(4143699003)(261009223027099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	xdZvsBvBLEsJFWMRmZiDYJwuIhKmtR0RIxPIx7IoYGJLUD/z14sODISFqJZKugh4tdcyhl/Xj4YtpCgPowrsHDufJPMABcu+jfzsPe/Y7y+jianlBsdmGWgTcYrfjbdR/SSxRE0lUbfZgAUU56q3sC/ypyicnxa73yjsbVNvttpmVOH1Zr4lhFN4BNWlKS9O2U8X5Rc9MUr3f3+zSUiBs+nGeL1GMuspUm2MfS3qZXOkequlW5X7VbItxP9mHhqe2+BCnaY/5I8gUsHMP3tLP5Tj+jsOY+FsultRH37OgqA3rPd2reA4S8NExfN6A/ci/yBR0lm+PF0VTf00bvjLmcmrGMc73nTw7054U9tM1ubDqXpJq7UGpQODtg13D+j2SfXqtdwgI1CAuAHTOYzZnNd0iWF7ZsHtrz8B2jegQrWzqO5MFuxr+4NmdIHNQk30
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 10:38:59.9408
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 36921a5e-963e-4ea3-88b0-08df2b71b059
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BN2PEPF000044A7.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6347
+X-MBO-RS-META: sjspt4g83kpztx5uz3hy416u9cgcio6w
+X-MBO-RS-ID: 8acdd262cc24994b0e6
 
-
-
-On 10/15/2026 4:25 PM, sashiko-bot@kernel.org wrote:
-> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+On 10/16/26 10:55 AM, Manivannan Sadhasivam wrote:
+> On 2026-10-04 01:31 +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [High] pcie: deadlocks due to ioremap and request_firmware in NOIRQ PM phase
+>> --
+>>
+>> commit e6c055f1eedf6bd5c13e231da24f0c6a76a24ba2
+>> Author: Marek Vasut <marek.vasut+renesas@mailbox.org>
+>>
+>> PCI: rcar-gen4: Add missing PM ops
+>>
+>> The R-Car Gen4 PCIe controller needs to gracefully suspend and resume its
+>> link across system suspend/resume cycles to support power domains shutting
+>> down. This patch adds suspend_noirq and resume_noirq PM operations to tear
+>> down the link on suspend and restart it on resume.
+>>
+>>> diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+>>> index 2e7a8d85c0060..fceecbd16355c 100644
+>>> --- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+>>> +++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+>>
+>> [ ... ]
+>>
+>>> @@ -1062,6 +1064,26 @@ static int rcar_gen4_pcie_ltssm_control(struct rcar_gen4_pcie *rcar, bool enable
+>>>   	return 0;
+>>>   }
+>>>   
+>>> +static int rcar_gen4_pcie_suspend_noirq(struct device *dev)
+>>> +{
+>>> +	struct rcar_gen4_pcie *rcar = dev_get_drvdata(dev);
+>>> +
+>>> +	if (rcar->drvdata->mode != DW_PCIE_RC_TYPE)
+>>> +		return 0;
+>>> +
+>>> +	return dw_pcie_suspend_noirq(&rcar->dw);
+>>                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>
+>> [Severity: High]
+>> Does this code trigger a deadlock or kernel panic during the NOIRQ PM phase?
+>>
+>> Setting pp->use_atu_msg to true causes dw_pcie_suspend_noirq() to eventually
+>> call ioremap():
+>>
+>> dw_pcie_suspend_noirq()
+>>    dw_pcie_pme_turn_off()
+>>      ioremap()
+>>
+>> Since this runs during the suspend_noirq phase with local interrupts disabled
+>> and the system frozen, ioremap() allocates memory with GFP_KERNEL and may
+>> sleep, which is strictly prohibited in NOIRQ context.
+>>
 > 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] kvm: x86/mmu: L2 GFN type confusion and missed PML logs for L2 page tables
-> --
-> 
-> commit 39018b0fb43ef6b337e5d8b61b880163828654c8
-> Author: Nikunj A Dadhania <nikunj@amd.com>
-> 
-> KVM: x86/mmu: Log dirty GPAs only for the nested GPA walk
-> 
-> This patch gates PML logging on the walk being the nested GPA walk, assuming
-> only that walk yields an L2 GPA. No functional change is intended as the EPT
-> template only backs the nested GPA walk.
-> 
->> diff --git a/arch/x86/kvm/mmu/paging_tmpl.h b/arch/x86/kvm/mmu/paging_tmpl.h
->> index 8e350095508c5..043d0ec02b272 100644
->> --- a/arch/x86/kvm/mmu/paging_tmpl.h
->> +++ b/arch/x86/kvm/mmu/paging_tmpl.h
->> @@ -235,7 +235,9 @@ static int FNAME(update_accessed_dirty_bits)(struct kvm_vcpu *vcpu,
->>                               !(pte & PT_GUEST_DIRTY_MASK)) {
->>                       trace_kvm_mmu_set_dirty_bit(table_gfn, index, sizeof(pte));
->>  #if PTTYPE == PTTYPE_EPT
->> -                     if (kvm_nested_call(write_log_dirty)(vcpu, addr))
->> +                     /* Only the nested GPA walk yields an L2 GPA to log. */
->> +                     if (w == &vcpu->arch.ngpa_walk &&
->> +                         kvm_nested_call(write_log_dirty)(vcpu, addr))
-> 
-> [Severity: High]
-> Does this change miss PML logs for L2 page table modifications that occur
-> during an L2 gva_walk?
+> What? Local CPU interrupts won't be disbled in the noirq phase, only the device
+> interrupts will be. So this concern is utterly baseless.
+Do you think we could get this patch into 7.4 since this is a bugfix ?
 
-No, those are logged, just not from the gva_walk.  Walking L2's page
-tables translates each page-table page through the nested walk, as a
-write:
-
-      walk_addr_generic(w = gva_walk)
-        nested_access = (have_ad ? PFERR_WRITE_MASK : 0) | PFERR_USER_MASK;
-        kvm_translate_gpa(gva_walk, gfn_to_gpa(table_gfn), nested_access | ...)
-          svm_translate_nested_gpa()           /* switches w to ngpa_walk */
-            walk_addr_generic(w = ngpa_walk)   /* write_fault is set */
-              update_accessed_dirty_bits()
-                write_log_dirty(vcpu, addr)    /* L2 GPA of the page table */
-
-Logging from the gva_walk would be wrong rather than extra: 'addr' there
-is an L2 GVA, not a GPA.
-
-> 
-> When KVM emulates setting A/D bits in an L2 page table (during an L2
-> gva_walk), it is writing to an L2 GPA. Hardware logs page table updates
-> to the PML buffer, so it seems KVM must do the same.
-> 
-> By ignoring gva_walk, does this fail to log L2 page table modifications
-> to L1's PML buffer, breaking L1's dirty page tracking?
-
-Regards,
-Nikunj
-
+Thank you !
