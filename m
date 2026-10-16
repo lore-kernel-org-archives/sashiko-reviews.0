@@ -1,170 +1,130 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613C8371CE3
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 03:08:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB42934D38B
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 03:19:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792120101; cv=none; b=LGcJRtl6IjOpaK0/Ndk48M66Efa/c+1HrtQ9YA4c/tCHp0dfv0g6nIcGjX2WERx5MXit+/2NGubqcHNcqg6E3C1P80xclRNaXKJA35ZxPBJzbkctZwJ1gF0wuSWLiwg2qR1PM98E3z+9ZQ6eaxaWSQkL2P8Xt7og3i1wgu+oDYk=
+	t=1792120785; cv=none; b=IjWvk21av7dUd2Ti0tf9sKJV6xjH1DK4cviv7KtZHFPGSBZuzrnhwzkMqqIXuTBXamyO8hHu2FymaEMc6aMWr6PFRZKLlUNgEThM3kBdJJ3DDwPrV//As1hbb/cLbiz5auUx+1vZIqjHWo9Z0bJ69bdgj5RPWb0K+1TOj5ULBrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792120101; c=relaxed/simple;
-	bh=10nqLsQTTfQgYbUM797LDF87efLT8v1IfDqqCZil33o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UcndfvOSiubdc5/lVSuLg9xmAcUgsUG44AWV+0u0JPxqnh3/T8ttK1gWuubjwLcKsqhZsBlIypK3DtnJNoXYI4+/wjppvMekHg4umeSRBGkJnf/DO6c2DW7ZSUKxpCarX2UNT0MZH6WY6L9KZfcTrQ+7JY+LLziwMaGiMe0C19k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=telaak.dev; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=telaak.dev
+	s=arc-20240116; t=1792120785; c=relaxed/simple;
+	bh=LectKxnVPgl6kp2WA9jYepcXdH0Or/Oem/uGNpqc0Pk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=pe9oUIYUGBREWK+G3gvvdF6+FLHpsO9ei4ZuGltPqTkDaNKILrtZMy1ARJFmkMVZ2vDp0LSO+8k1acI26GRncGnASwCIvytUFU9h6LLK7dnaRrAlPq9LUaXyiwzOOViDn9dce/5+iR0on62Oww6ZCR+Z7VoLfiFfJx4mxJomhzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d4rwpiix; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2e87c66e556so3033765ad.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 20:08:20 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d4rwpiix"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-3ab4178ee33so3523089a91.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 20:19:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792120784; x=1792725584; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=+TOjkNOOOYODKC3hy+v06oUAuoKTO3qPUXNp5ApotnM=;
+        b=d4rwpiix+Y3zyCUiTPJDF4p89YuOCbHI4Ya1GERsVtygydkZO6TssH7Ic3im7uiQu8
+         ELnu+tzU99MT4BUdQcGJ7lzaEaR7wc+i3l6cdecAtTIdp15+3sHfGAbMUDkH4FwCFcma
+         Y/3qxlMLP4g7vBn5kluibemfonbR3suUWlP4nllH7gV+2/sSP7nerU6suBS0kSivvmoG
+         nCCDbmNyuLz+aI2mG9dlvSeoQm5NGaN+yjMXx3s83QVahv9yyoJTjHyzfh6cJFdD36hE
+         ICVlnPorAc604vGNtyuLUHZjDcvRQFG5pPFc94iREF4Epcrmqy1GGWCOecE5jw5bfesr
+         AY9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792120100; x=1792724900;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=C7sEcXH37f0tH5wRZjkmvVXjFOaB+9cAQdh/V2489cI=;
-        b=q7pCcv9liifc0CCyCJIQZB/McN9UuC1eyA2kHz4t23yL7xseF0g0p2gYc8Z+viKFaK
-         THSHugwQIXzJnCp5cqztd9ogLWRfybsS1403U9Lwh0B5CP3JJFNPQNhbcy99oVMn18qi
-         EOHO3qzLxCiOp56UJuyGi+hBaMgoUIk2jk/e0/xY1PVSMcF1mUYZeqACXtA2mISFZgsE
-         zGtjiv9vZEojAtCmovuNTzQK9Remucx/4OVthfmOr0N+CY1J1kjWVVjTcA3LBxoCZ40k
-         zr/317ptELoA9+MivPlbYERwMI/BrhHaNi6mv0u7bKHObJaWIu4UOiX6fsYqSPrADqDT
-         dTVQ==
-X-Gm-Message-State: AFq9FYKhQBn5Ck04+D02Eejbr6VcqmTg7eJbHXLd03wPy02boAzrPPoO
-	pt2xfbAH9fk8FjSwNmKDiy8Xq93Oftq0ff/a8OV1BxoyRcg0cGjPqx48WGbfw9fOimA=
-X-Gm-Gg: AYBFou3IJhxJgofXRaB7P0scCmWEt6AUtm8/IYS1H3Fdbw8RQryCtXjv8Y5mHuGILTM
-	60M76ACWuIw75ZMrwtIBwLhcICcdz0Nw/Vu89LjjXo59uvCWpTYQ+Zd1gnSUdxCN4JYpGS0gtbw
-	o0Fmh2VTKQRpT/TVP3GbxrqdaicybZa8ercVFabEAsO5xgyz2QUCbCoahX+VcUyN1NdafdOnH2H
-	MjihVrQiDWgFizjMmKJv6XSGQ/GnHnZ67L8gpR5Zn3L5b4bt8zF+RoCdsRHH7361pnCN2CdBhJq
-	Krp1Hwy2o8SYEsJbXCdgsRw4/9Nqdejh4rDB1pjd9wELd00EcehoEhJuW6yrb3CN/oXBI5Ubvg+
-	JF09x6nV5VWGt26jo+0uK/sclS6ITwJu658xQ1fAtW8eaehu2aBQXvlbjpFKrMt7Xsf5qqgY+7n
-	y4yCz92Od5DcDway+YGwR2nDoRG2WAbGA8gxPl2UvdGSBP2INuVxTo6Lg++goaKjprPLu6y1iBj
-	OZJC+RhDSG5h9uUa5zJR5m9PV8hLo3fk1z5OOtL+RzGrg7k/I1DWj0qXst5xzKFg4Bjs5noAIAJ
-	mq4X2nqCINDPAA==
-X-Received: by 2002:a17:90b:4d8e:b0:3ab:3767:65d1 with SMTP id 98e67ed59e1d1-3acbb8b29a7mr1466952a91.22.1792120099503;
-        Thu, 15 Oct 2026 20:08:19 -0700 (PDT)
-Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com. [74.125.82.179])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cd6549fb556sm401571a12.22.2026.10.15.20.08.18
-        for <sashiko-reviews@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Oct 2026 20:08:19 -0700 (PDT)
-Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-35829219da8so665737eec.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 15 Oct 2026 20:08:18 -0700 (PDT)
-X-Received: by 2002:a05:693c:8097:b0:35d:5e81:1d87 with SMTP id
- 5a478bee46e88-3602ddd6208mr2385682eec.12.1792120098234; Thu, 15 Oct 2026
- 20:08:18 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792120784; x=1792725584;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=+TOjkNOOOYODKC3hy+v06oUAuoKTO3qPUXNp5ApotnM=;
+        b=m65gbKNd+Fca14baRwAxATVBMmcEJFtpKeYij9bCeHA6bIOD9MozlGtMM28gGRHAeV
+         2vN3pif67GANEiUEfHuJyxPdlxbvGGKIbToJWR5uy6mCaO3Jmb9SNM8L/U6tskD1A0Bs
+         72XImrod0JEO08c2JF0zV5W/uvqcBOdoMgK4y/bspnv6E+9B3Ymsv43+OYOVtU/aLMZ9
+         XmW4/FcitSzJJFRxOFyPNakMTHIN8Z2lZfQM8HPhUlEDunp1padCTqpu2ioBlLCqseI+
+         ioe28HExJnwh6JxINKleNUhxE3WEeB51TEzMbPU6/RSeY1KpjBFKNhM3f6esLo7322Yw
+         /mRQ==
+X-Gm-Message-State: AFq9FYIQqJUwRmeHcB4fQRJLim+uAYwq0FVwXDX8eok8VlvgwGmlxJ+3
+	JT1mEkJYAZyybMDrOlGbNkiskH2E5XVWcm4HWxNXL7HVrKvRLWLZrHzdPJwxXoPi
+X-Gm-Gg: AYBFou3QANOAzE/5HK36Kvp21nAtieX5bxwMlfUwPEbrqpwovmiZa4qwUHTPdBM9qcX
+	xZY16nVFujm7UaHlAfiu6eFIg4J/F0dLIZTsBDQRL2w1VV86Y1yKSfU7+3iGdnvHP4MSWDxhRDC
+	9dygzciiG2OlJgKLzH7sQChJCOmgJnZXb3I+Ux1CF3PMkYpDjAkqXDQrcbSBhMIT3w6mn4t9dGm
+	LW1A60XhYSKuXr4PXXJwVg4YpGizqpxbSe6LV5Trs6C1FL0G+E/pkWvlSfOGm1WBECHc7axQhmQ
+	96ZNC1szwXzUQwEf2LPIZ5sQ4+ZbRtXpqVZhSueC6YezB45RvjldHxxKhzmhcCEM55lCzONWXRJ
+	W6kp/WNqoKqNaQCOWe6vBjMETOxuMF/43A+uep3KoNVbq2Sws6qPQpow7I39YiV/9qvT8tM7tNB
+	jTZ4beEp8P01GsPvQ01lwJn6zI2I3l/is/vwP6VqOYu2pVG5L2QL9Tf/G0hI5zGgDwnCrcow6GR
+	xBsxLBD8UXq5EAV0g78HYLqakUSgK59RmyPICC17F+VTdSCWOq3zawIC+J2SLgH8mZ/3W0y7U9H
+	u3nZXt2HdDcyuG9xv1X8zfIjeSI0oe9lE5k=
+X-Received: by 2002:a17:90a:d44d:b0:3aa:f4af:1e17 with SMTP id 98e67ed59e1d1-3ab3a9d6d17mr15840009a91.39.1792120783938;
+        Thu, 15 Oct 2026 20:19:43 -0700 (PDT)
+Received: from sanjays-pc.govzhome.govindz.co.nz ([139.180.93.36])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3acc46ebe40sm1960144a91.6.2026.10.15.20.19.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Oct 2026 20:19:43 -0700 (PDT)
+From: Sanjay Govind <sanjay.govind9@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Jiri Kosina <jikos@kernel.org>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	dmitry.torokhov@gmail.com,
+	linux-input@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] HID: santroller: add driver for Santroller controllers
+Date: Fri, 16 Oct 2026 16:19:37 +1300
+Message-ID: <20261016031937.824565-1-sanjay.govind9@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <sashiko-outbox-173648@kernel.org>
+References: <20261016025403.779635-1-sanjay.govind9@gmail.com> <sashiko-outbox-173648@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261015-ehci-ce5300-hostpc-v1-1-3cae67c11946@telaak.dev> <sashiko-outbox-173543@kernel.org>
-In-Reply-To: <sashiko-outbox-173543@kernel.org>
-From: Joseph Telaak <joseph@telaak.dev>
-Date: Thu, 15 Oct 2026 23:08:06 -0400
-X-Gmail-Original-Message-ID: <CAPY4CJ7BEa_cmAYiVUdWmRnO4H6ddQJTO_bEZSBSEFh=kChm=w@mail.gmail.com>
-X-Gm-Features: AclHuK-6Dfqf-lD7fob5OF5YK8VRSOSLqirzEsT7JpUiorRplDbN6X4TAeDIG8s
-Message-ID: <CAPY4CJ7BEa_cmAYiVUdWmRnO4H6ddQJTO_bEZSBSEFh=kChm=w@mail.gmail.com>
-Subject: Re: [PATCH] usb: ehci-pci: Set has_hostpc for TDI EHCI on Intel CE5300/CE2600
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-usb@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, 16 Oct 2026 01:22:42 +0000, sashiko-bot@kernel.org wrote:
-> Since this hardware selects host mode via USBMODE_EX (offset 0xc8), the
-> standard USBMODE register (offset 0x68) may read as 0. If it does, will
-> tdi_in_host_mode() falsely return 0?
+On Fri, 16 Oct 2026 03:06:58 +0000, sashiko-bot@kernel.org wrote:
+> > +	for (i = 0; i < SANTROLLER_NUM_PLAYER_LEDS; i++) {
+> > +		if (sc->player_leds[i].brightness) {
+> > +			player = i;
+> > +			break;
+> > +		}
+> > +	}
+> > +
+> > +	guard(spinlock_irqsave)(&sc->lock);
+> > +
+> > +	sc->player = player;
+>
+> Since the brightness array is read outside sc->lock, one thread might read a
+> stale array, get preempted, and then overwrite the hardware state with an
+> outdated player index after the other thread has updated the state. Moving
+> the array read inside the lock would prevent this.
 
-Yes. USBMODE reads back 0 on this core even while it is running, so
-tdi_in_host_mode() returns 0 and ehci_halt() returns without stopping
-the controller. I confirmed it on hardware: after ehci_shutdown(),
-USBCMD.RS is still set. v2 will read host mode back from USBMODE_EX
-for this core only, via a new flag set by the CE5300 quirk, so other
-has_hostpc users such as ChipIdea are unaffected.
+Agreed. The LED core only serialises writes to the same LED, so two
+player LEDs can be set at once. I'll move the scan under the lock in
+v2.
 
-Testing this also turned up a second problem: ehci-pci reads SBRN and
-the port-wake bits from PCI config 0x60-0x62, which this core doesn't
-have (those bytes shadow a BAR). SBRN reads as 0, so the controller
-reports "USB 0.0" and ehci_shutdown() returns early, which hid the
-issue above. v2 will skip those reads for this core as well.
+> In the driver core, dev_groups assigned to the driver structure are
+> evaluated by device_add_groups() before the driver's probe() function is
+> executed. Because hid_set_drvdata() is only called later inside
+> santroller_probe(), drvdata is strictly NULL when this visibility check
+> is performed. This causes it to return 0 and skip attribute creation.
+
+This one is a false positive. really_probe() adds drv->dev_groups
+after call_driver_probe() returns, so drvdata is already set when
+is_visible runs. In testing the attribute is present on the gamepad
+interfaces, and hidden on the configuration interface as intended.
+
+> > +	scoped_guard(spinlock_irqsave, &sc->lock)
+> > +		sc->output_enabled = true;
+> > +
+> > +	ret = hid_connect(hdev, HID_CONNECT_DEFAULT);
+> > +	if (ret) {
+> > +		hid_err(hdev, "failed to connect HID device: %d\n", ret);
+> > +		goto err_stop_output;
+> > +	}
+>
+> Does this mix goto-based error handling with scope-based cleanup?
+
+The guard can't be jumped across here, but I'll move it into a
+santroller_start_output() helper in v2 so probe only uses goto.
 
 Thanks,
-Joseph
-
-On Thu, Oct 15, 2026 at 9:22=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] usb: ehci: tdi_in_host_mode() fails to check USBMODE_EX
-> --
->
-> commit 493a630291d0b5961a888e40fa36840fea16fbf5
-> Author: Joseph Telaak <joseph@telaak.dev>
->     usb: ehci-pci: Set has_hostpc for TDI EHCI on Intel CE5300/CE2600
->
-> The TransDimension EHCI core in the Intel CE5300 and CE2600 SoCs
-> (192e:0101, revision >=3D 6) has the Moorestown-style register extensions=
-:
-> host mode is selected in USBMODE_EX rather than USBMODE. This commit sets
-> has_hostpc so that USBMODE_EX reads back 0x23 and devices enumerate.
->
-> > diff --git a/drivers/usb/host/ehci-pci.c b/drivers/usb/host/ehci-pci.c
-> > index bd3a635555942..8c71c3de3082e 100644
-> > --- a/drivers/usb/host/ehci-pci.c
-> > +++ b/drivers/usb/host/ehci-pci.c
-> > @@ -145,8 +145,16 @@ static int ehci_pci_setup(struct usb_hcd *hcd)
-> >                       hcd->has_tt =3D 1;
-> >               break;
-> >       case PCI_VENDOR_ID_TDI:
-> > -             if (pdev->device =3D=3D PCI_DEVICE_ID_TDI_EHCI)
-> > +             if (pdev->device =3D=3D PCI_DEVICE_ID_TDI_EHCI) {
-> >                       hcd->has_tt =3D 1;
-> > +                     /*
-> > +                      * The TDI core in the Intel CE5300/CE2600 (rev >=
-=3D 6)
-> > +                      * selects host mode in USBMODE_EX and reports po=
-rt
-> > +                      * speed in HOSTPC, as on Moorestown.
-> > +                      */
-> > +                     if (pdev->revision >=3D 0x6)
-> > +                             ehci->has_hostpc =3D 1;
-> > +             }
->
-> [Severity: High]
-> Since this hardware selects host mode via USBMODE_EX (offset 0xc8), the
-> standard USBMODE register (offset 0x68) may read as 0. If it does, will
-> tdi_in_host_mode() falsely return 0?
->
-> drivers/usb/host/ehci-hcd.c:tdi_in_host_mode() {
->     ...
->     tmp =3D ehci_readl(ehci, &ehci->regs->usbmode);
->     return (tmp & 3) =3D=3D USBMODE_CM_HC;
-> }
->
-> During driver unbind or system suspend, ehci_halt() relies on
-> tdi_in_host_mode(). A false 0 return causes ehci_halt() to exit
-> immediately and completely bypass the teardown sequence (clearing
-> CMD_RUN and waiting for STS_HALT):
->
-> drivers/usb/host/ehci-hcd.c:ehci_halt() {
->     ...
->     if (ehci_is_TDI(ehci) && !ehci->no_tdi_mode &&
->         !tdi_in_host_mode(ehci)) {
->         spin_unlock_irq(&ehci->lock);
->         return 0;
->     }
->     ...
-> }
->
-> Can this bypassed teardown sequence leave DMA and IRQs active on the
-> newly enabled core, potentially leading to memory corruption or a system
-> panic? Does tdi_in_host_mode() need to check USBMODE_EX if has_hostpc
-> is set?
->
-> >               break;
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261015-ehci-ce5=
-300-hostpc-v1-1-3cae67c11946@telaak.dev?part=3D1
->
+Sanjay
