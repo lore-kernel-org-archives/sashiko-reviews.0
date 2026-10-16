@@ -1,209 +1,345 @@
-Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011017.outbound.protection.outlook.com [52.101.65.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B3E4D956C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 15:42:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E560375F9C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 15:51:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.17
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792165347; cv=pass; b=i+HRKaD0GCMqWhHvAdIGvjBMJqRKL9LfRK4hjDWZMx9bikYpYQVdJTlETFE6oxdZlUER7mYQb13eNmh7MnA3W6HqOix5Mr4d9YxM3ynsJKBjSrO8U12b3a+LooxYfN+5sUlZ9+J3hWorYaMWeQAgVc49FIg+yuE993Xz6JemCmM=
+	t=1792165895; cv=fail; b=KYEBzFr7hGAlDTyJnoj7MzH/4dCOl8dtyrL1SqodouYAUdfjLlmjbbEO2edqgGDo4x1v2TvCwYQXDUB/jYaEebxVvSkkdez9w8oDF/GH5TLecCLECx59qwrWKKdNEqi6f8yjlImi1Bo1cxe2OBZ/1OTziBHSTN14CpzyPLt+zfM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792165347; c=relaxed/simple;
-	bh=wEx/7wCNfeHOSauzGB1wU8Hea+BIBDPfoLRDPVD74RA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=huDHbKlttWY7MmWlgtstfsGy3vXnvnpA5seBxEyhX1816TFh2WOMtUeLJOseU2lI7iwSP9gJNoS1MPyPTf+qLBawTlQ5f5ml0zEbAI77XpPQe10cN7nSqnW6rxuTOASNO4DuztfoWS9M/1Ko6dUaPc9LD7qRAiccweTahjsScbQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qTPVuX1V; arc=pass smtp.client-ip=74.125.82.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1792165895; c=relaxed/simple;
+	bh=w2KLGu4KaRCpm5bwYvGWZTJcoQhOPlzBVUGLQZTTlxI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=NuSRAfajEWEibuWzpziPh3+7PKP/MnVh64z1SrDQlx6PZGzaCMqdGgVVNhJSeMpo3lq17szYMNZZCWsZfvPjZJ+zh59XDzjRuiqHLi+BvMAiRqbXJZKEB/FtTMYZVGAAw6MMux7n2uEPSyg1Mm6TN2iMw6clGCtKXAoNOEFZDPc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=fail (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=ADWMLJk6 reason="signature verification failed"; arc=fail smtp.client-ip=52.101.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qTPVuX1V"
-Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-30b6dad2382so45956eec.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 08:42:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792165345; cv=none;
-        d=google.com; s=arc-20260327;
-        b=An+pzmzJcCHg8YSMYUaGMKO9PClmREi5GI2nCjOemKOBKFfeKzk32cQIDw5zQ4/qiV
-         9s8LYiPKirPCAcOIWQNqDvSa87lFbvk1wv/hXrDu6GQz36NWDzb9yriC9lWCYLuVDWD+
-         zTZrqe0z+NYbZG+BmqmcFumAiAew8Q0a8aoQh28tMnWJgbnzYRn8ahg98PyZEPnPwusD
-         gsdoiIQm0a/ERJtLL14pIzIY1ZUDnrGrhAwaknf/ZMXgAnKRxGvDtEOTde4oavuJcf+j
-         0otHZd469Bpnd/db0tKL9Qq35baKfzpeQ6GxgM0ywQyFZVH8AQ+ZkGqwQfEUu3FY78ZP
-         Bbxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=/nYhRj4X6c1IBw/Jup8hasTqp4A+rlYmbM569hgNCOk=;
-        fh=5mf8YdY4GVeb38de+wxxesTeQeQTEBcQCgP1LhGM7j4=;
-        b=XxSB5nm/kNFiybkOVdMIQu/IO8hOlEnKAq6GFuY9etSPhXfE5J8mhRWDD+T3LTyDjl
-         x3xFbs88BYpuuoaNYH6gmIRSGw+/HIMKAfy2w/+Z7JxZ0jjm8WGYpQ5sznGuRaKeDQzl
-         oWjwjwYZtYZg7PDTTF50figfpuJ8Q/CGTIDzAatgUljV7zvFfvCySgADvPWTVxin2Pu1
-         Ms47uJ8OkCuriAT1pK9SeqT6y7ENf2R3BoevBls85dEXPpwZE23xldNnL3BIDg/VolQt
-         qItRBlEqiAVgIgqhiImNg28hNIH3u0NdvJIvR0MpXhEjfkulW01w/nCfIj1GC+PTlnH+
-         XM6A==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1792165345; x=1792770145; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=/nYhRj4X6c1IBw/Jup8hasTqp4A+rlYmbM569hgNCOk=;
-        b=qTPVuX1VrInCLcHbXDf6PegFB4rsgplLhj935vALy3FN83eQJgA4KHCHj9BMjgMTHu
-         tCUF1oJ7yyhPYVE8svyFVSpKg+o8n4Uum8AaE5JAdLIBffN9yHQT3xXZPlE57Ots5R6G
-         K1GhkD9tPEglh64eWFfrwtwy22eCs108oppxENGDEgIAX45B+jRQ3wNI8XEXvwyDfjdF
-         qCX95V9hIyRu0zFjDV5CJAi8Dl1umuDvN51KiWz5CMM8Mfyb+EY+wqMfT3vqnzel2HA3
-         aa3OdtdBRTr3fnvqWp99bHsdd0Z80906zf25BV9X5R80rso9gHUHVmJIUdnU1zAe8Gsi
-         Lutw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792165345; x=1792770145;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=/nYhRj4X6c1IBw/Jup8hasTqp4A+rlYmbM569hgNCOk=;
-        b=ZA4yDagDGy4/X5IKuZaG5LK8TVJCMs+mQr8o3v8NrRp9grtIWj3r8g0dfRodEvhpjE
-         Yzwo53Qx5hSRMpy/wIS/vRvDtK0APEdCS1A+BSMvF+PE+wCjvrcYdol8I83aNuKwXeLs
-         xQNmKhD3L21/QHPAVaqq0VEG++00VfxgtxNb8v6BrI/enZKFs7r8YavdKJzr23im1Dts
-         Fr7ujtwvyMV4gFFOF40O5cIHm2UvXrNRnG1bSSf5QC47ghEUFCSzCwrDdgcErWQuYl0W
-         yEydG3wzIqEog8OF3gIxRsnMR+0j4S7ChEJtr2b/g4fpHmbMRhKh3TdZQwzrXS3CPhHe
-         gDUw==
-X-Gm-Message-State: AFq9FYJkEcRuOY8qqmJexLJtRMnprSqcuvHghdITIwAsLdnKOJVMLrJR
-	2THhokujVwUN4yoEnXhMYrM5POPLwUcz0d0MfKcp0XaZg54WhCd3YwonFIgSNfowdopjzU3J1Q6
-	RDlM+/cLLU+HqY/QSE1s8Ddx7dvRkZ/ipoARjoKkx8ZIigSMVwrbLm5fmELM=
-X-Gm-Gg: AYBFou15i8oPNRkiyQTU1KeYZUaGJRjFtd/eKN8P6vul03/cRA0+ZI7+Devrr5tDd68
-	JZOVkCB+4qzfQ7PFhnir4fr6+G9/wPYA/v+8PPU9Tw8k9oa0Rywn9IgU3M2jfpMbv8TLJitfH1x
-	w35mw2cpNx02xkzIZUNA43eYYzKYInG6POHvoWHo87DADZ7pGVCCPbHvDR13FoaYTaXDquwmNK/
-	PS8Nde29A7maje68/2gQpqGXMvzupIfLpbV32eeC+oHMGwl8l3+1+2ZwO4BEA7hTRYYpZzky5WA
-	vnMCNf9UJYKzP3BYpV1xjXh+SNtxE5M2GBBItpMetQM/yu8bu4WY4sE3cUynGUaYh85ZQMmtDQf
-	nWINldBibFLc=
-X-Received: by 2002:a05:701b:2610:b0:143:3da5:cada with SMTP id
- a92af1059eb24-185152b6b6bmr306225c88.37.1792165343661; Fri, 16 Oct 2026
- 08:42:23 -0700 (PDT)
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="ADWMLJk6"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=m/zhPWY17GbzEheYCNfGz14zctGd3ClQgSD5i6fX6Cz61HfshfMLF75ne6ezutfcHsZuPonkVXOkD7P/AWyUm4aPZ5cxSaN0WAIH3/v/MUy/Y+1dHVbNnyjUS2s5Yhpeajb0Mqej9KETG2DWTxhNEMOWb83iir6XIqK3rW+M0r9B8Z5deGq4BqSzctLKj9fx7eT/4Xecr1x+nTOMEmEJE2n50J/OkQQnO1fqgzt14oeLUDMnLJUDfhBYDxLmRYn5NDskeKVa3H4QhN1wZohtqwx3J81dHPT6iT9q8crT0CRd4MivTuUA24zM4Y3kv89Qj1cycGHaliN+61NzpfXFxw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1TNYNn+HW+er8N5YU+PbPzg/YiCL4+GEy6DZ4RhDUI8=;
+ b=igPytJNkpDKd+YszfTk9uD222TiNs18ne6yOsCawNV8lrQobcXYT08oD4szCWIdQREwx5b925y4mS/qhbo96VG/LyRSxzpERCBaMDGPOH3kVP38J5eX3NGlXTw/kCQirDcf0a3B8g5LtLEBRoUdejPsWjSaq8K+71Q1LAu9hdLGZq7nw3sSBFxew+vkkCQmQj4fkmIZ/tP5cskN/4MgZKW8Zu5pkr2+t9cvyE44d4ElO9sQnFSqyB2E3eTWJGQnUQpKrzcpbjBBIqTQAOjwghgtj4tgKkHu44YA6b5mDDoA3GCALD1Ku6ic+9UR4M0pbt49C213L9gr9tcV7LqcXZw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1TNYNn+HW+er8N5YU+PbPzg/YiCL4+GEy6DZ4RhDUI8=;
+ b=ADWMLJk63kxUcDLm+T8YbHzMD/M0ytXO9SAKbj8RiT9c6rEeymylE8PUzKviDBENK9zmjl51gum5OP3TE9djsPZI4TfsSwBCkNbmwg/trhfS3tLBF2EdE51xDWF506PjRlUUWOMwBPEazbIX8nfrQvIY/B8MIvz/JuRzKnAkwPBAIeeazy/9nGAfT6sGRR0zUVMwPeojMxTvatYJe1VorGwh0X0LbuRXYmqwnrldPBs3/cbCvQvnZjkRNSZkamOxca0/rpK6VOlNCaeZ0ddxoS+V0Tud46Pc/hjmprPSAazQsjegKCgZRPa2Ylg538kwO8H2IDqaAAShvGrU70+zgA==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
+ by DBBPR04MB7899.eurprd04.prod.outlook.com (2603:10a6:10:1e1::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.15; Fri, 16 Oct
+ 2026 15:51:30 +0000
+Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
+ ([fe80::2146:83a2:5329:b7c%7]) with mapi id 15.21.0522.013; Fri, 16 Oct 2026
+ 15:51:30 +0000
+Date: Fri, 16 Oct 2026 11:51:23 -0400
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Ruoyu Wang <ruoyuw560@gmail.com>, vkoul@kernel.org,
+	dmaengine@vger.kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH] dmaengine: mmp_pdma: Check virtual channel before
+ scheduling tasklet
+Message-ID: <atJH-4ZtPYdfOlIM@lizhi-Precision-Tower-5810>
+References: <20260707150356.2257833-1-ruoyuw560@gmail.com>
+ <20260707152604.37C7D1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260707152604.37C7D1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: DS1PR03CA0018.namprd03.prod.outlook.com
+ (2603:10b6:8:233::15) To GV2PR04MB11799.eurprd04.prod.outlook.com
+ (2603:10a6:150:2cf::9)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261015145714.3327543-1-elver@google.com> <20261015145714.3327543-2-elver@google.com>
- <sashiko-outbox-174506@kernel.org>
-In-Reply-To: <sashiko-outbox-174506@kernel.org>
-From: Marco Elver <elver@google.com>
-Date: Fri, 16 Oct 2026 17:41:46 +0200
-X-Gm-Features: AclHuK8ATsc8VKpMtjbzGvE2xXlZuEy39NIy8wK_ev4B7i6RuKhKEu9q8cC6eGc
-Message-ID: <CANpmjNMfEXXz+PBd4rquzkNapFs3CGygdz_e_OmjJOtOnZZ5Jg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] rust: kcsan: add KUnit test for data race detection
-To: sashiko-reviews@lists.linux.dev
-Cc: Alexander Potapenko <glider@google.com>, Boqun Feng <boqun.feng@gmail.com>, kasan-dev@googlegroups.com, 
-	Dmitry Vyukov <dvyukov@google.com>, Jonathan Corbet <corbet@lwn.net>, 
-	Shuah Khan <skhan@linuxfoundation.org>, Randy Dunlap <rdunlap@infradead.org>, 
-	Andrew Morton <akpm@linux-foundation.org>, Miguel Ojeda <ojeda@kernel.org>, 
-	Boqun Feng <boqun@kernel.org>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, Daniel Almeida <daniel.almeida@collabora.com>, 
-	Tamir Duberstein <tamird@kernel.org>, Alexandre Courbot <acourbot@nvidia.com>, 
-	=?UTF-8?Q?Onur_=C3=96zkan?= <work@onurozkan.dev>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nsc@kernel.org>, 
-	Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, 
-	Justin Stitt <justinstitt@google.com>, Asahi Lina <lina+kernel@asahilina.net>, 
-	Lorenzo Stoakes <ljs@kernel.org>, Yury Norov <ynorov@nvidia.com>, David Gow <david@davidgow.net>, 
-	Joel Fernandes <joelagnelf@nvidia.com>, Alvin Sun <alvin.sun@linux.dev>, 
-	Josh Poimboeuf <jpoimboe@kernel.org>, Petr Mladek <pmladek@suse.com>, linux-kbuild@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|DBBPR04MB7899:EE_
+X-MS-Office365-Filtering-Correlation-Id: 014cf989-c421-41cf-7a70-08df2b9d5825
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|366016|376014|19092799006|23010399003|56012099006|4143699003|11063799006|5023799004|261009223027099003|10067099003|22082099003|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	lmOeD7+XuMnod9T8ChF3ZD46u/PbX41AJoxca9fO8RJH74Q2SyZqtXVCtVKnMLdGspx3eXLFzmRtaMDXADrwb9c4APGLIl08ZnlHDoepUzvpqfVTWa9xb5j60M65f3Dng7QL36PGQ18UsMWeaS4ciURmLmuGwvawmZQoLDx0pQcSbUmsIP7Zn8e+AWUQ74U4wpVggV4XynS1dRbB5m6MKvrR3ay1uX7W8Kcqx4hwJgHZaUN8WGnaQLqf7QWuoXPEbjoHw8vE9UJK6pofM60NCyOtha0kvOSCP0N20n8bYuBIuD9S7iO0qWYjnOcAuF9gJPUMJBQOnUUD97eNz8r+FwL3lIuF49TFSVIeUApasegYkwoaHJlAehoookwznY7yX7NNqH83kpgv4WUTIh+gXuWjQfnbSk2gjzsVvNXfzS4Gfp0dAZ4b6/0V9gcJI6HfPAAEsUMEcgavPuR8pJ8C2+EoGHseVhV2rUwhn3b7cJ6gxjATa3TF3FACUIiSuFgd1XYwhDFk9Xloa8dy8n+FjS9SbLEM47m1monaHSplsHF21fgeoYrTBXtpIdU6zdOXPqnspthJiGMbS4oQvJgO8xcII2/xiQl40zRjL3UgnL0=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(19092799006)(23010399003)(56012099006)(4143699003)(11063799006)(5023799004)(261009223027099003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?92ne7hl+pvHesuelf/JF5GVdQIlLIXXlJrVR7WMLNPWZDnsPw0UWx0ecDd?=
+ =?iso-8859-1?Q?QuLQ03/TwgQO1zHUapAoo18oTOQfrC3IE9yiPGkvoMXzdgzSzBBSpbodxv?=
+ =?iso-8859-1?Q?5DuOOYWTSi4xP2QWgwQQ0EeuRU2AIYLZqM5rqmEbFonr4B0xZXDRVONUk9?=
+ =?iso-8859-1?Q?7DZqwh1gxmCbABcBLT5nMrvM3emq6/IraoitfnBMv6DzQXnmXO92pGyYQL?=
+ =?iso-8859-1?Q?Z4JjZr+/si00fcy5yB/oJ8lHRJJNQHGcUpqW0XrgZGiau8LtMlaf+ctC3P?=
+ =?iso-8859-1?Q?3bwvTYnoQDQtD0U4f6NXxkrv7wJxZ0aliwR7e3vB66G/tbPsNbPRzwCMbx?=
+ =?iso-8859-1?Q?rlGN9RcM2GSGKIu64ohrlCDZFi6K2X3WPK5BBCOWktOjsbzYkM1nrRQ7fu?=
+ =?iso-8859-1?Q?pMYp7M5lwWu9sIJmfqlC1e7P109cAbKavl9sa7SlFKdcWUVYArRfPdOzds?=
+ =?iso-8859-1?Q?ivoexVFWN1BLYrMbz8IaJLntd8NggbP1tmm70HITSy2YCwiwzpWLcWbZkf?=
+ =?iso-8859-1?Q?X6XrmQkO3VU9OdashH+D0kxL5aBNGMKaNO0J3L3y8Rj5EE/Qac5fsaeh+Y?=
+ =?iso-8859-1?Q?WsrnkYqNSbCohstboH7qlERHfFBCz82kI/OXWQSdSWO6Y5qb+toocFCjx8?=
+ =?iso-8859-1?Q?Q5ip7AG7I6O35KT6/dzGGMX0p72iaWogD0BwVrhnK/m++cASJQMLe4Nx+x?=
+ =?iso-8859-1?Q?FUoNk1zrqhllPB8XbXC1wtS52hIT7wcyKp3Sgg1dSS5HfOEaGEjSiSNvv6?=
+ =?iso-8859-1?Q?qEZfahACS69Gj6BIiJCrz5DfPmefXE3bSJN34QCzYJOrC+vqtbVdtlpbvI?=
+ =?iso-8859-1?Q?mKD0CTzKBtZVije5AogKNDtcRNmSAyD6qJ/KDX2iIERlOy9BPFtnP3tOiO?=
+ =?iso-8859-1?Q?ZHYqWV9uhkme/eehC59W9BMMnnB/R3HCqYJW8quKAWpkQqO7XpSAGizjP6?=
+ =?iso-8859-1?Q?32ecRDhbqReiPrKpGLUYUSMVIREhJ8hIacekpKhWqLG6MaOO+LcmN3gE6/?=
+ =?iso-8859-1?Q?3O7H1qEUXdH3R16CHOgjjGCMdBpafOPgTEOyHFh+0P/t1QCGlQrVsakbdI?=
+ =?iso-8859-1?Q?C6zZVs+q8ZD8YGAlWnzKaROVT3RGrxToNL0d95slJXA5EoVnc1+tKArlMl?=
+ =?iso-8859-1?Q?Eqi0+fdcvx8Xw5wG6xNsTOff3ltPkOClZmkA8nLo+E/gNe8ECHxM67H3iu?=
+ =?iso-8859-1?Q?6AjsxvZYxGIZDVrqIAJSpj7mRJER4hdzjtBcJ2Bd4odXYBWx4sT/0HmXPR?=
+ =?iso-8859-1?Q?IqYflJf3Knix6C5AbPVYOaBrNNtLKuvRhQtXpN2ZiZa63rQ8Kt3v1HpsKF?=
+ =?iso-8859-1?Q?jXxz/ZdciuijepR/PJTb0N7l/RfEDC0sFvblz9KKbsFXaiZXA64HH0f3zf?=
+ =?iso-8859-1?Q?k4wA351bFSkTqUjFxMijCSF0VRSJWOWS0JaUZg/yAKS68H1id1gWI4euBz?=
+ =?iso-8859-1?Q?Bl12714WY8TpwD+jimMXOkvEREPKj9NRzW5iIH09S+3Om9PI+QhV4ryfLF?=
+ =?iso-8859-1?Q?xCZw6W/xUE95GVENmyTDb5pteoFGEfrQqsvU7T7ZJtvXRU3zxavNZwXWU/?=
+ =?iso-8859-1?Q?MHNYhjTlV7BFZ0xljqdKU4RWw7aMtT7n0HC6bGQlWEV9vycUbrcY3Ao9Tj?=
+ =?iso-8859-1?Q?sn8InLp4679msCHLiAndfKqarOOqARO/uZx4atiXPjSPwWj/3orB9PSznT?=
+ =?iso-8859-1?Q?DWANWhjS/1r+R986N/vJwCUEMA4JBIuKCWrshevIu1LWBbrHsuwry4Bn8e?=
+ =?iso-8859-1?Q?OGM3LQPFBPKG4BjkKyxPqbaepXa/RWTOlfJ7tgSn1ZRZBCSeXqIG1qgYar?=
+ =?iso-8859-1?Q?Qt/Ovc8IOqVxKiAE66Ny6u6zXxGIgGGXJBPtyCfHpzsnyPDjohVv?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 014cf989-c421-41cf-7a70-08df2b9d5825
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 15:51:30.0183
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: k3ATswfTdt7fxWwPx/66UOIgmYsAaXvPY56xcpr4Q8a8Q4ZPe3jz1PeVNlelMEV+UAAOGOTjC9h7v58LC2LkJmXODarZgbKO9+aEuRUMsb6PsnrtXHKChqniOBNhXrTK
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR04MB7899
 
-Sigh, I'm repeating myself against a bot:
-https://lore.kernel.org/all/CANpmjNPDKZKCWc0ubCGATLE05gwefwpR=n4D6E0FKAvsi9DCVw@mail.gmail.com/
-
-On Fri, 16 Oct 2026 at 16:57, sashiko-bot via kasan-dev
-<kasan-dev@googlegroups.com> wrote:
+On Tue, Jul 07, 2026 at 03:26:03PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] kunit: rust: KCSAN test stalls and spuriously fails on UP/PREEMPT_NONE
+> Pre-existing issues:
+> - [High] The patch leaves a Time-Of-Check to Time-Of-Use (TOCTOU) race open by taking two separate snapshots of `phy->vchan`.
+> - [High] Time-of-check to time-of-use (TOCTOU) races on `chan->phy` can lead to NULL pointer dereferences when racing with channel termination.
+> - [High] Missing `tasklet_kill()` during channel teardown and driver removal leads to use-after-free vulnerabilities.
+> - [High] A use-after-free write occurs on the error paths of the `prep_*` functions when freeing the descriptor list.
+> - [High] The DMA channel hangs indefinitely if multiple transactions are submitted before `issue_pending` is called.
+> - [Medium] Stale hardware interrupts are not reliably cleared when a physical channel is disabled, risking state corruption upon reallocation.
 > --
 >
-> commit 8335c11e7a640669968685ad30c1312fe11f4a68
-> Author: Marco Elver <elver@google.com>
+> --- Patch [1]: [PATCH] dmaengine: mmp_pdma: Check virtual channel before scheduling tasklet ---
+> commit 4969ecc3a7a7a671c042835c34adbdf0229a2d70
+> Author: Ruoyu Wang <ruoyuw560@gmail.com>
 >
-> rust: kcsan: add KUnit test for data race detection
+> dmaengine: mmp_pdma: Check virtual channel before scheduling tasklet
 >
-> Add a minimal KUnit test that checks that KCSAN detects data races in
-> Rust code: two threads concurrently increment a shared counter without
-> synchronization, and a probe on the console tracepoint waits for the
-> KCSAN report.
+> mmp_pdma_chan_handler() clears a physical-channel interrupt and then
+> unconditionally schedules phy->vchan->tasklet. The physical channel can
+> be detached from its virtual channel when the channel is terminated or
+> when no pending work remains, so a late or shared interrupt can reach the
+> handler with phy->vchan already NULL.
 >
-> > diff --git a/rust/kernel/Kconfig.test b/rust/kernel/Kconfig.test
-> > index 3bf4194f28c7c..26bcd91a48211 100644
-> > --- a/rust/kernel/Kconfig.test
-> > +++ b/rust/kernel/Kconfig.test
-> > @@ -104,4 +104,15 @@ config RUST_TIME_KUNIT_TEST
+> Snapshot phy->vchan in the interrupt path, skip tasklet scheduling when
+> there is no virtual channel, and use the same snapshot for the BUSERR
+> warning. Use WRITE_ONCE() for the matching attach/detach stores because
+> the IRQ path reads this pointer without taking phy_lock.
+>
+> Fixes: c8acd6aa6bed ("dmaengine: mmp-pdma support")
+> Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+>
+> > diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
+> > index 386e85cd4882a..6f379e9f10017 100644
+> > --- a/drivers/dma/mmp_pdma.c
+> > +++ b/drivers/dma/mmp_pdma.c
+>
+> [ ... ]
+>
+> > @@ -370,11 +372,16 @@ static int clear_chan_irq(struct mmp_pdma_phy *phy)
+> >  static irqreturn_t mmp_pdma_chan_handler(int irq, void *dev_id)
+> >  {
+> >  	struct mmp_pdma_phy *phy = dev_id;
+> > +	struct mmp_pdma_chan *vchan;
 > >
-> >         If unsure, say N.
+> >  	if (clear_chan_irq(phy) != 0)
+> >  		return IRQ_NONE;
 > >
-> > +config RUST_KCSAN_KUNIT_TEST
-> > +     bool "KUnit test for KCSAN instrumentation of Rust code" if !KUNIT_ALL_TESTS
-> > +     depends on KCSAN && HAVE_KCSAN_RUSTC && TRACEPOINTS
+> > -	tasklet_schedule(&phy->vchan->tasklet);
+> > +	vchan = READ_ONCE(phy->vchan);
 >
 > [Severity: High]
-> Should the RUST_KCSAN_KUNIT_TEST configuration in rust/kernel/Kconfig.test
-> include a depends on SMP requirement?
+> This isn't a bug introduced by this patch, but does taking two separate
+> snapshots of phy->vchan leave a time-of-check to time-of-use race open?
 >
-> The help text notes that the test requires at least 2 CPUs to reliably
-> observe a data race. Without an SMP dependency, the test can be built
-> and may spuriously fail on UP configurations.
 
-That's the point - if someone configures KCSAN and runs it on a system
-where we won't detect any data races, this test is the canary in the
-coalmine. The test will fail loudly and whoever configured their
-system (or VM) will know something is off. That's a good thing.
+Although it is not introduce by this patch. But you try to fix some problem,
+please fix this also.
 
-> > +     default KUNIT_ALL_TESTS
-> > +     help
-> > +       This option enables a KUnit test checking that KCSAN detects data
-> > +       races in Rust code. The test needs at least 2 CPUs to reliably
-> > +       observe a data race.
-> > +
-> > +       If unsure, say N.
-> > +
-> >  endif
+I am not sure if it is safe schedule tasklet, which already detach from
+vchan.
+
+Frank
+
+> The commit message mentions using the same snapshot, but the implementation
+> takes one snapshot in clear_chan_irq() and a second one here in
+> mmp_pdma_chan_handler(). If an interrupt fires for an old virtual channel
+> exactly as the physical channel is reassigned to a new one, the two
+> READ_ONCE(phy->vchan) calls could fetch different virtual channels.
 >
-> > diff --git a/rust/kernel/kcsan_test.rs b/rust/kernel/kcsan_test.rs
-> > new file mode 100644
-> > index 0000000000000..24810cf2970a0
-> > --- /dev/null
-> > +++ b/rust/kernel/kcsan_test.rs
-> [ ... ]
-> > +    #[test]
-> > +    fn data_race() -> Result {
-> [ ... ]
-> > +        let worker = ctx.clone();
-> > +        workqueue::system_unbound().try_spawn(GFP_KERNEL, move || {
-> > +            while !worker.stop.load(Relaxed) {
-> > +                racy_inc();
-> > +            }
-> > +            worker.done.complete_all();
-> > +        })?;
+> The interrupt would be cleared for the old channel, but the tasklet would be
+> scheduled for the new channel, prematurely completing its pending descriptors.
+>
+> Could this be fixed by returning the vchan pointer from clear_chan_irq()
+> instead of reading it twice?
+>
+> > +	if (!vchan)
+> > +		return IRQ_HANDLED;
 > > +
-> > +        let start = Instant::<Monotonic>::now();
-> > +        while !OBSERVED.load(Relaxed) && start.elapsed() < Delta::from_secs(10) {
-> > +            racy_inc();
-> > +        }
+> > +	tasklet_schedule(&vchan->tasklet);
+> >  	return IRQ_HANDLED;
+> >  }
 >
 > [Severity: High]
-> Could this loop in data_race() lead to a CPU stall or spurious test failure
-> on uniprocessor systems or when PREEMPT_NONE is set?
+> This is a pre-existing issue, but can this lead to a NULL pointer dereference
+> due to a time-of-check to time-of-use race in mmp_pdma_residue()?
 >
-> The main thread spins tightly in kernel mode for up to 10 seconds without
-> yielding. If the worker thread is scheduled on the same CPU, it is prevented
-> from executing.
+> In mmp_pdma_residue(), chan->phy is checked and used locklessly:
 >
-> After 10 seconds, the main thread exits the spin loop, sets the stop flag,
-> and waits for completion. The worker finally runs, sees the stop flag
-> immediately, and exits without performing any concurrent increments. The
-> assert!(OBSERVED.load(Relaxed)) assertion will then spuriously fail.
+> drivers/dma/mmp_pdma.c:mmp_pdma_residue() {
+>     ...
+>     if (!chan->phy)
+>         return 0;
 >
-> Would it make sense to yield the CPU during this loop, for example, using
-> cond_resched()?
-
-Where KCSAN works correctly, the data race is detected within
-milliseconds. Adding cond_resched() may in fact lead to the data race
-being detected much slower in the common case. If the worker is
-scheduled on the same CPU, the system is misconfigured (likely UP) and
-I want to see a test failure.
+>     if (chan->dir == DMA_DEV_TO_MEM)
+>         curr = pdev->ops->read_dst_addr(chan->phy);
+>     ...
+> }
+>
+> Concurrently, mmp_pdma_terminate_all() can call mmp_pdma_free_phy(), which
+> sets chan->phy = NULL. Because chan->phy is accessed without READ_ONCE() or
+> locks, the compiler might reload the variable from memory between the check
+> and its use, resulting in a NULL dereference.
+>
+> [Severity: High]
+> This is a pre-existing issue, but does the channel teardown path miss a
+> tasklet_kill() call, potentially leading to a use-after-free?
+>
+> In mmp_pdma_free_chan_resources(), the descriptor pool is destroyed without
+> synchronizing or killing active tasklets:
+>
+> drivers/dma/mmp_pdma.c:mmp_pdma_free_chan_resources() {
+>     ...
+>     dma_pool_destroy(chan->desc_pool);
+>     chan->desc_pool = NULL;
+>     ...
+> }
+>
+> Similarly, in mmp_pdma_remove(), the driver unregisters the device and allows
+> devres to free chan memory without first killing the tasklet. If a tasklet is
+> scheduled just before the DMA channel is freed, dma_do_tasklet() could run
+> concurrently with or after teardown, causing it to dereference chan after it
+> is freed or operate on chan->desc_pool after it is destroyed.
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but does the error path in the
+> prep_* functions cause a use-after-free write when freeing the descriptor list?
+>
+> In mmp_pdma_prep_memcpy(), newly allocated descriptors are appended using
+> list_add_tail(&new->node, &first->tx_list). If an allocation fails, the error
+> path passes the dynamically embedded list head to the cleanup function:
+>
+> drivers/dma/mmp_pdma.c:mmp_pdma_prep_memcpy() {
+>     ...
+> fail:
+>     if (first)
+>         mmp_pdma_free_desc_list(chan, &first->tx_list);
+>     ...
+> }
+>
+> During cleanup in mmp_pdma_free_desc_list():
+>
+> drivers/dma/mmp_pdma.c:mmp_pdma_free_desc_list() {
+>     ...
+>     list_for_each_entry_safe(desc, _desc, list, node) {
+>         list_del(&desc->node);
+>         dma_pool_free(chan->desc_pool, desc, desc->async_tx.phys);
+>     }
+>     ...
+> }
+>
+> Since first->tx_list is embedded in first, and first is freed during the
+> first iteration, subsequent iterations perform list_del(&desc->node). This
+> modifies the list head inside the already freed first descriptor, corrupting
+> the memory of the DMA descriptor pool.
+>
+> [Severity: High]
+> This is a pre-existing issue, but does the DMA channel hang indefinitely if
+> multiple transactions are submitted before issue_pending() is called?
+>
+> In start_pending_queue(), all pending transactions are moved to chain_running,
+> but only the physical address of the first descriptor is programmed to the
+> hardware:
+>
+> drivers/dma/mmp_pdma.c:start_pending_queue() {
+>     ...
+>     list_splice_tail_init(&chan->chain_pending, &chan->chain_running);
+>
+>     /*
+>      * Program the descriptor's address into the DMA controller,
+>      * then start the DMA transaction
+>      */
+>     pdev->ops->write_next_addr(chan->phy, desc->async_tx.phys);
+>     ...
+> }
+>
+> Since descriptors from different transactions are not linked, the controller
+> will stop after the first transaction. The tasklet in dma_do_tasklet() sees
+> that chain_running is not empty and leaves chan->idle = false:
+>
+> drivers/dma/mmp_pdma.c:dma_do_tasklet() {
+>     ...
+>     chan->idle = list_empty(&chan->chain_running);
+>
+>     /* Start any pending transactions automatically */
+>     start_pending_queue(chan);
+>     ...
+> }
+>
+> However, start_pending_queue() returns immediately if chan->idle is false,
+> meaning the remaining transactions in chain_running are never started.
+>
+> [Severity: Medium]
+> This isn't a bug introduced by this patch, but can stale hardware interrupts be
+> incompletely cleared when a physical channel is disabled or enabled?
+>
+> In disable_chan(), the read-modify-write sequence might miss W1C
+> (write-1-to-clear) interrupt bits that become asserted during the window:
+>
+> drivers/dma/mmp_pdma.c:disable_chan() {
+>     ...
+>     dcsr = readl(phy->base + reg);
+>
+>     if (phy->vchan) {
+>         struct mmp_pdma_device *pdev;
+>
+>         pdev = to_mmp_pdma_dev(phy->vchan->chan.device);
+>         writel(dcsr & ~pdev->ops->run_bits, phy->base + reg);
+>     ...
+> }
+>
+> If a hardware interrupt fires between readl() and writel(), the snapshot's
+> W1C interrupt bit is 0, so writel() writes 0, failing to clear the pending
+> interrupt.
+>
+> Similarly, enable_chan() performs an unlocked read-modify-write on a W1C
+> register, blindly clearing any pending W1C bits without processing them. When
+> the physical channel is later reassigned, this stale interrupt can trigger
+> the IRQ handler for the new channel.
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260707150356.2257833-1-ruoyuw560@gmail.com?part=1
