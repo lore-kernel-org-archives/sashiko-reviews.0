@@ -1,87 +1,65 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010035.outbound.protection.outlook.com [40.93.198.35])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593F43E717A
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 10:19:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792145962; cv=none; b=aTXX1lTkkB2VEe3LHIIWZPI0S//wx+HxIe0lAIFdnaTgqGa5w2A+n/mUH2y2h6KWTy5eArvY5x+zPQ28b5wcS3t8HmuSyfN5zilmVs0t2hzNWoHXH4sms+5h7gGkHwwje/rF3mlRj4vOUhgfMPUmDbg64x26sJzWYL3uIFZyaFg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792145962; c=relaxed/simple;
-	bh=U9CRgRoLAmtk8E/dKxBycedliKECA2YqR+zLevH5pAI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KlH5WoZr4yentVje8uD/p2x17+c4WEMEKkPfzQ+E6jW7ye11TA57WK3Z5g7oKw0pucfF0YN1Ts7MsQmt+h06Efi5Jhqy/sx2tN7rn3Xuykuxt9wrsxAhRfEtQxPmrmlXTJ1N5Cd+NNv4/1q3/Twvy7Eeva+c5vuCV5sdtUkm3xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Tef+K4uB; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=BfrAjBh5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE5D3B42CD
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 10:39:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.35
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792147148; cv=fail; b=G4fKgKYmuSOHiMnTtKnBf/jxt+Zr/rFySHeS8LvAyq//DDmlfofBZacicHHmWUx+k0UwErl7QalDkEb3hvhkTR2n/y8OeDtOHs06Yxse9vvOweaQXQee+8loBDwMaQSrocfA8I+LGyVyJL1Mn2HKFiI02vXt37a2fd4YzGwUsYk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792147148; c=relaxed/simple;
+	bh=F5EcBaoXU4Sd4YO6VQ8IdbY79b0qIpnlEUE5AUCP+ac=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Nqzz9+w48jnN/xogKIsBCQrJlJSSFrIMey10raD8KGixlE0apxWntY7us0pAV0cnFHHfPqtSp3nE7KFb2SVT/5lZFCL9PGMQEtsKZ+pkBO5dgtobmP9l3fH3pXloI9WuOTyrQ0sKmo+TdWpBqH25T3bsvlwepZlSwdzO4XXBBm4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=nFt5bsVK; arc=fail smtp.client-ip=40.93.198.35
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Tef+K4uB";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="BfrAjBh5"
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69GAAEhi1647704
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 10:19:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/GfCSAHxVxuL86t7uTRtCzziP8qEv+SHBLAo353w4f4=; b=Tef+K4uBkMBRv2OZ
-	ZIiOtdCer65op6N/K79bjlIrA6CtrrEUEc9LXhP3QuzAnXN6uPRBFatwBZ+06z99
-	1RhnVbmlxCd8x2teNLgAvv8nkog8QWwstqvaJ55Q6tCRXxpkHod0vYXZ5dxR2caz
-	XnnmoeDEQbzukohzCJCp7iIGoqyMEmK7lBU7GS2/PkvpQsOQOSWbZlEu6u8oFZ9c
-	q05GQIn31gG7eA1w/l5dBMG2ybl/sBk33R0qkTD8k/qct+qRSwOGmK5+61+TK3DJ
-	L0y7dBIVNZBoU40FF3S8SUh1ClSHnIFIxSUkRDMuDqdlg28GLIuOSCvGDMbUS1VZ
-	gwbkgg==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hbhumr1w5-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 10:19:20 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-341eff9e381so17471011eec.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 03:19:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1792145959; x=1792750759; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=/GfCSAHxVxuL86t7uTRtCzziP8qEv+SHBLAo353w4f4=;
-        b=BfrAjBh5C+xVdQBebzC9bfbkj1DsVto2joFzeRczYn7xfI0TWlWf/2GEwiIbEF79Kv
-         XldZvabOaByl7zYT60nySEbalV59Hg9Cnrpsdj4QWZj43T8hoeLAqdXCHigPeE5Nnlju
-         Aq4F3SCTlNdaUeWKbHeYO17Ue9AIznY4j/U5MLwAWXhU2VJl9L3qzCHMj6swvvC7UrhM
-         AyfOq/dExNLv0oTbY3Nb28lN0ri5gRioQDgRomyZgkXzTTRBI61kjbx0dYtVDxQ3Vl2c
-         psomA04i2QGq1qfNaU4NZnckWx70xasTEOY8ol5R0IcXfWFfmtktPHuAyIMa+WK7Z3ew
-         h0eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792145959; x=1792750759;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=/GfCSAHxVxuL86t7uTRtCzziP8qEv+SHBLAo353w4f4=;
-        b=HVeJG7kxIVXFLhHfiLynByxoJKvA5tT5MjUzHdG6rjdj9jQPZ99FqKg31WHIvwdkGq
-         aUu6T30/T6UruQXh1Fx/qrjVmapUud+hrgCpqmQr66ZkFT9IRXI+1W1AOR+H9OzVyhBx
-         IqMamib0d7uYHX83WW6Bb8TR0rmn7K4kwz1/Auwazdy3AZc4YtL6j7C19fiNFu2XxIR9
-         iW0GK1oDQf+ZMZ3QU0ceV6m3yR/PsSm8c28HHEtDD3dCMD3v+ZpnaD0KFvDj5fb7sY2S
-         6/p9/Xk2uLuLOJC3HqGkCoycvpS1bOnjwjbBpyojdSDhyV4WtazI7ogskxcD5z5wc4kz
-         1vCA==
-X-Forwarded-Encrypted: i=1; AKwUvByvUav6JgesYMel2y9tpL/bAO04FPq3NGNkoafzATUMuptU49QbpqCXkQ3gyrDAIhg9cLInO3aOjx7jnt+TpRA=@lists.linux.dev
-X-Gm-Message-State: AFq9FYLSpafA9RUklsmDIfg5O8KoBoCIK5hjndoDt1WhH6VPa3QmWvEi
-	Udtgl1cRiA8Oyu+jtdjW52kPtR35Szd6A4a6sz1+uM92Cvm1iXPOUmlzQJZyLOAtbxbHhNeELkr
-	cDBn8K0lR0ifSo7sZL4sAulPcYf+Unm0UI2wb+2pRpGSaiq1DcfTm7Cz0Ql9tHUBu4PIMC20=
-X-Gm-Gg: AYBFou14vITvfKnMMly42J5wWYKTgC9kJjGourNtUIOHp49zuNJ0ieI3UeMLGLbBnDQ
-	IKsYcHIAY7QhitrTZimO3nulAV9jINOrDiWx9RF3T3QhVtjr8va+DOsOEAmRd2qLKB7RWU4bYsD
-	3MfJVsdnDvesp1Mp+e4SEF9dA/Mgh3DpxSz28JuqSQjiJ2tHVTri+PpJvgWgErKAhdyD6HkGtc8
-	OnvI9nmGkXBaMD0qfnITPo4KSLPHm95U+/GCt+y8/pI3x1lbOVoyHqI8WePQqDtR0oclF3Ucnsz
-	G4vTB3GpALVovqA4MCVnyIvcv531lRePYVa907GrFubEzFW49ouyNWn0p9OVoUdBW5ufRnD224R
-	cWftKWE5jSeFB8FR3SkcpbAy5K96RDII=
-X-Received: by 2002:a05:693c:2a13:b0:35f:a2ad:603 with SMTP id 5a478bee46e88-35fa2ad06cbmr4910714eec.16.1792145958995;
-        Fri, 16 Oct 2026 03:19:18 -0700 (PDT)
-X-Received: by 2002:a05:693c:2a13:b0:35f:a2ad:603 with SMTP id 5a478bee46e88-35fa2ad06cbmr4910675eec.16.1792145958247;
-        Fri, 16 Oct 2026 03:19:18 -0700 (PDT)
-Received: from [10.218.14.97] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36082a7b33bsm10937298eec.24.2026.10.16.03.19.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Oct 2026 03:19:17 -0700 (PDT)
-Message-ID: <7337fb06-0953-42f6-acdf-ccd29549fd8b@oss.qualcomm.com>
-Date: Fri, 16 Oct 2026 15:49:14 +0530
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="nFt5bsVK"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jI6MU3x0gchxGIGtX+QiSoHNpFmnab9eVamMKy8wiIGX9YEpZEBuX1jnm+e/U2svfkIJBIkX4kyByCoh/YKMO6o1756aI8NlNery+wxzAJKuhNF3gs+salVCedWKaww+BWSGRW5vsbKqy9Fn5uLIfsYb7L79tJbeEXNk8Rm0VhVLw+YyZguTiwLSY6IKWV+4ujtJCJZnqgkktkcA2CoZTV5C9KzjiB3huVgLghx78/Zpji0arWZxgsBzHBgrxDZJFajfxo29QbIiLHtllBbpSMFZTLDHGDdc61/Bq6GSq8o7il8XZzeIvvzOpYBetceQczZ4LpSXkcwewLRUGZSNRg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eEbaut86T+lGsmrmBvx8bdufd+jsfFMDnk8KkDJXnPA=;
+ b=KkQqX9k/Dj8AwRMh3oWLNmL/VTLIQgbYD5Hr13s6XfEzET6ls6CHYTp4pfuGgA5WadHtNsFn67KzbiG/dfM8CBPO3DOQMTphPPqR8oZ7Gjmw57HTDQPaDcRiUeKATuxY7SZsFwTeItBqEpISsuwnQIY9PovymUhJ8tVLJTKDkJ7ReMA9qvlA89JkVBTsNDdyYIapGzOZsRwxhi+V8M3/G1Wp/fechXFsyIKRUWEl50gm0xBIadyGvucsgEHimPuTfzDf7GgOfoWJ1wQt4/MXeHkwxy/pm8xBYGclwr9lILCJ4E+8MVJnSBR743Lwhkm/AUf1NLgMbvhnOR18DeE11g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eEbaut86T+lGsmrmBvx8bdufd+jsfFMDnk8KkDJXnPA=;
+ b=nFt5bsVK59M/bwIps2365VVVouFRF5MStzP3lvKMOCoqPIVsdaJbUNJVdiJZOmEonVsyy2HTHRsJuJg9kKlxcoyrXYV8XJKcwZtvNNJoKvhausx8/WansxObyJNnhkkJPvGn8Clva11e/wh0YFYLOz1kaUIPjyhpE/rg1O8q/kw=
+Received: from BN0PR07CA0019.namprd07.prod.outlook.com (2603:10b6:408:141::9)
+ by CY5PR12MB6347.namprd12.prod.outlook.com (2603:10b6:930:20::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.14; Fri, 16 Oct
+ 2026 10:39:00 +0000
+Received: from BN2PEPF000044A7.namprd04.prod.outlook.com
+ (2603:10b6:408:141:cafe::81) by BN0PR07CA0019.outlook.office365.com
+ (2603:10b6:408:141::9) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.496.5 via Frontend Transport; Fri, 16
+ Oct 2026 10:38:59 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ BN2PEPF000044A7.mail.protection.outlook.com (10.167.243.101) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.522.6 via Frontend Transport; Fri, 16 Oct 2026 10:38:59 +0000
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Fri, 16 Oct
+ 2026 05:38:53 -0500
+Received: from [192.168.0.102] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.53 via Frontend
+ Transport; Fri, 16 Oct 2026 05:38:52 -0500
+Message-ID: <bfb2c3e7-cd80-498e-a4aa-7b46b56b3363@amd.com>
+Date: Fri, 16 Oct 2026 16:08:51 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -89,108 +67,101 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] dmaengine: qcom: gpi: Convert dev_dbg() calls to
- tracepoints
-To: Frank Li <Frank.li@oss.nxp.com>, sashiko-reviews@lists.linux.dev
-Cc: dmaengine@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
-        vkoul@kernel.org, Frank.Li@kernel.org
-References: <20260926-add-trace-support-gpio-v3-0-8572bf7456b2@oss.qualcomm.com>
- <20260926-add-trace-support-gpio-v3-2-8572bf7456b2@oss.qualcomm.com>
- <20260925210244.D6D5F1F000FF@smtp.kernel.org>
- <as6nEloHzo_YkEW9@lizhi-Precision-Tower-5810>
+Subject: Re: [RFC PATCH 1/5] KVM: x86/mmu: Log dirty GPAs only for the nested
+ GPA walk
+To: <sashiko-reviews@lists.linux.dev>, <kvm@vger.kernel.org>
+References: <20261015103933.2088307-1-nikunj@amd.com>
+ <20261015103933.2088307-2-nikunj@amd.com> <sashiko-outbox-172691@kernel.org>
 Content-Language: en-US
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
-In-Reply-To: <as6nEloHzo_YkEW9@lizhi-Precision-Tower-5810>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDA0MCBTYWx0ZWRfX2iZ2MidJ4m2y
- SwG9CMVWhhO88PMPj++cywQbUSZES2/zzdzQvs3hA6QU6/dd5S6zI9rvGXgqQpED6KW7R7lDI0L
- j76bsVgUXrcanGLhHzH0OAxJ1G9cd4s=
-X-Authority-Analysis: v=2.4 cv=H+BOUOYi c=1 sm=1 tr=0 ts=6ad1fa28 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=0yzcsfwEXPjLm50L98AA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22
- a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-GUID: OfObsOl5ozPmsxTA_MEs51Atutmicli-
-X-Proofpoint-ORIG-GUID: OfObsOl5ozPmsxTA_MEs51Atutmicli-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDA0MCBTYWx0ZWRfX+4MCseRZVB1l
- hUOcgj/a8foFF8v+uDYHUYAFhDqta2DakMma2SFpunUQ0QW9M6uDT925EdNqZ3JlPlWySvtZAZq
- QsSAne8fg63jbT+812nrZCvFlKQcVm0shOKeto200jxjfRLMMRfqbZes1dmQJ41FFaGzz2TD7HW
- TfmjC8IDMQY8SnVpU1+KXdDBfrQWRpmo9/kT6qg1xZAhsqUkqU7/sP8omCBaSWHnNHpC5xOjEtc
- dejnNANKqWHxQMeEYh7MZ16GBOPEfBEsd4ka+JesX/S4xUKcIhGVSeksC+kku7KwQNlh3l4SfFg
- TgHh9tkEAq8wu96mYwY0lIosEktREKvkzisnimjwNgxV9yjkklImWo4iU8NcWb4LbGzeWQO0gHL
- SN45QroBhwyB+YIR30D5Ll9OH6auai/guKmIR6JKJQB4vWGcdmZf3UbW68VOnWPUrOUwgbI1rBe
- tirla4VRsNjeIYHvFxQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-16_01,2026-10-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 malwarescore=0 bulkscore=0 phishscore=0 priorityscore=1501
- adultscore=0 clxscore=1011 lowpriorityscore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610160040
+From: "Nikunj A. Dadhania" <nikunj@amd.com>
+In-Reply-To: <sashiko-outbox-172691@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF000044A7:EE_|CY5PR12MB6347:EE_
+X-MS-Office365-Filtering-Correlation-Id: 36921a5e-963e-4ea3-88b0-08df2b71b059
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700016|23010399003|82310400026|1800799024|376014|6133799003|18002099003|22082099003|10067099003|13003099007|4143699003|261009223027099003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	G059h7ZAbKJy9SqvT4v9fU0WXa4mzRhwSDksBrEMLGaLRTKps+ypt7BEsL8Y3d6IX3yyrjsR2lAImPQlY6/9iSu5TBxLJ5qWGTRDdeGHwihUmoKZul8HXybLDkWvRa1xO5oSdQr2QxuLbFNDQFhbEH/QK4vf9i8MOD3nT5Au6JUu+ULfdUN641UbEMoRtOI7StUYo4Ab67XkKWu2mSqycX6bGkXKGu6vK8AqPy6cdaKQp2an2f/I5MexXuwvfej9Jp554ciEwwo9oJuwTqSx1+tidac7iZQAzjwFrp59kfUogUIgqFNO1vvIusAqSwDKo7figmIAYL9UNlVPbPocNYCZWm3jwHRSk9v+qtqneV8bPGzRKREUMWoaiIYOssDHX0vU58gY6qrehzRoXKK+uZbbGRsJTymfxjEl4v6Xd0AOwECvviawF4K+caqub2TimvSl/zpmsntjlo9J8L5zE85XqIIjXyDgxefQ6mnTwFUrgsEAqrldfYlNNXMA2AipbpdPA3sNLzhv11EmwAvhR9bjnbLHsIYvcFiqEKtY97N6/uDS576REoa+MVt9cv9UjMgnAtXziBu3ycPgnr58Jr0WGr8+6xZwSCNubhyc3Ca/CPjshhsuIO2m7tlWDx3eJXXrjQ0glYkJoDY8yYvVef5bBvB03Aoh/t79j7GoecCMTTsLXp/c9PVh11mO9TxQZZPilFmMaBbAhY2xkPQFYA==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(23010399003)(82310400026)(1800799024)(376014)(6133799003)(18002099003)(22082099003)(10067099003)(13003099007)(4143699003)(261009223027099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	xdZvsBvBLEsJFWMRmZiDYJwuIhKmtR0RIxPIx7IoYGJLUD/z14sODISFqJZKugh4tdcyhl/Xj4YtpCgPowrsHDufJPMABcu+jfzsPe/Y7y+jianlBsdmGWgTcYrfjbdR/SSxRE0lUbfZgAUU56q3sC/ypyicnxa73yjsbVNvttpmVOH1Zr4lhFN4BNWlKS9O2U8X5Rc9MUr3f3+zSUiBs+nGeL1GMuspUm2MfS3qZXOkequlW5X7VbItxP9mHhqe2+BCnaY/5I8gUsHMP3tLP5Tj+jsOY+FsultRH37OgqA3rPd2reA4S8NExfN6A/ci/yBR0lm+PF0VTf00bvjLmcmrGMc73nTw7054U9tM1ubDqXpJq7UGpQODtg13D+j2SfXqtdwgI1CAuAHTOYzZnNd0iWF7ZsHtrz8B2jegQrWzqO5MFuxr+4NmdIHNQk30
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 10:38:59.9408
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 36921a5e-963e-4ea3-88b0-08df2b71b059
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN2PEPF000044A7.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6347
 
-Hi Frank Li
 
-On 14-10-2026 03:18, Frank Li wrote:
-> On Fri, Sep 25, 2026 at 09:02:44PM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [Low] dmaengine: qcom: gpi: unused variable gpi_ev_state_str causes compiler warning
->> --
->>
->> commit 16ff3240f7873902688743d98570cd5eebf13594
->> Author: Praveen Talari <praveen.talari@oss.qualcomm.com>
->>
->> dmaengine: qcom: gpi: Convert dev_dbg() calls to tracepoints
->>
->> This commit replaces dev_dbg() based debug logging in the GPI DMA driver
->> with tracepoints, providing structured runtime visibility.
->>
->>> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
->>> index fafe6ac848d94..6aff2a0d54161 100644
->>> --- a/drivers/dma/qcom/gpi.c
->>> +++ b/drivers/dma/qcom/gpi.c
->> [ ... ]
->>> @@ -887,15 +883,14 @@ static irqreturn_t gpi_handle_irq(int irq, void *data)
->>>   				ev_state = DEFAULT_EV_CH_STATE;
->>>
->>>   			gpii->ev_state = ev_state;
->>> -			dev_dbg(gpii->gpi_dev->dev, "setting EV state to %s\n",
->>> -				TO_GPI_EV_STATE_STR(gpii->ev_state));
->>> +			trace_gpi_ev_ctrl_irq(gpii->gpi_dev->dev, gpii_id, ev_ch_irq,
->>> +					      gpii->ev_state);
->> [Severity: Low]
->> Is it possible that this change in gpi_handle_irq() within
->> drivers/dma/qcom/gpi.c leaves the gpi_ev_state_str static array and
->> TO_GPI_EV_STATE_STR macro as orphaned dead code?
->>
->> Since trace_gpi_ev_ctrl_irq() only takes the integer value, the final
->> consumer of the macro is removed. Could this regression trigger a
->> -Wunused-variable compiler warning for the unreferenced static array
->> when compiling the driver with standard kernel warning flags enabled?
->>
->> For reference, the array is defined earlier in the file as:
->>
->> static const char *const gpi_ev_state_str[MAX_EV_STATES] = {
->> 	[EV_STATE_NOT_ALLOCATED] = "NOT ALLOCATED",
->> 	[EV_STATE_ALLOCATED] = "ALLOCATED",
->> };
-> Please Remove dead code also.
 
-Thanks for pointing this out. I can reuse gpi_ev_state_str in the trace 
-output instead of removing it. I’ll update the patch accordingly.
+On 10/15/2026 4:25 PM, sashiko-bot@kernel.org wrote:
+> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+> 
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] kvm: x86/mmu: L2 GFN type confusion and missed PML logs for L2 page tables
+> --
+> 
+> commit 39018b0fb43ef6b337e5d8b61b880163828654c8
+> Author: Nikunj A Dadhania <nikunj@amd.com>
+> 
+> KVM: x86/mmu: Log dirty GPAs only for the nested GPA walk
+> 
+> This patch gates PML logging on the walk being the nested GPA walk, assuming
+> only that walk yields an L2 GPA. No functional change is intended as the EPT
+> template only backs the nested GPA walk.
+> 
+>> diff --git a/arch/x86/kvm/mmu/paging_tmpl.h b/arch/x86/kvm/mmu/paging_tmpl.h
+>> index 8e350095508c5..043d0ec02b272 100644
+>> --- a/arch/x86/kvm/mmu/paging_tmpl.h
+>> +++ b/arch/x86/kvm/mmu/paging_tmpl.h
+>> @@ -235,7 +235,9 @@ static int FNAME(update_accessed_dirty_bits)(struct kvm_vcpu *vcpu,
+>>                               !(pte & PT_GUEST_DIRTY_MASK)) {
+>>                       trace_kvm_mmu_set_dirty_bit(table_gfn, index, sizeof(pte));
+>>  #if PTTYPE == PTTYPE_EPT
+>> -                     if (kvm_nested_call(write_log_dirty)(vcpu, addr))
+>> +                     /* Only the nested GPA walk yields an L2 GPA to log. */
+>> +                     if (w == &vcpu->arch.ngpa_walk &&
+>> +                         kvm_nested_call(write_log_dirty)(vcpu, addr))
+> 
+> [Severity: High]
+> Does this change miss PML logs for L2 page table modifications that occur
+> during an L2 gva_walk?
 
-Thanks,
+No, those are logged, just not from the gva_walk.  Walking L2's page
+tables translates each page-table page through the nested walk, as a
+write:
 
-Praveen Talari
+      walk_addr_generic(w = gva_walk)
+        nested_access = (have_ad ? PFERR_WRITE_MASK : 0) | PFERR_USER_MASK;
+        kvm_translate_gpa(gva_walk, gfn_to_gpa(table_gfn), nested_access | ...)
+          svm_translate_nested_gpa()           /* switches w to ngpa_walk */
+            walk_addr_generic(w = ngpa_walk)   /* write_fault is set */
+              update_accessed_dirty_bits()
+                write_log_dirty(vcpu, addr)    /* L2 GPA of the page table */
 
->
-> Frank
->
->> #define TO_GPI_EV_STATE_STR(_state) (((_state) >= MAX_EV_STATES) ? \
->> 				    "INVALID" : gpi_ev_state_str[(_state)])
->>
->> --
->> Sashiko AI review · https://sashiko.dev/#/patchset/20260926-add-trace-support-gpio-v3-0-8572bf7456b2@oss.qualcomm.com?part=2
+Logging from the gva_walk would be wrong rather than extra: 'addr' there
+is an L2 GVA, not a GPA.
+
+> 
+> When KVM emulates setting A/D bits in an L2 page table (during an L2
+> gva_walk), it is writing to an L2 GPA. Hardware logs page table updates
+> to the PML buffer, so it seems KVM must do the same.
+> 
+> By ignoring gva_walk, does this fail to log L2 page table modifications
+> to L1's PML buffer, breaking L1's dirty page tracking?
+
+Regards,
+Nikunj
+
