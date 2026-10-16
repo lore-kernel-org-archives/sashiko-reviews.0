@@ -1,105 +1,126 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1421E44E67D;
-	Fri, 16 Oct 2026 08:55:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8667E4582E1
+	for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 08:58:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792140936; cv=none; b=I7pVeQImHgHaFWKRIw/eO20bvsxXCXGAZQ7WaOhRg0yEeqm9UrhxjQshapzYRC2IehLEtS9N3yT3mVF5VVdFe/w4sRb4zzUAh8B13/z/lrGdJDmwAwFxska2VzVW/bEDWUdh4wVDGYyKwC13tNdZ4EA6Uftea4GJL4w2TuAbYL8=
+	t=1792141086; cv=none; b=WSmeUYAbb7GbIlpwr4P52cOqIh8EW7qnHoWZ5FT55K1+tFKN2u//W8+30qGEm4hgCe0cW+Wh3jMNIiDC7wIeVq7Czdb9Ro9k/H7UL6A/3EKLxCf07adjVRQluZD8RXufFGKyiurbolejWmkx36Fk3ulvU5AXj++nipykTomrQNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792140936; c=relaxed/simple;
-	bh=khkxtZWCOnDlDDJhV4ExhPjS1Qusd0nh6hCeTeRsCXo=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=KojcTmvqZwbpgJwDl+rgnUtvaGvQJbqLOw6xmUROPi4Oep/aSSMIxvXrdt9+kw9oflrVC2mWLg5NV6JfXNRFrXEnSotZ5CwT32nKv2jdSUvAxZAZ4ivXvFtdEg3UkLk3pMwaoZKxEa8B7wS4n0dZlyDSDfPQUstxGrdcyDmwG60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937AB1F000C4;
-	Fri, 16 Oct 2026 08:55:28 +0000 (UTC)
+	s=arc-20240116; t=1792141086; c=relaxed/simple;
+	bh=ddwXXS94V1hYrv1+iJwdR5Vr6S9+vc+haoqBYE6HjBY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ES7fPOumjbVBo9JcyFA384J2f8dVkpV+x4E9hY0zUy1FERVw7jIFYmci2gNwSP7NU8QoijX7ckM/sptNEPenstHf+o5YVQNuaq22RyY7NpbPd3k134y0V0/jIuQIe70jHN8vYHP2it0CbuNZ8vWB2skeXL5krkrEM4PKtbcCIj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AyTEVUcn; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AyTEVUcn"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4a1880e1bf1so26469225e9.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 16 Oct 2026 01:58:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792141083; x=1792745883; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=1iCpWI4gds7IUpWviVdywbLiMJoOXNKnvhlY7AZVvYE=;
+        b=AyTEVUcnc3KijcjvdhbX93xnf86X0HtBmMz9zJMViHcKL7x1MPLFgEClZr/2o0AutM
+         6UP4HaTRsSFoCH/o8sG1l5YfdcX91bRC1dY6aDxHHiNtsGhlry9LSFYtw/7PNcjeXGjg
+         DK4FhNAje0hn7Njk3q/Dz2teSzOMNJcDLROuJ2MPtv3ZA76OsKVzh80hhI3n4NGauAkU
+         2sDK288DHa4rMtY/Emmo+Yab+BbeErxBfM3LDnB4bsOfkmRXY6WUib8wr9iirNxFA5Ow
+         ltYAXZCGd5qtWnZjU79FrCWAZ6Nzxhx0RlBjvUwozigPsQzpR9be7AU81a9BudVaz8KU
+         DiIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792141083; x=1792745883;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=1iCpWI4gds7IUpWviVdywbLiMJoOXNKnvhlY7AZVvYE=;
+        b=DM6JZC0SBGTMTrOBpDCcbc6qfb2XYqLpgif533ns1GLMPoVP+/oChbFCOVNJ+gi+EH
+         wGXmVSSiccx2ZYLtV8TzkjYwfdX52eYd79BGmFjPanoa0YfuiEc7Hdaid1/ucLZdI5x0
+         KlcK7cJtuSm1avq7U9J5tilFa0ExPuz+QJd4XJCQ6dCDTcBiJMnpmi1Z/K9gxKkN+hMj
+         aPnjJPaGKPZD/gcJQ5PD+hkiRN4MkkrdpPDCzIYP6ylGdDnNcnreg7NQ3hQxE0fUg3bC
+         ZipuB4sjebIdfTOvt7KUz8ZqHcUutkWX5IWvoBMkJM0WYmymtPMO8D7KyPyLVzGpChzj
+         6uPQ==
+X-Gm-Message-State: AFq9FYKSDdij4nGHc/gDugSMPOPFFbAn4xJfUJ/CklqL/5UFDOLG6/Yh
+	iKZOsFkgt6wJzoWD/1todM3yWzMTRPyW5CARH6RoUUj6GG8mMXKgaFehFXEvJg==
+X-Gm-Gg: AYBFou2C8eN48hoBVsUYzLMVvBk9ntcYwkHIAhbbARk+gmZtrIRYEaqpWZqjYBxfeB7
+	zRl1cSDlXiJasEGK7ft/ksxu+jYFQv+HZtwi/9vyTZsFxPxWMpAZDUx7983M8W2DHWyhM/GY/XW
+	Hl3JLytrQ1YySWOufM06m4x1GJ2NGeTNwRogm+RDGmr2p7hLSrHuu3YFfXViibaltas7/CeTYDu
+	Op2iuPIRvqonsjbg40VzAHV47wEGZXIMnG0eu1CKmqklBcUfzdDYJFsoV6fwGkSI5wwhFX/VIaC
+	b7ZjY4bSsvxTdWXX+GTK0AqsvDb9/SRBrqt7HIuy2MbhXLhT54vm42pbJEPglusCp8d2Xp+yfBn
+	suOpvefaJ412woOLjIG3UYAogqI54537h2sWq1pSxB/XmJ8Er5ORbwM/2CzhbFdOyCfWwc/ECpI
+	SX53GrXAdoEh24hDqAHJKSHCf0uFbWDCRlZ/Ca9Nu0XghphuGr1CU1y38MCF75+d2SrX/wAXBDs
+	Fbf6d0DlG4CJyEL0962ydhC2hdjxxY8jL18jn8cfbSlrCYqkoCjkq3QhVcYJHav89rwcbmJLTBK
+	RWzYZBTRloqtcSvmSeeJWfGzFrpK
+X-Received: by 2002:a05:600c:a01:b0:49f:ce72:e931 with SMTP id 5b1f17b1804b1-4a18e4fe3e1mr454263055e9.35.1792141082627;
+        Fri, 16 Oct 2026 01:58:02 -0700 (PDT)
+Received: from Lord-Beerus.station ([93.66.71.207])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1c8ce32absm27971455e9.1.2026.10.16.01.58.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Oct 2026 01:58:02 -0700 (PDT)
+Date: Fri, 16 Oct 2026 10:57:58 +0200
+From: Stefano Radaelli <stefano.radaelli21@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, imx@lists.linux.dev, robh@kernel.org,
+	conor+dt@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH v1 1/2] arm64: dts: imx8mm-var-dart: Enable WM8904 DMIC
+ input
+Message-ID: <atHnFpMVpoumQ4UX@Lord-Beerus.station>
+References: <cover.1792139809.git.stefano.r@variscite.com>
+ <5309337578f99886c804c8e4ee82643574f1c19c.1792139809.git.stefano.r@variscite.com>
+ <sashiko-outbox-174034@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v5] PCI: rcar-gen4: Add missing PM ops
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Marek Vasut <marek.vasut+renesas@mailbox.org>, 
- wsa+renesas@sang-engineering.com, linux-pci@vger.kernel.org, 
- robh@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org
-In-Reply-To: <20261004013131.0C7D81F0089B@smtp.kernel.org>
-References: <20261004011851.866833-1-marek.vasut+renesas@mailbox.org>
- <20261004013131.0C7D81F0089B@smtp.kernel.org>
-Date: Fri, 16 Oct 2026 14:25:06 +0530
-Message-Id: <179214090624.63727.1877053108500595755.b4-reply@b4>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2086;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=khkxtZWCOnDlDDJhV4ExhPjS1Qusd0nh6hCeTeRsCXo=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBq0eZuc7B1lcdRwuLAxWowartnfBFByfwhzSYgB
- aMiRiL+orCJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCatHmbgAKCRBVnxHm/pHO
- 9f/NB/4/euPK6H+vg84xq+Wke5CyWAutjlCCqIvhhZkMSbkPn0CheAK5476VuJhOUkYkLnDbE8T
- Wo8holnuEL1QjuhzpCgFGup6/JKhcbUKTZkiqfp5vC6hMP4Uhha3IJwp81r/daEP9SpKpOZ9Mie
- STavwGzkq01+u9tKlRF5UvwYRHQtph58ISw81dToqzJtHe60UAv9YvaP5j/HjpK14I8ewCgY2q6
- BV0/2sxRaE7W1CfgCYCzpoId/5HJ01MvZ2ajpdMfuPUPIiZaBbRMwXPnN5CdNIRAB6QV2lFodap
- ziswAJK2IDZ3/njqNOFNjUuYSSGoga+2IEYDgqA+l3uQA2se
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-174034@kernel.org>
 
-On 2026-10-04 01:31 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] pcie: deadlocks due to ioremap and request_firmware in NOIRQ PM phase
-> --
+On Fri, Oct 16, 2026 at 08:49:52AM +0000, sashiko-bot@kernel.org wrote:
 > 
-> commit e6c055f1eedf6bd5c13e231da24f0c6a76a24ba2
-> Author: Marek Vasut <marek.vasut+renesas@mailbox.org>
+> [Severity: Medium]
+> Does this patch also need to update the simple-audio-card,routing array in
+> the sound-wm8904 node?
 > 
-> PCI: rcar-gen4: Add missing PM ops
+> Currently, the routing in arch/arm64/boot/dts/freescale/imx8mm-var-dart.dtsi
+> still maps IN1L to "Microphone Jack":
 > 
-> The R-Car Gen4 PCIe controller needs to gracefully suspend and resume its
-> link across system suspend/resume cycles to support power domains shutting
-> down. This patch adds suspend_noirq and resume_noirq PM operations to tear
-> down the link on suspend and restart it on resume.
+> 	sound-wm8904 {
+> 		...
+> 		simple-audio-card,routing =
+> 			...
+> 			"IN1L", "Microphone Jack",
+> 			"IN1R", "Microphone Jack";
+> 		...
+> 	}
 > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> > index 2e7a8d85c0060..fceecbd16355c 100644
-> > --- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-> > +++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+> Exposing an onboard digital microphone (DMIC) as a "Microphone Jack" causes
+> semantic confusion in ALSA userspace. Audio routing daemons like PulseAudio
+> and PipeWire use widget names to distinguish between built-in microphones and
+> external pluggable headsets.
 > 
-> [ ... ]
-> 
-> > @@ -1062,6 +1064,26 @@ static int rcar_gen4_pcie_ltssm_control(struct rcar_gen4_pcie *rcar, bool enable
-> >  	return 0;
-> >  }
-> >  
-> > +static int rcar_gen4_pcie_suspend_noirq(struct device *dev)
-> > +{
-> > +	struct rcar_gen4_pcie *rcar = dev_get_drvdata(dev);
-> > +
-> > +	if (rcar->drvdata->mode != DW_PCIE_RC_TYPE)
-> > +		return 0;
-> > +
-> > +	return dw_pcie_suspend_noirq(&rcar->dw);
->                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> 
-> [Severity: High]
-> Does this code trigger a deadlock or kernel panic during the NOIRQ PM phase?
-> 
-> Setting pp->use_atu_msg to true causes dw_pcie_suspend_noirq() to eventually
-> call ioremap():
-> 
-> dw_pcie_suspend_noirq()
->   dw_pcie_pme_turn_off()
->     ioremap()
-> 
-> Since this runs during the suspend_noirq phase with local interrupts disabled
-> and the system frozen, ioremap() allocates memory with GFP_KERNEL and may
-> sleep, which is strictly prohibited in NOIRQ context.
+> Leaving the newly configured digital IN1L input tied to an external analog
+> jack breaks userspace jack detection logic and presents incorrect routing
+> options.
 > 
 
-What? Local CPU interrupts won't be disbled in the noirq phase, only the device
-interrupts will be. So this concern is utterly baseless.
+“Microphone Jack” is the existing DAPM widget name; it does not select
+analog operation or enable jack detection.
+This board does not configure microphone jack detection through
+simple-audio-card, so I do not see how retaining this name would cause
+the reported userspace jack detection failure.
 
-- Mani
+This patch adds the missing IN1L DMIC configuration.
+The same configuration, including the existing widget name and routing,
+is also used on the Variscite DART-MX91, DART-MX93 and DART-MX95.
 
+A more descriptive widget name could be considered separately.
+I would prefer to keep this patch focused on the missing DMIC property.
+
+Stefano
