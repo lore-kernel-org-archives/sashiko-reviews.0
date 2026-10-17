@@ -1,114 +1,202 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-yx2-f5.google.com (mail-yx2-f5.google.com [74.125.224.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4696B394797
-	for <sashiko-reviews@lists.linux.dev>; Sat, 17 Oct 2026 14:53:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792248793; cv=none; b=hFpQgeBsjNFxhyYBDgLE4deecTABPaIQ/Sb2+Hli7FLXwRvRTddy7p3L2xh9FWPNqFqDnILpEyY3r5QV/zSCat9Sxu4yINA69vGCcp6pWSlJpZ77Y6JIUmwHC/B/sgnnYZon2Qjdlt8aZYAo/r2ZPxmp2PuRcMNAT5E9BvxLBHY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792248793; c=relaxed/simple;
-	bh=Fvka/I8Qk9HOFH62SbLDTdQOv+/n4Lr6xbNErwQYZ88=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=S3/rX6XUIZLNUhddkUI78dis751BiihQvNtkYRI+Uy8YPDDbY+p+WhWPmklzPZ0UoqKiYjaS0xeBoAEHS/jL1RaApakro2UXf25wkTIsYUfaFvmXEviYTMkb0NwhdwIgtvupc1xDZf+9IGxrQQoLhgChcblvAqVU2fbCdh9p8XY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=K+IVm1Yx; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9D54CF477
+	for <sashiko-reviews@lists.linux.dev>; Sat, 17 Oct 2026 15:47:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.133
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792252054; cv=pass; b=JcIu/M/mQV0xR6vkOtxvZ4eZ9a8GqscQ6x87qRSO9WByf3QcDTcqrBfLa7QpZgNoBZOTGnVqlzwi96/rGGLmGtZViVho31NgyljDvMbjmxJQiDrZsIlsIDM6QFe3yDgIjs9vHLEtVih3M+fyqYkL5ExAU9fdB/scssYDfRVhnF8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792252054; c=relaxed/simple;
+	bh=FkQ9BGkZHIzSl4f7BgvwtqJKV8JaoQHfTjDdIqgPD7M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kpSB7B504BZzl5Or8vj4o/mJJrriyjjAt3cOLqmNVErBDrYKWFgxzi/qxIT6sb2FLRsIHUJzQky5eIeh2sOsCcHmjNAvs8k+DGTdS3BS8BWSIzEcKMfjKH3Y8BebxiAfKMB8Uvea7z95/7j+yfiGMq1tzBmW3k4sg7bx3ZtQ2rw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xs9/QiRJ; arc=pass smtp.client-ip=74.125.224.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="K+IVm1Yx"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4a180fbeef5so6235755e9.1
-        for <sashiko-reviews@lists.linux.dev>; Sat, 17 Oct 2026 07:53:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xs9/QiRJ"
+Received: by mail-yx2-f5.google.com with SMTP id 956f58d0204a3-679b519c952so463868d50.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 17 Oct 2026 08:47:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792252052; cv=none;
+        d=google.com; s=arc-20260327;
+        b=NtiXVl9oN/WGO+4NZyt+CdIXT35bZ0GF6yOTPPgjIe6LYuQKdL7Nedaz1/R/v5Jr7H
+         ziP5Be4FkiZq7hnbowOOoykJvu8lgyyVwqyAfIqoeN4FrSqdLysMHc/9dhqHeN2GR+R2
+         yqBmJv5bu/4Mcrz4AIlRag/Pbr0UZjx05deDywcMjeujkyq6F54kI97YT8x3U1ql5xXG
+         1tk37swjbR1ZK4gOm2s/ycVY09S4Wwwd9JajwoYCIMa5F91+cZfePOJMKOXnWDcMbcss
+         sfbif4ykkONS0eINs2TXSlF2Jif27pLc488IgLvqThC8Xx49nmBog8ypQRm/zdfpQbvo
+         9DuQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=nNQifjQfUVeridTllt8o7j6cyBjsZB7T3T0FO5TofVs=;
+        fh=IuYKpnmqOzg4sYa6UvzMnXHGhbs824nW/d3eWFJPaD4=;
+        b=KWlJCt15e5xyAGXHHPUY9TKAEXXCaaSsmnAR3xRaDY5nY1edc8BTfhdqrNs6RNXztC
+         WcDCxI2gvOd9UZJV5ziPHf6iZapF8GFF4B2XsShwHhhVb4XHKEJ6pxBRGB7KNepWiE5a
+         eaNdtLcqXBXXqo2byNU5nqH/GLZKVegdDRdsz4lDsUjuzlf+Vw/fnCT7Glc8PHRgMM68
+         fFiUxNHwEgYidTMK3lvACh/D3mcyqzb9mBqblU2+8SjNIPn1lNLlS1p/oAzRo1knV103
+         Az/AIcRG1IIVCOKcZl05mB+JmM5D6GCOxHiD3JfICeOFLFsj4e8m5gVH2SJbrcwhKMby
+         VNWw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1792248789; x=1792853589; darn=lists.linux.dev;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
-         :content-transfer-encoding:content-type:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=+66VnjPF/YyVU7Vru1kQeXTRwhm4W1VNOEJvI0QSylg=;
-        b=K+IVm1Yx9EXK/HK8fG+yXLEcF2a5SKT2ievpvKmUmz/0hHqIG+r5LFJ94hCD/eUaJ7
-         j+27JtGvvHa9psvg4GkMLfxuBNycFtM2fIDozyFsMDpoa5PXbhRFIU87yI9E9vRlZdAf
-         QG1rOPLDu//I6gNM7L4fBgxmo83SL9IMe4BiKt+a0THRefwcS6I+cM792CWM0JskEJKv
-         PL5UT8CJDn3I8p5746JONeUBxnewGkhz8eqEHS5UrUxNPOpQmwm2UNI9ME4T6wkR38oz
-         U9s9AzqRE6elpqf2rC1r8WtWbfbU29ox5APkPyg0zhSF0inig0+t/E0Vbf7RnLiBIsGB
-         EhlA==
+        d=gmail.com; s=20251104; t=1792252052; x=1792856852; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=nNQifjQfUVeridTllt8o7j6cyBjsZB7T3T0FO5TofVs=;
+        b=Xs9/QiRJsJUGDavH5HN//59YIBfN6I2dWWEND4B2xAnEow0K3cXhaY5sivyGJAxVHb
+         9LYrHgAMMtiRPWhTgZima3vDjjLCO62nSJM+bwmHdROeBmQNbfD7AOvYJuvQIWpPfqj5
+         nTTcsQAMbXeRTTyLABoV5/75/VXXvmWQfgkT47d+isu1/d57720C01joKDDJpY7uUaDu
+         6rdQJbWZT3TqsX3wRfync/GI4+I4Bzj1GvjBqGVqUBMhDIxSzXtEafsjZmqrESdiyI6c
+         8p3mg8jgZliiOHlLyqd5ZAjuE9xPvAKE6suyjLgZ7W9qM+kVzEdjG5lP+BOm49FGb1Dy
+         77Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792248789; x=1792853589;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
-         :content-transfer-encoding:content-type:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1792252052; x=1792856852;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=+66VnjPF/YyVU7Vru1kQeXTRwhm4W1VNOEJvI0QSylg=;
-        b=EbOrkqx/77Xum5nnY21Ef6S7H20GpJNa8ZBZKQyBrEDKuirFWs9w9ee5VUXN8r4j3F
-         Ry/YtjdzJ/F135M9W4Al7b3Tu7NRjbat/1MD/2pfNGrWTEpcHHiAWnaIEgtcGkspXA9E
-         OXjtnhWfQShc0f7CJEugHPOHhEEd7t0jiQPvw/5yd1NTudLq2dMzhJs+mcuS/8iYuNwq
-         or4VhbWnZpk3deKeNWJbUv+eHlHdf5xT820JPxAlnXGoqOi4bAotYYIuIh5QCeJ1OEbv
-         QsU2+F6mCmd54qz0efAGT/r0HRlFIB1za8flsdR9SzVHGI1VxljbpQJDSn0/tmofRgCP
-         tVMg==
-X-Forwarded-Encrypted: i=1; AKwUvBxZOHso7mRytW+tHaV+/eKGKG+45R213PsO0Ged0lfMZFn+6ei78nofj881bQo2p/844F781H4wWNhRn4Ih5RA=@lists.linux.dev
-X-Gm-Message-State: AFq9FYKsPhqc5GIvZO3uyaqo4ForEVj641heu1iOzZHjCYNPiwLxSBMu
-	fl6ky/MNqZ+cbvxIJkf7vPe6WVYtiwCDvEN31axWj49kWeq14jZvj5w1zPW4C6cxihQ=
-X-Gm-Gg: AYBFou05MYy+vOzQwflrMzzWDIKuXQ5z0oq7RtVr3e70kGXSVshllZWylVZwNY4+Prv
-	v+W4jMc/4xTZUoibbKQ8Se40KlzGGSMvG5jE0rkWYagKJZzYudqC8vfqv1+11YBeH4PDt6rb2mj
-	fkKyMWbNjM1tsVI3nLj1F5FBJs8INPTSWbHagdpqMbeWZ6KU4vKFKCDvqMGefDPdDOSM3zHKzvL
-	qTsQ6moQ/wNSlpeay0f3dwyEFR0DH/bXT2XKgV9ZJscjgx5ADFPmhv0aafs1g6HO4rfJ5dvyWu9
-	b1l0KC+Q9fSiGn3GTj+BHeBwHUzcJpRpkd2PkTfstDTuOIWnFocgmIv1GW6VDZyVMcjRsUTPd7v
-	s7ZS0MfC2EzmpjQLxvtk9gmG8/FdccCrHTO/s4oJhF+A0bEV9l5eUrUyEotZVwiig02AmwOj2uN
-	Q6KGcO7+T7HlwS5oDP/GBTyDSFEZ552h0S8Q6kwuVMTe54rjXmFJEUChKEcDip7IjFhY5yHDHF8
-	1XMFjgoAEtAHEPfxQ==
-X-Received: by 2002:a05:600c:81c8:b0:4a1:9661:14b5 with SMTP id 5b1f17b1804b1-4a1d7616576mr55179145e9.29.1792248789113;
-        Sat, 17 Oct 2026 07:53:09 -0700 (PDT)
-Received: from localhost (82-67-6-57.subs.proxad.net. [82.67.6.57])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1cbedb6f7sm148500265e9.2.2026.10.17.07.53.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Oct 2026 07:53:08 -0700 (PDT)
+        bh=nNQifjQfUVeridTllt8o7j6cyBjsZB7T3T0FO5TofVs=;
+        b=nCp8qyUN2LwpaVzhFzAEYhM3+Q+QYHHIHuk54MBmCvhb5w269mNjUx48HWlJWBP1XA
+         mW43b0Oev1lQdzF3t45eCTJpO9OgcpPg99Mg3hvGzFR0/wQ2t+krj2/H8Tvrd+GuU1jU
+         KJoOlYLPM10w8w7GdqpViJpDlOnwuNDhuyBJQdYHoadoqzJt28XvCKv6HtV3aoBvq1q0
+         8RPfwPY9SnTPHO48QY7yDAe6pICxrbQtvdaL1Jaqr5Pas41Ohl0TIuty/XVOzrEspxqT
+         18h/fKgEhSWxqSpV+8PA5qhKs95zikXoP656nu2oKqgZcb8Gce2/rTZSUTMuqx51dC8g
+         lM3w==
+X-Gm-Message-State: AFq9FYImWgp+thfS+Lbvmh49BnseIRCf3tqGNkPSOBxn1q6ZWMcnwSQk
+	+WXaknLeN5g+eeAt3DQ5Ax8zYmZvKFXeqp3V8Hlq/7NRM+shNNbiFvQvmVC2biD6+7vSE8Yr/KU
+	9c6NbOIwrF2CdxPhcXOBwJyBzTHRRKbERf7ZReiJULXFXLvY=
+X-Gm-Gg: AYBFou2ERdzPP+nbcIf2LC60CBWScEiXIccQ+BVMQ1fFht64Ft6TOoy/rIpqI9OVIbL
+	BmN+w1ZpEl9ZalIKjOBUyz8kr0G/NryWO2K7J2rb+k/cfvdlGpvIgP4ZNfvaCsXQAWzPPM/DsYT
+	Wtk3cFOsdPDTbQKmt9g3VWB9Nq3NeJHM0WJTMW1BardV1m3TKK2z6LxAoscpuc9nqhCkdi8Rzkn
+	3CLS92N8Poh+ACcxREE2dE4bQVxd0Nwss18tIYW9CnMDNNuFJxgLX1sD+OhAxngQNS9iIC4kRsa
+	VbDNepPoplN3PGyEscvNTvJkzsDfCDWwT9EM1GK3cfMcHkv1jncWsvDfTQJlrAcrfXEdJuHXMuw
+	AvWKAVVoz5NOJVJLbMQ2+TDsoNzNhi7ndZ3E=
+X-Received: by 2002:a05:690c:a686:b0:8b0:e238:271e with SMTP id
+ 00721157ae682-8b0f2245dddmr7527327b3.105.1792252051731; Sat, 17 Oct 2026
+ 08:47:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v10 04/10] clk: nuvoton: ma35d1: Reparent the gates
- correctly
-From: Jerome Brunet <jbrunet@baylibre.com>
-To: Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: sashiko-bot@kernel.org, sashiko-reviews@lists.linux.dev, 
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
- conor+dt@kernel.org
-In-Reply-To: <877bjivrf5.fsf@bootlin.com>
-References: <20261015-perso-ma35d1-upstream-clk-v10-0-47c97b54a809@bootlin.com>
- <20261015-perso-ma35d1-upstream-clk-v10-4-47c97b54a809@bootlin.com>
- <sashiko-outbox-173157@kernel.org> <877bjivrf5.fsf@bootlin.com>
-Date: Sat, 17 Oct 2026 16:53:07 +0200
-Message-Id: <179224878757.859276.836775392883899374.b4-reply@b4>
-X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=909; i=jbrunet@baylibre.com;
- h=from:subject:message-id; bh=Fvka/I8Qk9HOFH62SbLDTdQOv+/n4Lr6xbNErwQYZ88=;
- b=kA0DAAoWrRk/eyua5RcByyZiAGrTi9PIr3jXzkL3hPmoR9xxFK/1/LlW3qSqHNJrkRmkyxJ0Q
- 4h1BAAWCgAdFiEEfAt7F+4ZKvSalyzbrRk/eyua5RcFAmrTi9MACgkQrRk/eyua5RdugwD/XtK0
- ki15jlcgtzwga2FiiBGlGPxqB3vuFhbG5OxU+zMA/27a5Sk09wWvbJM3JiKm9WZLUwkc6mDyoYu
- dFvDeCKsB
-X-Developer-Key: i=jbrunet@baylibre.com; a=openpgp;
- fpr=F29F26CF27BAE1A9719AE6BDC3C92AAF3E60AED9
+References: <20261015143426.17620-1-jianyungao89@gmail.com> <sashiko-outbox-173003@kernel.org>
+In-Reply-To: <sashiko-outbox-173003@kernel.org>
+From: Jianyun Gao <jianyungao89@gmail.com>
+Date: Sat, 17 Oct 2026 23:47:20 +0800
+X-Gm-Features: AclHuK-luv-4iS6ShmJC3j8p42V2H0JsHrQsaqIcsGdvjv-_S5wN9kY6_ueRbgk
+Message-ID: <CAHP3+4CKXV6sUHg2yCKHADA5E53Jz=8y+SShvgp+g8G8Ujpiew@mail.gmail.com>
+Subject: Re: [PATCH v3] dax: fix wrong error code returned from dax_dedupe_file_range_compare()
+To: sashiko-reviews@lists.linux.dev
+Cc: "open list:FILESYSTEM DIRECT ACCESS (DAX)" <nvdimm@lists.linux.dev>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2026-10-15 18:50:54+02:00, Miquel Raynal wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Medium] clk: nuvoton: CCAP muxes registered with 1-bit width but 4
-> > parents
-> 
-> This is a pre-existing issue. I will wait for the maintainers to comment
-> on the rest of the series. If they ask for other changes, I'll include
-> this to the next revision. If not, I will send a dedicated patch for it.
+Thanks for the review. You are correct that dax_range_compare_iter()
+has a bug where ALIGN(pos1 + len, PAGE_SIZE) passes an absolute file
+offset instead of a relative length to dax_iomap_direct_access().
+This causes dax_direct_access() to request a massively inflated
+nr_pages via PHYS_PFN(size).
 
-It is too late for cycle for this cycle and I'll wait for rc1.
+This is a real bug, but it is a separate pre-existing issue from the
+error code propagation bug that this patch fixes. I have already
+submitted a separate patch to fix it:
 
-Best would be sent the next versions without the DT stuff, so we can apply
-the series using the cover as merge description . It makes it easier for
-us to then provide an immutable branch, should you need it for the DT side.
+  "dax: fix dax_range_compare_iter() to use correct size and address offset=
+"
 
-You can fold pre-existing issue fixups in your series if you want to,
-or you can send follow-ups later. Fine with me either way.
+That patch:
+  1. Fixes the size by computing ALIGN(len + offset_in_page(pos),
+     PAGE_SIZE), matching the pattern in dax_iomap_copy_around().
+  2. Also fixes memcmp() by adding offset_in_page(pos1)/
+     offset_in_page(pos2) to saddr/daddr, since the returned
+     addresses are page-aligned starting addresses.
 
--- 
-Jerome
+The two patches fix independent bugs and can be applied separately.
 
+Thanks,
+Jianyun
+
+On Thu, Oct 15, 2026 at 10:53=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] fsdax: incorrect size parameter in dax_range_compare_iter causes=
+ massive direct access requests
+> --
+>
+> commit 65ff21563702a9036c338f4961a061d5c576d038
+> Author: Jianyun Gao <jianyungao89@gmail.com>
+>
+> dax: fix wrong error code returned from dax_dedupe_file_range_compare()
+>
+> This commit fixes a bug in dax_dedupe_file_range_compare() where a positi=
+ve
+> return value was incorrectly propagated on failure. It now correctly retu=
+rns
+> the negative error code from dax_range_compare_iter().
+>
+> Link: https://lore.kernel.org/lkml/20261012144925.6728-1-jianyungao89@gma=
+il.com/
+>
+> > diff --git a/fs/dax.c b/fs/dax.c
+> > index 08adeaed2baf1..97b6212bfa898 100644
+> > --- a/fs/dax.c
+> > +++ b/fs/dax.c
+> > @@ -2254,7 +2254,7 @@ int dax_dedupe_file_range_compare(struct inode *s=
+rc, loff_t srcoff,
+> >               status =3D dax_range_compare_iter(&src_iter, &dst_iter,
+> >                               min(src_iter.len, dst_iter.len), same);
+> >               if (status < 0)
+> > -                     return ret;
+> > +                     return status;
+>
+> [Severity: High]
+> By correctly propagating the error code here, does this patch now expose =
+a
+> bug in dax_range_compare_iter() that will break dedupe for large offsets?
+>
+> Looking at dax_range_compare_iter() in fs/dax.c, it appears to pass an
+> absolute end offset instead of a length as the size parameter to
+> dax_iomap_direct_access():
+>
+> static int dax_range_compare_iter(...)
+> {
+>         ...
+>         ret =3D dax_iomap_direct_access(smap, pos1, ALIGN(pos1 + len, PAG=
+E_SIZE),
+>                                       &saddr, NULL);
+>         ...
+> }
+>
+> When dax_iomap_direct_access() receives this size parameter, it converts =
+it
+> via PHYS_PFN() and interprets the massive absolute offset as a relative
+> length:
+>
+> fs/dax.c:dax_iomap_direct_access() {
+>         ...
+>         length =3D dax_direct_access(iomap->dax_dev, pgoff, PHYS_PFN(size=
+),
+>                                    DAX_ACCESS, kaddr, pfnp);
+>         ...
+> }
+>
+> This requests an out-of-bounds mapping length from the underlying block
+> driver (up to pos1 + len instead of just len), which typically fails with
+> -EINVAL or -EIO for offsets that exceed device bounds.
+>
+> Since this patch changes the behavior from a silent pseudo-success to an
+> explicit failure, will standard deduplication at non-zero offsets now
+> consistently fail when dax_range_compare_iter() erroneously asks for an
+> enormous number of pages?
+>
+> >               src_iter.status =3D dst_iter.status =3D status;
+> >       }
+> >       return ret;
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261015143426.17=
+620-1-jianyungao89@gmail.com?part=3D1
