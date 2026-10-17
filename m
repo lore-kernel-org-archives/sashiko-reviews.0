@@ -1,108 +1,137 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from szelinsky.de (szelinsky.de [85.214.127.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E433C09F3;
-	Sat, 17 Oct 2026 21:41:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000F84CF497
+	for <sashiko-reviews@lists.linux.dev>; Sat, 17 Oct 2026 22:45:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.127.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792273294; cv=none; b=j/6wo+QxRxrtt0eKWy3PIASle0tLY6/V04IrIwO5L4BTpY5VHI60ikQEvwoOt1d9Nr4Ai68akUAo69nyRR6OKTwOrVPWIoEDWSh5IkdpU958AmWXEKOJyE5I0lORvoF9a6Pnm/ib/HP/3hWJcfDaDbMdLcS+bAiGc45ZL6GPbis=
+	t=1792277128; cv=none; b=bSeya1OecE/5ghZ3vItWDziRC1Uk4wtAyWm5h0avAnt3Vp0/TA1qBRwAQeUOQtNimHQOq8nNl52G2AEW9gtERz6Ao1zWEXf5w+fy+I5RSioNsHoObyeXM5BCpjdOU2lNpaqVi1JoWinDJrFXH7sEUobzyg8llB3ekNaRRLQY4hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792273294; c=relaxed/simple;
-	bh=yrFSkbmPM7KZ/xxHynh2ZC9G2eYqjOtBq3kwOJx4aG4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gzz/HD8wlGl9QFUrP2CdbApTsLu1gfFgWST2SrIuZZdMVEDi6DWAOOyygDLRSABQoisHKmr77PzMncpYZC6kjFdbZZ213UjN8y53UEzxWFV/toDNj+5Y+tetXbZIAe6jxnFAWD4+UZSO2zpo5NcXfL/pUbfVPoxo1EgFx3sBp/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KMg0czHU; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1792277128; c=relaxed/simple;
+	bh=bEE4PGpaZkZIAz7kZPNKajDa+gw9u8hFXd/FZ3+DSKI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=YVK3NcDJT2gRO+IPxkqJaQYkcl0dhrvCw8IVFaKjYTtEuPT7CLGMMzLhwcenV2IK+y5tPOs/UMsFMLEQYcTSpf9/F9tmYAFn+uELJiVRXJX8w8r5xhCfvDAWbyCa2U4pzVyq66Lcx2YSOJ2LrxNBpv9X8Z9Wpf0lpT1M1KkYVa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=szelinsky.de; spf=pass smtp.mailfrom=szelinsky.de; dkim=temperror (0-bit key) header.d=szelinsky.de header.i=@szelinsky.de header.b=VyrYyp2K; arc=none smtp.client-ip=85.214.127.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=szelinsky.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=szelinsky.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KMg0czHU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BCB1F000C4;
-	Sat, 17 Oct 2026 21:41:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792273292;
-	bh=OR6Niz5MdiTpwquqWCuq8lOuPJ4np8jeybekBLPpFBM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=KMg0czHUw/tZLrUsVEjuvV4z8PrCnDr6JKMIzfdNnNJlMUlK6YRkJe9Tw/V1GYX9+
-	 cdlX9iF/2mP7GsZkHq1t14Q5G8nChq5BXrogtk1HVWdpFn9chcS2eh33/LJyYF+Tyz
-	 CWr3barbTgLWRXP6GW4mxd+X7dy+3rybs39w3vo3WaswfB4geyzq2rFp5yZTB3BkWW
-	 IlJKgfIXeI+tm0MvWVG2aMr1Pw4DNEtop0dZtQ9B0m5UPO0oxlealZiKYY/ycohtK3
-	 iy8hyg2Hfvhl9J9CADva+MI133m+AYBPcUer6SptcmxFeXmxO/eZpaot3tL0v0ULdr
-	 uNnVolbeHbftQ==
-Date: Sat, 17 Oct 2026 14:41:29 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Dmitry Kandybka <d.kandybka@gmail.com>, Nicolas Schier <nsc@kernel.org>,
-	linux-kbuild@vger.kernel.org
-Subject: Re: [PATCH v2] kbuild: Makefile.lib: fix offsets generation with
- debug info
-Message-ID: <20261017214129.GA404142@ax162>
-References: <20260928105330.25427-1-d.kandybka@gmail.com>
- <20261015210149.78470-1-d.kandybka@gmail.com>
- <sashiko-outbox-174936@kernel.org>
+	dkim=temperror (0-bit key) header.d=szelinsky.de header.i=@szelinsky.de header.b="VyrYyp2K"
+Received: from localhost (localhost [127.0.0.1])
+	by szelinsky.de (Postfix) with ESMTP id E1C9DE83404;
+	Sun, 18 Oct 2026 00:45:17 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=szelinsky.de;
+	s=mail; t=1792277117;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bEE4PGpaZkZIAz7kZPNKajDa+gw9u8hFXd/FZ3+DSKI=;
+	b=VyrYyp2KdHTjwD3rSlANnh+VV0/+mKpvakYKnzvhSKj7kvaWBs5XXPFFZ4ziPU1PqEhNdn
+	3oRn61GHjzoqNkThNxzswSHJB4rdjOhDtvcVE+R+LgGlRDDPmcppcsdx5amEllQnlh0nUV
+	S5v7wI3MOEp1PnnzWNkEuBSiuzlF/tDlU0nXTJlPKQZkxZVcf9/vyy10V2Qgi7tARC3jXn
+	X+Ycf6h4DHtTPLJR3DkNJL/lK9OVYKEO6JOLIY7UfaZqX83BD1cDQIpw8knQqsR+udUxkv
+	0nSOLOppt372iHk5Uqwt62cs+xX+dUxMLBdDLpT8P1I7WaeaqHjBTjZB6Oyfcw==
+X-Virus-Scanned: Debian amavis at szelinsky.de
+Received: from szelinsky.de ([127.0.0.1])
+ by localhost (szelinsky.de [127.0.0.1]) (amavis, port 10025) with ESMTP
+ id 3xJJKWtduPqs; Sun, 18 Oct 2026 00:45:17 +0200 (CEST)
+Received: from p14sgen5.netbird.selfhosted (dslb-088-070-183-026.088.070.pools.vodafone-ip.de [88.70.183.26])
+	by szelinsky.de (Postfix) with ESMTPSA;
+	Sun, 18 Oct 2026 00:45:16 +0200 (CEST)
+From: Carlo Szelinsky <github@szelinsky.de>
+To: Oleksij Rempel <o.rempel@pengutronix.de>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	"David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Saravana Kannan <saravanak@kernel.org>
+Cc: Corey Leavitt <corey@leavitt.info>,
+	Jonas Jelonek <jelonek.jonas@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Mark Brown <broonie@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	netdev-bot+sashiko@kernel.org,
+	sashiko-bot@kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	Kyle Swenson <kyle.swenson@est.tech>,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next v8 2/7] net: pse-pd: fire lifecycle events on controller register/unregister
+Date: Sun, 18 Oct 2026 00:45:00 +0200
+Message-ID: <20261017224500.1526770-1-github@szelinsky.de>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <179122160553.434549.16806647504780466154@kernel.org>
+References: <179122160553.434549.16806647504780466154@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-174936@kernel.org>
 
-On Fri, Oct 16, 2026 at 09:02:07PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] kbuild: unanchored sed substitutions in sed-offsets can break build
-> --
-> 
-> commit 48672ceb9d59753178f125f7c16956dd57252dcd
-> Author: Dmitry Kandybka <d.kandybka@gmail.com>
-> 
-> kbuild: Makefile.lib: fix offsets generation with debug info
-> 
-> This commit fixes offset generation when debug information is enabled by
-> making the sed pattern matching stricter and adding a BLANK() macro for
-> readability. It prevents debug metadata from leaking into generated header
-> files and breaking the build.
-> 
-> > diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
-> > index 19e96b30a122f..173bc3aa4247f 100644
-> > --- a/scripts/Makefile.lib
-> > +++ b/scripts/Makefile.lib
-> > @@ -493,9 +493,9 @@ quiet_cmd_zstd22_with_size = ZSTD22  $@
-> >  # the .ascii directive whereas GCC keeps the <space> as-is.
-> >  define sed-offsets
-> >  	's:^[[:space:]]*\.ascii[[:space:]]*"\(.*\)".*:\1:; \
-> > -	/^->/{s:->#\(.*\):/* \1 */:; \
-> > -	s:^->\([^ ]*\) [\$$#]*\([^ ]*\) \(.*\):#define \1 \2 /* \3 */:; \
-> > -	s:->::; p;}'
-> > +	/^->/{s:->#\(.*\):/* \1 */:p; \
-> > +	s:^->\([[:alnum:]_]*\) [\$$#]*\([^ ]*\) \(.*\):#define \1 \2 /* \3 */:p; \
-> > +	s:->BLANK()::p;}'
-> 
+On Mon, 05 Oct 2026 17:33:25 +0000, netdev-bot+sashiko@kernel.org wrote:
 > [Severity: Low]
-> Could this unanchored sed substitution break the build under certain
-> conditions?
-> 
-> If the kernel is built with debug info (e.g., -ggdb3), the compiler may emit
-> .ascii directives containing debug strings from source code. If a string
-> literal from an included header starts with -> and contains -># or ->BLANK()
-> mid-string (for example, ->foo ->BLANK()), the unanchored sed substitution
-> will match mid-string.
-> 
-> Because of the :p flag, wouldn't it print the partially modified pattern space
-> (e.g., ->foo ), resulting in invalid C code being written to
-> include/generated/asm-offsets.h?
-> 
-> Should the pattern be anchored (e.g., s:^->BLANK()$::p;) to ensure it only
-> matches the intended kbuild macros?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261015210149.78470-1-d.kandybka@gmail.com?part=1
+> Once the net fix lands, will this paragraph be out of date? Could the
+> message refer to the net fix instead of saying that this commit closes
+> the race?
 
-This definitely feels a little contrived but anchoring at the beginning
-would avoid this and seems to match the rest of the macro.
+Agreed. In v9 the reordering is its own patch in the PSE core fixes
+series, so this commit message no longer talks about it.
 
-  s:^->BLANK()::p;}'
+> [Severity: Medium]
+> This isn't a bug introduced by this patch, but the error paths in
+> pse_controller_register() leak memory.
+...
+> Should the kfifo be sized after that default is set?
 
--- 
-Cheers,
-Nathan
+The leaks are fixed by the core fixes series. The kfifo size is an
+older bug; its fix goes to net.
+
+> [Severity: Medium]
+> This is a pre-existing issue, but can this disable_irq() mask an
+> interrupt line that the PSE core never owned?
+
+Yes, if the IRQ request failed. That is an older bug; the fix goes to
+net: pcdev->irq is cleared again when the request fails.
+
+> [Severity: Medium]
+> With disable_irq() now running before the event, can a port be powered on
+> from inside the PSE_UNREGISTERED walk?
+...
+> Is that case worth handling, or is the brief power-on acceptable here?
+
+The brief power-on is acceptable. The same walk switches the port off
+again when its PHY drops its handle. A port could only stay on if an
+earlier pi_disable() had failed, and I don't think that case is worth
+extra code.
+
+> [Severity: High]
+> At this point in the series, can ntf_work be queued again after this
+> drain?
+
+Yes, with only this patch applied, as the commit message says. The phy
+patch at the end of the series closes it, as the review describes.
+
+> [Severity: High]
+> This isn't a bug introduced by this patch, but can a shared power domain
+> be freed here while another controller still uses it?
+
+Yes. That is an older bug; its fix goes to net: the power domain is no
+longer devm memory and is freed only when its last user drops it.
+
+> [Severity: High]
+> This is a pre-existing issue, but at this commit, can PHY-held
+> pse_control handles reach the freed pcdev->pi and pcdev after unbind?
+
+Yes. The phy patch at the end of the series fixes it, as the review
+says.
+
+Carlo
