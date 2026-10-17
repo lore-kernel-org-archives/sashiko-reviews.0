@@ -1,95 +1,173 @@
-Received: from smtp052.goneo.de (smtp052.goneo.de [85.220.129.60])
+Received: from mx1.white.stw.pengutronix.de (mx1.white.stw.pengutronix.de [185.203.200.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6795D3C4165
-	for <sashiko-reviews@lists.linux.dev>; Sat, 17 Oct 2026 18:47:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.220.129.60
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792262865; cv=none; b=M/S7qSnX1NLgX3B9uMNVJ3bqzwrqubAAwkTH+y9s2iL/8GILT7JGTI6EQ7IpUAVo4Ae0n91TvOnzVlZCXPm5zlt/WNH3YxrvZHMCWz3MT8xZs5mnDFLHHdHg74U4SUlfVEU2gvRd73iDWejX7hpkEbYanZRGURB96BJ9yEAHn4k=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792262865; c=relaxed/simple;
-	bh=d70tjNajH7W5JdK4oZqTt5T71m6okE8yeOJdubvZaXE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=urdnxN4gHfFp25WNNQVrTt2EzPGLVTusS01S+0KZjdwD+TgfbNPx8Cb95jTFRxSfCg1PthCC5t4C8TZN80SVrFhWfQkenobPiN7c4j++RSkFLxkE19HnwS+8c0dYsd1UqdOM/djNTNXoQT0GXBJWfA8KHJF4wi2f2MXrMug/lKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tk154.de; spf=pass smtp.mailfrom=tk154.de; dkim=pass (2048-bit key) header.d=tk154.de header.i=@tk154.de header.b=hTCK7UBI; arc=none smtp.client-ip=85.220.129.60
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tk154.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tk154.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A92350A0F
+	for <sashiko-reviews@lists.linux.dev>; Sat, 17 Oct 2026 19:25:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.203.200.13
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792265124; cv=pass; b=tem/PCZddmI7SHG6k6Ah5/1HX7Ev+KXPmUlUSzkRGMKRUolBSlA8GwMra+oh5dyXSOSteqB7vkn+cBVVrS38F72w8pl+N54tyykeBj2DpTdyqeEyG3CzSPhD63RV6592UPM3HtCWIv/mFFjlIpHB/MTh8EkwpGWMeADuerlj7RQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792265124; c=relaxed/simple;
+	bh=p5hsZSUVQvyFz/Db0zpye9QMZ9iFq99QACjo/LBcW2k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d8NTktrFqb9AiAR/snPdScd3dr9f7Vp+Q282paA0ILrJk/Yy5TqVNXBlnoqROiu3FsTPpIsgAyfWcVgnLzqEDZFD3OvWW8bIT2iXa52Drb/u09zLJcyUZ8lxv6prgJXLpoy/SNPK+PSYRKKI+ro+gnMDL/ZLu9QhO6g6ftUJFAI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; dkim=pass (2048-bit key) header.d=pengutronix.de header.i=@pengutronix.de header.b=Lr9PBjBf; arc=pass smtp.client-ip=185.203.200.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tk154.de header.i=@tk154.de header.b="hTCK7UBI"
-Received: from hub1.goneo.de (hub1.goneo.de [IPv6:2001:1640:5::8:52])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	by smtp5.goneo.de (Postfix) with ESMTPS id 16D5A240B56;
-	Sat, 17 Oct 2026 20:37:32 +0200 (CEST)
-Received: from hub1.goneo.de (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	by hub1.goneo.de (Postfix) with ESMTPS id D41E9240114;
-	Sat, 17 Oct 2026 20:37:29 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tk154.de; s=DKIM001;
-	t=1792262249;
+	dkim=pass (2048-bit key) header.d=pengutronix.de header.i=@pengutronix.de header.b="Lr9PBjBf"
+Received: from drehscheibe.grey.stw.pengutronix.de (drehscheibe.grey.stw.pengutronix.de [IPv6:2a0a:edc0:0:c01:1d::a2])
+	(Authenticated sender: relay-from-drehscheibe.grey.stw.pengutronix.de)
+	by mx1.white.stw.pengutronix.de (Postfix) with ESMTPSA id 370512022D8;
+	Sat, 17 Oct 2026 21:25:12 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pengutronix.de;
+	s=20260414; t=1792265112;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=GZOw3LVxrwWnJzNeCV109Is8TVZT5XuQejH8TuHMcyk=;
-	b=hTCK7UBIpicVxtLdBBjUpewHOKqeVMujDrXyQ+N6huBg5QZz0jhOMi86o9mVHxATA+NpNT
-	zowSXvDrIkB42eBPCiso7qqtf5zlLjn/2EMRFlhWmbddnzLDmWSQx8d0UZ0273KyG03dLo
-	aKQS7lFS16mhCraYLMlOeaKQb+LtVY1lTCHAnBoEe7rP/yoOZqtzhc4MF5t7CrT90WJ8Ue
-	fjqvwT9GVB4uY6UnfeSkbFXLaDs72nRsYg+7AuD60PZobjJFveduuncUhxFkgSGaHvDgTA
-	0csS+acMDJDaR8dfMjYHXEyIULpCCktlqFmM04SAho65hjCG3kDgQpEyaYoaXw==
-Received: from [192.168.154.193] (p4fd55e66.dip0.t-ipconnect.de [79.213.94.102])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	bh=qpUBQn7R+ba4HbxKBHYpW/loFMEdRRnzpOJirxXrUso=;
+	b=Lr9PBjBfy6LeW35tUgoqKatos7P7UhVPhhzMZI/We8qOYrZ5eLgFIqHZw5oTzeKIYdSrmQ
+	2utBOiO9CbOPO3YhqdCAzUvxg0i1RDN3No6XN8OEeFgtFJ/PoDYENnkuWwYZjB9vVKME1m
+	qL1kHZpLunay1/vk40aHbFdLH/sYJYbllybgImq/KKu8pdqF73CnscgjblSq8xUCjYpHAi
+	hovu6u/1b8DwlLceFd3Im0yCQZNY6HbATomZPdbIcFw2LldSEdGsoa1iFCSfL+MunY4RD6
+	0BlZZvenAwozzpe2OTgLz0HShZ2o/Oj10yqCyDX/F0OeNWI6DV2z14CDcygq9A==
+ARC-Seal: i=1; s=20260414; d=pengutronix.de; t=1792265112; a=rsa-sha256;
+	cv=none;
+	b=BIccaqLe0M8Dg7NPtgN/sNqwHICLVmK20+IbM6zQHx62qhiSM4WxWN2ZGyONw3LdAQnOVu
+	gcHi9u3iur9nYo6XKNJ3YUArJlYUM+QSj1DCi+ye+RkcRVRLI9ridSMRgyZ1pVSyfntR20
+	qJsbS4F4456Hpkc8kTApie2NS9R/oVXSDeZvnKqyilr/1gMwgecHSq9+l8Y2guyvcWEvX2
+	+KROkp9iVboQkyBE8qoNxUrTd/kZNueBTZG92v6MDSeT1S4EXTtz9fhQLuueX6S67v24NV
+	LPehHWC97x/gBu3u113X1BxM5mv21sIn4yS2J+EeGb7IVTgyt1X/e3FxkZXa6Q==
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=relay-from-drehscheibe.grey.stw.pengutronix.de smtp.mailfrom=mkl@pengutronix.de
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=pengutronix.de;
+	s=20260414; t=1792265112;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qpUBQn7R+ba4HbxKBHYpW/loFMEdRRnzpOJirxXrUso=;
+	b=TT0NasdEFUeEnCz3/lzJS4zxZFgS0lpDcW/mxPZ1eM5uPWJKYp4CYKMDhxURg/7gFay1ut
+	zYWA37qgLQ9GeWXfboKvD6A6Q+0wzna/TIsPrvYHsKq0YJ708I0fsn2arO3VoBSIMm+hfr
+	nSzHoiJZEkWaWa7buy9tUh9NzxmcZJyFP2TyFZw8M+DJi96NgGAkBmnnnAF/E1hVqOTzQl
+	ZT/wM01xRmQvd79eyaq4zXOrSke/r8fdHIQE5qbl/1Pry9+vmz8dOb7OybAMyE4Hwr1g1g
+	Hbf3pYfmMotzjRUNQPhAPX4kWKz04nyJ5F6OxWGujG4e0OtBUjaYGnKvXzR7/w==
+Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <mkl@pengutronix.de>)
+	id 1xIA1o-006Snq-0D;
+	Sat, 17 Oct 2026 21:25:12 +0200
+Received: from pengutronix.de (p4ffb23c7.dip0.t-ipconnect.de [79.251.35.199])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by hub1.goneo.de (Postfix) with ESMTPSA id 75C2124010F;
-	Sat, 17 Oct 2026 20:37:27 +0200 (CEST)
-Message-ID: <c40f4d8f-223c-441b-901e-5bea5bcb612e@tk154.de>
-Date: Sat, 17 Oct 2026 20:37:27 +0200
+	(Client did not present a certificate)
+	(Authenticated sender: mkl-all@blackshift.org)
+	by smtp.blackshift.org (Postfix) with ESMTPSA id 2A5C95C6B3F;
+	Sat, 17 Oct 2026 10:10:22 +0000 (UTC)
+Date: Sat, 17 Oct 2026 12:10:21 +0200
+From: Marc Kleine-Budde <mkl@pengutronix.de>
+To: Filippo Storniolo <fstornio@redhat.com>, 
+	Jakub Kicinski <kuba@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, Vincent Mailhol <mailhol@kernel.org>, 
+	Oleksij Rempel <o.rempel@pengutronix.de>, Oliver Hartkopp <socketcan@hartkopp.net>, 
+	linux-can@vger.kernel.org
+Subject: Re: [PATCH can-next v3 3/3] can: add can diag interface
+Message-ID: <20261017-delectable-mackerel-of-calibration-1fad6d-mkl@pengutronix.de>
+References: <20260904-feat-can-diag-v3-0-bdcebf07b373@redhat.com>
+ <20260904-feat-can-diag-v3-3-bdcebf07b373@redhat.com>
+ <20260904142606.6FB371F00A3D@smtp.kernel.org>
+ <atJHPuFD8dZyoDaj@storniolo-redhat>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v2 3/3] net: ethernet: qualcomm: ppe: Add IPQ5332
- support
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
- netdev@vger.kernel.org
-References: <20261016152449.934312-1-mail@tk154.de>
- <20261016152449.934312-4-mail@tk154.de> <sashiko-outbox-175580@kernel.org>
-Content-Language: en-US, de-DE
-From: Til Kaiser <mail@tk154.de>
-In-Reply-To: <sashiko-outbox-175580@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Rspamd-UID: 2c9a6a
-X-Rspamd-UID: addb0e
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="zuv6fqtoxa7xhyab"
+Content-Disposition: inline
+In-Reply-To: <atJHPuFD8dZyoDaj@storniolo-redhat>
 
-On 10/17/26 5:25 PM, sashiko-bot@kernel.org wrote:
-> 
-> [Severity: High]
-> Does ppe_config_qm() calculate the multicast queue register address correctly
-> when queue_id is >= 256?
-> 
-> In ppe_config_qm(), the code calculates the address like this:
-> 
-> 			} else {
-> 				reg = PPE_AC_MULTICAST_QUEUE_CFG_TBL_ADDR +
-> 				      PPE_AC_MULTICAST_QUEUE_CFG_TBL_INC * queue_id;
-> 
-> Since queue_id ranges from 256 to 299 for multicast queues, and is not offset
-> by 256 (PPE_AC_UNICAST_QUEUE_CFG_TBL_ENTRIES) before multiplication, does this
-> result in an out-of-bounds address calculation?
-> 
 
-This is the pre-existing issue you identified in v1, affecting IPQ9574 as well.
-I submitted the fix separately to net:
-https://lore.kernel.org/all/20261016150140.929729-2-mail@tk154.de/
+--zuv6fqtoxa7xhyab
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH can-next v3 3/3] can: add can diag interface
+MIME-Version: 1.0
 
-I could also mention this in the commit message or add the link to the net series
-in the cover letter.
+On 16.10.2026 18:00:36, Filippo Storniolo wrote:
+> > [Severity: Medium]
+> > Will this simple index-based resumption (num < s_num) cause skipped or
+> > repeated sockets without notifying userspace if the list is modified be=
+tween
+> > dump iterations?
+> >
+> > A netlink dump of CAN sockets can require multiple messages, forcing
+> > can_diag_dump() to return and resume later. If a concurrent thread crea=
+tes
+> > or destroys a CAN socket, altering the layout of net->can.sklist while =
+the
+> > mutex is dropped, iteration by index becomes inaccurate.
+> >
+> > According to the Netlink uAPI guidelines, if iteration during a dump ma=
+y skip
+> > or repeat objects, NLM_F_DUMP_INTR must be set on the affected messages=
+=2E This
+> > is normally implemented by maintaining a generation counter and recordi=
+ng it
+> > in cb->seq to detect list modifications.
+> >
+> > > +				 sk_user_ns(NETLINK_CB(cb->skb).sk),
+> > > +				 NETLINK_CB(cb->skb).portid,
+> > > +				 cb->nlh->nlmsg_seq, NLM_F_MULTI,
+> > > +				 sock_i_ino(sk)) < 0)
+> > > +			goto done;
+> > > +next:
+> > > +		num++;
+> > > +	}
+> > > +done:
+> > > +	unlock_can_diag_mutex(net);
+> > > +	cb->args[0] =3D num;
+> > > +
+> > > +	return skb->len;
+> > > +}
+> >
+> > --
+> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20260904-feat-c=
+an-diag-v3-0-bdcebf07b373@redhat.com?part=3D3
+>
+> I understand the concern, but as far as I can tell no other diag
+> handler implements this.  Does it make sense to add it only here rather
+> than as a follow-up done uniformly across all the diag handlers?
+>
+> @Marc Kleine-Budde @Oliver Hartkopp what do you think about this?
+> If you think it could be worth adding this feature, I can do a respin.
+
+Let's ask Jakub (Cc'ed), who is the author of these 2 files:
+
+| Documentation/userspace-api/netlink/intro.rst
+| Documentation/core-api/netlink.rst
+
+regards,
+Marc
+
+--=20
+Pengutronix e.K.                 | Marc Kleine-Budde          |
+Embedded Linux                   | https://www.pengutronix.de |
+Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
+Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
+
+--zuv6fqtoxa7xhyab
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSl+MghEFFAdY3pYJLMOmT6rpmt0gUCatNJiwAKCRDMOmT6rpmt
+0kdMAP0T6Qf4AY5HQFqLVk8IIZffTK7mBs3BUp8JxSpq1p/rpwD/WUBGOTZEHs2s
+GaGQMarCOoh2KxhpdfCMUap4wyAUIw4=
+=P53l
+-----END PGP SIGNATURE-----
+
+--zuv6fqtoxa7xhyab--
