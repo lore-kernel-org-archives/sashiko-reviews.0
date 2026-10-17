@@ -1,151 +1,72 @@
-Received: from mta1.migadu.com (out-231.mta1.migadu.com [95.215.58.231])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-24428.protonmail.ch (mail-24428.protonmail.ch [109.224.244.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15F0352005
-	for <sashiko-reviews@lists.linux.dev>; Sat, 17 Oct 2026 05:24:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.231
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B749E3815DD
+	for <sashiko-reviews@lists.linux.dev>; Sat, 17 Oct 2026 05:41:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792214644; cv=none; b=hL9/Q/dBi170z+0YyxVczSm6ecDIp8TEC6/msUuDCWweC4SK4gaD1/4osvsDcqSkZdmyehIupggcodh3w9ZBgp6UBn2id5O+57CobZvvScyBbJijzfHpWwlNrrqndyJ0tkW2iHiVEXykJ4nMMIEExaS/UxNF7txkqtaD4svaKxs=
+	t=1792215713; cv=none; b=F8BEDta9673oNPsBkDbJKvbkwDQa1neF8N+46/V2HmZm4lWllP9fGTbUs3vkGjFymJZP+/G+2wCJ2V6RMNk04ZkC4BaIxCxuHarJrR7avDHAJ4/UA3JSvq29CugjuhQ5ZJHMLSpn8AK8RNAuBXNdlR0syOssEkI8W12f433Eni8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792214644; c=relaxed/simple;
-	bh=V71HwRlcRmnhrJOuBbvoS0H+bd9OgyZZDE0JcqZgMpU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=fnDvhaBB17slonkqdbNw2gZoSA8viw7xkiA7IIXR/3jwnMuAYY4JG/ZctFbPD5HNOpDU/T4x7UBh8974W3qIkmlMt/nsvByeivvfQkpcwU4OnfxhJba4lbGauivLEK2gSaZnHVS+QbSSFifb1flGggiC6UefNuCJh0PVgsN3Fro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=tRE97Lal; arc=none smtp.client-ip=95.215.58.231
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1792215713; c=relaxed/simple;
+	bh=oWP3CqfdKkrmUn2Fd9aCN1Hyf60aN5vW+HfRq/d7rFE=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=TtpDCIC/qcYDK95IUUbIlpx9NuhEPeJqud0IPQ9ob+w1VzbD4raTE5RFv2lLuKqmqFEic3QPypk3n8uBww36mhX+jw62+TmOD32io9yWNT+Loatv4cAgK9AoDLHkhr+wOv0wk4Q4Z8KEUqn4NBR+p/3eWPeLwrVdfBIEi2LPja8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=D6/E31TR; arc=none smtp.client-ip=109.224.244.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="tRE97Lal"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=V71HwRlcRmnhrJOuBbvoS0H+bd9OgyZZDE0JcqZgMpU=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1792214640; v=1; x=1792819440;
- b=tRE97LaluRTgCsNeh9EqlZGAyr1nt73KdSCMJVpbO1FwMkP9CUMe9fBP6o93APrUMg45hoC7
- PRCP/Hv/dDT1Mu42hKhS7uDBa6Vv4+SLKFdUvDT3IOF3FkQq29cBq/JmPgBZ5zqQ6ERrmi4Q1k/
- wwaPXaUqLkyppNU8Kvy+ps1U=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 6f4c53a09c9c65fa;
-	Sat, 17 Oct 2026 05:24:00 +0000
-X-Mizu-Trace-ID: 6f4c53a09c9c65fa
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <05918478-1564-4e6f-874a-1a3c4c084097@linux.dev>
-Date: Fri, 16 Oct 2026 22:23:58 -0700
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="D6/E31TR"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail2; t=1792215702; x=1792474902;
+	bh=oWP3CqfdKkrmUn2Fd9aCN1Hyf60aN5vW+HfRq/d7rFE=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=D6/E31TRwTP1tAd5S/DtmzkSI+rEA9VnjMTkn4h349sXjZzcM82r5Q4LaOynE5j61
+	 CdPLqqCGlt6Brfcp24j8/PHrUinuTZeeVV9r2HpyrsuEIazjyUJqs0YsfJ7MAzqJT4
+	 OavgscVzOW5afc7p9+UXFNSVwYoH1XqnLbzNrv069RYX92SREz15Z1xnqPN7r7ffxn
+	 uDoMf9l9rvD9JHlEtpAG+mBP/MayOTm3L0y+Yhr9bS/JJTTN29fYs8dxVU+AIgrXVp
+	 9pCA0A+tw47DZKWVpET0hILd3LbNmhy9AP0vQ0hrF/lJ1GVirF3Yfj66OL3dwkLwZM
+	 UZF7QzxEh5zxg==
+Date: Sat, 17 Oct 2026 05:41:39 +0000
+To: sashiko-reviews@lists.linux.dev
+From: quanyeyang <quanyeyang@proton.me>
+Cc: bpf@vger.kernel.org
+Subject: Re: [PATCH net-next v4 1/2] tls: annotate lockless access to sk->sk_err
+Message-ID: <0f_f65bKzWrIKpD02o0Zog8DXgvCojjB6E0_p64jFcUQXJf6eKe3LZ_r2AyAMoKP5m0rnzWidmndN0la2vYX7POrm0tVKb1QZJlj_FcCXGs=@proton.me>
+In-Reply-To: <sashiko-outbox-175251@kernel.org>
+References: <20261015-tls-fix-sk-kcsan-err-v4-0-391d788327f3@proton.me> <20261015-tls-fix-sk-kcsan-err-v4-1-391d788327f3@proton.me> <sashiko-outbox-175251@kernel.org>
+Feedback-ID: 206494642:user:proton
+X-Pm-Message-ID: 97b58392f95c42aed3c0916396b98545d01989af
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v12 07/25] bpf: Refuse a callback that can unwind
-To: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-References: <20261017025129.1914859-1-yonghong.song@linux.dev>
- <20261017025206.1920523-1-yonghong.song@linux.dev>
- <sashiko-outbox-175238@kernel.org>
-Content-Language: en-GB
-From: Yonghong Song <yonghong.song@linux.dev>
-In-Reply-To: <sashiko-outbox-175238@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+On Friday, October 16th, 2026 at PM 8:31, sashiko-bot@kernel.org <sashiko-b=
+ot@kernel.org> wrote:
 
+> Can a concurrent lockless call to getsockopt(SO_ERROR) clear the
+> error state here?
 
-On 10/16/26 8:19 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] bpf: missing might_unwind propagation to callback in bpf_check_cfg()
-> --
->
-> commit 1785732c5b5ae17b86f08f6a94449da36fb9c958
-> Author: Yonghong Song <yonghong.song@linux.dev>
->
-> bpf: Refuse a callback that can unwind
->
-> This commit adds bpf_exc_check_callback() and calls it in
-> push_callback_call() to reject callback subprograms that have
-> might_unwind set.
->
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index fce2baa6272d1..fcf0d0fe0f2ff 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
->> @@ -11191,6 +11191,10 @@ static int push_callback_call(struct bpf_verifier_env *env, struct bpf_insn *ins
->>   	 * callbacks
->>   	 */
->>   	env->subprog_info[subprog].is_cb = true;
->> +	err = bpf_exc_check_callback(env, subprog);
->> +	if (err)
->> +		return err;
->> +
->>   	if (bpf_pseudo_kfunc_call(insn) &&
->>   	    !is_callback_calling_kfunc(insn->imm)) {
->>   		verifier_bug(env, "kfunc %s#%d not marked as callback-calling",
-> [Severity: High]
-> Can a callback subprogram that transitively calls bpf_unwind() bypass
-> bpf_exc_check_callback() with env->subprog_info[subprog].might_unwind
-> still false?
->
-> In bpf_check_cfg(), direct calls (BPF_PSEUDO_CALL), function address
-> loads (BPF_PSEUDO_FUNC), and read-only map function pointer loads
-> (insn_func_ptrs()) are explored in a single DFS sharing
-> env->cfg.insn_state[]:
->
-> kernel/bpf/cfg.c:merge_callee_effects() {
-> 	caller = bpf_find_containing_subprog(env, t);
-> 	callee = bpf_find_containing_subprog(env, w);
-> 	caller->changes_pkt_data |= callee->changes_pkt_data;
-> 	caller->might_sleep |= callee->might_sleep;
-> 	caller->might_throw |= callee->might_throw;
-> 	caller->might_unwind |= callee->might_unwind;
-> }
->
-> merge_callee_effects() relies on callee w already being EXPLORED when
-> returning to caller t. However, if subprogram H has a conditional branch
-> whose fallthrough loads a read-only map containing the address of
-> callback cb via insn_func_ptrs() (or loads cb via BPF_PSEUDO_FUNC when H
-> is explored from a cleanup pad before main's fallthrough) and whose jump
-> target calls bpf_unwind(), while cb calls H via BPF_PSEUDO_CALL:
->
-> 1. bpf_check_cfg() enters H (marking insn_state[w_H] = DISCOVERED) and
->     explores H's fallthrough first, before visiting H's bpf_unwind()
->     branch, so H->might_unwind is still false.
->
-> 2. H's fallthrough visits cb via visit_func_ptrs_insn() or
->     visit_func_call_insn().
->
-> 3. When cb visits its BPF_PSEUDO_CALL to H, merge_callee_effects() sees
->     H->might_unwind == false, and push_insn() sees
->     (insn_state[w_H] & 0xF0) == DISCOVERED and returns DONE_EXPLORING.
->     Thus cb finishes CFG exploration with cb->might_unwind == false
->     before H explores its bpf_unwind() branch and sets
->     H->might_unwind = true.
->
-> 4. At the end of bpf_check_cfg(), mark_callx_might_unwind() checks
->     addr_taken_subprog_might_unwind():
->
-> kernel/bpf/cfg.c:mark_callx_might_unwind() {
-> 	if (!addr_taken_subprog_might_unwind(env))
-> 		return;
->      ...
-> }
->
->     Because the address-taken subprogram cb still has might_unwind == false,
->     addr_taken_subprog_might_unwind() returns false and skips the
->     fixed-point propagation loop.
+Yes, sock_error() can xchg() sk_err to 0 without the socket lock.
+That window is pre-existing. tls_encrypt_done() still keys off the
+crypto completion's err for this record's own failure; a stolen
+prior abort is the same as the old unmarked load seeing 0.
 
-The previous patch 6 indeed has a bug and this may cause
-addr_taken_subprog_might)unwind() return false and this will cause
-issues. Fixing patch 6 issue should fix the issue.
+> If a concurrent lockless call to getsockopt(SO_ERROR) consumes
+> and clears the error, the READ_ONCE() here might return 0
+> instead of EBADMSG.
 
->
-> 5. Neither sort_subprogs_topo() nor check_max_stack_depth() rejects the
->     program because insn_func_ptrs() edges are not call edges and async
->     BPF_PSEUDO_FUNC callbacks are skipped in stack depth checks.
->
-> When push_callback_call() then calls bpf_exc_check_callback(env, cb),
-> env->subprog_info[cb].might_unwind is false, allowing the unwinding
-> callback to pass verification and cause a verifier/runtime control-flow
-> mismatch or jump to a zero epilogue_ip when bpf_unwind() is invoked at
-> runtime.
->
+Also pre-existing. tls_push_record() still reports a synchronous
+encrypt failure only by tls_err_abort() and returns the raw crypto
+rc. The caller then peeks sk_err =3D=3D EBADMSG to free the chained
+open record. Folding the two loads into one READ_ONCE() does not
+open that steal; closing it means returning the failure to the
+caller instead of round-tripping through sk_err, which is a
+separate change.
 
