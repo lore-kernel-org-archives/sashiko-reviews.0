@@ -1,165 +1,104 @@
-Received: from mail.tipi-net.de (mail.tipi-net.de [194.13.80.246])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D5045FFD2
-	for <sashiko-reviews@lists.linux.dev>; Sat, 17 Oct 2026 09:07:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.13.80.246
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82123CEB90
+	for <sashiko-reviews@lists.linux.dev>; Sat, 17 Oct 2026 11:36:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792228072; cv=none; b=HtvfFRx4GwYfHxt/3C6VMLh1jJeB09IEzGb7ELHjoB+kRyuYg0SCrsESOIRYh95cxxFaSzxnuqOGxoDH4KPXD7OTMb5GcZys6zeW7DR8P8LvRuiaVaVimzkZbN6SGQQ745O796ysRCU/A74R5lZrO34gglWpXtT6rmL9EYDDMm4=
+	t=1792236975; cv=none; b=svXAEL6eXeW11KjDeR+ZbjdfRrPcwtwKK6OLNNOn5vyt16I4z2tQvUV+3gALnp8AyzBAlNBPYca/Pq1ttQtORUdj7JHDbOOZgdMNRvAreq9As11VjxDrLihFLSGbYtfCIVkzQWzKfCclRtfq8PvTEnVJz28n3IGF2aes8sREKO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792228072; c=relaxed/simple;
-	bh=gaMMUvSzpKODw+BMmNte1gSFoGv6Eaf9sQ1dWebmgO8=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=DSZ+YTPER5d1TqGhNDL7wCsSnh1YQOwtPrL0vYTOIpniOXzlRPyXtjBlrt+RDMUwpSPxPFz8J+91Iioyn88PiklTEu3UYvgsKF6P8HE1jIHHfeyxYYiexpjEH7LSWgC2ocB4o2j7DFr69Nwb1GUQE4lYnt3gjZ3QC+9WetEHHTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tipi-net.de; spf=pass smtp.mailfrom=tipi-net.de; dkim=pass (2048-bit key) header.d=tipi-net.de header.i=@tipi-net.de header.b=Oz5uomeM; arc=none smtp.client-ip=194.13.80.246
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tipi-net.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tipi-net.de
+	s=arc-20240116; t=1792236975; c=relaxed/simple;
+	bh=yNAJuYmjmAjUWtFgm4yj7+VgRbs02dwrTOWE3O4Hxz0=;
+	h=Message-ID:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=EAUrXM5hY2F/IZiN7ar2C9H3of12lUsdkKi1ZaxWOFq+eu66V9EZhtVDKt3wnjbXanK6JYMEItfKvmni9+GQ8B9/ytv1x9H3wp8nwOEU8KoXrA4Kcb2RsYIkbetZpN7jK6N4J16whjOpvVP/uTVwZrp6FDMi0RKcaYaQJxSy1+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fc+coPvR; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tipi-net.de header.i=@tipi-net.de header.b="Oz5uomeM"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 25089A157E;
-	Sat, 17 Oct 2026 11:07:37 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tipi-net.de; s=dkim;
-	t=1792228058; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=jlIbxif+VD4Y+A4zap/XlwInjrq9x4H7M20dtoeoZ5Y=;
-	b=Oz5uomeMQwApVeTghohxKoOwMRf4RYU+Ske3yxsg2QkfdMmAf6bqPJG3zohvBVgSsmxBmD
-	EKtlnBV0k0h3oxDAT187uncV301NE+yz0ygMgu+GwRik7Ci6nuvA7xvlSNLDEagR7TppaG
-	1A8okIjs4UiQGijzC5Htj38iS0BV5aUSdHynMZTD9FYQEYN/QoNMDNSjCLzjLSBWT28gYp
-	+FM7jTSUWBvpOTd7viObQj6g1qOHaDyi2DiF+BNk2CraU8KxFozkNRzjjZoaP3hyEDcb28
-	mikVaugiE6kVBQ9swq6awtZ14g8+Yo4wNgTKD5xUc7Z5H/n82Q30dnlWHy4FhQ==
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fc+coPvR"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-3a4c78ee4d6so129200a91.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 17 Oct 2026 04:36:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792236974; x=1792841774; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:subject:cc:to:from:date:message-id:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=y5lPor2Y39zEYus8yegDwQOLxe73Q923XLq/QXzQIhA=;
+        b=Fc+coPvRpzZK6pIeLAW4jXIdQsgRvbRVuKkEB6J7tGE/6mW9BHYm7yhV9hKtcRdM2C
+         EhMMiLdfhjXZPvYbz/dtDjULc3e3ZBp7x6Rtlq8zzrYzFJgw30TQFvCxGhhQe3gnguIG
+         DUEdR2yxjd0tnV+OFN6oxSX2YXhjzASYi9CwHonRY5N8YXXvG2/uN4MUFmHmZkAB6Gng
+         Xj5w9bf1q3OEU8RaHMxHjpHo8jLWojvMGZi0P7wmF5/Q3tFkxhDLgQVr+R+s5cTNasaO
+         Aien2YfXDkvWDs5JdTlZL0xDlOCoumvA5x8ld6yd4/Z6ykTCww9BxWXVQxX2jaZ8zP3g
+         ezOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792236974; x=1792841774;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:subject:cc:to:from:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=y5lPor2Y39zEYus8yegDwQOLxe73Q923XLq/QXzQIhA=;
+        b=qfQBxKQtkiuWpGnWzanLzTXq+9rDfE9zWKGTgXKSXgpVA2OLlpohh0pKJfu2QTLgHd
+         vvLaCdQZgp6qHGWsEkDEJvEh9j2mmOk0BnxQlA5Jvt6W78am7Qr/yO1EW0u90gCVtx/l
+         0Hg6WnyEj1IXymLAC7WkRN1V275MzSey3bpzR5pSTQRFN+YkniRdZlO95EiA8d+exMFK
+         C6T7HSkyBvWhIhv9DHbeTIA77pzxq95xYrXAkv2Gczxqo1TBh8XohRI3Rh6i2qHD5GPv
+         IgFcjqehHhaW5Z2/fOMv+JLEYqOfnAm6/lDdLhqQ0wo3gS4aErQ1jrIGjeC8p86NlJmX
+         MQVQ==
+X-Gm-Message-State: AFq9FYIsrSLAdlQx4WaZ6fhaVriwWTp2mIaTZ3paKog0BVmC7T5S51Q9
+	8cs6HC57Eg7pJX7uM9GON//yKYJ1NxD3C6iID612ZPNCAPagHOnUdpIvfv2t5JAyFr4=
+X-Gm-Gg: AYBFou0fEajtsG9ZEybTBIFoMbjLHl1BwcwlOOsWpcK8PHaBqW9MOWa/BKdVEx8Yva/
+	mF8v/ALueT2WjL3tEMgc1n40mdmljq4cdkDvAD//51eZxZYKkvA7P0CKMQaNDPTfKUcbnXrLwzj
+	uLufqxDlm7IsODBGNNhVxmhEIKUiJcfTlz7QBttroVLE+JDmSwqMAkexaggodCnvipKzNFGxZzs
+	KdW2y4OUuGf+lpAQ2d25Esn+BJUoUAxLJ4lWPbqXF+rTeAx5JvT81RlIYxzd7cOpSEyf+ph6hYX
+	7RiOE4zmW/qGwKUrZS1ccRsrMOFf/Z2CDPf9/Ircm8Qe4I2mJrTlNi5gDqqWXoov4CrauzNlLC2
+	BP1cXeJ+k2iPaZejCOckE0qYbsyYovbi/BdI4wqQW0fxE0OW1lBgcDpF7f6PZ/Zs1n/CGad5LG/
+	2L3/m/likv8kVNCAnCxvAqppzlPhdChKAG4QkuPcTE/mrDBjoCxr00Wjbk+Uwm4Q4PEzoDlta2F
+	HX4uxXtTbS4rj16PBxL4Q==
+X-Received: by 2002:a17:90b:164b:b0:3aa:ff60:9bb8 with SMTP id 98e67ed59e1d1-3acef167affmr3313208a91.3.1792236973898;
+        Sat, 17 Oct 2026 04:36:13 -0700 (PDT)
+Received: from [10.64.8.87] ([61.171.228.110])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ac94798212sm12999321a91.14.2026.10.17.04.36.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 17 Oct 2026 04:36:13 -0700 (PDT)
+Message-ID: <6ad35dad.70c60f76.2e7ac9.12a4@mx.google.com>
+Date: Sat, 17 Oct 2026 04:36:13 -0700 (PDT)
+From: Anfernee Cao <anferneemelokc5@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Mathias Nyman <mathias.nyman@intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-usb@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Xu Rao <raoxu@uniontech.com>
+Subject:
+ Re: [PATCH] usb: xhci: fix EP0 context leak on virt device allocation failure
+In-Reply-To: <sashiko-outbox-175494@kernel.org>
+References: <20261017111114.1135-1-anferneemelokc5@gmail.com>
+ <sashiko-outbox-175494@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Sat, 17 Oct 2026 11:07:37 +0200
-From: Nicolai Buchwitz <nb@tipi-net.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-serial@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] serial: amba-pl011: keep RS485 transmission
- running on reconfiguration
-In-Reply-To: <sashiko-outbox-175339@kernel.org>
-References: <20261017-devel-nbuchwitz-pl011-rs485-reconfig-stall-v2-0-6f457a1ee527@tipi-net.de>
- <20261017-devel-nbuchwitz-pl011-rs485-reconfig-stall-v2-2-6f457a1ee527@tipi-net.de>
- <sashiko-outbox-175339@kernel.org>
-Message-ID: <b07a35b9f41ab5f312c4c5439e0dab42@tipi-net.de>
-X-Sender: nb@tipi-net.de
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 17.10.2026 08:45, sashiko-bot@kernel.org wrote:
+> Does jumping to disable_slot here actually disable the newly enabled
+> slot_id?
 
-> [...]
+Yes, you're right, and thanks for catching it.  The disable_slot label
+should pass the local slot_id.
 
-> [Severity: Medium]
-> What happens if RS485 is enabled via TIOCSRS485 while a break is active 
-> on
-> the port (or if RS485 is disabled during a break, clearing 
-> uap->rs485_break
-> above while UART01x_LCRH_BRK remains set in REG_LCRH_TX, and then 
-> re-enabled)?
-> 
-> While UART01x_LCRH_BRK is set, the PL011 keeps UART01x_FR_BUSY asserted 
-> in
-> REG_FR, so pl011_tx_pending() returns true via !pl011_tx_empty() and 
-> enters
-> pl011_rs485_tx_resume():
-> 
-> drivers/tty/serial/amba-pl011.c:pl011_rs485_tx_resume() {
->     ...
-> 	if (stopped ||
-> 	    (kfifo_is_empty(&tport->xmit_fifo) && !pl011_dma_tx_queued(uap))) 
-> {
-> 		uap->rs485_tx_state = WAIT_AFTER_SEND;
-> 		hrtimer_start(&uap->trigger_stop_tx, uap->rs485_tx_drain_interval,
-> 			      HRTIMER_MODE_REL);
-> 	} else {
-> 		uap->rs485_tx_state = SEND;
-> 	}
-> }
-> 
-> Because pl011_rs485_tx_resume() does not check REG_LCRH_TX for
-> UART01x_LCRH_BRK and set uap->rs485_break = true, uap->rs485_break 
-> stays
-> false. Could this cause pl011_trigger_stop_tx() -> 
-> pl011_rs485_tx_stop() to
-> bypass the uap->rs485_break check and continuously re-arm 
-> trigger_stop_tx
-> every character interval in hardirq context for the entire duration of 
-> the
-> break?
-> 
->> -	} else if (port->rs485.flags & SER_RS485_ENABLED) {
->> +	} else if ((port->rs485.flags & SER_RS485_ENABLED) &&
->> +		   uap->rs485_tx_state == OFF) {
->> +		/* Set the idle level now, a transmission sets it when done */
->>  		pl011_rs485_tx_stop(uap);
->>  	}
-> 
+This is a pre-existing bug, separate from the EP0 context accounting
+leak fixed by this patch, and it has already been submitted:
 
-Agree. I verified on my CM4 that BUSY stays set during a break and the 
-drain timer
-keeps polling until the break ends. Will fix this in v3.
+  [PATCH] usb: xhci: disable the correct slot on alloc_dev failure
+  https://patchew.org/linux/6C94F1F35FF16E76+20260806084909.2959131-1-raoxu@u=
+niontech.com/
+  Fixes: 3ffbba9511b4 ("USB: xhci: Allocate and address USB devices")
 
+I deliberately kept this patch independent of that one.  The decrement
+added here releases the endpoint context reservation made by this
+invocation, regardless of which slot the current error path ends up
+disabling.  Once Xu Rao's fix lands, the error path will disable the
+correct slot and the two fixes compose cleanly.
 
-> [Severity: Medium]
-> During TIOCSRS485, uart_ioctl() -> uart_set_rs485_config() invokes
-> port->rs485_config() before storing the new configuration into 
-> port->rs485:
-> 
-> drivers/tty/serial/serial_core.c:uart_set_rs485_config() {
->     ...
-> 		ret = port->rs485_config(port, &tty->termios, &rs485);
-> 		if (!ret) {
-> 			port->rs485 = rs485;
->     ...
-> }
-> 
-> And pl011_rs485_tx_stop() -> pl011_rs485_tx_stop_now() also reads
-> port->rs485.flags:
-> 
-> drivers/tty/serial/amba-pl011.c:pl011_rs485_tx_stop_now() {
->     ...
-> 	if (port->rs485.flags & SER_RS485_RTS_AFTER_SEND)
-> 		cr &= ~UART011_CR_RTS;
-> 	else
-> 		cr |= UART011_CR_RTS;
->     ...
-> }
-> 
-> Because port->rs485 still holds the old settings here, can this cause 
-> two
-> issues when configuring an idle port (uap->rs485_tx_state == OFF and
-> !pl011_tx_pending()) via TIOCSRS485:
-> 
-> 1. When enabling RS485 for the first time, port->rs485.flags & 
-> SER_RS485_ENABLED
->    is still false, so pl011_rs485_tx_stop() is skipped, leaving 
-> UART011_CR_TXE
->    enabled while uap->rs485_tx_state == OFF and leaving UART011_CR_RTS 
-> at its
->    RS232 level?
-> 
-> 2. When RS485 is already enabled and TIOCSRS485 changes the RTS 
-> polarity
->    (SER_RS485_RTS_ON_SEND vs SER_RS485_RTS_AFTER_SEND),
->    pl011_rs485_tx_stop_now() programs UART011_CR_RTS using the old
->    port->rs485.flags instead of the new rs485->flags, driving the wrong 
-> RTS
->    idle level?
-> 
-> Should this branch check rs485->flags & SER_RS485_ENABLED and apply the 
-> new
-> rs485->flags when setting the idle state?
-
-IMHO this is a pre-existing issue. I even have a fix for this in my 
-local RS485
-rework series, I plan to send for next cycle. So if there aren't any 
-objections,
-I will skip this for v3.
-
-Thanks,
-Nicolai
+If the maintainers prefer, I can resend this rebased on top of that fix
+once it is applied, or send both as a series.
