@@ -1,147 +1,73 @@
-Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012031.outbound.protection.outlook.com [52.101.53.31])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D8D36CE19
-	for <sashiko-reviews@lists.linux.dev>; Sat, 17 Oct 2026 16:52:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.31
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792255940; cv=fail; b=WtbLCycdgH1dMMvN4EJZKP3WRUXhAdFsuMljBFFAjIL/ovhPDZS0xoAtw21y03DZ+lxh9HLLqt1H9EZN5tf3uWGT4/b3BKESZcaHXz8jKa9YK98jetEoEI4GePUufh3iDZ1PD58+dGNRueZwy5A7MLvBKynR+EDGaPDcKiTpmxQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792255940; c=relaxed/simple;
-	bh=bshTh/tRffGJWiiW83qDUPCparX+1HHBue/Y+d7njzA=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XU1DRTJNgNTR6wa7exp83/q0fPghgLLorjtrpUMlmsMBKH/QOMnufXuRs+g5M4ighFd1723pX3VK3QfZ7BTKeII2+ewEVG5iYCfxIGOSQnKmDY/KaCtqsFuJUFGhEukvwjqEQsbYvvGOS8YKunxSid7Z8Sz63gwdvsOL7X2yOXU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=mqNpL5d5; arc=fail smtp.client-ip=52.101.53.31
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B3034C98C;
+	Sat, 17 Oct 2026 18:43:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792262629; cv=none; b=jQKHdLQHd9mO2MBVqBLOdxHJgaYOmf7/v853kTeK3a0HpjnFS6kXpfxHJO/Xe6NPBRR8cJmd/hO7U3D+LpaVLJ+bdGqj70JEw5yH/0Aifqs6heYaWKlP6ZXFWNYSJzoaKn0zEpcSl8GhDcXWJkdTvZEwgyocHxBsl8L02Hc1dKA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792262629; c=relaxed/simple;
+	bh=y8ExBTAzTHGONyxcdjk6r0G3qPFtynGEMKvBwzEZZnc=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References; b=n7gYLHFabmCZqsO5bARLGrSXMHe5+55psZ+Um2+Er3sReN7pgEAw6A9BydJNiYJwurK+HurqQP2GiVzPhj3QJ2zuSl3gtefEY0z6r6zQTEVq6IaEyfFt1UMoG1KGKpyrF5gWdU2cMN8Xv7ZUzM4R5rgqd7wOL1rAaS+5V/U8+Iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AferkPHk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="mqNpL5d5"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EM5GtgDjteSdSb4oj12Mscg832n2PvsGkoRFbREjsDFmxnBFWGlJpe70psuDxhtgJw88OS+Q/54JDgrjW5BFnI55Fa/3eIUJ/wOWSrySU7aOCezz3qk8sEEPoVjFv9A1kSvy5oiohXEw0pu3/dcOpk20HUM2cp46MsfzAiVePAnoHIqjOgMk6x4MWqO6DI0DVfovBNu+rZ/0hdXFkkNb9p00DpnZ4kRM8Vf4x7jYIMqfD4FHqPwXcmxEwKkn401MnCCIlPPCO3Kk9+SVhk72dz5YMq2mL50Q95IYAVWZKViLLEtlYchQpvEDTAWnF1zS6R+doaXzMR2qku3fl7olCA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=X1uRQDqnt94oJkCaBATAWHohQZHL8K1tf7CreLe3/Xw=;
- b=HREKRwPKqBowXapBqsDt/vtG2E1hAAeeVYfhnu+PVah7GO/AwloN7San+gN7KWX7axSOL7FJ7eacaEccFM0iYnJ419cxlF1esvW5/sYaTdJimQENyNnVsx1bjtcSeik+Suni/RyjLAdk+UAPYao1gh0yEhqU+Koz3AYtyTVQVaQ+/18onWKAlkxbZX3ffjplxJrqkDdbEIzXsYFK0kk5dpnH44PgFz/DusNxmzSDxv+/O093Nv854j/kd0M2RYfRgkd9CNA5Lsy7KMOUmkVfGnfAs3kbGsbMNga37pdJd144uyBYNMT+eymOGLfEZkKWz4eHGjsnNuqTqgqlSbCrTg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linux.intel.com smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=X1uRQDqnt94oJkCaBATAWHohQZHL8K1tf7CreLe3/Xw=;
- b=mqNpL5d58QfqAW2PZMnLAeslauKmaE+GWEEGrbrT26TtzTYJx7wO0RBnfWhMue+Q7AyP7wghCFIlCLouaiqzLPq5fkQ0+JvhGoQXLgEjH+o/2bzVtXifQRFlmvQ+EOscbkHRBCm0QDVQXMu6F2uUD2L4hurt9PVeWlObSxusTpA=
-Received: from MW4PR03CA0242.namprd03.prod.outlook.com (2603:10b6:303:b4::7)
- by CH3PR12MB9729.namprd12.prod.outlook.com (2603:10b6:610:253::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.23; Sat, 17 Oct
- 2026 16:52:13 +0000
-Received: from MWH0EPF000C6188.namprd02.prod.outlook.com
- (2603:10b6:303:b4:cafe::47) by MW4PR03CA0242.outlook.office365.com
- (2603:10b6:303:b4::7) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.496.5 via Frontend Transport; Sat, 17
- Oct 2026 16:52:13 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- MWH0EPF000C6188.mail.protection.outlook.com (10.167.249.120) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.522.6 via Frontend Transport; Sat, 17 Oct 2026 16:52:12 +0000
-Received: from dcsm-trdripper1.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Sat, 17 Oct
- 2026 11:52:03 -0500
-From: Muralidhara M K <muralidhara.mk@amd.com>
-To: <ilpo.jarvinen@linux.intel.com>
-CC: <platform-driver-x86@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	Muralidhara M K <muralidhara.mk@amd.com>, Sashiko
-	<sashiko-reviews@lists.linux.dev>
-Subject: [PATCH 1/2] platform/x86/amd/hsmp: Validate num_args before the fd-mode gate in hsmp_ioctl_msg()
-Date: Sat, 17 Oct 2026 22:21:52 +0530
-Message-ID: <20261017165153.3748458-2-muralidhara.mk@amd.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261017165153.3748458-1-muralidhara.mk@amd.com>
-References: <20261017165153.3748458-1-muralidhara.mk@amd.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AferkPHk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E841F000C4;
+	Sat, 17 Oct 2026 18:43:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792262628;
+	bh=y8ExBTAzTHGONyxcdjk6r0G3qPFtynGEMKvBwzEZZnc=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=AferkPHk+yqBL49ynhyotZXW+u+UfjQitJcKGSFg3X2jedIPzj8IeTb7GoYBduS1O
+	 9CmKriNGJrPxRLBGPlq3qCu0xJLZRT4H6HX/iqj8CJmeM8DgfBPBHA8ZEa9lr+OJy/
+	 /stukboYQT5MVjwX39MfElX7cbaGH+qrbCZFL0z6Rd1flkLHtMVynZDqNJJZmWRzY5
+	 3UtO3r6bzUqOPLLkKp2oGE/SFtmF5s6zOjwopWaleXW6o1tKBmqbsmPTc4Hno1SX4F
+	 gU6FZZNAg1/QIbDKoJEJlRDoNoP6XD5+wuA924MxgwOK76rxqvYWACZSj9pbtVSUZP
+	 QCHhGJbAHuMow==
+Date: Sat, 17 Oct 2026 08:43:47 -1000
+Message-ID: <6ee796c005fe3cf9d5c3d29aecde0079@kernel.org>
+From: Tejun Heo <tj@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: sashiko-bot@kernel.org, sched-ext@lists.linux.dev
+Subject: Re: [PATCH 5/6] sched_ext: Report the ecaps loss when a cpu goes offline
+In-Reply-To: <sashiko-outbox-175737@kernel.org>
+References: <20261017164556.4136807-1-tj@kernel.org> <20261017164556.4136807-6-tj@kernel.org> <sashiko-outbox-175737@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000C6188:EE_|CH3PR12MB9729:EE_
-X-MS-Office365-Filtering-Correlation-Id: da1b346d-fcb3-4461-8016-08df2c6efdf2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|82310400026|1800799024|23010399003|36860700016|11063799006|261009223027099003|56012099006|22082099003|18002099003|10067099003|13003099007;
-X-Microsoft-Antispam-Message-Info:
-	c4H1ewQuQVi8GTZY3S+ncAS3CsrMaUjAwTqprwKASU9amKB1qeButYEHZ3shY7yXoMbUhDPu90vkjBLCGczN7Ka6Focnr8kjzIktP8/eUMt5koiAivdnAgYIFjygG/Sx19aBbl1VKCQyp3yClLg8TP6J95dReNq+mY1ZyP1yZ7kNo6/OjmNgbmo3hS8F7x9+mCKUXcJ0XZ2W0o+4ZXHA8HlUB0yc/+804mZ8WWcr11wg+w+wP342C/Ary5Wz6SKJbkwum6sFNFxOuxgCoCkzTfTkBzOp3QwmCyeXA/awPGIQEXsNX2NcdAZReUGz6ZDzqiFmTcDmtMKNMfJaGH50svxCeoV5C3s4TZZKloGltsjdCfxo3cI79lN8gqLa4rKjCDhLlj6mxZC1yUOxgaUNDUO01zd29y7tD3Fi9qnhA6mb7yv4Tu/G52wQSjZC1y0pWdDqw1kbtm/5apsvZ1GkTo//AL4ZeB0Llue58MIr5IPZkdKm13bRlHPhCHUFMU3ih4xHwmNX0mAgeiLZnUxP5lVqwxZfBZfGRak33fQFHJBsLEoux5H/7bcegwdbi6sbLF5ckJLu8PT9Bvcl/YDtkKIVXqIbx5SKidzW7yrEsLUS2uQhSDZ3+E3GkW3DuSleDBEtqaogk6Lk6JLIIbLl9g==
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(82310400026)(1800799024)(23010399003)(36860700016)(11063799006)(261009223027099003)(56012099006)(22082099003)(18002099003)(10067099003)(13003099007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	Y23J3jz+JEBwvMyD7ThhWR5JnfmiHdMBKM/l7Tv+ivLg1XlAEU8MUM+cRxILx0tPJbNZTRCyEd70hPUkHejUhaaHEUOTtSX7pTs++1Jx3Qa6dbYWYwUjyp3QEQbuSJ2zJtJPGdJ4Dc2CtK16Mp1VtFnQIQtEOK43hnBf4R6isdh4yaJUsi6hfVs+qh74znWn2V6HKcUmUrsJQi5NR/uZEeEEkLfjHco73eAfoYOace02ekZ+7Bxi2c8zR7jxmQbVfkO7HjWKaJqqrQf8cjQizTVh7JFd9aXV/nhJomSFTI+WiGmiLdZi6yxPV4Do0OUpEjv4hK38fKTm3+SPtMaILQot+Odh8STY8SnS4vzzalaoQQLEBcUF0kli5plxGqaSOpkyxOpuEKDThV3moXQVqqT8OdBRC75oqYaLVJMW/klXovz+803ToLCP5y2FG2uB
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Oct 2026 16:52:12.7297
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: da1b346d-fcb3-4461-8016-08df2c6efdf2
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	MWH0EPF000C6188.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9729
 
-is_get_msg() reads msg.args[0]'s CHECK_GET_BIT to tell GET and SET apart
-for HSMP_SET_GET messages, but hsmp_ioctl_msg() calls it before
-validate_message() (reached later through hsmp_send_message()) checks
-that msg.num_args matches desc->num_args. A request with num_args = 0
-for such a message reaches is_get_msg() anyway, so args[0] is read even
-though the request does not carry it.
+Hello,
 
-Check msg.num_args against desc->num_args before the fd-mode switch, so
-a num_args mismatch is rejected with -EINVAL before is_get_msg() reads
-args[0], rather than surfacing as -EPERM from the fd-mode gate.
+On Sat, Oct 17, 2026 at 06:14:02PM +0000, sashiko-bot@kernel.org wrote:
+> The comment notes that scx_enabled() cannot change during hotplug, and that
+> without a live root the ext class will not be picked and the wait would never
+> end. However, static_branch_disable(&__scx_enabled) in scx_root_disable() runs
+> before cpus_read_lock() is acquired.
 
-Reported-by: Sashiko <sashiko-reviews@lists.linux.dev>
-Link: https://sashiko.dev/#/patchset/20261012085407.1202295-1-muralidhara.mk@amd.com
-Signed-off-by: Muralidhara M K <muralidhara.mk@amd.com>
----
- drivers/platform/x86/amd/hsmp/hsmp.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+static_branch_disable() takes cpus_read_lock() itself in
+static_key_disable(), so the flip waits until the cpu down releases
+cpus_write_lock(). scx_enabled() stays true across the down.
 
-diff --git a/drivers/platform/x86/amd/hsmp/hsmp.c b/drivers/platform/x86/amd/hsmp/hsmp.c
-index 45d20beda946..635e6d5723ac 100644
---- a/drivers/platform/x86/amd/hsmp/hsmp.c
-+++ b/drivers/platform/x86/amd/hsmp/hsmp.c
-@@ -485,6 +485,16 @@ static long hsmp_ioctl_msg(struct file *fp, unsigned long arg)
- 		if (!desc)
- 			return -ENOMSG;
- 
-+		/*
-+		 * is_get_msg() below reads msg.args[0] for HSMP_SET_GET
-+		 * messages. Reject a num_args mismatch here first, so a
-+		 * malformed request fails with -EINVAL instead of letting
-+		 * the fd-mode gate read an argument slot the request does
-+		 * not actually carry.
-+		 */
-+		if (msg.num_args != desc->num_args)
-+			return -EINVAL;
-+
- 		switch (fp->f_mode & (FMODE_WRITE | FMODE_READ)) {
- 		case FMODE_WRITE:
- 			/*
--- 
-2.34.1
+> If the offline CPU had not yet picked ext_sched_class before __scx_enabled was
+> disabled and ext_server was detached (for instance, while a fair or RT task
+> was running during ext_server's dl_defer window), __scx_process_sync_ecaps()
+> will never be called on that rq.
 
+The drain doesn't depend on the ext server. scx_offline_ecaps() runs
+from sched_cpu_deactivate() after balance_push_set(), so once the
+hotplug thread sleeps in the wait, balance_push() moves every task but
+per-cpu kthreads and migration-disabled ones off the cpu. With
+scx_enabled() still true, the cpu's first pick with no fair task left
+runs the ext pick, whose dispatch_one() processes the marked sync.
+
+Only a per-cpu kthread or a migration-disabled task that never sleeps
+could hold it off after the ext server is detached, and that would be a
+bug of its own.
+
+Thanks.
+
+--
+tejun
