@@ -1,95 +1,82 @@
-Received: from mx.itxnorge.no (itx-kvm-14.itxnorge.no [91.189.121.228])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205193AFB18
-	for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 12:25:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.189.121.228
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B044C33F9;
+	Sun, 18 Oct 2026 14:39:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792326351; cv=none; b=bbykSHXBqR5GumNZ6+35eMRIftrKXmMm9ynNDmjtwp4N2XbBSpwNaeg1OL9vePIiHkZxbrUyBJr4GehQZJwDP6jFWYjSg+gO8qsVFBZ2bccZwOQaeRu3NJDg+tkGXugltlbXsvnDQ4jNySVCXwAuwYYUzOkGhOwe2x6z29z07sM=
+	t=1792334383; cv=none; b=sTO9oZjNMrzJ9YDlVZL97b10aySzA9VW0osEh1X/OtytHOfi+KGq72iQqVNPH6HmFHunE2GyigLz5BOzjj+vPuAbKr8iG5iFIwwcWv39DdNocYV1RR1dRPe0qclW6wR4SiFrblhdzN5owWgZR9yK+Uw5mQMtax7ew9dvppVjtvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792326351; c=relaxed/simple;
-	bh=4BlqkGfZ2/HXZLwDXoPKmXK3T/sLYv/XhbWLmIDCV+k=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=agHhPPLqW2cbZgbq4tsnppMXdVZeQR/6oWRI8i7dyKr9sVb+k0kdvRm1RSatlAtUWutDuxphDTkIIE3uz8iGuO6Hb/TmlwKquZtokCBeSkRLafEbuOVI2H66OPZdajEerROjgu7/MHePHeKldpqjpT7GD1EexIFPTXkGBEN7Q60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=itx.no; spf=pass smtp.mailfrom=itx.no; dkim=pass (1024-bit key) header.d=itx.no header.i=@itx.no header.b=AopFY58F; arc=none smtp.client-ip=91.189.121.228
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=itx.no
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=itx.no
+	s=arc-20240116; t=1792334383; c=relaxed/simple;
+	bh=PAfjW3xcpiCaHXV7/iUqTMYnxKrH/q5uQYs+RSCe+wQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=eFeFn7jMKfiBr4zlnBPbIkLN9/4RRH5t4w7qcYJnuAGSLdT5+y+ZGCeQ+nPr2QH0gud3vWaBse7PKlMTHDooqUzTaav3Aj0fg3i/QgBqFKwhnR9PtljA51BzlEeCwCsjV3DfTGCaczd7RNfmn907TpaHByfgR6gMdA1/AFR8vWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WuUYdnrR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=itx.no header.i=@itx.no header.b="AopFY58F"
-Message-ID: <13e574b8ae33eb113aa5c2b944960f9001cbe7ac.camel@itx.no>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
-	t=1792326341;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=4BlqkGfZ2/HXZLwDXoPKmXK3T/sLYv/XhbWLmIDCV+k=;
-	b=AopFY58FFAqOmgICzJzYRWChXUqz6vrfXr3fwCA1oTAKl2WuagM6cEODhiLMUzuWdSlloo
-	ZGEzNjxvOYSYuSXj2APCBHIwP2PQpIMCukB4M4NLF7jKVwAJdjNeVTovVZ60j1vyBMnNG3
-	0colmgoiEIjxmg5Z3ytCXCb9bk9hCLk=
-Subject: Re: [PATCH 2/2] sparc64: Randomize the load address of PIE
- executables
-From: Stian Halseth <stian@itx.no>
-To: sashiko-reviews@lists.linux.dev, Andreas Larsson <andreas@gaisler.com>, 
- "David S . Miller"
-	 <davem@davemloft.net>
-Cc: Kees Cook <kees@kernel.org>, Michel Lespinasse <michel@lespinasse.org>, 
-	linux-mm@kvack.org
-Date: Sun, 18 Oct 2026 14:25:40 +0200
-In-Reply-To: <sashiko-outbox-176036@kernel.org>
-References: <20261017100451.2266781-1-stian@itx.no>
-	 <20261017100451.2266781-3-stian@itx.no> <sashiko-outbox-176036@kernel.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-Rf6o3YE7c8xlHDeF/lt4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WuUYdnrR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831F81F000C4;
+	Sun, 18 Oct 2026 14:39:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792334382;
+	bh=ze4neFQXilKWVkV1JOWiiZvoobvoNiFOFy6OOiKZYSM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=WuUYdnrRY8wDlUtF/ZoukMeg7MH/2GbG3CAffRWphV7LzsETdchMvTcDXsZ1/jOKz
+	 izgTOvJSZM+LbG5kSjv/bDi34SkqmJwGnAClR7nyWo83tPVpOSNQNUCaIeBDOjqjCV
+	 2umv9Vc7NFHK5mb7qz9SFqQ4isGQTsIVxtad9uH0BujDfQe6Gn6LTXkbiP2E8Luh2X
+	 isZv3+kKBPDGIopNm4ee7eVTkYlCfB1qQODVa/9/fRadp+ODJvKEOdI6nMt9SPhJtD
+	 bhuc7ToHbEkXgE2TTWTPKjsYibR7/Esw3GVKAvpSygWN4xmMwKuc2HHUTnS0gqmygh
+	 mOvzaALCxkm9w==
+From: Sasha Levin <sashal@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
+	linux-kbuild@vger.kernel.org,
+	Shuah Khan <shuah@kernel.org>,
+	linux-kselftest@vger.kernel.org,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Arnaldo Carvalho de Melo <acme@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	James Clark <james.clark@linaro.org>,
+	linux-perf-users@vger.kernel.org,
+	=?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFC PATCH v2 1/7] kbuild: factor the userspace ABI flags out into KBUILD_USERABI
+Date: Sun, 18 Oct 2026 10:39:39 -0400
+Message-ID: <20261018143939.4113153-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <sashiko-outbox-175552@kernel.org>
+References: <20261016143143.3613501-1-sashal@kernel.org> <20261016143143.3613501-2-sashal@kernel.org> <sashiko-outbox-175552@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
+On Sat, Oct 17, 2026 at 02:32:08PM +0000, sashiko-bot@kernel.org wrote:
+>[Severity: Low]
+>Does this new exported variable also need to be added to the SPDX SBOM
+>environment allowlist?
+>
+>Currently, KBUILD_USERCFLAGS and KBUILD_USERLDFLAGS are explicitly tracked
+>in KERNEL_BUILD_VARIABLES_ALLOWLIST in scripts/sbom/sbom/environment.py:
+[...]
+>Leaving KBUILD_USERABI off this list means its value will not be captured
+>in the SPDX SBOM generated by scripts/sbom, resulting in incomplete build
+>metadata documentation for the userspace ABI configuration.
 
---=-Rf6o3YE7c8xlHDeF/lt4
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
+KBUILD_USERABI is appended to both KBUILD_USERCFLAGS and
+KBUILD_USERLDFLAGS, which are on that list, so its flags are already in
+the SBOM. Listing it as well would only record the same flags again.
 
-
-On Sun, 2026-10-18 at 10:05 +0000, sashiko-bot@kernel.org wrote:
->=20
-> Should COMPAT_ELF_ET_DYN_BASE be separated from 32-bit
-> TASK_UNMAPPED_BASE (similar to powerpc, x86, and arm64, which place
-> 32-bit COMPAT_ELF_ET_DYN_BASE at 0x000400000UL or offset from
-> TASK_UNMAPPED_BASE) so that 32-bit PIE and brk do not collide with
-> the bottom-up mmap base?
->=20
-
-Confirmed for 32-bit tasks in the legacy bottom-up layout.
-
-The dynamic PIE case was actually broken already, brk could not grow at
-all in that layout.
-
-The explicitly executed loader case is a real regression from this
-series though.
-
-v2 will add a patch that moves COMPAT_ELF_ET_DYN_BASE below the legacy
-mmap base.
-
-I can't use the 4MB that x86, arm64 and powerpc use, though. binfmt_elf
-rounds the load address down to the PIE's p_align, and from 4MB a 32-
-bit PIE with 8MB or larger alignment ends up at 0 and fails to exec.
-1GB keeps every alignment the old base allowed.
-
-/Stian
-
---=-Rf6o3YE7c8xlHDeF/lt4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTK1ph9OaYoND1R57zoeAEuJe36VgUCatS6xAAKCRDoeAEuJe36
-Vl5tAQDQggcjL5ML/FWoUiTbxxgW/UqRAeDJyGaCMgFt7Mo0lQEA5F88Gv4mTwLp
-uugn7+gKYcyRz9XrRYEly4NzUPpTPQw=
-=4Drl
------END PGP SIGNATURE-----
-
---=-Rf6o3YE7c8xlHDeF/lt4--
+-- 
+Thanks,
+Sasha
