@@ -1,36 +1,36 @@
-Received: from mta0.migadu.com (out-20.mta0.migadu.com [91.218.175.20])
+Received: from mta0.migadu.com (out-51.mta0.migadu.com [91.218.175.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B093D811C
-	for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 16:32:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE493DB333
+	for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 16:33:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792341143; cv=none; b=IBGW0leobBVRXszx5y2H5Mx9AZDmQaidOGLewklOfYxRb5u4FTM5p2uMK1um6RyBVFqWsAWTv1aBN9gNFOxNOY8hoRrsgrWOahJMAINpHMDxIqi8ccYdVE2Qyir8BM1S/K2SirgxKsfQyfHYT7lkuuKNpxDPiutt7o7Ptu58P+w=
+	t=1792341224; cv=none; b=DdNlYhDxhluS9uzed5+sRvL8EFLsSBWrOixfEw5DubUcZ/T9ibsQ0R+ZF4PCLNTM2MAP8D3KScmtoI6cIPa2cvQXuh7BawNOgS5+rFLWy4mkROoPHBK+Ai4KBhgVHiH1TMSfYsrDI5syQhnNREy7hPmLMXius9rxTFuO0XWCXEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792341143; c=relaxed/simple;
-	bh=JD1nLT7zLYU53o1FV8dwd8Lfd7u+g9ii/mSNl5kx7gM=;
+	s=arc-20240116; t=1792341224; c=relaxed/simple;
+	bh=fwOw3eqwEIOqybjjAJDDdPhaGAScdIoPMfsgoZAj0Rs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MXo4Z6Cy/wIEuoRq5ZHCsa7wNs9BzPTCyJEnr5iOaCydtXlw/IuPQ+lXXleuzNfeVwm9r9flA/XHS/AceqvpDVdyulMUhssFjt8BvzvwNERXxintL8XTHllbHVivDORg83en3nWx2s4RoM6t+K+1yfc2d32o5YPM5efbSn46heA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=fH8M64rQ; arc=none smtp.client-ip=91.218.175.20
+	 In-Reply-To:Content-Type; b=qRHIMTDN0pd/yB5nTIKD+ZA1t+MDNRwum5U6CpatBhIzbIOgQ0iOOGYNNoekGTfq15Y+gYcR4RT96EVTe+WVY85+SadI9t200sYXz7HQuN/eSdfWlOxXMCQYuFW8FOZoWUMxNd98DZNU3K6QTXhwybS9yY2yCfD3HuBhccDA4ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=wveEgMyO; arc=none smtp.client-ip=91.218.175.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="fH8M64rQ"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="wveEgMyO"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=JD1nLT7zLYU53o1FV8dwd8Lfd7u+g9ii/mSNl5kx7gM=;
+DKIM-Signature: a=rsa-sha256; bh=fwOw3eqwEIOqybjjAJDDdPhaGAScdIoPMfsgoZAj0Rs=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1792341139; v=1; x=1792945939;
- b=fH8M64rQCfWnzUDL7E3z2DrEoP1h4Y42wNvLUhIxmLHZ76uwr5dxRjYeGxqpE8/cdbILlHDB
- Dd38jnBdHizjA0KT7ZtQTQ3WUxcgcIV8CnLxYfGKwV7ytk4WF3l00vw6qPmr0n9WREIGza+UnIg
- WsW1OszCrr1SVNb1cqi1h8OM=
+ t=1792341212; v=1; x=1792946012;
+ b=wveEgMyOBWq9vUsHNN5ijR8M8EcyN3CgTyDeH5t+41g+S4DoYZDQUrd1n/5hcCCYDUqeY+TA
+ N93445JAQJiR4Y3vCBRAVmeP2wB4dLxE6WeLgjzRuGU5AjhNEYpQ/k/j6HVHQIH3UCnJo3wPoRo
+ EclqAGB63yuZ+R02EILqm9Tc=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 4a1cbad9841a4144;
-	Sun, 18 Oct 2026 16:32:19 +0000
-X-Mizu-Trace-ID: 4a1cbad9841a4144
+Received: by smtp.migadu.com with ESMTPS id 5a78a752332e31e8;
+	Sun, 18 Oct 2026 16:33:32 +0000
+X-Mizu-Trace-ID: 5a78a752332e31e8
 X-Migadu-Flow: FLOW_OUT
-Message-ID: <733300c4-9ed1-4bb6-a44a-22cceb65263f@linux.dev>
-Date: Mon, 19 Oct 2026 00:32:16 +0800
+Message-ID: <a2d2baee-68f1-4f92-ba64-0863621b0882@linux.dev>
+Date: Mon, 19 Oct 2026 00:33:29 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -38,170 +38,121 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 2/6] bpf: Add syscall common attrs support for
- xdp link_create
+Subject: Re: [PATCH bpf-next 5/6] libbpf: Add bpf_link_create_log API
 To: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
 Cc: linux-trace-kernel@vger.kernel.org
 References: <20261017142649.51047-1-leon.hwang@linux.dev>
- <20261017142649.51047-3-leon.hwang@linux.dev>
- <sashiko-outbox-175566@kernel.org>
+ <20261017142649.51047-6-leon.hwang@linux.dev>
+ <sashiko-outbox-175565@kernel.org>
 Content-Language: en-US
 From: Leon Hwang <leon.hwang@linux.dev>
-In-Reply-To: <sashiko-outbox-175566@kernel.org>
+In-Reply-To: <sashiko-outbox-175565@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 2026/10/17 22:48, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Critical] bpf: NULL deref and format string bug in bpf_xdp_link_attach() via bpf_log()
-> - [Critical] bpf: prog refcount underflow in link_create() if bpf_log_attr_finalize() fails
-> - [Low] bpf: link failure in bpf_xdp_link_attach() when !CONFIG_BPF_SYSCALL
+
+
+On 2026/10/17 22:43, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] libbpf: missing OPTS_VALID() check for log_opts in __bpf_link_create()
+> - [Medium] libbpf: bpf_link_create_log added to released LIBBPF_1.8.0 in libbpf.map
 > --
 > 
-> commit fa16fd00d8499a718392032e57d440248e048afc
+> commit 5adb04f5088a9ab6aa21d83e4c9370c13ebdaab6
 > Author: Leon Hwang <leon.hwang@linux.dev>
 > 
-> bpf: Add syscall common attrs support for xdp link_create
+> libbpf: Add bpf_link_create_log API
 > 
-> This commit passes the verifier log to bpf_xdp_link_attach() so that XDP
-> link creation can report target_ifindex and driver errors through BPF
-> syscall common attributes.
+> This commit introduces the bpf_link_create_log() API to pass struct
+> bpf_log_opts when creating BPF links without modifying struct
+> bpf_link_create_opts.
 > 
->> diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
->> index 252b479937a4d..e96d5f09486f5 100644
->> --- a/kernel/bpf/syscall.c
->> +++ b/kernel/bpf/syscall.c
->> @@ -5921,7 +5921,7 @@ static int link_create(union bpf_attr *attr, bpfptr_t uattr, struct bpf_common_a
->>  		break;
->>  #ifdef CONFIG_NET
->>  	case BPF_PROG_TYPE_XDP:
->> -		ret = bpf_xdp_link_attach(attr, prog);
->> +		ret = bpf_xdp_link_attach(attr, prog, log);
->>  		break;
->>  	case BPF_PROG_TYPE_SCHED_CLS:
->>  		if (attr->link_create.attach_type == BPF_TCX_INGRESS ||
-> 
-> [Severity: Critical]
-> Can the cleanup path in link_create() underflow prog's reference count if
-> bpf_log_attr_finalize() fails after bpf_xdp_link_attach() succeeds?
-
-Will fix the issue by reporting log_true_size twice. See the pseudocode
-in patch 1 reply.
-
-> 
-> When bpf_xdp_link_attach() succeeds, bpf_link_init() transfers ownership of
-> prog's reference to link->link.prog and bpf_link_settle() installs the link
-> file descriptor, returning a non-negative fd in ret.
-> 
-> At the out label in link_create(), bpf_log_attr_finalize() writes
-> log_true_size to uattr_common even when nothing was logged:
-> 
-> kernel/bpf/log.c:bpf_log_attr_finalize() {
-> 	...
-> 	if (attr->offsetof_true_size &&
-> 	    copy_to_bpfptr_offset(attr->uattr, attr->offsetof_true_size, &log_true_size,
-> 				  sizeof(log_true_size)))
-> 		return -EFAULT;
-> }
-> 
-> If uattr_common points to read-only memory, copy_from_bpfptr() in
-> __sys_bpf() succeeds, bpf_xdp_link_attach() attaches and settles the link,
-> and then bpf_log_attr_finalize() returns -EFAULT:
-> 
-> kernel/bpf/syscall.c:link_create() {
-> out:
-> 	/* preserve original error even if log finalization is successful */
-> 	err = bpf_log_attr_finalize(&attr_log, log);
-> 	if (err)
-> 		ret = err;
-> 
-> 	kfree(log);
-> 
-> 	if (ret < 0 && prog)
-> 		bpf_prog_put(prog);
-> 	return ret;
-> }
-> 
-> Overwriting ret with err causes link_create() to call bpf_prog_put(prog) on
-> a reference that is now owned by the settled bpf_link, leading to a
-> use-after-free of struct bpf_prog while the link remains attached in the
-> process fd table.
-> 
->> diff --git a/net/core/dev.c b/net/core/dev.c
->> index 18dc88990510a..fdc1de21f3589 100644
->> --- a/net/core/dev.c
->> +++ b/net/core/dev.c
-> [ ... ]
->> @@ -10771,7 +10772,8 @@ static const struct bpf_link_ops bpf_xdp_link_lops = {
->>  	.update_prog = bpf_xdp_link_update,
->>  };
+>> diff --git a/tools/lib/bpf/bpf.c b/tools/lib/bpf/bpf.c
+>> index 17e73e443bc7a..eb127d71f3c83 100644
+>> --- a/tools/lib/bpf/bpf.c
+>> +++ b/tools/lib/bpf/bpf.c
+>> @@ -788,9 +788,10 @@ int bpf_prog_detach2(int prog_fd, int target_fd, enum bpf_attach_type type)
+>>  	return bpf_prog_detach_opts(prog_fd, target_fd, type, NULL);
+>>  }
 >>  
->> -int bpf_xdp_link_attach(const union bpf_attr *attr, struct bpf_prog *prog)
->> +int bpf_xdp_link_attach(const union bpf_attr *attr, struct bpf_prog *prog,
->> +			struct bpf_verifier_log *log)
+>> -int bpf_link_create(int prog_fd, int target_fd,
+>> -		    enum bpf_attach_type attach_type,
+>> -		    const struct bpf_link_create_opts *opts)
+>> +static int __bpf_link_create(int prog_fd, int target_fd,
+>> +			     enum bpf_attach_type attach_type,
+>> +			     const struct bpf_link_create_opts *opts,
+>> +			     struct bpf_log_opts *log_opts)
 >>  {
->>  	struct net *net = current->nsproxy->net_ns;
->>  	struct bpf_link_primer link_primer;
->> @@ -10784,6 +10786,7 @@ int bpf_xdp_link_attach(const union bpf_attr *attr, struct bpf_prog *prog)
->>  	dev = dev_get_by_index(net, attr->link_create.target_ifindex);
->>  	if (!dev) {
->>  		rtnl_unlock();
->> +		bpf_log(log, "Invalid target_ifindex.\n");
->>  		return -EINVAL;
+>>  	const size_t attr_sz = offsetofend(union bpf_attr, link_create);
+>>  	__u32 target_btf_id, iter_info_len, relative_id;
+>> @@ -965,7 +966,7 @@ int bpf_link_create(int prog_fd, int target_fd,
+>>  		break;
 >>  	}
+>>  proceed:
+>> -	fd = sys_bpf_fd(BPF_LINK_CREATE, &attr, attr_sz);
+>> +	fd = __sys_bpf_fd(&attr, attr_sz, BPF_LINK_CREATE, log_opts);
 > 
-> [Severity: Low]
-> Will calling bpf_log() in bpf_xdp_link_attach() break linking when
-> CONFIG_NET=y and CONFIG_BPF_SYSCALL=n?
+> [Severity: Medium]
+> Should __bpf_link_create() validate log_opts with OPTS_VALID(log_opts,
+> bpf_log_opts) before passing it to __sys_bpf_fd()?
+> 
+> Currently __bpf_link_create() validates opts, but not log_opts:
+> 
+> tools/lib/bpf/bpf.c:__bpf_link_create() {
+> 	if (!OPTS_VALID(opts, bpf_link_create_opts))
+> 		return libbpf_err(-EINVAL);
+> }
 
-Correct.
-
-Will provide a stub bpf_log() when CONFIG_BPF_SYSCALL is not set.
+Will move OPTS_VALID(opts, bpf_link_create_opts) to __sys_bpf_fd() in
+the next revision.
 
 > 
-> net/core/dev.c is compiled whenever CONFIG_NET=y, and bpf_xdp_link_attach()
-> is not guarded by CONFIG_BPF_SYSCALL. While helpers like bpf_link_init() and
-> bpf_link_prime() have static inline stubs in include/linux/bpf.h when
-> !CONFIG_BPF_SYSCALL, bpf_log() is only compiled via kernel/bpf/log.o when
-> CONFIG_BPF_SYSCALL=y and has no stub in include/linux/bpf_verifier.h.
+> When a caller passes a malformed struct bpf_log_opts (such as an invalid sz
+> or non-zero unknown trailing fields) to bpf_link_create_log(),
+> __bpf_link_create() forwards it directly to __sys_bpf_fd(), which accesses
+> log_opts via OPTS_GET() and OPTS_SET() without checking OPTS_VALID().
 > 
+> For comparison, bpf_map_create() validates log_opts before calling
+> __sys_bpf_fd():
+> 
+> tools/lib/bpf/bpf.c:bpf_map_create() {
+> 	log_opts = OPTS_GET(opts, log_opts, NULL);
+> 	if (!OPTS_VALID(log_opts, bpf_log_opts))
+> 		return libbpf_err(-EINVAL);
+> 
+> 	fd = __sys_bpf_fd(&attr, attr_sz, BPF_MAP_CREATE, log_opts);
+> }
+> 
+> [ ... ]
+> 
+>> diff --git a/tools/lib/bpf/libbpf.map b/tools/lib/bpf/libbpf.map
+>> index eeba4072a5dac..990e2f926ecc3 100644
+>> --- a/tools/lib/bpf/libbpf.map
+>> +++ b/tools/lib/bpf/libbpf.map
+>> @@ -458,6 +458,7 @@ LIBBPF_1.7.0 {
 >>  
->> @@ -10812,6 +10815,7 @@ int bpf_xdp_link_attach(const union bpf_attr *attr, struct bpf_prog *prog)
->>  	if (err) {
->>  		link->dev = NULL;
->>  		bpf_link_cleanup(&link_primer);
->> +		bpf_log(log, extack._msg);
->>  		trace_bpf_xdp_link_attach_failed(extack._msg);
->>  		goto out_put_dev;
->>  	}
+>>  LIBBPF_1.8.0 {
+>>  	global:
+>> +		bpf_link_create_log;
+>>  		bpf_map__attach_cgroup_opts;
+>>  		bpf_prog_stream_open;
+>>  		bpf_program__add_flags;
 > 
-> [Severity: Critical]
-> What happens here when dev_xdp_attach_link() fails without setting an extack
-> message, or when extack._msg contains format specifiers?>
-> In bpf_xdp_link_attach(), extack is zero-initialized on the stack, so
-> extack._msg starts as NULL. Many failure paths under dev_xdp_attach_link() ->
-> dev_xdp_attach() -> dev_xdp_install() return an error without calling
-> NL_SET_ERR_MSG(), such as netif_xdp_propagate() when a device has no ndo_bpf
-> callback, or driver ndo_bpf callbacks like netkit_xdp() and veth_xdp()
-> returning -EOPNOTSUPP or -EINVAL.
+> [Severity: Medium]
+> Should bpf_link_create_log be placed under the LIBBPF_1.9.0 stanza in
+> tools/lib/bpf/libbpf.map instead of LIBBPF_1.8.0?
 > 
-> When a user provides a log buffer via syscall common attributes and
-> extack._msg is NULL, bpf_log() passes fmt = NULL into
-> bpf_verifier_vlog() -> vscnprintf() -> vsnprintf(), which dereferences fmt
-> unconditionally and crashes the kernel.
+> LIBBPF_1.8.0 is already succeeded by LIBBPF_1.9.0 at the bottom of
+> tools/lib/bpf/libbpf.map:
 > 
-> Additionally, because bpf_log() is a printf-style function, passing
-> extack._msg directly as the format string rather than using a "%s\n" format
-> specifier allows any '%' characters in a formatted extack message (for
-> example from NL_SET_ERR_MSG_FMT() containing an interface name) to be
-> interpreted as format specifiers by vscnprintf(), and omits the trailing
-> newline. Should this be guarded with if (extack._msg) and logged with
-> bpf_log(log, "%s\n", extack._msg)?
+> LIBBPF_1.9.0 {
+> } LIBBPF_1.8.0;
+> 
+> Adding bpf_link_create_log to LIBBPF_1.8.0 exports the new symbol under the
+> previous version node rather than the current LIBBPF_1.9.0 development cycle.
+> 
 
-Sure, will change to
-
-if (extack._msg)
-	bpf_log(log, "%s\n", extack._msg);
+Oops. Will move it to the LIBBPF_1.9.0 section.
 
 Thanks,
 Leon
