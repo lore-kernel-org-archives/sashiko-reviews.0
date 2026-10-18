@@ -1,154 +1,179 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3A335F19D
-	for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 17:24:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE64397B1C
+	for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 17:28:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792344251; cv=none; b=JpNeOQy5Q+jwtpSQ5xJif6aSeg9IMQu728blhfCQZ7e46wMPMEuDWyM67sMmoURWYPXVqCy2rJ4SLk3STKnd2I7ywxGSmbovWIv+GfU8cnYd1EoLdACVyYpfuD+0uuy/qGmjIDHw9tLZ46/6RBKOeUhEzYQ0MG4cuktULMVoG5I=
+	t=1792344511; cv=none; b=ewl4DEvsIj/D1cpClIOmux4DaPj2JXpmgAD0jdbPfLRCuZ6VRTZuZmo9JdKS3RMA4HHSZ921g6NiLgnQZ6JbHNZC0Wt7ll8yWrr8UwmcI0x4KdweOC5xeQCeVHxBhFfBlRf8Q2F/TOoCrZKuOmM3wm4TscK8/rL7WZnd6g6DrZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792344251; c=relaxed/simple;
-	bh=jPhhaWgkGhQmIqcArC/mv4lAwHC0rsjaVx4S3MLCvW4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PqCycX/8WT2+o2O7a9i1a9/0dzb2kKpxFBfg/X6bjIShHXGrdsrgVQDuyb+5DvOWJrA7I6awyXgp0fW7HokjDgq990dBAKXsODNgGkDYwB11VPHVgYUeIXSnsYf/IhzueyqOplZZO0lgSDXgAokOaIhRHS4MWhT9kvrt7OZ/pGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=gEGHJbDp; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1792344511; c=relaxed/simple;
+	bh=GqnVpycvp/gSL0yInzS41OkXSX2S56Zu2D2P69MnKHo=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=U5KpmGz/wcTMtaqFGw9RgMB2Ul381pX6JjrOwxbN0cUQCtS1ypnvkk91L++u94BXXmqhijvK+3aQBNefDPUyP0q8lBI8t1wkOdJA+pefnAxrm+us8/edRvche7rzgNWekVKBlYmY5yt9dVlz5/mLIzZDAzCTxMriMA379rq303E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aEOfpcpX; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="gEGHJbDp"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1792344248;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OubwlsLQAPyr9CVZ2r71r9IpAgVZ9Mz4Fo2cQf0VrI8=;
-	b=gEGHJbDp/akEZsd6obNBjXDJDwSJjc71lziGRQ1LRhzqY7aO0CURfNOBLf6OIwp6sry5ci
-	xBM3u2C963VGZQt9lUK5jt76aUCSGY6rqEqNeTEftCT+7l3HFOvgqqlrSMw/SnmhYwS+Kp
-	b7Qkbn6KAb3dVDMEB0lQioiwavG70ZA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-sIvX-ugbP0uHDC-vumpWjQ-1; Sun,
- 18 Oct 2026 17:24:05 +0000
-X-MC-Unique: sIvX-ugbP0uHDC-vumpWjQ-1
-X-Mimecast-MFC-AGG-ID: sIvX-ugbP0uHDC-vumpWjQ_1792344244
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 9F14E1955DDA;
-	Sun, 18 Oct 2026 17:24:03 +0000 (UTC)
-Received: from [100.91.18.181] (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
-	by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id BE0D5418;
-	Sun, 18 Oct 2026 17:24:02 +0000 (UTC)
-Message-ID: <5ce7995a-1f6a-4aa9-9dfa-7c67b952e462@redhat.com>
-Date: Sun, 18 Oct 2026 13:24:01 -0400
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aEOfpcpX"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4a1d293b293so7572885e9.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 10:28:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792344508; x=1792949308; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=gK+nm4guBVLWEst0QUYTIzdz/9/IYVNbhQShbRBd2MU=;
+        b=aEOfpcpXjL3Xvvy1Jc1zwOADMG2Q3XtisOm8vW+iO/0lMjYlRtHlOSlUx4lGSlO2g0
+         TFbCCOaLogiGx5KloO0C1TqsB3J3FbWDkhYLi9I13xPg+hA2f4VADfUM1D22oJ55KpAL
+         LTAXu+PMlADlUovW6+fkC10mi990ewWETkBbXJ6JCeUXu1U+GhfwxXDg/awVf+QM6gzb
+         W6wIhXIXw4mIAgVzxaRJBOyjPB1imh/0PqgfNSM2MF7PMXCiSzVplBJZ/KxN20QBDpX4
+         L5nPrJvXT1b2OmuQlY0RXrKn1AlgcNd9cQgwbd3ti3RuEN0NrYf3Bt8b9GlXBYKbu6FI
+         yckA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792344508; x=1792949308;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=gK+nm4guBVLWEst0QUYTIzdz/9/IYVNbhQShbRBd2MU=;
+        b=MQXp7oQi27pFZ+uSW8CpK1mTBAJjpvJh5jYQ5JxPydckr4k8tbsDOKZ/rJtDVeZ4jb
+         1EqqHNwLlAyN8RTIZBfswIcNqraU+E2GdwmtYNiS4wzjoOmTwydwirPV0Moj+EvDIpMw
+         6hIBKduiekZDbx4+x/M+wbzQ4xoIy48r7UurfQHmFibwmycHAgWcg2ePAc1UslHp3kxP
+         DOhFW8faA/cq3qJTnJlvVrxGToxeqoSJAtCppf9ikfCMECMBbQnpj7r62l8tgTSIsLvO
+         m1lhplmAmpodg4LAMQSPndaaShGFd6dNpJxZIgnKGIWHZ2IMgN0ou1RlJzFw3Cir/Tq7
+         +6AA==
+X-Gm-Message-State: AFq9FYKNfDHFqW0YLZND97+cahlXmzkmYUlUDvk+cOWSU71BhKuAMY26
+	X91dGG5hi9rDzekbTPLnglUHq2JyHwW7QmxhIRGmK7LhcXay/5zR9eYi
+X-Gm-Gg: AYBFou2cGusRDZpGS3IKQHqS/RUEVXD7hCynN3lQNC9CZd7b0INVswEc0gQGZ8qJrlG
+	hn9Ihh52qjlgeDQZrwoYLae36sAqHvByxwURlqJ2ssx79YAg6czFhrjaN79nRM1mYJYrkPJc/dC
+	0CrRgHNa2A3DMDEluBsz7rud6qhk91V9RdrzAchygZnCv6BPJ8F+BtK+LDZSPqhrvptgkZWb10v
+	PcZEUioVWdV7Nel2uwvKIMEyvCYIRkkWZ/3kTUHcwjlkfxcth8LbYzNqj/UGg7smAy13duSTuCo
+	wd9hWHb+bsFML/vRFwqIvpJli/snpRplatQYMXtFWESPX1J/EqZxDeHCWy48074uh+AZ+WRDqVW
+	PzBIzXgxwFavbalRaueGC7ISWwncUXRZhRJ+/VijnFwuSLePQP3hgG6P6N11OM585rjvUdAzFUH
+	rV1ofAOE+6kWV2JybPPAcyMPXc1GpGJIhH6l5iGjqahO2bvVZpcqPQnaKmsCsVhJK5cMyKEejzb
+	EfE2F464TQob04FT5rCimn8g6WrCqoQ2/o=
+X-Received: by 2002:a05:600c:4ed1:b0:4a0:2500:2cd0 with SMTP id 5b1f17b1804b1-4a1d760381fmr116248835e9.18.1792344507529;
+        Sun, 18 Oct 2026 10:28:27 -0700 (PDT)
+Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1c8a81587sm412237035e9.1.2026.10.18.10.28.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Oct 2026 10:28:26 -0700 (PDT)
+Date: Sun, 18 Oct 2026 18:28:25 +0100
+From: David Laight <david.laight.linux@gmail.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, "Andrew Morton"
+ <akpm@linux-foundation.org>, "Petr Mladek" <pmladek@suse.com>, "Kees Cook"
+ <kees@kernel.org>, linux-kbuild@vger.kernel.org, bpf@vger.kernel.org, "Jim
+ Cromie" <jim.cromie@gmail.com>, "Lorenzo Stoakes" <ljs@kernel.org>, "Luis
+ Chamberlain" <mcgrof@kernel.org>, "Andrey Grodzovsky"
+ <andrey.grodzovsky@crowdstrike.com>, "Steven Rostedt"
+ <rostedt@goodmis.org>, nathan@kernel.org, nsc@kernel.org
+Subject: Re: [PATCH 15/15] kallsyms: scripts/kallsyms: Improve compression
+ by about 2%
+Message-ID: <20261018182825.3e407c81@pumpkin>
+In-Reply-To: <sashiko-outbox-176259@kernel.org>
+References: <20261018155206.132411-1-david.laight.linux@gmail.com>
+	<20261018155206.132411-16-david.laight.linux@gmail.com>
+	<sashiko-outbox-176259@kernel.org>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-next v3 4/9] cgroup/cpuset: Do housekeeping check before
- converting invalid partition to valid
-To: sashiko-reviews@lists.linux.dev
-Cc: tj@kernel.org, hannes@cmpxchg.org, mkoutny@suse.com
-References: <20261014140548.575122-1-longman@redhat.com>
- <20261014140548.575122-5-longman@redhat.com>
- <sashiko-outbox-171409@kernel.org>
-From: Waiman Long <longman@redhat.com>
-In-Reply-To: <sashiko-outbox-171409@kernel.org>
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: LiCv3RjKvlbRYOJOOVrMqMjfq1Nsn4H3P4ElpNIsWVU_1792344244
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On 10/14/26 10:18 AM, sashiko-bot@kernel.org wrote:
+On Sun, 18 Oct 2026 16:05:10 +0000
+sashiko-bot@kernel.org wrote:
+
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] rcu: UAF in prstate_housekeeping_conflict() due to missing rcu_read_lock()
+> - [Medium] kallsyms: infinite loop in optimize_result() on self-overlapping token pairs
 > --
->
-> commit d31e8f03e0e5d616850715cc05487df6df41188b
-> Author: Waiman Long <longman@redhat.com>
->
-> cgroup/cpuset: Do housekeeping check before converting invalid partition to valid
->
-> When a hotplug event happens or when update_cpumasks_hier() is called, an
-> invalid partition may be converted back to valid. This patch updates the
-> code to allow reviving an invalid partition only if it can pass the
-> housekeeping check.
->
->> diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
->> index b2684c98d8c0f..51723c299ca5b 100644
->> --- a/kernel/cgroup/cpuset.c
->> +++ b/kernel/cgroup/cpuset.c
->> @@ -1959,9 +1959,14 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
->>   			bool exclusive = true;
->>   
->>   			/*
->> -			 * Convert invalid partition to valid has to
->> -			 * pass the cpu exclusivity test.
->> +			 * Convert invalid partition to valid has to pass the
->> +			 * cpu exclusivity test as well as the housekeeping
->> +			 * check.
->>   			 */
->> +			if (prstate_housekeeping_conflict(cs->partition_root_state, xcpus)) {
-> [Severity: High]
-> Does this new call to prstate_housekeeping_conflict() read an RCU-protected
-> cpumask without holding rcu_read_lock()?
+> 
+> commit 36121744ef0b7fd951486247d0297f67eaca31d8
+> Author: David Laight <david.laight.linux@gmail.com>
+> 
+> kallsyms: scripts/kallsyms: Improve compression by about 2%
+> 
+> This commit improves kallsyms compression by expanding infrequently used
+> merged tokens back into their original constituent pairs when no unused
+> tokens remain, freeing slots for more profitable token pairs.
+> 
+> > diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
+> > index 8576fe6ad90b7..9dbd7c85eec1e 100644
+> > --- a/scripts/kallsyms.c
+> > +++ b/scripts/kallsyms.c  
+...
+> > +static int split_token(unsigned int profit)
+> > +{
+> > +	struct token_table *tt, *left, *right;
+> > +	unsigned int i;
+> > +	int best = -1;
+> > +
+> > +	for (i = 0; i < 256; i++) {
+> > +		tt = token_table + i;
+> > +
+> > +		if (tt->len == 1 || tt->refs >= profit)
+> > +			continue;
+> > +
+> > +		/* Ignore tokens where the original parts have be reused */
+> > +		left = &token_table[LEFT(tt->pair)];
+> > +		right = &token_table[RIGHT(tt->pair)];
+> > +		if (tt->len != left->len + right->len ||
+> > +		    memcmp(tt->str, left->str, left->len) ||
+> > +		    memcmp(tt->str + left->len, right->str, right->len))
+> > +			continue;
+> > +
+> > +		best = i;
+> > +		if (tt->refs == 2)
+> > +			break;
+> > +		profit = tt->refs;
+> > +	}
+> > +	if (best < 0)
+> > +		return -1;
+> > +
+> > +	uncompress_symbols(token_table[best].pair, best);
+> > +
+> > +	return best;
+> > +}
+> > +
+>...
+> 
+> [Severity: Medium]
+> Can optimize_result() enter an infinite loop when find_best_token() selects a
+> homogeneous token pair best = PAIR(x, x) that overlaps with itself in runs of
+> 3 or more identical tokens?
+> 
+> For a homogeneous pair PAIR(x, x) where LEFT(best) == RIGHT(best),
+> learn_symbol() and uncompress_symbols() count every adjacent pair, so a run
+> of [x, x, x] increments token_profit[PAIR(x, x)] by 2. However, when
+> compress_symbols(PAIR(x, x), i) replaces the first pair to form [i, x], it
+> calls:
+> 
+>     adjust_profit(RIGHT(token_pair), idx, p[2], p[2]);
+> 
+> which is adjust_profit(x, i, x, x), decrementing token_profit[PAIR(x, x)] by
+> 1 for each triple. As a result, compress_symbols() performs fewer
+> substitutions (refs) than the initial token_profit[best] passed to
+> split_token().
 
-All the cpuset's cpumasks are protected by cpuset_mutex or 
-callback_lock, rcu_read_lock isn't need for protection. rcu_read_lock() 
-is used here only to protect the iteration of child cgroups which may be 
-deleted and freed concurrently. So there is no problem here.
+(Well done for spotting that one - it got me confused at one point.
+It is one reason why calling it 'profit' (historical name) is wrong.)
 
-Cheers,
-Longman
+In theory maybe, in practise no.
+There are two characters that get repeated more than twice (and I don't
+remember seeing any repeated tokens.)
+They are '_' and 'm'; "__" is by far the most common pair, "mmm" appears
+in _commmon_choices_show() in drivers/acpi/platform_profile.c
+(and looks like a typo).
+A token is allocated to "mm" but there are enough different uses that
+it isn't going to get split.
 
->
-> If an administrator modifies a cpuset partition configuration, it can trigger
-> an update to the housekeeping setup. The configuration thread drops
-> cpus_read_lock and cpuset_mutex in cpuset_update_sd_hk_unlock() before calling
-> housekeeping_update():
->
-> kernel/cgroup/cpuset.c:cpuset_update_sd_hk_unlock() {
->      ...
->      mutex_unlock(&cpuset_mutex);
->      cpus_read_unlock();
->      WARN_ON_ONCE(housekeeping_update(isolated_hk_cpus));
-> }
->
-> If a CPU hotplug event occurs concurrently, the hotplug thread can acquire
-> cpus_write_lock and cpuset_mutex, and enter update_parent_effective_cpumask(),
-> calling this new prstate_housekeeping_conflict() check.
->
-> Meanwhile, housekeeping_update() replaces the RCU-protected
-> housekeeping.cpumasks[HK_TYPE_DOMAIN] and frees the old mask after
-> synchronize_rcu():
->
-> kernel/sched/isolation.c:housekeeping_update() {
->      ...
->      rcu_assign_pointer(housekeeping.cpumasks[HK_TYPE_DOMAIN], trial);
->      synchronize_rcu();
->      ...
->      kfree(old);
-> }
->
-> Since the hotplug thread does not hold rcu_read_lock() here, synchronize_rcu()
-> will not wait for it. This allows the updater thread to free the old mask
-> while the hotplug thread is actively reading it via housekeeping_cpumask()
-> inside prstate_housekeeping_conflict(). Can this cause a use-after-free
-> regression?
->
->> +				part_error = PERR_HKEEPING;
->> +				goto write_error;
->> +			}
->>   			rcu_read_lock();
->>   			cpuset_for_each_child(child, css, parent) {
->>   				if (child == cs)
+I will put a check in the next version.
+(probably just avoiding splitting XX.)
+
+David
 
