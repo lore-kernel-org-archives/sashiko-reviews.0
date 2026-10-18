@@ -1,65 +1,65 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9373A784A
-	for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 16:47:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380AF3D9026
+	for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 17:04:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792342063; cv=none; b=QoAeu5YsPqdBIdeXzHegkPjIGE4i7lgQeFBJd0sTvtc206FpH5rldtpqsA+BV64J574+ow2eilWNEfjMfQH+HHKBu6WEhFFP8HVq6b8L5ncVKuaTQ42sovUFdsBTeCo3YcynkSPcjXWzddmdq6l9Q+T1FwN6YP8ZQW2D8OXHN/Q=
+	t=1792343062; cv=none; b=BgAXcelAE/n7IxsdzECBDtDoxUMNadbXA7V0/izgscWJqnjueaY1Z6+hxf9XR9a0Foskht/bRZDfLbGDjaEu3bxxcRNkemM0OPgKwqHb3UkMF03/R/IiV9P8IUx6FE2QYquJew5omPLu2fKFmyLzHkgzJxjn0USxFZrA9iYjsEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792342063; c=relaxed/simple;
-	bh=F4gfl0+YMk4ioGpONVD79EZfw8vpMfcktCDSQJ6061I=;
+	s=arc-20240116; t=1792343062; c=relaxed/simple;
+	bh=BANAP3Lc2+23fb8EhfAtZycAwPmcAdi1P+vUVcemTXk=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SJ7mmIGkHu0SJwhB/A6fmO6a8SL9/rNTbOCRqoxIhxUeAS/vsJip2SbAbjY6r9EGj+qvRsX8Ozj8gOGS8GwjubzPUvo7POdNrXQ5Ci0wP1kjmzl7HOSpTqFMQNFV4w7rsJ4mdzlPVOKillvOVauPG+N+DmOdDe1+85gDv67OthE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L0HaZ41x; arc=none smtp.client-ip=209.85.221.51
+	 MIME-Version:Content-Type; b=OBdSV4k8pId9ScnGKQKDTzq4zeytrl9+dUG5JWaUhOMRBIshMeN9fpz3zuU3XhQs8lNUBPKmCxvrzmjSvA2KJZqDA9J8we3qhLBg1Gc439DNDVxiQwBmyatckSJkTpDKcw1UXmVvvUorc1p7tilkyEBWI3OvYRauPi7LrZEAODg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dQ6P3Y+9; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L0HaZ41x"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-48e00eee27dso639756f8f.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 09:47:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dQ6P3Y+9"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4a01933b584so9707095e9.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 10:04:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792342061; x=1792946861; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1792343059; x=1792947859; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=EnjrROwlUYtLbg1DZjsxtXuCk8E0M6SVTV0/eLvG49o=;
-        b=L0HaZ41xKVxbVjBrJDu1i/+kdh5xyjO32y4VM0hKPW7024Y04fxXK4dOA0BnBdSlT1
-         IGppcH4L0vAChE/x8EhBdIbzDNsASlGzt9MYpjKRqN5GCm4+sw4fdNEdsGKUu2zEQd5y
-         4X9H955xL3N01/xmH5EEVPnSJ62BFSqG4Of2m+BrrjHuh3I3OYB4zT8n6YSYrBpmstv5
-         9s0Aa7zFn6nI3GhEMZePCm5N+q78eDQdfVToYN8TlQZzJlx3VJtRz3eDKNM12DSyV6PW
-         nMQpWcUthr0rbXLg85gAoZy9rZ6l5/+Ld7cZZ4SPJbl5p+jwryOQHS4ycz4RO1l8NVGZ
-         CovA==
+        bh=Wy50q/WaZjVAL/j6YEk/xR6SqWVwPpcjikDOg01mdZo=;
+        b=dQ6P3Y+9K3bsWoj50kHkK6RCEQvLu0LgR/Cr26VtH79Br0prU9icK+1UKwcYzuQXKt
+         U5GfzGrtHhZDJbJ1+yC3D6gWeAdvgWNB2KUCodytjFtTuLpoP58KVqaQG9QHPQz4nmHY
+         OtXHmFkyBqe/z445zyBfMfzOHmpveRc5bSnfRm7VZic51Ff4hfQvqDG1qRF0CxlgrxJs
+         C9MJ44uncN9Rsi5Ptxt70uOV3dt+BstFbh0nri50/65tEuPcq8H18tKG4aqHP5Ghimd8
+         Ji4YWfGm/Iq7B5OYfu5oiiRs6rC17j1cNUA+tTNUin403RM8mpHE0b2+/weDFVQbwHD0
+         /BUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792342061; x=1792946861;
+        d=1e100.net; s=20260707; t=1792343059; x=1792947859;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=EnjrROwlUYtLbg1DZjsxtXuCk8E0M6SVTV0/eLvG49o=;
-        b=EFkkXBFdQYNTv7ZtP8LyH9vHdgbcOzKCa9XKyjmocC6TB3WCGBdLVzcFtqk6u+RAcp
-         sdNx0lziOyVUilOg+mnodhzGir4MvGsh67SGWoqitOM7CUKxE2TutAGb7mEOtkkb4ORO
-         9q5xnr4D4eLKyqRUSwY9kuogE/GE18bL1vzr9A3mHDWaniQirCJHHpQI4CxEh9GOW5s1
-         oTXx2E21+gfjy+3bEU6b3g4pHhwPtsOZuXDl1RHh1NJj9idjZggsjuHIvOQVQzqKYHkg
-         i/Zene/oZSmoHJGFG7Kng07MFQZqbmIprfsfAine6d2hXlYTkUal//n13Kdw3B8TPUT1
-         ii9g==
-X-Gm-Message-State: AFq9FYL+hvL4YBwpo+dBg+S4hr83jVTyfxEEI9kM472+8uXy5yTIycvv
-	NsSwAnzmRWF6Dzriu3uYzBTIIcpFVk9j2Y7jYtqcrQ6cxIV5u9eC1rQJ
-X-Gm-Gg: AYBFou38MuMN+uCJEkyVMiYiw78wRN59Dup1lmdC2usZHnsSq/fZue9uOzAY2AxNFJv
-	Bm7F1CDjfXS8XBZp4On0d/REHp2FawAiaj9JVbv98+/e3wch9HU4sZeW+eJ6xUf8k0aJ8BdRBD0
-	9szdH8ZCDftdSqiEfJ3sYXgkh+lc18G2O40ST4HvRKeE40P4N5JCYtbZNAQKpit3ytsYcKhQzzG
-	O4u2X3Umq2alSWwux13PkHZExEmmcGhZSusX8hnn0ICvYxJWNARtnAUuLj7jTW9kMJ766A9moRG
-	hS9bKUdgn3+EF9FZga6Eob8OEY4lBFatHHsd0JG5Zlmog8mzInwb/X9IRBq3YsTgKbX//7MdKvv
-	gmz8gsFMRBj6SrMg8yQLVI7lPz+fqfLHVUSTp+TOoBso9pWUT0FaI1JvLOqtoPEgkM2Q0tjZ1Eh
-	mIh7mO9XLEIvtniFwdiNFDkPHpOBX+shCbMHG9pCUJ60ACMHHpdcXOsvpfbt5J7olbKYgpXG6iG
-	UZ52zfw8UlrC4izJs1BhFmBuaxz7tpcO+E=
-X-Received: by 2002:a05:6000:654:b0:48c:557d:ab24 with SMTP id ffacd0b85a97d-48e079800d3mr8049235f8f.4.1792342060574;
-        Sun, 18 Oct 2026 09:47:40 -0700 (PDT)
+        bh=Wy50q/WaZjVAL/j6YEk/xR6SqWVwPpcjikDOg01mdZo=;
+        b=EPh5wlPkxk3FdeiTPbIOYrQsckHxlRpRxn/teLLvpn1i5RgMSPdC06vd1wpPqSSetm
+         YtbDm4cI/ew+pWiOUFX8f3gMY8cNA/Hi77dGKO0cCisyJjedHsaTeMMPy+v6+frl57Aq
+         HBQnP3RNgkihq74PRwLRrR3CvKpYH9PRf8AidkGZkYT3z2N3bN8N264RLwuITu4OwziX
+         6f7meDaxzpbMlpFDuljKLS+bop6JlLBNgzyroXQGcZY7Ia0LemT3Fhj9aKucZMa24Xen
+         RW55ceFcA6a/6YspzWkruQOh2QIr4ncNeb6Rg/CKMQefTfBXjX9NwsUBQdBBrpqp1y+J
+         dGkg==
+X-Gm-Message-State: AFq9FYIEQ5Rs+J7YWwkZdqd4qbPCtXYXhEXZu9ZSvS3Y3ykI0mawAvLK
+	eEhbFMr4ulCaRm3TVjRkz/dQL7UEUscStTcSZifHd2g/ZiLeUPftaUch
+X-Gm-Gg: AYBFou1sFx6QmiD18/NzCCFaedmroKdy5lHM08A1T4FOo0vJyDWgWkbBtwZiuWx7b6i
+	oRso7Jvg4rHTbWzRKfrOT6UF08PvUzFT+0jNbpTenRSNAeH13dXPq4D/9ZNM6VEfGgT6HjImmHo
+	/cHFAvIMwSSAM+aSiwdM/Zhw3wSvT5Z/UxsUScBVkhyLelLISiCVZLL/9Kme+f/sGDGgskpqnPc
+	D0qqPZORleBDJiPM2ZwH4zYugqLxR+1HCDY9pTPSysRnzlUvq4IQbRfmFKTZx/VnQWY3SiXUEut
+	4twWpT5vpiSroF9PGsppb7hgnh1eOXKpacsdbiQSfFyR8rATXnJOu1LakgrdPyKmTF6Q2ClGPvQ
+	i98g39VyHH+6+rYVx84QvdDmb1VQN3GfgOg5qM7ffZJgxZS0Tu+us7SOp0wu3RMgbyWvqNdV13d
+	B7tz/VBgSXrjrI+dI2P/zpaC+XtuEfecYR9SUqjNV+nxmJWYHBZskj6u4x9BVmhAfH/jY6lzym+
+	gfhvSD4tZYQRvCAEOaK7U40iCKHxrxO684=
+X-Received: by 2002:a05:600d:4444:20b0:4a1:b027:99dc with SMTP id 5b1f17b1804b1-4a1d760098dmr81877465e9.18.1792343059298;
+        Sun, 18 Oct 2026 10:04:19 -0700 (PDT)
 Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48dfd503d78sm17256266f8f.50.2026.10.18.09.47.39
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48dfd500e75sm17494036f8f.42.2026.10.18.10.04.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Oct 2026 09:47:40 -0700 (PDT)
-Date: Sun, 18 Oct 2026 17:47:38 +0100
+        Sun, 18 Oct 2026 10:04:18 -0700 (PDT)
+Date: Sun, 18 Oct 2026 18:04:17 +0100
 From: David Laight <david.laight.linux@gmail.com>
 To: sashiko-bot@kernel.org
 Cc: sashiko-reviews@lists.linux.dev, "Andrew Morton"
@@ -69,13 +69,12 @@ Cc: sashiko-reviews@lists.linux.dev, "Andrew Morton"
  Chamberlain" <mcgrof@kernel.org>, "Andrey Grodzovsky"
  <andrey.grodzovsky@crowdstrike.com>, "Steven Rostedt"
  <rostedt@goodmis.org>, nathan@kernel.org, nsc@kernel.org
-Subject: Re: [PATCH 14/15] kallsyms: scripts/kallsyms: Reduce the output
- file size
-Message-ID: <20261018174738.79ae97b3@pumpkin>
-In-Reply-To: <sashiko-outbox-176260@kernel.org>
+Subject: Re: [PATCH v2 next 06/15] kallsyms: Optimise symbol name search
+Message-ID: <20261018180417.5438751b@pumpkin>
+In-Reply-To: <sashiko-outbox-176273@kernel.org>
 References: <20261018155206.132411-1-david.laight.linux@gmail.com>
-	<20261018155206.132411-15-david.laight.linux@gmail.com>
-	<sashiko-outbox-176260@kernel.org>
+	<20261018155206.132411-7-david.laight.linux@gmail.com>
+	<sashiko-outbox-176273@kernel.org>
 X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -86,90 +85,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On Sun, 18 Oct 2026 16:05:41 +0000
+On Sun, 18 Oct 2026 16:15:56 +0000
 sashiko-bot@kernel.org wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] kallsyms: NULL dereference and offset mismatch in write_src() on unused tokens
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] kallsyms: race in set_kallsyms_off_size() causes NULL dereference
+> - [High] kallsyms: set_kallsyms_off_size() sleeps in atomic context
 > --
 > 
-> commit 20102d6e3b81d88a59f6ac3b9732c8a7b28d3f98
+> commit d36232e927821c82911022ce5bae7cb3de465edd
 > Author: David Laight <david.laight.linux@gmail.com>
 > 
-> kallsyms: scripts/kallsyms: Reduce the output file size
+> kallsyms: Optimise symbol name search
 > 
-> This commit reduces the size of the assembly output generated by
-> scripts/kallsyms by formatting byte values in decimal, packing multiple
-> values per line for kallsyms_token_index and kallsyms_markers, moving the
-> token tables first, and replacing duplicate symbol name comments with
-> symbol offsets.
+> This commit optimizes symbol name lookups by indexing the compressed
+> names table directly instead of the array of symbol values. It supports
+> both 24-bit and 32-bit offset tables, selecting between them using a
+> static branch initialized on the first symbol lookup.
 > 
-> > diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
-> > index 189fb50ec8c58..8576fe6ad90b7 100644
-> > --- a/scripts/kallsyms.c
-> > +++ b/scripts/kallsyms.c
-> > @@ -350,6 +350,30 @@ static void write_src(void)
-> >  	struct sym_entry *se;
-> >  
-> >  	printf("\t.section .rodata, \"a\"\n");
-> > +	printf("\n");
-> > +
-> > +	output_label("kallsyms_token_table");
-> > +	off = 0;
-> > +	for (i = 0; i < 256; i++) {
-> > +		best_idx[i] = off;
-> > +		off += token_table[i].len + 1;
-> > +		printf("\t.asciz\t\"%s\"\t/* %u: %u */\n",
-> > +		       token_table[i].str, i, token_table[i].refs);
-> > +	}  
-> 
-> [Severity: High]
-> Can token_table[i].str be NULL here when fewer than 256 tokens are
-> populated?
-
-This is the same issue it found earlier in patch 11.
-
-David
-
-> 
-> During pass 0 of a CONFIG_KALLSYMS=y build, scripts/link-vmlinux.sh runs
-> scripts/kallsyms on an empty symbol file:
-> 
-> scripts/link-vmlinux.sh:kallsyms_step() {
->     ...
->     if is_enabled CONFIG_KALLSYMS; then
->         true > .tmp_vmlinux0.syms
->         kallsyms .tmp_vmlinux0.syms .tmp_vmlinux0.kallsyms
->     fi
->     ...
-> }
-> 
-> When symbol_cnt is 0 (or whenever the input symbols do not populate all
-> 256 entries), insert_real_symbols_in_table() leaves token_table[i].str as
-> NULL and token_table[i].len as 0 for unreferenced tokens:
-> 
-> scripts/kallsyms.c:insert_real_symbols_in_table() {
->     ...
->     for (i = 0; i <= 255; i++) {
->         if (!token_table[i].refs)
->             continue;
->         token_table[i].len = 1;
->         token_table[i].str = xmalloc(2);
->         token_table[i].str[0] = i;
->         token_table[i].str[1] = 0;
->     }
-> }
-> 
-> In optimize_result(), find_best_token() then returns -1 and breaks out of
-> the loop before filling the remaining unused tokens.
-> 
-> When write_src() passes token_table[i].str to printf("%s"), isn't that
-> undefined behavior that segfaults on non-glibc hosts (such as musl)? Also,
-> on glibc hosts where printf("%s", NULL) outputs "(null)" (7 bytes
-> including the NUL terminator in .asciz), off is only incremented by
-> token_table[i].len + 1 (1 byte), which mismatches the actual size emitted
-> into kallsyms_token_table and corrupts the offsets recorded in best_idx[].
+> > diff --git a/kernel/kallsyms.c b/kernel/kallsyms.c
+> > index d18d78e626db2..31451feac8221 100644
+> > --- a/kernel/kallsyms.c
+> > +++ b/kernel/kallsyms.c  
 > 
 > [ ... ]
 > 
+> > @@ -185,14 +216,19 @@ unsigned long kallsyms_sym_address(int idx)
+> >  	return (unsigned long)offset_to_ptr(kallsyms_offsets + idx);
+> >  }
+> >  
+> > -static unsigned int get_symbol_seq(int index)
+> > -{
+> > -	unsigned int i, seq = 0;
+> > +static DEFINE_STATIC_KEY_TRUE(kallsyms_off_size_24);
+> >  
+> > -	for (i = 0; i < 3; i++)
+> > -		seq = (seq << 8) | kallsyms_seqs_of_names[3 * index + i];
+> > +static inline unsigned int get_symbol_name_offset(unsigned long index)
+> > +{
+> > +	if (static_branch_likely(&kallsyms_off_size_24))
+> > +		return kallsyms_off24_of_names[index].v;
+> > +	return kallsyms_off32_of_names[index];
+> > +}
+> >  
+> > -	return seq;
+> > +static void set_kallsyms_off_size(void)
+> > +{
+> > +	if (kallsyms_off_size != 24)
+> > +		static_branch_disable(&kallsyms_off_size_24);
+> >  }  
+> 
+> [Severity: High]
+> Can calling static_branch_disable() in set_kallsyms_off_size() sleep in
+> an atomic or early-boot context when kallsyms_off_size != 24?
 
+Any suggestions on how to get the static branch set early enough?
+
+...
+> 
+> [Severity: High]
+> Does DO_ONCE_LITE(set_kallsyms_off_size) allow a concurrent caller to
+> dereference NULL in get_symbol_name_offset() when kallsyms_off_size == 32?
+
+I should have just open-code the 'do once'.
+It doesn't matter if it is called twice.
+
+But it looks as though I can't patch the code from there anyway.
+
+David
