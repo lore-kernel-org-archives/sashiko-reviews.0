@@ -1,159 +1,164 @@
-Received: from mta0.migadu.com (out-51.mta0.migadu.com [91.218.175.51])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE493DB333
-	for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 16:33:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A728134040D
+	for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 16:37:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792341224; cv=none; b=DdNlYhDxhluS9uzed5+sRvL8EFLsSBWrOixfEw5DubUcZ/T9ibsQ0R+ZF4PCLNTM2MAP8D3KScmtoI6cIPa2cvQXuh7BawNOgS5+rFLWy4mkROoPHBK+Ai4KBhgVHiH1TMSfYsrDI5syQhnNREy7hPmLMXius9rxTFuO0XWCXEg=
+	t=1792341451; cv=none; b=Il09D8rkLs84SjKon13HgPc7Ovp9Z2R0n8u/AOc4bk2c7ji5QWrTRcggROGNbg0wsPwx0X3gi8ESPUA08l9j0Rb7t3jbLaNBbM+KeS1TyLnsSpJegrdnYyUpepT0knxEYnLxX6r1/QkL2DCtGIx2DQeUn0UZcS72Hq4QwPr8/tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792341224; c=relaxed/simple;
-	bh=fwOw3eqwEIOqybjjAJDDdPhaGAScdIoPMfsgoZAj0Rs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qRHIMTDN0pd/yB5nTIKD+ZA1t+MDNRwum5U6CpatBhIzbIOgQ0iOOGYNNoekGTfq15Y+gYcR4RT96EVTe+WVY85+SadI9t200sYXz7HQuN/eSdfWlOxXMCQYuFW8FOZoWUMxNd98DZNU3K6QTXhwybS9yY2yCfD3HuBhccDA4ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=wveEgMyO; arc=none smtp.client-ip=91.218.175.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1792341451; c=relaxed/simple;
+	bh=Dn4leQDbq1m2uRP6oBxoD4WvGafxPMKi/15ipQiHAi8=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=RszpmOgb3w110brh3KrbnIcDBFmmfhdLrMcZrxT4arde/FwlDKcgwPm+mR2dGwnJCr4jzuBIkDBuI6QbPxvG/QIrWdZbcpkUnpq5ukCztMlpMsnKDRSICuaMZUHAevpfFQVhWAkm0zrQUkTH1dGsAzelAfZ4lbUb2Xpe8MnTQtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HAyx19q5; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="wveEgMyO"
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=fwOw3eqwEIOqybjjAJDDdPhaGAScdIoPMfsgoZAj0Rs=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1792341212; v=1; x=1792946012;
- b=wveEgMyOBWq9vUsHNN5ijR8M8EcyN3CgTyDeH5t+41g+S4DoYZDQUrd1n/5hcCCYDUqeY+TA
- N93445JAQJiR4Y3vCBRAVmeP2wB4dLxE6WeLgjzRuGU5AjhNEYpQ/k/j6HVHQIH3UCnJo3wPoRo
- EclqAGB63yuZ+R02EILqm9Tc=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 5a78a752332e31e8;
-	Sun, 18 Oct 2026 16:33:32 +0000
-X-Mizu-Trace-ID: 5a78a752332e31e8
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <a2d2baee-68f1-4f92-ba64-0863621b0882@linux.dev>
-Date: Mon, 19 Oct 2026 00:33:29 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HAyx19q5"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-48e00eee27dso636929f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 09:37:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792341442; x=1792946242; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=Ua6j+thg4pXL7S9wJjMaHKA5Xj0iNYktIJ1108GNG0g=;
+        b=HAyx19q5XTzJB4L+dB8hVDJ88md5njiPh4sNFYdZoAQIRVFYI/t8QLHQ1jBndcywSY
+         FFp1jseIjjrQAqsZVNyXFr39EKhqd4nQ/+H4+sB7KEr5IcOSEHNx3x2Rt9fIlkL1xLPO
+         ga31ktuvN/2MGPZUYVl3p0zj6MVwxKtvPSWE4Zh33yJC2GO7WohhOhXzKqe1LXA8jKti
+         jq0rfSLlnYoW2sxMxhAPj3ije/95V/Jw3Byr3KO80/o3ekdy+UKPKqQpD1qW/Ui0Cf+2
+         ouK0ABQII0DDMbLuKXI2AKqwcl5X2mOVjRuWlbjR8q1fWQOK3lMunUS2Ug871nZS0aXQ
+         6H7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792341442; x=1792946242;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Ua6j+thg4pXL7S9wJjMaHKA5Xj0iNYktIJ1108GNG0g=;
+        b=oB6USGmYuyj+RL0rPGdbAFBXF4eFrd9MoP82g4Vf75w7J4+7PJ/OBuDymqq+E8gBns
+         1bSsL+95Xvtuq5PB3e7eEBFEetmxqfUcRUXGrdX58U+rl4pCAXB9zLyfEYQjhrrdJTp5
+         Hcs99cewZKNLl/FQEnEhELhF+CBNXj4t6JtEa6yWnG9kNopFcPBEpsdmoZR7ZErZdjjo
+         46z06iO4qqerh8D3e3xvmNCgrlMIZGKBDBzqevJUQt1g409tEim26WuCMym8nvVQC0lm
+         JrhPATD0m5e4OVkUUekcmYpGlNBQUtNAH2x1AyrZPHnRCyHMakw+l7MfpRtQEhjjZeI/
+         a+Pw==
+X-Gm-Message-State: AFq9FYINi01nLpaZ89+giezekpM4Qjah6vTqasjjrvJmDtnU9YWnMyMF
+	LmGNweGl+TjrfZWid7w+k7+XhA/bdMHBXFsUQB4mNpGsCjfeT0pTrgwZ
+X-Gm-Gg: AYBFou1ug2nYOlUi3VURTMRln30zHnRzB26KtgE3yCaJKer2Ku79ZV+KkOcVIR+TchJ
+	l4vRvqJX0/CKq/070dcANdpbQAB9vPUMXrhLyvMxjugQ3RBEewyaL/FaeR89GN34UTit5VNelF6
+	726gKzMg2qbsLGaVkvOM46i9zI6RvrNdteFfOlvEWQqkOstITenHCY3BeJEA9XRXwxQyKcEp6SQ
+	ljuUAEOW2kGzfrQbcVsXcBpGykrHMgGyISL8Bt/mZNXVqOflUqFFxZdt8cevL1ApPtVQq0VyzVe
+	bbWmS2yleiJYkXc5qpBvbjhMmock+lObSiosTtdEYrRbMF6Kd4sR7ra6uY+qPElp4Wqah9ofvdC
+	jDyhJX+bB4ZvuS8Ik27kpo/lHg9G30v4PIU0/btqOkzz7UPqMx6DBD9a/silLtBhmXxHh4jHbp8
+	/lbZ3jdEpZg4c2MpxP/uNqrCjMQubXXPRbC8a4Ncjnn7u1oQ7iOCuOmRPYNd70tUtyeWxdW3x7K
+	5HbY9ZirdlIYA2vEVpiU6UNK4OB85XzC4o=
+X-Received: by 2002:a05:6000:4382:b0:48e:932:aef5 with SMTP id ffacd0b85a97d-48e0932b0d7mr10246501f8f.21.1792341442100;
+        Sun, 18 Oct 2026 09:37:22 -0700 (PDT)
+Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48dfd5033a2sm17651691f8f.45.2026.10.18.09.37.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Oct 2026 09:37:21 -0700 (PDT)
+Date: Sun, 18 Oct 2026 17:37:20 +0100
+From: David Laight <david.laight.linux@gmail.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, "Andrew Morton"
+ <akpm@linux-foundation.org>, "Petr Mladek" <pmladek@suse.com>, "Kees Cook"
+ <kees@kernel.org>, linux-kbuild@vger.kernel.org, bpf@vger.kernel.org, "Jim
+ Cromie" <jim.cromie@gmail.com>, "Lorenzo Stoakes" <ljs@kernel.org>, "Luis
+ Chamberlain" <mcgrof@kernel.org>, "Andrey Grodzovsky"
+ <andrey.grodzovsky@crowdstrike.com>, "Steven Rostedt"
+ <rostedt@goodmis.org>, nathan@kernel.org, nsc@kernel.org
+Subject: Re: [PATCH v2 next 11/15] kallsyms: scripts/kallsyms: Keep full
+ expansion of tokens
+Message-ID: <20261018173720.142adfde@pumpkin>
+In-Reply-To: <sashiko-outbox-176255@kernel.org>
+References: <20261018155206.132411-1-david.laight.linux@gmail.com>
+	<20261018155206.132411-12-david.laight.linux@gmail.com>
+	<sashiko-outbox-176255@kernel.org>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next 5/6] libbpf: Add bpf_link_create_log API
-To: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-Cc: linux-trace-kernel@vger.kernel.org
-References: <20261017142649.51047-1-leon.hwang@linux.dev>
- <20261017142649.51047-6-leon.hwang@linux.dev>
- <sashiko-outbox-175565@kernel.org>
-Content-Language: en-US
-From: Leon Hwang <leon.hwang@linux.dev>
-In-Reply-To: <sashiko-outbox-175565@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
+On Sun, 18 Oct 2026 16:00:02 +0000
+sashiko-bot@kernel.org wrote:
 
-
-On 2026/10/17 22:43, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] libbpf: missing OPTS_VALID() check for log_opts in __bpf_link_create()
-> - [Medium] libbpf: bpf_link_create_log added to released LIBBPF_1.8.0 in libbpf.map
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] kallsyms: NULL token_table[].str passed to printf() in write_src()
 > --
 > 
-> commit 5adb04f5088a9ab6aa21d83e4c9370c13ebdaab6
-> Author: Leon Hwang <leon.hwang@linux.dev>
+> commit b464b94e58431a4ad1ec112c739d63f16547b8f2
+> Author: David Laight <david.laight.linux@gmail.com>
 > 
-> libbpf: Add bpf_link_create_log API
+> kallsyms: scripts/kallsyms: Keep full expansion of tokens
 > 
-> This commit introduces the bpf_link_create_log() API to pass struct
-> bpf_log_opts when creating BPF links without modifying struct
-> bpf_link_create_opts.
+> This commit stores the full NUL-terminated string expansion for each token
+> in token_table[] as tokens are allocated, avoiding recursive symbol
+> expansions later.
 > 
->> diff --git a/tools/lib/bpf/bpf.c b/tools/lib/bpf/bpf.c
->> index 17e73e443bc7a..eb127d71f3c83 100644
->> --- a/tools/lib/bpf/bpf.c
->> +++ b/tools/lib/bpf/bpf.c
->> @@ -788,9 +788,10 @@ int bpf_prog_detach2(int prog_fd, int target_fd, enum bpf_attach_type type)
->>  	return bpf_prog_detach_opts(prog_fd, target_fd, type, NULL);
->>  }
->>  
->> -int bpf_link_create(int prog_fd, int target_fd,
->> -		    enum bpf_attach_type attach_type,
->> -		    const struct bpf_link_create_opts *opts)
->> +static int __bpf_link_create(int prog_fd, int target_fd,
->> +			     enum bpf_attach_type attach_type,
->> +			     const struct bpf_link_create_opts *opts,
->> +			     struct bpf_log_opts *log_opts)
->>  {
->>  	const size_t attr_sz = offsetofend(union bpf_attr, link_create);
->>  	__u32 target_btf_id, iter_info_len, relative_id;
->> @@ -965,7 +966,7 @@ int bpf_link_create(int prog_fd, int target_fd,
->>  		break;
->>  	}
->>  proceed:
->> -	fd = sys_bpf_fd(BPF_LINK_CREATE, &attr, attr_sz);
->> +	fd = __sys_bpf_fd(&attr, attr_sz, BPF_LINK_CREATE, log_opts);
-> 
-> [Severity: Medium]
-> Should __bpf_link_create() validate log_opts with OPTS_VALID(log_opts,
-> bpf_log_opts) before passing it to __sys_bpf_fd()?
-> 
-> Currently __bpf_link_create() validates opts, but not log_opts:
-> 
-> tools/lib/bpf/bpf.c:__bpf_link_create() {
-> 	if (!OPTS_VALID(opts, bpf_link_create_opts))
-> 		return libbpf_err(-EINVAL);
-> }
-
-Will move OPTS_VALID(opts, bpf_link_create_opts) to __sys_bpf_fd() in
-the next revision.
-
-> 
-> When a caller passes a malformed struct bpf_log_opts (such as an invalid sz
-> or non-zero unknown trailing fields) to bpf_link_create_log(),
-> __bpf_link_create() forwards it directly to __sys_bpf_fd(), which accesses
-> log_opts via OPTS_GET() and OPTS_SET() without checking OPTS_VALID().
-> 
-> For comparison, bpf_map_create() validates log_opts before calling
-> __sys_bpf_fd():
-> 
-> tools/lib/bpf/bpf.c:bpf_map_create() {
-> 	log_opts = OPTS_GET(opts, log_opts, NULL);
-> 	if (!OPTS_VALID(log_opts, bpf_log_opts))
-> 		return libbpf_err(-EINVAL);
-> 
-> 	fd = __sys_bpf_fd(&attr, attr_sz, BPF_MAP_CREATE, log_opts);
-> }
-> 
+> > diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
+> > index 5603b2a6c77bd..9e1bc0fdaa9f2 100644
+> > --- a/scripts/kallsyms.c
+> > +++ b/scripts/kallsyms.c  
 > [ ... ]
+> > @@ -415,9 +403,8 @@ static void write_src(void)
+> >  	off = 0;
+> >  	for (i = 0; i < 256; i++) {
+> >  		best_idx[i] = off;
+> > -		expand_symbol(token_table[i].ch, token_table[i].len, buf);
+> > -		printf("\t.asciz\t\"%s\"\n", buf);
+> > -		off += strlen(buf) + 1;
+> > +		off += token_table[i].len + 1;
+> > +		printf("\t.asciz\t\"%s\"\n", token_table[i].str);
+> >  	}
+> >  	printf(".size kallsyms_token_table, . - kallsyms_token_table\n");
+> >  	printf("\n");  
 > 
->> diff --git a/tools/lib/bpf/libbpf.map b/tools/lib/bpf/libbpf.map
->> index eeba4072a5dac..990e2f926ecc3 100644
->> --- a/tools/lib/bpf/libbpf.map
->> +++ b/tools/lib/bpf/libbpf.map
->> @@ -458,6 +458,7 @@ LIBBPF_1.7.0 {
->>  
->>  LIBBPF_1.8.0 {
->>  	global:
->> +		bpf_link_create_log;
->>  		bpf_map__attach_cgroup_opts;
->>  		bpf_prog_stream_open;
->>  		bpf_program__add_flags;
-> 
-> [Severity: Medium]
-> Should bpf_link_create_log be placed under the LIBBPF_1.9.0 stanza in
-> tools/lib/bpf/libbpf.map instead of LIBBPF_1.8.0?
-> 
-> LIBBPF_1.8.0 is already succeeded by LIBBPF_1.9.0 at the bottom of
-> tools/lib/bpf/libbpf.map:
-> 
-> LIBBPF_1.9.0 {
-> } LIBBPF_1.8.0;
-> 
-> Adding bpf_link_create_log to LIBBPF_1.8.0 exports the new symbol under the
-> previous version node rather than the current LIBBPF_1.9.0 development cycle.
-> 
+> [Severity: High]
+> Can token_table[i].str be NULL here when some token slots remain unused?
 
-Oops. Will move it to the LIBBPF_1.9.0 section.
+Probably :-(
 
-Thanks,
-Leon
+> In insert_real_symbols_in_table(), token_table[i].str is only allocated for
+> character codes present in the input symbols:
+> 
+> 	for (i = 0; i <= 255; i++) {
+> 		if (!token_table[i].len)
+> 			continue;
+> 		token_table[i].str = xmalloc(2);
+> 		token_table[i].str[0] = i;
+> 		token_table[i].str[1] = 0;
+> 	}
+> 
+> Then in optimize_result(), the loop stops early as soon as find_best_token()
+> finds no remaining token pairs with positive profit:
+> 
+> 		best = find_best_token();
+> 		if (best < 0)
+> 			break;
+> 
+> Any remaining unused entries in token_table[] keep len == 0 and str == NULL.
+> During pass 0 in scripts/link-vmlinux.sh, kallsyms is invoked on an empty
+> symbol file (.tmp_vmlinux0.syms), leaving all 256 token_table[i].str
+> pointers as NULL.
+> 
+> Previously, expand_symbol() wrote an empty string into buf when len was 0.
+> Passing a NULL token_table[i].str to printf("%s") in write_src() causes a
+> segmentation fault on non-glibc hosts (such as musl) or prints "(null)" on
+> glibc hosts while advancing off by only 1 byte, which corrupts
+> kallsyms_token_table and best_idx[].
+
+For glibc builds it won't really matter - that corrupt file doesn't matter
+and in reality there are always enough symbols.
+
+I'll add ?: "" to the code.
+
+David
+
 
