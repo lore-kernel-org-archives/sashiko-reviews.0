@@ -1,80 +1,106 @@
-Received: from mta0.migadu.com (out-58.mta0.migadu.com [91.218.175.58])
+Received: from mta0.migadu.com (out-224.mta0.migadu.com [91.218.175.224])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF87344DB9
-	for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 15:15:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F534D7D3B
+	for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 16:28:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.224
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792336557; cv=none; b=r42x9i3SmL5vQ4FXdLUE4TKnekrzzsvtiJPzkLQ/YAEm3pUgOYx2i+HHNFQ9PJFDRMUUq6g2LsHeBKosvEMZrXKcyO4XiBFejAMd98mey6DJ2M/E6e9Q/EgJKNGVfj8Vd1f8KGtbaAhkTemf/3ewt9djL9MW4tz7N0+whdwfY+o=
+	t=1792340937; cv=none; b=HGk5k4NlQ4dzcQZ2InQubTymfgw0qEDxNI7jDOpu4YXBzN2yLk7ibA2trXVQC4UEc0RwgsKrjotQkJhTdh40xij4pCFYCZFozALDmgJBFEdx6Y94tDyD32eTCgtAgmpEMJReZqjWqHhGwtctHXOArDVgJS0HJ+AFOwVuAPh/cUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792336557; c=relaxed/simple;
-	bh=RUm21wybWqL1C0tU5LmH7zuYeC/MbYwsi6nzJRHIrMo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=F90i+FAY6DJl1vWDf2joCOtpPQhNizqx6azq3BFDI4+sR0OQxdrf1UjXk0Y9CwZexVgffUwx2iyNV4a3R9xLdgdx5eUQIsnTcFe+UoQ8rssCUCXXVbw6+EGUZMDML5DFgQZDhSsq9xRey+kkRsq+7Cyq8J19jO06ZMgtOU/VGYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=AsoCKV+t; arc=none smtp.client-ip=91.218.175.58
+	s=arc-20240116; t=1792340937; c=relaxed/simple;
+	bh=L42fux9FkX7PdFA0Fbfsqg8O/3baLdxzaRMtvglaHYw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=h7s//eN+vfKs5LlNCnLmqOGpTsY7GN6Xn94VKv+kVRGviDMVkx4EnGdi5J4LeAEBE62qTU0wyXxZppP7OjNhngyT3oCRPmoQiN4URQqdCWPG2UZbPVrT+2x0z3Vz3Gh58Xzi5tGiOjXDCKxk++2rsPQRumM/HjA5x+/r2ip44jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=sjCLl7hz; arc=none smtp.client-ip=91.218.175.224
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="AsoCKV+t"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="sjCLl7hz"
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=RUm21wybWqL1C0tU5LmH7zuYeC/MbYwsi6nzJRHIrMo=;
+DKIM-Signature: a=rsa-sha256; bh=L42fux9FkX7PdFA0Fbfsqg8O/3baLdxzaRMtvglaHYw=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1792336553; v=1; x=1792941353;
- b=AsoCKV+tOsUOtIoRNiId21Jp8WMKr8R3gbuepPEwuSs98nX5+tnvP7QH/WAS+DiWncjFC4Ya
- jj9Pl7ruLK4GPMWIcLnJgX8UzkfoUUBOT+b7y4dPHSMk1UA7ZS3QLH2bgsHgr+TcXtD602xu58d
- 5zw8lZDo6DpxBZnAIewK65p8=
+ t=1792340933; v=1; x=1792945733;
+ b=sjCLl7hzK8/AzsPIANOdRQPqWK1kpU/4pi7aC8CdEmi6UYMc3x3yzhDK4+VyuWAqnSLVb4P/
+ NQxO9EzQCJWJMx/u9+j9OlD3eNydBNjf20/pj3YQZ4tzpE7ySCelYOFN/rC3Sc30lSNJ5grJCfg
+ pjblbGYVYHDSPNRSWk985q4s=
 X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 73bd9148a1814069;
-	Sun, 18 Oct 2026 15:15:53 +0000
-X-Mizu-Trace-ID: 73bd9148a1814069
+Received: by smtp.migadu.com with ESMTPS id 67c9c5eea7512f8c;
+	Sun, 18 Oct 2026 16:28:53 +0000
+X-Mizu-Trace-ID: 67c9c5eea7512f8c
 X-Migadu-Flow: FLOW_OUT
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5bcbb378fc9so5765e87.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 08:15:52 -0700 (PDT)
-X-Gm-Message-State: AFq9FYIjzjgIG0dtjkcYP6Khb8g7cFxUKE7lShVvL1dR6190zO4QTCB4
-	gTha+9PULqropi9JmtnfDrkOXnSfc0sjbA8TAuAjh72c4Hx7iSJx/xipT+BPwFv+MB0YnnPsmIY
-	01VGEHwsiDCIRU17bwOEerptnbf9bUJOV4dff/8pQ
-X-Received: by 2002:a05:6512:10d2:b0:5be:58ad:1ba4 with SMTP id
- 2adb3069b0e04-5be58ad1cccmr43392e87.6.1792336551261; Sun, 18 Oct 2026
- 08:15:51 -0700 (PDT)
+Message-ID: <6dc8b3e5-b4fe-45f6-9ed6-137c00e7d7db@linux.dev>
+Date: Mon, 19 Oct 2026 00:28:48 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261018080921.3942517-1-fuad.tabba@linux.dev> <sashiko-outbox-176009@kernel.org>
-In-Reply-To: <sashiko-outbox-176009@kernel.org>
-From: Fuad Tabba <fuad.tabba@linux.dev>
-Date: Sun, 18 Oct 2026 16:15:14 +0100
-X-Gmail-Original-Message-ID: <CA+EHjTyQ-fMMAdVbNpRBRmABox9PT4qYZ7sA3_6oY8R4QVRnvA@mail.gmail.com>
-X-Gm-Features: AclHuK8dSQbR9LjwbMs0rF-y41vhMpIYsrkhkNskk6dXGkghovZjiIfZf9BAEHY
-Message-ID: <CA+EHjTyQ-fMMAdVbNpRBRmABox9PT4qYZ7sA3_6oY8R4QVRnvA@mail.gmail.com>
-Subject: Re: [PATCH v2] KVM: arm64: Only enable S1PIE and S1POE with the
- features they imply
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
-	Marc Zyngier <maz@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next 1/6] bpf: Add syscall common attrs support for
+ link_create
+To: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
+Cc: linux-trace-kernel@vger.kernel.org
+References: <20261017142649.51047-1-leon.hwang@linux.dev>
+ <20261017142649.51047-2-leon.hwang@linux.dev>
+ <sashiko-outbox-175562@kernel.org>
+Content-Language: en-US
+From: Leon Hwang <leon.hwang@linux.dev>
+In-Reply-To: <sashiko-outbox-175562@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Sashiko, I see you're on Argon now... way to go!
+On 2026/10/17 22:39, sashiko-bot@kernel.org wrote:
 
-On Sun, 18 Oct 2026 09:29:22 +0100, sashiko-bot@kernel.org wrote:
 [...]
-> Won't a nested guest with S1PIE or S1POE and without TCR2 still leak and
-> corrupt the physical PIR_EL1, PIRE0_EL1, and POR_EL1 registers across
-> guests on VHE via PIR_EL2, PIRE0_EL2, and POR_EL2?
 
-Yes, these trap through HCR_EL2.NV and no FGT bit covers them, so the
-FGU misses them. v3 will UNDEF them along with their EL1 counterparts.
+>>  out:
+>> -	if (ret < 0)
+>> +	/* preserve original error even if log finalization is successful */
+>> +	err = bpf_log_attr_finalize(&attr_log, log);
+>> +	if (err)
+>> +		ret = err;
+>> +
+>> +	kfree(log);
+>> +
+>> +	if (ret < 0 && prog)
+>>  		bpf_prog_put(prog);
+>>  	return ret;
+>>  }
+> 
+> [Severity: Critical]
+> Can this underflow the refcount on prog and leak the newly installed link
+> file descriptor if bpf_log_attr_finalize() fails after link attachment
+> succeeds?
 
-> Similarly, if userspace enables TCR2 alongside S1PIE or S1POE while hiding
-> ATS1A or HPDS, leaving kvm_has_s1pie() and kvm_has_s1poe() unchanged means:
+Correct.
 
-With TCR2 present, the world switch saves and restores all of these
-registers, so nothing leaks. The rest is KVM's handling of an ID
-register combination the architecture doesn't allow, which this stable
-fix leaves alone.
+To avoid such prog leak, I'd like to report the log_true_size twice.
 
-Cheers,
-/fuad
+ret = bpf_log_attr_report_size(&attr_log, 0);
+if (ret)
+	goto out;
+
+switch (prog->type) {
+	/* ... */
+}
+
+out:
+if (ret) {
+	int err =  bpf_log_attr_finalize(&attr_log, log);
+
+	ret = err ? err : ret;
+}
+
+if (ret < 0 && prog)
+	bpf_prog_put(prog);
+
+kfree(log);
+return ret;
+
+Thanks,
+Leon
+
+> [...]
+
