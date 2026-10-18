@@ -1,129 +1,80 @@
-Received: from out162-62-58-211.mail.qq.com (out162-62-58-211.mail.qq.com [162.62.58.211])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta0.migadu.com (out-58.mta0.migadu.com [91.218.175.58])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1A44AD7C7
-	for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 15:12:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.58.211
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF87344DB9
+	for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 15:15:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792336369; cv=none; b=EWrI8kvKu3jqwLVmKQIYdnoqjpc9K2SL1ROaRIiQfygoTGQpZtTrp9708GpLt7PTp0jyigs5VkfDRoyOJP5M3FJeGqckPAxGmaoveKpTgdRpxeURNZp/IJyc+N1t/xvTbK1QeSmcPvtfDa08kErstHK6OH8FC9e8wlDMPHygRNc=
+	t=1792336557; cv=none; b=r42x9i3SmL5vQ4FXdLUE4TKnekrzzsvtiJPzkLQ/YAEm3pUgOYx2i+HHNFQ9PJFDRMUUq6g2LsHeBKosvEMZrXKcyO4XiBFejAMd98mey6DJ2M/E6e9Q/EgJKNGVfj8Vd1f8KGtbaAhkTemf/3ewt9djL9MW4tz7N0+whdwfY+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792336369; c=relaxed/simple;
-	bh=Hu1C+gxspGtogjhLwvc2sfoZ9RIMKEOB5ZA39HHhugk=;
-	h=From:To:Cc:Subject:Mime-Version:Content-Type:Date:Message-ID:
-	 References:In-Reply-To; b=udY8mcIma54M7J9WZAUbFwh/ZxlWNU+kBECH/q4WQk4rFf10e26r++rOxFywe9XxryouYMinljLoBATbpmqayxsJ5OeV0jL7pZAOlFLHv4C5dkdzVfC0/WkUwketiTq3F6Mbhe9OK+rgtzZuMmdY61p8CaePtsKlUX9r3t4zk9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=UThYTwQJ; arc=none smtp.client-ip=162.62.58.211
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	s=arc-20240116; t=1792336557; c=relaxed/simple;
+	bh=RUm21wybWqL1C0tU5LmH7zuYeC/MbYwsi6nzJRHIrMo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=F90i+FAY6DJl1vWDf2joCOtpPQhNizqx6azq3BFDI4+sR0OQxdrf1UjXk0Y9CwZexVgffUwx2iyNV4a3R9xLdgdx5eUQIsnTcFe+UoQ8rssCUCXXVbw6+EGUZMDML5DFgQZDhSsq9xRey+kkRsq+7Cyq8J19jO06ZMgtOU/VGYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=AsoCKV+t; arc=none smtp.client-ip=91.218.175.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="UThYTwQJ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1792336361; bh=Hu1C+gxspGtogjhLwvc2sfoZ9RIMKEOB5ZA39HHhugk=;
-	h=From:To:Cc:Subject:Date:References:In-Reply-To;
-	b=UThYTwQJTMc0wWxSjz2NECux799iRpy1aSU/6sIaGxdN3yvVwBo8UvFapPCOp4Hgs
-	 08qk0C8TMOs9w1Tpagg0qgmjwx1x5OBa3JhI0FIzUsMs6GdOatXHoI+Brji3R7n3SN
-	 CJuSKHPaKPSWlytEw+AmZNgbSvWTXrNerPAOShFI=
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
-X-QQ-XMAILINFO: MwjSFSbFHfyzxmNWeh0d6crR7yYkYywctExKdsld25OP39ZHntAYjg9A+HTA0K
-	 RI3j2YB8JYy4O+5ihovDUUiaWLPSf522NRo480M/QG4juEgNMYQuRKcvLQydltxEAZ75E2Ngex/EU
-	 F2J8sZFttEdaa5GWdCdxxNWjs/f6z5xVK98SqHZFnn30upRbBpuWDofO2PFODGbX7LQPLgUi/RlA5
-	 kjbiTc/lOpQpgjXRcPSKH69FK4U4Tw6CTYCzBZbF7VaPNEdvq9YEK+3Qv7Z2ExolQpyOpwmILbBBV
-	 aSGiqRrMBk1WEcBtYI0DsJUHzRjec7zfkfT51mEFdbWiP/OX/QmnaU02TvjPqcge2yEylIAwZEWes
-	 7V9L2cbwvIKKHNyYTMFEhTkD5mDXZa9gKGKF+h2xO8Z9HDn9O8/7oo7fDNMybTiDCT5kVwRy2IS+i
-	 CPtEIteZeaakPmyldBS7wV5zffh/Ak6POUneRsucyjxHxuOEpWBcLEAaBWHatTTjMUN9/ZQB4fvYp
-	 WzdJUTIPkChLNrbLh+Z7YCfi0klSJiCSgM6ucojvMZXINEu5jSYMHF2hvFoy/+u6pMgSP6FKCwViZ
-	 XUXk+jonzhrO2YPno/Jwb097CDa8UKPpmqg6p1kx8DNFmco28uHVZhLDn4XkMFBhWduPRwVHTUYfB
-	 3UwozOA4zQtf+BzObvJX0EBwuuByqyTifaOqe5j+wMBdS3HsvY4DxD1Q9ZhKIDtLBROi/4hF/VKkL
-	 h4yomItonsgqdk3qAABNG7/ljIzc0j8cHzSQkg4Fhz0m3Cqub4TxsJmi0comZ/7tvqfSV2+n89OIJ
-	 R3ULh8Vh/zJXf6zP3WMyu2nKq2em/D2S8//g+I/tc3I2NHFQ45+7573vqeYWSShBfn2sLrM262b8U
-	 cPCtFaiJ9KnT3hXNMZK6HdeeESfIMn3SvuF9cNOlVFY67rZucvy+1HZ3WEaK2a9MLquYHTE6nFEsA
-	 qW9fweTBK2aFr62yHBlgiiMl9Cd/lUF3X+nV6VS/WljDrcRCq8YlcBINWHNvVZlOLx0X0kNc72bnr
-	 nA8hq9egNkaffLlpFN5I7tSrHwETou82g/3oAQTDInbj2W6k=
-From: "=?utf-8?B?Q3VuaGFvIEx1?=" <1579567540@qq.com>
-To: "=?utf-8?B?c2FzaGlrby1yZXZpZXdz?=" <sashiko-reviews@lists.linux.dev>
-Cc: "=?utf-8?B?bGludXgtY2Fu?=" <linux-can@vger.kernel.org>, "=?utf-8?B?TWFyYyBLbGVpbmUtQnVkZGU=?=" <mkl@pengutronix.de>, "=?utf-8?B?T2xpdmVyIEhhcnRrb3Bw?=" <socketcan@hartkopp.net>, "=?utf-8?B?VmluY2VudCBNYWlsaG9s?=" <mailhol@kernel.org>, "=?utf-8?B?T2xla3NpaiBSZW1wZWw=?=" <o.rempel@pengutronix.de>
-Subject: Re: [PATCH net v6 3/6] can: rockchip_canfd: cancel bus-off restart before closing the device
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="AsoCKV+t"
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=RUm21wybWqL1C0tU5LmH7zuYeC/MbYwsi6nzJRHIrMo=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1792336553; v=1; x=1792941353;
+ b=AsoCKV+tOsUOtIoRNiId21Jp8WMKr8R3gbuepPEwuSs98nX5+tnvP7QH/WAS+DiWncjFC4Ya
+ jj9Pl7ruLK4GPMWIcLnJgX8UzkfoUUBOT+b7y4dPHSMk1UA7ZS3QLH2bgsHgr+TcXtD602xu58d
+ 5zw8lZDo6DpxBZnAIewK65p8=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 73bd9148a1814069;
+	Sun, 18 Oct 2026 15:15:53 +0000
+X-Mizu-Trace-ID: 73bd9148a1814069
+X-Migadu-Flow: FLOW_OUT
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5bcbb378fc9so5765e87.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 08:15:52 -0700 (PDT)
+X-Gm-Message-State: AFq9FYIjzjgIG0dtjkcYP6Khb8g7cFxUKE7lShVvL1dR6190zO4QTCB4
+	gTha+9PULqropi9JmtnfDrkOXnSfc0sjbA8TAuAjh72c4Hx7iSJx/xipT+BPwFv+MB0YnnPsmIY
+	01VGEHwsiDCIRU17bwOEerptnbf9bUJOV4dff/8pQ
+X-Received: by 2002:a05:6512:10d2:b0:5be:58ad:1ba4 with SMTP id
+ 2adb3069b0e04-5be58ad1cccmr43392e87.6.1792336551261; Sun, 18 Oct 2026
+ 08:15:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
-Date: Sun, 18 Oct 2026 23:12:39 +0800
-X-Priority: 3
-Message-ID: <tencent_EB0857C01DA2B3DF52532DCD92CC4642CC06@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-References: <20261017-rockchip-canfd-restart-close-v6-0-ed605feb4b6e@qq.com>
- <20261017-rockchip-canfd-restart-close-v6-3-ed605feb4b6e@qq.com>
-	<sashiko-outbox-176216@kernel.org>
-In-Reply-To: <sashiko-outbox-176216@kernel.org>
-X-QQ-mid: xmsezb41-0t1792336359ts2wan661
+MIME-Version: 1.0
+References: <20261018080921.3942517-1-fuad.tabba@linux.dev> <sashiko-outbox-176009@kernel.org>
+In-Reply-To: <sashiko-outbox-176009@kernel.org>
+From: Fuad Tabba <fuad.tabba@linux.dev>
+Date: Sun, 18 Oct 2026 16:15:14 +0100
+X-Gmail-Original-Message-ID: <CA+EHjTyQ-fMMAdVbNpRBRmABox9PT4qYZ7sA3_6oY8R4QVRnvA@mail.gmail.com>
+X-Gm-Features: AclHuK8dSQbR9LjwbMs0rF-y41vhMpIYsrkhkNskk6dXGkghovZjiIfZf9BAEHY
+Message-ID: <CA+EHjTyQ-fMMAdVbNpRBRmABox9PT4qYZ7sA3_6oY8R4QVRnvA@mail.gmail.com>
+Subject: Re: [PATCH v2] KVM: arm64: Only enable S1PIE and S1POE with the
+ features they imply
+To: sashiko-reviews@lists.linux.dev
+Cc: kvmarm@lists.linux.dev, Oliver Upton <oupton@kernel.org>, 
+	Marc Zyngier <maz@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-SGksCgo+IFtTZXZlcml0eTogTWVkaXVtXQo+IERvZXMgdXNpbmcgcHJpdi0+aXJxX3N1c3Bl
-bmRlZCBhcyBhIGJvb2xlYW4gZ2F0ZSBmbGFnIGJldHdlZW4KPiBya2NhbmZkX3NldF9tb2Rl
-KCkgYW5kIHJrY2FuZmRfaXJxKCkgbGVhdmUgYSByYWNlIHdpbmRvdyBkdXJpbmcgY29udHJv
-bGxlcgo+IHJlc3RhcnQgYW5kIHNoYXJlZCBJUlEgaGFuZGxpbmc/CgpUaGUgZmxhZyB3b3Jr
-cyB0b2dldGhlciB3aXRoIHN5bmNocm9uaXplX2lycSgpIHRvIGtlZXAgdGhlIElSUSBoYW5k
-bGVyCmZyb20gYWNjZXNzaW5nIHRoZSBkZXZpY2UgZHVyaW5nIHJlaW5pdGlhbGl6YXRpb24u
-IHN5bmNocm9uaXplX2lycSgpCndhaXRzIGZvciBoYW5kbGVycyB0aGF0IGhhdmUgYWxyZWFk
-eSBwYXNzZWQgdGhlIGZsYWcgY2hlY2suCgo+IFNldHRpbmcgcHJpdi0+aXJxX3N1c3BlbmRl
-ZCBvbiBlbnRyeSB0byBya2NhbmZkX3NldF9tb2RlKCkgYW5kIGNsZWFyaW5nIGl0IG9uCj4g
-ZXhpdCBhY3RzIGFzIGFuIGFkLWhvYyBsb2NrIHRoYXQgaXMgaW52aXNpYmxlIHRvIGxvY2tk
-ZXAgYW5kIGRvZXMgbm90Cj4gc2VyaWFsaXplIGFnYWluc3Qgb3RoZXIgY29uY3VycmVudCBy
-ZWFkZXJzIG9yIHdyaXRlcnMgb2Ygc2hhcmVkIHN0YXRlIChzdWNoIGFzCj4gcmtjYW5mZF9n
-ZXRfYmVycl9jb3VudGVyKCkpLgoKVGhlIEJFQyBjYWNoZSByYWNlIGlzIGEgcHJlLWV4aXN0
-aW5nIGlzc3VlLiBJIHdpbGwgbGVhdmUgaXQgb3V0IG9mIHRoaXMKc2VyaWVzIGZvciBub3cu
-IFdoZW4gSSBoYXZlIHRpbWUsIEkgd2lsbCBzZW5kIGEgc2VwYXJhdGUgcGF0Y2ggdG8gZml4
-IGl0LgoKPiBJbiBhZGRpdGlvbiwgcmtjYW5mZF9jaGlwX3N0YXJ0KCkgYWxyZWFkeSBwdXRz
-IHRoZSBjb250cm9sbGVyIGludG8KPiBSS0NBTkZEX1JFR19NT0RFX1dPUktfTU9ERSBhbmQg
-c2V0cyBwcml2LT5jYW4uc3RhdGUgPSBDQU5fU1RBVEVfRVJST1JfQUNUSVZFCj4gYmVmb3Jl
-IHJrY2FuZmRfc2V0X21vZGUoKSBjbGVhcnMgcHJpdi0+aXJxX3N1c3BlbmRlZDoKPgo+IGNh
-bl9yZXN0YXJ0KCkKPiAgIHJrY2FuZmRfc2V0X21vZGUobmRldiwgQ0FOX01PREVfU1RBUlQp
-Cj4gICAgIHJrY2FuZmRfY2hpcF9zdGFydChwcml2KQo+ICAgICAgIHJrY2FuZmRfY2hpcF9z
-ZXRfd29ya19tb2RlKHByaXYpOwo+ICAgICAgIHByaXYtPmNhbi5zdGF0ZSA9IENBTl9TVEFU
-RV9FUlJPUl9BQ1RJVkU7Cj4gICAgIHNtcF9zdG9yZV9yZWxlYXNlKCZwcml2LT5pcnFfc3Vz
-cGVuZGVkLCBmYWxzZSk7Cj4gICAgIHJrY2FuZmRfY2hpcF9pbnRlcnJ1cHRzX2VuYWJsZShw
-cml2KTsKPiAgICAgbmV0aWZfd2FrZV9xdWV1ZShuZGV2KTsKPgo+IEJlY2F1c2UgcmtjYW5m
-ZF9pcnEoKSByZWFkcyB0aGUgcmF3IHVubWFza2VkIGludGVycnVwdCBzdGF0dXMgZnJvbQo+
-IFJLQ0FORkRfUkVHX0lOVCBhbmQgbWFza3MgaXQgaW4gc29mdHdhcmUgd2l0aCB+cHJpdi0+
-cmVnX2ludF9tYXNrX2RlZmF1bHQKPiByYXRoZXIgdGhhbiBjb25zdWx0aW5nIFJLQ0FORkRf
-UkVHX0lOVF9NQVNLLCBhIHNoYXJlZCBJUlEgZmlyaW5nIG9uIHRoZQo+IElSUUZfU0hBUkVE
-IGxpbmUgYWZ0ZXIgc21wX3N0b3JlX3JlbGVhc2UoJnByaXYtPmlycV9zdXNwZW5kZWQsIGZh
-bHNlKSAob3IgYW4KPiBpbnRlcnJ1cHQgZmlyaW5nIHJpZ2h0IGFzIHJrY2FuZmRfY2hpcF9p
-bnRlcnJ1cHRzX2VuYWJsZSgpIHVubWFza3MgaGFyZHdhcmUKPiBpbnRlcnJ1cHRzKSBjYW4g
-ZW50ZXIgcmtjYW5mZF9pcnEoKSBhbmQgaGFuZGxlIGEgbmV3IGJ1cy1vZmYgY29uZGl0aW9u
-IGJlZm9yZQo+IHJrY2FuZmRfc2V0X21vZGUoKSBmaW5pc2hlczoKPgo+IHJrY2FuZmRfaXJx
-KCkKPiAgIHJrY2FuZmRfaGFuZGxlX3N0YXRlX2Vycm9yX2ludCgpCj4gICAgIHJrY2FuZmRf
-Y2hpcF9zdG9wKHByaXYsIENBTl9TVEFURV9CVVNfT0ZGKQo+ICAgICBjYW5fYnVzX29mZihu
-ZGV2KQo+Cj4gV2hlbiBya2NhbmZkX3NldF9tb2RlKCkgdGhlbiBleGVjdXRlcyBya2NhbmZk
-X2NoaXBfaW50ZXJydXB0c19lbmFibGUocHJpdikgYW5kCj4gbmV0aWZfd2FrZV9xdWV1ZShu
-ZGV2KSwgd291bGRuJ3QgaXQgdW5tYXNrIGludGVycnVwdHMgb24gdGhlIHN0b3BwZWQKPiBj
-b250cm9sbGVyIGFuZCB3YWtlIHRoZSB0cmFuc21pdCBxdWV1ZSB3aGlsZSBwcml2LT5jYW4u
-c3RhdGUgaXMKPiBDQU5fU1RBVEVfQlVTX09GRj8KClRoaXMgaXMgYWxyZWFkeSBoYW5kbGVk
-IGJ5IHBhdGNoIDUvNi4gcmtjYW5mZF9jaGlwX3N0YXJ0X2ZpbmlzaCgpIGhvbGRzCnR4X2xv
-Y2sgd2hpbGUgY2xlYXJpbmcgaXJxX3N1c3BlbmRlZCwgZW5hYmxpbmcgaW50ZXJydXB0cyBh
-bmQgd2FraW5nCnRoZSBxdWV1ZS4gVGhlIGJ1cy1vZmYgcGF0aCB0YWtlcyB0aGUgc2FtZSBs
-b2NrIGluIHJrY2FuZmRfdHhfZGlzYWJsZSgpCmJlZm9yZSBwdWJsaXNoaW5nIEJVU19PRkYg
-YW5kIHN0b3BwaW5nIHRoZSBjb250cm9sbGVyLiBBIG5ldyBidXMtb2ZmCnRoZXJlZm9yZSB0
-YWtlcyBlZmZlY3QgYWZ0ZXIgc3RhcnR1cCBmaW5pc2hlcy4KCj4gU2ltaWxhcmx5LCBiZWNh
-dXNlIHJrY2FuZmRfaXJxKCkgb25seSBjaGVja3MgcHJpdi0+aXJxX3N1c3BlbmRlZCAod2hp
-Y2ggaXMKPiBvbmx5IHNldCBkdXJpbmcgcmtjYW5mZF9zZXRfbW9kZSgpKSBhbmQgbWFza3Mg
-UktDQU5GRF9SRUdfSU5UIHdpdGgKPiB+cHJpdi0+cmVnX2ludF9tYXNrX2RlZmF1bHQsIHNo
-YXJlZCBJUlFzIGFycml2aW5nIGR1cmluZyBya2NhbmZkX29wZW4oKQo+IGJldHdlZW4gcmVx
-dWVzdF9pcnEoKSBhbmQgcmtjYW5mZF9jaGlwX2ludGVycnVwdHNfZW5hYmxlKCksIG9yIHdo
-aWxlIGluCj4gQ0FOX1NUQVRFX0JVU19PRkYgYWZ0ZXIgcmtjYW5mZF9jaGlwX3N0b3AoKSBt
-YXNrcyBSS0NBTkZEX1JFR19JTlRfTUFTSywgY2FuCj4gc3RpbGwgZXZhbHVhdGUgcGVuZGlu
-ZyBiaXRzIGluIFJLQ0FORkRfUkVHX0lOVC4gV291bGQgYSBwcm9wZXIgc3BpbmxvY2sgKG9y
-Cj4gaG9ub3JpbmcgdGhlIGFjdGl2ZSBtYXNrIHN0YXRlIHVuZGVyIGEgbG9jaykgYXZvaWQg
-dGhpcyByYWNlPwoKUGF0Y2ggNS82IGFsc28gc2V0cyBpcnFfc3VzcGVuZGVkIGluIHJrY2Fu
-ZmRfb3BlbigpIGJlZm9yZSByZXF1ZXN0X2lycSgpLgpJdCBpcyBjbGVhcmVkIGluIHJrY2Fu
-ZmRfY2hpcF9zdGFydF9maW5pc2goKSB1bmRlciB0eF9sb2NrLgoKVGhlIGJ1cy1vZmYgc3Rv
-cCBwYXRoIGFscmVhZHkgcmVzZXRzIHRoZSBoYXJkd2FyZSBhbmQgY2xlYXJzIFdPUktfTU9E
-RS4KSSBoYXZlIG5vdCBvYnNlcnZlZCBhIGZhaWx1cmUgY2F1c2VkIGJ5IHBlbmRpbmcgYml0
-cyByZW1haW5pbmcgYWZ0ZXIKcmVzZXQsIHNvIEkgZG8gbm90IHRoaW5rIHRoaXMgc2hvdWxk
-IGJlIGNvbnNpZGVyZWQgYSBidWcuCgpSZWdhcmRzLApDdW5oYW8gTHUK
+Sashiko, I see you're on Argon now... way to go!
 
+On Sun, 18 Oct 2026 09:29:22 +0100, sashiko-bot@kernel.org wrote:
+[...]
+> Won't a nested guest with S1PIE or S1POE and without TCR2 still leak and
+> corrupt the physical PIR_EL1, PIRE0_EL1, and POR_EL1 registers across
+> guests on VHE via PIR_EL2, PIRE0_EL2, and POR_EL2?
+
+Yes, these trap through HCR_EL2.NV and no FGT bit covers them, so the
+FGU misses them. v3 will UNDEF them along with their EL1 counterparts.
+
+> Similarly, if userspace enables TCR2 alongside S1PIE or S1POE while hiding
+> ATS1A or HPDS, leaving kvm_has_s1pie() and kvm_has_s1poe() unchanged means:
+
+With TCR2 present, the world switch saves and restores all of these
+registers, so nothing leaks. The rest is KVM's handling of an ID
+register combination the architecture doesn't allow, which this stable
+fix leaves alone.
+
+Cheers,
+/fuad
