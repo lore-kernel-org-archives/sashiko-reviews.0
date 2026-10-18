@@ -1,116 +1,129 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out162-62-58-211.mail.qq.com (out162-62-58-211.mail.qq.com [162.62.58.211])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32CA94CE662;
-	Sun, 18 Oct 2026 14:39:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1A44AD7C7
+	for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 15:12:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=162.62.58.211
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792334390; cv=none; b=hvqlQZSabY0TENngOIbj8cDNKDqcp6Lnc5Y26BTRQCC6rJ5cSXxE5xDZAHQnFLuQqX4KfUNNOItJMjsnXz2DuDlpyJf2hk2NSL1SMPlYLPt5HztjA0pUyu166bUU5Qvn+azsfYcZt/NEIP5DciWkI4O1LnnvrdU0FQ+BQEH7fr8=
+	t=1792336369; cv=none; b=EWrI8kvKu3jqwLVmKQIYdnoqjpc9K2SL1ROaRIiQfygoTGQpZtTrp9708GpLt7PTp0jyigs5VkfDRoyOJP5M3FJeGqckPAxGmaoveKpTgdRpxeURNZp/IJyc+N1t/xvTbK1QeSmcPvtfDa08kErstHK6OH8FC9e8wlDMPHygRNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792334390; c=relaxed/simple;
-	bh=SuY4gLuyRj7+8bL8p9hnHJM2T5/YY0D+QZt4mhfexhc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ey7axoshJcGGTkkqCV11KUDWSfPG/kG8v10lE2iIfMLAtFHKbrUN1kZd9ZnbmmrsmbZonul+lgiuvHWfv4VvUZawOgUYm2ctdVEv60XAteec7SeQtJ21F0a+jacgwB7FhStiBvNxNBqRb1egaIdYkJlWANIbXb6L290b0h23LuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cIZQ38Pg; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1792336369; c=relaxed/simple;
+	bh=Hu1C+gxspGtogjhLwvc2sfoZ9RIMKEOB5ZA39HHhugk=;
+	h=From:To:Cc:Subject:Mime-Version:Content-Type:Date:Message-ID:
+	 References:In-Reply-To; b=udY8mcIma54M7J9WZAUbFwh/ZxlWNU+kBECH/q4WQk4rFf10e26r++rOxFywe9XxryouYMinljLoBATbpmqayxsJ5OeV0jL7pZAOlFLHv4C5dkdzVfC0/WkUwketiTq3F6Mbhe9OK+rgtzZuMmdY61p8CaePtsKlUX9r3t4zk9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=UThYTwQJ; arc=none smtp.client-ip=162.62.58.211
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cIZQ38Pg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6FD1F000C4;
-	Sun, 18 Oct 2026 14:39:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792334388;
-	bh=llN8vi4Rd5xdSPsVbEvXNlM9uyfBMT7kb9KNI9c+8DY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cIZQ38PgZijku0YKSp8HNx2PxsLxD0duQzxinPRcPi/eyqrAnsOLbxnasfQSTiigG
-	 UN19RsdSfl4tW+PPnihHCFr5wAVa793i+qPbd/w1H/9Bwe2Vo9W6upfO/rkYlaD48/
-	 GDAp0VSLyZqT3/tK9GRCfB7wSnzjJbI4RR4jT4qzTFiKJ9ukNGh8bFhoSZMrIbKktD
-	 Df0OJuMFA+qzwsPRu6Bqf6o+iU2ed1zcJYMlRGMYkCHShRzOcNpmIIpMQIHLv9brQm
-	 W8lrzBlOVgjISJ5wRkg9Rybu7UNLNgli3k5AslW5jLqpxQfRlnQdQfYrfIvhw++mVJ
-	 u2XE1y/E7OQRg==
-From: Sasha Levin <sashal@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
-	linux-kbuild@vger.kernel.org,
-	Shuah Khan <shuah@kernel.org>,
-	linux-kselftest@vger.kernel.org,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	James Clark <james.clark@linaro.org>,
-	linux-perf-users@vger.kernel.org,
-	=?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH v2 5/7] tools: build kernel selftests in tools_build
-Date: Sun, 18 Oct 2026 10:39:45 -0400
-Message-ID: <20261018143945.4113338-1-sashal@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <sashiko-outbox-175556@kernel.org>
-References: <20261016143143.3613501-1-sashal@kernel.org> <20261016143143.3613501-6-sashal@kernel.org> <sashiko-outbox-175556@kernel.org>
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="UThYTwQJ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1792336361; bh=Hu1C+gxspGtogjhLwvc2sfoZ9RIMKEOB5ZA39HHhugk=;
+	h=From:To:Cc:Subject:Date:References:In-Reply-To;
+	b=UThYTwQJTMc0wWxSjz2NECux799iRpy1aSU/6sIaGxdN3yvVwBo8UvFapPCOp4Hgs
+	 08qk0C8TMOs9w1Tpagg0qgmjwx1x5OBa3JhI0FIzUsMs6GdOatXHoI+Brji3R7n3SN
+	 CJuSKHPaKPSWlytEw+AmZNgbSvWTXrNerPAOShFI=
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+X-QQ-XMAILINFO: MwjSFSbFHfyzxmNWeh0d6crR7yYkYywctExKdsld25OP39ZHntAYjg9A+HTA0K
+	 RI3j2YB8JYy4O+5ihovDUUiaWLPSf522NRo480M/QG4juEgNMYQuRKcvLQydltxEAZ75E2Ngex/EU
+	 F2J8sZFttEdaa5GWdCdxxNWjs/f6z5xVK98SqHZFnn30upRbBpuWDofO2PFODGbX7LQPLgUi/RlA5
+	 kjbiTc/lOpQpgjXRcPSKH69FK4U4Tw6CTYCzBZbF7VaPNEdvq9YEK+3Qv7Z2ExolQpyOpwmILbBBV
+	 aSGiqRrMBk1WEcBtYI0DsJUHzRjec7zfkfT51mEFdbWiP/OX/QmnaU02TvjPqcge2yEylIAwZEWes
+	 7V9L2cbwvIKKHNyYTMFEhTkD5mDXZa9gKGKF+h2xO8Z9HDn9O8/7oo7fDNMybTiDCT5kVwRy2IS+i
+	 CPtEIteZeaakPmyldBS7wV5zffh/Ak6POUneRsucyjxHxuOEpWBcLEAaBWHatTTjMUN9/ZQB4fvYp
+	 WzdJUTIPkChLNrbLh+Z7YCfi0klSJiCSgM6ucojvMZXINEu5jSYMHF2hvFoy/+u6pMgSP6FKCwViZ
+	 XUXk+jonzhrO2YPno/Jwb097CDa8UKPpmqg6p1kx8DNFmco28uHVZhLDn4XkMFBhWduPRwVHTUYfB
+	 3UwozOA4zQtf+BzObvJX0EBwuuByqyTifaOqe5j+wMBdS3HsvY4DxD1Q9ZhKIDtLBROi/4hF/VKkL
+	 h4yomItonsgqdk3qAABNG7/ljIzc0j8cHzSQkg4Fhz0m3Cqub4TxsJmi0comZ/7tvqfSV2+n89OIJ
+	 R3ULh8Vh/zJXf6zP3WMyu2nKq2em/D2S8//g+I/tc3I2NHFQ45+7573vqeYWSShBfn2sLrM262b8U
+	 cPCtFaiJ9KnT3hXNMZK6HdeeESfIMn3SvuF9cNOlVFY67rZucvy+1HZ3WEaK2a9MLquYHTE6nFEsA
+	 qW9fweTBK2aFr62yHBlgiiMl9Cd/lUF3X+nV6VS/WljDrcRCq8YlcBINWHNvVZlOLx0X0kNc72bnr
+	 nA8hq9egNkaffLlpFN5I7tSrHwETou82g/3oAQTDInbj2W6k=
+From: "=?utf-8?B?Q3VuaGFvIEx1?=" <1579567540@qq.com>
+To: "=?utf-8?B?c2FzaGlrby1yZXZpZXdz?=" <sashiko-reviews@lists.linux.dev>
+Cc: "=?utf-8?B?bGludXgtY2Fu?=" <linux-can@vger.kernel.org>, "=?utf-8?B?TWFyYyBLbGVpbmUtQnVkZGU=?=" <mkl@pengutronix.de>, "=?utf-8?B?T2xpdmVyIEhhcnRrb3Bw?=" <socketcan@hartkopp.net>, "=?utf-8?B?VmluY2VudCBNYWlsaG9s?=" <mailhol@kernel.org>, "=?utf-8?B?T2xla3NpaiBSZW1wZWw=?=" <o.rempel@pengutronix.de>
+Subject: Re: [PATCH net v6 3/6] can: rockchip_canfd: cancel bus-off restart before closing the device
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+Date: Sun, 18 Oct 2026 23:12:39 +0800
+X-Priority: 3
+Message-ID: <tencent_EB0857C01DA2B3DF52532DCD92CC4642CC06@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+References: <20261017-rockchip-canfd-restart-close-v6-0-ed605feb4b6e@qq.com>
+ <20261017-rockchip-canfd-restart-close-v6-3-ed605feb4b6e@qq.com>
+	<sashiko-outbox-176216@kernel.org>
+In-Reply-To: <sashiko-outbox-176216@kernel.org>
+X-QQ-mid: xmsezb41-0t1792336359ts2wan661
 
-On Sat, Oct 17, 2026 at 02:32:12PM +0000, sashiko-bot@kernel.org wrote:
->> +config TOOLS_BUILD_SELFTESTS_KEXEC
->> +	bool "kexec"
->> +	depends on X86_64
->
->[Severity: Medium]
->Does this unnecessarily restrict the kexec selftest to X86_64?
->
->Looking at tools/testing/selftests/kexec/Makefile, it explicitly supports both
->x86 (32-bit and 64-bit) and ppc64le:
-[...]
->Configuring the tools build on ppc64le or 32-bit x86 will not expose this
->option, silently excluding the test from being built and installed on these
->platforms.
+SGksCgo+IFtTZXZlcml0eTogTWVkaXVtXQo+IERvZXMgdXNpbmcgcHJpdi0+aXJxX3N1c3Bl
+bmRlZCBhcyBhIGJvb2xlYW4gZ2F0ZSBmbGFnIGJldHdlZW4KPiBya2NhbmZkX3NldF9tb2Rl
+KCkgYW5kIHJrY2FuZmRfaXJxKCkgbGVhdmUgYSByYWNlIHdpbmRvdyBkdXJpbmcgY29udHJv
+bGxlcgo+IHJlc3RhcnQgYW5kIHNoYXJlZCBJUlEgaGFuZGxpbmc/CgpUaGUgZmxhZyB3b3Jr
+cyB0b2dldGhlciB3aXRoIHN5bmNocm9uaXplX2lycSgpIHRvIGtlZXAgdGhlIElSUSBoYW5k
+bGVyCmZyb20gYWNjZXNzaW5nIHRoZSBkZXZpY2UgZHVyaW5nIHJlaW5pdGlhbGl6YXRpb24u
+IHN5bmNocm9uaXplX2lycSgpCndhaXRzIGZvciBoYW5kbGVycyB0aGF0IGhhdmUgYWxyZWFk
+eSBwYXNzZWQgdGhlIGZsYWcgY2hlY2suCgo+IFNldHRpbmcgcHJpdi0+aXJxX3N1c3BlbmRl
+ZCBvbiBlbnRyeSB0byBya2NhbmZkX3NldF9tb2RlKCkgYW5kIGNsZWFyaW5nIGl0IG9uCj4g
+ZXhpdCBhY3RzIGFzIGFuIGFkLWhvYyBsb2NrIHRoYXQgaXMgaW52aXNpYmxlIHRvIGxvY2tk
+ZXAgYW5kIGRvZXMgbm90Cj4gc2VyaWFsaXplIGFnYWluc3Qgb3RoZXIgY29uY3VycmVudCBy
+ZWFkZXJzIG9yIHdyaXRlcnMgb2Ygc2hhcmVkIHN0YXRlIChzdWNoIGFzCj4gcmtjYW5mZF9n
+ZXRfYmVycl9jb3VudGVyKCkpLgoKVGhlIEJFQyBjYWNoZSByYWNlIGlzIGEgcHJlLWV4aXN0
+aW5nIGlzc3VlLiBJIHdpbGwgbGVhdmUgaXQgb3V0IG9mIHRoaXMKc2VyaWVzIGZvciBub3cu
+IFdoZW4gSSBoYXZlIHRpbWUsIEkgd2lsbCBzZW5kIGEgc2VwYXJhdGUgcGF0Y2ggdG8gZml4
+IGl0LgoKPiBJbiBhZGRpdGlvbiwgcmtjYW5mZF9jaGlwX3N0YXJ0KCkgYWxyZWFkeSBwdXRz
+IHRoZSBjb250cm9sbGVyIGludG8KPiBSS0NBTkZEX1JFR19NT0RFX1dPUktfTU9ERSBhbmQg
+c2V0cyBwcml2LT5jYW4uc3RhdGUgPSBDQU5fU1RBVEVfRVJST1JfQUNUSVZFCj4gYmVmb3Jl
+IHJrY2FuZmRfc2V0X21vZGUoKSBjbGVhcnMgcHJpdi0+aXJxX3N1c3BlbmRlZDoKPgo+IGNh
+bl9yZXN0YXJ0KCkKPiAgIHJrY2FuZmRfc2V0X21vZGUobmRldiwgQ0FOX01PREVfU1RBUlQp
+Cj4gICAgIHJrY2FuZmRfY2hpcF9zdGFydChwcml2KQo+ICAgICAgIHJrY2FuZmRfY2hpcF9z
+ZXRfd29ya19tb2RlKHByaXYpOwo+ICAgICAgIHByaXYtPmNhbi5zdGF0ZSA9IENBTl9TVEFU
+RV9FUlJPUl9BQ1RJVkU7Cj4gICAgIHNtcF9zdG9yZV9yZWxlYXNlKCZwcml2LT5pcnFfc3Vz
+cGVuZGVkLCBmYWxzZSk7Cj4gICAgIHJrY2FuZmRfY2hpcF9pbnRlcnJ1cHRzX2VuYWJsZShw
+cml2KTsKPiAgICAgbmV0aWZfd2FrZV9xdWV1ZShuZGV2KTsKPgo+IEJlY2F1c2UgcmtjYW5m
+ZF9pcnEoKSByZWFkcyB0aGUgcmF3IHVubWFza2VkIGludGVycnVwdCBzdGF0dXMgZnJvbQo+
+IFJLQ0FORkRfUkVHX0lOVCBhbmQgbWFza3MgaXQgaW4gc29mdHdhcmUgd2l0aCB+cHJpdi0+
+cmVnX2ludF9tYXNrX2RlZmF1bHQKPiByYXRoZXIgdGhhbiBjb25zdWx0aW5nIFJLQ0FORkRf
+UkVHX0lOVF9NQVNLLCBhIHNoYXJlZCBJUlEgZmlyaW5nIG9uIHRoZQo+IElSUUZfU0hBUkVE
+IGxpbmUgYWZ0ZXIgc21wX3N0b3JlX3JlbGVhc2UoJnByaXYtPmlycV9zdXNwZW5kZWQsIGZh
+bHNlKSAob3IgYW4KPiBpbnRlcnJ1cHQgZmlyaW5nIHJpZ2h0IGFzIHJrY2FuZmRfY2hpcF9p
+bnRlcnJ1cHRzX2VuYWJsZSgpIHVubWFza3MgaGFyZHdhcmUKPiBpbnRlcnJ1cHRzKSBjYW4g
+ZW50ZXIgcmtjYW5mZF9pcnEoKSBhbmQgaGFuZGxlIGEgbmV3IGJ1cy1vZmYgY29uZGl0aW9u
+IGJlZm9yZQo+IHJrY2FuZmRfc2V0X21vZGUoKSBmaW5pc2hlczoKPgo+IHJrY2FuZmRfaXJx
+KCkKPiAgIHJrY2FuZmRfaGFuZGxlX3N0YXRlX2Vycm9yX2ludCgpCj4gICAgIHJrY2FuZmRf
+Y2hpcF9zdG9wKHByaXYsIENBTl9TVEFURV9CVVNfT0ZGKQo+ICAgICBjYW5fYnVzX29mZihu
+ZGV2KQo+Cj4gV2hlbiBya2NhbmZkX3NldF9tb2RlKCkgdGhlbiBleGVjdXRlcyBya2NhbmZk
+X2NoaXBfaW50ZXJydXB0c19lbmFibGUocHJpdikgYW5kCj4gbmV0aWZfd2FrZV9xdWV1ZShu
+ZGV2KSwgd291bGRuJ3QgaXQgdW5tYXNrIGludGVycnVwdHMgb24gdGhlIHN0b3BwZWQKPiBj
+b250cm9sbGVyIGFuZCB3YWtlIHRoZSB0cmFuc21pdCBxdWV1ZSB3aGlsZSBwcml2LT5jYW4u
+c3RhdGUgaXMKPiBDQU5fU1RBVEVfQlVTX09GRj8KClRoaXMgaXMgYWxyZWFkeSBoYW5kbGVk
+IGJ5IHBhdGNoIDUvNi4gcmtjYW5mZF9jaGlwX3N0YXJ0X2ZpbmlzaCgpIGhvbGRzCnR4X2xv
+Y2sgd2hpbGUgY2xlYXJpbmcgaXJxX3N1c3BlbmRlZCwgZW5hYmxpbmcgaW50ZXJydXB0cyBh
+bmQgd2FraW5nCnRoZSBxdWV1ZS4gVGhlIGJ1cy1vZmYgcGF0aCB0YWtlcyB0aGUgc2FtZSBs
+b2NrIGluIHJrY2FuZmRfdHhfZGlzYWJsZSgpCmJlZm9yZSBwdWJsaXNoaW5nIEJVU19PRkYg
+YW5kIHN0b3BwaW5nIHRoZSBjb250cm9sbGVyLiBBIG5ldyBidXMtb2ZmCnRoZXJlZm9yZSB0
+YWtlcyBlZmZlY3QgYWZ0ZXIgc3RhcnR1cCBmaW5pc2hlcy4KCj4gU2ltaWxhcmx5LCBiZWNh
+dXNlIHJrY2FuZmRfaXJxKCkgb25seSBjaGVja3MgcHJpdi0+aXJxX3N1c3BlbmRlZCAod2hp
+Y2ggaXMKPiBvbmx5IHNldCBkdXJpbmcgcmtjYW5mZF9zZXRfbW9kZSgpKSBhbmQgbWFza3Mg
+UktDQU5GRF9SRUdfSU5UIHdpdGgKPiB+cHJpdi0+cmVnX2ludF9tYXNrX2RlZmF1bHQsIHNo
+YXJlZCBJUlFzIGFycml2aW5nIGR1cmluZyBya2NhbmZkX29wZW4oKQo+IGJldHdlZW4gcmVx
+dWVzdF9pcnEoKSBhbmQgcmtjYW5mZF9jaGlwX2ludGVycnVwdHNfZW5hYmxlKCksIG9yIHdo
+aWxlIGluCj4gQ0FOX1NUQVRFX0JVU19PRkYgYWZ0ZXIgcmtjYW5mZF9jaGlwX3N0b3AoKSBt
+YXNrcyBSS0NBTkZEX1JFR19JTlRfTUFTSywgY2FuCj4gc3RpbGwgZXZhbHVhdGUgcGVuZGlu
+ZyBiaXRzIGluIFJLQ0FORkRfUkVHX0lOVC4gV291bGQgYSBwcm9wZXIgc3BpbmxvY2sgKG9y
+Cj4gaG9ub3JpbmcgdGhlIGFjdGl2ZSBtYXNrIHN0YXRlIHVuZGVyIGEgbG9jaykgYXZvaWQg
+dGhpcyByYWNlPwoKUGF0Y2ggNS82IGFsc28gc2V0cyBpcnFfc3VzcGVuZGVkIGluIHJrY2Fu
+ZmRfb3BlbigpIGJlZm9yZSByZXF1ZXN0X2lycSgpLgpJdCBpcyBjbGVhcmVkIGluIHJrY2Fu
+ZmRfY2hpcF9zdGFydF9maW5pc2goKSB1bmRlciB0eF9sb2NrLgoKVGhlIGJ1cy1vZmYgc3Rv
+cCBwYXRoIGFscmVhZHkgcmVzZXRzIHRoZSBoYXJkd2FyZSBhbmQgY2xlYXJzIFdPUktfTU9E
+RS4KSSBoYXZlIG5vdCBvYnNlcnZlZCBhIGZhaWx1cmUgY2F1c2VkIGJ5IHBlbmRpbmcgYml0
+cyByZW1haW5pbmcgYWZ0ZXIKcmVzZXQsIHNvIEkgZG8gbm90IHRoaW5rIHRoaXMgc2hvdWxk
+IGJlIGNvbnNpZGVyZWQgYSBidWcuCgpSZWdhcmRzLApDdW5oYW8gTHUK
 
-TOOLS_BUILD is only available on x86_64 and arm64 for now
-(TOOLS_BUILD_ABI), so no entry can be selected on ppc64le or 32-bit x86.
-The kexec Makefile has no tests for arm64, which leaves x86_64.
-
->> +$(selftest-shared): FORCE
->> +	$(Q)mkdir -p $(@D); \
->> +	newest=$$(find $(CURDIR)/usr/include $(toolsdir)/include $(toolsdir)/arch $(toolsdir)/testing/selftests \
->> +		-type f \( -name '*.h' -o -name '*.mk' -o -name Makefile \) -printf '%T@\n' | \
->> +		sort -n | tail -n 1); \
->> +	touch -d "@$${newest:-0}" $@
->
->[Severity: Medium]
->Will this miss rebuild dependencies on shared build scripts?
-[...]
->Modifying core shared files like tools/scripts/Makefile.include,
->tools/scripts/Makefile.arch, or scripts/subarch.include will not trigger a
->rebuild of selftests that include them, which can lead to stale builds.
-
-Right. Of the selftests built here, kexec and vDSO include
-tools/scripts/Makefile.arch and rseq includes scripts/subarch.include,
-and neither file is checked. I'll add both in the next version.
-
->[Severity: High]
->Can this trigger a fatal Make syntax error if no selftests are selected?
-[...]
->Since this rule uses two colons, it is a static pattern rule. While GNU Make
->ignores empty targets for single-colon rules, an empty target list in a
->double-colon static pattern rule evaluates to : selftest-%: ... and
->triggers a fatal missing target pattern. Stop. build error.
-
-This is not a double-colon rule, and make ignores a static pattern rule
-whose target list is empty. With CONFIG_TOOLS_BUILD=y and no tool or
-selftest selected, Makefile.kbuild runs with make 4.4.1 and reports
-nothing to be done for __tools_build, with and without -n.
-
--- 
-Thanks,
-Sasha
