@@ -1,236 +1,85 @@
-Received: from canpmsgout06.his.huawei.com (canpmsgout06.his.huawei.com [113.46.200.221])
+Received: from out30-124.freemail.mail.aliyun.com (out30-124.freemail.mail.aliyun.com [115.124.30.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861904E2F3A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 12:45:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.221
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D028B4F30FF
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 13:21:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792413918; cv=none; b=bwv2By4GdayRuMIEfLhm+rkbjVrdv04TDd3nqullBpImo6yXt6wyrXhiV16066BHb49eUYBoLI1+NTJsOm1TtxXqmvrlccEOEjGPDtPHx3pox4RhkV4U8ZnFIknU/q/frUivi76jk1XM0fID6yEpMTPommOh5b+8akgHCo6E87g=
+	t=1792416085; cv=none; b=aO9tyj2HHl+Yxpf8l2/PeexPwiTG34pxfrirZi4v02CqRbdfL5SwQryTerV4jOmm2DVYCqfTfPCNqA5cDfysKAcEiGqtfZTCJGtKBBl/FsbfjTFhsXOxLyzj201TpMVBy+hCWeCfWfko7F/M4mCi5OrkJxLaXdv0nncL+nzzPBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792413918; c=relaxed/simple;
-	bh=JLQ1kLeFu6pvIRnVW0J4T0AMrhi3lfEdE6uZ6cFdet4=;
-	h=Subject:From:To:CC:References:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=uJxuBmnMuJswXJQ/hke9bjTjAqtBbQNgNFHnN2sWOl8iCTFCbyhIayLTmAEehNigtBzm4CK3aaQZhG8opMW0SzXTWVzeFB704REnWlNlpzXb6QOUw/8cyCHHx2nBLpK1R9tvKWl/6adS3mhq7k5YugGDhmBnl1CvZazQ/MZam/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=YowgfSjf; arc=none smtp.client-ip=113.46.200.221
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1792416085; c=relaxed/simple;
+	bh=lRup/N8WUOJS+Q4ndfsk+LyKFMFPYIR3fn5J7Nr++qA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=q8Ogr3gPAsrm6cD9Lh5zI/+8wUB2oq/FnJEQC5NnAparHR8+nadZZDZ6Diew2FuCVuMRwx8vP6Sj6EjacaZm2i10kh2P91TqrgpUXlIFFZejWcFSJxtRjd1EXiXf7edzGsbvteBBXVNobNEulgy7PeuisCsMKuRv5P2TViPAwyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=o3ato5u+; arc=none smtp.client-ip=115.124.30.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="YowgfSjf"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=L+0VNU5nByae554B7SgJ5APf0VD0e80SdWFtScXBnjs=;
-	b=YowgfSjfVlZj+zo+szgQzSMm/B04j99NiTzmCEUoKbvo/aqLaqoEtFBsPBnArSZCGKGcTGWtP
-	6Dca5hDL/AEI0jXWCH6p1lNPqZUA0yLch5LZc6ep8+6efefTe31apU7fmBWGnJWFmHwEj9NAhLC
-	MqYcosj/nNkgJrWn/cZvLqU=
-Received: from mail.maildlp.com (unknown [172.19.162.144])
-	by canpmsgout06.his.huawei.com (SkyGuard) with ESMTPS id 4j7Zy860YgzRhRZ;
-	Mon, 19 Oct 2026 20:45:04 +0800 (CST)
-Received: from whupemo200011.china.huawei.com (unknown [7.152.185.179])
-	by mail.maildlp.com (Postfix) with ESMTPS id 13D8540538;
-	Mon, 19 Oct 2026 20:45:08 +0800 (CST)
-Received: from [10.174.178.46] (10.174.178.46) by
- whupemo200011.china.huawei.com (7.152.185.179) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 19 Oct 2026 20:45:06 +0800
-Subject: Re: [PATCH v2] ubifs: zero stale data beyond EOF before file size
- grows
-From: Zhihao Cheng <chengzhihao1@huawei.com>
-To: Nan Lin <lin.nan@h3c.com>, <sashiko-bot@kernel.org>
-CC: <linux-mtd@lists.infradead.org>, <richard@nod.at>,
-	<sashiko-reviews@lists.linux.dev>, <wangxiaoqing@h3c.com>,
-	<zhou.kete@h3c.com>
-References: <sashiko-outbox-174089@kernel.org>
- <20261019032530.2212601-1-lin.nan@h3c.com>
- <e85721bd-bc6d-5937-c601-377e9494a845@huawei.com>
-Message-ID: <9a775528-0259-2b88-d592-08c58b366253@huawei.com>
-Date: Mon, 19 Oct 2026 20:45:05 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="o3ato5u+"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1792416071; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+	bh=lRup/N8WUOJS+Q4ndfsk+LyKFMFPYIR3fn5J7Nr++qA=;
+	b=o3ato5u+7N7wHf8JyXNO/6f2SKoNK8WhmtvbjfoheR2K14zgSpqL0Ksm9t2UPtlh0RMTbbtrMkGbLxolNIhieWQ4HPKLwoFrdFN9ozhuisEH0o0YXrQXX0uSn2942QmNoN0pXVKeVhTjXk8j/0m7G4L+2QUc3vQhaY2JC+3WsEU=
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R111e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033037033178;MF=kanie@linux.alibaba.com;NM=1;PH=DS;RN=4;SR=0;TI=SMTPD_---0XD7dxJk_1792416070;
+Received: from 30.178.69.0(mailfrom:kanie@linux.alibaba.com fp:SMTPD_---0XD7dxJk_1792416070 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Mon, 19 Oct 2026 21:21:11 +0800
+Message-ID: <d9352031-1127-41ee-82a4-7af5bfbb1485@linux.alibaba.com>
+Date: Mon, 19 Oct 2026 21:21:10 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <e85721bd-bc6d-5937-c601-377e9494a845@huawei.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] nvme: document the service-time iopolicy sysfs
+ attributes
+To: Laurence Oberman <loberman@redhat.com>,
+ Martin George <martinus.gpy@gmail.com>, sashiko-reviews@lists.linux.dev
+Cc: linux-nvme@lists.infradead.org
+References: <20261019075607.808947-1-kanie@linux.alibaba.com>
+ <20261019075607.808947-4-kanie@linux.alibaba.com>
+ <sashiko-outbox-176783@kernel.org>
+ <acd6eee9-dadb-48e3-9a9d-232a268472d8@linux.alibaba.com>
+ <c4b6b7cfd51a498df8aaa7f5bc5cef9a0605b733.camel@gmail.com>
+ <1a84584bc9cf64fab6b4e17bdf2050f9b176ad6a.camel@redhat.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
+In-Reply-To: <1a84584bc9cf64fab6b4e17bdf2050f9b176ad6a.camel@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
- whupemo200011.china.huawei.com (7.152.185.179)
 
-在 2026/10/19 20:38, Zhihao Cheng 写道:
-> 在 2026/10/19 11:25, Nan Lin 写道:
-> Hi Nan Lin,
->> mmap writes can dirty the page cache beyond EOF without changing
->> i_size. A later extending write or ftruncate turns that region into a
->> hole, but UBIFS never zeroes the partial page at the old EOF, so reads
->> expose the stale data.
+
+
+在 2026/10/19 20:43, Laurence Oberman 写道:
+> On Mon, 2026-10-19 at 17:43 +0530, Martin George wrote:
+>> On Mon, 2026-10-19 at 19:13 +0800, Guixin Liu wrote:
+>>>> Should "service-time" also be added to the accepted values for
+>>>> /sys/class/nvme-subsystem/nvme-subsysX/iopolicy?
+>>>>
+>>>> هایی
+>>> Sure, changed in v3.
+>> Not just /sys/class/nvme-subsystem/nvme-subsysX/iopolicy, but this
+>> should be added to the accepted values in /sys/class/nvme-
+>> subsystem/nvme-subsysX/iopolicies as well.
 >>
->> Zero the tail of the old-EOF folio in all three size-extending paths:
->> ubifs_write_begin() for writes starting beyond EOF, do_setattr()
->> before truncate_setsize() grows the size, and ubifs_vm_page_mkwrite()
->> so mmap writes cannot leave such a tail behind. This mirrors what
->> block_page_mkwrite() does for buffer_head filesystems and what ext4
->> does on size extension.
->>
->> All zeroing takes the old-EOF folio lock without ui->ui_mutex, keeping
->> the folio_lock -> ui_mutex order of ->writepage() and
->> ->page_mkwrite(); the reverse order deadlocks.
->>
->> UBIFS does not enable large folios, so the EOF folio is always a
->> single page today; nevertheless, use folio-relative arithmetic
->> (offset_in_folio(), folio_contains(), folio_size()) throughout so the
->> code is correct if that ever changes.
->>
->> Signed-off-by: Nan Lin <lin.nan@h3c.com>
->>
->> Changes since v1:
->>   - Both zeroing sites used PAGE_SIZE-relative arithmetic
->>     (offset_in_page()-style) while folio_zero_range() expects
->>     folio-relative offsets. UBIFS does not currently enable large
->>     folios, so PAGE_SIZE == folio_size() and the two coincide in
->>     practice, but switch to offset_in_folio()/folio_size() anyway so
->>     the code is correct if UBIFS ever opts into large folios
->>     (suggested by Sashiko AI review).
->>
->> ---
->>   fs/ubifs/file.c | 73 +++++++++++++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 73 insertions(+)
->>
->> diff --git a/fs/ubifs/file.c b/fs/ubifs/file.c
->> index e73c28b12f97..1726714161a1 100644
->> --- a/fs/ubifs/file.c
->> +++ b/fs/ubifs/file.c
->> @@ -202,6 +202,53 @@ static void release_existing_page_budget(struct 
->> ubifs_info *c)
->>       ubifs_release_budget(c, &req);
->>   }
->> +/**
->> + * ubifs_zero_eof_hole - zero the stale tail of the old-EOF folio.
->> + * @inode: inode whose size is about to grow
->> + * @new_end: new end of the file, only used to bound the tail
->> + *
->> + * Zero the cached folio containing the old EOF for [old EOF,
->> + * min(folio end, @new_end)) so a size extension does not expose stale
->> + * data left beyond EOF by mmap writes.
->> + *
->> + * Must be called without ui->ui_mutex held: we block on the old-EOF
->> + * folio lock, and ->writepage() and ->page_mkwrite() hold that folio
->> + * lock while taking ui_mutex; the reverse order deadlocks.
->> + */
->> +static void ubifs_zero_eof_hole(struct inode *inode, loff_t new_end)
->> +{
->> +    loff_t old_size = i_size_read(inode);
->> +    size_t from, to;
->> +    struct folio *folio;
->> +
->> +    if (new_end <= old_size)
->> +        return;
->> +
->> +    folio = filemap_lock_folio(inode->i_mapping, old_size >> 
->> PAGE_SHIFT);
->> +    if (IS_ERR(folio))
->> +        return;
-> The filemap_lock_folio gets folio with FGP_LOCK, I think we should use 
-> 'FGP_WRITEBEGIN | FGP_ACCESSED' just like ext4_load_tail_bh() does, 
-> because the folio may not exist in ram when calling do_setattr().
->> +
->> +    /*
->> +     * Re-read i_size under the folio lock: a concurrent truncate may
->> +     * have shrunk the file, turning this folio into valid data.
->> +     */
->> +    old_size = i_size_read(inode);
->> +    if (new_end <= old_size)
->> +        goto out;
->> +
->> +    from = offset_in_folio(folio, old_size);
->> +    if (!from)
->> +        goto out;
-> Why skipping 'from == 0'? What if a user writes begin from 
-> offset-X(0<X<4096) to a new file(isize = 0)? Ext4 zero the range by 
-> ext4_block_write_begin->folio_zero_segments(folio, to, block_end, 
-> **block_start**, **from**), but ubifs not handle it.
->> +    to = folio_contains(folio, new_end >> PAGE_SHIFT) ?
->> +         offset_in_folio(folio, new_end) : folio_size(folio);
->> +    if (to > from)
->> +        folio_zero_range(folio, from, to - from);
->> +
->> +out:
->> +    folio_unlock(folio);
->> +    folio_put(folio);
->> +}
->> +
->>   static int write_begin_slow(struct address_space *mapping,
->>                   loff_t pos, unsigned len, struct folio **foliop)
->>   {
->> @@ -423,6 +470,14 @@ static int ubifs_write_begin(const struct kiocb 
->> *iocb,
->>       if (unlikely(c->ro_error))
->>           return -EROFS;
->> +    /*
->> +     * The write starts beyond EOF: zero the stale tail of the old-EOF
->> +     * folio before budgeting takes ui->ui_mutex. do_readpage() only
->> +     * sanitizes the write folio, not the old-EOF folio.
->> +     */
->> +    if (pos > inode->i_size)
->> +        ubifs_zero_eof_hole(inode, pos);
->> +
-> 
-> The ext4 protection check is ext4_write_checks->ext4_block_zero_eof, I 
-> think we can add the zero hole check in ubifs_write_iter().
->>       /* Try out the fast-path part first */
->>       folio = __filemap_get_folio(mapping, index, FGP_WRITEBEGIN,
->>               mapping_gfp_mask(mapping));
->> @@ -1220,6 +1275,10 @@ static int do_setattr(struct ubifs_info *c, 
->> struct inode *inode,
->>       if (attr->ia_valid & ATTR_SIZE) {
->>           dbg_gen("size %lld -> %lld", inode->i_size, new_size);
->> +
->> +        /* Must run before the size change loses the old boundary. */
->> +        ubifs_zero_eof_hole(inode, new_size);
->> +
->>           truncate_setsize(inode, new_size);
->>       }
->> @@ -1494,6 +1553,7 @@ static vm_fault_t ubifs_vm_page_mkwrite(struct 
->> vm_fault *vmf)
->>       struct timespec64 now = current_time(inode);
->>       struct ubifs_budget_req req = { .new_page = 1 };
->>       int err, update_time;
->> +    loff_t i_size;
->>       dbg_gen("ino %llu, pg %lu, i_size %lld",    inode->i_ino, 
->> folio->index,
->>           i_size_read(inode));
->> @@ -1553,6 +1613,19 @@ static vm_fault_t ubifs_vm_page_mkwrite(struct 
->> vm_fault *vmf)
->>           filemap_dirty_folio(folio->mapping, folio);
->>       }
->> +    /*
->> +     * Zero the part of the EOF folio beyond i_size so mmap writes
->> +     * cannot leave a stale tail behind (see ubifs_zero_eof_hole()).
->> +     * For a folio-aligned i_size the mkwrite entry check has already
->> +     * returned SIGBUS, so @from is always non-zero here.
->> +     */
->> +    i_size = i_size_read(inode);
->> +    if (folio_contains(folio, i_size >> PAGE_SHIFT)) {
->> +        size_t from = offset_in_folio(folio, i_size);
->> +
-> If the program enters into this branch, the ubifs file's isize is not 
-> zero, ubifs_read_folio has already zerod tail, do we still need this 
-> folio_zero_range?
-Oh, there is one case, UBIFS file has isize without data nodes(eg. isize 
-= 3, the first block is a data hole), ubifs_read_folio won't zero the 
-page tail, we still need folio_zero_range().
->> +        folio_zero_range(folio, from, folio_size(folio) - from);
->> +    }
->> +
->>       if (update_time) {
->>           int release;
->>           struct ubifs_inode *ui = ubifs_inode(inode);
->>
-> 
-> 
-> ______________________________________________________
-> Linux MTD discussion mailing list
-> http://lists.infradead.org/mailman/listinfo/linux-mtd/
+>> -Martin
+> Hello
+>
+> There should be no changes needed for my original iopolicies patch 
+>
+> iopolicies_show() walks ARRAY_SIZE(nvme_iopolicy_names), so whoever
+> adds a service-time policy adds its enum value and its string to
+> nvme_iopolicy_names[] as part of that work. The new name then shows up
+> in iopolicies automatically. The existing iopolicy store path already
+> matches against the same array, so both attributes stay in sync without
+> code changes
+Yes, it is.
+
+Best Regards,
+Guixin Liu
+>
+> Thanks
+> Laurence
 
