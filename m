@@ -1,226 +1,272 @@
-Received: from mail-oo2-f8.google.com (mail-oo2-f8.google.com [74.125.231.136])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-00206402.pphosted.com (mx0a-00206402.pphosted.com [148.163.148.77])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D54450E5B4
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 14:11:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.231.136
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792419064; cv=none; b=pxLTgV3l8Xph5JiS+/2rByedBClMEHNWZWerJM9KidRwfxXtgCmg4q72SMq5tGrtNf66/4WaIytYN2M/+xm8fVdj/zaB2jShRGUXFjkzrszIG+gleaRGy6nv+O16ar8lRpFFzASw9y9JkLDPmkwbIKD8ky5TH9WAAStJGbLZelo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792419064; c=relaxed/simple;
-	bh=Bd3lGiWqZIhNaSdNUy6QawoYjcVV49ug1PFzyoHRsr8=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=kMb36oESOHrKegvKrfKdbVNLNTZ31CI2PbYO5RafGTg4Zmr7H2ELbB26Tqh2hu8IB2DBfylWbgizvdYOFt5Fn5YOBpz7TpeQQfmPftfdRRx/e0o9iWRpA2pzcdHBD0vwyFHwbbA06Q7Ml47SfvvO6uvBcyeovKCXKh8VfTT7ca8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qN8nnATj; arc=none smtp.client-ip=74.125.231.136
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303014F649B
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 14:28:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=148.163.148.77
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792420098; cv=pass; b=YcAv8aKRy253vImsA0+vHra0hSq8OhiZ7Cb6RxPx2IYclVeyrFw7DZKajgUJqcrNegHJl0TOn9wEsWfIXD05a2eAF86HZSrRLb06Hw3ctjr6vcKNNkRqRivADBBiYDgEJLN+BraEFcC4+sqhg6DY1UNcntKcNq8/Syplh8r7/NA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792420098; c=relaxed/simple;
+	bh=vRKtHhtnSiVocMKcHj2IeE7eoWduJufuBbjw8LUmvyU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=O0lcXRzok8gB9uA7kRFDKNBiK/ngm3srfFzEMaG3bKNFUt2xuU48xscIB4OChY4tE3AslQ4oq9TMCf/fdtZlBdldECTylOtqX0jv+GcCvBSJJEkM82Dn3dgw74CS6KyY6mklAiJxhStJzda1X7yj24ONy/2AKEjVJwzyNJ8qVb0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=crowdstrike.com; spf=pass smtp.mailfrom=crowdstrike.com; dkim=pass (2048-bit key) header.d=crowdstrike.com header.i=@crowdstrike.com header.b=dozKaF1m; dkim=pass (2048-bit key) header.d=crowdstrike.com header.i=@crowdstrike.com header.b=IOgf5Q04; arc=pass smtp.client-ip=148.163.148.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=crowdstrike.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crowdstrike.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qN8nnATj"
-Received: by mail-oo2-f8.google.com with SMTP id 46e09a7af769-843c8bbfbc4so989198a34.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 07:11:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=crowdstrike.com header.i=@crowdstrike.com header.b="dozKaF1m";
+	dkim=pass (2048-bit key) header.d=crowdstrike.com header.i=@crowdstrike.com header.b="IOgf5Q04"
+Received: from pps.filterd (m0354652.ppops.net [127.0.0.1])
+	by mx0a-00206402.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69JD8uMu3567309
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 13:59:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crowdstrike.com;
+	 h=cc:content-transfer-encoding:content-type:date:from
+	:in-reply-to:message-id:mime-version:references:subject:to; s=
+	default; bh=W2Q5NbkXZFX2IYeB+rITdmJ46kQ40IR/VqtH2S5mst8=; b=dozK
+	aF1m//QlqQfhqKEeZH7yccyiI3Zvo2avADGqUzkwKY4/b3qe0U2mMUsMnOgx3t9C
+	w8/ahz50BQ20ArJo1kgmpCd4uRJ0qggtT0JMKsGptpIVzqYFp/U+iU5miAvY7zQ9
+	fmbFCpCFANtC52fcr0zygGl1FFerSnMCqCQOQJykN38xQVkzRs+MqaXoA8bw0IR8
+	DEDJGSGM8I95PEBAWrxYOdvt11dbnYpOO1/xl8C3GNyGT53cun7a4GPBeDGVUdH/
+	VJjFFX8RryP4bKDpfZA0WJF4x7V+Ot6NkgIvAKB/8gXSRbPEphCmHFZe6MEH9Y9d
+	RgDRrDGDHdZucZlcSA==
+Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com [74.125.224.69])
+	by mx0a-00206402.pphosted.com (PPS) with ESMTPS id 4hcpu1bjd6-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 13:59:16 +0000 (GMT)
+Received: by mail-yx1-f69.google.com with SMTP id 956f58d0204a3-679f81e0f96so38034d50.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 06:59:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792418356; cv=none;
+        d=google.com; s=arc-20260327;
+        b=fgS10wrsTdmN19RuBABAG0thuGZQoqcOyIm2pVR2oVvPWc/UG7y8QVxycQNZzargmZ
+         BaQWzSiqNJrqnc/EU+dFdhV4KFl/7G7EPnuNBJYifRHTwoOvyMGOE5eBBHl9oyTw7Az7
+         4HXAHI1qAHGl1u7FomXx0pyok+2JhPJTU4RZK1SNqyoDyqShmVkDOcFLp9lz0vURc9o+
+         GhMOO6uM921LHIM8UiamXANBVGogDoYQ52uN7XKZDewkvcRYesWjv6M6MrL5Y4dqf5ad
+         iCZHBaHAujWLLtR9SKCL1YxN6rr+JnANRMOBk4c++SV87Qbq8dCpI3sntiZfJtQfMxif
+         ZDYw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=W2Q5NbkXZFX2IYeB+rITdmJ46kQ40IR/VqtH2S5mst8=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=LnLwcMAqEaBm5g1XqBAaeml7ZZv6ju8AWWLOOEuGY7ml64vgnhvkr9WVohs/+AFz6e
+         eGg6GVtBgzsB+ecLwwF0KdEIhFVaUFizZLPIB2qzvxJ1MwBIDYD6Q5qA1J9bb9SaWQuu
+         PpQbxvUM33jm7OQAnkDE3eRUYbvkdhmoxjfnHhTwCZKi737o/VfpVR+5QnjrZk84iBL0
+         mMWSR2OAIk7n43zkcSmreoAz+pL03ypicN51W5+WYcleMG8hTzodNt0HLDz8fPT3uxpd
+         eQEGrGaARznWeaiNgO4uI9X3zx/9eutyRqaZw5FdPeQrNMFk3YLukmMK7Zurnz+nZa+j
+         ITug==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792419060; x=1793023860; darn=lists.linux.dev;
-        h=in-reply-to:references:to:from:subject:message-id:date:content-type
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=wsWzQzb19VeOVo4gfQPQyMhPBgieYKdiabjyzPIBqNM=;
-        b=qN8nnATjwz3txPw5dmzu3j3fJ5QLQoi744X/Z+766e1oyEAKtqrbFOdbiZvbE/cW9t
-         qznTlI5k8LX5CnohW6hnNkszqxj/YCjSM3YgPEnb7M5aAKZ1sRPFt+odQ85+7q5+d5tZ
-         MGBPkf9ABZlRnd7zFaFd7WNNtTEGro8EaZNYAkuYpZmu9z3wtJ8pThTjMfIS2xEan/Kr
-         rXVo3tKC8mRKMZjEPiPpS87Rzy1Xhp5zK+NWwA0PbMTAbAul+pGUNZT9L7hSdA4ZlrhF
-         Sr2gBk5wTb1yken9F7kteblPuabBkRUchS395erHKDman//rAterEdPx15IGzNUUeC/3
-         kiRw==
+        d=crowdstrike.com; s=google; t=1792418356; x=1793023156; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=W2Q5NbkXZFX2IYeB+rITdmJ46kQ40IR/VqtH2S5mst8=;
+        b=IOgf5Q04HTbfGN57oNtzSAI5uLy0ebxql8tWfAtqdDwTv0vfyX6WsEJ2BDqRSbAoM1
+         /WkfheZAT6HL7TJ+f4alANkOGgcnRBOgUA24EQ1LRhvUGnMLlKE3QqpjNO4QQhOtNTOv
+         1tkJ1ACor30ctlX3wl+O02S11An9ykhPAgUiMG8OEcnit2uYpSCWLr/VmNSV+YuEGyap
+         wxK3RQYSo0wTr+Ps91nIcER6O1s8JDik958J3/vZ8ectuhfpNVpInGB3DlKaCzbcmuu2
+         Et0YesE3xou27I7biStP8zAxnKB8KPS9LGCQXN/21lunJUmn9DqbypeEaYjRJwAxnSxq
+         4H3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792419060; x=1793023860;
-        h=in-reply-to:references:to:from:subject:message-id:date:content-type
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=wsWzQzb19VeOVo4gfQPQyMhPBgieYKdiabjyzPIBqNM=;
-        b=WV+ec5T2u6NnI66gvN7zMi/2ZI73A1e9l3RZEkrDnAs+8VDjo6yOrKkLAHVFgahOaU
-         OTrwAZI/teGy8ahlU7ia4iA3wcr0Qm90qDgnDwh0JdFkZtlsSIeDOPvixxJ0q6WH+qMn
-         D7Ojnh1h7fmq1R1xGvMdXweJwMRoEFl3mNHHGr/mf3Q4F9sNka+JXOB0GAjbWLMChNBU
-         vIb6AU7F9pO0P3WwJC95zW7LE1vHLzfp0nReNVIIU8IVeuEK0CDiclbnQ0AskVNU5n7S
-         cu1moXVBJTIRq3WEfrAKQo5G5oEFoHCnzs2/2SCPNvJdKEfq90bjRJa5JnQ9uXKlcnwP
-         D9JQ==
-X-Gm-Message-State: AFq9FYKgO2xUvMVqLyG+Qmhf85vqb+QQyV9Oz5M78X1/wGTYc3w9q7gH
-	cPmQZWHel6X0yeHSlhlq3w+/QlHdhLXKKGZCTpuJ1OBslTjIr38bgQewzLtY+tv6Da4=
-X-Gm-Gg: AYBFou09LTtDRhfOMRfvdB2LAOHafyAJ5q7sPtJFfeB+Mc186IpVQuA1YkbtoPemtBt
-	UV/4JTJEgjio0nX9GoFfxpFzuISSdiD8XI4SkNmlnIsbTyDCORWH82++QmEA1YDa3d6nAvUq+W3
-	Gh8AINNjmkerVZQbbJRHpFJe9O5KJUzJDFzmasc+NIEuarIX+3DT3JpmYH/VPYMH9rE62tW5q6g
-	oFfo0/gkMDXOJojja1vho2Gqr24c3eSnPQTbienaKSMyHgvESg9HHFvz5IcsHUSFCpkimFcdjl9
-	nwfdamHUUYi0WhGKbefcNVH2nPP3UpVqPscYDQscyRWzD1+jWlHvZjESMZUgC19bsGhHB9KA6n6
-	AWSIsLUTSlmw0uZLOTKD6NI68z/CIpwkvHZNHOIW6hWmLdWVpyIal3fusz+oCiSI0a9L+IelXSI
-	/1SAjgbS5z79c2nAKbyALguw8J+0Iks/i3NfR/kkhl04cEKDaQoELr2RtfPr91t8CPYgVGmA1ME
-	8OcUuaXheEpjEkbB8qnlnUkc7mc7p9V46ypG2Ucg7MK75E686b2tLBupaBKVkcPUhnLY5cAO2pJ
-	MJjRlbw=
-X-Received: by 2002:a05:6830:378f:b0:826:1ccc:8b9e with SMTP id 46e09a7af769-844f92c9c3cmr7951739a34.2.1792419059733;
-        Mon, 19 Oct 2026 07:10:59 -0700 (PDT)
-Received: from localhost ([2a03:2880:10ff:42::])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-842a0f31614sm8808494a34.3.2026.10.19.07.10.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Oct 2026 07:10:58 -0700 (PDT)
+        d=1e100.net; s=20260707; t=1792418356; x=1793023156;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=W2Q5NbkXZFX2IYeB+rITdmJ46kQ40IR/VqtH2S5mst8=;
+        b=rbq4U+wm3uLyGm+Gofwo7A3gu0jB83QugxT+OlhnnPNZM0x4uQxdZYcMrLrX12odAL
+         5jkazuAwvV1aqrsIGd0lDfJ8iJ4S64ELAevwlCUibmAhxgar7U8GlRVSyDOG2DzpVzGj
+         g45oGKDjnLJiskiVywmC69S9CiBCZCvK04wJ7wW0y+2x4HOOmb6mZg/sy9TMxMk10aQy
+         zL45bLhZEGkIKHk+CeUGc2j77NNc5cY72VN58M9aH8HlaWr+cS2T174MtD0E4ii9jf6F
+         mhIXVZNjSVFLGby56F86gXn1iEm4r9J4ghWMTWkpwsG5x9VxXjzGaHnX0RG054F0qgg/
+         5dbQ==
+X-Gm-Message-State: AFq9FYJ3GYNaAddhYu1H1WpeTBohkH7IoOZvNjAEADTrsXu/acCaKrli
+	GnGSfmafh4/B2Kum8IlP1KPwGjxQcau4uxCYswDeLLR4w0aneoixojMSA/y6cvPty8IPD7kxpp0
+	lXUHt9ctY9L4n1R5FBzguUdG5RXxLhZMNKIG/Rbeoj8lpyhNlyHnuO7aPbDNWYmSwVoouusMkQ5
+	7978AvKURtM1ihRsKtmu/re/8HfqicWSKbK7OGpVb+0l0aEvjWt3n9
+X-Gm-Gg: AYBFou09PEuOD4B67aF0LH6aTE+mSE37R0qPIl5JEzggaR1kxOaNjv6zeizVeUb6bwR
+	4q6kJqutP4jmdq+2aoRZxXEGML4NNI+uEuVtwJBzGB1KHLKGJebZK/8PDgApHO48fApp+reqd4D
+	NrMPsj93YCcYbYxxnGG+1Qj5MUKZ7VXMhVbfuPw4q6GFGI4SRpJ8X7EJD+
+X-Received: by 2002:a05:690e:1512:b0:679:15d0:9492 with SMTP id 956f58d0204a3-679ca8d61famr1806934d50.93.1792418355995;
+        Mon, 19 Oct 2026 06:59:15 -0700 (PDT)
+X-Received: by 2002:a05:690e:1512:b0:679:15d0:9492 with SMTP id
+ 956f58d0204a3-679ca8d61famr1806925d50.93.1792418355387; Mon, 19 Oct 2026
+ 06:59:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20261010143156.379864-1-andrey.grodzovsky@crowdstrike.com>
+ <20261010143156.379864-8-andrey.grodzovsky@crowdstrike.com> <sashiko-outbox-166685@kernel.org>
+In-Reply-To: <sashiko-outbox-166685@kernel.org>
+From: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
+Date: Mon, 19 Oct 2026 09:59:02 -0400
+X-Gm-Features: AclHuK8-chbj1rVBMLedg9wJZt3mjYJm9zJvcXutim4nnDp5VmLVfhBvB6zqLxU
+Message-ID: <CAOu3gNj7fYONFo2-UqcBVv5Uk2=d4Cw=0fvQvLPCwiDA6zc3Wg@mail.gmail.com>
+Subject: Re: [PATCH bpf-next v6 7/7] selftests/bpf: Convert veristat to BPF_PROG_LOAD_STRATEGY_MANUAL
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 19 Oct 2026 16:10:57 +0200
-Message-Id: <DM8VIZHIYVI8.20JN6DGIZJ45N@gmail.com>
-Subject: Re: [PATCH bpf-next v5 01/16] bpf: Check exclusive maps once the
- program digest is final
-From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>
-X-Mailer: aerc 0.22.0
-References: <20261019132203.3034698-1-memxor@gmail.com>
- <20261019132203.3034698-2-memxor@gmail.com>
- <sashiko-outbox-177221@kernel.org>
-In-Reply-To: <sashiko-outbox-177221@kernel.org>
+X-Authority-Analysis: v=2.4 cv=XrNvqlF9 c=1 sm=1 tr=0 ts=6ad62234 cx=c_pps
+ a=J+5FMm3BkXb42VdG8aMU9w==:117 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10
+ a=KZhmPCYDdY0A:10 a=VkNPw1HP01LnGYTKEx00:22 a=T2KQ53IYiC3MXPrxx8bB:22
+ a=2KvRFfd_T_-xjmS8C1aD:22 a=c92rfblmAAAA:8 a=pl6vuDidAAAA:8 a=VwQbUJbxAAAA:8
+ a=BiacRjDT1vw9CRUp734A:9 a=QEXdDO2ut3YA:10 a=Epx66wHExT0cjJnnR-oj:22
+ a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-GUID: PFTwENvFj_ZWBqgWzNJZyZFqq8Myzzun
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDA1NSBTYWx0ZWRfX2hhQ0DYsDw5F
+ +GXT4//rCOH9xSi6Ccm9E8yCJf0e5WKl3ga5unPLGdrXhjBx667ZsBlmvXz442KNBez58L4jz0O
+ jZwXCbOYo0jQb15TlQR8Wl1oZftN0Ya1k7fRq3QUUE+oicFyjGj9thyOe64EoSj1+KGFpXYsenm
+ gMCNKJuumFs7IAJtqopDf0X8VOo9HU2393eae0Y4cKgxfbdyWs2rzZc+Tm7rG7nlX9N2souGhcz
+ OddGB8zzt2J++B1s79Ps+TnGbQCfRS8uIalN6gbkJO2syHGMs5z3H1M/F8Db3spihqtJQJ9oZxb
+ cqjzMCbAvGGKJ0ZoCm/U+hqixRDbGUG2VIClX6mbybuLrWyE+JZKxGZAENZ+N22BO/h9IjgqMx9
+ MaxbtfDGSih/FI7OeM2t1DIaSQJ1vEYISj1gr/Xma5I5vFgnhsKEmRmBEFuVsRkB2uuU4R2Ag8o
+ dUaT4Z3hzVMU1xunUog==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDA1NSBTYWx0ZWRfXwndqRXIalvDe
+ pxCJ1wdxz8SPh4/82xWVr9HC0o4tNjiG5yc5GDrJk8pFoo6qE2IMsH5mk20pJiHaJCMhJ1D3vqX
+ ZsZHRTXn65Gr7gBJT2pmc60jD4SI39lvAA7qMi8NGQUMYAeyZ4CT
+X-Proofpoint-ORIG-GUID: PFTwENvFj_ZWBqgWzNJZyZFqq8Myzzun
+X-Proofpoint-Virus-Version: vendor=nai engine=6900 definitions=11940
+ signatures=596817
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 malwarescore=0 clxscore=1011
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610190055
 
-On Mon Oct 19, 2026 at 3:48 PM CEST, sashiko-bot wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+On Sat, Oct 10, 2026 at 11:08=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
 e(s) to consider:
-> - [High] bpf: unauthenticated CO-RE relocations after bpf_prog_verify_sig=
-nature()
+> - [Medium] bpf: veristat uninitialized memory read of log buffer on early=
+ load failure
+> - [Low] bpf: veristat skips cleanup and info retrieval when BPF program f=
+d is 0
 > --
 >
-> commit 32dc3dc6de06a5dac6e79c2b94b85778ecf062a2
-> Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+> commit 9ac34aec88e7eee9b39c53e8055bc5989345ce5b
+> Author: Andrey Grodzovsky <andrey.grodzovsky@crowdstrike.com>
+> Subject: selftests/bpf: Convert veristat to BPF_PROG_LOAD_STRATEGY_MANUAL
 >
-> bpf: Check exclusive maps once the program digest is final
+> This commit updates the veristat utility to verify programs using
+> BPF_PROG_LOAD_STRATEGY_MANUAL alongside bpf_program__load() and
+> bpf_program__unload(). It replaces the previous use of bpf_program__clone=
+(),
+> ensuring RODATA maps are properly bound during verification and subsequen=
+tly
+> dropped upon unload.
 >
-> This commit defers the exclusive map hash comparison and map claiming unt=
-il
-> check_and_resolve_insns() has computed the program digest after CO-RE
-> relocations. It also removes the early bpf_prog_calc_tag() call for signe=
-d
-> programs before process_fd_array().
->
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index d138688468236..ca5301fe3f66c 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
->
+> > diff --git a/tools/testing/selftests/bpf/veristat.c b/tools/testing/sel=
+ftests/bpf/veristat.c
+> > index 9cfc9b4b41c12..0cd19b59037f6 100644
+> > --- a/tools/testing/selftests/bpf/veristat.c
+> > +++ b/tools/testing/selftests/bpf/veristat.c
 > [ ... ]
+> > @@ -1726,18 +1725,15 @@ static int process_prog(const char *filename, s=
+truct bpf_object *obj, struct bpf
+> >       if (env.force_reg_invariants)
+> >               bpf_program__add_flags(prog, BPF_F_TEST_REG_INVARIANTS);
+> >
+> > -     opts.log_buf =3D buf;
+> > -     opts.log_size =3D buf_sz;
+> > -     opts.log_level =3D log_level;
+> > +     bpf_program__set_log_buf(prog, buf, buf_sz);
+> > +     bpf_program__set_log_level(prog, log_level);
+> >
+> >       cgroup_err =3D reset_stat_cgroup();
+> >       mem_peak_a =3D cgroup_memory_peak();
+> > -     fd =3D bpf_program__clone(prog, &opts);
+> > -     if (fd < 0) {
+> > -             err =3D fd;
+> > -             if (env.verbose)
+> > -                     fprintf(stderr, "Failed to load program %s %d\n",=
+ prog_name, err);
+> > -     }
+> > +     err =3D bpf_program__load(prog);
 >
->> @@ -23619,11 +23657,6 @@ int bpf_check(struct bpf_prog **prog, union bpf=
-_attr *attr, bpfptr_t uattr,
->>  		ret =3D -EINVAL;
->>  		goto err_prep;
->>  	}
->> -	if (env->signature) {
->> -		ret =3D bpf_prog_calc_tag(env->prog);
->> -		if (ret < 0)
->> -			goto err_prep;
->> -	}
->>
->>  	ret =3D process_fd_array(env, attr, uattr);
->>  	if (ret)
+> [Severity: Medium]
+> If bpf_program__load() returns an early error (e.g. from libbpf without
+> calling the kernel), could the dynamically allocated buf remain
+> uninitialized?
 >
-> [Severity: High]
-> Can removing the pre-relocation digest check allow unauthenticated CO-RE
-> relocations to mutate a signed program's instructions after
-> bpf_prog_verify_signature() and security_bpf_prog_load() have succeeded?
+> When env.verbose or env.top_src_lines > 0 is set, buf is allocated
+> via malloc() but the fallback initialization only null-terminates the
+> static array:
 >
-> In bpf_check(), bpf_prog_verify_signature() verifies the PKCS#7 signature
-> over the pre-relocation env->prog->insnsi and the frozen map value conten=
-ts
-> before BTF and CO-RE relocations are processed:
+>         if (env.verbose || env.top_src_lines > 0) {
+>                 buf =3D malloc(buf_sz);
+>         ...
+>         verif_log_buf[0] =3D '\0';
 >
->     ret =3D process_fd_array(env, attr, uattr);
->     if (ret)
->         goto err_prep;
+> If bpf_program__load() returns early without modifying the buffer,
+> parse_verif_log(buf, ...) will read this uninitialized memory. Could
+> buf[0] =3D '\0' be set directly on buf before loading?
 >
->     if (env->signature) {
->         ret =3D bpf_prog_verify_signature(env, attr, uattr.is_kernel);
->         if (ret)
->             goto err_prep;
->     }
->
->     ret =3D security_bpf_prog_load(env->prog, attr, env->prog->aux->token=
-,
->                      uattr.is_kernel);
->     ...
->     /* Prepare BTF and func_info needed to discover all subprograms. */
->     ret =3D bpf_prepare_btf_info(env, attr, uattr);
->     if (ret < 0)
->         goto skip_full_check;
->
->     /* Apply CO-RE before validating the program's instruction layout. */
->     ret =3D bpf_check_core_relo(env, attr, uattr);
->     if (ret < 0)
->         goto skip_full_check;
->
-> Although fd_array_get_btf() and __add_used_btf() reject BTF objects from
-> fd_array when env->signature is set, bpf_prepare_btf_info() loads
-> attr->prog_btf_fd via btf_get_by_fd() without checking env->signature, an=
-d
-> bpf_check_core_relo() applies caller-supplied attr->core_relos to
-> env->prog->insnsi in-place.
->
-> Furthermore, in bpf_prog_verify_signature(), the signature only covers
-> env->prog->insnsi and the map values, not map->excl_prog_sha:
->
->     if (!map->excl_prog_sha) {
->         verbose(env, "signed program metadata map '%s' must be exclusive\=
-n",
->             map->name);
->         err =3D -EPERM;
->         goto out;
->     }
->
-> The 32-byte hash stored in map->excl_prog_sha is supplied by userspace at
-> BPF_MAP_CREATE time via attr->excl_prog_hash (and a signed program with
-> env->used_map_cnt =3D=3D 0 has no exclusive map at all).
->
-> Previously, for a signed program with an exclusive map, bpf_prog_calc_tag=
-()
-> computed env->prog->digest over the signed instructions before
-> process_fd_array(), and check_map_prog_compatibility() required
-> map->excl_prog_sha to match that pre-relocation digest.
->
-> With this change, check_excl_maps() only compares map->excl_prog_sha agai=
-nst
-> env->prog->digest after bpf_check_core_relo() has already mutated the
-> instructions:
->
->     static int check_excl_maps(struct bpf_verifier_env *env)
->     {
->         int i;
->
->         for (i =3D 0; i < env->used_map_cnt; i++) {
->             struct bpf_map *map =3D env->used_maps[i];
->
->             if (map->excl_prog_sha &&
->                 memcmp(map->excl_prog_sha, env->prog->digest, SHA256_DIGE=
-ST_SIZE)) {
->                 verbose(env, "program's hash doesn't match map's excl_pro=
-g_hash\n");
->                 return -EACCES;
->             }
->         }
->         return 0;
->     }
->
-> If a caller takes a validly signed program and metadata, supplies a craft=
-ed
-> prog_btf_fd and core_relos (such as BPF_CORE_TYPE_ID_LOCAL, where
-> bpf_core_calc_relo_insn() sets targ_res->validate =3D false and
-> bpf_core_patch_insn() overwrites insn->imm or insn->off without validatin=
-g
-> the original immediate or offset), and creates the exclusive map with
-> excl_prog_hash set to the SHA-256 of the post-relocation instructions,
-> wouldn't both bpf_prog_verify_signature() and check_excl_maps() succeed w=
-hile
-> loading modified instructions with BPF_SIG_VERIFIED?
->
-> Should signed programs either reject attr->core_relos_cnt (or prog_btf_fd=
-) or
-> ensure that env->prog->insnsi cannot be modified after
-> bpf_prog_verify_signature()?
->
->  base-commit: 25bb03f0a47b622b9025a1558bf2095ec1f55d26
 
-Will be addressed separately in a follow up.
+While this is a true observation, it seems to me this exact scenario
+would also happen in the `clone` case, so it looks like a pre-existing
+issue.
+
+> > +     fd =3D err =3D=3D 0 ? bpf_program__fd(prog) : -1;
+>
+> [Severity: Low]
+> If standard input is closed, can bpf_program__load() assign file descript=
+or
+> 0 to the loaded program?
+>
+> If fd 0 is assigned, later checks will explicitly skip handling it:
+>
+>         if (fd > 0 && bpf_prog_get_info_by_fd(fd, &info, &info_len) =3D=
+=3D 0)
+>
+> This causes the program's JIT statistics to be skipped. Should this check
+> test for fd >=3D 0 instead of fd > 0?
+
+Same as above , I thiink the issue was pre-existing.
+
+>
+> > +     if (err && env.verbose)
+> > +             fprintf(stderr, "Failed to load program %s %d\n", prog_na=
+me, err);
+> >       mem_peak_b =3D cgroup_memory_peak();
+> >       if (!cgroup_err && mem_peak_a >=3D 0 && mem_peak_b >=3D 0)
+> >               mem_peak =3D mem_peak_b - mem_peak_a;
+> [ ... ]
+> > @@ -1774,7 +1770,7 @@ static int process_prog(const char *filename, str=
+uct bpf_object *obj, struct bpf
+> >       if (verif_log_buf !=3D buf)
+> >               free(buf);
+> >       if (fd > 0)
+> > -             close(fd);
+> > +             bpf_program__unload(prog);
+>
+> [Severity: Low]
+> Similar to the issue above, if fd is 0, will this prevent the program fro=
+m
+> being immediately unloaded and leave it in the kernel until the entire
+> BPF object is closed?
+>
+> Should this check also use if (fd >=3D 0) to ensure cleanup occurs?
+>
+> >       return 0;
+> >  }
+
+To summarize, I agree all the 3 issues definitely need to be addressed
+and I am happy to fix it. I just don't know if it should be as a part
+of this patch-set or a standalone fix?
+
+
+Andrey
+
+>
+> --
+> Sashiko AI review =C2=B7 https://urldefense.com/v3/__https://sashiko.dev/=
+*/patchset/20261010143156.379864-1-andrey.grodzovsky@crowdstrike.com?part=
+=3D7__;Iw!!BmdzS3_lV9HdKG8!3il3wicS8Eiw2ogONUagDMIrsqcvvmLZ1xXNrquJMEVXEJr8=
+5kqsNp4CNFasNUc417QJ6t73GShkLS7-x-efgKPJp1HzLOdaJg$
