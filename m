@@ -1,311 +1,274 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.167])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0448A404BDD
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 07:59:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792396802; cv=none; b=c4yVghj82VzTma339ue/N4aF79tC7+8nDSouaP0jvb57z43fu/Gdnlsqre4H8n2kxtoaeV89f4qNmZmjgrZ0DZEFJ1B26IGrb52xsg+DlYgUqt81WHo41DW14KV1I8/nmxK2/NJj9/qqXzmmlNRwd4GWtD5NlND4qPXWadg2I4E=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792396802; c=relaxed/simple;
-	bh=Rc824/XiH1K0fuI51TaTljkwtCzwTmuXLT67JRhcKk8=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=L6GrPcd8stiF0mx9/hruMQdplQlYm/L4QcpCXCoO2Y6/+QavRxfytf7o2vi2hUnQUkKYK0Om415VbycTe2NmNlTCefhjzlCzE740M5FU1WdRXAzPS52F2WIMz3si3wpMP9OHPvvDcNrAE5rZB4QEzbA/rf9g9JvfZWhoK+LRnok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=j3UTis0J; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF31E4071DE
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 08:09:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.167
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792397343; cv=pass; b=PGH9pCCCE3RNb+LTL2TRgAUsteit/FBAs5UMl67N4QYsapaBReINsrij00OyO4A4zaPs/C5xoDrLJ8gOAPGWOHcXKU0mEUPEOrkzELPEyvTB/cPtQHsVHdB7axEob2rCjs5yTZ/Krxq3RVCPBp7m7pdvrmwvKYu6kzIrxFe/HYc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792397343; c=relaxed/simple;
+	bh=reBd+OcjXMbahZaREWZkjeEzFNdSWPfYbBOa+mNDlA4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bZhzOY/TagQAojaC7BfYB0pF2KI2OYS5xF8nWrcmuDNFpsp6A5NhnjAzvlU0CQCa9uwKxpeVKSDTWTJLKpNLBmaQraxc4ZHhzLB7iEDdr5s+8PDaxxJr8CtrDjAIROytE73zNjvXf6bs8rgg/3IhK/1KNI4BT2AofZakgHxAvCc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=eLlCoEnf; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=5r64w6kW; arc=pass smtp.client-ip=81.169.146.167
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="j3UTis0J"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792396800; x=1823932800;
-  h=message-id:subject:from:to:cc:date:in-reply-to:
-   references:content-transfer-encoding:mime-version;
-  bh=Rc824/XiH1K0fuI51TaTljkwtCzwTmuXLT67JRhcKk8=;
-  b=j3UTis0JJBQT01Rt9sl2omE9IxPa7QLF/hWsgtMtlLhSUNhbUkFM8+SR
-   esSBsWrloITcgF4865AF9K1gFdOFxonnR4mMiR6t3wPAJMXEc/FQX0Rwm
-   2s6BirKJLKcdQXZK83QZALKTPDeGHBsg0ouV1/1i8mPYRVkM9gL4Xui1O
-   Xiihc5lPd62eM52FP1f8B7aaiDDUsB3TUVc5X9bdi4SOZ+fPkwZRQK7XA
-   GLU9tn0Hb87VGl6TMWl7UA6rM78dXzFIFhuIYy/2dnDUla7tefvNYGN1I
-   vyRXFMHu2E4lvqeE2C7UuHHl7xb8Tx2khJ9j7yvWeaH6yfTp7FguAWcb9
-   w==;
-X-CSE-ConnectionGUID: DDcN7GEGS1i5QwCnpV3r1A==
-X-CSE-MsgGUID: ZJfx9XAoTZq2eEhMBTzYsg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11939"; a="1096593"
-X-IronPort-AV: E=Sophos;i="6.27,167,1787036400"; 
-   d="scan'208";a="1096593"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 01:00:00 -0700
-X-CSE-ConnectionGUID: b8qJ+y/MTP2XaP2kGcL4Yg==
-X-CSE-MsgGUID: ZS1gBXhbThyK7fU99zxS8A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,167,1787036400"; 
-   d="scan'208";a="2419571"
-Received: from kniemiec-mobl1.ger.corp.intel.com (HELO [10.245.245.222]) ([10.245.245.222])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 00:59:58 -0700
-Message-ID: <6cbfc2349f0a8d14b7a170ff791d18dfcb44d158.camel@linux.intel.com>
-Subject: Re: [PATCH v4 3/4] drm/xe: Split the bo shrinker into purgeable and
- non-purgeable shrinkers
-From: Thomas =?ISO-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>
-To: Matthew Brost <matthew.brost@intel.com>
-Cc: sashiko-reviews@lists.linux.dev, intel-xe@lists.freedesktop.org
-Date: Mon, 19 Oct 2026 09:59:55 +0200
-In-Reply-To: <atJvxCnNISBr2VLK@gsse-cloud1.jf.intel.com>
-References: <20261016133523.3622-1-thomas.hellstrom@linux.intel.com>
-	 <20261016133523.3622-4-thomas.hellstrom@linux.intel.com>
-	 <sashiko-outbox-174414@kernel.org>
-	 <4d1338d127bb9b77c8bc9a114c7c8740d2ec2780.camel@linux.intel.com>
-	 <atJvxCnNISBr2VLK@gsse-cloud1.jf.intel.com>
-Organization: Intel Sweden AB, Registration Number: 556189-6027
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-2.fc43) 
+	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="eLlCoEnf";
+	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="5r64w6kW"
+ARC-Seal: i=1; a=rsa-sha256; t=1792397321; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=KwwuxW2j2qmKXXKQu1N+GEq3u3mE4QBp2GqEFY15Tow6QN36EB4nRBXdBH9kGDo0ex
+    WMAt0WLL2cmb9lgkcfNcufu+ibHH90sfxsuywaHVmpxF1cVQuNQfuZPh7UoVAiHNjzkm
+    aIjBvT4tbvzIXMdLqDgsIzhzQYq64mVm5nH0f6BlvxDzBa4326SEi3lMsb3SiVvy7Nwu
+    Z//W/VRfj7/f/zkMSZmFxikUvcwe8scUf2f/Esz1tFPm9MUL3Kw19lShxWqKhLOoKwSA
+    j4CaM/E9g8/1bN1LcbqGFZW4mad4VTrxZnUWrWQftXr3itQe4HY85iv+A69y+7HoaiN9
+    b7XQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1792397321;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=ax4WbjHhcP3QE1+obLX5BAjM2aDflIruHdjY/HnwNlA=;
+    b=jj+PoXlIC66j7DE36Mi/rv8xiDk4TdB0m2SNv91Vf97U4iSsLZxcQ3x5Wmnm/cMw7y
+    srSxG6HfytueiB3wC3xc49Adebk66vRL7Mjj+ls3aWbHWxZPBjg0PaGtwA3+H8SOmebj
+    FNBokoEAGR3pdh61DdbGPZtfZbwNIelfZcQ9SLvBFDBWbGmznrR+ZL22NXsicpBEpIAB
+    zxyLNRkdCZ9oDUHHfq8gOi0TibKmo9ihJjY/ViH/KDzBaS4ncga+zWWi13i/xSSgth+E
+    866f0ts1lLZjxm2ALlO/sHr2K7EQSy7/CFB2Q5hoZape3MU3RW6jP0LFjdyX/4vQO+ur
+    dCQw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1792397321;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=ax4WbjHhcP3QE1+obLX5BAjM2aDflIruHdjY/HnwNlA=;
+    b=eLlCoEnf1j294qyi+YC9Ob+FEggyEwwWU3N/nt1FRvMEI9PeOLC+Vkm6Ml+EeLR0vE
+    rkO8KXTxDtzh1jNIPdDUGkIQoh2w4jwtbWLFZQyGZsPpUu+N8+vJ0OuBU675RZ1Hwvq+
+    ft7PCmJndAMFZ4gGUlpSse5h/0wIAyUTlVDOcU4ZgL/QESl7jeYJyXki5Z9ZmAbAyFj3
+    jXKRYwCCsPeiMj3B4vAwRZhbL8AxsywnPhitxNnmq9Swu3Wz/V+EUa3Su2If3tEbgAlp
+    dW8CFmbWdG4CVLcJI84ffyVAWaIsRZiu2ZDPoEI1GyY1VdTC/PjYnfv/hKRWOLBTPsEB
+    AnPw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1792397321;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=ax4WbjHhcP3QE1+obLX5BAjM2aDflIruHdjY/HnwNlA=;
+    b=5r64w6kW4WMowTY8q2PA8C+VinTtW0qU8zk8WIHJ8Qppq5HwH32o1VGYANmDK2NPcl
+    L2lzDBXhjVy9rN0XfsBg==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
+Received: from [IPV6:2a00:6020:4a38:6810::989]
+    by smtp.strato.de (RZmta 55.6.3 AUTH)
+    with ESMTPSA id Kfdf2a29J88fV3m
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Mon, 19 Oct 2026 10:08:41 +0200 (CEST)
+Message-ID: <83241d6c-ae67-4de9-8582-b958ec836dd1@hartkopp.net>
+Date: Mon, 19 Oct 2026 10:08:35 +0200
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-
-On Fri, 2026-10-16 at 11:41 -0700, Matthew Brost wrote:
-> On Fri, Oct 16, 2026 at 04:09:44PM +0200, Thomas Hellstr=C3=B6m wrote:
-> > On Fri, 2026-10-16 at 13:53 +0000, sashiko-bot@kernel.org=C2=A0wrote:
-> > > Thank you for your contribution! Sashiko AI review found 2
-> > > potential
-> > > issue(s) to consider:
-> > > - [High] drm/xe: Use-After-Free of shrinker during DRM device
-> > > teardown
-> > > - [High] drm/xe: O(N^2) CPU lockup in purgeable shrinker due to
-> > > uncounted LRU skips
-> > > --
-> > >=20
-> > > commit 1e9348c2fe4768de2cf24e4dd9b6188400c84043
-> > > Author: Thomas Hellstr=C3=B6m <thomas.hellstrom@linux.intel.com>
-> > >=20
-> > > drm/xe: Split the bo shrinker into purgeable and non-purgeable
-> > > shrinkers
-> > >=20
-> > > This commit splits the single xe_shrinker into two independent
-> > > shrinker
-> > > instances: one for purgeable objects and another for non-
-> > > purgeable
-> > > (shrinkable) objects. This allows the shrinker core to apply
-> > > different
-> > > reclaim pressures based on the varying costs of reclaiming these
-> > > object
-> > > types.
-> > >=20
-> > > > diff --git a/drivers/gpu/drm/xe/xe_shrinker.c
-> > > > b/drivers/gpu/drm/xe/xe_shrinker.c
-> > > > index 378022c37a57c..8e3fe675e0f34 100644
-> > > > --- a/drivers/gpu/drm/xe/xe_shrinker.c
-> > > > +++ b/drivers/gpu/drm/xe/xe_shrinker.c
-> > >=20
-> > > [ ... ]
-> > >=20
-> > > > @@ -216,63 +238,52 @@ static bool
-> > > > xe_shrinker_runtime_pm_get(struct
-> > > > xe_shrinker *shrinker, bool force,
-> > >=20
-> > > [ ... ]
-> > >=20
-> > > > -static unsigned long xe_shrinker_scan(struct shrinker *shrink,
-> > > > struct shrink_control *sc)
-> > > > +static unsigned long xe_shrinker_scan_purgeable(struct
-> > > > shrinker
-> > > > *shrink,
-> > > > +						struct
-> > > > shrink_control *sc)
-> > > > =C2=A0{
-> > > > =C2=A0	struct xe_shrinker *shrinker =3D to_xe_shrinker(shrink);
-> > > > =C2=A0	struct ttm_operation_ctx ctx =3D {
-> > > > =C2=A0		.interruptible =3D false,
-> > > > =C2=A0		.no_wait_gpu =3D ttm_bo_shrink_avoid_wait(),
-> > > > =C2=A0	};
-> > > > -	unsigned long nr_to_scan, nr_scanned =3D 0, freed =3D 0;
-> > > > +	unsigned long nr_to_scan =3D sc->nr_to_scan, nr_scanned
-> > > > =3D 0,
-> > > > freed =3D 0;
-> > > > =C2=A0	struct xe_bo_shrink_flags shrink_flags =3D {
-> > > > =C2=A0		.purge =3D true,
-> > > > -		/* Don't request writeback without __GFP_IO.
-> > > > */
-> > > > -		.writeback =3D !ctx.no_wait_gpu && (sc->gfp_mask
-> > > > &
-> > > > __GFP_IO),
-> > > > =C2=A0	};
-> > > > -	bool runtime_pm;
-> > > > -	bool purgeable;
-> > > > -	bool can_backup =3D !!(sc->gfp_mask & __GFP_FS);
-> > > > -
-> > > > -	nr_to_scan =3D sc->nr_to_scan;
-> > > > -
-> > > > -	read_lock(&shrinker->lock);
-> > > > -	purgeable =3D !!shrinker->purgeable_pages;
-> > > > -	read_unlock(&shrinker->lock);
-> > > > =C2=A0
-> > > > -	/* Might need runtime PM. Try to wake early if it
-> > > > looks
-> > > > like it. */
-> > > > -	runtime_pm =3D xe_shrinker_runtime_pm_get(shrinker,
-> > > > false,
-> > > > nr_to_scan, can_backup);
-> > > > -
-> > > > -	if (purgeable && nr_scanned < nr_to_scan)
-> > > > -		xe_shrinker_walk(shrinker, &ctx, shrink_flags,
-> > > > -				 nr_to_scan, &nr_scanned,
-> > > > &freed);
-> > > > +	xe_shrinker_walk(shrinker, &ctx, shrink_flags,
-> > > > nr_to_scan,
-> > > > &nr_scanned, &freed);
-> > > > =C2=A0
-> > > > =C2=A0	sc->nr_scanned =3D nr_scanned;
-> > >=20
-> > > [Severity: High]
-> > > Can this cause an O(N^2) CPU lockup in the purgeable shrinker?
-> > >=20
-> > > When the memory reclaim core (do_shrink_slab) calls this
-> > > purgeable
-> > > scan
-> > > routine under memory pressure, xe_shrinker_walk() iterates the
-> > > LRU
-> > > list.
-> > >=20
-> > > However, non-purgeable BOs return -EBUSY and are skipped without
-> > > advancing
-> > > the scanned counter:
-> > >=20
-> > > drivers/gpu/drm/xe/xe_bo.c:xe_bo_shrink() {
-> > > =C2=A0=C2=A0=C2=A0 ...
-> > > =C2=A0=C2=A0=C2=A0 if (!(tt->page_flags & TTM_TT_FLAG_EXTERNAL_MAPPAB=
-LE) ||
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (flags.purge && !xe_tt->pu=
-rgeable))
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return -EBUSY;
-> > > =C2=A0=C2=A0=C2=A0 ...
-> > > }
-> > >=20
-> > > drivers/gpu/drm/xe/xe_shrinker.c:__xe_shrinker_walk() {
-> > > =C2=A0=C2=A0=C2=A0 ...
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 lr=
-et =3D xe_bo_shrink(ctx, ttm_bo, flags, scanned);
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /*=
- Like the TTM LRU walk, skip bos we can't shrink
-> > > now.
-> > > */
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if=
- (lret =3D=3D -EBUSY)
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 continue;
-> > > =C2=A0=C2=A0=C2=A0 ...
-> > > }
-> > >=20
-> > > Since the LRU cursor is initialized locally on each call and non-
-> > > purgeable
-> > > BOs do not increment nr_scanned, every batch rescans all leading
-> > > non-purgeable BOs without significantly advancing sc->nr_scanned.
-> > >=20
-> > > Will this force the shrinker core to repeatedly call this
-> > > function,
-> > > processing the same leading non-purgeable BOs over and over
-> > > again?
-> >=20
-> > This can't happen in practice since purgeable bos are always
-> > ordered
-> > before non-purgeable bos on the list.
-> >=20
->=20
-> Is this true, though? If a BO is marked as purged on a hot VM and
-> shares
-> the VM's bulk-move structure, it would remain hot in the list. Also,
-> within an individual bulk-move list, I don't think a purgable object
-> is
-> guaranteed to be at the front of the LRU.
->=20
-> So, at a minimum, BOs marked as purged should be moved to a lower
-> priority band, as this patch does [1], and reclaim should only walk
-> the
-> purged-priority band [2].
-
-TBH, I thought we already had [1]. But even [2] sounds like a good
-optimization, although the link seems incorrect.
-
->=20
-> We can do this in an immediate follow-up after this series merges.
-
-OK let's do that.
-Thanks,
-
-Thomas
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH can-next v3 1/4] can: proc: reset pkg_stats atomics
+ individually
+To: sashiko-reviews@lists.linux.dev, linux-can@vger.kernel.org
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>,
+ Vincent Mailhol <mailhol@kernel.org>,
+ Oleksij Rempel <o.rempel@pengutronix.de>
+References: <20261019074244.50391-1-socketcan@hartkopp.net>
+ <20261019074244.50391-2-socketcan@hartkopp.net>
+ <sashiko-outbox-176764@kernel.org>
+Content-Language: en-US
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <sashiko-outbox-176764@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
->=20
-> Matt
->=20
-> [1]
-> https://patchwork.freedesktop.org/patch/743454/?series=3D170454&rev=3D5
-> [2]
-> https://patchwork.freedesktop.org/patch/743454/?series=3D170454&rev=3D5
->=20
-> > /Thomas
-> >=20
-> >=20
-> >=20
-> > >=20
-> > > > -	if (nr_scanned >=3D nr_to_scan || !can_backup)
-> > > > -		goto out;
-> > > > =C2=A0
-> > > > -	/* If we didn't wake before, try to do it now if
-> > > > needed.
-> > > > */
-> > > > -	if (!runtime_pm)
-> > > > -		runtime_pm =3D
-> > > > xe_shrinker_runtime_pm_get(shrinker,
-> > > > true, 0, can_backup);
-> > > > +	return nr_scanned ? freed : SHRINK_STOP;
-> > > > +}
-> > >=20
-> > > [ ... ]
-> > >=20
-> > > > @@ -294,6 +305,7 @@ static void xe_shrinker_fini(struct
-> > > > drm_device
-> > > > *drm, void *arg)
-> > > > =C2=A0	xe_assert(shrinker->xe, !shrinker->purgeable_pages);
-> > > > =C2=A0	xe_assert(shrinker->xe, !shrinker->populated_tts);
-> > > > =C2=A0	shrinker_free(shrinker->shrink);
-> > > > +	shrinker_free(shrinker->purge_shrink);
-> > > > =C2=A0	flush_work(&shrinker->pm_worker);
-> > > > =C2=A0	kfree(shrinker);
-> > > > =C2=A0}
-> > >=20
-> > > [Severity: High]
-> > > Does this kfree(shrinker) leave xe->mem.shrinker as a dangling
-> > > pointer?
-> > >=20
-> > > Because drmm actions execute in LIFO order upon device release,
-> > > xe_shrinker_fini() is called before xe_device_destroy().=20
-> > >=20
-> > > Later, xe_device_destroy() runs and calls xe_bo_dev_fini() which
-> > > flushes
-> > > the async_free workqueue. Pending BOs in the workqueue will have
-> > > their
-> > > final references dropped, leading to
-> > > xe_ttm_tt_account_subtract():
-> > >=20
-> > > drivers/gpu/drm/xe/xe_bo.c:xe_ttm_tt_account_subtract() {
-> > > =C2=A0=C2=A0=C2=A0 ...
-> > > =C2=A0=C2=A0=C2=A0 if (xe_tt->purgeable)
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 xe_shrinker_mod_pages(xe->=
-mem.shrinker, 0, -(long)tt-
-> > > > num_pages, -1);
-> > > =C2=A0=C2=A0=C2=A0 else
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 xe_shrinker_mod_pages(xe->=
-mem.shrinker, -(long)tt-
-> > > >num_pages,
-> > > 0, -1);
-> > > =C2=A0=C2=A0=C2=A0 ...
-> > > }
-> > >=20
-> > > Can this lead to a use-after-free and memory corruption when
-> > > driver
-> > > unloads?
+
+On 19.10.26 09:53, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] can: proc: stale counter snapshots in can_stat_update() overwrite reset stats
+> --
+> 
+> commit 947871fd730bb7740551ee6c8b42c7ac5ed61308
+> Author: Runyu Xiao <runyu.xiao@seu.edu.cn>
+> 
+> can: proc: reset pkg_stats atomics individually
+> 
+> This patch replaces the whole-struct memset() in can_init_stats() with
+> individual atomic_long_set() and scalar field resets in can_reset_pkg_stats(),
+> and switches can_stat_update() to use atomic_long_xchg() when reading and
+> clearing the delta counters.
+> 
+>> diff --git a/net/can/proc.c b/net/can/proc.c
+>> index de4d05ae34597..70104f13077e0 100644
+>> --- a/net/can/proc.c
+>> +++ b/net/can/proc.c
+>> @@ -76,16 +76,39 @@ static const char rx_list_name[][8] = {
+>>    * af_can statistics stuff
+>>    */
+>>   
+>> +static void can_reset_pkg_stats(struct can_pkg_stats *pkg_stats)
+>> +{
+>> +	atomic_long_set(&pkg_stats->rx_frames, 0);
+>> +	atomic_long_set(&pkg_stats->tx_frames, 0);
+>> +	atomic_long_set(&pkg_stats->matches, 0);
+>> +
+>> +	pkg_stats->total_rx_rate = 0;
+>> +	pkg_stats->total_tx_rate = 0;
+>> +	pkg_stats->total_rx_match_ratio = 0;
+>> +
+>> +	pkg_stats->current_rx_rate = 0;
+>> +	pkg_stats->current_tx_rate = 0;
+>> +	pkg_stats->current_rx_match_ratio = 0;
+>> +
+>> +	pkg_stats->max_rx_rate = 0;
+>> +	pkg_stats->max_tx_rate = 0;
+>> +	pkg_stats->max_rx_match_ratio = 0;
+>> +
+>> +	atomic_long_set(&pkg_stats->rx_frames_delta, 0);
+>> +	atomic_long_set(&pkg_stats->tx_frames_delta, 0);
+>> +	atomic_long_set(&pkg_stats->matches_delta, 0);
+>> +}
+>> +
+>>   static void can_init_stats(struct net *net)
+>>   {
+>>   	struct can_pkg_stats *pkg_stats = net->can.pkg_stats;
+>>   	struct can_rcv_lists_stats *rcv_lists_stats = net->can.rcv_lists_stats;
+>>   	/*
+>> -	 * This memset function is called from a timer context (when
+>> +	 * This stats reset is called from a timer context (when
+>>   	 * can_stattimer is active which is the default) OR in a process
+>>   	 * context (reading the proc_fs when can_stattimer is disabled).
+>>   	 */
+>> -	memset(pkg_stats, 0, sizeof(struct can_pkg_stats));
+>> +	can_reset_pkg_stats(pkg_stats);
+>>   	pkg_stats->jiffies_init = jiffies;
+>>   
+>>   	rcv_lists_stats->stats_reset++;
+>> @@ -121,9 +144,10 @@ void can_stat_update(struct timer_list *t)
+>>   	long rx_frames = atomic_long_read(&pkg_stats->rx_frames);
+>>   	long tx_frames = atomic_long_read(&pkg_stats->tx_frames);
+>>   	long matches = atomic_long_read(&pkg_stats->matches);
+>> -	long rx_frames_delta = atomic_long_read(&pkg_stats->rx_frames_delta);
+>> -	long tx_frames_delta = atomic_long_read(&pkg_stats->tx_frames_delta);
+>> -	long matches_delta = atomic_long_read(&pkg_stats->matches_delta);
+>> +	/* fetch and clear values for 'current rate' calculation */
+>> +	long rx_frames_delta = atomic_long_xchg(&pkg_stats->rx_frames_delta, 0);
+>> +	long tx_frames_delta = atomic_long_xchg(&pkg_stats->tx_frames_delta, 0);
+>> +	long matches_delta = atomic_long_xchg(&pkg_stats->matches_delta, 0);
+>>   
+>>   	/* restart counting in timer context on user request */
+>>   	if (user_reset)
+> 
+> [Severity: Medium]
+> Does can_stat_update() overwrite the freshly reset scalar statistics in
+> pkg_stats with stale pre-reset counter snapshots after calling
+> can_init_stats()?
+
+Yes, but this is not introduced by this patch. The local snapshots were
+added by 80b5f90158d1 (the commit this patch fixes) and this patch does
+not change the resulting values.
+
+I would rate this as Low, as the impact is limited to cosmetic procfs
+statistics:
+
+- total_rx_match_ratio keeps its pre-reset value until new frames are
+   received.
+- current_* and max_* show the last pre-reset interval for one timer
+   period (one second).
+- A jiffies tick between snapshot and reset only increments stats_reset
+   twice; calc_rate() returns 0 in this case, no crash.
+
+I'll address this in a separate patch with the same Fixes: tag by
+returning early from can_stat_update() after a reset.
+
+Best regards,
+Oliver
+
+
+pw-bot: cr
+
+> 
+> At the beginning of can_stat_update() in net/can/proc.c, the counters are
+> snapshotted into local variables before checking for a reset or overflow:
+> 
+> 	unsigned long j = jiffies; /* snapshot */
+> 
+> 	long rx_frames = atomic_long_read(&pkg_stats->rx_frames);
+> 	long tx_frames = atomic_long_read(&pkg_stats->tx_frames);
+> 	long matches = atomic_long_read(&pkg_stats->matches);
+> 	/* fetch and clear values for 'current rate' calculation */
+> 	long rx_frames_delta = atomic_long_xchg(&pkg_stats->rx_frames_delta, 0);
+> 	long tx_frames_delta = atomic_long_xchg(&pkg_stats->tx_frames_delta, 0);
+> 	long matches_delta = atomic_long_xchg(&pkg_stats->matches_delta, 0);
+> 
+> 	/* restart counting in timer context on user request */
+> 	if (user_reset)
+> 		can_init_stats(net);
+> 
+> 	/* restart counting on jiffies overflow */
+> 	if (j < pkg_stats->jiffies_init)
+> 		can_init_stats(net);
+> 
+> 	/* prevent overflow in calc_rate() */
+> 	if (rx_frames > (LONG_MAX / HZ))
+> 		can_init_stats(net);
+> 	...
+> 
+> When user_reset is set (for example, after reading /proc/net/can/reset_stats)
+> or when one of the overflow conditions triggers, can_stat_update() calls
+> can_init_stats() -> can_reset_pkg_stats(), which zeroes the atomic counters
+> and the derived scalar fields (total_*, current_*, max_*).
+> 
+> However, the local variables rx_frames, tx_frames, matches, rx_frames_delta,
+> tx_frames_delta, and matches_delta still hold the pre-reset values when
+> can_stat_update() continues immediately below:
+> 
+> 	/* calc total values */
+> 	if (rx_frames)
+> 		pkg_stats->total_rx_match_ratio = (matches * 100) / rx_frames;
+> 
+> 	pkg_stats->total_tx_rate = calc_rate(pkg_stats->jiffies_init, j,
+> 					    tx_frames);
+> 	pkg_stats->total_rx_rate = calc_rate(pkg_stats->jiffies_init, j,
+> 					    rx_frames);
+> 
+> 	/* calc current values */
+> 	if (rx_frames_delta)
+> 		pkg_stats->current_rx_match_ratio =
+> 			(matches_delta * 100) /	rx_frames_delta;
+> 
+> 	pkg_stats->current_tx_rate = calc_rate(0, HZ, tx_frames_delta);
+> 	pkg_stats->current_rx_rate = calc_rate(0, HZ, rx_frames_delta);
+> 
+> 	/* check / update maximum values */
+> 	if (pkg_stats->max_tx_rate < pkg_stats->current_tx_rate)
+> 		pkg_stats->max_tx_rate = pkg_stats->current_tx_rate;
+> 	...
+> 
+> As a result, those pre-reset local variables overwrite total_rx_match_ratio,
+> current_*, and max_* right after can_reset_pkg_stats() cleared them (and if
+> the reset was triggered by the rx_frames, tx_frames, or matches overflow
+> checks, the overflowing values are still passed into the ratio and calc_rate()
+> calculations).
+> 
+> Additionally, because can_init_stats() sets pkg_stats->jiffies_init = jiffies
+> by reading live jiffies rather than using the snapshot j, if jiffies ticks
+> between the snapshot and can_init_stats(net) during a user_reset, the
+> subsequent check (j < pkg_stats->jiffies_init) will also evaluate to true,
+> calling can_init_stats(net) a second time and then passing jiffies_init > j
+> along with the stale non-zero tx_frames and rx_frames into calc_rate().
+> 
+> Should can_stat_update() re-arm the timer and return early (or zero the local
+> snapshot variables) when can_init_stats() is called?
+> 
+> [ ... ]
+> 
+
