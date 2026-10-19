@@ -1,190 +1,104 @@
-Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011039.outbound.protection.outlook.com [40.107.208.39])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029442F363F
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 03:38:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.39
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792381122; cv=fail; b=nY0d9axIWzm2DRk8SOLUEWicukDjP72NNLcjyOQ7nqbQ4CJXzqemLEBkooJq7Vnr6im47FT9l9hdAZRgOEaucoey43e8IeBgJI20EP96Msek2sV4WV6HQUlZAiI3uj9asfzruMvNNXfAGxxwnl5ApBOjuyQ2RfAe6+mxKL1RgFI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792381122; c=relaxed/simple;
-	bh=XHzLuHpUA/cRNyhc3du6Rt4CMzTHrLbHnl7HegKCxc0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Tn1mklb8cRkl/dCS7tCFfzz0VQgdejl6HqrzjuYogYJHcVxf+eJZC2jCjNdC2AbTk6pAtr8FrwoL+YjnY+INMDVXObUg03uYxc2E5pMsoTsTX+aQFjCRCM69QuaCCUdMeXLxmD8Sto+fogiS9NARJb25BcZtdjMYGhPa2KK2Zyw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=MtueJfsz; arc=fail smtp.client-ip=40.107.208.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2679B25B098
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 04:01:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792382490; cv=none; b=qbEhln4/s+a2ZP5iN93UNtmfvD807YSlYI8NhpYOekPEuu1+MdJ9GofZ3PRVU9nNtpVbSTdxUKoFikp2/foN7PQ9pfKdz75HWX1hHyhc5O/IhW4JQhpnXMbVFD86zj3ZmlevZTeMApK7nPbR7CBMjrdJiTr92oFFMLabM0JER9A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792382490; c=relaxed/simple;
+	bh=8CrE91J0fGYXsXVw280TKZ+FIOilDiXTUNJAh1UNvA8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LEJqYSzSk75bXfmy5KwuYyjgsdAJ51f7Nta9A+6gRAwnnuBXY4seAsUWwDm8PfHeRhuCT0kSYG8+aYkiAoVlxrCBg4OMAV5snFibzB+sQqEIMJ4TtRSpQgcTec0CIbDmjUuVlG/gzKSABrGrLXVmokC1XRmtT092BYamY53n99Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=UjBEsSn1; arc=none smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="MtueJfsz"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dEG+uGpx0oMaY4h21BsO1OFxhF0uhFCvMOIxS9LYsHxIp7ZjD2yeSv1uDLVR6p1zkUrSe22HhRGtgftpTjNsJdV5dmpiHlAqtggnE2jMcbvW801bYwKzSCI3PwPQUqWKEfCAaagIlk7Dz+sulBBFx23XEz96e9aVlP0kSdaOG5Lfakx9VrX0T2Cbhob8z1UYAUfz95qcS/+nRBequzv2gY5hg3PWtEddtjZelNgIC+y5pJ1syANLPSflk1qZRtsdtdSKkRx7nNZjo9YWSiZ8xFyAW/2tWnDzHds/xoHquG5HkFYoFUZcEi5C5mEvc1ktqjttHeZoBNLxc4/9aVQJ+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=l8F1/P+8pz/a2FD15vCUH/9F8cy9Bb/VAx0vLHRZIhk=;
- b=VpY1SWjrs9P5110m1tO0jB6oJEXY6R8CIE5FHmtGoA+e+EUcLyaPY/4RDrTSTvI7OW8LebehfgeW/0Pe1oHVa+WPzu/GBHtvY/nthtUKbLynjLCRxFX3GtU/jQcjJS2v4wZ8tS8+cP7U/mFAVWI8w7Ic0rUDOfk0NZSuiOhzg1xtL4WAgRHB6jjz31j+v2Ml43WPJahugozvqybQlwUrR0ejMQO6WN2wYGDua+xtMHR5PFdMea8gapUGTi5L/YeoOhMPU9IYh9XJ+NRTw4DOnMp3PD/OZMAIUsRQjNU8T7Zuo4HiS2H6++TSz18Oo7DS/btvwFsUuCUlVILT2FhCuw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=l8F1/P+8pz/a2FD15vCUH/9F8cy9Bb/VAx0vLHRZIhk=;
- b=MtueJfszbjMuoxKc6BPNY2Mhi3o4cTNUE161W05+9B/Gdbyo8L3zYXeOHAzoL8Azk2Re9d+Yh6dHOd47ofPy5QaXB90PRxCKcrkfKKmcowBiZJVcq9dYN1qH0Qdkzf929nDPBCzfgvl7VkYIOyUUyEhwq+J3baaiHdzWp3Zmsmc=
-Received: from BN9PR03CA0193.namprd03.prod.outlook.com (2603:10b6:408:f9::18)
- by DM4PR12MB6421.namprd12.prod.outlook.com (2603:10b6:8:b7::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.23; Mon, 19 Oct
- 2026 03:38:37 +0000
-Received: from BN3PEPF00022BCC.namprd03.prod.outlook.com
- (2603:10b6:408:f9:cafe::28) by BN9PR03CA0193.outlook.office365.com
- (2603:10b6:408:f9::18) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.451.23 via Frontend Transport; Mon,
- 19 Oct 2026 03:38:36 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- BN3PEPF00022BCC.mail.protection.outlook.com (10.167.248.164) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.522.6 via Frontend Transport; Mon, 19 Oct 2026 03:38:35 +0000
-Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Sun, 18 Oct
- 2026 22:38:28 -0500
-Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb09.amd.com
- (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Sun, 18 Oct
- 2026 22:38:28 -0500
-Received: from [10.85.36.197] (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.53 via Frontend
- Transport; Sun, 18 Oct 2026 22:38:27 -0500
-Message-ID: <a55b6e7c-c8ef-4bdd-bc35-1a0bfd1eac3f@amd.com>
-Date: Mon, 19 Oct 2026 09:08:21 +0530
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="UjBEsSn1"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-3ad41b47541so170183a91.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 21:01:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1792382488; x=1792987288; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=j5Us+RzdYAbnpmQtT3TAtyX+ezvC5k/Vrz+te4DAOOo=;
+        b=UjBEsSn1ix30Ek/K8PPy5RYRoXwksEHDs+MniJtIvwB3uqJIY4eLUEA/7GyYXpqhw4
+         HoR1qD2eQDeRaC7c4sJlmjzX3jvxAjHwAZE+xuSfbr6wyrTX5Zo3Gft7JXIjtEZxfNxp
+         FqFvi+nIb4Lv9XDTQessKpdJg+QG/ddhBYSLI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792382488; x=1792987288;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=j5Us+RzdYAbnpmQtT3TAtyX+ezvC5k/Vrz+te4DAOOo=;
+        b=N6aQvh03t6SttdiLrSz5GhPmOFoJZ3qPBtVd550vNiO5yiei7elBrtCfwCRwLZ8/S2
+         i+qEUZ8OaKML+W2oq5szlmMPwQ3Ln5rVJ3IvrQfvryq7GU4XkJTg1ct7Ok3oyLcxfer8
+         xrj9LHb6e1ayWWaCBcAhkATcHfrOZj5wsd0V/XNyh3mKA3YLnkFQbnTawptlLCktvEj8
+         pZ79BtJRHBZoXcJa0IqfvuMfvINxREoM1Rn9+OByJY9y5NH6qwiyfwLgUFR2B/MkxHVO
+         IDtqODVjyHRta5Mu5Lp654NgGmrs1q1Of0gsk5mx0zpENhpx+F6o4DLSbJji5jepUWDe
+         n4dg==
+X-Gm-Message-State: AFq9FYK8he8IS9mHJWeil4qbIvQusXw8Uzu/6MJlgqAL84L7QwyE0ySQ
+	Ks/jJCotq1pFRT8UVB9J3sDNhabDf2D3tSejwmp/gFJNbWOdCaPN1NZ28Nd+Xt66DJdFh0tYcVp
+	MZNg=
+X-Gm-Gg: AYBFou0PefKW5WAyHXiV79mboLdTdye0xbahfw9fRSyZoWVXatnwqWC+8qVpdZgygTm
+	21qlWXq3kS41H6LVmrXx9V8DS5GNegYo+Ig2kaVdE3Vqt9eor/TF8IfUU/yCf3N86qT+OTa+Q5f
+	EdDz/kOGKY7CypTDHcXPSzWV0NlOKB0fVmEuMEwkCENl+R8+jJ/bZcHefmqPXiR+7fBkhY3zYia
+	3hDhtauKHeYyx+GuU2yRWTJSX42bu/yb3jFS1ywxky0MjzyP+SK7+/82SblheLm/NpDSzD9xzXJ
+	DEBIpZoZH+f0YXRo9+ArmoGFjatWR9boOZm2v2hpYm0CMVVtQ+tmCzBOd2VNA0F3KKu6yaIY4ir
+	U7KubowjMy1m/DtjrQlClB9JOnt1C80m46U8T32jI/O05/YYKyeZ7BD2aNyfXlKkuVqRbt6scsA
+	AGv1zp3TucJz9Txu/ATqw6D3E9r5OoOXl9r91HLJOXVcgZCRuVP99Bin3uP6la+u5vgcaOFFhYR
+	GOB6hRZTwUglN3I1laIyagawiKjNmZn5I36Rw==
+X-Received: by 2002:a17:90a:5184:b0:3ad:13fe:41ba with SMTP id 98e67ed59e1d1-3ad13fe424amr1909945a91.52.1792382488360;
+        Sun, 18 Oct 2026 21:01:28 -0700 (PDT)
+Received: from google.com ([2a00:79e0:2031:6:7b3d:f4ff:823:5963])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3acd3cc73c7sm7232815a91.4.2026.10.18.21.01.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Oct 2026 21:01:27 -0700 (PDT)
+Date: Mon, 19 Oct 2026 13:01:23 +0900
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>, 
+	Andrew Morton <akpm@linux-foundation.org>, Brian Geffon <bgeffon@google.com>, 
+	Barry Song <baohua@kernel.org>, Bo Zhang <zhangbo0325@gmail.com>, 
+	Minchan Kim <minchan@kernel.org>, Richard Chang <richardycc@google.com>, linux-mm@kvack.org
+Subject: Re: [PATCH v5 12/13] zram: borrow idle decompression streams in
+ exclusive mode
+Message-ID: <atWV7iJpJv0UXXCQ@google.com>
+References: <20261018035125.3120704-1-senozhatsky@chromium.org>
+ <20261018035125.3120704-13-senozhatsky@chromium.org>
+ <sashiko-outbox-176604@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 5/5] KVM: selftests: nSVM: Add nested PML coverage to
- nested_dirty_log_test
-To: <sashiko-reviews@lists.linux.dev>, <kvm@vger.kernel.org>
-References: <20261015103933.2088307-1-nikunj@amd.com>
- <20261015103933.2088307-6-nikunj@amd.com> <sashiko-outbox-172714@kernel.org>
-Content-Language: en-US
-From: "Nikunj A. Dadhania" <nikunj@amd.com>
-In-Reply-To: <sashiko-outbox-172714@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF00022BCC:EE_|DM4PR12MB6421:EE_
-X-MS-Office365-Filtering-Correlation-Id: 69fbee06-2ea2-48ed-635a-08df2d9274e7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700016|82310400026|23010399003|1800799024|376014|6133799003|10067099003|22082099003|18002099003|13003099007|3023799007|11063799006|261009223027099003|56012099006|4143699003;
-X-Microsoft-Antispam-Message-Info:
-	Q/bJF5usbuVSEcW3jx0TfO+pBW/RGMy0sKOZ0h66jZEHRX1Kcwja5yi119n6uB3yDRj7yc5CZowM74pgaDLuIDUvokVjTkhKI7aERNPXsMT4sBxrz6J+Rx44YJ9gZGwQ8SEtJramsuL6d2iop38ATYSes0wf5fmhIOBBwPBDAOwRSHnMW8IeCz+oRWImCWtIZvTfZw+11Y4pDGqtzZ8v93BG84AFrpt7ljOOeNjLdlmscRsf7oKWG1s7w3TrJOlCiezq2tmmXq2Oj31o2KHwNO67QNpFYtBMpw5XJQr6+dUhj05jVYeZXiIEdnJwLEnX0M8GQu9ibfmLcmCfbwFReJjz5wP4kJe71cmnlvjGwKkf5MIb5oX97RvfegoWqdvhWyx19bz6ZYD+khdeh+U21PcfhCHlIdgH01XgIHdcpS0ZrWZEqMkWQb0F1z04nrxp9+EvcMpSl97/r0RuEmy0fW2NvWvNcj8usqyzbvff9IPgcpeIzi3pRLM6fyxiUAoCVY+NQNKLS9JqTTRc6GrhqRzUix167n68Gqogy8BbUxkKtJu4GtuY7Pk9JynisTSD3Q4obnRUCrn8mzWQIOhBKY2c+VVy4h1jmF61nlboMbAxbesgLP3zZHVgYiDFLt2vMPnx2WedEkeeQsBuH45Gk8gH2GuOsUqxsmNmEJcX0tygSXMScfgS56CnmKJdqVIhyH9tFmeoEsSaBtmRGEq41A==
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(82310400026)(23010399003)(1800799024)(376014)(6133799003)(10067099003)(22082099003)(18002099003)(13003099007)(3023799007)(11063799006)(261009223027099003)(56012099006)(4143699003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	SMmicW7XiWM50IqtUrKDTnHahq5PciEr0DrnZ8jASxNVjMQ7wSl5t3XkjeErql6vHpXEea9wviSSz1mLchfretCMbIaAHmgr/vpt9gwOvI8w3Jl6y+IqkNoOQO/iUEN0O9Zf9Gv8DL8nnZ8jXqlmuRyOeWVBGW/KRN/rnubu5r1TEwLeCMuwP4aW5zeZLyRlT8geNjZxXAtkaM7wMKeGZpZgfFz2f35FBgfj1JU9zF7w5nnJlT/Hm3C/KB7UGxBj1dQHl8sitDJGotPdKQGlscKD+KqoxTcyP4zd59gcjEfYvFYVUSfELvZcluFkspujhIXZEHDEmOhijgcPrV/mEiwzuvtX8JT+AK3gkKpoMr6rt8YNEm0VKTkbcNwe9ECJAfC4HLGpo/0MjbcalCUETG1FhIZX9aFPa7r2dAIv7bBJqnJkpZ4qoNNCR83jAkF4
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Oct 2026 03:38:35.9251
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 69fbee06-2ea2-48ed-635a-08df2d9274e7
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BN3PEPF00022BCC.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6421
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-176604@kernel.org>
 
-
-
-On 10/15/2026 4:34 PM, sashiko-bot@kernel.org wrote:
-> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
-> 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] selftests: kvm: l2_pml_guest_code executes VMX-specific vmcall() on SVM
-> --
-> 
-> commit cb64ef5e62e8854d8adff372ccbc0426babe6f16
-> Author: Nikunj A Dadhania <nikunj@amd.com>
-> 
-> KVM: selftests: nSVM: Add nested PML coverage to nested_dirty_log_test
-> 
-> This commit extends the existing nested PML selftest to also cover AMD's
-> nested Page Modification Logging (nSVM PML) by introducing an SVM-specific
-> L1 guest code path.
-> 
->> diff --git a/tools/testing/selftests/kvm/x86/nested_dirty_log_test.c b/tools/testing/selftests/kvm/x86/nested_dirty_log_test.c
->> index b1008724f46dc..cc49fa0c42937 100644
->> --- a/tools/testing/selftests/kvm/x86/nested_dirty_log_test.c
->> +++ b/tools/testing/selftests/kvm/x86/nested_dirty_log_test.c
->> @@ -250,6 +250,45 @@ static void l1_pml_vmx_code(struct vmx_pages *vmx)
->>       GUEST_DONE();
->>  }
->>
->> +static void l1_pml_svm_code(struct svm_test_data *svm)
->> +{
->> +     struct vmcb_control_area *ctrl = &svm->vmcb->control;
->> +     int nr_pml_full = 0;
->> +
->> +     /* PML requires NPT. */
->> +     GUEST_ASSERT(svm->ncr3_gpa);
->> +
->> +     generic_svm_setup(svm, l2_pml_guest_code);
+On (26/10/19 03:53), sashiko-bot@kernel.org wrote:
+[..]
+> > +static struct zcomp_dstrm *zcomp_dstrm_excl_tryget(struct zcomp *comp)
+> > +{
+> > +	struct zcomp_dstrm *zstrm;
+> > +	unsigned int cpu;
+> > +
+> > +	/* Best-effort start CPU hint; migration during the scan is fine */
+> > +	for_each_online_cpu_wrap(cpu, raw_smp_processor_id()) {
+> > +		zstrm = per_cpu_ptr(comp->dstream, cpu);
+> > +		if (zcomp_dstrm_excl_trylock(zstrm))
+> > +			return zstrm;
+> > +	}
+> > +	return NULL;
+> > +}
 > 
 > [Severity: High]
-> Could this setup lead to an Invalid Opcode (#UD) exception on AMD systems?
-> 
-> Looking at l2_pml_guest_code(), it appears to unconditionally execute the
-> vmcall() instruction:
-> 
-> tools/testing/selftests/kvm/x86/nested_dirty_log_test.c:l2_pml_guest_code() {
->     ...
->     vmcall();
->     ...
-> }
-> > If l2_pml_guest_code() emits the Intel-specific VMCALL instruction, won't
-> executing VMCALL on AMD systems raise an Invalid Opcode (#UD) exception
-> instead of causing a VM-exit to L1?
+> Does passing raw_smp_processor_id() directly as the start argument to
+> for_each_online_cpu_wrap() in zcomp_dstrm_excl_tryget() break the loop
+> termination logic when the task migrates during the scan?
 
-VMCALL does #UD on AMD, but KVM intercepts #UD and the emulator rewrites the
-instruction to VMMCALL and re-executes it, see emulator_fix_hypercall() and
-svm_patch_hypercall().  L1 intercepts VMMCALL, so L2 exits to L1 with
-SVM_EXIT_VMMCALL. l2_guest_code() in this file already uses vmcall().
-
-> 
-> Since generic_svm_setup() does not intercept #UD, does this exception
-> get delivered to the L2 guest, triggering the host's selftest abort
-> handler and crashing the nested AMD guest?
-> 
->> +
->> +     ctrl->pml_addr = svm->pml_gpa;
->> +     ctrl->pml_index = PML_LOG_NR_ENTRIES;
->> +     ctrl->misc_ctl |= SVM_MISC_ENABLE_PML;
->> +
->> +     run_guest(svm->vmcb, svm->vmcb_gpa);
->> +
->> +     for (;;) {
->> +             if (ctrl->exit_code == SVM_EXIT_VMMCALL)
->> +                     break;
-> 
-> [Severity: High]
-> Will this loop exit condition ever be met?
-
-Yes, for the reason above.  l1_svm_code() predates this series and already
-breaks on SVM_EXIT_VMMCALL.
-
-Regards,
-Nikunj
+I guess you are right.  I'll fixup in v6.
