@@ -1,58 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792428756;
-	b=k8nLf3gHB4FotGIVUquKDI7rgKiNZZVX3NHigRuDdPTPzvLZI1YqGFKsOSvE6VOAN6nC
-	 newL0Lx/dNddODWMORTj0Cpn47Wymd8Mxtc5kqISiH4XAcWC4HUJVQ9wfyVnodUTOZUvM
-	 pLgICgfpzob+VrEFiOowYIOK6bJrAQfkOPJZudIvT21HMin9yHGAoso97IJYgOGaws7J0
-	 Nc8ReB/iQ3FesikVnbsFIlTVvfiRW+hUZIvv0GsBWqPt30gRr73MSl62nektrVR7HYUbA
-	 GPgSkAPRhZzDvDjfKClqODqZ0U8xehbOP7iY2SNzTiOoAIOji1tnAg58b8qmfhjtbVg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792428756;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=5rklvj1zn8XL0xuyXWOQrH4Q0kowOc+zGy6APUeTD3c=;
-	b=MZktdIjk1ANOdsO31dNhGegymXCVwGdn2yVqvPe11AdBzAtnwlGJ8pmvQt+o1NrEd2hd
-	 abGkWeWah/jOzsqDDJ6YDtBz7WgyKGMV4e+aa5PwuurLaEjPXjFhqeZ2Uf0Vp4qwxDq7Q
-	 sBKR3KE6MZPxLpDMhHW029aWzN61EK2TVXnIPVzuWZPC3FqCuJprPZzY0x5uOBuHBSheC
-	 ur83PwlWCocZbaqmEO1xlOBPd/SlKRiL9vwYZ4Aa47FWTgNVOZuRLviOahSkq88L0kgpI
-	 SDGEMNkB3s2PKE/LlMeZDro82/0vYPvtboFcyMHa8TmhMJZ47GcKXbjbUdepYT1LZMg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="bf+MGTc/";
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=85.215.255.53
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792428924;
+	b=Bbjc9DLmPNT16wRghe0fDfCWWr+gP6O9qZJ0NMWHzIzUQbhpXz45kE4iZFyEzmQP0wZB
+	 +L8M6ehFscw3EGcj5hTY+bkuu/l713gxACwS2knRYViTE836MCkQxPpxB8cPndt/nx7SU
+	 l/Gf9gP7m8qWG56r7tE8t7i9Jur6Axvrb9mOccdI31dtOA/JPLH7ocFx38RCvlq5Kb3GL
+	 QR59brrA0yTKxOF9L8ifXgoV/XZONAOmsnIkQ3Vb3vSSt8NLTTFH+PcRmylhsZU5xvIHt
+	 MCH3KrB4AUGf+AWDMqONFllLjUpb/cZSQYwF2BtZURJLPVNSGuAQ+qTRQVacD7efR1A==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792428924;
+	h=DMARC-Filter:X-RZG-CLASS-ID:DKIM-Signature:DKIM-Signature:X-RZG-AUTH:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=25ht40xsUnjoF6cIeZGXfaQqy73ylTv6+L7Vod7bljA=;
+	b=yS3TkjZX6tl1ojNFN26EhmKIogkeiihnsMin36ca08JJB27pXkm2uuooakOIgWN3N1Vj
+	 7ueyHhQHeaG1VloTPDRj4NLKOT05UzgsXyjK7xyoEzzoJbHLIrKqxy5+Hp8gu+PpJk+xK
+	 1OiB44NOQm8S65lX22UBDQJG9jKKn/bSAuj3K3mgD7tj1/sBcu3v5sQh+v9Fze6n4tG5n
+	 c/KnxZ4jlQvyJJeR5Q7+Zcc/uG3QcZ7f9fG1zx7I0m0CuNw0cc4Akd+nO8p7Gikl1nX2U
+	 KIb4D+MTuifBsCKOX5BPtsmFcDtD6yFdIGInZmdzKyGGGXIF0Yj/Do4StshKAclKMDA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=hartkopp.net;
+	spf=fail smtp.mailfrom=hartkopp.net;
+	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=XhPdhAng;
+	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b="m/EsOQ+J";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=85.215.255.53
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.53])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4998A606A323;
-	Mon, 19 Oct 2026 16:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EDA606A31A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 16:55:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0EDA606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bf+MGTc/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762231F000C5;
-	Mon, 19 Oct 2026 16:52:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792428755;
-	bh=5rklvj1zn8XL0xuyXWOQrH4Q0kowOc+zGy6APUeTD3c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=bf+MGTc/X9PoWxTMus+rhdRZwqYw+eLmT2ZOvmNKryhhTqNSM8Mi9v0p9OKcQhvpT
-	 XYLp2ZiVdZ+saVO3mNDh+Jrz/NF0JHVeFD/V+++wcvs2nBQxVG4G2N2bveUfdk4VkV
-	 HahoERqh5eSaGqC2QWZtACVGu5edukqfBU8HmUTJ2DetUdfE4MY2rgKsPFSbGojq3H
-	 wT+jJSpBfn2Uv8djAVqOZv5S9XXkJVonpUaAyhZJuVh6jiO8eT3curNsSbIgnFER+h
-	 4hcYhxUFT2mKmtAY+DvihFdijSNgxOxvhonTXTSnjll8eTJWWDNQwxZPiTysErYTDi
-	 +F6thAX3Ocscg==
-Date: Mon, 19 Oct 2026 17:52:31 +0100
-From: Lee Jones <lee@kernel.org>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, mfd@lists.linux.dev,
-	conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-Subject: Re: [PATCH net-next v25 04/10] mfd: an8855: Add support for Airoha
- AN8855 Switch
-Message-ID: <20261019165231.GJ2663669@google.com>
-References: <20261009161102.38961-1-ansuelsmth@gmail.com>
- <20261009161102.38961-5-ansuelsmth@gmail.com>
- <sashiko-outbox-166721@kernel.org>
- <6acccc4e.4c22a69b.132624.271f@mx.google.com>
- <20261019164430.GI2663669@google.com>
- <6ad64981.198a47d7.3d6d5a.6d01@mx.google.com>
+	dkim=pass (2048-bit key, unprotected) header.d=hartkopp.net header.i=@hartkopp.net header.a=rsa-sha256 header.s=strato-dkim-0002 header.b=XhPdhAng;
+	dkim=pass header.d=hartkopp.net header.i=@hartkopp.net header.a=ed25519-sha256 header.s=strato-dkim-0003 header.b=m/EsOQ+J
+ARC-Seal: i=1; a=rsa-sha256; t=1792428897; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=o0WO8vRykPaIFXi/3seSGn9IxS81IItctZsuyDYWB6/FPykukJMjDn6ATBSXnhAxOs
+    QmLyUEMa/jOUI0l6V5FZSlOKk+6w9TLSiXLCwDin4HPGS8eJOtjfIljUiG4B6pL44+Os
+    armSBfdIgWqPq4K6vtYdTB3cs3BzmXOOTHTBcZ8O80C2PWorWEC418Cc7guySrhJbcyC
+    xHl6jFtof3baVAFPlhI7ocFZS9xMeQCiNrq5QUf8QMY+ggFutWdTbUL/NTOiJiO9jVg6
+    9k0OdtasyeUhFZ7lDBwDyOgxNFLQiHLSzT/JRrex4B9ns8Zhe8ltIlQJjetEE65oXgFH
+    1HWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1792428897;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=25ht40xsUnjoF6cIeZGXfaQqy73ylTv6+L7Vod7bljA=;
+    b=mpz/pJSxefiQr2Sd8s8UmRg5rVGq/S4ZaMcxxXcCXs0AIHkRux2/DlwKKFPn6i4Ysm
+    /lBXfzJkgRRT5GzJp6DNBJ1rb/SnQEhCkJi3YRqGK6v9CagF7wiDHRwgzkIwNVlQLHht
+    tfwBwZcAVHb3D/NANVCH+1K30qw4gEjmnj5k4Y30v1eW8gUBAPTjlg1c/aZ/xEX+7q/V
+    gJKt8BBGogOFe6k5WTRJjxKPAAlxfJ/dWIISGYYncNlYY2+0tL788tl3n5LS4Q+It2Tw
+    DmgYlFKQoPvWLhvXKgjuQb5H+tTMK0RyMwfhfwUy4S5bWvQhez/yTZJov9ouu+Zf6uqj
+    qnmQ==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1792428897;
+    s=strato-dkim-0002; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=25ht40xsUnjoF6cIeZGXfaQqy73ylTv6+L7Vod7bljA=;
+    b=XhPdhAngUHSqXjpueM7upWFWDf5qCsPGi928mLn9fT73IlPtEOcVBxDSnp1oEku5Lg
+    rvlf9/0QHS0Cb6HHlgIgNfPdWeTaVNXsm+Nn11/9F1mZRO4ub7HCXNAW34loMgWwxlh1
+    KL31II+K40mq+2tbgpfcjUmWFgtOPD6qMQGNvumbhy094pOzmJvqDKOuE3zm+aQJb0iu
+    HDtTVS29BzYeYL6Huj5W2nlb5XsVrbGmrl1+9Txbl+fZ7lh0HBtwT9yiEbvJP4RvErRv
+    0S9tZYF2gfFuKgl/pyrsLovb5voYZjkNNw3mFubEPMzH3mn+e17iulh4n439e+yF116U
+    NbIQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1792428897;
+    s=strato-dkim-0003; d=hartkopp.net;
+    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
+    From:Subject:Sender;
+    bh=25ht40xsUnjoF6cIeZGXfaQqy73ylTv6+L7Vod7bljA=;
+    b=m/EsOQ+J/2obgt75IArx2sC+7onUDLncE623sd6XSZdhh7ZvL/T8w4t/S7ywazwq2c
+    LaqL8vW8TK0wCpD3W7BQ==
+X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
+Received: from [IPV6:2a00:6020:4a38:6810::989]
+    by smtp.strato.de (RZmta 55.6.3 AUTH)
+    with ESMTPSA id Kfdf2a29JGsvXn3
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Mon, 19 Oct 2026 18:54:57 +0200 (CEST)
+Message-ID: <f3059d51-ec05-4ff9-8d24-159eeb0b1281@hartkopp.net>
+Date: Mon, 19 Oct 2026 18:54:51 +0200
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -62,96 +95,175 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6ad64981.198a47d7.3d6d5a.6d01@mx.google.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next 05/12] can: proc: reset pkg_stats atomics
+ individually
+To: sashiko-reviews@lists.linux.dev, Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: linux-can@vger.kernel.org, Vincent Mailhol <mailhol@kernel.org>,
+ Oleksij Rempel <o.rempel@pengutronix.de>
+References: <20261018164417.1540449-1-mkl@pengutronix.de>
+ <20261018164417.1540449-6-mkl@pengutronix.de>
+ <sashiko-outbox-177945@kernel.org>
+Content-Language: en-US
+From: Oliver Hartkopp <socketcan@hartkopp.net>
+In-Reply-To: <sashiko-outbox-177945@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, 19 Oct 2026, Christian Marangi wrote:
 
-> On Mon, Oct 19, 2026 at 05:44:30PM +0100, Lee Jones wrote:
-> > On Mon, 12 Oct 2026, Christian Marangi wrote:
-> > 
-> > > On Sat, Oct 10, 2026 at 04:11:40PM +0000, sashiko-bot@kernel.org wrote:
-> > > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > > > - [Medium] mfd: overlapping regmap readable ranges for General Purpose and GPU timers
-> > > > - [Low] mfd: structure and variable naming violates MFD API guidelines
-> > > > --
-> > > > 
-> > > > commit 05d4dc95b969f0fcf66d11398aafad3e7eb7c7f1
-> > > > Author: Christian Marangi <ansuelsmth@gmail.com>
-> > > > 
-> > > > mfd: an8855: Add support for Airoha AN8855 Switch
-> > > > 
-> > > > This commit adds support for the Airoha AN8855 Switch which provides
-> > > > a DSA switch and a NVMEM provider. It utilizes the mdio-regmap driver
-> > > > and registers a regmap for each internal PHY.
-> > > > 
-> > > > > diff --git a/drivers/mfd/airoha-an8855.c b/drivers/mfd/airoha-an8855.c
-> > > > > new file mode 100644
-> > > > > index 0000000000000..a2778511dfefc
-> > > > > --- /dev/null
-> > > > > +++ b/drivers/mfd/airoha-an8855.c
-> > > > [ ... ]
-> > > > > +static const struct regmap_range an8855_readable_ranges[] = {
-> > > > [ ... ]
-> > > > > +	regmap_reg_range(0x10009000, 0x10009fff), /* PDMA */
-> > > > > +	regmap_reg_range(0x1000a100, 0x1000a2ff), /* General Purpose Timer */
-> > > > > +	regmap_reg_range(0x1000a200, 0x1000a2ff), /* GPU timer */
-> > > > 
-> > > > [Severity: Medium]
-> > > > Is this range definition correct? The General Purpose Timer range
-> > > > (0x1000a100 to 0x1000a2ff) fully overlaps with the GPU timer range
-> > > > (0x1000a200 to 0x1000a2ff).
-> > > > 
-> > > > Could this be a typo in the hardware memory map definition? It seems like
-> > > > the General Purpose Timer range might have been intended to end at
-> > > > 0x1000a1ff to avoid overlapping and potential register access boundary
-> > > > issues.
-> > > 
-> > > I have to double check this from documentation, but if possible I would
-> > > like to fix this with a followup patch.
-> > >  
-> > > > [ ... ]
-> > > > > +static int an8855_core_probe(struct mdio_device *mdiodev)
-> > > > > +{
-> > > > > +	struct an8855_phy_bus phy_bus_infos[AN8855_MAX_PHY_PORT] = { };
-> > > > > +	struct device *dev = &mdiodev->dev;
-> > > > > +	struct an8855_core *priv;
-> > > > > +	struct regmap *regmap;
-> > > > > +	int num_phys;
-> > > > > +	int i, ret;
-> > > > > +
-> > > > > +	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-> > > > 
-> > > > [Severity: Low]
-> > > > This isn't a bug, but does this variable and structure naming align with MFD
-> > > > subsystem conventions?
-> > > > 
-> > > > The MFD guidelines suggest avoiding generic variable names like priv, and
-> > > > instead recommend using ddata for the instance variable. Also, should the
-> > > > struct name itself avoid hardcoding implementation details like core?
-> > > > Naming it something closer to struct an8855 might better adhere to the
-> > > > subsystem guidelines.
-> > > > 
-> > > 
-> > > I already updated the struct, is it needed to also update the local
-> > > variables?
-> > 
-> > Ah, I was just about to apply this!
-> > 
-> > This would be preferred:
-> > 
-> >   struct an8855 *ddata;
-> >
+
+On 19.10.26 18:50, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] can: proc: pre-reset local snapshots overwrite zeroed stats in can_stat_update()
+> --
 > 
-> Ahhhhhh! You got me!
+> commit 569f80e5a195e52b5ac88d8f5cdb36714d69c5db
+> Author: Runyu Xiao <runyu.xiao@seu.edu.cn>
 > 
-> Do you think there might be a faster method to submit this so I can quickly
-> rename the variable and you can pick it? 
+> can: proc: reset pkg_stats atomics individually
+> 
+> This patch replaces the whole-struct memset() in can_init_stats() with
+> can_reset_pkg_stats() to reset atomic_long_t counters via atomic_long_set()
+> and scalar fields individually. It also uses atomic_long_xchg() in
+> can_stat_update() to fetch and clear the *_delta counters atomically.
+> 
+> Link: https://patch.msgid.link/20261016110905.422684-1-socketcan@hartkopp.net
+> 
+>> diff --git a/net/can/proc.c b/net/can/proc.c
+>> index de4d05ae34597..70104f13077e0 100644
+>> --- a/net/can/proc.c
+>> +++ b/net/can/proc.c
+>> @@ -76,16 +76,39 @@ static const char rx_list_name[][8] = {
+>>    * af_can statistics stuff
+>>    */
+>>   
+>> +static void can_reset_pkg_stats(struct can_pkg_stats *pkg_stats)
+>> +{
+>> +	atomic_long_set(&pkg_stats->rx_frames, 0);
+>> +	atomic_long_set(&pkg_stats->tx_frames, 0);
+>> +	atomic_long_set(&pkg_stats->matches, 0);
+>> +
+>> +	pkg_stats->total_rx_rate = 0;
+>> +	pkg_stats->total_tx_rate = 0;
+>> +	pkg_stats->total_rx_match_ratio = 0;
+>> +
+>> +	pkg_stats->current_rx_rate = 0;
+>> +	pkg_stats->current_tx_rate = 0;
+>> +	pkg_stats->current_rx_match_ratio = 0;
+>> +
+>> +	pkg_stats->max_rx_rate = 0;
+>> +	pkg_stats->max_tx_rate = 0;
+>> +	pkg_stats->max_rx_match_ratio = 0;
+>> +
+>> +	atomic_long_set(&pkg_stats->rx_frames_delta, 0);
+>> +	atomic_long_set(&pkg_stats->tx_frames_delta, 0);
+>> +	atomic_long_set(&pkg_stats->matches_delta, 0);
+>> +}
+>> +
+>>   static void can_init_stats(struct net *net)
+>>   {
+>>   	struct can_pkg_stats *pkg_stats = net->can.pkg_stats;
+>>   	struct can_rcv_lists_stats *rcv_lists_stats = net->can.rcv_lists_stats;
+>>   	/*
+>> -	 * This memset function is called from a timer context (when
+>> +	 * This stats reset is called from a timer context (when
+>>   	 * can_stattimer is active which is the default) OR in a process
+>>   	 * context (reading the proc_fs when can_stattimer is disabled).
+>>   	 */
+>> -	memset(pkg_stats, 0, sizeof(struct can_pkg_stats));
+>> +	can_reset_pkg_stats(pkg_stats);
+>>   	pkg_stats->jiffies_init = jiffies;
+>>   
+>>   	rcv_lists_stats->stats_reset++;
+>> @@ -121,9 +144,10 @@ void can_stat_update(struct timer_list *t)
+>>   	long rx_frames = atomic_long_read(&pkg_stats->rx_frames);
+>>   	long tx_frames = atomic_long_read(&pkg_stats->tx_frames);
+>>   	long matches = atomic_long_read(&pkg_stats->matches);
+>> -	long rx_frames_delta = atomic_long_read(&pkg_stats->rx_frames_delta);
+>> -	long tx_frames_delta = atomic_long_read(&pkg_stats->tx_frames_delta);
+>> -	long matches_delta = atomic_long_read(&pkg_stats->matches_delta);
+>> +	/* fetch and clear values for 'current rate' calculation */
+>> +	long rx_frames_delta = atomic_long_xchg(&pkg_stats->rx_frames_delta, 0);
+>> +	long tx_frames_delta = atomic_long_xchg(&pkg_stats->tx_frames_delta, 0);
+>> +	long matches_delta = atomic_long_xchg(&pkg_stats->matches_delta, 0);
+>>   
+>>   	/* restart counting in timer context on user request */
+>>   	if (user_reset)
+> 
+> [Severity: Medium]
+> In net/can/proc.c:can_stat_update(), the counters and deltas are read into
+> local variables before the reset checks:
+> 
+> 	if (user_reset)
+> 		can_init_stats(net);
+> 
+> 	/* restart counting on jiffies overflow */
+> 	if (j < pkg_stats->jiffies_init)
+> 		can_init_stats(net);
+> 
+> 	/* prevent overflow in calc_rate() */
+> 	if (rx_frames > (LONG_MAX / HZ))
+> 		can_init_stats(net);
+> 	...
+> 
+> When a user reads /proc/net/can/reset_stats (setting user_reset = 1) or an
+> overflow condition triggers, can_init_stats(net) -> can_reset_pkg_stats()
+> zeroes all the counters and scalar fields in pkg_stats, and updates
+> pkg_stats->jiffies_init = jiffies.
+> 
+> However, because can_stat_update() does not return early or clear those
+> local snapshot variables after calling can_init_stats(net), it proceeds to
+> recompute the statistics using the stale pre-reset values:
+> 
+> 	/* calc total values */
+> 	if (rx_frames)
+> 		pkg_stats->total_rx_match_ratio = (matches * 100) / rx_frames;
+> 
+> 	pkg_stats->total_tx_rate = calc_rate(pkg_stats->jiffies_init, j,
+> 					    tx_frames);
+> 	pkg_stats->total_rx_rate = calc_rate(pkg_stats->jiffies_init, j,
+> 					    rx_frames);
+> 
+> 	/* calc current values */
+> 	if (rx_frames_delta)
+> 		pkg_stats->current_rx_match_ratio =
+> 			(matches_delta * 100) /	rx_frames_delta;
+> 
+> 	pkg_stats->current_tx_rate = calc_rate(0, HZ, tx_frames_delta);
+> 	pkg_stats->current_rx_rate = calc_rate(0, HZ, rx_frames_delta);
+> 
+> 	/* check / update maximum values */
+> 	if (pkg_stats->max_tx_rate < pkg_stats->current_tx_rate)
+> 		pkg_stats->max_tx_rate = pkg_stats->current_tx_rate;
+> 	...
+> 
+> Doesn't this immediately overwrite pkg_stats->total_rx_match_ratio,
+> current_rx_match_ratio, current_tx_rate, current_rx_rate, max_tx_rate,
+> max_rx_rate, and max_rx_match_ratio with pre-reset values right after
+> can_reset_pkg_stats() cleared them (with max_* and match ratios persisting
+> across subsequent timer ticks)?
+> 
+> Additionally, if jiffies advances between the initial snapshot of j at the
+> start of can_stat_update() and pkg_stats->jiffies_init = jiffies in
+> can_init_stats(), the subsequent check (j < pkg_stats->jiffies_init) will
+> evaluate to true, calling can_init_stats(net) a second time and passing
+> oldjif > newjif into calc_rate(). And if an overflow check on rx_frames,
+> tx_frames, or matches triggered the reset, the rate and ratio calculations
+> still run with the overflowing local values.
+> 
+> Should can_stat_update() re-arm the timer and return early when a reset
+> occurs, or perform the reset checks before snapshotting the counters?
+> 
+> [ ... ]
+> 
+>>
 
-Is everything else ready to go?
+Is fixed in a follow-up patch:
 
-BTW, there is no rush on this - I'm done for v7.4-rc1.
+https://lore.kernel.org/linux-can/20261019152741.54854-3-socketcan@hartkopp.net/
 
--- 
-Lee Jones
+
+pw-bot: cr
+
+> 
+
