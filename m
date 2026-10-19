@@ -1,139 +1,122 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 931714E9C22
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 12:39:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8607283FC4
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 12:43:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792413584; cv=none; b=CqD2MFw/LIVXu2X8dz9jC3RpW8dgS/55sBnjwIOw4YjFwnTSt2TiM6KG/854IyIYh9jWLvTfLXdr0gOfN8SnX4rxT3ZzNRkrAwLIQVLdI2cO97oIOAfyzG52USE/v2YwJaqryDOFV4P/yvQMsE0pyR/J9boeiiSJyxWv1d56I2o=
+	t=1792413815; cv=none; b=QpMI7CaEA8SZJrjE8t0GVxq5NwVt0PtNAb4e3Uw+0gUGPQr0Av2AuOdbYpyIVHGz6qefrudClYb6dLSh4xbdswCbz1Zr0pyH0M+yuRu6IwXSpoei+44xJziK2X69YN7qrKV2KUbco7cm+ZSe79bDCWlfL+qqRWjU7FkDlOT0kZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792413584; c=relaxed/simple;
-	bh=pXmwrBo6dLNLkbP8HSIjATa8tntP/iItXRS9BRdu81U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ssy6h1dvkGqr5g32AnMG2sO5UXlBXe9VNmuDLC+9E1diPetr0wTKNQ+O2eAdt5g4ye1nBlRxYB2/1PXG3xjDPGP6hXB/nHiqc3uSSt3OcvVcSC6Fn5j2ZQ6i9JiHvB+PD8L8Qo4vxH/Pn3c+VntNR4i5uZnXHawi1zaLXeqroiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=V3n7kcuV; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	s=arc-20240116; t=1792413815; c=relaxed/simple;
+	bh=BSQQWhEwYzqsSK80U6a+jDAT9oZq8I0PTtw89JMbS0E=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=WZrXdAxmGkpzGsnz4U99lysgCmOLIPkHEYFTD0W1hjEwo67OkBl+0g6wlnTp7fINoRwLbdMCtXDNV5RIfdlc1v874FMx3swLDwB5O20eX2CVFCD6EFWRHF4MX6b7ySXaW5/Msc17febKvFy4XM2IV6sctukjIe1Bw18VjO7CE3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=CT3euGW9; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="V3n7kcuV"
-Received: by linux.microsoft.com (Postfix, from userid 1216)
-	id 961C620B7168; Mon, 19 Oct 2026 05:39:26 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 961C620B7168
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1792413566;
-	bh=kBdEuTY6MQ+H0utY/zhuUL3qVvLCYjNeXyFJ+yLQZis=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V3n7kcuVKUm1AhJ6PZXwKO3w+wpYgHfp6NxT20jOMNoqOTV45Tg06yE6wp4wSgqKx
-	 X0idintsIYgYI9ISj3lG+XfGIgM1sHzuUbmHeza6Is5bTn+wvkcGBLehldfj//Nanm
-	 s/kzrvPD7ZG0ZI/ipNOSZLw9ZF9j8bWRY9X4YVC4=
-Date: Mon, 19 Oct 2026 08:39:26 -0400
-From: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-hyperv@vger.kernel.org, linux-pci@vger.kernel.org
-Subject: Re: [PATCH 2/2] PCI: hv: add vPCI device reset support
-Message-ID: <atYPfibVVa+nyyb9@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20261016235940.942090-1-hamzamahfooz@linux.microsoft.com>
- <20261016235940.942090-2-hamzamahfooz@linux.microsoft.com>
- <sashiko-outbox-175060@kernel.org>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="CT3euGW9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1792413812;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=BSQQWhEwYzqsSK80U6a+jDAT9oZq8I0PTtw89JMbS0E=;
+	b=CT3euGW97DPyA8QVm/lSQTV1orpFuJKaRgbhgPHSN4CN4do9NBj65z5URFgQfrg+BS2Csd
+	EavZZPY2l+7NdwYqWlUHtVWOeButlYexAojwPAegBQnqR/0JG2aN9sP8sX6WJ1UorSu2kK
+	0rDlj9aGXw72fgReQTbbpYKxHY6KM7U=
+Received: from mail-yx1-f70.google.com (mail-yx1-f70.google.com
+ [74.125.224.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-497-L8Jg0XuuN_esCQsF4-7hXA-1; Mon, 19 Oct 2026 12:43:31 +0000
+X-MC-Unique: L8Jg0XuuN_esCQsF4-7hXA-1
+X-Mimecast-MFC-AGG-ID: L8Jg0XuuN_esCQsF4-7hXA_1792413811
+Received: by mail-yx1-f70.google.com with SMTP id 956f58d0204a3-6768601940bso5221874d50.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 05:43:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792413811; x=1793018611;
+        h=mime-version:user-agent:content-transfer-encoding:content-type
+         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=BSQQWhEwYzqsSK80U6a+jDAT9oZq8I0PTtw89JMbS0E=;
+        b=obQ9EUIoSVZ3NUMMU6f3Vv36zzd9NViLFO2zmwUv8fg47WZSh6Nfzr12rOif+31c4Q
+         RS7AldKybPYF3G9I+4eNIkauZ/21sS5tipJxicfP2WLk6rSKd5i0trI8ZjOelbG9fXHh
+         dDrQzJCzC6IuLISOs/t3ByMuAQG8niF1IIvO2ORINAlDSWwvaY8c1iEmW/rfeU8a3ICm
+         dyeQBMoNhXEmNdWJeZIdSTAeagh0nP5OFaRES5UHrCpnEs7vqAiyKhnEJ5ZwgSV0aLwD
+         0piKjaWWfvnAO3eMwlmsFOgmHaZW7/W0w5lfbiWugOhub5dJqat+OdJxA374cReOM/pr
+         alIw==
+X-Forwarded-Encrypted: i=1; AKwUvBwXsEQ+ZAq+Adgy/WiiHUBLVjzcfJ7jvmVX3p/bU81H86LhRcDa9EEluyIX8L5KYY9ONqL+zJG2IBOWG/3rlh4=@lists.linux.dev
+X-Gm-Message-State: AFq9FYIo/FKcC5ew98IcvkIP1VmAhYSG6VorUuAFL5P0JRL/d3hu95bd
+	TmOQ9ibcMZhCxKCqMxHbazUFEU9F9+9AYsxvxXCXf8GlbONn6FzfjsgKCmHZPotHyh2YyOAxXeB
+	gB4gR9rkisDXRC8vDpWOA8isHXWdFhmrhVlcVzaztYEOaJmEvbKf/oU5N1rQJsbFc35etVg==
+X-Gm-Gg: AYBFou0mJo47GYEo09Do8c6RmrmkOV+Sr0pboD8d/IFroxP5xG+b/hZGNjoiZB3GH+P
+	dXDmI682m7WUjvIWLHnCauWnal67Hvu47MlFm8VipO3kBxtSQGS4TGgXJps9bUL/BBjmmYfY2MO
+	2Y5SzVsBdiwkcfAheRwtQxzBKGKaaas/MWogh7yhpUTF3P/21agkHszwEn9BGgq4ZWomZH/xaZo
+	3gXyqkxiEMNrbOvP0sQbdzoJ0K6qWWM932MeqDW3wdyDSQfoXYpBaeDNFXQMvvWCUlIlTrN0FoS
+	CAb5IECy8F0zff1jp+or09p9GOeDoFzelG/YHkskrt0rMW0OL8TfLNrEJ5szuQWKeXtf6WETjAb
+	BvDDvgLKAaNNgdA4r3C3pNfvGnZMq21xUpPnN
+X-Received: by 2002:a05:690e:1517:b0:677:a948:8d50 with SMTP id 956f58d0204a3-679ca8268eemr2007997d50.14.1792413810818;
+        Mon, 19 Oct 2026 05:43:30 -0700 (PDT)
+X-Received: by 2002:a05:690e:1517:b0:677:a948:8d50 with SMTP id 956f58d0204a3-679ca8268eemr2007993d50.14.1792413810372;
+        Mon, 19 Oct 2026 05:43:30 -0700 (PDT)
+Received: from loberman-thinkpadp16gen3.rmtusma.csb ([2600:6c65:2440:d8c:aa2b:ddff:fe88:da74])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-679b1f1ccadsm4040764d50.22.2026.10.19.05.43.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Oct 2026 05:43:28 -0700 (PDT)
+Message-ID: <1a84584bc9cf64fab6b4e17bdf2050f9b176ad6a.camel@redhat.com>
+Subject: Re: [PATCH v2 3/3] nvme: document the service-time iopolicy sysfs
+ attributes
+From: Laurence Oberman <loberman@redhat.com>
+To: Martin George <martinus.gpy@gmail.com>, Guixin Liu
+ <kanie@linux.alibaba.com>, 	sashiko-reviews@lists.linux.dev
+Cc: linux-nvme@lists.infradead.org
+Date: Mon, 19 Oct 2026 08:43:27 -0400
+In-Reply-To: <c4b6b7cfd51a498df8aaa7f5bc5cef9a0605b733.camel@gmail.com>
+References: <20261019075607.808947-1-kanie@linux.alibaba.com>
+		 <20261019075607.808947-4-kanie@linux.alibaba.com>
+		 <sashiko-outbox-176783@kernel.org>
+		 <acd6eee9-dadb-48e3-9a9d-232a268472d8@linux.alibaba.com>
+	 <c4b6b7cfd51a498df8aaa7f5bc5cef9a0605b733.camel@gmail.com>
+User-Agent: Evolution 3.60.2 (3.60.2-2.fc44)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-175060@kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: 0CMwF2nafFN1Em2gQR_1nkmiWRqvLKP0eVuULXW_1Bg_1792413811
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Oct 17, 2026 at 12:12:00AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] PCI: hv: hv_pci_reset_device() passes 3 arguments to wait_for_response()
-> --
-> 
-> commit 5767f2b6950e5dc7da0b5c142f971d8282c27a56
-> Author: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-> 
-> PCI: hv: add vPCI device reset support
-> 
-> This commit negotiates Hyper-V vPCI protocol version 1.5 and implements the
-> reset_root_port() callback on pci_host_bridge by sending a PCI_RESET_DEVICE
-> request over the vPCI VMBus channel.
-> 
-> > diff --git a/drivers/pci/controller/pci-hyperv.c b/drivers/pci/controller/pci-hyperv.c
-> > index 89816a2bd7cd3..4bb4ca6da1f7b 100644
-> > --- a/drivers/pci/controller/pci-hyperv.c
-> > +++ b/drivers/pci/controller/pci-hyperv.c
-> 
-> [ ... ]
-> 
-> > @@ -1397,6 +1401,52 @@ static int hv_pcifront_write_config(struct pci_bus *bus, unsigned int devfn,
-> >  	return PCIBIOS_SUCCESSFUL;
-> >  }
-> >  
-> > +static int hv_pci_reset_device(struct pci_host_bridge *bridge,
-> > +			       struct pci_dev *pdev)
-> > +{
-> > +	struct hv_pcibus_device *hbus =
-> > +		container_of(bridge->sysdata, struct hv_pcibus_device, sysdata);
-> > +	struct pci_child_message reset = {};
-> > +	struct hv_pci_compl comp_pkt;
-> > +	struct pci_packet pkt = {
-> > +		.completion_func = hv_pci_generic_compl,
-> > +		.compl_ctxt = &comp_pkt,
-> > +	};
-> > +	enum hv_pcibus_state state;
-> > +	int ret;
-> > +
-> > +	/* Do not take state_lock: eject holds it while removing/locking pdev. */
-> > +	state = READ_ONCE(hbus->state);
-> > +	if (state != hv_pcibus_probed && state != hv_pcibus_installed)
-> > +		return -ENODEV;
-> > +
-> > +	init_completion(&comp_pkt.host_event);
-> > +	reset.message_type.type = PCI_RESET_DEVICE;
-> > +	reset.wslot.slot = devfn_to_wslot(pdev->devfn);
-> > +
-> > +	ret = vmbus_sendpacket(hbus->hdev->channel, &reset, sizeof(reset),
-> > +			       (unsigned long)&pkt, VM_PKT_DATA_INBAND,
-> > +			       VMBUS_DATA_PACKET_FLAG_COMPLETION_REQUESTED);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	ret = wait_for_response(hbus->hdev, &comp_pkt.host_event,
-> > +				"PCI_RESET_DEVICE");
-> 
-> [Severity: Low]
-> Does this compile when CONFIG_PCI_HYPERV is enabled?
-> 
-> In drivers/pci/controller/pci-hyperv.c, wait_for_response() only accepts two
-> arguments:
-> 
-> static int wait_for_response(struct hv_device *hdev,
-> 			     struct completion *comp)
-> 
-> Passing "PCI_RESET_DEVICE" as a third argument in hv_pci_reset_device()
-> causes the build to fail with too many arguments to wait_for_response().
-> 
+On Mon, 2026-10-19 at 17:43 +0530, Martin George wrote:
+> On Mon, 2026-10-19 at 19:13 +0800, Guixin Liu wrote:
+> > >=20
+> > > Should "service-time" also be added to the accepted values for
+> > > /sys/class/nvme-subsystem/nvme-subsysX/iopolicy?
+> > >=20
+> > > =D9=87=D8=A7=DB=8C=DB=8C
+> > Sure, changed in v3.
+>=20
+> Not just /sys/class/nvme-subsystem/nvme-subsysX/iopolicy, but this
+> should be added to the accepted values in /sys/class/nvme-
+> subsystem/nvme-subsysX/iopolicies as well.
+>=20
+> -Martin
+Hello
 
-Not sure what tree this was applied to, but that function has 3 params
-as of mainline commit ca039df94983 ("PCI: hv: Warn when
-wait_for_response() waits indefinitely").
+There should be no changes needed for my original iopolicies patch=C2=A0
 
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	if (comp_pkt.completion_status == STATUS_NOT_SUPPORTED)
-> > +		return -ENOTTY;
-> > +
-> > +	if (comp_pkt.completion_status) {
-> > +		pci_err(pdev, "Hyper-V device reset failed: %#x\n",
-> > +			comp_pkt.completion_status);
-> > +		return -EIO;
-> > +	}
-> > +
-> > +	return 0;
-> > +}
-> 
-> [ ... ]
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261016235940.942090-1-hamzamahfooz@linux.microsoft.com?part=2
+iopolicies_show() walks ARRAY_SIZE(nvme_iopolicy_names), so whoever
+adds a service-time policy adds its enum value and its string to
+nvme_iopolicy_names[] as part of that work. The new name then shows up
+in iopolicies automatically. The existing iopolicy store path already
+matches against the same array, so both attributes stay in sync without
+code changes
+
+Thanks
+Laurence
+
