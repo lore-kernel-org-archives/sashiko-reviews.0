@@ -1,139 +1,231 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1644F526091
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 14:51:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792421520; cv=none; b=DDoreKZj8FcaVEbVDWsXUPEVJ+GERHjeXuowz6AJOwpn3G1SNzE3il13O9A/GenFP1S5fduJTNgj6fcsOEe790dhr8VJbodnZWYgQ9GVBDovK+vATnycxq/AlFGK62Ph622tA9AbbWckmKmlfVmX3I/GU2lcVNC0CGCmAMwqSpw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792421520; c=relaxed/simple;
-	bh=BfocLhumB1fGZxHu/mtdCb1aY9ZLnRM2UcKaUhQFaqo=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fphpcPDxhDXNMyYO2txjmC7X4XvvG2c9h0VCGjQvWX7jDloZcu0vxFSkqXEBoZ5azGj2+D68Mkj42tEW5sKRyz2d6LnYOmUxopokCuATmeAY4oTvsvgyFCPxDhFdmkf5tVEgki1cY7R9EZ4z37BOSkF0+LtZniv52K6CdPocTVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ektzJOa1; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=10.30.226.211
+ARC-Seal: i=3; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792421814;
+	b=geE10pdKDvknSfYCzkZToX0//rJJR12z/qcHWAQsYanHMRol3UJstHj8dPFqovrh28Za
+	 8IbaApBCgdaz88r8A9TFJHEmfkwJN4MNDQ2fyatRi+AfmkHNJwZLTwT9htTyFxZuNsu/6
+	 NX8nwbbqDHta2ixgIErfwMYSCkA36+rFSiebiFWCgIrRitc2nlNTcsqj+VAvM9GkdKg1V
+	 NXO2+uywNKTdOXX4rVKlliw0ki0kalkjj6WqMoaVddm7mhYcx5JEx1gbl0jZ6zmXLue0M
+	 cXo3KYlT9f+k4gfoZLFTpfJS5T3x/y0tS3vm9TqUvXYqGVILHe2SFCf/ZBAr4zOaDVA==
+ARC-Message-Signature: i=3; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792421814;
+	h=Received:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=YyVJu0EGkl/YFs7ApE6DeIsSQCa9Krhf/9Ms1uzPE1A=;
+	b=0yQnZEdNNHCtFIJUyumYkL03nQlBj16f31V/xxRITXSayQkCCP9dKVZX++X91sK8ZfNt
+	 A9zx7nzGaKaRqe7sHK48F/ZoFe+Pl4PnkQiLEK36qz0KEUBH9HzrPc21NVLrm5ELKhq0u
+	 Zv3ULQjnE3LP0GnwiJiU/gtEUlsdikSC3I9YcNe1pUcJLRGl6j/TMRuxfkkDmg7zWBtwX
+	 wIymj6sUtLv2EY6qECNc99+eKvNvyuzbJf8OSe2X5AhWdDFxrBfszzEzjm7Pr1qC2Q33X
+	 9OEw97S+VDluFoyEDMUN/3oEb5f9arue7nIoiku5kWcp6TodFMTFiDEg955qyQCJwwA==
+ARC-Authentication-Results: i=3; smtp.subspace.kernel.org; 
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=bYCBb3lV;
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=10.30.226.211
+Received: from aws-us-west-2-korg-listserv-1.web.codeaurora.org (ip-10-30-226-211.us-west-2.compute.internal [10.30.226.211])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D26966074086
+	for <sashiko-reviews.lists.linux.dev@localhost.mlmmj>; Mon, 19 Oct 2026 14:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ektzJOa1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1792421518;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=BfocLhumB1fGZxHu/mtdCb1aY9ZLnRM2UcKaUhQFaqo=;
-	b=ektzJOa1JZNQBaVjBDTITXjLP1HFvqRUFeBOJ4+yWE1/k9HmNftBb6LSGpojly0UqEvWk1
-	cvsL10F/JR049wpsWYZ5EVL7cDB0PMyJ7QLcLHgiDmvCJZhkukZWicoQ3nIns7+yG7ZKbI
-	vtylXWGKn7ot1SKZB+YmrlPi455xWfM=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-93-_S6GIhVMPnKbF9HKaNxZ2Q-1; Mon, 19 Oct 2026 14:51:56 +0000
-X-MC-Unique: _S6GIhVMPnKbF9HKaNxZ2Q-1
-X-Mimecast-MFC-AGG-ID: _S6GIhVMPnKbF9HKaNxZ2Q_1792421516
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-93909014c85so498579785a.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 07:51:56 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=bYCBb3lV
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23727533D6
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 14:56:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792421814; cv=pass; b=uHzYQLmEjCiN7lumrELHdwd357EOEpk+7AQthqUy5jCj5KSoXl0uYLAhYvlCYkhIeoiNYmtxHxoPh0ocriF5jVYXER4FHYNrDAidDpUdJolCfu074q1BngbvxnfRBlE2ZG9/C6bS+/RI6/JDlKgVw5gWaHpHttbz1i7bukxZWDk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792421814; c=relaxed/simple;
+	bh=kec9NO7V8Aa8rBvpnv8dsuyzbW1E+nfIFUj70hjQ+mY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JrDk3fh/uXzH1WqD06bFscUjKjH2X1LNG7eqF8mpBKq4oNLTF+BoJzryFr4LFj179w3COjJjvy3pwlkJTV0g4oLZqYIyRGyAXUZdlPjA+oCGoMtF5doW4bGTkpNP+hGVcpmJr7CJ3NOcQCt7UQmPUtY0/vCZ02RAOJcVz0BcJas=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bYCBb3lV; arc=pass smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-c40f29667e6so157940866b.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 07:56:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792421811; cv=none;
+        d=google.com; s=arc-20260327;
+        b=U87/mVUW+hwOHk1tRccrvB1BwBhIbbr09hMvNUrInUm74e6aFzcA3IteKXgYPJ6AzH
+         ewcekKJNPTQvIwKPLRR0d71/B0iktsSiuue0vmz6npoeu0GR6j7P8BgHqWVUgydkUH83
+         6rZYU87MM+KMkel+01GxILdyA9PX0nnrpaI58db3uD+zZz1PpIOWpKawyc7r/ft3VWvw
+         dooVwTm89Hb4ql/ZPfJVmZiTjFtfh6IfNEPGhU9F6EIDwUXI1dys6480jyN7ZdmAYr1O
+         JclsAXsNirYRaOqlbu0KUxXyuVl7PW9haFnXyFjQMEA8VADiB6hy6x22r5+dKYqZTq62
+         u+QQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=YyVJu0EGkl/YFs7ApE6DeIsSQCa9Krhf/9Ms1uzPE1A=;
+        fh=bN3WHTlzXcVIr2RkgMpk3NXK/DwXOefqRaFpMbeYf7s=;
+        b=ISRMNY0P/b9mjawuSZQmbwQUCPEQF9Y2eOcmoyiCW+2HVL9vpK8I3tDFMgZyF6YyZ8
+         GiXuWVaVFX5JtJtNwsvcNGskoEa63b1zGv461q1F15fm8KiVFhhyG23mt4plMzJAt+26
+         hYwVAx52ZOawyDkMbmt0SbgZdUypyJeUaylbd3xH+QjMtLBC+D2GiSrIoP5UyQW/xhXb
+         GoiU1KtrOp0MnYXl/IQ6cDcuVjlPgzm7ndTBdTkOP3aBcFhs6b1CcqK7O68c4tDtxmSG
+         pU1oOA/mJXi6rSsQkPAdds0tKO2+BwX4YF493u8L3l8kjd5amX0KePRtyp44BTS2rPNw
+         u+fg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792421811; x=1793026611; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=YyVJu0EGkl/YFs7ApE6DeIsSQCa9Krhf/9Ms1uzPE1A=;
+        b=bYCBb3lVRYJHSZpWADnM3oca6fFqsLKTRYggnU7+vMeNJEJM7zSlFD03l5TTqBeigR
+         fJ15rLOjItMfm6UsAlzrSxhrfaCIp+A8NSyI0I8EBzN10+7MAbILrM8sYtkVCHZNusJR
+         zGyMK+/omFW6vt2hF6Ro1ZUQwyPrzy+Ac/+dLs6ORHrO76xHCcytgbmR/viWdBGqjoJG
+         CJRphEVQdnNfyiZ00p3/21guRhx7amLLMew/Kxk8SwECNM5Kgi+mc2DX/HMDfvFMWOQ7
+         loX9YBrQ9g92wwdxFStsC5jG3Ws16dCjcebGKwizxJr3caxYTuY+ZLMV+SCAVzHuafV2
+         fOQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792421516; x=1793026316;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+        d=1e100.net; s=20260707; t=1792421811; x=1793026611;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=BfocLhumB1fGZxHu/mtdCb1aY9ZLnRM2UcKaUhQFaqo=;
-        b=eUbjMwtqbOtzlUm0722cJIau8zglYYlWrFogq6Q3ie4iqe24TRiOLLHdHbzUrz4rHB
-         j18J94fMguFemV6BHoIcYYMqBi9hoLN2X0b5a8YvzXjuxCvjjjvH8k9fUfTCkNGEnu7q
-         cNnoXPtQ4+oLp37TSqAL+K02zOyww8eBwkI763+DEwMCl9tQ5sfWP76mcNAdu221v87m
-         y5q8ejroIiboJ90e0IL/kurixu/o3i0458bpUaL2bjk0H3EmVAI0fgV0oiQEef7Zrkoz
-         CJYDnT92rzoo8mACW4vYWZqq1vZ/iJW96ll5OEcZnlMrStBLbJVzS0qBzhmQ29FEUy0B
-         hwwQ==
-X-Forwarded-Encrypted: i=1; AKwUvBwopIDnCkMroP8daM5tAQ79OT5UrVbTOKutG9e9RiHT0Y7RALM3U8Bq+CoV+eTWGDnsyDCx97FTrUo9sY06Lkc=@lists.linux.dev
-X-Gm-Message-State: AFq9FYJQeqFelfZyRdGVv46Z00ZTYFmmbA3jZtYmDAHhH6JO5GRLGdLO
-	qBJPsaXPlN/HtXpY08XyUZwwPrGsBFp+jIQLK9EJolVIGPdBmOwDKlk1SU/x2XGSqppESYDgl3U
-	DzU89mZksvUAFi3pd7K3Xg5ZeBTHiW8+SBcimYLfjPESXw86+gll1MhaIOxVG6ze38ggbv8xOmO
-	Tp9Q==
-X-Gm-Gg: AYBFou2bsVrzrVFBdq2FRfiIX3D/41k4tTp93Gd+BpN4xWkJFQTox9UkRCpE+piAesz
-	mFy688hPkWGNEsLJK8i1+rtIcAl4ED10P+5ShwG7JSfbAe2bOuRe+/ZHFQWAmg+9Z2QV+Lnvd6C
-	3/6cSRFw0eRXRsZiBkJTmprQNt1G7Sg/NrQI1KvuQCMMpw1j3jFvcWbQee6UxmXgpS3FKYACiaS
-	469XD1n2CEEjrxYtlJ8DcNIvULIo43paIrRY0EDB2xK0oql9N+Yo7rnulKFtX6hk2SXe+FtIbsg
-	YdmcJOkahLYgd0HjStRmlSgiAp7srg1DrvcUL9wLZTmYMDE20hyT1xKMWlxTJl8wgIgSoFJRJ1R
-	iNBRWaqfxGWBotyARtZjGfg==
-X-Received: by 2002:a05:620a:1b86:b0:93e:6f65:de63 with SMTP id af79cd13be357-93f29d0ed53mr1300749485a.47.1792421516062;
-        Mon, 19 Oct 2026 07:51:56 -0700 (PDT)
-X-Received: by 2002:a05:620a:1b86:b0:93e:6f65:de63 with SMTP id af79cd13be357-93f29d0ed53mr1300743085a.47.1792421515388;
-        Mon, 19 Oct 2026 07:51:55 -0700 (PDT)
-Received: from loberman-thinkpadp16gen3.rmtusma.csb ([2600:6c65:2440:d8c:aa2b:ddff:fe88:da74])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-93f3c61c440sm353019685a.10.2026.10.19.07.51.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Oct 2026 07:51:54 -0700 (PDT)
-Message-ID: <94b5d467f5ad5bffb8b958104fcff2bfa07dc085.camel@redhat.com>
-Subject: Re: [PATCH v2 3/3] nvme: document the service-time iopolicy sysfs
- attributes
-From: Laurence Oberman <loberman@redhat.com>
-To: Martin George <martinus.gpy@gmail.com>, Guixin Liu
- <kanie@linux.alibaba.com>, 	sashiko-reviews@lists.linux.dev
-Cc: linux-nvme@lists.infradead.org
-Date: Mon, 19 Oct 2026 10:51:53 -0400
-In-Reply-To: <1af1ff8db7803c1b8f8e656eebe249cbe5e622b4.camel@gmail.com>
-References: <20261019075607.808947-1-kanie@linux.alibaba.com>
-		 <20261019075607.808947-4-kanie@linux.alibaba.com>
-		 <sashiko-outbox-176783@kernel.org>
-		 <acd6eee9-dadb-48e3-9a9d-232a268472d8@linux.alibaba.com>
-		 <c4b6b7cfd51a498df8aaa7f5bc5cef9a0605b733.camel@gmail.com>
-		 <1a84584bc9cf64fab6b4e17bdf2050f9b176ad6a.camel@redhat.com>
-	 <1af1ff8db7803c1b8f8e656eebe249cbe5e622b4.camel@gmail.com>
-User-Agent: Evolution 3.60.2 (3.60.2-2.fc44)
-Precedence: bulk
+        bh=YyVJu0EGkl/YFs7ApE6DeIsSQCa9Krhf/9Ms1uzPE1A=;
+        b=XvS2zaR3nkCIsHVJNgPdtvqL8+JJ7xLAsF0iUvSwdZHdGgEQvV7yOCdRLXfR3+xBnh
+         rTvbMPDAAQpsswcZuNo21XvXYqybXnMp4M0WZ9N7SzmpgGsegn5IzgZWKDpNS/Hp6cfJ
+         QGkoxG7ngsUvaODE5n1eZP5wKnhLDMLfL3v6nxa71hSH/juul6W6jo2ieegZ2yPfuIMR
+         vsHpMrtl1jat0WZFOrljEhhjRVWqQKhUNhaWoRUlworitTc7JTZl1CCtMpwBQ8p229fx
+         ESMN+p1sWQ2V0lHedOgGmk0MbRbXpeeFjZl0+XbdWAvdZghswMsQpOTlSWdMPhPNY6wQ
+         NXKg==
+X-Gm-Message-State: AFq9FYJX0j3wEaJ88RJeVFG8F03kxCGOJv/b0mBNjM/872DzcpI0nHGL
+	1DxNAjoAzrGKsbIXLUFdrB3dd/4k1NGoOd9771vNmwmezULAgG+XOAosDnz4hORy9t4DBNZ28XX
+	aJ2fAoi9ic0DghuFNOqRv9AvmMj8N2bxAgZ7knNs=
+X-Gm-Gg: AYBFou1HQ1o5Y4TwhFXa7NrWy17B1+DTcgX34m6t/DbC5bMRmZdIb70VmsAFRE1rpnQ
+	sYhImmNxJHyF1lsTqBjh8ljzIAsynJmELUW70nTzY0r/QS+nygEsLoIpEr+JRHzU//MQt8x3oGA
+	7fhAOC8scr9kS/vN3/N22D1W9oPqGFcm5flFNTxCVe/Fuv6TU79lSC6xs+7Y3YVU3ChMOOib806
+	v4X/ZlTPojBMLxRV8IIrJx9CxxRDo3Y5eORQZyyClpnsyhW10x5p8/EHoDIqJQv4TcWlDNsbTVV
+	qC7cYMEAim8VhOwOp/un3u6FlwQPHof7+WBzdeLLvcCjD8eAPKB0mYv10/OfI9GClri3dm2azSI
+	QtviDTyHp0ClKG03ER8M3/p6v/yKv41wP5g3RThkZEg==
+X-Received: by 2002:a17:906:d552:b0:c40:9839:c892 with SMTP id
+ a640c23a62f3a-c419e2326demr628363866b.19.1792421811095; Mon, 19 Oct 2026
+ 07:56:51 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
+List-Post: <mailto:sashiko-reviews@lists.linux.dev>
+List-Help: <mailto:sashiko-reviews+help@lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
+List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
+Precedence: list
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 3wbw04q2LoTo73ZgFUvGbM7buxIpdmvl3TBLH_z-a0k_1792421516
-X-Mimecast-Originator: redhat.com
+References: <20261013175753.37344-1-kolomiiec@gmail.com> <sashiko-outbox-172448@kernel.org>
+In-Reply-To: <sashiko-outbox-172448@kernel.org>
+From: =?UTF-8?B?0J4g0Jo=?= <kolomiiec@gmail.com>
+Date: Mon, 19 Oct 2026 17:56:14 +0300
+X-Gm-Features: AclHuK8tloVCSjQ2U5-UDqRf3TB8_YW4TWwVk5crnPLxYw9n6ka3_9zIXu7hdC8
+Message-ID: <CA+e2gLs8Q3Y-ow=PdYqhQyq0Gax9rp8PktA7fgzannG8OU8XFA@mail.gmail.com>
+Subject: Re: [PATCH] drm/radeon: retry UVD v1 init on failure after resume
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 2026-10-19 at 20:16 +0530, Martin George wrote:
-> On Mon, 2026-10-19 at 08:43 -0400, Laurence Oberman wrote:
-> > On Mon, 2026-10-19 at 17:43 +0530, Martin George wrote:
-> > > On Mon, 2026-10-19 at 19:13 +0800, Guixin Liu wrote:
-> > > > >=20
-> > > > > Should "service-time" also be added to the accepted values
-> > > > > for
-> > > > > /sys/class/nvme-subsystem/nvme-subsysX/iopolicy?
-> > > > >=20
-> > > > > =D9=87=D8=A7=DB=8C=DB=8C
-> > > > Sure, changed in v3.
-> > >=20
-> > > Not just /sys/class/nvme-subsystem/nvme-subsysX/iopolicy, but
-> > > this
-> > > should be added to the accepted values in /sys/class/nvme-
-> > > subsystem/nvme-subsysX/iopolicies as well.
-> > >=20
-> > > -Martin
-> > Hello
-> >=20
-> > There should be no changes needed for my original iopolicies patch=C2=
-=A0
-> >=20
-> > iopolicies_show() walks ARRAY_SIZE(nvme_iopolicy_names), so whoever
-> > adds a service-time policy adds its enum value and its string to
-> > nvme_iopolicy_names[] as part of that work. The new name then shows
-> > up
-> > in iopolicies automatically. The existing iopolicy store path
-> > already
-> > matches against the same array, so both attributes stay in sync
-> > without
-> > code changes
-> >=20
->=20
-> I meant adding to the iopolicies documentation here.
->=20
-> -Martin
+Hello,
+You are right, and thank you for the precise catch. On my hardware the
+failure mode is different =E2=80=94 clock setup has never failed across 42+
+suspend/resume cycles; what fails is the ring test =E2=80=94 so the unguard=
+ed
+uvd_v1_0_stop() never fired in practice. But that is luck, not design:
+if radeon_set_uvd_clocks() ever fails, the retry loop would issue MMIO
+writes to an unclocked UVD block, with exactly the bus-abort/hang risk
+you describe. The guard is cheap and obviously correct: v2 keeps the
+clock-setup result in a separate variable and calls uvd_v1_0_stop() only
+when clocks were actually raised. I have sent [PATCH v2] with this fix
+to dri-devel. Thanks again for the review.
 
-Thanks, makes perfect sense
 Regards
-Laurence
+Oleg
 
+
+=D1=87=D1=82, 15 =D0=B6=D0=BE=D0=B2=D1=82. 2026=E2=80=AF=D1=80. =D0=BE 11:1=
+1 <sashiko-bot@kernel.org> =D0=BF=D0=B8=D1=88=D0=B5:
+
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] drm/radeon: system hang due to unclocked UVD register access on =
+clock setup failure
+> --
+>
+> commit 9840a4a45eacb2033c0f3f3ceb29f75910196145
+> Author: ukrainer8 <kolomiiec@gmail.com>
+> Subject: drm/radeon: retry UVD v1 init on failure after resume
+>
+> This commit introduces a retry loop for UVD v1 initialization during resu=
+me,
+> as the ring test can sometimes fail due to racing with hardware. On failu=
+re,
+> it stops UVD, waits 20ms, and retries the initialization steps up to 3 ti=
+mes.
+>
+> Link: https://gitlab.freedesktop.org/drm/amd/-/issues/1867
+> Link: https://bugs.launchpad.net/bugs/1865130
+>
+> > --- a/drivers/gpu/drm/radeon/uvd_v1_0.c
+> > +++ b/drivers/gpu/drm/radeon/uvd_v1_0.c
+> > @@ -158,24 +158,45 @@ int uvd_v1_0_init(struct radeon_device *rdev)
+> >  {
+> >       struct radeon_ring *ring =3D &rdev->ring[R600_RING_TYPE_UVD_INDEX=
+];
+> >       uint32_t tmp;
+> > -     int r;
+> > +     int r, retry;
+> > +
+> > +     /* after resume the first ring test can race with the hardware; r=
+etry */
+> > +     for (retry =3D 0; retry < 3; retry++) {
+> > +             /* raise clocks while booting up the VCPU */
+> > +             if (rdev->family < CHIP_RV740)
+> > +                     r =3D radeon_set_uvd_clocks(rdev, 10000, 10000);
+> > +             else
+> > +                     r =3D radeon_set_uvd_clocks(rdev, 53300, 40000);
+> > +             if (r)
+> > +                     drm_warn(&rdev->ddev, "radeon: raising UVD clocks=
+ failed (%d), attempt %d\n",
+> > +                              r, retry + 1);
+>
+> [ ... ]
+>
+> > +             if (!r)
+> > +                     break;
+> >
+> > -     ring->ready =3D true;
+> > -     r =3D radeon_ring_test(rdev, R600_RING_TYPE_UVD_INDEX, ring);
+> > -     if (r) {
+> > -             ring->ready =3D false;
+> > -             goto done;
+> > +             uvd_v1_0_stop(rdev);
+>                 ^^^^^^^^^^^^^^^^^^^
+> [Severity: High]
+> Is it safe to call uvd_v1_0_stop() when radeon_set_uvd_clocks() fails?
+>
+> If clock setup fails, r is non-zero, and the loop bypasses the break
+> condition to unconditionally call uvd_v1_0_stop().
+>
+> This function performs MMIO writes to UVD registers like UVD_RBC_RB_CNTL:
+>
+> drivers/gpu/drm/radeon/uvd_v1_0.c:uvd_v1_0_stop() {
+>         /* force RBC into idle state */
+>         WREG32(UVD_RBC_RB_CNTL, 0x11010101);
+>     ...
+> }
+>
+> Accessing these registers when the UVD IP block is unclocked can cause a =
+PCI
+> bus master abort and lead to a hard system hang. Should there be a check =
+to
+> ensure clocks are successfully raised before attempting to stop the hardw=
+are?
+>
+> > +             if (retry < 2)
+> > +                     mdelay(20);
+> >       }
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261013175753.37=
+344-1-kolomiiec@gmail.com?part=3D1
