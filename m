@@ -1,47 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.43
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792424998;
-	b=CHiWlSj68eeeLefC+fa7vjOvYqqRKl5iKhAaXtqYkbkCqSXobmGvxs9V9PEC4T2Ccg/I
-	 fZSFKP+cayDyjcJmNCtaKNSP5JyK1T5wVksIvMPywfqaiEZ69Wt4fu1x04jE/yjxBuz9g
-	 27QSgf7CR371BWSiLrJFzTTEks8zn4DY4bBiC0LHh0pI5YpkmhK+W4ERjka06LRTIYw6E
-	 gYBDGK3aYAvfgXiU1g3cWzkfiHGkS+Xhz5w4y/Xl8hI98YASvzPwcTtzBBIMgzDFwDBaO
-	 6v2ZC6kie0y3jzp85t4orX4duyejEb9lpItyBeMfzaYIfTQCSIExTXBee3VBlLBqXoA==
+	t=1792427279;
+	b=vT7NUaZdlkd3QKYtYzsm0esl+miVyVFXMEahABy0bOMRXbDdDhmCTIWH0/LfKUszYWdk
+	 mdkKBbjQGEf3v4qsEyhK8QOUsrdGVL+NpIoGkYJZHp0P9BR6PBKRGQg6dRAgKnw7Dt5I1
+	 Tia4Kkcq+RHlz6ZfVKs1Z2rynqrN7ZyUYQMrghB2hYMoej1GZDzq5OyyM8HjseN3ikhg5
+	 nDSi04SSlgukntHzaY8LyQlMu1rpDC2JZtj0bzVOJc1duUh7XKKr+iQSFVtuGisDOXBrt
+	 E7YL5NaAt24cKg11wAjIH3txvJ8qP4eVa3f92oq21CE9oChWqO4yOzXFucH/eJFfJrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792424998;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=DswmWj38SvF+mrDzPS0ddFSFW59m+8lcqwF1axXK7uE=;
-	b=FIthKKywzm/7amvn3XHBY05U3HhdXHNZTGGni8EE8i7j44JQVYv5guLRLrkte56mDuN+
-	 nZv4F1kIRbYYaVigQACwY2UtNdgPEH/IVwyHeSKclB/dOJE/wuIVjS0XDWP13+bCibVYU
-	 aJ94jBAaFQGoUbRaLQfnpxG/6uHkfaTLkXYFmulP7msnticuJ4k10ZjaIrdftqGbaHrk4
-	 kjd1RK35iBRa6y+HGUpcClQh5ClR0nZWlSKpds+zDT7ftbcqD6gTO07ml5arTAANgOAjd
-	 1j4DnSUcmhmr1uUJUwG09QTI9F5hgKMlYfF/1IOhfAx8sIdVoKEaiuNzApz/3w2lLug==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792427279;
+	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Gm-Message-State:
+	 X-Gm-Gg:X-Received:Received:Received:X-Received:MIME-Version:
+	 References:In-Reply-To:From:Date:X-Gmail-Original-Message-ID:
+	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type;
+	bh=grtW76dvtFb1t9XrerLmKdj5qwyowpPAeH9vnpYNVM8=;
+	b=2uixeTHw2rRQ9Eo3EAL1m4rD5bT8D3g2C3pBvSRIWfLmErXR5Fe+v2HoW1ENzuHfQ0nG
+	 Msnjt/BU8jBZ53EA1XHjcUoGIyRqwVOtwgmANmbRNIBWY2CddzWdTCPxMg3WuwINd8Q4H
+	 lkcuRjm+xewwsDYsY8zSpWZaGu87BJudyt084n9DH8vnvXALZWoNn1Mfz2dEr1paqFg7p
+	 Iq/f1eMuGS8HYo75K6C/89hAVEP4fyblhmXMHybWvKJPTgTnkbTgGimSA73/+a148ydTL
+	 lOQKgFvl6cjdMmZPSFex9fN5a2r99iCztouh9yLvblZfx089XIU3vdMZ/BNWYXLW1XA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SpiZoUWw;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=none header.from=linux-m68k.org;
+	spf=pass smtp.mailfrom=gmail.com;
+	arc=none smtp.remote-ip=209.85.208.43
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DD6609A544;
-	Mon, 19 Oct 2026 15:49:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SpiZoUWw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D621F000C4;
-	Mon, 19 Oct 2026 15:49:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792424997;
-	bh=DswmWj38SvF+mrDzPS0ddFSFW59m+8lcqwF1axXK7uE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=SpiZoUWw4IGZ95ffvLaDNVUnyWsXcPywK8C9pJ5isYTZJVdILSf+d4xCESFM1I7QQ
-	 JAqqux0YR9YNH2Zo0u4Ep49YjvmPvP1IENosFxWqJm0fMXqCYzm+OwpEKfSYNH44nc
-	 cR0Axr/8VKD751zi6R4/s6LJfpGPPkZTnxbkIT35z5cKZU7/hlKGnGRmAX6WwlG81s
-	 krgwmf4bv/J50svJMUx9/B8viF3Y36JSg1jHg/0Mt/NORCn5x8Aj/FIMmMwPNn8Q4t
-	 FEae+1Bh5wCEhk4ZjPh454f+n/kPbphFo+04yg+XHvMSEv6PcIgD4mqETWRNgkLw9G
-	 3XuA3taa3AA3w==
-Message-ID: <791c7eed-f0c2-47c3-9595-77be72f29771@kernel.org>
-Date: Mon, 19 Oct 2026 16:49:54 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21587606AAD4
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 16:27:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 21587606AAD4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-6b1ab2ad719so3384873a12.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 09:27:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792427277; x=1793032077;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=grtW76dvtFb1t9XrerLmKdj5qwyowpPAeH9vnpYNVM8=;
+        b=DB8T1x6iwOAETG++Ro571yOV5a+mH6qjNmPCteOT4f7arEy1uO8X15kipCfzKOmz/M
+         ybgcr2NzXETBdt4zConDJMzdisAxCJ6DZeV1K7bISbYO2Gr3SI910BmCtbxWYRpthu6Z
+         gzrzIROXXIezimIHTeV/sz0GiZyDfppiRZ0+8raAda23uiBzSvrSGJiQ7IRCxMInRIp1
+         8I3OpKkOFjAwzQGwAtVM3jmshw1U0zPBtjhxyu1vz7u/eweQdsi6c6EeunRFR+y2xzG4
+         rZPA2BQmj5vnDzxBKoDum2/sQzqSpamKGX5ptBhzuOo6bd7dJtEVeupKVJiVOQrCX5kM
+         3wng==
+X-Gm-Message-State: AFq9FYIXl9VZbhg4xXJ0Z2bggRqQo664jUAuHpv7jWCdEfpSlINe6p/N
+	LFULp6PR0vWQD4nLfXvf8ML0W0xE2ZtGz+1JEPiZhQOJfldsAw5+0A7nKY7nIN4VcfA=
+X-Gm-Gg: AYBFou2jnphGWCO1+UrPiG400IFBFLgkuonz6aFUTfVe58MrcwpkN6SQHHXFhdohq4m
+	Z9S+p8qx5VG84h3E8dTCrV+P99Ah9YR3vtMypHjNmfWTNOAi//akccKU1ezfpI0UA14kxykVylO
+	/F5RcRYVCLRnM4cBPqATvHLByx+I20i8Ul/6sPPtvE8fl8/UFDEicleObKfDWOKARCNujJP4y0L
+	dUJl3W1uJ5jun0jDJLNYLhZH9aEzzQBYcOw+a8+JQhbzzIhtr6bLn+5y3fw1W3yaS9r6dw6wnM8
+	j8tPTXgm/XHsklsq5FSO1xMV/s1KLGNnu5qV5FxznyxSMs6c6zhhMCcdHO73jTF5shdbnnSV0gt
+	yqUuWqr0aEhmo0pVZ7j8ZprvkgDaMMyoI2zZxwxq7rmc6TsDfzZayzUwFH7pcNuhl6DNkHLHrpC
+	6zOCyyh7AVtUBsmnrV3zh75d0laCG7hGV34tpKqG/QC5FiyE19PAGliwJEXc9MWJ9fN/kWu0kEQ
+	5XooSFCX4bgdWOZG8FVHJ4GLHJzhHBH+ZNE
+X-Received: by 2002:a17:907:86a7:b0:c2d:c6e7:9e9f with SMTP id a640c23a62f3a-c419e93972amr587576466b.27.1792427277334;
+        Mon, 19 Oct 2026 09:27:57 -0700 (PDT)
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com. [209.85.208.50])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c408e32897fsm384962566b.2.2026.10.19.09.27.56
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Oct 2026 09:27:56 -0700 (PDT)
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6af9a9451daso3331365a12.0
+        for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 09:27:56 -0700 (PDT)
+X-Received: by 2002:a17:907:9486:b0:c40:f9ea:7387 with SMTP id
+ a640c23a62f3a-c4199c63fd2mr604034966b.6.1792427276005; Mon, 19 Oct 2026
+ 09:27:56 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -51,95 +76,105 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2] phy: qcom-mipi-csi2: round the requested settle
- interval up
-To: Jizhou Tong <fqwqf@fqwqf.xyz>
-Cc: vkoul@kernel.org, neil.armstrong@linaro.org, olteanv@gmail.com,
- linux-phy@lists.infradead.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, sashiko-reviews@lists.linux.dev
-References: <sashiko-outbox-168888@kernel.org>
- <gq57UstyL5YYIJxiym8K0_j1cLrB6u3f908v8Ar3hgadrJwRuof5w5VUh4zR_xQKTGHIPadU-wb7lFoMzWYsZA==@protonmail.internalid>
- <010601a154d83d84-0b2dea8c-14b7-477b-b1ec-3f44b0b55ad4-000000@ap-northeast-1.amazonses.com>
-From: Bryan O'Donoghue <bod@kernel.org>
-Content-Language: en-GB
-Autocrypt: addr=bod@kernel.org; keydata=
- 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
-In-Reply-To: <010601a154d83d84-0b2dea8c-14b7-477b-b1ec-3f44b0b55ad4-000000@ap-northeast-1.amazonses.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <cover.1792163045.git.geert+renesas@glider.be> <4524363679c1f2163aca3b3dda2bfbde170d095a.1792163045.git.geert+renesas@glider.be>
+ <sashiko-outbox-174605@kernel.org>
+In-Reply-To: <sashiko-outbox-174605@kernel.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Mon, 19 Oct 2026 18:27:42 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdWT=9-GCt6pr3HT6C_=kxe2ud1y2jjXPZBH9MjcDYjB+g@mail.gmail.com>
+X-Gm-Features: AclHuK-zFCPihodw8HUR_tYnDf84w30NySJpayeqxb6wS60EuVgB6NNWocEAZa4
+Message-ID: <CAMuHMdWT=9-GCt6pr3HT6C_=kxe2ud1y2jjXPZBH9MjcDYjB+g@mail.gmail.com>
+Subject: Re: [PATCH v4 5/8] pmdomain: Make genpd_get_from_provider() return -EPROBE_DEFER
+To: sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, linux-clk@vger.kernel.org, robh@kernel.org, 
+	conor+dt@kernel.org, wsa+renesas@sang-engineering.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 19/10/2026 16:47, Jizhou Tong wrote:
-> Hi Bryan,
-> 
-> I checked the zero-count case raised by Sashiko against media-next
-> (d7e7bca71698) and the rounding patch. Both the base driver and the
-> patched driver return zero when the calculated interval is exactly
-> six integer timer periods, and lanes_enable() rejects it with -ENODEV.
-> 
-> For example, link_freq = 600000000 Hz and timer_clk_rate = 66666666 Hz
-> produce a 90000 ps interval and a 15000 ps integer timer period. The
-> helper returns zero before and after the patch. This is a software
-> boundary case, not a clock configuration I have tested on hardware.
-> 
-> Is a programmed settle count of zero valid on the supported PHYs, or
-> is rejecting it intentional? If it is valid, the helper would need to
-> distinguish it from an unrepresentable interval, with the caller checking
-> for an error separately.
-> 
-> The rounding RFC preserves the existing zero-count handling. I would
-> keep any change to that hardware policy separate from the rounding fix.
-> 
-> Best regards,
-> Jizhou Tong
+Hi Sashiko,
 
-Zero is not a valid settle count so we should just pick a minimum value. 
-For historical reasons six counts is it.
+On Fri, 16 Oct 2026 at 18:09, <sashiko-bot@kernel.org> wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] pmdomain: unnecessary probe deferral on invalid domain index
+> --
+>
+> commit c105920d803c0cf9396fb90d8428fdc4d83e8655
+> Author: Geert Uytterhoeven <geert+renesas@glider.be>
+>
+> pmdomain: Make genpd_get_from_provider() return -EPROBE_DEFER
+>
+> Unlike provider-based look-up functions in other subsystems[1],
+> genpd_get_from_provider() returns -ENOENT instead of -EPROBE_DEFER when
+> the provider is not found, thus not supporting probe deferral.
+> Currently this is worked around in of_genpd_add_subdomain() by remapping
+> -ENOENT[2].
+>
+> Fix this for all current and future callers by returning -EPROBE_DEFER
+> instead, and drop the no longer needed remapping code.
+>
+> > diff --git a/drivers/pmdomain/core.c b/drivers/pmdomain/core.c
+> > index 964e44c2f78f1..88c886814a5b9 100644
+> > --- a/drivers/pmdomain/core.c
+> > +++ b/drivers/pmdomain/core.c
+> > @@ -3021,7 +3021,7 @@ EXPORT_SYMBOL_GPL(of_genpd_del_provider);
+> >  static struct generic_pm_domain *genpd_get_from_provider(
+> >                                       const struct of_phandle_args *genpdspec)
+> >  {
+> > -     struct generic_pm_domain *genpd = ERR_PTR(-ENOENT);
+> > +     struct generic_pm_domain *genpd = ERR_PTR(-EPROBE_DEFER);
+> >       struct of_genpd_provider *provider;
+> >
+> >       if (!genpdspec)
+>
+> [ ... ]
+>
+> > @@ -3276,7 +3276,7 @@ int of_genpd_add_subdomain(const struct of_phandle_args *parent_spec,
+> >  out:
+> >       mutex_unlock(&gpd_list_lock);
+> >
+> > -     return ret == -ENOENT ? -EPROBE_DEFER : ret;
+> > +     return ret;
+> >  }
+>
+> [Severity: Low]
+> Does this change leave an unnecessary probe deferral in __genpd_dev_pm_attach()?
+>
+> If a device specifies a valid PM domain provider but an invalid domain index,
+> genpd_get_from_provider() returns the specific error code from the provider's
+> xlate callback, such as -ENOENT.
+>
+> However, __genpd_dev_pm_attach() still unconditionally routes all errors
+> through driver_deferred_probe_check_state():
+>
+> drivers/pmdomain/core.c:__genpd_dev_pm_attach() {
+>         ...
+>         pd = genpd_get_from_provider(&pd_args);
+>         of_node_put(pd_args.np);
+>         if (IS_ERR(pd)) {
+>                 mutex_unlock(&gpd_list_lock);
+>                 dev_dbg(dev, "%s() failed to find PM domain: %ld\n",
+>                         __func__, PTR_ERR(pd));
+>                 return driver_deferred_probe_check_state(base_dev);
+>         }
+>         ...
+> }
+>
+> Could this unnecessarily delay boot and error reporting for devices with
+> permanently invalid PM domain IDs by forcing a wait until late_initcall?
+>
+> Should __genpd_dev_pm_attach() be updated to only call
+> driver_deferred_probe_check_state() when PTR_ERR(pd) is -EPROBE_DEFER?
 
-If the calculated settle_cnt < 6 => settle_cnt = 6;
+__genpd_dev_pm_attach() doesn't care about the actual error code,
+it only cares about error or success.  Hence a change in error code
+has no impact.
 
-I realise the LLM is in paroxysms about that but...
+Gr{oetje,eeting}s,
 
----
-bod
+                        Geert
+
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
