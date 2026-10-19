@@ -1,104 +1,119 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2679B25B098
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 04:01:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062CA3C0626
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 04:10:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792382490; cv=none; b=qbEhln4/s+a2ZP5iN93UNtmfvD807YSlYI8NhpYOekPEuu1+MdJ9GofZ3PRVU9nNtpVbSTdxUKoFikp2/foN7PQ9pfKdz75HWX1hHyhc5O/IhW4JQhpnXMbVFD86zj3ZmlevZTeMApK7nPbR7CBMjrdJiTr92oFFMLabM0JER9A=
+	t=1792383042; cv=none; b=eBc+JwBlBI//4aCgd2YUp+FRZXUSxwboA75KaHBIcTVQuxH8ElmyYny6x3BgEEiGbhajxkuaET3CBsZkz6T+HQEoEJsv/HNpmwemFfcvocgTcGaBu7l/FyhnzrVzsxjOn4YsKKudPSUO7vbwwn08Ua6rFrnOBvQcKw2Ufrf6uII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792382490; c=relaxed/simple;
-	bh=8CrE91J0fGYXsXVw280TKZ+FIOilDiXTUNJAh1UNvA8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LEJqYSzSk75bXfmy5KwuYyjgsdAJ51f7Nta9A+6gRAwnnuBXY4seAsUWwDm8PfHeRhuCT0kSYG8+aYkiAoVlxrCBg4OMAV5snFibzB+sQqEIMJ4TtRSpQgcTec0CIbDmjUuVlG/gzKSABrGrLXVmokC1XRmtT092BYamY53n99Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=UjBEsSn1; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1792383042; c=relaxed/simple;
+	bh=dbGaGWlUvGTnSw/cOsAveAXk4OBbDrXFZouBzyoETRQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ltmNEy8C/EQomygrbyPUGZkDIY8NdWC1OTREPiI4M43RaOLDVHUmvk+plBe/gaNBdn31njg8SnPYnxeo25voQaYo1A4/+gUgX3RdEpxU3NHcYBQkP918o+j9iWZ8zb4MoSYhzc0l9bNBEiBnbeB+9cXkWIpLs38E1LVY6WVpaOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=W79NGkrn; arc=none smtp.client-ip=220.197.31.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="UjBEsSn1"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-3ad41b47541so170183a91.1
-        for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 21:01:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1792382488; x=1792987288; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=j5Us+RzdYAbnpmQtT3TAtyX+ezvC5k/Vrz+te4DAOOo=;
-        b=UjBEsSn1ix30Ek/K8PPy5RYRoXwksEHDs+MniJtIvwB3uqJIY4eLUEA/7GyYXpqhw4
-         HoR1qD2eQDeRaC7c4sJlmjzX3jvxAjHwAZE+xuSfbr6wyrTX5Zo3Gft7JXIjtEZxfNxp
-         FqFvi+nIb4Lv9XDTQessKpdJg+QG/ddhBYSLI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792382488; x=1792987288;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=j5Us+RzdYAbnpmQtT3TAtyX+ezvC5k/Vrz+te4DAOOo=;
-        b=N6aQvh03t6SttdiLrSz5GhPmOFoJZ3qPBtVd550vNiO5yiei7elBrtCfwCRwLZ8/S2
-         i+qEUZ8OaKML+W2oq5szlmMPwQ3Ln5rVJ3IvrQfvryq7GU4XkJTg1ct7Ok3oyLcxfer8
-         xrj9LHb6e1ayWWaCBcAhkATcHfrOZj5wsd0V/XNyh3mKA3YLnkFQbnTawptlLCktvEj8
-         pZ79BtJRHBZoXcJa0IqfvuMfvINxREoM1Rn9+OByJY9y5NH6qwiyfwLgUFR2B/MkxHVO
-         IDtqODVjyHRta5Mu5Lp654NgGmrs1q1Of0gsk5mx0zpENhpx+F6o4DLSbJji5jepUWDe
-         n4dg==
-X-Gm-Message-State: AFq9FYK8he8IS9mHJWeil4qbIvQusXw8Uzu/6MJlgqAL84L7QwyE0ySQ
-	Ks/jJCotq1pFRT8UVB9J3sDNhabDf2D3tSejwmp/gFJNbWOdCaPN1NZ28Nd+Xt66DJdFh0tYcVp
-	MZNg=
-X-Gm-Gg: AYBFou0PefKW5WAyHXiV79mboLdTdye0xbahfw9fRSyZoWVXatnwqWC+8qVpdZgygTm
-	21qlWXq3kS41H6LVmrXx9V8DS5GNegYo+Ig2kaVdE3Vqt9eor/TF8IfUU/yCf3N86qT+OTa+Q5f
-	EdDz/kOGKY7CypTDHcXPSzWV0NlOKB0fVmEuMEwkCENl+R8+jJ/bZcHefmqPXiR+7fBkhY3zYia
-	3hDhtauKHeYyx+GuU2yRWTJSX42bu/yb3jFS1ywxky0MjzyP+SK7+/82SblheLm/NpDSzD9xzXJ
-	DEBIpZoZH+f0YXRo9+ArmoGFjatWR9boOZm2v2hpYm0CMVVtQ+tmCzBOd2VNA0F3KKu6yaIY4ir
-	U7KubowjMy1m/DtjrQlClB9JOnt1C80m46U8T32jI/O05/YYKyeZ7BD2aNyfXlKkuVqRbt6scsA
-	AGv1zp3TucJz9Txu/ATqw6D3E9r5OoOXl9r91HLJOXVcgZCRuVP99Bin3uP6la+u5vgcaOFFhYR
-	GOB6hRZTwUglN3I1laIyagawiKjNmZn5I36Rw==
-X-Received: by 2002:a17:90a:5184:b0:3ad:13fe:41ba with SMTP id 98e67ed59e1d1-3ad13fe424amr1909945a91.52.1792382488360;
-        Sun, 18 Oct 2026 21:01:28 -0700 (PDT)
-Received: from google.com ([2a00:79e0:2031:6:7b3d:f4ff:823:5963])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3acd3cc73c7sm7232815a91.4.2026.10.18.21.01.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Oct 2026 21:01:27 -0700 (PDT)
-Date: Mon, 19 Oct 2026 13:01:23 +0900
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>, 
-	Andrew Morton <akpm@linux-foundation.org>, Brian Geffon <bgeffon@google.com>, 
-	Barry Song <baohua@kernel.org>, Bo Zhang <zhangbo0325@gmail.com>, 
-	Minchan Kim <minchan@kernel.org>, Richard Chang <richardycc@google.com>, linux-mm@kvack.org
-Subject: Re: [PATCH v5 12/13] zram: borrow idle decompression streams in
- exclusive mode
-Message-ID: <atWV7iJpJv0UXXCQ@google.com>
-References: <20261018035125.3120704-1-senozhatsky@chromium.org>
- <20261018035125.3120704-13-senozhatsky@chromium.org>
- <sashiko-outbox-176604@kernel.org>
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="W79NGkrn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=bj
+	xhhfbWXOOzUAWwH7pIj7Je30y2dzXsiwo8fgJ0B/Y=; b=W79NGkrnwCkDHdHjvH
+	A9nAHCLKOphhnIdiHQWszaAazbgTrE7DIw+yllU2+lqzwmYiG3EvZ6NAF+WAxFc5
+	Lr5Z0C848kaA6/cgZ2n1aYTqG94OYMYUfONV2fvHH0DgvaevpmqGQzt3ylPsMFdy
+	wtvmYSdoTyttmOJkC1yjDkdN0=
+Received: from colol4bi5.localdomain (unknown [])
+	by gzga-smtp-mtada-g1-2 (Coremail) with SMTP id _____wD3n4cpmNVq2YaJAw--.16525S2;
+	Mon, 19 Oct 2026 12:10:17 +0800 (CST)
+From: Binbin Deng <18983559317@163.com>
+To: sashiko-reviews@lists.linux.dev,
+	linux-rdma@vger.kernel.org
+Cc: zyjzyj2000@gmail.com,
+	jgg@ziepe.ca,
+	leon@kernel.org,
+	dsahern@kernel.org,
+	yanjun.zhu@linux.dev
+Subject: Re:Re: [PATCH v2] RDMA/rxe: unpublish the per-net tunnel socket 
+Date: Mon, 19 Oct 2026 12:10:16 +0800
+Message-ID: <20261019041016.463989-1-18983559317@163.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261019023717.455067-1-18983559317@163.com>
+References: <20261019023717.455067-1-18983559317@163.com>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-176604@kernel.org>
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wD3n4cpmNVq2YaJAw--.16525S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxurW8AF1UtF4ftrW3Ar4DCFg_yoW5Zr4Dpr
+	WSgFWUtr4DKr1Syw1IvF4xZF1fAa9YkFy5GFykKr9rCws8u34ayFWSqr1Fka98Cr4kG3Wj
+	vrn8Cws7ua98ZaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jFD73UUUUU=
+X-CM-SenderInfo: jprymmytvvmjmrxbiqqrwthudrp/xtbC4AlAJGrVmClyawAA3a
 
-On (26/10/19 03:53), sashiko-bot@kernel.org wrote:
-[..]
-> > +static struct zcomp_dstrm *zcomp_dstrm_excl_tryget(struct zcomp *comp)
-> > +{
-> > +	struct zcomp_dstrm *zstrm;
-> > +	unsigned int cpu;
-> > +
-> > +	/* Best-effort start CPU hint; migration during the scan is fine */
-> > +	for_each_online_cpu_wrap(cpu, raw_smp_processor_id()) {
-> > +		zstrm = per_cpu_ptr(comp->dstream, cpu);
-> > +		if (zcomp_dstrm_excl_trylock(zstrm))
-> > +			return zstrm;
-> > +	}
-> > +	return NULL;
-> > +}
-> 
-> [Severity: High]
-> Does passing raw_smp_processor_id() directly as the start argument to
-> for_each_online_cpu_wrap() in zcomp_dstrm_excl_tryget() break the loop
-> termination logic when the task migrates during the scan?
+Hi,
 
-I guess you are right.  I'll fixup in v6.
+Thanks for the review.  I verified both findings against the code and
+they are correct.  Details below; a v3 that addresses them follows.
+
+1. [Critical] residual use-after-free via the unpinned tunnel socket
+
+You are right, v2 does not close this one.  Confirmed in code:
+
+- rxe_ns_pernet_sk6() drops rcu_read_unlock() before returning the
+  raw sk pointer, without taking a reference;
+- rxe_find_route6() passes that pointer to ip6_dst_lookup_flow() in
+  the rxe_sender() workqueue context, outside any RCU read-side
+  critical section: ip6_route_output_flags() reads sk->sk_bound_dev_if
+  and inet6_sk(sk)->srcprefs, and xfrm_lookup_with_ifid() reads
+  sk->sk_policy[XFRM_POLICY_OUT];
+- therefore neither the synchronize_rcu() in rxe_ns_pernet_set_sk6()
+  nor the one inside udp_tunnel_sock_release() can protect a reader
+  that already fetched the pointer.  After v2 only new lookups are
+  protected (they see NULL, which ip6_dst_lookup_flow() handles).
+
+What v2 does fix is the failure mode KASAN reported: with the
+original ordering the per-net pointer stayed published while
+udp_tunnel_sock_release() ran and until set_sk(net, NULL) completed
+its grace period, so any new lookup in that window fetched an
+already-freed socket.  The window for in-flight readers that had
+fetched sk before the unpublish remained, as you describe.
+
+The complete fix is to pin the socket.  v3 takes a reference on it
+in rxe_ns_pernet_sk4/6() with refcount_inc_not_zero() under
+rcu_read_lock() and the callers sock_put() it after use.  Extending
+the RCU read-side critical section across the lookup is not an
+option because xfrm_lookup_route() may sleep.
+
+2. [High] races with rxe_net_init() / unsynchronized refcount check
+
+Both points are valid.  They pre-date v2 (they come with
+f1327abd6abe "RDMA/rxe: Support RDMA link creation and destruction
+per net namespace"), but v3 addresses them as well:
+
+- nldev_newlink() is serialized only by link_ops_rwsem, while
+  nldev_dellink() uses nldev_dellink_mutex, and the NETDEV_UNREGISTER
+  path in rxe_notify() takes neither: rxe_net_init() could observe
+  the just-cleared pointer and fail binding ROCE_V2_UDP_DPORT with
+  -EADDRINUSE, or sock_hold() a socket that was concurrently being
+  released.  v3 serializes rxe_net_init(), rxe_net_del() and
+  rxe_ns_exit() with a new rxe_ns_lock.
+
+- The refcount_read(&sk->sk_refcnt) > SK_REF_FOR_TUNNEL check was
+  indeed TOCTOU, and two concurrent rxe_net_del() callers ("rdma link
+  del" racing NETDEV_UNREGISTER of the underlying netdev) could both
+  release the tunnel.  v3 replaces the heuristic with explicit
+  accounting: the per-net pointer owns a publish reference, every
+  device holds its own reference (the creating device previously
+  never took one, so removing either of two rxe devices in one netns
+  tore the tunnel down underneath the other), and the two
+  rxe_net_del() callers of one device are deduplicated.
+
+The KASAN report from v2 is kept unchanged in the v3 commit message.
+v3 also fixes the truncated subject line of v2 ("...before") and
+drops the Reviewed-by tag since the patch changed.
+
+pw-bot: cr
+
