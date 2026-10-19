@@ -1,54 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=85.214.127.56
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792434115;
-	b=D8FqgXraTdFRv55TujKjnTfzUHGy92NaSgooh+ZQkoxCa22VQi5S9qC9zrBHEMQ/mzDb
-	 PMqYTMbGuPu9BkO8toTiB4PdKtLdATMjhHzGYwMdgHdPZyAaHyFrVMB7jxCs/unStNIkL
-	 cb9yKZ/hufWqz2wtwA6cy1kIZOGILElGz3PjsZWMEqTN3XHMjPOIbxQkNGCEHWOZVEQ3F
-	 L2BmxWeSw+Ez8Y/U3iNLeuXuYkBhcZPpeM5wHrYPK3GSBXilphBSFhbNvHkOt80NUeRpY
-	 KQwARH2qtoMHlMQZ/VY7RCKPo+aMK8tPIxHHwi/fliDNhQqRr22YRgrMmDSOwJAywmw==
+	t=1792439774;
+	b=co3VT9Yz2dhX8r/T+OkAHrii4Nbyv3HdH0Doqj+GTN+3ta5zXJVsPGWRzLqtQqrLXeoy
+	 sdLQwEWOxRuLq6qC1xydufj1cy+0jTaG0rW8YeBZjql2eDKnNz9rDhEWo8EyS4xrVEtmB
+	 GXBSlFtYeFuz1vz/k5/4FLXbZOf2uBlMG3oNrZ683YHCekWDLReOAmn8iU53Wltg+O63g
+	 D6wjcDPE304KNJ5tvj26b053mXUiyA8nEYDAIebuFRBCbw5qkUU4YrZc/MnmEXFGRXdCT
+	 Ixys8vwcYQYDtg8SV9XmCJvABJoJSaaUobBqS+T69SRSwPdVe/VyDSfpJ9mMU3PnLag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792434115;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=uvOL1B9+LtCcbiXQ4KdFPDLg6OoeMbmSgIVT59fRDdY=;
-	b=wud9Qjhch3mCVBSB7m3WV+7xF8oCwF9BS31E0Xi7UWltQCbVc/RsdfC7umaCsTqYMwlP
-	 gt5rWyHgm23ZwPEauJYxX/BEsXq3xKE+Vcf2Ik1k7aBXnvgoRxomIz7f6uJ+lAwkovnBK
-	 WEG31Iqtk1uRkEBZj7Yd+nzuvOaKpSkm7hS1K536YH0qcRfbKZekXLQ09js8o1b3skYo2
-	 Z2qx3XZHeHYCLLQHdoJPYsoeyKkCObjVS82ZjAGhcJKqhlqsuUiP+AynBv0n1DjnpSBZi
-	 4WGscaL0xGyX7pCkj4JH8ujjFP7RmagIKyWshc0PHyJmkOR6NtqeplWqLLDGrQGefhQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792439774;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Virus-Scanned:Received:
+	 Received:From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:
+	 References:MIME-Version:Content-Transfer-Encoding;
+	bh=3ETVpawH8TGNqcJn+eA+c7nYtySgKc/TG+P1cZ3T8mY=;
+	b=bD9Zk+Kr7fOgpLTEFZ92LpafW9nSO/SK/CTnuAtunSffDxBzXekvYU+lHAXWYQU7ZEq8
+	 li3rnthjIuDLhHHsNjD1ztdlbLcQNwN85gDE7cALU3T0NwTZTcCzDEFS/SaCkTyycXwYf
+	 4eJa1QJ8k78VtEKhj4HAlrd74occ+bol2SLSLdG19M+ay9Qzi/q+QGdkzpyYxp0o04Iux
+	 LSp65HEaf9ewqxQ0+qL6d7DFeZyWwKEuXZkDZ4lAq4v7oF/aDUEXxm1detJ+32qmXSRbN
+	 POCeJQ92BKBdIAfWgmPjlWNg8bxcOnRBLVLuCt9EgmJDNEiZX2bZGig6/9uM2sP/KGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GYeNQ2w6;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=szelinsky.de;
+	spf=pass smtp.mailfrom=szelinsky.de;
+	dkim=temperror header.d=szelinsky.de header.i=@szelinsky.de header.a=rsa-sha256 header.s=mail header.b=c5lDjmGH;
+	arc=none smtp.remote-ip=85.214.127.56
+Received: from szelinsky.de (szelinsky.de [85.214.127.56])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE5D606A31E;
-	Mon, 19 Oct 2026 18:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19830606A329
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 19:56:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 19830606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=szelinsky.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=szelinsky.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GYeNQ2w6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965751F000C4;
-	Mon, 19 Oct 2026 18:21:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792434113;
-	bh=uvOL1B9+LtCcbiXQ4KdFPDLg6OoeMbmSgIVT59fRDdY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=GYeNQ2w6DvQ/+O3emod3RMvPLCefiAgW9JYjiglA0coeEN8jk9nS7GojjjLs6E0FL
-	 UhpoHoTIr/HGOOvLmYjOFSrpToiVmxg1l22WX9HVMoVorh68B6j9L8DFKqoLAudcel
-	 3r4M10GSdUU8zpeYoDUrjm7eq6+XnzmBDhtIcnf26LkHD0DCLo4N6enALGHDxJwfz7
-	 uqFGUq1cgHVssUPROcJY3ZuyPeJxD3nbJ4s9W2ZQczUjOC7vJD+tiEFPc8LNUwptAR
-	 WR0SYChB0F2qah0YOOalgYAvAIwsgGQpUx6v2jiE/+4jmku5RWoRqtHjg+xfzQugBF
-	 sM+zBUFeoAp4w==
-Date: Mon, 19 Oct 2026 19:21:50 +0100
-From: Conor Dooley <conor@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Lachlan Michael <lachlan.michael@sony.com>, devicetree@vger.kernel.org,
-	robh@kernel.org, conor+dt@kernel.org, media-ci@linuxtv.org
-Subject: Re: [PATCH v5 1/2] media: dt-bindings: imx908: Add Sony IMX908 sensor
-Message-ID: <20261019-cause-decline-feb5a68f0d06@spud>
-References: <20261019014720.2635-1-lachlan.michael@sony.com>
- <20261019014720.2635-2-lachlan.michael@sony.com>
- <sashiko-outbox-176511@kernel.org>
+	dkim=temperror header.d=szelinsky.de header.i=@szelinsky.de header.a=rsa-sha256 header.s=mail header.b=c5lDjmGH
+Received: from localhost (localhost [127.0.0.1])
+	by szelinsky.de (Postfix) with ESMTP id 4938EE83AA4;
+	Mon, 19 Oct 2026 21:56:12 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=szelinsky.de;
+	s=mail; t=1792439772;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3ETVpawH8TGNqcJn+eA+c7nYtySgKc/TG+P1cZ3T8mY=;
+	b=c5lDjmGHpIkFfadXsxjbwFjF1PUFGQEE0wDNPALe/F5H6lsIUPd180rrJCMLez+1WCCgz9
+	BJrOAb4GVx5LrpSHyjUilMf0KKz29arjiTd1LuCMQ0lzq66WiZPHNP2H45Dy27zfHpm/lY
+	+AcgYBKn/SKdHyiTvlYTz/dbQ8K6vFiEGVMwv6m51VnaskPD9uSS16Ll/drtaZMPpNBeyn
+	tdR4tA/B1k0+ogHGx0FvW5v0Ud6rne7k46oD4EnwXAyAsgnm03dsKo25AgW1T512S18E6U
+	o7JXxFREKqDdV2Oj1pxs+a94jq7iZ+hg3Z3QmJfzDHSD4rs2lhWhpyRM1LLElw==
+X-Virus-Scanned: Debian amavis at szelinsky.de
+Received: from szelinsky.de ([127.0.0.1])
+ by localhost (szelinsky.de [127.0.0.1]) (amavis, port 10025) with ESMTP
+ id Zoo4JnsoDhL2; Mon, 19 Oct 2026 21:56:11 +0200 (CEST)
+Received: from p14sgen5.. (unknown [91.25.97.186])
+	by szelinsky.de (Postfix) with ESMTPSA;
+	Mon, 19 Oct 2026 21:56:11 +0200 (CEST)
+From: Carlo Szelinsky <github@szelinsky.de>
+To: netdev-bot+sashiko@kernel.org
+Cc: o.rempel@pengutronix.de,
+	kory.maincent@bootlin.com,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@kernel.org,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	broonie@kernel.org,
+	lgirdwood@gmail.com,
+	corey@leavitt.info,
+	kyle.swenson@est.tech,
+	horms@kernel.org,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH net-next 2/4] net: pse-pd: unwind allocations when controller registration fails
+Date: Mon, 19 Oct 2026 21:56:09 +0200
+Message-ID: <20261019195609.307868-1-github@szelinsky.de>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <179239893785.3135.13786246432250454158@kernel.org>
+References: <179239893785.3135.13786246432250454158@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,86 +87,56 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9CCrMjoYK9ZJsW8E"
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-176511@kernel.org>
+Content-Transfer-Encoding: 8bit
 
---9CCrMjoYK9ZJsW8E
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Oct 19, 2026 at 01:53:48AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] dt-bindings: media: imx908: additionalProperties: false blocks=
- allOf schema
-> --
->=20
-> commit ff8a8181af73cacaf3f8a03e0acde33eb53bb18b
-> Author: Lachlan Michael <lachlan.michael@sony.com>
->=20
-> media: dt-bindings: imx908: Add Sony IMX908 sensor
->=20
-> This commit adds device tree bindings and a MAINTAINERS entry for the Sony
-> IMX908 8.39 megapixel MIPI CSI-2 CMOS image sensor.
->=20
-> > diff --git a/Documentation/devicetree/bindings/media/i2c/sony,imx908.ya=
-ml b/Documentation/devicetree/bindings/media/i2c/sony,imx908.yaml
-> > new file mode 100644
-> > index 0000000000000..828db1175e2f5
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/media/i2c/sony,imx908.yaml
-> > @@ -0,0 +1,108 @@
-> [ ... ]
-> > +allOf:
-> > +  - $ref: /schemas/media/video-interface-devices.yaml#
-> > +
-> > +properties:
-> > +  compatible:
-> > +    const: sony,imx908
-> [ ... ]
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - clocks
-> > +  - dvdd-supply
-> > +  - ovdd-supply
-> > +  - avdd-supply
-> > +  - port
-> > +
-> > +additionalProperties: false
->=20
+On Mon, 19 Oct 2026 08:35:37 +0000, netdev-bot+sashiko@kernel.org wrote:
 > [Severity: Medium]
-> Should this be unevaluatedProperties: false instead of
-> additionalProperties: false?
+> Do these goto free_kfifo paths leak the OF node references held in
+> pcdev->pi[]?
 
-Only if the properties outside of what's already explicitly used in the
-binding are possible.
+Yes, and the commit message is wrong about that. The regulator core
+takes its own reference on the PI node, so I will drop the references
+on these paths and keep only the array. That goes into the next
+version, in net.
 
->=20
-> Because the schema references /schemas/media/video-interface-devices.yaml#
-> in allOf without listing common properties such as rotation, orientation,
-> lens-focus, or flash-leds under the local properties block, using
-> additionalProperties: false will cause dtbs_check to reject any
-> sony,imx908 node that uses those inherited properties.
->=20
-> [ ... ]
->=20
-> --=20
-> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20261019014720.2635-=
-1-lachlan.michael@sony.com?part=3D1
+> [Severity: Medium]
+> This recheck covers pse_pi_update_pw_budget() itself. Doesn't
+> pse_ethtool_set_pw_limit() still read pw_d and the PI state without
+> pcdev->lock before it calls this function?
 
---9CCrMjoYK9ZJsW8E
-Content-Type: application/pgp-signature; name=signature.asc
+Yes. That is fixed in net by "net: pse-pd: check the PI state under
+the lock when setting a power limit".
 
------BEGIN PGP SIGNATURE-----
+> [Severity: Low]
+> Should this patch carry a Fixes: tag
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCatZfvgAKCRB4tDGHoIJi
-0qiCAP4qFigSJ7kmNt08rOge0JhnUr0NgZ13psJilaB+vxyCQgEA7DnNdJGO2wUI
-NZegYkz6WVCesokxk/JP4xcO4EZGSwU=
-=w4tB
------END PGP SIGNATURE-----
+Yes. The patch moves to net, where it gets Fixes tags.
 
---9CCrMjoYK9ZJsW8E--
+> [Severity: High]
+> This is a pre-existing issue, but it sits next to this teardown code.
+> devm_pse_alloc_pw_d() still allocates the power domain against the
+> controller that creates it
+
+Older bug, fixed in net by "net: pse-pd: do not tie a shared power
+domain to its creator's devres".
+
+> [Severity: High]
+> This is a pre-existing issue, but does the normal unregister path follow
+> the rule in this comment?
+
+No, an older bug. The PI regulator part is fixed by the second patch
+of [1], which I will rework and fold into the net series. Ethtool
+callers that still hold a handle are fixed by the PSE notifier series.
+
+> [Severity: Medium]
+> This is a pre-existing issue, but none of the error paths after a
+> successful setup_pi_matrix() undo what the driver did in that callback.
+
+Only pd692x0 leaves something behind there: its power budget. That is
+fixed in net by "net: pse-pd: pd692x0: release the manager power
+budget through devres". The other drivers only read the device tree
+and write registers there, so nothing is left to undo.
+
+[1] https://lore.kernel.org/netdev/20260813200653.980170-1-github@szelinsky.de/
+
+Carlo
