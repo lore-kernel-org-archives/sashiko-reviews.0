@@ -1,72 +1,32 @@
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.167])
+Received: from out30-97.freemail.mail.aliyun.com (out30-97.freemail.mail.aliyun.com [115.124.30.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF31E4071DE
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 08:09:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.167
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792397343; cv=pass; b=PGH9pCCCE3RNb+LTL2TRgAUsteit/FBAs5UMl67N4QYsapaBReINsrij00OyO4A4zaPs/C5xoDrLJ8gOAPGWOHcXKU0mEUPEOrkzELPEyvTB/cPtQHsVHdB7axEob2rCjs5yTZ/Krxq3RVCPBp7m7pdvrmwvKYu6kzIrxFe/HYc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792397343; c=relaxed/simple;
-	bh=reBd+OcjXMbahZaREWZkjeEzFNdSWPfYbBOa+mNDlA4=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3B549739A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 08:27:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.97
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792398431; cv=none; b=fW1m2qOzJFC2HBU+GxpdzlnaNHrZyKIw0kiXUIwOVQhNCrnRJOkbdzG+cHnRLbNaDTGtEoX0UtIWsKbBEH5fBTIJexhlZDzLHEQqbp7dVYNTCYktw3gSfXHN50+fDQxGLASp+qJFXQSpoOMFv0+6CtW5oB3poml89PtAOg4wHqs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792398431; c=relaxed/simple;
+	bh=ZAs3C6Cq5AOaK0EGffB8Ba29lQAcu8xbuBVkcS5pdUM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bZhzOY/TagQAojaC7BfYB0pF2KI2OYS5xF8nWrcmuDNFpsp6A5NhnjAzvlU0CQCa9uwKxpeVKSDTWTJLKpNLBmaQraxc4ZHhzLB7iEDdr5s+8PDaxxJr8CtrDjAIROytE73zNjvXf6bs8rgg/3IhK/1KNI4BT2AofZakgHxAvCc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net; spf=fail smtp.mailfrom=hartkopp.net; dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=eLlCoEnf; dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b=5r64w6kW; arc=pass smtp.client-ip=81.169.146.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hartkopp.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=hartkopp.net
+	 In-Reply-To:Content-Type; b=ONEBlVpDX6lT3rnsdEHijZemUHTzh7okpsL2S5HtEoMQJmNDOECcQ5K/8bSg0ZhvRfAYmaYl9Lsci34NcKI/YNGqy9zVYeCTFgcPjG+fESm0pbcGlN/K4XF7N59efY5snEPbxrK0q1+5A9bPQez+HoREyMkk16u63n+w6NqpgtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=ZlTsGbzI; arc=none smtp.client-ip=115.124.30.97
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="eLlCoEnf";
-	dkim=permerror (0-bit key) header.d=hartkopp.net header.i=@hartkopp.net header.b="5r64w6kW"
-ARC-Seal: i=1; a=rsa-sha256; t=1792397321; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=KwwuxW2j2qmKXXKQu1N+GEq3u3mE4QBp2GqEFY15Tow6QN36EB4nRBXdBH9kGDo0ex
-    WMAt0WLL2cmb9lgkcfNcufu+ibHH90sfxsuywaHVmpxF1cVQuNQfuZPh7UoVAiHNjzkm
-    aIjBvT4tbvzIXMdLqDgsIzhzQYq64mVm5nH0f6BlvxDzBa4326SEi3lMsb3SiVvy7Nwu
-    Z//W/VRfj7/f/zkMSZmFxikUvcwe8scUf2f/Esz1tFPm9MUL3Kw19lShxWqKhLOoKwSA
-    j4CaM/E9g8/1bN1LcbqGFZW4mad4VTrxZnUWrWQftXr3itQe4HY85iv+A69y+7HoaiN9
-    b7XQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1792397321;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=ax4WbjHhcP3QE1+obLX5BAjM2aDflIruHdjY/HnwNlA=;
-    b=jj+PoXlIC66j7DE36Mi/rv8xiDk4TdB0m2SNv91Vf97U4iSsLZxcQ3x5Wmnm/cMw7y
-    srSxG6HfytueiB3wC3xc49Adebk66vRL7Mjj+ls3aWbHWxZPBjg0PaGtwA3+H8SOmebj
-    FNBokoEAGR3pdh61DdbGPZtfZbwNIelfZcQ9SLvBFDBWbGmznrR+ZL22NXsicpBEpIAB
-    zxyLNRkdCZ9oDUHHfq8gOi0TibKmo9ihJjY/ViH/KDzBaS4ncga+zWWi13i/xSSgth+E
-    866f0ts1lLZjxm2ALlO/sHr2K7EQSy7/CFB2Q5hoZape3MU3RW6jP0LFjdyX/4vQO+ur
-    dCQw==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1792397321;
-    s=strato-dkim-0002; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=ax4WbjHhcP3QE1+obLX5BAjM2aDflIruHdjY/HnwNlA=;
-    b=eLlCoEnf1j294qyi+YC9Ob+FEggyEwwWU3N/nt1FRvMEI9PeOLC+Vkm6Ml+EeLR0vE
-    rkO8KXTxDtzh1jNIPdDUGkIQoh2w4jwtbWLFZQyGZsPpUu+N8+vJ0OuBU675RZ1Hwvq+
-    ft7PCmJndAMFZ4gGUlpSse5h/0wIAyUTlVDOcU4ZgL/QESl7jeYJyXki5Z9ZmAbAyFj3
-    jXKRYwCCsPeiMj3B4vAwRZhbL8AxsywnPhitxNnmq9Swu3Wz/V+EUa3Su2If3tEbgAlp
-    dW8CFmbWdG4CVLcJI84ffyVAWaIsRZiu2ZDPoEI1GyY1VdTC/PjYnfv/hKRWOLBTPsEB
-    AnPw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1792397321;
-    s=strato-dkim-0003; d=hartkopp.net;
-    h=In-Reply-To:From:References:Cc:To:Subject:Date:Message-ID:Cc:Date:
-    From:Subject:Sender;
-    bh=ax4WbjHhcP3QE1+obLX5BAjM2aDflIruHdjY/HnwNlA=;
-    b=5r64w6kW4WMowTY8q2PA8C+VinTtW0qU8zk8WIHJ8Qppq5HwH32o1VGYANmDK2NPcl
-    L2lzDBXhjVy9rN0XfsBg==
-X-RZG-AUTH: ":P2MHfkW8eP4Mre39l357AZT/I7AY/7nT2yrDxb8mjH4JKvMdQv2tTUsMrZpkO3Mw3lZ/t54cFxeEQ7s8bDup0Q=="
-Received: from [IPV6:2a00:6020:4a38:6810::989]
-    by smtp.strato.de (RZmta 55.6.3 AUTH)
-    with ESMTPSA id Kfdf2a29J88fV3m
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Mon, 19 Oct 2026 10:08:41 +0200 (CEST)
-Message-ID: <83241d6c-ae67-4de9-8582-b958ec836dd1@hartkopp.net>
-Date: Mon, 19 Oct 2026 10:08:35 +0200
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="ZlTsGbzI"
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1792398422; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+	bh=y/cn1nw659hfdNL/u62UUjysTFQXLAmpwE8Xo3BKvYA=;
+	b=ZlTsGbzIdz3ejAx+6AOxpL7a2ET0rJVlT4B65aorD/q2q5GtZhqejBqiIpLJ7wdguUYsdma/WrkyLXDd2Bb1nD56LUaoxG92IdLDPkZY0JFsR84DLRhaMBZMscTYQ94ifx+05yIWDeGsKEjQlWlwkHoe1l8BtwDu3tyOWY9QOGs=
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R221e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033037026112;MF=kanie@linux.alibaba.com;NM=1;PH=DS;RN=2;SR=0;TI=SMTPD_---0XD3.0Wx_1792398421;
+Received: from 30.178.69.0(mailfrom:kanie@linux.alibaba.com fp:SMTPD_---0XD3.0Wx_1792398421 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Mon, 19 Oct 2026 16:27:01 +0800
+Message-ID: <1cd9132b-1c79-4073-a708-94fa333f2375@linux.alibaba.com>
+Date: Mon, 19 Oct 2026 16:27:00 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -74,201 +34,77 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH can-next v3 1/4] can: proc: reset pkg_stats atomics
- individually
-To: sashiko-reviews@lists.linux.dev, linux-can@vger.kernel.org
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>,
- Vincent Mailhol <mailhol@kernel.org>,
- Oleksij Rempel <o.rempel@pengutronix.de>
-References: <20261019074244.50391-1-socketcan@hartkopp.net>
- <20261019074244.50391-2-socketcan@hartkopp.net>
- <sashiko-outbox-176764@kernel.org>
-Content-Language: en-US
-From: Oliver Hartkopp <socketcan@hartkopp.net>
-In-Reply-To: <sashiko-outbox-176764@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 10/11] nvmet: translate placement identifiers of writes to
+ write streams
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-nvme@lists.infradead.org
+References: <20261019033624.402337-1-kanie@linux.alibaba.com>
+ <20261019033624.402337-11-kanie@linux.alibaba.com>
+ <sashiko-outbox-176586@kernel.org>
+From: Guixin Liu <kanie@linux.alibaba.com>
+In-Reply-To: <sashiko-outbox-176586@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 
 
-On 19.10.26 09:53, sashiko-bot@kernel.org wrote:
+在 2026/10/19 11:44, sashiko-bot@kernel.org 写道:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] can: proc: stale counter snapshots in can_stat_update() overwrite reset stats
+> - [Medium] nvmet: bi_write_stream lost on chained bios in nvmet_bdev_execute_rw()
 > --
-> 
-> commit 947871fd730bb7740551ee6c8b42c7ac5ed61308
-> Author: Runyu Xiao <runyu.xiao@seu.edu.cn>
-> 
-> can: proc: reset pkg_stats atomics individually
-> 
-> This patch replaces the whole-struct memset() in can_init_stats() with
-> individual atomic_long_set() and scalar field resets in can_reset_pkg_stats(),
-> and switches can_stat_update() to use atomic_long_xchg() when reading and
-> clearing the delta counters.
-> 
->> diff --git a/net/can/proc.c b/net/can/proc.c
->> index de4d05ae34597..70104f13077e0 100644
->> --- a/net/can/proc.c
->> +++ b/net/can/proc.c
->> @@ -76,16 +76,39 @@ static const char rx_list_name[][8] = {
->>    * af_can statistics stuff
->>    */
->>   
->> +static void can_reset_pkg_stats(struct can_pkg_stats *pkg_stats)
->> +{
->> +	atomic_long_set(&pkg_stats->rx_frames, 0);
->> +	atomic_long_set(&pkg_stats->tx_frames, 0);
->> +	atomic_long_set(&pkg_stats->matches, 0);
->> +
->> +	pkg_stats->total_rx_rate = 0;
->> +	pkg_stats->total_tx_rate = 0;
->> +	pkg_stats->total_rx_match_ratio = 0;
->> +
->> +	pkg_stats->current_rx_rate = 0;
->> +	pkg_stats->current_tx_rate = 0;
->> +	pkg_stats->current_rx_match_ratio = 0;
->> +
->> +	pkg_stats->max_rx_rate = 0;
->> +	pkg_stats->max_tx_rate = 0;
->> +	pkg_stats->max_rx_match_ratio = 0;
->> +
->> +	atomic_long_set(&pkg_stats->rx_frames_delta, 0);
->> +	atomic_long_set(&pkg_stats->tx_frames_delta, 0);
->> +	atomic_long_set(&pkg_stats->matches_delta, 0);
->> +}
->> +
->>   static void can_init_stats(struct net *net)
->>   {
->>   	struct can_pkg_stats *pkg_stats = net->can.pkg_stats;
->>   	struct can_rcv_lists_stats *rcv_lists_stats = net->can.rcv_lists_stats;
->>   	/*
->> -	 * This memset function is called from a timer context (when
->> +	 * This stats reset is called from a timer context (when
->>   	 * can_stattimer is active which is the default) OR in a process
->>   	 * context (reading the proc_fs when can_stattimer is disabled).
->>   	 */
->> -	memset(pkg_stats, 0, sizeof(struct can_pkg_stats));
->> +	can_reset_pkg_stats(pkg_stats);
->>   	pkg_stats->jiffies_init = jiffies;
->>   
->>   	rcv_lists_stats->stats_reset++;
->> @@ -121,9 +144,10 @@ void can_stat_update(struct timer_list *t)
->>   	long rx_frames = atomic_long_read(&pkg_stats->rx_frames);
->>   	long tx_frames = atomic_long_read(&pkg_stats->tx_frames);
->>   	long matches = atomic_long_read(&pkg_stats->matches);
->> -	long rx_frames_delta = atomic_long_read(&pkg_stats->rx_frames_delta);
->> -	long tx_frames_delta = atomic_long_read(&pkg_stats->tx_frames_delta);
->> -	long matches_delta = atomic_long_read(&pkg_stats->matches_delta);
->> +	/* fetch and clear values for 'current rate' calculation */
->> +	long rx_frames_delta = atomic_long_xchg(&pkg_stats->rx_frames_delta, 0);
->> +	long tx_frames_delta = atomic_long_xchg(&pkg_stats->tx_frames_delta, 0);
->> +	long matches_delta = atomic_long_xchg(&pkg_stats->matches_delta, 0);
->>   
->>   	/* restart counting in timer context on user request */
->>   	if (user_reset)
-> 
+>
+> commit ee4faa4396ddf960be1a3f58157a725fb3691c6f
+> Author: Guixin Liu <kanie@linux.alibaba.com>
+>
+> nvmet: translate placement identifiers of writes to write streams
+>
+> This commit translates NVMe Data Placement Directive placement identifiers
+> on write commands into block layer write streams on the backing block
+> device when FDP is enabled on the namespace.
+>
+>> diff --git a/drivers/nvme/target/io-cmd-bdev.c b/drivers/nvme/target/io-cmd-bdev.c
+>> index f2d9e8901df4e..ff480f9ab9906 100644
+>> --- a/drivers/nvme/target/io-cmd-bdev.c
+>> +++ b/drivers/nvme/target/io-cmd-bdev.c
+>> @@ -300,6 +300,10 @@ static void nvmet_bdev_execute_rw(struct nvmet_req *req)
+>>  	bio->bi_iter.bi_sector = sector;
+>>  	bio->bi_private = req;
+>>  	bio->bi_end_io = nvmet_bio_done;
+>> +	if (req->cmd->rw.opcode == nvme_cmd_write &&
+>> +	    nvmet_fdp_enabled(req->ns)) {
+>> +		bio->bi_write_stream = nvmet_fdp_write_stream(req);
+>> +	}
+>>  
+>>  	blk_start_plug(&plug);
+>>  	if (req->metadata_len)
 > [Severity: Medium]
-> Does can_stat_update() overwrite the freshly reset scalar statistics in
-> pkg_stats with stale pre-reset counter snapshots after calling
-> can_init_stats()?
-
-Yes, but this is not introduced by this patch. The local snapshots were
-added by 80b5f90158d1 (the commit this patch fixes) and this patch does
-not change the resulting values.
-
-I would rate this as Low, as the impact is limited to cosmetic procfs
-statistics:
-
-- total_rx_match_ratio keeps its pre-reset value until new frames are
-   received.
-- current_* and max_* show the last pre-reset interval for one timer
-   period (one second).
-- A jiffies tick between snapshot and reset only increments stats_reset
-   twice; calc_rate() returns 0 in this case, no crash.
-
-I'll address this in a separate patch with the same Fixes: tag by
-returning early from can_stat_update() after a reset.
-
-Best regards,
-Oliver
-
-
-pw-bot: cr
-
-> 
-> At the beginning of can_stat_update() in net/can/proc.c, the counters are
-> snapshotted into local variables before checking for a reset or overflow:
-> 
-> 	unsigned long j = jiffies; /* snapshot */
-> 
-> 	long rx_frames = atomic_long_read(&pkg_stats->rx_frames);
-> 	long tx_frames = atomic_long_read(&pkg_stats->tx_frames);
-> 	long matches = atomic_long_read(&pkg_stats->matches);
-> 	/* fetch and clear values for 'current rate' calculation */
-> 	long rx_frames_delta = atomic_long_xchg(&pkg_stats->rx_frames_delta, 0);
-> 	long tx_frames_delta = atomic_long_xchg(&pkg_stats->tx_frames_delta, 0);
-> 	long matches_delta = atomic_long_xchg(&pkg_stats->matches_delta, 0);
-> 
-> 	/* restart counting in timer context on user request */
-> 	if (user_reset)
-> 		can_init_stats(net);
-> 
-> 	/* restart counting on jiffies overflow */
-> 	if (j < pkg_stats->jiffies_init)
-> 		can_init_stats(net);
-> 
-> 	/* prevent overflow in calc_rate() */
-> 	if (rx_frames > (LONG_MAX / HZ))
-> 		can_init_stats(net);
-> 	...
-> 
-> When user_reset is set (for example, after reading /proc/net/can/reset_stats)
-> or when one of the overflow conditions triggers, can_stat_update() calls
-> can_init_stats() -> can_reset_pkg_stats(), which zeroes the atomic counters
-> and the derived scalar fields (total_*, current_*, max_*).
-> 
-> However, the local variables rx_frames, tx_frames, matches, rx_frames_delta,
-> tx_frames_delta, and matches_delta still hold the pre-reset values when
-> can_stat_update() continues immediately below:
-> 
-> 	/* calc total values */
-> 	if (rx_frames)
-> 		pkg_stats->total_rx_match_ratio = (matches * 100) / rx_frames;
-> 
-> 	pkg_stats->total_tx_rate = calc_rate(pkg_stats->jiffies_init, j,
-> 					    tx_frames);
-> 	pkg_stats->total_rx_rate = calc_rate(pkg_stats->jiffies_init, j,
-> 					    rx_frames);
-> 
-> 	/* calc current values */
-> 	if (rx_frames_delta)
-> 		pkg_stats->current_rx_match_ratio =
-> 			(matches_delta * 100) /	rx_frames_delta;
-> 
-> 	pkg_stats->current_tx_rate = calc_rate(0, HZ, tx_frames_delta);
-> 	pkg_stats->current_rx_rate = calc_rate(0, HZ, rx_frames_delta);
-> 
-> 	/* check / update maximum values */
-> 	if (pkg_stats->max_tx_rate < pkg_stats->current_tx_rate)
-> 		pkg_stats->max_tx_rate = pkg_stats->current_tx_rate;
-> 	...
-> 
-> As a result, those pre-reset local variables overwrite total_rx_match_ratio,
-> current_*, and max_* right after can_reset_pkg_stats() cleared them (and if
-> the reset was triggered by the rx_frames, tx_frames, or matches overflow
-> checks, the overflowing values are still passed into the ratio and calc_rate()
-> calculations).
-> 
-> Additionally, because can_init_stats() sets pkg_stats->jiffies_init = jiffies
-> by reading live jiffies rather than using the snapshot j, if jiffies ticks
-> between the snapshot and can_init_stats(net) during a user_reset, the
-> subsequent check (j < pkg_stats->jiffies_init) will also evaluate to true,
-> calling can_init_stats(net) a second time and then passing jiffies_init > j
-> along with the stale non-zero tx_frames and rx_frames into calc_rate().
-> 
-> Should can_stat_update() re-arm the timer and return early (or zero the local
-> snapshot variables) when can_init_stats() is called?
-> 
+> What happens when a write command spans multiple bios in
+> nvmet_bdev_execute_rw()?
+>
+> When req->sg_cnt exceeds BIO_MAX_VECS (or bio_add_page() otherwise fills
+> the current bio), the for_each_sg() loop allocates a new chained bio:
+>
+> 	for_each_sg(req->sg, sg, req->sg_cnt, i) {
+> 		while (bio_add_page(bio, sg_page(sg), sg->length, sg->offset)
+> 				!= sg->length) {
+> 			struct bio *prev = bio;
+> 			...
+> 			bio = bio_alloc(req->ns->bdev, bio_max_segs(sg_cnt),
+> 					opf, GFP_KERNEL);
+> 			bio->bi_iter.bi_sector = sector;
+>
+> 			bio_chain(bio, prev);
+> 			submit_bio(prev);
+> 		}
+>
+> Since bio_alloc() initializes bi_write_stream to 0 and bio_chain() does
+> not copy bi_write_stream from prev, won't all subsequent chained bios for
+> the write command be submitted with bi_write_stream set to 0 instead of
+> the stream returned by nvmet_fdp_write_stream(req), preventing them from
+> merging with the initial bio and routing the tail of the write to the
+> default stream instead of the host-selected reclaim unit?
+>
 > [ ... ]
-> 
+Sashiko is right, fixed in v2.
+>
 
