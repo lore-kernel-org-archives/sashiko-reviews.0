@@ -1,264 +1,187 @@
-Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012040.outbound.protection.outlook.com [52.101.53.40])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CCA37E30C
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 07:41:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51BC1489FB9
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 07:45:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.40
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792395671; cv=pass; b=AM6FB1gI1cOqQL1XV5F6bs2dz6PUpRmbClHoY8olodP6pcm0ffj8ouNsonIupZreW8vX7VYh1ByLJh8d7zwXBWCMPXBvpRUwbQUxhKq2Z8VV74ujrP+bU+hnNoAZtPKJg6EqueTS5ueg0XVWLknXqnpCQGS/RVCJap/tdoUjBe4=
+	t=1792395920; cv=fail; b=XUhr/G3EewliX0/8qpgA3n1lJa0HMyMxf9hcItB+sHMskyLhFAK52dy6g+jkY44M+uEoaLZOQNH1+XY3M6GBNmNGa0x7WNyE/2w3bDmvtuxQscVt4+Hu3rkkDT2IelPP5eQEvW4ZcOJrXUnYIzSVyhlXiS0eS7PWDPoyjnUYfmM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792395671; c=relaxed/simple;
-	bh=jPqPx4WIvZCwXAxSt7/GckqZUZbeRwYWXgGLl4PYDUQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YyGs+LZCEoLbhJ6MaZ7x/i73+SPT7JkDgUIsZXPPt+LprgTW9Y2HyIC3u9t0FlOPXnsFFtaBW8LESMyPgng0XGYdRKJh/0n8w9UhhUPkLwd1MkbKYdWDACnkNXtaAy75l862w14m749ybqQTORpKeUxnUj7kaORkoW+X8GIcP9I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nWeMt3Hq; arc=pass smtp.client-ip=74.125.224.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1792395920; c=relaxed/simple;
+	bh=vjTZ7zblH48qngVv6GNb+hPFGIJsV8qj7omFqvG4ZqE=;
+	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=acIcOsU4wkXu+iEIvt/GD1wGiuQ4vAUGa7FZB/bxHZVj121X8ctasqG5oXzZWKmUFSqc1RHJRcb1riagfcuc8RS2/rGjZuvc6/LX1/Vtj4ZPmT/Usod2nGgISs19P+2TGbBZf/KMoUOb/kQJpKTjljtWLCg5bZo/ELisjNTbO30=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=Yib0ae9P; arc=fail smtp.client-ip=52.101.53.40
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nWeMt3Hq"
-Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-67921b515a7so1874779d50.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 00:41:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792395669; cv=none;
-        d=google.com; s=arc-20260327;
-        b=R0wm/3USJB8Y/1GPFJrPh5NeFjP8C8k8nFDZYiaf9Lic4frPQmj35ymdKZ0U11weON
-         5lk0s5EWRo3Iik8gJov8Z1D4ZLhaSk0k7WtA4+xbEBdyubmAvjh6kSRzE2bhnLMKBM+B
-         DRjJrNeZXGc1R1nt/+9/V9Yb+UBCYA0a6VD9zTSSr01FPSPbh3pDwD6Ig4iKmchs7lpF
-         LaM1vkQhLXM2sKwkxyifW1bbqibty4tELswCYqTwNsxM00q203iv3ussgqViPExaqU8r
-         K59mBRGJ6Pf1D8cvD5hgZgCrg/t64NPAifDIPmJ0RmoHGyboNnwLBUc5BPimFenGf/un
-         Eh9Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=KpPZjaMDJls8EZkE/6oJfht+hbPc5JiwcvTAxpT7o3k=;
-        fh=risCXqddoJ4OMyEDiuoDYKl7eVWeTYRF0lZTs6+72Q8=;
-        b=dgpmFVQNq/VpoXb0+cveqTWkiAcjq4DhBRhcWt7r7gL+G+RjzukS0jPWgyCT885nVy
-         RAKCml61eBkLgwkDEs7qbGUQfKu0Z3f1B3iuerd5Qn096MSSbGXAOuj8kn7/SmRliYbH
-         L2UaY4Iz3sOlbHfEe9x248L+9ZTOksD5UoBON1LqISxBSpDdQP0O+DFPCLLLsAFME+j5
-         5lDybrLlf7mOif3e3mjjAkhAb5WSSWsBuDSyb1/LMW9eOQrF8OeetvsbR/1JqHzLM451
-         nR8deJxBVB6lNSN4hK25Q/fAetfMhMOf2Fh8dvqSF/fjouhm7WqeuBQ7P4F/+SYlh2ys
-         GuOA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792395669; x=1793000469; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=KpPZjaMDJls8EZkE/6oJfht+hbPc5JiwcvTAxpT7o3k=;
-        b=nWeMt3HqKWZywVt1lq23Zg+jWLvSjeRKLSxobUkAtQhvxvikjWIAMosN+14IoAESH0
-         zLnnaKvEb4ppI1ILuJbUDqLiYMIrFPr6j03WhBMGCEpQ07meYMxnsh5cW5iRxwIZl1fb
-         BR5+UuCARJLQan2CGoK8r6bR9/Bdf21cVhlR3ZwAp3FD0v/+lo6nM6QsY6sCA++G2RCt
-         WS9J7HM8Ver5Z/0p1SxjJxaVPWuLqzMP2CaYoD8V4o4WTdksCgPjmnY97gc8HU2i8JI1
-         m8xHTRfm4wEGXW1X48r30J96AW+i45tb7keRfk5XbqTc/e1pSy0KturG2C2Br5NZKX71
-         flQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792395669; x=1793000469;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=KpPZjaMDJls8EZkE/6oJfht+hbPc5JiwcvTAxpT7o3k=;
-        b=DKwEY/PCTyQByChWOMmQnIntDQEuxWN3ChZMcXerJdJD5XpSvMzlMBFlCkpI9Ofge4
-         52bSws2Ud3ATn/VtJT5TIUCW9PFpbudvA++MGqn7nKUzcqQ9Ts1q70s1bC+Lu33tmD1H
-         Fkh8HegtYoIxEkVibBiq/ZPub7b9euufrItXVjcXOOmRd9xl8ixeyTvt3nKhfqFDq49L
-         bTZIGIFEgBULsTzKALPAbyU09jcnK3Ij7AhqzFilZpi7o68NYALcc7jm3Sum9WubfKCP
-         K2jOGHdwAnuYQ3F99JvyjAYeFGnlHqnB2rlwMp2IHiAVbWsJiZQRz5z2Z1JtnKNo1HkF
-         U1/A==
-X-Gm-Message-State: AFq9FYJqsgWdNxpkQgY4KDuEQsV2JhFGQazR9WOkDcr/8KJhdKuUtMKL
-	Z87UxBWITutQpprKE+p9kOVkiASCL4g3SOEDl2f0gRAcjvUFmpV+o951pK0CF2rNl4z9cPYDfeD
-	W8Xvkf5y3qWg+E+Ltp6BLiRxFiDduVOTaf24zx/4=
-X-Gm-Gg: AYBFou35VmGq2F+GtUXBzNcVqq29OSWF+tHnM6gcOboWhkUviieBIdXplAsiQAHsmTb
-	1rJR4ffByf/6EX+g+banoK8BE4FS03Cw6+KuwOCH2j5EOO4Hb3bi0mnxA4vZibClBlsy/EpJtvx
-	1dY7JF1NbaJIwO/+qoNLTO/wYWzg2xOBlmUA5f5FI/uawBNjgJ3/dHuXBE737BU4hp3p1Dd90+D
-	+h8xZW3NdJshc+Srd9D1zPtuJvHFyYuhhEv1KnfBthgkZPJrVEOAelSZaF2CaEeYVIgIxCfGuAn
-	Q3yWTBesbQwkHJrs1bnqDaKt6pLINDmO2R48BpfJQPvVaqYv1OYrCAZXVVIqZyERw4Ax3YTykIM
-	QNUaXHY6QTA==
-X-Received: by 2002:a05:690e:4181:b0:679:938d:a5e1 with SMTP id
- 956f58d0204a3-679ca9152camr1672832d50.106.1792395668941; Mon, 19 Oct 2026
- 00:41:08 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="Yib0ae9P"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LGPXibMZowKC/uIfBawQIUKti1UbOFlORDfJDCUIUgzsnvyO8un/Cudq+g7QKV9mQ8Jq/i/p01S5yrfoHLIlukCnRtfVKZ5gzYedcdzxCteQ4dg3AC59a31kOeC6iO3mPSfg3Ib7TCX2to1aIRL0IpRGwEPDajdYAEA/CbgEA7TGYT50/oaXBjp3wNXCiUcr5jfgOAgt9ZRAja739nFTk1/DxPWwxv4a2YB5Jun/rJd2k+rl3GGRgoyY8gLyh9rLDDz7QXeb5N4kIQfvZApScMKUya2D0+8hydfIFXs3T4DXCvIxPuHeMIFua+ybw9H7ve4Nr3WXkQUAVow0AYwqrg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DM7Jdtu+HmnU8PW26EP/MnbYIobd5zsbVe+h/ktfqf8=;
+ b=qqR1/3sRJ/8ejqGDCPDa2/dU7eeE4bb+G6CugkLVyIAclAF9b/8oGjXGf9NWEgH1OzAt+St6sPQHZ/584MnajvjI1NmZpqwh5GTTbiQNDeXIMglg6j7lIhKnRr4vgkDM1RyqS3OTU8tDYUqwtD8i8KEapM6MQkkcP8fGRiFzCTVU5MLPfRdJM5blouKmw6auUDzckEoiDJ3NblmiECU1u1XnFYhBV32VBRz11xkYnU5E8Arj6IXz1lUYGlEPEu4ZGHM3vQak0rVSgek3gql30025XCJomBuU93KS8QZR/cS7qI8W4IEBqP/cdtz0zcbzJZz2yCi3VNZyq9xf4KXk0A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DM7Jdtu+HmnU8PW26EP/MnbYIobd5zsbVe+h/ktfqf8=;
+ b=Yib0ae9PEYJtD5QYh728ql6BqmXcv9P9anS/5q39ZnOAy0sytuCpteKsG88AP7APnZ+fsdaORKvD5k6m1sBxnZ45c7Id7w0trp2iT7Nh5gpIWOj0rs4xc8md1cy4gmZsvYQKNtxizTKCi6Jx3XN4URyNbEAUI5XoCmmX9PwsdvU=
+Received: from MW4P221CA0009.NAMP221.PROD.OUTLOOK.COM (2603:10b6:303:8b::14)
+ by LV3PR12MB9093.namprd12.prod.outlook.com (2603:10b6:408:19d::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.19; Mon, 19 Oct
+ 2026 07:45:15 +0000
+Received: from MWH0EPF000C6190.namprd02.prod.outlook.com
+ (2603:10b6:303:8b:cafe::18) by MW4P221CA0009.outlook.office365.com
+ (2603:10b6:303:8b::14) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.19 via Frontend Transport; Mon,
+ 19 Oct 2026 07:45:14 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ MWH0EPF000C6190.mail.protection.outlook.com (10.167.249.101) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.522.6 via Frontend Transport; Mon, 19 Oct 2026 07:45:14 +0000
+Received: from [10.85.34.241] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Mon, 19 Oct
+ 2026 02:44:57 -0500
+Message-ID: <134cdce2-ef41-4d23-9972-d184e73b2e42@amd.com>
+Date: Mon, 19 Oct 2026 13:14:50 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20261019064157.29885-1-laoar.shao@gmail.com> <20261019064157.29885-5-laoar.shao@gmail.com>
- <sashiko-outbox-176727@kernel.org>
-In-Reply-To: <sashiko-outbox-176727@kernel.org>
-From: Yafang Shao <laoar.shao@gmail.com>
-Date: Mon, 19 Oct 2026 15:40:28 +0800
-X-Gm-Features: AclHuK87RnG2er9Q0sMuCWVVDHgxTVssGIXLDngoxhqch9KZMv8DKOFsSe8QrYs
-Message-ID: <CALOAHbA9XCM=5AKz=MMCRcx79_E44rBNUZQi_c68tZQ1iYoxhA@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 bpf-next 4/5] sched: add BPF-based per-cgroup NUMA
- balancing mode selection
-To: sashiko-reviews@lists.linux.dev
-Cc: ast@kernel.org, daniel@iogearbox.net, andrii@kernel.org, eddyz87@gmail.com, 
-	memxor@gmail.com, mingo@redhat.com, peterz@infradead.org, 
-	juri.lelli@redhat.com, vincent.guittot@linaro.org, akpm@linux-foundation.org, 
-	david@kernel.org, gourry@gourry.net, tj@kernel.org, hannes@cmpxchg.org, 
-	mkoutny@suse.com, shakeel.butt@linux.dev, roman.gushchin@linux.dev, 
-	yu.c.chen@intel.com, zhao1.liu@intel.com, tim.c.chen@linux.intel.com, 
-	lizhe.67@bytedance.com, bpf@vger.kernel.org, linux-mm@kvack.org
+User-Agent: Mozilla Thunderbird
+CC: <sarunkod@amd.com>
+Subject: Re: [PATCH v5 6/7] KVM: SVM: Add support for AMD IOMMU Guest APIC
+ Physical Processor Interrupt (GAPPI)
+Content-Language: en-US
+To: <sashiko-reviews@lists.linux.dev>, <kvm@vger.kernel.org>
+References: <20261015064515.10700-1-sarunkod@amd.com>
+ <20261015064515.10700-7-sarunkod@amd.com> <sashiko-outbox-172379@kernel.org>
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <sashiko-outbox-172379@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MWH0EPF000C6190:EE_|LV3PR12MB9093:EE_
+X-MS-Office365-Filtering-Correlation-Id: 963d7c74-95d8-42cd-f933-08df2db4e958
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|82310400026|1800799024|376014|36860700016|4143699003|11063799006|56012099006|261009223027099003|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	zb3Fmq41UQklEc39V+e+RFxjHILET7NWRXAw8igGGoeWpMK7X5Wdg36erTCKLGtn62gM1UKBVW7OQVezu+48k2AbcZNJKZLraWEDByyqJJ7tIElDMtLXTZ9JNNbos/gfDJNvH7Y/mGJ22aFs7GeQd9w1vosmn4FcfXevdbK7ItGyM58hgkRwKLwxm1Y737/KKxuQJf/uxvMPs6fRXf014bxDe2yXFs4OA7a/G27an8x1mFfm9DEh/GnrM9lCkZavCCuCMBViCXntod/++ahZTU3FnJlVeC0lVnoQs8GGNH9RDjAmsRkQ+eXWSvoYW4PIFZfQt1HBeU37COQUIOpWVx2VLnZo3TLE63CFfN//HrD26nvxKmtwnRzbyiizAUF4qr8L9eKYtLBDmuNsSlI8MYXVhaHWaEJj2JNGo9R4vonh4nddNrMQ34roK36zB0FXH7/gdKnTpx4brGO9bgmTmWwsKFzb5NJAFMXcgw+vgnM4xiGcZf6BnLIYVWjNgwjvkFTR09YwbwWh4vu/Zd4qmmRacqkTcteBXnjeRwbBA1Q+9UZONOB9a9bZwbyQLTEKJWOfBftlG5v/kI80NgrSIGyf9YnnajEgnALO7eUNyCJUcwTgCvXqaIYcL1kHO31hpjHrBBR376PxVj9B+pnD7PhKb7MaHVZe9/jCSvdtz1yTY7mg0L+9M6CaAnYWFrRcxyX+X90yIFZ5JVywcXwUlg==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(82310400026)(1800799024)(376014)(36860700016)(4143699003)(11063799006)(56012099006)(261009223027099003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	OQQq7NSENs1w2MOoUlvMdKgFiHEw9s1JsUwGRYMOBpBGQ5VEHTd8AuEZNJvVng5KacdHHAaOsNajiUr8DR82B/gcKUuQSvg8BmRd94H4Tj6fwZZMntbfnGHms2tfgob8vxgcpdN4GPMcx3mxrOAB+x6TOfcEA0V6aDtLr7qkeoAROuqg4dWsz0I69BTf2tcoFYpZvfLI45dO/v647WtT7199tExeyikFPHDL24wTplVJY4q6Puj4bBCPTDhN3SbsTIyOsJ1l05YrkYMQVqrPfsFvg9ZV5l46UC8JX8WDSb3CsTC7T/INjxv7sL4Qx4unXvE7Lwjd4IcNuTxx9NwdE2Oi5EnGoWdo3DO/EgaDQDL0oSeNe+HSovZYdYTWgZkCiMVat3GrwZD9uGMTJrAECqqvha1q6F6jaHOJzSSHQYegMvGCas2O4ByMt43OYVsq
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Oct 2026 07:45:14.1394
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 963d7c74-95d8-42cd-f933-08df2db4e958
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	MWH0EPF000C6190.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9093
 
-On Mon, Oct 19, 2026 at 2:58=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Critical] mm: use-after-free on source folio in migrate_misplaced_foli=
-o()
+
+
+On 10/15/2026 12:35 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] kvm: svm: vCPU leaked on GAPPI pi_wakeup_list when AVIC deactivated
 > --
->
-> commit 5de3ed8c82d3030544f5f025b8ae47dd8339bfeb
-> Author: Yafang Shao <laoar.shao@gmail.com>
->
-> sched: add BPF-based per-cgroup NUMA balancing mode selection
->
-> This commit introduces per-cgroup NUMA balancing mode selection managed v=
-ia
-> the bpf_numab_set_mode() and bpf_numab_get_mode() kfuncs. Hot paths combi=
-ne
-> requests along the task or folio's memcg cgroup hierarchy behind the
-> numab_cgroup_mode_set static key to override the global sysctl setting.
->
-> > diff --git a/mm/migrate.c b/mm/migrate.c
-> > index 211c29bd2a283..c0692c7b27467 100644
-> > --- a/mm/migrate.c
-> > +++ b/mm/migrate.c
->
+> 
+> commit cd7fa3c00904984a2127bee934d4e48326ead7a8
+> Author: Sairaj Kodilkar <sarunkod@amd.com>
+> 
+>     KVM: SVM: Add support for AMD IOMMU Guest APIC Physical Processor Interrupt (GAPPI)
+>     
+>     With AVIC guest-mode interrupt remapping, device interrupts are posted into
+>     the guest vAPIC backing page by the IOMMU. When the vCPU is not running
+>     (IRTE[IsRun] = 0), KVM must still be notified to schedule it. The legacy
+>     path uses the GA log.
+> 
+>> diff --git a/arch/x86/kvm/svm/avic.c b/arch/x86/kvm/svm/avic.c
+>> index 8b1fa5bded3db..054b89c3cb0f9 100644
+>> --- a/arch/x86/kvm/svm/avic.c
+>> +++ b/arch/x86/kvm/svm/avic.c
 > [ ... ]
->
-> > @@ -2770,7 +2770,7 @@ int migrate_misplaced_folio(struct folio *folio, =
-int node)
-> >       if (nr_succeeded) {
-> >               count_vm_numa_events(NUMA_PAGE_MIGRATE, nr_succeeded);
-> >               count_memcg_events(memcg, NUMA_PAGE_MIGRATE, nr_succeeded=
-);
-> > -             if ((numab_in_tiering_mode())
-> > +             if (folio_numab_in_tiering_mode(folio)
-> >                   && !node_is_toptier(folio_nid(folio))
-> >                   && node_is_toptier(node))
-> >                       mod_lruvec_state(lruvec, PGPROMOTE_SUCCESS, nr_su=
-cceeded);
->
-> [Severity: Critical]
-> Has the source folio already been uncharged and freed by the time
-> migrate_misplaced_folio() calls folio_numab_in_tiering_mode(folio) here?
->
-> Before calling migrate_pages(), migrate_misplaced_folio() snapshots the
-> folio's memcg because migration transfers the charge and releases the
-> isolation reference on the source folio:
->
-> migrate_misplaced_folio()
->   memcg =3D get_mem_cgroup_from_folio(folio);
->   migrate_pages()
->     migrate_pages_batch()
->       migrate_folios_move()
->         migrate_folio_move()
->           move_to_new_folio()
->             folio_migrate_flags()
->               mem_cgroup_migrate()
->                 old->memcg_data =3D 0;
->           migrate_folio_done()
->             folio_put(src);
->
-> When nr_succeeded is non-zero, calling folio_numab_in_tiering_mode(folio)=
- ->
-> folio_numab_mode(folio) -> folio_memcg(folio) -> folio_objcg(folio) reads
-> folio->memcg_data on the freed source folio:
->
-> static inline struct obj_cgroup *folio_objcg(const struct folio *folio)
-> {
->         unsigned long memcg_data =3D folio->memcg_data;
->
->         VM_BUG_ON_FOLIO(folio_test_slab(folio), folio);
->         VM_BUG_ON_FOLIO(memcg_data & MEMCG_DATA_OBJEXTS, folio);
->
->         return (struct obj_cgroup *)(memcg_data & ~OBJEXTS_FLAGS_MASK);
-> }
->
-> If the freed page has not been reallocated yet, folio->memcg_data is 0, s=
-o
-> folio_memcg(folio) returns NULL and folio_numab_mode(folio) falls back to
-> NUMAB_FOLLOW_SYSTEM rather than using the owner cgroup's tiering mode for
-> PGPROMOTE_SUCCESS accounting.
->
-> If another CPU reallocates the freed page before this check runs (for exa=
-mple
-> as a slab page setting PG_slab and MEMCG_DATA_OBJEXTS, or as a compound t=
-ail
-> page), can folio_objcg(folio) trigger VM_BUG_ON_FOLIO() or dereference a
-> slabobj_ext pointer as a struct obj_cgroup *?
->
-> Would it make sense to evaluate folio_numab_in_tiering_mode(folio) before
-> migrate_pages(), or derive the mode from the already-pinned memcg pointer=
-?
+>> @@ -1018,7 +1038,7 @@ enum avic_vcpu_action {
+>>  };
+>>  
+>>  static void avic_update_iommu_vcpu_affinity(struct kvm_vcpu *vcpu, int apicid,
+>> -					    enum avic_vcpu_action action)
+>> +					    int cpu, enum avic_vcpu_action action)
+>>  {
+>>  	bool wakeup_intr = (action & AVIC_START_BLOCKING);
+>>  	bool is_running = apicid >= 0;
+>> @@ -1027,6 +1047,14 @@ static void avic_update_iommu_vcpu_affinity(struct kvm_vcpu *vcpu, int apicid,
+>>  
+>>  	lockdep_assert_held(&svm->ir_list_lock);
+>>  
+>> +	if (amd_iommu_gappi && is_running) {
+>> +		kvm_pi_disable_wakeup_handler(vcpu, svm->gappi_cpu);
+>> +		svm->gappi_cpu = cpu; /* Store cpu number as target for GAPPI */
+>> +	} else if (amd_iommu_gappi) {
+>> +		apicid = cpu_physical_id(svm->gappi_cpu);
+>> +		kvm_pi_enable_wakeup_handler(vcpu, svm->gappi_cpu);
+>> +	}
+>> +
+> 
+> [Severity: Medium]
+> Does this unconditionally add the vCPU to the pi_wakeup_list when is_running is
+> false, even during AVIC_DEACTIVATE?
+> 
+> When AVIC is deactivated via avic_refresh_apicv_exec_ctrl(), it calls
+> __avic_vcpu_put(AVIC_DEACTIVATE), which in turn calls
+> avic_update_iommu_vcpu_affinity() with a target apicid of -1 (so is_running
+> is false). This causes KVM to add the vCPU to the pi_wakeup_list of
+> svm->gappi_cpu.
+> 
+> Since AVIC is deactivated, the IOMMU falls back to legacy mode later in this
+> function:
+> 
+> 	if (!(action & AVIC_TOGGLE_ON_OFF))
+> 		WARN_ON_ONCE(amd_iommu_update_ga(...));
+> 	else if (is_running)
+> 		WARN_ON_ONCE(amd_iommu_activate_guest_mode(...));
+> 	else
+> 		WARN_ON_ONCE(amd_iommu_deactivate_guest_mode(data));
+> 
+> Because the IOMMU is reverted to legacy mode, it will not send GAPPI interrupts
+> for this vCPU.
+> 
+> However, the vCPU remains indefinitely on the per-CPU pi_wakeup_list because
+> subsequent context switches (via svm_vcpu_load()) ignore deactivated vCPUs and
+> will never call kvm_pi_disable_wakeup_handler().
+> 
+> Could this cause KVM to unnecessarily traverse the leaked vCPU on every GAPPI
+> interrupt targeted at that pCPU from other active VMs, wasting CPU cycles and
+> risking spurious wakeups?
+> 
 
-Nice catch. The check has to run before migrate_pages().
+You are right about this, it can cause spurious wakeups. We can simply
+skip list operations during activate and deactivate.
 
-diff --git a/mm/migrate.c b/mm/migrate.c
-index 4b87d465c5fd..84f224c42ab2 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -2761,6 +2761,7 @@ int migrate_misplaced_folio(struct folio *folio, int =
-node)
-        LIST_HEAD(migratepages);
-        struct mem_cgroup *memcg =3D get_mem_cgroup_from_folio(folio);
-        struct lruvec *lruvec =3D mem_cgroup_lruvec(memcg, pgdat);
-+       bool folio_tiering =3D folio_numab_in_tiering_mode(folio);
-
-        list_add(&folio->lru, &migratepages);
-        nr_remaining =3D migrate_pages(&migratepages, alloc_misplaced_dst_f=
-olio,
-@@ -2771,7 +2772,7 @@ int migrate_misplaced_folio(struct folio *folio, int =
-node)
-        if (nr_succeeded) {
-                count_vm_numa_events(NUMA_PAGE_MIGRATE, nr_succeeded);
-                count_memcg_events(memcg, NUMA_PAGE_MIGRATE, nr_succeeded);
--               if (folio_numab_in_tiering_mode(folio)
-+               if (folio_tiering
-                    && !node_is_toptier(folio_nid(folio))
-                    && node_is_toptier(node))
-                        mod_lruvec_state(lruvec, PGPROMOTE_SUCCESS,
-nr_succeeded);
-
-
-BTW, the folio_nid(folio) next to it has the same problem: after a
-successful migration the source folio is uncharged and its isolation
-reference dropped, so it may already be back in the allocator, and
-a reallocated page's flags give a wrong nid. That one predates this
-series (it goes back to e39bb6be9f2b), so I will fix it separately:
-
-diff --git a/mm/migrate.c b/mm/migrate.c
-index 15b45832bcfa..685c06a472ea 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -2760,6 +2760,7 @@ int migrate_misplaced_folio(struct folio *folio, int =
-node)
-        LIST_HEAD(migratepages);
-        struct mem_cgroup *memcg =3D get_mem_cgroup_from_folio(folio);
-        struct lruvec *lruvec =3D mem_cgroup_lruvec(memcg, pgdat);
-+       int src_nid =3D folio_nid(folio);
-
-        list_add(&folio->lru, &migratepages);
-        nr_remaining =3D migrate_pages(&migratepages, alloc_misplaced_dst_f=
-olio,
-@@ -2771,7 +2772,7 @@ int migrate_misplaced_folio(struct folio *folio, int =
-node)
-                count_vm_numa_events(NUMA_PAGE_MIGRATE, nr_succeeded);
-                count_memcg_events(memcg, NUMA_PAGE_MIGRATE, nr_succeeded);
-                if ((sysctl_numa_balancing_mode & NUMA_BALANCING_MEMORY_TIE=
-RING)
--                   && !node_is_toptier(folio_nid(folio))
-+                   && !node_is_toptier(src_node))
-                    && node_is_toptier(node))
-                        mod_lruvec_state(lruvec, PGPROMOTE_SUCCESS,
-nr_succeeded);
-        }
-
-Pls correct me if I'm wrong.
-
---=20
-Regards
-Yafang
+Thanks
+Sairaj
