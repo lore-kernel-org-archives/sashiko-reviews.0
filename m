@@ -1,60 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=85.214.127.56
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792439777;
-	b=Le4ictgzUqhCGFeDK/G4XhEcn9nm3zu2osv59937RxxMteK/bpyq4DtsO5F8/sQHOkw4
-	 bhYN+u73fx9LH/SiKuLX7gCcFUf0w1IakNI51UMgq9hnKKo5VuWLBp2wkefkpgGe1z5Wy
-	 AwMcDaR/1UsjmKN1JfZAow5Gl5OGCk1P69bhrDmyebIBFdeGQ0PbUzpNs+x/oVrsDFdR2
-	 csnH/xTmjO66wDGh27g75/ZPerzMYA99nhDJeAV9BcgcqkHefKsgBHgGa7quctXHS/shx
-	 73sgyE0lIu+qG4s0fJ2+b0HEknvoBsvhekKSNj6OZTfsggp8F/yHaj9W8mLDczZx5+Q==
+	t=1792439781;
+	b=tj3RYaR5BMhtXhayYE+Qyi61da9imraAM415Nh6wb6Qz+XZj9ZXeQpuh/567vd4KBTpd
+	 urfyePvv0Enp0c3u+uT9sdgUJqsvWWRGwACc33MvPz9nv35YbtKt4L9FLvUOO3nsQMdf5
+	 Hj1skxK5eXZtiHsGv1BbwkeeiZ77yx8sC+EGAZswm5K43ZefnWI2LSzvAHz5NOqp2fv0R
+	 dUB7TnYSFW2Suw5Q7qODOUkWbsIDLL4BNWDZLjq/hfPHBNP8rjFGTmtYFnh4+JKpfTkPJ
+	 nPTd/IqmUmyeZKmW1V8mvKtUnCY4yh7NF3T8gS2XBewGaK2t26ggQ6gKbBrerMtRtAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792439777;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792439781;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Virus-Scanned:Received:
 	 Received:From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:
 	 References:MIME-Version:Content-Transfer-Encoding;
-	bh=wOEmFPNBxCCXLsHZEe36jLOmx0lH4u9D6yFiiT5mTqk=;
-	b=RtCpPEvzN2rzHinkrN4HQZgX5hLDdHC4vho1TqTO98W4u3qPUelU5vX244jNDKshnm8p
-	 ODy806Q1Mnkf5BXWQape/uB8c9PL66eW68mkxxp0y4q3euJVOiGx0S/EKX+HRMChWGaIV
-	 d588xezozbxYpneVPqV1mRIqiG0wtzeEbkH3Y8gQYFCSNbqCIdDeEjKKpOawrNRjgOKo2
-	 YCZzTzf5+4G36ya0tkKt+FTmXwGXAsWqN0wEBP45mDBqROz5inElYMq0MssmK3oJMMkXX
-	 +qNw6ZsliR4ee4lwlTvZTq7EP/4sU4GAIQZABYjdSi4z7j2D7PZmHkpaYaCB0KrJgEQ==
+	bh=wBfbZ5ZD+4sqnmNPXqS0Pf4OpoYdm3bMyiWx/T1XVJs=;
+	b=diTU0ft+/qMhwN+x2Bp/pmFahfCqvTeSRF9oWCvoVFbjim5yFKDd/9tq7iH+QF7utxHI
+	 OmEiLA51jFSOo40yKh3PtO2iB28/ssqC0VZ6doxot1q14OhhF/lhdva4bks68a2kqOVl+
+	 WCQbUoX7RFsd3FEt744AhPHvgBoQ4zGVP8njM5CHistDXd920ihoKOe7dbkFWt6fQLsKi
+	 JXocPcfGaII/34o+UIBJ1NGB3G0dtdHlDRJu+Zbq/1EHVlnCeHI/XTwvgGCYQUZfyVsA7
+	 9vs3If83P8TLQNJPpXqj/uO6VqDut2D6f+Bot4Usg6CciUZ5H1Svso/5gLWeMrCxOlw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=szelinsky.de;
 	spf=pass smtp.mailfrom=szelinsky.de;
-	dkim=temperror header.d=szelinsky.de header.i=@szelinsky.de header.a=rsa-sha256 header.s=mail header.b=ZvBR4lR3;
+	dkim=temperror header.d=szelinsky.de header.i=@szelinsky.de header.a=rsa-sha256 header.s=mail header.b=S3hooIRy;
 	arc=none smtp.remote-ip=85.214.127.56
 Received: from szelinsky.de (szelinsky.de [85.214.127.56])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6C6606A319
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 19:56:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7D6C6606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A6260A261F
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 19:56:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 22A6260A261F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=szelinsky.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=szelinsky.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=temperror header.d=szelinsky.de header.i=@szelinsky.de header.a=rsa-sha256 header.s=mail header.b=ZvBR4lR3
+	dkim=temperror header.d=szelinsky.de header.i=@szelinsky.de header.a=rsa-sha256 header.s=mail header.b=S3hooIRy
 Received: from localhost (localhost [127.0.0.1])
-	by szelinsky.de (Postfix) with ESMTP id 1C9D3E83AA3;
-	Mon, 19 Oct 2026 21:56:15 +0200 (CEST)
+	by szelinsky.de (Postfix) with ESMTP id A3189E83AA4;
+	Mon, 19 Oct 2026 21:56:19 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=szelinsky.de;
-	s=mail; t=1792439775;
+	s=mail; t=1792439779;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=wOEmFPNBxCCXLsHZEe36jLOmx0lH4u9D6yFiiT5mTqk=;
-	b=ZvBR4lR38kuiHPkNtzgE5m7tdO22stpFLttlamdbL2VUb6LggwuRiBGcksbbKLR/n7Ttfw
-	m431IejrxgcuqY1fU0d5kFL6cFjG98W3U4bmQJKLDHyGEF4BbpphIxRBGDsgk0GDglmcKj
-	yUa6GLfa1WV+VP2egUdVZVzKUf3THGXigIGDK/R9+0+Nh3SO6ZGQeI+9bQWm6UWKpUJxOS
-	9QmCkkstqpJho89qSzKo4oArY92lAYWxOS2lAJ5ilM9Ge08ZBta1UUcxocht8vPn+w7Vg7
-	mA2c3kkBHfJGqHiOjskxgoDeDrToxDM2xNpexKQUPuBSVeCAeq+4VLIJdnaypg==
+	bh=wBfbZ5ZD+4sqnmNPXqS0Pf4OpoYdm3bMyiWx/T1XVJs=;
+	b=S3hooIRypOy8Qt4llsl4EZc7c/X9gWRj/ZcdmHKuzdAuBP90i9WlFAkpOxEAWJnqbXEWpS
+	1XVpN1If/NU4aKVXIWIXzMueUmF1F2IosqRIGnWAEbILWipiVtbWo3WJz94HFqy5qCqS9O
+	PuQW8MM94ANhbpDdHRxjYD/n1x9OD3hUeMmVd9vXSI3UxAisGLcTO77STrTd7yfMXSAzA7
+	75L+CVCuYpoduxn6Ej+Byn3fG3wP7lMRXJenOUJoX2xJHLogwpc/dYAP8X+5NaRdK7pEwt
+	6i7RgI4QM+9GMmmlFbZDy85TgOdGSXpFSVXhr48too/NmDeIOjzCjS2hdoWtJg==
 X-Virus-Scanned: Debian amavis at szelinsky.de
 Received: from szelinsky.de ([127.0.0.1])
  by localhost (szelinsky.de [127.0.0.1]) (amavis, port 10025) with ESMTP
- id xkJ-EErgaoIq; Mon, 19 Oct 2026 21:56:15 +0200 (CEST)
+ id qxfSNGlZcpcJ; Mon, 19 Oct 2026 21:56:19 +0200 (CEST)
 Received: from p14sgen5.. (unknown [91.25.97.186])
 	by szelinsky.de (Postfix) with ESMTPSA;
-	Mon, 19 Oct 2026 21:56:14 +0200 (CEST)
+	Mon, 19 Oct 2026 21:56:19 +0200 (CEST)
 From: Carlo Szelinsky <github@szelinsky.de>
 To: netdev-bot+sashiko@kernel.org
 Cc: o.rempel@pengutronix.de,
@@ -64,20 +64,19 @@ Cc: o.rempel@pengutronix.de,
 	edumazet@kernel.org,
 	kuba@kernel.org,
 	pabeni@redhat.com,
-	broonie@kernel.org,
-	lgirdwood@gmail.com,
-	corey@leavitt.info,
-	kyle.swenson@est.tech,
+	piotr.kubik@adtran.com,
+	saikrishnag@marvell.com,
 	horms@kernel.org,
+	kyle.swenson@est.tech,
 	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH net-next 4/4] net: pse-pd: check the PI vpwr supply before registering the controller
-Date: Mon, 19 Oct 2026 21:56:12 +0200
-Message-ID: <20261019195612.307895-1-github@szelinsky.de>
+Subject: Re: [PATCH net 02/10] net: pse-pd: fix module refcount leak in pse_control_get_internal()
+Date: Mon, 19 Oct 2026 21:56:17 +0200
+Message-ID: <20261019195617.307960-1-github@szelinsky.de>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <179239893933.3135.9046263155258328713@kernel.org>
-References: <179239893933.3135.9046263155258328713@kernel.org>
+In-Reply-To: <179239987068.3135.2768821007598612150@kernel.org>
+References: <179239987068.3135.2768821007598612150@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -89,41 +88,12 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Mon, 19 Oct 2026 08:35:39 +0000, netdev-bot+sashiko@kernel.org wrote:
-> [Severity: Medium]
-> Can this check pass even though resolving the PI's supply later still
-> defers?
+On Mon, 19 Oct 2026 08:51:10 +0000, netdev-bot+sashiko@kernel.org wrote:
+> Could the commit message say that the first branch is a defensive check
+> and cannot be reached today?
 
-Yes, as the commit message says. The bound check is inside the
-regulator core, and a PSE driver cannot do it from outside. fw_devlink
-does not help either: the vpwr-supply is in the PI child nodes, and
-for those fw_devlink adds no link that delays the controller's probe.
-So this window is real while the supplier has registered its
-regulator but has not finished probing.
-
-Once the supplier has bound, PI lookups work again. But the notifier
-series only retries a failed lookup on the next PSE_REGISTERED, so
-until then the PHY gets no PSE control.
-
-> Also, pse_register_pw_ds() only runs at registration. Would that PI then
-> never get a power domain?
-
-Yes, until the controller probes again. The commit message says that
-too.
-
-> [Severity: Medium]
-> Does this new exit, and the pse_controller_check_supply() exit just
-> below it, leak the vmain power budget that pd692x0 reserved in
-> setup_pi_matrix()?
-
-Yes, an older bug, and this patch makes it happen more often. It is
-fixed in net by "net: pse-pd: pd692x0: release the manager power
-budget through devres", which this patch will wait for.
-
-> [Severity: Low]
-> This isn't a bug, but is this comment accurate?
-
-Right, the fallback also walks the controller's child nodes. I will
-fix the comment in the next version.
+Right, it cannot be reached. As Kory asked, the next version removes
+that check in a patch before this one, so this patch only fixes the
+pse_pi_is_hw_enabled() path, and its commit message says only that.
 
 Carlo
