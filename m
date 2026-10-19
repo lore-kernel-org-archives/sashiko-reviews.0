@@ -1,225 +1,139 @@
-Received: from canpmsgout05.his.huawei.com (canpmsgout05.his.huawei.com [113.46.200.220])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F47D4A3F1B
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 12:38:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.220
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 931714E9C22
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 12:39:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792413517; cv=none; b=La5XwyISU+0dHvYjsPNKk8cRPMZ2LbcF0T7m3ZPUGGuUnoWFPdW2yE3yjLIBNswdBUZtl10Bvy23UID2Iy8vagm4oSbQvUrhvUMzKOYuvGqs09/U0Xm9lCDWzpdnLtibMAmuDt9vvbuJIrb3AXENsubQ4oH7iqZtIk+3pMirDJE=
+	t=1792413584; cv=none; b=CqD2MFw/LIVXu2X8dz9jC3RpW8dgS/55sBnjwIOw4YjFwnTSt2TiM6KG/854IyIYh9jWLvTfLXdr0gOfN8SnX4rxT3ZzNRkrAwLIQVLdI2cO97oIOAfyzG52USE/v2YwJaqryDOFV4P/yvQMsE0pyR/J9boeiiSJyxWv1d56I2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792413517; c=relaxed/simple;
-	bh=7NuO0BXWJ8oGd5pJ/0Jtp/7JeXo3VmBqEqGXK+cceEk=;
-	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=sKbxW+tejssCbd8AX//r0r0ragMUUNquYP6kWeV/Zftsj669Cnph7NGJO7jF201w0pIrMWcdMSqPNEV9xAKgwnkWOryXtqQq96vcP8/KuzPV+83bTmD6UQcg7Bvsogpjm1ccsrKuSSAcYbaBJSx+vbeeRHg2GUWX5wUNdSRK3l0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=148TH0wZ; arc=none smtp.client-ip=113.46.200.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1792413584; c=relaxed/simple;
+	bh=pXmwrBo6dLNLkbP8HSIjATa8tntP/iItXRS9BRdu81U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ssy6h1dvkGqr5g32AnMG2sO5UXlBXe9VNmuDLC+9E1diPetr0wTKNQ+O2eAdt5g4ye1nBlRxYB2/1PXG3xjDPGP6hXB/nHiqc3uSSt3OcvVcSC6Fn5j2ZQ6i9JiHvB+PD8L8Qo4vxH/Pn3c+VntNR4i5uZnXHawi1zaLXeqroiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=V3n7kcuV; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="148TH0wZ"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=6fxc93ioLjZlwRQTL7IJErarmplqIha42aoi64sf2m4=;
-	b=148TH0wZjHSTsfowwXVvD5KadakJFXLmADHcwcom+P4KgFQEBzi1LNgcl+sOQ+8Q7DNz+bEf8
-	zy8S6E0EpntVH6FjerLH1C9CFKyMmJo/C2oGcl6hw9TFrG8fVLE8YH0Mhwkc2zRfIZyL/pBfdqV
-	eeXrkygXjMY1Ju2FwMhU178=
-Received: from mail.maildlp.com (unknown [172.19.162.144])
-	by canpmsgout05.his.huawei.com (SkyGuard) with ESMTPS id 4j7ZpM5nsZz12LCg;
-	Mon, 19 Oct 2026 20:38:19 +0800 (CST)
-Received: from whupemo200011.china.huawei.com (unknown [7.152.185.179])
-	by mail.maildlp.com (Postfix) with ESMTPS id AE9464056D;
-	Mon, 19 Oct 2026 20:38:19 +0800 (CST)
-Received: from [10.174.178.46] (10.174.178.46) by
- whupemo200011.china.huawei.com (7.152.185.179) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 19 Oct 2026 20:38:18 +0800
-Subject: Re: [PATCH v2] ubifs: zero stale data beyond EOF before file size
- grows
-To: Nan Lin <lin.nan@h3c.com>, <sashiko-bot@kernel.org>
-CC: <linux-mtd@lists.infradead.org>, <richard@nod.at>,
-	<sashiko-reviews@lists.linux.dev>, <wangxiaoqing@h3c.com>,
-	<zhou.kete@h3c.com>
-References: <sashiko-outbox-174089@kernel.org>
- <20261019032530.2212601-1-lin.nan@h3c.com>
-From: Zhihao Cheng <chengzhihao1@huawei.com>
-Message-ID: <e85721bd-bc6d-5937-c601-377e9494a845@huawei.com>
-Date: Mon, 19 Oct 2026 20:38:17 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="V3n7kcuV"
+Received: by linux.microsoft.com (Postfix, from userid 1216)
+	id 961C620B7168; Mon, 19 Oct 2026 05:39:26 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 961C620B7168
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1792413566;
+	bh=kBdEuTY6MQ+H0utY/zhuUL3qVvLCYjNeXyFJ+yLQZis=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=V3n7kcuVKUm1AhJ6PZXwKO3w+wpYgHfp6NxT20jOMNoqOTV45Tg06yE6wp4wSgqKx
+	 X0idintsIYgYI9ISj3lG+XfGIgM1sHzuUbmHeza6Is5bTn+wvkcGBLehldfj//Nanm
+	 s/kzrvPD7ZG0ZI/ipNOSZLw9ZF9j8bWRY9X4YVC4=
+Date: Mon, 19 Oct 2026 08:39:26 -0400
+From: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-hyperv@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH 2/2] PCI: hv: add vPCI device reset support
+Message-ID: <atYPfibVVa+nyyb9@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+References: <20261016235940.942090-1-hamzamahfooz@linux.microsoft.com>
+ <20261016235940.942090-2-hamzamahfooz@linux.microsoft.com>
+ <sashiko-outbox-175060@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20261019032530.2212601-1-lin.nan@h3c.com>
-Content-Type: text/plain; charset="gbk"; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
- whupemo200011.china.huawei.com (7.152.185.179)
+In-Reply-To: <sashiko-outbox-175060@kernel.org>
 
-ÔÚ 2026/10/19 11:25, Nan Lin Ð´µÀ:
-Hi Nan Lin,
-> mmap writes can dirty the page cache beyond EOF without changing
-> i_size. A later extending write or ftruncate turns that region into a
-> hole, but UBIFS never zeroes the partial page at the old EOF, so reads
-> expose the stale data.
+On Sat, Oct 17, 2026 at 12:12:00AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] PCI: hv: hv_pci_reset_device() passes 3 arguments to wait_for_response()
+> --
 > 
-> Zero the tail of the old-EOF folio in all three size-extending paths:
-> ubifs_write_begin() for writes starting beyond EOF, do_setattr()
-> before truncate_setsize() grows the size, and ubifs_vm_page_mkwrite()
-> so mmap writes cannot leave such a tail behind. This mirrors what
-> block_page_mkwrite() does for buffer_head filesystems and what ext4
-> does on size extension.
+> commit 5767f2b6950e5dc7da0b5c142f971d8282c27a56
+> Author: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
 > 
-> All zeroing takes the old-EOF folio lock without ui->ui_mutex, keeping
-> the folio_lock -> ui_mutex order of ->writepage() and
-> ->page_mkwrite(); the reverse order deadlocks.
+> PCI: hv: add vPCI device reset support
 > 
-> UBIFS does not enable large folios, so the EOF folio is always a
-> single page today; nevertheless, use folio-relative arithmetic
-> (offset_in_folio(), folio_contains(), folio_size()) throughout so the
-> code is correct if that ever changes.
+> This commit negotiates Hyper-V vPCI protocol version 1.5 and implements the
+> reset_root_port() callback on pci_host_bridge by sending a PCI_RESET_DEVICE
+> request over the vPCI VMBus channel.
 > 
-> Signed-off-by: Nan Lin <lin.nan@h3c.com>
+> > diff --git a/drivers/pci/controller/pci-hyperv.c b/drivers/pci/controller/pci-hyperv.c
+> > index 89816a2bd7cd3..4bb4ca6da1f7b 100644
+> > --- a/drivers/pci/controller/pci-hyperv.c
+> > +++ b/drivers/pci/controller/pci-hyperv.c
 > 
-> Changes since v1:
->   - Both zeroing sites used PAGE_SIZE-relative arithmetic
->     (offset_in_page()-style) while folio_zero_range() expects
->     folio-relative offsets. UBIFS does not currently enable large
->     folios, so PAGE_SIZE == folio_size() and the two coincide in
->     practice, but switch to offset_in_folio()/folio_size() anyway so
->     the code is correct if UBIFS ever opts into large folios
->     (suggested by Sashiko AI review).
+> [ ... ]
 > 
-> ---
->   fs/ubifs/file.c | 73 +++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 73 insertions(+)
+> > @@ -1397,6 +1401,52 @@ static int hv_pcifront_write_config(struct pci_bus *bus, unsigned int devfn,
+> >  	return PCIBIOS_SUCCESSFUL;
+> >  }
+> >  
+> > +static int hv_pci_reset_device(struct pci_host_bridge *bridge,
+> > +			       struct pci_dev *pdev)
+> > +{
+> > +	struct hv_pcibus_device *hbus =
+> > +		container_of(bridge->sysdata, struct hv_pcibus_device, sysdata);
+> > +	struct pci_child_message reset = {};
+> > +	struct hv_pci_compl comp_pkt;
+> > +	struct pci_packet pkt = {
+> > +		.completion_func = hv_pci_generic_compl,
+> > +		.compl_ctxt = &comp_pkt,
+> > +	};
+> > +	enum hv_pcibus_state state;
+> > +	int ret;
+> > +
+> > +	/* Do not take state_lock: eject holds it while removing/locking pdev. */
+> > +	state = READ_ONCE(hbus->state);
+> > +	if (state != hv_pcibus_probed && state != hv_pcibus_installed)
+> > +		return -ENODEV;
+> > +
+> > +	init_completion(&comp_pkt.host_event);
+> > +	reset.message_type.type = PCI_RESET_DEVICE;
+> > +	reset.wslot.slot = devfn_to_wslot(pdev->devfn);
+> > +
+> > +	ret = vmbus_sendpacket(hbus->hdev->channel, &reset, sizeof(reset),
+> > +			       (unsigned long)&pkt, VM_PKT_DATA_INBAND,
+> > +			       VMBUS_DATA_PACKET_FLAG_COMPLETION_REQUESTED);
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	ret = wait_for_response(hbus->hdev, &comp_pkt.host_event,
+> > +				"PCI_RESET_DEVICE");
 > 
-> diff --git a/fs/ubifs/file.c b/fs/ubifs/file.c
-> index e73c28b12f97..1726714161a1 100644
-> --- a/fs/ubifs/file.c
-> +++ b/fs/ubifs/file.c
-> @@ -202,6 +202,53 @@ static void release_existing_page_budget(struct ubifs_info *c)
->   	ubifs_release_budget(c, &req);
->   }
->   
-> +/**
-> + * ubifs_zero_eof_hole - zero the stale tail of the old-EOF folio.
-> + * @inode: inode whose size is about to grow
-> + * @new_end: new end of the file, only used to bound the tail
-> + *
-> + * Zero the cached folio containing the old EOF for [old EOF,
-> + * min(folio end, @new_end)) so a size extension does not expose stale
-> + * data left beyond EOF by mmap writes.
-> + *
-> + * Must be called without ui->ui_mutex held: we block on the old-EOF
-> + * folio lock, and ->writepage() and ->page_mkwrite() hold that folio
-> + * lock while taking ui_mutex; the reverse order deadlocks.
-> + */
-> +static void ubifs_zero_eof_hole(struct inode *inode, loff_t new_end)
-> +{
-> +	loff_t old_size = i_size_read(inode);
-> +	size_t from, to;
-> +	struct folio *folio;
-> +
-> +	if (new_end <= old_size)
-> +		return;
-> +
-> +	folio = filemap_lock_folio(inode->i_mapping, old_size >> PAGE_SHIFT);
-> +	if (IS_ERR(folio))
-> +		return;
-The filemap_lock_folio gets folio with FGP_LOCK, I think we should use 
-'FGP_WRITEBEGIN | FGP_ACCESSED' just like ext4_load_tail_bh() does, 
-because the folio may not exist in ram when calling do_setattr().
-> +
-> +	/*
-> +	 * Re-read i_size under the folio lock: a concurrent truncate may
-> +	 * have shrunk the file, turning this folio into valid data.
-> +	 */
-> +	old_size = i_size_read(inode);
-> +	if (new_end <= old_size)
-> +		goto out;
-> +
-> +	from = offset_in_folio(folio, old_size);
-> +	if (!from)
-> +		goto out;
-Why skipping 'from == 0'? What if a user writes begin from 
-offset-X(0<X<4096) to a new file(isize = 0)? Ext4 zero the range by 
-ext4_block_write_begin->folio_zero_segments(folio, to, block_end, 
-**block_start**, **from**), but ubifs not handle it.
-> +	to = folio_contains(folio, new_end >> PAGE_SHIFT) ?
-> +	     offset_in_folio(folio, new_end) : folio_size(folio);
-> +	if (to > from)
-> +		folio_zero_range(folio, from, to - from);
-> +
-> +out:
-> +	folio_unlock(folio);
-> +	folio_put(folio);
-> +}
-> +
->   static int write_begin_slow(struct address_space *mapping,
->   			    loff_t pos, unsigned len, struct folio **foliop)
->   {
-> @@ -423,6 +470,14 @@ static int ubifs_write_begin(const struct kiocb *iocb,
->   	if (unlikely(c->ro_error))
->   		return -EROFS;
->   
-> +	/*
-> +	 * The write starts beyond EOF: zero the stale tail of the old-EOF
-> +	 * folio before budgeting takes ui->ui_mutex. do_readpage() only
-> +	 * sanitizes the write folio, not the old-EOF folio.
-> +	 */
-> +	if (pos > inode->i_size)
-> +		ubifs_zero_eof_hole(inode, pos);
-> +
-
-The ext4 protection check is ext4_write_checks->ext4_block_zero_eof, I 
-think we can add the zero hole check in ubifs_write_iter().
->   	/* Try out the fast-path part first */
->   	folio = __filemap_get_folio(mapping, index, FGP_WRITEBEGIN,
->   			mapping_gfp_mask(mapping));
-> @@ -1220,6 +1275,10 @@ static int do_setattr(struct ubifs_info *c, struct inode *inode,
->   
->   	if (attr->ia_valid & ATTR_SIZE) {
->   		dbg_gen("size %lld -> %lld", inode->i_size, new_size);
-> +
-> +		/* Must run before the size change loses the old boundary. */
-> +		ubifs_zero_eof_hole(inode, new_size);
-> +
->   		truncate_setsize(inode, new_size);
->   	}
->   
-> @@ -1494,6 +1553,7 @@ static vm_fault_t ubifs_vm_page_mkwrite(struct vm_fault *vmf)
->   	struct timespec64 now = current_time(inode);
->   	struct ubifs_budget_req req = { .new_page = 1 };
->   	int err, update_time;
-> +	loff_t i_size;
->   
->   	dbg_gen("ino %llu, pg %lu, i_size %lld",	inode->i_ino, folio->index,
->   		i_size_read(inode));
-> @@ -1553,6 +1613,19 @@ static vm_fault_t ubifs_vm_page_mkwrite(struct vm_fault *vmf)
->   		filemap_dirty_folio(folio->mapping, folio);
->   	}
->   
-> +	/*
-> +	 * Zero the part of the EOF folio beyond i_size so mmap writes
-> +	 * cannot leave a stale tail behind (see ubifs_zero_eof_hole()).
-> +	 * For a folio-aligned i_size the mkwrite entry check has already
-> +	 * returned SIGBUS, so @from is always non-zero here.
-> +	 */
-> +	i_size = i_size_read(inode);
-> +	if (folio_contains(folio, i_size >> PAGE_SHIFT)) {
-> +		size_t from = offset_in_folio(folio, i_size);
-> +
-If the program enters into this branch, the ubifs file's isize is not 
-zero, ubifs_read_folio has already zerod tail, do we still need this 
-folio_zero_range?
-> +		folio_zero_range(folio, from, folio_size(folio) - from);
-> +	}
-> +
->   	if (update_time) {
->   		int release;
->   		struct ubifs_inode *ui = ubifs_inode(inode);
+> [Severity: Low]
+> Does this compile when CONFIG_PCI_HYPERV is enabled?
+> 
+> In drivers/pci/controller/pci-hyperv.c, wait_for_response() only accepts two
+> arguments:
+> 
+> static int wait_for_response(struct hv_device *hdev,
+> 			     struct completion *comp)
+> 
+> Passing "PCI_RESET_DEVICE" as a third argument in hv_pci_reset_device()
+> causes the build to fail with too many arguments to wait_for_response().
 > 
 
+Not sure what tree this was applied to, but that function has 3 params
+as of mainline commit ca039df94983 ("PCI: hv: Warn when
+wait_for_response() waits indefinitely").
+
+> > +	if (ret)
+> > +		return ret;
+> > +
+> > +	if (comp_pkt.completion_status == STATUS_NOT_SUPPORTED)
+> > +		return -ENOTTY;
+> > +
+> > +	if (comp_pkt.completion_status) {
+> > +		pci_err(pdev, "Hyper-V device reset failed: %#x\n",
+> > +			comp_pkt.completion_status);
+> > +		return -EIO;
+> > +	}
+> > +
+> > +	return 0;
+> > +}
+> 
+> [ ... ]
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261016235940.942090-1-hamzamahfooz@linux.microsoft.com?part=2
