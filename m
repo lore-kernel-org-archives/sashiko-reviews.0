@@ -1,72 +1,104 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792427279;
-	b=vT7NUaZdlkd3QKYtYzsm0esl+miVyVFXMEahABy0bOMRXbDdDhmCTIWH0/LfKUszYWdk
-	 mdkKBbjQGEf3v4qsEyhK8QOUsrdGVL+NpIoGkYJZHp0P9BR6PBKRGQg6dRAgKnw7Dt5I1
-	 Tia4Kkcq+RHlz6ZfVKs1Z2rynqrN7ZyUYQMrghB2hYMoej1GZDzq5OyyM8HjseN3ikhg5
-	 nDSi04SSlgukntHzaY8LyQlMu1rpDC2JZtj0bzVOJc1duUh7XKKr+iQSFVtuGisDOXBrt
-	 E7YL5NaAt24cKg11wAjIH3txvJ8qP4eVa3f92oq21CE9oChWqO4yOzXFucH/eJFfJrA==
+	t=1792427578;
+	b=rujyr08V4LkF/oxoN7/XRkhmID0u0QyWMmtfz9AnWIO0zSO5akIJV2RuZMgnMAYuPNfB
+	 PMN0R6sSlD2d1eSJAfdaKq6pxSavSEX00H55Us9Z9WwmxEWRWpoAemoX4qmq0l8jVZbpN
+	 ry/60mm630Ms2xUYPdAniejqwqJ9jzpRvYmBzRaEdVnC6kdfCaSeIQwIFtGjSsG17a82g
+	 dbosj2h6D7Kal/Jsp04POOsEOSyn/R6rm2Ku2iqei1b/R3yikDCTaGeXlxyN56/iS/nbV
+	 rctHjGWQvTdmuWQOaOpExnxFZDP44AWM0XayZAchPdDIah+BTMYjtLmH4fLQmjwraIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792427279;
-	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Gm-Message-State:
-	 X-Gm-Gg:X-Received:Received:Received:X-Received:MIME-Version:
-	 References:In-Reply-To:From:Date:X-Gmail-Original-Message-ID:
-	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type;
-	bh=grtW76dvtFb1t9XrerLmKdj5qwyowpPAeH9vnpYNVM8=;
-	b=2uixeTHw2rRQ9Eo3EAL1m4rD5bT8D3g2C3pBvSRIWfLmErXR5Fe+v2HoW1ENzuHfQ0nG
-	 Msnjt/BU8jBZ53EA1XHjcUoGIyRqwVOtwgmANmbRNIBWY2CddzWdTCPxMg3WuwINd8Q4H
-	 lkcuRjm+xewwsDYsY8zSpWZaGu87BJudyt084n9DH8vnvXALZWoNn1Mfz2dEr1paqFg7p
-	 Iq/f1eMuGS8HYo75K6C/89hAVEP4fyblhmXMHybWvKJPTgTnkbTgGimSA73/+a148ydTL
-	 lOQKgFvl6cjdMmZPSFex9fN5a2r99iCztouh9yLvblZfx089XIU3vdMZ/BNWYXLW1XA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792427578;
+	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
+	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Rspamd-Server:
+	 X-Rspamd-Queue-Id:X-Rspamd-Action:X-Spam-Level:X-Spamd-Result:
+	 X-Spam-Flag:X-Spam-Score;
+	bh=oxmu7stfRu9F1nID7OH4tHkwJ+6MmriNypobbE12Aic=;
+	b=2SEjNWaVuWi8d+RjQmVp6PzNx2/oBUeXlbLWXZCbNHSORls190A8ZtUpH0Zkui2q5ZBV
+	 4FRJoL6HWORkL+I71Iw5gdQGqMnR4bbwvEYArNdlMkBa68QMPOB3OkP7w2Q7mGCGwEsR8
+	 ws5vhtNPROgeC07AwgPIFxnwBMiRUi0jDkwhUkq5lDnePQ/1Cc+JlncGctY6vAfE34QxU
+	 CP4UCJHEY3ZmiUa4V2wHs1htRkRXz8APXaf+GUYp3W63o61a5gA0ZtCYjvOFuGXkCil21
+	 +O4sWgCJFCsOM7dB5HnyPM56pJubPTpMd2mMIQV8Xwa1xygPIMtxmBYfyWhzvCIrWSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=linux-m68k.org;
-	spf=pass smtp.mailfrom=gmail.com;
-	arc=none smtp.remote-ip=209.85.208.43
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=suse.de;
+	spf=pass smtp.mailfrom=suse.de;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IEv18a17;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=NU20AtNF;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IEv18a17;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=NU20AtNF;
+	arc=none smtp.remote-ip=195.135.223.130
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21587606AAD4
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 16:27:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 21587606AAD4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-6b1ab2ad719so3384873a12.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 09:27:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792427277; x=1793032077;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=grtW76dvtFb1t9XrerLmKdj5qwyowpPAeH9vnpYNVM8=;
-        b=DB8T1x6iwOAETG++Ro571yOV5a+mH6qjNmPCteOT4f7arEy1uO8X15kipCfzKOmz/M
-         ybgcr2NzXETBdt4zConDJMzdisAxCJ6DZeV1K7bISbYO2Gr3SI910BmCtbxWYRpthu6Z
-         gzrzIROXXIezimIHTeV/sz0GiZyDfppiRZ0+8raAda23uiBzSvrSGJiQ7IRCxMInRIp1
-         8I3OpKkOFjAwzQGwAtVM3jmshw1U0zPBtjhxyu1vz7u/eweQdsi6c6EeunRFR+y2xzG4
-         rZPA2BQmj5vnDzxBKoDum2/sQzqSpamKGX5ptBhzuOo6bd7dJtEVeupKVJiVOQrCX5kM
-         3wng==
-X-Gm-Message-State: AFq9FYIXl9VZbhg4xXJ0Z2bggRqQo664jUAuHpv7jWCdEfpSlINe6p/N
-	LFULp6PR0vWQD4nLfXvf8ML0W0xE2ZtGz+1JEPiZhQOJfldsAw5+0A7nKY7nIN4VcfA=
-X-Gm-Gg: AYBFou2jnphGWCO1+UrPiG400IFBFLgkuonz6aFUTfVe58MrcwpkN6SQHHXFhdohq4m
-	Z9S+p8qx5VG84h3E8dTCrV+P99Ah9YR3vtMypHjNmfWTNOAi//akccKU1ezfpI0UA14kxykVylO
-	/F5RcRYVCLRnM4cBPqATvHLByx+I20i8Ul/6sPPtvE8fl8/UFDEicleObKfDWOKARCNujJP4y0L
-	dUJl3W1uJ5jun0jDJLNYLhZH9aEzzQBYcOw+a8+JQhbzzIhtr6bLn+5y3fw1W3yaS9r6dw6wnM8
-	j8tPTXgm/XHsklsq5FSO1xMV/s1KLGNnu5qV5FxznyxSMs6c6zhhMCcdHO73jTF5shdbnnSV0gt
-	yqUuWqr0aEhmo0pVZ7j8ZprvkgDaMMyoI2zZxwxq7rmc6TsDfzZayzUwFH7pcNuhl6DNkHLHrpC
-	6zOCyyh7AVtUBsmnrV3zh75d0laCG7hGV34tpKqG/QC5FiyE19PAGliwJEXc9MWJ9fN/kWu0kEQ
-	5XooSFCX4bgdWOZG8FVHJ4GLHJzhHBH+ZNE
-X-Received: by 2002:a17:907:86a7:b0:c2d:c6e7:9e9f with SMTP id a640c23a62f3a-c419e93972amr587576466b.27.1792427277334;
-        Mon, 19 Oct 2026 09:27:57 -0700 (PDT)
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com. [209.85.208.50])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c408e32897fsm384962566b.2.2026.10.19.09.27.56
-        for <sashiko-reviews@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Oct 2026 09:27:56 -0700 (PDT)
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6af9a9451daso3331365a12.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 09:27:56 -0700 (PDT)
-X-Received: by 2002:a17:907:9486:b0:c40:f9ea:7387 with SMTP id
- a640c23a62f3a-c4199c63fd2mr604034966b.6.1792427276005; Mon, 19 Oct 2026
- 09:27:56 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147AB606A31E;
+	Mon, 19 Oct 2026 16:32:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 147AB606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IEv18a17;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=NU20AtNF;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IEv18a17;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=NU20AtNF
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 5D74621C20;
+	Mon, 19 Oct 2026 16:32:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1792427575; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=oxmu7stfRu9F1nID7OH4tHkwJ+6MmriNypobbE12Aic=;
+	b=IEv18a17/3KJqDEtJ4FSngYTj3bf77WTh8T024FZIz0miCpeCU+wv57ptKwXXXzv+Xa2Qn
+	TtUOhpJlroYh8l0L7EsEKcIZ0F3ELqDVtiXZC645yTmY+15wxeN7pHgzXKsXAg+TPoKTHQ
+	qUs/dAnYDNCqL7W7OCMOtqd0gN2y6EY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1792427575;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=oxmu7stfRu9F1nID7OH4tHkwJ+6MmriNypobbE12Aic=;
+	b=NU20AtNFudFpqxSUTQa8t9OuCNcdTvtxiTDvY4aTGYQpH1p6G2pz7ZZfnnL/Q4FECZyCE/
+	FOoB0oqNSxbQHlBg==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=IEv18a17;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=NU20AtNF
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1792427575; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=oxmu7stfRu9F1nID7OH4tHkwJ+6MmriNypobbE12Aic=;
+	b=IEv18a17/3KJqDEtJ4FSngYTj3bf77WTh8T024FZIz0miCpeCU+wv57ptKwXXXzv+Xa2Qn
+	TtUOhpJlroYh8l0L7EsEKcIZ0F3ELqDVtiXZC645yTmY+15wxeN7pHgzXKsXAg+TPoKTHQ
+	qUs/dAnYDNCqL7W7OCMOtqd0gN2y6EY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1792427575;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=oxmu7stfRu9F1nID7OH4tHkwJ+6MmriNypobbE12Aic=;
+	b=NU20AtNFudFpqxSUTQa8t9OuCNcdTvtxiTDvY4aTGYQpH1p6G2pz7ZZfnnL/Q4FECZyCE/
+	FOoB0oqNSxbQHlBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0194E136CC;
+	Mon, 19 Oct 2026 16:32:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id VkahMjZG1morbQAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Mon, 19 Oct 2026 16:32:54 +0000
+Message-ID: <4deb710d-ef64-4592-833d-ad1b84d715be@suse.de>
+Date: Mon, 19 Oct 2026 18:32:54 +0200
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -76,105 +108,218 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <cover.1792163045.git.geert+renesas@glider.be> <4524363679c1f2163aca3b3dda2bfbde170d095a.1792163045.git.geert+renesas@glider.be>
- <sashiko-outbox-174605@kernel.org>
-In-Reply-To: <sashiko-outbox-174605@kernel.org>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Mon, 19 Oct 2026 18:27:42 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdWT=9-GCt6pr3HT6C_=kxe2ud1y2jjXPZBH9MjcDYjB+g@mail.gmail.com>
-X-Gm-Features: AclHuK-zFCPihodw8HUR_tYnDf84w30NySJpayeqxb6wS60EuVgB6NNWocEAZa4
-Message-ID: <CAMuHMdWT=9-GCt6pr3HT6C_=kxe2ud1y2jjXPZBH9MjcDYjB+g@mail.gmail.com>
-Subject: Re: [PATCH v4 5/8] pmdomain: Make genpd_get_from_provider() return -EPROBE_DEFER
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] drm/pixel: Link panic helpers into
+ drm_pixel_helper.ko
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, linux-clk@vger.kernel.org, robh@kernel.org, 
-	conor+dt@kernel.org, wsa+renesas@sang-engineering.com
-Content-Type: text/plain; charset="UTF-8"
+Cc: dri-devel@lists.freedesktop.org, linux-hyperv@vger.kernel.org,
+ intel-gfx@lists.freedesktop.org, imx@lists.linux.dev,
+ virtualization@lists.linux.dev, Frank.Li@kernel.org,
+ wsa+renesas@sang-engineering.com, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eugenio Perez <eperezma@redhat.com>
+References: <20261019154612.777074-1-tzimmermann@suse.de>
+ <20261019154612.777074-4-tzimmermann@suse.de>
+ <sashiko-outbox-177862@kernel.org>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <sashiko-outbox-177862@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 5D74621C20
+X-Rspamd-Action: no action
+X-Spam-Level: 
+X-Spamd-Result: default: False [-3.00 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	XM_UA_NO_VERSION(0.01)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	ARC_NA(0.00)[];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
+	TO_DN_SOME(0.00)[];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[renesas];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,suse.de:email,suse.de:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns]
+X-Spam-Flag: NO
+X-Spam-Score: -3.00
 
-Hi Sashiko,
 
-On Fri, 16 Oct 2026 at 18:09, <sashiko-bot@kernel.org> wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] pmdomain: unnecessary probe deferral on invalid domain index
+
+Am 19.10.26 um 18:19 schrieb sashiko-bot@kernel.org:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Low] drm: missing DRM_PIXEL_HELPER select in DRM_KMS_HELPER for drm_crtc_init()
+
+I see this is still an issue. The fix here is to move drm_crtc_init() 
+into drivers. The only remaining callers of drm_crtc_init() are in 
+radeon and amdgpu. There was recently a patch to move the helper there, 
+[1] but the effort appears to have stalled.
+
+[1] 
+https://lore.kernel.org/dri-devel/20260903071409.427010-1-oushixiong1025@163.com/
+
+I'll do this before continuing with the pixel helpers.
+
+
+> - [Low] drm/tests: link failure in drm_panic_helper_test when CONFIG_DRM_PANIC=n
+> - [Low] drm/xe: missing DRM_PIXEL_HELPER dependency when DRM_PANIC=y
 > --
 >
-> commit c105920d803c0cf9396fb90d8428fdc4d83e8655
-> Author: Geert Uytterhoeven <geert+renesas@glider.be>
+> commit d010f0f67d242682650aa0651dfd5a1e57612943
+> Author: Thomas Zimmermann <tzimmermann@suse.de>
 >
-> pmdomain: Make genpd_get_from_provider() return -EPROBE_DEFER
+> drm/pixel: Link panic helpers into drm_pixel_helper.ko
 >
-> Unlike provider-based look-up functions in other subsystems[1],
-> genpd_get_from_provider() returns -ENOENT instead of -EPROBE_DEFER when
-> the provider is not found, thus not supporting probe deferral.
-> Currently this is worked around in of_genpd_add_subdomain() by remapping
-> -ENOENT[2].
+> This commit moves the DRM panic helpers from drm_kms_helper into
+> drm_pixel_helper.ko, drops the DRM_PANIC_HELPER Kconfig option, and
+> selects DRM_PIXEL_HELPER in drivers using the panic helpers.
 >
-> Fix this for all current and future callers by returning -EPROBE_DEFER
-> instead, and drop the no longer needed remapping code.
+>> diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
+>> index 8e4a588e9111d..bf7c599443403 100644
+>> --- a/drivers/gpu/drm/Kconfig
+>> +++ b/drivers/gpu/drm/Kconfig
+>> @@ -46,13 +46,14 @@ config DRM_MIPI_DSI
+>>   config DRM_KMS_HELPER
+>>   	tristate
+>>   	depends on DRM
+>> -	select DRM_PANIC_HELPER if DRM_PANIC
+>>   	help
+>>   	  CRTC helpers for KMS drivers.
+> [Severity: Low]
+> Does DRM_KMS_HELPER also need to select DRM_PIXEL_HELPER if DRM_PANIC?
 >
-> > diff --git a/drivers/pmdomain/core.c b/drivers/pmdomain/core.c
-> > index 964e44c2f78f1..88c886814a5b9 100644
-> > --- a/drivers/pmdomain/core.c
-> > +++ b/drivers/pmdomain/core.c
-> > @@ -3021,7 +3021,7 @@ EXPORT_SYMBOL_GPL(of_genpd_del_provider);
-> >  static struct generic_pm_domain *genpd_get_from_provider(
-> >                                       const struct of_phandle_args *genpdspec)
-> >  {
-> > -     struct generic_pm_domain *genpd = ERR_PTR(-ENOENT);
-> > +     struct generic_pm_domain *genpd = ERR_PTR(-EPROBE_DEFER);
-> >       struct of_genpd_provider *provider;
-> >
-> >       if (!genpdspec)
+> drivers/gpu/drm/drm_modeset_helper.c is unconditionally compiled into
+> drm_kms_helper, and its primary_plane_funcs structure (used by
+> drm_crtc_init()) includes DRM_PANIC_PLANE_FUNCS:
+>
+> drivers/gpu/drm/drm_modeset_helper.c:
+>      static const struct drm_plane_funcs primary_plane_funcs = {
+>              DRM_PLANE_NON_ATOMIC_FUNCS,
+>              DRM_PANIC_PLANE_FUNCS,
+>      };
+>
+> When CONFIG_DRM_PANIC is enabled, DRM_PANIC_PLANE_FUNCS expands in
+> include/drm/drm_panic_helper.h to reference
+> drm_plane_helper_display_panic_screen, which is now built into
+> drm_pixel_helper. If CONFIG_DRM_PANIC=y and DRM_KMS_HELPER is enabled
+> without a matching built-in or modular DRM_PIXEL_HELPER, linking fails
+> with an undefined reference to drm_plane_helper_display_panic_screen.
 >
 > [ ... ]
 >
-> > @@ -3276,7 +3276,7 @@ int of_genpd_add_subdomain(const struct of_phandle_args *parent_spec,
-> >  out:
-> >       mutex_unlock(&gpd_list_lock);
-> >
-> > -     return ret == -ENOENT ? -EPROBE_DEFER : ret;
-> > +     return ret;
-> >  }
->
+>> diff --git a/drivers/gpu/drm/Kconfig.debug b/drivers/gpu/drm/Kconfig.debug
+>> index 1afb9cad850f6..4573cad368a28 100644
+>> --- a/drivers/gpu/drm/Kconfig.debug
+>> +++ b/drivers/gpu/drm/Kconfig.debug
+>> @@ -69,7 +69,6 @@ config DRM_KUNIT_TEST
+>>   	select DRM_EXPORT_FOR_TESTS if m
+>>   	select DRM_GEM_SHMEM_HELPER
+>>   	select DRM_KUNIT_TEST_HELPERS
+>> -	select DRM_PANIC_HELPER
+>>   	select DRM_PIXEL_HELPER
+>>   	select DRM_SYSFB_HELPER
+>>   	select PRIME_NUMBERS
 > [Severity: Low]
-> Does this change leave an unnecessary probe deferral in __genpd_dev_pm_attach()?
+> Can removing select DRM_PANIC_HELPER from DRM_KUNIT_TEST cause a link
+> failure when CONFIG_DRM_PANIC is disabled?
 >
-> If a device specifies a valid PM domain provider but an invalid domain index,
-> genpd_get_from_provider() returns the specific error code from the provider's
-> xlate callback, such as -ENOENT.
+> With this change, drm_panic_helper.o is only built into drm_pixel_helper
+> when CONFIG_DRM_PANIC is enabled:
 >
-> However, __genpd_dev_pm_attach() still unconditionally routes all errors
-> through driver_deferred_probe_check_state():
+> drivers/gpu/drm/Makefile:
+>      drm_pixel_helper-$(CONFIG_DRM_PANIC) += drm_panic_helper.o
 >
-> drivers/pmdomain/core.c:__genpd_dev_pm_attach() {
->         ...
->         pd = genpd_get_from_provider(&pd_args);
->         of_node_put(pd_args.np);
->         if (IS_ERR(pd)) {
->                 mutex_unlock(&gpd_list_lock);
->                 dev_dbg(dev, "%s() failed to find PM domain: %ld\n",
->                         __func__, PTR_ERR(pd));
->                 return driver_deferred_probe_check_state(base_dev);
->         }
->         ...
-> }
+> However, drivers/gpu/drm/tests/Makefile still builds
+> drm_panic_helper_test.o unconditionally under obj-$(CONFIG_DRM_KUNIT_TEST),
+> and functions such as drm_panic_helper_draw_screen_user_default() in
+> drivers/gpu/drm/tests/drm_panic_helper_test.c call
+> drm_panic_helper_draw_screen_user(), drm_panic_helper_draw_screen_kmsg(),
+> drm_panic_helper_set_description(), and
+> drm_panic_helper_clear_description(). When CONFIG_DRM_KUNIT_TEST is enabled
+> and CONFIG_DRM_PANIC=n, linking fails with undefined references to those
+> symbols.
 >
-> Could this unnecessarily delay boot and error reporting for devices with
-> permanently invalid PM domain IDs by forcing a wait until late_initcall?
+> [ ... ]
 >
-> Should __genpd_dev_pm_attach() be updated to only call
-> driver_deferred_probe_check_state() when PTR_ERR(pd) is -EPROBE_DEFER?
-
-__genpd_dev_pm_attach() doesn't care about the actual error code,
-it only cares about error or success.  Hence a change in error code
-has no impact.
-
-Gr{oetje,eeting}s,
-
-                        Geert
+>> diff --git a/drivers/gpu/drm/i915/Kconfig b/drivers/gpu/drm/i915/Kconfig
+>> index 71426b9c91f00..f698d3c8daa9e 100644
+>> --- a/drivers/gpu/drm/i915/Kconfig
+>> +++ b/drivers/gpu/drm/i915/Kconfig
+>> @@ -19,6 +19,7 @@ config DRM_I915
+>>   	select DRM_KMS_HELPER
+>>   	select DRM_PANEL
+>>   	select DRM_MIPI_DSI
+>> +	select DRM_PIXEL_HELPER if DRM_PANIC
+>>   	select FB_IOMEM_HELPERS if DRM_FBDEV_EMULATION
+>>   	select RELAY
+>>   	select I2C
+> [Severity: Low]
+> Should DRM_XE or DRM_XE_DISPLAY in drivers/gpu/drm/xe/Kconfig also select
+> DRM_PIXEL_HELPER if DRM_PANIC?
+>
+> When CONFIG_DRM_XE_DISPLAY=y, drivers/gpu/drm/xe/Makefile compiles
+> drivers/gpu/drm/i915/display/skl_universal_plane.c into xe.ko, where
+> skl_plane_funcs, icl_plane_funcs, and tgl_plane_funcs use
+> DRM_PANIC_PLANE_FUNCS:
+>
+> drivers/gpu/drm/i915/display/skl_universal_plane.c:
+>      static const struct drm_plane_funcs skl_plane_funcs = {
+>              ...
+>              DRM_PANIC_PLANE_FUNCS,
+>      };
+>
+> If CONFIG_DRM_XE=m, CONFIG_DRM_XE_DISPLAY=y, and CONFIG_DRM_PANIC=y are
+> enabled while CONFIG_DRM_PIXEL_HELPER=n, modpost fails with an undefined
+> reference to drm_plane_helper_display_panic_screen in xe.ko.
+>
+> [ ... ]
+>
 
 -- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+
