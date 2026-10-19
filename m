@@ -1,111 +1,158 @@
-Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
+Received: from mail-wr2-f1.google.com (mail-wr2-f1.google.com [74.125.225.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519C03DAAB3
-	for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 23:31:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.43
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792366293; cv=pass; b=sqlupPG7N9m5e2XZfNzqkK+e2PO4bhYNsfx5NCQi3pSjl1yI3yylrJzxiczBLtp+eH51Q0U0g7xn1Vwq2HE3Zob0MdeAo3LD5FTH7PNvXqNmzdz1yebbiNQnqt+5qGaQxcH6L+RIWEXY7XRM2eT7cZRO58jzoxDlyzwakr74gAk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792366293; c=relaxed/simple;
-	bh=Xg38Z07jNwHN1F4uO1K2Lyf/YBRj7zFPK1BqVTeQ5ks=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=agGFa3qtbfyDTGpqQUwyAkvmHpuQjq5fFM5UbsIro32ovloUJ6PTGRZW9UZtXyG3o364UQXYzaMve74r5Q7owwqGvk8j57NtWKbEIfP8ntOJyY88Py5DQ1UdfPg5kFzppA0DE5upc7x5SBuc3cL1yuPKJwv1/bk4I2MXNZQWpKI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=np+gsmu9; arc=pass smtp.client-ip=209.85.217.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5773644C1
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 02:11:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.65
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792375894; cv=none; b=JLELkna+vga+f/FIHC/grXFAW4o9x96myq3HcjG0ho1ABIRZvBJdmdZVqgg8mERVMcuhlTv47zonS8zw3+CvtrPnB/x2Ccgz5Wf1qfpvqh7Bgr+Esa1ClBfi+zVKVgjZ0L43B21wMPoLWhrxtMCzxAMSJH4zRjroKFtb7PTOe9Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792375894; c=relaxed/simple;
+	bh=//y/MIu9uR/LXkr1muCyOtxg09cxnF6FAzBp8EMUteQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=WYJaokZa2+F9CxOA1iqaLbcC+LpOF0WT33j/WtQywFw7p7ZeW8STnsH6BWh927dakBBSF0z3UjjPPxICWgSMwwlecka89TTqoLIvCbHSVHAX5EaslPanVrupkcdcpoX1DSGmWYT+GhVl80usnaJjG6syDhyS8m7VuIvtKv5Ee5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g+KfpUZx; arc=none smtp.client-ip=74.125.225.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="np+gsmu9"
-Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-7cc013095d4so452228137.2
-        for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 16:31:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792366291; cv=none;
-        d=google.com; s=arc-20260327;
-        b=m6zNZiwPQmhTtnXp6l/6OD4sbJXU3kJu1PbHLl4iZkz5I0kjKzAGH68/D8qicUS3H3
-         ol2EiHI1n1EeEEDtsBf0X3iU2bkI8NgH972LjXBNACp0EW7RpCXu/iLtGKkX8wWbVg6i
-         dnS14qMaYlHIRsZ23n/ZHPvvvFs9L4UiYWaxzxmsa9rMqFiVuunIuMXVbjQg3F7sP5ZD
-         gIUdrPnIS1an3gF1mdFrpQq3s288JrY4IH+Sz24vc2T+o3FTPFZRHeeiQKtrwYnn9k6K
-         fDhFQjaJapXOAzRTAtH7WilHVW8HecCQ9XZph1cBEtSe0atn4VLBpqFTpKVSENmZyjwq
-         G1Ig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=Xg38Z07jNwHN1F4uO1K2Lyf/YBRj7zFPK1BqVTeQ5ks=;
-        fh=dfvPRi+t5KvUF1qpgNVmacxvd83mvku6fE8K+/2kbH8=;
-        b=Wd1UUp97FDsjeTptcXKub0ert68eAdo8ebzKhzFm/x/Gc6LVqGSq518ve8F6QR5225
-         +6M5xefrAKUqpzYzZ+S2EFfCbOQBipgT4GGqyvM1sdbtrF/KLgT2Idp+AAG6tyNEBikC
-         /HDr+fRxcM7wKWkniab2WVIXlbqUpHxraISUGRPD+XB0IVDOtZVaSmWDwr5N7gR7aCLe
-         XE/E3/vCpT7mZ+sSC333A54/UnDAVLj7pTffq6slK0eOusBqtujt25w1U2OCLUTLrlKX
-         DYuoC02JweeunTxsraTzjaFtS0SfdKUv/H8atMU/njkFdf/szxcysTvxdhi3jrtBrS1U
-         gR1w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g+KfpUZx"
+Received: by mail-wr2-f1.google.com with SMTP id ffacd0b85a97d-48df388215cso764927f8f.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 18 Oct 2026 19:11:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792366291; x=1792971091; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Xg38Z07jNwHN1F4uO1K2Lyf/YBRj7zFPK1BqVTeQ5ks=;
-        b=np+gsmu9m7oVLpFPrkTztCTBtQcJ7CIHLzAjVMus3mmgdaIg6QcHj2PYg0E13vIAQL
-         gC8C5Rw4/9XpxFUV4YTpH+BhLeIXesCOnwgnf3n+l+aL9hCSXbgf3m8O+VuEcy+qBd4f
-         1jkdi0nHEkRma8nH28kS0NaU235kosYHmkDEXKsahemQy63Qw1l38Dv5yiVMSJiBtWUG
-         fJMqemELIvnurO5camDEloyOgJFyEfoxTiJQ5YzZBtbRNfxxBrXbq4DZoA1DT589RmAN
-         1aLcvP29hP5JoBpPZ3R6XCNxMVTtUIIW4xA7ppMpV1b8iiTJe9WWvnDAo1aocxIqlvgj
-         D7QA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792366291; x=1792971091;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20251104; t=1792375890; x=1792980690; darn=lists.linux.dev;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:from:to:cc
          :subject:date:message-id:reply-to:content-type;
-        bh=Xg38Z07jNwHN1F4uO1K2Lyf/YBRj7zFPK1BqVTeQ5ks=;
-        b=EDJs1CXy3eARfv1x4O5ep3G7DNe9NL503UWvsdXIJUBsSI4O8ZIOeH3JQtc3QwpD0f
-         U1WZi/mWmr6r/62SLR392mZuSlB259g+brGrRaQUPmjrvk255ovJZU6l42qRFWDJegqD
-         5kuwP394d/qx/rz1swZZhwxqAzhbesAIAMn9X748XPD7vR9rdmglYjpiAZGzOzaqkgXv
-         hQl2/We5Ips3+iQvOXpNLtprq+4h5bH66docwgbbje0KpUqo9pVseXB5Hn6h8kCicSRH
-         +dS8mmmJYkCse5XDhwTetgLiyRbRE5j3BfPHnqrVSFcXFNbika41YNPmVM63x4baXsEA
-         MHsQ==
-X-Gm-Message-State: AFq9FYI0booJZCNGGclKOLsDfDd/qU9hE8V80p8Qmh/sC74o81r142Ki
-	fJfgcWyS+ljFWtK07dOZlH83WQEWWIo2F5T6QZCqqxX73uOcWDX/2kKi/Iwlk1OlMh2WCAE6re7
-	lPpsitovtE0TgqoUA8Ekfv27gV6T/Bt4WN2WzJXM=
-X-Gm-Gg: AYBFou2g4XG16+j1Mx0SQ6tK3/RikbEuoN3j+ciUGoZR2Cb+Uw2cG0c7O9QQovJ3dtK
-	D9+RL0sOrYEJC8XRqNl2Afd7cbvRF2WDp3NJ4QIgb0jhUvxE3wic01g8VPfJCxO0YaWEmzwysgx
-	Eck5QK1AURWRp0c7Fd3uLqYz0crbujDdGYVMJpqiIXsqQ48IWcVTrjDEjysApRPsgLd+EWvpj9t
-	1lPgq4ULUB9pGPmG9f9cGhXuPBw/YShkFU5UmWdL7MiEzqW/gnBrjtHeZcd59niZzjE4cp/hFjd
-	1cI5OH00clc7Qk99BvtTy+RSoNZ+js3Y3XfgXKW1tysd6tiVqjjXcdHt9w==
-X-Received: by 2002:a05:6102:3c92:b0:779:5049:87b2 with SMTP id
- ada2fe7eead31-7cc36494a62mr1577333137.0.1792366291163; Sun, 18 Oct 2026
- 16:31:31 -0700 (PDT)
+        bh=yq8r18auL3kyxH5XJ1eYj6G//xk8iEfWZvNxcHJYvp8=;
+        b=g+KfpUZxS76195E+ToZBsI0A7BQWuxg2mzO6hBTa59Z8FYhH9oyfaLZajHsZ8EbsIj
+         uETLyWF6CARZs7yON33WeZRl9YEUSCeXn7QmphBSem59qrxa1iyUXGE1Xd+jbwwOv5nd
+         wMKHd7taLT1rIfpaj5ZtqkWSaEH+eOtNyyAMAt4ZWRZjOUhvWWCu7EiH8F8WgqreeAL4
+         LXMsagV6KhvRv2MmCZ695ihpe3+AsNbUFsRUETrmv+sx/HEh4dRJuE69aygS33J1KLrU
+         yahdSRdX/V+MDgy17rNPT0S4PTjfWAz9gsZ8dV4jOPdMXpbqMAq7QsUdE6ymX7ap7D30
+         igUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792375890; x=1792980690;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-type:content-transfer-encoding:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=yq8r18auL3kyxH5XJ1eYj6G//xk8iEfWZvNxcHJYvp8=;
+        b=oZuXwQvPUWODKX1YuIL+X1nTalWb79Xl69SAQM7+vrXZAWVvqK6gU4KIvSG2i/qhU7
+         Z+xnQ01F7W94P5TCRqVy88q7kdzKRxEuVliDq+4mGvabE/aCl3T8ucrBFK5VVO6brWoU
+         whUQv8uksXdN0styCAVaiItGcHsR8OllKkM/S6az+urHwLDGPPUQyVAu/0KDAFEADOdJ
+         GN7j5trBJphtCOsxVSqvnnAH2jFT6uPgu9MdyppQrYthHVG4SgpY0cMHBGAbo75uH2GQ
+         d9SE5zhyLQs5BWtWWYjaiaV4MKKq/soQjPpK8pjW33QPwaC3kbam3Ckr0ibQc3D62zRu
+         92kQ==
+X-Gm-Message-State: AFq9FYKcADtnXFBD8v/QiFt4KIQAS7r7wdYaz6/II0DrzNHnpmmTCYvh
+	h03QG3AdHSuzcVqWjHKjJnaeGEeyymEQWwz8Il7JZa9vTxTTXuorbzf75wT0p0Co
+X-Gm-Gg: AYBFou3FrulVYfffJsSjhbg2DqK6kgWDWVH1PIHz2RRgJLjZWZwRq2ETSgqsAEcu9M2
+	a25MuHtLjCD3iEvfB16h1Nbxj8ueb6RtnRCltKgiew60ODdGEY6Uit7JPD/ma0a7gonfTt1rPIg
+	HbM1UIHZftK5Q9TkKQobDt2SGe2pfWP/KZaoyyjrRrP7jwDsP/xP62omJxqkT36AlryIev/BgNS
+	otQ/HiUVTcfw++0T3dLuwVQVVWjVhcO+Vmw9QHYFB3b1gU3SEgi6BuwXtqa6GGAp0nCSaNnyqDG
+	HqygAH/8ZqG2SlYuB+qdlN6L6w47M+Ehzhi+MZ39Eg+K4q4hM1pC8AFhMMcfpgo8kfTjfPANoCX
+	OEGqIwZ80O7lXNfRRZ7vlvdvcfm89JUWWz+YwkUS2iQXMIHI89C/EUakNKj8YH/g+sB+cL9xFdI
+	JxAfsCEz3Bt6gyQyUafY9ZSmrQ3WM2xL6+21luNyEuuDI0MPNlcjpl/+9HbZT+1r1p+YRjbeowj
+	WkZN0c2jMdfnJfrGeOMmXuFknTf0PxgaAEop3W/GcBNwfz1lkLBWSwIwCb53+WV9dsJq//FfpLT
+	naYdveGX2zMkH7iClZ9up28PzvDFjX7Ld3AC+gtFhXM62oaT
+X-Received: by 2002:a05:6000:1050:b0:48d:ecba:3cf8 with SMTP id ffacd0b85a97d-48e07fa82f3mr8841415f8f.43.1792375890233;
+        Sun, 18 Oct 2026 19:11:30 -0700 (PDT)
+Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48dfd4f5b2dsm21520294f8f.31.2026.10.18.19.11.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 18 Oct 2026 19:11:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20261018224627.60328-1-markpariente@gmail.com> <sashiko-outbox-176440@kernel.org>
-In-Reply-To: <sashiko-outbox-176440@kernel.org>
-From: "Mark R. Pariente" <markpariente@gmail.com>
-Date: Sun, 18 Oct 2026 16:31:19 -0700
-X-Gm-Features: AclHuK9fAUVSx0HILj3AwYV2CMv6TDhde-IMbLTUz1PFT4ZZ37tovEoqYzIwRVo
-Message-ID: <CAEFveFzbaDrjALGQ4kABdpGe3+JmYjGBHpNhP9HCUZd+vsspRA@mail.gmail.com>
-Subject: Re: [PATCH] HID: logitech-dj: Re-announce connected devices on reset-resume
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 19 Oct 2026 04:11:29 +0200
+Message-Id: <DM8G84CGPV1M.24HT5CS3KKB9F@gmail.com>
+Cc: <bpf@vger.kernel.org>
+Subject: Re: [PATCH bpf-next v4 1/2] bpf: Enforce trusted BTF ID argument
+ provenance
+From: "Kumar Kartikeya Dwivedi" <memxor@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>, "Yiyang Chen"
+ <chenyy23@mails.tsinghua.edu.cn>
+X-Mailer: aerc 0.21.0
+References: <20261007-a3-arg-trusted-v4-v4-0-253ef3a1a69a@mails.tsinghua.edu.cn> <20261007-a3-arg-trusted-v4-v4-1-253ef3a1a69a@mails.tsinghua.edu.cn> <sashiko-outbox-163202@kernel.org>
+In-Reply-To: <sashiko-outbox-163202@kernel.org>
 
-> Can calling logi_dj_recv_query_hidpp_devices() unconditionally here break
-> Unifying (recvr_type_dj) device enumeration when a slot in
-> djrcv_dev->paired_dj_devices[] is still NULL during logi_dj_reset_resume()?
+On Wed Oct 7, 2026 at 6:43 PM CEST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] bpf: check_func_arg() allows PTR_UNTRUSTED | MEM_RCU into KF_RCU=
+ kfuncs
+> --
+>
+> commit 1e71cf476e59d8805f3765efcab69f9c9d9bba4a
+> Author: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
+>
+> bpf: Enforce trusted BTF ID argument provenance
+>
+> This commit modifies the verifier to make the provenance check contract-d=
+riven
+> by marking generated BTF ID kfunc argument types with PTR_TRUSTED and exp=
+licitly
+> adding MEM_RCU only for KF_RCU kfuncs. It uses the normalized type for mo=
+difier
+> checks while reference lookup uses the original register.
+>
+>> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+>> index 353bde9ae2274..a0ab793f041d8 100644
+>> --- a/kernel/bpf/verifier.c
+>> +++ b/kernel/bpf/verifier.c
+> [ ... ]
+>> @@ -9605,8 +9614,10 @@ static int check_func_arg(struct bpf_verifier_env=
+ *env, u32 arg, u32 slot, u32 p
+>>  			}
+>>  		}
+>>
+>> -		if (is_kfunc(meta) && (!is_trusted_reg(env, reg) ||
+>> -				       bpf_type_has_unsafe_modifiers(reg->type))) {
+>> +		reg_type =3D reg->type & ~(arg_type & PTR_MAYBE_NULL);
+>> +		if ((arg_type & PTR_TRUSTED) &&
+>> +		    (!is_trusted_reg_type(env, reg, reg_type) ||
+>> +		     bpf_type_has_unsafe_modifiers(reg_type))) {
+>>  			if (!(arg_type & MEM_RCU)) {
+> [ ... ]
+>>  				return -EINVAL;
+>>  			}
+>>  			if (!is_rcu_reg(reg)) {
+> [ ... ]
+>>  				return -EINVAL;
+>>  			}
+>>  		}
+>
+> [Severity: High]
+> Does this allow a register with both MEM_RCU and PTR_UNTRUSTED modifiers =
+to be
+> passed into KF_RCU kfuncs?
+>
+> If a BPF program loads a pointer that is marked as PTR_UNTRUSTED | MEM_RC=
+U (for
+> example, when loading an __rcu pointer embedded in a union) inside an RCU
+> critical section, and passes it to a KF_RCU kfunc:
+>
+> 1. The arg_type has MEM_RCU, so the first inner check !(arg_type & MEM_RC=
+U) is
+>    false.
+> 2. The register has MEM_RCU, so the second inner check !is_rcu_reg(reg) i=
+s
+>    false.
+> 3. The validation falls through and succeeds, even though the register ha=
+s the
+>    PTR_UNTRUSTED modifier.
+>
+> Since check_reg_type() bypasses the strict compatible_reg_types check for=
+ kfunc
+> BTF_ID arguments, this appears to leave the verifier without any checks t=
+hat
+> would reject the untrusted modifier here. Can this result in untrusted ga=
+rbage
+> pointers being used as valid RCU pointers?
 
-Yes, thanks. For a slot without a known device, logi_dj_hidpp_event()
-passes the HID++ 0x41 notification to logi_hidpp_recv_queue_notif(),
-which adds the device with reports guessed from the device type, and
-the correct DJ pairing notification is then ignored.
-
-This predates this patch: since commit 74808f9115ce ("HID: logitech-dj:
-add support for non unifying receivers") the same happens on Unifying
-receivers whenever a 0x41 arrives for an unknown slot, e.g. when Solaar
-sends the same fake-arrival request on startup or when a device
-reconnects. v2 adds a separate patch so that on Unifying receivers such
-notifications queue the unknown-device work instead, which enumerates
-the devices through DJ notifications, and makes this patch depend on it:
-
-https://lore.kernel.org/linux-input/20261018232654.70571-1-markpariente@gmail.com/T/#u
+Yiyang, could you please follow up with a fix for this corner case as well?
+Thanks a lot for the existing fix.
