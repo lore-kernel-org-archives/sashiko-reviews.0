@@ -1,185 +1,131 @@
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011003.outbound.protection.outlook.com [40.93.194.3])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6973F1ABE
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 03:12:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.3
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792379559; cv=fail; b=mvR7RIatRmPsBN5t0osSkwb1lMfJ1ah5hzOk47TqSaUlY7+0XQZYt/frHbSPfCio8npK7xOTcqsMnFRnBXjrJpm/zg2UzJg/4Wh6cj0UhRIWtIbx5M8J849DfcpbV7l8QjJvaOPbNxOiSRiIiEebN0ZiMj29J8CcIjdQguL5zuI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792379559; c=relaxed/simple;
-	bh=2AvU1nromrjo+EzODDOCd/c1YLwKCJUCwdLW56JaSfY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=n2zVuJ+QhMb1jnUaf7i1SlZNzYh6+qkBcanyf0udkvMRNcGHgeRaBiIlXY5vyfdiBJzSmbzhD01q2jHU9S8YWyozRXkGUAfc9k9binTaFOzTgvn9agiZKxD/t99kS4ruzY8o0EOV2ImAlpTYp8xkjhBe8Ho7ulZ96dHZ7yDfs4k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=a9Hg4fKV; arc=fail smtp.client-ip=40.93.194.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="a9Hg4fKV"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=AlNb3TTgxqt8lH+bEJjd8zQDxQ5p1aepWzl1clR1ekNHS4PKzTBzs/T0DXMUEtu1FVwzu3pdMdYyslwLGf74QGCnE3aVNyeaNuODLTQpWirLJ3s1ihLjH7fmJezUZXtcnqgxLVP2ovkBxjcGDWlx5KdJ7+cY4v9h0GMjVWdIq7iOPmCOTnQRZGrXki3t3MaVbCcSR+jaI3GCE2wJGqAPtYMcgGMjAsvM7m/VPde/ka7mltxeHKlKHGqt3shcI1BEZSqS6u4xt5G2ZqUvzIdD/cFB/TDDbKElWwWmKR/FNgCS2czBs0tEzGfVhJFJopxRlAZYOnU3JkkoB3RqIor/TQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1IJ/AcJF0PWBzN8rvkhrePL/VHSHp/nX6WvxCxCDvls=;
- b=y/7jNcw1XtoSZ3UVNImkvl+rFWJMUkZD1UWwyVSiow4BLkizoMRnkVT0EN5MMWMEvHoxFQyxXGkyUmh6v1t0anFw3pAIVfDfbTQ+nZa2KJwTWsEDP4JtGhstRpKq6vhOA0Qd3cU9HGy874wayvzAhvoKw6ODaYyzvmmXkRTWjUPNdA9rRxFcEooUEtQquFedY0D7QOc09TsCjLgFH6fUcPU6h7L36RZ9IJg7bTnerhMdokTYZjgFCUCbDjxEsAGemXVJZfzfLwko9oyTXbsG7OfdgWbH/20RumoTUFXe3fvhn1CT0i8SIz66JSKpXQto6sQzquj6eANgCLE24emKZg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1IJ/AcJF0PWBzN8rvkhrePL/VHSHp/nX6WvxCxCDvls=;
- b=a9Hg4fKV+3uTJBPzDBOjss9wxPd3erkuzRrJziPtdEVHJzSUnSSr9HFFM5MzzgvVbPM7mqK0aFkhQm2QkTWwaxJBdTJ9YqCp5MWE89V6lEkn9LwVGTOB7dOJ+GdwKz/DC8ilWkM59aGg4/sGUsetgWon8i/WDM5tea7tCOcIyUI=
-Received: from SJ0PR05CA0007.namprd05.prod.outlook.com (2603:10b6:a03:33b::12)
- by IA0PR12MB8085.namprd12.prod.outlook.com (2603:10b6:208:400::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.19; Mon, 19 Oct
- 2026 03:12:29 +0000
-Received: from EA8PEPF00000009.namprd05.prod.outlook.com
- (2603:10b6:a03:33b:cafe::35) by SJ0PR05CA0007.outlook.office365.com
- (2603:10b6:a03:33b::12) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.19 via Frontend Transport; Mon,
- 19 Oct 2026 03:12:29 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- EA8PEPF00000009.mail.protection.outlook.com (10.167.249.232) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.522.6 via Frontend Transport; Mon, 19 Oct 2026 03:12:29 +0000
-Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Sun, 18 Oct
- 2026 22:12:21 -0500
-Received: from [10.85.36.197] (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.53 via Frontend
- Transport; Sun, 18 Oct 2026 22:12:20 -0500
-Message-ID: <2669477e-20ef-430c-9224-cfcb4ca42acc@amd.com>
-Date: Mon, 19 Oct 2026 08:42:19 +0530
+Received: from fraori-sdnproxy-3.icoremail.net (fraori-sdnproxy-3.icoremail.net [132.226.202.154])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E30093EF0AA
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 03:33:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=132.226.202.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792380783; cv=none; b=GwPq7cxK6fxMQbZ1Q2jrmsDOqZam3+ynwZwOumT0udn/J9DEMtWMfQI5BLMW/Qlvl3+w5Cq4k6awjJLMyx/kkK0qqZ/8C73QPvHhBsWU7Aiw3sshoWAJ10reaI8cOmaAd/e+KPi5y5+juFIorrTuB1XDdReFBXs4M/+Qe4quH6M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792380783; c=relaxed/simple;
+	bh=myeZcrIK9N2UvgTiV88GF34NvItmy5XTQ1Uz3iGbQE0=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=PxDg6Mh8iMX4Z/Ko4tEMT9entVpixAk02YTbYClO9iucHH0DZqzURLczfNDAclBbSxCie7sp25fKDPYFr+7/6yI4Pbwjhp1rsevH6mRBvAEho6QBQAvdFXW36wDdmddhrLn3u16rAsWyLMhlel17CHjtRKcK/QbOG9h21SPh60E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=132.226.202.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
+Received: from yuanxiaofeng$eswincomputing.com ( [10.12.96.78] ) by
+ ajax-webmail-app2 (Coremail) ; Mon, 19 Oct 2026 11:32:33 +0800 (GMT+08:00)
+Date: Mon, 19 Oct 2026 11:32:33 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?6KKB5pmT5bOw?= <yuanxiaofeng@eswincomputing.com>
+To: "Masami Hiramatsu" <mhiramat@kernel.org>,
+	sashiko-reviews@lists.linux.dev
+Cc: linux-trace-kernel@vger.kernel.org, "Paul Walmsley" <pjw@kernel.org>,
+	"Palmer Dabbelt" <palmer@dabbelt.com>,
+	"Albert Ou" <aou@eecs.berkeley.edu>,
+	"Nam Cao" <namcao@linutronix.de>, "Alexandre Ghiti" <alex@ghiti.fr>,
+	"Naveen N Rao" <naveen@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: Re: [PATCH v6 1/2] riscv: kprobes: reject probes inside LR/SC
+ sequences
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
+ 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
+ mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
+In-Reply-To: <sashiko-outbox-174019@kernel.org>
+References: <20261016081706.1085-1-yuanxiaofeng@eswincomputing.com>
+ <20261016081706.1085-2-yuanxiaofeng@eswincomputing.com>
+ <sashiko-outbox-174019@kernel.org>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 4/5] KVM: selftests: nVMX: Add nested PML coverage to
- nested_dirty_log_test
-To: <sashiko-reviews@lists.linux.dev>, <kvm@vger.kernel.org>
-References: <20261015103933.2088307-1-nikunj@amd.com>
- <20261015103933.2088307-5-nikunj@amd.com> <sashiko-outbox-172712@kernel.org>
-Content-Language: en-US
-From: "Nikunj A. Dadhania" <nikunj@amd.com>
-In-Reply-To: <sashiko-outbox-172712@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: EA8PEPF00000009:EE_|IA0PR12MB8085:EE_
-X-MS-Office365-Filtering-Correlation-Id: d39d5e77-a856-4e3b-4ea8-08df2d8ecf2c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|23010399003|36860700016|82310400026|13003099007|11063799006|4143699003|56012099006|261009223027099003|10067099003|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	OsxuGnBfyG/7VLUiZ0h0DMnNOd13SFPQHd9jfwU/pYSD3aQbIa3jhq7aYNFC6f4J0t3whBMkOGH3Cl5n4NuFuQ9BiYCODvxjTi24dX7mZVAA8ie7UiwNIjV7LDz4ISSrshsMapeD7HATIARoHJH5qALhpnOjnI6LX423Q4BufnnhEO7r9Hj7+pcQbxQlTNlua6KpuwmnrLGZbltwCo6i3VKryW/JY5M5gtF+i1Z000yFXcFTbz4V8gdfVP1le0rAAjuCTzWlAlwnceBrsPFnt9ag3N+caU2WUs5BaPMQrCQh8c7cOXQYi07pmb2iybaRyxo2UKxysmRijw00hjx+Zi0r/wOyhwoTlg/N1EjWFVVX6RhbZW3eJyf3TXk2Ocs8EAs1gHJ53AhS2antSHMSxf/Hb10CW2AHfmx9PGq7OhmCzXGEJOzECRbvsDuN7WEduKXTDS/LXiY+SpUGRt+1ovZ25AkgfW/aAeYaVejWXlT2G2FAEY9WaRca2nRCgImuRzhXpcdnDs55PYj5c6EKmGtYlv+zOCQinMKIRxNqD3M9W+s2VYN3lj+Yp7eNThI9XlW4oQBxuTR2yYrcm5gVwqVC6MsbFAI/VmU6UjaVJWFYP1xc4zyI28VjujdnG+nonz/6U4XEmZIbBEmx21TM/oRtT4hecp9iuqnMJq62WV4DZK2cK/Yt3EX5mqlhQHNf
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(36860700016)(82310400026)(13003099007)(11063799006)(4143699003)(56012099006)(261009223027099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	hM86HJbNUDMYPyOpIAV3glTA7+s6NwVJeGPGPBsQRaF6hnnMKDFmViTF+MjEHV6bDN9h168kf0UTGV7A9/Kz6fW6uObsWdply+8MyB08Vnk4BzGNQrvOi/+GcrEC6v2gOCBA2M+KzN6GCFsRpa2tRW5LJAgWFAC7HxpS5B+EeuweNLRhBLqJeczGDrJn1c83f7sdAbLPa+fd3X/Ajqe6+Dr8t1+UQDJoqyesZmkox5xuRS+9fEYNllDb1UVs5fYj5wab7/RdFnUMxRriJUjUQvFUbq00dqs5ccIRwrx+wDyAzMOlN5dUSoga/EWYCo1wzEhdhLzWbF+Bsb0wHa13ydlc+0u4ka7iU8NB1gnod66O5j3YsyHgsn4H516gxam32b1Pi61ZQYZG9vQh7YUcWNzqxuJj5q2NLB3coYpBvql320vld6RcTg9HgjiSIIgF
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Oct 2026 03:12:29.2952
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d39d5e77-a856-4e3b-4ea8-08df2d8ecf2c
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	EA8PEPF00000009.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8085
+Message-ID: <4cd4d42d.afc2.1a15237d7d2.Coremail.yuanxiaofeng@eswincomputing.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:TQJkCgAnPqFRj9VqACOHAA--.14297W
+X-CM-SenderInfo: h1xd05xldrwv1qj6v25zlqu0xpsx3x1qjou0bp/1tbiAgEFE2rU9S
+	oWrAABsP
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWDJw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
 
-
-
-On 10/15/2026 4:34 PM, sashiko-bot@kernel.org wrote:
-> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
-> 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] selftests: kvm: nVMX test asserts on invalid guest PML index
-> --
-> 
-> commit 88c8168ec493a327cfe182178b11f281733406e7
-> Author: Nikunj A Dadhania <nikunj@amd.com>
-> 
-> KVM: selftests: nVMX: Add nested PML coverage to nested_dirty_log_test
-> 
-> This patch adds coverage for nested PML to nested_dirty_log_test. It
-> verifies that L1 takes a PML_FULL exit when the buffer fills, can drain it,
-> and can resume L2 without losing entries.
-> 
->> diff --git a/tools/testing/selftests/kvm/x86/nested_dirty_log_test.c b/tools/testing/selftests/kvm/x86/nested_dirty_log_test.c
->> index 7e5f9ae1cb00a..b1008724f46dc 100644
->> --- a/tools/testing/selftests/kvm/x86/nested_dirty_log_test.c
->> +++ b/tools/testing/selftests/kvm/x86/nested_dirty_log_test.c
-> 
-> [ ... ]
-> 
->> @@ -192,6 +192,149 @@ static void test_handle_ucall_sync(struct kvm_vm *vm, u64 arg,
->>       }
->>  }
->>
->> +#define PML_LOG_NR_ENTRIES   512
->> +#define PML_HEAD_INDEX               (PML_LOG_NR_ENTRIES - 1)
->> +
->> +#define PML_FULL_MAX_EXITS   64
-> 
-> [ ... ]
-> 
->> +static void l1_pml_vmx_code(struct vmx_pages *vmx)
->> +{
->> +     int nr_pml_full = 0;
->> +
->> +     GUEST_ASSERT(vmx->vmcs_gpa);
->> +     prepare_for_vmx_operation(vmx);
->> +     load_vmcs(vmx);
->> +
->> +     /* PML requires EPT. */
->> +     GUEST_ASSERT(vmx->eptp_gpa);
->> +
->> +     prepare_vmcs(vmx, l2_pml_guest_code);
->> +
->> +     vmwrite(PML_ADDRESS, vmx->pml_gpa);
->> +     vmwrite(GUEST_PML_INDEX, PML_LOG_NR_ENTRIES);
->> +     vmwrite(SECONDARY_VM_EXEC_CONTROL,
->> +             vmread(SECONDARY_VM_EXEC_CONTROL) | SECONDARY_EXEC_ENABLE_PML);
->> +
->> +     vmlaunch();
->> +
->> +     for (;;) {
->> +             u64 reason = vmread(VM_EXIT_REASON);
->> +
->> +             if (reason == EXIT_REASON_VMCALL)
->> +                     break;
->> +
->> +             GUEST_ASSERT_EQ(reason, EXIT_REASON_PML_FULL);
-> 
-> [Severity: Medium]
-> Since the test intentionally sets GUEST_PML_INDEX to 512, shouldn't this
-> result in a VM-entry failure instead of a successful entry followed by a
-> PML_FULL exit?
-
-It does not, and the test works as intended on both vendors.  KVM does not
-check guest_pml_index at VM-entry; it is only consumed in
-nested_vmx_write_pml_buffer().
-
-The seed is deliberate: on AMD the APM defines an index outside the valid
-range as the trigger for a PML Full exit, and the test uses the same setup
-for both vendors to get one deterministic PML_FULL.
-
-Regards,
-Nikunj
+SGkgTWFzYW1pLAoKCkkgbG9va2VkIGludG8gdGhlIGlzc3VlIFNhc2hpa28gcmVwb3J0ZWQgZm9y
+IHJpc2N2X3Byb2JlX2RlY29kZV9pbnNuKCkuClNoYXJpbmcgdGhlIGFuYWx5c2lzIGJlbG93OyB0
+aGUgc2hvcnQgdmVyc2lvbiBpcyB0aGF0IHRoaXMgcmVhZApwcmVkYXRlcyB0aGlzIHNlcmllcywg
+YW5kIEknbSBoYXBweSB0byBzZW5kIGEgc2VwYXJhdGUgcGF0Y2ggaWYgdGhlCm1haW50YWluZXJz
+IHRoaW5rIGl0IGlzIHdvcnRoIGZpeGluZy4KCgpGaXJzdCwgdGhlIGNvbnRleHQ6ICJwcm9iZV9v
+cGNvZGVfdCBpbnNuID0gKmFkZHI7IiBpcyBwcmUtZXhpc3RpbmcKY29kZS7CoCBUaGlzIHNlcmll
+cyBvbmx5IGFkZHMgdHdvIFJJU0NWX0lOU05fUkVKRUNURUQoKSBlbnRyaWVzLCB3aGljaApjb25z
+dW1lIHRoZSBhbHJlYWR5LWxvYWRlZCB2YWx1ZSBhbmQgZG8gbm90IGNoYW5nZSBob3cgbWVtb3J5
+IGlzCmFjY2Vzc2VkLgoKCk9uIHRoZSB1bmFsaWduZWQgcGFydDogd2l0aCBkZWZhdWx0IGNvbmZp
+Z3VyYXRpb25zLCBtaXNhbGlnbmVkCmFjY2Vzc2VzIGFyZSBlbXVsYXRlZCwgZWl0aGVyIGJ5IHRo
+ZSBmaXJtd2FyZSBvciBieSB0aGUga2VybmVsIGl0c2VsZgooUklTQ1ZfU0NBTEFSX01JU0FMSUdO
+RUQpLCBzbyBhbiBvb3BzIHdvdWxkIHJlcXVpcmUgYSBOT05QT1JUQUJMRQprZXJuZWwgYnVpbHQg
+d2l0aCBSSVNDVl9TTE9XL0VGRklDSUVOVF9VTkFMSUdORURfQUNDRVNTIHJ1bm5pbmcgb24KaGFy
+ZHdhcmUgdGhhdCBkb2VzIG5vdCBhY3R1YWxseSBzdXBwb3J0IHVuYWxpZ25lZCBhY2Nlc3Nlcy4K
+CgpPbiB0aGUgcGFnZS1jcm9zc2luZyBwYXJ0OiB0aGlzIG9uZSBpcyByZWFsIGluIHRoZW9yeSwg
+dGhvdWdoIHRoZQp3aW5kb3cgaXMgbmFycm93LsKgIEl0IGNhbm5vdCBoYXBwZW4gZm9yIGJ1aWx0
+LWluIGtlcm5lbCB0ZXh0ICh0aGUKbGluZWFyIG1hcHBpbmcgaXMgY29udGlndW91cykuwqAgRm9y
+IG1vZHVsZXMsIGl0IG5lZWRzIGEgY29tcHJlc3NlZAppbnN0cnVjdGlvbiBhdCB0aGUgbGFzdCB0
+d28gYnl0ZXMgb2YgYSBtb2R1bGUgdGV4dCBwYWdlIGZvbGxvd2VkIGJ5CnRoZSB2bWFsbG9jIGd1
+YXJkIHBhZ2UsIHBsdXMgYSBrcHJvYmUgcmVnaXN0ZXJlZCBleGFjdGx5IHRoZXJlLsKgIEEKMzIt
+Yml0IGluc3RydWN0aW9uIGNhbm5vdCBzaXQgYXQgdGhhdCBsb2NhdGlvbiBvbiBhIHdvcmtpbmcg
+bW9kdWxlCihpdHMgZW5jb2Rpbmcgd291bGQgY3Jvc3MgaW50byB0aGUgdW5tYXBwZWQgZ3VhcmQg
+cGFnZSwgc28gaXQgY291bGQKbmV2ZXIgYmUgZmV0Y2hlZCksIHdoaWNoIGlzIGFsc28gd2h5IHRo
+ZSB0d28tdTE2LXN0ZXAgY29weSBpbgphcmNoX3ByZXBhcmVfa3Byb2JlKCkgaXMgc2FmZS4KCgpJ
+ZiBpdCBpcyB3b3J0aCBmaXhpbmcsIHRoZSBjbGVhbmVzdCBhcHByb2FjaCBzZWVtcyB0byBiZSBw
+YXNzaW5nIHRoZQpvcGNvZGUgYnkgdmFsdWUgaW5zdGVhZCBvZiBhIHBvaW50ZXI6IGFyY2hfcHJl
+cGFyZV9rcHJvYmUoKSBhbHJlYWR5CmhvbGRzIGEgc2FmZWx5IGNvcGllZCBwLT5vcGNvZGUsIGFu
+ZCB0aGUgdXByb2JlcyBjYWxsZXIgcGFzc2VzIGEgc3RhY2sKdmFyaWFibGUsIHNvIGJvdGggY2Fs
+bCBzaXRlcyB3b3VsZCBiZSBjb3ZlcmVkLsKgIFRoZXJlIGlzIGEgdGhpcmQKc2ltaWxhciByYXcg
+cmVhZCBpbiB1cHJvYmVzLmMgKHRoZSBhdXByb2JlLT5pbnNuW10gZGVyZWZlcmVuY2UpIHRoYXQK
+Y291bGQgYmUgZm9sZGVkIGluIGFzIHdlbGwuCgoKRWl0aGVyIHdheSwgdGhpcyBkb2Vzbid0IG5l
+ZWQgdG8gYmUgaGFuZGxlZCBpbiB0aGUgc2VyaWVzOiB0aGUKdXBjb21pbmcgdjcgd2lsbCBvbmx5
+IGFkZHJlc3MgTmFtJ3MgcmV2aWV3IGNvbW1lbnRzLgoKClRoYW5rcywKWGlhb2ZlbmcKCgo+IC0t
+LS0t5Y6f5aeL6YKu5Lu2LS0tLS0KPiDlj5Hku7bkuro6IHNhc2hpa28tYm90QGtlcm5lbC5vcmcK
+PiDlj5HpgIHml7bpl7Q6MjAyNi0xMC0xNiAxNjoyOTo0MiAo5pif5pyf5LqUKQo+IOaUtuS7tuS6
+ujogIlhpYW9mZW5nIFl1YW4iIDx5dWFueGlhb2ZlbmdAZXN3aW5jb21wdXRpbmcuY29tPgo+IOaK
+hOmAgTogbGludXgtdHJhY2Uta2VybmVsQHZnZXIua2VybmVsLm9yZwo+IOS4u+mimDogUmU6IFtQ
+QVRDSCB2NiAxLzJdIHJpc2N2OiBrcHJvYmVzOiByZWplY3QgcHJvYmVzIGluc2lkZSBMUi9TQyBz
+ZXF1ZW5jZXMKPiAKPiBUaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJ
+IHJldmlldyBmb3VuZCAxIHBvdGVudGlhbCBpc3N1ZShzKSB0byBjb25zaWRlcjoKPiAtIFtIaWdo
+XSByaXNjdjoga3Byb2JlczogdW5zYWZlIDMyLWJpdCByZWFkIGluIHJpc2N2X3Byb2JlX2RlY29k
+ZV9pbnNuIGNhbiBwYWdlIGZhdWx0Cj4gLS0KPiAKPiBjb21taXQgNmY5NDA1NzhkMmYwOTY5NzBl
+OWFiZDZjYzI4OTRkZTAwOGUyOWY2Zgo+IEF1dGhvcjogWGlhb2ZlbmcgWXVhbiA8eXVhbnhpYW9m
+ZW5nQGVzd2luY29tcHV0aW5nLmNvbT4KPiAKPiAgICAgcmlzY3Y6IGtwcm9iZXM6IHJlamVjdCBw
+cm9iZXMgaW5zaWRlIExSL1NDIHNlcXVlbmNlcwo+IAo+IFRoaXMgcGF0Y2ggcmVqZWN0cyBrcHJv
+YmVzIHBsYWNlZCBpbnNpZGUgTFIvU0Mgc2VxdWVuY2VzIG9yIG9uIHRoZSBMUi9TQwo+IGluc3Ry
+dWN0aW9ucyB0aGVtc2VsdmVzIHRvIGF2b2lkIGxpdmVsb2NrLiBJdCB1cGRhdGVzIHJpc2N2X3By
+b2JlX2RlY29kZV9pbnNuKCkKPiB0byByZWplY3QgdGhlIGluc3RydWN0aW9ucyBhbmQgYWRkcyBp
+bnN0cnVjdGlvbiB3YWxraW5nIGxvZ2ljIGluCj4gYXJjaF9jaGVja19rcHJvYmUoKSB0byByZWpl
+Y3QgYWRkcmVzc2VzIHdpdGhpbiBhIHNlcXVlbmNlLgo+IAo+IFsgLi4uIF0KPiAKPiA+IGRpZmYg
+LS1naXQgYS9hcmNoL3Jpc2N2L2tlcm5lbC9wcm9iZXMvZGVjb2RlLWluc24uYyBiL2FyY2gvcmlz
+Y3Yva2VybmVsL3Byb2Jlcy9kZWNvZGUtaW5zbi5jCj4gPiBpbmRleCA0MzNkOTAzNWI4ODgyLi5l
+NmE4ODk0Njc3YjEwIDEwMDY0NAo+ID4gLS0tIGEvYXJjaC9yaXNjdi9rZXJuZWwvcHJvYmVzL2Rl
+Y29kZS1pbnNuLmMKPiA+ICsrKyBiL2FyY2gvcmlzY3Yva2VybmVsL3Byb2Jlcy9kZWNvZGUtaW5z
+bi5jCj4gPiBAQCAtMjMsNiArMjMsOCBAQCByaXNjdl9wcm9iZV9kZWNvZGVfaW5zbihwcm9iZV9v
+cGNvZGVfdCAqYWRkciwgc3RydWN0IGFyY2hfcHJvYmVfaW5zbiAqYXBpKQo+ID4gIAkgKi8KPiA+
+ICAJUklTQ1ZfSU5TTl9SRUpFQ1RFRChzeXN0ZW0sCQlpbnNuKTsKPiA+ICAJUklTQ1ZfSU5TTl9S
+RUpFQ1RFRChmZW5jZSwJCWluc24pOwo+ID4gKwlSSVNDVl9JTlNOX1JFSkVDVEVEKGxyLAkJCWlu
+c24pOwo+ID4gKwlSSVNDVl9JTlNOX1JFSkVDVEVEKHNjLAkJCWluc24pOwo+IAo+IFtTZXZlcml0
+eTogSGlnaF0KPiBEb2VzIGV2YWx1YXRpbmcgdGhlc2UgbWFjcm9zIHJlbHkgb24gdGhlIGluc24g
+dmFyaWFibGUsIHdoaWNoIGlzIHJlYWQKPiB1bmNvbmRpdGlvbmFsbHkgYXMgYSBuYXRpdmUgMzIt
+Yml0IGludGVnZXIgZWFybGllciBpbiB0aGUgZnVuY3Rpb24/Cj4gCj4gYXJjaC9yaXNjdi9rZXJu
+ZWwvcHJvYmVzL2RlY29kZS1pbnNuLmM6cmlzY3ZfcHJvYmVfZGVjb2RlX2luc24oKSB7Cj4gCXBy
+b2JlX29wY29kZV90IGluc24gPSAqYWRkcjsKPiAJLi4uCj4gCj4gSWYgYWRkciBpcyAyLWJ5dGUg
+YWxpZ25lZCwgd2lsbCB0aGlzIG5hdGl2ZSAzMi1iaXQgZGVyZWZlcmVuY2UgcGVyZm9ybQo+IGFu
+IHVuYWxpZ25lZCBtZW1vcnkgYWNjZXNzLCBwb3RlbnRpYWxseSBvb3BzaW5nIG9uIFJJU0MtViBo
+YXJkd2FyZSB0aGF0Cj4gbGFja3Mga2VybmVsLW1vZGUgdW5hbGlnbmVkIGFjY2VzcyBzdXBwb3J0
+Pwo+IAo+IEZ1cnRoZXJtb3JlLCBpZiBhZGRyIHBvaW50cyB0byBhIDE2LWJpdCBjb21wcmVzc2Vk
+IGluc3RydWN0aW9uIGF0IHRoZQo+IGVuZCBvZiBhIG1hcHBlZCBwYWdlIGFuZCB0aGUgbmV4dCBw
+YWdlIGlzIGFuIHVubWFwcGVkIHZtYWxsb2MgZ3VhcmQKPiBwYWdlLCBjb3VsZCB0aGlzIDMyLWJp
+dCByZWFkIGNyb3NzIHRoZSBwYWdlIGJvdW5kYXJ5IGludG8gdW5tYXBwZWQKPiBtZW1vcnk/Cj4g
+Cj4gV291bGQgdGhpcyB0cmlnZ2VyIGEga2VybmVsIHBhZ2UgZmF1bHQgYW5kIHBhbmljIHdoZW4g
+dHJhY2luZyB0b29scwo+IHJlZ2lzdGVyIGEga3Byb2JlIGF0IHN1Y2ggYW4gYWRkcmVzcz8KPiAK
+PiAtLSAKPiBTYXNoaWtvIEFJIHJldmlldyDCtyBodHRwczovL3Nhc2hpa28uZGV2LyMvcGF0Y2hz
+ZXQvMjAyNjEwMTYwODE3MDYuMTA4NS0xLXl1YW54aWFvZmVuZ0Blc3dpbmNvbXB1dGluZy5jb20/
+cGFydD0xCg==
