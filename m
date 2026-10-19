@@ -1,78 +1,67 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=23.251.234.58
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792424815;
-	b=0P1M3dIXYER5+asBvsnRl8KmS923kMoLzwkTNntQO+t2R8/7zRCxrIs2HK2uFBacuIWs
-	 e9djavDJOCCQp7nGevojFz/yldGU2YekMNfCxW4UpABk+dOlqiXYuJQO8neo/RxVnPy40
-	 BV3SxX4mSrMn6js26lSFM0Vczarub6Xr04q6Y7ehoSdBHN1teFN7GS8xrRfFyHaSbCM9h
-	 JxJq1MPWvsGkkuzjLGsbLoPKTMSGzhFXoprgSuupQDubRQaseW0NEabMpGmtbVmQw+uGw
-	 wWWwarSzHx99tpSiJtIwJasnSQVed3D2sxQJP573HQnkCMmk6cspjRGHKJocN0Bh2wA==
+	t=1792424822;
+	b=w6C7ifSwGGkuHsM9/YrTrF6PBEj0tXN87Z81D16zJcMC+yGLVxtHSJHHgvs516uWKW7x
+	 cm1Ljvf5pjQ2vyGyDdZE4bhy3WMAE8j20xwZmcJy9VvdZ1XYLOAOhKNahS6FXjQpTCCQT
+	 rJwmHRYttzcPUuE+0lvgc3P2ehEM9uH9OyJw4VNmtL6sRMGbDBg1Ftg7isK229xApoMro
+	 8iNn+hQDJ8tba15hmwdDcYRYcYSsGfF+h3Twlm7BUqgMKJirVj4CLcIdfEtSxv90T2ZqI
+	 kkW4w8t+h0R/dKxdnXyhrFwFuqK31EBEEGrfXPnE9k9UPTPog0PrxYuM9yRUxsDaW0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792424815;
-	h=DMARC-Filter:Received:Received:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-Rspamd-Pre-Result:X-Rspamd-Action:
-	 X-Spam-Flag:X-Spam-Score:X-Rspamd-Pre-Result:X-Spam-Level:
-	 X-Rspamd-Queue-Id:X-Spamd-Result:X-Rspamd-Server;
-	bh=AT+mLGGAR9lMsVQ4EgFREBQMYpMc/ICAky5vzL2w4MU=;
-	b=xx266vFz12nRoYotG/1if6p79tpeR+4qE4kB7zptdfV9dXAwrdwZrDm9JIYEkVA6akYt
-	 W1lI4XMTeiSGYDrUokJceyjjkln2pbLeXCmeqacWbaZ8aKh8D0SVwF/xvsUNIkqFtPxgA
-	 KCQr8G7RoOGhtdNi4NMOcEXgZauouwA9kYM8iOJKYGJbAIWXjYDquD22B9yqP8Bs0ca6W
-	 dRTNLhfTjA3Igb9xKHfXXIIixxmZLlnldE4xCu8akFN98VbKZo/TRlKR8BFSpudgg2YtW
-	 E2yo36iHmweC85x+CjkqFUAWID0flkWr4nkmMYDPFtmgWM8dNmnDPGXpPX4SKW7TCAg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792424822;
+	h=DMARC-Filter:DKIM-Signature:DKIM-Signature:In-Reply-To:References:
+	 X-Mailer:From:To:Cc:Subject:Message-ID:Content-Transfer-Encoding:Date:
+	 MIME-Version:Content-Type:Feedback-ID:X-SES-Outgoing;
+	bh=bA82C24dkHYIS6f3OgsgzKwCX4C0TKB5nurDcZQs6BU=;
+	b=2vfdI88aUz0vzohcX0S1D9joBjw78McacMDAWijc1o80TpbZz9qVcsvq0hpYWkEr98m4
+	 yegwe8IlTBWl+M7ZXO8sFewjkzzlYGlIc/Hva+lf7CYSI9wlRPtYu4h/ZGauVHSrairZQ
+	 XaM/um527HWmWcXoeXS/ZJKGn1DbcLSDz8od+5dI8VpKrz/IE3KdrPzD6Q9BMshtkp2pS
+	 3T882d59yhGojN3wJG90HKXvrU9AbbCje3uAGtgVjX9flZ6y3XjWfNH4GDG7uaw0eo1YJ
+	 O/v7CY/E1arSsGpPzqxQgiS23ghTje1a8o8drLO/ludGIMH4xee1FfIgnZhrkCeQtHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=fqwqf.xyz;
+	spf=pass smtp.mailfrom=send.fqwqf.xyz;
+	dkim=pass header.d=fqwqf.xyz header.i=@fqwqf.xyz header.a=rsa-sha256 header.s=resend header.b=WkEAmPbB;
+	dkim=pass header.d=amazonses.com header.i=@amazonses.com header.a=rsa-sha256 header.s=zh4gjftm6etwoq6afzugpky45synznly header.b=r0zLaYPc;
+	arc=none smtp.remote-ip=23.251.234.58
+Received: from e234-58.smtp-out.ap-northeast-1.amazonses.com (e234-58.smtp-out.ap-northeast-1.amazonses.com [23.251.234.58])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4E960774C4;
-	Mon, 19 Oct 2026 15:46:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9F4E960774C4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 3E30D21BB5;
-	Mon, 19 Oct 2026 15:46:19 +0000 (UTC)
-Authentication-Results: smtp-out1.suse.de;
-	none
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 77D22137D2;
-	Mon, 19 Oct 2026 15:46:18 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id gYPgBkk71mrrPAAAD6G6ig:T4
-	(envelope-from <tzimmermann@suse.de>); Mon, 19 Oct 2026 15:46:18 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: jfalempe@redhat.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org,
-	amd-gfx@lists.freedesktop.org,
-	linux-hyperv@vger.kernel.org,
-	intel-gfx@lists.freedesktop.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	nouveau@lists.freedesktop.org,
-	linux-renesas-soc@vger.kernel.org,
-	virtualization@lists.linux.dev,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 3/4] drm/pixel: Link panic helpers into drm_pixel_helper.ko
-Date: Mon, 19 Oct 2026 17:32:44 +0200
-Message-ID: <20261019154612.777074-4-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261019154612.777074-1-tzimmermann@suse.de>
-References: <20261019154612.777074-1-tzimmermann@suse.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863026078866
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 15:47:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 863026078866
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fqwqf.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=send.fqwqf.xyz
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=fqwqf.xyz header.i=@fqwqf.xyz header.a=rsa-sha256 header.s=resend header.b=WkEAmPbB;
+	dkim=pass (1024-bit key, unprotected) header.d=amazonses.com header.i=@amazonses.com header.a=rsa-sha256 header.s=zh4gjftm6etwoq6afzugpky45synznly header.b=r0zLaYPc
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple; s=resend;
+	d=fqwqf.xyz; t=1792424820;
+	h=In-Reply-To:References:From:To:Cc:Subject:Message-ID:Content-Transfer-Encoding:Date:MIME-Version:Content-Type;
+	bh=bA82C24dkHYIS6f3OgsgzKwCX4C0TKB5nurDcZQs6BU=;
+	b=WkEAmPbBXn5sincNaWpZ/EZwEzUK+EcbGbNyd1y+nZU4XVBOqYdvhwo9HV0IWMvx
+	UMgihLiP7BnYazFYubdP2oCExJp/LcdIRasW21YyEsMRZtqEt0brygiFc80Z9AJUD0u
+	UZ2+FAv3azWXhEWg8HOlbzkN99i7ELMi1ct/L1hs=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=zh4gjftm6etwoq6afzugpky45synznly; d=amazonses.com; t=1792424820;
+	h=In-Reply-To:References:From:To:Cc:Subject:Message-ID:Content-Transfer-Encoding:Date:MIME-Version:Content-Type:Feedback-ID;
+	bh=bA82C24dkHYIS6f3OgsgzKwCX4C0TKB5nurDcZQs6BU=;
+	b=r0zLaYPcueOoQaA6xyNudF62tLU7HfLnOZlty4CbcAd+oI+hqN8aLMLW+RBjxI2k
+	WEyicS8Nweq2nNV1YCkBOawh9wOzJBp5TmJydCAI/IUR/fIi1aWwnJsH0hCD4FaJ+Cd
+	EDS+qJYWjdHcB0vEFy4fPu1Uejqs9xpTb54G2JWc=
+In-Reply-To: <sashiko-outbox-168888@kernel.org>
+References: <sashiko-outbox-168888@kernel.org>
+X-Mailer: git-send-email 2.53.0
+From: Jizhou Tong <fqwqf@fqwqf.xyz>
+To: Bryan O'Donoghue <bod@kernel.org>
+Cc: vkoul@kernel.org, neil.armstrong@linaro.org, olteanv@gmail.com, 
+	linux-phy@lists.infradead.org, linux-media@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, sashiko-reviews@lists.linux.dev
+Subject: Re: [RFC PATCH v2] phy: qcom-mipi-csi2: round the requested settle
+  interval up
+Message-ID: <010601a154d83d84-0b2dea8c-14b7-477b-b1ec-3f44b0b55ad4-000000@ap-northeast-1.amazonses.com>
+Content-Transfer-Encoding: 7bit
+Date: Mon, 19 Oct 2026 15:47:00 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -82,333 +71,29 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Pre-Result: action=no action;
-	module=replies;
-	Message is reply to one we originated
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spam-Score: -4.00
-X-Rspamd-Pre-Result: action=no action;
-	module=replies;
-	Message is reply to one we originated
-X-Spam-Level: 
-X-Rspamd-Queue-Id: 3E30D21BB5
-X-Spamd-Result: default: False [-4.00 / 50.00];
-	REPLY(-4.00)[]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+Content-Type: text/plain; charset=utf-8
+Feedback-ID: :1.ap-northeast-1.6BGMgStFQE7EJYq5syaCRzdneEHVt/+DAaGDrqUmDs9QLO4/SllUBZ3fHvnZ8rcAX/3IjUyTRgi5JFZsWrikFHwlPJqCkqEMlxDFM4JXh+ycxH/J5Tudg5bGdz6h4331g1L1EFsGR8kuYNfGLsrxz4Nym4YXoPcZxeVkrHry4Zx21n8vEVLEjc7s+OCM8PU9:1.ap-northeast-1.DTXDV/V9GPBWozcllKo8innbNB2qs2O/3F8XZSzd9ZM=:AmazonSES
+X-SES-Outgoing: 2026.10.19-23.251.234.58
 
-Move panic helpers from drm_kms_helper to drm_pixel_helper.ko. Select
-DRM_PIXEL_HELPER in the drivers that use the panic helpers.
+Hi Bryan,
 
-Drop the Kconfig option DRM_PANIC_HELPER. With the user selecting
-panic support via DRM_PANIC, panic helpers will become available to
-drivers.
+I checked the zero-count case raised by Sashiko against media-next
+(d7e7bca71698) and the rounding patch. Both the base driver and the
+patched driver return zero when the calculated interval is exactly
+six integer timer periods, and lanes_enable() rejects it with -ENODEV.
 
-Related module init and exit functions are now declared in the new
-header file drm_pixel_helper_internal.h. Other internal functions for
-pixel helpers can later go there as well.
+For example, link_freq = 600000000 Hz and timer_clk_rate = 66666666 Hz
+produce a 90000 ps interval and a 15000 ps integer timer period. The
+helper returns zero before and after the patch. This is a software
+boundary case, not a clock configuration I have tested on hardware.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
----
- drivers/gpu/drm/Kconfig                     |  9 ++-------
- drivers/gpu/drm/Kconfig.debug               |  1 -
- drivers/gpu/drm/Makefile                    |  4 ++--
- drivers/gpu/drm/amd/amdgpu/Kconfig          |  1 +
- drivers/gpu/drm/drm_kms_helper_common.c     | 13 -------------
- drivers/gpu/drm/drm_panic_helper.c          |  1 +
- drivers/gpu/drm/drm_panic_internal.h        | 14 --------------
- drivers/gpu/drm/drm_pixel_helper_common.c   | 14 ++++++++++++++
- drivers/gpu/drm/drm_pixel_helper_internal.h | 20 ++++++++++++++++++++
- drivers/gpu/drm/i915/Kconfig                |  1 +
- drivers/gpu/drm/imx/ipuv3/Kconfig           |  1 +
- drivers/gpu/drm/nouveau/Kconfig             |  1 +
- drivers/gpu/drm/renesas/rcar-du/Kconfig     |  1 +
- drivers/gpu/drm/renesas/shmobile/Kconfig    |  1 +
- drivers/gpu/drm/tidss/Kconfig               |  1 +
- drivers/gpu/drm/virtio/Kconfig              |  1 +
- 16 files changed, 47 insertions(+), 37 deletions(-)
- create mode 100644 drivers/gpu/drm/drm_pixel_helper_internal.h
+Is a programmed settle count of zero valid on the supported PHYs, or
+is rejecting it intentional? If it is valid, the helper would need to
+distinguish it from an unrepresentable interval, with the caller checking
+for an error separately.
 
-diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
-index 8e4a588e9111..bf7c59944340 100644
---- a/drivers/gpu/drm/Kconfig
-+++ b/drivers/gpu/drm/Kconfig
-@@ -46,13 +46,14 @@ config DRM_MIPI_DSI
- config DRM_KMS_HELPER
- 	tristate
- 	depends on DRM
--	select DRM_PANIC_HELPER if DRM_PANIC
- 	help
- 	  CRTC helpers for KMS drivers.
- 
- config DRM_PIXEL_HELPER
- 	tristate
- 	depends on DRM
-+	select DRM_DRAW if DRM_PANIC
-+	select FONT_SUPPORT if DRM_PANIC
- 	help
- 	  Helpers for working with pixel data in DRM.
- 
-@@ -135,12 +136,6 @@ config DRM_PANIC_SCREEN_QR_VERSION
- 	  Smaller QR code are easier to read, but will contain less debugging
- 	  data. Default is 40.
- 
--config DRM_PANIC_HELPER
--	bool
--	depends on DRM
--	select DRM_DRAW
--	select FONT_SUPPORT
--
- config DRM_RAS
- 	bool "DRM RAS support"
- 	depends on DRM
-diff --git a/drivers/gpu/drm/Kconfig.debug b/drivers/gpu/drm/Kconfig.debug
-index 1afb9cad850f..4573cad368a2 100644
---- a/drivers/gpu/drm/Kconfig.debug
-+++ b/drivers/gpu/drm/Kconfig.debug
-@@ -69,7 +69,6 @@ config DRM_KUNIT_TEST
- 	select DRM_EXPORT_FOR_TESTS if m
- 	select DRM_GEM_SHMEM_HELPER
- 	select DRM_KUNIT_TEST_HELPERS
--	select DRM_PANIC_HELPER
- 	select DRM_PIXEL_HELPER
- 	select DRM_SYSFB_HELPER
- 	select PRIME_NUMBERS
-diff --git a/drivers/gpu/drm/Makefile b/drivers/gpu/drm/Makefile
-index fbc643747110..18a5a5baf029 100644
---- a/drivers/gpu/drm/Makefile
-+++ b/drivers/gpu/drm/Makefile
-@@ -102,6 +102,8 @@ obj-$(CONFIG_DRM_PANEL_BACKLIGHT_QUIRKS) += drm_panel_backlight_quirks.o
- drm_pixel_helper-y := \
- 	drm_format_helper.o \
- 	drm_pixel_helper_common.o
-+drm_pixel_helper-$(CONFIG_DRM_PANIC) += drm_panic_helper.o
-+drm_pixel_helper-$(CONFIG_DRM_PANIC_SCREEN_QR_CODE) += drm_panic_helper_qr.o
- obj-$(CONFIG_DRM_PIXEL_HELPER) += drm_pixel_helper.o
- 
- #
-@@ -160,8 +162,6 @@ drm_kms_helper-y := \
- 	drm_self_refresh_helper.o \
- 	drm_simple_kms_helper.o \
- 	drm_vblank_helper.o
--drm_kms_helper-$(CONFIG_DRM_PANIC_HELPER) += drm_panic_helper.o
--drm_kms_helper-$(CONFIG_DRM_PANIC_SCREEN_QR_CODE) += drm_panic_helper_qr.o
- obj-$(CONFIG_DRM_KMS_HELPER) += drm_kms_helper.o
- 
- #
-diff --git a/drivers/gpu/drm/amd/amdgpu/Kconfig b/drivers/gpu/drm/amd/amdgpu/Kconfig
-index 12e4a41bf1f0..78584d8aeb52 100644
---- a/drivers/gpu/drm/amd/amdgpu/Kconfig
-+++ b/drivers/gpu/drm/amd/amdgpu/Kconfig
-@@ -12,6 +12,7 @@ config DRM_AMDGPU
- 	select DRM_DISPLAY_HDCP_HELPER
- 	select DRM_DISPLAY_HELPER
- 	select DRM_KMS_HELPER
-+	select DRM_PIXEL_HELPER if DRM_PANIC
- 	select DRM_SCHED
- 	select DRM_TTM
- 	select DRM_TTM_HELPER
-diff --git a/drivers/gpu/drm/drm_kms_helper_common.c b/drivers/gpu/drm/drm_kms_helper_common.c
-index 1e55ecac4698..76c7297b24e9 100644
---- a/drivers/gpu/drm/drm_kms_helper_common.c
-+++ b/drivers/gpu/drm/drm_kms_helper_common.c
-@@ -30,7 +30,6 @@
- #include <linux/moduleparam.h>
- 
- #include "drm_crtc_helper_internal.h"
--#include "drm_panic_internal.h"
- 
- #if IS_ENABLED(CONFIG_DRM_FBDEV_EMULATION)
- bool drm_fbdev_emulation = true;
-@@ -68,18 +67,6 @@ MODULE_PARM_DESC(drm_leak_fbdev_smem,
- 
- #endif
- 
--static int __init drm_kms_helper_init(void)
--{
--	return drm_panic_helper_init();
--}
--module_init(drm_kms_helper_init);
--
--static void __exit drm_kms_helper_exit(void)
--{
--	drm_panic_helper_exit();
--}
--module_exit(drm_kms_helper_exit);
--
- MODULE_AUTHOR("David Airlie, Jesse Barnes");
- MODULE_DESCRIPTION("DRM KMS helper");
- MODULE_LICENSE("GPL and additional rights");
-diff --git a/drivers/gpu/drm/drm_panic_helper.c b/drivers/gpu/drm/drm_panic_helper.c
-index 8913c3d22e8d..6f0d3a2df6b3 100644
---- a/drivers/gpu/drm/drm_panic_helper.c
-+++ b/drivers/gpu/drm/drm_panic_helper.c
-@@ -20,6 +20,7 @@
- 
- #include "drm_draw_internal.h"
- #include "drm_panic_internal.h"
-+#include "drm_pixel_helper_internal.h"
- 
- struct drm_panic_line {
- 	u32 len;
-diff --git a/drivers/gpu/drm/drm_panic_internal.h b/drivers/gpu/drm/drm_panic_internal.h
-index fe6d514a0833..c68d64c56e15 100644
---- a/drivers/gpu/drm/drm_panic_internal.h
-+++ b/drivers/gpu/drm/drm_panic_internal.h
-@@ -52,18 +52,4 @@ static inline void drm_panic_lock(struct drm_device *dev, unsigned long flags) {
- static inline void drm_panic_unlock(struct drm_device *dev, unsigned long flags) {}
- #endif
- 
--#if IS_ENABLED(CONFIG_DRM_PANIC_HELPER)
--/* drm_panic_helper.c */
--int __init drm_panic_helper_init(void);
--void __exit drm_panic_helper_exit(void);
--#else
--static inline int __init drm_panic_helper_init(void)
--{
--	return 0;
--}
--
--static inline void __exit drm_panic_helper_exit(void)
--{ }
--#endif
--
- #endif /* __DRM_PANIC_INTERNAL_H__ */
-diff --git a/drivers/gpu/drm/drm_pixel_helper_common.c b/drivers/gpu/drm/drm_pixel_helper_common.c
-index 743846e1e003..0213c59b82f0 100644
---- a/drivers/gpu/drm/drm_pixel_helper_common.c
-+++ b/drivers/gpu/drm/drm_pixel_helper_common.c
-@@ -2,5 +2,19 @@
- 
- #include <linux/module.h>
- 
-+#include "drm_pixel_helper_internal.h"
-+
-+static int __init drm_pixel_helper_init(void)
-+{
-+	return drm_panic_helper_init();
-+}
-+module_init(drm_pixel_helper_init);
-+
-+static void __exit drm_pixel_helper_exit(void)
-+{
-+	drm_panic_helper_exit();
-+}
-+module_exit(drm_pixel_helper_exit);
-+
- MODULE_DESCRIPTION("DRM pixel-data helpers");
- MODULE_LICENSE("GPL and additional rights");
-diff --git a/drivers/gpu/drm/drm_pixel_helper_internal.h b/drivers/gpu/drm/drm_pixel_helper_internal.h
-new file mode 100644
-index 000000000000..1606cbb0a460
---- /dev/null
-+++ b/drivers/gpu/drm/drm_pixel_helper_internal.h
-@@ -0,0 +1,20 @@
-+/* SPDX-License-Identifier: GPL-2.0 or MIT */
-+
-+#ifndef DRM_PIXEL_HELPER_INTERNAL_H
-+#define DRM_PIXEL_HELPER_INTERNAL_H
-+
-+#if IS_ENABLED(CONFIG_DRM_PANIC)
-+/* drm_panic_helper.c */
-+int __init drm_panic_helper_init(void);
-+void __exit drm_panic_helper_exit(void);
-+#else
-+static inline int __init drm_panic_helper_init(void)
-+{
-+	return 0;
-+}
-+
-+static inline void __exit drm_panic_helper_exit(void)
-+{ }
-+#endif
-+
-+#endif
-diff --git a/drivers/gpu/drm/i915/Kconfig b/drivers/gpu/drm/i915/Kconfig
-index 5e939004b646..1c65b14bf0f4 100644
---- a/drivers/gpu/drm/i915/Kconfig
-+++ b/drivers/gpu/drm/i915/Kconfig
-@@ -19,6 +19,7 @@ config DRM_I915
- 	select DRM_KMS_HELPER
- 	select DRM_PANEL
- 	select DRM_MIPI_DSI
-+	select DRM_PIXEL_HELPER if DRM_PANIC
- 	select FB_IOMEM_HELPERS if DRM_FBDEV_EMULATION
- 	select RELAY
- 	select I2C
-diff --git a/drivers/gpu/drm/imx/ipuv3/Kconfig b/drivers/gpu/drm/imx/ipuv3/Kconfig
-index 3ca237515e46..19b51835cdd3 100644
---- a/drivers/gpu/drm/imx/ipuv3/Kconfig
-+++ b/drivers/gpu/drm/imx/ipuv3/Kconfig
-@@ -3,6 +3,7 @@ config DRM_IMX
- 	tristate "DRM Support for Freescale i.MX"
- 	select DRM_CLIENT_SELECTION
- 	select DRM_KMS_HELPER
-+	select DRM_PIXEL_HELPER if DRM_PANIC
- 	select VIDEOMODE_HELPERS
- 	select DRM_GEM_DMA_HELPER
- 	depends on DRM && (ARCH_MXC || COMPILE_TEST)
-diff --git a/drivers/gpu/drm/nouveau/Kconfig b/drivers/gpu/drm/nouveau/Kconfig
-index 3b5757aed9c8..3850b27861fa 100644
---- a/drivers/gpu/drm/nouveau/Kconfig
-+++ b/drivers/gpu/drm/nouveau/Kconfig
-@@ -10,6 +10,7 @@ config DRM_NOUVEAU
- 	select DRM_DISPLAY_HDMI_HELPER
- 	select DRM_DISPLAY_HELPER
- 	select DRM_KMS_HELPER
-+	select DRM_PIXEL_HELPER if DRM_PANIC
- 	select DRM_TTM
- 	select DRM_TTM_HELPER
- 	select DRM_EXEC
-diff --git a/drivers/gpu/drm/renesas/rcar-du/Kconfig b/drivers/gpu/drm/renesas/rcar-du/Kconfig
-index 80bd770ae0f6..33337ff84c2e 100644
---- a/drivers/gpu/drm/renesas/rcar-du/Kconfig
-+++ b/drivers/gpu/drm/renesas/rcar-du/Kconfig
-@@ -9,6 +9,7 @@ config DRM_RCAR_DU
- 	select DRM_DISPLAY_HELPER
- 	select DRM_BRIDGE_CONNECTOR
- 	select DRM_GEM_DMA_HELPER
-+	select DRM_PIXEL_HELPER if DRM_PANIC
- 	select VIDEOMODE_HELPERS
- 	help
- 	  Choose this option if you have an R-Car chipset.
-diff --git a/drivers/gpu/drm/renesas/shmobile/Kconfig b/drivers/gpu/drm/renesas/shmobile/Kconfig
-index 52e160464001..dbb86f068499 100644
---- a/drivers/gpu/drm/renesas/shmobile/Kconfig
-+++ b/drivers/gpu/drm/renesas/shmobile/Kconfig
-@@ -9,6 +9,7 @@ config DRM_SHMOBILE
- 	select DRM_DISPLAY_HELPER
- 	select DRM_BRIDGE_CONNECTOR
- 	select DRM_GEM_DMA_HELPER
-+	select DRM_PIXEL_HELPER if DRM_PANIC
- 	select VIDEOMODE_HELPERS
- 	help
- 	  Choose this option if you have an SH Mobile chipset.
-diff --git a/drivers/gpu/drm/tidss/Kconfig b/drivers/gpu/drm/tidss/Kconfig
-index 52a64fa1ad5d..be60ec720544 100644
---- a/drivers/gpu/drm/tidss/Kconfig
-+++ b/drivers/gpu/drm/tidss/Kconfig
-@@ -8,6 +8,7 @@ config DRM_TIDSS
- 	select DRM_BRIDGE_CONNECTOR
- 	select DRM_GEM_DMA_HELPER
- 	select DRM_PANEL
-+	select DRM_PIXEL_HELPER if DRM_PANIC
- 	help
- 	  The TI Keystone family SoCs introduced a new generation of
- 	  Display SubSystem. There is currently three Keystone family
-diff --git a/drivers/gpu/drm/virtio/Kconfig b/drivers/gpu/drm/virtio/Kconfig
-index fc884fb57b7e..6440a8f39e04 100644
---- a/drivers/gpu/drm/virtio/Kconfig
-+++ b/drivers/gpu/drm/virtio/Kconfig
-@@ -6,6 +6,7 @@ config DRM_VIRTIO_GPU
- 	select DRM_CLIENT_SELECTION
- 	select DRM_KMS_HELPER
- 	select DRM_GEM_SHMEM_HELPER
-+	select DRM_PIXEL_HELPER if DRM_PANIC
- 	select VIRTIO_DMA_SHARED_BUFFER
- 	help
- 	   This is the virtual GPU driver for virtio.  It can be used with
--- 
-2.56.0
+The rounding RFC preserves the existing zero-count handling. I would
+keep any change to that hardware policy separate from the rounding fix.
 
+Best regards,
+Jizhou Tong
