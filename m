@@ -1,162 +1,116 @@
-Received: from OS8PR02CU002.outbound.protection.outlook.com (mail-japanwestazon11022112.outbound.protection.outlook.com [40.107.75.112])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F8A4CA777
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 10:13:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.75.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792404821; cv=fail; b=c2+NIVehxXl7o6XvLlknewkRiXKsyVuLydt7UD2bMcCj3lVV5xB7L3wuT5hEnjCb6Xv2o3Mm+eC4lnjivoZuKYLHpnuqWMS9azS/MrckhIFyIbJUmkX/aAASybb/Ia+9wQYcraPx79Mvb7ApXlHx/GTgaj1ySAg1oIzhKyno/nw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792404821; c=relaxed/simple;
-	bh=h3gVRyxkPQOp5CqpcJtdgXjUv27OZQ5nYBktB501rvQ=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=B+eBss9qvVgsrl76MqyG1JPhlXQrWZ9T6eVOmX2J3JJfPjV4Hxxj5idsLxZq7jN6MVmBr7x8FA5EjXPSoOmqrosHG+nkBglm3ZVxgOoA7RMmm5gS29vwpdtPabkH8kaZoKkyEZQyuBBbzJiebgjcZO52OuQA7gf4p0HREYyY5r4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com; spf=pass smtp.mailfrom=microsoft.com; dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b=D9bBWEXw; arc=fail smtp.client-ip=40.107.75.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microsoft.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401B64E3236;
+	Mon, 19 Oct 2026 10:47:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792406826; cv=none; b=MsX0FvVwbJiOC1Z4Z2VdTxoM1HTXluNwlilZz2VOMe0BGX+BWPJef2ebitrka/6ZNKPSN3PIw8qsTZoOBOFbceMmRkzXYcgr4DqfvViTRJssLgrV/mkETAtfbC2tVSndR/jVETSxsMmuzGfmKMkOsYwvLMU2gY1KZWw+i/XALNI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792406826; c=relaxed/simple;
+	bh=OyP5qKjojQU55MZ5aIPOxkm7Sd3rGJnPSxEwuWYCsCk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UUVYX4CivilUuUcsUmVx5swBOGPa06H5Jbt4ZkksG/ahMTMr6GqaCIW8Xm3KYqCXMZ5KbrQRIrFKDsjl+BCEoeA6UmjbOa5C1b8CXipXPVDnlhzWJued7ZHDABmdYwDlBm/dJJtlm621+mDMMFcTHfGYa/5XaH8vhn9dI9tZgGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=RJrgegDS; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=L3yq5gli; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b="D9bBWEXw"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pgjQiGBIEgTva90n1NC7iA+DBxPqKgjJ7oIAakyK06UUgDUrKzjh+NaX9AFuSfruuPnHEnN1gFcP+ATbtSkxVhUTVWn9Nx5S066WG7o/LNwYhvKqsYS7Qn+sRQqKkjrjh3vqVxiIHbLiMKDujp5q3vVAUJkhNljqasuKYpHY2N6d8WkYDh59pm7AMpRuzznN2Me5toWbZHjuafcf/pB8FnNUCqEQyLxnpm+b1NP4JdUniBRv3PA0Th9SnbCYzeIqPRf4IrwxPk5aqObc+IArNdDkKc6gHWKUr6szbMaX6jSX7VuNn/J6VlvoO/K9W8HhuTQMd5MgPKbQK2kcEJ/rrQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
- bh=h3gVRyxkPQOp5CqpcJtdgXjUv27OZQ5nYBktB501rvQ=;
- b=GTbzPARuykZxGR4N8TaSIsyyJoskYLcHRPeqIFJZ/7/MkIcmJE9Vc6PkfsUBSFT/KQdA2sojY7ZWyAvOUq6fr1oKAO4PclNB+YiskHRf7Znmj4Gpb/mQx2Gldmgb9BumiNjyOR2vqHnp9SVg2r+rx/26iNzYgyZxX1NLfuGxlCk1yLRclzynfzzn0bVOkeHA/AKOAVQUDJ/lLbYkcETNdiveNiMWkGS5CWQNapdtsZLOPzidAr4ibZ+r+kFV+iG7YAwa57eR6WjsdB/S+ijsaQwmSzV+80tTuS+IVYg3RspkzqxPC6ravEfjPYscXfBnhKIG2MYkNXEClY8hOs6lpQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=h3gVRyxkPQOp5CqpcJtdgXjUv27OZQ5nYBktB501rvQ=;
- b=D9bBWEXwYWXkMi/8/e2ZW/QeCZ56Mq9UZ6mCTH2DGbk67InxgT4rnQ4hi57j8nE2TtbtiWWWsHSFIYPohClxqzbmVE98yyzQ8rYTPJ04s8fsYzmX4jtRIdLNETD1/qLOYkWF3VTEvttq8uhLUVfcH3yrxDtO2RIu0NEOYmBWUF4=
-Received: from SE3P153MB1848.APCP153.PROD.OUTLOOK.COM (2603:1096:101:340::5)
- by SEZP153MB0791.APCP153.PROD.OUTLOOK.COM (2603:1096:101:a6::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.0; Mon, 19 Oct
- 2026 10:13:32 +0000
-Received: from SE3P153MB1848.APCP153.PROD.OUTLOOK.COM
- ([fe80::8f4e:575a:4706:a56e]) by SE3P153MB1848.APCP153.PROD.OUTLOOK.COM
- ([fe80::8f4e:575a:4706:a56e%6]) with mapi id 15.21.0569.000; Mon, 19 Oct 2026
- 10:13:31 +0000
-From: Wei Hu <weh@microsoft.com>
-To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>, Wei
- Hu <weh@linux.microsoft.com>
-CC: "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
-	"linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>,
-	"kuba@kernel.org" <kuba@kernel.org>, "netdev@vger.kernel.org"
-	<netdev@vger.kernel.org>
-Subject: RE: [EXTERNAL] Re: [PATCH net-next v8 1/4] net: mana: prepare HWC
- ownership for safe reinitialization
-Thread-Topic: [EXTERNAL] Re: [PATCH net-next v8 1/4] net: mana: prepare HWC
- ownership for safe reinitialization
-Thread-Index: AQHdXWbLNk6ewlhwnUS+aa2fSPI+VLcBpSeAgAL522A=
-Date: Mon, 19 Oct 2026 10:13:31 +0000
-Message-ID:
- <SE3P153MB18484659AA1DDB56695CF21EBB982@SE3P153MB1848.APCP153.PROD.OUTLOOK.COM>
-References: <cover.1791998462.git.weh@linux.microsoft.com>
- <64987f49ea13b5ccdc9ef95f4a9baf23a479edc3.1791998462.git.weh@linux.microsoft.com>
- <sashiko-outbox-175499@kernel.org>
-In-Reply-To: <sashiko-outbox-175499@kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=7dad0630-2d5a-422a-a578-db5a56cf7494;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2026-10-19T09:33:32Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Tag=10,
- 3, 0, 1;
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microsoft.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SE3P153MB1848:EE_|SEZP153MB0791:EE_
-x-ms-office365-filtering-correlation-id: 272cd593-a0aa-45f8-e66c-08df2dc9a05f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|23010399003|42112799006|366016|1800799024|376014|38070700021|11063799006|4143699003|56012099006|10067099003|7146999003|22082099003|18002099003;
-x-microsoft-antispam-message-info:
- fMrxL1rbP7Ah+tznyYL/NrF08ZOHp8lXsjyqUcXBgzYp3CnuMd8HQjr973jiHjYfkbUBCYA0BzNtAdluGcgcXh5JJcQ0xcVn9D0+HWp2YPlopcUXBA2iSwKcXmDQUPraRNf7sCEDnQ0LFV4yl6nhLyBZAwooGRbUYN4U8o0FM51MmXpps2wU6DhhNvN7VGt7zJxVYeyG56FypN1gRHXDKT9RiEX2EEva+7Z47DGaP9TpJmoM+DNiIg7RS1EaDS8HMysh1XobhgqTE8gBkMibQEKXZfDB8wqQOKKeVtaGvyl0WK3x+jXE8cCQ8jhck8Vbo/c7NRywUqYWKh5nopbNR97IzpPc4y0cS0WpkQvzq+M2ujJwxA09zQjb6VNDXGM8SwaBbfXY1R7eqWuMbBv7R4t4b8+Uu9DItP6a7FXzuyZ3cElbaV8TXlAQDmlzDN60lWm00Hil0XojCfTs5sHQq1jZdn8wLvZlKhubpNJxGCoFxwGxw50q1U9mfAb5TyEo9s/H8DWzb/Tll5X5bCLSY4JK/gj4NqHVxIrOtQLDiPsIeVMmNj1izMAr4+XbGaZide5KjUMvXDr5zlSNVY+t2YomIQCSRY8MwDCJ8tObsh00zLUUELZiQskFOjUrS2ZqYKeaO0MPZDXYm4xsMdHCLqS7X1FHLD2ShlqTTBWCJiHkAYhbkgaVMWaD8Ywp1PL6J4RyYUmMxQesEhdLXhCpxusgNxcLIjQDsrtTpBZQ0L0=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SE3P153MB1848.APCP153.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(42112799006)(366016)(1800799024)(376014)(38070700021)(11063799006)(4143699003)(56012099006)(10067099003)(7146999003)(22082099003)(18002099003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?9cU8OogkFHTTLNIrLvXapJamdgLpCIc6Lmz0a9Sa5y2BvTynHTjw9cGh4fzu?=
- =?us-ascii?Q?6VWJ54dGmNXxtZNjKL5fGc/vzZsjPAslcdid2q4oGmSSRPZyz+aWkLeol+9R?=
- =?us-ascii?Q?V9cexp4s3yeq3Pcw8xu+GTaH1Y1fHEOmZ0HaQhSGAhV72KB9PrMkDSS9SEWb?=
- =?us-ascii?Q?8cqy2IeOreUEuBQWwtXTgVxbXKUw8//ixZcDc7jZ6Vg1+hhnvTIhpPvab8/+?=
- =?us-ascii?Q?Yct7jtmovlu/NPqiXzScx26e9xxBne9RqEBicmUT5kfNEthDCxTvnfWJEdrx?=
- =?us-ascii?Q?MtE0Cm99wnG4r57XFISkRWBKY9OHC1/aEOwIAbXrNwa4Y8ZbyaiFm3z3M92Y?=
- =?us-ascii?Q?lrkXrU2C1EVCQ2NpbJ0Ur8mOao/jMAiR7dL+yWxndjs/QHQXga9f3skQX8yN?=
- =?us-ascii?Q?EJPWXmI7RE98SxxLE51jdy/4pC1swwSR5BzLqiT9XMAJ+/7P7Y2PFRvDCWul?=
- =?us-ascii?Q?CGcfNSSH1bRxumZbnj/maGnpN1aGeBsZysFBe6zumLRBmPQBzUdy1tKKW7i0?=
- =?us-ascii?Q?2LtGwsgc+AYspSEjFM2GM4TgBQeM3wNE8NKZnFPIoFIenv/NXTOQ6ejQ6eWH?=
- =?us-ascii?Q?qtjdGpU2hh500y9mzFMyYyHb0pha3fWNBoTehZx+A2xl6aDI8tqyWn1+rXeD?=
- =?us-ascii?Q?YuwUb2PesGVcEwqzglwaljmeKxC8LK18IRCkrUKnmNeqYG/uLKzMXRVGjXg+?=
- =?us-ascii?Q?OJK2B4Gs/KKX/Wp+f75tLGr1OsT39f4TekmKpHgxd5ziKPyT5DOVLI+Kkzck?=
- =?us-ascii?Q?oJpqegpUNpdRpQEQiolNwY+kZDzp64jvUOqaj+3bnFZPKVRcn1muj2H9Qk9x?=
- =?us-ascii?Q?1DMj4r1ie2m9RwG/5ZuoeQbKpBXhAdXfuW3NKHCV2DkdYQainqeaSdJJM96N?=
- =?us-ascii?Q?jPMclsQmLZZFttlQAjkBl+BroPtf2Cfy1zov5+amHXCnBxqjnUfZHPxSYOvo?=
- =?us-ascii?Q?f0W73hvyiVdNpFTEIBbAmBXw6/6aU+K1XS6eTfTyc4/si01hMC9toBNxrXDv?=
- =?us-ascii?Q?1A1DwqHY3/XXcY+bAXKNCsP2VCTsLGQQmAryaeUAmFQkZzSAj/DiTakMJbxA?=
- =?us-ascii?Q?9ulIaLvw3rZrS/6XichYDvmWrxYNSoqUtDWudt3vLXXec3viGS0oLTU1vIUY?=
- =?us-ascii?Q?K2woSQP9yFrJ9h2oVYiovBB69I619jXGLVteBgw+BomQh28t3MLveAUlFamo?=
- =?us-ascii?Q?IbUi27CHgUonHKcwNoYkn9zbVSFtj+2qh01attD4ZVJcetRNO3aMC/GDHxef?=
- =?us-ascii?Q?FdNDlsDOslyfLAtT2kTi57LNTC9Dqc1ZqYrGEGX3KVfgTWeKJpO6jUdHOc2e?=
- =?us-ascii?Q?gQzUFx/NvPfQ30ppyq1KgGcHJAstElNB1XNOZrEF8iNddCVUSJr1vIcgMOsS?=
- =?us-ascii?Q?WZSpUVuSXkYAKop4YPScYrp3wnaPSseeKDYCff3ZzWs8KtLkBTZYE0F+0WFw?=
- =?us-ascii?Q?+Wis15sdKUa1BpEsUIorIpTAUpVP5Ivvplk1jhZwGhBiaP4rvkYPoRMfehqA?=
- =?us-ascii?Q?2Mfn0aJ1aP+0sOMO88bKHHlkTFrDcH3ENIV5XxGm6uCnIal3m0rU73oO7chG?=
- =?us-ascii?Q?TAdQGTBLvu/r9UTivAFxowWoHNnBDx+uzkmBr+mQWAYl1oujCTD+c2DkxePk?=
- =?us-ascii?Q?5uc1mwfnf63v0dqSWKVBXNU1Amj54EnjaMwjNlZ9Zf68FDmNLv+TETT1WYa6?=
- =?us-ascii?Q?AEfXur01Y8vlpNrNq3Jmsb/tZr0MZh5mddRW5oD1LlbMfUm2?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="RJrgegDS";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="L3yq5gli"
+From: John Ogness <john.ogness@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1792406821;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=O+H3ORQrwht0RhH+jV/nG3TxmFwVK7hnaHuDKuALH5U=;
+	b=RJrgegDSh31nSEeRaJ40tX9/wCik01AUj23iNKFod8Vpe5ofRKiuMhcPTZ57MmiKpzCWTr
+	XU4gMrQtGXzOXRjA88LaB+n2r4ogDkXj5oj63WGWgGObA+eFOxrV0KiZeRsdMsTOoiqkxP
+	BELJw07TMmdrlW3wiMH3Qddl7ylj1edkuLs2gXy5SwdmiikCP2Z+uUaorINQKT3ar5rdvC
+	WYNGsHTgatQw2BiLOzvd1r/2NIffMdC79bzZ/an4CjVR8p0heUzhn/ksRwNoAbC2KJDoaJ
+	VpNQeXKcaejCw3h6CKqU4g6oJWZ2U0XmV0lsBFakoeL89CdlplLKVBb1Z3cGtQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1792406821;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=O+H3ORQrwht0RhH+jV/nG3TxmFwVK7hnaHuDKuALH5U=;
+	b=L3yq5glitizDFhda1Bh5+tTcD0rO1VcMiIZrlrRUvxqJJWdj3FfRuqPmo0KDmfK9TVGTwE
+	I7vKDiEiUZZXqeDw==
+To: Zack Rusin <zack.rusin@broadcom.com>, sashiko-reviews@lists.linux.dev
+Cc: Petr Mladek <pmladek@suse.com>, Baoquan He <baoquan.he@linux.dev>, Mike
+ Rapoport <rppt@kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
+ Pratyush Yadav <pratyush@kernel.org>, Dave Young <ruirui.yang@linux.dev>,
+ Pasha Tatashin <pasha.tatashin@soleen.com>, Kees Cook <kees@kernel.org>,
+ linux-doc@vger.kernel.org, Shuah Khan <skhan@linuxfoundation.org>, "H.
+ Peter Anvin" <hpa@zytor.com>, Dave Hansen <dave.hansen@linux.intel.com>,
+ linux-kernel@vger.kernel.org, Ian Forbes <ian.forbes@broadcom.com>,
+ Borislav Petkov <bp@alien8.de>, Joel Granados <joel.granados@kernel.org>,
+ Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>, "Guilherme G. Piccoli"
+ <gpiccoli@igalia.com>, Ajay Kaher <ajay.kaher@broadcom.com>, Bo Gan
+ <bo.gan@broadcom.com>, virtualization@lists.linux.dev, Sergey Senozhatsky
+ <senozhatsky@chromium.org>, Ingo Molnar <mingo@redhat.com>,
+ x86@kernel.org, "Michael S. Tsirkin" <mst@redhat.com>, Maaz Mombasawala
+ <maaz.mombasawala@broadcom.com>, Alexey Makhalov
+ <alexey.makhalov@broadcom.com>, Thomas Gleixner <tglx@kernel.org>, Stephen
+ Brennan <stephen.s.brennan@oracle.com>, Steven Rostedt
+ <rostedt@goodmis.org>, Jonathan Corbet <corbet@lwn.net>, Randy Dunlap
+ <rdunlap@infradead.org>, Michael Kelley <mhklinux@outlook.com>, Eugenio
+ Perez <eperezma@redhat.com>, kexec@lists.infradead.org,
+ bcm-kernel-feedback-list@broadcom.com
+Subject: Re: [PATCH v2 2/6] crash: Notify pre-kdump callbacks before
+ switching kernels
+In-Reply-To: <CABQX2QNHSjP+FFppUR1ohthwvCjWNA2ozOuZtnwwdNu7WGaV0g@mail.gmail.com>
+References: <cover.1790014793.git.zack.rusin@broadcom.com>
+ <9ef573cdbbf5e659eea16fa23afeaf2488049198.1790014793.git.zack.rusin@broadcom.com>
+ <20260928180829.3A3461F000FF@smtp.kernel.org>
+ <CABQX2QNHSjP+FFppUR1ohthwvCjWNA2ozOuZtnwwdNu7WGaV0g@mail.gmail.com>
+Date: Mon, 19 Oct 2026 12:53:00 +0206
+Message-ID: <87v76yotln.fsf@jogness.linutronix.de>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SE3P153MB1848.APCP153.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 272cd593-a0aa-45f8-e66c-08df2dc9a05f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Oct 2026 10:13:31.2018
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: IgpKMSeuCfPc4xd/OX/bH6WiX7ay2nJyTexyRJIaWgNlkYjGMU/OcwGd0G/LbeAHNRHkZYN4ZeXb1MfTD4Qqfg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZP153MB0791
+Content-Type: text/plain
 
-On Sat, Oct 17, 2026 at 12:06:45PM +0000, sashiko-bot@kernel.org wrote:
-> Does this sequence still leave a use-after-free regression for Ethernet a=
-nd
-> RDMA queues during teardown?
+On 2026-09-28, Zack Rusin <zack.rusin@broadcom.com> wrote:
+>> > @@ -139,6 +140,7 @@ void __noclone __crash_kexec(struct pt_regs *regs)
+>> >                       struct pt_regs fixed_regs;
+>> >
+>> >                       crash_setup_regs(&fixed_regs, regs);
+>> > +                     panic_notify_pre_kdump(NULL);
+>>
+>> [Severity: Medium]
+>> Will this cause pre-kdump notifiers to receive a NULL message pointer instead
+>> of the expected panic message?
+>>
+>> If a system panic occurs and kexec is configured with the default setting of
+>> crash_kexec_post_notifiers=0, vpanic() triggers __crash_kexec(NULL) before
+>> reaching its own explicit panic_notify_pre_kdump(buf):
+>>
+>> kernel/panic.c:vpanic() {
+>>     ...
+>>     if (!_crash_kexec_post_notifiers)
+>>         __crash_kexec(NULL);
+>>     ...
+>>     panic_notify_pre_kdump(buf);
+>> }
+>>
+>> When this happens, __crash_kexec() will invoke panic_notify_pre_kdump() with
+>> a NULL message pointer. This permanently consumes the once-per-boot guard,
+>> and any callback relying on the documented msg parameter will experience
+>> data loss or potential NULL dereferences, violating the API contract that
+>> promises the panic message during a panic.
+>
+> afaict Sashiko gets tripped up here by the doc from the previous
+> email. Nothing in this series dereferences the msg. The only callback
+> is the VMware logger in patch 4, which ignores the argument. It reads
+> the printk buffer, where vpanic() has already written the panic line.
 
-Thanks for the report. This is a pre-existing individual-CQ lifetime
-issue, rather than a regression introduced by this HWC series.
+If you are not using the argument, why are you providing it in your new
+API? Just drop the argument. If any future pre_kdump panic notifiers
+need additional information, they can adjust the API appropriately.
 
-mana_gd_destroy_cq() clears the slot, but mana_gd_destroy_queue() can free
-the CQ while an EQ reader still holds its pointer. The later EQ-side RCU
-grace period does not protect the earlier CQ free.
-
-I checked unmodified net-next at 98c2ad4f5d80 on October 17. Its MANA
-Ethernet, RDMA and header subtrees are identical to the series base,
-05b5019b01fb. The Ethernet CQ reader/teardown ordering is also already
-present at upstream commit 02fed6d92bad ("net: mana: add msix index sharing
-between EQs"), from December 2023, well before this series.
-
-The HWC-specific teardown addressed by this patch is different: after
-acknowledged HWC teardown, it unpublishes the CQ table and waits for
-existing IRQ-side RCU readers before freeing the HWC queues. Individual
-Ethernet and RDMA CQ lifetime handling remains separate, as stated in the
-patch description.
-
-I agree that the reported issue should be addressed in a separate fix to
-the existing per-CQ teardown paths, independently of this HWC series.
-
-Thanks,
-Wei
-
-
+John Ogness
