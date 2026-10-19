@@ -1,123 +1,47 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792424828;
-	b=2cvIl+RT10EtEMNXCj+ec9Eyozy4wemjQXYFULCj1rS/a6grL28HaB887Xwr3JtRZKHK
-	 +IQb4DQzlBXVgeA5ScIOHYgRXiw3TI7So9hdJXcupwzQ2AF+4iBV0PTfbnLJ4DvVHtSJR
-	 3cKbp8x0FXxsPgkMNqA1IL5Gu3p+lcWa1GHguXQ5X3+BJD4/EipUWpNA0RYProA8Oauqk
-	 lzGxGCicv9SVPAiyzvSvoc7Pw/gXMNpqgoie3VdiEn5RHCKc42BOiVNqqHHeto51a7Pd7
-	 bjOa50QBWRjt/auc+kyNlbCRavBcPyxfkO9015u89h+qZ1dBj5n6+YKJDfcqbK767Qg==
+	t=1792424998;
+	b=CHiWlSj68eeeLefC+fa7vjOvYqqRKl5iKhAaXtqYkbkCqSXobmGvxs9V9PEC4T2Ccg/I
+	 fZSFKP+cayDyjcJmNCtaKNSP5JyK1T5wVksIvMPywfqaiEZ69Wt4fu1x04jE/yjxBuz9g
+	 27QSgf7CR371BWSiLrJFzTTEks8zn4DY4bBiC0LHh0pI5YpkmhK+W4ERjka06LRTIYw6E
+	 gYBDGK3aYAvfgXiU1g3cWzkfiHGkS+Xhz5w4y/Xl8hI98YASvzPwcTtzBBIMgzDFwDBaO
+	 6v2ZC6kie0y3jzp85t4orX4duyejEb9lpItyBeMfzaYIfTQCSIExTXBee3VBlLBqXoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792424828;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-Spam-Flag:X-Spam-Score:X-Spam-Level:
-	 X-Spamd-Result;
-	bh=ACxUqLchSDqFg79x5G7fXNVlcAc+CFu7MScJYvXaE5o=;
-	b=kjA7VXuDLMpwcq1VxwUl8aiPUExBonAGU/+rPWaoBwhIUyEX0DeWmK5kf9xU5hlsTx+G
-	 p0sNRQN+XIn8WJXBp8XEnEez0MyvG8wYhm0EMKOv5LIvMlj0NjixAQEw2GYLjo3Us//Xm
-	 YAJt9K7EUQIORkSABEFoobJtsY19xvRUOpS6x20WfR2ZY5R96xfUEToXfKA+KQ3XGc4k8
-	 6/vS9vdQT+vIstMJBnRul8NavA96JaN01IphOc+GdPaiJuKLvAH6m3UuiIkUjNikJWB9A
-	 gjUludX7KCAEtS7QnBYZ6avTJRNlwBH4JJWj3OrFD1w8BziPgCyOo328OsROq38YsEw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792424998;
+	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=DswmWj38SvF+mrDzPS0ddFSFW59m+8lcqwF1axXK7uE=;
+	b=FIthKKywzm/7amvn3XHBY05U3HhdXHNZTGGni8EE8i7j44JQVYv5guLRLrkte56mDuN+
+	 nZv4F1kIRbYYaVigQACwY2UtNdgPEH/IVwyHeSKclB/dOJE/wuIVjS0XDWP13+bCibVYU
+	 aJ94jBAaFQGoUbRaLQfnpxG/6uHkfaTLkXYFmulP7msnticuJ4k10ZjaIrdftqGbaHrk4
+	 kjd1RK35iBRa6y+HGUpcClQh5ClR0nZWlSKpds+zDT7ftbcqD6gTO07ml5arTAANgOAjd
+	 1j4DnSUcmhmr1uUJUwG09QTI9F5hgKMlYfF/1IOhfAx8sIdVoKEaiuNzApz/3w2lLug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=2XU3x6L6;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=4NvBHrrM;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=2XU3x6L6;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=4NvBHrrM;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SpiZoUWw;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C776079D69;
-	Mon, 19 Oct 2026 15:47:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 63C776079D69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DD6609A544;
+	Mon, 19 Oct 2026 15:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=2XU3x6L6;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=4NvBHrrM;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=2XU3x6L6;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=4NvBHrrM
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 5E3CA21CE8;
-	Mon, 19 Oct 2026 15:46:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1792424779; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ACxUqLchSDqFg79x5G7fXNVlcAc+CFu7MScJYvXaE5o=;
-	b=2XU3x6L6wBsU9NTbPA20qzM4oAIcmU1jEnkXXLxlw4eGwebjQAmogVJ3ddUNm73wyt+rks
-	h3AxFHBGJLiXdCnCqm78+eITs8Y3N/WaNa1ZNDuE/fGgXmVRMo9unazeLPWLE5OKFt2gY3
-	i8YTNDN8SdRqVVNmYrC0VYpYepfKX8c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1792424779;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ACxUqLchSDqFg79x5G7fXNVlcAc+CFu7MScJYvXaE5o=;
-	b=4NvBHrrMFq6p1xAns53IfLiWRU4tZ0BqyrsNX1ZJfrmAOkcHHKHkBDktCj2h/38qqdziLv
-	l7vtaRVWuMNQIrBg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1792424779; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ACxUqLchSDqFg79x5G7fXNVlcAc+CFu7MScJYvXaE5o=;
-	b=2XU3x6L6wBsU9NTbPA20qzM4oAIcmU1jEnkXXLxlw4eGwebjQAmogVJ3ddUNm73wyt+rks
-	h3AxFHBGJLiXdCnCqm78+eITs8Y3N/WaNa1ZNDuE/fGgXmVRMo9unazeLPWLE5OKFt2gY3
-	i8YTNDN8SdRqVVNmYrC0VYpYepfKX8c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1792424779;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ACxUqLchSDqFg79x5G7fXNVlcAc+CFu7MScJYvXaE5o=;
-	b=4NvBHrrMFq6p1xAns53IfLiWRU4tZ0BqyrsNX1ZJfrmAOkcHHKHkBDktCj2h/38qqdziLv
-	l7vtaRVWuMNQIrBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DBDAA137D4;
-	Mon, 19 Oct 2026 15:46:18 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id gYPgBkk71mrrPAAAD6G6ig:T5
-	(envelope-from <tzimmermann@suse.de>); Mon, 19 Oct 2026 15:46:18 +0000
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: jfalempe@redhat.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch
-Cc: dri-devel@lists.freedesktop.org,
-	amd-gfx@lists.freedesktop.org,
-	linux-hyperv@vger.kernel.org,
-	intel-gfx@lists.freedesktop.org,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	nouveau@lists.freedesktop.org,
-	linux-renesas-soc@vger.kernel.org,
-	virtualization@lists.linux.dev,
-	sashiko-reviews@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 4/4] drm/pixel: Link draw helpers into drm_pixel_helper.ko
-Date: Mon, 19 Oct 2026 17:32:45 +0200
-Message-ID: <20261019154612.777074-5-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261019154612.777074-1-tzimmermann@suse.de>
-References: <20261019154612.777074-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SpiZoUWw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D621F000C4;
+	Mon, 19 Oct 2026 15:49:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792424997;
+	bh=DswmWj38SvF+mrDzPS0ddFSFW59m+8lcqwF1axXK7uE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=SpiZoUWw4IGZ95ffvLaDNVUnyWsXcPywK8C9pJ5isYTZJVdILSf+d4xCESFM1I7QQ
+	 JAqqux0YR9YNH2Zo0u4Ep49YjvmPvP1IENosFxWqJm0fMXqCYzm+OwpEKfSYNH44nc
+	 cR0Axr/8VKD751zi6R4/s6LJfpGPPkZTnxbkIT35z5cKZU7/hlKGnGRmAX6WwlG81s
+	 krgwmf4bv/J50svJMUx9/B8viF3Y36JSg1jHg/0Mt/NORCn5x8Aj/FIMmMwPNn8Q4t
+	 FEae+1Bh5wCEhk4ZjPh454f+n/kPbphFo+04yg+XHvMSEv6PcIgD4mqETWRNgkLw9G
+	 3XuA3taa3AA3w==
+Message-ID: <791c7eed-f0c2-47c3-9595-77be72f29771@kernel.org>
+Date: Mon, 19 Oct 2026 16:49:54 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -127,120 +51,95 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spam-Score: -6.80
-X-Spam-Level: 
-X-Spamd-Result: default: False [-6.80 / 50.00];
-	REPLY(-4.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_HAS_DN(0.00)[];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FREEMAIL_TO(0.00)[redhat.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,imap1.dmz-prg2.suse.org:helo];
-	FROM_EQ_ENVFROM(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RCVD_TLS_ALL(0.00)[];
-	R_RATELIMIT(0.00)[to_ip_from(RLqirfcw6gnbcr9a9yhi49fhi6)];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com]
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2] phy: qcom-mipi-csi2: round the requested settle
+ interval up
+To: Jizhou Tong <fqwqf@fqwqf.xyz>
+Cc: vkoul@kernel.org, neil.armstrong@linaro.org, olteanv@gmail.com,
+ linux-phy@lists.infradead.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, sashiko-reviews@lists.linux.dev
+References: <sashiko-outbox-168888@kernel.org>
+ <gq57UstyL5YYIJxiym8K0_j1cLrB6u3f908v8Ar3hgadrJwRuof5w5VUh4zR_xQKTGHIPadU-wb7lFoMzWYsZA==@protonmail.internalid>
+ <010601a154d83d84-0b2dea8c-14b7-477b-b1ec-3f44b0b55ad4-000000@ap-northeast-1.amazonses.com>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-GB
+Autocrypt: addr=bod@kernel.org; keydata=
+ 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
+In-Reply-To: <010601a154d83d84-0b2dea8c-14b7-477b-b1ec-3f44b0b55ad4-000000@ap-northeast-1.amazonses.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Move drm_draw.o from the DRM core to drm_pixel_helper.ko. Remove the
-Kconfig option DRM_DRAW and provide the draw helpers unconditionally.
+On 19/10/2026 16:47, Jizhou Tong wrote:
+> Hi Bryan,
+> 
+> I checked the zero-count case raised by Sashiko against media-next
+> (d7e7bca71698) and the rounding patch. Both the base driver and the
+> patched driver return zero when the calculated interval is exactly
+> six integer timer periods, and lanes_enable() rejects it with -ENODEV.
+> 
+> For example, link_freq = 600000000 Hz and timer_clk_rate = 66666666 Hz
+> produce a 90000 ps interval and a 15000 ps integer timer period. The
+> helper returns zero before and after the patch. This is a software
+> boundary case, not a clock configuration I have tested on hardware.
+> 
+> Is a programmed settle count of zero valid on the supported PHYs, or
+> is rejecting it intentional? If it is valid, the helper would need to
+> distinguish it from an unrepresentable interval, with the caller checking
+> for an error separately.
+> 
+> The rounding RFC preserves the existing zero-count handling. I would
+> keep any change to that hardware policy separate from the rounding fix.
+> 
+> Best regards,
+> Jizhou Tong
 
-Having draw code in the DRM core is a left-over fro when panic handling
-was entirely located in the DRM core as well. With all the panic drawing
-in drm_pixel_helper.ko, the drawing helpers can go there as well. DRM's
-log clients also uses the drawing helpers for output. Update the Kconfig
-rules to select DRM_PIXEL_HELPER instead of DRM_DRAW for this client.
+Zero is not a valid settle count so we should just pick a minimum value. 
+For historical reasons six counts is it.
 
-The format and the draw helpers share the per-pixel color-format code
-from drm_format_internal. Putting it all into one place will hopefully
-help with sharing more code in the future.
+If the calculated settle_cnt < 6 => settle_cnt = 6;
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+I realise the LLM is in paroxysms about that but...
+
 ---
- drivers/gpu/drm/Kconfig                           | 5 -----
- drivers/gpu/drm/Makefile                          | 2 +-
- drivers/gpu/drm/clients/Kconfig                   | 2 +-
- drivers/gpu/drm/{drm_draw.c => drm_draw_helper.c} | 0
- 4 files changed, 2 insertions(+), 7 deletions(-)
- rename drivers/gpu/drm/{drm_draw.c => drm_draw_helper.c} (100%)
-
-diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
-index bf7c59944340..1b16e6101a53 100644
---- a/drivers/gpu/drm/Kconfig
-+++ b/drivers/gpu/drm/Kconfig
-@@ -52,15 +52,10 @@ config DRM_KMS_HELPER
- config DRM_PIXEL_HELPER
- 	tristate
- 	depends on DRM
--	select DRM_DRAW if DRM_PANIC
- 	select FONT_SUPPORT if DRM_PANIC
- 	help
- 	  Helpers for working with pixel data in DRM.
- 
--config DRM_DRAW
--	bool
--	depends on DRM
--
- config DRM_PANIC
- 	bool "Display a user-friendly message when a kernel panic occurs"
- 	depends on DRM && PRINTK
-diff --git a/drivers/gpu/drm/Makefile b/drivers/gpu/drm/Makefile
-index 18a5a5baf029..ab9eb4c21264 100644
---- a/drivers/gpu/drm/Makefile
-+++ b/drivers/gpu/drm/Makefile
-@@ -91,7 +91,6 @@ drm-$(CONFIG_DRM_PRIVACY_SCREEN) += \
- 	drm_privacy_screen_x86.o
- drm-$(CONFIG_DRM_ACCEL) += ../../accel/drm_accel.o
- drm-$(CONFIG_DRM_PANIC) += drm_panic.o
--drm-$(CONFIG_DRM_DRAW) += drm_draw.o
- drm-$(CONFIG_DRM_RAS) += drm_ras.o drm_ras_nl.o drm_ras_genl_family.o
- obj-$(CONFIG_DRM)	+= drm.o
- 
-@@ -100,6 +99,7 @@ obj-$(CONFIG_DRM_PANEL_ORIENTATION_QUIRKS) += drm_panel_orientation_quirks.o
- obj-$(CONFIG_DRM_PANEL_BACKLIGHT_QUIRKS) += drm_panel_backlight_quirks.o
- 
- drm_pixel_helper-y := \
-+	drm_draw_helper.o \
- 	drm_format_helper.o \
- 	drm_pixel_helper_common.o
- drm_pixel_helper-$(CONFIG_DRM_PANIC) += drm_panic_helper.o
-diff --git a/drivers/gpu/drm/clients/Kconfig b/drivers/gpu/drm/clients/Kconfig
-index 6096c623d9d5..8d21edc4cc5b 100644
---- a/drivers/gpu/drm/clients/Kconfig
-+++ b/drivers/gpu/drm/clients/Kconfig
-@@ -3,6 +3,7 @@
- config DRM_CLIENT_LIB
- 	tristate
- 	depends on DRM
-+	select DRM_PIXEL_HELPER if DRM_CLIENT_LOG
- 	select DRM_KMS_HELPER if DRM_FBDEV_EMULATION
- 	select FB_CORE if DRM_FBDEV_EMULATION
- 	help
-@@ -76,7 +77,6 @@ config DRM_CLIENT_LOG
- 	depends on DRM_CLIENT_SELECTION
- 	select DRM_CLIENT
- 	select DRM_CLIENT_SETUP
--	select DRM_DRAW
- 	select FONT_SUPPORT
- 	help
- 	  This enable a drm logger, that will print the kernel messages to the
-diff --git a/drivers/gpu/drm/drm_draw.c b/drivers/gpu/drm/drm_draw_helper.c
-similarity index 100%
-rename from drivers/gpu/drm/drm_draw.c
-rename to drivers/gpu/drm/drm_draw_helper.c
--- 
-2.56.0
-
+bod
