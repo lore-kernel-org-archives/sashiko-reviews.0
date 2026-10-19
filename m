@@ -1,204 +1,190 @@
-Received: from h3cspam01-ex.h3c.com (smtp.h3c.com [60.191.123.56])
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011039.outbound.protection.outlook.com [40.107.208.39])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203CD377ED9
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 03:34:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=60.191.123.56
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792380851; cv=none; b=nU5lYto2uMf3fXcS5hIak/G6A1/1dk6lr+pcmTdPjV9ERLdzM9100hxAtQ4U4+aWS3mnhNCTsADX5lJ9KVyriYfyldGUhmpVxXAA3zVaxjNeku/zvPGfsQs6qCo+G8gWVS4kiGuLUhQpwZl8xITaUseeRb9Fy6h+lX0ADJotRSk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792380851; c=relaxed/simple;
-	bh=GlDFamdmV7uagRt0szWh3vWqD1k8yemQuuVgfqOFn9Q=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JeeMInOGHns2cFoQI0S/xnyI/M1yJXfukG04U6r5aJRTRbfMaPoBDf6yedOeGRFsthzae/k2VeTk8mNN5+xYriYP0OR5SMrI/2ds7tcDCpeBDCnz6L4c7AdDDR3tGJvBVZSrlHgaOX/xOU2ChZiSudkdl3eebjz5kQ+V8KN4kls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=h3c.com; spf=pass smtp.mailfrom=h3c.com; arc=none smtp.client-ip=60.191.123.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=h3c.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=h3c.com
-Received: from mail.maildlp.com ([172.25.15.155])
-	by h3cspam01-ex.h3c.com with ESMTP id 69J3XML9077055;
-	Mon, 19 Oct 2026 11:33:22 +0800 (+08)
-	(envelope-from lin.nan@h3c.com)
-Received: from DAG6EX09-BJD.srv.huawei-3com.com (unknown [10.153.34.11])
-	by mail.maildlp.com (Postfix) with ESMTP id 3544E2284EA2;
-	Mon, 19 Oct 2026 11:36:26 +0800 (CST)
-Received: from localhost.localdomain (10.142.164.48) by
- DAG6EX09-BJD.srv.huawei-3com.com (10.153.34.11) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.2.1258.27; Mon, 19 Oct 2026 11:33:20 +0800
-From: Nan Lin <lin.nan@h3c.com>
-To: <sashiko-bot@kernel.org>
-CC: <chengzhihao1@huawei.com>, <lin.nan@h3c.com>,
-        <linux-mtd@lists.infradead.org>, <richard@nod.at>,
-        <sashiko-reviews@lists.linux.dev>, <wangxiaoqing@h3c.com>,
-        <zhou.kete@h3c.com>
-Subject: [PATCH v2] ubifs: zero stale data beyond EOF before file size grows
-Date: Mon, 19 Oct 2026 11:25:30 +0800
-Message-ID: <20261019032530.2212601-1-lin.nan@h3c.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <sashiko-outbox-174089@kernel.org>
-References: <sashiko-outbox-174089@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029442F363F
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 03:38:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.208.39
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792381122; cv=fail; b=nY0d9axIWzm2DRk8SOLUEWicukDjP72NNLcjyOQ7nqbQ4CJXzqemLEBkooJq7Vnr6im47FT9l9hdAZRgOEaucoey43e8IeBgJI20EP96Msek2sV4WV6HQUlZAiI3uj9asfzruMvNNXfAGxxwnl5ApBOjuyQ2RfAe6+mxKL1RgFI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792381122; c=relaxed/simple;
+	bh=XHzLuHpUA/cRNyhc3du6Rt4CMzTHrLbHnl7HegKCxc0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Tn1mklb8cRkl/dCS7tCFfzz0VQgdejl6HqrzjuYogYJHcVxf+eJZC2jCjNdC2AbTk6pAtr8FrwoL+YjnY+INMDVXObUg03uYxc2E5pMsoTsTX+aQFjCRCM69QuaCCUdMeXLxmD8Sto+fogiS9NARJb25BcZtdjMYGhPa2KK2Zyw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=MtueJfsz; arc=fail smtp.client-ip=40.107.208.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="MtueJfsz"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dEG+uGpx0oMaY4h21BsO1OFxhF0uhFCvMOIxS9LYsHxIp7ZjD2yeSv1uDLVR6p1zkUrSe22HhRGtgftpTjNsJdV5dmpiHlAqtggnE2jMcbvW801bYwKzSCI3PwPQUqWKEfCAaagIlk7Dz+sulBBFx23XEz96e9aVlP0kSdaOG5Lfakx9VrX0T2Cbhob8z1UYAUfz95qcS/+nRBequzv2gY5hg3PWtEddtjZelNgIC+y5pJ1syANLPSflk1qZRtsdtdSKkRx7nNZjo9YWSiZ8xFyAW/2tWnDzHds/xoHquG5HkFYoFUZcEi5C5mEvc1ktqjttHeZoBNLxc4/9aVQJ+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=l8F1/P+8pz/a2FD15vCUH/9F8cy9Bb/VAx0vLHRZIhk=;
+ b=VpY1SWjrs9P5110m1tO0jB6oJEXY6R8CIE5FHmtGoA+e+EUcLyaPY/4RDrTSTvI7OW8LebehfgeW/0Pe1oHVa+WPzu/GBHtvY/nthtUKbLynjLCRxFX3GtU/jQcjJS2v4wZ8tS8+cP7U/mFAVWI8w7Ic0rUDOfk0NZSuiOhzg1xtL4WAgRHB6jjz31j+v2Ml43WPJahugozvqybQlwUrR0ejMQO6WN2wYGDua+xtMHR5PFdMea8gapUGTi5L/YeoOhMPU9IYh9XJ+NRTw4DOnMp3PD/OZMAIUsRQjNU8T7Zuo4HiS2H6++TSz18Oo7DS/btvwFsUuCUlVILT2FhCuw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=l8F1/P+8pz/a2FD15vCUH/9F8cy9Bb/VAx0vLHRZIhk=;
+ b=MtueJfszbjMuoxKc6BPNY2Mhi3o4cTNUE161W05+9B/Gdbyo8L3zYXeOHAzoL8Azk2Re9d+Yh6dHOd47ofPy5QaXB90PRxCKcrkfKKmcowBiZJVcq9dYN1qH0Qdkzf929nDPBCzfgvl7VkYIOyUUyEhwq+J3baaiHdzWp3Zmsmc=
+Received: from BN9PR03CA0193.namprd03.prod.outlook.com (2603:10b6:408:f9::18)
+ by DM4PR12MB6421.namprd12.prod.outlook.com (2603:10b6:8:b7::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.23; Mon, 19 Oct
+ 2026 03:38:37 +0000
+Received: from BN3PEPF00022BCC.namprd03.prod.outlook.com
+ (2603:10b6:408:f9:cafe::28) by BN9PR03CA0193.outlook.office365.com
+ (2603:10b6:408:f9::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.451.23 via Frontend Transport; Mon,
+ 19 Oct 2026 03:38:36 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ BN3PEPF00022BCC.mail.protection.outlook.com (10.167.248.164) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.522.6 via Frontend Transport; Mon, 19 Oct 2026 03:38:35 +0000
+Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Sun, 18 Oct
+ 2026 22:38:28 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb09.amd.com
+ (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Sun, 18 Oct
+ 2026 22:38:28 -0500
+Received: from [10.85.36.197] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.53 via Frontend
+ Transport; Sun, 18 Oct 2026 22:38:27 -0500
+Message-ID: <a55b6e7c-c8ef-4bdd-bc35-1a0bfd1eac3f@amd.com>
+Date: Mon, 19 Oct 2026 09:08:21 +0530
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BJSMTP01-EX.srv.huawei-3com.com (10.63.20.132) To
- DAG6EX09-BJD.srv.huawei-3com.com (10.153.34.11)
-X-DNSRBL: 
-X-SPAM-SOURCE-CHECK: pass
-X-MAIL:h3cspam01-ex.h3c.com 69J3XML9077055
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 5/5] KVM: selftests: nSVM: Add nested PML coverage to
+ nested_dirty_log_test
+To: <sashiko-reviews@lists.linux.dev>, <kvm@vger.kernel.org>
+References: <20261015103933.2088307-1-nikunj@amd.com>
+ <20261015103933.2088307-6-nikunj@amd.com> <sashiko-outbox-172714@kernel.org>
+Content-Language: en-US
+From: "Nikunj A. Dadhania" <nikunj@amd.com>
+In-Reply-To: <sashiko-outbox-172714@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF00022BCC:EE_|DM4PR12MB6421:EE_
+X-MS-Office365-Filtering-Correlation-Id: 69fbee06-2ea2-48ed-635a-08df2d9274e7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700016|82310400026|23010399003|1800799024|376014|6133799003|10067099003|22082099003|18002099003|13003099007|3023799007|11063799006|261009223027099003|56012099006|4143699003;
+X-Microsoft-Antispam-Message-Info:
+	Q/bJF5usbuVSEcW3jx0TfO+pBW/RGMy0sKOZ0h66jZEHRX1Kcwja5yi119n6uB3yDRj7yc5CZowM74pgaDLuIDUvokVjTkhKI7aERNPXsMT4sBxrz6J+Rx44YJ9gZGwQ8SEtJramsuL6d2iop38ATYSes0wf5fmhIOBBwPBDAOwRSHnMW8IeCz+oRWImCWtIZvTfZw+11Y4pDGqtzZ8v93BG84AFrpt7ljOOeNjLdlmscRsf7oKWG1s7w3TrJOlCiezq2tmmXq2Oj31o2KHwNO67QNpFYtBMpw5XJQr6+dUhj05jVYeZXiIEdnJwLEnX0M8GQu9ibfmLcmCfbwFReJjz5wP4kJe71cmnlvjGwKkf5MIb5oX97RvfegoWqdvhWyx19bz6ZYD+khdeh+U21PcfhCHlIdgH01XgIHdcpS0ZrWZEqMkWQb0F1z04nrxp9+EvcMpSl97/r0RuEmy0fW2NvWvNcj8usqyzbvff9IPgcpeIzi3pRLM6fyxiUAoCVY+NQNKLS9JqTTRc6GrhqRzUix167n68Gqogy8BbUxkKtJu4GtuY7Pk9JynisTSD3Q4obnRUCrn8mzWQIOhBKY2c+VVy4h1jmF61nlboMbAxbesgLP3zZHVgYiDFLt2vMPnx2WedEkeeQsBuH45Gk8gH2GuOsUqxsmNmEJcX0tygSXMScfgS56CnmKJdqVIhyH9tFmeoEsSaBtmRGEq41A==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(36860700016)(82310400026)(23010399003)(1800799024)(376014)(6133799003)(10067099003)(22082099003)(18002099003)(13003099007)(3023799007)(11063799006)(261009223027099003)(56012099006)(4143699003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	SMmicW7XiWM50IqtUrKDTnHahq5PciEr0DrnZ8jASxNVjMQ7wSl5t3XkjeErql6vHpXEea9wviSSz1mLchfretCMbIaAHmgr/vpt9gwOvI8w3Jl6y+IqkNoOQO/iUEN0O9Zf9Gv8DL8nnZ8jXqlmuRyOeWVBGW/KRN/rnubu5r1TEwLeCMuwP4aW5zeZLyRlT8geNjZxXAtkaM7wMKeGZpZgfFz2f35FBgfj1JU9zF7w5nnJlT/Hm3C/KB7UGxBj1dQHl8sitDJGotPdKQGlscKD+KqoxTcyP4zd59gcjEfYvFYVUSfELvZcluFkspujhIXZEHDEmOhijgcPrV/mEiwzuvtX8JT+AK3gkKpoMr6rt8YNEm0VKTkbcNwe9ECJAfC4HLGpo/0MjbcalCUETG1FhIZX9aFPa7r2dAIv7bBJqnJkpZ4qoNNCR83jAkF4
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Oct 2026 03:38:35.9251
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 69fbee06-2ea2-48ed-635a-08df2d9274e7
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN3PEPF00022BCC.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6421
 
-mmap writes can dirty the page cache beyond EOF without changing
-i_size. A later extending write or ftruncate turns that region into a
-hole, but UBIFS never zeroes the partial page at the old EOF, so reads
-expose the stale data.
 
-Zero the tail of the old-EOF folio in all three size-extending paths:
-ubifs_write_begin() for writes starting beyond EOF, do_setattr()
-before truncate_setsize() grows the size, and ubifs_vm_page_mkwrite()
-so mmap writes cannot leave such a tail behind. This mirrors what
-block_page_mkwrite() does for buffer_head filesystems and what ext4
-does on size extension.
 
-All zeroing takes the old-EOF folio lock without ui->ui_mutex, keeping
-the folio_lock -> ui_mutex order of ->writepage() and
-->page_mkwrite(); the reverse order deadlocks.
+On 10/15/2026 4:34 PM, sashiko-bot@kernel.org wrote:
+> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+> 
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] selftests: kvm: l2_pml_guest_code executes VMX-specific vmcall() on SVM
+> --
+> 
+> commit cb64ef5e62e8854d8adff372ccbc0426babe6f16
+> Author: Nikunj A Dadhania <nikunj@amd.com>
+> 
+> KVM: selftests: nSVM: Add nested PML coverage to nested_dirty_log_test
+> 
+> This commit extends the existing nested PML selftest to also cover AMD's
+> nested Page Modification Logging (nSVM PML) by introducing an SVM-specific
+> L1 guest code path.
+> 
+>> diff --git a/tools/testing/selftests/kvm/x86/nested_dirty_log_test.c b/tools/testing/selftests/kvm/x86/nested_dirty_log_test.c
+>> index b1008724f46dc..cc49fa0c42937 100644
+>> --- a/tools/testing/selftests/kvm/x86/nested_dirty_log_test.c
+>> +++ b/tools/testing/selftests/kvm/x86/nested_dirty_log_test.c
+>> @@ -250,6 +250,45 @@ static void l1_pml_vmx_code(struct vmx_pages *vmx)
+>>       GUEST_DONE();
+>>  }
+>>
+>> +static void l1_pml_svm_code(struct svm_test_data *svm)
+>> +{
+>> +     struct vmcb_control_area *ctrl = &svm->vmcb->control;
+>> +     int nr_pml_full = 0;
+>> +
+>> +     /* PML requires NPT. */
+>> +     GUEST_ASSERT(svm->ncr3_gpa);
+>> +
+>> +     generic_svm_setup(svm, l2_pml_guest_code);
+> 
+> [Severity: High]
+> Could this setup lead to an Invalid Opcode (#UD) exception on AMD systems?
+> 
+> Looking at l2_pml_guest_code(), it appears to unconditionally execute the
+> vmcall() instruction:
+> 
+> tools/testing/selftests/kvm/x86/nested_dirty_log_test.c:l2_pml_guest_code() {
+>     ...
+>     vmcall();
+>     ...
+> }
+> > If l2_pml_guest_code() emits the Intel-specific VMCALL instruction, won't
+> executing VMCALL on AMD systems raise an Invalid Opcode (#UD) exception
+> instead of causing a VM-exit to L1?
 
-UBIFS does not enable large folios, so the EOF folio is always a
-single page today; nevertheless, use folio-relative arithmetic
-(offset_in_folio(), folio_contains(), folio_size()) throughout so the
-code is correct if that ever changes.
+VMCALL does #UD on AMD, but KVM intercepts #UD and the emulator rewrites the
+instruction to VMMCALL and re-executes it, see emulator_fix_hypercall() and
+svm_patch_hypercall().  L1 intercepts VMMCALL, so L2 exits to L1 with
+SVM_EXIT_VMMCALL. l2_guest_code() in this file already uses vmcall().
 
-Signed-off-by: Nan Lin <lin.nan@h3c.com>
+> 
+> Since generic_svm_setup() does not intercept #UD, does this exception
+> get delivered to the L2 guest, triggering the host's selftest abort
+> handler and crashing the nested AMD guest?
+> 
+>> +
+>> +     ctrl->pml_addr = svm->pml_gpa;
+>> +     ctrl->pml_index = PML_LOG_NR_ENTRIES;
+>> +     ctrl->misc_ctl |= SVM_MISC_ENABLE_PML;
+>> +
+>> +     run_guest(svm->vmcb, svm->vmcb_gpa);
+>> +
+>> +     for (;;) {
+>> +             if (ctrl->exit_code == SVM_EXIT_VMMCALL)
+>> +                     break;
+> 
+> [Severity: High]
+> Will this loop exit condition ever be met?
 
-Changes since v1:
- - Both zeroing sites used PAGE_SIZE-relative arithmetic
-   (offset_in_page()-style) while folio_zero_range() expects
-   folio-relative offsets. UBIFS does not currently enable large
-   folios, so PAGE_SIZE == folio_size() and the two coincide in
-   practice, but switch to offset_in_folio()/folio_size() anyway so
-   the code is correct if UBIFS ever opts into large folios
-   (suggested by Sashiko AI review).
+Yes, for the reason above.  l1_svm_code() predates this series and already
+breaks on SVM_EXIT_VMMCALL.
 
----
- fs/ubifs/file.c | 73 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 73 insertions(+)
-
-diff --git a/fs/ubifs/file.c b/fs/ubifs/file.c
-index e73c28b12f97..1726714161a1 100644
---- a/fs/ubifs/file.c
-+++ b/fs/ubifs/file.c
-@@ -202,6 +202,53 @@ static void release_existing_page_budget(struct ubifs_info *c)
- 	ubifs_release_budget(c, &req);
- }
- 
-+/**
-+ * ubifs_zero_eof_hole - zero the stale tail of the old-EOF folio.
-+ * @inode: inode whose size is about to grow
-+ * @new_end: new end of the file, only used to bound the tail
-+ *
-+ * Zero the cached folio containing the old EOF for [old EOF,
-+ * min(folio end, @new_end)) so a size extension does not expose stale
-+ * data left beyond EOF by mmap writes.
-+ *
-+ * Must be called without ui->ui_mutex held: we block on the old-EOF
-+ * folio lock, and ->writepage() and ->page_mkwrite() hold that folio
-+ * lock while taking ui_mutex; the reverse order deadlocks.
-+ */
-+static void ubifs_zero_eof_hole(struct inode *inode, loff_t new_end)
-+{
-+	loff_t old_size = i_size_read(inode);
-+	size_t from, to;
-+	struct folio *folio;
-+
-+	if (new_end <= old_size)
-+		return;
-+
-+	folio = filemap_lock_folio(inode->i_mapping, old_size >> PAGE_SHIFT);
-+	if (IS_ERR(folio))
-+		return;
-+
-+	/*
-+	 * Re-read i_size under the folio lock: a concurrent truncate may
-+	 * have shrunk the file, turning this folio into valid data.
-+	 */
-+	old_size = i_size_read(inode);
-+	if (new_end <= old_size)
-+		goto out;
-+
-+	from = offset_in_folio(folio, old_size);
-+	if (!from)
-+		goto out;
-+	to = folio_contains(folio, new_end >> PAGE_SHIFT) ?
-+	     offset_in_folio(folio, new_end) : folio_size(folio);
-+	if (to > from)
-+		folio_zero_range(folio, from, to - from);
-+
-+out:
-+	folio_unlock(folio);
-+	folio_put(folio);
-+}
-+
- static int write_begin_slow(struct address_space *mapping,
- 			    loff_t pos, unsigned len, struct folio **foliop)
- {
-@@ -423,6 +470,14 @@ static int ubifs_write_begin(const struct kiocb *iocb,
- 	if (unlikely(c->ro_error))
- 		return -EROFS;
- 
-+	/*
-+	 * The write starts beyond EOF: zero the stale tail of the old-EOF
-+	 * folio before budgeting takes ui->ui_mutex. do_readpage() only
-+	 * sanitizes the write folio, not the old-EOF folio.
-+	 */
-+	if (pos > inode->i_size)
-+		ubifs_zero_eof_hole(inode, pos);
-+
- 	/* Try out the fast-path part first */
- 	folio = __filemap_get_folio(mapping, index, FGP_WRITEBEGIN,
- 			mapping_gfp_mask(mapping));
-@@ -1220,6 +1275,10 @@ static int do_setattr(struct ubifs_info *c, struct inode *inode,
- 
- 	if (attr->ia_valid & ATTR_SIZE) {
- 		dbg_gen("size %lld -> %lld", inode->i_size, new_size);
-+
-+		/* Must run before the size change loses the old boundary. */
-+		ubifs_zero_eof_hole(inode, new_size);
-+
- 		truncate_setsize(inode, new_size);
- 	}
- 
-@@ -1494,6 +1553,7 @@ static vm_fault_t ubifs_vm_page_mkwrite(struct vm_fault *vmf)
- 	struct timespec64 now = current_time(inode);
- 	struct ubifs_budget_req req = { .new_page = 1 };
- 	int err, update_time;
-+	loff_t i_size;
- 
- 	dbg_gen("ino %llu, pg %lu, i_size %lld",	inode->i_ino, folio->index,
- 		i_size_read(inode));
-@@ -1553,6 +1613,19 @@ static vm_fault_t ubifs_vm_page_mkwrite(struct vm_fault *vmf)
- 		filemap_dirty_folio(folio->mapping, folio);
- 	}
- 
-+	/*
-+	 * Zero the part of the EOF folio beyond i_size so mmap writes
-+	 * cannot leave a stale tail behind (see ubifs_zero_eof_hole()).
-+	 * For a folio-aligned i_size the mkwrite entry check has already
-+	 * returned SIGBUS, so @from is always non-zero here.
-+	 */
-+	i_size = i_size_read(inode);
-+	if (folio_contains(folio, i_size >> PAGE_SHIFT)) {
-+		size_t from = offset_in_folio(folio, i_size);
-+
-+		folio_zero_range(folio, from, folio_size(folio) - from);
-+	}
-+
- 	if (update_time) {
- 		int release;
- 		struct ubifs_inode *ui = ubifs_inode(inode);
--- 
-2.33.0
-
+Regards,
+Nikunj
