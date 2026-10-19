@@ -1,98 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792428992;
-	b=2AxJHKbC12+voNtomMrhxbWO9vPosjmBlORdyB/dxcNskx5L7X6aDIyQ4LJ65KC1PUQF
-	 izi125WMBW4U89QctnubEJARXBtoo4hiCKLUSLAn4k6H8hBaYXAOLmAS2OkkCuA4LZ34V
-	 /JPzufryoVja+5gjdekMYK2H4jCdk9pzlt1+y8ECZIiVkVKyb8QGxPZgLDXZilmlWNeca
-	 mLmspzV5Z1zJBtpXF0eLTUPl18siGjDz6dr/FzbNKNU70PnzIuTGiDUd4dyBz9Nje5O0k
-	 GcXqhCWs8oTpKNuhIGMMfuu1NU5JAqfe9RjEL1ez6gNmgJ0x2gT5e4x7nZIjdPvv97w==
+	t=1792434115;
+	b=D8FqgXraTdFRv55TujKjnTfzUHGy92NaSgooh+ZQkoxCa22VQi5S9qC9zrBHEMQ/mzDb
+	 PMqYTMbGuPu9BkO8toTiB4PdKtLdATMjhHzGYwMdgHdPZyAaHyFrVMB7jxCs/unStNIkL
+	 cb9yKZ/hufWqz2wtwA6cy1kIZOGILElGz3PjsZWMEqTN3XHMjPOIbxQkNGCEHWOZVEQ3F
+	 L2BmxWeSw+Ez8Y/U3iNLeuXuYkBhcZPpeM5wHrYPK3GSBXilphBSFhbNvHkOt80NUeRpY
+	 KQwARH2qtoMHlMQZ/VY7RCKPo+aMK8tPIxHHwi/fliDNhQqRr22YRgrMmDSOwJAywmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792428992;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:
-	 X-Google-Original-Message-ID:Date:From:To:Cc:Subject:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=bgvtFckoRwO/w6wYyG/SDEa4Hefzwa+zI6y6vYHDT00=;
-	b=1UfVULw4D7AY6h32qRbc10JTDgGVa3DVr3sQEaI8iXutp+5hdEDZmfFJZD4YINPo9ZC7
-	 os/0kCbxRsylbrByFj7wyLHU8zYHoPSswuI6G5LJyd6jLMTlKXYNydQ4H12z5y5Di6rAV
-	 LxwZc7ExMHvQB2DuaFOu9ObhXdVh6wCpavtdrP5zDDAxT5YCDhm8EOjYvgr3hRbOlXOsa
-	 Gcp9bMHEvSKySi5YaBC4U2KF/EFzzO0aptsLSA7fziWOc7EWR/qgmDcORYiG2zEfgQSLW
-	 mTmCGVwQ6sUFTK4XSgmhfOJbLFknmOl1pmZy88ZMaSrrCXlarHH6XcDx2+ERHWefASw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792434115;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=uvOL1B9+LtCcbiXQ4KdFPDLg6OoeMbmSgIVT59fRDdY=;
+	b=wud9Qjhch3mCVBSB7m3WV+7xF8oCwF9BS31E0Xi7UWltQCbVc/RsdfC7umaCsTqYMwlP
+	 gt5rWyHgm23ZwPEauJYxX/BEsXq3xKE+Vcf2Ik1k7aBXnvgoRxomIz7f6uJ+lAwkovnBK
+	 WEG31Iqtk1uRkEBZj7Yd+nzuvOaKpSkm7hS1K536YH0qcRfbKZekXLQ09js8o1b3skYo2
+	 Z2qx3XZHeHYCLLQHdoJPYsoeyKkCObjVS82ZjAGhcJKqhlqsuUiP+AynBv0n1DjnpSBZi
+	 4WGscaL0xGyX7pCkj4JH8ujjFP7RmagIKyWshc0PHyJmkOR6NtqeplWqLLDGrQGefhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=pZTsVKGj;
-	arc=none smtp.remote-ip=209.85.128.43
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GYeNQ2w6;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDD4606A32C
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 16:56:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8FDD4606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE5D606A31E;
+	Mon, 19 Oct 2026 18:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=pZTsVKGj
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-49d0da752ffso18789415e9.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 09:56:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792428990; x=1793033790; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:subject:cc:to:from:date:message-id:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=bgvtFckoRwO/w6wYyG/SDEa4Hefzwa+zI6y6vYHDT00=;
-        b=pZTsVKGjuxFl/ARs7NmtzPsjMzxWmOrYC6HLVDM9G4Yrf6rp8K2Y//BZpWHCaMEtf5
-         mFrKbVjjKh1YqjtZqOvC1cPA6sNxLASuqlqM4tmy/9mGo4QumGxs2wKBoTy4uzQpQghr
-         m239qlUTJBfXMaLsRvvErX60ZfxvNdIJWYHWr+sl4HTZwsJRRIawaPpDeNmpfPxU69kV
-         oQsTSxFbD4wuvrtoIgM7ePceJbpxy0hD7oXIXfbqGVfcW2hFCDBYT/drYAKi4yNrUuO7
-         R00Rehv0Ls7nPS2nAjMrSHMIEfnzGq3GXQBC4CPOLm6FtqxNSDBk5a7v91mtgvSQju4y
-         dYVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792428990; x=1793033790;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:subject:cc:to:from:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=bgvtFckoRwO/w6wYyG/SDEa4Hefzwa+zI6y6vYHDT00=;
-        b=2Z2cRPWosj0Be7c++EED8kQ/hszmB75465APWPGW830GJRRMc+/sEvEipf3q5R9Wdi
-         M59HEAhRDkBpkYwpf9HUWOdhr7vAyligYK433hKJfVOuhnexoNGyMci5Uqr7nqrVvp+F
-         E/bAQItIbliE2Sj6q5zk1HsiwDJk6UIpFFdnKBahqnRDNwpen0zxqCCskQObQBy/nQ2M
-         qg6pC3M8tzCv+Tc67DXpHLSw5nZ7Z0oxOp9/+RgHq5rOdlwo0mw9a/w4eQquHQni3eq/
-         egQ2/7VNqR59jOnvAKkphJzkhQs3SGpli8tSdkZ5Wh7A1uuvHatQ5Sc547GiipZrG5vP
-         4Xwg==
-X-Gm-Message-State: AFq9FYLz4C0q0Dh6q/r5/8U+jxbjA7Swm4mbj2zyENTBI4PW20arsvyy
-	YSw4k2dAJbixK9HQh5/2TJkduJMIhAZBTOXHT089XwOul2O4ryz0b9YL
-X-Gm-Gg: AYBFou02rkD5ufhStorsKwfTcubktC8kZY45EWZ8W58IUne9JKV9FU7WxPzkotBCmC2
-	8aYIXfdGArGFcjxCpZPFCPCvU82Ou5kAkuqja0yM79VDGelzxXC3lfJ4ji2thoYfV8mFco/sY6t
-	4JNw4KK10qRQzbd2fXJ/DoJjcY1o0Kqw+/U8ZQ+MUXh65cKCXlRTRsLLx2ZQiwY4Kp1peL3G7hP
-	JBHQjWsR1Z/dB+dRo/9Q1qOhN5Q9r+mVHxlYW5jQlDXkiMoeIWS9QXr5oiNacsM0l08cJ5IUO3o
-	Kl64XS2pji3sKt4X28bysjLgFQ7GC4ty2ZEIk2vdTT9s9/HO72EELT3giK4/5xFfrAhRyf3oETE
-	2gVaAg1Ggx9kml4e4URFDEdbE+Wckttxdd6oE1YzCy81TYePikjnnF4jB5iPqHkiUopMvpARrF9
-	lcc1eW0B/mCGDiyOtAwttHrmnAeRFNL6Fc3+J/9stOYH0wpOmTK9QOcbGt9ROGX9nKs7pO0xZmH
-	UnDa3mjlZ1miCYwYU5+9r5+9LI6mATLW010PLmHPXLvjDtfBV7tPTHsPkz0Tg==
-X-Received: by 2002:a05:600c:1392:b0:4a1:62b8:9aa1 with SMTP id 5b1f17b1804b1-4a1d75aa87cmr195261465e9.2.1792428989590;
-        Mon, 19 Oct 2026 09:56:29 -0700 (PDT)
-Received: from Ansuel-XPS. (93-34-92-187.ip49.fastwebnet.it. [93.34.92.187])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e1d818c59sm92295f8f.30.2026.10.19.09.56.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Oct 2026 09:56:28 -0700 (PDT)
-Message-ID: <6ad64bbc.66e4af69.3b9046.552a@mx.google.com>
-X-Google-Original-Message-ID: <atZLucG4T0G9wQur@Ansuel-XPS.>
-Date: Mon, 19 Oct 2026 18:56:25 +0200
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Lee Jones <lee@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, mfd@lists.linux.dev,
-	conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-Subject: Re: [PATCH net-next v25 04/10] mfd: an8855: Add support for Airoha
- AN8855 Switch
-References: <20261009161102.38961-1-ansuelsmth@gmail.com>
- <20261009161102.38961-5-ansuelsmth@gmail.com>
- <sashiko-outbox-166721@kernel.org>
- <6acccc4e.4c22a69b.132624.271f@mx.google.com>
- <20261019164430.GI2663669@google.com>
- <6ad64981.198a47d7.3d6d5a.6d01@mx.google.com>
- <20261019165231.GJ2663669@google.com>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GYeNQ2w6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965751F000C4;
+	Mon, 19 Oct 2026 18:21:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792434113;
+	bh=uvOL1B9+LtCcbiXQ4KdFPDLg6OoeMbmSgIVT59fRDdY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=GYeNQ2w6DvQ/+O3emod3RMvPLCefiAgW9JYjiglA0coeEN8jk9nS7GojjjLs6E0FL
+	 UhpoHoTIr/HGOOvLmYjOFSrpToiVmxg1l22WX9HVMoVorh68B6j9L8DFKqoLAudcel
+	 3r4M10GSdUU8zpeYoDUrjm7eq6+XnzmBDhtIcnf26LkHD0DCLo4N6enALGHDxJwfz7
+	 uqFGUq1cgHVssUPROcJY3ZuyPeJxD3nbJ4s9W2ZQczUjOC7vJD+tiEFPc8LNUwptAR
+	 WR0SYChB0F2qah0YOOalgYAvAIwsgGQpUx6v2jiE/+4jmku5RWoRqtHjg+xfzQugBF
+	 sM+zBUFeoAp4w==
+Date: Mon, 19 Oct 2026 19:21:50 +0100
+From: Conor Dooley <conor@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Lachlan Michael <lachlan.michael@sony.com>, devicetree@vger.kernel.org,
+	robh@kernel.org, conor+dt@kernel.org, media-ci@linuxtv.org
+Subject: Re: [PATCH v5 1/2] media: dt-bindings: imx908: Add Sony IMX908 sensor
+Message-ID: <20261019-cause-decline-feb5a68f0d06@spud>
+References: <20261019014720.2635-1-lachlan.michael@sony.com>
+ <20261019014720.2635-2-lachlan.michael@sony.com>
+ <sashiko-outbox-176511@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -102,110 +58,86 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="9CCrMjoYK9ZJsW8E"
 Content-Disposition: inline
-In-Reply-To: <20261019165231.GJ2663669@google.com>
+In-Reply-To: <sashiko-outbox-176511@kernel.org>
 
-On Mon, Oct 19, 2026 at 05:52:31PM +0100, Lee Jones wrote:
-> On Mon, 19 Oct 2026, Christian Marangi wrote:
-> 
-> > On Mon, Oct 19, 2026 at 05:44:30PM +0100, Lee Jones wrote:
-> > > On Mon, 12 Oct 2026, Christian Marangi wrote:
-> > > 
-> > > > On Sat, Oct 10, 2026 at 04:11:40PM +0000, sashiko-bot@kernel.org wrote:
-> > > > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> > > > > - [Medium] mfd: overlapping regmap readable ranges for General Purpose and GPU timers
-> > > > > - [Low] mfd: structure and variable naming violates MFD API guidelines
-> > > > > --
-> > > > > 
-> > > > > commit 05d4dc95b969f0fcf66d11398aafad3e7eb7c7f1
-> > > > > Author: Christian Marangi <ansuelsmth@gmail.com>
-> > > > > 
-> > > > > mfd: an8855: Add support for Airoha AN8855 Switch
-> > > > > 
-> > > > > This commit adds support for the Airoha AN8855 Switch which provides
-> > > > > a DSA switch and a NVMEM provider. It utilizes the mdio-regmap driver
-> > > > > and registers a regmap for each internal PHY.
-> > > > > 
-> > > > > > diff --git a/drivers/mfd/airoha-an8855.c b/drivers/mfd/airoha-an8855.c
-> > > > > > new file mode 100644
-> > > > > > index 0000000000000..a2778511dfefc
-> > > > > > --- /dev/null
-> > > > > > +++ b/drivers/mfd/airoha-an8855.c
-> > > > > [ ... ]
-> > > > > > +static const struct regmap_range an8855_readable_ranges[] = {
-> > > > > [ ... ]
-> > > > > > +	regmap_reg_range(0x10009000, 0x10009fff), /* PDMA */
-> > > > > > +	regmap_reg_range(0x1000a100, 0x1000a2ff), /* General Purpose Timer */
-> > > > > > +	regmap_reg_range(0x1000a200, 0x1000a2ff), /* GPU timer */
-> > > > > 
-> > > > > [Severity: Medium]
-> > > > > Is this range definition correct? The General Purpose Timer range
-> > > > > (0x1000a100 to 0x1000a2ff) fully overlaps with the GPU timer range
-> > > > > (0x1000a200 to 0x1000a2ff).
-> > > > > 
-> > > > > Could this be a typo in the hardware memory map definition? It seems like
-> > > > > the General Purpose Timer range might have been intended to end at
-> > > > > 0x1000a1ff to avoid overlapping and potential register access boundary
-> > > > > issues.
-> > > > 
-> > > > I have to double check this from documentation, but if possible I would
-> > > > like to fix this with a followup patch.
-> > > >  
-> > > > > [ ... ]
-> > > > > > +static int an8855_core_probe(struct mdio_device *mdiodev)
-> > > > > > +{
-> > > > > > +	struct an8855_phy_bus phy_bus_infos[AN8855_MAX_PHY_PORT] = { };
-> > > > > > +	struct device *dev = &mdiodev->dev;
-> > > > > > +	struct an8855_core *priv;
-> > > > > > +	struct regmap *regmap;
-> > > > > > +	int num_phys;
-> > > > > > +	int i, ret;
-> > > > > > +
-> > > > > > +	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-> > > > > 
-> > > > > [Severity: Low]
-> > > > > This isn't a bug, but does this variable and structure naming align with MFD
-> > > > > subsystem conventions?
-> > > > > 
-> > > > > The MFD guidelines suggest avoiding generic variable names like priv, and
-> > > > > instead recommend using ddata for the instance variable. Also, should the
-> > > > > struct name itself avoid hardcoding implementation details like core?
-> > > > > Naming it something closer to struct an8855 might better adhere to the
-> > > > > subsystem guidelines.
-> > > > > 
-> > > > 
-> > > > I already updated the struct, is it needed to also update the local
-> > > > variables?
-> > > 
-> > > Ah, I was just about to apply this!
-> > > 
-> > > This would be preferred:
-> > > 
-> > >   struct an8855 *ddata;
-> > >
-> > 
-> > Ahhhhhh! You got me!
-> > 
-> > Do you think there might be a faster method to submit this so I can quickly
-> > rename the variable and you can pick it? 
-> 
-> Is everything else ready to go?
-> 
-> BTW, there is no rush on this - I'm done for v7.4-rc1.
-> 
+--9CCrMjoYK9ZJsW8E
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Honestly it's really to slim down this series and the fact that it's
-multi-subystem related.
+On Mon, Oct 19, 2026 at 01:53:48AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] dt-bindings: media: imx908: additionalProperties: false blocks=
+ allOf schema
+> --
+>=20
+> commit ff8a8181af73cacaf3f8a03e0acde33eb53bb18b
+> Author: Lachlan Michael <lachlan.michael@sony.com>
+>=20
+> media: dt-bindings: imx908: Add Sony IMX908 sensor
+>=20
+> This commit adds device tree bindings and a MAINTAINERS entry for the Sony
+> IMX908 8.39 megapixel MIPI CSI-2 CMOS image sensor.
+>=20
+> > diff --git a/Documentation/devicetree/bindings/media/i2c/sony,imx908.ya=
+ml b/Documentation/devicetree/bindings/media/i2c/sony,imx908.yaml
+> > new file mode 100644
+> > index 0000000000000..828db1175e2f5
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/media/i2c/sony,imx908.yaml
+> > @@ -0,0 +1,108 @@
+> [ ... ]
+> > +allOf:
+> > +  - $ref: /schemas/media/video-interface-devices.yaml#
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: sony,imx908
+> [ ... ]
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - clocks
+> > +  - dvdd-supply
+> > +  - ovdd-supply
+> > +  - avdd-supply
+> > +  - port
+> > +
+> > +additionalProperties: false
+>=20
+> [Severity: Medium]
+> Should this be unevaluatedProperties: false instead of
+> additionalProperties: false?
 
-The net part is done, I also asnwered the comments from sashiko but still
-waiting a slot for maintainers to check.
+Only if the properties outside of what's already explicitly used in the
+binding are possible.
 
-I understand there is no rush but it's also true that it's getting
-problematic to carry this part in this series (at least for me)
+>=20
+> Because the schema references /schemas/media/video-interface-devices.yaml#
+> in allOf without listing common properties such as rotation, orientation,
+> lens-focus, or flash-leds under the local properties block, using
+> additionalProperties: false will cause dtbs_check to reject any
+> sony,imx908 node that uses those inherited properties.
+>=20
+> [ ... ]
+>=20
+> --=20
+> Sashiko AI review =B7 https://sashiko.dev/#/patchset/20261019014720.2635-=
+1-lachlan.michael@sony.com?part=3D1
 
-So if we can already include the mfd driver and related DT it might be
-ideal.
+--9CCrMjoYK9ZJsW8E
+Content-Type: application/pgp-signature; name=signature.asc
 
--- 
-	Ansuel
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCatZfvgAKCRB4tDGHoIJi
+0qiCAP4qFigSJ7kmNt08rOge0JhnUr0NgZ13psJilaB+vxyCQgEA7DnNdJGO2wUI
+NZegYkz6WVCesokxk/JP4xcO4EZGSwU=
+=w4tB
+-----END PGP SIGNATURE-----
+
+--9CCrMjoYK9ZJsW8E--
