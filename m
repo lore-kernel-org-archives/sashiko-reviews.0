@@ -1,187 +1,311 @@
-Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012040.outbound.protection.outlook.com [52.101.53.40])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51BC1489FB9
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 07:45:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.40
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792395920; cv=fail; b=XUhr/G3EewliX0/8qpgA3n1lJa0HMyMxf9hcItB+sHMskyLhFAK52dy6g+jkY44M+uEoaLZOQNH1+XY3M6GBNmNGa0x7WNyE/2w3bDmvtuxQscVt4+Hu3rkkDT2IelPP5eQEvW4ZcOJrXUnYIzSVyhlXiS0eS7PWDPoyjnUYfmM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792395920; c=relaxed/simple;
-	bh=vjTZ7zblH48qngVv6GNb+hPFGIJsV8qj7omFqvG4ZqE=;
-	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=acIcOsU4wkXu+iEIvt/GD1wGiuQ4vAUGa7FZB/bxHZVj121X8ctasqG5oXzZWKmUFSqc1RHJRcb1riagfcuc8RS2/rGjZuvc6/LX1/Vtj4ZPmT/Usod2nGgISs19P+2TGbBZf/KMoUOb/kQJpKTjljtWLCg5bZo/ELisjNTbO30=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=Yib0ae9P; arc=fail smtp.client-ip=52.101.53.40
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0448A404BDD
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 07:59:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1792396802; cv=none; b=c4yVghj82VzTma339ue/N4aF79tC7+8nDSouaP0jvb57z43fu/Gdnlsqre4H8n2kxtoaeV89f4qNmZmjgrZ0DZEFJ1B26IGrb52xsg+DlYgUqt81WHo41DW14KV1I8/nmxK2/NJj9/qqXzmmlNRwd4GWtD5NlND4qPXWadg2I4E=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1792396802; c=relaxed/simple;
+	bh=Rc824/XiH1K0fuI51TaTljkwtCzwTmuXLT67JRhcKk8=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=L6GrPcd8stiF0mx9/hruMQdplQlYm/L4QcpCXCoO2Y6/+QavRxfytf7o2vi2hUnQUkKYK0Om415VbycTe2NmNlTCefhjzlCzE740M5FU1WdRXAzPS52F2WIMz3si3wpMP9OHPvvDcNrAE5rZB4QEzbA/rf9g9JvfZWhoK+LRnok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=j3UTis0J; arc=none smtp.client-ip=192.198.163.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="Yib0ae9P"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LGPXibMZowKC/uIfBawQIUKti1UbOFlORDfJDCUIUgzsnvyO8un/Cudq+g7QKV9mQ8Jq/i/p01S5yrfoHLIlukCnRtfVKZ5gzYedcdzxCteQ4dg3AC59a31kOeC6iO3mPSfg3Ib7TCX2to1aIRL0IpRGwEPDajdYAEA/CbgEA7TGYT50/oaXBjp3wNXCiUcr5jfgOAgt9ZRAja739nFTk1/DxPWwxv4a2YB5Jun/rJd2k+rl3GGRgoyY8gLyh9rLDDz7QXeb5N4kIQfvZApScMKUya2D0+8hydfIFXs3T4DXCvIxPuHeMIFua+ybw9H7ve4Nr3WXkQUAVow0AYwqrg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DM7Jdtu+HmnU8PW26EP/MnbYIobd5zsbVe+h/ktfqf8=;
- b=qqR1/3sRJ/8ejqGDCPDa2/dU7eeE4bb+G6CugkLVyIAclAF9b/8oGjXGf9NWEgH1OzAt+St6sPQHZ/584MnajvjI1NmZpqwh5GTTbiQNDeXIMglg6j7lIhKnRr4vgkDM1RyqS3OTU8tDYUqwtD8i8KEapM6MQkkcP8fGRiFzCTVU5MLPfRdJM5blouKmw6auUDzckEoiDJ3NblmiECU1u1XnFYhBV32VBRz11xkYnU5E8Arj6IXz1lUYGlEPEu4ZGHM3vQak0rVSgek3gql30025XCJomBuU93KS8QZR/cS7qI8W4IEBqP/cdtz0zcbzJZz2yCi3VNZyq9xf4KXk0A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DM7Jdtu+HmnU8PW26EP/MnbYIobd5zsbVe+h/ktfqf8=;
- b=Yib0ae9PEYJtD5QYh728ql6BqmXcv9P9anS/5q39ZnOAy0sytuCpteKsG88AP7APnZ+fsdaORKvD5k6m1sBxnZ45c7Id7w0trp2iT7Nh5gpIWOj0rs4xc8md1cy4gmZsvYQKNtxizTKCi6Jx3XN4URyNbEAUI5XoCmmX9PwsdvU=
-Received: from MW4P221CA0009.NAMP221.PROD.OUTLOOK.COM (2603:10b6:303:8b::14)
- by LV3PR12MB9093.namprd12.prod.outlook.com (2603:10b6:408:19d::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.19; Mon, 19 Oct
- 2026 07:45:15 +0000
-Received: from MWH0EPF000C6190.namprd02.prod.outlook.com
- (2603:10b6:303:8b:cafe::18) by MW4P221CA0009.outlook.office365.com
- (2603:10b6:303:8b::14) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.19 via Frontend Transport; Mon,
- 19 Oct 2026 07:45:14 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- MWH0EPF000C6190.mail.protection.outlook.com (10.167.249.101) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.522.6 via Frontend Transport; Mon, 19 Oct 2026 07:45:14 +0000
-Received: from [10.85.34.241] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Mon, 19 Oct
- 2026 02:44:57 -0500
-Message-ID: <134cdce2-ef41-4d23-9972-d184e73b2e42@amd.com>
-Date: Mon, 19 Oct 2026 13:14:50 +0530
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="j3UTis0J"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1792396800; x=1823932800;
+  h=message-id:subject:from:to:cc:date:in-reply-to:
+   references:content-transfer-encoding:mime-version;
+  bh=Rc824/XiH1K0fuI51TaTljkwtCzwTmuXLT67JRhcKk8=;
+  b=j3UTis0JJBQT01Rt9sl2omE9IxPa7QLF/hWsgtMtlLhSUNhbUkFM8+SR
+   esSBsWrloITcgF4865AF9K1gFdOFxonnR4mMiR6t3wPAJMXEc/FQX0Rwm
+   2s6BirKJLKcdQXZK83QZALKTPDeGHBsg0ouV1/1i8mPYRVkM9gL4Xui1O
+   Xiihc5lPd62eM52FP1f8B7aaiDDUsB3TUVc5X9bdi4SOZ+fPkwZRQK7XA
+   GLU9tn0Hb87VGl6TMWl7UA6rM78dXzFIFhuIYy/2dnDUla7tefvNYGN1I
+   vyRXFMHu2E4lvqeE2C7UuHHl7xb8Tx2khJ9j7yvWeaH6yfTp7FguAWcb9
+   w==;
+X-CSE-ConnectionGUID: DDcN7GEGS1i5QwCnpV3r1A==
+X-CSE-MsgGUID: ZJfx9XAoTZq2eEhMBTzYsg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11939"; a="1096593"
+X-IronPort-AV: E=Sophos;i="6.27,167,1787036400"; 
+   d="scan'208";a="1096593"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 01:00:00 -0700
+X-CSE-ConnectionGUID: b8qJ+y/MTP2XaP2kGcL4Yg==
+X-CSE-MsgGUID: ZS1gBXhbThyK7fU99zxS8A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,167,1787036400"; 
+   d="scan'208";a="2419571"
+Received: from kniemiec-mobl1.ger.corp.intel.com (HELO [10.245.245.222]) ([10.245.245.222])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 00:59:58 -0700
+Message-ID: <6cbfc2349f0a8d14b7a170ff791d18dfcb44d158.camel@linux.intel.com>
+Subject: Re: [PATCH v4 3/4] drm/xe: Split the bo shrinker into purgeable and
+ non-purgeable shrinkers
+From: Thomas =?ISO-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>
+To: Matthew Brost <matthew.brost@intel.com>
+Cc: sashiko-reviews@lists.linux.dev, intel-xe@lists.freedesktop.org
+Date: Mon, 19 Oct 2026 09:59:55 +0200
+In-Reply-To: <atJvxCnNISBr2VLK@gsse-cloud1.jf.intel.com>
+References: <20261016133523.3622-1-thomas.hellstrom@linux.intel.com>
+	 <20261016133523.3622-4-thomas.hellstrom@linux.intel.com>
+	 <sashiko-outbox-174414@kernel.org>
+	 <4d1338d127bb9b77c8bc9a114c7c8740d2ec2780.camel@linux.intel.com>
+	 <atJvxCnNISBr2VLK@gsse-cloud1.jf.intel.com>
+Organization: Intel Sweden AB, Registration Number: 556189-6027
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-2.fc43) 
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-CC: <sarunkod@amd.com>
-Subject: Re: [PATCH v5 6/7] KVM: SVM: Add support for AMD IOMMU Guest APIC
- Physical Processor Interrupt (GAPPI)
-Content-Language: en-US
-To: <sashiko-reviews@lists.linux.dev>, <kvm@vger.kernel.org>
-References: <20261015064515.10700-1-sarunkod@amd.com>
- <20261015064515.10700-7-sarunkod@amd.com> <sashiko-outbox-172379@kernel.org>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <sashiko-outbox-172379@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000C6190:EE_|LV3PR12MB9093:EE_
-X-MS-Office365-Filtering-Correlation-Id: 963d7c74-95d8-42cd-f933-08df2db4e958
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|82310400026|1800799024|376014|36860700016|4143699003|11063799006|56012099006|261009223027099003|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	zb3Fmq41UQklEc39V+e+RFxjHILET7NWRXAw8igGGoeWpMK7X5Wdg36erTCKLGtn62gM1UKBVW7OQVezu+48k2AbcZNJKZLraWEDByyqJJ7tIElDMtLXTZ9JNNbos/gfDJNvH7Y/mGJ22aFs7GeQd9w1vosmn4FcfXevdbK7ItGyM58hgkRwKLwxm1Y737/KKxuQJf/uxvMPs6fRXf014bxDe2yXFs4OA7a/G27an8x1mFfm9DEh/GnrM9lCkZavCCuCMBViCXntod/++ahZTU3FnJlVeC0lVnoQs8GGNH9RDjAmsRkQ+eXWSvoYW4PIFZfQt1HBeU37COQUIOpWVx2VLnZo3TLE63CFfN//HrD26nvxKmtwnRzbyiizAUF4qr8L9eKYtLBDmuNsSlI8MYXVhaHWaEJj2JNGo9R4vonh4nddNrMQ34roK36zB0FXH7/gdKnTpx4brGO9bgmTmWwsKFzb5NJAFMXcgw+vgnM4xiGcZf6BnLIYVWjNgwjvkFTR09YwbwWh4vu/Zd4qmmRacqkTcteBXnjeRwbBA1Q+9UZONOB9a9bZwbyQLTEKJWOfBftlG5v/kI80NgrSIGyf9YnnajEgnALO7eUNyCJUcwTgCvXqaIYcL1kHO31hpjHrBBR376PxVj9B+pnD7PhKb7MaHVZe9/jCSvdtz1yTY7mg0L+9M6CaAnYWFrRcxyX+X90yIFZ5JVywcXwUlg==
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(23010399003)(82310400026)(1800799024)(376014)(36860700016)(4143699003)(11063799006)(56012099006)(261009223027099003)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	OQQq7NSENs1w2MOoUlvMdKgFiHEw9s1JsUwGRYMOBpBGQ5VEHTd8AuEZNJvVng5KacdHHAaOsNajiUr8DR82B/gcKUuQSvg8BmRd94H4Tj6fwZZMntbfnGHms2tfgob8vxgcpdN4GPMcx3mxrOAB+x6TOfcEA0V6aDtLr7qkeoAROuqg4dWsz0I69BTf2tcoFYpZvfLI45dO/v647WtT7199tExeyikFPHDL24wTplVJY4q6Puj4bBCPTDhN3SbsTIyOsJ1l05YrkYMQVqrPfsFvg9ZV5l46UC8JX8WDSb3CsTC7T/INjxv7sL4Qx4unXvE7Lwjd4IcNuTxx9NwdE2Oi5EnGoWdo3DO/EgaDQDL0oSeNe+HSovZYdYTWgZkCiMVat3GrwZD9uGMTJrAECqqvha1q6F6jaHOJzSSHQYegMvGCas2O4ByMt43OYVsq
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Oct 2026 07:45:14.1394
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 963d7c74-95d8-42cd-f933-08df2db4e958
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	MWH0EPF000C6190.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9093
+
+On Fri, 2026-10-16 at 11:41 -0700, Matthew Brost wrote:
+> On Fri, Oct 16, 2026 at 04:09:44PM +0200, Thomas Hellstr=C3=B6m wrote:
+> > On Fri, 2026-10-16 at 13:53 +0000, sashiko-bot@kernel.org=C2=A0wrote:
+> > > Thank you for your contribution! Sashiko AI review found 2
+> > > potential
+> > > issue(s) to consider:
+> > > - [High] drm/xe: Use-After-Free of shrinker during DRM device
+> > > teardown
+> > > - [High] drm/xe: O(N^2) CPU lockup in purgeable shrinker due to
+> > > uncounted LRU skips
+> > > --
+> > >=20
+> > > commit 1e9348c2fe4768de2cf24e4dd9b6188400c84043
+> > > Author: Thomas Hellstr=C3=B6m <thomas.hellstrom@linux.intel.com>
+> > >=20
+> > > drm/xe: Split the bo shrinker into purgeable and non-purgeable
+> > > shrinkers
+> > >=20
+> > > This commit splits the single xe_shrinker into two independent
+> > > shrinker
+> > > instances: one for purgeable objects and another for non-
+> > > purgeable
+> > > (shrinkable) objects. This allows the shrinker core to apply
+> > > different
+> > > reclaim pressures based on the varying costs of reclaiming these
+> > > object
+> > > types.
+> > >=20
+> > > > diff --git a/drivers/gpu/drm/xe/xe_shrinker.c
+> > > > b/drivers/gpu/drm/xe/xe_shrinker.c
+> > > > index 378022c37a57c..8e3fe675e0f34 100644
+> > > > --- a/drivers/gpu/drm/xe/xe_shrinker.c
+> > > > +++ b/drivers/gpu/drm/xe/xe_shrinker.c
+> > >=20
+> > > [ ... ]
+> > >=20
+> > > > @@ -216,63 +238,52 @@ static bool
+> > > > xe_shrinker_runtime_pm_get(struct
+> > > > xe_shrinker *shrinker, bool force,
+> > >=20
+> > > [ ... ]
+> > >=20
+> > > > -static unsigned long xe_shrinker_scan(struct shrinker *shrink,
+> > > > struct shrink_control *sc)
+> > > > +static unsigned long xe_shrinker_scan_purgeable(struct
+> > > > shrinker
+> > > > *shrink,
+> > > > +						struct
+> > > > shrink_control *sc)
+> > > > =C2=A0{
+> > > > =C2=A0	struct xe_shrinker *shrinker =3D to_xe_shrinker(shrink);
+> > > > =C2=A0	struct ttm_operation_ctx ctx =3D {
+> > > > =C2=A0		.interruptible =3D false,
+> > > > =C2=A0		.no_wait_gpu =3D ttm_bo_shrink_avoid_wait(),
+> > > > =C2=A0	};
+> > > > -	unsigned long nr_to_scan, nr_scanned =3D 0, freed =3D 0;
+> > > > +	unsigned long nr_to_scan =3D sc->nr_to_scan, nr_scanned
+> > > > =3D 0,
+> > > > freed =3D 0;
+> > > > =C2=A0	struct xe_bo_shrink_flags shrink_flags =3D {
+> > > > =C2=A0		.purge =3D true,
+> > > > -		/* Don't request writeback without __GFP_IO.
+> > > > */
+> > > > -		.writeback =3D !ctx.no_wait_gpu && (sc->gfp_mask
+> > > > &
+> > > > __GFP_IO),
+> > > > =C2=A0	};
+> > > > -	bool runtime_pm;
+> > > > -	bool purgeable;
+> > > > -	bool can_backup =3D !!(sc->gfp_mask & __GFP_FS);
+> > > > -
+> > > > -	nr_to_scan =3D sc->nr_to_scan;
+> > > > -
+> > > > -	read_lock(&shrinker->lock);
+> > > > -	purgeable =3D !!shrinker->purgeable_pages;
+> > > > -	read_unlock(&shrinker->lock);
+> > > > =C2=A0
+> > > > -	/* Might need runtime PM. Try to wake early if it
+> > > > looks
+> > > > like it. */
+> > > > -	runtime_pm =3D xe_shrinker_runtime_pm_get(shrinker,
+> > > > false,
+> > > > nr_to_scan, can_backup);
+> > > > -
+> > > > -	if (purgeable && nr_scanned < nr_to_scan)
+> > > > -		xe_shrinker_walk(shrinker, &ctx, shrink_flags,
+> > > > -				 nr_to_scan, &nr_scanned,
+> > > > &freed);
+> > > > +	xe_shrinker_walk(shrinker, &ctx, shrink_flags,
+> > > > nr_to_scan,
+> > > > &nr_scanned, &freed);
+> > > > =C2=A0
+> > > > =C2=A0	sc->nr_scanned =3D nr_scanned;
+> > >=20
+> > > [Severity: High]
+> > > Can this cause an O(N^2) CPU lockup in the purgeable shrinker?
+> > >=20
+> > > When the memory reclaim core (do_shrink_slab) calls this
+> > > purgeable
+> > > scan
+> > > routine under memory pressure, xe_shrinker_walk() iterates the
+> > > LRU
+> > > list.
+> > >=20
+> > > However, non-purgeable BOs return -EBUSY and are skipped without
+> > > advancing
+> > > the scanned counter:
+> > >=20
+> > > drivers/gpu/drm/xe/xe_bo.c:xe_bo_shrink() {
+> > > =C2=A0=C2=A0=C2=A0 ...
+> > > =C2=A0=C2=A0=C2=A0 if (!(tt->page_flags & TTM_TT_FLAG_EXTERNAL_MAPPAB=
+LE) ||
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (flags.purge && !xe_tt->pu=
+rgeable))
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return -EBUSY;
+> > > =C2=A0=C2=A0=C2=A0 ...
+> > > }
+> > >=20
+> > > drivers/gpu/drm/xe/xe_shrinker.c:__xe_shrinker_walk() {
+> > > =C2=A0=C2=A0=C2=A0 ...
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 lr=
+et =3D xe_bo_shrink(ctx, ttm_bo, flags, scanned);
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /*=
+ Like the TTM LRU walk, skip bos we can't shrink
+> > > now.
+> > > */
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if=
+ (lret =3D=3D -EBUSY)
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 continue;
+> > > =C2=A0=C2=A0=C2=A0 ...
+> > > }
+> > >=20
+> > > Since the LRU cursor is initialized locally on each call and non-
+> > > purgeable
+> > > BOs do not increment nr_scanned, every batch rescans all leading
+> > > non-purgeable BOs without significantly advancing sc->nr_scanned.
+> > >=20
+> > > Will this force the shrinker core to repeatedly call this
+> > > function,
+> > > processing the same leading non-purgeable BOs over and over
+> > > again?
+> >=20
+> > This can't happen in practice since purgeable bos are always
+> > ordered
+> > before non-purgeable bos on the list.
+> >=20
+>=20
+> Is this true, though? If a BO is marked as purged on a hot VM and
+> shares
+> the VM's bulk-move structure, it would remain hot in the list. Also,
+> within an individual bulk-move list, I don't think a purgable object
+> is
+> guaranteed to be at the front of the LRU.
+>=20
+> So, at a minimum, BOs marked as purged should be moved to a lower
+> priority band, as this patch does [1], and reclaim should only walk
+> the
+> purged-priority band [2].
+
+TBH, I thought we already had [1]. But even [2] sounds like a good
+optimization, although the link seems incorrect.
+
+>=20
+> We can do this in an immediate follow-up after this series merges.
+
+OK let's do that.
+Thanks,
+
+Thomas
 
 
-
-On 10/15/2026 12:35 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] kvm: svm: vCPU leaked on GAPPI pi_wakeup_list when AVIC deactivated
-> --
-> 
-> commit cd7fa3c00904984a2127bee934d4e48326ead7a8
-> Author: Sairaj Kodilkar <sarunkod@amd.com>
-> 
->     KVM: SVM: Add support for AMD IOMMU Guest APIC Physical Processor Interrupt (GAPPI)
->     
->     With AVIC guest-mode interrupt remapping, device interrupts are posted into
->     the guest vAPIC backing page by the IOMMU. When the vCPU is not running
->     (IRTE[IsRun] = 0), KVM must still be notified to schedule it. The legacy
->     path uses the GA log.
-> 
->> diff --git a/arch/x86/kvm/svm/avic.c b/arch/x86/kvm/svm/avic.c
->> index 8b1fa5bded3db..054b89c3cb0f9 100644
->> --- a/arch/x86/kvm/svm/avic.c
->> +++ b/arch/x86/kvm/svm/avic.c
-> [ ... ]
->> @@ -1018,7 +1038,7 @@ enum avic_vcpu_action {
->>  };
->>  
->>  static void avic_update_iommu_vcpu_affinity(struct kvm_vcpu *vcpu, int apicid,
->> -					    enum avic_vcpu_action action)
->> +					    int cpu, enum avic_vcpu_action action)
->>  {
->>  	bool wakeup_intr = (action & AVIC_START_BLOCKING);
->>  	bool is_running = apicid >= 0;
->> @@ -1027,6 +1047,14 @@ static void avic_update_iommu_vcpu_affinity(struct kvm_vcpu *vcpu, int apicid,
->>  
->>  	lockdep_assert_held(&svm->ir_list_lock);
->>  
->> +	if (amd_iommu_gappi && is_running) {
->> +		kvm_pi_disable_wakeup_handler(vcpu, svm->gappi_cpu);
->> +		svm->gappi_cpu = cpu; /* Store cpu number as target for GAPPI */
->> +	} else if (amd_iommu_gappi) {
->> +		apicid = cpu_physical_id(svm->gappi_cpu);
->> +		kvm_pi_enable_wakeup_handler(vcpu, svm->gappi_cpu);
->> +	}
->> +
-> 
-> [Severity: Medium]
-> Does this unconditionally add the vCPU to the pi_wakeup_list when is_running is
-> false, even during AVIC_DEACTIVATE?
-> 
-> When AVIC is deactivated via avic_refresh_apicv_exec_ctrl(), it calls
-> __avic_vcpu_put(AVIC_DEACTIVATE), which in turn calls
-> avic_update_iommu_vcpu_affinity() with a target apicid of -1 (so is_running
-> is false). This causes KVM to add the vCPU to the pi_wakeup_list of
-> svm->gappi_cpu.
-> 
-> Since AVIC is deactivated, the IOMMU falls back to legacy mode later in this
-> function:
-> 
-> 	if (!(action & AVIC_TOGGLE_ON_OFF))
-> 		WARN_ON_ONCE(amd_iommu_update_ga(...));
-> 	else if (is_running)
-> 		WARN_ON_ONCE(amd_iommu_activate_guest_mode(...));
-> 	else
-> 		WARN_ON_ONCE(amd_iommu_deactivate_guest_mode(data));
-> 
-> Because the IOMMU is reverted to legacy mode, it will not send GAPPI interrupts
-> for this vCPU.
-> 
-> However, the vCPU remains indefinitely on the per-CPU pi_wakeup_list because
-> subsequent context switches (via svm_vcpu_load()) ignore deactivated vCPUs and
-> will never call kvm_pi_disable_wakeup_handler().
-> 
-> Could this cause KVM to unnecessarily traverse the leaked vCPU on every GAPPI
-> interrupt targeted at that pCPU from other active VMs, wasting CPU cycles and
-> risking spurious wakeups?
-> 
-
-You are right about this, it can cause spurious wakeups. We can simply
-skip list operations during activate and deactivate.
-
-Thanks
-Sairaj
+>=20
+> Matt
+>=20
+> [1]
+> https://patchwork.freedesktop.org/patch/743454/?series=3D170454&rev=3D5
+> [2]
+> https://patchwork.freedesktop.org/patch/743454/?series=3D170454&rev=3D5
+>=20
+> > /Thomas
+> >=20
+> >=20
+> >=20
+> > >=20
+> > > > -	if (nr_scanned >=3D nr_to_scan || !can_backup)
+> > > > -		goto out;
+> > > > =C2=A0
+> > > > -	/* If we didn't wake before, try to do it now if
+> > > > needed.
+> > > > */
+> > > > -	if (!runtime_pm)
+> > > > -		runtime_pm =3D
+> > > > xe_shrinker_runtime_pm_get(shrinker,
+> > > > true, 0, can_backup);
+> > > > +	return nr_scanned ? freed : SHRINK_STOP;
+> > > > +}
+> > >=20
+> > > [ ... ]
+> > >=20
+> > > > @@ -294,6 +305,7 @@ static void xe_shrinker_fini(struct
+> > > > drm_device
+> > > > *drm, void *arg)
+> > > > =C2=A0	xe_assert(shrinker->xe, !shrinker->purgeable_pages);
+> > > > =C2=A0	xe_assert(shrinker->xe, !shrinker->populated_tts);
+> > > > =C2=A0	shrinker_free(shrinker->shrink);
+> > > > +	shrinker_free(shrinker->purge_shrink);
+> > > > =C2=A0	flush_work(&shrinker->pm_worker);
+> > > > =C2=A0	kfree(shrinker);
+> > > > =C2=A0}
+> > >=20
+> > > [Severity: High]
+> > > Does this kfree(shrinker) leave xe->mem.shrinker as a dangling
+> > > pointer?
+> > >=20
+> > > Because drmm actions execute in LIFO order upon device release,
+> > > xe_shrinker_fini() is called before xe_device_destroy().=20
+> > >=20
+> > > Later, xe_device_destroy() runs and calls xe_bo_dev_fini() which
+> > > flushes
+> > > the async_free workqueue. Pending BOs in the workqueue will have
+> > > their
+> > > final references dropped, leading to
+> > > xe_ttm_tt_account_subtract():
+> > >=20
+> > > drivers/gpu/drm/xe/xe_bo.c:xe_ttm_tt_account_subtract() {
+> > > =C2=A0=C2=A0=C2=A0 ...
+> > > =C2=A0=C2=A0=C2=A0 if (xe_tt->purgeable)
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 xe_shrinker_mod_pages(xe->=
+mem.shrinker, 0, -(long)tt-
+> > > > num_pages, -1);
+> > > =C2=A0=C2=A0=C2=A0 else
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 xe_shrinker_mod_pages(xe->=
+mem.shrinker, -(long)tt-
+> > > >num_pages,
+> > > 0, -1);
+> > > =C2=A0=C2=A0=C2=A0 ...
+> > > }
+> > >=20
+> > > Can this lead to a use-after-free and memory corruption when
+> > > driver
+> > > unloads?
