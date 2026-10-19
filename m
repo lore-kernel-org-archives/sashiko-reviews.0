@@ -1,30 +1,30 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062CA3C0626
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 04:10:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88E345560A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 04:25:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792383042; cv=none; b=eBc+JwBlBI//4aCgd2YUp+FRZXUSxwboA75KaHBIcTVQuxH8ElmyYny6x3BgEEiGbhajxkuaET3CBsZkz6T+HQEoEJsv/HNpmwemFfcvocgTcGaBu7l/FyhnzrVzsxjOn4YsKKudPSUO7vbwwn08Ua6rFrnOBvQcKw2Ufrf6uII=
+	t=1792383912; cv=none; b=sviYf6u+7IRE2qPk2TD/3dNM03jdorT+M4uGxAZIUxhLwWs2vrRcWRXCRyBhTBDa4fo1aidy7yrFcAcUrksUHJ5vRzBHLICGeNky2NZOuW5UVKBeK6JRVXL2PFfHj1Qo+Cdz5Lesy7CRtMJTmzZj74zl+XpApErki7Tq9H6Cphc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792383042; c=relaxed/simple;
-	bh=dbGaGWlUvGTnSw/cOsAveAXk4OBbDrXFZouBzyoETRQ=;
+	s=arc-20240116; t=1792383912; c=relaxed/simple;
+	bh=OCUWKGT7AZkyog+r+usBNuADixx7/vpE+rViFHumn4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ltmNEy8C/EQomygrbyPUGZkDIY8NdWC1OTREPiI4M43RaOLDVHUmvk+plBe/gaNBdn31njg8SnPYnxeo25voQaYo1A4/+gUgX3RdEpxU3NHcYBQkP918o+j9iWZ8zb4MoSYhzc0l9bNBEiBnbeB+9cXkWIpLs38E1LVY6WVpaOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=W79NGkrn; arc=none smtp.client-ip=220.197.31.5
+	 MIME-Version; b=Ymz3623UNloDH4iOrPltTs9u62DGTpV2oJLMMUrwIM2AtwSD7bHvF2jqOJfDROBx61mnVE4H9o9NICI/KVu4lmt4zQVIRm5tKr0Y1epD1waOAZYRdmgw3EvR1YAofcLB4BZyoKFUJJF98EeSj/L2exdtRXtuvV9F18FohQ8WbtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=HXXXFaEs; arc=none smtp.client-ip=220.197.31.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="W79NGkrn"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="HXXXFaEs"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=bj
-	xhhfbWXOOzUAWwH7pIj7Je30y2dzXsiwo8fgJ0B/Y=; b=W79NGkrnwCkDHdHjvH
-	A9nAHCLKOphhnIdiHQWszaAazbgTrE7DIw+yllU2+lqzwmYiG3EvZ6NAF+WAxFc5
-	Lr5Z0C848kaA6/cgZ2n1aYTqG94OYMYUfONV2fvHH0DgvaevpmqGQzt3ylPsMFdy
-	wtvmYSdoTyttmOJkC1yjDkdN0=
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=Aw
+	2B94AIp/fE5PYbhVFZfzwqsmQ5VZUsTfV4vLq9MS4=; b=HXXXFaEsjiID70vIwa
+	R+GMzpfGQy1Ch+l5tf9IF3A/g4k2wuX/lB4S2KX1XG69J3g05ETIk28TF7dabTjJ
+	Q4Erkpj2CsyjqWX50uEIq5DBc9qAIe9109mKv4Oe71m7Y8iUFKmKBDTrxW6XQG1d
+	tWpBdYSiWCCWRnqpm1FuRP4Q4=
 Received: from colol4bi5.localdomain (unknown [])
-	by gzga-smtp-mtada-g1-2 (Coremail) with SMTP id _____wD3n4cpmNVq2YaJAw--.16525S2;
-	Mon, 19 Oct 2026 12:10:17 +0800 (CST)
+	by gzga-smtp-mtada-g0-0 (Coremail) with SMTP id _____wDnrxV8m9VqGji1BA--.16122S2;
+	Mon, 19 Oct 2026 12:24:29 +0800 (CST)
 From: Binbin Deng <18983559317@163.com>
 To: sashiko-reviews@lists.linux.dev,
 	linux-rdma@vger.kernel.org
@@ -34,8 +34,8 @@ Cc: zyjzyj2000@gmail.com,
 	dsahern@kernel.org,
 	yanjun.zhu@linux.dev
 Subject: Re:Re: [PATCH v2] RDMA/rxe: unpublish the per-net tunnel socket 
-Date: Mon, 19 Oct 2026 12:10:16 +0800
-Message-ID: <20261019041016.463989-1-18983559317@163.com>
+Date: Mon, 19 Oct 2026 12:24:28 +0800
+Message-ID: <20261019042428.465664-1-18983559317@163.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261019023717.455067-1-18983559317@163.com>
 References: <20261019023717.455067-1-18983559317@163.com>
@@ -46,17 +46,18 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wD3n4cpmNVq2YaJAw--.16525S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxurW8AF1UtF4ftrW3Ar4DCFg_yoW5Zr4Dpr
-	WSgFWUtr4DKr1Syw1IvF4xZF1fAa9YkFy5GFykKr9rCws8u34ayFWSqr1Fka98Cr4kG3Wj
-	vrn8Cws7ua98ZaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+X-CM-TRANSID:_____wDnrxV8m9VqGji1BA--.16122S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxurW8ZFW8uF4xXFWDXF48Crg_yoW5Zryfpr
+	WFgFWUtrWDtrs2ywn7ta1xuF1fAFZYkFy3GFykKry3Aws8uw1ayFWftr1Fvan5Cr4kK34j
+	vFn0k3ykuasxZFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
 	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jFD73UUUUU=
-X-CM-SenderInfo: jprymmytvvmjmrxbiqqrwthudrp/xtbC4AlAJGrVmClyawAA3a
+X-CM-SenderInfo: jprymmytvvmjmrxbiqqrwthudrp/xtbC4B0W+WrVm32jFAAA38
 
 Hi,
 
 Thanks for the review.  I verified both findings against the code and
-they are correct.  Details below; a v3 that addresses them follows.
+they are correct.  Details below; a v3 that fixes the use-after-free
+follows.
 
 1. [Critical] residual use-after-free via the unpinned tunnel socket
 
@@ -91,25 +92,27 @@ option because xfrm_lookup_route() may sleep.
 
 Both points are valid.  They pre-date v2 (they come with
 f1327abd6abe "RDMA/rxe: Support RDMA link creation and destruction
-per net namespace"), but v3 addresses them as well:
+per net namespace") and are not introduced by it:
 
 - nldev_newlink() is serialized only by link_ops_rwsem, while
   nldev_dellink() uses nldev_dellink_mutex, and the NETDEV_UNREGISTER
   path in rxe_notify() takes neither: rxe_net_init() could observe
   the just-cleared pointer and fail binding ROCE_V2_UDP_DPORT with
   -EADDRINUSE, or sock_hold() a socket that was concurrently being
-  released.  v3 serializes rxe_net_init(), rxe_net_del() and
-  rxe_ns_exit() with a new rxe_ns_lock.
+  released.  With v3 rxe_net_ipv4/6_init() acquire the socket through
+  the pinned getter, so they can no longer resurrect a socket that
+  is being released; the -EADDRINUSE window itself remains.
 
 - The refcount_read(&sk->sk_refcnt) > SK_REF_FOR_TUNNEL check was
   indeed TOCTOU, and two concurrent rxe_net_del() callers ("rdma link
   del" racing NETDEV_UNREGISTER of the underlying netdev) could both
-  release the tunnel.  v3 replaces the heuristic with explicit
-  accounting: the per-net pointer owns a publish reference, every
-  device holds its own reference (the creating device previously
-  never took one, so removing either of two rxe devices in one netns
-  tore the tunnel down underneath the other), and the two
-  rxe_net_del() callers of one device are deduplicated.
+  release the tunnel.
+
+Since these races exist in the code that v2 and v3 fix and are
+separate from the use-after-free at hand, I kept v3 minimal and
+scoped to the socket lifetime fix; I plan to send a follow-up
+series with proper locking and per-device reference accounting for
+them.
 
 The KASAN report from v2 is kept unchanged in the v3 commit message.
 v3 also fixes the truncated subject line of v2 ("...before") and
