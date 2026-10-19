@@ -1,131 +1,204 @@
-Received: from fraori-sdnproxy-3.icoremail.net (fraori-sdnproxy-3.icoremail.net [132.226.202.154])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E30093EF0AA
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 03:33:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=132.226.202.154
+Received: from h3cspam01-ex.h3c.com (smtp.h3c.com [60.191.123.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203CD377ED9
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 03:34:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=60.191.123.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792380783; cv=none; b=GwPq7cxK6fxMQbZ1Q2jrmsDOqZam3+ynwZwOumT0udn/J9DEMtWMfQI5BLMW/Qlvl3+w5Cq4k6awjJLMyx/kkK0qqZ/8C73QPvHhBsWU7Aiw3sshoWAJ10reaI8cOmaAd/e+KPi5y5+juFIorrTuB1XDdReFBXs4M/+Qe4quH6M=
+	t=1792380851; cv=none; b=nU5lYto2uMf3fXcS5hIak/G6A1/1dk6lr+pcmTdPjV9ERLdzM9100hxAtQ4U4+aWS3mnhNCTsADX5lJ9KVyriYfyldGUhmpVxXAA3zVaxjNeku/zvPGfsQs6qCo+G8gWVS4kiGuLUhQpwZl8xITaUseeRb9Fy6h+lX0ADJotRSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792380783; c=relaxed/simple;
-	bh=myeZcrIK9N2UvgTiV88GF34NvItmy5XTQ1Uz3iGbQE0=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=PxDg6Mh8iMX4Z/Ko4tEMT9entVpixAk02YTbYClO9iucHH0DZqzURLczfNDAclBbSxCie7sp25fKDPYFr+7/6yI4Pbwjhp1rsevH6mRBvAEho6QBQAvdFXW36wDdmddhrLn3u16rAsWyLMhlel17CHjtRKcK/QbOG9h21SPh60E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com; spf=pass smtp.mailfrom=eswincomputing.com; arc=none smtp.client-ip=132.226.202.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eswincomputing.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eswincomputing.com
-Received: from yuanxiaofeng$eswincomputing.com ( [10.12.96.78] ) by
- ajax-webmail-app2 (Coremail) ; Mon, 19 Oct 2026 11:32:33 +0800 (GMT+08:00)
-Date: Mon, 19 Oct 2026 11:32:33 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: =?UTF-8?B?6KKB5pmT5bOw?= <yuanxiaofeng@eswincomputing.com>
-To: "Masami Hiramatsu" <mhiramat@kernel.org>,
-	sashiko-reviews@lists.linux.dev
-Cc: linux-trace-kernel@vger.kernel.org, "Paul Walmsley" <pjw@kernel.org>,
-	"Palmer Dabbelt" <palmer@dabbelt.com>,
-	"Albert Ou" <aou@eecs.berkeley.edu>,
-	"Nam Cao" <namcao@linutronix.de>, "Alexandre Ghiti" <alex@ghiti.fr>,
-	"Naveen N Rao" <naveen@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: Re: [PATCH v6 1/2] riscv: kprobes: reject probes inside LR/SC
- sequences
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.2-cmXT6 build
- 20241203(6b039d88) Copyright (c) 2002-2026 www.mailtech.cn
- mispb-72143050-eaf5-4703-89e0-86624513b4ce-eswincomputing.com
-In-Reply-To: <sashiko-outbox-174019@kernel.org>
-References: <20261016081706.1085-1-yuanxiaofeng@eswincomputing.com>
- <20261016081706.1085-2-yuanxiaofeng@eswincomputing.com>
- <sashiko-outbox-174019@kernel.org>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1792380851; c=relaxed/simple;
+	bh=GlDFamdmV7uagRt0szWh3vWqD1k8yemQuuVgfqOFn9Q=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=JeeMInOGHns2cFoQI0S/xnyI/M1yJXfukG04U6r5aJRTRbfMaPoBDf6yedOeGRFsthzae/k2VeTk8mNN5+xYriYP0OR5SMrI/2ds7tcDCpeBDCnz6L4c7AdDDR3tGJvBVZSrlHgaOX/xOU2ChZiSudkdl3eebjz5kQ+V8KN4kls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=h3c.com; spf=pass smtp.mailfrom=h3c.com; arc=none smtp.client-ip=60.191.123.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=h3c.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=h3c.com
+Received: from mail.maildlp.com ([172.25.15.155])
+	by h3cspam01-ex.h3c.com with ESMTP id 69J3XML9077055;
+	Mon, 19 Oct 2026 11:33:22 +0800 (+08)
+	(envelope-from lin.nan@h3c.com)
+Received: from DAG6EX09-BJD.srv.huawei-3com.com (unknown [10.153.34.11])
+	by mail.maildlp.com (Postfix) with ESMTP id 3544E2284EA2;
+	Mon, 19 Oct 2026 11:36:26 +0800 (CST)
+Received: from localhost.localdomain (10.142.164.48) by
+ DAG6EX09-BJD.srv.huawei-3com.com (10.153.34.11) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.2.1258.27; Mon, 19 Oct 2026 11:33:20 +0800
+From: Nan Lin <lin.nan@h3c.com>
+To: <sashiko-bot@kernel.org>
+CC: <chengzhihao1@huawei.com>, <lin.nan@h3c.com>,
+        <linux-mtd@lists.infradead.org>, <richard@nod.at>,
+        <sashiko-reviews@lists.linux.dev>, <wangxiaoqing@h3c.com>,
+        <zhou.kete@h3c.com>
+Subject: [PATCH v2] ubifs: zero stale data beyond EOF before file size grows
+Date: Mon, 19 Oct 2026 11:25:30 +0800
+Message-ID: <20261019032530.2212601-1-lin.nan@h3c.com>
+X-Mailer: git-send-email 2.33.0
+In-Reply-To: <sashiko-outbox-174089@kernel.org>
+References: <sashiko-outbox-174089@kernel.org>
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <4cd4d42d.afc2.1a15237d7d2.Coremail.yuanxiaofeng@eswincomputing.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:TQJkCgAnPqFRj9VqACOHAA--.14297W
-X-CM-SenderInfo: h1xd05xldrwv1qj6v25zlqu0xpsx3x1qjou0bp/1tbiAgEFE2rU9S
-	oWrAABsP
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWDJw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: BJSMTP01-EX.srv.huawei-3com.com (10.63.20.132) To
+ DAG6EX09-BJD.srv.huawei-3com.com (10.153.34.11)
+X-DNSRBL: 
+X-SPAM-SOURCE-CHECK: pass
+X-MAIL:h3cspam01-ex.h3c.com 69J3XML9077055
 
-SGkgTWFzYW1pLAoKCkkgbG9va2VkIGludG8gdGhlIGlzc3VlIFNhc2hpa28gcmVwb3J0ZWQgZm9y
-IHJpc2N2X3Byb2JlX2RlY29kZV9pbnNuKCkuClNoYXJpbmcgdGhlIGFuYWx5c2lzIGJlbG93OyB0
-aGUgc2hvcnQgdmVyc2lvbiBpcyB0aGF0IHRoaXMgcmVhZApwcmVkYXRlcyB0aGlzIHNlcmllcywg
-YW5kIEknbSBoYXBweSB0byBzZW5kIGEgc2VwYXJhdGUgcGF0Y2ggaWYgdGhlCm1haW50YWluZXJz
-IHRoaW5rIGl0IGlzIHdvcnRoIGZpeGluZy4KCgpGaXJzdCwgdGhlIGNvbnRleHQ6ICJwcm9iZV9v
-cGNvZGVfdCBpbnNuID0gKmFkZHI7IiBpcyBwcmUtZXhpc3RpbmcKY29kZS7CoCBUaGlzIHNlcmll
-cyBvbmx5IGFkZHMgdHdvIFJJU0NWX0lOU05fUkVKRUNURUQoKSBlbnRyaWVzLCB3aGljaApjb25z
-dW1lIHRoZSBhbHJlYWR5LWxvYWRlZCB2YWx1ZSBhbmQgZG8gbm90IGNoYW5nZSBob3cgbWVtb3J5
-IGlzCmFjY2Vzc2VkLgoKCk9uIHRoZSB1bmFsaWduZWQgcGFydDogd2l0aCBkZWZhdWx0IGNvbmZp
-Z3VyYXRpb25zLCBtaXNhbGlnbmVkCmFjY2Vzc2VzIGFyZSBlbXVsYXRlZCwgZWl0aGVyIGJ5IHRo
-ZSBmaXJtd2FyZSBvciBieSB0aGUga2VybmVsIGl0c2VsZgooUklTQ1ZfU0NBTEFSX01JU0FMSUdO
-RUQpLCBzbyBhbiBvb3BzIHdvdWxkIHJlcXVpcmUgYSBOT05QT1JUQUJMRQprZXJuZWwgYnVpbHQg
-d2l0aCBSSVNDVl9TTE9XL0VGRklDSUVOVF9VTkFMSUdORURfQUNDRVNTIHJ1bm5pbmcgb24KaGFy
-ZHdhcmUgdGhhdCBkb2VzIG5vdCBhY3R1YWxseSBzdXBwb3J0IHVuYWxpZ25lZCBhY2Nlc3Nlcy4K
-CgpPbiB0aGUgcGFnZS1jcm9zc2luZyBwYXJ0OiB0aGlzIG9uZSBpcyByZWFsIGluIHRoZW9yeSwg
-dGhvdWdoIHRoZQp3aW5kb3cgaXMgbmFycm93LsKgIEl0IGNhbm5vdCBoYXBwZW4gZm9yIGJ1aWx0
-LWluIGtlcm5lbCB0ZXh0ICh0aGUKbGluZWFyIG1hcHBpbmcgaXMgY29udGlndW91cykuwqAgRm9y
-IG1vZHVsZXMsIGl0IG5lZWRzIGEgY29tcHJlc3NlZAppbnN0cnVjdGlvbiBhdCB0aGUgbGFzdCB0
-d28gYnl0ZXMgb2YgYSBtb2R1bGUgdGV4dCBwYWdlIGZvbGxvd2VkIGJ5CnRoZSB2bWFsbG9jIGd1
-YXJkIHBhZ2UsIHBsdXMgYSBrcHJvYmUgcmVnaXN0ZXJlZCBleGFjdGx5IHRoZXJlLsKgIEEKMzIt
-Yml0IGluc3RydWN0aW9uIGNhbm5vdCBzaXQgYXQgdGhhdCBsb2NhdGlvbiBvbiBhIHdvcmtpbmcg
-bW9kdWxlCihpdHMgZW5jb2Rpbmcgd291bGQgY3Jvc3MgaW50byB0aGUgdW5tYXBwZWQgZ3VhcmQg
-cGFnZSwgc28gaXQgY291bGQKbmV2ZXIgYmUgZmV0Y2hlZCksIHdoaWNoIGlzIGFsc28gd2h5IHRo
-ZSB0d28tdTE2LXN0ZXAgY29weSBpbgphcmNoX3ByZXBhcmVfa3Byb2JlKCkgaXMgc2FmZS4KCgpJ
-ZiBpdCBpcyB3b3J0aCBmaXhpbmcsIHRoZSBjbGVhbmVzdCBhcHByb2FjaCBzZWVtcyB0byBiZSBw
-YXNzaW5nIHRoZQpvcGNvZGUgYnkgdmFsdWUgaW5zdGVhZCBvZiBhIHBvaW50ZXI6IGFyY2hfcHJl
-cGFyZV9rcHJvYmUoKSBhbHJlYWR5CmhvbGRzIGEgc2FmZWx5IGNvcGllZCBwLT5vcGNvZGUsIGFu
-ZCB0aGUgdXByb2JlcyBjYWxsZXIgcGFzc2VzIGEgc3RhY2sKdmFyaWFibGUsIHNvIGJvdGggY2Fs
-bCBzaXRlcyB3b3VsZCBiZSBjb3ZlcmVkLsKgIFRoZXJlIGlzIGEgdGhpcmQKc2ltaWxhciByYXcg
-cmVhZCBpbiB1cHJvYmVzLmMgKHRoZSBhdXByb2JlLT5pbnNuW10gZGVyZWZlcmVuY2UpIHRoYXQK
-Y291bGQgYmUgZm9sZGVkIGluIGFzIHdlbGwuCgoKRWl0aGVyIHdheSwgdGhpcyBkb2Vzbid0IG5l
-ZWQgdG8gYmUgaGFuZGxlZCBpbiB0aGUgc2VyaWVzOiB0aGUKdXBjb21pbmcgdjcgd2lsbCBvbmx5
-IGFkZHJlc3MgTmFtJ3MgcmV2aWV3IGNvbW1lbnRzLgoKClRoYW5rcywKWGlhb2ZlbmcKCgo+IC0t
-LS0t5Y6f5aeL6YKu5Lu2LS0tLS0KPiDlj5Hku7bkuro6IHNhc2hpa28tYm90QGtlcm5lbC5vcmcK
-PiDlj5HpgIHml7bpl7Q6MjAyNi0xMC0xNiAxNjoyOTo0MiAo5pif5pyf5LqUKQo+IOaUtuS7tuS6
-ujogIlhpYW9mZW5nIFl1YW4iIDx5dWFueGlhb2ZlbmdAZXN3aW5jb21wdXRpbmcuY29tPgo+IOaK
-hOmAgTogbGludXgtdHJhY2Uta2VybmVsQHZnZXIua2VybmVsLm9yZwo+IOS4u+mimDogUmU6IFtQ
-QVRDSCB2NiAxLzJdIHJpc2N2OiBrcHJvYmVzOiByZWplY3QgcHJvYmVzIGluc2lkZSBMUi9TQyBz
-ZXF1ZW5jZXMKPiAKPiBUaGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJ
-IHJldmlldyBmb3VuZCAxIHBvdGVudGlhbCBpc3N1ZShzKSB0byBjb25zaWRlcjoKPiAtIFtIaWdo
-XSByaXNjdjoga3Byb2JlczogdW5zYWZlIDMyLWJpdCByZWFkIGluIHJpc2N2X3Byb2JlX2RlY29k
-ZV9pbnNuIGNhbiBwYWdlIGZhdWx0Cj4gLS0KPiAKPiBjb21taXQgNmY5NDA1NzhkMmYwOTY5NzBl
-OWFiZDZjYzI4OTRkZTAwOGUyOWY2Zgo+IEF1dGhvcjogWGlhb2ZlbmcgWXVhbiA8eXVhbnhpYW9m
-ZW5nQGVzd2luY29tcHV0aW5nLmNvbT4KPiAKPiAgICAgcmlzY3Y6IGtwcm9iZXM6IHJlamVjdCBw
-cm9iZXMgaW5zaWRlIExSL1NDIHNlcXVlbmNlcwo+IAo+IFRoaXMgcGF0Y2ggcmVqZWN0cyBrcHJv
-YmVzIHBsYWNlZCBpbnNpZGUgTFIvU0Mgc2VxdWVuY2VzIG9yIG9uIHRoZSBMUi9TQwo+IGluc3Ry
-dWN0aW9ucyB0aGVtc2VsdmVzIHRvIGF2b2lkIGxpdmVsb2NrLiBJdCB1cGRhdGVzIHJpc2N2X3By
-b2JlX2RlY29kZV9pbnNuKCkKPiB0byByZWplY3QgdGhlIGluc3RydWN0aW9ucyBhbmQgYWRkcyBp
-bnN0cnVjdGlvbiB3YWxraW5nIGxvZ2ljIGluCj4gYXJjaF9jaGVja19rcHJvYmUoKSB0byByZWpl
-Y3QgYWRkcmVzc2VzIHdpdGhpbiBhIHNlcXVlbmNlLgo+IAo+IFsgLi4uIF0KPiAKPiA+IGRpZmYg
-LS1naXQgYS9hcmNoL3Jpc2N2L2tlcm5lbC9wcm9iZXMvZGVjb2RlLWluc24uYyBiL2FyY2gvcmlz
-Y3Yva2VybmVsL3Byb2Jlcy9kZWNvZGUtaW5zbi5jCj4gPiBpbmRleCA0MzNkOTAzNWI4ODgyLi5l
-NmE4ODk0Njc3YjEwIDEwMDY0NAo+ID4gLS0tIGEvYXJjaC9yaXNjdi9rZXJuZWwvcHJvYmVzL2Rl
-Y29kZS1pbnNuLmMKPiA+ICsrKyBiL2FyY2gvcmlzY3Yva2VybmVsL3Byb2Jlcy9kZWNvZGUtaW5z
-bi5jCj4gPiBAQCAtMjMsNiArMjMsOCBAQCByaXNjdl9wcm9iZV9kZWNvZGVfaW5zbihwcm9iZV9v
-cGNvZGVfdCAqYWRkciwgc3RydWN0IGFyY2hfcHJvYmVfaW5zbiAqYXBpKQo+ID4gIAkgKi8KPiA+
-ICAJUklTQ1ZfSU5TTl9SRUpFQ1RFRChzeXN0ZW0sCQlpbnNuKTsKPiA+ICAJUklTQ1ZfSU5TTl9S
-RUpFQ1RFRChmZW5jZSwJCWluc24pOwo+ID4gKwlSSVNDVl9JTlNOX1JFSkVDVEVEKGxyLAkJCWlu
-c24pOwo+ID4gKwlSSVNDVl9JTlNOX1JFSkVDVEVEKHNjLAkJCWluc24pOwo+IAo+IFtTZXZlcml0
-eTogSGlnaF0KPiBEb2VzIGV2YWx1YXRpbmcgdGhlc2UgbWFjcm9zIHJlbHkgb24gdGhlIGluc24g
-dmFyaWFibGUsIHdoaWNoIGlzIHJlYWQKPiB1bmNvbmRpdGlvbmFsbHkgYXMgYSBuYXRpdmUgMzIt
-Yml0IGludGVnZXIgZWFybGllciBpbiB0aGUgZnVuY3Rpb24/Cj4gCj4gYXJjaC9yaXNjdi9rZXJu
-ZWwvcHJvYmVzL2RlY29kZS1pbnNuLmM6cmlzY3ZfcHJvYmVfZGVjb2RlX2luc24oKSB7Cj4gCXBy
-b2JlX29wY29kZV90IGluc24gPSAqYWRkcjsKPiAJLi4uCj4gCj4gSWYgYWRkciBpcyAyLWJ5dGUg
-YWxpZ25lZCwgd2lsbCB0aGlzIG5hdGl2ZSAzMi1iaXQgZGVyZWZlcmVuY2UgcGVyZm9ybQo+IGFu
-IHVuYWxpZ25lZCBtZW1vcnkgYWNjZXNzLCBwb3RlbnRpYWxseSBvb3BzaW5nIG9uIFJJU0MtViBo
-YXJkd2FyZSB0aGF0Cj4gbGFja3Mga2VybmVsLW1vZGUgdW5hbGlnbmVkIGFjY2VzcyBzdXBwb3J0
-Pwo+IAo+IEZ1cnRoZXJtb3JlLCBpZiBhZGRyIHBvaW50cyB0byBhIDE2LWJpdCBjb21wcmVzc2Vk
-IGluc3RydWN0aW9uIGF0IHRoZQo+IGVuZCBvZiBhIG1hcHBlZCBwYWdlIGFuZCB0aGUgbmV4dCBw
-YWdlIGlzIGFuIHVubWFwcGVkIHZtYWxsb2MgZ3VhcmQKPiBwYWdlLCBjb3VsZCB0aGlzIDMyLWJp
-dCByZWFkIGNyb3NzIHRoZSBwYWdlIGJvdW5kYXJ5IGludG8gdW5tYXBwZWQKPiBtZW1vcnk/Cj4g
-Cj4gV291bGQgdGhpcyB0cmlnZ2VyIGEga2VybmVsIHBhZ2UgZmF1bHQgYW5kIHBhbmljIHdoZW4g
-dHJhY2luZyB0b29scwo+IHJlZ2lzdGVyIGEga3Byb2JlIGF0IHN1Y2ggYW4gYWRkcmVzcz8KPiAK
-PiAtLSAKPiBTYXNoaWtvIEFJIHJldmlldyDCtyBodHRwczovL3Nhc2hpa28uZGV2LyMvcGF0Y2hz
-ZXQvMjAyNjEwMTYwODE3MDYuMTA4NS0xLXl1YW54aWFvZmVuZ0Blc3dpbmNvbXB1dGluZy5jb20/
-cGFydD0xCg==
+mmap writes can dirty the page cache beyond EOF without changing
+i_size. A later extending write or ftruncate turns that region into a
+hole, but UBIFS never zeroes the partial page at the old EOF, so reads
+expose the stale data.
+
+Zero the tail of the old-EOF folio in all three size-extending paths:
+ubifs_write_begin() for writes starting beyond EOF, do_setattr()
+before truncate_setsize() grows the size, and ubifs_vm_page_mkwrite()
+so mmap writes cannot leave such a tail behind. This mirrors what
+block_page_mkwrite() does for buffer_head filesystems and what ext4
+does on size extension.
+
+All zeroing takes the old-EOF folio lock without ui->ui_mutex, keeping
+the folio_lock -> ui_mutex order of ->writepage() and
+->page_mkwrite(); the reverse order deadlocks.
+
+UBIFS does not enable large folios, so the EOF folio is always a
+single page today; nevertheless, use folio-relative arithmetic
+(offset_in_folio(), folio_contains(), folio_size()) throughout so the
+code is correct if that ever changes.
+
+Signed-off-by: Nan Lin <lin.nan@h3c.com>
+
+Changes since v1:
+ - Both zeroing sites used PAGE_SIZE-relative arithmetic
+   (offset_in_page()-style) while folio_zero_range() expects
+   folio-relative offsets. UBIFS does not currently enable large
+   folios, so PAGE_SIZE == folio_size() and the two coincide in
+   practice, but switch to offset_in_folio()/folio_size() anyway so
+   the code is correct if UBIFS ever opts into large folios
+   (suggested by Sashiko AI review).
+
+---
+ fs/ubifs/file.c | 73 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 73 insertions(+)
+
+diff --git a/fs/ubifs/file.c b/fs/ubifs/file.c
+index e73c28b12f97..1726714161a1 100644
+--- a/fs/ubifs/file.c
++++ b/fs/ubifs/file.c
+@@ -202,6 +202,53 @@ static void release_existing_page_budget(struct ubifs_info *c)
+ 	ubifs_release_budget(c, &req);
+ }
+ 
++/**
++ * ubifs_zero_eof_hole - zero the stale tail of the old-EOF folio.
++ * @inode: inode whose size is about to grow
++ * @new_end: new end of the file, only used to bound the tail
++ *
++ * Zero the cached folio containing the old EOF for [old EOF,
++ * min(folio end, @new_end)) so a size extension does not expose stale
++ * data left beyond EOF by mmap writes.
++ *
++ * Must be called without ui->ui_mutex held: we block on the old-EOF
++ * folio lock, and ->writepage() and ->page_mkwrite() hold that folio
++ * lock while taking ui_mutex; the reverse order deadlocks.
++ */
++static void ubifs_zero_eof_hole(struct inode *inode, loff_t new_end)
++{
++	loff_t old_size = i_size_read(inode);
++	size_t from, to;
++	struct folio *folio;
++
++	if (new_end <= old_size)
++		return;
++
++	folio = filemap_lock_folio(inode->i_mapping, old_size >> PAGE_SHIFT);
++	if (IS_ERR(folio))
++		return;
++
++	/*
++	 * Re-read i_size under the folio lock: a concurrent truncate may
++	 * have shrunk the file, turning this folio into valid data.
++	 */
++	old_size = i_size_read(inode);
++	if (new_end <= old_size)
++		goto out;
++
++	from = offset_in_folio(folio, old_size);
++	if (!from)
++		goto out;
++	to = folio_contains(folio, new_end >> PAGE_SHIFT) ?
++	     offset_in_folio(folio, new_end) : folio_size(folio);
++	if (to > from)
++		folio_zero_range(folio, from, to - from);
++
++out:
++	folio_unlock(folio);
++	folio_put(folio);
++}
++
+ static int write_begin_slow(struct address_space *mapping,
+ 			    loff_t pos, unsigned len, struct folio **foliop)
+ {
+@@ -423,6 +470,14 @@ static int ubifs_write_begin(const struct kiocb *iocb,
+ 	if (unlikely(c->ro_error))
+ 		return -EROFS;
+ 
++	/*
++	 * The write starts beyond EOF: zero the stale tail of the old-EOF
++	 * folio before budgeting takes ui->ui_mutex. do_readpage() only
++	 * sanitizes the write folio, not the old-EOF folio.
++	 */
++	if (pos > inode->i_size)
++		ubifs_zero_eof_hole(inode, pos);
++
+ 	/* Try out the fast-path part first */
+ 	folio = __filemap_get_folio(mapping, index, FGP_WRITEBEGIN,
+ 			mapping_gfp_mask(mapping));
+@@ -1220,6 +1275,10 @@ static int do_setattr(struct ubifs_info *c, struct inode *inode,
+ 
+ 	if (attr->ia_valid & ATTR_SIZE) {
+ 		dbg_gen("size %lld -> %lld", inode->i_size, new_size);
++
++		/* Must run before the size change loses the old boundary. */
++		ubifs_zero_eof_hole(inode, new_size);
++
+ 		truncate_setsize(inode, new_size);
+ 	}
+ 
+@@ -1494,6 +1553,7 @@ static vm_fault_t ubifs_vm_page_mkwrite(struct vm_fault *vmf)
+ 	struct timespec64 now = current_time(inode);
+ 	struct ubifs_budget_req req = { .new_page = 1 };
+ 	int err, update_time;
++	loff_t i_size;
+ 
+ 	dbg_gen("ino %llu, pg %lu, i_size %lld",	inode->i_ino, folio->index,
+ 		i_size_read(inode));
+@@ -1553,6 +1613,19 @@ static vm_fault_t ubifs_vm_page_mkwrite(struct vm_fault *vmf)
+ 		filemap_dirty_folio(folio->mapping, folio);
+ 	}
+ 
++	/*
++	 * Zero the part of the EOF folio beyond i_size so mmap writes
++	 * cannot leave a stale tail behind (see ubifs_zero_eof_hole()).
++	 * For a folio-aligned i_size the mkwrite entry check has already
++	 * returned SIGBUS, so @from is always non-zero here.
++	 */
++	i_size = i_size_read(inode);
++	if (folio_contains(folio, i_size >> PAGE_SHIFT)) {
++		size_t from = offset_in_folio(folio, i_size);
++
++		folio_zero_range(folio, from, folio_size(folio) - from);
++	}
++
+ 	if (update_time) {
+ 		int release;
+ 		struct ubifs_inode *ui = ubifs_inode(inode);
+-- 
+2.33.0
+
