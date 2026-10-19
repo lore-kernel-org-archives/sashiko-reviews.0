@@ -1,32 +1,50 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 891CC49B5B4
-	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 08:39:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0657E49DB89
+	for <sashiko-reviews@lists.linux.dev>; Mon, 19 Oct 2026 08:44:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792399180; cv=none; b=k2wDeOpVRdpnBIfrEZ7BuOmmg3QODEC77DfZrJqYhJezIyNkWTm7CYZBQe0GaRwuU2K5/wB9Gw27kid0fg+67NjMSyOOIO5eP4omPtTYDfH1EExGWSXqczboU8/KCrwLS+EA606EXBLf64ztRZSszTygWUlaCqyEcOnV7ympHJU=
+	t=1792399490; cv=none; b=bXda+QpPklH98XxYIuxumxD7+mxuDSiwD2E0kW+gY+8wi32QTIiSmsEl7VcX4MBRAVkiQDSJijkvD/bBoYBoQJkwyy7zyS6XnagpG+esxVXuI86XoB2TCDbtN0hZVW78I8V1nhGuWeg1anC7quYuMQYBCJRF6U/Lpca3WvcB75M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792399180; c=relaxed/simple;
-	bh=xmkBK6nT2CHtVPbOi2Q09ixzEOYZHXw/Q3ljrPHbFeM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=qPk04k5pdpCbV1U2Zy8gr7Jf/Vrpm8kKSBrBZnhNVkf2JQJ11NTjMoM09/k6VU1FUaYg56xbD/+7RgomlcKvYNotXOlonlEfg/D4Q+LtOHnyYLKdBau0Eq/ffGSrHnkcuW6VT/2IlyS6S78Ih+4f+w19NX7H4O56S36nMAS4O3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=lOA28Bvb; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	s=arc-20240116; t=1792399490; c=relaxed/simple;
+	bh=+rxHd7A2spdMZj37iqfIcRBFMWAgi1P2y5Fb791M4DE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mjZMA4RO/mku2uPkF26ZoxFuwDPFBR1qXYAov5YVMrCFTcC+jVNeIGZgtu37SXlWBsdwZUXjD1xPcEOfw34AdskGhXDwxKfAO8MPReck4IICbKBJ7lIdSZXMj/dKC00RAYyaVPtZ7BZUJTjQiMf7KLCkZFCYhEUHxOCED6MQdMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RSqa8SBg; arc=none smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="lOA28Bvb"
-Received: from [10.26.7.43] (unknown [4.213.232.21])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 0B92E20B7168;
-	Mon, 19 Oct 2026 01:39:28 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 0B92E20B7168
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1792399169;
-	bh=f+80vBHLFi4oFrGve7Id4lDuk45EJXNBjrz+eGgB4J0=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=lOA28Bvb5GLpiR/bm804rRGdqvyVRZKaMMQMcajZ61dYc98z82Chl1W/MdLIKtcHr
-	 ujr0QdeNJ8bO40znpGj8MrR3HJf+ReP0U2BxmZDqdEKgXogrCLl+KM6Tkl9rXHHIfF
-	 vzBpwARJW/50Aw3B1j8J2jgp+OtU1ap1T1hObfDQ=
-Message-ID: <63471f61-97ff-4cd9-9c45-3b737edd8e69@linux.microsoft.com>
-Date: Mon, 19 Oct 2026 14:09:33 +0530
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RSqa8SBg"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1792399488; x=1823935488;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=+rxHd7A2spdMZj37iqfIcRBFMWAgi1P2y5Fb791M4DE=;
+  b=RSqa8SBgsp2q1H/JZtAJKT6ScifPOa6Mn2JkR49WoToFahvvGs5UIo3y
+   ehzwwEGQ/mhqDMofxMeZ873QU4BgFBDIo1JLq52oEZ5GW5/z8S1oZCme4
+   SYiWbHaQ0l0/lHTq7wedWBC7eP3dE7pkM0jdBqOKXJF3zw23VfTQb6KPv
+   yOcQdLq9isID7eTzxLyskg7Wr2H5UXzlZ2ebcs3kXiPTT7MU1Nno1CM8t
+   fxDFWCyF4Do1VLoiUVE6/25NB48OE02S8FK+RqoscPGFlhuOz0k9ZG7pm
+   XjibTTSQb4rGngHjoqiPCMcwxbmEH5z5g+2RFQoOcgptReLUzTY6120MI
+   g==;
+X-CSE-ConnectionGUID: 2iBBGLS+Tie2hLJVHiTr3A==
+X-CSE-MsgGUID: PBNW23XsQQCEwJC5TV03LA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11939"; a="975531"
+X-IronPort-AV: E=Sophos;i="6.27,167,1787036400"; 
+   d="scan'208";a="975531"
+Received: from fmviesa013.fm.intel.com ([10.60.135.153])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 01:44:48 -0700
+X-CSE-ConnectionGUID: JrtbCrjLR+KrG8YyzfuBkw==
+X-CSE-MsgGUID: cS9H3YcHR2Kcul8kw+46GA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,167,1787036400"; 
+   d="scan'208";a="4263057"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.239]) ([10.124.241.239])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 01:44:47 -0700
+Message-ID: <73659458-7d74-4340-92cc-bd88df1a82a1@linux.intel.com>
+Date: Mon, 19 Oct 2026 16:44:43 +0800
 Precedence: bulk
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -34,109 +52,129 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net v2] net: mana: Add support to process throttled EQEs
-To: sashiko-reviews@lists.linux.dev, linux-hyperv@vger.kernel.org,
- linux-rdma@vger.kernel.org
-References: <20261014134304.4177657-1-sahilchandna@linux.microsoft.com>
- <sashiko-outbox-172938@kernel.org>
+Subject: Re: [Patch v3 1/4] perf/x86: Clamp x86_pmu.lbr_nr to MAX_LBR_ENTRIES
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-perf-users@vger.kernel.org, bpf@vger.kernel.org
+References: <20261019070836.2972403-1-dapeng1.mi@linux.intel.com>
+ <20261019070836.2972403-2-dapeng1.mi@linux.intel.com>
+ <sashiko-outbox-176745@kernel.org>
 Content-Language: en-US
-From: Sahil Chandna <sahilchandna@linux.microsoft.com>
-In-Reply-To: <sashiko-outbox-172938@kernel.org>
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <sashiko-outbox-176745@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 15-10-2026 19:13, sashiko-bot@kernel.org wrote:
+
+On 10/19/2026 3:28 PM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] net: mana: use-after-free of CQ during teardown due to RCU-001 removal ordering violation
+> - [High] perf/x86: late x86_pmu.lbr_nr clamp in init_hw_perf_events() risks #GP
 > --
-> 
-> commit 4c00972dfa8283dfc036bc3bbb77031cb6550854
-> Author: Sahil Chandna <sahilchandna@linux.microsoft.com>
-> 
-> net: mana: Add support to process throttled EQEs
-> 
-> When an event queue nears full, the hardware coalesces the per-CQ
-> GDMA_EQE_COMPLETION notifications into a single throttle EQE (type 4)
-> that carries no cq_id. The driver does not handle this event type, so
-> it falls through to the default case and is dropped. Any CQ whose
-> completion notification was replaced by the throttle EQE can remain
-> unserviced, causing its queue to stall.
-> 
-> Link: https://lore.kernel.org/all/20261008083315.306076-1-sahilchandna@linux.microsoft.com/
-> 
->> diff --git a/drivers/net/ethernet/microsoft/mana/gdma_main.c b/drivers/net/ethernet/microsoft/mana/gdma_main.c
->> index ae0ed700b3b93..95ba6ba161ae2 100644
->> --- a/drivers/net/ethernet/microsoft/mana/gdma_main.c
->> +++ b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-> [ ... ]
->> @@ -1063,17 +1089,45 @@ static void mana_gd_create_cq(const struct gdma_queue_spec *spec,
->>  static void mana_gd_destroy_cq(struct gdma_context *gc,
->>  			       struct gdma_queue *queue)
->>  {
->> +	struct gdma_queue *eq = queue->cq.parent;
->> +	bool attached = false;
->>  	u32 id = queue->id;
->> +	u8 i;
->> +
->> +	if (eq) {
->> +		for (i = 0; i < GDMA_EQ_MAX_CHILD_CQ; i++) {
->> +			if (rcu_access_pointer(eq->eq.child_cq[i]) == queue) {
->> +				RCU_INIT_POINTER(eq->eq.child_cq[i], NULL);
->> +				attached = true;
->> +			}
->> +		}
->> +
->> +		if (attached)
->> +			synchronize_net();
->> +	}
+>
+> commit 7f534b76717bd0a7a33fa3404815780334bcf485
+> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
+>
+> perf/x86: Clamp x86_pmu.lbr_nr to MAX_LBR_ENTRIES
+>
+> This commit clamps x86_pmu.lbr_nr to MAX_LBR_ENTRIES in
+> init_hw_perf_events() to prevent out-of-bounds accesses to the cached
+> LBR stack.
+>
+>> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+>> index 4df792b139e05..82f6b66db7e2f 100644
+>> --- a/arch/x86/events/core.c
+>> +++ b/arch/x86/events/core.c
+>> @@ -2645,6 +2645,8 @@ static int __init init_hw_perf_events(void)
+>>  	if (!x86_pmu.config_mask)
+>>  		x86_pmu.config_mask = X86_RAW_EVENT_MASK;
 >>  
->>  	if (id >= gc->max_num_cqs)
->>  		return;
-> 
+>> +	x86_pmu.lbr_nr = min(x86_pmu.lbr_nr, MAX_LBR_ENTRIES);
+>> +
+>>  	perf_events_lapic_init();
+>>  	register_nmi_handler(NMI_LOCAL, perf_event_nmi_handler, 0, "PMI");
 > [Severity: High]
-> Does this code order the CQ removal and grace period correctly to prevent
-> a use-after-free?
-> 
-> Looking at the rest of mana_gd_destroy_cq(), gc->cq_table[id] is cleared
-> after the synchronize_net() grace period ends:
-> 
-> drivers/net/ethernet/microsoft/mana/gdma_main.c:mana_gd_destroy_cq() {
-> 	if (eq) {
-> 		...
-> 		if (attached)
-> 			synchronize_net();
+> Does clamping x86_pmu.lbr_nr after intel_pmu_init() and amd_pmu_init()
+> return risk an unhandled #GP in intel_pmu_arch_lbr_reset() and leave
+> the vendor PMU initialization inconsistent with the clamped depth?
+>
+> For Intel Architectural LBR, supported depths are enumerated as a bitmask
+> in eax.split.lbr_depth_mask (where each bit indicates support for a
+> multiple of 8 up to 64). During init_hw_perf_events() -> intel_pmu_init()
+> -> intel_pmu_arch_lbr_init(), the code selects the highest supported bit
+> and validates that unclamped depth against MSR_ARCH_LBR_DEPTH:
+>
+> arch/x86/events/intel/lbr.c:intel_pmu_arch_lbr_init() {
+> 	...
+> 	lbr_nr = fls(eax.split.lbr_depth_mask) * 8;
+> 	if (!lbr_nr)
+> 		goto clear_arch_lbr;
+>
+> 	/* Apply the max depth of Arch LBR */
+> 	if (wrmsrq_safe(MSR_ARCH_LBR_DEPTH, lbr_nr))
+> 		goto clear_arch_lbr;
+> 	...
+> }
+>
+> If a CPU or hypervisor advertises a depth greater than 32 in
+> lbr_depth_mask without also setting the bit for depth 32, clamping
+> x86_pmu.lbr_nr to MAX_LBR_ENTRIES (32) here leaves x86_pmu.lbr_nr set to
+> an unsupported depth that was never tested with wrmsrq_safe(). When
+> cpuhp_setup_state() subsequently runs x86_pmu_starting_cpu() ->
+> intel_pmu_cpu_starting() -> intel_pmu_lbr_reset() ->
+> intel_pmu_arch_lbr_reset():
+>
+> arch/x86/events/intel/lbr.c:intel_pmu_arch_lbr_reset() {
+> 	/* Write to ARCH_LBR_DEPTH MSR, all LBR entries are reset to 0 */
+> 	wrmsrq(MSR_ARCH_LBR_DEPTH, x86_pmu.lbr_nr);
+> }
+>
+> won't this unchecked wrmsrq() of 32 to MSR_ARCH_LBR_DEPTH raise a fatal
+> #GP at boot?
+>
+> Additionally, because this clamp runs after vendor initialization has
+> completed:
+>
+> 1. intel_pmu_arch_lbr_init() has already validated the XSAVE size via
+>    is_arch_lbr_xsave_available() and allocated pmu->task_ctx_cache using
+>    the unclamped lbr_nr.
+>
+> 2. intel_pmu_init() has already probed MSRs up to the unclamped
+>    x86_pmu.lbr_nr and logged the unclamped depth:
+>
+> arch/x86/events/intel/core.c:intel_pmu_init() {
+> 	...
+> 	for (i = 0; i < x86_pmu.lbr_nr; i++) {
+> 		if (!(check_msr(x86_pmu.lbr_from + i, 0xffffUL) &&
+> 		      check_msr(x86_pmu.lbr_to + i, 0xffffUL)))
+> 			x86_pmu.lbr_nr = 0;
 > 	}
-> 
-> 	if (id >= gc->max_num_cqs)
-> 		return;
-> 
-> 	if (!gc->cq_table[id])
-> 		return;
-> 
-> 	gc->cq_table[id] = NULL;
+>
+> 	if (x86_pmu.lbr_nr) {
+> 		intel_pmu_lbr_init();
+>
+> 		pr_cont("%d-deep LBR, ", x86_pmu.lbr_nr);
+> 	...
 > }
-> 
-> Because gc->cq_table[id] remains published during and immediately after
-> the grace period, can a concurrent or delayed interrupt processing
-> GDMA_EQE_COMPLETION in mana_gd_process_eqe() still find the CQ?
-> 
-> drivers/net/ethernet/microsoft/mana/gdma_main.c:mana_gd_process_eqe() {
-> 	case GDMA_EQE_COMPLETION:
-> 		...
-> 		cq = gc->cq_table[cq_id];
-> 		...
-> 		if (cq->cq.callback)
-> 			cq->cq.callback(cq->cq.context, cq);
+>
+> 3. amd_pmu_lbr_init() has likewise already logged the unclamped depth:
+>
+> arch/x86/events/amd/lbr.c:amd_pmu_lbr_init() {
+> 	...
+> 	x86_pmu.lbr_nr = ebx.split.lbr_v2_stack_sz;
+>
+> 	pr_cont("%d-deep LBR, ", x86_pmu.lbr_nr);
+> 	...
 > }
-> 
-> If a new reader accesses the CQ from gc->cq_table after synchronize_net()
-> returns, but before the caller mana_gd_destroy_queue() frees the memory via
-> kfree(), could it lead to a use-after-free crash?
-> 
-> Should the clearing of gc->cq_table[id] happen before calling
-> synchronize_net() so all reader-visible references are removed before
-> waiting for the grace period?
-> 
-The cq_table dereferencing race is real between mana_gd_destroy_cq and
-in GDMA_EQE_COMPLETION. I will address this re-ordering and if there are
-any other comments on this patch in v3.
+>
+> Should the MAX_LBR_ENTRIES limit be enforced at the point where
+> x86_pmu.lbr_nr (and lbr_depth_mask in intel_pmu_arch_lbr_init()) is
+> determined inside the vendor initialization paths instead?
+
+Ok, directly clampling x86_pmu.lbr_nr to MAX_LBR_ENTRIES seems not a good way. The proper way could be to check if x86_pmu.lbr_nr exceeds MAX_LBR_ENTRIES, if so, just error out the PMU initialization. Thanks.
+
+
+
+
+>
+>>  
+>  완벽
+>
