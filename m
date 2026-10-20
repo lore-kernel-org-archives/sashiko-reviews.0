@@ -1,56 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.15
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792492670;
-	b=ronXHcObjmb65o7h53SW7VfextyPBnMdjfIBDypFcmKuKzCYpzFsXsns9HObnQSd4gFY
-	 eWNq4i2FErslBCLRatnZkLm01mrcJSiiLkPO04ZfxtCM8/jCKCf3caVtJdqJXVXxOA7FU
-	 DhDj8bOZuNgTtwSHtW9uofiO4RoaUqNKYJH483v+Diy4AQSI81ETCPBD3CXd/Q9kmrWpH
-	 NL4nxxVHbWe4F+t+oxZSgToREJKMLK5BoztXNZRx18mS0XEtMjV4c2WNxKgTKCCikUTXR
-	 5aAn/7cnMuuX+onxNOygc4DnqfFa7ESYglOp7HDvzM0U1Purya84aGUBBLmWix9nZGw==
+	t=1792492760;
+	b=KNDKFU8skl66E/L1qXqZQSyXBAD3IRA8Z/DNvn5D9BTMmdAO84efnu55kpWWVnDTBtjX
+	 XV04ZCz2jECd9bbYO9A/m2gfFUAQ4tXNrXtfhcM839cD2T8U/YtCYPsBzsO2SguyAnhYu
+	 QX3jmhkmugCSjBh2tIkgj7Qew1pafgmePuGM+ewotVo9xVP5eLnH3KViK2Ep7F8YjpdpK
+	 bvuOMRu749X0vYh55fCsR4xo/BD5nCzgYiZl+5wzBhewRTicMmjfM5aHB9Z2WMhjOsQlt
+	 K7YLrwn8BB+80qqjx1NYK044yIo932/pb2doBmOnLY1b/248OxXGBQp+CpubPVQe58w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792492670;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=pQ7BMpJBbKomkOvbdvd4pG9zo1vWZwj/fOjMBE4qlBw=;
-	b=dyQxIfanF2fDWzUXokhdi1ONejEhnohzH7buVa4QsH07a0bjMnNIwvsr3dIZ/18+prf1
-	 sc399XmhIPyi/K1zYFOP+2U9kxDJTZEmr6bQG3ITtKxlkRW89e+V30HpvNyS+kNWgYHUC
-	 KGGtE5SEREz5AS4fTA6l7avseh4EDepGm7WopV8a5D3OSzFhSahEU2ficVUsbt2GKB+vY
-	 6QAomQzlcc8u4wqqv1HnXyU+a7vwHVF4xuB9iyC9wFVWbuZ2/kHJAuFKB09dLcvaEuK5s
-	 YzSfNOsbP6NzFfKmP/NFre2XDnE5IXuRozQ67Y8kZr0zQ3eW8q+cxrLwAo7dmh5ysEA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792492760;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:From:To:References:Content-Language:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=dqR2ngkS5f60IPp0VNZXVBKEWLAUz0RzefpLtGVQ6BA=;
+	b=aVOk9WvohO7P6HVlaW4DIvxtWfvUYhoYPTN2iDZnBwbL8PcrKzrAVZ48I4646DR3tozh
+	 DtPvYUQG1o9l/kIv5MuGZLz+fySWZXfhoHeSU8AR0JwR/SXP8nzWVENIszj6g4EYXIzrB
+	 C/5AhnCrCp7U+qAXaIlIVWVHeBTauvtDF9oSDcb/56yqTT4X+Bp3bqDAWfTXXY7Ryvutv
+	 gOGN9I0zwsl0f+EB09j4nALuAuuIIiX3FFvi0pcWkZYrDpvDXToga2Gg/jupOI4PwQK5S
+	 Gk796DW3qIZgMmCRbRIPhM0lV/r/6Bm43NHgQGLW4AsPJONcZgK9Mv4BltiwR8VFx0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YHZO7ujt;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Dgh3f2S6;
+	arc=none smtp.remote-ip=192.198.163.15
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D7D606A31B;
-	Tue, 20 Oct 2026 10:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3B2606A319
+	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 10:39:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7B3B2606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YHZO7ujt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21531F000C6;
-	Tue, 20 Oct 2026 10:37:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792492669;
-	bh=pQ7BMpJBbKomkOvbdvd4pG9zo1vWZwj/fOjMBE4qlBw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=YHZO7ujtOVIZxltquLVTT1oIJuSNp2iqSJq6Iw6bHLIra+5yetHQHAMeUP8vzbbWm
-	 iOdOQ8sjiGcTXkL2K7tq1Ocv8yl23zC52sPX42TKpbonGKHmHYs4EpHClEyVfGpKOZ
-	 QwP+a5vnZ6T/EHUva9ZO+gczps6mcfmy3dBmXkHLd7pJlod8/Jn9tNooZLzwoUlbb+
-	 BxOkiOnBZmYo+riboRxgkJSZdxV3+M/TSAjmZNr8Gt0BnsndOcUnnk19L6By5f9WI3
-	 XxBQEsz7A3CMUCXP6DOMh3rFz/hJYte6MbnK1iSuNOID/Rh3voT07pSHQNhoLP7BMH
-	 BHiamWTYnavWw==
-Date: Tue, 20 Oct 2026 11:37:44 +0100
-From: Lee Jones <lee@kernel.org>
-To: Rillian Grant <rillian.grant@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-leds@vger.kernel.org,
-	conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
-Subject: Re: [PATCH v3 3/4] leds: flash: lm3643: Describe the LED of ACPI
- boards without LED nodes
-Message-ID: <20261020103744.GA1795367@google.com>
-References: <20261011191026.149338-1-rillian.grant@gmail.com>
- <20261011191026.149338-4-rillian.grant@gmail.com>
- <sashiko-outbox-167402@kernel.org>
- <37Wk96VpSLOh-P0MeN457Q@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Dgh3f2S6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1792492759; x=1824028759;
+  h=message-id:date:mime-version:subject:from:to:references:
+   in-reply-to:content-transfer-encoding;
+  bh=d+irqP4gRAlW4o26RaUF8mqP4MaaD0lWMX36dRHY7NU=;
+  b=Dgh3f2S6KCNHtPARuDSb91O9dUWTwwFj7B3fPaUV52KSD/sv+8cMlVl6
+   TapCdfxpRH5UBjYWkjGxRQBoaYAa+2zVyvBEOZsOC8MiYlUtUeiBsb3g3
+   N7seCUcxVIzZcXizULwt8eih8yst4mVuN6JIz6idoiMUHHfcBOwOoKhVB
+   XD5EhW1HLtlXwdhkI4hHANDaTEEEUl/GSX7Vs5zW+kZuUvll+QSiNWrjq
+   G+Cmp8pF4+majQUYD16Jzv0PvYXCloD19BCWMZdlrlBT1GB3f2UxL4hKg
+   yJoFCSCxaMLRIDckphhZz+DuDn8ellI567jFTacClk9Bo2/W1mNhqjowY
+   Q==;
+X-CSE-ConnectionGUID: ZE60RwzfTDKu+Hvd+zK5cA==
+X-CSE-MsgGUID: /ZADDH0NR4un2mzhbH2Eig==
+X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="1202684"
+X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
+   d="scan'208";a="1202684"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2026 03:39:18 -0700
+X-CSE-ConnectionGUID: +pG71t18T5qs0/96Ed3XVw==
+X-CSE-MsgGUID: Y/hTnJt5Th2JgJV52I4P/w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
+   d="scan'208";a="2673831"
+Received: from smoticic-mobl1.ger.corp.intel.com (HELO [10.245.244.166]) ([10.245.244.166])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2026 03:39:17 -0700
+Message-ID: <a9c59d5c-9fb1-4207-a05b-3f5d52a3239e@intel.com>
+Date: Tue, 20 Oct 2026 11:39:14 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,28 +72,207 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <37Wk96VpSLOh-P0MeN457Q@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/2] gpu/buddy: restore two-pass clear/dirty guard for
+ range-biased allocation
+From: Matthew Auld <matthew.auld@intel.com>
+To: sashiko-reviews@lists.linux.dev,
+ Arunpravin Paneer Selvam <arunpravin.paneerselvam@amd.com>,
+ dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org
+References: <20261020055537.1640552-1-arunpravin.paneerselvam@amd.com>
+ <sashiko-outbox-178464@kernel.org>
+ <30e81db2-a56a-464b-93ea-c74aa161fdde@intel.com>
+Content-Language: en-GB
+In-Reply-To: <30e81db2-a56a-464b-93ea-c74aa161fdde@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, 13 Oct 2026, Rillian Grant wrote:
-
-> > [Severity: High]
-> > Is there a potential race condition here when multiple devices probe
-> > concurrently?
-> > 
-> > If two threads execute lm3643_add_dmi_leds() simultaneously (for example,
-> > during concurrent sysfs bind or async probe of two LM3643 devices matching
-> > the same DMI table), they both might pass the lockless
-> > software_node_fwnode(nodes[0]) check before either registers the nodes.
+On 20/10/2026 10:52, Matthew Auld wrote:
+> On 20/10/2026 09:00, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential 
+>> issue(s) to consider:
+>> - [High] gpu/buddy: block_incompatible() mishandles split and mixed 
+>> blocks in __alloc_range_bias()
+>> -- 
+>>
+>> commit 6dff7f0e6dce9c68ecb98f2d911199843d2b4401
+>> Author: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+>>
+>> gpu/buddy: restore two-pass clear/dirty guard for range-biased allocation
+>>
+>> This commit introduces a two-pass search in 
+>> __gpu_buddy_alloc_range_bias()
+>> using block_incompatible() in the strict pass to prevent range-restricted
+>> allocations from splitting opposite-class (clear vs. dirty) blocks unless
+>> no matching blocks exist in the range.
+>>
+>>> diff --git a/drivers/gpu/buddy.c b/drivers/gpu/buddy.c
+>>> index 503f7d5934e4b..91935c71c5255 100644
+>>> --- a/drivers/gpu/buddy.c
+>>> +++ b/drivers/gpu/buddy.c
+>>> @@ -1240,11 +1240,19 @@ static void __gpu_buddy_undo_splits(struct 
+>>> gpu_buddy *mm,
+>>>       }
+>>>   }
+>>> +static bool block_incompatible(struct gpu_buddy_block *block, 
+>>> unsigned int flags)
+>>> +{
+>>> +    bool needs_clear = flags & GPU_BUDDY_CLEAR_ALLOCATION;
+>>> +
+>>> +    return needs_clear != gpu_buddy_block_is_clear(block);
+>>> +}
+>>> +
+>>>   static struct gpu_buddy_block *
+>>>   __alloc_range_bias(struct gpu_buddy *mm,
+>>>              u64 start, u64 end,
+>>>              unsigned int order,
+>>> -           unsigned long flags)
+>>> +           unsigned long flags,
+>>> +           bool fallback)
+>>>   {
+>>
+>> [ ... ]
+>>
+>>> @@ -1298,6 +1304,9 @@ __alloc_range_bias(struct gpu_buddy *mm,
+>>>                   continue;
+>>>           }
+>>> +        if (!fallback && block_incompatible(block, flags))
+>>> +            continue;
+>>> +
+>>>           if (contains(start, end, block_start, block_end) &&
+>>>               order == gpu_buddy_block_order(block)) {
+>>>               /*
+>>> @@ -1315,38 +1324,8 @@ __alloc_range_bias(struct gpu_buddy *mm,
+>>>                   goto err_undo;
+>>>           }
+>>> -        /*
+>>> -         * Top-down is a strict address-placement policy, so when it is
+>>> -         * requested we ignore clear steering and simply descend the
+>>> -         * right (higher-address) child first. Only a non-top-down 
+>>> clear
+>>> -         * request biases the descent towards clear/has_clear subtrees.
+>>> -         */
+>>> -        if ((flags & GPU_BUDDY_CLEAR_ALLOCATION) &&
+>>> -            !(flags & GPU_BUDDY_TOPDOWN_ALLOCATION)) {
+>>> -            struct gpu_buddy_block *prefer;
+>>> -
+>>> -            if (gpu_buddy_block_is_clear(block->right))
+>>> -                prefer = block->right;
+>>> -            else if (gpu_buddy_block_is_clear(block->left))
+>>> -                prefer = block->left;
+>>> -            else if (block->right->has_clear)
+>>> -                prefer = block->right;
+>>> -            else if (block->left->has_clear)
+>>> -                prefer = block->left;
+>>> -            else
+>>> -                prefer = block->right;
+>>> -
+>>> -            if (prefer == block->right) {
+>>> -                list_add(&block->left->tmp_link, &dfs);
+>>> -                list_add(&block->right->tmp_link, &dfs);
+>>> -            } else {
+>>> -                list_add(&block->right->tmp_link, &dfs);
+>>> -                list_add(&block->left->tmp_link, &dfs);
+>>> -            }
+>>> -        } else {
+>>> -            list_add(&block->left->tmp_link, &dfs);
+>>> -            list_add(&block->right->tmp_link, &dfs);
+>>> -        }
+>>> +        list_add(&block->left->tmp_link, &dfs);
+>>> +        list_add(&block->right->tmp_link, &dfs);
+>>>       } while (1);
+>>
+>> [Severity: High]
+>> Does calling block_incompatible() on every visited node in
+>> __alloc_range_bias() before checking whether the block is split or mixed
+>> mishandle internal GPU_BUDDY_SPLIT nodes and coalesced GPU_BLOCK_MIXED 
+>> free
+>> blocks?
+>>
+>> First, when mark_split() transitions a block to GPU_BUDDY_SPLIT, it 
+>> leaves
+>> the previous GPU_BUDDY_HEADER_CLEAR bit intact on the internal node:
+>>
+>> drivers/gpu/buddy.c:mark_split() {
+>>     block->header &= ~GPU_BUDDY_HEADER_STATE;
+>>     block->header |= GPU_BUDDY_SPLIT;
+>>     ...
+>> }
+>>
+>> Because gpu_buddy_init() initializes roots as dirty, any root or ancestor
+>> split while dirty keeps gpu_buddy_block_is_clear(block) == false while 
+>> any
+>> descendant remains allocated. Conversely, a clear block that is split and
+>> later has a descendant freed as dirty keeps 
+>> gpu_buddy_block_is_clear(block)
+>> == true on the split ancestor.
+>>
+>> When __gpu_buddy_alloc_range_bias() runs the first pass (fallback = 
+>> false),
+>> __alloc_range_bias() evaluates block_incompatible(block, flags) on those
+>> GPU_BUDDY_SPLIT ancestors and skips the entire subtree without descending
+>> into its children. If no other root satisfies the request, the first pass
+>> returns -ENOSPC and __gpu_buddy_alloc_range_bias() falls back to the 
+>> second
+>> pass (fallback = true), where block_incompatible() is disabled and the
+>> clear/has_clear child-ordering preference has been removed, causing the
+>> search to split the highest-address extent regardless of class.
+>>
+>> Second, __gpu_buddy_free() coalesces adjacent clear and dirty free 
+>> buddies
+>> into a single GPU_BUDDY_FREE block with state GPU_BLOCK_MIXED, which has
+>> gpu_buddy_block_is_clear(block) == false and block->has_clear == true:
+>>
+>> 1. For clear range allocations (flags & GPU_BUDDY_CLEAR_ALLOCATION), 
+>> Pass 1
+>>     sees gpu_buddy_block_is_clear(block) == false on a GPU_BLOCK_MIXED 
+>> block
+>>     and skips it via block_incompatible() without splitting it to 
+>> reach the
+>>     clear sub-blocks inside. Pass 2 then splits the mixed block 
+>> without clear
+>>     child-steering and unconditionally visits block->right first, 
+>> returning a
+>>     dirty block whenever the clear half is in block->left.
+>>
+>> 2. For dirty range allocations (!(flags & GPU_BUDDY_CLEAR_ALLOCATION)),
+>>     block_incompatible() returns false on a higher-order GPU_BLOCK_MIXED
+>>     block because gpu_buddy_block_is_clear(block) is false. Pass 1 
+>> then calls
+>>     split_block(mm, block), which reclassifies block->left and block- 
+>> >right
+>>     via mark_free(). If the child overlapping [start, end) is clear 
+>> while the
+>>     dirty child lies outside [start, end), Pass 1 rejects the clear 
+>> child via
+>>     block_incompatible() and skips the other child without calling
+>>     __gpu_buddy_undo_splits().
+>>
+>> Wouldn't leaving that split GPU_BLOCK_MIXED block unmerged keep both
+>> children in GPU_BUDDY_FREE state, preventing ancestor coalescing on 
+>> teardown
+>> and triggering gpu_buddy_assert(gpu_buddy_block_is_free(mm->roots[i])) 
+>> while
+>> leaking the split child gpu_buddy_block structures in gpu_buddy_fini()?
 > 
-> This condition is currently unreachable. It would require two LM3643
-> instances on the same DMI entry.
+> Analysis looks correct to me. We assume if you get as far as doing an 
+> actual split, then that must mean there is something in there which is 
+> compatible, either you find it with some number of splits or one of the 
+> split calls hits an error, which takes care to undo the splits. But now 
+> with that compat check, this breaks, since we don't know ahead of time 
+> if it will find something which is also compat. Arun, thoughts?
+
+Maybe something like: 
+https://gitlab.freedesktop.org/mwa/kernel/-/commit/c611df39a268843021546f86754e20f07c7bdc87
+
+So inject the parent node into the dfs for each split, and since we 
+visit everything or find a suitable node, it should undo the splits as 
+we go, I think.
+
 > 
-> I'd be happy to add a static mutex if preferred, or alongside any future
-> DMI entry for a board with more than one LM3643.
+>>
+>> [ ... ]
+>>
+> 
 
-Please.
-
--- 
-Lee Jones
