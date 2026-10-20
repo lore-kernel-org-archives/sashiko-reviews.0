@@ -1,54 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.183
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.175
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792490572;
-	b=uCNLmkYjvNEuLaDkkTuIGzFU3sZf/Wsv/mnx987BoKK4dTacFVIaF1YMn5EHWj/Y0iPN
-	 0pFOqZTbtsy0AMDpi1udsxUO3QFOM0+RGZTPJWWcXFUubAK0p0WuPU208NVO1BbCHWQpY
-	 QlMOybHAoqn9bxQmlUiFwE6v4opiAXafSo+CA02vcdK61SMKzx3SEyVW68WYa1LiTzdVU
-	 Y23ZgtdV9ahfbyCPByworPpG0vB+S3voTQ5QtuebmMeX1/Xoij8rB5EWf0MmIlmki1/Si
-	 SqeT14MDU9L3pZjleEI43rY04j2F8Gi3FHt8Gdp981O2qpvfGkTUQxeJLcYBYS6AIvw==
+	t=1792490677;
+	b=JHwfb9UsdxkjRATPvbmsIzjUNZ5p2daTkAcArC1RA3EW53T0pfCPoeg6b02iOTTgLH3P
+	 yWQZLTw2qnWQk+k2iHphVfT348wxuUHf6BuHH8/KtSXgBPDKWhBB7Rw+NnTRplvvldGhG
+	 ZzT92iRfa+Gr/QxNQ/Z7gKR2LwCeY5TaLUIxe112V44Ux5xQ1dCK4fGrdUluaKjoFyJWg
+	 0+moX3w5y5yLrLeMk137rifxUgaeeyBUL1KH9/0Tc34Rf88ES8yVG1rWX3tTRCmnMgvsD
+	 Q62AhO32FSOBqo8cL+F+XodhxTgm9nKbCJA7qlU/Tcj1EoR4foN7AfZwuMegWxbNqLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792490572;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=9Q9Vtn9iuM5FjjwgFRmYAVzNxXo2zpaFYHAwpiMXXYI=;
-	b=pEp3glBqMCoLhP2CIRf+GDDcfcE9HlhBRqapQJNtMiokuwCzybjwx2EsFakdSXom3FU/
-	 wEdrejyB/CXAef2GYS0TbQoIylUxBExmV71Jiq3ucNvbGX6rI2zAGd2n3wSQTrFkp3nJ+
-	 RIT8VU395IMbKHy/qlTMyuQHVGtUMZbPCvEcjX/ofgKESClup+QaW6OPsfTs3/FAlQN5w
-	 qKJJpxyYpyy3hCiOdHM/hg842eQHbEh2tF3F+5D/YtEl+UtdaXA/ZGRCxdOJYHV+m/x4+
-	 aLuG+GQ1/GaGEIoNdoznEC4S1MPbVUeMROTnob20pwvV7JdurQfT9DyFlyQV5RBx38A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792490677;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
+	bh=U0/lnzk5hFsVd5ZzP5Fnt4j1JlLknKQhx8BKtAG3IEE=;
+	b=3mKUOCELR9nkB1yxk/24K4WVw3xwcEsyRGkDqX2QY/i6uvugF3Em5Riw/nlSvpb51NM9
+	 bUwVIJMgI8U142QuX23g8e+W231ooL/veKoJ+j0gEIhG7sm3ZkGZzq03isHnenjWameh5
+	 Tr/Dlhy/0l5fKrLVP13a51ygHWcQ+nyJf2qB027/Wwa5R2bnV2DrUZRw5WVz9O1nUTB+o
+	 REreJQia08Y9aD4gI5w3wqvspO9VD7gQ0pPDb9vmvPWhAh9QtsH7tcPPGmUJnP4tDL5+E
+	 ChydeY0kGrsRasiAXUN/saXuAPHgQa2wOAm0KPg7n0ofsiuZVuNjoLirOZQPZX++9Kg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=j1WJOhOl;
-	arc=none smtp.remote-ip=95.215.58.183
-Received: from mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=o+2RxzIm;
+	arc=none smtp.remote-ip=74.125.82.175
+Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86027606A31B
-	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 10:02:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 86027606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA7A606A31A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 10:04:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6EA7A606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=j1WJOhOl
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=t4SIrFwsLLdYUVykrtIKFEOdwi4NXhFqz8xZdBmmof4=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1792490568; v=1; x=1793095368;
- b=j1WJOhOlSO4AhDFb47e9MF+Xr2UxBAyiMRfHD5E7GeziTxmYr5r3/B40OW5Ouk+JrOTGiKKV
- 3J0+xJQtLFODbJriBs8Nyl0pvOGcsJ9q4O6uyp7YZn7cvfDPG2tbt7uMtB1QzUjHr2wCefVk07l
- o/A1oySJBGtkva6H1MdOEhTY=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 1ae7d4d8b0dbbd41;
-	Tue, 20 Oct 2026 10:02:48 +0000
-X-Mizu-Trace-ID: 1ae7d4d8b0dbbd41
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <2b83dfaa-424b-4464-830e-a7714a816d5c@linux.dev>
-Date: Tue, 20 Oct 2026 18:03:50 +0800
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=o+2RxzIm
+Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-353804b591eso5791869eec.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 03:04:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792490676; x=1793095476; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=U0/lnzk5hFsVd5ZzP5Fnt4j1JlLknKQhx8BKtAG3IEE=;
+        b=o+2RxzImk6rim5NkI4UGDo51eHi0wrk3XL7J5fZP2AFG5N/SPPqTMIgzh+zgeZ7dX3
+         YvxVA0yfigOY4FIunIqPF+gGfAQe5Ay8CAhNY9UDZqYr+SjdJu7P5fHznEXrMj4Pf2Po
+         ToHJcDh+BgDhmOPqMF5mOCl5EtPmX/qL9Y20DD2pKmgvydaL23I9jAQ6PRaP8B/V3NM5
+         nyJDrlrp9W3KqoObz+U6y8YgrySuq4+NpYPO3VwVBt7JcBOAJwBrTemNwwfj4Z+XaOb4
+         DWB6cExiGHG0Rb8QHP/0+A6Dgra4vEiVO5UGZvWhf9PMkxqxXJd5nirJqt8B7x4ZmZa1
+         PWXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792490676; x=1793095476;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=U0/lnzk5hFsVd5ZzP5Fnt4j1JlLknKQhx8BKtAG3IEE=;
+        b=1yn4OUEbpgDLnkv79UkgFzC2tlVfSWI9xc8hznVC3WaABhubIUfXNnRhbUnA4mYMuC
+         ssB9rZ19zp9Dq021Aj5E0fxFjlZSJTekwf4vdkNQBDDXTNf+bR5Eb8rJwdNuLpaz+JY5
+         AOO6U9B2nWXhmBejiVhw2A04Zh8okjYRoDFdnvS3qsyPDCvtuugxhhzoPnhuMdYQORNS
+         C8u3TSmUYgLACYTuWudXPxdX0vq1nArRwn2SqinvvvDPVb90VlqY4p6u+zB9/j3jJ+6m
+         y5MR/hZDqFS85EGqhFRExNgamrTuk1sqvGP/kDhoj02QPy7XGaks/erYNS7zFzfTCT4f
+         UsWw==
+X-Gm-Message-State: AFq9FYKY046smvfhRwJLXz2+KFRvl2/2DnXQWf436X8BOXB74mXNQsAr
+	SSpsEHnAQ4sNoGtqPyAk3ppEf1rcYdefgDs88L5wAfUpDBJ1+iyeDhWrTbih8Yey
+X-Gm-Gg: AYBFou3XRZolOTpp+HmmP4UnCtghIdw1c5Tv6ilq9BSoqVgoYFtf8rNJHTq7VUrVkQ9
+	WAvJj9P8OiK6iyfsVxNT0mZB6i05KgR0q7+JB/grg3Ie6MLlWKqzzM5OKwLfURFBwy537Bpk3xc
+	CnVmtOCsgI9cP4RA69qlPG3pj+1XZ7b93J1b50yYYATKA2Uy5ZkyWbVGSwFhCt5NPEy85msCVGy
+	hZzp1BoDXwqVW2bFkG80v9bIX5ARZlTc0D6o+uQNpfeMRq3tfAdHMbQlcoSpkUU+aGe/lfxSlqg
+	+qA8vWSZXKo0W+omlvxynP4N1zBWPYiP4PISHM6mrABU3xiT9OiIRXoVpcFPxfOXhuXm6K/l7Aq
+	K+vGVR6O0XKDA3B1GBP0gY0EwfPLt3ZCfqGRSxG7d4l8q4gvyTWRGtys8JrGee1MEK8aQFCGEkR
+	A6yJooH7hD/uckkefD8bWBDbtxb6SIBKoC7+eO+lPY62Xoj6UGM7HuY2YotFBEocnv+b+2DUEMz
+	A7OJK6IwcqDfDCA4/R8IxGU6DN0Li+mIfAsZfHUfbb+Odd6LcHCZqqGQ5vD5w==
+X-Received: by 2002:a05:701b:204f:20b0:151:7f08:5961 with SMTP id a92af1059eb24-1850c9cf541mr15980378c88.4.1792490675971;
+        Tue, 20 Oct 2026 03:04:35 -0700 (PDT)
+Received: from leonardoc-nb ([67.159.246.222])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1831996071csm36076766c88.9.2026.10.20.03.04.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Oct 2026 03:04:35 -0700 (PDT)
+Date: Tue, 20 Oct 2026 07:04:29 -0300
+From: Leonardo Costa <leoreis.costa@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	imx@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH v2 3/3] ARM: dts: imx6q-apalis: Add VGA overlay
+Message-ID: <t5mkri7cbalmy55ylrb7stanrnmxc7ep4vhmtw2nzulhgdi6wm@jsdhywrqubwx>
+References: <20261019-v2-apalis-imx6-enable-vga-v2-0-ef6a3a780472@toradex.com>
+ <20261019-v2-apalis-imx6-enable-vga-v2-3-ef6a3a780472@toradex.com>
+ <sashiko-outbox-177001@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,305 +96,122 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] mm/vmalloc: undo partial mappings inside the
- mapping functions
-To: Suren Baghdasaryan <surenb@google.com>,
- Uladzislau Rezki <urezki@gmail.com>
-Cc: kasan-dev@googlegroups.com, linux-mm@kvack.org,
- sashiko-reviews@lists.linux.dev, Madhavan Srinivasan <maddy@linux.ibm.com>,
- Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
- "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
- "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
- Shrikanth Hegde <sshegde@linux.ibm.com>,
- Alexander Potapenko <glider@google.com>, Marco Elver <elver@google.com>,
- Dmitry Vyukov <dvyukov@google.com>, Andrew Morton
- <akpm@linux-foundation.org>, Dennis Zhou <dennis@kernel.org>,
- Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>
-References: <20261019054531.87652-1-hao.ge@linux.dev>
- <20261019054531.87652-4-hao.ge@linux.dev> <sashiko-outbox-178439@kernel.org>
-Content-Language: en-US
-From: Hao Ge <hao.ge@linux.dev>
-In-Reply-To: <sashiko-outbox-178439@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-177001@kernel.org>
 
-Hi Suren and Ulad
-
-Sashiko reported several issues, and they all look real.
-I have some ideas for fixing the first few;
-of course, please correct me if I get anything wrong.
-
-I'd like to discuss the last issue with you all.
-
-
-On 2026/10/20 13:45, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] mm/vmalloc: infinite loop in vunmap_pte_range() on unaligned error rollback
-> - [High] mm/vmalloc: __vmap_pages_range_noflush() calls cond_resched() in atomic context
-> - [Medium] mm/vmalloc: vmap_page_range() calls flush_cache_vmap() before error rollback
+On Mon, Oct 19, 2026 at 10:36:09AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] ARM: dts: imx6q-apalis: VGA data-enable-active ignored by simple-bridge
 > --
 > 
-> commit 043026437ba63b051df5d14470fe69ce8fa8825c
-> Author: Hao Ge <hao.ge@linux.dev>
+> commit a66c8dd73182954ba43ed81cada90ae73edf93a0
+> Author: Leonardo Costa <leonardo.costa@toradex.com>
 > 
-> mm/vmalloc: undo partial mappings inside the mapping functions
+> ARM: dts: imx6q-apalis: Add VGA overlay
 > 
-> This commit adds rollback logic using __vunmap_range_noflush() and
-> kmsan_vunmap_range_noflush() into vmap_page_range(),
-> __vmap_pages_range_noflush(), and vmap_pages_range_noflush() when page
-> table installation or KMSAN metadata setup fails. It also adds range and
-> page_shift validation in __vmap_pages_range_noflush().
+> This commit adds a device tree overlay for the VGA output on the Apalis
+> Evaluation Board, connecting the parallel RGB display interface to a
+> non-programmable video DAC and VGA connector with an active-low data-enable
+> signal, and wires up composite DTB targets in the Makefile.
 > 
->> diff --git a/mm/vmalloc.c b/mm/vmalloc.c
->> index 44e0eb32708f1..75aa5acf55660 100644
->> --- a/mm/vmalloc.c
->> +++ b/mm/vmalloc.c
->> @@ -363,6 +363,9 @@ int vmap_page_range(unsigned long addr, unsigned long end,
->>  	if (!err)
->>  		err = kmsan_ioremap_page_range(addr, end, phys_addr, prot,
->>  					       ioremap_max_page_shift);
->> +	if (err)
->> +		__vunmap_range_noflush(addr, end);
->> +
->>  	return err;
->>  }
+> > diff --git a/arch/arm/boot/dts/nxp/imx/imx6q-apalis-eval-vga.dtso b/arch/arm/boot/dts/nxp/imx/imx6q-apalis-eval-vga.dtso
+> > new file mode 100644
+> > index 0000000000000..991c2b7c27773
+> > --- /dev/null
+> > +++ b/arch/arm/boot/dts/nxp/imx/imx6q-apalis-eval-vga.dtso
+> > @@ -0,0 +1,80 @@
 > 
-> [Severity: High]
-> What happens here when vmap_range_noflush() returns -EINVAL for a range
-> where end - addr is not PAGE_SIZE-aligned?
+> [ ... ]
 > 
-> In vmap_pte_range(), commit a739e6b557af09 added a check to bail out on
-> unaligned ranges specifically to avoid an infinite loop:
-> 
-> mm/vmalloc.c:vmap_pte_range() {
-> 	...
-> 	if (WARN_ON_ONCE(!PAGE_ALIGNED(end - addr)))
-> 		return -EINVAL;
-> }
-> 
-> This can be reached on 64KB page kernels via pci_remap_iospace() ->
-> vmap_page_range() with 16KB/32KB/48KB PCI I/O ranges (for example via
-> loongson_pci_probe() or acpi_pci_root_remap_iospace()).
-> 
-> When vmap_pte_range() returns -EINVAL, vmap_page_range() now calls
-> __vunmap_range_noflush(addr, end) with the unaligned range. Whenever a PMD
-> in [addr, end) is already populated with a PTE table (such as the
-> PCI_IOBASE PMD populated during early boot by reserve_pio_range(), or an
-> earlier PMD mapped in the same call), __vunmap_range_noflush() descends
-> into vunmap_pte_range(), which has no alignment check:
-> 
-> mm/vmalloc.c:vunmap_pte_range() {
-> 	...
-> 	do {
-> 		...
-> 			ptent = ptep_get_and_clear(&init_mm, addr, pte);
-> 		WARN_ON(!pte_none(ptent) && !pte_present(ptent));
-> 	} while (pte += (size >> PAGE_SHIFT), addr += size, addr != end);
-> }
-> 
-> Because end - addr is not a multiple of PAGE_SIZE, won't addr step past end
-> and loop infinitely, clearing unrelated kernel PTEs and corrupting memory
-> past the PTE table?
-> 
-
-That sounds reasonable. I will add a separate patch in the next version to fix
-this problem.
-
-> [Severity: Medium]
-> Also in vmap_page_range(), flush_cache_vmap(addr, end) is called
-> unconditionally before checking err and before rolling back with
-> __vunmap_range_noflush(addr, end):
-> 
-> mm/vmalloc.c:vmap_page_range() {
-> 	err = vmap_range_noflush(addr, end, phys_addr, pgprot_nx(prot),
-> 				 ioremap_max_page_shift);
-> 	flush_cache_vmap(addr, end);
-> 	if (!err)
-> 		err = kmsan_ioremap_page_range(addr, end, phys_addr, prot,
-> 					       ioremap_max_page_shift);
-> 	if (err)
-> 		__vunmap_range_noflush(addr, end);
-> 
-> 	return err;
-> }
-> 
-> On UML, flush_cache_vmap is defined as flush_tlb_kernel_range:
-> 
-> arch/um/include/asm/cacheflush.h:
-> #define flush_cache_vmap flush_tlb_kernel_range
-> 
-> When vmap_range_noflush() fails partway through or
-> kmsan_ioremap_page_range() fails, flush_cache_vmap() runs while the
-> partially installed PTEs are still pte_present(), causing
-> update_pte_range() in arch/um/kernel/tlb.c to map them into the host OS via
-> ops->mmap() and clear _PAGE_NEEDSYNC:
-> 
-> arch/um/kernel/tlb.c:update_pte_range() {
-> 	...
-> 		if (pte_present(*pte)) {
-> 			...
-> 			ret = ops->mmap(ops->mm_idp, addr, PAGE_SIZE,
-> 					prot, fd, offset);
-> 		} else
-> 			ret = ops->unmap(ops->mm_idp, addr, PAGE_SIZE);
-> 
-> 		*pte = pte_mkuptodate(*pte);
-> }
-> 
-> When __vunmap_range_noflush(addr, end) then clears the software PTEs
-> without a subsequent TLB flush or unmap notification, won't those host OS
-> mmap mappings be left behind? Should flush_cache_vmap(addr, end) only be
-> called after both vmap_range_noflush() and kmsan_ioremap_page_range()
-> succeed?
->
-
-That sounds reasonable. I will add this logic in the next version.
-
->> @@ -683,27 +686,35 @@ int __vmap_pages_range_noflush(unsigned long addr, unsigned long end,
->>  		pgprot_t prot, struct page **pages, unsigned int page_shift)
->>  {
->>  	unsigned int i, nr = (end - addr) >> PAGE_SHIFT;
->> +	unsigned long start = addr;
->> +	int err = 0;
->> +
->> +	if (WARN_ON_ONCE(addr >= end))
->> +		return -EINVAL;
->>  
->>  	if (WARN_ON_ONCE(page_shift < PAGE_SHIFT))
->>  		return -EINVAL;
->>  
->>  	if (!IS_ENABLED(CONFIG_HAVE_ARCH_HUGE_VMALLOC) ||
->> -			page_shift == PAGE_SHIFT)
->> -		return vmap_small_pages_range_noflush(addr, end, prot, pages);
->> -
->> -	for (i = 0; i < nr; i += 1U << (page_shift - PAGE_SHIFT)) {
->> -		int err;
->> -
->> -		err = vmap_range_noflush(addr, addr + (1UL << page_shift),
->> +			page_shift == PAGE_SHIFT) {
->> +		err = vmap_small_pages_range_noflush(addr, end, prot, pages);
->> +	} else {
->> +		for (i = 0; i < nr; i += 1U << (page_shift - PAGE_SHIFT)) {
->> +			err = vmap_range_noflush(addr, addr + (1UL << page_shift),
->>  					page_to_phys(pages[i]), prot,
->>  					page_shift);
->> -		if (err)
->> -			return err;
->> +			if (err)
->> +				break;
->>  
->> -		addr += 1UL << page_shift;
->> +			addr += 1UL << page_shift;
->> +		}
->>  	}
->>  
->> -	return 0;
->> +	/* Undo the PTEs installed before the failure. */
->> +	if (err)
->> +		__vunmap_range_noflush(start, end);
->> +
->> +	return err;
->>  }
+> > +	vga-encoder {
+> > +		compatible = "dumb-vga-dac";
+> > +
+> > +		ports {
+> > +			#address-cells = <1>;
+> > +			#size-cells = <0>;
+> > +
+> > +			port@0 {
+> > +				reg = <0>;
+> > +
+> > +				vga_enc_in: endpoint {
+> > +					data-enable-active = <0>;
+> > +					remote-endpoint = <&vga_display_out>;
+> > +				};
+> > +			};
 > 
 > [Severity: High]
-> Similarly here, __vmap_pages_range_noflush() checks addr >= end, but does
-> not check PAGE_ALIGNED(addr) or PAGE_ALIGNED(end).
+> Does data-enable-active = <0> on vga_enc_in actually reach the IPUv3
+> CRTC?
 > 
-> If a caller passes a sub-page or unaligned range (for example, 0 < end -
-> addr < PAGE_SIZE), nr = (end - addr) >> PAGE_SHIFT evaluates to 0, so the
-> huge-page path still maps nothing and returns 0, while the small-page path
-> loops infinitely in vmap_pages_pte_range(). And if the huge-page path fails
-> on an unaligned range, __vunmap_range_noflush(start, end) will hit the same
-> infinite loop in vunmap_pte_range().
+> In simple_bridge_probe() in drivers/gpu/drm/bridge/simple-bridge.c, the
+> data-enable-active property is parsed into timings->input_bus_flags:
 > 
-> Should both vmap_page_range() and __vmap_pages_range_noflush() validate
-> PAGE_ALIGNED(addr) && PAGE_ALIGNED(end) upfront before attempting to map or
-> unmap?
+> 	if (de_present && !sbridge->bridge.timings) {
+> 		struct drm_bridge_timings *timings;
 > 
+> 		timings = devm_kzalloc(&pdev->dev, sizeof(*timings), GFP_KERNEL);
+> 		if (!timings)
+> 			return -ENOMEM;
+> 
+> 		timings->input_bus_flags = de ? DRM_BUS_FLAG_DE_HIGH :
+> 						DRM_BUS_FLAG_DE_LOW;
+> 		sbridge->bridge.timings = timings;
+> 	}
+> 
+> However, simple_bridge_bridge_funcs registers atomic bridge state
+> callbacks without an .atomic_check callback:
+> 
+> static const struct drm_bridge_funcs simple_bridge_bridge_funcs = {
+> 	.atomic_create_state = drm_atomic_helper_bridge_create_state,
+> 	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
+> 	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
+> 	.attach		= simple_bridge_attach,
+> 	.atomic_enable = simple_bridge_enable,
+> 	.atomic_disable = simple_bridge_disable,
+> };
+> 
+> During drm_atomic_bridge_chain_check() ->
+> drm_atomic_bridge_propagate_bus_flags(), sbridge's
+> bridge_state->input_bus_cfg.flags is overwritten with the downstream
+> display-connector bridge's input_bus_cfg.flags (which is 0), and
+> sbridge->bridge.timings->input_bus_flags is never copied into
+> bridge_state->input_bus_cfg.flags.
+> 
+> Then, upstream in imx_pd_bridge_atomic_check() in
+> drivers/gpu/drm/imx/ipuv3/parallel-display.c:
+> 
+> 	if (next_bridge)
+> 		next_bridge_state = drm_atomic_get_new_bridge_state(crtc_state->state,
+> 								    next_bridge);
+> 
+> 	if (next_bridge_state)
+> 		bus_flags = next_bridge_state->input_bus_cfg.flags;
+> 	else
+> 		bus_flags = di->bus_flags;
+> 
+> Because next_bridge_state is non-NULL, bus_flags is read as 0 from
+> next_bridge_state->input_bus_cfg.flags without consulting
+> next_bridge->timings->input_bus_flags.
+> 
+> When ipu_crtc_mode_set_nofb() -> ipu_di_init_sync_panel() runs,
+> sig_cfg.enable_pol = !(imx_crtc_state->bus_flags & DRM_BUS_FLAG_DE_LOW)
+> evaluates to 1, driving the data-enable pin active-high instead of
+> active-low and gating off the VGA DAC output during active video.
+> 
+> Should simple-bridge implement .atomic_check to populate
+> bridge_state->input_bus_cfg.flags from bridge->timings->input_bus_flags
+>  so the active-low polarity is propagated to imx-parallel-display?
+> 
+> [ ... ]
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261019-v2-apalis-imx6-enable-vga-v2-0-ef6a3a780472@toradex.com?part=3
 
-I think We need to check both PAGE_ALIGNED(addr) and PAGE_ALIGNED(end).
-As an example: if addr is PAGE-aligned, end is not, and end - addr < PAGE_SIZE,
-then nr becomes zero. On the huge page path, we simply return 0 with no work performed.
+This and the other comment regarding atomic_check are addressed by the
+patch series below, which is listed as a dependency for this patch series:
 
-At the same time, vmap_pages_pte_range() needs the same guard as commit
-a739e6b557af ("mm: vmalloc: WARN_ON if mapping size is not PAGE_SIZE aligned"),
-to protect against unaligned ranges.
+    https://lore.kernel.org/all/20261002-v1-simple-bridge-atomic-check-v1-1-ef5d8332b078@toradex.com/T/#u
 
-So will do next version.
-
->>  
->>  int vmap_pages_range_noflush(unsigned long addr, unsigned long end,
->> @@ -715,7 +726,16 @@ int vmap_pages_range_noflush(unsigned long addr, unsigned long end,
->>  
->>  	if (ret)
->>  		return ret;
->> -	return __vmap_pages_range_noflush(addr, end, prot, pages, page_shift);
->> +
->> +	ret = __vmap_pages_range_noflush(addr, end, prot, pages, page_shift);
->> +	/*
->> +	 * The page tables undo themselves on failure. Tear down the
->> +	 * metadata that was fully set up before the mapping failed.
->> +	 */
->> +	if (ret)
->> +		kmsan_vunmap_range_noflush(addr, end);
->> +
->> +	return ret;
->>  }
-> 
-> [Severity: High]
-> Can calling __vunmap_range_noflush() and kmsan_vunmap_range_noflush() here
-> trigger a sleeping-in-atomic-context bug when __vmalloc() or kvmalloc() is
-> called with GFP_ATOMIC or GFP_NOWAIT?
-> 
-> __vmalloc_area_node() supports non-blocking allocations by wrapping
-> __vmap_pages_range() in memalloc_apply_gfp_scope(gfp_mask):
-> 
-> mm/vmalloc.c:__vmalloc_area_node() {
-> 	...
-> 	flags = memalloc_apply_gfp_scope(gfp_mask);
-> 	do {
-> 		ret = __vmap_pages_range(addr, addr + size, prot, area->pages,
-> 				page_shift, nested_gfp);
-> 	} while ((gfp_mask & __GFP_NOFAIL) && (ret < 0));
-> 	memalloc_restore_gfp_scope(flags);
-> }
-> 
-> When a GFP_ATOMIC or GFP_NOWAIT allocation runs in atomic context (such as
-> under a spinlock, preempt_disable(), or rcu_read_lock()) and page table
-> allocation fails in vmap_small_pages_range_noflush() after at least one PMD
-> in [start, end) is populated (or after kmsan_vmap_pages_range_noflush()
-> populated the KMSAN shadow/origin ranges), __vmap_pages_range_noflush() and
-> kmsan_vunmap_range_noflush() synchronously call __vunmap_range_noflush().
-> 
-> __vunmap_range_noflush() walks the populated PMDs via vunmap_pmd_range(),
-> which unconditionally calls cond_resched():
-> 
-> mm/vmalloc.c:vunmap_pmd_range() {
-> 	...
-> 	do {
-> 		next = pmd_addr_end(addr, end);
-> 		if (pmd_none_or_clear_bad(pmd))
-> 			continue;
-> 		vunmap_pte_range(pmd, addr, next, mask);
-> 
-> 		cond_resched();
-> 	} while (pmd++, addr = next, addr != end);
-> }
-> 
-> Commit 9c47753167a6 ("mm/vmalloc: defer freeing partly initialized
-> vm_struct") deferred error-path cleanup in __vmalloc_area_node() to a
-> workqueue specifically because unmapping on failure can sleep. Doesn't
-> calling __vunmap_range_noflush() synchronously inside
-> __vmap_pages_range_noflush() and vmap_pages_range_noflush() reintroduce
-> cond_resched() in atomic context?
-> 
-
-This issue also appears real. One possible approach is to plumb the caller's gfp_mask into vunmap_pmd_range()
-to conditionally skip cond_resched().
-Suren, Ulad, do you have any preferred or cleaner way to handle this?
-
-Thanks
-Best Regards
-Hao
-
+Leonardo
