@@ -1,94 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.72.5
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1792527964;
-	b=mfwKlz4XYZDTffEQjcDw4E3GmC86LXGTMb3QeTATO9EQi8SeweufQYO4y/RZIWDBR6/5
-	 fpJqzi7PqTrb/P/k73uwoPK6+/HpPN5wld+8O0oi/vZ+E2fnRPIUmX6crD1AjljYzn1YV
-	 Rhr7Sq7gXf0Hbv+yBT+vag9kIwedwJ+sSdiqlm3cFv+37K859/IZEc6tdJX0g2zZEi01A
-	 uTW++SAYSW9POt9gKm/0uXD7IYLAgqkHkTMxJvFsGjbbURz25zlcOf97/nO08wd6a9YU2
-	 jVxvynKcoZ/kGNcpHZKxV85PwaK1NTxZo9qTWvYQEnMso5TbHk71GitsiMc0aPJwTVw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792527964;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=VKbBdiItt7yw95WTMPkkNCmsifzrP0vZV3SLuUSAdBI=;
-	b=o/xCFxqBHUreoHYM8AxnTR3pqmbGvJ1LLxhJWiHfcOh7PvW/uCNOcCHDiaKl8Od3mPHS
-	 5BOL86s/epr1ymIs0bM4QvAu+KEPtsHwaDBU6q1/aSqKXNMra3lEpEVPFtHpo8G5tmA9J
-	 bSCRayQjo0QksGo2bakQi37eGgSarmBOoudJx/24ZyyxnITn4cF4R6Zvwwq91rJmgz2go
-	 mW+idEWwt8OFqiXqWDtJIcyxZt+5a06miiqHOMzK2hBHd2j/0wciVddEwJhFsxrutAmqb
-	 uiwOBm4Ai/pYVMa1VXDBdXcv8Poo7zRDe7svQ4+Kjb3f3xPlHNU6JUhJCYdkO59r/Sg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=Ws4WCm7q;
-	arc=fail smtp.remote-ip=52.101.72.5
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013005.outbound.protection.outlook.com [52.101.72.5])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.15.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792530117;
+	b=yJGO/PwBmyE9Nw5TSjna21FxIUs20NtwRVNzWHdB2h1nkzyRDDMcGa9p4gd6kUA8N6zf
+	 9RXJbeYIsXfIHD2xoJ994TZ206/OoGUwkGcyn/Zpt5dJ9xPecUGTDajWETX+lC7pP9Wwz
+	 M1rXwYLGdxkUc2VgD2IM9eEeFG6LJJYGebTm9giFSWdyzkBwd1V56PJ2bZHVNs75jd5L2
+	 P0nyqDPh+b8CB6Cx9X6IuF6hAPHuXawSwlE3NVCTMQNK17bM59F7WjXosNxOndfNNjVTG
+	 qXQme9IqbO7xweQciq/SB/MtHf8LW9xf+dWxmC7QgdhFOsLLnN4vEhT5CpnldVm0wVw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792530117;
+	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:UI-OutboundReport;
+	bh=brKNXuDD/mpiRHORLBW7NSVaDvD0hq9jnS4V3xq/32A=;
+	b=KPwc6mV+BSysM1jC+csJbvdWpE2Icp3amcQ4V47vCLyXI1LBAMAku7eHFt0+IapkK3YO
+	 GnarM7t2wyXXIblYW0Azz2zixwCUJd6JsZ71yItlvxXiNAdoXAML4Cd/6ClTe/jTAQ2KD
+	 q1MFxSWBoiKg5w92hhRHMn5e4NgiRMJy0J4GzZk4YO5WaMyzNkDmGBp0b7P3QUbvj2sly
+	 kR2XV8dIC5zhK0usOL7jF/ns0PJ8yJxxFXYpdoiKM2qyar3wyLjte6SJSl+Y2sjGtKZnf
+	 uPUgSbQwkLcXE6dsqS5LFZcoM8P+uK1dPC+f7231vA/W/4rI3iP43o5gLxUxilYUdfw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmx.de;
+	spf=pass smtp.mailfrom=gmx.de;
+	dkim=pass header.d=gmx.de header.i=w_armin@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=im+1fV3V;
+	arc=none smtp.remote-ip=212.227.15.18
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7177A606A31D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 20:26:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7177A606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BCC606A320
+	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 21:01:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 57BCC606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=Ws4WCm7q
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PhJzah7uEBqRv25jkO9NItldFJPr5Vs6K8LNxH52RNUn/Lo7MEn4h2Ku18pB9TvurmFR0ub2cuEA0DIPwdMnRVuer3JJzOuHo20ICKSgD5znSuNHKBuupiYEGVTTmjbdIskOErjU1LVYeideJjYU2Um2NASzIOPInpgvF3VKOahqMJimkPQE97Huoz9ebDsoE3Sr2ttaI5Lrnq4iyUi2Wfuf46isRP41XzSaq1E0hxowKi1hYI//3ysSxulvHdaJ8k9rGQ/XsTwMdQBa39CFk7W5geLYvbhq13k81xCLpeSaHxtDrKi/BvorOlkjWz8HJLkoZ+Qttfl5F9K7IXC0Sw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nRIjwPxXVlFBb2/3ce3Cm39LR7ETthon0sCZA8mRJP0=;
- b=jCbDojIRLN1azcgI0QbEWJI7Yhr1pPQHsJ3KjCItiwQjCJ/nnQ/4P5L9N2SgwLeud9XanBhefjhsl0+IvzivnPw88t7ragMV/qnhgUdwhmgzv3c7rVIoR21Ew35y1q1CYvzXs2hWrHmbozdOvW1EvAT2cfL6xT5RVD2HIaU5ibYg+QP6yJISzioJPT3tLMwTJbir9UEqBtbwSQOMgAod5NKjnxHoAdaiCkvm4D3EsT/YoU+f/tq62O32w9Wr0MDTetxigyrv6A99MNeWGVQ/qDSRrQ3aHK/JTOCjrp6IhfYpD7zxIL7nSKG/xowyktUt8A9KUKujEtJsymFT0lHQ5A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nRIjwPxXVlFBb2/3ce3Cm39LR7ETthon0sCZA8mRJP0=;
- b=Ws4WCm7qoqRraLZTgTRebNJVgRQrhTSZeRhkeZeTozQZlO8HEEDNchgxv/tggz/xJb/0W1PcCFbsf8g6nT5qBDQ30kutSgE85QPFXfEvj5VZP+2V01k9q7X+Mbbl3VmgpHxpIVW8BQEt/FBUhPc9ahrVe5UMPX4npIW2QRwQFLxybjC8+X7DQpWeD9ZB0Bwhgg9Dq2jsz3mpftgW5dypN8MrCo+V+mu5aBHyZvqVLyJIrqq3XoJKE/L10Rle/cryKaUcPb8mUUq8CZl48KH7ncFDQYYDxsFK4OIHS3iv+EimQsqr4IwSC4PPzpIM4iVbid5bvhxEft6KEdvykimBlg==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by GVXPR04MB11654.eurprd04.prod.outlook.com (2603:10a6:150:2c3::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Tue, 20 Oct
- 2026 20:25:59 +0000
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0546.012; Tue, 20 Oct 2026
- 20:25:52 +0000
-Date: Tue, 20 Oct 2026 16:25:45 -0400
-From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Myeonghun Pak <mhun512@gmail.com>, dmaengine@vger.kernel.org,
-	Frank.Li@kernel.org, vkoul@kernel.org
-Subject: Re: [PATCH] dmaengine: stm32-dma3: disable the active clock on
- removal
-Message-ID: <atfOSRpBqjDH8fbS@lizhi-Precision-Tower-5810>
-References: <20260911184841.34222-1-mhun512@gmail.com>
- <20260911190038.955201F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260911190038.955201F000FF@smtp.kernel.org>
-X-ClientProxiedBy: PH8P220CA0016.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:345::26) To AMBPR04MB12445.eurprd04.prod.outlook.com
- (2603:10a6:20b:75e::21)
+	dkim=pass (2048-bit key, unprotected) header.d=gmx.de header.i=w_armin@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=im+1fV3V
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1792530107; x=1793134907; i=w_armin@gmx.de;
+	bh=brKNXuDD/mpiRHORLBW7NSVaDvD0hq9jnS4V3xq/32A=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=im+1fV3VQvRdS0iK8cqKB2/Wc6Pr4AZVPpi2oSmuw4uVbkNY57skExtC0vakzbFX
+	 8A5OMRNo3I+FKUFTXt6TaD9ds254uqNNU75SxH6FgTNyDGe0uKOJeiGWr24HT81YS
+	 KukAHa5JBvoyY17d8xmyWL7rVdfGWXQOgFbRW1Nds/GdzXtbHi64t/kqDo0pGBiH3
+	 WmyzgGBJGzUucmvZWvi+orhl//Ajlde5b7L24aPIr/Qd/FozpBsfdsu8qb1hzhp+1
+	 FsK4OUQCFGRb1gE/dDWiOEKFy13NNXKIgLF0sQsBiRby3ApCP9fyuv9MeGxhK6BuX
+	 oKb710z4pT6I/sufdg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mr9Bk-1wmhI51t7m-00fFd5; Tue, 20
+ Oct 2026 23:01:47 +0200
+Message-ID: <f58e0b3a-d82a-4e3e-91f0-2c9114019f26@gmx.de>
+Date: Tue, 20 Oct 2026 23:01:46 +0200
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -98,159 +63,255 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|GVXPR04MB11654:EE_
-X-MS-Office365-Filtering-Correlation-Id: 34176ed2-dcb6-419d-2aa4-08df2ee855be
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|1800799024|19092799006|366016|56012099006|5023799004|11063799006|4143699003|261009220027099003|261009221227099003|261009223027099003|261009221727099003|261009223327099003|10067099003|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	U3Q6/qoa6nICUNGj5fYKfEONwMwbF594i9o8iNyN4JVNTN2gOyfxx4d7IRxm/I46ajM1+rvOIeiOvGZq35uLZ7GoqXjsgMf5P8WGbSVaiE1mBFvW4GlVTGE89hzvIW3OPD+c/F4BIcU61D6TJSzDEa70pFFIqnXQTrOFqrfNBDYf/iO2c6+xyc3BAaJ07e6hwwmJUKrsJCgieFpEGbuUhJkClA9+mkh9FvmvSAQLoi/vEBFZGpntDJIWAttoguQ52L+eAfNHl7E6aaB1UEB73W6mpGr0sMBakJyfdc/uMFZAXl/cvYpVmbaGMbI29F0ceqJttc5IsF3rrxh7hY1VVYW+yTqr3eQOloXv3Lg3CwV6ktt9haeQVJLIdDDNaU2HBzNaQoaggehoPnTi+/IJBaf8uTkG4no6gKXFSKHhfaNBnaWTpmaRgvG8J4oG3MCHzoOqqfihG70nwqI7D+8NjY87UMCsXuE9OAX7Zp9/F+eyf0qnEASuKvFbFY7jdqyCKgdOoLmNK5I1/JRmAOcK5qkK0pGbItaQHlkuUmk2Q9N9VSUlvZyq5Lirzap7GY9MkLSE1/hKlQWjdr/zMKHP1lw5NSkUm5s/V/3NBmsX4gc=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(1800799024)(19092799006)(366016)(56012099006)(5023799004)(11063799006)(4143699003)(261009220027099003)(261009221227099003)(261009223027099003)(261009221727099003)(261009223327099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?FWdiknsxigqB1xlCflAc0YHn1l+htNOImzzUREVIpNyRP0Q1Mk3jh/FHLO?=
- =?iso-8859-1?Q?nanCdAEf9lDwl8/RvS67nTUXZ369/KHN7Edf3t80sc2+caMFvCTaGhf6zn?=
- =?iso-8859-1?Q?caVvub4f3Wa6bKHriDiiNihhQH7WA1+ki+xmS+V+Jpvv3RyNhn+VpGwrl6?=
- =?iso-8859-1?Q?ykFjrQuAwwjapRcNdd7FJ28y7GPf8xoc0IwV+yT334ihuatFaML85hhCh/?=
- =?iso-8859-1?Q?PlElUBrkc1qkNc3sze7MPaXAthtDxYnl094Jab1VVFlkvUvy7MVPLXezi4?=
- =?iso-8859-1?Q?7iggIeTFR+bLNf6mGlPvJUU8A/Hmn73QaX+sCyxZgxyyUxx2T8RhChTWm9?=
- =?iso-8859-1?Q?PjE5lf0LXgxnqkEiMOPiOzyPYq9oaCv6HPjded8lq1l6lNGoW+7/bBvdDK?=
- =?iso-8859-1?Q?QcgTc4qEV0UWBh5AoL7VLr91dDNhYY7xjR5r4ibGMqMmQSuNoyfnJ4ETa+?=
- =?iso-8859-1?Q?5mdNEa1u6xNNlinJHjARcJ3k9HcDvZzEzYHo7ZYHWvu6woIe2vo8Wwouq1?=
- =?iso-8859-1?Q?ygvOdiozUKGgwOekAiPxWel8D0LaKza47g8dgtZ+LLF+FzbL9MvGX2z/IH?=
- =?iso-8859-1?Q?YtIHxWbfu9BQ7t2p1u9qC81JYEAlj7QY9BPjcdDSWgy0GpT7BXgxZKbGNy?=
- =?iso-8859-1?Q?rDTP17As/r10i//R7Qfgb7KEX5wneiHH6dd0N8i0xubZvNdmBQkqXGZ1I7?=
- =?iso-8859-1?Q?P7ZlwxjtyAiIlTj+wKS8xhU6Cnl5B6Lu1ekLjtNkPYWe3xGFFi0IED6zrn?=
- =?iso-8859-1?Q?9xwrvklc+X3W9kizolMucsvymsHiR9UGCh2fa0wH0PB0sX0xrnAsGsE2l2?=
- =?iso-8859-1?Q?f3DbglnfG6vAU1j2dKSPEKiUCnrdHyS0GQexV9BL+I/v6mI4uikj2S3wQw?=
- =?iso-8859-1?Q?IKnxZmO1ka316GTEOOqY7LOseZo5R5K1OVd0yYKmTv5kalzXo8HCbFLzSF?=
- =?iso-8859-1?Q?4LsGIoIRxwKO7ppVJ6p0jwxD9kHBdLpdmCzNA7pDcKxLF4r2E3S+gS4r6v?=
- =?iso-8859-1?Q?7LEBQgyUtPBEohRRPVy2jFLG+9xqFvSEBtVFBflle56rKWbCU2b/PydCg8?=
- =?iso-8859-1?Q?Bd0NySDXHpneWROaVohMbP8cAqn71mJ/lKdXIWK7gkwt2kC7vVuCF71mjO?=
- =?iso-8859-1?Q?O9U5a9NbdjG1KJowujWdaYGSpzB2Wy+/Sk6lgsP6AsshGyl0DFn/6gYlI6?=
- =?iso-8859-1?Q?GNpioM80zuzlG0jVw3bIiPeBvOVZTmoLYIYUEe5mE/BYW2Tvh35OGX68is?=
- =?iso-8859-1?Q?HBeXpcTZsz69QbYwWn/fbdYCWmRvaZ+CxSBaiEurvXZu6ThGRd8XpK6E+i?=
- =?iso-8859-1?Q?uxPhMrVv5oD0QcNPBwlz4DUYIA8tty8lRL028K//88Lszj3pIfEDa/R1Ub?=
- =?iso-8859-1?Q?P97oiw5xQG/hlM7nZRGFkXEioUzVx5Vo1KbivKr+MUr7MQISynh0+71peu?=
- =?iso-8859-1?Q?UKfrr7KVMHuZpoYvIx703pMdgyv3KaxxkeTdTpo+ReMOtWTj2+zo/aOKcR?=
- =?iso-8859-1?Q?dr7EchGaz44KsjewKuSbQe/omj6O+CBaodgudFR81pqFMU8m+AqLNqd8ns?=
- =?iso-8859-1?Q?iBq8VtVKbLokDrH9VEToR3C06eLmT/GsxHPMRqabTFVlaxjJYp2Tw7H/Rq?=
- =?iso-8859-1?Q?2qRmS7gSRh8mbJZP7J0SH7iUoweRVse5zTAQBz+vOAjJM8irrjkxiVDh6l?=
- =?iso-8859-1?Q?A/N34B/UXyrQnC7XjZyl93UNHOlA4Gp3FMwCqsHOhnLEHXhxbKHWJz0XGk?=
- =?iso-8859-1?Q?r8MZqJeChOiGG3Qj1eBAsTNBiln8sEYXQjzVDTLxqSVsHMcY1t0dRJpSEf?=
- =?iso-8859-1?Q?N+3YnA1fDI8o1k2/9XE48HJrRl67rYSWacehuGEpC8bSlCOgTpNV?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 34176ed2-dcb6-419d-2aa4-08df2ee855be
-X-MS-Exchange-CrossTenant-AuthSource: AMBPR04MB12445.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2026 20:25:52.1262
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TSFB74H7EJmx9qnwUlgc033gyTSI/KfiRCK9dCDKWZFi8Cml5zRIqVMqj6IVMaKxvXuL/nZkQgC13GTHkID8mRhssgxHlKuo+/YVGtyMrktdn0Yk80bx9JkbaeECunmq
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR04MB11654
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/10] leds: class: Take the LED access lock when reading
+ brightness_hw_changed
+To: Rong Zhang <i@rong.moe>, sashiko-reviews@lists.linux.dev
+Cc: linux-leds@vger.kernel.org, lee@kernel.org
+References: <20261018135339.1109271-1-W_Armin@gmx.de>
+ <20261018135339.1109271-7-W_Armin@gmx.de> <sashiko-outbox-176178@kernel.org>
+ <81e458c4-b9c9-4881-b669-16c87171046f@gmx.de>
+ <24d07a72cfdfb39963fc3771fc105deb3b2eaddc.camel@rong.moe>
+Content-Language: en-US
+From: Armin Wolf <W_Armin@gmx.de>
+In-Reply-To: <24d07a72cfdfb39963fc3771fc105deb3b2eaddc.camel@rong.moe>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:BDxPwBKACZED5zR3Ckd43m13ycT3+K1/ShEO7Bx7wztTkvcWLNN
+ eHREXjV/fMtZC/JtRFvoOw19Tljt8GO6PcpczYQdPNF2UPz+khUiG21Q9KdQ8wXFkNTrx4L
+ J0D38GqIgY3WZvzSqISTEG5hoPzo7WZeD0FNWMy5FKiNizPRAcccSyYo5le87vrJS6VnCW+
+ sgpp53ojWpVTGCtTEO+LQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:DmXsxEV1yg8=;OX++TSYCBSS5+YYpqibSjNpkiPu
+ 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
 
-On Fri, Sep 11, 2026 at 07:00:38PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->
-> New issues:
-> - [High] Devres sequence inversion explicitly disables the active clock in `remove()` before the DMA device is unregistered, creating a race where clients can access unclocked hardware.
->
-> Pre-existing issues:
-> - [High] IRQ handler accesses hardware registers without runtime PM protection, risking a crash if the device is suspended concurrently.
-> - [High] Missing tasklet_kill() for vchan tasklets causes Use-After-Free and hardware races during device removal.
-> --
->
-> commit 267d53077eeb3e6ecf120df2e24f7e2dab91c06d
-> Author: Myeonghun Pak <mhun512@gmail.com>
->
-> dmaengine: stm32-dma3: disable the active clock on removal
->
-> Probe enables the controller clock and runtime suspend disables it.
-> The remove callback only disables runtime PM, which does not itself
-> invoke runtime suspend. If the controller is still active, its clock
-> prepare and enable references therefore remain held after removal.
->
-> > diff --git a/drivers/dma/stm32/stm32-dma3.c b/drivers/dma/stm32/stm32-dma3.c
-> > index 4724e7fa0008e..b4d68be5a46b8 100644
-> > --- a/drivers/dma/stm32/stm32-dma3.c
-> > +++ b/drivers/dma/stm32/stm32-dma3.c
-> > @@ -1926,7 +1926,21 @@ static int stm32_dma3_probe(struct platform_device *pdev)
-> >
-> >  static void stm32_dma3_remove(struct platform_device *pdev)
-> >  {
-> > +	struct stm32_dma3_ddata *ddata = platform_get_drvdata(pdev);
-> > +	struct dma_chan *c;
-> > +
-> > +	of_dma_controller_free(pdev->dev.of_node);
-> >  	pm_runtime_disable(&pdev->dev);
->
-> [Severity: High]
-> This isn't a bug introduced by this patch, but can the interrupt handler
-> stm32_dma3_chan_irq() access unclocked hardware registers if a client
-> releases a channel concurrently?
->
-> The interrupt handler directly reads STM32_DMA3_MISR without acquiring a
-> runtime PM reference to guarantee the device is powered.
->
-> If a client releases a channel, stm32_dma3_free_chan_resources() executes,
-> dropping the channel lock and calling pm_runtime_put_sync(), which
-> synchronously suspends the device and disables its clock.
->
-> If an interrupt fires just before the lock is acquired in
-> stm32_dma3_free_chan_resources(), the handler spins. Once the lock is released,
-> the handler proceeds to read the register concurrently with the clock being
-> disabled by pm_runtime_put_sync(), which can trigger a crash.
->
-> > +
-> > +	list_for_each_entry(c, &ddata->dma_dev.channels, device_node) {
-> > +		struct stm32_dma3_chan *chan = to_stm32_dma3_chan(c);
-> > +
-> > +		devm_free_irq(&pdev->dev, chan->irq, chan);
->
-> [Severity: High]
-> This is a pre-existing issue, but does this loop also need to kill pending
-> vchan tasklets to prevent use-after-free and hardware races?
->
-> Virt-dma channels schedule a tasklet (chan->vchan.task) to process asynchronous
-> completions. If a tasklet was scheduled by an interrupt just before the IRQ was
-> freed, it remains pending and will execute asynchronously after remove() returns.
->
-> At that point, the clock is disabled by remove(), so any hardware access
-> initiated by the tasklet invoking client callbacks will crash the system. Once
-> devres frees the channel structures, the running tasklet will also access freed
-> memory.
->
-> > +	}
-> > +
-> > +	if (!pm_runtime_status_suspended(&pdev->dev))
-> > +		clk_disable_unprepare(ddata->clk);
->
-> [Severity: High]
-> Does disabling the clock here create a window where clients can access
-> unclocked hardware?
->
-> The driver registers the DMA device using dmaenginem_async_device_register().
-> Devres-managed cleanup runs after stm32_dma3_remove() returns. By manually
-> disabling the controller clock here, there is a window where the DMA device
-> remains registered and exposed to clients, but its hardware clock is disabled.
+Am 19.10.26 um 13:53 schrieb Rong Zhang:
 
-It make sense, please fix this. you use devm_add_action_or_reset(), or
-use devm clk function call.
+> Hi Armin,
+>
+> On Sun, 2026-10-18 at 19:08 +0200, Armin Wolf wrote:
+>> Am 18.10.26 um 16:03 schrieb sashiko-bot@kernel.org:
+>>
+>>> Thank you for your contribution! Sashiko AI review found 1 potential i=
+ssue(s) to consider:
+>>> - [Medium] leds: one-sided locking in brightness_hw_changed_show()
+>>> --
+>>>
+>>> commit ef875f7f46dcbf0a55900c763a37bd3cfcb02775
+>>> Author: Armin Wolf <W_Armin@gmx.de>
+>>>
+>>> leds: class: Take the LED access lock when reading brightness_hw_chang=
+ed
+>>>
+>>> This patch acquires the led_cdev->led_access mutex in
+>>> brightness_hw_changed_show() to guard reading brightness_hw_changed
+>>> against concurrent updates by led_classdev_notify_brightness_hw_change=
+d().
+>>>
+>>>> diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
+>>>> index e1f1b710536b0..77a0fce039528 100644
+>>>> --- a/drivers/leds/led-class.c
+>>>> +++ b/drivers/leds/led-class.c
+>>> [ ... ]
+>>>> @@ -102,11 +103,15 @@ static ssize_t brightness_hw_changed_show(struc=
+t device *dev, const struct devic
+>>>>    					  char *buf)
+>>>>    {
+>>>>    	struct led_classdev *led_cdev =3D dev_get_drvdata(dev);
+>>>> +	unsigned int brightness_hw_changed;
+>>>>   =20
+>>>> -	if (led_cdev->brightness_hw_changed =3D=3D -1)
+>>>> +	scoped_guard(mutex, &led_cdev->led_access)
+>>>> +		brightness_hw_changed =3D led_cdev->brightness_hw_changed;
+>>>> +
+>>>> +	if (brightness_hw_changed =3D=3D -1)
+>>>>    		return -ENODATA;
+>>>>   =20
+>>>> -	return sysfs_emit(buf, "%u\n", led_cdev->brightness_hw_changed);
+>>>> +	return sysfs_emit(buf, "%u\n", brightness_hw_changed);
+>>>>    }
+>>>>   =20
+>>>>    static const DEVICE_ATTR_RO(brightness_hw_changed);
+>>> [Severity: Medium]
+>>> Does taking led_cdev->led_access here actually synchronize against
+>>> led_classdev_notify_brightness_hw_changed()?
+>>>
+>>> Looking at drivers/leds/led-class.c, the writer updates
+>>> led_cdev->brightness_hw_changed without holding led_cdev->led_access:
+>>>
+>>> void led_classdev_notify_brightness_hw_changed(struct led_classdev *le=
+d_cdev, unsigned int brightness)
+>>> {
+>>> 	led_cdev->brightness_hw_changed =3D brightness;
+>>> 	sysfs_notify(&led_cdev->dev->kobj, NULL, "brightness_hw_changed");
+>>> }
+>>>
+>>> In addition, most callers invoke led_classdev_notify_brightness_hw_cha=
+nged()
+>>> without holding led_cdev->led_access, such as t14s_kbd_bl_update() in
+>>> drivers/platform/arm64/lenovo-thinkpad-t14s.c:
+>>>
+>>> static void t14s_kbd_bl_update(struct t14s_ec *ec)
+>>> {
+>>> 	enum led_brightness brightness =3D t14s_kbd_bl_get(&ec->kbd_backlight=
+);
+>>>
+>>> 	led_classdev_notify_brightness_hw_changed(&ec->kbd_backlight, brightn=
+ess);
+>>> }
+>>>
+>>> Some callers also run in atomic context where a sleeping mutex cannot =
+be
+>>> taken, such as lg_g15_raw_event() -> lg_g13_event() in
+>>> drivers/hid/hid-lg-g15.c:
+>>>
+>>> 	if (backlight_disabled ^ g15->backlight_disabled) {
+>>> 		led_classdev_notify_brightness_hw_changed(
+>>> 			&g15->leds[LG_G15_KBD_BRIGHTNESS].mcdev.led_cdev,
+>>> 			backlight_disabled
+>>> 			? 0 : g15->leds[LG_G15_KBD_BRIGHTNESS].brightness);
+>>> 		g15->backlight_disabled =3D backlight_disabled;
+>>> 	}
+>>>
+>>> Meanwhile, uniwill_ec_notify() in drivers/platform/x86/uniwill/uniwill=
+-acpi.c
+>>> already holds led_cdev->led_access across the call:
+>>>
+>>> 	guard(mutex)(&led_cdev->led_access);
+>>>
+>>> 	/* Sync the LED brightness with the actual hardware state */
+>>> 	ret =3D led_update_brightness(led_cdev);
+>>> 	if (ret < 0)
+>>> 		return ret;
+>>>
+>>> 	led_classdev_notify_brightness_hw_changed(led_cdev, brightness);
+>>>
+>>> Since the writer side does not consistently hold led_cdev->led_access =
+(and
+>>> cannot take it inside led_classdev_notify_brightness_hw_changed() with=
+out
+>>> sleeping in atomic context or deadlocking uniwill_ec_notify()), should
+>>> brightness_hw_changed_show() and led_classdev_notify_brightness_hw_cha=
+nged()
+>>> use READ_ONCE() and WRITE_ONCE() instead, similar to how trigger_hw_ch=
+anged
+>>> is handled in drivers/leds/led-triggers.c?
+>> I am not sure if READ_ONCE() guarantees atomic behavior here. What do t=
+he LED
+>> subsystem maintainers say?
+> While I am not a maintainer, paired READ_ONCE() and WRITE_ONCE() is
+> usually sufficient, as the attribute is only a hint for userspace OSD.
+>
+> The memory access itself is inherently atomic, i.e., neither a RMW
+> operation nor a split R/W. Since the led_cdev->brightness_hw_changed is
+> never used to synchronize other things, no memory barrier is needed here=
+.
+> Using rwonce prevents the compiler from reordering memory access, which
+> fulfills our requirements.
+>
+> Thanks,
+> Rong
 
-Frank
->
-> If a client issues a transfer or releases a channel during this window, the
-> driver might attempt to read or write hardware registers, causing a crash.
->
-> > +	pm_runtime_set_suspended(&pdev->dev);
-> >  }
-> >
-> >  static int stm32_dma3_runtime_suspend(struct device *dev)
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260911184841.34222-1-mhun512@gmail.com?part=1
+Nice, this also means that all the drivers calling led_classdev_notify_bri=
+ghtness_hw_changed() do not
+need to be audited for taking the led_access lock.
+
+I will use READ_ONCE()/WRITE_ONCE() in the v2 revision.
+
+Thanks,
+Armin Wolf
+
+>> Thanks,
+>> Armin Wolf
