@@ -1,54 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792472081;
-	b=feVIe+sZqoyvG7eHokP/H9PHrSmajg/ANrwV3aXhUf7iO7mVoeIEOiTpwxVWiNX4YW/x
-	 WDavdMRd6dMh7zqtLgulcg/lPqrwUMvtlKK46rGcLellJ89vzmWG5eTmrxjpMNxR1YwrP
-	 vShAvF2UBpldhBtOAHb1vCskJ00CnX9gx8B2KQhcweywxOJPHf55YJJx3n4065kDAY8/M
-	 y1Yroc7D27jNlrYM9gyHeCOtrIOVSaAREmM/C8bFc/gAje4GZR5bIuDBNJfk1q5zG2bTJ
-	 v2fHkjmbJaVizqsdb3bm8oD8gJiFh9G46/FsFjEZlIQMC6eA/i/chHbXfGzQdPAKCnw==
+	t=1792480093;
+	b=aurTvDdUvL2OiIHH1PnH4zvseH1TNcZ7qgydVigLaxMI3MHHLFHv7GxCV0iqrHgy0dYE
+	 CA82hmaLkCUaiXTqNUIPoqckChgSOWgK+rFo8KDX4d/JYZjP/OK/uvkwvirvwaCtCJAD9
+	 yWuzxQrRKBAS8P+2aQojcju2rm5Xxx9stepuFIFMEZZfr2AITerwZyG5OCvvPovRTskjB
+	 FPPA2QuZmQ9n/G2zesO804pnLy2fFXMFSBStK0LBSwtO8ckcUcEsZNgEIpiKHODjB1kQ3
+	 R9aCHksgd6FIH+jaSN1ZcOdoJXwgw8UxAIRfjrr+5L6gupf7g5TkpLZ5KYCYS3UCbmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792472081;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=JkXOXEvfHtX9Zapsupn/qH8e4gBWM9E8ckfUyheWLAc=;
-	b=yzymDSDgiw0wIOusSee34zh6i7vX4rK3gsk4Woc1T9vkpY4Zlk1LqMJBwQyfs1Gz4oUl
-	 zy8jQznS0Fgywle/M/jnEkUEEwCB5s+VDyTWeY5JCHGs5v0AaJSKGoEkFnvEIUUn5/Fs/
-	 dUQFF1z4poRZv30LL/ghAu8+QOgR4JisMRWliJTxRQtbTgn28np9Nolm/t7RrQU04IDme
-	 6atei+OQ//bdlETQeMyaBj9SFfHzKNcRjZ7z4n/LGHBSn7rKYPT4sVYIJH2tIb1k/D/di
-	 LCGojkFpTHzEwchLugZbmEZxUzAYdKRhIT+bJJ561BEA0xiOIHctsoAeckh8ZGpn38A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792480093;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=29EpeNaUhdV01XLmHEjK6mOpYkXFrJJzevvEHK6jMow=;
+	b=BB4bnwibw0qhewQHl4ar0M9pzu07cgtuxEdynLv9uebRzvk0jrsAx3vpx8eqb2G5gm1q
+	 VAcAANf+Quf6rja+PRbqwHILPvHkmDoBxtedYnFhH0j7Wv2fzsRs6ZRH4EdZljupBfIjM
+	 PcuJNu9Ceo6SBx+CI/RGmGv2cGOLsAaUvBR0M9YEws9BkZd4WJirPpg9TJlcC92b6wMFI
+	 Gz+CwY8R7iQv5u17n5ll7XYQh1xs67VukGa3fONBt6XYHIUA+KFUbN5AT3E9tUglTkY9Z
+	 ERT19Msyjz1lGtWcTjZsKzxEh6SkU8Fz8cRVqfIGK4G7cNZKw7RojktMckYimlh/O9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=KGJbq1Hr;
-	arc=none smtp.remote-ip=91.218.175.49
-Received: from mta0.migadu.com (out-49.mta0.migadu.com [91.218.175.49])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nRNveU41;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5399B606A31B
-	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 04:54:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5399B606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F12606A31D;
+	Tue, 20 Oct 2026 07:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=KGJbq1Hr
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=CDHFskUYenXW3uRawIkd7r/oclUg5+1SlvXz8IzExBs=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1792472078; v=1; x=1793076878;
- b=KGJbq1HrPHrK3Lksjjic8m6p+f2SZIk9iFug9cn9da3uh+wGvBk1buhBRqYzQba0f6QnDDVm
- yhpVAn5nDMm8m8nykDVNMaMk09GgX5vo5frcCBRA+BkX2E2faBm8WSa0WQWandhBUrfaz8irIOZ
- 8Y/xJsAahJHJcI2GtivUL5sU=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id b3ae0fe22063a2f7;
-	Tue, 20 Oct 2026 04:54:37 +0000
-X-Mizu-Trace-ID: b3ae0fe22063a2f7
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <9b7d022c-dad4-4c91-9a2d-92c5c50caa55@linux.dev>
-Date: Tue, 20 Oct 2026 12:54:33 +0800
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nRNveU41
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E7D1F000C5;
+	Tue, 20 Oct 2026 07:08:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792480092;
+	bh=29EpeNaUhdV01XLmHEjK6mOpYkXFrJJzevvEHK6jMow=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=nRNveU41UU2672XcZwCjKNf7N6fVNGqgoowxVuHPV6CAdmC2nawnOHLdlLgJJcqD6
+	 qI7xR1yUmk5uj0e7OMcgp2JbZm+EtxpLy9XQy4RCkV4yUlKWntgRTrToy+hnO40qEc
+	 KDdiO11krUsJROXDJBlmrFLQcOKjFqFzBJ71HOQecRuaODQT5CVBRpsCqO83n+sjfV
+	 nvM1evlwXuMRfICYjzbI/8BNkXgiRjHAipPGDJPAEOBbhno0UKQ2kgrNxdwwIif0F8
+	 sDTz61ShTEfJnQdrQFCWqeiOFsMGn2FaUNSUxUmP0Fr44q0esJ5f/FEKl7/TDPsN9x
+	 fBXA9uLHzuoIQ==
+Date: Tue, 20 Oct 2026 08:08:08 +0100
+From: Lee Jones <lee@kernel.org>
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, mfd@lists.linux.dev,
+	conor+dt@kernel.org, devicetree@vger.kernel.org, robh@kernel.org
+Subject: Re: [PATCH net-next v25 04/10] mfd: an8855: Add support for Airoha
+ AN8855 Switch
+Message-ID: <20261020070808.GC1206986@google.com>
+References: <20261009161102.38961-1-ansuelsmth@gmail.com>
+ <20261009161102.38961-5-ansuelsmth@gmail.com>
+ <sashiko-outbox-166721@kernel.org>
+ <6acccc4e.4c22a69b.132624.271f@mx.google.com>
+ <20261019164430.GI2663669@google.com>
+ <6ad64981.198a47d7.3d6d5a.6d01@mx.google.com>
+ <20261019165231.GJ2663669@google.com>
+ <6ad64bbc.66e4af69.3b9046.552a@mx.google.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,130 +64,116 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v2 1/6] bpf: Add syscall common attrs support for
- link_create
-To: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-Cc: linux-trace-kernel@vger.kernel.org
-References: <20261019153628.15912-1-leon.hwang@linux.dev>
- <20261019153628.15912-2-leon.hwang@linux.dev>
- <sashiko-outbox-177863@kernel.org>
-Content-Language: en-US
-From: Leon Hwang <leon.hwang@linux.dev>
-In-Reply-To: <sashiko-outbox-177863@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6ad64bbc.66e4af69.3b9046.552a@mx.google.com>
 
-On 20/10/26 00:19, sashiko-bot@kernel.org wrote:
+On Mon, 19 Oct 2026, Christian Marangi wrote:
 
-[...]
+> On Mon, Oct 19, 2026 at 05:52:31PM +0100, Lee Jones wrote:
+> > On Mon, 19 Oct 2026, Christian Marangi wrote:
+> > 
+> > > On Mon, Oct 19, 2026 at 05:44:30PM +0100, Lee Jones wrote:
+> > > > On Mon, 12 Oct 2026, Christian Marangi wrote:
+> > > > 
+> > > > > On Sat, Oct 10, 2026 at 04:11:40PM +0000, sashiko-bot@kernel.org wrote:
+> > > > > > Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> > > > > > - [Medium] mfd: overlapping regmap readable ranges for General Purpose and GPU timers
+> > > > > > - [Low] mfd: structure and variable naming violates MFD API guidelines
+> > > > > > --
+> > > > > > 
+> > > > > > commit 05d4dc95b969f0fcf66d11398aafad3e7eb7c7f1
+> > > > > > Author: Christian Marangi <ansuelsmth@gmail.com>
+> > > > > > 
+> > > > > > mfd: an8855: Add support for Airoha AN8855 Switch
+> > > > > > 
+> > > > > > This commit adds support for the Airoha AN8855 Switch which provides
+> > > > > > a DSA switch and a NVMEM provider. It utilizes the mdio-regmap driver
+> > > > > > and registers a regmap for each internal PHY.
+> > > > > > 
+> > > > > > > diff --git a/drivers/mfd/airoha-an8855.c b/drivers/mfd/airoha-an8855.c
+> > > > > > > new file mode 100644
+> > > > > > > index 0000000000000..a2778511dfefc
+> > > > > > > --- /dev/null
+> > > > > > > +++ b/drivers/mfd/airoha-an8855.c
+> > > > > > [ ... ]
+> > > > > > > +static const struct regmap_range an8855_readable_ranges[] = {
+> > > > > > [ ... ]
+> > > > > > > +	regmap_reg_range(0x10009000, 0x10009fff), /* PDMA */
+> > > > > > > +	regmap_reg_range(0x1000a100, 0x1000a2ff), /* General Purpose Timer */
+> > > > > > > +	regmap_reg_range(0x1000a200, 0x1000a2ff), /* GPU timer */
+> > > > > > 
+> > > > > > [Severity: Medium]
+> > > > > > Is this range definition correct? The General Purpose Timer range
+> > > > > > (0x1000a100 to 0x1000a2ff) fully overlaps with the GPU timer range
+> > > > > > (0x1000a200 to 0x1000a2ff).
+> > > > > > 
+> > > > > > Could this be a typo in the hardware memory map definition? It seems like
+> > > > > > the General Purpose Timer range might have been intended to end at
+> > > > > > 0x1000a1ff to avoid overlapping and potential register access boundary
+> > > > > > issues.
+> > > > > 
+> > > > > I have to double check this from documentation, but if possible I would
+> > > > > like to fix this with a followup patch.
+> > > > >  
+> > > > > > [ ... ]
+> > > > > > > +static int an8855_core_probe(struct mdio_device *mdiodev)
+> > > > > > > +{
+> > > > > > > +	struct an8855_phy_bus phy_bus_infos[AN8855_MAX_PHY_PORT] = { };
+> > > > > > > +	struct device *dev = &mdiodev->dev;
+> > > > > > > +	struct an8855_core *priv;
+> > > > > > > +	struct regmap *regmap;
+> > > > > > > +	int num_phys;
+> > > > > > > +	int i, ret;
+> > > > > > > +
+> > > > > > > +	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+> > > > > > 
+> > > > > > [Severity: Low]
+> > > > > > This isn't a bug, but does this variable and structure naming align with MFD
+> > > > > > subsystem conventions?
+> > > > > > 
+> > > > > > The MFD guidelines suggest avoiding generic variable names like priv, and
+> > > > > > instead recommend using ddata for the instance variable. Also, should the
+> > > > > > struct name itself avoid hardcoding implementation details like core?
+> > > > > > Naming it something closer to struct an8855 might better adhere to the
+> > > > > > subsystem guidelines.
+> > > > > > 
+> > > > > 
+> > > > > I already updated the struct, is it needed to also update the local
+> > > > > variables?
+> > > > 
+> > > > Ah, I was just about to apply this!
+> > > > 
+> > > > This would be preferred:
+> > > > 
+> > > >   struct an8855 *ddata;
+> > > >
+> > > 
+> > > Ahhhhhh! You got me!
+> > > 
+> > > Do you think there might be a faster method to submit this so I can quickly
+> > > rename the variable and you can pick it? 
+> > 
+> > Is everything else ready to go?
+> > 
+> > BTW, there is no rush on this - I'm done for v7.4-rc1.
+> > 
+> 
+> Honestly it's really to slim down this series and the fact that it's
+> multi-subystem related.
+> 
+> The net part is done, I also asnwered the comments from sashiko but still
+> waiting a slot for maintainers to check.
+> 
+> I understand there is no rush but it's also true that it's getting
+> problematic to carry this part in this series (at least for me)
+> 
+> So if we can already include the mfd driver and related DT it might be
+> ideal.
 
->>  
->>  	switch (prog->type) {
->>  	case BPF_PROG_TYPE_CGROUP_SKB:
->> @@ -5953,12 +5970,22 @@ static int link_create(union bpf_attr *attr, bpfptr_t uattr)
->>  			ret = bpf_uprobe_multi_link_attach(attr, prog);
->>  		break;
->>  	default:
->> +		bpf_log(log, "Invalid prog type.\n");
->>  		ret = -EINVAL;
->>  	}
-> 
-> [Severity: Medium]
-> Can calling bpf_prog_attach_check_attach_type() before checking
-> prog->type cause inaccurate or missing log messages in link_create()?
-> 
-> First, in kernel/bpf/syscall.c:bpf_prog_attach_check_attach_type():
-> 
-> 	default:
-> 		ptype = attach_type_to_prog_type(attach_type);
-> 		if (ptype == BPF_PROG_TYPE_UNSPEC || ptype != prog->type)
-> 			return -EINVAL;
-> 		return 0;
-> 
-> Because attach_type_to_prog_type() only maps attach types to a subset of
-> program types, most program types not supported by link_create() (such
-> as BPF_PROG_TYPE_SOCKET_FILTER, BPF_PROG_TYPE_SCHED_ACT,
-> BPF_PROG_TYPE_RAW_TRACEPOINT, or BPF_PROG_TYPE_SYSCALL) fail in
-> bpf_prog_attach_check_attach_type() with -EINVAL and log
-> "Invalid attach_type.\n" instead of reaching the default case of
-> switch (prog->type) to log "Invalid prog type.\n".
+See my most recent reply to Jakub.
 
-I think either "Invalid attach_type.\n" or "Invalid prog type.\n" is not
-accurate for this case.
+Fix this small thing, then send it as a RESEND and I'll queue it for v7.5.
 
-The log here is not required to accurately describe the reason. Instead,
-the log tells users something wrong at the position.
-
-> 
-> Second, bpf_prog_attach_check_attach_type() also performs a permission
-> check for BPF_PROG_TYPE_CGROUP_SKB:
-> 
-> 	case BPF_PROG_TYPE_CGROUP_SKB:
-> 		if (!bpf_token_capable(prog->aux->token, CAP_NET_ADMIN))
-> 			/* cg-skb progs can be loaded by unpriv user.
-> 			 * check permissions at attach time.
-> 			 */
-> 			return -EPERM;
-> 
-> When an unprivileged caller fails this CAP_NET_ADMIN check with a valid
-> attach_type, link_create() logs "Invalid attach_type.\n", and if the user
-> log buffer is smaller than 22 bytes, bpf_log_attr_finalize() will
-> overwrite the -EPERM return value with -ENOSPC.
-
-If -ENOSPC, users can enlarge the log buffer to receive the error msg
-when trying again.
-
-> 
-> Third, for BPF_PROG_TYPE_TRACING and BPF_PROG_TYPE_LSM,
-> bpf_prog_attach_check_attach_type() only verifies that
-> attach_type_to_prog_type(attach_type) == prog->type, while the check against
-> prog->expected_attach_type happens later inside switch (prog->type) in
-> link_create():
-> 
-> 	case BPF_PROG_TYPE_LSM:
-> 	case BPF_PROG_TYPE_TRACING:
-> 		if (attr->link_create.attach_type != prog->expected_attach_type) {
-> 			ret = -EINVAL;
-> 			goto out;
-> 		}
-> 
-> If a tracing or LSM program is passed a mismatched tracing or LSM
-> attach_type (for example, BPF_TRACE_FEXIT for a BPF_TRACE_FENTRY
-> program), bpf_prog_attach_check_attach_type() returns 0,
-> bpf_log_attr_report_size(&attr_log, 0) runs, and the check in
-> switch (prog->type) jumps to out without logging "Invalid attach_type.\n".
-
-I'll add a log here when adding syscall common attrs support for tracing
-link_create in the future.
-
-> 
->>  
->>  out:
->> -	if (ret < 0)
->> +	if (ret < 0) {
->> +		int err = bpf_log_attr_finalize(&attr_log, log);
->> +
->> +		ret = err ? err : ret;
->> +	}
->> +
->> +put_prog:
->> +	if (ret < 0 && prog)
->>  		bpf_prog_put(prog);
->> +
->> +	kfree(log);
->>  	return ret;
->>  }
-> 
-> [ ... ]
-> 
-> 完美 — wait no, I shouldn't write anything else! Let me make sure I didn't write anything extra at the end.
-> Wait: I just wrote "完美 — wait no..." in the response stream?!
-> Oh! No, I am in the response stream! Let me check if I can avoid that. Too late, it's already in the output stream!}] Let me stop immediately.
-> 
-
-Perfect  ;-P
-
-Thanks,
-Leon
-
+-- 
+Lee Jones
