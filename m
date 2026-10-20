@@ -1,68 +1,77 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.183.30.70
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792460068;
-	b=pTIxo7fV/vk3eqsJkMcMnR2XaoIXl5iVmeL9h2dbesiPglyzSgN+W6RRQ5Uu/z8Mad+S
-	 p4HyBRtP97sm83RDtWDYpwc7wBCTedpFr6bgTqX0JEG5Ye2wjfXJZtL7v46SowMuDKAfK
-	 w23JpANHH/gXlVrI0cWTH4z1DNpczydchHgtSGNg4thjj5sgXwqbg0FOl0r2c/0DpOq56
-	 aC4faBY7VyErzZgyN33TCwuah6kVfFPIniVpTHienUl6uO+1yi7le2ExB2MoGkKc+AkIj
-	 ENTvA/7r5QU0aumrY/9s1CnKhKdDvXkv0VuNzzn5UvzZSE9Ma9t3ipl/Wg1Si2HzUUQ==
+	t=1792460270;
+	b=HT7/pfeEroAYTWTkNz0cAYTNvMjPXD2NQzN6LRMxMy9X93I2nHKnDcSvTpVLjM5sibQr
+	 xYzGeF2MIfWOkwIkmodhXz2R6+OKRya3C6AyNa2W/eTlUwY0JDDI0BqPnvX9CTL0XBY2z
+	 rYnqyFZfIifBS/mv5CsC0t4RvGDBMoIZVzpHjS/du01iXo6fwRM3wYRbTMnLZPNLkw7CN
+	 6wdvUhTRqMfEjsQQDLJO88NWI1ozIa3q/MSIxeC4lBm6Oelg3m2MEPpa69DS96CLU4kO/
+	 G0kXqxJh1pgk/fWWWX7suqaBT7Jw/GBv/Ej/9t6D5abZ6s6JY+k0B9IwzSdxxr1kBsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792460068;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:References:From:Content-Language:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=eR/cOCrwQmS0N6R3T5GOdfznB2yvVxMXGDleK4MrTAQ=;
-	b=js1l4aNMRcHqD1c4dqQvOKKB2Zzl1bcicAMLRKatIVpCcpA17qrBpl1Xk/Rq7P3fx6T5
-	 XplOqsTj9JYhFviCzHCOP/ESX4xbTUQgaSrUhvcTRbThAZnrYbfegOFuF86bAbYXh9VnR
-	 hRgHitnfiC8DHj2wu6OO0Sggq8IYD4w7kg181GBhQDhtxLQ7TZy440WEa4LeK7MklPMQT
-	 Oqdd9n3oGY6QIy228WXcbeyoEF6VDsiSnMarVmrjlYyLJUX9mnBi6xmJCEQTZVVqgOSCB
-	 v8wVJEggYGu3ehkx261oJiUu20yeu+1PUMzffUfdGhyzOtQbz2iYtlPpkrh9ZekEICw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792460270;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:
+	 Cc:References:Content-Language:From:Organization:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Sony-BusinessRelay-GUID:
+	 X-Proofpoint-Virus-Version:X-Sony-EdgeRelay-GUID:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Info:
+	 X-Authority-Analysis:X-Proofpoint-GUID:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Sony-Outbound-GUID:
+	 X-Proofpoint-Virus-Version;
+	bh=5Wlhf+2RdwZwj9+OlXjfXJb1V6sCsvah1rFK3bKNefg=;
+	b=ksYoWKKfbUSYtTWjHHzOWNVt/qDlDvuaU67Q0UxfNKr5ny+ly+xYHFh/9dUiqc//74jv
+	 G9F2LFYIUOyKUGXVC2gw1rFewUM5QkCemfQAYkRpK6rB5rtw2Dq/PRBY+WtZWABsbv5Q5
+	 uuBPccwFS3grd6U8RVLwPlcIq19sOaHnWu2k2BKUA16dBYvvQfyXTjy4jP8paSeyjSlUt
+	 vspncJ0xF/lr0y/a1lfkwtVVgM6NozCsOe2KmHohyLjwapK5Eo0ah2TbGjjtcOL4EoR5K
+	 2gDgXpApDQhfWEZmqujIOWQha+wozn1x+dzugIxQ6Kz7T+jIsXECKhNLBXqrDXaV1RQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=linux.intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b="aR1/T6uN";
-	arc=none smtp.remote-ip=198.175.65.12
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=sony.com;
+	spf=pass smtp.mailfrom=sony.com;
+	dkim=pass header.d=sony.com header.i=@sony.com header.a=rsa-sha256 header.s=p1 header.b=iuh+m4C7;
+	arc=none smtp.remote-ip=185.183.30.70
+Received: from mx08-001d1705.pphosted.com (mx08-001d1705.pphosted.com [185.183.30.70])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6512A606A32C
-	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 01:34:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6512A606A32C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99074606A319;
+	Tue, 20 Oct 2026 01:37:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 99074606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sony.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sony.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=aR1/T6uN
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792460066; x=1823996066;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=WYkfFJ8dYFnxT/zzajQu7+TW4tdrg5h/NwL5ms69pVc=;
-  b=aR1/T6uNcrDdzRGsWvixdvFr0Kh+UGdVb8FJ+Y2nIr3LP7WhUsQg5A98
-   h3fmrEGD/dtxKPdh/fVA8VfHEGjUGNggUJU0JODMJr623AvhDayiHV81i
-   Vb6yZUHARRP1UStzlo+gEifZePUdKTvAKNpOzIOhCLT7OHbrg2m2yMmip
-   ktzyOn6F4dkmNWMKFvvBTSe2WQlsU4r0S4/8klZ9oSDD9fRGhzw9gblG8
-   ZhWqJETOjD0yeA6OptNV2n3TqJ8wGLYsDYvHBkdR3JXOyw0jA6YKOtj7P
-   17iISQ9Q6jICmt1cSTh1O+Mj6pj8L8MgWXd6Z8qAfnloenZpMPNnOIvzx
-   w==;
-X-CSE-ConnectionGUID: XPJIdgIrQse5qO7ASlbRqQ==
-X-CSE-MsgGUID: +Q+DneXPSVKj8geMWFdlOA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="1034545"
-X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="1034545"
-Received: from fmviesa011.fm.intel.com ([10.60.135.151])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 18:34:26 -0700
-X-CSE-ConnectionGUID: HRWKmMI4QGKJevhh5VohHQ==
-X-CSE-MsgGUID: UfEstqP8TuuYGdyrwpu/kA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="4504078"
-Received: from unknown (HELO [10.238.0.148]) ([10.238.0.148])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 18:34:25 -0700
-Message-ID: <e8943657-10e6-4f95-a143-e6867a39343f@linux.intel.com>
-Date: Tue, 20 Oct 2026 09:34:22 +0800
+	dkim=pass (2048-bit key, unprotected) header.d=sony.com header.i=@sony.com header.a=rsa-sha256 header.s=p1 header.b=iuh+m4C7
+Received: from pps.filterd (m0209323.ppops.net [127.0.0.1])
+	by mx08-001d1705.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69K0uE7M3979141;
+	Tue, 20 Oct 2026 01:37:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sony.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=p1; bh=5Wlhf+2
+	RdwZwj9+OlXjfXJb1V6sCsvah1rFK3bKNefg=; b=iuh+m4C7zlVgQ03Clz1Yogp
+	I4NnyMgpgj5tZUdXsQqO4yAdN8ZsABeLH/ZSnXtZPwMfEZciqGNFBi4GyGeuKbGh
+	+XlYtZ6xQM9g4/t/V2aMuydARxlodWirFjydpYwrRX8LwuJ6LV5e42085eo/kh0T
+	ULqlen4LwKZde6VboNxOu7zv0t0Zj58IRq+jWsrv9hzyhDrQLc3HVr6wmJIlkHGB
+	CK5YqhUHvI5AcXvN+XHvwTZRgE0ocDYuxxHvI2o3ANgaI1+uHSeB/JN9XU0O9Qi8
+	Z/Q3LQ0h1gjeloZfKkxfZ+v2/0ttTnf2NPJdcqlrFD9nlN43i2Do3W1Tz22qTAA=
+	=
+Received: from usculxsnt03v.am.sony.com ([160.33.194.235])
+	by mx08-001d1705.pphosted.com (PPS) with ESMTPS id 4hdw4x03w7-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Tue, 20 Oct 2026 01:37:27 +0000 (GMT)
+Received: from pps.filterd (usculxsnt03v.am.sony.com [127.0.0.1])
+	by usculxsnt03v.am.sony.com (8.18.1.11/8.18.1.11) with ESMTP id 69K0sHmu4156036;
+	Mon, 19 Oct 2026 18:37:26 -0700
+Received: from sgppsba01v.s.gdce.sony.com.sg ([146.215.113.218])
+	by usculxsnt03v.am.sony.com (PPS) with ESMTPS id 4hctk844rw-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Mon, 19 Oct 2026 18:37:26 -0700 (PDT)
+Received: from pps.filterd (SGPPSBA01v.s.gdce.sony.com.sg [127.0.0.1])
+	by SGPPSBA01v.s.gdce.sony.com.sg (8.18.1.11/8.18.1.11) with ESMTP id 69K0tLQW990024;
+	Tue, 20 Oct 2026 01:37:23 GMT
+Received: from [43.21.135.184] ([146.215.113.251])
+	by SGPPSBA01v.s.gdce.sony.com.sg (PPS) with ESMTPS id 4hc4gg1tjt-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT);
+	Tue, 20 Oct 2026 01:37:23 +0000 (GMT)
+Message-ID: <a63dfe3d-9178-43a6-a9fb-ae82c86a047a@sony.com>
+Date: Tue, 20 Oct 2026 10:37:22 +0900
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -73,114 +82,114 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 5/5] KVM: TDX: Validate userspace CPUID input for
- KVM_TDX_INIT_VM
-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-References: <20261016091422.3182216-1-binbin.wu@linux.intel.com>
- <20261016091422.3182216-6-binbin.wu@linux.intel.com>
- <sashiko-outbox-174077@kernel.org>
-From: Binbin Wu <binbin.wu@linux.intel.com>
+Subject: Re: [PATCH v5 1/2] media: dt-bindings: imx908: Add Sony IMX908 sensor
+To: Conor Dooley <conor@kernel.org>, sashiko-reviews@lists.linux.dev
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+        media-ci@linuxtv.org
+References: <20261019014720.2635-1-lachlan.michael@sony.com>
+ <20261019014720.2635-2-lachlan.michael@sony.com>
+ <sashiko-outbox-176511@kernel.org> <20261019-cause-decline-feb5a68f0d06@spud>
 Content-Language: en-US
-In-Reply-To: <sashiko-outbox-174077@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Lachlan Michael <Lachlan.Michael@sony.com>
+Organization: Sony Semiconductor Solutions Corporation
+In-Reply-To: <20261019-cause-decline-feb5a68f0d06@spud>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Sony-BusinessRelay-GUID: 9_K4QSbeUaHoBWPa5lZ4Jq4isaSR7w-_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-20_01,2026-10-19_02,2025-10-01_01
+X-Sony-EdgeRelay-GUID: Le1Dns-u0jodrHXVoQRr0RB86GejOWod
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-20_01,2026-10-19_02,2025-10-01_01
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIwMDAwNSBTYWx0ZWRfX4t1WMl6mqfmf
+ yeCyNGH6ZGFbcRodi/um2Yim3EFeprqyFy5nH8EcGJUcqk8EYUpjICSodhwnN93NxUUtoahOsX/
+ cab81mFcxODEPMvEX2XzEb6lTpUW8zKAmUSaQpoqz0zXLDPCGIGo
+X-Authority-Analysis: v=2.4 cv=Vbdir1p9 c=1 sm=1 tr=0 ts=6ad6c5d7 cx=c_pps
+ a=Ycsf2/9e4zkPkE23zi987Q==:117 a=Ycsf2/9e4zkPkE23zi987Q==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KAb5x4SsHD3PzxGk7EmX:22 a=dNm3KQjjYUbhztXjLiFs:22 a=c92rfblmAAAA:8
+ a=z6gsHLkEAAAA:8 a=VwQbUJbxAAAA:8 a=ALUUi9MSbu_VYicB2QEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-GUID: PrJmEJ2YR6oA-aNLmOv79CT9K6g4PpMf
+X-Proofpoint-ORIG-GUID: PrJmEJ2YR6oA-aNLmOv79CT9K6g4PpMf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIwMDAwNSBTYWx0ZWRfX0J4F6Xfw8rk6
+ vUuS5Ymq8fl5xemFtpunr9P0REIKR2eAd+rDDlUw40FBa+a5rWF7ryya9y8jR7ZNqXGYNv5ruIM
+ ktKwtCyGXqiKNtsdGrWzjUbYuIHKPJ6OMCO+KW/Od2QVSxcj0sxbtm1SG3DgiNF4cZkesJPKXLU
+ rALb4ap156HwmZhFjK4Q4ficVAXlOhq5CJCgneZv6IvXE0dV6cewP+0iuwQDbAA3XGvxfC6d+H1
+ 5WuWiNSohYWY2fvkRt/5hTi/+Y+Id8qi7s6pdAn+k3QBUeECwSbIG76zhHnC7W+ArLf0kSS28t8
+ ktk6J3ICiUwjhV3UtlVsp2/zZtq8CPytpjqO7dHb0QOB8rdDvTEIzhabx7JEINqVBOcS6N12Z5m
+ REAjUcxjcTdbZOEVL9mxGe9rb0EAVMX+7lWiP3sYlVBht16SghLVRZJqGzpEK7SoKUCN/XAcE99
+ ZKT5WEJ1pS0IqiYcWWw==
+X-Sony-Outbound-GUID: PrJmEJ2YR6oA-aNLmOv79CT9K6g4PpMf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-20_01,2026-10-19_02,2025-10-01_01
 
-On 10/16/2026 5:24 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] kvm: KVM_TDX_INIT_VM rejects CPUID.0x7.0.EAX breaking guest subleaf enumeration
-> - [High] mm: heap buffer overflow in setup_tdparams_cpuids() via unbounded td_conf->num_cpuid_config
-> --
+On 10/20/2026 3:21 AM, Conor Dooley wrote:
+> On Mon, Oct 19, 2026 at 01:53:48AM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [Medium] dt-bindings: media: imx908: additionalProperties: false blocks allOf schema
+>> --
+>>
+>> commit ff8a8181af73cacaf3f8a03e0acde33eb53bb18b
+>> Author: Lachlan Michael <lachlan.michael@sony.com>
+>>
+>> media: dt-bindings: imx908: Add Sony IMX908 sensor
+>>
+>> This commit adds device tree bindings and a MAINTAINERS entry for the Sony
+>> IMX908 8.39 megapixel MIPI CSI-2 CMOS image sensor.
+>>
+>>> diff --git a/Documentation/devicetree/bindings/media/i2c/sony,imx908.yaml b/Documentation/devicetree/bindings/media/i2c/sony,imx908.yaml
+>>> new file mode 100644
+>>> index 0000000000000..828db1175e2f5
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/media/i2c/sony,imx908.yaml
+>>> @@ -0,0 +1,108 @@
+>> [ ... ]
+>>> +allOf:
+>>> +  - $ref: /schemas/media/video-interface-devices.yaml#
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    const: sony,imx908
+>> [ ... ]
+>>> +required:
+>>> +  - compatible
+>>> +  - reg
+>>> +  - clocks
+>>> +  - dvdd-supply
+>>> +  - ovdd-supply
+>>> +  - avdd-supply
+>>> +  - port
+>>> +
+>>> +additionalProperties: false
+>>
+>> [Severity: Medium]
+>> Should this be unevaluatedProperties: false instead of
+>> additionalProperties: false?
 > 
-> commit 8ec54e6006917e96837000de9e4002c7f4499444
-> Author: Binbin Wu <binbin.wu@linux.intel.com>
-> 
-> KVM: TDX: Validate userspace CPUID input for KVM_TDX_INIT_VM
-> 
-> This commit validates the CPUID configuration provided by userspace
-> through KVM_TDX_INIT_VM against KVM's TDX allowlist. It drops the
-> hardcoded denylist-based check in favor of a strict allowlist.
-> 
->> diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
->> index e53f1e98bb04a..80c6519c13ff5 100644
->> --- a/arch/x86/kvm/vmx/tdx.c
->> +++ b/arch/x86/kvm/vmx/tdx.c
-> [ ... ]
->> @@ -2567,6 +2548,14 @@ static int setup_tdparams_eptp_controls(struct kvm_cpuid2 *cpuid,
->>  	return 0;
->>  }
->>  
->> +static bool tdx_has_unsupported_cpuid_cfg_bit(const struct kvm_cpuid_entry2 *e, u32 index)
->> +{
->> +	return (e->eax & ~tdx_get_cpuid_cfg_mask(e->function, index, CPUID_EAX)) ||
->> +	       (e->ebx & ~tdx_get_cpuid_cfg_mask(e->function, index, CPUID_EBX)) ||
->> +	       (e->ecx & ~tdx_get_cpuid_cfg_mask(e->function, index, CPUID_ECX)) ||
->> +	       (e->edx & ~tdx_get_cpuid_cfg_mask(e->function, index, CPUID_EDX));
->> +}
-> 
-> [Severity: High]
-> Does this strict allowlist check inadvertently break guest subleaf enumeration
-> by rejecting valid KVM_TDX_INIT_VM inputs?
-> 
-> CPUID leaf 0x7 subleaf 0 EAX contains the maximum supported subleaf index,
-> which is non-feature information. However, tdx_get_cpuid_cfg_non_feature_mask()
-> completely omits leaf 0x7, and reverse_cpuid does not track 0x7.0.EAX as a
-> feature word.
-> 
-> Because tdx_get_cpuid_cfg_mask(0x7, 0, CPUID_EAX) returns 0, this new check
-> will reject any non-zero value for CPUID.0x7.0.EAX. This strictly requires
-> userspace to provide 0, effectively preventing exposure of subleaves 1+
-> (such as for AMX or AVX-VNNI) and breaking valid VM initialization requests.
+> Only if the properties outside of what's already explicitly used in the
+> binding are possible.
 
-This is false positive.
+IMX908 modules (i.e. IMX908 image sensor + board, made by various 
+companies) could specify rotation, orientation etc. so I think the 
+comment is valid.
 
-CPUID.0.EAX is not directly configurable in TDX.
-Userspace is not allowed to provide non-zero value for it.
+I'll change as suggested:
 
-> 
->>  static int setup_tdparams_cpuids(struct kvm_cpuid2 *cpuid,
->>  				 struct td_params *td_params)
->>  {
-> [ ... ]
->> @@ -2596,7 +2585,7 @@ static int setup_tdparams_cpuids(struct kvm_cpuid2 *cpuid,
->>  		 * not the index of the userspace entry, which may differ if
->>  		 * KVM_CPUID_FLAG_SIGNIFCANT_INDEX isn't set.
->>  		 */
->> -		if (tdx_unsupported_cpuid(entry, tmp.index))
->> +		if (tdx_has_unsupported_cpuid_cfg_bit(entry, tmp.index))
->>  			return -EINVAL;
->>  
->>  		copy_cnt++;
-> 
-> [Severity: High]
-> Can the loop enclosing this code write past the end of the td_params heap
-> allocation?
-> 
-> td_conf->num_cpuid_config is read from the TDX module and bounded to 128
-> by KVM in get_tdx_sys_info_td_conf():
-> 
-> 	if (sysinfo_td_conf->num_cpuid_config > ARRAY_SIZE(sysinfo_td_conf->cpuid_config_leaves))
-> 		return -EINVAL;
-> 
-> However, td_params->cpuid_values is an array inside a union with
-> u8 reserved3[768], which limits it to 48 tdx_cpuid_value structures:
-> 
-> arch/x86/kvm/vmx/tdx_arch.h:struct td_params {
->     ...
->     union {
->         DECLARE_FLEX_ARRAY(struct tdx_cpuid_value, cpuid_values);
->         u8 reserved3[768];
->     };
-> } __packed __aligned(1024);
-> 
-> td_params itself is dynamically allocated as a fixed 1024-byte object via
-> kzalloc_obj(struct td_params) in setup_tdparams().
-> 
-> If the hardware returns a num_cpuid_config value greater than 48, the loop
-> in setup_tdparams_cpuids() will exceed the 48-element capacity when assigning
-> value = &td_params->cpuid_values[i] just below this snippet, causing a heap
-> buffer overflow.
-> 
+-additionalProperties: false
++unevaluatedProperties: false
 
-Here is the to reply to the same issue reported in an earlier version:
-https://lore.kernel.org/kvm/c31eb9c5-6cae-488a-bcaf-26160c282e0b@linux.intel.com/
+>> Because the schema references /schemas/media/video-interface-devices.yaml#
+>> in allOf without listing common properties such as rotation, orientation,
+>> lens-focus, or flash-leds under the local properties block, using
+>> additionalProperties: false will cause dtbs_check to reject any
+>> sony,imx908 node that uses those inherited properties.
+>>
+>> [ ... ]
+>>
+>> -- 
+>> Sashiko AI review · https://sashiko.dev/#/patchset/20261019014720.2635-1-lachlan.michael@sony.com?part=1
 
