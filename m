@@ -1,77 +1,46 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.183.30.70
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=218.76.62.146
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792460270;
-	b=HT7/pfeEroAYTWTkNz0cAYTNvMjPXD2NQzN6LRMxMy9X93I2nHKnDcSvTpVLjM5sibQr
-	 xYzGeF2MIfWOkwIkmodhXz2R6+OKRya3C6AyNa2W/eTlUwY0JDDI0BqPnvX9CTL0XBY2z
-	 rYnqyFZfIifBS/mv5CsC0t4RvGDBMoIZVzpHjS/du01iXo6fwRM3wYRbTMnLZPNLkw7CN
-	 6wdvUhTRqMfEjsQQDLJO88NWI1ozIa3q/MSIxeC4lBm6Oelg3m2MEPpa69DS96CLU4kO/
-	 G0kXqxJh1pgk/fWWWX7suqaBT7Jw/GBv/Ej/9t6D5abZ6s6JY+k0B9IwzSdxxr1kBsg==
+	t=1792460652;
+	b=zhh7l5xr/BiIolVih1FpUPABXnihvBg9jwaHVvSs7KaJUa3IdizrbeiLBg0MXSKVl6A0
+	 KHwKP2MxAOjWpIsHCULw5KIm+jvKCJ0KxOHt2/m5Yoqmn/VQT5e6FS2dWJwaTKpPiWfuo
+	 B02t2fH0gZauX7+A0YjTF9o9W4IWZh61qVYdzBmmtdBxOLpHkv01ba2Sq7DLEdeIlykuC
+	 hxxUIDqb58pAXmpIndciimjCV1UmNDpNP6SKAEdAmqvVScH7HUj/TTMXBOI9Z59rBAN6u
+	 Q8awjky4rzYNnE1F2gz0jpRFtzFEM3DqdRUWk/3a9x6zdoZSNUKKcBCMPU3+8vBAfFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792460270;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
-	 Received:Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:
-	 Cc:References:Content-Language:From:Organization:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Sony-BusinessRelay-GUID:
-	 X-Proofpoint-Virus-Version:X-Sony-EdgeRelay-GUID:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Info:
-	 X-Authority-Analysis:X-Proofpoint-GUID:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-Spam-Details-Enc:X-Sony-Outbound-GUID:
-	 X-Proofpoint-Virus-Version;
-	bh=5Wlhf+2RdwZwj9+OlXjfXJb1V6sCsvah1rFK3bKNefg=;
-	b=ksYoWKKfbUSYtTWjHHzOWNVt/qDlDvuaU67Q0UxfNKr5ny+ly+xYHFh/9dUiqc//74jv
-	 G9F2LFYIUOyKUGXVC2gw1rFewUM5QkCemfQAYkRpK6rB5rtw2Dq/PRBY+WtZWABsbv5Q5
-	 uuBPccwFS3grd6U8RVLwPlcIq19sOaHnWu2k2BKUA16dBYvvQfyXTjy4jP8paSeyjSlUt
-	 vspncJ0xF/lr0y/a1lfkwtVVgM6NozCsOe2KmHohyLjwapK5Eo0ah2TbGjjtcOL4EoR5K
-	 2gDgXpApDQhfWEZmqujIOWQha+wozn1x+dzugIxQ6Kz7T+jIsXECKhNLBXqrDXaV1RQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792460652;
+	h=DMARC-Filter:DKIM-Signature:Received:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:References:
+	 Date:Message-Id:X-Mailer:X-Developer-Signature:X-Developer-Key:
+	 X-CM-TRANSID:X-Coremail-Antispam:X-CM-SenderInfo;
+	bh=xgIIXHNklelq3OKVdtM53HYpQFcgP6CuMT6ZV0HhFpE=;
+	b=s6A+P2hWe7E7Iy4ZAVp0xCVdGDhPKnAiTZUgGKxbiq+0JcKzi6Q2SYk6hT5TA5fu6onU
+	 UOzwIAfm4VjRJSBoc7lPGcRFr98Zmwnxk395LW1UFx+LN5ACNkoncRINUTCbfLcgBB3kS
+	 Bd8EMSpE60Zqy4UXMblRCtD4F5wvALJrSHebfLO+SdvH4PkYqAOvBX8B0ic6UgloFy+UJ
+	 IUHBG1I6YxLnF0UiGzd+CN6wf5N1jf1l/7LG/PnEj4dwJgCfR/batFx+z736QmZkIEWzp
+	 d70rlEHRNnz6GVl/pQouv4UxNPRbtlO0xR4vJu+kwqC3kxraLCHbawjb7f9GmkOegRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=sony.com;
-	spf=pass smtp.mailfrom=sony.com;
-	dkim=pass header.d=sony.com header.i=@sony.com header.a=rsa-sha256 header.s=p1 header.b=iuh+m4C7;
-	arc=none smtp.remote-ip=185.183.30.70
-Received: from mx08-001d1705.pphosted.com (mx08-001d1705.pphosted.com [185.183.30.70])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99074606A319;
-	Tue, 20 Oct 2026 01:37:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 99074606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sony.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sony.com
+	dmarc=pass header.from=ultrarisc.com;
+	spf=pass smtp.mailfrom=ultrarisc.com;
+	dkim=pass header.d=ultrarisc.com header.i=@ultrarisc.com header.a=rsa-sha256 header.s=dkim header.b=LM9XveUK;
+	arc=none smtp.remote-ip=218.76.62.146
+Received: from ultrarisc.com (unknown [218.76.62.146])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97207606A31A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 01:44:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 97207606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ultrarisc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=sony.com header.i=@sony.com header.a=rsa-sha256 header.s=p1 header.b=iuh+m4C7
-Received: from pps.filterd (m0209323.ppops.net [127.0.0.1])
-	by mx08-001d1705.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69K0uE7M3979141;
-	Tue, 20 Oct 2026 01:37:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sony.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=p1; bh=5Wlhf+2
-	RdwZwj9+OlXjfXJb1V6sCsvah1rFK3bKNefg=; b=iuh+m4C7zlVgQ03Clz1Yogp
-	I4NnyMgpgj5tZUdXsQqO4yAdN8ZsABeLH/ZSnXtZPwMfEZciqGNFBi4GyGeuKbGh
-	+XlYtZ6xQM9g4/t/V2aMuydARxlodWirFjydpYwrRX8LwuJ6LV5e42085eo/kh0T
-	ULqlen4LwKZde6VboNxOu7zv0t0Zj58IRq+jWsrv9hzyhDrQLc3HVr6wmJIlkHGB
-	CK5YqhUHvI5AcXvN+XHvwTZRgE0ocDYuxxHvI2o3ANgaI1+uHSeB/JN9XU0O9Qi8
-	Z/Q3LQ0h1gjeloZfKkxfZ+v2/0ttTnf2NPJdcqlrFD9nlN43i2Do3W1Tz22qTAA=
-	=
-Received: from usculxsnt03v.am.sony.com ([160.33.194.235])
-	by mx08-001d1705.pphosted.com (PPS) with ESMTPS id 4hdw4x03w7-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Tue, 20 Oct 2026 01:37:27 +0000 (GMT)
-Received: from pps.filterd (usculxsnt03v.am.sony.com [127.0.0.1])
-	by usculxsnt03v.am.sony.com (8.18.1.11/8.18.1.11) with ESMTP id 69K0sHmu4156036;
-	Mon, 19 Oct 2026 18:37:26 -0700
-Received: from sgppsba01v.s.gdce.sony.com.sg ([146.215.113.218])
-	by usculxsnt03v.am.sony.com (PPS) with ESMTPS id 4hctk844rw-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Mon, 19 Oct 2026 18:37:26 -0700 (PDT)
-Received: from pps.filterd (SGPPSBA01v.s.gdce.sony.com.sg [127.0.0.1])
-	by SGPPSBA01v.s.gdce.sony.com.sg (8.18.1.11/8.18.1.11) with ESMTP id 69K0tLQW990024;
-	Tue, 20 Oct 2026 01:37:23 GMT
-Received: from [43.21.135.184] ([146.215.113.251])
-	by SGPPSBA01v.s.gdce.sony.com.sg (PPS) with ESMTPS id 4hc4gg1tjt-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT);
-	Tue, 20 Oct 2026 01:37:23 +0000 (GMT)
-Message-ID: <a63dfe3d-9178-43a6-a9fb-ae82c86a047a@sony.com>
-Date: Tue, 20 Oct 2026 10:37:22 +0900
+	dkim=pass (1024-bit key, unprotected) header.d=ultrarisc.com header.i=@ultrarisc.com header.a=rsa-sha256 header.s=dkim header.b=LM9XveUK
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
+	References:Date:Message-Id; bh=xgIIXHNklelq3OKVdtM53HYpQFcgP6CuM
+	T6ZV0HhFpE=; b=LM9XveUKKDI/xSvh11XN908U3TT1z+S4zPhlww1iu70ZrDblG
+	/8PJhAGJyMu1OTnMoyP9neLL9omNHCtJqGqpsGNs+v4dy3iqybHCOVdroNopVUSB
+	aDfK9CXbBpdp2s1qTzBT9XoJ1iEO/VZlcQRjxz1xsw7TT0BMM5mBPICkLk=
+Received: from [127.0.0.1] (unknown [192.168.100.1])
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwCnYwVfx9ZqPnoCAA--.763S2;
+	Tue, 20 Oct 2026 09:43:59 +0800 (CST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -81,115 +50,89 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] media: dt-bindings: imx908: Add Sony IMX908 sensor
-To: Conor Dooley <conor@kernel.org>, sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
-        media-ci@linuxtv.org
-References: <20261019014720.2635-1-lachlan.michael@sony.com>
- <20261019014720.2635-2-lachlan.michael@sony.com>
- <sashiko-outbox-176511@kernel.org> <20261019-cause-decline-feb5a68f0d06@spud>
-Content-Language: en-US
-From: Lachlan Michael <Lachlan.Michael@sony.com>
-Organization: Sony Semiconductor Solutions Corporation
-In-Reply-To: <20261019-cause-decline-feb5a68f0d06@spud>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Sony-BusinessRelay-GUID: 9_K4QSbeUaHoBWPa5lZ4Jq4isaSR7w-_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-20_01,2026-10-19_02,2025-10-01_01
-X-Sony-EdgeRelay-GUID: Le1Dns-u0jodrHXVoQRr0RB86GejOWod
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-20_01,2026-10-19_02,2025-10-01_01
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIwMDAwNSBTYWx0ZWRfX4t1WMl6mqfmf
- yeCyNGH6ZGFbcRodi/um2Yim3EFeprqyFy5nH8EcGJUcqk8EYUpjICSodhwnN93NxUUtoahOsX/
- cab81mFcxODEPMvEX2XzEb6lTpUW8zKAmUSaQpoqz0zXLDPCGIGo
-X-Authority-Analysis: v=2.4 cv=Vbdir1p9 c=1 sm=1 tr=0 ts=6ad6c5d7 cx=c_pps
- a=Ycsf2/9e4zkPkE23zi987Q==:117 a=Ycsf2/9e4zkPkE23zi987Q==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KAb5x4SsHD3PzxGk7EmX:22 a=dNm3KQjjYUbhztXjLiFs:22 a=c92rfblmAAAA:8
- a=z6gsHLkEAAAA:8 a=VwQbUJbxAAAA:8 a=ALUUi9MSbu_VYicB2QEA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-GUID: PrJmEJ2YR6oA-aNLmOv79CT9K6g4PpMf
-X-Proofpoint-ORIG-GUID: PrJmEJ2YR6oA-aNLmOv79CT9K6g4PpMf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIwMDAwNSBTYWx0ZWRfX0J4F6Xfw8rk6
- vUuS5Ymq8fl5xemFtpunr9P0REIKR2eAd+rDDlUw40FBa+a5rWF7ryya9y8jR7ZNqXGYNv5ruIM
- ktKwtCyGXqiKNtsdGrWzjUbYuIHKPJ6OMCO+KW/Od2QVSxcj0sxbtm1SG3DgiNF4cZkesJPKXLU
- rALb4ap156HwmZhFjK4Q4ficVAXlOhq5CJCgneZv6IvXE0dV6cewP+0iuwQDbAA3XGvxfC6d+H1
- 5WuWiNSohYWY2fvkRt/5hTi/+Y+Id8qi7s6pdAn+k3QBUeECwSbIG76zhHnC7W+ArLf0kSS28t8
- ktk6J3ICiUwjhV3UtlVsp2/zZtq8CPytpjqO7dHb0QOB8rdDvTEIzhabx7JEINqVBOcS6N12Z5m
- REAjUcxjcTdbZOEVL9mxGe9rb0EAVMX+7lWiP3sYlVBht16SghLVRZJqGzpEK7SoKUCN/XAcE99
- ZKT5WEJ1pS0IqiYcWWw==
-X-Sony-Outbound-GUID: PrJmEJ2YR6oA-aNLmOv79CT9K6g4PpMf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-20_01,2026-10-19_02,2025-10-01_01
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v4 7/7] riscv: dts: ultrarisc: Add Milk-V Titan board
+ device tree
+From: Xincheng Ji <jixincheng@ultrarisc.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Xincheng Ji <jixincheng@ultrarisc.com>, devicetree@vger.kernel.org, 
+ robh@kernel.org, conor+dt@kernel.org
+In-Reply-To: <sashiko-outbox-176776@kernel.org>
+References: <20261019-ultrarisc-dts-v4-0-3979747cda2e@ultrarisc.com>
+ <20261019-ultrarisc-dts-v4-7-3979747cda2e@ultrarisc.com>
+ <sashiko-outbox-176776@kernel.org>
+Date: Tue, 20 Oct 2026 09:43:59 +0800
+Message-Id: <179246063943.3442927.10941907832509473109.b4-reply@b4>
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792460639; l=1550;
+ i=jixincheng@ultrarisc.com; s=20260922; h=from:subject:message-id;
+ bh=0TzYJGZy5I86oYAb9Hp6QkfTOgUAxfb3cKoAWqceUnU=;
+ b=GDC4Gt1T8ifldM37DVWQcgCGqo9gbdMsCVGCAnTLFHBDmHvgt0M7MJliegRhprHn4W7Qi88Ik
+ mIxVacg6jB8A+fWxZmSvsFG4uPdbANncL0u0JBIT8w+7b9Bh7bQEOw9
+X-Developer-Key: i=jixincheng@ultrarisc.com; a=ed25519;
+ pk=n848dcS5D6g0vLad/rjp4Gf/1eedTe1a3pYUrkt2260=
+X-CM-TRANSID:AQAAfwCnYwVfx9ZqPnoCAA--.763S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7AF1rtFWrJry5Cw15ZF1rXrb_yoW8Xrykpa
+	15CF4j9rnYqr109392qr18C3yIkw48Jr47JFyayasrZ3ZxJr1Iqw4xC3WYqFyUGwn5ZFZ8
+	Ar4rXas5W3WDCaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvI14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r1j
+	6r4UM28EF7xvwVC2z280aVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
+	4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+	I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVWU
+	AVWUtwCY02Avz4vE-syl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2
+	IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v2
+	6r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2
+	IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv
+	67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf
+	9x0JUBmhwUUUUU=
+X-CM-SenderInfo: pml0x0xfkh0wg6xo325dul2uoofrz/1tbiAQAFDmrVviwAAQAQs2
 
-On 10/20/2026 3:21 AM, Conor Dooley wrote:
-> On Mon, Oct 19, 2026 at 01:53:48AM +0000, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [Medium] dt-bindings: media: imx908: additionalProperties: false blocks allOf schema
->> --
->>
->> commit ff8a8181af73cacaf3f8a03e0acde33eb53bb18b
->> Author: Lachlan Michael <lachlan.michael@sony.com>
->>
->> media: dt-bindings: imx908: Add Sony IMX908 sensor
->>
->> This commit adds device tree bindings and a MAINTAINERS entry for the Sony
->> IMX908 8.39 megapixel MIPI CSI-2 CMOS image sensor.
->>
->>> diff --git a/Documentation/devicetree/bindings/media/i2c/sony,imx908.yaml b/Documentation/devicetree/bindings/media/i2c/sony,imx908.yaml
->>> new file mode 100644
->>> index 0000000000000..828db1175e2f5
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/media/i2c/sony,imx908.yaml
->>> @@ -0,0 +1,108 @@
->> [ ... ]
->>> +allOf:
->>> +  - $ref: /schemas/media/video-interface-devices.yaml#
->>> +
->>> +properties:
->>> +  compatible:
->>> +    const: sony,imx908
->> [ ... ]
->>> +required:
->>> +  - compatible
->>> +  - reg
->>> +  - clocks
->>> +  - dvdd-supply
->>> +  - ovdd-supply
->>> +  - avdd-supply
->>> +  - port
->>> +
->>> +additionalProperties: false
->>
->> [Severity: Medium]
->> Should this be unevaluatedProperties: false instead of
->> additionalProperties: false?
+Hi,
+
+On 2026-10-19 08:08 +0000, sashiko-bot@kernel.org wrote:
+> Should the label properties be dropped from led@1 and led@2 here?
 > 
-> Only if the properties outside of what's already explicitly used in the
-> binding are possible.
+> When the PHY driver probes phy0, the call chain:
+> 
+>   of_phy_leds() ->
+>     of_phy_led() ->
+>       devm_led_classdev_register_ext() ->
+>         led_classdev_register_ext() ->
+>           led_compose_name() ->
+>             led_parse_fwnode_props()
+> 
+> checks for the deprecated label property first in
+> drivers/leds/led-core.c:led_parse_fwnode_props():
+> 
+> 	if (fwnode_property_present(fwnode, "label")) {
+> 		ret = fwnode_property_read_string(fwnode, "label", &props->label);
+> 		if (ret)
+> 			dev_err(dev, "Error parsing 'label' property (%d)\n", ret);
+> 		return;
+> 	}
+> 
+> Because led_parse_fwnode_props() returns early when label is present, the
+> color and function properties on led@1 and led@2 are never parsed and are
+> completely ignored at runtime.
+> 
+> In addition, Documentation/devicetree/bindings/leds/common.yaml deprecates
+> label for new bindings in favor of color and function.
+> 
+> Would it make sense to remove label from both nodes so that the LED core
+> uses color and function to compose the standard LED names?
+> 
+Thank you for the review. I understand that label is deprecated in favor
+of color and function.Since the LED core still supports parsing label, 
+would you consider removing these properties necessary for this patch,
+or more of a naming convention cleanup?
 
-IMX908 modules (i.e. IMX908 image sensor + board, made by various 
-companies) could specify rotation, orientation etc. so I think the 
-comment is valid.
+Best regards,
+Xincheng
 
-I'll change as suggested:
-
--additionalProperties: false
-+unevaluatedProperties: false
-
->> Because the schema references /schemas/media/video-interface-devices.yaml#
->> in allOf without listing common properties such as rotation, orientation,
->> lens-focus, or flash-leds under the local properties block, using
->> additionalProperties: false will cause dtbs_check to reject any
->> sony,imx908 node that uses those inherited properties.
->>
->> [ ... ]
->>
->> -- 
->> Sashiko AI review · https://sashiko.dev/#/patchset/20261019014720.2635-1-lachlan.michael@sony.com?part=1
+-- 
+Xincheng Ji <jixincheng@ultrarisc.com>
 
