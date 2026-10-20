@@ -1,104 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.176
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792495520;
-	b=wMAPfbpF0bQYj6krn0D/sV5KAIjZdK0MUtpTScztYPNZ50E/OUm8qdj8VWWUdbWKAe7f
-	 Ez+Pt1x60fYkmlv7ec3ytTEg+LTxh2/+2tZplljkddPkSdhv2BA72W+IWX/N2t9BejK7K
-	 nSi2F78eJVGp8a2MmjwxVEH9xjH2txefZg3aKN0hW7oWOOMccRjrTxPNlzfocojsQ1BsE
-	 5GtBfGVLjve2On8SlM1XmVMcIlI8Js7W7oup/2YArdW5MvEKunm1Cbbx6NsysvENY7ifs
-	 rw2UDZub8U4U4aM4IMremofTBRVaLtUSVe9TD0ny2sOv/1T6+YHuu507SPq+yGllZ8A==
+	t=1792495623;
+	b=2BP1x0RuTrhFgQ2BS6C/ANGH4P0wbNqf+ut6J689/PObAtkPa35YlNkIjUIkruZkZBY+
+	 8Qe+UQDXYt7pK8JPRQmyGhXzPcpiBFmXxMpa5dJk5HULKLjmM5bRqI217eCHi7eCOx2HS
+	 TGng5ELg+lWk8M12PNlqHtFT6o9+5HrJMfua5ffACHbbEdybn2i7zZWE1QibPASk1CDrq
+	 LQ3+RpmcS4r0ywdUs+YlOvVrA+kNZV61sTkwvv62s9/l6nIolZttkSpduK0UbZVeLNI4a
+	 6KmZPBp2oqpceTKjAY8xNmT1JNWp2nAFFf2bYfD8PZhJhpRMAyclcXS9W6Kv+ytPwpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792495520;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
-	bh=4DDHfULZCMXfKJmNIYoOvk990SrMTlrtJb/r57iKJOo=;
-	b=W162mUPY92E+t26IPNXMnXy4l6EMMXganaM5mBS8gGIlAjBBpoKfDnQspz1MNAqzQr9c
-	 BCPeBveq5t5J7fZikrQsGZGZm6JOQAtw0HevMu6y92J3CiERRJWs5HDIWTFTIkmuev2LX
-	 scqAkwpGaxldUUCnMC9VLs/bMYxBp3QZPWhIW2xjRWAa3Cq1/P+1uQ80ncC4Ma6gZi3Bc
-	 r2+RxrWLX+8Z5Z+pMxEQLyr9//micHRULAetXgRAzJUL35VYXLSmBH4i/fyUbA7pXrj15
-	 fVV0bS9VhzvR2/U+YQmSqLKYI1Oly67Br1IbCEBv5rmgoLpBJe+bq+hB2xCq5jxKhog==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792495623;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To;
+	bh=9IuNGgu3+n8EnXEqNr9sfqGmADrlCNKPBop93Whvr/M=;
+	b=1mckYZgjE4D5DdyZcpeeY8pYoHCWduu/cL7pYOYFq/3Sj5JMs7RjT2z6NQh9uPVYRg72
+	 xV4z74E8wVSb0/1SBcaIsufbfgjlsXQtEN7NyV91CsZT3zxMU1+O3Mdogrd837SK6rFIn
+	 BZthvRsobme7Z9Q6stzoXYJxvHmN84W/U3LZcD/laypXiL4LQYWaFrzdBrAKndfg+qVHp
+	 GZ/WaOF2yc5fM3D1bi9/pOG9i5BfAn4RX6+RTy1c8yLiwTsi6tMd+OXzTiFlapeXTkGH/
+	 uimIPVGYSUC6N5N5VpnnHHA4SdjHnzBLUiJG8C2WRbyqZh7mGjhdjBlMSgyjDOjg3eA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=AfbkziFD;
-	arc=none smtp.remote-ip=74.125.82.176
-Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kngWsQhr;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59BC606A31B
-	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 11:25:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C59BC606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D16606A319;
+	Tue, 20 Oct 2026 11:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=AfbkziFD
-Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-35829219da8so815728eec.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 04:25:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792495519; x=1793100319; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=4DDHfULZCMXfKJmNIYoOvk990SrMTlrtJb/r57iKJOo=;
-        b=AfbkziFDAOh1ELKdHSa3PgKiFeBavSdNhD7xUIFTofHo+/cu/zuRPtyo7Z1Eqm21je
-         qPY22hQ5RnJN5AXhm5JwPoLTsfe3bnT6XKnjdor+pveEvW9EJszl8Qz6casv9NKRD8vx
-         c6G4kh+HPtxvfxAs0PRESWyaTa6rX32YbB728zWIHhJOLz+JMVkMu3wir1zRnPqw62jy
-         eGhx7+udAVUvfl3fXZq+Va6n8QaOUziEZFgaqyw1bV+F/CK4hAeWUY6NCa+yB4rOhxTt
-         goW5UhGjY67PQ+9oc2OLwmF16ZJ8nJhyJg35jQJlrjEnL1+5NQc7CmfV7vmLU/qZM5TC
-         VL2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792495519; x=1793100319;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=4DDHfULZCMXfKJmNIYoOvk990SrMTlrtJb/r57iKJOo=;
-        b=cq9QNU/FVoFXZexGc/s8DpcXtJJQ3UMFUsVGF4tiLtKomuek06eGMYj7m9BgtTQYLT
-         nLW9a9VrIvESzQDHv0CUiZqqSmU0OLq7RAyB59SaBJn1SMZOsuN4LQXdrPnfSvDXjH8z
-         8nTErBfic1WsleDbfRzwFLt1E22T6pJyBmJZba2X6DzTGKsAB5OKDCTKLH45x6c/J70N
-         lGCyDrp1kY2bnzod21Z0nHKOma4blvBLn1jcMhbnuP7SamTSO6FoNJWJFvYfhwBjOI8n
-         0TSwS9OMR3Py1AUNGNwrTDY6yIydFT/vwgcZqHTzB/UNhmcFE8B3lK5lEjwqq8UXPyM5
-         8BOQ==
-X-Gm-Message-State: AFq9FYJ9skdKH+Tppfnjp/JlpZx4Z27Epbgbc5wxKrDm/nnSYGRXUui6
-	/okcSuDB8XTqFGtFGexX0S++biOoEC4K7DKMJy7cKxdKD5stV/dyhLQO/TGeYrOy
-X-Gm-Gg: AYBFou0UPKuSZxl4G47mCcmyffvIu9f67ujruwVlXqnde7mTH45Qw1k+vk4HWfHB8ov
-	KxIxZNbBrNEjy4I0/1R3COMehCZjr10fANRM77EJwYZ17FJRXlKc6xRte4ykDNDUVamA/Smk+LS
-	WpyWEydwpgKJT+HxdmuP+RtPNCNKfNDL+Hp9nBGNqIXMnms05uy9YMOJ8/vIYks6xygUfWXweb2
-	q+rldb6ulRLO6h5BpQy/SKMwrmRAXZq8KEU7umj7rgibuEvrjWwXLyMw/UDt8Cf/ATePUgOEuHt
-	0fPcYMc7Pz6uHs2ARuxHcMubJccN4tqXvETLNMs3BwvQP+QawNzHgKEuud0LleKq01ipQ3eKWnN
-	6wavZEC8VQjv6h6lUOY9yioY1YjyFngtZ/VNIBd45z/Ix0VLaf0Zagz04UIh4O3blVhq6ckx53p
-	7zaiOSFBWGPHYp3Tfg9sZd+72yY6oVhQnbyS/Kb+5JqXmUE6BnucSuELEQbR8PPgU4SImykb3YP
-	VIY
-X-Received: by 2002:a05:701b:4553:20b0:17a:a3d4:8b17 with SMTP id a92af1059eb24-18db9f2cfbbmr2343488c88.12.1792495518528;
-        Tue, 20 Oct 2026 04:25:18 -0700 (PDT)
-Received: from leonardoc-nb ([67.159.246.222])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1831b75be5esm48988354c88.16.2026.10.20.04.25.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Oct 2026 04:25:17 -0700 (PDT)
-Date: Tue, 20 Oct 2026 08:25:10 -0300
-From: Leonardo Costa <leoreis.costa@gmail.com>
-To: sashiko-reviews@lists.linux.dev, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, Frank Li <Frank.li@oss.nxp.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Luca Ceresoli <luca.ceresoli@bootlin.com>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Frank Li <Frank.Li@nxp.com>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
-	Leonardo Costa <leonardo.costa@toradex.com>
-Subject: Re: [PATCH v2 2/3] drm/bridge: simple-bridge: Support
- data-enable-active endpoint property
-Message-ID: <svnjkyubpps5ocerr3pdaylmhsvlo44olqax7fcco2hahahocd@xnvocnkddfu6>
-References: <20261019-v2-apalis-imx6-enable-vga-v2-0-ef6a3a780472@toradex.com>
- <20261019-v2-apalis-imx6-enable-vga-v2-2-ef6a3a780472@toradex.com>
- <sashiko-outbox-176995@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=kngWsQhr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E2B1F000C6;
+	Tue, 20 Oct 2026 11:27:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792495622;
+	bh=9IuNGgu3+n8EnXEqNr9sfqGmADrlCNKPBop93Whvr/M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=kngWsQhrwAC3fMs5oD32NO1HRJe/5g7ROr0sWqh9Wkn8SnMApos/5zyXTX64BhcCd
+	 fR85L1zsQhl4kWmdZtxDF18lJjrJD9rh3BkLaEM0D7O6gaNdoe8Uaay1gMybd4saOI
+	 yOP4u8aOoOb8v0N7WPvj/O/JMCxv3+KTKUCwsv4gY9e8EXAJju0XkOsNML/hCpyAZh
+	 QpUAN6s8ZnLBNSnugIKmQPBrSdf2MuSHGycxs1EorkGzrug1eSh/elAiXr+mS4iqf8
+	 hePYSTpviLfqTF2nYPVq3hivBh4tjS3aUV3ijZRGfhattrZn+t6AFdywm5ekR7grxC
+	 aOwAxYWYY52Ug==
+Date: Tue, 20 Oct 2026 12:26:58 +0100
+From: Lee Jones <lee@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Charles Keepax <ckeepax@opensource.cirrus.com>, mfd@lists.linux.dev
+Subject: Re: [PATCH v2 RESEND 1/2] soundwire: Add a helper function to
+ indicate a device will detach
+Message-ID: <20261020112658.GB1795367@google.com>
+References: <20260924120520.2511081-1-ckeepax@opensource.cirrus.com>
+ <20260924120520.2511081-2-ckeepax@opensource.cirrus.com>
+ <20260924121706.432811F000FF@smtp.kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -111,214 +62,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-176995@kernel.org>
+In-Reply-To: <20260924121706.432811F000FF@smtp.kernel.org>
 
-On Mon, Oct 19, 2026 at 10:34:06AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] drm/bridge: simple-bridge: missing atomic_check() to propagate DE bus flags
-> - [Medium] drm/bridge: simple-bridge: timings devm_kzalloc() lifetime mismatch
+On Thu, 24 Sep 2026, sashiko-bot@kernel.org wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] soundwire: data race in sdw_slave_signal_unattach() with complete_all()
+
+Charles, did you answer this?
+
+Maybe this is why Vinod isn't replying?
+
 > --
 > 
-> commit 17d03fa8dcd99e5bb3af7da622344c856ca2c887
-> Author: Leonardo Costa <leonardo.costa@toradex.com>
+> commit 0022c8987af32edaf369ec5a75ade11e2d3a1ba3
+> Author: Charles Keepax <ckeepax@opensource.cirrus.com>
 > 
-> drm/bridge: simple-bridge: Support data-enable-active endpoint property
+> soundwire: Add a helper function to indicate a device will detach
 > 
-> This commit reads the data-enable-active property from the input endpoint in
-> simple_bridge_probe() and allocates a drm_bridge_timings structure to set
-> DRM_BUS_FLAG_DE_HIGH or DRM_BUS_FLAG_DE_LOW in input_bus_flags when the bridge
-> does not already define its own timings.
+> Add a helper function that a driver can call to indicate it is about to
+> initiate an action that will cause the device to detach from the bus.
 > 
-> > diff --git a/drivers/gpu/drm/bridge/simple-bridge.c b/drivers/gpu/drm/bridge/simple-bridge.c
-> > index 3fba7002322e9..393228bed6e28 100644
-> > --- a/drivers/gpu/drm/bridge/simple-bridge.c
-> > +++ b/drivers/gpu/drm/bridge/simple-bridge.c
-> > @@ -171,6 +171,9 @@ static int simple_bridge_probe(struct platform_device *pdev)
-> >  {
-> >  	struct simple_bridge *sbridge;
-> >  	struct device_node *remote;
-> > +	struct device_node *ep;
-> > +	bool de_present;
-> > +	u32 de;
+> > diff --git a/include/linux/soundwire/sdw.h b/include/linux/soundwire/sdw.h
+> > index 707ca6bd1e23d..7d41df30561cf 100644
+> > --- a/include/linux/soundwire/sdw.h
+> > +++ b/include/linux/soundwire/sdw.h
+> 
+> [ ... ]
+> 
+> > @@ -1214,6 +1221,25 @@ static inline int sdw_update_no_pm(struct sdw_slave *slave, u32 addr, u8 mask, u
 > >  
-> >  	sbridge = devm_drm_bridge_alloc(&pdev->dev, struct simple_bridge,
-> >  					bridge, &simple_bridge_bridge_funcs);
-> > @@ -208,10 +211,26 @@ static int simple_bridge_probe(struct platform_device *pdev)
-> >  		return dev_err_probe(&pdev->dev, PTR_ERR(sbridge->enable),
-> >  				     "Unable to retrieve enable GPIO\n");
+> >  #endif /* CONFIG_SOUNDWIRE */
 > >  
-> > -	/* Register the bridge. */
-> >  	sbridge->bridge.of_node = pdev->dev.of_node;
-> >  	sbridge->bridge.timings = sbridge->info->timings;
-> >  
-> > +	ep = of_graph_get_endpoint_by_regs(pdev->dev.of_node, 0, -1);
-> > +	de_present = !of_property_read_u32(ep, "data-enable-active", &de);
-> > +	of_node_put(ep);
+> > +/**
+> > + * sdw_slave_signal_unattach - Signal that the peripheral is about to detach
+> > + * @slave: Pointer to the SoundWire peripheral.
+> > + *
+> > + * Inform the core that the peripheral is about to detach from the bus, this
+> > + * is usually due to some implementation defined reset mechanism. After this
+> > + * sdw_slave_wait_for_init() should be called to wait for the device to
+> > + * return.
+> > + */
+> > +static inline void sdw_slave_signal_unattach(struct sdw_slave *slave)
+> > +{
+> > +	if (!slave)
+> > +		return;
 > > +
-> > +	if (de_present && !sbridge->bridge.timings) {
-> > +		struct drm_bridge_timings *timings;
-> > +
-> > +		timings = devm_kzalloc(&pdev->dev, sizeof(*timings), GFP_KERNEL);
-> > +		if (!timings)
-> > +			return -ENOMEM;
-> 
-> [Severity: Medium]
-> Can allocating timings with devm_kzalloc() in simple_bridge_probe() cause a
-> lifetime mismatch with sbridge->bridge?
-> 
-> sbridge is allocated via devm_drm_bridge_alloc(), which manages the container's
-> lifetime through sbridge->bridge.refcount and only frees it in
-> __drm_bridge_free() after all drm_bridge references are dropped:
-> 
-> drivers/gpu/drm/drm_bridge.c:__drm_bridge_free()
-> 	if (bridge->funcs->destroy)
-> 		bridge->funcs->destroy(bridge);
-> 
-> 	drm_bridge_put(bridge->next_bridge);
-> 
-> 	kfree(bridge->container);
-> 
-> If pdev is unbound while an upstream bridge or encoder still holds a reference
-> to sbridge->bridge, devres_release_all() will free timings immediately, leaving
-> sbridge->bridge.timings as a dangling pointer that can be dereferenced by
-> upstream drivers (for example, in imx8mp_hdmi_pvi_bridge_enable()).
-> 
-> Would embedding struct drm_bridge_timings inside struct simple_bridge (as done
-> in lvds-codec.c and ti-tfp410.c), or pointing to static const
-> drm_bridge_timings instances for DRM_BUS_FLAG_DE_HIGH and DRM_BUS_FLAG_DE_LOW,
-> avoid this lifetime mismatch?
-
-This seemed to make sense to me, but I'm having trouble implementing either of
-Sashiko's suggestions in a proper way, as both seemed problematic to me when
-actually trying to make the changes. 
-
-Adding static const drm_bridge_timings instances for each of the flags goes
-against the current pattern of using these to list configurations of actual
-pieces of hardware.
-
-On the other hand, embedding struct drm_bridge_timings inside
-struct simple_bridge leads to duplicating information in the driver. It would
-look something like in the diff below. In this case, when the bridge provides
-a timings struct, the embedded drm_bridge_timings needs to receive a copy of it,
-despite serving no purpose in this situation, it seems to me to add too much
-complexity.
-
-Laurent, do you think this is still better than adding a compatible for the
-Apalis iMX6 VGA bridge, as was done in V1? Let me know if you think any of
-these concerns are not actual issues, or if you think there is a pattern that
-better fits this driver.
-
-Best regards,
-Leonardo
-
-diff --git a/drivers/gpu/drm/bridge/simple-bridge.c b/drivers/gpu/drm/bridge/simple-bridge.c
-index 848c2df2a276..9787eb7f7b82 100644
---- a/drivers/gpu/drm/bridge/simple-bridge.c
-+++ b/drivers/gpu/drm/bridge/simple-bridge.c
-@@ -28,6 +28,7 @@ struct simple_bridge_info {
- struct simple_bridge {
- 	struct drm_bridge	bridge;
- 	struct drm_connector	connector;
-+	struct drm_bridge_timings timings;
- 
- 	const struct simple_bridge_info *info;
- 
-@@ -183,6 +184,8 @@ static int simple_bridge_probe(struct platform_device *pdev)
- {
- 	struct simple_bridge *sbridge;
- 	struct device_node *remote;
-+	struct device_node *ep;
-+	u32 de;
- 
- 	sbridge = devm_drm_bridge_alloc(&pdev->dev, struct simple_bridge,
- 					bridge, &simple_bridge_bridge_funcs);
-@@ -220,10 +223,24 @@ static int simple_bridge_probe(struct platform_device *pdev)
- 		return dev_err_probe(&pdev->dev, PTR_ERR(sbridge->enable),
- 				     "Unable to retrieve enable GPIO\n");
- 
--	/* Register the bridge. */
- 	sbridge->bridge.of_node = pdev->dev.of_node;
- 	sbridge->bridge.timings = sbridge->info->timings;
- 
-+	if (sbridge->info->timings)
-+		sbridge->timings = *sbridge->info->timings;
-+
-+	ep = of_graph_get_endpoint_by_regs(pdev->dev.of_node, 0, -1);
-+
-+	if (!of_property_read_u32(ep, "data-enable-active", &de) &&
-+	    !sbridge->bridge.timings) {
-+		sbridge->timings.input_bus_flags |= de ? DRM_BUS_FLAG_DE_HIGH :
-+							 DRM_BUS_FLAG_DE_LOW;
-+		sbridge->bridge.timings = &sbridge->timings;
-+	}
-+
-+	of_node_put(ep);
-+
-+	/* Register the bridge. */
- 	return devm_drm_bridge_add(&pdev->dev, &sbridge->bridge);
- }
-
-> > +
-> > +		timings->input_bus_flags = de ? DRM_BUS_FLAG_DE_HIGH :
-> > +						DRM_BUS_FLAG_DE_LOW;
-> > +		sbridge->bridge.timings = timings;
-> > +	}
+> > +	slave->unattach_request = SDW_UNATTACH_REQUEST_SLAVE_RESET;
+> > +	reinit_completion(&slave->enumeration_complete);
+> > +	reinit_completion(&slave->initialization_complete);
 > 
 > [Severity: High]
-> Will setting only sbridge->bridge.timings->input_bus_flags actually propagate
-> the DE polarity to upstream atomic encoders and bridges?
+> Is there a risk of a data race here in sdw_slave_signal_unattach() with
+> complete_all()?
 > 
-> simple_bridge_bridge_funcs registers atomic state callbacks without an
-> .atomic_check callback:
+> Since reinit_completion() is non-atomic and executes locklessly here, a race
+> can occur if the bus ping thread concurrently processes a previous or bouncing
+> ATTACHED event in sdw_handle_slave_status(), which calls complete_all().
 > 
-> drivers/gpu/drm/bridge/simple-bridge.c:
-> static const struct drm_bridge_funcs simple_bridge_bridge_funcs = {
-> 	.atomic_create_state = drm_atomic_helper_bridge_create_state,
-> 	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
-> 	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
-> 	.attach		= simple_bridge_attach,
-> 	.atomic_enable = simple_bridge_enable,
-> 	.atomic_disable = simple_bridge_disable,
-> };
+> If complete_all() finishes after the zeroing, the completion remains marked
+> as done.
 > 
-> During an atomic modeset, drm_atomic_bridge_chain_check() calls
-> drm_atomic_bridge_propagate_bus_flags(), which overwrites
-> bridge_state->input_bus_cfg.flags with output_flags from the downstream bridge
-> or connector (0 for a VGA connector) and never checks
-> bridge->timings->input_bus_flags:
+> Would this cause subsequent calls to sdw_slave_wait_for_init() to return
+> immediately, and potentially lead the driver to perform I/O against a
+> detached device?
 > 
-> drivers/gpu/drm/drm_bridge.c:drm_atomic_bridge_propagate_bus_flags()
-> 	bridge_state->output_bus_cfg.flags = output_flags;
-> 	...
-> 	bridge_state->input_bus_cfg.flags = output_flags;
-> 
-> Because simple-bridge has a valid drm_bridge_state, upstream bridges and atomic
-> encoders such as imx_pd_bridge_atomic_check() in
-> drivers/gpu/drm/imx/ipuv3/parallel-display.c read
-> next_bridge_state->input_bus_cfg.flags instead of
-> next_bridge->timings->input_bus_flags:
-> 
-> drivers/gpu/drm/imx/ipuv3/parallel-display.c:imx_pd_bridge_atomic_check()
-> 	if (next_bridge_state)
-> 		bus_flags = next_bridge_state->input_bus_cfg.flags;
-> 	else
-> 		bus_flags = di->bus_flags;
-> 
-> As a result, bus_flags remains 0 instead of DRM_BUS_FLAG_DE_LOW or
-> DRM_BUS_FLAG_DE_HIGH.
-> 
-> Should simple_bridge_bridge_funcs implement an .atomic_check callback that
-> copies sbridge->bridge.timings->input_bus_flags into
-> bridge_state->input_bus_cfg.flags (similar to tfp410_atomic_check() in
-> drivers/gpu/drm/bridge/ti-tfp410.c)?
-> 
+> > +}
 > > +
-> > +	/* Register the bridge. */
-> >  	return devm_drm_bridge_add(&pdev->dev, &sbridge->bridge);
-> >  }
+> >  /**
+> >   * sdw_slave_wait_for_init - Wait for device initialisation
 > 
 > -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261019-v2-apalis-imx6-enable-vga-v2-0-ef6a3a780472@toradex.com?part=2
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260924120520.2511081-1-ckeepax@opensource.cirrus.com?part=1
 
-This second finding was a false positive, as per my response in the 3/3
-patch.
+-- 
+Lee Jones
