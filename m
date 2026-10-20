@@ -1,65 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.95
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792502195;
-	b=kZ2Y5Brg9fTjyZSB7+GVPPDqwol1HKWpVQjts53eCoiWDH43HPvsceBydNR2WB1cmAS/
-	 lj4+4ZO4ilC9sK7+kyri/0b0pQEvWJjd0Le02MlXhDF5kgGBueiIDUk40N2nev2iHE3Nc
-	 DAB7WmlF081TJdaNLyieozdrHNv2aQZ5lhBSUPCP2UzvG21YGTnjug2Rz/dYXs7aQvaB5
-	 9W8hxRSWfsfjDu0FNzxWGxKClMCOm2SPJHt3lfnPsBwiPExsSzsYKiEwaBcEsYOLus43c
-	 nZk65AInPqXLcmjtC2HU0ttKW32PjjMfVQD/5Msd02iE6m3JXKMA/lDoKim7EQ+fSQw==
+	t=1792502846;
+	b=gw9my0wnrt5fVuFTw0pwH2YkcLqXdBUnq8ham6iTAspkBIIAADKP2jtoF8EP38Vzwt1S
+	 N7BFeAGgiK+XjxBcSpbpgtqMhrg8JRGr5ZPG9vPh+Jhpboul1G96cU+ei9mxaJwq9RIG8
+	 4WmrnK4JfW5Fn8UcW2TOkwJ/85/h4Ql/ubs/qBXtXaBGLJoxPoFydl+MHzQyT7PdrXoos
+	 PJ+gbtJ8hygnPlhPLdJ+XROEkVUt61sboaIN4apOh9IUegPEzOaVWirwQmLXpJOz5ifZ+
+	 ma0sM7H0iTTVoKB8XX6hdY3lefiGEgWScNmXG1I47LoXGgnbyz4P/Y9MPUxo/j4Rq+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792502195;
-	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Subject:From:To:Date:
-	 In-Reply-To:References:Content-Type:User-Agent:MIME-Version:
-	 X-SRS-Rewrite;
-	bh=e10qufVRqqqJb1AQ6FrtUxdb1E5vSEGGMawPRMfZR38=;
-	b=bInZonnp53Zq9fSaUBIRm+jzcj00CVU0hhTtT5VsEonczuya+ktEHZdO2PvdX/cAvUoJ
-	 jBJEixvEhtk2To+KxOl6oLk/Z/hTmm9hfGys0/0znaRXOR+kqMKrwCjAU8gpQSqRNpgck
-	 s3399U/Gd7WTJuL7TY8myctXklxx4rK/TL2EdfGfz18ypgNhs74TFpRgksWKg19XH6oYB
-	 x9ydWatKXa9/Pu/FXxcRyeOvdeR9/DLiXum3Lskp2uru98+M2taSOlKtMJoeRh4WS6mB7
-	 47gkaYVLJdfCpXCmC6EvwcTRHUhKbgU4bho+8HB+QuHqxFXk5BZwdl0GSbrvkEoPvdA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792502846;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:From:To:Cc:References:Content-Language:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=9bNG+O9Mhp5lbrx3BoQ1xdHs39VYHKNeq+AtKI/tfWM=;
+	b=pOoPVMqkgpv2Wo8OpYmMBgiCfGJm25Q6QJDkbDausoNM0LFFo3BjaOHwJoyleTE4P3SN
+	 aJgbt5gGtLXHcA5pSlxo9KMgYYH+0TtV1xomLAoAv2hVsVP1S/cuw2I8mHX+hxSIVmuZa
+	 8e4ZAX8TPilw5c50AYVdCE/XqP6Rv3FpCu7OrRZoc0SM8vZp5d19KwaSdYM2Fm5jQWZtZ
+	 cmz0HWhX75hrAigTj5tyUld5woVN95Bo11Htcg5qgOgKvz3MDTaQ58UD35daGJQcW6xyt
+	 wHKC/Qy8RtZ19VOybnj5exkwkzqDLAAyPkc7ZhNjXVd1MrkIUu6L10G/qCgRxReK+Mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=infradead.org;
-	spf=none smtp.mailfrom=casper.srs.infradead.org;
-	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=OsrgXtY0;
-	arc=none smtp.remote-ip=90.155.50.34
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=ohGJq1yY;
+	arc=none smtp.remote-ip=91.218.175.95
+Received: from mta0.migadu.com (out-95.mta0.migadu.com [91.218.175.95])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F346606A31C;
-	Tue, 20 Oct 2026 13:16:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3F346606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=casper.srs.infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D63E606A31D
+	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 13:27:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0D63E606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=casper.20170209 header.b=OsrgXtY0
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
-	In-Reply-To:Date:To:From:Subject:Message-ID:Sender:Reply-To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=e10qufVRqqqJb1AQ6FrtUxdb1E5vSEGGMawPRMfZR38=; b=OsrgXtY05kBLGG2NARyqZDaNdr
-	Jz9rDbz40Oqup/dKOhAlvsLNMwxw0O1fguEGO4nNQmaelBkiDck2wq+Kx1mR2DYRMEcPA+DFwXzrj
-	m5H4MICRP22+6w1BbBEqSz6dpUz3pgwWXPOgTOnlBDELkCofCxi+WVCIlhWmE6GFaS6Vpx+FY9wPQ
-	JDjm4bBQh8VrCbPcxOsveQWdU7+Jj5+Ixu3TcUNisBtPWuLTQ+E7l7uYnial3a+a/kgG+eXhozKzh
-	7TE45AfeGSCI2nTprHwa+5g+1HH5r2X6u2TzJAw6FOBFReyZAn7Jdqa+VBSQvMDGk9KDWJ2ws2K2Q
-	qI1HQ0IQ==;
-Received: from 54-240-197-234.amazon.com ([54.240.197.234] helo=u09cd745991455d.ant.amazon.com)
-	by casper.infradead.org with esmtpsa (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1xJ9he-0000000H2yS-132U;
-	Tue, 20 Oct 2026 13:16:30 +0000
-Message-ID: <a654a72765eaf278649b285218b0b1f6f9d45664.camel@infradead.org>
-Subject: Re: [PATCH v4 06/12] KVM: x86/xen: Retry event channel delivery
- which races a memslot update
-From: David Woodhouse <dwmw2@infradead.org>
-To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
-Date: Tue, 20 Oct 2026 14:16:34 +0100
-In-Reply-To: <sashiko-outbox-177923@kernel.org>
-References: <20261019162445.37219-1-dwmw2@infradead.org>
-	 <20261019162445.37219-7-dwmw2@infradead.org>
-	 <sashiko-outbox-177923@kernel.org>
-Content-Type: multipart/signed; micalg="sha-256"; protocol="application/pkcs7-signature";
-	boundary="=-JlmFvHwtW4LRXbe0y1ju"
-User-Agent: Evolution 3.62.0-0ubuntu1~ppa1~24.04 
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=ohGJq1yY
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=5Im6iM6caI5rF/Q5XPuIhrDe6ukl0oG+vIfDRIVnGjs=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1792502844; v=1; x=1793107644;
+ b=ohGJq1yYXh3Edm35qT/oqoAHcoqkXYAMscQM2nZQZnO608FoRCGVnUr7WJfF9LnFJr2wrp2X
+ EoAKPMc1n9cLoqfmdlnX5xsm4JrKDZ8FQkwbI09CgrZBm4OjUl+xNCULk7l+HfM3K1QmHkL4ZHf
+ wwzX4Q28kFsfEXxCQL2ZwUBs=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id e3f5c746065a4e9d;
+	Tue, 20 Oct 2026 13:27:23 +0000
+X-Mizu-Trace-ID: e3f5c746065a4e9d
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <d1ed2d7f-3999-4e8a-a290-1f812a0439af@linux.dev>
+Date: Tue, 20 Oct 2026 21:27:14 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -69,154 +58,313 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org. See http://www.infradead.org/rpr.html
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/5] mm/vmalloc: undo partial mappings inside the
+ mapping functions
+From: Hao Ge <hao.ge@linux.dev>
+To: Suren Baghdasaryan <surenb@google.com>,
+ Uladzislau Rezki <urezki@gmail.com>
+Cc: kasan-dev@googlegroups.com, linux-mm@kvack.org,
+ sashiko-reviews@lists.linux.dev, Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
+ "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+ "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+ Shrikanth Hegde <sshegde@linux.ibm.com>,
+ Alexander Potapenko <glider@google.com>, Marco Elver <elver@google.com>,
+ Dmitry Vyukov <dvyukov@google.com>, Andrew Morton
+ <akpm@linux-foundation.org>, Dennis Zhou <dennis@kernel.org>,
+ Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>
+References: <20261019054531.87652-1-hao.ge@linux.dev>
+ <20261019054531.87652-4-hao.ge@linux.dev> <sashiko-outbox-178439@kernel.org>
+ <2b83dfaa-424b-4464-830e-a7714a816d5c@linux.dev>
+Content-Language: en-US
+In-Reply-To: <2b83dfaa-424b-4464-830e-a7714a816d5c@linux.dev>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
 
---=-JlmFvHwtW4LRXbe0y1ju
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 10/20/26 18:03, Hao Ge wrote:
+> Hi Suren and Ulad
+>
+> Sashiko reported several issues, and they all look real.
+> I have some ideas for fixing the first few;
+> of course, please correct me if I get anything wrong.
+>
+> I'd like to discuss the last issue with you all.
+>
+>
+> On 2026/10/20 13:45, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>> - [High] mm/vmalloc: infinite loop in vunmap_pte_range() on unaligned error rollback
+>> - [High] mm/vmalloc: __vmap_pages_range_noflush() calls cond_resched() in atomic context
+>> - [Medium] mm/vmalloc: vmap_page_range() calls flush_cache_vmap() before error rollback
+>> --
+>>
+>> commit 043026437ba63b051df5d14470fe69ce8fa8825c
+>> Author: Hao Ge <hao.ge@linux.dev>
+>>
+>> mm/vmalloc: undo partial mappings inside the mapping functions
+>>
+>> This commit adds rollback logic using __vunmap_range_noflush() and
+>> kmsan_vunmap_range_noflush() into vmap_page_range(),
+>> __vmap_pages_range_noflush(), and vmap_pages_range_noflush() when page
+>> table installation or KMSAN metadata setup fails. It also adds range and
+>> page_shift validation in __vmap_pages_range_noflush().
+>>
+>>> diff --git a/mm/vmalloc.c b/mm/vmalloc.c
+>>> index 44e0eb32708f1..75aa5acf55660 100644
+>>> --- a/mm/vmalloc.c
+>>> +++ b/mm/vmalloc.c
+>>> @@ -363,6 +363,9 @@ int vmap_page_range(unsigned long addr, unsigned long end,
+>>>   	if (!err)
+>>>   		err = kmsan_ioremap_page_range(addr, end, phys_addr, prot,
+>>>   					       ioremap_max_page_shift);
+>>> +	if (err)
+>>> +		__vunmap_range_noflush(addr, end);
+>>> +
+>>>   	return err;
+>>>   }
+>> [Severity: High]
+>> What happens here when vmap_range_noflush() returns -EINVAL for a range
+>> where end - addr is not PAGE_SIZE-aligned?
+>>
+>> In vmap_pte_range(), commit a739e6b557af09 added a check to bail out on
+>> unaligned ranges specifically to avoid an infinite loop:
+>>
+>> mm/vmalloc.c:vmap_pte_range() {
+>> 	...
+>> 	if (WARN_ON_ONCE(!PAGE_ALIGNED(end - addr)))
+>> 		return -EINVAL;
+>> }
+>>
+>> This can be reached on 64KB page kernels via pci_remap_iospace() ->
+>> vmap_page_range() with 16KB/32KB/48KB PCI I/O ranges (for example via
+>> loongson_pci_probe() or acpi_pci_root_remap_iospace()).
+>>
+>> When vmap_pte_range() returns -EINVAL, vmap_page_range() now calls
+>> __vunmap_range_noflush(addr, end) with the unaligned range. Whenever a PMD
+>> in [addr, end) is already populated with a PTE table (such as the
+>> PCI_IOBASE PMD populated during early boot by reserve_pio_range(), or an
+>> earlier PMD mapped in the same call), __vunmap_range_noflush() descends
+>> into vunmap_pte_range(), which has no alignment check:
+>>
+>> mm/vmalloc.c:vunmap_pte_range() {
+>> 	...
+>> 	do {
+>> 		...
+>> 			ptent = ptep_get_and_clear(&init_mm, addr, pte);
+>> 		WARN_ON(!pte_none(ptent) && !pte_present(ptent));
+>> 	} while (pte += (size >> PAGE_SHIFT), addr += size, addr != end);
+>> }
+>>
+>> Because end - addr is not a multiple of PAGE_SIZE, won't addr step past end
+>> and loop infinitely, clearing unrelated kernel PTEs and corrupting memory
+>> past the PTE table?
+>>
+> That sounds reasonable. I will add a separate patch in the next version to fix
+> this problem.
+>
+>> [Severity: Medium]
+>> Also in vmap_page_range(), flush_cache_vmap(addr, end) is called
+>> unconditionally before checking err and before rolling back with
+>> __vunmap_range_noflush(addr, end):
+>>
+>> mm/vmalloc.c:vmap_page_range() {
+>> 	err = vmap_range_noflush(addr, end, phys_addr, pgprot_nx(prot),
+>> 				 ioremap_max_page_shift);
+>> 	flush_cache_vmap(addr, end);
+>> 	if (!err)
+>> 		err = kmsan_ioremap_page_range(addr, end, phys_addr, prot,
+>> 					       ioremap_max_page_shift);
+>> 	if (err)
+>> 		__vunmap_range_noflush(addr, end);
+>>
+>> 	return err;
+>> }
+>>
+>> On UML, flush_cache_vmap is defined as flush_tlb_kernel_range:
+>>
+>> arch/um/include/asm/cacheflush.h:
+>> #define flush_cache_vmap flush_tlb_kernel_range
+>>
+>> When vmap_range_noflush() fails partway through or
+>> kmsan_ioremap_page_range() fails, flush_cache_vmap() runs while the
+>> partially installed PTEs are still pte_present(), causing
+>> update_pte_range() in arch/um/kernel/tlb.c to map them into the host OS via
+>> ops->mmap() and clear _PAGE_NEEDSYNC:
+>>
+>> arch/um/kernel/tlb.c:update_pte_range() {
+>> 	...
+>> 		if (pte_present(*pte)) {
+>> 			...
+>> 			ret = ops->mmap(ops->mm_idp, addr, PAGE_SIZE,
+>> 					prot, fd, offset);
+>> 		} else
+>> 			ret = ops->unmap(ops->mm_idp, addr, PAGE_SIZE);
+>>
+>> 		*pte = pte_mkuptodate(*pte);
+>> }
+>>
+>> When __vunmap_range_noflush(addr, end) then clears the software PTEs
+>> without a subsequent TLB flush or unmap notification, won't those host OS
+>> mmap mappings be left behind? Should flush_cache_vmap(addr, end) only be
+>> called after both vmap_range_noflush() and kmsan_ioremap_page_range()
+>> succeed?
+>>
+> That sounds reasonable. I will add this logic in the next version.
+>
+>>> @@ -683,27 +686,35 @@ int __vmap_pages_range_noflush(unsigned long addr, unsigned long end,
+>>>   		pgprot_t prot, struct page **pages, unsigned int page_shift)
+>>>   {
+>>>   	unsigned int i, nr = (end - addr) >> PAGE_SHIFT;
+>>> +	unsigned long start = addr;
+>>> +	int err = 0;
+>>> +
+>>> +	if (WARN_ON_ONCE(addr >= end))
+>>> +		return -EINVAL;
+>>>   
+>>>   	if (WARN_ON_ONCE(page_shift < PAGE_SHIFT))
+>>>   		return -EINVAL;
+>>>   
+>>>   	if (!IS_ENABLED(CONFIG_HAVE_ARCH_HUGE_VMALLOC) ||
+>>> -			page_shift == PAGE_SHIFT)
+>>> -		return vmap_small_pages_range_noflush(addr, end, prot, pages);
+>>> -
+>>> -	for (i = 0; i < nr; i += 1U << (page_shift - PAGE_SHIFT)) {
+>>> -		int err;
+>>> -
+>>> -		err = vmap_range_noflush(addr, addr + (1UL << page_shift),
+>>> +			page_shift == PAGE_SHIFT) {
+>>> +		err = vmap_small_pages_range_noflush(addr, end, prot, pages);
+>>> +	} else {
+>>> +		for (i = 0; i < nr; i += 1U << (page_shift - PAGE_SHIFT)) {
+>>> +			err = vmap_range_noflush(addr, addr + (1UL << page_shift),
+>>>   					page_to_phys(pages[i]), prot,
+>>>   					page_shift);
+>>> -		if (err)
+>>> -			return err;
+>>> +			if (err)
+>>> +				break;
+>>>   
+>>> -		addr += 1UL << page_shift;
+>>> +			addr += 1UL << page_shift;
+>>> +		}
+>>>   	}
+>>>   
+>>> -	return 0;
+>>> +	/* Undo the PTEs installed before the failure. */
+>>> +	if (err)
+>>> +		__vunmap_range_noflush(start, end);
+>>> +
+>>> +	return err;
+>>>   }
+>> [Severity: High]
+>> Similarly here, __vmap_pages_range_noflush() checks addr >= end, but does
+>> not check PAGE_ALIGNED(addr) or PAGE_ALIGNED(end).
+>>
+>> If a caller passes a sub-page or unaligned range (for example, 0 < end -
+>> addr < PAGE_SIZE), nr = (end - addr) >> PAGE_SHIFT evaluates to 0, so the
+>> huge-page path still maps nothing and returns 0, while the small-page path
+>> loops infinitely in vmap_pages_pte_range(). And if the huge-page path fails
+>> on an unaligned range, __vunmap_range_noflush(start, end) will hit the same
+>> infinite loop in vunmap_pte_range().
+>>
+>> Should both vmap_page_range() and __vmap_pages_range_noflush() validate
+>> PAGE_ALIGNED(addr) && PAGE_ALIGNED(end) upfront before attempting to map or
+>> unmap?
+>>
+> I think We need to check both PAGE_ALIGNED(addr) and PAGE_ALIGNED(end).
+> As an example: if addr is PAGE-aligned, end is not, and end - addr < PAGE_SIZE,
+> then nr becomes zero. On the huge page path, we simply return 0 with no work performed.
+>
+> At the same time, vmap_pages_pte_range() needs the same guard as commit
+> a739e6b557af ("mm: vmalloc: WARN_ON if mapping size is not PAGE_SIZE aligned"),
+> to protect against unaligned ranges.
+>
+> So will do next version.
+>
+>>>   
+>>>   int vmap_pages_range_noflush(unsigned long addr, unsigned long end,
+>>> @@ -715,7 +726,16 @@ int vmap_pages_range_noflush(unsigned long addr, unsigned long end,
+>>>   
+>>>   	if (ret)
+>>>   		return ret;
+>>> -	return __vmap_pages_range_noflush(addr, end, prot, pages, page_shift);
+>>> +
+>>> +	ret = __vmap_pages_range_noflush(addr, end, prot, pages, page_shift);
+>>> +	/*
+>>> +	 * The page tables undo themselves on failure. Tear down the
+>>> +	 * metadata that was fully set up before the mapping failed.
+>>> +	 */
+>>> +	if (ret)
+>>> +		kmsan_vunmap_range_noflush(addr, end);
+>>> +
+>>> +	return ret;
+>>>   }
+>> [Severity: High]
+>> Can calling __vunmap_range_noflush() and kmsan_vunmap_range_noflush() here
+>> trigger a sleeping-in-atomic-context bug when __vmalloc() or kvmalloc() is
+>> called with GFP_ATOMIC or GFP_NOWAIT?
+>>
+>> __vmalloc_area_node() supports non-blocking allocations by wrapping
+>> __vmap_pages_range() in memalloc_apply_gfp_scope(gfp_mask):
+>>
+>> mm/vmalloc.c:__vmalloc_area_node() {
+>> 	...
+>> 	flags = memalloc_apply_gfp_scope(gfp_mask);
+>> 	do {
+>> 		ret = __vmap_pages_range(addr, addr + size, prot, area->pages,
+>> 				page_shift, nested_gfp);
+>> 	} while ((gfp_mask & __GFP_NOFAIL) && (ret < 0));
+>> 	memalloc_restore_gfp_scope(flags);
+>> }
+>>
+>> When a GFP_ATOMIC or GFP_NOWAIT allocation runs in atomic context (such as
+>> under a spinlock, preempt_disable(), or rcu_read_lock()) and page table
+>> allocation fails in vmap_small_pages_range_noflush() after at least one PMD
+>> in [start, end) is populated (or after kmsan_vmap_pages_range_noflush()
+>> populated the KMSAN shadow/origin ranges), __vmap_pages_range_noflush() and
+>> kmsan_vunmap_range_noflush() synchronously call __vunmap_range_noflush().
+>>
+>> __vunmap_range_noflush() walks the populated PMDs via vunmap_pmd_range(),
+>> which unconditionally calls cond_resched():
+>>
+>> mm/vmalloc.c:vunmap_pmd_range() {
+>> 	...
+>> 	do {
+>> 		next = pmd_addr_end(addr, end);
+>> 		if (pmd_none_or_clear_bad(pmd))
+>> 			continue;
+>> 		vunmap_pte_range(pmd, addr, next, mask);
+>>
+>> 		cond_resched();
+>> 	} while (pmd++, addr = next, addr != end);
+>> }
+>>
+>> Commit 9c47753167a6 ("mm/vmalloc: defer freeing partly initialized
+>> vm_struct") deferred error-path cleanup in __vmalloc_area_node() to a
+>> workqueue specifically because unmapping on failure can sleep. Doesn't
+>> calling __vunmap_range_noflush() synchronously inside
+>> __vmap_pages_range_noflush() and vmap_pages_range_noflush() reintroduce
+>> cond_resched() in atomic context?
+>>
+> This issue also appears real. One possible approach is to plumb the caller's gfp_mask into vunmap_pmd_range()
+> to conditionally skip cond_resched().
+> Suren, Ulad, do you have any preferred or cleaner way to handle this?
 
-On Mon, 2026-10-19 at 16:37 +0000, sashiko-bot@kernel.org wrote:
->=20
-> [Severity: High]
-> Can passing wait=3Dtrue unconditionally in evtchn_set_fn() cause a 3-way
-> deadlock when GSI 0 is routed to KVM_IRQ_ROUTING_XEN_EVTCHN and the
-> in-kernel PIT is active?
 
-Meh, that's insane and would be a malicious VMM but isn't currently
-*prevented* by the kernel. Nothing stops userspace from setting up an
-in-kernel PIT *and* routing GSI0 to event channels.
+Alternatively, we can follow the approach from commit 9c47753167a6 
+("mm/vmalloc: defer freeing partly initialized vm_struct"):
 
-Preventing it is ugly too: we'd have to prevent setting the routing
-while a PIT exists (OK), as well as creating an in-kernel PIT while
-GSI0 is routed to event channels (ick).
+defer the cleanup to a workqueue when |gfp_mask| has GFP_ATOMIC or 
+GFP_NOWAIT，and perform cleanup synchronously
 
-We can't drop the SRCU in pit_ioport_write() like we do in other
-places, as it protects the *bus* too.
-
-Simplest option is probably just to make xen.c::evtchn_set_fn() not set
-the 'wait' argument if irq_source_id =3D=3D KVM_PIT_IRQ_SOURCE_ID. You can
-still do that daft thing; you just don't get to deadlock the kernel
-with it. I'll do that in the next round.
-
-Still annoyed at my own local Sashiko runs for not finding this... and
-it would be nice if lockdep could see through kthread_flush_work() too.
-Not sure how feasible that is.
-
---=-JlmFvHwtW4LRXbe0y1ju
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCE8Ew
-ggWvMIIEl6ADAgECAhANkOKMSmGXhF5eMl0rsRhvMA0GCSqGSIb3DQEBDAUAMGUxCzAJBgNVBAYT
-AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
-BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBHMjAeFw0yNDAzMTMwMDAwMDBaFw0zNDAz
-MTIyMzU5NTlaMGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
-AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTCCAiIw
-DQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOfSIeC0vv1xPQ+dgSxbIIrkaru6skAWJYaGFzmv
-q4Kq+2wU2jxhcWlJg/JeP5jEkq/LM3pn5aaLao79j+XRmS7J1ZpJKUODJVoM4s9MQJhTMvo4qS5Z
-S64g6QR7Obkz3I1Lr3aWeSBmDDEyzue+NKtuWZ1Cxy3RdXo/w5HgRc3l2AercOM3Gt1XonTzEtTb
-Z/Hwc0Sn9Gz8RmGRK6Ka4hVDl8q/2l110KaV233Kh5etP0csXS8MIMdVRfRu3sc5hp13DG7lCKzK
-72a2GEpI8Wpl26G6I1/LMzz/98T+FqjTqxsdquk7Cj7m2vKGLW1BorpQH7WFGPdJQXJe1hfbfiZA
-CcVdCtl4nAacFacmsiArZBfX7AQGL7isvHUwwYFEtcApyGW4p2Lt+t8nvU0CANA6BHOpOz1xOP8W
-mAESbUriIjyuTUf3fJ9oDNCurVqhASMJCDaWI3lYX/QAoiAzt6akqbbZxo2ujW7mGGqc0KxqE2cs
-h2T79v7pC8aUtHBfwNrTR19GnZVxE0eQ7ViIQhR6mpSaUQFA9sG+cmD2G8TnCgYsLa0q8De6F61a
-CBevQGHNzrbZ3JAMneveYg/Jy1XxQHDRcvrMfWKe0jjcWbdKYlaGVPm5V1ILwYz7Yv5ewo3NUrxI
-GJiywe9qPhuJSDZs7VehTuI0FxGIsgKzVjgbAgMBAAGjggFcMIIBWDASBgNVHRMBAf8ECDAGAQH/
-AgEAMB0GA1UdDgQWBBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAfBgNVHSMEGDAWgBTOw0q5mVXyuNtg
-v6l+vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29tMEMG
-CCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkSURS
-b290RzIuY3J0MEUGA1UdHwQ+MDwwOqA4oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdp
-Q2VydEFzc3VyZWRJRFJvb3RHMi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUA
-A4IBAQA+b8Uw53sDspdZgukU+qzLyyHkcjlxGGhHlP+zrmDLKm1wEFvCRS2pili3Hy67i8N4N5NU
-vw5Rg6kv3lxb9S9Rktxk43k+tvm68pl7OxQE55ZjVY87P0lUPGwEqOOwLLyH02ZQcsfq5p5LrOH9
-0JvmvZ1yy73HS+VpDAqOlytE0NSvTIRqFFkKQGQwfjvtql9YflujuNNvJztjBaHKYZsnNSg+J38o
-jYq4TP3pSg3UdVH0PncVjPQyqxC9xef5Xae92Kbkzol3x7Nel3A1bwAkalrDMspvTHvey6LfiBks
-FIqviTnoy7fgjaRAJgHS+RXx/cmuRd3rUAclSVVrYu8RMIIHAzCCBOugAwIBAgIQAzUotrsybJHx
-HTjKOIVdIDANBgkqhkiG9w0BAQsFADBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQs
-IEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
-MjAyNCBDQTEwHhcNMjYwNzE4MDAwMDAwWhcNMjgwMTA0MjM1OTU5WjAeMRwwGgYDVQQDDBNkd213
-MkBpbmZyYWRlYWQub3JnMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA2pYux73kdbYX
-sWF8f1u6DJP91qcqaZetsyfPkZk0B+MmXmAEv0kVes5n15V2mbDThOnpoPFly0UugQO9JYqLfrtD
-tKD5yL58fgrDB9Dw+LQikgrHafl6YSCds5AvUu/8hw2J6noKrcOLJpKlKn9Fl/4IB9Q3JIdLx5aa
-EtTqMalIPqHFOlgrJ7s+aua8xbB8YQ9ahqYBXWRJNv3P/2b1DYtdrz1oqZPE3CcB8Pc6Gf2a1Tcm
-6TAgtEx7Cf1BFcrsrMz7TWHmGQITieNb2r9UYWSc2Gp+GtYFNJCgT0JJXKUBIauPMKBLteYrL8Fo
-ff/uY44dC/mDWjdCP/5x0qelPQjlBvWdHL5zvBTOj06rJ0m3HNI/hnIcDh0Qu2j9reb9rLVcdym6
-bWmBM4uDEB8Zv9Ph0KTBFSy1IosyakuD1j1Os30EzjGfbi0EUXIvnOcYbTBAbM5UAzrxEHMhBvoX
-Pvnx+OyvjJmc9tWxTX6AcSz+m40esbT17URBeZS18afgieiikm5TynlUYP1LciR3hSgGVzvGXnKO
-02VDFR5itGWdRKZ2W5wIShNfWfhSa0D0K5UdIDt5Qc7sjzwK1Yb1sY5Tu0uA5mhIS82q1ov83uxB
-sFkriNnhGv/M1NCDVLBiOMsHu73qUM+yKmgKLwF9Hfn9WI25glbAMI4S5r3hYzcCAwEAAaOCAfcw
-ggHzMB8GA1UdIwQYMBaAFPebok7Tl8X0NA9DDoGFzpGTMq/5MB0GA1UdDgQWBBRcYhqbcGzn1jrT
-JOZaB8O7qllDpzAwBgNVHREEKTAngRNkd213MkBpbmZyYWRlYWQub3JngRBkYXZpZEB3b29kaG91
-LnNlMBQGA1UdIAQNMAswCQYHZ4EMAQUBAjAOBgNVHQ8BAf8EBAMCBeAwHQYDVR0lBBYwFAYIKwYB
-BQUHAwIGCCsGAQUFBwMEMIGpBgNVHR8EgaEwgZ4wTaBLoEmGR2h0dHA6Ly9jcmwzLmRpZ2ljZXJ0
-LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsME2gS6BJ
-hkdodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZT
-SEEzODQyMDI0Q0ExLmNybDCBjQYIKwYBBQUHAQEEgYAwfjAkBggrBgEFBQcwAYYYaHR0cDovL29j
-c3AuZGlnaWNlcnQuY29tMFYGCCsGAQUFBzAChkpodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20v
-RGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZTSEEzODQyMDI0Q0ExLmNydDANBgkqhkiG9w0B
-AQsFAAOCAgEAocabrh1cPd5s3vY5rnlBVQSTc7zs2ZWs67dAIltR+05WELrYClVzzUhMs/LOJPlr
-EUo45UDDomXq38DxFepaPd9+iNLjXfn33EX/IG44j04lU/oF/Rg9VeQILkYLbCZ/x9wOjNHZc4SN
-ydY7Dhvf/sT5aBz88u7D5+azZJ7Qf1U57wYseCH1Mt0nDrtr5y19IJ8D9xJJ33RFL6vfpHZBBAQ8
-+3RqkKNxLoV2aFvQhxdhjNLDqTv3LjUIdicwPraN7JkxEu7CV2Lka7eRqJgkWL7SK0YmBjGpRafs
-+icP/ON5RCCKTTb6VlX8eTG2sJJfsFhvJNCCt6xexbWzWtIrfP7NvPBvwBB737AyEGBZkS5aNizT
-McURJGTv9UKvBh1LF/+tNhYtLvPCN7oecGzhCHht9jcwSkygTo3Y6YlK3QgOu+ncmiBbfeuwlLZ1
-LxbYvG6hgNqXv7u6YyADbYajAQJXJ2OQen39pm3Q/AQSyLYG+B8lDglWsM8tYXPlEdrYJcksGK6F
-nqIX6Bumn43rBooLJdiZp4WmfWdL2pxe+LxRDjprmqu1WprixDxULSTOKJZoqTlugs6y3Bc+if+s
-gHnBBtz9WQ6MtPHkh7zONDAFIKcBmv8OqPQCx0F3Wv3OEybwMpXx0OsKgK8wLldaX1pXcMuyDgTL
-Sqs0AV0OHUgwggcDMIIE66ADAgECAhADNSi2uzJskfEdOMo4hV0gMA0GCSqGSIb3DQEBCwUAMGIx
-CzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQg
-QXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMTAeFw0yNjA3MTgwMDAwMDBa
-Fw0yODAxMDQyMzU5NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqG
-SIb3DQEBAQUAA4ICDwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZe
-YAS/SRV6zmfXlXaZsNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2z
-kC9S7/yHDYnqegqtw4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qG
-pgFdZEk2/c//ZvUNi12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41va
-v1RhZJzYan4a1gU0kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0c
-vnO8FM6PTqsnSbcc0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PW
-PU6zfQTOMZ9uLQRRci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXt
-REF5lLXxp+CJ6KKSblPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQr
-lR0gO3lBzuyPPArVhvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7Iq
-aAovAX0d+f1YjbmCVsAwjhLmveFjNwIDAQABo4IB9zCCAfMwHwYDVR0jBBgwFoAU95uiTtOXxfQ0
-D0MOgYXOkZMyr/kwHQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3
-bXcyQGluZnJhZGVhZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEC
-MA4GA1UdDwEB/wQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwgakGA1UdHwSB
-oTCBnjBNoEugSYZHaHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcyU01J
-TUVSU0E0MDk2U0hBMzg0MjAyNENBMS5jcmwwTaBLoEmGR2h0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNv
-bS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNBNDA5NlNIQTM4NDIwMjRDQTEuY3JsMIGNBggrBgEF
-BQcBAQSBgDB+MCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wVgYIKwYBBQUH
-MAKGSmh0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRHMlNNSU1FUlNB
-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
-g1AeliYo/J4EcHN5FiUBdWgAAAAAAAA=
+if we are already in process context. Anyway, I will look into this 
+further tomorrow.
 
 
---=-JlmFvHwtW4LRXbe0y1ju--
+>
+> Thanks
+> Best Regards
+> Hao
+>
