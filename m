@@ -1,55 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792537043;
-	b=eRWyIyk9pT6QZNR133m9tjPbcQjFwpfOYE4h34qpZbW7E0uQ1tfn3rqXxGxUBq+slzQD
-	 PSy9buz7+G6T4uhqVrLr0jDgKVz3R54qoAPcIdp4Slp+RQ8tEkLbkZAjFjlhJaF4tDnEw
-	 vKXvdplwutrEEaBz/4n3nqdz1XAB+iepOxj4GPyzMeKaCVcNNleGpPWfe/iljGtEzyYeP
-	 +sEk1/mOeOHihP4YLHXGTw3mOmnvggi7mPQYzkL6N+vgjR1pELkZVWJnpnVtOLvke7uS3
-	 TDN3Blx0NnJckHPPcAbGAJ+eR3goin3fv1fma3fUhYYMANkMjSvBoK1CS2SAq81RNow==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792537043;
-	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
-	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
-	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
-	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
-	bh=M+zq3/RTDO/8tOWvja+6CZAxKVk9ioosPOWISPdbg2w=;
-	b=gd+ZtH2sUaI9MNxSmsbQt4AMPaVda+K1Z+FFJjH/L9UPdNki/aoByrzRYhQ4BQZNrSuN
-	 eJ9DT5kHFu7Ojc4W4IXHpQRK/yfOGseWPcxiSB0gCwKqmr3jNUAo28blRYETA4eE7Cbma
-	 Seslo6iCC1/D3ukS43g4SMaBhAPGA+sp+dIqyoeyF+BUplK8e6EDpBQSUByahCNdsgbPa
-	 7zSdAbKU6e9boqStOUWOZg4d9gLlvjATYV8q3V0UiwUI+3fpzQp310a9iJx1zArstQBv9
-	 tIQG9c0ef1X2esCCSlEqRYL1vBSNzu9bCw5dFHqFhgpfh8/TVtEo1uFFnJMZdi/4R9w==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZCW8LJpF;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.176
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792537605;
+	b=DuUabIxR2cKR5YcT7KVnaqmC1pVnrx03rJfCkjNEEu1rytUi9519kdUpxty/vNEXqN1z
+	 Ff9MgzOzWiim8zPuuvHyq/N8B/IWz8asn3bjbRxhA40BWvnEf5SbDqnYvRustn5PS1RrS
+	 Sb1wvguq8/ZNwV8y6GuQW9sPrR8D5lHerwBv3gPEKu8Qf0xqyCHXiSfy4qNmIRTBJn/pM
+	 Byg8c6PEmhx15hZmvpV5SdqIUMEQg4CzwsO6svwwxhMbH0st4Ec/2ThKSZ3GMFilCP32b
+	 +NhQJE9Wk7dKJ8HmkgBImpxdteggmE9WsEdOB9107pRHwgevSt6kFgZdgA/HcR753vQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792537605;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=va6egunWkEGRYKak1VVc3OBpB5rdaiauwOcFiqC3P6w=;
+	b=gWa9LSyjyuxXWY7/rDPIKIDyosamDWTWj1hv2Sv3NKhw0heJjM+NcNU2u4SzhsyKyMUv
+	 temq8ujfJibv1yoBftvzutD7svb9cAiC31ZfaVU3AQpetzNuJfo+9yRi4NUmpLEzfXw0U
+	 Om/0XU6/JcmwSsdxd71nk/iqPvfqRQscX4/kzwSkN804U5Gl69NJNRXwIz0ekw/2WZ1p8
+	 NdVGLuH2zWAfdFfNIvYmfvnxDLN9XbHxHcwGYIeTGPLnZCoFq90Ex5f9Ff/vLCozMSqDf
+	 JdrJ/ZZAtmt2kFpYXNz9mytda53cenBsdbzPW726Zk8nh77j9HftPnKYRvYSpoUPkkA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=none header.from=x6u.co;
+	spf=pass smtp.mailfrom=x6u.co;
+	dkim=pass header.d=x6u.co header.i=@x6u.co header.a=rsa-sha256 header.s=google header.b=Vx8QDRTG;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.176
+Received: from mail-dy1-f176.google.com (mail-dy1-f176.google.com [74.125.82.176])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F22E606A31A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 22:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51836606A319
+	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 23:06:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 51836606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=x6u.co
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=x6u.co
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZCW8LJpF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413371F000CE
-	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 22:57:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792537042;
-	bh=M+zq3/RTDO/8tOWvja+6CZAxKVk9ioosPOWISPdbg2w=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=ZCW8LJpFiui0+jXEzE13ync5DkaPvr/TrQ/Oc+zv849mcTxeAAb8xBftnO8lLiMGZ
-	 GmPk+1tzAoHQnWRdxvrbYUGOjk8DvD1HPyzAHux7ZnQ7Yup9OwF44uYSx8MZUu5VW3
-	 /N6rRuXRvC/b6wTVyG/4it0WXaCFc6CEmzRRPiJQnwDx4b6chd5x5iT/hl+9BD6hp8
-	 95vjRY7Kxsfgj/prjvJB+HsgQsMNRqzPKbZTpLvnyHwrYXgYcUehuq+9eahVqxveiS
-	 tsqwp2iHFKHugoZe9epQuRmsu9EdeqdjZEwEQBdtH6xkwsHM8+U+SHzfC+nugRRCSJ
-	 Y9LyEfn4GAOLg==
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-918f75a68f0so2394166d6.1
-        for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 15:57:22 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AKwUvBwnNbGcLfrnS8t7gMegyVu1bcv0znHj23BqI08+K/n+XLpspkG6iH+qpiQ3PFaBhF1yiPJATwjfWOkoqLojrZo=@lists.linux.dev
-X-Gm-Message-State: AFq9FYIz9XV/v5uVOt7NC8DA9/qY8wFmwa2HU4j83932QxwjzQ0UAVQH
-	Dp9ULBlhr9QQwx/c/wYmiPt51CtUiuViHXCa4p8gz4w8gxGJAQ27dY0/0yN3acBnO/EMjwiWZPh
-	0Y0QoO7hi3zMKc0hv3NwdA+JKtjH/08s=
-X-Received: by 2002:a05:620a:1b82:b0:93c:c4da:f46c with SMTP id
- af79cd13be357-93f57f46150mr129759385a.56.1792537041637; Tue, 20 Oct 2026
- 15:57:21 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=x6u.co header.i=@x6u.co header.a=rsa-sha256 header.s=google header.b=Vx8QDRTG
+Received: by mail-dy1-f176.google.com with SMTP id 5a478bee46e88-35f036b17easo220553eec.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 16:06:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792537604; cv=none;
+        d=google.com; s=arc-20260327;
+        b=iqnl7uD20yMIq2RKNvPynoVCGvJfCMnCC3AI/0OPz0pxaWmV7P8jX1XGD5ugG5NiSn
+         +Ljf5GDaRx7fshoVPmpu4PlxN3pZP1oksAuiEE29bFXP288z1dMPoFNaE3zq586vKzu+
+         gNCRwsTH6I02PTXTuR+E6f5a2peHJ1rKfgQUAWT8RQ6boa8vsubzseSchRt9ak++Eedd
+         spOkph2miBMoWaO2uG03c62eiMT/wECIez+6yArrzA1LDzWivNmM5MnfDuJGfRpFWPMD
+         1vAW7URVEyO/K3OwU41iYQP5aiOT2m7au/gJd6VAnv56hbxAGaDdXdYw30FAQ3FeB/nM
+         N2nQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=va6egunWkEGRYKak1VVc3OBpB5rdaiauwOcFiqC3P6w=;
+        fh=Je+XfjZZELYMeUFG782y9M4oZFPTVtwBgMoamcbwTg0=;
+        b=YKxF80zVWploV/Nrxcb6U9SBuQz0jZfu8Vnh2Qv33J2bGJ9Jrh22kQa7Bqr11Fh+vY
+         ZjNK4alFCbfTXE8fgaHf1JuZnUOPPhY/7pyyE0VztTJRylUl25n/7nAkj83aDaeIXyWO
+         txSn4WHizp+xdrgJ0p7baHoqHSOnfDarAODuXkFTXerCRenP3DlPD8IQ3MT8f9VPV/4U
+         cnhI4mfRhNmMID6b3dVfj4rdHVBm+2qvgiu0Il1RFHGEAsCxUkA9zJTw7hkf5T0vHG/8
+         jO//FemW0Jvk77Nj4VRfpFDMhsJg2yO/KF/56mgd66Kkhk1iF96MvnQZp43TlCcz6y4y
+         yw0Q==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=x6u.co; s=google; t=1792537604; x=1793142404; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=va6egunWkEGRYKak1VVc3OBpB5rdaiauwOcFiqC3P6w=;
+        b=Vx8QDRTGOIM8MIkHejpxC+RasA+O2uHxfg4RF2OSPDMWTIKEvLOQl3UFwmRayr7gLW
+         gqoSsz/gB1tnTN8Iwl/8XquMxqnkf+nzaNw+3e1b5cUoye6Tp9JohvIRBl6bLN1LzjjJ
+         0e5wygiGnx6oAOBEmLq7iNaMKcCwXnwOSYJFvcLd8qMbHYmbxklCgiOg58xeRe09P2Ox
+         zdVGGfh9taSpm68P0vsDM3AGCnJNYxj9f+4QlhlEcdqUrn1tpf3WF96Z0TSGMunn4K3W
+         xBH75XnbiPY8gRB2z7ImXlSRus0FAxwj1TfrRMpVdNIMdjKfIhaxCLkAo/TssD8Zygtu
+         b0AA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792537604; x=1793142404;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=va6egunWkEGRYKak1VVc3OBpB5rdaiauwOcFiqC3P6w=;
+        b=aJrY9LG/dns3dgk+kYx4u6LrWGtT53FN/tsKU49BPV71CPQRJch/2o2w+Wfj/TjeZ2
+         Hsysd0bCqk5/LaCbldQEKKa2VQ03F70TgObzCPUA6d8ZisCJk0YcdBQoWVgscssNAQ+i
+         q44b+KkrZi0qGN/zCh1UDxui+F/rLApAjXDWLOubuuAsGlvGWQLycN97fM5Qhhhp/Ulq
+         RQGgYthCxJEtZ9CQm6PWyliakdldfbEoannBZ96dPQM7YRnja8KES6RK6iu9W1YgIeTs
+         HV/Qbu7Dk8pD0DWzO5OIfjSqSnzoCS6s6P2pkc8labZr/knQhO8n/OZyRElRfbCLIDCj
+         CwWw==
+X-Gm-Message-State: AFq9FYI8rTMXyQHzfLNuRl06OqomotezWfEXvO5PIRCoOQxk9hN4O+NR
+	Ki5mZZLED8BpeKkS/G97KsgaLJa+gLw3u+58AwCw904htP2xctglQv4v92xOHn3KhlPjntMy5Os
+	1nFPj4Ck7RxnQDxzJss1nWFikocANJeR/H6+zsfGmHhWRwm9h3/SKflz3
+X-Gm-Gg: AYBFou0YEC5nxB8TnyDhn3e8wDtd3KTfVthAwbd6fFNj8rQKI3eHaGT66hch5840IFe
+	g82TXvebtQ7Q03TjqIJu4EWAyjMg0CliGi3OZK+agM3+k7M21G1jyp2G/vIEjl+hEgEYkDziE4b
+	6luw5jFUeyGq39eOf6cN/9N8XfqjkG/B/kd8qLRD8uBQozi6uur4rETKmn537m5XDl2CDhmfqQN
+	UNTm2Q9j37IjZKWC1rrS4BRxOXD7wYXBqElHE3nZDJe1+GoHElgX8QlhPS4sB4ffaf3t73hcFcV
+	rrOB+D9Qku2a/MB9GUkkYyijH+H0KEt6RHKfUSU++RLOtxj6sFKVWgdM8qIWI5r1aUUeE0sDbbD
+	W/KcqFVebZBTT8XcXFetXj+o3ikwNhc7gkgbq6/P0sv929e06u8Sm
+X-Received: by 2002:a05:7301:150e:b0:35c:8abb:b4ae with SMTP id
+ 5a478bee46e88-3674f21ac5cmr985386eec.25.1792537603985; Tue, 20 Oct 2026
+ 16:06:43 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -59,95 +103,204 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <sashiko-outbox-175822@kernel.org> <20261018064458.86435-1-baohua@kernel.org>
-In-Reply-To: <20261018064458.86435-1-baohua@kernel.org>
-From: Barry Song <baohua@kernel.org>
-Date: Wed, 21 Oct 2026 06:57:09 +0800
-X-Gmail-Original-Message-ID: <CAGsJ_4zY5PrYgbFvY96R+52Tftp_eVrMkSbf_-2b3Tw0r6FgBw@mail.gmail.com>
-X-Gm-Features: AclHuK8Vh6-rYE5cHcP7BV2gGX_pqiXcWh_s7ZQdO0Z4QWPypCZNnf7iSB_RAHo
-Message-ID: <CAGsJ_4zY5PrYgbFvY96R+52Tftp_eVrMkSbf_-2b3Tw0r6FgBw@mail.gmail.com>
-Subject: Re: [PATCH] mm/mglru: fix using folio_mark_accessed to replace folio_set_active
-To: sashiko-bot@kernel.org
-Cc: akpm@linux-foundation.org, axelrasmussen@google.com, 
-	baolin.wang@linux.alibaba.com, baoquan.he@linux.dev, ehab.ababneh@intel.com, 
-	kasong@tencent.com, lance.yang@linux.dev, linux-mm@kvack.org, 
-	qi.zheng@linux.dev, sashiko-reviews@lists.linux.dev, shakeel.butt@linux.dev, 
-	weixugc@google.com, yuanchu@google.com, yuzhao@google.com
+References: <20261016202909.1289496-1-dhu@x6u.co> <20261016202909.1289496-4-dhu@x6u.co>
+ <sashiko-outbox-174922@kernel.org>
+In-Reply-To: <sashiko-outbox-174922@kernel.org>
+From: David Hu <dhu@x6u.co>
+Date: Tue, 20 Oct 2026 19:06:32 -0400
+X-Gm-Features: AclHuK-t7bu1YsPmx0t33N8Kecw-SsexQz8g2itTSLrXXxZiXwZB62bKOmc9ccc
+Message-ID: <CABdL-LTgFTwJPTD0vyScNsvCSAW_04TgOyO1swVBgHxDcmJsfg@mail.gmail.com>
+Subject: Re: [PATCH rdma-next v3 3/6] RDMA/irdma: Support UMEM attribute for
+ QP creation
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-rdma@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Oct 18, 2026 at 2:45=E2=80=AFPM Barry Song (Xiaomi) <baohua@kernel.=
-org> wrote:
-[...]
+On Fri, Oct 16, 2026 at 4:46=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thanks. I guess the real problem is that we have no reliable way to
-> identify whether a folio comes from in-fault readahead. I've tried
-> various combinations of PG_ flags, but none of them works. So the
-> only solution seems to be separate LRU-add callbacks for readahead
-> file folios and other folios.
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Critical] RDMA/irdma: invalid sg_page() on dmabuf QP umem in irdma_cop=
+y_user_pgaddrs()
+> --
 >
-> I've drafted a version below, but it's pretty ugly and feels like
-> using a sledgehammer to crack a nut for a quick fix =E2=80=94 simply not
-> worth it. Maybe the best approach is to revert 6cbdd9726fb5 and
-> leave the proper fix to Kairui's MGLRU-FG.
+> commit 200a925805870f2d575192eafe96be3cef694b7d
+> Author: David Hu <xuehaohu@google.com>
+>
+> RDMA/irdma: Support UMEM attribute for QP creation
+>
+> This commit adds support for the 1-step queue buffer creation model for Q=
+Ps
+> via UVERBS_ATTR_CREATE_QP_BUF_UMEM and ib_umem_get_attr(), while retainin=
+g
+> backward compatibility with the legacy 2-step MR registration model.
+>
+> > diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/h=
+w/irdma/verbs.c
+> > index b2ffdc8e3d677..ab25445f38282 100644
+> > --- a/drivers/infiniband/hw/irdma/verbs.c
+> > +++ b/drivers/infiniband/hw/irdma/verbs.c
+> [ ... ]
+> > @@ -713,6 +708,52 @@ static int irdma_setup_umode_qp(struct irdma_ucont=
+ext *ucontext,
+> >               ukinfo->rq_size =3D ukinfo->rq_depth >> ukinfo->rq_shift;
+> >       }
+> >
+> > +     if (attrs && uverbs_attr_is_valid(attrs, UVERBS_ATTR_CREATE_QP_BU=
+F_UMEM)) {
+> > +             struct irdma_mem_reg_req qp_req =3D {};
+> > +             struct ib_umem *umem;
+> > +             u32 total;
+> > +
+> > +             /* Legacy context does not provide depth info */
+> > +             if (!ucontext->use_raw_attrs)
+> > +                     return -EOPNOTSUPP;
+> > +
+> > +             qp_req.sq_pages =3D DIV_ROUND_UP(ukinfo->sq_depth * IRDMA=
+_QP_WQE_MIN_SIZE,
+> > +                                            IRDMA_HW_PAGE_SIZE);
+> > +             /* In case srq is used, this will be a single page */
+> > +             qp_req.rq_pages =3D DIV_ROUND_UP(ukinfo->rq_depth * IRDMA=
+_QP_WQE_MIN_SIZE,
+> > +                                            IRDMA_HW_PAGE_SIZE);
+> > +             total =3D qp_req.sq_pages + qp_req.rq_pages + IRDMA_SHADO=
+W_PGCNT;
+> > +
+> > +             umem =3D ib_umem_get_attr(&iwdev->ibdev, attrs,
+> > +                                     UVERBS_ATTR_CREATE_QP_BUF_UMEM,
+> > +                                     total << IRDMA_HW_PAGE_SHIFT,
+> > +                                     IB_ACCESS_LOCAL_WRITE);
+> > +             if (IS_ERR(umem))
+> > +                     return PTR_ERR(umem);
+> > +
+> > +             iwqp->iwpbl =3D irdma_setup_q_pbl_from_umem(iwdev, umem,
+> > +                                                       iwqp->ibqp.pd,
+> > +                                                       IRDMA_MEMREG_TY=
+PE_QP,
+> > +                                                       &qp_req);
+> [ ... ]
+> > @@ -3532,6 +3574,64 @@ static void irdma_free_iwmr(struct irdma_mr *iwm=
+r)
+> >       kfree(iwmr);
+> >  }
+> >
+> > +static struct irdma_pbl *irdma_setup_q_pbl_from_umem(struct irdma_devi=
+ce *iwdev,
+> > +                                                  struct ib_umem *regi=
+on,
+> > +                                                  struct ib_pd *pd,
+> > +                                                  enum irdma_memreg_ty=
+pe reg_type,
+> > +                                                  struct irdma_mem_reg=
+_req *req)
+> > +{
+> > +     struct irdma_pbl *iwpbl;
+> > +     struct irdma_mr *iwmr;
+> > +     u32 total;
+> > +     u8 lvl;
+> > +     int err;
+> > +
+> > +     /* iWarp: Catch page not starting on OS page boundary */
+> > +     if (!rdma_protocol_roce(&iwdev->ibdev, 1) && ib_umem_offset(regio=
+n))
+> > +             return ERR_PTR(-EINVAL);
+>
+> [Severity: Critical]
+> Can passing an IB_UVERBS_BUFFER_TYPE_DMABUF descriptor via
+> UVERBS_ATTR_CREATE_QP_BUF_UMEM cause a NULL pointer dereference or write =
+to
+> the wrong page during iWARP connection establishment?
+>
+> In irdma_setup_umode_qp(), ib_umem_get_attr() resolves the buffer descrip=
+tor
+> through __ib_umem_get_desc_dir(), which accepts both IB_UVERBS_BUFFER_TYP=
+E_VA
+> and IB_UVERBS_BUFFER_TYPE_DMABUF. Previously, IRDMA_MEMREG_TYPE_QP MRs co=
+uld
+> only be registered via irdma_reg_user_mr() -> ib_umem_get_va(), whereas
+> irdma_reg_user_mr_dmabuf() hardcoded IRDMA_MEMREG_TYPE_MEM.
+>
+> When irdma_setup_q_pbl_from_umem() calls irdma_handle_q_mem() ->
+> irdma_setup_pbles() -> irdma_copy_user_pgaddrs(), the driver extracts the
+> first SQ page from the scatterlist:
+>
+> drivers/infiniband/hw/irdma/verbs.c:irdma_copy_user_pgaddrs() {
+>         if (iwmr->type =3D=3D IRDMA_MEMREG_TYPE_QP)
+>                 iwpbl->qp_mr.sq_page =3D sg_page(region->sgt_append.sgt.s=
+gl);
+> }
+>
+> and irdma_setup_virt_qp() assigns iwqp->page =3D qpmr->sq_page, while
+> iwqp->sc_qp.qp_uk.sq_base remains NULL for a user-mode QP.
+>
+> On an iWARP device, irdma_accept() and irdma_cm_event_connected() map
+> iwqp->page to write the LSMM or RTT WQE:
+>
+> drivers/infiniband/hw/irdma/cm.c:irdma_accept() {
+>         if (iwqp->page)
+>                 iwqp->sc_qp.qp_uk.sq_base =3D kmap_local_page(iwqp->page)=
+;
+>
+>         cm_node->lsmm_size =3D accept.size + conn_param->private_data_len=
+;
+>         irdma_sc_send_lsmm(&iwqp->sc_qp, iwqp->ietf_mem.va, cm_node->lsmm=
+_size,
+>                            ibmr->lkey);
+> }
+>
+> drivers/infiniband/hw/irdma/cm.c:irdma_cm_event_connected() {
+>         if (iwqp->page)
+>                 iwqp->sc_qp.qp_uk.sq_base =3D kmap_local_page(iwqp->page)=
+;
+>         irdma_sc_send_rtt(&iwqp->sc_qp, read0);
+>         if (iwqp->page)
+>                 kunmap_local(iwqp->sc_qp.qp_uk.sq_base);
+> }
+>
+> With a dmabuf-backed ib_umem, calling sg_page() on the scatterlist breaks=
+ in
+> two ways:
+>
+> 1. When CONFIG_DMABUF_DEBUG is enabled (where dma_buf_wrap_sg_table() cle=
+ars
+>    page_link) or when the exporter does not populate struct page pointers
+>    (such as uverbs_dmabuf or P2P/MMIO exporters), sg_page() returns NULL.
+>    This leaves iwqp->page NULL, so irdma_accept() and
+>    irdma_cm_event_connected() skip kmap_local_page() and pass a NULL
+>    qp_uk->sq_base into irdma_sc_send_lsmm() / irdma_sc_send_rtt(), which
+>    immediately dereferences qp_uk->sq_base->elem.
+>
+> 2. Even when sg_page() is populated by a system-RAM exporter, if userspac=
+e
+>    passes a non-zero page-aligned offset within a coalesced multi-page SG
+>    entry, ib_umem_dmabuf_map_pages() advances sg_dma_address(sg) and
+>    decrements sg_dma_len(sg) in place without updating sg->page_link:
+>
+>    drivers/infiniband/core/umem_dmabuf.c:ib_umem_dmabuf_map_pages() {
+>                 if (cur <=3D start && start < cur + sg_dma_len(sg)) {
+>                         unsigned long offset =3D start - cur;
+>
+>                         umem_dmabuf->first_sg =3D sg;
+>                         umem_dmabuf->first_sg_offset =3D offset;
+>                         sg_dma_address(sg) +=3D offset;
+>                         sg_dma_len(sg) -=3D offset;
+>                         cur +=3D offset;
+>                 }
+>    }
+>
+>    As a result, sg_page(region->sgt_append.sgt.sgl) points to the start o=
+f
+>    that SG segment rather than the SQ page at the requested offset, causi=
+ng
+>    kmap_local_page(iwqp->page) to map and overwrite the wrong page.
+>
+> Should irdma_setup_q_pbl_from_umem() (or irdma_setup_umode_qp()) reject
+> region->is_dmabuf, at least when !rdma_protocol_roce(&iwdev->ibdev, 1) (o=
+r
+> unconditionally if dmabuf queue rings are not supported)?
 >
 
-Before reverting the patch (and regressing workloads such as kernel builds)=
-,
-I tried the following two options:
-
-1. Remove folio_test_referenced() as PG_referenced might interfere with sys=
-call.
-
-diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
-index ab69b9930893..e231e56f0257 100644
---- a/include/linux/mm_inline.h
-+++ b/include/linux/mm_inline.h
-@@ -327,7 +327,7 @@ static inline unsigned long
-lru_gen_folio_seq(const struct lruvec *lruvec,
-                  (folio_test_dirty(folio) || folio_test_writeback(folio)))=
-)
-                gen =3D MIN_NR_GENS;
-        else
--               gen =3D MAX_NR_GENS - (folio_test_workingset(folio) ||
-folio_test_referenced(folio));
-+               gen =3D MAX_NR_GENS - folio_test_workingset(folio);
-
-        return max(READ_ONCE(lrugen->max_seq) - gen + 1,
-READ_ONCE(lrugen->min_seq[type]));
- }
-
-2. changing to > 1 for folio_lru_refs() to reduce the syscall
-ra/non-ra interference:
-
-diff --git a/include/linux/mm_inline.h b/include/linux/mm_inline.h
-index ab69b9930893..a3a894aae10b 100644
---- a/include/linux/mm_inline.h
-+++ b/include/linux/mm_inline.h
-@@ -327,7 +327,7 @@ static inline unsigned long
-lru_gen_folio_seq(const struct lruvec *lruvec,
-                  (folio_test_dirty(folio) || folio_test_writeback(folio)))=
-)
-                gen =3D MIN_NR_GENS;
-        else
--               gen =3D MAX_NR_GENS - (folio_test_workingset(folio) ||
-folio_test_referenced(folio));
-+               gen =3D MAX_NR_GENS - (folio_test_workingset(folio) ||
-folio_lru_refs(folio) > 1);
-
-        return max(READ_ONCE(lrugen->max_seq) - gen + 1,
-READ_ONCE(lrugen->min_seq[type]));
- }
-
-In both cases, kernel build performance holds up. Reverting the
-patch would regress system time from 3m40s to 4m4s.
-
-I believe either option would eliminate or reduce interference
-with syscalls that use PG_referenced.
-
-All we need is to give in-fault folios slightly higher
-priority through folio_mark_accessed(folio). I now realize
-the original patch might have gone a bit too far with
-|| folio_test_referenced(folio).
-
-I will wait for Ehab's and Kairui's testing results on these options.
+For irdma, dma-buf heap based queue is only supported on RoCEv2 (CVM),
+not for iWARP.
+So this is not an issue in practice.
