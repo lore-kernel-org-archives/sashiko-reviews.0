@@ -1,59 +1,152 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.227.15.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792530117;
-	b=yJGO/PwBmyE9Nw5TSjna21FxIUs20NtwRVNzWHdB2h1nkzyRDDMcGa9p4gd6kUA8N6zf
-	 9RXJbeYIsXfIHD2xoJ994TZ206/OoGUwkGcyn/Zpt5dJ9xPecUGTDajWETX+lC7pP9Wwz
-	 M1rXwYLGdxkUc2VgD2IM9eEeFG6LJJYGebTm9giFSWdyzkBwd1V56PJ2bZHVNs75jd5L2
-	 P0nyqDPh+b8CB6Cx9X6IuF6hAPHuXawSwlE3NVCTMQNK17bM59F7WjXosNxOndfNNjVTG
-	 qXQme9IqbO7xweQciq/SB/MtHf8LW9xf+dWxmC7QgdhFOsLLnN4vEhT5CpnldVm0wVw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792530117;
-	h=DMARC-Filter:DKIM-Signature:X-UI-Sender-Class:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:UI-OutboundReport;
-	bh=brKNXuDD/mpiRHORLBW7NSVaDvD0hq9jnS4V3xq/32A=;
-	b=KPwc6mV+BSysM1jC+csJbvdWpE2Icp3amcQ4V47vCLyXI1LBAMAku7eHFt0+IapkK3YO
-	 GnarM7t2wyXXIblYW0Azz2zixwCUJd6JsZ71yItlvxXiNAdoXAML4Cd/6ClTe/jTAQ2KD
-	 q1MFxSWBoiKg5w92hhRHMn5e4NgiRMJy0J4GzZk4YO5WaMyzNkDmGBp0b7P3QUbvj2sly
-	 kR2XV8dIC5zhK0usOL7jF/ns0PJ8yJxxFXYpdoiKM2qyar3wyLjte6SJSl+Y2sjGtKZnf
-	 uPUgSbQwkLcXE6dsqS5LFZcoM8P+uK1dPC+f7231vA/W/4rI3iP43o5gLxUxilYUdfw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmx.de;
-	spf=pass smtp.mailfrom=gmx.de;
-	dkim=pass header.d=gmx.de header.i=w_armin@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=im+1fV3V;
-	arc=none smtp.remote-ip=212.227.15.18
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.103.14.40
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792536198;
+	b=jFr9XfMRRcGQzF1VpEbDB8rOUv4tfmnlemVcmV9s41OEghWHYEgHbNC8+vLg0dkk3E6O
+	 Zir+R+piHjt1j3wBmvlvA7MDsK7pZy98bntWgRzj1Um73n7Sk8Vaouo+yhUSeLKpoHK2o
+	 S1Dydn8rECJml19l9sy7O2ebw/sf5F0YnEdVOyVjQfK0i6p+nNu33Bfv15we+NN9t9JZ1
+	 UOsB0vmPeRhCYV6ClKbL19eOTxkG1WmGLLXfvlCPrXWz6XD49bfX/RfaRxVxVKahiYGqV
+	 YlrVoDgIz9W9AlPdVOXuhq4uSoWufvhxoXhD9yvV63I1n/QMT8YaSESVP4hcivWeecQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792536198;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:CC:Subject:
+	 Thread-Topic:Thread-Index:Date:Message-ID:References:In-Reply-To:
+	 Accept-Language:Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
+	 x-ms-publictraffictype:x-ms-traffictypediagnostic:
+	 x-ms-office365-filtering-correlation-id:
+	 x-ms-exchange-slblob-mailprops:x-microsoft-antispam:
+	 x-microsoft-antispam-message-info:
+	 x-ms-exchange-antispam-messagedata-chunkcount:
+	 x-ms-exchange-antispam-messagedata-0:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
+	 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-originalarrivaltime:
+	 X-MS-Exchange-CrossTenant-fromentityheader:
+	 X-MS-Exchange-CrossTenant-id:
+	 X-MS-Exchange-CrossTenant-rms-persistedconsumerorg:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=pvPHe/zCamIdVj4Frx7gW/Bx2Op7Npdhr434BHUKWHY=;
+	b=ZJKUMOLXfwcxrGn+bxrVTk5THbp5ba4BcrNKg4zMvM2ypib2VEo4jgD50qy2o+hzQHmc
+	 HAVS3aoDYiRW/BHLOlyKR63sDdcs3zfCzDmXi67pcHj3PakEnJxD+KIhOJYMYLYgu7WOH
+	 Ezrte0ByTvy3duIh4RLcXcgIq8QMMkt8oqJ+HjTPykZbPpJMc62N7l3nHVMr3OfvjiyB2
+	 S/W+/nN44MQEdzT1Baed4rCSCEwYHoF5yuHQ6aU4TBWUyIOePTamQPIqdXGZfBUr5b0rL
+	 XkgMFteVB/41O8eIlcTBFX7ODPXlUWIzK5PhyDOby48I4VlowfHz417wumjg3CK4MHQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=outlook.com;
+	spf=pass smtp.mailfrom=outlook.com;
+	dkim=pass header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256 header.s=selector1 header.b=Rl204Ky6;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.103.14.40
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazolkn19013040.outbound.protection.outlook.com [52.103.14.40])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BCC606A320
-	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 21:01:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 57BCC606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B09606A31A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 22:43:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 06B09606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmx.de header.i=w_armin@gmx.de header.a=rsa-sha256 header.s=s31663417 header.b=im+1fV3V
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1792530107; x=1793134907; i=w_armin@gmx.de;
-	bh=brKNXuDD/mpiRHORLBW7NSVaDvD0hq9jnS4V3xq/32A=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=im+1fV3VQvRdS0iK8cqKB2/Wc6Pr4AZVPpi2oSmuw4uVbkNY57skExtC0vakzbFX
-	 8A5OMRNo3I+FKUFTXt6TaD9ds254uqNNU75SxH6FgTNyDGe0uKOJeiGWr24HT81YS
-	 KukAHa5JBvoyY17d8xmyWL7rVdfGWXQOgFbRW1Nds/GdzXtbHi64t/kqDo0pGBiH3
-	 WmyzgGBJGzUucmvZWvi+orhl//Ajlde5b7L24aPIr/Qd/FozpBsfdsu8qb1hzhp+1
-	 FsK4OUQCFGRb1gE/dDWiOEKFy13NNXKIgLF0sQsBiRby3ApCP9fyuv9MeGxhK6BuX
-	 oKb710z4pT6I/sufdg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mr9Bk-1wmhI51t7m-00fFd5; Tue, 20
- Oct 2026 23:01:47 +0200
-Message-ID: <f58e0b3a-d82a-4e3e-91f0-2c9114019f26@gmx.de>
-Date: Tue, 20 Oct 2026 23:01:46 +0200
+	dkim=pass (2048-bit key, unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256 header.s=selector1 header.b=Rl204Ky6
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=O5neX+2jBcJJjo4Y/PPMkcjr9OM5LOcyWQPgWg4n9MKOx+lO1alEVxcG1lB76Brm50SBrDHlUC/xJc4ILkdlVyUKviPKHnk55r8udkDvVWVzTo/dbKHzEMrkn8X7ETo8neFVNjz9P6YRuNqabnl/5zsU7+3ncp8qSFcrWJxBrfkPx3r5bjRfsPpOoWaTfjUgXfKmgP0x1pSfdO9mqX2lcAHio4hIgQaxsDpzlpWGmZgvS033bVHxj3ZD1Mg12qvdkDPRMOCpXxTUqLoYu19yAyWZjF8C82tdolNTdkDYodUE///O0ly5PhgxLuYVes6e4ykODySVNCxo3NsdR5Dzsg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pvPHe/zCamIdVj4Frx7gW/Bx2Op7Npdhr434BHUKWHY=;
+ b=d1YLoUmOefAslQD41cK49ajGjWAgouxXEBuvCcF9JW0nvbIHfo+y+x8PDNUbGZ3Yxug07a/XpuiWGTqWZ8pQDq76Tk6Tb7jt1V5lHM1gPYaMCYxd6otMWkNaUtxqnuoVd9OuNQxCgTakQLDewiSfKcOxsPsrM+QeKgyMU3LzKq77CZCR/LrEykmSdaNDvXFFNE5+3Vba/D3+MICOeP7Gka0X2g3IbOxvE/SF5b8kM/yaFq5GMCPYPOAtyU1CTT4cyPt6i7hu/q/NXn9bxqZbCSn0XFnRm5fuKDwsbOG/wMPnogQw3zt6E8r77PbqUL4BpbbEU5MyOqF27Y7RKj6WBQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pvPHe/zCamIdVj4Frx7gW/Bx2Op7Npdhr434BHUKWHY=;
+ b=Rl204Ky6z7tHXQV/+fuoWzsjlrDe4GG2j6aBaWLHRcGGwX4i3Fbiye/AK0pScWybq0QrxJXlfb14sZ6Ed+c0qix6DX/pw+pBOY1IwxddykTEGXVATgrCqsNvlZ1CAxFZxqDpX1VdLH2dxJ/sBw7Q6r8QN+tR0ZIW3DFGWuBEVjekxbjV9DoMqTCLkU37ysGuj1C4R6VoHYGendi+EisW+VQxfgM0ODsVl7nHJYKr/q5IiQeORKr5NuzH33+CsjUYE7fOtHw0DCIZyd4H1M5W40hQv0QtbhEVCJXEgStuq6T9HTyCbI2uJYFDGdmYT+0L+nD+aLTBaTGBYhKFF0xeYA==
+Received: from MN2PR02MB6863.namprd02.prod.outlook.com (2603:10b6:208:1d7::20)
+ by SA6PR02MB10792.namprd02.prod.outlook.com (2603:10b6:806:434::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.19; Tue, 20 Oct
+ 2026 22:43:14 +0000
+Received: from MN2PR02MB6863.namprd02.prod.outlook.com
+ ([fe80::da67:fd0f:d96d:ac53]) by MN2PR02MB6863.namprd02.prod.outlook.com
+ ([fe80::da67:fd0f:d96d:ac53%4]) with mapi id 15.21.0522.017; Tue, 20 Oct 2026
+ 22:43:12 +0000
+From: Michael Kelley <mhklinux@outlook.com>
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+	"linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>
+Subject: RE: [PATCH 1/1] PCI: hv: Spread load across CPUs when selecting
+ effective affinity CPU
+Thread-Topic: [PATCH 1/1] PCI: hv: Spread load across CPUs when selecting
+ effective affinity CPU
+Thread-Index: AQKiU2Lgi+7G1r+Syuirp5hWzTTj9LV835CAgAA9bOA=
+Date: Tue, 20 Oct 2026 22:43:12 +0000
+Message-ID:
+ <MN2PR02MB686341E9C02FDA9A7615AD4CD4672@MN2PR02MB6863.namprd02.prod.outlook.com>
+References: <20261020182433.336637-1-mhklinux@outlook.com>
+ <sashiko-outbox-179492@kernel.org>
+In-Reply-To: <sashiko-outbox-179492@kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: MN2PR02MB6863:EE_|SA6PR02MB10792:EE_
+x-ms-office365-filtering-correlation-id: 9d9aa633-e246-4e4b-e334-08df2efb85a9
+x-ms-exchange-slblob-mailprops:
+ wzZnFI/JsIjEFWbiivP8ClEfvLEOQFGzLGJYN1TOvbLbPbAr5GveGNsHGpxtojdTHOCb8jLT+6JMbAq0EDG+D5+kk9dOuILIAoKgpRlfSJZPXnzuyiINjIJObZGY1FakoqIL18zrBJNA6EZcEA/0tGQMm6R+T3Pc9Ot5018p9RdfGggzxMImwmXyHFF9c24cTxYNC2GglWA9z7T/5sRGJ7QcCApC255pn77Tw5IB0xFGcSHQ+kjHs2Sh9SivEAZf6dQTLWZs3qyhIy7HARiW8G1YraQCRVJ69Dctes2OLhbkyvHCVjVlaMMZsJuM+AdIPAwA2uTLdewyegOWtSPHsRfmO2MKTgYDNZsh1ocEALzHd4LgYjN5dKuGrpF+dyEzb0ydN3xvfOYjW3B7fFN/Yw8X71wJqS5JT9V6tw8o/mXKavgN1Pl3BVVlg5vgoUx48U6awJOBM1pl3HyKYK5ATQca0Z/q3DLI+1+783gDJPkWLEaKgR6HrMJrHd02XdjpOmaz49mYk4OdLG60Gg0bOxB/Wj+brAWnYoiW4ScPhn6hbCyNWuHsfAwnSwFjhk01aTQsKUhwO6toegQZZc8As2nDWTlmn8WFzqgb9tuRRchlqNMDuiK0BQGv37EoL0WsdcDr1YpeBj3KeC0jXqKBL+siV2XHPgOO3BNYe3CeuD9Zei452iqALujHYyYotwz9j94IQFwVctqIFGsz6A0jywazCfm0dNeC3W9DdQzgxRTwPzzVoY1r0DfxzAvkxPOnFJ7AqMWrgrIWkpXIo3tX8ko9PmR7dA0lppzoXrNUFWlYYDMkFq/mlsjWSpzkcR+ecBTovxB+fzA=
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|15080799012|51005399006|37011999003|41001999006|13091999003|55001999006|8062599012|8060799015|19110799012|13031999006|31061999003|24021099003|25010399006|102099032|3412199025|440099028|4302099013|1602099012|12091999003|40105399003|1141799003|10035399007;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?UJsH00FEy/+2/80WEJcJM2MrAtkBwToRnOC49UvX20ALoeQmBMkcBunsmgQB?=
+ =?us-ascii?Q?7W29guf7G1x0Rs5LWgLk7kmlD7srFqlu/jIh+tFeg1gtGermb/WZKwN0ZzfL?=
+ =?us-ascii?Q?BAK75LPzk7sdlGmJzCnGoQNANc/bJShWjJ08fj02av8mWrIa8QEjKpYV79Y3?=
+ =?us-ascii?Q?23hRY4Zpv/AmK7Ateu5cTu1ePh4yAPGtS28id1dB6PeSpp7y12afbKPpGqub?=
+ =?us-ascii?Q?6v2eBkEKhjk6jwDB8AJL6YqLdq8ZtMBSqY+8JYfCWqXy4NsHcI4XTaxsIdEr?=
+ =?us-ascii?Q?gcT/fDD/HTbR6+t/Gy2+zK4nI2ttmlrWsFsPgGJWSpsHqI9hM0HIuBVVF/QM?=
+ =?us-ascii?Q?EavyWqUBDatp7MgybWbWHo7G+uaRvMpatVFNFgPUlFo1b0nLZNzsQi664Cnl?=
+ =?us-ascii?Q?TurbghEcNZtxa7tS4WzadMSQmZtnvdyAStssJPeB4Taf810RIwVYo5rsZvlH?=
+ =?us-ascii?Q?VslMnt/JgLNrtcydieHHwZSUHFjF5DFQYTHTrtQaTDwTrhTtqKsrowZMTtvO?=
+ =?us-ascii?Q?G2B/HFJLC10+Afqa24tMlQDCMZmczWnNaHsQyB7veoj6fae0wfNCY2ZqW4TI?=
+ =?us-ascii?Q?/srlr8JY8kNRPN3WCuVz7mIyBgeHVPXAC+/S6WftwSMfK8mFWru8AJmzg3Rn?=
+ =?us-ascii?Q?aYbUSmGlTfNFYRiOOqkNa+Q9vreeMZvMhF8AWuAV0mie+t4oSq5wWJ2pZmvH?=
+ =?us-ascii?Q?gdjfUoa75w5TwbLw+I51c/sm7PLUx5sxl0wTRiKB3oud4gZhmy49+EJePOI4?=
+ =?us-ascii?Q?equ2rWLIwEMnCxQiWkDum62yRhtCzGWawCEQ03Ec4BLalVB9D9laG/hMqDOm?=
+ =?us-ascii?Q?ezxIPECjVWV3mXzgR1IrNqVAteVpUFg3zFsLUBaImJ7QZRT0V2vEOEWDjz1L?=
+ =?us-ascii?Q?tvcspEuqwXX+nitfh0JhNfGzVt0/ljCtK7GoQ+HjyodRw1Q1eiQIvNtuvTkC?=
+ =?us-ascii?Q?tEj6BakB2fCuCQKumrgcfL2elHiCK1vC1wPGetURwsajvLkx3A5yHPqo7mLa?=
+ =?us-ascii?Q?4Do+6Ok0vuZckTqCG9gs4hwXpACoYzc3bbZ9ydtlwPJ6IIrbx5cLiBVfsuZY?=
+ =?us-ascii?Q?glNp9OPxcrv7ugSVVDD+V55hrkv7iEDkHR78AXaBxXE5NPrNzLeLl8+EycaI?=
+ =?us-ascii?Q?vzvor6MG/Tdl+IuZKQoQkFPUPTn38vcfYluA/CB+OQ7FVWSD9GHDVxAKhTGI?=
+ =?us-ascii?Q?1mrR66Vyc9TN6CPr?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?xzS9OVjT/SHmOygk02lBqrxRQg4KvccNsvBBSMxX6EGJINMqASfTtEwb8dVN?=
+ =?us-ascii?Q?GZcWbVzMeygYsuAHL+BOMaOA5D1iHdYxbOQPTCKVLobVsTxdHKoJrtnk6LyZ?=
+ =?us-ascii?Q?WDSp0u+3N+Gwx0FUHyb0Io7eVqMQYgwjFx1LZ7JqA61FQ0s0q6Ou61LHGsO2?=
+ =?us-ascii?Q?GJNelgKpFvHDLFcHaNBnvdl/V0/WMrl2XKhzpe/3tTSghZxWrQjf1v+XgwF5?=
+ =?us-ascii?Q?JXjMrWud0kfenictByVXvnP5jnRGQlClx82YcOoi+KyG74KFu/I2viI4+sH4?=
+ =?us-ascii?Q?jWvyz4lPhyU1EZkkAAeDGPbrUB3EtUe6nATk47bDJ/gWpyu2KbIkSatbw0VY?=
+ =?us-ascii?Q?JS35GalXtxh32di9ENUBJ7LtZHvq9MY4R+XNoSBgMPk3nClNJd5A/P8dVF9n?=
+ =?us-ascii?Q?vTirBafcWxuXqVBeE5vInA9VSadQHmIl5VQT8tr1aD1B1zya0bLctf7jdDY9?=
+ =?us-ascii?Q?Qhk4/dNRplhamQAm1SCXlQiKRkQn4CcmqPvs7ozH6/YIjUVwHPnJOAdrHNj+?=
+ =?us-ascii?Q?ITqV3zC65mfjmi9dvSLvGEZbCCl5FEHKGGdXEpqRa5YTqbPhWwGY84AhKyjl?=
+ =?us-ascii?Q?Z5IsYo/+xcmdRtFp26fm28iwqSEET50IeFKNmcGHcoam2wzHA0nj7M0453Gq?=
+ =?us-ascii?Q?KkSwAMMM0yipq/N0S7mLh6J8fVMdZHMeoarVhgvU0Tar3uPrRlE8PqYMocqi?=
+ =?us-ascii?Q?n4sCuQ3Fa08TBmpLOuz3uO7savUbmybEdhLjnyigOAPLePR5uvV8nQh+Oezz?=
+ =?us-ascii?Q?J1NK98rW5EcNKEUuTxPMvgecKi8YJ0RxNrA4j/F99FsCRSmHE8X7TxWi39FN?=
+ =?us-ascii?Q?oWYq8jIi0FFqxqO12jzTPkYzbOjuIGxEDPqBP5fMd9knLY+vkr72Y/KwAYF9?=
+ =?us-ascii?Q?kWKSYNOyp6X8aGThNdbKxO8Elq2GgIvlwQIGqGiksZ80wsLFUyLMHLBENw+a?=
+ =?us-ascii?Q?nOP9BQAv1qiFRWS7bI4bSim0dQ4NalMgvKe3jnGKtJRc4cTn52XRnhvr30dR?=
+ =?us-ascii?Q?qGMBmSi3NnSazi3/RiOz4lhO8/JbHgvJN3u/gDxwbVlD21+R7ztoySSMbkCC?=
+ =?us-ascii?Q?ll2hS5Z0EEj4Ie4V4h7x9FZ2FWkhmMqv3GH3gHzVNNyMB/ifZl3RsiXUKdJZ?=
+ =?us-ascii?Q?OrTk2Kgt9CS60mCl+hi9ZSm3sfMOb9Z2NlLPgwKTbPvqITf2zJnpKAZTDyGx?=
+ =?us-ascii?Q?FCpBbVAVbKuVEAqhBp8oL07QTjKsjlYbXfTg7P4xH3qPIzei/cP8eW5WWIR6?=
+ =?us-ascii?Q?IxU7nOmjnruaBCvkcOP9fLSWMRXRXheIy/3RyJpoDoTEOXPTvryw0OKy94c/?=
+ =?us-ascii?Q?Z0gFm73MQwNgVwKj1nONEhjroHsFHZzKl92Tdeq34pdc8+mohjPIAYfdjX1P?=
+ =?us-ascii?Q?0Pavf0s=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -63,255 +156,259 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/10] leds: class: Take the LED access lock when reading
- brightness_hw_changed
-To: Rong Zhang <i@rong.moe>, sashiko-reviews@lists.linux.dev
-Cc: linux-leds@vger.kernel.org, lee@kernel.org
-References: <20261018135339.1109271-1-W_Armin@gmx.de>
- <20261018135339.1109271-7-W_Armin@gmx.de> <sashiko-outbox-176178@kernel.org>
- <81e458c4-b9c9-4881-b669-16c87171046f@gmx.de>
- <24d07a72cfdfb39963fc3771fc105deb3b2eaddc.camel@rong.moe>
-Content-Language: en-US
-From: Armin Wolf <W_Armin@gmx.de>
-In-Reply-To: <24d07a72cfdfb39963fc3771fc105deb3b2eaddc.camel@rong.moe>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:BDxPwBKACZED5zR3Ckd43m13ycT3+K1/ShEO7Bx7wztTkvcWLNN
- eHREXjV/fMtZC/JtRFvoOw19Tljt8GO6PcpczYQdPNF2UPz+khUiG21Q9KdQ8wXFkNTrx4L
- J0D38GqIgY3WZvzSqISTEG5hoPzo7WZeD0FNWMy5FKiNizPRAcccSyYo5le87vrJS6VnCW+
- sgpp53ojWpVTGCtTEO+LQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:DmXsxEV1yg8=;OX++TSYCBSS5+YYpqibSjNpkiPu
- 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
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR02MB6863.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9d9aa633-e246-4e4b-e334-08df2efb85a9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Oct 2026 22:43:12.3924
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA6PR02MB10792
 
-Am 19.10.26 um 13:53 schrieb Rong Zhang:
-
-> Hi Armin,
+From: sashiko-bot@kernel.org <sashiko-bot@kernel.org> Sent: Tuesday, Octobe=
+r 20, 2026 11:45 AM
 >
-> On Sun, 2026-10-18 at 19:08 +0200, Armin Wolf wrote:
->> Am 18.10.26 um 16:03 schrieb sashiko-bot@kernel.org:
->>
->>> Thank you for your contribution! Sashiko AI review found 1 potential i=
-ssue(s) to consider:
->>> - [Medium] leds: one-sided locking in brightness_hw_changed_show()
->>> --
->>>
->>> commit ef875f7f46dcbf0a55900c763a37bd3cfcb02775
->>> Author: Armin Wolf <W_Armin@gmx.de>
->>>
->>> leds: class: Take the LED access lock when reading brightness_hw_chang=
-ed
->>>
->>> This patch acquires the led_cdev->led_access mutex in
->>> brightness_hw_changed_show() to guard reading brightness_hw_changed
->>> against concurrent updates by led_classdev_notify_brightness_hw_change=
-d().
->>>
->>>> diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
->>>> index e1f1b710536b0..77a0fce039528 100644
->>>> --- a/drivers/leds/led-class.c
->>>> +++ b/drivers/leds/led-class.c
->>> [ ... ]
->>>> @@ -102,11 +103,15 @@ static ssize_t brightness_hw_changed_show(struc=
-t device *dev, const struct devic
->>>>    					  char *buf)
->>>>    {
->>>>    	struct led_classdev *led_cdev =3D dev_get_drvdata(dev);
->>>> +	unsigned int brightness_hw_changed;
->>>>   =20
->>>> -	if (led_cdev->brightness_hw_changed =3D=3D -1)
->>>> +	scoped_guard(mutex, &led_cdev->led_access)
->>>> +		brightness_hw_changed =3D led_cdev->brightness_hw_changed;
->>>> +
->>>> +	if (brightness_hw_changed =3D=3D -1)
->>>>    		return -ENODATA;
->>>>   =20
->>>> -	return sysfs_emit(buf, "%u\n", led_cdev->brightness_hw_changed);
->>>> +	return sysfs_emit(buf, "%u\n", brightness_hw_changed);
->>>>    }
->>>>   =20
->>>>    static const DEVICE_ATTR_RO(brightness_hw_changed);
->>> [Severity: Medium]
->>> Does taking led_cdev->led_access here actually synchronize against
->>> led_classdev_notify_brightness_hw_changed()?
->>>
->>> Looking at drivers/leds/led-class.c, the writer updates
->>> led_cdev->brightness_hw_changed without holding led_cdev->led_access:
->>>
->>> void led_classdev_notify_brightness_hw_changed(struct led_classdev *le=
-d_cdev, unsigned int brightness)
->>> {
->>> 	led_cdev->brightness_hw_changed =3D brightness;
->>> 	sysfs_notify(&led_cdev->dev->kobj, NULL, "brightness_hw_changed");
->>> }
->>>
->>> In addition, most callers invoke led_classdev_notify_brightness_hw_cha=
-nged()
->>> without holding led_cdev->led_access, such as t14s_kbd_bl_update() in
->>> drivers/platform/arm64/lenovo-thinkpad-t14s.c:
->>>
->>> static void t14s_kbd_bl_update(struct t14s_ec *ec)
->>> {
->>> 	enum led_brightness brightness =3D t14s_kbd_bl_get(&ec->kbd_backlight=
-);
->>>
->>> 	led_classdev_notify_brightness_hw_changed(&ec->kbd_backlight, brightn=
-ess);
->>> }
->>>
->>> Some callers also run in atomic context where a sleeping mutex cannot =
-be
->>> taken, such as lg_g15_raw_event() -> lg_g13_event() in
->>> drivers/hid/hid-lg-g15.c:
->>>
->>> 	if (backlight_disabled ^ g15->backlight_disabled) {
->>> 		led_classdev_notify_brightness_hw_changed(
->>> 			&g15->leds[LG_G15_KBD_BRIGHTNESS].mcdev.led_cdev,
->>> 			backlight_disabled
->>> 			? 0 : g15->leds[LG_G15_KBD_BRIGHTNESS].brightness);
->>> 		g15->backlight_disabled =3D backlight_disabled;
->>> 	}
->>>
->>> Meanwhile, uniwill_ec_notify() in drivers/platform/x86/uniwill/uniwill=
--acpi.c
->>> already holds led_cdev->led_access across the call:
->>>
->>> 	guard(mutex)(&led_cdev->led_access);
->>>
->>> 	/* Sync the LED brightness with the actual hardware state */
->>> 	ret =3D led_update_brightness(led_cdev);
->>> 	if (ret < 0)
->>> 		return ret;
->>>
->>> 	led_classdev_notify_brightness_hw_changed(led_cdev, brightness);
->>>
->>> Since the writer side does not consistently hold led_cdev->led_access =
-(and
->>> cannot take it inside led_classdev_notify_brightness_hw_changed() with=
-out
->>> sleeping in atomic context or deadlocking uniwill_ec_notify()), should
->>> brightness_hw_changed_show() and led_classdev_notify_brightness_hw_cha=
-nged()
->>> use READ_ONCE() and WRITE_ONCE() instead, similar to how trigger_hw_ch=
-anged
->>> is handled in drivers/leds/led-triggers.c?
->> I am not sure if READ_ONCE() guarantees atomic behavior here. What do t=
-he LED
->> subsystem maintainers say?
-> While I am not a maintainer, paired READ_ONCE() and WRITE_ONCE() is
-> usually sufficient, as the attribute is only a hint for userspace OSD.
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to
+> consider:
+> - [Medium] PCI: hv: early activation in hv_pci_vec_irq_domain_activate() =
+skews CPU0 load
+
+This was intentional, and in my judgment, it's OK to skew against CPU 0.
+Low speed VMBus devices (i.e., not storvsc or netvsc) are assigned to CPU 0
+outside of what pci-hyperv.c knows about, as is the emulated PL011 UART
+for the VM serial console. Even in aggregate, these don't generate a lot of
+interrupts, but they could still cause some interference with a high-speed
+NVMe completion queue (for example). Ultimately, the spreading is just a
+heuristic that is set up to be helpful in the all the normal cases. But if =
+there
+are edge cases where it's not perfect, that's OK.
+
+I'll add a code comment in v2 describing the reasoning.
+
+> - [Medium] PCI: hv: cpu_spi_count corruption in hv_pci_arm64_set_affinity=
+() when inactive
+
+This is a good issue. It's an error in the tracking that can easily
+be fixed. I'll fix it in v2 by setting IRQD_AFFINITY_ON_ACTIVATE,
+which is what the arm64 ITS and x86 VECTOR domains do.
+
+Michael
+
+> --
 >
-> The memory access itself is inherently atomic, i.e., neither a RMW
-> operation nor a split R/W. Since the led_cdev->brightness_hw_changed is
-> never used to synchronize other things, no memory barrier is needed here=
-.
-> Using rwonce prevents the compiler from reordering memory access, which
-> fulfills our requirements.
+> commit 9d112d599453572154cd3fbc90e3b6ea7dedf0e3
+> Author: Michael Kelley <mhkelley58@gmail.com>
 >
-> Thanks,
-> Rong
-
-Nice, this also means that all the drivers calling led_classdev_notify_bri=
-ghtness_hw_changed() do not
-need to be audited for taking the led_access lock.
-
-I will use READ_ONCE()/WRITE_ONCE() in the v2 revision.
-
-Thanks,
-Armin Wolf
-
->> Thanks,
->> Armin Wolf
+> PCI: hv: Spread load across CPUs when selecting effective affinity CPU
+>
+> This patch extends the arm64 Hyper-V vPCI MSI irq chip to track per-CPU
+> SPI assignments and select the least-loaded CPU from the affinity mask
+> before forwarding the single-CPU effective affinity to the parent GICv3
+> chip. It also updates the domain activate and deactivate callbacks to
+> increment and decrement the per-CPU SPI counters.
+>
+> > diff --git a/drivers/pci/controller/pci-hyperv.c b/drivers/pci/controll=
+er/pci-hyperv.c
+> > index 824cf27e85e67..7c293e39c9208 100644
+> > --- a/drivers/pci/controller/pci-hyperv.c
+> > +++ b/drivers/pci/controller/pci-hyperv.c
+>
+> [ ... ]
+>
+> > +/*
+> > + * Track the count of SPIs assigned to each CPU. Pick a single CPU fro=
+m the
+> > + * affinity mask based on the SPI loading data, and have the parent IR=
+Q
+> > + * chip (should be "GICv3") set the effective affinity to that single =
+CPU.
+> > + */
+> > +static int hv_pci_arm64_set_affinity(struct irq_data *d,
+> > +                                const struct cpumask *mask_val,
+> > +                                bool force)
+> > +{
+> > +   unsigned int cpu, prev_cpu;
+> > +   int ret;
+> > +
+> > +   prev_cpu =3D cpumask_first(irq_data_get_effective_affinity_mask(d))=
+;
+> > +   if (prev_cpu < nr_cpu_ids)
+> > +           hv_pci_dec_spi_count(d, prev_cpu);
+> > +
+> > +   if (force)
+> > +           cpu =3D hv_pci_arm64_get_min_load(d, mask_val);
+> > +   else
+> > +           cpu =3D hv_pci_arm64_select_cpu(d, mask_val);
+> > +
+> > +   if (cpu >=3D nr_cpu_ids)
+> > +           goto err;
+> > +
+> > +   ret =3D irq_chip_set_affinity_parent(d, cpumask_of(cpu), force);
+> > +   if (ret < 0)
+> > +           goto err;
+> > +
+> > +   hv_pci_inc_spi_count(d, cpu);
+> > +   return ret;
+> > +
+> > +err:
+> > +   if (prev_cpu < nr_cpu_ids)
+> > +           hv_pci_inc_spi_count(d, prev_cpu);
+> > +   return -EINVAL;
+> > +}
+>
+> [Severity: Medium]
+> Can hv_pci_arm64_set_affinity() corrupt cpu_spi_count when affinity is
+> changed on a deactivated interrupt?
+>
+> When an allocated MSI or MSI-X interrupt is deactivated (for example, whe=
+n
+> free_irq() -> __free_irq() calls irq_domain_deactivate_irq() while MSI
+> vectors remain allocated across ndo_stop/ndo_open or queue reconfiguratio=
+n,
+> or when migrate_one_irq() calls irq_shutdown_and_deactivate()),
+> hv_pci_vec_irq_domain_deactivate() decrements cpu_spi_count for the CPU i=
+n
+> effective_affinity and IRQD_ACTIVATED is cleared, but the old CPU remains
+> set in the effective_affinity mask:
+>
+> drivers/pci/controller/pci-hyperv.c:hv_pci_vec_irq_domain_deactivate() {
+>       cpu =3D cpumask_first(irq_data_get_effective_affinity_mask(irqd));
+>       if (cpu < nr_cpu_ids)
+>               hv_pci_dec_spi_count(irqd, cpu);
+> }
+>
+> Because hv_pci_vec_irq_domain_alloc() does not set IRQD_AFFINITY_ON_ACTIV=
+ATE
+> (unlike its_irq_domain_alloc() in drivers/irqchip/irq-gic-v3-its.c),
+> irq_set_affinity_deactivated() does not defer affinity changes on a
+> deactivated interrupt:
+>
+> kernel/irq/manage.c:irq_set_affinity_deactivated() {
+>       if (!IS_ENABLED(CONFIG_IRQ_DOMAIN_HIERARCHY) ||
+>           irqd_is_activated(data) || !irqd_affinity_on_activate(data))
+>               return false;
+>       ...
+> }
+>
+> If irq_set_affinity() or irq_force_affinity() is called while the interru=
+pt
+> is deactivated (for example, via /proc/irq/<irq>/smp_affinity,
+> irq_set_affinity_hint(), or irq_restore_affinity_of_irq()),
+> irq_set_affinity_locked() -> irq_do_set_affinity() invokes
+> hv_pci_arm64_set_affinity(). That reads the stale prev_cpu from
+> irq_data_get_effective_affinity_mask(d), decrements prev_cpu's
+> cpu_spi_count a second time, and increments the newly selected cpu's
+> cpu_spi_count while IRQD_ACTIVATED remains false.
+>
+> If the vector is later freed via pci_free_irq_vectors() ->
+> __msi_domain_free_irqs() in kernel/irq/msi.c, irq_domain_deactivate_irq()
+> is skipped because !irqd_is_activated(irqd), leaking the count on the new
+> CPU; or if the vector is re-activated via request_irq() -> irq_activate()
+> -> hv_pci_vec_irq_domain_activate(), effective_affinity is overwritten
+> with cpumask_first(cpu_online_mask) without decrementing the CPU selected
+> while deactivated.
+>
+> Should hv_pci_vec_irq_domain_alloc() set IRQD_AFFINITY_ON_ACTIVATE, or
+> should hv_pci_vec_irq_domain_deactivate() clear effective_affinity?
+>
+> [ ... ]
+>
+> > @@ -885,21 +1007,39 @@ static int hv_pci_vec_irq_domain_alloc(struct ir=
+q_domain
+> *domain,
+> >   * composing MSI from the hypervisor. GIC will eventually set the righ=
+t
+> >   * affinity for the irq and the 'unmask' will retarget the interrupt t=
+o that
+> >   * cpu.
+> > + *
+> > + * The first cpu is always used for initial activation because spreadi=
+ng the
+> > + * initial CPU would have to be done without information about affinit=
+y groups
+> > + * that may exist. The resulting assignments would pollute the "least =
+loaded"
+> > + * data for making the final assignments. Everything would still work,=
+ but
+> > + * the spreading would be less even than it could be.
+> >   */
+> >  static int hv_pci_vec_irq_domain_activate(struct irq_domain *domain,
+> >                                       struct irq_data *irqd, bool reser=
+ve)
+> >  {
+> > -   int cpu =3D cpumask_first(cpu_present_mask);
+> > +   int cpu =3D cpumask_first(cpu_online_mask);
+> >
+> > +   hv_pci_inc_spi_count(irqd, cpu);
+> >     irq_data_update_effective_affinity(irqd, cpumask_of(cpu));
+> >
+> >     return 0;
+> >  }
+>
+> [Severity: Medium]
+> Won't incrementing cpu_spi_count in hv_pci_vec_irq_domain_activate() skew
+> the load calculation away from the first online CPU during multi-vector
+> MSI/MSI-X setup?
+>
+> Because pci_msi_template and pci_msix_template in
+> drivers/pci/msi/irqdomain.c set MSI_FLAG_ACTIVATE_EARLY, allocating N
+> vectors via pci_alloc_irq_vectors() or pci_alloc_irq_vectors_affinity()
+> causes __msi_domain_alloc_irqs() to activate all N vectors in a batch via
+> msi_init_virq() -> irq_domain_activate_irq() ->
+> hv_pci_vec_irq_domain_activate() before returning and before request_irq(=
+)
+> is called on any vector:
+>
+> kernel/irq/msi.c:__msi_domain_alloc_irqs() {
+>       ...
+>       for (i =3D 0; i < desc->nvec_used; i++) {
+>               irq_set_msi_desc_off(virq, i, desc);
+>               irq_debugfs_copy_devname(virq + i, dev);
+>               ret =3D msi_init_virq(domain, virq + i, vflags);
+>               if (ret)
+>                       return ret;
+>       }
+> }
+>
+> This increments cpu_spi_count on cpumask_first(cpu_online_mask) (typicall=
+y
+> CPU 0) for all N vectors up front, inflating CPU 0's count by N.
+>
+> When the driver then calls request_irq() for each vector i =3D 0..N-1 in
+> sequence (such as in nvme_setup_io_queues()), irq_startup() ->
+> irq_do_set_affinity() -> hv_pci_arm64_set_affinity() decrements CPU 0's
+> cpu_spi_count by only 1 for vector i, leaving CPU 0's count inflated by
+> N - 1 - i from the remaining unstarted vectors of the same device still
+> parked on CPU 0. When hv_pci_arm64_select_cpu() selects a CPU for the fir=
+st
+> queue (whose affinity mask includes CPU 0), it sees CPU 0's load inflated
+> by N - 1 and avoids assigning interrupts to CPU 0 for the first N - 1
+> devices probed.
+>
+> Furthermore, if a driver allocates M vectors and only calls request_irq()
+> on K < M of them (or defers request_irq() until queues or network ports a=
+re
+> opened), the M - K unrequested vectors remain activated on CPU 0 and keep
+> its cpu_spi_count inflated by M - K.
+>
+> Could hv_pci_vec_irq_domain_activate() leave effective_affinity empty and
+> avoid incrementing cpu_spi_count until hv_pci_arm64_set_affinity() select=
+s
+> the actual target CPU?
+>
+> [ ... ]
+>
+> --
+> Sashiko AI review *
+> https://sashiko.dev/
+> %23%2Fpatchset%2F20261020182433.336637-1-
+> mhklinux%40outlook.com%3Fpart%3D1&data=3D05%7C02%7C%7Ca9adc6acf8e34ef04
+> ebd08df2eda50ac%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C63928118
+> 7342913040%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIw
+> LjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C
+> %7C&sdata=3DnT7Wvhc6rrXjaC%2FqpvQj99H2cNbdzGmYWs4AeKb2jlU%3D&reserved=3D
+> 0
