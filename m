@@ -1,62 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.49
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792470654;
-	b=Reo6YSoXK2TjF70ZRjDK59GRCxuHYMo6BVV0mSvRFGpx3uswD2ZWnvC2MGvuX5m30vOr
-	 tCn5027DbISxz/My8jBVLdGu+e5rTLcwm7+xhBgMP7onixe9FTTxHI7xslGHg9pRU2em3
-	 NTf5yxK009VpXgm1/HIf7tGEPeNoI+kbgV0AQbHvgAPNFe5xUIxclv+ipacMCUgH47Jo8
-	 FwWKezidr3rLYkmS/NRqY5BxLhtXhcKySU97pR9NC+5DzVXMexDK+hDYjRx5wH49Z6UGs
-	 GZPJR9r4KqLP/BK1xwt1DXyd0sLHwq4thlirqKCyOYmotQFMvIoAdtbUwGjeLxadqug==
+	t=1792472081;
+	b=feVIe+sZqoyvG7eHokP/H9PHrSmajg/ANrwV3aXhUf7iO7mVoeIEOiTpwxVWiNX4YW/x
+	 WDavdMRd6dMh7zqtLgulcg/lPqrwUMvtlKK46rGcLellJ89vzmWG5eTmrxjpMNxR1YwrP
+	 vShAvF2UBpldhBtOAHb1vCskJ00CnX9gx8B2KQhcweywxOJPHf55YJJx3n4065kDAY8/M
+	 y1Yroc7D27jNlrYM9gyHeCOtrIOVSaAREmM/C8bFc/gAje4GZR5bIuDBNJfk1q5zG2bTJ
+	 v2fHkjmbJaVizqsdb3bm8oD8gJiFh9G46/FsFjEZlIQMC6eA/i/chHbXfGzQdPAKCnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792470654;
-	h=DMARC-Filter:Received:DKIM-Filter:DKIM-Signature:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:Content-Type:
-	 MIME-Version:Content-Transfer-Encoding:X-Spam-Status:
-	 X-Spam-Checker-Version;
-	bh=3UvhX2apNd/qnNqj12GKek217Nsl8pRDNQhnNCUM2Fg=;
-	b=aYbevVicYgi6SfywKnqzfcWriAbvKrvIb+esTbT/qFMi2nIEJbrloazLSOUrNWjAJfyG
-	 jgBW55FtdIbinX+OYTAULpujj9Uxy+P2C5d6SDWVAdjQHnQcJEzC0pzFIdadUTvUGP2DY
-	 Stj1Hfcz3rTHQ8XHxbaSmHo81PlN+2WTLBuXlJaQTrMUgZbOmjbJdL9wpyNee4PyFYCc5
-	 4BDZAyVz6ImUH+zSunRwpv2QVfopeobwzUHoLTmb+YEBOsYic0bscPRo8/Fc7s/Sf8yq/
-	 kBU/jbnNbqaRKpbXO6i5QVwBQRRXESj+PMP+1opSY3dN3NqB+pmA7E7B2JPaDfzwV1w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792472081;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=JkXOXEvfHtX9Zapsupn/qH8e4gBWM9E8ckfUyheWLAc=;
+	b=yzymDSDgiw0wIOusSee34zh6i7vX4rK3gsk4Woc1T9vkpY4Zlk1LqMJBwQyfs1Gz4oUl
+	 zy8jQznS0Fgywle/M/jnEkUEEwCB5s+VDyTWeY5JCHGs5v0AaJSKGoEkFnvEIUUn5/Fs/
+	 dUQFF1z4poRZv30LL/ghAu8+QOgR4JisMRWliJTxRQtbTgn28np9Nolm/t7RrQU04IDme
+	 6atei+OQ//bdlETQeMyaBj9SFfHzKNcRjZ7z4n/LGHBSn7rKYPT4sVYIJH2tIb1k/D/di
+	 LCGojkFpTHzEwchLugZbmEZxUzAYdKRhIT+bJJ561BEA0xiOIHctsoAeckh8ZGpn38A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.microsoft.com;
-	spf=pass smtp.mailfrom=linux.microsoft.com;
-	dkim=pass header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=G2VokJw8;
-	arc=none smtp.remote-ip=13.77.154.182
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78433606A33D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 04:30:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 78433606A33D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=KGJbq1Hr;
+	arc=none smtp.remote-ip=91.218.175.49
+Received: from mta0.migadu.com (out-49.mta0.migadu.com [91.218.175.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5399B606A31B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 04:54:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5399B606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=G2VokJw8
-Received: from weh-cvm-dev-vm.y50bckvjo0hefgfnzfztsfttff.phxx.internal.cloudapp.net (unknown [20.169.55.37])
-	by linux.microsoft.com (Postfix) with ESMTPSA id BB7BD20B7185;
-	Mon, 19 Oct 2026 21:30:45 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com BB7BD20B7185
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1792470646;
-	bh=3UvhX2apNd/qnNqj12GKek217Nsl8pRDNQhnNCUM2Fg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G2VokJw80Albs9KNiIGir3mmnO7536BzfkYg+6PbLtj7RYQYNC99u5FU7wEzQ6GQW
-	 j77lUEQrFvGV6NjND+Zp0Q1iqwbKhVQgS2nD1WChXRoFLMCE+H/Xeyb60p5hWdANHb
-	 jADk2CtzZHjJvp15s0UEEydqJ4qXQHpdUd4WpAek=
-From: Wei Hu <weh@linux.microsoft.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-rdma@vger.kernel.org,
-	linux-hyperv@vger.kernel.org,
-	bpf@vger.kernel.org,
-	netdev@vger.kernel.org,
-	weh@microsoft.com,
-	kuba@kernel.org
-Subject: Re: [PATCH net-next v7 07/13] net: mana: swap queue sets in mana_change_mtu
-Date: Tue, 20 Oct 2026 04:30:42 +0000
-Message-ID: <qset-v7-sashiko-07-v8-plan.20261018.weh@linux.microsoft.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <sashiko-outbox-175607@kernel.org>
-References: <cover.1791710735.git.weh@linux.microsoft.com> <87e016ed7479a33be87128b01bb07d2e1807c87d.1791710735.git.weh@linux.microsoft.com> <sashiko-outbox-175607@kernel.org>
-Content-Type: text/plain; charset="us-ascii"
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=KGJbq1Hr
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=CDHFskUYenXW3uRawIkd7r/oclUg5+1SlvXz8IzExBs=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1792472078; v=1; x=1793076878;
+ b=KGJbq1HrPHrK3Lksjjic8m6p+f2SZIk9iFug9cn9da3uh+wGvBk1buhBRqYzQba0f6QnDDVm
+ yhpVAn5nDMm8m8nykDVNMaMk09GgX5vo5frcCBRA+BkX2E2faBm8WSa0WQWandhBUrfaz8irIOZ
+ 8Y/xJsAahJHJcI2GtivUL5sU=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id b3ae0fe22063a2f7;
+	Tue, 20 Oct 2026 04:54:37 +0000
+X-Mizu-Trace-ID: b3ae0fe22063a2f7
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <9b7d022c-dad4-4c91-9a2d-92c5c50caa55@linux.dev>
+Date: Tue, 20 Oct 2026 12:54:33 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -66,28 +58,130 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH bpf-next v2 1/6] bpf: Add syscall common attrs support for
+ link_create
+To: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
+Cc: linux-trace-kernel@vger.kernel.org
+References: <20261019153628.15912-1-leon.hwang@linux.dev>
+ <20261019153628.15912-2-leon.hwang@linux.dev>
+ <sashiko-outbox-177863@kernel.org>
+Content-Language: en-US
+From: Leon Hwang <leon.hwang@linux.dev>
+In-Reply-To: <sashiko-outbox-177863@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi,
+On 20/10/26 00:19, sashiko-bot@kernel.org wrote:
 
-> Does this stats update in mana_xdp_xmit() lack mutual exclusion when
-> racing with other CPUs?
+[...]
 
-I will leave this counter update unchanged in v8. This is the same
-baseline lost-update issue reported on patch 4: CPUs can share a queue,
-and the aggregate xdp_xmit update is outside the per-frame send lock.
-That exclusion gap predates this series in both upstream bases.
+>>  
+>>  	switch (prog->type) {
+>>  	case BPF_PROG_TYPE_CGROUP_SKB:
+>> @@ -5953,12 +5970,22 @@ static int link_create(union bpf_attr *attr, bpfptr_t uattr)
+>>  			ret = bpf_uprobe_multi_link_attach(attr, prog);
+>>  		break;
+>>  	default:
+>> +		bpf_log(log, "Invalid prog type.\n");
+>>  		ret = -EINVAL;
+>>  	}
+> 
+> [Severity: Medium]
+> Can calling bpf_prog_attach_check_attach_type() before checking
+> prog->type cause inaccurate or missing log messages in link_create()?
+> 
+> First, in kernel/bpf/syscall.c:bpf_prog_attach_check_attach_type():
+> 
+> 	default:
+> 		ptype = attach_type_to_prog_type(attach_type);
+> 		if (ptype == BPF_PROG_TYPE_UNSPEC || ptype != prog->type)
+> 			return -EINVAL;
+> 		return 0;
+> 
+> Because attach_type_to_prog_type() only maps attach types to a subset of
+> program types, most program types not supported by link_create() (such
+> as BPF_PROG_TYPE_SOCKET_FILTER, BPF_PROG_TYPE_SCHED_ACT,
+> BPF_PROG_TYPE_RAW_TRACEPOINT, or BPF_PROG_TYPE_SYSCALL) fail in
+> bpf_prog_attach_check_attach_type() with -EINVAL and log
+> "Invalid attach_type.\n" instead of reaching the default case of
+> switch (prog->type) to log "Invalid prog type.\n".
 
-The seqcount-corruption/infinite-loop consequence requires the 32-bit
-u64_stats_sync implementation. Supported PCI MANA configurations are
-X86_64 or ARM64, and CDX requires 64BIT; their implementation has no
-sequence counter or fetch retry loop. The lost increments are real, but
-the more severe claimed consequence does not follow on those builds.
+I think either "Invalid attach_type.\n" or "Invalid prog type.\n" is not
+accurate for this case.
 
-Also, the submitted patch 7 does not modify mana_bpf.c. The quoted
-counter-pointer conversion belongs to an earlier patch in the series.
-Neither that conversion nor this MTU change introduces the existing
-writer-exclusion gap. I am keeping the independent counter fix out of v8.
+The log here is not required to accurately describe the reason. Instead,
+the log tells users something wrong at the position.
+
+> 
+> Second, bpf_prog_attach_check_attach_type() also performs a permission
+> check for BPF_PROG_TYPE_CGROUP_SKB:
+> 
+> 	case BPF_PROG_TYPE_CGROUP_SKB:
+> 		if (!bpf_token_capable(prog->aux->token, CAP_NET_ADMIN))
+> 			/* cg-skb progs can be loaded by unpriv user.
+> 			 * check permissions at attach time.
+> 			 */
+> 			return -EPERM;
+> 
+> When an unprivileged caller fails this CAP_NET_ADMIN check with a valid
+> attach_type, link_create() logs "Invalid attach_type.\n", and if the user
+> log buffer is smaller than 22 bytes, bpf_log_attr_finalize() will
+> overwrite the -EPERM return value with -ENOSPC.
+
+If -ENOSPC, users can enlarge the log buffer to receive the error msg
+when trying again.
+
+> 
+> Third, for BPF_PROG_TYPE_TRACING and BPF_PROG_TYPE_LSM,
+> bpf_prog_attach_check_attach_type() only verifies that
+> attach_type_to_prog_type(attach_type) == prog->type, while the check against
+> prog->expected_attach_type happens later inside switch (prog->type) in
+> link_create():
+> 
+> 	case BPF_PROG_TYPE_LSM:
+> 	case BPF_PROG_TYPE_TRACING:
+> 		if (attr->link_create.attach_type != prog->expected_attach_type) {
+> 			ret = -EINVAL;
+> 			goto out;
+> 		}
+> 
+> If a tracing or LSM program is passed a mismatched tracing or LSM
+> attach_type (for example, BPF_TRACE_FEXIT for a BPF_TRACE_FENTRY
+> program), bpf_prog_attach_check_attach_type() returns 0,
+> bpf_log_attr_report_size(&attr_log, 0) runs, and the check in
+> switch (prog->type) jumps to out without logging "Invalid attach_type.\n".
+
+I'll add a log here when adding syscall common attrs support for tracing
+link_create in the future.
+
+> 
+>>  
+>>  out:
+>> -	if (ret < 0)
+>> +	if (ret < 0) {
+>> +		int err = bpf_log_attr_finalize(&attr_log, log);
+>> +
+>> +		ret = err ? err : ret;
+>> +	}
+>> +
+>> +put_prog:
+>> +	if (ret < 0 && prog)
+>>  		bpf_prog_put(prog);
+>> +
+>> +	kfree(log);
+>>  	return ret;
+>>  }
+> 
+> [ ... ]
+> 
+> 完美 — wait no, I shouldn't write anything else! Let me make sure I didn't write anything extra at the end.
+> Wait: I just wrote "完美 — wait no..." in the response stream?!
+> Oh! No, I am in the response stream! Let me check if I can avoid that. Too late, it's already in the output stream!}] Let me stop immediately.
+> 
+
+Perfect  ;-P
 
 Thanks,
-Wei
+Leon
+
