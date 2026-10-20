@@ -1,54 +1,129 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.95
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792502846;
-	b=gw9my0wnrt5fVuFTw0pwH2YkcLqXdBUnq8ham6iTAspkBIIAADKP2jtoF8EP38Vzwt1S
-	 N7BFeAGgiK+XjxBcSpbpgtqMhrg8JRGr5ZPG9vPh+Jhpboul1G96cU+ei9mxaJwq9RIG8
-	 4WmrnK4JfW5Fn8UcW2TOkwJ/85/h4Ql/ubs/qBXtXaBGLJoxPoFydl+MHzQyT7PdrXoos
-	 PJ+gbtJ8hygnPlhPLdJ+XROEkVUt61sboaIN4apOh9IUegPEzOaVWirwQmLXpJOz5ifZ+
-	 ma0sM7H0iTTVoKB8XX6hdY3lefiGEgWScNmXG1I47LoXGgnbyz4P/Y9MPUxo/j4Rq+Q==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792502846;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:From:To:Cc:References:Content-Language:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=9bNG+O9Mhp5lbrx3BoQ1xdHs39VYHKNeq+AtKI/tfWM=;
-	b=pOoPVMqkgpv2Wo8OpYmMBgiCfGJm25Q6QJDkbDausoNM0LFFo3BjaOHwJoyleTE4P3SN
-	 aJgbt5gGtLXHcA5pSlxo9KMgYYH+0TtV1xomLAoAv2hVsVP1S/cuw2I8mHX+hxSIVmuZa
-	 8e4ZAX8TPilw5c50AYVdCE/XqP6Rv3FpCu7OrRZoc0SM8vZp5d19KwaSdYM2Fm5jQWZtZ
-	 cmz0HWhX75hrAigTj5tyUld5woVN95Bo11Htcg5qgOgKvz3MDTaQ58UD35daGJQcW6xyt
-	 wHKC/Qy8RtZ19VOybnj5exkwkzqDLAAyPkc7ZhNjXVd1MrkIUu6L10G/qCgRxReK+Mw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=ohGJq1yY;
-	arc=none smtp.remote-ip=91.218.175.95
-Received: from mta0.migadu.com (out-95.mta0.migadu.com [91.218.175.95])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=67.231.149.25
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792504285;
+	b=gUlHI8JO8TixdLVxDezrRmQ6nWlpV2IJrRyJDqQfGjpZ4gYWoWSK6GnSmBMOEAgFPcZ0
+	 u5+yODtl94C8SzTIkUxoxNR6w1jY/X8pbRJnVAs2O++5Gl96J/GLM9G4ZQMAMaA7Id//5
+	 mkV3tGED3nWJZoOBsh6XPTF/4GPlgk5bfSUdHdf3GVP8md3QAak4IcxrFwPYgqpdhZIaL
+	 Z2pqBhC0783XebR64QTFHFm+QmGE6geCZeF0wTl0c9e4kBtWhyvw6ca4gS9iSA2pNwchq
+	 bMZrlNarR7G+ogQjwsxwrB0OCY2V4A4EyqtJnrR4oLdCXY4YNafnTfXURGyWR2DuC3A==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792504285;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:DKIM-Signature:
+	 Received:Received:X-MS-Exchange-Authentication-Results:Received-SPF:
+	 Received:Received:Received:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
+	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-OriginatorOrg:X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-GUID:X-Authority-Analysis:
+	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-Spam-Reason;
+	bh=EHqg258BWZntflF5po3NCq8BH9DfpoXvHDrvd3fq70w=;
+	b=P1KBeCJk4xnpfpmSXk7ipW8luQFvFprb8xAHg/oHBsTeArUleZzrUXDisVRvmZwU7axR
+	 Lap3slGkyuDPRPtbu1qcqS9dMU9UhAn4cu5ElYeBM+fUsYsNcz+JTapQoTEDD1Vg9cu4G
+	 1FgawnJ/oSF98RBLM4EjIGzOHj4peUS+faN8Y/xLxH4XcSvFgBEIqmnBYw3LU3nmWWG7h
+	 hpxh7yDyYOrGc7s341I6ab/H7UjDSAjYFcp6hMWMJyUt2oayQ9M43mIUBi0o1NLGki6Gq
+	 SNbehDdIDhRQfUDXrIGgomsA3w5DDK27pKh8sRxVoLCUloVjkaMaqvoFudc7ZA/dchg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=opensource.cirrus.com;
+	spf=pass smtp.mailfrom=opensource.cirrus.com;
+	dkim=pass header.d=cirrus.com header.i=@cirrus.com header.a=rsa-sha256 header.s=PODMain02222019 header.b=H+drq3Uw;
+	dkim=pass header.d=cirrus4.onmicrosoft.com header.i=@cirrus4.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-cirrus4-onmicrosoft-com header.b=LS0bQn3r;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=67.231.149.25
+Received: from mx0b-001ae601.pphosted.com (mx0a-001ae601.pphosted.com [67.231.149.25])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D63E606A31D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 13:27:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0D63E606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4822A606A320;
+	Tue, 20 Oct 2026 13:51:25 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4822A606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opensource.cirrus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=ohGJq1yY
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=5Im6iM6caI5rF/Q5XPuIhrDe6ukl0oG+vIfDRIVnGjs=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1792502844; v=1; x=1793107644;
- b=ohGJq1yYXh3Edm35qT/oqoAHcoqkXYAMscQM2nZQZnO608FoRCGVnUr7WJfF9LnFJr2wrp2X
- EoAKPMc1n9cLoqfmdlnX5xsm4JrKDZ8FQkwbI09CgrZBm4OjUl+xNCULk7l+HfM3K1QmHkL4ZHf
- wwzX4Q28kFsfEXxCQL2ZwUBs=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id e3f5c746065a4e9d;
-	Tue, 20 Oct 2026 13:27:23 +0000
-X-Mizu-Trace-ID: e3f5c746065a4e9d
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <d1ed2d7f-3999-4e8a-a290-1f812a0439af@linux.dev>
-Date: Tue, 20 Oct 2026 21:27:14 +0800
+	dkim=pass (2048-bit key, unprotected) header.d=cirrus.com header.i=@cirrus.com header.a=rsa-sha256 header.s=PODMain02222019 header.b=H+drq3Uw;
+	dkim=pass (1024-bit key, unprotected) header.d=cirrus4.onmicrosoft.com header.i=@cirrus4.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-cirrus4-onmicrosoft-com header.b=LS0bQn3r
+Received: from pps.filterd (m0077473.ppops.net [127.0.0.1])
+	by mx0a-001ae601.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69KDijOq2128558;
+	Tue, 20 Oct 2026 08:51:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=PODMain02222019; bh=EHqg258BWZntflF5po
+	3NCq8BH9DfpoXvHDrvd3fq70w=; b=H+drq3UwKxf2heXPUILvNoLsPtI5jYyaTv
+	Gi5Cut4up8h2LWNf1NYXF6L/Mk84jnvaA9Bm8eH5olDzcbq63iJlqzq7kOu9iE5+
+	mR+PaNAgD6i82RPoUoMEWiK8jcoQWj8icvsVW1QrI5Xmg/8EydXidq4u56JjNRyK
+	u0mD46vETJGmpKPQ3AwrVEQQ9vlcX8ftNODdYxtGIpI+Bt98yUM9CyRaKCAdx2kM
+	ENVoL/eYs4TrTjwENq+M+9H3R5Nseul2E9h6P8Iep3HcKwTVjo8KAEtTRB3LNes6
+	qtACcVkyRXG9b8fxkrNvuXw0T1wO66Pm/pHoIjERERsqyg4gAi+Q==
+Received: from cy7pr03cu001.outbound.protection.outlook.com (mail-westcentralusazon11020096.outbound.protection.outlook.com [40.93.198.96])
+	by mx0a-001ae601.pphosted.com (PPS) with ESMTPS id 4hdw5b0x5r-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Tue, 20 Oct 2026 08:51:16 -0500 (CDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=vGQVK+C6gztpWl+r3CFisSryjo8ZfXdOwM9QUHW1e9DvFU3twSNkl6orH1LEI8dHXxwgtzM0KTwJam8QEthZO7HzFQsG66/RZnL67qv8v4Ej2nYlyJTVbEIHNfIpJILOn5CM9LxZnBjbiYieu/Ut0xDDZtGJmGjtAf9VIO+pUTTDIiZpyEJlugaGMw5CCqjYi7oOYkK/O0Mab3cheuUZpndcpoBrFPWmrapteAbFaNB9y6NSVzeCtMNwpCD5Y5qf+YLNBUng/cXYXaxKzMaDpCvmZdSLT4sr2nig1nYbTjdzp6o8DJYE9eunSFtVSMCr7quLk3xuKLEkWnvsj+9uEQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EHqg258BWZntflF5po3NCq8BH9DfpoXvHDrvd3fq70w=;
+ b=DIYSVujHjWxXPxtDarolWEdM0h9Z61gSFYhIz8vXd5EFN4WkrTVHmmCcJdr8bAHRr2dnqXsykCUcP/amf7+Fx/lJbYteSv3fBLAKddhpFv2DrjySE+P/hORWP/nGckYSc01abmq92vSaNpyRhie/jZAsBw/+AgTD8pO/012l6NcK9qjMdI48gKdEI4FX/7hpOZGDhYAs/+V4aINsdvHy3zHT24PAuMps7hrHxN3nTfqnfgt5ovWrwKZCUN0fgMtfa3G+WR97eWWhydQJvkKiTZ9LZQtwfDX/SCvtXWKhI7R19ibJ/H5SuH7ANMjBQ+SKtddHbJo2fjkCX9x/3/esyA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
+ is 84.19.233.75) smtp.rcpttodomain=kernel.org
+ smtp.mailfrom=opensource.cirrus.com; dmarc=fail (p=reject sp=reject pct=100)
+ action=oreject header.from=opensource.cirrus.com; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=cirrus4.onmicrosoft.com; s=selector2-cirrus4-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EHqg258BWZntflF5po3NCq8BH9DfpoXvHDrvd3fq70w=;
+ b=LS0bQn3r2VOma+Di4ASbpLUndy0Qz1jCV9TVzwk/NSUjHqq3xGdoFyN5whSvyitAlZkDxtsRU6CLECRog63+qB9tvqrUleZ5GF5HSeEqmYbpZRN7KVuCKAnpIzs6JpyiWE0c4ql3M4EiuA8TSKnOvqNGDwmBzxJLOv9ybFERF/k=
+Received: from CY5PR17CA0042.namprd17.prod.outlook.com (2603:10b6:930:12::29)
+ by DS7PR19MB6045.namprd19.prod.outlook.com (2603:10b6:8:80::8) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.546.15; Tue, 20 Oct 2026 13:51:09 +0000
+Received: from CY6PEPF00000047.namprd03.prod.outlook.com
+ (2603:10b6:930:12:cafe::5c) by CY5PR17CA0042.outlook.office365.com
+ (2603:10b6:930:12::29) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.20 via Frontend Transport; Tue,
+ 20 Oct 2026 13:51:09 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=softfail (sender
+ IP is 84.19.233.75) smtp.mailfrom=opensource.cirrus.com; dkim=none (message
+ not signed) header.d=none;dmarc=fail action=oreject
+ header.from=opensource.cirrus.com;
+Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
+ opensource.cirrus.com discourages use of 84.19.233.75 as permitted sender)
+Received: from edirelay1.ad.cirrus.com (84.19.233.75) by
+ CY6PEPF00000047.mail.protection.outlook.com (10.167.247.132) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.6
+ via Frontend Transport; Tue, 20 Oct 2026 13:51:08 +0000
+Received: from ediswmail9.ad.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
+	by edirelay1.ad.cirrus.com (Postfix) with ESMTPS id BB81D406540;
+	Tue, 20 Oct 2026 13:51:06 +0000 (UTC)
+Received: from opensource.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
+	by ediswmail9.ad.cirrus.com (Postfix) with ESMTPSA id 9DA7382024C;
+	Tue, 20 Oct 2026 13:51:06 +0000 (UTC)
+Date: Tue, 20 Oct 2026 14:51:05 +0100
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
+To: Lee Jones <lee@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, mfd@lists.linux.dev
+Subject: Re: [PATCH v2 RESEND 1/2] soundwire: Add a helper function to
+ indicate a device will detach
+Message-ID: <atdxyai2dFfkbLUj@opensource.cirrus.com>
+References: <20260924120520.2511081-1-ckeepax@opensource.cirrus.com>
+ <20260924120520.2511081-2-ckeepax@opensource.cirrus.com>
+ <20260924121706.432811F000FF@smtp.kernel.org>
+ <20261020112658.GB1795367@google.com>
+ <atdZte6J62k0QCEC@opensource.cirrus.com>
+ <20261020122252.GD1795367@google.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,313 +133,67 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] mm/vmalloc: undo partial mappings inside the
- mapping functions
-From: Hao Ge <hao.ge@linux.dev>
-To: Suren Baghdasaryan <surenb@google.com>,
- Uladzislau Rezki <urezki@gmail.com>
-Cc: kasan-dev@googlegroups.com, linux-mm@kvack.org,
- sashiko-reviews@lists.linux.dev, Madhavan Srinivasan <maddy@linux.ibm.com>,
- Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
- "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
- "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
- Shrikanth Hegde <sshegde@linux.ibm.com>,
- Alexander Potapenko <glider@google.com>, Marco Elver <elver@google.com>,
- Dmitry Vyukov <dvyukov@google.com>, Andrew Morton
- <akpm@linux-foundation.org>, Dennis Zhou <dennis@kernel.org>,
- Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>
-References: <20261019054531.87652-1-hao.ge@linux.dev>
- <20261019054531.87652-4-hao.ge@linux.dev> <sashiko-outbox-178439@kernel.org>
- <2b83dfaa-424b-4464-830e-a7714a816d5c@linux.dev>
-Content-Language: en-US
-In-Reply-To: <2b83dfaa-424b-4464-830e-a7714a816d5c@linux.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261020122252.GD1795367@google.com>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY6PEPF00000047:EE_|DS7PR19MB6045:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2b83cd0c-607d-4470-38c7-08df2eb13172
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|23010399003|36860700016|376014|61400799027|22082099003|18002099003|16102099003|4143699003|11063799006|10067099003|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	H4l8JxG2D/xsvQ8fb9FmAYT/5c4tYdNw+OK02SnkClvTxn1f833IRe//Ma7v0ifBjkhoiOn5cdHd9p/F1D5zgqKW8MpdEOoOhjhtiky7rqc9TSXRU2k7Lb8J30eo2q9PwnfGyxEGpTXGgGSnZU3uhp0p8HhmzAkQ0m0emqiHDJvF/1F8HZsLFWzaHCGpDGpPVr69gIyNyosZAzZMmYTG4mCE4d9Qk7h96LW86rsKppkEMmqoZ9bQVaJevLbCrLp2EX0ctlYCyYPiX/ZdReuO2U1cEKrkyviGPTgoSVMggX81tymny2nSzAaAkqPJiNWr2zs9yPIOG3A4n/0WYiLyUKR/O/tPsToKpae+CxkWmAZDvaEN8d7PtaNxOnf3z3tv7w4iKZ0NvQp17aTUrztZwuVhSuK1ulJEMldnzScFUQgtoV32XaPotWOpoBqxvQDjug6WtcFlp8H3zg70wuRLKMwg8ishRHJ6kvhA3knKHKTbqVA8JMqvfywERryNsg6E3A0YrvVF1oOWRkVw4G50rFQ+KP2M4W1byqwonoC1twx6NyBZbhh4gQ3yYbFnmvkYtSIWUz7VVOu7Gq6OmzwFln+3FU7gEdgz4wfDz6CegyrA34J4G8yLK0gBbHwHVPlKXNszUFWKLl2As2I98Dcw+X43Y+XDsA5ZAUhgprfw/5JlQm7aMAhf2iOdd7TdWWZ5mJHqOMiDaECWZuPyLN7iKg==
+X-Forefront-Antispam-Report:
+	CIP:84.19.233.75;CTRY:GB;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:edirelay1.ad.cirrus.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(23010399003)(36860700016)(376014)(61400799027)(22082099003)(18002099003)(16102099003)(4143699003)(11063799006)(10067099003)(56012099006);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	Let5+Hl3uXjf294Atluigo5xns5iygsRCszUM8bMYPHPsrqqDMKLAMRTS+iwoYfjou/ua16+yj1GaHFeWYWyS3/qTiXPuMQTlDt3QaHTmu29iEiJZ5meASU0AkMAW193gJZrI6QMkWaO5aR7zAFIOkVORvODI1XrWhtVs+bhSaLASbNdxnCNauO6q/PNYERN6ZCtoyOhU0epum1Snr2tYTXLEK99tcL2HRwpsdgKxhuIyM5Gu3kEF2vhJFnRuhS5Rg1nAKQ24Iv315DX33mvz+MjaAvYUf9OQSiOXZyswdvwa59dFhi+FtEl8LRbZnTZMg6XY5FEVgFXOj+uTBSnp9PEoyc2Vx0F9ItgU4CaGk4ux/BifFiGMOsR2sIhIDtDd1bSC1+qfp5LYCtLf65Bg5uMxGs1+YWnq/yANW2hD4aT9k37jxh0M0I5tfb11R/p
+X-Exchange-RoutingPolicyChecked:
+	nYdtDh1G21z0mQvrDU6p3JRDvlKW3uU5KNcO6yPjj63eSgvOTt0/ggK9S//14yuemBIwxMv0pMhxZE4kwT76QIaZI07toONsKybrg6xFLyG+iNqgqNQOSuCV1AuxxD3NTix4FX9BJldxFmBN4boxeQKq8RIVddLoR1e/pP2xvsdrLR77Ir7b5qOovI+rlwq6idX8JgyLiKR/m1tGM8QXfxKpeNyJEHeIamG095NVO5KdotCm0QGWZiTKu56aOZJMwzZdZ4EhEIziLeRoejFuUkDBrzXFZjISeV9Yq+f8z6DyHrWqaspg9gAIBDy+1Xx72z9nwzFi/n41yvIw8pM7YA==
+X-OriginatorOrg: opensource.cirrus.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2026 13:51:08.0614
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2b83cd0c-607d-4470-38c7-08df2eb13172
+X-MS-Exchange-CrossTenant-Id: bec09025-e5bc-40d1-a355-8e955c307de8
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=bec09025-e5bc-40d1-a355-8e955c307de8;Ip=[84.19.233.75];Helo=[edirelay1.ad.cirrus.com]
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TreatMessagesAsInternal-CY6PEPF00000047.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR19MB6045
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIwMDA1NCBTYWx0ZWRfX54dP6sc6soet
+ lC9i34x1l9NK1gjRq67RhZIy2U2QkdRZxy7xI7X4rs8T0Jvtvtf2cMbvSSSTr/M/G5ySPH3rxvZ
+ ItQWLN16VVawnHlbvM3R2UczLiz4/HM=
+X-Proofpoint-GUID: a2vfh59zGl5pjWmAIv046nSNpUKkFNkD
+X-Authority-Analysis: v=2.4 cv=HOlWhYtv c=1 sm=1 tr=0 ts=6ad771d4 cx=c_pps
+ a=X+KnjQQYfwFy+jvgOSkpsw==:117 a=h1hSm8JtM9GN1ddwPAif2w==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=kj9zAlcOel0A:10 a=660iZSQnnn4A:10 a=s63m1ICgrNkA:10 a=RWc_ulEos4gA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=iX4cTi3TZMoOKdANLEfx:22 a=Dj2-6B8FqX4mGL0U3gbX:22
+ a=VwQbUJbxAAAA:8 a=vfYWI2cJcXnOhAht2KIA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: a2vfh59zGl5pjWmAIv046nSNpUKkFNkD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIwMDA1NCBTYWx0ZWRfXxhkopRgEtxCG
+ FLsbgz15m8YJdjzHX2tN3UA14dRdUhhoUjiwUEk2SDqkNNtHxzgpsDnZZ6e7EqgD7OhQZ1HiHwi
+ vRYoRneL0jWNlW/indZHZNH5/CJSX15tN5FBJa3MSXw2wEiHdPQ8WAIRDm+0QdXcZU38YhUoiM+
+ QVgep7syZY4+/pM3xwcZsmShWNuKzj33nEROg9wpigmygfGVQgIqd4eFzD2etLNGboScjfpsn0c
+ GtfkFmfrXKjav+5Kh7HPc5BqJlZo50fTUR4zJya58mt1E+ri8pNJdYH2yorRbRPnLluGBypxPBd
+ N9KExRUy0OtFSW8eL27PYVtT2/sWb0c5itPCdv5gM151ztjGFFNH+pzwA/b9DBm3cFP09R6SdV5
+ p8Xqe2DXRDLUfJ4vnV2J1I7pET+WGq10l/ptwQoZQ0GZSUvXfXi9bgq2ppyuthz01captxsxNCc
+ h2JImeeg5C9HnuFFa9A==
+X-Proofpoint-Spam-Reason: safe
 
+On Tue, Oct 20, 2026 at 01:22:52PM +0100, Lee Jones wrote:
+> On Tue, 20 Oct 2026, Charles Keepax wrote:
+> > On Tue, Oct 20, 2026 at 12:26:58PM +0100, Lee Jones wrote:
+> > > On Thu, 24 Sep 2026, sashiko-bot@kernel.org wrote:
+> > I can do another resend carrying the ack if that is helpful?
+> 
+> Yes please.
 
-On 10/20/26 18:03, Hao Ge wrote:
-> Hi Suren and Ulad
->
-> Sashiko reported several issues, and they all look real.
-> I have some ideas for fixing the first few;
-> of course, please correct me if I get anything wrong.
->
-> I'd like to discuss the last issue with you all.
->
->
-> On 2026/10/20 13:45, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->> - [High] mm/vmalloc: infinite loop in vunmap_pte_range() on unaligned error rollback
->> - [High] mm/vmalloc: __vmap_pages_range_noflush() calls cond_resched() in atomic context
->> - [Medium] mm/vmalloc: vmap_page_range() calls flush_cache_vmap() before error rollback
->> --
->>
->> commit 043026437ba63b051df5d14470fe69ce8fa8825c
->> Author: Hao Ge <hao.ge@linux.dev>
->>
->> mm/vmalloc: undo partial mappings inside the mapping functions
->>
->> This commit adds rollback logic using __vunmap_range_noflush() and
->> kmsan_vunmap_range_noflush() into vmap_page_range(),
->> __vmap_pages_range_noflush(), and vmap_pages_range_noflush() when page
->> table installation or KMSAN metadata setup fails. It also adds range and
->> page_shift validation in __vmap_pages_range_noflush().
->>
->>> diff --git a/mm/vmalloc.c b/mm/vmalloc.c
->>> index 44e0eb32708f1..75aa5acf55660 100644
->>> --- a/mm/vmalloc.c
->>> +++ b/mm/vmalloc.c
->>> @@ -363,6 +363,9 @@ int vmap_page_range(unsigned long addr, unsigned long end,
->>>   	if (!err)
->>>   		err = kmsan_ioremap_page_range(addr, end, phys_addr, prot,
->>>   					       ioremap_max_page_shift);
->>> +	if (err)
->>> +		__vunmap_range_noflush(addr, end);
->>> +
->>>   	return err;
->>>   }
->> [Severity: High]
->> What happens here when vmap_range_noflush() returns -EINVAL for a range
->> where end - addr is not PAGE_SIZE-aligned?
->>
->> In vmap_pte_range(), commit a739e6b557af09 added a check to bail out on
->> unaligned ranges specifically to avoid an infinite loop:
->>
->> mm/vmalloc.c:vmap_pte_range() {
->> 	...
->> 	if (WARN_ON_ONCE(!PAGE_ALIGNED(end - addr)))
->> 		return -EINVAL;
->> }
->>
->> This can be reached on 64KB page kernels via pci_remap_iospace() ->
->> vmap_page_range() with 16KB/32KB/48KB PCI I/O ranges (for example via
->> loongson_pci_probe() or acpi_pci_root_remap_iospace()).
->>
->> When vmap_pte_range() returns -EINVAL, vmap_page_range() now calls
->> __vunmap_range_noflush(addr, end) with the unaligned range. Whenever a PMD
->> in [addr, end) is already populated with a PTE table (such as the
->> PCI_IOBASE PMD populated during early boot by reserve_pio_range(), or an
->> earlier PMD mapped in the same call), __vunmap_range_noflush() descends
->> into vunmap_pte_range(), which has no alignment check:
->>
->> mm/vmalloc.c:vunmap_pte_range() {
->> 	...
->> 	do {
->> 		...
->> 			ptent = ptep_get_and_clear(&init_mm, addr, pte);
->> 		WARN_ON(!pte_none(ptent) && !pte_present(ptent));
->> 	} while (pte += (size >> PAGE_SHIFT), addr += size, addr != end);
->> }
->>
->> Because end - addr is not a multiple of PAGE_SIZE, won't addr step past end
->> and loop infinitely, clearing unrelated kernel PTEs and corrupting memory
->> past the PTE table?
->>
-> That sounds reasonable. I will add a separate patch in the next version to fix
-> this problem.
->
->> [Severity: Medium]
->> Also in vmap_page_range(), flush_cache_vmap(addr, end) is called
->> unconditionally before checking err and before rolling back with
->> __vunmap_range_noflush(addr, end):
->>
->> mm/vmalloc.c:vmap_page_range() {
->> 	err = vmap_range_noflush(addr, end, phys_addr, pgprot_nx(prot),
->> 				 ioremap_max_page_shift);
->> 	flush_cache_vmap(addr, end);
->> 	if (!err)
->> 		err = kmsan_ioremap_page_range(addr, end, phys_addr, prot,
->> 					       ioremap_max_page_shift);
->> 	if (err)
->> 		__vunmap_range_noflush(addr, end);
->>
->> 	return err;
->> }
->>
->> On UML, flush_cache_vmap is defined as flush_tlb_kernel_range:
->>
->> arch/um/include/asm/cacheflush.h:
->> #define flush_cache_vmap flush_tlb_kernel_range
->>
->> When vmap_range_noflush() fails partway through or
->> kmsan_ioremap_page_range() fails, flush_cache_vmap() runs while the
->> partially installed PTEs are still pte_present(), causing
->> update_pte_range() in arch/um/kernel/tlb.c to map them into the host OS via
->> ops->mmap() and clear _PAGE_NEEDSYNC:
->>
->> arch/um/kernel/tlb.c:update_pte_range() {
->> 	...
->> 		if (pte_present(*pte)) {
->> 			...
->> 			ret = ops->mmap(ops->mm_idp, addr, PAGE_SIZE,
->> 					prot, fd, offset);
->> 		} else
->> 			ret = ops->unmap(ops->mm_idp, addr, PAGE_SIZE);
->>
->> 		*pte = pte_mkuptodate(*pte);
->> }
->>
->> When __vunmap_range_noflush(addr, end) then clears the software PTEs
->> without a subsequent TLB flush or unmap notification, won't those host OS
->> mmap mappings be left behind? Should flush_cache_vmap(addr, end) only be
->> called after both vmap_range_noflush() and kmsan_ioremap_page_range()
->> succeed?
->>
-> That sounds reasonable. I will add this logic in the next version.
->
->>> @@ -683,27 +686,35 @@ int __vmap_pages_range_noflush(unsigned long addr, unsigned long end,
->>>   		pgprot_t prot, struct page **pages, unsigned int page_shift)
->>>   {
->>>   	unsigned int i, nr = (end - addr) >> PAGE_SHIFT;
->>> +	unsigned long start = addr;
->>> +	int err = 0;
->>> +
->>> +	if (WARN_ON_ONCE(addr >= end))
->>> +		return -EINVAL;
->>>   
->>>   	if (WARN_ON_ONCE(page_shift < PAGE_SHIFT))
->>>   		return -EINVAL;
->>>   
->>>   	if (!IS_ENABLED(CONFIG_HAVE_ARCH_HUGE_VMALLOC) ||
->>> -			page_shift == PAGE_SHIFT)
->>> -		return vmap_small_pages_range_noflush(addr, end, prot, pages);
->>> -
->>> -	for (i = 0; i < nr; i += 1U << (page_shift - PAGE_SHIFT)) {
->>> -		int err;
->>> -
->>> -		err = vmap_range_noflush(addr, addr + (1UL << page_shift),
->>> +			page_shift == PAGE_SHIFT) {
->>> +		err = vmap_small_pages_range_noflush(addr, end, prot, pages);
->>> +	} else {
->>> +		for (i = 0; i < nr; i += 1U << (page_shift - PAGE_SHIFT)) {
->>> +			err = vmap_range_noflush(addr, addr + (1UL << page_shift),
->>>   					page_to_phys(pages[i]), prot,
->>>   					page_shift);
->>> -		if (err)
->>> -			return err;
->>> +			if (err)
->>> +				break;
->>>   
->>> -		addr += 1UL << page_shift;
->>> +			addr += 1UL << page_shift;
->>> +		}
->>>   	}
->>>   
->>> -	return 0;
->>> +	/* Undo the PTEs installed before the failure. */
->>> +	if (err)
->>> +		__vunmap_range_noflush(start, end);
->>> +
->>> +	return err;
->>>   }
->> [Severity: High]
->> Similarly here, __vmap_pages_range_noflush() checks addr >= end, but does
->> not check PAGE_ALIGNED(addr) or PAGE_ALIGNED(end).
->>
->> If a caller passes a sub-page or unaligned range (for example, 0 < end -
->> addr < PAGE_SIZE), nr = (end - addr) >> PAGE_SHIFT evaluates to 0, so the
->> huge-page path still maps nothing and returns 0, while the small-page path
->> loops infinitely in vmap_pages_pte_range(). And if the huge-page path fails
->> on an unaligned range, __vunmap_range_noflush(start, end) will hit the same
->> infinite loop in vunmap_pte_range().
->>
->> Should both vmap_page_range() and __vmap_pages_range_noflush() validate
->> PAGE_ALIGNED(addr) && PAGE_ALIGNED(end) upfront before attempting to map or
->> unmap?
->>
-> I think We need to check both PAGE_ALIGNED(addr) and PAGE_ALIGNED(end).
-> As an example: if addr is PAGE-aligned, end is not, and end - addr < PAGE_SIZE,
-> then nr becomes zero. On the huge page path, we simply return 0 with no work performed.
->
-> At the same time, vmap_pages_pte_range() needs the same guard as commit
-> a739e6b557af ("mm: vmalloc: WARN_ON if mapping size is not PAGE_SIZE aligned"),
-> to protect against unaligned ranges.
->
-> So will do next version.
->
->>>   
->>>   int vmap_pages_range_noflush(unsigned long addr, unsigned long end,
->>> @@ -715,7 +726,16 @@ int vmap_pages_range_noflush(unsigned long addr, unsigned long end,
->>>   
->>>   	if (ret)
->>>   		return ret;
->>> -	return __vmap_pages_range_noflush(addr, end, prot, pages, page_shift);
->>> +
->>> +	ret = __vmap_pages_range_noflush(addr, end, prot, pages, page_shift);
->>> +	/*
->>> +	 * The page tables undo themselves on failure. Tear down the
->>> +	 * metadata that was fully set up before the mapping failed.
->>> +	 */
->>> +	if (ret)
->>> +		kmsan_vunmap_range_noflush(addr, end);
->>> +
->>> +	return ret;
->>>   }
->> [Severity: High]
->> Can calling __vunmap_range_noflush() and kmsan_vunmap_range_noflush() here
->> trigger a sleeping-in-atomic-context bug when __vmalloc() or kvmalloc() is
->> called with GFP_ATOMIC or GFP_NOWAIT?
->>
->> __vmalloc_area_node() supports non-blocking allocations by wrapping
->> __vmap_pages_range() in memalloc_apply_gfp_scope(gfp_mask):
->>
->> mm/vmalloc.c:__vmalloc_area_node() {
->> 	...
->> 	flags = memalloc_apply_gfp_scope(gfp_mask);
->> 	do {
->> 		ret = __vmap_pages_range(addr, addr + size, prot, area->pages,
->> 				page_shift, nested_gfp);
->> 	} while ((gfp_mask & __GFP_NOFAIL) && (ret < 0));
->> 	memalloc_restore_gfp_scope(flags);
->> }
->>
->> When a GFP_ATOMIC or GFP_NOWAIT allocation runs in atomic context (such as
->> under a spinlock, preempt_disable(), or rcu_read_lock()) and page table
->> allocation fails in vmap_small_pages_range_noflush() after at least one PMD
->> in [start, end) is populated (or after kmsan_vmap_pages_range_noflush()
->> populated the KMSAN shadow/origin ranges), __vmap_pages_range_noflush() and
->> kmsan_vunmap_range_noflush() synchronously call __vunmap_range_noflush().
->>
->> __vunmap_range_noflush() walks the populated PMDs via vunmap_pmd_range(),
->> which unconditionally calls cond_resched():
->>
->> mm/vmalloc.c:vunmap_pmd_range() {
->> 	...
->> 	do {
->> 		next = pmd_addr_end(addr, end);
->> 		if (pmd_none_or_clear_bad(pmd))
->> 			continue;
->> 		vunmap_pte_range(pmd, addr, next, mask);
->>
->> 		cond_resched();
->> 	} while (pmd++, addr = next, addr != end);
->> }
->>
->> Commit 9c47753167a6 ("mm/vmalloc: defer freeing partly initialized
->> vm_struct") deferred error-path cleanup in __vmalloc_area_node() to a
->> workqueue specifically because unmapping on failure can sleep. Doesn't
->> calling __vunmap_range_noflush() synchronously inside
->> __vmap_pages_range_noflush() and vmap_pages_range_noflush() reintroduce
->> cond_resched() in atomic context?
->>
-> This issue also appears real. One possible approach is to plumb the caller's gfp_mask into vunmap_pmd_range()
-> to conditionally skip cond_resched().
-> Suren, Ulad, do you have any preferred or cleaner way to handle this?
+Cool yeah can do, I will wait until the merge window closes then
+do a resend.
 
-
-Alternatively, we can follow the approach from commit 9c47753167a6 
-("mm/vmalloc: defer freeing partly initialized vm_struct"):
-
-defer the cleanup to a workqueue when |gfp_mask| has GFP_ATOMIC or 
-GFP_NOWAIT，and perform cleanup synchronously
-
-if we are already in process context. Anyway, I will look into this 
-further tomorrow.
-
-
->
-> Thanks
-> Best Regards
-> Hao
->
+Thanks,
+Charles
