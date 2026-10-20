@@ -1,68 +1,118 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.15
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792492760;
-	b=KNDKFU8skl66E/L1qXqZQSyXBAD3IRA8Z/DNvn5D9BTMmdAO84efnu55kpWWVnDTBtjX
-	 XV04ZCz2jECd9bbYO9A/m2gfFUAQ4tXNrXtfhcM839cD2T8U/YtCYPsBzsO2SguyAnhYu
-	 QX3jmhkmugCSjBh2tIkgj7Qew1pafgmePuGM+ewotVo9xVP5eLnH3KViK2Ep7F8YjpdpK
-	 bvuOMRu749X0vYh55fCsR4xo/BD5nCzgYiZl+5wzBhewRTicMmjfM5aHB9Z2WMhjOsQlt
-	 K7YLrwn8BB+80qqjx1NYK044yIo932/pb2doBmOnLY1b/248OxXGBQp+CpubPVQe58w==
+	t=1792495410;
+	b=VeMRuxbNlWRlWrTibF3R15ZUp6xi6ER6BWB5zGhoLjtd+F0XJk7z1K3skXxm7jvKYLAa
+	 mIYGiFXDz9AOavdNKDhU7f2eiIu+kwY9ngZRfPxzgSph1jGcAJzC11QBpK4YiySenmYxp
+	 SEcW0COEAg07mjfyQ9JMnVEfslFy1tGnk2VcqgqyyQWDhJGv/otHNjjuN5IJ7VNJf5Hck
+	 6nXJ37Q/Q/9xx6mpCm//lop9+Fup3LJWvEgs/GBGbJI8hlD/4vdmM8QPZXYilKpggk4KJ
+	 kRdRCr5lAgVQZU9ytI7iQRU1Bl0jxkH7PJm/Gf+ddsP97hEo4hAOzkmnpHyKuJ+5DgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792492760;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:From:To:References:Content-Language:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=dqR2ngkS5f60IPp0VNZXVBKEWLAUz0RzefpLtGVQ6BA=;
-	b=aVOk9WvohO7P6HVlaW4DIvxtWfvUYhoYPTN2iDZnBwbL8PcrKzrAVZ48I4646DR3tozh
-	 DtPvYUQG1o9l/kIv5MuGZLz+fySWZXfhoHeSU8AR0JwR/SXP8nzWVENIszj6g4EYXIzrB
-	 C/5AhnCrCp7U+qAXaIlIVWVHeBTauvtDF9oSDcb/56yqTT4X+Bp3bqDAWfTXXY7Ryvutv
-	 gOGN9I0zwsl0f+EB09j4nALuAuuIIiX3FFvi0pcWkZYrDpvDXToga2Gg/jupOI4PwQK5S
-	 Gk796DW3qIZgMmCRbRIPhM0lV/r/6Bm43NHgQGLW4AsPJONcZgK9Mv4BltiwR8VFx0g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792495410;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
+	 X-Received:X-Received:Received:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-GUID:X-Authority-Analysis:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=qhh0ZV45FGIUTeIwsmsxV4mxFb/EQ7WWA7zG32iYPew=;
+	b=mtaWN/6RE6/P72OykwLJzbcSol4MDJDevjAGGtiPD8cyji+5tI++PnlgLd2ZYNrBbn66
+	 RYk2Vs+ZttiCsXFSKvWhUjEUGHwXS+3dR38mRwSPWhmGohbDn/ZzWtfzGbQoWmRxqoS6+
+	 BNvxMWj7SlDKwzbgmwU7roXGIjU/RepGfNFJraTObWZMZhW6RWotcvsiF0Ci24QGbWSVc
+	 xbuy2mFs/nbO0Qixbttkd4c7xoGZHOtt6g6OGLjJooEb6citykkBVL/W+p46BoFDeqMst
+	 Az46hqyKbPEjr9SXR9efDVBuTCRbvVzbvSta+iFMjh1mFqvJleKweGILjBLWlOqDdKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Dgh3f2S6;
-	arc=none smtp.remote-ip=192.198.163.15
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b="B05AQ//3";
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=SkBbK+g0;
+	arc=none smtp.remote-ip=205.220.168.131
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3B2606A319
-	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 10:39:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7B3B2606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389E5606A323
+	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 11:23:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 389E5606A323
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Dgh3f2S6
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792492759; x=1824028759;
-  h=message-id:date:mime-version:subject:from:to:references:
-   in-reply-to:content-transfer-encoding;
-  bh=d+irqP4gRAlW4o26RaUF8mqP4MaaD0lWMX36dRHY7NU=;
-  b=Dgh3f2S6KCNHtPARuDSb91O9dUWTwwFj7B3fPaUV52KSD/sv+8cMlVl6
-   TapCdfxpRH5UBjYWkjGxRQBoaYAa+2zVyvBEOZsOC8MiYlUtUeiBsb3g3
-   N7seCUcxVIzZcXizULwt8eih8yst4mVuN6JIz6idoiMUHHfcBOwOoKhVB
-   XD5EhW1HLtlXwdhkI4hHANDaTEEEUl/GSX7Vs5zW+kZuUvll+QSiNWrjq
-   G+Cmp8pF4+majQUYD16Jzv0PvYXCloD19BCWMZdlrlBT1GB3f2UxL4hKg
-   yJoFCSCxaMLRIDckphhZz+DuDn8ellI567jFTacClk9Bo2/W1mNhqjowY
-   Q==;
-X-CSE-ConnectionGUID: ZE60RwzfTDKu+Hvd+zK5cA==
-X-CSE-MsgGUID: /ZADDH0NR4un2mzhbH2Eig==
-X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="1202684"
-X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="1202684"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2026 03:39:18 -0700
-X-CSE-ConnectionGUID: +pG71t18T5qs0/96Ed3XVw==
-X-CSE-MsgGUID: Y/hTnJt5Th2JgJV52I4P/w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="2673831"
-Received: from smoticic-mobl1.ger.corp.intel.com (HELO [10.245.244.166]) ([10.245.244.166])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2026 03:39:17 -0700
-Message-ID: <a9c59d5c-9fb1-4207-a05b-3f5d52a3239e@intel.com>
-Date: Tue, 20 Oct 2026 11:39:14 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=B05AQ//3;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=SkBbK+g0
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69KAx7rq2524261
+	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 11:23:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	qhh0ZV45FGIUTeIwsmsxV4mxFb/EQ7WWA7zG32iYPew=; b=B05AQ//3bin4597i
+	8GD/kjSrr0VfInVU74gSPlE9m04Eh9WHk19sJCGQunDEY+DJgCFZtdfgZ+SeGadw
+	LXDJDBd8djPjp0Lu2UQQjst3x0OeE50hedLwWFjiR2NqOGCphCKhtIDlYJRwU51l
+	R3yovryvY+oXf8J1BmPNZhz3v/rvkJm79FUqenDj6oAo5B/mxfCDZjaFwLf21Kpc
+	xlCBZ1zK+oGNX60eRFdk9y7WR2MkbwS6XJT8td2yS0fXxMz+WenZDlk4dQsXWWq+
+	knyXHi6yhLXXdF4PzW7OHfhQ3tCzBh0yCYpeaHGreI2MpDCJTNwkzijNqwPoSxf5
+	pUKJjw==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hdw5p288w-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 11:23:29 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-30c0d568830so6791684eec.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 04:23:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1792495408; x=1793100208; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=qhh0ZV45FGIUTeIwsmsxV4mxFb/EQ7WWA7zG32iYPew=;
+        b=SkBbK+g0/j+g1o/SwfWzHY4z0j9Em0bA+FAI1lCPZo/Ao2oHBOk96Y8gQS67jJ2blP
+         ttkPqLCpNP0jVIqmjrKjzE4FlVHN8XCMKljMcqU4Mj9okhMEV3B8vs1kdiSkJpvnH8v/
+         /XcQGTr6eLxevA6Upcr1yPnu5+RW8rWlNccST3hnNUNbpCLE7ZAeG3xgQ1zAwqb8ROtW
+         Q+8ZMhwFAm3sS9uk87owkBshGYu1rxJZPiH5tuRLTj7BaTQVOGdlHC2WrCXzrdcDwlqj
+         8HAzY9xwh2g8E/wB5Vd5tKdWAKw/5A+lbe/ra5lXRIP20Ko11Q0NLmzhPUBFwf+QwWpQ
+         Z3tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792495408; x=1793100208;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=qhh0ZV45FGIUTeIwsmsxV4mxFb/EQ7WWA7zG32iYPew=;
+        b=kcq5RZ/xM3NnI4ABDITtZHtIOHac4Xre1a5tSK/bXZPgQDtjwfZ7UBlpayV6SQN/9o
+         COpILULQiSTaQqOwPjEgVQMWIm57urgTWaKBhLgbuEWUVYQMIgDdCGTg0OJeYRX3mLEC
+         wVFdY4EAgzrpKKQl1/eG2asmamPSP0p5ktC7FXVaqwM2eN1ajlSwMNKT+PlDO3LUupxs
+         0vjGsmpq4Zfqn294nzqnnLR5xTi5+Z4wyxqTb8fSrGDm7YJKKTDkegr38bi6smz64Knj
+         BYjCxrXExDZYvrpCiD4JVH+YKNRJt2P+vGmp1/2cKjRluqCLtzRaNCRJb0K0RtBboSIA
+         1p8g==
+X-Gm-Message-State: AFq9FYLCY3Ym1N03MTJgTIxeqr0RyR4EleP5L1otCgjmiar9+ehLQ42D
+	QvJ1YDOZVUh8u18OUQc/GrauPGZjIyKSXFlmo3As3G/XkUYRn6H0dN2G3duo1hzUIvvObkFIfk9
+	/o5y5MEH/BQ/gt4wEIh6WeXVsxOnTmiQHk/LvcMwgIQ8i4hzDmcc/9EUCy7uMxnKF60xhiQQpS5
+	/IR+Y=
+X-Gm-Gg: AYBFou1KqioxjM7g1qdxjwXVtvVn9TRE85WDAJGcIde5Z9UTCULpWoLJPklUlSDyDpP
+	wJmasGwRZ+XqbRkE/AfmPnuMUykYHkZCbfeiwKTwNI/QITbNf9HLdaWU1lhK5/cXtto1KR/JHLb
+	MSB5TsmgIBXBzdcunYXg9gHsBe7ZaookqqtkH8Wz82+oEIQtL+LyrvpWxROKfVLb6Bv7TtGlUPu
+	jD841oLOxhODnXC3zmkjG6bS9qpGNfvuoHMKmWQ7JVee62Sc/3pF7rFLgfLCkz1NwG87YxcpRpS
+	yoafDnpD/q+x93AeAsbr4FRa8t57iqIM9YTEDCeOKhoQhAjVKQrB/NQfsTRnt2lZ51SPkmcYG9n
+	3gsCf2CNWqpgMb+w+ixnqHWo3oA==
+X-Received: by 2002:a05:693c:8092:b0:35d:8c3a:38a8 with SMTP id 5a478bee46e88-361a2942646mr16312723eec.39.1792495408282;
+        Tue, 20 Oct 2026 04:23:28 -0700 (PDT)
+X-Received: by 2002:a05:693c:8092:b0:35d:8c3a:38a8 with SMTP id 5a478bee46e88-361a2942646mr16312690eec.39.1792495407584;
+        Tue, 20 Oct 2026 04:23:27 -0700 (PDT)
+Received: from hu-mdsor-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-360813b792bsm41575611eec.5.2026.10.20.04.23.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Oct 2026 04:23:27 -0700 (PDT)
+Date: Tue, 20 Oct 2026 16:53:21 +0530
+From: Mohit Dsor <mohit.dsor@oss.qualcomm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: robh@kernel.org, dri-devel@lists.freedesktop.org,
+        devicetree@vger.kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v17 2/2] drm/bridge: Add Lontium LT9611C(EX/UXD) MIPI DSI
+ to HDMI driver
+Message-ID: <atdPKccBp6CFiTzp@hu-mdsor-hyd.qualcomm.com>
+References: <20261008-lt9611c-v7-v17-0-1e8f5f2b2f19@oss.qualcomm.com>
+ <20261008-lt9611c-v7-v17-2-1e8f5f2b2f19@oss.qualcomm.com>
+ <sashiko-outbox-163341@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -72,207 +122,183 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] gpu/buddy: restore two-pass clear/dirty guard for
- range-biased allocation
-From: Matthew Auld <matthew.auld@intel.com>
-To: sashiko-reviews@lists.linux.dev,
- Arunpravin Paneer Selvam <arunpravin.paneerselvam@amd.com>,
- dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org
-References: <20261020055537.1640552-1-arunpravin.paneerselvam@amd.com>
- <sashiko-outbox-178464@kernel.org>
- <30e81db2-a56a-464b-93ea-c74aa161fdde@intel.com>
-Content-Language: en-GB
-In-Reply-To: <30e81db2-a56a-464b-93ea-c74aa161fdde@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-163341@kernel.org>
+X-Proofpoint-ORIG-GUID: mwVZ85NAJnL1bixu6w0drgs3fEuVWQya
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIwMDA0NSBTYWx0ZWRfX+rTU1SaFD2v0
+ 88dG1NWykdarsWZGwUxQM4Hwur6JMYF0tMArr6sEX1MKjZl1mOsFdHxgN/9oYV2aq8UlyZajCnm
+ hTT78PirntoTD7bDYrtKsagHVpEAqBA=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIwMDA0NSBTYWx0ZWRfX/yKIGeuWqfJc
+ pDkHoDzlDYECUp4qi9Q3W7GtsiVaZlDpkqZTU5XdzjhrqOuDswbHi9OLOW5vnTwD/zRXNnSqqlD
+ Xoy7+1TIc0QzdMp2ZDlJ6BkpJfx257Ok5MkH2qedxtQ0ZWM2yzbA6JWFoFCY3OrLWFEZRHDLASs
+ O+skDv5lYoivrh1rfd41wMELAs5BmKKVoXhMopTcjAVrQKOMYpZLkQmRVg3Hnta+Pnk6JcYZuti
+ +6IvKEgVTIBvVrllMV71DS5re/abbxTm7ICWWrzX56KXA5LisdzMFE1YjHmKFxaV9hVhsyE8JU9
+ WapPBP5zuwD3cc1KfPfiz1n0EtvLalOkdPdFhEjkNQoTim0/Fz3kQlt/3UI1vXg24nDy5T5HDdf
+ UTYfA0F1QMBrmLu5nV01UVWkR8LflhBNdKtOLU8o3ZwefwPHsGnUqR1YWkGsYJjZfctO8YcF8aO
+ Vmvr7ShAmB5ClzatEng==
+X-Proofpoint-GUID: mwVZ85NAJnL1bixu6w0drgs3fEuVWQya
+X-Authority-Analysis: v=2.4 cv=crUOAF4i c=1 sm=1 tr=0 ts=6ad74f31 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=Kz8-B0t5AAAA:8
+ a=JYkXmYT7k6CsIRxL8okA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=6Ab_bkdmUrQuMsNx7PHu:22 a=GvGzcOZaWPEFPQC_NcjD:22 a=RuZk68QooNbwfxovefhk:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-20_01,2026-10-19_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 malwarescore=0 bulkscore=0 adultscore=0
+ impostorscore=0 priorityscore=1501 phishscore=0 spamscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610200045
 
-On 20/10/2026 10:52, Matthew Auld wrote:
-> On 20/10/2026 09:00, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential 
->> issue(s) to consider:
->> - [High] gpu/buddy: block_incompatible() mishandles split and mixed 
->> blocks in __alloc_range_bias()
->> -- 
->>
->> commit 6dff7f0e6dce9c68ecb98f2d911199843d2b4401
->> Author: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
->>
->> gpu/buddy: restore two-pass clear/dirty guard for range-biased allocation
->>
->> This commit introduces a two-pass search in 
->> __gpu_buddy_alloc_range_bias()
->> using block_incompatible() in the strict pass to prevent range-restricted
->> allocations from splitting opposite-class (clear vs. dirty) blocks unless
->> no matching blocks exist in the range.
->>
->>> diff --git a/drivers/gpu/buddy.c b/drivers/gpu/buddy.c
->>> index 503f7d5934e4b..91935c71c5255 100644
->>> --- a/drivers/gpu/buddy.c
->>> +++ b/drivers/gpu/buddy.c
->>> @@ -1240,11 +1240,19 @@ static void __gpu_buddy_undo_splits(struct 
->>> gpu_buddy *mm,
->>>       }
->>>   }
->>> +static bool block_incompatible(struct gpu_buddy_block *block, 
->>> unsigned int flags)
->>> +{
->>> +    bool needs_clear = flags & GPU_BUDDY_CLEAR_ALLOCATION;
->>> +
->>> +    return needs_clear != gpu_buddy_block_is_clear(block);
->>> +}
->>> +
->>>   static struct gpu_buddy_block *
->>>   __alloc_range_bias(struct gpu_buddy *mm,
->>>              u64 start, u64 end,
->>>              unsigned int order,
->>> -           unsigned long flags)
->>> +           unsigned long flags,
->>> +           bool fallback)
->>>   {
->>
->> [ ... ]
->>
->>> @@ -1298,6 +1304,9 @@ __alloc_range_bias(struct gpu_buddy *mm,
->>>                   continue;
->>>           }
->>> +        if (!fallback && block_incompatible(block, flags))
->>> +            continue;
->>> +
->>>           if (contains(start, end, block_start, block_end) &&
->>>               order == gpu_buddy_block_order(block)) {
->>>               /*
->>> @@ -1315,38 +1324,8 @@ __alloc_range_bias(struct gpu_buddy *mm,
->>>                   goto err_undo;
->>>           }
->>> -        /*
->>> -         * Top-down is a strict address-placement policy, so when it is
->>> -         * requested we ignore clear steering and simply descend the
->>> -         * right (higher-address) child first. Only a non-top-down 
->>> clear
->>> -         * request biases the descent towards clear/has_clear subtrees.
->>> -         */
->>> -        if ((flags & GPU_BUDDY_CLEAR_ALLOCATION) &&
->>> -            !(flags & GPU_BUDDY_TOPDOWN_ALLOCATION)) {
->>> -            struct gpu_buddy_block *prefer;
->>> -
->>> -            if (gpu_buddy_block_is_clear(block->right))
->>> -                prefer = block->right;
->>> -            else if (gpu_buddy_block_is_clear(block->left))
->>> -                prefer = block->left;
->>> -            else if (block->right->has_clear)
->>> -                prefer = block->right;
->>> -            else if (block->left->has_clear)
->>> -                prefer = block->left;
->>> -            else
->>> -                prefer = block->right;
->>> -
->>> -            if (prefer == block->right) {
->>> -                list_add(&block->left->tmp_link, &dfs);
->>> -                list_add(&block->right->tmp_link, &dfs);
->>> -            } else {
->>> -                list_add(&block->right->tmp_link, &dfs);
->>> -                list_add(&block->left->tmp_link, &dfs);
->>> -            }
->>> -        } else {
->>> -            list_add(&block->left->tmp_link, &dfs);
->>> -            list_add(&block->right->tmp_link, &dfs);
->>> -        }
->>> +        list_add(&block->left->tmp_link, &dfs);
->>> +        list_add(&block->right->tmp_link, &dfs);
->>>       } while (1);
->>
->> [Severity: High]
->> Does calling block_incompatible() on every visited node in
->> __alloc_range_bias() before checking whether the block is split or mixed
->> mishandle internal GPU_BUDDY_SPLIT nodes and coalesced GPU_BLOCK_MIXED 
->> free
->> blocks?
->>
->> First, when mark_split() transitions a block to GPU_BUDDY_SPLIT, it 
->> leaves
->> the previous GPU_BUDDY_HEADER_CLEAR bit intact on the internal node:
->>
->> drivers/gpu/buddy.c:mark_split() {
->>     block->header &= ~GPU_BUDDY_HEADER_STATE;
->>     block->header |= GPU_BUDDY_SPLIT;
->>     ...
->> }
->>
->> Because gpu_buddy_init() initializes roots as dirty, any root or ancestor
->> split while dirty keeps gpu_buddy_block_is_clear(block) == false while 
->> any
->> descendant remains allocated. Conversely, a clear block that is split and
->> later has a descendant freed as dirty keeps 
->> gpu_buddy_block_is_clear(block)
->> == true on the split ancestor.
->>
->> When __gpu_buddy_alloc_range_bias() runs the first pass (fallback = 
->> false),
->> __alloc_range_bias() evaluates block_incompatible(block, flags) on those
->> GPU_BUDDY_SPLIT ancestors and skips the entire subtree without descending
->> into its children. If no other root satisfies the request, the first pass
->> returns -ENOSPC and __gpu_buddy_alloc_range_bias() falls back to the 
->> second
->> pass (fallback = true), where block_incompatible() is disabled and the
->> clear/has_clear child-ordering preference has been removed, causing the
->> search to split the highest-address extent regardless of class.
->>
->> Second, __gpu_buddy_free() coalesces adjacent clear and dirty free 
->> buddies
->> into a single GPU_BUDDY_FREE block with state GPU_BLOCK_MIXED, which has
->> gpu_buddy_block_is_clear(block) == false and block->has_clear == true:
->>
->> 1. For clear range allocations (flags & GPU_BUDDY_CLEAR_ALLOCATION), 
->> Pass 1
->>     sees gpu_buddy_block_is_clear(block) == false on a GPU_BLOCK_MIXED 
->> block
->>     and skips it via block_incompatible() without splitting it to 
->> reach the
->>     clear sub-blocks inside. Pass 2 then splits the mixed block 
->> without clear
->>     child-steering and unconditionally visits block->right first, 
->> returning a
->>     dirty block whenever the clear half is in block->left.
->>
->> 2. For dirty range allocations (!(flags & GPU_BUDDY_CLEAR_ALLOCATION)),
->>     block_incompatible() returns false on a higher-order GPU_BLOCK_MIXED
->>     block because gpu_buddy_block_is_clear(block) is false. Pass 1 
->> then calls
->>     split_block(mm, block), which reclassifies block->left and block- 
->> >right
->>     via mark_free(). If the child overlapping [start, end) is clear 
->> while the
->>     dirty child lies outside [start, end), Pass 1 rejects the clear 
->> child via
->>     block_incompatible() and skips the other child without calling
->>     __gpu_buddy_undo_splits().
->>
->> Wouldn't leaving that split GPU_BLOCK_MIXED block unmerged keep both
->> children in GPU_BUDDY_FREE state, preventing ancestor coalescing on 
->> teardown
->> and triggering gpu_buddy_assert(gpu_buddy_block_is_free(mm->roots[i])) 
->> while
->> leaking the split child gpu_buddy_block structures in gpu_buddy_fini()?
+On Wed, Oct 07, 2026 at 08:32:56PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [Critical] drm: build failure due to non-existent .atomic_create_state hook in drm_bridge_funcs
+> - [Critical] drm: type mismatch and memory corruption in atomic_enable hook signature
+> - [High] drm: missing mandatory initialization for HDMI bridge operations
+> - [High] sysfs: NULL pointer dereference in firmware attributes due to registration race
+> - [Medium] drm/bridge: missing atomic_disable leaves LT9611C hardware powered on
+> --
 > 
-> Analysis looks correct to me. We assume if you get as far as doing an 
-> actual split, then that must mean there is something in there which is 
-> compatible, either you find it with some number of splits or one of the 
-> split calls hits an error, which takes care to undo the splits. But now 
-> with that compat check, this breaks, since we don't know ahead of time 
-> if it will find something which is also compat. Arun, thoughts?
-
-Maybe something like: 
-https://gitlab.freedesktop.org/mwa/kernel/-/commit/c611df39a268843021546f86754e20f07c7bdc87
-
-So inject the parent node into the dfs for each split, and since we 
-visit everything or find a suitable node, it should undo the splits as 
-we go, I think.
-
+> commit 0482492a2bb6e8ef5381a82384662e6858358155
+> Author: Sunyun Yang <syyang@lontium.com>
 > 
->>
->> [ ... ]
->>
+> drm/bridge: Add Lontium LT9611C(EX/UXD) MIPI DSI to HDMI driver
 > 
+> This commit adds support for the Lontium LT9611C series MIPI DSI to HDMI
+> bridge chip. It supports configuring single or dual port DSI inputs and
+> provides HDMI output functionality along with audio and sysfs firmware
+> update support.
+> 
+> > diff --git a/drivers/gpu/drm/bridge/lontium-lt9611c.c b/drivers/gpu/drm/bridge/lontium-lt9611c.c
+> > new file mode 100644
+> > index 0000000000000..6082c89b388bf
+> > --- /dev/null
+> > +++ b/drivers/gpu/drm/bridge/lontium-lt9611c.c
+> [ ... ]
+> > +static void lt9611c_bridge_atomic_enable(struct drm_bridge *bridge,
+> > +					 struct drm_atomic_commit *state)
+> > +{
+> > +	struct lt9611c *lt9611c = bridge_to_lt9611c(bridge);
+> > +	struct drm_connector *connector;
+> > +	struct drm_connector_state *conn_state;
+> > +	struct drm_crtc_state *crtc_state;
+> > +	struct drm_display_mode *mode;
+> > +	int ret;
+> > +
+> > +	connector = drm_atomic_get_new_connector_for_encoder(state, bridge->encoder);
+> 
+> [Severity: Critical]
+> Does the signature of this atomic_enable hook match what the DRM core expects?
+> 
+> The atomic_enable hook in drm_bridge_funcs expects the second argument to be
+> a struct drm_bridge_state pointer for the old bridge state. Treating this
+> argument as the top-level struct drm_atomic_commit pointer and passing it to
+> drm_atomic_get_new_connector_for_encoder() casts the bridge state to a commit
+> state, which can cause out-of-bounds memory access when dereferencing the
+> state arrays.
+The atomic_enable hook in this kernel tree (include/drm/drm_bridge.h:339) takes a struct drm_atomic_commit *, while drm_atomic_get_new_connector_for_encoder() expects a const struct drm_atomic_commit *; therefore, the usage is correct, type-safe, and does not require any cast.
+> 
+> [ ... ]
+> > +static const struct drm_bridge_funcs lt9611c_bridge_funcs = {
+> > +	.attach = lt9611c_bridge_attach,
+> > +	.detect = lt9611c_bridge_detect,
+> > +	.edid_read = lt9611c_bridge_edid_read,
+> > +	.atomic_enable = lt9611c_bridge_atomic_enable,
+> > +	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
+> 
+> [Severity: Medium]
+> Is an atomic_disable hook needed here to properly power down the bridge?
+> 
+> The driver implements atomic_enable to set up video timings and dual DSI
+> ports, but lacks a corresponding atomic_disable. During display blanking
+> or system DPMS off, the hardware might remain active, wasting power or
+> potentially locking up when the upstream DSI host stops its clock.
+> 
+> > +	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
+> > +	.atomic_create_state = drm_atomic_helper_bridge_create_state,
+>
+The LT9611C bridge does not require an atomic_disable hook for correct operation. The bridge MCU firmware manages its own state and automatically enters a low-power idle state when the DSI input clock is removed, i.e. when the upstream DSI host stops transmitting. Explicit power-down via an MCU command is therefore unnecessary and would require an additional MCU command sequence that could potentially race with DSI host shutdown.
 
+System-level power management is handled by lt9611c_bridge_suspend(), which disables the regulators and IRQ, while display blanking/DPMS is naturally handled by the upstream DSI host stopping its output.
+
+If a future use case requires explicit bridge shutdown between mode transitions, an atomic_disable hook can be added at that time. 
+> [Severity: Critical]
+> Does this compile against the current drm_bridge_funcs definition?
+> 
+> The struct drm_bridge_funcs does not contain an atomic_create_state member,
+> and the assigned helper drm_atomic_helper_bridge_create_state does not exist.
+> The correct hook for resetting bridge state is atomic_reset, pointing to
+> drm_atomic_helper_bridge_reset. Without a valid reset hook, atomic state
+> allocation for the bridge will fail.
+> 
+> [ ... ]
+atomic_create_state is a valid member of struct drm_bridge_funcs in this kernel (see include/drm/drm_bridge.h:507), and drm_atomic_helper_bridge_create_state is the corresponding helper (see drivers/gpu/drm/drm_atomic_state_helper.c:909). This pattern is already used by other drivers in the same tree, such as chipone-icn6211.c. The atomic_reset hook you mentioned belongs to the older API; this driver correctly uses the newer atomic_create_state interface.
+> > +static ssize_t firmware_store(struct device *dev, struct device_attribute *attr,
+> > +				      const char *buf, size_t len)
+> > +{
+> > +	struct lt9611c *lt9611c = dev_get_drvdata(dev);
+> > +	int ret;
+> > +
+> > +	dev_warn(dev, "starting firmware upgrade — display will be disrupted\n");
+> > +
+> > +	ret = lt9611c_firmware_upgrade(lt9611c);
+> 
+> [Severity: High]
+> Can lt9611c be NULL here if the sysfs file is accessed before probe completes?
+> 
+> The sysfs group is registered via lt9611c_driver.driver.dev_groups, which
+> means the files are created by the driver core before probe runs. If userspace
+> accesses this before i2c_set_clientdata() is called, dev_get_drvdata(dev)
+> will return NULL, causing an immediate crash when it is passed to
+> lt9611c_firmware_upgrade().
+> 
+Will fix it
+> [ ... ]
+> > +static ssize_t firmware_show(struct device *dev, struct device_attribute *attr, char *buf)
+> > +{
+> > +	struct lt9611c *lt9611c = dev_get_drvdata(dev);
+> > +
+> > +	return sysfs_emit(buf, "0x%04x\n", READ_ONCE(lt9611c->fw_version));
+> > +}
+> 
+> [Severity: High]
+> Similar to firmware_store, this will dereference a NULL lt9611c pointer if
+> the sysfs attribute is read before the client data is set in probe, or if
+> probe fails.
+> 
+Will fix it
+> [ ... ]
+> > +	lt9611c->bridge.of_node = client->dev.of_node;
+> > +	lt9611c->bridge.ops = DRM_BRIDGE_OP_DETECT |
+> > +			DRM_BRIDGE_OP_EDID |
+> > +			DRM_BRIDGE_OP_HPD |
+> > +			DRM_BRIDGE_OP_HDMI |
+> > +			DRM_BRIDGE_OP_HDMI_AUDIO;
+> > +	lt9611c->bridge.type = DRM_MODE_CONNECTOR_HDMIA;
+> 
+> [Severity: High]
+> Since this driver sets the DRM_BRIDGE_OP_HDMI flag, does it also need to
+> initialize supported_hdmi_ver, supported_formats, and max_bpc?
+> 
+> When DRM_BRIDGE_OP_HDMI is set, leaving these uninitialized (zero) causes
+> drm_bridge_add() to log a warning for an unknown HDMI version. The HDMI state
+> helpers will also reject display modes because no valid color formats or
+> depths are advertised, which prevents display modesetting.
+The driver works correctly without these fields for the following reasons:
+
+supported_hdmi_ver - leaving this as HDMI_VERSION_UNKNOWN (0) only results in a DRM_WARN from drm_bridge_add() (drivers/gpu/drm/drm_bridge.c:464) and does not affect functionality. The only consequence is that ycbcr_420_allowed is evaluated as false, which is appropriate for this device since the LT9611C family does not support YCbCr 4:2:0 input.
+
+supported_formats - leaving this field unset (0) also results in ycbcr_420_allowed = false. Display mode filtering is based on EDID-reported sink capabilities and does not directly depend on supported_formats. RGB modes are therefore unaffected.
+
+max_bpc - leaving this at 0 effectively disables deep-color support, which is acceptable because the LT9611C firmware does not currently expose any mechanism for deep-color negotiation.
+
+These fields can be populated in a follow-up once the hardware capabilities have been fully characterized, for example, whether the MCU firmware supports YCbCr output formats or deep-color modes. Until then, leaving them unset is preferable to advertising capabilities that may not actually be supported.
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261008-lt9611c-v7-v17-0-1e8f5f2b2f19@oss.qualcomm.com?part=2
