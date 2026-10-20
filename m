@@ -1,68 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.183
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792489950;
-	b=POf+gpQLcnDQ9xwgw9k2gvikvkUBMmnNn87gmROjKNs1KQiWCZagOjQF2KGwx+2iHFef
-	 zAakwh4+wbEgQDAeqwieY4+1BozAqmf0W9OB4lS+JSY5GxjM3694hKcgT49X5fBgj1u5O
-	 TwfcDZrx95ZPxiIt6pnLta9oSma42PzkFWgV1+/wbRIK8drXEchjscFopkoMSmYhNKGAA
-	 uxrHxGRWNx726BtCHCyPXTx9mJvoX5R6ZM5duKyVNKnVXVJGY4GhWLYBsYpnvrDt/cI89
-	 DyzoOsUqm3lOokR4cvGNDnOmFYj4u8c1+uFLXsKwpplIBuueiurs+s9vB3dae4vmqbQ==
+	t=1792490572;
+	b=uCNLmkYjvNEuLaDkkTuIGzFU3sZf/Wsv/mnx987BoKK4dTacFVIaF1YMn5EHWj/Y0iPN
+	 0pFOqZTbtsy0AMDpi1udsxUO3QFOM0+RGZTPJWWcXFUubAK0p0WuPU208NVO1BbCHWQpY
+	 QlMOybHAoqn9bxQmlUiFwE6v4opiAXafSo+CA02vcdK61SMKzx3SEyVW68WYa1LiTzdVU
+	 Y23ZgtdV9ahfbyCPByworPpG0vB+S3voTQ5QtuebmMeX1/Xoij8rB5EWf0MmIlmki1/Si
+	 SqeT14MDU9L3pZjleEI43rY04j2F8Gi3FHt8Gdp981O2qpvfGkTUQxeJLcYBYS6AIvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792489950;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:References:Content-Language:From:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=9RA34eAKRDsHc610G/efk/DmF3S23pMiDtfSgVsnHq0=;
-	b=06/IhKZubZSlHyVf+z68tyloteQ1b3cYXi9QJ6Nmos27ifIkh+GUYHCz+2iWslR5Pod2
-	 BLmavgBU3Vs+ynhyP585ZqteuNeqCMTZFb1B2l7KtrF0MM+vVNOE8iEMGvuYq/gRYYSrm
-	 r5/bLn2w3AtD6GeOn7PLhpuZfRcuxkDUIGtT889JgUfat958SaEmIbV8wD/Kjp8nbMkxW
-	 SZ1NFPs0yoHk6Gq52K4hef+daERrq/h9hWBTWxO2/xv/S13zfUtcDhupAKC2R8VHBEwfZ
-	 R9ST0Bg6SKgs+Bp5/XZcFIjjaqanQfsInVLG3H4yX9QKIrk3hgVsTSpiy8kPx2i8tWA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792490572;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=9Q9Vtn9iuM5FjjwgFRmYAVzNxXo2zpaFYHAwpiMXXYI=;
+	b=pEp3glBqMCoLhP2CIRf+GDDcfcE9HlhBRqapQJNtMiokuwCzybjwx2EsFakdSXom3FU/
+	 wEdrejyB/CXAef2GYS0TbQoIylUxBExmV71Jiq3ucNvbGX6rI2zAGd2n3wSQTrFkp3nJ+
+	 RIT8VU395IMbKHy/qlTMyuQHVGtUMZbPCvEcjX/ofgKESClup+QaW6OPsfTs3/FAlQN5w
+	 qKJJpxyYpyy3hCiOdHM/hg842eQHbEh2tF3F+5D/YtEl+UtdaXA/ZGRCxdOJYHV+m/x4+
+	 aLuG+GQ1/GaGEIoNdoznEC4S1MPbVUeMROTnob20pwvV7JdurQfT9DyFlyQV5RBx38A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=CmMrdAk8;
-	arc=none smtp.remote-ip=198.175.65.20
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=j1WJOhOl;
+	arc=none smtp.remote-ip=95.215.58.183
+Received: from mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BE7606A31D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 09:52:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 14BE7606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86027606A31B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 10:02:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 86027606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=CmMrdAk8
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792489948; x=1824025948;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=IAPImBUfyp3bdkqhbMsCUAHxauF0onLlZjRETWAVSAk=;
-  b=CmMrdAk8A6mcI5ohusV6ReYQ/hOO5jiUQK5nFkDT7PND8KwTvaSTJbl3
-   PU7Twl02ZXJ8Zt1fWBfYoyQmUOn4BBKmSjlRma4o/jv8221NF/O5Va/7I
-   UwHO9A+gmZ/3pmqHEzPXBHze9QWxJHagS0t+mXFWGKu9RLbx+vU3o5FfN
-   40wuWsRHoU4vUzei7rtFSUNaRMj/3LvIax6fqLntqwYIYxW8F6XKZxJYE
-   cI7QK8oyniniCAtgpdL73gj9eBdg3WUMawqG3gZzrfoVHnfangJtLqjQU
-   BPYfXIY7Z6W/eIY+IHVmclI2zPMtZN4C++V7xR0krjBYVfgDjPeqhqMno
-   A==;
-X-CSE-ConnectionGUID: 4PMxHN4FQ9eNQ4p6dCxtvA==
-X-CSE-MsgGUID: TgkxbAQ5QfCY7ERst7bgsw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="1199296"
-X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="1199296"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2026 02:52:24 -0700
-X-CSE-ConnectionGUID: PL3RNsQXTLK+LLqLYIoqUg==
-X-CSE-MsgGUID: VLvf3u29Rne+Sacfrjbj7A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="2757227"
-Received: from smoticic-mobl1.ger.corp.intel.com (HELO [10.245.244.166]) ([10.245.244.166])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2026 02:52:23 -0700
-Message-ID: <30e81db2-a56a-464b-93ea-c74aa161fdde@intel.com>
-Date: Tue, 20 Oct 2026 10:52:21 +0100
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=j1WJOhOl
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=t4SIrFwsLLdYUVykrtIKFEOdwi4NXhFqz8xZdBmmof4=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1792490568; v=1; x=1793095368;
+ b=j1WJOhOlSO4AhDFb47e9MF+Xr2UxBAyiMRfHD5E7GeziTxmYr5r3/B40OW5Ouk+JrOTGiKKV
+ 3J0+xJQtLFODbJriBs8Nyl0pvOGcsJ9q4O6uyp7YZn7cvfDPG2tbt7uMtB1QzUjHr2wCefVk07l
+ o/A1oySJBGtkva6H1MdOEhTY=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 1ae7d4d8b0dbbd41;
+	Tue, 20 Oct 2026 10:02:48 +0000
+X-Mizu-Trace-ID: 1ae7d4d8b0dbbd41
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <2b83dfaa-424b-4464-830e-a7714a816d5c@linux.dev>
+Date: Tue, 20 Oct 2026 18:03:50 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -73,174 +59,304 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] gpu/buddy: restore two-pass clear/dirty guard for
- range-biased allocation
-To: sashiko-reviews@lists.linux.dev,
- Arunpravin Paneer Selvam <arunpravin.paneerselvam@amd.com>,
- dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org
-References: <20261020055537.1640552-1-arunpravin.paneerselvam@amd.com>
- <sashiko-outbox-178464@kernel.org>
-Content-Language: en-GB
-From: Matthew Auld <matthew.auld@intel.com>
-In-Reply-To: <sashiko-outbox-178464@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v2 3/5] mm/vmalloc: undo partial mappings inside the
+ mapping functions
+To: Suren Baghdasaryan <surenb@google.com>,
+ Uladzislau Rezki <urezki@gmail.com>
+Cc: kasan-dev@googlegroups.com, linux-mm@kvack.org,
+ sashiko-reviews@lists.linux.dev, Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
+ "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+ "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+ Shrikanth Hegde <sshegde@linux.ibm.com>,
+ Alexander Potapenko <glider@google.com>, Marco Elver <elver@google.com>,
+ Dmitry Vyukov <dvyukov@google.com>, Andrew Morton
+ <akpm@linux-foundation.org>, Dennis Zhou <dennis@kernel.org>,
+ Tejun Heo <tj@kernel.org>, Christoph Lameter <cl@gentwo.org>
+References: <20261019054531.87652-1-hao.ge@linux.dev>
+ <20261019054531.87652-4-hao.ge@linux.dev> <sashiko-outbox-178439@kernel.org>
+Content-Language: en-US
+From: Hao Ge <hao.ge@linux.dev>
+In-Reply-To: <sashiko-outbox-178439@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20/10/2026 09:00, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] gpu/buddy: block_incompatible() mishandles split and mixed blocks in __alloc_range_bias()
+Hi Suren and Ulad
+
+Sashiko reported several issues, and they all look real.
+I have some ideas for fixing the first few;
+of course, please correct me if I get anything wrong.
+
+I'd like to discuss the last issue with you all.
+
+
+On 2026/10/20 13:45, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] mm/vmalloc: infinite loop in vunmap_pte_range() on unaligned error rollback
+> - [High] mm/vmalloc: __vmap_pages_range_noflush() calls cond_resched() in atomic context
+> - [Medium] mm/vmalloc: vmap_page_range() calls flush_cache_vmap() before error rollback
 > --
 > 
-> commit 6dff7f0e6dce9c68ecb98f2d911199843d2b4401
-> Author: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+> commit 043026437ba63b051df5d14470fe69ce8fa8825c
+> Author: Hao Ge <hao.ge@linux.dev>
 > 
-> gpu/buddy: restore two-pass clear/dirty guard for range-biased allocation
+> mm/vmalloc: undo partial mappings inside the mapping functions
 > 
-> This commit introduces a two-pass search in __gpu_buddy_alloc_range_bias()
-> using block_incompatible() in the strict pass to prevent range-restricted
-> allocations from splitting opposite-class (clear vs. dirty) blocks unless
-> no matching blocks exist in the range.
+> This commit adds rollback logic using __vunmap_range_noflush() and
+> kmsan_vunmap_range_noflush() into vmap_page_range(),
+> __vmap_pages_range_noflush(), and vmap_pages_range_noflush() when page
+> table installation or KMSAN metadata setup fails. It also adds range and
+> page_shift validation in __vmap_pages_range_noflush().
 > 
->> diff --git a/drivers/gpu/buddy.c b/drivers/gpu/buddy.c
->> index 503f7d5934e4b..91935c71c5255 100644
->> --- a/drivers/gpu/buddy.c
->> +++ b/drivers/gpu/buddy.c
->> @@ -1240,11 +1240,19 @@ static void __gpu_buddy_undo_splits(struct gpu_buddy *mm,
->>   	}
->>   }
->>   
->> +static bool block_incompatible(struct gpu_buddy_block *block, unsigned int flags)
->> +{
->> +	bool needs_clear = flags & GPU_BUDDY_CLEAR_ALLOCATION;
+>> diff --git a/mm/vmalloc.c b/mm/vmalloc.c
+>> index 44e0eb32708f1..75aa5acf55660 100644
+>> --- a/mm/vmalloc.c
+>> +++ b/mm/vmalloc.c
+>> @@ -363,6 +363,9 @@ int vmap_page_range(unsigned long addr, unsigned long end,
+>>  	if (!err)
+>>  		err = kmsan_ioremap_page_range(addr, end, phys_addr, prot,
+>>  					       ioremap_max_page_shift);
+>> +	if (err)
+>> +		__vunmap_range_noflush(addr, end);
 >> +
->> +	return needs_clear != gpu_buddy_block_is_clear(block);
->> +}
->> +
->>   static struct gpu_buddy_block *
->>   __alloc_range_bias(struct gpu_buddy *mm,
->>   		   u64 start, u64 end,
->>   		   unsigned int order,
->> -		   unsigned long flags)
->> +		   unsigned long flags,
->> +		   bool fallback)
->>   {
-> 
-> [ ... ]
-> 
->> @@ -1298,6 +1304,9 @@ __alloc_range_bias(struct gpu_buddy *mm,
->>   				continue;
->>   		}
->>   
->> +		if (!fallback && block_incompatible(block, flags))
->> +			continue;
->> +
->>   		if (contains(start, end, block_start, block_end) &&
->>   		    order == gpu_buddy_block_order(block)) {
->>   			/*
->> @@ -1315,38 +1324,8 @@ __alloc_range_bias(struct gpu_buddy *mm,
->>   				goto err_undo;
->>   		}
->>   
->> -		/*
->> -		 * Top-down is a strict address-placement policy, so when it is
->> -		 * requested we ignore clear steering and simply descend the
->> -		 * right (higher-address) child first. Only a non-top-down clear
->> -		 * request biases the descent towards clear/has_clear subtrees.
->> -		 */
->> -		if ((flags & GPU_BUDDY_CLEAR_ALLOCATION) &&
->> -		    !(flags & GPU_BUDDY_TOPDOWN_ALLOCATION)) {
->> -			struct gpu_buddy_block *prefer;
->> -
->> -			if (gpu_buddy_block_is_clear(block->right))
->> -				prefer = block->right;
->> -			else if (gpu_buddy_block_is_clear(block->left))
->> -				prefer = block->left;
->> -			else if (block->right->has_clear)
->> -				prefer = block->right;
->> -			else if (block->left->has_clear)
->> -				prefer = block->left;
->> -			else
->> -				prefer = block->right;
->> -
->> -			if (prefer == block->right) {
->> -				list_add(&block->left->tmp_link, &dfs);
->> -				list_add(&block->right->tmp_link, &dfs);
->> -			} else {
->> -				list_add(&block->right->tmp_link, &dfs);
->> -				list_add(&block->left->tmp_link, &dfs);
->> -			}
->> -		} else {
->> -			list_add(&block->left->tmp_link, &dfs);
->> -			list_add(&block->right->tmp_link, &dfs);
->> -		}
->> +		list_add(&block->left->tmp_link, &dfs);
->> +		list_add(&block->right->tmp_link, &dfs);
->>   	} while (1);
+>>  	return err;
+>>  }
 > 
 > [Severity: High]
-> Does calling block_incompatible() on every visited node in
-> __alloc_range_bias() before checking whether the block is split or mixed
-> mishandle internal GPU_BUDDY_SPLIT nodes and coalesced GPU_BLOCK_MIXED free
-> blocks?
+> What happens here when vmap_range_noflush() returns -EINVAL for a range
+> where end - addr is not PAGE_SIZE-aligned?
 > 
-> First, when mark_split() transitions a block to GPU_BUDDY_SPLIT, it leaves
-> the previous GPU_BUDDY_HEADER_CLEAR bit intact on the internal node:
+> In vmap_pte_range(), commit a739e6b557af09 added a check to bail out on
+> unaligned ranges specifically to avoid an infinite loop:
 > 
-> drivers/gpu/buddy.c:mark_split() {
-> 	block->header &= ~GPU_BUDDY_HEADER_STATE;
-> 	block->header |= GPU_BUDDY_SPLIT;
+> mm/vmalloc.c:vmap_pte_range() {
 > 	...
+> 	if (WARN_ON_ONCE(!PAGE_ALIGNED(end - addr)))
+> 		return -EINVAL;
 > }
 > 
-> Because gpu_buddy_init() initializes roots as dirty, any root or ancestor
-> split while dirty keeps gpu_buddy_block_is_clear(block) == false while any
-> descendant remains allocated. Conversely, a clear block that is split and
-> later has a descendant freed as dirty keeps gpu_buddy_block_is_clear(block)
-> == true on the split ancestor.
+> This can be reached on 64KB page kernels via pci_remap_iospace() ->
+> vmap_page_range() with 16KB/32KB/48KB PCI I/O ranges (for example via
+> loongson_pci_probe() or acpi_pci_root_remap_iospace()).
 > 
-> When __gpu_buddy_alloc_range_bias() runs the first pass (fallback = false),
-> __alloc_range_bias() evaluates block_incompatible(block, flags) on those
-> GPU_BUDDY_SPLIT ancestors and skips the entire subtree without descending
-> into its children. If no other root satisfies the request, the first pass
-> returns -ENOSPC and __gpu_buddy_alloc_range_bias() falls back to the second
-> pass (fallback = true), where block_incompatible() is disabled and the
-> clear/has_clear child-ordering preference has been removed, causing the
-> search to split the highest-address extent regardless of class.
+> When vmap_pte_range() returns -EINVAL, vmap_page_range() now calls
+> __vunmap_range_noflush(addr, end) with the unaligned range. Whenever a PMD
+> in [addr, end) is already populated with a PTE table (such as the
+> PCI_IOBASE PMD populated during early boot by reserve_pio_range(), or an
+> earlier PMD mapped in the same call), __vunmap_range_noflush() descends
+> into vunmap_pte_range(), which has no alignment check:
 > 
-> Second, __gpu_buddy_free() coalesces adjacent clear and dirty free buddies
-> into a single GPU_BUDDY_FREE block with state GPU_BLOCK_MIXED, which has
-> gpu_buddy_block_is_clear(block) == false and block->has_clear == true:
+> mm/vmalloc.c:vunmap_pte_range() {
+> 	...
+> 	do {
+> 		...
+> 			ptent = ptep_get_and_clear(&init_mm, addr, pte);
+> 		WARN_ON(!pte_none(ptent) && !pte_present(ptent));
+> 	} while (pte += (size >> PAGE_SHIFT), addr += size, addr != end);
+> }
 > 
-> 1. For clear range allocations (flags & GPU_BUDDY_CLEAR_ALLOCATION), Pass 1
->     sees gpu_buddy_block_is_clear(block) == false on a GPU_BLOCK_MIXED block
->     and skips it via block_incompatible() without splitting it to reach the
->     clear sub-blocks inside. Pass 2 then splits the mixed block without clear
->     child-steering and unconditionally visits block->right first, returning a
->     dirty block whenever the clear half is in block->left.
+> Because end - addr is not a multiple of PAGE_SIZE, won't addr step past end
+> and loop infinitely, clearing unrelated kernel PTEs and corrupting memory
+> past the PTE table?
 > 
-> 2. For dirty range allocations (!(flags & GPU_BUDDY_CLEAR_ALLOCATION)),
->     block_incompatible() returns false on a higher-order GPU_BLOCK_MIXED
->     block because gpu_buddy_block_is_clear(block) is false. Pass 1 then calls
->     split_block(mm, block), which reclassifies block->left and block->right
->     via mark_free(). If the child overlapping [start, end) is clear while the
->     dirty child lies outside [start, end), Pass 1 rejects the clear child via
->     block_incompatible() and skips the other child without calling
->     __gpu_buddy_undo_splits().
-> 
-> Wouldn't leaving that split GPU_BLOCK_MIXED block unmerged keep both
-> children in GPU_BUDDY_FREE state, preventing ancestor coalescing on teardown
-> and triggering gpu_buddy_assert(gpu_buddy_block_is_free(mm->roots[i])) while
-> leaking the split child gpu_buddy_block structures in gpu_buddy_fini()?
 
-Analysis looks correct to me. We assume if you get as far as doing an 
-actual split, then that must mean there is something in there which is 
-compatible, either you find it with some number of splits or one of the 
-split calls hits an error, which takes care to undo the splits. But now 
-with that compat check, this breaks, since we don't know ahead of time 
-if it will find something which is also compat. Arun, thoughts?
+That sounds reasonable. I will add a separate patch in the next version to fix
+this problem.
 
+> [Severity: Medium]
+> Also in vmap_page_range(), flush_cache_vmap(addr, end) is called
+> unconditionally before checking err and before rolling back with
+> __vunmap_range_noflush(addr, end):
 > 
-> [ ... ]
+> mm/vmalloc.c:vmap_page_range() {
+> 	err = vmap_range_noflush(addr, end, phys_addr, pgprot_nx(prot),
+> 				 ioremap_max_page_shift);
+> 	flush_cache_vmap(addr, end);
+> 	if (!err)
+> 		err = kmsan_ioremap_page_range(addr, end, phys_addr, prot,
+> 					       ioremap_max_page_shift);
+> 	if (err)
+> 		__vunmap_range_noflush(addr, end);
 > 
+> 	return err;
+> }
+> 
+> On UML, flush_cache_vmap is defined as flush_tlb_kernel_range:
+> 
+> arch/um/include/asm/cacheflush.h:
+> #define flush_cache_vmap flush_tlb_kernel_range
+> 
+> When vmap_range_noflush() fails partway through or
+> kmsan_ioremap_page_range() fails, flush_cache_vmap() runs while the
+> partially installed PTEs are still pte_present(), causing
+> update_pte_range() in arch/um/kernel/tlb.c to map them into the host OS via
+> ops->mmap() and clear _PAGE_NEEDSYNC:
+> 
+> arch/um/kernel/tlb.c:update_pte_range() {
+> 	...
+> 		if (pte_present(*pte)) {
+> 			...
+> 			ret = ops->mmap(ops->mm_idp, addr, PAGE_SIZE,
+> 					prot, fd, offset);
+> 		} else
+> 			ret = ops->unmap(ops->mm_idp, addr, PAGE_SIZE);
+> 
+> 		*pte = pte_mkuptodate(*pte);
+> }
+> 
+> When __vunmap_range_noflush(addr, end) then clears the software PTEs
+> without a subsequent TLB flush or unmap notification, won't those host OS
+> mmap mappings be left behind? Should flush_cache_vmap(addr, end) only be
+> called after both vmap_range_noflush() and kmsan_ioremap_page_range()
+> succeed?
+>
+
+That sounds reasonable. I will add this logic in the next version.
+
+>> @@ -683,27 +686,35 @@ int __vmap_pages_range_noflush(unsigned long addr, unsigned long end,
+>>  		pgprot_t prot, struct page **pages, unsigned int page_shift)
+>>  {
+>>  	unsigned int i, nr = (end - addr) >> PAGE_SHIFT;
+>> +	unsigned long start = addr;
+>> +	int err = 0;
+>> +
+>> +	if (WARN_ON_ONCE(addr >= end))
+>> +		return -EINVAL;
+>>  
+>>  	if (WARN_ON_ONCE(page_shift < PAGE_SHIFT))
+>>  		return -EINVAL;
+>>  
+>>  	if (!IS_ENABLED(CONFIG_HAVE_ARCH_HUGE_VMALLOC) ||
+>> -			page_shift == PAGE_SHIFT)
+>> -		return vmap_small_pages_range_noflush(addr, end, prot, pages);
+>> -
+>> -	for (i = 0; i < nr; i += 1U << (page_shift - PAGE_SHIFT)) {
+>> -		int err;
+>> -
+>> -		err = vmap_range_noflush(addr, addr + (1UL << page_shift),
+>> +			page_shift == PAGE_SHIFT) {
+>> +		err = vmap_small_pages_range_noflush(addr, end, prot, pages);
+>> +	} else {
+>> +		for (i = 0; i < nr; i += 1U << (page_shift - PAGE_SHIFT)) {
+>> +			err = vmap_range_noflush(addr, addr + (1UL << page_shift),
+>>  					page_to_phys(pages[i]), prot,
+>>  					page_shift);
+>> -		if (err)
+>> -			return err;
+>> +			if (err)
+>> +				break;
+>>  
+>> -		addr += 1UL << page_shift;
+>> +			addr += 1UL << page_shift;
+>> +		}
+>>  	}
+>>  
+>> -	return 0;
+>> +	/* Undo the PTEs installed before the failure. */
+>> +	if (err)
+>> +		__vunmap_range_noflush(start, end);
+>> +
+>> +	return err;
+>>  }
+> 
+> [Severity: High]
+> Similarly here, __vmap_pages_range_noflush() checks addr >= end, but does
+> not check PAGE_ALIGNED(addr) or PAGE_ALIGNED(end).
+> 
+> If a caller passes a sub-page or unaligned range (for example, 0 < end -
+> addr < PAGE_SIZE), nr = (end - addr) >> PAGE_SHIFT evaluates to 0, so the
+> huge-page path still maps nothing and returns 0, while the small-page path
+> loops infinitely in vmap_pages_pte_range(). And if the huge-page path fails
+> on an unaligned range, __vunmap_range_noflush(start, end) will hit the same
+> infinite loop in vunmap_pte_range().
+> 
+> Should both vmap_page_range() and __vmap_pages_range_noflush() validate
+> PAGE_ALIGNED(addr) && PAGE_ALIGNED(end) upfront before attempting to map or
+> unmap?
+> 
+
+I think We need to check both PAGE_ALIGNED(addr) and PAGE_ALIGNED(end).
+As an example: if addr is PAGE-aligned, end is not, and end - addr < PAGE_SIZE,
+then nr becomes zero. On the huge page path, we simply return 0 with no work performed.
+
+At the same time, vmap_pages_pte_range() needs the same guard as commit
+a739e6b557af ("mm: vmalloc: WARN_ON if mapping size is not PAGE_SIZE aligned"),
+to protect against unaligned ranges.
+
+So will do next version.
+
+>>  
+>>  int vmap_pages_range_noflush(unsigned long addr, unsigned long end,
+>> @@ -715,7 +726,16 @@ int vmap_pages_range_noflush(unsigned long addr, unsigned long end,
+>>  
+>>  	if (ret)
+>>  		return ret;
+>> -	return __vmap_pages_range_noflush(addr, end, prot, pages, page_shift);
+>> +
+>> +	ret = __vmap_pages_range_noflush(addr, end, prot, pages, page_shift);
+>> +	/*
+>> +	 * The page tables undo themselves on failure. Tear down the
+>> +	 * metadata that was fully set up before the mapping failed.
+>> +	 */
+>> +	if (ret)
+>> +		kmsan_vunmap_range_noflush(addr, end);
+>> +
+>> +	return ret;
+>>  }
+> 
+> [Severity: High]
+> Can calling __vunmap_range_noflush() and kmsan_vunmap_range_noflush() here
+> trigger a sleeping-in-atomic-context bug when __vmalloc() or kvmalloc() is
+> called with GFP_ATOMIC or GFP_NOWAIT?
+> 
+> __vmalloc_area_node() supports non-blocking allocations by wrapping
+> __vmap_pages_range() in memalloc_apply_gfp_scope(gfp_mask):
+> 
+> mm/vmalloc.c:__vmalloc_area_node() {
+> 	...
+> 	flags = memalloc_apply_gfp_scope(gfp_mask);
+> 	do {
+> 		ret = __vmap_pages_range(addr, addr + size, prot, area->pages,
+> 				page_shift, nested_gfp);
+> 	} while ((gfp_mask & __GFP_NOFAIL) && (ret < 0));
+> 	memalloc_restore_gfp_scope(flags);
+> }
+> 
+> When a GFP_ATOMIC or GFP_NOWAIT allocation runs in atomic context (such as
+> under a spinlock, preempt_disable(), or rcu_read_lock()) and page table
+> allocation fails in vmap_small_pages_range_noflush() after at least one PMD
+> in [start, end) is populated (or after kmsan_vmap_pages_range_noflush()
+> populated the KMSAN shadow/origin ranges), __vmap_pages_range_noflush() and
+> kmsan_vunmap_range_noflush() synchronously call __vunmap_range_noflush().
+> 
+> __vunmap_range_noflush() walks the populated PMDs via vunmap_pmd_range(),
+> which unconditionally calls cond_resched():
+> 
+> mm/vmalloc.c:vunmap_pmd_range() {
+> 	...
+> 	do {
+> 		next = pmd_addr_end(addr, end);
+> 		if (pmd_none_or_clear_bad(pmd))
+> 			continue;
+> 		vunmap_pte_range(pmd, addr, next, mask);
+> 
+> 		cond_resched();
+> 	} while (pmd++, addr = next, addr != end);
+> }
+> 
+> Commit 9c47753167a6 ("mm/vmalloc: defer freeing partly initialized
+> vm_struct") deferred error-path cleanup in __vmalloc_area_node() to a
+> workqueue specifically because unmapping on failure can sleep. Doesn't
+> calling __vunmap_range_noflush() synchronously inside
+> __vmap_pages_range_noflush() and vmap_pages_range_noflush() reintroduce
+> cond_resched() in atomic context?
+> 
+
+This issue also appears real. One possible approach is to plumb the caller's gfp_mask into vunmap_pmd_range()
+to conditionally skip cond_resched().
+Suren, Ulad, do you have any preferred or cleaner way to handle this?
+
+Thanks
+Best Regards
+Hao
 
