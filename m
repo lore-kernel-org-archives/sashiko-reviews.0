@@ -1,60 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.12
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792455487;
-	b=y2N2wHYzjIuNXmIc1veSL9uuNwJl3m0i60km81zTRRA265ZRPC+FZuBr0mhdR9Hys2fu
-	 TXMtP3T1KVC44y/PB1ephM2yBfiz4OVjqnDbNSz/jxWYjdgOH8+/7wWNduiYbLCi0w01C
-	 Ho/v3kdqFEMXGBplqWT6XYfeM5hFo4YYBBPxBffObYW+JuR1PhZd/M5XA9N3Ss3QYEyhe
-	 /1QErrIToCdLZaqHThlqku2vgKkNHY+3+glcAl7RZsJwS9iY3iRzvT8VypZfcyWOhGOkt
-	 d+L9PbmLo1HltYePtMxmT0MbPKpVFkhKN8idXX9kI0GlmQ5OlNI9EzyRzLsIOkIolRg==
+	t=1792460068;
+	b=pTIxo7fV/vk3eqsJkMcMnR2XaoIXl5iVmeL9h2dbesiPglyzSgN+W6RRQ5Uu/z8Mad+S
+	 p4HyBRtP97sm83RDtWDYpwc7wBCTedpFr6bgTqX0JEG5Ye2wjfXJZtL7v46SowMuDKAfK
+	 w23JpANHH/gXlVrI0cWTH4z1DNpczydchHgtSGNg4thjj5sgXwqbg0FOl0r2c/0DpOq56
+	 aC4faBY7VyErzZgyN33TCwuah6kVfFPIniVpTHienUl6uO+1yi7le2ExB2MoGkKc+AkIj
+	 ENTvA/7r5QU0aumrY/9s1CnKhKdDvXkv0VuNzzn5UvzZSE9Ma9t3ipl/Wg1Si2HzUUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792455487;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=IEvaIyhXHXEZCzlzSit2T9T6bk8kSwVa4Br1EuaLx3c=;
-	b=FKHay+oN23wVmfpoX1GzUYqahy3lvpR/8c1qjctGW4ndGBX9btOqMeA6v06+wi0PIww/
-	 kSLCL+4hvLIQOejWviOokcwKc2Bur5uK8qPBETVNcio1+aBd4hWykYUJTua1UUfAOx3wQ
-	 RYhZX72r5YDINMajMJMuLMU4HpW3E+zqvauxkfMknHNAL+Ax+7TtCZC5Qe4pCU8qKKEQd
-	 4dhbTiIIzGRM6qLwkEB5pkqOY4/rvCUhzS+2MtRGP5bdWf8O35jA/5QxjrL360iUD0UAt
-	 zNhmK7jxwvPcRHSiV8tOryx0Eox8NgWRfN42PKsi4yuGnOcHcoLyOozIpcvy95rx7Gw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792460068;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:References:From:Content-Language:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=eR/cOCrwQmS0N6R3T5GOdfznB2yvVxMXGDleK4MrTAQ=;
+	b=js1l4aNMRcHqD1c4dqQvOKKB2Zzl1bcicAMLRKatIVpCcpA17qrBpl1Xk/Rq7P3fx6T5
+	 XplOqsTj9JYhFviCzHCOP/ESX4xbTUQgaSrUhvcTRbThAZnrYbfegOFuF86bAbYXh9VnR
+	 hRgHitnfiC8DHj2wu6OO0Sggq8IYD4w7kg181GBhQDhtxLQ7TZy440WEa4LeK7MklPMQT
+	 Oqdd9n3oGY6QIy228WXcbeyoEF6VDsiSnMarVmrjlYyLJUX9mnBi6xmJCEQTZVVqgOSCB
+	 v8wVJEggYGu3ehkx261oJiUu20yeu+1PUMzffUfdGhyzOtQbz2iYtlPpkrh9ZekEICw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FAgv4K+1;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=linux.intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b="aR1/T6uN";
+	arc=none smtp.remote-ip=198.175.65.12
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C49606A319;
-	Tue, 20 Oct 2026 00:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6512A606A32C
+	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 01:34:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6512A606A32C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FAgv4K+1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5002C1F000C4;
-	Tue, 20 Oct 2026 00:18:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792455486;
-	bh=IEvaIyhXHXEZCzlzSit2T9T6bk8kSwVa4Br1EuaLx3c=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=FAgv4K+1kT/E5gHVL2jgLK93rJVamNF8UOIr0ShvcCTp/+J+yPY9KaR4x5ZhsUFG7
-	 cPd9LaCNYTN/Z7kdWDwrclTUbob3U7rUMHxCNN3NMpdHmcnldA9K/MNq0zaHozdMqr
-	 7qzu8iBxvyaHs/MuI2ocfwOFKhIIIkyHlH7/dj3QSpV8VnHeRFCHSS/17Mh6lVN/bu
-	 2gl+lE2/DaKhTf4UscwIepesmvg1nBPOonCZpNlCmgmkVzEfiLiWicEnAHBJ9vgHtv
-	 jgs/beWsBur8OZXHdW6Uh7D80KYpLspIWn4QLw/yd9COYLmkKkic6EPO3M8nv4wbqc
-	 3SJwvT5hz9yaw==
-Date: Mon, 19 Oct 2026 17:18:05 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Birger Koblitz <mail@birger-koblitz.de>
-Cc: sashiko-reviews@lists.linux.dev, linux-usb@vger.kernel.org, Andrew Lunn
- <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, Andrew
- Lunn <andrew@lunn.ch>, Eric Dumazet <edumazet@kernel.org>,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Jianhui Xu
- <neuromoments@gmail.com>
-Subject: Re: [PATCH net-next v19 01/13] phylink: Add phylink_mac_interrupt
-Message-ID: <20261019171805.6aa3a7a3@kernel.org>
-In-Reply-To: <acada24c-903e-49ea-be04-879fedbfa08b@birger-koblitz.de>
-References: <20261010-ax88179a-v19-0-7475173cfb56@birger-koblitz.de>
-	<20261010-ax88179a-v19-1-7475173cfb56@birger-koblitz.de>
-	<sashiko-outbox-167008@kernel.org>
-	<acada24c-903e-49ea-be04-879fedbfa08b@birger-koblitz.de>
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=aR1/T6uN
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1792460066; x=1823996066;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=WYkfFJ8dYFnxT/zzajQu7+TW4tdrg5h/NwL5ms69pVc=;
+  b=aR1/T6uNcrDdzRGsWvixdvFr0Kh+UGdVb8FJ+Y2nIr3LP7WhUsQg5A98
+   h3fmrEGD/dtxKPdh/fVA8VfHEGjUGNggUJU0JODMJr623AvhDayiHV81i
+   Vb6yZUHARRP1UStzlo+gEifZePUdKTvAKNpOzIOhCLT7OHbrg2m2yMmip
+   ktzyOn6F4dkmNWMKFvvBTSe2WQlsU4r0S4/8klZ9oSDD9fRGhzw9gblG8
+   ZhWqJETOjD0yeA6OptNV2n3TqJ8wGLYsDYvHBkdR3JXOyw0jA6YKOtj7P
+   17iISQ9Q6jICmt1cSTh1O+Mj6pj8L8MgWXd6Z8qAfnloenZpMPNnOIvzx
+   w==;
+X-CSE-ConnectionGUID: XPJIdgIrQse5qO7ASlbRqQ==
+X-CSE-MsgGUID: +Q+DneXPSVKj8geMWFdlOA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="1034545"
+X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
+   d="scan'208";a="1034545"
+Received: from fmviesa011.fm.intel.com ([10.60.135.151])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 18:34:26 -0700
+X-CSE-ConnectionGUID: HRWKmMI4QGKJevhh5VohHQ==
+X-CSE-MsgGUID: UfEstqP8TuuYGdyrwpu/kA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
+   d="scan'208";a="4504078"
+Received: from unknown (HELO [10.238.0.148]) ([10.238.0.148])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2026 18:34:25 -0700
+Message-ID: <e8943657-10e6-4f95-a143-e6867a39343f@linux.intel.com>
+Date: Tue, 20 Oct 2026 09:34:22 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -64,32 +72,115 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 5/5] KVM: TDX: Validate userspace CPUID input for
+ KVM_TDX_INIT_VM
+To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org
+References: <20261016091422.3182216-1-binbin.wu@linux.intel.com>
+ <20261016091422.3182216-6-binbin.wu@linux.intel.com>
+ <sashiko-outbox-174077@kernel.org>
+From: Binbin Wu <binbin.wu@linux.intel.com>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-174077@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On Sun, 11 Oct 2026 07:32:52 +0200 Birger Koblitz wrote:
-> > The function comment notes that SFP modules do not support interrupts. However,
-> > when an SFP module is physically unplugged, the electrical link drops. Could
-> > this link drop trigger the MAC interrupt being handled here?  
+On 10/16/2026 5:24 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] kvm: KVM_TDX_INIT_VM rejects CPUID.0x7.0.EAX breaking guest subleaf enumeration
+> - [High] mm: heap buffer overflow in setup_tdparams_cpuids() via unbounded td_conf->num_cpuid_config
+> --
 > 
-> The way this code-review is done by whoever handles the AI is absolutely 
-> not OK. The same patch was considered to be free of errors in the 
-> previous round. Now something is brought up that has been discussed ad 
-> nauseam before, including an analysis by Andrew, and found correct.
-> The minimum I expect is that emails relating to the patches are being 
-> looked at and also understood!
+> commit 8ec54e6006917e96837000de9e4002c7f4499444
+> Author: Binbin Wu <binbin.wu@linux.intel.com>
+> 
+> KVM: TDX: Validate userspace CPUID input for KVM_TDX_INIT_VM
+> 
+> This commit validates the CPUID configuration provided by userspace
+> through KVM_TDX_INIT_VM against KVM's TDX allowlist. It drops the
+> hardcoded denylist-based check in favor of a strict allowlist.
+> 
+>> diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
+>> index e53f1e98bb04a..80c6519c13ff5 100644
+>> --- a/arch/x86/kvm/vmx/tdx.c
+>> +++ b/arch/x86/kvm/vmx/tdx.c
+> [ ... ]
+>> @@ -2567,6 +2548,14 @@ static int setup_tdparams_eptp_controls(struct kvm_cpuid2 *cpuid,
+>>  	return 0;
+>>  }
+>>  
+>> +static bool tdx_has_unsupported_cpuid_cfg_bit(const struct kvm_cpuid_entry2 *e, u32 index)
+>> +{
+>> +	return (e->eax & ~tdx_get_cpuid_cfg_mask(e->function, index, CPUID_EAX)) ||
+>> +	       (e->ebx & ~tdx_get_cpuid_cfg_mask(e->function, index, CPUID_EBX)) ||
+>> +	       (e->ecx & ~tdx_get_cpuid_cfg_mask(e->function, index, CPUID_ECX)) ||
+>> +	       (e->edx & ~tdx_get_cpuid_cfg_mask(e->function, index, CPUID_EDX));
+>> +}
+> 
+> [Severity: High]
+> Does this strict allowlist check inadvertently break guest subleaf enumeration
+> by rejecting valid KVM_TDX_INIT_VM inputs?
+> 
+> CPUID leaf 0x7 subleaf 0 EAX contains the maximum supported subleaf index,
+> which is non-feature information. However, tdx_get_cpuid_cfg_non_feature_mask()
+> completely omits leaf 0x7, and reverse_cpuid does not track 0x7.0.EAX as a
+> feature word.
+> 
+> Because tdx_get_cpuid_cfg_mask(0x7, 0, CPUID_EAX) returns 0, this new check
+> will reject any non-zero value for CPUID.0x7.0.EAX. This strictly requires
+> userspace to provide 0, effectively preventing exposure of subleaves 1+
+> (such as for AMX or AVX-VNNI) and breaking valid VM initialization requests.
 
-You are responding to the main Sashiko instance, not the netdev one.
-Due to infinite wisdom of some MM people these are not even CCed 
-to netdev (I guess CCing the USB list triggers them?)
-You can ignore the feedback form that instance for networking patches.
+This is false positive.
 
-Unfortunately our instance didn't run because patch 4 breaks the build
-(patch 12 fixes it). Our instance tries to save tokens and doesn't run
-on patches where basic CI checks fail.
+CPUID.0.EAX is not directly configurable in TDX.
+Userspace is not allowed to provide non-zero value for it.
 
-drivers/net/usb/ax88179_178a.c:691:8: error: use of undeclared label 'err_nodev'
-  691 |                 goto err_nodev;
-      |                      ^
--- 
-pw-bot: cr
+> 
+>>  static int setup_tdparams_cpuids(struct kvm_cpuid2 *cpuid,
+>>  				 struct td_params *td_params)
+>>  {
+> [ ... ]
+>> @@ -2596,7 +2585,7 @@ static int setup_tdparams_cpuids(struct kvm_cpuid2 *cpuid,
+>>  		 * not the index of the userspace entry, which may differ if
+>>  		 * KVM_CPUID_FLAG_SIGNIFCANT_INDEX isn't set.
+>>  		 */
+>> -		if (tdx_unsupported_cpuid(entry, tmp.index))
+>> +		if (tdx_has_unsupported_cpuid_cfg_bit(entry, tmp.index))
+>>  			return -EINVAL;
+>>  
+>>  		copy_cnt++;
+> 
+> [Severity: High]
+> Can the loop enclosing this code write past the end of the td_params heap
+> allocation?
+> 
+> td_conf->num_cpuid_config is read from the TDX module and bounded to 128
+> by KVM in get_tdx_sys_info_td_conf():
+> 
+> 	if (sysinfo_td_conf->num_cpuid_config > ARRAY_SIZE(sysinfo_td_conf->cpuid_config_leaves))
+> 		return -EINVAL;
+> 
+> However, td_params->cpuid_values is an array inside a union with
+> u8 reserved3[768], which limits it to 48 tdx_cpuid_value structures:
+> 
+> arch/x86/kvm/vmx/tdx_arch.h:struct td_params {
+>     ...
+>     union {
+>         DECLARE_FLEX_ARRAY(struct tdx_cpuid_value, cpuid_values);
+>         u8 reserved3[768];
+>     };
+> } __packed __aligned(1024);
+> 
+> td_params itself is dynamically allocated as a fixed 1024-byte object via
+> kzalloc_obj(struct td_params) in setup_tdparams().
+> 
+> If the hardware returns a num_cpuid_config value greater than 48, the loop
+> in setup_tdparams_cpuids() will exceed the 48-element capacity when assigning
+> value = &td_params->cpuid_values[i] just below this snippet, causing a heap
+> buffer overflow.
+> 
+
+Here is the to reply to the same issue reported in an earlier version:
+https://lore.kernel.org/kvm/c31eb9c5-6cae-488a-bcaf-26160c282e0b@linux.intel.com/
+
