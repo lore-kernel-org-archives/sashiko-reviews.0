@@ -1,91 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.156.1
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792506446;
-	b=vqQ5XS98PSsWoKPzNcJRN6UChHbps7TXtkGh8bv1p6Va9KxvpeUdkO2XfcFaQQRlLK33
-	 ou0OcLyhTkr263kHMLN25tVJR+8Y2qYKzut0aeQ+sGPSza4uL+ghCup9ciSAZZlFfS660
-	 aYKTGBmaMol/Q3iYWYb0E8WMXTRuVwjihu3JIYmV1FN5h3QoTIyY8rRmlEh32vjKehW4b
-	 lCHQdyg81OMkYS2WFJkrCRKxQA3WUiOdKMtd4HV0FhGDhtK250rxgCQxObdKHAyZvFfL4
-	 j1Z5uhhDqnMeJ2nEcEWTlD481o+qcyfLq6u9HTyvsjaU0Fer7me22QoWXx5bDfl+YOA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792506446;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
-	 Received:Received:Received:Received:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID:User-Agent:MIME-Version:Content-Type:
-	 X-TM-AS-GCONF:X-Proofpoint-GUID:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-Spam-Info:X-Proofpoint-Spam-Details-Enc:
-	 X-Authority-Analysis:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=FV4cnaw7sRSsSt0x7slQQic/Dpvr2Ij5JXzJAPl6FIQ=;
-	b=TqcZX0U2HFQk7ga9hazNCo/Y8It2whBTcHfqBVzkFL1bpAxXBiGw7gPzjGj8D4rlMn/V
-	 GHIy/zMl0Aj2hPQmiDzQArBXP6/Irf1HsuB2tn7tFrtcMOsgSrpYMkpdfPWCPOiC/J8RZ
-	 9LDv1BQfju32a7Q9/gKIqmy0n1cln+Ydm8WtbcsgxkgoHiR8w0gBD/JIxnh2Ug8fm0ANY
-	 cWPqE0BMWibLdO+mi1HIMuI2LmvrQc0+Z5scUtVd7rjbv8LArwGNgFhIZwLEqgCeKV10A
-	 b89uMmGm9Xy5FOqfEMSZ0JJMguW5HwWXrTuZvUAEQCJ4lkqGe3FoBlzpWB+oy16FHWg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.ibm.com;
-	spf=pass smtp.mailfrom=linux.ibm.com;
-	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lGb3x3GC;
-	arc=none smtp.remote-ip=148.163.156.1
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.37
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792506454;
+	b=zrQZa1SYSSiRdF6PW1cFSbkDeoxRVvuQiPR8wQv5jCTjTr3E6nkUrinRxssJ90nTkZPO
+	 NZj32qdsAopWJr5m9s+A3aWyiByoOTOQpnHexO5h73mESkf9bs4G4uia7tzmKprQBygPO
+	 Sgv76iaGwZV0vR301t2Q9fuNUAP2ilhobQx5OL8CUAijkyXy+HibByXKLRKQdxBKdy7Kt
+	 rBC5fQj0fSU579aTUNbqRUpplwbAzSeiQw46xX4eRjc3NBHeNxiUqLkt/md1Rg0labfJ4
+	 X2wsNO3xrLPdygBzsAiqeKbkzqOnqo3UQnvysKyGb/sAcBNBqseYEDqEsvzVRh5aUjg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792506454;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:
+	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:From:To:Cc:
+	 Subject:References:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:
+	 X-MS-Exchange-AntiSpam-MessageData-1:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=cBKu+bqWsVujOXlQ8XkTdqHVDxD5xbSTA19CWY/qQf0=;
+	b=PwbADXFGoxwyTED/eaAB07cTCzAzJsz+GiA/DE6PmgEopnTfdsYmqtFOxIy8vtd7ofUU
+	 WVvJZVFzyYUVKwPPry7ltXHoNdxbYpsgfrWnnbg6zDc99uhFJ5x8lk1lLTOAdcxEGIEyT
+	 Xk8X0bDfR0uFzVv7a2q1JiYMpjlPCTf1t8fgOmCXwGkxcgpsvWGkOaS2W8JCbfiHOvrC3
+	 yFRU4gmdaWw0IUUiLeLLRefpZF+ojkTZRVJygbWCD8xW3pPwYoicVrKq6DHqHUd/7GPCL
+	 N7YkyoXpw96aBTNYMM7BrNZ3gApCXuVYyw+2yeyKRnRI4vC0tyKl7Eyhd1d73nhjDFQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=nmL9xqW9;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.37
+Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010037.outbound.protection.outlook.com [52.101.46.37])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BEB606A31F;
-	Tue, 20 Oct 2026 14:27:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E4BEB606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A726606A325;
+	Tue, 20 Oct 2026 14:27:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2A726606A325
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lGb3x3GC
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69KDEC3Y870541;
-	Tue, 20 Oct 2026 14:26:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=FV4cnaw7sRSsSt0x7slQQic/Dpvr2I
-	j5JXzJAPl6FIQ=; b=lGb3x3GCdnCbk115hL/vSalBfeKRA5ZIW7Ruta+u+h0TYB
-	EzavphSGyMpMc0DhxdxoJVzxJZAE1OFu9V9Arl5Qhws8moqzb0TIKd+yqQIKsH05
-	eYMByFl7ivMuRczy773ttR/8js+Hw9+BeJ9LLSETtsFEN5RkOsupRZYldpdRriSu
-	RKSPauUwAJjUfgK2ptUPYrDe+Lc6rI8Y6RahX+Ijb12t6r9gOTQQtwR5kFtEDI78
-	GfuO/dzIy04bF4Eht16kJhM13rYR5PAUL0+BgA1XkrVAFL+RH2OTp8FgUQBfobkj
-	ES/GmL96ffHTLufofD3gJteqDALQ0ZPl8lcC1Beg==
-Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hdw5bbc4r-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Tue, 20 Oct 2026 14:26:53 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69KDK1oD350705;
-	Tue, 20 Oct 2026 14:26:53 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
-	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hcnjh28nm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Oct 2026 14:26:53 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com [10.241.53.104])
-	by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69KEQ5ab52756760
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 20 Oct 2026 14:26:05 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 1BC275805D;
-	Tue, 20 Oct 2026 14:26:52 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id F10A858065;
-	Tue, 20 Oct 2026 14:26:51 +0000 (GMT)
-Received: from e (unknown [9.61.26.156])
-	by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTPS;
-	Tue, 20 Oct 2026 14:26:51 +0000 (GMT)
-From: Dave Marquardt <davemarq@linux.ibm.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v15 03/11] scsi: ibmvfc: fix potential NULL pointer
- dereference on failed queue allocation
-In-Reply-To: <sashiko-outbox-178320@kernel.org> (sashiko-bot@kernel.org's
-	message of "Mon, 19 Oct 2026 22:29:27 +0000")
-References: <20261019-ibmvfc-fpin-support-v15-0-a858726e178a@linux.ibm.com>
-	<20261019-ibmvfc-fpin-support-v15-3-a858726e178a@linux.ibm.com>
-	<sashiko-outbox-178320@kernel.org>
-Date: Tue, 20 Oct 2026 09:26:51 -0500
-Message-ID: <87fqy0la6s.fsf@linux.ibm.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=nmL9xqW9
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qkwhdxDMJGd4fEBiYuQk0KPVyzMiZNO+Y2IsoQg3MVCs4DducABQb6DpKCzzScNndebKlbYOff3FoCmCKqnKuqP6cspuoaUmSu+8/Wws53oQX728+bUnqH9tJAi5Ys5TZEKKOKV2VpzHuiWDuqata04lp52AIqU4PB480yEznHUcfMMl53TuoQThKiCYL3/W28NeeXv31n5Qvoj5nbNx+AsnEz09TMnwntGHHXV5/5UkKKBpFEx9OLELSMaoCPh2xJJUPcnwbLORT88d9/R3ey4yEOwtzz8W4bO18L3va/zwKa8jXcxsX3Otld6uzY8C9W2DKY4ovExEFEZhY0pGGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cBKu+bqWsVujOXlQ8XkTdqHVDxD5xbSTA19CWY/qQf0=;
+ b=fYqe7UAPHx+zkRZj25Cxxf30Gq2TtjyaH+6+SrYQGti+Ia/AcRBXT6x94aNVXuSy2fmiLiWtXcY6cw62Beq/7YyaCgE85ubUUk3RHOeLBsvBi/yBa5wMJcFCH/SNQco6yeBN6czWMNxhe8Ya41Md3l++3tBqqmUh3okq8IamxzR+bOsCannY6bJauC7uZ8Sc9g7mSEkBeDIiKhw/YZKNPSzIsTPUjONb//h29iShTlSl8khxqUWEVec8J7VWL3wwcfy5110YBR2PiQOW24b6OdC5ncJMlPNYjgANp8IqcLhGEZ3sWKAnBnXIa6Nb/bAS1jfHZ0TkqGE0wOv2Y9lO9w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cBKu+bqWsVujOXlQ8XkTdqHVDxD5xbSTA19CWY/qQf0=;
+ b=nmL9xqW97EO/vxd0D8XMwUa7Nm+MuSb3G1s9GvYpdkQeBl0ajODto14KknFYH30DtgYrQysCTPj1UbBEiq3kwLV5i+kwYwSuwg2cBZDDVOQzatdYageUuRO5Rvux6ZH/F1kaIqNmEAqh/2PDAMJN7mDP/spC8cGDRT4QqQnauT+51S4qzsET8fh4VsvPdskOCuW6bRYT3uLdwxDmJCn/4Gi0wRW+TjstXh6PWNWX2suvm2JDoSbKkkKmEueeliu1/rD+FCKElB82DBEn8SIv/HwE73a359ZjHAQVhO7EHzQYidg1z4k1vEAJdwpi9rEM60XCjTRVOpR8M0mJ7Q345g==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from MW4PR12MB6873.namprd12.prod.outlook.com (2603:10b6:303:20c::17)
+ by SA1PR12MB7441.namprd12.prod.outlook.com (2603:10b6:806:2b9::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.19; Tue, 20 Oct
+ 2026 14:27:27 +0000
+Received: from MW4PR12MB6873.namprd12.prod.outlook.com
+ ([fe80::a338:bd2c:3a38:ece1]) by MW4PR12MB6873.namprd12.prod.outlook.com
+ ([fe80::a338:bd2c:3a38:ece1%5]) with mapi id 15.21.0546.012; Tue, 20 Oct 2026
+ 14:27:26 +0000
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 20 Oct 2026 23:27:23 +0900
+Message-Id: <DM9QI47QSJ0L.2QMRVD4AP5WIV@nvidia.com>
+From: "Alexandre Courbot" <acourbot@nvidia.com>
+To: <sashiko-bot@kernel.org>
+Cc: <sashiko-reviews@lists.linux.dev>, "John Hubbard" <jhubbard@nvidia.com>,
+ "Danilo Krummrich" <dakr@kernel.org>, "Alice Ryhl" <aliceryhl@google.com>,
+ "David Airlie" <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>,
+ "Benno Lossin" <lossin@kernel.org>, "Gary Guo" <gary@garyguo.net>,
+ "Alistair Popple" <apopple@nvidia.com>, "Timur Tabi" <ttabi@nvidia.com>,
+ "Eliot Courtney" <ecourtney@nvidia.com>, "Zhi Wang" <zhiw@nvidia.com>,
+ <nova-gpu@lists.linux.dev>, <dri-devel@lists.freedesktop.org>,
+ <ojeda@kernel.org>
+Subject: Re: [PATCH v5 11/14] gpu: nova-core: gsp: cmdq: use consume_element
+ to implement drain
+References: <20261020-cmdq-rpc-v5-0-dceeb8f360ec@nvidia.com>
+ <20261020-cmdq-rpc-v5-11-dceeb8f360ec@nvidia.com>
+ <sashiko-outbox-178822@kernel.org>
+In-Reply-To: <sashiko-outbox-178822@kernel.org>
+X-ClientProxiedBy: TYWPR01CA0032.jpnprd01.prod.outlook.com
+ (2603:1096:400:aa::19) To MW4PR12MB6873.namprd12.prod.outlook.com
+ (2603:10b6:303:20c::17)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -95,109 +105,182 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: rbqdMuafVYe9-JTqUFofQxsSCoC1rVS8
-X-Proofpoint-ORIG-GUID: rbqdMuafVYe9-JTqUFofQxsSCoC1rVS8
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIwMDA1NiBTYWx0ZWRfX9OUMHlgCUHii
- LPk69ELpJQpsWLdAZwNfozd3NjP4ktSyRJYtU1bfxLnTpQJnzTRIP9+H662Ofu/XVxx9yTT94g2
- 6IZ0W48/V5Sqr918hLGQURaM/shxVx8=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIwMDA1NiBTYWx0ZWRfX4IZNGx4m9K0f
- 3mSIlV4bIQU+fvI3PufNILahjK0mA+3jxB8WtQxcMbiPauYC4VPvbg7mHVFCKOTZmXZEtU69wfR
- ZBnaMXyD198o+vZdQTlYp1bNm+9uJfWu6ejbInwqeh9b+FryuDzeuzmCNDC53pkHMxBImpzAY45
- tdOCAkkFbubFvIPd2Vqs6TJikUwhUhTrGdXfWD284EACH85C4DudhEuEDzH1SbMO+r2lEQVwzAs
- ziM5aPyI7A471q9kLb0GiMcpUOyQX35VHMMj7Sq74h/QRVt+8xGSlyO6Lua7uzo5AEGzad41UBn
- xWJMqDHI9HMxW2Ld0h9NtgeoDW5rrxHwnh/jgPlWKi6MqfejCC1929PzI6y3XF7c2L95D3HOERN
- fBFFiDmd2V+/0dUqBiIycG1Amr1LV6egQU7tfLvFUH8gv9xwrxRCIRL0hM3kSW0BTYBwwQzJjs8
- /zN5a3gwcNqEeNoVvTQ==
-X-Authority-Analysis: v=2.4 cv=Gb2CDgXL c=1 sm=1 tr=0 ts=6ad77a2d cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=p80Zfm7aPcmGqdMWmFsA:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-20_02,2026-10-19_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 malwarescore=0 spamscore=0 phishscore=0
- clxscore=1015 bulkscore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610200056
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MW4PR12MB6873:EE_|SA1PR12MB7441:EE_
+X-MS-Office365-Filtering-Correlation-Id: cc11dad9-7b3c-4168-809f-08df2eb643d1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|10070799003|7416014|376014|366016|1800799024|23010399003|56012099006|4143699003|11063799006|5023799004|261009223027099003|10067099003|22082099003|18002099003|6133799003;
+X-Microsoft-Antispam-Message-Info:
+	TChHfYhnCKj7PuZ4KmZ4wFUHFcjy+OBC4UI5Om3uPqFArQLkDhityVc/7Quq8pRCbCBa1iKGuzFFInhg6cLcPUNqnVGg2l7PZd1yrvOIdXonxxKl1nTK49vjsq2g0WX2V76mIkvX5OqnUo6UTC/aN8PmkbTV5yfejTj6tGF5zWklXTB6zYCwvALAap2ZCr1ldd7t1PaYfRV7PTh4kr9UDHYnVKTOtZnyywJ5GIcBT/nc77JQQLqIEGZXf9vGCrOgnexJfCeqpTnslTWbLyHKb10rS4BUZbhRcnw5SCcA7AEtXgrf+XhqjebagF/ZY2rLJSfNAZzykPGrYpa2T2I3sRXytwykO1+Hs9GC1oPTs6F+c+v03w/MfpEvGgKe3S6bEf3YlEyJUx5shyaIyCQF/87m7FRRB2S+f46AoTvReP783wCezCSL2my1aOezl2YeHa/UKADkn93x8VyZqTb17qPcYek6/992LNRtL+xd1uZjJEYokei7hVDNi9a7dytcXRhrmU+iOwt96YBjUrKVNIzGPvxXPNZ3TwjNlwLzpqDKtdxS53KEJAGctDx+x2kE9ZxXECpgdEY1iPPRaNsooiKLDcBLIP6/BO9ikBft5V7Zxa+JHih3Aie2Bdvo1jz5G2+DzoPVuWvl5g4RAWWmbH/BHZuEwcCVyzYRrIYX1Lg=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW4PR12MB6873.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(7416014)(376014)(366016)(1800799024)(23010399003)(56012099006)(4143699003)(11063799006)(5023799004)(261009223027099003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SE9tZGJtVHRYcHIya3ZWMVJkY25qdHI1ZWZpcWZoOGxjcWN0MWtmTE5IWVZJ?=
+ =?utf-8?B?RFhlR0g5YnkyT2hFNVhUL3FqYjF2NmJMVnNVUUI5aGtqaDB3bnJyK1dRNXU1?=
+ =?utf-8?B?OFFwZHY3blhJSVNrMnN5UEZ1SU12R0loZmN3czdVRDk0SmgxVUQwc3lRdzRh?=
+ =?utf-8?B?SGlrVzNUT0xhREVMZTVSLzVJbnJnOURNNy8wNXVMU2FuT282K2Z0TzBzRVg1?=
+ =?utf-8?B?OVVKWk9MVE5EeU53dHQ4SVhQMzNJVTFoRHc5RlNDeDc1aTBybHkvWjhqdEFU?=
+ =?utf-8?B?VWxLSUJwNWVZYUdPM21TemI4Qzc3cGxqZlAwMFVrZGlFd1pway9iVm1oQU00?=
+ =?utf-8?B?ZDlBL0VZaXAyQUVDQzFyUU5sNkJ1b3lCZ0RwdFpCaGZlcXlTKzJMYU9HSHpV?=
+ =?utf-8?B?U2szKzZWeTBsbEdyemw4ZGphUjdFQ3dGT2M5SVJFaXBlZkNSUVQvUDRzTFFn?=
+ =?utf-8?B?NUZiTjcxOCtaZWc1Zm11UFJlVVc5d2libmlPcUkrNFJIdHBUOVhDeWlBbi9M?=
+ =?utf-8?B?cU84eWFzSzRzdUtiUVJwWWplcksxRnMwT3IwRjVJNjFpRnJOYnZja2ZpKzF6?=
+ =?utf-8?B?Y0hsSVAwOEVEMEJuWk1NakpwUE0vYlpoYWVyVlpLWTR2VmZ3NHVlRHlhak5F?=
+ =?utf-8?B?Y2pMMEVhRDErMFd3R0VNNUJzSkZVbisvRXluVW9ZTU1WbGdBZVh3UUR3WGxq?=
+ =?utf-8?B?ZWV6Yzd0M3Z3UG9mOXZuVHBBRDB4dEpPU2JudFpzWHU5bjdFR09wT3hFZ3ZP?=
+ =?utf-8?B?bEJ0OUc5RzBiVVRlVlhuV0hDV3R4WElqZHVucU9IbXl6aDJwUlY4MitSWTdi?=
+ =?utf-8?B?cVVRbndWM3ZReDk3R1FRNlVZc3Z5aUowTGI5NUVlb20zcVBKQmZGdUVMNUd4?=
+ =?utf-8?B?UVZxTUFpY09LZHJrdWdMcTJTQ2FhZFFaTUp1TTJ4VGQrL2xsYkxvcWp6UGJt?=
+ =?utf-8?B?UW1WOXFBNVMyNEpLcFcvUSsrS1RHN0ZNczVncDdqK211eWJYcndpMFFPSG1o?=
+ =?utf-8?B?OXNoVDdMZ0kzVlM4aFE3YThHanZkMEkxSzhIR0dDN1lrcTMrMFg5WDdQSGVY?=
+ =?utf-8?B?TXIzY2FzYThWSTVuQk1sYW1lSWR4YitZTUFWNHQvTGE2ck1xU29wbiszTEZC?=
+ =?utf-8?B?dTZsWmw2T3hZMHBwMEYrUmVtbkwycDd1alkzVFh6dmlHVmFqZGVMQVNBTVNW?=
+ =?utf-8?B?VkNqYmxqNDhHV0hoNWZ0N1B4RGFPK3NoTE9nbkYzMzF4QUZvdmM2clNRZGo2?=
+ =?utf-8?B?Tm9jaFllTWNXR1NPTmxkd1ZEa2dPbndTaEVWa09UdEhvOU1idmpTQ0NGUmox?=
+ =?utf-8?B?a2t0dml1VjFWN3BuMlVzenVwNTVyNVIySE9PaW1pL21Tc1orQUU2QUQ4c2l6?=
+ =?utf-8?B?ZnhVdUtib3JLTXdXTU0zNFdhRXRsTUg5OUcxTkp6cUxUR0xYZ1JhbEx1SGJX?=
+ =?utf-8?B?RktuQXVXUUx0OC9iR0dCald6TmVneTN0Y0E2SzRUUm5FUi9udDIrVUsrejJp?=
+ =?utf-8?B?aG54YmdOTkJMamF2ZzluR0h2ZGU4QkZOMFJEWHRJZFNwRDZERnc0Rlh3a0hl?=
+ =?utf-8?B?SmY4TDMzeDhGb3g5S1pDTjNZM3MwTHEyTWl6eHJOSGpRUU4rOGY5NFpRSnlM?=
+ =?utf-8?B?Yk5XdDVENHdFTktrVE14TlhnY2J5VmtvbGhVeFdub0pyaGVueEVsL05rQzd2?=
+ =?utf-8?B?UGQ0N2xPeHZzV3N0bjJ1RCt5YVpiRkx4T0xzQm5KSytEMGl0SCszM2lnZ1Vw?=
+ =?utf-8?B?KzFVT0tXbEtZS0s3MTUyOHZYblBWclJwMW0zMXY4NGQyaTZETFp2Q1VNODh5?=
+ =?utf-8?B?WmNDcTBFVWUxVWxscDQ2ZXg1Z2VPMUEwelE1SWdFRjJOUXczTm5UcTl4S0d0?=
+ =?utf-8?B?Qm9SZUNrQWF6OHFFdzBSUzU1OFFpYk1MekVVak5pa2pWOUZ5cGttUDBZNHdW?=
+ =?utf-8?B?UHI0c0sycWdsSUI4RXVFcDZPSU9Cc2IyaDZlMy9CZlFlb0lmZHNaUmdmakhM?=
+ =?utf-8?B?dXJFa2ZzUm9pc1I3L0FPM2VwRVhMdkNqZk1JMi9aNUVaOXBRZ3dmcXpFQ3pq?=
+ =?utf-8?B?NnEyeFBLNkJIRFRRU3NGK3c0UnV1dU84U0tadjdoTEpkbWFidmJFbUtLTWFP?=
+ =?utf-8?B?SEpKQlY4YXc2L0R6aUpwT29CSURjcXYrVkpPd242MUtWSHNicm95d1dlU1dZ?=
+ =?utf-8?B?YTFaSTJmY0hPeGFYRkQ3SCtybEQrQkVtWW9nYzRYcG0vNXVzWUs4QkhzYlVo?=
+ =?utf-8?B?clA0aVU4cXpGTjNxQ2tNbmJMcXlsdElTbENUaER1Vk5PanRnMW8yMWxBQ0xQ?=
+ =?utf-8?B?bWwzTnUycmdndnI0dFJCdU5Mdm1zY2xlNjN6aDhtcjBoenYwMkU0eHJQME1H?=
+ =?utf-8?Q?jL69/fQcuKQKCB9E1U8pcvvYJ78r0F41DnIqA5Y+MUrPN?=
+X-MS-Exchange-AntiSpam-MessageData-1: vGU3+7/TB+VdjA==
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cc11dad9-7b3c-4168-809f-08df2eb643d1
+X-MS-Exchange-CrossTenant-AuthSource: MW4PR12MB6873.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2026 14:27:26.8259
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Ltq3gBOZ5RNhHZplRglnF+49Md9EHtLLSL+rIY7ZbTD64iiaRmqnqLkaN8MSeqjn7sub+54We3sZ61cPdhUy2g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7441
 
-sashiko-bot@kernel.org writes:
-
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] scsi: ibmvfc: scrq->cookie not cleared on H_REG_SUB_CRQ failure in ibmvfc_register_channel()
+On Tue Oct 20, 2026 at 7:18 PM JST, sashiko-bot wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] gpu: nova-core: unintended 1ms sleep in CmdqInner::drain() on =
+empty queue
 > --
 >
-> commit 09a8086d40f44887491493f172cd7dd44285d18d
-> Author: Tyrel Datwyler <tyreld@linux.ibm.com>
+> commit c3321749b8f493965661eed66b6e6bf889cebd66
+> Author: Alexandre Courbot <acourbot@nvidia.com>
 >
-> scsi: ibmvfc: fix potential NULL pointer dereference on failed queue allocation
+> gpu: nova-core: gsp: cmdq: use consume_element to implement drain
 >
-> This commit guards ibmvfc_deregister_channel() against calling H_FREE_SUB_CRQ
-> on an unregistered sub-CRQ queue and against zeroing an unallocated message
-> buffer. It also adds a KUnit test suite to verify the deregistration guards.
+> This commit refactors CmdqInner::drain() to use consume_element() and
+> adds a log() helper method to GspParsedMessage.
 >
->> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> index 145d559041f12..0fe6b6f4260ba 100644
->> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> @@ -6449,12 +6449,24 @@ static int ibmvfc_register_channel(struct ibmvfc_host *vhost,
->>  	do {
->>  		hcall_rc = plpar_hcall_norets(H_FREE_SUB_CRQ, vdev->unit_address, scrq->cookie);
->>  	} while (hcall_rc == H_BUSY || H_IS_LONG_BUSY(hcall_rc));
->> +	scrq->cookie = 0;
->>  reg_failed:
->>  	LEAVE;
->>  	return rc;
+>> diff --git a/drivers/gpu/nova-core/gsp/cmdq.rs b/drivers/gpu/nova-core/g=
+sp/cmdq.rs
+>> index 7db3d28e8902c..54e87fd7158cd 100644
+>> --- a/drivers/gpu/nova-core/gsp/cmdq.rs
+>> +++ b/drivers/gpu/nova-core/gsp/cmdq.rs
+>
+> [ ... ]
+>
+>> @@ -1054,21 +1063,14 @@ fn await_msg<M: MessageFromGsp>(&mut self) -> Re=
+sult<M>
+>>      /// `EIO` if a message fails framing or checksum validation, or if =
+a message's page count
+>>      /// overflows a `u32`.
+>>      fn drain(&mut self) -> Result {
+>> -        while !self.gsp_mem.driver_read_area().0.is_empty() {
+>> -            // A message is available, so this returns without waiting.
+>> -            let msg =3D self.wait_for_msg(Delta::ZERO)?;
+>> -
+>> -            let pages =3D
+>> -                u32::try_from(msg.header.msg_length().div_ceil(GSP_PAGE=
+_SIZE)).map_err(|_| {
+>> -                    dev_err!(&self.dev, "GSP drain: message length over=
+flow\n");
+>> -                    EIO
+>> -                })?;
+>> -
+>> -            RpcMessage::parse(self.dev, msg)?.log(self.dev);
+>> -
+>> -            self.gsp_mem.advance_cpu_read_ptr(pages);
+>> +        loop {
+>> +            match self.consume_element(Delta::ZERO, |message| message.l=
+og(self.dev)) {
+>> +                Ok(()) =3D> (),
+>> +                // No more message pending on the queue, drain is compl=
+ete.
+>> +                Err(ETIMEDOUT) =3D> return Ok(()),
+>> +                // Other errors are fatal, and stall the queue.
+>> +                Err(e) =3D> return Err(e),
+>> +            }
+>>          }
+>> -
+>> -        Ok(())
+>>      }
 >>  }
 >
 > [Severity: Medium]
-> Should scrq->cookie = 0 be placed after the reg_failed label (or should
-> h_reg_sub_crq() avoid writing *cookie on error)?
+> Can removing the !self.gsp_mem.driver_read_area().0.is_empty() check
+> cause CmdqInner::drain() to sleep for 1 ms when the queue is empty?
 >
-> Looking at h_reg_sub_crq() in drivers/scsi/ibmvscsi/ibmvfc-core.c, it
-> unconditionally writes retbuf[0] into *cookie regardless of the return code:
+> Previously, CmdqInner::drain() only called wait_for_msg(Delta::ZERO)
+> after confirming a message was available in driver_read_area(). With the
+> new loop, consume_element(Delta::ZERO, ...) is called until the queue is
+> empty, which invokes wait_for_msg(Delta::ZERO):
 >
-> static long h_reg_sub_crq(unsigned long unit_address, unsigned long ioba,
-> 			  unsigned long length, unsigned long *cookie,
-> 			  unsigned long *irq)
-> {
-> 	unsigned long retbuf[PLPAR_HCALL_BUFSIZE];
-> 	long rc;
+> drivers/gpu/nova-core/gsp/cmdq.rs:CmdqInner::wait_for_msg()
+>         let (slice_1, slice_2) =3D read_poll_timeout(
+>             || Ok(self.gsp_mem.driver_read_area()),
+>             |driver_area| !driver_area.0.is_empty(),
+>             Delta::from_millis(1),
+>             timeout,
+>         )
 >
-> 	rc = plpar_hcall(H_REG_SUB_CRQ, retbuf, unit_address, ioba, length);
-> 	*cookie = retbuf[0];
-> 	*irq = retbuf[1];
+> In rust/kernel/io/poll.rs:read_poll_timeout(), when the condition is
+> false, the timeout check uses a strict greater-than comparison:
 >
-> 	return rc;
-> }
+>         if start.elapsed() > timeout_delta {
+>             // Unlike the C version, we immediately return.
+>             // We have just called `op()` so we don't need to call it aga=
+in.
+>             return Err(ETIMEDOUT);
+>         }
 >
-> In plpar_hcall() (arch/powerpc/platforms/pseries/hvCall.S), r5 (unit_address)
-> is moved into r4 before HVSC and r4 is unconditionally stored into retbuf[0]
-> after HVSC, even when HVSC returns an error such as H_PARAMETER or H_RESOURCE.
+>         if !sleep_delta.is_zero() {
+>             fsleep(sleep_delta);
+>         }
 >
-> When h_reg_sub_crq() fails in ibmvfc_register_channel():
+> Because op() only reads two u32 indices from coherent memory in RAM, if
+> the monotonic clock has not advanced by at least 1 ns between
+> Instant::now() and start.elapsed() (for instance on architectures with
+> coarser timer resolution or under virtualization), start.elapsed() is
+> Delta::ZERO. Since Delta::ZERO > Delta::ZERO is false,
+> read_poll_timeout() falls through to fsleep(Delta::from_millis(1)) while
+> holding the Cmdq mutex (in paths like GspInterrupt::handle_threaded() ->
+> Cmdq::drain() and Gpu::new() -> Cmdq::drain()).
 >
-> 	rc = h_reg_sub_crq(vdev->unit_address, scrq->msg_token, PAGE_SIZE,
-> 			   &scrq->cookie, &scrq->hw_irq);
->
-> 	/* H_CLOSED indicates successful register, but no CRQ partner */
-> 	if (rc && rc != H_CLOSED) {
-> 		dev_warn(dev, "Error registering sub-crq: %d\n", rc);
-> 		if (rc == H_PARAMETER)
-> 			dev_warn_once(dev, "Firmware may not support MQ\n");
-> 		goto reg_failed;
-> 	}
->
-> jumping to reg_failed skips scrq->cookie = 0, leaving a non-zero value in
-> scrq->cookie. If ibmvfc_deregister_channel() is later called on this queue
-> during reset or teardown (via ibmvfc_dereg_sub_crqs()), won't the new
-> if (scrq->cookie) check evaluate to true and issue H_FREE_SUB_CRQ on a queue
-> that failed registration?
+> Would it make sense to keep the while
+> !self.gsp_mem.driver_read_area().0.is_empty() loop condition around
+> self.consume_element(Delta::ZERO, |message| message.log(self.dev))?
 
-Yes. I will move clearing scrq->cookie after the reg_failed label.
+Mmm, that's an interesting one, in that I am not sure there are any
+concrete implications but I'd like to fix it anyway.
 
--Dave
+I was thinking that maybe we should add a special-case to
+`read_poll_timeout` so it returns unconditionally after checking the
+condition once if `timeout_delta =3D=3D Delta::ZERO`, but doing so would
+make the `sleep_delta` argument moot so I guess that's not adequate (and
+the current behavior is technically correct). So I think I'll
+special-case nova-core's `wait_for_msg` instead.
