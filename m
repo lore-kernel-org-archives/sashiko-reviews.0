@@ -1,69 +1,62 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=23.88.97.239
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=13.77.154.182
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792468219;
-	b=Ei7CtEWNwR701Y9OBkFaGDtHwc0JqAUMy6+XYM46XAwNLipd5kYmXnYSu5R4OYlgxWec
-	 drjMMxTNjo+agSN4ZFIV5BM9CgVxpyeBqwA/dt0REubduONLF352d5TaUCJ45bbxbl1Gs
-	 zsC3BEDrE+LPwg2sRIfojWlK9zcL6B3zeCT9D6iqV4gg+BTbGBTBRdPv3YE7Q26nog+JG
-	 wIujAgw6T6YjdgbBw+sWFI9D9m3EHTTF4YazaLEoBhI3Ib1/06sfAOiSOjUh15rN5ZdFU
-	 bBvj/I6bdbvqqmlzdg6ARVnzAQL7vuE/TYqI5qpzu2NdSrGPaLLLvZsJrDUrqq/jTfA==
+	t=1792470649;
+	b=4cOAVV9dthrTywmiu7Utp9Oarf31O211KN8Oec+LleKGwd/0gBNoa0HkXFU65ciTmDh3
+	 Q867nc9r7RHJYM19VSWjNo1N5beK112/SewrYBGqH69BZxuphFxRBJeaePsKQWnIdThFz
+	 8sjGIvgu8Eyqf7h38etEbOPAwvA2m2CkzZ0RoUVvuCF7fNsWuQKyqKo1JnDT34l9ESfAz
+	 DaHa3PWfAconLEdemrxd08T5c0B11vT4yUBxXRhfxWhTKpcJ5eDK0Nl7Gy/Ue6BBxkLnc
+	 RzZTbCH7Ml8Os9ipd57BDu59Mrt5cfGdrWIFMesYGikOsLy1R/qYDKGpb4iNbk4TYJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792468219;
-	h=DMARC-Filter:DKIM-Signature:Received:X-Spam-Checker-Version:
-	 X-Spam-Level:X-Spam-Status:DKIM-Signature:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=Zs7TQJ1QMl5/wgAW6DMgdgeWAnLtRic9HtSTpoGlsjY=;
-	b=cRRKSFTsc2thZFBm31xmUXayOd2oYhf+R6tGXTz+6PwXoy+rsU7ZjT+UU3FkfK4/Zanb
-	 n68dY8OfqJA2kHzOPZ+IN5CfURw0aPjFUZyrMt0/4p7jRlVjQGz8kJuDE1cIhQhZuWE/r
-	 MpmSMXwgt7xqYGrRol1lkBElp6bDMP45yemDyMKOu2/qXAyUnMSsdE+wj2iGLGg6S/xSa
-	 yxa4PRZvNTwPZ8KKlU4n7Nx4kSDjaIcvU4A/GKa/cwIpz0bXgVleIyq0fCYmHgR/y4cH+
-	 OheTF01zdEzDSaScug4B4cbjy+5w5dSFoUR6fZuX3mW0dy+aJ8UwgbG/1HFG91sil5A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792470649;
+	h=DMARC-Filter:Received:DKIM-Filter:DKIM-Signature:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:Content-Type:
+	 MIME-Version:Content-Transfer-Encoding:X-Spam-Status:
+	 X-Spam-Checker-Version;
+	bh=6DcGGOOFdce5ERyHzgW3XUEmRU7KpMeHrpytV7uK3CA=;
+	b=HjLb72woJ3GxJ1SaHGuyaMDL1+6sB9TcqhUzmzOaW7LXt03wmfaAkCopZMQVn+QjSzAz
+	 SX14eugUtEENhi7KyhRo/K7JJsr5lj8i69lv9MmrAZG0rmTqlu14hu0S8eLBijHXi2C4K
+	 3jt4fNAjPYYrMUoB2fIVF1mIuVDBNiYHohP4hUdfmWIEuqevfr/5ti7dLsp17byOBgeMc
+	 eaLWn9YSB9qnVkXex9n3tQfi4MzdX162HcLVDVkS6Ec6WG+a2PgdJSoCcK5pn6RXN4ZQV
+	 krnz36+PX4vdrqlaTxM1WWxIVNsUROoZEm8gICbK1yqyHVfQLrreh4u4ljjCPrGr0SQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=birger-koblitz.de;
-	spf=pass smtp.mailfrom=birger-koblitz.de;
-	dkim=pass header.d=birger-koblitz.de header.i=@birger-koblitz.de header.a=rsa-sha256 header.s=default header.b=sKH2Imjl;
-	dkim=pass header.d=birger-koblitz.de header.i=@birger-koblitz.de header.a=rsa-sha256 header.s=default header.b=qR33jShD;
-	arc=none smtp.remote-ip=23.88.97.239
-Received: from bkemail.birger-koblitz.de (bkemail.birger-koblitz.de [23.88.97.239])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7A7606A31A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 03:50:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EF7A7606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=birger-koblitz.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=birger-koblitz.de
+	dmarc=pass header.from=linux.microsoft.com;
+	spf=pass smtp.mailfrom=linux.microsoft.com;
+	dkim=pass header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=CS0kzJ6V;
+	arc=none smtp.remote-ip=13.77.154.182
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1C08606A319
+	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 04:30:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D1C08606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=birger-koblitz.de header.i=@birger-koblitz.de header.a=rsa-sha256 header.s=default header.b=sKH2Imjl;
-	dkim=pass (2048-bit key) header.d=birger-koblitz.de header.i=@birger-koblitz.de header.a=rsa-sha256 header.s=default header.b=qR33jShD
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=birger-koblitz.de;
-	s=default; t=1792468211;
-	bh=7+K4+AX/RtVusBYoHVcrrKKwlzL1owrS1ons4OCjTgo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=sKH2ImjlFrukzax0bdrGDOvPEsAFx9elkdNoKqJZKlGqbNf+uH7qj/b7GE8mEfVWV
-	 XcoImoyp1DRsRlLh/26L4WsDZSD8TTgMQfYwwPBBQ8qPM41QMcgd48gDSs12K0uDWJ
-	 Pv26Qc/C8pUaoiCE7lmKdCn5URJwbDBYjgM1YwTQr46Z4D1RmebVfzL1ekMMc6SqOp
-	 TIEo+0vr0+29E84PTjQISkB6tdJm+MEZHtHAhPxtHNLVIxr10JlMIAPlV3jkHt5YVa
-	 H2PzWW3B7poS7FZ5mBG4yLim5/dTsr8+OZ25vBIronmWZDras2jR1cbr3T6V/tNQfD
-	 AW64zrDg8ut1w==
-Received: by bkemail.birger-koblitz.de (Postfix, from userid 109)
-	id 02CE2491AB; Tue, 20 Oct 2026 03:50:11 +0000 (UTC)
-X-Spam-Level: 
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=birger-koblitz.de;
-	s=default; t=1792468208;
-	bh=7+K4+AX/RtVusBYoHVcrrKKwlzL1owrS1ons4OCjTgo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=qR33jShDxubnpWGjAKP4snVpA0kPV8kHg5LEng0IY0Ov2UqnwZGLV2TjvCxhsi4EZ
-	 eTPRk+16geu+Gqr5OYqYtMptFgEvTIVixmpkBLPTHp5vNm6e/iJ6+lGiv7IqAYcG7q
-	 epmL/R6S67VxftIhBhuIgDeoQkW+Yn4yimIJo4PEb8XwG6d1/V/tVoEjlYOQYn/cN7
-	 n/VYoc3xE8jJzDP9GmytVn4pdR+SymFVNoKgZM2DoBYt40d94rJFbe8fJLsGxZpepO
-	 uJH6p6Tvgi/T/Z072Y/WzcyFERdEtFqbSP24vuUhped3cFgwl4wdlQTqjNw5AVVENf
-	 5HCxYfSom+LhQ==
-Received: from [IPV6:2a00:6020:47a3:e800:271c:c6c5:9fde:77cb] (unknown [IPv6:2a00:6020:47a3:e800:271c:c6c5:9fde:77cb])
-	by bkemail.birger-koblitz.de (Postfix) with ESMTPSA id 9D16F491A7;
-	Tue, 20 Oct 2026 03:50:08 +0000 (UTC)
-Message-ID: <d2b9c51d-2f82-49d9-a072-aa47959d7242@birger-koblitz.de>
-Date: Tue, 20 Oct 2026 05:50:08 +0200
+	dkim=pass (1024-bit key, unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=CS0kzJ6V
+Received: from weh-cvm-dev-vm.y50bckvjo0hefgfnzfztsfttff.phxx.internal.cloudapp.net (unknown [20.169.55.37])
+	by linux.microsoft.com (Postfix) with ESMTPSA id E211520B7168;
+	Mon, 19 Oct 2026 21:30:40 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E211520B7168
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1792470641;
+	bh=6DcGGOOFdce5ERyHzgW3XUEmRU7KpMeHrpytV7uK3CA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=CS0kzJ6V5exZC/Oxw4HGYd9bVsqvkL/H90ftXt8pcPBtqIQ/M8Qx/lifmZM9Qdi/q
+	 xxwLBbuH0aNiFGPq/S6kd98PZOel5zGnpeo6z/GqHRhatqm9oOKRMqBRZRpB7uWQIY
+	 TKAgolw/uS086DhAngF5p05mv7pACCn6hSsEgEyU=
+From: Wei Hu <weh@linux.microsoft.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-rdma@vger.kernel.org,
+	linux-hyperv@vger.kernel.org,
+	bpf@vger.kernel.org,
+	netdev@vger.kernel.org,
+	weh@microsoft.com,
+	kuba@kernel.org
+Subject: Re: [PATCH net-next v7 02/13] net: mana: share the EQ pool across a queue-set swap
+Date: Tue, 20 Oct 2026 04:30:38 +0000
+Message-ID: <qset-v7-sashiko-02-v8-plan.20261018.weh@linux.microsoft.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <sashiko-outbox-175602@kernel.org>
+References: <cover.1791710735.git.weh@linux.microsoft.com> <9b7e62cc70138f8940a32869da44c1260748be14.1791710735.git.weh@linux.microsoft.com> <sashiko-outbox-175602@kernel.org>
+Content-Type: text/plain; charset="us-ascii"
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -73,49 +66,59 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v19 01/13] phylink: Add phylink_mac_interrupt
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: sashiko-reviews@lists.linux.dev, linux-usb@vger.kernel.org,
- Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
- <davem@davemloft.net>, Andrew Lunn <andrew@lunn.ch>,
- Eric Dumazet <edumazet@kernel.org>, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, Jianhui Xu <neuromoments@gmail.com>
-References: <20261010-ax88179a-v19-0-7475173cfb56@birger-koblitz.de>
- <20261010-ax88179a-v19-1-7475173cfb56@birger-koblitz.de>
- <sashiko-outbox-167008@kernel.org>
- <acada24c-903e-49ea-be04-879fedbfa08b@birger-koblitz.de>
- <20261019171805.6aa3a7a3@kernel.org>
-From: Birger Koblitz <mail@birger-koblitz.de>
-Content-Language: en-US
-In-Reply-To: <20261019171805.6aa3a7a3@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Thanks Jakub for the explanation!
+Hi,
 
-On 20/10/2026 2:18 am, Jakub Kicinski wrote:
-> On Sun, 11 Oct 2026 07:32:52 +0200 Birger Koblitz wrote:
-> You are responding to the main Sashiko instance, not the netdev one.
-> Due to infinite wisdom of some MM people these are not even CCed
-> to netdev (I guess CCing the USB list triggers them?)
-> You can ignore the feedback form that instance for networking patches.
-> 
-> Unfortunately our instance didn't run because patch 4 breaks the build
-> (patch 12 fixes it). Our instance tries to save tokens and doesn't run
-> on patches where basic CI checks fail.
-It would be nice to get that kind of feedback immediately from the CI 
-system.
+> Should mana_ib_remove_cq_cb() use cmpxchg() and synchronize_rcu() for
+> teardown, similar to what was added for Ethernet CQs in
+> mana_gd_destroy_cq()?
 
-> 
-> drivers/net/usb/ax88179_178a.c:691:8: error: use of undeclared label 'err_nodev'
->    691 |                 goto err_nodev;
->        |                      ^
-Interestingly, Sashiko did not even complain about that. And the extra 
-error handling was in respect of existing code. Should have refused to 
-do that, I guess...
+I will leave the RDMA teardown path unchanged in v8. The callback-wrapper
+lifetime issue is real, but mana_ib_remove_cq_cb() and mana_ib_destroy_cq()
+already have this ordering in both unmodified upstream bases used for v6
+and v7. The acquire/release publication change does not introduce that
+reader/free race or resolve it. An independent RDMA lifetime fix should
+cover the hardware CQ and pending events as well as the software readers;
+I am not including that separate change in this queue-set revision.
 
-I will fix only this issue, then, and re-send once the patch window 
-opens again. Thanks again for looking into this,
+> Can gc->cq_table be NULL when this acquire load executes?
 
-Birger
+I will also leave this initialization path unchanged in v8. There is a
+window after max_num_cqs is populated and before cq_table is allocated.
+A spurious or premature completion in that window could hit the missing
+table-root check. That window and the unguarded lookup already exist in
+both upstream bases, before this series.
+
+For normal HWC startup, WQEs are posted only after channel establishment
+returns and the CQ table is installed. I have not identified a normal
+completion producer in the window described here. This is a conditional
+hardware-protocol hardening issue, not a demonstrated new startup failure
+caused by the publication change.
+
+> Could this sequential mana_gd_test_eq() call lead to an unbounded RTNL
+> stall if an EQ stops delivering interrupts?
+
+I will address the additional per-CQ timeout amplification in v8. These
+extra waits are introduced by the queue-set series and are already in v6.
+
+The correction will stop the retiring WQs, keep their CQ callbacks alive,
+and issue all required parent-EQ markers before waiting. Per-EQ
+completions will allow one shared 30-second completion budget per RX or TX
+cleanup batch. CQ withdrawal and the existing RCU reader wait remain
+after the batch, including the partial-allocation cleanup paths.
+
+One detail of the reported bound needs qualification: each TX/RX pair has
+its own parent EQ. One stalled parent normally adds two CQ waits, about
+60 seconds. The 128 * 30-second case requires all 64 parents to stall
+while the hardware channel remains responsive. The cumulative delay is
+finite, but it is still a real problem introduced by these extra waits.
+
+The correction bounds the added CQ-marker completion waits, not all RTNL
+hold time. Existing per-EQ destruction waits and hardware-channel request
+time remain separate. It also preserves the existing best-effort cleanup
+policy after a failed marker, rather than claiming new hardware recovery
+guarantees.
+
+Thanks,
+Wei
