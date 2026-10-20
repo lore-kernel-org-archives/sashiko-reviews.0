@@ -1,58 +1,76 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.17
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792517127;
-	b=rxhlJ0dB9/XBUeJ//WJ7/MqDR7Qb0bEVpx8n1rgocbO7dOEZQULWjbrdNxc0ZDN7uwG/
-	 GFO6SUD0keBe9sq+K4sW8GWbUtmyVFmwwTLLPI3PV8U6y0BT9iqPGxBNwEHyEnZM4Q94E
-	 +tWDRMjQRvdPa7TKvhQiz83fVgY7rAkZtHuk0sx4A5aExoxhMpcqyMSqYxYkWoGE/CU8k
-	 cQ3DfokYSnC8mxMu3IiHfowosF7kHeKR0xMkeu8bU7lh8N/UZu7/f9aAf27AjVb2emdMV
-	 aWN8NOZij0DpjDQ7mF1lJUhWYrCvDv6U2QjX5fdpgFvLjnXxdgod9jK1kBpaErQbxiw==
+	t=1792521082;
+	b=RpkLtoN0+uTp09qwhu04/DBA/3+AsT6XvzzG+z27OTxnVlg06WvrNm7D9KBAEjPbi39D
+	 5ZChZ3KdsEADJwrwy20aFWgK7rzDKMfQ/J7NRx3q2BSwqOfNBdcROf5aFcnhJdHk/GBzU
+	 IO9/3s+TBEuuqHDMsoRta8WnNh+M8/zY6aiynNu67HAMy5z1Ee0Wu2D+19WiFWTxPlgtF
+	 eGYrGTW7exkgCJWcjpfU13O7w9MvJaq9jG8lGrjpN4nWE3CQuiIeEUTtjrPSvN2UsQ803
+	 tk//uRTyPBRISbaC66wMAjNmE4Y6/el8P54q6K2Eez9Mfh8wvMlsBVr8zrov9Rf4AIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792517127;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=41GcUzN4XDaRMpPBkysR0QGcyhgarr2Sb5LXYMDsLOU=;
-	b=A9WnG4/LyQfVTm52zcT7SQ45M52bGoPUxBxpGa8qUGg/+Z//L1EJOq7o+hL2ISj+8FWW
-	 CLjaJLempB74Ep6BKC+K2xPHMDCTXuxhXooUGLnQy6kLi1bdnxaWuBPlwJQI8cyuvLMlJ
-	 0IoJUvIUsTpZb2nn6mRJfIc6QtJ6O7JcZAay+1dpuUci4TmEi7viUi/b8u/s4QsPLpxl7
-	 fq6MVm0fCh+LxdGIsFCNLIOKPtb5Q3Vw9VlCUNuur3IXdWRjISkLc1z4nKQBt0Z7UFHEK
-	 7wcq5+RMLUtZD+MT0567XzgdLTE+WTOjed7e7XDD9PhNAiYXyBAPYD6IWnslaO7EX6w==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792521082;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
+	 X-Patchwork-Hint:Organization;
+	bh=rsg0nIVN3/WbpXY88yK+UXs9xD48yZcmA5hhXunhA2U=;
+	b=nTFrOk/50sMbTP8etFLNf/gEuVy+6seRzP4I4wJlPY/g0ibnpZVyEPIGENXpIxTZpQW0
+	 lvWrx5S3h5t7S0fdiokEcrhSsyMz9sYkVt/ohRqzoQo7sRwF3vrRuhshO+iW8zzV/QL7S
+	 23myXiLedy4t7ZMPsinYnygi8Om7Z7f0sAkjK0qJXL+5xFx7ODKAyaHRfxKQrrX8sKezC
+	 qWLXB8qLVIx8xzytbCp7Iku0M1tiQjEoHIGN97nX/y86718WMTjQ2UGaXYnLaNwxdl/Kl
+	 7eQ9TMN3l3IalPAVfvLaTbCDr6bR5YLdIKMKuIuFuYuX2mmZgyrv3ii1xHXIzik1jpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mQLGW5sj;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=c1uHE5lI;
+	arc=none smtp.remote-ip=198.175.65.17
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBAB606A31B;
-	Tue, 20 Oct 2026 17:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8FD606A319
+	for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 18:31:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9F8FD606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mQLGW5sj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A0E01F000C9;
-	Tue, 20 Oct 2026 17:25:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792517126;
-	bh=41GcUzN4XDaRMpPBkysR0QGcyhgarr2Sb5LXYMDsLOU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=mQLGW5sjrhktucLERIORURV17rz6cGETr9P4eyl3MmKQ3mX0f33jcKT7NGcTOYoYp
-	 +Dodqkq9zERI2/j4HC2b8VDGbMwGc7mOkHLTWSYGsedGpGLNDbTuIJwp4XZZyjp+XD
-	 rx+V1VvI0V9jscNC8121bbsCrergl6Xv+jhv+0Fodgi0axAqMb5Cr/E3nRos6L6lVX
-	 O/T571rTIq7TKzTLTQLvZ5QR0kTnJiNZKLbMUh+DduTax1fG7A4LB7x3JkVf8AUMGi
-	 uqnLZSuAeTGIuKVHqvVKW3igQQ8k8K1zYJPjMI3X/wiOwevCWKepI/HI1LPzvKNKbe
-	 wiHoeAe3csCOw==
-Date: Tue, 20 Oct 2026 12:25:25 -0500
-From: Rob Herring <robh@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=c1uHE5lI
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1792521081; x=1824057081;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=RwKALq7QX9OKo83egn3Wq1A/qkiKaRSFFMEEk09V4so=;
+  b=c1uHE5lIWT37/0KqCUAvksDNbJoJbW1GBB9i5Wsj5tw7sL8NFf1H2oO2
+   Hdzte97FLEsCPj3eV2TGH+qlHqT0Q4+hriHgYTbJjmjDKr8RbAAPBJHsA
+   J6BgkHbTKjQUSlQB9+u6/YWyRYzO/7swoAfLCghRsw2FA7fW64bQbaYss
+   JfJ9QoQ5v5uroA9C6v621KgQAIGwg+dcEDmU6P2j46SddxE5t2HU7RSNa
+   U6eWlFwd6WLyUYLAJ12qVdp/B7MtVKhCpEYISwVfVqWceY3DLm8bc9N1s
+   OPziroxyDPg1cX/0tv3nifgR/+H5jlC+U9EvYf53L/C/shGSCX9vKk1p9
+   A==;
+X-CSE-ConnectionGUID: Ngmdnm2oQ1KfJgX2a5MTwg==
+X-CSE-MsgGUID: jutyeE4iQz2NLrMogFsL2g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11941"; a="1249285"
+X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
+   d="scan'208";a="1249285"
+Received: from fmviesa012.fm.intel.com ([10.60.135.152])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2026 11:31:21 -0700
+X-CSE-ConnectionGUID: g+dAZ/deShiRwHKtUxW9+Q==
+X-CSE-MsgGUID: 32fYlhqJRsu0ZyY6qL81yA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
+   d="scan'208";a="4627866"
+Received: from carterle-desk.ger.corp.intel.com (HELO localhost) ([10.245.244.238])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2026 11:31:19 -0700
+Date: Tue, 20 Oct 2026 21:31:16 +0300
+From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nsc@kernel.org>,
-	Saravana Kannan <saravanak@kernel.org>,
-	David Heidelberg <david@ixit.cz>, Arnd Bergmann <arnd@arndb.de>,
-	linux-kbuild@vger.kernel.org, devicetree@vger.kernel.org,
-	conor+dt@kernel.org
-Subject: Re: [PATCH v4 2/2] kbuild: Support directory targets for building
- DTBs
-Message-ID: <20261020172525.GA4166631-robh@kernel.org>
-References: <20261016-dtb-dirs-v3-v4-0-0ec42fd8ef9b@kernel.org>
- <20261016-dtb-dirs-v3-v4-2-0ec42fd8ef9b@kernel.org>
- <sashiko-outbox-175793@kernel.org>
+Cc: intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org
+Subject: Re: [PATCH 15/15] drm/i915/pfit: Allow downscaling on i966+
+Message-ID: <atezdPm7w8x4KNlT@intel.com>
+References: <20261019135309.23578-1-ville.syrjala@linux.intel.com>
+ <20261019135309.23578-16-ville.syrjala@linux.intel.com>
+ <sashiko-outbox-177503@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -62,142 +80,96 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-175793@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-177503@kernel.org>
+X-Patchwork-Hint: comment
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
 
-On Sat, Oct 17, 2026 at 07:49:53PM +0000, sashiko-bot@kernel.org wrote:
+On Mon, Oct 19, 2026 at 02:47:56PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] kbuild: parallel build race in dtbs target and extra boot/dts traversal
+> - [Medium] drm/i915/pfit: off-by-one max_scale in i9xx_pfit_check_scaling()
 > --
 > 
-> commit 3f00c18c0d96a2ac1d59c7335959fec4fa041ff7
-> Author: Rob Herring (Arm) <robh@kernel.org>
+> commit c5496f644982a254aa09057b7c02f1bea3cb5b18
+> Author: Ville Syrjälä <ville.syrjala@linux.intel.com>
 > 
-> kbuild: Support directory targets for building DTBs
+> drm/i915/pfit: Allow downscaling on i966+
 > 
-> This commit enables building DTBs using directory targets so that all DTBs
-> for a vendor directory can be built, including base+overlay DTB targets,
-> and updates the dtbs target to use the directory target rule.
+> This commit updates i9xx_pfit_check_scaling() to raise max_scale to 0x20000 on
+> DISPLAY_VER(display) >= 4 platforms to permit panel fitter downscaling.
 > 
-> > diff --git a/Makefile b/Makefile
-> > index c307ee9293bcd..6d1d1c803ee86 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -1664,8 +1664,8 @@ dtbindingtree := Documentation/devicetree/bindings
-> >  ifneq ($(dtstree),)
+> > diff --git a/drivers/gpu/drm/i915/display/intel_pfit.c b/drivers/gpu/drm/i915/display/intel_pfit.c
+> > index 6eb457047bf4c..2b6706c7af534 100644
+> > --- a/drivers/gpu/drm/i915/display/intel_pfit.c
+> > +++ b/drivers/gpu/drm/i915/display/intel_pfit.c
+> > @@ -563,7 +563,10 @@ static int i9xx_pfit_check_scaling(const struct intel_crtc_state *crtc_state)
+> >  	int hscale, vscale, max_scale;
+> >  	struct drm_rect src;
 > >  
-> >  PHONY += dtbs dtbs_prepare dtbs_install dtbs_check
-> > -dtbs: dtbs_prepare
-> > -	$(Q)$(MAKE) $(build)=$(dtstree) need-dtbslist=1
-> > +dtbs:
-> > +	$(Q)$(MAKE) $(dtstree)/
-> 
-> [Severity: High]
-> Does dropping dtbs_prepare from the dtbs target prerequisites and spawning a
-> separate top-level make for $(dtstree)/ introduce a parallel build race when
-> vmlinux and dtbs are built together (for example, during make -j all when
-> CONFIG_OF_EARLY_FLATTREE=y, make -j vmlinux when CONFIG_GENERIC_BUILTIN_DTB=y,
-> or make -j image.fit on arm64)?
-
-I think I just need to add back dtbs_prepare here.
-
-> Previously, vmlinux (via . -> prepare -> prepare0 -> archprepare) and dtbs
-> (via dtbs_prepare) shared the same top-level make dependency graph, which
-> serialized include/config/kernel.release, scripts_basic, and scripts_dtc:
-> 
-> Makefile:
->     scripts: scripts_basic scripts_dtc
->     	$(Q)$(MAKE) $(build)=$(@)
->     ...
->     archprepare: outputmakefile archheaders archscripts scripts include/config/kernel.release \
->     ...
->     dtbs_prepare: include/config/kernel.release scripts_dtc
-> 
-> With dtbs running $(MAKE) $(dtstree)/, the child make enables single-build
-> and evaluates $(build-dir): $(single-build-prep) where single-build-prep is
-> dtbs_prepare. In a parallel build, the parent make (building archprepare) and
-> the child make (building dtbs_prepare) have independent dependency graphs and
-> can run concurrently:
-> 
-> 1. Both make instances can run filechk for include/config/kernel.release at
->    the same time, racing on the shared include/config/.tmp_kernel.release
->    temporary file in scripts/Kbuild.include:
-> 
->    define filechk
->    	$(check-FORCE)
->    	$(Q)set -e;						\
->    	mkdir -p $(dir $@);					\
->    	trap "rm -f $(tmp-target)" EXIT;			\
->    	{ $(filechk_$(1)); } > $(tmp-target);			\
->    	if [ ! -r $@ ] || ! cmp -s $@ $(tmp-target); then	\
->    		$(kecho) '  UPD     $@';			\
->    		mv -f $(tmp-target) $@;				\
->    	fi
->    endef
-> 
-> 2. Both make instances can concurrently invoke $(MAKE) $(build)=scripts/basic
->    and $(MAKE) $(build)=scripts/dtc in the same output directory, racing on
->    building the host binaries (fixdep, dtc, fdtoverlay) and their .*.cmd
->    files.
-> 
-> [ ... ]
-> 
-> > diff --git a/scripts/Makefile.build b/scripts/Makefile.build
-> > index 4349108e75e1f..d22b3b2d43b32 100644
-> > --- a/scripts/Makefile.build
-> > +++ b/scripts/Makefile.build
-> > @@ -38,6 +38,13 @@ include $(srctree)/scripts/Makefile.compiler
-> >  include $(kbuild-file)
-> >  include $(srctree)/scripts/Makefile.lib
+> > -	max_scale = 0x10000;
+> > +	if (DISPLAY_VER(display) >= 4)
+> > +		max_scale = 0x20000;
+> > +	else
+> > +		max_scale = 0x10000;
 > >  
-> > +# Make DT directory targets reachable for architectures with a DTS tree.
-> > +ifeq ($(obj),arch/$(SRCARCH))
-> > +ifneq ($(wildcard $(src)/boot/dts/),)
-> > +subdir-y += boot/dts
-> > +endif
-> > +endif
-> > +
+> >  	drm_rect_init(&src, 0, 0, pipe_src_w << 16, pipe_src_h << 16);
+> >  
 > 
-> [Severity: High]
-> Because subdir-y += boot/dts is added unconditionally whenever $(obj) is
-> arch/$(SRCARCH), won't the main "." build pass (as well as non-DT builds like
-> make vmlinux or make modules) now recurse into arch/$(SRCARCH)/boot/dts and
-> all vendor subdirectories even when need-dtbslist is not set?
-> 
-> During make -j, the parent make's "." traversal will descend into
-> arch/$(SRCARCH)/boot/dts in parallel with the child $(MAKE) $(dtstree)/
-> spawned by the dtbs target. In every vendor directory where dtb-y or dtb- is
-> non-empty, scripts/Makefile.build includes scripts/Makefile.dtbs (which adds
-> $(real-dtb-y) to targets) and then includes the .cmd files for existing
-> targets:
-> 
-> scripts/Makefile.build:
->     ifneq ($(need-dtbslist)$(dtb-y)$(dtb-)$(filter %.dtb %.dtb.o %.dtbo.o,$(targets)),)
->     include $(srctree)/scripts/Makefile.dtbs
->     endif
->     ...
->     existing-targets := $(wildcard $(sort $(targets)))
-> 
->     -include $(foreach f,$(existing-targets),$(dir $(f)).$(notdir $(f)).cmd)
-> 
-> If the parallel dtbs sub-make has just created a .dtb file and cmd_and_fixdep
-> is still writing the corresponding .*.dtb.cmd file while the "." build walk
-> is evaluating that directory, can the "." sub-make read a partially written
-> .*.dtb.cmd file and fail with a syntax error?
+> [Severity: Medium]
+> Should max_scale be 0x20000 - 1 (or 0x1fff0) rather than 0x20000 here?
 
-This should fix the issue:
+I guess I'll just go with 0x20000-1 for now. I suppose that isn't
+100% correct because it doesn't match the hardware precision, but
+then again neither does the rounding done by drm_rect_{h,v}scale().
+The same issue actually exist in the ILK+ pfit and SKL+ scaler
+code as well, though in that case the hw precision is .15. I think
+what we should do is perform the check using the hardware precision
+and rounding, but that check will have to be done after clipping
+and all this stuff right now runs before clipping. Currently we
+don't have clipping for pfit but I have a branch somewhere that
+tries to add that to properly handle the pfit+joiner combo.
+For SKL+ plane scaling clipping is already there of course.
 
-diff --git a/scripts/Makefile.build b/scripts/Makefile.build
-index d22b3b2d43b3..22fbd5199091 100644
---- a/scripts/Makefile.build
-+++ b/scripts/Makefile.build
-@@ -40,7 +40,7 @@ include $(srctree)/scripts/Makefile.lib
- 
- # Make DT directory targets reachable for architectures with a DTS tree.
- ifeq ($(obj),arch/$(SRCARCH))
--ifneq ($(wildcard $(src)/boot/dts/),)
-+ifdef need-dtbslist
- subdir-y += boot/dts
- endif
- endif
+> 
+> In i9xx_pfit_check_scaling(), max_scale is passed to drm_rect_calc_hscale()
+> and drm_rect_calc_vscale(), which treat max_hscale and max_vscale as inclusive
+> upper bounds and only reject with -ERANGE when scale > max_scale. Setting
+> max_scale = 0x20000 allows an exact 2.0x downscale factor (for example, when
+> scaling a 1600x1200 pipe_src to an 800x600 dst).
+> 
+> However, in drivers/gpu/drm/i915/display/intel_pfit_regs.h, the i965+ scaling
+> ratio fields in PFIT_PGM_RATIOS are 13-bit 1.12 fixed-point values:
+> 
+> #define   PFIT_VERT_SCALE_MASK_965	REG_GENMASK(28, 16) /* 965+ */
+> #define   PFIT_VERT_SCALE_965(x)	REG_FIELD_PREP(PFIT_VERT_SCALE_MASK_965, (x))
+> #define   PFIT_HORIZ_SCALE_MASK_965	REG_GENMASK(12, 0) /* 965+ */
+> #define   PFIT_HORIZ_SCALE_965(x)	REG_FIELD_PREP(PFIT_HORIZ_SCALE_MASK_965, (x))
+> 
+> These 13-bit fields have a maximum representable value of 0x1fff (< 2.0). For
+> an exact 2.0x downscale, panel_fitter_scaling() computes 0x2000 (BIT(13)),
+> which overflows the 13-bit register field and causes a hardware state readout
+> mismatch in i965_pfit_get_config() -> i9xx_compute_pfit_dst() on
+> crtc_state->pfit.dst and pixel_rate:
+> 
+> drivers/gpu/drm/i915/display/intel_pfit.c:i965_pfit_get_config() {
+> 	...
+> 	case PFIT_SCALING_AUTO:
+> 	case PFIT_SCALING_PROGRAMMED:
+> 		hscale = REG_FIELD_GET(PFIT_HORIZ_SCALE_MASK_965, ratios);
+> 		vscale = REG_FIELD_GET(PFIT_VERT_SCALE_MASK_965, ratios);
+> 		break;
+> 	}
+> 
+> 	i9xx_compute_pfit_dst(crtc_state, hscale, vscale);
+> 	...
+> }
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261019135309.23578-1-ville.syrjala@linux.intel.com?part=15
+
+-- 
+Ville Syrjälä
+Intel
