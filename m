@@ -1,56 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.119
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792601486;
-	b=N9XZOZqfDQ/x9QqgyESmWhL2nflGmtmBvr78jVwzSA0vmrfNPcTJ0Ir+TTRUzNFxHdav
-	 fycA4PCqGg/Ja9SQrJXQ3LuCkVKlfI0xTnKRlcvfjbDipHzJWLlfv0+P0JbytKLxI4/bI
-	 YybbmD7cQKwNHASdiiTiypUo2Y8K1yCvzTJ68ROH0GTL1M/bU6ok0odPoC97S2vgc0xWa
-	 jDEAbwSYtpElqqHaI2DKxzjYE5W0GcjkgmPKWVftL/ci7juGlGC0aYULhUaefZ6bey1mn
-	 wRIrwP0cgiXII38HirrhqS5psJEsxbH1fMrEZkY+T634FBNHcbF0sgEaYg/1n1fxzqQ==
+	t=1792605369;
+	b=xOt8q20hG1xaEgJdIK38V9djO6dvI/ur/0UajnsRCc7sKWQevdii3Iv8wjTYXe4ohgnt
+	 UP7ais19AIhKSN4UFKhkmA4EKC7eu6yVt6fKn0myobZiBydg3WVZdHtCT1Qefz1uZJsAk
+	 orFMGX/Z4RljL4G7g4lKXFe4Vpqa+shyUB2yVNiGbidXGHLoiMQLHeaCg1axOcPGB8Vb/
+	 cZFS7cZDaUxMunCb2eLne+SRhck1C3S2exwtcM/WDyLG4K+L9CtXmOkgKAEoVTDvyzeFU
+	 i3Zw0ouIHs++xdIPCxHExQwpCRZ3c3lSb6DhNOZlCbdTq7Wi8uz9lZPbnIkJRP7pDgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792601486;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=hbdnG3aoWSjBlncyLDUr+YRS4FjLyxq83LeGwvz/hKs=;
-	b=SZgQKnEOBZU8c3NwmBcJAKvxhRE0ujQ0Evkhal8a+1T/rPq/hXyFOQVJf7qwzuqz1EWr
-	 y/46v/zz/2y5MnhWTOC08uDkAMR4tOkgkcftGOsHfbefYkxoUXgrvMfo3RJMQKP3Vo5xm
-	 ybUo4va4GH1o+GwkqhBJfMHw0E1QeD1x76db9lZVYy1jnJhC62gFZ07jWTTcK/zyuARPj
-	 6qick1F7fh6QSON6QkhoY2u+R8xluCfVDX8yF+lwnmPjS5vRaVIg+DxKM2VU5kR5Qo96F
-	 8kvFpjNRo1VbaUqb0eUuj0jwsLBsaax3tMczPBJm5Oxc/ff+kPt438POqOSzsfqq5FA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792605369;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:From:Content-Language:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=TqhmT3zzwgjEqD3sonXGsJG7hfDHBxIZreM+m1+TOGg=;
+	b=1Xk0uobyOzoeIqk27xdESny24PDuHOqMe8gF3YmxcZpr8PDKOAZ5ZCwku+rhVrrA+KSq
+	 LFp9WjS71JlUmWEZM/HKiJyLYFSJny6Ue4R6FMCnW76bjf9eDgFVlPqUMmF2O1/jkRB52
+	 bYD5Izxm/zjJcu7rnegWEoQ4H7+YoKZO/5cAY6lSYAyqTy9SX8B3A/EungVI5TmdJKt9h
+	 i4/s+uZwcJZ1+z5Q6ecRmmJ21Z1fG0PYJoHjMuz5dAzApWHUB1EXmxIscitB+ZGVdy9ht
+	 e4iNmhpCXuZujvhyUFHi6+xA5WqzXX8rnyPi0esxT69R60uORjTIJFuiW7eDOCFp1LA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YjXyREZc;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=p2iKCLQx;
+	arc=none smtp.remote-ip=91.218.175.119
+Received: from mta0.migadu.com (out-119.mta0.migadu.com [91.218.175.119])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5794606A31B;
-	Wed, 21 Oct 2026 16:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B44606A31D
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 17:56:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 58B44606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=YjXyREZc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5381F000C1;
-	Wed, 21 Oct 2026 16:51:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792601485;
-	bh=hbdnG3aoWSjBlncyLDUr+YRS4FjLyxq83LeGwvz/hKs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=YjXyREZcH8yb45lqeO/8RH9JKij2ZqO7EHrVipYnPOmBwYcw1pJy+Hz1HbSBmnptP
-	 Omw1hBypC9C3EQu7lVhxxJ4gaIoRCKJGAmc43bpG3S7xv/omZQFcIQKbwZkrt+rsR9
-	 mJeDlyM4J+8FVBoBoU4AxR1+pX4xOffZSaXt2YvwGNI8AR3C6EQbFVABCFgxeSQRtr
-	 ETg3g/WRdI4zIVPAimBBU27S3DxO7J8Uw49ovHhwSQp4qJd1tY5tHeY3s/iwoAb8Yn
-	 P5Yn7qovs6KbGaCmtO7LAanMnUu3H4i9/Ut3LlE+/Z2RTOhvPOt59YTjM/z30O+i9i
-	 D/x/VjI4hD2Fg==
-Date: Wed, 21 Oct 2026 17:51:22 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Xincheng Ji <jixincheng@ultrarisc.com>
-Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
-	robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v4 7/7] riscv: dts: ultrarisc: Add Milk-V Titan board
- device tree
-Message-ID: <20261021-badly-issuing-847ac366c9b9@spud>
-References: <20261019-ultrarisc-dts-v4-0-3979747cda2e@ultrarisc.com>
- <20261019-ultrarisc-dts-v4-7-3979747cda2e@ultrarisc.com>
- <sashiko-outbox-176776@kernel.org>
- <179246063943.3442927.10941907832509473109.b4-reply@b4>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=p2iKCLQx
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=uJr1MDyW1DaFhj9hIHiQ+HWYF6EIfeHGqPHiC+1ZAzk=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1792605365; v=1; x=1793210165;
+ b=p2iKCLQx+RXrIxj6DpCXojAT80roQ262u8/Yp/doEo8dlXU83BTOIdzZUPtMPOdykhNhcVjF
+ yW9WB9/Vz8oMcxHoH0Rm7thh7TxtkDXZ6Fs6gzab285KpzhRfzLQulAAYbY7TPufUZ7GD39M6zy
+ 29QIG76t9+YshQOJP+Nuy9fQ=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 0f8ee1d09eff9576;
+	Wed, 21 Oct 2026 17:56:05 +0000
+X-Mizu-Trace-ID: 0f8ee1d09eff9576
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <131319e8-7f92-4297-a07e-fc97a094e3a6@linux.dev>
+Date: Wed, 21 Oct 2026 10:56:02 -0700
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,73 +58,126 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6HsWZr+ABwcYqoMX"
-Content-Disposition: inline
-In-Reply-To: <179246063943.3442927.10941907832509473109.b4-reply@b4>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/2] tracing: fgraph: use scoped_guard() for the task
+ list walk
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-trace-kernel@vger.kernel.org, bpf@vger.kernel.org
+References: <20261021174406.2891598-1-vineet.gupta@linux.dev>
+ <20261021174406.2891598-3-vineet.gupta@linux.dev>
+ <sashiko-outbox-180533@kernel.org>
+From: Vineet Gupta <vineet.gupta@linux.dev>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-180533@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---6HsWZr+ABwcYqoMX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 10/21/26 10:53 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] tracing: fgraph: mix of scoped_guard() and goto in alloc_retstack_tasklist()
+> --
+>
+> commit 7d59298fba17927bc12b63b0da1c66b0d138332a
+> Author: Vineet Gupta <vineet.gupta@linux.dev>
+>
+> tracing: fgraph: use scoped_guard() for the task list walk
+>
+> This commit replaces the explicit rcu_read_lock() and rcu_read_unlock() pair
+> in alloc_retstack_tasklist() with scoped_guard(rcu) and removes the unlock
+> label by jumping to the free label on the -EAGAIN path.
+>
+>> diff --git a/kernel/trace/fgraph.c b/kernel/trace/fgraph.c
+>> index 4c74f1a15ad48..bbf6e4e2da2d4 100644
+>> --- a/kernel/trace/fgraph.c
+>> +++ b/kernel/trace/fgraph.c
+>> @@ -1057,32 +1057,31 @@ static int alloc_retstack_tasklist(unsigned long **ret_stack_list)
+>>   		}
+>>   	}
+>>   
+>> -	rcu_read_lock();
+>> -	for_each_process_thread(g, t) {
+>> -		unsigned long *rs;
+>> +	scoped_guard (rcu) {
+>> +		for_each_process_thread(g, t) {
+>> +			unsigned long *rs;
+>>   
+>> -		if (t->ret_stack)
+>> -			continue;
+>> +			if (t->ret_stack)
+>> +				continue;
+>>   
+>> -		rs = kmem_cache_alloc(fgraph_stack_cachep, GFP_NOWAIT);
+>> -		if (!rs) {
+>> -			if (start == end) {
+>> -				ret = -EAGAIN;
+>> -				goto unlock;
+>> +			rs = kmem_cache_alloc(fgraph_stack_cachep, GFP_NOWAIT);
+>> +			if (!rs) {
+>> +				if (start == end) {
+>> +					ret = -EAGAIN;
+>> +					goto free;
+>> +				}
+>> +				rs = ret_stack_list[start++];
+>>   			}
+>> -			rs = ret_stack_list[start++];
+>> -		}
+>>   
+>> -		atomic_set(&t->trace_overrun, 0);
+>> -		ret_stack_init_task_vars(rs);
+>> -		t->curr_ret_stack = 0;
+>> -		t->curr_ret_depth = -1;
+>> -		/* Make sure the tasks see the 0 first: */
+>> -		smp_store_release(&t->ret_stack, rs);
+>> +			atomic_set(&t->trace_overrun, 0);
+>> +			ret_stack_init_task_vars(rs);
+>> +			t->curr_ret_stack = 0;
+>> +			t->curr_ret_depth = -1;
+>> +			/* Make sure the tasks see the 0 first: */
+>> +			smp_store_release(&t->ret_stack, rs);
+>> +		}
+>>   	}
+>>   
+>> -unlock:
+>> -	rcu_read_unlock();
+>>   free:
+>>   	for (i = start; i < end; i++)
+>>   		kmem_cache_free(fgraph_stack_cachep, ret_stack_list[i]);
+> [Severity: Low]
+> In kernel/trace/fgraph.c, alloc_retstack_tasklist() now uses
+> scoped_guard(rcu) while still jumping out of the guarded scope via goto free
+> when kmem_cache_alloc(fgraph_stack_cachep, GFP_NOWAIT) fails and start == end,
+> as well as jumping to free from the earlier pre-allocation loop:
+>
+> kernel/trace/fgraph.c:alloc_retstack_tasklist() {
+> 	for (i = 0; i < FTRACE_RETSTACK_ALLOC_SIZE; i++) {
+> 		ret_stack_list[i] = kmem_cache_alloc(fgraph_stack_cachep, GFP_KERNEL);
+> 		if (!ret_stack_list[i]) {
+> 			start = 0;
+> 			end = i;
+> 			ret = -ENOMEM;
+> 			goto free;
+> 		}
+> 	}
+> }
+>
+> The documentation in include/linux/cleanup.h notes that goto-based cleanup
+> and scope-based cleanup helpers should not be mixed within the same function:
+>
+>   * Lastly, given that the benefit of cleanup helpers is removal of
+>   * "goto", and that the "goto" statement can jump between scopes, the
+>   * expectation is that usage of "goto" and cleanup helpers is never
+>   * mixed in the same function. I.e. for a given routine, convert all
+>   * resources that need a "goto" cleanup to scope-based cleanup, or
+>   * convert none of them.
+>
+> Also, on the -EAGAIN path inside scoped_guard(rcu), start == end is already
+> true because all pre-allocated entries in ret_stack_list[] have been consumed,
+> so the cleanup loop at the free label runs zero iterations on that path.
+>
+> Should alloc_retstack_tasklist() avoid mixing scoped_guard(rcu) with goto
+> free?
 
-On Tue, Oct 20, 2026 at 09:43:59AM +0800, Xincheng Ji wrote:
-> Hi,
->=20
-> On 2026-10-19 08:08 +0000, sashiko-bot@kernel.org wrote:
-> > Should the label properties be dropped from led@1 and led@2 here?
-> >=20
-> > When the PHY driver probes phy0, the call chain:
-> >=20
-> >   of_phy_leds() ->
-> >     of_phy_led() ->
-> >       devm_led_classdev_register_ext() ->
-> >         led_classdev_register_ext() ->
-> >           led_compose_name() ->
-> >             led_parse_fwnode_props()
-> >=20
-> > checks for the deprecated label property first in
-> > drivers/leds/led-core.c:led_parse_fwnode_props():
-> >=20
-> > 	if (fwnode_property_present(fwnode, "label")) {
-> > 		ret =3D fwnode_property_read_string(fwnode, "label", &props->label);
-> > 		if (ret)
-> > 			dev_err(dev, "Error parsing 'label' property (%d)\n", ret);
-> > 		return;
-> > 	}
-> >=20
-> > Because led_parse_fwnode_props() returns early when label is present, t=
-he
-> > color and function properties on led@1 and led@2 are never parsed and a=
-re
-> > completely ignored at runtime.
-> >=20
-> > In addition, Documentation/devicetree/bindings/leds/common.yaml depreca=
-tes
-> > label for new bindings in favor of color and function.
-> >=20
-> > Would it make sense to remove label from both nodes so that the LED core
-> > uses color and function to compose the standard LED names?
-> >=20
-> Thank you for the review. I understand that label is deprecated in favor
-> of color and function.Since the LED core still supports parsing label,=20
-> would you consider removing these properties necessary for this patch,
-> or more of a naming convention cleanup?
+This has been discussed before and it was agreed this is fine.
 
-You're asking a bot that will never reply to you.
-
-I'd say that if the analysis provided is correct, then yes you should
-since the deprecated property overrides the replacement properties.
-
---6HsWZr+ABwcYqoMX
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCatjtigAKCRB4tDGHoIJi
-0qdHAQDJg7mVMZXbo3JBiVLR3Y/nJfObiBpvzM2Aksowbu4v5wD+Kki94ll+8U+k
-TLLC37znTzsBVhizgYQFByMjNA36Gg8=
-=dTSb
------END PGP SIGNATURE-----
-
---6HsWZr+ABwcYqoMX--
+Thx,
+-Vineet
