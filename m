@@ -1,47 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=45.249.212.51
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792548425;
-	b=P+Hpdt9HMCiR4pBbnPQ1o77yPWWZlZEYnItG4jN0ylYys88MwWycPh2A4m0f8OdIdLg0
-	 Aesnv6zDYBcLAYVCHwsuZM7ICj4cwFFzyH+/5E8JWx89syeNSPxXIwmi5yL31WTYvEluD
-	 ypo33Q84S9U9yMM8SKaZOuX8PTsZktQuXVRw79n9uFl4i1ba4nd989MFGlcmlS3BwlNxa
-	 SnmKKTvDxcp4Jz05CWZpBePPf6vXokJs4xdL5lCEp3eiYwWpB7/rsL/HaQhcI/j+JHZAH
-	 anTyPSovkB8xf+9FNTGb+b9ILjxDapr1IH11JnQfeJe4itdq3237JJ3l/Xg0w6izxjw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792548425;
-	h=DMARC-Filter:Received:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-CM-TRANSID:
-	 X-Coremail-Antispam:X-CM-SenderInfo;
-	bh=l7KFQLIaTwlSBsukka0meVUJRSxCzsTjMjFc9CnbXDc=;
-	b=kwLDX8q7pEPBTXSno6rQUSkCbeXPDCupxZufwAkH+yThWMzeAhijLEl6to3hamMSbs2u
-	 k0BOVfIiqZNwfvBGQy2yqD/uKFPlnNhnFT9oeCaQD+5aLEZHwRmSy/w/jWXMcESvnpSET
-	 YyW5XajkJznC4lSYHKS8gTLldw4WOfsW887g+6eziXmQMUuxgXMWLog+hTF0nc+3g2Rzd
-	 kXy0QQIvcTURDxAJZPsHiHAE8AeI5N/Rw/nE4rZBiTnFL3pxmJWZWo4A53rac7uIAO0H/
-	 28DCIFpcByftHAFEgf1kynMLpHcOMkVsssijON0F1d9EEr3lNsxWWIHfJRt40emQ9IQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=huaweicloud.com;
-	spf=pass smtp.mailfrom=huaweicloud.com;
-	arc=none smtp.remote-ip=45.249.212.51
-Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.30
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792551490;
+	b=a/AFJQNRJ6zs3ItIusgZjB7eB+v1NxtzGzs03GOH8S4PieFur4oVPXcddCrlGh2yCwmN
+	 BmHJAkjdub5bCfxRoGZY8lqoXZCVNBgzng2qwisKshGhZEDOp1Sg7yBRZsoFyYeVyNQb8
+	 1B97yBGfP57OxOW8ii+Q8f8xxTWri7qloMfQRmJ1uvSQNn2PQ+qyQK2aw0O164JwWmT0i
+	 2dm4w3aRIcuOvUBZBhNqPHj6abnE6oH5mfTo1avE29R+WoigE06Qoy/Y86ydpvUj2kZzA
+	 DvHWTQb0T1irpFeJbI0SvpCOu96JvmCCDXzzEqQba9tsNoKNXhjwElL2c1Se3F9jysw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792551490;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:
+	 Content-Transfer-Encoding:Content-Type:Date:Message-Id:Subject:From:
+	 To:Cc:X-Mailer:References:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:
+	 X-MS-Exchange-AntiSpam-MessageData-1:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=nMe6iPw09X8BBNWrQSytP27VQmOwrWaqqVPVEB4W2SA=;
+	b=CSbqqp/PTtFFTPgLMT5Tjc2LSyU14YeegCua35rxB/xoDEjO/YPvijuA8LZH9hHf35wo
+	 qmloQ+vZy0vub+VlCZY4O1X3JrGcmu4gqA6jZQeg7ZnLkjlsIFboxTOp22X3eUAS/6jca
+	 5VYRLxmPnb6uDrwaP2dZnLZU0/ei4nlgHzXwTSvbpTtU3XwYZwSE11+XFhAcD35bT0ZaR
+	 +icWTRQ+5zTdQlppxm4myTp7eKV/4AvtepTUbjP+Msu68pTZtbDJ6SZVkipv6oNDMf3Hq
+	 jkamEoaqO5CBp7QkqQk7yxM8zfkdscN3F9bU6M/yppLd1GJvEnUZdQSeHHhUhT7WlfQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=FoXD2s5O;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.30
+Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013030.outbound.protection.outlook.com [40.93.201.30])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD035606A321
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 02:07:03 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BD035606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.19.163.170])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4j8Xhx5BHczYQtnZ
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 10:06:57 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.75])
-	by mail.maildlp.com (Postfix) with ESMTP id 98C7E40561
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 10:07:00 +0800 (CST)
-Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP2 (Coremail) with UTF8SMTPA id Syh0CgD3xOpEHthqsiLhBA--.22682S2;
-	Wed, 21 Oct 2026 10:07:00 +0800 (CST)
-Message-ID: <d27f6108-fe6d-4d71-a601-b964e10e7f77@huaweicloud.com>
-Date: Wed, 21 Oct 2026 10:07:00 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74BD9606A319;
+	Wed, 21 Oct 2026 02:58:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 74BD9606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=FoXD2s5O
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=x2LobR6wJnQ8Drqb6Y9tngkGDd87wUsy8VZN3xGf9wdqpiipI9ZJ8svYJYOABfDQWpFXPOXwHuT1W5mh1vLAOTWmJUP3kxt8uDOEWlMdGd7EwGme9e2UZTW5oT9fwinUSBrbcNiZCh8W4ehDZmmCIW5i9ygVZsw9P6dfgU2/4bzFaP/QuDaCbhQEogtXb3mmNJsExYrK9LkvB7wbKBHrSVMQCtooMZKj4SsIIoTMfsyjAFp+NE1oDPZ2IMQHscfm6Ep33dbEs2/N4zr53m+2Hdjh/uPK3CXia4PdSm2Rsz9VgqhxLAFx1hGv+jsjNizsc8XLsVkIZ2HCBb503o5mug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=nMe6iPw09X8BBNWrQSytP27VQmOwrWaqqVPVEB4W2SA=;
+ b=fWeMYArPIl0BtjJtc0gCEHODKF4Q9OrcqyhxqUXONws/zM5sPjQQBpU8kez/IwgyCNlBA8otkXaMA0MqNB2K8sDbSqPQ/P1U/lxf37l6hqBJcYRbVOWcN26eJnoPuyxYfqFJlJip8ZnYn5JhIpO+e2PVc1iGRGQ48oRNiEEvKWfVJZrj4NBjlnrepRotvVdlhkISK3hYWdlUabkkaKlGy/JGBAWKF5fCjAYmYdZFTJ1el1pNFmUEwjtdcUebsGkHheEvPl/yBvG82ZqMNRvn5jz27urGKOjpY3q9w9aGL5uMhHkXjPAxTYshaBtXDIae4Y1eT4dmKvlpV9HmxxPirA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nMe6iPw09X8BBNWrQSytP27VQmOwrWaqqVPVEB4W2SA=;
+ b=FoXD2s5OIct3UYiDnVfgsa8MxaF1wLyTVbfZIHcVfVXMT8AREeOTUHG7eZopHdq+NhhAP6wA2kKIv7eLPcOFo1GXYT85/5ojRHEnKVyaJyNNKghku90RVo7g1uBgYdg77eOR/3cFbAoez5ZAWNntvJGFsykD6nD0X9t4kcTqz05b0eRyTCdUtl9GEpIfTGoLzuxYwnYbBzEV4nlxYPsLYjITSiWMoQCl1G1ooKUX+SKB84t+52nG7mP1QHbXRC6MqwP6k+Oo649fUMKACF5SLtnj/g9+lqY3Z15YE0kRUv28QUNFpK1bbyJrtMrEYUf6zwhuFIla/sIS/xXvA9LBGQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DS0PR12MB6413.namprd12.prod.outlook.com (2603:10b6:8:ce::10) by
+ PH7PR12MB7456.namprd12.prod.outlook.com (2603:10b6:510:20f::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Wed, 21 Oct
+ 2026 02:58:04 +0000
+Received: from DS0PR12MB6413.namprd12.prod.outlook.com
+ ([fe80::e82a:6673:4142:37fa]) by DS0PR12MB6413.namprd12.prod.outlook.com
+ ([fe80::e82a:6673:4142:37fa%5]) with mapi id 15.21.0522.017; Wed, 21 Oct 2026
+ 02:58:03 +0000
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 21 Oct 2026 11:57:57 +0900
+Message-Id: <DMA6GSC7REE4.1OL8XYR8JKJ3C@nvidia.com>
+Subject: Re: [PATCH v5 11/14] gpu: nova-core: gsp: cmdq: use consume_element
+ to implement drain
+From: "Eliot Courtney" <ecourtney@nvidia.com>
+To: "Alexandre Courbot" <acourbot@nvidia.com>, <sashiko-bot@kernel.org>
+Cc: <sashiko-reviews@lists.linux.dev>, "John Hubbard" <jhubbard@nvidia.com>,
+ "Danilo Krummrich" <dakr@kernel.org>, "Alice Ryhl" <aliceryhl@google.com>,
+ "David Airlie" <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>,
+ "Benno Lossin" <lossin@kernel.org>, "Gary Guo" <gary@garyguo.net>,
+ "Alistair Popple" <apopple@nvidia.com>, "Timur Tabi" <ttabi@nvidia.com>,
+ "Eliot Courtney" <ecourtney@nvidia.com>, "Zhi Wang" <zhiw@nvidia.com>,
+ <nova-gpu@lists.linux.dev>, <dri-devel@lists.freedesktop.org>,
+ <ojeda@kernel.org>, "dri-devel" <dri-devel-bounces@lists.freedesktop.org>
+X-Mailer: aerc 0.22.0-0-gc2f86b7abde3
+References: <20261020-cmdq-rpc-v5-0-dceeb8f360ec@nvidia.com>
+ <20261020-cmdq-rpc-v5-11-dceeb8f360ec@nvidia.com>
+ <sashiko-outbox-178822@kernel.org> <DM9QI47QSJ0L.2QMRVD4AP5WIV@nvidia.com>
+In-Reply-To: <DM9QI47QSJ0L.2QMRVD4AP5WIV@nvidia.com>
+X-ClientProxiedBy: PAZP264CA0018.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:102:21::23) To DS0PR12MB6413.namprd12.prod.outlook.com
+ (2603:10b6:8:ce::10)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -51,127 +106,123 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 13/15] perf annotate-arm64: Support 'adrp' instruction
- to track global variables
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-References: <cover.1792411435.git.wutengda@huaweicloud.com>
- <145ac934f72c090987c2e6d0be28b28972f843c7.1792411435.git.wutengda@huaweicloud.com>
- <sashiko-outbox-179232@kernel.org>
-Content-Language: en-US
-From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <sashiko-outbox-179232@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:Syh0CgD3xOpEHthqsiLhBA--.22682S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryDJrW7Kry5WF48Cw1ftFb_yoWrXry7pF
-	WDGFy5Gw42vF10grsIqrWfXFySga17GF1fKryDKF4IkFy2vrn3KF9Ika1Ygay7JrZxZw1U
-	Jan09rsrZF10ka7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
-	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
-	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
-	0267AKxVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
-	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
-	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
-	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
-	AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
-	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
-	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2
-	KfnxnUUI43ZEXa7IU1wL05UUUUU==
-X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS0PR12MB6413:EE_|PH7PR12MB7456:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8272a31f-8bfd-495c-6ffe-08df2f1f1fa2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|10070799003|1800799024|7416014|376014|366016|23010399003|56012099006|4143699003|11063799006|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	9mgQUh9I8RZFU71HQz8qaa7BFj1vsJnYU/QGMrw/sqgqGoESqRxfpnN9mM+m1/ZJZo8PWildA1bku+Dphn7E3KlyPMciLiyLiETTmRDaKcVMGyzsNEE7uyzb+QMvaevk9DV6bP7XiWbvWurlg7JytokK7SpRtbmCAGYmINa/TkO6b9puIfSPPgPz4zLPma7qQXAvBtXhDcy+tETjf3pB2MbWfRpsnWxlF/DGC4IqkZ55ZViShXNceMGQzT5CHGiO5sD/Z5QNNps+uHfQdVEfx3mq0HS93azBKPFp1MBDmm6CL2glspQt1STRezOMF33EOEpkf4Zx6KYh/d7WczER5k4tWfR9OZU45UXzvxETLhdtikWLL2VwfdaVRwp0vF/+RRSoJP1qGs5KX5e2NKmb7WYVbuhoMc5BNKwtzTJKIAF7x9X2t9Sk6aENFhlK8UhLm3Zor7e4PNww0l1pvNAweyNqdAbdCQn7ZP1ZB831ow7afEDnMbH62PwyaaKCOCyCzdZQXga/pGuAPFH9Ul1PjXMiIAji3zAGLiOJNAOdSX+dJXqlZsrwRXIhkNnblXLJ2pGLyh7nPSV3A7ZhMt+01nwwEeaCbVgxzxhMs3unuuC5mARkY9CeRfkYb3MOrnqChpVvtYjKN4XUYvWnxFoZjd3oitAQTvjOPspgovGq1qU=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR12MB6413.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(1800799024)(7416014)(376014)(366016)(23010399003)(56012099006)(4143699003)(11063799006)(10067099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?L3lHL0M1RjFqTjRpN1lRVmxGQSs1dURlRGNDRmtranhBZEx5eDFNQkY3N1hN?=
+ =?utf-8?B?aU5mWFV2d0ZLMGxRK0FvVDFSRzdxeWZJRDZ5WU0yWEJXNFhPS014WEJad1Ju?=
+ =?utf-8?B?RTM2cEZ1TFV3b2psS2ZqVjY5dnFPaUxkQU56dUJUNVVZWTJPdWdIb0F3OTRP?=
+ =?utf-8?B?Ulc2RUVWRFhWaDNGa25RN0NMZVl4alc1SW5FZjFDOXo3N2Q1MlJ3UXhXdng0?=
+ =?utf-8?B?aGZzczQ1cFUwK2NiWkRnZEdhc1F2NlRCUVJzazc0Nm94M3RHVW5xZWd4RGlx?=
+ =?utf-8?B?QllLY2Uwc28zdjJ2L3FuLzU5WFR2QnQvd0svcktOS2xTeE9LKzlOUk41U29H?=
+ =?utf-8?B?UmtENUhhYU8rVmo3cWYrVWZLZ1VoMi9VdlZBeS80WUI0TDVaVTBKbGNHa2ly?=
+ =?utf-8?B?QlBlUjNRcE8xQ1lmREgwVWZOWmdjTjFqajZOYWJ1bUg1aWVXelZjZDA3Qk1F?=
+ =?utf-8?B?YzJ2OEVZRU1wZlAzeGtJWnU4ZTR1YVhvTnRROHFhSzkyYXF2ZUp6OG9UVTJq?=
+ =?utf-8?B?T2cvREtNaVVWZk15bGJ2YWFta2VKeVB5SnV5ZDlhOWRRaW9BSWtLMEVMaUtV?=
+ =?utf-8?B?N21hNExRbnVHakdtNnJKSUtEak5pSnByNnVFbm1UaXFrYlBkTEtMOXI4SGJm?=
+ =?utf-8?B?ZHVHZk80OVNHMTJ6YmZ5V3prS1hIWWcvb1crczVyOHlzRTNIemFya2l3Wis1?=
+ =?utf-8?B?ZHRTbW1Ta05YN254Yk9XNU5LQXNQTFVNaTNSTHI0VWY5Umkzb3plSWxGK3Zs?=
+ =?utf-8?B?eTBTMUVFdkE5aitoMWJaK0dEN0QrVjBhYmdoa3RxVEl5bDhXbzMzWjRZSXBM?=
+ =?utf-8?B?L2JFTk9pV0p0eHNxUFBDbWovT2ovY25PTldzY0VsVjJtcTRxU0Q4SjJhUEV1?=
+ =?utf-8?B?NEVFbUpBSDNkNjkwVk9NS2V2SEhDTDczUjZPK1BLRFRZWVdBa0ZPa2twa0lo?=
+ =?utf-8?B?WVFyMW92Z0xwM0tOWU5ubGVoSktiUEdDUWcyQ3ZVT2JvSmxGZ1NJVHhjZmhS?=
+ =?utf-8?B?YjIzWHRoQ1B1ZjE2OUt0cXMxbzZLRUJSRlpSNk5peW5KSjdrMnNrdzVIMG1Y?=
+ =?utf-8?B?cmxocDRiUjZxeCtZZHRMQ2NZUEhiSjdseUVraHdqbzdoZkNEWkhhK2JienBI?=
+ =?utf-8?B?bTFmTS9sOXFaeWFicktIci8xSkJsQXEyYUdFYXR0bFZuRmN4UVlxbTF1UmRM?=
+ =?utf-8?B?UVlzTG96UUZCM1ZyM01sUlhoSVdpeFhpcXpUb3VYUFJnUm50UStnUlN5M2dq?=
+ =?utf-8?B?TmppZDV6LzhwbWVhREZJZGxnek5LZ1ZBVzR4eXU3M1NxRmZWOHhRcUFFQmJh?=
+ =?utf-8?B?ZnlRbmFUUGZyVkwvSGU3WnZxc2J1bG9sOUpKaHcveDZYdkdSSnJtdVlzbXE2?=
+ =?utf-8?B?WlFrb2d3bTBGMW43cnRMQTN2UEkraExiOGl5RGdsY1lKZDJPb3psdzYzaWwy?=
+ =?utf-8?B?UWc0TWdZT2tsOGkzRXE1RDg3NytSY09tR0JWVmRpVGxMNjJ2N254ZlB5cXp4?=
+ =?utf-8?B?K1c4VzFNbGVhQm14MExTdld1VGRodXYwTVVFemVrRmlEQmdMNmJncTFnLy8v?=
+ =?utf-8?B?eHIwMVBkQmtpRHdmRFNRQVEydyt0UnV0WGlWY2JITTcyM0czOElOZndxSTZu?=
+ =?utf-8?B?dUFGMEFPSEpVMW9SRWtLdWR6TGlQODgzTE41aDJMbVhuakV2VUVWRWVSK3FC?=
+ =?utf-8?B?Ui9RTXh5R053R0RUYWROcG5DNzdRcTQ4d0E0VmM1S2dOYnhCaVFuc3NTZXZG?=
+ =?utf-8?B?c2FRamp6OTNKeGxELzBzdkZIeWhQZFFxUmFnNTlJYTdtTGhoR005YmoyaGlV?=
+ =?utf-8?B?dVNZNmdGQVFGcHU1K1lHQk9CVDNHeXJ2YURvTDZ3cVdRSk1sT2VkSzVFNzd0?=
+ =?utf-8?B?ekdTWGxvcEQ0VDJCTFlDTlp5M21hdkdNV2d4RURsMXc2VGQrdS8wTStSUndC?=
+ =?utf-8?B?Ull0QVdhSmNTT0IyNWxyN2pLM0hvelo3UmR3VHZBWG8yNXFoMnBMWk1JdHl4?=
+ =?utf-8?B?a0ZQU2RLbVFKQ3I3MXU0eTJsS1VwS1RkSFgyZTYveHZvYUFZOVM2TWRrYWNX?=
+ =?utf-8?B?UXBuaUpGVE9tdW83S3FKZE1ldnNaN1V6ZGM5Y05RUkk5NmQ5NHZ3Qmh5WWkz?=
+ =?utf-8?B?Z2JZYmY4ZWFDcmE5SnlNYlpzcGZ6cW9kRFNuVGluRW14cFlKWUUrSldGYXQv?=
+ =?utf-8?B?RGhJbXNZSkZQR3RGY1FYR2lIZk9xY1RRTkVvbXNWNklsdzJtUVlWVXozNGc5?=
+ =?utf-8?B?eGtHbkdoNUd0cHpvMnFkOWN1eDRKQ0J4VkxncGs0eVk2NjN4Zmt6ajdIZlZn?=
+ =?utf-8?B?bnVrUWdPVTNyUzczZ210dWFEeDF5Mm5RR1pBY2ZFOGErUzNyVFFHS1B4WXd1?=
+ =?utf-8?Q?6xzzYa+MS35K+aNoijEaaTkHVmyS4ZTwYElsLmnoIVhrN?=
+X-MS-Exchange-AntiSpam-MessageData-1: d4orOMul9TDatg==
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8272a31f-8bfd-495c-6ffe-08df2f1f1fa2
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR12MB6413.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2026 02:58:03.2658
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7zIjybXVY2+YFqqTRIVu7gnYxonwXbxQSdfpoKpDiaEdsSbptYjEebgkOl2Cm19lnw3a7K9AesY5B7fi37zpew==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7456
 
+On Tue Oct 20, 2026 at 11:27 PM JST, Alexandre Courbot wrote:
+> On Tue Oct 20, 2026 at 7:18 PM JST, sashiko-bot wrote:
 
+[...]
 
-On 2026/10/20 23:15, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] perf annotate-arm64: adjust_reg_index_state() drops global addr writeback
-> --
-> 
-> commit 329d013c0c7d0b8be3fe8f0ec1e0f669451e6cbd
-> Author: Tengda Wu <wutengda@huaweicloud.com>
-> 
-> perf annotate-arm64: Support 'adrp' instruction to track global variables
-> 
-> This commit extends arm64 data type profiling to track global variable
-> addresses calculated via page-relative adrp instructions. It introduces
-> TSR_KIND_GLOBAL_ADDR to store the page-aligned base address and resolves
-> the symbol address and DWARF type on subsequent add or load instructions.
-> 
->> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
->> index 61df9c4f48776..bd060a823b765 100644
->> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
->> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
-> [ ... ]
->> @@ -722,6 +722,33 @@ static int propagate_load_reg_state(struct type_state *state,
->>  		return 0;
->>  	}
->>  
->> +	/* Or check if it's a global variable */
->> +	if (src_tsr->kind == TSR_KIND_GLOBAL_ADDR) {
->> +		u64 ip = dloc->ms->sym->start + dl->al.offset;
->> +		u64 addr = src_tsr->imm_value + reg_offset;
->> +		int offset;
->> +
->> +		if (!get_global_var_type(cu_die, dloc, ip, addr, &offset, &type_die) ||
->> +		    !die_get_member_type(&type_die, offset, &type_die))
->> +			return -1;
-> [ ... ]
->> @@ -991,14 +1018,16 @@ static void update_add_insn_state(struct type_state *state,
->>  	if (arch_get_reg_offset(dloc->arch, src, sreg, state, false, &reg_offset))
->>  		goto add_non_regoff;
->>  
->> -	if (src_tsr.kind == TSR_KIND_CONST) {
->> +	if (src_tsr.kind == TSR_KIND_CONST || src_tsr.kind == TSR_KIND_GLOBAL_ADDR) {
->>  		tsr->kind = src_tsr.kind;
->> +		/* For 'adrp + add' pair: resolve the full global variable address. */
->>  		tsr->imm_value = src_tsr.imm_value + reg_offset;
->>  		tsr->offset = 0;
->>  		tsr->ok = src_tsr.ok;
-> 
-> [Severity: Medium]
-> What happens when a pre-indexed or post-indexed load or store instruction
-> (for example, ldr x0, [x19, #0x40]! or ldr x0, [x19], #8) uses a
-> TSR_KIND_GLOBAL_ADDR register as its base?
-> 
-> Both update_load_insn_state() and update_store_insn_state() call
-> adjust_reg_index_state(), which adds the writeback offset to tsr->offset:
-> 
-> tools/perf/util/annotate-arch/annotate-arm64.c:adjust_reg_index_state() {
-> 	...
-> 	if (arch_get_reg_offset(dloc->arch, op_loc, reg, state, true, &offset)) {
-> 		invalidate_reg_state(tsr);
-> 		return;
-> 	}
-> 
-> 	tsr->offset += offset;
-> 	...
-> }
-> 
-> However, TSR_KIND_GLOBAL_ADDR stores the base address in tsr->imm_value,
-> and all consumers — propagate_load_reg_state(), update_add_insn_state(),
-> and check_matching_type() in tools/perf/util/annotate-data.c — compute the
-> target address from imm_value + reg_offset while ignoring tsr->offset (and
-> update_add_insn_state() resets tsr->offset to 0).
-> 
-> Should adjust_reg_index_state() update tsr->imm_value (or should the
-> consumers include tsr->offset) so that pre/post-index writeback updates on
-> global address registers are not lost on subsequent instructions?
-> 
-> [ ... ]
-> 
+>> In rust/kernel/io/poll.rs:read_poll_timeout(), when the condition is
+>> false, the timeout check uses a strict greater-than comparison:
+>>
+>>         if start.elapsed() > timeout_delta {
+>>             // Unlike the C version, we immediately return.
+>>             // We have just called `op()` so we don't need to call it ag=
+ain.
+>>             return Err(ETIMEDOUT);
+>>         }
+>>
+>>         if !sleep_delta.is_zero() {
+>>             fsleep(sleep_delta);
+>>         }
+>>
+>> Because op() only reads two u32 indices from coherent memory in RAM, if
+>> the monotonic clock has not advanced by at least 1 ns between
+>> Instant::now() and start.elapsed() (for instance on architectures with
+>> coarser timer resolution or under virtualization), start.elapsed() is
+>> Delta::ZERO. Since Delta::ZERO > Delta::ZERO is false,
+>> read_poll_timeout() falls through to fsleep(Delta::from_millis(1)) while
+>> holding the Cmdq mutex (in paths like GspInterrupt::handle_threaded() ->
+>> Cmdq::drain() and Gpu::new() -> Cmdq::drain()).
+>>
+>> Would it make sense to keep the while
+>> !self.gsp_mem.driver_read_area().0.is_empty() loop condition around
+>> self.consume_element(Delta::ZERO, |message| message.log(self.dev))?
+>
+> Mmm, that's an interesting one, in that I am not sure there are any
+> concrete implications but I'd like to fix it anyway.
+>
+> I was thinking that maybe we should add a special-case to
+> `read_poll_timeout` so it returns unconditionally after checking the
+> condition once if `timeout_delta =3D=3D Delta::ZERO`, but doing so would
+> make the `sleep_delta` argument moot so I guess that's not adequate (and
+> the current behavior is technically correct). So I think I'll
+> special-case nova-core's `wait_for_msg` instead.
 
-The compiler does not combine them this way. The purpose of adrp + add is to
-compute the full address of a global variable into a register, so that the
-variable or its members can subsequently be accessed via [reg, #offset]. Once
-the address has been computed, there is no reason to use a pre-/post-indexed
-writeback on the same register, that would clobber the just-computed base
-address and misalign all subsequent accesses to the global variable. Unless
-there is some special compiler optimization?
+Personally I don't mind the special case in `read_poll_timeout`.
+If you say, I want the timeout to be zero and then it sleeps, that
+sounds like wonky behaviour to me. I think it feels weird to have
+this special case w.r.t. `sleep_delta` only because we are using
+constant values and that's a common use case. TBH I think it would
+even be fine to change `start.elapsed() > timeout_delta` to
+`start.elapsed() >=3D timeout_delta`, then it's not even really a
+special case. I could try sending a patch for this.
 
-In any case, I will keep it unchanged.
-
-Thanks,
-Tengda
-
+I'm also fine with special casing `wait_for_msg`, but personally
+(maybe) sleeping when you set timeout to Delta::ZERO sounds busted to
+me.
