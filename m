@@ -1,115 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792576829;
-	b=uQM1MLK6Z69qPLLzskMFWfdnd77w0nt85iSyqR2QnpZ+iyRdvDTNbCY/Eqb061/IpZGK
-	 h8z/uoJpn4QtkC6iertsDeVqvi4ArApgEMWDQHSC7N3Y10Lb4eh/08kHeDil6XsfiorCG
-	 M+JFCX+Qx0Hp1pJpau3HOTFTpVfHdcU545fTyJgVpKfYURQSelxErEdC5Vx1cpfT5Ky6K
-	 ts2vJERRYnJmkG+J26MWiERLHEcgwQAB0H5ZcN3gFQ3UvGWh3umFutmyeh92T5CFaBzAu
-	 xmjm0EMld+9Y//x7ST3o0dDbETor0daX/Hsfb9TTH2LP6e8+7qc3v0cjwDfja6y4utQ==
+	t=1792576924;
+	b=FEwy45IKp19c+sYQJZHSP8zdSrJtnixCJvROrPVy1pwdixx/d0YEwdhJgLc7HKizhcPh
+	 7yfgHPXTSTVXvdOgxIOCtX2BGD3B9BiOka/CK1y6cZNktPfti718K8c7ZiSjTlDZPJc1O
+	 uOUm6AKsPeby+Pe7OeJyEYx8cDMUrp9A+nQN7MB8WalIiIdeCztD6JiVGfd34pY8hmZOI
+	 CVGv0xDr/hOX/6JV52i5DRE2bkxM7oMbxQWmYDgH5IZTOCo2AwS/nN0rS+XZ5xNVcFXxl
+	 hRkNYSOnAxX+K8hoj2Td2SjuRIzfVc6MdVN6ue9aUXZbExjoKfUTu1w17C+PxzajYzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792576829;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=a4qQqva7hpZUYX8lZvn/7hBg+bhNuRpKHD2wnwR6pQg=;
-	b=y9SPdaf1wCGQqdYAIs19TRyyqWe9mQouKGXQz9ey0lP7J8fmfJ0mtGudTvc1LurDO/dl
-	 oaOrAC9VluCJ+HOXlGKzpaLtcAMydZ7birN45jUdkPEZxFUUHI7x+y9YmsoM+KxxcXamV
-	 FQu/Tgv2xXWz13gL1OyIrDAO2jb8vmspviWWDEz693Ep1YiTNVBHKENO4hwucBGcDLJND
-	 OFsQI9mcvs/VXcR2P4lq1VZEUnnjK58oMAKV5cmscrOA5Rrr6vhY5EhTzvzY6HhCwljkU
-	 9z7v0oVc2T1pQKIRfDRKg2DQ88Wr4rpLPW0ecOCxi+AaXkNQ1lN29OHHY4wLE5L3e7g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792576924;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
+	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-GUID:X-Proofpoint-Spam-Info:X-Authority-Analysis:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=CJOiUgrxjc+64U0G2mkIKbgMGJKdd6rz8j2md+6Y6n0=;
+	b=iPa8w4kjQTWyxKVLF3xEViL4Tkgb5Koa+Zlou0GWU+7hP08/oqOh8nuOaYOMxeI2Sl1I
+	 4xYYhnKIgqzC4aoqzENy8Tg7J/vDRezcEg8+i7SBV+xUoZAtamtxQ9ls3j5eXfh7fNhGx
+	 xL4naPKp+MHy/XjLoh1lw+yoracUxU7Q6V0JkQIgucTc/URqId8A2X9roHYPqSwhVsDv4
+	 IAV5k7JPZ0sK7fcQ6iNotjA5MW+cD/7NQYlkKj+OXqlKrJA42+qKy13yRs3HA1b7BtnIg
+	 iPzBhW1TVrtRvi1trXmjdVJk0u+roFSK/4/oYV5xVcVaYzDb8djjSRqtkeC+/2sGqRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=invisiblethingslab.com;
-	spf=pass smtp.mailfrom=invisiblethingslab.com;
-	dkim=pass header.d=invisiblethingslab.com header.i=@invisiblethingslab.com header.a=rsa-sha256 header.s=fm2 header.b=IrhPgW7C;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=VoFcE4y0;
-	arc=none smtp.remote-ip=103.168.172.148
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Jw1qjqgg;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=HV+pdkVM;
+	arc=none smtp.remote-ip=205.220.168.131
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD82606A32D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 10:00:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3DD82606A32D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=invisiblethingslab.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=invisiblethingslab.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D10606A31B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 10:02:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 26D10606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=invisiblethingslab.com header.i=@invisiblethingslab.com header.a=rsa-sha256 header.s=fm2 header.b=IrhPgW7C;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=VoFcE4y0
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5F3D5EC01D8
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 06:00:28 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Wed, 21 Oct 2026 06:00:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1792576828; x=1792663228; bh=a4qQqva7hp
-	ZUYX8lZvn/7hBg+bhNuRpKHD2wnwR6pQg=; b=IrhPgW7CC9gnA/uuzKnQnH9l3i
-	3BuDutwayG8ADMAiTtYFTaGvpqZn/6sOgylXVVMOXnDgSX68I1mRVrqw0FsZH3yj
-	th7fje01BSrfhhkpTrCmEKoWRBS4GFBFtOtz0zBmev7uXS/oWPQSnHGCfmxIlr/+
-	VzhU7wI70hYauCGdi2Bw8zisCeulG3b6pdT0oCNlYYLiltgcWVxffv9PPPlFuULM
-	DjIxDzhNbch4AbpQbWmQB50CvYu3kbec+eyalZq0seiZpEBksD27s3WZujzcd5bb
-	PNs1F7fy/yUbfcSFmY5DYUVXyTP4GqgAkG5DnAghHKponwYAJ6zOAZORJ3bA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792576828; x=
-	1792663228; bh=a4qQqva7hpZUYX8lZvn/7hBg+bhNuRpKHD2wnwR6pQg=; b=V
-	oFcE4y0CigyTYFRLgk6apAcC2yZNg2YZTWBKM73jLMSdzoCWNx/hP1lVW578xqnH
-	eQDPyd0gzqupAycn+yhLFW+GdtBfKFVim4XvtYTVSNCmW3BeHH/ipoZf3mVgV/Fb
-	TAY6WRVwSCX1D8jGLpXUOH2XtHkjKRv3wtg9XvS/cYTKrvRlVHW9zjYumdeVeDyg
-	905CnpUJwShS9/OgJq++VNWXKy0VFR1JbMOo0TgLuD6yumvvy4FGfSo/aj9ZEbny
-	zXAp5ueF0tg6eD+IH1KQCruiJnZfvrm8EJqH7uHswukMTjNefMILRNmao6Vsyz5D
-	SvSVh+wDXOT7Zs/eVS1cw==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=sign d=invisiblethingslab.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792576828; d=invisiblethingslab.com;
-	mf=PHZhbEBpbnZpc2libGV0aGluZ3NsYWIuY29tPg==;
-	rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
-	s=fm2:rsa-sha256:btzoiP4VQJAKLLW0yrOAgrun/D3GIrvR+WF1Q03kGS+mixv
-	DVgQaOghLybEOlS7D+I/Jt3tc7hnHj7OmTK7hnSRfBUzMZYqhiQ9P0zHk2BmAq+E
-	UF/Kc6qnPFWSVIDlIFsKywMFxIB/HKIy0+ZX55XVTRhVh+nFqq/EJnfkqDOfootp
-	gSwWsbO6QsP2viqi9Fx/H7AVtCt5yTpYKSUyS0qPcvT00FINDge0iqW3JtoPLpiZ
-	5HOEwL6ihBKwrdvQt5Kx9ohEfzuCx/JNzQtZ26ErZI/CzN92i4oSHk/79KeiLcdQ
-	3Kuxy+u6ITuLvQL/TfWzICojkxz9e034q7wB9nQ==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
-	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
-	action=mi-m=1; hc=15;
-	hn=autocrypt,cc,content-language,content-transfer-encoding,
-	content-type,date,feedback-id,from,in-reply-to,message-id,
-	mime-version,references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:sH61B0WTNd3o7Ce01Ay7b+0PcjVatBMKl5oRbnezMDY=:1T00oweYgELIabGf0R8/4TqhxxaGwwH2ImTdruNeOBA=;
-X-ME-Sender: <xms:PI3YagHUcQnsOnNnhICLlqYgjX-C1sFVuzjtp2DBCoVYwAE4neiOow>
-    <xme:PI3YahGupoFO_yw4XnLwNIV27UCU2MzO4c40qQTkdWrDaDAQLsUT6MRwUk-gHERik
-    nMlr2fiEWWtZ2ESgZDVrxAJRDEuOBI6srMg-bP6MTPfAC160FcF>
-X-ME-Received: <xmr:PI3YatPeaJS-xXqN0ErlT7qgkRxihqIH3v_gelYg2BiTmru6bvPDR7Vx2Mpn99kf83HhaM0ZF3YKu7XlKZZKSVe9xeqERZsJWA>
-X-ME-Proxy-Cause: dmFkZTFxDuD5zJD64YygKVPOuOgENiIrImFPgMb6XrSrAnNLWLV7NYtdzfqIktQRdYMXTZ
-    lHdjqOAkhdfRXEEwZPaOn5fjynGXLcdqlCRCv53c3rvcHdnsgiQsNkCtSH3WQlDc1EZbuY
-    5Mi1Ub0jZqdxbzmySdn95CeBBNI++GKicx9Sw3D/Pj0/jqqKFSn1GsDMEWXoDqDGEdgT83
-    v84jeCuOK78dXUXP6ZYqUtHcSQcGsye15T0Rwq7KHH/xYgVlGlWQN4rJueMb2FjQV8dJ7r
-    QogUafA/q3iY/AsGBS/OthLolNR3N/x6r0tPXWZ6cXpfE0dZeq8SQFk9CkQPIa3FaOdjfB
-    6cxDdeqLx+YwzA+Hmqshzqrqy8YX9h5gL+8Bd+CRpoP2HRW/60QFImoHbmTy2fwhJr7Rrr
-    /Z2pdljhdxtSYpyKZ6mBTrvVFaKWMrd/4zn1CqLI5nrdEgS0J9d//f5vHqmoy9jvb3HfMF
-    pvFrDER5PhLYhVaLkDFJ6adST9mI19XKo+GpYfAVYm2Y5FalnRbd2R+sZUcLYXICpAOMmi
-    FhcvhwVabkNZqSR2AckpedJVg/Esm3FM+pSV1P9jtPWs+bjjn2338eoK9D1rTV6gzxFiTl
-    Ug4FH7T7gWsup6wRkccLy9184YxM6gD+xocHKnG4Ln4LMpYadXnJh7wuD2CA
-X-ME-Proxy: <xmx:PI3YagHz7ddGXSuPAUGJbhVlftPI-giYKhNBSSsta6ff4vCVPB65bQ>
-    <xmx:PI3YakNnYgkcyciwBgx8DceX8DUJt1vdu5JzbW3rBUS-cUOrBBc3EQ>
-    <xmx:PI3Yah_qnhZbmJepU3LIJHMb9rgJnV_3D1h6amALKhmAGv8GbJhLtA>
-    <xmx:PI3YagSXf4yBXYWD-tjD_kdOsF1iUNC9IG5Y0ZcqVx5owyhfm4q4lw>
-    <xmx:PI3YamY9qmGcDB2hO7YwA6FX4bNYKQGsI8iKK-ANKuFbglF3mUvA1r41>
-Feedback-ID: i001e48d0:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Oct 2026 06:00:27 -0400 (EDT)
-Message-ID: <3a69039d-2454-4693-b99d-9208694709f3@invisiblethingslab.com>
-Date: Wed, 21 Oct 2026 07:00:24 -0300
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Jw1qjqgg;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=HV+pdkVM
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69L9stYm756329
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 10:02:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	CJOiUgrxjc+64U0G2mkIKbgMGJKdd6rz8j2md+6Y6n0=; b=Jw1qjqggAC6SQMwo
+	wCMcOCaj+FZz0W6Rzn3sjUodPfIWWDb8DHeh3p0qFhTjiIdKubwHLuLAkOZF4sb+
+	wZ9VyGkBobHnwxwjCAFOY4u7UCS14z17tdyoboIna7tlIZtZQA3VwMWbtwNTp2oZ
+	D9z9LIODIif4MxLyyf23hmaHuyifkyBDB9UHzRmp1XwXKWo4GC8ulvQGkNSXEZR4
+	COqcQfdzxazU1n/+y7rtspk2AOqcWsiOAnIf0xxXTGHjNNE94c0j9rKlBsc+8CPh
+	d3zYQkt6EFhCEt3NyasjqPJvfjxH5Iboh9gpWA9zcClQkvHHdmsgcCLZYOJ1G/r6
+	/laOzg==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4heda4ubm2-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 10:02:02 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-3ac7a4ba546so1091182a91.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 03:02:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1792576921; x=1793181721; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=CJOiUgrxjc+64U0G2mkIKbgMGJKdd6rz8j2md+6Y6n0=;
+        b=HV+pdkVM4PLJlSpR30YeROmMtt7WR90IMczXPM0o/s1AjOFDYvvgPxKoYiEMdu/Luc
+         5lpySsbZibO5gb4uIqd+2ZQhy0srxDLT6YIMq33UYeTeFwxou9jjuY1G9/LoZC4B7alP
+         DJ7qOVATLbhW6CKoeklHPvvl77NofIM93CZsfsrjXwh374jqbACMZVrN5/UCwGBWw5H6
+         XWzkh1mTHVEm1weTZuiosjZzKoHAJ0J4aWf6V6eFVgna/7MfcJj76gSTIMLKQOj7tX/K
+         nL280Nqp65YKqPxaJ1cePhIJ6Md9kmhioU9WSVgUMr+8k0YNCdK0nsMM2kI4EHHPBoWD
+         34DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792576921; x=1793181721;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=CJOiUgrxjc+64U0G2mkIKbgMGJKdd6rz8j2md+6Y6n0=;
+        b=uyGQxLZESrNGL3oDq/G/psHIvqcbENmIR5DlerZIBoW/WPOKJmv8vIfBv+iSlOsoOs
+         KNzwLLwcHChEibAqGlUyNUax0qXj8IrBsBJqUiKxPhQmI8DW8IolXD68E6Q2NuP2pY0C
+         XQ+Ax9Tqmm4M3JuEp2t4TWnfQdB5yncnmtncilAYclLYchXnhkVSsKjCaSkBJgGNXLSV
+         Ko1wtle9Xrq1bfimOkiavBhu7Ly0voeJ1tPveY/4vNI+m+rlmejKAGIa5OY8YqkyyjzR
+         ZyfHnPE4ytRkdvsX8MfEzbzMzp+UkaUGhN2KSv9lZaW6zzBzJCNDZYaHfr5ddONSe+k/
+         AAEg==
+X-Gm-Message-State: AFq9FYIKqkqp3iu2VyCX5keJyILz/1xw22Za0dvSTYrTai7qVwaB0050
+	PVy9R30B/PwZYcCdHXpssUID0wPwHtJslZU09q4zdjZYKH0i5h9z30Y3Buuy+pPsNzYkvr+r2sm
+	P3ct9YFCv/O8Hz2GCBd7ySd6p6qy+YVfORMY9gR4tKpKPwO5J2XziT+YON8AnEtMRWK5xn4pJwi
+	z0caE=
+X-Gm-Gg: AYBFou3VYQp0SthcsSjroUT+l/9RfjxQNFYbRRAtx2SF1dwkV2CeCdWxEw7+jQx5Qms
+	VZWWBqkRstIg2e7rPMIqBPiJhueCGuPZTU+o1EHp0KLSZdyJMVrO/8Hv4pOIrBjAgYPl6wq3dGo
+	ZtzaNbINHNYbEjh+gMKshUEgrh3oQtYGTVSTz1HXwMkcdxW2oRNA+XVP+VT0HhqsdFiAxwHD4Ce
+	M5ymmJQb/+266zSLQSuhOV7+QvKk/lXZB3RwBDTOg4yrHYjQkgSDQEE8aG/3phR1IkCdb+5j/Bz
+	wWVKUeY4pz5Hd/TQF5grm6ry5u38Ano9Tato/SKNbTann7csuOtbr4xIslFiMfmPEzREsxK7VsE
+	w8CryduR63CszEFM8LNc89tgsAvE02mgluw==
+X-Received: by 2002:a17:90a:e707:b0:3ab:b39f:41ca with SMTP id 98e67ed59e1d1-3ad86f397e5mr726750a91.31.1792576921558;
+        Wed, 21 Oct 2026 03:02:01 -0700 (PDT)
+X-Received: by 2002:a17:90a:e707:b0:3ab:b39f:41ca with SMTP id 98e67ed59e1d1-3ad86f397e5mr726729a91.31.1792576920944;
+        Wed, 21 Oct 2026 03:02:00 -0700 (PDT)
+Received: from [10.152.193.243] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ad811c515fsm3426879a91.9.2026.10.21.03.01.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Oct 2026 03:02:00 -0700 (PDT)
+Message-ID: <02c95465-fca7-4324-bb9a-5bc2b34049b3@oss.qualcomm.com>
+Date: Wed, 21 Oct 2026 15:31:57 +0530
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -120,68 +115,113 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dma-buf: Add DMA_BUF_IOCTL_SET_RELEASE_EVENTFD
+Subject: Re: [PATCH ath-next v2 13/17] wifi: ath12k: use CMEM write for PPT on
+ hybrid bus devices
 To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, media-ci@linuxtv.org
-References: <20261021093533.1990028-1-val@invisiblethingslab.com>
- <sashiko-outbox-180068@kernel.org>
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20261016-mpp-bringup-v2-0-f510c33bfcf5@oss.qualcomm.com>
+ <20261016-mpp-bringup-v2-13-f510c33bfcf5@oss.qualcomm.com>
+ <sashiko-outbox-173688@kernel.org>
 Content-Language: en-US
-From: Val Packett <val@invisiblethingslab.com>
-Autocrypt: addr=val@invisiblethingslab.com; keydata=
- xm8EaFTEiRMFK4EEACIDAwQ+qzawvLuE95iu+QkRqp8P9z6XvFopWtYOaEnYf/nE8KWCnsCD
- jz82tdbKBpmVOdR6ViLD9tzHvaZ1NqZ9mbrszMXq09VfefoCfZp8jnA2yCT8Y4ykmv6902Ne
- NnlkVwrNKFZhbCBQYWNrZXR0IDx2YWxAaW52aXNpYmxldGhpbmdzbGFiLmNvbT7CswQTEwkA
- OxYhBAFMrro+oMGIFPc7Uc87uZxqzalRBQJoVMSJAhsDBQsJCAcCAiICBhUKCQgLAgQWAgMB
- Ah4HAheAAAoJEM87uZxqzalRlIIBf0cujzfSLhvib9iY8LBh8Tirgypm+hJHoY563xhP0YRS
- pmqZ6goIuSGpEKcW5mV3egF/TLLAOjsfroWae4giImTVOJvLOsUycxAP4O5b1Qiy+cCGsHKA
- nCRzrvqnPkyf4OeRznMEaFTEiRIFK4EEACIDAwSffe3tlMmmg3eKVp7SJ+CNZLN0M5qzHSCV
- dBBkIVvEJo+8SDg4jrx/832rxpvMCz2+x7+OHaeBHKafhOWUccYBLKqV/3nBftxCkbzXDbfY
- d02BY9H4wBIn0Y3GnwoIXRgDAQkJwpgEGBMJACAWIQQBTK66PqDBiBT3O1HPO7mcas2pUQUC
- aFTEiQIbDAAKCRDPO7mcas2pUaptAX9f7yUJLGU4C6XjMJvXd8Sz6cGTyxkngPtUyFiNqtad
- /GXBi3vHKYNfSrdqJ8wmZ8MBgOqWaaa1wE4/3qZU8d4RNR8mF7O40WYK/wdf1ycq1uGad8PN
- UDOwAqdfvuF3w8QMPw==
-In-Reply-To: <sashiko-outbox-180068@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+In-Reply-To: <sashiko-outbox-173688@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: LJPti9MrB9GoBj9mLNT7aCAZVNv9gC-n
+X-Proofpoint-GUID: LJPti9MrB9GoBj9mLNT7aCAZVNv9gC-n
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDAzOSBTYWx0ZWRfX2E0IlBJtja3C
+ lH6NU0nJxv7JubcMOFJxZCt3MWafwThHRMTFeKHdRAcmnJnFjJ4zJOgLc9wNIyHgryAXlKYtvKz
+ kEULJ4Ho8PSxpNhW9QJvBZc3STI6Ypk=
+X-Authority-Analysis: v=2.4 cv=R7aWitRX c=1 sm=1 tr=0 ts=6ad88d9a cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=svsrqo6iM0rPbd9dxYEA:9 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDAzOSBTYWx0ZWRfX2hLF2W5u92Kv
+ EL2vrDDwf1RUOu7VmFEb6f+SdXvpJFGinnWWLHMTYVOeU+djj2rqKO9/zGZ22fXMBEXQQzLwBol
+ ogLYVdYESVMg5dINt/40pbh9oI/uyv7Nj9ELZ66sDj5F/P3xSzGmrzzGE7KEO1S1IyShxMavdF2
+ ALwqkrceES6oaGn4FKkf/2VxKz6ijlTVHzSz3VxTtqLTK+/nYe0S7tAz1No94Aa1BM+rsFRW79y
+ LmlqrWDzlOleuV+D3FiPSXUbaSW4kSEz+Y26Pv5Y4uhx7bFPiVdsjmWt4hYVFCGY49BXUUDBe4u
+ ZBciZyaRP+EaNsAc5q4e8WImAwhWQcYHO4KMdlkRATbqwjrP2iv93Hr4FMitWJxdo5ZEuyyB/X0
+ 89UVCIakwttQ4ldQMwbpwm9wOpMmJcHDUT3Z0RhDCYF0A2gM/vc1mbaHKNR2w7a4NDg3PI3BIyG
+ PZZbVqgEDhSpV8U4uSg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-21_02,2026-10-19_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 spamscore=0 suspectscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610210039
 
 
-On 10/21/26 6:47 AM, sashiko-bot@kernel.org wrote:
-> [..]
-> Can concurrent DMA_BUF_IOCTL_SET_RELEASE_EVENTFD calls on the same dma-buf
-> race in dma_buf_set_release_eventfd() in drivers/dma-buf/dma-buf.c and cause
-> a use-after-free or leak of struct eventfd_ctx?
-> [..]
-> What happens if more than one process registers a release eventfd on the
-> same struct dma_buf, or if a recipient of the dma-buf fd calls
-> DMA_BUF_IOCTL_SET_RELEASE_EVENTFD? [..]
-> Could that leave the original waiter blocked indefinitely waiting for buffer
-> release, and would a list of registered eventfd contexts (or rejecting
-> re-registration) avoid allowing one holder to disarm another's notification?
 
-Yeeeeeah I guess a "one use only" policy would be better after all, i.e. 
-not allowing replacement. That should solve both of these. I'll probably 
-change it to that in v2.
+On 10/16/2026 9:11 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] wifi: ath12k: OOB array read in ath12k_dp_cmem_init() due to mixed MLO mem modes
+> --
+> 
+> commit b4813e2e272b2801865377c6c50ae123db10e5d7
+> Author: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+> 
+> wifi: ath12k: use CMEM write for PPT on hybrid bus devices
+> 
+> This commit updates the Primary Page Table (PPT) initialization to use
+> CMEM-specific write operations on hybrid bus devices. It also propagates
+> errors from these CMEM writes during PPT and partner copy cache
+> initialization, aborting MLO setup if a failure occurs.
+> 
+>> diff --git a/drivers/net/wireless/ath/ath12k/dp.c b/drivers/net/wireless/ath/ath12k/dp.c
+>> index 83f9edfabf696..6cf254b2d2a78 100644
+>> --- a/drivers/net/wireless/ath/ath12k/dp.c
+>> +++ b/drivers/net/wireless/ath/ath12k/dp.c
+> [ ... ]
+>> @@ -1328,24 +1328,38 @@ static int ath12k_dp_cmem_init(struct ath12k_base *ab,
+>>  	}
+>>  
+>>  	/* Write to PPT in CMEM */
+>> -	for (i = start; i < end; i++)
+>> -		ath12k_hif_write32(ab, cmem_base + ATH12K_PPT_ADDR_OFFSET(i),
+>> -				   dp->spt_info[i].paddr >> ATH12K_SPT_4K_ALIGN_OFFSET);
+>> +	for (i = start; i < end; i++) {
+>> +		addr = cmem_base + ATH12K_PPT_ADDR_OFFSET(i);
+>> +		val = dp->spt_info[i].paddr >> ATH12K_SPT_4K_ALIGN_OFFSET;
+> 
+> [Severity: High]
+> Can this result in an out-of-bounds array read on hybrid bus MLO devices?
+> 
+> The loop limits start and end are derived from the current device's
+> profile (ab->profile_param->dp_params). However, the array being indexed,
+> dp->spt_info[i], belongs to the partner device.
+> 
+> On systems with mixed-bus MLO configurations (like an AHB radio and a PCI
+> radio in the same MLO group) and constrained memory, the devices might have
+> different memory profiles. For example, if the AHB device has the DEFAULT
+> profile but the PCI partner is using the LOW_512_M profile, the AHB device
+> will calculate a larger end value than the size of the partner's allocated
+> spt_info array.
+> 
+> Does this mean the loop will read past the end of the spt_info array and
+> write garbage memory values to the device's CMEM Primary Page Table?
+> 
 
->>   /**
->> diff --git a/include/uapi/linux/dma-buf.h b/include/uapi/linux/dma-buf.h
->> index e827c9d20c5d3..566dea778ad06 100644
->> --- a/include/uapi/linux/dma-buf.h
->> +++ b/include/uapi/linux/dma-buf.h
->> @@ -179,5 +179,6 @@ struct dma_buf_import_sync_file {
->>   #define DMA_BUF_SET_NAME_B	_IOW(DMA_BUF_BASE, 1, __u64)
->>   #define DMA_BUF_IOCTL_EXPORT_SYNC_FILE	_IOWR(DMA_BUF_BASE, 2, struct dma_buf_export_sync_file)
->>   #define DMA_BUF_IOCTL_IMPORT_SYNC_FILE	_IOW(DMA_BUF_BASE, 3, struct dma_buf_import_sync_file)
->> +#define DMA_BUF_IOCTL_SET_RELEASE_EVENTFD	_IOW(DMA_BUF_BASE, 4, __u32)
-> [Severity: Medium]
-> Is DMA_BUF_IOCTL_SET_RELEASE_EVENTFD in include/uapi/linux/dma-buf.h intended
-> to take a user pointer to __u32 or a file descriptor value directly?
->
-> Here DMA_BUF_IOCTL_SET_RELEASE_EVENTFD is defined with _IOW(DMA_BUF_BASE, 4,
-> __u32), which indicates a user pointer argument [..]
-
-I don't see anything in include/uapi/asm-generic/ioctl.h intended for 
-defining value arguments but it's a common thing across the tree..?? :/
-
-
-~val
+This is not expected to happen, as all devices in the same MLO group are expected
+to operate with the same memory profile. The profile (DEFAULT or LOW_512_M) is
+selected based on the platform's RAM size, so all devices on the platform are
+expected to use the same profile.
+>> +
+>> +		if (ab->hw_params->hybrid_bus_type) {
+>> +			ret = ath12k_hif_cmem_write32(ab, addr, val);
+>> +			if (ret)
+>> +				return ret;
+>> +		} else {
+>> +			ath12k_hif_write32(ab, addr, val);
+>> +		}
+>> +	}
+>>  
+>>  	return 0;
+>>  }
+> 
 
