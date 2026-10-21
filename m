@@ -1,91 +1,115 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.198.58
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792576565;
-	b=TuIYePgUTV11ZVS6IPSv3IrRf4KXWHEpvavT2WLjH52nsd2oaXNMkLb8P7cPHHRuEgpG
-	 UAcyzB0QdJARJOpFCvVUMYEdjKy+xSMJnYzYQb5PXT3Casu7cTWw6o9KYe5Z82Dfom7Jg
-	 Ed1r2h2ZYi6VVoEz0f0GkW2hvCERfiOZMO2ME7OJyIo79c+fvn4PuwR32ZVgc0faOFLvj
-	 PsV0mupe9fR3vyTMj6twqLqk1bHOw1MKHSIId2MbsaRJ7cPRcnt2ga2YqmhBqBC9mYXOv
-	 uXVF0oNC4ux+D0kOWzELpdfyF1p+7Bq6u/j4I0IUyKVcXT84mYn2SetMD4fAtKcULFg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792576565;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Subject:
-	 Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 Content-Transfer-Encoding:Content-Type:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=DXnuJdQsM6kA5pE9yEjIxr27lcT78TXLTnq5bozM3m4=;
-	b=rdIlohh20ZqGTgz3fnBAQndAl5/Nf+R6ni1HWHreF5YPYkOX8cctZ8FBkjPM6/nn6dTM
-	 6sRLVNfnMpvXMWPjHJnhG1kSk2aLXusXDN9DuV42jLppArjVmYnxRNWxqHA7JoB1feFbi
-	 eYTQjm/HQWZUlaQ/+GnBElEJ0HFzCvRYN7x+hY80FRQ+950yr3Ub2Ya7Q+RnIo3Q2JwVp
-	 MPC/TdmjLrGKhwjf4YL3Lo6BSLL6C54nkznsQ3Mei2ODs42g1o+0UdD1HKq95X+AhMcWD
-	 T0/4raG88pkwH21cCLr0KUKUsWTplQGr5WcXWy0sTVAcz+/gaYQLlcfVGgvgR+Fvd6A==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nvidia.com;
-	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=k0yvmgUi;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.198.58
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010058.outbound.protection.outlook.com [40.93.198.58])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=103.168.172.148
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792576829;
+	b=uQM1MLK6Z69qPLLzskMFWfdnd77w0nt85iSyqR2QnpZ+iyRdvDTNbCY/Eqb061/IpZGK
+	 h8z/uoJpn4QtkC6iertsDeVqvi4ArApgEMWDQHSC7N3Y10Lb4eh/08kHeDil6XsfiorCG
+	 M+JFCX+Qx0Hp1pJpau3HOTFTpVfHdcU545fTyJgVpKfYURQSelxErEdC5Vx1cpfT5Ky6K
+	 ts2vJERRYnJmkG+J26MWiERLHEcgwQAB0H5ZcN3gFQ3UvGWh3umFutmyeh92T5CFaBzAu
+	 xmjm0EMld+9Y//x7ST3o0dDbETor0daX/Hsfb9TTH2LP6e8+7qc3v0cjwDfja6y4utQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792576829;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
+	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
+	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=a4qQqva7hpZUYX8lZvn/7hBg+bhNuRpKHD2wnwR6pQg=;
+	b=y9SPdaf1wCGQqdYAIs19TRyyqWe9mQouKGXQz9ey0lP7J8fmfJ0mtGudTvc1LurDO/dl
+	 oaOrAC9VluCJ+HOXlGKzpaLtcAMydZ7birN45jUdkPEZxFUUHI7x+y9YmsoM+KxxcXamV
+	 FQu/Tgv2xXWz13gL1OyIrDAO2jb8vmspviWWDEz693Ep1YiTNVBHKENO4hwucBGcDLJND
+	 OFsQI9mcvs/VXcR2P4lq1VZEUnnjK58oMAKV5cmscrOA5Rrr6vhY5EhTzvzY6HhCwljkU
+	 9z7v0oVc2T1pQKIRfDRKg2DQ88Wr4rpLPW0ecOCxi+AaXkNQ1lN29OHHY4wLE5L3e7g==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=invisiblethingslab.com;
+	spf=pass smtp.mailfrom=invisiblethingslab.com;
+	dkim=pass header.d=invisiblethingslab.com header.i=@invisiblethingslab.com header.a=rsa-sha256 header.s=fm2 header.b=IrhPgW7C;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=VoFcE4y0;
+	arc=none smtp.remote-ip=103.168.172.148
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12684606A325
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 09:56:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 12684606A325
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD82606A32D
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 10:00:28 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3DD82606A32D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=invisiblethingslab.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=invisiblethingslab.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=k0yvmgUi
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=INbAmjpJQcWKW6RtByu0QMRYj1S48aRJAGfZNzg2ndo/G6ZN707C32dTRBUeLahHkwnbPh0YTgPpJT6rAqvobf/ZXcPAnDzmehaEUewGB69565ciix8jAOI0rELaxm7L9PPdlAQYcSsv7B7Cz7N9xvjqeEwc41hzqapeQRMTm25Vyz0Cp08aJlTigmh3p5QJoZ92c/o59VAyQkT1rvnJcvJGk4q0VOtN6m3+i/R1ceg76Ft4f4g/9SAi4q/Q300/MypnCFyF/SLVK6UsSy9oKSqLZu6g7/JIzgycPuuUV2xF+VkMjf4QftiCWrI2xc/0XvfdV8AjNBjrq5hhJQyVvg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DXnuJdQsM6kA5pE9yEjIxr27lcT78TXLTnq5bozM3m4=;
- b=EOP6XOOXRFgBHzRqNaWDmGeekkRFopZjJGeL/gUaGjQW10ncYTkpGNoq7UEyug5vTwDQajHh/Gbn8QowfmjGkEcn+M3L3e7Rtzqgb4wMEvD3E/x+5V2aiyBoXFuGP4B5GapO3ToH2uB2g+XkxIsOybjcoRvT9kLwXQQDPtoqn698Ez3YGANOCx2zZM1ecjAUef22OoDVTZMVKLJUVbHE+5qyaIDpHKAXG043YF6/seurPTejCeBi25j8Sc7LoxZ888GoQKGiOpcqpq4KidCB24DWiHmIvGrdgDaKhUK3wYUSD7GBHGHqkbhEzQkBz2/NPkn4rrSg16UNBXTUe5w3dw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DXnuJdQsM6kA5pE9yEjIxr27lcT78TXLTnq5bozM3m4=;
- b=k0yvmgUi2K3B6zja217h6vXAsnKp3WQ+GRPDo7uz4+tkxkYCVp6OgaCHoa3fPwfAaEes2jw5PS7seoz7R2DmZlvwMTiZa81EW24FDW1Gt7ojqFwIGd6b7R2ce5shmqkYwUjJaCvWjD57lM8PIi/450+ca3vpKMQqzwDgiLweVsyrxEb6G6hrFVKLrkXDpsnfe0iYqYHh8g2BNi+lOD26DK5dpQ3Qyfi+mFGqrJ6fQjSYG5J7GvcdmFnmaG8CGD8TkO8DEGu/QO+DWHpSps02AF5EkiinZ5UK636X/uE4rBaINA3P8q5/YEcKzL7/m07VjZ3gTSct2cqaXfIMg4Y0ZQ==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from PH7PR12MB5974.namprd12.prod.outlook.com (2603:10b6:510:1d9::19)
- by BY5PR12MB4098.namprd12.prod.outlook.com (2603:10b6:a03:205::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.19; Wed, 21 Oct
- 2026 09:56:02 +0000
-Received: from PH7PR12MB5974.namprd12.prod.outlook.com
- ([fe80::f5a5:bbc3:e9da:f8a0]) by PH7PR12MB5974.namprd12.prod.outlook.com
- ([fe80::f5a5:bbc3:e9da:f8a0%3]) with mapi id 15.21.0522.017; Wed, 21 Oct 2026
- 09:56:02 +0000
-From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v3 6/6] gpiolib: let the character device free its IRQs first on chip removal
-Date: Wed, 21 Oct 2026 12:55:54 +0300
-Message-ID: <20261021095551.3283369-6-aambrozewicz@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <sashiko-outbox-179021@kernel.org>
-References: <20261020-gpiolib-chip-removal-v3-0-aambrozewicz@nvidia.com> <20261020-gpiolib-chip-removal-v3-6-aambrozewicz@nvidia.com> <sashiko-outbox-179021@kernel.org>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MR1P264CA0197.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:501:57::12) To PH7PR12MB5974.namprd12.prod.outlook.com
- (2603:10b6:510:1d9::19)
+	dkim=pass (2048-bit key, unprotected) header.d=invisiblethingslab.com header.i=@invisiblethingslab.com header.a=rsa-sha256 header.s=fm2 header.b=IrhPgW7C;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=VoFcE4y0
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5F3D5EC01D8
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 06:00:28 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Wed, 21 Oct 2026 06:00:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	invisiblethingslab.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1792576828; x=1792663228; bh=a4qQqva7hp
+	ZUYX8lZvn/7hBg+bhNuRpKHD2wnwR6pQg=; b=IrhPgW7CC9gnA/uuzKnQnH9l3i
+	3BuDutwayG8ADMAiTtYFTaGvpqZn/6sOgylXVVMOXnDgSX68I1mRVrqw0FsZH3yj
+	th7fje01BSrfhhkpTrCmEKoWRBS4GFBFtOtz0zBmev7uXS/oWPQSnHGCfmxIlr/+
+	VzhU7wI70hYauCGdi2Bw8zisCeulG3b6pdT0oCNlYYLiltgcWVxffv9PPPlFuULM
+	DjIxDzhNbch4AbpQbWmQB50CvYu3kbec+eyalZq0seiZpEBksD27s3WZujzcd5bb
+	PNs1F7fy/yUbfcSFmY5DYUVXyTP4GqgAkG5DnAghHKponwYAJ6zOAZORJ3bA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792576828; x=
+	1792663228; bh=a4qQqva7hpZUYX8lZvn/7hBg+bhNuRpKHD2wnwR6pQg=; b=V
+	oFcE4y0CigyTYFRLgk6apAcC2yZNg2YZTWBKM73jLMSdzoCWNx/hP1lVW578xqnH
+	eQDPyd0gzqupAycn+yhLFW+GdtBfKFVim4XvtYTVSNCmW3BeHH/ipoZf3mVgV/Fb
+	TAY6WRVwSCX1D8jGLpXUOH2XtHkjKRv3wtg9XvS/cYTKrvRlVHW9zjYumdeVeDyg
+	905CnpUJwShS9/OgJq++VNWXKy0VFR1JbMOo0TgLuD6yumvvy4FGfSo/aj9ZEbny
+	zXAp5ueF0tg6eD+IH1KQCruiJnZfvrm8EJqH7uHswukMTjNefMILRNmao6Vsyz5D
+	SvSVh+wDXOT7Zs/eVS1cw==
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=sign d=invisiblethingslab.com a=rsa-sha256;
+DKIM2-Signature: i=1; m=1; t=1792576828; d=invisiblethingslab.com;
+	mf=PHZhbEBpbnZpc2libGV0aGluZ3NsYWIuY29tPg==;
+	rt=PHNhc2hpa28tcmV2aWV3c0BsaXN0cy5saW51eC5kZXY+;
+	s=fm2:rsa-sha256:btzoiP4VQJAKLLW0yrOAgrun/D3GIrvR+WF1Q03kGS+mixv
+	DVgQaOghLybEOlS7D+I/Jt3tc7hnHj7OmTK7hnSRfBUzMZYqhiQ9P0zHk2BmAq+E
+	UF/Kc6qnPFWSVIDlIFsKywMFxIB/HKIy0+ZX55XVTRhVh+nFqq/EJnfkqDOfootp
+	gSwWsbO6QsP2viqi9Fx/H7AVtCt5yTpYKSUyS0qPcvT00FINDge0iqW3JtoPLpiZ
+	5HOEwL6ihBKwrdvQt5Kx9ohEfzuCx/JNzQtZ26ErZI/CzN92i4oSHk/79KeiLcdQ
+	3Kuxy+u6ITuLvQL/TfWzICojkxz9e034q7wB9nQ==;
+X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
+	repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
+	action=mi-m=1; hc=15;
+	hn=autocrypt,cc,content-language,content-transfer-encoding,
+	content-type,date,feedback-id,from,in-reply-to,message-id,
+	mime-version,references,subject,to,user-agent;
+Message-Instance: m=1; h=sha256:sH61B0WTNd3o7Ce01Ay7b+0PcjVatBMKl5oRbnezMDY=:1T00oweYgELIabGf0R8/4TqhxxaGwwH2ImTdruNeOBA=;
+X-ME-Sender: <xms:PI3YagHUcQnsOnNnhICLlqYgjX-C1sFVuzjtp2DBCoVYwAE4neiOow>
+    <xme:PI3YahGupoFO_yw4XnLwNIV27UCU2MzO4c40qQTkdWrDaDAQLsUT6MRwUk-gHERik
+    nMlr2fiEWWtZ2ESgZDVrxAJRDEuOBI6srMg-bP6MTPfAC160FcF>
+X-ME-Received: <xmr:PI3YatPeaJS-xXqN0ErlT7qgkRxihqIH3v_gelYg2BiTmru6bvPDR7Vx2Mpn99kf83HhaM0ZF3YKu7XlKZZKSVe9xeqERZsJWA>
+X-ME-Proxy-Cause: dmFkZTFxDuD5zJD64YygKVPOuOgENiIrImFPgMb6XrSrAnNLWLV7NYtdzfqIktQRdYMXTZ
+    lHdjqOAkhdfRXEEwZPaOn5fjynGXLcdqlCRCv53c3rvcHdnsgiQsNkCtSH3WQlDc1EZbuY
+    5Mi1Ub0jZqdxbzmySdn95CeBBNI++GKicx9Sw3D/Pj0/jqqKFSn1GsDMEWXoDqDGEdgT83
+    v84jeCuOK78dXUXP6ZYqUtHcSQcGsye15T0Rwq7KHH/xYgVlGlWQN4rJueMb2FjQV8dJ7r
+    QogUafA/q3iY/AsGBS/OthLolNR3N/x6r0tPXWZ6cXpfE0dZeq8SQFk9CkQPIa3FaOdjfB
+    6cxDdeqLx+YwzA+Hmqshzqrqy8YX9h5gL+8Bd+CRpoP2HRW/60QFImoHbmTy2fwhJr7Rrr
+    /Z2pdljhdxtSYpyKZ6mBTrvVFaKWMrd/4zn1CqLI5nrdEgS0J9d//f5vHqmoy9jvb3HfMF
+    pvFrDER5PhLYhVaLkDFJ6adST9mI19XKo+GpYfAVYm2Y5FalnRbd2R+sZUcLYXICpAOMmi
+    FhcvhwVabkNZqSR2AckpedJVg/Esm3FM+pSV1P9jtPWs+bjjn2338eoK9D1rTV6gzxFiTl
+    Ug4FH7T7gWsup6wRkccLy9184YxM6gD+xocHKnG4Ln4LMpYadXnJh7wuD2CA
+X-ME-Proxy: <xmx:PI3YagHz7ddGXSuPAUGJbhVlftPI-giYKhNBSSsta6ff4vCVPB65bQ>
+    <xmx:PI3YakNnYgkcyciwBgx8DceX8DUJt1vdu5JzbW3rBUS-cUOrBBc3EQ>
+    <xmx:PI3Yah_qnhZbmJepU3LIJHMb9rgJnV_3D1h6amALKhmAGv8GbJhLtA>
+    <xmx:PI3YagSXf4yBXYWD-tjD_kdOsF1iUNC9IG5Y0ZcqVx5owyhfm4q4lw>
+    <xmx:PI3YamY9qmGcDB2hO7YwA6FX4bNYKQGsI8iKK-ANKuFbglF3mUvA1r41>
+Feedback-ID: i001e48d0:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 Oct 2026 06:00:27 -0400 (EDT)
+Message-ID: <3a69039d-2454-4693-b99d-9208694709f3@invisiblethingslab.com>
+Date: Wed, 21 Oct 2026 07:00:24 -0300
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -95,76 +119,69 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5974:EE_|BY5PR12MB4098:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9774710f-64f3-4f22-3129-08df2f5983f4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|18002099003|22082099003|4143699003|10067099003|261009223027099003|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	YBrNAdVqp2hkUvwltYkxCwvTyLVQEl1VGbhrNQ0EZZf6BXsG9SbFIPG7dHlI8DmPd8bhrG82EOs4ZVbpDvAhKB33zQi1+5rKn/4Vd3Jmo/1SDD+SrFtslNl9d4WC5EhhvNu3/dZ3GUK6Co6DPPognDoCza8lxs8tTXagyHRxeETiG+0DZFAKQE6gNUcr4vkTZKdRzBKq+9Qazm5KKojN6SH7cHipg4ShY2UfJqSoYDUvSUhzpI6InKq0f6HcXCajXXMW5TyFshE6J2VAICEcmdE3bAONiZxP5SVRPYZFrHp5K1pP1JWcnuq67jeaXklD7jNV/HCXGjFKWiq23Pgynd2nzvGFNJ2IPOnTykrtYOXriNlS2Y3DSYj7TX7zzi3ae43NlNK5ngJ/wDpAPhRhIe31DXg1T7m/bfNapR7MOjDBtIp7+Zbs+405VL8rz+zPeMTXPw9VLuLInsZBXeID/c4vTg+hUHMYEiB8B8fBJraLAf06oBOvebBx7N9Iz/OEBWZq1JCjCkqaRmhNXrIWY/OrQazilrOGWruscBnK2R/IMknq0lqA1dsPwxuNGF1TPqLqUzynPHF81NNUXpkxq2D4XBESOS62l1oGyhi1HYB3VX1fvXROWX6V6QKsrYJPSWt6DHiseGk623WBcBw9HuUl5ChwjuFgyguHznQrqgc=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5974.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(18002099003)(22082099003)(4143699003)(10067099003)(261009223027099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?DZZSEjvlJcafpSyeid0U9DhAok7tH4Vph7QEM5rVMMe8iMSenc84/huita2c?=
- =?us-ascii?Q?dKuSacBFAcWvMktsG3Njqn+A0KVnf2nrQ9LCw5VcqksZa5HxUl4635GanYVX?=
- =?us-ascii?Q?JA9k0jy5uF37S6Mym7BG82TQh4ws7yDOufFkLZWaMytBoFEV/P/KAej8SECr?=
- =?us-ascii?Q?bNP30Jfu42XkUFxqYWaKCsV8a9lgPmUx540N5DdtRnrdyRsc3iWJ7zTSF9y+?=
- =?us-ascii?Q?LSMkE4KwYxBGW59g+gmHny7WPWXAMAEq2HnX5FZh5ZPv0zXGHxfj9ko8SuK2?=
- =?us-ascii?Q?8Sj+drUt7GAxfWJ9KXFqmtNFnn/B5ZE0+acn+QrtTJWPOkATh1hEdBsKIXou?=
- =?us-ascii?Q?bzV/nsumG86oSdk/q7b2oII4TtT0NWw4Egann5dMddIhGrMEGywPgx/7mLEG?=
- =?us-ascii?Q?rMEnqpH6kRPpG0mbzPG8WKsndMGoiriNYe8kq09OYcILaSenU5/XMVhXT00G?=
- =?us-ascii?Q?Kyejq0ohJS0LA9J9BacppMot+ixKcP3lS/ItqRg3uM+aMLxzevVgJKmvG3oL?=
- =?us-ascii?Q?XKC9xvjGzbwHE5JvTspjPEWZ0PAd1004oY0eNypgwZoL7XErhRDEXIaJHsvD?=
- =?us-ascii?Q?NYOrLZLiqLarklg8Sx7aR9BXl7j5+4A1DIxdW0pIE/S5tY8LlzhnaiDgQWDj?=
- =?us-ascii?Q?8gp+oHVkfN2VVuaxwEKWw+/N73wx7JCUBwLJQJX/Ts47vYJd3fE7qgEyNNac?=
- =?us-ascii?Q?9GyZToBgvJDhstQ3IZCVyqm2rfGxkeLWS8eD2DCAyYu/FxTzaSyWlFy8okvj?=
- =?us-ascii?Q?mfafEGIrbJ2wNDa86BbIkiyAj6AWYMxHMOLrGgjsT2pgWYIpZTT2zHD/UJ3H?=
- =?us-ascii?Q?p1ppyNQsqnRQ4qde/znOZPBnf31c9WxjykIXJz5Y3y1rsdElPWlXM3ea8ImA?=
- =?us-ascii?Q?kYN9YE9dN15WqUaoQIM5qgL2zrrxXZO2Gpct90jOqN7gkOL5PGc0ZGaGBoB/?=
- =?us-ascii?Q?Ax365MHci1V9NrbOCfdzNJRVPYxGfJ1ovbiVPmj59YLSAUmkvc+zr1uXf74A?=
- =?us-ascii?Q?syvR0TLAY1u8kZUICnpTTVta5cRYi5xDCpgEkeQNI5sB2SX5VeBhGRR0DHIs?=
- =?us-ascii?Q?xRUh4HBnmRfqKL8HcE6O1wI/ip55gjcRI3M3zN2ZNhO23rmQJNuVQI+6yLys?=
- =?us-ascii?Q?cA+QdCeiXxOtlXsR8FEbtEmzToIM4Mtw8Xitoy+3fOAsDxAP4PllJevEL7gz?=
- =?us-ascii?Q?XTLHF9ZGN+k9kV4+/QHuEU3IZvbnWl2LscyTvfEKN873lHTNDATnlpeC0kOl?=
- =?us-ascii?Q?ypFqhQ1qfidzYpm+u0mxEWb9mchlEmFiqa+vdPVOctSRtIznsmewtWSHjrLC?=
- =?us-ascii?Q?DvjPJeVsOY0zOOKXtlP3Sl2iiwvYoKEMK9Y36Gx5oc608lv+7ygtuSXRrpLM?=
- =?us-ascii?Q?TxE2IpEaswx8yfHbFGqRDrjizmLHN4wRC4byuG/aF3qFtjI2EIbEkWx54g6F?=
- =?us-ascii?Q?DCQE8L1BDGLr8DH/QsO16ruvJyfgotx/48lwaSjouW+PIcjrM1DBIZaRTXcW?=
- =?us-ascii?Q?NVl063L51k590fjBgahUALfCEVd0CIwkg87p/YLhNPvFQ5u3DNND4gOAdCJR?=
- =?us-ascii?Q?RdaINdbz4oiGpPiC9Go/bxkta48cx+N39e58EYa1PCgX6X4ujKry/JFCRLo4?=
- =?us-ascii?Q?Uuiv+O8AJMDdI2KoNj2pgfRtXGxHIr0XMcGVEu3dc9if9ORvfHLTYqQjrOOT?=
- =?us-ascii?Q?zoBJuHkpFdlU60haR3GO82lbXilIGzPNtj36DjlmKgHlz/Ss+4HMmtueGLdy?=
- =?us-ascii?Q?VQLWW7pfJg=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9774710f-64f3-4f22-3129-08df2f5983f4
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5974.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2026 09:56:02.3092
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: DuvvS6ewOzoUoArnCAlXxtOb23X/TbDqmXQmvfpzFJETbigzne1611nZyAXBPLIZ8xE2OT+CnfgDvpDGFv3PUQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4098
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dma-buf: Add DMA_BUF_IOCTL_SET_RELEASE_EVENTFD
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, media-ci@linuxtv.org
+References: <20261021093533.1990028-1-val@invisiblethingslab.com>
+ <sashiko-outbox-180068@kernel.org>
+Content-Language: en-US
+From: Val Packett <val@invisiblethingslab.com>
+Autocrypt: addr=val@invisiblethingslab.com; keydata=
+ xm8EaFTEiRMFK4EEACIDAwQ+qzawvLuE95iu+QkRqp8P9z6XvFopWtYOaEnYf/nE8KWCnsCD
+ jz82tdbKBpmVOdR6ViLD9tzHvaZ1NqZ9mbrszMXq09VfefoCfZp8jnA2yCT8Y4ykmv6902Ne
+ NnlkVwrNKFZhbCBQYWNrZXR0IDx2YWxAaW52aXNpYmxldGhpbmdzbGFiLmNvbT7CswQTEwkA
+ OxYhBAFMrro+oMGIFPc7Uc87uZxqzalRBQJoVMSJAhsDBQsJCAcCAiICBhUKCQgLAgQWAgMB
+ Ah4HAheAAAoJEM87uZxqzalRlIIBf0cujzfSLhvib9iY8LBh8Tirgypm+hJHoY563xhP0YRS
+ pmqZ6goIuSGpEKcW5mV3egF/TLLAOjsfroWae4giImTVOJvLOsUycxAP4O5b1Qiy+cCGsHKA
+ nCRzrvqnPkyf4OeRznMEaFTEiRIFK4EEACIDAwSffe3tlMmmg3eKVp7SJ+CNZLN0M5qzHSCV
+ dBBkIVvEJo+8SDg4jrx/832rxpvMCz2+x7+OHaeBHKafhOWUccYBLKqV/3nBftxCkbzXDbfY
+ d02BY9H4wBIn0Y3GnwoIXRgDAQkJwpgEGBMJACAWIQQBTK66PqDBiBT3O1HPO7mcas2pUQUC
+ aFTEiQIbDAAKCRDPO7mcas2pUaptAX9f7yUJLGU4C6XjMJvXd8Sz6cGTyxkngPtUyFiNqtad
+ /GXBi3vHKYNfSrdqJ8wmZ8MBgOqWaaa1wE4/3qZU8d4RNR8mF7O40WYK/wdf1ycq1uGad8PN
+ UDOwAqdfvuF3w8QMPw==
+In-Reply-To: <sashiko-outbox-180068@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Oct 20, 2026 at 01:23:24PM +0000, sashiko-bot@kernel.org wrote:
-> With character device IRQs now freed in the notifier callback after
-> rcu_assign_pointer(gdev->chip, NULL), can an in-flight dual-edge interrupt
-> handler queue a spurious rising-edge event to userspace?
 
-Yes. With the IRQ thread delayed in a test kernel, a reader blocked in
-read() gets a falling edge as a rising one when the chip is removed
-meanwhile, with both uAPI v1 and v2. Without this patch any failed read
-does the same, for example on an expander that is going away, and so
-does the HTE thread.
+On 10/21/26 6:47 AM, sashiko-bot@kernel.org wrote:
+> [..]
+> Can concurrent DMA_BUF_IOCTL_SET_RELEASE_EVENTFD calls on the same dma-buf
+> race in dma_buf_set_release_eventfd() in drivers/dma-buf/dma-buf.c and cause
+> a use-after-free or leak of struct eventfd_ctx?
+> [..]
+> What happens if more than one process registers a release eventfd on the
+> same struct dma_buf, or if a recipient of the dma-buf fd calls
+> DMA_BUF_IOCTL_SET_RELEASE_EVENTFD? [..]
+> Could that leave the original waiter blocked indefinitely waiting for buffer
+> release, and would a list of registered eventfd contexts (or rejecting
+> re-registration) avoid allowing one holder to disarm another's notification?
 
-> Should edge_irq_thread() and lineevent_irq_thread() also check for a
-> negative return from gpiod_get_value_cansleep() and drop the event?
+Yeeeeeah I guess a "one use only" policy would be better after all, i.e. 
+not allowing replacement. That should solve both of these. I'll probably 
+change it to that in v2.
 
-For v4 I plan a patch before this one that drops the event when the
-read fails, in all three threads, as debounce_work_func() does.
+>>   /**
+>> diff --git a/include/uapi/linux/dma-buf.h b/include/uapi/linux/dma-buf.h
+>> index e827c9d20c5d3..566dea778ad06 100644
+>> --- a/include/uapi/linux/dma-buf.h
+>> +++ b/include/uapi/linux/dma-buf.h
+>> @@ -179,5 +179,6 @@ struct dma_buf_import_sync_file {
+>>   #define DMA_BUF_SET_NAME_B	_IOW(DMA_BUF_BASE, 1, __u64)
+>>   #define DMA_BUF_IOCTL_EXPORT_SYNC_FILE	_IOWR(DMA_BUF_BASE, 2, struct dma_buf_export_sync_file)
+>>   #define DMA_BUF_IOCTL_IMPORT_SYNC_FILE	_IOW(DMA_BUF_BASE, 3, struct dma_buf_import_sync_file)
+>> +#define DMA_BUF_IOCTL_SET_RELEASE_EVENTFD	_IOW(DMA_BUF_BASE, 4, __u32)
+> [Severity: Medium]
+> Is DMA_BUF_IOCTL_SET_RELEASE_EVENTFD in include/uapi/linux/dma-buf.h intended
+> to take a user pointer to __u32 or a file descriptor value directly?
+>
+> Here DMA_BUF_IOCTL_SET_RELEASE_EVENTFD is defined with _IOW(DMA_BUF_BASE, 4,
+> __u32), which indicates a user pointer argument [..]
 
-Adrian
+I don't see anything in include/uapi/asm-generic/ioctl.h intended for 
+defining value arguments but it's a common thing across the tree..?? :/
+
+
+~val
+
