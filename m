@@ -1,99 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.43.51
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792565174;
-	b=BC4EnkoQ0J8SVZwU6wkmVeROt8mCDHaDvZoWSh6Ak5an5AmTgwtS2Y99O2yR9FheISKY
-	 y5hEPcUSr18CMfJXLCI6/2gScehgfHnsVa9jMkR7KemSsp1FXAcQeFGKhWv0E257mngXk
-	 w7kfCQRn4f+qhXg8XFx/a0F1GSB5w0NdXExc1ZL4TbbE9D0I/1o1juC+gt0dUXTCl1Q2h
-	 DpQ2yhfMHxgcQ3qijzDRiMBcLK4v9tkuc+lXcfu6hyGJl8WIMXgTc+XFx3uMeahZxIt9+
-	 4bJ1tqK4g4/lggZXygx7HFGBBgqPNOofr+uEv8pLyXKEhr7ASJsiLaGn4XmTPi2O6wA==
+	t=1792565221;
+	b=WXN/3DrH23xm0NGsqlm0LuAPXAYDS8OC2L3oe8/yTBqe0Vaff+Js/9Qvfguxcz8MjH0u
+	 l/CNdgifoBNcrxUhWlH7pSrlninPFvCFomBw6aF0+0ymSk3pq59hlwEb2mhnyW+vF8f3V
+	 9sNHpNva/PmISMOGmmMD4/bbNAfV4S9Jgf2NES8WhELW+j8SDE1x0vOX8V7VnF0xsjB1l
+	 /udn9TDm1c9EajqmoUmDDybf7PVmEKLgQROortMhJnVaBItRvyVRiih/B1bduIcqfFRYx
+	 cM0xtIGqQuw1mJA9Dwm2scIq4ZZ0owNoHfMAzrnHR+wGl4Ca721GO0HD0zYZuETkh9g==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792565174;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=ijjheEMdAZYOTtTGE4e3W26/a2l3yNs/YuDbeMhOKVg=;
-	b=gGiGM5nEtLUwE+mzw0Nrb0AZh0hSl0jBDbX+1PDA9PI4p8Hd/znR77/hdDFvcwqCTMOt
-	 RLrJexyPHSArSOHaI6Qn6MYjfzJ1vYwVdfu3Hwop0VELUAiOm7omt330jyHVgFu0DCAta
-	 WMWtAewLibJP8cRKRcLunjEd6z/b072h/XNvfCjH9PtEvumKoB0aPAhc0LkTLXzN2kqFP
-	 4i0X6j0n8r43KeTj4JTIARU5T9P1AxPJm7KwzDqJVSYHmhJsK8rGzBypFB+lksdXnlhNZ
-	 O5ctPeZJ3Lvn8R92fOTDWzXVd8KKTlDqNsCOU6tBlZ+l8HhBjFRcPh4Sxt/OOKdre/g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792565221;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=FJcKHEcNcnoDoxmtp0cQdBiB9Im2emgCuy8VL+5ww50=;
+	b=06dGLGLJGYpiQ3ZlGhBEdGfl5jSY06kCv20XVAVcIrbl+gXkeSFfKv46KGoKF9Cze6w3
+	 3V5xPmfZ7Jjba545UGnDUti5z4srUNdYGoKfsEL5Il+C+bFy7PKXgKET/283V0tt9SV+S
+	 WVqM7b2JL1QbqxMCBCbHEiUQ8LYtcG9UdqFNxdgbjjusU38jdZk+HoEBtD/fp+NSQZIgi
+	 2T6rqwa3iLKnZnN3U6bydv1HQpei40Rh3GDQqZCALMdqdzyGOmFfChgdcTZmFhHZy6kxB
+	 bvplSM9cBO9NvNEQGXSQpAviGsD6U/L0yTyK/qNhMX487qwYxpQhApRZi+C2vJvGlCw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hcD5S+mc;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.219.46
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=Mxtk439V;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.43.51
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012051.outbound.protection.outlook.com [52.101.43.51])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9D2606A319
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 06:46:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DE9D2606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37782606A319
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 06:47:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 37782606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hcD5S+mc
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-91ba702cceaso5074486d6.0
-        for <sashiko-reviews@lists.linux.dev>; Tue, 20 Oct 2026 23:46:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792565173; cv=none;
-        d=google.com; s=arc-20260327;
-        b=JtBOo+MVZl2hldzAT3dUX+56sMEKe8lFEtItfJuGCVai5axcUeBqH7qOPR9Lq9P2Wi
-         Dh6a+c2Bx27KJq/n6rubDtoq+4732mKvQ3hMJ9pVjBXLdyhzECrBrhJ5I5VTvqEW6hkd
-         g/WnivpCsMktMcKf/c7/oUOw+7aDUvucqKpzBMyuGFEOgvwchq4HLTorls/He/NrDZCG
-         +ch0o2MS1mCw5Hv6ggQOdyRaxrdOzTOOr524cshEyTeRpeQqMIJdSkk9aTwmXKgcDt4p
-         xnzdjF2oLBL3pF8jjeW167dsgW70UTCz/q5AlHAE4AGBf5i84/SzFrIwLLTzg8HowO8h
-         x1Qw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ijjheEMdAZYOTtTGE4e3W26/a2l3yNs/YuDbeMhOKVg=;
-        fh=/AdlCMJF6qUuLsczI7ru1wBLS4H93RtTxxx96z7H2I4=;
-        b=p1+wOjPvPBvh+J1g1fBrl8QiOwflj9iGf8SHnuGo+JMRbKpfaMqmu3DIQ9Ta5oPXgC
-         Cli6xmLyrL2iN2dPeOyfsmZ6MJeaMrR6ktBJz+el9hS8rCYkDOLteubnkhi2nUuZ9n4Y
-         HxLvlWJpWxPq/9yJ41Emt65/x8Q6+vCGtFSpn2LjZPub+vGY7oFzmV1m+z5AA3lNnsnQ
-         76PlAc/p0btcGLo2YVHMX1Ms5A2WvZW/F+HGQkEnECX7xqimGiAk5g5AG3HxbbCb8TzO
-         6JSes2Ipj5nebpWUdWvcXZfoCQhVDu7zpWrbbMBAKqzbqtusud2KYthPVOWpo0eR4qWw
-         FWow==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792565173; x=1793169973; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=ijjheEMdAZYOTtTGE4e3W26/a2l3yNs/YuDbeMhOKVg=;
-        b=hcD5S+mcjzIaNpHygz2s62Q8CPfsqyja/9KAs1KGzjDyvTUXb4RapIC3utxKuB4YR2
-         +9KCuL9U3BjnKZ82ZyCB6eY5QorW250D6lraRWuoQMMSK0j4arGqGUrQI4OFST77zkyM
-         QVnbTP1tyh/E+IgUiDYt+tnGIhJytpAe9KqZwlkpByC1YAPA9QBVWiwTntGhbA3v1aag
-         51RYakGMKJPoLbzPkwffHrRbmPtqjOq4BiIK20+FDLUUJOeW6mx8d/0xjZBn3WkOiX2X
-         rvSaggL0jQ2fr/9dOO77SQItTSX5OHBqu4ETl+570S97B71HjNrYFes5cUIv0bJ9GPNt
-         3FJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792565173; x=1793169973;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ijjheEMdAZYOTtTGE4e3W26/a2l3yNs/YuDbeMhOKVg=;
-        b=ugFUYP7N1BLkZijfC1D9wKjpKhgq07hBerEE1V72hTwaOKn/wZeh8L8UtEufRKikTQ
-         s1VwQsg/Bm85aC9Q+aOVXIqmAJKjJ7PfdmE6SkhteO5ooWb5KkFIxKXbYu15PXQDFoH4
-         OoJXtXEhlvk5iaowdYtQiuxexCtqHLItf3n7wX2C4fMcSah1zi6D/gx16QYNSgtfDD+i
-         Ee2ay45qS8cRNU5HgrWZMDieRwU1Z5kZ5J8xoik16WErRtmJtJUyZVJaMvU/TBj8+WV6
-         wNmWvSeysyTlTJlgpDoiscYGTTNpZyQm6ZTzCUqGQcPwwUyb0uFKWxtQQsTbU38Ha/Kf
-         ky4Q==
-X-Gm-Message-State: AFq9FYLFLHwM/9guacVnJT5GqPv/aowgCM3g2/mQwYg+Y+vRrVn3kLGr
-	7caIaLHyt8CcQPF9ZKBeBpgZy4LBs7rJK4+ITzrPqszKT8dtiG7dH+imJnHotKMduQ0q0J/FnLW
-	wDOwBufzajW9JnlhAuLRqHET3WImFJ6YjcsYA
-X-Gm-Gg: AYBFou1KRfvGxAWputczdj2SAQ522OMlwlNaiA3sFAA+Dx4bi+lxVD3mVKQFfPznJs2
-	rTiE42m4FLN0bENgghy7cOkZ39c3nq8kRgYx9F0dGEVLk2u2gJSk1M/IJRGeuYrefLamqjxcvPN
-	YzgtokAM8J7eab5zoIhEQpNVn/SU30o0SLdoLYzLBwfh//FxWAZvPnNGMPWvDEVRhuNx53xUdsw
-	GV3sWbImID0AzSkTA0/3yPKY5VBCVwD+ZIKib75PnohgrJDSHY4V5hB5QjoPvduH3+tcaIBJ/RC
-	QM5SkmxMRIWMnScUumTWAVD6Hn3er9S54C/XbK5Jp0M9DGEzEjhrtN8C/yV1HP1PSFRGUWnQgo4
-	7Xbcfkcj1Bm46xaAZ98OeAhqALgAzBs5oZjyfGXwpVRuc7bqyPnMk322qk58=
-X-Received: by 2002:a05:6214:487:b0:91b:cafe:58e2 with SMTP id
- 6a1803df08f44-91c12eb7b30mr18765456d6.14.1792565172936; Tue, 20 Oct 2026
- 23:46:12 -0700 (PDT)
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=Mxtk439V
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jNi6FBU9704il65VsuOGcsRHT7z874/g+C/fRzQa0/JzJ87qpVLTg/KYB4DDQFh5I1Mw5QQbl8NimIavc3PTYPjLaA2TRAAbThpTLxtFIuWrBmOmzGr4vayar+Vas9Q/78rSxNtcYWkyPTfmYGk4AEsWIJKPdxYFoj63zHMc4CN8cbz8mMBDPTVcWzajPEk2Dop131qkxUWM96rzAIT3BjYWoGVdK3a0SnVwFlTXjepudRJkPFb+Pn77EgoV+Np5e+MrDMUJhVDhs4xU29o+/EWLpDF1ExjYyMmknoBSIg+O6ZqDqDasT9edd9/ieB9EIBhCD19+yWRJqpCsP64ecw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FJcKHEcNcnoDoxmtp0cQdBiB9Im2emgCuy8VL+5ww50=;
+ b=Wa+xyCYnd8s04SbvYaTbe195s4KFOQ0Ek98adlNmXUvQRAqqu0vjIqJeViBdCnxLa1akporElNhTmRTMhaeOhb9XIpbOCdAm/ZbACGFV8Lvpgx/OniKqXtjqH76jLMiaF1h+M/wL5iK2j1CT4bE21xqv+iMcp2nf30IpuhQglq0NO/vGchM7GoD43sBAdPZv+nj9l+io5vdubFj5UkV+uui2mxcNR6iN4d6YU/7n1s8Zh7A9rZ3sxgEELDVnSd6ZV6eXN3LPfKJp6jcxi7EcO2xZd3rQ9laD+AbB+tZniluBa9hwmQSufL/ZLWKLNkwrHWIY3HI/BmrOLAzZdFCh8A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FJcKHEcNcnoDoxmtp0cQdBiB9Im2emgCuy8VL+5ww50=;
+ b=Mxtk439VhtpjkmMllkIk8UIJ/Xf/SMgLeXiQamaUMsUx58PcdtuOiImHM7E7E6/AcJyg1/XosFbvRUHscAlG5Z/hvfKugPt2SLz7E0zs4st6BvFH4fsBnAyi3OldGy3rO/5By11791VthGAEs3zMUSU1LFDjzACwAGuSb+VMRA0=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DM4PR12MB5039.namprd12.prod.outlook.com (2603:10b6:5:38a::18)
+ by DS6PR12MB934327.namprd12.prod.outlook.com (2603:10b6:8:4c5::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Wed, 21 Oct
+ 2026 06:46:58 +0000
+Received: from DM4PR12MB5039.namprd12.prod.outlook.com
+ ([fe80::762:6408:ca99:701d]) by DM4PR12MB5039.namprd12.prod.outlook.com
+ ([fe80::762:6408:ca99:701d%4]) with mapi id 15.21.0546.012; Wed, 21 Oct 2026
+ 06:46:58 +0000
+Message-ID: <eb837a59-b682-423f-93a7-f83de4e38d4c@amd.com>
+Date: Wed, 21 Oct 2026 12:16:51 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/2] gpu/buddy: restore two-pass clear/dirty guard for
+ range-biased allocation
+To: Matthew Auld <matthew.auld@intel.com>, sashiko-reviews@lists.linux.dev,
+ dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org
+References: <20261020055537.1640552-1-arunpravin.paneerselvam@amd.com>
+ <sashiko-outbox-178464@kernel.org>
+ <30e81db2-a56a-464b-93ea-c74aa161fdde@intel.com>
+Content-Language: en-US
+From: Arunpravin Paneer Selvam <arunpravin.paneerselvam@amd.com>
+In-Reply-To: <30e81db2-a56a-464b-93ea-c74aa161fdde@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MA5PR01CA0154.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1ac::15) To DM4PR12MB5039.namprd12.prod.outlook.com
+ (2603:10b6:5:38a::18)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,64 +99,270 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261013063259.2734757-1-a0282524688@gmail.com>
- <20261013063259.2734757-6-a0282524688@gmail.com> <sashiko-outbox-169117@kernel.org>
-In-Reply-To: <sashiko-outbox-169117@kernel.org>
-From: Ming Yu <a0282524688@gmail.com>
-Date: Wed, 21 Oct 2026 14:46:01 +0800
-X-Gm-Features: AclHuK_sk3N3reGEV1vFqkhXmWhSRT0CO9e7SvF9FhuKig6lX9RUqvijqALmuJY
-Message-ID: <CAOoeyxWNsBt6nDn82bCv0DUpar3c_K19su87UEbjm4CfCJbbHA@mail.gmail.com>
-Subject: Re: [PATCH v9 05/12] mfd: nct6694: Move module type macros to shared header
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-gpio@vger.kernel.org, linux-hwmon@vger.kernel.org, 
-	linux-can@vger.kernel.org, linux-rtc@vger.kernel.org, 
-	linux-watchdog@vger.kernel.org, mfd@lists.linux.dev, 
-	Marc Kleine-Budde <mkl@pengutronix.de>, Oliver Hartkopp <socketcan@hartkopp.net>, 
-	Vincent Mailhol <mailhol@kernel.org>, Oleksij Rempel <o.rempel@pengutronix.de>, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, lee@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM4PR12MB5039:EE_|DS6PR12MB934327:EE_
+X-MS-Office365-Filtering-Correlation-Id: 98e7f3a3-cfc0-4da0-fefa-08df2f3f1a82
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|23010399003|1800799024|6133799003|22082099003|18002099003|10067099003|4143699003|261009223027099003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	YLvsKPFuxa8sJeKv/9QUhitePXcjgb/GclgZdZJeLi+zkCkATLA/rbkr1GOZcT8TcCR+d4nf3Fmfj4o/PUneH3ZYXknKQpL1VaqyDl6xB+zWdk/PTKKZPmdz1mXqajhjSgZP5y80jMsB3CCobzJDKQgQ/IEH5gq8DuKGIqM7Q2SO4JqCSCX7C79hJvV6LvtJpfzdWAU5kql/2gkkXfq6I2YDMwODGP21HYijuphkMF6EGW6Vho5/IWMlHGVFLi6v7/0i2tFVa7DINUwRd6DgOK04hyBInCUBuJBptLnMA+R2veGt6Qdz7gOEe8d3gco0mnPjwdtZzE8h7Pgadl54rfG7GYtbqrSRB4nErcR55S3W+ESspRbb7H40wlC79kl8oTUFlO8993JDBZR3Z49Iov3fM2ePT7a0OPZGQ8lQjeyHYF0GBa1HbRlLjxOHRhhf8VxW/8Wsi65pDVNvByVBLA5ChChAr8RFKSwQKnuL165c6ZWwlkOTF6l2Do1obtgE29cdLDwX3R8tyleFO7MzffqNrY4PSnL5pAVrLzwVpnufT7kRsflVjz7o8l4CGk2+4UBNDmZYIVVKp0fYYF747jHDdykJ90aGK5+Q9vBTFPbH3oLYQ8Xho2jHlDciScc9x8uOUofA+GymHWBv/aILpiXatvBEV4gQsdbDhsFUTX8=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR12MB5039.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(6133799003)(22082099003)(18002099003)(10067099003)(4143699003)(261009223027099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?aFhQKzBoUEhlZzI3SUdnUWFyQkdZVlpOb21RcE9kK3FVaGFwV014MlVJbkFB?=
+ =?utf-8?B?STlBdi9WN0ZWRTBNUkVCWjJmbEpRLysvMFphMVhIQ2puZ0RYR1kvVHA1dWdS?=
+ =?utf-8?B?QTZXQ2tiRk0raUdGbElZK2lCbWFvUmNKSGxNOTJSR3Y2OWVXMitodDl1MzE1?=
+ =?utf-8?B?Vko0Ty9WU1NTR2JkU3BDS25FRzVHQ3FleEk2MU1RVUFLZmpJUjM2eWdkZmZt?=
+ =?utf-8?B?M3VoVlFwVTZHSVFycFJGK01JeTFOQjRQeUNBSkh3TlB0ZTBWaFkwQkF3Skp3?=
+ =?utf-8?B?MVZkVWdOTGV3ai91RVVVZXV1V1ZSKy9JL003RlMrQk11c0twOFJXYWc5ZjNs?=
+ =?utf-8?B?Mi95UmZrTmdKdDU3cWNiMmhabVRtTDg0cFo3YTZxdmNDSkk3aDRUc0NYZEZz?=
+ =?utf-8?B?Sm14aTNRQ3BTaDE2eDRic05SQk5KL0RvdVdFVTNiQ3VDOExmaXIxY0M2eGZU?=
+ =?utf-8?B?UVdEV081ajNQa1lzTDFvSHgrZHlHQWEwdFVkY3UrL05HMFZWRGttc0JMOW5s?=
+ =?utf-8?B?elRPa29oNmtFVlUzbFhZVHhkY3ZzOUdMb3AyOHNkdGFSS0NOU0s5Z1FkK0Ix?=
+ =?utf-8?B?UHNXWmc2VWFvTlptTFM3NVVUQVJ1aVpPbWhqZnJrVSs0Qkd5QkUxOWdpNGZY?=
+ =?utf-8?B?R2I2OFpUeXZheVdWdjd0SHhPcVR6U21WZ0gybnFLSHprRTdtU3dPUURqVW5B?=
+ =?utf-8?B?N3lUZEpjYktwdVMyK0JtTFhwWkhWNVM3NGp5dUdIdXRlMG9CU3lINUtvZTNm?=
+ =?utf-8?B?UFhUVmVyRGhkSFdrckl2TDV2QXZ5dlI3dVl1OVpvNWZTM2svaVphTVplTU81?=
+ =?utf-8?B?M1NTWVFNTWlCOFNuZlk0ZEJVZzdjVkdBdWIxTkMwR1FWZUFST0MreHQ1Y0J0?=
+ =?utf-8?B?UzVpMWwyRGNvVGI5MDZ2NWRpVitQdjVKUmpEeVFUN3EvUmJqZEhYa2VLSFhs?=
+ =?utf-8?B?R2RyVVJQaGdvNDU2b2xzKzlDbE9DV2M2VFNDYmY2Si9VbUhOdEltQXVHU0Y5?=
+ =?utf-8?B?TEVOT3JnY3hFUXhoMkNFSythcnpxVDUwekt2TVVOUHZUTlJGeHduZ3BHQTlm?=
+ =?utf-8?B?TlI0VU1Uek84QWdsRlo5ZEl2Zm4wam9IMWVZTGRWRDBNVDdRMnpwTUtMTFJ0?=
+ =?utf-8?B?dS9KRnhDZWdLajd1YWJRLys2V0RKQUVHLzNqTFBwQXVpbjJ4eWVCd1VmQk16?=
+ =?utf-8?B?eXlGQ0VOcjVQNDV2aHFCNDdOK0xkalIrZUpHQ1dJMlBHa1gydndCbmcrT1ZE?=
+ =?utf-8?B?ME5IdGl6MDBEVFlPMzdIV1JGbVkzdk41bjYzZ3Z1WXl2b3hTaUhhMFhZaFZY?=
+ =?utf-8?B?S1FyZG5Ba0FBSXR1UkxnT0J2N3ZhVmRDSHpESUxWTEZMdDVYM3NsTUJWZmdv?=
+ =?utf-8?B?dVJETmtOTk5tcStRdFd1WGttNHdmY1lWM2djVGp0Y3pvWGZ2b3F3WHdtZUJt?=
+ =?utf-8?B?Uk01QmZla0hYMFcySkNZUzlMZE9JbHFhTlM5M2FHUkV1bnhBaSswS29vdUZQ?=
+ =?utf-8?B?WVd5VGJWUGJRdzNUOEg2eExnYmRsOVU2R3NrTkhNeGg4K2RSTEZtMlFYdnh5?=
+ =?utf-8?B?S3NQYzJWRE1lZkJuVUpyNTVBT1BlczQ4YTNJRllNQjgrY1I3cDRJSU10K0FN?=
+ =?utf-8?B?OHBLTXdzbFY4aS94T2xhMTBZWGdzWDVZRjBvd3ZEQTM2RG5BSWNpYlJweTFO?=
+ =?utf-8?B?R2JBb1o4eEJXR296Yjk4TnRDbmlpWTQrRGtUQXlJWTFQMDBFdWN6Ym1FL3pa?=
+ =?utf-8?B?d1hpLzRPSnhqNEI5U2lEU0Z5eFFqaThnNXBSclI3TTBQejlxazJhNW1WVGRn?=
+ =?utf-8?B?ejJNVlIzUGJ2QlVMemdqeHZiRG85UThFVmdUR3BQS1hiVDJoRkFVd3kvVzNt?=
+ =?utf-8?B?RXZvb0VHMGlHSkpXQUpzMHBMWmFJOWx0S1hpNEFJN2E2TVNWRmF3TDdkWWFZ?=
+ =?utf-8?B?RXZBTTJERmxvZ0FWc3gzLzkzNTFaMEF1UlQ2L0dFSHk3Y1A1Y0VVWStNYnVD?=
+ =?utf-8?B?Tm41S0FIa1ZXY3NOTXZtVFdYK1lUbXNUNE1yRFJyT3lWZ2NrMnZ6c05odjlU?=
+ =?utf-8?B?bG5tOFlKc212eVpyMjhpQ3h4NkhlS1BFZUdRVkdSSlRGYWRJbWFYbUxYZ0Zx?=
+ =?utf-8?B?YWJham9JbVVsakMvbkVCSkhMWkduTWZhSDc4MTJqUDVYb2t4aHlob21PMlJD?=
+ =?utf-8?B?by9QWHRkakJ0ejVRZC9uZVJJNEJmRWdwSHJ6dkJoR3pnZFhCZkxGYjJ5M0V1?=
+ =?utf-8?B?TGhNckdRQm5UU0c1cUN4WnprRXdsME5JWFRTQ2IvVXpEUjI0OWpqZk41cXRV?=
+ =?utf-8?B?a2VvL3NkQjZhYVZtNVoyME5DREJyNWw3NXM4T2xWMitaazJZakRwQT09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 98e7f3a3-cfc0-4da0-fefa-08df2f3f1a82
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5039.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2026 06:46:58.5331
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: SWKcdlF971V3l55ELGKqnaKoRPN6/yQH9UM83dQuOP9TNA8wfcr1eW8e0XSGIqolBoavapIjCWFbjw3cweMiHw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS6PR12MB934327
 
-<sashiko-bot@kernel.org> =E6=96=BC 2026=E5=B9=B410=E6=9C=8813=E6=97=A5=E9=
-=80=B1=E4=BA=8C =E4=B8=8B=E5=8D=882:40=E5=AF=AB=E9=81=93=EF=BC=9A
+
+
+On 10/20/2026 3:22 PM, Matthew Auld wrote:
+> On 20/10/2026 09:00, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential 
+>> issue(s) to consider:
+>> - [High] gpu/buddy: block_incompatible() mishandles split and mixed 
+>> blocks in __alloc_range_bias()
+>> -- 
+>>
+>> commit 6dff7f0e6dce9c68ecb98f2d911199843d2b4401
+>> Author: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+>>
+>> gpu/buddy: restore two-pass clear/dirty guard for range-biased 
+>> allocation
+>>
+>> This commit introduces a two-pass search in 
+>> __gpu_buddy_alloc_range_bias()
+>> using block_incompatible() in the strict pass to prevent 
+>> range-restricted
+>> allocations from splitting opposite-class (clear vs. dirty) blocks 
+>> unless
+>> no matching blocks exist in the range.
+>>
+>>> diff --git a/drivers/gpu/buddy.c b/drivers/gpu/buddy.c
+>>> index 503f7d5934e4b..91935c71c5255 100644
+>>> --- a/drivers/gpu/buddy.c
+>>> +++ b/drivers/gpu/buddy.c
+>>> @@ -1240,11 +1240,19 @@ static void __gpu_buddy_undo_splits(struct 
+>>> gpu_buddy *mm,
+>>>       }
+>>>   }
+>>>   +static bool block_incompatible(struct gpu_buddy_block *block, 
+>>> unsigned int flags)
+>>> +{
+>>> +    bool needs_clear = flags & GPU_BUDDY_CLEAR_ALLOCATION;
+>>> +
+>>> +    return needs_clear != gpu_buddy_block_is_clear(block);
+>>> +}
+>>> +
+>>>   static struct gpu_buddy_block *
+>>>   __alloc_range_bias(struct gpu_buddy *mm,
+>>>              u64 start, u64 end,
+>>>              unsigned int order,
+>>> -           unsigned long flags)
+>>> +           unsigned long flags,
+>>> +           bool fallback)
+>>>   {
+>>
+>> [ ... ]
+>>
+>>> @@ -1298,6 +1304,9 @@ __alloc_range_bias(struct gpu_buddy *mm,
+>>>                   continue;
+>>>           }
+>>>   +        if (!fallback && block_incompatible(block, flags))
+>>> +            continue;
+>>> +
+>>>           if (contains(start, end, block_start, block_end) &&
+>>>               order == gpu_buddy_block_order(block)) {
+>>>               /*
+>>> @@ -1315,38 +1324,8 @@ __alloc_range_bias(struct gpu_buddy *mm,
+>>>                   goto err_undo;
+>>>           }
+>>>   -        /*
+>>> -         * Top-down is a strict address-placement policy, so when 
+>>> it is
+>>> -         * requested we ignore clear steering and simply descend the
+>>> -         * right (higher-address) child first. Only a non-top-down 
+>>> clear
+>>> -         * request biases the descent towards clear/has_clear 
+>>> subtrees.
+>>> -         */
+>>> -        if ((flags & GPU_BUDDY_CLEAR_ALLOCATION) &&
+>>> -            !(flags & GPU_BUDDY_TOPDOWN_ALLOCATION)) {
+>>> -            struct gpu_buddy_block *prefer;
+>>> -
+>>> -            if (gpu_buddy_block_is_clear(block->right))
+>>> -                prefer = block->right;
+>>> -            else if (gpu_buddy_block_is_clear(block->left))
+>>> -                prefer = block->left;
+>>> -            else if (block->right->has_clear)
+>>> -                prefer = block->right;
+>>> -            else if (block->left->has_clear)
+>>> -                prefer = block->left;
+>>> -            else
+>>> -                prefer = block->right;
+>>> -
+>>> -            if (prefer == block->right) {
+>>> -                list_add(&block->left->tmp_link, &dfs);
+>>> -                list_add(&block->right->tmp_link, &dfs);
+>>> -            } else {
+>>> -                list_add(&block->right->tmp_link, &dfs);
+>>> -                list_add(&block->left->tmp_link, &dfs);
+>>> -            }
+>>> -        } else {
+>>> -            list_add(&block->left->tmp_link, &dfs);
+>>> -            list_add(&block->right->tmp_link, &dfs);
+>>> -        }
+>>> +        list_add(&block->left->tmp_link, &dfs);
+>>> +        list_add(&block->right->tmp_link, &dfs);
+>>>       } while (1);
+>>
+>> [Severity: High]
+>> Does calling block_incompatible() on every visited node in
+>> __alloc_range_bias() before checking whether the block is split or mixed
+>> mishandle internal GPU_BUDDY_SPLIT nodes and coalesced 
+>> GPU_BLOCK_MIXED free
+>> blocks?
+>>
+>> First, when mark_split() transitions a block to GPU_BUDDY_SPLIT, it 
+>> leaves
+>> the previous GPU_BUDDY_HEADER_CLEAR bit intact on the internal node:
+>>
+>> drivers/gpu/buddy.c:mark_split() {
+>>     block->header &= ~GPU_BUDDY_HEADER_STATE;
+>>     block->header |= GPU_BUDDY_SPLIT;
+>>     ...
+>> }
+>>
+>> Because gpu_buddy_init() initializes roots as dirty, any root or 
+>> ancestor
+>> split while dirty keeps gpu_buddy_block_is_clear(block) == false 
+>> while any
+>> descendant remains allocated. Conversely, a clear block that is split 
+>> and
+>> later has a descendant freed as dirty keeps 
+>> gpu_buddy_block_is_clear(block)
+>> == true on the split ancestor.
+>>
+>> When __gpu_buddy_alloc_range_bias() runs the first pass (fallback = 
+>> false),
+>> __alloc_range_bias() evaluates block_incompatible(block, flags) on those
+>> GPU_BUDDY_SPLIT ancestors and skips the entire subtree without 
+>> descending
+>> into its children. If no other root satisfies the request, the first 
+>> pass
+>> returns -ENOSPC and __gpu_buddy_alloc_range_bias() falls back to the 
+>> second
+>> pass (fallback = true), where block_incompatible() is disabled and the
+>> clear/has_clear child-ordering preference has been removed, causing the
+>> search to split the highest-address extent regardless of class.
+>>
+>> Second, __gpu_buddy_free() coalesces adjacent clear and dirty free 
+>> buddies
+>> into a single GPU_BUDDY_FREE block with state GPU_BLOCK_MIXED, which has
+>> gpu_buddy_block_is_clear(block) == false and block->has_clear == true:
+>>
+>> 1. For clear range allocations (flags & GPU_BUDDY_CLEAR_ALLOCATION), 
+>> Pass 1
+>>     sees gpu_buddy_block_is_clear(block) == false on a 
+>> GPU_BLOCK_MIXED block
+>>     and skips it via block_incompatible() without splitting it to 
+>> reach the
+>>     clear sub-blocks inside. Pass 2 then splits the mixed block 
+>> without clear
+>>     child-steering and unconditionally visits block->right first, 
+>> returning a
+>>     dirty block whenever the clear half is in block->left.
+>>
+>> 2. For dirty range allocations (!(flags & GPU_BUDDY_CLEAR_ALLOCATION)),
+>>     block_incompatible() returns false on a higher-order GPU_BLOCK_MIXED
+>>     block because gpu_buddy_block_is_clear(block) is false. Pass 1 
+>> then calls
+>>     split_block(mm, block), which reclassifies block->left and 
+>> block->right
+>>     via mark_free(). If the child overlapping [start, end) is clear 
+>> while the
+>>     dirty child lies outside [start, end), Pass 1 rejects the clear 
+>> child via
+>>     block_incompatible() and skips the other child without calling
+>>     __gpu_buddy_undo_splits().
+>>
+>> Wouldn't leaving that split GPU_BLOCK_MIXED block unmerged keep both
+>> children in GPU_BUDDY_FREE state, preventing ancestor coalescing on 
+>> teardown
+>> and triggering 
+>> gpu_buddy_assert(gpu_buddy_block_is_free(mm->roots[i])) while
+>> leaking the split child gpu_buddy_block structures in gpu_buddy_fini()?
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Low] mfd: driver-specific header modified in global include/linux/mfd/
-> --
-...
-> > --- a/include/linux/mfd/nct6694.h
-> > +++ b/include/linux/mfd/nct6694.h
-> > @@ -8,6 +8,15 @@
-> >  #ifndef __MFD_NCT6694_H
-> >  #define __MFD_NCT6694_H
-> >
-> > +#define NCT6694_HWMON_MOD    0x00
-> > +#define NCT6694_PWM_MOD              0x01
-> > +#define NCT6694_I2C_MOD              0x03
-> > +#define NCT6694_CANFD_MOD    0x05
-> > +#define NCT6694_WDT_MOD              0x07
-> > +#define NCT6694_RTC_MOD              0x08
-> > +#define NCT6694_RPT_MOD              0xFF
-> > +#define NCT6694_GPIO_MOD     NCT6694_RPT_MOD
-> > +
+> Analysis looks correct to me. We assume if you get as far as doing an 
+> actual split, then that must mean there is something in there which is 
+> compatible, either you find it with some number of splits or one of 
+> the split calls hits an error, which takes care to undo the splits. 
+> But now with that compat check, this breaks, since we don't know ahead 
+> of time if it will find something which is also compat. Arun, thoughts?
+Agreed, Matthew, and thanks for the pointer. The split-then-reject case 
+does leak because the compatibility check breaks the assumption that a 
+split will always find a suitable block.
+I followed your approach: after split_block(), the parent is pushed back 
+onto the DFS stack, and unsplit_block() merges it back when both 
+children are still free. I also narrowed block_incompatible() to check 
+only free blocks.
+I extended gpu_test_buddy_alloc_range_clear_guard to cover this case. 
+The test fails without the fix and passes with it. I will send the v6.
+
+Thanks,
+Arun.
 >
-> [Severity: Low]
-> Are these driver-specific module type macros only used by the parent and =
-its
-> immediate children?
->
-> According to MFD subsystem guidelines, driver-specific header files shoul=
-d not
-> be placed in the global include/linux/mfd/ directory if they are only use=
-d
-> by the parent and its immediate children. They should be kept local to
-> drivers/mfd/ instead.
->
-> Does this addition of driver-specific macros to the global header violate
-> the subsystem architecture guidelines?
+>>
+>> [ ... ]
+>>
 >
 
-The sub-device drivers under gpio, i2c, can, hwmon, rtc, watchdog and
-pwm also use these definitions, so the header needs to stay in
-include/linux/mfd/.
