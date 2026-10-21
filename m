@@ -1,97 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.83.33
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1792600679;
-	b=E9D/tcqn+fa91NxocWebJ8zTOiH+2DhXwYnphZAwwpHs2NtlWBVVbNAoI73GOeHhPPkY
-	 YUhEaXkGZnyaULOC1wfOFGptYVKDaK4a+fwLKzRwrtCqBV6jJjxbDbJsSwavFqf0C30rz
-	 +wzPyltw0Yrp6tp+sfDCUsTeSmRBTcLBiL1RIWfJmZLRBB67QhX3aqRiqi09GnpbFv38o
-	 tBWQ+z3p7J6kOX1UOnkczEhbfXmsU6AjQwz347JDhnXqW7OrF3V35gM8z7cDqd++5kB0N
-	 gBj9boDl+f2HRJuVdJ3BiKD8OZB8enBW2JEI7daZ8xbISZXEPucrhLBiBcOpl7LCxrA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792600679;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=f8k2DjxEyqUaL9cGTocKFyj6UPD2f8risYrBO2Zps14=;
-	b=pmV06D87XmCbV7LVF/MQVBPXnnDanqMBp3tT8c6VO4Wl5eXOSWNCtpVj+P6ToF6K1tyo
-	 y+NHcYC7XQcljGhS6Jb6D6uar7Nf3oZiiAEJ87rzmUQn9WnMj+HceuAxtxGuQwfTN0rPo
-	 GGxBNfybvs49o5hh905kVzJfcZvAaGejgDkVaD077ClJL34qV4uKhTgl3d3sig/mHO9DV
-	 YnENCPVqlA7a2WMresooJOMlRG53aPoqpGhs//E0H+q88BJPvU2adVYKyIQGr6yzccSh9
-	 fLjYvuShUApunlM7mDax0CP7oJ/64l5+D9OPvMCuLxZ9584Heh8bz+NZgg5z1Y12gTg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b="KQ26xcF/";
-	arc=fail smtp.remote-ip=52.101.83.33
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013033.outbound.protection.outlook.com [52.101.83.33])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.158.5
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792601081;
+	b=biAaCr+VYiwrajK8VgHYB7qfrnpcOZlxwi8JZEETAPk2fFygH0UG6YuVlWY2lxl8djzc
+	 ATM1K32ryN4fcEaDDomLvB4gZ+fJAvFJ7/11eLIQVCtQp5vIJJ4GzBtr0ef7fJeac/A0S
+	 uZzueSpcMNXx8tOUX91H02dmYjmlykFwd58AyNfIBYCZ2SMDcmiuuH1tRmpEyfof7nQzw
+	 6z3uIH7uN+XT6o6K6iWj4SZ72OqSkA73hoYA96Ou+1VDPzAvjsbwXxye317HzGHi6wBVd
+	 qi39fmDTjjvmgVF4BsM2llEzmfzgfi5GBpe9Yx5DsLkIHxM4PwnHKmCkW5vVWE4MufA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792601081;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:User-Agent:MIME-Version:Content-Type:
+	 X-TM-AS-GCONF:X-Proofpoint-Spam-Details-Enc:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-GUID:X-Proofpoint-Spam-Info:X-Authority-Analysis:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=e31l6mY+7kYwd3xTWE7F78PbWC6bDsSOvajR5yk1q0Q=;
+	b=V3A5NwFtI2hEvMAP8Mpqdm8v4JVtQJ0an1uzuyVjum06dpBPqC+og728dSvGoLYJ18it
+	 pYnO2rOadmce7wIWEFUQIT302rro0V8rl+RjqkM1C3vxnE50LQZ9O/LoHF4ZKeAC2Fkhi
+	 Z/oZSg6CUHN73EhzpnsQAFqMk4wPjFKlksRJCewgyLr6QhE+ripwayyAVyWF3UO7VSc3c
+	 7fMrHA3ecqGlLudrzRRrb3VCbpQTC0C9v9xtqkAQGB73DZOOULDwHQnGdMnDkjaJq4VUW
+	 3SqNdbCXtLx1IPjUFXsxGSe0ugRx88YviVxEkjkO/74UPf+JwyaQ3UFPt8lfbubbIfA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=hZjVbvzb;
+	arc=none smtp.remote-ip=148.163.158.5
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7564E606A31D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 16:37:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7564E606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1005606A31A;
+	Wed, 21 Oct 2026 16:44:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D1005606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=KQ26xcF/
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pwmW04zDFOwUCpT3cgJwrB96obFIKZSOTVjbWBL7RQS3DRBupmCr5kIM1Ql0ETVqzxykFIzTAT1jqJ75IhEbzkOZISeETh/rbHDzYQmskRlhuXM9enSICNrK9eiiIj25frRxMuUZF7YVlV4ApEjI0/vgXfnmYX7PAfrsVZKgpbHFaDrUG0GpET19bZVqK7IxTcnYNPkBN2rWYIdFDeXmAgT386i5ELB+llH1MjY5/5ItynrM6kJS8bjR4X+ADM2aRZHxnJvvmtjBKyVlFSHzB8SrDzHKOlg1Oerz6Koa+GLlGcKN4SaLEKwl7aRWUeiOzmsEp0M6xJRTP2XjwjwJgg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KnsqBi+nIoInxmUsk2IlzZXoNsGJz441rkqgl6fGkPg=;
- b=Rwi8iDh1KUVie0VKCKCv9STiUnvnnp3FX8xL+gXMEnrg+Vg26pWNy06Uq9DDuAK2tHeA1nt/4yE0QvQs1rbjrIZLfq0xvS2R/KNiTch4SidmjvgOmy6FiA9OGGOZo+kjAOEIaogSehocudwXuf+yDTKHCHHQBijm5oCPUs87K51uJD7AD5lykzoRKH88xvhN3trjMEtbReALGismeg957xw32/R/s0txy+mO4isvM7CVmxsmgwU290KXqLPN3dGJdY6KcCxK/ni/eitMDsJ2muFmDuPfzTs5WOCS4z6e/BqIzt84e1BvD4CT7mLQPM2m6f0Jd9xYAVLeF74RXxB50w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KnsqBi+nIoInxmUsk2IlzZXoNsGJz441rkqgl6fGkPg=;
- b=KQ26xcF/JKvVHwuUHyQwgBwasUlQ+K4v9i8t4V6nMhl6XU2rpA0qF6dh4+UuQkv1bgmvcFdY3b+JMRh2/H9J4BVzjd1pzLyGitiuwf2lgP6cC0dG06gKjjD8hTk+4C/EOholQysrFPIMR2zPFobLAVvYyD2mb9CDhjAwuYkMI2x8WD7JXYgSn/tDyLPiKXviDUAqQuzIFY3+QaW3A4Cfjk50xTWGJrTBrEl+0vJNBHEOZhuPuAJKvdLi4fj/u6AphNqdlbyN96OLMu+HYwMQWp4rrAtzh5ywUG3XVtxULjJjO5zap7jW9QHePSxI4ALgSdY+vD90y1nCZtRN3zUSng==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by AMBPR04MB12310.eurprd04.prod.outlook.com (2603:10a6:20b:723::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Wed, 21 Oct
- 2026 16:37:55 +0000
-Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
- ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0546.012; Wed, 21 Oct 2026
- 16:37:55 +0000
-Date: Wed, 21 Oct 2026 12:37:48 -0400
-From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	robh@kernel.org, dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org,
-	conor+dt@kernel.org
-Subject: Re: [PATCH v9 2/4] dmaengine: qcom: gpi: Add lock/unlock TREs for
- multi-owner I2C transfers
-Message-ID: <atjqXMg6-fLLYEsf@lizhi-Precision-Tower-5810>
-References: <20260813140047.1006478-1-mukesh.savaliya@oss.qualcomm.com>
- <20260813140047.1006478-3-mukesh.savaliya@oss.qualcomm.com>
- <20260813141955.7466B1F000E9@smtp.kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260813141955.7466B1F000E9@smtp.kernel.org>
-X-ClientProxiedBy: DS0PR17CA0007.namprd17.prod.outlook.com
- (2603:10b6:8:191::14) To MI3PR04MB12438.eurprd04.prod.outlook.com
- (2603:10a6:290:76::14)
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=hZjVbvzb
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69LFi9Lh1594211;
+	Wed, 21 Oct 2026 16:44:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=e31l6mY+7kYwd3xTWE7F78PbWC6bDs
+	SOvajR5yk1q0Q=; b=hZjVbvzbnfBdfrfEouGwGEHlBEbZ1H9zAyppysPDf28l+C
+	ugCZyuChKKUIUB+o/+Fvh4epHLVEuZNkQHl5PE84Pp43DWU9gT1kGisjY8DSBMd6
+	swRT/aKLkV9Cqjl+HQyhzxhAK/UuA/6QI+K+2vuSmLqXpaeXLn4J8t59355F1vtY
+	5loLBWbi65NqJyGPgvYAPSRkzgJ/1K7agGxeyuAxB+CJ3tjSrCadA6ZSf7v/8ffP
+	xlxNthvmQWjGh8V1aQZlNh4auqy+zfgw6dBAb/rFUo1ciZJJ92oxyoCgeA0rKCp6
+	anof4hFvbRvDEBdW5QmpaEjokTj7khofVqt+//hw==
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hdw5a21ny-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Wed, 21 Oct 2026 16:44:37 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69LFZ3NV2114770;
+	Wed, 21 Oct 2026 16:44:36 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hefss3ycc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 21 Oct 2026 16:44:36 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com [10.39.53.232])
+	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69LGiaNa18022940
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 21 Oct 2026 16:44:36 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 0C9F258059;
+	Wed, 21 Oct 2026 16:44:36 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id BD94158053;
+	Wed, 21 Oct 2026 16:44:35 +0000 (GMT)
+Received: from e (unknown [9.16.46.225])
+	by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+	Wed, 21 Oct 2026 16:44:35 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v15 10/11] scsi: ibmvfc: register and use asynchronous
+ sub CRQ for events
+In-Reply-To: <sashiko-outbox-178317@kernel.org> (sashiko-bot@kernel.org's
+	message of "Mon, 19 Oct 2026 22:26:13 +0000")
+References: <20261019-ibmvfc-fpin-support-v15-0-a858726e178a@linux.ibm.com>
+	<20261019-ibmvfc-fpin-support-v15-10-a858726e178a@linux.ibm.com>
+	<sashiko-outbox-178317@kernel.org>
+Date: Wed, 21 Oct 2026 11:44:35 -0500
+Message-ID: <87mrs7vw98.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -101,223 +94,184 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AMBPR04MB12310:EE_
-X-MS-Office365-Filtering-Correlation-Id: 28c602f5-b432-47b6-9650-08df2f91a870
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|366016|23010399003|376014|1800799024|6133799003|18002099003|10067099003|22082099003|4143699003|261013131602099003|261009223027099003|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	xeDVqHfSw44FJDJtiXkEuNFhuXtIDACsJPJFXLEAfOTJzsJ2jxQP6SWL0mE1wqnK2+cDYJ6YoD+qLsN3TyoW1HE3BIiQEbMsctzcNxlQU/TGtQod7zK0aILlprpFOhE4iCJ9dZbMSs/3Ual5g1mk398TuPOgz1fcnkRahDMfxOw49QJVLCdReopvWs3oUCvneE1RyssOZGHkcZEIXSdT8OaGDGyQ3flUdzvQTWhBFJ70pcv6Xwxb5+nBaWPhHwed4ay6BVswWTAyZ3ODWcTk6Dv3dT7EHqS8BehCLeW6Q66alKVe1Yhh7/xMQzYY6FLOBDRY6jvY0LUkPj27sZ4gnJ0SjtQQtraF7H4+puZa06tNV7bmXnaUlC7/10x0ptY7ts4aH8/5vPO7z/Yi8TF+AV535QuLwCDSc2bK/G5P5cHjo8wRMW7ZKJuQHaALJdpOa9R67g0h5rQcqoL9A7lLW+7enj21eadaHTg2wHMN0AS4+oGhZ5ytsJe/Nw7VKn0d3Nz/zs0tiij6LyB4EpCp3GkwUJvXgzOiAmEjLftqlKc7z9QMw23LDl7jqnn1/Q3xR/zDc/JsnmY0d7Gz1b+I8AiHyBxHeiCxFw7L//zqjDI=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(23010399003)(376014)(1800799024)(6133799003)(18002099003)(10067099003)(22082099003)(4143699003)(261013131602099003)(261009223027099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?4Pxev9DwH5WBPJRtKSuWZ5bxXvvq7siVdjaMk3aZcsrv1aaijAhHVElHNg?=
- =?iso-8859-1?Q?eSYALbMX2DX/eBl+rEhcTuTcvZbDvXpqnuOqDmBo5WTz5D/DFomyqkBB+0?=
- =?iso-8859-1?Q?wsTFJ6eBPmk4+VaewEtZjv6wt50CSkubkjd5uVwP2wrEkrb+d7yoKgMnQE?=
- =?iso-8859-1?Q?JgJspIzrbO8T5rO33Jmb0hQWE/St8IA1JEG0K0UrtHxhyhVujNhtKHXePx?=
- =?iso-8859-1?Q?8HISUVJEA7T2KXAw9ez/+m+aVV6VJUg96yBycrqhHRQN7AK9HOD4ogXDhw?=
- =?iso-8859-1?Q?gDm6wF8hzDHHuMEifrrlAbTjDsjT/Ok+Uo6jKfinItqzpWfKClrUOSKIjc?=
- =?iso-8859-1?Q?snmVftkc31pjdUKf1GMY05f7v6GsrkRob4VTPgJWqQZ2k2HVDCl1ptbYLb?=
- =?iso-8859-1?Q?F0emtjt/QxHJ/6YfDyP4oImGRRml4irJhM3CIMZDbyi7wL1inoDFZBuKRV?=
- =?iso-8859-1?Q?BgZqwkdX2lpSg8/6uc9+BVKOuxHLysTHuKA2MYQGc+n2Xc2Tcle51nO2Ko?=
- =?iso-8859-1?Q?+U7+sDkkX+fvra3TH6asG+MTfEZmyRxwiolfzGvteWyVuSHhoNik7i7LcJ?=
- =?iso-8859-1?Q?x5znquSW4O6vpJ9jdEjQvGW+/DghL8bryh5Y18eQHWK8Ecx78DEv2219cs?=
- =?iso-8859-1?Q?xPiKqh0p4Wrjkq7ak4CKAFmNrQ+ATM1lR5Rq5p4+As+qH8AwcsTWULzKFz?=
- =?iso-8859-1?Q?TDNX5o0DACcrYhu8MwVvViOgZyP/BkcY8Sv7rz6jzaEUDpzPwEpk6ksp3J?=
- =?iso-8859-1?Q?v6U2snmxHcoSGu+DgN70V41lMg9hGdNZH+hpr5WDTfTX0kmmY12c4ffIBT?=
- =?iso-8859-1?Q?p6fB5BHORjzPbeva4Bz1wrzv7EHn8/sl+ZpObaYGFMFTzG0QtdKtAqSTS9?=
- =?iso-8859-1?Q?8qSfnZlrVAfYzvaJNj4Rsxn7Y8T56ENAqn2NqIL/iAIcGoZRrAqYvR/bmT?=
- =?iso-8859-1?Q?9R0QhY9Bq5wgJPaZ5pYde+mvC0XCC2pZKNd1qFqfn72+LqSVeEMQIjX5pP?=
- =?iso-8859-1?Q?QcmtG5KZdwjVLx6TioyOdWN35GBEdQjrUk2g4WHz8SURTsdajz4MstZYoj?=
- =?iso-8859-1?Q?tFh7J1JNugOnyZ64kgvMWjpT8E9BhCr4e4pLmAyrZwbbYkRHcda7IcoCv2?=
- =?iso-8859-1?Q?TC4utm065vMOujsbZ7y8Qe3XPZKNUdNFBXht1uus/l8ozLCZJmz5u581aY?=
- =?iso-8859-1?Q?ueTHZ/KqVBmoVORbKU/B0LvQp4KppmnMthszzRUhVXF8sp9eEoxuDLW8Fw?=
- =?iso-8859-1?Q?gavDzK+xktici08TPR3CfBLIB8E8RUzQN2Z7ZIhtTWACuFByUOLn6ZJGZH?=
- =?iso-8859-1?Q?a3S9xt2Z/1K8H9zzwNNzhfXOKzPg8oVi/dKwkbFbFpLjxaM0maaz15jBsl?=
- =?iso-8859-1?Q?n0vw2u5ZOAWdJ6rptDkz1mqflogkX7ZBBeu6oWJ7tOUrQdICL1Yc0guLSN?=
- =?iso-8859-1?Q?fpTj1iqA4EeLL5AFjWLjeOWkPCRI2+74o11nWuzuicpj21fEXfrJj0ecDo?=
- =?iso-8859-1?Q?zY9eUQGmd4zUG4t0jRrsYfgyaD2WlcspfihojXYvXjSl2MTzyA0buNzbGS?=
- =?iso-8859-1?Q?Ke4GVUj7G6rG1qnpEqA3utOaSV7jY3yQ7XJKcRWE3HPmFAiMg1i8gVDlgw?=
- =?iso-8859-1?Q?BB95gquJksQadC4VzFOC5UP0fbI5Tp3WQnuqT+lu6wbxyydiOlDzjtatWN?=
- =?iso-8859-1?Q?bpCpAcFapo6xuW9ok+Dibg4EdRemojTo1VddrzF8ifgQM4SY1PSorOOmAe?=
- =?iso-8859-1?Q?cpgGp7DUI9t6TLSbcvIHpui+jDqPLf+wyDkaWv0Qzg+KfQi+I+FshBvgxB?=
- =?iso-8859-1?Q?bgXNp+wtPyvDimaAt7u2QtavmW259kfNHDWO2hMV7MDEHjm3C6Cz?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 28c602f5-b432-47b6-9650-08df2f91a870
-X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2026 16:37:55.3526
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: P9Hi+P2ZwPUT8IWEgJ9j1HZx1t0+hU3dwJ3loMrQsKxNCU7/R309YSwmpU71LG0EX+hLBfxx/XLrujTenvGaT06clOXZ7snZdpusLY4FkK/ba07u5zFBxSaxNMMPObrv
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMBPR04MB12310
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA2NiBTYWx0ZWRfX1rKyDk4OHIQt
+ c3A6TKrbIMXxHg01KBTUJeT1E2l4Fw2T8nI4qPF0hgz/IIiNKM2gv4UXVZHnIHMcmBzUwZX1l0E
+ EOcj7j6VLaJJPGLK0rNKJQGSrBi/sIJtKy3sQCnVx/rKa+0Gv6UJmS5PzPJptRdWsCdeps8rQHc
+ R0h7m9WDOMT5OOOcWBT0d+vs9ei+hZd8+QljLhi/46V5MmvYRgneBMdpY5xTMsQK/5numtvD7BE
+ fgEMBik87C5fkCg1L1zdD8oMquinbmyZYszjfPoUhulmUe/wMs5GPpcQTorY52gpx9guRjDuKsV
+ zMTdFk6/XZuC8ZYWwyGyu//Bc+aDYVEpMFtFt5HXqqFkM/bW8eyWaug20QL7NALoBaeVCSJ4+aD
+ crP+59FBebKP7CEuNG9ezRq/gybCVoiFgKQh7cM+EAnIm7SiLgAJM3vtfiJSxz/HDESYqf+fQXt
+ AoifjVkgbiIsq4P/hhw==
+X-Proofpoint-ORIG-GUID: As4tNAfLRz_PnAozmdP2Iln76U5AOS3W
+X-Proofpoint-GUID: As4tNAfLRz_PnAozmdP2Iln76U5AOS3W
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA2NiBTYWx0ZWRfX+Co6Ye2EElRg
+ YhSt1kvVNbHELG3Nq0iYEs7DlmtiIhCEd8GKPijP+xhNlKN6kpD90GGYCuFqvSt9feTccKglZkB
+ JH9TffaFA1bkl7QGyk+l7pEcyugflco=
+X-Authority-Analysis: v=2.4 cv=ZfSIpcVA c=1 sm=1 tr=0 ts=6ad8ebf5 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=lttzEiji57sduyQuKiQA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-21_04,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 spamscore=0 suspectscore=0
+ clxscore=1015 phishscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210066
 
-On Thu, Aug 13, 2026 at 02:19:55PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
->
-> New issues:
-> - [Critical] Setting `TRE_FLAGS_IEOB` on LOCK and UNLOCK TREs causes multiple completion events per descriptor, leading to Use-After-Free and queue corruption.
-> - [High] The driver prematurely drops the hardware lock in Write-then-Read multi-message transfers due to misinterpreting `DMA_PREP_INTERRUPT`.
-> - [High] Failure to reset `gchan->lock_pending` during channel reset or termination permanently bypasses hardware locking for subsequent transactions.
-> - [High] `gpi_prep_slave_sg()` blindly hardcodes the maximum TRE requirement to 3, failing to account for the newly added LOCK and UNLOCK TREs, causing ring buffer overflow.
+sashiko-bot@kernel.org writes:
 
-Need fix these issue or provide explain.
-
-Frank
-
->
-> Pre-existing issues:
-> - [High] Dangling pointer in `gchan->config` leads to Use-After-Free during channel reallocation.
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] scsi: ibmvfc: clearing mq_enabled in ibmvfc_reg_sub_crqs() skips deregistration
+> - [High] scsi: ibmvfc: ibmvfc_init_sub_crqs() ignores ibmvfc_reg_sub_crqs() failures
 > --
 >
-> --- Patch [2]: [PATCH v9 2/4] dmaengine: qcom: gpi: Add lock/unlock TREs for multi-owner I2C transfers ---
-> commit b6883d50c999f402ed4f7be119614262119be22d
-> Author: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
+> commit 97f68806c8ca0b8cd795db2454a75c5e092d7ae9
+> Author: Dave Marquardt <davemarq@linux.ibm.com>
 >
-> dmaengine: qcom: gpi: Add lock/unlock TREs for multi-owner I2C transfers
+> scsi: ibmvfc: register and use asynchronous sub CRQ for events
 >
-> This commit adds support for emitting lock and unlock Transfer Ring Elements
-> (TREs) around I2C transfers on QUP-based controllers shared with other
-> processors. The GPI driver autonomously determines the placement of these
-> TREs based on transaction boundaries and latches a multi-owner flag during
-> initial configuration.
+> This commit wires the asynchronous sub-CRQ into the sub-CRQ lifecycle by
+> allocating, registering, and freeing vhost->async_scrqs alongside the SCSI
+> and NVMe channel queues. It also updates channel setup and login info to
+> handle the async sub-CRQ and multi-queue capabilities.
 >
-> > diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> > index a5055a6273af6..25fe7410bee2e 100644
-> > --- a/drivers/dma/qcom/gpi.c
-> > +++ b/drivers/dma/qcom/gpi.c
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> index 7e012281d368c..0d603542fe348 100644
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
 >
 > [ ... ]
 >
-> > @@ -518,7 +529,7 @@ struct gpii {
-> >  	bool ieob_set;
-> >  };
-> >
-> > -#define MAX_TRE 3
-> > +#define MAX_TRE 5
+>> @@ -6977,6 +6995,7 @@ EXPORT_SYMBOL_IF_KUNIT(ibmvfc_deregister_channel);
+>>  static void ibmvfc_reg_sub_crqs(struct ibmvfc_host *vhost,
+>>  				struct ibmvfc_channels *channels)
+>>  {
+>> +	unsigned long flags;
+>>  	int i, j;
+>>  
+>>  	ENTER;
+>> @@ -6987,7 +7006,10 @@ static void ibmvfc_reg_sub_crqs(struct ibmvfc_host *vhost,
+>>  		if (ibmvfc_register_channel(vhost, channels, i)) {
+>>  			for (j = i; j > 0; j--)
+>>  				ibmvfc_deregister_channel(vhost, channels, j - 1);
+>> +			spin_lock_irqsave(&vhost->host->host_lock, flags);
+>>  			vhost->do_enquiry = 0;
+>> +			vhost->mq_enabled = 0;
+>> +			spin_unlock_irqrestore(&vhost->host->host_lock, flags);
+>>  			return;
+>>  		}
+>>  	}
 >
 > [Severity: High]
-> While MAX_TRE is increased to 5 here, does gpi_prep_slave_sg() still
-> hardcode the maximum TRE requirement to 3 when checking if the ring buffer
-> has enough elements available via gpi_ring_num_elements_avail()?
+> Does clearing vhost->mq_enabled here prevent previously registered channel
+> sets from ever being deregistered?
 >
-> If the ring buffer only has 3 or 4 slots available, could this pass the
-> check but fail to enqueue the remaining elements like the UNLOCK TRE,
-> potentially locking the hardware bus?
+> In ibmvfc_init_sub_crqs(), ibmvfc_reenable_crq_queue(), and
+> ibmvfc_reset_crq(), channel sets are registered sequentially:
 >
-> >  struct gpi_desc {
+> 	ibmvfc_reg_sub_crqs(vhost, &vhost->async_scrqs);
+> 	ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs);
+> 	ibmvfc_reg_sub_crqs(vhost, &vhost->nvme_scrqs);
+>
+> If ibmvfc_reg_sub_crqs() succeeds for vhost->async_scrqs (or
+> vhost->scsi_scrqs), and then fails on a later call for vhost->scsi_scrqs or
+> vhost->nvme_scrqs, the error path in ibmvfc_reg_sub_crqs() only unwinds the
+> current channels set and sets vhost->mq_enabled = 0, leaving the earlier
+> channel sets registered with the hypervisor and their Linux IRQs active.
+>
+> Because ibmvfc_dereg_sub_crqs() guards deregistration on vhost->mq_enabled:
+>
+> 	if (!vhost->mq_enabled || !channels->scrqs)
+> 		return;
+>
+> 	for (i = 0; i < channels->max_queues; i++)
+> 		ibmvfc_deregister_channel(vhost, channels, i);
+>
+> all subsequent calls to ibmvfc_dereg_sub_crqs() in
+> ibmvfc_reenable_crq_queue(), ibmvfc_reset_crq(), and
+> ibmvfc_release_sub_crqs() will return early without calling
+> ibmvfc_deregister_channel().
+>
+> When ibmvfc_release_sub_crqs() later runs during teardown,
+> ibmvfc_dereg_sub_crqs() is skipped while ibmvfc_release_channels()
+> unconditionally unmaps and frees each queue page (scrq->msgs.handle) and
+> kfree()s channels->scrqs. Doesn't this leak the hypervisor sub-CRQ
+> registrations and kernel IRQs, leaving the IRQ handler and hypervisor
+> referencing freed scrq slab memory and DMA pages?
 >
 > [ ... ]
->
-> > @@ -1617,6 +1629,17 @@ gpi_peripheral_config(struct dma_chan *chan, struct dma_slave_config *config)
-> >  	gchan->config = new_config;
-> >  	memcpy(gchan->config, config->peripheral_config, config->peripheral_size);
-> >
+
+Yes, this is broken. I will remove the check for mq_enabled, as the
+check for channels->scrq is all that is needed here.
+
+>> @@ -7081,9 +7084,53 @@ static void ibmvfc_release_channels(struct ibmvfc_host *vhost,
+>>  	}
+>>  }
+>>  
+>> +static void ibmvfc_init_sub_crqs(struct ibmvfc_host *vhost)
+>> +{
+>> +	unsigned long flags;
+>> +
+>> +	ENTER;
+>> +	if (!vhost->mq_enabled)
+>> +		return;
+>> +
+>> +	/* register async_sub_crq channel */
+>> +	if (ibmvfc_alloc_channels(vhost, &vhost->async_scrqs))
+>> +		goto out;
+>> +
+>> +	ibmvfc_reg_sub_crqs(vhost, &vhost->async_scrqs);
+>> +
+>> +	if (ibmvfc_alloc_channels(vhost, &vhost->scsi_scrqs))
+>> +		goto deregister_async_sub_crq;
+>> +
+>> +	ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs);
+>> +
+>> +	if (vhost->nvme_enabled) {
+>> +		if (ibmvfc_alloc_channels(vhost, &vhost->nvme_scrqs)) {
+>> +			spin_lock_irqsave(&vhost->host->host_lock, flags);
+>> +			vhost->nvme_enabled = 0;
+>> +			spin_unlock_irqrestore(&vhost->host->host_lock, flags);
+>> +		} else
+>> +			ibmvfc_reg_sub_crqs(vhost, &vhost->nvme_scrqs);
+>> +	}
+>> +
+>> +	LEAVE;
+>> +	return;
+>> +
+>> +deregister_async_sub_crq:
+>> +	ibmvfc_dereg_sub_crqs(vhost, &vhost->async_scrqs);
+>> +	ibmvfc_release_channels(vhost, &vhost->async_scrqs);
+>> +out:
+>> +	spin_lock_irqsave(&vhost->host->host_lock, flags);
+>> +	vhost->do_enquiry = 0;
+>> +	vhost->mq_enabled = 0;
+>> +	spin_unlock_irqrestore(&vhost->host->host_lock, flags);
+>> +}
 >
 > [Severity: High]
-> This isn't a bug introduced by this patch, but when
-> gpi_free_chan_resources() frees this memory with kfree(gchan->config), it
-> leaves gchan->config as a dangling pointer.
+> The commit message states that in ibmvfc_init_sub_crqs(), failure of either
+> ibmvfc_alloc_channels() or ibmvfc_reg_sub_crqs() disables multi-queue and
+> aborts init. However, ibmvfc_reg_sub_crqs() returns void and its failure is
+> not checked here.
 >
-> Since gchan elements are statically allocated arrays reused across DMA
-> channel requests, if the channel is requested again, will this call to
-> krealloc() receive the freed pointer and cause a slab use-after-free?
+> If ibmvfc_reg_sub_crqs(vhost, &vhost->async_scrqs) fails, should
+> ibmvfc_init_sub_crqs() release vhost->async_scrqs and return rather than
+> continuing to allocate vhost->scsi_scrqs and vhost->nvme_scrqs?
 >
-> > +	/*
-> > +	 * Latch the multi_owner flag from the initial config call so the GPI
->
-> [ ... ]
->
-> > @@ -1627,10 +1650,33 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
-> > +	/*
-> > +	 * Insert a LOCK TRE before the first transfer of a multi-owner
-> > +	 * transaction.  The GPI driver detects the transaction start
-> > +	 * autonomously: if multi_owner is set and no lock has been issued
-> > +	 * since the last unlock (lock_pending == false), this is the first
-> > +	 * descriptor in a new transaction.
-> > +	 */
-> > +	if (chan->multi_owner && !chan->lock_pending) {
-> > +		tre = &desc->tre[tre_idx];
-> > +		tre_idx++;
-> > +
-> > +		tre->dword[0] = 0;
-> > +		tre->dword[1] = 0;
-> > +		tre->dword[2] = 0;
-> > +		tre->dword[3] = u32_encode_bits(1, TRE_LOCK);
-> > +		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOB);
->
-> [Severity: Critical]
-> Adding TRE_FLAGS_IEOB to the LOCK and UNLOCK TREs means a single transaction
-> produces an EOB event (from Lock), an EOT event (from DMA), and another EOB
-> event (from Unlock).
->
-> In gpi_process_xfer_compl_event(), EOB events fall through to the success
-> path which pops the active descriptor from gchan->vc and frees it. Since a
-> single descriptor generates multiple events, could the event handler pop and
-> free unrelated descriptors from the queue, causing a use-after-free?
->
-> > +		tre->dword[3] |= u32_encode_bits(0, TRE_MINOR_TYPE);
-> > +		tre->dword[3] |= u32_encode_bits(3, TRE_MAJOR_TYPE);
-> > +
-> > +		chan->lock_pending = true;
->
-> [Severity: High]
-> If a transaction errors out after a LOCK TRE is generated and the client
-> calls gpi_terminate_all() to abort the transfer, gchan->lock_pending is not
-> reset to false.
->
-> On the next transaction, will gpi_create_i2c_tre() evaluate lock_pending as
-> true and skip inserting the necessary LOCK TRE, causing transactions to run
-> on the shared bus without acquiring the hardware lock?
->
-> > +	}
-> > +
-> >  	/* first create config tre if applicable */
-> >  	if (i2c->set_config) {
->
-> [ ... ]
->
-> > @@ -1690,6 +1736,35 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
->
-> [ ... ]
->
-> > +	/*
-> > +	 * Insert an UNLOCK TRE after the last write transfer of a multi-owner
-> > +	 * transaction.  DMA_PREP_INTERRUPT marks the final descriptor in the
-> > +	 * batch; reads carry their own completion event so the unlock follows
-> > +	 * the write leg of each read message.
-> > +	 */
-> > +	if (chan->multi_owner && is_last && i2c->op != I2C_READ) {
-> > +		tre = &desc->tre[tre_idx];
-> > +		tre_idx++;
-> > +
-> > +		tre->dword[0] = 0;
-> > +		tre->dword[1] = 0;
-> > +		tre->dword[2] = 0;
-> > +		tre->dword[3] = u32_encode_bits(1, TRE_UNLOCK);
->
-> [Severity: High]
-> If the i2c-qcom-geni client driver executes Write-then-Read sequences by
-> setting DMA_PREP_INTERRUPT on the write leg to wait for its completion, will
-> this logic equate the flag with the absolute end of the I2C transaction?
->
-> Could this prematurely append an UNLOCK TRE between the write and read,
-> destroying the I2C bus stretch and allowing other owners to interleave
-> transactions and corrupt the bus state?
->
-> > +		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOB);
-> > +		tre->dword[3] |= u32_encode_bits(1, TRE_MINOR_TYPE);
-> > +		tre->dword[3] |= u32_encode_bits(3, TRE_MAJOR_TYPE);
-> > +
-> > +		chan->lock_pending = false;
-> >  	}
-> >
-> >  	for (i = 0; i < tre_idx; i++)
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20260813140047.1006478-1-mukesh.savaliya@oss.qualcomm.com?part=2
+> Similarly, if ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs) fails after
+> vhost->async_scrqs has been registered, shouldn't it release
+> vhost->scsi_scrqs and jump to deregister_async_sub_crq so vhost->async_scrqs
+> is deregistered and released instead of proceeding to allocate
+> vhost->nvme_scrqs?
+
+This code will be reworked for ibmvfc_reg_sub_crqs() returns int and
+ibmvfc_init_sub_crqs() will take appropriate clean up actions when
+ibmvfc_reg_sub_crqs() returns non-zero.
+
+-Dave
