@@ -1,47 +1,47 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=45.249.212.56
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=45.249.212.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792547929;
-	b=bpqf/Wx4BeAVfbcuG8V0JaEN59s5MvqhPGvhWVILHKR+7T0J72v3RdTXh4snDFvTft/c
-	 eZRaBs4nXLGEVifggOy/OvWEVw0fsAPy7qIUS5M6W+ikf01UgDYzCky0er0R9W8kuehAn
-	 F/n6Wf3c/vzsU/WxoMh4V7W4grdp1PxYNbYgKNlCWgpYP8x4LDROplY0NafUYTCW85NJ9
-	 Hs8XgsyvnKNHrWJut+PxckKAm8zFe443abhSmsVl11X+rtZq3d1m8FKQk1pv/0dGh7wea
-	 DdvJCYkAUh4ECiVXJQy/cL4uvtH3GX7FPou0ZyyjI4g3XzFvR/p+0EoBhbYAl2ff7vA==
+	t=1792548425;
+	b=P+Hpdt9HMCiR4pBbnPQ1o77yPWWZlZEYnItG4jN0ylYys88MwWycPh2A4m0f8OdIdLg0
+	 Aesnv6zDYBcLAYVCHwsuZM7ICj4cwFFzyH+/5E8JWx89syeNSPxXIwmi5yL31WTYvEluD
+	 ypo33Q84S9U9yMM8SKaZOuX8PTsZktQuXVRw79n9uFl4i1ba4nd989MFGlcmlS3BwlNxa
+	 SnmKKTvDxcp4Jz05CWZpBePPf6vXokJs4xdL5lCEp3eiYwWpB7/rsL/HaQhcI/j+JHZAH
+	 anTyPSovkB8xf+9FNTGb+b9ILjxDapr1IH11JnQfeJe4itdq3237JJ3l/Xg0w6izxjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792547929;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792548425;
 	h=DMARC-Filter:Received:Received:Received:Message-ID:Date:MIME-Version:
 	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding:X-CM-TRANSID:
 	 X-Coremail-Antispam:X-CM-SenderInfo;
-	bh=QqjFGGnFG6TPnVy9+6VBpXIM5ds0Ve0VY/HafKIxOyo=;
-	b=GQ8QYPDiPwhl0pBtG6yW8fQMf+LpT3mLjVAsO8Orvnikk5et9MScz7kOiRS2SnH+X+rI
-	 O6Rl2x+O8DCUU21MyzDnFHIq3M37VcUWd28gw+TTh3GHwczha1JYOKhNOM5ZjwpTLOALy
-	 S8lPnOmN8ceSk5WwH2b+r/THw6JuxTSwtkWPuHv3CvErbzOsxWFIMXMi2p2ZZuR+NsTFW
-	 +JHD/1BMOcL60Jaj+AM/p1tX4djcP7s4jNW1mwKuENHafADIuIXxXv3RKvePfNpn4T+oB
-	 Dl4eT8zwzsn+Ok7VE4luVdIPgA72Ft332Ln4NtthABsQclkgDuvt/XFUrzZJt3Og9tQ==
+	bh=l7KFQLIaTwlSBsukka0meVUJRSxCzsTjMjFc9CnbXDc=;
+	b=kwLDX8q7pEPBTXSno6rQUSkCbeXPDCupxZufwAkH+yThWMzeAhijLEl6to3hamMSbs2u
+	 k0BOVfIiqZNwfvBGQy2yqD/uKFPlnNhnFT9oeCaQD+5aLEZHwRmSy/w/jWXMcESvnpSET
+	 YyW5XajkJznC4lSYHKS8gTLldw4WOfsW887g+6eziXmQMUuxgXMWLog+hTF0nc+3g2Rzd
+	 kXy0QQIvcTURDxAJZPsHiHAE8AeI5N/Rw/nE4rZBiTnFL3pxmJWZWo4A53rac7uIAO0H/
+	 28DCIFpcByftHAFEgf1kynMLpHcOMkVsssijON0F1d9EEr3lNsxWWIHfJRt40emQ9IQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=huaweicloud.com;
 	spf=pass smtp.mailfrom=huaweicloud.com;
-	arc=none smtp.remote-ip=45.249.212.56
-Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+	arc=none smtp.remote-ip=45.249.212.51
+Received: from dggsgout11.his.huawei.com (dggsgout11.his.huawei.com [45.249.212.51])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1F6606A333
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 01:58:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3F1F6606A333
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD035606A321
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 02:07:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BD035606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
 Received: from mail.maildlp.com (unknown [172.19.163.170])
-	by dggsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4j8XWD360XzKHLtF
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 09:58:32 +0800 (CST)
-Received: from mail02.huawei.com (unknown [10.116.40.128])
-	by mail.maildlp.com (Postfix) with ESMTP id 393AC4056D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 09:58:43 +0800 (CST)
+	by dggsgout11.his.huawei.com (SkyGuard) with ESMTPS id 4j8Xhx5BHczYQtnZ
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 10:06:57 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id 98C7E40561
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 10:07:00 +0800 (CST)
 Received: from [10.67.110.36] (unknown [10.67.110.36])
-	by APP4 (Coremail) with UTF8SMTPA id gCh0CgDXCelSHNhqIXfsBA--.22166S2;
-	Wed, 21 Oct 2026 09:58:43 +0800 (CST)
-Message-ID: <bf6719dd-7166-4b9f-91ac-bc7e266d6565@huaweicloud.com>
-Date: Wed, 21 Oct 2026 09:58:41 +0800
+	by APP2 (Coremail) with UTF8SMTPA id Syh0CgD3xOpEHthqsiLhBA--.22682S2;
+	Wed, 21 Oct 2026 10:07:00 +0800 (CST)
+Message-ID: <d27f6108-fe6d-4d71-a601-b964e10e7f77@huaweicloud.com>
+Date: Wed, 21 Oct 2026 10:07:00 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -52,285 +52,126 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 05/15] perf annotate-arm64: Support load instruction
- tracking
+Subject: Re: [PATCH v8 13/15] perf annotate-arm64: Support 'adrp' instruction
+ to track global variables
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-perf-users@vger.kernel.org
 References: <cover.1792411435.git.wutengda@huaweicloud.com>
- <a6085b6f08ba2ed533208ebe9227968770cd58ca.1792411435.git.wutengda@huaweicloud.com>
- <sashiko-outbox-179159@kernel.org>
+ <145ac934f72c090987c2e6d0be28b28972f843c7.1792411435.git.wutengda@huaweicloud.com>
+ <sashiko-outbox-179232@kernel.org>
 Content-Language: en-US
 From: Tengda Wu <wutengda@huaweicloud.com>
-In-Reply-To: <sashiko-outbox-179159@kernel.org>
+In-Reply-To: <sashiko-outbox-179232@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:gCh0CgDXCelSHNhqIXfsBA--.22166S2
-X-Coremail-Antispam: 1UD129KBjvJXoW3GF1DWw1rZF4xWFWrAFyxZrb_yoWfGr18pF
-	WkCay5Ka17Xr4IgrsIqr4rWry3Ww1xWr1xCry5Za1SyFnFvr1rKa93KrW3WFWrGrZxAr1U
-	Xw4jyrnxXw4jkaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUglb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:Syh0CgD3xOpEHthqsiLhBA--.22682S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxuryDJrW7Kry5WF48Cw1ftFb_yoWrXry7pF
+	WDGFy5Gw42vF10grsIqrWfXFySga17GF1fKryDKF4IkFy2vrn3KF9Ika1Ygay7JrZxZw1U
+	Jan09rsrZF10ka7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUgmb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
 	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
 	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7Cj
-	xVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7
-	CjxVAFwI0_Cr1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02
-	F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4I
-	kC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Y
-	z7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zV
-	AF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4l
-	IxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCw
-	CI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVF
-	xhVjvjDU0xZFpf9x07UE-erUUUUU=
+	xVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
+	0267AKxVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8C
+	rVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4
+	IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkE
+	bVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67
+	AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI
+	42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMI
+	IF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2
+	KfnxnUUI43ZEXa7IU1wL05UUUUU==
 X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
 
 
-On 2026/10/20 22:36, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] perf annotate-arm64: unused type_die in propagate_load_reg_state()
-> - [Medium] perf annotate-arm64: missing reg2 extraction in ldp when reg1 is xzr/wzr
+On 2026/10/20 23:15, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] perf annotate-arm64: adjust_reg_index_state() drops global addr writeback
 > --
 > 
-> commit d4331cee155820a433821da388de2a7297699e0e
+> commit 329d013c0c7d0b8be3fe8f0ec1e0f669451e6cbd
 > Author: Tengda Wu <wutengda@huaweicloud.com>
 > 
-> perf annotate-arm64: Support load instruction tracking
+> perf annotate-arm64: Support 'adrp' instruction to track global variables
 > 
-> This commit extends update_insn_state_arm64() to track register state
-> changes across standard load and load-pair instructions, including
-> pre-index and post-index addressing modes.
+> This commit extends arm64 data type profiling to track global variable
+> addresses calculated via page-relative adrp instructions. It introduces
+> TSR_KIND_GLOBAL_ADDR to store the page-aligned base address and resolves
+> the symbol address and DWARF type on subsequent add or load instructions.
 > 
 >> diff --git a/tools/perf/util/annotate-arch/annotate-arm64.c b/tools/perf/util/annotate-arch/annotate-arm64.c
->> index c4cc8bca85cc0..0b5d1abbc5755 100644
+>> index 61df9c4f48776..bd060a823b765 100644
 >> --- a/tools/perf/util/annotate-arch/annotate-arm64.c
 >> +++ b/tools/perf/util/annotate-arch/annotate-arm64.c
->> @@ -527,11 +527,212 @@ static void invalidate_unhandled_insn_regs(struct type_state *state,
->>  	/* TODO: Extend invalidation support to more special instructions. */
->>  }
->>  
->> +static int arm64__reg_size(const char *reg)
->> +{
->> +	if (!reg || !*reg || !arm64__is_reg(reg))
->> +		return -1;
->> +
->> +	if (reg[0] == 'w')
->> +		return 4;
->> +
->> +	if (reg[0] == 'x' || !strncmp(reg, "sp", 2))
->> +		return 8;
->> +
->> +	return -1;
->> +}
-> 
 > [ ... ]
-> 
->> +static int propagate_load_reg_state(struct type_state *state,
->> +				    struct data_loc_info *dloc,
->> +				    struct disasm_line *dl, int dreg,
->> +				    struct annotated_op_loc *src,
->> +				    struct type_state_reg **src_states,
->> +				    int mem_spacing)
->> +{
->> +	struct type_state_reg *tsr;
->> +	struct type_state_reg *src_tsr = src_states[0];
->> +	Dwarf_Die type_die;
->> +	u32 insn_offset = dl->al.offset;
->> +	int sreg = src->reg1;
->> +	int reg_offset;
+>> @@ -722,6 +722,33 @@ static int propagate_load_reg_state(struct type_state *state,
+>>  		return 0;
+>>  	}
+>>  
+>> +	/* Or check if it's a global variable */
+>> +	if (src_tsr->kind == TSR_KIND_GLOBAL_ADDR) {
+>> +		u64 ip = dloc->ms->sym->start + dl->al.offset;
+>> +		u64 addr = src_tsr->imm_value + reg_offset;
+>> +		int offset;
 >> +
->> +	if (!has_reg_type(state, dreg))
->> +		return -1;
->> +
->> +	tsr = &state->regs[dreg];
->> +	tsr->copied_from = -1;
->> +	tsr->lifetime_active = false;
->> +	tsr->lifetime_end = 0;
->> +
->> +retry:
->> +	if (arch_get_reg_offset(dloc->arch, src, sreg, state, false, &reg_offset))
->> +		goto load_non_regoff;
->> +
->> +	reg_offset += mem_spacing;
->> +
->> +	if (!src_tsr || !src_tsr->ok)
->> +		return -1;
->> +
->> +	/* Dereference the pointer if it has one */
->> +	if (src_tsr->kind == TSR_KIND_TYPE &&
->> +	    die_deref_ptr_type(&src_tsr->type,
->> +			       src_tsr->offset + reg_offset, &type_die)) {
->> +		tsr->type = type_die;
->> +		tsr->kind = TSR_KIND_TYPE;
->> +		tsr->offset = 0;
->> +		tsr->ok = true;
->> +
->> +		pr_debug_dtp("%s [%x] %#x(reg%d) -> reg%d",
->> +			     dl->ins.name, insn_offset, reg_offset, sreg, dreg);
->> +		pr_debug_type_name(&tsr->type, tsr->kind);
->> +		return 0;
->> +	}
->> +
->> +	/* Handle dereference of TSR_KIND_POINTER registers */
->> +	if (src_tsr->kind == TSR_KIND_POINTER &&
->> +	    die_get_member_type(&src_tsr->type,
->> +				src_tsr->offset + reg_offset, &type_die)) {
->> +		tsr->type = src_tsr->type;
->> +		tsr->kind = TSR_KIND_TYPE;
->> +		tsr->offset = src_tsr->offset + reg_offset;
+>> +		if (!get_global_var_type(cu_die, dloc, ip, addr, &offset, &type_die) ||
+>> +		    !die_get_member_type(&type_die, offset, &type_die))
+>> +			return -1;
+> [ ... ]
+>> @@ -991,14 +1018,16 @@ static void update_add_insn_state(struct type_state *state,
+>>  	if (arch_get_reg_offset(dloc->arch, src, sreg, state, false, &reg_offset))
+>>  		goto add_non_regoff;
+>>  
+>> -	if (src_tsr.kind == TSR_KIND_CONST) {
+>> +	if (src_tsr.kind == TSR_KIND_CONST || src_tsr.kind == TSR_KIND_GLOBAL_ADDR) {
+>>  		tsr->kind = src_tsr.kind;
+>> +		/* For 'adrp + add' pair: resolve the full global variable address. */
+>>  		tsr->imm_value = src_tsr.imm_value + reg_offset;
+>>  		tsr->offset = 0;
+>>  		tsr->ok = src_tsr.ok;
 > 
 > [Severity: Medium]
-> Should tsr->type be assigned type_die and tsr->offset set to 0 here?
+> What happens when a pre-indexed or post-indexed load or store instruction
+> (for example, ldr x0, [x19, #0x40]! or ldr x0, [x19], #8) uses a
+> TSR_KIND_GLOBAL_ADDR register as its base?
 > 
-> When DWARF describes a struct variable via a register-based memory
-> location (where var->is_reg_var_addr is true), update_var_state() sets
-> the base register to TSR_KIND_POINTER with reg->type set to the struct
-> DIE.
+> Both update_load_insn_state() and update_store_insn_state() call
+> adjust_reg_index_state(), which adds the writeback offset to tsr->offset:
 > 
-> When a load instruction reads a member from that struct into dreg,
-> update_insn_state_arm64() -> update_load_insn_state() ->
-> propagate_load_reg_state() calls die_get_member_type() to resolve the
-> loaded member's type into type_die.
-> 
-> However, type_die is left unused, and tsr->type is set to src_tsr->type
-> (the outer struct DIE) with tsr->offset set to src_tsr->offset +
-> reg_offset and tsr->kind set to TSR_KIND_TYPE. When a subsequent
-> instruction dereferences dreg, check_matching_type() or
-> die_deref_ptr_type() inspects dreg->type, sees the outer struct type
-> instead of the member's pointer type, and fails with PERF_TMR_NO_POINTER.
-> 
-
-A similar issue was already clarified in v6 [1], and this part of the code
-has been confirmed during actual debugging to resolve the data type
-correctly, so I will keep it consistent with x86 and not modify it.
-
-[1] https://lore.kernel.org/all/228cf99e-2b8a-42a8-aab6-45cc4823d3b7@huaweicloud.com/#t
-
->> +		tsr->imm_value = 0;
->> +		tsr->ok = true;
->> +
->> +		pr_debug_dtp("%s [%x] addr %#x(reg%d) -> reg%d",
->> +			     dl->ins.name, insn_offset, reg_offset, sreg, dreg);
->> +		pr_debug_type_name(&tsr->type, tsr->kind);
->> +		return 0;
->> +	}
->> +
->> +load_non_regoff:
->> +	/* Try another register if any */
->> +	if (src->multi_regs && src->reg1 != src->reg2 && sreg != src->reg2 &&
->> +	    !(src->extend_type || src->shift_type)) {
->> +		sreg = src->reg2;
->> +		src_tsr = src_states[1];
->> +		goto retry;
->> +	}
->> +
->> +	return -1;
->> +}
->> +
->> +static void update_load_insn_state(struct type_state *state,
->> +				   struct data_loc_info *dloc,
->> +				   struct disasm_line *dl,
->> +				   struct annotated_op_loc *src,
->> +				   struct annotated_op_loc *dst)
->> +{
->> +	struct type_state_reg snapshots[2];
->> +	struct type_state_reg *src_states[2] = {};
->> +	int mem_spacing = 0;
->> +
->> +	if (!src->mem_ref ||  /* exclude PC-relative loads */
->> +	    !has_reg_type(state, src->reg1)) {
->> +		/* Invalidate tracked destination registers */
->> +		if (has_reg_type(state, dst->reg1))
->> +			invalidate_reg_state(&state->regs[dst->reg1]);
->> +		if (dst->multi_regs && has_reg_type(state, dst->reg2))
->> +			invalidate_reg_state(&state->regs[dst->reg2]);
->> +		goto out_adjust;
->> +	}
->> +
->> +	/*
->> +	 * Snapshot source register states before updating destination registers.
->> +	 * This preserves the original source state for aliased loads (e.g.,
->> +	 * ldp x0, x1, [x0]), where updating the first destination may overwrite
->> +	 * the source register.
->> +	 */
->> +	snapshots[0] = state->regs[src->reg1];
->> +	src_states[0] = &snapshots[0];
->> +	if (src->multi_regs && has_reg_type(state, src->reg2)) {
->> +		snapshots[1] = state->regs[src->reg2];
->> +		src_states[1] = &snapshots[1];
->> +	}
->> +
->> +	/* Handle the first destination register */
->> +	if (has_reg_type(state, dst->reg1)) {
->> +		if (propagate_load_reg_state(state, dloc, dl, dst->reg1,
->> +					     src, src_states, mem_spacing))
->> +			invalidate_reg_state(&state->regs[dst->reg1]);
->> +	}
->> +
->> +	if (!dst->multi_regs || !has_reg_type(state, dst->reg2))
->> +		goto out_adjust;
-> 
-> [Severity: Medium]
-> What happens here when an ldp instruction uses the zero register (xzr or
-> wzr) as its first destination operand, such as "ldp xzr, x19, [sp], #16"
-> or "ldp xzr, x1, [x0]"?
-> 
-> In update_load_insn_state(), dst->reg1 is guarded by has_reg_type(state,
-> dst->reg1) without returning early, and arm64__reg_size() recognizes
-> xzr/wzr via arm64__is_reg() so dst->reg2 can still be updated or
-> invalidated.
-> 
-> However, when update_insn_state_arm64() calls
-> annotate_get_insn_location() -> extract_op_location_arm64(),
-> arch__dwarf_regnum() returns -1 for xzr and wzr, and
-> extract_op_location_arm64() returns before parsing reg2:
-> 
-> tools/perf/util/annotate-arch/annotate-arm64.c:extract_op_location_arm64() {
+> tools/perf/util/annotate-arch/annotate-arm64.c:adjust_reg_index_state() {
 > 	...
-> 	/* Extract the primary register */
-> 	op_loc->reg1 = arch__dwarf_regnum(arch, s);
-> 	if (op_loc->reg1 == -1)
+> 	if (arch_get_reg_offset(dloc->arch, op_loc, reg, state, true, &offset)) {
+> 		invalidate_reg_state(tsr);
 > 		return;
+> 	}
 > 
-> 	s = next_operand_field(s);
-> 	if (s == NULL)
-> 		return;
-> 
-> 	/* Extract secondary register or immediate offset */
-> 	if (op_loc->multi_regs) {
-> 		op_loc->reg2 = arch__dwarf_regnum(arch, s);
+> 	tsr->offset += offset;
 > 	...
 > }
 > 
-> Doesn't this leave dst->reg2 as -1, causing update_load_insn_state() (and
-> invalidate_unhandled_insn_regs()) to skip the second register instead of
-> propagating its type or invalidating its previous state?
+> However, TSR_KIND_GLOBAL_ADDR stores the base address in tsr->imm_value,
+> and all consumers — propagate_load_reg_state(), update_add_insn_state(),
+> and check_matching_type() in tools/perf/util/annotate-data.c — compute the
+> target address from imm_value + reg_offset while ignoring tsr->offset (and
+> update_add_insn_state() resets tsr->offset to 0).
 > 
-
-So the root cause is that arch__dwarf_regnum does not currently support xzr/wzr;
-it is not a problem with this patch.
-
-I will take a targeted look at how to handle xzr/wzr in the future.
-
-Thanks,
-Tengda
-
->> +
->> +	/* Handle the second destination register */
->> +	if (!strcmp(dl->ins.name, "ldpsw"))
->> +		mem_spacing = 4;  /* ldpsw loads two 32-bit signed words (4-byte spacing) */
->> +	else
->> +		mem_spacing = arm64__reg_size(dl->ops.target.raw);
->> +
->> +	if (mem_spacing < 0 ||
->> +	    propagate_load_reg_state(state, dloc, dl, dst->reg2,
->> +				     src, src_states, mem_spacing))
->> +		invalidate_reg_state(&state->regs[dst->reg2]);
->> +
->> +out_adjust:
->> +	adjust_reg_index_state(state, dloc, dl, src);
->> +}
+> Should adjust_reg_index_state() update tsr->imm_value (or should the
+> consumers include tsr->offset) so that pre/post-index writeback updates on
+> global address registers are not lost on subsequent instructions?
 > 
 > [ ... ]
 > 
->>
-> 
+
+The compiler does not combine them this way. The purpose of adrp + add is to
+compute the full address of a global variable into a register, so that the
+variable or its members can subsequently be accessed via [reg, #offset]. Once
+the address has been computed, there is no reason to use a pre-/post-indexed
+writeback on the same register, that would clobber the just-computed base
+address and misalign all subsequent accesses to the global variable. Unless
+there is some special compiler optimization?
+
+In any case, I will keep it unchanged.
+
+Thanks,
+Tengda
 
