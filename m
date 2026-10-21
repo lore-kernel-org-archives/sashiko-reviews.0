@@ -1,85 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.42
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792598960;
-	b=2tUvP3GQNEN3Gq/Ry3pbyawOogqw9vOsDkhSOKEz12+2gvPRkctCIbBr1TrM1mfT4MxG
-	 zaCg8XmZLt7BbSi/u+6v175GnzoziYQllJOfrXsedmEIwtLiURck4eAzGbUYGN2dp7KCG
-	 0qc+Kt/CKlkGsQF4pJ0hsrtK1qmU7uRNppls5LrN+tPj2nOG/9LYpvnD4e5hA86yf7ny4
-	 U68qx6ANaOh54MzjjPyy0bjLASqR/bNDaKX8ZmtIgrn29gjm7tzy25X3f7Ouwh+X7dUqI
-	 pXVdqywDXH3pMd+7qadSs38rngxsfPV/S9E1Fl9EfKMKL0nfk+nKIofly8iSlzAx+xA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792598960;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
-	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=XdA/1dgOR2+vUOT5wPwWboExQPZSnnOzRA32hGxvLSo=;
-	b=wMQEjtYrQ96ND35NTa1Oo2O3ntv26l/TtVNGrfBYw9bIRCr0nym8fPhrN+QEIhL7e2Wn
-	 nkVRzwaZTpbkNOAsr7mqwhXr2WLSw1yv3OazFBbJgYlWG/pR48DL0l+5U/b5me9+fwRZj
-	 nmnaXZxjwvkCqfPd6zxu5L58x7Et7NqscW3gJB5fLBIMqXSwPNYTlsCqT+JdOcBcIOPp4
-	 jeHxBal6kcbYq3Mgr1kbqMPoj3vI2hvHV4Z8XK3rLIBfGeKa3et2BOSl6cEVKdWruMwE1
-	 Mghll7TST8oPS2ww+Y7qiKNm+Oqshnn5Yf1zowgK2JcaN9Dzy5qbtGxYlktJhqQPuGg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.com;
-	spf=pass smtp.mailfrom=suse.com;
-	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=QrY4nIhv;
-	arc=none smtp.remote-ip=209.85.128.42
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.83.33
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1792600679;
+	b=E9D/tcqn+fa91NxocWebJ8zTOiH+2DhXwYnphZAwwpHs2NtlWBVVbNAoI73GOeHhPPkY
+	 YUhEaXkGZnyaULOC1wfOFGptYVKDaK4a+fwLKzRwrtCqBV6jJjxbDbJsSwavFqf0C30rz
+	 +wzPyltw0Yrp6tp+sfDCUsTeSmRBTcLBiL1RIWfJmZLRBB67QhX3aqRiqi09GnpbFv38o
+	 tBWQ+z3p7J6kOX1UOnkczEhbfXmsU6AjQwz347JDhnXqW7OrF3V35gM8z7cDqd++5kB0N
+	 gBj9boDl+f2HRJuVdJ3BiKD8OZB8enBW2JEI7daZ8xbISZXEPucrhLBiBcOpl7LCxrA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792600679;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=f8k2DjxEyqUaL9cGTocKFyj6UPD2f8risYrBO2Zps14=;
+	b=pmV06D87XmCbV7LVF/MQVBPXnnDanqMBp3tT8c6VO4Wl5eXOSWNCtpVj+P6ToF6K1tyo
+	 y+NHcYC7XQcljGhS6Jb6D6uar7Nf3oZiiAEJ87rzmUQn9WnMj+HceuAxtxGuQwfTN0rPo
+	 GGxBNfybvs49o5hh905kVzJfcZvAaGejgDkVaD077ClJL34qV4uKhTgl3d3sig/mHO9DV
+	 YnENCPVqlA7a2WMresooJOMlRG53aPoqpGhs//E0H+q88BJPvU2adVYKyIQGr6yzccSh9
+	 fLjYvuShUApunlM7mDax0CP7oJ/64l5+D9OPvMCuLxZ9584Heh8bz+NZgg5z1Y12gTg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b="KQ26xcF/";
+	arc=fail smtp.remote-ip=52.101.83.33
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013033.outbound.protection.outlook.com [52.101.83.33])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B46606A319
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 16:09:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 57B46606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7564E606A31D
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 16:37:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7564E606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=QrY4nIhv
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-499dd4900dfso1447835e9.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 09:09:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1792598958; x=1793203758; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=XdA/1dgOR2+vUOT5wPwWboExQPZSnnOzRA32hGxvLSo=;
-        b=QrY4nIhvw+f5xPDDGYZqVHwiE/T7mXuzsXZM1DF+0mg+2KFBe0mq3jM2z1AaYmFyPN
-         IU/ETfenNDJSfKE1iAx9nh6v+gYUnd8z/go61wSWbu9YvQV7RqOoqRPyAzusQ+mD7Nxo
-         oq+gsQPFy5AVFTvCdBitLKeR1pcP98+fwMo0vSCueyv3G6rlhKHtOCzMN5R+FqeWIQsC
-         /fNiVdw9MX7W45FL/1H9FRNcwP123ZeD5T8JneRkPIXEc9JrSjKTBLymDQQ+VQpppW9Y
-         BPGhFK5qHmRtdiOspmNr9d7uFpiNRrA1zmERxqZ2GPmzm6rHiEGKINwpYvbXHW0sPaRD
-         aJ7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792598958; x=1793203758;
-        h=content-transfer-encoding:content-type:in-reply-to:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=XdA/1dgOR2+vUOT5wPwWboExQPZSnnOzRA32hGxvLSo=;
-        b=qZ3jbEPNJiOn8PMgrte3pYwuCF9CPgT0yMviNe8+t5rTUzGuh4TbbuZRBxkNZ3iQ7O
-         okyYWhWTwK3Kj9t9LlpG3NX8gBh5HL4T7fzo4LI5CHeiChzURoZb5imbJ4j7QrZe4ZAj
-         s6YS3xbSVzRQTyjeYfPOiLsetYKT/PSXyPHddRMv5bYko5YxuH52UvAAsJx69DmNQyUd
-         C1wo+3tHe1pbS2ceSXa4Q8/ukFlmdT4d27qIq3aMsBqaDGwTlrhlAfC9zxdIcJVe3w7N
-         jeFWn6spUXvJGPPnPJU9mMjC2f25LQyIAcXspL3MwoVLDw0nefdbLAY6GjA+2TiBfHsH
-         nhdQ==
-X-Gm-Message-State: AFq9FYJBqhTWlBUT7anGyD3qE0bP/oN0pZw+Hwqppyl/laXjwyLMVjce
-	2v6nsJpzNOR0cGQXBk1Wz17uI3tWp8eHmI/Dgcj54dFn2C5nZms2kwRCxj9Z/ea+CIL9r9OSxjb
-	4gTvbBSY=
-X-Gm-Gg: AYBFou3aWejuTP9p5SrJnf+BoAimyh0Xi+/jR+vQCd8cjnoTD2/vwB89HYXAqHHjl83
-	BkGTPrVV0SLiBHcmERyun4TNNyEd0a/YqcZpjZ6U/5kdbwRnVpw15rmQYSd5EFbvhILqHXsgj6O
-	SqH1iqOn3t/q7H+HjEkkzIN1hEHrAJhbuPSUMopG1OvakrQ0ReGmuEFbh+jVAIkOectbbYRQB9Y
-	z0R5Uj7YkTC0ob6v0+AeMmDOJvyBK7HsnIskSQGeIymsbEXeVL9580EGy2WoznGWlhwq1Swhe5N
-	OaWlXIukTo5ZvTH6gqQ4LDco8hXLUceskOj6/Vy/3HHN11Pr3I8VfvKNFyjZfzigztT5ODhHc35
-	LbjVMf/A7ApFSv9nLTFe+4l1o65C/vyTq+5yz5wAMNraH2kJwGYY7U4eVgOuaKthDbeIvx2X0r6
-	kVxfpgHTxJ4QlgK9etw5BqfQU5iO6EIsLGfZXfxmw2+mPwSu8s2xw/e+OcDZqYh8PVPyr8bSwI/
-	3PTZqNZfxM/fVSlmLw1OsFKV6HsSMj+TGvHlTlkZzPnSKKa/n50P1SUcqU1/Q==
-X-Received: by 2002:a05:600c:1c25:b0:4a1:e774:370d with SMTP id 5b1f17b1804b1-4a1fdafd0d0mr57784905e9.1.1792598957526;
-        Wed, 21 Oct 2026 09:09:17 -0700 (PDT)
-Received: from [10.202.112.30] ([202.127.77.110])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ea3b410626sm13405705ad.20.2026.10.21.09.09.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Oct 2026 09:09:16 -0700 (PDT)
-Message-ID: <ca6bcf4a-2f3e-497e-8229-cd213038931c@suse.com>
-Date: Thu, 22 Oct 2026 00:09:11 +0800
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=KQ26xcF/
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pwmW04zDFOwUCpT3cgJwrB96obFIKZSOTVjbWBL7RQS3DRBupmCr5kIM1Ql0ETVqzxykFIzTAT1jqJ75IhEbzkOZISeETh/rbHDzYQmskRlhuXM9enSICNrK9eiiIj25frRxMuUZF7YVlV4ApEjI0/vgXfnmYX7PAfrsVZKgpbHFaDrUG0GpET19bZVqK7IxTcnYNPkBN2rWYIdFDeXmAgT386i5ELB+llH1MjY5/5ItynrM6kJS8bjR4X+ADM2aRZHxnJvvmtjBKyVlFSHzB8SrDzHKOlg1Oerz6Koa+GLlGcKN4SaLEKwl7aRWUeiOzmsEp0M6xJRTP2XjwjwJgg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=KnsqBi+nIoInxmUsk2IlzZXoNsGJz441rkqgl6fGkPg=;
+ b=Rwi8iDh1KUVie0VKCKCv9STiUnvnnp3FX8xL+gXMEnrg+Vg26pWNy06Uq9DDuAK2tHeA1nt/4yE0QvQs1rbjrIZLfq0xvS2R/KNiTch4SidmjvgOmy6FiA9OGGOZo+kjAOEIaogSehocudwXuf+yDTKHCHHQBijm5oCPUs87K51uJD7AD5lykzoRKH88xvhN3trjMEtbReALGismeg957xw32/R/s0txy+mO4isvM7CVmxsmgwU290KXqLPN3dGJdY6KcCxK/ni/eitMDsJ2muFmDuPfzTs5WOCS4z6e/BqIzt84e1BvD4CT7mLQPM2m6f0Jd9xYAVLeF74RXxB50w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=KnsqBi+nIoInxmUsk2IlzZXoNsGJz441rkqgl6fGkPg=;
+ b=KQ26xcF/JKvVHwuUHyQwgBwasUlQ+K4v9i8t4V6nMhl6XU2rpA0qF6dh4+UuQkv1bgmvcFdY3b+JMRh2/H9J4BVzjd1pzLyGitiuwf2lgP6cC0dG06gKjjD8hTk+4C/EOholQysrFPIMR2zPFobLAVvYyD2mb9CDhjAwuYkMI2x8WD7JXYgSn/tDyLPiKXviDUAqQuzIFY3+QaW3A4Cfjk50xTWGJrTBrEl+0vJNBHEOZhuPuAJKvdLi4fj/u6AphNqdlbyN96OLMu+HYwMQWp4rrAtzh5ywUG3XVtxULjJjO5zap7jW9QHePSxI4ALgSdY+vD90y1nCZtRN3zUSng==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by AMBPR04MB12310.eurprd04.prod.outlook.com (2603:10a6:20b:723::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Wed, 21 Oct
+ 2026 16:37:55 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0546.012; Wed, 21 Oct 2026
+ 16:37:55 +0000
+Date: Wed, 21 Oct 2026 12:37:48 -0400
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+	robh@kernel.org, dmaengine@vger.kernel.org,
+	devicetree@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org,
+	conor+dt@kernel.org
+Subject: Re: [PATCH v9 2/4] dmaengine: qcom: gpi: Add lock/unlock TREs for
+ multi-owner I2C transfers
+Message-ID: <atjqXMg6-fLLYEsf@lizhi-Precision-Tower-5810>
+References: <20260813140047.1006478-1-mukesh.savaliya@oss.qualcomm.com>
+ <20260813140047.1006478-3-mukesh.savaliya@oss.qualcomm.com>
+ <20260813141955.7466B1F000E9@smtp.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260813141955.7466B1F000E9@smtp.kernel.org>
+X-ClientProxiedBy: DS0PR17CA0007.namprd17.prod.outlook.com
+ (2603:10b6:8:191::14) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -89,251 +101,223 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 2/4] ocfs2: switch DIO read path from buffer_head
- to iomap
-To: sashiko-reviews@lists.linux.dev
-Cc: Mark Fasheh <mark@fasheh.com>, Joel Becker <jlbec@evilplan.org>,
- Joseph Qi <joseph.qi@linux.alibaba.com>
-References: <20261018143319.22329-1-heming.zhao@suse.com>
- <20261018143319.22329-3-heming.zhao@suse.com>
- <sashiko-outbox-176228@kernel.org>
-From: Heming Zhao <heming.zhao@suse.com>
-Content-Language: en-US
-In-Reply-To: <sashiko-outbox-176228@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AMBPR04MB12310:EE_
+X-MS-Office365-Filtering-Correlation-Id: 28c602f5-b432-47b6-9650-08df2f91a870
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|366016|23010399003|376014|1800799024|6133799003|18002099003|10067099003|22082099003|4143699003|261013131602099003|261009223027099003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	xeDVqHfSw44FJDJtiXkEuNFhuXtIDACsJPJFXLEAfOTJzsJ2jxQP6SWL0mE1wqnK2+cDYJ6YoD+qLsN3TyoW1HE3BIiQEbMsctzcNxlQU/TGtQod7zK0aILlprpFOhE4iCJ9dZbMSs/3Ual5g1mk398TuPOgz1fcnkRahDMfxOw49QJVLCdReopvWs3oUCvneE1RyssOZGHkcZEIXSdT8OaGDGyQ3flUdzvQTWhBFJ70pcv6Xwxb5+nBaWPhHwed4ay6BVswWTAyZ3ODWcTk6Dv3dT7EHqS8BehCLeW6Q66alKVe1Yhh7/xMQzYY6FLOBDRY6jvY0LUkPj27sZ4gnJ0SjtQQtraF7H4+puZa06tNV7bmXnaUlC7/10x0ptY7ts4aH8/5vPO7z/Yi8TF+AV535QuLwCDSc2bK/G5P5cHjo8wRMW7ZKJuQHaALJdpOa9R67g0h5rQcqoL9A7lLW+7enj21eadaHTg2wHMN0AS4+oGhZ5ytsJe/Nw7VKn0d3Nz/zs0tiij6LyB4EpCp3GkwUJvXgzOiAmEjLftqlKc7z9QMw23LDl7jqnn1/Q3xR/zDc/JsnmY0d7Gz1b+I8AiHyBxHeiCxFw7L//zqjDI=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(366016)(23010399003)(376014)(1800799024)(6133799003)(18002099003)(10067099003)(22082099003)(4143699003)(261013131602099003)(261009223027099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?4Pxev9DwH5WBPJRtKSuWZ5bxXvvq7siVdjaMk3aZcsrv1aaijAhHVElHNg?=
+ =?iso-8859-1?Q?eSYALbMX2DX/eBl+rEhcTuTcvZbDvXpqnuOqDmBo5WTz5D/DFomyqkBB+0?=
+ =?iso-8859-1?Q?wsTFJ6eBPmk4+VaewEtZjv6wt50CSkubkjd5uVwP2wrEkrb+d7yoKgMnQE?=
+ =?iso-8859-1?Q?JgJspIzrbO8T5rO33Jmb0hQWE/St8IA1JEG0K0UrtHxhyhVujNhtKHXePx?=
+ =?iso-8859-1?Q?8HISUVJEA7T2KXAw9ez/+m+aVV6VJUg96yBycrqhHRQN7AK9HOD4ogXDhw?=
+ =?iso-8859-1?Q?gDm6wF8hzDHHuMEifrrlAbTjDsjT/Ok+Uo6jKfinItqzpWfKClrUOSKIjc?=
+ =?iso-8859-1?Q?snmVftkc31pjdUKf1GMY05f7v6GsrkRob4VTPgJWqQZ2k2HVDCl1ptbYLb?=
+ =?iso-8859-1?Q?F0emtjt/QxHJ/6YfDyP4oImGRRml4irJhM3CIMZDbyi7wL1inoDFZBuKRV?=
+ =?iso-8859-1?Q?BgZqwkdX2lpSg8/6uc9+BVKOuxHLysTHuKA2MYQGc+n2Xc2Tcle51nO2Ko?=
+ =?iso-8859-1?Q?+U7+sDkkX+fvra3TH6asG+MTfEZmyRxwiolfzGvteWyVuSHhoNik7i7LcJ?=
+ =?iso-8859-1?Q?x5znquSW4O6vpJ9jdEjQvGW+/DghL8bryh5Y18eQHWK8Ecx78DEv2219cs?=
+ =?iso-8859-1?Q?xPiKqh0p4Wrjkq7ak4CKAFmNrQ+ATM1lR5Rq5p4+As+qH8AwcsTWULzKFz?=
+ =?iso-8859-1?Q?TDNX5o0DACcrYhu8MwVvViOgZyP/BkcY8Sv7rz6jzaEUDpzPwEpk6ksp3J?=
+ =?iso-8859-1?Q?v6U2snmxHcoSGu+DgN70V41lMg9hGdNZH+hpr5WDTfTX0kmmY12c4ffIBT?=
+ =?iso-8859-1?Q?p6fB5BHORjzPbeva4Bz1wrzv7EHn8/sl+ZpObaYGFMFTzG0QtdKtAqSTS9?=
+ =?iso-8859-1?Q?8qSfnZlrVAfYzvaJNj4Rsxn7Y8T56ENAqn2NqIL/iAIcGoZRrAqYvR/bmT?=
+ =?iso-8859-1?Q?9R0QhY9Bq5wgJPaZ5pYde+mvC0XCC2pZKNd1qFqfn72+LqSVeEMQIjX5pP?=
+ =?iso-8859-1?Q?QcmtG5KZdwjVLx6TioyOdWN35GBEdQjrUk2g4WHz8SURTsdajz4MstZYoj?=
+ =?iso-8859-1?Q?tFh7J1JNugOnyZ64kgvMWjpT8E9BhCr4e4pLmAyrZwbbYkRHcda7IcoCv2?=
+ =?iso-8859-1?Q?TC4utm065vMOujsbZ7y8Qe3XPZKNUdNFBXht1uus/l8ozLCZJmz5u581aY?=
+ =?iso-8859-1?Q?ueTHZ/KqVBmoVORbKU/B0LvQp4KppmnMthszzRUhVXF8sp9eEoxuDLW8Fw?=
+ =?iso-8859-1?Q?gavDzK+xktici08TPR3CfBLIB8E8RUzQN2Z7ZIhtTWACuFByUOLn6ZJGZH?=
+ =?iso-8859-1?Q?a3S9xt2Z/1K8H9zzwNNzhfXOKzPg8oVi/dKwkbFbFpLjxaM0maaz15jBsl?=
+ =?iso-8859-1?Q?n0vw2u5ZOAWdJ6rptDkz1mqflogkX7ZBBeu6oWJ7tOUrQdICL1Yc0guLSN?=
+ =?iso-8859-1?Q?fpTj1iqA4EeLL5AFjWLjeOWkPCRI2+74o11nWuzuicpj21fEXfrJj0ecDo?=
+ =?iso-8859-1?Q?zY9eUQGmd4zUG4t0jRrsYfgyaD2WlcspfihojXYvXjSl2MTzyA0buNzbGS?=
+ =?iso-8859-1?Q?Ke4GVUj7G6rG1qnpEqA3utOaSV7jY3yQ7XJKcRWE3HPmFAiMg1i8gVDlgw?=
+ =?iso-8859-1?Q?BB95gquJksQadC4VzFOC5UP0fbI5Tp3WQnuqT+lu6wbxyydiOlDzjtatWN?=
+ =?iso-8859-1?Q?bpCpAcFapo6xuW9ok+Dibg4EdRemojTo1VddrzF8ifgQM4SY1PSorOOmAe?=
+ =?iso-8859-1?Q?cpgGp7DUI9t6TLSbcvIHpui+jDqPLf+wyDkaWv0Qzg+KfQi+I+FshBvgxB?=
+ =?iso-8859-1?Q?bgXNp+wtPyvDimaAt7u2QtavmW259kfNHDWO2hMV7MDEHjm3C6Cz?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 28c602f5-b432-47b6-9650-08df2f91a870
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Oct 2026 16:37:55.3526
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: P9Hi+P2ZwPUT8IWEgJ9j1HZx1t0+hU3dwJ3loMrQsKxNCU7/R309YSwmpU71LG0EX+hLBfxx/XLrujTenvGaT06clOXZ7snZdpusLY4FkK/ba07u5zFBxSaxNMMPObrv
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMBPR04MB12310
 
-On 10/18/26 23:03, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] ocfs2: ocfs2_iomap_begin() caps logical blocks at 32 bits and overflows int
-> - [Medium] ocfs2: ocfs2_file_read_iter() treats DIO EOF return as buffered fallback
+On Thu, Aug 13, 2026 at 02:19:55PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+>
+> New issues:
+> - [Critical] Setting `TRE_FLAGS_IEOB` on LOCK and UNLOCK TREs causes multiple completion events per descriptor, leading to Use-After-Free and queue corruption.
+> - [High] The driver prematurely drops the hardware lock in Write-then-Read multi-message transfers due to misinterpreting `DMA_PREP_INTERRUPT`.
+> - [High] Failure to reset `gchan->lock_pending` during channel reset or termination permanently bypasses hardware locking for subsequent transactions.
+> - [High] `gpi_prep_slave_sg()` blindly hardcodes the maximum TRE requirement to 3, failing to account for the newly added LOCK and UNLOCK TREs, causing ring buffer overflow.
+
+Need fix these issue or provide explain.
+
+Frank
+
+>
+> Pre-existing issues:
+> - [High] Dangling pointer in `gchan->config` leads to Use-After-Free during channel reallocation.
 > --
-> 
-> commit 0ce3e0976541f87f07073b3eedf67a03235e8f09
-> Author: Heming Zhao <heming.zhao@suse.com>
-> 
-> ocfs2: switch DIO read path from buffer_head to iomap
-> 
-> This commit migrates the ocfs2 direct I/O read path from buffer_head to the
-> iomap framework, introducing ocfs2_iomap_begin() and handling cluster rw_lock
-> unlocking through iomap_dio_ops and __iomap_dio_rw().
-> 
->> diff --git a/fs/ocfs2/aops.c b/fs/ocfs2/aops.c
->> index 3215e2dda2be0..633d23dbbe098 100644
->> --- a/fs/ocfs2/aops.c
->> +++ b/fs/ocfs2/aops.c
->> @@ -4,6 +4,7 @@
->>    */
->>   
->>   #include <linux/fs.h>
->> +#include <linux/iomap.h>
->>   #include <linux/slab.h>
->>   #include <linux/highmem.h>
->>   #include <linux/pagemap.h>
->> @@ -2545,6 +2546,116 @@ static ssize_t ocfs2_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
->>   				    ocfs2_dio_end_io, 0);
->>   }
->>   
->> +static int ocfs2_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
->> +		unsigned int flags, struct iomap *iomap, struct iomap *srcmap)
->> +{
->> +	int ret;
->> +	struct ocfs2_map_block map;
->> +	struct ocfs2_inode_info *oi = OCFS2_I(inode);
->> +	u8 blkbits = inode->i_blkbits;
->> +
->> +	if ((offset >> blkbits) > OCFS2_MAX_LOGICAL_BLOCK)
->> +		return -EINVAL;
->> +
->> +	/*
->> +	 * Calculate the first and last logical blocks respectively.
->> +	 */
->> +	map.lblk = offset >> blkbits;
->> +	map.len = min_t(loff_t, (offset + length - 1) >> blkbits,
->> +			OCFS2_MAX_LOGICAL_BLOCK) - map.lblk + 1;
->> +	map.flags = 0;
->> +
->> +	if (flags & IOMAP_WRITE) {
->> +		return -EOPNOTSUPP;
->> +	} else {
->> +		down_read(&oi->ip_alloc_sem);
->> +		ret = ocfs2_map_blocks(inode, &map, 0);
->> +		up_read(&oi->ip_alloc_sem);
->> +	}
->> +
->> +	if (ret < 0)
->> +		return ret;
-> 
+>
+> --- Patch [2]: [PATCH v9 2/4] dmaengine: qcom: gpi: Add lock/unlock TREs for multi-owner I2C transfers ---
+> commit b6883d50c999f402ed4f7be119614262119be22d
+> Author: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
+>
+> dmaengine: qcom: gpi: Add lock/unlock TREs for multi-owner I2C transfers
+>
+> This commit adds support for emitting lock and unlock Transfer Ring Elements
+> (TREs) around I2C transfers on QUP-based controllers shared with other
+> processors. The GPI driver autonomously determines the placement of these
+> TREs based on transaction boundaries and latches a multi-owner flag during
+> initial configuration.
+>
+> > diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> > index a5055a6273af6..25fe7410bee2e 100644
+> > --- a/drivers/dma/qcom/gpi.c
+> > +++ b/drivers/dma/qcom/gpi.c
+>
+> [ ... ]
+>
+> > @@ -518,7 +529,7 @@ struct gpii {
+> >  	bool ieob_set;
+> >  };
+> >
+> > -#define MAX_TRE 3
+> > +#define MAX_TRE 5
+>
 > [Severity: High]
-> Can this cap on OCFS2_MAX_LOGICAL_BLOCK (0xFFFFFFFE) reject valid large-file
-> offsets and overflow the signed int return value of ocfs2_map_blocks()?
-> 
-> In ocfs2, on-disk extent offsets (e_cpos) and inode cluster counts
-> (ip_clusters) are 32-bit cluster numbers, while block offsets are 64-bit:
-> 
-> fs/ocfs2/super.c:ocfs2_max_file_offset() {
-> 	unsigned int bytes = 1 << cbits;
-> 	unsigned int trim = bytes;
-> 	unsigned int bitshift = 32;
-> 
-> 	/*
-> 	 * i_size and all block offsets in ocfs2 are always 64 bits
-> 	 * wide. i_clusters is 32 bits, in cluster-sized units. So on
-> 	 * 64 bit platforms, cluster size will be the limiting factor.
-> 	 */
-> 	...
-> 	return (((unsigned long long)bytes) << bitshift) - trim;
-> }
-> 
-> Whenever the cluster size is larger than the block size (cbits > bbits),
-> valid logical block numbers exceed 0xFFFFFFFE (for example, offsets at or
-> above 16 TiB with 4 KiB blocks and 8 KiB to 1 MiB clusters). With this check,
-> O_DIRECT reads via ocfs2_file_read_iter() -> __iomap_dio_rw() ->
-> iomap_iter() -> ocfs2_iomap_begin() fail with -EINVAL at offsets that
-> previously worked and still work for buffered reads.
-
-the max file size is 16TB(0x1000,0000,0000).
-OCFS2_MAX_LOGICAL_BLOCK represents the block number, the max value is
-0xFFFF,FFFF in theory.
-I will change the value of OCFS2_MAX_LOGICAL_BLOCK from 0xFFFFFFFE to 0xFFFF,FFFF.
-
-> 
-> Additionally, ocfs2_map_blocks() returns u64 map->len as a signed 32-bit int:
-
-This issue was mentioned in [1/4] patch review comments.
-I will fix it in the next version.
-
-> 
-> fs/ocfs2/aops.c:ocfs2_map_blocks() {
-> 	...
-> bail:
-> 	if (err < 0)
-> 		return err;
-> 	else
-> 		return map->len;
-> }
-> 
-> Because map.len can be up to 0xFFFFFFFF (and ocfs2_figure_hole_clusters()
-> returns UINT_MAX - v_cluster for holes at EOF), a mapped or hole range of
-> 0x80000000 blocks or more will truncate to a negative int return value in
-> ret and cause ocfs2_iomap_begin() to fail with a bogus error code.
-> 
+> While MAX_TRE is increased to 5 here, does gpi_prep_slave_sg() still
+> hardcode the maximum TRE requirement to 3 when checking if the ring buffer
+> has enough elements available via gpi_ring_num_elements_avail()?
+>
+> If the ring buffer only has 3 or 4 slots available, could this pass the
+> check but fail to enqueue the remaining elements like the UNLOCK TRE,
+> potentially locking the hardware bus?
+>
+> >  struct gpi_desc {
+>
 > [ ... ]
-> 
->> +static int ocfs2_iomap_dio_end_io(struct kiocb *iocb, ssize_t size, int error,
->> +				  int level)
->> +{
->> +	struct inode *inode = file_inode(iocb->ki_filp);
->> +
->> +	/*
->> +	 * When iomap_dio_complete() calls us with size==0 and error==0, it
->> +	 * means the mapping bounced back to buffered I/O. In that case leave
->> +	 * the rw_lock ocfs2_file_{read,write}_iter() keeps it for the buffered
->> +	 * retry and releases it in its own cleanup path.
->> +	 */
->> +	if (size == 0 && error == 0)
->> +		return 0;
->> +
->> +	ocfs2_rw_unlock(inode, level);
->> +	return error;
->> +}
-> 
+>
+> > @@ -1617,6 +1629,17 @@ gpi_peripheral_config(struct dma_chan *chan, struct dma_slave_config *config)
+> >  	gchan->config = new_config;
+> >  	memcpy(gchan->config, config->peripheral_config, config->peripheral_size);
+> >
+>
+> [Severity: High]
+> This isn't a bug introduced by this patch, but when
+> gpi_free_chan_resources() frees this memory with kfree(gchan->config), it
+> leaves gchan->config as a dangling pointer.
+>
+> Since gchan elements are statically allocated arrays reused across DMA
+> channel requests, if the channel is requested again, will this call to
+> krealloc() receive the freed pointer and cause a slab use-after-free?
+>
+> > +	/*
+> > +	 * Latch the multi_owner flag from the initial config call so the GPI
+>
 > [ ... ]
-> 
->> diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
->> index 62f45a1b5ca1a..519d4fb213db3 100644
->> --- a/fs/ocfs2/file.c
->> +++ b/fs/ocfs2/file.c
-> 
+>
+> > @@ -1627,10 +1650,33 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
+> > +	/*
+> > +	 * Insert a LOCK TRE before the first transfer of a multi-owner
+> > +	 * transaction.  The GPI driver detects the transaction start
+> > +	 * autonomously: if multi_owner is set and no lock has been issued
+> > +	 * since the last unlock (lock_pending == false), this is the first
+> > +	 * descriptor in a new transaction.
+> > +	 */
+> > +	if (chan->multi_owner && !chan->lock_pending) {
+> > +		tre = &desc->tre[tre_idx];
+> > +		tre_idx++;
+> > +
+> > +		tre->dword[0] = 0;
+> > +		tre->dword[1] = 0;
+> > +		tre->dword[2] = 0;
+> > +		tre->dword[3] = u32_encode_bits(1, TRE_LOCK);
+> > +		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOB);
+>
+> [Severity: Critical]
+> Adding TRE_FLAGS_IEOB to the LOCK and UNLOCK TREs means a single transaction
+> produces an EOB event (from Lock), an EOT event (from DMA), and another EOB
+> event (from Unlock).
+>
+> In gpi_process_xfer_compl_event(), EOB events fall through to the success
+> path which pops the active descriptor from gchan->vc and frees it. Since a
+> single descriptor generates multiple events, could the event handler pop and
+> free unrelated descriptors from the queue, causing a use-after-free?
+>
+> > +		tre->dword[3] |= u32_encode_bits(0, TRE_MINOR_TYPE);
+> > +		tre->dword[3] |= u32_encode_bits(3, TRE_MAJOR_TYPE);
+> > +
+> > +		chan->lock_pending = true;
+>
+> [Severity: High]
+> If a transaction errors out after a LOCK TRE is generated and the client
+> calls gpi_terminate_all() to abort the transfer, gchan->lock_pending is not
+> reset to false.
+>
+> On the next transaction, will gpi_create_i2c_tre() evaluate lock_pending as
+> true and skip inserting the necessary LOCK TRE, causing transactions to run
+> on the shared bus without acquiring the hardware lock?
+>
+> > +	}
+> > +
+> >  	/* first create config tre if applicable */
+> >  	if (i2c->set_config) {
+>
 > [ ... ]
-> 
->> @@ -2598,17 +2610,42 @@ static ssize_t ocfs2_file_read_iter(struct kiocb *iocb,
->>   	}
->>   	ocfs2_inode_unlock(inode, lock_level);
->>   
->> -	ret = generic_file_read_iter(iocb, to);
->> +	if (direct_io && ocfs2_should_use_dio(iocb, to, inode)) {
->> +		struct iomap_dio *dio;
->> +
->> +		dio = __iomap_dio_rw(iocb, to, &ocfs2_iomap_ops,
->> +				&ocfs2_iomap_dio_ops_r_pr, 0, NULL, 0);
->> +		if (dio == NULL) {
->> +			/* No I/O issued; rw_lock still held. */
->> +			ret = 0;
->> +		} else if (IS_ERR(dio)) {
->> +			ret = PTR_ERR(dio);
->> +			if (ret == -EIOCBQUEUED)
->> +				rw_level = -1;
->> +		} else {
->> +			ret = iomap_dio_complete(dio);
->> +			if (ret != 0)
->> +				rw_level = -1;
->> +		}
->> +		/*
->> +		 * A 0 result means the mapping bounced us back to buffered I/O
->> +		 * (e.g. inline data); the rw_lock is still held. Clear
->> +		 * IOCB_DIRECT so generic_file_read_iter() takes the buffered
->> +		 * path rather than re-entering direct I/O.
->> +		 */
->> +		if (ret == 0) {
->> +			iocb->ki_flags &= ~IOCB_DIRECT;
->> +			ret = generic_file_read_iter(iocb, to);
->> +		}
-> 
-> [Severity: Medium]
-> When an O_DIRECT read starts at or past EOF, won't this treat the 0 return as
-> a buffered I/O fallback and call generic_file_read_iter() with IOCB_DIRECT
-> cleared?
-> 
-> In __iomap_dio_rw(), a read at or past dio->i_size jumps to out_free_dio with
-> ret == 0 and returns NULL:
-> 
-> fs/iomap/direct-io.c:__iomap_dio_rw() {
-> 	...
-> 	if (iov_iter_rw(iter) == READ) {
-> 		if (iomi.pos >= dio->i_size)
-> 			goto out_free_dio;
-> 	...
-> }
-> 
-> Here, dio == NULL sets ret = 0, and the if (ret == 0) block then clears
-> IOCB_DIRECT and falls back to generic_file_read_iter() -> filemap_read(). If
-> a concurrent writer extends i_size after __iomap_dio_rw() sampled
-> dio->i_size, filemap_read() will perform a buffered read on the O_DIRECT
-> descriptor, populating the page cache and bypassing DIO alignment checks.
-> 
-> Also, since ocfs2_should_use_dio() already filters out inline data before
-> calling __iomap_dio_rw() and ocfs2_iomap_begin() never returns -ENOTBLK on
-> reads, is there any case on the read path where __iomap_dio_rw() or
-> iomap_dio_complete() actually bounces back to buffered I/O?
-
-
-The buffer_head path has the same issue. I suggest addressing it in another
-thread.
-
-@joseph,
-There is no action to clear IOCB_DIRECT in the buffer_head path, so I think
-the code below can be written more simply.
-from
-+	if (ret == 0) {
-+		iocb->ki_flags &= ~IOCB_DIRECT;
-+		ret = generic_file_read_iter(iocb, to);
-+	}
-
-to:
-+	if (ret == 0)
-+		ret = filemap_read(iocb, to, 0);
-
-
-Thanks,
-Heming
-> 
->> +	} else {
->> +		iocb->ki_flags &= ~IOCB_DIRECT;
->> +		ret = generic_file_read_iter(iocb, to);
->> +	}
-> 
+>
+> > @@ -1690,6 +1736,35 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
+>
 > [ ... ]
-> 
-
+>
+> > +	/*
+> > +	 * Insert an UNLOCK TRE after the last write transfer of a multi-owner
+> > +	 * transaction.  DMA_PREP_INTERRUPT marks the final descriptor in the
+> > +	 * batch; reads carry their own completion event so the unlock follows
+> > +	 * the write leg of each read message.
+> > +	 */
+> > +	if (chan->multi_owner && is_last && i2c->op != I2C_READ) {
+> > +		tre = &desc->tre[tre_idx];
+> > +		tre_idx++;
+> > +
+> > +		tre->dword[0] = 0;
+> > +		tre->dword[1] = 0;
+> > +		tre->dword[2] = 0;
+> > +		tre->dword[3] = u32_encode_bits(1, TRE_UNLOCK);
+>
+> [Severity: High]
+> If the i2c-qcom-geni client driver executes Write-then-Read sequences by
+> setting DMA_PREP_INTERRUPT on the write leg to wait for its completion, will
+> this logic equate the flag with the absolute end of the I2C transaction?
+>
+> Could this prematurely append an UNLOCK TRE between the write and read,
+> destroying the I2C bus stretch and allowing other owners to interleave
+> transactions and corrupt the bus state?
+>
+> > +		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOB);
+> > +		tre->dword[3] |= u32_encode_bits(1, TRE_MINOR_TYPE);
+> > +		tre->dword[3] |= u32_encode_bits(3, TRE_MAJOR_TYPE);
+> > +
+> > +		chan->lock_pending = false;
+> >  	}
+> >
+> >  	for (i = 0; i < tre_idx; i++)
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20260813140047.1006478-1-mukesh.savaliya@oss.qualcomm.com?part=2
