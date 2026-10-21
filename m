@@ -1,110 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792577737;
-	b=Uv7cDU9K58sNTvXsy89Aj0Le01sBHN0ICK7ZrwhhjxOECAUYatZl/fVMGHQYRrTYILrb
-	 wzj+7GAz+nrUFzHt+E+opX2fvJQEibRwcHqTA1Pul45pbVpcrpD6n+ViK9UELnLwQUX+3
-	 45hgyGDsrZSRVwgKaracaC3unn8dd6urAke1DwjM2hzShu0HaeVMCpSdzm+HnWYkSoQx9
-	 7UyOmW4KMIVfmkjp+riM1kAxY9y2XXFpNwLWVW6HQnO9VvUGzZjgX4Nz6a8dS1KEnz+X3
-	 gmw+lct51H1EGSGmigLPh/WNb8bks/wahAPVmFnkZnsX8TZsbFJ0jhOpNy7JgK47CwA==
+	t=1792579502;
+	b=IyQXU9Eq7C0RR8i9WKnADkoHBIMCkscuU5KOCU8/nQiWT9wklPlEzT38ZnkT302OBK4S
+	 0ycwkOLVB38xECvH+0QuO6QZhl2wOaF+KxgnRiUTnpZWuojgkH72apskzJWvNDxOW6o2e
+	 f9XPT0/EZ4And28K25s8xTIgrJqGIgzvJI+vgWuqpqAS3AAlEsm6E/Ef8C0/7TGI2WA0i
+	 Ohb4YmZHGaFqyNsLxMj/4KzKcsj7AyvSEhJJHoKNsAxF2MWt5C/hpvXiYf/P9qe+myDWV
+	 6IlG8r3tI3m47iOrdRIGPknwQPbyaaKK4se6tiAB1M7Ew4j/WRf5aka+/y7gqBt5N0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792577737;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792579502;
 	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
 	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
 	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
 	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Proofpoint-Spam-Details-Enc:
-	 X-Authority-Analysis:X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Info:
-	 X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
+	 Content-Type:Content-Transfer-Encoding:X-Authority-Analysis:
+	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-GUID:X-Proofpoint-Spam-Info:X-Proofpoint-Virus-Version:
 	 X-Proofpoint-Spam-Details;
-	bh=uhoI8znfXdGm+yPN6uFO9tAaso3xMr1cOltvpbG+UDI=;
-	b=TBuWfwGU4HU5vgcq3b5SGQQMCuTX1Nxyf/nXdiJndy7Ucry1Qkh8je6uSPECXzzIlyN7
-	 /YQGEyMsGN7VghLqlspYN4NQGDdqIpqUZwaPkAc0o8IPPD5lyByzB3Gk20sDjhOOiVRUr
-	 IYWZxHrQO3J56sQw6ZPQph+GE8TLLgd+QDX1Tbr/YCelpbqqzgtDsueB+SlYoQ+y0Xh5w
-	 20sqUGrrVWVIivzBd9V4XwdHeH0iff8xwnQH0nPzRjkMw4/O1GxZhm9Z6FMrompnh+jR2
-	 zFT1jq4SFEYGBsA8fuSNPWCc1N2XoCN/Zt/fC2r/b9MNIfOzaNZ+sDdVfcMFiAeCjWw==
+	bh=ik84gjJhQXZyxzqpUBYq3dSc7Euo+Avkq4FYME9dfpE=;
+	b=XwMd7NtkCPuSjdwTjuc1eHG426GV4GxqN2KlgnYWXhP8CDG8HZEfSgkiTvd4ci0cUys/
+	 c+G2i2Ns8D2wjcwlSPyahxIQQwYH+Oc5eSxdvZfN4/COS+Ywlf1MOrdE5txRjZcfxcUTS
+	 Ko7Kwzsj6/Qi4CnjTHxvVVkTfx5d1kXvUd8VooXJLozis9hF9nr8UswaPfyctfRftFyjP
+	 ZUK1qDTSdRW0WAl/uOn8PMnslqODI1LlALMt5hK1t/v9WZSnrC9Tj4/ilcNOp/uLqan9O
+	 AMOao87bk7MmgmqOyqNSIeK+NNyn34qH252k01/6t4m8rPD/GsQGz/KNXiC7GYBzEyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.qualcomm.com;
 	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=pjfTWkdO;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=dFQ4XIyh;
-	arc=none smtp.remote-ip=205.220.168.131
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=c90OVmmj;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b="HIHN4W/z";
+	arc=none smtp.remote-ip=205.220.180.131
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BAE3606A31F
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 10:15:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3BAE3606A31F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71AB606A31D
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 10:45:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E71AB606A31D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=pjfTWkdO;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=dFQ4XIyh
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69LA6Mrp3621183
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 10:15:36 GMT
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=c90OVmmj;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=HIHN4W/z
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69LA6RtF282249
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 10:45:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	uhoI8znfXdGm+yPN6uFO9tAaso3xMr1cOltvpbG+UDI=; b=pjfTWkdOnXjiMyxe
-	CbrTorlcTfm6p8dazhPPSx58tDtspamwDRmSZiuvaFxMztwQadG4+WM4nWq4JAJj
-	fhkMSy/XUf1ad4RBE49udduBMwH0eMQM5KqtwbaLGb/1mXNd5gloiAgxr6qJQ7gZ
-	J1WBPtzazS1v1C11CWxeccYMtHUXDDda2GNgHxBjlUTHZNYTKyngBIl2EEt8STEu
-	OTGSYV0qWiKuemGnrmFfkDjgn55yVEu3iz9C8UVHUt7CZVWyVoLOrVghloRHmVa7
-	SI9yH00apE2DNPmX5NpfZCUs+bvukzQWrDmIDYHvyq0TIRKWxD4b6DowNTxte6Ks
-	42is+A==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hebyd3twp-1
+	ik84gjJhQXZyxzqpUBYq3dSc7Euo+Avkq4FYME9dfpE=; b=c90OVmmjPQw+bVBp
+	JuYLpaUHzF8pry/dvoE4zMJMbkN0UdZ51c/FJja3NdSEUtUiah+V2X+l59iOSQ82
+	I1+hlzYmRIlQLt8wLJk/qxQsQW9rKylm6h4df5Mi5lRnYKD9JSok7UkP3ppu9QrL
+	yyNlTyC0FYPRTvzJKJ5ZqnKn/bTwWDUI00TJpmwhuMo3+XP1NlI3Eq5zEtYpCTFO
+	RrNlyuExnTD101II9Vhn17xbwC6Loz9oFFoXmByLZKB0z+pphx3352XtZ75+sOQm
+	8YT1NhLx+wRKQDCSbtZF0XaIiodo19RhocKwEPp0oBmaG3Lx97bfK36RzXIXCTGI
+	8l1ziA==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4heh5r2m4m-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 10:15:36 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-3ac16335199so571823a91.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 03:15:36 -0700 (PDT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 10:45:00 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-8a01e2962a1so826012b3a.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 03:45:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1792577735; x=1793182535; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1792579499; x=1793184299; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=uhoI8znfXdGm+yPN6uFO9tAaso3xMr1cOltvpbG+UDI=;
-        b=dFQ4XIyhd5Gco2mFnsRH8DtM2w5F/xoX6rkzYx3kkgsiA5dGxd0AUILfJ/Cgky0y50
-         K/gcwzSkoT5zF9HglVOJXZe+uVtj4rvicK+5wcYUMrskNzMBSdRwyBEvY72OYk4/Uu6G
-         QEnQCn0u31DsIfOmS+xAueTPbWj3qs7IDxbBd3TilAxE7DfDGEGFK9JXi+pitFQ5l9Lp
-         H3AyBbouGF2xZ7yN2Yy+gJRXXTAoe2As0nY6nNognrq/6IeEDfzVMn6kz8noJoDfmJOm
-         kLmv09wbkYpEHEkWUMSSh//wPpKjggHcw1iLjaQOywjVKiemB/jul7x2lT1KezBQ8Xzk
-         vFiA==
+        bh=ik84gjJhQXZyxzqpUBYq3dSc7Euo+Avkq4FYME9dfpE=;
+        b=HIHN4W/zLLyYs7N5elFvF0q8/9xZ7p9HrrZCyMWydr+qI0iRSa9bz6U4ymZu8XTWiv
+         86l59Wh2akewn/CXGrIiEw8Pgp+dPtenOO/h/JSdzk0m1XU7XZQq4Z1pS/nJyBhK3tgu
+         Sh6uo4xDTFBLmkaftZq0pYSHmoGjusmvalTw486GXpJPW7gqAEEujWA9e0gneigwGv8J
+         5UpTgRVUF1QKQwUCbhKPk9ntNFbrYyYxJ5QgPqV7uZabMCQpj5kqFjr4CXrUlAdvQw0A
+         wtfXjWY1jOxStkOxY4ML+qxE8k1cLbcgL/5v2TFYOdHqjjmM0NWGrozfy5PZoxTvx4sm
+         HxMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792577735; x=1793182535;
+        d=1e100.net; s=20260707; t=1792579499; x=1793184299;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=uhoI8znfXdGm+yPN6uFO9tAaso3xMr1cOltvpbG+UDI=;
-        b=vhmGsBgOt/oPaCx5o5uHmSZG4bLl5GensKZx9RO1tltFMVmk+1zjFzJQCL+VKIU+sW
-         DdfEK7LRcm2kMe3Gq90n1go9eULrNPprmQPmlpseAEANEUKL1/KNUD9OpItcNhz2j8t6
-         0zxl1TW4NQQ2Ongl0dLt5yUo/a4UPAZqAlpbixwVJavGk4+4GZTQIOzmr0+QGcMPZJh5
-         CurjVe7jSsF0OwD+i925DCqo3C4a2+joPunCA6zRtLr2mMIEPyuGYlZ6rJrlNyWA+K/L
-         VrKzrye7b1qs6AlTRDx47xW/GIuATMuwpNeKsGVHP/egTUGXwzKw/lKNCI+GNwBV/IcR
-         bEOg==
-X-Gm-Message-State: AFq9FYIHY1aYcIbTGSd5i1UVp6DiWIH3t4W6EBeiVdnibHFhmQTKxlUd
-	+CfzBVvXCXJmhEIkoeXiRAqzsJnANO6AcebT3ktOHIyt8CJsAVIX0z5JMy0ujlAmyHbmPHSARux
-	xdNz5Qv0vQv8/nCBMWJWPoNWyPEIY8eoAaNfZZL2MbbuNrMKR5aBQBtbsFHpueQ3wcisgw7Jkrl
-	Pt7/w=
-X-Gm-Gg: AYBFou3BVPN+cjsUf06JexhwaO5P39NLVpJGBpBz5pV2fNWjOA8v4imZgbwL54Oxve/
-	smHfvFzxQP9/ykzTX41wdrudoeuDDTm9y8u8Oeq15+kmdJqreEl5K+5jUIeel3JNWLB5DYb+y2/
-	rXOGg4DSsRoYrE+/ZQgUUSeec8fVZmXbvznEk70pAeZVw9D/PpRqBMxphK+HprHwUxgJLO2u2eA
-	nub55/3AMEuUOmueyCzuZVlp+EtArkhh69l2axVrhE5JNZjpYl+DQ3V8bfhsA/fuoli0UuJGJbR
-	FH4/+QUSL27p7WWTylOv3Ra0OBaZX8LRGdiJK2v0e7jmoCkFFeknIfx0fkM7moSuY6O2DNX9dWA
-	U5uApVDjpSrQIMqi47T/CMt6flrLYLqQ12A==
-X-Received: by 2002:a17:90b:28c3:b0:3ac:4e18:237c with SMTP id 98e67ed59e1d1-3ad86a44f73mr1374798a91.0.1792577735499;
-        Wed, 21 Oct 2026 03:15:35 -0700 (PDT)
-X-Received: by 2002:a17:90b:28c3:b0:3ac:4e18:237c with SMTP id 98e67ed59e1d1-3ad86a44f73mr1374758a91.0.1792577734155;
-        Wed, 21 Oct 2026 03:15:34 -0700 (PDT)
+        bh=ik84gjJhQXZyxzqpUBYq3dSc7Euo+Avkq4FYME9dfpE=;
+        b=UMtJ1IkhxeiBPwUmrM1sLoWRuXpJ3o/Pbv7jo1zG2jQ6sIuyDffwXaEHsfwuKAafeU
+         /Iol1Ic0tcVdNCvHFzMAOKgdVfZtiENPZ2stLW+3oQbBznjikuk5MysRAjuYf0CHLMdU
+         HUp7N+GCDhnPt7iDRreGJG2uz0ruahfOf7kqd0iA30DWp29H6G/rNOrtnPbta/GhNxWQ
+         BG/VT+rROYodjA36Q6kwmQwDNvZRjZ7MptIkhkcvJfdzhzFbr/vU2ZUjPn1Sj+QVqL8G
+         GjeeWkhjw4mTYA1ppRJXwdG2fxzIG66Cbn/uHvwMmgPQlwRiFn0XYieDOgbkcLrIe0UE
+         kwbQ==
+X-Gm-Message-State: AFq9FYKxLwReKX9gD7RUb/iiCemVid9qX3SOFiqcjhcy7FLMlgSmn5wu
+	hHh28Ga/wr2V9cLehyAQFLxOvOo7+BASJb4n6jjiWdHIjPBZ04WkKCTRDlWW0+7naoUFAVHGZ0m
+	m6G7thOuwzq4bMf+MuzuvgBC5Jtmhg16Kg7QpTTJv9QozfHbXSNcik3sfqcjHzfxzD6gDXHMmuh
+	/wzhU=
+X-Gm-Gg: AYBFou2mVHcs9YlZBv6xu2BMH6trk3lfo0Lu6mmvo7CMA+DMpjzsUS2aR8T7hjwdPBf
+	FKUpGzoTzRPpTepKpacM/2SEC75frobYfkTA8yVDqnh9K4kZBMltKqAxPSMN2n2UCCfz7E0Q8aO
+	/HUKhl0SN7rTuoEr77+ZpiBh9UB99plnD9SeVdiVA0uYy7kTCZ404p72PHreGm7vIueUjA8HjlU
+	Yv0t0mDEe6/GRwWv81Evt940TPeNkM6oPpSTCxOBMf9yKWNitmf9YCwqWrp4klmzV4tcjmMoKY3
+	ZvDmoNbg6RH4HRZkAfrOrz4oyZ7SCQQOw6w1rxIkreHCk+p9BP6ctH6fZPD/Nqm30fE2ngjHTWr
+	mplvtUpxAIEcCvCegeQHbQI40VhT0ZBzNjg==
+X-Received: by 2002:a05:6a00:3687:b0:89f:28c3:aab0 with SMTP id d2e1a72fcca58-8a089d43a8fmr1242649b3a.40.1792579499516;
+        Wed, 21 Oct 2026 03:44:59 -0700 (PDT)
+X-Received: by 2002:a05:6a00:3687:b0:89f:28c3:aab0 with SMTP id d2e1a72fcca58-8a089d43a8fmr1242630b3a.40.1792579498886;
+        Wed, 21 Oct 2026 03:44:58 -0700 (PDT)
 Received: from [10.152.193.243] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ad813de463sm3759170a91.13.2026.10.21.03.15.31
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8a0895dba2bsm729437b3a.36.2026.10.21.03.44.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Oct 2026 03:15:33 -0700 (PDT)
-Message-ID: <40f9ba00-929a-490e-b578-f88867be383b@oss.qualcomm.com>
-Date: Wed, 21 Oct 2026 15:45:30 +0530
+        Wed, 21 Oct 2026 03:44:57 -0700 (PDT)
+Message-ID: <3fee0897-a878-459d-89c8-c9dd772c1976@oss.qualcomm.com>
+Date: Wed, 21 Oct 2026 16:14:54 +0530
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -115,146 +115,102 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH ath-next v2 09/17] wifi: ath12k: add support for unified
- data-region memory allocation
+Subject: Re: [PATCH ath-next v2 12/17] wifi: ath12k: Enable MSI interrupt
+ support for DP interrupt
 To: sashiko-reviews@lists.linux.dev
 Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
 References: <20261016-mpp-bringup-v2-0-f510c33bfcf5@oss.qualcomm.com>
- <20261016-mpp-bringup-v2-9-f510c33bfcf5@oss.qualcomm.com>
- <sashiko-outbox-173678@kernel.org>
+ <20261016-mpp-bringup-v2-12-f510c33bfcf5@oss.qualcomm.com>
+ <sashiko-outbox-173689@kernel.org>
 Content-Language: en-US
 From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
-In-Reply-To: <sashiko-outbox-173678@kernel.org>
+In-Reply-To: <sashiko-outbox-173689@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA0MCBTYWx0ZWRfX0eTEMH0ZcR82
- fCq+yefF48efDaPl6wYpRPjbYvIcSFNSS8nXsqBVs2kotL2HfS8C42pkJLGtzldGtobLTcg8yg6
- kf1GCkktwCOF3Y4+gjcC0pUwvBZcZubZKL+iZlWQ9NURDmmVibgnHk0Mt3dufsni2UA9Eg0eDaB
- ZQfNcKdM3R5kJHLqqQO1PMwHOL71D1GTz0LTF3v/n+IrKenoEZcqRcYW1mmdZ3OwusEjxIcoLsF
- p9XrhWDoodSd2XXewNPd9P57zMCuPHWaFohOyqT4rZDFS37i1axIUt88q8LTgkPtcnkMB6jlMZz
- JMeWvNb3qb15zQ5elBje+qsLfhZaCqOnxrtwyX4QRF9fhB2QWeISb3dNutFU3MNKblwtAF8COGG
- XouLQkA/CBFVNgsTAoHd/l0P5LgyWYP+44YZOq4dcZ3XWMMl9OeKI+62fuuh8hv8INrWh06bCKH
- Hi8sOYI+BxKIoJ0m8SA==
-X-Authority-Analysis: v=2.4 cv=TdsDJhQh c=1 sm=1 tr=0 ts=6ad890c8 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+X-Authority-Analysis: v=2.4 cv=aI5lOr9m c=1 sm=1 tr=0 ts=6ad897ac cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=LXZuLjuy80gFrzuPV9sA:9 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-ORIG-GUID: zOliVC-eWr_kePxLSTbU1k1bukRYhKvh
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA0MCBTYWx0ZWRfXzBYrIdAfJTc5
- uwqgeGdt56FVgVeuC1AYKO9kJKcWao3Qhjs/jaozIlVCVxhXBqe4ocUYxBl0yed9eS5pux2UmqG
- wtYL23XxGqtCZToZtk+UgafRJgPw6Jo=
-X-Proofpoint-GUID: zOliVC-eWr_kePxLSTbU1k1bukRYhKvh
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=JXgSEGKP8_NlnuhlkvkA:9 a=QEXdDO2ut3YA:10
+ a=IoOABgeZipijB_acs4fv:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: 1lv9MzsDdL4KIvFoOGY3V_KlohR3nVji
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA0MiBTYWx0ZWRfX6npl1JimumVT
+ p5rPkeNAQ+dlomPx55zuFv7dteWimYttRf6uQdqx8E99BJo3wBeDnQg2/YQwyDS1cYPvIj7P2pO
+ 8HGsmpXiYxabN/XjZbP8kk5L+HOASx9wZjcMsbZ2Bx7qjUS0BaM9cOqcu51MlUcJy4dxFcV6wC4
+ 11HtTdf+4JryFfVdB5UcYmxMB7AjFaJmr+uUNWuaLbNGhExVnHvgRWGJ6mo6PButS90kcB6b3HX
+ 2Wfo+z7JEU4HgTCR91/ZNGHrkqCwFqk9NwV71Qvzs9gSLnTJzVz2Pe+ZIGMs7t1NgtYSDnDOR3Y
+ ppv2bwYAAf8TtAYPu2OP0cJB+aQgtxEdx8y6gbI1MqPiYgUtCzYa56/S//UACTTIw0SNly1oNuW
+ yPKnxj8J/SsS2OfGgG+70Ulo10eMIcBcVlcqlL5j8gbpnaC9hFAeUb7bR2qtA773Y04gg59+gIH
+ Cx9D8K9Q69xDhb6/oNw==
+X-Proofpoint-GUID: 1lv9MzsDdL4KIvFoOGY3V_KlohR3nVji
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA0MiBTYWx0ZWRfXwGs4NL5uy3Ob
+ WD1fEPM65kM3tOnLTCTAfZsxZ1ZUul0K49Z8vcy5Qj5AackH6tDZW+AlMBptRR5y9BpLGoCcX3S
+ dCeh99plO1SpfdhwzJHf6pphLDhTa2E=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-21_03,2026-10-19_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 phishscore=0 impostorscore=0 spamscore=0
- clxscore=1015 malwarescore=0 priorityscore=1501 lowpriorityscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610210040
+ priorityscore=1501 clxscore=1015 impostorscore=0 spamscore=0 bulkscore=0
+ malwarescore=0 suspectscore=0 adultscore=0 phishscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210042
 
 
 
-On 10/16/2026 9:05 AM, sashiko-bot@kernel.org wrote:
+On 10/16/2026 9:11 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] ath12k: data-region loop incorrectly intercepts all memory chunk types
+> - [High] wifi: ath12k: TOCTOU race drops edge-triggered MSI DP interrupts causing permanent stall
 > --
 > 
-> commit 1f2202b158e5c8168f0cae90faae57bce35a9612
-> Author: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
-> wifi: ath12k: add support for unified data-region memory allocation
+> commit d922087bb1f873dbadddf00fcba276c1d612d2d7
+> Author: Sowmiya Sree Elavalagan <quic_ssreeela@quicinc.com>
 > 
-> This commit adds support for devices that provide M3 and calibration
-> memory through a unified data-region reserved-memory node. If the
-> data-region lookup fails, it falls back to the existing per-memory-type
-> allocation scheme.
+> wifi: ath12k: Enable MSI interrupt support for DP interrupt
 > 
->> diff --git a/drivers/net/wireless/ath/ath12k/qmi.c b/drivers/net/wireless/ath/ath12k/qmi.c
->> --- a/drivers/net/wireless/ath/ath12k/qmi.c
->> +++ b/drivers/net/wireless/ath/ath12k/qmi.c
+> This commit configures and requests external MSI interrupts for DP ring groups.
+> It creates a NAPI context for each active external interrupt group and disables
+> the corresponding IRQs while NAPI polling is in progress.
+> 
+>> diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
+>> index a26fdb3c0ad27..4bb14a95aec98 100644
+>> --- a/drivers/net/wireless/ath/ath12k/pci.c
+>> +++ b/drivers/net/wireless/ath/ath12k/pci.c
 > [ ... ]
->> @@ -2851,6 +2871,48 @@ static int ath12k_qmi_assign_target_mem_chunk(struct ath12k_base *ab)
->>  	const char *rname;
->>  	int i, idx, ret;
+>> @@ -1118,7 +1122,7 @@ void ath12k_pci_ext_irq_enable(struct ath12k_base *ab)
+>>  	for (i = 0; i < ATH12K_EXT_IRQ_GRP_NUM_MAX; i++) {
+>>  		struct ath12k_ext_irq_grp *irq_grp = &ab->ext_irq_grp[i];
 >>  
->> +	ret = of_reserved_mem_region_to_resource_byname(np, "data-region", &res);
->> +	if (ret && ret != -ENODATA)
->> +		return ret;
->> +
->> +	if (!ret) {
->> +		avail_rmem_size = resource_size(&res);
->> +		for (i = 0, idx = 0; i < ab->qmi.mem_seg_count; i++) {
->> +			chunk = &ab->qmi.target_mem[i];
->> +
->> +			if (chunk->type == CALDB_MEM_REGION_TYPE) {
->> +				ret = ath12k_qmi_map_target_mem(ab, idx, 0, chunk->size,
->> +								chunk->type);
->> +				if (ret)
->> +					goto out;
->> +
->> +				idx++;
->> +				continue;
->> +			}
->> +
->> +			if (offset > avail_rmem_size ||
->> +			    avail_rmem_size - offset < chunk->size) {
->> +				ath12k_err(ab, "failed to assign mem type %u req size %u avail size %zu\n",
->> +					   chunk->type, chunk->size,
->> +					   offset > avail_rmem_size ? 0 :
->> +					   avail_rmem_size - offset);
->> +				ret = -EINVAL;
->> +				goto out;
->> +			}
->> +
->> +			ret = ath12k_qmi_map_target_mem(ab, idx, res.start + offset,
->> +							chunk->size, chunk->type);
+>> -		if (!irq_grp->napi_enabled) {
+>> +		if (irq_grp->napi_ndev && !irq_grp->napi_enabled) {
+>>  			napi_enable(&irq_grp->napi);
+>>  			irq_grp->napi_enabled = true;
+>>  		}
 > 
 > [Severity: High]
-> The commit message states that only M3 and calibration memory should be
-> allocated from the unified data-region, while other segments continue to use
-> separate regions.
+> Can unmasking the hardware IRQs race with setting the software flag?
 > 
-> Since there is no check for the chunk type here, won't this unconditionally
-> map all memory segments (including HOST_DDR_REGION_TYPE, BDF_MEM_REGION_TYPE,
-> and MLO_GLOBAL_MEM_REGION_TYPE) sequentially from the data-region?
->
-
-The data-region is defined for QCN6432, and MLO is not currently supported for
-QCN6432 on the AHB platform. Therefore, the firmware is not expected to request
-the MLO_GLOBAL_MEM_REGION_TYPE at present.
-HOST_DDR_REGION_TYPE is expected to be allocated from the data-region. The intention
-is to allocate firmware memory requests from the data-region, except for
-MLO_GLOBAL_MEM_REGION_TYPE, which requires separate handling.
-
-The MLO-specific memory allocation can be addressed as part of the MLO enablement series for
-AHB devices.
- 
->> +			if (ret)
->> +				goto out;
->> +
->> +			offset += chunk->size;
->> +			idx++;
->> +		}
->> +
->> +		ab->qmi.mem_seg_count = idx;
->> +		return 0;
->> +	}
+> In ath12k_pci_ext_irq_enable(), ath12k_pci_ext_grp_enable() is called just
+> after this block to unmask the hardware IRQs, but the software flag
+> ATH12K_FLAG_EXT_IRQ_ENABLED is only set after the loop completes:
 > 
-> [Severity: High]
-> Because the function returns 0 here after iterating all requested memory
-> segments, does this entirely bypass the fallback code below that maps the
-> dedicated q6-region and mlo-global-mem regions?
+> 	ath12k_pci_ext_grp_enable(irq_grp);
+> }
+> set_bit(ATH12K_FLAG_EXT_IRQ_ENABLED, &ab->dev_flags);
 > 
-> Could this lead to device initialization failure if the data-region is
-> exhausted, or place hardware-specific memory segments at incorrect physical
-> addresses?
+> If an MSI interrupt fires immediately after unmasking,
+> ath12k_pci_ext_interrupt_handler() drops it because the flag is still clear:
 > 
-> [ ... ]
-
-The expectation is that each firmware memory region is allocated either from
-the data-region or through the fallback mechanism, depending on the region.
+> 	if (!test_bit(ATH12K_FLAG_EXT_IRQ_ENABLED, &ab->dev_flags))
+> 		return IRQ_HANDLED;
+> 
+> Since MSI interrupts are edge-triggered, dropping the interrupt without
+> scheduling NAPI leaves the hardware condition unacknowledged. No further MSI
+> will be generated, which could permanently stall the DP ring.
+> 
+> Since NAPI is already enabled for the group before unmasking the hardware IRQ,
+> is it safe to drop this interrupt, or could the flag be set earlier?
 > 
 
+The expectation is that ATH12K_FLAG_EXT_IRQ_ENABLED is set after the IRQ
+configuration and enable sequence is completed. NAPI is already enabled before
+the hardware IRQs are unmasked.
