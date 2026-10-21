@@ -1,56 +1,53 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=213.97.179.56
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792566759;
-	b=N+iPRbrYmxp4iD2fiRnQgusqDSBiY0xZGWiqq3cKEjJ0IfQZNFXsZp2bDAR1k3VH+Dr/
-	 EsSdjqByhxNBQzJLXu1L4DvLlMtj3JmyYmUnxFz2HbDFJ60+A+hm+HtDfYMWXewG+5LX5
-	 yVcRdGA2pvdufs6K2wZAsm+F8E+XzKWdef2ATEbQMf3Ps7eLrIZ0gi0/8elx1OWsHyrI2
-	 7fUsPulprLe8TbpuHrhwWgA+J2u4s4OZWnfGTNn5AphP+aYFYqoYc6VVX6iay/tdwXLHD
-	 ERneEzZFZbftfWxwdexuwCDLZ6eWiQ1ZDzrYMBplvBf1iRaAueIfKh3/ggEiOwJy9Sw==
+	t=1792570144;
+	b=rbCEp/Qnf60xYlLhXuoHqBCN8gFw3VEFuldticTlBhq/ZtW7r1R9AgAhrZFnXNEDyphk
+	 I911QuxMFP6cLqmZ6YRt4JfYZ+tlzlPe5S7w/hUBSeWtvbY3eNS9VrK+leHGADqCxUJnh
+	 TgVBneUTJXYqxaeop4oRWFOhlglXtQsIauKvWeNh4qkyk63GpHF/DPHMCbISBu/gRso95
+	 /p9bFWIltUvL8oAOwmMMYSHT0zdlkTzbZ3jbeYuBVPs3XWTBmS86Ia0pWwcJD5kUYzkRM
+	 tuIDbt6ehI/mRy3TvEGxoZzU2VWSvtyifT1SgF/TJ5NPQz4NGsCHx8m0SW0UHdaM88Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792566759;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=vcc8SXBf3xzir4Lak2b1xe9rdcx6QX+V+Egzn2h6A1c=;
-	b=ZjSmMYvYvZC4e9k9fM2LcNMFn5gLDnKgw5DD234oK9L0IodyEZFIiAYPfN7u4MMuU9NM
-	 xNb0jrtzuQfX0Ve6UvklVQMBl33kmvnbd/TnB+qeovkHxBNXUkRV0UK76nWoZxv4W0ydW
-	 zF1qs1aB+CETcz2D3zGsIZXlAuQc2nZmsOa9zeTru0H2xUX39O7oFkuuhYMf61pkzA52p
-	 KIUScDsSQV6UQXXa5UDoaftfJVD2R5gtA2QR5dTAtiFjLfemC3c6XV6gYtHx4+Fz7kFMT
-	 w8ROkxbAw9/entrc/cOxsFnv/V6LZLOlfLgM4keDiuUdMX1+0v0kd/b4aLV7pXjqJcA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792570144;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:References:Content-Language:Cc:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=NvukL1YkYWvvmYohA6hxlmPKOZNOWIjgvH912SBvpxA=;
+	b=v/GC8ZQ1nIcqWlGHyopHTuP/7XlYpx1XPXnEiJ67iPtxKewl9sYi4JJa/i8kd/mjlKV5
+	 xnQRHQ0IwWpn6Ki0C/3ki/ncI3KnPzQDV+fQa9w/dsR9/kaMf4yaZi5lGB1ECWFTP9CuD
+	 oAI5iDEmuDvIut91mD+e8q3yCAiYf+ta4TUrRAGnsoJ9/P5jlvcIjGizvgk2jCGoW0TfZ
+	 TDzEyNHt6Q2DvT3YAi3nL2PFeu6Lj1gS5rIhbprguuHWauuq6ugMepi/p3voYr5aCr0Sz
+	 U8kzDPSJplnfpqKqSBGACDbhO5YO8CB7XOV872qRPTgvWukBe3Lyo/gtQNBomeGWF0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OUGGIcKw;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=igalia.com;
+	spf=pass smtp.mailfrom=igalia.com;
+	dkim=pass header.d=igalia.com header.i=@igalia.com header.a=rsa-sha256 header.s=20170329 header.b=VVhJlPcD;
+	arc=none smtp.remote-ip=213.97.179.56
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0175D606A31A;
-	Wed, 21 Oct 2026 07:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37CC9606A319
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 08:09:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 37CC9606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OUGGIcKw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801BC1F000C9;
-	Wed, 21 Oct 2026 07:12:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792566758;
-	bh=vcc8SXBf3xzir4Lak2b1xe9rdcx6QX+V+Egzn2h6A1c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=OUGGIcKw/ZpSSVUcfi/IzHJ5QKybdiuYXAxvT05egGZKsQADdJaBBEfRmdYkHPvF0
-	 viZQPBWPUkAyrESwHjhGa8fBWj3fyuRghvzat9in5IKLrDi/GIFLoKPhMcQQKA9nBR
-	 IGRgh1qiR8gjtqTv1ZS5yvTaCHlU3pmqr8ph/4agYSNtQrSxOr3mQtzU1sLCb/Ezbh
-	 ruHH+lnSo/cqH/LUJuC6u7PUDRLFHj8Ocufzshx0QdBKHX3nqZRfsXr8bExWR5hpXj
-	 A9XFS833HE8N7WqD7p0DBPHpBjZ6lPchk3n1CiMKJgKFqGCsqt+gSzDcd4W0D5oSx6
-	 R01iqAErv5Haw==
-Date: Wed, 21 Oct 2026 00:12:37 -0700
-From: Wei Liu <wei.liu@kernel.org>
-To: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Cc: sashiko-reviews@lists.linux.dev, linux-hyperv@vger.kernel.org,
-	linux-pci@vger.kernel.org, Wei Liu <wei.liu@kernel.org>
-Subject: Re: [PATCH 2/2] PCI: hv: add vPCI device reset support
-Message-ID: <20261021071237.GC851443@liuwe-devbox-debian-v2.local>
-References: <20261016235940.942090-1-hamzamahfooz@linux.microsoft.com>
- <20261016235940.942090-2-hamzamahfooz@linux.microsoft.com>
- <sashiko-outbox-175060@kernel.org>
- <atYPfibVVa+nyyb9@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+	dkim=pass (2048-bit key, unprotected) header.d=igalia.com header.i=@igalia.com header.a=rsa-sha256 header.s=20170329 header.b=VVhJlPcD
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:From:Cc:To:Subject:
+	MIME-Version:Date:Message-ID:From:Reply-To;
+	bh=NvukL1YkYWvvmYohA6hxlmPKOZNOWIjgvH912SBvpxA=; b=VVhJlPcDgXCE3hl4qmvDm67Eq4
+	8/3gv6QaghFZ8I2/grBaPtx+esxoQvZ/WsW5kOl0UOIIy/apvDLn4p4rYxgii0ifVhsnkiTCzvLEo
+	b9G0EzFl+VuE0rpb0I2OkEG+kwpRAGtl708ILKxMkMX/awAfrx3aJ42ktUX6fBl3vhKFPrmPTm5m1
+	fxYrrZpy8dhXG0ZTP05eRjkYEat8yMAw/ddRKQtbZ5JoDmEBtZz8ogLIFcELkJfdJJLJVPXXw0KxK
+	r7WABgWrmSmleyT6nug5wvzSZBNZrN/jH1COxhbQBeGDAQXTZ87y8c4CXlKMzQw1WAejRcPCK25AQ
+	lnj6SDMA==;
+Received: from [81.79.79.1] (helo=[192.168.0.116])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1xJRNV-005Puq-Qf; Wed, 21 Oct 2026 10:08:53 +0200
+Message-ID: <c32a1931-c0de-4d63-a8c8-2189c35137dc@igalia.com>
+Date: Wed, 21 Oct 2026 09:08:53 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,93 +57,127 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <atYPfibVVa+nyyb9@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/8] drm/sched: Disallow initializing entities with
+ un-initialized schedulers
+To: sashiko-reviews@lists.linux.dev, dri-devel@lists.freedesktop.org
+References: <20261020154123.33631-1-tvrtko.ursulin@igalia.com>
+ <20261020154123.33631-3-tvrtko.ursulin@igalia.com>
+ <sashiko-outbox-179327@kernel.org>
+Content-Language: en-GB
+Cc: =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+In-Reply-To: <sashiko-outbox-179327@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Oct 19, 2026 at 08:39:26AM -0400, Hamza Mahfooz wrote:
-> On Sat, Oct 17, 2026 at 12:12:00AM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Low] PCI: hv: hv_pci_reset_device() passes 3 arguments to wait_for_response()
-> > --
-> > 
-> > commit 5767f2b6950e5dc7da0b5c142f971d8282c27a56
-> > Author: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-> > 
-> > PCI: hv: add vPCI device reset support
-> > 
-> > This commit negotiates Hyper-V vPCI protocol version 1.5 and implements the
-> > reset_root_port() callback on pci_host_bridge by sending a PCI_RESET_DEVICE
-> > request over the vPCI VMBus channel.
-> > 
-> > > diff --git a/drivers/pci/controller/pci-hyperv.c b/drivers/pci/controller/pci-hyperv.c
-> > > index 89816a2bd7cd3..4bb4ca6da1f7b 100644
-> > > --- a/drivers/pci/controller/pci-hyperv.c
-> > > +++ b/drivers/pci/controller/pci-hyperv.c
-> > 
-> > [ ... ]
-> > 
-> > > @@ -1397,6 +1401,52 @@ static int hv_pcifront_write_config(struct pci_bus *bus, unsigned int devfn,
-> > >  	return PCIBIOS_SUCCESSFUL;
-> > >  }
-> > >  
-> > > +static int hv_pci_reset_device(struct pci_host_bridge *bridge,
-> > > +			       struct pci_dev *pdev)
-> > > +{
-> > > +	struct hv_pcibus_device *hbus =
-> > > +		container_of(bridge->sysdata, struct hv_pcibus_device, sysdata);
-> > > +	struct pci_child_message reset = {};
-> > > +	struct hv_pci_compl comp_pkt;
-> > > +	struct pci_packet pkt = {
-> > > +		.completion_func = hv_pci_generic_compl,
-> > > +		.compl_ctxt = &comp_pkt,
-> > > +	};
-> > > +	enum hv_pcibus_state state;
-> > > +	int ret;
-> > > +
-> > > +	/* Do not take state_lock: eject holds it while removing/locking pdev. */
-> > > +	state = READ_ONCE(hbus->state);
-> > > +	if (state != hv_pcibus_probed && state != hv_pcibus_installed)
-> > > +		return -ENODEV;
-> > > +
-> > > +	init_completion(&comp_pkt.host_event);
-> > > +	reset.message_type.type = PCI_RESET_DEVICE;
-> > > +	reset.wslot.slot = devfn_to_wslot(pdev->devfn);
-> > > +
-> > > +	ret = vmbus_sendpacket(hbus->hdev->channel, &reset, sizeof(reset),
-> > > +			       (unsigned long)&pkt, VM_PKT_DATA_INBAND,
-> > > +			       VMBUS_DATA_PACKET_FLAG_COMPLETION_REQUESTED);
-> > > +	if (ret)
-> > > +		return ret;
-> > > +
-> > > +	ret = wait_for_response(hbus->hdev, &comp_pkt.host_event,
-> > > +				"PCI_RESET_DEVICE");
-> > 
-> > [Severity: Low]
-> > Does this compile when CONFIG_PCI_HYPERV is enabled?
-> > 
-> > In drivers/pci/controller/pci-hyperv.c, wait_for_response() only accepts two
-> > arguments:
-> > 
-> > static int wait_for_response(struct hv_device *hdev,
-> > 			     struct completion *comp)
-> > 
-> > Passing "PCI_RESET_DEVICE" as a third argument in hv_pci_reset_device()
-> > causes the build to fail with too many arguments to wait_for_response().
-> > 
+
+On 20/10/2026 17:02, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] drm/sched: drm_sched_entity_init() breaks v3d_open() on V3D 3.3
+> --
 > 
-> Not sure what tree this was applied to, but that function has 3 params
-> as of mainline commit ca039df94983 ("PCI: hv: Warn when
-> wait_for_response() waits indefinitely").
+> commit 607520d70e20fa56f0a8fa9eade2db9f019b764f
+> Author: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+> 
+> drm/sched: Disallow initializing entities with un-initialized schedulers
+> 
+> This patch updates drm_sched_entity_init() to reject schedulers whose
+> run-queues have not been initialized, returning -EINVAL instead of logging
+> a warning and continuing.
+> 
+>> diff --git a/drivers/gpu/drm/scheduler/sched_entity.c b/drivers/gpu/drm/scheduler/sched_entity.c
+>> index e12709b7bd0c3..95bb79b3d003a 100644
+>> --- a/drivers/gpu/drm/scheduler/sched_entity.c
+>> +++ b/drivers/gpu/drm/scheduler/sched_entity.c
+>> @@ -119,9 +119,16 @@ int drm_sched_entity_init(struct drm_sched_entity *entity,
+>>   			  unsigned int num_sched_list,
+>>   			  atomic_t *guilty)
+>>   {
+>> -	if (!entity || !sched_list || !num_sched_list || !sched_list[0])
+>> +	unsigned int i;
+>> +
+>> +	if (!entity || !sched_list || !num_sched_list)
+>>   		return -EINVAL;
+>>   
+>> +	for (i = 0; i < num_sched_list; i++) {
+>> +		if (!sched_list[i] || !sched_list[i]->sched_rq)
+>> +			return -EINVAL;
+>> +	}
+> 
+> [Severity: High]
+> Does returning -EINVAL here when !sched_list[i]->sched_rq break
+> v3d_open() on V3D 3.3 hardware (V3D_GEN_33)?
+> 
+> During probe, v3d_sched_init() in drivers/gpu/drm/v3d/v3d_sched.c only
+> initializes the V3D_CSD and V3D_CACHE_CLEAN schedulers when
+> v3d_has_csd(v3d) is true:
+> 
+> drivers/gpu/drm/v3d/v3d_sched.c:v3d_sched_init() {
+> 	...
+> 	if (v3d_has_csd(v3d)) {
+> 		ret = v3d_queue_sched_init(v3d, &v3d_csd_sched_ops, V3D_CSD,
+> 					   "v3d_csd");
+> 		if (ret)
+> 			goto fail;
+> 
+> 		ret = v3d_queue_sched_init(v3d, &v3d_cache_clean_sched_ops,
+> 					   V3D_CACHE_CLEAN, "v3d_cache_clean");
+> 		if (ret)
+> 			goto fail;
+> 	}
+> 	...
+> }
+> 
+> On V3D 3.3 platforms where !v3d_has_csd(v3d), those two schedulers are
+> never initialized via drm_sched_init(), leaving their sched_rq pointers
+> NULL.
+> 
+> However, when userspace opens the DRM device node, v3d_open() in
+> drivers/gpu/drm/v3d/v3d_drv.c unconditionally loops over all
+> V3D_MAX_QUEUES queues and fails if drm_sched_entity_init() returns an
+> error:
+> 
+> drivers/gpu/drm/v3d/v3d_drv.c:v3d_open() {
+> 	...
+> 	for (i = 0; i < V3D_MAX_QUEUES; i++) {
+> 		v3d_priv->stats[i] = v3d_stats_alloc();
+> 		if (!v3d_priv->stats[i]) {
+> 			ret = -ENOMEM;
+> 			goto err_stats;
+> 		}
+> 
+> 		sched = &v3d->queue[i].sched;
+> 		ret = drm_sched_entity_init(&v3d_priv->sched_entity[i],
+> 					    DRM_SCHED_PRIORITY_NORMAL, &sched,
+> 					    1, NULL);
+> 		if (ret)
+> 			goto err_sched;
+> 	}
+> 	...
+> }
+> 
+> Previously, drm_sched_entity_init() logged a warning via pr_warn() and
+> returned 0, allowing v3d_open() to succeed. With this change, won't
+> every v3d_open() call on V3D 3.3 fail with -EINVAL?
 
-The link ...
+Oh well, guess I overestimated the general public sensitivity to weird 
+error messages.
 
-> > Sashiko AI review · https://sashiko.dev/#/patchset/20261016235940.942090-1-hamzamahfooz@linux.microsoft.com?part=2
+Given the submit side is guarded with the same v3d_has_csd() as the 
+scheduler init, so those entities are not reachable after open, I think 
+I can just add a patch which adds the same skip condition in the 
+v3d_open() loop.
+
+Maira - does that sound like it would work?
+
+Regards,
+
+Tvrtko
+
+> 
+> [ ... ]
+> 
+>>
 > 
 
-... shows that it picked git.lwn.net/docs-next (90d9f76ccb72ec024ef476b4229f3dd1957d7b26).
-
-It looks like it is hallucinating.
-
-Wei
