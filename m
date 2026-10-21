@@ -1,110 +1,110 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792583040;
-	b=hmURygeol6ScdKlWBmVld9PynuvDq/xZygAcwWPeayAn2leX0CraPikcYT+JjoDnBDdH
-	 1mr5SqZvY66tg2CMpfEmO5j7SyRGlsYZtYHQ9RafHEuux0f2815qQ5uAWuS4YalS9qaoD
-	 1gHm6PjHqJT0O1AZ+jAU+NbEnmJ15SMugTzq83NkA5lqJtJ2R5ZI+hKLDhVA3ZhZVz20/
-	 NBbc9/TpDA6iHck+gbymRUIxztyxo22oQ17RtfBkaBc2dDgkq5aMkbp0H1mH9G04Z7/Cc
-	 jBPl0uBmCdr3QBrTjA40jdkEX8tfl5KxQ7gsRpu+HMhldVXUl4tYq0D/NAm8L4qvKfQ==
+	t=1792583948;
+	b=wlLdv6stb//PJp50QwNEtwgsCTKfvILl6JX9dhR7qkarfDco/s5v8g8Ow2Hki12lgJPf
+	 WnsXxJgXR0Zq+jGB+mokWTwVTcZfAxTJebbf2leZUcPoL66D7ZjXh4Tcgi66NWtANYHfo
+	 3tCGeosd/xIhV0j2UwVzBeYb5gGHgEGnoWBdhVNtL69kwPkrcCGhy5hWh741Tcn6xYJV3
+	 bwEiLLDIRU924WLFCh6vZcCuOfDCvHpQkgJrLPg9WT/+JEXD5SALD6WQyrGG11PgeisQY
+	 17rwbkx39U+KsazxIgZ/8SKl/+81XICIrA0VzWWidmV6SYwi0NTXov0ZyQ3h8TQhGNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792583040;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792583948;
 	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
 	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
 	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
 	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Proofpoint-Spam-Details-Enc:
-	 X-Proofpoint-GUID:X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Info:
-	 X-Authority-Analysis:X-Proofpoint-Virus-Version:
+	 Content-Type:Content-Transfer-Encoding:X-Authority-Analysis:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-GUID:X-Proofpoint-Virus-Version:
 	 X-Proofpoint-Spam-Details;
-	bh=xIPW256AZ+imGupCIhtsV229OdDYpy+ktfp8HqshjI4=;
-	b=Kj6ayl36PWLl2agQ5pP6+FCN2TTyvH3CSAEEuI+30AOPvEvJUWtYA6AzltV3yp7cRBjr
-	 AQI1IBe6W4Nh5YF8pRizNhKY9zSOCLZ3lDURKJJnRcE5oyOo1r+yLF06UuMKX7hticxUz
-	 bqlGvhTR6VnvvgEPRPYphsc699MRgnj19avR6v30c8oebDTxYrr9u9Uw1+RYWqYpuZQ9M
-	 GN6F96ITYOFAGaFV6/nmVfSIGKAEHJJmBXaiySCMlZcadK6GzoVtWwtXUvu+rdljTRmhw
-	 zoXIiKk75OgKEd1v8Zsaz1PKYJw9wJIBAy3WLt40ZI41/gBjxotbERfeHgc0ItxLCNA==
+	bh=8sVdcb9WOamSSxBX7E5eJsqhQ4h6DMMgPD6RZRCx7SM=;
+	b=5CCnW5lGeC6rG9gpZ31yBO4dywBl4HADVSO1hxVOHOduMK+dpMCFhji1ohyXqwf3ocUb
+	 KAE+1pkKs7giSjG8klss8DzlS2vduKLsbQScp2C66BwD/dyOt4xwN2Mp9S5G56Ti9jTv2
+	 3/i4P+NeXxLX8f3T3Jzoq0AFiuAy0ryza4OeZVJLFit5RxZQICj5wA4mMGSnWuc9gOxwX
+	 0PJzoTgVcphU7Ta5rf6a/T2kVLDJ/vPoS2p3OfmpQQJgjM10LFBju0htweZ3t6kdH2RAy
+	 sJiUhTqI6gfpYm2siADGMSXTSBNtIlpsrM/z/33kz7Tc9cYoaupVdUtmJn+N42vuVsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.qualcomm.com;
 	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=jyaCsiy4;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=OyFaMgyy;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=BfTav5Q6;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=VyliqDMi;
 	arc=none smtp.remote-ip=205.220.180.131
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9E5606A31B
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 11:44:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2F9E5606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76301606A319
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 11:59:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 76301606A319
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=jyaCsiy4;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=OyFaMgyy
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69LBgOLo1054604
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 11:43:59 GMT
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=BfTav5Q6;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=VyliqDMi
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69LBg8kS977423
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 11:59:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xIPW256AZ+imGupCIhtsV229OdDYpy+ktfp8HqshjI4=; b=jyaCsiy4aRW2CehF
-	5U2ELI2XhD/nJsn/SeqVsAyvJpvuVqUuDoTe8ANndyE9mJuGJPfohQMIGRVotJMW
-	syNqmJR03oYobhS3xe9DBgjGjjgWxw8h5tCNh/JtltZtbL3yHzTxFg4mk0sJ7gpS
-	V3pFFIoAyzW124ZTpK7FApBHz6e3hZlPICy3gIcQ7/EKhapEFY7wuHkiLd1zkIQ3
-	YmkZd9rKdD4XIz/IHUa94hyqbBugwbLgh6G06s17bBgJdpI6ue3KUnF8BzytFQMe
-	Z2wXnSDdoQBLoC+KGYjdDg71g53ungFzt/wzo+EKZlTKr1EbTAmFXhAwcpT20nLx
-	OwQLyA==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com [74.125.82.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hedajkpq7-1
+	8sVdcb9WOamSSxBX7E5eJsqhQ4h6DMMgPD6RZRCx7SM=; b=BfTav5Q6ZIKdf48c
+	eN2QC3GLYvzFJN6oqbfdhXg2MkVpRsB8+vRpV55k8QkMqT1G+JA5oxXnnpIv0WXO
+	wS5LCu+WXRBtF9SyiKtppPwJow/Kx4fQMoONS8t7lIBbzFV0+1jLSxKlUe46R54L
+	5Db8arC7BCe7YfsLI1tYVax+WREUXh7FPKprsRdw9mjCz6Bj52Gs+CRXbQqLRblL
+	r6H6zTtX3ctu3PeNetnwdMS/PAEP3XYpHuQWYf1fBOCHto7ZH7b4pE4SqMjzCA4F
+	h2BV4Ektne5nRGCJ1Ce5oYM+iv8eZX/O+SuFUaFFfNNK2OoqRpeFAp3Z9SvjPmjF
+	rzirxQ==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hegs02ysp-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 11:43:58 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id 5a478bee46e88-36637676140so1117207eec.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 04:43:58 -0700 (PDT)
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 11:59:05 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-3425098ae4bso2735955eec.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 04:59:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1792583038; x=1793187838; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1792583945; x=1793188745; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=xIPW256AZ+imGupCIhtsV229OdDYpy+ktfp8HqshjI4=;
-        b=OyFaMgyy67JQ+6bWp3y9Gs+tBtBPk4u3U/CjwVOjZWv6v5XVoAcBNEhELG8kDcDC7a
-         oMo15gaSKOCE37Pjk/MnLQhaU1NDofyA+1htYIiSPT9ulY2hXeN78rgQzxCn03Soa3lV
-         i1dvL8YN8YpaIBbLwhffYdGgx9rpIE/KPwhNoLW3r034tWJ6WvV5F6eGTgUG2uhPpuBy
-         9AjajnbGTZDnL5qfxzXwl1mU+vmrptJygRZE17HkaKVoXXe9v2TYgbgICujd53mGNcVf
-         G4amkywmMXmxai1po9jj8SshMk8xCuEo8MnJ7nx/PLolO7zVcMFsMHY3WYe2h0K2ZSZv
-         tc0A==
+        bh=8sVdcb9WOamSSxBX7E5eJsqhQ4h6DMMgPD6RZRCx7SM=;
+        b=VyliqDMi/Mg5uAAmO8RSqHLhwlcyGvUPtEyODz3AtUYBFMQ5KObik80XwtWxV5JgjL
+         S61v+o5Z5HYx/IdK7VpkMxu3SoyYexNR62RVm/lzVYD3ihNf4uE557NNIdIJfYSowHUh
+         bgpJ7PWYPWoIBrBpPWJXo5RKX1H32emv9nwFzZmkI7xmJRYz5mtRXZXNIlDLLSRksMY2
+         fURRngmfRiq5uPeTKNNtCIxmRvPxibdGKut/XMfJ4e9PhCruHceRb69V1QR/IgJesOYp
+         VE346vuQ0zDmjLGVwW9zSq28MpS/sqi19xYrn5oB6p9n0XvW8oM5shWuXwxHybPN2lyv
+         6h9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792583038; x=1793187838;
+        d=1e100.net; s=20260707; t=1792583945; x=1793188745;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=xIPW256AZ+imGupCIhtsV229OdDYpy+ktfp8HqshjI4=;
-        b=p38rNm5VCKATkkuQJ50UnIh5fH3g5hLjkowp7awoPSordQq9+Reg+VU4hV/M01RTkX
-         7cF8Xrda7kSIKjMntuTXafzjX5QGzLGy9Lu6gPcDqf0Xlt/ezVklyv8tpGRRZVCxAj5S
-         453NkJnjq3e+gEQMeUJX0y6Jb42uka8RHZHlKUvAgOx5Db/n9Ut9OHiTNxFmD7T/MSky
-         uMRXmnteIMk/1HjN2qADNPEO3O4EZueVQNGMW5KkEGTYsU/Ler8qQ9vatgzqK4jHKpoU
-         vegagmIIDKZzRyF5Y8C7f7f0XkeGKlwf44Xws7hu5t+wwWDc//8BE+VAt6mbW0jYMAr4
-         rJCg==
-X-Gm-Message-State: AFq9FYLI37y5b/vTB+7pgyyFNyjR1KjtDeTNwVPFOHwX00h0qS1uspQe
-	ULMEOdy5wcndR/poVFQqGXeZ1Vza6pVePKoHGszdnEDDSt1YZmaaj7dvVoAINkTSZ8hz+X8EL4a
-	CC9Gh2TpHF5g9vKl2OcQXOC9iduZMjO098LKm4wGql9fRrHOiTLpLcWfnO5FH8U6Jzy1CBLzM9Z
-	qs7C8=
-X-Gm-Gg: AYBFou0aY4EoYuGK2uQu5WegWYXXxWXJNHqbH/fpZExajVjQ77NERhkVKDngxocRFSw
-	bedX3jMqZwHYFU7t0GKdFMtUtZP99+vY4abqvfEaSHpjTyrcTFdQXC/YmUDrMVq9ijSSsI68KXZ
-	kneQk3Za2PCjFe+HCOdtYsn+CqFEa7QF9nNipD7mD/VJXMOLbE1iEjfOxjuFY0/O1QXyeGpR+OJ
-	GVxlgvl0EorlLAQ7YAKQ6sxg7WMVfq2GJ8HWE9T9bWMkWcZbLhBGY3FFR/QIMXOtCzRs8borg5x
-	kAzM29z1ssTeG79f4Fzofljfff6OWxVQhtpBWZ/72ueIlLL1vNgMGcEQOek0LiJMyIpHqf+kUck
-	13DKwTLidfjkP6Y7whyr79I41AZs6s7Dx
-X-Received: by 2002:a05:7301:e116:b0:35a:4ad6:d215 with SMTP id 5a478bee46e88-3674e0521f2mr2798227eec.22.1792583037733;
-        Wed, 21 Oct 2026 04:43:57 -0700 (PDT)
-X-Received: by 2002:a05:7301:e116:b0:35a:4ad6:d215 with SMTP id 5a478bee46e88-3674e0521f2mr2798191eec.22.1792583037124;
-        Wed, 21 Oct 2026 04:43:57 -0700 (PDT)
+        bh=8sVdcb9WOamSSxBX7E5eJsqhQ4h6DMMgPD6RZRCx7SM=;
+        b=OjizQSsIO/BY7thRiKXritSXbCznFvYQb64WquLKOBEZOJeWirNLYOmGl7DM7oCNDc
+         IXZyY9BkdCP98X6QjuSLZBtxY/QnpW8tvt01ms6tsEt4+NUgtEcYNs36/wygsb8Jra2F
+         R/ALWfeR2NKbqj3wMHthVK2Zuch/vnBDhhvwS0QlvGIfbXIMfIXe7hk0WOF7EFDfZ+gp
+         B7g3TZzAI44zbeqVge3vDPuZre2wdLCt+XWIdkz6BZz16tE4ldppMmaMNPZPu4HZIThs
+         T+ipSLGhUv6vAt9zvUm1AX4xutNnJN54BJyLq0gIq2wPZ0yU16VL7i0sXI+syjS72A70
+         J1Fw==
+X-Gm-Message-State: AFq9FYKoqdOuN3b2aR2hMLs9sOaZEG+CYja9bz50qsQWXckVklcRufsq
+	F/T8C6ODrTSgtvEfudV2VLrFhiskrmBzG5AxpLCHMUR78eGtcwovqWp7afbNEtxZL3IbBFne1wJ
+	Xdg7tkp5Zm9WuiKTAhKPwAIgqMLf/wBvVfNgNzHzmDHPcYcwRGQugmECELuuIS8GBWGs7dYvRtC
+	qbZaA=
+X-Gm-Gg: AYBFou0D43V8Mlk7TrrWRx46h4oQxhG3EOVzwC01TiwDWr/9ZDuZxvqas/zGSaMgBom
+	BGn1iwNSkhwWKfBEjIsUpJMM/mQYlTQiGKm3olvehBwBAyYs0o4KDBGas6GHRjUso0iM2miXNTu
+	3ODDdQPFBCrrPyNIRvOOz+rdhQB2Si4jyx+3jv0KsehB3Nu31DtRA6ACShhQYYr/36uDY7x0UEt
+	fSIZodrTDXVYG0+k+0BXkCZCIuKKL2CTgtnXlTpT40q9lnlZ15bmG7Ce0J5xSIs/Kh15qnif787
+	4Wj+KmhmqiCjINslaB311ZF7OmGHiJN5Ozbbg/arGoIC9SknUsSER9Y2cFnUjJsHMl+qNGyfa/s
+	pZ9krvCVyKAXbxM6kGBqdymrbKulKm3zt
+X-Received: by 2002:a05:701b:4189:20b0:15e:12b6:7365 with SMTP id a92af1059eb24-190a1194331mr2367323c88.2.1792583944553;
+        Wed, 21 Oct 2026 04:59:04 -0700 (PDT)
+X-Received: by 2002:a05:701b:4189:20b0:15e:12b6:7365 with SMTP id a92af1059eb24-190a1194331mr2367302c88.2.1792583943897;
+        Wed, 21 Oct 2026 04:59:03 -0700 (PDT)
 Received: from [10.217.240.81] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-367411bc89fsm8009104eec.16.2026.10.21.04.43.55
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1903a180b9esm8969327c88.4.2026.10.21.04.59.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Oct 2026 04:43:56 -0700 (PDT)
-Message-ID: <be848b5c-8d66-426c-8dca-4358317e2a89@oss.qualcomm.com>
-Date: Wed, 21 Oct 2026 17:13:53 +0530
+        Wed, 21 Oct 2026 04:59:03 -0700 (PDT)
+Message-ID: <80d3e29c-b46f-4250-9408-d4fffaabb987@oss.qualcomm.com>
+Date: Wed, 21 Oct 2026 17:28:59 +0530
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -115,133 +115,225 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: cache: qcom,llcc: allow optional second
- interrupt for LCP/SRP ECC
+Subject: Re: [PATCH 3/4] edac: qcom: add LCP/SRP DDR DRAM ECC support for
+ Shikra
 To: sashiko-reviews@lists.linux.dev
 Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
 References: <20261014-master-v1-0-aba3cfcfbac9@oss.qualcomm.com>
- <20261014-master-v1-1-aba3cfcfbac9@oss.qualcomm.com>
- <sashiko-outbox-171513@kernel.org>
+ <20261014-master-v1-3-aba3cfcfbac9@oss.qualcomm.com>
+ <sashiko-outbox-171516@kernel.org>
 Content-Language: en-US
 From: Faiyaz Mohammed <faiyaz.mohammed@oss.qualcomm.com>
-In-Reply-To: <sashiko-outbox-171513@kernel.org>
+In-Reply-To: <sashiko-outbox-171516@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA0NiBTYWx0ZWRfX8Ln/lOGjDkYn
- cRxzjB0ZH1kSer9kgqrIpVbkTTlOLw3dGDOimOJs2KBo/vqON8RwrFzI7YKQFEKpH38cbbvN1FJ
- 3TUChb9wdBTeYwq1rK02PedZ0vrN6tgl+mOiPiwCPbwPmmxBYf+9e9q/HvQAL2RpClKQpsilDQs
- ap63aF/JoOtsCqZS41o+B4MUORo8krZjTu+G3kFbmnj/SXTDfPHNJ0yPiCR96YUF0KmqVZWI5PS
- yapFCYMNIRd1paXSBKKnNvSLBWztpUpcsfIqFj4fl3pR0z30/0lZQ4kR9cCdFQD92zg+6ketiUe
- Jp0Dcw7djduDzjzjPAFPJysWFO2Aja12GOxuwlpZsRKF7NjsatEtVFnGApBG7aSI7NXqkocpgyM
- /kv1nmnqf4wG5Y7K8tqETx/pwhanuDFRGrcfgFqhi3iS5GQpNZq+YmsaRwixdOoV0WIjMdldjs2
- sDsRNg024rbxkd65DjA==
-X-Proofpoint-GUID: A0WsE6E_EGnEIgmX8-XwqrVDImjZ_Baw
-X-Proofpoint-ORIG-GUID: A0WsE6E_EGnEIgmX8-XwqrVDImjZ_Baw
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA0NiBTYWx0ZWRfX0YsMemw6nEOA
- PZ1eoCsFO7Emc3xo5Gs/ShopW3O/7RNlqedqVv0PZElFj5xd7SRJPOQmVt/7cxfMWz8NmUU1kcP
- WPvot2W+3A8Z2ZvkUbc9oaVrcOsjjcs=
-X-Authority-Analysis: v=2.4 cv=HrTjiETS c=1 sm=1 tr=0 ts=6ad8a57e cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+X-Authority-Analysis: v=2.4 cv=S/NMU4sP c=1 sm=1 tr=0 ts=6ad8a909 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=A_4eXHUubm_z0tGzWTkA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=aujk0-q522kD59K_cGUA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA0NyBTYWx0ZWRfX3M4a1CpM6iZ4
+ qL2+ns74lLympZb+UfMu7IImTlige5qo0vl0h64AjP5uVgDuFYt83dwOtrQhz/xtWylACocaSHe
+ MYdCTvh8ld52FEbLxJPTkQDsq/33yc9KHsDlwdeX722oi+xJoNtGkUItmvySss3uopAgKEcWpiD
+ L4qhHfjltzNYqZglWaaieaP7sJ3jGZpl+F6f6xMeLqx4jE8qqHw9Qq8uPBEHAwuSARSxPpePYol
+ javMOkn+y+6O0UYCSIF44Nz1gCX6it/tlHHTvr9eupqB4BBbN103mxlkrcv37VfLz+c7fRq2qh9
+ cu9S/D48G8QTqGMvXQrVfDX8Uj8oeWNU9inBXStnnkEJOxFPeXdkdmc6rGP7TTirc4SRB1HT/rR
+ tC9iatl0QdeOkZlTY4Ush9XlURf4TKn2vTDlm25tW3PqFpqBFPkzUXca6iUD7DOshn+kpD2fQhQ
+ LEtG//EIMs8OI+Trn3w==
+X-Proofpoint-ORIG-GUID: VKuEyZXxORrxfugvL6-NB5VZsAi3E_ED
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA0NyBTYWx0ZWRfX3iWv9AP/TIrY
+ f4v9E5Vqlo453BsP3DsYwNJCRyivrcECThoaCH/ObWoXX5uGcuhExAdQv+McDU92RiAyw19oT76
+ p2bjzupUsouN3vAMMLeUqJEE0R/V+EY=
+X-Proofpoint-GUID: VKuEyZXxORrxfugvL6-NB5VZsAi3E_ED
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-21_03,2026-10-21_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1011 impostorscore=0 suspectscore=0 bulkscore=0
- adultscore=0 priorityscore=1501 spamscore=0 malwarescore=0 lowpriorityscore=0
+ adultscore=0 clxscore=1015 priorityscore=1501 spamscore=0 bulkscore=0
+ lowpriorityscore=0 malwarescore=0 phishscore=0 impostorscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210046
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210047
 
 
 
-On 14-10-2026 21:35, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] dt-bindings: missing maxItems constraint for legacy interrupts
+On 14-10-2026 21:39, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] edac: qcom: UAF in llcc_lcp_ecc_irq_handler due to devm_request_irq lifecycle mismatch
+The identical race exists for the pre-existing ecc_irq INT mode path
+which also uses devm_request_irq() with edev_ctl as dev_id. Fixing
+only lcp_irq would create an asymmetry; a correct fix requires
+converting both IRQs to non-devm with explicit free_irq() before
+edac_device_free_ctl_info() in the remove path. That is a pre-existing
+driver-wide concern and is out of scope for this series.
+
+> - [Medium] edac: LCP/SRP handlers discard hardware ECC counts, causing under-reporting
+Good catch — this one is new and valid. Switched to
+edac_device_handle_ue_count(db_cnt) and
+edac_device_handle_ce_count(sb_cnt) to propagate the hardware-provided
+aggregated counts rather than hardcoding 1. The existing
+llcc_ecc_irq_handler correctly uses count=1 since it fires per-event.
+
+> - [Medium] edac: qcom: data race in EDAC counters due to concurrent IRQs
+The plain-increment counters in edac_device_handle_ue_count() and
+edac_device_handle_ce_count() are a pre-existing EDAC subsystem design
+that affects all edac_device drivers, not specific to this patch. Out
+of scope for this series.
+
 > --
 > 
-> commit 50febfa0c04f4bae15f676db2e6662c8855b0e3c
+> commit 943c843f6548de65b2dfbf919c2a617470e1b5e9
 > Author: Faiyaz Mohammed <faiyaz.mohammed@oss.qualcomm.com>
 > 
-> dt-bindings: cache: qcom,llcc: allow optional second interrupt for LCP/SRP ECC
+> edac: qcom: add LCP/SRP DDR DRAM ECC support for Shikra
 > 
-> QCM2390 (Shikra) has an LCP/SRP block that signals DDR DRAM ECC errors
-> on a dedicated interrupt line separate from the existing TRP/DRP cache
-> ECC interrupt. This commit allows an optional second interrupt in the
-> LLCC binding and enforces both are present for qcom,shikra-llcc.
+> Add qcom_llcc_lcp_setup() to enable LCP/SRP interrupt routing when
+> firmware has not pre-configured it, and llcc_lcp_ecc_irq_handler() to
+> report per-bank correctable and uncorrectable DDR DRAM ECC errors.
 > 
->> diff --git a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
->> index 2141e5d4de63b..3546cf7c25195 100644
->> --- a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
->> +++ b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
->> @@ -64,7 +64,17 @@ properties:
->>      maxItems: 18
->>  
->>    interrupts:
->> -    maxItems: 1
->> +    minItems: 1
->> +    items:
->> +      - description: TRP/DRP LLCC cache ECC (ddrss_apps_interrupt[2])
->> +      - description: LCP/SRP DDR DRAM ECC (ddrss_apps_interrupt[1]), present
->> +          on platforms with an LCP/SRP block such as QCM2390
-> 
-> [Severity: Low]
-> Does this implicitly raise the maximum number of interrupts to 2 for all
-> compatible strings?
-> 
-> Since maxItems: 1 was removed globally, a device tree for older hardware 
-> could erroneously define two interrupts without failing schema validation.
-> 
->> +
->> +  interrupt-names:
->> +    minItems: 1
->> +    items:
->> +      - const: llcc-ecc
->> +      - const: llcc-lcp-ecc
->>  
->>    memory-region:
->>      maxItems: 1
+>> diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
+>> index f3da9385ca0d8..b4f7b2493650c 100644
+>> --- a/drivers/edac/qcom_edac.c
+>> +++ b/drivers/edac/qcom_edac.c
 > 
 > [ ... ]
 > 
->> @@ -234,6 +244,20 @@ allOf:
->>              - const: llcc1_base
->>              - const: llcc_broadcast_base
+>> @@ -334,6 +366,92 @@ static void llcc_ecc_check(struct edac_device_ctl_info *edev_ctl)
+>>  	llcc_ecc_irq_handler(0, edev_ctl);
+>>  }
 >>  
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            const: qcom,shikra-llcc
->> +    then:
->> +      properties:
->> +        interrupts:
->> +          minItems: 2
->> +        interrupt-names:
->> +          minItems: 2
->> +      required:
->> +        - interrupt-names
+>> +/*
+>> + * Handler for the optional LCP/SRP DDR DRAM ECC interrupt
+>> + * (ddrss_apps_interrupt[1]).  The LCP/SRP registers live in each LLCC
+>> + * instance's address space, so iterate over all banks and read status
+>> + * per-instance.  Broadcast-write the clear after the full loop, mirroring
+>> + * the TRP/DRP handler pattern.
+>> + */
+>> +static irqreturn_t llcc_lcp_ecc_irq_handler(int irq, void *edev_ctl)
+>> +{
+>> +	struct edac_device_ctl_info *edac_dev_ctl = edev_ctl;
+>> +	struct llcc_drv_data *drv = edac_dev_ctl->dev->platform_data;
+>> +	const struct llcc_edac_reg_offset *reg = drv->edac_reg_offset;
+>> +	irqreturn_t irq_rc = IRQ_NONE;
+>> +	u32 intr_status, err_status, clr_reg;
+>> +	int i, ret;
 >> +
+>> +	/* Iterate over banks: LCP/SRP status registers are per-LLCC instance */
+>> +	for (i = 0; i < drv->num_banks; i++) {
+>> +		ret = regmap_read(drv->regmaps[i], reg->lcp_srp_interrupt_status,
+>> +				  &intr_status);
+>> +		if (ret)
+>> +			continue;
+>> +
+>> +		intr_status &= LCP_SB_ECC_ERROR | LCP_DB_ECC_ERROR;
+>> +		if (!intr_status)
+>> +			continue;
+>> +
+>> +		irq_rc = IRQ_HANDLED;
+>> +
+>> +		ret = regmap_read(drv->regmaps[i], reg->lcp_srp_ecc_error_status1,
+>> +				  &err_status);
+>> +		if (ret) {
+>> +			edac_printk(KERN_ERR, EDAC_LLCC,
+>> +				    "LCP/SRP error status read failed for bank%u: %d\n",
+>> +				    i, ret);
+>> +			continue;
+>> +		}
+>> +
+>> +		if (intr_status & LCP_DB_ECC_ERROR) {
+>> +			u32 db_cnt = FIELD_GET(LCP_DB_ERR_COUNT_MASK, err_status);
+>> +
+>> +			edac_printk(KERN_CRIT, EDAC_LLCC,
+>> +				    "LCP/SRP DDR DRAM Double-bit ECC error in bank%u: count=%u status=0x%08x\n",
+>> +				    i, db_cnt, err_status);
+>> +			edac_device_handle_ue(edac_dev_ctl, 0, i,
+>> +					      "LCP/SRP DDR DRAM uncorrectable error");
 > 
-> [Severity: Low]
-> Should there be an else clause here to restrict legacy platforms back to
-> maxItems: 1 for interrupts and interrupt-names?
+> [Severity: Medium]
+> Since db_cnt contains the exact number of double-bit errors, should this
+> code use edac_device_handle_ue_count(edac_dev_ctl, db_cnt, ...) instead?
 > 
-Valid finding — without an else clause a non-Shikra platform can declare
-two interrupts without failing schema validation. Fixed in v2 by adding
-an else branch to the allOf block:
-
-  else:
-    properties:
-      interrupts:
-        maxItems: 1
-      interrupt-names:
-        maxItems: 1
-
-platforms except qcom,shikra-llcc, which requires both.
-This restores the original single-interrupt constraint for all
+> The edac_device_handle_ue() wrapper hardcodes an error count of 1, which will
+> discard the hardware-provided count and lead to under-reporting if the
+> aggregated count is greater than 1.
+> 
+> [Severity: Medium]
+> Additionally, since edac_device_handle_ue() performs non-atomic increments on
+> the EDAC core counters, is a lock needed here?
+> 
+> The ecc_irq and lcp_irq are independent hardware interrupts. If their handlers
+> (llcc_ecc_irq_handler and llcc_lcp_ecc_irq_handler) run concurrently on
+> different CPUs, it could result in a data race on the shared edev_ctl
+> statistics.
+> 
+>> +		}
+>> +
+>> +		if (intr_status & LCP_SB_ECC_ERROR) {
+>> +			u32 sb_cnt = FIELD_GET(LCP_SB_ERR_COUNT_MASK, err_status);
+>> +
+>> +			edac_printk(KERN_WARNING, EDAC_LLCC,
+>> +				    "LCP/SRP DDR DRAM Single-bit ECC error in bank%u: count=%u status=0x%08x\n",
+>> +				    i, sb_cnt, err_status);
+>> +			edac_device_handle_ce(edac_dev_ctl, 0, i,
+>> +					      "LCP/SRP DDR DRAM correctable error");
+> 
+> [Severity: Medium]
+> Similarly, should this use edac_device_handle_ce_count(edac_dev_ctl, sb_cnt, ...)
+> to propagate the actual hardware count instead of defaulting to 1?
+> 
+>> +		}
+>> +	}
+> 
+> [ ... ]
+> 
+>> @@ -386,6 +506,33 @@ static int qcom_llcc_edac_probe(struct platform_device *pdev)
+>>  		return rc;
+>>  	}
+>>  
+>> +	/*
+>> +	 * Set up LCP/SRP DDR DRAM ECC after the EDAC device is published.
+>> +	 * Skip hardware routing setup if firmware already configured IRQ
+>> +	 * propagation (irq_configured); only request the IRQ handler.
+>> +	 * Guard on a non-zero lcp_srp_interrupt_enable offset to confirm
+>> +	 * this LLCC variant actually has an LCP/SRP block.
+>> +	 */
+>> +	if (llcc_driv_data->lcp_irq > 0 &&
+>> +	    llcc_driv_data->edac_reg_offset->lcp_srp_interrupt_enable) {
+>> +		if (!llcc_driv_data->ecc_irq_configured) {
+>> +			rc = qcom_llcc_lcp_setup(llcc_driv_data,
+>> +						 llcc_driv_data->bcast_regmap);
+>> +			if (rc) {
+>> +				dev_warn(dev, "LCP/SRP interrupt setup failed: %d\n", rc);
+>> +				goto lcp_done;
+>> +			}
+>> +		}
+>> +		rc = devm_request_irq(dev, llcc_driv_data->lcp_irq,
+>> +				      llcc_lcp_ecc_irq_handler,
+>> +				      0, "llcc_lcp_ecc", edev_ctl);
+> 
+> [Severity: High]
+> Does the use of devm_request_irq() here create a use-after-free risk during
+> device removal?
+> 
+> If the device is unbound, the remove callback (qcom_llcc_edac_remove) explicitly
+> frees the edev_ctl structure via edac_device_free_ctl_info(). However, because
+> the IRQ is registered with devm_request_irq(), free_irq() isn't called until
+> devres teardown, which happens after the remove callback completes.
+> 
+> If the LCP ECC interrupt fires in this window, llcc_lcp_ecc_irq_handler() will
+> dereference a freed edev_ctl pointer.
+> 
+>> +		if (rc)
+>> +			dev_warn(dev,
+>> +				 "failed to request LCP ECC irq %d: %d, DDR DRAM ECC reporting disabled\n",
+>> +				 llcc_driv_data->lcp_irq, rc);
+>> +	}
+>> +lcp_done:
+>> +	rc = 0;
+>>  	platform_set_drvdata(pdev, edev_ctl);
+>>  
+>>  	return rc;
+> 
 
 Thanks & regards,
 Mohammed Faiyaz
