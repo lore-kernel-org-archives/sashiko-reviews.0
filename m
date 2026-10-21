@@ -1,96 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.182
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792625066;
-	b=bI7s4B9DoVHhdn+NijKBLN0kcHYL0EUdAkBmK8+o+mkUa7OlOlFc75HbT5zmH44yOyM0
-	 XVLYj7AAnk1f37MCJ41g6gYkV2blf3BWq1pAuY8sdjd68PljCbnA92RxJc+6arXnWWBbK
-	 dTrCWz6kuPKjKHsP2hUNAYg3NgRcFE64UD3if7E3JLHkTY7GHCE90GL6RWLIAZcyGesVP
-	 tgwBt2+p9eIS8xAKCygAAcVVimBWIs9DMGzz+u3aViBuDQzA99Xl2Wj7NSUNqxlrCu/wJ
-	 QlNjBAMqmzzAjOMiT5uLR5jRUh/5asMGr12yp/nQDYpqsPNWYyTtd86yxeNhsjvcrCw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792625066;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792625897;
+	b=dQyJGibmPr8Jf++dBdm0yvaZjT9EQytwL606RFWNG73EIu53SiP1oDWCEaW06WXya1Ll
+	 0OMWXjKhTjKa1FExtVgaYExim6PhUsfubG1VySLfjdWy05u22nEw1lSmDD3lT7oGee9j7
+	 sifCZCbcrU3+OMpZw06PseMaaTMuBFCecPv2hd5oF6X06sYk5scMYvIdRfDU67U75UO4/
+	 gHHzAAeqeMTCOkyavC7qENr9Kinod0kUhm544l1eZtLbrMCYpC0Ri2hQssqpZ2TU8+sOJ
+	 5g8tAEsaY9xjKksMXat2jYX7ZZG0MHZeqFTCpNlVo98L6Z9YV5jlNv+M57gHMqk0jJQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792625897;
+	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:
+	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=OOnJLMePRidiRd6Zbc0eEriUIlHpT2oioIudJsKLtbo=;
-	b=Uqv5hRcYh9rtZFvUuCR6W+qehTeItcWr7SSkSsk+l6wp6oLYmzbJ60OkUdQp8tTF78iH
-	 5jxWNZDFv+miAkYaGTnEVskKoTup4JBBgg0wDqL3ttj+jL1hXVsBHVCvOBSTik3IR8ivo
-	 qWnfC7XMV+wdmnsKKwZKD0yASkghDB0IZSQwH25eO2tWAkFlOhbAz37bQHjW/lhZKlMkt
-	 0Q9EPRbQwubyUQElK+RlX5hIVuze7IQFcTnuHolGZ5unUw4ho9lTTMsCYdEbE3jQrcbL/
-	 AB/Ka7chp+oS+ljocNP/wKXNX0RGPdxt7E7bFUAHyg1LhsbKu4LdnaRFKa0bUjXZvEA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=chromium.org;
-	spf=pass smtp.mailfrom=chromium.org;
-	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=SUQhtNdE;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.182
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	bh=XKZAiKGbiib5zp4TSw/Q6LRpir6OwzmcI8NEHPK6cRM=;
+	b=QCv/i2GCdzCV4195VuXe4medifnbtRhCyF4TFHtuF3lm9QvKvwrSyYCIOg3FXmvTbIkh
+	 3Dan6V05FQqDBfgTW2yfjZ3WIB7pytDVxur5/Ko1lIA1Z+QNyPED3Ec95OXfHx2hfUAal
+	 L+W3nH+nT4VpZpmNSOg7TJEtqZ4hS455pZgPFlXD8BUsJkeBRUiVEilYL2YH1MuUdjr8c
+	 8a+JP/o0QRAipzrWVgbPmss40+MclEcrtPnSlTQFUep289WTfIjcuRp9ZncW5jTL5H0Br
+	 Vx5wDhYQS4DB0YxQcAYYP92vpWEFLjpeXmJK22qcSf2qsep+GmOZLoHlXjjnMUdxsHg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MgMVqk7b;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8B3606A31D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 23:24:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1F8B3606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6249E606A31B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 23:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=SUQhtNdE
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-8b0d91601bdso3181007b3.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 16:24:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792625065; cv=none;
-        d=google.com; s=arc-20260327;
-        b=sDZfFg6DCVLeXlKYE0QVY7arCm1n+ovuA8w1ux7LwEYc5jBhCTmsiz6vHlmKVGldW3
-         2qCgIvNEIxpYShVNK2qbskAsZTXBwWb+XESN/InVsK4/cMuo7d5xDcPfA5YYkuGUEmG4
-         nbGbkA9yBqn+98IwrwOBxUdtBYoFgoLaoX/IL/G789PvJmiETdPjUDLJP4/Eff/JxCN4
-         gcx5NSFH0F+OVgJuG4SBeyPNEZwtyniEcTbAZSsqqz2JUF0BYXb5D6F777lhtcWQIY6n
-         yNyaJv3OK/yW3+6qMLT0loA1VH3nQzby75Ve4oCIq3pqR1iAbd4FjWiHiVtGo3AHE8ip
-         luzA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=OOnJLMePRidiRd6Zbc0eEriUIlHpT2oioIudJsKLtbo=;
-        fh=osfj9leewLfc4MqIYaUjfG4KfpRUNqFnByXZRUnRoVs=;
-        b=gW86PE7AAeFiPQepbkaW+WuRaMWjenQIUYx2ty5is0l7OnB5XDZaepPfgZB9dZ0NcX
-         yMRPAP/j5hqe7IEBgCMD4BSHtQk/b1hjboIVnG/i6B2uQs206W6tjotwFPi/puTTRsBL
-         J9nuWgHC1twommTmXw37Yfu4TA7k3QrnQMRQHxN05YTnXmZC8r1vg22wRiv1IKgtA7nc
-         hThI2RtVU0f7p2Nw4nJwxhbEyqE2ZCtSc/EGwOQALAC7a0EHsQc+Q/4ft24pPb6Y/ina
-         +eINvPn/tc3z/DdXYtp+YdxSPhY5WbwZpJytxIXtWG4+SEfbXO8J2RvKyUV3zzvVG9vb
-         pi9w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1792625065; x=1793229865; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=OOnJLMePRidiRd6Zbc0eEriUIlHpT2oioIudJsKLtbo=;
-        b=SUQhtNdEUWWmoiUQTxxgtNRfb/CmiewiFErEAeXkANJJ1XrTPdGb43Yo8SWGNOAc8m
-         1VljtdbzxMrte0iJOcQiMWbhPaaaDZZSPCifllp2Ms2m3Zk9on9Gtl2Q9HRbTS4kKesE
-         Zj3uEb3im0xNkGkJqHzHuAc3xexOpU0w05Xhw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792625065; x=1793229865;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=OOnJLMePRidiRd6Zbc0eEriUIlHpT2oioIudJsKLtbo=;
-        b=quQ0l5Ak3rLVACM9luJNT25Fz3kUFW1sVTuJ/wWcwoXBD7N+YSVhdtdHWc2mcoenzK
-         0SLeZshhZ0BLi3KbQ4fynvO7Fx01WY2/wyxnKi9TeL0Ofgh91MBHgHknyy3ujMR4WYlR
-         8BZ7eO1WKpuegBDHeqwHs92EDoPhoOvRCemq6PUdE6GxEHl65uO9v38wVLAB71q4jOr1
-         Jsnp8GIijaI1iwdLSQa89n6uQtnIJiDcsVAHCO0SQojYvBUHyVFUyxWB6jfLl8zmdppQ
-         K41W/Yl7y39MESXyJBv0T6pyA2OwAmk8WGKQ1f3NTINEa7jQEAtY7TBz0sJ7YlTw3z0g
-         a8fQ==
-X-Gm-Message-State: AFq9FYKsEJqU4SVlxwjeNGtZdBlqUzfJS5Vf3ZgQAdPqbrHg6xQX//Vy
-	HAxHlABgzVXLxg6HXNtQUDS2SnRXigMyZobPTJGskwrD0wmGCr6lu7nuaRDQP76LjuoFSjkd9xz
-	4Ei3m4P2sNiBNfutb3BPpnaugUNBuOjmXDlXDYAkI+LyuThVfkeQ=
-X-Gm-Gg: AYBFou2q3bK6x9Kckli8lG04BF1mJt/5ZBE/hvPbQ5DJlnIaHTTvo88Xxf1e+sU9F0G
-	KWmxWMv63CBwxTh0TFpYUW0TsYQfk/jKQjFr+ZVoIeiSrUC4qZPKv3CEp0auhtljH10acdHjvyz
-	bLT+TMeCuINtF4Kf8DVOjcDsd0thb+dEgUBR6/NJIeCPFCzcYbuZnr/lEhgM2JhLfAiJRm8+NvL
-	RqDerU4d1+dKng9bWxVTh1IG74BEznJOhDWl/DUkGyis0Swb7/PEIa/PriioX6b1DrAS7tI6oVD
-	JGIx6R30fcV2kit0hxaza7jrzo25HcOF4KHxeWvv+x5n9zU++3PNgB6HQnrHRUaX3fpI7+2XVpC
-	SfErxB36hrSpbzsJy6h1fZNeI4iH+XaTp1ev5rKKgHBow9A6Xo6RVlCKLQxXQlScaG8Q=
-X-Received: by 2002:a05:690c:2786:b0:8b0:88c7:f184 with SMTP id
- 00721157ae682-8b14551034emr3963617b3.4.1792625064963; Wed, 21 Oct 2026
- 16:24:24 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=MgMVqk7b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079FE1F000C7
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 23:38:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792625896;
+	bh=XKZAiKGbiib5zp4TSw/Q6LRpir6OwzmcI8NEHPK6cRM=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=MgMVqk7bGrp6Ls7lIijkuqzS2bPELzf388vN3Ahkv5vSs3t+pZAr/5v6ecs8I+Nlj
+	 YapOkwComR8CE1pa9p/RwTVrAJjY+ia3CF2mHTdISibWS8FPYu7yTOBk4OcOqYQ2af
+	 c0Jma87QHmwk+xshEgSyGx/7BgGVnlxVosa+bJcEIybK5qRqmR5VpeNDPgD4JnT24C
+	 f5h+hu4mrZzK/Yq32b4XNEmV4F5lvAIfY+7WC0DtDHfdfhOBQ5iPiP+mS/0fPyv7nO
+	 SI4SMRGI+SBLSwdBE0cJ2VOWmmtTkU8ngaa/YaKSbvtOKmvpBhMCD5+QchN+H18QXq
+	 +LGw1gIU0ZesA==
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-93f079a63b8so130708685a.3
+        for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 16:38:15 -0700 (PDT)
+X-Gm-Message-State: AFq9FYLNg0H/CQ1MWKvuTrjMPrxBSEynsqEjjnVgt6XhgyicPJFgTFCj
+	o3jiG5OsX7BsKdepYcgktKr65FYdTHj/N4ONGK5DD2ImyyICNEFU96PhtQCOcJwyqrItgbKIAL6
+	wR3tYw/Zp6WpuX4qxgS/pIXtZYhC6vik=
+X-Received: by 2002:a05:620a:601a:b0:93e:5daa:67a4 with SMTP id
+ af79cd13be357-93f57f0a0d9mr727720585a.29.1792625895221; Wed, 21 Oct 2026
+ 16:38:15 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,185 +58,94 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261019-send-upstream-v6-0-cb9ba4b3d6fa@chromium.org>
- <20261019-send-upstream-v6-4-cb9ba4b3d6fa@chromium.org> <sashiko-outbox-178143@kernel.org>
-In-Reply-To: <sashiko-outbox-178143@kernel.org>
-From: Jingyuan Liang <jingyliang@chromium.org>
-Date: Wed, 21 Oct 2026 16:24:13 -0700
-X-Gm-Features: AclHuK8I92dDi-a24-arJkNbKz40DybvKa54bpvCtfeFFEOTon1M-6c-zRbUBhQ
-Message-ID: <CAEe3GZG3rHcRtHmg=vB5WdfsQ38Fghi_o80dSnsuaog2_xrieQ@mail.gmail.com>
-Subject: Re: [PATCH v6 04/11] HID: spi-hid: add spi-hid driver HID layer
+References: <20261021222255.3124940-1-song@kernel.org> <sashiko-outbox-180771@kernel.org>
+In-Reply-To: <sashiko-outbox-180771@kernel.org>
+From: Song Liu <song@kernel.org>
+Date: Wed, 21 Oct 2026 16:38:03 -0700
+X-Gmail-Original-Message-ID: <CAPhsuW5BhxAUC=OE=mjZ32vtYpsGM2WYw6bKTXF5GrTDh8CiSA@mail.gmail.com>
+X-Gm-Features: AclHuK_CkLDvphCAJPCC_oZ2GWHVamkqhlYW3dwZFYCLJHlJKYBN8UaCaDlSLYA
+Message-ID: <CAPhsuW5BhxAUC=OE=mjZ32vtYpsGM2WYw6bKTXF5GrTDh8CiSA@mail.gmail.com>
+Subject: Re: [PATCH] compiler_types: Do not mark inline functions notrace
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org, linux-trace-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, 
-	dmitry.torokhov@gmail.com
+Cc: linux-trace-kernel@vger.kernel.org, live-patching@vger.kernel.org, 
+	rostedt@goodmis.org, mhiramat@kernel.org, mark.rutland@arm.com, 
+	kernel-team@meta.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 19, 2026 at 12:26=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Wed, Oct 21, 2026 at 4:09=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+> Thank you for your contribution! Sashiko AI review found 5 potential issu=
 e(s) to consider:
-> - [Medium] HID: spi-hid: zero-length report descriptor accepted in spi_hi=
-d_ll_parse()
+> - [Critical] x86/paravirt: removing notrace from inline instruments pv_op=
+s and resume
+> - [High] tracing: removing notrace from inline breaks ftrace recursion pr=
+otection
+> - [High] rcu: srcu_read_lock_fast_notrace() and tracepoints lose notrace =
+attribute
+> - [High] bpf: removing notrace from inline exposes trampoline helpers to =
+fentry
+> - [High] entry: removing notrace from inline instruments unvalidated entr=
+y helpers
+
+Wow. I didn't expect this from Sashiko.
+
 > --
 >
-> commit 9328ec8c48a0b55cf1019d845ec2c37e89f4cdbb
-> Author: Jingyuan Liang <jingyliang@chromium.org>
+> commit 1eb6626c4a5ab70e5858a8a8f1c9edfca235db57
+> Author: Song Liu <song@kernel.org>
 >
-> HID: spi-hid: add spi-hid driver HID layer
+> compiler_types: Do not mark inline functions notrace
 >
-> This commit adds the HID low-level driver callbacks and device creation l=
-ogic
-> for spi-hid, handling report descriptor fetching, buffer allocation, and
-> output/feature report requests.
+> This commit removes the notrace attribute from the inline macro definitio=
+n
+> in include/linux/compiler_types.h so that inline functions emitted
+> out-of-line by the compiler can be traced by ftrace, attached to via BPF
+> fentry/fexit, and livepatched.
 >
-> > diff --git a/drivers/hid/spi-hid/spi-hid-core.c b/drivers/hid/spi-hid/s=
-pi-hid-core.c
-> > index 02a7608c4b882..fca7a44eeb9f9 100644
-> > --- a/drivers/hid/spi-hid/spi-hid-core.c
-> > +++ b/drivers/hid/spi-hid/spi-hid-core.c
-> [ ... ]
-> > @@ -84,11 +185,484 @@ static const char *spi_hid_power_mode_string(enum=
- hidspi_power_state power_state
-> [ ... ]
-> > +/*
-> > + * This function returns the length of the report descriptor, or a neg=
-ative
-> > + * error code if something went wrong.
-> > + */
-> > +static int spi_hid_report_descriptor_request(struct spi_hid *shid)
-> > +{
-> > +     struct device *dev =3D &shid->spi->dev;
-> > +     struct spi_hid_output_report report =3D {
-> > +             .report_type =3D REPORT_DESCRIPTOR,
-> > +             .content_length =3D 0,
-> > +             .content_id =3D SPI_HID_OUTPUT_REPORT_CONTENT_ID_DESC_REQ=
-UEST,
-> > +             .content =3D NULL,
-> > +     };
-> > +     int ret;
-> > +
-> > +     ret =3D  spi_hid_sync_request(shid, &report);
-> > +     if (ret) {
-> > +             dev_err(dev,
-> > +                     "Expected report descriptor not received: %d\n", =
-ret);
-> > +             return ret;
-> > +     }
-> > +
-> > +     ret =3D shid->response_length;
-> > +     if (ret !=3D shid->desc.report_descriptor_length) {
-> > +             ret =3D min_t(unsigned int, ret, shid->desc.report_descri=
-ptor_length);
-> > +             dev_err(dev, "Received report descriptor length doesn't m=
-atch device descriptor field, using min of the two: %d\n",
-> > +                     ret);
-> > +     }
-> > +
-> > +     return ret;
-> > +}
-> [ ... ]
-> > +static int spi_hid_ll_parse(struct hid_device *hid)
-> > +{
-> > +     struct spi_device *spi =3D hid->driver_data;
-> > +     struct spi_hid *shid =3D spi_get_drvdata(spi);
-> > +     struct device *dev =3D &spi->dev;
-> > +     unsigned int rsize =3D shid->desc.report_descriptor_length;
-> > +     int error, len;
-> > +
-> > +     if (rsize > HID_MAX_DESCRIPTOR_SIZE) {
-> > +             dev_err(dev,
-> > +                     "Report descriptor size %d is greater than HID_MA=
-X_DESCRIPTOR_SIZE %d\n",
-> > +                     rsize, HID_MAX_DESCRIPTOR_SIZE);
-> > +             return -EINVAL;
-> > +     }
-> > +
-> > +     if (rsize > shid->bufsize) {
-> > +             error =3D spi_hid_alloc_buffers(shid, rsize);
-> > +             if (error)
-> > +                     return error;
-> > +     }
-> > +
-> > +     len =3D spi_hid_report_descriptor_request(shid);
-> > +     if (len < 0) {
-> > +             dev_err(dev, "Report descriptor request failed, %d\n", le=
-n);
-> > +             return len;
-> > +     }
-> > +
-> > +     /*
-> > +      * FIXME: below call returning 0 doesn't mean that the report des=
-criptor
-> > +      * is good. We might be caching a crc32 of a corrupted r. d. or w=
-ho
-> > +      * knows what the FW sent. Need to have a feedback loop about r. =
-d.
-> > +      * being ok and only then cache it.
-> > +      */
-> > +     error =3D hid_parse_report(hid, (u8 *)shid->response->content, le=
-n);
-> > +     if (error) {
-> > +             dev_err(dev, "failed parsing report: %d\n", error);
-> > +             return error;
-> > +     }
-> > +     shid->report_descriptor_crc32 =3D crc32_le(0,
-> > +                                              (unsigned char const *)s=
-hid->response->content,
-> > +                                              len);
-> > +
-> > +     set_bit(SPI_HID_READY, &shid->flags);
-> > +
-> > +     return 0;
-> > +}
+> > diff --git a/include/linux/compiler_types.h b/include/linux/compiler_ty=
+pes.h
+> > index c5921f1390079..ea7f2a928b4da 100644
+> > --- a/include/linux/compiler_types.h
+> > +++ b/include/linux/compiler_types.h
+> > @@ -230,9 +230,8 @@ struct ftrace_likely_data {
+> >   * externally visible function. This makes extern inline behave as per=
+ gnu89
+> >   * semantics rather than c99. This prevents multiple symbol definition=
+ errors
+> >   * of extern inline functions at link time.
+> > - * A lot of inline functions can cause havoc with function tracing.
+> >   */
+> > -#define inline inline __gnu_inline __inline_maybe_unused notrace
+> > +#define inline inline __gnu_inline __inline_maybe_unused
+> >
+> >  /*
+> >   * gcc provides both __inline__ and __inline as alternate spellings of
 >
-> [Severity: Medium]
-> What happens in spi_hid_ll_parse() if the report descriptor length is 0?
->
-> In spi_hid_ll_parse(), rsize (shid->desc.report_descriptor_length) is che=
-cked
-> against HID_MAX_DESCRIPTOR_SIZE, but not for zero. Later in the series, t=
-he
-> commit "HID: spi-hid: add HID SPI protocol implementation" validates
-> raw->rep_desc_len !=3D 0 in spi_hid_dev_desc_response(), but if a device =
-returns
-> a REPORT_DESCRIPTOR_RESPONSE with content_length =3D=3D 0 (shid->response=
-_length =3D=3D
-> 0), spi_hid_report_descriptor_request() computes min_t(unsigned int, 0,
-> shid->desc.report_descriptor_length) and returns 0.
->
-> Both spi_hid_ll_parse() here and spi_hid_refresh_device() in the protocol=
- patch
-> only check if (len < 0), treating len =3D=3D 0 as success.
->
-> When len =3D=3D 0 is passed to hid_parse_report():
->
-> drivers/hid/hid-core.c:hid_parse_report() {
->         hid->dev_rdesc =3D kmemdup(start, size, GFP_KERNEL);
->         if (!hid->dev_rdesc)
->                 return -ENOMEM;
->         hid->dev_rsize =3D size;
->         return 0;
-> }
->
-> kmemdup() returns ZERO_SIZE_PTR (non-NULL), so hid_parse_report() returns=
- 0.
-> spi_hid_ll_parse() then caches a CRC32 of 0 and sets SPI_HID_READY, and
-> hid_add_device() sees a non-NULL hdev->dev_rdesc and calls device_add(),
-> registering an unusable hid_device while bypassing SPI_HID_ERROR reset
-> recovery.
->
-> Should spi_hid_report_descriptor_request() or its callers reject a 0-leng=
+> [Severity: Critical]
+> Could removing notrace from inline cause a triple-fault during x86 suspen=
+d
+> resume, secondary CPU bringup, or kexec when function tracing or call-dep=
 th
-> report descriptor (for example, checking !rsize in spi_hid_ll_parse() and
-> returning -EINVAL when shid->response_length =3D=3D 0 or len <=3D 0)?
+> tracking is active?
+>
+> In include/linux/compiler_attributes.h, __always_inline expands to inline=
+:
+>
+>     #define __always_inline inline __attribute__((__always_inline__))
 
-Will fix this in v7.
+I wonder whether we need __always_inline to be notrace, and whether
+this resolves any of these concerns.
+
+Thanks,
+Song
 
 >
-> [ ... ]
+> Because __always_inline only inherits notrace through inline, removing
+> notrace here strips notrace from both inline and __always_inline function=
+s
+> whenever their address is taken and the compiler emits an out-of-line cop=
+y.
 >
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261019-send-ups=
-tream-v6-0-cb9ba4b3d6fa@chromium.org?part=3D4
+
+[...]
