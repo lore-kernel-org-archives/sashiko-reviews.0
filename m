@@ -1,94 +1,88 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.208.179
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792591642;
-	b=dfxQJJokgZbRI7cI+21qHpllHp4cVDFXJA7DWtLQ3nEXCPipFrMN+MrOk8aFE/y5VWsk
-	 +7leetjJYGbiMt2xv+0ZrEfs3N8hTYPCSSK7ofBnYv6oIC8o2TZI54Dlpz8voY5Xnd4GS
-	 IJuisVZ/bQF+l4QkHN64JxnuJ340MpsaaqHwf96trANDCL7qo54TrcJ2lSkZGK0mSqfb4
-	 AYiX9gPpYwypDTohTSAwwIrbEB4IKp0D5ElCDa/WPPd1UnKrdBcqypV43KitB14KXTFu+
-	 goObYncUCHyn2pe3zdTXUJfzPYMyU1DGJ+ajKzWsPzRmpyPpTm5t21mOAJWvVB1hhcA==
+	t=1792592256;
+	b=TWSbze9LBVMBmov+GOZn0Bb0g9W1qUJdusjyw32uWAndJ6pr40/EKhOhpbSFwg+lmQcr
+	 juvIJrpbrzyhQfOdn8Pvh1nvWMpv1vTotcD/wz5Q1GTBvEBTxgfiUzi29U2ova2pb4RW2
+	 8PVfO7Tm/O/6q76Ast7NJJ+KbOfiIeWDDCFeWJYLwBwfV4HZEG5UKrv/D+qQ013csI2T+
+	 WJo1mhUrpF4RmZsN+pgTp33PJEXMqxkWjpslZwJ9M6tpWjWnYk3HZ3ioTbnG+rP2MG9ZH
+	 yDeW0RSmxW3K1v+KSV1W3IyNLtm/0HvEgenpPgVtzdNon+oD1RpvGnDdToqI7NvRYbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792591642;
-	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
-	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 X-Received:Received:Message-ID:Date:MIME-Version:User-Agent:Subject:
-	 To:Cc:References:From:In-Reply-To:X-Mimecast-Spam-Score:
-	 X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:Content-Language:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=h/tGrN3vAXkF4xhrgSHBlBodyDLosDfdLftjO+4g2gc=;
-	b=vbuGBMPvXk9yfJgQdfHNY8zJ4+AWBj3Hhz1Vlr1XXKgT+IxCgF/0t/GUPRnU/b42h9zL
-	 M6SzQGUZ2udqbrp4g7XiKGn18FWPsOTflTroHFOF92B3HntzkR4pbq3kumS1GZXcTLL7p
-	 ER+DFfUKEKgM/+xMum47GHpfR74rU1ThtNNIyk0OtreklQc+cQL3wr+HIVQ1zTRZiWAUI
-	 g+CskuuHChJe4HkwJKB4Q+0HPEeNc9ug72eC14e5hLUkdPtVk9Lh8snQSYusnQeXY/GTT
-	 immpIjAWQRPHeib1iHdunNlaUdbXR630WNWbIic1MT+mzL27ROG9uUnN8kJ/6wZeWhw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792592256;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:
+	 X-Google-Original-From:Content-Type:Mime-Version:Subject:In-Reply-To:
+	 Date:Cc:Reply-To:Content-Transfer-Encoding:Message-Id:References:To:
+	 X-Mailer;
+	bh=8uM/e5bRSgkmbP1MwQqFnaKW7cMdOGe9VQb7vfvxj/s=;
+	b=AqH4cLxHQ5Ggx677Ua9Ak54VxbQCKaqBapUvtNu30v+3gwWHh4gqDZBrYGunXoTQHUr2
+	 zZIZPmR+A9XUWnul5pBREjGvMfNAfruewirJ6obVKQPnqN2xFo+asMZRj8frxjUOhh4Be
+	 HcG/oG8SlE1S3z3JawpbIHG9kZw0agm2Dz11oc5/3GsCftEgN+Oj5hWWXbf++hjX2cvwU
+	 PgRwW0M+4Z3530/ZQ+J29sVKG5eKG7LIQdJQ2uek6yOYjeDJ5IEOQQrx4zjhTMmAeMKLi
+	 NfeNNspMIci2qNb6Wa3reivOS0rqs13J456c094STNCq0ARQozgoWSZ5MZsIc0pOzIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=redhat.com;
-	spf=pass smtp.mailfrom=redhat.com;
-	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=cKxGnFIC;
-	arc=none smtp.remote-ip=170.10.133.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b="c3Ru178/";
+	arc=none smtp.remote-ip=209.85.208.179
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC51606A31E
-	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 14:07:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8AC51606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15394606A31B
+	for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 14:17:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 15394606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=cKxGnFIC
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1792591640;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=h/tGrN3vAXkF4xhrgSHBlBodyDLosDfdLftjO+4g2gc=;
-	b=cKxGnFIClWugHa1o1xIB/ztnJpY8dNxh9TuaXeGdMWoTz+C8tXOeCxiiGFYg7WZZWpkvKe
-	SDgqUiopr3lCVkPaF4j8fkB40MGr52DQxBHIWBGFUaBWBU+0t+//6rFFusCayLRDnH9lqN
-	7JqJsCtj6lEC2ELxgHDJlvb4WZLXYCs=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-398-iYqXcdjVO0qMDcmzGs6c0Q-1; Wed, 21 Oct 2026 14:07:19 +0000
-X-MC-Unique: iYqXcdjVO0qMDcmzGs6c0Q-1
-X-Mimecast-MFC-AGG-ID: iYqXcdjVO0qMDcmzGs6c0Q_1792591638
-Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-4a1e672580aso5780415e9.3
-        for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 07:07:18 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=c3Ru178/
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-3a9e87ba696so6521511fa.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 07:17:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792592254; x=1793197054; darn=lists.linux.dev;
+        h=to:references:message-id:content-transfer-encoding:reply-to:cc:date
+         :in-reply-to:subject:mime-version:content-type:from:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=8uM/e5bRSgkmbP1MwQqFnaKW7cMdOGe9VQb7vfvxj/s=;
+        b=c3Ru178/VJywwADpIGn2V+Ydugg27qXS5zqjV7BHtr8d9RrbXwxsS0aEqsuVfDBZoT
+         YcYCYnkpcSxBvyRoWxF4mTNKVr90+Y+sWdO+NnazUfOLZmnIQmJsxEIypQamt+ERU1Rs
+         20iPe8HpDQkDp3mDxBhwkPiPM8y47fSkgcwi/LxQk+qhN+quwp6As6+JF9/+x6EkTw9g
+         tR5VbMALWGDZ0ED5XOeTxfUYmWMkWQdGcVrIGk4VK9N3EbKkxSW9uoTLIgM9urS4jYfH
+         RtsrXObvHlafH37RPepuIBy5bG8/uwrmz01CmA1gMGubfbN9f7yY9CHn3jrCLlYWvJhF
+         VXbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792591638; x=1793196438;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=h/tGrN3vAXkF4xhrgSHBlBodyDLosDfdLftjO+4g2gc=;
-        b=GmTsu3D+DcUmYHZCge/8DJAPEcxxWU2G1YUCtdRreAVAC9f0f/dQ6Ac0L7lVl9r23r
-         EfFFHqTkM/q3tZoz6XHOczFUWzvWXyX8kdJYRA8P3KXSFU74GQ/jvw/qWO0Gf1HBq3SY
-         gf5CxCS/q6lAHWJ7ppnI4wRMyQ/cMHQlXWTzeTThwOcpg4TSvESWmbE63uumo8UZ0lRU
-         pRRh92zkr6NfehG+WkWGMhULaJ3PAkl0UUIQTJ806yJtkD0kcuVW1fvuAaTU026wdm8J
-         xsRC1FAnWMn1vmBNGKkrLWRrpXCDvlhkE/4/oZetUeE4P1fFyl9zCBKE8pFEIJI6dxp5
-         kFUA==
-X-Forwarded-Encrypted: i=1; AKwUvBxvg5WQe733g51pSHv2SaOprK3rlZHSAf+thpT+EusMliTSjVO8pbxON4ySXAsWuuEOnkkN5/YR0Xg3zxgl2Cw=@lists.linux.dev
-X-Gm-Message-State: AFq9FYKCDa72MeB4hzQd5njbBrMRUsnqRBVSJzbdXIrhzday38akYINZ
-	c0f6ZwtWx0N9FChpVgFeUyXBnXd1rDtXWNnxZ7mzRpqwsUTU3/vvs/sjEWw6SLlnnqfT34xzFui
-	0Fpaa8YnsNsHup3RuI45ZixXyvw1YAi7jfM2PlYcPA4qwpYnBnXagstb49m/5m+1AqJ+I/w==
-X-Gm-Gg: AYBFou0TR2zyj488FoYpmexvrTzc4nfIfoOKOMh29zBivY6QYfbFxh3YhrmmTw2MJu4
-	Xs/nd3Uht/HusQYY1SvPZB/lGqfUlt9D1g29a0IdNhIJncARhV4Gi2UQ2mimbbU4mvlwNlSLj+7
-	HGbHS5uvQumbggH7QaO2ZQVO6+k06C2lvGN6C1YZA9D1X56jUWMXo8eUpwO3C2Y7DpVvfCjgfVA
-	z8RkKP93YmYnh289web7qAtekAjGIvJYTWsJusk+8ObNpYYjvvz4Fq+3/E5EAXsu17RIZkW2rq3
-	cznBDMeuQIiL6xakDAs2JGnX9jctTpXYKNFv33ciQ9mGvuvzVAl+bniYF46HJnExfLvNKu3hlyR
-	Atj1SDr/NlrYz5H0zQGkkbGg2swujA8yUuzF83kXLJYKrOj882db+HqdPezhzZ9OhbYDvPHmHoA
-	==
-X-Received: by 2002:a05:600c:3f0c:b0:49f:c199:e1e2 with SMTP id 5b1f17b1804b1-4a1fdd39fbamr45863865e9.28.1792591637599;
-        Wed, 21 Oct 2026 07:07:17 -0700 (PDT)
-X-Received: by 2002:a05:600c:3f0c:b0:49f:c199:e1e2 with SMTP id 5b1f17b1804b1-4a1fdd39fbamr45861165e9.28.1792591635848;
-        Wed, 21 Oct 2026 07:07:15 -0700 (PDT)
-Received: from [192.168.188.234] (ip232-47-231-195.pool-bba.aruba.it. [195.231.47.232])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a1fe5239e9sm43986055e9.0.2026.10.21.07.07.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Oct 2026 07:07:15 -0700 (PDT)
-Message-ID: <08a71c7d-d5ba-48ee-b80c-7997d07e6e22@redhat.com>
-Date: Wed, 21 Oct 2026 16:07:14 +0200
+        d=1e100.net; s=20260707; t=1792592254; x=1793197054;
+        h=to:references:message-id:content-transfer-encoding:reply-to:cc:date
+         :in-reply-to:subject:mime-version:content-type:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=8uM/e5bRSgkmbP1MwQqFnaKW7cMdOGe9VQb7vfvxj/s=;
+        b=L8mY8j0k/HXAskLTxdajcgdsyQyV/gGnJdvrE4e2bVR+aG6RmxItip6rMzbbo6T7i5
+         BW60TYqGt2y4G3Zqvc61eRRYmoEUGAIjQohkGYjXQxzuXrJH2LRANMb7PCnXQcyqDA1O
+         3SO9VB8k3NBrM+XCXowG+vXzTe/0eA74D2xUnhRi39bTtADHnjaVqUgVqHwxhlpE6R1+
+         6cNwirdKjz9jouDJfMDe4GKegoTX1Vw0qQHzmDAnRyRujUBARv5SCbcjV25Ji2uvsglF
+         WjN/pfRspgv+QJCl7NOdZWTKbMs5Z4VZXmD95DGW/i86/boYWmUJcBxZWKMPeCHF+NLi
+         ng/Q==
+X-Gm-Message-State: AFq9FYL8H/zce0/ov1Bs/4xpRP0rT4sNbWUZNLgjSx7o+R3IU6eX0pO6
+	7EnZ7c3Drk16KAugKvObqj/zHqHcdd+w807QWo7xforXKIXsWx6W4L5ALUQmjZqxyFUtI9zg
+X-Gm-Gg: AYBFou17eZ7u+tGpPd438194FJV3DIo4ePT37gVBbT62wzEEyYkIoIGPTMhwFneBDjv
+	OtHFAqbP1DfKDMjauF1bI2dGjHfdrt4cvG/8WlRysqVsZCQJn3HX/u8HE9PAEb1jhkOx9xIgKzA
+	RI0nZ4sHk9qAccw2UmQ4jr79cvZZ0woQRxAWHHlIVraUQ9Q7up8YgdQYYPvLVt1K7Ru1Wx61Ib9
+	FlGyy220U+bvnlcGS6o3AlZscELuSvHnivmRbGsh7Vqxo589rKoGTf5WrpAI5eeF2E3YOQghI4k
+	W3MliyggaZdPzIXgczSOoa+KCCaH62CvriDz85wEy2QT0VR7/YR6PjIzYB5dHeaCczn2rmQeplH
+	Uln4cCmvNjn+CSS4NV0RtD+QR5r5Gbyljbp5iRtPHSZDbFTU5g/jFTSwtAfMrKVRExOT/NiYtq6
+	FtranKUeErRq7j4VwfT9zix4ySTd9V6QmpQIhzsq9skSoWkQONQ09BpDvrKkWMjX0QWKLmoBuX7
+	16efKnWetYNIxjUdWHc4M8zJ3fo+tLtHzxg9RtEE7xIGeWhk6l/YLPxTBsdoP/lENudGTPRrmcN
+	yQ==
+X-Received: by 2002:a05:651c:a20c:10b0:3a9:9a60:2c47 with SMTP id 38308e7fff4ca-3ac441c1e28mr5511751fa.29.1792592254112;
+        Wed, 21 Oct 2026 07:17:34 -0700 (PDT)
+Received: from smtpclient.apple ([176.99.99.239])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3ac4f563b1asm169111fa.17.2026.10.21.07.17.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Oct 2026 07:17:33 -0700 (PDT)
+From: "=?utf-8?B?0JTQvNC40YLRgNC40Lkg0JrQsNC90LTRi9Cx0LrQsA==?=" <d.kandybka@gmail.com>
+X-Google-Original-From: =?utf-8?B?0JTQvNC40YLRgNC40Lkg0JrQsNC90LTRi9Cx0LrQsA==?= <D.Kandybka@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -97,57 +91,34 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v2 3/3] net: ethernet: qualcomm: ppe: Add IPQ5332
- support
-To: Til Kaiser <mail@tk154.de>, sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
- netdev@vger.kernel.org
-References: <20261016152449.934312-1-mail@tk154.de>
- <20261016152449.934312-4-mail@tk154.de> <sashiko-outbox-175580@kernel.org>
- <c40f4d8f-223c-441b-901e-5bea5bcb612e@tk154.de>
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <c40f4d8f-223c-441b-901e-5bea5bcb612e@tk154.de>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: CPgFnfjDVIc9VQ6PBa7vasaGNiQ6cAmL56er9vHBdz4_1792591638
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.700.51.1.3\))
+Subject: Re: [PATCH v2] kbuild: Makefile.lib: fix offsets generation with
+ debug info
+In-Reply-To: <20261017214129.GA404142@ax162>
+Date: Wed, 21 Oct 2026 17:17:16 +0300
+Cc: sashiko-reviews@lists.linux.dev,
+ Nicolas Schier <nsc@kernel.org>,
+ linux-kbuild@vger.kernel.org
+Reply-To: 20261017214129.GA404142@ax162
 Content-Transfer-Encoding: 7bit
+Message-Id: <72D78195-967D-4789-92C2-2521195D9454@gmail.com>
+References: <20260928105330.25427-1-d.kandybka@gmail.com>
+ <20261015210149.78470-1-d.kandybka@gmail.com>
+ <sashiko-outbox-174936@kernel.org> <20261017214129.GA404142@ax162>
+To: Nathan Chancellor <nathan@kernel.org>
+X-Mailer: Apple Mail (2.3864.700.51.1.3)
 
-On 10/17/26 20:37, Til Kaiser wrote:
-> On 10/17/26 5:25 PM, sashiko-bot@kernel.org wrote:
->>
->> [Severity: High]
->> Does ppe_config_qm() calculate the multicast queue register address correctly
->> when queue_id is >= 256?
->>
->> In ppe_config_qm(), the code calculates the address like this:
->>
->> 			} else {
->> 				reg = PPE_AC_MULTICAST_QUEUE_CFG_TBL_ADDR +
->> 				      PPE_AC_MULTICAST_QUEUE_CFG_TBL_INC * queue_id;
->>
->> Since queue_id ranges from 256 to 299 for multicast queues, and is not offset
->> by 256 (PPE_AC_UNICAST_QUEUE_CFG_TBL_ENTRIES) before multiplication, does this
->> result in an out-of-bounds address calculation?
->>
+
+> On 18 Oct 2026, at 00:41, Nathan Chancellor <nathan@kernel.org> wrote:
 > 
-> This is the pre-existing issue you identified in v1, affecting IPQ9574 as well.
-> I submitted the fix separately to net:
-> https://lore.kernel.org/all/20261016150140.929729-2-mail@tk154.de/
+> This definitely feels a little contrived but anchoring at the beginning
+> would avoid this and seems to match the rest of the macro.
 > 
-> I could also mention this in the commit message or add the link to the net series
-> in the cover letter.
+>  s:^->BLANK()::p;}'
 
-Please note that you could/should ignore reports from the global sashiko instance,
-and look at the nipa ones (clashiko)
-The feedback from the global sashiko instance is incorporated and validated by other
-models (which already discarded the above concern).
+Thank you for better view on this patch. I agree with your correction.
 
-This series does not apply cleanly to net-next anymore. You need to rebase and
-repost. Please note that the repost MUST wait for the end of the merge window.
-
-/P
+--
+best regards,
+Dmitry
 
