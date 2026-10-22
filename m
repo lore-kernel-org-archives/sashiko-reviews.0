@@ -1,74 +1,66 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.72
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.128
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792706722;
-	b=d4Rjn9GUsCa47RdeRrgC0uQXiCnDO8LIBO4kYK31DtbsJXznZU+2nEoPtWllRcr2YJd9
-	 +zxuoz+15j/vEIB2eG7WUsHO2GozDGSNGroRIDu9S2xGEvxxNjtiKiBRoouMW8Kun8fAC
-	 Hirpz/ZSIT2+BRx1C0iWil+n9ja6ExZPo2skA86XRcj2NYDRMX6QavGjg9e2om1Jnh9sr
-	 zpsZC/z9ixk5Uy+WIrRgCcG+ZKUd38b9Hi4O63ErSIOWxGE0cwdRCR4BTN0iUX9xeb6Uz
-	 50QFLx9UYsLE8zS4QqhEpAMEyVLcLW2zzDcHaxgUkLxiyVFprl24VfDlmaSRP+W24wA==
+	t=1792710480;
+	b=35cFU5HqroezxlrPrsEulnr+qhdsOVXG8Bpps+F8/udoYQiPP0KhMkYR2YKu6Bml/Dgt
+	 53F/akDFyM5hRwamxCz9iXCoZOIXV1zizwip6tHphE9U3m+BWLBOY2Yj82eeaA+oKSksl
+	 aHlZWqAjcwIH19arjlRVjjo/Gepk86vnnMYXdkT1xyoRdMaQ9h0R0aCL7WdveTzrcz+ac
+	 gSUDwBMcHiJ58hfTKY7Imd+bG6Ei7IpI7OPOy6BOsG0jtWWRcQK3fZmEhtBeU8KoYVNTR
+	 6GoG6A1rw58Usgz1KfUFuckDXuqt9d8LKfkdL85PhcG7mS6AI+FrxQ/4BVEfMlTTa+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792706722;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
-	 References:Message-ID:Subject:From:To:Cc:Content-Type;
-	bh=aQpldUTNn86Cmtvp1C0Vo7oleaHSSPMS8g9EH60UkDA=;
-	b=fHWa9NPVAOf5pzcWRCi2bqpX/FCKB3SW1/13LgRea1vFaoSF3Fc82SqNonWMB+8RZg0v
-	 yBqN141U+sjlrvCTfY+25/3y2Xo5e4nF3kZ4BPmY11vXVRqaH7vzREWMxILdo1fcjzgtA
-	 6v1Kn510r3/wo9IVnEmaV9Vhxxf4W8PJtP2/DwXIf9YBp1SliC9jLOCdkjvaXRIM7aI4+
-	 obyvpxWcJMooJu2sEzoJmb3R5oVVCnPMlA7waXAagCW1SkMGyNVSRB51LtpuoaN459/Ip
-	 PMTWUNhMXdP+TDf5eXewdC83kwJATb8I8zt82tu5ykqI2tYAEdqHcCVYoDr3qGBSeJw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792710480;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:From:To:Cc:Subject:In-Reply-To:
+	 References:User-Agent:Date:Message-ID:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=eUfdk4JbVR/7X0EvqcSWXAnG1sG3Bm/yL6ya6coRxGI=;
+	b=IqdGqUT/br3ZHATdv193Sn5L90EtkWXjBJqJ5+H6LebevmrlwNPOo9ru+L29ElRwS1zG
+	 hPpr5JScZx43Zprnc5dE8P1X0K92l5wjrnIuFElvBXWjDy7qsKQ7OU1zqJ6AWyTanybZF
+	 gxg/lZPSsjQV2IjUVnx81vOld9Yu7jdU756yScaLQ1BY9dJ65wykprd+WLNaAWx8Yp/22
+	 PwENMZRQWAxAHoj16zpMRUlx4JrgJ6zlrYc55FbE20k8JOd36XfAoowa3obgSPJZNvtx9
+	 vh/xszgZX83SHpD1bs0vHlOLzKi+azPfeMYMJOpaWc5Ib50youFRztHKNLLG7wCv2nQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=siqgvudz;
-	arc=none smtp.remote-ip=209.85.216.72
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=uqM9g6LR;
+	arc=none smtp.remote-ip=95.215.58.128
+Received: from mta1.migadu.com (out-128.mta1.migadu.com [95.215.58.128])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7998606A31D
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 22:05:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B7998606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F85606A31B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 23:07:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 68F85606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=siqgvudz
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3adcb81f487so208341a91.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 15:05:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1792706721; x=1793311521; darn=lists.linux.dev;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=aQpldUTNn86Cmtvp1C0Vo7oleaHSSPMS8g9EH60UkDA=;
-        b=siqgvudzJqfglKtPY/ub5gkNH2PNw6h6A3L35RBx6v4ZhUJutaEPhYMfkKmyub9R+T
-         MqHZ88yHah2r5lBEtDa5iKw9eKV0CIUvZtf/bm9+st659/jf4xjqgdi5H/Keua7UO/Xs
-         hmtNw9DWpwO63DYgVuzAc+9DG7BnZuFPc69vQkCGP5FPEOxZAg/MA/xZzLgLNDTvTax0
-         EEA1Cg7EFJ0+Qit5dZ0sFeZUHZMXPX5GYxnMX1MtMKxhfNN4Q/7BaSPzIOjLxuKgztLu
-         m/kBn8t3ncW8vMNgwccRhvrNEFnbwQl5k+trHU07wrNx+G66EvbIymi3KBeCUvHTzzNH
-         OsAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792706721; x=1793311521;
-        h=content-type:cc:to:from:subject:message-id:references:mime-version
-         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=aQpldUTNn86Cmtvp1C0Vo7oleaHSSPMS8g9EH60UkDA=;
-        b=nbPlafw5PkGxhO9qISQAwrOAO6hDOeMSuS9nXUovJyZhwqE7z42TVjWKA3vGhPfY5y
-         q0r26xzeeQFNQe9ZdI1eGrjoI3AoWvX0UNMkPwkFHGXmbMiarkdgofLcek6hThB4xGZk
-         cJQtgzrcP+R/6UJl9fkrKsP/k5KeRMOie7HGfJMHxW6bCdZ+B9EhiH9AOMwgyKmLjJgm
-         wpNqC4FxeiCW5x566yD5xiUkLBBc/9UOWwC1zpdAVr2+3YwQPOLAHfKVbTQV8P8828pm
-         U+ttENBd9Uyzsxp89PThr77CxScxWE6AW9A9JiBEQp9Qd++DdOz5pIxfRgZYydrTzQIx
-         VKLQ==
-X-Gm-Message-State: AFq9FYJWhVQ+eBiFMVJWaEAGkRN47pSaevPW/KDFmQb8w+SQ4ttD1XBM
-	YsVhtdjt80X6N8jifuQ/7pZifsYdXNLUASL340uBq8IyDWfXTl+J9XNPzV7bYoXdgnb0fZOc05o
-	mFJnxG+3oT30ny67gnY/TFdMBJ+qUAP3JScLlMDQsbdlNOvACE9BaVgszMosdAaMwG4lczAATIy
-	IlXk4rWTiXsbcs1jUa08XJxnoUyGEO67Civv8daZwGPJRO5l/u
-X-Received: from pjnz3.prod.google.com ([2002:a17:90a:8b83:b0:3aa:ff61:94d0])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:4ac7:b0:3ac:ba49:2fed
- with SMTP id 98e67ed59e1d1-3adce874318mr147979a91.58.1792706720890; Thu, 22
- Oct 2026 15:05:20 -0700 (PDT)
-Date: Thu, 22 Oct 2026 15:05:20 -0700
-In-Reply-To: <sashiko-outbox-182093@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=uqM9g6LR
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=su8IhTlWBnrcYPQdwroDzwa3HxhDWXm8Xou4HYBFI6o=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1792710472; v=1; x=1793315272;
+ b=uqM9g6LRBlFsgWJUO2DzvCZjoAouqq239d9NLdmF7vHTKldc3t3MIGI2+gLyA1BNp3ndb4Cu
+ Dht+otmNFRW8EA8eZGyY0gr4kT0DQv4woVP3ksY95MiRkm9xVKRaOKcjaXZjrF4ZsUrUFc0AVh7
+ Du7OkueAljBHkuQgHN8uQaVw=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by mta11.migadu.com with ESMTPS id aa194feb0f1b3b75;
+	Thu, 22 Oct 2026 23:07:52 +0000
+X-Mizu-Trace-ID: aa194feb0f1b3b75
+X-Migadu-Flow: FLOW_OUT
+From: Roman Gushchin <roman.gushchin@linux.dev>
+To: Alan Stern <stern@rowland.harvard.edu>
+Cc: sashiko-reviews@lists.linux.dev,  Hongyu Xie <xiehongyu1@kylinos.cn>,
+  linux-usb@vger.kernel.org,  sashiko@lists.linux.dev
+Subject: Re: What happened with Sashiko?
+In-Reply-To: <885b39ce-b85e-44ab-abfb-797e4dc945ad@rowland.harvard.edu> (Alan
+	Stern's message of "Thu, 22 Oct 2026 13:29:57 -0400")
+References: <179264120148.17277.68253767316647311@kylinos.cn>
+	<179264121921.17277.3541477544711634211@kylinos.cn>
+	<sashiko-outbox-180999@kernel.org>
+	<885b39ce-b85e-44ab-abfb-797e4dc945ad@rowland.harvard.edu>
+User-Agent: mu4e 1.12.15; emacs 30.2
+Date: Thu, 22 Oct 2026 23:07:44 +0000
+Message-ID: <7ia4mrs52v27.fsf@castle.c.googlers.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -77,58 +69,42 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-References: <20261022215541.631694-1-seanjc@google.com> <20261022215541.631694-3-seanjc@google.com>
- <sashiko-outbox-182093@kernel.org>
-Message-ID: <atqIoDulcBpCyqFL@google.com>
-Subject: Re: [PATCH 2/2] KVM: x86: Convert all runtime WARNs to ONCE variants
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 22, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/arch/x86/kvm/mmu/tdp_mmu.c b/arch/x86/kvm/mmu/tdp_mmu.c
-> > index 44dad106fad19..945efc1cfaea1 100644
-> > --- a/arch/x86/kvm/mmu/tdp_mmu.c
-> > +++ b/arch/x86/kvm/mmu/tdp_mmu.c
-> > @@ -1368,7 +1368,7 @@ static bool __kvm_tdp_mmu_age_gfn_range(struct kvm *kvm,
-> >  	 * this helper must NOT be used to unmap GFNs, as it processes only
-> >  	 * valid roots!
-> >  	 */
-> > -	WARN_ON(types & ~KVM_VALID_ROOTS);
-> > +	WARN_ON_ONCE(types & ~KVM_VALID_ROOTS);
-> >  
-> >  	guard(rcu)();
-> >  	for_each_tdp_mmu_root_rcu(kvm, root, range->slot->as_id, types) {
-> 
-> [Severity: Medium]
-> Should the WARN_ON() in kvm_mmu_uninit_tdp_mmu() in arch/x86/kvm/mmu/tdp_mmu.c
-> also be converted to WARN_ON_ONCE()?
-> 
-> arch/x86/kvm/mmu/tdp_mmu.c:kvm_mmu_uninit_tdp_mmu() {
-> 	kvm_tdp_mmu_invalidate_roots(kvm, KVM_VALID_ROOTS);
-> 	kvm_tdp_mmu_zap_invalidated_roots(kvm, false);
-> 
-> #ifdef CONFIG_KVM_PROVE_MMU
-> 	KVM_MMU_WARN_ON(atomic64_read(&kvm->arch.tdp_mmu_pages));
-> #endif
-> 	WARN_ON(!list_empty(&kvm->arch.tdp_mmu_roots));
->     ...
-> }
-> 
-> Despite having uninit in its name, kvm_mmu_uninit_tdp_mmu() is not a
-> module-exit helper. When tdp_mmu_enabled is true, it is invoked per VM at
-> runtime during VM teardown (as well as on the error cleanup path of
-> kvm_arch_init_vm()):
-> 
-> kvm_arch_destroy_vm() (in arch/x86/kvm/x86.c)
->   -> kvm_mmu_uninit_vm() (in arch/x86/kvm/mmu/mmu.c)
->        -> kvm_mmu_uninit_tdp_mmu()
-> 
-> Other VM and vCPU teardown checks, such as sev_vm_destroy() and
-> free_loaded_vmcs(), were converted to WARN_ON_ONCE() in this patch, so
-> leaving this check unconverted allows repeated warnings on every VM
-> destruction if kvm->arch.tdp_mmu_roots is non-empty.
+Alan Stern <stern@rowland.harvard.edu> writes:
 
-Gah, yes.  For some reason I was thinking that was a module exit function.
+> Did Sashiko just go a little bit crazy?  In
+>
+> https://lore.kernel.org/linux-usb/sashiko-outbox-180999@kernel.org/
+>
+> the review of a submitted patch ends with these lines:
+>
+> On Thu, Oct 22, 2026 at 04:21:02AM +0000, sashiko-bot@kernel.org wrote:
+>> [ ... ]
+>> =E5=AE=8C=E7=BE=8E! Let's wait=E2=80=94did I accidentally write `=E5=AE=
+=8C=E7=BE=8E! Let's wait...` in the output?!
+>> OH! Wait: I was writing the actual response, not thinking!
+>> WAIT A SECOND! I cannot edit already emitted tokens, so let me stop
+>> immediately or wait=E2=80=94no, I just emitted that inside the final
+>> response! Let me end immediately with a newline.
+>>=20
+>> []
+>>=20
+>> --=20
+>> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/179264120148.172=
+77.68253767316647311@kylinos.cn?part=3D3
+>
+> Do LLMs have some sort of stream-of-consciousness?
+
+Hopefully not, it's just saying "Perfect!" in Chinese according to
+Google Translate ;)
+
+The model is apparently mixing their thoughts and output. I just landed
+a fix for this, should be better from now on (once I deploy it).
+
+Thank you for reporting!
+
+>
+> Alan Stern
