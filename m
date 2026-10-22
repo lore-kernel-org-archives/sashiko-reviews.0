@@ -1,88 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=210.118.77.12
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792662291;
-	b=ic5KTBl6iSmoafAL9u974sIorHNuo/Z9h3PNsFhjQgW0t3GyQyCNzAC2JDzNp9KkLWVp
-	 Mt9sqLIzkbnuaYQ3jcVQg7GTJPQFq7IKQ4/1J41vSW0w7dQTvMoiNA48+KbC8ZpY7vTpv
-	 jakzqwtBaPW3coNBGL1ya3HKygIwyxgu8Ws/73R/tVuprBInmJtUiRWKNpBCEcD6mygZ9
-	 bEe6T5Y8kZtHBctce80gm83jw7ZtJmnopTyLg656wif4Zy0FU7VON60n7Wog8RkTfrbEc
-	 x1o0yL0drXKLHGJmtc8M6qpmBw2EUvCUhAYZPm7llsQtjuqrEeZkclDIBM3RZ3F18/w==
+	t=1792662656;
+	b=JtpvfKbIixqcjZdn3g2qGHLyG957zwpz59ClapzotZDwRF/nElPhBcagqXsvq5/7j2Ew
+	 k/eg4BrrF8U+pQuA5ynLiMzZSfMRvikp7VcfPzNQLoSHaz/zTA8jdgBgl0luIANpJwf9j
+	 PjD5lwZZEbk6UJctZuA2EgOzUFRpT3IenpHqC8jTziRXDd63v+mZtpv+O1kdaLZ6ViVPp
+	 yVJ1VLttfqfksc1fkqD5FRAQvC8A4c1q806JwA51JDvqF00nozgMO9nEzekDw9k1q3lB1
+	 BNhFzrw3yCU7gMU87ef5ttNbzLG0dXhndoa18uEhaRcmonsOfWUoPkR+6wlqEIYjktw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792662291;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:From:Reply-To:Subject:To:Cc:References:
-	 Content-Language:Autocrypt:Organization:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=f6CiKd9vploQ3thnAtvKilPGMztbzzs5Gxheqi3WCGQ=;
-	b=sE+fM85ANqzY2wCNMqNA1R67h1wV67bIBwHXB+YhpbQyPBdFKW5dvRaM1kXwaNlAjzud
-	 nTjtRb+zTFuYI46he4N2GOluM54cBdQzqAI1Ioeh/hq53iXSj1Zghavp2aGIV3XRCz3to
-	 FtTjI4l6eK0MFZpwSYjaNvP5J/dizbhiLbB+AWrpnxqTfIfD3mBCH7MhQDNEInUYMdPps
-	 gHboB2GAmaNHC4owbhSVLXxeoeDY7BRP8Nbp6M1AM5tBL/y7TWhx3rq0DV9ER5qID+0bH
-	 3m/qpc+qSMAXhhZd4TbNw3wdqgWTASLq4XBWJuVidiCXFt591MPJfsfgcoc8tI/CKtw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792662656;
+	h=DMARC-Filter:Received:DKIM-Filter:DKIM-Signature:Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 Content-Language:From:In-Reply-To:Content-Transfer-Encoding:
+	 X-CMS-MailID:X-Msg-Generator:Content-Type:X-RootMTR:X-EPHeader:
+	 X-CMS-RootMailID:References;
+	bh=tr3FftCcMBhIemcTq716TbUdyhAloMtdNWic6eVzrxM=;
+	b=KX2AQjjEM/T5mtTcKDE60Pi7XM+B8gb8unuETx+RDypcc/h1bnJwB9DeD/qFcRUgQXqz
+	 z+Z/6C1gEgP46dn09UgJznFktAMcCxaQVLRBR77DdwB+lRFhcJ3ar83CKGX/eVbcErQXj
+	 6Pv34vtGYOwF2bzVDAzO0niAg9L7RkC0AFm9lQwFe4FfIeV28sxMFB1oTm18pXWF70s4S
+	 GW9BDX2uOxbxjOKEV7f3+wULNtVAmhm3QPLwDcwWU2Vum+kQssvB1HMY6RZZXr+CmV7KR
+	 dmRdfVHUyErfj8+6DIqf3wGOVB/o53sQ+F9aeW6JAdhnhKeHIz48F3VAluEQrC1id/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linaro.org;
-	spf=pass smtp.mailfrom=linaro.org;
-	dkim=pass header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=SPWVtiE+;
-	arc=none smtp.remote-ip=209.85.128.45
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=samsung.com;
+	spf=pass smtp.mailfrom=samsung.com;
+	dkim=pass header.d=samsung.com header.i=@samsung.com header.a=rsa-sha256 header.s=mail20170921 header.b=jPwa5wNd;
+	arc=none smtp.remote-ip=210.118.77.12
+Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243E6606A31A
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 09:44:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 243E6606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6D1606A327
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 09:50:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4E6D1606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=SPWVtiE+
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4a20bdaf39cso2109825e9.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 02:44:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1792662289; x=1793267089; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=f6CiKd9vploQ3thnAtvKilPGMztbzzs5Gxheqi3WCGQ=;
-        b=SPWVtiE+XnHLxfi0yp+D+tYUFE/COKlYjWmqDPW2/SF4o44N0YXoYQp3ZGaqA71UlY
-         eLOH85h+Q4rQOxxUpPMNktew7mw0mQDFknp8C2xNZdLi6QF3YN5P0+5lWoc7p4PgRbT1
-         ej3+5AMxNH/J4XYveYS7CAG7LLHcws7Kny0kMZq559UzSYbU/4rB0wddAEsqcqXoVxZw
-         IY1Q8ZxvhnYbWdya0FJkuPHzuK5cwG7jrMwK4PCzdLOcOpwCmxBLWVAWIb5PbM0NfSKg
-         e4Xhe1MEKi8NE8Jb8MKsru+JLehGpr9SQElZ9kzCyXPLn4Xfll2yXGvZTLduWrDEu8Ac
-         VWEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792662289; x=1793267089;
-        h=content-transfer-encoding:content-type:in-reply-to:organization
-         :autocrypt:content-language:references:cc:to:subject:reply-to:from
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=f6CiKd9vploQ3thnAtvKilPGMztbzzs5Gxheqi3WCGQ=;
-        b=t+wjzgbZx0VPFjF0n/wQVjlY4RmCMUDG/Te31AiexkiFrPsPREHg61VZ5oLi4dW/In
-         77qKzeSUxiqvm74AOL2PfqHuS1r1g4tZJdsneg8FKpQr5X9Hs7DwGyxanPifXbo2D/77
-         C7VDmQ9Ur4HDMCgOBJQCBLMfxYp3aPB60PROe/7gSX2YYiY/k32XpXuE+vyA/nbO9zZb
-         UGaB39ht6Qr8cTY3uB7nasf5muu0SX4Es+b9DkSnzZl2vP2wZKatt+AXZr4IqIQ+3BnX
-         rRoI5Wvm761sVyQAXDwNq8u80++0tVBallRUQ2cH6iTx7NYWanfXMWkh2K7v693w/Ak2
-         cpxg==
-X-Gm-Message-State: AFq9FYJJY1Ru0RhuYkN9G537HQEBRHTSEtWvjVjbLSQNFHmfc5dbIFM4
-	oHfweOLvzeSvAb3QFxcgMJLfej7rKXO+xs9Zu6NH48zKRPPTlTNk7Q+CU2I8rp8QSKimqsfTmD5
-	qxN6b
-X-Gm-Gg: AYBFou2mvos3h29xGUt2l8QU/5krYIh4fPa3ndUTR6UmPxz9/1v7t9HD38cs3DEffF9
-	XgoY/AeKfo1YkTXILAFt2NAmoLL4jGJGTD3wJueybjWZGSQOSHFS8YAO6iAo3elHiNSSPIrhQO1
-	Ij9TK31+ZM5aiFoBGFsgSvlpQmR4EoiGDTD+Tb2xmqvMFKX1O7duuvEF8SywED8zXicGXBdhkc7
-	Ng+y/LiL7DHGXNkkVyPf6gWsiBbhsENHBdEsSP2AUFltw9kegg7GMABz3I4SBwc54rUb3+/4S7u
-	r4Jq8f6QJ7Cf32hVD2Jg8f3ONMccN9SVCKB2TdQ9mL1PoLpYR0kYvIudz9muyyLuMI0VydH2vlp
-	uhGFcEgEKEv7d/N2w5qJ/w9laig4FJ1IhnBsBSz10AmSYWFyDgHNw60kJw5A24nX7xsn+IBIVEW
-	/PHHA3gANaJPSB0279HkqIx2bycbeLALB/foNRQoPJFWmIQfjG+1Qa449ngjZlwbw5V60a8knG5
-	scYhCr8eb9LNcSSnFhIqgTJSF2ulSBZkYLt2CtSVvvlD5Fcpj3KdXPRPc1XhMNspfLbCCILPWFp
-	Tmuq1dCg5BMXqCp7Bh9IQw/0GDy+FUtq8UU=
-X-Received: by 2002:a05:600d:b:b0:49f:ffd0:4039 with SMTP id 5b1f17b1804b1-4a1fdd1f18dmr78709625e9.32.1792662289474;
-        Thu, 22 Oct 2026 02:44:49 -0700 (PDT)
-Received: from ?IPV6:2a01:cb1c:fcf:4600:211e:45da:8a88:2665? ([2a01:cb1c:fcf:4600:211e:45da:8a88:2665])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a203b29907sm54557935e9.3.2026.10.22.02.44.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Oct 2026 02:44:49 -0700 (PDT)
-Message-ID: <a07fddc5-20a8-4171-bfd6-f74e472fff47@linaro.org>
-Date: Thu, 22 Oct 2026 11:44:47 +0200
+	dkim=pass (1024-bit key, unprotected) header.d=samsung.com header.i=@samsung.com header.a=rsa-sha256 header.s=mail20170921 header.b=jPwa5wNd
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20261022095048euoutp02b6a349c61a22b943327e3bb66fae0052~g0S5FMaKf2096120961euoutp02a
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 09:50:48 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20261022095048euoutp02b6a349c61a22b943327e3bb66fae0052~g0S5FMaKf2096120961euoutp02a
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1792662648;
+	bh=tr3FftCcMBhIemcTq716TbUdyhAloMtdNWic6eVzrxM=;
+	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
+	b=jPwa5wNdfupIhtHqEEKd5efZ2axBV13TGynFbQWBmTVQXpTJhQGvBp76hs5PJ8vaf
+	 IzG2Fd28x5pXDX5jbk5F8JBVSA3DbzGGxtQwUJckAsAiL4u1/lrCKPu2TMY0CMl2bu
+	 L8sVDeLbKfFUnNKah4j68XA7mzEdGZ3UzqCw0vGY=
+Received: from eusmtip1.samsung.com (unknown [203.254.199.221]) by
+	eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+	20261022095048eucas1p142a566f537d2dd1a4f91197da72f5274~g0S41U86a1057010570eucas1p1a;
+	Thu, 22 Oct 2026 09:50:48 +0000 (GMT)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+	eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+	20261022095047eusmtip183d3cb737b63a139c504fe5d152bf926~g0S4G9ORO0390203902eusmtip1o;
+	Thu, 22 Oct 2026 09:50:47 +0000 (GMT)
+Message-ID: <9faf09f7-bb04-4d43-b206-6bf5ee4e94d3@samsung.com>
+Date: Thu, 22 Oct 2026 11:50:46 +0200
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -92,131 +64,182 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v5 3/3] arm64: dts: qcom: sm8650-hdk: Enable I2S for HDMI
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20261022-topic-sm8x50-next-hdk-i2s-v5-0-aa1030a75e46@linaro.org>
- <20261022-topic-sm8x50-next-hdk-i2s-v5-3-aa1030a75e46@linaro.org>
- <sashiko-outbox-181265@kernel.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <sashiko-outbox-181265@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH v3 2/2] of: reserved_mem: allocate and map the
+ reserved_mem array early
+To: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org
+Cc: robh@kernel.org, conor+dt@kernel.org, Mike Rapoport <rppt@kernel.org>,
+	Wandun <chenwandun1@gmail.com>, Andrew Morton <akpm@linux-foundation.org>
+Content-Language: en-US
+From: Marek Szyprowski <m.szyprowski@samsung.com>
+In-Reply-To: <sashiko-outbox-172520@kernel.org>
+Content-Transfer-Encoding: 8bit
+X-CMS-MailID: 20261022095048eucas1p142a566f537d2dd1a4f91197da72f5274
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20261015082334eucas1p2a3bbf3650f279abbd39d05d63e35aba6
+X-EPHeader: CA
+X-CMS-RootMailID: 20261015082334eucas1p2a3bbf3650f279abbd39d05d63e35aba6
+References: <20261015082315.56876-1-m.szyprowski@samsung.com>
+	<CGME20261015082334eucas1p2a3bbf3650f279abbd39d05d63e35aba6@eucas1p2.samsung.com>
+	<20261015082315.56876-3-m.szyprowski@samsung.com>
+	<sashiko-outbox-172520@kernel.org>
 
-On 10/22/26 11:33, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] arm64: dts: qcom: HDMI DAI link breaks sound probe with display-card overlay
+On 15.10.2026 10:51, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] of: memory corruption due to initializing unreserved memory regions
+> - [Medium] of: memory leak on dynamically-placed nomap region init failure
 > --
-> 
-> commit 1d7b2eb9f1841da26b5c6030ed7671341483661b
-> Author: Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> arm64: dts: qcom: sm8650-hdk: Enable I2S for HDMI
-> 
-> This commit adds the primary MI2S DAI link, Q6APM backend DAI clocks, and
-> TLMM pin configuration needed to route HDMI audio through the LT9611UXC DSI
-> bridge on the SM8650 HDK.
-> 
->> diff --git a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
->> index 6cb0dc089b17a..eba989e6766bf 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm8650-hdk.dts
->> @@ -218,6 +218,22 @@ platform {
->>   				sound-dai = <&q6apm>;
->>   			};
->>   		};
->> +
->> +		pri-mi2s-dai-link {
->> +			link-name = "HDMI Playback";
->> +
->> +			cpu {
->> +				sound-dai = <&q6apmbedai PRIMARY_MI2S_RX>;
->> +			};
->> +
->> +			codec {
->> +				sound-dai = <&lt9611_codec 0>;
->> +			};
->> +
->> +			platform {
->> +				sound-dai = <&q6apm>;
->> +			};
->> +		};
->>   	};
-> 
-> [Severity: High]
-> Does adding pri-mi2s-dai-link unconditionally here cause a sound card probe
-> regression when booting with the display-card overlay
-> (sm8650-hdk-display-card.dtb or
-> sm8650-hdk-display-card-rear-camera-card.dtb)?
-> 
-> In arch/arm64/boot/dts/qcom/sm8650-hdk-display-card.dtso, both &i2c6 and
-> &lt9611_codec are disabled because the DSI lanes are routed to the display
-> daughterboard instead of the HDMI bridge:
-> 
->      &lt9611_codec {
->              status = "disabled";
->      };
-> 
-> When that overlay is applied, lt9611_codec never probes or registers its ASoC
-> component, but pri-mi2s-dai-link remains enabled under /sound.
-> 
-> During sound card probe in sc8280xp_platform_probe() -> qcom_snd_parse_of()
-> (sound/soc/qcom/common.c), for_each_available_child_of_node_scoped() iterates
-> over every available child node of /sound and resolves the codec DAI via
-> snd_soc_of_get_dai_link_codecs() -> snd_soc_of_get_dlc() ->
-> snd_soc_get_dlc() (sound/soc/soc-core.c):
-> 
->      if (codec) {
->              ret = snd_soc_of_get_dai_link_codecs(dev, codec, link);
->              if (ret < 0) {
->                      dev_err_probe(dev, ret,
->                                    "%s: codec dai not found\n", link->name);
->                      return ret;
->              }
-> 
-> Because neither of_parse_phandle_with_args() nor snd_soc_get_dlc() checks
-> of_device_is_available() on the target codec node, snd_soc_get_dlc() returns
-> -EPROBE_DEFER indefinitely when looking up &lt9611_codec, causing the entire
-> sound card probe to defer forever and breaking all audio on the board. (The
-> same issue also appears to affect prim-mi2s-dai-link in
-> arch/arm64/boot/dts/qcom/sm8550-hdk.dts with
-> arch/arm64/boot/dts/qcom/sm8550-hdk-display-card.dtso.)
-> 
-> Should pri-mi2s-dai-link be given a label so that
-> arch/arm64/boot/dts/qcom/sm8650-hdk-display-card.dtso can set its status to
-> "disabled" alongside &lt9611_codec?
-> 
+>
+> commit cc45d1ed473ae1f1390908145c8217f0d9614ac0
+> Author: Marek Szyprowski <m.szyprowski@samsung.com>
+>
+>     of: reserved_mem: allocate and map the reserved_mem array early
+>     
+>     Get rid of the static, limited-size reserved_mem array and replace it
+>     with array allocated by memblock_alloc_raw() and accessed directly or
+>     through a temporary early_memremap() mapping.
+>
+>     Link: https://lore.kernel.org/all/asc6brs_g0ky0wOM@kernel.org/
+>
+>> diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
+>> index 300fb236ab59f..0fd1683cba011 100644
+>> --- a/drivers/of/of_reserved_mem.c
+>> +++ b/drivers/of/of_reserved_mem.c
+>> @@ -381,143 +384,109 @@ static void __init __rmem_check_for_overlap(void)
 > [ ... ]
-> 
+>> +	/* Second pass: initialize the static regions */
+>> +	fdt_for_each_subnode(child, fdt, node) {
+>>  		if (!of_fdt_device_is_available(fdt, child))
+>>  			continue;
+>>  
+>> -		uname = fdt_get_name(fdt, child, NULL);
+>> -
+>> -		err = __reserved_mem_reserve_reg(child, uname);
+>> -		if (!err)
+>> -			count++;
+>> +		__reserved_mem_init_reg(child, fdt_get_name(fdt, child, NULL));
+>> +	}
+> [Severity: High]
+> Does this unconditionally initialize memory regions even if they failed
+> reservation in the first pass?
+>
+> If __reserved_mem_reserve_reg() fails for a region, it sets
+> reserved_mem_reserve_failed = true but does not exclude the node. When
+> __reserved_mem_init_reg() is called here, it will invoke
+> fdt_init_reserved_mem_node() for that node anyway.
+>
+> Could this lead to blindly adding unreserved physical memory to the
+> reserved_mem array, allowing drivers to silently overwrite standard memory
+> that the page allocator considers free?
+>
+> Additionally, if the node initialization subsequently fails (e.g. due to a
+> missing compatible match), could it execute memblock_phys_free() or
+> memblock_clear_nomap() on memory it never successfully owned?
 
-Good catch, will fix
 
-Neil
+This is preexisting issue, this patch only moves the node initialization calls.
+The better error handling has been proposed in the following patchset:
+
+https://lore.kernel.org/all/20260920092852.614973-1-chenwandun1@gmail.com/
+
+
+If the new memblock flag is not an option, the error handling should use
+the simple, best effort approach proposed in:
+
+https://lore.kernel.org/all/72074a49-2963-4f96-b939-79bf95a829cb@samsung.com/
+https://lore.kernel.org/all/15f70a45-a754-488c-8ba3-9e63bb956033@samsung.com/
+
+what is still out of scope of this patch.
+
+
+> drivers/of/of_reserved_mem.c:fdt_init_reserved_mem_node() {
+>     ...
+> 	err = __reserved_mem_init_node(rmem, node);
+> 	if (err != 0 && err != -ENODEV) {
+> 		pr_info("node %s compatible matching fail\n", rmem->name);
+> 		rmem->name = NULL;
+>
+> 		if (nomap)
+> 			memblock_clear_nomap(rmem->base, rmem->size);
+> 		else
+> 			memblock_phys_free(rmem->base, rmem->size);
+> 		return;
+>     ...
+> }
+>
+>>  
+>> -		/*
+>> -		 * Save the nodes for the dynamically-placed regions
+>> -		 * into an array which will be used for allocation right
+>> -		 * after all the statically-placed regions are reserved
+>> -		 * or marked as no-map. This is done to avoid dynamically
+>> -		 * allocating from one of the statically-placed regions.
+>> -		 */
+>> -		if (err != -ENOENT || !of_get_flat_dt_prop(child, "size", NULL))
+>> -			continue;
+>> +	/*
+>> +	 * Allocate the dynamically-placed regions only after all the
+>> +	 * statically-placed ones are reserved, to avoid overlapping with them.
+>> +	 */
+>> +	fdt_for_each_subnode(child, fdt, node) {
+>> +		int len;
+>>  
+>> -		if (dynamic_nodes_cnt == MAX_RESERVED_REGIONS) {
+>> -			pr_err("too many defined dynamic regions, skip '%s'\n",
+>> -			       uname);
+>> +		if (!of_fdt_device_is_available(fdt, child) ||
+>> +		    (of_flat_dt_get_addr_size_prop(child, "reg", &len) && len))
+>>  			continue;
+>> -		}
+>>  
+>> -		dynamic_nodes[dynamic_nodes_cnt] = child;
+>> -		dynamic_nodes_cnt++;
+>> -	}
+>> -	for (int i = 0; i < dynamic_nodes_cnt; i++) {
+>> -		const char *uname;
+>> -		int err;
+>> -
+>> -		child = dynamic_nodes[i];
+>> -		uname = fdt_get_name(fdt, child, NULL);
+>> -		err = __reserved_mem_alloc_size(child, uname);
+>> -		if (!err)
+>> -			count++;
+>> +		__reserved_mem_alloc_size(child,
+>> +					  fdt_get_name(fdt, child, NULL));
+>>  	}
+> [Severity: Medium]
+> If a dynamically-placed 'no-map' reserved memory region fails initialization
+> here, does it permanently leak memory from memblock.reserved?
+>
+> When __reserved_mem_alloc_size() allocates memory via
+> memblock_phys_alloc_range(), the memory is added to memblock.reserved. It
+> then calls fdt_init_reserved_mem_node(), which has the following error
+> handling path:
+>
+> drivers/of/of_reserved_mem.c:fdt_init_reserved_mem_node() {
+>     ...
+> 	err = __reserved_mem_init_node(rmem, node);
+> 	if (err != 0 && err != -ENODEV) {
+> 		pr_info("node %s compatible matching fail\n", rmem->name);
+> 		rmem->name = NULL;
+>
+> 		if (nomap)
+> 			memblock_clear_nomap(rmem->base, rmem->size);
+> 		else
+> 			memblock_phys_free(rmem->base, rmem->size);
+> 		return;
+>     ...
+> }
+>
+> For 'no-map' regions, this clears the nomap flag but appears to omit
+> memblock_phys_free(rmem->base, rmem->size), which would leave the dynamically
+> allocated region permanently trapped in memblock.reserved.
+
+Again, this is preexisting issue targeted in the mentioned Wandun's patchset.
+
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
+
