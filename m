@@ -1,69 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.223
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.156.1
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792653313;
-	b=5tTIhf2WEzGNkE7Y6R2OVCUM3h/vZbKTwW6XCpao8GdD84lUU+SHlGk+UTLGP3FOYR+4
-	 DdDIe7GV40iQO4mBhaxDK10oUycbiuYnj5WUiErNaUQ0lDXLLnyB4OB+A0vnAZBsLMG1q
-	 o6ztu6hJDyb1h3NbJ0N7L5cdLAa75Hpwrz1XZIhcwFWzYc8zbxlMZL08daogirzM/FvYK
-	 GeX1FFF3hf5xtbui0vv/aJeFKVmGEFgmQfRM10Y3K2XjeotXBRwzDs676ZyAUZq77MfXp
-	 RYIUSbdJ/aYnYDnCRkSvzh+A99M8OOi+XzLNT7e5r5StohtzseXDE4ffO3PzlltdV3w==
+	t=1792655816;
+	b=wKv6mZhKSSWZsw7GJmUwERjjXYKtNduSMaXAd/NqG6Cbf7MwWm/S7P+qXWwMfOD1fgf8
+	 fz8OwWbAS4/2Ys78TDsoUVgg0F0Ge6HVwxXNcZfB8KauVbSQcl3sBeSPZ8/EryYcwbY5N
+	 hpbm5XyX1RgQX1w7luox9WFzE+lPpR7Fx+mTt64m4GATjbBYXWB1hM3BzUo5ldLkGjN+g
+	 mi+2+MgHGk3blcBgIavpcOAz53IZ/9RDvxQ4fDp/XeJRi1FNtVydrMwwrngtYRYqdLCNr
+	 LXK42qcE+EOUmy97fzKYeX++KxSRAeQPjfIM2/v6sWfsFyH9LzZf/x9NjKv2VW8Au4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792653313;
-	h=DMARC-Filter:dkim-signature:Received:Received:Received:Subject:To:CC:
-	 References:From:Message-ID:Date:User-Agent:MIME-Version:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Originating-IP:
-	 X-ClientProxiedBy;
-	bh=Za/P3smVo7gdYFPU0LMiITaJ1qndBhudPZ2k00jU2iQ=;
-	b=HkbIxOqMHdEOvH7LMWCwLk2Gl++QINHhF/EYHbegbynSVTLtRjU5ZYijViQPDLXDI0Ef
-	 KLFLwx4Iqk88Yny8JhCMA5hA5FPNNH0asRXOQKxTzu/6XWCbSNYB2FYbB5umYYvHqkIc1
-	 yYCfKNFW9fJt8Tuv1Mu3JWxYlYQgoRXvg3uXex1hlpp1Vb1usRFW0Nk55g3FzgLO6sxZ2
-	 BjlWRwE88VcNE6ynAu5n6Aoy1rYP1osMGXVFYbjfu9y8OJcBjx6sQ9+AILPXnUE/aZOxf
-	 YHgQz5vpaStx0F1RS88DFBA/rzVeRkgvPs8i6vNmVZscc5VXQ8Mn9wOfsY4RTVaAwlA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792655816;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:Date:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To:X-TM-AS-GCONF:X-Proofpoint-GUID:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-ORIG-GUID:
+	 X-Authority-Analysis:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=lZuPvHfcQCCINYKbPhFqyHUpZg95Ahi4/dqK/t3/A8w=;
+	b=sRVz6jr8AMKSkUYScudY2AmixSX6+Fs0ltjEaOsivTllU/UzYEJTvrylvqdYiwPQTYeK
+	 ab2GxdQ8YpdlfYZBJVwvZ6xHlzRxKz2kFEKceHKEbN/XqyHlG1IR5qVFPs3mNN6JWWdIl
+	 oCeTNJfMRYGeRM33sKPDhriOeD760XILy5YiuWrMFiFRnKpWeAwjGz5vmvAvaSzqqgz3Z
+	 J9FjrXZlVWQzyp/9ElhG7RFWFtx36wdWkrm8uRWzFG9IMoiqPEjsOTRUDuP1ReTYGYM3x
+	 RLHHZX8wacqx3JysVn4V6e34FZh+LqwiHPHXhu6RKHGzMxCUFFBPmj0Uu9s1rA2nLSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=huawei.com;
-	spf=pass smtp.mailfrom=huawei.com;
-	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=nN5qBzq7;
-	arc=none smtp.remote-ip=113.46.200.223
-Received: from canpmsgout08.his.huawei.com (canpmsgout08.his.huawei.com [113.46.200.223])
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=V4QsO65o;
+	arc=none smtp.remote-ip=148.163.156.1
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B65606A31E
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 07:15:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 19B65606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AAB7606A319;
+	Thu, 22 Oct 2026 07:56:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7AAB7606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=nN5qBzq7
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=Za/P3smVo7gdYFPU0LMiITaJ1qndBhudPZ2k00jU2iQ=;
-	b=nN5qBzq7xZ1jWeEAEfDERQqjtAKc8/Kz8fJLviHszC/1JG2xXSX9HZv2oJcn+e6P1oX3D7n2t
-	PGORJxN+yQHvBCeZbkD17QLrB4i7xbf3sAQGY+kvodFff0OA9kn/EWDbq55/m637X/svd0/3RWM
-	TXAZLyhtC6ES9mqunln2g7Y=
-Received: from mail.maildlp.com (unknown [172.19.162.92])
-	by canpmsgout08.his.huawei.com (SkyGuard) with ESMTPS id 4j9HTs48bPzmV6F;
-	Thu, 22 Oct 2026 15:14:57 +0800 (CST)
-Received: from whupemo200011.china.huawei.com (unknown [7.152.185.179])
-	by mail.maildlp.com (Postfix) with ESMTPS id 1D40B40565;
-	Thu, 22 Oct 2026 15:15:00 +0800 (CST)
-Received: from [10.174.178.46] (10.174.178.46) by
- whupemo200011.china.huawei.com (7.152.185.179) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Thu, 22 Oct 2026 15:14:58 +0800
-Subject: Re: [PATCH v2] ubifs: zero stale data beyond EOF before file size
- grows
-To: Nan Lin <lin.nan@h3c.com>
-CC: <linux-mtd@lists.infradead.org>, <richard@nod.at>,
-	<sashiko-bot@kernel.org>, <sashiko-reviews@lists.linux.dev>,
-	<wangxiaoqing@h3c.com>, <zhou.kete@h3c.com>
-References: <9a775528-0259-2b88-d592-08c58b366253@huawei.com>
- <20261022031814.2735650-1-lin.nan@h3c.com>
-From: Zhihao Cheng <chengzhihao1@huawei.com>
-Message-ID: <9b07df29-a459-f607-e06c-07aa6b9cf290@huawei.com>
-Date: Thu, 22 Oct 2026 15:14:57 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=V4QsO65o
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69M7E64R3560983;
+	Thu, 22 Oct 2026 07:56:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=lZuPvHfcQCCINYKbPhFqyHUpZg95Ah
+	i4/dqK/t3/A8w=; b=V4QsO65o/inGZOaMQefLE6AvPkKh/sPSPakvixTgGxQS96
+	xRvhwoflgwo9wlt3Tsh7nQSdwOYB7VK4oGS40u1bJGBJJDNmHbC5Uj981pfyNyDR
+	O8YD1aEINxng5Ibn3slejbcv6ebdZu1+GTVvnnAi3OvXrXd8q75w/MopCBLZr0xA
+	GAuxuW8XUooW3ZWEKePZlsV+PNPFVXvnZYLYKtrknIxxY6OR2KGMYiOwndftprID
+	m+81ZQJ1c/c068cZNva5FT1eH8G9FeSVmQKFFZPMVAKRbOHyASNaoWG/1b7iFEQl
+	oD2MSw/SxsAKRqafhKoksct1BYSgkZchU7JXMjPg==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hdw58wthc-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Thu, 22 Oct 2026 07:56:54 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69M74tIF089148;
+	Thu, 22 Oct 2026 07:56:53 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4he7bs925d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 22 Oct 2026 07:56:53 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
+	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69M7umD952429230
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 22 Oct 2026 07:56:49 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id DE8F12004B;
+	Thu, 22 Oct 2026 07:56:48 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C421B20043;
+	Thu, 22 Oct 2026 07:56:48 +0000 (GMT)
+Received: from osiris (unknown [9.224.90.220])
+	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Thu, 22 Oct 2026 07:56:48 +0000 (GMT)
+Date: Thu, 22 Oct 2026 09:56:46 +0200
+From: Heiko Carstens <hca@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: Re: [RFC PATCH] s390/syscall: Sign extend system call number
+ retrieved via syscall_get_nr()
+Message-ID: <20261022075646.11120A92-hca@linux.ibm.com>
+References: <20261021125911.1550331-1-hca@linux.ibm.com>
+ <sashiko-outbox-180303@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -73,291 +93,78 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-In-Reply-To: <20261022031814.2735650-1-lin.nan@h3c.com>
-Content-Type: text/plain; charset="gbk"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
- whupemo200011.china.huawei.com (7.152.185.179)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-180303@kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Y-roT4I9BUAtqE8rQaD99HkLX_z5xa7b
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDAzMCBTYWx0ZWRfX2NkfHgfm4jiV
+ q86brYIQ3/c5BTjOb4nB+Md7lCrQAjriFsbakKLwtYlLwbUzq2W4QKjsVufMtB34tFpI3zV07Vo
+ k+p2ihZMzErUxI/OSOylzNYtdaKG/I8=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDAzMCBTYWx0ZWRfX6KukPcWu7bz2
+ aMxSVEnk/KlqFlBOE2KGzYZgjbpcvkxTOP2UswP8ella4ryvFWHsmb0D3EjspA9c+rnPfDYb0/0
+ YAJ76V74kXYkT1felEakFVWf6CY/3EJE/s6jBm8LMeVmisf2MFsJFT8cND8LNFnowtCiCbE318T
+ 8EXj4o0xOhjBX6X/BwiISerkJJGGJssh//TrToBn2Q0pob6RE1box00IwDnn/VO+U3CUAQl0Sr2
+ phLlWEwSIPmuH3Ho6yvqnITWtGEmbkw3i4rZaEoQBrHbMPdOP1dSmC031eu2wlr6QLaXhAozMYa
+ T84YfpH93Q5wDaBtzN23SZ+qO9t5reTX2vctQpghOefnpwQRt5r7MSK/shYR1YOgoHqUKKem6jt
+ 5Gv4lGLnON4jZuLoW+avuMmdwBeO3e/IBgBFaphgwQzdJ24Qfo5qXB3RLLNZdZiFc9ercV6uodp
+ +MLEKtyA28Ob8ejZi7w==
+X-Proofpoint-ORIG-GUID: Y-roT4I9BUAtqE8rQaD99HkLX_z5xa7b
+X-Authority-Analysis: v=2.4 cv=Ob4NnRTY c=1 sm=1 tr=0 ts=6ad9c1c6 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=kj9zAlcOel0A:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=AGpjq-OJZXGNhh8UPtcA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-22_03,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0 phishscore=0 spamscore=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610220030
 
-ÔÚ 2026/10/22 11:18, Nan Lin Ð´µÀ:
-> Hi Cheng,
+On Wed, Oct 21, 2026 at 01:27:30PM +0000, sashiko-bot@kernel.org wrote:
+> > @@ -20,7 +20,7 @@ static inline long syscall_get_nr(struct task_struct *task,
+> >  				  struct pt_regs *regs)
+> >  {
+> >  	return test_pt_regs_flag(regs, PIF_SYSCALL) ?
+> > -		(regs->int_code & 0xffff) : -1;
+> > +		(s16)(regs->int_code & 0xffff) : -1;
+> >  }
 > 
-> Thanks for the detailed review. My responses are inline.
+> [Severity: High]
+> When a system call is skipped under SECCOMP_RET_TRACE on s390, can this cause
+> __do_syscall() to return the wrong value to userspace instead of -ENOSYS?
 > 
->> The filemap_lock_folio gets folio with FGP_LOCK, I think we should use
->> 'FGP_WRITEBEGIN | FGP_ACCESSED' just like ext4_load_tail_bh() does,
->> because the folio may not exist in ram when calling do_setattr().
+> Previously, syscall_get_nr() returned an unsigned 16-bit value (65535 when nr
+> was set to -1), so after PTRACE_EVENT_SECCOMP in
+> kernel/seccomp.c:__seccomp_filter():
 > 
-> ext4_load_tail_bh() needs FGP_CREAT because in Ext4 the block behind an
-> unwritten/delayed extent holds garbage on disk, so the zeroing must
-> reach the media. UBIFS does not have this problem -- stale data can
-> only live in the page cache, never on flash:
-> 
->    writeback:  ubifs_writepage() zeroes the straddling folio on every
->                invocation and skips folios fully beyond i_size, so
->                stale tails never reach the media.
->    read-in:    do_readpage()/read_block() zero the tails of holes and
->                short data nodes, so a folio loaded from flash is always
->                tail-clean.
-> 
-> So when the EOF folio is absent from the cache, there is nothing to
-> zero anywhere: FGP_CREAT would merely allocate a fresh (already zero)
-> folio to zero it again. Returning early on IS_ERR() is the correct and
-> cheaper equivalent of Ext4's path.
+> 	/* Check if the tracer forced the syscall to be skipped. */
+> 	this_syscall = syscall_get_nr(current, current_pt_regs());
+> 	if (this_syscall < 0)
+> 		goto skip;
 
-There is one case makes me confused:
-File f, isize = 0
-1. setattr(f, isize = 3)
-    do_setattr -> ubifs_zero_eof_hole -> filemap_lock_folio // gets no 
-folio and returns, nothing happens
-2. pwrite(f, "123", offset = 6, len = 3)
-    ubifs_write_begin
-     ubifs_zero_eof_hole -> filemap_lock_folio // gets no folio and 
-returns, nothing happens
-     folio = __filemap_get_folio(FGP_WRITEBEGIN) // create a new folio 
-with random content
-     if (!folio_test_uptodate(folio))
-       do_readpage // does nothing
-        while (1) {
-          ENOENT = read_block
-        }
-    ubifs_write_end
-     isize = 9
+This is addressed with:
+https://lore.kernel.org/all/20261021085643.2442949-1-hca@linux.ibm.com/
 
-   ubifs_writepage
-    folio content looks like
-   | random | random | 123   |   zero       |
-   0        3        6       9             4096
+Read: should not happen anymore.
 
-According to the current implementations, could above process happen?
-If it is, I think we need to do two points:
-1. The folio(even not cached) zero range is necessary when setting a new 
-bigger size?       -- For 0~3 case
-2. The folio(even not cached) zero range is necessary when writting 
-starts after old isize?       -- For 3~6 case
-I think zeroing the whole folio in ubifs_read_folio(ENOENT case) is a 
-simple solution?
+> [Severity: Medium]
+> Should arch/s390/kernel/syscall.c:__do_syscall() and
+> arch/s390/include/asm/syscall.h:syscall_set_nr() also be updated to keep the
+> syscall number representation consistent with syscall_get_nr()?
 > 
->> Why skipping 'from == 0'? What if a user writes begin from
->> offset-X(0<X<4096) to a new file(isize = 0)? Ext4 zero the range by
->> ext4_block_write_begin->folio_zero_segments(folio, to, block_end,
->> block_start, from), but ubifs not handle it.
+> In arch/s390/kernel/syscall.c:__do_syscall():
 > 
-> from == 0 means the old EOF is folio-aligned, so the EOF folio has no
-> bytes beyond EOF and there is no hole in it:
-> 
->    from != 0:  |/////valid/////|stale|   <- zero [from, to)
->    from == 0:  |/////valid/////|         <- nothing beyond EOF here
-> 
-> For the i_size == 0 case: a zero-size file cannot hold a polluted
-> folio. mmap cannot create one (page_mkwrite returns SIGBUS when
-> folio_pos >= i_size), and write() followed by ftruncate(0) invalidates
-> the folio. The [0, X) part of the write folio itself is zeroed by the
-> existing do_readpage() path ("block >= beyond" ->
-> folio_zero_range()), which is UBIFS's counterpart of
-> ext4_block_write_begin()'s folio_zero_segments() -- the work happens
-> at folio read-in because UBIFS's block size always equals the page
-> size.
-> 
-
-This question is similar with the previous one.
-
->> The ext4 protection check is ext4_write_checks->ext4_block_zero_eof,
->> I think we can add the zero hole check in ubifs_write_iter().
-> 
-> Agreed. This mirrors ext4_write_checks() -> ext4_block_zero_eof() and
-> runs once per syscall instead of once per write_begin() iteration.
-> Will move it there in v3.
-> 
->> If the program enters into this branch, the ubifs file's isize is not
->> zero, ubifs_read_folio has already zerod tail, do we still need this
->> folio_zero_range?
->> Oh, there is one case, UBIFS file has isize without data nodes(eg.
->> isize = 3, the first block is a data hole), ubifs_read_folio won't
->> zero the page tail, we still need folio_zero_range().
-> 
-> Right -- and one more case on top of the hole-inode one: mkwrite also
-> runs on already-cached folios, and earlier mmap stores may have
-> re-dirtied the tail after ubifs_read_folio() cleaned it (only folios
-> fully beyond EOF get SIGBUS; the straddling folio stays writable
-> across its whole length). So the tail must be re-zeroed on every
-> (re-)fault, and the folio_zero_range() stays.
-
-I;m still confusing about the necessary of this folio_zero_range().
-For a hole inode(isize = 3, no data nodes), if the folio is cached, 
-ubifs_read_folio has zerod the whole folio content(Suspend we have 
-applied the simple solution from the previous question). The subsequent 
-dirty setting will not write the page content after the 3rd byte to a 
-data node.
-> 
-> For reproducibility I have attached a small single-writer reproducer.
-> It covers both size-extending paths (S1: pwrite beyond EOF ->
-> write_begin/write_end, S2: ftruncate up -> do_setattr) against a
-> polluted old-EOF folio.
-
-Thanks for providing that.
-> 
-> Build: gcc -O2 -Wall -o eof_hole_test eof_hole_test.c
-> Run:   ./eof_hole_test <mountpoint>/eof_hole.bin
-> 
-> -----------------[ eof_hole_test.c ]-----------------
-> /*
->   * eof_hole_repro.c -- repro for "stale data in hole" bug
->   *
->   * Reproduce:
->   *   1. pwrite data to [0, 0x2000)          - full page 0 and 1
->   *   2. ftruncate DOWN to 0x1100            - VFS zeroes page-1 tail
->   *   3. mmap page 1; write junk into [0x1100, 0x1200) via the mapping
->   *      (MAP_SHARED, past EOF)              - pollutes the cache tail,
->   *                                            i_size unchanged, legal
->   *   4. pwrite at 0x3000 (beyond EOF)       - i_size jumps; UBIFS's
->   *                                            ubifs_write_end() does NOT
->   *                                            zero [0x1100, 0x3000)
->   *   5. pread [0x1100, 0x3000): must be all zero.
->   *      Non-zero bytes = stale mmap junk exposed = bug reproduced.
->   *
->   * Scenario 2 uses ftruncate UP instead of pwrite to exercise
->   * do_setattr() instead of write_end().
->   *
->   * Build: gcc -O2 -Wall -o eof_hole_test eof_hole_test.c
->   * Run:   ./eof_hole_test /mnt/flash/eof_hole.bin
->   */
-> #include <stdio.h>
-> #include <stdlib.h>
-> #include <string.h>
-> #include <unistd.h>
-> #include <fcntl.h>
-> #include <errno.h>
-> #include <sys/mman.h>
-> 
-> #define PS       4096
-> #define OLD_EOF  (PS + 0x100)   /* 0x1100: old EOF mid-page-1 */
-> #define NEW_END  (3 * PS)       /* 0x3000: hole end */
-> #define JUNK_LEN 0x100          /* 256 bytes of pollution */
-> 
-> static int check_hole(int fd, off_t off, size_t len, const char *what)
-> {
-> 	unsigned char buf[512];
-> 	size_t n, i;
-> 
-> 	while (len) {
-> 		n = len > sizeof(buf) ? sizeof(buf) : len;
-> 		if (pread(fd, buf, n, off) != (ssize_t)n) {
-> 			printf("FAIL: %s: pread error: %s\n", what,
-> 			       strerror(errno));
-> 			return 1;
-> 		}
-> 		for (i = 0; i < n; i++) {
-> 			if (buf[i] != 0) {
-> 				printf("FAIL: %s: byte 0x%02x at offset 0x%llx "
-> 				       "(hole offset +%zu)\n",
-> 				       what, buf[i],
-> 				       (unsigned long long)(off + i), i);
-> 				return 1;
-> 			}
-> 		}
-> 		off += n;
-> 		len -= n;
+> 	nr = regs->int_code & 0xffff;
+> 	if (likely(!nr)) {
+> 		nr = regs->gprs[1] & 0xffff;
+> 		regs->int_code &= ~0xffffUL;
+> 		regs->int_code |= nr;
 > 	}
-> 	printf("PASS: %s\n", what);
-> 	return 0;
-> }
-> 
-> /* Create a file with EOF mid-page-1, then pollute the page-cache tail
->   * beyond EOF via an mmap write (the only path that skips zeroing). */
-> static int make_file(const char *path)
-> {
-> 	unsigned char junk[PS];
-> 	void *map;
-> 	int fd;
-> 
-> 	memset(junk, 0x5a, sizeof(junk));
-> 
-> 	fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
-> 	if (fd < 0) {
-> 		perror("open");
-> 		return -1;
-> 	}
-> 
-> 	/* page 1 full of junk, durable */
-> 	if (pwrite(fd, junk, PS, PS) != PS) {
-> 		perror("pwrite");
-> 		goto bad;
-> 	}
-> 	fsync(fd);
-> 
-> 	/* shrink: VFS zeroes page-1 tail [OLD_EOF, 0x2000) itself */
-> 	if (ftruncate(fd, OLD_EOF)) {
-> 		perror("ftruncate");
-> 		goto bad;
-> 	}
-> 
-> 	/* re-pollute [OLD_EOF, OLD_EOF+JUNK_LEN) through a shared
-> 	 * mapping. This goes through ->page_mkwrite() which does no
-> 	 * zeroing. */
-> 	map = mmap(NULL, PS, PROT_READ | PROT_WRITE, MAP_SHARED, fd, PS);
-> 	if (map == MAP_FAILED) {
-> 		perror("mmap");
-> 		goto bad;
-> 	}
-> 	memcpy((char *)map + 0x100, junk, JUNK_LEN);
-> 	munmap(map, PS);
-> 	return fd;
-> 
-> bad:
-> 	close(fd);
-> 	return -1;
-> }
-> 
-> int main(int argc, char **argv)
-> {
-> 	const char *path = argc > 1 ? argv[1] : "./eof_hole.bin";
-> 	unsigned char junk[JUNK_LEN];
-> 	int fd, fail = 0;
-> 
-> 	memset(junk, 0x5a, sizeof(junk));
-> 
-> 	/* ---------- S1: buffered write beyond EOF ----------
-> 	 * exercises ubifs_write_end() appending branch            */
-> 	fd = make_file(path);
-> 	if (fd < 0)
-> 		return 1;
-> 	if (pwrite(fd, junk, JUNK_LEN, NEW_END) != JUNK_LEN) {
-> 		perror("pwrite");
-> 		return 1;
-> 	}
-> 	fsync(fd);
-> 	fail |= check_hole(fd, OLD_EOF, NEW_END - OLD_EOF,
-> 			   "S1 write_end: hole [0x1100,0x3000)");
-> 	close(fd);
-> 
-> 	/* ---------- S2: ftruncate UP ----------
-> 	 * exercises do_setattr() ATTR_SIZE branch                  */
-> 	fd = make_file(path);
-> 	if (fd < 0)
-> 		return 1;
-> 	if (ftruncate(fd, NEW_END)) {
-> 		perror("ftruncate");
-> 		return 1;
-> 	}
-> 	fail |= check_hole(fd, OLD_EOF, NEW_END - OLD_EOF,
-> 			   "S2 do_setattr: hole [0x1100,0x3000)");
-> 	close(fd);
-> 
-> 	unlink(path);
-> 
-> 	if (fail) {
-> 		printf("\n===> BUG REPRODUCED: stale data visible in hole\n");
-> 		return 1;
-> 	}
-> 	printf("\n===> OK: hole reads as zeros on both paths\n");
-> 	return 0;
-> }
-> ------------------------------------------------------
-> 
-> --
-> Nan Lin
-> 
-> .
-> 
+> 	regs->gprs[2] = nr;
 
+This is valid - things should be consistent.
