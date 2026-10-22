@@ -1,94 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.53.43
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792672556;
-	b=PW295sPIV3hpGlEdRYRxDqpCPsihPIxFDyeDjl11/wdBJSw3hDWbpJNl7Zw+YRTKIaBQ
-	 yAyHJM1dBaYN8eaDUb6quihhckf+zAlS7taGiWdH6sUOODJXqBfYAIka5524rj0FkpT2k
-	 x9AmLXki/tlhHn+ePT2UrXB9RnAPZqtDk3GiPImd/C0OsbAvKLUOEp0VIdha+ARNROa9n
-	 0COsGiZpJujF6xiNyBcH9hNVAih2dEAH3c1xOdKF9YAMhxaHI0/lbW9iiJdtxCK54ttkx
-	 sFhEODiFF6tXq2BNstrRVvy1WM7aiBVc8lp10TrM8zG/LDgRbraXDEBfKFFeyVkfRlw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792672556;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:
-	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:CC:Subject:Content-Language:
-	 To:References:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 X-Originating-IP:X-ClientProxiedBy:X-EOPAttributedMessage:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-Id:
-	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=q1XGNiupac/jj2V/5Zux9ZKLEMDxBHJrQDyFB6h5kX4=;
-	b=MQWXp+iherOsoi7wY0ogGZ0bCumGegzYX/rZD9ahHV8HcFLSaIDXHdajAYhd2nAZweWF
-	 B2p8fFhMpad2XILN3PXqOIAIunvqY3UTNiNJ3GAxnhxpYXEzf5ZKY9om3bBFhuLeCe4SN
-	 Ikk0V5TcBkFJfZuUIAP2joY3S5Li0Vvd/tRbow/hpzamPwSKx10U4s/olcccAR4mfq19O
-	 wQxxYOzpk8HHKKQ04HwzwpljR9m5pSCEsQza363NQQNi9rzOzi3rhevsDV32V5LFgxPEy
-	 amvqAwa7ZL4vOAXo2Xzih5Ch50oaLT4Bh8KiqE8O3297c5OC0/AY2NQUcbdHd2IN+zw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amd.com;
-	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b="z8Hc/d0Q";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.53.43
-Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012043.outbound.protection.outlook.com [52.101.53.43])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.71
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792674527;
+	b=1c5QWhThJFqXJ0BOHfB2LzFxCXZzP8eAfuaYGJd8CVWxb/u/s7inUbMY1WBvG8jQHOWj
+	 XmkzyX1HHwTKe5xel8ssOcR1pUoWnT5UYXJI0+eVo3Co4Igbda7eO9OYKsnzAoWdVNHey
+	 VWzny3SXCtupZ2oXo1TnRh9jG/8mG4ehPldZxsVMsBRJKfx0PKcRPcEvVE/E0rud8ULl5
+	 AnyzWYVzeIR1aEEAZ++2JJTUvKdUfTJB8Im7EOyxnQdpMLlm/Hc6SqyJR3xAQMr0t3ZLW
+	 VMsIZce2zfLG0r769H6aiwP2gHeUAgjDF9xZ18nP8OIN2JDMhMj7YEdYVH/JYvwoZCQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792674527;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
+	 References:Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=M5qHQnLTnpdSrQUS+p19DIXqfKposMzCKXDblMJrEuU=;
+	b=BA4DRd9Cyu8/DQkzvI1QtXOZKuNjCLqVBe2CpKCt2qX48PGjH8sHzP/Q+AXw565O9U8H
+	 Fxjmp6ZXFJkXuHvsdFXKwnHb0Tmr6Ovh1KOUjSrqqAW1rqnBcWTiukN3A8rkF8HyV01Us
+	 raNxP6fbFxPQWSxx50iJItFNDkJm5Q0e7g7Cc6VUFdHiyaVY0KrDVr8nXOuTdb230tunE
+	 0jJEzM/K5m30uxAkOH/MOSwUoYIde152E09733JOgljtQyGfnvWU7lUW4zgY+BHBYY+5D
+	 uQhwpV6zWDiLEiWNV8gHn3qYJXAcQNodsdrB1HqjcJDBX/w0VxJ6JP1ohO8ZaXgzu7g==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=HmQhPQbt;
+	arc=none smtp.remote-ip=209.85.216.71
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A3D606A31A
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 12:35:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 28A3D606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718A7606A31B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 13:08:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 718A7606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=z8Hc/d0Q
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sRT3V7xazzwpp43d2U52VsfRnRHRpnvv3K/syp7bZWl+qEvJZMXphpbdeolEbISUaej67XiBWvhrfb8fUHxj4O3eUUOedRKvcbaLrd2KEmE2iZjc8hm8FyJarkKNTkeT8w/bc+b4d86Jty7gquKZRapEhs7rwgHTgKiuZA6Xjfh6zj0XbuV6jaGCf7iUImqLQrl7RckZ40XqOSlW+bzfJwrPXMeW5rmKBccNX2yEyv+WDPciv2UguRqjjDbdqwvFV8dpp+RM+eRseW0h0r0BRM+jsHNaVrSXRDjt8tEjye8SCRBKMW+jbva8ejO4ppaHmrZzaIZz/mvpNTgFQRHlyA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=q1XGNiupac/jj2V/5Zux9ZKLEMDxBHJrQDyFB6h5kX4=;
- b=Fk9G8zyrEF8POXeq2Le0ouXHCKZuxFkUA8bVr0vxBCy6WobVQMZ0X8cATONAxrkE8yXiDLUYHH4R3plB0s2nkCp4jRvNuD22LLQdrp4zgilBpTWJp/gzc865UAx+QGs58DZzQ7NMHyZo2Bww+Ra2mznJ4Lm7QPRB5mWJhMqyy2pyTCjY86SFAEAVXxwY1mAxA1MhQF16tybLsnT09Un1sVmP01MaaGg1WKjJho9yQa0z9Y79S+i9VIXOt95tXFcWNEPsHldLHjEGN0PxMPXDuVccGvAt0YxhMWGN0MCrzPLWvNV8TgO1/wqaG/2jWmHO7AADSEEWISwU4H1MPFI85A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=q1XGNiupac/jj2V/5Zux9ZKLEMDxBHJrQDyFB6h5kX4=;
- b=z8Hc/d0QRestjtjMlqzMfkFRNneNFd9nVAAukrqIALjlTbOhMdLbCJKTR+c3tE49wDkvey9DX9rUIzIpBdFUTTnjVV6FX4LBUj5r+3RM4j8VQExsDEXuXpPTpV4sDhOR+1dOQufFQTWCHvSW46x9qzepmj7bLcuwJDS3OnO903Q=
-Received: from ROAP284CA0066.BRAP284.PROD.OUTLOOK.COM (2603:10d6:10:a9::17) by
- LV2PR12MB150617.namprd12.prod.outlook.com (2603:10b6:408:3a9::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.16; Thu, 22 Oct
- 2026 12:35:52 +0000
-Received: from BN3PEPF0000B36D.namprd21.prod.outlook.com
- (2603:10d6:10:a9:cafe::46) by ROAP284CA0066.outlook.office365.com
- (2603:10d6:10:a9::17) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.546.17 via Frontend Transport; Thu,
- 22 Oct 2026 12:35:51 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BN3PEPF0000B36D.mail.protection.outlook.com (10.167.243.164) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.569.0 via Frontend Transport; Thu, 22 Oct 2026 12:35:51 +0000
-Received: from [192.168.1.4] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Thu, 22 Oct
- 2026 07:35:49 -0500
-Message-ID: <267fe25f-79af-477e-be8b-c5c3def9b2dd@amd.com>
-Date: Thu, 22 Oct 2026 18:05:46 +0530
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=HmQhPQbt
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-3aaf955db5fso2781531a91.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 06:08:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1792674527; x=1793279327; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=M5qHQnLTnpdSrQUS+p19DIXqfKposMzCKXDblMJrEuU=;
+        b=HmQhPQbtJXhf9PagGSKix1x1105/E8o+xeQWppXTYWkqfgkJUHGVgDJDtyV5xLBwVN
+         VoLxHBBAqwrR83Us7d46IPbKumUSey4VJfGmH1XXG/H1A5Nvl8s76dss+X3To+yIiQ3C
+         r/huw53wWJxlklzbiXMs4J7gBcJb9WbrABXuxtBcfUr3BcFU10AxUKIX2IcTh23wX2ps
+         Vbqc1KA1btXTs5Wbak9L4zcb6JGOpBFdgKL4EEdnWa99mPKXfV+MrQ3GX5U6XmIcfBcZ
+         Xh39uyQIo5iOvycpOh71rBUZfEsSpsuZ7jRwsyTGpZGN58M0fw8OHAOfaarpvhIxWhdm
+         i2XA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792674527; x=1793279327;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=M5qHQnLTnpdSrQUS+p19DIXqfKposMzCKXDblMJrEuU=;
+        b=Iw8AQhZgbwkXEjLi8DLvoPon/f8YeKAVdrQOphFQZQbpf3qBsIui5amSTLAEbX6ftb
+         S4AgvVBR8jdq9zsOFdd0jExt0dUdilwcmMkTbt5ZGTPyvOvbQS089KLGdWb60sck9zYg
+         zM8vt91VNzAg20Oy1Z4iZfDoCWyL2/DF+j2gFsikjxbkfi0xht1F6AM5my4DB4KI5ldw
+         X/1s+cptyZxYMkf03TAXGcFHfjWugTFKO1tOK1Fo7nkT5DS1Pc56E9sA/8dHQcgahl6p
+         8+97hC0Wc40h/ebSqzglgJHjLAjC11Cvu+Z+B+bk20k+iC9FYmUdnHhfCVyNoOdTGCHe
+         9bXg==
+X-Gm-Message-State: AFq9FYKbnM7JH58E9EcFH5fRnjT6qmCvvN0mC80yx4KsIPFYm4QcJhXT
+	uHLoyCwUSNdDIfG9FrGrhogbvH1ozyxd9rUL8x11F1niAHvqx1pxgzcpQiw1aso7TuzhiA2uJzZ
+	DlTahwgCRHC6YFUuiHF5sjdJOratJdjoQKxWPt/fQ8tcKaSbUVkQkrb27qYwb3+JUpMuSS365Tn
+	eDowDbs3PRJ3ry/8LlXWgEJyoxHwNYAOcnoAnCQ3KNZD/DMCcJ
+X-Received: from pjio14.prod.google.com ([2002:a17:90a:5b0e:b0:3ab:323:94d4])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:55cc:b0:3a8:185:cf40
+ with SMTP id 98e67ed59e1d1-3ad86f1bd64mr4549299a91.10.1792674526475; Thu, 22
+ Oct 2026 06:08:46 -0700 (PDT)
+Date: Thu, 22 Oct 2026 06:08:45 -0700
+In-Reply-To: <sashiko-outbox-180887@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -97,188 +77,177 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-CC: <sarunkod@amd.com>
-Subject: Re: [PATCH v5 7/7] iommu/amd: Provide kernel command line option to
- enable GAPPI
-Content-Language: en-US
-To: <sashiko-reviews@lists.linux.dev>, <kvm@vger.kernel.org>
-References: <20261015064515.10700-1-sarunkod@amd.com>
- <20261015064515.10700-8-sarunkod@amd.com> <sashiko-outbox-172380@kernel.org>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <sashiko-outbox-172380@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B36D:EE_|LV2PR12MB150617:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2e45b245-e73b-4282-fe33-08df303901df
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|36860700016|82310400026|23010399003|376014|6133799003|18002099003|22082099003|3023799007|10067099003|11063799006|4143699003|261021135927099003|261021123027099003|261021130227099003|261009223027099003|261021121427099003|261021133027099003|56012099006;
-X-Microsoft-Antispam-Message-Info:
-	ce95KYOnbePHN+gG9JVwaj4dFV4qyPGcJVuxzxcBQh4p4j13K/ZgbgaDh1zqA3T3PF5czlnq7xJrQTStP9CF8CzDu0iHdKva52r8HWD0c2y0XSi8MfNDUjBJpz4Ece0XpWVvK7UbEdr+cOzBU+uEcCSk408d73kRRTvlLl3uz6Tw4FdxRJdrNA6hUPZPFMAS6RToWe3IKQtgXrT5+DTG3qD5HGB4I5YeF31W+PimYdxPM9zBEpjDaWY5PGEG0qSgI7xwSZ0i1zg0NHRTyf22NQFYCnxuUdTP/Amzsnb1arGhU+4gCIF7TeMpxQhkjtanck/ikF3pctLLrdAwjTg82Aa/7ZxvtdU7qJ0A39DMxWDQFRxH3jQlbgo1UW/QMv+ZgIsleT/OfN4ACMukgT1qGyMS2D5RtHOhT0TS4gi+2eWBjIkEBu4DFdLU+flME72Ee+FsIYOy5jfSD47j1qSw2XqS6WwV/ZQTn10bBtcHHGxAovEpiZ+VfslO5o6ooT+g3aQxdQorOx0OQmqkiwLvYCuRKwcwVnhOaAKNeIiHfwxB9f3vfrNVWBQFZ1s5cksWm7lp0HJOvZh8KHlemSPyD1OxNgTQv0fiuve0oBKG8lSVOJgcnIY4gako/OKcU0F297wWkuS1H3QGM+jsNl2e5xnCnY1xFRdIIuCbq2re02OA7jRTN3pGmz2ncIjS2Sg9KDS63CTmNOi7ic5RI3aA/A==
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(36860700016)(82310400026)(23010399003)(376014)(6133799003)(18002099003)(22082099003)(3023799007)(10067099003)(11063799006)(4143699003)(261021135927099003)(261021123027099003)(261021130227099003)(261009223027099003)(261021121427099003)(261021133027099003)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	G3vrOaygm32LkjXJyoIWmdvRCnzep/vnnTkOG/Ic1q8rrjsP13o+1Np1AtSJfDQFFsRvLs/t7aOPZHreF67y5I/KO7V/uI2BOzT0NPOHxckyPun4Ab4vXa/YgUygldcYyD1N4LC3KDKvDliRIb0Qi4y5JEnpBECTeKqC+7mklZIkv0DoNH00PhahPiA2vR49ho8WhFTu6ZI/8w1AdQi2uIL+co2Zx1WIfi1FDomYNntjQqFhe0SoBq900mvGWOET/WshVA97EYqSERqn9Q2JGGASjjlN76WIZOu5hU22xyzl1SVAAp4jKIHZOSnbzhVZ+N9qhirCTrrxc4EA0VlF2SmEb7avamD0zc9CErX6bd73WGb3LxzV0Lb9vYd1a+quSkgjrfEO7ujMqZT8q96SZUkCfXDa1PdA03oyZJGMr+NN6NClRpdDixXHS93U8N2L
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2026 12:35:51.2186
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2e45b245-e73b-4282-fe33-08df303901df
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BN3PEPF0000B36D.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB150617
+Mime-Version: 1.0
+References: <20261022022813.303978-1-seanjc@google.com> <20261022022813.303978-2-seanjc@google.com>
+ <sashiko-outbox-180887@kernel.org>
+Message-ID: <atoK3Z1hrMxwwgTY@google.com>
+Subject: Re: [PATCH v2 1/2] KVM: x86: Switch to vmcs01 to update EOI exiting
+ bitmap on-demand if L2 is active
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-
-
-On 10/15/2026 12:38 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] iommu/amd: NULL pointer dereference in iommu_poll_ga_log() with GAPPI
-> - [Medium] iommu/amd: amd_iommu_gappi state inconsistent on VAPIC fallback
-> - [Low] iommu/amd: missing GAPPI in feat_str feature name array
-> --
-> 
-> commit f3f34d41f6c88bbaa635da8109c52cf22d09f580
-> Author: Sairaj Kodilkar <sarunkod@amd.com>
-> 
-> iommu/amd: Provide kernel command line option to enable GAPPI
-> 
-> Enable GAPPI when the IOMMU GAPPISup extended feature bit is set and
-> the kernel is booted with the amd_iommu=gappi kernel parameter.
-> 
->> diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
->> index b89a2b3df0a49..51edd617ddca2 100644
->> --- a/drivers/iommu/amd/amd_iommu_types.h
->> +++ b/drivers/iommu/amd/amd_iommu_types.h
->> @@ -78,6 +78,7 @@
->>  #define FEATURE_X2APIC		BIT_ULL(2)
->>  #define FEATURE_NX		BIT_ULL(3)
->>  #define FEATURE_GT		BIT_ULL(4)
->> +#define FEATURE_GAPPI		BIT_ULL(5)
+On Thu, Oct 22, 2026, sashiko-bot@kernel.org wrote:
+> > diff --git a/arch/x86/kvm/regs.h b/arch/x86/kvm/regs.h
+> > index 447f0ec3e63e4..411eaf445d436 100644
+> > --- a/arch/x86/kvm/regs.h
+> > +++ b/arch/x86/kvm/regs.h
+> > @@ -464,12 +464,6 @@ static inline void enter_guest_mode(struct kvm_vcpu *vcpu)
+> >  static inline void leave_guest_mode(struct kvm_vcpu *vcpu)
+> >  {
+> >  	vcpu->arch.hflags &= ~HF_GUEST_MASK;
+> > -
+> > -	if (vcpu->arch.load_eoi_exitmap_pending) {
+> > -		vcpu->arch.load_eoi_exitmap_pending = false;
+> > -		kvm_make_request(KVM_REQ_LOAD_EOI_EXITMAP, vcpu);
+> > -	}
+> > -
+> >  	vcpu->stat.guest_mode = 0;
+> >  }
+> >  
 > 
 > [Severity: Low]
-> This isn't a functional bug, but FEATURE_GAPPI is defined as bit 5. 
+> With the removal of the only reader of vcpu->arch.load_eoi_exitmap_pending in
+> leave_guest_mode() (in arch/x86/kvm/regs.h) and its only writer in
+> vcpu_scan_ioapic() (in arch/x86/kvm/x86.c), load_eoi_exitmap_pending in
+> struct kvm_vcpu_arch has no remaining references in the tree (both at this
+> commit and at the end of the series):
 > 
-> In print_iommu_info(), bit 5 is still hardcoded as "[5]" in the feature
-> string array:
+> arch/x86/include/asm/kvm_host.h:
+> struct kvm_vcpu_arch {
+> 	...
+> 	u64 apic_base;
+> 	struct kvm_lapic *apic;    /* kernel irqchip context */
+> 	bool load_eoi_exitmap_pending;
+> 	DECLARE_BITMAP(ioapic_handled_vectors, 256);
 > 
-> drivers/iommu/amd/init.c:print_iommu_info() {
-> ...
-> 	static const char * const feat_str[] = {
-> 		"PreF", "PPR", "X2APIC", "NX", "GT", "[5]",
-> 		"IA", "GA", "HE", "PC"
-> 	};
-> ...
-> }
-> 
-> Should "[5]" be updated to "GAPPI" so the kernel boot log displays the
-> correct feature name?
-> 
-> [ ... ]
->> diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
->> index ef23e0755c32d..c536e0b3c4ff7 100644
->> --- a/drivers/iommu/amd/init.c
->> +++ b/drivers/iommu/amd/init.c
-> [ ... ]
->> @@ -3025,10 +3035,19 @@ static void enable_iommus_vapic(void)
->>  		return;
->>  	}
->>  
->> +	if (amd_iommu_gappi &&
->> +	    !(check_feature(FEATURE_GAPPI) &&
->> +	      AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir))) {
->> +		pr_warn("GAPPI is not supported.\n");
->> +		amd_iommu_gappi = false;
->> +	}
-> 
-> [Severity: Medium]
-> If VAPIC is unsupported or disabled due to SNP, the code returns early just
-> above this diff and falls back to legacy mode:
-> 
-> drivers/iommu/amd/init.c:enable_iommus_vapic() {
-> ...
-> 	if (!check_feature(FEATURE_GAM_VAPIC)) {
-> 		amd_iommu_guest_ir = AMD_IOMMU_GUEST_IR_LEGACY_GA;
-> 		return;
-> 	}
-> 
-> 	if (amd_iommu_snp_en &&
-> 	    !FEATURE_SNPAVICSUP_GAM(amd_iommu_efr2)) {
-> 		pr_warn("Force to disable Virtual APIC due to SNP\n");
-> 		amd_iommu_guest_ir = AMD_IOMMU_GUEST_IR_LEGACY_GA;
-> 		return;
-> 	}
-> ...
-> }
-> 
-> These early returns bypass the new fallback check added here that sets
-> amd_iommu_gappi = false.
-> 
-> If KVM subsequently reads the stale amd_iommu_gappi flag and attempts to set
-> up IRTE entries using GAPPI parameters, it calls irq_set_vcpu_affinity()
-> which triggers this check:
-> 
-> drivers/iommu/amd/iommu.c:amd_ir_set_vcpu_affinity() {
-> ...
-> 	if (WARN_ON_ONCE(!AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir)))
-> 		return -EINVAL;
-> ...
-> }
-> 
-> Could this result in a kernel warning and failure to configure the affinity
-> since the IOMMU driver actually fell back to legacy mode?
-> 
->> +
->>  	/* Enabling GAM and SNPAVIC support */
->>  	for_each_iommu(iommu) {
->> -		if (iommu_init_ga_log(iommu) ||
->> -		    iommu_ga_log_enable(iommu))
->> +		if (amd_iommu_gappi)
->> +			iommu_feature_enable(iommu, CONTROL_GAPPI_EN);
->> +		else if (iommu_init_ga_log(iommu) ||
->> +			 iommu_ga_log_enable(iommu))
->>  			return;
+> Should load_eoi_exitmap_pending be removed from struct kvm_vcpu_arch as well?
+
+/facepalm
+
+Every. Single. Time.  I forget to remove the boolean.
+
+> > diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+> > index 612ab07d4100f..5e765409398d3 100644
+> > --- a/arch/x86/kvm/vmx/vmx.c
+> > +++ b/arch/x86/kvm/vmx/vmx.c
+> > @@ -7139,6 +7139,8 @@ void vmx_load_eoi_exitmap(struct kvm_vcpu *vcpu, u64 *eoi_exit_bitmap)
+> >  	if (!kvm_vcpu_apicv_active(vcpu))
+> >  		return;
+> >  
+> > +	guard(vmx_vmcs01)(vcpu);
+> > +
+> >  	vmcs_write64(EOI_EXIT_BITMAP0, eoi_exit_bitmap[0]);
+> >  	vmcs_write64(EOI_EXIT_BITMAP1, eoi_exit_bitmap[1]);
+> >  	vmcs_write64(EOI_EXIT_BITMAP2, eoi_exit_bitmap[2]);
+> > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+> > index aad065d035fbb..082d027ade583 100644
+> > --- a/arch/x86/kvm/x86.c
+> > +++ b/arch/x86/kvm/x86.c
+> > @@ -8003,17 +8003,6 @@ static void vcpu_scan_ioapic(struct kvm_vcpu *vcpu)
+> >  		kvm_ioapic_scan_entry(vcpu, vcpu->arch.ioapic_handled_vectors);
+> >  #endif
+> >  
+> > -	if (is_guest_mode(vcpu))
+> > -		vcpu->arch.load_eoi_exitmap_pending = true;
+> > -	else
+> > -		kvm_make_request(KVM_REQ_LOAD_EOI_EXITMAP, vcpu);
+> > -}
+> > -
+> > -static void vcpu_load_eoi_exitmap(struct kvm_vcpu *vcpu)
+> > -{
+> > -	if (!kvm_apic_hw_enabled(vcpu->arch.apic))
+> > -		return;
+> > -
+> >  #ifdef CONFIG_KVM_HYPERV
+> >  	if (to_hv_vcpu(vcpu)) {
+> >  		u64 eoi_exit_bitmap[4];
+> > @@ -8167,8 +8156,6 @@ static int vcpu_enter_guest(struct kvm_vcpu *vcpu)
+> >  		}
+> >  		if (kvm_check_request(KVM_REQ_SCAN_IOAPIC, vcpu))
+> >  			vcpu_scan_ioapic(vcpu);
+> > -		if (kvm_check_request(KVM_REQ_LOAD_EOI_EXITMAP, vcpu))
+> > -			vcpu_load_eoi_exitmap(vcpu);
+> >  		if (kvm_check_request(KVM_REQ_APIC_PAGE_RELOAD, vcpu))
+> >  			kvm_vcpu_reload_apic_access_page(vcpu);
+> >  #ifdef CONFIG_KVM_HYPERV
 > 
 > [Severity: High]
-> If GAPPI is enabled, we skip allocating the GA log, so iommu->ga_log
-> remains NULL.
+> Can calling load_eoi_exitmap() directly from vcpu_scan_ioapic() while L2 is
+> active leave stale EOI_EXIT_BITMAP0..3 values in vmcs01 when APICv
+> transitions from inhibited to uninhibited in L2?
+
+Huh.  This isn't an L2 vs. L1 issue, this is a pre-existing bug that doesn't have
+anything to do with nested.  Sashiko found a convoluted scenario where not
+deferring the EOI update would create a bigger window for the bug, but there are
+much simpler scenarios that will hit this bug.  E.g. any GSI routing changes that
+affect the EOI bitmap that are made while APICv is inhibited will run afoul of
+this issue.
+
+The bug has likely gone unnoticed because APICv doesn't have many inhibits, and
+pretty much the only one that's likely to be toggled by a "real" guest is the
+APICV_INHIBIT_REASON_HYPERV one that SynIC uses when AutoEOI is enabled.
+
+> When APICv becomes inhibited on a vCPU (for example, when L1 or L2 modifies
+> the xAPIC APIC_ID via kvm_lapic_reg_write() -> kvm_recalculate_apic_map(),
+> disables the APIC via kvm_apic_set_base(), or enables Hyper-V SynIC AutoEOI),
+> KVM queues both KVM_REQ_APICV_UPDATE and KVM_REQ_SCAN_IOAPIC.
 > 
-> If the previous kernel used the legacy GA log and left an interrupt pending,
-> or if an unmasked interrupt triggers the handler:
+> In vcpu_enter_guest() in arch/x86/kvm/x86.c, KVM_REQ_SCAN_IOAPIC is serviced
+> before KVM_REQ_APICV_UPDATE:
 > 
-> drivers/iommu/amd/iommu.c:iommu_poll_ga_log() {
-> ...
-> 	head = readl(iommu->mmio_base + MMIO_GA_HEAD_OFFSET);
-> 	tail = readl(iommu->mmio_base + MMIO_GA_TAIL_OFFSET);
-> 
-> 	while (head != tail) {
-> 		volatile u64 *raw;
-> ...
-> 		raw = (u64 *)(iommu->ga_log + head);
-> ...
-> 		/* Avoid memcpy function-call overhead */
-> 		log_entry = *raw;
-> ...
+> arch/x86/kvm/x86.c:vcpu_enter_guest() {
+> 	...
+> 		if (kvm_check_request(KVM_REQ_SCAN_IOAPIC, vcpu))
+> 			vcpu_scan_ioapic(vcpu);
+> 	...
+> 		if (kvm_check_request(KVM_REQ_APICV_UPDATE, vcpu))
+> 			kvm_vcpu_update_apicv(vcpu);
 > }
 > 
-> Won't the while loop unconditionally dereference iommu->ga_log which is now
-> NULL, crashing the kernel?
+> During the inhibit transition, apic->apicv_active is still true when
+> vcpu_scan_ioapic() runs, so vmx_load_eoi_exitmap() writes the zeroed
+> ioapic_handled_vectors bitmap into vmcs01's EOI_EXIT_BITMAP0..3 before
+> KVM_REQ_APICV_UPDATE sets apic->apicv_active to false. Similarly, any IOAPIC
+> routes configured while APICv is inhibited are not written to vmcs01 because
+> apic->apicv_active is false.
 > 
+> When the guest later transitions out of the inhibited state while L2 is
+> active (is_guest_mode(vcpu) is true) -- for example, when L2 enables x2APIC
+> via MSR_IA32_APICBASE or restores the xAPIC ID -- kvm_apic_set_base() or
+> kvm_recalculate_apic_map() clears the APICv inhibit (queuing
+> KVM_REQ_APICV_UPDATE) and calls kvm_make_scan_ioapic_request() (queuing
+> KVM_REQ_SCAN_IOAPIC).
+> 
+> Previously, because is_guest_mode(vcpu) was true, vcpu_scan_ioapic() set
+> vcpu->arch.load_eoi_exitmap_pending = true and deferred
+> KVM_REQ_LOAD_EOI_EXITMAP until leave_guest_mode() on nested VM-Exit, after
+> KVM_REQ_APICV_UPDATE had already set apic->apicv_active = true.
 
-This is a valid concern. This is a pre-existing bug and can arise if
-second kernel has IRQ_REMAP disabled or fails to enable ga_log. Hence it
-is better to address this in a separate series.
+...
 
-Thanks
-Sairaj
+> Should KVM_REQ_APICV_UPDATE be processed before KVM_REQ_SCAN_IOAPIC in
+> vcpu_enter_guest(), or should kvm_vcpu_update_apicv() reload the EOI exit
+> bitmap when re-activating APICv?
 
+Neither.  This bug was introduced by commit d62caabb41f3 ("kvm/x86: per-vcpu apicv
+deactivation support").  As KVM does with device posted interrupts, where IRTEs
+are kept up-to-date even if APICv is *currently* inhibited, the simple thing to
+do is keep the EOI bitmap up-to-date if APICv is globally enabled, i.e.:
+
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index b341af4c6057..d8e66d67138f 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -7079,7 +7079,7 @@ int vmx_sync_pir_to_irr(struct kvm_vcpu *vcpu)
+ 
+ void vmx_load_eoi_exitmap(struct kvm_vcpu *vcpu, u64 *eoi_exit_bitmap)
+ {
+-	if (!kvm_vcpu_apicv_active(vcpu))
++	if (!lapic_in_kernel(vcpu) || !enable_apicv)
+ 		return;
+ 
+ 	vmcs_write64(EOI_EXIT_BITMAP0, eoi_exit_bitmap[0]);
+
+I'll insert a new patch in v2.
