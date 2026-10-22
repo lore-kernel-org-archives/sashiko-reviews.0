@@ -1,131 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.16
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1792644118;
-	b=DA6bekqkzfK5lcm83kayqJfkKYisK41QWTWgUWuZ9vx+U4cuQpgLaKd6ZNw8rwk4J6TD
-	 HSlpiXnz3IC/wA07X4GjysETZLf+y74RxxmW74wnvu46+FmlP0CCO8A5D/eLAdMIbRRF8
-	 9w2QYQ74LiYSTEXRnwpNUNtNGymksMdw3o/8xIkLTQSE4xfx+QxNJief5rSX/Brh2Oy1P
-	 Mn0Fx0vh+zEL5jc1v3+QgmNqeSzLQEdAgOMb0BD39BU+oTGTwGVZ3xlsZ1fl22u0c4S1j
-	 1DPd9Sb6nIOXw5t9mk0cnHB2tevlQcNM2QZ1z7Ra+oM8wvTxXQiBb+RFQCsRtbY0VFQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792644118;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.14
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792650005;
+	b=3kH5sa2zecofnzdYvzTvdzCmWahcV2sCbegWjDC0dBrbzAtN3yEo9pEk11yGzCW2nh8y
+	 SN2fh0/7anpwWpyjHseaiVhw46Ail4f/+PtKA2+6SOjeerxbw7eYcJqonFnH8UAsbIZzB
+	 ONPohGL54T3G/bIVbWzbTmuMp704SgIvfSqmMyNr30YBvJy8FWXt/FBlKHAt/4R+5eDuc
+	 VXO1zaMceKGOCDnY35NqpAtqoBKDWryKolH5ZlexZR8G1dIsP0L/1pypS4pBfY1lubr1x
+	 p/qFsdO6yF1qYYCY3MfxDLWvr9b5h400y80nND5XHVD5hYljUu/KwksG1I262B7mJmA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792650005;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:Received:Received:Message-ID:Date:User-Agent:Subject:To:CC:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=HzZsuIiBsF8VoApb8OfCqrK0QNrH8S2njTbUD+F0uyw=;
-	b=xEe1eO3zeuF4v7viWodWohsY2EsdTsgRqu+7TuBr7D9cIBOx3FUzHPrIMKqP2/CFsX9R
-	 O7gn4FaqvSlzFLsEoNAmVaN/oM3dSTkl93itBEPS3epYlC6MsxSde+nuveewaxLjaCklM
-	 7pfIlAw6oyqF710D61nVdNc1ImDmLhz0+q8nAeWe9tWnvVM9xTeLMgLnwb11n0pc+pIt5
-	 VfqWuWkfoGqIgFY5u3ef28VF9OylVqW6TxU1NmDIpK2YCFfal03HCsxOcIYYUoKVFqfPR
-	 keC0ymvUhedMxGl8ALCivc/XT75ryOT5XvIsNdiMreMiG0l1/A8arUKjGCWEpa9dV9w==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=RtcUJqyU;
-	arc=fail smtp.remote-ip=192.198.163.16
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=Ak030PKoYpRUQlgzvTjPjd4UCALDe994mmCbXVCPokI=;
+	b=TmdJilSiv7eWO84wLbKX/VCwG11jDZyLqwt9s7eb3jB+/Os2atA+8ZgWz9B+NzeScp/u
+	 QwIEEX0x6CoRen4dTO7h0o/HOL6rCf864W01evFJc0X7eteblHe1QnqIkl3SGeACj3eaM
+	 YefbGEzCatsddEiKJClFGhTNaMz56wxMyeUSDnf90IJwoukCPPTl+VFKhpG6h2bGNJcQ0
+	 +mjA0zHAeILQWSz2S+NDGDkECaaN3FAF9a6UCou0Ys0fK1Q96qXQQFSgnsOLSMKF/r7VO
+	 gABduP635Oxlcs/EEkYfRRPMNFU5Gm+FvU48HiPKsotRG7xDnd/Gx/C+1y8AT1cLXug==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=linux.intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=AtNqs3Dn;
+	arc=none smtp.remote-ip=198.175.65.14
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D24A606A319
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 04:41:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7D24A606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B52606A31A
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 06:20:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 83B52606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=RtcUJqyU
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=AtNqs3Dn
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792644116; x=1824180116;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=aC0IoVujE9uuGL88CiWwQFE5wX74pO8PYG7e8LLwGoE=;
-  b=RtcUJqyUFsUCIdi+UomTxxRtKscfuhMeyz1WuUYvE5+jo5Cw0riMSBp6
-   YV2T3ZKxzNDtv7RdMygVFNMmtkhwugCex7xA18eNtQE2HSeCDRX13vW/+
-   pYq9obsvwbNovJWuO+gX82nB+nqGQ7WE09FbcAZ6lGUdrNAPUInHB8sWS
-   LKIuGVonWVA4L1UxFVZVB564Xd1EZMmOCpTf7nifu0Yz3ookOQZF2ZOKZ
-   KvowR5GOWlqDVTqePgFDll7eeQEl6O2eLR752qRtlpyUaB09PCEcRcxPI
-   hK6baSUZ8aX2l9nlAYTUGqUvY1vbdLKatbkhqrWbUBpW79QHIY7n0hoo+
-   A==;
-X-CSE-ConnectionGUID: sdp+PVwZQDia4nOcppDRjw==
-X-CSE-MsgGUID: aIB3fHcyRR+eamFG+zW9eA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11942"; a="1392647"
+  t=1792650004; x=1824186004;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=pZAqtUAKS+V3y9BRC6MiOPSFzCs7ihb2KxPrNR3NPPE=;
+  b=AtNqs3DnwCPy5eYnrH2ExVMERQvFy9/AVfP8QfmjRk57X1vymEpGXyju
+   I8T0hhayx00ktFHPRCpPeIvXWJ2zyDYQfFsR9CfkL8lGdBUt0XR5i1yR4
+   csdlbF+9KltZv9p0IwAeaDVM+Y+o4jdLxZOgdm30/qTkFKCm372f6Nrw1
+   5Ky8ymsywe4Qn4mQJNi68nrjKev7PX0XC6VwceVPR5d92C/dD2/Q5vtaz
+   XmXCaf8hVkbmuFrHSYqITQS5othoXN4Qst9PwS0GOgzFXaDHg4737qXHR
+   TOC+3wy0/PeEIzlV0WunUm8/VfGE7s/mZS8FOSol6Ph6HEFI6zHO0wQur
+   w==;
+X-CSE-ConnectionGUID: POsFwcKEQFyvttLkJrfsCw==
+X-CSE-MsgGUID: 5BZSregTSD6N+h3dzZIMrg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11942"; a="1260102"
 X-IronPort-AV: E=Sophos;i="6.27,171,1787036400"; 
-   d="scan'208";a="1392647"
-Received: from fmviesa011.fm.intel.com ([10.60.135.151])
-  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Oct 2026 21:41:56 -0700
-X-CSE-ConnectionGUID: KRBrTIcVSTWIKwGhGvzDoA==
-X-CSE-MsgGUID: sOB8oxJsTj+/xzhoU30INg==
+   d="scan'208";a="1260102"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Oct 2026 23:20:04 -0700
+X-CSE-ConnectionGUID: B6q9p7sATKu5pSgcdpVRSw==
+X-CSE-MsgGUID: Qf2E8D9URDmr2gDYO6uxlw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,171,1787036400"; 
-   d="scan'208";a="5115781"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by fmviesa011.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Oct 2026 21:41:56 -0700
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Wed, 21 Oct 2026 21:41:55 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49 via Frontend Transport; Wed, 21 Oct 2026 21:41:55 -0700
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.30) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Wed, 21 Oct 2026 21:41:55 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tk5NQFAV7gnWrz4YWsOqsw8ppP29BimCsSj1SpOgoojsSR2GuaYTa9AHSlg6IECmVB/2v3xGjEdcxNz1wn4IoVsrd7538gmTsPVDErU6vH9tj5Hu0l12UhWKomU+fkEklL+uIyTcaSKMEodMPlydMN/1NDBNnAi5l86zuK9DY0aswhzrLvs+sNr5YdLgfL3JCUBcqr9R1V+6h9tCfEGOFAmNaptkAh+yl7i77E7ks8Y+Lr1WbzbFFoj4myhAonVgup6Mqi+708G7yNGI4FLb9gNeG0CTL2VFyIc477VrpSzHJxtAyDC0bYTll9suba0sYwycnOp+LJE3mDdu4uKy0Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HzZsuIiBsF8VoApb8OfCqrK0QNrH8S2njTbUD+F0uyw=;
- b=PwFlq5oHkv4qqwTfIONY7dZFKId6nMJFFmDpdSagnNx+8kW4JKY7gBhmGGRtxL6U6/LvNQ0UJm+ON5cprJIxvxsEt5F/i1hC9b0JK4QaFL0nFk7QqbfuR7/MXP84mXKPneaw7IxrP69cYUmpWEnDQ0Ilc+rAj7WqxKw+AxZHki/4YtR2fu07WT07O9VehJXkFrMkjdr01VwVokK/jChYMIFkKpWvlI3VVG4bRts5iAgDAfkqvdBs1tHyiLrp93zpOxX2uivcnRbVaexpgnARAZ9WAxH6NOK9LOARAzH9ev+ntGAs5EOfn0K/zxUnVDDtoJd/XSS7rqOu8VDUSK+g0g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS0PR11MB8208.namprd11.prod.outlook.com (2603:10b6:8:165::18)
- by SACPR11MB967231.namprd11.prod.outlook.com (2603:10b6:806:548::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Thu, 22 Oct
- 2026 04:41:52 +0000
-Received: from DS0PR11MB8208.namprd11.prod.outlook.com
- ([fe80::ecb0:7475:84de:ca9c]) by DS0PR11MB8208.namprd11.prod.outlook.com
- ([fe80::ecb0:7475:84de:ca9c%6]) with mapi id 15.21.0522.017; Thu, 22 Oct 2026
- 04:41:52 +0000
-Message-ID: <aa357cbe-fcfa-41f5-ae82-fdc8cd79f495@intel.com>
-Date: Thu, 22 Oct 2026 10:11:43 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] gpu/tests/buddy: Add range-bias pruning and
- free-order tracking tests
-To: <sashiko-reviews@lists.linux.dev>, <dri-devel@lists.freedesktop.org>
-CC: <intel-xe@lists.freedesktop.org>
-References: <cover.1792599420.git.sanjay.kumar.yadav@intel.com>
- <acd1a30cc29c3d6efc14723cb90434d0e378ea0a.1792599420.git.sanjay.kumar.yadav@intel.com>
- <sashiko-outbox-180522@kernel.org>
-Content-Language: en-US
-From: "Yadav, Sanjay Kumar" <sanjay.kumar.yadav@intel.com>
-In-Reply-To: <sashiko-outbox-180522@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MA5P287CA0254.INDP287.PROD.OUTLOOK.COM
- (2603:1096:a01:1f1::9) To DS0PR11MB8208.namprd11.prod.outlook.com
- (2603:10b6:8:165::18)
+   d="scan'208";a="3165389"
+Received: from unknown (HELO [10.238.3.193]) ([10.238.3.193])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Oct 2026 23:20:02 -0700
+Message-ID: <bc06cae6-6f52-408f-985f-0f604a4bd272@linux.intel.com>
+Date: Thu, 22 Oct 2026 14:19:59 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -135,138 +72,361 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS0PR11MB8208:EE_|SACPR11MB967231:EE_
-X-MS-Office365-Filtering-Correlation-Id: f9fe479c-31e2-4e34-3d64-08df2ff6caa1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|56012099006|5023799004|4143699003|11063799006|261021121427099003|261009223027099003|10067099003|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info: PETOk48+JPTAODfgKji2zje1mNImV9xpytNvI7l5BZfVQMvfP+DoD+LY3jhThzG7LTfM/kX27OBiAUcdClIJWNx+Sswlwt2HNxL14rQ/7/xlvppIdNMkjz5uv+TxnqtkXTSAOPh+95f2v9XSaRLjG2R1CNjpbRXuxx3NCkHVI1EsFo1zGaaKo7xq+vhWpj/PQV2qNIvBwz9m88h8owZdnnvVzxp52OI/JyefvUO9vRivyXDu6YTvxXXAWKOJN6wEurLCv8bo0VZ6HyYsRH9UPsKHDWQ7IXADu2tmMk54ZEiXt7DtI60UDXSCiXoMg2QkujFMWDTIbpQmGBOVyWPFJFlCC87eGNuHhqJE3Hy2JI4nqtuNx4tvAUjEjjFQZxIKDjqAD4ZC3WpxbL5di5iH8cwcCT0ip8RXJhZaQ85cbPm9Dg+vTl/ne8BCzNVkk0b3oEbGys8b9dJ2aq9cKfxAC6vOfaVdQgsQl6waFVDiGtr0rGLxwvTH/eH+BEphIfdEVE8D7lI73Xe/KOTViBbRJTYCd7B8oXd6bKEiVmgAIKC05yz5dXQu6yRUOxM6HYME0496ROLgSUey2qgDnHEwFIaxLL8ecFTknuZweeGx+/MDa+p73kY3m8Tl1F3VOfv497AgL8QQiZDx5PQTn6HZlTxzsMKnMQUnlcZbpmoBP3w=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR11MB8208.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(56012099006)(5023799004)(4143699003)(11063799006)(261021121427099003)(261009223027099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a3R4bXVITDdOUzFrNlpGRGkwMjNQYnNzTVY1NWkvWERqRHBuZlhTR0F3SHlQ?=
- =?utf-8?B?b2RaWXBlblNDb0pLa1Zhc25rSFQzSndXYkJtMzludkxQdzBmWmo3bXppV3NC?=
- =?utf-8?B?bW5kNVdOVVJ2N0NDSlZTU3V5TGhMNk4ydkM0M1AyRm4vV211YnhMN1haVko3?=
- =?utf-8?B?MDNUOFRRUFJWSnU3U1QwQVhIU2JoN2hJVXVmTlcxdDhhU0pPZFR5NmpEenIv?=
- =?utf-8?B?STBNenhwb1RCOUtFRHZibThiK3BDd1NER3k2Rkc5L3k0SW9wNHRpYXRUV05x?=
- =?utf-8?B?YlRyaVU4MnE4REZkMHpmVzE2MStsZTBpWDBFejNoTEVUS05JTzEyYU9WVzFP?=
- =?utf-8?B?Z25NV3lLdzJKcHpONkZTUytKM01JbEh0b0I3T1l4K2FvclNLYUViaStrYVVI?=
- =?utf-8?B?WmFhSFlBaE5mQU1zYThQMWxubzU5NFJOYUFNcWpNTEhkTEcxaVdFT21zUG5Q?=
- =?utf-8?B?ZStiSXBZUTBxT2ZXeVpqdzRrdGpqeHkremFNSDg4YXROYkpWK3NzdW5peGFX?=
- =?utf-8?B?SHFUTUlnTE9PVVhQbUtSRmc5dm80b0hGbW5qZDZ3bVFlNTE2aDFhYXpHZ1dr?=
- =?utf-8?B?TlhYZ2dYSWFGUUZFU3JqZFpmOTF5Vm9CUDNIY2ZPOGlpTXNQRWl2amRJa1h1?=
- =?utf-8?B?NXBRbmxQN09yTjN6SzFQcC9nZEtNTXpabjdCZUhhKzMvbXZxdlpoa3JXWTFB?=
- =?utf-8?B?VzJwR0kvQkRPTnBVTEtLdXBhb2NVOGdUbzZCT05YR2NJWndXUnkrNWZUTy9C?=
- =?utf-8?B?VDM0WUVWWENFRkxlc1c3Qm9CZkdRYU4yQmh3ZnlobmRWMmlnMWFKSFlSMHN0?=
- =?utf-8?B?MnJ2NEFuYjQwY1ppVm9rWjRQTGNNMW5VbFFsKytrMU9yc2NFd0srTXNZQ0hM?=
- =?utf-8?B?L2RtWFFvWmU1NWdUbEtqQ054SlNKbEViRUxGVkFvOUhVTG96dyt0RC93SHNM?=
- =?utf-8?B?OXFSL09NMSsyRTdtN0QvSU5FSlNhbXZWUjQ0eVJvd0F3dkZaR3FBMEpoZnhm?=
- =?utf-8?B?ZlVzK3FydE9PdUxXZ3BHbDVxOXVYN2IxdkMwaVJsMi9ZcnZLVnhlUVFERVVG?=
- =?utf-8?B?cTJ5R2R1RDExaFJYa2RDZlVPbTFBMFNSU2Y3ZlBwbDFFMVlLQXNXQ0NHWDVW?=
- =?utf-8?B?Y2ZFYkNWZ1lrL2JCYTFRdTlzTnRzNjRMZXROUUNmWklaVWxnK1E2QnFPd2Rk?=
- =?utf-8?B?MWl2TGFWUWNlSlFqMnRTbk9RcVBlMW8wYUhVQWVYaTdsTGZOelM1QU41QmxX?=
- =?utf-8?B?SExqQXI2TlN5dkllRTNWYTRSSW1NMmg2ZmlCd2RoVlFDQzNzbmRnbWFUcWE3?=
- =?utf-8?B?Sk5YWHN5SGdBa0pQVTJVelZ5b3ltTkJlYWhzbkcxanVRNnlMa1Y3elBaQW9T?=
- =?utf-8?B?Y29mU0hpUm5wV2VEM0pJSmM1aXJRNHZ2Q0I2MXlRSERZOWJZTUltcnptUWh3?=
- =?utf-8?B?OE91MC9aTlZTTWU2WlIwV0dmT2VHSnlmM1drblA0UWhFVVI2bHBiTTNzdUFZ?=
- =?utf-8?B?cFhUQjlxTHhWY1FGOCtCdUxBY2xoSWtCTW5qUXJzb0Q4NVl3YmVoUnBjYjVK?=
- =?utf-8?B?M1ZUMXJidy9HWlRTVTBjd05kNi8xM0pDZ01KZVRpR3E3ZUhlakNKOGFHRE5r?=
- =?utf-8?B?Tkx5a3h2MFZaR2RZYk1BbURKQWMxOEp6VTE3R3BQandlaWxXTENRS0FmRGQz?=
- =?utf-8?B?K2ZkYUp6R1ZtVzNrME0yZWhIeXp1L1RnSnVRNFlqb1lNRi8wWHhCMUZ0UmxF?=
- =?utf-8?B?cHRsc3hZeHhpd1J3RjVqRWF6WkpiSEdLS1AzWnpTVzA5L2tSa2xNaDFlZ09J?=
- =?utf-8?B?cGg5T2owYlJybzNXMXRJelE5cGJMM2RiNWtjekd0QWZnOUplZ2pseXcyaVI0?=
- =?utf-8?B?VjhEckRzMmtBTFJrT0gxblhHOVBOWCt3QVlMYXB0S0Ixc2hwWHhyY2tPUy9j?=
- =?utf-8?B?VXdGYUliWExJajhmUWUxeU9kMmZ0K2VHK3dQNnlnVzRqaExuY0xVWktCV2kv?=
- =?utf-8?B?NUtlUGlhY2FaY0xnZFdBTkU5TmhoSzM1eEpJMEo3T0RuSm04MmpQSUJxdlU1?=
- =?utf-8?B?d3BOQ0xENnduMkpnUlRHeVBhOWFSSkljbGVpNHdVd1VyV0loUGMvdTl6ZjdF?=
- =?utf-8?B?R2hWM1VJQXlzRko3SUxUZ3g3OXQzUHVaUFFiNlRPUDRLOHk2aW5LdVdlNk1D?=
- =?utf-8?B?K3lJMW1jUWNzcjJpTSt5TWY2bVNyN2lTMU9YKzlVSmxIR2IzTEFsSXNGVGJX?=
- =?utf-8?B?WExCeEJMRUtWMHFXeVZUejY4SFh1L0FoMGVtUlAreFhVdVNOK1pCQUV6YWlU?=
- =?utf-8?B?TUo1M1dDZlhQdEt1N2I0SUJ1VHBUUkdDNUZGQmFZWEJ4MUlrVFc2WlAwVFlT?=
- =?utf-8?Q?eihstM7iRPv+W4lA=3D?=
-X-Exchange-RoutingPolicyChecked: cAq04JbuHARWVGDr5f5d/7cAStRcBJK6uTUPn4UpXxXaz9K9YcZwjHE41iNqDRwAOluFhz8KRXXFnipMNGFSRu+4XJa+KSqwXtds65QZwvMZj/neILiVMvqNBkSijL6Ph8T8xmgxzoU8VGgKm77u+LA9zvjlq1FLp7/gm35JCmcovuctOhKTSkr0FRQTF8FvEL3n5jTZF6/lg1QFF0Cw7Zm1NdcxPHwaW1Cz1avdLbRBlhjQf1yMqHc64s53vVC5hVipzGQeuub1NXQGxGII+xsdtlodHaStLGFdjeh4bNp/gJpF2SVnqclR66kMzMyFw4vS2rDTzKUC5usmLj1Kjw==
-X-MS-Exchange-CrossTenant-Network-Message-Id: f9fe479c-31e2-4e34-3d64-08df2ff6caa1
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB8208.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2026 04:41:51.9441
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: f6q1V7AKs6FX842gTuNwasJkdmLQD0YXhLjwJGuMJfSMV7hknFJftYFJV0AoT5cQhTgyd3Ri0nlSLWPtkEHvNw3mkqHt+oI9+sMkasBdUvU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SACPR11MB967231
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Patch v4 5/5] pef/x86/intel: Always snapshot live hardware LBR
+ state for BPF path
+To: sashiko-reviews@lists.linux.dev, Sandipan Das <sandipan.das@amd.com>
+Cc: linux-perf-users@vger.kernel.org, bpf@vger.kernel.org
+References: <20261021050711.4043703-1-dapeng1.mi@linux.intel.com>
+ <20261021050711.4043703-6-dapeng1.mi@linux.intel.com>
+ <sashiko-outbox-179823@kernel.org>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <sashiko-outbox-179823@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 
-On 21-10-2026 22:54, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] gpu/tests/buddy: 64-bit division in gpu_test_buddy_range_bias_pruning()
+On 10/21/2026 2:05 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
+> - [Critical] perf/x86/intel: LBR state corruption in __intel_pmu_snapshot_branch_stack()
+> - [High] perf/x86/intel: __intel_pmu_snapshot_branch_stack() enables PMU in PMI
+> - [Medium] perf/x86/intel: unfrozen LBRs and PMU re-enable in PMI branch snapshot
+> - [Medium] perf/x86: NMI race on lbr_snapshot in __intel_pmu_snapshot_branch_stack()
+> - [Medium] perf/x86/intel: unfiltered LBR branch counter bits in perf_branch_entry.reserved
 > --
 >
-> commit c218b91af95d861d31913d5c9b3ba0681e319523
-> Author: Sanjay Yadav <sanjay.kumar.yadav@intel.com>
+> commit 4d2b360d61a8a8f6825b3cd919182ee99dbe2d76
+> Author: Dapeng Mi <dapeng1.mi@linux.intel.com>
 >
-> gpu/tests/buddy: Add range-bias pruning and free-order tracking tests
+> pef/x86/intel: Always snapshot live hardware LBR state for BPF path
 >
-> This commit adds KUnit tests in drivers/gpu/tests/gpu_buddy_test.c to verify
-> range-bias subtree pruning and subtree_max_free_order tracking across block
-> allocation, splitting, coalescing, and trimming operations.
+> This commit updates __intel_pmu_snapshot_branch_stack() to always read live
+> hardware LBR registers for the BPF snapshot path even when PEBS LBR users
+> are active. To avoid clobbering cached PEBS LBR data during a PMI, it saves
+> and restores cpuc->lbr_stack, cpuc->lbr_entries, and cpuc->lbr_counters
+> around intel_pmu_lbr_read() using a per-CPU buffer, and moves the
+> cpuc->lbr_users == cpuc->lbr_pebs_users check into intel_pmu_handle_irq().
 >
->> diff --git a/drivers/gpu/tests/gpu_buddy_test.c b/drivers/gpu/tests/gpu_buddy_test.c
->> index b75d32ca6ca0a..4c7e823d57892 100644
->> --- a/drivers/gpu/tests/gpu_buddy_test.c
->> +++ b/drivers/gpu/tests/gpu_buddy_test.c
->> @@ -1586,6 +1586,311 @@ static void gpu_test_buddy_addr_to_block(struct kunit *test)
->>   	gpu_buddy_fini(&mm);
->>   }
->>   
-> [ ... ]
->> +static void gpu_test_buddy_range_bias_pruning(struct kunit *test)
->> +{
->> +	const u64 mm_size = SZ_512M, range_end = SZ_128M, chunk = SZ_4K;
->> +	const unsigned int nr = range_end / chunk, window = 1024;
->> +	const u64 holes[] = { 0, range_end / 2 + 3 * chunk };
->> +	struct gpu_buddy_block *block, *hidden;
->> +	u64 first_ns = 0, last_ns = 0;
->> +	unsigned int i, misplaced = 0;
->> +	LIST_HEAD(allocated);
->> +	struct gpu_buddy mm;
->> +	LIST_HEAD(tmp);
->> +	int err;
-> [ ... ]
->> +	for (i = 0; i < nr; i++) {
->> +		ktime_t start = ktime_get();
->> +		u64 elapsed;
+>> diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+>> index 5dfb9e9156e88..07d1a8a7845b2 100644
+>> --- a/arch/x86/events/intel/core.c
+>> +++ b/arch/x86/events/intel/core.c
+>> @@ -2815,16 +2815,50 @@ static void intel_pmu_enable_all(int added)
+>>  	__intel_pmu_enable_all(added, false);
+>>  }
+>>  
+>> +struct lbr_snapshot {
+>> +	struct perf_branch_stack stack;
+>> +	struct perf_branch_entry entries[MAX_LBR_ENTRIES];
+>> +	u64 counters[MAX_LBR_ENTRIES];
+>> +};
+>> +static DEFINE_PER_CPU(struct lbr_snapshot, lbr_snapshot);
+> [Severity: Medium]
+> Can an NMI race on the per-CPU lbr_snapshot buffer when
+> __intel_pmu_snapshot_branch_stack() is called in non-NMI context?
+>
+> In arch/x86/events/intel/core.c, intel_pmu_snapshot_branch_stack() and
+> intel_pmu_snapshot_arch_branch_stack() call local_irq_save(flags) and
+> __intel_pmu_disable_all(false) before invoking
+> __intel_pmu_snapshot_branch_stack(). However, local_irq_save() only masks
+> normal interrupts, and an in-flight PMI or another NMI can still arrive
+> after __intel_pmu_disable_all() due to NMI delivery latency.
+>
+> When cpuc->lbr_pebs_users > 0 and a non-NMI BPF program (such as an
+> fentry/fexit trampoline via __bpf_prog_enter_recur() or a raw_tracepoint,
+> where bpf_prog_active is not incremented) calls:
+>
+>   bpf_get_branch_snapshot()
+>     -> intel_pmu_snapshot_branch_stack()
+>       -> __intel_pmu_snapshot_branch_stack()
+>
+> an arriving PMI can still invoke bpf_overflow_handler() ->
+> bpf_get_branch_snapshot() -> __intel_pmu_snapshot_branch_stack() on the
+> same CPU, overwriting this_cpu_ptr(&lbr_snapshot) while the outer call is
+> between its save and restore steps. Even if the PMI does not call
+> bpf_get_branch_snapshot(), intel_pmu_handle_irq() updates cpuc->lbr_stack
+> and cpuc->lbr_entries while the interrupted snapshot is saving or
+> restoring them.
+>
+> Since cpuc->lbr_stack only holds live sample data awaiting output during a
+> PMI, should the save and restore of cpuc->lbr_stack be restricted to NMI
+> context or otherwise protected against NMI reentrancy?
+>
 >> +
->> +		err = gpu_buddy_alloc_blocks(&mm, 0, range_end, chunk, chunk,
->> +					     &allocated, GPU_BUDDY_RANGE_ALLOCATION);
->> +		elapsed = ktime_to_ns(ktime_sub(ktime_get(), start));
->> +		KUNIT_ASSERT_EQ_MSG(test, err, 0, "range alloc %u failed\n", i);
+>>  static noinline int
+>>  __intel_pmu_snapshot_branch_stack(struct perf_branch_entry *entries,
+>>  				  unsigned int cnt, unsigned long flags)
+>>  {
+>>  	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
+>> +	struct lbr_snapshot *snapshot = this_cpu_ptr(&lbr_snapshot);
 >> +
->> +		if (i < window)
->> +			first_ns += elapsed;
->> +		else if (i >= nr - window)
->> +			last_ns += elapsed;
+>> +	/*
+>> +	 * This may be called from bpf_event_handler() in a PMI context. If
+>> +	 * a PEBS LBR user is active, the PEBS sample record has already updated
+>> +	 * cpuc->lbr_stack. Reading the LBR registers here would overwrite that
+>> +	 * cached PEBS LBR stack, so save it first and restore it afterward. This
+>> +	 * keeps the cached LBR data available for later output to userspace in
+>> +	 * the normal PEBS record path.
+>> +	 */
+>> +	if (cpuc->lbr_pebs_users) {
+>> +		memcpy(&snapshot->stack, &cpuc->lbr_stack,
+>> +		       sizeof(struct perf_branch_stack));
+>> +		memcpy(snapshot->entries, cpuc->lbr_entries,
+>> +		       sizeof(struct perf_branch_entry) * cpuc->lbr_stack.nr);
+>> +		memcpy(snapshot->counters, cpuc->lbr_counters,
+>> +		       sizeof(u64) * cpuc->lbr_stack.nr);
+>> +	}
+> [Severity: Critical]
+> What happens in __intel_pmu_snapshot_branch_stack() when cpuc->lbr_users
+> is non-zero, but cpuc->lbr_pebs_users is 0?
+>
+> In arch/x86/events/intel/lbr.c:intel_pmu_lbr_add(), cpuc->lbr_pebs_users
+> is only incremented when x86_pmu.intel_cap.pebs_baseline is set and
+> event->attr.precise_ip > 0:
+>
+> 	if (x86_pmu.intel_cap.pebs_baseline && event->attr.precise_ip > 0)
+> 		cpuc->lbr_pebs_users++;
+>
+> When non-PEBS hardware LBR events (precise_ip == 0), legacy PEBS LBR
+> events (pre-Ice Lake where pebs_baseline == 0), or Architectural PEBS LBR
+> events (arch/x86/events/intel/ds.c:setup_arch_pebs_sample_data(), where
+> pebs_baseline == 0) are active, cpuc->lbr_users > 0 while
+> cpuc->lbr_pebs_users == 0.
+>
+> In those paths, handle_pmi_common(), setup_pebs_fixed_sample_data(), and
+> setup_arch_pebs_sample_data() call intel_pmu_lbr_save_brstack() before
+> perf_event_overflow() -> __perf_event_overflow() ->
+> bpf_overflow_handler():
+>
+> 	if (has_branch_stack(event))
+> 		intel_pmu_lbr_save_brstack(&data, cpuc, event);
+> 	...
+> 	perf_event_overflow(event, &data, regs);
+>
+> Inside include/linux/perf_event.h:perf_sample_save_brstack(), brs
+> (&cpuc->lbr_stack) is clamped in place and used to precompute
+> data->dyn_size:
+>
+> 	brs->nr = min_t(u16, event->attr.sample_max_stack, brs->nr);
+> 	size += brs->nr * sizeof(struct perf_branch_entry);
+> 	if (brs_cntr)
+> 		size += brs->nr * sizeof(u64);
+> 	data->br_stack = brs;
+> 	data->br_stack_cntr = brs_cntr;
+> 	data->dyn_size += size;
+> 	data->sample_flags |= PERF_SAMPLE_BRANCH_STACK;
+>
+> If bpf_overflow_handler() then calls bpf_get_branch_snapshot() ->
+> __intel_pmu_snapshot_branch_stack() with cpuc->lbr_pebs_users == 0, the
+> save and restore of cpuc->lbr_stack, cpuc->lbr_entries, and
+> cpuc->lbr_counters are skipped, and intel_pmu_lbr_read() overwrites them
+> in place:
+>
+> 1. In kernel/events/core.c:perf_output_sample(), data->br_stack still
+>    points to &cpuc->lbr_stack. Because intel_pmu_lbr_read() resets
+>    cpuc->lbr_stack.nr up to x86_pmu.lbr_nr, undoing the sample_max_stack
+>    clamp after data->dyn_size was already computed, perf_output_sample()
+>    can copy more perf_branch_entry (and counter) elements than
+>    perf_output_begin() reserved in the ring buffer.
+>
+> 2. The frozen LBR entries captured at PMI entry (or from the Arch PEBS
+>    record) in cpuc->lbr_entries are overwritten by unfrozen post-ack LBR
+>    registers containing PMI handler branches.
+>
+> 3. For branch counter groups, intel_pmu_lbr_counters_reorder() has already
+>    extracted counter bits from cpuc->lbr_entries[i].reserved into
+>    cpuc->lbr_counters[i] and cleared .reserved; calling
+>    intel_pmu_lbr_read() -> intel_pmu_store_lbr() writes raw counter bits
+>    back into cpuc->lbr_entries[i].reserved and desynchronizes
+>    cpuc->lbr_counters[].
+>
+> Should the save and restore in __intel_pmu_snapshot_branch_stack() be
+> gated on cpuc->lbr_users instead of cpuc->lbr_pebs_users (and save/restore
+> based on the pre-clamp entry count or full array when needed)?
+>
+>>  
+>>  	intel_pmu_lbr_read();
+>>  	cnt = min_t(unsigned int, cnt, cpuc->lbr_stack.nr);
+>> -
+>>  	memcpy(entries, cpuc->lbr_entries, sizeof(struct perf_branch_entry) * cnt);
+> [Severity: Medium]
+> On platforms with Architectural LBR and branch counter logging, does
+> copying cpuc->lbr_entries directly after intel_pmu_lbr_read() leak raw
+> branch counter bits in entries[i].reserved to BPF programs?
+>
+> When intel_pmu_snapshot_arch_branch_stack() calls
+> __intel_pmu_snapshot_branch_stack(), intel_pmu_lbr_read() invokes
+> intel_pmu_arch_lbr_read() or intel_pmu_arch_lbr_read_xsave(), which calls
+> arch/x86/events/intel/lbr.c:intel_pmu_store_lbr():
+>
+> 	/*
+> 	 * Leverage the reserved field of
+> 	 * cpuc->lbr_entries[i] to temporarily store the
+> 	 * branch counters information. The later code will
+> 	 * decide what content can be disclosed to the perf
+> 	 * tool. Pleae see intel_pmu_lbr_counters_reorder().
+> 	 */
+> 	.reserved = (info >> LBR_INFO_BR_CNTR_OFFSET) &
+> 		    LBR_INFO_BR_CNTR_FULL_MASK,
+>
+> Normally intel_pmu_lbr_counters_reorder() filters those bits and clears
+> cpuc->lbr_entries[i].reserved to 0 before the entries are exposed. Since
+> __intel_pmu_snapshot_branch_stack() copies cpuc->lbr_entries directly into
+> entries without calling intel_pmu_lbr_counters_reorder(), won't the raw
+> hardware counter bits remain in the UAPI perf_branch_entry.reserved field
+> returned by bpf_get_branch_snapshot()?
+>
 >> +
->> +		block = list_last_entry(&allocated, struct gpu_buddy_block, link);
->> +		if (gpu_buddy_block_offset(block) != range_end - (u64)(i + 1) * chunk)
->> +			misplaced++;
+>> +	if (cpuc->lbr_pebs_users) {
+>> +		memcpy(&cpuc->lbr_stack, &snapshot->stack,
+>> +		       sizeof(struct perf_branch_stack));
+>> +		memcpy(cpuc->lbr_entries, snapshot->entries,
+>> +		       sizeof(struct perf_branch_entry) * cpuc->lbr_stack.nr);
+>> +		memcpy(cpuc->lbr_counters, snapshot->counters,
+>> +		       sizeof(u64) * cpuc->lbr_stack.nr);
 >> +	}
 >> +
->> +	kunit_info(test, "first %u range allocs: %llu us, last %u: %llu us\n",
->> +		   window, first_ns / NSEC_PER_USEC, window, last_ns / NSEC_PER_USEC);
-> [Severity: Low]
-> In gpu_test_buddy_range_bias_pruning() in drivers/gpu/tests/gpu_buddy_test.c,
-> first_ns and last_ns are u64 variables that accumulate runtime nanosecond
-> durations. On 32-bit architectures with CONFIG_GPU_BUDDY_KUNIT_TEST enabled,
-> won't dividing them directly with the / operator by NSEC_PER_USEC emit calls
-> to __udivdi3 or __aeabi_uldivmod and cause a link failure?
+>>  	intel_pmu_enable_all(0);
+> [Severity: High]
+> Is it safe for __intel_pmu_snapshot_branch_stack() to unconditionally call
+> intel_pmu_enable_all(0) when invoked from bpf_overflow_handler() in a PMI?
 >
-> Should this use div_u64() (or ktime_to_us()) instead?
-Yes, this matches the kernel test robot’s __aeabi_uldivmod failure on 
-32-bit ARM.
-I reproduced it locally on 32bit compiler and confirmed that replacing 
-the direct u64 divisions with div_u64() fixes the issue.
+> In arch/x86/events/intel/core.c:intel_pmu_handle_irq(), the PMI handler
+> saves cpuc->enabled, sets cpuc->enabled = 0, and disables the PMU in
+> hardware:
+>
+> 	pmu_enabled = cpuc->enabled;
+> 	...
+> 	cpuc->enabled = 0;
+> 	__intel_pmu_disable_all(true);
+>
+> The PMI handler expects the PMU, PEBS, BTS, and LBRs to remain disabled in
+> hardware while handle_pmi_common() and __intel_pmu_pebs_last_event() drain
+> PEBS records and reprogram counter periods, only restoring the hardware
+> state at the done label if pmu_enabled was set:
+>
+> 	/* Only restore PMU state when it's active. See x86_pmu_disable(). */
+> 	cpuc->enabled = pmu_enabled;
+> 	if (pmu_enabled)
+> 		__intel_pmu_enable_all(0, true);
+>
+> When a BPF program runs via perf_event_overflow() ->
+> bpf_overflow_handler() during a PMI and calls bpf_get_branch_snapshot() ->
+> __intel_pmu_snapshot_branch_stack(), calling intel_pmu_enable_all(0)
+> invokes x86_pmu_pebs_enable_all() and __intel_pmu_enable_all(0, false)
+> while cpuc->enabled is 0. This re-enables MSR_IA32_PEBS_ENABLE, LBRs, BTS,
+> and MSR_CORE_PERF_GLOBAL_CTRL before __intel_pmu_pebs_last_event() and
+> handle_pmi_common() finish reprogramming counter periods, and leaves the
+> hardware PMU enabled after the PMI exits if the PMI interrupted an
+> x86_pmu_disable() section where pmu_enabled was 0.
+>
+> Should __intel_pmu_snapshot_branch_stack() avoid calling
+> intel_pmu_enable_all(0) when cpuc->enabled is 0?
+
+Hi Sandipan,
+
+Although this issue is reported for Intel platform, it looks AMD platform
+has similar issue. To ensure AMD and Intel platform has consistent
+behavior, the below changes are made for AMD platform as well. Could you
+please double check if it's correct for AMD platform? Thanks.
+
+diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
+index bf631f60757c..d46e442c9d4a 100644
+--- a/arch/x86/events/amd/core.c
++++ b/arch/x86/events/amd/core.c
+@@ -930,24 +930,33 @@ static int amd_pmu_handle_irq(struct pt_regs *regs)
+  */
+ static int amd_pmu_v2_snapshot_branch_stack(struct perf_branch_entry
+*entries, unsigned int cnt)
+ {
+-       struct cpu_hw_events *cpuc;
++       struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
+        unsigned long flags;
++       int pmu_enabled;
+
+        /*
+         * The sequence of steps to freeze LBR should be completely inlined
+         * and contain no branches to minimize contamination of LBR snapshot
+         */
+        local_irq_save(flags);
++       pmu_enabled = cpuc->enabled;
+        amd_pmu_core_disable_all();
+        __amd_pmu_lbr_disable();
+
+-       cpuc = this_cpu_ptr(&cpu_hw_events);
+-
+        amd_pmu_lbr_read();
+        cnt = min(cnt, cpuc->lbr_stack.nr);
+        memcpy(entries, cpuc->lbr_entries, sizeof(struct perf_branch_entry)
+* cnt);
+
+-       amd_pmu_v2_enable_all(0);
++       if (pmu_enabled) {
++               amd_pmu_v2_enable_all(0);
++       } else {
++               /*
++                * When pmu_enabled is false, we are probably in the PMI
+handler.
++                * LBR is frozen in PMI context, and there is no later explicit
++                * LBR enable before the PMI returns, so re-enable it here.
++                */
++               amd_pmu_lbr_enable_all();
++       }
+        local_irq_restore(flags);
+
+        return cnt;
+
+
+
+>
+>>  	local_irq_restore(flags);
+>>  	return cnt;
+>> @@ -4022,7 +4056,12 @@ static int intel_pmu_handle_irq(struct pt_regs *regs)
+>>  
+>>  	loops = 0;
+>>  again:
+>> -	intel_pmu_lbr_read();
+>> +	/*
+>> +	 * No need to read the LBR stack when all LBR users are PEBS events,
+>> +	 * since the PEBS handler updates it.
+>> +	 */
+>> +	if (cpuc->lbr_users != cpuc->lbr_pebs_users)
+>> +		intel_pmu_lbr_read();
+>>  	intel_pmu_ack_status(status);
+> [Severity: Medium]
+> When cpuc->lbr_users == cpuc->lbr_pebs_users and a BPF program calls
+> bpf_get_branch_snapshot() from bpf_overflow_handler() during a PMI, haven't
+> the hardware LBR registers already been unfrozen by
+> intel_pmu_ack_status(status)?
+>
+> In arch/x86/events/intel/core.c:intel_pmu_handle_irq(),
+> __intel_pmu_disable_all(true) clears MSR_CORE_PERF_GLOBAL_CTRL but does
+> not clear LBR enable bits in MSR_IA32_DEBUGCTLMSR or MSR_ARCH_LBR_CTL,
+> relying on GLOBAL_STATUS_LBRS_FROZEN to keep the LBR stack frozen.
+>
+> As noted in arch/x86/events/intel/lbr.c:__intel_pmu_lbr_enable():
+>
+> 	/*
+> 	 * No need to unfreeze manually, as v4 can do that as part
+> 	 * of the GLOBAL_STATUS ack.
+> 	 */
+> 	if (pmi && x86_pmu.version >= 4)
+> 		return;
+>
+> On PMU v4+ platforms (which include all pebs_baseline platforms), calling
+> intel_pmu_ack_status(status) clears GLOBAL_STATUS_LBRS_FROZEN and
+> immediately unfreezes the hardware LBRs. By the time handle_pmi_common() ->
+> x86_pmu_drain_pebs() -> __intel_pmu_pebs_last_event() sets up the PEBS
+> sample and invokes bpf_overflow_handler() ->
+> __intel_pmu_snapshot_branch_stack(), the unfrozen hardware LBR MSRs have
+> been recording branches inside the PMI handler itself (and
+> __intel_pmu_snapshot_branch_stack() then also calls intel_pmu_enable_all(0)
+> before the PMI finishes).
+>
+> Can __intel_pmu_snapshot_branch_stack() still obtain an unpolluted hardware
+> LBR snapshot in this PMI path after intel_pmu_ack_status(status) has
+> unfrozen the LBRs?
 >
 > [ ... ]
 >
