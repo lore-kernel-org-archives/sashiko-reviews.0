@@ -1,113 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.67.36.66
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792671294;
-	b=ydJJJI17dzf3DHtysFbkkVty6bQDHUz3wDqHaSar45QXEKbqG1wGss9nsD5Ju8Dzwp3m
-	 h/2ZccUmPZTrWw1gYI4caAsipIAQQ4GHt5p/RlJ5LMMM5Tjs02VOTdfEdRoyId8WUVrEE
-	 0esN+FMRm1uIc3kG9rBqLLff3bi2S7qX/HRHUiVTysr8BBUdYD/d/xni4XbNXOHxspKmK
-	 YJC9cBp8Pt2n1gkGmXXgnF/Oo0qT6/GkrbuSiSGtVkU49k3hLWUhLq4c6gjBOG4aJDsVu
-	 MVOpjgyZ3ecaFy8g6K+X/YL+cgi7uB+4R64d7gBbAThi3zDg/BdeAPvqBLwnQXtiTvw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792671294;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Message-ID:Subject:
-	 From:To:Cc:Date:In-Reply-To:References:Autocrypt:Content-Type:
-	 MIME-Version:OpenPGP;
-	bh=wFRuVw4Ng1K10XTymm8SnahC9MBBUnCc5kdSoMm+6AI=;
-	b=nIYweLeK6snqyQ1UPd5S/TLfbcTFVx2HEmscnKzHfB79mTVkN1IpgVAvKpiSsio3NiKp
-	 uBDmx1vKRxDAp/IAzVMWwcs5vBXuJU2aS+phIajQeSq8Ylsy7jy+XNYt6+8EucC5GdcAr
-	 pnvmCmRXNKgreqLJK3K0GFvUV7i7gJ5m+q6EM6cRMW5jusp8txDLANxNrSh+DE3KX7s2J
-	 Ap+LjXANJVkpSIPrjAAr4it5muK9F4sPgJbXz+2wb9eITG/Zim82YpxWzpr241BWBfdt/
-	 6HZEaPvtK+VH82E6P/hsvczfYeOzribOQm58ZMyLn5XAeUc7ZGaInQPY65P/FSpJ5TQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=posteo.de;
-	spf=pass smtp.mailfrom=posteo.de;
-	dkim=pass header.d=posteo.de header.i=@posteo.de header.a=rsa-sha256 header.s=1984.8680eb header.b="PGZ/lKkf";
-	arc=none smtp.remote-ip=185.67.36.66
-Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.53.43
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792672556;
+	b=PW295sPIV3hpGlEdRYRxDqpCPsihPIxFDyeDjl11/wdBJSw3hDWbpJNl7Zw+YRTKIaBQ
+	 yAyHJM1dBaYN8eaDUb6quihhckf+zAlS7taGiWdH6sUOODJXqBfYAIka5524rj0FkpT2k
+	 x9AmLXki/tlhHn+ePT2UrXB9RnAPZqtDk3GiPImd/C0OsbAvKLUOEp0VIdha+ARNROa9n
+	 0COsGiZpJujF6xiNyBcH9hNVAih2dEAH3c1xOdKF9YAMhxaHI0/lbW9iiJdtxCK54ttkx
+	 sFhEODiFF6tXq2BNstrRVvy1WM7aiBVc8lp10TrM8zG/LDgRbraXDEBfKFFeyVkfRlw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792672556;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:
+	 X-MS-Exchange-Authentication-Results:Received-SPF:Received:Received:
+	 Message-ID:Date:MIME-Version:User-Agent:CC:Subject:Content-Language:
+	 To:References:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 X-Originating-IP:X-ClientProxiedBy:X-EOPAttributedMessage:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=q1XGNiupac/jj2V/5Zux9ZKLEMDxBHJrQDyFB6h5kX4=;
+	b=MQWXp+iherOsoi7wY0ogGZ0bCumGegzYX/rZD9ahHV8HcFLSaIDXHdajAYhd2nAZweWF
+	 B2p8fFhMpad2XILN3PXqOIAIunvqY3UTNiNJ3GAxnhxpYXEzf5ZKY9om3bBFhuLeCe4SN
+	 Ikk0V5TcBkFJfZuUIAP2joY3S5Li0Vvd/tRbow/hpzamPwSKx10U4s/olcccAR4mfq19O
+	 wQxxYOzpk8HHKKQ04HwzwpljR9m5pSCEsQza363NQQNi9rzOzi3rhevsDV32V5LFgxPEy
+	 amvqAwa7ZL4vOAXo2Xzih5Ch50oaLT4Bh8KiqE8O3297c5OC0/AY2NQUcbdHd2IN+zw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b="z8Hc/d0Q";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.53.43
+Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012043.outbound.protection.outlook.com [52.101.53.43])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13AB606A319
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 12:14:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D13AB606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A3D606A31A
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 12:35:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 28A3D606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=posteo.de header.i=@posteo.de header.a=rsa-sha256 header.s=1984.8680eb header.b=PGZ/lKkf
-Received: from submission (posteo.de [185.67.36.169]) 
-	by mout02.posteo.de (Postfix) with ESMTPS id 90427240103
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 14:14:50 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de;
-	s=1984.8680eb; t=1792671290;
-	bh=wFRuVw4Ng1K10XTymm8SnahC9MBBUnCc5kdSoMm+6AI=;
-	h=Message-ID:Subject:From:To:Cc:Date:Autocrypt:Content-Type:
-	 MIME-Version:OpenPGP:From;
-	b=PGZ/lKkfeV+yXU4qoVLg03+1fGLNZz4otQyp4SNi6H7cbOeIEeGL1fkeVusJQZafi
-	 A6UPuiZhY3pM/RgN/o6KZ+J0meNxWPb847zteBexcuzWv3q7C27SW3LXYL6RriiOg7
-	 2KZ5koObsTDoTK5BVFdSX7QCD/TWaipXHs8h8Trw7YWx3ZBT/apWzen8kreTSBF/ar
-	 +znGUxdG+FX5knvRc6AKkf4AGyyafujF5jahQ5j2VBMjpHiNs4zu6gKOqneyDdHhrs
-	 C0G8YVKpKjdLMVE2tv5SQ+QkTZUMQCv2lLrtJ0NB/HQuiNVl7epNKYA7nYSbqAgmrX
-	 cz76xCB/FpV+g==
-Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4j9Q7s6JsLz6txm;
-	Thu, 22 Oct 2026 14:14:49 +0200 (CEST)
-Message-ID: <b645a10a615430fa43ff79091cfb9dd1df944695.camel@posteo.de>
-Subject: Re: [PATCH v5 3/4] rust: serdev: Replace `active` mutex with
- receive pause
-From: Markus Probst <markus.probst@posteo.de>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-serial@vger.kernel.org, ojeda@kernel.org, gary@garyguo.net
-Date: Thu, 22 Oct 2026 12:14:50 +0000
-In-Reply-To: <sashiko-outbox-181411@kernel.org>
-References: 
-	<20261022-rust_serdev_probe_refactor-v5-0-a27d862a415a@posteo.de>
-	 <20261022-rust_serdev_probe_refactor-v5-3-a27d862a415a@posteo.de>
-	 <sashiko-outbox-181411@kernel.org>
-Autocrypt: addr=markus.probst@posteo.de; prefer-encrypt=mutual;
- keydata=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
- jfGillcaQOqFZ3WwVqyzG1BUfTow==
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-oCjhZOCA51w+IqGmpzV8"
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=z8Hc/d0Q
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=sRT3V7xazzwpp43d2U52VsfRnRHRpnvv3K/syp7bZWl+qEvJZMXphpbdeolEbISUaej67XiBWvhrfb8fUHxj4O3eUUOedRKvcbaLrd2KEmE2iZjc8hm8FyJarkKNTkeT8w/bc+b4d86Jty7gquKZRapEhs7rwgHTgKiuZA6Xjfh6zj0XbuV6jaGCf7iUImqLQrl7RckZ40XqOSlW+bzfJwrPXMeW5rmKBccNX2yEyv+WDPciv2UguRqjjDbdqwvFV8dpp+RM+eRseW0h0r0BRM+jsHNaVrSXRDjt8tEjye8SCRBKMW+jbva8ejO4ppaHmrZzaIZz/mvpNTgFQRHlyA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=q1XGNiupac/jj2V/5Zux9ZKLEMDxBHJrQDyFB6h5kX4=;
+ b=Fk9G8zyrEF8POXeq2Le0ouXHCKZuxFkUA8bVr0vxBCy6WobVQMZ0X8cATONAxrkE8yXiDLUYHH4R3plB0s2nkCp4jRvNuD22LLQdrp4zgilBpTWJp/gzc865UAx+QGs58DZzQ7NMHyZo2Bww+Ra2mznJ4Lm7QPRB5mWJhMqyy2pyTCjY86SFAEAVXxwY1mAxA1MhQF16tybLsnT09Un1sVmP01MaaGg1WKjJho9yQa0z9Y79S+i9VIXOt95tXFcWNEPsHldLHjEGN0PxMPXDuVccGvAt0YxhMWGN0MCrzPLWvNV8TgO1/wqaG/2jWmHO7AADSEEWISwU4H1MPFI85A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=q1XGNiupac/jj2V/5Zux9ZKLEMDxBHJrQDyFB6h5kX4=;
+ b=z8Hc/d0QRestjtjMlqzMfkFRNneNFd9nVAAukrqIALjlTbOhMdLbCJKTR+c3tE49wDkvey9DX9rUIzIpBdFUTTnjVV6FX4LBUj5r+3RM4j8VQExsDEXuXpPTpV4sDhOR+1dOQufFQTWCHvSW46x9qzepmj7bLcuwJDS3OnO903Q=
+Received: from ROAP284CA0066.BRAP284.PROD.OUTLOOK.COM (2603:10d6:10:a9::17) by
+ LV2PR12MB150617.namprd12.prod.outlook.com (2603:10b6:408:3a9::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.16; Thu, 22 Oct
+ 2026 12:35:52 +0000
+Received: from BN3PEPF0000B36D.namprd21.prod.outlook.com
+ (2603:10d6:10:a9:cafe::46) by ROAP284CA0066.outlook.office365.com
+ (2603:10d6:10:a9::17) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.546.17 via Frontend Transport; Thu,
+ 22 Oct 2026 12:35:51 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BN3PEPF0000B36D.mail.protection.outlook.com (10.167.243.164) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.569.0 via Frontend Transport; Thu, 22 Oct 2026 12:35:51 +0000
+Received: from [192.168.1.4] (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Thu, 22 Oct
+ 2026 07:35:49 -0500
+Message-ID: <267fe25f-79af-477e-be8b-c5c3def9b2dd@amd.com>
+Date: Thu, 22 Oct 2026 18:05:46 +0530
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -117,119 +98,187 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-OpenPGP: url=https://posteo.de/keys/markus.probst@posteo.de.asc; preference=encrypt
-
-
---=-oCjhZOCA51w+IqGmpzV8
+User-Agent: Mozilla Thunderbird
+CC: <sarunkod@amd.com>
+Subject: Re: [PATCH v5 7/7] iommu/amd: Provide kernel command line option to
+ enable GAPPI
+Content-Language: en-US
+To: <sashiko-reviews@lists.linux.dev>, <kvm@vger.kernel.org>
+References: <20261015064515.10700-1-sarunkod@amd.com>
+ <20261015064515.10700-8-sarunkod@amd.com> <sashiko-outbox-172380@kernel.org>
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <sashiko-outbox-172380@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B36D:EE_|LV2PR12MB150617:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2e45b245-e73b-4282-fe33-08df303901df
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|36860700016|82310400026|23010399003|376014|6133799003|18002099003|22082099003|3023799007|10067099003|11063799006|4143699003|261021135927099003|261021123027099003|261021130227099003|261009223027099003|261021121427099003|261021133027099003|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	ce95KYOnbePHN+gG9JVwaj4dFV4qyPGcJVuxzxcBQh4p4j13K/ZgbgaDh1zqA3T3PF5czlnq7xJrQTStP9CF8CzDu0iHdKva52r8HWD0c2y0XSi8MfNDUjBJpz4Ece0XpWVvK7UbEdr+cOzBU+uEcCSk408d73kRRTvlLl3uz6Tw4FdxRJdrNA6hUPZPFMAS6RToWe3IKQtgXrT5+DTG3qD5HGB4I5YeF31W+PimYdxPM9zBEpjDaWY5PGEG0qSgI7xwSZ0i1zg0NHRTyf22NQFYCnxuUdTP/Amzsnb1arGhU+4gCIF7TeMpxQhkjtanck/ikF3pctLLrdAwjTg82Aa/7ZxvtdU7qJ0A39DMxWDQFRxH3jQlbgo1UW/QMv+ZgIsleT/OfN4ACMukgT1qGyMS2D5RtHOhT0TS4gi+2eWBjIkEBu4DFdLU+flME72Ee+FsIYOy5jfSD47j1qSw2XqS6WwV/ZQTn10bBtcHHGxAovEpiZ+VfslO5o6ooT+g3aQxdQorOx0OQmqkiwLvYCuRKwcwVnhOaAKNeIiHfwxB9f3vfrNVWBQFZ1s5cksWm7lp0HJOvZh8KHlemSPyD1OxNgTQv0fiuve0oBKG8lSVOJgcnIY4gako/OKcU0F297wWkuS1H3QGM+jsNl2e5xnCnY1xFRdIIuCbq2re02OA7jRTN3pGmz2ncIjS2Sg9KDS63CTmNOi7ic5RI3aA/A==
+X-Forefront-Antispam-Report:
+	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(36860700016)(82310400026)(23010399003)(376014)(6133799003)(18002099003)(22082099003)(3023799007)(10067099003)(11063799006)(4143699003)(261021135927099003)(261021123027099003)(261021130227099003)(261009223027099003)(261021121427099003)(261021133027099003)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	G3vrOaygm32LkjXJyoIWmdvRCnzep/vnnTkOG/Ic1q8rrjsP13o+1Np1AtSJfDQFFsRvLs/t7aOPZHreF67y5I/KO7V/uI2BOzT0NPOHxckyPun4Ab4vXa/YgUygldcYyD1N4LC3KDKvDliRIb0Qi4y5JEnpBECTeKqC+7mklZIkv0DoNH00PhahPiA2vR49ho8WhFTu6ZI/8w1AdQi2uIL+co2Zx1WIfi1FDomYNntjQqFhe0SoBq900mvGWOET/WshVA97EYqSERqn9Q2JGGASjjlN76WIZOu5hU22xyzl1SVAAp4jKIHZOSnbzhVZ+N9qhirCTrrxc4EA0VlF2SmEb7avamD0zc9CErX6bd73WGb3LxzV0Lb9vYd1a+quSkgjrfEO7ujMqZT8q96SZUkCfXDa1PdA03oyZJGMr+NN6NClRpdDixXHS93U8N2L
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2026 12:35:51.2186
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2e45b245-e73b-4282-fe33-08df303901df
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BN3PEPF0000B36D.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB150617
 
-On Thu, 2026-10-22 at 12:04 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] rust: serdev: mutable borrow of shared ref in remove_callback(=
-)
+
+
+On 10/15/2026 12:38 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] iommu/amd: NULL pointer dereference in iommu_poll_ga_log() with GAPPI
+> - [Medium] iommu/amd: amd_iommu_gappi state inconsistent on VAPIC fallback
+> - [Low] iommu/amd: missing GAPPI in feat_str feature name array
 > --
->=20
-> commit 7873e32e25475629867563ba84c28fd279d7f25d
-> Author: Markus Probst <markus.probst@posteo.de>
->=20
-> rust: serdev: Replace active mutex with receive pause
->=20
-> This commit replaces the active mutex in the Rust serdev abstraction with
-> serdev_device_pause_rx() and serdev_device_resume_rx() to fix race
-> conditions during probe failure and driver unbind.
->=20
-> > diff --git a/rust/kernel/serdev.rs b/rust/kernel/serdev.rs
-> > index 17ca504b7f8d6..c16d6593a8d2d 100644
-> > --- a/rust/kernel/serdev.rs
-> > +++ b/rust/kernel/serdev.rs
+> 
+> commit f3f34d41f6c88bbaa635da8109c52cf22d09f580
+> Author: Sairaj Kodilkar <sarunkod@amd.com>
+> 
+> iommu/amd: Provide kernel command line option to enable GAPPI
+> 
+> Enable GAPPI when the IOMMU GAPPISup extended feature bit is set and
+> the kernel is booted with the amd_iommu=gappi kernel parameter.
+> 
+>> diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
+>> index b89a2b3df0a49..51edd617ddca2 100644
+>> --- a/drivers/iommu/amd/amd_iommu_types.h
+>> +++ b/drivers/iommu/amd/amd_iommu_types.h
+>> @@ -78,6 +78,7 @@
+>>  #define FEATURE_X2APIC		BIT_ULL(2)
+>>  #define FEATURE_NX		BIT_ULL(3)
+>>  #define FEATURE_GT		BIT_ULL(4)
+>> +#define FEATURE_GAPPI		BIT_ULL(5)
+> 
+> [Severity: Low]
+> This isn't a functional bug, but FEATURE_GAPPI is defined as bit 5. 
+> 
+> In print_iommu_info(), bit 5 is still hardcoded as "[5]" in the feature
+> string array:
+> 
+> drivers/iommu/amd/init.c:print_iommu_info() {
+> ...
+> 	static const char * const feat_str[] = {
+> 		"PreF", "PPR", "X2APIC", "NX", "GT", "[5]",
+> 		"IA", "GA", "HE", "PC"
+> 	};
+> ...
+> }
+> 
+> Should "[5]" be updated to "GAPPI" so the kernel boot log displays the
+> correct feature name?
+> 
 > [ ... ]
-> > @@ -231,6 +198,12 @@ extern "C" fn remove_callback(sdev: *mut bindings:=
-:serdev_device) {
-> >          let data_pinned =3D unsafe { Pin::new_unchecked(data.assume_in=
-it_ref()) };
-> > =20
-> >          T::unbind(sdev, data_pinned);
-> > +
-> > +        // SAFETY: `sdev.as_raw()` is guaranteed to be a valid pointer=
- to `serdev_device`.
-> > +        unsafe { bindings::serdev_device_pause_rx(sdev.as_raw()) };
-> > +
-> > +        // SAFETY: We already established that `data` is guaranteed to=
- be initialized.
-> > +        unsafe { data.assume_init_drop() };
-> >      }
->=20
+>> diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+>> index ef23e0755c32d..c536e0b3c4ff7 100644
+>> --- a/drivers/iommu/amd/init.c
+>> +++ b/drivers/iommu/amd/init.c
+> [ ... ]
+>> @@ -3025,10 +3035,19 @@ static void enable_iommus_vapic(void)
+>>  		return;
+>>  	}
+>>  
+>> +	if (amd_iommu_gappi &&
+>> +	    !(check_feature(FEATURE_GAPPI) &&
+>> +	      AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir))) {
+>> +		pr_warn("GAPPI is not supported.\n");
+>> +		amd_iommu_gappi = false;
+>> +	}
+> 
 > [Severity: Medium]
-> Does Adapter::remove_callback() in rust/kernel/serdev.rs fail to compile
-> when building this commit with CONFIG_RUST_SERIAL_DEV_BUS_ABSTRACTIONS=3D=
-y?
->=20
-> Earlier in Adapter::remove_callback(), data is bound as an immutable
-> shared reference of type &MaybeUninit<T::Data<'_>>:
->=20
->     let data =3D unsafe { &*private_data.driver.get() };
->     let data_pinned =3D unsafe { Pin::new_unchecked(data.assume_init_ref(=
-)) };
->=20
->     T::unbind(sdev, data_pinned);
->=20
-> Because MaybeUninit::assume_init_drop(&mut self) requires a mutable
-> reference, calling data.assume_init_drop() fails with rustc error E0596
-> (cannot borrow *data as mutable, as it is behind a & reference).
->=20
-> Since receive_buf_callback() can still run concurrently during T::unbind(=
-)
-> and create a shared reference to *private_data.driver.get() before
-> serdev_device_pause_rx() is called, data cannot be changed to a mutable
-> reference at the start of remove_callback().
->=20
-> Although a later commit in this series ("rust: serdev: Simplify callbacks=
-")
-> refactors PrivateData to store T::Data directly and removes the
-> assume_init_drop() call, should this commit dereference the UnsafeCell
-> pointer directly after serdev_device_pause_rx() establishes exclusive
-> access:
->=20
->     unsafe { (*private_data.driver.get()).assume_init_drop() };
->=20
-> so that git bisection and standalone backporting remain unbroken?
-Thats true.
+> If VAPIC is unsupported or disabled due to SNP, the code returns early just
+> above this diff and falls back to legacy mode:
+> 
+> drivers/iommu/amd/init.c:enable_iommus_vapic() {
+> ...
+> 	if (!check_feature(FEATURE_GAM_VAPIC)) {
+> 		amd_iommu_guest_ir = AMD_IOMMU_GUEST_IR_LEGACY_GA;
+> 		return;
+> 	}
+> 
+> 	if (amd_iommu_snp_en &&
+> 	    !FEATURE_SNPAVICSUP_GAM(amd_iommu_efr2)) {
+> 		pr_warn("Force to disable Virtual APIC due to SNP\n");
+> 		amd_iommu_guest_ir = AMD_IOMMU_GUEST_IR_LEGACY_GA;
+> 		return;
+> 	}
+> ...
+> }
+> 
+> These early returns bypass the new fallback check added here that sets
+> amd_iommu_gappi = false.
+> 
+> If KVM subsequently reads the stale amd_iommu_gappi flag and attempts to set
+> up IRTE entries using GAPPI parameters, it calls irq_set_vcpu_affinity()
+> which triggers this check:
+> 
+> drivers/iommu/amd/iommu.c:amd_ir_set_vcpu_affinity() {
+> ...
+> 	if (WARN_ON_ONCE(!AMD_IOMMU_GUEST_IR_VAPIC(amd_iommu_guest_ir)))
+> 		return -EINVAL;
+> ...
+> }
+> 
+> Could this result in a kernel warning and failure to configure the affinity
+> since the IOMMU driver actually fell back to legacy mode?
+> 
+>> +
+>>  	/* Enabling GAM and SNPAVIC support */
+>>  	for_each_iommu(iommu) {
+>> -		if (iommu_init_ga_log(iommu) ||
+>> -		    iommu_ga_log_enable(iommu))
+>> +		if (amd_iommu_gappi)
+>> +			iommu_feature_enable(iommu, CONTROL_GAPPI_EN);
+>> +		else if (iommu_init_ga_log(iommu) ||
+>> +			 iommu_ga_log_enable(iommu))
+>>  			return;
+> 
+> [Severity: High]
+> If GAPPI is enabled, we skip allocating the GA log, so iommu->ga_log
+> remains NULL.
+> 
+> If the previous kernel used the legacy GA log and left an interrupt pending,
+> or if an unmasked interrupt triggers the handler:
+> 
+> drivers/iommu/amd/iommu.c:iommu_poll_ga_log() {
+> ...
+> 	head = readl(iommu->mmio_base + MMIO_GA_HEAD_OFFSET);
+> 	tail = readl(iommu->mmio_base + MMIO_GA_TAIL_OFFSET);
+> 
+> 	while (head != tail) {
+> 		volatile u64 *raw;
+> ...
+> 		raw = (u64 *)(iommu->ga_log + head);
+> ...
+> 		/* Avoid memcpy function-call overhead */
+> 		log_entry = *raw;
+> ...
+> }
+> 
+> Won't the while loop unconditionally dereference iommu->ga_log which is now
+> NULL, crashing the kernel?
+> 
 
-```
-// SAFETY: We have exclusive access to `private_data.driver`.
-let data =3D unsafe { &mut *private_data.driver.get() };
-```
-needs to be added after `serdev_device_pause_rx`.
+This is a valid concern. This is a pre-existing bug and can arise if
+second kernel has IRQ_REMAP disabled or fails to enable ga_log. Hence it
+is better to address this in a separate series.
 
 Thanks
-- Markus Probst
+Sairaj
 
-
->=20
-> [ ... ]
-
---=-oCjhZOCA51w+IqGmpzV8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQJPBAABCAA5FiEEgnQYxPSsWOdyMMRzNHYf+OetQ9IFAmrZ/jkbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyAAoJEDR2H/jnrUPSKTsP/j6x/sPJ/DlS+DXMpdhN
-n9uuB25r6bXrHTaRuWBVr2lgwDPRf1P5zeIKjZmMXEZSv0l4PFLhsiVexAcgqcQV
-zMrHAX4JcceX8+XyH5oM5C8lKzUnDKJ6eWMij5gE0gxsmtNimJ0Zyj/82aVqy2cy
-m3r6vlX1znUoNF9YMuNoy5vI28PDk/5lvQ1nm8fTCp4x/CtU23L3DluooiylMXeq
-DW5/Xf4LzY7RGbolFwyfZ+tXPj0jaWYQet2CuIo5Y1j4nQSvD6rujm1yJeG/m1TK
-UqOOFgj4lEuS9A3YGFhBsjHrUZOtbvzv3k/B4M51TVvEE+XPvyvKbnbKJJ7AyEvM
-ZkVPaexOeLa+5u0gkGdIypZfLJ44BhnZEWlVeAi8I6QvyxV04eudq+96erfwM+pF
-t1uFTjfRgXhFrKQkSS1/HAQjOaUIRZ+lU09fERkkMT5XdpcgoDqqLxb6+qbPqQ2L
-a5rhmOvIwfNM1ReZ75AQUagJSUQrI3zJkKH7BVlo9wqxkQi9gpvJ/GZdS0xgIdlr
-j+FV3rq8o02hnwm14fSOE3cznXbHcbwUFielh1iSzXIuIxqmIM/8UIvn8wTnVytt
-WTLdcdZWLHDCrOrCCKl8vfBFPXzxIZNSxyJd1HUt8AV6prJCyAS7WMqYA3azmCEQ
-egy9Y1DfG6rvBfQCcRBBabOb
-=ptDe
------END PGP SIGNATURE-----
-
---=-oCjhZOCA51w+IqGmpzV8--
