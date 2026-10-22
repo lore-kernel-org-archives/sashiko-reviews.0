@@ -1,57 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=216.40.44.13
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792679239;
-	b=ImT0SR/mxLLk5N5kHAbbBHju6Oq5e03YAwFrhP6vDakceUVdqBxHRxzQVR7s0Ovy52cC
-	 W/cBeQqxOJCC2Vieh+tyy8p2ggNExotZeA8rXPXWVAHdBJVomMxl22Krej/7S9sjrlORT
-	 foH9YnS+uGqMZjMvf3ygEzZFN45CGFBXnP5qrINNDYSGApCZbeGCTZ/YZhKybtiN7f7uA
-	 7Q+W4jr1PSjEWtnEy43LEGNBR7O2cLsKfqemQtPgyiQklXm23KbICxVdwOtCW6pltELVR
-	 UJENhuJ2qEzLTS/AEUunJMn6eP1pGPPH8Wg2HxFKeXePEmRaPOq7p7Nk/QHbiHqbMIQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792679239;
-	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-Rspamd-Server:X-Rspamd-Queue-Id:
-	 X-Stat-Signature:X-Spam-Status:X-Session-Marker:X-Session-ID:
-	 DKIM-Signature:X-HE-Tag:X-HE-Meta;
-	bh=PWTwdXz739qDubZv3PzMlWOlUVDAFnpK6YYpPguc15I=;
-	b=GztaTNnQFW0bvo8N5soh6rFpNsfGOQb1NqS1jSSl6jdToInjZVlCYdTKfAXOnqUMEiw8
-	 RO8oVmyHyXfT3YoGwzfZBiTUkeTUsVspYaGyVdUCWn4UpauIFV41hHUf+rmgRkM7dKFGU
-	 ey4GvCtjYp/dXnvVRkw1lohe4PP2tpNzYL+EyCPSSVyevPGLkkHr7Cb+Yy/IZqB7WSk3F
-	 PwnalboB6/2EqYXK086kbX3tg9+KD5mdhVPOWkv77cd5hzMurVRK8kHhuZRkcW0u88O3t
-	 dAodkDrjZKAwmXgOS/4NZwbTh0W72PquR/uFFXbkwWGCeRPnsy9dxap1hRl4mhixjOg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=goodmis.org;
-	spf=pass smtp.mailfrom=goodmis.org;
-	dkim=pass header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=5Fdqmxat;
-	arc=none smtp.remote-ip=216.40.44.13
-Received: from relay.hostedemail.com (smtprelay0013.hostedemail.com [216.40.44.13])
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=40.107.159.27
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1792681623;
+	b=QYJd3Ii1rbNPqFbJrKdYswMYZMVAtf7h1b8Aj1NnNSfHbwXYxi7ndH7UhBkXivk7RIs3
+	 N8llqjUELKsrQGgpQ7SiypHrOYH53XDM7gJrtsG4/STl7lmP9j0MSXZ1pIPuE+lNF4ilQ
+	 wPLw+LEz73PytrYj+Wva4j+zsE0fIQnvmRviXL0loCXdMMg01r26BnaFlGUJC+Ie/rSVN
+	 IHv1hNYUBUO/ie2VTzg87tbIAKMzDbtZQ1wy06Q/dPJlySsD+30d4eFDDWXZhdFsVlLOR
+	 luQOyGoamFuoLycj96/eRiOlUXi0b3SwTbzbk4QJM7qF2HhvSj4aTgpRYvRyJE5q7wg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792681623;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=gtdaMGwQx2oylKbPT4vD88Q90VMr1emYZVd12h8dLgA=;
+	b=lc39qX/76Loj47qjcmV0HcYltrkpZlIowYl6SL9yu1RFtK1QLVCXp/IakpSulz/hBZed
+	 sKo27D/iW+bHymF77pWDL3dQJBbeCzBQ2TcR0NwAmCZ5CXsMD1liuI7F6Y1BQ1RAb4Xol
+	 EYYUZdC/sjKjwnviS02ysAKCzpJRiK/FxW5S9KMB6Qphbd86LTwys9n74PTvfvHJ3sd6Q
+	 uB00x8/qNfUV0t8pBA0mV3FLv5GMTTSQE4rlYrWkT42HnJk8wJtrc58HjLrkHsHb6ysWv
+	 DcfHqhjMYodM4MxvFcu8MXO1BSv/Vt6y/4GK4JfwRLbygWPLRUXtzfCp0rWbmHDv5Jg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=usk40kLP;
+	arc=fail smtp.remote-ip=40.107.159.27
+Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013027.outbound.protection.outlook.com [40.107.159.27])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF022606A319
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 14:27:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BF022606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078AF60A4AF5;
+	Thu, 22 Oct 2026 15:07:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 078AF60A4AF5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=5Fdqmxat
-Received: from omf07.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay05.hostedemail.com (Postfix) with ESMTP id F0FC340139;
-	Thu, 22 Oct 2026 14:27:10 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf07.hostedemail.com (Postfix) with ESMTPA id EB69C2002C;
-	Thu, 22 Oct 2026 14:27:08 +0000 (UTC)
-Date: Thu, 22 Oct 2026 10:27:07 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, "Song Liu" <song@kernel.org>,
- linux-trace-kernel@vger.kernel.org, live-patching@vger.kernel.org,
- mhiramat@kernel.org, mark.rutland@arm.com, kernel-team@meta.com
-Subject: Re: [PATCH] compiler_types: Do not mark inline functions notrace
-Message-ID: <20261022102707.67a8a010@gandalf.local.home>
-In-Reply-To: <sashiko-outbox-180771@kernel.org>
-References: <20261021222255.3124940-1-song@kernel.org>
-	<sashiko-outbox-180771@kernel.org>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=usk40kLP
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uUPF3lNiW2jMr1x8+NTJRuqSBE3px56ZMQ0qVCNj8lfhDMBPsP/d6x4Qgn+oPHVDtU4sethMQ6VSvwUk0V860++jljDq6lVT4p6PZgnjWM5VqJhamqMdHPtE5OGFd4j4MkgjEzMvHxGOoaXiN8IWlxf4Uabaykpxky2YxwXlHFrH3o3Jpmi9qBwj9X/zKWML8Olt3M+aLMqAtdEuNw0o7Iq4woSsTV6dldpPzRsb29EvCZiQrk4Zms2yqMUP9Qq/GnHywsAumzhUrkI4UDaTpeWSQ3irnqvdkzSTOBc9fAwrOvJKcUEwde7ccPtyPRHK8buumOJFP3AbLqh2aNepxQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3ogMuLJcyv1316ylpAyz0ppuB5mK0UlabHTvlVh4XBE=;
+ b=puZXUqrc3DhvPmt3w3ShmcNlrke3UDPOqw9TnDZvfpYT7eYnffohN5RFAK0RaRmH1+iEvJj9CvKCb0LUxv0jLCId7cV84iiygekmzV7QMefl3NF7lbdNruAqncWjqakOSSSupUKuBc6NZN8YOiP9aOUbThLPJJxQ13JWp4D7GJZFVi0K3Ik5Be5Y5VU0hTVeByJpWFlinB6ejazCPm3P+vPSd16xt2i3EtYBqzU1MYLO+h2Go6Q8aGkKTPKQRYMfO12QagIa8Eh8vxcQukm/O2I6D560G/+kKXoiC2VbYQo7NnvnLFKh1paGLObKXSnzaG1StRkJS/EWYK8Yi3DxTw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3ogMuLJcyv1316ylpAyz0ppuB5mK0UlabHTvlVh4XBE=;
+ b=usk40kLPLhs8viKA5o9EVusPtKvp4KjsKBSttpr90//7akk9LeXWCAgOzf8whjGlX/50MXMRkagR8hX9r2pFs4FTPMLBNkRxSxa1BGiYNoEzkGj3ltXPnugFiktDjywSIJUGFDX1DXhPiAc7Re1PI3BuZeQoTq+/DSjcuoJHUKA7TevKSoltwkSI/lIFyS2HZl4FiVEELerq4KkrFNrZ5Il56P/eMdzfIq59mb7ZaWF4KcqGFEAzbmqpIr8uwf3PBTnNGkdU1Daq65RU+CatQ1jCXzx6yEtHHoJ0RPCrCroFFIdG+MpYknTW9CwhPZ7dh+K14xTH0L8hEMThKT/m9A==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by GV2PR04MB11376.eurprd04.prod.outlook.com (2603:10a6:150:29f::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Thu, 22 Oct
+ 2026 15:07:00 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0546.012; Thu, 22 Oct 2026
+ 15:06:59 +0000
+Date: Thu, 22 Oct 2026 10:06:50 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Ernest Van Hoecke <ernestvanhoecke@gmail.com>,
+	devicetree@vger.kernel.org, imx@lists.linux.dev, robh@kernel.org,
+	conor+dt@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH v3] arm64: dts: freescale: imx8mp-verdin: Add Cortex-M7
+ remoteproc
+Message-ID: <atomiojI98tsqnJg@SMW015318>
+References: <20261022-verdin-imx8mp-m7-v3-1-af284e28531d@toradex.com>
+ <sashiko-outbox-181644@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-181644@kernel.org>
+X-ClientProxiedBy: PH7PR13CA0020.namprd13.prod.outlook.com
+ (2603:10b6:510:174::27) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -61,408 +99,148 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Server: rspamout05
-X-Rspamd-Queue-Id: EB69C2002C
-X-Stat-Signature: z8wcboef5fbactoco8c59uau8dnhi14c
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX1+Fk0YnJXEkfIzfEopqidMPlITZ9tyiqGg=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=PWTwdXz739qDubZv3PzMlWOlUVDAFnpK6YYpPguc15I=; b=5FdqmxatsCiJYKQ+WJHedhTJckXpxevfeZ0Tp4gv6uHGTLiYtDBtTC/6iwuayc82M0KuRZfnduQRGLRlIj5PzwIFJCpto8+aoBNHWugjyXJteGKTPYuQE0/ZvKOdzAmqeM+stHk0WNLTjmUWY7efJ9H5jJHYx6Cud/YEWFo0U4E=
-X-HE-Tag: 1792679228-962234
-X-HE-Meta: U2FsdGVkX19FyUWBZC7c1BWpWOBChmEKZfA+CCr6R8dZWyAh/yUrXiC6XMiuC0POAShe+79ImUms6eJRp4xNHLHnT38VxHGn1xTLelyUrGuewUEV/qMVmfkhPQjloHaDFmxKGiYOv792pXOQeg4EsZ4TRwxqS/xrNWP1L8xmD2XzjAxjX7aN+yUmBS5orTQnzyqlOx2S1sUVBFPR5l7ns09Ex2OJvwl/szh7ZodqdDMui9/EgrOW2tBj12BvfuwYZB8YD3kKiHsKUDk+0lHdDZqRm6X2g5OPBzcubtSuRtGWBPeIYKcBsCUPCQrPjLdQrg7IkNVg2rT8Eei2ReXYSl2zdbQEPpTKpCXeJN6TivsdxLEkXDFEWw==
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|GV2PR04MB11376:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2b81dc32-d1ae-485e-aaba-08df304e1ec2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|23010399003|1800799024|376014|366016|18002099003|22082099003|4143699003|11063799006|261009223027099003|261021123027099003|261021121427099003|10067099003|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	wQXbi2otXJkZZv4wkonpmH05snZAKJX74iIvvb89rNrDUqvOhiAQuBWvAgxsx/wheGUJpL1ObDxRW4o+Rx9iDxdANrQhe8qFcY4lr2h6cyns8swrMlh4N4coFqMsqD/0GheJFfgbrRz90A5zaULApSjkn84PJr6GthCAWk85p5CsUdOzf+GRrpz2YyKiOtuSghCZFPKem/4q3jWcIAvmORHV89yol9ZjROqJM1lm/0ZowXwp/jksFVsg3aMS3g7WlyzTE2X11S+KYfdm5qZfHP23pEkqLth36j2+2AP9O8AVe6/GT8+YPDmMLpMdWuKbJKlPAUsoqDw035A2Zy3rCygIqvghqDszptH7/M1YGAqjFeRiu/6Xdb75iaMGdUaEJhAVQP0eGBVHH0w/7GkjnRZCyLVtXD4cISuJBEEFw+blkN7aap6NX6fHCVCp9P+SZy2xGjVrGsdL5SUbbEvzyP2UWRWn7RHgOwM7s03de0HkN9HKv8VAlXI/NJ8eh50OYGqW+7ZLoGo4xPh19woi2rXdU+/09pPveRUCI5QUIUStwDhn9qm1lG74uCu2Ah1beMx/b/oedFg4j+i47muGt5YBh0arLlo+TLlfJmit+Io=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(1800799024)(376014)(366016)(18002099003)(22082099003)(4143699003)(11063799006)(261009223027099003)(261021123027099003)(261021121427099003)(10067099003)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?trJcJy4BOjikJ2ONHLO1hDGPPFNXcZ0Rhzqloj+HqPgQaojYZ4PaLiaZq2?=
+ =?iso-8859-1?Q?UONuum0NKLqViZrg6rCgyp2/pOxO6i8Xap7Hafs3qxN4C9Qm3jVZs1X5nB?=
+ =?iso-8859-1?Q?YIWREWx0G3k4UOLT80RcZoHIs9MxHmRyhcZHsQ65i6O+c/5FzPX1MglNCt?=
+ =?iso-8859-1?Q?aRV6oTZ38aypMMYB93LbayKbaOlUkvzIHivSFEBtunpril23i1cCeC4Nej?=
+ =?iso-8859-1?Q?TmmiszV+90KKZ55nW6Q+wnmWID9D60ajCRtSV9NbMH7OhOmGq0L2UaNy/a?=
+ =?iso-8859-1?Q?GYEBQ4lI8sK1JwevOLZEKn+nPhCiJhILl+F7t8E7KR+qMUXh9gfwXHFxT2?=
+ =?iso-8859-1?Q?cYwXtZU8JrPPP7C4+haDqsi9YxuiyKkQ7Q9rN/Y4lLykpI+4VMYyq8Xf3+?=
+ =?iso-8859-1?Q?Kw4v9axye9SSnxr5DGk7u8n6ET6GwUI6Oygr7PpuVl0YcBLkTFfCjK2IDc?=
+ =?iso-8859-1?Q?BFHCeWt3wD82WVxvIAl8UX8DIOTsr/SiEvuOnW1zCezqTdCIBfMnwKsVGg?=
+ =?iso-8859-1?Q?TQfm5NcXqrRd7k36qh/LTc98jOZfcK+B2avPfZlhaaqGuO6EzvvIzQiyTM?=
+ =?iso-8859-1?Q?Pz/U5xxGGVRSse2ZRJuMkM904fVllTrSdsoWDo6721z50kmRvR5YCFEXa2?=
+ =?iso-8859-1?Q?sS+FnidJAZktg2QeUczG6PK9UaZ1nA9xZWHd9nQKOL2IyToR1XGum1N0aM?=
+ =?iso-8859-1?Q?9gLCv+dSsMPgn0DZJERN4tVsJLp8LiWdu7ds4AwePACWRaQ8I3jGBIvLfw?=
+ =?iso-8859-1?Q?WMd0B34gZr5hywrIb9b1vZ62yt7denLNCe/w4hA1Xlh+EhczZVRI1iy/Yp?=
+ =?iso-8859-1?Q?Y0NpZLcYbVxH5zwrRbo5+ZInu0+xvhBFkTfRM15rQd0RsV31lDuaspU3GZ?=
+ =?iso-8859-1?Q?d/y8/YDBoWWUXhUvNIU/LIdAlzfQrww4YzNAWravQrIPr04LPgA7R8N8TK?=
+ =?iso-8859-1?Q?TgBUTWSCyfOdbOkgdJhV40ZniMFmTE2RUj6Vjyvcjz/pA7SIlnobs8xvZP?=
+ =?iso-8859-1?Q?Bb3UZprQwPGIMdLUnmn44hIqFFFKxmCG0MGyZP3daFQjXzG/HSTq+R2qEb?=
+ =?iso-8859-1?Q?YXqQFbybZ/UdNugtXDy9fhhXXExumn8U9NAtdk7wH2fwd9xzxXD8loZLrE?=
+ =?iso-8859-1?Q?vi3p4Ue5NRcVCh6vsB5UCgQ/R8BS6lHetdSUcg4+v05jseVSV5OVLgdhE1?=
+ =?iso-8859-1?Q?7M5JlVrQyKArE6Ns1mERMiRKFIghDh5xRd1w11qgC96TiH2DflyLogsRRt?=
+ =?iso-8859-1?Q?ROMSU/Qg1+CN7z4x9gxKnHHT4ai6Auj+YxKJlRlITwvhlzNnIq2D/A0TLH?=
+ =?iso-8859-1?Q?J6In4khWPp+QBOuBrNKdmRArnDd8SamBOocFTX75gbFmcF/vX0Zeh51szG?=
+ =?iso-8859-1?Q?+9FpwXYn+jcbMKVfORMPyvjJm567cJFmCRpwKl80fEa24giNMLXaqv3tJE?=
+ =?iso-8859-1?Q?nd6PvpxXU1/of5U2DNZc3zcJXyfZjVXo1/w9jbZhcPWyjK4DcCb++xmFgy?=
+ =?iso-8859-1?Q?hSaciUxmrcgRvWlSEs0KKEQ0WdM3HA0tqXrsLkV10wCmHYrb5aGHVwCYrN?=
+ =?iso-8859-1?Q?ivedfJ8TYqgF0o72b0RLDJl+Y7+tHuF/uJtvZlMLNBjpHHHlGF5PNHPPb+?=
+ =?iso-8859-1?Q?yq8r9p5Q/3UGtBRJNBTQ2M9TZWGOhtWPrt2HTKBsA/i3/c+QC/agvFiTdr?=
+ =?iso-8859-1?Q?TeVKYQERPJiZpbog9zGj0Cuj1KwGmxRilXMUoEduE+Kj4DgGufykU2kQfb?=
+ =?iso-8859-1?Q?mWqHz4NX/yPQTBvX7kYJRLXKPKbf9XCN7SzJNLNJJdWFzd1aOi9Qhs65nM?=
+ =?iso-8859-1?Q?pMy/z7Ofu1L4HU6oRsH89+Yel7tR53nrvdyRi5j/3sZXCH4hvfiD?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2b81dc32-d1ae-485e-aaba-08df304e1ec2
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2026 15:06:59.3839
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Rv/1uGLj8e7Ij+M2/1hLRfrLuRdHSzLBpiiWIej9prrN7UKv7GshuKBz7cj7yFgx8uH32uxVZTrKzf9vaYs4v6krHMUqJ2tQdFsaTpY7ZJbKopjY3PsjsRWSrA4BxImO
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR04MB11376
 
-On Wed, 21 Oct 2026 23:09:21 +0000
-sashiko-bot@kernel.org wrote:
-
-> 
-> > diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
-> > index c5921f1390079..ea7f2a928b4da 100644
-> > --- a/include/linux/compiler_types.h
-> > +++ b/include/linux/compiler_types.h
-> > @@ -230,9 +230,8 @@ struct ftrace_likely_data {
-> >   * externally visible function. This makes extern inline behave as per gnu89
-> >   * semantics rather than c99. This prevents multiple symbol definition errors
-> >   * of extern inline functions at link time.
-> > - * A lot of inline functions can cause havoc with function tracing.
-> >   */
-> > -#define inline inline __gnu_inline __inline_maybe_unused notrace
-> > +#define inline inline __gnu_inline __inline_maybe_unused
-> >  
-> >  /*
-> >   * gcc provides both __inline__ and __inline as alternate spellings of  
-> 
-> [Severity: Critical]
-> Could removing notrace from inline cause a triple-fault during x86 suspend
-> resume, secondary CPU bringup, or kexec when function tracing or call-depth
-> tracking is active?
-> 
-> In include/linux/compiler_attributes.h, __always_inline expands to inline:
-> 
->     #define __always_inline inline __attribute__((__always_inline__))
-> 
-> Because __always_inline only inherits notrace through inline, removing
-> notrace here strips notrace from both inline and __always_inline functions
-> whenever their address is taken and the compiler emits an out-of-line copy.
-
-Correct. If we remove "notrace" from "inline" we must add it to
-"__always_inline"
-
-> 
-> In arch/x86/kernel/paravirt.c (compiled with CC_FLAGS_FTRACE when
-> CONFIG_PARAVIRT_XXL=y and CONFIG_FUNCTION_TRACER=y), pv_ops takes the
-> addresses of static inline and static __always_inline native_* helpers
-> (including native_load_idt, native_load_gdt, native_load_tr_desc,
-> native_set_ldt, native_write_gdt_entry, native_write_idt_entry,
-> native_write_ldt_entry, native_load_tls, native_load_gs_index,
-> native_load_sp0, native_store_tr, native_cpuid, native_read_cr0,
-> native_write_cr0, native_write_cr4, native_read_msr, native_write_msr,
-> native_read_msr_safe, native_write_msr_safe, native_read_pmc, and
-> native_halt):
-> 
->     .cpu.read_cr0       = native_read_cr0,
->     .cpu.write_cr0      = native_write_cr0,
->     .cpu.write_cr4      = native_write_cr4,
->     .cpu.read_msr       = native_read_msr,
->     .cpu.write_msr      = native_write_msr,
->     .cpu.read_msr_safe  = native_read_msr_safe,
->     .cpu.write_msr_safe = native_write_msr_safe,
->     .cpu.read_pmc       = native_read_pmc,
->     .cpu.load_tr_desc   = native_load_tr_desc,
->     .cpu.set_ldt        = native_set_ldt,
->     .cpu.load_gdt       = native_load_gdt,
->     .cpu.load_idt       = native_load_idt,
-> 
-> This forces the compiler to emit out-of-line bodies in paravirt.o with
-> __fentry__ callsites.
-> 
-> During S3 or hibernation resume, __restore_processor_state() in
-> arch/x86/power/cpu.c is marked notrace (rather than noinstr, so objtool does
-> not validate it) and calls wrmsrq(), __write_cr4(), write_cr3(),
-> write_cr0(), and load_idt(&ctxt->idt) -> pv_ops.cpu.load_idt ->
-> native_load_idt() before MSR_GS_BASE (%gs) is restored:
-
-Seems that we need to find these and add "notrace" to each of them individually.
-
-> 
->     static void notrace __restore_processor_state(struct saved_context *ctxt)
->     {
->         ...
->         wrmsrq(MSR_EFER, ctxt->efer);
->         __write_cr4(ctxt->cr4);
->     #endif
->         write_cr3(ctxt->cr3);
->         write_cr2(ctxt->cr2);
->         write_cr0(ctxt->cr0);
-> 
->         /* Restore the IDT. */
->         load_idt(&ctxt->idt);
->         ...
->         wrmsrq(MSR_GS_BASE, ctxt->gs_base);
-> 
-> Similarly, start_secondary() -> cpu_init_exception_handling() in
-> arch/x86/kernel/cpu/common.c calls write_gdt_entry(), load_TR_desc(), and
-> load_current_idt() -> load_idt() before the secondary CPU IDT is loaded, and
-> machine_kexec() in arch/x86/kernel/machine_kexec_64.c calls load_segments()
-> (which resets %gs to 0) followed by the static inline virt_to_phys() in
-> arch/x86/include/asm/io.h:
-
-Anything that is compiled in common.c via headers is not a concern as the
-Makefile has:
-
-  CFLAGS_REMOVE_common.o = -pg
-
-Which removes all fentry calls to common.o.
-
-That doesn't stop fentry being added to functions that
-cpu_init_exception_handling() calls that is defined in another C file that
-is compiled with -pg.
-
-But for those you mention:
-
-  write_gdt_entry() is defined in headers (safe)
-  load_TR_desc() is defined in headers (safe)
-
-  load_current_idt() is itself currently traced. If what it calls is an
-  issue then we have the issue now anyway.
-
-The virt_to_phys() could be converted to __always_inline
-
-
-> 
->     load_segments();
-> 
->     /* now call it */
->     image->start = relocate_kernel_ptr((unsigned long)image->head,
->                                        virt_to_phys(control_page),
-> 
-> Won't executing __fentry__ in these paths dereference %gs per-CPU state
-> (such as current->trace_recursion or call-depth tracking) before %gs or the
-> IDT is valid?
-
-Probably should test this.
-
-> 
+On Thu, Oct 22, 2026 at 02:34:25PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] arm64: dts: imx8mp-verdin: unregistered IMX8MP_CLK_M7_DIV clock in imx8mp-cm7
+> --
+>
+> commit 37e821a019361403bc773ac48a7bf68be6a133ac
+> Author: Ernest Van Hoecke <ernest.vanhoecke@toradex.com>
+>
+> arm64: dts: freescale: imx8mp-verdin: Add Cortex-M7 remoteproc
+>
+> This commit adds the Cortex-M7 remoteproc node and its associated
+> reserved-memory regions to the Verdin iMX8M Plus device tree.
+>
+> > diff --git a/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi
+> > index 9fee2cf9ef546..45a4713c260f4 100644
+> > --- a/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi
+> > +++ b/arch/arm64/boot/dts/freescale/imx8mp-verdin.dtsi
+> > @@ -77,6 +77,18 @@ key-wakeup {
+> >  		};
+> >  	};
+> >
+> > +	imx8mp-cm7 {
+> > +		compatible = "fsl,imx8mp-cm7";
+> > +		clocks = <&clk IMX8MP_CLK_M7_DIV>;
+>
 > [Severity: High]
-> What prevents infinite ftrace recursion when out-of-line inline helpers are
-> called inside ftrace recursion protection itself?
-> 
-> Ftrace callbacks use ftrace_test_recursion_trylock() ->
-> trace_test_and_set_recursion() in include/linux/trace_recursion.h at entry
-> and ftrace_test_recursion_unlock() -> trace_clear_recursion() at exit:
-> 
->     static __always_inline int trace_test_and_set_recursion(unsigned long ip,
->                                                             unsigned long pip,
->                                                             int start)
+> Should this clock specifier be IMX8MP_CLK_M7_CORE instead of
+> IMX8MP_CLK_M7_DIV?
 
-Fixed by adding "notrace" to "__always_inline".
+look like make sense.
 
->     {
->         unsigned int val = READ_ONCE(current->trace_recursion);
->         int bit;
-> 
->         if (trace_warn_on_no_rcu(ip))
->             return -1;
-> 
->         bit = trace_get_context_bit() + start;
-> 
-> In translation units compiled with $(CC_FLAGS_FTRACE) (such as
-> kernel/livepatch/patch.c, fs/pstore/ftrace.c,
-> arch/x86/kernel/kprobes/ftrace.c, arch/powerpc/kernel/kprobes-ftrace.c,
-> kernel/rcu/tree.c, and kernel/trace/trace_events.c under
-> CONFIG_FUNCTION_SELF_TRACING=y), several functions called before
-> current->trace_recursion is set (or after it is cleared) are plain static
-> inline:
-> 
-> 1. trace_test_and_set_recursion() evaluates current -> get_current() (plain
->    static inline in arch/powerpc/include/asm/current.h and
->    arch/m68k/include/asm/current.h), trace_warn_on_no_rcu() ->
->    rcu_is_watching() (plain static inline in include/linux/rcutiny.h, and
->    calls preempt_disable_notrace() / preempt_enable_notrace() in
->    kernel/rcu/tree.c), and trace_get_context_bit() ->
->    interrupt_context_level() -> preempt_count() (plain static inline in
->    arch/arm64/include/asm/preempt.h).
+Frank
 
-Perhaps we should be more strict and convert them to __always_inline.
-
-> 
-> 2. In arch/arm64/include/asm/preempt.h, preempt_count(),
->    __preempt_count_add(), __preempt_count_sub(), should_resched(), and
->    __preempt_count_dec_and_test() are plain static inline without
->    __always_inline or notrace, so preempt_disable_notrace() and
->    preempt_enable_notrace() can be traced if emitted out-of-line.
-
-Again, __always_inline having notrace will fix this.
-
-> 
-> 3. In kernel/trace/trace_events.c (compiled with $(CC_FLAGS_FTRACE) when
->    CONFIG_FUNCTION_SELF_TRACING=y), __init function_test_events_call() is
->    registered without FTRACE_OPS_FL_RECURSION and calls static inline
->    helpers tracing_gen_ctx(), tracing_gen_ctx_flags(),
->    arch_local_save_flags(), preempt_disable_notrace(), and
->    atomic_inc_return() before incrementing ftrace_test_event_disable, as
->    well as atomic_dec() and preempt_enable_notrace() when decrementing it:
-
-All the above do need to be made to explicitly have notrace.
-
-> 
->     trace_ctx = tracing_gen_ctx();
->     preempt_disable_notrace();
->     cpu = raw_smp_processor_id();
->     disabled = atomic_inc_return(&per_cpu(ftrace_test_event_disable, cpu));
-> 
-> If the compiler emits any of these helpers out-of-line, won't tracing them
-> recurse infinitely before the recursion guard takes effect?
-> 
-> [Severity: High]
-> Should the _notrace SRCU helpers and tracepoint dispatch wrappers retain an
-> explicit notrace or __always_inline annotation?
-
-Probably.
-
-> 
-> In include/linux/srcu.h, srcu_read_lock_fast_notrace() and
-> srcu_read_unlock_fast_notrace() are documented as non-traceable, but unlike
-> srcu_read_lock_notrace() and srcu_read_unlock_notrace() (which are marked
-> static inline notrace), they rely on inline for notrace:
-> 
->     /*
->      * Used by tracing, cannot be traced and cannot call lockdep.
->      * See srcu_read_lock_fast() for more information.
->      */
->     static inline struct srcu_ctr __percpu *srcu_read_lock_fast_notrace(struct srcu_struct *ssp)
-> 
-> Their callee srcu_check_read_flavor() in include/linux/srcutree.h and the
-> CONFIG_TINY_SRCU helpers in include/linux/srcutiny.h are also plain static
-> inline.
-> 
-> Similarly, in include/linux/tracepoint.h, __do_trace_##name (which uses
-> guard(srcu_fast_notrace)(&tracepoint_srcu) and is called on the cold
-> static_branch_unlikely() path as well as from notrace void
-> rust_do_trace_##name), trace_##name, and trace_call__##name are plain static
-> inline:
-> 
->     static inline void __do_trace_##name(proto)                     \
-
-This probably should be converted to __always_inline
-
-
->     {                                                               \
->         TRACEPOINT_CHECK(name)                                      \
->         if (cond) {                                                 \
->             guard(srcu_fast_notrace)(&tracepoint_srcu);             \
->             __DO_TRACE_CALL(name, TP_ARGS(args));                   \
->         }                                                           \
->     }
-> 
-> Because __do_trace_##name is on the cold branch of trace_##name, compilers
-> frequently emit it out-of-line. Without notrace on inline, won't these
-> tracepoint and _notrace SRCU helpers become ftrace and fentry targets?
-> 
-> [Severity: High]
-> Can attaching a BPF fentry or fexit program to an uninlined helper in
-> kernel/bpf/trampoline.c or kernel/bpf/memalloc.c trigger infinite recursion
-> or llist corruption?
-
-Hmm, perhaps we need to add to kernel/bpf/Makefile:
-
-  CFLAGS_REMOVE_trampoline.o = $(CC_FLAGS_FTRACE)
-
-
-> 
-> Unlike ftrace_ops callbacks, BPF trampolines do not use
-> ftrace_test_recursion_trylock(). In kernel/bpf/trampoline.c (compiled with
-> $(CC_FLAGS_FTRACE)), notrace __bpf_prog_enter*(), __bpf_prog_exit*(),
-> __bpf_tramp_enter(), and __bpf_tramp_exit() call plain static inline helpers
-> before prog->active recursion protection is acquired or after it is
-> released:
-> 
->     static u64 notrace __bpf_prog_enter_recur(struct bpf_prog *prog, struct bpf_tramp_run_ctx *run_ctx)
->         __acquires(RCU)
->     {
->         rcu_read_lock_dont_migrate();
-> 
->         run_ctx->saved_run_ctx = bpf_set_run_ctx(&run_ctx->run_ctx);
-> 
->         if (unlikely(!bpf_prog_get_recursion_context(prog))) {
-> 
-> and:
-> 
->     static void notrace __bpf_prog_exit_recur(struct bpf_prog *prog, u64 start,
->                                               struct bpf_tramp_run_ctx *run_ctx)
->         __releases(RCU)
->     {
->         bpf_reset_run_ctx(run_ctx->saved_run_ctx);
-> 
->         update_prog_stats(prog, start);
->         bpf_prog_put_recursion_context(prog);
->         rcu_read_unlock_migrate();
->     }
-> 
-> The static inline helpers called here include __migrate_disable() and
-> __migrate_enable() (include/linux/sched.h), rcu_read_unlock_migrate(),
-> rcu_read_lock(), and rcu_read_unlock() (include/linux/rcupdate.h),
-> rcu_read_lock_trace() and rcu_read_unlock_trace()
-
-Yeah, this patch will likely need to turn into a series where we have to
-convert several "inline" to "__always_inline" to prevent from tracing. Or
-add explicit "notrace".
-
-> (include/linux/rcupdate_trace.h), bpf_set_run_ctx(), bpf_reset_run_ctx(),
-> bpf_prog_get_recursion_context(), and bpf_prog_put_recursion_context()
-> (include/linux/bpf.h), percpu_ref_get() and percpu_ref_put()
-> (include/linux/percpu-refcount.h), and u64_stats_update_begin_irqsave() and
-> u64_stats_update_end_irqrestore() (include/linux/u64_stats_sync.h). In
-> kernel/bpf/verifier.c, btf_id_deny only blocks the out-of-line wrappers
-> migrate_disable, migrate_enable, ___migrate_enable, rcu_read_unlock_strict,
-> preempt_count_add, preempt_count_sub, __rcu_read_lock, and
-> __rcu_read_unlock, not these static inline functions.
-> 
-> In addition, unit_alloc(), unit_free(), and unit_free_rcu() in
-> kernel/bpf/memalloc.c are marked notrace specifically so BPF programs cannot
-> attach to them and corrupt free_llist or free_llist_extra, yet they call
-> plain static inline helpers __llist_add(), __llist_add_batch(), llist_add(),
-> llist_add_batch(), local_inc_return(), local_add_return(), and local_dec():
-> 
->     static void notrace unit_free(struct bpf_mem_cache *c, void *ptr)
->     {
->         ...
->         local_irq_save(flags);
->         if (local_inc_return(&c->active) == 1) {
->             __llist_add(llnode, &c->free_llist);
->             cnt = ++c->free_cnt;
->         } else {
->             llist_add(llnode, &c->free_llist_extra);
->         }
->         local_dec(&c->active);
-> 
-> If any of these static inline helpers is emitted out-of-line and attached to
-> via fentry/fexit, won't the trampoline recurse infinitely or corrupt the
-> bpf_mem_alloc freelist?
-> 
-> [Severity: High]
-> How are entry, exit, and NMI inline helpers protected against ftrace
-> instrumentation on architectures without objtool noinstr validation?
-> 
-> CONFIG_HAVE_NOINSTR_VALIDATION is only selected on X86_64 (in
-> arch/x86/Kconfig, when CONFIG_DEBUG_ENTRY=y); powerpc, arm64, riscv, s390,
-> loongarch, and x86_32 do not have build-time objtool noinstr validation:
-> 
-> 1. On PowerPC, arch/powerpc/include/asm/interrupt.h defines
->    interrupt_handler with notrace rather than noinstr because of linker
->    branch stub range limitations:
-> 
->     #define interrupt_handler __visible noinline notrace __no_kcsan __no_sanitize_address
-> 
->    The notrace interrupt, NMI, and syscall entry/exit paths in
->    arch/powerpc/kernel/traps.c and arch/powerpc/kernel/interrupt.c call
->    large static inline helpers in arch/powerpc/include/asm/entry-common.h,
->    arch/powerpc/include/asm/ftrace.h, and arch/powerpc/include/asm/hw_irq.h,
->    including check_return_regs_valid(), arch_interrupt_enter_prepare(),
->    arch_interrupt_exit_prepare(), arch_interrupt_nmi_enter_prepare(),
->    arch_interrupt_nmi_exit_prepare(), this_cpu_disable_ftrace(),
->    this_cpu_enable_ftrace(), this_cpu_set_ftrace_enabled(),
->    this_cpu_get_ftrace_enabled(), and (from prep_irq_for_enabled_exit() in
->    arch/powerpc/kernel/interrupt.c) exit_must_hard_disable(),
->    __hard_EE_RI_disable(), __hard_RI_enable(), __hard_irq_disable(),
->    lazy_irq_pending_nocheck(), arch_local_irq_disable(), and
->    arch_local_irq_save(). These run while MSR[RI]=0 (unrecoverable exception
->    state), in real mode on Book3S-64 NMI entry, before
->    this_cpu_set_ftrace_enabled(0) disables ftrace in NMI, with unreconciled
->    irq_soft_mask, or after user_enter_irqoff() while RCU is not watching.
-> 
-> 2. On arm64, arch/arm64/kernel/entry-common.c is compiled with
->    $(CC_FLAGS_FTRACE), and its noinstr handlers
->    (arm64_enter_from_kernel_mode(), __arm64_exit_to_kernel_mode(),
->    arm64_exit_to_kernel_mode_preempt(), el0_pc(), and __sdei_handler()) call
->    plain static inline helpers outside instrumentation_begin() /
->    instrumentation_end(): irqentry_exit_to_kernel_mode_preempt()
->    (include/linux/irq-entry-common.h), __kern_my_cpu_offset()
->    (arch/arm64/include/asm/percpu.h), mte_check_tfsr_entry(),
->    mte_check_tfsr_exit(), and mte_disable_tco_entry()
->    (arch/arm64/include/asm/mte.h), sme_enter_from_user_mode() and
->    sme_exit_to_user_mode() (arch/arm64/include/asm/fpsimd.h),
->    instruction_pointer() (arch/arm64/include/asm/ptrace.h), and
->    system_supports_mte(), system_has_prio_mask_debugging(),
->    system_uses_hw_pan(), and cpu_has_pan()
->    (arch/arm64/include/asm/cpufeature.h).
-
-These will need to be looked through.
-
-> 
-> 3. In generic entry code (include/linux/irq-entry-common.h),
->    enter_from_user_mode() and exit_to_user_mode() call user_exit_irqoff()
->    and user_enter_irqoff() (include/linux/context_tracking.h, which are
->    plain static inline when !CONFIG_CONTEXT_TRACKING_USER) and
->    lockdep_hardirqs_off() and lockdep_hardirqs_on()
->    (include/linux/irqflags.h, which are plain static inline when
->    !CONFIG_PROVE_LOCKING) outside instrumentation_begin() /
->    instrumentation_end().
-> 
-> Won't an out-of-line copy of these helpers be instrumented by ftrace and
-> execute when MSR[RI]=0, in real mode, or while RCU is not watching?
-
-I think most of those are stubs. I would hope a compiler would never
-out-of-line them.
-
--- Steve
+>
+> In drivers/clk/imx/clk-imx8mp.c, commit 8c83a8ff4dd9 ("clk: imx8mp: use
+> imx8m_clk_hw_composite_core to simplify code") replaced
+> hws[IMX8MP_CLK_M7_DIV] in imx8mp_clocks_probe() with
+> hws[IMX8MP_CLK_M7_CORE] without keeping an alias at IMX8MP_CLK_M7_DIV:
+>
+> 	hws[IMX8MP_CLK_A53_DIV] = imx8m_clk_hw_composite_core("arm_a53_div", imx8mp_a53_sels, ccm_base + 0x8000);
+> 	hws[IMX8MP_CLK_A53_SRC] = hws[IMX8MP_CLK_A53_DIV];
+> 	hws[IMX8MP_CLK_A53_CG] = hws[IMX8MP_CLK_A53_DIV];
+> 	hws[IMX8MP_CLK_M7_CORE] = imx8m_clk_hw_composite_core("m7_core", imx8mp_m7_sels, ccm_base + 0x8080);
+>
+> Because clk_hw_data is zero-allocated, hws[IMX8MP_CLK_M7_DIV] remains
+> NULL. When imx_rproc_probe() in drivers/remoteproc/imx_rproc.c requests
+> the clock for "fsl,imx8mp-cm7" (which sets IMX_RPROC_NEED_CLKS in
+> imx_rproc_cfg_imx8mn):
+>
+> 	if (dcfg->flags & IMX_RPROC_NEED_CLKS) {
+> 		priv->clk = devm_clk_get_enabled(dev, NULL);
+> 		if (IS_ERR(priv->clk))
+> 			return dev_err_probe(dev, PTR_ERR(priv->clk), "Failed to enable clock\n");
+> 	}
+>
+> of_clk_hw_onecell_get() returns NULL for hw_data->hws[IMX8MP_CLK_M7_DIV],
+> causing devm_clk_get_enabled() to return NULL without an error. As a
+> result, m7_core is never prepared or enabled by imx_rproc_probe(), and
+> clk_disable_unused() can gate it off at late boot when the Cortex-M7 was
+> not pre-booted by the bootloader, leaving the core unclocked when
+> imx_rproc accesses TCM or starts the remote processor.
+>
+> Other i.MX8MP Cortex-M7 device tree descriptions such as
+> arch/arm64/boot/dts/freescale/imx8mp-data-modul-edm-sbc-overlay-cm7.dtso
+> use IMX8MP_CLK_M7_CORE:
+>
+> 	imx8mp-cm7 {
+> 		compatible = "fsl,imx8mp-cm7-mmio";
+> 		clocks = <&clk IMX8MP_CLK_M7_CORE>;
+>
+> > +		mbox-names = "tx", "rx", "rxdb";
+> > +		mboxes = <&mu 0 1
+> > +			  &mu 1 1
+> > +			  &mu 3 1>;
+> > +		memory-region = <&vdev0buffer>, <&vdev0vring0>, <&vdev0vring1>,
+> > +				<&rsc_table>;
+> > +		syscon = <&src>;
+> > +	};
+> > +
+> >  	sound_hdmi: sound-hdmi {
+> >  		compatible = "fsl,imx-audio-hdmi";
+> >  		model = "audio-hdmi";
+>
+> [ ... ]
+>
+> >
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261022-verdin-imx8mp-m7-v3-1-af284e28531d@toradex.com?part=1
