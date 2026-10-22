@@ -1,92 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.156.1
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792687233;
-	b=2mBTW/DdXZHbbZREHQDUsLE+ol7aPtnFhrygDUaYbPFLHBJoSnoz0NiyUNLaZU7zg8k3
-	 0+p7nuEea04JMkAi5hxcniEQfrSn1xzmxtSKbgvBbrzbSOfVFQiVNLEfYGptXgcWbCX6F
-	 kXf2EYKWoyUQc/6RxigHQ43BSrPDLN8WemOVmlkEgs24xC4zsVde2nepOkD/BACCJmJTS
-	 aJtH0Ty/K1LOjsFlWMwLMnFUYDOOmOoQfNwz/SLzXQnyrAC30xMYA1rZgksKL8yx5zDfC
-	 ukxUhkJ4N6rcVk7lp3ASUgZrryAL5g0Wys9XammP4FRGb0TRJSDGhjfKmK9UOkFAG1Q==
+	t=1792688950;
+	b=luOK8XkuI0/jr/bXakBv+azo2z626IEoh+cbOgajxvfKmMYawI0m9y1hRGFFfgtrkmRh
+	 sJtdOII4kqq0nel0kiIE88+NUkoo2xX08y9eKIWNw7Mzsi0fDaHp4EEPz2ezRfQxTlWNx
+	 Gd0iyGu2Aobes1FcsFRsiwAte2p3qjyhiPq58lLzvxIOUcQV0rF2IW7jfAC0FIvpXGnm0
+	 EI09DCWUoS4UKHW0s/41+GdAzmO+N94FEjnm6PZnLG+F7rLDfuqzXFGqqs0nsSQJM6kaj
+	 7nN11O3VzoGWJBLtJcBp2q3e51TYxFos9Fqku4ap2Bfx7ypWHpWmleMCz7ePP1huHaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792687233;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=KIXR/3+QUTDcEupkbOOsq++gF5QeeU/bfAuAJ1TSZ9Y=;
-	b=zcB+RzzjC+oy9DuyLmxOKhqcAZxuQeMvfDk/jkRE/Fm5yxsNelpBSGsNG6doYuMm+SZ1
-	 iKErbwR15hJkuP7FDAN4+NsXEa0mnxG8/eSNQPjzmwKGQnWwHwDXmxmilw0Zq+AHNWDhO
-	 P/P2rZveJQhH99H8LdaFDDG/1UBnffWuXFAD8P3MA8WN39jInhuDcNIf7sv+PP8SW+l0U
-	 Czt2mKQM8hHCoZY3g6kv1JEKE3Qwejzdg8n8PDHzgy2L5hH+4vczpVlm5yyOimB8kTR9q
-	 eAAC4rzUg6VzIHXo98UCee8XZioVzRlhQFWaIvc6KDrXn+k7sLGUzwfifty6sPK5LZA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792688950;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding:
+	 X-TM-AS-GCONF:X-Proofpoint-Spam-Info:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-GUID:X-Authority-Analysis:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=NU/GV3aLtPYXfGmgd/+gSYtTHK5EW/hO3KtY3yIfoMY=;
+	b=H2agMcZoFq7Dnkhhb+GsQzTdWHb+jtsTBiY4QgetVDhjjRMOEoY1m/101aTnRobtcCH6
+	 IvFXZb+nYDZlOwqU3YsQUPVqdMDoYltsYBgnSxw00rOtKRnNoNxotgq67YeeR++Ji3Mlf
+	 OuhRoJIneIome6OmEE1p1oid59nS40sl/bOe/8s01UOtmoFCmpv9e6hQQuTMCvAvAwfKl
+	 k7P4YMKhKglVSoZnMze7W3K43qGv8c+7ERz6VxBURpEK/bZ1Vxmd2GnBnj4SmsYgJrYGf
+	 fkJMdi3K5lLoljsJnrztEn9t/seog4LnQ6LSMI4dOUkAWQKPABxwhQq8tYNWMQYlK5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=konsulko.com;
-	spf=pass smtp.mailfrom=konsulko.com;
-	dkim=pass header.d=konsulko.com header.i=@konsulko.com header.a=rsa-sha256 header.s=google header.b=RHnQXCX7;
-	arc=none smtp.remote-ip=209.85.218.41
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ohzgRoLJ;
+	arc=none smtp.remote-ip=148.163.156.1
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C1B606A31E
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 16:40:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B6C1B606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=konsulko.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=konsulko.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDEEA606A31E;
+	Thu, 22 Oct 2026 17:09:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CDEEA606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=konsulko.com header.i=@konsulko.com header.a=rsa-sha256 header.s=google header.b=RHnQXCX7
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-c45551fa84eso313390966b.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 09:40:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=konsulko.com; s=google; t=1792687231; x=1793292031; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=KIXR/3+QUTDcEupkbOOsq++gF5QeeU/bfAuAJ1TSZ9Y=;
-        b=RHnQXCX7TDq0SqzEg/X4WVKXGhZ41ZKyxWPRjuRnacl/BO8NNGTOBQrevI1UQfhBmb
-         DPJiDIrlNMQN8uNBVtMtyvkqDZWeEvSTUpE+m/8qiRKPqGXjJIqricaoTIUddC66xm24
-         6WLOurJMSOlrCCBATt/fWvZaJow0raXmlMNCY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792687231; x=1793292031;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=KIXR/3+QUTDcEupkbOOsq++gF5QeeU/bfAuAJ1TSZ9Y=;
-        b=zNZP06YDAjeZ6JafxRkwDjtJGHySwg47Pl6sdac70Sl36Qe4HpirkGc8bDIoXPs4aR
-         p4V7LqFdJxKosrIgKBj4SSMP5wPM1O36rgUsF+AXX3vVrMAW1D7s6Ln8HFVoGEnuErsn
-         cg7GS809hpdERFVs2Z3gC10z8yQqhGJVDvF3Y2dNY08ywNIrkGUvPKqOlUXk6xS4PzsP
-         eJI2u4qlyX66A6V6DKXIGab4qk1j5NbBGr26dSi0eSNygxKXyoG92xgbrm/kNKuAzlHR
-         yIuZ14gch7cW/gGSoAYGaQ76BBC4CQGiEVJwZ+faV94gkuRnQdrt8+MRlKk4D/M97CDv
-         Rs0A==
-X-Gm-Message-State: AFq9FYJC4mAOdzoj0YvnKShHllVW11QTDVff6UZcGUq+ofxnKMi67dYJ
-	X1hwbszRb+28eUS0eSIvu9W78VrLrEABq18p0/Y+dSyoQq5U5OpFVGtOPH3pCHGXOB8=
-X-Gm-Gg: AYBFou09A41TOd5YI2HQCXGPFTtRM6I/C8u9g4EYWVAJylWFqu5/VI+bDWIAWKJp2s2
-	171IaWCEreZE7I0dxq9niU9v3ae1WiJ5ZqW7mjXhAt0pOEfftfzjrMLUSYcBgjGFkaSOMzBr1wk
-	AU/7STmH2geZ9qz2hcLXi+CpgMAM3/OLYAhFzeevEyFYSSPuf6Mg0LMBIqL8lNnVP0wjNv/I9qW
-	jKHwoQ/wzwSoPR6ZnQYDhCRqJHl+bmt2TtpjtU4Ws6jG6fBdBt0VoNk1CUqSpFFAq6yj33nNCfo
-	r6cQTl4lCJVTYiplx1/x1+q2KpYuqTjP9TJ1U/QwnIseakJrw8rqjV+M3NQ3w97LAvR1PInokDl
-	GK8rV0Axp7C2V0G8lAhp7zG6JfXOLLbKQjtOZd6OrcYwcDWpcaaukdYqJPJH4zRqFl8Z4kMUsvQ
-	E7NfH/4DWaqfFIOb2xl9F2B1f0NU3+/Z5JNyipddi4SP6uqvrAwkaI4nyWDj4hB2t/Rn130ILP1
-	4dfpilmjr3EEnr25qHn7D5twTIAtdNdpWD0NtI8J18YfFAfNG+UH0rlz8UH
-X-Received: by 2002:a17:906:9f90:b0:c2d:be57:f73a with SMTP id a640c23a62f3a-c4679536f80mr679402366b.13.1792687230949;
-        Thu, 22 Oct 2026 09:40:30 -0700 (PDT)
-Received: from carbon.k.g ([95.43.162.52])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c46a5cfb941sm5456866b.82.2026.10.22.09.40.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Oct 2026 09:40:30 -0700 (PDT)
-Date: Thu, 22 Oct 2026 19:40:28 +0300
-From: Petko Manolov <petko.manolov@konsulko.com>
-To: Frank Li <Frank.li@oss.nxp.com>
-Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
-	imx@lists.linux.dev, robh@kernel.org, conor+dt@kernel.org,
-	Frank.Li@kernel.org
-Subject: Re: [PATCH v4 1/2] dt-bindings: arm: fsl: add Draeger M48 dual-cpu
- board
-Message-ID: <20261022164028.GC3711@carbon.k.g>
-References: <20261022140244.3476844-1-petko.manolov@konsulko.com>
- <20261022140244.3476844-2-petko.manolov@konsulko.com>
- <sashiko-outbox-181612@kernel.org>
- <aton_teIric7IKX8@SMW015318>
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ohzgRoLJ
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69MEEN5o133227;
+	Thu, 22 Oct 2026 17:09:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=pp1; bh=NU/GV3aLtPYXfGmgd/+gSYtTHK5EW/hO3KtY3yIfo
+	MY=; b=ohzgRoLJ61WxD5Az2Lh72sbhOQvQv7kiCLcBEPFglBOkuQfd2HYSC/A0Y
+	zC1em5fRcUsNCl1gAM8/CbpkCqretrpZnqdC5Yi2TuhUtuMzfYc/XjpHQzWe/9JT
+	nHO2m8PkhgruLSKf3XX1q2oVw88grjHxBCdXb+nxPyQx2pUaABuU4OixZZm55wzv
+	2njwSxbC2opNWOvY9HkZ4JsBa49VfcYYVXFKnS4X/UaHIqYcp4forVQEHK60/jVk
+	C0J1I6gz6hheqRsL9SoP/hUoysATULtvOje9VFkPMZnjAuQ/fEKyONx/nmwHqfEY
+	XnOqZeotAXbEgZSYvEETIznEugT+g==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hdw5agdh8-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Thu, 22 Oct 2026 17:09:08 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69MEJseU619356;
+	Thu, 22 Oct 2026 17:09:08 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hfj1x158r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 22 Oct 2026 17:09:07 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com [10.20.54.104])
+	by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69MH94bN35848516
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 22 Oct 2026 17:09:04 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 0CB192004B;
+	Thu, 22 Oct 2026 17:09:04 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E050F20043;
+	Thu, 22 Oct 2026 17:09:03 +0000 (GMT)
+Received: from tuxmaker.lnxne.boe (unknown [9.87.85.9])
+	by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 22 Oct 2026 17:09:03 +0000 (GMT)
+From: M Nikhil <nikh1092@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev, linux-s390@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Cc: niharp@linux.ibm.com, pasic@linux.ibm.com, bblock@linux.ibm.com
+Subject: [PATCH v13 0/2] zfcp: Use DMA streaming API to map I/O
+Date: Thu, 22 Oct 2026 19:08:26 +0200
+Message-ID: <20261022170828.4189701-1-nikh1092@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -96,60 +89,87 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aton_teIric7IKX8@SMW015318>
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA2NiBTYWx0ZWRfX5MBLYON6Ynn3
+ jM++COkGqOvGBeKacwYShGmqDQMo07lFzbZfN1BZH4V0PuyOMfEzqlXnDwZ1fAvfkIuuZERS7/6
+ nBlV8BWUdmMhkeKLXnmlI6CFmrAPG0Q=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA2NiBTYWx0ZWRfXzgTfGPNtL5Ut
+ XwJLdhEHDgNzKO94/p8chios5jmdzNDMw1arNrlvZ1+ioq6tA8sHFf1/Z9R8GN5hgq3wZF3RjzZ
+ PsAhxtPDT8WmTcTzZQR4s4IbeT7KLVlRaqNf7HeNXr7K084DMsLCuewfXRLn6EjyuCM+0LOQqdt
+ 9jEgwHJ5HLD6MrHP5IFjLyze0qSsL9TDP5t+/HEWT1kfbkhZLMxS6RoU+Q0puJ5LqFgSkdCRhYg
+ sFRjt0gp5cfGlMMMEtmPb6juVoOXGnXNNtB7SB8fY9sxOcljvSHwYj6v0yOjcR1cQtMh+Ja4JUA
+ p7k0WvaDcMJdtjkYEc8c6nH2SdXf1jBn3H7dGsZyfxRHTemasKBPx1E/geKoAsiFJa3J+6jDtYa
+ hhWXLVNLr4xyKWwCCLjSovtXmBturCnwqoi8ktxgQDqEApFqhVK+c2i/bqRl/JG3YNvCtJlFTwy
+ SbFWi1AKlnICjlK4fNA==
+X-Proofpoint-GUID: u42_A2dpT2N6Rjacil91ze3EVOkQEfUk
+X-Authority-Analysis: v=2.4 cv=JIKuIMKb c=1 sm=1 tr=0 ts=6ada4334 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=Wd4ccqAm3J3WqkYLFQkA:9
+X-Proofpoint-ORIG-GUID: u42_A2dpT2N6Rjacil91ze3EVOkQEfUk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-22_05,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
+ priorityscore=1501 spamscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610220066
 
-On 26-10-22 10:13:02, Frank Li wrote:
-> On Thu, Oct 22, 2026 at 02:10:36PM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [Low] dt-bindings: arm: fsl: undocumented draeger vendor prefix in fsl.yaml
-> > --
-> >
-> > commit 3465979b7c116a128c865587fd61bc41cff5927b
-> > Author: Petko Manolov <petko.manolov@konsulko.com>
-> >
-> > dt-bindings: arm: fsl: add Draeger M48 dual-cpu board
-> >
-> > This commit adds the draeger,imx6q-m48 and draeger,imx6dl-m48 board
-> > compatible strings to Documentation/devicetree/bindings/arm/fsl.yaml.
-> >
-> > > diff --git a/Documentation/devicetree/bindings/arm/fsl.yaml b/Documentation/devicetree/bindings/arm/fsl.yaml
-> > > index 656f2596e1d53..8f3a04228780a 100644
-> > > --- a/Documentation/devicetree/bindings/arm/fsl.yaml
-> > > +++ b/Documentation/devicetree/bindings/arm/fsl.yaml
-> > > @@ -260,6 +260,7 @@ properties:
-> > >                - boundary,imx6q-nitrogen6x
-> > >                - compulab,cm-fx6           # CompuLab CM-FX6
-> > >                - dmo,imx6q-edmqmx6         # Data Modul eDM-QMX6 Board
-> > > +              - draeger,imx6q-m48         # Draeger imx6q variant of M48
-> > >                - ds,imx6q-sbc              # Da Sheng COM-9XX Modules
-> > >                - embest,imx6q-marsboard    # Embest MarS Board i.MX6Dual
-> > >                - emtrion,emcon-mx6         # emCON-MX6D or emCON-MX6Q SoM
-> > > @@ -458,6 +459,7 @@ properties:
-> > >                - boundary,imx6dl-nit6xlite     # Boundary Devices Nitrogen6 Lite
-> > >                - boundary,imx6dl-nitrogen6x    # Boundary Devices Nitrogen6x
-> > >                - bticino,imx6dl-mamoj      # BTicino i.MX6DL Mamoj
-> > > +              - draeger,imx6dl-m48        # Draeger imx6dl variant of M48
-> > >                - eckelmann,imx6dl-ci4x10
-> > >                - emtrion,emcon-mx6         # emCON-MX6S or emCON-MX6DL SoM
-> > >                - emtrion,emcon-mx6-avari   # emCON-MX6S or emCON-MX6DL SoM on Avari Base
-> >
-> > [Severity: Low]
-> > Both hunks in properties:compatible of
-> > Documentation/devicetree/bindings/arm/fsl.yaml introduce compatible strings
-> > with the draeger vendor prefix (draeger,imx6q-m48 and draeger,imx6dl-m48),
-> > and the follow-up commit 6e00402d882f ("arm: dts: nxp: imx: Add devicetree
-> > files for M48") uses them as well.
-> >
-> > However, patternProperties in
-> > Documentation/devicetree/bindings/vendor-prefixes.yaml does not appear to
-> > have a matching "^draeger,.*" entry:
-> 
-> Please add a draeger entry in vendor-prefixes.yaml.
+In the existing zFCP driver, virtual addresses are translated directly
+into bus (physical addresses) for DMA operations on all I/O buffers
+passing from zFCP driver to the device.
 
-It is already in linux-next.
+Need for using DMA-API in zFCP driver:
+
+In a Secure Execution environment, the host must ensure that device DMA
+accesses are restricted to non-guest-private, page-sized memory blocks.
+This prevents I/O failures that can occur when a device attempts to
+access guest-private memory. Therefore, guest memory pages must be
+prepared by the hypervisor before they become accessible to an I/O
+device.
+
+To support this requirement, the host Linux kernel must be reliably
+informed whenever a memory region becomes eligible for device DMA access
+and when that access must be revoked. This information must be
+maintained correctly at least at page size granularity. To satisfy these
+requirements, all I/O buffers used by the zFCP driver should be mapped
+through the DMA API.
+
+DMA API Integration in zFCP:
+
+The zFCP driver is updated to use the DMA streaming API's to map all the
+I/O buffers which will be passed to the device.
+All zFCP I/O buffers (QTCB, SRB, CT/ELS and SCSI I/O) are represented as
+scatter-gather lists and mapped through DMA API using dma_map_sgtable().
+Once the DMA transfer is complete, the corresponding mappings are
+released using dma_unmap_sgtable().
+
+By routing all device-visible memory through the DMA mapping layer, the
+driver ensures that:
+1. DMA access is properly authorized before use.
+2. DMA is revoked after use.
+3. Secure Execution memory restrictions are honored.
 
 
-cheers,
-Petko
+M Nikhil (2):
+  zfcp: Replace sg-list with sg_table in zfcp_fsf_ct_els structure
+  zfcp: Use DMA streaming API to map I/O
+
+ drivers/s390/scsi/zfcp_aux.c  |  16 ++
+ drivers/s390/scsi/zfcp_dbf.c  |  16 +-
+ drivers/s390/scsi/zfcp_def.h  |   4 +
+ drivers/s390/scsi/zfcp_ext.h  |  11 +-
+ drivers/s390/scsi/zfcp_fc.c   |  48 +++--
+ drivers/s390/scsi/zfcp_fsf.c  | 323 +++++++++++++++++++++++++++++-----
+ drivers/s390/scsi/zfcp_fsf.h  |   9 +-
+ drivers/s390/scsi/zfcp_qdio.c |  40 +++--
+ drivers/s390/scsi/zfcp_qdio.h |  27 +--
+ drivers/s390/scsi/zfcp_scsi.c |  67 ++++++-
+ 10 files changed, 461 insertions(+), 100 deletions(-)
+
+-- 
+2.53.0
+
