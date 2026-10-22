@@ -1,58 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=60.191.123.56
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=216.40.44.15
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792675407;
-	b=DWbOflNf/Uw4Pf/IRQfgZUAk33jc1QaYZY5Xs8IWlEK4fLphOl49T8CjHf3ObL+rdSz2
-	 UfjU3WiINJ8/MHJs0h+xnPxkO8j83uxGFAlQ2hoENg36ySpONQuTLh67pRvyi2xDB7Smh
-	 i6NoFTxEZoFqvQJTZ4Rv0zDL0wpcUdf5Bv6kzolNFT44+VAo28LwXE/+/7TcsGaYVmUy3
-	 V5am146pX46GLKfyHnAIKBlVsHkODvwKxMrfvnxGvTWpkAfnEjK99aqH91zpWwpnuUhn0
-	 hb37mid4E30OpzvdbnxOys98Ze1GiuxJjej7TJVgHxSLHJl6VM/OW28Ecf25I8BKi+A==
+	t=1792675537;
+	b=oKpi8RiZNAlcasqmFtutsb4ZjAECQm1fNo87TQW2v82myDI5biFhmEGzsLN4+KoIiEnh
+	 jyrrvMoFx2ymyvwxJoMb4GbX74Dr4n7lb4p/dCyU2FwGHUdXorNYo9KknSBUfECSrH+bc
+	 hSS0GKxsgPGLXTjT/cLaOq5OruG5OFjYCMAlWO2Q8eqrrQk6FDRTk41VAbz8G+WJqBLX7
+	 /+ytt7pEOf51ya5Iq3M0n7w6DCVDfxcFAA4UPL1dw2ZMSK5EuLTk/IqpHuf4NsaEEmicf
+	 4RKV97XY0wQZj4iB1hPON9mYvgK26OzZOxR2cC/vx2TUUe4VuE7IEyL2tpIhQGGQcDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792675407;
-	h=DMARC-Filter:Received:Received:Received:From:To:CC:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:Content-Type:X-Originating-IP:
-	 X-ClientProxiedBy:X-DNSRBL:X-SPAM-SOURCE-CHECK:X-MAIL;
-	bh=bxDbG0GKqQfKu6q+9TwqXPon+t/6hlTpBmYGDaVdTCk=;
-	b=Aeqp6fbRUzDavrRrVpX9zFbqpqmZ8Z8OAq3Uf8+sCfFt2cMOB9oPQbm0ujHiV9hsrsAC
-	 R8MqjwKspWf9bw+NgC7aAmHprFqpCbXC8R/f3kYSOgC3XXAu5iBFGbMYGDE5ZlKJ6ZXM5
-	 JlSRG7l4xzrup5wdgULVB4WlLm+XuqkDK5ZZKkufLExESQ0a3CcBl1Qu2MDiYbdxXxnZe
-	 na/HCCmUhsFEQSEj4Jg8TBRoYVXVSGF5oCwppnlGEVR24qUcWImgDrtuOo74YdY+7wXZ1
-	 cXg9XWWLhNAkNCJgC4E8rfEAuiqhrhdBdmHFiV3XKcpjWt+lq7lbpGvwiqm46jxvuNQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792675537;
+	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
+	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-Rspamd-Server:X-Rspamd-Queue-Id:
+	 X-Stat-Signature:X-Spam-Status:X-Session-Marker:X-Session-ID:
+	 DKIM-Signature:X-HE-Tag:X-HE-Meta;
+	bh=oEGlizCzT8H8VgGeloXhhkjrEyb3fwnCwNMOv+mnUQg=;
+	b=WP792Zpgy5O05S+3W/DnsR0YH8Sqe8ihId8XIodYqK4e7wCzQxYag/gxfv26TRW6dUEw
+	 74Fn/QvwJ02NBPA7d8e//yJ3939RaunjxZqJE1ryAVDQxPVwOjMjxmpUyXRNida6mOUn7
+	 ULvcgFq6rBso1XqzT231+BUP3L1oZReZI5CQHOflrrRmWkzweRGWeGE+iwStG+WO33Kju
+	 QAKNEp9wca5K3jhi6NpJkVXo/1U/XSTr9MNcxwxmMBRMSoSpvAmXh5vM3s+UazIAm5Agz
+	 h9GyxiC8OOEFl3NSCuoG8eg4PbC3jCk7xtSyFI7j6cxfpXVM7nX4qAAhQalXTt6+ecQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=h3c.com;
-	spf=pass smtp.mailfrom=h3c.com;
-	arc=none smtp.remote-ip=60.191.123.56
-Received: from h3cspam01-ex.h3c.com (smtp.h3c.com [60.191.123.56])
+	dmarc=pass header.from=goodmis.org;
+	spf=pass smtp.mailfrom=goodmis.org;
+	dkim=pass header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b="gY3NF/cO";
+	arc=none smtp.remote-ip=216.40.44.15
+Received: from relay.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9DB606A320
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 13:23:25 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8A9DB606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=h3c.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=h3c.com
-Received: from mail.maildlp.com ([172.25.15.155])
-	by h3cspam01-ex.h3c.com with ESMTP id 69MDMfU3056546;
-	Thu, 22 Oct 2026 21:22:41 +0800 (+08)
-	(envelope-from lin.nan@h3c.com)
-Received: from DAG6EX09-BJD.srv.huawei-3com.com (unknown [10.153.34.11])
-	by mail.maildlp.com (Postfix) with ESMTP id 19BEB20091FC;
-	Thu, 22 Oct 2026 21:25:53 +0800 (CST)
-Received: from localhost.localdomain (10.142.164.48) by
- DAG6EX09-BJD.srv.huawei-3com.com (10.153.34.11) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.2.1258.27; Thu, 22 Oct 2026 21:22:41 +0800
-From: Nan Lin <lin.nan@h3c.com>
-To: <chengzhihao1@huawei.com>
-CC: <lin.nan@h3c.com>, <linux-mtd@lists.infradead.org>, <richard@nod.at>,
-        <sashiko-bot@kernel.org>, <sashiko-reviews@lists.linux.dev>,
-        <wangxiaoqing@h3c.com>, <zhou.kete@h3c.com>
-Subject: Re: [PATCH v2] ubifs: zero stale data beyond EOF before file size grows
-Date: Thu, 22 Oct 2026 21:15:09 +0800
-Message-ID: <20261022131509.3006011-1-lin.nan@h3c.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <9b07df29-a459-f607-e06c-07aa6b9cf290@huawei.com>
-References: <9b07df29-a459-f607-e06c-07aa6b9cf290@huawei.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C5E606A31B
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 13:25:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B4C5E606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=gY3NF/cO
+Received: from omf14.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay04.hostedemail.com (Postfix) with ESMTP id C94401A081D;
+	Thu, 22 Oct 2026 13:25:29 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf14.hostedemail.com (Postfix) with ESMTPA id D6AEE30;
+	Thu, 22 Oct 2026 13:25:27 +0000 (UTC)
+Date: Thu, 22 Oct 2026 09:25:26 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Song Liu <song@kernel.org>
+Cc: sashiko-reviews@lists.linux.dev, linux-trace-kernel@vger.kernel.org,
+ live-patching@vger.kernel.org, mhiramat@kernel.org, mark.rutland@arm.com,
+ kernel-team@meta.com
+Subject: Re: [PATCH] compiler_types: Do not mark inline functions notrace
+Message-ID: <20261022092526.46261360@gandalf.local.home>
+In-Reply-To: <CAPhsuW5BhxAUC=OE=mjZ32vtYpsGM2WYw6bKTXF5GrTDh8CiSA@mail.gmail.com>
+References: <20261021222255.3124940-1-song@kernel.org>
+	<sashiko-outbox-180771@kernel.org>
+	<CAPhsuW5BhxAUC=OE=mjZ32vtYpsGM2WYw6bKTXF5GrTDh8CiSA@mail.gmail.com>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -62,148 +62,90 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BJSMTP02-EX.srv.huawei-3com.com (10.63.20.133) To
- DAG6EX09-BJD.srv.huawei-3com.com (10.153.34.11)
-X-DNSRBL: 
-X-SPAM-SOURCE-CHECK: pass
-X-MAIL:h3cspam01-ex.h3c.com 69MDMfU3056546
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Server: rspamout07
+X-Rspamd-Queue-Id: D6AEE30
+X-Stat-Signature: 7mj1wh3udg8mxttgss8xq63tzqqqahjk
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX1+9tqH9bmrYJJKTL1q+fxUkvAWCu4lyPLE=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=oEGlizCzT8H8VgGeloXhhkjrEyb3fwnCwNMOv+mnUQg=; b=gY3NF/cOcEXVjvZH57HQpd3JVGQzbQ8GRiVIMRJ7O+2ZRuPejK4+clC9PHmNmWWu+Ow5ZVXKgo2HGZO2n6CkvqLRefGdxhMxep+effr2UMvhiyDu7EXgz4WQ6GmWxXYLAMb7PF4O2RH8tYt+C5VzOihZ0pdk+Ne69zPUkc4ae0Y=
+X-HE-Tag: 1792675527-724063
+X-HE-Meta: U2FsdGVkX1+h96t4ngXe6gDub4AkVlV5bWzT6c2Z/eo6mOTFIvdwR48MM1Mju5Bz586Ks3vOugrgdoWQhqtf3DYQn4yX9oVDT7ipNfJCEPwdjDUmwuaa9fmVae2U3K3EwG3yixgn4rIq077PaRw0f/1bGtp6zCvkL7721DJFiCSDTbrlSYvivXa0XY0ZJWsSiKdjWUP98WtkWQFquMqZllOmDOv7XLJ+PGpeeBjKToqwHbA2lBjemrfw1l5//wgyNYblqCp1J7M/8Yrbe8nVFfRDvv3s6n7cqrd/qHAHaCAhcsoGMkXodS4HGy5rU3nD0sIRiknMhk1oHWCYPjZy0hvq+akRBeFg
 
->> Hi Cheng,
->>
->> Thanks for the detailed review. My responses are inline.
->>
->>> The filemap_lock_folio gets folio with FGP_LOCK, I think we should 
->>> use 'FGP_WRITEBEGIN | FGP_ACCESSED' just like ext4_load_tail_bh() 
->>> does, because the folio may not exist in ram when calling do_setattr().
->>
->> ext4_load_tail_bh() needs FGP_CREAT because in Ext4 the block behind 
->> an unwritten/delayed extent holds garbage on disk, so the zeroing must 
->> reach the media. UBIFS does not have this problem -- stale data can 
->> only live in the page cache, never on flash:
->>
->>    writeback:  ubifs_writepage() zeroes the straddling folio on every
->>                invocation and skips folios fully beyond i_size, so
->>                stale tails never reach the media.
->>    read-in:    do_readpage()/read_block() zero the tails of holes and
->>                short data nodes, so a folio loaded from flash is always
->>                tail-clean.
->>
->> So when the EOF folio is absent from the cache, there is nothing to 
->> zero anywhere: FGP_CREAT would merely allocate a fresh (already zero) 
->> folio to zero it again. Returning early on IS_ERR() is the correct and 
->> cheaper equivalent of Ext4's path.
->
->There is one case makes me confused:
->File f, isize = 0
->1. setattr(f, isize = 3)
->    do_setattr -> ubifs_zero_eof_hole -> filemap_lock_folio // gets no folio and returns, nothing happens 2. pwrite(f, "123", offset = 6, len = 3)
->    ubifs_write_begin
->     ubifs_zero_eof_hole -> filemap_lock_folio // gets no folio and returns, nothing happens
->     folio = __filemap_get_folio(FGP_WRITEBEGIN) // create a new folio with random content
->     if (!folio_test_uptodate(folio))
->       do_readpage // does nothing
->        while (1) {
->          ENOENT = read_block
->        }
->    ubifs_write_end
->     isize = 9
->
->   ubifs_writepage
->    folio content looks like
->   | random | random | 123   |   zero       |
->   0        3        6       9             4096
->
+On Wed, 21 Oct 2026 16:38:03 -0700
+Song Liu <song@kernel.org> wrote:
 
-do_readpage() does run here: pos(6) != folio_pos(0), so the
-skipped_read branch is not taken. With i_size = 3:
+> On Wed, Oct 21, 2026 at 4:09=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+> >
+> > Thank you for your contribution! Sashiko AI review found 5 potential is=
+sue(s) to consider:
+> > - [Critical] x86/paravirt: removing notrace from inline instruments pv_=
+ops and resume
+> > - [High] tracing: removing notrace from inline breaks ftrace recursion =
+protection
+> > - [High] rcu: srcu_read_lock_fast_notrace() and tracepoints lose notrac=
+e attribute
+> > - [High] bpf: removing notrace from inline exposes trampoline helpers t=
+o fentry
+> > - [High] entry: removing notrace from inline instruments unvalidated en=
+try helpers =20
+>=20
+> Wow. I didn't expect this from Sashiko.
 
-  do_readpage():
-    beyond = (3 + 4095) >> 12 = 1
-    block(0) < beyond(1) -> no early exit
-    read_block(block=0):
-      ubifs_tnc_lookup() -> -ENOENT (no data nodes yet)
-      -> folio_zero_range(folio, 0, 4096)     /* whole 4K block */
-      -> return -ENOENT                       /* file.c:52-59 */
-    hole branch: err = 0, folio_set_checked(), folio_mark_uptodate()
+Yeah, I was pretty impressed too.
 
-So read_block() zeroes the full 4K block *before* returning -ENOENT. The folio VFS copies "123" into is:
+>=20
+> > --
+> >
+> > commit 1eb6626c4a5ab70e5858a8a8f1c9edfca235db57
+> > Author: Song Liu <song@kernel.org>
+> >
+> > compiler_types: Do not mark inline functions notrace
+> >
+> > This commit removes the notrace attribute from the inline macro definit=
+ion
+> > in include/linux/compiler_types.h so that inline functions emitted
+> > out-of-line by the compiler can be traced by ftrace, attached to via BPF
+> > fentry/fexit, and livepatched.
+> > =20
+> > > diff --git a/include/linux/compiler_types.h b/include/linux/compiler_=
+types.h
+> > > index c5921f1390079..ea7f2a928b4da 100644
+> > > --- a/include/linux/compiler_types.h
+> > > +++ b/include/linux/compiler_types.h
+> > > @@ -230,9 +230,8 @@ struct ftrace_likely_data {
+> > >   * externally visible function. This makes extern inline behave as p=
+er gnu89
+> > >   * semantics rather than c99. This prevents multiple symbol definiti=
+on errors
+> > >   * of extern inline functions at link time.
+> > > - * A lot of inline functions can cause havoc with function tracing.
+> > >   */
+> > > -#define inline inline __gnu_inline __inline_maybe_unused notrace
+> > > +#define inline inline __gnu_inline __inline_maybe_unused
+> > >
+> > >  /*
+> > >   * gcc provides both __inline__ and __inline as alternate spellings =
+of =20
+> >
+> > [Severity: Critical]
+> > Could removing notrace from inline cause a triple-fault during x86 susp=
+end
+> > resume, secondary CPU bringup, or kexec when function tracing or call-d=
+epth
+> > tracking is active?
+> >
+> > In include/linux/compiler_attributes.h, __always_inline expands to inli=
+ne:
+> >
+> >     #define __always_inline inline __attribute__((__always_inline__)) =
+=20
+>=20
+> I wonder whether we need __always_inline to be notrace, and whether
+> this resolves any of these concerns.
 
-  | 0 ... 0 | 123 | 0 ... 0 |
-  0         3/6   9        4096
+Yes, we should add "notrace" to the __always_inline for the reasons given
+by sashiko. I'll look a the other comments to see if there's other issues.
 
-not "| random | random | 123 |". The random bytes never survive:
-every !uptodate folio passes through do_readpage(), and read_block()
-zeroes every block whose TNC lookup returns -ENOENT. 
-
->According to the current implementations, could above process happen?
->If it is, I think we need to do two points:
->1. The folio(even not cached) zero range is necessary when setting a new
->bigger size?       -- For 0~3 case
->2. The folio(even not cached) zero range is necessary when writting
->starts after old isize?       -- For 3~6 case
->I think zeroing the whole folio in ubifs_read_folio(ENOENT case) is a simple solution?
->>
->>> Why skipping 'from == 0'? What if a user writes begin from
->>> offset-X(0<X<4096) to a new file(isize = 0)? Ext4 zero the range by 
->>> ext4_block_write_begin->folio_zero_segments(folio, to, block_end, 
->>> block_start, from), but ubifs not handle it.
->>
->> from == 0 means the old EOF is folio-aligned, so the EOF folio has no 
->> bytes beyond EOF and there is no hole in it:
->>
->>    from != 0:  |/////valid/////|stale|   <- zero [from, to)
->>    from == 0:  |/////valid/////|         <- nothing beyond EOF here
->>
->> For the i_size == 0 case: a zero-size file cannot hold a polluted 
->> folio. mmap cannot create one (page_mkwrite returns SIGBUS when 
->> folio_pos >= i_size), and write() followed by ftruncate(0) invalidates 
->> the folio. The [0, X) part of the write folio itself is zeroed by the 
->> existing do_readpage() path ("block >= beyond" -> folio_zero_range()), 
->> which is UBIFS's counterpart of ext4_block_write_begin()'s 
->> folio_zero_segments() -- the work happens at folio read-in because 
->> UBIFS's block size always equals the page size.
->>
->
->This question is similar with the previous one.
->
->>> The ext4 protection check is ext4_write_checks->ext4_block_zero_eof,
->>> I think we can add the zero hole check in ubifs_write_iter().
->>
->> Agreed. This mirrors ext4_write_checks() -> ext4_block_zero_eof() and 
->> runs once per syscall instead of once per write_begin() iteration.
->> Will move it there in v3.
->>
->>> If the program enters into this branch, the ubifs file's isize is not 
->>> zero, ubifs_read_folio has already zerod tail, do we still need this 
->>> folio_zero_range?
->>> Oh, there is one case, UBIFS file has isize without data nodes(eg.
->>> isize = 3, the first block is a data hole), ubifs_read_folio won't 
->>> zero the page tail, we still need folio_zero_range().
->>
->> Right -- and one more case on top of the hole-inode one: mkwrite also 
->> runs on already-cached folios, and earlier mmap stores may have 
->> re-dirtied the tail after ubifs_read_folio() cleaned it (only folios 
->> fully beyond EOF get SIGBUS; the straddling folio stays writable 
->> across its whole length). So the tail must be re-zeroed on every 
->> (re-)fault, and the folio_zero_range() stays.
->
->I;m still confusing about the necessary of this folio_zero_range().
->For a hole inode(isize = 3, no data nodes), if the folio is cached, ubifs_read_folio has zerod the whole folio content(Suspend we have applied the simple solution from the previous question). The subsequent dirty setting will not write the page content after the 3rd byte to a data node.
-
-Yes, I agree: ubifs_read_folio() zeroes the tail at read-in, and
-writeback does not persist bytes beyond EOF (the straddling folio's
-tail is zeroed and do_writepage() only writes i_size
-bytes). My concern is the cached tail of the EOF folio: a previous
-shared mapping may have modified it, and a later write fault may
-reuse the uptodate folio without calling ubifs_read_folio() again.
-The zeroing will clear that stale tail before page_mkwrite() returns.
-
-This is not a general fix for read-only re-mappings, since those do
-not invoke page_mkwrite(). In this scenario, I see the hunk as a
-defensive cleanup of the cached EOF tail on a later write fault,
-rather than a fix for writeback correctness. A userspace reproducer
-may race with writeback. I'd lean toward keeping it as a defensive
-measure, but I haven't yet demonstrated a correctness issue without
-it. What do you think?
+-- Steve
