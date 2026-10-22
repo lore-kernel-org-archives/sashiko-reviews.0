@@ -1,69 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.218
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.218.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792677304;
-	b=HecktQHI6IF0Do4LumSqNMW8ZzsRy401x3ckdIRDmjm3SBmPJE3EPo0wV/yiJhFtufnB
-	 rUuwbGATZZ5R4X60pRnTmEugrM9IJas3X/rxsusH4TQnru5O9x60JkykAzaIRBvVhujyk
-	 nKvIgeNrZhYzLPh4ym0jVre0g1usnUuRxRA+LZ3kJiC4wdhi8G94SzpQoVFdbyhM4lttq
-	 52zIQoTmpmQ05O9jHCAh1rFSLE6NfDchpp4uOhSMAYN43su0XH/rrmltDne/0dEqbbQhZ
-	 FDILiB6N2J4hjiYUzjHgA0AoLvccVyO3/+qRkYiZwirOyXGwNHkNsRbXSahIVy1CbZA==
+	t=1792678270;
+	b=C+8E7r4Zi2VaUxeoONwPVtL6TzSTnBk68y5P8fyXxtjRtV6a9Z3j+vkx/MRmVKP0YQc2
+	 Ord+NLOupf4Xh+BW6QHx1RebFWF4HXBUZQU0l7AxGxcjAHWRrBWkpC3koTO3twdVCpAyv
+	 2WUkvUcO77AYcdX0gZJDIICIiFYWIAgZWWo6W6ntCG/SWyPf1aKpTgeuMGE/nk3bhW0zr
+	 U+eTB332O76qfbHJ2xFnGYTzZu9kvhmqxxk6natQ7vo6ckdPE5GYCGkU70o4PqfGpXf/o
+	 PWGMzrXohOylHAGZIYa6pM1kS6EbgMGYDdDKdmltVhNI47OKh7VksP2SPC3JMrLOe/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792677304;
-	h=DMARC-Filter:dkim-signature:Received:Received:Received:Subject:To:CC:
-	 References:From:Message-ID:Date:User-Agent:MIME-Version:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Originating-IP:
-	 X-ClientProxiedBy;
-	bh=5BsMfkeVKf6/6NYf7cNfBlIy3p+cOAo6iw/vAUH7MuQ=;
-	b=jfgg11Tfg2VBzgStlY3Rw7bSDWRwHA6FhMzu9EK2P1JIcQXUNej+XVXmVw9nz1UxBlDV
-	 c1t7FD48GzwGVk5g9iN4LdDstrGgAm9WV65Z4feLh6ayXOmYL3YTZdrZHhyjPud9OZ2MY
-	 4EuTI09YcdnnofPJzzWfZh5R55u0tqFlxFWml23lwkyeFews/hEpUYLD81QLKJgZJNYQq
-	 OoLtydxI8KPdJ1FxLI8oLuloVhsA4uLFbfoxZTzYoZXY0Bw6dMLS0wld543KV4L9lafI9
-	 mRolfrxmF/efPlLghCaWuT97NLUsudfRw2WfPsucq5PDiM5a7bKi4QJ9jeo3YiCdHQg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792678270;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=iRyksO0YLobR75bb2n3wA0ydtgFNs8F9swKUDXItpSo=;
+	b=YaCqlmILglxZ9EjLRJVmBgm9aWeZyMQcxcVtJIGYaWNk2kS8q/tGmrquCqnJ2FGjhabL
+	 pQEMs7UU4vrWpQ2oncQP+d9igP6sKbpP7p7vpViswAABt0Q0PV/FvvE1eLjBL5D9WUF4T
+	 nLtHNAYgYKgU+/G6dC16UQUNPdXvP4g/Z8DVbw3KToIWd0Svo/YRT7IBDkFG8aF0/vZTC
+	 rkjwTerWc4CYZ34CGlgNeKzWu3xsu2qwlWfTO9RiSHOR6Eub4hLMBmN49qWkT5hjVYcG1
+	 wFBbbHLpdl8crDPSqFx1B4DfonUieU57HTzWcCY8P9ERhraVj1j0iiNQKPrdCtgztPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=huawei.com;
-	spf=pass smtp.mailfrom=huawei.com;
-	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=bUnEFeJh;
-	arc=none smtp.remote-ip=113.46.200.218
-Received: from canpmsgout03.his.huawei.com (canpmsgout03.his.huawei.com [113.46.200.218])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=suse.com;
+	spf=pass smtp.mailfrom=suse.com;
+	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=hF2sDi5n;
+	arc=none smtp.remote-ip=209.85.218.42
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06ED606A31A
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 13:55:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F06ED606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5741606A319
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 14:11:09 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D5741606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=bUnEFeJh
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=5BsMfkeVKf6/6NYf7cNfBlIy3p+cOAo6iw/vAUH7MuQ=;
-	b=bUnEFeJhvTvLaGQ7vxP7lTuip+fpR+DdwpzyXeA0QFVyDJK+e+aBLyOPKgqAuXeSDqOYnZJTC
-	SvGneUVLre54SAXGzyL7Ce+Wk3gdRhihD4ig3AjbADb+BktfGiSO7RbLZ+owPrVLM4gGbB0pmyj
-	v8+6/16qu0dGwHowdvqDfUA=
-Received: from mail.maildlp.com (unknown [172.19.162.144])
-	by canpmsgout03.his.huawei.com (SkyGuard) with ESMTPS id 4j9SMM1jYmzpSvH;
-	Thu, 22 Oct 2026 21:54:55 +0800 (CST)
-Received: from whupemo200011.china.huawei.com (unknown [7.152.185.179])
-	by mail.maildlp.com (Postfix) with ESMTPS id 6D55B40538;
-	Thu, 22 Oct 2026 21:54:57 +0800 (CST)
-Received: from [10.174.178.46] (10.174.178.46) by
- whupemo200011.china.huawei.com (7.152.185.179) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Thu, 22 Oct 2026 21:54:56 +0800
-Subject: Re: [PATCH v2] ubifs: zero stale data beyond EOF before file size
- grows
-To: Nan Lin <lin.nan@h3c.com>
-CC: <linux-mtd@lists.infradead.org>, <richard@nod.at>,
-	<sashiko-bot@kernel.org>, <sashiko-reviews@lists.linux.dev>,
-	<wangxiaoqing@h3c.com>, <zhou.kete@h3c.com>
-References: <9b07df29-a459-f607-e06c-07aa6b9cf290@huawei.com>
- <20261022131509.3006011-1-lin.nan@h3c.com>
-From: Zhihao Cheng <chengzhihao1@huawei.com>
-Message-ID: <d79ef729-5cb2-6128-7075-be95be77580c@huawei.com>
-Date: Thu, 22 Oct 2026 21:54:54 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+	dkim=pass (2048-bit key, unprotected) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=hF2sDi5n
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-c2937c43f31so31185966b.3
+        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 07:11:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1792678268; x=1793283068; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=iRyksO0YLobR75bb2n3wA0ydtgFNs8F9swKUDXItpSo=;
+        b=hF2sDi5n6TIXIe9xTgdQewGCLi1Wito92NBHlyFx1thYGTgPQG89TEyZn+zgd7xD5M
+         XOcXroC8ur9H/kvfIG4OD1SwBQB8rGJh8cvo+3xX7rPADGvDyTb54m15eDVUrWOVFPiL
+         W6/gBanXIwtVgzbi/62ZWYb4cXewd42xOyYbklekuZHQJJg00So7pQ8SMdTY5e5BUudn
+         NlYt4MqLdhvdY58zM+Wg1hcKguhfTTKugrMMg9Rb4oRj6k/UpC7C8aj9kPzmyHdLakwa
+         PI71cS02s6UdTS5fjMhEXQzwQPIg26rb4Xnwh2NMz8xhonbN/6FkvuwxsKniwMCuUUqb
+         FAzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792678268; x=1793283068;
+        h=content-transfer-encoding:content-type:in-reply-to:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=iRyksO0YLobR75bb2n3wA0ydtgFNs8F9swKUDXItpSo=;
+        b=XBHCuh/9zKw2ISyg/XJJWehztyX3a6TIoP81P6QNuWf9tCPAtRMFSiZb+X8EPaqACH
+         h44SoryxufVegOL1SUSwdGwF7F5GW5AGK2MroPxR1DI69E1yRZfz4/2UVRqGgs43TdqJ
+         iJAezgr8r0acEnfucHUMxdarfdwB0fT0tcPDjN4fBQXEHvA0Iu7PkD9j5wEl9mTtLP6z
+         P0HU9y+m68VjSO5XL6WY88vbjFTcgGY9KnEac9DGXc+5/lQlWYEoZrksciwefrxBzlq4
+         MeQMeMfNMCTVZITat99iE0jNPtMeAnyRLUgwNzaV+lO8G7qq3gxJ6+eY/4Zv3ip+kmi2
+         w0zA==
+X-Gm-Message-State: AFq9FYL320N7Q3wS3A5Qq/kYlorCRTQs2fXvho2uqlCcpLVfO5smLdnQ
+	TNjgUc7AZ7rGZVkIEGIKZ7RITyCY6rJp/JXnVVhkqHyUhu+bGLBElrUCR0ZB4RcPCnsxhZTCcBK
+	IXHkP53o=
+X-Gm-Gg: AYBFou3Uq8+2eFxvRnJ5jcUEiEwezcwmgcycGRPMts8aflMQSPouObCNkUyHUTLZ4I6
+	aYGjyHAUIamnRWD4uQJWaHanphBy5ntpKEBm4Cplm7ZF5CgrjvCOxDl5kKsX1YJCEvD97+anCWD
+	UHpEslBvW2rVpS0G2HwkjLuEbJL6eZapi506CPH8TQsAgf8kShkeJnBJmed26Wl9zz3oGtL6Yrg
+	q6aMANbmeQmEpOGhIl/Eq2+6g6JRRiUIte6ycLJzO8Hufp7P+HIThjFVTSyhHNxKgPtN6iSjaVc
+	NYexpaVvEWHGQ2cEYCL4J4bnEvN7uoE5UOvSzFGFUnHTuqrsMbV6wUz+C8JQ6I9NfZHJZYqogvQ
+	tM6Y9P1ppbC5pyMqafOe+CDe/6jN1+phvOIEeQ1Wel7Qu4SUcMzsIt/6lbTJk8UIFT24ci/CMYX
+	JDLLtkOarJpWdGAI23N4FhBL9c6+SsLIDMEZ1mqZ7hzJY5NucdTQAg7M3UDR/hYHnf68MGqz+HD
+	en2LKLsXP61tvs1YGvL8nNamUkTrPoFzONGI5lv7IhmEgaqIT5x7D296fX6dA==
+X-Received: by 2002:a17:907:9407:b0:c32:8cbb:fac with SMTP id a640c23a62f3a-c467962728bmr609539766b.3.1792678268183;
+        Thu, 22 Oct 2026 07:11:08 -0700 (PDT)
+Received: from [10.202.112.30] ([202.127.77.110])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8a0895d8264sm2265365b3a.39.2026.10.22.07.11.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Oct 2026 07:11:07 -0700 (PDT)
+Message-ID: <c444dce2-418f-40ae-b3c9-49c20489dacc@suse.com>
+Date: Thu, 22 Oct 2026 22:11:02 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -73,157 +89,143 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-In-Reply-To: <20261022131509.3006011-1-lin.nan@h3c.com>
-Content-Type: text/plain; charset="gbk"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems100002.china.huawei.com (7.221.188.206) To
- whupemo200011.china.huawei.com (7.152.185.179)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 4/4] ocfs2: remove legacy blockdev direct-IO path
+ APIs
+To: sashiko-reviews@lists.linux.dev
+Cc: Mark Fasheh <mark@fasheh.com>, Joel Becker <jlbec@evilplan.org>,
+ Joseph Qi <joseph.qi@linux.alibaba.com>
+References: <20261018143319.22329-1-heming.zhao@suse.com>
+ <20261018143319.22329-5-heming.zhao@suse.com>
+ <sashiko-outbox-176211@kernel.org>
+From: Heming Zhao <heming.zhao@suse.com>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-176211@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-ÔÚ 2026/10/22 21:15, Nan Lin Ð´µÀ:
->>> Hi Cheng,
->>>
->>> Thanks for the detailed review. My responses are inline.
->>>
->>>> The filemap_lock_folio gets folio with FGP_LOCK, I think we should
->>>> use 'FGP_WRITEBEGIN | FGP_ACCESSED' just like ext4_load_tail_bh()
->>>> does, because the folio may not exist in ram when calling do_setattr().
->>>
->>> ext4_load_tail_bh() needs FGP_CREAT because in Ext4 the block behind
->>> an unwritten/delayed extent holds garbage on disk, so the zeroing must
->>> reach the media. UBIFS does not have this problem -- stale data can
->>> only live in the page cache, never on flash:
->>>
->>>     writeback:  ubifs_writepage() zeroes the straddling folio on every
->>>                 invocation and skips folios fully beyond i_size, so
->>>                 stale tails never reach the media.
->>>     read-in:    do_readpage()/read_block() zero the tails of holes and
->>>                 short data nodes, so a folio loaded from flash is always
->>>                 tail-clean.
->>>
->>> So when the EOF folio is absent from the cache, there is nothing to
->>> zero anywhere: FGP_CREAT would merely allocate a fresh (already zero)
->>> folio to zero it again. Returning early on IS_ERR() is the correct and
->>> cheaper equivalent of Ext4's path.
->>
->> There is one case makes me confused:
->> File f, isize = 0
->> 1. setattr(f, isize = 3)
->>     do_setattr -> ubifs_zero_eof_hole -> filemap_lock_folio // gets no folio and returns, nothing happens 2. pwrite(f, "123", offset = 6, len = 3)
->>     ubifs_write_begin
->>      ubifs_zero_eof_hole -> filemap_lock_folio // gets no folio and returns, nothing happens
->>      folio = __filemap_get_folio(FGP_WRITEBEGIN) // create a new folio with random content
->>      if (!folio_test_uptodate(folio))
->>        do_readpage // does nothing
->>         while (1) {
->>           ENOENT = read_block
->>         }
->>     ubifs_write_end
->>      isize = 9
->>
->>    ubifs_writepage
->>     folio content looks like
->>    | random | random | 123   |   zero       |
->>    0        3        6       9             4096
->>
+On 10/18/26 22:44, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] ocfs2: ocfs2_file_open() skips FMODE_CAN_ODIRECT on inline-data inodes
+> - [Low] ocfs2: unused OCFS2_DIO_MARK_EXTENT_BATCH macro in fs/ocfs2/aops.c
+> --
 > 
-> do_readpage() does run here: pos(6) != folio_pos(0), so the
-> skipped_read branch is not taken. With i_size = 3:
+> commit c44e1e979977c124de60573ae7e8ca56edb710ca
+> Author: Heming Zhao <heming.zhao@suse.com>
 > 
->    do_readpage():
->      beyond = (3 + 4095) >> 12 = 1
->      block(0) < beyond(1) -> no early exit
->      read_block(block=0):
->        ubifs_tnc_lookup() -> -ENOENT (no data nodes yet)
-Oh, I missed the folio_zero_range in read_block(), sorry for the noisy.
->        -> folio_zero_range(folio, 0, 4096)     /* whole 4K block */
->        -> return -ENOENT                       /* file.c:52-59 */
->      hole branch: err = 0, folio_set_checked(), folio_mark_uptodate()
+> ocfs2: remove legacy blockdev direct-IO path APIs
 > 
-> So read_block() zeroes the full 4K block *before* returning -ENOENT. The folio VFS copies "123" into is:
+> This commit removes the legacy buffer_head direct-IO callbacks and Kconfig
+> selection from ocfs2, and explicitly sets FMODE_CAN_ODIRECT in
+> ocfs2_file_open() now that direct I/O is handled via iomap.
 > 
->    | 0 ... 0 | 123 | 0 ... 0 |
->    0         3/6   9        4096
+>> diff --git a/fs/ocfs2/aops.c b/fs/ocfs2/aops.c
+>> index 6564b3251b28b..ba63d983b6d63 100644
+>> --- a/fs/ocfs2/aops.c
+>> +++ b/fs/ocfs2/aops.c
 > 
-> not "| random | random | 123 |". The random bytes never survive:
-> every !uptodate folio passes through do_readpage(), and read_block()
-> zeroes every block whose TNC lookup returns -ENOENT.
+> [ ... ]
 > 
->> According to the current implementations, could above process happen?
->> If it is, I think we need to do two points:
->> 1. The folio(even not cached) zero range is necessary when setting a new
->> bigger size?       -- For 0~3 case
->> 2. The folio(even not cached) zero range is necessary when writting
->> starts after old isize?       -- For 3~6 case
->> I think zeroing the whole folio in ubifs_read_folio(ENOENT case) is a simple solution?
->>>
->>>> Why skipping 'from == 0'? What if a user writes begin from
->>>> offset-X(0<X<4096) to a new file(isize = 0)? Ext4 zero the range by
->>>> ext4_block_write_begin->folio_zero_segments(folio, to, block_end,
->>>> block_start, from), but ubifs not handle it.
->>>
->>> from == 0 means the old EOF is folio-aligned, so the EOF folio has no
->>> bytes beyond EOF and there is no hole in it:
->>>
->>>     from != 0:  |/////valid/////|stale|   <- zero [from, to)
->>>     from == 0:  |/////valid/////|         <- nothing beyond EOF here
->>>
->>> For the i_size == 0 case: a zero-size file cannot hold a polluted
->>> folio. mmap cannot create one (page_mkwrite returns SIGBUS when
->>> folio_pos >= i_size), and write() followed by ftruncate(0) invalidates
->>> the folio. The [0, X) part of the write folio itself is zeroed by the
->>> existing do_readpage() path ("block >= beyond" -> folio_zero_range()),
->>> which is UBIFS's counterpart of ext4_block_write_begin()'s
->>> folio_zero_segments() -- the work happens at folio read-in because
->>> UBIFS's block size always equals the page size.
->>>
->>
->> This question is similar with the previous one.
->>
->>>> The ext4 protection check is ext4_write_checks->ext4_block_zero_eof,
->>>> I think we can add the zero hole check in ubifs_write_iter().
->>>
->>> Agreed. This mirrors ext4_write_checks() -> ext4_block_zero_eof() and
->>> runs once per syscall instead of once per write_begin() iteration.
->>> Will move it there in v3.
->>>
->>>> If the program enters into this branch, the ubifs file's isize is not
->>>> zero, ubifs_read_folio has already zerod tail, do we still need this
->>>> folio_zero_range?
->>>> Oh, there is one case, UBIFS file has isize without data nodes(eg.
->>>> isize = 3, the first block is a data hole), ubifs_read_folio won't
->>>> zero the page tail, we still need folio_zero_range().
->>>
->>> Right -- and one more case on top of the hole-inode one: mkwrite also
->>> runs on already-cached folios, and earlier mmap stores may have
->>> re-dirtied the tail after ubifs_read_folio() cleaned it (only folios
->>> fully beyond EOF get SIGBUS; the straddling folio stays writable
->>> across its whole length). So the tail must be re-zeroed on every
->>> (re-)fault, and the folio_zero_range() stays.
->>
->> I;m still confusing about the necessary of this folio_zero_range().
->> For a hole inode(isize = 3, no data nodes), if the folio is cached, ubifs_read_folio has zerod the whole folio content(Suspend we have applied the simple solution from the previous question). The subsequent dirty setting will not write the page content after the 3rd byte to a data node.
+>> @@ -2533,205 +2322,6 @@ static int ocfs2_dio_wr_map_blocks(struct inode *inode,
+>>   	return ret;
+>>   }
+>>   
+>> -static int ocfs2_dio_end_io_write(struct inode *inode,
+>> -				  struct ocfs2_dio_write_ctxt *dwc,
+>> -				  loff_t offset,
+>> -				  ssize_t bytes)
+>> -{
 > 
-> Yes, I agree: ubifs_read_folio() zeroes the tail at read-in, and
-> writeback does not persist bytes beyond EOF (the straddling folio's
-> tail is zeroed and do_writepage() only writes i_size
-> bytes). My concern is the cached tail of the EOF folio: a previous
-> shared mapping may have modified it, and a later write fault may
-> reuse the uptodate folio without calling ubifs_read_folio() again.
-> The zeroing will clear that stale tail before page_mkwrite() returns.
+> [ ... ]
 > 
-Agreed with the analysis of the multi writing processes. Anyway, user 
-must be aware that he is modifying a file beyonds EOF by mmap(). The 
-user should be responsible for the memory content beyonds EOF.
-> This is not a general fix for read-only re-mappings, since those do
-> not invoke page_mkwrite(). In this scenario, I see the hunk as a
-> defensive cleanup of the cached EOF tail on a later write fault,
-> rather than a fix for writeback correctness. A userspace reproducer
-> may race with writeback. I'd lean toward keeping it as a defensive
-> measure, but I haven't yet demonstrated a correctness issue without
-> it. What do you think?
+>> -		if (++batch == OCFS2_DIO_MARK_EXTENT_BATCH) {
+>> -			ocfs2_commit_trans(osb, handle);
+>> -			handle = NULL;
+>> -			batch = 0;
+>> -		}
+>> -	}
+> 
+> [Severity: Low]
+> With ocfs2_dio_end_io_write() removed, is the OCFS2_DIO_MARK_EXTENT_BATCH
+> macro definition earlier in fs/ocfs2/aops.c now unused, and should it be
+> removed as well?
+
+I will follow the same handling as in commit d647c5b2fbf81 by using
+OCFS2_DIO_MARK_EXTENT_BATCH in ocfs2_iomap_dio_end_io_write().
+
+> 
+> [ ... ]
+> 
+>> diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
+>> index 04d676ff7aa59..2b7f878f25e24 100644
+>> --- a/fs/ocfs2/file.c
+>> +++ b/fs/ocfs2/file.c
+>> @@ -129,6 +129,15 @@ static int ocfs2_file_open(struct inode *inode, struct file *file)
+>>   
+>>   	file->f_mode |= FMODE_NOWAIT;
+>>   
+>> +	/*
+>> +	 * Direct I/O is served through iomap_dio_rw() from
+>> +	 * ocfs2_file_{read,write}_iter() rather than an a_ops->direct_IO
+>> +	 * method, so advertise O_DIRECT capability explicitly here.
+>> +	 */
+>> +	if (!(OCFS2_I(inode)->ip_dyn_features & OCFS2_INLINE_DATA_FL))
+>> +		file->f_mode |= FMODE_CAN_ODIRECT;
+>> +
+>> +
+>>   leave:
+>>   	return status;
+>>   }
+> 
+> [Severity: High]
+> Should ocfs2_file_open() set FMODE_CAN_ODIRECT unconditionally here rather
+> than skipping it when OCFS2_INLINE_DATA_FL is set?
+> 
+> Previously, ocfs2_aops had .direct_IO set, so do_dentry_open() always set
+> FMODE_CAN_ODIRECT on regular files regardless of OCFS2_INLINE_DATA_FL. The
+> read and write iterators check ocfs2_should_use_dio() under the cluster
+> lock and fall back to buffered I/O when the file has inline data:
+> 
+> fs/ocfs2/file.c:ocfs2_should_use_dio() {
+> 	if (OCFS2_I(inode)->ip_dyn_features & OCFS2_INLINE_DATA_FL)
+> 		return false;
+> }
+> 
+> Skipping FMODE_CAN_ODIRECT in ocfs2_file_open() appears to cause several
+> regressions on filesystems with inline-data enabled:
+> 
+> 1. Opening an existing inline-data file with O_DIRECT now fails with
+>     -EINVAL in do_dentry_open() instead of succeeding and falling back to
+>     buffered I/O (or converting to extents on write).
+> 
+> 2. OCFS2_INLINE_DATA_FL is mutable and is cleared dynamically in
+>     ocfs2_convert_inline_data_to_extents() when a file grows beyond inline
+>     capacity. If an inline-data file is opened without O_DIRECT and later
+>     converted to extents, file->f_mode still lacks FMODE_CAN_ODIRECT, so a
+>     subsequent fcntl(fd, F_SETFL, O_DIRECT) in setfl() or RWF_DIRECT I/O
+>     will fail with -EINVAL.
+> 
+> 3. ocfs2_file_open() reads ip_dyn_features without holding oi->ip_lock or
+>     the cluster lock (ocfs2_inode_lock()), so a node with a stale cached
+>     OCFS2_INLINE_DATA_FL flag can reject open(..., O_DIRECT) with -EINVAL
+>     even after another node has already converted the inode to extents.
+> 
+> 4. Earlier in ocfs2_file_open(), OCFS2_INODE_OPEN_DIRECT is set before
+>     do_dentry_open() checks FMODE_CAN_ODIRECT:
+> 
+> 	if (mode & O_DIRECT)
+> 		oi->ip_flags |= OCFS2_INODE_OPEN_DIRECT;
+> 
+>     If an inline-data file already has another open fd (oi->ip_open_count > 0)
+>     when an O_DIRECT open fails in do_dentry_open(), ocfs2_file_release()
+>     will not clear OCFS2_INODE_OPEN_DIRECT because --oi->ip_open_count is
+>     still non-zero.
+> 
+> [ ... ]
 > 
 
-Well, this is not a practical issue and will not have any impact on the 
-user, and other filesystems(eg. ext4) behave like UBIFS for this case, 
-so I prefer to keep the original implementation.
+I prefer the style of setting FMODE_CAN_ODIRECT unconditionally. This is also v2
+code style.
 
+Thanks,
+Heming
