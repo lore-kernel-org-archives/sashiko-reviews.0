@@ -1,100 +1,99 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.173
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792664930;
-	b=4Zng39h9zjETeGmI0EubcFSUZnynvUZrEA/QnHp3hauP9Enf7Xlo2YjZVwJtMngzoEz7
-	 zC/yWaQqQZvaX2UlleiDGDg8da9ZX9TCMAvr/CG/hWPdebb9W6wBctbtpy5KBi2d5/HKS
-	 c1kovpYZdCOC/A3nmmlgWsb/mJnalOLLyB1mk3M94hMooRM5kt3rDBv2mZsGRdlWgj/51
-	 LXvJ6AVaGrfM2Qn98HL8q4pjkijdM9o+uMb2Q+gs8xdI652PStlsgBowWSbYBz+Y13KU4
-	 88EipBWsFWK+LemeIx+WDIUkiBVZI1akFw25HoKLg7ONjgUOsdZHxt0qL+rqfjgE/qA==
+	t=1792665030;
+	b=fjMwubv/88G+J9MAAC/+dQhY2wgLRkmCsLzHQBlSrm/0mqEvwGt+8OFI5XHen4KGSzsx
+	 yW5Cnrhz47a8kYsUd811u8PKgUTpgiCkv3iOa8Bj7OIDtBwIFzsLb1qbY135qxL4Oxuz0
+	 Vm+gErO5P8YjWSaKZXW8QvAByx9AUhcP5FD+QKUmkT9wIAjtXgFJLEWgBM/gIQjnVC2IB
+	 rnRYMB8eAeF+EvCxzwo8tviDAXTF3dYQbRBY5+DWj0P8DJbYmjPIGz3MEt7M8VZgtmB0k
+	 YXqF8zF44pnehgTbFjfnvKkh9BOnWVyYh6A7Llv6JB6EWB6M9w9fLjxvNbuOYqxnAJw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792664930;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792665030;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=6CF33eXmXdf4Wc/z+SGcXu47kHs9TcOdOxXud5wQjXA=;
-	b=rczWGtFB3VSv4PO1XFDCfdSmlTNB7yIABuAZyNnYWNJaoGUyVUASadan8oAtnfF8brRX
-	 w7XjP5x0bfRy7ByUPKjr8vJ0hnPdaYqIyIQQNacknlh1Dt9ine74fwga8ArHvzwAK9CtJ
-	 8ZXoRHcRGRSgMAtTXCW8lb9COx0kzyetHf/Tk5h+jGcCcyn8wiz8hpMda/+Xm0fAIiHoo
-	 f75+ofZxrsLzH1SQs/EFeZzO6BPjq+XYGzerobFjywGOMzMMza6DVOB5fqMmlt6ccW89b
-	 N4db6eaCaqp0HF/+9+SoqZJPB+TOmfUX8sP1GRiLtOmkXBJGj9P8XDfq0ynMoXfPixw==
+	bh=BEhHwxYzSMiJvLdiI5HQibRaFl5gonBn5xrnfJkUhrQ=;
+	b=VHArAc0HgO11YmiyiYc6T3DPcIxxVe2FKa9OiXRCtLsXrBWXQR+B8neNSJgnBQpNE91e
+	 SxSW3PB+nLun/FXMeyZy8Pcw0JefMAqJhuHY+972hfwd2vAi329v5IdqicM/uoQAP3yaJ
+	 GURgLxrIlOcXAwEeBCwfBc0QcB+Qo35iaNLMCctxnjVkx/j6ZYiE6XEBgHzxTUhDMnVCI
+	 +aPjsQ7EhgZiwc7jekcVsmItU41z+gBbY+cjiWcVuh1Rav4EIANPvUoAXb55DrtRSZEJv
+	 xcZsQdBIbZpAzhPMITeRK9jZ64H2BtXDSgEtu71UeWo2j5OgRKvdNALtf20J1lZ0/Xg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ZCbMyZd9;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FVeOXXkz;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.173
 Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD09606A321
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 10:28:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EAD09606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F104D606A31E
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 10:30:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F104D606A31E
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ZCbMyZd9
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-8b13c7bb0deso9763637b3.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 03:28:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792664929; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FVeOXXkz
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-8ac525c1f05so14594687b3.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 03:30:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792665029; cv=none;
         d=google.com; s=arc-20260327;
-        b=X2mPnZQwQG4czG+qSS0QFazn7SQ2g9WytoDcEUy0AzMVNtOVcG5JOx1cVVY+1WMrdZ
-         CmNnviR8KdNoG7NR7mD7fY2l3ReEKLmAWaRri9CzNRwosamkJcO6isNgxasxFllK+prB
-         3N5kgSqgnmqUKvcVEY32jr6IfQwUGAQgeGUpZyIiZoZxN+B0GFsXYpMp/tOBh+ME6X/l
-         hlU7MbRbnjKwTXV93AHJXCEGHjrbFO4ItNwVFldGNgMISUsODOt8yZ+tRDX3Rci++bu4
-         SBkeCHCPnZNleefYLRhEK9MDDy5ULnRl3RQ3lc2rLBt5mbl1jB4WW428tSV+pX8kiwzp
-         ge5w==
+        b=dulUDawIfIYMg8Y4AxVp+M72aGqck7gPBSQGsr/NJTDYiBQLRVxo0ZJYHmYxaffNnh
+         o54SzkgIApW8jcZj6qXvmtycpjQ57hN1/XmPo6PUJIEJoqVERFP+tismPoKYOuftcWDR
+         AS4NulSdilTc9MKBzcoYPdcf0WJuOMCZw/7SSmUblD6MXRNpOE34kq0DKk8jfot1vnN8
+         qi2ZK3Qh/acCXa/MqHqnYfW+P/NGMb8nfufzTmpJpzFn6ivDCQtxWn6fhQvrrOOPUMrl
+         VK8vjixP914Q3dms3Uwdga2bRh7/liT19f/ucjcH5yiXOV7SrR+vbkzRORNunbbWHnTf
+         c7+A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=6CF33eXmXdf4Wc/z+SGcXu47kHs9TcOdOxXud5wQjXA=;
+        bh=BEhHwxYzSMiJvLdiI5HQibRaFl5gonBn5xrnfJkUhrQ=;
         fh=qZ+seXf+f2TsJGAcBan+zfngSJsoMHLyq6CoMxxVLFE=;
-        b=h8HdwOqwvujhlui/doUfgh0DDEOmYZUrENH5WBhpCcSoSxVFslU+hwpqbxtQqcd2NY
-         xcghNH2+Zhugof13AP6unHh58R231Tr2ou1brkkkepQH6Eykri8KqXQb9uGHlhyH0pat
-         RTwmR5hsngb3c5nonbp/3m7JK6cfdc8Q6YiKY0MQFPGlLmbMcIxQK5BlKI0ubFsX0aj5
-         6/3qPcXK8EnidU3UUqWRoaGDtuzYa6apjHGQgo3jd+IE12FFfAIHxceWm1rCezZ0pRCX
-         GiEUtkA7khncGLJKh0HjM9g/NjmjvapVML5Fax65/zsEnzh+ydDoebOR9uLd5C6O6T40
-         Mf6Q==;
+        b=ljcx7XlX1DNWZKSNIGDuHxSs1mDaiItUTh3sRu+Eu+CenIBwUSlk7JuYtMKNc7BXk7
+         /+8MaPtEVjBJ+F/BrSu6mxDoBtF19jMv/6RiW5lMTHDyA7QJ6qQdbjo1edFc9NaMTLS/
+         6U8/mpCwHnPwxNqsMC9CqJt4yTU6InMVkJMhu/y9mbvDUfiXHpWY+DbP4SIkuqIIWu0f
+         3+visc49IG/FJ6FScDwbraBBPAp4o1GOTjvP7+hDhlWl3NXrudPXoVvAnNpSex8Ohbmm
+         SgNv2VhIGlzuo9nRE990v9QXlZwF0RP7VidDc25Rfo9rLgRpSAZ6U/1bsGb0oY8cBtUP
+         V2Mw==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792664929; x=1793269729; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1792665029; x=1793269829; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=6CF33eXmXdf4Wc/z+SGcXu47kHs9TcOdOxXud5wQjXA=;
-        b=ZCbMyZd9kP7TKx0pCGopneebnf0m0/vbADYBPjKFWpSRia1Lu13IAR7VMrqiVp2RMK
-         bvxUg2NlsMerympdJAnl4Wv3Q27K0aekFZ9cvAh4gP7e490XvHzw6NTPczEsOCqgsvWU
-         L2zd/hUMIXpOr0QTfNWqxAxYKtLAY1luUT7fXDABECeKnjcWFt65HHEh5GU0hSpwwy3a
-         m5IHsLSYFuRdvJfFjLeUJBnr9d6ryZ97xAni2XNqDu4tanoPz24MIGxm8BIITxJ4nw/q
-         dAJuRJzW1RO+rhRrc0dqycem3weW7WxrvKK8DHnhakwMZBSpEnHqP8bnFHLpKDNLEKkG
-         4ecw==
+        bh=BEhHwxYzSMiJvLdiI5HQibRaFl5gonBn5xrnfJkUhrQ=;
+        b=FVeOXXkzcWFlIdrJu28oSUZ5lSNyU97NF1y6OGItoCrUioDEXaOxmd9UsPo8aQEMls
+         OA4vubXH0xxia49S5yJRsb7XOLgYykREGy1CZZxMk+ZLlj7LNAWRpFlVdCeSsvETMQQ3
+         t+V7TjqYncXmlSu6mBprjVitsF0vgfm1dyVYbJ01zS+m5h1uytEvCV/1xmwe/ULy+04N
+         OOg3HsccugPUwDPju14WCReiC5yNLfux2jZAwip+3U/ZzDeEfRYrm0+rgOjBXOzTmOOG
+         wMA/+RISOB8EZU0xEuskZAjFPf7/SSwjhBZxp7+/xvzXlYwlu3Hro18CD0i74q5U0E51
+         N39w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792664929; x=1793269729;
+        d=1e100.net; s=20260707; t=1792665029; x=1793269829;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=6CF33eXmXdf4Wc/z+SGcXu47kHs9TcOdOxXud5wQjXA=;
-        b=uChNgdiTnWTPcDy3k68LjF8hvrHMdJL8cO3R1ytcaMWmtHjonxd4EWKWmc2PWaV3zu
-         SSe8lwz0CrsaXGTWad72jrJWhmvwdTN48B4n7hqYaY4DkSCSiwU9We5AJ8mksGre0Zl7
-         b9mlQ7t6fgusNcfp2KSzJfwuKTYSaMvbGRa3NqcWXcbjJbrT2awMpKMAroYObjI4CWUY
-         7Eq2mraUsh/DSzQky4PURh0JhijPjKEaS9/sODA6wOi98ufzPtsTXjWT3+IVfLkdtGNp
-         A19Px3IQZxa12bbDyooYbPbks38JbwIfUCzxPxxfRbNgrVhF/UnVe8lOIR7EtrP/W8lt
-         9UxA==
-X-Gm-Message-State: AFq9FYJXiu6cYX0bja13Cpt1WukyLMWZcyV8cpY8JihrDDpHPtSH1kkt
-	na7zA80sQlfvKCavRW8lKZxJ8Ae44pTRNzexmM7qF/v08ThK9jS/FbIzuYMEgGQq+LCmW8/vqPl
-	7IxdHkBZCpbw3F+625rjqEQUYeEwiLYL8GPRR
-X-Gm-Gg: AYBFou1adzktBMyyhwgeYb1cZlH1mDzRWX+cibeAju06GmJJzuEyMQHF8fA0SuKXe+l
-	I1b6Kpur+x7II6+geRZNwi633TIWYtrukKrTEhnLylj6ET5Pp+ujBoi9B7ERlQ5GfOY7CFtVLFo
-	KWKy4Ha4A6HmGbLppnESfnP/OHsJuQQCowqeNrfO/zdfhtR5uW+m/sBY6/3Wlwg47NxE8L9LCJJ
-	qmsXDgArw585j6kRvaXyU1EfS6oPuaO7vIH7fiBvb6RRJAtHPN/b8aGQ5bt8RlLjawkyhNsB4sP
-	72CRqeVZWlegtZ9fwo/GtoB8tN+vS2+9rEOXyROyTqierwp5IEkmT/noQjWXN5ks6+7oCzrIqXC
-	zh2qP3+iBdVRgSD2Xnd/yszkB50rj4FpV8toZcqjZ2h6sc8oQ/pcY5o+LxqWjKYlV2p9iz4t5e2
-	7YSluExu3kH8nbGoLz
-X-Received: by 2002:a05:690c:6b12:b0:890:659e:3c84 with SMTP id
- 00721157ae682-8b133f861cfmr30266177b3.57.1792664928818; Thu, 22 Oct 2026
- 03:28:48 -0700 (PDT)
+        bh=BEhHwxYzSMiJvLdiI5HQibRaFl5gonBn5xrnfJkUhrQ=;
+        b=pJarW2tA4HHOwKG2LAY4zMn9sZz7ViZUtZBfkP88ISHDnkPTFVPiVn9ECKfqMwZJgN
+         H2G4XuAc+yXjpYReT2dAoXR5mBCZu1NX6ouWj1L5yKoz86/ry69JL7aMHG5hh2Dljhfo
+         vrOy3mrnu1tP18y25tOiyFkbE81G5moiWDPw4ap1JbV16Sv7zg1kQBNgXQtucwxGmXkL
+         65h5cp1VImKmoITc4BpAAAV6nzpd99WHxgsqNrPbOte9+NxLOR4+koKyaYbC9Jq84utC
+         lx6CMxZVyXGi4gUBi6aOVkIzCSba0KFODHDqbuSB6cmPTX6itjD8ntNEa5D+w/jV9sg+
+         WSEQ==
+X-Gm-Message-State: AFq9FYINcmOrnDVQxD297ucbSsSJyxyQMAuoUlI24W/CEVn+pa+ZK7W8
+	79t66fF3TYAJPVBeUP9gCqqFRYl5Xh+s1/7pYaybG9k0YTtVZ0pm0djvvoewwyhFh3yq/gfyAeH
+	yWwlkN7fe86ZZg5h18TcRR1Fqy+oUsHze7VyQ
+X-Gm-Gg: AYBFou2PJxLysxolSYOyWZwil4lgA7vRHu2GQ6kp1Otvnz3vA3hSnPtAhBvJgZLepUU
+	hF0trG1/qpPprMzsQeaZT9p59mxrXsNMRYZUZSctiXfdbIQJ5Z1R2hHUYvshZw8kUws9ueBik6X
+	f8Nm59/SfLmurJ7b9qPiquo6UvonOpvlVJN1o61T55d7oo6GGWxvuILkIz0AxM3G+SJOJeoFeiO
+	G2o6bOs4G7noXuIBgQyk3UxLxr6+YgHUldja2pbhFeF7yRw6Y0qTTl1r96jR7XjZDc7/8z84kN9
+	UFvPMfsd1F2nCl2UM/WEfFpgUdrRQMChSN7vS5hg9dV0OQxGj+CoMZeDfiWaWCSvbq6XqqQcraa
+	8vawkloJG5O9+UL4XB9cBjFodrBmKiFGYcs8lJiUPnNKOC6YlnubOhfnCtw7Faz4UlcekohQ=
+X-Received: by 2002:a05:690c:6e83:b0:88a:4770:c2e9 with SMTP id
+ 00721157ae682-8b133cab00emr32482837b3.14.1792665028968; Thu, 22 Oct 2026
+ 03:30:28 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -105,447 +104,203 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 References: <20261021-g2ul_sci-v2-0-b4e038220018@bp.renesas.com>
- <20261021-g2ul_sci-v2-2-b4e038220018@bp.renesas.com> <sashiko-outbox-180317@kernel.org>
-In-Reply-To: <sashiko-outbox-180317@kernel.org>
+ <20261021-g2ul_sci-v2-3-b4e038220018@bp.renesas.com> <sashiko-outbox-180298@kernel.org>
+In-Reply-To: <sashiko-outbox-180298@kernel.org>
 From: Biju Das <biju.das.au@gmail.com>
-Date: Thu, 22 Oct 2026 11:28:36 +0100
-X-Gm-Features: AclHuK-AinZtZpEbw8ja_Ez1_fDlTzuBgrsh9qdoyukinCDoeNVZ4fuD5VuBoyY
-Message-ID: <CADT+UeCyngEgqPwU1w=9Kh3AxGsFmEUDxb4Z8zWw0xg0zmTpRA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] serial: sh-sci: Keep TX enabled on TEI while data
- is pending
+Date: Thu, 22 Oct 2026 11:29:57 +0100
+X-Gm-Features: AclHuK9NxPFgx-jqOft8MHFpJQqezzJagWJDKOJP_AqiRF8xMdXQyhKNm1Uf3MY
+Message-ID: <CADT+UeA_z=6o32GdhHD9KrmMpW3WRcujcED_ZvCGSoi38jrg+w@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] serial: sh-sci: Skip TDxE clear when hardware
+ clears it automatically
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-serial@vger.kernel.org, kvm@vger.kernel.org, 
 	wsa+renesas@sang-engineering.com, linux-renesas-soc@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 21, 2026 at 2:38=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Wed, Oct 21, 2026 at 2:22=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] serial: sh-sci: TX stall in sci_tx_end_interrupt() on x_char whe=
-n stopped
-> - [High] serial: sh-sci: lock drop race in sci_tx_end_interrupt() before =
-TX handoff
-> - [Medium] serial: sh-sci: sci_tx_end_interrupt() clears TE without check=
-ing TEND
+> - [Medium] serial: sh-sci: missing has_tdxe_auto_clear init in scix_early=
+_console_setup()
 > --
 >
-> commit 24fb279b2944cfab75c45c919854637a4575564b
-> Author: Biju Das <biju.das.jz@bp.renesas.com>
+> commit 7c4175b5ac1e1b0c0d116921a097acf598dc7be1
+> Author: Au Dang <au.dang.jx@renesas.com>
 >
-> serial: sh-sci: Keep TX enabled on TEI while data is pending
+> serial: sh-sci: Skip TDxE clear when hardware clears it automatically
 >
-> This commit updates sci_tx_end_interrupt() to check for pending transmit =
-data
-> under the port lock before disabling the transmitter, handing over to
-> sci_tx_interrupt() when data is waiting. It also adds tie and teie bit ma=
-sks
-> to struct sci_port_params_bits for the supported port variants.
+> This commit adds a tdxe_auto_clear flag to struct sci_of_data and propaga=
+tes
+> it to struct sci_port as has_tdxe_auto_clear to skip software clearing of
+> TDxE in sci_transmit_chars() and sci_poll_put_char() on PORT_SCI variants=
+.
 >
 > > diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
-> > index 9eb297dbc9010..58120b523ca1e 100644
+> > index 58120b523ca1e..aa179c7874878 100644
 > > --- a/drivers/tty/serial/sh-sci.c
 > > +++ b/drivers/tty/serial/sh-sci.c
+> > @@ -913,7 +913,8 @@ static void sci_poll_put_char(struct uart_port *por=
+t, unsigned char c)
+> >       } while (!(status & SCxSR_TDxE(port)));
+> >
+> >       sci_serial_out(port, SCxTDR, c);
+> > -     s->ops->clear_SCxSR(port, SCxSR_TDxE_CLEAR(port) & ~SCxSR_TEND(po=
+rt));
+> > +     if (!s->has_tdxe_auto_clear)
+> > +             s->ops->clear_SCxSR(port, SCxSR_TDxE_CLEAR(port) & ~SCxSR=
+_TEND(port));
+> >  }
+> >  #endif /* CONFIG_CONSOLE_POLL || CONFIG_SERIAL_SH_SCI_CONSOLE ||
+> >         CONFIG_SERIAL_SH_SCI_EARLYCON */
 >
 > [ ... ]
 >
-> > @@ -2012,6 +2016,7 @@ static irqreturn_t sci_tx_end_interrupt(int irq, =
-void *ptr)
-> >  {
-> >       struct uart_port *port =3D ptr;
-> >       struct sci_port *s =3D to_sci_port(port);
-> > +     struct tty_port *tport =3D &port->state->port;
-> >       const struct sci_common_regs *regs =3D s->params->common_regs;
-> >       unsigned long flags;
-> >       u32 ctrl;
-> > @@ -2020,8 +2025,17 @@ static irqreturn_t sci_tx_end_interrupt(int irq,=
- void *ptr)
-> >               return sci_tx_interrupt(irq, ptr);
-> >
-> >       uart_port_lock_irqsave(port, &flags);
-> > -     ctrl =3D s->ops->read_reg(port, regs->control) &
-> > -             ~(s->params->param_bits->te_clear);
-> > +     ctrl =3D s->ops->read_reg(port, regs->control);
-> > +     if (port->x_char || (!kfifo_is_empty(&tport->xmit_fifo) &&
-> > +                          !uart_tx_stopped(port))) {
-> > +             ctrl &=3D ~(s->params->param_bits->teie);
-> > +             ctrl |=3D s->params->param_bits->tie;
-> > +             s->ops->write_reg(port, regs->control, ctrl);
->
-> [Severity: High]
-> What happens here when port->x_char is non-zero while uart_tx_stopped(por=
-t)
-> is true and tport->xmit_fifo is not empty?
->
-> In that case, sci_tx_end_interrupt() clears param_bits->teie, sets
-> param_bits->tie, and calls sci_tx_interrupt() -> s->ops->transmit_chars(p=
-ort).
-> In both drivers/tty/serial/sh-sci.c:sci_transmit_chars() and
-> drivers/tty/serial/rsci.c:rsci_transmit_chars(), the loop sends port->x_c=
-har,
-> clears port->x_char =3D 0, and breaks out on the next iteration because s=
-topped
-> is true:
->
->         do {
->                 unsigned char c;
->
->                 if (port->x_char) {
->                         c =3D port->x_char;
->                         port->x_char =3D 0;
->                 } else if (stopped || !kfifo_get(&tport->xmit_fifo, &c)) =
-{
->                         break;
->                 }
->
-> However, at the end of sci_transmit_chars() and rsci_transmit_chars(),
-> param_bits->tie is only cleared and param_bits->teie is only re-enabled w=
-hen
-> tport->xmit_fifo is empty:
->
-> drivers/tty/serial/sh-sci.c:sci_transmit_chars() {
->         ...
->         if (kfifo_is_empty(&tport->xmit_fifo)) {
->                 if (s->type =3D=3D PORT_SCI) {
->                         ctrl =3D sci_serial_in(port, SCSCR);
->                         ctrl &=3D ~SCSCR_TIE;
->                         ctrl |=3D SCSCR_TEIE;
->                         sci_serial_out(port, SCSCR, ctrl);
->                 }
->
->                 sci_stop_tx(port);
->         }
-> }
->
-> drivers/tty/serial/rsci.c:rsci_transmit_chars() {
->         ...
->         if (kfifo_is_empty(&tport->xmit_fifo)) {
->                 ctrl =3D rsci_serial_in(port, CCR0);
->                 ctrl &=3D ~CCR0_TIE;
->                 ctrl |=3D CCR0_TEIE;
->                 rsci_serial_out(port, CCR0, ctrl);
->         }
-> }
->
-> Because tport->xmit_fifo is still non-empty while the port is stopped,
-> param_bits->tie remains set and param_bits->teie remains cleared after
-> port->x_char has been written:
->
-> 1. On sci ports without hardware status auto-clear, when the transmit dat=
-a
->    register empties and triggers sci_tx_interrupt() again with
->    port->x_char =3D=3D 0 and stopped =3D=3D 1, sci_transmit_chars() break=
-s out of the
->    loop without writing a new byte and calls s->ops->clear_SCxSR(), causi=
-ng
->    the hardware to repeatedly re-transmit the stale byte in the data regi=
-ster
->    in an interrupt loop.
->
-> 2. On both sci and rsci ports, because param_bits->teie is cleared,
->    sci_tx_end_interrupt() never fires after port->x_char finishes shiftin=
-g
->    out, so transmit-enable is never cleared. When the port is later unsto=
-pped
->    and uart_start() calls sci_start_tx() or rsci_start_tx(), transmit-ena=
-ble
->    and param_bits->tie are already set in regs->control, producing no ris=
-ing
->    edge to trigger the transmit interrupt and stalling the remaining data=
- in
->    tport->xmit_fifo.
->
-> Could sci_transmit_chars() and rsci_transmit_chars() also switch back fro=
-m
-> param_bits->tie to param_bits->teie when stopped is true?
->
-> > +             uart_port_unlock_irqrestore(port, flags);
-> > +             return sci_tx_interrupt(irq, ptr);
-> > +     }
->
-> [Severity: High]
-> Does dropping port->lock here before calling sci_tx_interrupt() introduce=
- a
-> race window with concurrent port operations?
->
-> sci_tx_interrupt() immediately re-acquires port->lock to invoke
-> s->ops->transmit_chars(port):
->
-> drivers/tty/serial/sh-sci.c:sci_tx_interrupt() {
->         ...
->         uart_port_lock_irqsave(port, &flags);
->         s->ops->transmit_chars(port);
->         uart_port_unlock_irqrestore(port, flags);
->         ...
-> }
->
-> Between uart_port_unlock_irqrestore() in sci_tx_end_interrupt() and
-> uart_port_lock_irqsave() in sci_tx_interrupt(), another processor can acq=
-uire
-> port->lock:
->
-> 1. In drivers/tty/serial/sh-sci.c:sci_shutdown():
->
->         uart_port_lock_irqsave(port, &flags);
->         s->port.ops->stop_rx(port);
->         s->port.ops->stop_tx(port);
->         s->ops->shutdown_complete(port);
->         uart_port_unlock_irqrestore(port, flags);
->
->    If sci_shutdown() runs during the unlock window before sci_free_irq(s)=
-,
->    sci_tx_interrupt() will subsequently run s->ops->transmit_chars(port)
->    after shutdown_complete(), writing to the transmit data register and
->    re-arming transmit interrupts on a shut-down port.
->
-> 2. If uart_stop() runs in the window, it sets tty->flow.stopped and calls
->    stop_tx() to clear param_bits->tie. When s->ops->transmit_chars(port)
->    then runs with stopped set and a non-empty tport->xmit_fifo, no byte i=
-s
->    written and param_bits->teie is not set, leaving transmit-enable set w=
-ith
->    both param_bits->tie and param_bits->teie cleared so a later
->    sci_start_tx() or rsci_start_tx() sees no rising edge on transmit-enab=
-le
->    and stalls.
->
-> 3. If uart_flush_buffer() or a concurrent sci_tx_interrupt() drains
->    tport->xmit_fifo during the window, s->ops->transmit_chars(port) runs =
-with
->    an empty fifo and clears status without writing a new byte.
->
-> Could sci_tx_end_interrupt() call s->ops->transmit_chars(port) directly w=
-hile
-> still holding port->lock instead of unlocking and calling sci_tx_interrup=
-t()?
->
-> > +
-> > +     ctrl &=3D ~(s->params->param_bits->te_clear);
-> >       s->ops->write_reg(port, regs->control, ctrl);
-> >       uart_port_unlock_irqrestore(port, flags);
+> > @@ -3791,6 +3794,7 @@ static struct plat_sci_port *sci_parse_dt(struct =
+platform_device *pdev,
+> >       sp->ops =3D data->ops;
+> >       sp->port.ops =3D data->uart_ops;
+> >       sp->params =3D data->params;
+> > +     sp->has_tdxe_auto_clear =3D data->tdxe_auto_clear;
 >
 > [Severity: Medium]
-> Can clearing param_bits->te_clear here cut off a byte that was just writt=
-en
-> to the transmit register by a concurrent sci_tx_interrupt()?
+> Should scix_early_console_setup() in drivers/tty/serial/sh-sci.c also cop=
+y
+> data->tdxe_auto_clear to sci_ports[0].has_tdxe_auto_clear?
 >
-> When sci_transmit_chars() or rsci_transmit_chars() writes the final byte =
-from
-> tport->xmit_fifo, it clears param_bits->tie and sets param_bits->teie whi=
-le
-> the byte is still draining. If uart_write() queues a new byte before that
-> transmission finishes, drivers/tty/serial/sh-sci.c:sci_start_tx():
+> When earlycon is enabled on a renesas,sci port, sci_early_console_setup()=
+ ->
+> scix_early_console_setup() initializes sci_ports[0] from of_sci_sci, but
+> leaves has_tdxe_auto_clear unset:
 >
->                 if (s->type =3D=3D PORT_SCI)
->                         ctrl |=3D SCSCR_TE;
+> drivers/tty/serial/sh-sci.c:scix_early_console_setup() {
+>         ...
+>         sci_ports[0].cfg =3D &port_cfg;
+>         sci_ports[0].params =3D data->params;
+>         sci_ports[0].ops =3D data->ops;
+>         sci_ports[0].port.ops =3D data->uart_ops;
+>         sci_uart_earlycon =3D true;
+>         ...
+> }
 >
->                 sci_serial_out(port, SCSCR, ctrl | SCSCR_TIE);
->
-> and drivers/tty/serial/rsci.c:rsci_start_tx():
->
->         ctrl =3D rsci_serial_in(port, CCR0);
->         ctrl |=3D CCR0_TIE | CCR0_TE;
->         rsci_serial_out(port, CCR0, ctrl);
->
-> set param_bits->tie without clearing param_bits->teie.
->
-> If the previous byte finishes shifting out and triggers
-> sci_tx_end_interrupt() while sci_tx_interrupt() runs on another processor=
- and
-> moves the newly queued byte from tport->xmit_fifo into the data register
-> (leaving tport->xmit_fifo empty again), sci_tx_end_interrupt() will see
-> port->x_char =3D=3D 0 and kfifo_is_empty(&tport->xmit_fifo) and clear
-> param_bits->te_clear while the new byte is still in the hardware register=
-.
->
-> Should sci_tx_end_interrupt() verify that param_bits->poll_sent_bits is s=
-till
-> set in regs->status before clearing param_bits->te_clear (or should
-> sci_start_tx() and rsci_start_tx() clear param_bits->teie)?
+> During early console output via serial_console_write() ->
+> uart_console_write() -> serial_console_putchar() -> sci_poll_put_char(),
+> s->has_tdxe_auto_clear will still be false on sci_ports[0], causing
+> s->ops->clear_SCxSR() to be called in software instead of being skipped.
 >
 > >
->
-> >       return IRQ_HANDLED;
-> >  }
+> >       sp->has_rtscts =3D of_property_read_bool(np, "uart-has-rtscts");
+> >
 >
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261021-g2ul_sci=
--v2-0-b4e038220018@bp.renesas.com?part=3D2
+-v2-0-b4e038220018@bp.renesas.com?part=3D3
 
-Modified patch based on rhe above review.
+Modified patch based on above review.
 
-From 4ebe5978f806e7cbf6690ecab116d660c210929b Mon Sep 17 00:00:00 2001
-From: Biju Das <biju.das.jz@bp.renesas.com>
-Date: Mon, 19 Oct 2026 18:01:10 +0100
-Subject: [PATCH 2/4] serial: sh-sci: Keep TX enabled on TEI while data is
- pending
+From 0efbe7abe7fc1ec3354fcdc1f4c02b77eaac7904 Mon Sep 17 00:00:00 2001
+From: Au Dang <au.dang.jx@renesas.com>
+Date: Mon, 19 Oct 2026 18:01:11 +0100
+Subject: [PATCH 3/4] serial: sh-sci: Skip TDxE clear when hardware clears i=
+t
+ automatically
 
-sci_tx_end_interrupt() handles the transmit-end interrupt (TEI) on
-SCI and RSCI ports by clearing TE and TEIE, which turns the
-transmitter off. It does this unconditionally, even if the xmit kfifo
-was refilled, or an x_char was queued, after the last byte was written
-to the data register and before TEI fired. The pending data is then not
-sent until the transmitter is re-enabled, so output stalls or is lost.
+On some SCI variants, the TDxE (Transmit Data Empty) flag in SCxSR is
+cleared by hardware when data is written to TDR. Clearing it again from
+software via clear_SCxSR() generates a spurious TXI interrupt, causing
+the last character to be transmitted twice.
 
-Check for pending data (x_char, or a non-empty xmit kfifo on a port
-that is not stopped) before shutting the transmitter down. If there is
-any, clear TEIE, set TIE and hand over to the port's transmit_chars()
-op so transmission continues normally. The existing TE/TEIE teardown
-path only runs once nothing is left to send.
+Add a tdxe_auto_clear flag to struct sci_of_data, propagate it to struct
+sci_port as has_tdxe_auto_clear, and skip the clear_SCxSR() call in
+sci_transmit_chars() and sci_poll_put_char() when it is set. Enable the
+flag for the PORT_SCI (of_sci_sci) variant.
 
-When the port is stopped with data still queued, the transmit_chars()
-paths (sci_transmit_chars() and rsci_transmit_chars()) now also swap
-TIE for TEIE, as they already did for an empty kfifo. Without this, TIE
-would keep firing with nothing the driver is allowed to send, and TEI
-would never be raised to complete the transmission.
-
-To keep the handler independent of the register layout, add tie and
-teie masks to struct sci_port_params_bits and populate them for the
-SCI, SCIF and RSCI variants.
-
-Fixes: d61ae331d6f3 ("tty: serial: sh-sci: Add support for tx end
-interrupt handling")
+Signed-off-by: Au Dang <au.dang.jx@renesas.com>
 Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
 ---
- drivers/tty/serial/rsci.c          |  4 ++-
- drivers/tty/serial/sh-sci-common.h |  2 ++
- drivers/tty/serial/sh-sci.c        | 47 +++++++++++++++++++++++-------
- 3 files changed, 41 insertions(+), 12 deletions(-)
+v1->v2:
+ * Updated commit header and description.
+ * Replaced the PORT_SCI check with a has_tdxe_auto_clear flag in
+   struct sci_port, set from the new tdxe_auto_clear field in
+   struct sci_of_data.
+---
+ drivers/tty/serial/sh-sci-common.h | 2 ++
+ drivers/tty/serial/sh-sci.c        | 9 +++++++--
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/rsci.c b/drivers/tty/serial/rsci.c
-index 40db9daa4272..0391111db8ae 100644
---- a/drivers/tty/serial/rsci.c
-+++ b/drivers/tty/serial/rsci.c
-@@ -465,7 +465,7 @@ static void rsci_transmit_chars(struct uart_port *port)
-  if (kfifo_len(&tport->xmit_fifo) < WAKEUP_CHARS)
-  uart_write_wakeup(port);
-
-- if (kfifo_is_empty(&tport->xmit_fifo)) {
-+ if (kfifo_is_empty(&tport->xmit_fifo) || stopped) {
-  ctrl =3D rsci_serial_in(port, CCR0);
-  ctrl &=3D ~CCR0_TIE;
-  ctrl |=3D CCR0_TEIE;
-@@ -627,6 +627,8 @@ static const struct sci_port_params_bits
-rsci_port_param_bits =3D {
-  .rxtx_enable =3D CCR0_RE | CCR0_TE,
-  .te_clear =3D CCR0_TE | CCR0_TEIE,
-  .poll_sent_bits =3D CSR_TDRE | CSR_TEND,
-+ .tie =3D CCR0_TIE,
-+ .teie =3D CCR0_TEIE
- };
-
- static const struct sci_port_params rsci_rzg3e_port_params =3D {
 diff --git a/drivers/tty/serial/sh-sci-common.h
 b/drivers/tty/serial/sh-sci-common.h
-index 01ff9fced803..273856fbc20b 100644
+index 273856fbc20b..b75e5e1d3075 100644
 --- a/drivers/tty/serial/sh-sci-common.h
 +++ b/drivers/tty/serial/sh-sci-common.h
-@@ -56,6 +56,8 @@ struct sci_port_params_bits {
-  unsigned int rxtx_enable;
-  unsigned int te_clear;
-  unsigned int poll_sent_bits;
-+ unsigned int tie;
-+ unsigned int teie;
+@@ -108,6 +108,7 @@ struct sci_of_data {
+  const struct sci_port_ops *ops;
+  unsigned short regtype;
+  unsigned short type;
++ bool tdxe_auto_clear;
  };
 
- struct sci_common_regs {
+ struct sci_port {
+@@ -163,6 +164,7 @@ struct sci_port {
+  bool has_rtscts;
+  bool autorts;
+  bool tx_occurred;
++ bool has_tdxe_auto_clear;
+ };
+
+ #define to_sci_port(uart) container_of((uart), struct sci_port, port)
 diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
-index 9eb297dbc901..6df25fef5a5f 100644
+index 6df25fef5a5f..1a4d9467d2be 100644
 --- a/drivers/tty/serial/sh-sci.c
 +++ b/drivers/tty/serial/sh-sci.c
-@@ -261,13 +261,17 @@ static bool sci_uart_earlycon_dev_probing;
- static const struct sci_port_params_bits sci_sci_port_params_bits =3D {
-  .rxtx_enable =3D SCSCR_RE | SCSCR_TE,
-  .te_clear =3D SCSCR_TE | SCSCR_TEIE,
-- .poll_sent_bits =3D SCI_TDRE | SCI_TEND
-+ .poll_sent_bits =3D SCI_TDRE | SCI_TEND,
-+ .tie =3D SCSCR_TIE,
-+ .teie =3D SCSCR_TEIE
- };
+@@ -913,7 +913,8 @@ static void sci_poll_put_char(struct uart_port
+*port, unsigned char c)
+  } while (!(status & SCxSR_TDxE(port)));
 
- static const struct sci_port_params_bits sci_scif_port_params_bits =3D {
-  .rxtx_enable =3D SCSCR_RE | SCSCR_TE,
-  .te_clear =3D SCSCR_TE | SCSCR_TEIE,
-- .poll_sent_bits =3D SCIF_TDFE | SCIF_TEND
-+ .poll_sent_bits =3D SCIF_TDFE | SCIF_TEND,
-+ .tie =3D SCSCR_TIE,
-+ .teie =3D SCSCR_TEIE
- };
+  sci_serial_out(port, SCxTDR, c);
+- s->ops->clear_SCxSR(port, SCxSR_TDxE_CLEAR(port) & ~SCxSR_TEND(port));
++ if (!s->has_tdxe_auto_clear)
++ s->ops->clear_SCxSR(port, SCxSR_TDxE_CLEAR(port) & ~SCxSR_TEND(port));
+ }
+ #endif /* CONFIG_CONSOLE_POLL || CONFIG_SERIAL_SH_SCI_CONSOLE ||
+    CONFIG_SERIAL_SH_SCI_EARLYCON */
+@@ -1063,7 +1064,8 @@ static void sci_transmit_chars(struct uart_port *port=
+)
+  port->icount.tx++;
+  } while (--count > 0);
 
- static const struct sci_common_regs sci_common_regs =3D {
-@@ -1007,6 +1011,20 @@ static int sci_rxfill(struct uart_port *port)
-  *                   the interrupt related routines                       =
-*
-  * ********************************************************************** =
-*/
+- s->ops->clear_SCxSR(port, SCxSR_TDxE_CLEAR(port));
++ if (!s->has_tdxe_auto_clear)
++ s->ops->clear_SCxSR(port, SCxSR_TDxE_CLEAR(port));
 
-+static void sci_clr_tie_set_teie(struct uart_port *port)
-+{
-+ struct sci_port *s =3D to_sci_port(port);
-+ unsigned short ctrl;
-+
-+ if (s->type !=3D PORT_SCI)
-+ return;
-+
-+ ctrl =3D sci_serial_in(port, SCSCR);
-+ ctrl &=3D ~SCSCR_TIE;
-+ ctrl |=3D SCSCR_TEIE;
-+ sci_serial_out(port, SCSCR, ctrl);
-+}
-+
- static void sci_transmit_chars(struct uart_port *port)
- {
-  struct tty_port *tport =3D &port->state->port;
-@@ -1050,14 +1068,10 @@ static void sci_transmit_chars(struct uart_port *po=
-rt)
   if (kfifo_len(&tport->xmit_fifo) < WAKEUP_CHARS)
   uart_write_wakeup(port);
-  if (kfifo_is_empty(&tport->xmit_fifo)) {
-- if (s->type =3D=3D PORT_SCI) {
-- ctrl =3D sci_serial_in(port, SCSCR);
-- ctrl &=3D ~SCSCR_TIE;
-- ctrl |=3D SCSCR_TEIE;
-- sci_serial_out(port, SCSCR, ctrl);
-- }
--
-+ sci_clr_tie_set_teie(port);
-  sci_stop_tx(port);
-+ } else if (stopped) {
-+ sci_clr_tie_set_teie(port);
-  }
- }
+@@ -3664,6 +3666,7 @@ static const struct sci_of_data of_sci_sci =3D {
+  .ops =3D &sci_port_ops,
+  .uart_ops =3D &sci_uart_ops,
+  .params =3D &sci_port_params[SCIx_SCI_REGTYPE],
++ .tdxe_auto_clear =3D true,
+ };
 
-@@ -2012,6 +2026,7 @@ static irqreturn_t sci_tx_end_interrupt(int irq,
-void *ptr)
- {
-  struct uart_port *port =3D ptr;
-  struct sci_port *s =3D to_sci_port(port);
-+ struct tty_port *tport =3D &port->state->port;
-  const struct sci_common_regs *regs =3D s->params->common_regs;
-  unsigned long flags;
-  u32 ctrl;
-@@ -2020,8 +2035,18 @@ static irqreturn_t sci_tx_end_interrupt(int
-irq, void *ptr)
-  return sci_tx_interrupt(irq, ptr);
+ static const struct of_device_id of_sci_match[] __maybe_unused =3D {
+@@ -3802,6 +3805,7 @@ static struct plat_sci_port *sci_parse_dt(struct
+platform_device *pdev,
+  sp->ops =3D data->ops;
+  sp->port.ops =3D data->uart_ops;
+  sp->params =3D data->params;
++ sp->has_tdxe_auto_clear =3D data->tdxe_auto_clear;
 
-  uart_port_lock_irqsave(port, &flags);
-- ctrl =3D s->ops->read_reg(port, regs->control) &
-- ~(s->params->param_bits->te_clear);
-+ ctrl =3D s->ops->read_reg(port, regs->control);
-+ if (port->x_char || (!kfifo_is_empty(&tport->xmit_fifo) &&
-+      !uart_tx_stopped(port))) {
-+ ctrl &=3D ~(s->params->param_bits->teie);
-+ ctrl |=3D s->params->param_bits->tie;
-+ s->ops->write_reg(port, regs->control, ctrl);
-+ s->ops->transmit_chars(port);
-+ uart_port_unlock_irqrestore(port, flags);
-+ return IRQ_HANDLED;
-+ }
-+
-+ ctrl &=3D ~(s->params->param_bits->te_clear);
-  s->ops->write_reg(port, regs->control, ctrl);
-  uart_port_unlock_irqrestore(port, flags);
+  sp->has_rtscts =3D of_property_read_bool(np, "uart-has-rtscts");
+
+@@ -4088,6 +4092,7 @@ int __init scix_early_console_setup(struct
+earlycon_device *device,
+  sci_ports[0].params =3D data->params;
+  sci_ports[0].ops =3D data->ops;
+  sci_ports[0].port.ops =3D data->uart_ops;
++ sci_ports[0].has_tdxe_auto_clear =3D data->tdxe_auto_clear;
+  sci_uart_earlycon =3D true;
+  regs =3D sci_ports[0].params->common_regs;
 
 --=20
 2.43.0
