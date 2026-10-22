@@ -1,58 +1,131 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=60.191.123.56
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792639605;
-	b=YuTWj3285cP3xIYtsxT9FGK5Cf/NdR203kL6i5bCiYwcvRkyGHDC5tX0ydDCl9+zEPGm
-	 T0w9MCYniR8ykR3rGzNh7WWhbqefWXevhoEdg7HXXJHPCfnUIyPeRechM3qG1k9Bk0Dfm
-	 o2q8pMpi4SyIq3c5dRcEnw58IxiSJ0fyAGgB585UEOJmTKRfPs4VKab7iUEKMP9ZVg+eg
-	 2eqlSD/HMmFEJyV8Z0ZuMFv5R+2Omq9/GTC1ysGmOXtxjorHfPM37eJuKRUlSMUDZKAcq
-	 9lHuK0aE1bAiPtYpGjnNIHsXxl2dI/bTC2zeZ7bAnkDdeqcev3baOsBjdhfzWzaBJkg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792639605;
-	h=DMARC-Filter:Received:Received:Received:From:To:CC:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:Content-Type:X-Originating-IP:
-	 X-ClientProxiedBy:X-DNSRBL:X-SPAM-SOURCE-CHECK:X-MAIL;
-	bh=SngtsZTYHRp2bk6dNNPcrerGoV8Eq6CPARBtMiR7Me4=;
-	b=caaruaPWcl2I5jjWHiEBzEWyhPdsEUJ+8VNz+GpTIzo2pg2eD700xlWJDvReAmTY9Lem
-	 kCuNtctFJ4cd/5LX30Lyhek9mGolyljQxkOdTMLKOigXylKQ7gzaS8blThB6gwJ3HbHY/
-	 4kc90y8Li7ESBu3sJcHKELo36fM0TEy0HtDOi4Pfl/9/p34vKq7jdpHn+3x1b4hWr0bZT
-	 XOS32TxFQEnJObqjfjxlA596W5dZE2QeslLsQ0G2+pZPQ3X0UjonnC7oCU7QRgz/58IEg
-	 LOqDibXse8LNVXrAoQZK81qOBRHnaWMGxIORtA+66lZtg/spnGlD+USITzXVlzBd85w==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=h3c.com;
-	spf=pass smtp.mailfrom=h3c.com;
-	arc=none smtp.remote-ip=60.191.123.56
-Received: from h3cspam01-ex.h3c.com (smtp.h3c.com [60.191.123.56])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.16
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1792644118;
+	b=DA6bekqkzfK5lcm83kayqJfkKYisK41QWTWgUWuZ9vx+U4cuQpgLaKd6ZNw8rwk4J6TD
+	 HSlpiXnz3IC/wA07X4GjysETZLf+y74RxxmW74wnvu46+FmlP0CCO8A5D/eLAdMIbRRF8
+	 9w2QYQ74LiYSTEXRnwpNUNtNGymksMdw3o/8xIkLTQSE4xfx+QxNJief5rSX/Brh2Oy1P
+	 Mn0Fx0vh+zEL5jc1v3+QgmNqeSzLQEdAgOMb0BD39BU+oTGTwGVZ3xlsZ1fl22u0c4S1j
+	 1DPd9Sb6nIOXw5t9mk0cnHB2tevlQcNM2QZ1z7Ra+oM8wvTxXQiBb+RFQCsRtbY0VFQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792644118;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
+	 Received:Received:Received:Message-ID:Date:User-Agent:Subject:To:CC:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
+	bh=HzZsuIiBsF8VoApb8OfCqrK0QNrH8S2njTbUD+F0uyw=;
+	b=xEe1eO3zeuF4v7viWodWohsY2EsdTsgRqu+7TuBr7D9cIBOx3FUzHPrIMKqP2/CFsX9R
+	 O7gn4FaqvSlzFLsEoNAmVaN/oM3dSTkl93itBEPS3epYlC6MsxSde+nuveewaxLjaCklM
+	 7pfIlAw6oyqF710D61nVdNc1ImDmLhz0+q8nAeWe9tWnvVM9xTeLMgLnwb11n0pc+pIt5
+	 VfqWuWkfoGqIgFY5u3ef28VF9OylVqW6TxU1NmDIpK2YCFfal03HCsxOcIYYUoKVFqfPR
+	 keC0ymvUhedMxGl8ALCivc/XT75ryOT5XvIsNdiMreMiG0l1/A8arUKjGCWEpa9dV9w==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=RtcUJqyU;
+	arc=fail smtp.remote-ip=192.198.163.16
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2706606A31E
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 03:26:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E2706606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=h3c.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=h3c.com
-Received: from mail.maildlp.com ([172.25.15.155])
-	by h3cspam01-ex.h3c.com with ESMTP id 69M3Q5dx034063;
-	Thu, 22 Oct 2026 11:26:05 +0800 (+08)
-	(envelope-from lin.nan@h3c.com)
-Received: from DAG6EX09-BJD.srv.huawei-3com.com (unknown [10.153.34.11])
-	by mail.maildlp.com (Postfix) with ESMTP id CEDD1200920D;
-	Thu, 22 Oct 2026 11:29:15 +0800 (CST)
-Received: from localhost.localdomain (10.142.164.48) by
- DAG6EX09-BJD.srv.huawei-3com.com (10.153.34.11) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.2.1258.27; Thu, 22 Oct 2026 11:26:04 +0800
-From: Nan Lin <lin.nan@h3c.com>
-To: <chengzhihao1@huawei.com>
-CC: <lin.nan@h3c.com>, <linux-mtd@lists.infradead.org>, <richard@nod.at>,
-        <sashiko-bot@kernel.org>, <sashiko-reviews@lists.linux.dev>,
-        <wangxiaoqing@h3c.com>, <zhou.kete@h3c.com>
-Subject: Re: [PATCH v2] ubifs: zero stale data beyond EOF before file size grows
-Date: Thu, 22 Oct 2026 11:18:14 +0800
-Message-ID: <20261022031814.2735650-1-lin.nan@h3c.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <9a775528-0259-2b88-d592-08c58b366253@huawei.com>
-References: <9a775528-0259-2b88-d592-08c58b366253@huawei.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D24A606A319
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 04:41:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7D24A606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=RtcUJqyU
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1792644116; x=1824180116;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=aC0IoVujE9uuGL88CiWwQFE5wX74pO8PYG7e8LLwGoE=;
+  b=RtcUJqyUFsUCIdi+UomTxxRtKscfuhMeyz1WuUYvE5+jo5Cw0riMSBp6
+   YV2T3ZKxzNDtv7RdMygVFNMmtkhwugCex7xA18eNtQE2HSeCDRX13vW/+
+   pYq9obsvwbNovJWuO+gX82nB+nqGQ7WE09FbcAZ6lGUdrNAPUInHB8sWS
+   LKIuGVonWVA4L1UxFVZVB564Xd1EZMmOCpTf7nifu0Yz3ookOQZF2ZOKZ
+   KvowR5GOWlqDVTqePgFDll7eeQEl6O2eLR752qRtlpyUaB09PCEcRcxPI
+   hK6baSUZ8aX2l9nlAYTUGqUvY1vbdLKatbkhqrWbUBpW79QHIY7n0hoo+
+   A==;
+X-CSE-ConnectionGUID: sdp+PVwZQDia4nOcppDRjw==
+X-CSE-MsgGUID: aIB3fHcyRR+eamFG+zW9eA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11942"; a="1392647"
+X-IronPort-AV: E=Sophos;i="6.27,171,1787036400"; 
+   d="scan'208";a="1392647"
+Received: from fmviesa011.fm.intel.com ([10.60.135.151])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Oct 2026 21:41:56 -0700
+X-CSE-ConnectionGUID: KRBrTIcVSTWIKwGhGvzDoA==
+X-CSE-MsgGUID: sOB8oxJsTj+/xzhoU30INg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,171,1787036400"; 
+   d="scan'208";a="5115781"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by fmviesa011.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Oct 2026 21:41:56 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Wed, 21 Oct 2026 21:41:55 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49 via Frontend Transport; Wed, 21 Oct 2026 21:41:55 -0700
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.30) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Wed, 21 Oct 2026 21:41:55 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=tk5NQFAV7gnWrz4YWsOqsw8ppP29BimCsSj1SpOgoojsSR2GuaYTa9AHSlg6IECmVB/2v3xGjEdcxNz1wn4IoVsrd7538gmTsPVDErU6vH9tj5Hu0l12UhWKomU+fkEklL+uIyTcaSKMEodMPlydMN/1NDBNnAi5l86zuK9DY0aswhzrLvs+sNr5YdLgfL3JCUBcqr9R1V+6h9tCfEGOFAmNaptkAh+yl7i77E7ks8Y+Lr1WbzbFFoj4myhAonVgup6Mqi+708G7yNGI4FLb9gNeG0CTL2VFyIc477VrpSzHJxtAyDC0bYTll9suba0sYwycnOp+LJE3mDdu4uKy0Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HzZsuIiBsF8VoApb8OfCqrK0QNrH8S2njTbUD+F0uyw=;
+ b=PwFlq5oHkv4qqwTfIONY7dZFKId6nMJFFmDpdSagnNx+8kW4JKY7gBhmGGRtxL6U6/LvNQ0UJm+ON5cprJIxvxsEt5F/i1hC9b0JK4QaFL0nFk7QqbfuR7/MXP84mXKPneaw7IxrP69cYUmpWEnDQ0Ilc+rAj7WqxKw+AxZHki/4YtR2fu07WT07O9VehJXkFrMkjdr01VwVokK/jChYMIFkKpWvlI3VVG4bRts5iAgDAfkqvdBs1tHyiLrp93zpOxX2uivcnRbVaexpgnARAZ9WAxH6NOK9LOARAzH9ev+ntGAs5EOfn0K/zxUnVDDtoJd/XSS7rqOu8VDUSK+g0g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS0PR11MB8208.namprd11.prod.outlook.com (2603:10b6:8:165::18)
+ by SACPR11MB967231.namprd11.prod.outlook.com (2603:10b6:806:548::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Thu, 22 Oct
+ 2026 04:41:52 +0000
+Received: from DS0PR11MB8208.namprd11.prod.outlook.com
+ ([fe80::ecb0:7475:84de:ca9c]) by DS0PR11MB8208.namprd11.prod.outlook.com
+ ([fe80::ecb0:7475:84de:ca9c%6]) with mapi id 15.21.0522.017; Thu, 22 Oct 2026
+ 04:41:52 +0000
+Message-ID: <aa357cbe-fcfa-41f5-ae82-fdc8cd79f495@intel.com>
+Date: Thu, 22 Oct 2026 10:11:43 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] gpu/tests/buddy: Add range-bias pruning and
+ free-order tracking tests
+To: <sashiko-reviews@lists.linux.dev>, <dri-devel@lists.freedesktop.org>
+CC: <intel-xe@lists.freedesktop.org>
+References: <cover.1792599420.git.sanjay.kumar.yadav@intel.com>
+ <acd1a30cc29c3d6efc14723cb90434d0e378ea0a.1792599420.git.sanjay.kumar.yadav@intel.com>
+ <sashiko-outbox-180522@kernel.org>
+Content-Language: en-US
+From: "Yadav, Sanjay Kumar" <sanjay.kumar.yadav@intel.com>
+In-Reply-To: <sashiko-outbox-180522@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: MA5P287CA0254.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:a01:1f1::9) To DS0PR11MB8208.namprd11.prod.outlook.com
+ (2603:10b6:8:165::18)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -62,243 +135,138 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BJSMTP01-EX.srv.huawei-3com.com (10.63.20.132) To
- DAG6EX09-BJD.srv.huawei-3com.com (10.153.34.11)
-X-DNSRBL: 
-X-SPAM-SOURCE-CHECK: pass
-X-MAIL:h3cspam01-ex.h3c.com 69M3Q5dx034063
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS0PR11MB8208:EE_|SACPR11MB967231:EE_
+X-MS-Office365-Filtering-Correlation-Id: f9fe479c-31e2-4e34-3d64-08df2ff6caa1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|23010399003|56012099006|5023799004|4143699003|11063799006|261021121427099003|261009223027099003|10067099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info: PETOk48+JPTAODfgKji2zje1mNImV9xpytNvI7l5BZfVQMvfP+DoD+LY3jhThzG7LTfM/kX27OBiAUcdClIJWNx+Sswlwt2HNxL14rQ/7/xlvppIdNMkjz5uv+TxnqtkXTSAOPh+95f2v9XSaRLjG2R1CNjpbRXuxx3NCkHVI1EsFo1zGaaKo7xq+vhWpj/PQV2qNIvBwz9m88h8owZdnnvVzxp52OI/JyefvUO9vRivyXDu6YTvxXXAWKOJN6wEurLCv8bo0VZ6HyYsRH9UPsKHDWQ7IXADu2tmMk54ZEiXt7DtI60UDXSCiXoMg2QkujFMWDTIbpQmGBOVyWPFJFlCC87eGNuHhqJE3Hy2JI4nqtuNx4tvAUjEjjFQZxIKDjqAD4ZC3WpxbL5di5iH8cwcCT0ip8RXJhZaQ85cbPm9Dg+vTl/ne8BCzNVkk0b3oEbGys8b9dJ2aq9cKfxAC6vOfaVdQgsQl6waFVDiGtr0rGLxwvTH/eH+BEphIfdEVE8D7lI73Xe/KOTViBbRJTYCd7B8oXd6bKEiVmgAIKC05yz5dXQu6yRUOxM6HYME0496ROLgSUey2qgDnHEwFIaxLL8ecFTknuZweeGx+/MDa+p73kY3m8Tl1F3VOfv497AgL8QQiZDx5PQTn6HZlTxzsMKnMQUnlcZbpmoBP3w=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR11MB8208.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(56012099006)(5023799004)(4143699003)(11063799006)(261021121427099003)(261009223027099003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a3R4bXVITDdOUzFrNlpGRGkwMjNQYnNzTVY1NWkvWERqRHBuZlhTR0F3SHlQ?=
+ =?utf-8?B?b2RaWXBlblNDb0pLa1Zhc25rSFQzSndXYkJtMzludkxQdzBmWmo3bXppV3NC?=
+ =?utf-8?B?bW5kNVdOVVJ2N0NDSlZTU3V5TGhMNk4ydkM0M1AyRm4vV211YnhMN1haVko3?=
+ =?utf-8?B?MDNUOFRRUFJWSnU3U1QwQVhIU2JoN2hJVXVmTlcxdDhhU0pPZFR5NmpEenIv?=
+ =?utf-8?B?STBNenhwb1RCOUtFRHZibThiK3BDd1NER3k2Rkc5L3k0SW9wNHRpYXRUV05x?=
+ =?utf-8?B?YlRyaVU4MnE4REZkMHpmVzE2MStsZTBpWDBFejNoTEVUS05JTzEyYU9WVzFP?=
+ =?utf-8?B?Z25NV3lLdzJKcHpONkZTUytKM01JbEh0b0I3T1l4K2FvclNLYUViaStrYVVI?=
+ =?utf-8?B?WmFhSFlBaE5mQU1zYThQMWxubzU5NFJOYUFNcWpNTEhkTEcxaVdFT21zUG5Q?=
+ =?utf-8?B?ZStiSXBZUTBxT2ZXeVpqdzRrdGpqeHkremFNSDg4YXROYkpWK3NzdW5peGFX?=
+ =?utf-8?B?SHFUTUlnTE9PVVhQbUtSRmc5dm80b0hGbW5qZDZ3bVFlNTE2aDFhYXpHZ1dr?=
+ =?utf-8?B?TlhYZ2dYSWFGUUZFU3JqZFpmOTF5Vm9CUDNIY2ZPOGlpTXNQRWl2amRJa1h1?=
+ =?utf-8?B?NXBRbmxQN09yTjN6SzFQcC9nZEtNTXpabjdCZUhhKzMvbXZxdlpoa3JXWTFB?=
+ =?utf-8?B?VzJwR0kvQkRPTnBVTEtLdXBhb2NVOGdUbzZCT05YR2NJWndXUnkrNWZUTy9C?=
+ =?utf-8?B?VDM0WUVWWENFRkxlc1c3Qm9CZkdRYU4yQmh3ZnlobmRWMmlnMWFKSFlSMHN0?=
+ =?utf-8?B?MnJ2NEFuYjQwY1ppVm9rWjRQTGNNMW5VbFFsKytrMU9yc2NFd0srTXNZQ0hM?=
+ =?utf-8?B?L2RtWFFvWmU1NWdUbEtqQ054SlNKbEViRUxGVkFvOUhVTG96dyt0RC93SHNM?=
+ =?utf-8?B?OXFSL09NMSsyRTdtN0QvSU5FSlNhbXZWUjQ0eVJvd0F3dkZaR3FBMEpoZnhm?=
+ =?utf-8?B?ZlVzK3FydE9PdUxXZ3BHbDVxOXVYN2IxdkMwaVJsMi9ZcnZLVnhlUVFERVVG?=
+ =?utf-8?B?cTJ5R2R1RDExaFJYa2RDZlVPbTFBMFNSU2Y3ZlBwbDFFMVlLQXNXQ0NHWDVW?=
+ =?utf-8?B?Y2ZFYkNWZ1lrL2JCYTFRdTlzTnRzNjRMZXROUUNmWklaVWxnK1E2QnFPd2Rk?=
+ =?utf-8?B?MWl2TGFWUWNlSlFqMnRTbk9RcVBlMW8wYUhVQWVYaTdsTGZOelM1QU41QmxX?=
+ =?utf-8?B?SExqQXI2TlN5dkllRTNWYTRSSW1NMmg2ZmlCd2RoVlFDQzNzbmRnbWFUcWE3?=
+ =?utf-8?B?Sk5YWHN5SGdBa0pQVTJVelZ5b3ltTkJlYWhzbkcxanVRNnlMa1Y3elBaQW9T?=
+ =?utf-8?B?Y29mU0hpUm5wV2VEM0pJSmM1aXJRNHZ2Q0I2MXlRSERZOWJZTUltcnptUWh3?=
+ =?utf-8?B?OE91MC9aTlZTTWU2WlIwV0dmT2VHSnlmM1drblA0UWhFVVI2bHBiTTNzdUFZ?=
+ =?utf-8?B?cFhUQjlxTHhWY1FGOCtCdUxBY2xoSWtCTW5qUXJzb0Q4NVl3YmVoUnBjYjVK?=
+ =?utf-8?B?M1ZUMXJidy9HWlRTVTBjd05kNi8xM0pDZ01KZVRpR3E3ZUhlakNKOGFHRE5r?=
+ =?utf-8?B?Tkx5a3h2MFZaR2RZYk1BbURKQWMxOEp6VTE3R3BQandlaWxXTENRS0FmRGQz?=
+ =?utf-8?B?K2ZkYUp6R1ZtVzNrME0yZWhIeXp1L1RnSnVRNFlqb1lNRi8wWHhCMUZ0UmxF?=
+ =?utf-8?B?cHRsc3hZeHhpd1J3RjVqRWF6WkpiSEdLS1AzWnpTVzA5L2tSa2xNaDFlZ09J?=
+ =?utf-8?B?cGg5T2owYlJybzNXMXRJelE5cGJMM2RiNWtjekd0QWZnOUplZ2pseXcyaVI0?=
+ =?utf-8?B?VjhEckRzMmtBTFJrT0gxblhHOVBOWCt3QVlMYXB0S0Ixc2hwWHhyY2tPUy9j?=
+ =?utf-8?B?VXdGYUliWExJajhmUWUxeU9kMmZ0K2VHK3dQNnlnVzRqaExuY0xVWktCV2kv?=
+ =?utf-8?B?NUtlUGlhY2FaY0xnZFdBTkU5TmhoSzM1eEpJMEo3T0RuSm04MmpQSUJxdlU1?=
+ =?utf-8?B?d3BOQ0xENnduMkpnUlRHeVBhOWFSSkljbGVpNHdVd1VyV0loUGMvdTl6ZjdF?=
+ =?utf-8?B?R2hWM1VJQXlzRko3SUxUZ3g3OXQzUHVaUFFiNlRPUDRLOHk2aW5LdVdlNk1D?=
+ =?utf-8?B?K3lJMW1jUWNzcjJpTSt5TWY2bVNyN2lTMU9YKzlVSmxIR2IzTEFsSXNGVGJX?=
+ =?utf-8?B?WExCeEJMRUtWMHFXeVZUejY4SFh1L0FoMGVtUlAreFhVdVNOK1pCQUV6YWlU?=
+ =?utf-8?B?TUo1M1dDZlhQdEt1N2I0SUJ1VHBUUkdDNUZGQmFZWEJ4MUlrVFc2WlAwVFlT?=
+ =?utf-8?Q?eihstM7iRPv+W4lA=3D?=
+X-Exchange-RoutingPolicyChecked: cAq04JbuHARWVGDr5f5d/7cAStRcBJK6uTUPn4UpXxXaz9K9YcZwjHE41iNqDRwAOluFhz8KRXXFnipMNGFSRu+4XJa+KSqwXtds65QZwvMZj/neILiVMvqNBkSijL6Ph8T8xmgxzoU8VGgKm77u+LA9zvjlq1FLp7/gm35JCmcovuctOhKTSkr0FRQTF8FvEL3n5jTZF6/lg1QFF0Cw7Zm1NdcxPHwaW1Cz1avdLbRBlhjQf1yMqHc64s53vVC5hVipzGQeuub1NXQGxGII+xsdtlodHaStLGFdjeh4bNp/gJpF2SVnqclR66kMzMyFw4vS2rDTzKUC5usmLj1Kjw==
+X-MS-Exchange-CrossTenant-Network-Message-Id: f9fe479c-31e2-4e34-3d64-08df2ff6caa1
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB8208.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2026 04:41:51.9441
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: f6q1V7AKs6FX842gTuNwasJkdmLQD0YXhLjwJGuMJfSMV7hknFJftYFJV0AoT5cQhTgyd3Ri0nlSLWPtkEHvNw3mkqHt+oI9+sMkasBdUvU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SACPR11MB967231
+X-OriginatorOrg: intel.com
 
-Hi Cheng,
 
-Thanks for the detailed review. My responses are inline.
-
-> The filemap_lock_folio gets folio with FGP_LOCK, I think we should use
-> 'FGP_WRITEBEGIN | FGP_ACCESSED' just like ext4_load_tail_bh() does,
-> because the folio may not exist in ram when calling do_setattr().
-
-ext4_load_tail_bh() needs FGP_CREAT because in Ext4 the block behind an
-unwritten/delayed extent holds garbage on disk, so the zeroing must
-reach the media. UBIFS does not have this problem -- stale data can
-only live in the page cache, never on flash:
-
-  writeback:  ubifs_writepage() zeroes the straddling folio on every
-              invocation and skips folios fully beyond i_size, so
-              stale tails never reach the media.
-  read-in:    do_readpage()/read_block() zero the tails of holes and
-              short data nodes, so a folio loaded from flash is always
-              tail-clean.
-
-So when the EOF folio is absent from the cache, there is nothing to
-zero anywhere: FGP_CREAT would merely allocate a fresh (already zero)
-folio to zero it again. Returning early on IS_ERR() is the correct and
-cheaper equivalent of Ext4's path.
-
-> Why skipping 'from == 0'? What if a user writes begin from
-> offset-X(0<X<4096) to a new file(isize = 0)? Ext4 zero the range by
-> ext4_block_write_begin->folio_zero_segments(folio, to, block_end,
-> block_start, from), but ubifs not handle it.
-
-from == 0 means the old EOF is folio-aligned, so the EOF folio has no
-bytes beyond EOF and there is no hole in it:
-
-  from != 0:  |/////valid/////|stale|   <- zero [from, to)
-  from == 0:  |/////valid/////|         <- nothing beyond EOF here
-
-For the i_size == 0 case: a zero-size file cannot hold a polluted
-folio. mmap cannot create one (page_mkwrite returns SIGBUS when
-folio_pos >= i_size), and write() followed by ftruncate(0) invalidates
-the folio. The [0, X) part of the write folio itself is zeroed by the
-existing do_readpage() path ("block >= beyond" ->
-folio_zero_range()), which is UBIFS's counterpart of
-ext4_block_write_begin()'s folio_zero_segments() -- the work happens
-at folio read-in because UBIFS's block size always equals the page
-size.
-
-> The ext4 protection check is ext4_write_checks->ext4_block_zero_eof,
-> I think we can add the zero hole check in ubifs_write_iter().
-
-Agreed. This mirrors ext4_write_checks() -> ext4_block_zero_eof() and
-runs once per syscall instead of once per write_begin() iteration.
-Will move it there in v3. 
-
-> If the program enters into this branch, the ubifs file's isize is not
-> zero, ubifs_read_folio has already zerod tail, do we still need this
-> folio_zero_range?
-> Oh, there is one case, UBIFS file has isize without data nodes(eg.
-> isize = 3, the first block is a data hole), ubifs_read_folio won't
-> zero the page tail, we still need folio_zero_range().
-
-Right -- and one more case on top of the hole-inode one: mkwrite also
-runs on already-cached folios, and earlier mmap stores may have
-re-dirtied the tail after ubifs_read_folio() cleaned it (only folios
-fully beyond EOF get SIGBUS; the straddling folio stays writable
-across its whole length). So the tail must be re-zeroed on every
-(re-)fault, and the folio_zero_range() stays.
-
-For reproducibility I have attached a small single-writer reproducer.
-It covers both size-extending paths (S1: pwrite beyond EOF ->
-write_begin/write_end, S2: ftruncate up -> do_setattr) against a
-polluted old-EOF folio. 
-
-Build: gcc -O2 -Wall -o eof_hole_test eof_hole_test.c
-Run:   ./eof_hole_test <mountpoint>/eof_hole.bin
-
------------------[ eof_hole_test.c ]-----------------
-/*
- * eof_hole_repro.c -- repro for "stale data in hole" bug
- *
- * Reproduce:
- *   1. pwrite data to [0, 0x2000)          - full page 0 and 1
- *   2. ftruncate DOWN to 0x1100            - VFS zeroes page-1 tail
- *   3. mmap page 1; write junk into [0x1100, 0x1200) via the mapping
- *      (MAP_SHARED, past EOF)              - pollutes the cache tail,
- *                                            i_size unchanged, legal
- *   4. pwrite at 0x3000 (beyond EOF)       - i_size jumps; UBIFS's
- *                                            ubifs_write_end() does NOT
- *                                            zero [0x1100, 0x3000)
- *   5. pread [0x1100, 0x3000): must be all zero.
- *      Non-zero bytes = stale mmap junk exposed = bug reproduced.
- *
- * Scenario 2 uses ftruncate UP instead of pwrite to exercise
- * do_setattr() instead of write_end().
- *
- * Build: gcc -O2 -Wall -o eof_hole_test eof_hole_test.c
- * Run:   ./eof_hole_test /mnt/flash/eof_hole.bin
- */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <sys/mman.h>
-
-#define PS       4096
-#define OLD_EOF  (PS + 0x100)   /* 0x1100: old EOF mid-page-1 */
-#define NEW_END  (3 * PS)       /* 0x3000: hole end */
-#define JUNK_LEN 0x100          /* 256 bytes of pollution */
-
-static int check_hole(int fd, off_t off, size_t len, const char *what)
-{
-	unsigned char buf[512];
-	size_t n, i;
-
-	while (len) {
-		n = len > sizeof(buf) ? sizeof(buf) : len;
-		if (pread(fd, buf, n, off) != (ssize_t)n) {
-			printf("FAIL: %s: pread error: %s\n", what,
-			       strerror(errno));
-			return 1;
-		}
-		for (i = 0; i < n; i++) {
-			if (buf[i] != 0) {
-				printf("FAIL: %s: byte 0x%02x at offset 0x%llx "
-				       "(hole offset +%zu)\n",
-				       what, buf[i],
-				       (unsigned long long)(off + i), i);
-				return 1;
-			}
-		}
-		off += n;
-		len -= n;
-	}
-	printf("PASS: %s\n", what);
-	return 0;
-}
-
-/* Create a file with EOF mid-page-1, then pollute the page-cache tail
- * beyond EOF via an mmap write (the only path that skips zeroing). */
-static int make_file(const char *path)
-{
-	unsigned char junk[PS];
-	void *map;
-	int fd;
-
-	memset(junk, 0x5a, sizeof(junk));
-
-	fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (fd < 0) {
-		perror("open");
-		return -1;
-	}
-
-	/* page 1 full of junk, durable */
-	if (pwrite(fd, junk, PS, PS) != PS) {
-		perror("pwrite");
-		goto bad;
-	}
-	fsync(fd);
-
-	/* shrink: VFS zeroes page-1 tail [OLD_EOF, 0x2000) itself */
-	if (ftruncate(fd, OLD_EOF)) {
-		perror("ftruncate");
-		goto bad;
-	}
-
-	/* re-pollute [OLD_EOF, OLD_EOF+JUNK_LEN) through a shared
-	 * mapping. This goes through ->page_mkwrite() which does no
-	 * zeroing. */
-	map = mmap(NULL, PS, PROT_READ | PROT_WRITE, MAP_SHARED, fd, PS);
-	if (map == MAP_FAILED) {
-		perror("mmap");
-		goto bad;
-	}
-	memcpy((char *)map + 0x100, junk, JUNK_LEN);
-	munmap(map, PS);
-	return fd;
-
-bad:
-	close(fd);
-	return -1;
-}
-
-int main(int argc, char **argv)
-{
-	const char *path = argc > 1 ? argv[1] : "./eof_hole.bin";
-	unsigned char junk[JUNK_LEN];
-	int fd, fail = 0;
-
-	memset(junk, 0x5a, sizeof(junk));
-
-	/* ---------- S1: buffered write beyond EOF ----------
-	 * exercises ubifs_write_end() appending branch            */
-	fd = make_file(path);
-	if (fd < 0)
-		return 1;
-	if (pwrite(fd, junk, JUNK_LEN, NEW_END) != JUNK_LEN) {
-		perror("pwrite");
-		return 1;
-	}
-	fsync(fd);
-	fail |= check_hole(fd, OLD_EOF, NEW_END - OLD_EOF,
-			   "S1 write_end: hole [0x1100,0x3000)");
-	close(fd);
-
-	/* ---------- S2: ftruncate UP ----------
-	 * exercises do_setattr() ATTR_SIZE branch                  */
-	fd = make_file(path);
-	if (fd < 0)
-		return 1;
-	if (ftruncate(fd, NEW_END)) {
-		perror("ftruncate");
-		return 1;
-	}
-	fail |= check_hole(fd, OLD_EOF, NEW_END - OLD_EOF,
-			   "S2 do_setattr: hole [0x1100,0x3000)");
-	close(fd);
-
-	unlink(path);
-
-	if (fail) {
-		printf("\n===> BUG REPRODUCED: stale data visible in hole\n");
-		return 1;
-	}
-	printf("\n===> OK: hole reads as zeros on both paths\n");
-	return 0;
-}
-------------------------------------------------------
-
---
-Nan Lin
+On 21-10-2026 22:54, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] gpu/tests/buddy: 64-bit division in gpu_test_buddy_range_bias_pruning()
+> --
+>
+> commit c218b91af95d861d31913d5c9b3ba0681e319523
+> Author: Sanjay Yadav <sanjay.kumar.yadav@intel.com>
+>
+> gpu/tests/buddy: Add range-bias pruning and free-order tracking tests
+>
+> This commit adds KUnit tests in drivers/gpu/tests/gpu_buddy_test.c to verify
+> range-bias subtree pruning and subtree_max_free_order tracking across block
+> allocation, splitting, coalescing, and trimming operations.
+>
+>> diff --git a/drivers/gpu/tests/gpu_buddy_test.c b/drivers/gpu/tests/gpu_buddy_test.c
+>> index b75d32ca6ca0a..4c7e823d57892 100644
+>> --- a/drivers/gpu/tests/gpu_buddy_test.c
+>> +++ b/drivers/gpu/tests/gpu_buddy_test.c
+>> @@ -1586,6 +1586,311 @@ static void gpu_test_buddy_addr_to_block(struct kunit *test)
+>>   	gpu_buddy_fini(&mm);
+>>   }
+>>   
+> [ ... ]
+>> +static void gpu_test_buddy_range_bias_pruning(struct kunit *test)
+>> +{
+>> +	const u64 mm_size = SZ_512M, range_end = SZ_128M, chunk = SZ_4K;
+>> +	const unsigned int nr = range_end / chunk, window = 1024;
+>> +	const u64 holes[] = { 0, range_end / 2 + 3 * chunk };
+>> +	struct gpu_buddy_block *block, *hidden;
+>> +	u64 first_ns = 0, last_ns = 0;
+>> +	unsigned int i, misplaced = 0;
+>> +	LIST_HEAD(allocated);
+>> +	struct gpu_buddy mm;
+>> +	LIST_HEAD(tmp);
+>> +	int err;
+> [ ... ]
+>> +	for (i = 0; i < nr; i++) {
+>> +		ktime_t start = ktime_get();
+>> +		u64 elapsed;
+>> +
+>> +		err = gpu_buddy_alloc_blocks(&mm, 0, range_end, chunk, chunk,
+>> +					     &allocated, GPU_BUDDY_RANGE_ALLOCATION);
+>> +		elapsed = ktime_to_ns(ktime_sub(ktime_get(), start));
+>> +		KUNIT_ASSERT_EQ_MSG(test, err, 0, "range alloc %u failed\n", i);
+>> +
+>> +		if (i < window)
+>> +			first_ns += elapsed;
+>> +		else if (i >= nr - window)
+>> +			last_ns += elapsed;
+>> +
+>> +		block = list_last_entry(&allocated, struct gpu_buddy_block, link);
+>> +		if (gpu_buddy_block_offset(block) != range_end - (u64)(i + 1) * chunk)
+>> +			misplaced++;
+>> +	}
+>> +
+>> +	kunit_info(test, "first %u range allocs: %llu us, last %u: %llu us\n",
+>> +		   window, first_ns / NSEC_PER_USEC, window, last_ns / NSEC_PER_USEC);
+> [Severity: Low]
+> In gpu_test_buddy_range_bias_pruning() in drivers/gpu/tests/gpu_buddy_test.c,
+> first_ns and last_ns are u64 variables that accumulate runtime nanosecond
+> durations. On 32-bit architectures with CONFIG_GPU_BUDDY_KUNIT_TEST enabled,
+> won't dividing them directly with the / operator by NSEC_PER_USEC emit calls
+> to __udivdi3 or __aeabi_uldivmod and cause a link failure?
+>
+> Should this use div_u64() (or ktime_to_us()) instead?
+Yes, this matches the kernel test robot’s __aeabi_uldivmod failure on 
+32-bit ARM.
+I reproduced it locally on 32bit compiler and confirmed that replacing 
+the direct u64 divisions with div_u64() fixes the issue.
+>
+> [ ... ]
+>
