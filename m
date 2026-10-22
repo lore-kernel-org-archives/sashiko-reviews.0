@@ -1,89 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.156.1
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792655816;
-	b=wKv6mZhKSSWZsw7GJmUwERjjXYKtNduSMaXAd/NqG6Cbf7MwWm/S7P+qXWwMfOD1fgf8
-	 fz8OwWbAS4/2Ys78TDsoUVgg0F0Ge6HVwxXNcZfB8KauVbSQcl3sBeSPZ8/EryYcwbY5N
-	 hpbm5XyX1RgQX1w7luox9WFzE+lPpR7Fx+mTt64m4GATjbBYXWB1hM3BzUo5ldLkGjN+g
-	 mi+2+MgHGk3blcBgIavpcOAz53IZ/9RDvxQ4fDp/XeJRi1FNtVydrMwwrngtYRYqdLCNr
-	 LXK42qcE+EOUmy97fzKYeX++KxSRAeQPjfIM2/v6sWfsFyH9LzZf/x9NjKv2VW8Au4w==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792655816;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
-	 Received:Received:Received:Received:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:X-TM-AS-GCONF:X-Proofpoint-GUID:X-Proofpoint-Spam-Info:
-	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-ORIG-GUID:
-	 X-Authority-Analysis:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=lZuPvHfcQCCINYKbPhFqyHUpZg95Ahi4/dqK/t3/A8w=;
-	b=sRVz6jr8AMKSkUYScudY2AmixSX6+Fs0ltjEaOsivTllU/UzYEJTvrylvqdYiwPQTYeK
-	 ab2GxdQ8YpdlfYZBJVwvZ6xHlzRxKz2kFEKceHKEbN/XqyHlG1IR5qVFPs3mNN6JWWdIl
-	 oCeTNJfMRYGeRM33sKPDhriOeD760XILy5YiuWrMFiFRnKpWeAwjGz5vmvAvaSzqqgz3Z
-	 J9FjrXZlVWQzyp/9ElhG7RFWFtx36wdWkrm8uRWzFG9IMoiqPEjsOTRUDuP1ReTYGYM3x
-	 RLHHZX8wacqx3JysVn4V6e34FZh+LqwiHPHXhu6RKHGzMxCUFFBPmj0Uu9s1rA2nLSg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.ibm.com;
-	spf=pass smtp.mailfrom=linux.ibm.com;
-	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=V4QsO65o;
-	arc=none smtp.remote-ip=148.163.156.1
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.9
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792658038;
+	b=wnHD362nZhOjol86l8zZSRIKmkXHcX1+rVWBe4gGWExcvsg/70AtD1RHjZb6ym8R8iyg
+	 m+1hpeLj5DlWh64X4Jtaxyrfbkm1P9N7TfJomED5hRDVhopt3AQoyLwD1ua0eLTvZsVD3
+	 CTx7UYzrTtKM2/UVyYLb/I6E4efXMur/uye6zImtMNcpkdovSYMi3T3NPOjyd1pBpCVHI
+	 PrQudYezpxF11HepwW1TJ010v51ThC6GwhIPcv2OuNaYIpGADrC1GRLKBYP6Yd0qgOaTm
+	 AC8s/QYfzdL+SNKk+m61Vt0z8ZL9i77loUiRrY+2YHWfDFwAOhGHsF58FpA+M4x+2Tg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792658038;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 Content-Transfer-Encoding:Content-Type:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=6WbDFhxRPQLE4yd9skM3+G315eXtjUICwy1QEmbqUBI=;
+	b=E06sovNXIANUgIvDphy40wAyqTvxYxkxiLU4muP2pKuJoY1HKYt7m74sGtvnPwspNtOU
+	 3qW0rKTEbEaM+M1aSe09w1OUxweZhSsurCz+HUvp6nlHGZ9bEfA0zWM5RV8Bpl1PQuCRJ
+	 Z+9n2aI/MQFYhTDIXrqkZrRrB+dO5IcGu6h5E13it2pPySuKhG9azQqVN4RzzUgTIQYon
+	 NoCHvT47p9ovPGCPmxMWIbg1o1aqBRszrT7wF/8QDOqRojmOrUhq9X5DVC1selpsbOM+e
+	 td2w/bNoCpZmMVKik2mQnkuWxugM8BiCBJ1djfD7VAoxAKG32G7Ti1ZotZ4g/GHWBEg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=nvidia.com;
+	spf=fail smtp.mailfrom=nvidia.com;
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=cyZ9aXj2;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.9
+Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010009.outbound.protection.outlook.com [52.101.46.9])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AAB7606A319;
-	Thu, 22 Oct 2026 07:56:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7AAB7606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FCD606A329
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 08:33:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 77FCD606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=V4QsO65o
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69M7E64R3560983;
-	Thu, 22 Oct 2026 07:56:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=lZuPvHfcQCCINYKbPhFqyHUpZg95Ah
-	i4/dqK/t3/A8w=; b=V4QsO65o/inGZOaMQefLE6AvPkKh/sPSPakvixTgGxQS96
-	xRvhwoflgwo9wlt3Tsh7nQSdwOYB7VK4oGS40u1bJGBJJDNmHbC5Uj981pfyNyDR
-	O8YD1aEINxng5Ibn3slejbcv6ebdZu1+GTVvnnAi3OvXrXd8q75w/MopCBLZr0xA
-	GAuxuW8XUooW3ZWEKePZlsV+PNPFVXvnZYLYKtrknIxxY6OR2KGMYiOwndftprID
-	m+81ZQJ1c/c068cZNva5FT1eH8G9FeSVmQKFFZPMVAKRbOHyASNaoWG/1b7iFEQl
-	oD2MSw/SxsAKRqafhKoksct1BYSgkZchU7JXMjPg==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hdw58wthc-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Thu, 22 Oct 2026 07:56:54 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69M74tIF089148;
-	Thu, 22 Oct 2026 07:56:53 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4he7bs925d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Oct 2026 07:56:53 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
-	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69M7umD952429230
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 22 Oct 2026 07:56:49 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id DE8F12004B;
-	Thu, 22 Oct 2026 07:56:48 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C421B20043;
-	Thu, 22 Oct 2026 07:56:48 +0000 (GMT)
-Received: from osiris (unknown [9.224.90.220])
-	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Thu, 22 Oct 2026 07:56:48 +0000 (GMT)
-Date: Thu, 22 Oct 2026 09:56:46 +0200
-From: Heiko Carstens <hca@linux.ibm.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-s390@vger.kernel.org, Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: Re: [RFC PATCH] s390/syscall: Sign extend system call number
- retrieved via syscall_get_nr()
-Message-ID: <20261022075646.11120A92-hca@linux.ibm.com>
-References: <20261021125911.1550331-1-hca@linux.ibm.com>
- <sashiko-outbox-180303@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=cyZ9aXj2
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=kouXXCqCYcAI5bu2nPYcnfzn9j+Dtg4DdkBoximoPSXlob8ymJFcf2Kfx5wkrIgS8gTh5p2E16Jr++6PX9WbIJjk8OXFZR5F43M+g9ZLlNi5T0bKG8LpPDQ5TMuPx+ZkQ6Ixc1jFHRhBCgGaQKwM4BPM8HGT64qDijserx1RjmygaIN4xgIkwq9B/L3crL88//811yE8RLZffeUZPJZve3H1B+oGv8V6QHPQyaaDE6x+1Jylp2IbJBHOatDlFDEwYh0oRpIVsM2d4J5xMwTyxqBDUelL5eSSrDUINJRemMzNCSdECItsyALRwnIXXrkVVON3gzjhcieD5f90MMGmrw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6WbDFhxRPQLE4yd9skM3+G315eXtjUICwy1QEmbqUBI=;
+ b=hVoLggXL25kQj7lSOJf9fCzVIX6Ku7QK1aQcYA6z5EvUiM6Z7OhGjXsOae5DwmOV+5tStpfPMQlb3n8Hh3CM+s3gUiSAjscQCpHa4kCZm681GvHKiYs8FTZFbIXyB6u3nZXDfRwyo4Bb0TdwY6+QXRmqRLku9wAa5MGdJx/7CmpF1efZB3fqLks3k7zmoapptD1mCsV0U+Kr6kkkqy03GuOhp5AxVEHdgOVKABJ7LFZuD9uhxdebwEpS8EIcuRQym0slDqy3FjnUl0kOFBnk7d8RPOVMg3BtVh+igaKIz5KehDNe/yYEqnd3hfY6eJ6QzP6JsQfxK4GVK+yliCmqSw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6WbDFhxRPQLE4yd9skM3+G315eXtjUICwy1QEmbqUBI=;
+ b=cyZ9aXj2GvUIDThWHinw049yaTJkf5qDCYvZTJTJANQt3yL5IN/hD1LS792yNoA2n1oW9tThh3V8RjKB+g5OMgRmYyyzT0F6zhMNuE9w2O6ebeTWZh4le2gyRIR6IUkoOajuY+OqcJ8cw97vPcvj5DZTcUbOjvcH1SODeyLnliJnhgEf7f5G8NBBEVZ9oWws4YJ/EE22VSAL7Ozz2j1F8apNPOqc6rrlcZkVVRYIAivcP3I3hCg4nJB5x1+TlaqdQnmeAvw6iuwTdc7I8vCXduP6OZtxsLlufYXgkI6w9QclD2Ew1Ao/NhYIlgniL/iVaJ4l8iuiGZCLkPVsHOmcww==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from PH7PR12MB5974.namprd12.prod.outlook.com (2603:10b6:510:1d9::19)
+ by IA3PR12MB460542.namprd12.prod.outlook.com (2603:10b6:208:709::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Thu, 22 Oct
+ 2026 08:33:53 +0000
+Received: from PH7PR12MB5974.namprd12.prod.outlook.com
+ ([fe80::f5a5:bbc3:e9da:f8a0]) by PH7PR12MB5974.namprd12.prod.outlook.com
+ ([fe80::f5a5:bbc3:e9da:f8a0%3]) with mapi id 15.21.0546.016; Thu, 22 Oct 2026
+ 08:33:53 +0000
+From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: linux-gpio@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v3 6/6] gpiolib: let the character device free its IRQs first on chip removal
+Date: Thu, 22 Oct 2026 11:33:45 +0300
+Message-ID: <20261022083343.3905973-4-aambrozewicz@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <CAMRc=Mduzetc38ZttGFEQqtOnyvD-PumZ7=m5FOEF75eGpq55Q@mail.gmail.com>
+References: <20261020-gpiolib-chip-removal-v3-0-aambrozewicz@nvidia.com> <20261020-gpiolib-chip-removal-v3-6-aambrozewicz@nvidia.com> <sashiko-outbox-179021@kernel.org> <20261021095551.3283369-6-aambrozewicz@nvidia.com> <CAMRc=Mduzetc38ZttGFEQqtOnyvD-PumZ7=m5FOEF75eGpq55Q@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: ZR2P278CA0068.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:52::11) To PH7PR12MB5974.namprd12.prod.outlook.com
+ (2603:10b6:510:1d9::19)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -93,78 +96,67 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-180303@kernel.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Y-roT4I9BUAtqE8rQaD99HkLX_z5xa7b
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDAzMCBTYWx0ZWRfX2NkfHgfm4jiV
- q86brYIQ3/c5BTjOb4nB+Md7lCrQAjriFsbakKLwtYlLwbUzq2W4QKjsVufMtB34tFpI3zV07Vo
- k+p2ihZMzErUxI/OSOylzNYtdaKG/I8=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDAzMCBTYWx0ZWRfX6KukPcWu7bz2
- aMxSVEnk/KlqFlBOE2KGzYZgjbpcvkxTOP2UswP8ella4ryvFWHsmb0D3EjspA9c+rnPfDYb0/0
- YAJ76V74kXYkT1felEakFVWf6CY/3EJE/s6jBm8LMeVmisf2MFsJFT8cND8LNFnowtCiCbE318T
- 8EXj4o0xOhjBX6X/BwiISerkJJGGJssh//TrToBn2Q0pob6RE1box00IwDnn/VO+U3CUAQl0Sr2
- phLlWEwSIPmuH3Ho6yvqnITWtGEmbkw3i4rZaEoQBrHbMPdOP1dSmC031eu2wlr6QLaXhAozMYa
- T84YfpH93Q5wDaBtzN23SZ+qO9t5reTX2vctQpghOefnpwQRt5r7MSK/shYR1YOgoHqUKKem6jt
- 5Gv4lGLnON4jZuLoW+avuMmdwBeO3e/IBgBFaphgwQzdJ24Qfo5qXB3RLLNZdZiFc9ercV6uodp
- +MLEKtyA28Ob8ejZi7w==
-X-Proofpoint-ORIG-GUID: Y-roT4I9BUAtqE8rQaD99HkLX_z5xa7b
-X-Authority-Analysis: v=2.4 cv=Ob4NnRTY c=1 sm=1 tr=0 ts=6ad9c1c6 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=kj9zAlcOel0A:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=AGpjq-OJZXGNhh8UPtcA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-22_03,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 phishscore=0 spamscore=0 suspectscore=0
- lowpriorityscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610220030
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5974:EE_|IA3PR12MB460542:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9fde8be2-8aca-4616-6cd0-08df3017343a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|1800799024|376014|366016|6133799003|22082099003|10067099003|18002099003|261021121427099003|11063799006|4143699003|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	fLxriiSx4uXy7p+xRUMUr093Rr8UVVV5BXDAKjAFBDrmxr1grDanGuxk08AZ8ZhWKWOecPRTFYtB9E7PEybGzYnF/msnBUpbddnM5QX6BYDhI3xBPmImcXyDCKOSaGGHIB9c6VKQAANjfCsfnlrLn1A1yjpQ9hq9jEQGKlvOATL3NIK+hBhWILHCQ2SiBr5b+kvZSFsH0YnDP6rFqKZcCp4Ks0EcsQMRbyNzq9mDfZZmmICe4o/lB1VBAX9QTAEcigybLJgEfMm0+SDXLJARNMaj3i8xDmlY57TdYwlDtYWTg5Mnh/pbUF53iminvXZ+DBjRYphlPL0fvvpKWFp5ZSBlJa1Eh1u8w7qB3jAYoexc9FMETZoYiph24ndorAcHc/+rJyrQkKwRM3k3Eimwp3BYqkFhvlUiiJqGT/LLACEovKXMqsX9Idp3n9WDad3Ie4/5KurY9JySkp/Z/ZDtfkYmZaC+5hY57HyKLgl2Ml7880A6JBanMW9cbyLjiMmLNWl6qkQcPXu5Jmf5MtTs+hPSDhJeTZoMoLEjOU38bG2tWbP4Cek/qgH0hnq5YIrkrE5+CUDPz7vAUGifPVvZagueU+XMLs4f0gZsc8P7WiA6Rjq9xWqAOZpM5BLjMSQgx+kXeK+h+1Ja2i2NhoKCxhcxmCLY2ncw4uuiEqxwLgE=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5974.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(6133799003)(22082099003)(10067099003)(18002099003)(261021121427099003)(11063799006)(4143699003)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?b7wYOl/EJ0QdMVSmr2EPn5PKqWQWIB9+pMO91Dg/XgKEI7BvXHJ0nVSIUGAh?=
+ =?us-ascii?Q?N3Uv17Jd34CJjlc1p1wkkY8nemN554zS2zNXBa/+ceg19iNPK6Ks2L6lT2F6?=
+ =?us-ascii?Q?qU/9G/yuw4Aj+MbGiiL4SwiVwaizuIZ1z//PTUXmjF8jownLOrNo8ALUUQWV?=
+ =?us-ascii?Q?ZUksR6EnGVpGxCwuKNoXZmzQlv1b3uKyS0DlnHq4MIRkGQyU5ze3BTA65+Mk?=
+ =?us-ascii?Q?7Gv/pQv41i6R61vdeLF6ScjM82BAJbDP826L2Q+KMt/dFr8X3HKj+DclTiGK?=
+ =?us-ascii?Q?/fJiMJzGZ/Nm7hXSxIy8JeE6uIm3OR96bM1eyxrGnJUNbY0uareYSlu+wRIR?=
+ =?us-ascii?Q?panOflJ3OUzt/h4zoX7bC6pciAzIBYpLdWIzJp7LYgVKvH4ocDf91weUTeI7?=
+ =?us-ascii?Q?lGBFg6E15dHSsa3o/znnKs4ICrspl+HrAyXfxRl5qBb3x94bpXGAkKVEMpfC?=
+ =?us-ascii?Q?PAPhUwOqXPQX84D7/tR8rR0dM0/jpMtyo59wmtWLddojIh2NNmkAJxb6FqSK?=
+ =?us-ascii?Q?QyC0GpZdM4KrgsPuE0UW5dsB2WAjadVSpETGXL0VVZe2Hl+DOX/rL2koBllZ?=
+ =?us-ascii?Q?oPgBQWRfdVddyh3JCueD9AFSRE0VNh9y9/erB7OC7cKGqaB19VJMluvSY0gV?=
+ =?us-ascii?Q?X4SGnytVOCbOq+BOQ+2naKi27I4hIwjutxOnxAxyulnUdV+8SZN3ovMEqPnY?=
+ =?us-ascii?Q?N/derv5LxBn3qdwvcKJ4fdLReA62YCIQ1hMrb0ZbIPVrtLpVAhDv3Rsg0Y0q?=
+ =?us-ascii?Q?SfoTkcNq3UKNdTq22JK7aOBc9PHyIljnpfC5/VwdohALawwEC1UzB/sciTAZ?=
+ =?us-ascii?Q?50rgf3KQiED5TMDktEiCctUUtk1UelTOUBrgFUArn7qNZvxtbLE0fXMjIEos?=
+ =?us-ascii?Q?2MdiYNyudPX/Ig6Ift8zXFy0gRUk/vG7qz3+UiYFa5WCiecE2OlWw3kI7PuX?=
+ =?us-ascii?Q?8rUYR5BgQRwDOkwdPlGjaQx/NRnkavytLOxVy2ItBUZpwwIQ5cX9Zc+/U/lf?=
+ =?us-ascii?Q?f101u2m1lNB6SgTxV0V2UIv9OPHt9OlyPJYTR8t3my1RVKtbrlthGxyGuu7h?=
+ =?us-ascii?Q?C7EB/kOm4zdt1n8xq0/0LJbKY7W51rYQM8LBfEZGnr4WHkgiukHx4b/WtGwF?=
+ =?us-ascii?Q?GToAXMB6pWvKIRJVxTwB9uHh2BQDAZJH5sT7cRTQybm33mwVkoZokK15t+97?=
+ =?us-ascii?Q?c0/0lLLDIMyNHG9T6xK2VTdRkfrHljGl5BUg6RYeZcPHyF47MqYH5Diheve4?=
+ =?us-ascii?Q?I6hg0AX76aW1J1v6q5oUVf/1ZAJE8u6LAmS4qFD5s9shMXqhh0lvXnMAMKXD?=
+ =?us-ascii?Q?zfSDwuQ2QwJEK/qYVyJ51r3J6VEIYG7IDBxG1SYkm+jDZu+krzqqBhMhPuiP?=
+ =?us-ascii?Q?wRXJykYtpM4V/sWpjmWLtqy3863DmIta1HL28fNowVSb16b2xz0t/2LcdMmJ?=
+ =?us-ascii?Q?4NAJq3rUa5HJTvKIyYmyMRULgeY+4Vw2hDcxs4Uw2+R3Hzjqtp3BVpWlu6ne?=
+ =?us-ascii?Q?73Cz+/LUoJjcJbMQ1IaOFe1c54lNRdg8yILqEOXobSDp0VqcoUiR26KMJkNf?=
+ =?us-ascii?Q?ZlAChXiQ9WStxzCsB8Y+KX7Yg0AkvVU4l1+Nsddj81OY5sGotODUZMwiNtCO?=
+ =?us-ascii?Q?YHp93GUOp4l54MMaemIXdCcIRJ1CEZTdZ/XeoIxg/vnbihRDb800VvjgPIzd?=
+ =?us-ascii?Q?wQEHeAzTEv1ALRi2thTeLRlvaqkaSpmGaWl3TcLMEXjKhviTMjf4KpSEh9Rj?=
+ =?us-ascii?Q?xT/BePEBqA=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9fde8be2-8aca-4616-6cd0-08df3017343a
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5974.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2026 08:33:52.9433
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xnJrTICl1CTgl8A2voUmOaozrGyZoiCbCQTfUwcS2SE3o7pEMSU6v8pAZpbr/d+vs5sTEi+W1zKv3N0v0I/P1Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR12MB460542
 
-On Wed, Oct 21, 2026 at 01:27:30PM +0000, sashiko-bot@kernel.org wrote:
-> > @@ -20,7 +20,7 @@ static inline long syscall_get_nr(struct task_struct *task,
-> >  				  struct pt_regs *regs)
-> >  {
-> >  	return test_pt_regs_flag(regs, PIF_SYSCALL) ?
-> > -		(regs->int_code & 0xffff) : -1;
-> > +		(s16)(regs->int_code & 0xffff) : -1;
-> >  }
-> 
-> [Severity: High]
-> When a system call is skipped under SECCOMP_RET_TRACE on s390, can this cause
-> __do_syscall() to return the wrong value to userspace instead of -ENOSYS?
-> 
-> Previously, syscall_get_nr() returned an unsigned 16-bit value (65535 when nr
-> was set to -1), so after PTRACE_EVENT_SECCOMP in
-> kernel/seccomp.c:__seccomp_filter():
-> 
-> 	/* Check if the tracer forced the syscall to be skipped. */
-> 	this_syscall = syscall_get_nr(current, current_pt_regs());
-> 	if (this_syscall < 0)
-> 		goto skip;
+On Wed, Oct 21, 2026 at 06:05:33AM -0400, Bartosz Golaszewski wrote:
+> As annoying as sashiko reports are, I think they will result in better code in
+> the end. Thanks for addressing these issues.
 
-This is addressed with:
-https://lore.kernel.org/all/20261021085643.2442949-1-hca@linux.ibm.com/
+Sashiko did a tremendous job on this series, and I find that kind of
+help encouraging rather than annoying. For a newcomer it is a great
+safety net, and in the end the code is more solid for it.
 
-Read: should not happen anymore.
-
-> [Severity: Medium]
-> Should arch/s390/kernel/syscall.c:__do_syscall() and
-> arch/s390/include/asm/syscall.h:syscall_set_nr() also be updated to keep the
-> syscall number representation consistent with syscall_get_nr()?
-> 
-> In arch/s390/kernel/syscall.c:__do_syscall():
-> 
-> 	nr = regs->int_code & 0xffff;
-> 	if (likely(!nr)) {
-> 		nr = regs->gprs[1] & 0xffff;
-> 		regs->int_code &= ~0xffffUL;
-> 		regs->int_code |= nr;
-> 	}
-> 	regs->gprs[2] = nr;
-
-This is valid - things should be consistent.
+Adrian
