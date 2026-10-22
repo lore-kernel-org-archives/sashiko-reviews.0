@@ -1,76 +1,50 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=115.124.30.131
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792662731;
-	b=mVVZC221Kvh9Q5dI22KX3pAuhHQgboSCoyuwIVlBfDMqJZ6kwwJZk6Hq6kgtn3nvgOCW
-	 jnIpfyzq1TR9iuoZKQPUumNoL+I+ef1Zl1fq9mXhe64GBMiFowJpWSElAsyIoc9nJgz+G
-	 yF1Ivv+8RAwKzkCwj+XzVTZVOPEL2nSKRNYW21lo1ekTnPLylqQe8iT+F5VFr7K62qV+P
-	 sb1CeZZ5BX67Xf6pSKGhku+rDaXDwkeQsRJg8Vm5SUQ8RIzkh4YcWbX5MjtblGpOEWL1J
-	 sV486YBHzLbukh1YhMz6RjDAvg2cJa6ahrCbadjcK/9iJmK1wC/Zq1/ERwpEZw1i/yA==
+	t=1792662971;
+	b=PumcP+g45AFYIn+QZJY1fcbt7nZOEH9NwLIGYPPBHjc7IW+tBqu6rlojhvYqRtpG4/bq
+	 r6WUlQ67FvtwepNbT5dviPpkC1WmWR5qB8gjybciHNbdD0WZ42jDF/doRlHZzozHn+699
+	 F3eCgyj6gge8UbM54rnSOzRhvgMpZLlwzT2BaNQLqYNed/Upgk3DVDduMOFEU+aNUTO/Y
+	 6c8EPGz1ikEZy5s3xJggZd8IBfAfXBjgTi/7ROkF3Uykv5AM02/yoaoPSLcnnvFvXktlp
+	 RWweiunPXdyJLyJQE79iA5JlgqMjedapWkfAXKulEWx958sjw1q1d69Xqp0FQHuRRqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792662731;
-	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:From:To:Cc:
-	 Subject:In-Reply-To:References:User-Agent:Date:Message-ID:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-Last-TLS-Session-Version;
-	bh=F/chYiasiSXcn83g5A2gWdD74tn+mRgtMiCgnkCqNTg=;
-	b=oaGuOsiIUqe+rFGTET1HnaiNBKOhFKnxmdMhcYkEBJ/qchvSGa7MTBL7J5dvLxF/3UlH
-	 +0NNBobBAiTSjD4/BFJO6iVWuRXq1FJsK4jsh4tU9xUaIWQIPp1OqQvRbbnMnyWBqZXRd
-	 TefVY3GKwAEYWAIkjc3tWnStyISKai+CvEoxy411fWLqmtkyVtdwbPEoJ+PV8bLtOxeWy
-	 RQjlrLfhGnZQ3+cY8H6s8QwowOVyzZlHoU7vp9KA7Qq5WyP7mtYws+QjcBTdFGJfRmtPh
-	 43yPmmvTDivYRIuBZgxI87VVTjK1Avggmj7sVkdd3yQFlAvCvbN7yFTIBWYopRhupyA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792662971;
+	h=DMARC-Filter:DKIM-Signature:X-Alimail-AntiSpam:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:Cc:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=wc8R6pcetAOysFIliaOJ2VQr+tr2jqU67xiXxMwPvfM=;
+	b=Tt/TLm6PphYgllNBbWNOWKu16OSGvq821xADKBf4ivZtQE0ctNRQa3h0rYKLJW8IXLOj
+	 /KFfhMBcSQdFo+NHkkuHY3MAPNIVhrYNfsKpYhGyg2S+l7PYjfUvl938S1jK3aawXw5pV
+	 aFEtVhqXSE6NxqXZ936pOCj8DB7Zj4NwEJAduHxL8jkziqmg/mLk8AnGPPfgy+t9ovcDf
+	 mI4dhg/TyRJ2bnW1rdO7G7vV0m2/YZ3zk0zLR//TDEJLt+NiwUYtePdAFoK1jaPrwoZQ/
+	 Kxhi8UG/rZpKK0SEYb2mASwYy3nTvQP/NCp4YVD52ZHeNOFWU+bF4n5YE29UunDBWyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=bootlin.com;
-	spf=pass smtp.mailfrom=bootlin.com;
-	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=Vjf2fb0z;
-	arc=none smtp.remote-ip=185.171.202.116
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+	dmarc=pass header.from=linux.alibaba.com;
+	spf=pass smtp.mailfrom=linux.alibaba.com;
+	dkim=pass header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=S6SKAGp8;
+	arc=none smtp.remote-ip=115.124.30.131
+Received: from out30-131.freemail.mail.aliyun.com (out30-131.freemail.mail.aliyun.com [115.124.30.131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3CA606A31A
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 09:52:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AB3CA606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93696606A31D
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 09:56:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 93696606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=Vjf2fb0z
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 16E0FC58470;
-	Thu, 22 Oct 2026 09:53:07 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id BD0E460360;
-	Thu, 22 Oct 2026 09:52:07 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 7CD6210328E44;
-	Thu, 22 Oct 2026 11:52:02 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1792662726; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=F/chYiasiSXcn83g5A2gWdD74tn+mRgtMiCgnkCqNTg=;
-	b=Vjf2fb0zvrDj5uRNZZFDtFblI9dLdnBb40EzR5mWLG/MCNPR6BmUTqmn4GrMPr07GjeTA7
-	V1fB31mFXvXtTiQI9LWq9KpDu0YU9FUSxZO2Giu/ccm0obQRsR2vJVr5uu7PEF1NE6Kx1m
-	cPGdSwVjhQTgKoIRUR9kTbdx+qteyFmz21VI/VmUK+/ct5/MpetPF877piSWq0YAU2fPaO
-	eX9qo4dMqOg1wmpvqFozKp+1kcqAewdW6A/ika83i/Qg+W2EgptAa2KfCuR1FyDTf525+x
-	ZW+X7aGUmgt33mNaOW8T1QA7MP2dWwQyx2thwQMv2aABzYtcOCrHgVtaYfY52w==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: "Bough Chen (OSS)" <haibo.chen@oss.nxp.com>
-Cc: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>,
-  Pratyush Yadav <pratyush@kernel.org>,  Michael Walle <mwalle@kernel.org>,
-  Takahiro Kuwano <takahiro.kuwano@infineon.com>,  Richard Weinberger
- <richard@nod.at>,  Vignesh Raghavendra <vigneshr@ti.com>,
-  "linux-mtd@lists.infradead.org" <linux-mtd@lists.infradead.org>,
-  "imx@lists.linux.dev" <imx@lists.linux.dev>,  "michael@walle.cc"
- <michael@walle.cc>,  Bough Chen <haibo.chen@nxp.com>,
-  "Frank.Li@kernel.org" <Frank.Li@kernel.org>
-Subject: Re: [PATCH v3] mtd: spi-nor: clear the default read_sr2 opcode for
- xSPI Profile 1.0 flashes
-In-Reply-To: <AS8PR04MB8820F1AAF591DCF5C9D0136090652@AS8PR04MB8820.eurprd04.prod.outlook.com>
-	(Bough Chen's message of "Thu, 22 Oct 2026 08:56:03 +0000")
-References: <20261022-spi-nor-fix-v3-1-bffa00b75c27@nxp.com>
-	<sashiko-outbox-181158@kernel.org>
-	<AS8PR04MB8820F1AAF591DCF5C9D0136090652@AS8PR04MB8820.eurprd04.prod.outlook.com>
-User-Agent: mu4e 1.12.12; emacs 30.2
-Date: Thu, 22 Oct 2026 11:52:01 +0200
-Message-ID: <87y0bqqczi.fsf@bootlin.com>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=S6SKAGp8
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1792662961; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+	bh=wc8R6pcetAOysFIliaOJ2VQr+tr2jqU67xiXxMwPvfM=;
+	b=S6SKAGp8BSICqU2kLKb/xtQ5FJMmRjSGeUd4Q66qhAZOi76fU2QRE1B5Z2+kZlZvZA0Y4VzxuKHvpf7vCUoOjMHdTIjfaLT5Iv8RBJlbHUkmft87Vvgd3Wpr84d5ar0Av7uS7h7nl3NUkpq1aWf+SQVlmfAmNMgfgXS2PP25PlI=
+X-Alimail-AntiSpam:AC=PASS;BC=-1|-1;BR=01201311R961e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=maildocker-contentspam033032089153;MF=libaokun@linux.alibaba.com;NM=1;PH=DS;RN=3;SR=0;TI=SMTPD_---0XDIrfSv_1792662960;
+Received: from 30.221.132.50(mailfrom:libaokun@linux.alibaba.com fp:SMTPD_---0XDIrfSv_1792662960 cluster:ay36)
+          by smtp.aliyun-inc.com;
+          Thu, 22 Oct 2026 17:56:01 +0800
+Message-ID: <dd05e858-88f6-40de-b91d-734e171915ca@linux.alibaba.com>
+Date: Thu, 22 Oct 2026 17:56:00 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -80,158 +54,100 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: TLSv1.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ext4: skip eof zeroing when the zero range covers the eof
+ block
+To: linux-ext4@vger.kernel.org
+Cc: tytso@mit.edu, sashiko-reviews@lists.linux.dev
+References: <20261022065342.3569693-1-libaokun@linux.alibaba.com>
+ <sashiko-outbox-181121@kernel.org>
+Content-Language: en-US
+From: Baokun Li <libaokun@linux.alibaba.com>
+In-Reply-To: <sashiko-outbox-181121@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hello,
-
-On 22/10/2026 at 08:56:03 GMT, "Bough Chen (OSS)" <haibo.chen@oss.nxp.com> =
-wrote:
-
->> -----Original Message-----
->> From: sashiko-bot@kernel.org <sashiko-bot@kernel.org>
->> Sent: Thursday, October 22, 2026 4:21 PM
->> To: Bough Chen (OSS) <haibo.chen@oss.nxp.com>; Pratyush Yadav
->> <pratyush@kernel.org>; Michael Walle <mwalle@kernel.org>; Takahiro
->> Kuwano <takahiro.kuwano@infineon.com>; Miquel Raynal
->> <miquel.raynal@bootlin.com>; Richard Weinberger <richard@nod.at>;
->> Vignesh Raghavendra <vigneshr@ti.com>
->> Cc: linux-mtd@lists.infradead.org; imx@lists.linux.dev; michael@walle.cc;
->> Bough Chen <haibo.chen@nxp.com>; Frank.Li@kernel.org
->> Subject: Re: [PATCH v3] mtd: spi-nor: clear the default read_sr2 opcode =
-for
->> xSPI Profile 1.0 flashes
->>=20
->> Thank you for your contribution! Sashiko AI review found 1 potential iss=
-ue(s)
->> to consider:
->> - [Medium] mtd: spi-nor: read_sr2 left set for 8D-8D-8D flashes without
->> Profile 1.0
->> --
->>=20
->> commit ef4079e3aea2014890e08df31ea4d8775a392f81
->> Author: Haibo Chen <haibo.chen@nxp.com>
->>=20
->> mtd: spi-nor: clear the default read_sr2 opcode for xSPI Profile 1.0 fla=
-shes
->>=20
->> This commit clears params->opcodes.read_sr2 in spi_nor_parse_profile1() =
-so
->> that flashes with an xspi profile 1.0 table do not issue an unsupported
->> 0x35 register read when running in octal dtr mode.
->>=20
->> > diff --git a/drivers/mtd/spi-nor/sfdp.c b/drivers/mtd/spi-nor/sfdp.c
->> > index 4a3f82e97cef8..722eeff71d0df 100644
->> > --- a/drivers/mtd/spi-nor/sfdp.c
->> > +++ b/drivers/mtd/spi-nor/sfdp.c
->> > @@ -1344,6 +1344,17 @@ static int spi_nor_parse_profile1(struct spi_nor
->> *nor,
->> >  	 */
->> >  	nor->params->hwcaps.mask |=3D SNOR_HWCAPS_PP_8_8_8_DTR;
->> >
->> > +	/*
->> > +	 * The xSPI Profile 1.0 table does not describe a Read Configuration
->> > +	 * Register (RDCR, 35h) instruction, and the single-byte RDCR default
->> > +	 * is not usable in 8D-8D-8D mode. Drop the SR2 read opcode for
->> these
->> > +	 * octal-capable flashes so spi_nor_read_sr1_and_sr2() degrades to
->> an
->> > +	 * SR1-only read and spi_nor_init() does not issue an unsupported
->> > +	 * command that the flash never answers. A manufacturer driver that
->> > +	 * actually needs SR2 can install its own opcode in a later fixup.
->> > +	 */
->> > +	nor->params->opcodes.read_sr2 =3D 0;
->>=20
->> [Severity: Medium]
->> What happens on octal dtr flashes that do not publish an xspi profile 1.0
->> table, so spi_nor_parse_profile1() is never called?
->>=20
->> Specifically, some batches of the Micron mt35xu512aba lack the profile 1=
-.0
->> table and instead configure SNOR_PROTO_8_8_8_DTR in
->> drivers/mtd/spi-nor/micron-st.c:mt35xu512aba_post_sfdp_fixup():
->>=20
->> 	nor->params->hwcaps.mask |=3D SNOR_HWCAPS_READ_8_8_8_DTR;
->> 	spi_nor_set_read_settings(&nor->params-
->> >reads[SNOR_CMD_READ_8_8_8_DTR],
->> 				  0, 20, SPINOR_OP_MT_DTR_RD,
->> 				  SNOR_PROTO_8_8_8_DTR);
->> 	...
->> 	nor->params->hwcaps.mask |=3D SNOR_HWCAPS_PP_8_8_8_DTR;
->> 	spi_nor_set_pp_settings(&nor->params-
->> >page_programs[SNOR_CMD_PP_8_8_8_DTR],
->> 				SPINOR_OP_PP_4B,
->> SNOR_PROTO_8_8_8_DTR);
->>=20
->> In drivers/mtd/spi-nor/sfdp.c:spi_nor_parse_bfpt(), params-
->> >opcodes.read_sr2 is initialized to SPINOR_OP_RDCR (0x35) and remains set
->> when the quad enable requirements field contains a reserved value (which
->> mt35xu512aba_post_sfdp_fixup() notes is the case on this part) or
->> BFPT_DWORD15_QER_NONE:
->>=20
->> 	params->opcodes.read_sr1 =3D SPINOR_OP_RDSR;
->> 	params->opcodes.read_sr2 =3D SPINOR_OP_RDCR;
->> 	...
->> 	default:
->> 		dev_dbg(nor->dev, "BFPT QER reserved value used\n");
->> 		break;
->>=20
->> Similarly, non-sfdp flashes initialized with SPI_NOR_OCTAL_DTR_READ in
->> drivers/mtd/spi-nor/core.c:spi_nor_no_sfdp_init_params() enable
->> SNOR_HWCAPS_READ_8_8_8_DTR while leaving params->opcodes.read_sr2
->> set to SPINOR_OP_RDCR from spi_nor_init_default_params().
->>=20
->> When spi_nor_init() switches these flashes to SNOR_PROTO_8_8_8_DTR via
->> spi_nor_set_octal_dtr() and then runs:
->>=20
->>   spi_nor_init()
->>     -> spi_nor_cache_sr_lock_bits()
->>       -> spi_nor_read_sr1_and_sr2_careful()
->>         -> spi_nor_read_sr2_careful()
->>           -> spi_nor_read_sr_ll()
->>=20
->> wouldn't this still issue the unsupported 0x3535 register read in
->> SNOR_PROTO_8_8_8_DTR mode and fail probe or resume with a controller
->> timeout?
+On 2026/10/22 15:16, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] ext4: stale data in ext4_alloc_file_blocks() on FALLOC_FL_WRITE_ZEROES
+> --
 >
-> Hi Miquel,
+> commit 5e26fed6c5f3f56bd5013064a243a3a558e3a73d
+> Author: Baokun Li <libaokun@linux.alibaba.com>
 >
-> The Sashiko AI review raised a valid point on v3.
-
-Is it a valid point? Only Winbond flashes have something in SR2. It is
-mentioning non SFDP compliant Micron devices. So this case never
-actually happens.
-
-> I see three ways to go, which do you prefer?
+> ext4: skip eof zeroing when the zero range covers the eof block
 >
-> 1, Keep the v3 approach (clear in spi_nor_parse_profile1()) and fix the r=
-emaining
->     cases one by one, clearing read_sr2 in each relevant fixup=20
->     (e.g. mt35xu512aba_post_sfdp_fixup) / no-SFDP path.
-
-This is my favorite option, as you can guess.
-
-> 2, Move the clear into spi_nor_late_init_params(), gated on the 8D read c=
-apability
->     (hwcaps & SNOR_HWCAPS_READ_8_8_8_DTR) and read_sr2 =3D=3D RDCR, so al=
-l 8D=20
->     paths are covered in one place.=20
->     The downside: late_init runs after the manufacturer fixups, so if a v=
-endor later
->     wants to set its own SR2 opcode for 8D it would be clobbered here and=
- overriding
->      it cleanly becomes awkward.
+> This commit skips calling ext4_block_zero_eof() in ext4_alloc_file_blocks()
+> when EXT4_GET_BLOCKS_CONVERT_UNWRITTEN is set and the allocation range covers
+> the EOF block, preventing the dropped EOF page from being read back into the
+> page cache with stale data during FALLOC_FL_ZERO_RANGE.
 >
-> 3, Go back to the v2 approach (clear in spi_nor_set_octal_dtr() when the =
-switch to 8D
->     actually succeeds). This covers every path that ends up in 8D regardl=
-ess of how the=20
->     capability was discovered, but it is runtime-protocol based rather th=
-an capability=20
->     based, which you didn't prefer earlier. And this method has the same =
-downside as
->     method 2.
+>> diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+>> index 7193429a05e1f..8f7ded6e08299 100644
+>> --- a/fs/ext4/extents.c
+>> +++ b/fs/ext4/extents.c
+>> @@ -4639,8 +4639,15 @@ static int ext4_alloc_file_blocks(struct file *file, loff_t offset, loff_t len,
+>>  	credits = ext4_chunk_trans_blocks(inode, len_lblk);
+>>  	depth = ext_depth(inode);
+>>  
+>> -	/* Zero to the end of the block containing i_size */
+>> -	if (new_size > old_size) {
+>> +	/*
+>> +	 * Zero to the end of the block containing i_size.
+>> +	 * Loading the eof block back before it is converted to unwritten
+>> +	 * may leave the page cache inconsistent with the disk, and zeroing
+>> +	 * it is redundant, so skip it.
+>> +	 */
+>> +	if (new_size > old_size &&
+>> +	    (!(flags & EXT4_GET_BLOCKS_CONVERT_UNWRITTEN) ||
+>> +	     !in_range(old_size >> blkbits, map.m_lblk, map.m_len))) {
+>>  		ret = ext4_block_zero_eof(inode, old_size, LLONG_MAX);
+>>  		if (ret)
+>>  			return ret;
+> [Severity: Critical]
+> Does this condition also need to check !alloc_zero to cover the
+> FALLOC_FL_WRITE_ZEROES path?
+>
+> In ext4_zero_range(), after ext4_truncate_page_cache_block_range() drops the
+> page cache, FALLOC_FL_WRITE_ZEROES calls ext4_alloc_file_blocks() with
+> EXT4_GET_BLOCKS_CREATE_ZERO rather than EXT4_GET_BLOCKS_CONVERT_UNWRITTEN:
+>
+> 	if (align_end > align_start) {
+> 		if (mode & FALLOC_FL_WRITE_ZEROES)
+> 			flags = EXT4_GET_BLOCKS_CREATE_ZERO | EXT4_EX_NOCACHE;
+> 		else
+> 			flags |= (EXT4_GET_BLOCKS_CONVERT_UNWRITTEN |
+> 				  EXT4_EX_NOCACHE);
+> 		ret = ext4_alloc_file_blocks(file, align_start,
+> 					     align_end - align_start, new_size,
+> 					     flags);
+>
+> Earlier in ext4_alloc_file_blocks(), EXT4_GET_BLOCKS_ZERO is cleared from
+> flags and converted into alloc_zero = true:
+>
+> 	if (flags & EXT4_GET_BLOCKS_ZERO) {
+> 		flags &= ~EXT4_GET_BLOCKS_ZERO;
+> 		flags |= EXT4_GET_BLOCKS_UNWRIT_EXT;
+> 		alloc_zero = true;
+> 	}
+>
+> When FALLOC_FL_WRITE_ZEROES extends i_size across an unaligned written EOF
+> block covered by [align_start, align_end),
+> !(flags & EXT4_GET_BLOCKS_CONVERT_UNWRITTEN) is true. As a result,
+> ext4_block_zero_eof() is still called and reads the dropped EOF block back
+> from disk into the page cache with stale data below old_size, marks the
+> buffer or folio dirty, and then the loop zeroes the block on disk via
+> ext4_issue_zeroout() and leaves the extent mapped as written.
+>
+> Wouldn't this leave the dirty page cache folio with stale data that is
+> returned on buffered reads and written back over the zeroed disk block on
+> writeback or fsync?
+>
+
+This is indeed another similar issue that can be addressed
+in the current patch. I will send version 2 soon.
 
 Thanks,
-Miqu=C3=A8l
+Baokun
+
+
