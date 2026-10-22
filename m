@@ -1,58 +1,82 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792693054;
-	b=Z4+liCrpZ0J3dCVCUiBvabC/AaKC1m0BoZdmKcbCsaitLWnbgPxsxgRgQyG1d9NowKVQ
-	 DF1s5XWTfw6std/WrJtCFMXajU1lTv9bnJuwzLevpNdjVDtr8659iq6A9srvZTQA1iSYB
-	 0tE+mk9AItyvsZ9NOES/tR1cBkStIHP6nxPH0FzJshK2u8zz5oOSjTfgbclT8BJr16yje
-	 jiY3z6eOnTyAePK38ouFplsRjwzFw0cTmyraclj28MLnyMAXesqihCUDD3XI0fpmzFkBL
-	 IaE2rcr6kkwDH+ZqKp3iToY9ByEfFfCzvWx7GfXOvHQSn0MXr+SpRYDC1YQI9B/5fpg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792693054;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=JfYuGkKiundK6sq/58f2tx3DomPHPmn9OTCr7OSTgaY=;
-	b=5WgM3F8Ats0hE1rRFWGY/MACKVXDJKVsklaNnbfkEhYwVcEqZA8sMZfh30Uvk3mQ8+WK
-	 ZXIjyTtLqqxaojLsqh0VzL1wsmg0a0jrQti0F//0EDmMeUjHr2oxfPFY+Q7j4jGZus1a2
-	 FUJMdpv5Alq6hXathsJLJeUQYCd/g7kDJsbkpU3bfsKmXck+xeY4EjntOBk0nIF+1h0IS
-	 1ew7OqrpOBVt07xpR0HZKG42JYP1yTHGLwVw+cnAADdyCuvnKZPABufOcClMDaxgvoLqP
-	 OlafAns/kvoAiH6R/XexXfl07pO5LgW/eQRHIYDJoi/wZqrcubCAIzqHqcoxjQ7Dung==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="HpkBUb/t";
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.101.107
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792695877;
+	b=JYsWRC4rKLwhFlYqL5cNMXuEpjuwCYZxse2LkH7ICIHwIjLr1RnKIAGIBF5qDq7mLjwU
+	 bA+YEfBPn+G4m8nX7lIkFal/ESQ3jsgS/1gmQ8slLKAGYL1AkU+SSyKXWij9ssFIb6k8C
+	 x6Vm9PkZc7U/IGnv3Nck2j4n4ZeVaCVcO5dh6uhacPGa6r+3uH2uECuw5cFfm5369iNzM
+	 y0zDkp/cRNyXnUCPSxCI3sYl3aTuz66qo7LyJ9yfb96nCBrvOTy4v7iE20k9/Wzc37wOM
+	 mbLmSfpf1KgSz+SECQwM3A0tDa+nfCg/2g/nke7QTHfy2uWZTRgDdhBLBXJZMQALaGA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792695877;
+	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
+	 References:Content-Type:Content-Disposition:In-Reply-To:
+	 X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=RxStaOPPvVmeIILaqR8HDJN3uO2GPDcoVsA6i925JSo=;
+	b=f8f+oiq3ushKmXi7TKoL9Bpc20sxDUafDQRl17x/94XLeOjhLVO+rkFjWOuwpq5BjSY+
+	 9w4rwiF/RRWPN2NurHAKdf5A8i24qQKUu6aOftF/RsSkqLnTa4ji6mCOkEJE25v7oebqy
+	 2nfYBJY3Z6sSKhDPsECo+F9v+7D/nf9mm7tPHFRW43WiuuxrJb5MWo1BL7kKmQvnJt2LP
+	 8hph0JJAxM2VrzZWaoeG8Nrjy6e3IkorgWTeZ2KfvMcaTzetwPsauHXYlcnGczjkCTDpo
+	 1yk/TT6NzAUqwGUCTjNQp0JO8G4zhlbfZv+adcjNGlTdlfkqFQfya8+xE3Kg1wYHaUw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=none header.from=atomlin.com;
+	spf=pass smtp.mailfrom=atomlin.com;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.101.107
+Received: from CWXP265CU010.outbound.protection.outlook.com (mail-ukwestazon11022107.outbound.protection.outlook.com [52.101.101.107])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DE4606A31B;
-	Thu, 22 Oct 2026 18:17:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=HpkBUb/t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CBC1F01825;
-	Thu, 22 Oct 2026 18:17:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792693053;
-	bh=JfYuGkKiundK6sq/58f2tx3DomPHPmn9OTCr7OSTgaY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=HpkBUb/tiIUUTPc6tYRNejcN3x5B65mB+I1hTmIl19HTWVJ0SQdoTtlDQKgpvqT3c
-	 qybA6CjKrVg+1fMtHubR8Bmy4ARD8fPZ2fcKCDkIqgrq0u2wmJOTMoYTeQFkQktqRN
-	 OVKG2l49wCsPbxbN+y1xo+6/SAZzHTB/epJKsBZtkdprSm0ZyMT5ypy4JVaGMSFC9O
-	 bpwNV0oQlgCRNRoTunbuRVx6Tal0XCp3+dQTY3ZMaNGy5QmTKsvRyxo24jZpAP9Bi+
-	 IFarpI22uvTLkicmhpBTozngp2R/58Sv5j0mMlsyP63FeAR/bHFFbJSUihXHO2C6z5
-	 gldczFU8MTvZw==
-Date: Thu, 22 Oct 2026 19:17:30 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Xincheng Ji <jixincheng@ultrarisc.com>
-Cc: sashiko-reviews@lists.linux.dev, devicetree@vger.kernel.org,
-	robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v4 7/7] riscv: dts: ultrarisc: Add Milk-V Titan board
- device tree
-Message-ID: <20261022-viewer-calzone-06a380c1c377@spud>
-References: <20261019-ultrarisc-dts-v4-0-3979747cda2e@ultrarisc.com>
- <20261019-ultrarisc-dts-v4-7-3979747cda2e@ultrarisc.com>
- <sashiko-outbox-176776@kernel.org>
- <179246063943.3442927.10941907832509473109.b4-reply@b4>
- <20261021-badly-issuing-847ac366c9b9@spud>
- <179263206397.701068.17555028009758516675.b4-reply@b4>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFBB606A31A
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 19:04:36 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EDFBB606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IKLWoUF6/zSfaMaLH4X+548vHmwF/O39WFtUTgh4ULM64abF8yGWWKrclC0f+hNwDdeirm8+GDzg2ClAtwpZZ6KOcrFWDt3EiI/r4gD6MlGkMNugxIazbL+c/UT6xBMFjrB+68KI6ykNel+dG4L2Kj7abamyOgySF8RITG9w5W/7exq47MNGXcOxyWDCLJy+nBlZnpfoEQHzfkb7TU0Gn1m0qkCak8gNWlfmAemka4RM0vgvqQj7cywya8uHr0yLIM/+jsomSX0MgVmAo+db7M3JmHRy69vDKKjq7iqePecpjcCSIGGBq5e1fsi+RB6kW4eFyFxuJNvpexdMHxkuGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
+ bh=RxStaOPPvVmeIILaqR8HDJN3uO2GPDcoVsA6i925JSo=;
+ b=tFsyPj62gAyNL4lsCDvaeW9vcPP3oXfwPo5MSc8n99BghCbZNJpdloD/JiH2O40SrSxMlVcpgDARz4jCzviv7ghE7qVIanT+e/6gLOCK1KyYSyhJSmrBvhc4k56SKosMXFS7e2eNvhyaaLaJxFVW2QKj8Zsvj/ieq1iBsGU8Xzv8c7Mim1UzgG49W6xjUsD7xvhaxbaQlKeImPIE2RsCPVuo4djp1x39V06fu535Rkr/X1pX/CjMb6/UdmgK1H+d0jGHCkRQ+s//VDERDNA/+RnMB0gAqFntXp5st/81m4hBPrr1fopn1QSe7JpkHCh2jfsXgBbXFkSucyDMJA9F3w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
+ dkim=pass header.d=atomlin.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=atomlin.com;
+Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:183::5)
+ by LO0P123MB7423.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:330::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.16; Thu, 22 Oct
+ 2026 19:04:33 +0000
+Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+ ([fe80::cec4:77ab:262e:d230]) by CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+ ([fe80::cec4:77ab:262e:d230%5]) with mapi id 15.21.0546.016; Thu, 22 Oct 2026
+ 19:04:33 +0000
+Date: Thu, 22 Oct 2026 15:04:28 -0400
+From: Aaron Tomlin <atomlin@atomlin.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-modules@vger.kernel.org, Petr Pavlu <petr.pavlu@suse.com>
+Subject: Re: [PATCH v2] module: Fix use-after-free in module_put() tracepoint
+Message-ID: <xkmj4fhe6wvtq54kmpg4anfmxrcqrpv3yrc4d2adlki44v5hy2@dxkednlyzejp>
+References: <20261022184517.66438-1-atomlin@atomlin.com>
+ <sashiko-outbox-181939@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-181939@kernel.org>
+X-ClientProxiedBy: CY5PR10CA0026.namprd10.prod.outlook.com
+ (2603:10b6:930:1c::9) To CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:400:183::5)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -62,62 +86,108 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sNz75mFAs8F+NaGx"
-Content-Disposition: inline
-In-Reply-To: <179263206397.701068.17555028009758516675.b4-reply@b4>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CWLP123MB6607:EE_|LO0P123MB7423:EE_
+X-MS-Office365-Filtering-Correlation-Id: b8727f7e-3cce-430b-a48e-08df306f4ec0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|23010399003|366016|376014|18002099003|22082099003|4143699003|261009223027099003|10067099003|261022105027099003|56012099006|261022075727099003|27256017;
+X-Microsoft-Antispam-Message-Info:
+	YcGpZ2EnSS5dGSLWqU3WV22gwn3qbW2GY4r3GhQaxLpQXB41P0AOaWyj/w1bA416B1vRNIyN6mYJFT7NbwRBKlYTjin89Vgm3bE/CTqKDjXVAzIZ/DrHsxgLnxrr8nszUqvQcvG3TMlDbdvTBLlMfE2MbHMbnao940aXYOEzt4gGbgt8GWalMtV/Hlf5PAp/9WW4h6e0hrA8m/C+iEHyDpetG9KOuj+9nFL9MY7ySdisczg3RRCnRQrZ+MDlepJutDYCgAPt5Xr2Xq1xiddQPF/8ZAPQDvNQG3ubNbfing8zst5/xY9blj34suh3E5DXUeJs4Xep6GuNS5e4JTpxiibmnX28qi8NLdfcHbc4nz0qAL0NAapi1wwkmPgcbXAADEcVxZFUnCU5WUR+z4eXili537cCh0/6OikPHxqWePpP6jwVGif5zgh0r7Kq2MhI25R+Lv65U1mt4NZdGZNqr4lDILIf2Q4dYIJpSuBLHSWgPwNt9ZTW84gAAkcaLOapOw9UurwMElfzYZ+vGHeBDHcRPCeWypLmiIB/SH1CuYf5owwlZtnffdjG39nnhMvXPEwofAwX9C8iPTDG0TSJykANjrKiV/JUahrsemGx4xrd//y5menACBqAtkmPEsEAnoQtGt5jFSD9Pucca5v7LBy4Asmjsvp8hJC7Mnhr240s6F89Ufv3vxEijAgO8e+XC2tflRUCCexqSmXoIroHTA==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(366016)(376014)(18002099003)(22082099003)(4143699003)(261009223027099003)(10067099003)(261022105027099003)(56012099006)(261022075727099003)(27256017);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?Z1g2NmJBOExGV1FhNU9NTkhnQlhoVUMwdCtNOS9VZGU0K1hPS1oyYUljSFJL?=
+ =?utf-8?B?TWJTOTkrVzFaTXpJRGIxWEZQSjFJRUNlS25uV1c4Um1JdnhHUndodkJsVmY4?=
+ =?utf-8?B?TnZ2WTU2STRDNGNZaXZGc0Zrd2lNamZuWEVscmVENEExVFB2RkMyYmN5a1N4?=
+ =?utf-8?B?VHA0bGhiNTJrK2h6Nk51ZTQ3eDA4aE9PZ1hsTXFUR01RK2RVZzZpaWVkQkVF?=
+ =?utf-8?B?ZFFOelM5QkhoNExCWVhrUG5FVkJCRTBtK0M3aTJnSmp4R1J4UUJ4dGp1UExu?=
+ =?utf-8?B?YjlvTVVpU3NuS2d5NGVsU1F2WVhCOGpoMU1mSWFIeVRVU0RDLy81d3duUWFt?=
+ =?utf-8?B?cFhhNnFGZXBxSExUendxdUZxdW0xZzc4QWQ1OURWNnQ0MGdZSlVOaVNaSUlt?=
+ =?utf-8?B?Y2FuL2IrelU1SjRuWHNPdkgrQUdOaEJneHVZZFdkeHJ0U1NjQjNDTTMzN1NR?=
+ =?utf-8?B?TXR5N0FSaEhXOUh4VjVYbDA0RUF1N0RlajljQzdlT2FobkVOZU9ZSnpHQ2o0?=
+ =?utf-8?B?K2xPN013bDV6U2YwRnBId3VFVHpsRXdiczBTbUJaL2ErSDJRS3lpeHNyUklt?=
+ =?utf-8?B?d1hRekJyTGdGbFpRcitYaC9tM21wTHFleXc3elQ5eXk2ZlV4MTZSeURWRnBE?=
+ =?utf-8?B?dUlFZ3p6QURramdMczNlZzFNOW9yMlpCREcyWERuZjA1Nk1QeC9NeUFpRzhF?=
+ =?utf-8?B?SzVHREFZQnhnTGl4aGwxY283Z1BZaWJzRFpmN0FXUng0VUZadjZVQVY3d3hQ?=
+ =?utf-8?B?SWZESHFVM0pDZnBVQ3JQSnNQUEtsbWMvQjhmZDF6R3NCTk44ZFFVSGxiakp6?=
+ =?utf-8?B?bFZqR0lYcnRKQkV5THhTRDJMb2JVdjdwTDhSV2cvdVl5Q0l2czZkUUdlU1ZS?=
+ =?utf-8?B?K05PcXNQR0hRQWVtcUFJNU1FOVo2dEpNdm04T1RaWjRMNW5GaEpGR0wrRVJM?=
+ =?utf-8?B?czJvOE1sU1FRZ1FmYVFGSGhzUWRNUjIyMCtMRS9iaVI0MngyVE9lRVhZVEU5?=
+ =?utf-8?B?Q0lJMjVSSllEd2pYMDhQTUx6OTgzQm5JUmwxTDFQdmFBU1k2d0NlaE5oMGZk?=
+ =?utf-8?B?b1FEV0tvNnhCVjhodnZXT3ZKZkxCbElibVJ3alRXekZSWTViYUFsazNTMmJX?=
+ =?utf-8?B?YkZoUnpNcThmcGQrNC9PSVFzUjRwRU91ajR5cUVhYzVVK3JWR2xPNm5sNCtm?=
+ =?utf-8?B?WjVTWE5QcERDSFA5aUF5Y2JIVlJzZkpqLzg5NDV4cnhmaHBobk1IVTlSUFJh?=
+ =?utf-8?B?V1VGR0FxSjdFWHdFNm12Zjk3MmR4Wjk0bElYYWlJRjRPNVVyamlkQit6azA0?=
+ =?utf-8?B?N29YanJUdXp0YVlQMUs3dCtQSkdyTnRtVElEOTNrdVArT3JndDVheHpaTDd3?=
+ =?utf-8?B?dzJLcXZxTmpXS1FuZmZpM1YzT2xBYk0vUldhYWgwemJxc0tLOW8vWjNUL0FC?=
+ =?utf-8?B?cTVsK2JNejU5eHFUTURlQ204aDJRRmVnSVNUajRNZ2tTTmdCMWdhQjV5b1NC?=
+ =?utf-8?B?Q0Fyb2NsSFFIaForR1ZIZ09LQjhXN1FORkttNEp0VFdETFhUQnlFRWZFSzNY?=
+ =?utf-8?B?c0x3ZUhnNitpbXJrZHR5dWVlMEtxcXBlMXN4dFBGU0N0NXN2VzcwV0Y3ZXlt?=
+ =?utf-8?B?L0NTcjJMTlp6cjJaY21zc0xOcDU2TG1YY0lkWVZKbDZ1cFhscld5Q2hodnph?=
+ =?utf-8?B?TFNBcjJUeWxrWGxPekZWQm1VaFdrSFF2SXF2YUduQmc4clNTRndTRllKdmV5?=
+ =?utf-8?B?b0QvSVlFVUY2QmgvbE85TmJGUEhGL0FCMnhNbm9DV1cxR3ljcHZpZ0F0UW53?=
+ =?utf-8?B?eVFmbEhzcVVjeVRZbk9EV2l0STFNcTV3VC9XdFV3ODhHQTFhKzNHd3hoQlQv?=
+ =?utf-8?B?UGRCVmZZK21JY0lnL3JheVpJOWpiZVpGRUJFOTZBVm1sQTVxMHdFRGtUbGhG?=
+ =?utf-8?B?NHdwVWZZL1ZyUHdiSlJ5YnJnMmZjRzhvWWp0cUFub3ZCeGUzUkhINjNxd3pz?=
+ =?utf-8?B?N1NaRTZhcEU3RkpQUnl5S0QyMmY4Y0d3WFFlbTcxSk5oNEc4SWtUYmZWbENK?=
+ =?utf-8?B?cnQ3S044d1BtdWI0aElnNXdLMzlhdjlpM0psVTlMdHR6c0JLRFNmWm4rYWFY?=
+ =?utf-8?B?RDgzMHVMUXZCejE5ekJrejdZUzA5eWpKdU1BR1N0dm9ZWXdvaXJzWUZuWk5t?=
+ =?utf-8?B?bGdtOGtGMWN1Q1lzTFZ0K1k1OTFIbVJRUnpJeUh3c2Ird2VSdklnT3AyMGdC?=
+ =?utf-8?B?Q3ovenltV3Fya3k5ak51RWhlN2JjZTNwYVdFVzliSHVMV1BocWhzeDRabDlS?=
+ =?utf-8?B?R0ZRTjNvT09FVjM5aFdBLzBBT1gwR2c3UlNaaVlFYm94U0VnK2V2Zz09?=
+X-OriginatorOrg: atomlin.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b8727f7e-3cce-430b-a48e-08df306f4ec0
+X-MS-Exchange-CrossTenant-AuthSource: CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2026 19:04:33.2074
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2kmzw6xdYNAtIGhtUIEVjFdFK83mju+eMHSglloFue2k4IA7yZnfL+WMmA23ZzNz6lsHY9NJOdBtKncSmuzcxw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO0P123MB7423
 
---sNz75mFAs8F+NaGx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, Oct 22, 2026 at 06:52:48PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] module: trace_module_put() records pre-decrement refcnt in module_put()
+> --
+> 
+> commit 2c168275e42fc7a4482d549cb0c9f1fc9f71e395
+> Author: Aaron Tomlin <atomlin@atomlin.com>
+> 
+> module: Fix use-after-free in module_put() tracepoint
+> 
+> This commit moves trace_module_put() before atomic_dec_if_positive() in
+> module_put() to prevent a use-after-free if the thread is preempted after
+> decrementing the module reference count while the module is being unloaded.
+> 
+> > diff --git a/kernel/module/main.c b/kernel/module/main.c
+> > index f1392c10907a2..70063fea52d03 100644
+> > --- a/kernel/module/main.c
+> > +++ b/kernel/module/main.c
+> > @@ -954,9 +954,9 @@ void module_put(struct module *module)
+> >  	int ret;
+> >  
+> >  	if (module) {
+> > +		trace_module_put(module, _RET_IP_);
+> >  		ret = atomic_dec_if_positive(&module->refcnt);
+> >  		WARN_ON(ret < 0);	/* Failed to put refcount */
+> > -		trace_module_put(module, _RET_IP_);
+> 
+> [Severity: Medium]
+> Does moving trace_module_put() before atomic_dec_if_positive() in
+> module_put() cause the module_put trace event to record a reference count
+> that is off by one?
 
-On Thu, Oct 22, 2026 at 09:21:03AM +0800, Xincheng Ji wrote:
-> Hi Conor,
-> On 2026-10-21 17:51 +0100, Conor Dooley wrote:
-> > > >=20
-> > > > Because led_parse_fwnode_props() returns early when label is presen=
-t, the
-> > > > color and function properties on led@1 and led@2 are never parsed a=
-nd are
-> > > > completely ignored at runtime.
-> > > >=20
-> > > > In addition, Documentation/devicetree/bindings/leds/common.yaml dep=
-recates
-> > > > label for new bindings in favor of color and function.
-> > > >=20
-> > > > Would it make sense to remove label from both nodes so that the LED=
- core
-> > > > uses color and function to compose the standard LED names?
-> > You're asking a bot that will never reply to you.
-> >=20
-> > I'd say that if the analysis provided is correct, then yes you should
-> > since the deprecated property overrides the replacement properties.
->=20
-> Thanks for the clarification and for reviewing the patch. Sorry for
-> addressing my previous question to the bot; I hadn't realised it would
-> not respond to follow-up questions.
+Yes, moving trace_module_put() prior to atomic_dec_if_positive() means it
+records the pre-decrement reference count rather than the post-decrement
+count. Introducing unconditional RCU read-side locks on every call across
+the kernel solely to keep an inactive debug tracepoint post-decrement
+introduces unnecessary overhead. Relocating the tracepoint compiles down to
+a zero-overhead static jump label when tracing is disabled.
 
-It's not your fault that you didn't know, I was just pointing it out ;)
-
-> I'll remove the two LED label properties in the next revision so that
-> color and function are used for naming.
-
-Cool. You're too late for 7.4, so I figure what you've got here will be
-7.5 material?
-
-Thanks,
-Conor.
-
---sNz75mFAs8F+NaGx
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCatpTOgAKCRB4tDGHoIJi
-0tGGAP9lPCJnqeoQ9B1G6bmTq3uvewTCC9HWjZ0FOZBQZA5YTgD+Lg2/ebt85aCb
-36IK3w6WM/RiA+q+WxLD97CvE/4jvQA=
-=clv5
------END PGP SIGNATURE-----
-
---sNz75mFAs8F+NaGx--
+-- 
+Aaron Tomlin
