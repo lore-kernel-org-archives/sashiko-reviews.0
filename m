@@ -1,99 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.179
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.47
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792703607;
-	b=tDhy8nI1JRBebEBSUQJ6o6MyFfq+3U/LEAOIcJjQrZFbnXNYopR+K1uruUDVq1YfADgt
-	 klQlNRSsEh2/gJ5svsdjp0EZMRXczwZvXsD0O3io9XM4mnZE3KcQN1rqAXPGStnuxBU3/
-	 YgNRFw4ub9Xirlh+8GJwwN0QqIRdHQYREKkuOS4JBF+21hJ8S+nzDcwAqdfQAxf4ohTLT
-	 Vye46U+zWziZ1M8Re2xLpBMafXyNkZfX1ratj9rC5yf1TT5CYi41Qz2Nbin5NMAEQ5QGG
-	 1wrkzotbm52/w8V4pn5AtXhwowzv2aE+n4NiJfu+oUJrYLMUmjD60X9IoUSLZMOp3nw==
+	t=1792704897;
+	b=FzZRIOVvAgRJJ6HVE9PpGgbLpts2XjFY2JT4hqHCB3riCdx/+hzXlmM6nXpLry8pu6QQ
+	 qSuSuaYF8LRMn09UjyoC4BJMG5K1VSnDhlxnu7zyL4YZ0xtVIwifkuM8hPpZl++lSdpvL
+	 rKwPt8tgL1JtOMqb9nTQAXToZzO4/3HmxZCsmGBSvQjKcmzgIuHfWmmaWyymPbd4kwojb
+	 lD5g5NjjeYtiJFwN5tto1g89TNg/Qt8lgYssWPeURhckOl/zcKYOYHOiixeWYm63H403p
+	 Qyrf+rG2WSMh/LBaf6OR7b2K+Lj14UREdRt7fZuT2cNXjZvrbLpV5rXIvcKU0/rmLjQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792703607;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792704897;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=zu39K4rqHyOdUSQLpBVtVU0mWc6KejOhZ/J0gKovzv8=;
-	b=mAvqCZ7db32+SdiKVMTK3ZdZJ30Ag1x0OQfUqUVwRcXcSOiesQ3hHQ0ffzlrLeWdOBjM
-	 IQhbjfygPlo4RgkMYigJUgWoZeio/0d8bR5PUdZzfsfW+b6HuyHuJC8BPs3p+ApOjICdv
-	 y8V3ph8O/nLfrDvzA2tgwGHqO+20Z1NZwaZgXj6M+HVy17+Vb7JU/CEZB5QZPeGmcrtYk
-	 KYPGnJf4cIyp/KzKDtxzU/ANZjXhsVNc7wZdwyPDwcA3Q0PyrI1I+RzyJVgrnggyuT+/r
-	 H7/SjDYVDghqOUPXZ2q5us73AuQj3mqt4lfKhPhxSnTxaezCWGK8418qr/LKdBcgEEw==
+	bh=LA0xVzv55vv90cseImuUZu6G5SXRivgPxKWoy9yziNo=;
+	b=iUyrB7Dwfeg9cLt0PugLxGigctqgrnNYAnTImDkiiApZLs1cqRZyqOyRu4XfUO0Cks7k
+	 98eo4KNejOmJvSWRsaO/OKtQdMLTmGE05E8C3LdN6uSz7W+wuwKwog/Cx/HQhoTLO8waz
+	 ZAGEClEkTlqUeU23AjWEnmu+UYQJSGDhZvA+BaUYu+60+DgonoWuHQslD1l8acsdKu1Qc
+	 HWtJL8hh8at/9E2KksE7ojluPinTlpjhcOIGQ1IghCatR71rlozt2nXFhMo8VJbKwGeyG
+	 7lj9IuicVQ06cYc2Vfh+Eywwgc66F61GIhjAFtBdq4BgQSEq5ZtAn6oysMjHS0dwhaQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=I4zKEnVh;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.160.179
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Ez+CpNtn;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.217.47
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33456606A31F
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 21:13:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 33456606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637DC606A321
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 21:34:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 637DC606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=I4zKEnVh
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-533202fe429so93711cf.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 14:13:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792703605; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Ez+CpNtn
+Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-7cc91ddf447so119134137.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 14:34:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792704896; cv=none;
         d=google.com; s=arc-20260327;
-        b=HeMQXOtNNhpfG98oIPriJN3YMI27CFM/CYP0vxn9qJzmQcSx8uymAj5B9nRTfUAs9b
-         7Lv0uZapXch+kNOCcgCR9XmJcMPzaH1+AquaFxGKt71CKcXBlXCx/+HenuGpVt362JRz
-         z4GWSSVIege4/6kjgq86NQFFHdDtJ+CAs6vZwZHrqEs4lpidBDVucaudqiBluuYkXur/
-         6lt9yIQYQsQgNdjySBEICKhfVtrMhBrubheZR25KnB0UqDGfyiTJ9KmzK5YBx3oEBjzj
-         TxtTipsvUF9uW4q/iOi3J4loEeMvCvIIHvIzlNo58wrxkJMjqpk1WJlfWNIj4Ybf33Qj
-         3j4A==
+        b=hO71DYyZF/nPOH5nQN4nMQsLhIWx8gJ7Pq+zjDiSyGvCpxysENjkW+P6h+WFr7znU+
+         dI8YZW/KnZfhSVysmbdu0ngPag3kAZAQ6AXKb6GCX53XWOb3XtPgVyt1XJTS2jTOOAIH
+         V+xfeVpxpvgt956Yyzv1jkCNBlMINGKZv3HiXh7rmReLvTPQGvyBKlT0P3ZvCiehF/Gk
+         c7hFV753U4OaZ9jTbGlIpoLf7PCXV8R4tJQA+Gaz5EICYd1eX8Fum5GzjNb/rjdE9wk/
+         GfClT/b7USunIUwPDUu8i9AMPJbsBo00kUxNnHI0rb+79ACQ919wg9lkVmCB5GdStwKW
+         iKNQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=zu39K4rqHyOdUSQLpBVtVU0mWc6KejOhZ/J0gKovzv8=;
-        fh=0zVHGC//SC94CWFKHtFt4lnskmkXkJNNy7lE0FDd3Ck=;
-        b=D/lF4lxh0qYSI+XAFAL9ExthRD6O113MIqob2xRHqNp5o14Tui4nnThtU3G764O79I
-         GzM8Dt4FWyyYwEN7zDhFl7DZ2MNj5JXPTts3uNMRczN3rwQunm4qQAlRMXnMm61yuuhS
-         8e/g6PC92aowx6PM1PVMiFvOJ345zliF2T1G8gCmH105I3tb6hGVG9d9vTHrtYblzJFW
-         HJcjklI82k6f16fWZzM5TZv7zO98mQRUWdbNFVmW+cl5/eSORTAyF+u0pirh3+WqmS3b
-         fccZWzL+hKnjJ/T03Pi8+AhRoTbJZ3hqFB9kIYNOGsRyAl45lGizSUv/d62FL6KjXtAj
-         bp8Q==;
+        bh=LA0xVzv55vv90cseImuUZu6G5SXRivgPxKWoy9yziNo=;
+        fh=LrM3G6RcmBZ425pLRY8E44TM1XcCb9gU9D3viVl1X8E=;
+        b=RZ6fKXGlcxklt4CFmKfb+ZDlAWS4UCXo5GC32yLbg25g1QTYab78F/UFJwJLmGPJAf
+         HRuVbzJK2qMlGnH8sDH1h7B0UC5o4Fc8ZpylujLaZrtv4X2tZJC+ht0hNEv4u8nON1nP
+         tYFRmM6CtV9i++VkZi/b8bdqkFDmCjGSwfoYcT2Oiz+AggXkGnM8SjBKCPbnHAwu+v0+
+         6wTg3FJPUOazUkOlOJkB6SsU+rJUpG1ODcM2rTAS7NCUlVv/EWIPsW97sVnUnI2c9VWL
+         YxY7yyfQGsdvq29+QuggQRyGLVv0sr6LZ+GETb/TBecLRrMVn86TTdLzzVaMq2cOB7RW
+         /v/Q==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1792703605; x=1793308405; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1792704896; x=1793309696; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=zu39K4rqHyOdUSQLpBVtVU0mWc6KejOhZ/J0gKovzv8=;
-        b=I4zKEnVhxXzIB30Ty75oCPvKP6CIz3ZUtrtaQh0yT5t3anLwPfjb8rOu28VciA+qmT
-         3HxOSZChcpvELJtaYPgRwB1Jrwi1kXJG+RcTdRCHIygxEQQTsnvW0XNknCHzPjkBlk6E
-         KaUMTs5G+bcEpCH+YQC7nzczHJE2H8B6FZEc49WAPMGKa30KpqF7ODO25ebLn6V6T//Z
-         WOhZSflf/l64bYgjN/8GxLecIRoFhGWKSksTkElr2+NnSa/PaDb6zJSuwjFSX80IXeRD
-         nkZiATT9CcYxnX5SYx0Q1+sGbXTFRX9wXIEM0Y9oC/sC7DYtsEsncNKsH6cUQLdp5vCe
-         Jwfg==
+        bh=LA0xVzv55vv90cseImuUZu6G5SXRivgPxKWoy9yziNo=;
+        b=Ez+CpNtnd3UH5o3AIE1Qzg17bdss7C+sMswlXPPa8IGsxVpaRJgpjgWVxqIKhWT4tr
+         ThG1cozt7ARrkI7BRULIOtB1aq+Iz4SxolxT4hk22kxm5MoVyqt0gyg2JzLcnyD5wSCp
+         kG7q9R7e9H5cx/3wYzeX7seSd2re5lsqSwlO2j4XNeFSc/Sp20k4g5IwR9Ckej1UCxF+
+         KmiclW5DISwP0AudfQIqvAEWt3AdtVzcWB0tCkIwkwZYuvN7E/a4nI8LQeUsPMG64YIU
+         PW2eBmedI1Hv9ySQIMoF75VwCV2mpxyNtajAGBzAR/8aXaQ/ZxFouxukflm3JUzJS3gW
+         Hmgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792703605; x=1793308405;
+        d=1e100.net; s=20260707; t=1792704896; x=1793309696;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=zu39K4rqHyOdUSQLpBVtVU0mWc6KejOhZ/J0gKovzv8=;
-        b=BxPSl2cG25/m+uazIWvOvb+gWp5s4KnXPJCSsxcHj6jVHc5COEA3naMAY/UJUC/dpi
-         ZVZyOMiKyKJ3zvwJtBoIz6UgsvQc+ypap1ynvfC4egxNqD/VqYtnDjovt7nUyrNfdXOc
-         mqh+DhvcKi9WPVBANo9VTZLZGSY23413KMQ8a9jHHTnMe/2TQdxiSuVNfG7338w7584m
-         GBJ4Pkw5Zq6SrFOADqPukuzZuYCXNOkKuMDJZuDpdeJJUbGR77YUMqfzXIoi5utsr81e
-         M2ahAnv+kZc7u9LasA3EZeTa3jHHNWx5TBiHoVoz47COi2oyxs5ugoLCNqmfIoDAKsU3
-         2nHg==
-X-Gm-Message-State: AFq9FYLUwDemQinFtT9K48FZPsOSFS8eDvKMJlCViu+Gel6YiqvOXoYn
-	RLj13EMUPKy2gHplnORZMun3Kpg6F+id+RwAwj5JD7moFirj5bUKeQ0ZVp2hih4BwZQ0KXHz9Qg
-	sp3Ky4KS3inJoAR8P0NCVwck1/mbtmc5nBVKlIJH4tv1s98xFtQPGVOVVCck=
-X-Gm-Gg: AYBFou0EstCTE1X3EaxQsArNh0s1zFKVFF4bYKNc7G17pDIHgREhNuN+1yeEBOSgdg0
-	L3BTDCtwfelH+M1uj4c5gHeKN8xUT3f7G+6fxT92R7Uh5/gA/Hnm5mN37A/mTQCocgErOLl2G7H
-	ruvafqE4TEq/tS1/kJtPnsN5CrF12CQBIuWxxYa6fH6fPgrrVKIKUniTG06cg/B3jt6iLYR2Pr+
-	9bgt9Nhup2DIMzuQ22VQ4bsDsmRUA2ZdPAkyYvKwvy0Qd6EXiFogOAE87bxuFqseYWuO4UMZdMy
-	eRYspwR4OCSJwqTzgAZPoaXNORVavnBGM7seH1nvek/7KYjrZDGv3MOx2Wt5ednKLZS8nrfFrWy
-	d/pKsYaLfnXf30w5pQiTdr5pgTcJIW0qcr8rjbwp1+7a/yeVCRS2jekMgqxjJ8fmcAw==
-X-Received: by 2002:a05:622a:a0c:b0:532:eff8:3491 with SMTP id
- d75a77b69052e-536c1cf9c51mr1694561cf.14.1792703604321; Thu, 22 Oct 2026
- 14:13:24 -0700 (PDT)
+        bh=LA0xVzv55vv90cseImuUZu6G5SXRivgPxKWoy9yziNo=;
+        b=EzKfjw02FEYNR3E+WkKtj/sxFuQ0hqn0Wysu9oSrUxJ2sMf5gHfpHeBkuQ/erIjV1c
+         gNwgUAcP6G6mCrqIYW4DI7AxoEuI7RdaaZK1fbtqAGqXO4EPrTo4GfrszDnTAtpV/IKG
+         wYYdh8GW4G7MkNC3VIC9mqF8FlJrmlgbG95iLpP8gy3E2CO2WucC6wVWDAFCaqDo2fcB
+         cEO5T5g9WB/dg2n3iTOFyYuP+/7hvttUW/ShzL7+eFv+KyGx3tkng3/+RaeO55ctKgPe
+         IjzAo5B8kD3aDG/IrQ+W2fQCP3GAYgwWHOxVJnR8srDXta3GyKutvCd32YIdMzLi9oiv
+         YYUg==
+X-Gm-Message-State: AFq9FYIb1AUwvSZiDP8HgGNXQcMAriJu6OXRNFjLZrfmxEoPuyQyVPJf
+	fbohsqmVNhvodtOpfARv7QG0RkonYPjmQ5C7tmpG2T2OS5gBl5hp5Rh1KpgSdgayE2YKL5cSL0N
+	Ybzf9wR8DdJKQWmAQjlJu0PIt9a/6+PsPxBR9A10=
+X-Gm-Gg: AYBFou1x81cZc404blg3//teuCl1sKQ0582E7ToYZ242XnzWOt+XuiXQNwK5l6S0FzJ
+	CPVIm1QqVY1tvkV6CbeoN/XFD76grrJ1pD490k74gecMI1qnDTOGGcbQAUSJTsdteZbhUaoAem6
+	FrjNObQy+7+DDio9ZEDeJK2cGNiSMojqFn0ZSSugV5yOYMaA23uVjC6vDVRPFPsYHtslUgesfej
+	hJKe6XCeaLkSdbN00+soeN3l27RbQQNKnP5cnvpOVXFh/huceX8G5fZt4p0rRTCvwjTrWCShwZ5
+	nODSKdHxtjtcStL1ZKDUMVr0SNEZNwECjTrEx97GJa8ZGBRf+9fLippwPRLRYGfSWGWe4d6nxzt
+	jZI2L6SEmOpkphtfDaYB9Jprvs1woBlnm3hOWF/F7lclN9q5YTvNyVWHLEjxynwUal5hwZcCEes
+	rLfdkrQmD/qi8xQHuBTPPOW0BbifOUuqOusP4Ea2Ir5Sv/luwqJnOL836dDhFhqdXbJJy2TDlis
+	QtgST4YvnPEYysKe3tyGWLZokQ9+Q==
+X-Received: by 2002:a05:6102:4448:b0:7c0:1d48:b2a2 with SMTP id
+ ada2fe7eead31-7ccc34426d7mr180886137.31.1792704896300; Thu, 22 Oct 2026
+ 14:34:56 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,136 +105,171 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261021223905.715051-1-irogers@google.com> <20261022201453.1717523-1-irogers@google.com>
- <20261022201453.1717523-7-irogers@google.com> <sashiko-outbox-182008@kernel.org>
-In-Reply-To: <sashiko-outbox-182008@kernel.org>
-From: Ian Rogers <irogers@google.com>
-Date: Thu, 22 Oct 2026 14:13:11 -0700
-X-Gm-Features: AclHuK8_6jlQfZ8Ya1VQB1vC7VCbf2a5AGSMLdrz-LmFZTthd1zlfoA7b6te61k
-Message-ID: <CAP-5=fVNh8X-zpHBf1PELH0KD_JudKsfADP2WQB7ScuzCK=ONA@mail.gmail.com>
-Subject: Re: [PATCH v8 06/19] perf comm: Add __guarded_by annotations to
- struct comm_strs
+References: <20261022-submit-mtk-uart-dma-terminate-atomic-v1-v1-1-aa498ba5da25@gmail.com>
+ <sashiko-outbox-182061@kernel.org>
+In-Reply-To: <sashiko-outbox-182061@kernel.org>
+From: James Hilliard <james.hilliard1@gmail.com>
+Date: Thu, 22 Oct 2026 15:34:45 -0600
+X-Gm-Features: AclHuK8XSvw8qsK2rLsmYRH4GbjeZAAeNXGi3DQaPA1mpnSYabxmiTKjlnStHRg
+Message-ID: <CADvTj4qMcb48RucqxGxL7qqdu7dDbUw0pSBX7v-t2Q9+MbmfGA@mail.gmail.com>
+Subject: Re: [PATCH] dmaengine: mediatek: uart: make channel termination atomic
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
+Cc: dmaengine@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 22, 2026 at 1:31=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+On Thu, Oct 22, 2026 at 3:25=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [Medium] perf comm: struct comm_strs __guarded_by(&lock) breaks build o=
-n Clang < 22
+> - [High] dmaengine: mediatek: dangling c->desc in mtk_uart_apdma_terminat=
+e_all()
 > --
 >
-> commit 5b99280fd6ec287f3ff5bbe3100d016159c309e9
-> Author: Ian Rogers <irogers@google.com>
+> commit add32020b23bda4849b015bc2e7b816090491c89
+> Author: James Hilliard <james.hilliard1@gmail.com>
 >
-> perf comm: Add __guarded_by annotations to struct comm_strs
+> dmaengine: mediatek: uart: make channel termination atomic
 >
-> This commit annotates the strs, num_strs, and capacity fields of struct
-> comm_strs with __guarded_by(&lock) and __pt_guarded_by(&lock) for Clang
-> thread-safety analysis.
+> This commit updates mtk_uart_apdma_terminate_all() to serialize hardware
+> channel termination under c->vc.lock using atomic register polling instea=
+d of
+> sleeping polls and synchronize_irq(). It also checks VFF_INT_FLAG in
+> mtk_uart_apdma_irq_handler() under c->vc.lock in case termination already
+> acknowledged the interrupt, and aborts descriptor cleanup if stopping the
+> channel times out.
 >
-> > diff --git a/tools/perf/util/comm.c b/tools/perf/util/comm.c
-> > index 6343a3c9debed..9fc4e91a36e9f 100644
-> > --- a/tools/perf/util/comm.c
-> > +++ b/tools/perf/util/comm.c
-> > @@ -16,9 +16,9 @@ DECLARE_RC_STRUCT(comm_str) {
+> > diff --git a/drivers/dma/mediatek/mtk-uart-apdma.c b/drivers/dma/mediat=
+ek/mtk-uart-apdma.c
+> > index f74e9a3285887..73d4b701ac858 100644
+> > --- a/drivers/dma/mediatek/mtk-uart-apdma.c
+> > +++ b/drivers/dma/mediatek/mtk-uart-apdma.c
+> > @@ -256,6 +256,12 @@ static irqreturn_t mtk_uart_apdma_irq_handler(int =
+irq, void *dev_id)
+> >       unsigned long flags;
 > >
-> >  static struct comm_strs {
-> >       struct rw_semaphore lock;
-> > -     struct comm_str **strs;
-> > -     int num_strs;
-> > -     int capacity;
-> > +     struct comm_str **strs __pt_guarded_by(&lock) __guarded_by(&lock)=
-;
-> > +     int num_strs __guarded_by(&lock);
-> > +     int capacity __guarded_by(&lock);
-> >  } _comm_strs;
+> >       spin_lock_irqsave(&c->vc.lock, flags);
+> > +     /* Termination may have acknowledged an interrupt before we got t=
+he lock. */
+> > +     if (!mtk_uart_apdma_read(c, VFF_INT_FLAG)) {
+> > +             spin_unlock_irqrestore(&c->vc.lock, flags);
+> > +             return IRQ_NONE;
+> > +     }
+> > +
+> >       if (c->dir =3D=3D DMA_DEV_TO_MEM)
+> >               mtk_uart_apdma_rx_handler(c);
+> >       else if (c->dir =3D=3D DMA_MEM_TO_DEV)
+> > @@ -400,10 +406,12 @@ static int mtk_uart_apdma_terminate_all(struct dm=
+a_chan *chan)
+> >       LIST_HEAD(head);
+> >       int ret;
 > >
-> >  static void comm_strs__remove_if_last(struct comm_str *cs);
+> > +     spin_lock_irqsave(&c->vc.lock, flags);
+> > +
+> >       mtk_uart_apdma_write(c, VFF_FLUSH, VFF_FLUSH_B);
+> >
+> > -     ret =3D readx_poll_timeout(readl, c->base + VFF_FLUSH,
+> > -                       status, status !=3D VFF_FLUSH_B, 10, 100);
+> > +     ret =3D readx_poll_timeout_atomic(readl, c->base + VFF_FLUSH,
+> > +                                     status, status !=3D VFF_FLUSH_B, =
+10, 100);
+> >       if (ret)
+> >               dev_err(c->vc.chan.device->dev, "flush: fail, status=3D0x=
+%x\n",
+> >                       mtk_uart_apdma_read(c, VFF_DEBUG_STATUS));
+> > @@ -415,11 +423,14 @@ static int mtk_uart_apdma_terminate_all(struct dm=
+a_chan *chan)
+> >        * 3. set stop as 0
+> >        */
+> >       mtk_uart_apdma_write(c, VFF_STOP, VFF_STOP_B);
+> > -     ret =3D readx_poll_timeout(readl, c->base + VFF_EN,
+> > -                       status, !status, 10, 100);
+> > -     if (ret)
+> > +     ret =3D readx_poll_timeout_atomic(readl, c->base + VFF_EN,
+> > +                                     status, !status, 10, 100);
+> > +     if (ret) {
+> >               dev_err(c->vc.chan.device->dev, "stop: fail, status=3D0x%=
+x\n",
+> >                       mtk_uart_apdma_read(c, VFF_DEBUG_STATUS));
+> > +             spin_unlock_irqrestore(&c->vc.lock, flags);
+> > +             return ret;
+> > +     }
+> >
+> >       mtk_uart_apdma_write(c, VFF_STOP, VFF_STOP_CLR_B);
+> >       mtk_uart_apdma_write(c, VFF_INT_EN, VFF_INT_EN_CLR_B);
+> > @@ -429,9 +440,6 @@ static int mtk_uart_apdma_terminate_all(struct dma_=
+chan *chan)
+> >       else if (c->dir =3D=3D DMA_MEM_TO_DEV)
+> >               mtk_uart_apdma_write(c, VFF_INT_FLAG, VFF_TX_INT_CLR_B);
+> >
+> > -     synchronize_irq(c->irq);
+> > -
+> > -     spin_lock_irqsave(&c->vc.lock, flags);
+> >       vchan_get_all_descriptors(&c->vc, &head);
+> >       spin_unlock_irqrestore(&c->vc.lock, flags);
 >
-> [Severity: Medium]
-> Does referencing the struct member lock inside __guarded_by(&lock) and
-> __pt_guarded_by(&lock) on struct comm_strs fields in tools/perf/util/comm=
-.c
-> break the build on Clang versions older than Clang 22?
+> [Severity: High]
+> When mtk_uart_apdma_terminate_all() runs while a transfer is active on th=
+e
+> channel (for example, via dmaengine_terminate_async() from
+> serial8250_tx_dma_flush() or serial8250_rx_dma_flush()), does c->desc rem=
+ain a
+> dangling pointer to freed memory?
 >
-> In C mode (-std=3Dgnu11), referencing a sibling struct member inside an
-> attribute on a struct field requires -fexperimental-late-parse-attributes=
-,
-> which was introduced in Clang 22. Without that flag, Clang looks up lock =
-in
-> file scope and fails compilation with an undeclared identifier error.
-
-Thanks for the review, but I don't believe this is the case.
--fexperimental-late-parse-attributes is only needed when the attribute
-names a member that is declared *after* the annotated field (a forward
-reference). Members declared earlier in the struct are already in scope
-when the attribute is parsed, and Clang has resolved those for
-guarded_by/pt_guarded_by in C for a long time. In struct comm_strs, lock
-is the first member, ahead of strs, num_strs and capacity.
-
-I checked this with Debian clang 19.1.7 and 21.1.8, both older than
-Clang 22:
-
-  struct foo1 {
-    struct mutex lock;
-    int val __guarded_by(&lock); /* compiles without the flag */
-  };
-
-  struct foo2 {
-    int val __guarded_by(&lock); /* error: use of undeclared */
-    struct mutex lock; /* identifier 'lock' */
-  };
-
-I also did a full perf build of the series with clang-19 and WERROR=3D1,
-removing -fexperimental-late-parse-attributes and passing
--fno-experimental-late-parse-attributes to force late parsing off. It
-builds cleanly, so none of the annotations in the series rely on a
-forward reference.
-
-Also, -fexperimental-late-parse-attributes is already accepted by
-clang 19, and Makefile.config only adds it when the compiler supports
-it. With an older Clang, the probe fails and the backward references
-still work. So I'd prefer to keep -DWARN_CONTEXT_ANALYSIS enabled for
-all Clang builds rather than gate it on the flag.
-
-Thanks,
-Ian
-
-> In tools/perf/Makefile.config, -DWARN_CONTEXT_ANALYSIS is enabled for all
-> Clang builds even when -fexperimental-late-parse-attributes is not suppor=
-ted
-> by the compiler:
+> When a transfer is started in mtk_uart_apdma_issue_pending(), the active
+> descriptor remains on c->vc.desc_issued while c->desc points to it:
 >
->   CFLAGS +=3D -DWARN_CONTEXT_ANALYSIS -Wthread-safety
->   ifeq ($(shell $(CC) -Werror -Wthread-safety-pointer -Wthread-safety-bet=
-a -c -x c /dev/null -o /dev/null >/dev/null 2>&1 && echo 1), 1)
->     CFLAGS +=3D -Wthread-safety-pointer -Wthread-safety-beta
->   endif
->   ifeq ($(shell $(CC) -Werror -fexperimental-late-parse-attributes -c -x =
-c /dev/null -o /dev/null >/dev/null 2>&1 && echo 1), 1)
->     CFLAGS +=3D -fexperimental-late-parse-attributes
->   endif
+> drivers/dma/mediatek/mtk-uart-apdma.c:mtk_uart_apdma_issue_pending() {
+>         ...
+>         if (vchan_issue_pending(&c->vc) && !c->desc) {
+>                 vd =3D vchan_next_desc(&c->vc);
+>                 c->desc =3D to_mtk_uart_apdma_desc(&vd->tx);
+>         ...
+> }
 >
-> When WARN_CONTEXT_ANALYSIS is defined,
-> tools/include/linux/compiler-context-analysis.h expands __guarded_by and
-> __pt_guarded_by to the underlying attributes:
+> The only place that clears c->desc is mtk_uart_apdma_chan_complete_handle=
+r(),
+> called from mtk_uart_apdma_irq_handler():
 >
->   # define __guarded_by(...)            __attribute__((guarded_by(__VA_AR=
-GS__)))
->   ...
->   # define __pt_guarded_by(...)         __attribute__((pt_guarded_by(__VA=
-_ARGS__)))
+> drivers/dma/mediatek/mtk-uart-apdma.c:mtk_uart_apdma_chan_complete_handle=
+r() {
+>         struct mtk_uart_apdma_desc *d =3D c->desc;
 >
-> Should -DWARN_CONTEXT_ANALYSIS in tools/perf/Makefile.config only be enab=
-led
-> when the compiler supports -fexperimental-late-parse-attributes, or shoul=
+>         if (d) {
+>                 list_del(&d->vd.node);
+>                 vchan_cookie_complete(&d->vd);
+>                 c->desc =3D NULL;
+>         }
+> }
+>
+> In mtk_uart_apdma_terminate_all(), VFF_INT_EN and VFF_INT_FLAG are cleare=
 d
-> struct member annotations be guarded accordingly?
+> under c->vc.lock (so any pending mtk_uart_apdma_irq_handler() sees
+> !mtk_uart_apdma_read(c, VFF_INT_FLAG) and returns IRQ_NONE early), and
+> vchan_get_all_descriptors(&c->vc, &head) splices c->vc.desc_issued into h=
+ead
+> before vchan_dma_desc_free_list(&c->vc, &head) frees the descriptor.
+>
+> Because c->desc is not cleared during termination, subsequent calls to
+> mtk_uart_apdma_issue_pending() will see a non-NULL c->desc and refuse to =
+start
+> any new transfers on the channel, and any later interrupt on the channel =
+would
+> dereference the freed descriptor in mtk_uart_apdma_rx_handler() and
+> mtk_uart_apdma_chan_complete_handler().
+>
+> Should mtk_uart_apdma_terminate_all() also set c->desc =3D NULL while hol=
+ding
+> c->vc.lock?
+
+This issue is fixed separately here:
+https://lore.kernel.org/all/20261022-submit-mtk-uart-dma-retire-v1-v1-1-3f9=
+b99a9d89a@gmail.com/
+
+>
+> >
+> >
 >
 > --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261022201453.17=
-17523-1-irogers@google.com?part=3D6
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261022-submit-m=
+tk-uart-dma-terminate-atomic-v1-v1-1-aa498ba5da25@gmail.com?part=3D1
