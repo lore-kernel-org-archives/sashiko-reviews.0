@@ -1,102 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=60.191.123.56
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792635743;
-	b=dVDs1qco9DM8e3Wub0lbhEnFelALPrh0trG2PvRfairy5TawkeOFFOQiu3t3aOEb0oSq
-	 mWj+HLQKOcouoIg8pQaY7+LDeQE5MUxgqUDVxzqIYhp9ZhW4atv3j/kOgDyLbABCDXjTv
-	 MnRn4W/5DiHGtyeciKYHjv9htGiuOe2TJ2hyKcOepEwQkWF8IWVdy1Fk18pz94efdC9QD
-	 ROneobfKpk0qNWVDWft0wnQz6xIOo9HmEQprsByqY12knKnbQqULw9mBSFHRve4pkDoEs
-	 mSxetnlCcAGgtIlmjH73DJVmI+LK8BJrTd3OexGKiAZr8ncPQ/gTkIZVXLngwY+P7AA==
+	t=1792639605;
+	b=YuTWj3285cP3xIYtsxT9FGK5Cf/NdR203kL6i5bCiYwcvRkyGHDC5tX0ydDCl9+zEPGm
+	 T0w9MCYniR8ykR3rGzNh7WWhbqefWXevhoEdg7HXXJHPCfnUIyPeRechM3qG1k9Bk0Dfm
+	 o2q8pMpi4SyIq3c5dRcEnw58IxiSJ0fyAGgB585UEOJmTKRfPs4VKab7iUEKMP9ZVg+eg
+	 2eqlSD/HMmFEJyV8Z0ZuMFv5R+2Omq9/GTC1ysGmOXtxjorHfPM37eJuKRUlSMUDZKAcq
+	 9lHuK0aE1bAiPtYpGjnNIHsXxl2dI/bTC2zeZ7bAnkDdeqcev3baOsBjdhfzWzaBJkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792635743;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:Date:
-	 Message-Id:Subject:From:To:Cc:In-Reply-To:References:X-Mailer:
-	 Content-Transfer-Encoding:MIME-Version;
-	bh=XxjX1g1mQUEUPhKLrpLxYSgZ8S+x7GSgwLX7BwyjX7g=;
-	b=pNoU+0yUpgqgOndCQ4UyeXXkoP3IiyfGB1Az0nHo81NnShWgWntZcuYRBbMbZCvDo1Uk
-	 wgpcGqYmKzTrBeZPSCG0qPywW7m6LKB4672jzd4e91caehnfF1Jj6fur9CdJ9EBSRGuFU
-	 AX7twY/zIoD2pc0tbnvCA9v3ZmcbiVdTLH3U+mJQ3fI/Fgay9Cwqxn7RHVCDeaHuT0sPf
-	 ML5OmYFIMEJqapLAniGkOUVBIUjw0iZgP8h1mTlkCwzJCnvIIsFixunO4ZOzuE7ZPAUf9
-	 0Ih5f8qP20X1zj28a9MkUvi7w9zzz0D6Q6l8s/n4JJ38cDBCmCDnj7/77zFfzd/kBEQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792639605;
+	h=DMARC-Filter:Received:Received:Received:From:To:CC:Subject:Date:
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:Content-Type:X-Originating-IP:
+	 X-ClientProxiedBy:X-DNSRBL:X-SPAM-SOURCE-CHECK:X-MAIL;
+	bh=SngtsZTYHRp2bk6dNNPcrerGoV8Eq6CPARBtMiR7Me4=;
+	b=caaruaPWcl2I5jjWHiEBzEWyhPdsEUJ+8VNz+GpTIzo2pg2eD700xlWJDvReAmTY9Lem
+	 kCuNtctFJ4cd/5LX30Lyhek9mGolyljQxkOdTMLKOigXylKQ7gzaS8blThB6gwJ3HbHY/
+	 4kc90y8Li7ESBu3sJcHKELo36fM0TEy0HtDOi4Pfl/9/p34vKq7jdpHn+3x1b4hWr0bZT
+	 XOS32TxFQEnJObqjfjxlA596W5dZE2QeslLsQ0G2+pZPQ3X0UjonnC7oCU7QRgz/58IEg
+	 LOqDibXse8LNVXrAoQZK81qOBRHnaWMGxIORtA+66lZtg/spnGlD+USITzXVlzBd85w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=lTP2uRaS;
-	arc=none smtp.remote-ip=209.85.210.170
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=none header.from=h3c.com;
+	spf=pass smtp.mailfrom=h3c.com;
+	arc=none smtp.remote-ip=60.191.123.56
+Received: from h3cspam01-ex.h3c.com (smtp.h3c.com [60.191.123.56])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20503606A31D
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 02:22:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 20503606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=lTP2uRaS
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-8a06210b29fso535744b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 21 Oct 2026 19:22:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792635742; x=1793240542; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:references:in-reply-to:cc:to
-         :from:subject:message-id:date:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=XxjX1g1mQUEUPhKLrpLxYSgZ8S+x7GSgwLX7BwyjX7g=;
-        b=lTP2uRaSGKGfObXmIenachu/rRr0TAOstn88LtGDf10b3Iju9hd2gR6PQ/ACpstiNS
-         EYB3SmxRHpyNHg8NIi6mawtaMWEag79DkkVpbr0WGLqDIvjhsf/vTFYvPzNCHQfemsY1
-         t6f+NPa2/hqZBd/T1iauXzJ38UWNjWCYfPHXsc0tpTfjdWc77saDoAwAkGjV4gMR1sOb
-         9jXJ9NiMuFrNIQ/PawhPF5wRfjNK0yAjfn6WdTqZnTTmHZ98ZqSvbVIn1PirgF4TJ34S
-         SwPzTTSPh9qw99D88sOApdBR1BI4hLiUvHQsP7fFSCuqpxidmhSUPVupaNcldICK5GQh
-         g+Vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792635742; x=1793240542;
-        h=mime-version:content-transfer-encoding:references:in-reply-to:cc:to
-         :from:subject:message-id:date:content-type:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=XxjX1g1mQUEUPhKLrpLxYSgZ8S+x7GSgwLX7BwyjX7g=;
-        b=KaJsg/YV/dMtzbdzNNl2AdGmTCGwsHGLaON0q0KW1PvUGXkSrnwKYGxWn5Y2hEDXJp
-         KqpR0S83yt+KJZ1RiHOSkRb7b/iwImV1QQiDwrpAhbggf8FK8SOvTkaERTuMzrWrAXai
-         ErzIzB1DYJTuDfZjVABglCb9GE1AIZ7KGEuMLbSr35hHJQCt0U0TCzjq5AHHOUXMu7Kt
-         JZNrahjnClW7djCJokI7H8F77fo/cjIu/xTAhFNZFlwdSk94ko9uhO61eBKE5Ioabdbw
-         zYQnmMYsJikHKhCXyc0nWffFqOl8fDPBwu8hef8K8lnvCAT1VBrxJzMkbFwjNDGMfW1n
-         vk8Q==
-X-Gm-Message-State: AFq9FYLxNGSjUVxPASUKtWNYPuT4Iu+BwtRBcpxK5i3VXCUoIcZQQrHQ
-	XpyM6i7yTcaXAcAJHZGLOCOTKmUKftXuFCFFkYuqgdw1mHU/sn42GoudLzvCsQ==
-X-Gm-Gg: AYBFou24TwUkXsst45NowYONcIIIvZEZfM+d6ubFaWcr+SAJoEYF+aeQe9hwp3651S6
-	3GZwgrOpssNT3DEmqlQeuerBqyoEKqC64GwAfZXZA3biXSN0Fhdqd9K8Ss6WZUIHSilhtqAf1lN
-	XRB120Hf9eYVTNBdJHkhWb5kHKxNav6LHu+lbm4LleplP3lt2VJRDAWLa2AnxB18ZvOdTiiorCE
-	3icxIh4S4Jwumg+K+kU7qoHO9oxW/9JxDunx4p3zRkbGpYEs/MJClQCMDcHFffl/9ZHknGVLmWs
-	p8lMraTUy6Y4TcDCzr6rdvPDOEG/oCL/fl76CdizuHzhbxdgaUISfDgiv6JH0sQgQnfwzEntStb
-	MsUWwjbYOdRnVd6KnYWKEQlhc8wWbaZ9dQYrN19NovCk1HU41nKOv8FP4xQOv2PVmuK3coEvasy
-	lEDGX0PqM3IqArrO+3UEoam+jCiJZuEbZmfb8hqKKldR68d4rKcGHbFgXvjQdWgNyU5c2Mq8ezB
-	q0tZCiB6Ui6bqf1E5Op2lFDbPghcJJaMDLmLI6JsC9lsE91SfIgYp4qpKwJueYOYnN1nQ465QTy
-	u/KPjahETrhWTd5/B9QLASd/qmDJkWsNqqf6AbccvJ86G6ojf7G9CC0U2/yq
-X-Received: by 2002:a05:6a00:b49:b0:89f:37a0:b2cb with SMTP id d2e1a72fcca58-8a089eba62amr2905819b3a.49.1792635742236;
-        Wed, 21 Oct 2026 19:22:22 -0700 (PDT)
-Received: from localhost ([153.61.198.248])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8a0894b4206sm1450303b3a.18.2026.10.21.19.22.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Oct 2026 19:22:21 -0700 (PDT)
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 22 Oct 2026 02:22:20 +0000
-Message-Id: <DMB0C24NTIST.YQZ2Y3E0I1I1@gmail.com>
-Subject: Re: [PATCH bpf-next 9/9] selftests/bpf: Test uprobes and fork()
- with busy mmap_lock
-From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>
-Cc: <daniel@iogearbox.net>, <andrii@kernel.org>, <eddyz87@gmail.com>,
- <memxor@gmail.com>, <oleg@redhat.com>, <peterz@infradead.org>,
- <mhiramat@kernel.org>, <jolsa@kernel.org>, <akpm@linux-foundation.org>,
- <liam@infradead.org>, <ljs@kernel.org>, <surenb@google.com>,
- <david@kernel.org>, <vbabka@kernel.org>, <jannh@google.com>,
- <hughd@google.com>, <kees@kernel.org>, <mingo@redhat.com>,
- <tglx@kernel.org>, <x86@kernel.org>, <linux-trace-kernel@vger.kernel.org>,
- <linux-mm@kvack.org>, <linux-perf-users@vger.kernel.org>
-In-Reply-To: <sashiko-outbox-180860@kernel.org>
-References: <20261022015712.1297331-1-alexei.starovoitov@gmail.com> <20261022015712.1297331-10-alexei.starovoitov@gmail.com> <sashiko-outbox-180860@kernel.org>
-X-Mailer: mkdraft (claude review draft; edit before sending)
-Content-Transfer-Encoding: 8bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2706606A31E
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 03:26:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E2706606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=h3c.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=h3c.com
+Received: from mail.maildlp.com ([172.25.15.155])
+	by h3cspam01-ex.h3c.com with ESMTP id 69M3Q5dx034063;
+	Thu, 22 Oct 2026 11:26:05 +0800 (+08)
+	(envelope-from lin.nan@h3c.com)
+Received: from DAG6EX09-BJD.srv.huawei-3com.com (unknown [10.153.34.11])
+	by mail.maildlp.com (Postfix) with ESMTP id CEDD1200920D;
+	Thu, 22 Oct 2026 11:29:15 +0800 (CST)
+Received: from localhost.localdomain (10.142.164.48) by
+ DAG6EX09-BJD.srv.huawei-3com.com (10.153.34.11) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.2.1258.27; Thu, 22 Oct 2026 11:26:04 +0800
+From: Nan Lin <lin.nan@h3c.com>
+To: <chengzhihao1@huawei.com>
+CC: <lin.nan@h3c.com>, <linux-mtd@lists.infradead.org>, <richard@nod.at>,
+        <sashiko-bot@kernel.org>, <sashiko-reviews@lists.linux.dev>,
+        <wangxiaoqing@h3c.com>, <zhou.kete@h3c.com>
+Subject: Re: [PATCH v2] ubifs: zero stale data beyond EOF before file size grows
+Date: Thu, 22 Oct 2026 11:18:14 +0800
+Message-ID: <20261022031814.2735650-1-lin.nan@h3c.com>
+X-Mailer: git-send-email 2.33.0
+In-Reply-To: <9a775528-0259-2b88-d592-08c58b366253@huawei.com>
+References: <9a775528-0259-2b88-d592-08c58b366253@huawei.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -106,22 +62,243 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: BJSMTP01-EX.srv.huawei-3com.com (10.63.20.132) To
+ DAG6EX09-BJD.srv.huawei-3com.com (10.153.34.11)
+X-DNSRBL: 
+X-SPAM-SOURCE-CHECK: pass
+X-MAIL:h3cspam01-ex.h3c.com 69M3Q5dx034063
 
-On Wed, Oct 21, 2026 at 07:10 PM sashiko-bot@kernel.org <sashiko-bot@kernel.org> wrote:
->> +#define AREA_MAX	(64UL << 30)
->
-> [ ... ]
->
->> +	area = mmap(NULL, AREA_MAX, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE, -1, 0);
->> +	if (area == MAP_FAILED)
->> +		goto err;
->
-> [Severity: Medium]
-> In tools/testing/selftests/bpf/prog_tests/uprobe_busy_mm.c, does AREA_MAX
-> overflow on 32-bit architectures when passed to mmap() in hold_mmap_lock()?
->
-> Should AREA_MAX be sized appropriately for 32-bit architectures as well?
+Hi Cheng,
 
-No. uprobe_multi link is 64-bit only.
-bpf_uprobe_multi_link_attach() returns -EOPNOTSUPP on 32-bit and
-three of four subtests attach with it.
+Thanks for the detailed review. My responses are inline.
+
+> The filemap_lock_folio gets folio with FGP_LOCK, I think we should use
+> 'FGP_WRITEBEGIN | FGP_ACCESSED' just like ext4_load_tail_bh() does,
+> because the folio may not exist in ram when calling do_setattr().
+
+ext4_load_tail_bh() needs FGP_CREAT because in Ext4 the block behind an
+unwritten/delayed extent holds garbage on disk, so the zeroing must
+reach the media. UBIFS does not have this problem -- stale data can
+only live in the page cache, never on flash:
+
+  writeback:  ubifs_writepage() zeroes the straddling folio on every
+              invocation and skips folios fully beyond i_size, so
+              stale tails never reach the media.
+  read-in:    do_readpage()/read_block() zero the tails of holes and
+              short data nodes, so a folio loaded from flash is always
+              tail-clean.
+
+So when the EOF folio is absent from the cache, there is nothing to
+zero anywhere: FGP_CREAT would merely allocate a fresh (already zero)
+folio to zero it again. Returning early on IS_ERR() is the correct and
+cheaper equivalent of Ext4's path.
+
+> Why skipping 'from == 0'? What if a user writes begin from
+> offset-X(0<X<4096) to a new file(isize = 0)? Ext4 zero the range by
+> ext4_block_write_begin->folio_zero_segments(folio, to, block_end,
+> block_start, from), but ubifs not handle it.
+
+from == 0 means the old EOF is folio-aligned, so the EOF folio has no
+bytes beyond EOF and there is no hole in it:
+
+  from != 0:  |/////valid/////|stale|   <- zero [from, to)
+  from == 0:  |/////valid/////|         <- nothing beyond EOF here
+
+For the i_size == 0 case: a zero-size file cannot hold a polluted
+folio. mmap cannot create one (page_mkwrite returns SIGBUS when
+folio_pos >= i_size), and write() followed by ftruncate(0) invalidates
+the folio. The [0, X) part of the write folio itself is zeroed by the
+existing do_readpage() path ("block >= beyond" ->
+folio_zero_range()), which is UBIFS's counterpart of
+ext4_block_write_begin()'s folio_zero_segments() -- the work happens
+at folio read-in because UBIFS's block size always equals the page
+size.
+
+> The ext4 protection check is ext4_write_checks->ext4_block_zero_eof,
+> I think we can add the zero hole check in ubifs_write_iter().
+
+Agreed. This mirrors ext4_write_checks() -> ext4_block_zero_eof() and
+runs once per syscall instead of once per write_begin() iteration.
+Will move it there in v3. 
+
+> If the program enters into this branch, the ubifs file's isize is not
+> zero, ubifs_read_folio has already zerod tail, do we still need this
+> folio_zero_range?
+> Oh, there is one case, UBIFS file has isize without data nodes(eg.
+> isize = 3, the first block is a data hole), ubifs_read_folio won't
+> zero the page tail, we still need folio_zero_range().
+
+Right -- and one more case on top of the hole-inode one: mkwrite also
+runs on already-cached folios, and earlier mmap stores may have
+re-dirtied the tail after ubifs_read_folio() cleaned it (only folios
+fully beyond EOF get SIGBUS; the straddling folio stays writable
+across its whole length). So the tail must be re-zeroed on every
+(re-)fault, and the folio_zero_range() stays.
+
+For reproducibility I have attached a small single-writer reproducer.
+It covers both size-extending paths (S1: pwrite beyond EOF ->
+write_begin/write_end, S2: ftruncate up -> do_setattr) against a
+polluted old-EOF folio. 
+
+Build: gcc -O2 -Wall -o eof_hole_test eof_hole_test.c
+Run:   ./eof_hole_test <mountpoint>/eof_hole.bin
+
+-----------------[ eof_hole_test.c ]-----------------
+/*
+ * eof_hole_repro.c -- repro for "stale data in hole" bug
+ *
+ * Reproduce:
+ *   1. pwrite data to [0, 0x2000)          - full page 0 and 1
+ *   2. ftruncate DOWN to 0x1100            - VFS zeroes page-1 tail
+ *   3. mmap page 1; write junk into [0x1100, 0x1200) via the mapping
+ *      (MAP_SHARED, past EOF)              - pollutes the cache tail,
+ *                                            i_size unchanged, legal
+ *   4. pwrite at 0x3000 (beyond EOF)       - i_size jumps; UBIFS's
+ *                                            ubifs_write_end() does NOT
+ *                                            zero [0x1100, 0x3000)
+ *   5. pread [0x1100, 0x3000): must be all zero.
+ *      Non-zero bytes = stale mmap junk exposed = bug reproduced.
+ *
+ * Scenario 2 uses ftruncate UP instead of pwrite to exercise
+ * do_setattr() instead of write_end().
+ *
+ * Build: gcc -O2 -Wall -o eof_hole_test eof_hole_test.c
+ * Run:   ./eof_hole_test /mnt/flash/eof_hole.bin
+ */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <sys/mman.h>
+
+#define PS       4096
+#define OLD_EOF  (PS + 0x100)   /* 0x1100: old EOF mid-page-1 */
+#define NEW_END  (3 * PS)       /* 0x3000: hole end */
+#define JUNK_LEN 0x100          /* 256 bytes of pollution */
+
+static int check_hole(int fd, off_t off, size_t len, const char *what)
+{
+	unsigned char buf[512];
+	size_t n, i;
+
+	while (len) {
+		n = len > sizeof(buf) ? sizeof(buf) : len;
+		if (pread(fd, buf, n, off) != (ssize_t)n) {
+			printf("FAIL: %s: pread error: %s\n", what,
+			       strerror(errno));
+			return 1;
+		}
+		for (i = 0; i < n; i++) {
+			if (buf[i] != 0) {
+				printf("FAIL: %s: byte 0x%02x at offset 0x%llx "
+				       "(hole offset +%zu)\n",
+				       what, buf[i],
+				       (unsigned long long)(off + i), i);
+				return 1;
+			}
+		}
+		off += n;
+		len -= n;
+	}
+	printf("PASS: %s\n", what);
+	return 0;
+}
+
+/* Create a file with EOF mid-page-1, then pollute the page-cache tail
+ * beyond EOF via an mmap write (the only path that skips zeroing). */
+static int make_file(const char *path)
+{
+	unsigned char junk[PS];
+	void *map;
+	int fd;
+
+	memset(junk, 0x5a, sizeof(junk));
+
+	fd = open(path, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0) {
+		perror("open");
+		return -1;
+	}
+
+	/* page 1 full of junk, durable */
+	if (pwrite(fd, junk, PS, PS) != PS) {
+		perror("pwrite");
+		goto bad;
+	}
+	fsync(fd);
+
+	/* shrink: VFS zeroes page-1 tail [OLD_EOF, 0x2000) itself */
+	if (ftruncate(fd, OLD_EOF)) {
+		perror("ftruncate");
+		goto bad;
+	}
+
+	/* re-pollute [OLD_EOF, OLD_EOF+JUNK_LEN) through a shared
+	 * mapping. This goes through ->page_mkwrite() which does no
+	 * zeroing. */
+	map = mmap(NULL, PS, PROT_READ | PROT_WRITE, MAP_SHARED, fd, PS);
+	if (map == MAP_FAILED) {
+		perror("mmap");
+		goto bad;
+	}
+	memcpy((char *)map + 0x100, junk, JUNK_LEN);
+	munmap(map, PS);
+	return fd;
+
+bad:
+	close(fd);
+	return -1;
+}
+
+int main(int argc, char **argv)
+{
+	const char *path = argc > 1 ? argv[1] : "./eof_hole.bin";
+	unsigned char junk[JUNK_LEN];
+	int fd, fail = 0;
+
+	memset(junk, 0x5a, sizeof(junk));
+
+	/* ---------- S1: buffered write beyond EOF ----------
+	 * exercises ubifs_write_end() appending branch            */
+	fd = make_file(path);
+	if (fd < 0)
+		return 1;
+	if (pwrite(fd, junk, JUNK_LEN, NEW_END) != JUNK_LEN) {
+		perror("pwrite");
+		return 1;
+	}
+	fsync(fd);
+	fail |= check_hole(fd, OLD_EOF, NEW_END - OLD_EOF,
+			   "S1 write_end: hole [0x1100,0x3000)");
+	close(fd);
+
+	/* ---------- S2: ftruncate UP ----------
+	 * exercises do_setattr() ATTR_SIZE branch                  */
+	fd = make_file(path);
+	if (fd < 0)
+		return 1;
+	if (ftruncate(fd, NEW_END)) {
+		perror("ftruncate");
+		return 1;
+	}
+	fail |= check_hole(fd, OLD_EOF, NEW_END - OLD_EOF,
+			   "S2 do_setattr: hole [0x1100,0x3000)");
+	close(fd);
+
+	unlink(path);
+
+	if (fail) {
+		printf("\n===> BUG REPRODUCED: stale data visible in hole\n");
+		return 1;
+	}
+	printf("\n===> OK: hole reads as zeros on both paths\n");
+	return 0;
+}
+------------------------------------------------------
+
+--
+Nan Lin
