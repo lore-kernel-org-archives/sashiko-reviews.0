@@ -1,99 +1,110 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.173
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792665030;
-	b=fjMwubv/88G+J9MAAC/+dQhY2wgLRkmCsLzHQBlSrm/0mqEvwGt+8OFI5XHen4KGSzsx
-	 yW5Cnrhz47a8kYsUd811u8PKgUTpgiCkv3iOa8Bj7OIDtBwIFzsLb1qbY135qxL4Oxuz0
-	 Vm+gErO5P8YjWSaKZXW8QvAByx9AUhcP5FD+QKUmkT9wIAjtXgFJLEWgBM/gIQjnVC2IB
-	 rnRYMB8eAeF+EvCxzwo8tviDAXTF3dYQbRBY5+DWj0P8DJbYmjPIGz3MEt7M8VZgtmB0k
-	 YXqF8zF44pnehgTbFjfnvKkh9BOnWVyYh6A7Llv6JB6EWB6M9w9fLjxvNbuOYqxnAJw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792665030;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=BEhHwxYzSMiJvLdiI5HQibRaFl5gonBn5xrnfJkUhrQ=;
-	b=VHArAc0HgO11YmiyiYc6T3DPcIxxVe2FKa9OiXRCtLsXrBWXQR+B8neNSJgnBQpNE91e
-	 SxSW3PB+nLun/FXMeyZy8Pcw0JefMAqJhuHY+972hfwd2vAi329v5IdqicM/uoQAP3yaJ
-	 GURgLxrIlOcXAwEeBCwfBc0QcB+Qo35iaNLMCctxnjVkx/j6ZYiE6XEBgHzxTUhDMnVCI
-	 +aPjsQ7EhgZiwc7jekcVsmItU41z+gBbY+cjiWcVuh1Rav4EIANPvUoAXb55DrtRSZEJv
-	 xcZsQdBIbZpAzhPMITeRK9jZ64H2BtXDSgEtu71UeWo2j5OgRKvdNALtf20J1lZ0/Xg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FVeOXXkz;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.173
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.180.131
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792666620;
+	b=HpVbhD8N3aXC65trKhPk+SMgYwU+IQYOzhZDRDRpa5EImX2u6qkJ/US56/Pjp55/DG3X
+	 SVgiOfdsH9ha05FHw0dLHzNpHgGjUAYVfdSHwl+7f8vF9iYroqU8LXO0tcW10mTQPKduF
+	 3TphxJFtSRKiCr3bTBhu52mRGGboFn61NzN9fxw24+sdJFsDSl53MX+TJghP1mRh2m5dl
+	 y5qVEgT8dYBmSuSDhR1+/WIbum+o+A8ZkBUl4BNE93WvOtGbyfBucTJWLU/mkHboEkf4b
+	 3xkM2XpM34m6QlHM0TyOinNAAf7woYOkhhqwT1Vy9NadH3DgqnNQ/KRQQ0GBrQN79Uw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792666620;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
+	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
+	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-GUID:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Authority-Analysis:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=+qUjfZRRveuY++xXlkQWRbDMXMpAPdgSRpEgB72Ewnc=;
+	b=iqByd8ivQL6DTc89Sks5kQOB8A8WmwiwTjxt8yAA97vRO2enu9lIYgnZLi7q7wjsKuGt
+	 7fO5imTcGZqigIe6MmhD5StvU4bfEhSxNh3G1v09UDMjjlaR7ML66PNGrm/12/Tn5dafl
+	 gVMcCL5qTqvN37H6C/XIZjveZTQcRcq6Wamt8FNygHNYZkCVMD6/28+r+nxRNElQSIKNl
+	 Sgqtl19oXeuGaMAoifOL/fdByfRfDFUTqUbVZjzp6zRWZXl1nmCF8IFlH/MhFz/Uq/ZkW
+	 S7A1dnrtNrNviutjfn02CXry91WtP3g8Xqv2LvsiwV4svZIHJbqmI6KYhxliPh/GV/g==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.qualcomm.com;
+	spf=pass smtp.mailfrom=oss.qualcomm.com;
+	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=gcoV1le+;
+	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=GYQy5ikV;
+	arc=none smtp.remote-ip=205.220.180.131
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F104D606A31E
-	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 10:30:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F104D606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64887606A31A
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 10:56:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 64887606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=FVeOXXkz
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-8ac525c1f05so14594687b3.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 03:30:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792665029; cv=none;
-        d=google.com; s=arc-20260327;
-        b=dulUDawIfIYMg8Y4AxVp+M72aGqck7gPBSQGsr/NJTDYiBQLRVxo0ZJYHmYxaffNnh
-         o54SzkgIApW8jcZj6qXvmtycpjQ57hN1/XmPo6PUJIEJoqVERFP+tismPoKYOuftcWDR
-         AS4NulSdilTc9MKBzcoYPdcf0WJuOMCZw/7SSmUblD6MXRNpOE34kq0DKk8jfot1vnN8
-         qi2ZK3Qh/acCXa/MqHqnYfW+P/NGMb8nfufzTmpJpzFn6ivDCQtxWn6fhQvrrOOPUMrl
-         VK8vjixP914Q3dms3Uwdga2bRh7/liT19f/ucjcH5yiXOV7SrR+vbkzRORNunbbWHnTf
-         c7+A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=BEhHwxYzSMiJvLdiI5HQibRaFl5gonBn5xrnfJkUhrQ=;
-        fh=qZ+seXf+f2TsJGAcBan+zfngSJsoMHLyq6CoMxxVLFE=;
-        b=ljcx7XlX1DNWZKSNIGDuHxSs1mDaiItUTh3sRu+Eu+CenIBwUSlk7JuYtMKNc7BXk7
-         /+8MaPtEVjBJ+F/BrSu6mxDoBtF19jMv/6RiW5lMTHDyA7QJ6qQdbjo1edFc9NaMTLS/
-         6U8/mpCwHnPwxNqsMC9CqJt4yTU6InMVkJMhu/y9mbvDUfiXHpWY+DbP4SIkuqIIWu0f
-         3+visc49IG/FJ6FScDwbraBBPAp4o1GOTjvP7+hDhlWl3NXrudPXoVvAnNpSex8Ohbmm
-         SgNv2VhIGlzuo9nRE990v9QXlZwF0RP7VidDc25Rfo9rLgRpSAZ6U/1bsGb0oY8cBtUP
-         V2Mw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=gcoV1le+;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=GYQy5ikV
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69MA05a23115450
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 10:56:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+qUjfZRRveuY++xXlkQWRbDMXMpAPdgSRpEgB72Ewnc=; b=gcoV1le+mfvgJjKC
+	pXK7kkAfGq10QwvZnuZx/i3D82mzMt6MTvtiOqqe37JjSPhCcxUM+CKmZDeLH0YZ
+	2e3STe7nohZ3vrYzuk6gB/rqdd4fXWtOJI0EbV1jL8NRGuHZRWzGj2JlQXKIJCOQ
+	qln5cYAeLLupNVTZXdEJmZA4LUSy+YOuRr0EpqLhB4LdK3XhWUbsxUWb9aZWjJ58
+	sPWVsr03KtsFBBmA/kJmWE9C6Q3uirx24ATKY9mZJy+CnFkjcaJbc+78VESVu1FP
+	11K6jrwiepzTM2na+sKrhEaG97/Ec51U3neGE/xYetOLDDlxfDi+Zx3jPc0kI9LW
+	qskT/g==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hf93btauf-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 10:56:58 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2cec4226c70so14855805ad.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 03:56:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792665029; x=1793269829; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=BEhHwxYzSMiJvLdiI5HQibRaFl5gonBn5xrnfJkUhrQ=;
-        b=FVeOXXkzcWFlIdrJu28oSUZ5lSNyU97NF1y6OGItoCrUioDEXaOxmd9UsPo8aQEMls
-         OA4vubXH0xxia49S5yJRsb7XOLgYykREGy1CZZxMk+ZLlj7LNAWRpFlVdCeSsvETMQQ3
-         t+V7TjqYncXmlSu6mBprjVitsF0vgfm1dyVYbJ01zS+m5h1uytEvCV/1xmwe/ULy+04N
-         OOg3HsccugPUwDPju14WCReiC5yNLfux2jZAwip+3U/ZzDeEfRYrm0+rgOjBXOzTmOOG
-         wMA/+RISOB8EZU0xEuskZAjFPf7/SSwjhBZxp7+/xvzXlYwlu3Hro18CD0i74q5U0E51
-         N39w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792665029; x=1793269829;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=oss.qualcomm.com; s=google; t=1792666617; x=1793271417; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=BEhHwxYzSMiJvLdiI5HQibRaFl5gonBn5xrnfJkUhrQ=;
-        b=pJarW2tA4HHOwKG2LAY4zMn9sZz7ViZUtZBfkP88ISHDnkPTFVPiVn9ECKfqMwZJgN
-         H2G4XuAc+yXjpYReT2dAoXR5mBCZu1NX6ouWj1L5yKoz86/ry69JL7aMHG5hh2Dljhfo
-         vrOy3mrnu1tP18y25tOiyFkbE81G5moiWDPw4ap1JbV16Sv7zg1kQBNgXQtucwxGmXkL
-         65h5cp1VImKmoITc4BpAAAV6nzpd99WHxgsqNrPbOte9+NxLOR4+koKyaYbC9Jq84utC
-         lx6CMxZVyXGi4gUBi6aOVkIzCSba0KFODHDqbuSB6cmPTX6itjD8ntNEa5D+w/jV9sg+
-         WSEQ==
-X-Gm-Message-State: AFq9FYINcmOrnDVQxD297ucbSsSJyxyQMAuoUlI24W/CEVn+pa+ZK7W8
-	79t66fF3TYAJPVBeUP9gCqqFRYl5Xh+s1/7pYaybG9k0YTtVZ0pm0djvvoewwyhFh3yq/gfyAeH
-	yWwlkN7fe86ZZg5h18TcRR1Fqy+oUsHze7VyQ
-X-Gm-Gg: AYBFou2PJxLysxolSYOyWZwil4lgA7vRHu2GQ6kp1Otvnz3vA3hSnPtAhBvJgZLepUU
-	hF0trG1/qpPprMzsQeaZT9p59mxrXsNMRYZUZSctiXfdbIQJ5Z1R2hHUYvshZw8kUws9ueBik6X
-	f8Nm59/SfLmurJ7b9qPiquo6UvonOpvlVJN1o61T55d7oo6GGWxvuILkIz0AxM3G+SJOJeoFeiO
-	G2o6bOs4G7noXuIBgQyk3UxLxr6+YgHUldja2pbhFeF7yRw6Y0qTTl1r96jR7XjZDc7/8z84kN9
-	UFvPMfsd1F2nCl2UM/WEfFpgUdrRQMChSN7vS5hg9dV0OQxGj+CoMZeDfiWaWCSvbq6XqqQcraa
-	8vawkloJG5O9+UL4XB9cBjFodrBmKiFGYcs8lJiUPnNKOC6YlnubOhfnCtw7Faz4UlcekohQ=
-X-Received: by 2002:a05:690c:6e83:b0:88a:4770:c2e9 with SMTP id
- 00721157ae682-8b133cab00emr32482837b3.14.1792665028968; Thu, 22 Oct 2026
- 03:30:28 -0700 (PDT)
+        bh=+qUjfZRRveuY++xXlkQWRbDMXMpAPdgSRpEgB72Ewnc=;
+        b=GYQy5ikVUV9AEzbpFyHtUQ0QRxkBsWZ5HB7zxdx+IwFvDlaeSzp1TWgL4AqtOb72VT
+         GDcWU79WVhSLCMVR19Kqo8Ymxb9o3lg8yxC2BNeYdkiv+qnKOelG7w/fsv8BWVAllEKz
+         ZVymiU4UeFimj9eK6TtU2BdIELiwhS1Ti41HbGGCKF3KPrTBJWNEaOe1Yg0TaMjsuGjP
+         n5V31tJaS0Mc63ieMPPKMbbkqzeKq4GOud2m6ggkjxXUbTzclUllz7K9vVx9sQLVCsGA
+         AOi5xuXNZdz5NuaKwsdFQTngOwTDpcKZR2YOZ6nX13ZZPCcUSlvkOt2Xb7tGH0zmn3A7
+         9mEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792666617; x=1793271417;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=+qUjfZRRveuY++xXlkQWRbDMXMpAPdgSRpEgB72Ewnc=;
+        b=DqbRisLf81kcEmlNd/ULfJQRI14XGQ8lnJX9Q3Qw/OBc306Y9nTdipMqg+PuCvYgTG
+         XJx9CJfbApTtsYo1XxrPm1mCEpOYrz4cPEurTZQzGvMeyJ3jpyokSknpDCZxfmArF2+j
+         iRjoROAkb0APS2IMYLzTLzDPBmdCqcW53uyCQec7MwvxyV0GsPIOWPYwhRfSPD4GoHLM
+         KpcVGv4IJQ0Oo/qpmP2Nn+SSbKBYYpwe+m7VrLWGDnIGlW6kXisf8jAKxZ45qwZaYOBY
+         XFIhEamqrA5FPyJsHRCmxA/6Au83fx8VvJOKJnHiYLQmcXmPyKZ65O9SfKW9e9mkmHlK
+         LLvA==
+X-Gm-Message-State: AFq9FYJ2kgNKsAFr3CePCLwR2lxK64+fiRVCTAQgbwWtAExSoxGu2frS
+	i05FCXG1OH1Bw7UopTEHS10umcfmaOwW8gJpXupPYvqVrN6tP591EdEu3nEXGf6QWpLHE9F7Hlo
+	919PSPQ9J+4KDuS3thav5gqYFpoE0VoMScgSselzUm+YhDbmTB/KJJoNkjfWs9q9Ec4PjmpRvM8
+	R3OXc=
+X-Gm-Gg: AYBFou0z6+eRcE5cGeEU71mF0BhuYSe0L8ZNWdrazIMBtgLj3aOoSwj+R0ofEuY2c5Q
+	i4waJORkG7szZMHlU/CfCHQQfiItv5xbbjnJjjEWKcODUzbueF6Vnam78V51ba92NE0+LZOxWbd
+	+OC04nYIfLhBBpKj2H5+jxbi4ji5qKQaVR8CIg9UZjnvnur8IAfwfl+iyvsufuitxOSHyX5Phzr
+	gvNz3qyApZbve22foLUwmbuxISduCO05xJ/ql5dKICIgeIh5Z8xHeZNO3A2ZojPBQ+jqQvCx1zl
+	YRv1FzRjkPq5/0X9IlgYzp00kFX8ivKJ67Ob+yDueoZAduzseu+yatSKr0iB7tq1M4QhGdsEz6v
+	iNKp0zqhEHwcU32F0zrzLEVkR8wiOAAEd
+X-Received: by 2002:a17:903:2ac7:b0:2e6:c39:b25b with SMTP id d9443c01a7336-2ea43e4f132mr35643915ad.14.1792666617459;
+        Thu, 22 Oct 2026 03:56:57 -0700 (PDT)
+X-Received: by 2002:a17:903:2ac7:b0:2e6:c39:b25b with SMTP id d9443c01a7336-2ea43e4f132mr35643625ad.14.1792666616662;
+        Thu, 22 Oct 2026 03:56:56 -0700 (PDT)
+Received: from [10.218.31.237] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ea3b49e5f6sm22117235ad.70.2026.10.22.03.56.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Oct 2026 03:56:56 -0700 (PDT)
+Message-ID: <17d0f386-04ae-471e-8339-ad3e44fd2ee5@oss.qualcomm.com>
+Date: Thu, 22 Oct 2026 16:26:53 +0530
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,204 +114,221 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261021-g2ul_sci-v2-0-b4e038220018@bp.renesas.com>
- <20261021-g2ul_sci-v2-3-b4e038220018@bp.renesas.com> <sashiko-outbox-180298@kernel.org>
-In-Reply-To: <sashiko-outbox-180298@kernel.org>
-From: Biju Das <biju.das.au@gmail.com>
-Date: Thu, 22 Oct 2026 11:29:57 +0100
-X-Gm-Features: AclHuK9NxPFgx-jqOft8MHFpJQqezzJagWJDKOJP_AqiRF8xMdXQyhKNm1Uf3MY
-Message-ID: <CADT+UeA_z=6o32GdhHD9KrmMpW3WRcujcED_ZvCGSoi38jrg+w@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] serial: sh-sci: Skip TDxE clear when hardware
- clears it automatically
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v3 2/2] net: wwan: qcom_bam_dmux: Assign
+ restricted DMA pool to remote processor
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-serial@vger.kernel.org, kvm@vger.kernel.org, 
-	wsa+renesas@sang-engineering.com, linux-renesas-soc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+References: <20261021-qcom-bam-dmux-vmid-ext-v3-0-cedd1f681102@oss.qualcomm.com>
+ <20261021-qcom-bam-dmux-vmid-ext-v3-2-cedd1f681102@oss.qualcomm.com>
+ <sashiko-outbox-181101@kernel.org>
+Content-Language: en-US
+From: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+In-Reply-To: <sashiko-outbox-181101@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA0MyBTYWx0ZWRfXzZsJ5qmm9YV9
+ KIww0RBaU/1XGC/j3kxPkqS8WUBjL6+SmwFhPEj07IaQOiDBUpY1Ws8EBVWmQH1tapHRGM+/q+b
+ b+mpjaMV6UHTLdG9f5IDFFAj/1IzTj0=
+X-Proofpoint-GUID: TK_yY-aE6ASAwoiBI4q2ttzUraRb1Haq
+X-Proofpoint-ORIG-GUID: TK_yY-aE6ASAwoiBI4q2ttzUraRb1Haq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA0MyBTYWx0ZWRfXz9Zw52kJQv1r
+ PbOazo141YzwI9F3o98O7+NTnupY50R2WmvKFuLr4hnu5TmMc8wI11LnRYEcU9VoIbdXaoWkvf6
+ jnMkusFNuAu+K1OwHBdTedbyJ6eLl/pahyEM6keW7tzM0EnqLeLti0G/TsI3Chucu8JXyugGktR
+ /b72vSolM4Z4Yrw5H7RfKtHJ+AEEqU5X+1TgizXSUR+6e+U3vYsWQFzchHYkYpRHrn60Skta52M
+ SkDTAy03MaZ/JpP40RzkpHBqos69BrR3ohQ87HMcRN6AuAcXvUgj4EqzBh+jxRmv91t8NZgOyTK
+ nmkupoeci0qJmJJKynuy4X8ZoWrY2+K0HpIuSrrwpsEXjaUqK6veZjUi8XLDCn5PqUUpZNhu1WF
+ GQiiWjEYdlkeBS5qD5a1P4wDARZCew==
+X-Authority-Analysis: v=2.4 cv=HJxWhYtv c=1 sm=1 tr=0 ts=6ad9ebfa cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=eIAiJ7D5M_aMgY5_KNUA:9 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-22_04,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ adultscore=0 bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610220043
 
-On Wed, Oct 21, 2026 at 2:22=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] serial: sh-sci: missing has_tdxe_auto_clear init in scix_early=
-_console_setup()
+On 22-10-2026 12:10 pm, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] net: wwan: qcom_bam_dmux: race on remote_suspended in bam_dmux_remove()
+> - [High] net: wwan: qcom_bam_dmux: UAF on register_netdev_work in bam_dmux_remove()
 > --
 >
-> commit 7c4175b5ac1e1b0c0d116921a097acf598dc7be1
-> Author: Au Dang <au.dang.jx@renesas.com>
+> commit 122841a576cc339cc33ba7e25a1af2d9d591b2cb
+> Author: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
 >
-> serial: sh-sci: Skip TDxE clear when hardware clears it automatically
+> net: wwan: qcom_bam_dmux: Assign restricted DMA pool to remote processor
 >
-> This commit adds a tdxe_auto_clear flag to struct sci_of_data and propaga=
-tes
-> it to struct sci_port as has_tdxe_auto_clear to skip software clearing of
-> TDxE in sci_transmit_chars() and sci_poll_put_char() on PORT_SCI variants=
-.
+> This commit adds support for assigning a restricted DMA pool to both the
+> local and remote execution environments via SCM when qcom,vmid is present,
+> and reclaiming the pool for the local environment during probe failure or
+> driver removal if the remote processor has suspended.
 >
-> > diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
-> > index 58120b523ca1e..aa179c7874878 100644
-> > --- a/drivers/tty/serial/sh-sci.c
-> > +++ b/drivers/tty/serial/sh-sci.c
-> > @@ -913,7 +913,8 @@ static void sci_poll_put_char(struct uart_port *por=
-t, unsigned char c)
-> >       } while (!(status & SCxSR_TDxE(port)));
-> >
-> >       sci_serial_out(port, SCxTDR, c);
-> > -     s->ops->clear_SCxSR(port, SCxSR_TDxE_CLEAR(port) & ~SCxSR_TEND(po=
-rt));
-> > +     if (!s->has_tdxe_auto_clear)
-> > +             s->ops->clear_SCxSR(port, SCxSR_TDxE_CLEAR(port) & ~SCxSR=
-_TEND(port));
-> >  }
-> >  #endif /* CONFIG_CONSOLE_POLL || CONFIG_SERIAL_SH_SCI_CONSOLE ||
-> >         CONFIG_SERIAL_SH_SCI_EARLYCON */
->
+>> diff --git a/drivers/net/wwan/qcom_bam_dmux.c b/drivers/net/wwan/qcom_bam_dmux.c
+>> index cc6ace8d64371..fa3621224a56e 100644
+>> --- a/drivers/net/wwan/qcom_bam_dmux.c
+>> +++ b/drivers/net/wwan/qcom_bam_dmux.c
 > [ ... ]
+>> @@ -829,8 +929,11 @@ static int bam_dmux_probe(struct platform_device *pdev)
+>>   
+>>   	ret = irq_get_irqchip_state(dmux->pc_irq, IRQCHIP_STATE_LINE_LEVEL,
+>>   				    &dmux->pc_state);
+>> -	if (ret)
+>> -		goto err_disable_pm;
+>> +	if (ret) {
+>> +		/* The PC IRQ may already have powered up the RX path */
+>> +		bam_dmux_remove(pdev);
+>> +		return ret;
+>> +	}
+> [Severity: High]
+> When irq_get_irqchip_state() fails in bam_dmux_probe() in
+> drivers/net/wwan/qcom_bam_dmux.c (or during normal driver removal),
+> calling bam_dmux_remove() cancels register_netdev_work and unregisters
+> existing netdevs while dmux->pc_irq and the RX DMA channel can still be
+> active:
 >
-> > @@ -3791,6 +3794,7 @@ static struct plat_sci_port *sci_parse_dt(struct =
-platform_device *pdev,
-> >       sp->ops =3D data->ops;
-> >       sp->port.ops =3D data->uart_ops;
-> >       sp->params =3D data->params;
-> > +     sp->has_tdxe_auto_clear =3D data->tdxe_auto_clear;
->
-> [Severity: Medium]
-> Should scix_early_console_setup() in drivers/tty/serial/sh-sci.c also cop=
-y
-> data->tdxe_auto_clear to sci_ports[0].has_tdxe_auto_clear?
->
-> When earlycon is enabled on a renesas,sci port, sci_early_console_setup()=
- ->
-> scix_early_console_setup() initializes sci_ports[0] from of_sci_sci, but
-> leaves has_tdxe_auto_clear unset:
->
-> drivers/tty/serial/sh-sci.c:scix_early_console_setup() {
->         ...
->         sci_ports[0].cfg =3D &port_cfg;
->         sci_ports[0].params =3D data->params;
->         sci_ports[0].ops =3D data->ops;
->         sci_ports[0].port.ops =3D data->uart_ops;
->         sci_uart_earlycon =3D true;
->         ...
+> drivers/net/wwan/qcom_bam_dmux.c:bam_dmux_remove() {
+> 	/* Unregister network interfaces */
+> 	cancel_work_sync(&dmux->register_netdev_work);
+> 	rtnl_lock();
+> 	for (i = 0; i < BAM_DMUX_NUM_CH; ++i)
+> 		if (dmux->netdevs[i])
+> 			unregister_netdevice_queue(dmux->netdevs[i], &list);
+> 	unregister_netdevice_many(&list);
+> 	rtnl_unlock();
+> 	...
+> 	/* Try to wait for remote side to drop power vote */
+> 	remote_suspended = wait_event_timeout(dmux->pc_wait, !dmux->rx,
+> 					      BAM_DMUX_REMOTE_TIMEOUT);
+> 	...
+> 	/* Make sure everything is cleaned up before we return */
+> 	disable_irq(dmux->pc_irq);
+> 	bam_dmux_power_off(dmux);
 > }
 >
-> During early console output via serial_console_write() ->
-> uart_console_write() -> serial_console_putchar() -> sci_poll_put_char(),
-> s->has_tdxe_auto_clear will still be false on sci_ports[0], causing
-> s->ops->clear_SCxSR() to be called in software instead of being skipped.
+> While bam_dmux_remove() is waiting in wait_event_timeout(), incoming
+> BAM_DMUX_CMD_OPEN packets on the active RX DMA path invoke
+> bam_dmux_rx_callback() -> bam_dmux_cmd_open(), which schedules
+> dmux->register_netdev_work again:
 >
-> >
-> >       sp->has_rtscts =3D of_property_read_bool(np, "uart-has-rtscts");
-> >
+> drivers/net/wwan/qcom_bam_dmux.c:bam_dmux_cmd_open() {
+> 	if (netdev) {
+> 		netif_device_attach(netdev);
+> 	} else {
+> 		/* Cannot sleep here, schedule work to register the netdev */
+> 		schedule_work(&dmux->register_netdev_work);
+> 	}
+> }
 >
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261021-g2ul_sci=
--v2-0-b4e038220018@bp.renesas.com?part=3D3
+> Because register_netdev_work is not canceled and netdevs are not
+> unregistered after disable_irq() and bam_dmux_power_off() stop the IRQ
+> and RX DMA, can bam_dmux_register_netdev_work() run after
+> bam_dmux_remove() returns, causing a use-after-free on the devm-allocated
+> struct bam_dmux or leaving registered net_device instances pointing to
+> freed memory?
 
-Modified patch based on above review.
+This is a pre-existing issue in bam_dmux_remove() where the work has been
+cancelled before RX is stopped. It is out of scope for this series, and can
+be addressed in future as separate patch.
 
-From 0efbe7abe7fc1ec3354fcdc1f4c02b77eaac7904 Mon Sep 17 00:00:00 2001
-From: Au Dang <au.dang.jx@renesas.com>
-Date: Mon, 19 Oct 2026 18:01:11 +0100
-Subject: [PATCH 3/4] serial: sh-sci: Skip TDxE clear when hardware clears i=
-t
- automatically
+>
+> [ ... ]
+>> @@ -853,6 +957,7 @@ static void bam_dmux_remove(struct platform_device *pdev)
+>>   	struct bam_dmux *dmux = platform_get_drvdata(pdev);
+>>   	struct device *dev = dmux->dev;
+>>   	LIST_HEAD(list);
+>> +	bool remote_suspended;
+>>   	int i;
+>>   
+>>   	/* Unregister network interfaces */
+>> @@ -872,13 +977,21 @@ static void bam_dmux_remove(struct platform_device *pdev)
+>>   	pm_runtime_set_suspended(dev);
+>>   
+>>   	/* Try to wait for remote side to drop power vote */
+>> -	if (!wait_event_timeout(dmux->pc_wait, !dmux->rx, BAM_DMUX_REMOTE_TIMEOUT))
+>> +	remote_suspended = wait_event_timeout(dmux->pc_wait, !dmux->rx,
+>> +					      BAM_DMUX_REMOTE_TIMEOUT);
+>> +	if (!remote_suspended)
+>>   		dev_err(dev, "Timed out waiting for remote side to suspend\n");
+>>   
+>>   	/* Make sure everything is cleaned up before we return */
+>>   	disable_irq(dmux->pc_irq);
+>>   	bam_dmux_power_off(dmux);
+>>   	bam_dmux_free_skbs(dmux->tx_skbs, DMA_TO_DEVICE);
+>> +
+>> +	/* The remote side may still access the pool if it did not suspend */
+>> +	if (remote_suspended)
+>> +		bam_dmux_reclaim_dma_pool(dmux);
+>> +	else if (dmux->dma_pool_perms)
+>> +		dev_warn(dev, "Leaving restricted DMA pool assigned to remote\n");
+>>   }
+> [Severity: High]
+> In bam_dmux_remove() in drivers/net/wwan/qcom_bam_dmux.c,
+> remote_suspended is sampled from wait_event_timeout(dmux->pc_wait,
+> !dmux->rx, BAM_DMUX_REMOTE_TIMEOUT) before disable_irq(dmux->pc_irq)
+> synchronizes with the threaded handler bam_dmux_pc_irq():
+>
+> drivers/net/wwan/qcom_bam_dmux.c:bam_dmux_pc_irq() {
+> 	if (new_state) {
+> 		if (bam_dmux_power_on(dmux))
+> 			bam_dmux_pc_ack(dmux);
+> 		else
+> 			bam_dmux_power_off(dmux);
+> 	} else {
+> 		bam_dmux_power_off(dmux);
+> 		bam_dmux_pc_ack(dmux);
+> 	}
+>
+> 	dmux->pc_state = new_state;
+> 	wake_up_all(&dmux->pc_wait);
+> }
+>
+> If dmux->rx is NULL when wait_event_timeout() checks !dmux->rx (for
+> example, if bam_dmux_pc_irq() was just triggered during the
+> bam_dmux_probe() error path or during removal and has not yet set
+> dmux->rx in bam_dmux_power_on()), wait_event_timeout() returns
+> immediately with remote_suspended set to true.
+>
+> Before disable_irq(dmux->pc_irq) finishes waiting for the running IRQ
+> thread, bam_dmux_pc_irq() can complete bam_dmux_power_on(dmux) and send
+> bam_dmux_pc_ack(dmux) to the remote processor. Then bam_dmux_power_off()
+> tears down dmux->rx locally without a remote power-down handshake, and
+> bam_dmux_remove() still sees the stale remote_suspended == true and calls
+> bam_dmux_reclaim_dma_pool(dmux) while the remote side is active.
+>
+> Conversely, if wait_event_timeout() times out while bam_dmux_pc_irq() is
+> in the middle of handling a remote power-down edge, disable_irq() waits
+> for bam_dmux_pc_irq() to finish calling bam_dmux_power_off() and
+> bam_dmux_pc_ack(), but remote_suspended remains false and the DMA pool
+> is never reclaimed.
+>
+> Should remote_suspended be re-evaluated (for example, checking !dmux->rx)
+> after disable_irq(dmux->pc_irq) returns and before bam_dmux_power_off()
+> clears dmux->rx?
 
-On some SCI variants, the TDxE (Transmit Data Empty) flag in SCxSR is
-cleared by hardware when data is written to TDR. Clearing it again from
-software via clear_SCxSR() generates a spurious TXI interrupt, causing
-the last character to be transmitted twice.
+Agreed. I plan to sample the state after disable_irq() in the next
+revision, so a running PC IRQ handler is accounted for in both cases like below:
 
-Add a tdxe_auto_clear flag to struct sci_of_data, propagate it to struct
-sci_port as has_tdxe_auto_clear, and skip the clear_SCxSR() call in
-sci_transmit_chars() and sci_poll_put_char() when it is set. Enable the
-flag for the PORT_SCI (of_sci_sci) variant.
+if (!wait_event_timeout(dmux->pc_wait, !dmux->rx, BAM_DMUX_REMOTE_TIMEOUT))
+  dev_err(dev, "Timed out waiting for remote side to suspend\n");
 
-Signed-off-by: Au Dang <au.dang.jx@renesas.com>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
----
-v1->v2:
- * Updated commit header and description.
- * Replaced the PORT_SCI check with a has_tdxe_auto_clear flag in
-   struct sci_port, set from the new tdxe_auto_clear field in
-   struct sci_of_data.
----
- drivers/tty/serial/sh-sci-common.h | 2 ++
- drivers/tty/serial/sh-sci.c        | 9 +++++++--
- 2 files changed, 9 insertions(+), 2 deletions(-)
+/* Make sure everything is cleaned up before we return */
+disable_irq(dmux->pc_irq);
+/* The PC IRQ handler cannot run anymore, so dmux->rx is stable */
+remote_suspended = !dmux->rx;
+bam_dmux_power_off(dmux);
 
-diff --git a/drivers/tty/serial/sh-sci-common.h
-b/drivers/tty/serial/sh-sci-common.h
-index 273856fbc20b..b75e5e1d3075 100644
---- a/drivers/tty/serial/sh-sci-common.h
-+++ b/drivers/tty/serial/sh-sci-common.h
-@@ -108,6 +108,7 @@ struct sci_of_data {
-  const struct sci_port_ops *ops;
-  unsigned short regtype;
-  unsigned short type;
-+ bool tdxe_auto_clear;
- };
 
- struct sci_port {
-@@ -163,6 +164,7 @@ struct sci_port {
-  bool has_rtscts;
-  bool autorts;
-  bool tx_occurred;
-+ bool has_tdxe_auto_clear;
- };
+Does this look reasonable, or would another approach be preferred?
 
- #define to_sci_port(uart) container_of((uart), struct sci_port, port)
-diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
-index 6df25fef5a5f..1a4d9467d2be 100644
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -913,7 +913,8 @@ static void sci_poll_put_char(struct uart_port
-*port, unsigned char c)
-  } while (!(status & SCxSR_TDxE(port)));
 
-  sci_serial_out(port, SCxTDR, c);
-- s->ops->clear_SCxSR(port, SCxSR_TDxE_CLEAR(port) & ~SCxSR_TEND(port));
-+ if (!s->has_tdxe_auto_clear)
-+ s->ops->clear_SCxSR(port, SCxSR_TDxE_CLEAR(port) & ~SCxSR_TEND(port));
- }
- #endif /* CONFIG_CONSOLE_POLL || CONFIG_SERIAL_SH_SCI_CONSOLE ||
-    CONFIG_SERIAL_SH_SCI_EARLYCON */
-@@ -1063,7 +1064,8 @@ static void sci_transmit_chars(struct uart_port *port=
-)
-  port->icount.tx++;
-  } while (--count > 0);
+Thanks,
+Vishnu
 
-- s->ops->clear_SCxSR(port, SCxSR_TDxE_CLEAR(port));
-+ if (!s->has_tdxe_auto_clear)
-+ s->ops->clear_SCxSR(port, SCxSR_TDxE_CLEAR(port));
-
-  if (kfifo_len(&tport->xmit_fifo) < WAKEUP_CHARS)
-  uart_write_wakeup(port);
-@@ -3664,6 +3666,7 @@ static const struct sci_of_data of_sci_sci =3D {
-  .ops =3D &sci_port_ops,
-  .uart_ops =3D &sci_uart_ops,
-  .params =3D &sci_port_params[SCIx_SCI_REGTYPE],
-+ .tdxe_auto_clear =3D true,
- };
-
- static const struct of_device_id of_sci_match[] __maybe_unused =3D {
-@@ -3802,6 +3805,7 @@ static struct plat_sci_port *sci_parse_dt(struct
-platform_device *pdev,
-  sp->ops =3D data->ops;
-  sp->port.ops =3D data->uart_ops;
-  sp->params =3D data->params;
-+ sp->has_tdxe_auto_clear =3D data->tdxe_auto_clear;
-
-  sp->has_rtscts =3D of_property_read_bool(np, "uart-has-rtscts");
-
-@@ -4088,6 +4092,7 @@ int __init scix_early_console_setup(struct
-earlycon_device *device,
-  sci_ports[0].params =3D data->params;
-  sci_ports[0].ops =3D data->ops;
-  sci_ports[0].port.ops =3D data->uart_ops;
-+ sci_ports[0].has_tdxe_auto_clear =3D data->tdxe_auto_clear;
-  sci_uart_earlycon =3D true;
-  regs =3D sci_ports[0].params->common_regs;
-
---=20
-2.43.0
+>
