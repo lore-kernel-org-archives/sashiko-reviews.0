@@ -1,128 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=198.175.65.13
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1792792899;
-	b=kdIwlKLu4W/RfTyJfG8NLRyu2o2AxXlid77vkIFCGZy5T4DGTpt2xC6qQC7beTQip7n2
-	 Oc5fUo7Jd5NAqlTMqpjrgupThHORtjG9nnji5h/xJf8Ygp1LfeVSBQb/yQU9smLxnF08d
-	 Az6EHQwu317svkbT86HBRCjU6Qkf9Vr9ULJmAfMz5WqIP+UHpwYYw3g6kKhKk/qCYqpYy
-	 XjJn9b8oWbh1ayl2e+AWgSs77FytlltueCjAEr3c0QwfcMG58pYteZRUDA026Ca8/KO7K
-	 bFz4b9o9IHQYxY/QCSKK4m+iYCLUD6w8Ga4mBTiwz3Y3UqVnkNMUYlwxBS7byccGYfA==
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.42
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792794622;
+	b=bc+cKDWzOizU+2rvxkL570aLnGB1ELZA90ayFfTybYl70cmRiBeIgBjlBqbXPNtTVtMD
+	 Lmn7hSkYLswe4KVcJTNtWOjwzeAQYRFXhCpqyTdMLpU5pU6C0EftagGEXJ4WZaaDWPRtR
+	 eA7uuB6EbE5niSngjYgMmYKv/TjzC4pnzdHjYUtXPzdG0be0+Oi5Z5zX2x4/YomLdx8sV
+	 El5lt6REhVrxKhfYUlrmfRPZxc138ffLocNpiZUZZuvznJtz6un69T6Dk9EyaoHL0kzgA
+	 8Y5xdbTdE6tjYq1Q9euCH1+eKUfyUz0U1rqZ8TIFkZxFVhEZbJDczF9vW/j0Ov47HuQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792792899;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:Received:Received:From:To:Subject:In-Reply-To:References:
-	 Date:Message-ID:Content-Type:Content-Transfer-Encoding:
-	 X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=KCRaQdNwhXiN29y1pUzdMM9XcInttjlg16Vc1GHRars=;
-	b=gB9DWf1l6t/c87mavwilBA8sFzxss+mE1rdsmgX79JVerJSiOE0SsF76INT2VmjfeuQ4
-	 dzWoS0W7yvXW2PyJOcvdhET6NscQB3h0qnkv3GxNK5fX49Yj8FTaMWmLhsdXlY+QC/z4/
-	 KbGmaRn6aGX/pW6sbyKgt0QPl16XUklyKxPMtDa2nLe1ht6/h3b1S0iE8QlQtbqPGlD1k
-	 gThZy80cmMNT6OTfe9FzCwjK4SthifH1emtnyDTZEmkElm7ccQLbIEP24C+Few2kyaUzN
-	 cC7dlJprLCjO+SZJOIA9QxxN7w1r5sCeMr4QS5sOAoDjk98wp8ayyixct9UPdW2JwNA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792794622;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=b1vVmrd2o2bhAY35x1Wt33iUoT/bMDNuOnBZV1/6OMk=;
+	b=3MTeMPkVRjrCU2JzYvmCLxZ8i/6Lp5xFkihqQp+neoFQQLDW0lu3FMnQGi+TZ8cc2qAI
+	 b/UfRKAGH5l1qNy1rWApqeetT9GPcQFwvhT62aUvWSh6/xKhfEDeoWO6aOhmSy8VgLU/s
+	 O7hLeSeXL/d6cjmxsI8ZvkoULFun5ELHGUPuWy331jDhNSfSivnIh0aXUPOpyzVQx2PLB
+	 h/Zg3EzSw44RU7mZ9XBODr7MpHX0wsOENpNsAfUSedqnWnC1WcGdGANC8jBWFV26N9oMT
+	 9tbsCsQeSkx8djxDcgXFmdPtquy/szvqO00jVzyKdccBS/JFzs2VJ3o4r6g9pSfXUsA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=lJsw+CZ8;
-	arc=fail smtp.remote-ip=198.175.65.13
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=BW63KCzC;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.42
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967B3606A31A
-	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 22:01:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 967B3606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEA2606A321
+	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 22:30:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BCEA2606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=lJsw+CZ8
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792792897; x=1824328897;
-  h=from:to:subject:in-reply-to:references:date:message-id:
-   content-transfer-encoding:mime-version;
-  bh=0T/vC4kt4KGYmpe+sQ7ZrJyCTRrdOuNDxYIL/OD2np0=;
-  b=lJsw+CZ8esRRGZ4xvN8JuXfLI4lK3iYgLIqMiXHuCnpuicRflUtlsBva
-   WrSzI/xvjt5pv/027/SM9m7CmPsMraiaP3QdvE6m9dUr3Cp9VT7WnbcwN
-   VGXz7qgV2oOs9vIA8vt1QweDG9OT+sQMvm7Tyu+N2P4+MALj51Z3rurDS
-   PHjTOIQ89eWNVcpTrpudgusfoUGgRmytAKdxI7en/Fa5HkI8CESC5SRXw
-   /vrXUJFLQ1b+lOm8TkUsGvKgmtPdcruK9kcpntocbqZP/FJCrKtpHSzL2
-   Tg8vByDzPQlV6Ua00iWoUTOd838Mv75Oo1a8NhzdIp+bJpXDQrAxroyOx
-   A==;
-X-CSE-ConnectionGUID: wyvS8kJoRnC+UFzC5HVVLw==
-X-CSE-MsgGUID: ZW5+sLUoShOuYPL7SPyNvw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11944"; a="1432347"
-X-IronPort-AV: E=Sophos;i="6.27,175,1787036400"; 
-   d="scan'208";a="1432347"
-Received: from fmviesa013.fm.intel.com ([10.60.135.153])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Oct 2026 15:01:25 -0700
-X-CSE-ConnectionGUID: lztQIbpCRMuoVocurmiTIQ==
-X-CSE-MsgGUID: TBTn6lRzSBuaFwov+Osmkw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,175,1787036400"; 
-   d="scan'208";a="5564792"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
-  by fmviesa013.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Oct 2026 15:01:24 -0700
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Fri, 23 Oct 2026 15:01:09 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49 via Frontend Transport; Fri, 23 Oct 2026 15:01:09 -0700
-Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.14) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Fri, 23 Oct 2026 15:01:09 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CbXowxvxE6bpr64qw3rBJ2tB7Hq4rzFdp4rdEJ4uPh0uIzLT06E3bcbrfdIlnhiMtAWp7sW7qkRdKGH+NK4NBd6MPWtrdPv2JoglSDpucfydEK4zy6fWdr8py6iBDOq5TMiCscCU7fCbDo4zMWLOKRJL1mXSWTGKixEtf+4oSzK/UziWFShAp1KmNlrjHEx6aWH5mbOuZzlh3mZf5rPFL1hnjRiksZpHLm1w+BHbKlHhwgedWUWrttNNyF0GmCQ3xmyiBjii3EKBlPXrzI6lu0rAAEB3T7h7+U2XXb0STTXoaol1nZoW28a+NHf2/7TXQ1keoNK1tQAvQFFH26KfQw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KCRaQdNwhXiN29y1pUzdMM9XcInttjlg16Vc1GHRars=;
- b=xxHk+I6mM0r7NAlg6JeYlr1sF3fzaLSg/gIK8pPROXZZzYsBUPClK9VLXJTT0JT0wL5t+ZwYhdMnjtvspnbMfDu0zzBOjMbVSFtftUG5tV3CIYsVqD+uEdnptlBXtXoGs5erHq8azYcLErKs2vSXv0V/it8mMyx+hw3/xYfkpttG7lwXGFSUXfEOHP1MscbZap4xend3cUI8+V4+3zp2M1DHFhMT/pIg5owrrspatWVKXlbAU6KVriNaEQhFpeF8gajqyTqELEyRxfon7vv9JAZOjIH9vBlZcodiRhjie8/n4m8TVZx6pnsMXcBLlUCQN3m4yomGc9iMdOZ0bHMP8g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from PH0PR11MB5095.namprd11.prod.outlook.com (2603:10b6:510:3b::14)
- by IA1PR11MB8100.namprd11.prod.outlook.com (2603:10b6:208:445::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Fri, 23 Oct
- 2026 22:01:07 +0000
-Received: from PH0PR11MB5095.namprd11.prod.outlook.com
- ([fe80::770b:7229:68c0:5ded]) by PH0PR11MB5095.namprd11.prod.outlook.com
- ([fe80::770b:7229:68c0:5ded%3]) with mapi id 15.21.0546.017; Fri, 23 Oct 2026
- 22:01:06 +0000
-From: Gustavo Sousa <gustavo.sousa@intel.com>
-To: <sashiko-reviews@lists.linux.dev>, <intel-xe@lists.freedesktop.org>
-Subject: Re: [PATCH 03/10] drm/xe: Use picosecond as common unit in
- adjust_idledly()
-In-Reply-To: <sashiko-outbox-183245@kernel.org>
-References: <20261023-wa_16031259911-v1-0-b0453f79c4e1@intel.com>
- <20261023-wa_16031259911-v1-3-b0453f79c4e1@intel.com>
- <sashiko-outbox-183245@kernel.org>
-Date: Fri, 23 Oct 2026 19:00:58 -0300
-Message-ID: <87ld7ohyat.fsf@intel.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: SJ0PR13CA0075.namprd13.prod.outlook.com
- (2603:10b6:a03:2c4::20) To PH0PR11MB5095.namprd11.prod.outlook.com
- (2603:10b6:510:3b::14)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=BW63KCzC
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4a35a60499eso1092695e9.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 15:30:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792794620; cv=none;
+        d=google.com; s=arc-20260327;
+        b=k5yZHJHAKbj4ujjV8yrM4TkwwbDQ5N3ujt5YPHjLwgSSO7lQ2CSrwh89xsRG+fHuTy
+         6owJqDTiuRhPdJdRY6m9/N8Syr7W+V/vGnR1c2CzDABtLAb1kDrd2gd6KqpCHQUHQwiP
+         wugwEdDdw/7S6iw5RqSE9VpiiPmrt3wiczgLDa6TDkLynPHTDsnLXG7oEOyixCW0QHP1
+         oxfrL8LVDCH5zrAt0nZY6/5USpbryqF557qPJwKIYcPN0GsLP0V4hxCXhHyimGTzhMYu
+         L4b9AvoJhDW9GXL7gUUzwLHF/kd2EZVNm0n4HxFniywbUNCrX08TmNiejI9KTmg/tUIP
+         ldCA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=b1vVmrd2o2bhAY35x1Wt33iUoT/bMDNuOnBZV1/6OMk=;
+        fh=Hze5d3d0Z382PtgOb2+CzJ4z7uaRv7y1hGw2r7dwflQ=;
+        b=n47t5Zfvr3E+k8vzIaP5yC4pBio89JvHlD3Ny7wYZRoOT4JgvJ+2wRuerkCPtUj5Ie
+         pn9hTTn6n1sVgoU+XUj1xCW1cTOwPKDbzIGr9zGhiPw5Wbxq/P6N1x91Kxd1QVWkcbKp
+         aTyeHhmcV3udxDabqx9U5LO7GThde9Ie2XVqBuC5GzMDXzdVWrifO4BNfO3lC4uXYgvq
+         BtidgkCr4jNwFmnHg9G35czMb9/cBauy3UnSCf27uUrkAmB6KTZiXr5gbg+2+POBlrk2
+         mb6y8opNQG6Lpu8fJ+575MAngnDDimXFCXuwEt+Ebsxz73cXMlxODSXhqc7UnM+zbJbq
+         QRaw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792794620; x=1793399420; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=b1vVmrd2o2bhAY35x1Wt33iUoT/bMDNuOnBZV1/6OMk=;
+        b=BW63KCzCxIyselY4GulAjFTdKd1atojEfwDjbxTmcP3C0tFm6acKYx/gSqutNY10i7
+         W97QEYHBqjw06PuK+q31BynHumattf3xwvt5WPqbHwgzPNTsMJIPsuxRX2xJByTtdJh9
+         iQ6/wp+NlGruKrCiTu82CCLMS6hUGlgewpCOBiQc4b7Oxez2ytMvQP53nr2Tyf4myH0c
+         TUZngh16/+FZAK1qXxIaRVEqyo8RY/8wy0f2+upeNehBYt27U4N5pYdiGmQTo5VGYgYB
+         dLVrxhoLyfNUqVzPPEoqwvnag/z/xLM4HhDAnVKT2lxEGYlOl6VT9GApx8wB+zfyUp1a
+         cHwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792794620; x=1793399420;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=b1vVmrd2o2bhAY35x1Wt33iUoT/bMDNuOnBZV1/6OMk=;
+        b=pyKn6dINmsUEr/B4Djer5eQIBlsLyWlgRC7bWGER/Txz+qEq8El6n5ODoh5TKSJA2o
+         5H9wXrZ/7TVg5+R1uMK50CldAOtxJWnNjqyf/s+vbixrcTJrgeacymIy440TiOB5xEqJ
+         N2oREYqhzeviNf0a2OVXzVGATAEojkErR15i/2STuI0q2V7m7m3yUC4gOvWI2c6W/uVu
+         h/GkrGyaZTrL05OrEBXi7IzO2vl+Yi8HCdBqro05Lt1YURshotU8TDWaZJ0wv83IWwUf
+         PQ6edbUCyca1oUe1vJ96Xktfs6zHenfzh7SVEkTiT4jgUw5pwddZx/PY3716A4/lgr3E
+         LUrQ==
+X-Gm-Message-State: AFq9FYKBzyf4TQh0AeIwxRd3bNRyXC+z9rIvSLUd7295X6fxXsyJ7+7f
+	i/RSGC77xJor6vq3C+Uu2E0oGbbgvO4q5SgN7w7GP81VaYenxNif+AQum/1wG8Icz25myWF6vZt
+	FGqGKvze0Y4YuefX8nZYRxgdhR15gkHCJaa0QrIn4NA==
+X-Gm-Gg: AYBFou3bmjGNKJPSJmIjop9U7+QfA6BZNDa5U1fCzyDcHuNUg6umGfIT0vd3tj0l6T6
+	XpG4Y2+GfYWg5fD9rvdeC47oE87cO91ioC1rdcIudS4Z/Rcswbz00U/V/4/7FdWACbDHMF5AvFE
+	quxbmu05Iw75Aduull1+Zyj1/a61Vo5WBcDrlYzV2W2EQY3UGTxpKqD3jV9xgrw6OplL4n4G6Ad
+	ws/wfDQjkaIFtnXhuf/pRSdSSA1+JI2IB4aJjKphxpGDvmEtZMMMvL8QAOIiVs3k4VzVANZIszw
+	4agaOHFnsk4ZvPw1SwrsJ/O4BGPBZ2rINQ1q3OU0czO9HLdpLGsxbufxTlbqTkakvNip5BV6YtL
+	lQnWI8nbyV+agTn1ER1JNHPWRGXTGuinlbxw1Z8fyeZeBNRe7fXu0FFjay1cH8Em35G7uDevwpc
+	XJJBHqdOWno5F33/dQzvtFI0Er9cfHSRFIzaHimKm/XPD9NFeOj7Ex
+X-Received: by 2002:a05:600c:4f41:b0:4a2:150f:1603 with SMTP id
+ 5b1f17b1804b1-4a35acb3e14mr4128865e9.25.1792794619650; Fri, 23 Oct 2026
+ 15:30:19 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -132,189 +104,420 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR11MB5095:EE_|IA1PR11MB8100:EE_
-X-MS-Office365-Filtering-Correlation-Id: 97d42faa-e995-4dad-2a27-08df31512345
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|376014|366016|1800799024|260925021911599003|260925021311599003|261022075727099003|56012099006|260925022911599003|11063799006|4143699003|261009223027099003|261021123027099003|261021121427099003|10067099003|261022105027099003|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info: G1nYrPJ2LpcXbXVMsAth7OjFELNDSSrnKWPkGwRLY3tIYJf3daFGikXPQjWhd4IzVqxkPEh1OI77Glng/mZUrhLfyfFfrf80SWpP3LNcr41Ot1ZvAAoh2Lvweljwj+bBcWQZUckAmu0yK9GdPQIK3AcEQlT5EJbM5VodtMTHwSEtVaKFXM7QunVcW+9MPM9/nGBCtKFvQcW1YJP7Ej/EbXvr9Zm05jvr67NAozgdU8RS5zHJUDXNhmIha8eSAXE2l7HO3y6BC+uJXnxPwWyxyV7Q7EXwhkt3mviBeaX8EcC1inv2EMF60AbeAdgSVeqwSy0B+On9Xu6kIasHFplF3IxWN19M54U53NOtcOiiuThiZmM/QVRExw1cFvEoO+IJH8nDLPEKtkcjIoKZxIATs1oeOlPnL2oKg2ozQaN4Ko7VhRH2l/F4xNUMkSmCL93prHNY9f3ZvDdZIyWoWZqjvE8R4Fyf4L5E+g5OJmxlnnKWzhBgJB45F0dQo6pWug3LveZHyEiP+SsymAOcBgqhu8L6Q2+YjB56L62CVP6KSM1YVgfLk0Qo9hpS4fZJ96lbdPjT+T8btFSzPIjBQQuGh0t/inZX+3HWn9zNryUcsCA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR11MB5095.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(260925021911599003)(260925021311599003)(261022075727099003)(56012099006)(260925022911599003)(11063799006)(4143699003)(261009223027099003)(261021123027099003)(261021121427099003)(10067099003)(261022105027099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WDdHU0VtNE0vNDBQRHNPUVZHY2RNWFJWbVlBVmpJakJBM1NJODJOa3VDMUJx?=
- =?utf-8?B?L3FvTWJWNTR0OVd1MHJHd3B6aU5LK2V1QVVJY0x6QllYL1I2K2plUWVRa1BG?=
- =?utf-8?B?N3BUNVdtMUZNWHZQYXVPTHVwc3IwWVBZUDZtYWFkR01GcVhIdlhKOUxBQ05W?=
- =?utf-8?B?TnVCRnUrL1hZYnpGbUhIK1JObXBUL3d6WWJGdTNSbUlHWVh1L3hvdVBQczl3?=
- =?utf-8?B?Rk0rSXdWMzF4aE9oeGkyVkZBQ0JQWXBxRUMwNmtNME54cVI0c0hXbVhXUGpw?=
- =?utf-8?B?bUY0NG9LWTEvMEN0cFl0QjFaMExmK0VldjJRVGl2Y1dvTjhUNUVOVmpJUVhB?=
- =?utf-8?B?SFVmcDFENm44RGFXN1plWTEyV2cxWm5obVlWRTdDYkkrck9FSUdPQ0FPRDh4?=
- =?utf-8?B?ejhlcCtqNGNvTjZEZXQzbHhhdTU3KzYyQjBNbmhuMGFYQWhTbzIyQ3hVSmV4?=
- =?utf-8?B?MStOVUtUOHRYbnM5VEg2UUJoYmtYQ0JpWmY3U3RDVmNNYkpmRzFab2hjcUor?=
- =?utf-8?B?N3g3c2h4TXNDbFA1aU5Qdm02L0dnUFUzK1RuYi9qZUJBM0NvTVRvdk15TUoz?=
- =?utf-8?B?d0JyeFNOOU1YVWNDWVAyVGZpeXNMeXFCNysxL2RscGJBU3FiUlV4L3NHbkEv?=
- =?utf-8?B?MEp4ZjVJWkdwd2pPZGdQbUJXTnBkcWcyaGtPb3RYWlpFMkYwNTdhaHR5UTdD?=
- =?utf-8?B?Z3B4WFZ5Qmw1d2x1T3hCOGVyeUdZY25CZGpoeEJkalhhQ3lOdXRqL2c4Tk9w?=
- =?utf-8?B?QS85UGhEaGQ1UGZodmhreGx3Q2ZkR2RMRXZuQ2YzdGJnbERJTjVvRGl6V1c1?=
- =?utf-8?B?aUZWSXBZR2x6YzZ3K0VBRC82Yng4RHBLLzZIVFB3WDhUSTFPeVcvR0ZUNmQr?=
- =?utf-8?B?YTBWczRyVFBwR1E2UHZqekZOVnRPSzJob2h3UXV5MzB5dmtoNXp5aXRRR0l1?=
- =?utf-8?B?SkY1akpPbVFTTWdEWXNvU0R6S1pwaUV4MCtEU3ZTeDF5Q0h5eFdtZ1JqUzEz?=
- =?utf-8?B?MU1vdit5SGN0eVpTeVZkVTlteUpMTWVKcjNjVlFoVUVNWXRiNjNRaTc0ems2?=
- =?utf-8?B?ek9Zb3Ixd09BQXpKWGl5akR1all2VklvSE9FU3pmNEl0ZmYrcVNqeWh2Zk1q?=
- =?utf-8?B?dDM2ZGdYajlwMkRsWGNYY0orVkx1ZFpTZ2xPWlRYdUU2ZmdxZTgxcE91Nzc0?=
- =?utf-8?B?MTJtNEpPR1NPVHVNZyt0MzQ4bFJVampvUlQ2OHB2TGsyMlVUb2FnOFhUa0Jh?=
- =?utf-8?B?SjJ6WE9TQmk2bWQ4aDFqMEltZzdmQS9RMkNGMVd5VG5pZzgxNVlKZTVQSXpx?=
- =?utf-8?B?cC9PRVZKd3hSZzJ6bU54TVFNbGR4TDZHY2xGbWhEK1hFdzJJeG5FLzBmRTMw?=
- =?utf-8?B?eW1kaTlqT1p5MFVBMTErSnFZbVlWMlhYK2xKcWVoSThPZEdsSzRtYUw1ZDF2?=
- =?utf-8?B?ZXJ6dU9DOEtSUStTZWRINmpSRjQ3bmNPZnMwYXM0ZWgwWUdXOTk2blhPc2xS?=
- =?utf-8?B?enVtVHE4YURvNmlBZDlSOTlzdk5Ib3hjWkEzUDJyL0ltY0VvSEw1aFZOa3M1?=
- =?utf-8?B?YnlKNlQ4T09OZS9pMUlNTUtBNjlONjUra2xkYWdxZ0Y1WXBxTE9QR3dIV2hI?=
- =?utf-8?B?a2w1bjRWL2l0T1k0RjRiVjhwL0xLcnY2R25IRFBaaDlKazNXNDZKR0JSdHlM?=
- =?utf-8?B?Y0pnY05JdWpCMjNhNkZXb1hmbWhoWS84VFFBYXpSdzdtQ2ZKLzNEaDJ3TTFF?=
- =?utf-8?B?RjE1MWdKazhzTTAvQjNZK2QrS3FLQXpLNHUwa1JPNzI4VHRLRnNmSlRRSEY3?=
- =?utf-8?B?MnllSFErY1lnczNBL0FxTjNPNG9CSHJ5Ym1GYVBPTzFJRmpLTmtpUlczMkh0?=
- =?utf-8?B?K2FYdDFhL2NHNmdrQURIdGhtVnZXRW5LRDZOaTQ0bE94UjZJQ1Y3ekRMVHZZ?=
- =?utf-8?B?TW5hWXZUdG9XU1k4ZnRKQVovczVJek9VYkJFSDB5bm83aDNRZ0p1aEw3QkJO?=
- =?utf-8?B?bXNGM0UyVWVHOHlRUkVnRWhQdVoyMEFjT05KV3grOXM1K3JwTnJZT01sU3ZY?=
- =?utf-8?B?SThCZXJWamJFR0Y5bDZnV29HYTVFaFdObDZYcVpqK3ZhOWl0ckVYcGFMYkZB?=
- =?utf-8?B?eDlTalA3dVJVcGtTZUtBUHpZbHR2M0ZBdHJMNjdNakcxZ2MzRXlCVFhick5r?=
- =?utf-8?B?d2JsMGRVYnIwa0pWNU1BUHVHYWpoRDFITnRDbVltNHUxakhESzQyS3hNVkN4?=
- =?utf-8?B?bUd2MUtVZzdZWkdpNnp1UERZUFU5MFc1UndoTHpPVE9yemtsMFhoZEpaaGNQ?=
- =?utf-8?B?WUFubVUxdlEwU1oxTG1QZ3dHTUpYS1FUaXZRSG9qVjd5dmovRGJWUT09?=
-X-Exchange-RoutingPolicyChecked: mAuUWz74XKkulIq3Hdti4rYdoAJUuVDd/9M8Pz7vHBeYDtas6o/K0GJwLwB/LrMvYXc6W5cUblPnrxVPXcd6jfCClbx0MiPI1YKJ99njkzoyyzthO1uPA+XX7qHsm1zQzIh4kuxagTmOs4tjzupif1+/ySWEZ7DhgXAtFWVo6w1q1LZN1fJSjAcgm2I0h8sLp/2MeQaovukiH+PXgy50wuBn81k17cCSCUh5YPhlunY2jS4hpeOwur5zLbQlhCHorqKQFhdG/cEFct6SBoZ02Mp/0zwzoY+QgdT6MVWEKdiyhV/Rsx4/bwOKftOiXElKWypp2QZbkHC+MlnBN2XqAQ==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 97d42faa-e995-4dad-2a27-08df31512345
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR11MB5095.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2026 22:01:06.5793
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BSrPDfQOWcVXWLeHvRf2szPjS+COSCYeJGnAeuNIxXPvYkAHqFpkhHnmD+auV9gKOZPPFZxAmksJJ61EahglEA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB8100
-X-OriginatorOrg: intel.com
+References: <20261021060323.553433-1-nphamcs@gmail.com> <20261021060323.553433-5-nphamcs@gmail.com>
+ <sashiko-outbox-181078@kernel.org>
+In-Reply-To: <sashiko-outbox-181078@kernel.org>
+From: Nhat Pham <nphamcs@gmail.com>
+Date: Fri, 23 Oct 2026 15:30:07 -0700
+X-Gm-Features: AclHuK9f3EoMXWJVPyND1AFMLPSEq7pySnN5Iv4BK8FN6E0iGCBP-yL0F6SS_5w
+Message-ID: <CAKEwX=OBBfF5U+JHDfnugk5KGFEnOPQkkwZRfeii1iEQUNVG4Q@mail.gmail.com>
+Subject: Re: [PATCH v6 04/12] mm, swap: support physical swap as a vswap backend
+To: sashiko-reviews@lists.linux.dev
+Cc: akpm@linux-foundation.org, chrisl@kernel.org, kasong@tencent.com, 
+	hannes@cmpxchg.org, mhocko@kernel.org, roman.gushchin@linux.dev, 
+	shakeel.butt@linux.dev, yosry@kernel.org, david@kernel.org, 
+	muchun.song@linux.dev, shikemeng@huaweicloud.com, baoquan.he@linux.dev, 
+	baohua@kernel.org, youngjun.park@lge.com, chengming.zhou@linux.dev, 
+	ljs@kernel.org, liam@infradead.org, vbabka@kernel.org, rppt@kernel.org, 
+	surenb@google.com, qi.zheng@linux.dev, axelrasmussen@google.com, 
+	yuanchu@google.com, weixugc@google.com, riel@surriel.com, gourry@gourry.net, 
+	haowenchao22@gmail.com, corbet@lwn.net, hughd@google.com, 
+	baolin.wang@linux.alibaba.com, tj@kernel.org, mkoutny@suse.com, 
+	skhan@linuxfoundation.org, rdunlap@infradead.org, kunwu.chan@linux.dev, 
+	kernel-team@meta.com, linux-mm@kvack.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-sashiko-bot@kernel.org writes:
+On Wed, Oct 21, 2026 at 11:19=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+Working through Sashikos list now!
+
+>
+> Thank you for your contribution! Sashiko AI review found 3 potential issu=
 e(s) to consider:
-> - [High] drm/xe: 32-bit multiplication overflow in adjust_idledly()
+> - [High] mm: try_to_unuse() dirties unmapped vswap folios rejected by pag=
+eout()
+> - [High] mm: try_to_unuse() leaks vswap folios and slots when swap count =
+is zero
+> - [High] mm: large vswap folios declined by zswap fail swapout without sp=
+litting
+
+IMHO:
+
+* First issue is a real scenario, but it's rare and the trade-off of
+fixing it is nuanced.
+
+* Second issue is real, but we're just adding (a rare) triggers to an
+existing problem.
+
+* Third issue is a problem because of the second issue. The fix is a
+one-liner though, and is a smart thing to do either way, so I'll just
+follow sashiko's recommendations here!
+
+More details below:
+
 > --
 >
-> commit 6274ddb08f811b772af3c2cc759b8be4b565872c
-> Author: Gustavo Sousa <gustavo.sousa@intel.com>
+> commit f1735375be4432e3cb8facdcc6b588e080aeb34c
+> Author: Nhat Pham <nphamcs@gmail.com>
 >
-> drm/xe: Use picosecond as common unit in adjust_idledly()
+> mm, swap: support physical swap as a vswap backend
 >
-> This commit changes adjust_idledly() to use picoseconds instead of
-> nanoseconds as the common unit of time to avoid precision loss and
-> eliminate extra integer divisions.
+> This commit adds physical swapfile support as a backend for virtual swap
+> entries when zswap declines a folio during swap_writeout(), tracking the
+> reverse mapping via vswap-tagged swap_table entries on the physical clust=
+er.
+> During swapoff, try_to_unuse() reads vswap-backed physical slots into the
+> swap cache and releases their physical backing slots before walking proce=
+ss
+> and shmem mappings.
 >
->> diff --git a/drivers/gpu/drm/xe/xe_hw_engine.c b/drivers/gpu/drm/xe/xe_h=
-w_engine.c
->> index 6872d1ca656e2..dcc8a6d53c5d0 100644
->> --- a/drivers/gpu/drm/xe/xe_hw_engine.c
->> +++ b/drivers/gpu/drm/xe/xe_hw_engine.c
->> @@ -585,17 +585,19 @@ static void hw_engine_init_early(struct xe_gt *gt,=
- struct xe_hw_engine *hwe,
->>  	xe_reg_whitelist_process_engine(hwe);
->>  }
->> =20
->> -static u32 idledly_floor_ticks(u32 idledly_ns, u32 idledly_units_ps)
->> +static u32 idledly_floor_ticks(u64 idledly_ps, u32 idledly_units_ps)
->>  {
->> -	return DIV_ROUND_DOWN_ULL((u64)idledly_ns * 1000, idledly_units_ps);
->> +	return DIV_ROUND_DOWN_ULL(idledly_ps, idledly_units_ps);
->>  }
->> =20
->>  static void adjust_idledly(struct xe_hw_engine *hwe)
->>  {
->>  	struct xe_gt *gt =3D hwe->gt;
->> -	u32 idledly, idledly_hw, idledly_reg_val, maxcnt;
->> +	u32 idledly_reg_val, maxcnt_reg_val;
->>  	u32 idledly_units_ps =3D 8 * gt->info.timestamp_base;
->> -	u32 maxcnt_units_ns =3D 640;
->> +	u32 maxcnt_units_ps =3D 640000;
->> +	u64 idledly_ps, idledly_hw_ps;
->> +	u64 maxcnt_ps;
->>  	bool inhibit_switch =3D false;
->>  	bool wa_applied =3D false;
->>  	bool clamped_below_maxcnt =3D false;
->> @@ -604,29 +606,27 @@ static void adjust_idledly(struct xe_hw_engine *hw=
-e)
->>  		return;
->> =20
->>  	if (XE_GT_WA(gt, 16023105232) || XE_GT_WA(gt, 14025941587)) {
->> -		u32 mincnt_idledly_ns =3D 5000;
->> +		u32 mincnt_idledly_ps =3D 5000000;
->> =20
->>  		/* xe_gt_clock_init() warns and zeroes timestamp_base on unknown crys=
-tal clock. */
->>  		if (!idledly_units_ps)
->>  			return;
->> =20
->>  		idledly_reg_val =3D xe_mmio_read32(&gt->mmio, RING_IDLEDLY(hwe->mmio_=
-base));
->> -		maxcnt =3D xe_mmio_read32(&gt->mmio, RING_PWRCTX_MAXCNT(hwe->mmio_bas=
-e));
->> -
->>  		inhibit_switch =3D idledly_reg_val & INHIBIT_SWITCH_UNTIL_PREEMPTED;
->> -		idledly =3D REG_FIELD_GET(IDLE_DELAY, idledly_reg_val);
->> -		idledly =3D DIV_ROUND_CLOSEST_ULL((u64)idledly * idledly_units_ps, 10=
-00);
->> -		idledly_hw =3D idledly;
->> -		maxcnt =3D REG_FIELD_GET(IDLE_WAIT_TIME, maxcnt);
->> -		maxcnt *=3D maxcnt_units_ns;
->> +		idledly_ps =3D REG_FIELD_GET(IDLE_DELAY, idledly_reg_val) * idledly_u=
-nits_ps;
->> +		idledly_hw_ps =3D idledly_ps;
->> +
->> +		maxcnt_reg_val =3D xe_mmio_read32(&gt->mmio, RING_PWRCTX_MAXCNT(hwe->=
-mmio_base));
->> +		maxcnt_ps =3D REG_FIELD_GET(IDLE_WAIT_TIME, maxcnt_reg_val) * maxcnt_=
-units_ps;
+> > diff --git a/mm/page_io.c b/mm/page_io.c
+> > index 61bb5c6e97595..ed8c037e4aa08 100644
+> > --- a/mm/page_io.c
+> > +++ b/mm/page_io.c
+> > @@ -209,6 +209,7 @@ static void swap_zeromap_folio_clear(struct folio *=
+folio)
+> >   */
+> >  int swap_writeout(struct swap_io_ctx *ctx, struct folio *folio)
+> >  {
+> > +     swp_entry_t phys =3D folio->swap;
+> >       int ret =3D 0;
+> >
+> >       if (folio_free_swap(folio))
+>
+> [ ... ]
+>
+> > @@ -257,13 +264,21 @@ int swap_writeout(struct swap_io_ctx *ctx, struct=
+ folio *folio)
+> >       }
+> >       rcu_read_unlock();
+> >
+> > -     /* A vswap folio has no physical slot to write to. */
+> >       if (is_vswap_entry(folio->swap)) {
+> > +             phys =3D folio_realloc_swap(folio);
+> > +             if (!phys.val) {
+> > +                     folio_mark_dirty(folio);
+> > +                     return AOP_WRITEPAGE_ACTIVATE;
+> > +             }
+> > +     }
 >
 > [Severity: High]
-> Can the multiplications computing idledly_ps and maxcnt_ps in
-> adjust_idledly() overflow 32-bit unsigned arithmetic before being widened
-> to u64?
+> What happens here when a large folio (order > 0) with a virtual swap entr=
+y
+> is declined by zswap_store() and the underlying physical swap cannot sati=
+sfy
+> a high-order allocation?
 >
-> In include/drm/intel/reg_bits.h, REG_FIELD_GET() returns a u32:
+> During reclaim in shrink_folio_list() or shmem_writeout(), folio_alloc_sw=
+ap()
+> allocates from vswap_si via vswap_alloc() -> cluster_alloc_swap_entry():
 >
->     #define REG_FIELD_GET(__mask, __val)	((u32)FIELD_GET(__mask, __val))
+> mm/swapfile.c:cluster_alloc_swap_entry() {
+>         if (order && !(si->flags & SWP_BLKDEV) && !swap_is_vswap(si))
+>                 return 0;
+> }
 >
-> Because idledly_units_ps and maxcnt_units_ps are both declared as u32,
-> both multiplications are evaluated in 32-bit arithmetic before assignment
-> to u64 idledly_ps and u64 maxcnt_ps.
+> Because swap_is_vswap(vswap_si) is true, vswap_alloc() succeeds for order=
+ > 0
+> folios even when the physical swap devices are regular swapfiles without
+> SWP_BLKDEV or have fragmented high-order clusters. As a result,
+> folio_alloc_swap() returns 0 instead of -E2BIG, bypassing the
+> split_folio_to_list() fallback in both shrink_folio_list() and
+> shmem_writeout().
 >
-> For idledly_ps, dropping the (u64) cast that was added in commit
-> d864065ea25e ("drm/xe: harden adjust_idledly() against divide-by-zero and
-> overflow") means IDLE_DELAY (a 21-bit field, REG_GENMASK(20, 0)) multipli=
-ed
-> by idledly_units_ps (up to 666,664 ps) wraps around U32_MAX whenever
-> IDLE_DELAY is >=3D 6443 ticks.
+> Later in swap_writeout(), if zswap_store() declines the large folio,
+> folio_realloc_swap() -> folio_alloc_phys_swap() attempts to allocate a
+> contiguous physical swap range of folio_order(folio), which always fails =
+on
+> non-SWP_BLKDEV swapfiles and fails when high-order physical clusters are
+> unavailable. swap_writeout() then marks the folio dirty and returns
+> AOP_WRITEPAGE_ACTIVATE without splitting it.
 >
-> Similarly, for maxcnt_ps, scaling the unit multiplier from 640 ns to
-> 640,000 ps in u32 means IDLE_WAIT_TIME (a 20-bit field, REG_GENMASK(19, 0=
-))
-> multiplied by maxcnt_units_ps wraps around U32_MAX whenever IDLE_WAIT_TIM=
-E
-> is >=3D 6711 ticks (~4.29 ms out of its ~671 ms range).
+> On subsequent reclaim passes, an anonymous large folio is already in the =
+swap
+> cache with PTEs referencing its vswap slots, so shrink_folio_list() skips=
+ the
+> !folio_test_swapcache(folio) block where split_folio_to_list() is called:
 >
-> When either product wraps, xe_gt_WARN_ON(gt, idledly_hw_ps >=3D maxcnt_ps=
+> mm/vmscan.c:shrink_folio_list() {
+>         if (folio_test_anon(folio) && folio_test_swapbacked(folio) &&
+>                         !folio_test_swapcache(folio)) {
+>                 ...
+>                 ret =3D folio_alloc_swap(folio);
+>                 if (ret) {
+>                         ...
+>                         if (split_folio_to_list(folio, folio_list))
+>                                 goto activate_locked;
+> }
+>
+> For a large shmem folio, shmem_writeout() removes the unsplit folio from =
+the
+> swap cache on AOP_WRITEPAGE_ACTIVATE without reaching its -E2BIG split pa=
+th,
+> repeating the same vswap_alloc() success and folio_realloc_swap() failure=
+ on
+> every pass.
+>
+> Can this cause large vswap folios declined by zswap to never split or swa=
+p
+> out?
+
+This is quite nuanced. I spent way too much time trying to reason
+about this, but seems like my documentation is lacking, so sashiko
+can't reason about it. I'll put down my reasoning here first, then
+update the documentation later.
+
+Zswap store can "fail" for a couple of reasons:
+
+1. Incompressibility: we'd actually still try to store the folio's
+subpages as-is in the zswap pool if zswap writeback is enabled. If
+zswap writeback is disabled, then we cycle the page through the LRU.
+But note that there is no difference, with or without zswap in the
+picture here. We'd just be splitting prematurely, but the
+incompressible pages would still remain in memory regardless.
+
+2. Zswap rejects the page due to limits being hit - this one is
+trickier. For the cgroup case, I already checked at vswap_alloc()
+time. If the cgroup disables zswap, then we go for physical swap
+allocation, where we avoid the physical swap backends that do not
+support high-order allocation, or split if no such backends are
+around.
+
+For the global zswap limit, I thought about also checking it and
+bypass vswap based on that limt at vswap_alloc() time, but decided
+against it, because I wanted to trigger the global zswap shrinker in
+zswap_store() path, and giving zswap opportunity to try again.
+
+(I'm also against capping zswap size as well, but that's another story).
+
+
+>
+> > diff --git a/mm/swapfile.c b/mm/swapfile.c
+> > index 69fac2d905a4f..be66ac79313ce 100644
+> > --- a/mm/swapfile.c
+> > +++ b/mm/swapfile.c
+>
+> [ ... ]
+>
+> > @@ -3087,19 +3287,95 @@ static unsigned int find_next_to_unuse(struct s=
+wap_info_struct *si,
+> >
+> >  static int try_to_unuse(unsigned int type)
+> >  {
+> > +     struct mempolicy *mpol =3D get_task_policy(current);
+> >       struct mm_struct *prev_mm;
+> >       struct mm_struct *mm;
+> >       struct list_head *p;
+> >       int retval =3D 0;
+> >       struct swap_info_struct *si =3D swap_info[type];
+> >       struct folio *folio;
+> > -     swp_entry_t entry;
+> > -     unsigned int i;
+> > +     struct swap_io_ctx ctx;
+> > +     swp_entry_t entry, vswap_entry, phys;
+> > +     unsigned long swp_tb;
+> > +     unsigned int i, j;
+> >
+> >       if (!swap_usage_in_pages(si))
+> >               goto success;
+> >
+> >  retry:
+> > +     /*
+> > +      * Free vswap-backing slots (Vswap-tagged) first. Walk physical
+> > +      * clusters, read the vswap entry from the rmap, ensure the data
+> > +      * is in the swap cache, and transition PHYS to FOLIO. Freeing th=
+e
+> > +      * physical backing is enough, so no page table walk is needed.
+> > +      */
+> > +     i =3D 0;
+> > +     while (vswap_is_enabled() &&
+> > +            swap_usage_in_pages(si) &&
+> > +            !signal_pending(current) &&
+> > +            (i =3D find_next_to_unuse(si, i)) !=3D 0) {
+> > +             swp_tb =3D swap_table_lookup(swp_entry(si->type, i));
+> > +             if (!swp_tb_is_vswap(swp_tb))
+> > +                     continue;
+> > +
+> > +             vswap_entry =3D swp_tb_vswap_to_swp_entry(swp_tb);
+> > +
+> > +             folio =3D swap_cache_get_folio(vswap_entry);
+> > +             if (!folio) {
+> > +                     folio =3D __swap_cache_alloc_folio(vswap_entry,
+> > +                                                      GFP_HIGHUSER_MOV=
+ABLE,
+> > +                                                      BIT(0), NULL, mp=
+ol,
+> > +                                                      NO_INTERLEAVE_IN=
+DEX);
+> > +                     if (IS_ERR(folio)) {
+> > +                             if (PTR_ERR(folio) =3D=3D -ENOMEM)
+> > +                                     return -ENOMEM;
+> > +                             continue;
+> > +                     }
+> > +                     folio_add_lru(folio);
+> > +                     ctx =3D (struct swap_io_ctx){};
+> > +                     swap_read_folio(&ctx, folio);
+> > +                     swap_read_submit(&ctx);
+> > +             }
+> > +             folio_lock(folio);
+> > +
+> > +             if (!folio_matches_swap_entry(folio, vswap_entry)) {
+> > +                     folio_unlock(folio);
+> > +                     folio_put(folio);
+> > +                     continue;
+> > +             }
+> > +
+> > +             /*
+> > +              * Re-validate under folio lock: rmap holds folio->swap +=
+ j
+> > +              * for some j in [0, nr_pages). Check folio->swap still m=
+aps
+> > +              * to the contiguous physical run that includes our slot =
+i.
+> > +              */
+> > +             j =3D vswap_entry.val - folio->swap.val;
+> > +             phys =3D vswap_to_phys(folio->swap);
+> > +             if (!phys.val || swp_type(phys) !=3D type ||
+> > +                 swp_offset(phys) + j !=3D i) {
+> > +                     folio_unlock(folio);
+> > +                     folio_put(folio);
+> > +                     continue;
+> > +             }
+> > +
+> > +             folio_wait_writeback(folio);
+> > +             folio_release_vswap_backing(folio);
+> > +             /*
+> > +              * Drop a folio whose read failed rather than dirtying
+> > +              * uninitialised memory; the next fault finds no backing =
+and
+> > +              * gets SIGBUS.
+> > +              */
+> > +             if (unlikely(!folio_test_uptodate(folio)))
+> > +                     swap_cache_del_folio(folio);
+> > +             else
+> > +                     folio_mark_dirty(folio);
+>
+> [Severity: High]
+> Can pageout() ever write out the unmapped swap-cache folios allocated and
+> dirtied by this pre-pass?
+>
+> When __swap_cache_alloc_folio() -> __swap_cache_alloc() allocates a fresh
+> swap-cache folio here, it sets PG_swapbacked and PG_swapcache, but leaves
+> folio->mapping as NULL because try_to_unuse() does not map the folio into=
+ a
+> VMA via folio_add_new_anon_rmap(). Shmem folios in the swap cache also ha=
+ve
+> folio->mapping set to NULL. As a result, folio_test_anon(folio) is false.
+>
+> When shrink_folio_list() later scans one of these dirty swap-cache folios=
+ on
+>  the LRU, folio_mapping(folio) returns &swap_space and shrink_folio_list(=
 )
-> can trigger spuriously, and the Wa_14025941587 and Wa_16023105232 checks
-> can program a corrupted IDLE_DELAY tick count into RING_IDLEDLY.
+> calls pageout():
 >
-> Should idledly_units_ps and maxcnt_units_ps be declared as u64 (or the
-> operands cast to u64 before multiplying)?
+> mm/vmscan.c:pageout() {
+>         if (folio_ref_count(folio) !=3D 1 + folio_nr_pages(folio) || !map=
+ping)
+>                 return PAGE_KEEP;
+>         if (!shmem_mapping(mapping) && !folio_test_anon(folio))
+>                 return PAGE_ACTIVATE;
+>         if (!folio_clear_dirty_for_io(folio))
+>                 return PAGE_CLEAN;
+> }
+>
+> Because mapping is &swap_space (!shmem_mapping(mapping)) and
+> folio_test_anon(folio) is false, pageout() unconditionally returns
+> PAGE_ACTIVATE before reaching swap_writeout(). Wouldn't this prevent recl=
+aim
+> from ever writing these dirtied vswap folios out to zswap or another swap
+> device until they are faulted in?
 
-Thanks for catching this. I'll make sure to add the cast to u64 to the
-operations in v2.
+I think this a pre-existing issue (which vswap adds a new, rarer
+trigger). Readahead of zswap entries gets us into this exact spot...
 
---
-Gustavo Sousa
+I think what we need is fixing the check above:
+
+        if (!shmem_mapping(mapping) && !folio_test_anon(folio) &&
+            !folio_test_swapcache(folio))
+                 return PAGE_ACTIVATE;
+
+So if the page is in swapcache, we still proceed with the pageout...
+
+That will take care of both triggers. But this sounds like a separate
+fix from this patch series. I can send an RFC later, but let me double
+check first!
+
+> [Severity: High]
+> Does this pre-pass leak the folio, its vswap slot, and its memcg swap cha=
+rge
+> if the vswap entry's swap count is 0 (or drops to 0 concurrently)?
+>
+> There are two ways the vswap entry can have swap_count =3D=3D 0 when reac=
+hing
+> folio_release_vswap_backing(folio):
+>
+> 1. While try_to_unuse() holds the folio lock (during swap_read_folio() IO=
+ or
+>    before folio_unlock()), the owning process exits or zaps the swap PTE =
+via
+>    zap_nonpresent_ptes() -> free_swap_and_cache_nr() ->
+>    swap_put_entries_cluster(). That path decrements the vswap slot's swap
+>    count to 0 and calls __try_to_reclaim_swap(), which fails folio_tryloc=
+k()
+>    and bails out expecting the folio lock holder to clean up.
+>
+> 2. A prior read fault in do_swap_page() mapped the folio, decremented the
+>    vswap entry's swap count to 0 via folio_put_swap(), and left the folio=
+ in
+>    the swap cache because should_try_to_free_swap() saw
+>    folio_phys_swap_backed(folio) =3D=3D true.
+>
+> After folio_release_vswap_backing(folio) frees the physical slot,
+> folio_phys_swap_backed(folio) becomes false, and try_to_unuse() marks the
+> folio dirty without calling folio_free_swap(folio) (unlike the post-pass =
+at
+> the end of try_to_unuse()).
+>
+> In the first case, the unlocked folio is unmapped, has folio->mapping =3D=
+=3D NULL
+> (!folio_test_anon(folio)), has swap_count =3D=3D 0, and is no longer phys=
+ically
+> backed. pageout() rejects it with PAGE_ACTIVATE before reaching
+> swap_writeout() -> folio_free_swap(), and the activate_locked path in
+> shrink_folio_list() also skips folio_free_swap() because
+> folio_phys_swap_backed(folio) is now false:
+>
+> mm/vmscan.c:shrink_folio_list() {
+> activate_locked:
+>         /* Not a candidate for swapping, so reclaim swap space. */
+>         if (folio_test_swapcache(folio) &&
+>             ((mem_cgroup_swap_full(folio) && folio_phys_swap_backed(folio=
+)) ||
+>              folio_test_mlocked(folio)))
+>                 folio_free_swap(folio);
+> }
+>
+> Should try_to_unuse() check or call folio_free_swap(folio) when releasing=
+ the
+> vswap backing here?
+
+Ah sure, this is related to the problem above somewhat, but
+irregardless of it, it's not a bad idea to eagerly free the swapcached
+page when we know swap_count =3D=3D 0 and we have the folio's lock at
+hand. I think I actually did it manually in the pre-swap-table version
+of vswap!
+
+Will include this eager folio_free_swap() in the next version/as a follow-u=
+p!
 
 >
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261023-wa_16031=
-259911-v1-0-b0453f79c4e1@intel.com?part=3D3
+> [ ... ]
+>
+> =E5=AE=8C=E7=BE=8E (Wait: oops, don't write any extra text after the repo=
+rt! Let's make sure the final output has only the report and ends with a bl=
+ank line.)
+> Let's review the whole text and output it cleanly.commit f1735375be4432e3=
+cb8facdcc6b588e080aeb34c
+
+I think the rest is duplicated! Hallucination in the wild :)
