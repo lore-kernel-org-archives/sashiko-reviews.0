@@ -1,110 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792756949;
-	b=1xYu9TY3eYdrzrHRjUeTWk/b9Ly8yNeLq3x6UFUMlP6CWN2zZ/OUhcm5/jMXZ+cjh9Ky
-	 H8TyDe62BRsCGxZviNvOX5S7E/Mp9PvmQDVYVD6boIR9YAx5TFMc4Op4bWwCvpDpXyOXL
-	 OlflvoB7D7+srxUyLgsBAcusVhma5sXmnZM3uqeqEShSYJitK6PkN/cT7SvwiqqYl2xXs
-	 ynPFL3VhyjmcOg+b7No6x0qcBaxrnyOCFNhY98BZfSX6FZagnmtO6ZDHpkSG5Ug2NLnXS
-	 vX5LFNW8aYOQMuB4VxnlJEnqk6GZUrE0/9YYwlr436AE7I7IwjXdpQ+VybgF0qCOhcg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792756949;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
-	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
-	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Proofpoint-Spam-Info:
-	 X-Proofpoint-GUID:X-Proofpoint-Spam-Details-Enc:
-	 X-Proofpoint-ORIG-GUID:X-Authority-Analysis:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
-	bh=6GGmdXvwIAnulrKf4r+LcLf1PuI6wwGvA7L6rMhArNo=;
-	b=G3l93N56SckeqZiTGJMVB3DwwdBFENfL0VJfFQTWLIM4LPq1C1Nm+IFz6xoX4K3E8E8+
-	 eaYbenXAxsdq3hKiQx3UZOTAvLRmrFnpPhGP852eXYdOW4yD8OYOXnO8mq6Tk8yEuWKLS
-	 ykEJ2q8rdthvlukl9C6pkBzcU8aeGRIPI7INuf0pd4nmp/XBwn8lln4zBM3YAO5yRofRj
-	 o6C/uNEMMbiX3Rt7OTmvhuU0lvRQb4QXOYSeQcf48zW5YHvRSoTbqaLcrNLLfMtzPMoxo
-	 rzppYpMB0DkeX3pnITvyUSbUc8hfPtRFSjLsHEzd7dIp3IbRRhwGOnk2QquL6TEvCcQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.qualcomm.com;
-	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ZgouW7ox;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=jRPnFzUa;
-	arc=none smtp.remote-ip=205.220.168.131
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.46
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792758480;
+	b=tbjY0FhpROnNrp3URs8dT3alXEK4XEaF2zwqMu1tLbYL65qJV+T1p+nbAmDa/IWjNsxk
+	 Sg8Z9XBOGLTYzEWv43AaFXUDgNEC3ymc6Leegp+PyROQ4RnCgeElI0eMi9ny0Fo4pg9hR
+	 8XKqot9gKT26f/91+gpPM1SoJo3iuCOhlvS0ovNHR1uGKoEKyXQcF7qzGcg2kZ47sRU6D
+	 WyD9dyfS1pZ9OYpFffpqMFTJV4+Zd9QCU6F0N5J1r3sFt8sH1n1C7OJAZEQfeJeKr0OqP
+	 zJWtCyuj3wgfhxCT2JaSwKY/D3eZmpChPcwluKX5B7SkhwmHjpIjtT2HLPIzF4qKO8g==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792758480;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=tQY67d/Zz756QoGJ/ocO3hnVcH9ZIjPSMX4dABiHKoc=;
+	b=FMIItXIh2wqtoX8mC7wX2+iDEt4gjMzR+LRtaePa661vfsVB6Tb9NQiRggx7gZtLXPjW
+	 wckwqKANzzfXwMDOfvaYIZ2VSPnBPgPtpJQBGDDBwaWU1DuvfOZ1bhk3YzwIGK4nGBzMB
+	 PvbBjMXgCgT8IWo1EmLqZyyJtC+gPkembDtZU7NjudLQ38A/JRC7rAAODjUu6kLQJxwhl
+	 SHC+TsXzdI7mDU2yoGnw8MSZj5sEsrW3M5gCS0sUirgKT7KMb2uZQ3T/KuzwTTkKCdZdI
+	 MWFY+DGHzEDFIOMcx4BgULbd/PXskHBSEPFeCmPfA02h310qpass99Dt+O8O7Jo8Ifg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hQQT881z;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.46
+Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6452A606A31A
-	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 12:02:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6452A606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6EE606A31B
+	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 12:27:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9F6EE606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ZgouW7ox;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=jRPnFzUa
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69NAAT7t3560858
-	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 12:02:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6GGmdXvwIAnulrKf4r+LcLf1PuI6wwGvA7L6rMhArNo=; b=ZgouW7oxVzfUAKZQ
-	KOU0IWzlrr6Dubt2hR51UJT2qwDOEn+P6ShzEQm7KKeqvELfky49nvxULxXPo1sO
-	MRBbZixXOE47+6dGMHosulbGpEn7aFALGJfApvVx/IJF96X0byW9h8SUmaOVobIV
-	c06BsVXT9FIc9iP/8y9aSmzRp32MHWOHr5gVxuEYhsXVpP8ZV53NnjCa9Amlv/7c
-	sLd083BmST4gquvl5Vaj3M6QwL3S7zE5y+ebEBeFdzRqPQlg43Pm7CA6GeTAu0cg
-	HQWrgG5MInG7+AkPjKOAEHCYmirtmCnuaQyUZP0MbQDZqQMVnLcymKzA8eS45pV2
-	BU8Yqw==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfqmpbhpg-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 12:02:28 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2e9572e892dso6524435ad.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 05:02:28 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hQQT881z
+Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-676804a3a22so850236d50.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 05:27:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792758479; cv=none;
+        d=google.com; s=arc-20260327;
+        b=qW4Yanr+NUrtqFlevsTZMMlB9Fo2HJz7cLWdTA9zVwTunYMT3U4Ks7eCp8XAzUyfTW
+         8QnXi/n5HQuB+6kgrTFqf1ESqhR9RSRVYKbaM/lB4msmimpdg1PjL/lhRr6cG2trTMnW
+         8ofV6ONixDbmD5Qb1OUeAc35klJA73NUMgPLgc783G0Tw/b3OVtkqDPLPv5m+OsRZIxh
+         UFuAWnUPmzeltlqTB5Ai4TcHZ+JEcUVwy8B56jnY+9csTe9EftLlZMTmhMbvdTHK3/IU
+         asTUyUa4CeeaIxSFdck6z6WqYMiOtWi36Pcntn/rHTI3wVr+4QDEyrtKo5x+/8TUhynJ
+         DdNQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=tQY67d/Zz756QoGJ/ocO3hnVcH9ZIjPSMX4dABiHKoc=;
+        fh=j7qE0RlvzNR5Qm6xA4ehUDBqPqcz09gsE3Wa6zaxdUU=;
+        b=a5mXsgYLa/R224k74F7jfjcoR/2B9RkK292EQQWCzzeCooSHs93OESuL2z1vYBi6EB
+         Sikdt4GPfGE3+jVb4+EEmX2cyB38Yb+lDmzAjt2yjdZsz+ZuTYtdR+oRKcdOnN5X8riK
+         42D8BYMb+1H7v9xmmCTbGabkwoaNLwMgxHXZnPQt8IY47MPt+U//USRBgvT6IviDvZ65
+         +pI+RlZZfK80FnZeH98GhuRiKWniaRtKsJa3XGeC1T1Almetd9jXcjDA/ZqvJbBN0GDz
+         84DOh2spO4IyA1Qd+/SZnCFF+vSOxTotNzou3YmGYusJ5XnrmqLbnBy77lsR5ftjKxaZ
+         JsVg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1792756948; x=1793361748; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=6GGmdXvwIAnulrKf4r+LcLf1PuI6wwGvA7L6rMhArNo=;
-        b=jRPnFzUac6Y+otH03O5xqV0p8ENvHTPutfPKsbU28IxROqlXa4kX1IGeTUCoR/1bXu
-         4epfxGKe2GEo+jdwt12U02vWewVmJLYBTALPumVDbwGDPZsKkr1cBcKiwisM4+/8973P
-         egtJwdXxoQvArP4DwyK4iTi/e8O6cTm5MFXvWsnyunfkSpeCzZLgQf572xBqTfRtBNoJ
-         9nt0Xp4cGUtZH3Exeyud3l1VABYy2uYbaDhaOOih2BP8BxrODKbM3WW9YM3HdZ4E2Ila
-         aNB2cnlU7qfgPY2NYTtStCQvCf4kxhID3NLG3Nn9Y7t0E0kcPs8sMy8yXF4+sbv8/2aF
-         oEYw==
+        d=gmail.com; s=20251104; t=1792758479; x=1793363279; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=tQY67d/Zz756QoGJ/ocO3hnVcH9ZIjPSMX4dABiHKoc=;
+        b=hQQT881z76KbNQB2PNHsj/vjmbgJJAoQY1krOr6aidtGt/SxUhFEDVtPCY1YgFHwvb
+         NIud3DBaOLt7D6iUu+U6omCE9geCrwtlxBgbEFIHq28ueLEs7toVFFipuUFZEhqo35X0
+         IDVnKOmI9l7zjaGr0GEV/Kna2RS5WFwIUSohBzAmbwuZzLm6lQo2aux+jRDfkqnhLmaw
+         8GlppxlubHZjXKqrCYOFnpNrsA8Va/FfLA75AqBrWFFA1OVWuqCU98FcjkLMyoUnThBQ
+         clKJSpi0OoCKTKENoTSyXGn99kA4DCObKJ4KeUxkw2yB+uarP++YWDp13aTRyVAApTDC
+         7EkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792756948; x=1793361748;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=6GGmdXvwIAnulrKf4r+LcLf1PuI6wwGvA7L6rMhArNo=;
-        b=f/AGOh6uPZb5j1v/AmuiBd8hiadPKIrNGbdYKUtSzufq9AJwtUVNs4LykyOZNj7qFN
-         VEgUgxdOgYUGCZfmtPdBHosuHUnlCIF2QFaPvTX5/GrOUnZCiK/XzrlOgnfARQRCn967
-         5TTImEUQMBIep6EFHDiiPvhqlMH6og9yFRQy8MmzkHXA79OVYqUYwkzl2sJ70ujw8wtU
-         gwG8YW3AlU99w3nNJoiEKrlsBRPzQT5gNAaZqfCrteTa9/7rQTFJCF9PafzglMDX2fkL
-         uIlocReD2/ngN/0URsGfBL6H0hR+dOUU4BCiwzfPyllQO3o6I1kABxCP1zihkdFeVMNj
-         HJGg==
-X-Gm-Message-State: AFq9FYI5VMlncpH8/tV7MknYr3aFLK0SSPbwbb/EG+wRLamipE3nwFQk
-	QkAXs/zmE+fQvdm3jFjE4VHedRJUy7zv6NpuHPDGTbP15A3mX4Sd2h6KOIUdf84tz/sGnOYz+UE
-	nsPNdr6SaUCytgrFNe3ORXms7Ws0tAIq+rJ0nvjyMOMSMg0I0lkpnS7LwywyYURwzM29f3/AGKl
-	WekYE=
-X-Gm-Gg: AYBFou3ApK91umvAVwwqniI6Q1a/2xTae54qkvUHk37v7DgG7+BBTkdxMSW/GTF0AlN
-	guqIklj8QWK2WOZWF7Rwj8l7G6GgI2fu+fynMpJauxtK7fMGf9/RRUrZowlxmgE5wGd65kb6fe3
-	i5BHAhuz9G7Q3E+/7HqTsyKMryuezP3HO/fVdA21fuFcig6B60tgZXB+jwX6KRCsR6QAL8OlMDQ
-	RjhFeW8ZyDz7f/+ootTZ7UwxlMky1isz0HvAl+AFN+DI8UMr5Zw0gO+UHF7qHUKbWNui13NXGNY
-	YuZedIxUOx8annzy1w/XgHHYiDC5ZcHuGs31K3KmrHXBFp4MNGB3HKo+kWXIMIzTREiT6deVy2B
-	Nuj0MIQVkBFxpGkO2skEEgk1k4b56
-X-Received: by 2002:a17:90b:1350:b0:3ac:b3c7:de14 with SMTP id 98e67ed59e1d1-3adce136cf1mr1516500a91.61.1792756947581;
-        Fri, 23 Oct 2026 05:02:27 -0700 (PDT)
-X-Received: by 2002:a17:90b:1350:b0:3ac:b3c7:de14 with SMTP id 98e67ed59e1d1-3adce136cf1mr1516163a91.61.1792756942520;
-        Fri, 23 Oct 2026 05:02:22 -0700 (PDT)
-Received: from [10.218.7.34] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3addd6c20fdsm41656a91.11.2026.10.23.05.02.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Oct 2026 05:02:22 -0700 (PDT)
-Message-ID: <a8db08bd-a92b-4c8c-a9b0-0a637b57cf0f@oss.qualcomm.com>
-Date: Fri, 23 Oct 2026 17:32:18 +0530
+        d=1e100.net; s=20260707; t=1792758479; x=1793363279;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=tQY67d/Zz756QoGJ/ocO3hnVcH9ZIjPSMX4dABiHKoc=;
+        b=w0RlhYm1WrMtLFmEjCSdS3I4xL5TUWpOM8GH+EDXqRcO+9LGaq6+HFqFK4aZ5UDGSp
+         ZVcrMfNu4ByyHpIZsr9AYyhTuPklLeVdem7WkXUTlVhyd3YAN/+dxWybSsGABR3lBlUB
+         lWpGp0Kh4kQ/HFfJh7OPZJCp0A4fGUMBmmMmlJRON+uSuQwm/ZqyLzWhgHBpbsVhN1s8
+         +0IwT4Frj+zuVAei34PDgwVosh4/8mNMwPRNiUj6yM3cNa0ucwmvxdwMY1YRD0N1LMMM
+         teTe8JXJML1Y8QCxPCtgrCAqGm7jHFE+oHg2eZoq5IvriimpNXFlUCZhbF1uKicOI7+K
+         JgQQ==
+X-Gm-Message-State: AFq9FYK5nFfdC1QXPEvbfjFTna/QSetmyR4qu4jD7M9rQrwZbbMxfNgB
+	CjnsM5clSw6Hm785zSnXfrd3p4/7qnN4YvetIPZQzcoMjwQpyuWIcnHRCTNYRN3Pkhp5zCGV9Q/
+	MykcL03DpHqsUe9ZSmiiIuNsG5GcjQwIFgeynUA==
+X-Gm-Gg: AYBFou0lW/F79uvH742KQG3z+lxqIripe7TcFXIlUBhYiTpmCSHyDDhyTOJOJNj7yOx
+	qI7gLULTC9rh22zQ9qvrXymNbi069CJEElNJYUEbCVXd14+OfG32s/U/0sajX43rh8jWRenQy/A
+	qnZmSh4cftAYCWsba16rzw2en+2Lqx9hBBRMXdHwJwAS3VUmvVMciuRVeCRx34TreYtLT8Y3+LX
+	nd4aM5W2hvKriswLKFaGspjP1paXm2W1vPwHMbP3q55X7jUScP93OkIb9AAe/m32MZ+ngv8sQzf
+	Iblwx1AmiBEjwsbGIUDXnK91+fc6HhfU0l+L0Deh0DWn0iG1fpkknw61507u//akr7Bv5YNTML8
+	UcqGsKCqtqHUf6QT4lwCXT3Cs/atpPHm2u0m1hMwflKQ2H7lctKtcwfSVAmUohmP2pfeGwjQZA0
+	JQRgLyRRQ+idhM7kD0/5w/t6fFDLTlgTAJLKVV6Y8=
+X-Received: by 2002:a05:690e:12cf:b0:679:a925:edf2 with SMTP id
+ 956f58d0204a3-67a35bb9bd5mr1507183d50.19.1792758478595; Fri, 23 Oct 2026
+ 05:27:58 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -114,109 +104,169 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/7] mfd: qcom-pm8008: Drop GPIO support
+References: <20261022164340.78664-1-rainey.shawn+kaudio@gmail.com> <sashiko-outbox-181835@kernel.org>
+In-Reply-To: <sashiko-outbox-181835@kernel.org>
+From: Shawn <rainey.shawn@gmail.com>
+Date: Fri, 23 Oct 2026 08:27:47 -0400
+X-Gm-Features: AclHuK8dKd1CFrAVuglMwdaxGNoaEf4sR5SDw0Am1FeI8s6v4RIsVzplaUqWCpg
+Message-ID: <CANcp8vf22LvCxqXC6w2jGBjbhNFbA64_Xe4-0AZXsVq_hKKrJg@mail.gmail.com>
+Subject: Re: [PATCH] ALSA: usb-audio: add quirk for Novation UltraNova (1235:0011)
 To: sashiko-reviews@lists.linux.dev
-Cc: mfd@lists.linux.dev, devicetree@vger.kernel.org, robh@kernel.org,
-        conor+dt@kernel.org, lee@kernel.org
-References: <20261014-pm8010_i2c_support-v2-0-b395d2b3f668@oss.qualcomm.com>
- <20261014-pm8010_i2c_support-v2-4-b395d2b3f668@oss.qualcomm.com>
- <sashiko-outbox-171157@kernel.org>
-Content-Language: en-US
-From: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-In-Reply-To: <sashiko-outbox-171157@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA0NiBTYWx0ZWRfX4K4PHJFaJ9or
- PkVNLoUU4dx1u2sUg91RLFiVZFEN092wOzO2jtKp1eKlTvx4AnqyZHxObWEk0ctZCDlydnGUQVQ
- Zj56dmwJqrnd5eoXwoBsCe4xG/nKcxk=
-X-Proofpoint-GUID: XO5urKWWD41D-q1jklACKA5IVopQMQoT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA0NiBTYWx0ZWRfXxV3+fAonku7Y
- JH13nE1UIUVUUV65VzQKmFf2UgaIO4VEL5GJjbshmoNPukVcOajo9i0hWhfaeL22l6mYKjIrY9E
- zSc6yHuxOEz6hhDLVYxlr3AcPF7cfpjReUMRScm/gx4owlymgk/AClgzXff4uqmArScLhuEj8zH
- 0ibU16hZcXd4EwyFou6g94FVZcYvyoiwlreTJvHsH4NXwjXvMMsg/OtHVmH+teveJt2YpF5MI6s
- ++w0I4tpHCxUBLfFklqaVf1g1OWskQC1IRBpRqjQTphXNFFFKn9NSB4Ttgfto7OP/AWWy/m9d3h
- vEQDnBmS/8/m9YzZgwTIzbJ6NdyFv95IMWLJYLMMaCcL1kAWD1/hooel2gXvkQqvMg4hPdpDPXf
- B/u+2yDEAKOkyvSRCtManE3H0of6kRJDlCL7tixB1UU6TSMnjDxUS71bhH58AP1xgO+CAd0r1R7
- 8cGe0IQCvkcx9p7jIbw==
-X-Proofpoint-ORIG-GUID: XO5urKWWD41D-q1jklACKA5IVopQMQoT
-X-Authority-Analysis: v=2.4 cv=BdBNQbt2 c=1 sm=1 tr=0 ts=6adb4cd4 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=b4OPtKER6HTDepoTwoAA:9 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-23_03,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 malwarescore=0 phishscore=0 impostorscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 bulkscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610230046
+Cc: linux-sound@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> commit 8f95e31f13fcffe905ad6efeb0bf108998166be9
-> Author: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-> Subject: mfd: qcom-pm8008: Drop GPIO support
-> 
-> This commit drops the GPIO MFD cell and its associated peripheral and IRQ
-> definitions from the PM8008 driver. It removes the GPIO elements from the
-> peripherals enum, which reduces PM8008_NUM_PERIPHS from 4 to 2, and truncates
-> pm8008_periph_base[] to 2 elements.
-> 
-> [Severity: High]
-> In drivers/base/regmap/regmap-irq.c:read_irq_data(), max_main_bits is derived
-> from chip->num_regs, which is now 2.
-> 
-> Due to an off-by-one bounds check, if bit 2 (the dropped GPIO1 interrupt) is
-> set by the hardware in the main status register, the check "2 > 2" is false:
-> 
-> 			for_each_set_bit(b, &mreg, map->format.val_bytes * 8) {
-> 				if (i * map->format.val_bytes * 8 + b >
-> 				    max_main_bits)
-> 					break;
-> 				ret = read_sub_irq_data(data, b);
-> 
-> This allows the framework to process bit 2 and call read_sub_irq_data() with
-> b = 2.
-> 
-> In drivers/base/regmap/regmap-irq.c:read_sub_irq_data(), this leads to a memory
-> overflow when writing to the status_buf array:
-> 
-> 		reg = data->get_irq_reg(data, chip->status_base, b);
-> 		ret = regmap_read(map, reg, &data->status_buf[b]);
-> 
-> Since status_buf was allocated with size chip->num_regs (2), writing to
-> data->status_buf[2] corrupts adjacent kernel memory.
-> 
-> Additionally, data->get_irq_reg() calls pm8008_get_irq_reg() in
-> drivers/mfd/qcom-pm8008.c:
-> 
-> static unsigned int pm8008_get_irq_reg(struct regmap_irq_chip_data *data,
-> 				       unsigned int base, int index)
-> {
-> 	/* Simple linear addressing for the main status register */
-> 	if (base == I2C_INTR_STATUS_BASE)
-> 		return base + index;
-> 
-> 	return pm8008_periph_base[index] + base;
-> }
-> 
-> When index is 2, reading pm8008_periph_base[2] reads past the end of the array
-> because it was truncated to 2 elements.
-> 
-> Can reducing PM8008_NUM_PERIPHS lead to out-of-bounds accesses in
-> data->status_buf[] and pm8008_periph_base[] if the physical GPIO1 interrupt
-> still fires?
-> 
+Good catch. v2 incoming  with .ep_idx =3D 1 to the capture entry
 
-I checked the HW documentation and I see that the GPIOs of both PM8008 and
-PM8010 are not capable of generating interrupts. GPIO1 is used to send out
-interrupts from the PMIC to the SoC and GPIO2 is used to reset the PMIC.
-Since they would not have any bits in the main interrupt status register,
-this issue cannot happen.
+Best,
 
-Thanks,
-Jishnu
+Shawn
 
 
+
+On Thu, Oct 22, 2026 at 12:57=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] ALSA: usb-audio: missing .ep_idx =3D 1 in UltraNova capture au=
+dioformat
+> --
+>
+> commit aa83c7ced6942ef370a66b06613c33f74107f796
+> Author: Shawn Rainey <rainey.shawn+kaudio@gmail.com>
+>
+> ALSA: usb-audio: add quirk for Novation UltraNova (1235:0011)
+>
+> This commit adds a composite USB audio quirk for the Novation UltraNova
+> (1235:0011) with fixed playback and capture audio formats on interface 0
+> and a raw MIDI quirk on interface 1, while leaving the vendor control
+> interfaces unbound.
+>
+> > diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
+> > index 6343a50fb2732..0b8bea76eca5b 100644
+> > --- a/sound/usb/quirks-table.h
+> > +++ b/sound/usb/quirks-table.h
+> > @@ -2359,6 +2359,69 @@ YAMAHA_DEVICE(0x7010, "UB99"),
+> >               }
+> >       }
+> >  },
+> > +{
+> > +     /*
+> > +      * Novation UltraNova: vendor-specific class descriptors, fixed
+> > +      * audio and MIDI layouts.  Only the audio and MIDI interfaces
+> > +      * (0 and 1) are grabbed; the vendor control interfaces (2/3)
+> > +      * are left unbound for userspace access.
+> > +      */
+> > +     USB_DEVICE_INTERFACE_NUMBER(0x1235, 0x0011, 0),
+> > +     QUIRK_DRIVER_INFO {
+> > +             .vendor_name =3D "Novation",
+> > +             .product_name =3D "UltraNova",
+> > +             QUIRK_DATA_COMPOSITE {
+> > +                     {
+> > +                             QUIRK_DATA_AUDIOFORMAT(0) {
+> > +                                     /* playback */
+> > +                                     .formats =3D SNDRV_PCM_FMTBIT_S16=
+_LE,
+> > +                                     .channels =3D 4,
+> > +                                     .iface =3D 0,
+> > +                                     .altsetting =3D 1,
+> > +                                     .altset_idx =3D 1,
+> > +                                     .attributes =3D UAC_EP_CS_ATTR_SA=
+MPLE_RATE,
+> > +                                     .endpoint =3D 0x01,
+> > +                                     .ep_attr =3D USB_ENDPOINT_XFER_IS=
+OC |
+> > +                                                USB_ENDPOINT_SYNC_SYNC=
+,
+> > +                                     .maxpacksize =3D 392,
+> > +                                     .rates =3D SNDRV_PCM_RATE_44100 |
+> > +                                              SNDRV_PCM_RATE_48000,
+> > +                                     .rate_min =3D 44100,
+> > +                                     .rate_max =3D 48000,
+> > +                                     .nr_rates =3D 2,
+> > +                                     .rate_table =3D (unsigned int[]) =
+{
+> > +                                             44100, 48000
+> > +                                     }
+> > +                             }
+> > +                     },
+> > +                     {
+> > +                             QUIRK_DATA_AUDIOFORMAT(0) {
+> > +                                     /* capture */
+> > +                                     .formats =3D SNDRV_PCM_FMTBIT_S24=
+_3LE,
+> > +                                     .channels =3D 2,
+> > +                                     .iface =3D 0,
+> > +                                     .altsetting =3D 1,
+> > +                                     .altset_idx =3D 1,
+> > +                                     .attributes =3D UAC_EP_CS_ATTR_SA=
+MPLE_RATE,
+> > +                                     .endpoint =3D 0x82,
+> > +                                     .ep_attr =3D USB_ENDPOINT_XFER_IS=
+OC |
+> > +                                                USB_ENDPOINT_SYNC_SYNC=
+,
+>
+> [Severity: Medium]
+> Should the capture QUIRK_DATA_AUDIOFORMAT(0) entry in usb_audio_ids in
+> sound/usb/quirks-table.h also set .ep_idx =3D 1?
+>
+> Since capture endpoint 0x82 shares interface 0 altsetting 1 with playback
+> endpoint 0x01, endpoint 0x82 is the second endpoint descriptor on that
+> altsetting. Leaving .ep_idx unset defaults fp->ep_idx to 0.
+>
+> When usb_audio_probe() -> snd_usb_create_quirk() ->
+> create_composite_quirk() -> create_fixed_stream_quirk() runs in
+> sound/usb/quirks.c:
+>
+>         alts =3D &iface->altsetting[fp->altset_idx];
+>         altsd =3D get_iface_desc(alts);
+>         if (altsd->bNumEndpoints <=3D fp->ep_idx) {
+>                 err =3D -EINVAL;
+>                 goto error;
+>         }
+>
+> having fp->ep_idx =3D=3D 0 only checks altsd->bNumEndpoints <=3D 0 and do=
+es not
+> verify that a second endpoint descriptor exists on altsetting 1.
+>
+> Next, in create_fixed_stream_quirk() -> add_audio_stream_from_fixed_fmt()=
+ ->
+> snd_usb_audioformat_set_sync_ep() in sound/usb/pcm.c:
+>
+>         if (fmt->ep_idx > 0 || altsd->bNumEndpoints < 2)
+>                 return 0;
+>
+>         is_playback =3D !(get_endpoint(alts, 0)->bEndpointAddress & USB_D=
+IR_IN);
+>         attr =3D fmt->ep_attr & USB_ENDPOINT_SYNCTYPE;
+>         if ((is_playback && (attr =3D=3D USB_ENDPOINT_SYNC_SYNC ||
+>                              attr =3D=3D USB_ENDPOINT_SYNC_ADAPTIVE)) ||
+>             (!is_playback && attr !=3D USB_ENDPOINT_SYNC_ADAPTIVE))
+>                 return 0;
+>
+> because fmt->ep_idx is 0 rather than 1, snd_usb_audioformat_set_sync_ep()
+> does not return early at fmt->ep_idx > 0 and instead checks
+> get_endpoint(alts, 0) (playback endpoint 0x01), treating the capture
+> audioformat as is_playback =3D true. That also appears to be why omitting
+> USB_ENDPOINT_SYNC_SYNC caused generic sync-EP detection to pair 0x82 as a
+> sync endpoint for the capture direction as described in the commit messag=
+e.
+>
+> Additionally, when opening the capture endpoint via snd_usb_hw_params() -=
+>
+> snd_usb_endpoint_open() in sound/usb/endpoint.c:
+>
+>                 } else {
+>                         ep->iface =3D fp->iface;
+>                         ep->altsetting =3D fp->altsetting;
+>                         ep->ep_idx =3D fp->ep_idx;
+>                 }
+>
+> ep->ep_idx for endpoint 0x82 is recorded as 0 instead of 1.
+>
+> [ ... ]
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261022164340.78=
+664-1-rainey.shawn+kaudio@gmail.com?part=3D1
