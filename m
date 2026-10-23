@@ -1,47 +1,47 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=65.21.61.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792744432;
-	b=VS+RFwfDqw+Kh/mbMHibBJsRN0bFr09fmxICAJPpwtkcX3JWhDbvPOab61t18so2OJrZ
-	 TmiyzgSPQXHbTwjidPBQjVs5oxzX8qv4l37anXceFP9FLvumeWuo9SXuomOKPf2GlZ10l
-	 Fz5fSEXrFTg9ISNluGAbEDUa/8lj8DcFD1jj+9cakcvFxd4R3xURSpcERKmBQ+BEk1X7B
-	 C1jtWEvMZ6/6tPTI9nkPlvRJMtQCJZp0tJ6TC6PiizyLCfkbAhBk2n/pSIoH6TQBE3YVL
-	 R0ad6cIHoRuGu9ZBA+h3G1FBCz0VxbDT6c3Evo+lwwLJ6Z7gt6BG/+DCb9q+wxRas9Q==
+	t=1792745623;
+	b=gpGuCU8+Qr27rV9CXSxWH2bw0HGmUGaEJosN+Sap45Uiz0SqczB50cxh62LEi7+5HNEl
+	 FwZWU84WYjqOkmW9AFU+VN5gLQ1fSvIkGJjI2DXkJTbMmgBZVb6ZnGtZfpx1ByrJoxiCd
+	 AgYZ8m75td7LgKWrpOYs2etCez+Mo1wWkdzp5KcI61uuNY0RFX+0ASn+YFZjsmCjjs5V2
+	 qg3qYK5iJPl7O2KEGf9ThKs9A9fohEME5m9x8FsPDTWgp6Flqc59k+f1hXBTwNk1m6toG
+	 9gVUs2qC6OUysxi4107R2abxDbOlsqXPlqZeeD9PPyGlp6pCXOhJ03eHWjiNMel/+Cg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792744432;
-	h=DMARC-Filter:Message-ID:DKIM-Signature:Date:MIME-Version:User-Agent:
-	 From:Subject:To:Cc:References:Content-Language:In-Reply-To:
+	a=rsa-sha256; c=relaxed/relaxed; t=1792745623;
+	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:Content-Language:From:Autocrypt:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=w3IRUU67Xyp23cczeFIC2oMuL/aNMCp0dTeCUBbAmNc=;
-	b=cyMq5rSrzyy08HYpjq/ChyO1O/meDfuzM9TTuBke9Z9ALIBxUqaKYzlBQMN6SDO2c2oI
-	 wm0zYvkX5ZyP6jly90wQJYDxiV+SWPBYD6yrzvqPkGRcZs94AHq96QL9OPx8pE0PCaX0g
-	 RoGAV9ZAhvNAEsZ8NnCwEORN0qmJOIbWy8pHU5NWl1r2HA7j7TBYezDmOmhQq1/HTONxC
-	 9r9z427hHrPXdZ6MekwNmtwAUmYIjUJT1q+mR9dmjqtOUiAWWXtuXGNADMnUGWaHyANmO
-	 62bkULbP5Vh566hwpCI4bvofmInd75z5cWAQVGVka/ZqWJ9S1hkU6VcpzCx3zg4j4nw==
+	bh=CdoKhQZLuMkXckBiKIoEwBUaAVMRBZJL1gI/03P97mw=;
+	b=fnfCg7Xa+ahdPnkjAzTErBOMXxlk9j9GXtwQtxpzlNi3HFqciuHCKjpDymclySgNAgqt
+	 aRUoJ/yxrPloUFiJvcvO+npFe78eCaUJUHtlGGDTADLeuYpsZe7gEDkvZhXuglaXO+6gu
+	 /dnCX9Ow73eL0+NBPSqljfZhHSD4SAzjMEVO6m/J+Bhy75LS4VlEDfEtVPj9stYAmyKnz
+	 uit0mhlewVeAZNnfv4yavXl0IGbH/lQxQhXErSrQ9ChLM2zWuYbH6+2HGaOCaZoH3vYPO
+	 WllOCtkm0oH61DFrkLY3edMlQ8FJOY0+zZltM3ZNUlu8G2E1gfTxknwkjCFgZQ8jjIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=aliel.fr;
-	spf=pass smtp.mailfrom=aliel.fr;
-	dkim=pass header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b=uaZ6IZxL;
-	arc=none smtp.remote-ip=65.21.61.41
-Received: from courrier.aliel.fr (courrier.aliel.fr [65.21.61.41])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DZzUxdOT;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F55606A322
-	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 08:33:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 48F55606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aliel.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aliel.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B68606A31B;
+	Fri, 23 Oct 2026 08:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=aliel.fr header.i=@aliel.fr header.a=rsa-sha256 header.s=courrier-s1 header.b=uaZ6IZxL
-Message-ID: <023fc2b8-274f-4ecf-a10f-b4948ff431a3@aliel.fr>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aliel.fr;
-	s=courrier-s1; t=1792744422;
-	bh=wJPa3CPJhe0TddsJiu6BCdY+b+rdCFFUmUqxMimWaOA=;
-	h=Date:From:Subject:To:Cc:References:In-Reply-To;
-	b=uaZ6IZxL9gE7bSep95BjOc1cp/cqmZ2TvfO8pIyR2Xt0hTTFtYx5Qav5ZCQZmraeC
-	 8aFxL0IzFTfom9g9UrDvKWFxbtFkZZMtS0rZymwrfsOCETtg5Zt9RgDmF3VO7M6pZL
-	 jIExsL5/BkaUL+SiHMWCzGEk7V4pCNezCsLiawhk=
-Date: Fri, 23 Oct 2026 10:31:14 +0200
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DZzUxdOT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5DF1F01828;
+	Fri, 23 Oct 2026 08:53:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792745623;
+	bh=CdoKhQZLuMkXckBiKIoEwBUaAVMRBZJL1gI/03P97mw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=DZzUxdOTgcIRoKA2V+T5Op99DceRrm0cIVtHES2x/nPJgAjZOXUBqSU/GqqdUZrh9
+	 wUck6GflVkpi70dn/sM2T2JkmQ9z7uLB1fdBblfLoWTP20px6NYt1qRUGO6L7XQzzC
+	 kiLmRbBaXKpY2S4bvWMIYoTLXy/Nl+1NoTW7ffjPDsa1wyg06wOnx6l3s9gadOcIxk
+	 RDHXOhXstn1Q/d2iY4StNQyg9QTtSFN9DpY6nKS2n98c1Yn+UuT/GApdAHiKYjmQFg
+	 Z062uidBZwGQCyX3tUvHJBAnXb7VLisMEArdeN5f/NQYjc+Jf1xaJwHC47Qcosu7S4
+	 i9ittSO4yMBWA==
+Message-ID: <c826575e-cc1e-4a9e-880a-9f3deceed895@kernel.org>
+Date: Fri, 23 Oct 2026 10:53:40 +0200
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -51,105 +51,151 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-From: Ronald Claveau <linux-kernel-dev@aliel.fr>
-Subject: Re: [PATCH 1/4] clk: meson: g12a: fix fclk_div2p5 multiplier
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/6] serial: 8250: make port operations work on struct
+ uart_8250_port
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-amlogic@lists.infradead.org, linux-clk@vger.kernel.org,
- neil.armstrong@linaro.org
-References: <20261022-fix-g12a-clk-v1-0-e2bd8f3f1afa@aliel.fr>
- <20261022-fix-g12a-clk-v1-1-e2bd8f3f1afa@aliel.fr>
- <sashiko-outbox-182086@kernel.org>
+Cc: linux-serial@vger.kernel.org
+References: <cover.1791873876.git.jirislaby@kernel.org>
+ <c59fa203f325e0fe7601ea0fbc0d222c8b37f9eb.1791873876.git.jirislaby@kernel.org>
+ <sashiko-outbox-170897@kernel.org>
 Content-Language: en-US
-In-Reply-To: <sashiko-outbox-182086@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <sashiko-outbox-170897@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/23/26 12:00 AM, sashiko-bot@kernel.org wrote:
+On 14. 10. 26, 8:49, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] clk: meson: g12a: incorrect rate for g12a_fclk_div2p5_div due to 4 GHz parent
+> - [High] tty: serial: 8250_hp300: NULL pointer dereference on hpdca device removal
 > --
 > 
-> commit 63eec9c39f2ccd77037a929408928c357e150075
-> Author: Ronald Claveau <linux-kernel-dev@aliel.fr>
+> commit f913317bfee3afed5e144530ca60f25858464754
+> Author: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+> Date:   Tue Oct 13 06:48:51 2026 +0000
 > 
-> clk: meson: g12a: fix fclk_div2p5 multiplier
+>      serial: 8250: make port operations work on struct uart_8250_port
+>      
+>      This commit switches the interface of port operations to use
+>      struct uart_8250_port instead of the line number, returning the registered
+>      port or an ERR_PTR() on failure. It updates all drivers to store the port
+>      pointer instead of the line number.
 > 
-> This commit changes the multiplier of g12a_fclk_div2p5_div in
-> drivers/clk/meson/g12a.c from 1 to 2 so that its fixed factor ratio becomes
-> 2/5 instead of 1/5.
-> 
->> diff --git a/drivers/clk/meson/g12a.c b/drivers/clk/meson/g12a.c
->> index d0d4c7b6dc827..4ec5f15daf980 100644
->> --- a/drivers/clk/meson/g12a.c
->> +++ b/drivers/clk/meson/g12a.c
->> @@ -995,7 +995,7 @@ static struct clk_regmap g12a_fclk_div7 = {
->>  };
->>  
->>  static struct clk_fixed_factor g12a_fclk_div2p5_div = {
->> -	.mult = 1,
->> +	.mult = 2,
->>  	.div = 5,
->>  	.hw.init = &(struct clk_init_data){
->>  		.name = "fclk_div2p5_div",
+>> diff --git a/drivers/tty/serial/8250/8250_hp300.c b/drivers/tty/serial/8250/8250_hp300.c
+>> index 59ec0c7377a1c..e9599c5c2fead 100644
+>> --- a/drivers/tty/serial/8250/8250_hp300.c
+>> +++ b/drivers/tty/serial/8250/8250_hp300.c
+> [ ... ]
+>> @@ -177,9 +177,8 @@ static int hpdca_init_one(struct dio_dev *d,
+>>   	uart.port.membase = (char *)(uart.port.mapbase + DIO_VIRADDRBASE);
+>>   	uart.port.regshift = 1;
+>>   	uart.port.dev = &d->dev;
+>> -	line = serial8250_register_8250_port(&uart);
+>> -
+>> -	if (line < 0) {
+>> +	uport = serial8250_register_8250_port(&uart);
+>> +	if (IS_ERR(uport)) {
+>>   		dev_notice(&d->dev,
+>>   			  "8250_hp300: register_serial() DCA scode %d irq %d failed\n",
+>>   			  d->scode, uart.port.irq);
+>>   		return 0;
+
+Am I hallucinating or you do? I have:
+   return -ENOMEM;
+on that line.
+
+>>   	}
+>>   
+>>   	/* Enable board-interrupts */
+>>   	out_8(d->resource.start + DIO_VIRADDRBASE + DCA_IC, DCA_IC_IE);
+>> -	dio_set_drvdata(d, (void *)line);
+>> +	dio_set_drvdata(d, uport);
+>>   
+>>   	/* Reset the DCA */
+>>   	out_8(d->resource.start + DIO_VIRADDRBASE + DCA_ID, 0xff);
 > 
 > [Severity: High]
-> Won't setting .mult = 2 here cause g12a_fclk_div2p5_div and g12a_fclk_div2p5
-> to report 1.6 GHz instead of the expected 800 MHz when clk_fixed_factor_ops
-> calculates the clock rate?
+> If serial8250_register_8250_port() fails here and returns an ERR_PTR, this
+> function logs a warning and returns 0 (success). In this failure path,
+> dio_set_drvdata() is skipped, leaving the device's driver data as NULL.
 > 
-> Unlike the other g12a_fclk_div*_div clocks in drivers/clk/meson/g12a.c, which
-> use g12a_fixed_pll (~2 GHz) as their parent:
+> Because the driver returns 0, the device is considered successfully bound.
+> When the device is later removed, hpdca_remove_one() is called:
 > 
-> drivers/clk/meson/g12a.c:
-> static struct clk_fixed_factor g12a_fclk_div5_div = {
-> 	.mult = 1,
-> 	.div = 5,
-> 	.hw.init = &(struct clk_init_data){
-> 		.name = "fclk_div5_div",
-> 		.ops = &clk_fixed_factor_ops,
-> 		.parent_hws = (const struct clk_hw *[]) { &g12a_fixed_pll.hw },
-> 		.num_parents = 1,
-> 	},
-> };
+>> @@ -287,14 +283,13 @@ static int __init hp300_8250_init(void)
+>>   #ifdef CONFIG_HPDCA
+>>   static void hpdca_remove_one(struct dio_dev *d)
+>>   {
+>> -	int line;
+>> +	struct uart_8250_port *uport = dio_get_drvdata(d);
+>>   
+>> -	line = (int) dio_get_drvdata(d);
+>>   	if (d->resource.start) {
+>>   		/* Disable board-interrupts */
+>>   		out_8(d->resource.start + DIO_VIRADDRBASE + DCA_IC, 0);
+>>   	}
+>> -	serial8250_unregister_port(line);
+>> +	serial8250_unregister_port(uport);
+>>   }
+>>   #endif
 > 
-> g12a_fclk_div2p5_div is parented directly to g12a_fixed_pll_dco (~4 GHz),
-> before the g12a_fixed_pll post-divider divides the DCO by 2:
+> Will this lead to a NULL pointer dereference?
 > 
-> drivers/clk/meson/g12a.c:
-> static struct clk_fixed_factor g12a_fclk_div2p5_div = {
-> 	.mult = 2,
-> 	.div = 5,
-> 	.hw.init = &(struct clk_init_data){
-> 		.name = "fclk_div2p5_div",
-> 		.ops = &clk_fixed_factor_ops,
-> 		.parent_hws = (const struct clk_hw *[]) {
-> 			&g12a_fixed_pll_dco.hw
-> 		},
-> 		.num_parents = 1,
-> 	},
-> };
+> If the registration failed during probe, uport will be NULL here. Since
+> serial8250_unregister_port() unconditionally dereferences the pointer (e.g.,
+> checking uart->em485), passing NULL will cause a kernel panic.
 > 
-> Because g12a_fixed_pll_dco runs at ~4 GHz (3,999,999,938 Hz, as also seen in
-> g12a_mpll_50m_div which divides g12a_fixed_pll_dco by 80 to get 50 MHz),
-> dividing g12a_fixed_pll_dco by 5 with .mult = 1 already produces the 800 MHz
-> rate (799,999,987 Hz, or g12a_fixed_pll / 2.5) expected by consumers such as
-> gpu_opp_table in arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi:
+> Should the failure path in hpdca_init_one() return an error code instead of
+> 0, or should hpdca_remove_one() check for a valid uport before
+> unregistering?
 > 
-> arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi:
-> 		opp-799999987 {
-> 			opp-hz = /bits/ 64 <799999987>;
-> 			opp-microvolt = <800000>;
-> 		};
-> 
-> With .mult = 2 and .div = 5 on g12a_fixed_pll_dco, wouldn't fclk_div2p5
-> report ~1.6 GHz (1,599,999,975 Hz) and cause downstream dividers such as the
-> Mali GPU, NNA, VDEC, VAPB, and MIPI ISP clocks to program a /2 divider and
-> run at half their requested frequency?
+> Note: This replaces a prior bug where passing an uninitialized 0 line number
+> caused the driver to erroneously unregister ttyS0 instead of crashing.
 > 
 
-You right, I misread the parent and will drop this patch in v2.
 
 -- 
-Best regards,
-Ronald
+js
+suse labs
