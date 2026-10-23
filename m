@@ -1,100 +1,50 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.46
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792758480;
-	b=tbjY0FhpROnNrp3URs8dT3alXEK4XEaF2zwqMu1tLbYL65qJV+T1p+nbAmDa/IWjNsxk
-	 Sg8Z9XBOGLTYzEWv43AaFXUDgNEC3ymc6Leegp+PyROQ4RnCgeElI0eMi9ny0Fo4pg9hR
-	 8XKqot9gKT26f/91+gpPM1SoJo3iuCOhlvS0ovNHR1uGKoEKyXQcF7qzGcg2kZ47sRU6D
-	 WyD9dyfS1pZ9OYpFffpqMFTJV4+Zd9QCU6F0N5J1r3sFt8sH1n1C7OJAZEQfeJeKr0OqP
-	 zJWtCyuj3wgfhxCT2JaSwKY/D3eZmpChPcwluKX5B7SkhwmHjpIjtT2HLPIzF4qKO8g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792758480;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=tQY67d/Zz756QoGJ/ocO3hnVcH9ZIjPSMX4dABiHKoc=;
-	b=FMIItXIh2wqtoX8mC7wX2+iDEt4gjMzR+LRtaePa661vfsVB6Tb9NQiRggx7gZtLXPjW
-	 wckwqKANzzfXwMDOfvaYIZ2VSPnBPgPtpJQBGDDBwaWU1DuvfOZ1bhk3YzwIGK4nGBzMB
-	 PvbBjMXgCgT8IWo1EmLqZyyJtC+gPkembDtZU7NjudLQ38A/JRC7rAAODjUu6kLQJxwhl
-	 SHC+TsXzdI7mDU2yoGnw8MSZj5sEsrW3M5gCS0sUirgKT7KMb2uZQ3T/KuzwTTkKCdZdI
-	 MWFY+DGHzEDFIOMcx4BgULbd/PXskHBSEPFeCmPfA02h310qpass99Dt+O8O7Jo8Ifg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hQQT881z;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.46
-Received: from mail-yx1-f46.google.com (mail-yx1-f46.google.com [74.125.224.46])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=141.105.120.124
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792758652;
+	b=JeCvoje1LgoKxOsrPadj82uQpsZJVsB5uZpv7qhg0goZ/vPAU1x7bwir0WWKKXiyPwNL
+	 WtmtLQlv0YZ+sqdFN1EF0PH9GRzn5MdyG8Ewzj20WY85g7FCz02wHJb9tQ7DpTVJtIsvW
+	 H6vPZ6BwHY0CHSVwKeHXGFfJIU99AARWtkK3+EC5PrRd36tv1boSHlQxCGfmQzv6DNY03
+	 QiaOZJBuNV1sDSK1q1IFSeOY4+SERYtKpeBr9EXdlZVexTdOhEysHyZrF7ASH8QCJbnt+
+	 Ua6k7B/WWtJ+HN5NsSK++NhbGouALCqx8mni2XDnrcblCEXwvmKBtfu2FrPNbalVqpg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792758652;
+	h=DMARC-Filter:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=8ypVT+aqdsJ/2zXRmml6vlOIqQ5YiUTO3XelL32NhT4=;
+	b=wfIVpeRR06G4FV68VI3Vk5Z9q3gQT+5nWuR02ZWeq/kcwe6Wke3Col0+IWJGcqGU66lh
+	 sfCZTj7C/sJ5x1IG2e4DrtR5p53TCsqpcgUJ8WCxgnWJ0RyWpp0wanzyqu6AaiFrQxh6S
+	 mEvAz73QP3BgKJqxu2/CJaLrdmNXALMnH/DO796+MDRYUaNdhcEsCOfuGI6urVTbGvpLw
+	 IT7butm+fbYEFTq+LU845k7cD1rXRGjgUNZQt0Kp6MqmEqUcEZBNNoj2emBwqa7rvp993
+	 JUHsSDZ6wttFgYJY03w/s83aDhPlKS1fNqe/fI14izVVpg6E8j665GvEVZxv4vrzT6A==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=lankhorst.se;
+	spf=pass smtp.mailfrom=lankhorst.se;
+	dkim=pass header.d=lankhorst.se header.i=@lankhorst.se header.a=rsa-sha256 header.s=default header.b=fotBV2h3;
+	arc=none smtp.remote-ip=141.105.120.124
+Received: from lankhorst.se (unknown [141.105.120.124])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6EE606A31B
-	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 12:27:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9F6EE606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A5E60A2605
+	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 12:30:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C8A5E60A2605
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lankhorst.se
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lankhorst.se
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hQQT881z
-Received: by mail-yx1-f46.google.com with SMTP id 956f58d0204a3-676804a3a22so850236d50.1
-        for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 05:27:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792758479; cv=none;
-        d=google.com; s=arc-20260327;
-        b=qW4Yanr+NUrtqFlevsTZMMlB9Fo2HJz7cLWdTA9zVwTunYMT3U4Ks7eCp8XAzUyfTW
-         8QnXi/n5HQuB+6kgrTFqf1ESqhR9RSRVYKbaM/lB4msmimpdg1PjL/lhRr6cG2trTMnW
-         8ofV6ONixDbmD5Qb1OUeAc35klJA73NUMgPLgc783G0Tw/b3OVtkqDPLPv5m+OsRZIxh
-         UFuAWnUPmzeltlqTB5Ai4TcHZ+JEcUVwy8B56jnY+9csTe9EftLlZMTmhMbvdTHK3/IU
-         asTUyUa4CeeaIxSFdck6z6WqYMiOtWi36Pcntn/rHTI3wVr+4QDEyrtKo5x+/8TUhynJ
-         DdNQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=tQY67d/Zz756QoGJ/ocO3hnVcH9ZIjPSMX4dABiHKoc=;
-        fh=j7qE0RlvzNR5Qm6xA4ehUDBqPqcz09gsE3Wa6zaxdUU=;
-        b=a5mXsgYLa/R224k74F7jfjcoR/2B9RkK292EQQWCzzeCooSHs93OESuL2z1vYBi6EB
-         Sikdt4GPfGE3+jVb4+EEmX2cyB38Yb+lDmzAjt2yjdZsz+ZuTYtdR+oRKcdOnN5X8riK
-         42D8BYMb+1H7v9xmmCTbGabkwoaNLwMgxHXZnPQt8IY47MPt+U//USRBgvT6IviDvZ65
-         +pI+RlZZfK80FnZeH98GhuRiKWniaRtKsJa3XGeC1T1Almetd9jXcjDA/ZqvJbBN0GDz
-         84DOh2spO4IyA1Qd+/SZnCFF+vSOxTotNzou3YmGYusJ5XnrmqLbnBy77lsR5ftjKxaZ
-         JsVg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792758479; x=1793363279; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=tQY67d/Zz756QoGJ/ocO3hnVcH9ZIjPSMX4dABiHKoc=;
-        b=hQQT881z76KbNQB2PNHsj/vjmbgJJAoQY1krOr6aidtGt/SxUhFEDVtPCY1YgFHwvb
-         NIud3DBaOLt7D6iUu+U6omCE9geCrwtlxBgbEFIHq28ueLEs7toVFFipuUFZEhqo35X0
-         IDVnKOmI9l7zjaGr0GEV/Kna2RS5WFwIUSohBzAmbwuZzLm6lQo2aux+jRDfkqnhLmaw
-         8GlppxlubHZjXKqrCYOFnpNrsA8Va/FfLA75AqBrWFFA1OVWuqCU98FcjkLMyoUnThBQ
-         clKJSpi0OoCKTKENoTSyXGn99kA4DCObKJ4KeUxkw2yB+uarP++YWDp13aTRyVAApTDC
-         7EkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792758479; x=1793363279;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=tQY67d/Zz756QoGJ/ocO3hnVcH9ZIjPSMX4dABiHKoc=;
-        b=w0RlhYm1WrMtLFmEjCSdS3I4xL5TUWpOM8GH+EDXqRcO+9LGaq6+HFqFK4aZ5UDGSp
-         ZVcrMfNu4ByyHpIZsr9AYyhTuPklLeVdem7WkXUTlVhyd3YAN/+dxWybSsGABR3lBlUB
-         lWpGp0Kh4kQ/HFfJh7OPZJCp0A4fGUMBmmMmlJRON+uSuQwm/ZqyLzWhgHBpbsVhN1s8
-         +0IwT4Frj+zuVAei34PDgwVosh4/8mNMwPRNiUj6yM3cNa0ucwmvxdwMY1YRD0N1LMMM
-         teTe8JXJML1Y8QCxPCtgrCAqGm7jHFE+oHg2eZoq5IvriimpNXFlUCZhbF1uKicOI7+K
-         JgQQ==
-X-Gm-Message-State: AFq9FYK5nFfdC1QXPEvbfjFTna/QSetmyR4qu4jD7M9rQrwZbbMxfNgB
-	CjnsM5clSw6Hm785zSnXfrd3p4/7qnN4YvetIPZQzcoMjwQpyuWIcnHRCTNYRN3Pkhp5zCGV9Q/
-	MykcL03DpHqsUe9ZSmiiIuNsG5GcjQwIFgeynUA==
-X-Gm-Gg: AYBFou0lW/F79uvH742KQG3z+lxqIripe7TcFXIlUBhYiTpmCSHyDDhyTOJOJNj7yOx
-	qI7gLULTC9rh22zQ9qvrXymNbi069CJEElNJYUEbCVXd14+OfG32s/U/0sajX43rh8jWRenQy/A
-	qnZmSh4cftAYCWsba16rzw2en+2Lqx9hBBRMXdHwJwAS3VUmvVMciuRVeCRx34TreYtLT8Y3+LX
-	nd4aM5W2hvKriswLKFaGspjP1paXm2W1vPwHMbP3q55X7jUScP93OkIb9AAe/m32MZ+ngv8sQzf
-	Iblwx1AmiBEjwsbGIUDXnK91+fc6HhfU0l+L0Deh0DWn0iG1fpkknw61507u//akr7Bv5YNTML8
-	UcqGsKCqtqHUf6QT4lwCXT3Cs/atpPHm2u0m1hMwflKQ2H7lctKtcwfSVAmUohmP2pfeGwjQZA0
-	JQRgLyRRQ+idhM7kD0/5w/t6fFDLTlgTAJLKVV6Y8=
-X-Received: by 2002:a05:690e:12cf:b0:679:a925:edf2 with SMTP id
- 956f58d0204a3-67a35bb9bd5mr1507183d50.19.1792758478595; Fri, 23 Oct 2026
- 05:27:58 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=lankhorst.se header.i=@lankhorst.se header.a=rsa-sha256 header.s=default header.b=fotBV2h3
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lankhorst.se;
+	s=default; t=1792758642;
+	bh=rslR3JPdPqtXqMF/hlQKKg0WrLsAgqePSNtDkHFvyqU=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=fotBV2h3tSFZVE3xxOsFWCwRTendVtNyMg6y3SGBeuRxZQs+0rSyklepk0KN0JV27
+	 9yoLQ2E0gd+I4z6ZW7NoE6rHu07cnbb2i5Spesuq83dQv5Oxr9JWI/BHRtxXP0zNUj
+	 7g5yNOVh8q6oKPTK9ULzCivHpWtZjd9/cFeh447nniKLq0z0PPvYmnZvzbtbDjDQnA
+	 fNhjFRr10tEipwvKd6lyqSsDzViwYguDpAuh2R4vG8ka66nSFU1TK/9OX592pPLhf1
+	 +tk7S7qKnKIRaOJFaspfnbj3RBEuyK/O8dHSsoMMtMja+yttRBTA0d03gZBeP2XV33
+	 n3IFuyQs+p7Rw==
+Message-ID: <03772e8b-8a33-424a-bb8d-effbfc6b1e71@lankhorst.se>
+Date: Fri, 23 Oct 2026 14:30:41 +0200
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,169 +54,135 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261022164340.78664-1-rainey.shawn+kaudio@gmail.com> <sashiko-outbox-181835@kernel.org>
-In-Reply-To: <sashiko-outbox-181835@kernel.org>
-From: Shawn <rainey.shawn@gmail.com>
-Date: Fri, 23 Oct 2026 08:27:47 -0400
-X-Gm-Features: AclHuK8dKd1CFrAVuglMwdaxGNoaEf4sR5SDw0Am1FeI8s6v4RIsVzplaUqWCpg
-Message-ID: <CANcp8vf22LvCxqXC6w2jGBjbhNFbA64_Xe4-0AZXsVq_hKKrJg@mail.gmail.com>
-Subject: Re: [PATCH] ALSA: usb-audio: add quirk for Novation UltraNova (1235:0011)
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-sound@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Good catch. v2 incoming  with .ep_idx =3D 1 to the capture entry
-
-Best,
-
-Shawn
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] drm/xe/display: Use xe_bo_addr_iter in remapped
+ DPT pinning
+To: sashiko-reviews@lists.linux.dev, intel-xe@lists.freedesktop.org
+References: <20261023114616.735366-1-dev@lankhorst.se>
+ <20261023114616.735366-2-dev@lankhorst.se> <sashiko-outbox-182746@kernel.org>
+Content-Language: en-US
+From: Maarten Lankhorst <dev@lankhorst.se>
+In-Reply-To: <sashiko-outbox-182746@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
 
-
-On Thu, Oct 22, 2026 at 12:57=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] ALSA: usb-audio: missing .ep_idx =3D 1 in UltraNova capture au=
-dioformat
+On 10/23/26 13:59, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] drm/xe/display: 32-bit overflow in write_dpt_remapped_tiled() size calculation
 > --
 >
-> commit aa83c7ced6942ef370a66b06613c33f74107f796
-> Author: Shawn Rainey <rainey.shawn+kaudio@gmail.com>
+> commit 061485566c342a900f9594f9a2b0fa400ea6f8c5
+> Author: Maarten Lankhorst <dev@lankhorst.se>
 >
-> ALSA: usb-audio: add quirk for Novation UltraNova (1235:0011)
+> drm/xe/display: Use xe_bo_addr_iter in remapped DPT pinning
 >
-> This commit adds a composite USB audio quirk for the Novation UltraNova
-> (1235:0011) with fixed playback and capture audio formats on interface 0
-> and a raw MIDI quirk on interface 1, while leaving the vendor control
-> interfaces unbound.
+> This patch replaces per-page xe_bo_addr() lookups in
+> write_dpt_remapped_linear() and write_dpt_remapped_tiled() with
+> xe_bo_addr_iter_first() and xe_bo_addr_iter_addr() cursor iteration to
+> reduce pinning complexity from O(N^2) to O(N).
 >
-> > diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
-> > index 6343a50fb2732..0b8bea76eca5b 100644
-> > --- a/sound/usb/quirks-table.h
-> > +++ b/sound/usb/quirks-table.h
-> > @@ -2359,6 +2359,69 @@ YAMAHA_DEVICE(0x7010, "UB99"),
-> >               }
-> >       }
-> >  },
-> > +{
-> > +     /*
-> > +      * Novation UltraNova: vendor-specific class descriptors, fixed
-> > +      * audio and MIDI layouts.  Only the audio and MIDI interfaces
-> > +      * (0 and 1) are grabbed; the vendor control interfaces (2/3)
-> > +      * are left unbound for userspace access.
-> > +      */
-> > +     USB_DEVICE_INTERFACE_NUMBER(0x1235, 0x0011, 0),
-> > +     QUIRK_DRIVER_INFO {
-> > +             .vendor_name =3D "Novation",
-> > +             .product_name =3D "UltraNova",
-> > +             QUIRK_DATA_COMPOSITE {
-> > +                     {
-> > +                             QUIRK_DATA_AUDIOFORMAT(0) {
-> > +                                     /* playback */
-> > +                                     .formats =3D SNDRV_PCM_FMTBIT_S16=
-_LE,
-> > +                                     .channels =3D 4,
-> > +                                     .iface =3D 0,
-> > +                                     .altsetting =3D 1,
-> > +                                     .altset_idx =3D 1,
-> > +                                     .attributes =3D UAC_EP_CS_ATTR_SA=
-MPLE_RATE,
-> > +                                     .endpoint =3D 0x01,
-> > +                                     .ep_attr =3D USB_ENDPOINT_XFER_IS=
-OC |
-> > +                                                USB_ENDPOINT_SYNC_SYNC=
-,
-> > +                                     .maxpacksize =3D 392,
-> > +                                     .rates =3D SNDRV_PCM_RATE_44100 |
-> > +                                              SNDRV_PCM_RATE_48000,
-> > +                                     .rate_min =3D 44100,
-> > +                                     .rate_max =3D 48000,
-> > +                                     .nr_rates =3D 2,
-> > +                                     .rate_table =3D (unsigned int[]) =
-{
-> > +                                             44100, 48000
-> > +                                     }
-> > +                             }
-> > +                     },
-> > +                     {
-> > +                             QUIRK_DATA_AUDIOFORMAT(0) {
-> > +                                     /* capture */
-> > +                                     .formats =3D SNDRV_PCM_FMTBIT_S24=
-_3LE,
-> > +                                     .channels =3D 2,
-> > +                                     .iface =3D 0,
-> > +                                     .altsetting =3D 1,
-> > +                                     .altset_idx =3D 1,
-> > +                                     .attributes =3D UAC_EP_CS_ATTR_SA=
-MPLE_RATE,
-> > +                                     .endpoint =3D 0x82,
-> > +                                     .ep_attr =3D USB_ENDPOINT_XFER_IS=
-OC |
-> > +                                                USB_ENDPOINT_SYNC_SYNC=
-,
+>> diff --git a/drivers/gpu/drm/xe/display/xe_fb_pin.c b/drivers/gpu/drm/xe/display/xe_fb_pin.c
+>> index 15fbd3fe6cbb7..7d53f77308a46 100644
+>> --- a/drivers/gpu/drm/xe/display/xe_fb_pin.c
+>> +++ b/drivers/gpu/drm/xe/display/xe_fb_pin.c
+>> @@ -17,6 +17,7 @@
+>>  #include "xe_ggtt.h"
+>>  #include "xe_pat.h"
+>>  #include "xe_pm.h"
+>> +#include "xe_res_cursor.h"
+>>  #include "xe_vram_types.h"
+>>  
+>>  static void
+>> @@ -68,14 +69,14 @@ write_dpt_remapped_linear(struct xe_bo *bo, struct iosys_map *map,
+>>  	const u64 pte = xe_ggtt_encode_pte_flags(ggtt, bo,
+>>  						 xe_cache_pat_idx(xe, XE_CACHE_NONE));
+>>  	unsigned int offset = plane->offset * XE_PAGE_SIZE;
+>> -	unsigned int size = plane->size;
+>> +	unsigned int size = plane->size * XE_PAGE_SIZE;
+>> +	struct xe_res_cursor cur;
+>>  
+>> -	while (size--) {
+>> -		u64 addr = xe_bo_addr(bo, offset, XE_PAGE_SIZE);
+>> +	for (xe_bo_addr_iter_first(bo, &cur, offset, size); cur.remaining; xe_res_next(&cur, XE_PAGE_SIZE)) {
+>> +		u64 addr = xe_bo_addr_iter_addr(&cur);
+>>  
+>>  		iosys_map_wr(map, dest, u64, addr | pte);
+>>  		dest += sizeof(u64);
+>> -		offset += XE_PAGE_SIZE;
+>>  	}
+>>  
+>>  	return dest;
+>> @@ -90,20 +91,22 @@ write_dpt_remapped_tiled(struct xe_bo *bo, struct iosys_map *map,
+>>  	struct xe_ggtt *ggtt = xe_device_get_root_tile(xe)->mem.ggtt;
+>>  	const u64 pte = xe_ggtt_encode_pte_flags(ggtt, bo,
+>>  						 xe_cache_pat_idx(xe, XE_CACHE_NONE));
+>> -	unsigned int offset, column, row;
+>> +	u32 offset = plane->offset * XE_PAGE_SIZE;
+>> +	struct xe_res_cursor cur;
+>>  
+>> -	for (row = 0; row < plane->height; row++) {
+>> -		offset = (plane->offset + plane->src_stride * row) *
+>> -			 XE_PAGE_SIZE;
+>> -
+>> -		for (column = 0; column < plane->width; column++) {
+>> -			u64 addr = xe_bo_addr(bo, offset, XE_PAGE_SIZE);
+>> +	xe_bo_addr_iter_first(bo, &cur, offset, plane->height * plane->src_stride * XE_PAGE_SIZE);
+>> +	while (cur.remaining) {
+> [Severity: Critical]
+> Can the size calculation in write_dpt_remapped_tiled() overflow a 32-bit
+> signed int and cause an out-of-bounds write past the end of map?
+No, framebuffers are 32-bits.
 >
-> [Severity: Medium]
-> Should the capture QUIRK_DATA_AUDIOFORMAT(0) entry in usb_audio_ids in
-> sound/usb/quirks-table.h also set .ep_idx =3D 1?
+> In include/drm/intel/gtt_view_types.h, struct intel_remapped_plane_info
+> defines height and src_stride as u16:
 >
-> Since capture endpoint 0x82 shares interface 0 altsetting 1 with playback
-> endpoint 0x01, endpoint 0x82 is the second endpoint descriptor on that
-> altsetting. Leaving .ep_idx unset defaults fp->ep_idx to 0.
+> include/drm/intel/gtt_view_types.h:
+> 	struct intel_remapped_plane_info {
+> 		/* in gtt pages */
+> 		u32 offset:31;
+> 		u32 linear:1;
+> 		union {
+> 			/* in gtt pages for !linear */
+> 			struct {
+> 				u16 width;
+> 				u16 height;
+> 				u16 src_stride;
+> 				u16 dst_stride;
+> 			};
 >
-> When usb_audio_probe() -> snd_usb_create_quirk() ->
-> create_composite_quirk() -> create_fixed_stream_quirk() runs in
-> sound/usb/quirks.c:
+> 			/* in gtt pages for linear */
+> 			u32 size;
+> 		};
+> 	} __packed;
 >
->         alts =3D &iface->altsetting[fp->altset_idx];
->         altsd =3D get_iface_desc(alts);
->         if (altsd->bNumEndpoints <=3D fp->ep_idx) {
->                 err =3D -EINVAL;
->                 goto error;
->         }
+> And in drivers/gpu/drm/xe/xe_bo.h, XE_PAGE_SIZE is a signed int expression:
 >
-> having fp->ep_idx =3D=3D 0 only checks altsd->bNumEndpoints <=3D 0 and do=
-es not
-> verify that a second endpoint descriptor exists on altsetting 1.
+> 	#define XE_PTE_SHIFT			12
+> 	#define XE_PAGE_SIZE			(1 << XE_PTE_SHIFT)
 >
-> Next, in create_fixed_stream_quirk() -> add_audio_stream_from_fixed_fmt()=
- ->
-> snd_usb_audioformat_set_sync_ep() in sound/usb/pcm.c:
+> In write_dpt_remapped_tiled(), plane->height and plane->src_stride undergo
+> standard C integer promotion from u16 to 32-bit signed int, so the product
+> plane->height * plane->src_stride * XE_PAGE_SIZE is evaluated in 32-bit
+> signed arithmetic before being converted to u64 for xe_bo_addr_iter_first().
 >
->         if (fmt->ep_idx > 0 || altsd->bNumEndpoints < 2)
->                 return 0;
+> When userspace pins a maximum-dimension tiled framebuffer via
+> drm_mode_addfb2 -> intel_framebuffer_init() -> intel_fill_fb_info() and
+> xe_fb_pin_to_ggtt() -> xe_pin_fb_vma_dpt() -> write_dpt_remapped_tiled()
+> (for example, a 16384x16384 4-tiled or Y-tiled plane with a 128 KiB pitch
+> where plane->height is 512 and plane->src_stride is 1024, totaling 524,288
+> pages or 2 GiB), the multiplication 512 * 1024 * 4096 overflows INT_MAX to
+> -0x80000000 and sign-extends to u64 as 0xffffffff80000000ULL.
 >
->         is_playback =3D !(get_endpoint(alts, 0)->bEndpointAddress & USB_D=
-IR_IN);
->         attr =3D fmt->ep_attr & USB_ENDPOINT_SYNCTYPE;
->         if ((is_playback && (attr =3D=3D USB_ENDPOINT_SYNC_SYNC ||
->                              attr =3D=3D USB_ENDPOINT_SYNC_ADAPTIVE)) ||
->             (!is_playback && attr !=3D USB_ENDPOINT_SYNC_ADAPTIVE))
->                 return 0;
+> Because the outer loop condition was changed from row < plane->height to
+> while (cur.remaining), cur.remaining starts at 0xffffffff80000000ULL and does
+> not reach zero after all plane->height rows are written. This causes the loop
+> to overrun the BO resource cursor in xe_res_next() and write PTEs past the
+> end of the DPT iosys_map via iosys_map_wr().
 >
-> because fmt->ep_idx is 0 rather than 1, snd_usb_audioformat_set_sync_ep()
-> does not return early at fmt->ep_idx > 0 and instead checks
-> get_endpoint(alts, 0) (playback endpoint 0x01), treating the capture
-> audioformat as is_playback =3D true. That also appears to be why omitting
-> USB_ENDPOINT_SYNC_SYNC caused generic sync-EP detection to pair 0x82 as a
-> sync endpoint for the capture direction as described in the commit messag=
-e.
+> Similarly, in both write_dpt_remapped_linear() and
+> write_dpt_remapped_tiled(), multiplying plane->offset and plane->size by
+> XE_PAGE_SIZE in 32-bit unsigned int / u32 variables truncates byte offsets
+> and sizes at or above 4 GiB. Should these byte offset and size calculations
+> use u64 arithmetic (or mul_u32_u32() / a 64-bit page size constant)?
 >
-> Additionally, when opening the capture endpoint via snd_usb_hw_params() -=
->
-> snd_usb_endpoint_open() in sound/usb/endpoint.c:
->
->                 } else {
->                         ep->iface =3D fp->iface;
->                         ep->altsetting =3D fp->altsetting;
->                         ep->ep_idx =3D fp->ep_idx;
->                 }
->
-> ep->ep_idx for endpoint 0x82 is recorded as 0 instead of 1.
->
-> [ ... ]
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261022164340.78=
-664-1-rainey.shawn+kaudio@gmail.com?part=3D1
