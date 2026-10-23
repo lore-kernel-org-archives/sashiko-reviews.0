@@ -1,50 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=141.105.120.124
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.174
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792758652;
-	b=JeCvoje1LgoKxOsrPadj82uQpsZJVsB5uZpv7qhg0goZ/vPAU1x7bwir0WWKKXiyPwNL
-	 WtmtLQlv0YZ+sqdFN1EF0PH9GRzn5MdyG8Ewzj20WY85g7FCz02wHJb9tQ7DpTVJtIsvW
-	 H6vPZ6BwHY0CHSVwKeHXGFfJIU99AARWtkK3+EC5PrRd36tv1boSHlQxCGfmQzv6DNY03
-	 QiaOZJBuNV1sDSK1q1IFSeOY4+SERYtKpeBr9EXdlZVexTdOhEysHyZrF7ASH8QCJbnt+
-	 Ua6k7B/WWtJ+HN5NsSK++NhbGouALCqx8mni2XDnrcblCEXwvmKBtfu2FrPNbalVqpg==
+	t=1792758967;
+	b=EzfiagPdu2JCvFGQ90KrPy8AFtdTEHA44rLKq9T9JLHTcHOa4BCvNiBcxix1PlTRtn7N
+	 t2koao06chR5yRb8ZjmARjGB59GDGjsS7CRb74HYTgchoojfZkUUlyuNHjSgVQhG7gZXd
+	 8/z2IHOab1KXvzKFXVB9KCUAFFdjEDo1p2H9jglCfWSoHUh3TXo5woOWxxhY6+N8cztML
+	 gvGkNfk3kRjMIhIir3sYhL/QYgVusTHmxiIROxwwgdikvYd/mg37KimkVco8IPnvke/G/
+	 63kp8qSrmcpZW6HGfKn4ftDnaEwjYSIgXhnf3Bv01O7sOD0efMqDEV2misgmtF/q+jw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792758652;
-	h=DMARC-Filter:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:References:Content-Language:From:In-Reply-To:Content-Type:
+	a=rsa-sha256; c=relaxed/relaxed; t=1792758967;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
 	 Content-Transfer-Encoding;
-	bh=8ypVT+aqdsJ/2zXRmml6vlOIqQ5YiUTO3XelL32NhT4=;
-	b=wfIVpeRR06G4FV68VI3Vk5Z9q3gQT+5nWuR02ZWeq/kcwe6Wke3Col0+IWJGcqGU66lh
-	 sfCZTj7C/sJ5x1IG2e4DrtR5p53TCsqpcgUJ8WCxgnWJ0RyWpp0wanzyqu6AaiFrQxh6S
-	 mEvAz73QP3BgKJqxu2/CJaLrdmNXALMnH/DO796+MDRYUaNdhcEsCOfuGI6urVTbGvpLw
-	 IT7butm+fbYEFTq+LU845k7cD1rXRGjgUNZQt0Kp6MqmEqUcEZBNNoj2emBwqa7rvp993
-	 JUHsSDZ6wttFgYJY03w/s83aDhPlKS1fNqe/fI14izVVpg6E8j665GvEVZxv4vrzT6A==
+	bh=EmfKpji+90isn+q04JehTBPzQ9AQUDyGYMHQgJ4/n9Y=;
+	b=vSyPMlQGS/p06J2itw2+f+xE74/MDOgcr8ENAuoU8+TWWHmNTFPxEK4Ep/p1euvpjGJo
+	 LIirxgisRTS/qi3H0HQ5RUG4rJCP268eGe/0ASv1AcbwKJq9pkp67S/EDSqyOyR+PdbTc
+	 jGDaZEP9I2zY40aqdGCjdtJvutMJKyi5bX5mhckGcxD92RbSReovoxgvzGNW+S5baDuak
+	 BGF8rh6Z25o4EzSnGb4e/UC0VBRy2OV1fxEMBtMOnKilSgn5XEqYEurQVgHVOY6vn1OMg
+	 Q7PfQP+1J8BVNPxqfF+YjSp7oHA+inF8SyoFF1kEl/zP2qwdpp1Q58HFVCX6Y2xbs0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=lankhorst.se;
-	spf=pass smtp.mailfrom=lankhorst.se;
-	dkim=pass header.d=lankhorst.se header.i=@lankhorst.se header.a=rsa-sha256 header.s=default header.b=fotBV2h3;
-	arc=none smtp.remote-ip=141.105.120.124
-Received: from lankhorst.se (unknown [141.105.120.124])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=q7eBU3d+;
+	arc=none smtp.remote-ip=209.85.215.174
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A5E60A2605
-	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 12:30:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C8A5E60A2605
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lankhorst.se
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lankhorst.se
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C351606A31E
+	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 12:36:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3C351606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=lankhorst.se header.i=@lankhorst.se header.a=rsa-sha256 header.s=default header.b=fotBV2h3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lankhorst.se;
-	s=default; t=1792758642;
-	bh=rslR3JPdPqtXqMF/hlQKKg0WrLsAgqePSNtDkHFvyqU=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=fotBV2h3tSFZVE3xxOsFWCwRTendVtNyMg6y3SGBeuRxZQs+0rSyklepk0KN0JV27
-	 9yoLQ2E0gd+I4z6ZW7NoE6rHu07cnbb2i5Spesuq83dQv5Oxr9JWI/BHRtxXP0zNUj
-	 7g5yNOVh8q6oKPTK9ULzCivHpWtZjd9/cFeh447nniKLq0z0PPvYmnZvzbtbDjDQnA
-	 fNhjFRr10tEipwvKd6lyqSsDzViwYguDpAuh2R4vG8ka66nSFU1TK/9OX592pPLhf1
-	 +tk7S7qKnKIRaOJFaspfnbj3RBEuyK/O8dHSsoMMtMja+yttRBTA0d03gZBeP2XV33
-	 n3IFuyQs+p7Rw==
-Message-ID: <03772e8b-8a33-424a-bb8d-effbfc6b1e71@lankhorst.se>
-Date: Fri, 23 Oct 2026 14:30:41 +0200
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=q7eBU3d+
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-ccce6d9abfeso536834a12.1
+        for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 05:36:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1792758966; x=1793363766; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=EmfKpji+90isn+q04JehTBPzQ9AQUDyGYMHQgJ4/n9Y=;
+        b=q7eBU3d+ogFnvM6lBe5mErAqJSlCmjLO20XOesIrAMa++6DB3DCTPhW7zKmcouNMqe
+         ZvIs6AyWeLW3xtuyxFXilgnn+OKNY9f5BSH6iG221J4HEd2197gbGzUQTYdPN7YCwMm0
+         sog5g6jDdupEs3dIjcGEwq3JhjUVYvJEBGWbsL2MjEnlQFXKvTzbL278xhst+JNxD3+v
+         VXsIYCLDzEbPpSsFH8JzZGUApPv7WFm4DgF9ziSJ9ebhWaHadxcKY3wU07wGfd2hYaSM
+         SGVl1eobTEexiO0Za2Plg/svZj27jLjbVs/oHsgjukQvYrrD382pVVmUc1qa9MgnzJWB
+         +s3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792758966; x=1793363766;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=EmfKpji+90isn+q04JehTBPzQ9AQUDyGYMHQgJ4/n9Y=;
+        b=0aldZF/N3U2DY1/QcQrSgzL1SvFsd0C4d1ra4WTrwDTP3deTrXdniZO2NRr8EWlS8Z
+         pPpYk1HXwzu4WgGBvkmG7kbubs4te4q/OtgCMqKfvDjOMpZApJNRj0AgJVQCuQh4brT4
+         lSM66B/4Eqmgcmuwql2+41lhApdGk6L0o6HbhQD9+10EON1Rw0FRUDIeBodbujpxX3Jj
+         ul/BXXuXFsyntPy1OhsNpGOkOhkLTBPT5RQqozWFD7EtzcMpkH7nXaOIYx2Nc/jlpEA/
+         jhRCyl8zMmjnBBIip2uyKh55/KRtSLmPFC/QAv9De6yDZBzgFe/OIzHf1bDAUSzdZFAr
+         yzWQ==
+X-Gm-Message-State: AFq9FYLzDvCcmOlpruk1I4TMvd03+fYP1AnuZpOs6gc8iEk19NMPfn0a
+	pgW0SrLEmRm4II6duRIA+f0chPuW8XzLhXEUkWBhF/Sj8Hn26cHA7pqAy5jETDrUW6QYfg==
+X-Gm-Gg: AYBFou1RTbXnOZBa7aUjMRz9KOOO1Xjr9u63yDSg59/CRNeZrumSLm1nT5AjG9RMFOe
+	iPfqhb0WyiJkoyF2mZ4MSYEe/jq3xEwbBlsm7uQn5UjJ/gv/zAFgS4WEwxTfGnxb8iiEM2cn+Va
+	NZEbX3Zd4HuFC0m+oxKjI1nie8LNObZf847F7tIudhR8bV+NEOAvZbVQomKSao7TPst0/kJQJr5
+	K1Kox92SqVypAoipjWsZIDJ8zTXE73KO+9WCh1vOqvbhc05mXiiPBbNJOHsUuR8QkDNckAmyRck
+	7Ui5G1Qo/WvNb4SzMEXgDs/ToFOakB1s366GxCOwIyHMJhhZVoI9qmFqK75ZvMcesugjvjlRBxf
+	+Gr8PZQHq3cem6sh1UEFDdP4RmA1uwF18ddS9DHSwT0GEvRX2v2fN12IBfkDT6Iq8Hqda8/V5Ks
+	72OCHN4Iw9bZlkWidIZegV+LkguFzA6E6T7Hnb8vMosFtXotOozHva6lStKLsR3IrB6Jif9niir
+	M/E/0vQBWi/x496z2VH1PLnw4AvbhZa9ouqlejtGVl6P7rmVpVO29xOtY4bIypo+Xrn66d/
+X-Received: by 2002:a05:6300:392:b0:3e1:6acc:5b08 with SMTP id adf61e73a8af0-3e37676d16emr1403665637.63.1792758966458;
+        Fri, 23 Oct 2026 05:36:06 -0700 (PDT)
+Received: from DESKTOP-NM9EKIA ([125.134.240.130])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cd8ba8a5342sm684757a12.17.2026.10.23.05.36.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Oct 2026 05:36:05 -0700 (PDT)
+From: Joonhoe Kim <26rote@gmail.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: sashiko-bot@kernel.org,
+	vkoul@kernel.org,
+	neil.armstrong@linaro.org,
+	olteanv@gmail.com,
+	mani@kernel.org,
+	konrad.dybcio@oss.qualcomm.com,
+	dmitry.baryshkov@oss.qualcomm.com,
+	val@packett.cool,
+	wesley.cheng@oss.qualcomm.com,
+	linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] phy: qcom: qmp-combo: Leave the USB PCS alone in DP-only mode
+Date: Fri, 23 Oct 2026 21:36:00 +0900
+Message-ID: <20261023123601.374-1-26rote@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.5
+In-Reply-To: <sashiko-outbox-181846@kernel.org>
+References: <20261022165219.1368-1-26rote@gmail.com> <sashiko-outbox-181846@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -54,135 +105,37 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] drm/xe/display: Use xe_bo_addr_iter in remapped
- DPT pinning
-To: sashiko-reviews@lists.linux.dev, intel-xe@lists.freedesktop.org
-References: <20261023114616.735366-1-dev@lankhorst.se>
- <20261023114616.735366-2-dev@lankhorst.se> <sashiko-outbox-182746@kernel.org>
-Content-Language: en-US
-From: Maarten Lankhorst <dev@lankhorst.se>
-In-Reply-To: <sashiko-outbox-182746@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
+On Thu, 22 Oct 2026 17:07:04 +0000, Sashiko AI review wrote:
+> - [High] phy: qcom: qmp-combo: qmp_combo_typec_switch_set() powers USB in DP-only mode
+[...]
+> Would this overwrite the serdes, lane, and PCS tables, time out waiting
+> for PHYSTATUS, and call clk_disable_unprepare(qmp->pipe_clk) on the
+> error path while qmp->init_count remains non-zero?
+[...]
+> Should both qmp_combo_typec_switch_set() and the power-off path in
+> qmp_combo_reconfigure_phy() also skip the USB PCS when qmp->qmpphy_mode is
+> QMPPHY_MODE_DP_ONLY?
 
-On 10/23/26 13:59, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] drm/xe/display: 32-bit overflow in write_dpt_remapped_tiled() size calculation
-> --
->
-> commit 061485566c342a900f9594f9a2b0fa400ea6f8c5
-> Author: Maarten Lankhorst <dev@lankhorst.se>
->
-> drm/xe/display: Use xe_bo_addr_iter in remapped DPT pinning
->
-> This patch replaces per-page xe_bo_addr() lookups in
-> write_dpt_remapped_linear() and write_dpt_remapped_tiled() with
-> xe_bo_addr_iter_first() and xe_bo_addr_iter_addr() cursor iteration to
-> reduce pinning complexity from O(N^2) to O(N).
->
->> diff --git a/drivers/gpu/drm/xe/display/xe_fb_pin.c b/drivers/gpu/drm/xe/display/xe_fb_pin.c
->> index 15fbd3fe6cbb7..7d53f77308a46 100644
->> --- a/drivers/gpu/drm/xe/display/xe_fb_pin.c
->> +++ b/drivers/gpu/drm/xe/display/xe_fb_pin.c
->> @@ -17,6 +17,7 @@
->>  #include "xe_ggtt.h"
->>  #include "xe_pat.h"
->>  #include "xe_pm.h"
->> +#include "xe_res_cursor.h"
->>  #include "xe_vram_types.h"
->>  
->>  static void
->> @@ -68,14 +69,14 @@ write_dpt_remapped_linear(struct xe_bo *bo, struct iosys_map *map,
->>  	const u64 pte = xe_ggtt_encode_pte_flags(ggtt, bo,
->>  						 xe_cache_pat_idx(xe, XE_CACHE_NONE));
->>  	unsigned int offset = plane->offset * XE_PAGE_SIZE;
->> -	unsigned int size = plane->size;
->> +	unsigned int size = plane->size * XE_PAGE_SIZE;
->> +	struct xe_res_cursor cur;
->>  
->> -	while (size--) {
->> -		u64 addr = xe_bo_addr(bo, offset, XE_PAGE_SIZE);
->> +	for (xe_bo_addr_iter_first(bo, &cur, offset, size); cur.remaining; xe_res_next(&cur, XE_PAGE_SIZE)) {
->> +		u64 addr = xe_bo_addr_iter_addr(&cur);
->>  
->>  		iosys_map_wr(map, dest, u64, addr | pte);
->>  		dest += sizeof(u64);
->> -		offset += XE_PAGE_SIZE;
->>  	}
->>  
->>  	return dest;
->> @@ -90,20 +91,22 @@ write_dpt_remapped_tiled(struct xe_bo *bo, struct iosys_map *map,
->>  	struct xe_ggtt *ggtt = xe_device_get_root_tile(xe)->mem.ggtt;
->>  	const u64 pte = xe_ggtt_encode_pte_flags(ggtt, bo,
->>  						 xe_cache_pat_idx(xe, XE_CACHE_NONE));
->> -	unsigned int offset, column, row;
->> +	u32 offset = plane->offset * XE_PAGE_SIZE;
->> +	struct xe_res_cursor cur;
->>  
->> -	for (row = 0; row < plane->height; row++) {
->> -		offset = (plane->offset + plane->src_stride * row) *
->> -			 XE_PAGE_SIZE;
->> -
->> -		for (column = 0; column < plane->width; column++) {
->> -			u64 addr = xe_bo_addr(bo, offset, XE_PAGE_SIZE);
->> +	xe_bo_addr_iter_first(bo, &cur, offset, plane->height * plane->src_stride * XE_PAGE_SIZE);
->> +	while (cur.remaining) {
-> [Severity: Critical]
-> Can the size calculation in write_dpt_remapped_tiled() overflow a 32-bit
-> signed int and cause an out-of-bounds write past the end of map?
-No, framebuffers are 32-bits.
->
-> In include/drm/intel/gtt_view_types.h, struct intel_remapped_plane_info
-> defines height and src_stride as u16:
->
-> include/drm/intel/gtt_view_types.h:
-> 	struct intel_remapped_plane_info {
-> 		/* in gtt pages */
-> 		u32 offset:31;
-> 		u32 linear:1;
-> 		union {
-> 			/* in gtt pages for !linear */
-> 			struct {
-> 				u16 width;
-> 				u16 height;
-> 				u16 src_stride;
-> 				u16 dst_stride;
-> 			};
->
-> 			/* in gtt pages for linear */
-> 			u32 size;
-> 		};
-> 	} __packed;
->
-> And in drivers/gpu/drm/xe/xe_bo.h, XE_PAGE_SIZE is a signed int expression:
->
-> 	#define XE_PTE_SHIFT			12
-> 	#define XE_PAGE_SIZE			(1 << XE_PTE_SHIFT)
->
-> In write_dpt_remapped_tiled(), plane->height and plane->src_stride undergo
-> standard C integer promotion from u16 to 32-bit signed int, so the product
-> plane->height * plane->src_stride * XE_PAGE_SIZE is evaluated in 32-bit
-> signed arithmetic before being converted to u64 for xe_bo_addr_iter_first().
->
-> When userspace pins a maximum-dimension tiled framebuffer via
-> drm_mode_addfb2 -> intel_framebuffer_init() -> intel_fill_fb_info() and
-> xe_fb_pin_to_ggtt() -> xe_pin_fb_vma_dpt() -> write_dpt_remapped_tiled()
-> (for example, a 16384x16384 4-tiled or Y-tiled plane with a 128 KiB pitch
-> where plane->height is 512 and plane->src_stride is 1024, totaling 524,288
-> pages or 2 GiB), the multiplication 512 * 1024 * 4096 overflows INT_MAX to
-> -0x80000000 and sign-extends to u64 as 0xffffffff80000000ULL.
->
-> Because the outer loop condition was changed from row < plane->height to
-> while (cur.remaining), cur.remaining starts at 0xffffffff80000000ULL and does
-> not reach zero after all plane->height rows are written. This causes the loop
-> to overrun the BO resource cursor in xe_res_next() and write PTEs past the
-> end of the DPT iosys_map via iosys_map_wr().
->
-> Similarly, in both write_dpt_remapped_linear() and
-> write_dpt_remapped_tiled(), multiplying plane->offset and plane->size by
-> XE_PAGE_SIZE in 32-bit unsigned int / u32 variables truncates byte offsets
-> and sizes at or above 4 GiB. Should these byte offset and size calculations
-> use u64 arithmetic (or mul_u32_u32() / a 64-bit page size constant)?
->
+Yes. Since 89563a152973 ("phy: qualcomm: qmp-combo: Add preliminary
+USB4 support") the mux keeps usb_init_count when it enters DP-only
+mode, so an orientation change in that mode already re-ran the USB
+PCS power-on over the DisplayPort configuration before this patch. v2
+skips the USB PCS in qmp_combo_typec_switch_set() as well.
+
+The power-off in qmp_combo_reconfigure_phy() when leaving DP-only mode
+only asserts SW_RESET, clears the start bits and puts the PCS into
+power-down, which it already is in DP-only mode, so it is harmless, but
+v2 skips it too for consistency.
+
+The pipe_clk handling on the error path of qmp_combo_usb_power_on() is
+a separate issue: pipe_clk is enabled in qmp_combo_com_init() and
+disabled in qmp_combo_com_exit(), so disabling it on a PHYSTATUS
+timeout leaves it unbalanced whatever the mode. This patch does not
+change that.
+
+v2: https://lore.kernel.org/all/20261023123512.1912-1-26rote@gmail.com/
+
+Thanks,
+Joonhoe Kim
