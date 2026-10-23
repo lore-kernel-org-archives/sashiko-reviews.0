@@ -1,69 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.218
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.226
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792719538;
-	b=cSZ8GOrxCKmrDDohaNQlCUxYVy606QI/o5t3OrHxDG4icEKVR6Ap/TmuiKCjxYo7KPgh
-	 J7jIB+uB2WQH+rYReWZcG3cmMbrp1xQIVwXSVT+5T6w2WQ3OVldmcmwyHq29PmIQbnNUx
-	 agcCkcmhv84aOo+sAPhg09o/MRn7ZL1J8ggbrkfepU+sh84PJFy31TmXTylpvmamh+08C
-	 iLJUnTijxGPVstuhnCXrTjzOXHeUUDzpyg1xB0T953lt+grE40ohbkz4HQso25zVQpYYB
-	 8mXbvm4/pYpKeaBmFZGNUGQH3cLWkKXSN2ZOnq2RhFgIIxpL7jb0B93evde2ZYe8obw==
+	t=1792720161;
+	b=dJFqBcEUddvs0nfDYjHKIAbv/uZJx02TO14S78MR2UiXNXf1fUz0gtstV1toOWqHTh+y
+	 9y08nmZZ1Kd8dYZ8qfwP8G9F7REvQkQG5TSM48Bzv6bxNeQnrlOsk2v7gGvict7kw0/37
+	 bPVqZHGw6GITbD5T1zPfuxWjQhjzQjIQeQmN4Wtnau/2YM+QLHYxETTOS6bUcg6SJl8bd
+	 eX7TSaW6OIeE0kd+UGkLzHUUerUOWHHICeCvDV8+gBp4XMCEidChVhU5C+N8cE9Y4Dh2c
+	 WYbW5lsUdxCOHmLNa4igVOMgJD9gD1y/qau7C8MIB6HSvbL7cGuWyR1J1F3w3atgj2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792719538;
-	h=DMARC-Filter:dkim-signature:Received:Received:Received:Subject:To:CC:
-	 References:From:Message-ID:Date:User-Agent:MIME-Version:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Originating-IP:
-	 X-ClientProxiedBy;
-	bh=QWucc+eNs0JFwgN0pMkOoCVTFUEqSR4d49rqTdMABsI=;
-	b=b2OCK60jz2bfmtZuA5nLaffEERJgiBflQWyKsouHBUR5LuHJ7olDLZ1WZjCpVmXpqXe9
-	 rnSwXadLVLS204lgiq9D2OYE7JStUwm/sjetpzFPF16TUZiwOHmKxi3UshiNx+KHC7Nzk
-	 zvukK8skETN1DtbXgSGWhPzN1v2Vqcav5cBP0kCVYrZqKbF4IfgtFB5xiwYATXE1WTr+5
-	 VJmOJO96LWeSoAdwoA1Oh4FGkKx5IogozvnfNwmiHrVhVNTEgal6qIHnhBdBLcaMpS3tP
-	 Vpdp+UAQ+A10k7zXDzR6OVGB6Dmsc3KJDEwdjz4ZQ5NCjiKeo9uf5qI3zhrj7/4c9eg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792720161;
+	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Gm-Message-State:
+	 X-Gm-Gg:X-Received:Received:X-Relaying-Domain:X-CFilter-Loop:Received:
+	 DKIM-Signature:X-Received:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 X-DetectorID-Processed:Content-Type;
+	bh=22/C10ZYKpRlQQVhA0S4k+qdBezIcwiS/xsZ7aeVMfI=;
+	b=SoBf88od7TdWdcFE96i+krYjx+eb3Qk4/fy0WXduD+c8ZHNNFTuTFffAiKj7p1jyTtgB
+	 UYbPBKu8pddOGSn7zBsL5SEsQoGoYWZt8JD2oW7BGXFcadAkkrehPoSgw1gma089KUcTu
+	 z6gVkUAqhRNcK4f26AVr1mx8wVxy+8tXIS+sIINwkx2SHYdLZzN3sI95wqDrnr+oZNRpK
+	 LSbWNNvpmLA+cVmKa6SDH7tvvNv/9GCVLuKbkFD1IrrEpx6w0YuopzcYrB+/UsEzXzeGp
+	 qnXb5Dawe/OUUbgeMDzDMrroM/H7oBfFfwGLx+Ie/ViHfgOuYbUZtNYFGbAuyHhdreg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=huawei.com;
-	spf=pass smtp.mailfrom=huawei.com;
-	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=unsT895E;
-	arc=none smtp.remote-ip=113.46.200.218
-Received: from canpmsgout03.his.huawei.com (canpmsgout03.his.huawei.com [113.46.200.218])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=broadcom.com;
+	spf=fail smtp.mailfrom=broadcom.com;
+	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b="B5uwKM/l";
+	arc=none smtp.remote-ip=209.85.210.226
+Received: from mail-pf1-f226.google.com (mail-pf1-f226.google.com [209.85.210.226])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406F3606A319
-	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 01:38:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 406F3606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FF5606A31A
+	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 01:49:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 60FF5606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=unsT895E
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=QWucc+eNs0JFwgN0pMkOoCVTFUEqSR4d49rqTdMABsI=;
-	b=unsT895ExXORKOB/nW3zxC50rb37VJp5ihevRg78sPWVhnhiX0HvyNf9pRsk/ptnvR7DARpJC
-	79+RbLLKFQdgZ2N8DFF9tX8GfJLAVAT0ih4Xbyus0LaRXbdRF5vhwiSFBtLKB3DW7Dh7c7s8kU8
-	91Zl7cwBAxjp9aCReN5g6LE=
-Received: from mail.maildlp.com (unknown [172.19.162.140])
-	by canpmsgout03.his.huawei.com (SkyGuard) with ESMTPS id 4j9lzZ0dPDzpTJr;
-	Fri, 23 Oct 2026 09:38:50 +0800 (CST)
-Received: from whupemo200011.china.huawei.com (unknown [7.152.185.179])
-	by mail.maildlp.com (Postfix) with ESMTPS id 2A493203C8;
-	Fri, 23 Oct 2026 09:38:53 +0800 (CST)
-Received: from [10.174.178.46] (10.174.178.46) by
- whupemo200011.china.huawei.com (7.152.185.179) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Fri, 23 Oct 2026 09:38:51 +0800
-Subject: Re: [PATCH v2] ubifs: zero stale data beyond EOF before file size
- grows
-To: Nan Lin <lin.nan@h3c.com>
-CC: <linux-mtd@lists.infradead.org>, <richard@nod.at>,
-	<sashiko-bot@kernel.org>, <sashiko-reviews@lists.linux.dev>,
-	<wangxiaoqing@h3c.com>, <zhou.kete@h3c.com>
-References: <d79ef729-5cb2-6128-7075-be95be77580c@huawei.com>
- <20261023012325.3333221-1-lin.nan@h3c.com>
-From: Zhihao Cheng <chengzhihao1@huawei.com>
-Message-ID: <9380b1bc-45b6-5d95-7260-5a8dc92acc09@huawei.com>
-Date: Fri, 23 Oct 2026 09:38:50 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+	dkim=pass (1024-bit key, unprotected) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=B5uwKM/l
+Received: by mail-pf1-f226.google.com with SMTP id d2e1a72fcca58-8a05b210703so212159b3a.0
+        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 18:49:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792720161; x=1793324961;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=22/C10ZYKpRlQQVhA0S4k+qdBezIcwiS/xsZ7aeVMfI=;
+        b=fqOlsFT0sCAoV9sPkcxNMW42ZFbB4+jFw0F+OkAhGevpeJDRpo1Xio6+GbAwnC9NRD
+         1Xzh1RoLus8MYljvuNtO/4yeCvG9XRh9KlzVjOIQeyn6ZI0697L2U648gTYHFdhjRoTL
+         IjEenajTYC1MezHogpghHqf8q0hWcc8rMymJVW5WLTzhJD0ILHceuqygBfS4MfMYHeYF
+         9boIgUUmx/BuxQgz5zV4UwWYmXQiTbfbYzkwF/mu7TrHZ8C63OhqcU42DKG1NFn+HDew
+         HvBL/RJv5IIZ/ytRJVXDNqNC499Mu05Er9Fot148MsdUoHtkI3P8LT53H/0+ItuJI0St
+         OITg==
+X-Gm-Message-State: AFq9FYLKXRXLuKzu1p4Cl8J63V4c6YYU0Zrfocv5J6X3nfZP4yK36ais
+	e8HNpzVSUDdsJWcOvZl2RbIzfAnXpEyD3Hv5jxkBflk+s26s5YwsJ20511A0gTXeh2gGxXh2G7e
+	+LNggk03d4Ck/EsF3K3Kh1xuTMrodJAVlP5CkU+aI94VBLt/ppGFhRhyujCFefaaU05D196Getk
+	ImnI+bFPFTsq8H+XEjnWyOZ/g6NsMzdFgnOfezgVLkEK/zLgeJYwmg2GMibbGfGqkiJD0RoBfDh
+	WUVfK/dlW4O8TDTiokE
+X-Gm-Gg: AYBFou3ZhZBH9sL5IyfkxJwX8g0da5h+8Snd/XXeZcYMn9u5dK7vpRl0iSpBo3ZHgs9
+	3wWDSZYws0xPti0zZciX6nIh01GT5AWfuPuNznr9PFImyjND/R5+g71ongpJHmCIml9/tdhBw2v
+	65Qb8/y+QNa76LBJ87vR2FA1+r4uqnbEKIHsmaCX+EmdGW9QTM4bGLM3BHEvL4Ft7W69xfu20ao
+	sEir4CCkdPASZwYFzyOlx/K4pJVQnIUEj4Jbd0ZSz1lwO+9N7ZyDLLaf3UcDvpdfWX5+lDahwSN
+	anrqtxQ2zGCo5GucnqoBqj6eHCn1mkez2GFyQID8ufiVQy7EMOoN+yFMIkXGtk8bojZEDc25p7J
+	SgLDtdeYsxhzxwR255OPkRJySBw7fkl+42OYP8LgKRrLA5tbsNfaArS3Mr3UAMSN/KBZLmzXnWX
+	w36tzrnwOcUdX8EjAuciP2hCMN1kFgaNHd
+X-Received: by 2002:a05:6a00:b41:b0:8a0:2344:c44b with SMTP id d2e1a72fcca58-8a2c63c8b36mr644608b3a.40.1792720160420;
+        Thu, 22 Oct 2026 18:49:20 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-17.dlp.protect.broadcom.com. [144.49.247.17])
+        by smtp-relay.gmail.com with ESMTPS id d2e1a72fcca58-8a2c8bd2092sm6097b3a.6.2026.10.22.18.49.18
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 22 Oct 2026 18:49:20 -0700 (PDT)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-ed1-f70.google.com with SMTP id 4fb4d7f45d1cf-6b1ab11f480so541120a12.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 18:49:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1792720157; x=1793324957; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=22/C10ZYKpRlQQVhA0S4k+qdBezIcwiS/xsZ7aeVMfI=;
+        b=B5uwKM/l5yeWVtboXPM08SDJp7cPEX3c56AXvSXeGlaKk1EeX8yxkCT3TBVfEIJiTM
+         cYi2tOofeUipFrWAcxeKSL+2hEtJvnn1lOgpc6J9r8az20Ofoq13p6NAsTfyPp+ZvuPZ
+         4h47Cex3QaMDxigKZHYB5iBxkd5dOnVGs5yyM=
+X-Received: by 2002:a05:6402:1246:b0:6b1:a67b:d378 with SMTP id 4fb4d7f45d1cf-6b432c414f8mr1207945a12.17.1792720157173;
+        Thu, 22 Oct 2026 18:49:17 -0700 (PDT)
+X-Received: by 2002:a05:6402:1246:b0:6b1:a67b:d378 with SMTP id
+ 4fb4d7f45d1cf-6b432c414f8mr1207929a12.17.1792720156706; Thu, 22 Oct 2026
+ 18:49:16 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -73,176 +95,143 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-In-Reply-To: <20261023012325.3333221-1-lin.nan@h3c.com>
-Content-Type: text/plain; charset="gbk"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
- whupemo200011.china.huawei.com (7.152.185.179)
+References: <20261019-uet-ib-core-v2-0-8bd654f25370@broadcom.com>
+ <20261019-uet-ib-core-v2-5-8bd654f25370@broadcom.com> <sashiko-outbox-178596@kernel.org>
+In-Reply-To: <sashiko-outbox-178596@kernel.org>
+From: Eric Davis <eric.davis@broadcom.com>
+Date: Thu, 22 Oct 2026 18:48:48 -0700
+X-Gm-Features: AclHuK_JjOg2wfBd5rpKJKlrX5CL3XXEWBiO2j9AUHSpFZYAaygPzGU7za_rRO8
+Message-ID: <CAMouMYLNHzpPYa8i_ZJ5aowkAE+6GBbL1rX-8Ofsy+DpZZTMHQ@mail.gmail.com>
+Subject: Re: [PATCH rdma-next v2 05/13] RDMA/core: extended address handle attributes
+To: sashiko-reviews@lists.linux.dev, Jason Gunthorpe <jgg@ziepe.ca>, 
+	Leon Romanovsky <leon@kernel.org>
+Cc: linux-rdma@vger.kernel.org
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
+	boundary="0000000000002a68e3065e7830eb"
 
-ÔÚ 2026/10/23 9:23, Nan Lin Ð´µÀ:
->>>>> Hi Cheng,
->>>>>
->>>>> Thanks for the detailed review. My responses are inline.
->>>>>
->>>>>> The filemap_lock_folio gets folio with FGP_LOCK, I think we should
->>>>>> use 'FGP_WRITEBEGIN | FGP_ACCESSED' just like ext4_load_tail_bh()
->>>>>> does, because the folio may not exist in ram when calling do_setattr().
->>>>>
->>>>> ext4_load_tail_bh() needs FGP_CREAT because in Ext4 the block behind
->>>>> an unwritten/delayed extent holds garbage on disk, so the zeroing
->>>>> must reach the media. UBIFS does not have this problem -- stale data
->>>>> can only live in the page cache, never on flash:
->>>>>
->>>>>      writeback:  ubifs_writepage() zeroes the straddling folio on every
->>>>>                  invocation and skips folios fully beyond i_size, so
->>>>>                  stale tails never reach the media.
->>>>>      read-in:    do_readpage()/read_block() zero the tails of holes and
->>>>>                  short data nodes, so a folio loaded from flash is always
->>>>>                  tail-clean.
->>>>>
->>>>> So when the EOF folio is absent from the cache, there is nothing to
->>>>> zero anywhere: FGP_CREAT would merely allocate a fresh (already
->>>>> zero) folio to zero it again. Returning early on IS_ERR() is the
->>>>> correct and cheaper equivalent of Ext4's path.
->>>>
->>>> There is one case makes me confused:
->>>> File f, isize = 0
->>>> 1. setattr(f, isize = 3)
->>>>      do_setattr -> ubifs_zero_eof_hole -> filemap_lock_folio // gets no folio and returns, nothing happens 2. pwrite(f, "123", offset = 6, len = 3)
->>>>      ubifs_write_begin
->>>>       ubifs_zero_eof_hole -> filemap_lock_folio // gets no folio and returns, nothing happens
->>>>       folio = __filemap_get_folio(FGP_WRITEBEGIN) // create a new folio with random content
->>>>       if (!folio_test_uptodate(folio))
->>>>         do_readpage // does nothing
->>>>          while (1) {
->>>>            ENOENT = read_block
->>>>          }
->>>>      ubifs_write_end
->>>>       isize = 9
->>>>
->>>>     ubifs_writepage
->>>>      folio content looks like
->>>>     | random | random | 123   |   zero       |
->>>>     0        3        6       9             4096
->>>>
->>>
->>> do_readpage() does run here: pos(6) != folio_pos(0), so the
->>> skipped_read branch is not taken. With i_size = 3:
->>>
->>>     do_readpage():
->>>       beyond = (3 + 4095) >> 12 = 1
->>>       block(0) < beyond(1) -> no early exit
->>>       read_block(block=0):
->>>         ubifs_tnc_lookup() -> -ENOENT (no data nodes yet)
->> Oh, I missed the folio_zero_range in read_block(), sorry for the noisy.
->>>         -> folio_zero_range(folio, 0, 4096)     /* whole 4K block */
->>>         -> return -ENOENT                       /* file.c:52-59 */
->>>       hole branch: err = 0, folio_set_checked(), folio_mark_uptodate()
->>>
->>> So read_block() zeroes the full 4K block *before* returning -ENOENT. The folio VFS copies "123" into is:
->>>
->>>     | 0 ... 0 | 123 | 0 ... 0 |
->>>     0         3/6   9        4096
->>>
->>> not "| random | random | 123 |". The random bytes never survive:
->>> every !uptodate folio passes through do_readpage(), and read_block()
->>> zeroes every block whose TNC lookup returns -ENOENT.
->>>
->>>> According to the current implementations, could above process happen?
->>>> If it is, I think we need to do two points:
->>>> 1. The folio(even not cached) zero range is necessary when setting a new
->>>> bigger size?       -- For 0~3 case
->>>> 2. The folio(even not cached) zero range is necessary when writting
->>>> starts after old isize?       -- For 3~6 case
->>>> I think zeroing the whole folio in ubifs_read_folio(ENOENT case) is a simple solution?
->>>>>
->>>>>> Why skipping 'from == 0'? What if a user writes begin from
->>>>>> offset-X(0<X<4096) to a new file(isize = 0)? Ext4 zero the range by
->>>>>> ext4_block_write_begin->folio_zero_segments(folio, to, block_end,
->>>>>> block_start, from), but ubifs not handle it.
->>>>>
->>>>> from == 0 means the old EOF is folio-aligned, so the EOF folio has
->>>>> no bytes beyond EOF and there is no hole in it:
->>>>>
->>>>>      from != 0:  |/////valid/////|stale|   <- zero [from, to)
->>>>>      from == 0:  |/////valid/////|         <- nothing beyond EOF here
->>>>>
->>>>> For the i_size == 0 case: a zero-size file cannot hold a polluted
->>>>> folio. mmap cannot create one (page_mkwrite returns SIGBUS when
->>>>> folio_pos >= i_size), and write() followed by ftruncate(0)
->>>>> invalidates the folio. The [0, X) part of the write folio itself is
->>>>> zeroed by the existing do_readpage() path ("block >= beyond" ->
->>>>> folio_zero_range()), which is UBIFS's counterpart of
->>>>> ext4_block_write_begin()'s
->>>>> folio_zero_segments() -- the work happens at folio read-in because
->>>>> UBIFS's block size always equals the page size.
->>>>>
->>>>
->>>> This question is similar with the previous one.
->>>>
->>>>>> The ext4 protection check is
->>>>>> ext4_write_checks->ext4_block_zero_eof,
->>>>>> I think we can add the zero hole check in ubifs_write_iter().
->>>>>
->>>>> Agreed. This mirrors ext4_write_checks() -> ext4_block_zero_eof()
->>>>> and runs once per syscall instead of once per write_begin() iteration.
->>>>> Will move it there in v3.
->>>>>
->>>>>> If the program enters into this branch, the ubifs file's isize is
->>>>>> not zero, ubifs_read_folio has already zerod tail, do we still need
->>>>>> this folio_zero_range?
->>>>>> Oh, there is one case, UBIFS file has isize without data nodes(eg.
->>>>>> isize = 3, the first block is a data hole), ubifs_read_folio won't
->>>>>> zero the page tail, we still need folio_zero_range().
->>>>>
->>>>> Right -- and one more case on top of the hole-inode one: mkwrite
->>>>> also runs on already-cached folios, and earlier mmap stores may have
->>>>> re-dirtied the tail after ubifs_read_folio() cleaned it (only folios
->>>>> fully beyond EOF get SIGBUS; the straddling folio stays writable
->>>>> across its whole length). So the tail must be re-zeroed on every
->>>>> (re-)fault, and the folio_zero_range() stays.
->>>>
->>>> I;m still confusing about the necessary of this folio_zero_range().
->>>> For a hole inode(isize = 3, no data nodes), if the folio is cached, ubifs_read_folio has zerod the whole folio content(Suspend we have applied the simple solution from the previous question). The subsequent dirty setting will not write the page content after the 3rd byte to a data node.
->>>
->>> Yes, I agree: ubifs_read_folio() zeroes the tail at read-in, and
->>> writeback does not persist bytes beyond EOF (the straddling folio's
->>> tail is zeroed and do_writepage() only writes i_size bytes). My
->>> concern is the cached tail of the EOF folio: a previous shared mapping
->>> may have modified it, and a later write fault may reuse the uptodate
->>> folio without calling ubifs_read_folio() again.
->>> The zeroing will clear that stale tail before page_mkwrite() returns.
->>>
->> Agreed with the analysis of the multi writing processes. Anyway, user must be aware that he is modifying a file beyonds EOF by mmap(). The user should be responsible for the memory content beyonds EOF.
->>> This is not a general fix for read-only re-mappings, since those do
->>> not invoke page_mkwrite(). In this scenario, I see the hunk as a
->>> defensive cleanup of the cached EOF tail on a later write fault,
->>> rather than a fix for writeback correctness. A userspace reproducer
->>> may race with writeback. I'd lean toward keeping it as a defensive
->>> measure, but I haven't yet demonstrated a correctness issue without
->>> it. What do you think?
->>>
->>
->> Well, this is not a practical issue and will not have any impact on the user, and other filesystems(eg. ext4) behave like UBIFS for this case, so I prefer to keep the original implementation.
-> 
-> Understood. I verified your point against the code:
-> ext4_page_mkwrite() -> ext4_block_page_mkwrite() ->
-> ext4_block_write_begin(handle, folio, 0, len) with len =
-> i_size - folio_pos, and nothing zeroes [i_size, folio_size) on the
-> write fault path; block_page_mkwrite() behaves the same. I agree
-> the mmap-past-EOF semantics put the responsibility on the user.
-> 
-> I'll drop the mkwrite hunk in v3 and fix the commit message
-> accordingly (drop the inaccurate "mirrors block_page_mkwrite()"
-> claim, refer to the ext4 size-growth zeroing instead), keeping the
-> write_iter() and do_setattr() zeroing. Will post after testing.
-> 
+--0000000000002a68e3065e7830eb
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Sounds fine to me.
-> Best regards,
-> Nan Lin
-> 
-> 
-> .
-> 
+On Tue, Oct 20, 2026 at 1:40=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+> Should UVERBS_HANDLER(UVERBS_METHOD_AH_EX_CREATE) call
+> uverbs_finalize_uobj_create(attrs, UVERBS_ATTR_CREATE_AH_EX_HANDLE) befor=
+e
+> returning 0?
 
+Yes, agreed. The method declares UVERBS_ATTR_UHW(), so the UHW_OUT
+write after the handler can fail and the abort then skips
+uverbs_free_ah(). v3 will call uverbs_finalize_uobj_create() once the AH
+is set up.
+
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261019-uet-ib-c=
+ore-v2-0-8bd654f25370@broadcom.com?part=3D5
+
+Thanks,
+- eric
+
+--0000000000002a68e3065e7830eb
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+MIIVUQYJKoZIhvcNAQcCoIIVQjCCFT4CAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0BBwGg
+ghK+MIIGqDCCBJCgAwIBAgIQfofDCS7XZu8vIeKo0KeY9DANBgkqhkiG9w0BAQwFADBMMSAwHgYD
+VQQLExdHbG9iYWxTaWduIFJvb3QgQ0EgLSBSNjETMBEGA1UEChMKR2xvYmFsU2lnbjETMBEGA1UE
+AxMKR2xvYmFsU2lnbjAeFw0yMzA0MTkwMzUzNTNaFw0yOTA0MTkwMDAwMDBaMFIxCzAJBgNVBAYT
+AkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIEdDQyBS
+NiBTTUlNRSBDQSAyMDIzMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAwjAEbSkPcSyn
+26Zn9VtoE/xBvzYmNW29bW1pJZ7jrzKwPJm/GakCvy0IIgObMsx9bpFaq30X1kEJZnLUzuE1/hlc
+hatYqyORVBeHlv5V0QRSXY4faR0dCkIhXhoGknZ2O0bUJithcN1IsEADNizZ1AJIaWsWbQ4tYEYj
+ytEdvfkxz1WtX3SjtecZR+9wLJLt6HNa4sC//QKdjyfr/NhDCzYrdIzAssoXFnp4t+HcMyQTrj0r
+pD8KkPj96sy9axzegLbzte7wgTHbWBeJGp0sKg7BAu+G0Rk6teO1yPd75arbCvfY/NaRRQHk6tmG
+71gpLdB1ZhP9IcNYyeTKXIgfMh2tVK9DnXGaksYCyi6WisJa1Oa+poUroX2ESXO6o03lVxiA1xyf
+G8lUzpUNZonGVrUjhG5+MdY16/6b0uKejZCLbgu6HLPvIyqdTb9XqF4XWWKu+OMDs/rWyQ64v3mv
+Sa0te5Q5tchm4m9K0Pe9LlIKBk/gsgfaOHJDp4hYx4wocDr8DeCZe5d5wCFkxoGc1ckM8ZoMgpUc
+4pgkQE5ShxYMmKbPvNRPa5YFzbFtcFn5RMr1Mju8gt8J0c+dxYco2hi7dEW391KKxGhv7MJBcc+0
+x3FFTnmhU+5t6+CnkKMlrmzyaoeVryRTvOiH4FnTNHtVKUYDsCM0CLDdMNgoxgkCAwEAAaOCAX4w
+ggF6MA4GA1UdDwEB/wQEAwIBhjBMBgNVHSUERTBDBggrBgEFBQcDAgYIKwYBBQUHAwQGCisGAQQB
+gjcUAgIGCisGAQQBgjcKAwwGCisGAQQBgjcKAwQGCSsGAQQBgjcVBjASBgNVHRMBAf8ECDAGAQH/
+AgEAMB0GA1UdDgQWBBQAKTaeXHq6D68tUC3boCOFGLCgkjAfBgNVHSMEGDAWgBSubAWjkxPioufi
+1xzWx/B/yGdToDB7BggrBgEFBQcBAQRvMG0wLgYIKwYBBQUHMAGGImh0dHA6Ly9vY3NwMi5nbG9i
+YWxzaWduLmNvbS9yb290cjYwOwYIKwYBBQUHMAKGL2h0dHA6Ly9zZWN1cmUuZ2xvYmFsc2lnbi5j
+b20vY2FjZXJ0L3Jvb3QtcjYuY3J0MDYGA1UdHwQvMC0wK6ApoCeGJWh0dHA6Ly9jcmwuZ2xvYmFs
+c2lnbi5jb20vcm9vdC1yNi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0GCSqGSIb3DQEBDAUAA4IC
+AQCRkUdr1aIDRmkNI5jx5ggapGUThq0KcM2dzpMu314mJne8yKVXwzfKBtqbBjbUNMODnBkhvZcn
+bHUStur2/nt1tP3ee8KyNhYxzv4DkI0NbV93JChXipfsan7YjdfEk5vI2Fq+wpbGALyyWBgfy79Y
+IgbYWATB158tvEh5UO8kpGpjY95xv+070X3FYuGyeZyIvao26mN872FuxRxYhNLwGHIy38N9ASa1
+Q3BTNKSrHrZngadofHglG5W3TMFR11JOEOAUHhUgpbVVvgCYgGA6dSX0y5z7k3rXVyjFOs7KBSXr
+dJPKadpl4vqYphH7+P40nzBRcxJHrv5FeXlTrb+drjyXNjZSCmzfkOuCqPspBuJ7vab0/9oeNERg
+nz6SLCjLKcDXbMbKcRXgNhFBlzN4OUBqieSBXk80w2Nzx12KvNj758WavxOsXIbX0Zxwo1h3uw75
+AI2v8qwFWXNclO8qW2VXoq6kihWpeiuvDmFfSAwRLxwwIjgUuzG9SaQ+pOomuaC7QTKWMI0hL0b4
+mEPq9GsPPQq1UmwkcYFJ/Z4I93DZuKcXmKMmuANTS6wxwIEw8Q5MQ6y9fbJxGEOgOgYL4QIqNULb
+5CYPnt2LeiIiEnh8Uuh8tawqSjnR0h7Bv5q4mgo3L1Z9QQuexUntWD96t4o0q1jXWLyrpgP7Zcnu
+CzCCBYMwggNroAMCAQICDkXmuwODM8OFZUjm/0VRMA0GCSqGSIb3DQEBDAUAMEwxIDAeBgNVBAsT
+F0dsb2JhbFNpZ24gUm9vdCBDQSAtIFI2MRMwEQYDVQQKEwpHbG9iYWxTaWduMRMwEQYDVQQDEwpH
+bG9iYWxTaWduMB4XDTE0MTIxMDAwMDAwMFoXDTM0MTIxMDAwMDAwMFowTDEgMB4GA1UECxMXR2xv
+YmFsU2lnbiBSb290IENBIC0gUjYxEzARBgNVBAoTCkdsb2JhbFNpZ24xEzARBgNVBAMTCkdsb2Jh
+bFNpZ24wggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQCVB+hzymb57BTKezz3DQjxtEUL
+LIK0SMbrWzyug7hBkjMUpG9/6SrMxrCIa8W2idHGsv8UzlEUIexK3RtaxtaH7k06FQbtZGYLkoDK
+RN5zlE7zp4l/T3hjCMgSUG1CZi9NuXkoTVIaihqAtxmBDn7EirxkTCEcQ2jXPTyKxbJm1ZCatzEG
+xb7ibTIGph75ueuqo7i/voJjUNDwGInf5A959eqiHyrScC5757yTu21T4kh8jBAHOP9msndhfuDq
+jDyqtKT285VKEgdt/Yyyic/QoGF3yFh0sNQjOvddOsqi250J3l1ELZDxgc1Xkvp+vFAEYzTfa5MY
+vms2sjnkrCQ2t/DvthwTV5O23rL44oW3c6K4NapF8uCdNqFvVIrxclZuLojFUUJEFZTuo8U4lptO
+TloLR/MGNkl3MLxxN+Wm7CEIdfzmYRY/d9XZkZeECmzUAk10wBTt/Tn7g/JeFKEEsAvp/u6P4W4L
+sgizYWYJarEGOmWWWcDwNf3J2iiNGhGHcIEKqJp1HZ46hgUAntuA1iX53AWeJ1lMdjlb6vmlodiD
+D9H/3zAR+YXPM0j1ym1kFCx6WE/TSwhJxZVkGmMOeT31s4zKWK2cQkV5bg6HGVxUsWW2v4yb3BPp
+DW+4LtxnbsmLEbWEFIoAGXCDeZGXkdQaJ783HjIH2BRjPChMrwIDAQABo2MwYTAOBgNVHQ8BAf8E
+BAMCAQYwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUrmwFo5MT4qLn4tcc1sfwf8hnU6AwHwYD
+VR0jBBgwFoAUrmwFo5MT4qLn4tcc1sfwf8hnU6AwDQYJKoZIhvcNAQEMBQADggIBAIMl7ejR/ZVS
+zZ7ABKCRaeZc0ITe3K2iT+hHeNZlmKlbqDyHfAKK0W63FnPmX8BUmNV0vsHN4hGRrSMYPd3hckSW
+tJVewHuOmXgWQxNWV7Oiszu1d9xAcqyj65s1PrEIIaHnxEM3eTK+teecLEy8QymZjjDTrCHg4x36
+2AczdlQAIiq5TSAucGja5VP8g1zTnfL/RAxEZvLS471GABptArolXY2hMVHdVEYcTduZlu8aHARc
+phXveOB5/l3bPqpMVf2aFalv4ab733Aw6cPuQkbtwpMFifp9Y3s/0HGBfADomK4OeDTDJfuvCp8g
+a907E48SjOJBGkh6c6B3ace2XH+CyB7+WBsoK6hsrV5twAXSe7frgP4lN/4Cm2isQl3D7vXM3PBQ
+ddI2aZzmewTfbgZptt4KCUhZh+t7FGB6ZKppQ++Rx0zsGN1s71MtjJnhXvJyPs9UyL1n7KQPTEX/
+07kwIwdMjxC/hpbZmVq0mVccpMy7FYlTuiwFD+TEnhmxGDTVTJ267fcfrySVBHioA7vugeXaX3yL
+SqGQdCWnsz5LyCxWvcfI7zjiXJLwefechLp0LWEBIH5+0fJPB1lfiy1DUutGDJTh9WZHeXfVVFsf
+rSQ3y0VaTqBESMjYsJnFFYQJ9tZJScBluOYacW6gqPGC6EU+bNYC1wpngwVayaQQMIIGhzCCBG+g
+AwIBAgIMV+ot3F/3fQjMh7yLMA0GCSqGSIb3DQEBCwUAMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
+ExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIEdDQyBSNiBTTUlNRSBDQSAy
+MDIzMB4XDTI1MDYyMDEzNTIwOFoXDTI3MDYyMTEzNTIwOFowgdExCzAJBgNVBAYTAlVTMRMwEQYD
+VQQIEwpDYWxpZm9ybmlhMREwDwYDVQQHEwhTYW4gSm9zZTEZMBcGA1UEYRMQTlRSVVMrREUtNjYx
+MDExNzEOMAwGA1UEBBMFRGF2aXMxDTALBgNVBCoTBEVyaWMxFjAUBgNVBAoTDUJST0FEQ09NIElO
+Qy4xIDAeBgNVBAMMF2VyaWMuZGF2aXNAYnJvYWRjb20uY29tMSYwJAYJKoZIhvcNAQkBFhdlcmlj
+LmRhdmlzQGJyb2FkY29tLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANfEH6AC
++LxMFQKtBM+3IIkk3y79FdNJ0aSEtx7ylIALY2Cy+w4cZ2mnTQBz8I/fcvc+7Nu4+C82MEouggu7
+THSLCC9N61nO6/woOMp7U0lttATSMIeibGPNnU8AizWyI5DxXKkIG5jv1EosjdJwBsJ8ZntvpfIx
++KplEkYfqN7Sy+7LOzXXkl5KhTkDELRuftv+sahPNzVHW1cJgj0HjMb1sCrFjzcAuO27JA4geQXW
+cl+gyZDv53xtHnMSNmIoqDEINo4yoSHYPGK+cTtGC4K9a6yCXdP2zyLkkSQtZ+hEUOru4dQ1gIZf
+4bWVHOILQGaMbqVAVA1OrjpUNGktgz0CAwEAAaOCAdswggHXMA4GA1UdDwEB/wQEAwIFoDAMBgNV
+HRMBAf8EAjAAMIGTBggrBgEFBQcBAQSBhjCBgzBGBggrBgEFBQcwAoY6aHR0cDovL3NlY3VyZS5n
+bG9iYWxzaWduLmNvbS9jYWNlcnQvZ3NnY2NyNnNtaW1lY2EyMDIzLmNydDA5BggrBgEFBQcwAYYt
+aHR0cDovL29jc3AuZ2xvYmFsc2lnbi5jb20vZ3NnY2NyNnNtaW1lY2EyMDIzMGUGA1UdIAReMFww
+CQYHZ4EMAQUDAzALBgkrBgEEAaAyASgwQgYKKwYBBAGgMgoDAjA0MDIGCCsGAQUFBwIBFiZodHRw
+czovL3d3dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzBBBgNVHR8EOjA4MDagNKAyhjBodHRw
+Oi8vY3JsLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjZzbWltZWNhMjAyMy5jcmwwIgYDVR0RBBswGYEX
+ZXJpYy5kYXZpc0Bicm9hZGNvbS5jb20wEwYDVR0lBAwwCgYIKwYBBQUHAwQwHwYDVR0jBBgwFoAU
+ACk2nlx6ug+vLVAt26AjhRiwoJIwHQYDVR0OBBYEFIjgxJwMJZ5pkTAB1796PUvJ+W7DMA0GCSqG
+SIb3DQEBCwUAA4ICAQCM/INVouXcD/gHdJNCPtF31BpLUwHGTj4BlO4083w8xuxt0iSjyb0EKv7S
+LBz29Dw9scSTMRS/sY9dotjJ03vVvzceiGB4FbMIZNSKHTy1PTNu0oZR7TwhBEEZHC4RtST9S2hU
+MvDagOAWRM/56PG6FH2i7dnhwtcnsBX8CMeVJQc6SB21LuxJVqgULli/kbrkr1DBVMh2f7oCFHVu
+0VgtvRtACeQVi7ny8wspKNV/WXN2IqT06c0vtUmFUPkidlgGxMzYCfQXbXcE3YvA7+xYqmCY0zdQ
+f/ira3VJoAytznhfRSBRV4gmlChdSg8yoaM6LHNE7igDDqhVFT2QCqkRkIcPOCQYxNE4kViiDKKo
+3VFnREnYmLzRbJkdGY4X3m+N7HOU8R99Zeatx6hN02eJQH1vZ1J9cH4SqxuqDxKi05n3SGE7J4Wc
+oNsgfaIDL28JX+2JBG+gKr/vvjocja5y9G43gvIOs9yEzGBt91FCuuwPedXIIREUcqJtq6+MOvAq
+ZMEsct9jQXibihTD7z9wLTIkXqOHumCc6f53zhsQCRofr8m7Tm0YrckGCHd0BowU12A6oVax5xEQ
+6j1hyszkhFPrlLKAlaFU7VuIwlcjKvN9XYrmOfXfTnYoVV6f1IDwhgbtJNlKnJksqoCzfsbAVd0e
+usA704DOznTCfAYJqjGCAlcwggJTAgEBMGIwUjELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2Jh
+bFNpZ24gbnYtc2ExKDAmBgNVBAMTH0dsb2JhbFNpZ24gR0NDIFI2IFNNSU1FIENBIDIwMjMCDFfq
+Ldxf930IzIe8izANBglghkgBZQMEAgEFAKCBxzAvBgkqhkiG9w0BCQQxIgQgiQ1IFqEf65Dpt78z
+9NxlcYcQ9t31ItbKT5s6RIqQTh4wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0B
+CQUxDxcNMjYxMDIzMDE0OTE3WjBcBgkqhkiG9w0BCQ8xTzBNMAsGCWCGSAFlAwQBKjALBglghkgB
+ZQMEARYwCwYJYIZIAWUDBAECMAoGCCqGSIb3DQMHMAsGCSqGSIb3DQEBBzALBglghkgBZQMEAgEw
+DQYJKoZIhvcNAQEBBQAEggEAsa4vBJ4+XX46Ce6/BnDeC7tFjPc5+yXIOScwBDWlCX1CoRRVgIzD
+hL3fpS2hJPV2SoAPnqQIH5AmV8Y9UU9FTWAOlXfdSITS6/+KB0IamaPI0I1bSEz0XAdt9uCi3i8D
+jQXc0DD15q9QgvJZmWXfZOtIYO4tUAH8juc4f8QyJZ1HnAoVKLpsS5DGZqInX5Dwuzk4oBXHmCCc
+QKgy2lw0Sd2AG3w4mfxuPD5phWAgosG5Qrdw2T9wi4WjVabTtI6S3A9cwD82AAYDBIP9p/ybSdvX
+4KfPQ8t7S2fYoCObgkkqPdByKpts3GGTHeSyQoDuS7j1h0DjZPChdRtGI0EeDg==
+--0000000000002a68e3065e7830eb--
