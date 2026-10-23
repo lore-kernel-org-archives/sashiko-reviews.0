@@ -1,95 +1,61 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=212.27.42.3
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792765027;
-	b=jTaUMuEpDAElTPreCw/O+mkIyvu8zvZaqcw5xeKFAaFIpDlUnPT/eDbBxTFEKF8JH2U4
-	 ZlFth0K7bCj97vaKsZ+0p27NB7pggW1Aj45ZNq3m3maieGEV7anuqAZxdVeh7KrBW2Jex
-	 0T6BIgTnBQsTII8p0p+l5p1K9XqdIjApMK+t8Zr/HixF6RtXvIswnYia31vB0jgNDI8nb
-	 4aS59+5wRT9M9K8dF1jOluc5j2e8O/NKToXzVUpVpxnCBn+N6rwN4XXi9+nBJFuHG9w9F
-	 nIiJ6iPRmErRQ6yWnePFpzPyysqz4U6SyHen5dyD+krjoI738+Id/u6/7wU08I7WFPQ==
+	t=1792765558;
+	b=HgVFRxzj8pNbAkWxl9xe2ZvEvDM93PROBhnTBBFundweF/JYPe4njUiGNUh+CZddc69h
+	 VZzc/sb7xwrVnfGhrnM4+OFJZOwVZTQRlBQ/ViTx3B4rhqyoeIpG5c7y9Ibxnts7DCjwn
+	 pAv7SC6q+RzyuFHfhlyXpHoPm++zpDGg8I2uohkygL6nWpJ0PjooZDL97lPEo4yKhcsCB
+	 inHa844dInjjkqOnlv4Nnx1LevFN56qgVXm1JNJYfR/2lv2LgsUXU3xTCBi9fvc12PDts
+	 rSCBCIuNE+Dz5zkgB8B8bpjQ4mfzMCw/W4QPfYP+5Mr0wOYD0giFi80IkQUAGRhc/Fw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792765027;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=hspaebYZC3S45MqYVptIGDURC4EwLbHzPpd9+9VEq8s=;
-	b=RFH+nNriMSqs8Mu2DpWLPjifPw97EPeWVRjgQos2jGCKKE7QJ8OtJgsL+dAHSkmhXCVm
-	 r4mR0yNW4ls+sOtGczU3Zqsx8IPQfzGlOFvVgxD2besWoepT+dI6gHyi36sp4z7CZ7sHv
-	 tyBZ8Ji/SHbZ0HgXm+l3zcNxKh3rkgnHam/9G9Dvixs0/vSZaChzZ+79oyRJZ1aBkM7YG
-	 f7VQhp+K6k+XtHWPBcLSz9j9cqYhnCqPWPM5sXlJYhwcfCqj3+W+sDXYTtIkggG4rQhBb
-	 ipEAWZeORCdk4vpDqNI8XDRHw7CW/XE+rsah2nM42LnSXGkisPLtjro4ifio9zUCDjw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792765558;
+	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To;
+	bh=W5fuhNKUSXuRd2FcFbMePX8/tpQy3waUB4xqOMmzouQ=;
+	b=LZhokUrbo6o+eTdpSjrh2MXzQHSJYkRzbYph3DZRge67lUduYMlRIynK+POh1nXhlZjx
+	 RV6LHiisoQFJ5/Ask/zpI7yKyxm6IYpqWScieoo0FSWSQdlvKA3VYL9dT+PX2JYfmOaXV
+	 o7DKV96mxkZ/VSZ4cCRRFKRHhyh1k3udNBJnE84L3KtmIWHxg0yTA5J02j7XibMjru8q7
+	 UpeBbcPF/NFf3hqFE+74ZXobf4x0eM92n63eSUloxbNpz+twFgHimycAapAJYew3OVLxV
+	 VQsrxBRR/Xos5lwRzilYvB1WBdMdqUbIKh0+rlEDTZI4QqpHQzmF6xNMye3nfRSvrbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.com;
-	spf=pass smtp.mailfrom=suse.com;
-	dkim=pass header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=bhXEJ1Hd;
-	arc=none smtp.remote-ip=209.85.128.50
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=free.fr;
+	spf=pass smtp.mailfrom=free.fr;
+	dkim=pass header.d=free.fr header.i=@free.fr header.a=rsa-sha256 header.s=smtp-20201208 header.b=vU0ddTxz;
+	arc=none smtp.remote-ip=212.27.42.3
+Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8133606A31A
-	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 14:17:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A8133606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF3E606A321;
+	Fri, 23 Oct 2026 14:25:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8EF3E606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=suse.com header.i=@suse.com header.a=rsa-sha256 header.s=google header.b=bhXEJ1Hd
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4a210470b49so7438215e9.2
-        for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 07:17:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1792765025; x=1793369825; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=hspaebYZC3S45MqYVptIGDURC4EwLbHzPpd9+9VEq8s=;
-        b=bhXEJ1HdqY9cHhpNJ3PG6GozQIIj6F3DBI4ev3S0IxLOXB9MfoL8A8n0vXl0gjT8eP
-         L+4mslkFp8lq6Mb+al2bbHB8YYZ876nlYm7SELvugzKcLP66lw5r7kQT+hf7WN8wyJCQ
-         xh0zbXSikeIqKg0U1npx9tF9D3u+dzKMokpt/Y4DaobYPOVX8LQj04lMJgxWzUKcRnJo
-         3Flh/nMoeGT0132puA/rYGUHACeDtUPrV9Erfjm9Mu6vQXsUvFncMr2FV5LIaKAwxSxE
-         U31hUViQB5C4vl7V856bLTcJlP2Y7fLfgfQ1GhmVxXkpOEWrjVi/kSRxf5stbeKW/8C0
-         931g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792765025; x=1793369825;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=hspaebYZC3S45MqYVptIGDURC4EwLbHzPpd9+9VEq8s=;
-        b=Q29PZbbIz5VQvhTeEiaYLnLz91+UUBD7Ez7AFr26gUmufxbmfpTeR2Sy+Q+uyJJwQ9
-         wx6gcSzaMbQnEnS9Ipbh6dLvZamwDhY9HJ4IOB1TAPg3ajWLuEQYHT++n3zDqV83fb0G
-         gQ+cbhhnUsXo/pN6I0+BQBviiJ1JeSIedYI5eiRI17GB4ZyyeAyWxcXinUbgd1/niCnc
-         P7Rrji2Xq6RB2phbBZatLeNqJCAN5YYBqvf6/O56YyUtl/Dc3qs2zhXJoNasfqLmL+tM
-         PkfAVsM1zraDSge55FdNlg3IQk4pK4A2hfoaKFKCUieopQxg4KOsvbRpJkQnZh1xxKpj
-         jcEg==
-X-Forwarded-Encrypted: i=1; AKwUvByBmGY2DFuarvReuSoxbuIgcnlKhcOO5khuYpIv5fhOnCm24HOsmXj3M3YemjcUY7Q8cy7NQkbk5QNRkmnhL70=@lists.linux.dev
-X-Gm-Message-State: AFq9FYIEWpjy6oayNq6uTR26SnVXw4uw4bcL1UTHLFnf+wKRJwp6AwWk
-	JKRt/QtyVW2tqMKPkIcRH2Yex0EridG9MqoI3m/ZZit+TsBBi08xJshC4aN4DbFNWUo=
-X-Gm-Gg: AYBFou2CV3Dm4HnYrA4bTE/i+6uJzdzcK8FCTJE/Qvd1jRNcJBPGo8Clsx//BbYMJZM
-	kOOVPGTH4MPF7JnAmHIsJ+tnbiQepPlr7Jodz4VmBu6mhCtJsrJ86L5QVkTDUyHg9mW8i6C5B1h
-	WHqYH2+NKf3Y0ieFptoxvKvR5EL72yJu6kRMAavN6JhnDUJsoaeAcuTjxes41Fna4VmCBeeV48x
-	lVFDbUI3voJmQrlW4DZiciwzMvQP2dPeJ5YImykoYlgLBYd6qViSojrSsTwZxhiCQ1Bz57Ilk+I
-	CZPGidHqoVEl/6Q2pyfdBoX0MOXbGkl+SMxqkJy8xxpAD8QsiDjkZJJFkL1OSSCkQexi/6JNLnp
-	jcmuX//shIJrNvoR/afstYxMZPo8KhhmoDrjN/GcZRgpbLAF9Y8SUI3rg/tKa9zOA/JAfeDDj2U
-	5DvjVgF9pRQbgKt6oAmcizcDsPNby5YVE+FvPZym9gTvEbFD2uqqntMoSsh6H+rC5pbbaCrLAeC
-	RPVBfXzglmLSlbtoBPykvZ7q8ktgvBPue9cHR+/MtHNJY0EK9UNFC7gmw==
-X-Received: by 2002:a05:600c:1d0a:b0:4a1:e00b:a0ea with SMTP id 5b1f17b1804b1-4a211c7fbcamr41795835e9.1.1792765024225;
-        Fri, 23 Oct 2026 07:17:04 -0700 (PDT)
-Received: from pathway.suse.cz ([176.114.240.130])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a29cda986dsm7997135e9.7.2026.10.23.07.17.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2026 07:17:03 -0700 (PDT)
-Date: Fri, 23 Oct 2026 16:17:01 +0200
-From: Petr Mladek <pmladek@suse.com>
-To: Harry Hsu <x90613@gmail.com>
-Cc: mbenes@suse.cz, jikos@kernel.org, joe.lawrence@redhat.com,
-	jpoimboe@kernel.org, linux-kernel@vger.kernel.org,
-	live-patching@vger.kernel.org, sashiko-reviews@lists.linux.dev,
-	shuah@kernel.org, song@kernel.org
-Subject: Re: [PATCH v4 1/5] livepatch: Fail object initialization on
- duplicate patched function
-Message-ID: <attsXfOPYrprACJw@pathway.suse.cz>
-References: <alpine.LSU.2.21.2609181452160.21788@pobox.suse.cz>
- <20261001043228.74946-1-x90613@gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=free.fr header.i=@free.fr header.a=rsa-sha256 header.s=smtp-20201208 header.b=vU0ddTxz
+Received: from L30177.local (unknown [78.240.209.29])
+	(Authenticated sender: vjardin@free.fr)
+	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 3820413F8A2;
+	Fri, 23 Oct 2026 16:25:47 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1792765549;
+	bh=bGXAgwF2I4uAU6K1JxWgp4tW9fCtqmRSB/yMy7Oshco=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=vU0ddTxzwSM3utvw0gOR62M9AdP95A6Y1M/avA8OKZiQWVcWK04y1/qlGIaal9MGq
+	 /ZwFrHgEFAP9PAi8KT+fi9BQKnmAU/8oMzT5j6JHKtc3drAbCKuR5/XO6T1AcWhZ8Y
+	 EgJW19NhbMNPWCFtzPoPH3fy5ip6kqRtOzkZYFjpw60aJJaVazt4a7nBk8snn3+MDM
+	 8h99TDHYt8iA6db5n1uxNPCnFClo+HGBhQzJgD7yN1Dmomz+LpaJPiGkfvewFlK96q
+	 0kYs55D6VTUB/8Lrd9Nm1NWqfxW7VSnsRkmFTAIBjKTFjA/N9eVAeGbixCWJ/wREKF
+	 NXOYiyc9AOyog==
+Date: Fri, 23 Oct 2026 16:25:45 +0200
+From: Vincent Jardin <vjardin@free.fr>
+To: sashiko-reviews@lists.linux.dev
+Cc: imx@lists.linux.dev, Frank.Li@kernel.org
+Subject: Re: [PATCH RESEND v2] i2c: imx: add I2C_M_REV_DIR_ADDR and
+ I2C_M_NOSTART
+Message-ID: <attuac0-PDBA9X8p@L30177.local>
+References: <20261023-for-upstream-i2c-imx-lx2160-reverse-v2-1-03afae754886@free.fr>
+ <sashiko-outbox-182524@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -101,72 +67,49 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261001043228.74946-1-x90613@gmail.com>
+In-Reply-To: <sashiko-outbox-182524@kernel.org>
 
-On Thu 2026-10-01 12:32:28, Harry Hsu wrote:
-> On Fri, 18 Sep 2026, Miroslav Benes wrote:
+Hi M. Bot,
+
+
+> > +}
 > 
-> > Could we also check prev_func/func->nop in the check in
-> > klp_init_object_loaded() and have a pass if true?
+> [Severity: Medium]
+> What happens if a caller splits a read across two messages, passing
+> msgs[i - 1] with I2C_M_RD followed by msgs[i] with I2C_M_RD | I2C_M_NOSTART?
 > 
-> Thanks for the suggestion.
+> In i2c_imx_check_msgs(), that sequence is accepted as long as i > 0 and
+> msgs[i].len > 0. However, the read paths for msgs[i - 1]
+> (i2c_imx_setup_read(), i2c_imx_isr_read_continue(), i2c_imx_prepare_read(),
+> i2c_imx_atomic_read(), and i2c_imx_dma_read()) unconditionally set I2CR_TXAK
+> on the last byte of msgs[i - 1] and set I2CR_MTX before reading the final byte
+> from IMX_I2C_I2DR:
 > 
-> Yes, I've updated the check to skip the pair when both klp_funcs are
-> nops. Two nops added by klp_add_nops() for replaced aliases are
-> interchangeable, so an atomic replace patch that inherits nops for
-> __do_sys_fork and __x64_sys_fork from two previous patches now loads
-> fine. A non-nop func colliding with a nop (or another non-nop func)
-> is still rejected, since the nop would land on top of the real
-> replacement on ops->func_stack and silently disable it.
+> drivers/i2c/busses/i2c-imx.c:i2c_imx_isr_read_continue() {
+> 	if ((i2c_imx->msg->len - 1) == i2c_imx->msg_buf_idx) {
+> 		...
+> 		temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
+> 		temp |= I2CR_MTX;
+> 		imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
+> 		next_state = IMX_I2C_STATE_DONE;
+> 	} else if (i2c_imx->msg_buf_idx == (i2c_imx->msg->len - 2)) {
+> 		temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
+> 		temp |= I2CR_TXAK;
+> 		imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
+> 	}
+> }
 > 
-> The incremental change on top of v4 1/5 is:
+> Because the controller sends a NACK at the end of msgs[i - 1], the target
+> device aborts transmission and releases SDA. When msgs[i] then runs
+> i2c_imx_setup_read() (or i2c_imx_prepare_read() in atomic mode), it clears
+> I2CR_MTX, performs another dummy read of IMX_I2C_I2DR, and clocks in 0xff for
+> the remainder of the transfer.
 > 
-> --- a/kernel/livepatch/core.c
-> +++ b/kernel/livepatch/core.c
-> @@ -894,6 +894,8 @@ static int klp_init_object_loaded(struct klp_patch *patch,
->  			if (prev_func == func)
->  				break;
->  			if (prev_func->old_func == func->old_func) {
-> +				if (prev_func->nop && func->nop)
-> +					continue;
->  				pr_err("'%s' and '%s' resolve to the same address, aliased symbols are not supported\n",
->  				       prev_func->old_name, func->old_name);
->  				return -EINVAL;
-> 
-> If this direction looks good, I'll resend the series. Petr, should I
-> just bundle everything into a v5, or do you have changes on your side
-> that I should wait for?
+> Should i2c_imx_check_msgs() reject I2C_M_RD | I2C_M_NOSTART when preceded by
+> an I2C_M_RD message (or conversely, when a non-final read message is followed
+> by I2C_M_NOSTART), or should the read state machine suppress I2CR_TXAK,
+> I2CR_MTX, and the second dummy read across the message boundary?
 
-I am afraid that this is still not enough.
+hmm, ok, updated into the v3
 
-Problem:
-
-It would work when the livepatch gets applied the nops are removed.
-
-But it might cause problems when the transition gets reverted
-in the middle. All processes should go back to use the previous
-implementations (original code or previous livepatch).
-But the ftrace handler would just go back from one nop to the other.
-
-
-Solutions:
-
-1. A solution would be to create only one not in the first place.
-
-2. It seems that we are close to the scoped atomic replace feature.
-   It will prevent loading conflicting livepatches in parallel.
-   Well, it currently checks only the function names. We should
-   add another another check which would detect the conflict
-   also by the alias.
-
-
-Best Regards,
-Petr
-
-PS: I am sorry for the late reply. This patchset is far from trivial
-    because it handles several levels of "what will happen if"
-    and makes my head spin. And it has lower priority because
-    it handles corner cases.
-
-    Also I always forget all the details before I get an answer.
-    It seems that we are all in the same trap. ;-)
+thank you,
