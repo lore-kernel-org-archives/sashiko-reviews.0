@@ -1,134 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.9
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1792773176;
-	b=2EY/FXBSFGoglSp9GiAOhhXBnsRbGtw7oMuc38rcSEkDj/lglA34o6bJpqrLXeijpzoX
-	 wfKLxzxS5o7ThnKs8m3gp7f2pv6ceg0C2/rkNkZrnZINbABQ/4/ymCpkueEPNVENhwVLf
-	 NdUpofeTlF28PEPpLBlgn6/wBICXo9uxfZ1ilVKAp4fTk7QhHQcgCohUhU3rAW19gjh7L
-	 6/2e1PTHMv2jDGCO50wFDRYAFXukON2Q//5HrF0o6qawTyS+QuGE0xxEvVNFO7dvv5w7O
-	 HQJyRa9/ArZz5OjkTBoNhuMd6b/quwxPH0kYUKms3Y/g+e9KGE0VJvvvBZQdsCfJVjA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792773176;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:Received:Received:Date:From:To:CC:Subject:Message-ID:
-	 References:Content-Type:Content-Disposition:In-Reply-To:Organization:
-	 X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:
-	 X-MS-Exchange-AntiSpam-MessageData-1:X-Exchange-RoutingPolicyChecked:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=uvTyg6ZLRnYjy/bD29sa6uZNFZknVeyBKNU0kdZ+u8c=;
-	b=TS9O6gT8SCWuR7LNopVabMz6N4HOAVdrrBKFk/TgtWkfUgn4TpaZyxLwSDIXBlSwOTeB
-	 pR+VlcSi4QIRuaOXO8jV9Ri83zkYoBFciGfsRV4quHI4Qbibj4UKDEJTepc2ihZGhLAy0
-	 0OWr4wQ9RzSriCQF3KVdsf/FjqBxOim6jIZWv1QRvKRLXMKOK+5BOUbJonjSmtxu4yNbf
-	 DqTqScklFocxjQ4VCcwXROgMScy3uXNitjdLs6pSUMSgg1nIMfgOpyp8r4l5DVSaAsrZs
-	 2bydXvYx7NIHCOlVU/JzhEVw5cykc8wGrI9Fk/rdIQLLr4zcfQ9yRASRIEU6jSQEjjw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=fwTuUev6;
-	arc=fail smtp.remote-ip=192.198.163.9
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792773289;
+	b=RkE1numx+yvzN/ANJc+WLmZFIzJKBEYau2FI1KZTYDIxPyfmYBMq5jU/UT/bPcW1NyEP
+	 otzkBtAIc6dgGFadmsO/7Ey7LhOhOBqJ/KWOiuX3ibQAIODNYU0C9Kx9wLUz2q5xuy4dD
+	 IQ+AKcmcCsAKtz9AET7MTodaJJK6A4IWhoiTfFDLLjqDzQzkDDwEw//gh9nTQoYDQm9FA
+	 sfyiaBxVmUjsB8+Ual8AuP2bQDvnUCqxi33CZVpPjjJl97fDheJj87nGC7UXFtRncRCmI
+	 c8qj9tNGTs/Ms6u2DBtQ52VIvpoKYLfK3nU72UU5pAM0JM+kmrX8XYGN2cVq9tTTR9g==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792773289;
+	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
+	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Date:From:
+	 To:Cc:Subject:Message-ID:References:MIME-Version:In-Reply-To:
+	 X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
+	 Content-Type:Content-Disposition:Content-Transfer-Encoding;
+	bh=fEHLxHVmO7FJjZpKsvuinG1U7k9znbZ8wdMBda76NbU=;
+	b=D+7F1nKm5KI7ZhUipj9EN+HBguoioOKT41+1x07vtw7LrwwZfMVAmwHAD1rLqq1Ag2hT
+	 FVwBy/lqnD6rgX1o19LMmumdlgwySZsBzNwCIvdQa50MpAUJ1N3VxnrBmYbsVAMzpDA9F
+	 VsBCPIHa3H9ewbO9NV3VsCCIV4WnEUsJGEtyNkoqhOXXme5464ZvmvMxinliLbwg8WOOB
+	 WQOEc4IfYcjCXuZjzVikZUN++C28DDGVaWxa6MXrVvlTQswrTYM+6VeslRglmM9o/8333
+	 uTGnawlAGZkOoV3EbrLZvDrBlEsIXbsuSXYTmGWjT85z6iwC4e7WHZ5iasR1vMA9oGw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=redhat.com;
+	spf=pass smtp.mailfrom=redhat.com;
+	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=EOSEOZYv;
+	arc=none smtp.remote-ip=170.10.133.124
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF0C606A329
-	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 16:32:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CAF0C606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CFA606A31A
+	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 16:34:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 75CFA606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=fwTuUev6
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1792773175; x=1824309175;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=undLnql+FgdWdR5e0mPX3uTiI09wc3t7hpsjehb0fGE=;
-  b=fwTuUev6MSV/+GIbIwZrpWP6vVF+Sh4+GCVjjVz/hCtgacvmDpqz4pO5
-   QDR7jVXyCLpgKIjSR4voG2Gp0u/QGSt/vtWJXugzbfjmwiP4ZGFj8gJjv
-   iDS/BNTdl+NG0rjpS6hh6hkZEXNQbgaGhnolbcdJ+B3yT9SRVxyrjg83+
-   Y1LWDCoACSLORjTT6F+ewQvCwg4YgH9irWlDQXLpXs5cPjbKTRqV1gKxT
-   5P7qF0zM9e4v17xtIu7KXJNmFrTfxr91vTmoW3xzwMJKIU7NM8DCQo7y+
-   eRoXVTQtz8SfGtKXRgbqmhbWIYYQ/Z+JrP3OQIb3oQaW4jxw9qsP6HOVz
-   A==;
-X-CSE-ConnectionGUID: Uzwd/LkGT5CGD/iZrT7P7Q==
-X-CSE-MsgGUID: hx2cyiZdR7S+D8aJPd0QmA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11944"; a="1426375"
-X-IronPort-AV: E=Sophos;i="6.27,174,1787036400"; 
-   d="scan'208";a="1426375"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Oct 2026 09:32:54 -0700
-X-CSE-ConnectionGUID: KNpNAQAaQ3u1xYpKKFmH5Q==
-X-CSE-MsgGUID: sgh/jEgXRJyeqWnAPtyONA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,174,1787036400"; 
-   d="scan'208";a="3678325"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
-  by orviesa009.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Oct 2026 09:32:54 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Fri, 23 Oct 2026 09:32:53 -0700
-Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49 via Frontend Transport; Fri, 23 Oct 2026 09:32:53 -0700
-Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.41) by
- edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Fri, 23 Oct 2026 09:32:53 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aiQ91UtnqZMYvnZXqEQ4Xk4G/Tr9D1Ue3XnmD22MpANkvI54SapV0Y3CHQ8PLgYeKhInu+s8AYtqfD4fn3/m7e2EI04PSa3mjaq7P4Scq5LUeRYummdIzAn8co7sqejdldWvVxqfzy8z1KHHeJugjj48u/SI4OXQtnTiYCK2tBuedAlOwsNxeUU1QVsEwYbqrfLI4zEqMlhXFM2X+8mtCmt8AqXeWaPbV5JJFSTfdkIXEjMCpZaBxiVMYjes3GmkFtUIwSj9V2BwZNd4yaHnrGj0CQNmKGj5FudJPa60i84z/1WvxmrwPf+UHzseKVBlLTbsWjhoCHl3KFfPpRg48Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uvTyg6ZLRnYjy/bD29sa6uZNFZknVeyBKNU0kdZ+u8c=;
- b=uvCuajqzIU6FACMYLjpgD5zXiC65qu6gP6k+0QYHxloPxqy2k1WofONtyr0SJQSJUf1Na8bKBBD5QraIHKit9YcXUtT/UQASWmVnvMA/gcrTu4LhmqjafB/Gwi/mSwDnX1uEbRynuYzXsq9REBgI6j35made0epis8ZJzbbsZRF+KmuBCSJ/BuvnWTFTc751jYw71QQKh8pRwQiC7Ak1SgykkVxGl/WuQSeCKjrfozfKa9f4gw4E+FYWIRMnXUkryNWouLOUqK3bpieJY5PrF2RkzoETGzK7N/BTjUUF1IgeLCAq06Ka48Irxjv4X6SU8yD9idmDOe0vwdOp6SgWeA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from IA4PR11MB9230.namprd11.prod.outlook.com (2603:10b6:208:567::16)
- by SJ0PR11MB4944.namprd11.prod.outlook.com (2603:10b6:a03:2ae::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.19; Fri, 23 Oct
- 2026 16:32:51 +0000
-Received: from IA4PR11MB9230.namprd11.prod.outlook.com
- ([fe80::578:a20c:8f82:7505]) by IA4PR11MB9230.namprd11.prod.outlook.com
- ([fe80::578:a20c:8f82:7505%4]) with mapi id 15.21.0546.016; Fri, 23 Oct 2026
- 16:32:51 +0000
-Date: Fri, 23 Oct 2026 17:32:47 +0100
-From: Ahsan Atta <ahsan.atta@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <herbert@gondor.apana.org.au>, <linux-crypto@vger.kernel.org>,
-	<qat-linux@intel.com>, Bairavi Alagappan <bairavix.alagappan@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Subject: Re: [PATCH RESEND 1/2] crypto: qat - enable three-service mode for
- QAT GEN5 devices
-Message-ID: <atuML5Yt9x9HwmIZ@soc-PF5467PW.clients.intel.com>
-References: <20261023144835.170453-1-ahsan.atta@intel.com>
- <20261023144835.170453-2-ahsan.atta@intel.com>
- <sashiko-outbox-182890@kernel.org>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-182890@kernel.org>
-Organization: Intel Research and Development Ireland Ltd - Co. Reg. #308263 -
- Collinstown Industrial Park, Leixlip, County Kildare - Ireland
-X-ClientProxiedBy: DUZPR01CA0189.eurprd01.prod.exchangelabs.com
- (2603:10a6:10:4b6::7) To IA4PR11MB9230.namprd11.prod.outlook.com
- (2603:10b6:208:567::16)
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=EOSEOZYv
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1792773287;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fEHLxHVmO7FJjZpKsvuinG1U7k9znbZ8wdMBda76NbU=;
+	b=EOSEOZYvzF70kMvyhxevZnMpWuAmZ4X6p1lbnFf0+0E3i6DsABdoO9jOG6s9z96Evo/khD
+	rR0TCFnGQxzxk3s29NKrR25BP3Py4LJiL3dH4PC5wseXgHOcRpDQU+favhK1gu4l5c8Uxb
+	CL+6dKT1HUXySppoYiFMTrvLo+LzMZ8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-480-VAEcTnEhM7yE8EAb4VZ1kg-1; Fri, 23 Oct 2026 12:34:44 -0400
+X-MC-Unique: VAEcTnEhM7yE8EAb4VZ1kg-1
+X-Mimecast-MFC-AGG-ID: VAEcTnEhM7yE8EAb4VZ1kg_1792773284
+Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-48df5b058ddso690552f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 09:34:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792773283; x=1793378083;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=fEHLxHVmO7FJjZpKsvuinG1U7k9znbZ8wdMBda76NbU=;
+        b=GUsstV83NSD3V5tBxy0qS1X1uAgVGy6FCNRW10h1KekpmdXfuyRVqvYL4dGI5ywJR0
+         4/WOE6CRVSKlRxYBAEgwO4EiMhW0E/m/tBhpmBG6ARe71JA/GUxC2YiX2hBzmnThvEtF
+         GVDCJhVwhSEP/T35WHrZ42iQYNkxfTvR5NyUGU2GZjjVUKkPxMx4clsFpne4hZmY8A2r
+         eEG2k+WCM+QY7zYMJoEb8POwjoPQN8JXBVN0VuEl6Ljqysz6no9cOoCo3EM1CJg6qwJM
+         w12eBoGwnw5gblQPhMFHguzezuyGLHHwAWDVUTCN5QfGlkK0tnoOiTzyCalTxVKZRyyG
+         ApRg==
+X-Gm-Message-State: AFq9FYJEv4Dh4M5NX15E2T98xJrvfwQE+uQIAAlqTJ+Fr//bBkRucbGk
+	vZPll18v/Lt5J6SebS6UDC5NLYXisIOcvKKUoCfKij9l2kzPSs7tXA4oKaCnxFZX4QrLROTfH8P
+	VtA9cY1J/ZpqiOhpv2BnYNAeLqlTAbNt0FJKvUCKC1vq/crO0DsiZ8T01ss9o/62Dux5htDcojo
+	JWkgqNGGd/FULNbiIxt5pc0fekIJLELPloP9WhqSatU5hjrx4=
+X-Gm-Gg: AYBFou14GceFug6/ZYiJmx9gX+M7AiFmYAzztuK3QIGUK+eOJNk2OzCc8usEXmN127I
+	sw6zFyXTMcTLqZW1HxlfNS/Lfg5nF6wREy7KQLFctSwBwWu1asUIaR4La7SPwunUc1fOYfmsAOs
+	TujHbgJ1gR7eUUbluVloOJQIPL4MIs89HeH/v4qLitTWnbpvfNZCyYoNoH2QhCkTpPn9Nf1anj5
+	ZVyMAeGzp6PAFSA5OLxZoAWWt0gf2LosSpRom0Te0D1od2zI1+fRzq0MjSqceuM04IKmsxgIo68
+	HFEj08hLXr0HeeHfNg20n9uN05ScPV4dL8BJW2FghJiXMiNktSnyYADs2bruINS6v5hO15E=
+X-Received: by 2002:a05:6000:2b12:b0:488:8931:b1b2 with SMTP id ffacd0b85a97d-48e385962ffmr3200832f8f.28.1792773283421;
+        Fri, 23 Oct 2026 09:34:43 -0700 (PDT)
+X-Received: by 2002:a05:6000:2b12:b0:488:8931:b1b2 with SMTP id ffacd0b85a97d-48e385962ffmr3200797f8f.28.1792773282701;
+        Fri, 23 Oct 2026 09:34:42 -0700 (PDT)
+Received: from redhat.com ([2a06:c701:73f6:2400:30a8:9e33:7d82:c035])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3d405cc0sm789801f8f.30.2026.10.23.09.34.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Oct 2026 09:34:41 -0700 (PDT)
+Date: Fri, 23 Oct 2026 12:34:39 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Cheng Yongkang <teel4res@gmail.com>, virtualization@lists.linux.dev,
+	Eugenio Perez <eperezma@redhat.com>
+Subject: Re: [PATCH net] net: virtio_net: decode tunnel csum_start as
+ little-endian
+Message-ID: <20261023122951-mutt-send-email-mst@kernel.org>
+References: <179268538303.70821.1734486381476363942@gmail.com>
+ <sashiko-outbox-182939@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -138,152 +103,80 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA4PR11MB9230:EE_|SJ0PR11MB4944:EE_
-X-MS-Office365-Filtering-Correlation-Id: f8335250-89a5-4e47-8ce2-08df312347c9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|23010399003|10070799003|366016|1800799024|376014|10067099003|261009223027099003|3023799007|261022075727099003|261022105027099003|56012099006|11063799006|4143699003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: oI2asXAmupykNtv88I/lpRx7acQ3rUaRaVV/oy136KI/LOmx8QAWPssPo/5EuBp++BeUwNT7VixUh+vjOWYZDsCBUWwjeGn2V0HU25d3w7ly+KIvIF0HqYI9ML0w7xzpU1K3iH+6DHFeY6ZCwNaG7d+yYPXPrjf3G7hcUjAREPcFHkazHH6/oK9pDMRnXsCQY7avqEizoF8au9AHLhRbhN0VX//hcPAFpVbfKpy1bZeUstmD0TnC+5xP1fLYvxmsgUhAHbcxrChUyufr5Lx9Y/5m14aweSllUT+gANn9wC7cVUFL1VSSBGTbiqQEktObrdQW+lTHdGgOVHL2ecmdpg0EiYKlOO6hj037u7vypV6ZiHppNW1QBqVplnXTheoAlHrR8cxpUebGA+j8Sm2z4YaBEo/N2wG5OD5hZQeYAZkII153sEPb3PLqT1ASv27pX6Z+FxkYPCDDbj+x5zOUJ+9QOdzTN3dJkcFOBagwvMCdl1hW79WFliMX3RrfP7vNUPd58lM66npwr7ZdJ8L4LOhUwIVZ7IM8gmCiCEFGafr7ASp8gi+zjWTthitIzi+ZIh2HckYmpAFM9YjeQsA9bVECC0uT9Mjo4GpQoucEtdOmlXzwIjKa7e2ucNwXUD4c4ao4eBzyOb5Zr2yfhlppszjI49ICtD/A2WfOQcIHPzk=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA4PR11MB9230.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(10070799003)(366016)(1800799024)(376014)(10067099003)(261009223027099003)(3023799007)(261022075727099003)(261022105027099003)(56012099006)(11063799006)(4143699003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?T6G7bi/VvOea5ACid6caCjF6FmY4Lu5Ldswqo1JqoulXtIUhskAi127DVYGX?=
- =?us-ascii?Q?T5aTLjqfnT7XXRsNkWznPxKct4CDmlRfII/nt96PtP2ymE8aQJyybcIoGkze?=
- =?us-ascii?Q?GBDHW/r+6/5IrW2hQOVnOPj9ELJWFyzzwA8aJQG8nNFrzRum9Oj/IK0GvYVw?=
- =?us-ascii?Q?LFjSfH0o4LJIwHzeoqTqJ4fCHL1Ojd60qAj65IE83CQ086G8NQsps3QiMSB2?=
- =?us-ascii?Q?X1uYQZRKA8SEOuRbD/CMMWOledIizL2aEe0EY5PEmX4Kq3SdIwKOngloY2h6?=
- =?us-ascii?Q?oBhsvKq6B7uHlDyYjTLZRAeHlAE9MA39FDaUsVq+9JC07CPHxYru/GcLBQSE?=
- =?us-ascii?Q?2H5WNscUJzEAt28/x1QUZGOqmAH+JgP6GZ3MnzSr9lcF61FVB+GwI3q96JSZ?=
- =?us-ascii?Q?YywSzf35oyzXLL9ZtcjbQCC1OuFmvNjPPWgnPLGcrELTCApQw5CpzSrsGXP6?=
- =?us-ascii?Q?9XNzvQJrsqFbcX9OnA/172+jSTpYCUiPaoKAp4WI9vFlFT4uztC6lO87T5PB?=
- =?us-ascii?Q?zQQq9+Abo7jPqJWTXqZxYv8WotgJxqmXa2uXaRC9R2HxzMLyU+6+r2aBqnd7?=
- =?us-ascii?Q?srHFj1OH2aqClAdtb9NLLLAHPg2RUGtUgoYvRL02O2jDQ5j0rQh8zPxnWoid?=
- =?us-ascii?Q?l+LrtBqyLDsC1NrtsxHMk6SEx1v35wX0QPz5YGtQgZBu5ghq27nWQ3W8d9cs?=
- =?us-ascii?Q?lyuqIqZbzETomrbv2gkvflxUfavGKV0EBiOO1sqwSTBTRFJaAFtNYjqq7Nj5?=
- =?us-ascii?Q?Xi8VDz4CTtDXu4jmS6ng9iPXLuStfMmO2eP16Hn41bwknaIyNkfmQ/IEW6yZ?=
- =?us-ascii?Q?EKA7WbLl+VRD/W43sRs6mnalMKOc+9GdoGGxqkzyoZsqR189uAktQPlkPK17?=
- =?us-ascii?Q?jJl6onA8L5GAYJZVgF05vR8uPorqv1J0jfBmwRrvb67b0jrdqsS76WcmZRus?=
- =?us-ascii?Q?WrwP0a8Sz7sgsEh3Dy82xEqQ2cYhroki/eSrBO2A/TzYE9hnOlSxVNQczv7N?=
- =?us-ascii?Q?JzELPGn4IQZX7zawZndDKu+X9/U194AO90+pQnDh95sNht+PolzH8pjYiiGb?=
- =?us-ascii?Q?lfjdnzm/4GjY/mY5wAjk0A5TS7/+r0GFwqI2t33uqeGbfiIF6Um1xfpvg8Eg?=
- =?us-ascii?Q?8ZvhZwbH/kvRwty2oddFniL5CmJenhzDk9BbSFy5uKATN7J75nMgz3l5DRRr?=
- =?us-ascii?Q?cwtliqyuXbSpJKQLoez+2XQQnrWzbZWnKFAI+SH4eOGA2nzcowjurUI5DhPD?=
- =?us-ascii?Q?42o8idLGgOmtCa0pQT/nDsIV3em0z1HuqHo7f9PDnFtFIfZB0ALSzSOlqPgU?=
- =?us-ascii?Q?N8fDP7balD79GfNp037K9Au+3HgNiZYFqtgbnpagEDhEtr25pLGMlYYfD84O?=
- =?us-ascii?Q?f72fVLFVVlnzJgonQJZzYzqxTOfojmzpOXwEzV84KLNlJ12rQNMkJVyVNfJF?=
- =?us-ascii?Q?f0m/QAKRpXBRtbIafHawhp5W4k3d8LdtftDsEUE8Nd3fKtjSLMAVQoiWhIm6?=
- =?us-ascii?Q?mFp2LJwVpDHfF2923Fkq28JGasKLR+C0qTb1oWgcFnKB0p6XUhO9KBwbr+YO?=
- =?us-ascii?Q?mBhJw6gSdGviRuJF60EEKMWhcs/O8lImv2uYwhGiXwILyN9TxOGu/Idzd5IR?=
- =?us-ascii?Q?iEohwOULqHkc9sw+1feh2zxD4BUxxliRgVHyQp6kuDRNAHpFe5WGBnnT1aB9?=
- =?us-ascii?Q?JtYZSSQdDr9qAMrDm05+xB+TiSVSbdlgAz+NDx4MpD/liaXJU2lMXIKZ/+GT?=
- =?us-ascii?Q?QES+TxmI20wZlljAfkg9jnEpIJKUrEHJowAc+7jYLmSCUjvIDNoznxOHfzDm?=
-X-MS-Exchange-AntiSpam-MessageData-1: nDLRyJ5TwQXLSw==
-X-Exchange-RoutingPolicyChecked: dvatqr9CmlGiZigvoE3kZsiNv8U1mEGcIBAiabambutkTX8nVRjTEZbleaAt9UR8X+2swtqsV3p7Y0+aUUfanj6/8LL0Ik4BtMAenibPJ7fwpeK9FipGIYWAKWV/Riig2N9L8AtHV6mpWxzNQSAriQ5rOapGctnGIS1XxXg+T6ajQjTpvNUrL8yvLjKiaoOvnkyJPIZK8bCkZw/EUOt9lrqcW2qEKWKi3xfWeCm+xLL08Par5Km4CzZihdW7svmx9/9g/zRdSoLIOmKNMAMPpukr3QR7z5ndA2I+zxzvS/7UFe7fNDB6UoL7k/QPcQwKsnVKEd+vYc+EdbmgP077Lg==
-X-MS-Exchange-CrossTenant-Network-Message-Id: f8335250-89a5-4e47-8ce2-08df312347c9
-X-MS-Exchange-CrossTenant-AuthSource: IA4PR11MB9230.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2026 16:32:51.1624
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: sVGjjKXtHe7N1ITx2+jUlVztlMG29XgmiU3++rQycfy+9qy9+tPmMtHtBlRXq3pfKLdPrI7eZH+9arEwRy8S2g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB4944
-X-OriginatorOrg: intel.com
+In-Reply-To: <sashiko-outbox-182939@kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: NGZnxWC522iimKN73hhNwHQRrs-rdLtwdpiMKxBanS0_1792773284
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 23, 2026 at 03:03:08PM +0000, sashiko-bot@kernel.org wrote:
+On Fri, Oct 23, 2026 at 04:09:57PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] crypto: qat - unrestored rl_data.svc_ae_mask in adf_420xx_dev_config()
+> - [Low] net: virtio_net: sparse __virtio16 mismatch in virtio_net_hdr_tnl_to_skb()
 > --
 > 
-> commit 84452d0273c635ae08ee4c142e1d46cbf85da2de
-> Author: Bairavi Alagappan <bairavix.alagappan@intel.com>
+> commit ba7ce0ae4b2dfb77c6b110ada68faaf66de9237f
+> Author: Cheng Yongkang <teel4res@gmail.com>
 > 
-> crypto: qat - enable three-service mode for QAT GEN5 devices
+> net: virtio_net: decode tunnel csum_start as little-endian
 > 
-> This commit adds support for enabling symmetric crypto, asymmetric crypto,
-> and compression services concurrently on QAT GEN5 (qat_420xx) devices. It
-> defines the firmware object layout, ring-to-service mapping,
-> thread-to-arbiter mapping, and rate-limiting accelerator engine accounting
-> for three-service mode.
+> This commit changes virtio_net_hdr_tnl_to_skb() in include/linux/virtio_net.h
+> to always decode hdr->csum_start as little-endian during tunnel header offset
+> validation, matching the subsequent call to __virtio_net_hdr_to_skb().
 > 
-> > diff --git a/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c b/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c
-> > index 19f9f738630b1..281067f5b60c5 100644
-> > --- a/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c
-> > +++ b/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c
+> > diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
+> > index d6466f96cdd00..ddc6341747e53 100644
+> > --- a/include/linux/virtio_net.h
+> > +++ b/include/linux/virtio_net.h
+> > @@ -324,7 +324,7 @@ virtio_net_hdr_tnl_to_skb(struct sk_buff *skb,
+> >  	inner_l3min = virtio_l3min(inner_isv6);
+> >  	outer_l3min = ETH_HLEN + virtio_l3min(outer_isv6);
+> >  
+> > -	inner_th = __virtio16_to_cpu(little_endian, hdr->csum_start);
+> > +	inner_th = le16_to_cpu(hdr->csum_start);
+> >  	inner_nh = le16_to_cpu(vhdr->inner_nh_offset);
+> >  	outer_th = le16_to_cpu(vhdr->outer_th_offset);
+> >  	if (outer_th < outer_l3min ||
 > 
-> [ ... ]
+> [Severity: Low]
+> Does passing hdr->csum_start directly to le16_to_cpu() in
+> virtio_net_hdr_tnl_to_skb() trigger sparse endianness warnings when building
+> callers such as drivers/net/virtio_net.c and drivers/net/tun.c with C=1?
 > 
-> > @@ -425,6 +450,79 @@ static void adf_gen4_set_err_mask(struct adf_dev_err_mask *dev_err_mask)
+> Unlike vhdr->inner_nh_offset and vhdr->outer_th_offset, which are declared as
+> __le16 in struct virtio_net_hdr_v1_hash_tunnel, hdr->csum_start is declared as
+> __virtio16 in include/uapi/linux/virtio_net.h:
 > 
-> [ ... ]
+> struct virtio_net_hdr {
+> 	...
+> 	__virtio16 csum_start;	/* Position to start checksumming from */
+> 	__virtio16 csum_offset;	/* Offset after that to place checksum */
+> };
 > 
-> > +static void adf_update_rl_data(struct adf_rl_hw_data *rl_data)
-> > +{
-> > +	unsigned int num_groups;
-> > +	unsigned int i;
-> > +
-> > +	num_groups = ARRAY_SIZE(adf_fw_asym_sym_dc_config) - ADF_GEN4_ADMIN_ACCELENGINES;
-> > +
-> > +	memset(rl_data->svc_ae_mask, 0, sizeof(rl_data->svc_ae_mask));
-> > +
-> > +	for (i = 0; i < num_groups; i++) {
-> > +		switch (adf_fw_asym_sym_dc_config[i].obj) {
-> > +		case ADF_FW_ASYM_OBJ:
-> > +			rl_data->svc_ae_mask[SVC_ASYM] +=
-> > +				hweight32(adf_fw_asym_sym_dc_config[i].ae_mask);
-> > +			break;
-> > +		case ADF_FW_SYM_OBJ:
-> > +			rl_data->svc_ae_mask[SVC_SYM] +=
-> > +				hweight32(adf_fw_asym_sym_dc_config[i].ae_mask);
-> > +			break;
-> > +		case ADF_FW_DC_OBJ:
-> > +			rl_data->svc_ae_mask[SVC_DC] +=
-> > +				hweight32(adf_fw_asym_sym_dc_config[i].ae_mask);
-> > +			break;
-> > +		default:
-> > +			break;
-> > +		}
-> > +	}
-> > +}
-> > +
-> > +static int adf_420xx_dev_config(struct adf_accel_dev *accel_dev)
-> > +{
-> > +	int ret;
-> > +
-> > +	ret = adf_gen4_dev_config(accel_dev);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	if (adf_get_service_enabled(accel_dev) == SVC_SYM_ASYM_DC)
-> > +		adf_update_rl_data(&GET_HW_DATA(accel_dev)->rl_data);
-> > +
-> > +	return 0;
-> > +}
+> In include/linux/virtio_byteorder.h, __virtio16_to_cpu() performs the forced
+> cast from __virtio16 to __le16 before calling le16_to_cpu():
 > 
-> [Severity: Medium]
-> During probe, adf_init_hw_data_420xx() -> adf_init_rl_data() ->
-> adf_gen4_init_num_svc_aes() initializes rl_data.svc_ae_mask to ae_cnt - 1
-> (16 on an unfused 420xx device) for SVC_ASYM, SVC_SYM, and SVC_DC.
+> static inline u16 __virtio16_to_cpu(bool little_endian, __virtio16 val)
+> {
+> 	if (little_endian)
+> 		return le16_to_cpu((__force __le16)val);
+> 	else
+> 		return be16_to_cpu((__force __be16)val);
+> }
 > 
-> When the device is brought down via sysfs, configured to SVC_SYM_ASYM_DC,
-> and brought back up via state_store() -> adf_dev_up(accel_dev, true) ->
-> adf_420xx_dev_config(), adf_update_rl_data() overwrites rl_data.svc_ae_mask
-> in-place with {SVC_ASYM: 4, SVC_SYM: 4, SVC_DC: 8, SVC_DECOMP: 0}.
-> 
-> If the device is subsequently brought down, reconfigured via cfg_services
-> to a 1-service or 2-service mode, and brought back up,
-> adf_420xx_dev_config() has no else branch (such as calling
-> adf_gen4_init_num_svc_aes()) to restore rl_data.svc_ae_mask.
-> 
-> Additionally, if cfg_services is modified while the device is down and
-> SR-IOV is then enabled, adf_sriov_configure() -> adf_do_enable_sriov()
-> brings the device up with config set to false:
->
+> Should this use __virtio16_to_cpu(true, hdr->csum_start) instead, matching the
+> __virtio_net_hdr_to_skb(skb, hdr, true, ...) call below and
+> __cpu_to_virtio16(true, hdr_len) in __virtio_net_set_tnl_hdrlen()?
 
-Hi All,
-I will re-work the series and submit a V1.
-The feedback here from sashiko is valid.
 
-Regards,
-Ahsan
+Ugh. In fact it does. Should be __virtio16_to_cpu(true, hdr->csum_start)
+and I had exactly that in v5. Not sure at what point I picked
+an old version of that (
+
+It's just a warning - functionally the same - so if v6 goes in, I'll fix
+it by a patch on top.
+
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/179268538303.70821.1734486381476363942@gmail.com?part=1
+
