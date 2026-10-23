@@ -1,91 +1,98 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.225
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792720876;
-	b=sOCJBElyqClMPTqBwwLQ8RtDhvPcE8AY5KRQ/vgRu1B9dZsNDUV+2AVq9xabJWgQ9bYy
-	 g8k6gD2HGgO+2SqmcZMEmCFZJClLMc+ihJpvUgIxqEKDB2Lz/VxhyjA4/TBFoM8GsxeCV
-	 PavrYwlWabCAQ3sEBtx9wiRCZS340sV0NtHQMIB1zzZQvwVamtQKLi6GsV5cb0I011Mz2
-	 HoSR98X0jvikbAxONvDua1PFR9deH9XD3rWwdLjHHroL1UBZ95+RikUqwLZKwEk8KdOXh
-	 oqlZeAjtMt3Y13ge7nuHImaaT3gu5n2gk8jDK7C5A8o7BQusYzRrEAGmsP/7IzFiZzA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792720876;
-	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Gm-Message-State:
-	 X-Gm-Gg:X-Received:Received:X-Relaying-Domain:X-CFilter-Loop:Received:
-	 DKIM-Signature:X-Received:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 X-DetectorID-Processed:Content-Type;
-	bh=Kpc2GKaqzeZIfHVzdp+yPmLdciSSoPjMFH3diC+JClA=;
-	b=oLqvOMgn8Puy6pa34OLEfDstsOGu5cz/de1SFeC91pMsBvmq08FDhkeZNioiFBZK7GIH
-	 1flwheMTv/gnxuWJ2k7CA/Z3rDYwOUGQ1ImKlDFpp+Nz4y4QYcdwYii7UopxlaUbPouyB
-	 /I0IMN5dOfM4TGxO5yPIKkQJpqz/bKPVwIGNpz3Crpxcb71/8pBFcr+d8vbyAu46noy0e
-	 hio4llgLEhkPxOumruNp1yZm6C/1VTBs3BL9w55IF57P5aKHj62YivS3wPQ6uvHwGnVyq
-	 Oz9HuxlJnYDIEGS1k82XxkDf8+J2Bi30kDI50kLB4DKZdqICG+xsl2LTNpZMZpsMgoQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=broadcom.com;
-	spf=fail smtp.mailfrom=broadcom.com;
-	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=S0VzvUpT;
-	arc=none smtp.remote-ip=209.85.222.225
-Received: from mail-qk1-f225.google.com (mail-qk1-f225.google.com [209.85.222.225])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.70.30
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792721556;
+	b=sxPQ31LibwA1ct6+JZglqYlMIRp7VHoNwVUGJzjMKJE8f0fFaMEHUyPdoQIpIclDs3fG
+	 rcf9+ixNq4YB5krR5nIYhAviiCxdbOwtOmx9ux6z/2Mj4V6BJnDuNzo3qfL4YVVdADWbC
+	 jxtdvbrW3SPQ7WYEldVx3DJS/ZZSdNBqEaNAv0NyRL3mET4AvOxPI6d0LE9eGbsb8PgNN
+	 mTQnow08x2OS/k9l1zW89CtFt69jw4OrkdiYLv/Z+jq4b6ZQQkxQEYeqrJy4ZtZ3GRXVS
+	 ok6jk0qY9CtnXVy0g7zc3OVrkkigd3/3hSnX7bdVTEVq9yfcpYeFHebu3KZY2zywiLA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792721556;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-Exchange-MessageSentRepresentingType:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SharedMailbox-RoutingAgent-Processed:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=S7BZK7270ygKjfPzMd8itp2YRvcsgjjzRNtX6MFQlVk=;
+	b=e1pWMkPPG9bflWc7bHlkv+uNz0+tA5I+STw4CwlstBS9GX2DhDSv89hfE+BX2QMYjMPY
+	 xkvVrfTRSj+br78i4geiBHKXA7cr/oI2Qs0FzeI7hHd4UzKu2lhBmSdPpJBAt9lB7XbSD
+	 hLKoDYhUW4iaqJXcjh9bXjcAnmsMsU9KbIlf/1aWlUdwvSbl3OjT3iY6yCISJjWPSRmw6
+	 fluTX1kdHp1LmtS91UbYbC7cTlJd4vggJCsgzErbbybNoPMgkarDSg7ZPenwKPZCBokYF
+	 LO6iVGG4E2qlRn84Wpl2cCq2sKNmAC5jKwLV+IFel/qXLf8KxwvaiGJfm89+W5Lcg2Q==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=r4BcJFlq;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.70.30
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011030.outbound.protection.outlook.com [52.101.70.30])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D03606A319
-	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 02:01:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A8D03606A319
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE99606A319;
+	Fri, 23 Oct 2026 02:12:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6FE99606A319
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=S0VzvUpT
-Received: by mail-qk1-f225.google.com with SMTP id af79cd13be357-93e635220b4so34126585a.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 19:01:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792720874; x=1793325674;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=Kpc2GKaqzeZIfHVzdp+yPmLdciSSoPjMFH3diC+JClA=;
-        b=IXmGFMyK4c7GibgTQXuVCbdUJYK19QR9ELEptUf3YJi2OpIGx9Vb/Av/YO93Zl/tNI
-         151RS0VLPT24jwK4VA/dWPUlM6Y28ZyM9lRsE4kWh2rY/Hyb4yDT0cyLOoO+2OKgdjII
-         e/cFXd5rVN85CbW2EpaLd9QCMny2W0031Klqm5VVKAJ9mgAxsSETNKxy7vyW6EPYGvU8
-         DMcXuGyVtBBcItgaSxGviH2nFhBgg7GrjlruS3MSNO/DO003NvD9YuOt3+o5fjInVzeC
-         JAyGfBz0EdfHWPoJq4fx0fvAGnKNQucy4FOtGx8BTM4NoNcD8jLT+r39peseA2BRdC7l
-         KrmQ==
-X-Gm-Message-State: AFq9FYJAbZ3OB/814yjGoiRktTvc9JY2DzDGHQqe+hOO+xSZ9Fm8RUFj
-	RRtSKtgxs2ZpqrxmF3ep6U/v0prLGNU6I5cjDrQdZpPtIce0Nav3QL6WTXkxspGa9GicYJOB9PP
-	PvaGq09/kQ8LUPbp29GEilidlZ+jQihoPSi6WcVTIhhirB0lkHPhRFjuSWFQJEbkGdtLfUioayA
-	LVVqLrfFjRGJ8322KCoXifSJu3l3tHOLs/miv2MApkwJxyGdw8LgsKXysFZJviDJKApcF8lclOq
-	9xM2Dh2kykwF/nn4GIv
-X-Gm-Gg: AYBFou3s8JzRujuik2fa8HpuX1nYQ/CKFC27TmqHtGsuJUI5S8PTXzooTxkf99Nhn3k
-	s3jbwvt0bP7fsJoIvUI2nYa8j/ao9U5Eyxbw9pq9hoPQ3BIS1ofPE/mmxTZBoIEtt9WtSsCU1XF
-	48fw0HWrdOXhrupOX6h12B9vTEBM2FGBkW7ApVyMemkOwA6thqZb5fk2Z52M7mbwqjThkyTJYzx
-	tUhnMGAbD7nb7nA1YeG0Mf0T2Rd8x//jjBDyRdVqkpwm9qhYL6wA2DS9AfGusWZCF6/aVVhwOBY
-	U5ndrY4RY+2uLftQlz/wFFCPBXQGY0Mu8rcvfqZA4drDA1KyNF0CLnV3psiSR5LmUjCe7qW936Q
-	nFAhowabrBh/W2LgFRg8TOA3DvnfcNXBPBYZdqenTmZ0bhbcdWYeEht0GZZ+RWeBQvHTZXrSskA
-	f0TIww1KWEuJMfmZd7gL6HRUq6w2kPifRLkNI=
-X-Received: by 2002:a05:620a:1a15:b0:939:6de8:43dd with SMTP id af79cd13be357-93f6f996e2bmr237192185a.49.1792720847623;
-        Thu, 22 Oct 2026 19:00:47 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-120.dlp.protect.broadcom.com. [144.49.247.120])
-        by smtp-relay.gmail.com with ESMTPS id af79cd13be357-93f70ece130sm13494685a.9.2026.10.22.19.00.46
-        for <sashiko-reviews@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Oct 2026 19:00:47 -0700 (PDT)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-c37b2763f1bso39043866b.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 19:00:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1792720845; x=1793325645; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Kpc2GKaqzeZIfHVzdp+yPmLdciSSoPjMFH3diC+JClA=;
-        b=S0VzvUpTeJZvY7YjAXCxigfCmcmFxIKtczPnE/h61OWVzrT98c8JvZYsqucNF4JeVv
-         yIBv+GMMlIEpkJ+HYUmCpwehbhDraaDmKRAJIPihpg6QL74bGQfGxrp+LmgJ0+MlLRvx
-         NDL/AWudT0BiF7PhnleDthjnjDPVY3/rwWSr4=
-X-Received: by 2002:a17:907:e849:b0:c31:b89b:213b with SMTP id a640c23a62f3a-c46a900e861mr145167466b.18.1792720845461;
-        Thu, 22 Oct 2026 19:00:45 -0700 (PDT)
-X-Received: by 2002:a17:907:e849:b0:c31:b89b:213b with SMTP id
- a640c23a62f3a-c46a900e861mr145165066b.18.1792720844926; Thu, 22 Oct 2026
- 19:00:44 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=r4BcJFlq
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PTjvXAW9Bq+FBCETD3U5sjbzRIabLaO6qGaYgucDfProu1C3WA/mI4ZQFgeGaUQ0AYE60BNNbWt2nX4+EIx6Ct/NZixms5y65rAgeOQeduZ9KTzkmD8r5qVDh6flvQw2WNlgMaqaSsKtjhQBxAiVan1yf++9bYboPNqC0cr9PgV8llNyoukmKwMXil20P/kNqappsRdL87gJQTOzDcYgbMmX6kvT3FiXGnf4q3t/A7tUgj/+WikdcK1I/Cn0BZT+EUfwuhI5R353bvYSCN0Dwzo0JrutbJ9Co0+XJPSV3mvy4/wMxPScNnFHkbsGBxAI8WGYoEt3Nb1tIknLUXuqlQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=S7BZK7270ygKjfPzMd8itp2YRvcsgjjzRNtX6MFQlVk=;
+ b=F2vYw1ho8Om/XWKEUMCZ8+KgZERzD3V7pqI16wM5cHwVAsLuFPzFpRhXMSjHL62ZLScYiChANLOvnM+ha8TIa0dX5JqUXXh1T5Z2FEBdX9gpGDRUiffxPiacJiO/OQEWDzFRb1kpdSMTT2rzRwrYWV6syAk+QccJmB4Aekv3r1ScvlBZr9C/KI4za8szx1+YRSAwDbkPPgyyZR7SvbcUtDk5CxOT7akt0C9p7C4ByjYpmZoo7YzLCIv7X5rf3LGbi87emdoTu3TGfY8a88/K5wN17WxUXac2oy5tI9H7MVZMgQfcLos8nhs57n5KZfJX67/P3JuYa2RVQTA4bfGukQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=S7BZK7270ygKjfPzMd8itp2YRvcsgjjzRNtX6MFQlVk=;
+ b=r4BcJFlqnhNipIAS4C/X8aDWD8TBQWSAolSmGokUebSj0fkCwyjyRPdBwXAzEOOztgkKKbsPm9HDWuL4Z5341qaCuuf2VCY21GRfEW1SBxEP6NnhqNFXrVWeuwISML4kH6bR2q1xDHBUATZPrtY3YG7DVrGTk2lL4QXhm2SC5QwvAUbVis32pOJGhAAVNVuj5/793/bDjkVbKeDm3cPjRoYGkcAEgXE7dWPmYXUtv27OAdiv5Mb2hQ/WJKSod82ixD0OEBUgCyad6fsw+gor+d9PFzizhl+m6pO4+P6oucxq+H9wQLJBM2MEvBBSLfztcOVDCkdJht+PAzMaWnGCNA==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MRWPR04MB12117.eurprd04.prod.outlook.com (2603:10a6:501:97::14)
+ by WA4PR04MB026519.eurprd04.prod.outlook.com (2603:10a6:1d0:2c::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.18; Fri, 23 Oct
+ 2026 02:12:30 +0000
+Received: from MRWPR04MB12117.eurprd04.prod.outlook.com
+ ([fe80::9a10:5b39:708:7f43]) by MRWPR04MB12117.eurprd04.prod.outlook.com
+ ([fe80::9a10:5b39:708:7f43%3]) with mapi id 15.21.0546.012; Fri, 23 Oct 2026
+ 02:12:30 +0000
+Message-ID: <74d006f8-33e4-4157-a0c6-a0045be323ae@oss.nxp.com>
+Date: Fri, 23 Oct 2026 10:12:10 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: imx95-19x19-frdm-pro: add boot phase
+ properties
+To: Frank Li <Frank.li@oss.nxp.com>, sashiko-reviews@lists.linux.dev
+Cc: imx@lists.linux.dev, conor+dt@kernel.org, Frank.Li@kernel.org,
+ devicetree@vger.kernel.org, robh@kernel.org
+References: <20261012-bootph-frdm-imx95-pro-v1-1-6757c5f04a17@nxp.com>
+ <sashiko-outbox-167770@kernel.org>
+ <atp0uQDD8EuhYyb1@lizhi-Precision-Tower-5810>
+Content-Language: en-US
+From: "Joseph Guo (OSS)" <qijian.guo@oss.nxp.com>
+In-Reply-To: <atp0uQDD8EuhYyb1@lizhi-Precision-Tower-5810>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI1PR02CA0052.apcprd02.prod.outlook.com
+ (2603:1096:4:1f5::20) To MRWPR04MB12117.eurprd04.prod.outlook.com
+ (2603:10a6:501:97::14)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -95,161 +102,112 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261019-uet-ib-core-v2-0-8bd654f25370@broadcom.com>
- <20261019-uet-ib-core-v2-13-8bd654f25370@broadcom.com> <sashiko-outbox-178828@kernel.org>
-In-Reply-To: <sashiko-outbox-178828@kernel.org>
-From: Eric Davis <eric.davis@broadcom.com>
-Date: Thu, 22 Oct 2026 19:00:17 -0700
-X-Gm-Features: AclHuK9fznijRHes4Zh9iwpBLWhIkHKYzo9AQrVm3xUgoviC6U7EHKyLOM83TkY
-Message-ID: <CAMouMY+J=pi6bGtRfHqwrHyFm70E5zvC27mhC4WW-bifa56iFQ@mail.gmail.com>
-Subject: Re: [PATCH rdma-next v2 13/13] RDMA/core: attach a memory region to a
- queue pair
-To: sashiko-reviews@lists.linux.dev, Jason Gunthorpe <jgg@ziepe.ca>, 
-	Leon Romanovsky <leon@kernel.org>
-Cc: linux-rdma@vger.kernel.org
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="00000000000031559b065e78595b"
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MRWPR04MB12117:EE_|WA4PR04MB026519:EE_
+X-MS-Office365-Filtering-Correlation-Id: deedf626-6658-48dd-6247-08df30ab16d1
+X-MS-Exchange-SharedMailbox-RoutingAgent-Processed: True
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|23010399003|376014|1800799024|366016|22082099003|18002099003|4143699003|11063799006|261009223027099003|261022105027099003|261021121427099003|261022075727099003|10067099003|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	tz778LuixAj8wL68MkQTVuryG0bfKj5Cw9QU88MKHixGUECwJ3Impce7LmeMQt86rQU+3dPMUasEGhh+Yk7RVyAWKDVDCS9tx0K/x6yJYInn59eIAL1v4MCXeLK0rIgLjVdTFD4BIpkE93ktWPlbfsvYNdMNCGPk3/hBcXqtiMpASlb4tPiYiDSGv8UuHUOJ9mP2vaFlly5WLdgYPwIkq95mloActry6KNoyf+tLwhnE0CSau0BOdm3fncNuMTV9iYkNsVVMGSilASc68wYXVc+osQXUblXhO9ljIzsz5e4LZCXN8rNxm5GkGEpENnjBu5AxFGPedcS9tt5uEAB32Z8WMdjbrduRIq8sjPidW34R4U6Y6vDGw2Ar8Qz4/OayK9YVe9Mw84spztVid+d3AlcsHex1MKVIoMUYi8ut2PTq5Z1MysgJdnG+jwMULo5RK7M83SRYXmYtbSwEHlWrUXzW5wPXVt2iV44/arS36Br/QjbX9cRx2ib0rm1lTv7I7MKagtkIfyB39TPk3+gHpnh5ClHFipRNxbIfg+hIej871E55JmFYH+MM2dedQAcsCdWxu+jhzJUahmnW5acsp+TsR2yXxwDl2wfB700OB8sWT85brd48OPKWUgeNOksEvEhqxOnZHIQFrsdC3B+45gVtf4rvcNilpmu+DnTNRV4=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MRWPR04MB12117.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(376014)(1800799024)(366016)(22082099003)(18002099003)(4143699003)(11063799006)(261009223027099003)(261022105027099003)(261021121427099003)(261022075727099003)(10067099003)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?NmJoTTVMMHFHekhRelNHTVpMWkxTT1hXVFllcGMxODRrOTh3UXVSRE9oSEdB?=
+ =?utf-8?B?aFdzbkJoY1RZak5FbjFCYVEvb0Ftd1EyWCtXbEgvVDIvRVgzWmhCUlU4TXZ3?=
+ =?utf-8?B?N1FoRTBnTFRxYzhuTjZmbDErVDliYWJjM1FQV3dlWnByZmN0bDV1K3FnQTAz?=
+ =?utf-8?B?WC9PeXQwN3Ixa0xIdWwxV3dYU3Y1RUxCOUZBSGI3NE0xeW9xMDhDNEJWV0h4?=
+ =?utf-8?B?NEJNbnRzRFRycE1RUXNvWFNxSEtvYjAycGl6UHBmS2lJT1cyeTY5NUZOZ1N3?=
+ =?utf-8?B?RTdjVjNyNWVJcHdmUGJZQlU2TUxjRklDblFVYTRjVk1TaXVnOU9hNitmZnBD?=
+ =?utf-8?B?dEFxS1VQZlJGOWsxZzAyTU1hZkxtenU1V0ZkbDlDY2lBaVBxSFhhOVJSeDJs?=
+ =?utf-8?B?TEV3Z1RTcWpZbkJnZE8rTURBR1ZPY3l3OUJ4SnA2SUtBVVgwdzRNSU9sZk9r?=
+ =?utf-8?B?Tmx0U0VQWldsMStVVURaTkcyeFNXUXVYSFRUTndYbTB3aGQyRHluRi81T3Ux?=
+ =?utf-8?B?RHZFRm00SVBjYU5iUnJJNE9rK21yUFZNM0JCblQzRDhrT2lUMUlzNFEvNWdS?=
+ =?utf-8?B?QXdiZ1M1NDlHL2hwazZhbjJ5Nzd0L3NCSEVaSVYzdE1MOU1DSkhaOWZlWlNI?=
+ =?utf-8?B?L0JkbzNHaFVGdktocmg2QjJNY2tVQ3RVUGprWGp3TE4wa0E5VHU2c0xlUEFX?=
+ =?utf-8?B?Uk11SXdZVDJqS0Z5ZDBRL1B2SFZNaEZaZjVRZlkxeURVNnZuWkxXQXY4VUpQ?=
+ =?utf-8?B?UlFRRUhwSTdmL0dPaHFMVjdVQ2tvTklIT1FDdFZpSEVKMGMvRWdOWmZJK09O?=
+ =?utf-8?B?ZzhrTG1sdE5iMk5BTzFpaU5JZ2JtazhKNEVjS24xcmRyN1R6RUtoWUU1dHlI?=
+ =?utf-8?B?eHo3RWhTaGg1K2FCbVI4NGFTbjVrdVZCMHBHTTdGT3BqdnkxeS8ycURJcE96?=
+ =?utf-8?B?dUk2N1hrNXhBbjNIWi9jMEdUTUNRYy9mdEczY1dObUlBaEJYS2NXYVBoRzlh?=
+ =?utf-8?B?a0lIenBIaThjNkM3NHlXTEhWTzNYbjN6c3M4OEtZK0RhakNMMUZnZ3d3c2Vr?=
+ =?utf-8?B?Z2FYdTNiZlNCYXFuV2ZpcmtWanlEU2VvNWdncTVjNHhnekdrakMxTUhUNWF1?=
+ =?utf-8?B?dFpiNzlpYTNoeFBFMHcxS2xOdmhlVVRUeXFIMnpGLzVYeS9xRTFMVmF2SzVj?=
+ =?utf-8?B?K25jZEN3bWQ0Y2xGc3ZqV21Qb3VLSVZzajVCY01SMVdHRUFFeHNOWElOWFVs?=
+ =?utf-8?B?QWFMMS9BeXNqVTd6VlArcklyUUthdkYvUWlNWmZsVkc2cW92aGlON2MyR2xi?=
+ =?utf-8?B?YWpIQUhTRU5ENGV5b3R1cURsR0t1Vjc2ak5NbVhET0NlY05zQzM3d1dYcVdS?=
+ =?utf-8?B?WmxWZ0ZJRjRnN3RvaURTRmtQVzJUWTBYVnhoVUdTRW9zWDBBb3dwK1B0aGV6?=
+ =?utf-8?B?K1FzZU82a05Vb2NGTVJXdVpFL0FiMlFzVitqejZaR0hyNnhoYTNIQ1FTTmJp?=
+ =?utf-8?B?UkJHV3Z4SUVnVlYyZmtBYW52eUdySmhNRkVtbHVFb0NFWUFZUzk3NS9oWjFN?=
+ =?utf-8?B?MzZhVFB6Y21FK1p1WjR2YURzaHI1Q3EyUUVjdDl6dndXTnlwTnQ2b1k4SnZ2?=
+ =?utf-8?B?cDJlVC9mNnhPZFkybmtoSGk5NjJBOVErT3JkRUZwK3g2OU9OQUhOT3Z0eUh6?=
+ =?utf-8?B?WE5kM0FrU0lUdUJNek82R2ZueTZFVHZ0eXNFY2pDVkVDMThXd1NlckZiSzh6?=
+ =?utf-8?B?WUNkRnVWVEt2RjQvUDZhb25RMStEM1A4MWl4TG5TUldrWW1XRCtTOVhZb1E4?=
+ =?utf-8?B?c1gvWXNIaEF3Mm5wVk91UVpqbDJ1NGZDYTJtZGRjZjZZZndOTU5CSjV5QmMv?=
+ =?utf-8?B?d2YzZHZXK3NhR29MR2Mzc0EvUmF5NGRoSGRaTW4veEI0a0xySU1xUkZsYnV3?=
+ =?utf-8?B?RWsxbjkwSVBhWlYxVEFOMmliVE40NGZtYWdDUmZza2sreUFIRmZ0YzFXU2Jv?=
+ =?utf-8?B?K0tMNDh0TFNVWkZkeU1DeGxCelNGZmxKSFIwUlh1ZVNpeEhncW8rMkp4SmE4?=
+ =?utf-8?B?aXpRbWNrNlZ6RXZ0T2hOMVh1ZVhhTytpdWJ0RSsrTUswd1M1clYycWYwZ3Zu?=
+ =?utf-8?B?anp0WjM2ZVkwdFJSR25STFZvZVUxejJsOXg3bUMzc0JjdjRYTzdkT3BFZ1o2?=
+ =?utf-8?B?MEtMcUpVY2szc3BYMHFWZHBOQkI5ZU1qcldKekhBRktDMmlHQ1VoeC93SStK?=
+ =?utf-8?B?YjUwYllWOWxRSE8yQjRxbTF5WnA0SjUwb1hobjEwMmVtekQ2Y09xRlZjeE1C?=
+ =?utf-8?B?RWxhUjV5VkhKZGhJRHdZYjdXWWg4a3A2R0J2cHlsMmZZdkY0VUxCZz09?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: deedf626-6658-48dd-6247-08df30ab16d1
+X-MS-Exchange-CrossTenant-AuthSource: MRWPR04MB12117.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2026 02:12:30.0961
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /fzwgZmvW1WB+/hyOkkxgxVcoHTo5QdlDB5UKlGFllWYYrPsia3I8tlynorPjg9qDf/NTnjxuEo3Wx2hPSBsFg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: WA4PR04MB026519
 
---00000000000031559b065e78595b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 10/23/2026 4:40 AM, Frank Li wrote:
+> On Mon, Oct 12, 2026 at 07:01:30AM +0000, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+>> - [Medium] dts: Missing bootph-pre-ram for gpio3 breaks early SD card access
+>> --
+>>
+>> commit dc22078eb20524e315ef0d520678ff9336ed179e
+>> Author: Joseph Guo <qijian.guo@nxp.com>
+>>
+>>     arm64: dts: imx95-19x19-frdm-pro: add boot phase properties
+>>
+>>     Add boot phase properties to essential resources during boot phase.
+>>
+>>     FRDM-IMX95-PRO need UART, SD-Card, eMMC access during boot process.
+>>
+>>> diff --git a/arch/arm64/boot/dts/freescale/imx95-19x19-frdm-pro.dts b/arch/arm64/boot/dts/freescale/imx95-19x19-frdm-pro.dts
+>>> index 1f62d729a5e77..8dc1134f8d24d 100644
+>>> --- a/arch/arm64/boot/dts/freescale/imx95-19x19-frdm-pro.dts
+>>> +++ b/arch/arm64/boot/dts/freescale/imx95-19x19-frdm-pro.dts
+>>> @@ -180,6 +180,7 @@ reg_usdhc2_vmmc: regulator-usdhc2 {
+>>>  		regulator-min-microvolt = <3300000>;
+>>>  		gpio = <&gpio3 7 GPIO_ACTIVE_HIGH>;
+>>>  		enable-active-high;
+>>> +		bootph-pre-ram;
+>>>  	};
+>>
+>> [Severity: Medium]
+>> Will this regulator be available in the SPL phase without adding bootph-pre-ram
+>> to the gpio3 node?
+>>
+>> Since the fdtgrep tool extracts nodes tagged with bootph-pre-ram but does not
+>> automatically trace and retain phandles for nodes lacking the tag, the
+>> gpio3 controller node will be entirely stripped from the SPL device tree.
+>>
+>> Could the gpio3 node also be marked with bootph-pre-ram so that
+>> reg_usdhc2_vmmc can resolve its GPIO dependency?
+> 
+> Is it true?
+> 
+> Frank
 
-On Tue, Oct 20, 2026 at 3:21=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
-> Can this sequence in ib_destroy_qp_user() cause a use-after-free write to
-> mr->attached_qp or a race on mr->usecnt?
-
-The first part is real and will be fixed in v3. A relaxed atomic_dec() can
-become visible before the store to mr->attached_qp, and a concurrent
-uverbs_free_mr() can then free the region under it.
-
-> Should mr->usecnt be decremented before clearing mr->attached_qp
-
-No, that opens the same window from the other side. Once usecnt is
-zero, uverbs_free_mr() can free the region before mr->attached_qp is
-cleared. v3 will keep the order and make the decrement a release, with
-smp_mb__before_atomic(), so the cleared pointer is visible before the
-count can read zero. uverbs_free_mr() frees only after it reads usecnt,
-so that side is ordered by the control dependency.
-
-> Once mr->attached_qp is cleared to NULL, another thread can attach
-> and detach the MR on a second QP [...] and then call uverbs_free_mr()
-> or ib_uverbs_rereg_mr() before the first thread runs
-> atomic_dec(&mr->usecnt)
-
-This cannot happen. Attach and detach take the MR handle with
-UVERBS_ACCESS_READ, and destroy and rereg need it exclusively, so
-neither can run while a detach is between clearing the pointer and
-dropping the count. A concurrent destroy gets -EBUSY from the uobject
-lock.
-
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261019-uet-ib-c=
-ore-v2-0-8bd654f25370@broadcom.com?part=3D13
-
-Thanks,
-- eric
-
---00000000000031559b065e78595b
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
-
-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
-THSLCC9N61nO6/woOMp7U0lttATSMIeibGPNnU8AizWyI5DxXKkIG5jv1EosjdJwBsJ8ZntvpfIx
-+KplEkYfqN7Sy+7LOzXXkl5KhTkDELRuftv+sahPNzVHW1cJgj0HjMb1sCrFjzcAuO27JA4geQXW
-cl+gyZDv53xtHnMSNmIoqDEINo4yoSHYPGK+cTtGC4K9a6yCXdP2zyLkkSQtZ+hEUOru4dQ1gIZf
-4bWVHOILQGaMbqVAVA1OrjpUNGktgz0CAwEAAaOCAdswggHXMA4GA1UdDwEB/wQEAwIFoDAMBgNV
-HRMBAf8EAjAAMIGTBggrBgEFBQcBAQSBhjCBgzBGBggrBgEFBQcwAoY6aHR0cDovL3NlY3VyZS5n
-bG9iYWxzaWduLmNvbS9jYWNlcnQvZ3NnY2NyNnNtaW1lY2EyMDIzLmNydDA5BggrBgEFBQcwAYYt
-aHR0cDovL29jc3AuZ2xvYmFsc2lnbi5jb20vZ3NnY2NyNnNtaW1lY2EyMDIzMGUGA1UdIAReMFww
-CQYHZ4EMAQUDAzALBgkrBgEEAaAyASgwQgYKKwYBBAGgMgoDAjA0MDIGCCsGAQUFBwIBFiZodHRw
-czovL3d3dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzBBBgNVHR8EOjA4MDagNKAyhjBodHRw
-Oi8vY3JsLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjZzbWltZWNhMjAyMy5jcmwwIgYDVR0RBBswGYEX
-ZXJpYy5kYXZpc0Bicm9hZGNvbS5jb20wEwYDVR0lBAwwCgYIKwYBBQUHAwQwHwYDVR0jBBgwFoAU
-ACk2nlx6ug+vLVAt26AjhRiwoJIwHQYDVR0OBBYEFIjgxJwMJZ5pkTAB1796PUvJ+W7DMA0GCSqG
-SIb3DQEBCwUAA4ICAQCM/INVouXcD/gHdJNCPtF31BpLUwHGTj4BlO4083w8xuxt0iSjyb0EKv7S
-LBz29Dw9scSTMRS/sY9dotjJ03vVvzceiGB4FbMIZNSKHTy1PTNu0oZR7TwhBEEZHC4RtST9S2hU
-MvDagOAWRM/56PG6FH2i7dnhwtcnsBX8CMeVJQc6SB21LuxJVqgULli/kbrkr1DBVMh2f7oCFHVu
-0VgtvRtACeQVi7ny8wspKNV/WXN2IqT06c0vtUmFUPkidlgGxMzYCfQXbXcE3YvA7+xYqmCY0zdQ
-f/ira3VJoAytznhfRSBRV4gmlChdSg8yoaM6LHNE7igDDqhVFT2QCqkRkIcPOCQYxNE4kViiDKKo
-3VFnREnYmLzRbJkdGY4X3m+N7HOU8R99Zeatx6hN02eJQH1vZ1J9cH4SqxuqDxKi05n3SGE7J4Wc
-oNsgfaIDL28JX+2JBG+gKr/vvjocja5y9G43gvIOs9yEzGBt91FCuuwPedXIIREUcqJtq6+MOvAq
-ZMEsct9jQXibihTD7z9wLTIkXqOHumCc6f53zhsQCRofr8m7Tm0YrckGCHd0BowU12A6oVax5xEQ
-6j1hyszkhFPrlLKAlaFU7VuIwlcjKvN9XYrmOfXfTnYoVV6f1IDwhgbtJNlKnJksqoCzfsbAVd0e
-usA704DOznTCfAYJqjGCAlcwggJTAgEBMGIwUjELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2Jh
-bFNpZ24gbnYtc2ExKDAmBgNVBAMTH0dsb2JhbFNpZ24gR0NDIFI2IFNNSU1FIENBIDIwMjMCDFfq
-Ldxf930IzIe8izANBglghkgBZQMEAgEFAKCBxzAvBgkqhkiG9w0BCQQxIgQgEflJHMb1VId9HhxT
-FGu9j/sackU1obwuzA0BiwaLhg4wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0B
-CQUxDxcNMjYxMDIzMDIwMDQ1WjBcBgkqhkiG9w0BCQ8xTzBNMAsGCWCGSAFlAwQBKjALBglghkgB
-ZQMEARYwCwYJYIZIAWUDBAECMAoGCCqGSIb3DQMHMAsGCSqGSIb3DQEBBzALBglghkgBZQMEAgEw
-DQYJKoZIhvcNAQEBBQAEggEAxu8xJL2rBvZ1XKyY5IaeNnn7TfOXWc4HfuZMB7K3/G85+F0BlXoP
-pvI4NzK3BmcimEksi5sYxVUA/6bYD7YOHKyjiZYEdUBIq+RTcnJyw6beNqzIFhQw5pn4IMV6HDAs
-NqR4gUXvknhIGHpsDg8CmJhVs/ExQIq3/8WV9b3MQrycDQ3UgbTKBqe8hgT4UkqUzxwwofe4KJdx
-IbySyca8MiSJL3T6fEC8pegsQgeSMsH6Lma+hDQICHBfq/SHWvPAZmTNN/7lAgunA+wstXv13yv2
-SjKB/He304ZgXQgLGHOczHeSB8QGIY5tLI3k8sbcjrQhQgzrUprcrdCGYl+xGQ==
---00000000000031559b065e78595b--
+In u-boot, the gpio3 node already marked with bootph-pre-ram in SoC dtsi. No need
+to add in board dts.
