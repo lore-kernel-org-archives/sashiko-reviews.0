@@ -1,100 +1,96 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.172
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792794622;
-	b=bc+cKDWzOizU+2rvxkL570aLnGB1ELZA90ayFfTybYl70cmRiBeIgBjlBqbXPNtTVtMD
-	 Lmn7hSkYLswe4KVcJTNtWOjwzeAQYRFXhCpqyTdMLpU5pU6C0EftagGEXJ4WZaaDWPRtR
-	 eA7uuB6EbE5niSngjYgMmYKv/TjzC4pnzdHjYUtXPzdG0be0+Oi5Z5zX2x4/YomLdx8sV
-	 El5lt6REhVrxKhfYUlrmfRPZxc138ffLocNpiZUZZuvznJtz6un69T6Dk9EyaoHL0kzgA
-	 8Y5xdbTdE6tjYq1Q9euCH1+eKUfyUz0U1rqZ8TIFkZxFVhEZbJDczF9vW/j0Ov47HuQ==
+	t=1792798747;
+	b=jpwTPLDYeCe7VpL3GJWobB2p+9DEvgzta5PWeYzCaIDlGn5jo7qLNkWl/bYpznox3RAQ
+	 oJrUUhP8672wXp2MLRRHNnYoSwasEFYqx9bMsxUvD741z46lwcvSlABa+1/U5vuS0Kbla
+	 DWQuEwL1y51g8E/Wv26LL4zn0P2dhnD6sQ2kEz7uyYkgkpjpTTyilX63EKCPBsiJZSyec
+	 01BgLwaSjLz5wQsDO9WAD2kvUOjRpW3cG8FiZK4Z7dVuEUEKTQDg94JTGhdSIe+uZhyHR
+	 CXf8DXus+PsFpquvBTd7QKtyOKzqHRmPXRHNmX6zbn5JH/o3k5ge903+b3LK2n8eH9w==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792794622;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792798747;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=b1vVmrd2o2bhAY35x1Wt33iUoT/bMDNuOnBZV1/6OMk=;
-	b=3MTeMPkVRjrCU2JzYvmCLxZ8i/6Lp5xFkihqQp+neoFQQLDW0lu3FMnQGi+TZ8cc2qAI
-	 b/UfRKAGH5l1qNy1rWApqeetT9GPcQFwvhT62aUvWSh6/xKhfEDeoWO6aOhmSy8VgLU/s
-	 O7hLeSeXL/d6cjmxsI8ZvkoULFun5ELHGUPuWy331jDhNSfSivnIh0aXUPOpyzVQx2PLB
-	 h/Zg3EzSw44RU7mZ9XBODr7MpHX0wsOENpNsAfUSedqnWnC1WcGdGANC8jBWFV26N9oMT
-	 9tbsCsQeSkx8djxDcgXFmdPtquy/szvqO00jVzyKdccBS/JFzs2VJ3o4r6g9pSfXUsA==
+	bh=aimS7WOX4+iFi8PQPFSUhpjDeNXHySq/D50+MFe/QW0=;
+	b=WxmDIwPK1MIlwO3u57Yuh9BDF19YJa3OuWPgZ/qirmXVB+FkFCb0TbDCZREdd3iwtl72
+	 oHXkXwovBXxSy/pVRtOCL2xaQVt6gPbvFG2yX56L+xB8aD3Zg3QtHBMvuehBkOs5RIS1f
+	 THvqjcc+quvDo2p18cxvF9Sc21iiwklox3l6g0k1/PL0YoziD7dUuQOQ9n3JcdTuQlWAW
+	 YTnyMW1LG2x2+sWXZG52l3uAtrlcLtMcFpDNS85braXfXio8KcQHfi1CsBT2AhyMUEjrf
+	 2JjvA1SAZzsP0FCD1V4m7I4BoQQxIZI5qf9k+C9H1+fyMy0VEYfKS+ZBygRFKgtQHwQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=BW63KCzC;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.42
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	dmarc=pass header.from=chromium.org;
+	spf=pass smtp.mailfrom=chromium.org;
+	dkim=pass header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=bva0aX7+;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.172
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEA2606A321
-	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 22:30:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BCEA2606A321
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D48606A31A
+	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 23:39:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 89D48606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=BW63KCzC
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4a35a60499eso1092695e9.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 15:30:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792794620; cv=none;
+	dkim=pass (1024-bit key, unprotected) header.d=chromium.org header.i=@chromium.org header.a=rsa-sha256 header.s=google header.b=bva0aX7+
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-8ae8607e8afso10743357b3.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 16:39:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792798745; cv=none;
         d=google.com; s=arc-20260327;
-        b=k5yZHJHAKbj4ujjV8yrM4TkwwbDQ5N3ujt5YPHjLwgSSO7lQ2CSrwh89xsRG+fHuTy
-         6owJqDTiuRhPdJdRY6m9/N8Syr7W+V/vGnR1c2CzDABtLAb1kDrd2gd6KqpCHQUHQwiP
-         wugwEdDdw/7S6iw5RqSE9VpiiPmrt3wiczgLDa6TDkLynPHTDsnLXG7oEOyixCW0QHP1
-         oxfrL8LVDCH5zrAt0nZY6/5USpbryqF557qPJwKIYcPN0GsLP0V4hxCXhHyimGTzhMYu
-         L4b9AvoJhDW9GXL7gUUzwLHF/kd2EZVNm0n4HxFniywbUNCrX08TmNiejI9KTmg/tUIP
-         ldCA==
+        b=L77Q7t/kEbIf2R6tJ01/Hh2U+SnRdAwIsy5GzCpZqItfPQbq2p8OHNeJX3nSwX/vn+
+         2TXTjhHSvlBV5cxSWo87mcgnToGiOpiJMkcdrUBTgUUnUIMPHd6V9/H8Wh14pk3294F/
+         73zP3IabSFqEWwwuRTfXwTJ6ApwrLsjnkIF4PVGJM27nCED4nA3zxxrRP2VOaJO98UGH
+         +RadaR85n/oQXBucpGuh2mI0utYzrh+4e7ppN0btW2CoFatlICTYQVGtFrbnNbMI/gGD
+         qoHFMkEHkmY9zYwCOkUC/X7AYm80CoXvDLjbD3uYEqu2+xNUs2NqrAxWlhUjcoR19aq9
+         0xLg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=b1vVmrd2o2bhAY35x1Wt33iUoT/bMDNuOnBZV1/6OMk=;
-        fh=Hze5d3d0Z382PtgOb2+CzJ4z7uaRv7y1hGw2r7dwflQ=;
-        b=n47t5Zfvr3E+k8vzIaP5yC4pBio89JvHlD3Ny7wYZRoOT4JgvJ+2wRuerkCPtUj5Ie
-         pn9hTTn6n1sVgoU+XUj1xCW1cTOwPKDbzIGr9zGhiPw5Wbxq/P6N1x91Kxd1QVWkcbKp
-         aTyeHhmcV3udxDabqx9U5LO7GThde9Ie2XVqBuC5GzMDXzdVWrifO4BNfO3lC4uXYgvq
-         BtidgkCr4jNwFmnHg9G35czMb9/cBauy3UnSCf27uUrkAmB6KTZiXr5gbg+2+POBlrk2
-         mb6y8opNQG6Lpu8fJ+575MAngnDDimXFCXuwEt+Ebsxz73cXMlxODSXhqc7UnM+zbJbq
-         QRaw==;
+        bh=aimS7WOX4+iFi8PQPFSUhpjDeNXHySq/D50+MFe/QW0=;
+        fh=osfj9leewLfc4MqIYaUjfG4KfpRUNqFnByXZRUnRoVs=;
+        b=F2SHnm52hqgzKGPl49uoGCBBLSMPeSEOAQUroaOcWKjGhWAnw2ceWzhQXNQv3UneRw
+         SyU8O/gI6GpTK1HkANW5+Dio/NqL7yiov1QznasENu4uBKcsTwvxvz+6V4Z/aKG0rVY1
+         uAvzI6afhVgWvhtLRq7num9dx65jdVjSZ1ybTxgwFHEbQhm5zs+Qi6dD5dd257e0ln0y
+         ikGSWpLzxbEdxjXqHWRO+1btDqvZ4EOGxLZMudtK2qCbMBuaDb5XYOksfW16a1qmp9tv
+         D8ia7fjtW0B8Xky3uYkWuIC2eckrTJ7egLy2FiNLmr8BbMHt8zTfaIEw86SFbqWb8mUX
+         JyLg==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792794620; x=1793399420; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1792798745; x=1793403545; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=b1vVmrd2o2bhAY35x1Wt33iUoT/bMDNuOnBZV1/6OMk=;
-        b=BW63KCzCxIyselY4GulAjFTdKd1atojEfwDjbxTmcP3C0tFm6acKYx/gSqutNY10i7
-         W97QEYHBqjw06PuK+q31BynHumattf3xwvt5WPqbHwgzPNTsMJIPsuxRX2xJByTtdJh9
-         iQ6/wp+NlGruKrCiTu82CCLMS6hUGlgewpCOBiQc4b7Oxez2ytMvQP53nr2Tyf4myH0c
-         TUZngh16/+FZAK1qXxIaRVEqyo8RY/8wy0f2+upeNehBYt27U4N5pYdiGmQTo5VGYgYB
-         dLVrxhoLyfNUqVzPPEoqwvnag/z/xLM4HhDAnVKT2lxEGYlOl6VT9GApx8wB+zfyUp1a
-         cHwQ==
+        bh=aimS7WOX4+iFi8PQPFSUhpjDeNXHySq/D50+MFe/QW0=;
+        b=bva0aX7+1MOXzEbR3Bd/m3JaEv89ujGCE0Hhrqjaxdv6x45g2wSMWQ/LpTtvqOPhpc
+         xjD2VBTw+fKrnpvoz0GapsoIqEY75Yk85i/fKz5FVozAb8BxKfWFD5m6aH0/KGtxiFu4
+         GSD0PoMlKHaR2OnvzldjsUSdw6F5Lz/rP7i54=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792794620; x=1793399420;
+        d=1e100.net; s=20260707; t=1792798745; x=1793403545;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=b1vVmrd2o2bhAY35x1Wt33iUoT/bMDNuOnBZV1/6OMk=;
-        b=pyKn6dINmsUEr/B4Djer5eQIBlsLyWlgRC7bWGER/Txz+qEq8El6n5ODoh5TKSJA2o
-         5H9wXrZ/7TVg5+R1uMK50CldAOtxJWnNjqyf/s+vbixrcTJrgeacymIy440TiOB5xEqJ
-         N2oREYqhzeviNf0a2OVXzVGATAEojkErR15i/2STuI0q2V7m7m3yUC4gOvWI2c6W/uVu
-         h/GkrGyaZTrL05OrEBXi7IzO2vl+Yi8HCdBqro05Lt1YURshotU8TDWaZJ0wv83IWwUf
-         PQ6edbUCyca1oUe1vJ96Xktfs6zHenfzh7SVEkTiT4jgUw5pwddZx/PY3716A4/lgr3E
-         LUrQ==
-X-Gm-Message-State: AFq9FYKBzyf4TQh0AeIwxRd3bNRyXC+z9rIvSLUd7295X6fxXsyJ7+7f
-	i/RSGC77xJor6vq3C+Uu2E0oGbbgvO4q5SgN7w7GP81VaYenxNif+AQum/1wG8Icz25myWF6vZt
-	FGqGKvze0Y4YuefX8nZYRxgdhR15gkHCJaa0QrIn4NA==
-X-Gm-Gg: AYBFou3bmjGNKJPSJmIjop9U7+QfA6BZNDa5U1fCzyDcHuNUg6umGfIT0vd3tj0l6T6
-	XpG4Y2+GfYWg5fD9rvdeC47oE87cO91ioC1rdcIudS4Z/Rcswbz00U/V/4/7FdWACbDHMF5AvFE
-	quxbmu05Iw75Aduull1+Zyj1/a61Vo5WBcDrlYzV2W2EQY3UGTxpKqD3jV9xgrw6OplL4n4G6Ad
-	ws/wfDQjkaIFtnXhuf/pRSdSSA1+JI2IB4aJjKphxpGDvmEtZMMMvL8QAOIiVs3k4VzVANZIszw
-	4agaOHFnsk4ZvPw1SwrsJ/O4BGPBZ2rINQ1q3OU0czO9HLdpLGsxbufxTlbqTkakvNip5BV6YtL
-	lQnWI8nbyV+agTn1ER1JNHPWRGXTGuinlbxw1Z8fyeZeBNRe7fXu0FFjay1cH8Em35G7uDevwpc
-	XJJBHqdOWno5F33/dQzvtFI0Er9cfHSRFIzaHimKm/XPD9NFeOj7Ex
-X-Received: by 2002:a05:600c:4f41:b0:4a2:150f:1603 with SMTP id
- 5b1f17b1804b1-4a35acb3e14mr4128865e9.25.1792794619650; Fri, 23 Oct 2026
- 15:30:19 -0700 (PDT)
+        bh=aimS7WOX4+iFi8PQPFSUhpjDeNXHySq/D50+MFe/QW0=;
+        b=vqw+4SU94oNsSbObILa3PhmZN8IL6v384Oh/6qZG5BUQ5pvmqYazC96yYg9ZHFhvL/
+         XmIdKSxjzB0dv1I7K2HXcrT+SfmU2SRS8bzeY2OAHxgVnq3iAg51jklOyhc0MBmhjdJ+
+         +1Z4/ifFZ9KO3vbvBTDSeR2Vv/DPZkAbSpe371/UeDJ7D2/H4bmwazGBQRchSKr5C/A9
+         a2M+i75MIkflxZoBxXPq3an7kHJAbWQWtL1AX0UDyiYrR1eCi1Yt/falOySTQmWbE+sp
+         hvQK+ad1xO7JlJJXMN2kuHVBMpqwCdQno6Mo7wZH6Ar3nsu7DwbI/pfGsaqAsekdV3Tf
+         yqMg==
+X-Gm-Message-State: AFq9FYIShCNqNPR7CF8S5KiZrAJ6ugdAxkSl6BUIOiLXeD4EHDuC63p8
+	s3/q+iS/JZK9PeMNr7Hd+ekeXFdtcW4sOhRAzNz+S0mF3QhpOxXreiZVRozDOfWjRmBiAUXCMmm
+	56UwsD9T2KKSfMhrYUkIT9QShboWZl30eCxdVRD2mg4odvCqg985XUg==
+X-Gm-Gg: AYBFou1LQj1eKkqSdcUoJNXywqb6hCm/7SzhJ6mgjhrZqjVlYgbAIfAF5HcQ9ijqlnt
+	umKWKzKjkdyDvJ0fzve66uBSmfuIWVh976WAxlUDNWGEksf7kiF1RX0jMA36cNWpvdLm6TuLm4m
+	6mDRYEL+8YjrWYoniqH/nE0lMh429CTRE8JKOSALrPHkjUr5Cg4b9p6W+xBkbK1cBgJHROFAY5B
+	1XEHqJL2JTvH9Txh+8n1PZQYYG3nw27ufBhM9E1Sr/ratsjvuOs1cQgNkHDis/8QCRpERCQ0pW7
+	zpcKbc+qHxWTGqZ51rqltrgzDKjN0feMPnu3uL8k2zaGgKslj/h/5iPgELxovdufobKDeVWvFym
+	eHLEEzYyrpj6zsH6XmYLTLdJ65UXXE+hx44RvtO76NrJAOmPQFtDcVtqOd2g2qRfqKw==
+X-Received: by 2002:a05:690c:c9e:b0:8b0:c921:92e with SMTP id
+ 00721157ae682-8b166c4ababmr5255127b3.54.1792798745513; Fri, 23 Oct 2026
+ 16:39:05 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,420 +100,430 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261021060323.553433-1-nphamcs@gmail.com> <20261021060323.553433-5-nphamcs@gmail.com>
- <sashiko-outbox-181078@kernel.org>
-In-Reply-To: <sashiko-outbox-181078@kernel.org>
-From: Nhat Pham <nphamcs@gmail.com>
-Date: Fri, 23 Oct 2026 15:30:07 -0700
-X-Gm-Features: AclHuK9f3EoMXWJVPyND1AFMLPSEq7pySnN5Iv4BK8FN6E0iGCBP-yL0F6SS_5w
-Message-ID: <CAKEwX=OBBfF5U+JHDfnugk5KGFEnOPQkkwZRfeii1iEQUNVG4Q@mail.gmail.com>
-Subject: Re: [PATCH v6 04/12] mm, swap: support physical swap as a vswap backend
+References: <20261019-send-upstream-v6-0-cb9ba4b3d6fa@chromium.org>
+ <20261019-send-upstream-v6-10-cb9ba4b3d6fa@chromium.org> <sashiko-outbox-178144@kernel.org>
+In-Reply-To: <sashiko-outbox-178144@kernel.org>
+From: Jingyuan Liang <jingyliang@chromium.org>
+Date: Fri, 23 Oct 2026 16:38:54 -0700
+X-Gm-Features: AclHuK8uEa43z9JyE9axDo9YiPWsBeLihmL2U6YIIVjA17r70unKjmeacRPtRjo
+Message-ID: <CAEe3GZFz7D0F94gnqAG-aWfTDQc3jFw775jNdLNKiN1SsRukQg@mail.gmail.com>
+Subject: Re: [PATCH v6 10/11] HID: spi-hid: add power management implementation
 To: sashiko-reviews@lists.linux.dev
-Cc: akpm@linux-foundation.org, chrisl@kernel.org, kasong@tencent.com, 
-	hannes@cmpxchg.org, mhocko@kernel.org, roman.gushchin@linux.dev, 
-	shakeel.butt@linux.dev, yosry@kernel.org, david@kernel.org, 
-	muchun.song@linux.dev, shikemeng@huaweicloud.com, baoquan.he@linux.dev, 
-	baohua@kernel.org, youngjun.park@lge.com, chengming.zhou@linux.dev, 
-	ljs@kernel.org, liam@infradead.org, vbabka@kernel.org, rppt@kernel.org, 
-	surenb@google.com, qi.zheng@linux.dev, axelrasmussen@google.com, 
-	yuanchu@google.com, weixugc@google.com, riel@surriel.com, gourry@gourry.net, 
-	haowenchao22@gmail.com, corbet@lwn.net, hughd@google.com, 
-	baolin.wang@linux.alibaba.com, tj@kernel.org, mkoutny@suse.com, 
-	skhan@linuxfoundation.org, rdunlap@infradead.org, kunwu.chan@linux.dev, 
-	kernel-team@meta.com, linux-mm@kvack.org
+Cc: linux-input@vger.kernel.org, linux-trace-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, 
+	dmitry.torokhov@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 21, 2026 at 11:19=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-
-Working through Sashikos list now!
-
+On Mon, Oct 19, 2026 at 12:36=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
 >
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
+> Thank you for your contribution! Sashiko AI review found 5 potential issu=
 e(s) to consider:
-> - [High] mm: try_to_unuse() dirties unmapped vswap folios rejected by pag=
-eout()
-> - [High] mm: try_to_unuse() leaks vswap folios and slots when swap count =
-is zero
-> - [High] mm: large vswap folios declined by zswap fail swapout without sp=
-litting
-
-IMHO:
-
-* First issue is a real scenario, but it's rare and the trade-off of
-fixing it is nuanced.
-
-* Second issue is real, but we're just adding (a rare) triggers to an
-existing problem.
-
-* Third issue is a problem because of the second issue. The fix is a
-one-liner though, and is a smart thing to do either way, so I'll just
-follow sashiko's recommendations here!
-
-More details below:
-
+> - [High] hid: spi-hid: disable_irq() before cancel_work_sync() in spi_hid=
+_suspend()
+> - [High] hid: spi-hid: unchecked deassert_reset() and reset timeout in re=
+sume/suspend
+> - [High] hid: spi-hid: holding power_lock in spi_hid_wait_for_reset() blo=
+cks recovery
+> - [Medium] hid: spi-hid: spi_hid_resume() runs reset_resume before pendin=
+g reset_work
+> - [Medium] HID: spi-hid: skipped power-up in spi_hid_resume() when wakeup=
+ is enabled
 > --
 >
-> commit f1735375be4432e3cb8facdcc6b588e080aeb34c
-> Author: Nhat Pham <nphamcs@gmail.com>
+> commit 943f2d7ec87adee993c65a27b7655a39b4d0ef5c
+> Author: Jingyuan Liang <jingyliang@chromium.org>
 >
-> mm, swap: support physical swap as a vswap backend
+> HID: spi-hid: add power management implementation
 >
-> This commit adds physical swapfile support as a backend for virtual swap
-> entries when zswap declines a folio during swap_writeout(), tracking the
-> reverse mapping via vswap-tagged swap_table entries on the physical clust=
-er.
-> During swapoff, try_to_unuse() reads vswap-backed physical slots into the
-> swap cache and releases their physical backing slots before walking proce=
-ss
-> and shmem mappings.
+> This commit implements system sleep power management callbacks for the
+> HID over SPI transport driver, handling device suspend, resume, reset
+> synchronization, and wake IRQ setup.
 >
-> > diff --git a/mm/page_io.c b/mm/page_io.c
-> > index 61bb5c6e97595..ed8c037e4aa08 100644
-> > --- a/mm/page_io.c
-> > +++ b/mm/page_io.c
-> > @@ -209,6 +209,7 @@ static void swap_zeromap_folio_clear(struct folio *=
-folio)
-> >   */
-> >  int swap_writeout(struct swap_io_ctx *ctx, struct folio *folio)
-> >  {
-> > +     swp_entry_t phys =3D folio->swap;
-> >       int ret =3D 0;
-> >
-> >       if (folio_free_swap(folio))
+> > diff --git a/drivers/hid/spi-hid/spi-hid-core.c b/drivers/hid/spi-hid/s=
+pi-hid-core.c
+> > index 96805c10bfe36..c2232d5959b88 100644
+> > --- a/drivers/hid/spi-hid/spi-hid-core.c
+> > +++ b/drivers/hid/spi-hid/spi-hid-core.c
 >
 > [ ... ]
 >
-> > @@ -257,13 +264,21 @@ int swap_writeout(struct swap_io_ctx *ctx, struct=
- folio *folio)
+> > @@ -242,6 +250,148 @@ static const char *spi_hid_power_mode_string(enum=
+ hidspi_power_state power_state
 > >       }
-> >       rcu_read_unlock();
+> >  }
 > >
-> > -     /* A vswap folio has no physical slot to write to. */
-> >       if (is_vswap_entry(folio->swap)) {
-> > +             phys =3D folio_realloc_swap(folio);
-> > +             if (!phys.val) {
-> > +                     folio_mark_dirty(folio);
-> > +                     return AOP_WRITEPAGE_ACTIVATE;
+> > +/*
+> > + * Wait for the device descriptor response after reset; the device the=
+n takes
+> > + * requests. Set READY here: the report descriptor check that normally=
+ sets it
+> > + * needs power_lock, which callers hold.
+> > + */
+> > +static void spi_hid_wait_for_reset(struct spi_hid *shid)
+> > +{
+> > +     unsigned long timeout =3D msecs_to_jiffies(SPI_HID_RESET_TIMEOUT =
++
+> > +                                              SPI_HID_RESP_TIMEOUT);
+> > +
+> > +     if (!wait_for_completion_timeout(&shid->reset_done, timeout)) {
+> > +             dev_warn(&shid->spi->dev,
+> > +                      "Device descriptor not received after reset\n");
+> > +             return;
+> > +     }
+> > +
+> > +     set_bit(SPI_HID_READY, &shid->flags);
+> > +}
+>
+> [Severity: High]
+> What happens if an error occurs during the post-reset handshake while a
+> caller is waiting in spi_hid_wait_for_reset()?
+>
+> Both spi_hid_resume() and the power_down() rollback path in
+> spi_hid_suspend() hold shid->power_lock across spi_hid_wait_for_reset()
+> and hid_driver_reset_resume().
+>
+> If a transient bus error, header validation error, or descriptor error
+> occurs in spi_hid_dev_irq(), spi_hid_reset_response(), or
+> spi_hid_dev_desc_response(), the driver sets SPI_HID_ERROR and schedules
+> shid->reset_work to run spi_hid_error_handler():
+>
+>   spi_hid_reset_work()
+>     spi_hid_error_handler()
+>       guard(mutex)(&shid->power_lock);
+>
+> Because spi_hid_wait_for_reset() is sleeping with shid->power_lock held,
+> spi_hid_error_handler() blocks on shid->power_lock and cannot perform any
+> of its SPI_HID_MAX_RESET_ATTEMPTS recovery resets until
+> spi_hid_wait_for_reset() times out after 2000 ms and spi_hid_resume() or
+> spi_hid_suspend() returns. That leaves SPI_HID_READY cleared when
+> hid_driver_reset_resume() runs, and delays the error reset until after
+> resume finishes.
+
+Will fix in v7: resume no longer calls hid_driver_reset_resume() when the
+device is not ready. Delaying the error reset until resume returns is
+intentional.
+
+>
+> > +
+> > +static int spi_hid_suspend(struct spi_hid *shid)
+> > +{
+> > +     int error;
+> > +     struct device *dev =3D &shid->spi->dev;
+> > +
+> > +     /* HID driver suspend may talk to the device; responses need the =
+IRQ. */
+> > +     scoped_guard(mutex, &shid->power_lock) {
+> > +             if (shid->power_state !=3D HIDSPI_OFF && shid->hid) {
+> > +                     error =3D hid_driver_suspend(shid->hid, PMSG_SUSP=
+END);
+> > +                     if (error) {
+> > +                             dev_err(dev, "%s failed to suspend hid dr=
+iver: %d\n",
+> > +                                     __func__, error);
+> > +                             return error;
+> > +                     }
 > > +             }
 > > +     }
->
-> [Severity: High]
-> What happens here when a large folio (order > 0) with a virtual swap entr=
-y
-> is declined by zswap_store() and the underlying physical swap cannot sati=
-sfy
-> a high-order allocation?
->
-> During reclaim in shrink_folio_list() or shmem_writeout(), folio_alloc_sw=
-ap()
-> allocates from vswap_si via vswap_alloc() -> cluster_alloc_swap_entry():
->
-> mm/swapfile.c:cluster_alloc_swap_entry() {
->         if (order && !(si->flags & SWP_BLKDEV) && !swap_is_vswap(si))
->                 return 0;
-> }
->
-> Because swap_is_vswap(vswap_si) is true, vswap_alloc() succeeds for order=
- > 0
-> folios even when the physical swap devices are regular swapfiles without
-> SWP_BLKDEV or have fragmented high-order clusters. As a result,
-> folio_alloc_swap() returns 0 instead of -E2BIG, bypassing the
-> split_folio_to_list() fallback in both shrink_folio_list() and
-> shmem_writeout().
->
-> Later in swap_writeout(), if zswap_store() declines the large folio,
-> folio_realloc_swap() -> folio_alloc_phys_swap() attempts to allocate a
-> contiguous physical swap range of folio_order(folio), which always fails =
-on
-> non-SWP_BLKDEV swapfiles and fails when high-order physical clusters are
-> unavailable. swap_writeout() then marks the folio dirty and returns
-> AOP_WRITEPAGE_ACTIVATE without splitting it.
->
-> On subsequent reclaim passes, an anonymous large folio is already in the =
-swap
-> cache with PTEs referencing its vswap slots, so shrink_folio_list() skips=
- the
-> !folio_test_swapcache(folio) block where split_folio_to_list() is called:
->
-> mm/vmscan.c:shrink_folio_list() {
->         if (folio_test_anon(folio) && folio_test_swapbacked(folio) &&
->                         !folio_test_swapcache(folio)) {
->                 ...
->                 ret =3D folio_alloc_swap(folio);
->                 if (ret) {
->                         ...
->                         if (split_folio_to_list(folio, folio_list))
->                                 goto activate_locked;
-> }
->
-> For a large shmem folio, shmem_writeout() removes the unsplit folio from =
-the
-> swap cache on AOP_WRITEPAGE_ACTIVATE without reaching its -E2BIG split pa=
-th,
-> repeating the same vswap_alloc() success and folio_realloc_swap() failure=
- on
-> every pass.
->
-> Can this cause large vswap folios declined by zswap to never split or swa=
-p
-> out?
-
-This is quite nuanced. I spent way too much time trying to reason
-about this, but seems like my documentation is lacking, so sashiko
-can't reason about it. I'll put down my reasoning here first, then
-update the documentation later.
-
-Zswap store can "fail" for a couple of reasons:
-
-1. Incompressibility: we'd actually still try to store the folio's
-subpages as-is in the zswap pool if zswap writeback is enabled. If
-zswap writeback is disabled, then we cycle the page through the LRU.
-But note that there is no difference, with or without zswap in the
-picture here. We'd just be splitting prematurely, but the
-incompressible pages would still remain in memory regardless.
-
-2. Zswap rejects the page due to limits being hit - this one is
-trickier. For the cgroup case, I already checked at vswap_alloc()
-time. If the cgroup disables zswap, then we go for physical swap
-allocation, where we avoid the physical swap backends that do not
-support high-order allocation, or split if no such backends are
-around.
-
-For the global zswap limit, I thought about also checking it and
-bypass vswap based on that limt at vswap_alloc() time, but decided
-against it, because I wanted to trigger the global zswap shrinker in
-zswap_store() path, and giving zswap opportunity to try again.
-
-(I'm also against capping zswap size as well, but that's another story).
-
-
->
-> > diff --git a/mm/swapfile.c b/mm/swapfile.c
-> > index 69fac2d905a4f..be66ac79313ce 100644
-> > --- a/mm/swapfile.c
-> > +++ b/mm/swapfile.c
->
-> [ ... ]
->
-> > @@ -3087,19 +3287,95 @@ static unsigned int find_next_to_unuse(struct s=
-wap_info_struct *si,
-> >
-> >  static int try_to_unuse(unsigned int type)
-> >  {
-> > +     struct mempolicy *mpol =3D get_task_policy(current);
-> >       struct mm_struct *prev_mm;
-> >       struct mm_struct *mm;
-> >       struct list_head *p;
-> >       int retval =3D 0;
-> >       struct swap_info_struct *si =3D swap_info[type];
-> >       struct folio *folio;
-> > -     swp_entry_t entry;
-> > -     unsigned int i;
-> > +     struct swap_io_ctx ctx;
-> > +     swp_entry_t entry, vswap_entry, phys;
-> > +     unsigned long swp_tb;
-> > +     unsigned int i, j;
-> >
-> >       if (!swap_usage_in_pages(si))
-> >               goto success;
-> >
-> >  retry:
+> > +
 > > +     /*
-> > +      * Free vswap-backing slots (Vswap-tagged) first. Walk physical
-> > +      * clusters, read the vswap entry from the rmap, ensure the data
-> > +      * is in the swap cache, and transition PHYS to FOLIO. Freeing th=
-e
-> > +      * physical backing is enough, so no page table walk is needed.
+> > +      * disable_irq() waits for a running IRQ thread, so no new reset_=
+work
+> > +      * can be queued after it returns. Then wait for any queued or ru=
+nning
+> > +      * instance. Must not hold power_lock here: reset_work takes it.
 > > +      */
-> > +     i =3D 0;
-> > +     while (vswap_is_enabled() &&
-> > +            swap_usage_in_pages(si) &&
-> > +            !signal_pending(current) &&
-> > +            (i =3D find_next_to_unuse(si, i)) !=3D 0) {
-> > +             swp_tb =3D swap_table_lookup(swp_entry(si->type, i));
-> > +             if (!swp_tb_is_vswap(swp_tb))
-> > +                     continue;
+> > +     disable_irq(shid->spi->irq);
+> > +     cancel_work_sync(&shid->reset_work);
+>
+> [Severity: High]
+> Can calling disable_irq(shid->spi->irq) before
+> cancel_work_sync(&shid->reset_work) starve an in-flight synchronous
+> request in spi_hid_reset_work()?
+>
+> If shid->reset_work is already running when spi_hid_suspend() disables th=
+e
+> IRQ, it may be executing a synchronous request in:
+>
+>   spi_hid_reset_work()
+>     spi_hid_reset_response() / spi_hid_create_device() / spi_hid_refresh_=
+device()
+>       spi_hid_sync_request()
+>         __spi_hid_sync_request()
+>           wait_for_completion_timeout(&shid->output_done, ...)
+>
+> Since shid->output_done is completed by spi_hid_response_handler() from
+> the threaded IRQ handler spi_hid_dev_irq(), disabling the IRQ first
+> prevents the response interrupt from being serviced while
+> cancel_work_sync() waits for reset_work.
+>
+> This stalls cancel_work_sync() for the full SPI_HID_RESP_TIMEOUT, fails
+> the request with -ETIMEDOUT, clears SPI_HID_READY, sets SPI_HID_ERROR,
+> and triggers dev_WARN_ONCE() in spi_hid_reset_response():
+>
+>         error =3D spi_hid_sync_request(shid, &report);
+>         if (error) {
+>                 dev_WARN_ONCE(dev, true,
+>                               "Failed to send device descriptor request: =
+%d\n", error);
+>                 set_bit(SPI_HID_ERROR, &shid->flags);
+>                 schedule_work(&shid->reset_work);
+>         }
+>
+> For wakeup-enabled devices, this also leaves the device suspended with
+> SPI_HID_READY cleared (causing spi_hid_input_report_handler() to drop
+> wakeup input reports) and SPI_HID_ERROR pending. In addition, because
+> shid->power_lock is released after hid_driver_suspend() and before
+> disable_irq(), spi_hid_create_device() or spi_hid_refresh_device() in
+> spi_hid_reset_work() can register a new shid->hid in that window that
+> never has hid_driver_suspend() called on it.
+
+Will fix this in v7.
+
+>
 > > +
-> > +             vswap_entry =3D swp_tb_vswap_to_swp_entry(swp_tb);
+> > +     guard(mutex)(&shid->power_lock);
+> > +     if (!device_may_wakeup(dev)) {
+> > +             if (shid->power_state !=3D HIDSPI_OFF) {
+> > +                     /* Device is fully reset on resume; drop stale st=
+ate. */
+> > +                     clear_bit(SPI_HID_READY, &shid->flags);
+> > +                     clear_bit(SPI_HID_RESET_RESPONSE, &shid->flags);
+> > +                     clear_bit(SPI_HID_CREATE_DEVICE, &shid->flags);
+> > +                     clear_bit(SPI_HID_ERROR, &shid->flags);
+> > +                     set_bit(SPI_HID_RESET_PENDING, &shid->flags);
 > > +
-> > +             folio =3D swap_cache_get_folio(vswap_entry);
-> > +             if (!folio) {
-> > +                     folio =3D __swap_cache_alloc_folio(vswap_entry,
-> > +                                                      GFP_HIGHUSER_MOV=
-ABLE,
-> > +                                                      BIT(0), NULL, mp=
-ol,
-> > +                                                      NO_INTERLEAVE_IN=
-DEX);
-> > +                     if (IS_ERR(folio)) {
-> > +                             if (PTR_ERR(folio) =3D=3D -ENOMEM)
-> > +                                     return -ENOMEM;
-> > +                             continue;
+> > +                     shid->ops->assert_reset(shid->ops);
+> > +
+> > +                     error =3D shid->ops->power_down(shid->ops);
+> > +                     if (error) {
+> > +                             dev_err(dev, "%s: could not power down\n"=
+, __func__);
+> > +                             shid->regulator_error_count++;
+> > +                             shid->regulator_last_error =3D error;
+> > +                             /*
+> > +                              * Undo partial suspend before returning =
+error.
+> > +                              * Complete the reset; RESET_PENDING stay=
+s set
+> > +                              * until the device sends its reset respo=
+nse.
+> > +                              */
+> > +                             shid->ops->sleep_minimal_reset_delay(shid=
+->ops);
+> > +                             reinit_completion(&shid->reset_done);
+> > +                             shid->ops->deassert_reset(shid->ops);
+> > +                             enable_irq(shid->spi->irq);
+> > +                             if (shid->hid) {
+> > +                                     spi_hid_wait_for_reset(shid);
+> > +                                     hid_driver_reset_resume(shid->hid=
+);
+> > +                             }
+> > +                             return error;
 > > +                     }
-> > +                     folio_add_lru(folio);
-> > +                     ctx =3D (struct swap_io_ctx){};
-> > +                     swap_read_folio(&ctx, folio);
-> > +                     swap_read_submit(&ctx);
-> > +             }
-> > +             folio_lock(folio);
 > > +
-> > +             if (!folio_matches_swap_entry(folio, vswap_entry)) {
-> > +                     folio_unlock(folio);
-> > +                     folio_put(folio);
-> > +                     continue;
+> > +                     shid->power_state =3D HIDSPI_OFF;
 > > +             }
+> > +     }
+> > +     return 0;
+> > +}
 > > +
-> > +             /*
-> > +              * Re-validate under folio lock: rmap holds folio->swap +=
- j
-> > +              * for some j in [0, nr_pages). Check folio->swap still m=
-aps
-> > +              * to the contiguous physical run that includes our slot =
-i.
-> > +              */
-> > +             j =3D vswap_entry.val - folio->swap.val;
-> > +             phys =3D vswap_to_phys(folio->swap);
-> > +             if (!phys.val || swp_type(phys) !=3D type ||
-> > +                 swp_offset(phys) + j !=3D i) {
-> > +                     folio_unlock(folio);
-> > +                     folio_put(folio);
-> > +                     continue;
+> > +static int spi_hid_resume(struct spi_hid *shid)
+> > +{
+> > +     int error;
+> > +     struct device *dev =3D &shid->spi->dev;
+> > +     bool was_reset =3D false;
+> > +
+> > +     guard(mutex)(&shid->power_lock);
+> > +     if (test_bit(SPI_HID_DEAD, &shid->flags)) {
+> > +             /* Stay off; only balance disable_irq() in suspend. */
+> > +             enable_irq(shid->spi->irq);
+> > +             return 0;
+> > +     }
+> > +
+> > +     if (!device_may_wakeup(dev)) {
+> > +             if (shid->power_state =3D=3D HIDSPI_OFF) {
+>
+> [Severity: Medium]
+> Can gating the power-up path on !device_may_wakeup(dev) and
+> shid->power_state =3D=3D HIDSPI_OFF leave the device unpowered across res=
+ume
+> or hibernation restore?
+
+This is addressed in 11/11.
+
+>
+> In this commit, if shid->power_state is HIDSPI_OFF while
+> device_may_wakeup(dev) is true (for example, if power/wakeup is enabled
+> while suspended or after a failed power_up()), spi_hid_resume() skips
+> powering up and resetting the device. A later commit in the series ("HID:
+> spi-hid: add panel follower support") removes the outer
+> !device_may_wakeup(dev) check in spi_hid_resume(), but hibernation still
+> has a related problem when wakeup is enabled.
+>
+> Because spi_hid_core_pm uses SYSTEM_SLEEP_PM_OPS(spi_hid_core_pm_suspend,
+> spi_hid_core_pm_resume), .freeze, .thaw, .poweroff, and .restore all call
+> spi_hid_suspend() and spi_hid_resume(). When device_may_wakeup(dev) is
+> true during hibernation:
+>
+> 1. During .freeze, spi_hid_suspend() sees device_may_wakeup(dev) and skip=
+s
+>    clearing SPI_HID_READY, asserting reset, calling ops->power_down(), an=
+d
+>    setting shid->power_state =3D HIDSPI_OFF. The hibernation image theref=
+ore
+>    saves shid->power_state as HIDSPI_ON (and conf->supply_enabled as true
+>    in spi-hid-of).
+>
+> 2. During .poweroff, spi_hid_suspend() again skips powering down the
+>    device, and platform power is then removed by S4 or by the boot
+>    kernel's .freeze before image restoration.
+>
+> 3. During .restore, spi_hid_resume() sees shid->power_state =3D=3D HIDSPI=
+_ON
+>    from the restored image, skips assert_reset(), power_up(),
+>    deassert_reset(), and spi_hid_wait_for_reset(), and calls
+>    hid_driver_reset_resume(shid->hid) while the hardware is unpowered or
+>    held in reset.
+
+Will address this in a follow-up patch.
+
+>
+> > +                     shid->ops->assert_reset(shid->ops);
+> > +
+> > +                     shid->ops->sleep_minimal_reset_delay(shid->ops);
+> > +
+> > +                     error =3D shid->ops->power_up(shid->ops);
+> > +                     if (error) {
+> > +                             dev_err(dev, "%s: could not power up\n", =
+__func__);
+> > +                             shid->regulator_error_count++;
+> > +                             shid->regulator_last_error =3D error;
+> > +                             /* Suspend runs next even if resume fails=
+. */
+> > +                             enable_irq(shid->spi->irq);
+> > +                             return error;
+> > +                     }
+> > +                     shid->power_state =3D HIDSPI_ON;
+> > +                     reinit_completion(&shid->reset_done);
+> > +                     shid->ops->deassert_reset(shid->ops);
+> > +                     was_reset =3D true;
 > > +             }
+> > +     }
 > > +
-> > +             folio_wait_writeback(folio);
-> > +             folio_release_vswap_backing(folio);
-> > +             /*
-> > +              * Drop a folio whose read failed rather than dirtying
-> > +              * uninitialised memory; the next fault finds no backing =
-and
-> > +              * gets SIGBUS.
-> > +              */
-> > +             if (unlikely(!folio_test_uptodate(folio)))
-> > +                     swap_cache_del_folio(folio);
-> > +             else
-> > +                     folio_mark_dirty(folio);
+> > +     enable_irq(shid->spi->irq);
+> > +
+> > +     /*
+> > +      * For devices that may wake up, process work that was pending wh=
+en
+> > +      * suspend cancelled reset_work. Otherwise suspend already droppe=
+d it.
+> > +      */
+> > +     if (test_bit(SPI_HID_RESET_RESPONSE, &shid->flags) ||
+> > +         test_bit(SPI_HID_CREATE_DEVICE, &shid->flags) ||
+> > +         test_bit(SPI_HID_ERROR, &shid->flags))
+> > +             schedule_work(&shid->reset_work);
+> > +
+> > +     if (shid->hid) {
+> > +             if (was_reset)
+> > +                     spi_hid_wait_for_reset(shid);
+> > +             error =3D hid_driver_reset_resume(shid->hid);
 >
 > [Severity: High]
-> Can pageout() ever write out the unmapped swap-cache folios allocated and
-> dirtied by this pre-pass?
+> Should spi_hid_resume() and the power_down() error rollback in
+> spi_hid_suspend() check the return value of shid->ops->deassert_reset()
+> and handle timeouts from spi_hid_wait_for_reset()?
 >
-> When __swap_cache_alloc_folio() -> __swap_cache_alloc() allocates a fresh
-> swap-cache folio here, it sets PG_swapbacked and PG_swapcache, but leaves
-> folio->mapping as NULL because try_to_unuse() does not map the folio into=
- a
-> VMA via folio_add_new_anon_rmap(). Shmem folios in the swap cache also ha=
-ve
-> folio->mapping set to NULL. As a result, folio_test_anon(folio) is false.
+> Unlike spi_hid_core_probe() and spi_hid_error_handler(), both sites ignor=
+e
+> the return value of shid->ops->deassert_reset(shid->ops) (which evaluates
+> the ACPI _RST method in spi_hid_acpi_deassert_reset() or drives the reset
+> GPIO in spi_hid_of_deassert_reset()).
 >
-> When shrink_folio_list() later scans one of these dirty swap-cache folios=
- on
->  the LRU, folio_mapping(folio) returns &swap_space and shrink_folio_list(=
-)
-> calls pageout():
+> If deassert_reset() fails, or if the device fails to respond before
+> spi_hid_wait_for_reset() times out, spi_hid_wait_for_reset() only logs a
+> warning and returns without setting SPI_HID_READY, setting SPI_HID_ERROR,
+> or scheduling shid->reset_work (and if shid->hid is NULL,
+> spi_hid_wait_for_reset() is not called at all).
 >
-> mm/vmscan.c:pageout() {
->         if (folio_ref_count(folio) !=3D 1 + folio_nr_pages(folio) || !map=
-ping)
->                 return PAGE_KEEP;
->         if (!shmem_mapping(mapping) && !folio_test_anon(folio))
->                 return PAGE_ACTIVATE;
->         if (!folio_clear_dirty_for_io(folio))
->                 return PAGE_CLEAN;
-> }
->
-> Because mapping is &swap_space (!shmem_mapping(mapping)) and
-> folio_test_anon(folio) is false, pageout() unconditionally returns
-> PAGE_ACTIVATE before reaching swap_writeout(). Wouldn't this prevent recl=
-aim
-> from ever writing these dirtied vswap folios out to zswap or another swap
-> device until they are faulted in?
+> Both functions then unconditionally call hid_driver_reset_resume(shid->hi=
+d)
+> while SPI_HID_READY is still 0, causing any synchronous HID requests
+> during reset_resume to fail with -ENODEV in __spi_hid_send_output_report(=
+),
+> and leaving the device stuck in SPI_HID_RESET_PENDING with no recovery
+> scheduled.
 
-I think this a pre-existing issue (which vswap adds a new, rarer
-trigger). Readahead of zswap entries gets us into this exact spot...
+Will fix this in v7.
 
-I think what we need is fixing the check above:
-
-        if (!shmem_mapping(mapping) && !folio_test_anon(folio) &&
-            !folio_test_swapcache(folio))
-                 return PAGE_ACTIVATE;
-
-So if the page is in swapcache, we still proceed with the pageout...
-
-That will take care of both triggers. But this sounds like a separate
-fix from this patch series. I can send an RFC later, but let me double
-check first!
-
-> [Severity: High]
-> Does this pre-pass leak the folio, its vswap slot, and its memcg swap cha=
-rge
-> if the vswap entry's swap count is 0 (or drops to 0 concurrently)?
 >
-> There are two ways the vswap entry can have swap_count =3D=3D 0 when reac=
-hing
-> folio_release_vswap_backing(folio):
+> [Severity: Medium]
+> Also in spi_hid_resume(), what happens when a wakeup-enabled device
+> (was_reset =3D=3D false) resumes while reset or recovery work is pending?
 >
-> 1. While try_to_unuse() holds the folio lock (during swap_read_folio() IO=
- or
->    before folio_unlock()), the owning process exits or zaps the swap PTE =
-via
->    zap_nonpresent_ptes() -> free_swap_and_cache_nr() ->
->    swap_put_entries_cluster(). That path decrements the vswap slot's swap
->    count to 0 and calls __try_to_reclaim_swap(), which fails folio_tryloc=
-k()
->    and bails out expecting the folio lock holder to clean up.
+> When SPI_HID_RESET_RESPONSE, SPI_HID_CREATE_DEVICE, or SPI_HID_ERROR was
+> pending when spi_hid_suspend() cancelled shid->reset_work, SPI_HID_READY
+> is 0.
 >
-> 2. A prior read fault in do_swap_page() mapped the folio, decremented the
->    vswap entry's swap count to 0 via folio_put_swap(), and left the folio=
- in
->    the swap cache because should_try_to_free_swap() saw
->    folio_phys_swap_backed(folio) =3D=3D true.
+> In spi_hid_resume(), schedule_work(&shid->reset_work) queues the worker
+> asynchronously while shid->power_lock is still held, spi_hid_wait_for_res=
+et()
+> is skipped because was_reset is false, and hid_driver_reset_resume(shid->=
+hid)
+> is called immediately before shid->reset_work can complete the reset and
+> set SPI_HID_READY.
 >
-> After folio_release_vswap_backing(folio) frees the physical slot,
-> folio_phys_swap_backed(folio) becomes false, and try_to_unuse() marks the
-> folio dirty without calling folio_free_swap(folio) (unlike the post-pass =
-at
-> the end of try_to_unuse()).
+> As a result, __spi_hid_send_output_report() rejects any feature or output
+> reports sent by hid_driver_reset_resume() with -ENODEV:
 >
-> In the first case, the unlocked folio is unmapped, has folio->mapping =3D=
-=3D NULL
-> (!folio_test_anon(folio)), has swap_count =3D=3D 0, and is no longer phys=
-ically
-> backed. pageout() rejects it with PAGE_ACTIVATE before reaching
-> swap_writeout() -> folio_free_swap(), and the activate_locked path in
-> shrink_folio_list() also skips folio_free_swap() because
-> folio_phys_swap_backed(folio) is now false:
+>         /* While not READY, only (re)init descriptor requests may be sent=
+. */
+>         if (report->report_type !=3D DEVICE_DESCRIPTOR &&
+>             report->report_type !=3D REPORT_DESCRIPTOR &&
+>             !test_bit(SPI_HID_READY, &shid->flags))
+>                 return -ENODEV;
 >
-> mm/vmscan.c:shrink_folio_list() {
-> activate_locked:
->         /* Not a candidate for swapping, so reclaim swap space. */
->         if (folio_test_swapcache(folio) &&
->             ((mem_cgroup_swap_full(folio) && folio_phys_swap_backed(folio=
-)) ||
->              folio_test_mlocked(folio)))
->                 folio_free_swap(folio);
-> }
->
-> Should try_to_unuse() check or call folio_free_swap(folio) when releasing=
- the
-> vswap backing here?
 
-Ah sure, this is related to the problem above somewhat, but
-irregardless of it, it's not a bad idea to eagerly free the swapcached
-page when we know swap_count =3D=3D 0 and we have the folio's lock at
-hand. I think I actually did it manually in the pre-swap-table version
-of vswap!
+Will fix this in v7.
 
-Will include this eager folio_free_swap() in the next version/as a follow-u=
-p!
-
+> > +             if (error) {
+> > +                     dev_err(dev, "%s: failed to reset resume hid driv=
+er: %d\n",
+> > +                             __func__, error);
+> > +                     return error;
+> > +             }
+> > +     }
+> > +     return 0;
+> > +}
 >
 > [ ... ]
 >
-> =E5=AE=8C=E7=BE=8E (Wait: oops, don't write any extra text after the repo=
-rt! Let's make sure the final output has only the report and ends with a bl=
-ank line.)
-> Let's review the whole text and output it cleanly.commit f1735375be4432e3=
-cb8facdcc6b588e080aeb34c
-
-I think the rest is duplicated! Hallucination in the wild :)
+> > @@ -1454,6 +1620,25 @@ void spi_hid_core_remove(struct spi_device *spi)
+> >  }
+> >  EXPORT_SYMBOL_GPL(spi_hid_core_remove);
+> >
+> > +static int spi_hid_core_pm_suspend(struct device *dev)
+> > +{
+> > +     struct spi_hid *shid =3D dev_get_drvdata(dev);
+> > +
+> > +     return spi_hid_suspend(shid);
+> > +}
+> > +
+> > +static int spi_hid_core_pm_resume(struct device *dev)
+> > +{
+> > +     struct spi_hid *shid =3D dev_get_drvdata(dev);
+> > +
+> > +     return spi_hid_resume(shid);
+> > +}
+> > +
+> > +const struct dev_pm_ops spi_hid_core_pm =3D {
+> > +     SYSTEM_SLEEP_PM_OPS(spi_hid_core_pm_suspend, spi_hid_core_pm_resu=
+me)
+> > +};
+> > +EXPORT_SYMBOL_GPL(spi_hid_core_pm);
+>
+> [ ... ]
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261019-send-ups=
+tream-v6-0-cb9ba4b3d6fa@chromium.org?part=3D10
