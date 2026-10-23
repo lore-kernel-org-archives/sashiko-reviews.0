@@ -1,54 +1,99 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1792761895;
-	b=QUdZDyPXMwfn6Ddla8UifNdLG5ftAjqUDej/UG/8JgHHf8RPQ5UFL310J50Il6IpsNi4
-	 lCfAAZofxkomMy5j9QOKWX+RqZrbSlsycchKQyYr9AhQ8rrryc6AVc6/k78m04PAK7s9z
-	 m/8UpfVn2e6GjOjaJ5WuGvDx9Q52ZlVKwavLwNGLrNEWs4MME+nwZe+3AF9T1LV9KVgMM
-	 PvMaSG9UrXrSyi3K57B1B3aYTiuWKo0wQpfkwCKgBW5fV5x6RYAZxdo33mJLCMHdDVI3c
-	 m9xhw496tfArKvIg1+DCo9bd+rx3k1WY2B+z71DyEpOJF9xprLAkQxWacWMh4OoSaww==
+	b=ogJ8j/CVdZL71Y0Bo9EcHL/Obg3Qgmuu/pv38nr3Pbm7eAuCxrmuzKYoa4T36runChNn
+	 V7KHkjd0VUfZBt6KAElDEXafmjwUxcVDhkRpStSezhCrZbw7r3aLkJP+vxzTDbb5hMuRn
+	 Ggai/Uhlw2O8cT6aj1tq8TB5rcx01ekyTdS2MK5wHHP+tMBq/QH1tKP0cPj5iMhPXbMVh
+	 nWRq00ccaimGqS/ilqo+mSfGr0dIvvGQeD+aPo7vnkvgQHTq61p8BHVu9W1Yz9iUY45Hr
+	 QPMH6ekJjL1zTdpFTZQ15rapJAE+U/EZ6bYrEaG36/ZCXNWOZRHLMeVr83xaLHFpKCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1792761895;
-	h=DMARC-Filter:Received:Received:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-Rspamd-Pre-Result:X-Rspamd-Queue-Id:
-	 X-Rspamd-Pre-Result:X-Rspamd-Action:X-Rspamd-Server:X-Spam-Level:
-	 X-Spamd-Result:X-Spam-Flag:X-Spam-Score;
-	bh=JFTfF/+dKodAINkeqFDJ9gdDQsEU1yKigXEy0qcWv7k=;
-	b=PBVMMYFG638+YY+uotCyafgCEmZwnptXSsKfcD40Cfeeh/h474KnxZaNNnK2BEiGoCyi
-	 Q3kvj9Xo3BE7OvB/G+nB5XdsJ0mLGBKEaGZPOXKGfTy6pFE/bzzgmFlfuYbWP+mMKwDle
-	 0O0wTPwjVCFcT2Nvy7HM0F0SNUKQtRopjiVU7Cv8VyZSzntoZ45sihluISkzBpNkGs+vK
-	 bcPgi/lvP0XGEpTOv8jte6UcEvn0G1pXz/YT6+R2thdHH611fXY+dC+1wdyd5XC9zEeNc
-	 /Ekt2l9hn3duKahAkP0pAJOmsKO3KY2FrgrUX0UEDbVg/NABXA6R6ewppv0/k840GAw==
+	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
+	 DKIM-Signature:Received:Received:From:To:Cc:Subject:Date:Message-ID:
+	 X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-Spam-Flag:X-Spam-Level:X-Spamd-Result:
+	 X-Spam-Score;
+	bh=HYWEkYXITRdxx8PJL4BELKv4UkAeNlUxpZyOSi0kIQo=;
+	b=d7T4BGKK49UOef9QK6u9x/OA7cmq3dAgeqTkuKbzNP2k8NlKVZhkAr+aHbzH6kt2QKKg
+	 JWeJsomM/fKcyY2yJ+h1Hy93RXTEis16bL9ZZyhf3IHNbdYaIB2SQ7kOT/AWjyE7WHdrc
+	 TGen+79nIEcc764nR1Ne+mGMcYao1JJGgf3RlgNQ92XqUWf9ozEc4mo4qyqmemgroJfcD
+	 TvXsDKobAhcOKWVjJHK9lciZtkFCPJ6wuVGXU61Q2yv32II/IyUyo9bfzmUzlNfEGDKD7
+	 hJM4EcEOpjidpvQ6uYvu3xJbE0JUWQ7kh8px5xPKmMMpuHp2oEExIkVwcsbQQhLD8jQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=suse.de;
 	spf=pass smtp.mailfrom=suse.de;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=FtAO877H;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=zhFGUzLM;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=FtAO877H;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=zhFGUzLM;
 	arc=none smtp.remote-ip=195.135.223.130
 Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F00606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495B6606A321
 	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 13:24:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A8F00606A323
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 495B6606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=FtAO877H;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=zhFGUzLM;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=FtAO877H;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=zhFGUzLM
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 3BDA2220A6;
-	Fri, 23 Oct 2026 13:24:53 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 9A15922176;
+	Fri, 23 Oct 2026 13:24:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1792761892; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HYWEkYXITRdxx8PJL4BELKv4UkAeNlUxpZyOSi0kIQo=;
+	b=FtAO877Hb5sRzaL/qHjYMnifaB7F7HpqwZoOVfW4L1CY+epUs5SM3Vb6KK91DvNe3x5Hc9
+	RBGzt/dcuOsOug+KKbL385Q46cul2wX/ziIHy8gFnhMq02rD6BpSDhmQNjdNEfYSoNryMa
+	xPRFOYF090nCTlPbDACiOzCVV57Zau8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1792761892;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HYWEkYXITRdxx8PJL4BELKv4UkAeNlUxpZyOSi0kIQo=;
+	b=zhFGUzLMuQ2zv+oEedfJodd+TpcAXa/qLTuUrvcpOaRNye+gpsHYW29yyva0ZvBoKOZVvX
+	X8o03a4//ODemBDQ==
 Authentication-Results: smtp-out1.suse.de;
 	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1792761892; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HYWEkYXITRdxx8PJL4BELKv4UkAeNlUxpZyOSi0kIQo=;
+	b=FtAO877Hb5sRzaL/qHjYMnifaB7F7HpqwZoOVfW4L1CY+epUs5SM3Vb6KK91DvNe3x5Hc9
+	RBGzt/dcuOsOug+KKbL385Q46cul2wX/ziIHy8gFnhMq02rD6BpSDhmQNjdNEfYSoNryMa
+	xPRFOYF090nCTlPbDACiOzCVV57Zau8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1792761892;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HYWEkYXITRdxx8PJL4BELKv4UkAeNlUxpZyOSi0kIQo=;
+	b=zhFGUzLMuQ2zv+oEedfJodd+TpcAXa/qLTuUrvcpOaRNye+gpsHYW29yyva0ZvBoKOZVvX
+	X8o03a4//ODemBDQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CFED7134E6;
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2FBAF134E6;
 	Fri, 23 Oct 2026 13:24:52 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id kolmHiNg22qfRQAAD6G6ig:T4
+	id kolmHiNg22qfRQAAD6G6ig:T2
 	(envelope-from <tzimmermann@suse.de>); Fri, 23 Oct 2026 13:24:52 +0000
 From: Thomas Zimmermann <tzimmermann@suse.de>
 To: gregkh@linuxfoundation.org,
@@ -62,9 +107,9 @@ Cc: linux-kernel@vger.kernel.org,
 	linux-parisc@vger.kernel.org,
 	sashiko-reviews@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH v3 3/7] fbcon: Implement struct consw.con_unblank
-Date: Fri, 23 Oct 2026 15:16:13 +0200
-Message-ID: <20261023132448.115747-4-tzimmermann@suse.de>
+Subject: [PATCH v3 1/7] vt: Add con_unblank callback to struct consw
+Date: Fri, 23 Oct 2026 15:16:11 +0200
+Message-ID: <20261023132448.115747-2-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261023132448.115747-1-tzimmermann@suse.de>
 References: <20261023132448.115747-1-tzimmermann@suse.de>
@@ -78,122 +123,147 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Pre-Result: action=no action;
-	module=replies;
-	Message is reply to one we originated
-X-Rspamd-Queue-Id: 3BDA2220A6
-X-Rspamd-Pre-Result: action=no action;
-	module=replies;
-	Message is reply to one we originated
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spam-Level: 
-X-Spamd-Result: default: False [-4.00 / 50.00];
-	REPLY(-4.00)[]
 X-Spam-Flag: NO
-X-Spam-Score: -4.00
+X-Spam-Level: 
+X-Spamd-Result: default: False [-15.80 / 50.00];
+	SUSE_INTERNAL_BYPASS(-9.00)[];
+	REPLY(-4.00)[];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	FREEMAIL_TO(0.00)[linuxfoundation.org,kernel.org,gmx.de,HansenPartnership.com,ffwll.ch];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,imap1.dmz-prg2.suse.org:helo];
+	FREEMAIL_ENVRCPT(0.00)[gmx.de]
+X-Spam-Score: -15.80
 
-Implement con_unblank from struct consw with the !blank branches from
-fbcon_blank(). The new function is called fbcon_unblank(). Remove the
-duplicated code from fbcon_blank().
+Add struct consw.con_unblank as inverse operation to con_blank.
 
-Fbcon tracks fbdev blank state in par->blank_state using fbdev's FB_BLANK
-constants. In fbcon_unblank() the stored value is always FB_BLANK_UNBLANK.
-In fbcon_blank(), the new blank state is 1 + plus the VESA blank mode
-given in the parameter blank.
+If implemented invoke con_blank to turn the console from blanked to
+unblanked. Also update the semantics of con_blank in this case: The
+blank parameter of con_blank receives a VESA blank mode from enum
+vesa_blank_mode instead of the hybrid unblank/blank values it has
+used so far.
 
-fbcon_blank() now disables the cursor worker unconditionally.
+With con_unblank not implemented, invoke con_blank for blanking and
+unblanking as before.
+
+The old semantics of con_blank will be removed when all consoles
+implement con_unblank.
 
 v3:
-- take mode_switch from parameter
+- fix typo in commit description (Helge)
+- add mode_switch parameter to con_unblank
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 ---
- drivers/video/fbdev/core/fbcon.c | 55 ++++++++++++++++++++++----------
- 1 file changed, 38 insertions(+), 17 deletions(-)
+ drivers/tty/vt/vt.c     | 30 +++++++++++++++++++++++-------
+ include/linux/console.h | 10 +++++++---
+ 2 files changed, 30 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index d97d94bb8e99..f6139e3c26a2 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -2270,32 +2270,52 @@ static bool fbcon_blank(struct vc_data *vc, enum vesa_blank_mode blank,
- 	struct fb_info *info = fbcon_info_from_console(vc->vc_num);
- 	struct fbcon_par *par = info->fbcon_par;
- 
--	if (mode_switch) {
--		struct fb_var_screeninfo var = info->var;
-+	if (mode_switch)
-+		par->graphics = true;
- 
--		par->graphics = 1;
-+	if (fbcon_is_active(vc, info)) {
-+		int blank_state = 1 + blank; /* convert VESA to FB_BLANK constant */
- 
--		if (!blank) {
--			var.activate = FB_ACTIVATE_NOW | FB_ACTIVATE_FORCE |
--				FB_ACTIVATE_KD_TEXT;
--			fb_set_var(info, &var);
--			par->graphics = 0;
--			par->var = info->var;
-+		if (par->blank_state != blank_state) {
-+			par->blank_state = blank_state;
-+			fbcon_cursor(vc, false);
-+			par->cursor_flash = false;
-+
-+			if (fb_blank(info, blank_state))
-+				fbcon_generic_blank(vc, info, true);
+diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
+index 8415e274e4be..82885f357f76 100644
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -4788,7 +4788,10 @@ void do_blank_screen(int entering_gfx)
+ 	if (console_blanked) {
+ 		if (blank_state == blank_vesa_wait) {
+ 			blank_state = blank_off;
+-			vc->vc_sw->con_blank(vc, vesa_blank_mode + 1, 0);
++			if (vc->vc_sw->con_unblank)
++				vc->vc_sw->con_blank(vc, vesa_blank_mode, 0);
++			else
++				vc->vc_sw->con_blank(vc, vesa_blank_mode + 1, 0);
  		}
+ 		return;
+ 	}
+@@ -4797,7 +4800,10 @@ void do_blank_screen(int entering_gfx)
+ 	if (entering_gfx) {
+ 		hide_cursor(vc);
+ 		save_screen(vc);
+-		vc->vc_sw->con_blank(vc, VESA_VSYNC_SUSPEND, 1);
++		if (vc->vc_sw->con_unblank)
++			vc->vc_sw->con_blank(vc, VESA_NO_BLANKING, 1);
++		else
++			vc->vc_sw->con_blank(vc, VESA_VSYNC_SUSPEND, 1);
+ 		console_blanked = fg_console + 1;
+ 		blank_state = blank_off;
+ 		set_origin(vc);
+@@ -4818,8 +4824,12 @@ void do_blank_screen(int entering_gfx)
+ 
+ 	save_screen(vc);
+ 	/* In case we need to reset origin, blanking hook returns 1 */
+-	i = vc->vc_sw->con_blank(vc, vesa_off_interval ? VESA_VSYNC_SUSPEND :
+-				 (vesa_blank_mode + 1), 0);
++	if (vc->vc_sw->con_unblank)
++		i = vc->vc_sw->con_blank(vc, vesa_off_interval ? VESA_NO_BLANKING :
++					 vesa_blank_mode, 0);
++	else
++		i = vc->vc_sw->con_blank(vc, vesa_off_interval ? VESA_VSYNC_SUSPEND :
++					 (vesa_blank_mode + 1), 0);
+ 	console_blanked = fg_console + 1;
+ 	if (i)
+ 		set_origin(vc);
+@@ -4870,9 +4880,15 @@ void do_unblank_screen(int leaving_gfx)
  	}
  
-+	fbcon_del_cursor_work(info);
-+
-+	return false;
-+}
-+
-+static bool fbcon_unblank(struct vc_data *vc, bool mode_switch)
-+{
-+	struct fb_info *info = fbcon_info_from_console(vc->vc_num);
-+	struct fbcon_par *par = info->fbcon_par;
-+
-+	if (mode_switch) {
-+		struct fb_var_screeninfo var = info->var;
-+
-+		var.activate = FB_ACTIVATE_NOW | FB_ACTIVATE_FORCE | FB_ACTIVATE_KD_TEXT;
-+		fb_set_var(info, &var);
-+		par->graphics = false;
-+		par->var = info->var;
+ 	console_blanked = 0;
+-	if (vc->vc_sw->con_blank(vc, VESA_NO_BLANKING, leaving_gfx))
+-		/* Low-level driver cannot restore -> do it ourselves */
+-		update_screen(vc);
++	if (vc->vc_sw->con_unblank) {
++		if (vc->vc_sw->con_unblank(vc, leaving_gfx))
++			/* Low-level driver cannot restore -> do it ourselves */
++			update_screen(vc);
++	} else {
++		if (vc->vc_sw->con_blank(vc, VESA_NO_BLANKING, leaving_gfx))
++			/* Low-level driver cannot restore -> do it ourselves */
++			update_screen(vc);
 +	}
-+
- 	if (fbcon_is_active(vc, info)) {
--		if (par->blank_state != blank) {
--			par->blank_state = blank;
--			fbcon_cursor(vc, !blank);
--			par->cursor_flash = (!blank);
-+		if (par->blank_state != FB_BLANK_UNBLANK) {
-+			par->blank_state = FB_BLANK_UNBLANK;
-+			fbcon_cursor(vc, true);
-+			par->cursor_flash = true;
- 
--			if (fb_blank(info, blank))
--				fbcon_generic_blank(vc, info, blank);
-+			if (fb_blank(info, FB_BLANK_UNBLANK))
-+				fbcon_generic_blank(vc, info, false);
- 		}
- 
--		if (!blank)
--			update_screen(vc);
-+		update_screen(vc);
- 	}
- 
- 	if (mode_switch || !fbcon_is_active(vc, info) || par->blank_state != FB_BLANK_UNBLANK)
-@@ -3145,6 +3165,7 @@ static const struct consw fb_con = {
- 	.con_scroll 		= fbcon_scroll,
- 	.con_switch 		= fbcon_switch,
- 	.con_blank 		= fbcon_blank,
-+	.con_unblank		= fbcon_unblank,
- 	.con_font_set 		= fbcon_set_font,
- 	.con_font_get 		= fbcon_get_font,
- 	.con_font_default	= fbcon_set_def_font,
+ 	if (console_blank_hook)
+ 		console_blank_hook(0);
+ 	set_palette(vc);
+diff --git a/include/linux/console.h b/include/linux/console.h
+index df23148987ee..cb8be9ea4a76 100644
+--- a/include/linux/console.h
++++ b/include/linux/console.h
+@@ -55,9 +55,12 @@ enum vc_intensity;
+  *		Invoked by csi_M and printing to the console.
+  * @con_switch: notifier about the console switch; it is supposed to return
+  *		true if a redraw is needed.
+- * @con_blank:  blank/unblank the console. The target mode is passed in @blank.
+- *		@mode_switch is set if changing from/to text/graphics. The hook
+- *		is supposed to return true if a redraw is needed.
++ * @con_blank:  blank the console. The preferred VESA blank mode is passed in
++ *		@blank. @mode_switch is set if changing from/to text/graphics.
++ *		The hook is supposed to return true if a redraw is needed.
++ * @con_unblank: unblank the console. The hook is supposed to return true if
++ *		a redraw is needed. @mode_switch is set if changing from/to
++ *		text/graphics.
+  * @con_font_set: set console @vc font to @font with height @vpitch. @flags can
+  *		be %KD_FONT_FLAG_DONT_RECALC. (optional)
+  * @con_font_get: fetch the current font on @vc of height @vpitch into @font.
+@@ -99,6 +102,7 @@ struct consw {
+ 	bool	(*con_switch)(struct vc_data *vc);
+ 	bool	(*con_blank)(struct vc_data *vc, enum vesa_blank_mode blank,
+ 			     bool mode_switch);
++	bool	(*con_unblank)(struct vc_data *vc, bool mode_switch);
+ 	int	(*con_font_set)(struct vc_data *vc,
+ 				const struct console_font *font,
+ 				unsigned int vpitch, unsigned int flags);
 -- 
 2.56.0
 
