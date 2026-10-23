@@ -1,91 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.226
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.227
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792720161;
-	b=dJFqBcEUddvs0nfDYjHKIAbv/uZJx02TO14S78MR2UiXNXf1fUz0gtstV1toOWqHTh+y
-	 9y08nmZZ1Kd8dYZ8qfwP8G9F7REvQkQG5TSM48Bzv6bxNeQnrlOsk2v7gGvict7kw0/37
-	 bPVqZHGw6GITbD5T1zPfuxWjQhjzQjIQeQmN4Wtnau/2YM+QLHYxETTOS6bUcg6SJl8bd
-	 eX7TSaW6OIeE0kd+UGkLzHUUerUOWHHICeCvDV8+gBp4XMCEidChVhU5C+N8cE9Y4Dh2c
-	 WYbW5lsUdxCOHmLNa4igVOMgJD9gD1y/qau7C8MIB6HSvbL7cGuWyR1J1F3w3atgj2g==
+	t=1792720516;
+	b=zXb0NMBF9Kx1I/RESnz27a5dcVxJXRnemE/4oyH6yM1YKHv6n/EdLrbxFojUBmYZNkxX
+	 o70sxttzESi2rWFKSyX0MZGPxNVJKCkoIwA4FxVZBnRbBbFEwUBPBBHmxhfAZ8z8Z9t1R
+	 6Q+1BJ5iZdEdM68/AoUtDgCU+aNBU03p95g2FVHm1PTHSFuS0zHdzQ6DVInyxEqnJysmh
+	 TN4UeLr+GP6bvfvFVIDfo0sqpVqSEALJMe7otlezqktP0R0m/qNgL5IFBf3Dlgj5cUDQ2
+	 eMEFlYtN112Kw3XQk7VcSKFquIgXvXO99FSSe9+ubQvHRf7apX/AMMGK4EqAQ12Potw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792720161;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792720516;
 	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Gm-Message-State:
 	 X-Gm-Gg:X-Received:Received:X-Relaying-Domain:X-CFilter-Loop:Received:
 	 DKIM-Signature:X-Received:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 X-DetectorID-Processed:Content-Type;
-	bh=22/C10ZYKpRlQQVhA0S4k+qdBezIcwiS/xsZ7aeVMfI=;
-	b=SoBf88od7TdWdcFE96i+krYjx+eb3Qk4/fy0WXduD+c8ZHNNFTuTFffAiKj7p1jyTtgB
-	 UYbPBKu8pddOGSn7zBsL5SEsQoGoYWZt8JD2oW7BGXFcadAkkrehPoSgw1gma089KUcTu
-	 z6gVkUAqhRNcK4f26AVr1mx8wVxy+8tXIS+sIINwkx2SHYdLZzN3sI95wqDrnr+oZNRpK
-	 LSbWNNvpmLA+cVmKa6SDH7tvvNv/9GCVLuKbkFD1IrrEpx6w0YuopzcYrB+/UsEzXzeGp
-	 qnXb5Dawe/OUUbgeMDzDMrroM/H7oBfFfwGLx+Ie/ViHfgOuYbUZtNYFGbAuyHhdreg==
+	bh=DBhAiXze7tlmP1reA1HnF1h7dz9H4elvGtrwUsHZA2U=;
+	b=bDZy+cCo6TXMNrQ+5aKC2XxWTofq0ZaUR5EQds1PnjxkOFURnuPB00eBTAyO2LCo+JtZ
+	 VVE/Jl18WehCbpvQnWGbGEBTIzg6NMO1OOSN2x1LrFuUkdX+xGUYpcqffvWbOBMrf9oph
+	 iT7Z1qpqhq2GXYq9SNnO/vtOTOPYjzZd8tfB9V+9uAYhj/wEww/JgM2K2Za0DSNFaK/q1
+	 /w+aVYg+4E86sR63txgKuW1pOEERHjD/9uplBVCfKMfJGK8AvaG2Q9IyF67dALaC+HlGj
+	 wSKi6ShaZn/qC5O1L8UeN5BBQb2Swr/sfRFLI/oUUdv5gz3E0puUiu/Bdgte7PyfReA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=broadcom.com;
 	spf=fail smtp.mailfrom=broadcom.com;
-	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b="B5uwKM/l";
-	arc=none smtp.remote-ip=209.85.210.226
-Received: from mail-pf1-f226.google.com (mail-pf1-f226.google.com [209.85.210.226])
+	dkim=pass header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=Hl6V6JPr;
+	arc=none smtp.remote-ip=74.125.82.227
+Received: from mail-dy1-f227.google.com (mail-dy1-f227.google.com [74.125.82.227])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FF5606A31A
-	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 01:49:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 60FF5606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BFE606A31A
+	for <sashiko-reviews@lists.linux.dev>; Fri, 23 Oct 2026 01:55:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 78BFE606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=B5uwKM/l
-Received: by mail-pf1-f226.google.com with SMTP id d2e1a72fcca58-8a05b210703so212159b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 18:49:21 -0700 (PDT)
+	dkim=pass (1024-bit key, unprotected) header.d=broadcom.com header.i=@broadcom.com header.a=rsa-sha256 header.s=google header.b=Hl6V6JPr
+Received: by mail-dy1-f227.google.com with SMTP id 5a478bee46e88-35cd4e8bdbdso632542eec.1
+        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 18:55:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792720161; x=1793324961;
+        d=1e100.net; s=20260707; t=1792720515; x=1793325315;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:dkim-signature:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=22/C10ZYKpRlQQVhA0S4k+qdBezIcwiS/xsZ7aeVMfI=;
-        b=fqOlsFT0sCAoV9sPkcxNMW42ZFbB4+jFw0F+OkAhGevpeJDRpo1Xio6+GbAwnC9NRD
-         1Xzh1RoLus8MYljvuNtO/4yeCvG9XRh9KlzVjOIQeyn6ZI0697L2U648gTYHFdhjRoTL
-         IjEenajTYC1MezHogpghHqf8q0hWcc8rMymJVW5WLTzhJD0ILHceuqygBfS4MfMYHeYF
-         9boIgUUmx/BuxQgz5zV4UwWYmXQiTbfbYzkwF/mu7TrHZ8C63OhqcU42DKG1NFn+HDew
-         HvBL/RJv5IIZ/ytRJVXDNqNC499Mu05Er9Fot148MsdUoHtkI3P8LT53H/0+ItuJI0St
-         OITg==
-X-Gm-Message-State: AFq9FYLKXRXLuKzu1p4Cl8J63V4c6YYU0Zrfocv5J6X3nfZP4yK36ais
-	e8HNpzVSUDdsJWcOvZl2RbIzfAnXpEyD3Hv5jxkBflk+s26s5YwsJ20511A0gTXeh2gGxXh2G7e
-	+LNggk03d4Ck/EsF3K3Kh1xuTMrodJAVlP5CkU+aI94VBLt/ppGFhRhyujCFefaaU05D196Getk
-	ImnI+bFPFTsq8H+XEjnWyOZ/g6NsMzdFgnOfezgVLkEK/zLgeJYwmg2GMibbGfGqkiJD0RoBfDh
-	WUVfK/dlW4O8TDTiokE
-X-Gm-Gg: AYBFou3ZhZBH9sL5IyfkxJwX8g0da5h+8Snd/XXeZcYMn9u5dK7vpRl0iSpBo3ZHgs9
-	3wWDSZYws0xPti0zZciX6nIh01GT5AWfuPuNznr9PFImyjND/R5+g71ongpJHmCIml9/tdhBw2v
-	65Qb8/y+QNa76LBJ87vR2FA1+r4uqnbEKIHsmaCX+EmdGW9QTM4bGLM3BHEvL4Ft7W69xfu20ao
-	sEir4CCkdPASZwYFzyOlx/K4pJVQnIUEj4Jbd0ZSz1lwO+9N7ZyDLLaf3UcDvpdfWX5+lDahwSN
-	anrqtxQ2zGCo5GucnqoBqj6eHCn1mkez2GFyQID8ufiVQy7EMOoN+yFMIkXGtk8bojZEDc25p7J
-	SgLDtdeYsxhzxwR255OPkRJySBw7fkl+42OYP8LgKRrLA5tbsNfaArS3Mr3UAMSN/KBZLmzXnWX
-	w36tzrnwOcUdX8EjAuciP2hCMN1kFgaNHd
-X-Received: by 2002:a05:6a00:b41:b0:8a0:2344:c44b with SMTP id d2e1a72fcca58-8a2c63c8b36mr644608b3a.40.1792720160420;
-        Thu, 22 Oct 2026 18:49:20 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-17.dlp.protect.broadcom.com. [144.49.247.17])
-        by smtp-relay.gmail.com with ESMTPS id d2e1a72fcca58-8a2c8bd2092sm6097b3a.6.2026.10.22.18.49.18
+        bh=DBhAiXze7tlmP1reA1HnF1h7dz9H4elvGtrwUsHZA2U=;
+        b=2Xq7AEKDWPUxcBCnISt1eegA9mEGLCv2C6hcuTvHQM6Yk3Aco20g0FTSTn3r/qXR3l
+         08urUjhhYJVCZZZJg0yd0Rwi6A+oXLrHXBPhNmmAzS+WesTzDQjva3vYhhgZB7I7j15J
+         Rc70+wXXaOw2VrkseiN+Qy4EZbZ3CZmApqilSPSHLNjcsFovA2chmv2Z0tvJck9S+pTm
+         0T6pTUDdcR3G7/1QpnI15JxVZ2q2v6X2CCHSLrX3aNbsIV61RU3Sow3u24MWU3UUEWPr
+         29I+/xc0qxkj0jb++91/Yc28sCc5tapKP8YewjOJmEGd6I0mKhwy2d48pMTkKjYvYLsj
+         E3tA==
+X-Gm-Message-State: AFq9FYK5j/wnZmPdqBYTlQjqipL26XMKjBGslH/hcItlV8BVn0hE2FJv
+	HXpbwSthT2x1PFCOFRLdDysJHKNkfIH10oRZCHgA1I0mk1C/iD0QP2mm751H+6B6nangHXO8JhF
+	5knlPnhPHr70g2/ptV5ovXy/616bI3VP6WbHFDNjJ82DOA10IxXdmm56IHaDm7wcRg5n7wDiIP5
+	JpxHD4xRaN63HAikHWLTfMEDBmyJM5jOFBiEFayKsfqfqSId/lepzlM9JJT+B9sKKItr5btZ1NC
+	o+EIvmSZI/B7C7Vy03n
+X-Gm-Gg: AYBFou3cf6t9C2KMz+QykvBW19wyq9raAou8WOxCsyvMf9Xp/fNJjgmETLeV96YsQ4U
+	m5SFNp5eMlEKud/4SertMj6kjcmiETnoYqbqw8Tod/9R/1al7ScriA8zyjIDd3IQknftMUXc6ke
+	8YJHqyf1SqiYcl5vZPb6kB213f6/KbnM2sMdr4IfMiBCi8NauXE0v9mQUqvbK4LUaegVSlUE4gI
+	DwEUQkgo9XBDiKaCUBgTS+TipsQdSI09bHXfMTkhqzFD3Pjfi5Kewao+v/brqdSHMjXt+59t++F
+	BaT16Z4/VyPlKswWUIHYAu/gqI0TMAewGGtHMEo8sADYx9aEtlNad7ptNmEme2dI3MeAu6deWxB
+	s/Ecshmq+E2WwAptwfoCul16JWlysgPME4nIHr7c8I6hnNa9UuyLyWNDipIMEdyeYRnJx0ou16e
+	e7w9e2PqMqOgvs9r8xKe/StPY68MBGTD6+oXQ=
+X-Received: by 2002:a05:693c:639b:10b0:369:2040:cc88 with SMTP id 5a478bee46e88-369d9740e76mr1042701eec.20.1792720515142;
+        Thu, 22 Oct 2026 18:55:15 -0700 (PDT)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-120.dlp.protect.broadcom.com. [144.49.247.120])
+        by smtp-relay.gmail.com with ESMTPS id 5a478bee46e88-369d9c7396csm12409eec.2.2026.10.22.18.55.14
         for <sashiko-reviews@lists.linux.dev>
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Oct 2026 18:49:20 -0700 (PDT)
+        Thu, 22 Oct 2026 18:55:15 -0700 (PDT)
 X-Relaying-Domain: broadcom.com
 X-CFilter-Loop: Reflected
-Received: by mail-ed1-f70.google.com with SMTP id 4fb4d7f45d1cf-6b1ab11f480so541120a12.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 18:49:18 -0700 (PDT)
+Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-c43bf48b6f4so16925566b.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 22 Oct 2026 18:55:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1792720157; x=1793324957; darn=lists.linux.dev;
+        d=broadcom.com; s=google; t=1792720513; x=1793325313; darn=lists.linux.dev;
         h=content-type:cc:to:subject:message-id:date:from:in-reply-to
          :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=22/C10ZYKpRlQQVhA0S4k+qdBezIcwiS/xsZ7aeVMfI=;
-        b=B5uwKM/l5yeWVtboXPM08SDJp7cPEX3c56AXvSXeGlaKk1EeX8yxkCT3TBVfEIJiTM
-         cYi2tOofeUipFrWAcxeKSL+2hEtJvnn1lOgpc6J9r8az20Ofoq13p6NAsTfyPp+ZvuPZ
-         4h47Cex3QaMDxigKZHYB5iBxkd5dOnVGs5yyM=
-X-Received: by 2002:a05:6402:1246:b0:6b1:a67b:d378 with SMTP id 4fb4d7f45d1cf-6b432c414f8mr1207945a12.17.1792720157173;
-        Thu, 22 Oct 2026 18:49:17 -0700 (PDT)
-X-Received: by 2002:a05:6402:1246:b0:6b1:a67b:d378 with SMTP id
- 4fb4d7f45d1cf-6b432c414f8mr1207929a12.17.1792720156706; Thu, 22 Oct 2026
- 18:49:16 -0700 (PDT)
+        bh=DBhAiXze7tlmP1reA1HnF1h7dz9H4elvGtrwUsHZA2U=;
+        b=Hl6V6JPrgJ5plHToV843bo0DdGB2LgbLqmhvsFNE9v/BYd2Ee1/NdQbM9HdzGXs710
+         72qfs75cFFaoLj7pnOifCZadJbYb/PXM9PMDyBk2oMmChH8ZX9A6VKuRBhfJlUsseRbp
+         GjYxfsZkOPuHLgLJR5C0eggLsHLQ6yW7nhkRc=
+X-Received: by 2002:a17:907:3cc5:b0:c46:8b9a:39ae with SMTP id a640c23a62f3a-c46a92620camr120915566b.28.1792720512903;
+        Thu, 22 Oct 2026 18:55:12 -0700 (PDT)
+X-Received: by 2002:a17:907:3cc5:b0:c46:8b9a:39ae with SMTP id
+ a640c23a62f3a-c46a92620camr120913966b.28.1792720512467; Thu, 22 Oct 2026
+ 18:55:12 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -96,43 +96,50 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 References: <20261019-uet-ib-core-v2-0-8bd654f25370@broadcom.com>
- <20261019-uet-ib-core-v2-5-8bd654f25370@broadcom.com> <sashiko-outbox-178596@kernel.org>
-In-Reply-To: <sashiko-outbox-178596@kernel.org>
+ <20261019-uet-ib-core-v2-10-8bd654f25370@broadcom.com> <sashiko-outbox-178770@kernel.org>
+In-Reply-To: <sashiko-outbox-178770@kernel.org>
 From: Eric Davis <eric.davis@broadcom.com>
-Date: Thu, 22 Oct 2026 18:48:48 -0700
-X-Gm-Features: AclHuK_JjOg2wfBd5rpKJKlrX5CL3XXEWBiO2j9AUHSpFZYAaygPzGU7za_rRO8
-Message-ID: <CAMouMYLNHzpPYa8i_ZJ5aowkAE+6GBbL1rX-8Ofsy+DpZZTMHQ@mail.gmail.com>
-Subject: Re: [PATCH rdma-next v2 05/13] RDMA/core: extended address handle attributes
+Date: Thu, 22 Oct 2026 18:54:43 -0700
+X-Gm-Features: AclHuK-JmIGVVq5OqCm7xVb3e8MKVPTKOFU1seTU_5CNa3RHWxeP0p6V8FbIjeg
+Message-ID: <CAMouMY+p54wjF0rinQtf0ULRNE_09_+BZEVQhgaiA-2Y21UMHA@mail.gmail.com>
+Subject: Re: [PATCH rdma-next v2 10/13] RDMA/core: queue pair attributes for
+ unconnected transports
 To: sashiko-reviews@lists.linux.dev, Jason Gunthorpe <jgg@ziepe.ca>, 
 	Leon Romanovsky <leon@kernel.org>
 Cc: linux-rdma@vger.kernel.org
 X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="0000000000002a68e3065e7830eb"
+	boundary="0000000000005f9151065e784537"
 
---0000000000002a68e3065e7830eb
+--0000000000005f9151065e784537
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 20, 2026 at 1:40=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
-> Should UVERBS_HANDLER(UVERBS_METHOD_AH_EX_CREATE) call
-> uverbs_finalize_uobj_create(attrs, UVERBS_ATTR_CREATE_AH_EX_HANDLE) befor=
-e
-> returning 0?
+On Tue, Oct 20, 2026 at 2:53=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+> Should create_qp_opt_attrs() return -EOPNOTSUPP whenever attr->qp_type =
+=3D=3D
+> IB_QPT_RU and !(device->attrs.device_cap_flags & IB_DEVICE_RU)?
 
-Yes, agreed. The method declares UVERBS_ATTR_UHW(), so the UHW_OUT
-write after the handler can fail and the abort then skips
-uverbs_free_ah(). v3 will call uverbs_finalize_uobj_create() once the AH
-is set up.
+Yeah. Folding the two conditions into one test lets an RU create with
+no optional attributes through on a device without RU. v3 will refuse that
+with -EOPNOTSUPP before any attribute is looked at, so the source QPN
+checks can no longer be skipped either.
+
+> Should the checks and assignments on the fields of usem in
+> create_qp_opt_attrs() be gated by their corresponding bits in
+> usem.comp_mask?
+
+Agreed. v3 will check and copy only the fields comp_mask selects, so an
+unselected field reaches neither the range checks nor the driver.
 
 > --
 > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261019-uet-ib-c=
-ore-v2-0-8bd654f25370@broadcom.com?part=3D5
+ore-v2-0-8bd654f25370@broadcom.com?part=3D10
 
 Thanks,
 - eric
 
---0000000000002a68e3065e7830eb
+--0000000000005f9151065e784537
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -225,13 +232,13 @@ ZMEsct9jQXibihTD7z9wLTIkXqOHumCc6f53zhsQCRofr8m7Tm0YrckGCHd0BowU12A6oVax5xEQ
 6j1hyszkhFPrlLKAlaFU7VuIwlcjKvN9XYrmOfXfTnYoVV6f1IDwhgbtJNlKnJksqoCzfsbAVd0e
 usA704DOznTCfAYJqjGCAlcwggJTAgEBMGIwUjELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEEdsb2Jh
 bFNpZ24gbnYtc2ExKDAmBgNVBAMTH0dsb2JhbFNpZ24gR0NDIFI2IFNNSU1FIENBIDIwMjMCDFfq
-Ldxf930IzIe8izANBglghkgBZQMEAgEFAKCBxzAvBgkqhkiG9w0BCQQxIgQgiQ1IFqEf65Dpt78z
-9NxlcYcQ9t31ItbKT5s6RIqQTh4wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0B
-CQUxDxcNMjYxMDIzMDE0OTE3WjBcBgkqhkiG9w0BCQ8xTzBNMAsGCWCGSAFlAwQBKjALBglghkgB
+Ldxf930IzIe8izANBglghkgBZQMEAgEFAKCBxzAvBgkqhkiG9w0BCQQxIgQgAVLymRqEGVgyF2Tz
+KWSO+ZlUACTA3ZJPQzBhKkhBX60wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0B
+CQUxDxcNMjYxMDIzMDE1NTEzWjBcBgkqhkiG9w0BCQ8xTzBNMAsGCWCGSAFlAwQBKjALBglghkgB
 ZQMEARYwCwYJYIZIAWUDBAECMAoGCCqGSIb3DQMHMAsGCSqGSIb3DQEBBzALBglghkgBZQMEAgEw
-DQYJKoZIhvcNAQEBBQAEggEAsa4vBJ4+XX46Ce6/BnDeC7tFjPc5+yXIOScwBDWlCX1CoRRVgIzD
-hL3fpS2hJPV2SoAPnqQIH5AmV8Y9UU9FTWAOlXfdSITS6/+KB0IamaPI0I1bSEz0XAdt9uCi3i8D
-jQXc0DD15q9QgvJZmWXfZOtIYO4tUAH8juc4f8QyJZ1HnAoVKLpsS5DGZqInX5Dwuzk4oBXHmCCc
-QKgy2lw0Sd2AG3w4mfxuPD5phWAgosG5Qrdw2T9wi4WjVabTtI6S3A9cwD82AAYDBIP9p/ybSdvX
-4KfPQ8t7S2fYoCObgkkqPdByKpts3GGTHeSyQoDuS7j1h0DjZPChdRtGI0EeDg==
---0000000000002a68e3065e7830eb--
+DQYJKoZIhvcNAQEBBQAEggEA0w81dPItXT0uG7Gl1VNkNM4Cgn0rgefbC5MZ83o0WTs0njcJXCD7
++OzGvpqXfjTuAeLdWc+mTFfsATa82/tMZCqBJQEQUAWEJ7hvIZBsAAPSFKZPxpamhyD1uDlR9QZf
+T5fwcvRPNxB4XUpQXbza3A0YOmk8xBY5MFtmdkPluyj0jaSTZdpjbq4Kv3fZxDEmgI1cvSEIDP3Q
+5FUXyS+pehMqJLpInxj+HrBBolagF2n+th/BCY+qzzvZOb4bjPYCyZxiPV3GcwN3vT5iVtAdtXS5
+7TeD2Sxi2LaS9NltxEq0t62XLjs459w5JUHGZm6NbFSJBvPF75Vv4hCGqa8pRQ==
+--0000000000005f9151065e784537--
