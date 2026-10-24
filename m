@@ -1,99 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.41
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792858788;
-	b=2ylhdZew/q/KsOTbbdXaORJRLu1fIafURmuP9HF//eEJ64tmljvTEUEyykxy6RH84XG6
-	 m1Td/43RJovtWFksuOHhUwPjqihSwTGlbe/3xLymgEtOxFEx+BisrEsVsWbyc/ITWs6+1
-	 Mji5F9jq6NOXR+C6VFZ5cV+s2WP6j6f/FesnYRDHySYEasONySznx07BYZ3ST/MSTgZbR
-	 bi5vnXbFiYtPmIqLqqf8OFTYzd8CeNUFjv4N6D/W8nUOn6lNbaeOsZ5EABoGlCmmQyJt7
-	 O5BYrlFg4ELmPe4VADNKSTA4JrY3Fsvvk0sqa4IgKMA1nTIDN3pVCegDwKqqd2qXo8w==
+	t=1792859104;
+	b=cAHIyJcTHdMlrTmTPgIk/bXtM5rEwKn6AcSb5zrfkPcnJN7hvz9b4VqLlR7whvJPTj6L
+	 +IpILO0dqyrmRZzwbulArKJ4t3j9pMfZD/Zlv6enbR/LAeD/Jee77AMhLrdeDDs/uvuds
+	 swj4sNOzMkmXfAaS4tOYLoILa3J/nfrcJMuuyLG43QbGWeE7yqNPvLIRPQAiUBaMaxLhx
+	 ZmTtlH8hkfhmhmthdiGSu24Xb3x4W3MVsZeKehG5W8lATfbjTDl3uKt92+mH9xjxj8jaK
+	 wBEFJk9zG7tHr4PFYUym/keXDfxVQVyPI7UFXklux1kZLZ2T3qQRLT6YL+xgjPxYDDw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792858788;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792859104;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
 	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=Z8jBptDh3nGhMkmWNwW4GPM011tCVyIihOeKHGlsDRI=;
-	b=hbyhYbNT4oIRrhzSRY6vY6XgqwxOSsyss/WAQOqI8JuNXkuxrQPnimnysf136wsA7SsX
-	 CX4a21FFPg4XBgTiQGRVeT6AeTf8s2D5IHXjcMclZ6y1f25ffeZvySakXit4dpW5NZJ4E
-	 gnw+sGj4ZxjvAf+nMCIVNjHXYRlNUJaoTcWfsqlRo6ckTpiXd6C9/aGanBU7u4lBCJ9eI
-	 5tPuWGzv0gYJCutcoPQ66qm+vg5mKVf8TtusyxxEx0CTH1zrmJgElDaTLsaI1Bx2Apvvh
-	 KTaTGxSMonRcNWngIaOO5eZqysF1EODSflp2LwiugJO28CyDf4dlxyFOX1fvr4WIpFA==
+	bh=Ta6b9kStTlqhcUIrK0rj2jJZhUFfSCgXPRCGwSKRipw=;
+	b=Fknqva9rWJTPrmyqofNQMzDpmiRRN0xwAu9nf6i0DBx1MqU/oKRiOjUzgo6B2QIeH/FY
+	 EV34nDEaVRfKOR0WyL2YltartQgkz4PTa1ApUNJlEnK9zXSby2pHcT6+PwQVHlcFp10A+
+	 baFd+T4kMuhjiYzUCHe2bY+AyVHHHipq7fDSjLkY0bzK0QdcqFwhWFNSnrw8fqnj9X9Wc
+	 DaIfzol+xHldEguH9pLOP35E8AYAFN04jqOU32ysb4ZcNCR3Ot1LKaCMmLi+6SlgFIHcK
+	 osYO/P9aYDXygkInvhZ8AtyY+XkJWM5Fcj1hTPo/AJ9JaZkL//aJ1M5DfhUf7OZ+rAw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=reegLIsX;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.210.176
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=TsWZYL1F;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.41
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E56606A31B
-	for <sashiko-reviews@lists.linux.dev>; Sat, 24 Oct 2026 16:19:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 76E56606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3ED606A31A
+	for <sashiko-reviews@lists.linux.dev>; Sat, 24 Oct 2026 16:25:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9E3ED606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=reegLIsX
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-8a058f74a54so639213b3a.1
-        for <sashiko-reviews@lists.linux.dev>; Sat, 24 Oct 2026 09:19:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792858788; cv=none;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=TsWZYL1F
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-c2055573c8cso221761466b.3
+        for <sashiko-reviews@lists.linux.dev>; Sat, 24 Oct 2026 09:25:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792859102; cv=none;
         d=google.com; s=arc-20260327;
-        b=qIpV3UGjOg+ZCio2VwQhmpllmdZuc9xEUzRMZ9XYtVLVPk1L8IAgGtl1TaMkn1Vfp0
-         /mZyMlN9wPzBOQPutm7gsdwBqbE0jNhKl15m+QRqdINOeSUYUvw+E7jHqzkrYbFkU49R
-         23qo7NStrdWbIcZ8fhRaRZxWaLe6G8OR/U6jMuAj4YseVhoD4ml7Ndz6lvRmSNK82nss
-         yiagaBU2Grqy/VxPzlLum5iCn/GBRpL0V6hgTWnGJVMQLPH4omueegY8SgiHS3TBqf4/
-         ixNkbZI/a1YBRBEE6YYnLZiyRTd4JWHD08GHwlupMq7coprT4mIHJvB9GZQPdlWzDCBo
-         eGZw==
+        b=U/c4MRxrGEsKBWBshthLss3mmXvtEWL9o5dkd63jAOXSFZh+IEnD8EF+JjMF00Bt2v
+         MSfwM1coO6ByCU0vfb9CEw0nOrdnCCOYHD10geUtsgWwHpC/EiLJZAlgo5M9FSDUX7t5
+         qRsTkY+6j1KsOwWYq8ix4TtPFZK/M2HlKgGcnDYNvKzuWUxANSf3pc5xHFvlsYxr+2i/
+         PjoNGRcRESy/1EhhkalC/j8mP4rBP3XzUPMoLqbVblfvQIBEU+1g2HU8ep+F/yqQo4di
+         EHe9jhuGhV/blT1cR3iCPrnw5baDJq5JlmfsnO+W1abkTeGrsCz1/vnOsfYGe0ncOQNm
+         QIAQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=Z8jBptDh3nGhMkmWNwW4GPM011tCVyIihOeKHGlsDRI=;
+        bh=Ta6b9kStTlqhcUIrK0rj2jJZhUFfSCgXPRCGwSKRipw=;
         fh=luCPnnVstdrQVMGL960i/bkf+vsPiecmH+dKLh4tZ1o=;
-        b=nmulNPYCUrLtXuST+JoXcotqH3mLVsKr8YcgMoLD5WqEKBVHmJ+OUVffHNBpWcJRD7
-         6zuO6ZeyUR4WNICD349OppVuH7SoqPvDRBdq2HceR6TC7AalSdbId8q79A5pyDoqptJ4
-         yLnkEDUAVhLr2UmpKv0OKWhc3lzpc+LvtDwbY3c+dsmsirKZ5TbvBJJ5EDjIgHe4pzmb
-         JZUTXPZW5cTn5ESIGum9FeXu7gfiEoA5qaivkCRx1vVVamjJfqXBFRwIS+HXjN1Z/4H9
-         GucjXiFWhvPUEnBB/t9RcD0SKZD6sVDDCPBZ76Lp/1OxOb/ndWG13Yf4n0vbrX4OYeC1
-         gV9w==;
+        b=kAmAI69PT4o9x+tELIjraLavC/9bpjFq0ICYS2llVOqJuc9H4xCvveym+u5smRJqCP
+         Ibl/ZKxkRHRn7fCFHxFbX8ULCZafp8zq0V4kC7Y5k6js2hAyLQJIGo8yu/sfuxwaYGHq
+         ja0A42OjIu0ePnT031EZG8RThOIxyrpqh1k88X2GUfrJsBc5R8VHb6XQsUm41S0uofkX
+         mJHWuZMl31HEWfsIhpcDdaMuLGsGyETe/fx1BbcF9WvzQ2tdm2gqi2ZCur4SJBOiKCX5
+         7hPLlOlz36OqRnX9+Bdh6uFMWTPVMmosJ0zchkzqX1Pn8JjecSHxO8Ic2M7IW4YWyU/7
+         PA3w==;
         darn=lists.linux.dev
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792858788; x=1793463588; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1792859102; x=1793463902; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=Z8jBptDh3nGhMkmWNwW4GPM011tCVyIihOeKHGlsDRI=;
-        b=reegLIsXO1ZBU/9e2rv/olvAi83dWUzY6q39YgZLQz0dTqdvzQDe4zoeGob0edb/fM
-         DFKds9NhOx16lBTbIgUIFm24KbnfoJuMYZdlO3JxN5CE3qIJSFrY/T1YQQ6hfKEGDIDG
-         SOUBPF4UzTUoD/iO4hEtMHHPYGW7OG8SMe4uKKuKvtqx6UxuoFdtFgn1YypBJRLUXkUK
-         P1N4FkvMe7vXidtqqQvqKF8UcdgrE4nM7NEV6cjKBKV3HmsX/ut+IK3Z3FFd5iv+oj52
-         zeXz7GMKC9jsROqmlUaagXDskd5MNViw25wgcvJS4u1vEFoRbBXzvAOdDwM9b4YGD4lZ
-         lgyg==
+        bh=Ta6b9kStTlqhcUIrK0rj2jJZhUFfSCgXPRCGwSKRipw=;
+        b=TsWZYL1FB9N83iL6J+BVTZhtjc3moSAE5eWig2+d8vkE9ACtkDpzOcXait3zDgkyTE
+         pgVaG7atcnoEuMHf0SqZupw2w0mjFCunfq7bh2UH5jRvZkJTUi5r5VSjy3032sSGo+Ag
+         SUWyqlVRWF6FTlwBC4BT5XC0mTpQwq/Qniq48qu5EkR5lhcCMXsOQLHan7B03U8Nuldh
+         yFAp8ynFpUUVM4fVUwvFNYwI7YLOh2YvHqeThXjy38A0NnSLRm4e5/iSsHGh3uR1B+mJ
+         J70IpJ8Ek0xuUF7Y/a0r5bECkza1bl65pV+UKqeQU5zmN9wuM/U6+s6XfgG9uYtnpu7v
+         uKNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792858788; x=1793463588;
+        d=1e100.net; s=20260707; t=1792859102; x=1793463902;
         h=content-transfer-encoding:content-type:cc:to:subject:message-id
          :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=Z8jBptDh3nGhMkmWNwW4GPM011tCVyIihOeKHGlsDRI=;
-        b=tv8fFaOp7aSB7YLa3ExwK9xa2edPhNQ4t/e4Oi/fRTw9x+z4DBP31yfq/EmJy3Aidz
-         tu4k3734QmlGoKX05IIqs4ECxgy3yWjoyLlvZXA3F1V2SbB+SIE9Opc2LlEIe1HnDaay
-         RFwl6MhEcS7OuhWAr8atXWhF/Lb/m3n4Ce4N9JmzuZGoWCvYccsghYy2sPobiuSIuc8Z
-         p3KwNmULJf35MyP/f84ZP/6C0mnNmAFTHS52XyJsuBqq0EbtaP1fNDzifUd7pUSVpo8W
-         CDPmP6RzB6+HOuCmcoBy3fCl2xa4Yjqurl53mBaS11uQ+vx06Bgs9pubqiEA2Y8+I/Ri
-         ztRQ==
-X-Gm-Message-State: AFq9FYIMsAckytB3GNepZjjsQo7XuWJlQZ8qXVS3SeijVDLHn9ZC/ZXl
-	L/B8urQ/WWRfed+KokiwsGROtaZiO85x+Rl3kTLMJVhoeJ0/SivS1ORFxxhhP/+k+zOAVnmgGWM
-	79C4E2SoIpa2rj5EgmIjQ8as46YZiwO+S7sbVn98=
-X-Gm-Gg: AYBFou1kF3s1m61HvvT68RMEmMRG3yC00MCphKaigjlX0RBqlaKaF+Pq1PLf5acg7DV
-	mKg21z50OwuUFX5puIqN1fK9TzZKwCDq+b6EpaHu2Gh4CPhGS8RW6QqkDxiLrczlc7fdFMKdTkn
-	+imHs/ZNSold47NkLGFWVBotW0f6FGsR1IfIE1w9Y0K1zlt3I+sH5lycGZPzoXAxG/9F1wZV59H
-	0q2xR9aHBTHLwc9FQmy1bognaWOkwrnzM3srgxDxmxLxG/V+YE6UCmWYVWkftYA+HVmPsQPudbE
-	geZ8Xs6B1PNu43ODz24obK6BSeqAlli6xSn2CkMRi6i3dDiNd5LOpq56lGcFjnFcz7TBvMCLbmS
-	fAA4/X8Ur2n7nIGpMFEs65sxS4UW8qoDthRawdZcAAWRAVExjuqaqk1VFWUFraKEhy/vspw==
-X-Received: by 2002:a05:6a20:548d:b0:3e0:c3f8:4821 with SMTP id
- adf61e73a8af0-3e7cd4da8b4mr2356336637.41.1792858787664; Sat, 24 Oct 2026
- 09:19:47 -0700 (PDT)
+        bh=Ta6b9kStTlqhcUIrK0rj2jJZhUFfSCgXPRCGwSKRipw=;
+        b=X9OP4INGlVOnVY5y8GYQKtYfYaIxmOu43Kxaib2lrg06jmzlvfICm3E7Lc4icIIZFS
+         zwyLmcTip+1sP4pvQ3VLBWSyIpU6jFAOe09Aw/OjSM1MF34Ip6Vq6+FZ2yUQUrgK6VLp
+         ztEmaVtC2GkUv/ExRQolWh4IzDTn2GFGHgpCrz9PLCV3NRxmeJM3aSaZhXeLmyAFd5lx
+         d8POnID6uH76Dh5KAGNw4t2Fn7lF5HRTRaRUQ/Mx/NAr2b4zxFNW05vIwtqV3k5fwKQM
+         59mpG1sDn6SDCZcNzbiKmW/5Z5XEAEif4mgZiqM7VKMuYvLh2MH12G4lV3Q7EZuC12Z0
+         zCJw==
+X-Gm-Message-State: AFq9FYLmR7qR8o9Gr7y7OF1dIWOwlMGf8g7ocShu84KLd/7/1F9Pkxyl
+	5DOIsIdvlAFEVEYuTd+DNlSNxAqcyPC4K9uqxmETBYzYDjGMFjIIn729v+Bi3tugm3PH3yrDdIG
+	7gc3T336ogbJXgx0QDgs68aKUwAFF19CpyF3FULc=
+X-Gm-Gg: AYBFou3WYX4CeVPtoZjRqxincqMPfj0Yaxn7QXDGyZPfrJDVXKOjpIamW4DUZNbyXuS
+	2l2RBRI15SHoGdwQy8+qxu9J8qkj1oiLypD+zL/JyxM5/AfM35XL1cXT91+4jURMoUqWsr6m4XN
+	ll6RU76cfPLZnd6ucdq+cZu8RNCFiNzQjynOGLQ7SyJCovyh8ujvVcEUEp+u4WTYysNtXl15fgW
+	e9/v1ZCKJnltMVb8DyDMTLyjRc7Pj5iwP2YedWPtivBaNVJ05L0T6TqykdPcVYmec2+ZEdR82jg
+	dekS+TgX5yJ8xpW1QxZ4fB3UXY1kZ5f+0i4ENwcvUvtawoc9LH7zKaTshH9S6QN5HZi6wvJa+J0
+	w0KwwIRLO1iijrA5Eb5iNPtqAHDdW3mWVG8jTFIkK7T01Q+oCVVzuB6h++KlyBQoUMdyQ/w==
+X-Received: by 2002:a17:907:930d:b0:c41:8736:8c38 with SMTP id
+ a640c23a62f3a-c46bde59590mr245827766b.30.1792859101720; Sat, 24 Oct 2026
+ 09:25:01 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,15 +103,15 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261022220203.91911-1-baohua@kernel.org> <20261022220203.91911-6-baohua@kernel.org>
- <sashiko-outbox-183271@kernel.org>
-In-Reply-To: <sashiko-outbox-183271@kernel.org>
+References: <20261022220203.91911-1-baohua@kernel.org> <20261022220203.91911-8-baohua@kernel.org>
+ <sashiko-outbox-183273@kernel.org>
+In-Reply-To: <sashiko-outbox-183273@kernel.org>
 From: Kairui Song <ryncsn@gmail.com>
-Date: Sun, 25 Oct 2026 00:19:05 +0800
-X-Gm-Features: AclHuK-xQtv4r8dDkN4YIOrd37L7SThU05g33L2D4y29AVDXw1XAksvSMWjHm9E
-Message-ID: <CAMgjq7C4Tu1zVCpyv82aXrGh_rmkQLngGCkoKvQrRgEYf7sC=Q@mail.gmail.com>
-Subject: Re: [RFC PATCH v5 05/14] mm/mglru: skip zones above reclaim_idx
- instead of rotating them
+Date: Sun, 25 Oct 2026 00:24:25 +0800
+X-Gm-Features: AclHuK8XZLGPPGEKrhXrigZfLOFmwwSSuwTBiqIswh8wTsjxAPb2yu1VJB7vo4k
+Message-ID: <CAMgjq7AZF4R8voNhsbj5Ede7NR19k1tkAMGnn7556ydB2ERX5A@mail.gmail.com>
+Subject: Re: [RFC PATCH v5 07/14] mm/mglru: balance anon and file scan budget
+ by refault rate
 To: sashiko-reviews@lists.linux.dev
 Cc: "Barry Song (Xiaomi)" <baohua@kernel.org>, akpm@linux-foundation.org, linux-mm@kvack.org, 
 	hui.zhu@linux.dev, axelrasmussen@google.com, baolin.wang@linux.alibaba.com, 
@@ -129,158 +129,202 @@ On Sat, Oct 24, 2026 at 6:03=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
 >
 > Thank you for your contribution! Sashiko AI review found 1 potential issu=
 e(s) to consider:
-> - [High] mm/mglru: pinned min_seq in higher zones stalls aging in scan_fo=
-lios()
+> - [Medium] mm/mglru: lru_gen_balance_scan() budgets un-scannable gens and=
+ zones
 > --
 >
-> commit 1b2f683d6b8bd1e171eb9677315ba8a3d9431b9b
+> commit ce196f9c0d172466d44f73b512ed408a9ecb6e36
 > Author: Kairui Song <kasong@tencent.com>
 >
-> mm/mglru: skip zones above reclaim_idx instead of rotating them
+> mm/mglru: balance anon and file scan budget by refault rate
 >
-> This commit restricts scan_folios() and lruvec_populated_min_seq() during
-> eviction to zones at or below sc->reclaim_idx, and removes the ineligible=
--zone
-> rotation branch from sort_folio(). try_to_inc_min_seq() continues to chec=
-k all
-> zones up to MAX_NR_ZONES before advancing min_seq.
+> This commit replaces get_type_to_scan() and isolate_folios() with
+> lru_gen_balance_scan() and evict_folio_lists() to split the scan budget
+> proportionally between anon and file LRUs based on per-type refault rates
+> and LRU sizes.
 >
 > > diff --git a/mm/vmscan.c b/mm/vmscan.c
-> > index a365a4bc8c988..09ea72b354a56 100644
+> > index cc20ba8c6cf2c..fed39b0422e01 100644
 > > --- a/mm/vmscan.c
 > > +++ b/mm/vmscan.c
-> > @@ -4132,7 +4132,7 @@ static bool inc_min_seq(struct lruvec *lruvec, in=
-t type, int swappiness)
-> >
-> >  /* Similar to lruvec_evictable_size, return the oldest populated seq o=
-f the type */
-> >  static unsigned long lruvec_populated_min_seq(struct lruvec *lruvec, i=
-nt type,
-> > -                                           unsigned long max_seq)
-> > +                                           int zone_limit, unsigned lo=
-ng max_seq)
-> >  {
-> >       int gen, zone;
-> >       unsigned long min_seq;
-> > @@ -4143,7 +4143,7 @@ static unsigned long lruvec_populated_min_seq(str=
-uct lruvec *lruvec, int type,
-> >       min_seq =3D READ_ONCE(lrugen->min_seq[type]);
-> >       while (min_seq <=3D max_seq) {
-> >               gen =3D lru_gen_from_seq(min_seq);
-> > -             for (zone =3D 0; zone < MAX_NR_ZONES; zone++) {
-> > +             for (zone =3D 0; zone < zone_limit; zone++) {
-> >                       if (!list_empty(&lrugen->folios[gen][type][zone])=
-)
-> >                               return min_seq;
-> >               }
-> > @@ -4166,7 +4166,7 @@ static void try_to_inc_min_seq(struct lruvec *lru=
-vec, int swappiness)
-> >       /* Requires at least MIN_NR_GENS gens for basic functionality */
-> >       seq =3D lrugen->max_seq - MIN_NR_GENS;
-> >       for_each_evictable_type(type, swappiness) {
-> > -             min_seq[type] =3D lruvec_populated_min_seq(lruvec, type, =
-seq + 1);
-> > +             min_seq[type] =3D lruvec_populated_min_seq(lruvec, type, =
-MAX_NR_ZONES, seq + 1);
-> >               if (min_seq[type] > lrugen->min_seq[type])
-> >                       seq_inc_flag =3D true;
-> >       }
+> > @@ -5019,79 +5019,110 @@ static int get_tier_idx(struct lruvec *lruvec,=
+ int type)
 >
 > [ ... ]
 >
-> > @@ -4863,10 +4864,8 @@ static bool sort_folio(struct lruvec *lruvec, st=
-ruct folio *folio, struct scan_c
-> >        * longer be promoted or protected, so just isolate them. The one
-> >        * exception is lru_gen_reparent_memcg(), which is handled above.
+> > +static void lru_gen_balance_scan(struct lruvec *lruvec, int swappiness=
+,
+> > +             unsigned long total_scan, unsigned long nr[])
+> >  {
+>
+> [ ... ]
+>
+> > -     /*
+> > -      * We are running out of the current reclaim type. Fall back to
+> > -      * the other type if allowed.
+> > +      * The more extreme the swappiness, the wider the IO cost gap bet=
+ween
+> > +      * anon and file, so the split should follow the IO cost ratio ra=
+ther
+> > +      * than the sizes. With a mild swappiness, balance the scan by th=
+e
+> > +      * actual LRU size more.
 > >        */
-> > -     if (min_gen =3D=3D max_gen) {
-> > -             VM_WARN_ON_ONCE(zone > sc->reclaim_idx);
-> > +     if (min_gen =3D=3D max_gen)
-> >               return false;
+> > -     if (!scanned && !tried && type_fallback_allowed) {
+> > -             type =3D !type;
+> > -             tried =3D true;
+> > -             type_fallback_allowed =3D false;
+> > -             goto retry;
 > > -     }
-> >
-> >       /* protected */
-> >       if (tier > tier_idx || refs + workingset =3D=3D BIT(LRU_REFS_WIDT=
-H) + 1) {
-> > @@ -4883,13 +4882,6 @@ static bool sort_folio(struct lruvec *lruvec, st=
-ruct folio *folio, struct scan_c
-> >               return true;
-> >       }
-> >
-> > -     /* ineligible */
-> > -     if (zone > sc->reclaim_idx) {
-> > -             gen =3D folio_inc_gen(lruvec, folio, min_gen);
-> > -             list_move_tail(&folio->lru, &lrugen->folios[gen][type][zo=
-ne]);
-> > -             return true;
+> > +     size_bias =3D max(1, min(swappiness, MAX_SWAPPINESS - swappiness)=
+);
+> > +     anon_weight =3D nr[LRU_GEN_ANON] + nr[LRU_GEN_FILE] / size_bias;
+> > +     file_weight =3D nr[LRU_GEN_FILE] + nr[LRU_GEN_ANON] / size_bias;
+> > +
+> > +     anon_factor =3D (u64)swappiness * refault_rate[LRU_GEN_FILE] * an=
+on_weight;
+> > +     file_factor =3D (u64)(MAX_SWAPPINESS - swappiness) * refault_rate=
+[LRU_GEN_ANON] * file_weight;
+> > +
+> > +     /* Cross-multiply the ratio above. */
+> > +     anon_scan =3D mul_u64_u64_div_u64(total_scan, anon_factor, anon_f=
+actor + file_factor);
+> > +     file_scan =3D (u64)total_scan - anon_scan;
+> > +
+> >       /*
+> > -      * We scanned some folios but failed to isolate any due to promot=
+ions,
+> > -      * protections, or races. Retry once to avoid a larger loop.
+> > +      * Bound each type by its evictable size. Hand the exceeding part=
+ to
+> > +      * the other type. Any excess left when total_scan exceeds both s=
+izes
+> > +      * is dropped, since it only stresses the scanner with no gain.
+> >        */
+> > -     if (scanned && !tried) {
+> > -             tried =3D true;
+> > -             goto retry;
 > > -     }
 > > -
-> >       return false;
+> > -     return total_scanned;
+> > +     if (anon_scan > nr[LRU_GEN_ANON])
+> > +             file_scan +=3D anon_scan - nr[LRU_GEN_ANON];
+> > +     if (file_scan > nr[LRU_GEN_FILE])
+> > +             anon_scan +=3D file_scan - nr[LRU_GEN_FILE];
+> > +     nr[LRU_GEN_ANON] =3D min_t(u64, anon_scan, nr[LRU_GEN_ANON]);
+> > +     nr[LRU_GEN_FILE] =3D min_t(u64, file_scan, nr[LRU_GEN_FILE]);
+> >  }
+>
+> [ ... ]
+>
+> > @@ -5212,22 +5244,22 @@ static bool should_run_aging(struct lruvec *lru=
+vec, unsigned long max_seq,
+> >       return evictable_min_seq(min_seq, swappiness) + MIN_NR_GENS =3D=
+=3D max_seq;
 > >  }
 > >
-> > @@ -4921,16 +4913,17 @@ static int scan_folios(unsigned long nr_to_scan=
-, struct lruvec *lruvec,
-> >                      struct scan_control *sc, int type, int tier,
-> >                      struct list_head *list, int *isolatedp)
+> > -static long get_nr_to_scan(struct lruvec *lruvec, struct scan_control =
+*sc,
+> > -                        struct mem_cgroup *memcg, int swappiness)
+> > +static void lru_gen_prepare_scan(struct lruvec *lruvec, struct scan_co=
+ntrol *sc,
+> > +                              struct mem_cgroup *memcg, int swappiness=
+,
+> > +                              unsigned long nr_to_scan[])
 > >  {
-> > -     int i;
-> >       enum node_stat_item item;
-> > +     int zone_idx;
-> >       int sorted =3D 0;
-> >       int scanned =3D 0;
-> >       int isolated =3D 0;
-> >       int skipped =3D 0;
-> >       int gen, max_gen;
-> > -     unsigned long min_seq;
-> > +     unsigned long seq;
-> >       unsigned long remaining =3D nr_to_scan;
-> >       struct lru_gen_folio *lrugen =3D &lruvec->lrugen;
-> > +     struct pglist_data *pgdat =3D lruvec_pgdat(lruvec);
-> >       DEFINE_MAX_SEQ(lruvec);
+> > -     unsigned long nr_to_scan, evictable, sizes[ANON_AND_FILE];
+> > +     unsigned long total;
 > >
-> >       VM_WARN_ON_ONCE(nr_to_scan > MAX_LRU_BATCH);
-> > @@ -4942,24 +4935,22 @@ static int scan_folios(unsigned long nr_to_scan=
-, struct lruvec *lruvec,
-> >        * when under pressure to respect swappiness more and reduce IO c=
-ost.
-> >        */
-> >       if (sc->priority =3D=3D DEF_PRIORITY)
-> > -             min_seq =3D lrugen->min_seq[type];
-> > +             seq =3D lrugen->min_seq[type];
-> >       else
-> > -             min_seq =3D lruvec_populated_min_seq(lruvec, type, lrugen=
-->max_seq);
-> > +             seq =3D lrugen->max_seq;
+> > -     lruvec_evictable_size(lruvec, swappiness, sizes);
+> > -     evictable =3D sizes[LRU_GEN_ANON] + sizes[LRU_GEN_FILE];
+> > +     lruvec_evictable_size(lruvec, swappiness, nr_to_scan);
+> > +     total =3D nr_to_scan[LRU_GEN_ANON] + nr_to_scan[LRU_GEN_FILE];
 > >
-> > -     gen =3D lru_gen_from_seq(min_seq);
-> > +     seq =3D lruvec_populated_min_seq(lruvec, type, sc->reclaim_idx + =
-1, seq);
-> > +     gen =3D lru_gen_from_seq(seq);
-> >       max_gen =3D lru_gen_from_seq(max_seq);
+> > -     /* try to scrape all its memory if this memcg was deleted */
+> > +     /* Just scrape all pages calculated above if this memcg was delet=
+ed */
+> >       if (!mem_cgroup_online(memcg))
+> > -             return evictable;
+> > -
+> > -     nr_to_scan =3D apply_proportional_protection(memcg, sc, evictable=
+);
+> > -     nr_to_scan >>=3D sc->priority;
+> > +             return;
 > >
-> > -     for (i =3D MAX_NR_ZONES; i > 0; i--) {
-> > +     /* Scan eligible zones in descending order. */
-> > +     for (zone_idx =3D sc->reclaim_idx; zone_idx >=3D 0; zone_idx--) {
+> > -     return nr_to_scan;
+> > +     total =3D apply_proportional_protection(memcg, sc, total);
+> > +     total >>=3D sc->priority;
+> > +     lru_gen_balance_scan(lruvec, swappiness, total, nr_to_scan);
+> >  }
+> >
+> >  static bool should_abort_scan(struct lruvec *lruvec, struct scan_contr=
+ol *sc)
+> > @@ -5260,6 +5292,30 @@ static bool should_abort_scan(struct lruvec *lru=
+vec, struct scan_control *sc)
+> >       return true;
+> >  }
+> >
+> > +static long evict_folio_lists(unsigned long nr_to_scan[], struct lruve=
+c *lruvec,
+> > +                          struct scan_control *sc, int swappiness, uns=
+igned long max_batch)
+> > +{
+> > +     int type;
+> > +     unsigned long batch, scanned, total_scanned =3D 0;
+> > +
+> > +     /*
+> > +      * Scan both types with the given budgets; the caller checks if
+> > +      * reclaim is satisfied after each pass.
+> > +      */
+> > +     for (type =3D LRU_GEN_FILE; type >=3D LRU_GEN_ANON; type--) {
+> > +             if (!nr_to_scan[type])
+> > +                     continue;
+> > +
+> > +             batch =3D min(nr_to_scan[type], max_batch);
+> > +             scanned =3D evict_folios(batch, lruvec, sc, type, swappin=
+ess);
+> > +
+> > +             nr_to_scan[type] -=3D min(nr_to_scan[type], scanned);
+> > +             total_scanned +=3D scanned;
+> > +     }
+> > +
+> > +     return total_scanned;
+> > +}
 >
-> [Severity: High]
-> During zone-constrained reclaim in mm/vmscan.c (where sc->reclaim_idx is =
-below
-> MAX_NR_ZONES - 1 and zones above sc->reclaim_idx are populated, such as
-> GFP_DMA32 reclaim with a populated ZONE_NORMAL or GFP_KERNEL reclaim with=
- a
-> populated ZONE_MOVABLE), can keeping MAX_NR_ZONES in try_to_inc_min_seq()
-> while removing the ineligible-zone rotation from sort_folio() stall aging=
- and
-> memcg rotation?
+> [ ... ]
+>
+> > @@ -5948,8 +6001,11 @@ static int run_eviction(struct lruvec *lruvec, u=
+nsigned long seq, struct scan_co
+> >               if (sc->nr_reclaimed >=3D nr_to_reclaim)
+> >                       return 0;
+> >
+> > -             nr_batch =3D min(nr_to_reclaim - sc->nr_reclaimed, MAX_LR=
+U_BATCH);
+> > -             if (!evict_folios(nr_batch, lruvec, sc, swappiness))
+> > +             lruvec_evictable_size(lruvec, swappiness, nr_to_scan);
+> > +             lru_gen_balance_scan(lruvec, swappiness,
+> > +                                  nr_to_reclaim - sc->nr_reclaimed, nr=
+_to_scan);
+> > +
+> > +             if (!evict_folio_lists(nr_to_scan, lruvec, sc, swappiness=
+, MAX_LRU_BATCH))
+> >                       return 0;
+> >
+> >               cond_resched();
+>
+> [Severity: Medium]
+> Can budgeting with lruvec_evictable_size() in lru_gen_balance_scan() caus=
+e
+> lost scan budget and premature reclaim termination in try_to_shrink_lruve=
+c()
+> and run_eviction() when one type has no folios in scannable generations o=
+r
+> eligible zones?
 
-Yeah it can stall aging, but this series lifted the restriction of
-MIN_NR_GEN on eviction, and eviction will start the the last populated
-gen of a zone instead of min_seq, and we have more proactive aging
-when the gens are imbalanced, so this won't be a problem, it won't
-cause OOM. I'm not sure if it will cause any performance issue though,
-if this is concerning we can keep the old behavior, or trigger aging
-when the populated gen that satisfy a reclain is below (MIN_NR_GEN -
-1) or imbalanced, this seems a better solution to me, still avoid a
-lot of redundant work while ensure there is no reclaim effenciency
-issue. We already have the right helper to do so in this series, so
-seem not hard or dirty.
+At the moment it's like part of the design, prioiry will raise and in
+the end we will have no scannable generation limit, zone might worth
+be considered when getting the evictable size though?
+
+Also, maybe we can improve the aging on imbalance to trigger when the
+scan budget is much larger than the scannable size (and priority is
+raised beyound default)?
