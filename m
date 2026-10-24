@@ -1,46 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=218.76.62.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.160.181
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792837142;
-	b=sceYdHpk5xalhSuexgm+4Fc1DwI/RwkEKyW8u4P96Z0kFse2I7dME7zRdA9/kgTI/Vl7
-	 maRKO224ybI5k5LriiDnX0mY9Z9INif6MWZaB3IFiBSe1jz9Jx5MDrZHRrzbW+LWLQB7w
-	 wFZrikrjdu/t6i40mAD5iBfKfruoSU0sa4PmEVCOJ2L/M+9hz45ojvvdcqoM2nlass3Qk
-	 Stby6D9a2OCathyiPqx1G82p2wG6pElu8aOGD0y8h8uLb39pmRdB5tf7BO/waVqy8d3Rb
-	 92DWmDiYxse8r1cRVBNG8s4kIQG/MRX9iPD1yd6lR7eis82fjCTUYB042/juXjNqx3g==
+	t=1792854649;
+	b=D3mZnK9YVVdnnZCNf64FuS+3/+WW7SIT3RWNAbPBzE+hW51zRsZu6h9a7WmASQACzo65
+	 8KWMI4N//lN52BECVC+pFCaiikGSCIZ+slTrACDgunGF3AbJGL9v0tWluCB+j5I+dmXuf
+	 AYQN5rhqJ8nAnZi4ghITib+m9fkQNjovk4agmPrhDwcpOeVf/Q6Dqapvu3hDUldiFTlht
+	 qcozA44leZSz57tLrtXAKlXeuPqLF7OHaavFNr2+Dh4WRsb/Pd84IBnOgqbi23r5JIpe7
+	 WXjA4jofhhHKamgK7FYoUuam1wnysT0ag1FQkc3H0U2V7narLHHvtveFFLNyaZzBgyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792837142;
-	h=DMARC-Filter:DKIM-Signature:Received:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:References:
-	 Date:Message-Id:X-Mailer:X-Developer-Signature:X-Developer-Key:
-	 X-CM-TRANSID:X-Coremail-Antispam:X-CM-SenderInfo;
-	bh=mhr9qgQE0EJPZKLcMiOOrsxk2svu6ZzTrQM8BT1dCJc=;
-	b=ddDCgzxPvI6j6jyiB16G8D/uJItrnTmYifb1KyD0t7KHo3i03kqQzCsaYVX4OLXsftwX
-	 zequyBgn1ZnHP/lE+icmCL37mWlcXTUGdPduCXtJAYotWyzd3HpojtunhSRUKK1LDbn/z
-	 /qEffJXEJlsTGPKsgLGWQEIFlSzu3eHD9I74D2l8Gwi8RxVC/M0eTOHkXgluZtOpT2mdC
-	 JpvvhRaZAQo2oKhl8stH2uZFNDuHM6U6Wx8FjUO6brBCvpaRSkvsXlMNVXHYbqtLGMH2c
-	 wCMh9Ceyip0oUy19omBkmr8yaaNVkV8CbEy1Fo+A1CeEMZz+9JIHX2GMBN+sweHqK9Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792854649;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=uf9PXkRYvY5lIL6bNTa4Yzjo7yt0Q40iND7ldsiuGxA=;
+	b=CbrAH3Pt2mC8Wh8pa+ue9C/UX8NJYNburqujGCsH6haMqIRT9m95/iXhJFFt4kMbmAzv
+	 ZfnCz0yHEKBLaJLxIEtUOQfLwb5/NYgoUkRW3ckfhq+fHPVdvf/0zoa24/ONi+6OWCs6n
+	 Rwx/ntcyW6NPGJYpT5kvOtFO7S1RqBP//P+Dy88K4q52od9t9Q+OX2m4Mh4/jf4pPmYq3
+	 Hop5SSkL31Hju7BRfgN10/rUMvK8PsClWqwAqmhhSWbuX2AaYxGWZKnfAJv/4LVcGnqSA
+	 vFN4Px2kd5x3Wv2Ns8kLlHfrmfySpLNL2D36HcDn4i+vGmdv62619eW5ACLk4Hm97Eg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=ultrarisc.com;
-	spf=pass smtp.mailfrom=ultrarisc.com;
-	dkim=pass header.d=ultrarisc.com header.i=@ultrarisc.com header.a=rsa-sha256 header.s=dkim header.b=GRuZkjY5;
-	arc=none smtp.remote-ip=218.76.62.146
-Received: from ultrarisc.com (unknown [218.76.62.146])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C28E606A31A
-	for <sashiko-reviews@lists.linux.dev>; Sat, 24 Oct 2026 10:18:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5C28E606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ultrarisc.com
+	dmarc=pass header.from=rowland.harvard.edu;
+	spf=fail smtp.mailfrom=g.harvard.edu;
+	dkim=pass header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.a=rsa-sha256 header.s=google header.b=Drgzb9Rc;
+	arc=none smtp.remote-ip=209.85.160.181
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594F4606A31B
+	for <sashiko-reviews@lists.linux.dev>; Sat, 24 Oct 2026 15:10:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 594F4606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rowland.harvard.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=g.harvard.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=ultrarisc.com header.i=@ultrarisc.com header.a=rsa-sha256 header.s=dkim header.b=GRuZkjY5
+	dkim=pass (2048-bit key, unprotected) header.d=rowland.harvard.edu header.i=@rowland.harvard.edu header.a=rsa-sha256 header.s=google header.b=Drgzb9Rc
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-5363c8de563so17271741cf.0
+        for <sashiko-reviews@lists.linux.dev>; Sat, 24 Oct 2026 08:10:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=ultrarisc.com; s=dkim; h=Received:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:
-	References:Date:Message-Id; bh=mhr9qgQE0EJPZKLcMiOOrsxk2svu6ZzTr
-	QM8BT1dCJc=; b=GRuZkjY54UQOdhvq+HKxgcbh1/Of2eUSAgruFfFKI2RC7k1KX
-	K33vGdyftDFkIq6Na7CcyFo3Ai2nJ2XRv0FEWKwiBgeKgQXCoy2SyTSmHtkDmH8T
-	DCWTnMh4erjSfRZxZtTQQeeSH6MKUOqjUiXQPgTOZC7Y2N8IKcFljoIwdI=
-Received: from [127.0.0.1] (unknown [192.168.100.1])
-	by localhost.localdomain (Coremail) with SMTP id AQAAfwCnYwX9hdxqkrMCAA--.881S2;
-	Sat, 24 Oct 2026 18:18:49 +0800 (CST)
+        d=rowland.harvard.edu; s=google; t=1792854648; x=1793459448; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=uf9PXkRYvY5lIL6bNTa4Yzjo7yt0Q40iND7ldsiuGxA=;
+        b=Drgzb9RciH9NcPmPvvhcDVGaxwa3gjvwO4xtTOGbyKRQPB637qh9fA5BYLT2D1Z5iM
+         z0pa79v1danD5Qp+WtlfEb2LwrCmbpFy4NclLMWIGarQhXxNYMoh8ZWE9i8ZOTGDPaxl
+         yEnCTCgjaZy1cMtCAyZc8pJ7oPijh2v3vShhz1QlKXzX6NEmhLgWRsBnlbzI8G9nN9mb
+         FJCQ9hYxV/ai2uT89riaVUaAjXzAz9Lsls2xEettyuXPMeT0KkdZ9LOxS8kcotDm17cr
+         jBtStEDZJe9Dp6L0ySgDT4496y3f2wbNzpKpeENIcrzyqLgpq1MxsUlvudYI2oXCy70J
+         IZ/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1792854648; x=1793459448;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=uf9PXkRYvY5lIL6bNTa4Yzjo7yt0Q40iND7ldsiuGxA=;
+        b=SisTZPgBvWnwOB4m/9CyWCjXTQnUxJJxit2kS983Wd/teYn8urGlry1txqdz5igIW5
+         l6WDxg8d4P50EZf47m3GOH4E8u2DqKtkzKYsiNjB+P6oIunnElsJIRvm1HRjRbR+oHv4
+         L/YrM94WOzgpweU3xWSWVpvYKbgSqQUX4dzOFFZ7lwUukghSOoZLeeseA5ac3jfhmrIe
+         RbdIoCsVIowrVaFm9h2kcojcxsy233gpvWv57Glh44ePiiumQu7z/dQQNzhvogVT8UCh
+         U4xsiSLLZBzNzn6Izo79L5JI62iPrfXZJoMo7oOWJdtnJpvADvr43EkQ6hFzH8hIgch2
+         JjlQ==
+X-Gm-Message-State: AFq9FYIL+xhG4VuyDr6xRDnUCBD/loJy4n/a9/bpw7D7TfCF8KzG+DyP
+	rQ1OddvGmmhVYrBTeZM6Vbl75ndNrFFYKQKPYyvSP/1mMpM6hcBsgIOqrZ6WUxrIbJ9V4KlW7S9
+	7YW0JuQ==
+X-Gm-Gg: AYBFou2HJV0mNJ6Xad3RGBmfPw79lS6Fs/sA3f8H79uF4tjrZdGlLhGOyu0VuCEvLCE
+	GpAhw8q+FQBL6fT7iTLh1fI9xWwZ6pwvOxL60iwcd2vuwTuU8DuPexcv/6V2h2uWLNshfba4W0G
+	BZwhUeagQcA1sp39HYEZNQyKUZ6BPpv8tMSORw/C7L1QYdNlpWD04pkghuxdlX0BOta0u47PKq5
+	Za9T0CqNarnM875RPJogB7I4UArFCcrbe+Pub6vyAPXsgMgr4GVAleadSoLJIGBmHwFwn0kuiI3
+	9BbxFlIRfZ1vsB4S4axCl8DgTEK5nHQBFzVAh242G9kUUFpDDDjjUxhFUQtlTySsR4rBgo1mbzT
+	Zk8x94O7oxe6gFWkEftFGlBD6ygD1xo6buRSt84i858spu2O9D7jN0WEJgZGmFQEcduFzymJhdC
+	tEVGLHcWuNQ2Lk4LIeHFDtEYOVgw71r0EG0ZqYJfAs+SzZFQ3aDEOMeiRv94BAa9Izx98VKA6Zz
+	hmKvQeZdA/dSn2BLvZa0qIw8C1i//GQntQwHv9C/4ShYPK9I+sTJ1pK
+X-Received: by 2002:ac8:5acd:0:b0:535:162c:2e85 with SMTP id d75a77b69052e-5383b353beamr27733841cf.10.1792854648097;
+        Sat, 24 Oct 2026 08:10:48 -0700 (PDT)
+Received: from rowland.harvard.edu ([2601:19b:d01:d210::66b0])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5383970b678sm17189781cf.21.2026.10.24.08.10.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 24 Oct 2026 08:10:47 -0700 (PDT)
+Date: Sat, 24 Oct 2026 11:10:45 -0400
+From: Alan Stern <stern@rowland.harvard.edu>
+To: sashiko-reviews@lists.linux.dev
+Cc: Igor Putko <igorpetindev@gmail.com>, linux-usb@vger.kernel.org
+Subject: Re: [PATCH v2] usb: core: hcd: flush giveback work on stop
+Message-ID: <47728b9e-c35e-4964-8c90-5bc29a2ab045@rowland.harvard.edu>
+References: <20261023174015.54793-1-igorpetindev@gmail.com>
+ <20261024083647.2599-1-igorpetindev@gmail.com>
+ <sashiko-outbox-183606@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -50,69 +96,54 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v6 5/7] riscv: dts: ultrarisc: Add initial device tree
- for UltraRISC DP1000
-From: Xincheng Ji <jixincheng@ultrarisc.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Xincheng Ji <jixincheng@ultrarisc.com>, devicetree@vger.kernel.org, 
- robh@kernel.org, conor+dt@kernel.org
-In-Reply-To: <sashiko-outbox-183627@kernel.org>
-References: <20261024-ultrarisc-dts-v6-0-c62994d8a114@ultrarisc.com>
- <20261024-ultrarisc-dts-v6-5-c62994d8a114@ultrarisc.com>
- <sashiko-outbox-183627@kernel.org>
-Date: Sat, 24 Oct 2026 18:18:38 +0800
-Message-Id: <179283711841.2737981.7618602420031907655.b4-reply@b4>
-X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792837118; l=893;
- i=jixincheng@ultrarisc.com; s=20260922; h=from:subject:message-id;
- bh=L946K+8csVVFcJRZMouriLB15lZ6UCCrxKjDXCdTcrE=;
- b=aUiU6l6gLNmzjFU2VEY2F89m6bh9b253J2I1VbEzX2lkDDXMbu7cvpQ/WJ8JkkJncic125ca+
- 49aLkbY55aMAlwL/ltz5cxXNx2WW4DOwU2Qrcm2RwZwraqqPa9f9cR/
-X-Developer-Key: i=jixincheng@ultrarisc.com; a=ed25519;
- pk=n848dcS5D6g0vLad/rjp4Gf/1eedTe1a3pYUrkt2260=
-X-CM-TRANSID:AQAAfwCnYwX9hdxqkrMCAA--.881S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7Gr45AFWfKFyDWr4UuryfZwb_yoWfXFcEgF
-	WIyasrCw4DGrs5GanIkrs0qr1Fyr4xGF18Jr1YkrnxtrW5JFsrJFW8tr1SvFyIq3y7tF90
-	9ryfWanrKr1IgjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbI8FF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Jr0_
-	Gr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Jr0_Gr
-	1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0
-	cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8Jw
-	ACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc7CjxVAaw2AFwI0_JF0_
-	Jw1lc2xSY4AK6svPMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I
-	0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWU
-	AVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcV
-	CY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAF
-	wI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvj
-	fUehL0UUUUU
-X-CM-SenderInfo: pml0x0xfkh0wg6xo325dul2uoofrz/1tbiAQAHDmrYYSwADQAgsa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-183606@kernel.org>
 
-On 2026-10-24 09:43 +0000, sashiko-bot@kernel.org wrote:
-> The duplicated @9000000 suffix causes dtc to fail compilation in
-> scripts/dtc/checks.c:check_node_name_format() when building any board
-> device tree that includes dp1000.dtsi:
+On Sat, Oct 24, 2026 at 09:11:11AM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Critical] usb: core: hcd: incomplete bh work flush in usb_stop_hcd() on self-requeue
+> --
 > 
->     if (strchr(get_unitname(node), '@'))
->         FAIL(c, dti, node, "multiple '@' characters in node name");
+> commit 9c9e1488a3b8b0e4cd42d6243a942c8d42aeb233
+> Author: Igor Putko <igorpetindev@gmail.com>
 > 
-> It also causes check_simple_bus_reg() and dtbs_check validation to fail
-> because the unit-address does not match the reg property address.
+> usb: core: hcd: flush giveback work on stop
 > 
-Thanks for catching these mistakes, and sorry for the careless errors.
+> This commit adds flush_work() calls on the high and low priority BH work
+> items in usb_stop_hcd() to prevent a use-after-free on struct usb_hcd when
+> usb_giveback_urb_bh() is still executing as the HCD is stopped and freed.
+> 
+> > diff --git a/drivers/usb/core/hcd.c b/drivers/usb/core/hcd.c
+> > index a865a15ea3863..9db0f39896065 100644
+> > --- a/drivers/usb/core/hcd.c
+> > +++ b/drivers/usb/core/hcd.c
+> > @@ -2788,6 +2788,9 @@ static void usb_stop_hcd(struct usb_hcd *hcd)
+> >  	/* In case the HCD restarted the timer, stop it again. */
+> >  	clear_bit(HCD_FLAG_POLL_RH, &hcd->flags);
+> >  	timer_delete_sync(&hcd->rh_timer);
+> > +
+> > +	flush_work(&hcd->high_prio_bh.bh);
+> > +	flush_work(&hcd->low_prio_bh.bh);
+> 
+> [Severity: Critical]
+> Is a single flush_work() call on each BH work item sufficient to drain all
+> pending givebacks if usb_giveback_urb_bh() requeues itself?
 
-I've fixed the PLIC node name and moved the M0 PHY node rename into
-the M0 board patch for v7. Both board DTBs now compile successfully.
+That's not an issue in this case.  By the time usb_stop_hcd() runs, the 
+two giveback queues should be entirely empty and there should be no more 
+devices remaining on the USB bus creating new entries to add to the 
+queues.
 
-I'll review the changes and validate each patch more carefully before
-sending future revisions.
+However, it would be worthwhile to add a sentence to the kerneldoc for 
+usb_stop_hcd() explaining this fact.
 
-Thanks,
-Xincheng
+> Also, does the comment above usb_stop_hcd() in usb_remove_hcd() stating that
+> flush_work() isn't needed there need to be updated?
 
--- 
-Xincheng Ji <jixincheng@ultrarisc.com>
+Yes, that comment should be removed.  In its place, add a comment to 
+usb_stop_hcd() explaining that even though all URBs have been given 
+back, the work routine itself may still be finishing up and accessing 
+the usb_hcd structure; that's why the work items need to be flushed.
 
+Alan Stern
