@@ -1,55 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=117.135.210.3
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792823221;
-	b=s9vmkyiWeTK3r6LgrvPjyiLuD/rrA5tgpnF5XSsqIcrj0ozAdvjHPAqXRajsGJoaEzuQ
-	 Qda4WtHaz3JN6sIM9oWSnG/+XW4krBFV49WNfEnTL+bNZMqtAnYG692Awqm3fMLjGBkY7
-	 3IlXfA947qFQtda70pT+RH+AakOWfoODmpbMzh4buL61Ql+ErFTbd7qmtVxg57wld7ebg
-	 bdcq7996MmNBIOqFHsKojdPR2i4o4tHtCbleqTlQqO1Z6iDH/r6JAqycjy4wYY4sNgWEL
-	 H0E+mK2Usi83XGgdS83OTEI9xvjo3YRpVIHECkDdGtiuqXDGFcY+lrrDgsf6dRFaFTg==
+	t=1792836250;
+	b=o9jx8pyeNsGFNx4mW1PgQdZ9hOCQJ0XntylDUPfb9nVOklgHbj8PigOnumB6ysr5vXYF
+	 aPdFlR63uQh/jC+V7Im0s9BSW9piM3wnXAa+CERRZ36IVYlsauvkAhG9NUQsyqL9XTrOJ
+	 U+ig7BRNcNolSSsOwlqecVGFmPStglwoW/VDeheGQP3B1+2CV8MLe6gdHvZQjR/QoqVp8
+	 31q/4Zo15MNActUoDQCEDClKKzQbhHqMF3a3ykF3b8H0k/hgkZu2khJW0KCnP4A3oWDBM
+	 gqJDrzrGDVatEbs7rH8k7Reeufod3pZTd9Wl6dPkf3HddUCUj0Rl7koiLCMWJnMlQOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792823221;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To;
-	bh=+S9En87nOHBKDP9xDITQCXqiAG2G9mU536/WXxAEKjM=;
-	b=viaMKG5iWp7Pw1N1qIdi3UzBWO/O6Xw1NJOk8LTm6sKj5PX7SphBgd9VaiuonXcsU+Xg
-	 bCvk4Rv7TyIXQXSmE3CPz/FYafnBpW9K2d96zB9z/SOQwB9PKJWu162zXGFa3xPLkm1j/
-	 cTIWe698TdvMalIYVkf9mOsyM5UsZd6OXV/eRDIvUgPodBQ6KX4EIN5VSZs1J0TjSbf6H
-	 tm+thZwdUebaQhs2wbVOg8qvmMfQUD443ynnVj8XNIp/3Xfwi9FE74GujnfSIyH+CCVHH
-	 2hvnOA3hfolXPjI31TLOlKHPejp5ipd+/VdBKE4BLcP3cUlW41G/kehgJv3JqTrlSjA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792836250;
+	h=DMARC-Filter:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
+	 In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:X-CM-TRANSID:X-Coremail-Antispam:
+	 X-CM-SenderInfo;
+	bh=ZLX2FJ8teYpCnQ3RfDTqC7zap37D6OQ9RPoG9fqqkT8=;
+	b=U5+CVogm004htp+f5TOLUFPVSPtqdcuN57pQ6J3OJaIoxuNIY8r2yFjxFRdFvbo5n2FI
+	 gwoP5AVz7lKRDMgg47uA+h8CenW7vyopFmhlWc/dDsxUKvzQfBAMCC0EXfeCi6CzwiSkL
+	 saxNU0QX3UuWLOvkCFUeI1qgYKoTGOoeJrulcmHQhz/Q+PvvC5ug9rFjoFmvRYWOIhIYK
+	 44GfaURKOSj+Hk6zlCzSAIDyMbXBWo/Poat8B/qlj87b3RUyCi6/k7Nsjr+vRF3zvKQuo
+	 f6mMpChmxiJXE2ZsfU7lm/vbKhcOKLO0n4D83QVWIvQI54jpF/Nn46Wt1/c4DznnLFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=g8RtePCQ;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=163.com;
+	spf=pass smtp.mailfrom=163.com;
+	dkim=pass header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=VyeUJLWI;
+	arc=none smtp.remote-ip=117.135.210.3
+Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7BB606A31E;
-	Sat, 24 Oct 2026 06:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D64606A31A
+	for <sashiko-reviews@lists.linux.dev>; Sat, 24 Oct 2026 10:04:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 76D64606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=g8RtePCQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62BF81F01825;
-	Sat, 24 Oct 2026 06:27:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792823220;
-	bh=+S9En87nOHBKDP9xDITQCXqiAG2G9mU536/WXxAEKjM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=g8RtePCQu/twlD4PMNOBNLI9WPlik31a5cUdbrvT+ViOqWXKBTjEUjre7qA8f2mPo
-	 cSTEmQ0f65hGHL4Oe02XVxZ3ORUVRBHEDTBFB6KFRGYzl9oSqdfk4ewTU4incgqfPa
-	 QV1k9gq8zjJ23EfiZp/U4qAUX5D0xKN1W+NYScXCht+PQsdgM87chs5dNf6bE+GMLZ
-	 J1f6ddCLyVu2SIGLOUCHMD5KqQXp1/V+AufETHL1GOY9ca2WevP9SMWW+lJw75Z7tP
-	 zcT1mzL+dJxd40IXBP0+LuuqEpOtL/jQYMnyo/vn7//VRT51P1Q4cc3xNUtFsuSgft
-	 1s+bLqqcjOecw==
-Date: Fri, 23 Oct 2026 23:26:59 -0700
-From: Oliver Upton <oupton@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvmarm@lists.linux.dev, Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH v2 04/28] KVM: arm64: nv: Only shadow writable-dirty
- guest descs as writable
-Message-ID: <atxPs59WnhOM1cJ9@kernel.org>
-References: <20261023205610.1044532-1-oupton@kernel.org>
- <20261023205610.1044532-5-oupton@kernel.org>
- <sashiko-outbox-183253@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=VyeUJLWI
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version:
+	Content-Type; bh=ZLX2FJ8teYpCnQ3RfDTqC7zap37D6OQ9RPoG9fqqkT8=;
+	b=VyeUJLWIZowmFIkrb87raiEk3FSlhuXigOFqwV4Fnr5R/lZ1N3+fkv31bYpJZi
+	gYeXbeW432NBpa2aGQYiyqqhblmuoKbZev/kWPhUH1EAFqBy6kCK+mGjtM61A/xc
+	YQ/iRDOmx0C11OvBZ0643KzOr/pI8AoUIy/IFFeXBtfvY=
+From: Bob Hui <bg9oxa@163.com>
+To: linux-sound@vger.kernel.org
+Cc: sashiko-reviews@lists.linux.dev, bg9oxa@163.com
+Subject: Re: [PATCH 1/2] ASoC: es8328: describe the power-on register values
+ in the regmap
+Date: Sat, 24 Oct 2026 18:03:57 +0800
+Message-ID: <179283623767.21314.9471498417293367893@163.com>
+In-Reply-To: <sashiko-outbox-183604@kernel.org>
+References: <sashiko-outbox-183604@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -59,61 +58,40 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-183253@kernel.org>
+X-CM-TRANSID:_____wDXn8CNgtxqNz1_CA--.42446S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7tw45XF4UCr4fAF4rXr47urg_yoW8XrW5pF
+	ZxK343Kr4kur4Ikrn7Zr4jvFyruayfta45Cry8Jw47Za15A342yrZ3tF4YyF10krZ5Ka4a
+	qrs8X34xCayDZaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0JUN_-9UUUUU=
+X-CM-SenderInfo: lejz05rd6rljoofrz/xtbC3g6VA2rcgo7yVQAA3b
 
-On Fri, Oct 23, 2026 at 09:25:39PM +0000, sashiko-bot@kernel.org wrote:
-> > @@ -1781,7 +1788,7 @@ int kvm_handle_vncr_abort(struct kvm_vcpu *vcpu)
-> >  		kvm_inject_nested_sync(vcpu, esr);
-> >  		break;
-> >  	case 0:
-> > -		perm = kvm_is_write_fault(vcpu) ? vt->wr.pw && vt->hpa_writable : vt->wr.pr;
-> > +		perm = kvm_is_write_fault(vcpu) ? vncr_can_map_writable(vt) : vt->wr.pr;
-> >  		if (!perm)
-> >  			handle_vncr_perm(vcpu);
-> >  		break;
-> 
-> [Severity: Medium]
-> Does handle_vncr_perm() in arch/arm64/kvm/nested.c also need to check
-> vt->wr.dirty when deciding whether to promote a write fault to an external
-> abort?
+Yes, that can happen, and it is a deliberate trade-off rather than
+something this patch alone can rule out.
 
-Yep, what we have 'works' for the direct permission model but S1PIE
-style software dirty state makes a mess of it.
+The values are the reset values from the ES8328 datasheet (Revision 1.0,
+sections 6.1.1 to 6.3.30).  They are correct whenever the codec has been
+through a power cycle, which is the normal case: probe enables the
+supplies and the codec comes up in its reset state.
 
-> With FEAT_S1PIE enabled at guest EL2, compute_s1_indirect_permissions()
-> computes vt->wr.pw = true from PIR_EL2 and the descriptor's permission index
-> independently of BIT(7), while compute_s1_permissions() sets vt->wr.dirty =
-> false when BIT(7) is set on a writable-clean stage-1 descriptor.
+Where the codec is not power cycled - a warm reboot, kexec, or a driver
+rebind on a board whose supplies are always on - the cache can describe a
+state the hardware is not in.  The driver does not reset the codec at
+probe time and so cannot guarantee otherwise.  In those cases the mixer
+state that userspace installs (alsactl or UCM) is what brings the codec
+back to a usable state.  Without the register cache the same board still
+comes up in whatever state it was left in, the only difference is that
+the driver reads that state back instead of assuming the reset values.
 
-Hey, look at that! You got the architecture right this time.
+The suspend/resume path already forces the two back together:
+es8328_resume() calls regcache_mark_dirty() and regcache_sync(), so after
+the first suspend/resume cycle the hardware matches the cache again.
 
-Thanks,
-Oliver
+One thing worth stating explicitly: the driver also binds
+"everest,es8388", and the ES8388 comes up with different reset values in
+a handful of registers, so on those parts the cached values do not
+describe the hardware.  I can split the table per chip if that is
+preferred; it needs the device type plumbed through the i2c/spi match
+data.
 
-> When a nested guest takes a VNCR write fault on such a writable-clean
-> descriptor backed by a read-only memslot or HPA (!vt->hpa_writable),
-> kvm_handle_vncr_abort() sees !vncr_can_map_writable(vt) and calls
-> handle_vncr_perm():
-> 
-> arch/arm64/kvm/nested.c:handle_vncr_perm() {
-> 	...
-> 	if (kvm_is_write_fault(vcpu) && vt->wr.pw && !vt->hpa_writable)
-> 		fsc = ESR_ELx_FSC_EXTABT;
-> 	/*
-> 	 * Otherwise, inject a permission fault using the guest's translation
-> 	 * level rather than the host's.
-> 	 */
-> 	else
-> 		fsc = ESR_ELx_FSC_PERM_L(vt->wr.level);
-> 	...
-> }
-> 
-> Because handle_vncr_perm() only checks vt->wr.pw && !vt->hpa_writable
-> without checking vt->wr.dirty, won't it inject ESR_ELx_FSC_EXTABT instead of
-> the architectural stage-1 permission fault ESR_ELx_FSC_PERM_L(vt->wr.level)?
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261023205610.1044532-1-oupton@kernel.org?part=4
