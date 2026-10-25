@@ -1,103 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.54
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792941872;
-	b=N+lolBtTFFDbASMS2kpOFPtwHvlP6VuQZnnemJZGZ6Vo2yN5K4dhWLwGQtlbArGmcBa8
-	 lxfDD7FPbu2XBzo7iRoiwpdc9y0qgEmER63vZWT3CVJ1qFD640dpZ+vd7e1X8Ba7qnn0I
-	 dDwGrWqjyeRpKAKkN1RrB+gjl64GSG2MvXg7szOdKTmMZRW1WqgBrU+rKn9yaQDm6zJqT
-	 7dDkKUr3Z2EJEAogOZS/ryAUQ9C8ioCf/uS7TPZqDyypJdXp/Qj2gzWU9mKuKvxgy9fKp
-	 JqJhWPi/cSqjYEoEqqxuLC85CYvN5mGUUcSZyQsRdPgRn44hWJ5TK5PpOl79gFbnC1A==
+	t=1792941873;
+	b=ewLudpfSPS5je8mZB2n5/cyy9zLMIUdguPoTfG/3O9O7vZJX78s2WR/Ql4ngY9KpSuuQ
+	 HERISce/20HCzEZMYxHyxmoWhYbVkqeVCGXVTrsPD1+3yNUuABkb7poRMPlsVhg1G3QAi
+	 2xr9Rru1/781N+m2hVyq5IcpGhdV+5pfTp8dR33vCObsFvc5XZZ9an8NaBgqPGhKU2qFj
+	 3jvasOeunLRGiyqeqgSXc/0/icQ0mNeD6O8gYA1Tcy+I1oYGQ8JUxhLz29ZYlM/W2hajh
+	 mmduRdDM3S/k4aRBPJ9EAMLnCspgSsSPQeMalKeOJmirXyhbHayr6TC0ZLhK6JWuyZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792941872;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792941873;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:In-Reply-To:References:Content-Type:
 	 Content-Transfer-Encoding:MIME-Version;
-	bh=gr7m8Jgx5qFfXx97jCHm/dv2wdINd/6dtVxf1769JNg=;
-	b=1d1heh0Gg5px7DdOIc+C4FfaSL2FHkiK6z6RsOE627qRD+fFU+fsDl+W0ji7KkNtjMfe
-	 rKbLywuDhhl1EV8aOdU4DGFmgcDiAlS0BEc9r4n0+bfPcXSRFn3RiHG73U6w6l8RMqLpf
-	 Ye8160zqbEbnN1bvMZw2WOCyRkK93Vg9ZNG+VCyXkP5pNoSTN/coFCDL0znu1XleqBWCY
-	 ICY6xly9p/O9A0sxyHWZc7lrRhr4PKEgLX8ckKmZo085cOrVEFDTQSo3yeFy/scvJoHsi
-	 D0ZOVxdOM3AlqsSxH/ao7FZ0fKZGVXKvAW+M1WnCoVVkzKyrC+2v9NOayxXo2mb/eug==
+	bh=IPyxHxI8QCk7tgMR65iE29Aq0L2SmeJ7DzhvVjt4aIA=;
+	b=pL+OckBOqNkHGq7vMrzqwObKm/QRxiLN/5m07IFl1GPFSLyw+meBDl+VF+etP54DGsFt
+	 il61prv5tFM6Nvlh5JpvSdr5I5VmYJHx72FBt1AwmWftKONP2RE+gstkA5W4w4ErlkGiu
+	 uxA4p8IvUyGItpWqM3jMAjqy1cntEPA65bvElpWkEiu23LMu92CPN/taIPvRVy+NKgO+Q
+	 OZHGAXoxNYBLLBzP1LG8pkxO4tKpql7NoHpKHfxzLiAws1YI92P/3+Q52zvHWtvS3cjqf
+	 99e4zCTN2B2Ue/NMqfN5JktP5T/4E32uyIbNpHx7ZMLC4nn3mczQ4t5wqH/rdGgOLPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=AE+cEXEk;
-	arc=none smtp.remote-ip=209.85.128.43
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=mqiy29d9;
+	arc=none smtp.remote-ip=209.85.128.54
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3499D606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4F7606A326
 	for <sashiko-reviews@lists.linux.dev>; Sun, 25 Oct 2026 15:24:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3499D606A31B
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BD4F7606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=AE+cEXEk
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4a2000d5fb1so13831435e9.1
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=mqiy29d9
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4a35d5d4a20so9950645e9.2
         for <sashiko-reviews@lists.linux.dev>; Sun, 25 Oct 2026 08:24:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792941870; x=1793546670; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1792941871; x=1793546671; darn=lists.linux.dev;
         h=mime-version:content-transfer-encoding:content-type:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=gr7m8Jgx5qFfXx97jCHm/dv2wdINd/6dtVxf1769JNg=;
-        b=AE+cEXEkDTVQ5Xidz/t2mgO0PRxmvYquGYR6supT6REukqF189LEWaYRwPAeXyrZYQ
-         WviPWJ434woG1KqejachISTCVSE+iKymecFompgrmD3Wx4ASBYz/ZIQUI/iHUi/ZnUFT
-         Z/zX3lqFuhWxRiHG9cfmj+GCCUvsCUZs05GFnv6LL+/pRfExv5Fo3LYl5irKhj5J+TPI
-         nxfP6Q9YWEOWHRfoRF8CNdfnrparZxld7I1N9uuDVGhfikBcXrmYnH5p3rOR1AMqyXFJ
-         k5mPFve/ySMD9C3CZMW4vilzpaQTsnRdXDTYDLnnle02Yj8P5kPEDcBUj+U2/ADqciFN
-         O1Lg==
+        bh=IPyxHxI8QCk7tgMR65iE29Aq0L2SmeJ7DzhvVjt4aIA=;
+        b=mqiy29d9y6T+ncEo/JO99Au88pWsNSXQTZkAe/0YzpZ0cxK6rKoFOg+kg5W2yV4gw+
+         e8k2/gw8Qt5Q33Dp+mT18eZd4w/JeF9kApPxOTp6ohGeYzI2JdQPVzESE9tUb+olgcFb
+         BfvX1LId6LO/Y+w0w9P6CPYVEpcYpDKiH/NW4cm83T6OClIpYoRsuzSE1d/0MJlO377X
+         7qVgY0tsBiDgEMs2Q9ih+sjEi4iZoR65INdkgImDpX/SBCAilMz7FcIUwE/yizfBH6gJ
+         J3on4JO9Y5wHxEeIrjY1SwbDKC4DXhwx/a9AU6GDBYErrEN4QPjLahKVTbs6Tqmp6GUf
+         JKYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792941870; x=1793546670;
+        d=1e100.net; s=20260707; t=1792941871; x=1793546671;
         h=mime-version:content-transfer-encoding:content-type:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=gr7m8Jgx5qFfXx97jCHm/dv2wdINd/6dtVxf1769JNg=;
-        b=Vu0xtvQAQFfjBXR3RD5yOM5Uj/lT/t35TsMVRrp6GwVgW95ggA9tQzMGNAjq1kpeEO
-         EI8nciCsoEDVsKprCGVQhge9v5g87GiRrFmtKGk7oa+jDJDATX9UmiPVq6xxGiL1O+XZ
-         89MfEWZdat2vfnwDKDVG0XCTAU8D3mBA1hsW5tYgeGkfJFupLXlHApST2IhfmVPcWhGa
-         ESRD+GeJ5Y1wVU+bC+1tBRpKjmIvSU5hoXW43yGC8zJcEtpmV3gg40nA0IU+l0HjZdt7
-         drK+Og/xkaRkL8aYx4xck4MwTjPJI9Bnaj0jVQLiOaWjjEwkbg/5T7Lx8NIi0f19vy+8
-         rLJg==
-X-Gm-Message-State: AFq9FYL5p+yoSHNGt9RRrUsPuRjflJbfIagpf9XyC1IwOFIAWDWb++12
-	9olx/rwlDUiBoy18MdLdGbTltOzJj7VSA7VvuTQ6SAyNsqsC+WyT4pmSR7a1vXqK
-X-Gm-Gg: AYBFou2NHJCiG3ULSSLx1kM1YEC3t52SWkqaAUjT8sZnSzF3LN/R7fvhYYPn6tpEJQJ
-	HPACyuuzkXjG8KvEdTKaty2DYhzx8nzkolzlsaAILx6Qa1/meIgQ+fSN/FHzIgVJQDhZmQNdG4S
-	gFUKnQiswbkMoX8s32bV6vaoQeMBWEb05Oe8RWTu/odeeCRWnYPQuW+qDGMzsjF8t7o1xQqueOA
-	cjq23FeGhVn8uZ+q2xpYGSj1xv+uW5PYxr2WAWe+C9lR0HhwVMAa8Pjnse8ujv/vGYAsKHSE+Z0
-	OWhjs6/G9zs1aujw15nW6wbh0Y6kEo/beqrG/pNnJKJYA4pQVsutyRPMCCh0g3iiLbf6KSm1DvO
-	G4kJovl6xwWw52+8ktfcDck6468rXxRgY1Ol1pUZSNlhpNJe9VpXfemKBJFv/FQXNJmwf0nOkjd
-	uqVA8nkYgoVKESe/EqgffjP6qiFtPGfooJSjut/mmgv/+eus9YOo2QOpPj+6FQarEONllRtnKEt
-	h50olufT92wAv2PJcj2cuQubrc+G5mZaNUn4ufhOWAN0yob3Vo2AUxakIsITLxmyPRRklCH7seB
-	DCNMhS7wB5I4UWfVh5i70HdNOHdWZR9dLJ4XeDzs8zU=
-X-Received: by 2002:a05:600c:c0c9:b0:4a5:87b3:ddc1 with SMTP id 5b1f17b1804b1-4a587b3e000mr20792825e9.13.1792941870382;
-        Sun, 25 Oct 2026 08:24:30 -0700 (PDT)
+        bh=IPyxHxI8QCk7tgMR65iE29Aq0L2SmeJ7DzhvVjt4aIA=;
+        b=I14gEX6eTd7KJi+Z7WXLsOvstQNERB4KUwC3aHeUFAhakuKl7WraRFMOt2FMY78JRF
+         jOumgEEYLsg9p5iEXwof+iF+P1CTpC7dNQNlEQZlDdyAOoNfqOCu1TITmOEqNd++UhWn
+         ouOyhFLebzrlFGAsyQPzlN2VaRCi4ArbSlUx8MhX8v4HN0fXRzWlOpufOBcyU6QaXtXk
+         rDb4U8HbeOksjP4tBSZjt2O5KwMoS3+U8+k7DUIhqZtWbD0r/eTPcTaZpCp+1QT9TVLB
+         9Md8lnrg4lO892wziMWMHZA3QHWbPwA7MqTHijb9+uy+RMVM7dgdDvCkphrw4WctPacP
+         ADyQ==
+X-Gm-Message-State: AFq9FYK/cncCJSHfABFXEM9WXveUTe2gxZJhqpzVFvm/eoJwLKGlklRJ
+	NWMvu9p/0MeTeUIJRP0WVHtpNL1jscMWo7L8cQD1Vo6iMH9h6+BpivApLx0co0wS
+X-Gm-Gg: AYBFou3dPuEe6WgmAXsVmFk2ymYBM29+mPQtqGMOFlHo2WdMzl6GEwOG3nvXvGNFBG/
+	q1oTzb2tq9eIsljvZuSunu0qazd4mo9PBukShGJx/moo2tm4M79MgGE/L7ENMQXB2rFfywkPiCr
+	SLrMUx5abrC6YcLShg3DNgsocual5GVnSeULk4u8Ulx7/MTsLd7ab8u6cMA2v/jKWUfs1iilBdV
+	KQJuKylRBLwdDiCgoEBHmfkt3942Q0ZcDaDeRFBM+VZYVaBKkGfrmQIts3g33xG0q8EBxddlFWm
+	msmX229aCTjQzKHHMDipl9O8KH2AKUXdXB57rL9b+rcHKgXH3xBMB3s4JlZA7FWIYPjn3TyVACu
+	K2+H1d84xK9u5tQvqjovb0mmpPOelaAvNsDeTsKS1wFZ3NQlVAJdGWo5Q74Z80kKk7QdyWdDEXw
+	IIzgR/u24aljuLdAlgbpXRNt62PpYm5QQUKweXldn2U4RJ/FM5OH+NIBc6Z6dWi6ldwUY6kVQoY
+	/jSBLrseXc9qvX7ue97HGt0yXjhkz5H5FyxRbxoTCzEoGYn5+07t37RE7+RuENJHr0cSGVyl8IP
+	MaithNhKmeC9xAi4+BrQM86RzqvAtyJjONojnKxzTg63
+X-Received: by 2002:a05:600c:5248:b0:4a1:83f0:7c8a with SMTP id 5b1f17b1804b1-4a35ac3cb66mr82142695e9.1.1792941871149;
+        Sun, 25 Oct 2026 08:24:31 -0700 (PDT)
 Received: from [127.0.1.1] ([2001:861:39c2:e340:4c3:3a00:d533:9d50])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a35a04ae28sm132982575e9.2.2026.10.25.08.24.29
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a35a04ae28sm132982575e9.2.2026.10.25.08.24.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sun, 25 Oct 2026 08:24:30 -0700 (PDT)
 From: Romain TISSERAND <romain.tisserand@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Luca Ceresoli <luca.ceresoli@bootlin.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Heiko Stuebner <heiko@sntech.de>, Liu Ying <victor.liu@nxp.com>,
- dri-devel@lists.freedesktop.org, linux-rockchip@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/bridge: dw-mipi-dsi: use the lane rate for lbcc when
- lanes run faster
-Date: Sun, 25 Oct 2026 16:24:29 +0100
-Message-ID: <179294186960.4141843.10824416552753869438@gmail.com>
-In-Reply-To: <sashiko-outbox-184251@kernel.org>
-References: <20261025142639.3454322-1-romain.tisserand@gmail.com>
- <sashiko-outbox-184251@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Oder Chiou <oder_chiou@realtek.com>,
+ Animesh Agarwal <animeshagarwal28@gmail.com>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] ASoC: codecs: rt5631: Enable the optional MCLK
+Date: Sun, 25 Oct 2026 16:24:30 +0100
+Message-ID: <179294187050.4141843.1375662350308483762@gmail.com>
+In-Reply-To: <sashiko-outbox-184258@kernel.org>
+References: <20261025145354.3476371-1-romain.tisserand@gmail.com>
+ <20261025145354.3476371-3-romain.tisserand@gmail.com>
+ <sashiko-outbox-184258@kernel.org>
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 X-Mailing-List: sashiko-reviews@lists.linux.dev
@@ -110,28 +106,16 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 
-On Sun, 25 Oct 2026 14:38:50 +0000, sashiko-bot@kernel.org wrote:
-> For a 4-lane non-burst panel using MIPI_DSI_FMT_RGB666_PACKED (bpp = 18),
-> (bpp / lanes) truncates from 4.5 to 4, giving a lane rate of 5 * mpclk Mbps.
-> That is only 11.1% (1/9) above the 4.5 * mode->clock pixel bandwidth, rather
-> than 25%.
-[...]
-> If the slack is only meant to ignore lane_mbps being rounded up to the next
-> MHz, should the check compare dsi->lane_mbps against
-> DIV_ROUND_UP_ULL(pixel_kbps, MSEC_PER_SEC) instead of adding pixel_kbps / 8?
+On Sun, 25 Oct 2026 15:12:00 +0000, sashiko-bot@kernel.org wrote:
+> Should devm_clk_get_optional() be called in rt5631_i2c_probe() in
+> sound/soc/codecs/rt5631.c instead of the ASoC component probe callback
+> rt5631_probe() (similar to how rt5616_i2c_probe() in
+> sound/soc/codecs/rt5616.c acquires its mclk)?
 
-Right, the 1/8 slack misses that case. v2 will use the lane rate when
-lane_mbps is above the pixel bandwidth rounded up to the next MHz, which
-keeps i.MX93, Meson and STM in non-burst mode on the pixel clock formula.
-
-> Should pixel_kbps and the pixel-clock lbcc calculation divide by
-> dw_mipi_dsi_get_lanes(dsi) instead of dsi->lanes to handle dual-DSI panels?
-
-With dsi->lanes the patch doesn't change the timing of the dual-DSI Gru
-Scarlet panel: its lane rate stays below the per-link pixel bandwidth, so
-it keeps the current computation. Switching to the total lane count would
-change that timing, and I can't test it, so I'll keep dsi->lanes in this
-patch and leave the dual-DSI accounting to a separate one.
+Right: in the component probe a deferral is lost and a rebind leaks the
+clock reference. rt5616 moved it to the I2C probe in commit b5c9df40ca56
+("ASoC: codecs: rt5616: Move mclk acquisition to the i2c probe"); v2 will
+do the same in rt5631_i2c_probe(). Please don't apply v1.
 
 I'll send v2 in about a week.
 
