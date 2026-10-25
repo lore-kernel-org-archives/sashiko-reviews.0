@@ -1,121 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.177
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792891876;
-	b=ZRjds7CAznkdIaqqVeRg/M1OuriC6cSP/ZSYkouB+tmaCRpCyaQ268TW7tXAcWgHBV9h
-	 6tOdGid0d4SJoJ+k20xvz7ESd4z3SDT1QuJ8SUCZqJuhQVTXLXAWjH3RTCaWdkZ8yxRmI
-	 JWyrMCfs5FOsPLJ1vd3Q3eu5vaOLLt7RoNykib3ZNlkOehQzInWtGUQeG/FqsNWiW9NMc
-	 nr0ext8AJmgm4kO3M8pegAtsruW8djhHFNb0j4ZI2pV0Pg91MdC3ILMPYmwHZ0c9OQA2i
-	 3BFq/pc1WrKkv+VTwnKRMiiFZ5lky9BuNOrMmUv2iMMm/tjQ7im1RG5R0xco7HrnuFQ==
+	t=1792892838;
+	b=J1wIskU52F9i7EdAHAil/ESvxUBW7oRyxcbuaDkRK1oWxkNDsuC0FPqfcbgngYVbisiU
+	 Xg7DsxkxEL1I24RmdGXvMZq8+8KF775W5cmR4h+M6t2deb053zIm3Vgz4GGEeIBvDu6A8
+	 bWNCK+OpzyTgStidw8rHq5ckzWw/EL8AAadSQYmAf8fcWMRi4fcxZCGVxZOP+DnrzC+mp
+	 GnqydXSCaEVO0b3FuVd58IDUCyA1nNAp60WnST9NP00vqmAgIXkuE/xnDDcmbEK/M+fyh
+	 1TIB6Yy043GhM6AOT5J7oijcafMRqCK6x3GetLgh2oLGAk/PkFXx151W60YSlVxd5Bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792891876;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792892838;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:X-Google-Original-From:To:Cc:Subject:Date:Message-Id:X-Mailer:
-	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=NjK0kx7CGIZMdCtURm6ydpz5eb+27HR4F80VrSkDz3k=;
-	b=Uu4c8d6HIXPQ9Z/4dB+UDFyZJMCj7UpilBDRFhSnla4OrP7bWLpADYko4XzsNPNaMRZ5
-	 Ua5lBAvhdGkfRyMjRMdqKR54jLPOAuukAOSDD08uaQiWo4QmVPstWWrCF3IyXPkldZ4C7
-	 CF9r4twe4PfNV+Xnn+kJ1tiwyFP1RlOCRrWXfCQb/0WU7M0lBjaO7r+ziCn3We7gmOwhC
-	 LBmjy7UhTmqEYt0FUA8KuiAHB7ffc8T1lGLLULPlBF8MmpN8Ra6IuaLgeijmwueiRdlV8
-	 whr6u9GndwvzqeBrbKDO9p1jvyNnwtxl+LeDstdojxN2CHclbMVIIj0PGAaGtkBg0fA==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=m2TX/K6jADp5DrZJjz8JnHFJ2oJhNK/mzbZjK4Sp/uA=;
+	b=XCYn94sZsKzfXYfB6+nj1PImTI7n6m3Ooh6xi8e7pAL7gEY1yFvHxCtC7IW67NaT20+4
+	 Asqh6s1QvVDLWfw7mcBNkZNRkpaToJXBOZzKPdGOaNbxgXuBYR1TqDT41isuJ5xZwWSpr
+	 9gKnG2Lsv+qBOAU0bYx1HIcLQsQuG/h+Uc+fYCVBOj23PLZI5CncyDG64J+TtmkC6QxUY
+	 qSH2s6Wd+ja8hsdqIPIb9GQePjca61ALRvap+DwAe7fo3Wl6ZrRlq1YcIEvHe1OXtkSsX
+	 El4aqhQYJwg9Cuv4Ur4jdt5sX/uf+MuPh9DHh/Xl/joCt1N/FKzlQTXHOsu6YEDwjCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=PAq8YN3V;
-	arc=none smtp.remote-ip=209.85.214.181
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	dmarc=fail header.from=isslab.korea.ac.kr;
+	spf=none smtp.mailfrom=isslab.korea.ac.kr;
+	dkim=pass header.d=isslab-korea-ac-kr.20251104.gappssmtp.com header.i=@isslab-korea-ac-kr.20251104.gappssmtp.com header.a=rsa-sha256 header.s=20251104 header.b="M/2VR8s2";
+	arc=none smtp.remote-ip=74.125.82.177
+Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9778A606A31A
-	for <sashiko-reviews@lists.linux.dev>; Sun, 25 Oct 2026 01:31:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9778A606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF75606A31A
+	for <sashiko-reviews@lists.linux.dev>; Sun, 25 Oct 2026 01:47:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DAF75606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=isslab.korea.ac.kr
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=isslab.korea.ac.kr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=PAq8YN3V
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2ea138a3497so12229315ad.2
-        for <sashiko-reviews@lists.linux.dev>; Sat, 24 Oct 2026 18:31:15 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=isslab-korea-ac-kr.20251104.gappssmtp.com header.i=@isslab-korea-ac-kr.20251104.gappssmtp.com header.a=rsa-sha256 header.s=20251104 header.b=M/2VR8s2
+Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-36661f953e4so3705169eec.1
+        for <sashiko-reviews@lists.linux.dev>; Sat, 24 Oct 2026 18:47:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1792891875; x=1793496675; darn=lists.linux.dev;
+        d=isslab-korea-ac-kr.20251104.gappssmtp.com; s=20251104; t=1792892837; x=1793497637; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=NjK0kx7CGIZMdCtURm6ydpz5eb+27HR4F80VrSkDz3k=;
-        b=PAq8YN3VHf2OfXjnS2ULwsZpGHNugJ6D9YRKJxOI7Fp4RedufVi9cA+0Tf+W4pTpU0
-         +TBdDJL0ETRqwgUWi4DgtqTHytvOd8ycf8/6XZ2juldJHMqdv9kOsKDgWQbDGLwz5Upl
-         so3h0a34e0iKCTMA1mXeppfw7DtBbDCJeKs8aONb9t2pdGTQSZi7Jok7O/FCX4hy8z4J
-         ceXXgfpCqBUIZGhrzU35XAwPM3B7IbVxvjrwNsReANr3df20o/1iAS8VANTZlF4i1SRZ
-         pY9+nei2qCNB+RZ7o2IP9NKjqeIfFHJFqTZUjZeqJfmtVlXOr9pERsUqnTHP3UX09lM+
-         BrjQ==
+        bh=m2TX/K6jADp5DrZJjz8JnHFJ2oJhNK/mzbZjK4Sp/uA=;
+        b=M/2VR8s2g17XzhWRjTP1GCcdXw+0/lPNpxN0ONnfopqf9rjLrsD8VAaBept0XCtWT8
+         6V/JX3X5kznvnlZdkkKpxS81S2ML/C9masRK96GjpM0ZpKZEvvwfqoyEOuhAs9WCrtxJ
+         QELassmCbzV2kPpe/iE81fJrbxXlaLZh8Mw3e1etFtOsPYl43zwLLMRLFhCnQNBtgAUf
+         oLNj6OUORxysnATyubldFbuiW8ZVFIuMQN6GtKtXdVhrMEiCTQF/nY3hvr3EtDXzBWnF
+         ZvX75tODUIOVcQEPKaeIx66ASYF6n8pt7wcdlyG+DNw8qk9s/hxYzqyC4wEHKLw5ru8S
+         2eeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792891875; x=1793496675;
+        d=1e100.net; s=20260707; t=1792892837; x=1793497637;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=NjK0kx7CGIZMdCtURm6ydpz5eb+27HR4F80VrSkDz3k=;
-        b=NnzyjerwD3+KNce0t3OkUZNiSiJgc//sNKlNoY+/omTCMWPYuWl7EN63UFQBEPPSMh
-         K3eKX3+QC772/yhiffOU++mqDSWdJc4BPCTHScOqbHhll8CaOLm8ZKwbvKJUd1KDeNva
-         JoHlJkqoDw+SsOjJSzficdLkGrm5bn16+mQCAD9fVmVZ9SjGQOTFnQacJGcGkISwP7KV
-         JHlIACCmLgCy3UTX7W4UUtkmr4N6lSXSWEUnZBe4wAMK/EUYfcn5iumZJYyU0Co22LzG
-         xuy5PytIE1oAS75Ypg/HOI7OMjB7RBGEBi8B4OH6jauuSSGjspuZ9pCVR+C1cRrVUf2e
-         15Yw==
-X-Forwarded-Encrypted: i=1; AKwUvBzBwB0+5cllbJquYEy3j3GRO31fCVuRxh18qNRE/Nzeq7krDR0llyexoifFmyVwAGOskbEzPGgQKxtsGF44fNU=@lists.linux.dev
-X-Gm-Message-State: AFq9FYKAFBAkmAjNYwX8bxwEPvs6AZFxrDNL5ITs0iFqqqceLywBJft2
-	ABO3NmhcIbDQK4d60P9NQFJi4LUedaUGxlEqCCEQTY7tCT4KgpgmjfE8
-X-Gm-Gg: AYBFou2z5VhL0s3v1HH8UlkQwGxpnCgyTjRclb+uZ0k2VPzzxrLyA26qfdhZtg0zDpP
-	UdydaGA5Hhr3x1zrH6BtjhwbUzguAyt4ROaJw1Bc+A4xUWoNYpk88UzAvkhQyjkd+W5EitNzjr6
-	XmvGiL+cz58m8ZmJ6VYZicpbDmVaZJCbGPiQ6ASE46sOlqlu9CRoDghu24E8aNZXr58h2jBvTqk
-	I+3CfrJiGy0dh3qW2ZhEwWmAa9YaCB5KhdAzW5mXWilzQmlTxzWD3+FLRmZuT90xuuVj0ZHCbaj
-	Tih3+2HC3mOdLIJNHfz7y2VeX176QW1B5ZErS2BcRWiBe9jDfPdPG938I6IbbvinZgDpjdpDQOT
-	X9CvAfgstRXkHTBWuQ33DFNkMqCukYDE14ROezlH4uAQaWl1tIWdjKlxWPa3NxXzTxLNFtNBT6I
-	a3teLCJnm1r1uUBV0BrbZJd3ueK+QUnJpt1JVcm6mQS94QwtqEvIRe/xFfjsZOu/xbcqiaNshBS
-	OaGrslbM9V1g6+pMRpGW8i2lFBRoXNhO7w+IKhqAXcXZfbNPcA3o08jstDCZ2/x3JR3FZ3clpo=
-X-Received: by 2002:a17:903:15c7:b0:2e6:2868:e576 with SMTP id d9443c01a7336-2ea9c87defamr24585005ad.31.1792891874848;
-        Sat, 24 Oct 2026 18:31:14 -0700 (PDT)
-Received: from zhangbo56-PC.mioffice.cn ([43.224.245.235])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ea9b1a1c00sm7197805ad.45.2026.10.24.18.31.06
+        bh=m2TX/K6jADp5DrZJjz8JnHFJ2oJhNK/mzbZjK4Sp/uA=;
+        b=TAWBlA+5ZRPC7Uk3Sm4ZKqxWtQvFsKaZccRpDXj/F6FgV+H/opRCoeO+rI/lmGr58t
+         t8tkAmJEZVIV++WfdhSBWZoA7QSZWj8hmjnv93seleBjIUvfvN8gNO3mM24SwWPuudNi
+         x73aA847MMELz/onQ16pXyZid+5bOodp5TTLH539zlwhYPEe4yxbnUhnNDNWmOWhn+Ic
+         FOVK6tV38BN7srUtjqTbLCaCQRBp1JWvThY41MzXn8klMXtSMb/6Q0N2mqI7dRBjTlKZ
+         Ctyt+ijFxTMYFWgCilbXBPmPKys2HF7Pm0EV1XifosVAt4VMaXrLV0ogbweNGtQrpGsZ
+         J+Wg==
+X-Gm-Message-State: AFq9FYIizX3f8OJBA3fCTCWmrAyFHkJN5fTg2kQ7hzTZv/CBK4Pn2wCF
+	D5Uf68dUbbZSgpe3895TORnKp3EFdvgWe8sVB3JoHbejr+4LWaUsTUvxavTLmkSDnIQ=
+X-Gm-Gg: AYBFou0Ye+G1yMDJtc+OAGyUgpnKt/Il42wuXPqqYmEMn3l8yTIoIi/gBpoTVyIdfDg
+	gLahP3nNmru6IF7FkYAX1PJT/l8MoL7mEc7qd7JdMJ/kRedj7ciyDwjmsAogU/Zuhj8uXaGidJx
+	R0jQrBY9utkQ/8AiDE10bNkhVv/c3TW70pIuwMIUSAthsO2COlrE2vQsJQlV9pEqHKkihsFOrap
+	wdXjKKbfuc9Onsv3VnAhub5vlRgNxwodRFRLa03pfTtVx+hKMAeF2eDy4XvlNevD2eeOkqEEuML
+	kLNj9GKoRytungF/b2aJbG5kfY+YHwrsQqx8yY9eAZt4CX5Ms3cMVZpMjZep4L+8YHkL2OEIO1L
+	8nVCa/YZ5gMvrCdPTBlKxEaXOLjDKgS5RLNGpIopiDmzc7164HZIVXddxWhnOmX6afS8lzvy1k8
+	ZzVa0yn0H7F9yrTUwIMO5afz3yTqClRblP0poo8y2EEu6SshHYzoH+SlZKNMI2BF2rrXbWnerAh
+	AHoa29WzkzA+myVXvdChMv+I9/N1piWWzCua/2dUuM/TIicNWKH8TZaRfuoAP8NCIUUEhh6SgiI
+	bpWCO1rKXpK/sBLjzn/m7LnaGUHckXHQLLKCZz+3DNANOOC1ATcjIJhltyp3UEOA
+X-Received: by 2002:a05:7022:3d81:b0:144:e38d:8e52 with SMTP id a92af1059eb24-199374f32d3mr5050179c88.37.1792892836882;
+        Sat, 24 Oct 2026 18:47:16 -0700 (PDT)
+Received: from yhlee-960QFG.Davolink ([2406:5900:1044:110c:dba3:be57:a674:a67f])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-369e8c572bbsm11981252eec.2.2026.10.24.18.47.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Oct 2026 18:31:14 -0700 (PDT)
-From: Bo Zhang <zhangbo0325@gmail.com>
-X-Google-Original-From: Bo Zhang <zhangbo56@xiaomi.com>
-To: sashiko-bot@kernel.org
-Cc: akpm@linux-foundation.org,
-	axelrasmussen@google.com,
-	baohua@kernel.org,
-	baolin.wang@linux.alibaba.com,
-	baoquan.he@linux.dev,
-	david@kernel.org,
-	hannes@cmpxchg.org,
-	hui.zhu@linux.dev,
-	kasong@tencent.com,
-	kunwu.chan@gmail.com,
-	liam@infradead.org,
-	lianux.mm@gmail.com,
-	linux-mm@kvack.org,
-	liuxiang.277@bytedance.com,
-	ljs@kernel.org,
-	lyugaofei@xiaomi.com,
-	mhocko@kernel.org,
-	mhocko@suse.com,
-	qi.zheng@linux.dev,
-	ridong.chen@linux.dev,
-	rppt@kernel.org,
-	ryncsn@gmail.com,
-	sashiko-reviews@lists.linux.dev,
-	shakeel.butt@linux.dev,
-	surenb@google.com,
-	wangzicheng@honor.com,
-	weixugc@google.com,
-	yuanchu@google.com,
-	zhangbo56@xiaomi.com,
-	zhuhui@kylinos.cn
-Subject: Re: [RFC PATCH v5 14/14] mm/mglru: Avoid scan anon while swapcache is low for GFP_NOIO allocation
-Date: Sun, 25 Oct 2026 09:31:03 +0800
-Message-Id: <20261025013103.2742885-1-zhangbo56@xiaomi.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <sashiko-outbox-183280@kernel.org>
-References: <sashiko-outbox-183280@kernel.org>
+        Sat, 24 Oct 2026 18:47:16 -0700 (PDT)
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+To: Bart Van Assche <bvanassche@acm.org>
+Cc: sashiko-reviews@lists.linux.dev,
+	linux-rdma@vger.kernel.org,
+	target-devel@vger.kernel.org,
+	yhlee@isslab.korea.ac.kr
+Subject: Re: [PATCH v4 1/2] RDMA/srpt: bound the indirect descriptor table to the IU
+Date: Sun, 25 Oct 2026 10:47:03 +0900
+Message-ID: <20261025014703.3756487-1-yhlee@isslab.korea.ac.kr>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <01fb5172-3f8f-47be-99f2-20f2c9a5244f@acm.org>
+References: <20261024162852.3528224-1-yhlee@isslab.korea.ac.kr> <20261024162852.3528224-2-yhlee@isslab.korea.ac.kr> <sashiko-outbox-183819@kernel.org> <01fb5172-3f8f-47be-99f2-20f2c9a5244f@acm.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -127,152 +100,16 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-I have checked the two sub-issues separately. Both issues are valid and
-the root cause is the same: patch 14 skips anon scanning but leaves
-swappiness non-zero, so every path that still treats anon as evictable
-(scan budget, aging, lruvec_is_sizable()) misbehaves.
+Thanks. v5 removes the size_t casts, uses struct_size(idb, desc_list, nbufs),
+and rejects nbufs == 0, so the code does what the commit message says.
 
-> [High] unclamped scan budget on early return in lru_gen_balance_scan()
+v5 is now three patches. While working out why nbufs == 0 reached
+ib_post_send() I found that a zero-length descriptor is not rejected either
+and faults the same allocator, so I added that as a new 2/3 that still needs
+review. The counters patch is 3/3 and carries your Reviewed-by. Both are
+described in the cover letter.
 
-Confirmed. With 1 <= swappiness <= MAX_SWAPPINESS and if one of the type's 
-nr is 0, the early return left the other type at its full unscaled evictable
-size, bypassing priority scaling, memory.low protection and nr_to_reclaim.
-Note this is not specific for GFP_NOIO, an lruvec that naturally has only
-one type has the same problem.
+v5: https://lore.kernel.org/linux-rdma/20261025013748.3755639-1-yhlee@isslab.korea.ac.kr
 
-> [Medium] inconsistent swappiness state when anon reclaim is skipped
-> Would checking can_reclaim_anon_pages() in get_swappiness() ... avoid both?
-
-Confirmed for both sub-issues, stalled aging via evictable_min_seq(), and
-lruvec_is_sizable() counting unreclaimable anon.
-
-Rather than forcing swappiness to 0 in get_swappiness() (which, as Barry
-noted in [1], wrongly allows anon cold/hot inversion for the temporary
-GFP_NOIO case), I keep swappiness not changed and fix the evictable view at
-its source, lruvec_evictable_size():
-
-1. It now filters out anon here when it cannot be reclaimed (e.g. GFP_NOIO
-   with low swapcache), so nr[LRU_GEN_ANON] is 0 for all consumers. This
-   drops the per-caller zeroing and lets lruvec_is_sizable() ignore
-   unreclaimable anon.
-
-2. lru_gen_balance_scan() clamps the remaining type to total_scan before
-   the single-type early return.
-
-3. should_run_aging() forces aging when file gens run low and anon is
-   unreclaimable, so a stalled min_seq[LRU_GEN_ANON] no longer blocks aging.
-
-Proposed fix on top of patch 14:
-
-[1] https://lore.kernel.org/lkml/20261022102726.56682-1-baohua@kernel.org/
-
----
- mm/vmscan.c | 29 +++++++++++++++++------------
- 1 file changed, 17 insertions(+), 12 deletions(-)
-
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index d72a5aef3a0f..32bd9c0fef5d 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -4350,12 +4350,14 @@ static inline unsigned long lruvec_gen_size(struct lru_gen_folio *lrugen,
- 	return size;
- }
-
--static void lruvec_evictable_size(struct lruvec *lruvec, int swappiness,
--				  unsigned long nr[])
-+static void lruvec_evictable_size(struct lruvec *lruvec, struct scan_control *sc,
-+				  int swappiness, unsigned long nr[])
- {
- 	int type;
- 	unsigned long seq;
- 	struct lru_gen_folio *lrugen = &lruvec->lrugen;
-+	struct mem_cgroup *memcg = lruvec_memcg(lruvec);
-+	int nid = lruvec_pgdat(lruvec)->node_id;
- 	DEFINE_MAX_SEQ(lruvec);
- 	DEFINE_MIN_SEQ(lruvec);
-
-@@ -4363,6 +4365,8 @@ static void lruvec_evictable_size(struct lruvec *lruvec, int swappiness,
- 	nr[LRU_GEN_FILE] = 0;
-
- 	for_each_evictable_type(type, swappiness) {
-+		if (type == LRU_GEN_ANON && !can_reclaim_anon_pages(memcg, nid, sc))
-+			continue;
- 		for (seq = min_seq[type]; seq <= max_seq; seq++)
- 			nr[type] += lruvec_gen_size(lrugen, type, seq);
- 	}
-@@ -4374,7 +4378,7 @@ static bool lruvec_is_sizable(struct lruvec *lruvec, struct scan_control *sc)
- 	int swappiness = get_swappiness(lruvec, sc);
- 	struct mem_cgroup *memcg = lruvec_memcg(lruvec);
-
--	lruvec_evictable_size(lruvec, swappiness, sizes);
-+	lruvec_evictable_size(lruvec, sc, swappiness, sizes);
- 	total = sizes[LRU_GEN_ANON] + sizes[LRU_GEN_FILE];
-
- 	/* whether the size is big enough to be helpful */
-@@ -5058,18 +5062,17 @@ static void lru_gen_balance_scan(struct lruvec *lruvec, struct scan_control *sc,
- 	u64 anon_weight, file_weight;
- 	int size_bias;
-
--	if (swappiness <= MIN_SWAPPINESS) {
-+	if (swappiness <= MIN_SWAPPINESS)
- 		nr[LRU_GEN_ANON] = 0;
--		nr[LRU_GEN_FILE] = min_t(u64, total_scan, nr[LRU_GEN_FILE]);
--	}
-
--	if (swappiness == SWAPPINESS_ANON_ONLY) {
-+	if (swappiness == SWAPPINESS_ANON_ONLY)
- 		nr[LRU_GEN_FILE] = 0;
--		nr[LRU_GEN_ANON] = min_t(u64, total_scan, nr[LRU_GEN_ANON]);
--	}
-
--	if (!nr[LRU_GEN_ANON] || !nr[LRU_GEN_FILE])
-+	if (!nr[LRU_GEN_ANON] || !nr[LRU_GEN_FILE]) {
-+		nr[LRU_GEN_ANON] = min_t(u64, total_scan, nr[LRU_GEN_ANON]);
-+		nr[LRU_GEN_FILE] = min_t(u64, total_scan, nr[LRU_GEN_FILE]);
- 		return;
-+	}
-
- 	for (int type = LRU_GEN_ANON; type <= LRU_GEN_FILE; type++) {
- 		int hist = lru_hist_from_seq(READ_ONCE(lrugen->min_seq[type]));
-@@ -5271,12 +5274,19 @@ static bool should_run_aging(struct lruvec *lruvec, unsigned long max_seq,
- 			     struct scan_control *sc, int swappiness,
- 			     bool do_balance)
- {
-+	struct pglist_data *pgdat = lruvec_pgdat(lruvec);
-+	struct mem_cgroup *memcg = lruvec_memcg(lruvec);
- 	DEFINE_MIN_SEQ(lruvec);
-
- 	/* have to run aging, since eviction is not possible anymore */
- 	if (evictable_min_seq(min_seq, swappiness) + MIN_NR_GENS > max_seq)
- 		return true;
-
-+	/* run aging when GFP_NOIO limits anon reclaim with few swapcache folios */
-+	if (swappiness && min_seq[LRU_GEN_FILE] + MIN_NR_GENS > max_seq &&
-+	    reclaimable_anon_is_low(memcg, pgdat->node_id, sc))
-+		return true;
-+
- 	/* try to avoid aging, do gentle reclaim at the default priority */
- 	if (sc->priority == DEF_PRIORITY)
- 		return false;
-@@ -5295,9 +5305,7 @@ static void lru_gen_prepare_scan(struct lruvec *lruvec, struct scan_control *sc,
- {
- 	unsigned long total;
-
--	lruvec_evictable_size(lruvec, swappiness, nr_to_scan);
--	if (!can_reclaim_anon_pages(memcg, lruvec_pgdat(lruvec)->node_id, sc))
--		nr_to_scan[LRU_GEN_ANON] = 0;
-+	lruvec_evictable_size(lruvec, sc, swappiness, nr_to_scan);
- 	total = nr_to_scan[LRU_GEN_ANON] + nr_to_scan[LRU_GEN_FILE];
-
- 	/* Just scrape all pages calculated above if this memcg was deleted */
-@@ -6050,7 +6058,7 @@ static int run_eviction(struct lruvec *lruvec, unsigned long seq, struct scan_co
- 		if (sc->nr_reclaimed >= nr_to_reclaim)
- 			return 0;
-
--		lruvec_evictable_size(lruvec, swappiness, nr_to_scan);
-+		lruvec_evictable_size(lruvec, sc, swappiness, nr_to_scan);
- 		lru_gen_balance_scan(lruvec, sc, swappiness,
- 				     nr_to_reclaim - sc->nr_reclaimed, nr_to_scan);
-
---
-2.34.1
+Thanks,
+Yehyeong
