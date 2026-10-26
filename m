@@ -1,72 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=35.89.44.35
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.221
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793051810;
-	b=tNz3/t92K57fKqqWEWaX0KYo9eJQpzX5QjGT0R8yIp13IYCBc+A27Cl264kaUZ/kNjj+
-	 oKKhiO0ywk2p/efa69YZQFWFo2tyysQctiGBhmFrqfcLzkgDTLUwNuBoogDzoF0diviAG
-	 7byhmjuaWgoY2rkDxGxge+JihN1Fy70iPW8r4bWpoImuHZL+V6TaoT5Hay9A3nvdeEDIE
-	 fkwO93E4p612kFI0q9ysZtZy02xOeb+fMqksS99Eh8x3NngVLcjY7ghWPje5UcqJe9I3z
-	 ztC+jfkjCmizw9GzyNRa4k9lxJ915DUix8psttwhY15D6XIwIuYJpDuQwbQEUFSqEFw==
+	t=1793052092;
+	b=dU/jBU1YaMo5nCIMfcTjWBO54k5MK86bQJJd9gMo44EANvKzc6x3iP1DSBBmVEmg0RhH
+	 jZlJx/Gh87wkUbDZgYwN9fObwkr/3grgLNRQiaVwDI5eM1nSgy5cB1xKwGKCoFYvu5iTy
+	 7a7hD5RAWDjRx/4zL6OdiHDRXhK3iMMNt+0yWp5dPbiLf+fV8J4q+0dCRjidyZmR1dnAQ
+	 vsP5qecpg8jQGhBvjlFVVNG0IWN6T9Je3lUvTKoG8vcVUri7+9Ksdy/K2bsGzvnnC4PmN
+	 SdwhZEFWW0yeSqLAOtYhvDp408KvTtBtP7/PjD48n6i7vyI3a2Z4ddB5VaH83e0oZpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793051810;
-	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
-	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
-	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
-	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
-	bh=Ql8b3SPdd8YuwXyKaG5uxeVFoTrcOtPYj40d++K6fOE=;
-	b=0ZXulxYaSUblhJPqn4RtHfRidiVFFnLvjtofGjtrNgAPg1mKQ2RtYiJJJOPkqRaR3Fhk
-	 aAPQBLabBUbWbj+d0rOu/cYTJLtX9GNXt5fonsf9igC61NBuD7fp+28J0Hz7jK0HbT25i
-	 4LgL03gjnzZtKotqOcrb8NLFEBxGhXGwM4g7HlJrFCLS4Phr5R0RrzaJLagJD/kMFCZPs
-	 9RaDRSPR/2rCuhxv4JMRPBO9KMHGNfklzL8ODsYbQDjogP81XD8dsRC0I6Vpap6Wll4mh
-	 HS1pRETg9nLQ+gpvm4iC0LHcLdPWWmI8KA/sOmb7xkVBRHuytwo4tWPNGp2Vf1m/ozA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793052092;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:From:Content-Language:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=JfoDqe96Kwk1JhgIOwUU/4TvSCsIa9add42yravEH04=;
+	b=H9RevOwU62gWkPaKTrPZob225jygrXTMg1iS+hwDqr3/IrDdKu2QhDHmFtGaiu7iwCyk
+	 EI1c7iTxuVn5/fBa9lDTjRVUXOOCOHB8GP72Tthgc6B8ZBJkSb5YrZuHUIJKpDfYEq5b6
+	 alTqr4YI5StpNNagH7n2ViJA7ybKwMR+TxR2r+m9P9lEo9XMBJspWdJPuKEG6xmmH9q/5
+	 9nV92/XEh5oYgFYwNZG9TMMVazZXjleLKGVzGB0n+mZJfAQQKvXyz/0Y4ocbGVOGuqCu5
+	 5Xmk8BaUEE7s1kbVOrQbuVnU4cy/9XUQ2NSlKppKlJ239bDchPqmoK8Gvvgv4sRS5WQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=roeck-us.net;
-	spf=fail smtp.mailfrom=roeck-us.net;
-	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=pssl+oVo;
-	arc=none smtp.remote-ip=35.89.44.35
-Received: from omta36.uswest2.a.cloudfilter.net (omta36.uswest2.a.cloudfilter.net [35.89.44.35])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=K2DGESd1;
+	arc=none smtp.remote-ip=95.215.58.221
+Received: from mta1.migadu.com (out-221.mta1.migadu.com [95.215.58.221])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328E1606A320
-	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 21:56:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 328E1606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0565606A31A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 22:01:31 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0565606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=pssl+oVo
-Received: from eig-obgw-5002b.ext.cloudfilter.net ([10.0.29.226])
-	by cmsmtp with ESMTPS
-	id LJN0xiKRnusRSLSgTxvned; Mon, 26 Oct 2026 21:56:49 +0000
-Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
-	by cmsmtp with ESMTPS
-	id LSgSxS9w99uv0LSgTxyCPY; Mon, 26 Oct 2026 21:56:49 +0000
-X-Authority-Analysis: v=2.4 cv=M4tNKzws c=1 sm=1 tr=0 ts=6adfcca1
- a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
- a=2sXmku2JeBYkAKbX80UA:9 a=QEXdDO2ut3YA:10 a=YLW5Y6rX8DFJjTE4N0y5:22
- a=KPbNTLLc3YvdawN95zVk:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
-	List-Archive; bh=Ql8b3SPdd8YuwXyKaG5uxeVFoTrcOtPYj40d++K6fOE=; b=pssl+oVoGd78
-	gvVzCBAqcriOZwGntgw5N3pqO0M9UuepaKSV0p+NQAtMCXkdApBVPDAYIwEsfgqT9v3ZYwhntqofm
-	vE8/q2qdEHtFTc7U3YN5Q/UlFQMTZQka0+cqdAX0IG0Hqd/tmhhIxpoIEruZ9yq6GrT4rFJCUdpbK
-	614j/o9gCv6FgVty+BrrXp7j/tYBWuZd4nyVvw9jBC0Ss4pOxIPEwVdvYOljb0Oc8GqsOwLq2ChTq
-	kux3o/HBUOsu4QJwjKW2taOiqkRSCYfNbOBKV6rCbEja7dDGGsKj9bssadnYxgUZ2WFzODLi94mzG
-	n6GcZycnmbS908LnirrnWg==;
-Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:45814)
-	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.100.1)
-	(envelope-from <linux@roeck-us.net>)
-	id 1xLSgS-00000003lg7-2EYQ;
-	Tue, 27 Oct 2026 03:26:48 +0530
-Message-ID: <56a656d8-66be-41d0-9d9d-4533b3030817@roeck-us.net>
-Date: Mon, 26 Oct 2026 14:56:47 -0700
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=K2DGESd1
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=d/XH3OknxfPjStHsj+pXLKFQsWfu7QdbdcYVcusQH88=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1793052090; v=1; x=1793656890;
+ b=K2DGESd1ORM+nfGVKFRn1bNSIcfkuCoHPjkJGL4Z/8dhPAxUPA9s5NpdIN9r4nwCdGBhDekk
+ d3fN9p1kyWhnhDOZFxz59mJXu96m6aV1Ba6GycMUNuHfDLXxYWAsgsTBzfZ2VlR788evjAE0Ejl
+ lDvVTJ4S4DHmvNrPZAzoZ9gA=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 313bf9c5a9775fab;
+	Mon, 26 Oct 2026 22:01:30 +0000
+X-Mizu-Trace-ID: 313bf9c5a9775fab
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <c6955dac-49bd-4b9a-9313-49f7b9753eb1@linux.dev>
+Date: Mon, 26 Oct 2026 15:01:28 -0700
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -77,160 +59,228 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] hwmon: sparx5: add LAN969x PWM support
-To: sashiko-reviews@lists.linux.dev, Robert Marko <robert.marko@sartura.hr>,
- linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org
-Cc: robh@kernel.org, conor+dt@kernel.org
-References: <20261013125735.1542349-1-robert.marko@sartura.hr>
- <20261013125735.1542349-4-robert.marko@sartura.hr>
- <sashiko-outbox-169777@kernel.org>
+Subject: Re: [PATCH bpf-next v3 12/12] [do not merge] selftests/bpf: Cover the
+ low-32 link for narrowing stack spills
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+References: <20261020161907.2115379-1-vineet.gupta@linux.dev>
+ <20261020161907.2115379-13-vineet.gupta@linux.dev>
+ <sashiko-outbox-179354@kernel.org>
+From: Vineet Gupta <vineet.gupta@linux.dev>
 Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <sashiko-outbox-169777@kernel.org>
+In-Reply-To: <sashiko-outbox-179354@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - roeck-us.net
-X-BWhitelist: no
-X-Source-IP: 108.223.40.66
-X-Source-L: No
-X-Exim-ID: 1xLSgS-00000003lg7-2EYQ
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:45814
-X-Source-Auth: guenter@roeck-us.net
-X-Email-Count: 19
-X-Org: HG=direseller_whb_net_legacy;ORG=directi;
-X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfDiB8ZL1sWz9ps0RcdW5/8Od8uDcSA8DCoczQ8Z4lJrU/uQd6ZdOnAtUYmNMc+Gpl3zovyvydh1cIvCzEE+TbR8e0/vZ249UL8cuEUKbUlAKV8BjvjAe
- w6TySqLl8a20G8jXuYVO8R2Rwo+AmZrYNpLblm5cpeRAcjQ/dy7c+Go/T0zcl4sxej2HZzDQ98uU/04W5MiXHd6UFC4YS+BUyhtbiBDPyTS0yVBy3SmaI7xo
 
-On 10/13/26 06:10, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] hwmon: redundant custom lock violates subsystem locking guidelines
+On 10/20/26 9:32 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [Medium] selftests/bpf: fill before narrow in zext_narrowing_spill_byte_no_link()
+> - [Medium] selftests/bpf: tautological test in sext_fill_of_narrowing_spill_drops_zext()
+> - [Low] selftests/bpf: stale inline comment in zext_narrowing_spill_drops_link()
 > --
-
-I agree, the extra lock is unnecessary.
-
-> 
-> commit 28a1c23dcff1b1ead30305d4b8a45894536ca4ec
-> Author: Robert Marko <robert.marko@sartura.hr>
-> 
->      hwmon: sparx5: add LAN969x PWM support
-> 
-> This commit adds PWM support for the LAN969x fan controller, exposing pwm1
-> and pwm1_freq attributes. It implements a custom mutex to serialize fan
-> controller register access and parses standard PWM specifier properties from
-> the device tree to configure the hardware.
-> 
->> diff --git a/drivers/hwmon/sparx5-temp.c b/drivers/hwmon/sparx5-temp.c
->> index 922c3c33a049a..5130140e1b579 100644
->> --- a/drivers/hwmon/sparx5-temp.c
->> +++ b/drivers/hwmon/sparx5-temp.c
->> @@ -41,8 +48,11 @@ struct s5_hwmon {
->>   	void __iomem *base;
->>   	void __iomem *fan;
->>   	struct clk *clk;
->> +	struct mutex lock; /* protects fan controller state and registers */
-> 
-> [Severity: Low]
-> Is this custom mutex necessary?
-> 
-> The hwmon subsystem core already serializes sysfs operations for attributes
-> registered with the info parameter of devm_hwmon_device_register_with_info()
-> via its own internal locking in hwmon_attr_show() and hwmon_attr_store().
-> 
-> If follow-up patches in the series introduce a thermal cooling device that
-> requires serialization against sysfs, the hwmon architectural guidelines
-> explicitly mandate using the hwmon_lock() and hwmon_unlock() API instead of
-> a private mutex.
-> 
-> Could this private lock be replaced with the hwmon core locking to avoid
-> violating the subsystem's API contract?
-> 
+>
+> commit a341902044eb0b749136bbae6f269759e4c0ffcd
+> Author: Vineet Gupta <vineet.gupta@linux.dev>
+>
+> selftests/bpf: Cover the low-32 link for narrowing stack spills
+>
+> This patch adds six verifier selftests to verifier_linked_scalars.c to test
+> low-32 register linking behavior across narrowing stack spills and subsequent
+> fills.
+>
+>> diff --git a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
+>> index ab78285153fb1..8ade4836e1b2f 100644
+>> --- a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
+>> +++ b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
+>> @@ -1217,6 +1217,128 @@ __naked void zext_fill_byte_forms_no_link(void)
+>>   	: __clobber_all);
+>>   }
+>>   
 > [ ... ]
-> 
->> +static int s5_write_pwm_freq(struct s5_hwmon *hwmon, long val)
+>
+>> +/*
+>> + * A narrowing spill stores only the source's low 32 bits, so the slot is their
+>> + * zero-extension. Filling it back is a mov, though, and that drops the link
+>> + * for the same reason zext_chain_drops_link does, so a later narrowing of the
+>> + * source does not reach the filled register.
+>> + */
+>> +SEC("socket")
+>> +__failure
+>> +__msg("div by zero")
+>> +__naked void zext_narrowing_spill_drops_link(void)
 >> +{
->> +	unsigned long rate, divider;
->> +	u32 data;
->> +
->> +	if (val <= 0)
->> +		return -EINVAL;
->> +
->> +	rate = DIV_ROUND_CLOSEST(hwmon->clk_rate, FAN_PWM_FREQ_SCALE);
->> +	if (val < DIV_ROUND_CLOSEST(rate, FIELD_MAX(FAN_PWM_FREQ_DIV)) ||
->> +	    val > rate)
->> +		return -ERANGE;
->> +
->> +	divider = DIV_ROUND_CLOSEST(rate, val);
->> +	divider = min_t(unsigned long, divider, FIELD_MAX(FAN_PWM_FREQ_DIV));
->> +
->> +	mutex_lock(&hwmon->lock);
-> 
+>> +	asm volatile ("						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r6 = r0;						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r0 <<= 32;						\
+>> +	r6 |= r0;		/* r6 = full 64-bit unknown */	\
+>> +	*(u32 *)(r10 - 8) = r6;	/* narrowing spill, forms the link */ \
+>> +	r2 = *(u32 *)(r10 - 8);	/* fill it back */		\
+>> +	if w6 != 0 goto 1f;	/* narrows r6, propagates to r2 */ \
 > [Severity: Low]
-> Since s5_write_pwm_freq() is invoked via sysfs for an info-registered
-> attribute, the execution is already serialized by the hwmon core. There is
-> also no concurrency during probe() for this driver.
-> 
-> Does taking hwmon->lock here add redundant locking complexity that can be
-> safely removed?
-> 
->> +	data = readl_relaxed(hwmon->fan + FAN_PWM_FREQ);
->> +	data &= ~FAN_PWM_FREQ_DIV;
->> +	data |= FIELD_PREP(FAN_PWM_FREQ_DIV, divider);
->> +	writel_relaxed(data, hwmon->fan + FAN_PWM_FREQ);
->> +	mutex_unlock(&hwmon->lock);
->> +
->> +	return 0;
+> This isn't a bug, but is this inline comment in
+> zext_narrowing_spill_drops_link() left over from the earlier version of the
+> test? Since the preceding fill into r2 drops BPF_REG_LINK_ZEXT, narrowing w6
+> here does not propagate to r2.
+
+Yes. It said the narrowing propagates to r2, which is the opposite of what
+the test is named for. Fixed.
+
+
+>> +	if r2 == 0 goto 1f;					\
+>> +	r0 /= 0;						\
+>> +1:								\
+>> +	r0 = 0;							\
+>> +	exit;							\
+>> +"	:
+>> +	: __imm(bpf_get_prandom_u32)
+>> +	: __clobber_all);
 >> +}
-> 
+>> +
+> [ ... ]
+>
+>> +/*
+>> + * A sub-word spill is below the low-32 model, so no link is formed there.
+>> + * The fill is a byte load too, so this pins the spill-side and fill-side
+>> + * size gates together rather than either on its own.
+>> + */
+>> +SEC("socket")
+>> +__failure __msg("div by zero")
+>> +__naked void zext_narrowing_spill_byte_no_link(void)
+>> +{
+>> +	asm volatile ("						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r6 = r0;						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r0 <<= 32;						\
+>> +	r6 |= r0;						\
+>> +	*(u8 *)(r10 - 8) = r6;	/* 1-byte spill: no link */	\
+>> +	r2 = *(u8 *)(r10 - 8);					\
+>> +	if w6 != 0 goto 1f;					\
+>> +	if r2 == 0 goto 1f;	/* not deduced */		\
+> [Severity: Medium]
+> Does zext_narrowing_spill_byte_no_link() actually test the size gate in
+> check_stack_write_fixed_off()?
+
+No, fixed in v4.
+
+The narrowing now happens while the value is still on the stack, before 
+the fill, as you suggest and as zext_narrowing_spill_reaches_fill 
+already does. As written, the fill had already dropped any link, so the 
+test would have passed even if the 1-byte spill had formed one.
+
+
+> Here, r2 is filled from fp-8 before w6 is narrowed:
+>
+> 	*(u8 *)(r10 - 8) = r6;	/* 1-byte spill: no link */
+> 	r2 = *(u8 *)(r10 - 8);
+> 	if w6 != 0 goto 1f;
+>
+> As demonstrated by zext_narrowing_spill_drops_link() above, filling a
+> BPF_REG_LINK_ZEXT slot into r2 before narrowing w6 drops the zero-extending
+> link on the fill, so narrowing w6 afterwards would not propagate to r2 even if
+> the 1-byte spill had formed a link.
+>
+> Should the narrowing branch "if w6 != 0 goto 1f" happen while the value is
+> still on the stack before filling r2, matching the instruction order in
+> zext_narrowing_spill_reaches_fill()?
+>
+>> +	r0 /= 0;						\
+>> +1:								\
+>> +	r0 = 0;							\
+>> +	exit;							\
+>> +"	:
+>> +	: __imm(bpf_get_prandom_u32)
+>> +	: __clobber_all);
+>> +}
+>> +
+>>   #ifdef CAN_USE_MOVSX
+> [ ... ]
+>
+>> @@ -1800,6 +1952,35 @@ __naked void sext_byte_fill_drops_sext_link(void)
+>>   }
+>>   #endif /* CAN_USE_MOVSX */
+>>   
+>> +/*
+>> + * The same, with the zero-extending link coming from a narrowing spill rather
+>> + * than a mov. The spill truncated the slot to 32 bits, so the fill is not
+>> + * narrowing and assigns no link kind of its own; the slot's zero-extending
+>> + * one must not survive the sign-extending load.
+>> + */
+>> +SEC("socket")
+>> +__failure __msg("div by zero")
+>> +__naked void sext_fill_of_narrowing_spill_drops_zext(void)
+>> +{
+>> +	asm volatile ("						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r6 = r0;						\
+>> +	call %[bpf_get_prandom_u32];				\
+>> +	r0 <<= 32;						\
+>> +	r6 |= r0;		/* r6 = full 64-bit unknown */	\
+>> +	*(u32 *)(r10 - 8) = r6;	/* narrowing spill: slot is ZEXT */ \
+>> +	r2 = *(s32 *)(r10 - 8);	/* sign-extending, not narrowing */ \
+>> +	if w6 != -1 goto 1f;	/* slot low 32 bits are all ones */ \
+>> +	if r2 s>= 0 goto 1f;	/* taken only if r2 was rebuilt zext */ \
+>> +	r0 /= 0;						\
+> [Severity: Medium]
+> Can sext_fill_of_narrowing_spill_drops_zext() ever reach the is_ldsx link
+> clearing in check_mem_access() with BPF_REG_LINK_ZEXT still intact?
+
+nope it can't: v4 drops the test.
+
+Thx,
+-Vineet
+
+> In check_stack_write_fixed_off(), the 4-byte narrowing spill
+> "*(u32 *)(r10 - 8) = r6" truncates fp-8 to 32 bits via
+> zext_32_to_64(&ss->spilled_ptr) and sets BPF_REG_LINK_ZEXT.
+>
+> When "r2 = *(s32 *)(r10 - 8)" then runs in check_stack_read_fixed_off(),
+> get_reg_width(reg) is at most 32, so narrowing is false. Because size == 4,
+> spill_size == 4, and !narrowing all hold, check_stack_read_fixed_off() calls
+> assign_scalar_id_before_mov(env, reg) before copying *reg to
+> state->regs[dst_regno]:
+>
+> kernel/bpf/verifier.c:check_stack_read_fixed_off() {
+>      ...
+> 	if (env->bpf_capable && size == 4 &&
+> 	    (subreg_link || (spill_size == 4 && !narrowing)))
+> 		assign_scalar_id_before_mov(env, reg);
+> 	state->regs[dst_regno] = *reg;
+>      ...
+> }
+>
+> And assign_scalar_id_before_mov() immediately clears BPF_REG_LINK_ZEXT and
+> assigns a fresh scalar ID unlinked from r6:
+>
+> kernel/bpf/verifier.c:assign_scalar_id_before_mov() {
+> 	if (src_reg->link_kind && src_reg->link_kind != BPF_REG_LINK_SEXT)
+> 		bpf_clear_scalar_id(src_reg);
+> 	if (!src_reg->id && !tnum_is_const(src_reg->var_off))
+> 		src_reg->id = ++env->id_gen;
+> }
+>
+> So BPF_REG_LINK_ZEXT is already cleared by the normal 4-byte fill path (the
+> same path tested by zext_narrowing_spill_drops_link()) before the is_ldsx
+> handling in check_mem_access() runs.
+>
+> Additionally, even if r2 kept r6's ID and BPF_REG_LINK_ZEXT past
+> check_mem_access(), coerce_reg_to_size_sx() restricts r2's 64-bit bounds to
+> [S32_MIN, S32_MAX]. When "if w6 != -1 goto 1f" calls sync_linked_regs(),
+> rebuilding r2 with zext_32_to_64() yields 0xffffffff, which is disjoint from
+> [S32_MIN, S32_MAX], causing range_bounds_violation() to revert r2 to its prior
+> bounds and still hit "r0 /= 0".
+>
+>> +1:								\
+>> +	r0 = 0;							\
+>> +	exit;							\
+>> +"	:
+>> +	: __imm(bpf_get_prandom_u32)
+>> +	: __clobber_all);
+>> +}
+>> +
+>>   #endif /* CAN_USE_LDSX */
+>>   
+>>   char _license[] SEC("license") = "GPL";
 
