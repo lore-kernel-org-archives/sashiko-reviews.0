@@ -1,102 +1,64 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=162.62.57.252
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793000484;
-	b=HmO50zAcSQVnuGEiiItgT2wJB1CNordm+CBpN+FcvEAiS4p9omS7ErAS6r/6dhQbWUUN
-	 to7hsek+PI+f7IHdHoVoSXidEufCAz7HUi/Gr5vF8y5pn5hmWcY29mNUQVAEHD8EsgVj+
-	 A+NRKzCI1dmwrKPCP0Cyz6kf54JM+VAFU7PIea8MWqXRbyDzPBhhWASAqJQJq/28dnNhN
-	 163rlmV/QwDzsOAMBCkJSkc2X3YaPbu2Ct2aqe8vFMGYlDQYBzOlEqwNn4oTjxIoeBfFj
-	 lgLlncA9Z0fGRG1Ey4WJFo/wRtlepf+jur0qxvsUAMwgPlpr9bF24d69xfUEe8eA2lQ==
+	t=1793001108;
+	b=rKqWWhEz62QSoT/LAjQCWQW3pYcc7j6OSMCJYhUet63Zpz5U1Osg7KjZG4H7SkLfP3zT
+	 Hn5GmeF2qAgk/ielXgkR+znGKw23q9Z2HaR/PuV7cXM81Qfri3Vw4iPyK4gJBWpZAy/L0
+	 5VyyZu8u601FNK9BE73FnZm1ssl3gElNTaRyfAarp0eWySLMDTGv69c2KTiiiNfK0mR01
+	 LkQwGhmyG9qkNzZlSDzjWRnODzRexJqy/LNXh3V99av2+NCnOwkHN64ActLEBl+d97Fvh
+	 wkI/Yt18uUmxv7Hvjyn4B5UWRMg35Xxr8OYwVe4V2esxvZRqOAslXMOnwtdY9XIblnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793000484;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spamd-Result:
-	 X-Spam-Score:X-Spam-Level:X-Spam-Flag;
-	bh=sWrkcP/yBVW3JGHMD8FsWZTL1fQHiKFs8LimUVOooqU=;
-	b=1pUr/f5DAzz1oWLiuJWf2RUMKib2RbUyl84YhzwV0UW0PNHraubJa6xLRBQlkKkkUbJ5
-	 uT9wF2nqh0Dssh4ELVmYMQhYMSb5sTr2zxl9Km2hSI2Os7OjABHD13TDvzkb9osbrcH5K
-	 6x8VEO61LvKn9wa/m/+lLTagBIw4sPIPB0wvtJ0pHPgo3rWgUuqfBepeZtrqNFrpSdOiE
-	 vpl8STm1rhvxoZRW/hXBaOvmRRbRS8tawamzxlS0FN/UHtfZH6MRkcw8qZpyuuSenhkGx
-	 gtTnlhiltThNlah/w8SRisFFEtDl8xLHAsWXJEdjDR/nv6cQ54Mt9AU07zOLHnLmoNw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793001108;
+	h=DMARC-Filter:DKIM-Signature:X-QQ-XMRINFO:X-QQ-XMAILINFO:From:To:Cc:
+	 Subject:Mime-Version:Content-Type:Content-Transfer-Encoding:Date:
+	 X-Priority:Message-ID:X-QQ-MIME:X-Mailer:X-QQ-Mailer:References:
+	 In-Reply-To:X-QQ-mid;
+	bh=+nE7HO3QFyRL2Ai8GdADlUMnKwk6M/Zzpg853YbKlk8=;
+	b=hu2LT4DzZDqcKaWR4iQ0ho5HziqkdB7FqWRKyT2onFX5wKeIrnvrnDy6Mt/a1hRwQj/D
+	 /DYghCgQdCmXktlLaUKrHlDLDEpYW+Dzls3Do11NmrOjaZYk6VxJ/84oxIjNN7CWLycYS
+	 aMZ8jhrKdxLKFthzFJ204RB0zbNF7e8o27RKdPBTKETPEdcJCAyhRlKhK5xQawkDn0EI6
+	 ki/O4mjLAebsGj854aVw6uq5bmhCtwWD0HggcAgbXtvfysg91EayaJ3aQn/c1AycSKr3g
+	 wtFFGNFL1EqouhJSH/3TSalf0GD7hHhJfNtmfkJw5JVaLj0Mr1Z9ctjJ/FAh78Z/1Cg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IMSjQOaC;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=FedeyjtJ;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IMSjQOaC;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=FedeyjtJ;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=qq.com;
+	spf=pass smtp.mailfrom=qq.com;
+	dkim=pass header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=JLSXZWP6;
+	arc=none smtp.remote-ip=162.62.57.252
+Received: from out162-62-57-252.mail.qq.com (out162-62-57-252.mail.qq.com [162.62.57.252])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBA7606A322
-	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 07:41:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CBBA7606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884ED606A322
+	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 07:51:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 884ED606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IMSjQOaC;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=FedeyjtJ;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IMSjQOaC;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=FedeyjtJ
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 0FF47222C7;
-	Mon, 26 Oct 2026 07:41:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1793000482; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=sWrkcP/yBVW3JGHMD8FsWZTL1fQHiKFs8LimUVOooqU=;
-	b=IMSjQOaCYWrZu7o5oVeTyU5bR+QO2aHnpndiTERI5WvKhqz750d5ghV49LPUysNNNTkC9h
-	0zAl5CtbyfEov4yIlVzmrfTc2ykbkwfbaYGf1ExI9csxqZKV/TXReZztxrbvbw8xI43yLz
-	eF4XcUzEWGDs4UbBJFUgDeFyWlakNNg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1793000482;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=sWrkcP/yBVW3JGHMD8FsWZTL1fQHiKFs8LimUVOooqU=;
-	b=FedeyjtJmYr8yfqpxxZ7nqWPJCLWdfeDsrXcaVNhFTgOWJQTS7/yvJss8Yb3TZmacB+Gny
-	HxldMtmc75DcbzBQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1793000482; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=sWrkcP/yBVW3JGHMD8FsWZTL1fQHiKFs8LimUVOooqU=;
-	b=IMSjQOaCYWrZu7o5oVeTyU5bR+QO2aHnpndiTERI5WvKhqz750d5ghV49LPUysNNNTkC9h
-	0zAl5CtbyfEov4yIlVzmrfTc2ykbkwfbaYGf1ExI9csxqZKV/TXReZztxrbvbw8xI43yLz
-	eF4XcUzEWGDs4UbBJFUgDeFyWlakNNg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1793000482;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=sWrkcP/yBVW3JGHMD8FsWZTL1fQHiKFs8LimUVOooqU=;
-	b=FedeyjtJmYr8yfqpxxZ7nqWPJCLWdfeDsrXcaVNhFTgOWJQTS7/yvJss8Yb3TZmacB+Gny
-	HxldMtmc75DcbzBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A324F13319;
-	Mon, 26 Oct 2026 07:41:21 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id MKHHESEE32qkBgAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Mon, 26 Oct 2026 07:41:21 +0000
-Message-ID: <4baeea95-1628-485e-bee7-925849a867d2@suse.de>
-Date: Mon, 26 Oct 2026 08:41:20 +0100
+	dkim=pass (1024-bit key, unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=JLSXZWP6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1793001102; bh=+nE7HO3QFyRL2Ai8GdADlUMnKwk6M/Zzpg853YbKlk8=;
+	h=From:To:Cc:Subject:Date:References:In-Reply-To;
+	b=JLSXZWP6KWW+GlHF3YJRpnzX4kfrkKR9k87KrKARSbi79rfBdpIERkU/BFjADRuD6
+	 6PIvXf4Zx0SeR1b6z1Jim7RrdfRgmbuLyrKF6KUra1isNblzx8C+ymvT/qbgiuBkgE
+	 r1pwUeF4dAS3cc6Ud2b16pddUdpoZPyvuvgAM9/g=
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+X-QQ-XMAILINFO: M+DG/l9YxNXY6gel2mm4emCwqjrguTLsCjqIzapjig9WrxrPVhvK0sVnBQjN22
+	 VfcOb9ose1fjG4kHPbGy5o5QJSojF9/vLemsLPOnZNYciEfQVVCAI6+Mm7y28MMwRLJvBrOzyS6qm
+	 9E6i0gbsib0YL4PFIwIPfnGKhNejU24E74tEbXW8Nj25/ERr95miiGszTkxhU2lVqtPzK4hBvg5Sx
+	 x0sqfduYcsclBz6xxfJgB0ScWg6odScp6Pcmez4HtGInSQPs75hfk2UeNJQQamvjCipKkT0YTG7KE
+	 iicVZ58nOPST6O8u3erBaLFeNaR6K8sJqSGFQiRa0hcR71E1uIMMykPn0+69qTIZir2skRFTwPgKT
+	 nHlgg21zJ1ghqGgr76Hmd60yDNuupbTiLW2y5AxXpO8xt8zq5Pul166G+IGrYfcL/q49mPxzlm6QX
+	 Ft0qiWlVr8iCLdZa1mzJp+lkB/QMGAVWjbWwd3GYPpgEh+lazBDYbkP9poVYqSYRf007QA4oI8shW
+	 ajeAwTcN5e4m9BzkGbX4K8MOE/hLQfl24rrrH1uc+6x09Owenk3mlgnYlxQYHr2HsYBuT/wWtw2Fc
+	 IsvYLwIN9BXHwk9f5LvLTioX62JF13VWDVFr2DynGgcbM+4eszjb+Sa03kK5LCSlKzXIh3QJlKdp3
+	 mlM+j1ql2W4J13g588rvcayrmR9N6X6pwMOtM91kmrDWVE5FVgIGg6TvH1F34VzsHZp1Cc0oyVbNS
+	 Sr6WaxeR2oanNdccn9cPrQ6+AVE1MUBvUwBoN8CEbuyQB6/4mD8PUx6aB6n/NNVwFfYaEY2+sRrCp
+	 Hw3Z+u9oYIqRbupfOQ4h8PoUX9XzSmE3T1QmOTaGM19mDWjIlSIwIUx4LHcEZO8tLK3KNw1CJwFfa
+	 rWj0Xf2TF0Rl1oBpepfgS6X8RdBx8OpY+oAHz0WN6O6E71opA+wwrFQtc8MyYViE1NmbxuzyIMYRB
+	 sq6LEX+SUzkgdSxyiVD4vbClIzNtI8HpmArr81jXLwHxH4yA6JE7N30wQJiDxRTgWDl7pnmIO+dau
+	 vXLyt6zHqF64fFVNFhBMclMjnaA==
+From: "=?utf-8?B?Q3VuaGFvIEx1?=" <1579567540@qq.com>
+To: "=?utf-8?B?c2FzaGlrby1yZXZpZXdz?=" <sashiko-reviews@lists.linux.dev>
+Cc: "=?utf-8?B?ZGV2aWNldHJlZQ==?=" <devicetree@vger.kernel.org>, "=?utf-8?B?cm9iaA==?=" <robh@kernel.org>, "=?utf-8?B?Y29ub3IrZHQ=?=" <conor+dt@kernel.org>
+Subject: Re: [PATCH v3 2/2] pmdomain: rockchip: Add RK3572 boot peripheral domains
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -105,110 +67,30 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/7] vt: Remove old-style con_blank
-To: Helge Deller <deller@gmx.de>, Greg KH <gregkh@linuxfoundation.org>
-Cc: jirislaby@kernel.org, James.Bottomley@hansenpartnership.com,
- simona@ffwll.ch, linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
- linux-fbdev@vger.kernel.org, linux-parisc@vger.kernel.org,
- sashiko-reviews@lists.linux.dev
-References: <20261023132448.115747-1-tzimmermann@suse.de>
- <20261023132448.115747-8-tzimmermann@suse.de>
- <2026102312-chute-proud-204a@gregkh>
- <68342b92-0e12-4aa1-a215-efb623418696@gmx.de>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <68342b92-0e12-4aa1-a215-efb623418696@gmx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-13.29 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	XM_UA_NO_VERSION(0.01)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	FREEMAIL_TO(0.00)[gmx.de,linuxfoundation.org];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmx.de];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.com:url]
-X-Spam-Score: -13.29
-X-Spam-Level: 
-X-Spam-Flag: NO
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+Date: Mon, 26 Oct 2026 15:51:41 +0800
+X-Priority: 3
+Message-ID: <tencent_3A91A40015443A3FDB26209A0119DC84C007@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+References: <20261026-add-board-ok3572-c-pmdomain-v3-0-70d614d3d921@qq.com>
+ <20261026-add-board-ok3572-c-pmdomain-v3-2-70d614d3d921@qq.com>
+	<sashiko-outbox-184654@kernel.org>
+In-Reply-To: <sashiko-outbox-184654@kernel.org>
+X-QQ-mid: xmsezb41-0t1793001101tf572a3g3
 
-Hi
-
-Am 25.10.26 um 08:48 schrieb Helge Deller:
-> On 10/23/26 15:37, Greg KH wrote:
->> On Fri, Oct 23, 2026 at 03:16:17PM +0200, Thomas Zimmermann wrote:
->>> All consoles implement the new con_blank plus con_unblank. Remove
->>> the old semantics from con_blank. Always pass a VESA blank mode to
->>> the blank parameter.
->>>
->>> v3:
->>> - keep con_blank's mode_switch parameter
->>
->> Shouldn't the "v3:" stuff go below the --- line?
-
-Force of habit. Putting the change log in the commit description is 
-common for DRM patches.
-
-I'll do better next time.
-
-
-> Series applied to fbdev git tree.
-> While at it, I dropped the v3: stuff lines, so no need to resend.
-
-Thanks Helge.
-
-Best regards
-Thomas
-
->
-> Helge
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
-
+SGksCgo+IFtIaWdoXSBwbWRvbWFpbjogcm9ja2NoaXA6IHJvY2tjaGlwX3BkX3Bvd2VyKCkg
+cmVzZXRzIGFjdGl2ZSBtZW1vcnkgb24KPiBwb3dlci1vZmYgZXJyb3IKCkNvbmZpcm1lZC4g
+UmVjb3ZlcnkgY2FuIHJlc2V0IHRoZSBtZW1vcnkgb2YgYSBkb21haW4gdGhhdCBuZXZlciBw
+b3dlcmVkCm9mZi4gSSB3aWxsIGZpeCB0aGlzIGlzc3VlIGluIHY0LgoKPiBbTWVkaXVtXSBw
+bWRvbWFpbjogcm9ja2NoaXA6IGRvbWFpbiBsZWZ0IHBvd2VyZWQgb24gd2hlbgo+IHJvY2tj
+aGlwX3BkX3Bvd2VyX29uKCkgZmFpbHMKCkNvbmZpcm1lZC4gVGhlIGVycm9yIHBhdGggc2hv
+dWxkIGF0dGVtcHQgdG8gcG93ZXIgZG93biB0aGUgZG9tYWluIGJlZm9yZQpkaXNhYmxpbmcg
+aXRzIHN1cHBseSwgYW5kIHJldGFpbiB0aGUgc3VwcGx5IGlmIHJvbGxiYWNrIGZhaWxzLiBJ
+IHdpbGwgZml4CnRoaXMgaXNzdWUgaW4gdjQuCgpCZXN0IHJlZ2FyZHMsCkN1bmhhbyBMdQoK
+cHctYm90OiBjcgo=
 
