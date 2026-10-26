@@ -1,74 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.198
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.200
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793037122;
-	b=qFvsqBNllTiF4Ny5bGHmzj+iLdJZMMTQ2SzFETDLsfKz/iET0tvjoNB5hNdCav7RR/sq
-	 skI3KQkkJf9GNmk/sfrF7AmIBx26d1dIQIZPepP3Ju1ugxMrdnG3uJgYUnX9xs7SK7TIh
-	 ZaeyabKehj/KXoaKs0/+oR4+zFcGOQj2hrI1j7iJYohHxX6akn1/m8qRC/Areg51N+Pd5
-	 ae02GNKkKckMys0KGQwBG+OGAs1B43LvKya95f/nteGs1QzcTeV7SgrXlYHB7l8WAqNAX
-	 KPDXR6R5ar0DIrPvfJnfmVPzyKrBPcCW6FNpOZ2EXd5+Pbn7rP1a5xAD/Hy5/nzdLQQ==
+	t=1793038143;
+	b=AusLZ3sGcY6uOeuaVA9iYh/s/G0hncdoT/k8rUDPw3RdEniKEW30fKlsPPnlrJptM9uX
+	 kmN+kGJf07eEGl7Z52WWwHPZP/yiAPXOf09kUPq1fzerp7rUAQNBo01i7SOGsYB9oKzH5
+	 ib49ykMtG1566DksEgNQlq9NUUIRTKVh8PLEF8ycioGGu8NQEK7quPGncDviXIlYCwQWR
+	 XfEaDTBXBYAQtigqRieoEpBZesQY6uPt8iMWEq7aG3DMnXZTsYn9pztbrS3mLYTKfmIIb
+	 8CYoAQmOQLm1/Dl5QiB2u4oNPhoCrQyDt3uonetx/7TermTyomiiI4rW0jKpxhuE5cg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793037122;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793038143;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
 	 References:Message-ID:Subject:From:To:Cc:Content-Type;
-	bh=La0LweeObaZXk+KmiUrwtJDhtNlJw55vuKFmJ7P+2rk=;
-	b=J3KhtqXH/RSl1bdhAIqqs1sdcVBkAjb/BPqeYhFfl2zLdS3OayJlfK+AeFUi9pI1vcSL
-	 i39oPKo219xaihqWiucnV07Lw4va8RcQyUfJIElx9p4SUnsxo88IllPkXPr72teIoXxF7
-	 dktnM61OEp9G8GpNrz0BNogTfRX05QTpianSA4CANnb8IqmHEhgg0p9oVfkqIiZEKm7iY
-	 hheDEsetjD177dW6d0VC99nz5sgMmRdeMsXVgdkwvfp6m1gzlgQch0B+LJyCPaRmi21PX
-	 PlU8/o67rvtmHXMsyZu3Ox519lPLLv1YUgtszdTmsqQ/ShmU+kbuasRVGEWTYdPJYqg==
+	bh=Kv2U2+i5YrqjHvWntz1heOg13a9Ao3/MyitVnANiQ8U=;
+	b=0zEJpaozpfqO2jkagh3Bf2A51W4OP0uQoa4wtauZYPpI4ZqwkX5JW76gJm6LRh+3QN8y
+	 c+ffht8SRVGUdyq6utA2qDSHeiXFDZG8q6FXOjpDcO3zCCCPPoKwjpEcY4vCqRa5qKDIl
+	 6WYIr6JsB84VuWo8ZsogNHfwzYIOLZyK/iAFAtaShidzsD2eEBJdlhCnfIXBgjy28wynd
+	 HOmrXyLpQcO8M7lcpugThmEi6QMKhgvR/GdLoA3w75jksqU3dHsyuenmPrczgUZc60sE9
+	 LMmmdmf72DeMbSa60PrIerDPSklfxZHxj5kjBw7khu5mFreJ1CEbAzsw+HyeN66WePw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=JTZxfSJI;
-	arc=none smtp.remote-ip=209.85.215.198
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=NyxD3NAQ;
+	arc=none smtp.remote-ip=209.85.210.200
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F51606A31D
-	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 17:52:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 99F51606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58900606A31D
+	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 18:09:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 58900606A31D
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=JTZxfSJI
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-cd652c0385bso2011160a12.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 10:52:01 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=NyxD3NAQ
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-8a065e2933fso4680525b3a.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 11:09:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1793037121; x=1793641921; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1793038143; x=1793642943; darn=lists.linux.dev;
         h=content-type:cc:to:from:subject:message-id:references:mime-version
          :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=La0LweeObaZXk+KmiUrwtJDhtNlJw55vuKFmJ7P+2rk=;
-        b=JTZxfSJIkZgrqzN/93xpzglj3D3yZR919+D8ohzNnoMIUczL5OZYp8VEaEIbte2LwS
-         DcGJFx2Ielb8QSQ0i6Py5/bxFRvShUzR8PXHJvFQTppnkMssEmTc4YGQI/tZ1RZbXxRw
-         HHF4gUquQuPNpXkdUyfnuox+pAWYV2XVN5wSi6r025/XOHomkejP29xZAJseGwxFJCQg
-         +iTZzIib67oLQSbNb2qVdGcNzVmWk9NAh3oU49XEVywThMNufAu6+VMm+eyaEfI+N8e/
-         fyfQW/i9532+IDaEuVrteJjDtHmMUTDxfKvxCkQLoveYI30T6VC7KeHpd+wULaOm7SMg
-         nmCw==
+        bh=Kv2U2+i5YrqjHvWntz1heOg13a9Ao3/MyitVnANiQ8U=;
+        b=NyxD3NAQwnCtYvS8Ubykr7UugRqHPkHvOvyx/7HIL+pM39+FMlQtxmtYJKIwdqd3LV
+         pTjKHreFG6HNBSHjGsMAj1PudgLGXCDYxkWcImHbj9ZG6S02GB2vOMqPtneh6JyPpVyb
+         Uvwevq1lTzVdjpirJ5Rg2QPeIhwuKU1ODSs9Cgag7lNmlPosUaaK8IE5EeugowwaUpaY
+         dfrnw4BcsNATVqs+3RM/DyLj1s3jFCEIm7IRxB0EPC7SZJGNlw39TiTcDOGMlPKVf8Oc
+         iycO4fRZNCdlyjHxTJ6W0Oido8zGw4sq9ux187LL5QS7KxC54X/qrfMGlPh2zL2kSpYJ
+         SNBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793037121; x=1793641921;
+        d=1e100.net; s=20260707; t=1793038143; x=1793642943;
         h=content-type:cc:to:from:subject:message-id:references:mime-version
          :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=La0LweeObaZXk+KmiUrwtJDhtNlJw55vuKFmJ7P+2rk=;
-        b=DStfqGrY3M7jSc1rsNSqqul8G0E4GSERPZwko61IaGxqd1M3cyaYfIbrCK/aThEsze
-         43fnJU9LNr6uxugNpAs+GlgxTY1oYlSKoVfZKozMI148wg2ji5v+N7KOomaWLAk2V9vf
-         +3xg37gJhoMTbpwVmgxSEDAkVyXJ1KB5axugU3sUmqdZYtqqn1DXqXSFo0lC/YujmAhw
-         XWyhKww04WVSGGWzvhB9U/1eC8cBzI5rrYKzmRq+rTn+EapSe66CBSR+eCjA6wnHNSmr
-         1ziHDsgk1sPzpuDuJFqxC8OhtXI+ScxW5Pzcf/N4cYeh6BxilaGXukvno0jgnOtljnCD
-         5ZiA==
-X-Gm-Message-State: AFq9FYIlyuvIN/XwGelQWShMw2USqFaSMU4zZ5+eH0e5sUAmYpzE6IbG
-	RPj9IE4c4Z2TAJUj/j/JDQKy3njpi7iK3G9+90scPdFcbmuK5kB5wvCVGmZUAeUMsDdHNqeZSbL
-	vzyqv0d2R+G/RJb8EIVcEExTBcDGn/fdfkcxMhhijUyawehQ7S580xe9le4rDvu8M1LA8LSBBun
-	v0iWRRc+NsW0v0RPjRvVFyEy2WDd2XUU2T5CY02m/fhZ6imZdh
-X-Received: from pjblj15.prod.google.com ([2002:a17:90b:344f:b0:3a4:fb9f:4a65])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:1c0d:b0:3ac:7556:8ed9
- with SMTP id 98e67ed59e1d1-3adea9dab5cmr5810939a91.10.1793037120447; Mon, 26
- Oct 2026 10:52:00 -0700 (PDT)
-Date: Mon, 26 Oct 2026 10:51:59 -0700
-In-Reply-To: <sashiko-outbox-182134@kernel.org>
+        bh=Kv2U2+i5YrqjHvWntz1heOg13a9Ao3/MyitVnANiQ8U=;
+        b=wGe5YhOlmVB2/bn4hyDyLQUg4krtnk02owVWa5GFZKrlCqirps+TOz2QVV8FbLjyri
+         wIbF/94OfjEuBCwSxjiXY5rHrZPQv5vMkUeOwy5aY1zhixzAHE7pfSaPwvLtrPwOc7Dh
+         VswDuRfMsRP5Qh2e2XAJ92NYK4XVp9xK6p6L3mh3Rd2+NG+e9yP8GFLy3kRf7V95TpFO
+         O0wn+fBIf/vhjUHNI6eaiOm7EzNJpCGJsb418JbJNMZBi2WZi62vEnRPQELoJN/UAsa8
+         5CL9+cMUQtAICtEJLKv4RXfjd/YdUJeuJPqOtxZ5ZEjSE2XJeMfeC8e7eLxi7kFVSwVZ
+         dhZQ==
+X-Gm-Message-State: AFq9FYIgrxwExkd825HONTjLH9IIMfZyLet69B2/H6rIXGxEQcQ2YAW6
+	sgm0hXhPwJ7rRZu2vGEcSjKEzJeM62w8NdAF+MRaQqoTyyXd7IXthQJT/u8RFK74bS3SQgTzq7w
+	VPURBiGChzGcRtItNa4LCN80mqw+BAd/EcqWlX89Cfkbr7MMDoXr8H9S5Dgs2ERoKpqw5oTJhYs
+	uuyCYMZZkP2dezCKmlbiPMFOuRf6qcEotyiYLRlT63w09+k5cC
+X-Received: from pgli22.prod.google.com ([2002:a63:1316:0:b0:cd7:f985:396d])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a20:3c8e:b0:3e1:1db7:7608
+ with SMTP id adf61e73a8af0-3e7cd5ee414mr6775984637.54.1793038142494; Mon, 26
+ Oct 2026 11:09:02 -0700 (PDT)
+Date: Mon, 26 Oct 2026 11:09:01 -0700
+In-Reply-To: <at-TP7Il6rWcd5Xh@google.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -79,8 +79,8 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
 References: <20261022223052.646891-1-seanjc@google.com> <20261022223052.646891-4-seanjc@google.com>
- <sashiko-outbox-182134@kernel.org>
-Message-ID: <at-TP7Il6rWcd5Xh@google.com>
+ <sashiko-outbox-182134@kernel.org> <at-TP7Il6rWcd5Xh@google.com>
+Message-ID: <at-XPai1zCM_Zr2z@google.com>
 Subject: Re: [PATCH 3/4] KVM: x86: Recompute EFER.LMA instead of inheriting
  the current value on EFER writes
 From: Sean Christopherson <seanjc@google.com>
@@ -88,235 +88,78 @@ To: sashiko-reviews@lists.linux.dev
 Cc: kvm@vger.kernel.org
 Content-Type: text/plain; charset="us-ascii"
 
-On Thu, Oct 22, 2026, sashiko-bot@kernel.org wrote:
-> > diff --git a/arch/x86/kvm/msrs.c b/arch/x86/kvm/msrs.c
-> > index c3cb1575fe66e..41f3ec6eb2866 100644
-> > --- a/arch/x86/kvm/msrs.c
-> > +++ b/arch/x86/kvm/msrs.c
-> > @@ -638,8 +638,18 @@ static int set_efer(struct kvm_vcpu *vcpu, u64 efer)
-> >  	    (vcpu->arch.efer & EFER_SVME) && !(efer & EFER_SVME))
-> >  		return 1;
-> >  
-> > -	efer &= ~EFER_LMA;
-> > -	efer |= vcpu->arch.efer & EFER_LMA;
-> > +	if ((efer & EFER_LME) && is_paging(vcpu) && is_pae(vcpu))
-> > +		efer |= EFER_LMA;
-> > +	else
-> > +		efer &= ~EFER_LMA;
-> > +
-> > +	/*
-> > +	 * Toggling EFER.LMA on a bare write to EFER should be impossible, as
-> > +	 * it means KVM allowed architecturally invalid state at some point in
-> > +	 * the past, i.e. allowed EFER.LMA=1 && (!CR0.PG || !CR4.PAE).
-> > +	 */
-> > +	if (WARN_ON_ONCE((efer & EFER_LMA) != (vcpu->arch.efer & EFER_LMA)))
-> > +		return 1;
-> 
-> [Severity: High]
-> Can a guest or host userspace trigger this WARN_ON_ONCE() and get a spurious
-> #GP (or failed RSM / KVM_SET_MSRS) via SVM paths that still leave EFER_LMA
-> in vcpu->arch.efer out of sync with (EFER_LME && CR0.PG && CR4.PAE)?
+On Mon, Oct 26, 2026, Sean Christopherson wrote:
+> On Thu, Oct 22, 2026, sashiko-bot@kernel.org wrote:
+> > Because svm_set_cr0() sets EFER_LMA without checking is_pae(vcpu) (for
+> > example on an SEV-SNP AP created via SVM_VMGEXIT_AP_CREATE where
+> > sev_snp_init_protected_guest_state() calls kvm_vcpu_reset() and clears
+> > vcpu->arch.cr4 while the VMSA has CR4.PAE=1), 
 
-LOL, followed by a freaking disseration.
+Wait, no, kvm_vcpu_reset() also immediately clears EFER:
 
-> Earlier in arch/x86/kvm/msrs.c:set_efer(), KVM rejects changing EFER_LME
-> while paging is enabled:
+	kvm_x86_call(set_cr4)(vcpu, 0);
+	kvm_x86_call(set_efer)(vcpu, 0);  <===
+
+and svm_set_efer() sets vcpu->arch.efer verbatim.
+
+> > or if a guest clears CR4.PAE observed via cr_trap() while EFER_LMA=1,
+
+And I'm pretty sure Sashiko is wrong on this one too, as this can't happen.
+Clearing CR4.PAE while long mode is active results in a #GP, and hardware should
+enforcee that when MOV CR4 intercepts are trap-like.
+
+So I don't think the vcpu->kvm->arch.has_protected_state waiver is needed (though
+I do think it makes sense to WARN and continute, not WARN and reject).
+
+> a subsequent efer_trap() ->
+> > set_efer() sees EFER_LMA=1 with !is_pae(vcpu) and triggers the WARN_ON_ONCE()
+> > and #GP.
 > 
-> arch/x86/kvm/msrs.c:set_efer() {
-> 	...
-> 	if (is_paging(vcpu) && (vcpu->arch.efer & EFER_LME) != (efer & EFER_LME))
-> 		return 1;
-> 	...
-> }
+> Ugh.  I _want_ this to be a KVM bug, e.g. as is already pointed out by the comment:
 > 
-> Because of that check, the recomputed EFER_LMA in set_efer() is always equal
-> to ((vcpu->arch.efer & EFER_LME) && is_paging(vcpu) && is_pae(vcpu)). The new
-> WARN_ON_ONCE() therefore triggers whenever a vCPU enters set_efer() with
-> vcpu->arch.efer & EFER_LMA out of sync with those bits.
+> 	 * Clear EFER_LMSLE for a related reason: EFER writes are *trapped*,
+> 	 * not intercepted, i.e. hardware has already committed the write by
+> 	 * the time KVM gains control, and the trap is enabled if and only if
+> 	 * the guest is SEV-ES, whose EFER lives in the encrypted VMSA and so
+> 	 * can't be fixed up by KVM.  Rejecting EFER.LMSLE=1 would inject a #GP
+> 	 * *and* leave EFER.LMSLE set in the guest, which is strictly worse
+> 	 * than honoring a write that hardware itself allowed.
 > 
-> There appear to be three SVM paths where that still happens:
+> "rejecting" a value and injecting a #GP is completely pointless.  The guest already
+> has the "bad" value in EFER, and a misbehaving guest can simply eat the #GP.
 > 
-> 1. Nested SVM VMRUN and RSM into L2:
+> But the issue is really just that KVM simply doesn't have visibility into EFER.LMA
+> being set.  Heh, which technically makes this a bug fix, since IIUC, the current
+> code will never set EFER.LMA in this case?
 > 
-> Architecturally on SVM, VMRUN ignores EFER.LMA in the VMCB save area and sets
-> EFER.LMA from (EFER.LME && CR0.PG) in hardware, so nested_vmcb_check_save()
-> does not require save->efer & EFER_LMA to match (EFER_LME && CR0.PG):
+> I can't think of any way to do the right thing other than to rely on hardware to
+> not screw up?  E.g.
 > 
-> arch/x86/kvm/svm/nested.c:nested_vmcb_check_save() {
-> 	...
+> diff --git a/arch/x86/kvm/msrs.c b/arch/x86/kvm/msrs.c
+> index 41f3ec6eb286..3a6a0ebf1932 100644
+> --- a/arch/x86/kvm/msrs.c
+> +++ b/arch/x86/kvm/msrs.c
+> @@ -648,7 +648,8 @@ static int set_efer(struct kvm_vcpu *vcpu, u64 efer)
+>  	 * it means KVM allowed architecturally invalid state at some point in
+>  	 * the past, i.e. allowed EFER.LMA=1 && (!CR0.PG || !CR4.PAE).
+>  	 */
+> -	if (WARN_ON_ONCE((efer & EFER_LMA) != (vcpu->arch.efer & EFER_LMA)))
+> +	if (WARN_ON_ONCE((efer & EFER_LMA) != (vcpu->arch.efer & EFER_LMA) &&
+> +			 !vcpu->kvm->arch.has_protected_state))
+>  		return 1;
+>  
+>  	r = kvm_x86_call(set_efer)(vcpu, efer);
+> 
+> 
+> Hmm, though all of these cases make me wonder if we'd better off with just a WARN,
+> i.e. no #GP, since the goal is to enforce a consistent model, which is what the
+> new code does.
+> 
 > 	/*
-> 	 * These checks are also performed by KVM_SET_SREGS,
-> 	 * except that EFER.LMA is not checked by SVM against
-> 	 * CR0.PG && EFER.LME.
+> 	 * Toggling EFER.LMA on a bare write to EFER should be impossible, as
+> 	 * it means KVM allowed architecturally invalid state at some point in
+> 	 * the past, i.e. allowed EFER.LMA=1 && (!CR0.PG || !CR4.PAE).
 > 	 */
-> 	if ((save->efer & EFER_LME) && (save->cr0 & X86_CR0_PG)) {
-> 		if (CC(!(save->cr4 & X86_CR4_PAE)) ||
-> 		    CC(!(save->cr0 & X86_CR0_PE)) ||
-> 		    CC(!kvm_vcpu_is_legal_cr3(vcpu, save->cr3)))
-> 			return false;
-> 	...
-> }
+> 	WARN_ON_ONCE((efer & EFER_LMA) != (vcpu->arch.efer & EFER_LMA) &&
+> 		     !vcpu->kvm->arch.has_protected_state);
 > 
-> However, nested_vmcb02_prepare_save() only clears EFER_LMA when EFER_LME is
-> 0, and relies on svm_set_cr0() to update EFER_LMA:
-> 
-> arch/x86/kvm/svm/nested.c:nested_vmcb02_prepare_save() {
-> 	...
-> 	/* SVM ignores EFER.LMA if EFER.LME=0 (instead of failing VMRUN). */
-> 	if (!(svm->nested.save.efer & EFER_LME))
-> 		svm->nested.save.efer &= ~EFER_LMA;
-> 
-> 	svm_set_efer(vcpu, svm->nested.save.efer);
-> 
-> 	svm_set_cr0(vcpu, svm->nested.save.cr0);
-> 	svm_set_cr4(vcpu, svm->nested.save.cr4);
-> 	...
-> }
-> 
-> And svm_set_cr0() only updates EFER_LMA in vcpu->arch.efer when CR0.PG
-> transitions relative to the previous vcpu->arch.cr0:
-> 
-> arch/x86/kvm/svm/svm.c:svm_set_cr0() {
-> 	...
-> 	if (vcpu->arch.efer & EFER_LME) {
-> 		if (!is_paging(vcpu) && (cr0 & X86_CR0_PG)) {
-> 			vcpu->arch.efer |= EFER_LMA;
-> 			if (!vcpu->arch.guest_state_protected)
-> 				svm->vmcb->save.efer |= EFER_LMA | EFER_LME;
-> 		}
-> 
-> 		if (is_paging(vcpu) && !(cr0 & X86_CR0_PG)) {
-> 			vcpu->arch.efer &= ~EFER_LMA;
-> 			if (!vcpu->arch.guest_state_protected)
-> 				svm->vmcb->save.efer &= ~(EFER_LMA | EFER_LME);
-> 		}
-> 	}
-> 	...
-> }
-> 
-> Because L1 must have CR0.PG=1 to execute VMRUN, is_paging(vcpu) is already
-> true when svm_set_cr0() runs during VMRUN. If vmcb12 has CR0.PG=1, CR4.PAE=1,
-> EFER.LME=1, and EFER.LMA=0, svm_set_cr0() never sets EFER_LMA, leaving L2
-> running in 64-bit mode with EFER_LMA=0 in vcpu->arch.efer. When L2 executes a
-> valid WRMSR(MSR_EFER) (for example setting EFER_NX or EFER_SCE) or userspace
-> calls KVM_SET_MSRS, set_efer() computes EFER_LMA=1, triggers WARN_ON_ONCE(),
-> and injects a #GP into L2.
-
-This looks like a KVM bug, i.e. we want the WARN and should fix the underlying
-bug.
-
-> Conversely, during RSM to L2 via emulator_leave_smm() -> svm_leave_smm() ->
-> enter_svm_guest_mode() -> nested_vmcb02_prepare_save(), emulator_leave_smm()
-> clears CR0.PG before calling svm_leave_smm(). If vmcb12 has EFER.LME=1,
-> EFER.LMA=1, and CR0.PG=0, is_paging(vcpu) is already false when svm_set_cr0()
-> runs, leaving EFER_LMA=1 with CR0.PG=0. When rsm_load_state_64() then calls
-> __kvm_emulate_msr_write(vcpu, MSR_EFER, smstate->efer & ~EFER_LMA) ->
-> set_efer(), set_efer() computes EFER_LMA=0, triggers WARN_ON_ONCE(), and
-> aborts RSM with X86EMUL_UNHANDLEABLE.
-
-Same here?
-
-> 2. KVM_SET_NESTED_STATE and svm_leave_smm() followed by #VMEXIT:
-> 
-> In arch/x86/kvm/svm/nested.c:svm_set_nested_state(), L1's saved host state in
-> vmcb01->save is only checked for ((save->efer & EFER_LMA) &&
-> !(save->efer & EFER_LME)) (and svm_leave_smm() copies vmcb01->save from
-> guest MSR_VM_HSAVE_PA memory without checking EFER_LMA):
-> 
-> arch/x86/kvm/svm/nested.c:svm_set_nested_state() {
-> 	...
-> 	if (!(save->cr0 & X86_CR0_PG) ||
-> 	    !(save->cr0 & X86_CR0_PE) ||
-> 	    (save->rflags & X86_EFLAGS_VM) ||
-> 	    ((save->efer & EFER_LMA) && !(save->efer & EFER_LME)) ||
-> 	    !nested_vmcb_check_save(vcpu, &save_cached, false))
-> 		goto out_free;
-> 	...
-> }
-> 
-> If vmcb01->save has EFER.LME=1, EFER.LMA=0, CR0.PG=1, and CR4.PAE=1, then on
-> nested_svm_vmexit() from a paged L2 (where is_paging(vcpu) is already true),
-> svm_set_efer() and svm_set_cr0() leave L1 with EFER_LMA=0 while EFER_LME=1,
-> CR0.PG=1, and CR4.PAE=1, causing the next WRMSR(MSR_EFER) or KVM_SET_MSRS to
-> trigger the WARN_ON_ONCE() in set_efer().
-
-And here.
-
-> 3. SEV-ES and SEV-SNP write traps:
-> 
-> In arch/x86/kvm/svm/svm.c:cr_trap(), SVM_EXIT_CR0_WRITE_TRAP and
-> SVM_EXIT_CR4_WRITE_TRAP call svm_set_cr0() and svm_set_cr4() directly without
-> checking consistency between EFER.LMA, CR0.PG, and CR4.PAE:
-> 
-> arch/x86/kvm/svm/svm.c:cr_trap() {
-> 	...
-> 	case 0:
-> 		old_value = kvm_read_cr0(vcpu);
-> 		svm_set_cr0(vcpu, new_value);
-> 
-> 		kvm_post_set_cr0(vcpu, old_value, new_value);
-> 		break;
-> 	case 4:
-> 		old_value = kvm_read_cr4(vcpu);
-> 		svm_set_cr4(vcpu, new_value);
-> 
-> 		kvm_post_set_cr4(vcpu, old_value, new_value);
-> 		break;
-> 	...
-> }
-> 
-> Because svm_set_cr0() sets EFER_LMA without checking is_pae(vcpu) (for
-> example on an SEV-SNP AP created via SVM_VMGEXIT_AP_CREATE where
-> sev_snp_init_protected_guest_state() calls kvm_vcpu_reset() and clears
-> vcpu->arch.cr4 while the VMSA has CR4.PAE=1), or if a guest clears CR4.PAE
-> observed via cr_trap() while EFER_LMA=1, a subsequent efer_trap() ->
-> set_efer() sees EFER_LMA=1 with !is_pae(vcpu) and triggers the WARN_ON_ONCE()
-> and #GP.
-
-Ugh.  I _want_ this to be a KVM bug, e.g. as is already pointed out by the comment:
-
-	 * Clear EFER_LMSLE for a related reason: EFER writes are *trapped*,
-	 * not intercepted, i.e. hardware has already committed the write by
-	 * the time KVM gains control, and the trap is enabled if and only if
-	 * the guest is SEV-ES, whose EFER lives in the encrypted VMSA and so
-	 * can't be fixed up by KVM.  Rejecting EFER.LMSLE=1 would inject a #GP
-	 * *and* leave EFER.LMSLE set in the guest, which is strictly worse
-	 * than honoring a write that hardware itself allowed.
-
-"rejecting" a value and injecting a #GP is completely pointless.  The guest already
-has the "bad" value in EFER, and a misbehaving guest can simply eat the #GP.
-
-But the issue is really just that KVM simply doesn't have visibility into EFER.LMA
-being set.  Heh, which technically makes this a bug fix, since IIUC, the current
-code will never set EFER.LMA in this case?
-
-I can't think of any way to do the right thing other than to rely on hardware to
-not screw up?  E.g.
-
-diff --git a/arch/x86/kvm/msrs.c b/arch/x86/kvm/msrs.c
-index 41f3ec6eb286..3a6a0ebf1932 100644
---- a/arch/x86/kvm/msrs.c
-+++ b/arch/x86/kvm/msrs.c
-@@ -648,7 +648,8 @@ static int set_efer(struct kvm_vcpu *vcpu, u64 efer)
- 	 * it means KVM allowed architecturally invalid state at some point in
- 	 * the past, i.e. allowed EFER.LMA=1 && (!CR0.PG || !CR4.PAE).
- 	 */
--	if (WARN_ON_ONCE((efer & EFER_LMA) != (vcpu->arch.efer & EFER_LMA)))
-+	if (WARN_ON_ONCE((efer & EFER_LMA) != (vcpu->arch.efer & EFER_LMA) &&
-+			 !vcpu->kvm->arch.has_protected_state))
- 		return 1;
- 
- 	r = kvm_x86_call(set_efer)(vcpu, efer);
-
-
-Hmm, though all of these cases make me wonder if we'd better off with just a WARN,
-i.e. no #GP, since the goal is to enforce a consistent model, which is what the
-new code does.
-
-	/*
-	 * Toggling EFER.LMA on a bare write to EFER should be impossible, as
-	 * it means KVM allowed architecturally invalid state at some point in
-	 * the past, i.e. allowed EFER.LMA=1 && (!CR0.PG || !CR4.PAE).
-	 */
-	WARN_ON_ONCE((efer & EFER_LMA) != (vcpu->arch.efer & EFER_LMA) &&
-		     !vcpu->kvm->arch.has_protected_state);
