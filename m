@@ -1,89 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.158.5
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793052701;
-	b=hJXtrsCjEtW64luAPtbbSwlzAk9eVnnzwsRMxhDl17UAqTuSgQ8t9IIir9Cn4mnRbCWP
-	 naCEdTO+nmpUzhVy3SWhflEYCGj0OWlnV1ELXMd6GCSDG5z2QgvDH7qCuDvbKYBUx13xZ
-	 3YMzwOIM+pTa5IWkC2J3aygNT6QmJ1aSRIPaxhN2o8eGLhDq1r/EvPdxqIa/G29dCCrA/
-	 GLEMnaE7fXcNrArTaDVsqv0E+tpOxbw/rEK6RE/itOQVe6seh1hauDC+jxtKAy9H2ZMQD
-	 caegQr3reqK8afAiRnQdaxVhz65YsAs2lcTlphyduED+o926Ozszeq3BTbQh3zjKtmw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793052701;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
-	 Received:Received:Received:Received:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID:User-Agent:MIME-Version:Content-Type:
-	 X-TM-AS-GCONF:X-Proofpoint-Spam-Info:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-Spam-Details-Enc:X-Authority-Analysis:X-Proofpoint-GUID:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
-	bh=B8wgkW9Guv3xYAvJFD5+NUvZAJ/JB1rAg8hkSwTJhVw=;
-	b=MJYCRqfMahjpLndk0ROwdqNXRWlDGCCJ0MO71qPI3k9HH8G3P39sVTcWSz2OCddtm53Y
-	 XxWZRMpS2fWyoF18kcw4uLbWpqlJtOpwEf5IMjyPv/9Lkk40vPSPdXUSIwymGAh+JDrIa
-	 cJTGeX+9BFH1WOFR8KhvtWO3yjvmjgxyoxtTy6TmlVvQISM9tLrxOWvhdCrT8cQ+03r2X
-	 q+mgLiZoBd3BKGfNdLjk5BPEhBs8I5noxQQv7wTwitdDdBgWQFcoSfrh44GvkSGioK4ra
-	 TLhXAAukR0swtVb+rMkbxsTs/5JMgZIkRaWitf8ze1GNsFzy3iDq+2q8BiGnAHbgh9g==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.ibm.com;
-	spf=pass smtp.mailfrom=linux.ibm.com;
-	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lhBhysKj;
-	arc=none smtp.remote-ip=148.163.158.5
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.47
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793053489;
+	b=0pLqgMWyj/9kziTU3QJ2ceHm6mqWN9f69jxMjHUW1Y3yPTeKLmN5G1WsrvQ+psRjpngV
+	 Lk/BeWDWmfjLeRWsZ7BNxKny01D+gxQzZqCmRFtGy9LGPO8s3zGPyvDaNC1bxFVNN7bCp
+	 bNXMYbxSiBE0LKo00WlmUzsPRB4CzCFPyHZH/34a4L6OZTYf3hq42tLf03HGTWZtNovjF
+	 pBREYdcPIygzWADP7J8oAzpsO3NHlDOoVXWWmgwCtlvaSkdmUSKAWz72cSqmrW+pGrrwi
+	 82ugp+jOL8Lw5U6Xrfn2e6o4phFHk3Ac40kjJkvw9mvKHcJ9/O8hu5skNBZA3XwzmNQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793053489;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=iVjafvKaFWiL8zTdM57JrvEcpVYGEcYrmsTnFX/+S2w=;
+	b=SAv1INlcRRArciQ4/BQXr7seyJJ7lNAYlMEIOPeRYxXQiJljDCv36qnaRu8X6fJe95hb
+	 9k8yBBUjvwNe3kgHfLtimsg8UfubdzXNUv1YXs0Cd4PeCN6CmKo7eM+fIwzVhhvPty7Mh
+	 SqtkpmjBFKDC733vjPfhhABH0odSN2la56reYHo+QKbexN6kwyL+b0zdQA8lxocCAnqPd
+	 B9hgVYCm7qYZFGDjPZ6ZN8f2E3U1x3Nybo7nzAxK2zvYOjb/3T3KZqdzcTX2KwJB7M8VR
+	 Z++LQKdKCQ75UGHQy9AX1LgtcRfWZmC97q9Ax7tfMtLiXVCrVCpjuDEOQmhZ+1ebX2A==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=NOdbpiNj;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.224.47
+Received: from mail-yx1-f47.google.com (mail-yx1-f47.google.com [74.125.224.47])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15667606A31A;
-	Mon, 26 Oct 2026 22:11:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 15667606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4383606A31E
+	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 22:24:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E4383606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lhBhysKj
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69QJELMv189680;
-	Mon, 26 Oct 2026 22:11:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=B8wgkW9Guv3xYAvJFD5+NUvZAJ/JB1
-	rAg8hkSwTJhVw=; b=lhBhysKjxQQBP7h8pydJ2mjhoQvv25ks+xd0CDWRxo1kxp
-	j3iNruaS0tmWxSYUrvRQFTViCMJPYmyfnHMzC0X24W5DdiiOliaCgUpbVyx0Q+D+
-	sFNmsEFkNvp6TJ3cICIgDF6c+OI6EgIZ+135mfFT+SiOzeNG7xwqckEGXWCSrQDk
-	dMDQXXjc8hOBtKRd4YG3fjLRpxiBec0n3kjpskGef0jKBoSkl6Ent4VIYeHWASSC
-	hVQ3Q7Fd+Nq6aCW4NmmXU9VeiY2901QuTGv45xrThtS0GBQnbJzpvJ32Ru4/JeCc
-	MZGHqh6QGX4qytnkB6PmNQDh0MbYHjfvQuKx0neQ==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgj3m4se9-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Mon, 26 Oct 2026 22:11:38 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69QIpCFi3004949;
-	Mon, 26 Oct 2026 22:11:37 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hh70prbb7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 Oct 2026 22:11:37 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
-	by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69QMBbrc5833268
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 26 Oct 2026 22:11:37 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 051B25805A;
-	Mon, 26 Oct 2026 22:11:37 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id DC80658052;
-	Mon, 26 Oct 2026 22:11:36 +0000 (GMT)
-Received: from e (unknown [9.61.189.219])
-	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
-	Mon, 26 Oct 2026 22:11:36 +0000 (GMT)
-From: Dave Marquardt <davemarq@linux.ibm.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
-Subject: Re: [PATCH v16 05/12] scsi: ibmvfc: add basic FPIN support
-In-Reply-To: <sashiko-outbox-185513@kernel.org> (sashiko-bot@kernel.org's
-	message of "Mon, 26 Oct 2026 16:24:10 +0000")
-References: <20261026-ibmvfc-fpin-support-v16-0-a900aa657ed5@linux.ibm.com>
-	<20261026-ibmvfc-fpin-support-v16-5-a900aa657ed5@linux.ibm.com>
-	<sashiko-outbox-185513@kernel.org>
-Date: Mon, 26 Oct 2026 17:11:36 -0500
-Message-ID: <87bj8gf6xz.fsf@linux.ibm.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=NOdbpiNj
+Received: by mail-yx1-f47.google.com with SMTP id 956f58d0204a3-67992884b02so2305509d50.3
+        for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 15:24:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793053488; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Byry4Nbo96PV5T6jlHdw9LuyyDNk6MUD9nhePrNrJZHieBnYLRS5uTHUUVdyF5qtkE
+         NNuCm6p7WIe+sEnP96jEVh+dX8LRdjyKHjkGyH7laL9hbkzATHX8q2L0Y+fvkgbxwtF2
+         Vu4bxidB0pqVe5kH/AaLMrHLdZOqTwIXAh3L5oYd4xAB8PYtSSB5jqPYDjeoj+AAdfM3
+         y89XgOYLaYTP0k3TRFMaDuDVDroZLr+XnBix1DHpqNIcyU5O+Zlkfz317BkOEE/9I7pH
+         ue0Bt8aHNnivA7qLvZgufcOxDlWpbBYhS8B7A7t3g5U+R1oZ3TqBbWB2eaOx0WQC6dwY
+         aQOA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=iVjafvKaFWiL8zTdM57JrvEcpVYGEcYrmsTnFX/+S2w=;
+        fh=8C0Lm4TMaVbKv0r+2pEeIA4v35hviqcOmjoKQSS2WNA=;
+        b=ejxiQfiQ/dkIOhi3JqBi6bN1f4HLhuCtBh8Pkn/o2S2SfwH+ToswwgCYTf02v7xhjx
+         HULBnLlpq8gPQJ/RNTfAhdshne1VWV6cqmovh1OCNSHSOQUpXeN+xvArGSwrzagFupUr
+         MFg019VP3TAHNNu5stIEftDVEGxmQqdYrkxj0McMEKf6yD19gSXcS3k+p2hxpJljKWBW
+         cF3P8sRhBP3TqOqNhHtUqv2EhptRuD5Yzvw4Z/KdUgEmKV7Ch1+K/jeZZloJioKpQunv
+         YykgfyGurBobgRKKHjqXCHudo1cQYgmNbFyJTc5FLp+rCt3lBrHQtiLtvFxtN9hSSD9m
+         XbPA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1793053488; x=1793658288; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=iVjafvKaFWiL8zTdM57JrvEcpVYGEcYrmsTnFX/+S2w=;
+        b=NOdbpiNj9IMzA1r0jOXIAhUUzYqsDgOO88bLbRTtq8DUKb7PmV8d2d8mlHP9RqyYMh
+         AQMi98Tw6LHh8w/drItgSwdRsfQAXJJiYPJjHsEWjVo6gKFlf2bsXYiPa9M8WKFr6xT2
+         irJg45WAQpco8XNHGbQfXIvkjHzHsgLtJ27fOkSxb7VOn30mweaoMlNAnxnHaQntUtQX
+         HXSp4Hw5/8pTavmF9wWx6g85A3eQC5wgPlhj5D6aKiGv0bxmCYS9IRSw2ai4nQvNJYh3
+         gd7NfOg5vds54mRGZ9d1/VlHGPNlPlxJk070gljqEqzbIzfmb//iXvfYrGwRLBw8mjwk
+         UFcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793053488; x=1793658288;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=iVjafvKaFWiL8zTdM57JrvEcpVYGEcYrmsTnFX/+S2w=;
+        b=a26Q7arwSYz1nFStqB3uR2TSYU9Kcc97dLM1L+2XawWU3m5ZuZZ5nqcHR0LGbXB2In
+         lQRNLPdnmZUOJP4vMahLroMwQUN3jJYqkquzqYPfIOS/gJ21cVMOxE37jguzyTdLBeNT
+         nxE1F0z8Y165Ug/o0IHV5EkHUKmro26DIFz4OloB7DvCQ776XSJPTab0eeEffmWUU/S7
+         0QCFAjVfh49NY71Q9E9pVj/jqfuweWvCjnUbR97AvpGoG4K8Xbwi60YP7wLIz2Swsu4I
+         eCV2zH5znCEP/b1fjpJAFmrF2cKexDYQV9t1JgorGLFpFQuk0IUDyITZWnxzkyUGO79T
+         xM9Q==
+X-Gm-Message-State: AFq9FYLLLLuouCiX6QOrrq6lcsarS6DHAiltRYvkU9amXVyflVQsmLXJ
+	6YjuX5OoMn9Daut7r/yjWDL5G0JUwvIok6E1vBuiMxcxIdkT5Hs9T75M98p3VcQrMaJfDfC3KhD
+	JqP8VVb/dMZCXwQj3qSEgem5HGL4D5KYJmA==
+X-Gm-Gg: AYBFou08zGbtTy6ZsjTBSbB2MmLm5Nw0iI0qnZafg+X0OQrF3I/3HdkL6NyVllnWYl2
+	PPmRN42ok4hGsw5mhlqhe5sl8RIE/D14VhPd8rviR4KFPizFNh/7XoOquD/TvMUebvLH53zFadO
+	45/yMglVzADy4jK9TIks7639WMlTQhz0N4s/kJjPh9WxgMqIyWpJ6jqFKi75XNjj3VLELqEKNoM
+	HQRzTUNFjbOdvwzxivm0krA3t6FCrE2/MyLSmqKhe48J8xH/Miv5bWbk2NC+sny+E6t66XvrWZe
+	haidK+r8emEMdN1tI86zH0X6R00dxuBdM47JamYhhrP9mLNLnwmduSGQRcZQu04YsObUdXz4IxD
+	cZg5t9dhynFtCY1Ma25xNzTUfNgI0GI3SnYaGWTQeAC8EpbQjCc9MYTt4BD4/RK9XmR3Fww0uSt
+	Bk1UxB79YxZtazD5qtzbVIZSRqf8KJf8YnBWsN
+X-Received: by 2002:a05:690e:dc5:b0:677:cbe8:4fce with SMTP id
+ 956f58d0204a3-67a45500fcemr5471600d50.79.1793053487746; Mon, 26 Oct 2026
+ 15:24:47 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -93,122 +104,161 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA4NiBTYWx0ZWRfX5dAaeIfwoACi
- PHUfMRGHuqil5AdqJsYZ4L+gL052Yvx5AU+ZzFaBA4Fs2tB5G7UdYvfbXde0aZayCLQIseNAPaL
- +BV1j/udQ++KxmjN7Q7Vpp+utKcbwKw=
-X-Proofpoint-ORIG-GUID: PChiCZRu_21Fepiyz2r9InosAEpQ201f
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA4NiBTYWx0ZWRfX/s49P1xF3MsX
- Q+HusCvvxc9JrklfQXSewal4xEZIMQT4aCB9hIVbaIc7dKZmT8NIG1/th34iwW4O8bw1IzSDaOO
- klp9/QxA4na2c0/mDtkrHPeYN2EZ+OhrX2l4JHLsgITLdn4VW2RFENntZ5KjZqIe0nNFxsMISyr
- ED3KvEJFzzkvtLsfVhha+IssAM4VUOreWGWXl3W1HUZYzTVTgkE4W6onGPp035HJhBXHsG9/WJg
- BpyH7fvBq2nJUls3mEulyYiPH74hZVQQKDBoViJZbuGFbeMan+tuoBIzk+tJ7Fr+w3VIAZPrmd+
- ebP38umGXqHxAYM9k8pyJPhTPNdD/sF298HXKSfxdKUWkONNfL1zrmsoycdUOF0u/mRhLcTru0n
- nz436sycdxIESOSRGD1j4RFmKCIOKSGy1BwWbwGNH2YrHwkhH95A6OfLOe4U6I2EXdStfVgaKY7
- 3uHg+CEa31Y8iH823GA==
-X-Authority-Analysis: v=2.4 cv=G7uJgNk5 c=1 sm=1 tr=0 ts=6adfd01a cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=j9RR-ouNwWIpI61htBwA:9
-X-Proofpoint-GUID: PChiCZRu_21Fepiyz2r9InosAEpQ201f
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-26_04,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 impostorscore=0 suspectscore=0 clxscore=1015
- phishscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610260086
+References: <20261012-dd-cmap-part2-clean-v12-0-3c8cc5725def@gmail.com>
+ <20261012-dd-cmap-part2-clean-v12-1-3c8cc5725def@gmail.com> <sashiko-outbox-170708@kernel.org>
+In-Reply-To: <sashiko-outbox-170708@kernel.org>
+From: jim.cromie@gmail.com
+Date: Mon, 26 Oct 2026 16:24:20 -0600
+X-Gm-Features: AclHuK8NnuLVLON4lfx7cNxK26K-bWlrdBylLKsqpFu-v1Gz5G-bY8ivxELQPKw
+Message-ID: <CAJfuBxzw4jWufuQhgstnYFtkC=+VyV9nNLi9R3xTuJEVsWbuNQ@mail.gmail.com>
+Subject: Re: [PATCH v12 01/40] selftests/dyndbg: Add kselftest script to
+ verify dynamic-debug
+To: sashiko-reviews@lists.linux.dev
+Cc: Jason Baron <jbaron@akamai.com>, Shuah Khan <shuah@kernel.org>, 
+	Andrew Morton <akpm@linux-foundation.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Arnd Bergmann <arnd@arndb.de>, Luis Chamberlain <mcgrof@kernel.org>, Petr Pavlu <petr.pavlu@suse.com>, 
+	Daniel Gomez <da.gomez@kernel.org>, Sami Tolvanen <samitolvanen@google.com>, 
+	Aaron Tomlin <atomlin@atomlin.com>, Jonathan Corbet <corbet@net.net>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nsc@kernel.org>, Shuah Khan <skhan@linuxfoundation.org>, 
+	Randy Dunlap <rdunlap@infradead.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Pavel Machek <pavel@kernel.org>, Len Brown <lenb@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	Petr Mladek <pmladek@suse.com>, Steven Rostedt <rostedt@goodmis.org>, 
+	John Ogness <john.ogness@linutronix.de>, Sergey Senozhatsky <senozhatsky@chromium.org>, 
+	=?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>, 
+	dri-devel@lists.freedesktop.org, linux-modules@vger.kernel.org, 
+	linux-kbuild@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-sashiko-bot@kernel.org writes:
-
->> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> index b63b341efb074..1cd39d36edf5c 100644
->> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
->> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+On Tue, Oct 13, 2026 at 8:36=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [Medium] selftests: test flakiness from unfiltered dmesg temporal slici=
+ng
+> - [Medium] selftests: test failure coupled to unrelated kernel/params.c p=
+r_debug churn
+> --
+>
+> commit 56bb89808ed29ee403a2b674106329de27cb9b06
+> Author: Jim Cromie <jim.cromie@gmail.com>
+>
+> selftests/dyndbg: Add kselftest script to verify dynamic-debug
+>
+> This commit introduces a dynamic-debug selftest script and a reusable hel=
+per
+> library for baseline-change-verify testing. It uses spatial control-file
+> slicing and temporal syslog slicing to verify valid syntax, error handlin=
+g,
+> and basic queries against the built-in kernel/params.c file.
+>
+> > diff --git a/tools/testing/selftests/dynamic_debug/dyndbg_selftest.sh b=
+/tools/testing/selftests/dynamic_debug/dyndbg_selftest.sh
+> > new file mode 100755
+> > index 0000000000000..c1475c7555429
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/dynamic_debug/dyndbg_selftest.sh
 >
 > [ ... ]
 >
->> @@ -6900,9 +7171,15 @@ static int ibmvfc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
->>  	INIT_WORK(&vhost->rport_add_work_q, ibmvfc_rport_add_thread);
->>  	mutex_init(&vhost->passthru_mutex);
->>  
->> -	if ((rc = ibmvfc_alloc_mem(vhost)))
->> +	vhost->fpin_workq = alloc_ordered_workqueue("%s-fpin-workq-%u", 0,
->> +						    IBMVFC_NAME, shost->host_no);
->> +	if (!vhost->fpin_workq)
->>  		goto free_scsi_host;
->>  
->> +	rc = ibmvfc_alloc_mem(vhost);
->> +	if (rc)
->> +		goto free_workq;
->> +
->>  	vhost->work_thread = kthread_run(ibmvfc_work, vhost, "%s_%d", IBMVFC_NAME,
->>  					 shost->host_no);
->>  
->> @@ -6910,7 +7187,7 @@ static int ibmvfc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
->>  		dev_err(dev, "Couldn't create kernel thread: %ld\n",
->>  			PTR_ERR(vhost->work_thread));
->>  		rc = PTR_ERR(vhost->work_thread);
->> -		goto free_host_mem;
->> +		goto free_workq;
->>  	}
->>  
->>  	if ((rc = ibmvfc_init_crq(vhost))) {
->> @@ -6946,7 +7223,8 @@ static int ibmvfc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
->>  	ibmvfc_release_crq_queue(vhost);
->>  kill_kthread:
->>  	kthread_stop(vhost->work_thread);
->> -free_host_mem:
->> +free_workq:
->> +	destroy_workqueue(vhost->fpin_workq);
->>  	ibmvfc_free_mem(vhost);
+> > +function FT_basic_queries {
+> > +    v_echo "${GREEN}# BASIC_TESTS ${NC}"
+> > +    if [ $LACK_DD_BUILTIN -eq 1 ]; then
+> > +     echo "SKIP - test requires dynamic_debug built into kernel"
+> > +     return
+> > +    fi
+> > +    local f=3D'kernel/params.c'
+> > +    ddcmd =3D_ # zero everything
+> > +
+> > +    ddcmd "file $f +mf" "$f"
 >
-> [Severity: High]
-> Does jumping to free_workq when ibmvfc_alloc_mem(vhost) fails in
-> ibmvfc_probe() cause a double free in ibmvfc_free_mem(vhost)?
+> [Severity: Medium]
+> By strictly validating the exact state of kernel/params.c and hashing the
+> normalized text, won't this test break if an unrelated upstream commit
+> legitimately adds or removes a pr_debug() in kernel/params.c? Does this
+> inadvertently couple the selftest to unrelated core kernel changes?
 >
-> When an allocation fails inside ibmvfc_alloc_mem(), it already unwinds and
-> frees everything allocated up to that point before returning -ENOMEM, leaving
-> non-NULL dangling pointers in vhost:
->
-> drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_alloc_mem() {
-> 	...
-> free_tgt_pool:
-> 	mempool_destroy(vhost->tgt_pool);
-> free_trace:
-> 	kfree(vhost->trace);
-> free_nvme_disc_buffer:
-> 	ibmvfc_free_disc_buf(dev, &vhost->nvme_scrqs);
-> free_scsi_disc_buffer:
-> 	ibmvfc_free_disc_buf(dev, &vhost->scsi_scrqs);
-> free_login_buffer:
-> 	dma_free_coherent(dev, sizeof(*vhost->login_buf),
-> 			  vhost->login_buf, vhost->login_buf_dma);
-> free_sg_pool:
-> 	dma_pool_destroy(vhost->sg_pool);
-> unmap_async_crq:
-> 	ibmvfc_free_queue(vhost, async_q);
-> nomem:
-> 	LEAVE;
-> 	return -ENOMEM;
-> }
->
-> In ibmvfc_probe(), jumping to free_workq when ibmvfc_alloc_mem() fails
-> destroys vhost->fpin_workq and then falls through into ibmvfc_free_mem(vhost),
-> which frees all of those host resources a second time and calls
-> dma_free_coherent() on NULL pointers such as vhost->channel_setup_buf.
->
-> Should ibmvfc_alloc_mem(vhost) be called before alloc_ordered_workqueue()
-> (or use separate error labels for freeing host memory and destroying
-> vhost->fpin_workq) so that an ibmvfc_alloc_mem() failure skips
-> ibmvfc_free_mem()?
 
-Yes, this is a valid issue. If ibmvfc_free_mem() zeroed out all the
-pointers, this call to ibmvfc_free_mem() might be fine. v17 will
-allocate the ordered workqueue after allocating memory
-(ibmvfc_alloc_mem()) and use a separate label in order to skip
-ibmvfc_free_mem() if ibmvfc_alloc_mem() fails.
+Yes, there is a certain amount of dependency / brittleness
+IF kernel/params.c is changed in certain ways.
 
--Dave
+That said
+1. kernel/params.c is one of the most stable / unchanging parts of the kern=
+el
+2. tests that change flags and verify the changes are needed for
+adequate coverage
+3. tests against builtin pr_debugs work even when test-modules are not buil=
+t
+4. line numbers are excluded from the verification, eliminating that
+source of breakage
+
+
+
+
+> > +    ddcmd "file $f +l"  "$f"
+> > +    ddcmd "file $f -m"  "$f"
+> > +    ddcmd "file $f =3D_"  "$f"
+>
+> [ ... ]
+>
+> > diff --git a/tools/testing/selftests/dynamic_debug/syslog_hash_validati=
+on.sh b/tools/testing/selftests/dynamic_debug/syslog_hash_validation.sh
+> > new file mode 100644
+> > index 0000000000000..8c6e91f5d9c27
+> > --- /dev/null
+> > +++ b/tools/testing/selftests/dynamic_debug/syslog_hash_validation.sh
+>
+> [ ... ]
+>
+> > +function verify_dmesg_slice {
+> > +    # Slices dmesg, computes its hash, and verifies it against the dat=
+abase.
+> > +    # $1 - unique test key (e.g. normal_513)
+> > +    # $2 - optional start marker (defaults to ${APP}_START_${label})
+> > +    # $3 - optional end marker (defaults to ${APP}_END_${label})
+> > +
+> > +    local label=3D"$1"
+> > +    local app=3D"${APP:-DYNDBG}"
+> > +    local start_marker=3D"${2:-${app}_START_${label}_$$}"
+> > +    local end_marker=3D"${3:-${app}_END_${label}_$$}"
+> > +
+> > +    # 1. Capture the log slice (exactly once!)
+> > +    local log_slice=3D$(dmesg | sed -n "/$start_marker/,/$end_marker/p=
+" | \
+> > +     grep -E -v "$start_marker|$end_marker" | \
+> > +        sed -E -e 's/^(\[[^]]*\][[:space:]]*)+//' )
+>
+> [Severity: Medium]
+> Since verify_dmesg_slice captures all kernel logs between test markers an=
+d
+> hashes the entire block without filtering for test-specific messages, cou=
+ld
+> concurrent unrelated kernel subsystems (like networking or RCU) emit prin=
+tk
+> logs that alter the MD5 hash and cause false positive test failures?
+>
+
+All my testing has been done on VMs, they are well isolated from
+unrelated subsystems.
+ISTM most CI-CD testing is done that way.
+If needed, we could easily add grep filtering later to select only
+relevant messages,
+but it adds its own maintenance burden; it doesn't seem like a blocker to m=
+e.
+
+> > +
+> > +    # 2. Compute its fingerprint
+> > +    local fingerprint=3D$(echo "$log_slice" | tr -d '\r' | md5sum | cu=
+t -d' ' -f1)
+> > +
+> > +    # 3. Verify
+> > +    verify_fingerprint "$label" "$fingerprint" "Dmesg Log" "$log_slice=
+"
+> > +}
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261012-dd-cmap-=
+part2-clean-v12-0-3c8cc5725def@gmail.com?part=3D1
