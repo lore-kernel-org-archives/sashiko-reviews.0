@@ -1,64 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=162.62.57.210
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.222
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792991065;
-	b=Zi6wW7pYBEnEM5AlAPMY8lMBGclKGFUwKk0FfVrk0UYcTKNtZgoKy8GounaW8gGEhX7e
-	 3POqBR9Lyp6TiyLp0tJgiilnZOtLdU6ei5eKDQrLA1Y1K9ziahT6HY6Pogol+VaQ04t1n
-	 KMFMruf/y1FXDKe0+9WZ14sLW19WisRhCyOfCpe7qakKe2+vDOaUsNCywg+EyNxyuz2ak
-	 +2wO0UOm4Cy70wwmwItyrRC5pvEf1Yp7dDMGGjNbVXFTQIraMSY69kKK1ebs1/dXc7YYh
-	 veTKakL73DWUUwZ+6CeUe9kn7IBVBQqWgfrmNCJ/r3ekGiIdxePz5ujtJsB2eRAasUw==
+	t=1792994523;
+	b=sBmFVjwtd4N/WlpdLndthrzayxczIw0aXfWT6xIx/hW2+AI9Jv75LddY2CBKQsU8flox
+	 +ipewFfv9n2Y4GOq+GQiAai+/qsR3zWiavkkpjsDQJhL8IVnF97LhVvENLWsl187uJZYa
+	 VDzvek7pDwWsrTlW/r9XcOjRK53ByJK5DzHAjxXyDQIAzxZJxV0Z9+8ycGcoxNAeJuzIS
+	 DV/dG5wAxH6feUH5NFFd8yfmx/p8XWbwJ9JUskfUiQ9fWuM+JHncY6VA0Rhu17jNWtjvy
+	 j+UDJitTryu9ZxijQxO/Ac5MqRX0ztSp2sOHFuMykhojL8tZ4YrB3a5dXgZUhN5IWsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792991065;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-XMRINFO:X-QQ-XMAILINFO:From:To:Cc:
-	 Subject:Mime-Version:Content-Type:Content-Transfer-Encoding:Date:
-	 X-Priority:Message-ID:X-QQ-MIME:X-Mailer:X-QQ-Mailer:References:
-	 In-Reply-To:X-QQ-mid;
-	bh=yZJaU1OcxLRCU4fu7eWUXBH5CKQ0LM8TN889bthhLLM=;
-	b=BZ6XZSj22gTEjsV3jmvp5+XUMW51k3DqCXn4+lPu2fl1kdiYl2eID7FS+wlwT8ZWtjN6
-	 tl/wdlo6Z8DrQN9CF0zAINvf+e2/af6PBKFmrtCXGgbz1xYw84hbEpZxsoIqvWHeitNUq
-	 2XQwrXOUwzn+p3oX4Sxv8D2FY0F8CMpP+mN2+M8T+CmbfTkZLkHgRkWDC+7HJnqrpd3m0
-	 LD52meTvbuZ71cJF7ROhw5FAbo/1VfC7Pcr61EBei1hFt62qg12E6p/dIJSro1LFn46tB
-	 WBfYKxzLuC7tcpg/51usiXZIvqgCpg9D1ftbf8nX+nNwr9IRnXUEt4Fa22oduSam2Fg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792994523;
+	h=DMARC-Filter:dkim-signature:Received:Received:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Originating-IP:
+	 X-ClientProxiedBy;
+	bh=YUsDrIsQFf7u2M6+ouvMSrkdV5qNOI7EBxDvQmWtcPI=;
+	b=i711sveKirHkMbhIBbiAdAVFyXKtFejsGppEPb7c9u/GAz4OttSu8njl1M1X5Nb2Tiwy
+	 HcVCsscYHCmTB7m/DeXCotJ43M+HWEJW5aexcMlEUjXv8ID+/K6PydSSsaENGPa1SvQsF
+	 8N7IazVu1BZJvaDfbOXoz9JICdPObohtldGY1gcqhYaXoAazbRtryOtwV8wIy1n4y3tkm
+	 XzobySFnhdvji12dNrcl8BDxaDLXiJO4kffmO3LmYOL53Ea2xVfOOgx9UK2JhXCe4vyg2
+	 4vWThE8u59ajIlneINzjK3Z/FswLhixxa4uXh4VwUu3GwmG56INAh4GSCRFIKeWvttw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=qq.com;
-	spf=pass smtp.mailfrom=qq.com;
-	dkim=pass header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b="Xubo/w6Y";
-	arc=none smtp.remote-ip=162.62.57.210
-Received: from out162-62-57-210.mail.qq.com (out162-62-57-210.mail.qq.com [162.62.57.210])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=huawei.com;
+	spf=pass smtp.mailfrom=huawei.com;
+	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=WzS7+lSd;
+	arc=none smtp.remote-ip=113.46.200.222
+Received: from canpmsgout07.his.huawei.com (canpmsgout07.his.huawei.com [113.46.200.222])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03D8606A31B
-	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 05:04:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E03D8606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94323606A31A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 06:02:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 94323606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=Xubo/w6Y
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1792991059; bh=yZJaU1OcxLRCU4fu7eWUXBH5CKQ0LM8TN889bthhLLM=;
-	h=From:To:Cc:Subject:Date:References:In-Reply-To;
-	b=Xubo/w6YzA9MRRNbyMANJ3qmnMI7kgy6nwalptpbMiC2uuV2048NAX9kYJLgGCKd4
-	 NdeIv3kfMq39y6camhGhM9ApACax1cglIVyYYlxP18YLKq8kqlvCM+IFlury2M88ks
-	 JnheJlt6QJA51A9ru8clUU+F7Acz3d7lzawR91WM=
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
-X-QQ-XMAILINFO: N2nZekq4carkL2/CzPWlL2tGscRH9qxY1jsbZj6+0eUY8UYcvOPyiL6wER2v9U
-	 03mQ5UI1Hi6xdACXMQbGDhhBFSkEIPSgkgjyp/wKqiLin86b01LrTc88ZlPA+J3A6+enNsuwc9W0j
-	 J+oEhe3r64QoP6JLEOH+UopZ6GBVILGV/2j/Vtt8z0MQBi+Flx12gEtFnUR7i+bNECKG1yIkfGfWs
-	 hUrTc9XdHAm0SP+SYXzwkgmD0psc3qigD/hhJRbvOanqRSK6BLv5FpgV39WisF/iSm18lqMYBqE1u
-	 5t7Vy4VVIdEztdo1XchpETrgoPeaRAJ3Q3pao13N4dOKRQJu2gMFvhTj1ZBKKTo5vl5VjngSZVXqq
-	 nRa48pMA5tdmbQW7c8SDjUbDZnuCCg54eHAy3mo8HlPDvCzCvINRNgHpMpKJFsyDtO7R0X9z9CXUL
-	 piyi78MfjQYXDwFocezb6FNmJYpx1TFeVh80fDl8FeSzR+TT4yn8pACRNlvC3S5AM9O7xjXJNrxvY
-	 Bgtc0kRaV5LFevR2nSgBL652qxBJlvByp974ynBlZRikUNqn90cMhBycs2g08gq3zTyhFL/xXl6sb
-	 xZEVRu+UtoUywAFOhxNiymtxX2d9CjePsTP0YY2Maqz/Ev52N0OrrJOYVMmVwjDeRgjVfbGkMXeRD
-	 6DkrwyO4luSvCAsqWbeB2Vs51EHKpGCLZf58qB6MrQypdKYEon8OyaoE0L7GtlnGXKnkAbVynzt7r
-	 tA7rS3AXzZRQyCsKhEWKmyVo5jiB3MYK4dJY54DQ35hJTMfnMqj0dlu1ryblW8qkPg/ch912HPioB
-	 Hyife78Y4xu/UNyEPT8HlNSqH8xD9LjZ3n+AWiiUag8uCeBq4aBEPa0qPiGVe7wLuqF6D8awK0jeW
-	 0SVguQamyMuJFu4a9a5hO0sWDQT4kCWKc2CYTWZ+yXWZQn+9kliEqc4Nh6gAEfq8VjHIWWYFxsg7r
-	 UM05oQUtc7RZmNJgqo9gqkYbf5u+cRoXBRU/wERXx2h7eSnMF5Zxla713LjFKoI63IBiUhjrHZmid
-	 mOYEDOy8h7Q7Q9YDXysV68oBVX1VGecSXMcDfI/nnCSWgOLsCevyPJOtfpxfJSMC53TU9
-From: "=?utf-8?B?Q3VuaGFvIEx1?=" <1579567540@qq.com>
-To: "=?utf-8?B?c2FzaGlrby1yZXZpZXdz?=" <sashiko-reviews@lists.linux.dev>
-Cc: "=?utf-8?B?bGludXgtY2xr?=" <linux-clk@vger.kernel.org>, "=?utf-8?B?ZGV2aWNldHJlZQ==?=" <devicetree@vger.kernel.org>, "=?utf-8?B?cm9iaA==?=" <robh@kernel.org>, "=?utf-8?B?Y29ub3IrZHQ=?=" <conor+dt@kernel.org>
-Subject: Re: [PATCH v2 2/3] clk: rockchip: Add internal support for 24-bit fractional dividers
+	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=WzS7+lSd
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=YUsDrIsQFf7u2M6+ouvMSrkdV5qNOI7EBxDvQmWtcPI=;
+	b=WzS7+lSdNs/Le1nqYRxq3LDikGcIa/iJ8ZNyTvToliOUUzWG/Ry1gBPWL+CgDD9xavRzoroZC
+	cAapjIH4FJsS13eQTMOVQFQabApqua4MsV5Jv9nU/sd40LolGmaQU4GbuhMPSjB+ZNjHnKSdHsw
+	pWLuYpah+joWIEgNsLTG27g=
+Received: from mail.maildlp.com (unknown [172.19.163.214])
+	by canpmsgout07.his.huawei.com (SkyGuard) with ESMTPS id 4jCjgV4NVTzLlSk;
+	Mon, 26 Oct 2026 14:01:42 +0800 (CST)
+Received: from kwepemk200005.china.huawei.com (unknown [7.202.194.71])
+	by mail.maildlp.com (Postfix) with ESMTPS id BA1634057C;
+	Mon, 26 Oct 2026 14:01:47 +0800 (CST)
+Received: from [10.159.167.44] (10.159.167.44) by
+ kwepemk200005.china.huawei.com (7.202.194.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Mon, 26 Oct 2026 14:01:47 +0800
+Message-ID: <96b30d87-2519-495f-b126-82aa29671683@huawei.com>
+Date: Mon, 26 Oct 2026 14:01:46 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -67,36 +61,200 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
-Date: Mon, 26 Oct 2026 13:04:18 +0800
-X-Priority: 3
-Message-ID: <tencent_72A6661A5419B984EB11DB006CC4133FC907@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-References: <20261023-add-board-ok3572-c-clk-v2-0-90b98836be6e@qq.com>
- <20261023-add-board-ok3572-c-clk-v2-2-90b98836be6e@qq.com>
-	<sashiko-outbox-183649@kernel.org>
-In-Reply-To: <sashiko-outbox-183649@kernel.org>
-X-QQ-mid: xmsezb41-0t1792991058tp2j4wqmx
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for drm-misc-fixes v3 1/2] drm/hisilicon/hibmc: Modify the
+ method of obtaining the hpd_status
+To: "sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+	<shuliubin@huawei.com>, "fengsheng (A)" <fengsheng5@huawei.com>, "helin (T)"
+	<helin52@h-partners.com>, Thomas Zimmermann <tzimmermann@suse.de>,
+	<shiyongbang@huawei.com>
+References: <20260924080609.3681795-1-shiyongbang@huawei.com>
+ <20260924080609.3681795-2-shiyongbang@huawei.com>
+ <20260924083002.24F441F000FF@smtp.kernel.org>
+From: Yongbang Shi <shiyongbang@huawei.com>
+In-Reply-To: <20260924083002.24F441F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
+ kwepemk200005.china.huawei.com (7.202.194.71)
 
-SGksCgo+IFtTZXZlcml0eTogSGlnaF0KPiBEb2VzIHRoaXMgb3ZlcmZsb3cgY2hlY2sgZG91
-YmxlLWNvdW50IGZkLT5oaWdoX253aWR0aCBhbmQgYWxsb3cgbiB0bwo+IG92ZXJmbG93IHRo
-ZSAyNC1iaXQgZGVub21pbmF0b3IgcmVnaXN0ZXI/CgpZZXMuIGZkLT5ud2lkdGggYWxyZWFk
-eSBpbmNsdWRlcyB0aGUgaGlnaCBiaXRzLiBJIHJlcHJvZHVjZWQgdGhlIHRydW5jYXRpb24K
-d2l0aCB0aGUgb3JpZ2luYWwgY2FsbGJhY2tzIGFuZCBtb2NrZWQgcmVnaXN0ZXJzLCBpbmNs
-dWRpbmcgYSBjYXNlIHRoYXQKcGFzc2VzIHRocm91Z2ggZGV0ZXJtaW5lX3JhdGUoKS4KCj4g
-QWxzbywgaWYgdGhlIG1hc2sgaXMgY2hhbmdlZCB0byBHRU5NQVNLKGZkLT5ud2lkdGggLSAx
-LCAwKSwgd291bGRuJ3QKPiBjbGFtcGluZyBvbmx5IG4gdG8gdGhlIG1heGltdW0gbWFzayBh
-ZnRlciBtdWx0aXBseWluZyBib3RoIG0gYW5kIG4gYnkgdmFsCj4gZGlzdG9ydCB0aGUgbSAv
-IG4gcmF0aW8gaW5zdGVhZCBvZiBrZWVwaW5nIHRoZSB1bnNjYWxlZCBtIGFuZCBuIHdoZW4K
-PiBuICogdmFsIG92ZXJmbG93cz8KCkNsYW1waW5nIG4gYWxvbmUgd291bGQgY2hhbmdlIHRo
-ZSByYXRpby4gUmV0YWluaW5nIGEgc21hbGwgbnVtZXJhdG9yIHdpdGgKYW4gb2RkIGRlbm9t
-aW5hdG9yIHdvdWxkIGJ5cGFzcyB0aGUgZXhpc3RpbmcgY29tcGVuc2F0aW9uIHdvcmthcm91
-bmQsIHNvCkkgd2lsbCByZWplY3QgcmF0aW9zIHRoYXQgY2Fubm90IGJlIHNjYWxlZCB3aXRo
-aW4gdGhlIGFjdHVhbCBmaWVsZCB3aWR0aHMuCkkgd2lsbCBmaXggdGhpcyBpc3N1ZSBpbiB2
-My4KCkJlc3QgcmVnYXJkcywKQ3VuaGFvCgpwdy1ib3Q6IGNy
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] drm/hisilicon: Hardcoded initial HPD_OUT state breaks boot display detection
+> - [High] drm/hisilicon: Removal of HPD debounce causes DPCD read failures on hotplug
+> - [Medium] drm/hisilicon: Early exit in encoder_enable breaks KMS forced modesets
+> - [Low] drm/hisilicon: Data race on dp->hpd_status between hardirq and process contexts
+> --
+> 
+> commit 19dc442443127128a0c2f9bcb0ceca722bb81f14
+> Author: Lin He <helin52@huawei.com>
+> 
+> drm/hisilicon/hibmc: Modify the method of obtaining the hpd_status
+> 
+> This commit replaces the polling mechanism in the lower half of the HPD
+> interrupt with a direct read of the interrupt status in the upper half.
+> It also skips detection and training if the status is not HPD_IN, and
+> initializes the state to HPD_OUT.
+> 
+>> diff --git a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c
+>> index d5bd3c45649b2..a4cd4cd8cc75e 100644
+>> --- a/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c
+>> +++ b/drivers/gpu/drm/hisilicon/hibmc/dp/dp_hw.c
+> [ ... ]
+>> @@ -322,20 +326,26 @@ void hibmc_dp_set_cbar(struct hibmc_dp *dp, const struct hibmc_dp_cbar_cfg *cfg)
+>>   	writel(HIBMC_DP_SYNC_EN_MASK, dp_dev->base + HIBMC_DP_TIMING_SYNC_CTRL);
+>>   }
+>>   
+>> -bool hibmc_dp_check_hpd_status(struct hibmc_dp *dp, int exp_status)
+>> +int hibmc_dp_get_hpd_status(struct hibmc_dp *dp)
+>>   {
+>> +	int hpd_status = HIBMC_HPD_UNKNOWN;
+>>   	u32 status;
+>> -	int ret;
+>>   
+>> -	ret = readl_poll_timeout(dp->dp_dev->base + HIBMC_DP_HPD_STATUS, status,
+>> -				 FIELD_GET(HIBMC_DP_HPD_CUR_STATE, status) == exp_status,
+>> -				 1000, 100000); /* DP spec says 100ms */
+>> -	if (ret) {
+>> -		drm_dbg_dp(dp->drm_dev, "wait hpd status timeout");
+>> -		return false;
+>> +	status = FIELD_GET(HIBMC_DP_HPD_CUR_STATE,
+>> +			   readl(dp->dp_dev->base + HIBMC_DP_HPD_STATUS));
+>> +	switch (status) {
+>> +	case 0: /* idle */
+>> +	case 3: /* unplug */
+>> +	case 4: /* unplug intermediate */
+>> +		hpd_status = HIBMC_HPD_OUT;
+>> +		break;
+>> +	case 1: /* plug */
+>> +	case 2: /* plug intermediate */
+>> +		hpd_status = HIBMC_HPD_IN;
+> 
+> [Severity: High]
+> Does mapping the 'plug intermediate' state (value 2) directly to HIBMC_HPD_IN
+> without the previous 100ms debounce loop cause DPCD read failures?
+> 
+> When the link is physically bouncing during a hotplug event, returning
+> HIBMC_HPD_IN immediately schedules hibmc_dp_detect(). The immediate AUX
+> transaction in hibmc_dp_get_dpcd() can then fail because the connection has
+> not stabilized, causing the hotplug event to be dropped.
+> 
 
+As answered in [1]: debouncing is implemented on-chip. The driver
+reads the debounced HPD state-machine output (HIBMC_DP_HPD_CUR_STATE
+in HIBMC_DP_HPD_STATUS), never the raw HPD pin, so mechanical contact
+bounce is filtered by hardware before software can observe it.
+
+Regarding 'plug intermediate' (state 2): despite the name, this is
+not an unstable plug. The state machine enters state 2 only from
+the stable plug state, to debounce a possible unplug; the sink
+remains connected throughout. So mapping it to HIBMC_HPD_IN is
+consistent with the plug interrupt that fired.
+
+Note also that the removed loop was not a debounce: our hardware
+already implements the debouncing, so the software 100 ms loop
+served no purpose.
+
+>> +		break;
+>> +	default:
+>> +		break;
+>>   	}
+>>   
+>> -	dp->dp_dev->hpd_status = exp_status;
+>> -
+>> -	return true;
+>>   }
+>> diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c
+>> index 2e9403b8bf3c8..1f8ea0b092537 100644
+>> --- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c
+>> +++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_dp.c
+> [ ... ]
+>> @@ -63,11 +61,10 @@ static int hibmc_dp_detect(struct drm_connector *connector,
+>>   	struct hibmc_dp_dev *dp_dev = dp->dp_dev;
+>>   	int ret = connector_status_disconnected;
+>>   
+>> -	if (dp->irq_status) {
+>> -		if (dp_dev->hpd_status != HIBMC_HPD_IN) {
+>> -			ret = connector_status_disconnected;
+>> -			goto exit;
+>> -		}
+>> +	if (dp->hpd_status != HIBMC_HPD_IN) {
+> 
+> [Severity: Low]
+> Is there a theoretical data race here when reading dp->hpd_status?
+> 
+> It appears to be modified in hardirq context by hibmc_dp_interrupt() and read
+> here in process context without WRITE_ONCE()/READ_ONCE() annotations or
+> locking.
+> 
+
+Okay, I'll change it to use READ_ONCE and WRITE_ONCE; they are indeed more secure.
+
+>> +		drm_dbg_dp(dp->drm_dev, "dp detect skipped, hpd (%d)\n",
+>> +			   dp->hpd_status);
+>> +		goto exit;
+>>   	}
+>>   
+>>   	if (!hibmc_dp_get_dpcd(dp_dev)) {
+> [ ... ]
+>> @@ -166,6 +163,12 @@ static void hibmc_dp_encoder_enable(struct drm_encoder *drm_encoder,
+>>   	struct hibmc_dp *dp = container_of(drm_encoder, struct hibmc_dp, encoder);
+>>   	struct drm_display_mode *mode = &drm_encoder->crtc->state->mode;
+>>   
+>> +	if (dp->hpd_status != HIBMC_HPD_IN) {
+> 
+> [Severity: Medium]
+> Does this early exit break KMS forced modesets?
+> 
+> If a user overrides the connector to 'connected' (e.g., via sysfs or kernel
+> command line) and the DRM core attempts an atomic commit, this check will
+> refuse to program the hardware. This would desynchronize the KMS software
+> state from the actual hardware state.
+> 
+
+Okay, the original purpose of this interceptor was to reduce the number of
+exception logs when HPD_OUT; it serves no other purpose. I will remove it in v4.
+
+>> +		drm_dbg_dp(dp->drm_dev, "dp encoder enable skipped, hpd (%d)\n",
+>> +			   dp->hpd_status);
+>> +		return;
+>> +	}
+>> +
+>>   	if (hibmc_dp_prepare(dp, mode))
+>>   		return;
+> [ ... ]
+>> @@ -223,6 +228,7 @@ int hibmc_dp_init(struct hibmc_drm_private *priv)
+>>   
+>>   	dp->mmio = priv->mmio;
+>>   	dp->drm_dev = dev;
+>> +	dp->hpd_status = HIBMC_HPD_OUT;
+> 
+> [Severity: High]
+> Will hardcoding the initial state to HIBMC_HPD_OUT break display detection
+> at boot?
+> 
+> During boot, drm_client_setup() runs detect() before or immediately after
+> interrupts are enabled in late_register(). Because detect() no longer queries
+> the live hardware register and relies only on this cached value, it will read
+> HPD_OUT and silently force a disconnected state even if a monitor is already
+> connected.
+> 
+As explained in [1], a monitor connected before boot does trigger an
+HPD interrupt: the event is latched by hardware while DP interrupts
+are still masked. hibmc_dp_hw_init() ends with a 100 ms delay, which
+gives the hardware time to complete the debouncing and latch the
+interrupt; this already detects the plug-in in the vast majority of
+cases.
+
+Moreover, even if a transient or sporadic hardware issue prevents
+the plug-in from being recognized within the 100 ms window, or even
+by the time drm_client_setup() runs, hibmc_dp_hpd_isr(), the
+threaded bottom half of the HPD interrupt, re-triggers the hotplug
+flow via drm_connector_helper_hpd_irq_event(), so the DP plug-in
+event is never lost.
+
+[1] https://lore.kernel.org/all/8026563b-d04a-4f8d-9c9c-c30f5520b3b9@huawei.com/
+
+Thanks,
+Yongbang.
