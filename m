@@ -1,93 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.198.5
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793030970;
-	b=vGzVtY0/qVNj2NA4Ac7YCyjTbHsFPm2dAhjX5wdQKjI7Vl6QfX0C1j5ZILeRCwj0xXkJ
-	 axA/6cIF6VQHYTSDfwimIXiwU1+Hpqreki6z5jXNqjiu8KNrMLDrQbSrVWcUjRX57VQAV
-	 j7XEULEpDfMG8SVU+EMYgkAd/4Ufn0ujhrqiP+ldrlVsyEqFMySiGB9IbvhiPhCsbnSOU
-	 Tdln4fmF3QbeCnpIglEy3QpMMhdgYI6ULmSc7iMp6CxO7PMIAXuUuqzNurcTW5bFQqsvT
-	 mEJ9SAAWGbZrwmN56UtpXtQdp+8n+TLvR8xXVa57hM3RhzXM4e495JND0TG9uS9qu9g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793030970;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:Content-Language:To:Cc:References:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=h0Ke6N1x7PJK+EQ6eoYCGhcjV/O0T1vXRaN/kaOK4UA=;
-	b=t/rBwkp2VmDA0kHrAJNauHZXt2hboIRtS3sx1ptcTQ54SYjE8HnwliaxtWQClINxXA0Y
-	 zJpEgCRtlnHDS4OzyyNFqRyhoEgCA+kPUqhFOvifWoPM57aTSmQxI3Zd0dKdddjxKEUNo
-	 JMn2A7BQ/eFQUS5XldrYXCzKphMPdueJ4czZuF26tuQtpvw3b2N/G4zZMyTj14Y3QGy0T
-	 QERuzS22KcpHHkmVOab4DMu0FU/nBtmeMFYz02zb858mkQolXiAuWgP9f7KbfOlxviLuI
-	 427+ViT6aQ3MtRhny30ycaf9Tr0TjX/tdms1094tE34YqnYQunn8B7rRGUz9RIsD/bw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amd.com;
-	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b="qfHGl/Jm";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.198.5
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010005.outbound.protection.outlook.com [40.93.198.5])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.198
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793037122;
+	b=qFvsqBNllTiF4Ny5bGHmzj+iLdJZMMTQ2SzFETDLsfKz/iET0tvjoNB5hNdCav7RR/sq
+	 skI3KQkkJf9GNmk/sfrF7AmIBx26d1dIQIZPepP3Ju1ugxMrdnG3uJgYUnX9xs7SK7TIh
+	 ZaeyabKehj/KXoaKs0/+oR4+zFcGOQj2hrI1j7iJYohHxX6akn1/m8qRC/Areg51N+Pd5
+	 ae02GNKkKckMys0KGQwBG+OGAs1B43LvKya95f/nteGs1QzcTeV7SgrXlYHB7l8WAqNAX
+	 KPDXR6R5ar0DIrPvfJnfmVPzyKrBPcCW6FNpOZ2EXd5+Pbn7rP1a5xAD/Hy5/nzdLQQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793037122;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
+	 References:Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=La0LweeObaZXk+KmiUrwtJDhtNlJw55vuKFmJ7P+2rk=;
+	b=J3KhtqXH/RSl1bdhAIqqs1sdcVBkAjb/BPqeYhFfl2zLdS3OayJlfK+AeFUi9pI1vcSL
+	 i39oPKo219xaihqWiucnV07Lw4va8RcQyUfJIElx9p4SUnsxo88IllPkXPr72teIoXxF7
+	 dktnM61OEp9G8GpNrz0BNogTfRX05QTpianSA4CANnb8IqmHEhgg0p9oVfkqIiZEKm7iY
+	 hheDEsetjD177dW6d0VC99nz5sgMmRdeMsXVgdkwvfp6m1gzlgQch0B+LJyCPaRmi21PX
+	 PlU8/o67rvtmHXMsyZu3Ox519lPLLv1YUgtszdTmsqQ/ShmU+kbuasRVGEWTYdPJYqg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=JTZxfSJI;
+	arc=none smtp.remote-ip=209.85.215.198
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA279606A31D
-	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 16:09:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DA279606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F51606A31D
+	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 17:52:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 99F51606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=qfHGl/Jm
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gq0Ae1yAn1Q2klc+TW6bvEubjfyfKg9f/Q1TSyol3YFtOosHjjiZhINPLmQqGGL9vmDaVBCp+mFKC8POLnLbSvRBkxb58t8gbxB5u86WjGSnD0UYfR7WuhYPBhRPr906keYofGwOclNOLcV2f1TSuXmHfHH1jCXrRHftvMGFXmlBTFjhQygCGx8Y8GigfJ3layvyCc0cBskF9VJ6T8ZlYU0LDSWM1C8QLOODA2eQGBb23S8sYrlH3K7D4wJGu7se6OmoEd/z+bBgddHCWuyDPBRb8HtE9rwEYUDwmW5CGaVUrbBjmagIDl7L57Vhj0iMTECdUtsAgLyuKVsiomJfPQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=h0Ke6N1x7PJK+EQ6eoYCGhcjV/O0T1vXRaN/kaOK4UA=;
- b=H+BKJZM3RBwJ0pmDks5vDpq7PWP8owZNfQ4m4eK/2JQdkUlGCCC9WyzuDyM13O4mmfmS8bLO0AyJ1sSE6L5vecbVNbQUIVEUicfg6j9rsJWfMNNDiNbbL1hvYgXDPH7UtMUwED7dJH4mKVDQg48Dala5+A2OFKNmupYRCccIa54gluwiItl8SAvI9yD0LMBC83YAfVPZ6XQs6XpgG85K6gavxfwHQdMZszaabYNNRaujh5OzCSNx+Y/jLetiYnT/wT+Vma4Dt7joDFXOOTJGFNUami47/VGd3FEYYn7YrgLSPUmML2KZ5I+Jo+dfBrc6NCjJApW6LLJWOZ1yzInhxg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=h0Ke6N1x7PJK+EQ6eoYCGhcjV/O0T1vXRaN/kaOK4UA=;
- b=qfHGl/JmPHbAQ212FRR9otHNiq4T33pABbKtEXz/jgTj8h+JRbrfaBM2E0ohXwrQnqxcUv+t1sMMdyfIDHW8KzqTCfBuNhrK3Zyt0kIqPsNBWKpozy3YC08pD62U9r4c1GIlxHIJHxQT7RrhtcxXVh4e1tm7mGse4UWEwwrX+XA=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from PH7PR12MB9174.namprd12.prod.outlook.com (2603:10b6:510:2ed::9)
- by SA1PR12MB8599.namprd12.prod.outlook.com (2603:10b6:806:254::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Mon, 26 Oct
- 2026 16:09:26 +0000
-Received: from PH7PR12MB9174.namprd12.prod.outlook.com
- ([fe80::eaaa:b430:ba9:5dc]) by PH7PR12MB9174.namprd12.prod.outlook.com
- ([fe80::eaaa:b430:ba9:5dc%7]) with mapi id 15.21.0546.021; Mon, 26 Oct 2026
- 16:09:25 +0000
-Message-ID: <d6d10a47-6524-47d1-8588-fd5099ea6233@amd.com>
-Date: Mon, 26 Oct 2026 11:09:23 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] PCI: Preserve the initial bus number in pci_bus
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-pci@vger.kernel.org, dri-devel@lists.freedesktop.org
-References: <20261026-vfct-regression-v3-0-fe9586ed6978@amd.com>
- <20261026-vfct-regression-v3-1-fe9586ed6978@amd.com>
- <sashiko-outbox-185478@kernel.org>
-From: Mario Limonciello <mario.limonciello@amd.com>
-In-Reply-To: <sashiko-outbox-185478@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SN7P220CA0017.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:806:123::22) To PH7PR12MB9174.namprd12.prod.outlook.com
- (2603:10b6:510:2ed::9)
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=JTZxfSJI
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-cd652c0385bso2011160a12.2
+        for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 10:52:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1793037121; x=1793641921; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=La0LweeObaZXk+KmiUrwtJDhtNlJw55vuKFmJ7P+2rk=;
+        b=JTZxfSJIkZgrqzN/93xpzglj3D3yZR919+D8ohzNnoMIUczL5OZYp8VEaEIbte2LwS
+         DcGJFx2Ielb8QSQ0i6Py5/bxFRvShUzR8PXHJvFQTppnkMssEmTc4YGQI/tZ1RZbXxRw
+         HHF4gUquQuPNpXkdUyfnuox+pAWYV2XVN5wSi6r025/XOHomkejP29xZAJseGwxFJCQg
+         +iTZzIib67oLQSbNb2qVdGcNzVmWk9NAh3oU49XEVywThMNufAu6+VMm+eyaEfI+N8e/
+         fyfQW/i9532+IDaEuVrteJjDtHmMUTDxfKvxCkQLoveYI30T6VC7KeHpd+wULaOm7SMg
+         nmCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793037121; x=1793641921;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=La0LweeObaZXk+KmiUrwtJDhtNlJw55vuKFmJ7P+2rk=;
+        b=DStfqGrY3M7jSc1rsNSqqul8G0E4GSERPZwko61IaGxqd1M3cyaYfIbrCK/aThEsze
+         43fnJU9LNr6uxugNpAs+GlgxTY1oYlSKoVfZKozMI148wg2ji5v+N7KOomaWLAk2V9vf
+         +3xg37gJhoMTbpwVmgxSEDAkVyXJ1KB5axugU3sUmqdZYtqqn1DXqXSFo0lC/YujmAhw
+         XWyhKww04WVSGGWzvhB9U/1eC8cBzI5rrYKzmRq+rTn+EapSe66CBSR+eCjA6wnHNSmr
+         1ziHDsgk1sPzpuDuJFqxC8OhtXI+ScxW5Pzcf/N4cYeh6BxilaGXukvno0jgnOtljnCD
+         5ZiA==
+X-Gm-Message-State: AFq9FYIlyuvIN/XwGelQWShMw2USqFaSMU4zZ5+eH0e5sUAmYpzE6IbG
+	RPj9IE4c4Z2TAJUj/j/JDQKy3njpi7iK3G9+90scPdFcbmuK5kB5wvCVGmZUAeUMsDdHNqeZSbL
+	vzyqv0d2R+G/RJb8EIVcEExTBcDGn/fdfkcxMhhijUyawehQ7S580xe9le4rDvu8M1LA8LSBBun
+	v0iWRRc+NsW0v0RPjRvVFyEy2WDd2XUU2T5CY02m/fhZ6imZdh
+X-Received: from pjblj15.prod.google.com ([2002:a17:90b:344f:b0:3a4:fb9f:4a65])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90b:1c0d:b0:3ac:7556:8ed9
+ with SMTP id 98e67ed59e1d1-3adea9dab5cmr5810939a91.10.1793037120447; Mon, 26
+ Oct 2026 10:52:00 -0700 (PDT)
+Date: Mon, 26 Oct 2026 10:51:59 -0700
+In-Reply-To: <sashiko-outbox-182134@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -96,169 +77,246 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB9174:EE_|SA1PR12MB8599:EE_
-X-MS-Office365-Filtering-Correlation-Id: 67c56db1-191b-4148-bea3-08df337b8165
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|23010399003|261022075727099003|261026140227099003|4143699003|11063799006|56012099006|261009223027099003|261022105027099003|261021121427099003|10067099003|261026121527099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	wF2XAO9HUFz0gAFDna8gsI6scxFl9PlSD4M6gZswvNnBxswMomOYadjOCEzP6UKBcMzyQvWvAOhZ/LjaCGGB4gOrAcOFnY1+zW9KW29wRm2prY4U2iykjwANPTD0n57ESEliU1kecyog4Uj2uXIfISmyEPlvCRjKIWEpr/qgkRvFCv8YyqRmA0e0r34aTku6+Yzwr4YcI2Go+WVXUfU+FnD6MLYks6767IQYknfKhzae1D4ybDn/S+PKjaJAc/KAIOjOMcHqmNLtclidFz2CuKi/sH9wuA7//wWIzzOEDOzgapakzsf0kdpDZ4/YxUdrJfc+YXaZi6iFi5UAJS/bxHOPb/o9x+ec71+m5uajDoioapO1+0a/zn2zYNF1EoW5FbwJDH0FWnkeY9lu18oVAvboLu/kdbR1gGTJho2YT6JlXHeljGJWu8XMpJmR3qMV9uj46DXnmFQvawD6OduIo9iCcLku0szHMqGkhiFVO5kmm5Ipxe0Wjt3SzTai/UnItRQCopktofbtiimiVxWarSRXhig+zELMHwK2r9KUzxgd5W+MUWHlQOyR1TysC+bZjRJ6A59CoMXwSylgm78N6Fab3bFY9WmTq3T5ZaggnLya5gKxny55ViRHnqQGxUClLxuvS4ON/nJJM79TdDi/aOc/lT4GOJ1sFfQ3KD+dptY=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB9174.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(261022075727099003)(261026140227099003)(4143699003)(11063799006)(56012099006)(261009223027099003)(261022105027099003)(261021121427099003)(10067099003)(261026121527099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?UXVjNm50dGtDVDR2NXh5UmxDWmpHR0VKWFIzWHJSVTVtT2NRcExOV2pTNm5k?=
- =?utf-8?B?TG93ZjB2akZ5NGt3bmZsdnZITnV1Z0tFUmx3Vkl4UFM2Q1hYT2lJTVVHQkFw?=
- =?utf-8?B?STh3NHVpTDFzcDNsMi94UFI0VGt0UnJGQ3o2NDVwTXdWRGE5REM1RkdWUnI4?=
- =?utf-8?B?OVM4ZHF6R1ZzaWhvOHVlNFlRajA1Q3RiR3lMTWZuWHdld2RSY29ka0YwdGZM?=
- =?utf-8?B?cTIwcGs0WjRnR0M5TXpzN1ozUUlDME9qMHdXN1JtRFlkWFg1OFlQVVRTeGFR?=
- =?utf-8?B?NCtsTnVNZGtXeWd3RXNMOGJBSm4wSWhaRFlrS3pTNGwzMFFiK2pxeG5sUHpw?=
- =?utf-8?B?UVZrLzg0RFpQZStpb1dSNGd3M2FxcnN5Q3hMZSt2TVpENmd5TXZGM0M5V2Zw?=
- =?utf-8?B?MVZOeDNPV0xMcGpVODBSRlRLN2J4Qk9VTThVVGNGeEpGckw4UkdqV0xxZkll?=
- =?utf-8?B?WnU0eGk2M1B4U2pUNHM4ZUxrTnp5ZkdydmdqNVF2WVZ3UU1JNUNNVU0ycTB3?=
- =?utf-8?B?Q0xrWUFvRXB6eVA2OWtDZ0g3YllxRCtSQXQ2WWh1T043aWVEUWpFdFV1NjIv?=
- =?utf-8?B?cS8vcVZVdXkyVC8rUFRUQXRDOEtlU2pZeGRHb1dNRm40ZjFsMDJQbWQ4eFpO?=
- =?utf-8?B?bzhqajZwUE5ia3ljc0NiVkZ4cWJaQUtISUJjUFIyYXNEWERLc1luL1lsZ0FP?=
- =?utf-8?B?aXlEN3RtODREQW13MGxBMW1FUURvL2U4RTNMTXFZVFNPL3hMOXVSUGFpWDVv?=
- =?utf-8?B?cHc2TXhyMEg2VmVrZEVrMkx2Y3BFT01CWGlFNnFrVjhtNEhPZnV1eGFXejh2?=
- =?utf-8?B?aHBvU2kyTGxqdkZqSEt4aFBVV3dra3BIbDNvcGovQlI2S2c3eEtrS3BHT0U0?=
- =?utf-8?B?YnZkRGJxR2ZzVWxLRDdaVXdsYWhpRmQvY21jRFR1OEdjajNid2l6dmVtRFgw?=
- =?utf-8?B?bzI3SSs3SnhMLzBFa3RWZWxBN1JiSFhQQWZha01Md1RzbFZiN1Vhbm9MSEtU?=
- =?utf-8?B?aWRrSi85d2JRbmV2ZGl1dXFaZXVqQzZ0Vy94bzROUHp3cTR4emVvS3hzTDE3?=
- =?utf-8?B?T2NqUGVicXVIQmd3Q2J6YjZEOHBLQnh0Z2UwNUZ1YnlCanFmS3dNRlJxMXhk?=
- =?utf-8?B?cjcza0R0Z2JibjhHS0hJVHM3NzdEejZMYk1yODlhejhCbWhrdnFISGY1Vm5P?=
- =?utf-8?B?ZlJ1Qm1BMXVsNmMwQlg3ekNDTUdUU3NmT3k1Si92bGR3aDN5SEc5VVVuQVh2?=
- =?utf-8?B?UHUydXoyMjFDYTMvckJVVFVudVBnbUJPd1JDLzYvdm1hZHBjb0cwck1maG5j?=
- =?utf-8?B?V2J5Z29sNURDK2owa1Y4YmZKY1F5MytncVdsMG54YTRCbEk2SVUrYlVnNUlK?=
- =?utf-8?B?WGRlWnRMMy9GOEVKWmNPSnFJbVlwcXVJVE45WTgvVWFQNmUxQ1RnRlhSVWlE?=
- =?utf-8?B?VGk4Z0JVOTZRc1d4c0xtVGFaNFN1dGJqbWl5OUxsaUFBWjZlSFRBRDhwWmxW?=
- =?utf-8?B?RkhKZGthYnFBbUlOQlpQdm5CbEg3ZjhCdmJoVkUvVmJOa1FCQVVjUEx2b0VC?=
- =?utf-8?B?dUdwbEVlamduQVNrR3JGSklUcFhXY0gxYXo3V3VNVzFVWGJOaFNhbjJTQjJ0?=
- =?utf-8?B?VVdpYzJoRmhVTExNWmhTZjVSWjBLRHJuZTcvNXY0OHlZUks0ZG5HQ1ZRL05w?=
- =?utf-8?B?M1hxZzVZWEFoUDM4bXN0RzRSdU1lci8yRytROWtDVUQ4dFIrQTI0U2hBTjJK?=
- =?utf-8?B?ZW1DU2pCNzNGNEFUMDJNMjRRczJDWW5VbE12TlN2LzRZSjRHcGFWRzU2cGxK?=
- =?utf-8?B?ZlpHNUhBWERpUWhKbmthZTJwM1kzVWJSMGRlQ2ppTUJYUXRudk4yQVJwS0Fs?=
- =?utf-8?B?ZHJYU3RoNC9nUXNSVFZ5T3Z4cTI2UFEweFdOSGppZytwNHBUUTB4eGx6TTlK?=
- =?utf-8?B?UjNhYjV1TjhuZGoxUk14Mmt4cGYrODh2WHk1d3RJei9uWkw2SGVOdTNablNU?=
- =?utf-8?B?alFVNjdZS0txelUzby80dDk5Mnkrbk5SMWpSdUlwUU9KMmQzWU14RnZCODBn?=
- =?utf-8?B?SzVsZWg3TzFYV1RwQnNzQzd2Wk15U2lkMFVYOHQrY2ovVFV3blh4Z2NuTFpE?=
- =?utf-8?B?eVpCWkdlTDdoeHFtRSttV2gyRUMvSU5iMDQ0YXc5NWw0TzFHV3lzMW5HWGVu?=
- =?utf-8?B?Y3hqU1JyNDJ6c1lIYmY0SU5tNUJMVTlZUUVCakJFM1FBRnorUWhnekRBNVcr?=
- =?utf-8?B?NFU4bHUyMHpGd0FVRHlxSjBJeTlMVTFtZUZoMzlSR0QxT0c4TmNEeXNaTkt0?=
- =?utf-8?Q?xfPGSC+P2VFO+Bf8g/?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 67c56db1-191b-4148-bea3-08df337b8165
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB9174.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Oct 2026 16:09:25.7672
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: dkWvEI6M5X/gCBKvlfyHKv9G7t9G8lc17oU3iIcS05DYUgoLtYeKWDd6Pp8O/ZA8lc2uJL4cCiAYXP0bU4JoVQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB8599
+Mime-Version: 1.0
+References: <20261022223052.646891-1-seanjc@google.com> <20261022223052.646891-4-seanjc@google.com>
+ <sashiko-outbox-182134@kernel.org>
+Message-ID: <at-TP7Il6rWcd5Xh@google.com>
+Subject: Re: [PATCH 3/4] KVM: x86: Recompute EFER.LMA instead of inheriting
+ the current value on EFER writes
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
+On Thu, Oct 22, 2026, sashiko-bot@kernel.org wrote:
+> > diff --git a/arch/x86/kvm/msrs.c b/arch/x86/kvm/msrs.c
+> > index c3cb1575fe66e..41f3ec6eb2866 100644
+> > --- a/arch/x86/kvm/msrs.c
+> > +++ b/arch/x86/kvm/msrs.c
+> > @@ -638,8 +638,18 @@ static int set_efer(struct kvm_vcpu *vcpu, u64 efer)
+> >  	    (vcpu->arch.efer & EFER_SVME) && !(efer & EFER_SVME))
+> >  		return 1;
+> >  
+> > -	efer &= ~EFER_LMA;
+> > -	efer |= vcpu->arch.efer & EFER_LMA;
+> > +	if ((efer & EFER_LME) && is_paging(vcpu) && is_pae(vcpu))
+> > +		efer |= EFER_LMA;
+> > +	else
+> > +		efer &= ~EFER_LMA;
+> > +
+> > +	/*
+> > +	 * Toggling EFER.LMA on a bare write to EFER should be impossible, as
+> > +	 * it means KVM allowed architecturally invalid state at some point in
+> > +	 * the past, i.e. allowed EFER.LMA=1 && (!CR0.PG || !CR4.PAE).
+> > +	 */
+> > +	if (WARN_ON_ONCE((efer & EFER_LMA) != (vcpu->arch.efer & EFER_LMA)))
+> > +		return 1;
+> 
+> [Severity: High]
+> Can a guest or host userspace trigger this WARN_ON_ONCE() and get a spurious
+> #GP (or failed RSM / KVM_SET_MSRS) via SVM paths that still leave EFER_LMA
+> in vcpu->arch.efer out of sync with (EFER_LME && CR0.PG && CR4.PAE)?
 
+LOL, followed by a freaking disseration.
 
-On 10/26/26 11:01, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] PCI: number_initial clobbered on bus rescan in pci_scan_bridge_extend()
-> --
+> Earlier in arch/x86/kvm/msrs.c:set_efer(), KVM rejects changing EFER_LME
+> while paging is enabled:
 > 
-> commit 66abeabff58a043b28934ad23308d764456e9fa4
-> Author: Mario Limonciello <mario.limonciello@amd.com>
-> 
-> PCI: Preserve the initial bus number in pci_bus
-> 
-> This commit saves the firmware-assigned secondary bus number before PCI bus
-> renumbering and stores it in pci_bus->number_initial so drivers can match
-> firmware records against the initial bus number.
-> 
->> diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
->> index 27008e2ea5afc..9950a9dd1db1f 100644
->> --- a/drivers/pci/probe.c
->> +++ b/drivers/pci/probe.c
-> 
-> [ ... ]
-> 
->> @@ -1232,6 +1233,7 @@ static struct pci_bus *pci_alloc_child_bus(struct pci_bus *parent,
->>   
->>   	/* Set up the primary, secondary and subordinate bus numbers */
->>   	child->number = child->busn_res.start = busnr;
->> +	child->number_initial = busnr;
->>   	child->primary = parent->busn_res.start;
->>   	child->busn_res.end = 0xff;
->>   
->> @@ -1470,6 +1472,7 @@ static int pci_scan_bridge_extend(struct pci_bus *bus, struct pci_dev *dev,
->>   			child = pci_add_new_bus(bus, dev, secondary);
->>   			if (!child)
->>   				goto out;
->> +			child->number_initial = secondary;
->>   			child->primary = primary;
->>   			pci_bus_insert_busn_res(child, secondary, subordinate);
->>   			child->bridge_ctl = bctl;
->> @@ -1491,6 +1494,8 @@ static int pci_scan_bridge_extend(struct pci_bus *bus, struct pci_dev *dev,
->>   		 * do in the second pass.
->>   		 */
->>   		if (!pass) {
->> +			if (!dev->secondary_busnr)
->> +				dev->secondary_busnr = secondary;
->>   			if (pcibios_assign_all_busses() || broken)
->>   
->>   				/*
->> @@ -1529,6 +1534,10 @@ static int pci_scan_bridge_extend(struct pci_bus *bus, struct pci_dev *dev,
->>   			pci_bus_insert_busn_res(child, next_busnr,
->>   						bus->busn_res.end);
->>   		}
->> +		if (dev->secondary_busnr) {
->> +			child->number_initial = dev->secondary_busnr;
->> +			dev->secondary_busnr = 0;
->> +		}
-> 
-> [Severity: Medium]
-> Can this overwrite child->number_initial with the reassigned runtime bus
-> number during a subsequent PCI bus rescan when pcibios_assign_all_busses()
-> is enabled?
-> 
-> During the initial scan of a bridge taking the bus reassignment branch in
-> pci_scan_bridge_extend(), pass 0 saves the firmware secondary bus number in
-> dev->secondary_busnr. Pass 1 then transfers it to child->number_initial,
-> resets dev->secondary_busnr to 0, and writes the newly assigned bus number
-> (next_busnr) into the bridge's PCI_PRIMARY_BUS register:
-> 
-> drivers/pci/probe.c:pci_scan_bridge_extend() {
->      ...
-> 		buses = (buses & PCI_SEC_LATENCY_TIMER_MASK) |
-> 			FIELD_PREP(PCI_PRIMARY_BUS_MASK, child->primary) |
-> 			FIELD_PREP(PCI_SECONDARY_BUS_MASK, child->busn_res.start) |
-> 			FIELD_PREP(PCI_SUBORDINATE_BUS_MASK, child->busn_res.end);
-> 
-> 		/* We need to blast all three values with a single write */
-> 		pci_write_config_dword(dev, PCI_PRIMARY_BUS, buses);
->      ...
+> arch/x86/kvm/msrs.c:set_efer() {
+> 	...
+> 	if (is_paging(vcpu) && (vcpu->arch.efer & EFER_LME) != (efer & EFER_LME))
+> 		return 1;
+> 	...
 > }
 > 
-> When a later bus rescan occurs (for example via pci_rescan_bus(),
-> /sys/bus/pci/rescan, pci_rescan_bus_bridge_resize(), or hotplug), pass 0
-> reads PCI_PRIMARY_BUS again, where secondary is now the reassigned bus
-> number. Because dev->secondary_busnr was reset to 0 in the first scan,
-> !dev->secondary_busnr is true and dev->secondary_busnr is set to the
-> reassigned bus number.
+> Because of that check, the recomputed EFER_LMA in set_efer() is always equal
+> to ((vcpu->arch.efer & EFER_LME) && is_paging(vcpu) && is_pae(vcpu)). The new
+> WARN_ON_ONCE() therefore triggers whenever a vCPU enters set_efer() with
+> vcpu->arch.efer & EFER_LMA out of sync with those bits.
 > 
-> In pass 1 of the rescan, pci_find_bus(pci_domain_nr(bus), next_busnr) finds
-> the existing child bus, and the block after if (!child) overwrites
-> child->number_initial with the reassigned bus number. A similar overwrite
-> can occur if pci_find_bus() finds an already-existing bus during hotplug.
+> There appear to be three SVM paths where that still happens:
 > 
-> Also, in the new-bus case, pci_add_new_bus() calls pci_alloc_child_bus(),
-> which sets child->number_initial = busnr (next_busnr) before calling
-> device_register(&child->dev), pcibios_add_bus(child), and
-> child->ops->add_bus(child), so those callbacks see the reassigned bus
-> number in child->number_initial before pci_scan_bridge_extend() updates it
-> from dev->secondary_busnr.
+> 1. Nested SVM VMRUN and RSM into L2:
 > 
+> Architecturally on SVM, VMRUN ignores EFER.LMA in the VMCB save area and sets
+> EFER.LMA from (EFER.LME && CR0.PG) in hardware, so nested_vmcb_check_save()
+> does not require save->efer & EFER_LMA to match (EFER_LME && CR0.PG):
+> 
+> arch/x86/kvm/svm/nested.c:nested_vmcb_check_save() {
+> 	...
+> 	/*
+> 	 * These checks are also performed by KVM_SET_SREGS,
+> 	 * except that EFER.LMA is not checked by SVM against
+> 	 * CR0.PG && EFER.LME.
+> 	 */
+> 	if ((save->efer & EFER_LME) && (save->cr0 & X86_CR0_PG)) {
+> 		if (CC(!(save->cr4 & X86_CR4_PAE)) ||
+> 		    CC(!(save->cr0 & X86_CR0_PE)) ||
+> 		    CC(!kvm_vcpu_is_legal_cr3(vcpu, save->cr3)))
+> 			return false;
+> 	...
+> }
+> 
+> However, nested_vmcb02_prepare_save() only clears EFER_LMA when EFER_LME is
+> 0, and relies on svm_set_cr0() to update EFER_LMA:
+> 
+> arch/x86/kvm/svm/nested.c:nested_vmcb02_prepare_save() {
+> 	...
+> 	/* SVM ignores EFER.LMA if EFER.LME=0 (instead of failing VMRUN). */
+> 	if (!(svm->nested.save.efer & EFER_LME))
+> 		svm->nested.save.efer &= ~EFER_LMA;
+> 
+> 	svm_set_efer(vcpu, svm->nested.save.efer);
+> 
+> 	svm_set_cr0(vcpu, svm->nested.save.cr0);
+> 	svm_set_cr4(vcpu, svm->nested.save.cr4);
+> 	...
+> }
+> 
+> And svm_set_cr0() only updates EFER_LMA in vcpu->arch.efer when CR0.PG
+> transitions relative to the previous vcpu->arch.cr0:
+> 
+> arch/x86/kvm/svm/svm.c:svm_set_cr0() {
+> 	...
+> 	if (vcpu->arch.efer & EFER_LME) {
+> 		if (!is_paging(vcpu) && (cr0 & X86_CR0_PG)) {
+> 			vcpu->arch.efer |= EFER_LMA;
+> 			if (!vcpu->arch.guest_state_protected)
+> 				svm->vmcb->save.efer |= EFER_LMA | EFER_LME;
+> 		}
+> 
+> 		if (is_paging(vcpu) && !(cr0 & X86_CR0_PG)) {
+> 			vcpu->arch.efer &= ~EFER_LMA;
+> 			if (!vcpu->arch.guest_state_protected)
+> 				svm->vmcb->save.efer &= ~(EFER_LMA | EFER_LME);
+> 		}
+> 	}
+> 	...
+> }
+> 
+> Because L1 must have CR0.PG=1 to execute VMRUN, is_paging(vcpu) is already
+> true when svm_set_cr0() runs during VMRUN. If vmcb12 has CR0.PG=1, CR4.PAE=1,
+> EFER.LME=1, and EFER.LMA=0, svm_set_cr0() never sets EFER_LMA, leaving L2
+> running in 64-bit mode with EFER_LMA=0 in vcpu->arch.efer. When L2 executes a
+> valid WRMSR(MSR_EFER) (for example setting EFER_NX or EFER_SCE) or userspace
+> calls KVM_SET_MSRS, set_efer() computes EFER_LMA=1, triggers WARN_ON_ONCE(),
+> and injects a #GP into L2.
 
-I'll dig in.  I initially think this one is true.
+This looks like a KVM bug, i.e. we want the WARN and should fix the underlying
+bug.
+
+> Conversely, during RSM to L2 via emulator_leave_smm() -> svm_leave_smm() ->
+> enter_svm_guest_mode() -> nested_vmcb02_prepare_save(), emulator_leave_smm()
+> clears CR0.PG before calling svm_leave_smm(). If vmcb12 has EFER.LME=1,
+> EFER.LMA=1, and CR0.PG=0, is_paging(vcpu) is already false when svm_set_cr0()
+> runs, leaving EFER_LMA=1 with CR0.PG=0. When rsm_load_state_64() then calls
+> __kvm_emulate_msr_write(vcpu, MSR_EFER, smstate->efer & ~EFER_LMA) ->
+> set_efer(), set_efer() computes EFER_LMA=0, triggers WARN_ON_ONCE(), and
+> aborts RSM with X86EMUL_UNHANDLEABLE.
+
+Same here?
+
+> 2. KVM_SET_NESTED_STATE and svm_leave_smm() followed by #VMEXIT:
+> 
+> In arch/x86/kvm/svm/nested.c:svm_set_nested_state(), L1's saved host state in
+> vmcb01->save is only checked for ((save->efer & EFER_LMA) &&
+> !(save->efer & EFER_LME)) (and svm_leave_smm() copies vmcb01->save from
+> guest MSR_VM_HSAVE_PA memory without checking EFER_LMA):
+> 
+> arch/x86/kvm/svm/nested.c:svm_set_nested_state() {
+> 	...
+> 	if (!(save->cr0 & X86_CR0_PG) ||
+> 	    !(save->cr0 & X86_CR0_PE) ||
+> 	    (save->rflags & X86_EFLAGS_VM) ||
+> 	    ((save->efer & EFER_LMA) && !(save->efer & EFER_LME)) ||
+> 	    !nested_vmcb_check_save(vcpu, &save_cached, false))
+> 		goto out_free;
+> 	...
+> }
+> 
+> If vmcb01->save has EFER.LME=1, EFER.LMA=0, CR0.PG=1, and CR4.PAE=1, then on
+> nested_svm_vmexit() from a paged L2 (where is_paging(vcpu) is already true),
+> svm_set_efer() and svm_set_cr0() leave L1 with EFER_LMA=0 while EFER_LME=1,
+> CR0.PG=1, and CR4.PAE=1, causing the next WRMSR(MSR_EFER) or KVM_SET_MSRS to
+> trigger the WARN_ON_ONCE() in set_efer().
+
+And here.
+
+> 3. SEV-ES and SEV-SNP write traps:
+> 
+> In arch/x86/kvm/svm/svm.c:cr_trap(), SVM_EXIT_CR0_WRITE_TRAP and
+> SVM_EXIT_CR4_WRITE_TRAP call svm_set_cr0() and svm_set_cr4() directly without
+> checking consistency between EFER.LMA, CR0.PG, and CR4.PAE:
+> 
+> arch/x86/kvm/svm/svm.c:cr_trap() {
+> 	...
+> 	case 0:
+> 		old_value = kvm_read_cr0(vcpu);
+> 		svm_set_cr0(vcpu, new_value);
+> 
+> 		kvm_post_set_cr0(vcpu, old_value, new_value);
+> 		break;
+> 	case 4:
+> 		old_value = kvm_read_cr4(vcpu);
+> 		svm_set_cr4(vcpu, new_value);
+> 
+> 		kvm_post_set_cr4(vcpu, old_value, new_value);
+> 		break;
+> 	...
+> }
+> 
+> Because svm_set_cr0() sets EFER_LMA without checking is_pae(vcpu) (for
+> example on an SEV-SNP AP created via SVM_VMGEXIT_AP_CREATE where
+> sev_snp_init_protected_guest_state() calls kvm_vcpu_reset() and clears
+> vcpu->arch.cr4 while the VMSA has CR4.PAE=1), or if a guest clears CR4.PAE
+> observed via cr_trap() while EFER_LMA=1, a subsequent efer_trap() ->
+> set_efer() sees EFER_LMA=1 with !is_pae(vcpu) and triggers the WARN_ON_ONCE()
+> and #GP.
+
+Ugh.  I _want_ this to be a KVM bug, e.g. as is already pointed out by the comment:
+
+	 * Clear EFER_LMSLE for a related reason: EFER writes are *trapped*,
+	 * not intercepted, i.e. hardware has already committed the write by
+	 * the time KVM gains control, and the trap is enabled if and only if
+	 * the guest is SEV-ES, whose EFER lives in the encrypted VMSA and so
+	 * can't be fixed up by KVM.  Rejecting EFER.LMSLE=1 would inject a #GP
+	 * *and* leave EFER.LMSLE set in the guest, which is strictly worse
+	 * than honoring a write that hardware itself allowed.
+
+"rejecting" a value and injecting a #GP is completely pointless.  The guest already
+has the "bad" value in EFER, and a misbehaving guest can simply eat the #GP.
+
+But the issue is really just that KVM simply doesn't have visibility into EFER.LMA
+being set.  Heh, which technically makes this a bug fix, since IIUC, the current
+code will never set EFER.LMA in this case?
+
+I can't think of any way to do the right thing other than to rely on hardware to
+not screw up?  E.g.
+
+diff --git a/arch/x86/kvm/msrs.c b/arch/x86/kvm/msrs.c
+index 41f3ec6eb286..3a6a0ebf1932 100644
+--- a/arch/x86/kvm/msrs.c
++++ b/arch/x86/kvm/msrs.c
+@@ -648,7 +648,8 @@ static int set_efer(struct kvm_vcpu *vcpu, u64 efer)
+ 	 * it means KVM allowed architecturally invalid state at some point in
+ 	 * the past, i.e. allowed EFER.LMA=1 && (!CR0.PG || !CR4.PAE).
+ 	 */
+-	if (WARN_ON_ONCE((efer & EFER_LMA) != (vcpu->arch.efer & EFER_LMA)))
++	if (WARN_ON_ONCE((efer & EFER_LMA) != (vcpu->arch.efer & EFER_LMA) &&
++			 !vcpu->kvm->arch.has_protected_state))
+ 		return 1;
+ 
+ 	r = kvm_x86_call(set_efer)(vcpu, efer);
+
+
+Hmm, though all of these cases make me wonder if we'd better off with just a WARN,
+i.e. no #GP, since the goal is to enforce a consistent model, which is what the
+new code does.
+
+	/*
+	 * Toggling EFER.LMA on a bare write to EFER should be impossible, as
+	 * it means KVM allowed architecturally invalid state at some point in
+	 * the past, i.e. allowed EFER.LMA=1 && (!CR0.PG || !CR4.PAE).
+	 */
+	WARN_ON_ONCE((efer & EFER_LMA) != (vcpu->arch.efer & EFER_LMA) &&
+		     !vcpu->kvm->arch.has_protected_state);
