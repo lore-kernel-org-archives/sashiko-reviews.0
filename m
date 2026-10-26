@@ -1,103 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793045055;
-	b=Ed0HkVFR1+YPiUbKN9Gniphl3Gf+MCWiX4QT3l0FoSiu5l84lgUNWHXT6PvK5VyLA3wU
-	 joVTJdBtqu94m22kUfZLwNRw2RQE+0YqI45xaB/9rzd5AJuBJq2Sq5xlPQofKpxqju6R1
-	 LDbLO0izzCZA6j8Kehj+UAIt8ZsUTbzY18uZlgCS+uy2DQVB777z9N5NdIDCbpGiuAGcm
-	 KZ/1VpaVkPmGnk0eBkiuKAmNzN3by+UHnqW/2YTj7xlRzQjmvrpSjRtqCfrzBmu21MBpG
-	 CeiJuCNVgkJf5ZNHcZ2iq/kpUxUC3Pzb6V96NU8h6QZeI4fbUgtdtg3ADyylL4Kr4RQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793045055;
-	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
-	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Message-ID:
-	 Subject:From:To:Cc:Date:In-Reply-To:References:User-Agent:
-	 MIME-Version:X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:
-	 X-Mimecast-Originator:Content-Type:Content-Transfer-Encoding;
-	bh=pIGQYHOya3I2T1/hTITqLzL89FrdxItvQxreQpHmjmE=;
-	b=xWnvVaNSwBvPdzCadYHvo8G1Dgr5Obi0REnrCg3osZmuyLFcOlW3ttfBikDrHCum2OXL
-	 Ze8m351wXDsELvWeo5pAsZN35hbI3FvJD4hd0kyCq2RZkWVXOoK2wA7BhnVdGv3fTI7TB
-	 ZgTxvpscnulOEGgUPmCw7+Huta0D0OwiX5r8qoL09MAu6u9YXv5IZRYV5UJCzT9eSVI03
-	 icSxZFaTVVqOy2+BdWJfx1k23iPLUTK2kJzad/7vQNNMd6cf0T5aPtFn+m+ABbBB3UX6m
-	 oSGFXyp8f9UHsssuD659xD04qPX2myVelXcrp3uzHGE2whvusGACHPh8NwTkl8oZzoQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=redhat.com;
-	spf=pass smtp.mailfrom=redhat.com;
-	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=AUSI0kDU;
-	arc=none smtp.remote-ip=170.10.133.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.84.36
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1793045355;
+	b=oovp5P8fnO6gCP98hZtTJrqus7z/Of0IIi//eEoP4Kvdtdm/g4jUAeFESQ+4StHQqdJg
+	 0QszeHGVbZ37dp+7sja8hWAwBkE2FgCNvPX1C4pNVy9hYayUTfYtYI1VvheWLWJ2OFRlK
+	 FRT5MpekoRbcKHLhYWl5SJqs7sDauQ/rKAl6kgsfZQzMVvab2Qb/IPV/3cDZBtqTZRI2o
+	 NIVfTo2QsZUgl6xgxMn48l9uANr0emmYtsjtDVBsCRJtp83k/CbvHlM7I0DowCKW2SCzN
+	 GlLg5wA468Mqs4wWVk879vnNwan772Gq/A4oyd5mY1CSJCyXQGAFX+uk7IiRCOeRpgw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793045355;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=j5SYMlWiOg3406pB/aoaJ3uilksdg5FbtY9HYyRsG9E=;
+	b=KnKSq2l8JY2XqLsIDwvT8FeEWzer/rHJOZu5eCCqzoLG/CkQsUH3YY4xa/Yv4VfwGBkf
+	 nf8Z8ZowomjWi0r1cIXAYw4fbNtmV7cCz/bydiprw45rP07+mvJ+Bir02sM8GiktIUEG/
+	 BejBTI0g0hYYhjpuzgRqQPlnaqpAzNiL32THiLlRU7487bDpUyFwqxJXictLMeUk6hhSE
+	 OEsD+XEjkL5DtOrw+Fo3knkt7afeq5dK6vMATv9xSs1U6Sy6LU7Tb9LlGvcX0AM4m2PAA
+	 H+aUw6O7E90t7YClbHuGpzw9UereknrHHU7MhMWVN2YyQkZ6ft4QexK7Zq12R0YTIcA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=foHgGDF9;
+	arc=fail smtp.remote-ip=52.101.84.36
+Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazon11010036.outbound.protection.outlook.com [52.101.84.36])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA52606A31A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 20:04:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CAA52606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48461606A31D;
+	Mon, 26 Oct 2026 20:09:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 48461606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=AUSI0kDU
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1793045053;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pIGQYHOya3I2T1/hTITqLzL89FrdxItvQxreQpHmjmE=;
-	b=AUSI0kDU43MxBqSo8bBhPCRkCCNc8Ni4ZMKn5eyawOHauZKe/IXV2/h8IVOeIQId5mmI2S
-	p6TNiucIviZKDqzC/Kzeh63fOL35K8HtCKbVdav+zzg3ZiQI9ibzgvaSw9TZZZXKSM8D5C
-	oCRWyxxReWA1yu5xuq1HDy3BYKDiyD8=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-488-1-p_tyDhP3uK40uGFZ6DMw-1; Mon, 26 Oct 2026 16:04:12 -0400
-X-MC-Unique: 1-p_tyDhP3uK40uGFZ6DMw-1
-X-Mimecast-MFC-AGG-ID: 1-p_tyDhP3uK40uGFZ6DMw_1793045052
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-93f5844e383so619502185a.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 13:04:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793045052; x=1793649852;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=EteNQ3QjnOcsX1B3Urg7UJN4lThZVIxHF8GjAs9LfFk=;
-        b=siBkem4grWS0aoZt7kvBBXZpy8ZC0sMzHCJE7ouoWZZQ8ulOMRYaIOLkXsCFPmj+5f
-         QLslasOygsNt5VDdB+CwqltnnrOR8+sZJvO4qDKsYlgJjZBHs7G0x8K7GuRX0Kpa8Lk9
-         jP9t+xD4bnxiDQdh3s3XWnio+GMr7kXrHZKBDx8qdwuW4/Xiy5BTF/ipibRYB1o1EizK
-         VZuzeFs5i2wZX5Itg/+av9LeaQ0ndNxVXJDCFZgGMaEzS9U1LzsP4TIDjgbVfA9xLTst
-         cSOyHhW6X5oYijY2VnjVrKw1pr84PEHfs2Yyf8LhOcWND1u+LOJeyob6I/4ZOzmcariq
-         035g==
-X-Gm-Message-State: AFq9FYKviSpbiQezKVwmZCrYp3JJ+dMZVf0esjMj2btyN4xwnyh7K0QB
-	VqiBQebYiesymEu7KPQE+nPyHApgICeqS/kNa1cC7si/1xB7moPIHu1tjKdPbwTu3qkdGyiWbTt
-	WmMRwAztwF8Llw0OEAtC2KwI1gcWcfag7pk/g4NAzdt3Sa4C0SwD5wnGaXZvaGfZY9ZrBCU5QOB
-	N4PDAygDBwNHJvoqg+QXXxfK/KGPbJzd3S6VRJKTumqoAARxmDF6+Fpw==
-X-Gm-Gg: AYBFou0UXTcyIwYFdVH70yu6g6VRFQos0UlMB9W98w+it1dj1JjO920zuUylgZwAvQV
-	SnQg4p9c3OCFeQGBLj6DgVX1QUSzzztZFM8+LY8Whj5cFcXtHqcyaPftrFHUefl20xe4OVC94kT
-	vL1m9FibedASOZpoqJ4m2Kr+3ZE11dXCgk+hcCR1CrNEiOYNAcguOgfDK3JNiWxGcWt6pGfZnDr
-	mcYyq37khbIoM6e14S1VgvDD7KDTssuI6Bl2f/+ePj83MyyU4OrjXFdAlpG+drippthtG571WEu
-	lf7JX0bFYQxhpXXHuqTkbhACeTNQolk0VUcd3CCmYYS7sidD35SgyADHrZIp0JkJJZdo8E/blBt
-	VXySGLuu67KcwYT1FVjAxWVfOp3qKPFm8RAxM93huDMEjMwEt6b5er8u6Z3wyj+JNXk6t107+Er
-	0/2wr9U9xa+eQ3p2ovBf7RBg==
-X-Received: by 2002:a05:620a:3949:b0:93e:7192:191c with SMTP id af79cd13be357-940ef91b69cmr1103805385a.17.1793045051704;
-        Mon, 26 Oct 2026 13:04:11 -0700 (PDT)
-X-Received: by 2002:a05:620a:3949:b0:93e:7192:191c with SMTP id af79cd13be357-940ef91b69cmr1103796885a.17.1793045050972;
-        Mon, 26 Oct 2026 13:04:10 -0700 (PDT)
-Received: from loberman-thinkpadp16gen3.rmtusma.csb ([2600:6c65:2440:d8c:aa2b:ddff:fe88:da74])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-940f0a7e5cfsm772481385a.37.2026.10.26.13.04.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2026 13:04:10 -0700 (PDT)
-Message-ID: <d0f9945fb5338ef81796e97777a5a8c4b7f8600b.camel@redhat.com>
-Subject: Re: [PATCH v5 1/2] scsi: target: Complete an aborted command at
- most once
-From: Laurence Oberman <loberman@redhat.com>
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=foHgGDF9
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yZVUdejTI1QdipqRdVL308uKwpLIWE87CFk9GOOf5uR36FqJfdt2Z/B5Zs16kqwP42zBzMZrFa65ww0LnR5ZuaQFoz8VBB4DvEiQf9QR78iplDv/5pLu7o+qxP4oYxtyb/XakSuLbVdplWrXbGC7mpaEBVR4y/Y3bQq+w6iHi/3+YzuokAi7yvaSoWSQzcRpVHqmwhTwzvcAUdsrBW2TfRHEFP8QN16ZsM22IASfC7m9vuvmdsv0En67erpvaCCuShM3EqBNSHIWbUCBaJxbEQXSK9/sKbgrP5mRKFtj/A69O28jLEqjn8nizo7W/Mys7PHJaazZdkkZM39hWmlffQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZDVTxPWQVFjPOUJ5dmmR3o6onKt0LIeoCgM7lQLMZZQ=;
+ b=EYNsmiwtcsA0g0LKDprj2mFRbaOFLHkfYAxOCint28G3v2ZiY3wBOYyS2fAFpyBjXRyJDqZ/NJOY8gZIuewvDL56PF9UAQrK7BZkA4yGhXDVc2GurSlH5zyW+5lD9m2EQPlifshmiSBX265yF+3ImGnnXIMTUHV4KAvvIEABzd9AkzRhIJlvnKotLMmFXkSToqfPI6D/WlDGFFamA9zzxRzvqcKjv78R+UPyHDCKrHtlfdGQ7Bw6+XmFhCJ3o+eyufLUN7EWbHEKVCqVzDimvx2fdjDll6by3CdHjFpwfQZznNzvv5hCXlEEegacUzx7j/ghS1QM8yUiM6iPMJBURw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZDVTxPWQVFjPOUJ5dmmR3o6onKt0LIeoCgM7lQLMZZQ=;
+ b=foHgGDF9OwwGAamKGuDoOM5Xuvte1ZLH5qc5JfxOF/bqnd6EuPx7jQ64OVXVAL5rpjSaJgBA2UsB9TkAzUhb4Yl9VY2EhYBz4Ge6xX37iASJQ9r95ZBn9zwTJaOZ4WiNQAej35g1Ais9T7jrVEyKUAIrBDbG8a8C2/Viq615BKRN4Uemc8Ma66PtCsbXHSk9d+lMcNUHXOEzuciEH/Cze1IJsMa64cJ5zzhIAhJUGFRDoT3EIwP3DnTJr2nKLfidcNGD3PiaJ+oUPpkr86B5OydKaatHkbYnGSeIcyE6KpPNZmZ7pZ6NWZu8iX8gpt19ejKuO7bTEpNAQF2MYh+LhQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
+ by DB9PR04MB11659.eurprd04.prod.outlook.com (2603:10a6:10:607::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Mon, 26 Oct
+ 2026 20:09:12 +0000
+Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
+ ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0546.021; Mon, 26 Oct 2026
+ 20:09:12 +0000
+Date: Mon, 26 Oct 2026 15:09:03 -0500
+From: Frank Li <Frank.li@oss.nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org, target-devel@vger.kernel.org
-Date: Mon, 26 Oct 2026 16:04:09 -0400
-In-Reply-To: <sashiko-outbox-185693@kernel.org>
-References: <20261026192835.1431767-1-loberman@redhat.com>
-	 <20261026192835.1431767-2-loberman@redhat.com>
-	 <sashiko-outbox-185693@kernel.org>
-User-Agent: Evolution 3.60.2 (3.60.2-2.fc44)
+Cc: Laurentiu Mihalcea <laurentiumihalcea111@gmail.com>,
+	devicetree@vger.kernel.org, imx@lists.linux.dev, robh@kernel.org,
+	conor+dt@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH] arm64: dts: imx95-navq: add USB1/USB2 nodes
+Message-ID: <at-zX6Go4I415M2z@SMW015318>
+References: <20261026182150.11330-1-laurentiumihalcea111@gmail.com>
+ <sashiko-outbox-185636@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-185636@kernel.org>
+X-ClientProxiedBy: PH8P220CA0035.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:348::7) To MI3PR04MB12438.eurprd04.prod.outlook.com
+ (2603:10a6:290:76::14)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -107,234 +98,171 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 8Kie3Xic2719oyDulbpIYw5oxmnlnqzOvoFiLl4D-PM_1793045052
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|DB9PR04MB11659:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2590a778-69e6-4d0c-c9cb-08df339d0075
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|23010399003|366016|376014|1800799024|22082099003|261026121527099003|18002099003|11063799006|4143699003|56012099006|261009223027099003|261022105027099003|261022075727099003|10067099003|261026140227099003;
+X-Microsoft-Antispam-Message-Info:
+	k5d6GI0fuwf9ApO//JaXvL+5eZhGZ1TeyeGXDRwaECOb+KogC4NYDGpoG4ryoA3iQXX6MicYTCRU0tpCx3pB+fJLmRh7rCPCkjR5ugKDkG0b3MYcQuSu8cL+j4HLCzlzNrGuHFvaOFbM0NTlrzvymYetIbGiJCeu4EqXNkzxOY4l5GKvIj0aWlpTfUOHbdi0Dm0R2xZx2HZkiWH3uftMxMEH/biR4f1x6bvTO1oVtnLY1H0e/EHNv8FTQ5jumRf1aT1MjKxkRrKS4Gc05/MmdSxtXQBqM/ur1s/w921i/VwSbYV934JD3Iar/ke1Ucotl+w3pTFcNphkfpM5onV/IFSMH+l+h4e750rD/+Ue/e66ecX1YWNuefac37MuBy6c1c9DdwW7aTL9rwBEkdiNM4IiADmQ0TVV2EJfAmOy48AhLxPlfetrOoWMAV8/QWuP1QLICukf5ILbEWrGY7lSiKKIWKTe/xb1Zp7ZOtJ8b7N/7kTC58gRL408/+go2fg3+XjxagN4JgADQ6dLWTNPfZclJWbxNaZEN+QW/Y5ECyz+967pQs/rrnqCEpRwneeOHXc3C/YnWlAyphkxXN5zWeG0bwQvrus+TgkprvuwsFc=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(366016)(376014)(1800799024)(22082099003)(261026121527099003)(18002099003)(11063799006)(4143699003)(56012099006)(261009223027099003)(261022105027099003)(261022075727099003)(10067099003)(261026140227099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?KTnvms5hv84MIwhTGPiW6bhX50qmbKSP5/S2+QZ39VA2+OyEWiK/6brR4C?=
+ =?iso-8859-1?Q?urs6Z6iVKtwvdEKdb9fgQGG/hU2ES8a8IM82rxErWnivjBNFhgNGEW5sOE?=
+ =?iso-8859-1?Q?3JznPGY1YTjow53tEJLDc4M8vk3f9SOR+y3yx5O0HGhQBad5odeUQD4vqb?=
+ =?iso-8859-1?Q?rH0LjD+ZafDo3hv/w7EmTCqzddaa5Pdo8xGnhM3thQjkpAdLcUTz/5kHeY?=
+ =?iso-8859-1?Q?6ebRv8jI6qD6RhYZ3NNo1v/+fxUQVE3jxyPmsCRrfh06RVPlc7dYBDirRI?=
+ =?iso-8859-1?Q?pem1B5NDbz2b6o85LgaKNreSUum/pjUzj+4buncpXw6W6yafhP2DehPyzt?=
+ =?iso-8859-1?Q?QI3BNsOokw59zyomYKoLt4YvO4QSf/22WXJZl8xH9KVyXbE6nsUHiusD6R?=
+ =?iso-8859-1?Q?y4rats8qr4dlWB9zOPX4iFAINk1ofu3RPGEcA29PCVvacyyqaC8Qjibknf?=
+ =?iso-8859-1?Q?wsgbT5TyUtNDvIigki8ZdWcVcZGPexkDyCuFfc7u9gPBTVeCV2REWRF3on?=
+ =?iso-8859-1?Q?O0hQewYYEP99++iDVNMu3aLfYIyL4KEjuhACcJzpGqSx7qyunnXopQWO/A?=
+ =?iso-8859-1?Q?0sDYLxccZjxwBmk9so9Y1NHr0b1Q8LsFW6Smms4Uy8xr3Ho4wawxLsiMyB?=
+ =?iso-8859-1?Q?00y5mMjZ+zzG7laHnU75m1A6U6Yt0EMXr7XIIB7WgLWQfiArusuJhNPUsp?=
+ =?iso-8859-1?Q?JwcEykcHyKzd5mB5FeBcbIXFv40RrgT3Qr2TO2w0DtdoBS9nf2HDgHgW8a?=
+ =?iso-8859-1?Q?9bbe4JkuWGxu0L8D6HyoqKGoQ4zQM9NHz5JsMDd35r5c3amL7U1MaJeJmY?=
+ =?iso-8859-1?Q?3uzdVsEJsKfiNABr51u4+yMCe/8vkPRKCOLdivwNNEP4/GvN9hTmD7KQxU?=
+ =?iso-8859-1?Q?0Jt0iscgf1Y4/rveqpVYkb18CPtR7PkJAbQdZ2MDdFQAP2MSCfZ/Ok+dAC?=
+ =?iso-8859-1?Q?6yz/5JT7BlHSUvVJIvjHb45ECPkvP4rGtPu153jFxrFxlVX6XQpcHc3EFS?=
+ =?iso-8859-1?Q?z0qh87qNovtN2fg/+C7tRN2JYItCNT/QD1PLwYiFwqvZUfZb+aWE0SG6hT?=
+ =?iso-8859-1?Q?kWZZ2rVuobnB0clPZFXZk0CqGhNAjIWatxvVydOK4DikLAaLxP0iaSkIts?=
+ =?iso-8859-1?Q?QlpSq50vikaHWAs1zSJJ/9bX9r6jACDrpMIEQPvdodfwYdkxcum1bN6SQq?=
+ =?iso-8859-1?Q?Kf2T0JfeotneyGGsUpBrnOCiuSCaP7bRxECT+agGQbCf9iKnD5w7hApc0c?=
+ =?iso-8859-1?Q?J+s5WhG9iDbe6rMxDczPrQk4s0dO56FF6AFKUTDqmtZWoCVNrTeTO45/gA?=
+ =?iso-8859-1?Q?M3/Fg3Kmh8ZIXEV9uQNNGskwsgWphEi9FQLplN6rG++T/hqFy/0K91X+HD?=
+ =?iso-8859-1?Q?Sv7XckPlQAJZynrWQ9+Q940iy6PL2mvPS7+3EU7Sch8JBeLgi+jVe8PrT6?=
+ =?iso-8859-1?Q?cexiF1XskEbsqW2BjzQdcy1mfDkD5sDlABMKhob/pCv6C8XAgpXw2Lm1SZ?=
+ =?iso-8859-1?Q?CFjV2/iytl0zNfD3SUL19Z6+noSqNapLNJQ2Ajx3jperZ+dwOiTPGv1dBv?=
+ =?iso-8859-1?Q?mZEyauu0e/rus3fOi1zew5Zqy0jn3IZcEhGxG8OSe5rIDj7CQyrLG8iWbS?=
+ =?iso-8859-1?Q?9s6YM88lMbK60nQLN8D2BJ2SPqq7OOg78uYNjJX8yD2PujLH33YKID8hQw?=
+ =?iso-8859-1?Q?RgxQg6FSN34DK1O1WB/2u7GXFgiFR3N06WPYJ9/420YTZ8IVCpdKNeYyiD?=
+ =?iso-8859-1?Q?ELbTa7bsDVfpZq/Hy2o0qXXNUlyZvYCmDoGv108oDf5FMsqE6y4aph42BP?=
+ =?iso-8859-1?Q?yCD9Ji0T6+lHEVA7YwiOVgxl8YS0tNUKIVCnFZS6DpkP4qDEvpyq?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2590a778-69e6-4d0c-c9cb-08df339d0075
+X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Oct 2026 20:09:12.2617
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: i7P05I8QNTbc2CO8pd0cb/62OPVkmCu65Pg5SqjtFseKJgnaq6/PUZ3WcePy+pFam6MTtJ97FDWv+xApW6FGa4niwhoMDE7FxHqfPGo9o4DDLDLXjmoROoK0ck8qatnb
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB11659
 
-On Mon, 2026-10-26 at 19:56 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential
-> issue(s) to consider:
-> - [High] scsi: target: double transport_complete_callback() via
-> CMD_T_STOP
-> - [High] scsi: target: unguarded abort queueing in
-> transport_generic_request_failure()
+On Mon, Oct 26, 2026 at 06:44:28PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] arm64: dts: imx95-navq: usb2 dr_mode = host breaks usb-role-switch
 > --
->=20
-> commit 9f0a0fc8e2f216b4d0f91c9797ea14d9a91154f8
-> Author: Laurence Oberman <loberman@redhat.com>
->=20
-> scsi: target: Complete an aborted command at most once
->=20
-> This commit adds the CMD_T_ABORT_QUEUED flag under t_state_lock in
-> target_cmd_interrupted() so that an aborted command only runs its
-> completion
-> callback and queues target_abort_work once.
->=20
-> > diff --git a/drivers/target/target_core_transport.c
-> > b/drivers/target/target_core_transport.c
-> > index 927861c30afc4..4896a92392e0e 100644
-> > --- a/drivers/target/target_core_transport.c
-> > +++ b/drivers/target/target_core_transport.c
-> > @@ -882,24 +882,45 @@ static void target_abort_work(struct
-> > work_struct *work)
-> > =C2=A0=09target_handle_abort(cmd);
-> > =C2=A0}
-> > =C2=A0
-> > +/*
-> > + * Returns true if the command has been aborted or stopped, in
-> > which case the
-> > + * caller must not carry on with normal completion.=C2=A0 For an
-> > aborted command the
-> > + * work that must not run twice -- the completion callback and the
-> > queueing of
-> > + * target_abort_work -- is done once, under CMD_T_ABORT_QUEUED.
-> > + */
-> > =C2=A0static bool target_cmd_interrupted(struct se_cmd *cmd)
-> > =C2=A0{
-> > +=09bool queue_abort =3D false, stop =3D false;
-> > +=09unsigned long flags;
-> > =C2=A0=09int post_ret;
-> > =C2=A0
-> > +=09spin_lock_irqsave(&cmd->t_state_lock, flags);
-> > =C2=A0=09if (cmd->transport_state & CMD_T_ABORTED) {
-> > -=09=09if (cmd->transport_complete_callback)
-> > -=09=09=09cmd->transport_complete_callback(cmd,
-> > false, &post_ret);
-> > +=09=09if (cmd->transport_state & CMD_T_ABORT_QUEUED) {
-> > +=09=09=09spin_unlock_irqrestore(&cmd->t_state_lock,
-> > flags);
-> > +=09=09=09return true;
-> > +=09=09}
-> > +=09=09cmd->transport_state |=3D CMD_T_ABORT_QUEUED;
-> > +=09=09queue_abort =3D true;
-> > +=09} else if (cmd->transport_state & CMD_T_STOP) {
-> > +=09=09stop =3D true;
-> > +=09}
-> > +=09spin_unlock_irqrestore(&cmd->t_state_lock, flags);
+>
+> commit 7aa413a1299c4bee8b5a2613c0acf6256cd30c16
+> Author: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
+>
+> arm64: dts: imx95-navq: add USB1/USB2 nodes
+>
+> This commit adds and enables the device tree nodes for the USB1 and USB2
+> controllers and their Type-C port controllers on the imx95-navq board.
+>
+> > diff --git a/arch/arm64/boot/dts/freescale/imx95-navq.dts b/arch/arm64/boot/dts/freescale/imx95-navq.dts
+> > index 7860c113e9e02..5fe245b623068 100644
+> > --- a/arch/arm64/boot/dts/freescale/imx95-navq.dts
+> > +++ b/arch/arm64/boot/dts/freescale/imx95-navq.dts
+>
+> [ ... ]
+>
+> > @@ -80,6 +82,72 @@ i2c3_gpio_expander_21: gpio-expander@21 {
+>
+> [ ... ]
+>
+> > +	ptn5110_usb2: tcpc@51 {
+> > +		compatible = "nxp,ptn5110", "tcpci";
+> > +		reg = <0x51>;
+> > +		interrupt-parent = <&gpio4>;
+> > +		interrupts = <25 IRQ_TYPE_LEVEL_LOW>;
+> > +		pinctrl-0 = <&pinctrl_typec>;
+> > +		pinctrl-names = "default";
 > > +
-> > +=09if (!queue_abort && !stop)
-> > +=09=09return false;
+> > +		/* no SINK circuit (EN_SINK1 tied to TP30) */
+> > +		connector {
+> > +			compatible = "usb-c-connector";
+> > +			label = "USB2 2.0 Type C";
+> > +			data-role = "dual";
+> > +			power-role = "source";
+> > +			self-powered;
+> > +			source-pdos = <PDO_FIXED(5000, 3000, PDO_FIXED_USB_COMM)>;
 > > +
-> > +=09if (cmd->transport_complete_callback)
-> > +=09=09cmd->transport_complete_callback(cmd, false,
-> > &post_ret);
->=20
-> [Severity: High]
-> Can cmd->transport_complete_callback() still be called more than once
-> when a
-> command hits the CMD_T_STOP path first?
->=20
-> The commit message notes that leaving the CMD_T_STOP branch unguarded
-> is
-> harmless because complete_all() is idempotent, and explains that a
-> first call
-> to target_cmd_interrupted() can take the CMD_T_STOP branch before
-> CMD_T_ABORTED
-> is set afterwards.
->=20
-> However, target_cmd_interrupted() executes cmd-
-> >transport_complete_callback()
-> when either queue_abort or stop is true, without clearing the
-> callback pointer
-> or guarding its execution. In drivers/target/target_core_sbc.c, both
-> compare_and_write_callback() and compare_and_write_post() release
-> dev->caw_sem
-> without clearing cmd->transport_complete_callback:
->=20
-> drivers/target/target_core_sbc.c:compare_and_write_callback() {
-> =C2=A0=C2=A0=C2=A0 ...
-> out:
-> =09/*
-> =09 * In the MISCOMPARE or failure case, unlock ->caw_sem
-> obtained in
-> =09 * sbc_compare_and_write() before the original READ I/O
-> submission.
-> =09 */
-> =09up(&dev->caw_sem);
-> =09sg_free_table(&write_tbl);
-> =09return ret;
-> }
->=20
-> If a first call to target_cmd_interrupted() takes the CMD_T_STOP
-> branch and a
-> subsequent call takes either the CMD_T_ABORTED branch (after
-> CMD_T_ABORTED is
-> set) or the CMD_T_STOP branch a second time, won't
-> cmd->transport_complete_callback() run twice and call up(&dev-
-> >caw_sem) a
-> second time?
->=20
+> > +			port {
+> > +				typec2_con_hs: endpoint {
+> > +					remote-endpoint = <&usb2_data_hs>;
+> > +				};
+> > +			};
+> > +		};
+> > +	};
+> >  };
+>
+> [ ... ]
+>
+> > @@ -198,6 +270,55 @@ pinctrl_usdhc2: usdhc2grp {
+> >  	};
+> >  };
+> >
+> > +&usb2 {
+> > +	disable-over-current;
+> > +	dr_mode = "host";
+> > +	usb-role-switch;
 > > +
-> > +=09if (queue_abort) {
-> > =C2=A0=09=09INIT_WORK(&cmd->work, target_abort_work);
-> > =C2=A0=09=09queue_work(target_completion_wq, &cmd->work);
-> > -=09=09return true;
-> > -=09} else if (cmd->transport_state & CMD_T_STOP) {
-> > -=09=09if (cmd->transport_complete_callback)
-> > -=09=09=09cmd->transport_complete_callback(cmd,
-> > false, &post_ret);
-> > +=09} else {
-> > =C2=A0=09=09complete_all(&cmd->t_transport_stop_comp);
-> > -=09=09return true;
-> > =C2=A0=09}
-> > =C2=A0
-> > -=09return false;
-> > +=09return true;
-> > =C2=A0}
->=20
-> [Severity: High]
-> Does transport_generic_request_failure() in
-> drivers/target/target_core_transport.c also need to test and set
-> CMD_T_ABORT_QUEUED under cmd->t_state_lock?
->=20
-> Commit 2c9fa49e100f ("scsi: target/core: Make ABORT and LUN RESET
-> handling
-> synchronous") added the same abort handling pattern to both
-> target_cmd_interrupted() and transport_generic_request_failure():
->=20
-> drivers/target/target_core_transport.c:transport_generic_request_fail
-> ure() {
-> =C2=A0=C2=A0=C2=A0 ...
-> =09if (cmd->transport_complete_callback)
-> =09=09cmd->transport_complete_callback(cmd, false,
-> &post_ret);
->=20
-> =09if (cmd->transport_state & CMD_T_ABORTED) {
-> =09=09INIT_WORK(&cmd->work, target_abort_work);
-> =09=09queue_work(target_completion_wq, &cmd->work);
-> =09=09return;
-> =09}
-> =C2=A0=C2=A0=C2=A0 ...
-> }
->=20
-> Because transport_generic_request_failure() does not check or set
-> CMD_T_ABORT_QUEUED under cmd->t_state_lock, if CMD_T_ABORTED is set
-> after
-> target_cmd_interrupted() returns false in target_execute_cmd(), and
-> execution
-> then fails in target_write_prot_action() or __target_execute_cmd()
-> (for
-> example, when tcmu_queue_cmd() sees CMD_T_ABORTED and returns
-> TCM_CHECK_CONDITION_ABORT_CMD, or when target_scsi3_ua_check()
-> fails):
->=20
-> drivers/target/target_core_transport.c:__target_execute_cmd() {
-> =C2=A0=C2=A0=C2=A0 ...
-> err:
-> =09spin_lock_irq(&cmd->t_state_lock);
-> =09cmd->transport_state &=3D ~CMD_T_SENT;
-> =09spin_unlock_irq(&cmd->t_state_lock);
->=20
-> =09transport_generic_request_failure(cmd, ret);
-> }
->=20
-> transport_generic_request_failure() will invoke
-> cmd->transport_complete_callback(), queue target_abort_work on cmd-
-> >work, and
-> return early without setting CMD_T_ABORT_QUEUED or
-> SCF_SENT_CHECK_CONDITION.
->=20
-> If an iSCSI ERL=3D2 TMR TASK_REASSIGN then runs
-> iscsit_task_reassign_complete_write() in
-> drivers/target/iscsi/iscsi_target_tmr.c, it sees ICF_GOT_LAST_DATAOUT
-> set and
-> CMD_T_SENT cleared, and calls target_execute_cmd() ->
-> target_cmd_interrupted():
->=20
-> drivers/target/iscsi/iscsi_target_tmr.c:iscsit_task_reassign_complete
-> _write() {
-> =C2=A0=C2=A0=C2=A0 ...
-> =09if (cmd->cmd_flags & ICF_GOT_LAST_DATAOUT) {
-> =09=09if (!(cmd->se_cmd.transport_state & CMD_T_SENT)) {
-> =09=09=09pr_debug("WRITE ITT: 0x%08x: t_state: %d"
-> =09=09=09=09" never sent to transport\n",
-> =09=09=09=09cmd->init_task_tag, cmd-
-> >se_cmd.t_state);
-> =09=09=09target_execute_cmd(se_cmd);
-> =09=09=09return 0;
-> =09=09}
-> =C2=A0=C2=A0=C2=A0 ...
-> }
->=20
-> Similarly, fabric error paths such as tcm_qla2xxx_write_pending(),
-> tcm_qla2xxx_handle_data_work(), and isert_rdma_read_done() call
-> transport_generic_request_failure() directly. Could these paths reach
-> both
-> transport_generic_request_failure() and target_cmd_interrupted() (or
-> transport_generic_request_failure() twice) for the same aborted
-> command,
-> re-initializing cmd->work while queued and running
-> cmd->transport_complete_callback() and target_handle_abort() a second
-> time?
+> > +	status = "okay";
+> > +
+> > +	port {
+> > +		usb2_data_hs: endpoint {
+> > +			remote-endpoint = <&typec2_con_hs>;
+> > +		};
+> > +	};
+> > +};
+>
+> [Severity: Medium]
+> Should usb2 use dr_mode = "otg" here instead of "host" to match the
+> usb-role-switch property and the connector's data-role = "dual" in
+> ptn5110_usb2, or should ptn5110_usb2 use data-role = "host" without
+> usb-role-switch on usb2?
 
-Let me wait on Bart's review but I do see validity in what Sashiko is
-reporting. The complexity in this target code is really hard to deal
-with but I am doing my best. I will also see if I can get AI to check
-it fully first should I come up with a good response to the latest
-sashiko review
+if use type C port, suppose it should be dual role device.
 
-Regards
-Laurence
+Frank
 
+>
+> When dr_mode is set to "host", ci_hdrc_probe() in drivers/usb/chipidea/core.c
+> skips initializing the gadget role and OTG handling:
+>
+> 	if (dr_mode == USB_DR_MODE_OTG || dr_mode == USB_DR_MODE_PERIPHERAL) {
+> 		ret = ci_hdrc_gadget_init(ci);
+> 		...
+> 	}
+> 	...
+> 	if (ci->is_otg && ci->roles[CI_ROLE_GADGET]) {
+> 		ret = ci_hdrc_otg_init(ci);
+> 		...
+> 	}
+>
+> Because ci->roles[CI_ROLE_GADGET] remains NULL, ci_get_role() never enables
+> OTGSC_IDIE:
+>
+> 	if (ci->roles[CI_ROLE_HOST] && ci->roles[CI_ROLE_GADGET]) {
+> 		if (ci->is_otg) {
+> 			role = ci_otg_role(ci);
+> 			hw_write_otgsc(ci, OTGSC_IDIE, OTGSC_IDIE);
+> 		} else {
+>
+> As a result, id_extcon.enabled and vbus_extcon.enabled remain false. Although
+> the Type-C port manager configures ptn5110_usb2 for dual-role data and accepts
+> USB PD data role swaps, calls along usb_role_switch_set_role() ->
+> ci_usb_role_switch_set() -> ci_irq() -> ci_irq_handler() will have OTGSC_IDIE
+> and OTGSC_BSVIE masked out by hw_read_otgsc(), leaving role switching
+> non-functional and the controller permanently in host mode.
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261026182150.11330-1-laurentiumihalcea111@gmail.com?part=1
