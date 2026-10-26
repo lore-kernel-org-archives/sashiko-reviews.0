@@ -1,54 +1,89 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.221
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.158.5
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793052092;
-	b=dU/jBU1YaMo5nCIMfcTjWBO54k5MK86bQJJd9gMo44EANvKzc6x3iP1DSBBmVEmg0RhH
-	 jZlJx/Gh87wkUbDZgYwN9fObwkr/3grgLNRQiaVwDI5eM1nSgy5cB1xKwGKCoFYvu5iTy
-	 7a7hD5RAWDjRx/4zL6OdiHDRXhK3iMMNt+0yWp5dPbiLf+fV8J4q+0dCRjidyZmR1dnAQ
-	 vsP5qecpg8jQGhBvjlFVVNG0IWN6T9Je3lUvTKoG8vcVUri7+9Ksdy/K2bsGzvnnC4PmN
-	 SdwhZEFWW0yeSqLAOtYhvDp408KvTtBtP7/PjD48n6i7vyI3a2Z4ddB5VaH83e0oZpw==
+	t=1793052701;
+	b=hJXtrsCjEtW64luAPtbbSwlzAk9eVnnzwsRMxhDl17UAqTuSgQ8t9IIir9Cn4mnRbCWP
+	 naCEdTO+nmpUzhVy3SWhflEYCGj0OWlnV1ELXMd6GCSDG5z2QgvDH7qCuDvbKYBUx13xZ
+	 3YMzwOIM+pTa5IWkC2J3aygNT6QmJ1aSRIPaxhN2o8eGLhDq1r/EvPdxqIa/G29dCCrA/
+	 GLEMnaE7fXcNrArTaDVsqv0E+tpOxbw/rEK6RE/itOQVe6seh1hauDC+jxtKAy9H2ZMQD
+	 caegQr3reqK8afAiRnQdaxVhz65YsAs2lcTlphyduED+o926Ozszeq3BTbQh3zjKtmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793052092;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:Content-Language:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=JfoDqe96Kwk1JhgIOwUU/4TvSCsIa9add42yravEH04=;
-	b=H9RevOwU62gWkPaKTrPZob225jygrXTMg1iS+hwDqr3/IrDdKu2QhDHmFtGaiu7iwCyk
-	 EI1c7iTxuVn5/fBa9lDTjRVUXOOCOHB8GP72Tthgc6B8ZBJkSb5YrZuHUIJKpDfYEq5b6
-	 alTqr4YI5StpNNagH7n2ViJA7ybKwMR+TxR2r+m9P9lEo9XMBJspWdJPuKEG6xmmH9q/5
-	 9nV92/XEh5oYgFYwNZG9TMMVazZXjleLKGVzGB0n+mZJfAQQKvXyz/0Y4ocbGVOGuqCu5
-	 5Xmk8BaUEE7s1kbVOrQbuVnU4cy/9XUQ2NSlKppKlJ239bDchPqmoK8Gvvgv4sRS5WQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793052701;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:User-Agent:MIME-Version:Content-Type:
+	 X-TM-AS-GCONF:X-Proofpoint-Spam-Info:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Authority-Analysis:X-Proofpoint-GUID:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=B8wgkW9Guv3xYAvJFD5+NUvZAJ/JB1rAg8hkSwTJhVw=;
+	b=MJYCRqfMahjpLndk0ROwdqNXRWlDGCCJ0MO71qPI3k9HH8G3P39sVTcWSz2OCddtm53Y
+	 XxWZRMpS2fWyoF18kcw4uLbWpqlJtOpwEf5IMjyPv/9Lkk40vPSPdXUSIwymGAh+JDrIa
+	 cJTGeX+9BFH1WOFR8KhvtWO3yjvmjgxyoxtTy6TmlVvQISM9tLrxOWvhdCrT8cQ+03r2X
+	 q+mgLiZoBd3BKGfNdLjk5BPEhBs8I5noxQQv7wTwitdDdBgWQFcoSfrh44GvkSGioK4ra
+	 TLhXAAukR0swtVb+rMkbxsTs/5JMgZIkRaWitf8ze1GNsFzy3iDq+2q8BiGnAHbgh9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=K2DGESd1;
-	arc=none smtp.remote-ip=95.215.58.221
-Received: from mta1.migadu.com (out-221.mta1.migadu.com [95.215.58.221])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lhBhysKj;
+	arc=none smtp.remote-ip=148.163.158.5
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0565606A31A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 22:01:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F0565606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15667606A31A;
+	Mon, 26 Oct 2026 22:11:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 15667606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=K2DGESd1
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=d/XH3OknxfPjStHsj+pXLKFQsWfu7QdbdcYVcusQH88=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1793052090; v=1; x=1793656890;
- b=K2DGESd1ORM+nfGVKFRn1bNSIcfkuCoHPjkJGL4Z/8dhPAxUPA9s5NpdIN9r4nwCdGBhDekk
- d3fN9p1kyWhnhDOZFxz59mJXu96m6aV1Ba6GycMUNuHfDLXxYWAsgsTBzfZ2VlR788evjAE0Ejl
- lDvVTJ4S4DHmvNrPZAzoZ9gA=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 313bf9c5a9775fab;
-	Mon, 26 Oct 2026 22:01:30 +0000
-X-Mizu-Trace-ID: 313bf9c5a9775fab
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <c6955dac-49bd-4b9a-9313-49f7b9753eb1@linux.dev>
-Date: Mon, 26 Oct 2026 15:01:28 -0700
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lhBhysKj
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69QJELMv189680;
+	Mon, 26 Oct 2026 22:11:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=B8wgkW9Guv3xYAvJFD5+NUvZAJ/JB1
+	rAg8hkSwTJhVw=; b=lhBhysKjxQQBP7h8pydJ2mjhoQvv25ks+xd0CDWRxo1kxp
+	j3iNruaS0tmWxSYUrvRQFTViCMJPYmyfnHMzC0X24W5DdiiOliaCgUpbVyx0Q+D+
+	sFNmsEFkNvp6TJ3cICIgDF6c+OI6EgIZ+135mfFT+SiOzeNG7xwqckEGXWCSrQDk
+	dMDQXXjc8hOBtKRd4YG3fjLRpxiBec0n3kjpskGef0jKBoSkl6Ent4VIYeHWASSC
+	hVQ3Q7Fd+Nq6aCW4NmmXU9VeiY2901QuTGv45xrThtS0GBQnbJzpvJ32Ru4/JeCc
+	MZGHqh6QGX4qytnkB6PmNQDh0MbYHjfvQuKx0neQ==
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgj3m4se9-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Mon, 26 Oct 2026 22:11:38 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69QIpCFi3004949;
+	Mon, 26 Oct 2026 22:11:37 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hh70prbb7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 26 Oct 2026 22:11:37 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
+	by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69QMBbrc5833268
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 26 Oct 2026 22:11:37 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 051B25805A;
+	Mon, 26 Oct 2026 22:11:37 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id DC80658052;
+	Mon, 26 Oct 2026 22:11:36 +0000 (GMT)
+Received: from e (unknown [9.61.189.219])
+	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+	Mon, 26 Oct 2026 22:11:36 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v16 05/12] scsi: ibmvfc: add basic FPIN support
+In-Reply-To: <sashiko-outbox-185513@kernel.org> (sashiko-bot@kernel.org's
+	message of "Mon, 26 Oct 2026 16:24:10 +0000")
+References: <20261026-ibmvfc-fpin-support-v16-0-a900aa657ed5@linux.ibm.com>
+	<20261026-ibmvfc-fpin-support-v16-5-a900aa657ed5@linux.ibm.com>
+	<sashiko-outbox-185513@kernel.org>
+Date: Mon, 26 Oct 2026 17:11:36 -0500
+Message-ID: <87bj8gf6xz.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,229 +93,122 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v3 12/12] [do not merge] selftests/bpf: Cover the
- low-32 link for narrowing stack spills
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20261020161907.2115379-1-vineet.gupta@linux.dev>
- <20261020161907.2115379-13-vineet.gupta@linux.dev>
- <sashiko-outbox-179354@kernel.org>
-From: Vineet Gupta <vineet.gupta@linux.dev>
-Content-Language: en-US
-In-Reply-To: <sashiko-outbox-179354@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA4NiBTYWx0ZWRfX5dAaeIfwoACi
+ PHUfMRGHuqil5AdqJsYZ4L+gL052Yvx5AU+ZzFaBA4Fs2tB5G7UdYvfbXde0aZayCLQIseNAPaL
+ +BV1j/udQ++KxmjN7Q7Vpp+utKcbwKw=
+X-Proofpoint-ORIG-GUID: PChiCZRu_21Fepiyz2r9InosAEpQ201f
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA4NiBTYWx0ZWRfX/s49P1xF3MsX
+ Q+HusCvvxc9JrklfQXSewal4xEZIMQT4aCB9hIVbaIc7dKZmT8NIG1/th34iwW4O8bw1IzSDaOO
+ klp9/QxA4na2c0/mDtkrHPeYN2EZ+OhrX2l4JHLsgITLdn4VW2RFENntZ5KjZqIe0nNFxsMISyr
+ ED3KvEJFzzkvtLsfVhha+IssAM4VUOreWGWXl3W1HUZYzTVTgkE4W6onGPp035HJhBXHsG9/WJg
+ BpyH7fvBq2nJUls3mEulyYiPH74hZVQQKDBoViJZbuGFbeMan+tuoBIzk+tJ7Fr+w3VIAZPrmd+
+ ebP38umGXqHxAYM9k8pyJPhTPNdD/sF298HXKSfxdKUWkONNfL1zrmsoycdUOF0u/mRhLcTru0n
+ nz436sycdxIESOSRGD1j4RFmKCIOKSGy1BwWbwGNH2YrHwkhH95A6OfLOe4U6I2EXdStfVgaKY7
+ 3uHg+CEa31Y8iH823GA==
+X-Authority-Analysis: v=2.4 cv=G7uJgNk5 c=1 sm=1 tr=0 ts=6adfd01a cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=j9RR-ouNwWIpI61htBwA:9
+X-Proofpoint-GUID: PChiCZRu_21Fepiyz2r9InosAEpQ201f
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-26_04,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0 impostorscore=0 suspectscore=0 clxscore=1015
+ phishscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610260086
 
-On 10/20/26 9:32 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [Medium] selftests/bpf: fill before narrow in zext_narrowing_spill_byte_no_link()
-> - [Medium] selftests/bpf: tautological test in sext_fill_of_narrowing_spill_drops_zext()
-> - [Low] selftests/bpf: stale inline comment in zext_narrowing_spill_drops_link()
-> --
+sashiko-bot@kernel.org writes:
+
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> index b63b341efb074..1cd39d36edf5c 100644
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
 >
-> commit a341902044eb0b749136bbae6f269759e4c0ffcd
-> Author: Vineet Gupta <vineet.gupta@linux.dev>
->
-> selftests/bpf: Cover the low-32 link for narrowing stack spills
->
-> This patch adds six verifier selftests to verifier_linked_scalars.c to test
-> low-32 register linking behavior across narrowing stack spills and subsequent
-> fills.
->
->> diff --git a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
->> index ab78285153fb1..8ade4836e1b2f 100644
->> --- a/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
->> +++ b/tools/testing/selftests/bpf/progs/verifier_linked_scalars.c
->> @@ -1217,6 +1217,128 @@ __naked void zext_fill_byte_forms_no_link(void)
->>   	: __clobber_all);
->>   }
->>   
 > [ ... ]
 >
->> +/*
->> + * A narrowing spill stores only the source's low 32 bits, so the slot is their
->> + * zero-extension. Filling it back is a mov, though, and that drops the link
->> + * for the same reason zext_chain_drops_link does, so a later narrowing of the
->> + * source does not reach the filled register.
->> + */
->> +SEC("socket")
->> +__failure
->> +__msg("div by zero")
->> +__naked void zext_narrowing_spill_drops_link(void)
->> +{
->> +	asm volatile ("						\
->> +	call %[bpf_get_prandom_u32];				\
->> +	r6 = r0;						\
->> +	call %[bpf_get_prandom_u32];				\
->> +	r0 <<= 32;						\
->> +	r6 |= r0;		/* r6 = full 64-bit unknown */	\
->> +	*(u32 *)(r10 - 8) = r6;	/* narrowing spill, forms the link */ \
->> +	r2 = *(u32 *)(r10 - 8);	/* fill it back */		\
->> +	if w6 != 0 goto 1f;	/* narrows r6, propagates to r2 */ \
-> [Severity: Low]
-> This isn't a bug, but is this inline comment in
-> zext_narrowing_spill_drops_link() left over from the earlier version of the
-> test? Since the preceding fill into r2 drops BPF_REG_LINK_ZEXT, narrowing w6
-> here does not propagate to r2.
-
-Yes. It said the narrowing propagates to r2, which is the opposite of what
-the test is named for. Fixed.
-
-
->> +	if r2 == 0 goto 1f;					\
->> +	r0 /= 0;						\
->> +1:								\
->> +	r0 = 0;							\
->> +	exit;							\
->> +"	:
->> +	: __imm(bpf_get_prandom_u32)
->> +	: __clobber_all);
->> +}
+>> @@ -6900,9 +7171,15 @@ static int ibmvfc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+>>  	INIT_WORK(&vhost->rport_add_work_q, ibmvfc_rport_add_thread);
+>>  	mutex_init(&vhost->passthru_mutex);
+>>  
+>> -	if ((rc = ibmvfc_alloc_mem(vhost)))
+>> +	vhost->fpin_workq = alloc_ordered_workqueue("%s-fpin-workq-%u", 0,
+>> +						    IBMVFC_NAME, shost->host_no);
+>> +	if (!vhost->fpin_workq)
+>>  		goto free_scsi_host;
+>>  
+>> +	rc = ibmvfc_alloc_mem(vhost);
+>> +	if (rc)
+>> +		goto free_workq;
 >> +
-> [ ... ]
+>>  	vhost->work_thread = kthread_run(ibmvfc_work, vhost, "%s_%d", IBMVFC_NAME,
+>>  					 shost->host_no);
+>>  
+>> @@ -6910,7 +7187,7 @@ static int ibmvfc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+>>  		dev_err(dev, "Couldn't create kernel thread: %ld\n",
+>>  			PTR_ERR(vhost->work_thread));
+>>  		rc = PTR_ERR(vhost->work_thread);
+>> -		goto free_host_mem;
+>> +		goto free_workq;
+>>  	}
+>>  
+>>  	if ((rc = ibmvfc_init_crq(vhost))) {
+>> @@ -6946,7 +7223,8 @@ static int ibmvfc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+>>  	ibmvfc_release_crq_queue(vhost);
+>>  kill_kthread:
+>>  	kthread_stop(vhost->work_thread);
+>> -free_host_mem:
+>> +free_workq:
+>> +	destroy_workqueue(vhost->fpin_workq);
+>>  	ibmvfc_free_mem(vhost);
 >
->> +/*
->> + * A sub-word spill is below the low-32 model, so no link is formed there.
->> + * The fill is a byte load too, so this pins the spill-side and fill-side
->> + * size gates together rather than either on its own.
->> + */
->> +SEC("socket")
->> +__failure __msg("div by zero")
->> +__naked void zext_narrowing_spill_byte_no_link(void)
->> +{
->> +	asm volatile ("						\
->> +	call %[bpf_get_prandom_u32];				\
->> +	r6 = r0;						\
->> +	call %[bpf_get_prandom_u32];				\
->> +	r0 <<= 32;						\
->> +	r6 |= r0;						\
->> +	*(u8 *)(r10 - 8) = r6;	/* 1-byte spill: no link */	\
->> +	r2 = *(u8 *)(r10 - 8);					\
->> +	if w6 != 0 goto 1f;					\
->> +	if r2 == 0 goto 1f;	/* not deduced */		\
-> [Severity: Medium]
-> Does zext_narrowing_spill_byte_no_link() actually test the size gate in
-> check_stack_write_fixed_off()?
-
-No, fixed in v4.
-
-The narrowing now happens while the value is still on the stack, before 
-the fill, as you suggest and as zext_narrowing_spill_reaches_fill 
-already does. As written, the fill had already dropped any link, so the 
-test would have passed even if the 1-byte spill had formed one.
-
-
-> Here, r2 is filled from fp-8 before w6 is narrowed:
+> [Severity: High]
+> Does jumping to free_workq when ibmvfc_alloc_mem(vhost) fails in
+> ibmvfc_probe() cause a double free in ibmvfc_free_mem(vhost)?
 >
-> 	*(u8 *)(r10 - 8) = r6;	/* 1-byte spill: no link */
-> 	r2 = *(u8 *)(r10 - 8);
-> 	if w6 != 0 goto 1f;
+> When an allocation fails inside ibmvfc_alloc_mem(), it already unwinds and
+> frees everything allocated up to that point before returning -ENOMEM, leaving
+> non-NULL dangling pointers in vhost:
 >
-> As demonstrated by zext_narrowing_spill_drops_link() above, filling a
-> BPF_REG_LINK_ZEXT slot into r2 before narrowing w6 drops the zero-extending
-> link on the fill, so narrowing w6 afterwards would not propagate to r2 even if
-> the 1-byte spill had formed a link.
->
-> Should the narrowing branch "if w6 != 0 goto 1f" happen while the value is
-> still on the stack before filling r2, matching the instruction order in
-> zext_narrowing_spill_reaches_fill()?
->
->> +	r0 /= 0;						\
->> +1:								\
->> +	r0 = 0;							\
->> +	exit;							\
->> +"	:
->> +	: __imm(bpf_get_prandom_u32)
->> +	: __clobber_all);
->> +}
->> +
->>   #ifdef CAN_USE_MOVSX
-> [ ... ]
->
->> @@ -1800,6 +1952,35 @@ __naked void sext_byte_fill_drops_sext_link(void)
->>   }
->>   #endif /* CAN_USE_MOVSX */
->>   
->> +/*
->> + * The same, with the zero-extending link coming from a narrowing spill rather
->> + * than a mov. The spill truncated the slot to 32 bits, so the fill is not
->> + * narrowing and assigns no link kind of its own; the slot's zero-extending
->> + * one must not survive the sign-extending load.
->> + */
->> +SEC("socket")
->> +__failure __msg("div by zero")
->> +__naked void sext_fill_of_narrowing_spill_drops_zext(void)
->> +{
->> +	asm volatile ("						\
->> +	call %[bpf_get_prandom_u32];				\
->> +	r6 = r0;						\
->> +	call %[bpf_get_prandom_u32];				\
->> +	r0 <<= 32;						\
->> +	r6 |= r0;		/* r6 = full 64-bit unknown */	\
->> +	*(u32 *)(r10 - 8) = r6;	/* narrowing spill: slot is ZEXT */ \
->> +	r2 = *(s32 *)(r10 - 8);	/* sign-extending, not narrowing */ \
->> +	if w6 != -1 goto 1f;	/* slot low 32 bits are all ones */ \
->> +	if r2 s>= 0 goto 1f;	/* taken only if r2 was rebuilt zext */ \
->> +	r0 /= 0;						\
-> [Severity: Medium]
-> Can sext_fill_of_narrowing_spill_drops_zext() ever reach the is_ldsx link
-> clearing in check_mem_access() with BPF_REG_LINK_ZEXT still intact?
-
-nope it can't: v4 drops the test.
-
-Thx,
--Vineet
-
-> In check_stack_write_fixed_off(), the 4-byte narrowing spill
-> "*(u32 *)(r10 - 8) = r6" truncates fp-8 to 32 bits via
-> zext_32_to_64(&ss->spilled_ptr) and sets BPF_REG_LINK_ZEXT.
->
-> When "r2 = *(s32 *)(r10 - 8)" then runs in check_stack_read_fixed_off(),
-> get_reg_width(reg) is at most 32, so narrowing is false. Because size == 4,
-> spill_size == 4, and !narrowing all hold, check_stack_read_fixed_off() calls
-> assign_scalar_id_before_mov(env, reg) before copying *reg to
-> state->regs[dst_regno]:
->
-> kernel/bpf/verifier.c:check_stack_read_fixed_off() {
->      ...
-> 	if (env->bpf_capable && size == 4 &&
-> 	    (subreg_link || (spill_size == 4 && !narrowing)))
-> 		assign_scalar_id_before_mov(env, reg);
-> 	state->regs[dst_regno] = *reg;
->      ...
+> drivers/scsi/ibmvscsi/ibmvfc-core.c:ibmvfc_alloc_mem() {
+> 	...
+> free_tgt_pool:
+> 	mempool_destroy(vhost->tgt_pool);
+> free_trace:
+> 	kfree(vhost->trace);
+> free_nvme_disc_buffer:
+> 	ibmvfc_free_disc_buf(dev, &vhost->nvme_scrqs);
+> free_scsi_disc_buffer:
+> 	ibmvfc_free_disc_buf(dev, &vhost->scsi_scrqs);
+> free_login_buffer:
+> 	dma_free_coherent(dev, sizeof(*vhost->login_buf),
+> 			  vhost->login_buf, vhost->login_buf_dma);
+> free_sg_pool:
+> 	dma_pool_destroy(vhost->sg_pool);
+> unmap_async_crq:
+> 	ibmvfc_free_queue(vhost, async_q);
+> nomem:
+> 	LEAVE;
+> 	return -ENOMEM;
 > }
 >
-> And assign_scalar_id_before_mov() immediately clears BPF_REG_LINK_ZEXT and
-> assigns a fresh scalar ID unlinked from r6:
+> In ibmvfc_probe(), jumping to free_workq when ibmvfc_alloc_mem() fails
+> destroys vhost->fpin_workq and then falls through into ibmvfc_free_mem(vhost),
+> which frees all of those host resources a second time and calls
+> dma_free_coherent() on NULL pointers such as vhost->channel_setup_buf.
 >
-> kernel/bpf/verifier.c:assign_scalar_id_before_mov() {
-> 	if (src_reg->link_kind && src_reg->link_kind != BPF_REG_LINK_SEXT)
-> 		bpf_clear_scalar_id(src_reg);
-> 	if (!src_reg->id && !tnum_is_const(src_reg->var_off))
-> 		src_reg->id = ++env->id_gen;
-> }
->
-> So BPF_REG_LINK_ZEXT is already cleared by the normal 4-byte fill path (the
-> same path tested by zext_narrowing_spill_drops_link()) before the is_ldsx
-> handling in check_mem_access() runs.
->
-> Additionally, even if r2 kept r6's ID and BPF_REG_LINK_ZEXT past
-> check_mem_access(), coerce_reg_to_size_sx() restricts r2's 64-bit bounds to
-> [S32_MIN, S32_MAX]. When "if w6 != -1 goto 1f" calls sync_linked_regs(),
-> rebuilding r2 with zext_32_to_64() yields 0xffffffff, which is disjoint from
-> [S32_MIN, S32_MAX], causing range_bounds_violation() to revert r2 to its prior
-> bounds and still hit "r0 /= 0".
->
->> +1:								\
->> +	r0 = 0;							\
->> +	exit;							\
->> +"	:
->> +	: __imm(bpf_get_prandom_u32)
->> +	: __clobber_all);
->> +}
->> +
->>   #endif /* CAN_USE_LDSX */
->>   
->>   char _license[] SEC("license") = "GPL";
+> Should ibmvfc_alloc_mem(vhost) be called before alloc_ordered_workqueue()
+> (or use separate error labels for freeing host memory and destroying
+> vhost->fpin_workq) so that an ibmvfc_alloc_mem() failure skips
+> ibmvfc_free_mem()?
 
+Yes, this is a valid issue. If ibmvfc_free_mem() zeroed out all the
+pointers, this call to ibmvfc_free_mem() might be fine. v17 will
+allocate the ordered workqueue after allocating memory
+(ibmvfc_alloc_mem()) and use a separate label in order to skip
+ibmvfc_free_mem() if ibmvfc_alloc_mem() fails.
+
+-Dave
