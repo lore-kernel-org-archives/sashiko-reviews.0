@@ -1,85 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.95.78
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1792982717;
-	b=tlmqzTfbyWXNc8XmS9ZToUocKl/qLqPuEFturhnFHi6exJCJ50J5HRcdpDvZUNu7BooA
-	 tBzC3A1pjiLlB4Q+Ul1+PORpjz9pv2U3ZedO6ybKUz6ulQ7w26wQ2VpaOep0oZdwfcDvn
-	 Hn0BOucK/4F2dPjUV2ydK/JgXNKLRbnQGo7f5CpB/loKCLoYeTEk93spOF0v9OAXHBvat
-	 d6fCVPDw6ozV91pjz95704LbFqR7LFLW/q/+AHFQiUqy8vGN8ERYddEHJEVtEOaVOLMoX
-	 z5cquz8aJcG51N+8KJVJqyzAH9V4bkA7FHUJ8rTnKgnCECIPIh7Es7UKbaPLNaaCVIw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792982717;
-	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 References:Content-Type:Content-Disposition:Content-Transfer-Encoding:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=h0nEinRlpbybUdQrVguh2XopPpg9hbAWT4zSalqImkc=;
-	b=U79HuAobA2QODluYzby1QDuI18YmdG8fdeUoOhBsz0BKCnIvrlOzOoLR2fg50yAai7LO
-	 mn/yjJWjwTEDfM63N+xqkZzjaZ8XoH+SgE9peASBm2C9KXnj3P1YZ4WGfYhv+m2fazeNg
-	 bb318S64gAqIIR4RhBJVyJmBKy2h/Ns4P6JyH1A7pRsD8lMxIwQ/0YHEr6LbR1mFfwTJ1
-	 bR5Mf1ZOOm3xy/0qDb7Zeb+CEinkgbnKNPCfDnoMHFRBa+tLWRYgMTkloX2y1shJyjCsx
-	 9OlDXMubVxD5lHVMhfLr0nP7CEU4r/FqPXyPccqna44iCcSSBvtY/jZOdPM6TBaFs2w==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=none header.from=atomlin.com;
-	spf=pass smtp.mailfrom=atomlin.com;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.95.78
-Received: from LO2P265CU024.outbound.protection.outlook.com (mail-uksouthazon11021078.outbound.protection.outlook.com [52.101.95.78])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.158.5
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792988224;
+	b=vDgqjw8yrZYRT/nQrzZdCR6yCQ2kJa/HKci+Ur4IUqufeBXQ53nMBlvl5p6XTkz030LV
+	 1sqzyiB1Qd3nMRhjj2XNBZs8gJ8X5U+eSuGhMxQDmipq0fy15LWdPzMJNUcG0NeI0kBXZ
+	 s6tfcGS3rAzEMjJjlg5rFscyCaaodDQAI7uqEJg60adev22crNfZrcpvdZinz5QVeqPzt
+	 P5MyNvx6muC8Iru/aKxpKralpVpSdC39w56MxLos7xQ+0qZoca30J0PG3yQ1yLUp/sjao
+	 kxJF6LxAEVMdetLKlWzTB44dFjUUvrrtuBWnYWohss6gQpK6+XKkKYyhUdt6U5oGYSQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792988224;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding:
+	 X-TM-AS-GCONF:X-Authority-Analysis:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-GUID:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=hW+j5hVH2NoEz7o0BKAh/O6CXz6kmzHAOPnvYWNp+FI=;
+	b=EbNfhb71Jegk3xRaCehjUJhz6x4R0535GkscMYBRwH+0oftK983G14uczT0yp1Lpj+J0
+	 HCyQEwMfWpYdp487vXoTXO7YGBnQam8KjqX7l74Q/nelneK/cCES8Qp8KOoJZLJwOFyCm
+	 pcZxB6b7eO2olk57rYHYhNeJ34+T9r403Iyo9Dv0scj8UQw20xi+73ygeDOGXlrmB0NL0
+	 WdFmkh1z2O6SbhShGA6QgxJvAQmNWENEdNyuMze1DtctqVY5vnEosLGgkvCQxVevNjXG1
+	 Dn4zA7b7KBetEkDAtuvrogVKkboDkzoNKvDYTPEKgQZ1v7Okqk8KcnvXyzMdLhlmYag==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ontQWzV7;
+	arc=none smtp.remote-ip=148.163.158.5
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A98B606A31B
-	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 02:45:16 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9A98B606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=atomlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atomlin.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WiaXp4aNFeuGlW0WZ9qi+mzP0JTpS+Q07WIIhL1JCX0I00WgvUkrU71Q/wpA/nnLIPijkqvPi9BZCZdVgbsh8BdnHQ6NQlFuquMmE5IR0cN0e6hdlv3NxK1dsYBEJJAIVFcvy6WHFi+v+z1sYtcuWYUSCPHcN/BHXyBAkQi8i3FCB/cRu2JDIpkHh24oPLq5b6VL/qJywBV5a/am0P/Jk8zkesSA2i73n2BsuGcDeS0MIW3V9r+IPM0c+CJo2EUMBYGgjnNDy5rFaQrhkCvz8xap+zuN6HfgWQdcK6Ta4+B1l59NENuTRlJk5UGnSwbvuEdEvr9v6MtJjQCxw2RLBw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001; h=From:Date:Subject:Message-ID:MIME-Version;
- bh=h0nEinRlpbybUdQrVguh2XopPpg9hbAWT4zSalqImkc=;
- b=SA8R6smkupernRSUXnjoymw9QLx2WmrsZdrYDcU2Fma3jDXN/733kA6CKyF6HZgyTOw9VxSAjW8/0n4Hu5xRQQAHbacmSaJb6ic+edyBih7UpjaNiCRShW++jrdLiCiODz84hBTjYrX8nyfYo4aVKne9bZLXEqEwDnnyzV6oOFjgEZcMOsQ12jPXqMbLFkDFLZWdb35OzFdcRucTq58vz4hx1+UVVlm23ZJYEuD/Rqn7J0ZuwlyHGjp51tSG3FYvacnwDcZLSg6VACH7Y0ef99Q+2jDLsJd5znEmWYQUfXqN0rKylaOoE3sI9dCtRrBnU4ibHH6N74LebMif40l0Sg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atomlin.com; dmarc=pass action=none header.from=atomlin.com;
- dkim=pass header.d=atomlin.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=atomlin.com;
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM (2603:10a6:400:183::5)
- by LO0P123MB5942.GBRP123.PROD.OUTLOOK.COM (2603:10a6:600:242::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Mon, 26 Oct
- 2026 02:45:14 +0000
-Received: from CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230]) by CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- ([fe80::cec4:77ab:262e:d230%5]) with mapi id 15.21.0546.021; Mon, 26 Oct 2026
- 02:45:14 +0000
-Date: Sun, 25 Oct 2026 22:45:09 -0400
-From: Aaron Tomlin <atomlin@atomlin.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-perf-users@vger.kernel.org
-Subject: Re: [PATCH perf-tools-next v11 10/10] perf ftrace: Filter extraneous
- functions in function graph tracer
-Message-ID: <xsywpsoninmyql6w7f6uf5quktgvob35og25zsiiv6rn4pgsfa@yryvosduzgnq>
-References: <20261025181125.514372-1-atomlin@atomlin.com>
- <20261025181125.514372-11-atomlin@atomlin.com>
- <sashiko-outbox-184340@kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-184340@kernel.org>
-X-ClientProxiedBy: SA9PR13CA0142.namprd13.prod.outlook.com
- (2603:10b6:806:27::27) To CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:400:183::5)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFAF3606A31A;
+	Mon, 26 Oct 2026 04:17:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EFAF3606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ontQWzV7
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69Q2i6sD833002;
+	Mon, 26 Oct 2026 04:17:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=pp1; bh=hW+j5hVH2NoEz7o0BKAh/O6CXz6kmzHAOPnvYWNp+
+	FI=; b=ontQWzV77lWHvfCbPp141QBeC6FlPuA1soK0vISrw/j3vbp45c77zyao/
+	qURQpy+rYmxi61Adj5nJHgZmfbKsGQfZJ24V/Nb3+4lvr2XsPe/uDOkGAI/iGYq2
+	ZEaVSRB0YKy7JUETO7tKMc6J83WTn0dxPjSVbXFf1KJxhCS20yZ87II1PT9g+g3v
+	GaHhIswexl4d7t/DtKBYPojVPDEsvoj84shTENTXgVlSTm0rFumGasjPCFe6CyIC
+	QLDqmaEaR8ivRgCJuDJpO5wJdA4N5EO6tg8b2ncZfXueSTxAIAmJIVPb30SU5+8i
+	uE+1qaTSfyrnvM2PNmNn17UA7xULQ==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgk3fqsyf-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Mon, 26 Oct 2026 04:17:02 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69Q2KQws1924216;
+	Mon, 26 Oct 2026 04:17:02 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hh8ggv2dq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 26 Oct 2026 04:17:02 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69Q4GwY456230186
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 26 Oct 2026 04:16:58 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 0489D2004D;
+	Mon, 26 Oct 2026 04:16:58 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id D854B20043;
+	Mon, 26 Oct 2026 04:16:57 +0000 (GMT)
+Received: from tuxmaker.lnxne.boe (unknown [9.87.85.9])
+	by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Mon, 26 Oct 2026 04:16:57 +0000 (GMT)
+From: M Nikhil <nikh1092@linux.ibm.com>
+To: sashiko-reviews@lists.linux.dev, linux-s390@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Cc: niharp@linux.ibm.com, pasic@linux.ibm.com, bblock@linux.ibm.com
+Subject: [PATCH v13 0/2] zfcp: Use DMA streaming API to map I/O
+Date: Mon, 26 Oct 2026 05:16:52 +0100
+Message-ID: <20261026041654.2301619-1-nikh1092@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -89,221 +90,86 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CWLP123MB6607:EE_|LO0P123MB5942:EE_
-X-MS-Office365-Filtering-Correlation-Id: b436f658-78aa-45bc-eeda-08df330b2954
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|23010399003|366016|1800799024|4143699003|56012099006|261021123027099003|261021121427099003|261022105027099003|261022075727099003|261009223027099003|10067099003|22082099003|18002099003|6133799003|3023799007|27256017;
-X-Microsoft-Antispam-Message-Info:
-	9ZGdhrq0fM4SIfeBXRZ/g7RYWvud+bDWpOiE05EpH8VT4Bt4EUtrdVYi/NFo7aGjiWA+Urrzqxm80TZDNoIgXksaSGhTisUB2YiXY3u3K7CJx1EpiA7QvGjF4d8cikxSQp8Yz6cHaMzWJI08HsQ06GgdTry+oP4VADaCOokv335hyAGLBzHHXrmn5SWwisvCuyhmlejmMlTstYGsJqC7+fhTvFmn4cNIdEMrBsvZriuS2JbvQ1q6XRto6jG55FDo9nPyo64PgEmg7xv1kpPch39l06fCfpR9EVYLWpvm1EcRRBU6NNHEq8PRsUuxm7EGC9qGIV/JQg7x1SdA7986s4xPkj4sQWdSI3M1jD3sbOD5ceiSCr7DdYurNLDwTFzQ8wmbUDPlWwPjOXWlUmQ/5ASxMjQzLC7+eqoHLMpcMNG9GxtmeqLar/R9iwpsgpYciVlDoyfwfwOybJxZeUusBbK7SJHIzJQAmscjpx3SrOhz5pq0Y/aKdxfr6FNW+7zCh+pzvyGwvG2neGkHQiM5OEGyX8N1Wgyxtgy4zKkhETF9Tah9D3Lx4qugVl5X1QeCHwG8D7J+m9rHPaOlv+htZmg3ryT0OK1RyvGej/iE0cjz9OW17abRFdxfco+zVwnuPBKHEj/JfgT3BcVsjU0LK/qB+zKATLJ1Ljcokl558T0=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(4143699003)(56012099006)(261021123027099003)(261021121427099003)(261022105027099003)(261022075727099003)(261009223027099003)(10067099003)(22082099003)(18002099003)(6133799003)(3023799007)(27256017);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?b3ZESjVYRlRaTzlzYkQ0YTRmTmM1aVpKOVcxa3BxeUE4V2RFb2EyNDd1Tita?=
- =?utf-8?B?U0F4TnBBdjd3RVBZMFNDSmpmLy9TYVdHRjgrQzl2RE5HRzAwNURVWC8rS1BF?=
- =?utf-8?B?MThVcVExL0dqS2UxdVpGL3BhbWZZYXFOaFppbTAzSUh6dkl3RFd6Q3lydm9u?=
- =?utf-8?B?azJxU2dncHYxQUdDZ2I4dFV5YXVDNlNQMmlrcUZ0WHRRVVBleVRXbXh1c1JV?=
- =?utf-8?B?RnJDYUxqQ1lVQmh5cGloZndRdldrYS9EWDFmRTBCckpuLzJmNGxKYk9JWUJZ?=
- =?utf-8?B?Z0EyYzdQZWZMSU9VSmJyU0hVR2hvZHNvbHVPdWpmcWZiUjhoemljbTFMenpY?=
- =?utf-8?B?MUhqUndySnVHLzZYaGx2cEFiNW45eCtjVk9sNnVIQ2I1T2FORXUxSEZBOFBq?=
- =?utf-8?B?TXVnQ2lhM3NUemRoaDlJeE5Mc1pUNlBKMlpiWExJdGdkbXlXeExSS3JMQWVT?=
- =?utf-8?B?S2JMcm9XNEorYWRrczUrYnJnM0J4WmNNdUhvd0NIRUIrSXZEYm81Mi9lQ00x?=
- =?utf-8?B?bUhoREsxNlpNVmRORzhmWUkyVTRqVmZVTW5UaGRUNFdMYWo2WEpQRHVVdVZi?=
- =?utf-8?B?dG1sd215NE04QjJFMzJ5ZE5CeHRBcmJKcVJkdjQ0RXRlZGVHZTA2bHRVMHkr?=
- =?utf-8?B?RUREckt0YXdqb1lXUFF1bG5zSGNsVi94bHNpTTBSbnNrNFgwQklZSHRqaVFq?=
- =?utf-8?B?anl2RXl2NEpVZFp5L0pvaXFrM3dOUXdicWxaWnUzS0ZMY3EyMlBTb0cwUjh0?=
- =?utf-8?B?UTlRQXZZTDI1NTAwUEtqNXBUYURiRWh5dXgzOUUzMUFkQmNraXhvNmFFQURi?=
- =?utf-8?B?cnhZRXIxa1RMcFBLQWNwanE4ak44WlU4N1VhNTVlbTFjT0MxZUlsL2k5aEhk?=
- =?utf-8?B?SzJwQUhycDFLU0NySVAzU1RHRDI4ZGlJeG8vL0NvS1J2OTN6a3BOcEFTYWhl?=
- =?utf-8?B?ZjlDNXBEK014dFJVcTdCZUVZMUdSR1dHZXorRVNzUzBZbmlzcGxObG1KemRE?=
- =?utf-8?B?VUFUQ2hDTGhScjJxUFFyQS8zTEZmTGRkMlJKaGdwL2RvbktMOVRKL3dVeUxz?=
- =?utf-8?B?cWRhTGprNjVtSXkxWmwwSU1POUVVQk12UDRaQUZ6RHRmL05nWWhUenZ0UDkz?=
- =?utf-8?B?VGF2RFhYQ1JmMXJGRUN5Y2REK1NNaDF0bmxBdjBnR2pzRnFrdThCY1IxK2Qv?=
- =?utf-8?B?TTNVemd5anMzdXg0Ykg4SDljcWVYN281bWJ6MkdOVGZNSEcrUWdGd0NOQ20x?=
- =?utf-8?B?akZ1cDFLK01BaVoyVElESmtVczc0bms1SlA3WTdUOWhmbHVqaTVTak1RWlFC?=
- =?utf-8?B?cHVhL2NPdXJVdzhlbkVKQ2ZOaUJSaThOS2paQTUxRjlaWWI2QjBNQ0RtVldY?=
- =?utf-8?B?NjNVOTBCUUxSTDgwYThEdVMrd2FkRk94aytoM1ppVVhKS1hSSzRqeDArUi9l?=
- =?utf-8?B?QjZrdVIwYTJCS1JoWEpybXVZSHh6T3oza1pMN2lMSi9rREV0L3JnUnRqYWVy?=
- =?utf-8?B?RVlMT1BaMVg1ajF5bUpQSXFNNDNsWE1WMUZjQ0hYTU5rSW1kTWNaUWhtV0ZH?=
- =?utf-8?B?UmFGYmE3Qi9Idy9sYzJYcUxMQTgvZ3RueDJuRGlqRUt1elZHZXpJa0Y0b0RX?=
- =?utf-8?B?RjdueDhPUUpEcUxaazllQWFrNEdQQzRsaWJJQ2Q2V2tQWklNWmo1RWg5U3dp?=
- =?utf-8?B?ZDVsNlI2emd2TzlJV2M5SlFPem5tTVljc2sxd2VTS0h2TTh2OWNKd2w4NE5I?=
- =?utf-8?B?TWlmTVJCREgvR253MjM4c0x6V0hlalFoTW5FakJzd0NNeWxMNnU1SXhQZWtl?=
- =?utf-8?B?OUorcFVrY25WRTBZdzJmZVp3S3lyU1dsZGV3ODJMY2JjNTRVbjBjVExHNVFE?=
- =?utf-8?B?WlAxTmNBUkJkazFCcmRyQ2VMSUVtblJrRkM4MklrNkRhRmFLeHdEVTNXanB4?=
- =?utf-8?B?VEF2eG5BdHZGcklmVUM5UWs5R2FiTDRIZW42RFFvY1JaTEZac0tHbHZlQzdv?=
- =?utf-8?B?anFUYXNGdzF5VUdoa2NuN3ZzRVE0aU91bzZ1MHRUUmI3YjFzN3grMFBUSGN2?=
- =?utf-8?B?VWFWdVNvaXpYMjVNbmVUd25yMGd1b3VrbXR4UXpBVC9pVGNMeHRoVkN1ai9N?=
- =?utf-8?B?RzY5QXJMd0VEMjdhOGFzWnIyOGZCV2JoYUpxUjBPMGdzV05GN3hQbUhCcUZ4?=
- =?utf-8?B?bnBta21Ra2pRWTQ0dWx1cURzSStRN2tlbGh3SlZwY1J1MnVMQmlsT0lYNWNU?=
- =?utf-8?B?TGlDUERDUGZhaXZkQUhLRDFJM2lhYmpBZS8yOXVTckovNmRNRGh1Y01CVmVw?=
- =?utf-8?B?R0lCNlE5T2tHSDhabXVFV3hpUGpvM3VPbUYvRWx2UWpHSXdaWG00QT09?=
-X-OriginatorOrg: atomlin.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b436f658-78aa-45bc-eeda-08df330b2954
-X-MS-Exchange-CrossTenant-AuthSource: CWLP123MB6607.GBRP123.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Oct 2026 02:45:14.3593
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e6a32402-7d7b-4830-9a2b-76945bbbcb57
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: GNPdLcOrpohTABEErOWdMyYNiP+aJaEEqPjXgv5yWtG3PuekjGIPCLj3QbNaAI0BUYEHcXHs38DqyYhiWD9Zlw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO0P123MB5942
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=BOMmP1QG c=1 sm=1 tr=0 ts=6aded43e cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=Wd4ccqAm3J3WqkYLFQkA:9
+X-Proofpoint-ORIG-GUID: 4VQ7dfiLZTNR98kiIa3a8kK_A1u8q83e
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDAxNiBTYWx0ZWRfXy9xzsYTGaNV9
+ inoWM5bzGoGABjRt0pf/Yb3X6W3d/nQb9fA5KM4GU9vHoVzVQJfuxWxCNSAHcBhLvrkR/P8rPtR
+ dTC4LcZ4bF1VIvy1pqET45ryyfmxHmwjqMOfdto90UVBiIo8QUkV62JeXeO3b+EO5ct3OoQqecu
+ Fxrdh3BIkVjEiP8FtBujjiL06xkXRyMl7YOU2R9M6heEmpDDFsmz4YbSiOe8XDrqz0pGYOlmMwa
+ ozxAfs3vnjnfsuFyokiYdXw8VfVYpWasKguO+IEmJJHv4Lw8AQ3ztvFQo/+ycOJYhZasy8lXiyh
+ UislMCSIdBlGWGjE/SvQEr8+0zz+8rpAobGjhQiVIBKyPi79IuBo7FsAEdI/JiQOus/8Xhly3Jl
+ 7l7cEMLJ6em8+yTAYgMgv/JsFDAGBZsIsZQIUy9/s162W0/NG0voUHhwUVae2t5cYzAo3Q2gxBT
+ m2KMgzjZRJAJugh1j/A==
+X-Proofpoint-GUID: 4VQ7dfiLZTNR98kiIa3a8kK_A1u8q83e
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDAxNiBTYWx0ZWRfXyrXtqK8x+J5H
+ jkIOorZ/nbmKHdUflw8jEzvqmo9gQCwRgFcqOvChPXGTQ6cpCbvIgOStpf0CDhJbfwtWXVdwlzM
+ aly/nfFypttCIpvLJHuBZp6MxHLav5Q=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-26_01,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 malwarescore=0 clxscore=1015 spamscore=0
+ phishscore=0 adultscore=0 impostorscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610260016
 
-On Sun, Oct 25, 2026 at 06:29:50PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Medium] perf ftrace: unshifted target_root_depth in ftrace_task_state__rekey()
-> - [Low] perf tests ftrace: missing ensure_synthetic_inline() in test_graph_target_filter()
-> --
-> 
-> commit 79ad3a54d36210f71bcd95c62c94ed00575efdc0
-> Author: Aaron Tomlin <atomlin@atomlin.com>
-> 
-> perf ftrace: Filter extraneous functions in function graph tracer
-> 
-> This commit adds userspace callgraph target state tracking and return-address
-> caller validation to perf ftrace so that extraneous top-level functions and
-> detached orphan calls are suppressed when filtering with -G / --graph-funcs.
-> It also replaces the fixed-size call stack with a dynamically reallocated
-> array and adds unit tests in tools/perf/tests/ftrace.c.
-> 
-> > diff --git a/tools/perf/tests/ftrace.c b/tools/perf/tests/ftrace.c
-> > index 0aef2cd9b07fb..3591883b32041 100644
-> > --- a/tools/perf/tests/ftrace.c
-> > +++ b/tools/perf/tests/ftrace.c
-> > @@ -1492,6 +1492,2259 @@ static int test_context_switch_handling(void)
-> >  }
-> >  #undef TEST_CS_ASSERT
-> >  
-> > +static int test_graph_target_filter(void)
-> > +{
-> [ ... ]
-> > +	vmlinux = vmlinux_path__find();
-> > +
-> > +	/* 6. Test targeted leaf call with synthesized DWARF inlines closing and resetting filter */
-> > +	if (vmlinux) {
-> > +		const char *inlined_names[FTRACE_MAX_INLINES];
-> > +		int num_inlines;
-> > +		int j;
-> > +		const char *saved_vmlinux = symbol_conf.vmlinux_name;
-> > +		bool saved_ignore_buildid = symbol_conf.ignore_vmlinux_buildid;
-> > +
-> > +		symbol_conf.vmlinux_name = vmlinux;
-> > +		symbol_conf.ignore_vmlinux_buildid = true;
-> > +		if (perf_ftrace__setup_inlines(&ftrace) == 0 && ftrace.machine) {
-> > +			num_inlines = ftrace_resolve_inlines(ftrace.machine,
-> > +							     "wake_up_new_task", 0x1d1,
-> > +							     inlined_names,
-> > +							     FTRACE_MAX_INLINES);
-> > +			if (num_inlines > 0 && !strcmp(inlined_names[0], "activate_task")) {
-> 
-> [Severity: Low]
-> In test_graph_target_filter(), perf_ftrace__setup_inlines() creates a fresh
-> machine and loads vmlinux before querying ftrace_resolve_inlines() for
-> wake_up_new_task at offset 0x1d1.
-> 
-> Other inline tests in tools/perf/tests/ftrace.c, such as
-> test_inline_processing(), test_stack_saturation(), and
-> test_context_switch_handling(), call ensure_synthetic_inline() first:
-> 
-> 	if (perf_ftrace__setup_inlines(&ftrace) == 0 && ftrace.machine) {
-> 		ensure_synthetic_inline(ftrace.machine, "wake_up_new_task", 0x1d1,
-> 					"activate_task");
-> 		num_inlines = ftrace_resolve_inlines(ftrace.machine,
-> 						     "wake_up_new_task", 0x1d1,
-> 						     inlined_names,
-> 						     FTRACE_MAX_INLINES);
-> 
-> Should test_graph_target_filter() also call ensure_synthetic_inline() before
-> ftrace_resolve_inlines() so that subtests 6, 6b, and 6c are not silently
-> skipped when the host vmlinux does not have activate_task inlined at exact
-> offset 0x1d1 of wake_up_new_task?
+In the existing zFCP driver, virtual addresses are translated directly
+into bus (physical addresses) for DMA operations on all I/O buffers
+passing from zFCP driver to the device.
 
-Acknowledged. In the next iteration, test_graph_target_filter() now calls
-ensure_synthetic_inline(ftrace.machine, "wake_up_new_task", 0x1d1,
-"activate_task") prior to ftrace_resolve_inlines(), matching the other
-inline test cases so that subtests 6, 6b, and 6c always execute
-deterministically regardless of the host vmlinux DWARF layout.
+Need for using DMA-API in zFCP driver:
 
-> 
-> > diff --git a/tools/perf/util/ftrace.c b/tools/perf/util/ftrace.c
-> > index 384fc03850f27..4e916096a9380 100644
-> > --- a/tools/perf/util/ftrace.c
-> > +++ b/tools/perf/util/ftrace.c
-> [ ... ]
-> > @@ -313,6 +345,26 @@ static struct ftrace_task_state *ftrace_task_state__rekey(struct ftrace_task_sta
-> >  			for (j = to_copy; j < ts->depth; j++)
-> >  				free(ts->stack[j].name);
-> >  
-> > +			if (ts->in_target &&
-> > +			    ts->target_root_frame_idx < ts->depth) {
-> > +				existing->in_target = true;
-> > +				existing->target_root_depth = ts->target_root_depth;
-> > +				existing->target_root_frame_idx =
-> > +					split_idx + ts->target_root_frame_idx;
-> > +				existing->target_root_indent = ts->target_root_indent;
-> > +				strlcpy(existing->target_root_name,
-> > +					ts->target_root_name,
-> > +					sizeof(existing->target_root_name));
-> > +				existing->orphan_depth = ts->orphan_depth;
-> > +			} else if (existing->in_target) {
-> > +				if (existing->target_root_frame_idx >= old_split_idx) {
-> > +					existing->target_root_frame_idx +=
-> > +						(split_idx + to_copy) - old_split_idx;
-> > +					existing->target_root_depth +=
-> > +						(split_idx + to_copy) - old_split_idx;
-> > +				}
-> > +			}
-> > +
-> >  			existing->depth = split_idx + to_copy + post_count;
-> >  		}
-> 
-> [Severity: Medium]
-> When ftrace_task_state__rekey() splices ts->stack[0 .. to_copy - 1] into
-> existing->stack at split_idx, existing->target_root_frame_idx is shifted by
-> split_idx, and the else-if branch shifts both target_root_frame_idx and
-> target_root_depth. However, in the ts->in_target branch,
-> existing->target_root_depth is set to ts->target_root_depth without adding
-> split_idx (and the guard checks ts->target_root_frame_idx < ts->depth rather
-> than to_copy).
-> 
-> If a task enters non-target ancestor frames on one CPU (leaving split_idx > 0
-> on existing->stack) and then migrates to another CPU where it enters a target
-> root function at ts->target_root_depth == 0 before the context-switch banner
-> is processed, existing->target_root_depth will remain 0 after the merge
-> instead of split_idx.
-> 
-> When that happens, won't ftrace_check_target_caller() and
-> ftrace_process_fgraph_line() treat the pre-migration non-target ancestor
-> frames at indices 0 .. split_idx - 1 as being at or above target_root_depth:
-> 
-> ftrace_check_target_caller()
-> 	if (has_retaddr && caller_idx >= 0 && caller_idx < cs->target_root_depth) {
-> 		ftrace_unwind_to_depth(cs, caller_idx + 1, blank_prefix, out);
-> 
-> ftrace_process_fgraph_line()
-> 	if (!has_filter || (cs->in_target && match_idx >= cs->target_root_depth)) {
-> 
-> allowing non-target ancestor calls and exits to leak into the filtered output,
-> or unwinding into ancestor inline frames when the target root exits?
+In a Secure Execution environment, the host must ensure that device DMA
+accesses are restricted to non-guest-private, page-sized memory blocks.
+This prevents I/O failures that can occur when a device attempts to
+access guest-private memory. Therefore, guest memory pages must be
+prepared by the hypervisor before they become accessible to an I/O
+device.
 
-Indeed. In the next iteration, ftrace_task_state__rekey() validates
-ts->target_root_frame_idx against to_copy before merging, tracks the
-relocated index (new_t_root / new_e_root) of the outermost surviving target
-root frame during the sequence-ordered stack merge, and shifts both
-target_root_frame_idx and target_root_depth by the exact displacement
-(delta = new_t_root - ts->target_root_frame_idx). In addition,
-ftrace_task_state__prune_stack() and ftrace_task_state__rekey() now
-synchronise orphan tracking state against the merged watermark history and
-sequence order so pre-migration ancestor frames and stale orphan states are
-handled accurately.
+To support this requirement, the host Linux kernel must be reliably
+informed whenever a memory region becomes eligible for device DMA access
+and when that access must be revoked. This information must be
+maintained correctly at least at page size granularity. To satisfy these
+requirements, all I/O buffers used by the zFCP driver should be mapped
+through the DMA API.
 
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261025181125.514372-1-atomlin@atomlin.com?part=10
+DMA API Integration in zFCP:
+
+The zFCP driver is updated to use the DMA streaming API's to map all the
+I/O buffers which will be passed to the device.
+All zFCP I/O buffers (QTCB, SRB, CT/ELS and SCSI I/O) are represented as
+scatter-gather lists and mapped through DMA API using dma_map_sgtable().
+Once the DMA transfer is complete, the corresponding mappings are
+released using dma_unmap_sgtable().
+
+By routing all device-visible memory through the DMA mapping layer, the
+driver ensures that:
+1. DMA access is properly authorized before use.
+2. DMA is revoked after use.
+3. Secure Execution memory restrictions are honored.
+
+M Nikhil (2):
+  zfcp: Replace sg-list with sg_table in zfcp_fsf_ct_els structure
+  zfcp: Use DMA streaming API to map I/O
+
+ drivers/s390/scsi/zfcp_aux.c  |  16 ++
+ drivers/s390/scsi/zfcp_dbf.c  |  16 +-
+ drivers/s390/scsi/zfcp_def.h  |   4 +
+ drivers/s390/scsi/zfcp_ext.h  |  12 +-
+ drivers/s390/scsi/zfcp_fc.c   |  48 +++--
+ drivers/s390/scsi/zfcp_fsf.c  | 325 +++++++++++++++++++++++++++++-----
+ drivers/s390/scsi/zfcp_fsf.h  |   9 +-
+ drivers/s390/scsi/zfcp_qdio.c |  40 +++--
+ drivers/s390/scsi/zfcp_qdio.h |  27 +--
+ drivers/s390/scsi/zfcp_scsi.c | 126 ++++++++++++-
+ 10 files changed, 518 insertions(+), 105 deletions(-)
 
 -- 
-Aaron Tomlin
+2.53.0
+
