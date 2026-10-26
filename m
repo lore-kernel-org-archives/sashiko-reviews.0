@@ -1,103 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793022128;
-	b=LIkRuha9mTGmw8WzH3GjR/DTNtwlj2g4s6PfC8sxlrCc03aZzWmlZz3pdA8cYQAicKtk
-	 /DJbnpzp2Cc2uKcIKfqQH+gMKOSnSoC8Fs4H0Uet1QLp+3TYuIXX34qPnveXYd0+QBLsR
-	 Cvodm76KtlzyHKJWq9pdW6kJCc8HdqTgSR9KO6YNZ+sLpcU0aTBv7RrN0LOtHItnGSNG9
-	 FLkc4CGT3DLZ0JppFcw9vCxri9xg2Urhd24Ynk1OMUhNs744izDOGCvpJYzGB1cPdknEg
-	 IdU8BrBSOjPU1GGXQ3s+tP4tWQtCOMOC4D2Jv9B7jKP4/1I8ywGD6J2CIId6tjbEQKw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793022128;
-	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
-	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Message-ID:
-	 Subject:From:To:Cc:Date:In-Reply-To:References:User-Agent:
-	 MIME-Version:X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:
-	 X-Mimecast-Originator:Content-Type:Content-Transfer-Encoding;
-	bh=oUcbRuQvxqLMf3mlpCxogE4P6glYlGSoeDrP4IxGtbU=;
-	b=TShjdrez2Z2gwbLa6iJwO3Uqs8GfW35hdCk2H21NMxOE1NtZxdRH4pFF4HdQep9P1bMC
-	 1Sn1jn4603eLbSyULAQv8B2iH1jUiZgYoLBryuOzKQTQGYRp2mUZ/542UQQmA9VEzJm5K
-	 0RZz6tHMNGxFWmUxudppV4MLfekm/C4NIIdS0gAB723O8gGBxY4wFXu17xMX0dhHLd690
-	 Q5YIL1CjFdaEA4kC70d+X4Aar9ecqC1bMpqjT6Fa+OOFnC88iuYhRyxvK1OO7s1hLfYwP
-	 vBdRqhWMB4/LgvcT89BX8eRxy8Wo5ZEJmJgJUsnYrWDPCw0S3aR7QjxOU1ZtrrBLFSA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=redhat.com;
-	spf=pass smtp.mailfrom=redhat.com;
-	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NYOtvj84;
-	arc=none smtp.remote-ip=170.10.133.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.10
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793022427;
+	b=YGhz+lplmPjtZLfBevkwq+sqf+bAJsSeXiVWt3IuR17AzSIFe/Sis2d0G+pnBOXNyw0p
+	 1E9Nh6Z15eBxLdwc1lCgDpgd3elj6kBJu/G4rJQwhzm9GYEbG4x7Hvz8QAcG7lBQa+rHG
+	 ACR7Yt4mGw3GHbNHQ+q2ZbaJ57Nvue5XN0hH25y0dV4iONJoHjAVWN7Gsu2aQoZpdMV8z
+	 NVE6836X73kJoMKTwql/YwqNAuTaliFpg+iUuu7imDG225fZJDnEVu3shMOPX+nIshUKn
+	 DUU/o/uXpP0kPcwUMQSXRCM5vHUFrgzpPqBGkPhGWnWxOxE/Nx7vLrMRcfU92ycC9qQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793022427;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:From:To:Cc:References:Content-Language:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=xZw7U6r5jlg4pUGlWC1zQV7xRrgBaR+VnkioQamESDk=;
+	b=rCzJa0n1Z55QC3grI/BbB1QSXJJuiHnbwVWhRUhJEy3FMeCg5elEknZ4JMhF74scpztA
+	 u8f9GdHukreBfHULv1xSPDaLjt0MimHjxOTJGgGtl0hJzDliHJnPVvduIb8hANw+698yc
+	 Iboo4k0to8B9TGANN+8TOMy7AR4NEfHQUWbhjGAH9sNEUsyYo1dTl6AtOOLh4AskIkqyN
+	 GzBAS+xmCdC7+45y75OVbusFfSW4f+ETBxXmEHif5DCFqnLkmgA0wTdtGHSmHW0MLJMMN
+	 X7Txx2k65oaGeGV8wp7zgHBD6BWq5bRcDKW1WLZXohmkK4a4fTLxOVoGkgv1Qhv/iSg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=adqQFqOS;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.201.10
+Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013010.outbound.protection.outlook.com [40.93.201.10])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C6F606A31F
-	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 13:42:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 51C6F606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B23460A2605
+	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 13:47:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8B23460A2605
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NYOtvj84
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1793022127;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oUcbRuQvxqLMf3mlpCxogE4P6glYlGSoeDrP4IxGtbU=;
-	b=NYOtvj84UAakuFee6TyW75DgEUhFeoA+kayDRz0B6Z4rYUdAFf6/Q6p+3ANcjBxl93zPF1
-	Zy+U6yTvIei06gR7C+5FZHlFAYy7dfsw85fnqwwB/9YVvXjk2RP8qFSQtUZtEkw6NXMmHo
-	XCskc3TjBwjFspoetpvddtmlRstJ/T0=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-378-Yjk0YpIsNluTFNvj8SbvZQ-1; Mon, 26 Oct 2026 09:42:06 -0400
-X-MC-Unique: Yjk0YpIsNluTFNvj8SbvZQ-1
-X-Mimecast-MFC-AGG-ID: Yjk0YpIsNluTFNvj8SbvZQ_1793022124
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-536347602faso71880571cf.3
-        for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 06:42:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793022124; x=1793626924;
-        h=mime-version:user-agent:content-transfer-encoding:content-type
-         :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ed+PX3IGkbk+mTJa3PsZsNtkAoyqu1J1xwHAA2Xtd+g=;
-        b=uRE9Gwm00defObtgTf1PkCXj7Y+S170ZKqhhvgB3WoTyKNsXJ0yu4Qji2KQhCsPVnb
-         IcWEZIvuQCpLcSozoTyEKNFq9wXZwIyiWmTayDzokJS4KWajhIvWEe2X1lBj9wRVIC73
-         kkhAOLW3O6eSckIk47OlUbn5KfCImbWLEBwOO+rWEH1JEX2pwLhDgWSkT7OY3r67SGgh
-         Blpf/FdRr4w+tWjf/CVKnTssd2bRVEX6sgFR0PwqRb/usQeQa8il0grBaGIrsI0yZKKC
-         SZM8mGCMo/rs2fq9pBZvY+2qBHvgrqgvnx35Xd7Goqb1+dygy8+MsQkMLzAQOxEEUPOq
-         E5dw==
-X-Gm-Message-State: AFq9FYLzA4U6uHCRMeFgZ6KFAfMRaQ6PK+GmzKqjdSWCQ+er1fxO0KLz
-	QIYwLKC2SUHjN8XP2/YiG7cUnWxPWYYwPy4XpLiiwf6zrl8dyGY8RK9qu8d+bj2yPFtumMgHa1i
-	xw394/WKWcbcXWpEJveKdWWWm8+vahEDoHnExIpEOu/cDu8lTb5BwmkuYOz7Tl//Ndp+KaM0aAY
-	4r0iYVO74feuWwnnZs8xh2ITTZOsEBpiBb3u8nG0mHDJxZznq0GJ7kiA==
-X-Gm-Gg: AYBFou2yhQNcPWbTyb0S+f3WRf62kyAWJ7kU74KXUrOfHmxGtyL3JRUoH8h7IbIYg6J
-	IU/UeRjMiFHSP8zEjZulorGQDGux+o5+SFyeDU5gDp2ZNn4qynngHNfeM3wDVovCuVxQS0lnbpz
-	H/xH15oKFuBwYZMErKDX0LXQCHND9qtZW5EAP/Tw1h8vF4HGZbMLLarspAW06l5bA4ua+FhMRxG
-	MK36Hv8F71eaqXL4zji2nCvAJsw/VjbHB4LotgxunwkjHi24792ibMYT87o3U91PW7wL2T+oHea
-	DV31HoWTyxKK6HRM1ve0S0aa0nC9Yp5aUeZzlUfYL0ZGqedX5ZXqPNfxHwqJ1C4ao+/tnMoKtg/
-	anZ9Du6707+MmwPOlsKYr1L2lr/nd44bNjIGmIutYnikhkRioAc1arQs8VGHz2nojwipBD4z1GY
-	xySJ4yT2WnHLoMzAIwGmm+oQ==
-X-Received: by 2002:a05:622a:5b0d:b0:536:575b:8dd6 with SMTP id d75a77b69052e-5383af13431mr89884511cf.0.1793022124237;
-        Mon, 26 Oct 2026 06:42:04 -0700 (PDT)
-X-Received: by 2002:a05:622a:5b0d:b0:536:575b:8dd6 with SMTP id d75a77b69052e-5383af13431mr89883771cf.0.1793022123494;
-        Mon, 26 Oct 2026 06:42:03 -0700 (PDT)
-Received: from loberman-thinkpadp16gen3.rmtusma.csb ([2600:6c65:2440:d8c:aa2b:ddff:fe88:da74])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-91c47c53fdcsm72863586d6.27.2026.10.26.06.42.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2026 06:42:02 -0700 (PDT)
-Message-ID: <3e2a63af147ce884e84cd3aee1e456051265d7bc.camel@redhat.com>
-Subject: Re: [PATCH v3 2/4] scsi: target: iscsi: Complete an aborted WRITE
- when a new R2T would be sent
-From: Laurence Oberman <loberman@redhat.com>
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=adqQFqOS
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YliZYl7mdIvkmcmNZlcUqiqA1IxgQ07fFBkOH4S5nJqnEuU6jLze3AY1/d9oerDzp7TtRXoYnVOplaqUe+051BzOcCkmdstfGeDYJdQqXOl4dgF4PrhIr7t/fd8pmolWCeHI2yOGG5E0YwuY7Xis7E8Phjl+rMEa5pTmtxNEn/l+/0einJh7Ko3K3c5KlF+5DJbO+gi192lMKGqFeM/H9jcbDVR5TjAmWu7MxuHsQsXTRQzPccL/6VYIm6inGG07W2UK7wfuCRdGTQaSgqQevZVfjtnJqCCG4V6Xv6as9YFkuzqNoZwfJpke9lQjqaImOkSE1V/keDkepKUohWQE2A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=xZw7U6r5jlg4pUGlWC1zQV7xRrgBaR+VnkioQamESDk=;
+ b=cfU9r4Igzk941dkP6HZv5pMUK1P+uTG/ylz2XBRZcx6J4lFDxj8Gxj10ylGEJw5I4OjAwgLfH/FTAwiNla0mIpwxnAS35sV8XZj9SY7aHd4E8ssjMwmWb9rI8fL1Znsq6mxguS6y4a6O2CeF4CYxbb/nAWOMA3mBdahZFjLIL17xKEshTTt0BS3ynOCp56v5XyG/1fVCEVz46U4tbSbIfe3UAN767SCTbbDwigukg9j5/ezgPvOoc59jPhdwdephv5iLMyHa8HAHGIZf0tGvZqEINdWx92EWelW5QYfvmfrDz5HROPK6mICwXg6/Tbg24N1sn+sZ4QYEjKbclkKONA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=xZw7U6r5jlg4pUGlWC1zQV7xRrgBaR+VnkioQamESDk=;
+ b=adqQFqOSWbUncQZCUaGcow7uPq8CvLN4/aK0CxII1fjtpwHtaHaif1LRzOGuMHDwxcA9MIMrcrt65S+d086GJKwmPgOv/UBdt6HtzSX+/tIfsoaqbaszEX0kqA5PVuUiYJ3NkM47wzH4TVS7T/yhAtqMZv33pzB27/3nC8AYnxs=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CY5PR12MB6252.namprd12.prod.outlook.com (2603:10b6:930:20::17)
+ by MW5PR12MB5683.namprd12.prod.outlook.com (2603:10b6:303:1a0::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Mon, 26 Oct
+ 2026 13:47:01 +0000
+Received: from CY5PR12MB6252.namprd12.prod.outlook.com
+ ([fe80::ab00:d77:6014:64a2]) by CY5PR12MB6252.namprd12.prod.outlook.com
+ ([fe80::ab00:d77:6014:64a2%4]) with mapi id 15.21.0546.021; Mon, 26 Oct 2026
+ 13:47:01 +0000
+Message-ID: <e2d6b65a-9125-4938-a2b4-5ba032f1ec88@amd.com>
+Date: Mon, 26 Oct 2026 19:15:57 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 02/13] soundwire: amd: return response on IMM status
+ cleanup timeout
+From: "Mukunda,Vijendar" <vijendar.mukunda@amd.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-scsi@vger.kernel.org, target-devel@vger.kernel.org
-Date: Mon, 26 Oct 2026 09:42:02 -0400
-In-Reply-To: <sashiko-outbox-185289@kernel.org>
-References: <20261026124344.745124-1-loberman@redhat.com>
-	 <20261026124344.745124-3-loberman@redhat.com>
-	 <sashiko-outbox-185289@kernel.org>
-User-Agent: Evolution 3.60.2 (3.60.2-2.fc44)
+Cc: linux-sound@vger.kernel.org, Syed Saba Kareem <syed.sabakareem@amd.com>,
+ "Dommati, Sunil-kumar" <Sunil-kumar.Dommati@amd.com>,
+ "Prasad, Prasad" <venkataprasad.potturu@amd.com>,
+ "N, Poojitha" <Poojitha.N@amd.com>,
+ Mario Limonciello <Mario.Limonciello@amd.com>, Vinod Koul
+ <vkoul@kernel.org>, Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+ Bard Liao <yung-chuan.liao@linux.intel.com>
+References: <20261026044507.2310694-1-Vijendar.Mukunda@amd.com>
+ <20261026044507.2310694-3-Vijendar.Mukunda@amd.com>
+ <sashiko-outbox-184738@kernel.org>
+ <b9a63395-16f0-46ee-9208-19b3b28d876c@amd.com>
+Content-Language: en-US
+In-Reply-To: <b9a63395-16f0-46ee-9208-19b3b28d876c@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PN5P287CA0038.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:c01:25f::10) To CY5PR12MB6252.namprd12.prod.outlook.com
+ (2603:10b6:930:20::17)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -107,155 +105,195 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: QQuHEoN16uVG4kGPx4A_Xvu9HhEco1poFZdojg0Jpd0_1793022124
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, 2026-10-26 at 13:13 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential
-> issue(s) to consider:
-> - [Critical] scsi: target: iscsi: UAF of OOO cmd in
-> iscsit_check_dataout_payload()
-> --
->=20
-> commit 93e4d74df05b6ac07e171f5586d09d2036dc2494
-> Author: Laurence Oberman <loberman@redhat.com>
->=20
-> scsi: target: iscsi: Complete an aborted WRITE when a new R2T would
-> be sent
->=20
-> This commit completes an aborted WRITE command via
-> iscsit_complete_aborted_cmd() in iscsit_check_dataout_payload() when
-> iscsit_check_post_dataout() returns DATAOUT_SEND_R2T and no
-> outstanding R2Ts
-> remain.
->=20
-> > diff --git a/drivers/target/iscsi/iscsi_target.c
-> > b/drivers/target/iscsi/iscsi_target.c
-> > index aab9237a67768..3dad7f69f3bae 100644
-> > --- a/drivers/target/iscsi/iscsi_target.c
-> > +++ b/drivers/target/iscsi/iscsi_target.c
-> > @@ -1669,6 +1669,22 @@ iscsit_check_dataout_payload(struct
-> > iscsit_cmd *cmd, struct iscsi_data *hdr,
-> > =C2=A0=09if ((rc =3D=3D DATAOUT_NORMAL) || (rc =3D=3D
-> > DATAOUT_WITHIN_COMMAND_RECOVERY))
-> > =C2=A0=09=09return 0;
-> > =C2=A0=09else if (rc =3D=3D DATAOUT_SEND_R2T) {
-> > +=09=09/*
-> > +=09=09 * A new R2T would never be answered for an
-> > aborted command.
-> > +=09=09 * The CMD_T_ABORTED handling in
-> > __iscsit_check_dataout_hdr()
-> > +=09=09 * does not cover this: it only runs for DataOut
-> > PDUs
-> > +=09=09 * belonging to R2Ts that were already issued, and
-> > +=09=09 * iscsit_dataout_update_r2t() has already
-> > decremented
-> > +=09=09 * outstanding_r2ts for the burst that just
-> > finished.=C2=A0 Guard
-> > +=09=09 * on outstanding_r2ts so that with
-> > MaxOutstandingR2T > 1 the
-> > +=09=09 * completion is still left to the last R2T to
-> > drain.
-> > +=09=09 */
-> > +=09=09if (cmd->se_cmd.transport_state & CMD_T_ABORTED) {
-> > +=09=09=09if (cmd->outstanding_r2ts < 1)
-> > +=09=09=09=09iscsit_complete_aborted_cmd(cmd);
-> > +=09=09=09return 0;
-> > +=09=09}
->=20
-> [Severity: Critical]
-> Can completing the command here cause a use-after-free of cmd if
-> ICF_OOO_CMDSN is set?
->=20
-> When ImmediateData=3DYes and InitialR2T=3DNo, a WRITE command can arrive
-> with
-> immediate data and expect additional unsolicited DataOut PDUs in the
-> first
-> burst followed by R2T-solicited data (payload_length <
-> FirstBurstLength <
-> se_cmd.data_length, so cmd->unsolicited_data =3D=3D 1 and
-> ICF_NON_IMMEDIATE_UNSOLICITED_DATA is set).
->=20
-> In drivers/target/iscsi/iscsi_target.c:iscsit_process_scsi_cmd(),
-> transport_generic_new_cmd(&cmd->se_cmd) is called before CmdSN
-> sequencing:
->=20
-> =09cmd->sense_reason =3D transport_generic_new_cmd(&cmd->se_cmd);
-> =09if (cmd->sense_reason)
-> =09=09return 1;
->=20
-> This places cmd->se_cmd on dev->queues[cpuid].state_list in
-> TRANSPORT_WRITE_PENDING. When iscsit_get_immediate_data()
-> subsequently calls
-> iscsit_sequence_cmd() and cmd->cmd_sn > sess->exp_cmd_sn,
-> drivers/target/iscsi/iscsi_target_erl1.c:iscsit_handle_ooo_cmdsn()
-> queues
-> an entry on sess->sess_ooo_cmdsn_list holding a raw pointer to cmd:
->=20
-> =09cmd->cmd_flags=09=09=09|=3D ICF_OOO_CMDSN;
-> =09...
-> =09ooo_cmdsn->cmd=09=09=09=3D cmd;
->=20
-> Because cmd->unsolicited_data is set, iscsit_get_immediate_data()
-> then calls
-> iscsit_set_unsolicited_dataout(cmd).
->=20
-> If a concurrent TMR aborts cmd while it is still waiting on
-> sess->sess_ooo_cmdsn_list, __target_check_io_state() sets
-> CMD_T_ABORTED on
-> cmd->se_cmd. When the final unsolicited DataOut PDU of the first
-> burst
-> arrives, __iscsit_check_dataout_hdr() takes the cmd->unsolicited_data
-> =3D=3D 1
-> path, and iscsit_dataout_post_crc_passed() clears cmd-
-> >unsolicited_data =3D 0
-> and returns DATAOUT_SEND_R2T.
->=20
-> In this new DATAOUT_SEND_R2T branch in
-> iscsit_check_dataout_payload(),
-> cmd->outstanding_r2ts is 0, so iscsit_complete_aborted_cmd(cmd) is
-> called
-> without checking ICF_OOO_CMDSN or removing cmd from
-> sess->sess_ooo_cmdsn_list (unlike the adjacent
-> DATAOUT_SEND_TO_TRANSPORT
-> branch, which checks cmd->cmd_flags & ICF_OOO_CMDSN).
->=20
-> Once target_complete_cmd() schedules target_abort_work ->
-> target_handle_abort(), cmd is completed and freed via
-> iscsit_release_cmd().
-> When the missing ExpCmdSN PDU later arrives,
-> drivers/target/iscsi/iscsi_target_erl1.c:iscsit_execute_ooo_cmdsns()
-> will
-> dereference the dangling ooo_cmdsn->cmd pointer:
->=20
-> =09=09cmd =3D ooo_cmdsn->cmd;
-> =09=09cmd->i_state =3D cmd->deferred_i_state;
-> =09=09ooo_count++;
-> =09=09sess->exp_cmd_sn++;
-> =09=09...
-> =09=09iscsit_remove_ooo_cmdsn(sess, ooo_cmdsn);
->=20
-> =09=09if (iscsit_execute_cmd(cmd, 1) < 0)
-> =09=09=09return -1;
->=20
-> Should the DATAOUT_SEND_R2T abort path also account for commands with
-> ICF_OOO_CMDSN set before completing cmd?
-
-I will drop patch 2 for this series as this turns out out be a real
-issue and follow up with a v4 for the series. Dropping patch 2 will not
-affect the validity of the fix with the over 300 reset loop tests we
-ran which resolved the original customer issue.
-
-Sashiko complaints for patches 1 and 4 are pre-existing and wont be
-handled in this series.
-
-It has taken many weeks to get to stable outcome for a customer that
-included multiple long vmcore analysis tasks and instrumentation.
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY5PR12MB6252:EE_|MW5PR12MB5683:EE_
+X-MS-Office365-Filtering-Correlation-Id: 70444dbd-4327-4df1-0c61-08df33679c2f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|23010399003|1800799024|376014|366016|261021123027099003|11063799006|4143699003|56012099006|261009223027099003|261022075727099003|261022105027099003|261021121427099003|18002099003|22082099003|10067099003|3023799007;
+X-Microsoft-Antispam-Message-Info:
+	kTvc+1yYj4WgloLk2pRNPf7N6Ae26S+he5OO1QcBxv2h6dChShuwJWOyDnevK9+oisgCazHdlAb15sbJZUnMA5x8sF5uJvtrlAm93MMK4szt+/LjA7vlKL+tHKAedpq04NOvsts3dX6xkZKstJQEtKLUywbvI0pGwGgiJxL3GsaD41DCYW0sT8yrUnh//k0VTYX8BaPOn4A5H0ekpcXP6pTEJAlZlUsQ2GQfIoAIuqFTJ3S9cCjsfc1U+bMFkMjUN7BRHiscuIzDZurhl1KWVk4uML06aLy4u5xQYqSTxYm3AmwtTrF8wwdNuJ8OGnbjNP+sJxnv8v1uL3HKnUDMRPlv54K9apBa0KnkcMPDTS+Lyxg/fL+RpCqwQlvei8C3ehA6sYXvTDZdo19nRk2s1qRJUX7upevAGrLG5XFTcrk01y59KGOPfuCFFl7IfFGCV2M8889mbaZh6+ZAJNLbPq5U/rCKCHfi93QXTk3jFHY9IgMNDgLxET1oREmfjDUWBKlN+ND+uEEXjlmZdUFi1kjgJMUs7n9uYWb2GebQs4lY/MyScEZ6rGrBypJZFy2cws2UXRE8CUbyP9PaPG9l4/mAg0KPs/IYC3YnVOxhtlg=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR12MB6252.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(261021123027099003)(11063799006)(4143699003)(56012099006)(261009223027099003)(261022075727099003)(261022105027099003)(261021121427099003)(18002099003)(22082099003)(10067099003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?cmZXNzdTWitRdmJNa29STjFtWDV1anE0aDNnZERtQmNmWDBHaDRDTWhlNFh1?=
+ =?utf-8?B?RlRXWk93Q242Q25ZR2wwRTBDb3VVMjJYSkxsZU1oejRPWXg0S1pmQkVrWlI3?=
+ =?utf-8?B?YlZZdDVxWmVNMjlBRVJhMzgrRWpJeDZtZGc3a01qdjlESmtKUXF4VmJTUnA3?=
+ =?utf-8?B?Z1pHQkRNbkNsV3czSVBpbVFNWDNlVmtXb0N6Skgrd0FnZ21tUXBNa09aV1Z1?=
+ =?utf-8?B?WlhCRXdydTNBdFhjclNjU21VWEp1cFFoL0VHUCtWdEQ1MURBeWt1ZHhDcEJ0?=
+ =?utf-8?B?VDNCMW1ySjlWVkRNdVAyS1hmTSsvRmlXNVJoNWZqQVVuNGdGa0Nia2wxNU1E?=
+ =?utf-8?B?VTVJTm9yZmt4WnRWUSsrOTJYLzBIYlptTThlays5enBJaWlkL25UWlFkZzFL?=
+ =?utf-8?B?Z2tJaWZ6NDVJck45T3AxUTlqbGFLamhiQk1BU2l0dlAzUzIwbDJOT0ZWeFgv?=
+ =?utf-8?B?SU0vSTh1SkZJb0RCUEh6QUd2TGsrZWxaeWFMckE2SHI0bEg2Y2gralh2T1c3?=
+ =?utf-8?B?ZHFTOUpLSGl2Y2w3TVdpQjRLRXV3cyswSktNSkZDa2xKSE1nc1NFZHM5WE9X?=
+ =?utf-8?B?OUlsRVgwR0EvTTRhRkVBV1NyTC9CWTN3aHNvUzl0MTkrdUpad2dEWWo1L2wr?=
+ =?utf-8?B?SU5mdWgwZHR1MnpKU3NwWmxIKzN6d2R1VHJrb3dncEtkY29aTHR5VTFvRmRu?=
+ =?utf-8?B?N0xYclc3QlAxNlg0SlMwLytrczNxQ0lCWFF3ZjNLbytEWkVqdjZYcVZSdFV4?=
+ =?utf-8?B?OVFOQXA1YlhLZkdNY0dPakhnL3pKNFI3TkVRdTN1K2ttQ3g2QXpReVJxUHJi?=
+ =?utf-8?B?OHZyMmxNQlQ0bWxJQVpYZk1wUWhEM0swQkFXSDRxMVFuUDErZFdlYlRFS3M3?=
+ =?utf-8?B?L090YlFrTjMyYXdmcTNkY1R4RVRjS29ERCtyZmREN0Y2YnRiaFRCMm45TDdZ?=
+ =?utf-8?B?MDlhU0JqamdnckNMWjlQeUNqeXIvNmtUMlViT0lEOVIxbTl1Uml5d0NoNnJ0?=
+ =?utf-8?B?N3BNMWNWbG9NMnZWZWZPMUowdGpQb0VFNkZObklBczRYSHBQbzk4WEFSTy9O?=
+ =?utf-8?B?RWZuN2p6cFBMa3puSkM2cUhiVUhVRW9ZUmFkY1Noakd1YW54d0x0bkhOem1u?=
+ =?utf-8?B?WTkwVGtib04zOCtkYTJRcnhTOUJUeGNqVlY4YkduREkrOGVRWWN4UG0xc3Uy?=
+ =?utf-8?B?NTFyQzhIWS83b1VLcWhpckJCSHh4ZzJnOUtsZ2lsYStldWRVZkd2N0JQc0NT?=
+ =?utf-8?B?WHhGSlBFSFBhOWFRVGlhV2dKdlNERWNrTmZSd0t2MVI0VXY4eTgyeXlCL3Vx?=
+ =?utf-8?B?QUcvUTNyM1NWazdRTndnNnJOL254NlRBZUtjR283YmdhT2ZQYkRkOE1ITURD?=
+ =?utf-8?B?RHpJL3NVUHl6TEZNNEdON3dLQXd5aC90a2JJRGFnSFRaTDM3UlJyNTR5bEQ5?=
+ =?utf-8?B?MFlSUk5uM3I2WGFsTTdkL21uVzd2UlJEakxwd2hCSFlJamxCKytxbmdHeUxF?=
+ =?utf-8?B?cTNGektyT1lyQVo3bXR2OFpaRkJZS1Q0SXgvejNjQ3JmWlY0QkNzR25uSlAw?=
+ =?utf-8?B?UjVVY1c2L0FlQjhHKzNkRzhOUUN0ckZiMEV3cDNoeVZqOWs0eXhRVWdUUVVT?=
+ =?utf-8?B?d2kvOG9kcUdUZVloZW1DMHFmaWNGUXBEcWw5VjBsdnQvYlJzTUNUdVlFSkJW?=
+ =?utf-8?B?bjdoOGUxU0dNVUhPK253NGZvYVUxbUxET3k0MU43RGMwR2IySzY1YjdpOFQw?=
+ =?utf-8?B?Qk9EZmpVbndhazhSMGZjODB0SjQ0WXNLWW9vRkVrUVZqZmJ1ZjIxNFlCWnp0?=
+ =?utf-8?B?bHVtMVJsb2VkSDh3d056OWtnZnpYSFQvUldXY1dQWjU2ZkVBYUJUb3hMSGFO?=
+ =?utf-8?B?VjFEbFlIeUhJV2x2bW05NUZYeHFmTTlVWldWSGdwd2F5cUdZVzZ3ZWI0ZWxo?=
+ =?utf-8?B?UGYxdk16NE1OL3UwcThWUmZyMlQrRGF5L082Wk1OVWt6eUJLenJPTWE1TmtF?=
+ =?utf-8?B?bStIcWFmWTNJdWQ3YWlYV0dtRUpGTkZ1c25tQ1hWbE0xSEE1N0NWd0Z0VG91?=
+ =?utf-8?B?VUJNMEszNHFyakFnNHk4dUxhaWtsMDhXbkM3dlpFUldha1FXSmRLWXRsaHlC?=
+ =?utf-8?B?aDNEbHY4VHRwSzd0MGxYWEI5cnB0Ky9mOWd1SWVMUENBd0pRMEdhajJDNG10?=
+ =?utf-8?B?V2gzRkd0VVhpQ2hHU2lJckJEMllEUXU3OU9Id241K08rNXltOTlBeGNkOStL?=
+ =?utf-8?B?cXB3VmNkZTJrSTJVTlBzVGVQcG5DWlRTUzAyRUZFeGl6K0svSENaL1BocWFQ?=
+ =?utf-8?B?RlJwbkptZUsxNEtkdzU2U3Fkd1V3Y0JCc2ZocWxvUDNPVGhSQ0xLQT09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 70444dbd-4327-4df1-0c61-08df33679c2f
+X-MS-Exchange-CrossTenant-AuthSource: CY5PR12MB6252.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Oct 2026 13:47:00.9325
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: gnQOIsRZtH8loCLaXMiHcf3nTgouSbUA2neLf09plG88/YTSh5NLSTuxdeQgOWkp5kJ4WLSTT53FXwoo09aVWg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR12MB5683
 
 
-Thanks
-Laurence
+
+On 10/26/26 17:43, Mukunda,Vijendar wrote:
+>
+>
+> On 10/26/26 14:38, sashiko-bot@kernel.org wrote:
+>> [You don't often get email from sashiko-bot@kernel.org. Learn why 
+>> this is important at https://aka.ms/LearnAboutSenderIdentification ]
+>>
+>> Thank you for your contribution! Sashiko AI review found 1 potential 
+>> issue(s) to consider:
+>> - [High] soundwire: amd: unpolled IMM_RES_VALID clear in 
+>> amd_sdw_send_cmd_get_resp()
+>> -- 
+>>
+>> commit 3a55a761f23cc08cf1a64f142c04e1aa78cc244d
+>> Author: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+>>
+>> soundwire: amd: return response on IMM status cleanup timeout
+>>
+>> This commit changes amd_sdw_send_cmd_get_resp() to log an error, 
+>> store the
+>> read response, and return 0 when polling for AMD_SDW_IMM_RES_VALID to 
+>> clear
+>> times out. It relies on the bad-state check at the start of the next
+>> invocation to clear the remaining AMD_SDW_IMM_RES_VALID bit.
+>>
+>>> diff --git a/drivers/soundwire/amd_manager.c 
+>>> b/drivers/soundwire/amd_manager.c
+>>> index 307cbfdb94422..0b83126b5ce6c 100644
+>>> --- a/drivers/soundwire/amd_manager.c
+>>> +++ b/drivers/soundwire/amd_manager.c
+>>> @@ -285,11 +285,9 @@ static int amd_sdw_send_cmd_get_resp(struct 
+>>> amd_sdw_manager *amd_manager, u32 lo
+>>>        writel(AMD_SDW_IMM_RES_VALID, amd_manager->mmio + 
+>>> ACP_SW_IMM_CMD_STS);
+>>>        ret = readl_poll_timeout(amd_manager->mmio + 
+>>> ACP_SW_IMM_CMD_STS, sts,
+>>>                                 !(sts & AMD_SDW_IMM_RES_VALID), 
+>>> ACP_DELAY_US, AMD_SDW_TIMEOUT);
+>>> -     if (ret) {
+>>> +     if (ret)
+>>>                dev_err(amd_manager->dev, "SDW%x cmd status retry 
+>>> failed\n",
+>>>                        amd_manager->instance);
+>>> -             return ret;
+>>> -     }
+>>>        *response = ((u64)upper_resp << 32) | lower_resp;
+>>>        return 0;
+>>>   }
+>> [Severity: High]
+>> When this cleanup poll for !(sts & AMD_SDW_IMM_RES_VALID) times out and
+>> amd_sdw_send_cmd_get_resp() in drivers/soundwire/amd_manager.c 
+>> returns 0,
+>> can back-to-back commands read stale response data from
+>> ACP_SW_IMM_RESP_UPPER_WORD and ACP_SW_IMM_RESP_LOWER_QWORD?
+++
+> No. The response for the current command has already been latched and 
+> read
+> before the cleanup poll is performed.
+>
+> The first poll waits for AMD_SDW_IMM_RES_VALID to be set, indicating that
+> the response is available. A timeout there is still returned as an error
+> and this behavior is unchanged.
+>
+> The trailing poll only waits for AMD_SDW_IMM_RES_VALID to be cleared 
+> after
+> the response has been read. Therefore, a timeout during this cleanup does
+> not invalidate the response that was already obtained.
+>>
+>> Callers such as amd_program_scp_addr() and amd_sdw_xfer_msg() issue 
+>> multiple
+>> commands in sequence:
+>>
+>> sdw_transfer()
+>>    do_transfer()
+>>      amd_sdw_xfer_msg()
+>>        amd_prep_msg()
+>>          amd_program_scp_addr()
+>>            amd_sdw_send_cmd_get_resp()
+>>        _amd_sdw_xfer_msg()
+>>          amd_sdw_send_cmd_get_resp()
+>>
+>> On the immediate next call to amd_sdw_send_cmd_get_resp(), the bad-state
+>> guard writes AMD_SDW_IMM_RES_VALID to ACP_SW_IMM_CMD_STS without 
+>> polling for
+>> !(sts & AMD_SDW_IMM_RES_VALID) before issuing the next command and 
+>> polling
+>> for (sts & AMD_SDW_IMM_RES_VALID):
+>>
+>>          if (sts & AMD_SDW_IMM_RES_VALID) {
+>>                  dev_err(amd_manager->dev, "SDW%x manager is in bad 
+>> state\n", amd_manager->instance);
+>>                  writel(AMD_SDW_IMM_RES_VALID, amd_manager->mmio + 
+>> ACP_SW_IMM_CMD_STS);
+>>          }
+>>          writel(upper_data, amd_manager->mmio + 
+>> ACP_SW_IMM_CMD_UPPER_WORD);
+>>          writel(lower_data, amd_manager->mmio + 
+>> ACP_SW_IMM_CMD_LOWER_QWORD);
+>>
+>>          ret = readl_poll_timeout(amd_manager->mmio + 
+>> ACP_SW_IMM_CMD_STS, sts,
+>>                                   (sts & AMD_SDW_IMM_RES_VALID), 
+>> ACP_DELAY_US, AMD_SDW_TIMEOUT);
+>>
+>> Because clearing AMD_SDW_IMM_RES_VALID requires an asynchronous hardware
+>> handshake that already failed to complete within AMD_SDW_TIMEOUT on the
+>> previous command, won't AMD_SDW_IMM_RES_VALID still be set when
+>> readl_poll_timeout() immediately checks (sts & AMD_SDW_IMM_RES_VALID),
+>> causing it to succeed on the stale bit and read the previous command's
+>> response registers? Should the bad-state guard also poll until
+>> !(sts & AMD_SDW_IMM_RES_VALID) before writing the new command words?
+> No. If AMD_SDW_IMM_RES_VALID is still set on the next invocation, the
+> bad-state path clears it by writing AMD_SDW_IMM_RES_VALID to
+> ACP_SW_IMM_CMD_STS before programming the next command.
+>
+> This behavior is also consistent with the hardware reference
+> implementation, where the bad-state path uses the same write-1-to-clear
+> sequence without polling again for the status bit to clear.
+> Therefore, no additional change is required for this scenario.
+>
+>>
+>> -- 
+>> Sashiko AI review · 
+>> https://sashiko.dev/#/patchset/20261026044507.2310694-1-Vijendar.Mukunda@amd.com?part=2
+>
 
