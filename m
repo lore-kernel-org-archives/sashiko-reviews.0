@@ -1,60 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792996970;
-	b=3D7nZYnxvURsT1qdd2mcbAM99L3xYim5TJ3+DyyuvmkC4CA1B31toPgInBfJRlm8DtL4
-	 gXdNygC0prjxX/fKs5mrqx1fbl0wxiW7tuUzSOPwMxLcQVy+Qbvk50eUQ5jupQyUFBzFH
-	 HxgpRIYpUtulH0/ZoDQ+4bV8KjW+SmsSkcmzX75Ygc1jar0UbGCJcyuYmjnIpF8yWzNlh
-	 zN4YuCFKgw5DZ0lZ9c3N+m4Y7LWzDdMMps1aWnNAxUMkdkD6E7S4V+xMU9lqcnmAJub8V
-	 B7lrIZfeowDklrnsUsf0w+9za53i5wstonw6zy046xgKnNIL9sTFxz9dyXxEwOXlPcw==
+	t=1792997143;
+	b=I7AYUWPI2/L/Bot+46YWii5+BMaKTlUhvMw6jpOznCLFfQ6JFTbcxEH0u9Xx1L5fKNqT
+	 S1ikv3w02BGVBr0KH/xDMMxaIip39gc59o+YfSnZRixhuUtbipE1w14ZAFhS0rZV8vt2F
+	 pXUMf6/HeoYJD0/DF/XUC1Ly2WW3UNhar9DS/watLHQlQ1zc9X3aT3Qw2uHuIVdiRR5Mt
+	 PLIf+s7epmXDp7rk1DgI429gPsaLcK7noQ8WYKsavwPr50f6zQkX0KCdFLEsidhjRz/Sq
+	 hxDcszM3U23nwQBeOreDNoVoA6i2QnAi7ikBmBemSGWL60Sf6zEtQGccC4jSuDVdq4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792996970;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792997143;
 	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
 	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=n5Vk1C6Gb4AlFXKC7EAJi6d5JIRefGvea6Uz6EyXsKA=;
-	b=U8jHpePzZiGDUFXktpJQBMYWW81bV/6QeBVl2z7xZ2p6/mqkd0J8dFl7kxgV7+icXG7J
-	 vNMiv2kC03bnnpjggf8O/skFzOGnaY9m9L3isMiostIBko8Fpo0M2ISKZRhgcEU7Jp7On
-	 pqSrqeQbQlwNcUy4r58rYAWEjjadOzHIO6ag0pl0QlbxJpkwz/+HGLhlH6fhcXgFGOP4E
-	 eYHSuCejDOi0J7WIHFbMCizyyLAZDNwNEnuIRL39ykAbD2lUi2WfBWU+mFQ9NKjANw5dv
-	 2WiGlHKhGKNLvdlRVGYzI4GyNtiFZt2UjsP08Lhc1uj3Ie7itQeDrrpb+RaYmIHpccg==
+	bh=tSJeqW/JSAYgRuY93wLK4C5nODhaGQjLKEspR3ljmIs=;
+	b=0mRn69ilNF6ZpyffNf3bPQbANw84mMFAmcitsut05amxVYgCVxue7WbTlMayxx8ShibJ
+	 0nn0s+lKAQXT/xErXZzfdBWUbGuNarYDbLnTXfBeHXPza4xl4uR4Y8TMaJt1vniX1Wf1t
+	 oRb/3iGmthIW2cQqptjzIj5fznGcj5suIWD+5aon6jiiHUZlMN0sgqd++RNVdpXUrLTZ/
+	 FieTyZ1eJUHaVuRxEmUg6yyIoB2v9uynVlIg3zMgyAaLlgJoV74TkSKZFKqgstF2kb1Tc
+	 UTSBJlr1OCdSPV0Vt55Rjjs8RnaRhXQJpW1IGX72Vp3EMbhu0DfNSg9KTphoyb1b+yA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=U3vfl+0U;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Cjje+TyJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B88606A31A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 06:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2F4606A31A
+	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 06:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=U3vfl+0U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366FC1F01825;
-	Mon, 26 Oct 2026 06:42:47 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Cjje+TyJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11441F01825;
+	Mon, 26 Oct 2026 06:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792996969;
-	bh=n5Vk1C6Gb4AlFXKC7EAJi6d5JIRefGvea6Uz6EyXsKA=;
+	s=k20260515; t=1792997143;
+	bh=tSJeqW/JSAYgRuY93wLK4C5nODhaGQjLKEspR3ljmIs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=U3vfl+0Ufgj5Eylaf+izJI/NCOCXf1RAVfxUNxZMCO0XtbSTeXllCooJOfS3a4LkS
-	 3tHuJxvhJSMSXvdydTrXXKK5E3u607J1NUnlV3SF5+KVzoIxr9jR+avWhDZVgcOQot
-	 Y/2Ub/n5idcTyiwO0X3MvaY2tL078Miw7XCTEnBwVqVPt3H5rFGFtmZeUUuOhOQJoY
-	 KqJiBd7l3Aaa8647V6HxKE0+VrjycPaPERRKcaqgr/zcZTZhhzHgoY/fcccLFZG9Rs
-	 +T5WoEE3kp0j02152ZzQJpBQ9xqa5QZVFXue5fjwyG5JuP0HQJQRau/qdrn4ggccJW
-	 XxBL1dx5C4KRA==
-Date: Mon, 26 Oct 2026 02:42:44 -0400
+	b=Cjje+TyJe1CjksRtcHVbhALfF3kCywMkR6E82jRbwK5yU3HW7sthh3PN26Q/IjWK9
+	 uoBC3LrKmpjDstiQkA/8HQHoWfOlVnl1jfLNe0h/9RxM+os0U6iIMEKVlCJEapHf7X
+	 0HtlKwgjbQrYV9JTgwkNTwIDH1kiehlsUxVdaw6tVzC5QFQTV8M+UgytO9uX53CTbk
+	 Z9P8A50y9pQciRZBtX2J97yvvXIHMUS5hO0Wk0Bc4QosutayXT3no4xlQQJAg+xTYK
+	 vcTcvjoPf4z6R9oXFdGRraqpLcIiIab39GuC4W/GwvTzHVSpe9R5OworkePg0f1Z26
+	 MZXEyTNvhyvSw==
+Date: Mon, 26 Oct 2026 02:45:42 -0400
 From: Mike Snitzer <snitzer@kernel.org>
 To: sashiko-reviews@lists.linux.dev, Matthew Wilcox <willy@infradead.org>,
-	linux-mm@kvack.org
-Cc: Chuck Lever <cel@kernel.org>, Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neil@brown.name>,
+	linux-mm@kvack.org, Chuck Lever <cel@kernel.org>
+Cc: Jeff Layton <jlayton@kernel.org>, NeilBrown <neil@brown.name>,
 	Olga Kornievskaia <okorniev@redhat.com>,
 	Dai Ngo <Dai.Ngo@oracle.com>, Tom Talpey <tom@talpey.com>,
 	Christoph Hellwig <hch@lst.de>, Jens Axboe <axboe@kernel.dk>,
-	Jonathan Corbet <corbet@lwn.net>, Anna Schumaker <anna@kernel.org>
-Subject: Re: [PATCH v9 3/6] mm: add folio_mark_dropbehind() to mark a folio
- dropbehind and account it
-Message-ID: <at72ZLeWWQyptVq0@kernel.org>
+	Jonathan Corbet <corbet@lwn.net>, Anna Schumaker <anna@kernel.org>,
+	Jonathan Flynn <jonathan.flynn@hammerspace.com>
+Subject: Re: [PATCH v9 6/6] NFSD: drop a shared boundary page only once both
+ WRITEs have written it
+Message-ID: <at73FnE5dVNyQO_L@kernel.org>
 References: <20261024221152.6965-1-snitzer@kernel.org>
- <20261024221152.6965-4-snitzer@kernel.org>
- <sashiko-outbox-184464@kernel.org>
+ <20261024221152.6965-7-snitzer@kernel.org>
+ <sashiko-outbox-184467@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -66,29 +66,35 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-184464@kernel.org>
+In-Reply-To: <sashiko-outbox-184467@kernel.org>
 
-On Sun, Oct 25, 2026 at 10:12:09PM +0000, sashiko-bot@kernel.org wrote:
-> Can WB_DONTCACHE_DIRTY still be double-counted here if a stale
-> PAGECACHE_TAG_DIRTY coincides with an unlocked dirtier that has just set
-> PG_dirty?
+On Sun, Oct 25, 2026 at 10:12:10PM +0000, sashiko-bot@kernel.org wrote:
+> However, in fs/nfsd/vfs.c:nfsd_write_dio_iters_init(), the boundary
+> between the buffered prefix or suffix and the direct middle segment is
+> still cut at max_t(u32, offset_align, PAGE_SIZE):
+[...]
+> Should cut in nfsd_write_dio_iters_init() also take
+> mapping_min_folio_nrbytes(nf->nf_file->f_mapping) into account so that
+> buffered prefix and suffix segments are cut on unit boundaries?
 
-Yes, in that window.  The folio must be clean with a stale dirty tag.
-On XFS that happens when iomap_writeback_handle_eof() skips a folio that
-a truncate put beyond EOF.  Then an unlocked dirtier sets PG_dirty, and
-folio_mark_dropbehind() or filemap_clear_dropbehind() runs on that folio
-before the dirtier takes the i_pages lock.  In that gap, a counted folio
-and an uncounted one look the same: PG_dirty and the dirty tag are both
-set.  Closing it needs a new page flag, or a tag clear in the paths that
-uncount a folio.  Both are core mm changes.
+Yes, and a separate patch already does that.  "NFSD: cut a misaligned
+direct-mode WRITE at folio boundaries" replaces the commit in
+cel/nfsd-testing that added this cut:
 
-Only the counter changes.  WB_DONTCACHE_DIRTY tells
-wb_check_start_dontcache() how many pages the DONTCACHE writeback kick
-writes.  A count that is too high makes the kick write more dirty pages.
-A count below zero makes it write none.  Data and page state do not
-change.  Before 1/6, the clear in __filemap_get_folio_mpol() decided by
-PG_dirty alone, so this window and a wider one were already there.
+  https://lore.kernel.org/linux-nfs/at0DFod8CcUfus2S@kernel.org/
 
-I do not plan to change this in this series.  If linux-mm wants it
-closed, I can follow up with whichever of the two changes linux-mm
-prefers.
+With it, a misaligned end is cut at
+
+	cut = max_t(unsigned long, offset_align,
+		    mapping_min_folio_nrbytes(nf->nf_file->f_mapping));
+
+so the buffered prefix and suffix end on a boundary of the smallest folio,
+the same unit that nfsd_write_dio_seg_hold() uses.  The cover letter of
+v9 says that v8 1/7 went out separately.  This review ran on the v9 base
+(cel/nfsd-testing), which does not have that replacement yet.  v9 applies
+on top of the replacement without change.
+
+An end that is already aligned to offset_align keeps no buffered segment,
+mid-folio or not.  This keeps such a WRITE direct, on purpose.
+
+Mike
