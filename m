@@ -1,64 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=162.62.57.252
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=109.224.244.119
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793001108;
-	b=rKqWWhEz62QSoT/LAjQCWQW3pYcc7j6OSMCJYhUet63Zpz5U1Osg7KjZG4H7SkLfP3zT
-	 Hn5GmeF2qAgk/ielXgkR+znGKw23q9Z2HaR/PuV7cXM81Qfri3Vw4iPyK4gJBWpZAy/L0
-	 5VyyZu8u601FNK9BE73FnZm1ssl3gElNTaRyfAarp0eWySLMDTGv69c2KTiiiNfK0mR01
-	 LkQwGhmyG9qkNzZlSDzjWRnODzRexJqy/LNXh3V99av2+NCnOwkHN64ActLEBl+d97Fvh
-	 wkI/Yt18uUmxv7Hvjyn4B5UWRMg35Xxr8OYwVe4V2esxvZRqOAslXMOnwtdY9XIblnA==
+	t=1793001239;
+	b=DyGKz/xxSc27+XsMJElFPkiZ01rDCNd2WMsX0Om1xq0BGusJU4e+R8VV/Jf0LeCVlSPR
+	 JpE0Wq7X/C8OsNCHBk0BpK1GOBXd0z2bjGvi/MbESdphkaqMu2sIAvttuV8qjMywTnRu3
+	 LvDYy9bD5RAu9tIOMiQeMBOrBlnteParT+dht3TGIEhOObZzVKcNKK32VyaF6J5WECE1v
+	 tTLPFSoEddJNh6jqFz5xHmVWcYLNJKo2K/saPq7tjrfdM/cm4MtYAfnEOXO5xUJLLR+9S
+	 n41voyInUfIrekGaYWTR1BRQeFDmqvVV/MAOE3bVEQY1PB5FpCEWRRdQsRqB9GVWilg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793001108;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-XMRINFO:X-QQ-XMAILINFO:From:To:Cc:
-	 Subject:Mime-Version:Content-Type:Content-Transfer-Encoding:Date:
-	 X-Priority:Message-ID:X-QQ-MIME:X-Mailer:X-QQ-Mailer:References:
-	 In-Reply-To:X-QQ-mid;
-	bh=+nE7HO3QFyRL2Ai8GdADlUMnKwk6M/Zzpg853YbKlk8=;
-	b=hu2LT4DzZDqcKaWR4iQ0ho5HziqkdB7FqWRKyT2onFX5wKeIrnvrnDy6Mt/a1hRwQj/D
-	 /DYghCgQdCmXktlLaUKrHlDLDEpYW+Dzls3Do11NmrOjaZYk6VxJ/84oxIjNN7CWLycYS
-	 aMZ8jhrKdxLKFthzFJ204RB0zbNF7e8o27RKdPBTKETPEdcJCAyhRlKhK5xQawkDn0EI6
-	 ki/O4mjLAebsGj854aVw6uq5bmhCtwWD0HggcAgbXtvfysg91EayaJ3aQn/c1AycSKr3g
-	 wtFFGNFL1EqouhJSH/3TSalf0GD7hHhJfNtmfkJw5JVaLj0Mr1Z9ctjJ/FAh78Z/1Cg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793001239;
+	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
+	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=l0YvXY1ZXOO/2zz78iKHOZrlkKi+Hmc7P2K347btTPE=;
+	b=hbv+ikZBCC9s+lQ4+KPvnGUNcrqGLSxp5BZwa4Yhw6HPG/Hwk1exYEw2HF6B5zISu4sP
+	 cYL5LVvUcdKgwnJQNvcOI+GQ1z4AeJgiFBayUkjkkyllCLvU2uRfLG05Eca7jATyckdqr
+	 ec109j8/CV4F9/i96XxUv1PMcf5LywWb4iIjfChFUkbHAWD3IhzeeTbsmG7Ry4VXZ7Hen
+	 zrL6seNpal6DsAs9HP57303TH5O09JEtEXrH9SQ1K5f6SWHZJpEHNauf9+8YcFF3bJNE9
+	 HQ2Ux3tffN7/oV59P0CI5hKnpHvI392w1E5X4NIFMUOiEdG5/Y1PQkoudYKqJ/XjkFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=qq.com;
-	spf=pass smtp.mailfrom=qq.com;
-	dkim=pass header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=JLSXZWP6;
-	arc=none smtp.remote-ip=162.62.57.252
-Received: from out162-62-57-252.mail.qq.com (out162-62-57-252.mail.qq.com [162.62.57.252])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=1g4.org;
+	spf=pass smtp.mailfrom=1g4.org;
+	dkim=pass header.d=1g4.org header.i=@1g4.org header.a=rsa-sha256 header.s=protonmail header.b=dYr19qWL;
+	arc=none smtp.remote-ip=109.224.244.119
+Received: from mail-244119.protonmail.ch (mail-244119.protonmail.ch [109.224.244.119])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884ED606A322
-	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 07:51:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 884ED606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41160606A326
+	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 07:53:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 41160606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=1g4.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=1g4.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=JLSXZWP6
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1793001102; bh=+nE7HO3QFyRL2Ai8GdADlUMnKwk6M/Zzpg853YbKlk8=;
-	h=From:To:Cc:Subject:Date:References:In-Reply-To;
-	b=JLSXZWP6KWW+GlHF3YJRpnzX4kfrkKR9k87KrKARSbi79rfBdpIERkU/BFjADRuD6
-	 6PIvXf4Zx0SeR1b6z1Jim7RrdfRgmbuLyrKF6KUra1isNblzx8C+ymvT/qbgiuBkgE
-	 r1pwUeF4dAS3cc6Ud2b16pddUdpoZPyvuvgAM9/g=
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-X-QQ-XMAILINFO: M+DG/l9YxNXY6gel2mm4emCwqjrguTLsCjqIzapjig9WrxrPVhvK0sVnBQjN22
-	 VfcOb9ose1fjG4kHPbGy5o5QJSojF9/vLemsLPOnZNYciEfQVVCAI6+Mm7y28MMwRLJvBrOzyS6qm
-	 9E6i0gbsib0YL4PFIwIPfnGKhNejU24E74tEbXW8Nj25/ERr95miiGszTkxhU2lVqtPzK4hBvg5Sx
-	 x0sqfduYcsclBz6xxfJgB0ScWg6odScp6Pcmez4HtGInSQPs75hfk2UeNJQQamvjCipKkT0YTG7KE
-	 iicVZ58nOPST6O8u3erBaLFeNaR6K8sJqSGFQiRa0hcR71E1uIMMykPn0+69qTIZir2skRFTwPgKT
-	 nHlgg21zJ1ghqGgr76Hmd60yDNuupbTiLW2y5AxXpO8xt8zq5Pul166G+IGrYfcL/q49mPxzlm6QX
-	 Ft0qiWlVr8iCLdZa1mzJp+lkB/QMGAVWjbWwd3GYPpgEh+lazBDYbkP9poVYqSYRf007QA4oI8shW
-	 ajeAwTcN5e4m9BzkGbX4K8MOE/hLQfl24rrrH1uc+6x09Owenk3mlgnYlxQYHr2HsYBuT/wWtw2Fc
-	 IsvYLwIN9BXHwk9f5LvLTioX62JF13VWDVFr2DynGgcbM+4eszjb+Sa03kK5LCSlKzXIh3QJlKdp3
-	 mlM+j1ql2W4J13g588rvcayrmR9N6X6pwMOtM91kmrDWVE5FVgIGg6TvH1F34VzsHZp1Cc0oyVbNS
-	 Sr6WaxeR2oanNdccn9cPrQ6+AVE1MUBvUwBoN8CEbuyQB6/4mD8PUx6aB6n/NNVwFfYaEY2+sRrCp
-	 Hw3Z+u9oYIqRbupfOQ4h8PoUX9XzSmE3T1QmOTaGM19mDWjIlSIwIUx4LHcEZO8tLK3KNw1CJwFfa
-	 rWj0Xf2TF0Rl1oBpepfgS6X8RdBx8OpY+oAHz0WN6O6E71opA+wwrFQtc8MyYViE1NmbxuzyIMYRB
-	 sq6LEX+SUzkgdSxyiVD4vbClIzNtI8HpmArr81jXLwHxH4yA6JE7N30wQJiDxRTgWDl7pnmIO+dau
-	 vXLyt6zHqF64fFVNFhBMclMjnaA==
-From: "=?utf-8?B?Q3VuaGFvIEx1?=" <1579567540@qq.com>
-To: "=?utf-8?B?c2FzaGlrby1yZXZpZXdz?=" <sashiko-reviews@lists.linux.dev>
-Cc: "=?utf-8?B?ZGV2aWNldHJlZQ==?=" <devicetree@vger.kernel.org>, "=?utf-8?B?cm9iaA==?=" <robh@kernel.org>, "=?utf-8?B?Y29ub3IrZHQ=?=" <conor+dt@kernel.org>
-Subject: Re: [PATCH v3 2/2] pmdomain: rockchip: Add RK3572 boot peripheral domains
+	dkim=pass (2048-bit key, unprotected) header.d=1g4.org header.i=@1g4.org header.a=rsa-sha256 header.s=protonmail header.b=dYr19qWL
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1g4.org;
+	s=protonmail; t=1793001233; x=1793260433;
+	bh=l0YvXY1ZXOO/2zz78iKHOZrlkKi+Hmc7P2K347btTPE=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=dYr19qWLgNxaI6kjQtsrquIulqivtOAvVzDWRfdROAIHuStkIGvXwAXqZIW50JF5x
+	 OQclzbLDmLn1a8IaUyIFAfnHNzbvh8YjBM7a5PG63sLjVrdhKVSQEfPzYyx9Is3VES
+	 AJ6KWcjVyLqPyikmNd3dLYdNldP5DbGMcmQDrsJXYLmWokCtkC9qNU6vfEjLvmy9pH
+	 8xCD0ZPAYqm7bSRoSd6pw8IW/ywlIufTr/glWjFwHrWXs6tDzE6GdhgI+nd/2AEcW3
+	 CKLw5VW/u6MKimAIp+GCt+LXfXGDocjpigmzsDSusw3gGZSfzTN2+baO+Z3qlv7dGO
+	 +CbU4XHcT2t0A==
+Date: Mon, 26 Oct 2026 07:53:49 +0000
+To: sashiko-reviews@lists.linux.dev
+From: Paul Moses <p@1g4.org>
+Cc: intel-wired-lan@lists.osuosl.org, bpf@vger.kernel.org
+Subject: Re: [PATCH net] igc: track rx frame boundaries independent of skbs
+Message-ID: <RWzBrfsuLy54ULo85bs7EUhLPBOhR88jVUxVW1TsP7bhhEDQM2T-b9R6X3F9D62O3nN9GVNqK2S9NQG-sqqOIba8bP0oHv0rOUJdn_p1QUo=@1g4.org>
+In-Reply-To: <sashiko-outbox-184616@kernel.org>
+References: <20261025065154.2037149-1-p@1g4.org> <sashiko-outbox-184616@kernel.org>
+Feedback-ID: 8253658:user:proton
+X-Pm-Message-ID: 88968fa72f3d1b8507b05439ff909c5cb132e4e1
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -67,30 +63,140 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
-Date: Mon, 26 Oct 2026 15:51:41 +0800
-X-Priority: 3
-Message-ID: <tencent_3A91A40015443A3FDB26209A0119DC84C007@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-References: <20261026-add-board-ok3572-c-pmdomain-v3-0-70d614d3d921@qq.com>
- <20261026-add-board-ok3572-c-pmdomain-v3-2-70d614d3d921@qq.com>
-	<sashiko-outbox-184654@kernel.org>
-In-Reply-To: <sashiko-outbox-184654@kernel.org>
-X-QQ-mid: xmsezb41-0t1793001101tf572a3g3
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-SGksCgo+IFtIaWdoXSBwbWRvbWFpbjogcm9ja2NoaXA6IHJvY2tjaGlwX3BkX3Bvd2VyKCkg
-cmVzZXRzIGFjdGl2ZSBtZW1vcnkgb24KPiBwb3dlci1vZmYgZXJyb3IKCkNvbmZpcm1lZC4g
-UmVjb3ZlcnkgY2FuIHJlc2V0IHRoZSBtZW1vcnkgb2YgYSBkb21haW4gdGhhdCBuZXZlciBw
-b3dlcmVkCm9mZi4gSSB3aWxsIGZpeCB0aGlzIGlzc3VlIGluIHY0LgoKPiBbTWVkaXVtXSBw
-bWRvbWFpbjogcm9ja2NoaXA6IGRvbWFpbiBsZWZ0IHBvd2VyZWQgb24gd2hlbgo+IHJvY2tj
-aGlwX3BkX3Bvd2VyX29uKCkgZmFpbHMKCkNvbmZpcm1lZC4gVGhlIGVycm9yIHBhdGggc2hv
-dWxkIGF0dGVtcHQgdG8gcG93ZXIgZG93biB0aGUgZG9tYWluIGJlZm9yZQpkaXNhYmxpbmcg
-aXRzIHN1cHBseSwgYW5kIHJldGFpbiB0aGUgc3VwcGx5IGlmIHJvbGxiYWNrIGZhaWxzLiBJ
-IHdpbGwgZml4CnRoaXMgaXNzdWUgaW4gdjQuCgpCZXN0IHJlZ2FyZHMsCkN1bmhhbyBMdQoK
-cHctYm90OiBjcgo=
 
+
+
+
+On Monday, October 26th, 2026 at 1:52 AM, sashiko-bot@kernel.org <sashiko-b=
+ot@kernel.org> wrote:
+
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] igc: off-by-one in TSIP length check in igc_clean_rx_irq() and z=
+c variant
+> --
+>=20
+> commit 7b71c87cde8117fd4a451a2a079f34aaf64bd069
+> Author: Paul Moses <p@1g4.org>
+>=20
+> igc: track rx frame boundaries independent of skbs
+>=20
+> This commit tracks RX frame boundaries per ring via rx_in_frame so that
+> inline RX timestamps are stripped only from the first descriptor buffer.
+> It also rejects unsupported split frames before XDP, drains continuation
+> descriptors, and updates NAPI budget accounting in both standard and
+> AF_XDP zero-copy RX paths.
+>=20
+> > diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/et=
+hernet/intel/igc/igc_main.c
+> > index 1fb5f3cbe93c5..9ca5558c762c9 100644
+> > --- a/drivers/net/ethernet/intel/igc/igc_main.c
+> > +++ b/drivers/net/ethernet/intel/igc/igc_main.c
+>=20
+> [ ... ]
+>=20
+> > @@ -2635,21 +2635,34 @@ static int igc_clean_rx_irq(struct igc_q_vector=
+ *q_vector, const int budget)
+> >  =09=09dma_rmb();
+> >
+> >  =09=09rx_buffer =3D igc_get_rx_buffer(rx_ring, size, &rx_buffer_pgcnt)=
+;
+> > +=09=09tsip =3D first && igc_test_staterr(rx_desc, IGC_RXDADV_STAT_TSIP=
+);
+> > +
+> > +=09=09if ((!first && !skb) ||
+> > +=09=09    (first && igc_xdp_is_enabled(adapter) &&
+> > +=09=09     !igc_test_staterr(rx_desc, IGC_RXD_STAT_EOP)) ||
+> > +=09=09    unlikely(tsip && size < IGC_TS_HDR_LEN)) {
+> > +=09=09=09if (first)
+> > +=09=09=09=09dev_core_stats_rx_dropped_inc(rx_ring->netdev);
+> > +=09=09=09xdp_res =3D IGC_XDP_CONSUMED;
+> > +=09=09=09goto xdp_done;
+> > +=09=09}
+> > +
+> >  =09=09truesize =3D igc_get_rx_frame_truesize(rx_ring, size);
+> >
+> >  =09=09pktbuf =3D page_address(rx_buffer->page) + rx_buffer->page_offse=
+t;
+> >
+> > -=09=09if (igc_test_staterr(rx_desc, IGC_RXDADV_STAT_TSIP)) {
+> > +=09=09if (tsip) {
+> >  =09=09=09ctx.rx_ts =3D pktbuf;
+> >  =09=09=09pkt_offset =3D IGC_TS_HDR_LEN;
+> >  =09=09=09size -=3D IGC_TS_HDR_LEN;
+> >  =09=09}
+>=20
+> [Severity: High]
+> Should the length check in igc_clean_rx_irq() be size <=3D IGC_TS_HDR_LEN
+> instead of size < IGC_TS_HDR_LEN?
+>=20
+> When a first descriptor has IGC_RXDADV_STAT_TSIP set and size =3D=3D
+> IGC_TS_HDR_LEN, the buffer contains only the 16-byte inline timestamp
+> header and no packet payload. With size < IGC_TS_HDR_LEN, the check passe=
+s
+> and size -=3D IGC_TS_HDR_LEN leaves size as 0.
+>=20
+> If XDP is disabled and this is a non-EOP descriptor followed by a
+> continuation descriptor of at least 60 bytes (ETH_ZLEN),
+> igc_construct_skb() or igc_build_skb() creates an skb with zero linear
+> headlen, and igc_add_rx_frag() attaches the continuation buffer as a page=
+d
+> fragment where skb->len =3D=3D skb->data_len >=3D 60. Because skb->len >=
+=3D
+> ETH_ZLEN, igc_cleanup_headers() -> eth_skb_pad() does nothing, and
+> igc_process_skb_fields() -> eth_type_trans() -> __skb_pull(skb, ETH_HLEN)
+> then triggers BUG() because skb->len drops below skb->data_len.
+>=20
+> If EOP is set on the 16-byte descriptor, size =3D=3D 0 runs XDP on an emp=
+ty
+> buffer where XDP_TX calls igc_xdp_xmit_back() ->
+> igc_xdp_init_tx_descriptor() with a 0-byte length, and normal RX or
+> XDP_PASS allocates a 0-byte skb that eth_skb_pad() zero-pads to 60 bytes
+> and hands to napi_gro_receive().
+>=20
+> [ ... ]
+>=20
+> > @@ -2829,11 +2855,20 @@ static int igc_clean_rx_irq_zc(struct igc_q_vec=
+tor *q_vector, const int budget)
+> >  =09=09dma_rmb();
+> >
+> >  =09=09bi =3D &ring->rx_buffer_info[ntc];
+> > +=09=09tsip =3D first && igc_test_staterr(desc, IGC_RXDADV_STAT_TSIP);
+> > +=09=09eop =3D igc_test_staterr(desc, IGC_RXD_STAT_EOP);
+> > +
+> > +=09=09if (!first || !eop || unlikely(tsip && size < IGC_TS_HDR_LEN)) {
+> > +=09=09=09if (first)
+> > +=09=09=09=09dev_core_stats_rx_dropped_inc(ring->netdev);
+> > +=09=09=09res =3D IGC_XDP_CONSUMED;
+> > +=09=09=09goto xdp_done;
+> > +=09=09}
+> >
+> >  =09=09ctx =3D xsk_buff_to_igc_ctx(bi->xdp);
+> >  =09=09ctx->rx_desc =3D desc;
+> >
+> > -=09=09if (igc_test_staterr(desc, IGC_RXDADV_STAT_TSIP)) {
+> > +=09=09if (tsip) {
+> >  =09=09=09ctx->rx_ts =3D bi->xdp->data;
+> >
+> >  =09=09=09bi->xdp->data +=3D IGC_TS_HDR_LEN;
+>=20
+> [Severity: High]
+> Similarly, in igc_clean_rx_irq_zc(), should the check be size <=3D
+> IGC_TS_HDR_LEN so a 16-byte TSIP descriptor does not result in size =3D=
+=3D 0
+> after subtracting IGC_TS_HDR_LEN, which would pass a 0-byte xdp_buff to
+> __igc_xdp_run_prog() and igc_dispatch_skb_zc()?
+>=20
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261025065154.20=
+37149-1-p@1g4.org?part=3D1
+>=20
+
+I'm assuming the hardware works as documented, if someone wants
+to followup on hypothetical defensive scenarios, go for it.
+
+Even if I did change these, where does it end? 
