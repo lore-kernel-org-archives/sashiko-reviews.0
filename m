@@ -1,54 +1,91 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.77
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.158.5
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793047614;
-	b=23Np1Y1v8HKDkZGSEC5fnkuxc3wbu7gRo0pb8RooSwqd/4L8QSOxi7nrsliJsYyvNepn
-	 vb5KHWlyD5ugB2XS9QoEpP/ycLY+se2QGJzERCLQHybcw2hiRYtKyP/Krfb1Ty29vdC6w
-	 BdBtnibYFl7xHtF4mS1v+aiQpAaoi2NccYhli56ocmr6Frd/gm9F7dORm3NyibGOQZR0Q
-	 PRLYr2/Zbgjyy8NFJvh+lV6s73ZxnhNsqI+hqpDKiHLq1BJRa5GrIXr89TeRka6MCQJjJ
-	 7mdLsLNXtnuVMQpZQTRB6JTe0fUWsSgdQVNR/NgZpcvgj9FYDtCJTpZ8dhWgBmdPI+Q==
+	t=1793049463;
+	b=LbSV9ywcVyZ3b8XehhjTkkFLFf2QSGidcHyhWCG1LBiThRQ0vlFfCHRU0YLKQ8gGkQUh
+	 ddQiYuxgJPhtRVW+Hwl9LupBtUkVIHrSdu/dLjvXJD/p87zCsgjcWVSFsz66R64Ehw8qc
+	 Gjcjrf22RZX2aI5S1Z+jbc1as3clrBoiDiXLCPu7ITug+fkm/qjf87bytyeXPg2NOwfri
+	 YplQ+wOHD6UKz7nxpOsBIr2k2vvxfYO9H55HqiT3p0ATY5zyoOTt/Wgf+SIdTlaYjigjP
+	 3KqPj2YN2aZ4EYhfc+JVypHZIxkpVi8pImM2iu5Aqx+Z+AT8LWRAZwsDU924UHEHK7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793047614;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:Content-Language:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=kh5e2W/fnEYGpxBeGCaqV9/JbXLam61+Dk9J7TB/zlA=;
-	b=hPOyadfj0TAPfCuYyicnIARJVG9RF687lIq8gwQyF0xUyzZ4YC6sV3iL/Gs0FK1Bq6ZL
-	 ZR0yaUoVen9km+oxvf7xsbKJPGjcqSkmp3wq8xbqncoYOG6lqe3DbWfQukrSwDq1/59lT
-	 Tv/7JesnOb/npuivzelSI+yn6KAJHkoDGWvCici8vQjxKrNhYQoHHoHwUKxl5o9cgmypN
-	 AT+8dOGPmV3Chq50Xi+FVL7307mLeYLC79yEnhcO7ULvmJZGmjRp9ZhE7aAn9ZT9TXJPY
-	 ECyt/6go//I5yxH8LNMkOuePBaUDM9Vl5PtCE5kthhTSNFKdcW2mXBtT+o/hjTWvJAA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793049463;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:User-Agent:MIME-Version:Content-Type:
+	 X-TM-AS-GCONF:X-Authority-Analysis:X-Proofpoint-GUID:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=e2Ui39yGphVQXmHqV++3fx2VRkqj2x1+yGDqIiiKip4=;
+	b=2YOt0lnKZg40PEQ+R5m95Hj6dUQUzgq30kgUAT1VqzaqAaG3gZfJXB23n0SYlj+qMxJd
+	 yhpoua0ArnjKqszaVWbXY10b7IusJSUmWKa6Rf9Ju0peUNzhkPp4mGo9T2lWVSt1Ixh8E
+	 lSX8sivBDBifIbYyb5SKwn7stRzFJ2/kGKaeM1B80smTYF776DKlAlZM2sNhb8EwjybRZ
+	 CcDxtoEDmHoMJSAY8Jn3klRy+qBiEJUmCB4DeUBWG4BS6DkAxtHRYgxpYYb9zOZOearEm
+	 3vFXi2/vH/9CmRSWCPZgPCOnSeCAWjpqZmAt9GK+17EocQQHjich3RNy1FAveu1/q7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=onB49kUt;
-	arc=none smtp.remote-ip=91.218.175.77
-Received: from mta0.migadu.com (out-77.mta0.migadu.com [91.218.175.77])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=cTbFXiZC;
+	arc=none smtp.remote-ip=148.163.158.5
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292D5606A31B
-	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 20:46:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 292D5606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB76606A31A;
+	Mon, 26 Oct 2026 21:17:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1EB76606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=onB49kUt
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=C4Y13M+jrENBRCet6RI0EFW34E6acTeziluGPaYgzMg=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1793047610; v=1; x=1793652410;
- b=onB49kUt0BJOzdc8ukrKdL3OTPSXIiiEx2fxGvUojzpSnnFjRCP92hfR8Vmy5gjiTtuWRFPz
- Qr9DbGybS6JyS4cguMls/Baql4WYbtsacKY0yAXdGO08864Sp0/+/2v+2HXZNYnQtLbnkGC0Yf1
- hh8TaGBPS5zKpDW6W/3W6ouY=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 415063d7dbed8587;
-	Mon, 26 Oct 2026 20:46:50 +0000
-X-Mizu-Trace-ID: 415063d7dbed8587
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <8653c48c-8bdb-40be-adf7-8ea2db8f4298@linux.dev>
-Date: Mon, 26 Oct 2026 13:46:45 -0700
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=cTbFXiZC
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69QJFHw3276673;
+	Mon, 26 Oct 2026 21:17:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=e2Ui39yGphVQXmHqV++3fx2VRkqj2x
+	1+yGDqIiiKip4=; b=cTbFXiZCduDDRZfa8/6oWlRR35izjm9jnI2pTbz8+n1XEn
+	nedsOqJQ5LmbMrcZLiGLFSUNpFIr0pK8ig2UtzSp9ImodFgl+v+MMazyGCosIKZe
+	qfrnDrlynm5zLXVKXdQ8lLBVIiIh3DyWb3t8cU+e+hoxtBqUSJ0JmpRkDxeOGl33
+	atvcUL1ykeTCb6DEKVmMd75ovwZ57q8SkHfi+b97uLtegYenvHMZM7wzoir2nqxb
+	rBAInGFZcvff+E9bT83VzrdRDSlJiy/Npt3WDnZd3p8UMgx96Fo/7diqGltrSSxf
+	zuDoKV3QNTMvd7Lkc72m3rbyDpqTuGvOyYk76Ucg==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgmavc1d2-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Mon, 26 Oct 2026 21:17:40 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69QIovvI3043177;
+	Mon, 26 Oct 2026 21:17:39 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hh8ggywpc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 26 Oct 2026 21:17:39 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com [10.241.53.105])
+	by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69QLHc0K50659632
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 26 Oct 2026 21:17:39 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E20E358055;
+	Mon, 26 Oct 2026 21:17:38 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C365C58043;
+	Mon, 26 Oct 2026 21:17:38 +0000 (GMT)
+Received: from e (unknown [9.61.189.219])
+	by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+	Mon, 26 Oct 2026 21:17:38 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v16 03/12] scsi: ibmvfc: fix potential NULL pointer
+ dereference on failed queue allocation
+In-Reply-To: <sashiko-outbox-185517@kernel.org> (sashiko-bot@kernel.org's
+	message of "Mon, 26 Oct 2026 16:26:58 +0000")
+References: <20261026-ibmvfc-fpin-support-v16-0-a900aa657ed5@linux.ibm.com>
+	<20261026-ibmvfc-fpin-support-v16-3-a900aa657ed5@linux.ibm.com>
+	<sashiko-outbox-185517@kernel.org>
+Date: Mon, 26 Oct 2026 16:17:38 -0500
+Message-ID: <87fqxsf9fx.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,220 +95,171 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v3 06/12] bpf: Track low-32 scalar equality
- across sign-extending movs
-To: sashiko-reviews@lists.linux.dev
-Cc: bpf@vger.kernel.org
-References: <20261020161907.2115379-1-vineet.gupta@linux.dev>
- <20261020161907.2115379-7-vineet.gupta@linux.dev>
- <sashiko-outbox-179390@kernel.org>
-From: Vineet Gupta <vineet.gupta@linux.dev>
-Content-Language: en-US
-In-Reply-To: <sashiko-outbox-179390@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=P8SvFSAu c=1 sm=1 tr=0 ts=6adfc374 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=TxC64Fj3QtcIoGYGvycA:9
+X-Proofpoint-GUID: cEz9mXxV2YixcaGcLimKAsRdGVF2UX0A
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA4NCBTYWx0ZWRfX3JvF+OycFehH
+ 6PwncLv+soUD+YgBh0Xlq2bgzkldHgFGqhmvjj1R+v1bXLlZMyFPlti69Nukv1OZF5fvV1Ior8f
+ Ic/8q0XgkKu8oHflDUdzrvCWed/kYMo=
+X-Proofpoint-ORIG-GUID: cEz9mXxV2YixcaGcLimKAsRdGVF2UX0A
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA4NCBTYWx0ZWRfXxw067mLq0l2v
+ XjQOCwz7oU9c4OoeIksZ8P6KxxsrbYLDuL/aHupFzi+PcCxW/BNxvBF5MMktLucRM6NGleEeNu6
+ s5UzAR2k3cu3CFi3kA63GSgh0Ym1IQ4F76Y/E9Wt4YO9mX1HncKNXlLOcjA15AIAgvlsOKC4M9j
+ C6ewCm3uznAj3Ex4cNDEAaZKUdx1yelYHjLKeaWqq1uvM26GoBG0AZV6AJePIsg/STQzEgIc4lV
+ tW80XOHaNYvHkWx4ueGljFNwFNVIBhAP9jD4RY72jGgqBrQqetImOrD5uDs7k0AxRSyfJ47j3BW
+ nRHtO+Fh1aDNB9m+rKNED1HUTfr7ewQmU5ms9TRsUhA+K6Q9EQNb9XoIOHh9/dAoOebdmLi0pab
+ INZ/5Es/LNBbjB/ZeQYZ7KIDUWlUDygeG1+aHSz8u/JQTASq7Cb+GmfIhG3cKu5YjKShpYEYSb6
+ Zu31zLQV+CRkylPPScQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-26_04,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 malwarescore=0 phishscore=0 spamscore=0
+ clxscore=1015 bulkscore=0 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610260084
 
-On 10/20/26 9:57 AM, sashiko-bot@kernel.org wrote:
+sashiko-bot@kernel.org writes:
+
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] bpf: empty range after reg_bounds_sync() in sync_linked_regs()
+> - [Low] scsi: ibmvfc: build failure when CONFIG_KUNIT is disabled
 > --
 >
-> commit ad01f18c15eb8cfa9a97b984758db9dd254aace2
-> Author: Vineet Gupta <vineet.gupta@linux.dev>
+> commit e6767e190b474e7d3a6e33d2ed96de8dbb05ff1a
+> Author: Tyrel Datwyler <tyreld@linux.ibm.com>
 >
-> bpf: Track low-32 scalar equality across sign-extending movs
+> scsi: ibmvfc: fix potential NULL pointer dereference on failed queue allocation
 >
-> This commit adds BPF_REG_LINK_SEXT to track low-32 scalar equality across
-> 32-bit sign-extending moves, using sext_32_to_64() and tnum_sext() to
-> propagate bounds in sync_linked_regs().
+> This commit guards ibmvfc_deregister_channel() against freeing an
+> unregistered sub-CRQ or clearing an unallocated message buffer, and adds a
+> KUnit test suite to verify the guard conditions.
 >
->> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
->> index 6afd718ede647..4621b476b206e 100644
->> --- a/kernel/bpf/verifier.c
->> +++ b/kernel/bpf/verifier.c
-> [ ... ]
->> @@ -6090,6 +6090,25 @@ static void zext_32_to_64(struct bpf_reg_state *reg)
->>   	reg_set_urange64(reg, reg_u32_min(reg), reg_u32_max(reg));
->>   }
->>   
->> +/*
->> + * The sign-extending counterpart. Signed bounds carry over directly because
->> + * sign extension is monotonic over the signed 32-bit range.
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> index 145d559041f12..f0502d7482105 100644
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> @@ -6450,11 +6450,23 @@ static int ibmvfc_register_channel(struct ibmvfc_host *vhost,
+>>  		hcall_rc = plpar_hcall_norets(H_FREE_SUB_CRQ, vdev->unit_address, scrq->cookie);
+>>  	} while (hcall_rc == H_BUSY || H_IS_LONG_BUSY(hcall_rc));
+>>  reg_failed:
+>> +	scrq->cookie = 0;
+>>  	LEAVE;
+>>  	return rc;
+>>  }
+>>  
+>> -static void ibmvfc_deregister_channel(struct ibmvfc_host *vhost,
+>> +/**
+>> + * ibmvfc_deregister_channel - Deregister a sub-CRQ channel with the hypervisor
+>> + * @vhost:	ibmvfc host struct
+>> + * @channels:	ibmvfc channels struct containing the sub-CRQ array
+>> + * @index:	index into the sub-CRQ array
+>> + *
+>> + * Frees the IRQ, disposes of the IRQ mapping, and calls H_FREE_SUB_CRQ to
+>> + * release the sub-CRQ with the hypervisor. On success the queue message
+>> + * buffer is zeroed and the current index is reset. If H_FREE_SUB_CRQ fails,
+>> + * an error is logged but the channel resources are cleaned up regardless.
 >> + */
->> +static void sext_32_to_64(struct bpf_reg_state *reg)
->> +{
->> +	/*
->> +	 * See comment at reg_step_check_unsigned(). Sign extension subtracts
->> +	 * 2^32 from every value with bit 31 set, which preserves a residue
->> +	 * mod step only when step divides 2^32, so the line cannot be kept.
->> +	 * The zero-extending twin calls reg_step_check_unsigned(reg, 32) for
->> +	 * the same reason; the unsigned form does not apply here because the
->> +	 * result is not the low 32 bits but the low 32 bits moved.
->> +	 */
->> +	reg_step_reset(reg);
->> +	reg->var_off = tnum_sext(reg->var_off, 4);
->> +	reg_set_srange64(reg, reg_s32_min(reg), reg_s32_max(reg));
->> +}
-> [ ... ]
->> @@ -18795,9 +18843,26 @@ static void sync_linked_regs(struct bpf_verifier_env *env, struct bpf_verifier_s
->>   			scalar32_min_max_add(reg, &fake_reg);
->>   			scalar_min_max_add(reg, &fake_reg);
->>   			reg->var_off = tnum_add(reg->var_off, fake_reg.var_off);
->> -			if (reg->link_kind == BPF_REG_LINK_ZEXT ||
->> -			    known_reg->link_kind == BPF_REG_LINK_ZEXT)
->> +			if (reg->link_kind == BPF_REG_LINK_SEXT) {
->> +				sext_32_to_64(reg);
->> +			} else if (reg->link_kind == BPF_REG_LINK_ZEXT ||
->> +				   known_reg->link_kind == BPF_REG_LINK_ZEXT ||
->> +				   known_reg->link_kind == BPF_REG_LINK_SEXT) {
->> +				/*
->> +				 * Either @reg is itself the zero extension, or
->> +				 * @reg has no 32-bit kind and @known_reg does
->> +				 * -- the reverse direction, where the guard
->> +				 * above has already proved @reg fits 32 bits.
->> +				 * Then @reg is @known_reg's low half with
->> +				 * nothing above it, whichever way @known_reg
->> +				 * filled its own high half, so the zero
->> +				 * extension is the reconstruction for both
->> +				 * kinds. BPF_REG_LINK_FULL is not here on
->> +				 * purpose: it relates all 64 bits and must not
->> +				 * be truncated.
->> +				 */
->>   				zext_32_to_64(reg);
->> +			}
->>   			/*
->>   			 * Intersect rather than overwrite. A BPF_REG_LINK_ZEXT
->>   			 * link over a wide base does not propagate back, so the
-> [Severity: Medium]
-> Can sync_linked_regs() leave reg with CNUM64_EMPTY and CNUM32_EMPTY after
-> reg_bounds_sync(), triggering a register invariants violation on the next
-> instruction that inspects the register?
-
-Yes and actually two things:
-
-  - tnum_intersect() has no tnum_overlap() precheck, so two disagreeing 
-known bits become a known 1 rather than a detected contradiction.
-  - range_bounds_violation() tests only cnum32/64_is_empty, and it runs 
-*before* reg_bounds_sync(). A contradiction that only materialises 
-inside the sync through __update_reg_bounds() or 
-deduce_bounds_32_from_64() is therefore not caught by the restore that 
-4/12 added.
-
-So the guard added in 4/12 is narrower than the problem it is named for.
-
-The reproducer in your 4/12 report does not fire, though, and the log 
-says why. Built as a socket filter on a patch-10 kernel it verifies 
-clean, and the walk goes 0..7 then straight to 10:
-
-       5: R7=scalar(id=1+0,...,var_off=(0x4; 0x1))
-       6: (45) if r6 & 0x2 goto pc+1
-       6: R6=scalar(id=1,...,var_off=(0x4; 0xffffffff00000001))
-       7: (05) goto pc+2
-      10: (b7) r0 = 0
-
-The "r9 = 0; r7 %= r9" pair at 8 and 9 is never walked. r6's var_off has 
-bit 1 known zero: value 0x4, and bit 1 is not in the mask, so "if r6 & 
-2" is resolved statically and the contradicting path is pruned.
-
-r6 knows that because of 8/12 itself: its reverse arm pinned the base's 
-low half from r7, which is why R6 carries smin32/umin32=4, 
-smax32/umax32=5 and the low var_off (0x4; 0x1) by instruction 6. The 
-same issue hid the original 4/12 bug, 8/12 keeps masking things rather 
-than fixing them.
-
-Rather than keep on chasing which reproducers survives patch 8's 
-masking, v4 does what you suggested at the end of the 4/12 report: ask 
-tnum_overlap() before tnum_intersect(), and check 
-range_bounds_violation() after reg_bounds_sync() as well as before. Both 
-arms now go through one helper:
-
-     static void sync_bounds_or_revert(struct bpf_reg_state *reg,
-                       const struct bpf_reg_state *prev)
-     {
-         if (range_bounds_violation(reg)) {
-             *reg = *prev;
-             return;
-         }
-         reg_bounds_sync(reg);
-         if (range_bounds_violation(reg))
-             *reg = *prev;
-     }
-
-Thx,
--Vineet
-
-
-
-> At the end of the differencing block in sync_linked_regs():
+>> +VISIBLE_IF_KUNIT void ibmvfc_deregister_channel(struct ibmvfc_host *vhost,
+>>  				      struct ibmvfc_channels *channels,
+>>  				      int index)
+>>  {
+>> @@ -6471,20 +6483,28 @@ static void ibmvfc_deregister_channel(struct ibmvfc_host *vhost,
+>>  		scrq->irq = 0;
+>>  	}
+>>  
+>> -	do {
+>> -		rc = plpar_hcall_norets(H_FREE_SUB_CRQ, vdev->unit_address,
+>> -					scrq->cookie);
+>> -	} while (rc == H_BUSY || H_IS_LONG_BUSY(rc));
+>> +	if (scrq->cookie) {
+>> +		do {
+>> +			rc = plpar_hcall_norets(H_FREE_SUB_CRQ, vdev->unit_address,
+>> +						scrq->cookie);
+>> +		} while (rc == H_BUSY || H_IS_LONG_BUSY(rc));
+>>  
+>> -	if (rc)
+>> -		dev_err(dev, "Failed to free sub-crq[%d]: rc=%ld\n", index, rc);
+>> +		if (rc)
+>> +			dev_err(dev, "Failed to free protocol (%d) sub-crq[%d]: rc=%ld\n",
+>> +				channels->protocol, index, rc);
+>> +		else
+>> +			scrq->cookie = 0;
+>> +	}
+>>  
+>>  	/* Clean out the queue */
+>> -	memset(scrq->msgs.crq, 0, PAGE_SIZE);
+>> -	scrq->cur = 0;
+>> +	if (scrq->msgs.handle) {
+>> +		memset(scrq->msgs.crq, 0, PAGE_SIZE);
+>> +		scrq->cur = 0;
+>> +	}
+>>  
+>>  	LEAVE;
+>>  }
+>> +EXPORT_SYMBOL_IF_KUNIT(ibmvfc_deregister_channel);
 >
-> 	cnum64_intersect_with(&reg->r64, prev.r64);
-> 	cnum32_intersect_with(&reg->r32, prev.r32);
-> 	reg->var_off = tnum_intersect(reg->var_off, prev.var_off);
-> 	if (range_bounds_violation(reg))
-> 		*reg = prev;
-> 	reg_bounds_sync(reg);
->
-> range_bounds_violation(reg) is only checked before reg_bounds_sync(reg),
-> and tnum_intersect() is called without checking tnum_overlap(). When a
-> contradiction occurs across domains (between r64, r32, and var_off) rather
-> than within r64 or r32 individually, the pre-sync range_bounds_violation()
-> check passes, and reg_bounds_sync(reg) then turns the cross-domain
-> disjointness into CNUM64_EMPTY / CNUM32_EMPTY without restoring prev.
->
-> This can be triggered in two ways with BPF_REG_LINK_SEXT:
->
-> 1. Cross-domain contradiction between r64 and r32 via sext_32_to_64():
->
->     Suppose r6 is a 64-bit unknown scalar and r7 = (s32)r6 links r7 to r6
->     with BPF_REG_LINK_SEXT.
->
->     - Narrow r7 with signed 64-bit jumps to [-0x7ffffff0, 0x7ffffff0], so
->       r7.r64 is [-0x7ffffff0, 0x7ffffff0] and r7.r32 is the arc
->       [0x80000010, 0x7ffffff0].
->     - Execute if w6 < 0x7ffffff0 goto out. Because [0x7ffffff0, 0xffffffff]
->       and [0x80000010, 0x7ffffff0] overlap in two disjoint arcs,
->       cnum32_intersect() over-approximates by keeping the smaller arc
->       [0x7ffffff0, 0xffffffff] for r6.r32 and r7.r32, while r7.r64 remains
->       [-0x7ffffff0, 0x7ffffff0].
->     - Execute if w6 != w8 goto out where w8 has r32 = [0x7ffffff8, 0x80000007].
->     - In sync_linked_regs() for r7, reg->r32 is [0x7ffffff8, 0x80000007],
->       which straddles S32_MAX / S32_MIN. sext_32_to_64(reg) sets reg->r64 to
->       [S32_MIN, S32_MAX].
->     - Intersecting reg->r64 with prev.r64 gives [-0x7ffffff0, 0x7ffffff0]
->       (non-empty) and intersecting reg->r32 with prev.r32 gives
->       [0x7ffffff8, 0x80000007] (non-empty).
->     - range_bounds_violation(reg) is false, so *reg = prev is skipped.
->     - reg_bounds_sync(reg) calls deduce_bounds_32_from_64(reg), which
->       intersects [0x7ffffff8, 0x80000007] with [0x80000010, 0x7ffffff0] and
->       leaves reg->r32 = CNUM32_EMPTY and reg->r64 = CNUM64_EMPTY.
->
-> 2. Contradiction between var_off and r64/r32 via tnum_intersect():
->
->     Suppose r6 is a 64-bit unknown scalar, r7 = (s32)r6, and r7 is narrowed
->     to [-4, 3].
->
->     - Execute if w6 & 8 goto out. On the fallthrough branch,
->       regs_refine_cond_op() calls __mark_reg_unbounded(&r6) and clears bit 3
->       in var_off; sync_linked_regs() narrows r7 to [0, 3] with
->       var_off = TNUM(0, 3).
->     - Execute if w6 & 4 goto target. On the taken branch, r6 gets low-32
->       var_off = TNUM(4, 0xfffffff3) and r32 = [-0x7ffffffc, 0x7ffffff7].
->     - In sync_linked_regs() on r7, cnum64_intersect_with() and
->       cnum32_intersect_with() both produce [0, 3] (non-empty), while
->       tnum_intersect() without a tnum_overlap() check combines
->       TNUM(4, 0xfffffffffffffff3) and TNUM(0, 3) into TNUM(4, 3) ([4, 7]).
->     - range_bounds_violation(reg) is false before reg_bounds_sync(reg), and
->       __update_reg_bounds() inside reg_bounds_sync(reg) then intersects
->       [0, 3] with [4, 7], leaving r7 with CNUM32_EMPTY and CNUM64_EMPTY.
->
-> Should sync_linked_regs() check !tnum_overlap(reg->var_off, prev.var_off)
-> and also check range_bounds_violation(reg) after reg_bounds_sync(reg) before
-> committing the updated state?
->
->>   			/*
->>   			 * Intersect rather than overwrite. A BPF_REG_LINK_ZEXT
->>   			 * link over a wide base does not propagate back, so the
 > [ ... ]
 >
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc.h b/drivers/scsi/ibmvscsi/ibmvfc.h
+>> index ca80ceffe53a5..421ce8bc3ea33 100644
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc.h
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc.h
+>> @@ -1088,4 +1088,12 @@ static inline struct ibmvfc_host *ibmvfc_channels_to_vhost(struct ibmvfc_channel
+>>  #define ibmvfc_remove_trace_file(kobj, attr) do { } while (0)
+>>  #endif
+>>  
+>> +#if IS_ENABLED(CONFIG_KUNIT)
+>> +#include <kunit/visibility.h>
+>> +VISIBLE_IF_KUNIT void ibmvfc_deregister_channel(struct ibmvfc_host *vhost,
+>> +						struct ibmvfc_channels *channels,
+>> +						int index);
+>> +VISIBLE_IF_KUNIT struct ibmvfc_host *ibmvfc_get_first_vhost(void);
+>> +#endif
+>
+> [Severity: Low]
+> Does this break the build when CONFIG_SCSI_IBMVFC is enabled and CONFIG_KUNIT
+> is disabled?
+>
+> In drivers/scsi/ibmvscsi/ibmvfc-core.c, ibmvfc_deregister_channel() uses
+> VISIBLE_IF_KUNIT and EXPORT_SYMBOL_IF_KUNIT(ibmvfc_deregister_channel)
+> outside of any CONFIG_KUNIT guard.
+>
+> However, drivers/scsi/ibmvscsi/ibmvfc.h only includes <kunit/visibility.h>
+> when CONFIG_KUNIT is enabled, so the fallback definitions in
+> include/kunit/visibility.h:
+>
+> #else
+>     #define VISIBLE_IF_KUNIT static
+>     #define EXPORT_SYMBOL_IF_KUNIT(symbol)
+> #endif
+>
+> are never pulled in when CONFIG_KUNIT is disabled, causing compilation of
+> drivers/scsi/ibmvscsi/ibmvfc-core.c to fail due to unknown macros.
+>
+> A later commit in the series, commit 1bc41de0e60f ("scsi: ibmvfc: add basic
+> FPIN support"), adds an unconditional #include <kunit/visibility.h> to
+> drivers/scsi/ibmvscsi/ibmvfc-core.c, though leaving this commit and commit
+> 1b37c48a1902 ("scsi: ibmvfc: add link state to host struct") unbuildable with
+> CONFIG_KUNIT=n during bisection.
+>
+> Should <kunit/visibility.h> be included unconditionally in
+> drivers/scsi/ibmvscsi/ibmvfc.h (or drivers/scsi/ibmvscsi/ibmvfc-core.c) in
+> this commit?
 
+I'm configured a kernel build pseries_le_defconfig and then turned
+CONFIG_KUNIT off. Indeed, there's an error when building ibmvfc-core.c.
+
+I tried including <kunit/visibility.h> unconditionally in ibmvfc.h, but
+that caused build warnings for ibmvfc-nvme.c about unused
+functions. Including <kunit/visibility.h> in ibmvfc-core.c resolved the
+issue.
+
+This will be the fix in v17.
+
+-Dave
