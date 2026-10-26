@@ -1,81 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793023468;
-	b=zK1as6vAI43MrmQAqLTL6e/OPIWV7rXujhcOi5L1HC34jIqUQEVKCfmkScUOo0Jomym+
-	 X1QmSJFLunG7ELkFnuml5ZhlFlzFqKXgUOFbJm/qObnmwlsC3B5X9zpt7TVTDAkqZDrGm
-	 WUFHfx7ghxBhRQ8Sk/v6Vm02i6zazHYiFRqLi2eY1TuDHrX1DO3afnkQkSsMdyr41n0LC
-	 B0EVFJ+/iKnxeL2MFYNzzFVkViiWChWX8+Q0p0mfnWRSMCBuvxiA33rmLYgIN5V5HohBo
-	 4YAPgsQRyxgVBdIa50A96h/P1zsLZxfOzDopG2/HYXrppx+UOml4dKI1SX7tAQgxhgA==
+	t=1793024891;
+	b=IgoT3G/Jq/QiVSw3t8PmEt2gdJoTp4jYc7hYxSJ0cVcsqaG+zLaAKzt5RVJHql3sDIFc
+	 2S78zRVetPZEUkuac2n34n2zmLvsnEKFmaNeGFZBeXLIioguLGnJyAB+5SEmcmN8qiKwU
+	 3PRCRD1mQ1yt7BGlN5G5EfMUqvP1tWavO3ZcUMvB9t6qbnmseX/0PgXiyKtB/JU5DXWcJ
+	 3DYP3qpWb4C8i2iOIMSYKa0QZm65tWt6zZqMYdZ6c7PioGB6GUParBQW6H6d1Bedn/OkH
+	 O5EqNDcb1kKlzO3vZdLNhslUuu4W+d0eOJwAEU+WxwsdVhoSAJVw/WBJLVQuVHp+lwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793023468;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
-	 Received:Received:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-TM-AS-GCONF:
-	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Spam-Details-Enc:
-	 X-Authority-Analysis:X-Proofpoint-GUID:X-Proofpoint-Spam-Info:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
-	bh=PuMxAq8ry7rkPRNo8bPxAsp3Y2xQSTcDNM5FlctNm3Y=;
-	b=sGIXo8Pq5TDxw4YvRAv+i3gSa3LxMbImFnp3pGyv4Sp18DvsDq1paQJTo1PTKKXE4P91
-	 wYnlRrKE+U5UOkBHk2DPi+jyAbi621+Xx9+17+t6qo2DKsWqERX669kgsj1dCQWQxwtT6
-	 eD/biMr9Xm1vpaBz3j+HAcBa4eR6Umh4/clkxsjtk8pjZG/0ecpu0NrnDabhsYKVmnjbs
-	 yQDDeEE43FwlHp3vF8xhDjRj0Ekwu9VvsMMtE2FUCTzgbqFxa6BW/qPBq0aVadA+dQx+0
-	 9xRUnqdBGuYs2e6kfYECF3kG6F3ptKmo/vy2qjAcG/ZOtfeJpXGlm8mbmW9L+couVxw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793024891;
+	h=Received:DKIM-Signature:From:To:Subject:In-Reply-To:References:Date:
+	 Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=yoRAL1VdHDtmhri9kcaJF90SjTo1inDYchp3J27MFt0=;
+	b=G9tjxdwu7uduGOq6SkYttZJ7T+XvV1fKpbCK7PZTLF5MlvKzkYptR0w5pUeIxNhoFNAN
+	 Fkv9xdet/+vSPG1ymVvM9WtsUv3uTk+tQxOkLpu+Tb5dQG0KtZyPekKwPld6vmjvLfd2c
+	 A9Lda+5IrU+/OHDOjva/g3m+zWhHvVcvD+W2kVCDeEQx1NQW27JSoVnAWL3xKrRsJl40G
+	 gB3cpzvs5wPRTGsZNtnJC5hjOOGJOCkSNwickHDfzjupwnbRzWw2Om3nutBSNQWUJYazj
+	 Qxh4qhIHDxC5Y3dJsUIxFtt7GAujVOWX/z3SEp4Qfe9wDodA7XfhT8NcYbmwPmY7L4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.ibm.com;
-	spf=pass smtp.mailfrom=linux.ibm.com;
-	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=WczHv1l5;
-	arc=none smtp.remote-ip=148.163.158.5
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ex7BSezQ;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4551A606A322;
-	Mon, 26 Oct 2026 14:04:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4551A606A322
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07480606A31F;
+	Mon, 26 Oct 2026 14:28:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=WczHv1l5
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69QBEiR42189635;
-	Mon, 26 Oct 2026 14:04:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=PuMxAq
-	8ry7rkPRNo8bPxAsp3Y2xQSTcDNM5FlctNm3Y=; b=WczHv1l5TOazfh0PnAEzes
-	Qd7QtYSoqM4Pu74DM3sgyIyevq6tqoWsHNtSOj+Ji2BhAq9Rx+dOCmfY9F3deanr
-	XBFMTwbN5XybZ2HekLpJki5jgaPyA+TEfdJzEZj4tkwD9/xJfU2blM0+Vs27OGb+
-	weKJHo511MJYYo1WYjz8TBHvPhzQAxW9cLKirYeyWGDgiVn/YwC+7v+d+kf14/F7
-	nd3buw7wKcBG/anvY/ZzeX2w4Uo4828vBS32QptpmQ9MZOmw87QqeUSAiX+9mrvT
-	Xt6/dLyTN9Azu4z2IVSRhleCAEa0tUHcITR/N8AZd/blMVxYdYuuFdL4FVbUOJug
-	==
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgk3ft8j1-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Mon, 26 Oct 2026 14:04:27 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69QB4vt12397555;
-	Mon, 26 Oct 2026 14:04:26 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hh80je7jf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 Oct 2026 14:04:26 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com [10.241.53.104])
-	by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69QE4PTM11272786
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 26 Oct 2026 14:04:25 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 6D9115805D;
-	Mon, 26 Oct 2026 14:04:25 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id B51D358052;
-	Mon, 26 Oct 2026 14:04:24 +0000 (GMT)
-Received: from [9.61.99.193] (unknown [9.61.99.193])
-	by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Mon, 26 Oct 2026 14:04:24 +0000 (GMT)
-Message-ID: <b544c525-f13e-4fde-a98a-3e41f1827ca3@linux.ibm.com>
-Date: Mon, 26 Oct 2026 10:04:24 -0400
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Ex7BSezQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A6DC1F01825;
+	Mon, 26 Oct 2026 14:28:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793024890;
+	bh=yoRAL1VdHDtmhri9kcaJF90SjTo1inDYchp3J27MFt0=;
+	h=From:To:Subject:In-Reply-To:References:Date;
+	b=Ex7BSezQNQd93RpzBcXQvGnDsZfYKCJ9dp3U54YKrnpfmbeK8135MGYTVMEJSDLeg
+	 SfMVX61hThT/NN1pjgIpI+6UC30yAcPGhvWa2BMH0CPqK/1xax6R6b5inwt54mc2o9
+	 17v5U40rdAYLzgTxl589AlgVbh0DO1koBG5dFqU8LUgZCdzKpbpIJxnPD9mqdre6b5
+	 IDlrSZpSR1jCLexjrEXUweKtj4h1MVY9zAEysZUZUSrPJPFfTfUMvvqfgQ1jzZz0Yx
+	 ztn/4Ma7QcJgrc1az/XrB1ePZDzdcqRycqQw3pkVKswhZt8qGZIYpL8m3YXlkiVSVW
+	 E9hz4BG+y6g0g==
+From: =?utf-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>
+To: sashiko-reviews@lists.linux.dev, Zhiling Zou <zhilinz@nebusec.ai>,
+ bpf@vger.kernel.org
+Subject: Re: [PATCH net 1/1] xsk: validate consumer ring producer index
+In-Reply-To: <sashiko-outbox-182466@kernel.org>
+References: <cover.1792654486.git.zhilinz@nebusec.ai>
+ <d2b51708a3ada3b12b986224ee8340ca7ef5b3be.1792654486.git.zhilinz@nebusec.ai>
+ <sashiko-outbox-182466@kernel.org>
+Date: Mon, 26 Oct 2026 15:28:07 +0100
+Message-ID: <87y0bk5yfc.fsf@all.your.base.are.belong.to.us>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -85,134 +58,135 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 03/15] s390/vfio-ap: Functions to initialize/release
- vfio device migration data
-To: sashiko-reviews@lists.linux.dev, linux-s390@vger.kernel.org,
-        kvm@vger.kernel.org
-Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Jason Herne <jjherne@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20261023174349.3545941-1-akrowiak@linux.ibm.com>
- <20261023174349.3545941-4-akrowiak@linux.ibm.com>
- <sashiko-outbox-183045@kernel.org>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <sashiko-outbox-183045@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: I-b_LZiAvJqRA3N8MXIvxgQWmPynsOsC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA1NCBTYWx0ZWRfXxcC4PE98AgQz
- Gq+Eiw6qAAq/5Esvd5WHSp8eY6+brnF0FTi4dgHyQhNB1/38k9T/dMAle5kw6TjLRZHC9Ap8roi
- nET2g5SzOsV2k6D0uUlRf5ehFjFs54ukMtC4QorVisxbIiYkf2mbVXg0rhfYu+WdbDvbToGcu3q
- Vkmoq6pAOZtfLMXzcmzmFu4mHPb5vRnfB2T1v0tXnROK/KY2AHAmqhj/l4YMrZ6LAgOm1X86joV
- FSojkaF2bupdGMLw/QgMrRR2RLyu5wkkVINsxglEzEjRVd7RBPrkdqsHQ7U8jEpgnHVHLRgY54w
- BR+VFbW6kffPaxDz8Qiookijfvlp+YZrxr5IuQJmQczuop7zXcD+XIn77vgdbgYLXvYbeXHWkqt
- t7iZ858lYFmUyPPineKHroSzniAt9A==
-X-Authority-Analysis: v=2.4 cv=BOMmP1QG c=1 sm=1 tr=0 ts=6adf5deb cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=B8PkBatXBUWJemwRq-AA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: I-b_LZiAvJqRA3N8MXIvxgQWmPynsOsC
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA1NCBTYWx0ZWRfX76SUMlkYQkRf
- P7CfxINkR/qwFRUO9+DJ2WiCi1gG8IjIiho2ASBwGR755T72jFPcw/w2dbZB7qy7jn0evCt/a0X
- /uQ8dCfh3k06rkDJv1QCY33jyf214D8=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-26_02,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 malwarescore=0 adultscore=0 phishscore=0
- spamscore=0 lowpriorityscore=0 classifier=typeunknown authscore=0 authtc=
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2610190000 definitions=main-2610260054
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+sashiko-bot@kernel.org writes:
 
-
-On 10/23/26 2:09 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] s390/vfio-ap: ap_is_se_guest() checks host in vfio_ap_init_migration_data()
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] xsk: unbounded re-peek loop in __xp_alloc() despite __xskq_cons_=
+peek() check
 > --
 >
-> commit 79c297f4ef408f423e0eed3174df28dca4e407f2
-> Author: Anthony Krowiak <akrowiak@linux.ibm.com>
+> commit b1eb51f9c983fb773e7eaf99ed508d1895d9b804
+> Author: Zhiling Zou <zhilinz@nebusec.ai>
 >
-> s390/vfio-ap: Functions to initialize/release vfio device migration data
+> xsk: validate consumer ring producer index
 >
-> This patch adds helper functions to allocate, initialize, and release the
-> vfio_ap_migration_data structure and its associated migration file state
-> when a vfio_ap mediated device is opened, closed, or released.
+> This commit adds a bounds check in __xskq_cons_peek() to clamp q->cached_=
+prod
+> to q->cached_cons when the producer-consumer distance exceeds q->nentries,
+> aiming to bound the consumer loop in __xp_alloc() to the ring size.
 >
->> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
->> index f01a37e4c418f..ba86a1afbb332 100644
->> --- a/drivers/s390/crypto/vfio_ap_migration.c
->> +++ b/drivers/s390/crypto/vfio_ap_migration.c
-> [ ... ]
+> Link: https://bugtracker.nebusec.ai/f/13760
 >
->> +int vfio_ap_init_migration_data(struct ap_matrix_mdev *matrix_mdev)
->> +{
->> +	struct vfio_ap_migration_data *mig_data;
->> +
->> +	lockdep_assert_held(&matrix_dev->mdevs_lock);
->> +
->> +	/*
->> +	 * Live guest migration is not supported for SE guests, so there is no
->> +	 * need to initialize the migration data.
->> +	 */
->> +	if (ap_is_se_guest())
->> +		return 0;
-> [Severity: Medium]
-> Does ap_is_se_guest() check the right entity here when called via
-> vfio_ap_mdev_open_device() -> vfio_ap_init_migration_data()?
+>> diff --git a/net/xdp/xsk_queue.h b/net/xdp/xsk_queue.h
+>> index 1bc42c8902f4b..315b656534749 100644
+>> --- a/net/xdp/xsk_queue.h
+>> +++ b/net/xdp/xsk_queue.h
+>> @@ -344,6 +344,9 @@ static inline void __xskq_cons_peek(struct xsk_queue=
+ *q)
+>>  {
+>>  	/* Refresh the local pointer */
+>>  	q->cached_prod =3D smp_load_acquire(&q->ring->producer);  /* C, matche=
+s B */
+>> +	/* A malformed producer must not make us consume beyond the ring. */
+>> +	if (q->cached_prod - q->cached_cons > q->nentries)
+>> +		q->cached_prod =3D q->cached_cons;
+>>  }
+>>=20=20
+>>  static inline void xskq_cons_get_entries(struct xsk_queue *q)
 >
-> In drivers/s390/crypto/ap_bus.c, ap_is_se_guest() is defined as:
+> [Severity: High]
+> Does this check in __xskq_cons_peek() actually bound the loop in __xp_all=
+oc()
+> to at most q->nentries descriptors?
 >
-> bool ap_is_se_guest(void)
-> {
-> 	return is_prot_virt_guest() && ap_sb_available();
+> In net/xdp/xsk_buff_pool.c:__xp_alloc(), invalid fill descriptors are con=
+sumed
+> in an unbounded loop that calls xskq_cons_peek_addr_unchecked() on every
+> iteration:
+>
+> net/xdp/xsk_buff_pool.c:__xp_alloc() {
+> 	for (;;) {
+> 		if (!xskq_cons_peek_addr_unchecked(pool->fq, &addr)) {
+> 			pool->fq->queue_empty_descs++;
+> 			return NULL;
+> 		}
+>
+> 		ok =3D pool->unaligned ? xp_check_unaligned(pool, &addr) :
+> 		     xp_check_aligned(pool, &addr);
+> 		if (!ok) {
+> 			pool->fq->invalid_descs++;
+> 			xskq_cons_release(pool->fq);
+> 			continue;
+> 		}
+> 		break;
+> 	}
 > }
 >
-> That helper checks whether the currently running kernel itself is executing as
-> a Protected Virtualization (Secure Execution) guest, rather than checking
-> whether the target KVM guest attached to the mediated device is an SE guest.
-> Because vfio_ap runs on the KVM host where is_prot_virt_guest() is false,
-> ap_is_se_guest() will always evaluate to false here and matrix_mdev->mig_data
-> will still be allocated and initialized for SE guests.
+> Whenever pool->fq->cached_cons catches up to pool->fq->cached_prod after
+> consuming a batch of invalid descriptors, the next iteration of the loop =
+does
+> not terminate. Instead, xskq_cons_peek_addr_unchecked() in
+> net/xdp/xsk_queue.h calls xskq_cons_get_entries():
 >
-> Additionally, vfio_ap_init_migration_data() is called from
-> vfio_ap_mdev_open_device() when userspace first opens the VFIO device (and
-> before vfio_ap_mdev_set_kvm() sets matrix_mdev->kvm), whereas an s390 KVM
-> guest only transitions into Protected Virtualization mode later when the guest
-> executes DIAG 308 subcode 8 or 10. Can the SE guest check be performed when a
-> migration state transition is requested via kvm_s390_pv_is_protected(), rather
-> than during device open?
-
-It is true that ap_is_se_guest() checks only whether the host kernel 
-itself is
-running as a Secure Execution guest; it does not check whether the KVM 
-guest
-attached to the mdev is protected. However, when the host kernel is an 
-SE guest,
-the AP hardware queues are bound to that SE host under UV control. The 
-AP queue
-state on an SE host is protected memory and cannot be extracted and 
-transmitted
-to a destination host, so live guest migration of vfio-ap devices is not
-possible from such a host regardless of whether any particular KVM guest is
-also running under SE. The ap_is_se_guest() guard in
-vfio_ap_setup_vfio_device_migration() and vfio_ap_init_migration_data() is
-checking the right entity for the right reason.
-
-The existing uses of ap_is_se_guest() in ap_queue.c (e.g. the secure binding
-path) follow the same pattern — they gate AP subsystem behavior on the 
-host's
-own SE status, not on any KVM guest's status. The features_show() 
-function in
-vfio_ap_drv.c omits the migration feature token on SE hosts for the same 
-reason.
-
+> net/xdp/xsk_queue.h:xskq_cons_peek_addr_unchecked() {
+> 	if (q->cached_prod =3D=3D q->cached_cons)
+> 		xskq_cons_get_entries(q);
+> 	return xskq_cons_read_addr_unchecked(q, addr);
+> }
 >
+> xskq_cons_get_entries() then calls __xskq_cons_release() to publish the n=
+ewly
+> advanced q->cached_cons to the user-mapped q->ring->consumer, followed by
+> __xskq_cons_peek() to reload q->cached_prod from q->ring->producer and
+> validate it against the updated q->cached_cons.
+>
+> Because __xskq_cons_peek() re-evaluates q->cached_prod - q->cached_cons >
+> q->nentries relative to the newly advanced q->cached_cons on each reload,=
+ two
+> cases can still exceed q->nentries in a single __xp_alloc() call:
+>
+> 1. On a one-entry ring (q->nentries =3D=3D 1) containing an invalid descr=
+iptor
+> address, a concurrent userspace thread updating q->ring->producer in the
+> mmap'd fill ring as q->ring->consumer advances (for example keeping
+> q->ring->producer equal to q->ring->consumer + 1) satisfies
+> q->cached_prod - q->cached_cons <=3D q->nentries on every re-peek in
+> xskq_cons_get_entries(), keeping the kernel in the __xp_alloc() loop
+> indefinitely in receive context.
+>
+> 2. Even without concurrent updates during __xp_alloc(), if k > 0 entries =
+are
+> already cached on entry to __xp_alloc() (q->cached_prod - q->cached_cons =
+=3D=3D k)
+> and userspace has written q->ring->producer =3D q->ring->consumer + k +
+> q->nentries, __xp_alloc() first consumes the k cached invalid descriptors
+> until q->cached_cons reaches q->cached_prod. Then xskq_cons_get_entries()
+> advances q->ring->consumer by k and reloads q->ring->producer, where the
+> remaining distance is now q->nentries <=3D q->nentries, causing __xp_allo=
+c() to
+> consume an additional q->nentries descriptors.
+>
+> Should __xp_alloc() also bound the number of iterations or avoid re-fetch=
+ing
+> new batches via xskq_cons_get_entries() once the initial batch of descrip=
+tors
+> has been exhausted?
 
+Sashiko has a point IMO (let's wait for the netdev-bot tho).
+
+The simplest fix I can see, is changing "continue" in:
+
+  |             if (!ok) {
+  |                     pool->fq->invalid_descs++;
+  |                     xskq_cons_release(pool->fq);
+  |                     continue;
+  |             }
+
+to: "return NULL".
+
+
+Bj=C3=B6rn
