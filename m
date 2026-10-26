@@ -1,54 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793000090;
-	b=i2CxQ5icTsAG4Hm3IfUSmKUj1N4wIGGGEsMGYHNmPRFGCBEwvcGImrBwpD4zVmwaV4eG
-	 FYNGkkDu+Z/f3J96jHo5rENtSivCGhkTSZXOrQ4N80mDIo8sc6X3d23z3nnytt19p3oBo
-	 DnGRB6o7cfnc/b5ccGGxKO1yf499F2DMC/R119UGl2lt1pCrF9MOkwY4rxDepx6x0w7yZ
-	 MFWGhy0NQ12QbX20dIJaq7p0AlMP8PqRae98gPJEGltZ8AB+Us3iXA2id5wXFp5R9qIQK
-	 3xGtvL3+w/QdOjIijHJ5ejN/toNjD8CWjrcnXvR0wRcOWGVw0gq1AZYw1vnzx/S2Igw==
+	t=1793000484;
+	b=HmO50zAcSQVnuGEiiItgT2wJB1CNordm+CBpN+FcvEAiS4p9omS7ErAS6r/6dhQbWUUN
+	 to7hsek+PI+f7IHdHoVoSXidEufCAz7HUi/Gr5vF8y5pn5hmWcY29mNUQVAEHD8EsgVj+
+	 A+NRKzCI1dmwrKPCP0Cyz6kf54JM+VAFU7PIea8MWqXRbyDzPBhhWASAqJQJq/28dnNhN
+	 163rlmV/QwDzsOAMBCkJSkc2X3YaPbu2Ct2aqe8vFMGYlDQYBzOlEqwNn4oTjxIoeBfFj
+	 lgLlncA9Z0fGRG1Ey4WJFo/wRtlepf+jur0qxvsUAMwgPlpr9bF24d69xfUEe8eA2lQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793000090;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=eCp7793YU+XpI2dR52kKJJUrJruoufr3s1+FAGOxksY=;
-	b=dinHYgSou+RHb3p6sSSMKMRe008cYeo+jYeWBRFRqr5HU/FZeil7iLshC8LrK4xWWNlJ
-	 AK2l2tgrDvIOqGwSj/ecpA/nXMxu3QMJNRIAbQx90HJqg7WXiy/IoaW90PEbO9F4rWMrl
-	 bKBeHHZprXNqIllvc0Mivbc7SwstxVzNmRnZiF+bJS/01fA1Ki+SkL6KG83ph+T4N4+KM
-	 hSFXjiTnNmXRPzFfhpnqUMcxldjOYp605VDMOsBINXGii4cSc5xo3vk0/kcEA23p0MGlp
-	 VobbH+ez/ktOs5M8DWBEYZg0gWXN7UPg5wxx9M3Gzd9e5D5E8gWFEKuh0GH78ZZBRwg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793000484;
+	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
+	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spamd-Result:
+	 X-Spam-Score:X-Spam-Level:X-Spam-Flag;
+	bh=sWrkcP/yBVW3JGHMD8FsWZTL1fQHiKFs8LimUVOooqU=;
+	b=1pUr/f5DAzz1oWLiuJWf2RUMKib2RbUyl84YhzwV0UW0PNHraubJa6xLRBQlkKkkUbJ5
+	 uT9wF2nqh0Dssh4ELVmYMQhYMSb5sTr2zxl9Km2hSI2Os7OjABHD13TDvzkb9osbrcH5K
+	 6x8VEO61LvKn9wa/m/+lLTagBIw4sPIPB0wvtJ0pHPgo3rWgUuqfBepeZtrqNFrpSdOiE
+	 vpl8STm1rhvxoZRW/hXBaOvmRRbRS8tawamzxlS0FN/UHtfZH6MRkcw8qZpyuuSenhkGx
+	 gtTnlhiltThNlah/w8SRisFFEtDl8xLHAsWXJEdjDR/nv6cQ54Mt9AU07zOLHnLmoNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UsTSCXzR;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=suse.de;
+	spf=pass smtp.mailfrom=suse.de;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IMSjQOaC;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=FedeyjtJ;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IMSjQOaC;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=FedeyjtJ;
+	arc=none smtp.remote-ip=195.135.223.130
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242C1606A31A
-	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 07:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBA7606A322
+	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 07:41:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CBBA7606A322
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=UsTSCXzR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42E91F031E9
-	for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 07:34:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793000089;
-	bh=eCp7793YU+XpI2dR52kKJJUrJruoufr3s1+FAGOxksY=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=UsTSCXzR+/RjF9VnjyyhN4i1jTHMUDayGFUMfG8dnQNxw09izDNW4bne3+DM3nr9c
-	 WMdFJuuokskdhoWpwWdUD66xtgYNT3ilRBItkcgwr6m6AxyajJp5N8EWgmZgUpjzz1
-	 mNgKinnthCD6R2XbLcRJPInGLiuMhMDyO5z0Dl+CfeWlluxg2yqLGv/OzsmxYuq0/8
-	 PECJpBocY4XFWFeFQuH5Ci29f1+UDyvpcck0kGjhTkVBzZU+0oAnH24bqslIlq8TNM
-	 G8va/Znm4XrSCLC6OzMNFGj4KkC58shzmD2A/FieYhVzRSsyYRL+2zkWeS9yoEAtxB
-	 BKUQ14ERwuGug==
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-93efc0452b5so174454385a.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 26 Oct 2026 00:34:49 -0700 (PDT)
-X-Gm-Message-State: AFq9FYJCO+MrGHC86UbbNAZ3YJ5lYnTas+++VGdIqVkKkrtRCSTouHcp
-	/Aouokm4d6QhlxW58JlWUB3FNs89iLaXBn5l9bDzn18sM/EHfaMrgw1cX6lHeZFlMpuoiOyrwWc
-	eKRJyyEMyrv2JIvI0zr0xBMayuL8U7Ow=
-X-Received: by 2002:a05:620a:458e:b0:93c:b7f3:9f5b with SMTP id
- af79cd13be357-940ef95515fmr961429385a.45.1793000089011; Mon, 26 Oct 2026
- 00:34:49 -0700 (PDT)
+	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IMSjQOaC;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=FedeyjtJ;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IMSjQOaC;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=FedeyjtJ
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 0FF47222C7;
+	Mon, 26 Oct 2026 07:41:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1793000482; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=sWrkcP/yBVW3JGHMD8FsWZTL1fQHiKFs8LimUVOooqU=;
+	b=IMSjQOaCYWrZu7o5oVeTyU5bR+QO2aHnpndiTERI5WvKhqz750d5ghV49LPUysNNNTkC9h
+	0zAl5CtbyfEov4yIlVzmrfTc2ykbkwfbaYGf1ExI9csxqZKV/TXReZztxrbvbw8xI43yLz
+	eF4XcUzEWGDs4UbBJFUgDeFyWlakNNg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1793000482;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=sWrkcP/yBVW3JGHMD8FsWZTL1fQHiKFs8LimUVOooqU=;
+	b=FedeyjtJmYr8yfqpxxZ7nqWPJCLWdfeDsrXcaVNhFTgOWJQTS7/yvJss8Yb3TZmacB+Gny
+	HxldMtmc75DcbzBQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1793000482; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=sWrkcP/yBVW3JGHMD8FsWZTL1fQHiKFs8LimUVOooqU=;
+	b=IMSjQOaCYWrZu7o5oVeTyU5bR+QO2aHnpndiTERI5WvKhqz750d5ghV49LPUysNNNTkC9h
+	0zAl5CtbyfEov4yIlVzmrfTc2ykbkwfbaYGf1ExI9csxqZKV/TXReZztxrbvbw8xI43yLz
+	eF4XcUzEWGDs4UbBJFUgDeFyWlakNNg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1793000482;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=sWrkcP/yBVW3JGHMD8FsWZTL1fQHiKFs8LimUVOooqU=;
+	b=FedeyjtJmYr8yfqpxxZ7nqWPJCLWdfeDsrXcaVNhFTgOWJQTS7/yvJss8Yb3TZmacB+Gny
+	HxldMtmc75DcbzBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A324F13319;
+	Mon, 26 Oct 2026 07:41:21 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id MKHHESEE32qkBgAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Mon, 26 Oct 2026 07:41:21 +0000
+Message-ID: <4baeea95-1628-485e-bee7-925849a867d2@suse.de>
+Date: Mon, 26 Oct 2026 08:41:20 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,78 +106,109 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261022220203.91911-1-baohua@kernel.org> <20261022220203.91911-8-baohua@kernel.org>
- <sashiko-outbox-183273@kernel.org> <CAMgjq7AZF4R8voNhsbj5Ede7NR19k1tkAMGnn7556ydB2ERX5A@mail.gmail.com>
-In-Reply-To: <CAMgjq7AZF4R8voNhsbj5Ede7NR19k1tkAMGnn7556ydB2ERX5A@mail.gmail.com>
-From: Barry Song <baohua@kernel.org>
-Date: Mon, 26 Oct 2026 15:34:38 +0800
-X-Gmail-Original-Message-ID: <CAGsJ_4zObH8KOzRL77+oPgp5Scu9fJuV7Q5_8=qDVMERA_t+1w@mail.gmail.com>
-X-Gm-Features: AclHuK8HIHYePZwSi4ORH8Tu8XMTrLkYqZE4DswlO9WKZxuNsXLsRQwzbO4Fx3c
-Message-ID: <CAGsJ_4zObH8KOzRL77+oPgp5Scu9fJuV7Q5_8=qDVMERA_t+1w@mail.gmail.com>
-Subject: Re: [RFC PATCH v5 07/14] mm/mglru: balance anon and file scan budget
- by refault rate
-To: Kairui Song <ryncsn@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, akpm@linux-foundation.org, 
-	linux-mm@kvack.org, hui.zhu@linux.dev, axelrasmussen@google.com, 
-	baolin.wang@linux.alibaba.com, david@kernel.org, hannes@cmpxchg.org, 
-	ljs@kernel.org, mhocko@kernel.org, qi.zheng@linux.dev, shakeel.butt@linux.dev, 
-	weixugc@google.com, yuanchu@google.com, zhuhui@kylinos.cn, 
-	baoquan.he@linux.dev, liuxiang.277@bytedance.com, wangzicheng@honor.com, 
-	lianux.mm@gmail.com, liam@infradead.org, surenb@google.com, mhocko@suse.com, 
-	rppt@kernel.org, zhangbo56@xiaomi.com, lyugaofei@xiaomi.com, 
-	ridong.chen@linux.dev, kunwu.chan@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 7/7] vt: Remove old-style con_blank
+To: Helge Deller <deller@gmx.de>, Greg KH <gregkh@linuxfoundation.org>
+Cc: jirislaby@kernel.org, James.Bottomley@hansenpartnership.com,
+ simona@ffwll.ch, linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+ linux-fbdev@vger.kernel.org, linux-parisc@vger.kernel.org,
+ sashiko-reviews@lists.linux.dev
+References: <20261023132448.115747-1-tzimmermann@suse.de>
+ <20261023132448.115747-8-tzimmermann@suse.de>
+ <2026102312-chute-proud-204a@gregkh>
+ <68342b92-0e12-4aa1-a215-efb623418696@gmx.de>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <68342b92-0e12-4aa1-a215-efb623418696@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-13.29 / 50.00];
+	SUSE_INTERNAL_BYPASS(-9.00)[];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	XM_UA_NO_VERSION(0.01)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	FREEMAIL_TO(0.00)[gmx.de,linuxfoundation.org];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmx.de];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.com:url]
+X-Spam-Score: -13.29
+X-Spam-Level: 
+X-Spam-Flag: NO
 
-On Sun, Oct 25, 2026 at 12:25=E2=80=AFAM Kairui Song <ryncsn@gmail.com> wro=
-te:
-[...]
-> > > @@ -5948,8 +6001,11 @@ static int run_eviction(struct lruvec *lruvec,=
- unsigned long seq, struct scan_co
-> > >               if (sc->nr_reclaimed >=3D nr_to_reclaim)
-> > >                       return 0;
-> > >
-> > > -             nr_batch =3D min(nr_to_reclaim - sc->nr_reclaimed, MAX_=
-LRU_BATCH);
-> > > -             if (!evict_folios(nr_batch, lruvec, sc, swappiness))
-> > > +             lruvec_evictable_size(lruvec, swappiness, nr_to_scan);
-> > > +             lru_gen_balance_scan(lruvec, swappiness,
-> > > +                                  nr_to_reclaim - sc->nr_reclaimed, =
-nr_to_scan);
-> > > +
-> > > +             if (!evict_folio_lists(nr_to_scan, lruvec, sc, swappine=
-ss, MAX_LRU_BATCH))
-> > >                       return 0;
-> > >
-> > >               cond_resched();
-> >
-> > [Severity: Medium]
-> > Can budgeting with lruvec_evictable_size() in lru_gen_balance_scan() ca=
-use
-> > lost scan budget and premature reclaim termination in try_to_shrink_lru=
-vec()
-> > and run_eviction() when one type has no folios in scannable generations=
- or
-> > eligible zones?
+Hi
+
+Am 25.10.26 um 08:48 schrieb Helge Deller:
+> On 10/23/26 15:37, Greg KH wrote:
+>> On Fri, Oct 23, 2026 at 03:16:17PM +0200, Thomas Zimmermann wrote:
+>>> All consoles implement the new con_blank plus con_unblank. Remove
+>>> the old semantics from con_blank. Always pass a VESA blank mode to
+>>> the blank parameter.
+>>>
+>>> v3:
+>>> - keep con_blank's mode_switch parameter
+>>
+>> Shouldn't the "v3:" stuff go below the --- line?
+
+Force of habit. Putting the change log in the commit description is 
+common for DRM patches.
+
+I'll do better next time.
+
+
+> Series applied to fbdev git tree.
+> While at it, I dropped the v3: stuff lines, so no need to resend.
+
+Thanks Helge.
+
+Best regards
+Thomas
+
 >
-> At the moment it's like part of the design, prioiry will raise and in
-> the end we will have no scannable generation limit, zone might worth
-> be considered when getting the evictable size though?
+> Helge
 
-It should be straightforward to exclude non-reclaimable zones based on
-Bo's fix to 14/14 which addresses the GFP_NOIO issue[1].
-Since sc is already passed to lruvec_evictable_size(),
-this should be fairly simple.
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
 
-If you want to give it a try, I've pushed the code to:
 
-https://git.kernel.org/pub/scm/linux/kernel/git/baohua/linux.git/log/?h=3Ds=
-wappiness-rfc-v5-with-kairui-and-fixes
-
-[1] https://lore.kernel.org/linux-mm/20261025013103.2742885-1-zhangbo56@xia=
-omi.com/
-
->
-> Also, maybe we can improve the aging on imbalance to trigger when the
-> scan budget is much larger than the scannable size (and priority is
-> raised beyound default)?
