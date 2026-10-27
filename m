@@ -1,26 +1,25 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=198.175.65.10
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793128950;
-	b=pSmeCAk9LEBgIi9wJxy6WKxVBgVED8Jidaz/YW4XDsuW9tcYmwYOqWYDYEoRmn7F6VLX
-	 tgCAC1xC6duGeCiF3W3DxIwVXubP4BfgdYe2ZKe1WCb1V0GXPU1esl3EEoDYOXmYsZN2K
-	 WV8A/Wo3konbyMtM3ZcNcJ7vNj0z5gPY8A3smVuFyt4txo+zD/SL2Umz+tDH73kWB8iDr
-	 ZWXs4hbIvKcHKFgRCTkV/kBBVH0+XFHF32SZTz/23qu6aIwUZzniFYW0TYvEGJvEG2LUz
-	 JF7BGKDm+Uu3n7RlCxjtA5jjBSgQodrzJXu4rvTxU/DvRCRN+sl4ri3rcNIiLVPRExg==
+	t=1793128954;
+	b=jlCAY6xZW2IMVjAhz9wG5raJKSJWzHmdPRWM4W6m5SN6Oj2SUouH6I0J5a1FkUvqAzOh
+	 OAQTv4OqVsv0M1oaclLuv/zm9BCT+lviVN2TmU8KO8jtK6SFG3uAaCIdt3f9mYNyoDjGU
+	 WtOd5t2r4+fxZKcsYK8xOgz+zqBYaO/YvC5duBKVXHqwXF33HMd0gCjTN7N2BOJenOM6l
+	 BhLHkadMQKCDRMxbMAC3mg3JVK1eQiDMrIUFo3gbUQdQJAlh6HKERjgFaymBHJAiN63ij
+	 affpZZP1Jt5+jOckD3YHpH6wQnhyGKGcdnT6XlR29Z9exRttG43raXDstQqBUDfPXSQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793128950;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793128954;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
 	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:Received:Received:Date:From:To:CC:Subject:Message-ID:
-	 References:Content-Type:Content-Disposition:Content-Transfer-Encoding:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
+	 Received:Received:Received:Message-ID:Date:User-Agent:Subject:To:
+	 References:From:Content-Language:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:
-	 X-MS-Exchange-AntiSpam-MessageData-1:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
 	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
 	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
@@ -28,104 +27,104 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=A9pZYWdbwW/sgWZ7Cyg9Dq7+CZ1TCJ3s8ZJ7KrvMF4g=;
-	b=Hnm+mM/S87iy/jpL/yjAAcYsOej56fMLB6oTAcoUUjm5136sLaN4pL5f8p/xEBD5LmaX
-	 WIkysmlDi7GVt+WD73xvQDk9gdh2RqX3jfjWyXC9LAhTjp4pd4ckkr848dvUFlz13Z2oo
-	 KR8SHoVxkdmzVrvWCvs0OvPlCphqkjYb0p7LKAQ1/EMYogtJKWHxqpAO489jtDWU7nsXM
-	 uVViZ7AGC+pLm96c0V40c9opDufh/rCEAqQIAZ6u0Oc+sKXyudMI6fcPiyiySAoyvbJaL
-	 PuZAAYwPRttD429pzYCRFzM/tYm627mSfjHXewU70bZBaqY6ff5i4HhTzKkosa0IaWQ==
+	bh=WrjJ210tUx+GDtjvq8dmmpooB5aVjih5AHs4ZvOtsFY=;
+	b=RxgoqBX1hPsY8gc3gtJdvxYQ6Qc3jHMA5ODohBWndVB56dMMF+vrmNsuL7g1m1bCqcg4
+	 RsAuJTE/XGyhammZ+xDeQhs+tm2Uk9lnjRvmfFDUDLtHY7iB5IFMjmKSZrzC17oEJxxM6
+	 Q0yFcHSF6ZAMR6pNixMh7bvejNG4UT/ODtPigUA5tptp60yE3TuSWhM01yvPc2d4BSAL5
+	 ULxpqYHpUx6sreN7EwzNnHWJ9dYtkuCKi3oUrfopAx7prJCudQYK+vbBrVj9d/zs6uZmg
+	 VXyNl2B8IPCofdEUmobdDKf+95ToaGpz1zm5+jTVnBvc6Kp3rH4LrmBQDPDrtF1TLRA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=intel.com;
 	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=NiUUu2Vn;
-	arc=fail smtp.remote-ip=198.175.65.15
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=FDJFueQy;
+	arc=fail smtp.remote-ip=198.175.65.10
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58AD606A31A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 19:22:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B58AD606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C848606A31A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 19:22:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8C848606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=NiUUu2Vn
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=FDJFueQy
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793128950; x=1824664950;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=+j8Nh+pqm/MOH4/806dcaZ8MKyXDpPbRprkuSVbQ5aI=;
-  b=NiUUu2VnrcBLDFFFzxDZHhLc2hWOtL74Kaehy6vIHz6NEVGqHSHyodvC
-   xUwAh/eHKhCMFUPUuAj8g/TMNCDle0txzlIHnmUd9W+yLQd5f9+Jaqf6h
-   E2ITvMPtL6Q0jBAYtKDjfL75KcU6X4JpcY3060A1F05pWQBxWvJ598uMu
-   WpdzFGfzGWN18cOEmBlnfqeF4mfaqaYbM1nrJrgy8WWF5Mgu0tccyBDBq
-   gCPh1kLbKHfp/m4+dvVtvXRRUIAxIP2MyBTCbSQc0uTe4bnnLs3hYKVFE
-   9G+SfSUdbn12A/q0ZUYUInuyR5RpNFlw176jpO51qXnrBG6BICxvEJnn2
+  t=1793128953; x=1824664953;
+  h=message-id:date:subject:to:references:from:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=0pePTGYxMkROE8eGdV9jJNE0dtoVG/0CcB02lDULthI=;
+  b=FDJFueQyUn1dkO30sGTWA3TRs0V3pd3F+YhURYgSexobzwhIR5mehO9j
+   44yvr+7Us6o1+W+jdD8S2UAGeNiabEoxmG6Ih0dFMCqcCmOhVN+t8S0o9
+   H0+AUdAzos8R6Fy3jrCI1LIf1alH5T7AEyxSJ96kgCby+wOHTynANiGmB
+   0+LnfiDKimaMqsCDLW+2o0yhKh0/KjJpAU8OkQKbG3uXqFaw3ac7mnqus
+   agqvwfmTcVGwZysONT4PwHfJb2amm8TaB057j0j35pZJCywU1AZviLFaB
+   A2dGVnbEZAyltNTUv2miFFNT5BV7ypwPZHYERGvYCZMRuikXn8VptHQyJ
    Q==;
-X-CSE-ConnectionGUID: CND2g0IcRnCzRL4KN7HQUQ==
-X-CSE-MsgGUID: b2MUYLcVRHOJ1uZAa293vw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11948"; a="1841501"
+X-CSE-ConnectionGUID: HkCHrFiYTRS/aut8EH+Lww==
+X-CSE-MsgGUID: WPNYwFY6SJuD9b+7II4+JA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11948"; a="1731254"
 X-IronPort-AV: E=Sophos;i="6.27,181,1787036400"; 
-   d="scan'208";a="1841501"
-Received: from fmviesa012.fm.intel.com ([10.60.135.152])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 12:22:30 -0700
-X-CSE-ConnectionGUID: IrI3m71NRT60k9qNBWmmYQ==
-X-CSE-MsgGUID: 95Dj1a4YSYOf3ihh9CbarA==
+   d="scan'208";a="1731254"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 12:22:33 -0700
+X-CSE-ConnectionGUID: g5blVs8hRsy8QJ40AXinYg==
+X-CSE-MsgGUID: PanwR3plQtGhtJFbRct8KA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,181,1787036400"; 
-   d="scan'208";a="6402757"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
-  by fmviesa012.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 12:22:29 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+   d="scan'208";a="4716338"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 12:22:32 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Tue, 27 Oct 2026 12:22:28 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ 15.2.2562.49; Tue, 27 Oct 2026 12:22:31 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49 via Frontend Transport; Tue, 27 Oct 2026 12:22:28 -0700
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.17) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ 15.2.2562.49 via Frontend Transport; Tue, 27 Oct 2026 12:22:31 -0700
+Received: from PH7PR06CU001.outbound.protection.outlook.com (52.101.201.45) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Tue, 27 Oct 2026 12:22:28 -0700
+ 15.2.2562.49; Tue, 27 Oct 2026 12:22:31 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PQ6kcpEuvZgTGfMkZuJHWYkcXkwtHGx+dPe6zDgQ0AyqATEvayJRb8za6JEkPTSWQna2DzdBnms0XjOiAs8yjvTwei0l5CRpsmeuAkqMPIlovE1Q5cWjXCjMJmtUZZ0OpVel64GqwPzMRz5vywODVpK8INcsJdLckFOzEIrW//8rI+G6HfJf6QF9sSjvu8A2EhYj8Sl1fBzMwqdD2ezDu3yztAVcfCSHj52a9js3b8VfTXMet0Z5peMAXZc0hk0G4RMdCG0CCxI6JAykQ1g1h3/YMrmPLpKsRD0K2Duvo9nZbfZ3GTTNssPD/8dBmFeavvRGJnH7IJnzYrrkmhVNww==
+ b=Mb4GJGvJxT8bbcu6mug78MW32Nnonh4RJqKA3J1QmojVLFNC3K6sucB5l5zMAQtlDj0N/mdu1R6T17LWO/FDsIyUsy+Wxa//wCzdG1a1anmltHhfxq4qCBFvpQMmoJb2Fq21r9Q4J9Fuj2azGb5J4yS6M6VTIJ6yb31sk64zB6LLBkuMVKKZ9cTwoY09Yo2Yfjl2QVDm6UORG12GvV0mymQOmXRB3mpzGtvx+lM5FbauQGhqqrLLbYynNh1DF6XshE5Ltb14uWbkpmTd8XiNbg7GXOldGiR9n0il1wADc19egt+IuFfFYz7AiJ25xQTWZBrGuo7NKLwZD1lig6oGvg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2RcaK/dQgwqLdnMnQFU8dBC9xoIYQe2SuTUKrWghkyY=;
- b=Wec5bd9KpkI3WFK+0qUDmOSSts+lZeT+RlRh4fFbrs1+NOJU3OxpcS6U4iIlWMIc+T9xLUHqsohpv02KWULnGZU3xOIIzI+6UNfGwVOa1ItyZo2l/gOHbNbxuzbWfCJBTpHLVa5BKbrIxnbGJbX0qrEbx+JZwxEcawG9DfoQUc0omj4KIYcvhY9xIZwVoZ+zWZZfalopol/kE7WPmZmAv4z7Gw1GjwVjHWI1easUPLYxFhOpqLFdVo07aGa6tNPBYrGDc7UEnNs01xPO/6Jqmjdevg+EfwOnOzhxDriIUheMNfRhpGhgrwEH2xHkUf9IsBpkgUPwIZ6s+uJmK5NWxA==
+ bh=WrjJ210tUx+GDtjvq8dmmpooB5aVjih5AHs4ZvOtsFY=;
+ b=Lb8vQqtCEvRY8BcghsZD86VI5JxvcqXW7X3nTH11hJ9rlVXk6wMWBInTKWmqzQfYQE5TmzIGFrk75OvmGUmjiLXJ2Mf2PKi+zIa+Tvwk4Nh10nLpyqUh4XkBiuTllQVSEW4IMYxiOKcbtJSeB/3Dqv6noXPj+/y5DFtWwM7EACkZRy7DwuTldy1UZ8AEzq3SgQRFcv2oy4iVmGsrqX3VyDPIVVyZETxCjTZSGo5kSrFCiu7qC+zJkM42wtKAhI1r42xkATEuyYf+5STk1svx166SHJdWQ5gv0AMHTmR6t8bsPsfe0O6UNsJAQBB6frwWik32mdYx17COroqqr7XMag==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ5PPF89507EDE4.namprd11.prod.outlook.com
- (2603:10b6:a0f:fc02::83e) by SA2PR11MB5114.namprd11.prod.outlook.com
- (2603:10b6:806:114::19) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.496.15; Tue, 27 Oct
- 2026 19:22:26 +0000
-Received: from SJ5PPF89507EDE4.namprd11.prod.outlook.com
- ([fe80::387e:6187:3626:ee07]) by SJ5PPF89507EDE4.namprd11.prod.outlook.com
- ([fe80::387e:6187:3626:ee07%2]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
- 19:22:25 +0000
-Date: Tue, 27 Oct 2026 12:22:23 -0700
-From: Matt Atwood <matthew.s.atwood@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: Gustavo Sousa <gustavo.sousa@intel.com>, <intel-xe@lists.freedesktop.org>
-Subject: Re: [PATCH 04/10] drm/xe: Factor out {min,max}_idledly_ps in
- adjust_idledly()
-Message-ID: <20261027192223.GC203565@msatwood-mobl>
-References: <20261023-wa_16031259911-v1-0-b0453f79c4e1@intel.com>
- <20261023-wa_16031259911-v1-4-b0453f79c4e1@intel.com>
- <sashiko-outbox-183251@kernel.org>
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-183251@kernel.org>
-X-ClientProxiedBy: SJ0PR13CA0039.namprd13.prod.outlook.com
- (2603:10b6:a03:2c2::14) To SJ5PPF89507EDE4.namprd11.prod.outlook.com
- (2603:10b6:a0f:fc02::83e)
+Received: from DS0PR11MB7381.namprd11.prod.outlook.com (2603:10b6:8:134::14)
+ by CH3PR11MB141418.namprd11.prod.outlook.com (2603:10b6:610:362::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
+ 2026 19:22:30 +0000
+Received: from DS0PR11MB7381.namprd11.prod.outlook.com
+ ([fe80::4c39:dfe6:d6dc:6f58]) by DS0PR11MB7381.namprd11.prod.outlook.com
+ ([fe80::4c39:dfe6:d6dc:6f58%6]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
+ 19:22:30 +0000
+Message-ID: <cbee478d-c729-422a-8f52-117de23f2c12@intel.com>
+Date: Tue, 27 Oct 2026 12:21:14 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH iwl-net 2/2] ice: use struct timecounter for E825 and E830
+To: <sashiko-reviews@lists.linux.dev>, Intel Wired LAN
+	<intel-wired-lan@lists.osuosl.org>
+References: <20261023-jk-e825-e830-timecounter-v1-0-e932602f0d16@intel.com>
+ <20261023-jk-e825-e830-timecounter-v1-2-e932602f0d16@intel.com>
+ <sashiko-outbox-183498@kernel.org>
+From: Jacob Keller <jacob.e.keller@intel.com>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-183498@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR04CA0279.namprd04.prod.outlook.com
+ (2603:10b6:303:89::14) To DS0PR11MB7381.namprd11.prod.outlook.com
+ (2603:10b6:8:134::14)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -136,209 +135,467 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PPF89507EDE4:EE_|SA2PR11MB5114:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8b5c6869-58c6-428f-0ab4-08df345fa22d
+X-MS-TrafficTypeDiagnostic: DS0PR11MB7381:EE_|CH3PR11MB141418:EE_
+X-MS-Office365-Filtering-Correlation-Id: fbda2b98-a062-435d-256e-08df345fa4c3
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|10070799003|23010399003|1800799024|376014|366016|261026121527099003|261021123027099003|261022075727099003|261022105027099003|4143699003|11063799006|56012099006|261009223027099003|260925021311599003|260925021911599003|260925022911599003|10067099003|18002099003|22082099003|6133799003|261026140227099003|261021121427099003;
-X-Microsoft-Antispam-Message-Info: 45T60YTOUdtNTDcxe3d4xqIu069k3iER6jC0CjrrLG5SlHKXAgukAJCiJWQ7srlz0jWgpPqUT1LRrQUqoyFGaC/adBkKoYcaqpSAflVXu4pwRiZOxNr2tjCsWSgG0w3zuth5mpw8RdfRwGVMIQ/y92CCTiUHCWRJrlXjopORklkQTpxdtUx5FX2SltwUOIawZnYkJsgHCH31MTe6uO18ons28/ZhszVvlGGwSY+eijTpa8Z1GgMAD02qQt7uhzduiI+lq++4VLueQUDxeunNXF6pLktuosTL5E+POHKyCfMGJIxdjU1lgmTEeihRU1zwvWD6WW9ulsjfhlBA8CgL6yuxeHKc37HS26BaOp6oVIYThh9kF85aZW0rWKxQB+owjrKGnUDcsRAv+z3PbzIUmG2bKu9Xziz9DeRxyfffsq19qk/3/Vc9llNSF3gfPb/T016qYpPylvPImJ3JnLFLVE0/lTTmkYGwAvjjraIMsK9MsbmF1qN+8eBBtt6Qz1/FXwpCbU647CKZIeIEfcEdasi/8l6jnmFAKDcRr6F6sSbwHglIM/7VfTzOp6IVugXOpEnXXpagLlNFjUOlIQBuux1PtN6JkO5Mvg8zZCzYNv8=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ5PPF89507EDE4.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(23010399003)(1800799024)(376014)(366016)(261026121527099003)(261021123027099003)(261022075727099003)(261022105027099003)(4143699003)(11063799006)(56012099006)(261009223027099003)(260925021311599003)(260925021911599003)(260925022911599003)(10067099003)(18002099003)(22082099003)(6133799003)(261026140227099003)(261021121427099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?7gAGbaWxNS3WcVpB72RF83vzDaRH9OZMIGaw6zA3hxJjveWR8cN9qFGj6+?=
- =?iso-8859-1?Q?c03/vEUL+IWzWFn5D/x3rUeMGQMrfMR6mJT09AuwKlhEv79/cBgKeGncEP?=
- =?iso-8859-1?Q?N15u3deM6ZIt5DoVheCpXuYqofJnvEZaWsMtQnpsLgIZ83C25bNtYASqR0?=
- =?iso-8859-1?Q?86yUQbqminiTsyvIbVoPPP2ESQjGKrd/HTdLAsHTclnRCuD3cTvj2lDxqK?=
- =?iso-8859-1?Q?XDFIWxzyvZIh1hi80WMbymCN5tJO1+r75hGZX+tb2/P3Y3ke4Tr7tf1qdm?=
- =?iso-8859-1?Q?N3PaKMaFoECco5EboFBnOhnYc+lYqQCd7muviNY3PDND0fHjITtsnTMMs+?=
- =?iso-8859-1?Q?VImZka+wU4glqo4Chy5x5gm4+nr4f5Bm8tN81bAO5G+Wcdzm2Hhr0HV0nH?=
- =?iso-8859-1?Q?f5tumKEOxFV4q0ThU/zAqXiNCz34FNyCTuf6HBuXZSUqzXYd4t0Odf9LhH?=
- =?iso-8859-1?Q?tyXzQCSXvmCtp3EKTUYn7PWx+67fkZTJadjMkExlYPxaEjETcrmUSG7u7F?=
- =?iso-8859-1?Q?Jruts1cT4wo4dNg+5QmOUP58963zMpyisAm+tJsHb51+/nmeeOEu8/avvp?=
- =?iso-8859-1?Q?LAZ7eIZdX02H7WC4UxHdFPuASqx5/RRP1aYR+Zj8nwkJbeyofZYZ3AgbLy?=
- =?iso-8859-1?Q?cMUoWBgq/CEWEaeieOeXiLaTSlqa/K5xrKN9o/ljZWHOqE8eZbRA6SNw8C?=
- =?iso-8859-1?Q?8AJT7F6rmRZ9m1PBkW51TBbKEkGBpOghZiWE3xhwFFJipz/R/iLnIuoVDV?=
- =?iso-8859-1?Q?A7oD1UpfwG0q13CG059NFnay2NaC0a3XXVJiBNLcyZeCANqTc8mO4DuJF7?=
- =?iso-8859-1?Q?cXGsBG1GZVCTytNlgDFh+XzEeGckr7eaHBZNtnNG1NoeC6JyJT6j6tdONX?=
- =?iso-8859-1?Q?XdLSQyRS1bxyogWlqNxmnQxMt1/16dUUXNDPm4AJ5EDYtpqqT8aOLpNdjU?=
- =?iso-8859-1?Q?/8nNsrEgY2uKRxw/G6Neq25WqPcsjeelY4tb09fMMpZBbOSXLCggpPYiNG?=
- =?iso-8859-1?Q?gzAqhs8O0gZuqRRVoMxCScVptUjulkkT3ZiTAafmy58Uy1XvueXZ2syZoj?=
- =?iso-8859-1?Q?8L8aZGUw3SsGV0B7uR2LLw59gUZd1on5Voi8UMt8hGYhE+k56elBdVu4jI?=
- =?iso-8859-1?Q?Jd660DRGUcQrSk6zAynEcGtP9pD/M3onlXCFarOUgMWR4MM+7kBSc7BKt2?=
- =?iso-8859-1?Q?OyDQFvJ3s/qmUqR7yBzV61KxLZtcdmtMWw9vx7EvgbNY38szSypHa1Wg3K?=
- =?iso-8859-1?Q?SDjFVnndrF3hfeHOtuvTA6v0wIfdf1f3akjozbLhig36W+OSFkiJStXq5B?=
- =?iso-8859-1?Q?NOwf9o6suGG3t4B31zBFTUWtyBl3shhC6bOyd64uX2o8Vtanj7Ig+tlCaj?=
- =?iso-8859-1?Q?7BcvEFvjOt6pUP8gRuu90AQfo5qMqqyUkjOweWrHNQdiElUcEzCqswF8gq?=
- =?iso-8859-1?Q?u007QK5PM3SqjGlcDY7cZvID5V3UYm4z7Q01bML+dO20ZJqRGvw8Re6NqX?=
- =?iso-8859-1?Q?5qeGSHGOQh5htsb7gZnEJehu5nISvo9qCgHk1Wpq3RyfIiMOKXpB54XyQL?=
- =?iso-8859-1?Q?9NyTUxE1wRK7LZqSiLlelESNv7KbabbVIqfib1qMtp4+x+Ho5s5lkuOljX?=
- =?iso-8859-1?Q?MNr2cGw9vRMSuR927TaC8a92PAda7lPdD44ZD5lwvBXTqSBvg92/TXqft7?=
- =?iso-8859-1?Q?iE+CwXc4wbPY3zCosOxAjn2pBRAh9eB7dE9J74KdgKlXFm8uZLW0Oydyoq?=
- =?iso-8859-1?Q?4GnttDFjelhieVpspFvC0AHynFjJuz3B/vaDZ9Ez0ctqSFM0XSAZw9xiT9?=
- =?iso-8859-1?Q?k5kovmspnsNnz+3aYo42RFm3qMS2V24PUVaGxVRmnQcjBKyQZdMb0Nz+fj?=
- =?iso-8859-1?Q?g8?=
-X-MS-Exchange-AntiSpam-MessageData-1: 4BCEwvbCTJe6QVWBo550InUPRwXPQ/53EbM=
-X-Exchange-RoutingPolicyChecked: f4AD1jYBB1gVeeSHW0Km0PL7trna8xaG6chV+IFA8FQnFVpTNvjr0mXKu78JB86TFvJ0aBDMuE6zKRHihZ2ghEjoPIdHzBOn6A+/3/A58WhPNdHVTrRFSk2Y17S48LTr4k/ROmzX5eYZsGDA5zwZtbLEJ1ZpvmuETNBw4wVkAw1TvHo8TcIK2tb/wiBDhFELZqHHDKCmPUN/1+h2XHsox/p3JNMViq+6SlYp2DJFrxKm4QcAW2UQO0a3OwctgMc26GZqLwp3X1tgWH23TzIm/W1+xTUHD5ZjE4cgz7RL4G2WI3z4ZZ1G7r+tZRRKG9hj49vA/leWFDq/yNQ6fpGivQ==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8b5c6869-58c6-428f-0ab4-08df345fa22d
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PPF89507EDE4.namprd11.prod.outlook.com
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|261026121527099003|4143699003|11063799006|56012099006|261021121427099003|261009223027099003|261022075727099003|261022105027099003|261021123027099003|3023799007|10067099003|18002099003|22082099003|6133799003|261026140227099003;
+X-Microsoft-Antispam-Message-Info: YRXe5twYHwBtlW1hxAIZf9ofWrLg/gxP8ulRm6vE0nBLbfSBdxfYT+yiiJb1JgCzvk10nYLNIPq67+fYPsOxgcVpBfv2yJoH7daL9D9IHgzsS/nSlwvSt/Pv2w6LchYjAfddz2Jj3V29uBhaIoXhGCzdmahl12V/Pj2zxmqG+i47GlhghuU788OgGfeepFrpzyoOaCnK6lGSNYwQyLOkrAw+I7H3FqcKSQQSV4MwZfHEPQfmek6sH7D+KFrHG6Z2MQlSshDzVoOcLJ4lGU7963joLs6h95KOmhEdAtL+DJnLO2PHO2nXZ+fzsADZFTRB+Wkhl1Od6JF9jy4Te2LEK+Q3f2PxDcYkXCniu5a3Pmd/11Tkcr6P3HfPJRH0DoirBLAeSNcgE5vZmNJVmXBp9I7lTBGZLIuAHME8U189pX91ep2K+4qB4vcm9wZL5P+eISIJaZvGQTwmNf7CIzIKssO7MlkxF7d3hbR3Fz/Y4NjwWUUgIUqAq0Zb5jyafffvTV7gpnnWSl03ZH/8s1Lp9A0LkvShfqjIRiBr15qrL+oYJA5Tbp9074b+rC9B52eZ8Sn/WbiGLOV58A9ErjYlgTePX9Ma+72uLJHVfQZjeC4GNvo2myOMuqe69W3VRbQBura8so9btRuouzNDGw+RvTcikV5XdBemSXO4xOfSlm4=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR11MB7381.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(261026121527099003)(4143699003)(11063799006)(56012099006)(261021121427099003)(261009223027099003)(261022075727099003)(261022105027099003)(261021123027099003)(3023799007)(10067099003)(18002099003)(22082099003)(6133799003)(261026140227099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?N1V5R2pvaFdIWTFReUU1NEJnMWFTb1hqZkxhZlN2YmlXRWxTL3N3bnd1UXZP?=
+ =?utf-8?B?UEdXY3J4cWJqODBaTGJtUUdYV3NacHNua0orempFTGhPaXJocmJxVFlubldi?=
+ =?utf-8?B?ME03RGVYalA2VkZ6T3dlblVvcGZTVDR3SUhWeW9KeFpBQUtML2RRN2JvQ2NY?=
+ =?utf-8?B?TXRTNy9xODAwL1l3N0dPRTBkZkpDY1RjbnRROXNqdCtNY21ubEZnQ1k1QzVj?=
+ =?utf-8?B?RTJPMHJBQXNTS0NhbnVmNkpkOXFWdzUwY09QSDRqNWo3djVXbDJhUkVTbE5k?=
+ =?utf-8?B?UnhxRE9RVnYwQ01yUzliU2FwRmE1WDk0dFlGdjA5dWVKYkgxV1NuS2lXM0Zj?=
+ =?utf-8?B?VlFkc3FCU3pNSXh5MHVmSWM4WW02dW8xWlFSQ0NIdmFsK3cwZGdta1JhNmxW?=
+ =?utf-8?B?ajV4Q1RYWS9xajRRRnpnakdsUUlybVNyQVByaUN2NHFIYi9qNFg5RXpGLzlk?=
+ =?utf-8?B?N0V1WUZPY3VEeEJoK0ErRXY1cWxOTDVXYnl5b3Q2eTdQRFpKTDY5bGhybEUr?=
+ =?utf-8?B?VFZvdWkwNTBXTktWU2FPaGt5UW5KTXJnNFdqL3RHc0tiYnVyWWVocEtkMlNZ?=
+ =?utf-8?B?a3ZPMUQxcUxKWXdEQ20zZXpTMWNsRUZKM09GQ0daVDZrd2VBc2tBTVhzNk9M?=
+ =?utf-8?B?Tm1SM1FGVWZKRFFDUWM0V05sTzBJaHllL2FNV0dzenhITGl6NjR4Wi9VQk5D?=
+ =?utf-8?B?bXpnRnRHZk9qeVR0V25YL3lWWmgxNy9EejNpV1BRaG1pYVh3bUhUbUIyWUN5?=
+ =?utf-8?B?MkdpUUlJUHBWNWdkaEIza0VPQzdqVUNSN3RiNHQ5cU9CdS9VNFd5RVdHd3V3?=
+ =?utf-8?B?OXU0ZmV6NmRhUGM3Wk5kZXRZSyttNm5BaUl0V3Zkc2g5MDlVcVRTakRRalhI?=
+ =?utf-8?B?TGhoL3BkL3UzNGdEZWFsVkRjYUhkT2wwVWt3Y2xwTlFVRXB5N1d4dVVjYVZN?=
+ =?utf-8?B?WXpJQ3hSUTBsNU5uR2MwUFIzalM5SjhFNEtaSkNNNktzRndpUWQ5VEJ5M3lM?=
+ =?utf-8?B?VTdwWFJTb3MzdUVjd1dMVlI0bHd2SVpvMkwvZjZJeEVzVnovZ3JkSHZSV1NR?=
+ =?utf-8?B?Wjlua2lLV0xSUWdYZU1lemtFM1krZlcvK3g5S2Q4MGtYNFFMM212M1B1NThi?=
+ =?utf-8?B?V2JsS3BoS2dBb0xhb2Q4cTR6MS9PTEdwak9JOC9wVEsyTVkwRS9TMUIvTGpn?=
+ =?utf-8?B?NFllK3NoRnErcDBxa0QzSTRnWXNSM0g5TFNXZmt5czNRWWMwelIyUHFML2ZT?=
+ =?utf-8?B?anhkMkdxQkRiMWtaV3pBMyt5UGlEZXVTUnlhZmVCRGMxaVoxT3ZXZkZGbVVt?=
+ =?utf-8?B?RitPNzZXZ2crT1lNdGxBOFdLd2hlUWpUNjhwSWEySm5HaHJwdXRDSmpWeWpo?=
+ =?utf-8?B?OWxjZDI0Rm1Zb1RJc0dxZ3ZwMU1tK2Z0dWlFNmV5Q0hJQzl5YUZvODZreFNO?=
+ =?utf-8?B?blRKUlJ1VHMrOExhTU52ODc3WVd4c01KOExEd0EvY0xRY0lLeUE2RWhtWWRX?=
+ =?utf-8?B?U3QyYm15bnNYUkJieVV2VWEvRjZEYVlBMW85QUtkeUpXWUEraVFIN0VUalRZ?=
+ =?utf-8?B?bzBuSWRuOElmamhXM3dYRndSTkUxOUZsSUNmc2RZMUIxT25SemJyL2RzMDZw?=
+ =?utf-8?B?ZlErTjF6bU1mUEg1VjIyOUFVNXdPaVYxVVYxQnRabTVjNzBNaGFtekc5YjBu?=
+ =?utf-8?B?VVQ4ZG9ndUt3YUFyd1lKVUpQWkpKTlYveS9pTHNYaDEyTXFuVGszU0trWXFN?=
+ =?utf-8?B?SXhuWnk5M1c3ckxmTlo0MHdSS3pXT015UlJCS3hKVGdvZEludnZpZ3ZiTndL?=
+ =?utf-8?B?M2NxNXhhRDdSdmtmTCtyZGFjNVZ2endINUxuNWM3WnFMQktkZWx3RVpVaGlo?=
+ =?utf-8?B?RlRGeW5TWWdyRXNHeU51TnFVTVBYYkJsTnQrb1dWSmtWaktTY2FMRzFhZ05U?=
+ =?utf-8?B?ajAwZzJCWk5FT3V1TWVISlN1QllkOWlrU1Jpd2FNUkdOMTZBc3NCY0xZWmFB?=
+ =?utf-8?B?Umk0VEZmVDhLTFk5WWVNdlhCczBqUmFPOWh1NWJtQk1LY0Q2YzhwVXkzYkgx?=
+ =?utf-8?B?M3FFZXJRMGphYkd3Qi9vOEZhREtnNmNNdmtIMVN3Y25MRDZxdUN1RFUzaVF5?=
+ =?utf-8?B?M2FTc1d0U1JXa3dUWXpCQjJyaGZlamlhN0ZsbHFmSTdsZSs1N2U2d0FlL3ly?=
+ =?utf-8?B?b3ZJNlh2dmJhSUMvTlMzNGVRRklJODBrelBCaVlXdUZRU0RCM3d0SStMdkVo?=
+ =?utf-8?B?Mmk0Rk9Wa1E1YmlTQ2d4U3NoeHN0a1o2Vkliai9RVG5tMnVYeFJ2VnhMTStI?=
+ =?utf-8?B?NTlYMm5QV0xCVWpRR005VEh4RW0rRmxxSGIvU2xHT0lMMk0rakJOL2JqSXFX?=
+ =?utf-8?Q?XcgUxWpeiXY8cwDs=3D?=
+X-Exchange-RoutingPolicyChecked: 4DSk8uyIVUuSi2UYnd2wCIIgAmTiVmnAdcqd/ZUMH0mGZMUcE9BYojmDsHIvcuV/JtTJlVruzxACwkvWPsWuV3/2B/YRCBqQ7205o7n2KLvGobRNe52rK0ek/IsJPbWFbPoxZZ39oE5DOC84k0sdddmn1T8SHAY6DVtVXcC1or192mj2dWzVf8I6byC3cO3s28RWVwBDwx8zuNN9I/q8hTrHsvowt1aE2Kjg9XhbfdaiDqdh6PO6iO9Wwx8w1Suppk+05SaYaVouiuYZV8d5xEJ+nRnWZA5NIgmbtZmfnMpVmTd/EDOMRbOL+PSgMgrF8RRpb1e2YkIls7b7mP6BZQ==
+X-MS-Exchange-CrossTenant-Network-Message-Id: fbda2b98-a062-435d-256e-08df345fa4c3
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB7381.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 19:22:25.8746
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 19:22:30.2286
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uF1ntKhE91VtCM0YOjWrIQ0ZrVuVASm8+f+DfJC4Mw5xna7gye7VyeIuLytYeek/jCne/7KYnoPNqLeDGPe3bL0EIllqSa4/4Spu5DYqjqo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR11MB5114
+X-MS-Exchange-CrossTenant-UserPrincipalName: v8q0DttH+lX9T2R8BlLalYhEk8EllcgxV9WHzGHXmyBozgyjEflkSwEGzpcaXV4KZSfvP4w61Z4Rqf9dUKSAKvNFoWWejjK/E7T7pbLoVvY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB141418
 X-OriginatorOrg: intel.com
 
-On Fri, Oct 23, 2026 at 09:23:04PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] drm/xe: 32-bit multiplication overflow in adjust_idledly()
+On 10/23/2026 6:55 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+> - [High] ice: 500ms offset before ice_phc_cyc2time() in ice_ptp_cfg_perout() wraps
+> - [High] ice: uncompensated timecounter offset for E830 TxTime in ice_tx_map()
+> - [Medium] ice: late PHC update check broken in ice_ptp_update_cached_phctime()
+> - [Medium] ice: missing timecounter conversion in ice_vc_get_phc_time()
+> - [Medium] ice: missing timecounter staleness and validity handling in ice_phc
+> - [Medium] ice: ice_ptp_prepare_for_reset() converts zero GLTSYN_TIME via timecounter
 > --
 > 
-> commit 032b173104de210ca0228dd31e057951f3cde20d
-> Author: Gustavo Sousa <gustavo.sousa@intel.com>
+> commit 348b48a49347fa2790d183338857035e4d8f1fa4
+> Author: Jacob Keller <jacob.e.keller@intel.com>
 > 
-> drm/xe: Factor out {min,max}_idledly_ps in adjust_idledly()
+> ice: use struct timecounter for E825 and E830
 > 
-> This commit reorganizes adjust_idledly() so that workaround-specific logic
-> computes min_idledly_ps and max_idledly_ps before applying and rounding
-> those limits to the RING_IDLEDLY register field.
+> This commit switches E825 and E830 PTP hardware clock management from direct
+> hardware timer adjustments to a software struct timecounter and cyclecounter
+> embedded in struct ice_phc. This avoids PCS timer synchronization stalls on
+> E825 caused by manual PHY timer adjustments and converts timestamp extension,
+> clock reads, cross-timestamping, and periodic output configuration to account
+> for the timecounter phase offset.
 > 
-> > diff --git a/drivers/gpu/drm/xe/xe_hw_engine.c b/drivers/gpu/drm/xe/xe_hw_engine.c
-> > index dcc8a6d53c5d0..2d2a80cc2da35 100644
-> > --- a/drivers/gpu/drm/xe/xe_hw_engine.c
-> > +++ b/drivers/gpu/drm/xe/xe_hw_engine.c
-> > @@ -585,99 +585,81 @@ static void hw_engine_init_early(struct xe_gt *gt, struct xe_hw_engine *hwe,
-> >  	xe_reg_whitelist_process_engine(hwe);
-> >  }
-> >  
-> > -static u32 idledly_floor_ticks(u64 idledly_ps, u32 idledly_units_ps)
-> > -{
-> > -	return DIV_ROUND_DOWN_ULL(idledly_ps, idledly_units_ps);
-> > -}
-> > -
-> >  static void adjust_idledly(struct xe_hw_engine *hwe)
-> >  {
-> >  	struct xe_gt *gt = hwe->gt;
-> > -	u32 idledly_reg_val, maxcnt_reg_val;
-> > +	u32 idledly_reg_val;
-> > +	u32 idledly;
-> >  	u32 idledly_units_ps = 8 * gt->info.timestamp_base;
-> > -	u32 maxcnt_units_ps = 640000;
-> >  	u64 idledly_ps, idledly_hw_ps;
-> > -	u64 maxcnt_ps;
-> > +	u64 min_idledly_ps = 0;
-> > +	u64 max_idledly_ps = -1;
-> >  	bool inhibit_switch = false;
-> >  	bool wa_applied = false;
-> > -	bool clamped_below_maxcnt = false;
-> >  
-> >  	if (IS_SRIOV_VF(gt_to_xe(gt)))
-> >  		return;
-> >  
-> >  	if (XE_GT_WA(gt, 16023105232) || XE_GT_WA(gt, 14025941587)) {
-> > -		u32 mincnt_idledly_ps = 5000000;
-> > -
-> >  		/* xe_gt_clock_init() warns and zeroes timestamp_base on unknown crystal clock. */
-> >  		if (!idledly_units_ps)
-> >  			return;
-> >  
-> >  		idledly_reg_val = xe_mmio_read32(&gt->mmio, RING_IDLEDLY(hwe->mmio_base));
-> >  		inhibit_switch = idledly_reg_val & INHIBIT_SWITCH_UNTIL_PREEMPTED;
-> > -		idledly_ps = REG_FIELD_GET(IDLE_DELAY, idledly_reg_val) * idledly_units_ps;
-> > +		idledly = REG_FIELD_GET(IDLE_DELAY, idledly_reg_val);
-> > +		idledly_ps = idledly * idledly_units_ps;
-> >  		idledly_hw_ps = idledly_ps;
-> >  
-> > -		maxcnt_reg_val = xe_mmio_read32(&gt->mmio, RING_PWRCTX_MAXCNT(hwe->mmio_base));
-> > -		maxcnt_ps = REG_FIELD_GET(IDLE_WAIT_TIME, maxcnt_reg_val) * maxcnt_units_ps;
-> > -
-> > -		/*
-> > -		 * Wa_14025941587 is applied before Wa_16023105232, which takes
-> > -		 * priority if the two ever conflict (not expected in practice).
-> > -		 */
-> > -		if (XE_GT_WA(gt, 14025941587) &&
-> > -		    idledly_ps < mincnt_idledly_ps) {
-> > -			idledly_ps = mincnt_idledly_ps;
-> > -			wa_applied = true;
-> > -		}
-> > +		if (XE_GT_WA(gt, 14025941587))
-> > +			min_idledly_ps = max(min_idledly_ps, 5000000);
-> >  
-> >  		if (XE_GT_WA(gt, 16023105232)) {
-> > +			u32 maxcnt_units_ps = 640000;
-> > +			u32 maxcnt = xe_mmio_read32(&gt->mmio, RING_PWRCTX_MAXCNT(hwe->mmio_base));
-> > +
-> > +			max_idledly_ps = min_t(u64,
-> > +					       max_idledly_ps,
-> > +					       REG_FIELD_GET(IDLE_WAIT_TIME, maxcnt) * maxcnt_units_ps);
-> > +
-> >  			/* Clear the inhibit switch without disturbing a valid delay. */
-> >  			if (inhibit_switch) {
-> >  				idledly_reg_val &= ~INHIBIT_SWITCH_UNTIL_PREEMPTED;
-> >  				wa_applied = true;
-> >  			}
-> > +		}
-> >  
-> > -			/* Warn only on the value read from hardware. */
-> > -			xe_gt_WARN_ON(gt, idledly_hw_ps >= maxcnt_ps);
-> > +		/*
-> > +		 * min_idledly_ps is applied before max_idledly_ps, which takes
-> > +		 * priority if the two ever conflict (not expected in practice).
-> > +		 */
-> > +		if (idledly_ps < min_idledly_ps) {
-> > +			idledly = DIV_ROUND_UP_ULL(min_idledly_ps, idledly_units_ps);
-> > +			idledly_ps = idledly * idledly_units_ps;
-> > +			wa_applied = true;
-> > +		}
-> >  
-> > -			if (idledly_ps >= maxcnt_ps) {
-> > -				/* maxcnt may be 0 if IDLE_WAIT_TIME is unprogrammed. */
-> > -				idledly_ps = maxcnt_ps ? maxcnt_ps - 1 : 0;
-> > -				clamped_below_maxcnt = true;
-> > -				wa_applied = true;
-> > +		if (idledly_ps >= max_idledly_ps) {
-> > +			if (max_idledly_ps) {
-> > +				idledly = DIV_ROUND_DOWN_ULL(max_idledly_ps - 1, idledly_units_ps);
-> > +				idledly_ps = idledly * idledly_units_ps;
+>> diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
+>> index 4b4a00beadd2c..488db8298059a 100644
+>> --- a/drivers/net/ethernet/intel/ice/ice_ptp.c
+>> +++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
+>> @@ -210,6 +210,38 @@ void ice_ptp_restore_timestamp_mode(struct ice_pf *pf)
+>>  	ice_flush(hw);
+>>  }
+>>  
+>> +u64 ice_ptp_read_cycles(struct cyclecounter *cc)
+>> +{
+>> +	struct ice_adapter *adapter;
+>> +	struct ice_phc *phc;
+>> +	struct ice_pf *pf;
+>> +	struct ice_hw *hw;
+>> +	u8 tmr_idx;
+>> +
+>> +	phc = container_of(cc, struct ice_phc, cc);
+>> +	adapter = container_of(phc, struct ice_adapter, phc);
+>> +
+>> +	scoped_guard(rcu) {
+>> +		pf = rcu_dereference(adapter->ctrl_pf);
+>> +		if (!pf)
+>> +			return 0;
+> 
+> [ ... ]
+> 
+>> @@ -995,19 +1046,17 @@ static int ice_ptp_init_tx(struct ice_pf *pf, struct ice_ptp_tx *tx, u8 port)
+>>   * ice_ptp_update_cached_phctime - Update the cached PHC time value
+>>   * @pf: Board specific private structure
+>>   *
+>> - * Update the PTP hardware clock time values which are cached in the PHC
+>> - * structure.
+>> + * For devices that use a timecounter structure, update the timecounter.
+>> + * Ohterwise, update the cached PHC time used for timestamp extension.
+>>   *
+>>   * This function must be called periodically by the clock owner to ensure that
+>> - * the cached value is never more than 2 seconds old.
+>> + * the timecounter or cached value is never more than 2 seconds old.
+>>   */
+>>  static void ice_ptp_update_cached_phctime(struct ice_pf *pf)
+>>  {
+>>  	struct ice_phc *phc = &pf->adapter->phc;
+>>  	struct device *dev = ice_pf_to_dev(pf);
+>>  	unsigned long update_before;
+>> -	u64 systime;
+>> -	int err;
+>>  
+>>  	update_before = phc->update_jiffies + msecs_to_jiffies(2000);
+>>  	if (phc->cached_time && time_is_before_jiffies(update_before)) {
+>> @@ -1018,21 +1067,33 @@ static void ice_ptp_update_cached_phctime(struct ice_pf *pf)
+>>  		pf->ptp.late_cached_phc_updates++;
+>>  	}
+>>  
+>> -	/* Read the current PHC time */
+>> -	err = ice_ptp_read_src_clk_reg(pf, NULL, &systime);
+>> -	if (err) {
+>> -		/* The source clock is gone, so the cache can no longer be
+>> -		 * refreshed. Publish zero instead of leaving the last good
+>> -		 * value behind: neither ice_ptp_get_rx_hwts() nor
+>> -		 * ice_ptp_extend_40b_ts() may extend against a value that no
+>> -		 * longer tracks the PHC, and both treat a zero cache as
+>> -		 * "no timestamp".
+>> -		 */
+>> -		WRITE_ONCE(phc->cached_time, 0);
+>> +	WRITE_ONCE(phc->update_jiffies, jiffies);
+>> +
+>> +	if (phc->use_timecounter) {
+>> +		unsigned long flags;
+>> +
+>> +		write_seqlock_irqsave(&phc->tc_lock, flags);
+>> +		timecounter_read(&phc->tc);
+>> +		write_sequnlock_irqrestore(&phc->tc_lock, flags);
+>>  	} else {
+>> -		/* Update the cached PHC time stored in the PHC structure */
+>> +		u64 systime;
+>> +		int err;
+>> +
+>> +		err = ice_ptp_read_src_clk_reg(pf, NULL, &systime);
+>> +		if (err) {
+>> +			/* The source clock is gone, so the cache can no
+>> +			 * longer be refreshed. Publish zero instead of
+>> +			 * leaving the last good value behind: neither
+>> +			 * ice_ptp_get_rx_hwts() nor ice_ptp_extend_40b_ts()
+>> +			 * may extend against a value that no longer tracks
+>> +			 * the PHC, and both treat a zero cache as "no
+>> +			 * timestamp".
+>> +			 */
+>> +			systime = 0;
+>> +		}
+>> +
+>> +		/* Update the cached PHC time stored in the PF structure */
+>>  		WRITE_ONCE(phc->cached_time, systime);
+>> -		WRITE_ONCE(phc->update_jiffies, jiffies);
+>>  	}
+>>  }
 > 
 > [Severity: Medium]
-> Can these tick-to-picosecond multiplications in adjust_idledly() in
-> drivers/gpu/drm/xe/xe_hw_engine.c overflow 32 bits before being widened to
-> u64?
+> In ice_ptp_update_cached_phctime(), the check for late updates still tests
+> phc->cached_time:
 > 
-> When hw_engine_init() calls adjust_idledly() on non-VF platforms where
-> Wa_16023105232 or Wa_14025941587 is active, idledly, idledly_units_ps (up to
-> 8 * 83333 = 666,664 ps), maxcnt_units_ps (640,000 ps), and the return value
-> of REG_FIELD_GET(IDLE_WAIT_TIME, maxcnt) are all u32.
+> 	update_before = phc->update_jiffies + msecs_to_jiffies(2000);
+> 	if (phc->cached_time && time_is_before_jiffies(update_before)) {
+> 		unsigned long time_taken = jiffies - phc->update_jiffies;
 > 
-> In the three assignments:
+> 		dev_warn(dev, "%u msecs passed between update to cached PHC time\n",
+> 			 jiffies_to_msecs(time_taken));
+> 		pf->ptp.late_cached_phc_updates++;
+> 	}
 > 
-> 	idledly_ps = idledly * idledly_units_ps;
+> When phc->use_timecounter is true on E825 and E830 devices, phc->cached_time
+> is initialized to 0 in ice_adapter_new() and is never written. Won't this
+> cause the condition to always evaluate to false in timecounter mode,
+> preventing late timecounter updates from ever emitting the warning or
+> incrementing pf->ptp.late_cached_phc_updates?
 > 
-> both operands are u32. Since IDLE_DELAY is a 21-bit field (REG_GENMASK(20, 0),
-> up to 2,097,151 ticks), the product can reach ~1.398e12 ps and wraps modulo
-> 2^32 for idledly >= 6443 ticks before assignment to u64 idledly_ps.
+> Also, by moving WRITE_ONCE(phc->update_jiffies, jiffies) above the
+> if (phc->use_timecounter) branch, phc->update_jiffies is now updated on
+> legacy devices even when ice_ptp_read_src_clk_reg() fails and systime is set
+> to 0. Should phc->update_jiffies only be updated when the clock read
+> succeeds, and should the late-update check also cover timecounter mode?
 > 
-> Similarly, in:
+
+Yea, this makes sense, I think I can re-order things to make that work.
+
+> [ ... ]
 > 
-> 	max_idledly_ps = min_t(u64,
-> 			       max_idledly_ps,
-> 			       REG_FIELD_GET(IDLE_WAIT_TIME, maxcnt) * maxcnt_units_ps);
+>> @@ -1793,8 +1859,9 @@ static int ice_ptp_write_perout(struct ice_hw *hw, unsigned int chan,
+>>  static int ice_ptp_cfg_perout(struct ice_pf *pf, struct ptp_perout_request *rq,
+>>  			      int on)
+>>  {
+>> +	struct ice_phc *phc = &pf->adapter->phc;
+>> +	u64 clk, period, start, phase, cycles;
+>>  	unsigned int gpio_pin, prop_delay_ns;
+>> -	u64 clk, period, start, phase;
+>>  	struct ice_hw *hw = &pf->hw;
+>>  	int pin_desc_idx;
+>>  	int err;
+>> @@ -1840,12 +1907,21 @@ static int ice_ptp_cfg_perout(struct ice_pf *pf, struct ptp_perout_request *rq,
+>>  	if (err)
+>>  		return err;
+>>  	clk += NSEC_PER_MSEC * 500;
+>> +	if (phc->use_timecounter) {
+>> +		cycles = clk;
+>> +		clk = ice_phc_cyc2time(phc, cycles);
+>> +	}
+>> +
+>>  	if (rq->flags & PTP_PEROUT_PHASE || start <= clk - prop_delay_ns)
+>>  		start = div64_u64(clk + period - 1, period) * period + phase;
+>>  
+>>  	/* Compensate for propagation delay from the generator to the pin. */
+>>  	start -= prop_delay_ns;
+>>  
+>> +	/* Compensate for timecounter phase offset, if necessary */
+>> +	if (phc->use_timecounter)
+>> +		start -= (clk - cycles);
+>> +
+>>  	return ice_ptp_write_perout(hw, rq->index, gpio_pin, start, period);
+>>  }
 > 
-> REG_FIELD_GET(IDLE_WAIT_TIME, maxcnt) * maxcnt_units_ps is evaluated in 32-bit
-> unsigned arithmetic before min_t(u64, ...) casts the result to u64. Because
-> IDLE_WAIT_TIME is a 20-bit field (REG_GENMASK(19, 0), up to 1,048,575 ticks),
-> the product can reach ~6.71e11 ps and wraps 32 bits for IDLE_WAIT_TIME >= 6711
-> ticks, which can misprogram RING_IDLEDLY or trigger false
-> xe_gt_WARN_ON(gt, idledly_hw_ps >= max_idledly_ps) warnings.
+> [Severity: High]
+> In ice_ptp_cfg_perout(), 500 ms (NSEC_PER_MSEC * 500) is added to the raw
+> hardware clock value before passing cycles to ice_phc_cyc2time():
 > 
-> Commit d864065ea25e ("drm/xe: harden adjust_idledly() against divide-by-zero
-> and overflow") previously added explicit (u64) casts to prevent 32-bit
-> truncation when converting ticks to time units. Should idledly_units_ps and
-> maxcnt_units_ps (or the multiplication operands) be promoted to u64 here as
-> well?
-Similar to previous patch the bot is correct here, please adjust in v2
+> 	err = ice_ptp_read_src_clk_reg(pf, NULL, &clk);
+> 	if (err)
+> 		return err;
+> 	clk += NSEC_PER_MSEC * 500;
+> 	if (phc->use_timecounter) {
+> 		cycles = clk;
+> 		clk = ice_phc_cyc2time(phc, cycles);
+> 	}
 > 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261023-wa_16031259911-v1-0-b0453f79c4e1@intel.com?part=4
+> Since phc->cc uses CYCLECOUNTER_MASK(32), timecounter_cyc2time() treats any
+> cycle value where (cycles - tc->cycle_last) & 0xffffffff exceeds
+> cc->mask / 2 (~2.147 seconds) as having occurred in the past, subtracting the
+> delta from tc->nsec instead of adding it.
+> 
+> Because cycles is already 0.5 seconds ahead of the current hardware counter,
+> doesn't this shrink the forward window before wraparound from ~2.147 seconds
+> to ~1.647 seconds? If tc->cycle_last was updated between 1.648 and 2.0
+> seconds ago (within the normal periodic update window, or during
+> ice_ptp_adjtime_tc() -> ice_ptp_enable_all_perout() where tc->cycle_last is
+> not refreshed), ice_phc_cyc2time() will wrap backwards by 2^32 ns, making
+> (clk - cycles) and the resulting GLTSYN_TGT_L/H start time off by 2^32 ns
+> (and shifting the periodic output phase by 2^32 mod period).
+> 
+> Should ice_phc_cyc2time() be called on the raw clk value before adding
+> NSEC_PER_MSEC * 500?
+> 
+
+Hm. Ya that seems correct. Can fix.
+
+> [ ... ]
+> 
+>> @@ -2414,15 +2546,9 @@ u64 ice_ptp_get_rx_hwts(const union ice_32b_rx_flex_desc *rx_desc,
+>>  		return 0;
+>>  
+>>  	cached_time = READ_ONCE(pkt_ctx->phc->cached_time);
+>> -	if (!cached_time)
+>> +	if (!pkt_ctx->phc->use_timecounter && !cached_time)
+>>  		return 0;
+>>  
+>> -	/* Use ice_ptp_extend_32b_ts directly, using the ring-specific cached
+>> -	 * PHC value, rather than accessing the PF. This also allows us to
+>> -	 * simply pass the upper 32bits of nanoseconds directly. Calling
+>> -	 * ice_ptp_extend_40b_ts is unnecessary as it would just discard these
+>> -	 * bits itself.
+>> -	 */
+>>  	ts_high = le32_to_cpu(rx_desc->wb.flex_ts.ts_high);
+>>  	ts_ns = ice_ptp_extend_32b_ts(pkt_ctx->phc, ts_high);
+> 
+> [Severity: Medium]
+> When pkt_ctx->phc->use_timecounter is true, ice_ptp_get_rx_hwts() bypasses
+> the cached_time check and does not check phc->update_jiffies (unlike
+> ice_ptp_extend_40b_ts()) or whether the clock owner is active.
+> 
+> Because timecounter_cyc2time() with a 32-bit cyclecounter is only valid
+> within +/- 2.14 seconds of tc->cycle_last, what happens if the periodic work
+> is delayed past 2 seconds, or if the clock owner PF on a multi-PF adapter is
+> unbound in ice_ptp_release(), fails ice_ptp_rebuild(), or fails
+> ice_ptp_init_owner() after setting phc->use_timecounter = 1? Won't sibling
+> PFs continue extending Rx timestamps against a frozen or uninitialized
+> phc->tc instead of returning 0?
+> 
+
+True. We weren't checking jiffies before because it wasn't accessible
+and partially because it was considered expensive and not worth doing
+for the per-packet Rx timestamps.
+
+We can fix the
+
+> Relatedly, in ice_ptp_release(), ice_ptp_cleanup_adapter() clears
+> adapter->ctrl_pf before cancelling pf->ptp.work and unregistering the PTP
+> clock, which allows ice_ptp_read_cycles() to observe a NULL ctrl_pf and
+> return 0 as a valid cycle count into timecounter_read() or
+> timecounter_init(). Also, ice_ptp_init_owner(), ice_ptp_rebuild_owner(), and
+> ice_ptp_settime64_tc() call timecounter_init() without refreshing
+> phc->update_jiffies, which can leave phc->update_jiffies stale across a reset
+> until the periodic work runs and cause ice_ptp_extend_40b_ts() to discard
+> valid Tx timestamps right after ice_ptp_restore_timestamp_mode().
+
+Strictly, i don't think I had really intended the jiffies protection to
+be applied to the timecounter logic. But I can fix that. Additionally,
+ice_ptp_read_cycles() is actually only ever called from the periodic
+work (all other callers should be using timecounter_cyc2time to avoid
+modifying the timecounter unnecessarily and causing the seqlock contention).
+
+I can try to rework this to fix that.
+
+> 
+> [ ... ]
+> 
+>> @@ -3133,8 +3266,11 @@ void ice_ptp_prepare_for_reset(struct ice_pf *pf, enum ice_reset_req reset_type)
+>>  
+>>  	/* Acquire PHC and system timer to restore after reset */
+>>  	ptp->reset_time = ktime_get_real_ns();
+>> -	if (ice_ptp_read_src_clk_reg(pf, NULL, &ptp->phc_reset_time))
+>> -		ptp->phc_reset_time = 0;
+>> +	if (ice_ptp_read_src_clk_reg(pf, NULL, &ns))
+>> +		ns = 0;
+>> +	else if (pf->adapter->phc.use_timecounter)
+>> +		ns = ice_phc_cyc2time(&pf->adapter->phc, ns);
+>> +	ptp->phc_reset_time = ns;
+>>  }
+> 
+> [Severity: Medium]
+> When a hardware reset (such as CORER, GLOBR, or EMPR) has already cleared the
+> GLTSYN_TIME registers to 0 before ice_ptp_prepare_for_reset() runs,
+> ice_ptp_read_src_clk_reg() on the clock owner PF returns 0 with ns = 0.
+> 
+
+I am not certain this is actually possible, I would have to check if
+those resets actually do clear these registers.
+
+> Previously, ns = 0 resulted in ptp->phc_reset_time = 0, causing
+> ice_ptp_rebuild_owner() to fall back to ktime_get_real_ns():
+> 
+> 	if (ptp->phc_reset_time) {
+> 		time_diff = ktime_get_real_ns() - ptp->reset_time;
+> 		ns = ptp->phc_reset_time + time_diff;
+> 	} else {
+> 		ns = ktime_get_real_ns();
+> 	}
+> 
+> With phc.use_timecounter enabled, the else-if branch passes ns = 0 to
+> ice_phc_cyc2time(&pf->adapter->phc, 0), which computes a 32-bit delta between
+> cycle 0 and the pre-reset tc->cycle_last. Doesn't this turn a zeroed hardware
+> register into a non-zero ptp->phc_reset_time shifted by up to +/- 2.147
+> seconds, bypassing the ktime_get_real_ns() fallback in
+> ice_ptp_rebuild_owner()?
+> 
+
+I'll try to fix the logic regardless.
+
+> [ ... ]
+> 
+>> @@ -3375,10 +3522,21 @@ int ice_ptp_clock_index(struct ice_pf *pf)
+>>   */
+>>  static int ice_ptp_init_owner(struct ice_pf *pf)
+>>  {
+>> +	struct ice_phc *phc = &pf->adapter->phc;
+>>  	struct ice_hw *hw = &pf->hw;
+>> -	struct timespec64 ts;
+>>  	int err;
+>>  
+>> +	switch (hw->mac_type) {
+>> +	case ICE_MAC_GENERIC_3K_E825:
+>> +	case ICE_MAC_E830:
+>> +		/* Use struct timecounter for E825 and E830 devices */
+>> +		dev_dbg(ice_pf_to_dev(pf), "PTP 1588 enabling timecounter mode\n");
+>> +		phc->use_timecounter = 1;
+>> +		break;
+>> +	default:
+>> +		break;
+>> +	}
+> 
+> [Severity: High]
+> Enabling phc->use_timecounter on ICE_MAC_E830 means the hardware
+> E830_GLTSYN_TIME registers are no longer initialized in ice_ptp_init_owner()
+> or ice_ptp_rebuild_owner(), nor adjusted in ice_ptp_settime64_tc() and
+> ice_ptp_adjtime_tc().
+> 
+> However, E830 supports ICE_F_TXTIME hardware offload:
+> 
+> drivers/net/ethernet/intel/ice/ice_lib.c:ice_init_feature_support() {
+> 	if (pf->hw.mac_type == ICE_MAC_E830) {
+> 		ice_set_feature_support(pf, ICE_F_MBX_LIMIT);
+> 		ice_set_feature_support(pf, ICE_F_GCS);
+> 		ice_set_feature_support(pf, ICE_F_TXTIME);
+> 	}
+> }
+> 
+> And in ice_tx_map(), the TxTime descriptor timestamp is populated directly
+> from first->skb->tstamp without compensating for the timecounter phase
+> offset:
+> 
+> drivers/net/ethernet/intel/ice/ice_txrx.c:ice_tx_map() {
+> 		ts = ktime_to_timespec64(first->skb->tstamp);
+> 		tstamp = ts.tv_nsec >> ICE_TXTIME_CTX_RESOLUTION_128NS;
+> 
+> 		ts_desc = ICE_TS_DESC(tstamp_ring, j);
+> 		ts_desc->tx_desc_idx_tstamp = ice_build_tstamp_desc(i, tstamp);
+> }
+> 
+> How does ICE_F_TXTIME work on E830 when the PHC time is maintained in the
+> software timecounter while the hardware TxTime queue compares descriptor
+> timestamps against the unadjusted hardware clock?
+> 
+
+This may be somewhat tricky. We need to compute the inverse of the
+timecounter phase like we do with periodic output.
+
+> [Severity: Medium]
+> Similarly, when an SR-IOV VF requests the PHC time via
+> VIRTCHNL_OP_1588_PTP_GET_TIME, ice_vc_get_phc_time() in
+> drivers/net/ethernet/intel/ice/virt/virtchnl.c still reads the raw hardware
+> register without converting through ice_phc_cyc2time():
+> 
+> drivers/net/ethernet/intel/ice/virt/virtchnl.c:ice_vc_get_phc_time() {
+> 	if (ice_ptp_read_src_clk_reg(pf, NULL, &phc_time->time)) {
+> 		v_ret = VIRTCHNL_STATUS_ERR_NOT_SUPPORTED;
+> 		len = 0;
+> 	}
+> }
+> 
+> Furthermore, in the VF driver, iavf_ptp_extend_32b_timestamp() in
+> drivers/net/ethernet/intel/iavf/iavf_ptp.c computes:
+> 
+> 	u32 low = lower_32_bits(cached_phc_time);
+> 	u32 delta = in_tstamp - low;
+> 
+> which assumes the lower 32 bits of the PHC time returned by the PF match the
+> raw 32-bit hardware timestamp domain in the Rx descriptor. Won't enabling
+> phc->use_timecounter on E825 and E830 break both VF PTP clock reads and VF Rx
+> hardware timestamp extension?
+> 
+
+We can use ice_phc_cyc2time to convert the time reported to the VF, but
+then the raw timestamps captured won't convert properly with timestamp
+extension (they lack access to the timecounter). I think we need to
+disable Rx timestamp offload until we figure out how to resolve this.
