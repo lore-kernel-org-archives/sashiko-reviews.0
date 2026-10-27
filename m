@@ -1,86 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.3.219.148
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.21
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793141751;
-	b=kkixFB5zse6mV8TCtR5Sz6Trcu+9EkroPCd4lzriThfJP0RzeeTkY194OM5Fo5paIiqh
-	 1lfqY8p5Evu/57qb0Z3GWBLL601iLG2ADhd81i+19dtuQ6kRn2YzkunlH4CzII+39kPf+
-	 sDsjrojnmP2zzRbp8AD75Xu2YPT0g6SObBdJjSe4+NRondM+TDlZ+0jKmebGV54u91hIr
-	 NQqWXMxs0KpYUyjzCvZKgid89407Sd+n8Vn4ZFVfPPjv7tNTgclCAWz7IhFDJXFy11B5s
-	 5cWUeuM8EhoM7A/p1q+CnT5615MKGwlrbYvfzjz4bUxrHIok6UXS6uDLnpBV0ZCODVg==
+	t=1793141820;
+	b=5RbLZkhTIKbIhK6NX0VNgn9BSmC+n1aZ8ZxCDL2nf4PK1zkV5yCBhx3bb00ABmw2RM6Y
+	 WlEGb52zp7bVax06Esk2FK52zZb9yaRqp6WuXTxy2EzhCZ+znbweLLF2mpmuvoOKSDlXp
+	 v6wrAk8V7YmsxEGDqu8YB5AP/yZZ/920c9CuDKgJY26A/RInC/WqeKVW1rDUu9QWnjhe/
+	 ywoABxC3VuKiK4iv4f3W9Erl5FS/WpGjMNmqZ+HNDnj2jDIamHOhbudDudDiKEA180u7G
+	 7nlCrgRgTrQYVlpXNwNpH7YOG4oSNbpizR438XGSeu7LKaiWAPsp6W5bqg+dAGYeVaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793141751;
-	h=DMARC-Filter:Received:DKIM-Filter:DKIM-Signature:DKIM-Signature:
-	 Received:Received:Date:From:To:CC:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-Originating-IP:
-	 X-ClientProxiedBy:X-KSMG-AntiPhishing:
-	 X-KSMG-AntiSpam-Interceptor-Info:X-KSMG-AntiSpam-Status:
-	 X-KSMG-AntiVirus:X-KSMG-AntiVirus-Status:X-KSMG-KATA-Status:
-	 X-KSMG-LinksScanning:X-KSMG-Message-Action:X-KSMG-Rule-ID;
-	bh=ywhaCbnTX+qTpWHanCXUPC4b96UVNtT+R99Ydrulnr8=;
-	b=378KY+7Dmav0levEcwkcF00afE5hqvOprN+tl954qHgT5IjMmjz8tDFxSw4/u9fEZP66
-	 0+XV325TZbrOscixSPsSEzfz5tv42zQDIe4A99Hp5zCKbKMitVMR1N6KNoOpU2HAZihPI
-	 RdWEWta3ckhMtrTAnlyNLkeBKv6RZg9Z4wUVNayWfBiSiGZGkLlqC5VJvcj1Gt2V1dKeX
-	 m9SG5kM4yB5xHEJ/L5MbJlFucKsubDRaFDW5xf3esTbHEwzbBJAuB1g49kntLyqTejOwB
-	 ewOChwrl4L2mIl9H6DcmecZ2FGRYkDIA/LHgTwEs3fFVyopCC7L38P06Xnp9BSOH/DQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793141820;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=gIVns6+2kR7Rl7cmy4htyby4FQjdtEx7csuUjrR4iLk=;
+	b=h+wukn1pxSoVZRPmGA12ZlVWz51VEEaVcbtmTYUdHTRZf0oMCfPQm/PRi2zih8g6ALPn
+	 IiGuDOJRHvOCvn+NFy7LkjDvhr9xRJfFQuyKbhQtl+itl+B1QkUFfK3trCaMbOATe0daV
+	 y6Sy9l7w4ie+/CS5bhLz0fSfjDK0WztPx0/PFeWeq21gTN1z8SbksDvLbzEPSAWrPunzi
+	 3OI5UmgBxtEBVk5wB4cqdn31G4PtpMaQnNHxGP3rPPQXF2bgzn0qZMRQGVhUmsOugp++y
+	 1aMAaYp0Mf9jVB+UtySD/BQ90M2hUc3fQglF5Et2YlFmZC6XRwAM/mUcTDj+WbP2HJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=yadro.com;
-	spf=pass smtp.mailfrom=yadro.com;
-	dkim=pass header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-02 header.b=xJEuQSev;
-	dkim=pass header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-03 header.b=GqERLg4l;
-	arc=none smtp.remote-ip=195.3.219.148
-Received: from mta-01.yadro.com (mta-01.yadro.com [195.3.219.148])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Ia0l5YsQ;
+	arc=none smtp.remote-ip=198.175.65.21
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D58606A31D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 22:55:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 88D58606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yadro.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yadro.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664A6606A31A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 22:56:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 664A6606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-02 header.b=xJEuQSev;
-	dkim=pass (2048-bit key, unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-03 header.b=GqERLg4l
-Received: from mta-01.yadro.com (localhost [127.0.0.1])
-	by mta-01.yadro.com (Postfix) with ESMTP id 2FF3E20003;
-	Wed, 28 Oct 2026 01:55:46 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-01.yadro.com 2FF3E20003
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-02;
-	t=1793141746; bh=ywhaCbnTX+qTpWHanCXUPC4b96UVNtT+R99Ydrulnr8=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:From;
-	b=xJEuQSevRhbxKUhbXOgkgPSeOU9Q0uMdYWvVYUqvhUwLjBBdBAQyBSg4AAwh+dnBv
-	 BpGvEnVSKx/gN3M5ZQcWC/+TiKno6O3211wbkNJ7WGyXIp6gzJ2jOuzU3NElZH+lG7
-	 +Nx0KZ3Dfso4RbR72SRX9LejbmC7VijicfnAVizrbNxAeAmq6b/PBrvE5vhaaz8n48
-	 VNd/h54KMWO2lbi4GPoR7cgZMlZki+GXSSC1E6Zw00oKAobaXzB1cPC5PmXNQiSNLT
-	 w4AHhDnIvD3Uub+bCFgJVhpH1lcc7G5GBpV6KGctUZ95a3ROO+wGqCuuAm1SJ2U1td
-	 jAFSorb9rcw5g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-03;
-	t=1793141746; bh=ywhaCbnTX+qTpWHanCXUPC4b96UVNtT+R99Ydrulnr8=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:From;
-	b=GqERLg4lmGEC4NNEuTury1CqBqvZlHE2OYvAr4ucgHozCsbq28mmT24hSBkq08QEf
-	 Y88lqxvqhyyWMayVfE765fMKGHF/2sVewxR5bA7KhLuKsLsjFOUMfO9SDsonJ//RP0
-	 GVv4jL/8EMLDaAebkjMn3YizF8n+rMIXsawkx9FJnkE/FUJEBlCBj8R6eRAyDkWxks
-	 JmWTZMnqut6KpbbFPelSycihe0VQRJHgMNpcv7/J/oxMZeMSMZM75Jrx1Iip8hyQo2
-	 8O6hxvStI1JYdxOB8xalfmjS9sFeKfaThad5+vLysnivT0WP0GGvX1i1ndzhyjSMVH
-	 R8zWw9GndgMkw==
-Received: from RTM-EXCH-06.corp.yadro.com (unknown [10.34.9.206])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mta-01.yadro.com (Postfix) with ESMTPS;
-	Wed, 28 Oct 2026 01:55:45 +0300 (MSK)
-Received: from yadro.com (10.34.9.246) by RTM-EXCH-06.corp.yadro.com
- (10.34.9.206) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.49; Wed, 28 Oct
- 2026 01:55:45 +0300
-Date: Wed, 28 Oct 2026 01:55:45 +0300
-From: Dmitry Bogdanov <d.bogdanov@yadro.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <target-devel@vger.kernel.org>, <linux-scsi@vger.kernel.org>
-Subject: Re: [PATCH 2/2] scsi: target: iscsi: fix hanging WRITE_PENDING
- commands
-Message-ID: <20261027225545.GA32229@yadro.com>
-References: <20261027180123.13163-1-d.bogdanov@yadro.com>
- <20261027180123.13163-3-d.bogdanov@yadro.com>
- <sashiko-outbox-187009@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Ia0l5YsQ
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793141818; x=1824677818;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=sOlyCuSZxE0bpLNopzU/8YOcrlV8+AwrSCT7isibU64=;
+  b=Ia0l5YsQfifRZH2wzIMpg6e5f1qQFOZvfYPs5UHUPDQvvzHmjcMJ5sHu
+   ON/uK4CEjP58Gpw3RfQfF43TZ9kH5vebJpr+LS3JHhM2yL7I6FG3pu+oP
+   ddbu/4RM4Q24wp3NQYpoTTwUqzhm+E2x8yHO0hJdntv1bx974wGIc1ShH
+   XCBqjFaE5diwy7D9yiTjmknChew4np62TVzi90JnXPsEHZQXnc38lZxQO
+   KLJ+6iY4Jb7YdWHpaK2zwV8MO+ceR+zfI8THKhpr2chUC64Qcvce9eF2G
+   xoc9mbTwLpozWUzPPn5Q+J3Q8+GH8Xt5e7XuJFxdq8qPEEfRorPwQrt+T
+   A==;
+X-CSE-ConnectionGUID: vzy4LrzPT6udd1OPSBlBOA==
+X-CSE-MsgGUID: Dq16Ky+BQKqrDJDrc4v85Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11948"; a="1946898"
+X-IronPort-AV: E=Sophos;i="6.27,181,1787036400"; 
+   d="scan'208";a="1946898"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 15:56:58 -0700
+X-CSE-ConnectionGUID: 47NJByKORP2a9ouAGCSZiw==
+X-CSE-MsgGUID: Eowt1B9AQoS9P7g39cH8WQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,181,1787036400"; 
+   d="scan'208";a="4998129"
+Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.184.228]) ([10.122.184.228])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 15:56:57 -0700
+Message-ID: <1e3230bc-800c-4862-9bb8-ff1074e76fc8@intel.com>
+Date: Tue, 27 Oct 2026 17:56:56 -0500
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -90,181 +72,165 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 12/12] KVM: x86/pmu: Support RDPMC Metrics Clear Mode
+To: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>, sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+References: <20260918193937.569414-1-zide.chen@intel.com>
+ <20260918193937.569414-13-zide.chen@intel.com>
+ <20260918202200.F39971F000FF@smtp.kernel.org>
+ <1de5af16-06a5-4b97-ba92-0a4ac02c32ff@linux.intel.com>
+Content-Language: en-US
+From: "Chen, Zide" <zide.chen@intel.com>
+In-Reply-To: <1de5af16-06a5-4b97-ba92-0a4ac02c32ff@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-187009@kernel.org>
-X-ClientProxiedBy: RTM-EXCH-01.corp.yadro.com (10.34.9.201) To
- RTM-EXCH-06.corp.yadro.com (10.34.9.206)
-X-KSMG-AntiPhishing: NotDetected, bases: 2026/10/27 19:34:00
-X-KSMG-AntiSpam-Interceptor-Info: not scanned
-X-KSMG-AntiSpam-Status: not scanned, disabled by settings
-X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.1.8310, bases: 2026/10/27 19:28:00 #28750693
-X-KSMG-AntiVirus-Status: NotDetected, skipped
-X-KSMG-KATA-Status: Not Scanned
-X-KSMG-LinksScanning: NotDetected, bases: 2026/10/27 19:34:00
-X-KSMG-Message-Action: skipped
-X-KSMG-Rule-ID: 5
-
-On Tue, Oct 27, 2026 at 06:18:12PM +0000, sashiko-bot@kernel.org wrote:
-> 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] scsi: target: iscsi: double completion in iscsit_release_commands_from_conn()
-> --
-> 
-> commit 31a87057639fce26dc0f2f4bbcd6ddacf96b85a5
-> Author: Dmitry Bogdanov <d.bogdanov@yadro.com>
-> 
-> scsi: target: iscsi: fix hanging WRITE_PENDING commands
-> 
-> This commit removes early CMD_T_ABORTED checks in the iSCSI Data-Out and
-> command execution paths so that aborted WRITE commands in WRITE_PENDING state
-> are passed to the target core once all Data-Out PDUs have been received.
-> 
-> > diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
-> > index 62ada3a52210e..03d618cd76721 100644
-> > --- a/drivers/target/iscsi/iscsi_target.c
-> > +++ b/drivers/target/iscsi/iscsi_target.c
-> > @@ -1518,23 +1518,6 @@ __iscsit_check_dataout_hdr(struct iscsit_conn *conn, void *buf,
-> >                       if (hdr->flags & ISCSI_FLAG_CMD_FINAL)
-> >                               iscsit_stop_dataout_timer(cmd);
-> >
-> > -                     return iscsit_dump_data_payload(conn, payload_length, 1);
-> > -             }
-> > -     } else {
-> > -             /*
-> > -              * For the normal solicited data path:
-> > -              *
-> > -              * Check for a delayed TASK_ABORTED status and dump any
-> > -              * incoming data out payload if one exists.  Also, when the
-> > -              * ISCSI_FLAG_CMD_FINAL is set to denote the end of the current
-> > -              * data out sequence, we decrement outstanding_r2ts.  Once
-> > -              * outstanding_r2ts reaches zero, go ahead and send the delayed
-> > -              * TASK_ABORTED status.
-> > -              */
-> > -             if (se_cmd->transport_state & CMD_T_ABORTED) {
-> > -                     if (hdr->flags & ISCSI_FLAG_CMD_FINAL &&
-> > -                         --cmd->outstanding_r2ts < 1)
-> > -                             iscsit_stop_dataout_timer(cmd);
-> 
-> [Severity: High]
-> Could passing an aborted WRITE_PENDING command to target_execute_cmd() cause
-> a double abort completion and use-after-free if the connection closes afterward
-> in iscsit_release_commands_from_conn()?
-
-Yes, it can cause. But my patch neither was intended to address that
-problem neither increases its probability. WRITE_PENDING always may be
-aborted, in parallel from other session, right
-before target_cmd_interrupted() in target_execute_cmd().
-
-And that is easily fixed by changing cmd->t_state in
-target_execute_cmd() before target_cmd_interrupted() to take the
-cmd ownership by the target core:
-
------------------
-diff --git a/drivers/target/target_core_transport.c b/drivers/target/target_core_transport.c
-index 2c9f4b58c024f..14ea1a9d7fa40 100644
---- a/drivers/target/target_core_transport.c
-+++ b/drivers/target/target_core_transport.c
-@@ -2561,6 +2561,10 @@ static bool target_handle_task_attr(struct se_cmd *cmd)
- void target_execute_cmd(struct se_cmd *cmd)
- {
-        trace_target_execute_cmd(cmd);
-+
-+       spin_lock_irq(&cmd->t_state_lock);
-+       cmd->t_state = TRANSPORT_PROCESSING;
-+       spin_unlock_irq(&cmd->t_state_lock);
-        /*
-         * Determine if frontend context caller is requesting the stopping of
-         * this command for frontend exceptions.
-@@ -2571,7 +2575,6 @@ void target_execute_cmd(struct se_cmd *cmd)
-                return;
-
-        spin_lock_irq(&cmd->t_state_lock);
--       cmd->t_state = TRANSPORT_PROCESSING;
-        cmd->transport_state |= CMD_T_ACTIVE | CMD_T_SENT;
-        spin_unlock_irq(&cmd->t_state_lock);
-
----------------
 
 
+
+On 9/21/2026 4:39 AM, Mi, Dapeng wrote:
 > 
-> With this check removed in __iscsit_check_dataout_hdr(), an aborted WRITE
-> command in TRANSPORT_WRITE_PENDING state receives its remaining Data-Out PDUs
-> and calls target_execute_cmd() in iscsit_check_dataout_payload() (or in
-> iscsit_execute_cmd() for out-of-order CmdSNs):
+> On 9/19/2026 4:22 AM, sashiko-bot@kernel.org wrote:
+>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>> - [High] pmu: event filter mistakenly strips METRICS_CLEAR_EN from fixed_ctr_ctrl_hw
+>> - [Medium] pmu: METRICS_CLEAR_EN unmasked without validating fixed counter bounds
+>> - [Low] pmu: emulation incorrectly ties PERF_METRICS clearing to SLOTS PMC existence
+>> --
+>>
+>> commit 8ba3725c32dbde4a1c3935cb433e898e06425b83
+>> Author: Zide Chen <zide.chen@intel.com>
+>>
+>> KVM: x86/pmu: Support RDPMC Metrics Clear Mode
+>>
+>> This commit adds support for PERF_CAP_RDPMC_METRICS_CLEAR (bit 19 of
+>> IA32_PERF_CAPABILITIES). It advertises this capability to guests when the
+>> mediated PMU is enabled and the host reports it, unmasking the relevant
+>> control bit. It also updates intel_emulate_rdpmc() to replicate the
+>> clear-on-read behavior for consistency.
+>>
+>>> diff --git a/arch/x86/kvm/vmx/pmu_intel.c b/arch/x86/kvm/vmx/pmu_intel.c
+>>> index 98e2fb80347a1..3e5e8bae67ab0 100644
+>>> --- a/arch/x86/kvm/vmx/pmu_intel.c
+>>> +++ b/arch/x86/kvm/vmx/pmu_intel.c
+>> [ ... ]
+>>> @@ -138,6 +149,18 @@ static int intel_emulate_rdpmc(struct kvm_vcpu *vcpu, unsigned int idx,
+>>>  			return 1;
+>>>  
+>>>  		*data = pmu->perf_metrics;
+>>> +
+>>> +		/*
+>>> +		 * Per the SDM, RDPMC of PERF_METRICS clears both PERF_METRICS
+>>> +		 * and the SLOTS fixed counter when Metrics Clear Mode is
+>>> +		 * enabled via INTEL_FIXED_3_METRICS_CLEAR in FIXED_CTR_CTRL.
+>>> +		 */
+>>> +		pmc = kvm_pmc_idx_to_pmc(pmu, INTEL_PMC_IDX_FIXED_SLOTS);
+>>> +		if (pmc && intel_pmu_metrics_clear_enabled(pmu)) {
+>>> +			pmu->perf_metrics = 0;
+>>> +			pmc_write_counter(pmc, 0);
+>>> +		}
+>>> +
+>> [Severity: Low]
+>> Does tying the clearing of PERF_METRICS to the existence of the SLOTS PMC in
+>> intel_emulate_rdpmc() violate the hardware specification?
+>>
+>> If the guest executes RDPMC natively and triggers an interception, and the
+>> SLOTS counter is not exposed to the guest (making kvm_pmc_idx_to_pmc return
+>> NULL), but METRICS_CLEAR_EN is enabled, this code silently skips clearing
+>> PERF_METRICS.
+>>
+>> Should the clearing of pmu->perf_metrics be performed independently of whether
+>> the software PMC object for the SLOTS counter exists?
+>>
+>>>  		return 0;
+>>>  	default:
+>>>  		return 1;
+>> [ ... ]
+>>> @@ -601,6 +624,11 @@ static void intel_pmu_refresh(struct kvm_vcpu *vcpu)
+>>>  						 INTEL_FIXED_0_USER |
+>>>  						 INTEL_FIXED_0_ENABLE_PMI);
+>>>  
+>>> +	if (perf_capabilities & PERF_CAP_RDPMC_METRICS_CLEAR)
+>>> +		pmu->fixed_ctr_ctrl_rsvd &=
+>>> +			~intel_fixed_bits_by_idx(INTEL_FIXED_SLOTS_IDX,
+>>> +						 INTEL_FIXED_3_METRICS_CLEAR);
+>>> +
+>> [Severity: Medium]
+>> Does intel_pmu_refresh() unconditionally unmask the METRICS_CLEAR_EN bit
+>> without verifying if the guest topology actually exposes the SLOTS counter?
+>>
+>> If a VM is configured with 3 or fewer fixed counters, this unmasking would
+>> allow the unprivileged guest OS to write to bit 14 in
+>> MSR_CORE_PERF_FIXED_CTR_CTRL without triggering the expected #GP.
+>>
+>> Should this be gated by checking if pmu->nr_arch_fixed_counters >
+>> INTEL_FIXED_SLOTS_IDX?
 > 
-> drivers/target/iscsi/iscsi_target.c:iscsit_check_dataout_payload() {
->         ...
->                 iscsit_stop_dataout_timer(cmd);
->                 if (ooo_cmdsn)
->                         return 0;
->                 target_execute_cmd(&cmd->se_cmd);
->                 return 0;
->         ...
-> }
+> This sounds like a real risk. Should we mask out PERF_METRICS from guest
+> PERF_CAPABILITIES in intel_pmu_refresh() if guest doesn't advertise fixed
+> counter 3?
+
+Yes, will checks the availability of guest FC3 in
+kvm_vcpu_has_perf_metrics() as well.
+
+>>
+>> [Severity: High]
+>> Does this patch inadvertently cause event filters to strip the METRICS_CLEAR_EN
+>> bit in kvm_mediated_pmu_refresh_event_filter()?
+>>
+>> When a host-level event filter denies the SLOTS counter (counter 3) from
+>> counting, KVM applies a 0xf hardware mask that zeroes all 4 configuration bits
+>> for the counter:
+>>
+>> arch/x86/kvm/pmu.c:kvm_mediated_pmu_refresh_event_filter() {
+>> ...
+>> 	} else {
+>> 		u64 mask = intel_fixed_bits_by_idx(pmc->idx - KVM_FIXED_PMC_BASE_IDX, 0xf);
+>>
+>> 		pmu->fixed_ctr_ctrl_hw &= ~mask;
+>> 		if (allowed)
+>> 			pmu->fixed_ctr_ctrl_hw |= pmu->fixed_ctr_ctrl & mask;
+>> 	}
+>> }
+>>
+>> Since this mask covers the entire 4-bit configuration block, it will also clear
+>> bit 14 (METRICS_CLEAR_EN) from hardware. If the guest sets METRICS_CLEAR_EN and
+>> then executes RDPMC natively, it will lead to un-cleared stale metrics.
+>>
+>> Should the mask be updated to avoid interfering with this newly introduced
+>> feature bit?
 > 
-> In target_execute_cmd(), target_cmd_interrupted() is called before
-> cmd->t_state is updated to TRANSPORT_PROCESSING:
+> This is another tricky corner case. The best way should be disabling
+> PERF_METRICS along with fixed counter 3. But Intel HW doesn't provide a way
+> to disable PERF_METRICS except the EN_PERF_METRICS bit in PERF_GLOBAL_CTRL.
+> Since PERF_GLOBAL_CTRL could be in pass-through mode and guest could
+> directly overwrite PERF_GLOBAL_CTRL, it becomes meaningless for KVM
+> clearing EN_PERF_METRICS bit for guest PERF_GLOBAL_CTRL.
 > 
-> drivers/target/target_core_transport.c:target_execute_cmd() {
->         if (target_cmd_interrupted(cmd))
->                 return;
+> For the filter mask, it may be good enough to only mask out
+> (INTEL_FIXED_0_KERNEL | INTEL_FIXED_0_USER).
+
+Yes, the 0xf mask erroneously strips bit 14 (METRICS_CLEAR_EN).
+Since event filtering is only intended to prevent counter
+increments, mask out only (INTEL_FIXED_0_KERNEL | INTEL_FIXED_0_USER) is
+sufficient, which also leaves the PMI enable bit intact.
+
+This also matches the GP counter handling, which only masks out the
+necessary enable bit and keep all other bits unchanged.
+
+@@ -557,7 +574,9 @@ static void
+kvm_mediated_pmu_refresh_event_filter(struct kvm_pmc *pmc)
+                        pmc->eventsel_hw |= pmc->eventsel &
+                                            ARCH_PERFMON_EVENTSEL_ENABLE;
+        } else {
+-               u64 mask = intel_fixed_bits_by_idx(pmc->idx -
+KVM_FIXED_PMC_BASE_IDX, 0xf);
++               u64 mask = intel_fixed_bits_by_idx(pmc->idx -
+KVM_FIXED_PMC_BASE_IDX,
++                                                  INTEL_FIXED_0_KERNEL |
++                                                  INTEL_FIXED_0_USER);
 > 
->         spin_lock_irq(&cmd->t_state_lock);
->         cmd->t_state = TRANSPORT_PROCESSING;
->         cmd->transport_state |= CMD_T_ACTIVE | CMD_T_SENT;
->         spin_unlock_irq(&cmd->t_state_lock);
->         ...
-> }
-> 
-> Because CMD_T_ABORTED is set, target_cmd_interrupted() queues
-> target_abort_work on target_completion_wq and returns true without changing
-> cmd->t_state:
-> 
-> drivers/target/target_core_transport.c:target_cmd_interrupted() {
->         ...
->         if (cmd->transport_state & CMD_T_ABORTED) {
->                 if (cmd->transport_complete_callback)
->                         cmd->transport_complete_callback(cmd, false, &post_ret);
->                 INIT_WORK(&cmd->work, target_abort_work);
->                 queue_work(target_completion_wq, &cmd->work);
->                 return true;
->         }
->         ...
-> }
-> 
-> As a result, cmd->se_cmd.t_state remains TRANSPORT_WRITE_PENDING. When
-> CMD_T_TAS is set (for example, when aborted by a LUN_RESET on another session
-> with emulate_tas enabled), target_handle_abort() queues SAM_STAT_TASK_ABORTED
-> status and drops one cmd_kref reference via
-> transport_cmd_check_stop_to_fabric(), leaving the command on
-> conn->conn_cmd_list in TRANSPORT_WRITE_PENDING state until ExpStatSN
-> acknowledges the status (or, when CMD_T_TAS is not set, until
-> target_abort_work runs iscsit_aborted_task()).
-> 
-> If the connection closes while the command is still on conn->conn_cmd_list,
-> iscsit_release_commands_from_conn() checks for TRANSPORT_WRITE_PENDING:
-> 
-> drivers/target/iscsi/iscsi_target.c:iscsit_release_commands_from_conn() {
->         ...
->                 if (cmd->se_cmd.t_state == TRANSPORT_WRITE_PENDING) {
->                         /*
->                          * We never submitted the cmd to LIO core, so we have
->                          * to tell LIO to perform the completion process.
->                          */
->                         spin_unlock_irq(&se_cmd->t_state_lock);
->                         target_complete_cmd(&cmd->se_cmd, SAM_STAT_TASK_ABORTED);
->                         continue;
->                 }
->         ...
-> }
-> 
-> Wouldn't this call target_complete_cmd() -> target_cmd_interrupted() a second
-> time on the same command, re-initializing and re-queueing cmd->work for
-> target_abort_work while iscsit_release_commands_from_conn() also frees the
-> command via iscsit_free_cmd(), leading to workqueue corruption, cmd_kref
-> underflow, and use-after-free of struct iscsit_cmd?
-> 
-> --
-> Sashiko AI review � https://sashiko.dev/#/patchset/20261027180123.13163-1-d.bogdanov@yadro.com?part=2
+>>
+>>>  	counter_rsvd = ~((BIT_ULL(pmu->nr_arch_gp_counters) - 1) |
+>>>  			 ((BIT_ULL(pmu->nr_arch_fixed_counters) - 1) << KVM_FIXED_PMC_BASE_IDX));
+>>>  	pmu->global_ctrl_rsvd = counter_rsvd;
+
