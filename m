@@ -1,99 +1,69 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.201.46
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793089763;
-	b=TnCWAZB/X2mwOv8aDJoxJVYQ8WY+niNBvf6PeZRrCbHpDeJt/oEaQaPVmuJqynJgD82A
-	 EisrE2Y1iYA1DQDuYRNgFPlX2a/l6bM94NWlvBPfG283qufaaf4Apr9P2P0F6HzjModF2
-	 5LI2bBJG5S+rf+MarZD6i5aZOSVTB/QoOC08Oc5fEcy7iyu3xb70/LR5fgoR5q/gehGCW
-	 AAdLmfUtMgnJv6rruT+ZOEpZ27ZnuE05mL7eoNRglh31QWjQlYXuO14XANsTYE2kqYYCy
-	 hVaPokODuJtUG5TpRMXqCQwqcDbmDeyde/EXrsdXdePWFMdemUtU7gLZ+SJLoxZlxXA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793089763;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=pjsIVBayaK3g+oi6KbL1a82i8CcyMXFudLp5Zg6GlFY=;
-	b=JiBWYE5uDNpABakndGQNvY0IvJRQsFeJTseJP8Fv5SHe6xLVMCqSZmNnqz3BjEysq/WC
-	 yr1c2xtoqU17f/a3dmt7V52k5gmCD8Y9td36lUQa44V0UR6aXdJQw5nMQge7SQYZOKBKR
-	 1Pz6oPJJwje/z4/1/8G2aduu0m4jFC7VjmVFA47hbtSnzTatd01uw20CuO6COMLuiNQ9D
-	 Rbeo1rdL4RZOmi9oYQExCvijSj5cgIMNi/xVxLL8R6Bti+0etjCQj+TAtSbjrQMQWvCKP
-	 L1U7a9Q4SsiijMxRoMakKg3uNztlN+ioa6kWFr/uLUu5x7fXbnKkhET1SOh4skiM7BQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amd.com;
-	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=a6kQIuT2;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.201.46
-Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013046.outbound.protection.outlook.com [40.107.201.46])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.218
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793090420;
+	b=JRHk+bHukZuMCap4kINe60Q/++U5l1wL8mpb6fjQiophn+naMTdjU6lZFkX4WvkrJelY
+	 xPDmwR4xSw9YjPVuyRICu47OvFQWLDw12iF8s/e8n+oHTKTiHNty7LiMpEauRzL4MmxwN
+	 +zH1JIM1AZkfL54ifoF6ZGoEtHPrMPxYlm8l8EPpYjm42QIrO8WtNCtr5il65Cm0JyseM
+	 stQ8CjwyGEOri9hvfTdaSVj6LGVPzwQbZZNFH7l9vg9hxp6tWNyL1VxBWk/jAjDynSRKK
+	 cmZEadgHLI4yseYMyre+N+90jGh4fVSalccS5Vy4yskThkz4j5GQxGcxokNOmq8F2Ow==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793090420;
+	h=DMARC-Filter:dkim-signature:Received:Received:Received:Subject:To:CC:
+	 References:From:Message-ID:Date:User-Agent:MIME-Version:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-Originating-IP:
+	 X-ClientProxiedBy;
+	bh=dEUMA+v6R68CAwNDCvh/sXJcOeG92Dey9ccxulz6V5I=;
+	b=MEE2QPH1KYKKklzgPk/kU6EfTEAODqEZGUOPCkCWokYxL9rT++AxUXIjYI0sqLoYjf6D
+	 6jSmfNAV/mAlw0lI7v5DpXB50TaV7+HEUxcJZLJXZKMufPUMAq2IG6gJ69mohUgXsE/+9
+	 0PLVWBL/iaQaXezDKnT84xQO8MSg4ino26MFQQJY76XKKUch6Rv6AKJ4BMBIZ6E66Nl1T
+	 PRlX+K1h08pWQjZ10MMoLTtC5f0z8VJUVTi+RiiyZmh8KIhlr57duI0iUbcV/wTo4w1u7
+	 d07D69oaM1po0zBn3J6X2t90LcWEzG0RRxraYEDKsBpUbv/+YfNSRZ5UDmrpSq/BtvA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=huawei.com;
+	spf=pass smtp.mailfrom=huawei.com;
+	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b="K/c8gj8J";
+	arc=none smtp.remote-ip=113.46.200.218
+Received: from canpmsgout03.his.huawei.com (canpmsgout03.his.huawei.com [113.46.200.218])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F246B606A31D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 08:29:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F246B606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D681A606A31A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 08:40:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D681A606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=a6kQIuT2
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bXWGIy2BnQu0g53Urs8n0ezRPt2TzGav07bXZ1WTZ3i/xH8im3zXHN3rcaiSJR+jSP6zftHt1TYAeXqFW0GLlndBbbMtHOObrpPKa59iJzpgv63HzYgE6ARI7ZbWsMbrz+QN74O94UKi1WbuRtkIOwlZpzJCzPlA/F/xcaIbtrLV9BkB9bJvHAexsiAeq7CVTaFjPHg5L0ZogT119TRfYGxAlR9ZEVnXWTrdVz9JBv5IzgvNdet4DyNthG2vA5EqNBZEq0/wM4QAJ7gzVmJ0+2MJsj2eLWvPUJsLkLuwSArcuhgadEQXEZnrXSFMZRJG5KP8o9B9FpeLyaKqCE2F7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pjsIVBayaK3g+oi6KbL1a82i8CcyMXFudLp5Zg6GlFY=;
- b=O3a9y4dM108+p7vWoG+QkAm4WklFZI5ecv/m49Nt00PsyNGoZh5DRWB9aJ6qpwbL4/V6uxcLhDvgDKlr2aLZQZW9DMIRDzdTVJy5OoXWrXSc0so48NtPBInR4c7D/lz/JOdUA5q+DNlVE9QiySoAYjVhpIkuFrU5eubnWHZmzvvVr352hMgXdBgoJH4qPKcWnZAsQjoJdD/U53HEaLLldqa7g0ryqKj9bJYExYCjFTboIKfCL135O3rGV6P+8FAG2+JQci/BPu9G8+e4dcqky/yFkCfGvG6RUtUeoBcpPLdSxJQILdnndG/qrD+enZzhy/oXalgBzv+tRYEYx8xrgg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pjsIVBayaK3g+oi6KbL1a82i8CcyMXFudLp5Zg6GlFY=;
- b=a6kQIuT2iuHBf6HTm5niPktY75KoRClv0rU6o6QWIEw9o4leLLh7S9Lk3paFff7OJfS+TxAvowGXsVEnwYV7mew5M8UgqOBjtS6cjOIjVwSaBN3Rf67u/JuXO5PeMX88lfRCv9CpbwcIXQ7nwWKpkJRiTj1l1OFLRqSeuEp4dY8=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CY5PR12MB6252.namprd12.prod.outlook.com (2603:10b6:930:20::17)
- by SJ2PR12MB8011.namprd12.prod.outlook.com (2603:10b6:a03:4c8::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
- 2026 08:29:19 +0000
-Received: from CY5PR12MB6252.namprd12.prod.outlook.com
- ([fe80::ab00:d77:6014:64a2]) by CY5PR12MB6252.namprd12.prod.outlook.com
- ([fe80::ab00:d77:6014:64a2%4]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
- 08:29:19 +0000
-Message-ID: <64353fda-29e4-4751-9d27-3f232cebdb6a@amd.com>
-Date: Tue, 27 Oct 2026 13:58:18 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 11/13] soundwire: amd: fix interrupt gate and work
- drain ordering in PM ops
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-sound@vger.kernel.org, Mario Limonciello
- <Mario.Limonciello@amd.com>, Syed Saba Kareem <syed.sabakareem@amd.com>,
- "Dommati, Sunil-kumar" <Sunil-kumar.Dommati@amd.com>,
- "Prasad, Prasad" <venkataprasad.potturu@amd.com>,
- Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
- Vinod Koul <vkoul@kernel.org>, Bard Liao <yung-chuan.liao@linux.intel.com>
-References: <20261026044507.2310694-1-Vijendar.Mukunda@amd.com>
- <20261026044507.2310694-12-Vijendar.Mukunda@amd.com>
- <sashiko-outbox-184937@kernel.org>
-Content-Language: en-US
-From: "Mukunda,Vijendar" <vijendar.mukunda@amd.com>
-In-Reply-To: <sashiko-outbox-184937@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: PNYPR01CA0069.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:2ba::10) To CY5PR12MB6252.namprd12.prod.outlook.com
- (2603:10b6:930:20::17)
+	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=K/c8gj8J
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=dEUMA+v6R68CAwNDCvh/sXJcOeG92Dey9ccxulz6V5I=;
+	b=K/c8gj8JYshqDOVmIoV5rTx2+KW/NYjSOUn2iSFcfljWnak4hqBLjLKKm+P9lvl7K9TZ8YrHR
+	2aWO3S2sCqf79Y3W70o285U9WkM/GaBf/2eOJdZm/tyXvkJ12h50CWx7MewMPJFTxEANn7ZkNPL
+	/nWTlD1tXyri+43AnC/xLbM=
+Received: from mail.maildlp.com (unknown [172.19.163.104])
+	by canpmsgout03.his.huawei.com (SkyGuard) with ESMTPS id 4jDP7m0j1QzpSt7;
+	Tue, 27 Oct 2026 16:40:04 +0800 (CST)
+Received: from whupemo200011.china.huawei.com (unknown [7.152.185.179])
+	by mail.maildlp.com (Postfix) with ESMTPS id C76234057F;
+	Tue, 27 Oct 2026 16:40:14 +0800 (CST)
+Received: from [10.174.178.46] (10.174.178.46) by
+ whupemo200011.china.huawei.com (7.152.185.179) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Tue, 27 Oct 2026 16:40:13 +0800
+Subject: Re: [PATCH v5] ubifs: zero stale data beyond EOF before file size
+ grows
+To: Nan Lin <lin.nan@h3c.com>
+CC: <linux-mtd@lists.infradead.org>, <richard@nod.at>,
+	<sashiko-reviews@lists.linux.dev>, <wangxiaoqing@h3c.com>,
+	<zhou.kete@h3c.com>
+References: <0f05834a-7483-3e4e-0612-1d70e045b893@huawei.com>
+ <20261027080536.3569047-1-lin.nan@h3c.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
+Message-ID: <5d2101bc-92a1-d633-fd8c-e491fcecb5c0@huawei.com>
+Date: Tue, 27 Oct 2026 16:40:12 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,231 +73,190 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY5PR12MB6252:EE_|SJ2PR12MB8011:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0dab2e84-e88f-40de-94f6-08df3404652a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|23010399003|6133799003|10067099003|22082099003|261026121527099003|18002099003|4143699003|11063799006|5023799004|56012099006|261009223027099003|261022075727099003|261021121427099003|261022105027099003|261026140227099003|261021123027099003;
-X-Microsoft-Antispam-Message-Info:
-	yi6imLY5YDOOzS2JxoJNh91D7tM9qHOfYOzkRrmVB7AzsTBu/P/p3roluOWv+fjFLJ6w1OwJGHRllhdd51xSQWTj4ybKpMxLnSeppz1YeyPAObXGsR4/IcMROOGjMadhJb5ggoxJ/IaHKjLc8sp32C7BQ/1C8wgRaQCIvetWh+hEuQ99RKa4GvVRIiTvjg9K0vT8M0hXqmewms/8JrrxhIiK+Qgd3RQOXVQPlhPFBN5w5iloKYD5EFClXj8mFMQM3f8yv/UaCePryabZlFQwCYVtl8K6kLW3ScaVE1AFGb2NV/4oRNIjW440a56Emwz+mR95wJbnGRpFexHMWwmeyrlwNTJGySP/V8bJacWfPk8n7oL1FqD1jGzvlqOZ+0/8qyGfcpGsd48TOe6Ci33Qyzf16GhMHosS5YeDhJMyu2RB2UOgseLGZEdX+dCx7yFGQzSry9OtDWxaF6igpcG0xB4H5Be/FehjBgbos0WgmREBCtLiNX6gg+s6CHD1N5SqLSLpNa7etGXgksOPEphNbocNOhTdiDOxizZjJsfkd+RnW6xNDcppsraw3ZLd/mvhPfuz6B1vWJtW/Xb3m3Pw12mDOXjgJassWSKpK6WDHVyImv2rurS9/WSinNCyXVMnoRgREJ3aJiJDZJltJUiIob+crqPUwzQc4Ih4FWdWEI0=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR12MB6252.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(23010399003)(6133799003)(10067099003)(22082099003)(261026121527099003)(18002099003)(4143699003)(11063799006)(5023799004)(56012099006)(261009223027099003)(261022075727099003)(261021121427099003)(261022105027099003)(261026140227099003)(261021123027099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?UjBwaGZpbG5nMTd3UzhzdTY3SHk2NHpaeXU1UGp5VVMrRkNhZzRPb1NDNFU3?=
- =?utf-8?B?RWtjandBd2RTa1k0K0VvT2NYb2hKV2FFZEF1THBySTdCeGhLY2ZLODVRSFpt?=
- =?utf-8?B?dGxWTldtR0NVQkdNYW4zM0FtTVJvL3JFSFkwa2lhM29uNUtkOW1iSGlKY3BD?=
- =?utf-8?B?NFN0cDdCT3dCYlJKODR2eEF6emU4bGVuT0hDeWN3ZnRuMGNLTzlRckxmU2dC?=
- =?utf-8?B?TUI0STZxaDVQeHU3ZkpZUjFyT3VGeEM1S3g5WDlGallYZFduNmlBaTBhWC9Y?=
- =?utf-8?B?WGJUamRZKzZhOTY0VjJQQk1ISzlFZ2poUVFMQ3JrRndnRmZQdjROOTk0clhw?=
- =?utf-8?B?ejcrcituYnBYdU8xN2R4UmNXS1lVK2VMcGZtSkkvVUd3aHR1bTBYakp6NUlj?=
- =?utf-8?B?ZEVvck4wN29uL0piemNrbURmMmZsdzRTSVlIbjE1NlFxaktNZSs2NTc1SXpp?=
- =?utf-8?B?eUdYbVhnb0ErbUI3QVpmRkFTdFB0eENOcm9yYlVKbXorR0c5NFJQUVJJeUJG?=
- =?utf-8?B?blA3OTNsS1dKaUJrT0JSalgyNnJEYTM0d0pxOVJLUUZKdlFnaCs4TjJxUkRE?=
- =?utf-8?B?eHRDSWN5c0ZIZzdVQzFPVzQzSk5pWlh3WFdqSVVsNk4yNFFYc3hVSWlTZktY?=
- =?utf-8?B?WkhWaWI3YTZwQ1NBdkljeEExMitpZGJCOHlicmdNVWRLdU1GU29UUTNNa21z?=
- =?utf-8?B?UkVublgzbFRrdWhseXN1Yng2aEg3R09tREFsZm8reTcvdkJsc2FnZGxXdlEz?=
- =?utf-8?B?LzZ0Mld5MU5WMHhQZGR4ZzZjUzZKMFpPaWw2ekEzeFR5bHZlcHhjZUVsZysx?=
- =?utf-8?B?ei9MdjNrdEtKeUw4S2hvVUx0UURkRHEzUlBwemszVWh0LzI0aHh5dFo0aTlh?=
- =?utf-8?B?ZTNjRmduaVZKWWhVbWRob2YxOUlKUXA5ZTJNWnZ4QjliUXZHQnVxOTBFVEl4?=
- =?utf-8?B?enNQQU5Yb1A5RndGZzhwT0x4UXppcmZTb0RJTnVobDhxcGowN1hpR091SENk?=
- =?utf-8?B?bERVSDhzQzllMXY5QW9QWERBcVR2d2NzbVdZcjJJaVFsVCtqQld1c1dNMUFh?=
- =?utf-8?B?eFpRbTJCNXZQUmhTTityeGFKUy9hUGZiMHNFeDRnRjRxY21OWWtVQitseWRX?=
- =?utf-8?B?YzVqOUVSQ1c4TWl0RS9nWHU5R2xDTUJxNTlQWmFKQjRFcThMaStyclpHdXBo?=
- =?utf-8?B?Ly9qTzVaT3Y3eTZlSm1TMi81NmtYT1hJOUhoN1p1bUlHc0RqZWVqUW92d3lu?=
- =?utf-8?B?TzRiTkNkVXJBdnVJWXRIMnBzQmlpRm13cWdnYnhPRFZ4a3VZSDFsRnVtcEVL?=
- =?utf-8?B?OCtxQ1RVSHlwYUdJVXFScmkrakpWT0NXZGw1ek91R2RjckpSOXdKNkxHVG9C?=
- =?utf-8?B?S1QxZVlaU1NFMzNwY3I4TlFiR3ZwYnVPMVZsa0p0N05ucEVBZTBmSHZVTEF3?=
- =?utf-8?B?QUt0ZWVrZGg2N2htbmxPelQyL1gwZjhHa0RQTHFDU2NKUzZLdndGTS9mSVhh?=
- =?utf-8?B?eXcrOFcrUkdTNm5rdzhkY05HdHZQUSs4RkZudEZLM2p0OGVRY09scGZIdEpC?=
- =?utf-8?B?a3Q4c0Y1K0RGNC8zMjU1THcxUWFFc0JQRVl1OTJGWnZReWdMNDNOVXgyVXg1?=
- =?utf-8?B?aUFReVB6dmlPdStXSDZWODVYeStsRkRFSXRJbU9OYkQ2Y25SRVFxWE50Sy9j?=
- =?utf-8?B?eVZISDZyeXV5eG10anAwUkhRWEU1YitYaGx6SVBMUXZEeTB0dStRMXJHR3l0?=
- =?utf-8?B?MUJwMFdSRG5WRjgwam0vdHV3c1JRbTh1QW1IS1hFNEhESkNXMW1vOFRGaVRN?=
- =?utf-8?B?ejFycGYwSysrNWJYMnJDSXVhTnFTN0VNOWtyWEx6YlNNR1FLdDhMUjIweEVZ?=
- =?utf-8?B?Szh3MDcyQkd1cTlVZWlaTU5kYk9KV2tZZHNJY0lHR0lXTFN0Y211T3lSdUR4?=
- =?utf-8?B?aW9melp1ajN1R1FwczVFWnVzN0ZURXpFdXdTTnVCWjdtMTUxN1dIVTI1VWUv?=
- =?utf-8?B?SmZhbEhXYWxlSEZmbW1oMXJIcjBzam9lakVUQzE3NmxPQ2lpS3ZxWUkwL0Jz?=
- =?utf-8?B?MzA0VHk2MHphT1ViYXE1Y3lNNXBySklYUURlSFBNaFRlaFFsVUFPaGlZTHJM?=
- =?utf-8?B?dFpMS1c5Q040eS80aUx6YWN5TDdaZGVraDRGczlWTWlyYnpiY0RCd0VwQjBz?=
- =?utf-8?B?bCtrWXhLQ2ZvZVBoQ2lIVi9GZ1pxd2lRRVF5Z2RCQUpycyt4M3dmRlZGNFps?=
- =?utf-8?B?NGE1WTlRYjNOb3IvUVVRWFpQSTFqZ25uZlVUMXoyVml2ZUZQcE9NbFNBSUk1?=
- =?utf-8?B?YU91UUNGYURvVktLNW5kbVRnNFFoZDVlTjlhNUpCL2pXMTkrK3d3dz09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0dab2e84-e88f-40de-94f6-08df3404652a
-X-MS-Exchange-CrossTenant-AuthSource: CY5PR12MB6252.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 08:29:19.2719
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: QnvT0kJUX5jjpdnHRVlIJyiMEKg5vHKblFyCdyRST8Y0OoG1EGpnRj7PAKcjp687L098Y/BVdiBLsANW84Zqnw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8011
+In-Reply-To: <20261027080536.3569047-1-lin.nan@h3c.com>
+Content-Type: text/plain; charset="gbk"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
+ whupemo200011.china.huawei.com (7.152.185.179)
 
+�� 2026/10/27 16:05, Nan Lin д��:
+> mmap writes can dirty the page cache beyond EOF without changing
+> i_size. A later extending write or ftruncate turns that region into a
+> hole, but UBIFS never zeroes the partial page at the old EOF, so reads
+> expose the stale data.
+> 
+> Zero the tail of the cached old-EOF folio in both size-extending
+> paths: ubifs_write_iter() for writes starting beyond EOF, and
+> do_setattr() before truncate_setsize() grows the size. This mirrors
+> what ext4 does on size extension;
+> 
+> Restructure ubifs_write_iter() to match ext4_buffered_write_iter():
+> acquire inode_lock, perform write checks, call file_remove_privs() for
+> setuid/setgid clearing (UBIFS sets S_NOCMTIME so file_modified() is a
+> no-op), update mtime/ctime via update_mctime(), zero the EOF hole,
+> then execute the write with generic_perform_write(). This ensures
+> proper serialization and security handling.
+> 
+> All zeroing takes the old-EOF folio lock without ui->ui_mutex, keeping
+> the folio_lock -> ui_mutex order of ->writepage(); the reverse order
+> deadlocks.
+> 
+> UBIFS does not enable large folios, so the EOF folio is always a
+> single page today; nevertheless, use folio-relative arithmetic
+> (offset_in_folio(), folio_contains(), folio_size()) throughout so the
+> code is correct if that ever changes.
+> 
+> Signed-off-by: Nan Lin <lin.nan@h3c.com>
+> 
+> Changes since v4:
+>   - Use file_remove_privs() instead of kiocb_modified(), as UBIFS sets
+>     S_NOCMTIME making file_modified() a no-op (suggested by
+>     Zhihao Cheng).
+> 
+> Changes since v3:
+>   - Add inode_lock and move zero-eof after generic_write_checks(),
+>     matching ext4_buffered_write_iter structure
+>     (suggested by Sashiko AI review & Zhihao Cheng).
+>   - Add kiocb_modified() for setuid/setgid clearing.
+>   - Keep explicit update_mctime() as UBIFS sets S_NOCMTIME.
+> 
+> Changes since v2:
+>   - Move the extending-write check from ubifs_write_begin() to
+>     ubifs_write_iter(), mirroring ext4_write_checks() ->
+>     ext4_block_zero_eof(): the hole zeroing runs once per write()
+>     syscall instead of once per ->write_begin() iteration (suggested
+>     by Zhihao Cheng).
+>   - Drop the ubifs_vm_page_mkwrite() zeroing: like ext4
+>     (ext4_block_write_begin() with len = i_size - folio_pos),
+>     ->page_mkwrite() does not zero the tail beyond EOF, and mmap
+>     writes past EOF are the user's responsibility (suggested by
+>     Zhihao Cheng).
+> 
+> Changes since v1:
+>   - Both zeroing sites used PAGE_SIZE-relative arithmetic
+>     (offset_in_page()-style) while folio_zero_range() expects
+>     folio-relative offsets. UBIFS does not currently enable large
+>     folios, so PAGE_SIZE == folio_size() and the two coincide in
+>     practice, but switch to offset_in_folio()/folio_size() anyway so
+>     the code is correct if UBIFS ever opts into large folios
+>     (suggested by Sashiko AI review).
+> 
+> Note: The short-copy issue in ubifs_write_end() where i_size may
+> advance to pos + len on partial copies is pre-existing UBIFS behavior,
+> not introduced by this patch. It affects all buffered writes and
+> involves write_end() budget/ui_mutex handling; worth a dedicated
+> analysis/patch but outside the scope of this fix.
+> ---
+>   fs/ubifs/file.c | 80 ++++++++++++++++++++++++++++++++++++++++++++++---
+>   1 file changed, 76 insertions(+), 4 deletions(-)
+> 
 
-
-On 10/26/26 15:57, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] soundwire: amd: amd_enable_sdw_interrupts() in suspend fires stale status IRQs
-> - [Medium] soundwire: amd: missing IRQ sync before work drain in amd_suspend()
-> --
->
-> commit ecf45f9e24e7a7e6c5e9ff39ceefacd5dd89af26
-> Author: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
->
-> soundwire: amd: fix interrupt gate and work drain ordering in PM ops
->
-> This commit updates amd_suspend() and amd_suspend_runtime() to disable
-> SoundWire interrupts and cancel amd_sdw_irq_thread before draining
-> amd_sdw_work and stopping the bus clock. In the AMD_SDW_CLK_STOP_MODE path,
-> it also re-enables SoundWire interrupts and configures wake enablement after
-> stopping the clock.
->
->> diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
->> index a685bd7da52b1..d7289b840513b 100644
->> --- a/drivers/soundwire/amd_manager.c
->> +++ b/drivers/soundwire/amd_manager.c
->> @@ -1318,15 +1318,20 @@ static int __maybe_unused amd_suspend(struct device *dev)
->>   	}
->>   
->>   	if (amd_manager->power_mode_mask & AMD_SDW_CLK_STOP_MODE) {
->> +		amd_disable_sdw_interrupts(amd_manager);
->> +		cancel_work_sync(&amd_manager->amd_sdw_irq_thread);
->>   		cancel_work_sync(&amd_manager->amd_sdw_work);
-> [Severity: Medium]
-> Can an in-flight hard IRQ handler on another CPU still schedule
-> amd_sdw_irq_thread after cancel_work_sync() returns here (and in the
-> corresponding AMD_SDW_POWER_OFF_MODE and amd_suspend_runtime() paths)?
-++
-
-This is a valid concern. A follow-up fix will introduce a
-software irq_enabled flag in amd_sdw_manager. The flag will be
-cleared in amd_disable_sdw_interrupts() before writing to
-ACP_EXTERNAL_INTR_CNTL, and checked in acp63_irq_handler()
-before calling schedule_work():
-
-     if (amd_manager && amd_manager->irq_enabled)
-         schedule_work(&amd_manager->amd_sdw_irq_thread);
-
-Clearing the flag before cancel_work_sync() ensures that any
-IRQ handler already executing on another CPU reads
-irq_enabled == false and skips schedule_work(), closing the
-race window without requiring synchronize_irq().
-
-The wake path is handled correctly. In the CLK_STOP_MODE
-suspend path, amd_enable_sdw_interrupts() is called after
-amd_sdw_clock_stop(), which restores irq_enabled = true. Wake
-interrupts then schedule amd_sdw_irq_thread which calls
-amd_sdw_process_wake_event() -> pm_request_resume() for the
-resume sequence. In the remove path, amd_enable_sdw_interrupts()
-is never called, so irq_enabled remains false permanently.
->
-> In sound/soc/amd/ps/pci-ps.c:acp63_irq_handler() (as well as
-> acp_irq_handler() and acp7x_irq_handler() in sound/soc/sof/amd/acp.c), the
-> hard IRQ handler reads ACP_EXTERNAL_INTR_STAT and schedules
-> amd_sdw_irq_thread without holding acp_sdw_lock:
->
-> sound/soc/amd/ps/pci-ps.c:acp63_irq_handler() {
-> 	...
-> 	ext_intr_stat = readl(adata->acp63_base + ACP_EXTERNAL_INTR_STAT);
-> 	if (ext_intr_stat & ACP_SDW0_STAT) {
-> 		writel(ACP_SDW0_STAT, adata->acp63_base + ACP_EXTERNAL_INTR_STAT);
-> 		amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
-> 		if (amd_manager)
-> 			schedule_work(&amd_manager->amd_sdw_irq_thread);
-> 		irq_flag = 1;
-> 	}
-> 	...
-> }
->
-> If the hard IRQ handler on CPU 1 has already read ACP_EXTERNAL_INTR_STAT
-> before CPU 0 masks ACP_EXTERNAL_INTR_CNTL in amd_disable_sdw_interrupts(),
-> CPU 0 can complete both cancel_work_sync() calls before CPU 1 invokes
-> schedule_work(&amd_manager->amd_sdw_irq_thread).
->
-> Because amd_disable_sdw_interrupts() only clears the mask registers and does
-> not clear ACP_SW_STATE_CHANGE_STATUS_0TO7 or
-> ACP_SW_STATE_CHANGE_STATUS_8TO11, the newly scheduled amd_sdw_irq_thread()
-> will see the non-zero status registers and schedule amd_sdw_work concurrently
-> with amd_sdw_clock_stop() and amd_disable_sdw_manager(). In addition, since
-> the post-clock-stop amd_disable_sdw_interrupts() call is removed from the
-> AMD_SDW_POWER_OFF_MODE path, a racing amd_sdw_update_slave_status_work() with
-> status[0] == SDW_SLAVE_ATTACHED would also write AMD_SDW_IRQ_MASK_0TO7 and
-> AMD_SDW_IRQ_MASK_8TO11 back to the mask registers.
->
-> Should the driver synchronize with the parent ACP IRQ or clear the status
-> registers after synchronizing before draining the work items?
->
->> -		amd_sdw_wake_enable(amd_manager, false);
->>   		ret = amd_sdw_host_wake_enable_by_rev(amd_manager, false);
->>   		if (ret)
->>   			return ret;
->>   		ret = amd_sdw_clock_stop(amd_manager);
->>   		if (ret)
->>   			return ret;
->> +		amd_enable_sdw_interrupts(amd_manager);
->> +		amd_sdw_wake_enable(amd_manager, false);
-> [Severity: High]
-> Could calling amd_enable_sdw_interrupts() right after amd_sdw_clock_stop()
-> here and in amd_suspend_runtime() re-trigger slave status interrupts while
-> the SoundWire bus clock is stopped?
->
-> When a SoundWire interrupt fires just before amd_disable_sdw_interrupts(),
-> the hard IRQ handler clears ACP_EXTERNAL_INTR_STAT and queues
-> amd_sdw_irq_thread, leaving ACP_SW_STATE_CHANGE_STATUS_0TO7 and
-> ACP_SW_STATE_CHANGE_STATUS_8TO11 non-zero until amd_sdw_irq_thread() runs to
-> completion:
->
-> drivers/soundwire/amd_manager.c:amd_sdw_irq_thread() {
-> 	...
-> 	status_change_8to11 = readl(amd_manager->mmio + ACP_SW_STATE_CHANGE_STATUS_8TO11);
-> 	status_change_0to7 = readl(amd_manager->mmio + ACP_SW_STATE_CHANGE_STATUS_0TO7);
-> 	if (!status_change_0to7 && !status_change_8to11)
-> 		return;
-> 	...
-> 	if (status_change_8to11 || status_change_0to7)
-> 		schedule_work(&amd_manager->amd_sdw_work);
-> 	writel(0x00, amd_manager->mmio + ACP_SW_STATE_CHANGE_STATUS_8TO11);
-> 	writel(0x00, amd_manager->mmio + ACP_SW_STATE_CHANGE_STATUS_0TO7);
-> }
->
-> If cancel_work_sync(&amd_manager->amd_sdw_irq_thread) cancels that pending
-> work item before it executes, or if any slave status bits latch during
-> sdw_bus_prep_clk_stop() and sdw_bus_clk_stop() while the masks are zeroed,
-> ACP_SW_STATE_CHANGE_STATUS_0TO7 and ACP_SW_STATE_CHANGE_STATUS_8TO11 remain
-> non-zero after amd_sdw_clock_stop() sets clk_stopped = true.
->
-> Calling amd_enable_sdw_interrupts() at that point unmasks
-> ACP_EXTERNAL_INTR_CNTL, AMD_SDW_IRQ_MASK_0TO7, and AMD_SDW_IRQ_MASK_8TO11:
->
-> drivers/soundwire/amd_manager.c:amd_enable_sdw_interrupts() {
-> 	...
-> 	writel(AMD_SDW_IRQ_MASK_0TO7, amd_manager->mmio +
-> 		       ACP_SW_STATE_CHANGE_STATUS_MASK_0TO7);
-> 	writel(AMD_SDW_IRQ_MASK_8TO11, amd_manager->mmio +
-> 		       ACP_SW_STATE_CHANGE_STATUS_MASK_8TO11);
-> 	writel(AMD_SDW_IRQ_ERROR_MASK, amd_manager->mmio + ACP_SW_ERROR_INTR_MASK);
-> }
->
-> Wouldn't unmasking those registers with stale bits still set in
-> ACP_SW_STATE_CHANGE_STATUS_0TO7 and ACP_SW_STATE_CHANGE_STATUS_8TO11
-> immediately fire an interrupt and schedule amd_sdw_irq_thread() and
-> amd_sdw_work while the link clock is stopped, causing MIPI command timeouts
-> in amd_sdw_update_slave_status_work()?
-ACP_SW_STATE_CHANGE_STATUS_0TO7 and
-ACP_SW_STATE_CHANGE_STATUS_8TO11 are internal SoundWire status
-registers polled directly by amd_sdw_irq_thread(). Stale bits
-in these registers do not set ACP_EXTERNAL_INTR_STAT or raise
-a CPU interrupt when the masks are re-enabled.
-
-Once the bus clock is stopped, no slave status interrupts can
-be asserted — only wake interrupts remain active, which are
-handled separately via amd_sdw_wake_enable(). Calling
-amd_enable_sdw_interrupts() after amd_sdw_clock_stop() is
-therefore safe — no spurious interrupt delivery or MIPI command
-timeouts can result from stale status bits.
->
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+> diff --git a/fs/ubifs/file.c b/fs/ubifs/file.c
+> index e73c28b12f97..534e93793744 100644
+> --- a/fs/ubifs/file.c
+> +++ b/fs/ubifs/file.c
+> @@ -202,6 +202,44 @@ static void release_existing_page_budget(struct ubifs_info *c)
+>   	ubifs_release_budget(c, &req);
+>   }
+>   
+> +/**
+> + * ubifs_zero_eof_hole - zero the stale tail of the old-EOF folio.
+> + * @inode: inode whose size is about to grow
+> + * @new_end: new end of the file, only used to bound the tail
+> + *
+> + * Zero the cached folio containing the old EOF for [old EOF,
+> + * min(folio end, @new_end)) so a size extension does not expose stale
+> + * data left beyond EOF by mmap writes.
+> + *
+> + * Context: inode_lock held, ui_mutex not held.  The old-EOF folio_lock
+> + * must nest outside ui_mutex to match ->writepage()/->page_mkwrite().
+> + */
+> +static void ubifs_zero_eof_hole(struct inode *inode, loff_t new_end)
+> +{
+> +	loff_t old_size = i_size_read(inode);
+> +	size_t from, to;
+> +	struct folio *folio;
+> +
+> +	if (new_end <= old_size)
+> +		return;
+> +
+> +	folio = filemap_lock_folio(inode->i_mapping, old_size >> PAGE_SHIFT);
+> +	if (IS_ERR(folio))
+> +		return;
+> +
+> +	from = offset_in_folio(folio, old_size);
+> +	if (!from)
+> +		goto out;
+> +	to = folio_contains(folio, new_end >> PAGE_SHIFT) ?
+> +	     offset_in_folio(folio, new_end) : folio_size(folio);
+> +	if (to > from)
+> +		folio_zero_range(folio, from, to - from);
+> +
+> +out:
+> +	folio_unlock(folio);
+> +	folio_put(folio);
+> +}
+> +
+>   static int write_begin_slow(struct address_space *mapping,
+>   			    loff_t pos, unsigned len, struct folio **foliop)
+>   {
+> @@ -1220,6 +1258,10 @@ static int do_setattr(struct ubifs_info *c, struct inode *inode,
+>   
+>   	if (attr->ia_valid & ATTR_SIZE) {
+>   		dbg_gen("size %lld -> %lld", inode->i_size, new_size);
+> +
+> +		/* Zero before truncate_setsize() changes i_size. */
+> +		ubifs_zero_eof_hole(inode, new_size);
+> +
+>   		truncate_setsize(inode, new_size);
+>   	}
+>   
+> @@ -1433,11 +1475,41 @@ static int update_mctime(struct inode *inode)
+>   
+>   static ssize_t ubifs_write_iter(struct kiocb *iocb, struct iov_iter *from)
+>   {
+> -	int err = update_mctime(file_inode(iocb->ki_filp));
+> -	if (err)
+> -		return err;
+> +	struct inode *inode = file_inode(iocb->ki_filp);
+> +	ssize_t ret;
+> +
+> +	if (iocb->ki_flags & IOCB_NOWAIT)
+> +		return -EOPNOTSUPP;
+>   
+> -	return generic_file_write_iter(iocb, from);
+> +	inode_lock(inode);
+> +
+> +	ret = generic_write_checks(iocb, from);
+> +	if (ret <= 0)
+> +		goto out;
+> +
+> +	/* Clear setuid/setgid; skip file_modified() due to S_NOCMTIME. */
+> +	ret = file_remove_privs(iocb->ki_filp);
+> +	if (ret)
+> +		goto out;
+> +
+> +	/* Update mtime/ctime explicitly (VFS skips it for S_NOCMTIME). */
+> +	ret = update_mctime(inode);
+> +	if (ret)
+> +		goto out;
+> +
+> +	/*
+> +	 * Zero stale data beyond old EOF if extending.  At this point
+> +	 * ki_pos is final (O_APPEND/RWF_APPEND already resolved).
+> +	 */
+> +	if (iocb->ki_pos > i_size_read(inode))
+> +		ubifs_zero_eof_hole(inode, iocb->ki_pos);
+> +
+> +	ret = generic_perform_write(iocb, from);
+> +out:
+> +	inode_unlock(inode);
+> +	if (ret > 0)
+> +		ret = generic_write_sync(iocb, ret);
+> +	return ret;
+>   }
+>   
+>   static bool ubifs_dirty_folio(struct address_space *mapping,
+> 
 
