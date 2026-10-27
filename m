@@ -1,47 +1,130 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793091166;
-	b=FmaJ9USZ4xrplwSTmcaM9Kia1hWr8jRmsgBJtip6Jyes8p7HJ14eKTsHd+buTk6ONL/8
-	 KrWBDNsGjMRQK0poxan7FgTPHBwcgw+kP6d2LfipNY6Qg2CZuSvH5elpYuymPwp3Ahuyb
-	 DRtc6w1yhr/+JejPC3bEF1RCJer98hnCUUfjzVZR8irln9NPEzTBVwYwdx6eJSYYV1/+4
-	 AeNMI48Zx9uBWSPidPlLkWtIyy+QYhoUbMQzJmw6rmo+pUcf2lWbaUZmQURIzlemCmS/Z
-	 4+mP9ORg+MxhaIlamHfc3Syl9fvtM94MWBSMuCxrsjlGp7AeHNy6Fa4VUIikCEfv77A==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793091166;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=H4uQku64KgXUJNfYEY0MKCka2gtiYaG22BFRUPfvLhU=;
-	b=lu3WUS/bnGf6xtaqF5eyOPlE+hk8pMn5I0TDCFG4zoj+hfse2dUG4ZYWn+Fb0pc2stJQ
-	 EDFjRyNnwnEODfWR0m6O/UV3kDcAeHWFVlptue2e7hw1uuFFkyNLoWD7rKA4ibRGvcWl6
-	 c/FznXuj/suzJxL/LLOJTj2w29A7ZHi/2rt+j8Fp1bwiM0AFzHuGSOKxp4mnmUwOIouYh
-	 5iyyx7vXF+8JNwmZHileeQ/HD3XKhuk/ryu/eRbubfzMrZTKMnd6gBG1xrI+jUfSUH47U
-	 3IlH5SIAHDBm/UjvY/Yaxwc1ML6VbYIefQlDdqN4zO4xgI91sOQ6ANit7wkR7sq8twA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Reqkf6cL;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=148.163.150.75
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793093020;
+	b=oWbEEE8+kbmlZjNmWn/ni8EeL76e0OMGR6GBCIdmVeqt8Ez7t3cf2xW3lqqCLWNKF9qk
+	 9ThQ7V8zIOG6rMsx9DO7gKLDVli3+C4XYWlg0mOOoLdj2LO0HKNNOnELmK9jnxIlvO52R
+	 q4ZNnnDZwqBzgZA0rHXyBkBjN66COK6LTm6HR/LfwDMYFC4lSM0b7LWOkrqq3ud/gZj2+
+	 kM56sq6GYRf9NHkQbvb9+aBA/+LAZw3CdK//xjuk9WqlBJloQlemA06dgcdI7Bar6s3/f
+	 m/Qvfo+2y7EfE5OyHKT6x+CP42KmzJ+RWeH0E5ooCi+hzM62afwJ8N2Q+0WZ8YNMyHQ==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793093020;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:DKIM-Signature:
+	 Received:Received:X-MS-Exchange-Authentication-Results:Received-SPF:
+	 Received:Received:Received:Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:CC:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 X-EOPAttributedMessage:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-OriginatorOrg:X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-Id:
+	 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:
+	 X-Authority-Analysis:X-Proofpoint-Spam-Info:
+	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-GUID:
+	 X-Proofpoint-ORIG-GUID:X-Proofpoint-Virus-Version:
+	 X-Proofpoint-Spam-Details;
+	bh=tcJiWflNERAJKN+0b2Of1evtaXniz/O0jz+o/VDD4CM=;
+	b=lPadsLWKqjZmLAeDAOrTdpK4rdBjI3K1iofpVTUMPe+ndoRaFh1RXPg5c4Owb9oNDNvf
+	 eXzgrT1wAgo4d5ehrZDvuHw0HcJj2xFX+jTLlBDk2332cHvxta4kOwqVsl28kuHNmIebM
+	 Dg9135/r+n9eArDF4+6Nr+i9L8aaM2Zpps3VGXUms4nMsE3udn+SbX14KqLHuQp6bL2CH
+	 3Q4CaEbHxAcnBLbDBrGkawzmVIrybw2rta/aDyjFnTArABVGViwpWRwdM5Zi9I4DE/eXV
+	 NGvNtNUF9Mh3jlLEJrb8ZtyoF3l+UEEuYGLV4jZLZnHnHM5JVTZV6e7WRPxNxZ62Abw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=ti.com;
+	spf=pass smtp.mailfrom=ti.com;
+	dkim=pass header.d=ti.com header.i=@ti.com header.a=rsa-sha256 header.s=proofpoint-05-2026 header.b=EQBSZl6Z;
+	dkim=pass header.d=ticloud.onmicrosoft.com header.i=@ticloud.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-ticloud-onmicrosoft-com header.b=JfWb+whd;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=148.163.150.75
+Received: from mx0a-0002e601.pphosted.com (mx0a-0002e601.pphosted.com [148.163.150.75])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E39A606A31A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 08:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BE0606A320;
+	Tue, 27 Oct 2026 09:23:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 58BE0606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Reqkf6cL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A76E1F01829;
-	Tue, 27 Oct 2026 08:52:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793091165;
-	bh=H4uQku64KgXUJNfYEY0MKCka2gtiYaG22BFRUPfvLhU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=Reqkf6cLUo47ByHdJHPu47JBgsXyfv03O05ygNtH/1uEb5Zhddy/ZsnNO0UElblzo
-	 mgmZT9zzzD8my5fdzGV4tMVDTUvKGt7OsqtNzeSV80JmoMTNqsSYnekKt4n0YG6TzW
-	 JPT/KXAUpyZzRZELwgHqpNAYmqFRsPE733dOUeCnNY67dtyPY9oIdzHEoIclGTyyRh
-	 OVPdS4ZaRNv0cv3sDiwpb5LcsnjEl46WcqBh9BceHAXVS2/1+1iL9XiksmDHOo+7Ps
-	 Om5aPqe815FZIKNmO+ZY2efasAaPLbQegShObJdcYpdu5oiPW+qReDofiwjgjEAquc
-	 BuJqgG6zaydWw==
-Message-ID: <da2a2acf-f9da-489d-97c3-829b6f73fa52@kernel.org>
-Date: Tue, 27 Oct 2026 09:52:27 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=ti.com header.i=@ti.com header.a=rsa-sha256 header.s=proofpoint-05-2026 header.b=EQBSZl6Z;
+	dkim=pass (1024-bit key, unprotected) header.d=ticloud.onmicrosoft.com header.i=@ticloud.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-ticloud-onmicrosoft-com header.b=JfWb+whd
+Received: from pps.filterd (m0384305.ppops.net [127.0.0.1])
+	by m0384305.ppops.net (8.18.1.11/8.18.1.11) with ESMTP id 69R94cnm2721552;
+	Tue, 27 Oct 2026 04:23:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	proofpoint-05-2026; bh=tcJiWflNERAJKN+0b2Of1evtaXniz/O0jz+o/VDD4
+	CM=; b=EQBSZl6ZufN3j1TZMppEYXzKYxu21OgaeKWM9YuLtpRW1YlKlw+WXfHeu
+	+ZbEA8EMj65kXWHYisbZfnGonHnjtIEf1rhRSFEaxovXssGi8vQLB2YNZm6EUwV0
+	1StWC3KRsqkVChVzPQPSEsHONhoaoy7lRJTZCE5t0qcGFtyLjNNw2II3UByqePNi
+	48Np5/fnZ+94mW0XvHtDWZauIheUm8uOgt1WzjklbdSJAxVeMk10rk9TUXr58To/
+	ieSvBzyjo71RSYuxoQgWzmEpIxLevvF8qMzTlcaWVln+mCcsrlFJuwEAmlBM+fh0
+	7ZHjp/I+U0FaQglJW3EADSpZDWZtg==
+Received: from co1pr03cu002.outbound.protection.outlook.com (mail-westus2azon11010016.outbound.protection.outlook.com [52.101.46.16])
+	by m0384305.ppops.net (PPS) with ESMTPS id 4hj9rqwebu-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Tue, 27 Oct 2026 04:23:36 -0500 (CDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dQFotKvx7FLPgnIkkac5Tn9cUKy0Q9AzpYIFvDQsTVlsi9sFjp87tGnVtUHCkiRNuZdEfFYb2vA9YJH1Nc9GAZ78cYKb/Qhc6Ckqgii/EzVFN0U95gKjuiuGjAOXshMzC8N2Hb8HIWijePrLdxxh76QIccqgt+x32LIHQMTyX5NGh60PboEqPCeQDA19hobG/Mfq37+u9etcNmB22MXx0qC6VReMfvOS4dlCBXr+BDqvWjc4yhYcVbLx0M/2YfJAM7dH9fXvkJcFpypuHhAJKk1BnIe0yi9tS2HZUoQey+WXoG0Y6Wq8tJit1DZHED0KTmBYfaidZLN3d4tgLzTyXA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tcJiWflNERAJKN+0b2Of1evtaXniz/O0jz+o/VDD4CM=;
+ b=daatD3FlD7qZGIcxT4OCkB2xNlVxMdmavKrAbfmMsOE23OZ1Zqek2VfwRCUUPIKZLYIHcx5u2yNUIvbdwTwzgIDKgeqCvxnhXjtyj4RjFcG1fT0y1yV1bbub5B8jCvYUe0ZNFL8xKZQVi6dn7eOQ1clUM27tzl3KeiiDzAL9WA5DI9ww0jKqISVYyISVwVG3ioMWoIPUQlJgUzvmwYUa3Lfl5NMdh/Y4oE05nOvgyYzgb6O9SnYbj5b8jU/diwFy7iXPwjg3JTbW+emC87wi5j5c1Jf/4N1XPLmUAE3AmnUz9R+mCoi1SxP1JETCVnLLQ9KjOhyivgt1nv97E+Txrw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 198.47.21.194) smtp.rcpttodomain=kernel.org smtp.mailfrom=ti.com; dmarc=pass
+ (p=quarantine sp=none pct=100) action=none header.from=ti.com; dkim=none
+ (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ticloud.onmicrosoft.com; s=selector1-ticloud-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tcJiWflNERAJKN+0b2Of1evtaXniz/O0jz+o/VDD4CM=;
+ b=JfWb+whd1W90OWQRpXOCCPBjN1K1bo2x73MLoHOHmhD90tnwRqXhQqPE9qnCThpUiU0/jeLz8mghUGljrrOMXG/iTm7FWRr06uFRxR69H2Ys5Q2q/m8xrRPurOkejsd5eBT1/ie0bZgjpqnGCLzMtR0lsY4FpU9xooXxHAJCtss=
+Received: from BN9P221CA0011.NAMP221.PROD.OUTLOOK.COM (2603:10b6:408:10a::31)
+ by DS0PR10MB8078.namprd10.prod.outlook.com (2603:10b6:8:1fd::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
+ 2026 09:23:32 +0000
+Received: from BL6PEPF0006C3DA.namprd02.prod.outlook.com
+ (2603:10b6:408:10a:cafe::19) by BN9P221CA0011.outlook.office365.com
+ (2603:10b6:408:10a::31) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.546.22 via Frontend Transport; Tue,
+ 27 Oct 2026 09:23:32 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 198.47.21.194) smtp.mailfrom=ti.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=ti.com;
+Received-SPF: Pass (protection.outlook.com: domain of ti.com designates
+ 198.47.21.194 as permitted sender) receiver=protection.outlook.com;
+ client-ip=198.47.21.194; helo=flwvzet200.ext.ti.com; pr=C
+Received: from flwvzet200.ext.ti.com (198.47.21.194) by
+ BL6PEPF0006C3DA.mail.protection.outlook.com (10.167.249.228) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.569.4 via Frontend Transport; Tue, 27 Oct 2026 09:23:31 +0000
+Received: from DFLE200.ent.ti.com (10.64.6.58) by flwvzet200.ext.ti.com
+ (10.248.192.31) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Tue, 27 Oct
+ 2026 04:23:02 -0500
+Received: from DFLE206.ent.ti.com (10.64.6.64) by DFLE200.ent.ti.com
+ (10.64.6.58) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Tue, 27 Oct
+ 2026 04:23:02 -0500
+Received: from lelvem-mr06.itg.ti.com (10.180.75.8) by DFLE206.ent.ti.com
+ (10.64.6.64) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45 via Frontend
+ Transport; Tue, 27 Oct 2026 04:23:02 -0500
+Received: from [10.24.50.20] (moteen-ubuntu-desk.dhcp.ti.com [10.24.50.20])
+	by lelvem-mr06.itg.ti.com (8.18.1/8.18.1) with ESMTP id 69R9MxM51630035;
+	Tue, 27 Oct 2026 04:22:59 -0500
+Message-ID: <bebbc032-6f40-45e6-a7bb-3a8e163add44@ti.com>
+Date: Tue, 27 Oct 2026 14:52:58 +0530
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -52,139 +135,190 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/46] mm/mglru: don't use stack pointers when walking PUD
- and PMD tables
-To: sashiko-reviews@lists.linux.dev, Andrew Morton
- <akpm@linux-foundation.org>, Johannes Weiner <hannes@cmpxchg.org>,
- Michal Hocko <mhocko@kernel.org>, Qi Zheng <qi.zheng@linux.dev>,
- Shakeel Butt <shakeel.butt@linux.dev>, Lorenzo Stoakes <ljs@kernel.org>,
- Kairui Song <kasong@tencent.com>, Barry Song <baohua@kernel.org>,
- Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>,
- Wei Xu <weixugc@google.com>, Baoquan He <baoquan.he@linux.dev>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
- Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
- Michal Hocko <mhocko@suse.com>, Kees Cook <kees@kernel.org>,
- Peter Zijlstra <peterz@infradead.org>, Jann Horn <jannh@google.com>,
- Pedro Falcato <pfalcato@suse.de>, Hugh Dickins <hughd@google.com>,
- Pasha Tatashin <pasha.tatashin@soleen.com>,
- Pratyush Yadav <pratyush@kernel.org>,
- "Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>,
- Zi Yan <ziy@nvidia.com>, Lance Yang <lance.yang@linux.dev>,
- Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>,
- Alistair Popple <apopple@nvidia.com>, Nico Pache <nico.pache@linux.dev>,
- Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>,
- Usama Arif <usama.arif@linux.dev>, Kiryl Shutsemau <kas@kernel.org>,
- Matthew Brost <matthew.brost@intel.com>, John Hubbard <jhubbard@nvidia.com>,
- Peter Xu <peterx@redhat.com>, Will Deacon <will@kernel.org>,
- "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>, Nick Piggin
- <npiggin@gmail.com>, Oscar Salvador <osalvador@suse.de>,
- Minchan Kim <minchan@kernel.org>, Muchun Song <muchun.song@linux.dev>,
- Xu Xin <xu.xin@linux.dev>, Chengming Zhou <chengming.zhou@linux.dev>,
- Chris Li <chrisl@kernel.org>, Kemeng Shi <shikemeng@huaweicloud.com>,
- Nhat Pham <nphamcs@gmail.com>, Youngjun Park <youngjun.park@lge.com>,
- Gregory Price <gourry@gourry.net>, Joshua Hahn <joshua.hahnjy@gmail.com>,
- Rakie Kim <rakie.kim@sk.com>, Ying Huang <ying.huang@linux.alibaba.com>,
- Jason Gunthorpe <jgg@ziepe.ca>, Roman Gushchin <roman.gushchin@linux.dev>
-Cc: kexec@lists.infradead.org, Josef Bacik <josef@toxicpanda.com>
-References: <20261027-fixes_core-v1-0-6f74bec9a5bb@kernel.org>
- <20261027-fixes_core-v1-1-6f74bec9a5bb@kernel.org>
- <sashiko-outbox-185883@kernel.org>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
+Subject: Re: [PATCH v2 3/3] soc: ti: Add TDA54 SCM configuration syscon
+ support
+To: <sashiko-reviews@lists.linux.dev>
+CC: <devicetree@vger.kernel.org>, <robh@kernel.org>, <conor+dt@kernel.org>,
+        "Davis, Andrew" <afd@ti.com>, Nishanth Menon <nm@ti.com>,
+        "Kumar, Udit"
+	<u-kumar1@ti.com>,
+        Hari Prasath Gujulan Elango <gehariprasath@ti.com>, <a-limaye@ti.com>
+References: <20261027083700.1964371-1-m-shah@ti.com>
+ <20261027083700.1964371-4-m-shah@ti.com> <sashiko-outbox-186303@kernel.org>
 Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <sashiko-outbox-185883@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: Moteen Shah <m-shah@ti.com>
+In-Reply-To: <sashiko-outbox-186303@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF0006C3DA:EE_|DS0PR10MB8078:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9ff8b2b9-b266-4e93-8bd0-08df340bf78e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|23010399003|36860700016|82310400026|10067099003|261026121527099003|261022105027099003|261021121427099003|261022075727099003|261009223027099003|56012099006|4143699003|5023799004|22082099003|6133799003|18002099003|261026140227099003;
+X-Microsoft-Antispam-Message-Info:
+	KpoDm7zn+u4ad0LnevhEgqqPIXiUjzIX1z86Okco5W+njY0Xb/1eMtu+jOa430m10WznYVLn+pHqiem7thwjkNlQ1M87TvbUYrYJ6zURe1soVJTQnjFVImS9jWBTORFQPIMeXdEYhyBswxSh7nAg0bxhnoIvm29iFEwbudKpTkPjWrZ2BeFgWeQEzX30o5E0TFXDh4gCD3JenF2BZIIf4vCC0bKZ5vGbCgCYdZSQIya7v3T9QTOqTu6OC8xD7qRwywdALvVArHXysKX8e4/jy81K0oo6c/AaQ6oSy6QZdpC/hqC5iBpeePjawAxP34agisoRw1T/dltoOi7y8rejNn9a3xilZqewojevnk0RyZ0iTd+YMZr9dmX+y8fYdJzQ7y3CtIgzEwhSeQhs1ujsXr8lL7ysWMZ+q/aoE5rf2xQY4KwA5fVcTyZTR0cBGnThBvJ3DiwmFA5EnzI0MGQkKVqGHY/jEWKZ/IBE+tjnpueuqdYDBMmsN8MtU9z6jGW2BxOD/NuTwBuLGg3OV+E1ahl3uy05sIsJjWy/zVIOFosRDefQnwk9T8B9jrkFLhpSOySMqGCbFnd/wNBuhC+3T0ZcSqvTSzZYVVbyWDQOtIfHA5WyTy+ifNSHW4l4lefMGLVLo0ISX7XrY5Vs2zsKzq3a3V5rYnS+eQKh9yMiMgxkY9ApSRAbyIoj/jFrj3XATTvcTW8u/4UrjhSDy56gvA==
+X-Forefront-Antispam-Report:
+	CIP:198.47.21.194;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:flwvzet200.ext.ti.com;PTR:ErrorRetry;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(36860700016)(82310400026)(10067099003)(261026121527099003)(261022105027099003)(261021121427099003)(261022075727099003)(261009223027099003)(56012099006)(4143699003)(5023799004)(22082099003)(6133799003)(18002099003)(261026140227099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	7M6ewnUhgpBc3f+gsEzYVxWZtw6PDJbKqPzy0Zge8zSvKl9HbKJrlGzPj9h2qrNYw3Ky2T/bjQ6y2HGjYgy8jEkuzIJdeSUhvKUqJ7oXvh/3gGEoiZFvU6zb8cfB3Fzo5NkQTNhSPlWlWX7RYVtHLZQg86C2fZcue9K2/VqVMQuQC3k7hdeAv9CqoaMCqjc3GvYmS3lNUKcT5m3x8+8DMRwZDzKaGITOfpg4siOnVhybFGG54qQcc9k0TW1i+e7Ke6Ir7rqrvPm/9RV9USZfNUhr4ArQ6tyJ3HK7PaD2EHWANcMH/g1U1t4pA5U4gvTN22oZSCjEOJIbsLTvGnzbZt7w2ADv4bCknTrfcC0YUAKfF5wFo3ZMMG2YfvBSV+cd8EasaMF0/rrWeShBWdV35gZwSOprHK7P7V6KrpG+tY/4TRnu85m0pu3I3tdfwjFL
+X-Exchange-RoutingPolicyChecked:
+	yK2qrRcK+F+FMCDnkXT2eLs/aalmNyaYr8Lowhcf7BuiKhb5a62xV0KXyJG+LHNTxgD+vse74KrsNjnLv3TfGhXNmt6toBxhBNPeASc2Z5ZquYB4x6onBWr1EHRkj1a7zljRGM4o/GnrywSUAXnCHnTWW/5IU6ImumLO528J1hQyIi7JEW0Oc6oJFaTUfRf88zSJtna+EalMRacMOK5Mmd/UI9+e+iQ4XatMBkOHBLJIj7ISUSdbYXQ31TPyJCkYsJOp9m/XcMWjJRP9ZKlgsEkgNboXkUFEpkqAg2yPRMdr8FRqE8QoB1GeAHweI23DL6+7l6Prlv1FDFY8rSAWoA==
+X-OriginatorOrg: ti.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 09:23:31.1287
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9ff8b2b9-b266-4e93-8bd0-08df340bf78e
+X-MS-Exchange-CrossTenant-Id: e5b49634-450b-4709-8abb-1e2b19b982b7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e5b49634-450b-4709-8abb-1e2b19b982b7;Ip=[198.47.21.194];Helo=[flwvzet200.ext.ti.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BL6PEPF0006C3DA.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB8078
+X-Authority-Analysis: v=2.4 cv=bIWDs/+Z c=1 sm=1 tr=0 ts=6ae06d98 cx=c_pps
+ a=+tUgqrp9vGCFEjR5l+cGAg==:117 a=iwqwCZQqcuTv3JOpYdM7/Q==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10
+ a=AlMIdn_sM9wA:10 a=VkNPw1HP01LnGYTKEx00:22 a=Z8NIEmU8O1QQgoT56wFK:22
+ a=taLDd7a_hP9WKsMzeGRc:22 a=VwQbUJbxAAAA:8 a=sozttTNsAAAA:8
+ a=sTWhRribMSbyvwYx1LkA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDAzNyBTYWx0ZWRfXxfYBnyDYyrPk
+ QgqtWwARGoLBj7xrreIXWmTBXR2z2rkI+TVwxcXERI39kUMipJ7Ee86LWGYtVblvmNrNYkGcluH
+ QDokqVH5fHkmAbvTgoouROq2+e17+N0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDAzNyBTYWx0ZWRfX1P0cZdbN88WL
+ Vj5OsE5lm+5Vne+qcHUVnL7Y7x4kZkzZQYSJLruJINw+eBTOv40WU5KAmeKxxH246+7QBjY9UEc
+ ZzLoRtp1WHcpAhshMW0a6TxRlxNDPtaWHmBOAaRkf0T+0e1E1Gm0Ug5Onf6HN/rd0f+vKjjZTyX
+ CXl065I4byLaitCpLZXzxvGEGjYT0vIZY4V3x6hAP5OxYjEreWxt8fVqOUB11O8z7mau7syGquS
+ LBC92lB95Uo+7O/b3aYl1iKDgOIbTFxFnyDrr3FK15Tgd7r7UAoWscfI2uGHnDaiL74D0oEpgVH
+ E+YOlR+DiM0LVi6mDtkqzGVzc2nl1s7gvX4ZMS+N9Gc+rqFFzNPPVU+drezzR4xbJGSLm8ZvVO3
+ ICOXN0TzMuH0+SnoRhnAEKp1+tPcEDrEaHgGAWXiWO+4ORpkNwZG1ZkzxkIQEa0Iug3R7aFfPx4
+ Dvwh8lN+Cxizd6leTGw==
+X-Proofpoint-GUID: 236uo7FKFh54SYO-8ChHqTV36VuWwaxD
+X-Proofpoint-ORIG-GUID: 236uo7FKFh54SYO-8ChHqTV36VuWwaxD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-27_02,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 lowpriorityscore=0 spamscore=0 phishscore=0 malwarescore=0
+ suspectscore=0 impostorscore=0 priorityscore=1501 adultscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610270037
 
-On 10/27/26 01:12, sashiko-bot@kernel.org wrote:
->> From: Josef Bacik <josef@toxicpanda.com>
->>
->> MGLRU passes stack copies of page-table entries in walk_pud_range() and
->> walk_pmd_range() when walking to the next level. These copies can become
->> stale when khugepaged or MADV_DONTNEED (CONFIG_PT_RECLAIM) removes a PTE
->> table concurrently.
->>
->> This pattern dates back to commit bd74fdaea146 ("mm: multi-gen LRU:
->> support page table walks"). Likely, earlier locking masked the latent
->> bug. Later changes exposed it: commit 1d65b771bc08 ("mm/khugepaged:
->> retract_page_tables() without mmap or vma lock") allowed concurrent
->> retraction, and commit cf4a65539c13 ("memcg-v1: no need for memcg locking
->> for MGLRU") dropped the walker's outer RCU protection.
->>
->> The fix is simple, so just fix the original commit so we don't have to
->> speculate. To fix it, pass the actual PMD/PUD pointers. This restores the
->> RCU-protected lookup and validation against the live PMD. Note that the PUD
->> handling is required as well to handle folded page tables correctly in all
->> cases.
->>
->> Fix generated by an LLM and sent by Josef Bacik in private.
->>
->> Fixes: bd74fdaea146 ("mm: multi-gen LRU: support page table walks")
->> Cc: stable@vger.kernel.org
->> Signed-off-by: Josef Bacik <josef@toxicpanda.com>
->> [ david: handle walk_pud_range() as well, clarify+simplify description,
->>          adjust Fixes: ]
->> Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-> 
-> Sashiko has reviewed this patch and found no issues.
-> 
 
-@Roman 46 useless emails from Sashiko.
+On 27/10/26 14:20, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] soc: ti: use-after-free on module unload in tda54_scm_conf_probe()
+> --
+>
+> commit f2ead172cf9d7f3e5cd199e2a129679497527a10
+> Author: Moteen Shah <m-shah@ti.com>
+>
+> soc: ti: Add TDA54 SCM configuration syscon support
+>
+> This commit adds the TDA54 SCM configuration driver to provide regmap/syscon
+> access to the SCM register space with proxy-based register claim/unlock
+> handling, and registers TDA54 SoC identification info via k3-socinfo.
+>
+>> diff --git a/drivers/soc/ti/tda54-mcu-sysconf.c b/drivers/soc/ti/tda54-mcu-sysconf.c
+>> new file mode 100644
+>> index 0000000000000..3ef82e737d095
+>> --- /dev/null
+>> +++ b/drivers/soc/ti/tda54-mcu-sysconf.c
+> [ ... ]
+>> +static int tda54_scm_conf_probe(struct platform_device *pdev)
+>> +{
+>> +	struct device *dev = &pdev->dev;
+>> +	struct tda54_scm_conf *scm;
+>> +	struct regmap *regmap;
+>> +	void __iomem *base;
+>> +	int ret;
+>> +
+>> +	scm = devm_kzalloc(dev, sizeof(*scm), GFP_KERNEL);
+>> +	if (!scm)
+>> +		return -ENOMEM;
+>> +
+>> +	base = devm_platform_ioremap_resource(pdev, 0);
+>> +	if (IS_ERR(base))
+>> +		return PTR_ERR(base);
+> [ ... ]
+>> +	regmap = devm_regmap_init(dev, NULL, scm, &tda54_scm_conf_regmap_cfg);
+>> +	if (IS_ERR(regmap))
+>> +		return PTR_ERR(regmap);
+>> +
+>> +	writel(TDA54_SCM_CONF_LOCK_KICK0_UNLOCK_VAL, scm->base + scm->pdata->lock_offset);
+>> +	writel(TDA54_SCM_CONF_LOCK_KICK1_UNLOCK_VAL, scm->base + scm->pdata->lock_offset + 4);
+>> +
+>> +	/*
+>> +	 * There is no way to unregister a syscon regmap, so publish it only
+>> +	 * once nothing else in probe can fail.
+>> +	 */
+>> +	ret = of_syscon_register_regmap(dev->of_node, regmap);
+>> +	if (ret)
+>> +		return dev_err_probe(dev, ret, "failed to register syscon regmap\n");
+> [ ... ]
+>> +static struct platform_driver tda54_scm_conf_driver = {
+>> +	.probe = tda54_scm_conf_probe,
+>> +	.driver = {
+>> +		.name = "k3-tda54-scm-conf",
+>> +		.of_match_table = tda54_scm_conf_of_match,
+>> +		.suppress_bind_attrs = true,
+>> +	},
+>> +};
+>> +
+>> +module_platform_driver(tda54_scm_conf_driver);
+> [Severity: High]
+> Can unloading this module cause a use-after-free when consumers access the
+> syscon regmap?
+>
+> TI_TDA54_MCU_SYSCONF is a tristate Kconfig option (defaulting to m on
+> ARCH_K3), and module_platform_driver(tda54_scm_conf_driver) generates a
+> module_exit callback that invokes platform_driver_unregister(). While
+> .suppress_bind_attrs = true hides the sysfs bind/unbind attributes, it does
+> not prevent unloading the module via rmmod or modprobe -r.
+>
+> In tda54_scm_conf_probe(), scm, base, and regmap are allocated with devres
+> (devm_kzalloc(), devm_platform_ioremap_resource(), and devm_regmap_init()),
+> and regmap is then published globally via of_syscon_register_regmap():
+>
+> drivers/mfd/syscon.c:of_syscon_register_regmap() {
+>      ...
+> 	list_for_each_entry(entry, &syscon_list, list)
+> 		if (entry->np == np) {
+> 			ret = -EEXIST;
+> 			goto err_unlock;
+> 		}
+>
+> 	syscon->regmap = regmap;
+> 	syscon->np = np;
+>
+> 	/* register the regmap in syscon list */
+> 	list_add_tail(&syscon->list, &syscon_list);
+>      ...
+> }
+>
+> Because of_syscon_register_regmap() permanently stores the raw regmap pointer
+> on syscon_list without taking a module reference or providing an
+> unregistration path, unloading the module detaches the device and runs
+> devres_release_all(), freeing regmap, unmapping base, freeing scm, and
+> unmapping the module text (tda54_scm_conf_reg_read() and
+> tda54_scm_conf_reg_write()) while syscon_list retains the dangling regmap
+> pointer.
+>
+> Any subsequent or existing consumer using syscon_node_to_regmap() or
+> syscon_regmap_lookup_by_phandle() will dereference the freed regmap and call
+> into unmapped module text, and reloading the module will fail with -EEXIST in
+> of_syscon_register_regmap().
+>
+> Should TI_TDA54_MCU_SYSCONF be bool (using builtin_platform_driver()), or if
+> it remains a module, avoid registering a module_exit callback so it cannot be
+> unloaded once registered with syscon?
 
-Why can another list overwrite something that is more restrictive?
+Ideally, the fix should be done in the core syscon framework itself to 
+resolve this issue(which is out of scope for this series)
+The consumers shouldn't be doing any extra handling as suggested above.
 
-I guess I can teach my filters to throw all of these mails into the trash, where
-they belong. Unless we keep changing their content.
+Regards,
+Moteen
 
-But there is literally 0 value in these per-patch "no found issues" mails.
-
-There are just entirely stupid.
-
--- 
-Cheers,
-
-David
