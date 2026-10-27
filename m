@@ -1,97 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.156.1
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793109731;
-	b=0nCy6qsrL3wHjeUqPkl3+1DixeIrj4fekr3flMPyiBSn96IEz9KzfHvKwDbIMUk5mDA+
-	 T+8xtycLEEN45M9bVJS5wcpcA4Hw3FaSEedUYjS+PF6sprLbmKhGpKTL+6qVM8OukHVVw
-	 yNOXoF75hTPcHRKOozHi3s40imz3/7pvPt9MxtNe1LG80eQDpbd8CrjSYO54FLxRecAMv
-	 L1C95e/XtOIPlE2+VTdSxKvgUaki9eJpreifc3Ca4i3cEiC6CGHIRQ5am7/h9gTWA2zxk
-	 hdGEVurx98mJ79pYI1ezqBxjR59REQyL3xOZBeXau0LwloPXez8+nQlM9ZiZmcYR5VQ==
+	t=1793110101;
+	b=k8Knaukqp1Te/MU7i3CJo9F0kKPW+8GOPspzPROmd5YmeRgEhzaRJecPJIeaIRDnOiWB
+	 zEzPKRDD1H6gMSXYlErEsEWblkQyl2Sri4sU2nZxQZ4+UXmHWoIq3eggkBbRnCm9z97C+
+	 5VvvZt/+llho50ygg5zIBfaqh3ygoig8vuWASusaXgLCkFnFGR5vJSrM5Kcvtls+A+5Zz
+	 KSnBdKGnXjBHwZWF5m4+EESc6IK4vZYGFUs/8DgrVCQbuC5OVoRVtltq5FpY0xh2OPTvr
+	 uY6isOkr1hDLyUk3sjKaQdwGy0++fO4UiEx8E8Ndp6AA2SWSLArUomPgbwpG5vNhNow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793109731;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:User-Agent:MIME-Version:Content-Type:X-Spam-Flag:
-	 X-Spam-Level:X-Spamd-Result:X-Spam-Score;
-	bh=vf4Ao8tnzx7MRA/wyLkcBxzQd6bdSmV+kWQgdB86Vec=;
-	b=1MEGfI9EN87jNcoNiQZg0klpI+b9nihqEb20RePq9rvcz6NBjZGb5MUEqAH1drIKKEop
-	 NW1X5swo+b8pJFD40y9GKMlS9Dt7ZZwBDX7pSW7SKAol/Ls6/gSHkAGYvhMGINLSXF8XN
-	 i8S4x3wrK07FxvTizXwKn0Z7j4C/rOl2SK7bvJL8iKXXxL8mJtjN/ZSGzwAUr+PbaFynA
-	 jw77SkDuhbE2AG34vZYlf/T6/w03G9hFYXGTfN1hw2egk2VfSJ+Blr6QLGJwklaGx3M2K
-	 1i0LWoGqtViQlcXODiQAWRDOSuD3hzd22jOXi+bXnzATDXgT/FmL9BiZCe/uBqQEE5A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793110101;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:User-Agent:MIME-Version:Content-Type:
+	 X-TM-AS-GCONF:X-Authority-Analysis:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-GUID:X-Proofpoint-Spam-Info:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=yE6Yh8nRyVDcjdtvJCKPkA7gLaolSB4uHiKRdyI0rIM=;
+	b=eGar8CuoJEb7DDF7CE5VB8YV/NfgB/Hvg8vlnlB9X9BQeCTPtxwH9ke/oTFF45t/P+PW
+	 f8Mv3TI8yzuvudDYQQZ64FeydXRcEGoQ4mjveEDHnO1eQgBapzHUEUEu757gqd7A5b0v7
+	 8IFGn7iqH/0oG2dCVDqutq15EuTqDJBhNkVGK8PSoYxe8dhQ+Hpj9cTKBfj1MHsIlSai7
+	 Ca7oNI/5yuKPKSP1JKzxDGnpglWYXM3ulucRyLLH0rL0cQ0TJS1+V4D+Arcbe8eatjkb3
+	 u4vQoByZ7OFh/hNcJaDq3u1ApWzRC0hDiqzg0vhqGppn7YTw04X77GGk8QQXGS5rBDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=suse.cz;
-	spf=pass smtp.mailfrom=suse.cz;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=D0qD5mHd;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=cXJsDfAl;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=D0qD5mHd;
-	dkim=neutral header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=cXJsDfAl;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ONeMug7g;
+	arc=none smtp.remote-ip=148.163.156.1
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547AE606A31A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 14:02:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 547AE606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BDB606A320;
+	Tue, 27 Oct 2026 14:08:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 05BDB606A320
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=D0qD5mHd;
-	dkim=pass header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=cXJsDfAl;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.a=rsa-sha256 header.s=susede2_rsa header.b=D0qD5mHd;
-	dkim=neutral header.d=suse.cz header.i=@suse.cz header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=cXJsDfAl
-Received: from pobox.suse.cz (unknown [10.128.32.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 603D821EE4;
-	Tue, 27 Oct 2026 14:02:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1793109728; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vf4Ao8tnzx7MRA/wyLkcBxzQd6bdSmV+kWQgdB86Vec=;
-	b=D0qD5mHd3eRsZRbNGpvxUBPECmeVWS2yGLxMJXd7iEA6o6rD0iw1w0qXpzlfJsov7Uz6c9
-	6KFLEk9ZEpFMZM8cG+onwNXuM2jl/rSB7DnBjZaKRlCUPz4lwlKsE3AUUId4KYdvdD8v7i
-	4qzORuddAsNA6Py/CAG8UTtVUg1ZIyw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1793109728;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vf4Ao8tnzx7MRA/wyLkcBxzQd6bdSmV+kWQgdB86Vec=;
-	b=cXJsDfAlMNGp5xm9URB0rO94no8sS1E8o7ne+6r71Inyab9o2iqUn9Ux3OJ/Yu3kUWBe3d
-	r85z91iF1cfwoABA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1793109728; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vf4Ao8tnzx7MRA/wyLkcBxzQd6bdSmV+kWQgdB86Vec=;
-	b=D0qD5mHd3eRsZRbNGpvxUBPECmeVWS2yGLxMJXd7iEA6o6rD0iw1w0qXpzlfJsov7Uz6c9
-	6KFLEk9ZEpFMZM8cG+onwNXuM2jl/rSB7DnBjZaKRlCUPz4lwlKsE3AUUId4KYdvdD8v7i
-	4qzORuddAsNA6Py/CAG8UTtVUg1ZIyw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1793109728;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vf4Ao8tnzx7MRA/wyLkcBxzQd6bdSmV+kWQgdB86Vec=;
-	b=cXJsDfAlMNGp5xm9URB0rO94no8sS1E8o7ne+6r71Inyab9o2iqUn9Ux3OJ/Yu3kUWBe3d
-	r85z91iF1cfwoABA==
-Date: Tue, 27 Oct 2026 15:02:08 +0100 (CET)
-From: Miroslav Benes <mbenes@suse.cz>
-To: Petr Mladek <pmladek@suse.com>
-cc: Harry Hsu <x90613@gmail.com>, jikos@kernel.org, joe.lawrence@redhat.com, 
-    jpoimboe@kernel.org, linux-kernel@vger.kernel.org, 
-    live-patching@vger.kernel.org, sashiko-reviews@lists.linux.dev, 
-    shuah@kernel.org, song@kernel.org
-Subject: Re: [PATCH v4 1/5] livepatch: Fail object initialization on duplicate
- patched function
-In-Reply-To: <attsXfOPYrprACJw@pathway.suse.cz>
-Message-ID: <alpine.LSU.2.21.2610271459550.28401@pobox.suse.cz>
-References: <alpine.LSU.2.21.2609181452160.21788@pobox.suse.cz> <20261001043228.74946-1-x90613@gmail.com> <attsXfOPYrprACJw@pathway.suse.cz>
-User-Agent: Alpine 2.21 (LSU 202 2017-01-01)
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ONeMug7g
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69R5iGdG1503999;
+	Tue, 27 Oct 2026 14:08:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=yE6Yh8nRyVDcjdtvJCKPkA7gLaolSB
+	4uHiKRdyI0rIM=; b=ONeMug7gCA9gVLKwJGAYG5wBuTk3vn+hndjiWb0qKtuSvt
+	Sq+JHOYwl70/7psKwmc17vT9kkJ5WemH3mf8pIo2vLqTzCT/lOQv1oeqw30zNTRo
+	JHJImEITWNOep2oVG9wq9GIfpfkENQ44xJc8I8tjhNSFMJ0zf5nXXtHLtcMasQYT
+	n8dtowMxz8VHH/BSyKUzbW6J8NQNbu16hpk90yLVxHdagoLLP9ZbJa9/3QfA4FFI
+	brPBIZmAEK1UT52Fbb3PE8wyXkf2zBx10CQVDQDykctbUBxR2dcA6Q0B1ECurxKp
+	c9Y9ro8reQaafXY9hzhnd4CMUr5K/hV28PZOS9fQ==
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgmd6yt30-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Tue, 27 Oct 2026 14:08:18 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69RDoQIL097227;
+	Tue, 27 Oct 2026 14:08:17 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hh8gh307n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Oct 2026 14:08:17 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com [10.39.53.233])
+	by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69RE8HvO14746306
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 27 Oct 2026 14:08:17 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 320AE58067;
+	Tue, 27 Oct 2026 14:08:17 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id EECF05803F;
+	Tue, 27 Oct 2026 14:08:16 +0000 (GMT)
+Received: from e (unknown [9.61.53.188])
+	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+	Tue, 27 Oct 2026 14:08:16 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v16 09/12] scsi: ibmvfc: add interrupt routine for
+ asynchronous sub CRQ
+In-Reply-To: <sashiko-outbox-185515@kernel.org> (sashiko-bot@kernel.org's
+	message of "Mon, 26 Oct 2026 16:24:16 +0000")
+References: <20261026-ibmvfc-fpin-support-v16-0-a900aa657ed5@linux.ibm.com>
+	<20261026-ibmvfc-fpin-support-v16-9-a900aa657ed5@linux.ibm.com>
+	<sashiko-outbox-185515@kernel.org>
+Date: Tue, 27 Oct 2026 09:08:16 -0500
+Message-ID: <877bj3fd7z.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -101,102 +94,125 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Spamd-Result: default: False [-13.30 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-0.999];
-	MIME_GOOD(-0.10)[text/plain];
-	RCVD_COUNT_ZERO(0.00)[0];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	ARC_NA(0.00)[];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	FREEMAIL_CC(0.00)[gmail.com,kernel.org,redhat.com,vger.kernel.org,lists.linux.dev];
-	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_DN_SOME(0.00)[]
-X-Spam-Score: -13.30
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=ZYOIpcVA c=1 sm=1 tr=0 ts=6ae0b052 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=lgx1sjMKL3iQhMCxiSoA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA1NCBTYWx0ZWRfX8R7td/yXkBtx
+ UAPY/VUgvezovDbfodP29QM4Eoy2Rf551Dqj/TANXaOOQ2mvts908pgVgJouP5kVJckfNf2IAH5
+ BNcQe1ITTmoKvFoj9jAuP6s/Jwf5k6dZseKSYv/M3bH6C7XAU8u3ZOhMnvy6pHSwU4TLFke/9KR
+ e4PSFqTe9oXE+jGV7m0qIoRObHjaf1qo+OVu6lFSz2oqNsXhHur/9vxYxyfjd1tTSihw/2+OB47
+ W53wF+TGyGBvU0XQFlBSp/65j2LhiZa2PL6ZlpG8st+SkBUyH2a8G4qqs6AMOXjrD1qPilE7ahr
+ B6nx0sCHlIdmZflm4g7WUUSry09Faf4CGrWFP7aj+hGVU4YW1R24uTRfbVhzoj+481Mo6kflXGZ
+ i8quVvCDasbY74XdyCnTsyQlEMxtPau3O72X7weuTqJbyAlIn3xkLqPD+dMM20ffCAFfSJ+YoAx
+ Ieooq0LYIXPl0Hdx9Pw==
+X-Proofpoint-GUID: tw_NDnbAQpGwlypYonKoE-NeZJkApjMT
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA1NCBTYWx0ZWRfX/bbufX7Zbrfo
+ LqfvyITFTFzI2EyFUWcrzkNIuZeCUaP5fnc3hfBFfitZhDm4jITaAkOokLsBC5FXd4cr2Hfi2mf
+ 9q4DPqJj26916tbZz3EI9tO7X9/DnHI=
+X-Proofpoint-ORIG-GUID: tw_NDnbAQpGwlypYonKoE-NeZJkApjMT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-27_02,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 phishscore=0 clxscore=1015
+ bulkscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610270054
 
-On Fri, 23 Oct 2026, Petr Mladek wrote:
+sashiko-bot@kernel.org writes:
 
-> On Thu 2026-10-01 12:32:28, Harry Hsu wrote:
-> > On Fri, 18 Sep 2026, Miroslav Benes wrote:
-> > 
-> > > Could we also check prev_func/func->nop in the check in
-> > > klp_init_object_loaded() and have a pass if true?
-> > 
-> > Thanks for the suggestion.
-> > 
-> > Yes, I've updated the check to skip the pair when both klp_funcs are
-> > nops. Two nops added by klp_add_nops() for replaced aliases are
-> > interchangeable, so an atomic replace patch that inherits nops for
-> > __do_sys_fork and __x64_sys_fork from two previous patches now loads
-> > fine. A non-nop func colliding with a nop (or another non-nop func)
-> > is still rejected, since the nop would land on top of the real
-> > replacement on ops->func_stack and silently disable it.
-> > 
-> > The incremental change on top of v4 1/5 is:
-> > 
-> > --- a/kernel/livepatch/core.c
-> > +++ b/kernel/livepatch/core.c
-> > @@ -894,6 +894,8 @@ static int klp_init_object_loaded(struct klp_patch *patch,
-> >  			if (prev_func == func)
-> >  				break;
-> >  			if (prev_func->old_func == func->old_func) {
-> > +				if (prev_func->nop && func->nop)
-> > +					continue;
-> >  				pr_err("'%s' and '%s' resolve to the same address, aliased symbols are not supported\n",
-> >  				       prev_func->old_name, func->old_name);
-> >  				return -EINVAL;
-> > 
-> > If this direction looks good, I'll resend the series. Petr, should I
-> > just bundle everything into a v5, or do you have changes on your side
-> > that I should wait for?
-> 
-> I am afraid that this is still not enough.
-> 
-> Problem:
-> 
-> It would work when the livepatch gets applied the nops are removed.
-> 
-> But it might cause problems when the transition gets reverted
-> in the middle. All processes should go back to use the previous
-> implementations (original code or previous livepatch).
-> But the ftrace handler would just go back from one nop to the other.
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> index 64981a5a39fbf..2cb38757333a4 100644
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> @@ -4387,6 +4387,72 @@ static struct ibmvfc_crq *ibmvfc_next_scrq(struct ibmvfc_queue *scrq)
+>>  	return crq;
+>>  }
+>>  
+>> +static struct ibmvfc_async_sub_crq *ibmvfc_next_async_scrq(struct ibmvfc_queue *scrq)
+>> +{
+>> +	struct ibmvfc_async_sub_crq *crq;
+>> +
+>> +	crq = &scrq->msgs.async_scrq[scrq->cur];
+>> +	if (crq->valid & 0x80) {
+>> +		if (++scrq->cur == scrq->size)
+>> +			scrq->cur = 0;
+>> +		rmb();
+>> +	} else
+>> +		crq = NULL;
+>> +
+>> +	return crq;
+>> +}
+>> +
+>> +static void ibmvfc_drain_async_subq(struct ibmvfc_queue *scrq)
+>> +{
+>> +	struct ibmvfc_host *vhost = scrq->vhost;
+>> +	struct ibmvfc_async_crq_event ae = {
+>> +		.type = IBMVFC_ASYNC_CRQ_SUB,
+>> +	};
+>> +	struct ibmvfc_async_sub_crq *crq;
+>> +	unsigned long flags;
+>> +	int done = 0;
+>> +
+>> +	spin_lock_irqsave(&vhost->host->host_lock, flags);
+>> +	spin_lock(scrq->q_lock);
+>> +	while (!done) {
+>> +		while ((crq = ibmvfc_next_async_scrq(scrq)) != NULL) {
+>> +			ae.subq = *crq;
+>> +			ibmvfc_handle_async(&ae, scrq->vhost);
+>
+> [Severity: High]
+> Can calling ibmvfc_handle_async() while holding scrq->q_lock trigger a
+> lockdep recursive locking warning?
+>
+> Every struct ibmvfc_queue (including async_scrqs, scsi_scrqs, and nvme_scrqs)
+> initializes queue->_lock at the same call site in ibmvfc_alloc_queue():
+>
+> 	spin_lock_init(&queue->_lock);
+> 	queue->q_lock = &queue->_lock;
+>
+> This places scrq->q_lock, scsi_q[i].q_lock, and nvme_q[i].q_lock into the
+> same lockdep class.
+>
+> When ibmvfc_drain_async_subq() processes a reset-triggering async event
+> (such as IBMVFC_AE_RESUME, IBMVFC_AE_LINK_UP, IBMVFC_AE_SCN_FABRIC, or
+> IBMVFC_AE_SCN_DOMAIN) while vhost->action is IBMVFC_HOST_ACTION_LOGO_WAIT
+> (for example, if a second async event arrives while NPIV logout is in flight
+> with vhost->using_channels set) or vhost->state is IBMVFC_HOST_OFFLINE, the
+> call chain reaches ibmvfc_purge_requests():
+>
+>   ibmvfc_drain_async_subq()
+>     spin_lock(scrq->q_lock)
+>     ibmvfc_handle_async()
+>       __ibmvfc_reset_host()
+>         ibmvfc_hard_reset_host()
+>           ibmvfc_purge_requests()
+>
+> In ibmvfc_purge_requests(), the loops over active SCSI and NVMe sub-queues
+> acquire scsi_q[i].q_lock and nvme_q[i].q_lock at subclass 0 while
+> scrq->q_lock of the same lockdep class is still held:
+>
+> 	for (i = 0; i < shwqs; i++) {
+> 		spin_lock_irqsave(scsi_q[i].q_lock, flags);
+> 		spin_lock(&scsi_q[i].l_lock);
+> 		...
+> 	}
+>
+> 	for (i = 0; i < nhwqs; i++) {
+> 		spin_lock_irqsave(nvme_q[i].q_lock, flags);
+> 		spin_lock(&nvme_q[i].l_lock);
+> 		...
+> 	}
+>
+> Should async sub-queue locks use a separate lockdep class or subclass, or
+> should ibmvfc_handle_async() be called without holding scrq->q_lock?
 
-Hm, you are right. There will be two nop functions on the stack in this 
-case and the redirection in the handler would not work.
+I'm rewriting ibmvfc_drain_async_subq() to create a list of events to
+handle, similar to the way ibmvfc_drain_sub_crq() does it, then unlock
+the queue lock, and then call ibmvfc_handle_async() for each event. This
+resolves the lockdep issue.
 
-> Solutions:
-> 
-> 1. A solution would be to create only one not in the first place.
-
-Not a bad idea.
-
-> 2. It seems that we are close to the scoped atomic replace feature.
->    It will prevent loading conflicting livepatches in parallel.
->    Well, it currently checks only the function names. We should
->    add another another check which would detect the conflict
->    also by the alias.
-
--ETOOMANYDEPENDENCIESBETWEENPATCHSETS. If the first solution is not 
-difficult to implement, it might be better.
-
-> PS: I am sorry for the late reply. This patchset is far from trivial
->     because it handles several levels of "what will happen if"
->     and makes my head spin. And it has lower priority because
->     it handles corner cases.
-> 
->     Also I always forget all the details before I get an answer.
->     It seems that we are all in the same trap. ;-)
-
-Yes, it took me a while to page it all in again :).
-
-Miroslav
+-Dave
