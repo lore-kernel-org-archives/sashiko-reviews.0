@@ -1,131 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.8
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793130056;
-	b=lhO3At66We39Q3iYqZIlqWtZg8RB2o7qUmLSOONIIQDAWUqp1/EnEpiuwPPJpjF54vLU
-	 mXCW4v80zW04rEdCgu4ec9Itne8OIkgWXbpcs7mrQXAovhOXTetbuhq+XAXKLJEJgzcOO
-	 4dz7Hmb6kCnZmwOrXMYT5Y/bjIhK/37Z3T0egoI+KRx0TVJK2uYYJ+9Py4cPuyEhacvTG
-	 rr4NuC6rKVaKHkVmwEUmm6q8k+BF6fIzeRbkfDooofYTjsMPmcKg5rn+YVtU2vTVUxPvZ
-	 DBU9ENOnbzXgRED+wXaeTirXwUMYna3TijQDsdRFJfK8ZRS1xYjtFWHlk1ihiDXJBxA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793130056;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:Received:Received:Date:From:To:CC:Subject:Message-ID:
-	 References:Content-Type:Content-Disposition:Content-Transfer-Encoding:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=0sud/BK9MoNQAFON+d86NBeT9p51dT4rjdS2NSws+CM=;
-	b=oY3VqzM6xfyD9WmrmZ5f5dxuLj9thfaGmk7WTyKFZfxf1IwEessDhRHAOvas0dJsaWMG
-	 nq/cCQupD9G46KFyL7vHuXUPrYSrgraKT+Q6HNTMLb7oMgWT16uBCOcGMjIjgbQDihICL
-	 Ym5EnfzearBgMPsKgyeWeCEJ6UUjkg+5K+hKxn/VJRa1ZixJizlsxeQxMwXiiIHapK9/W
-	 yCjBpFkz5hiWyJZV0vsNiWJy9ZpWe+kyzL5YzsheCeGEvnJgcx9fcZxsP7hTnmjPfVS5A
-	 yyXyRniCqU4T9fB/+HdvcFFH6SLuv0fYEySx/wP4GSDa3xjpZLNEcVmTfS14+f8bzGA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=B62w8Va7;
-	arc=fail smtp.remote-ip=192.198.163.8
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.202.169.37
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793130889;
+	b=AVfl541NNs9Flt90TI0+/NuW4swZw3hWcCh5H7aFuZWM67rBkgTstbN1kw93h9sCisG5
+	 Nq+33ZorAyGvxsozKaOq1vynJ+FEGc4H/UX2PLaEMy6LQuBFUMrecnA6CdDnbbSApNkoB
+	 9gPBj2T2kAaT2LKoXcWlT3Owit5tWI78LRWCG9kI5cMctcmoPzKNWepxhufsrmS7F1xRg
+	 STnCwJPLBoJ3NzXR9ez6UcxOiYPwWt8GmSOGrI4mQPnf24wKLGu2GKROts3lcDHQxWZem
+	 ZaZvizF6Qy8UkypKfSb+t7Xen1FZZvBaX8ImTYb13OK1IFnnJa8UY4vk4FBTA038pGQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793130889;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=FVld1aBiYtmBTyeqFf3iiHOdygGd80PvBTMIQ+6iAcQ=;
+	b=xJ0DbCdlSBxawK+7OKK+mifwJiNBU4jAoEBbl2XwYSzz/+N7++dWkor9hL4mcaGvojjF
+	 Z442mzcNIN2bi0y6dPzS7NXlJC2scLKyhBCNvCPL3/ZYBZmc+Olwb2NWTQfBa+gtiEJ54
+	 0qqxKCEhU++xHqm2JuAx7kUf+u+eJEuL80N7xcECCbilxVXUcWHKiaYTD3IEqWkQOJf0e
+	 255pBnNQTglXVOUaQMrLC5htGbVBy9gc0iqFGKHWcldhvX/GuWmFa7X7ESFi63ZyKbt3z
+	 jhAHrfWR2BPgKWMsbNLSu/yxzcf4Td9ytbcAv9jECdt21762PLz+p5NVhjWbj4kPKJA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=roeck-us.net;
+	spf=fail smtp.mailfrom=roeck-us.net;
+	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=jerw67Ty;
+	arc=none smtp.remote-ip=44.202.169.37
+Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B083A606A31F
-	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 19:40:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B083A606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E8B606A31D
+	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 19:54:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 53E8B606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=B62w8Va7
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793130054; x=1824666054;
-  h=date:from:to:cc:subject:message-id:references:
-   content-transfer-encoding:in-reply-to:mime-version;
-  bh=Cn8ha/UX6geWrjHUs9twB/3QSPHq2S1C5Jjnj2ZYQrc=;
-  b=B62w8Va7X/g+1qlPrPn4iOYsJ5Cm5iwL1M2WFTtHYjZoddX9pZVRK9XQ
-   6qCMdcKHxREAR3lzbEnFlytf9XDbOyY4vrESiKMrxhOle/grQcvMzYDBG
-   P+xKrm6CR4EecawrCy22fw76Cm03alKFo3T//JzjGJdXZyEKX7+cnuzgH
-   euhmcz1OkrATK76DYIHkXEtLcW/PcYSut9Vpx6U+Q3n8yAn1PQlm5gKb2
-   tlAcrb83MpYKE/nNlDISnx9d+VZ4UFQIv0EZGmfr6OfuWDEMZNUgAMhJC
-   bKrum6QTeZ9JXK7WfziVNpV0swIOZrTRXSgwK8GL+tjuj+lXh8B/Ccbwx
-   Q==;
-X-CSE-ConnectionGUID: hV2oPngySCufn6vaOTsn7w==
-X-CSE-MsgGUID: Y/HtX+AuRpipVQpV73Ro1Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11948"; a="1736039"
-X-IronPort-AV: E=Sophos;i="6.27,181,1787036400"; 
-   d="scan'208";a="1736039"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 12:40:53 -0700
-X-CSE-ConnectionGUID: gYE/sMQWS4m/5tXwPBM3cg==
-X-CSE-MsgGUID: GW5z1/+6R4ydBYHq0gAGxw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,181,1787036400"; 
-   d="scan'208";a="4587525"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
-  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 12:40:54 -0700
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Tue, 27 Oct 2026 12:40:53 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49 via Frontend Transport; Tue, 27 Oct 2026 12:40:53 -0700
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.15) by
- edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Tue, 27 Oct 2026 12:40:52 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=usc+iDu+XuF81PqAUJJEtdZpfafL3ixYN6Setvuqr5X9G8Mk41UbcnC5j6HkQSiMEMIA7pJCBQl/YAL1jWDLDcP0Xeukt1G3cRZ9p1Tj3hwp9zOWFkZpoWvZVwkktHeabPEN5DmKcBAx4VOS28skyHhCQngcIzN4v/HZgPQ3bP5+8tGA225WyVldAUlvV1VWUNWoQFHKYsI8Q4NmbX+P9vrIwG+DG6doLNxHGLQvB/lgq+r0GeChzT4U46LGLj8jMGInZNpPwY54I38WgJTWMfWETTKJeh9krkg3YWpVKCxb1lpQ8Yi1jxZDHdrCb8TOZbE2++uFE1XpFfnCNsz7hw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=c9p60OpTQtgX+DsgRHqvKFFcOFlyYLFbqCfR5rU/0Oc=;
- b=n0sf8zjE3z1Hz39n+WPSRT9EZuzBJYzB3eL2kTuHGnsy0Ai8oUwhpsjxuCvobQovk3cX8Pb6V0suDU5vOtA9fv8G2MSxBM71JiOA8Wo9/2DP99e1l1rFaluZy4XMReS0xnu58LCzAJyG2Q+JUiUgs1H4+zUC4vfBpJ20HYesGe3y0+TKVJ4CSEVIz85WYd6LUM13gcglzKMPamstWc1wq4K2O+p015GifJqEbW6amldOk6Ldz4biPfSpFylSRHObDUN2KKisl6eYSPYUX9KKjuA+Wv0BZC/z+hb3k+1mglz+oRXu+TfOtuTNoMGl6GUztdUwtDkUTUbHW5o9z+ycMA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CO1PR11MB4787.namprd11.prod.outlook.com (2603:10b6:303:95::23)
- by CH3PR11MB291940.namprd11.prod.outlook.com (2603:10b6:610:366::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
- 2026 19:40:50 +0000
-Received: from CO1PR11MB4787.namprd11.prod.outlook.com
- ([fe80::e7eb:a872:53d1:21fd]) by CO1PR11MB4787.namprd11.prod.outlook.com
- ([fe80::e7eb:a872:53d1:21fd%4]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
- 19:40:50 +0000
-Date: Tue, 27 Oct 2026 12:40:48 -0700
-From: Matthew Brost <matthew.brost@intel.com>
-To: <sashiko-reviews@lists.linux.dev>
-CC: <intel-xe@lists.freedesktop.org>
-Subject: Re: [PATCH v4 3/5] drm/xe: Leave the VM bulk move on BO release, not
- on GEM close
-Message-ID: <auD+QGnArEx1GAOJ@gsse-cloud1.jf.intel.com>
-References: <20261027183638.1031299-1-matthew.brost@intel.com>
- <20261027183638.1031299-4-matthew.brost@intel.com>
- <sashiko-outbox-187039@kernel.org>
- <auD1DQSSOgXvtLgE@gsse-cloud1.jf.intel.com>
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <auD1DQSSOgXvtLgE@gsse-cloud1.jf.intel.com>
-X-ClientProxiedBy: MW4PR04CA0340.namprd04.prod.outlook.com
- (2603:10b6:303:8a::15) To CO1PR11MB4787.namprd11.prod.outlook.com
- (2603:10b6:303:95::23)
+	dkim=pass (2048-bit key, unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=jerw67Ty
+Received: from eig-obgw-6006b.ext.cloudfilter.net ([10.0.30.211])
+	by cmsmtp with ESMTPS
+	id LlbqxarDIJFmFLnFvxMvUU; Tue, 27 Oct 2026 19:54:47 +0000
+Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
+	by cmsmtp with ESMTPS
+	id LnFuxNHYa6hvPLnFuxeBSr; Tue, 27 Oct 2026 19:54:46 +0000
+X-Authority-Analysis: v=2.4 cv=cqCbk04i c=1 sm=1 tr=0 ts=6ae10186
+ a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=KYGhMtosgZqaclhzuAAA:9 a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10
+ a=KPbNTLLc3YvdawN95zVk:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
+	List-Archive; bh=FVld1aBiYtmBTyeqFf3iiHOdygGd80PvBTMIQ+6iAcQ=; b=jerw67TyDxoC
+	lvur2EkiomKgCgFyFPCs3mvRPN61pffJ8rccN5znA5o66jBW6AU0q1Oz0j2hFQdlJUWLodeJg4FOq
+	7LFGmKEGb2xg7U9KrIrnvXLinGvWlVp54lkX56lf/iWmEkX5KFsnlHmHS9SghBjvoYw6vNEkAsKse
+	gOb2IJnWRv+k5HDmVAfV3HD3YYOtZlHpxt3pGoMHCLx63cU7+2xWR8JCXVYb0DhxUoWT+6WHTWQUI
+	/kFqPgwJSRYHwKenmzMCzsxhfeB+EwvLPPSUuKmOlq+1M59GLbeHIqmXVUuWM+mMrFTXmq+MJqhus
+	+ACn+5KHr3wV0SZv8rX1NA==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:60960)
+	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <linux@roeck-us.net>)
+	id 1xLnFu-00000002dL4-0GiG;
+	Wed, 28 Oct 2026 01:24:46 +0530
+Message-ID: <67c297cd-eda3-4a01-a2e8-fce6c8993728@roeck-us.net>
+Date: Tue, 27 Oct 2026 12:54:45 -0700
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -135,196 +76,350 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PR11MB4787:EE_|CH3PR11MB291940:EE_
-X-MS-Office365-Filtering-Correlation-Id: 60a0c64f-92bd-47bb-0db1-08df346234c4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|261026121527099003|11063799006|4143699003|56012099006|10067099003|261021123027099003|261021121427099003|261022105027099003|261009221227099003|261009223027099003|261022075727099003|18002099003|22082099003|6133799003|261026140227099003;
-X-Microsoft-Antispam-Message-Info: DgcAn64lfK3LTLckUe6WXddP8GA9nEN7UEk4xHGP8lj/N/L0UmZjbOXhFS1uX9QKXaiCJkV80VjpF6+a3DYH3+ORY3xONG+X5vMsZRtg6NGSmqeOWgZNm2Hyw08Q28rNNvltjK/VGQoOcHjDQB8sFYKBrsK9EHA4mjh3eSDk9VHTTHLZaciGxYmzygKBcyqPVCdaYW3YTd0ICO8PmXWOtCH9yYdVinHvGkAdsXFy95n6RJHeq8ITGIdCfQVz6DUCXeXrY+u/ziZPth3w5F9zFhxIMFmSSFolyO+PiLjeieIBtP1V4mf7LDn7U9EpyRnBvvSKLcds/VryzkltjUmUFzeMhetd8nDcFNQsdvUeU1XDhomGzFNU2N79QxemhGboO077m7vGLkpq77SKGVbrAbQ32rnMyndOdLapM3AELF/eyUg4x5cNbNMkJbBe0TND9+35Mpmq5tfDproBzJUv6mqCU5X7Lmf0aF8cAi0ntg6eF268rzvAzmT6xlnkJP8l6XIvQ/Nk2oe4fjTRxSZagIWK9MYncfGQ9GoUfUZonUGb2S5OBbbk3zv05N9JI5Hamp5deDRriBzPpgSBVzRgw5ohF4Jf77LeRLHkeXFLbwU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB4787.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(261026121527099003)(11063799006)(4143699003)(56012099006)(10067099003)(261021123027099003)(261021121427099003)(261022105027099003)(261009221227099003)(261009223027099003)(261022075727099003)(18002099003)(22082099003)(6133799003)(261026140227099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?Ad/5hAuGublTPo5b1geB8TmI0kzitdlbsB9lEJESWzJBLhGM6YkAqlTA+Q?=
- =?iso-8859-1?Q?Lma0zZ5V4QkS11/gPrImPhmqJ/UJSpQx1FTaXpFB4wvdmfbzzaSaclF/Tb?=
- =?iso-8859-1?Q?Sp92H2ARghXoT4Xa2lE/s+FuUHXBaDPxgCe0CABU44LmR3OJWG9mVVpOeY?=
- =?iso-8859-1?Q?rtcHPr536btgKwEyhALOYI+ywbXWL8FUKngHIkVzIWtxMblHT6wAP7Lu5E?=
- =?iso-8859-1?Q?IcX2sFDYLDvvV5jU3wBZlZEpgJzsw5+ha5lX9KFURRA51IbVrASDugtGMW?=
- =?iso-8859-1?Q?P1VfWFN74HycgQ3iImCURoPsbj9gpd1B7b0zyiTdkVx8/VLYNFRsORj1oa?=
- =?iso-8859-1?Q?+3WjHarw0q8AW4DxRiQiFs9/mKSAm9TIgz3u4Naot0M2SZYbKOSkB0p+K/?=
- =?iso-8859-1?Q?UpehdHe9qzbNVgrZ2qQXHskTqT0+OHC5S8Bz2+66nE61Wqx9tJkYWRyNo4?=
- =?iso-8859-1?Q?83kjfOSxdIc5+3V1a3jDkyZUY4TUaoZvSMOUxV+q/udLYc2TeLdUXCys78?=
- =?iso-8859-1?Q?mW7Q1KwNP32K6z54k+4lJQH3FY7Q9CKE8LDOfuSKlLaGXc/hZq+xiKVNtc?=
- =?iso-8859-1?Q?xiw4mXMHJyHY8pjfdh1EZu0z6dndY3JGUsAaaKHSfhBb58h0d6ylyQ75Yv?=
- =?iso-8859-1?Q?84hDz6gmzLw/RIG9ZhDrVXcJF7Jnk0qrC6hqW8kHFnP4yUYMzxu/aqA+gZ?=
- =?iso-8859-1?Q?vB7KggNMziWxhL5Ko1o15jHobmaaslBKDSZbmGZOJFqw4sGbg2wIo55XrN?=
- =?iso-8859-1?Q?9E7eosGqSIoEGUUP2nnaUqtKuOARY4C/ch3j8MRJmYC6k684WHIB6d8qp3?=
- =?iso-8859-1?Q?jLpF68evWO4xb4hFqb8ISFOfIxXSRTJID1mCR292E5LVXRwyelsWIukaOd?=
- =?iso-8859-1?Q?4l2+MxB0hjw3ALpe99CUF6X+IUBD2KI1j7JyKg0u32EC+7ZTMSlPy7nAzX?=
- =?iso-8859-1?Q?2+o1WqEtp70GSAi+lQL/I6GF8cIgxH/7mAjph35V3X35cu4caBWeuNDmj2?=
- =?iso-8859-1?Q?bJmbrrSEF6/JK47DSbHSrRIrRGUeLS0RC+5M1flJ89BpQASN3DzxZrvrQk?=
- =?iso-8859-1?Q?Qfkxyq8TA7cLDE2MF4Fdyc74BSzOeOp9X4xB8dRH0K2LRph+2RtwIPx6Kn?=
- =?iso-8859-1?Q?OMij1vuFYpySIb7VQGB0U3byNgazwQ8gJ5auRcsROjImwNta72FsG/7aco?=
- =?iso-8859-1?Q?FTb5bSANoBmQkqYTBCgwUe3g49BgYj1AH7lRb7b+kUM2l4zJK/rhoPJMuA?=
- =?iso-8859-1?Q?i2agtLIJWKK/kJTFU4K/xUHphrrjOtgLYYiasLZ0RDUZy1W52/+mp39eRa?=
- =?iso-8859-1?Q?eN3sxWU7j3bA1xUVPmxEv81CjHljisvOoT0240KsYeaRvYx1sSD/NXlsPg?=
- =?iso-8859-1?Q?C90ytwFsi1kh/Q1MnlYwLtJq1JB8DoI8B5hps67W9e+TXTA7LKRCajqwkg?=
- =?iso-8859-1?Q?5GfFaGZs7FwAM8976GZwjmJ7b2dc78jrf7nzBLwvFNljjqx4dY7i/9FXF3?=
- =?iso-8859-1?Q?sWCwlBPa7W2LnwnvuIjLxwfXIkrITBFQ5pvYfzjo6UjWnaUFmIN+DUAihW?=
- =?iso-8859-1?Q?gwO41GVV1aB8OmO0xjty3iT3joXTpFU9HbxjLvTXVbnPwXxe0xwZRSwpYj?=
- =?iso-8859-1?Q?vxYqkFFXxWA8ogWCnsc9TT10JUS9m1xZNnXrIV5fLNvxnn19TeKpmvRgTo?=
- =?iso-8859-1?Q?LQqMOUk6bQvSfNSS3znoCwaLY8hEaUP0f3IHXWZpUmAY0tXLfYhT5g5NG0?=
- =?iso-8859-1?Q?6dtm7EqwKYHjGbCKVRI99dIUBilkG1Yc2RU+f3FMsiSPmNDJ1rdRa5Td/Z?=
- =?iso-8859-1?Q?Dww+ef1nMA=3D=3D?=
-X-Exchange-RoutingPolicyChecked: wwtPftlbkHLnSFjiUZ+mKUSSSX6Bw8fOV9/J046eevbtePB2LB1RBBOix+uYnv+lffFaeS3l0ZTolcsbXcNQJDozbX98Yob6912v3zi/VDZR0uJyVJj2m3rUj/XwqdasDZ7+b835uco8hxLJt7tpv+tf9Cf2GFdvP/JtHU0xfG+0AXT+834eN4Y2FdEuB3pqxnMtNfi4kgONGgahHO2NhvtGnTI91/ihaeS1lSd1BaCTRYr7Bqj45MGYrgeuk4Hg37sYuu2FXPMJyP18QPwkaHgu5Osu4PYn3xeCJhfNC87YppipqOpmmTzQbg2w9EWInxzuBKrFSgSknzEKRcTD6w==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 60a0c64f-92bd-47bb-0db1-08df346234c4
-X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB4787.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 19:40:50.8200
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Rzf/GfX1unq1pjr7hf78EVYYU+Q/Z1OlAUiqfj5P/w3WZnEaUrfzFERrAZEZBUbmmgC/xhGKEsluvH78ciTCBQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB291940
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 2/2] drivers/watchdog: Add RISC-V SBI watchdog driver
+To: sashiko-reviews@lists.linux.dev, Prajwal N <prajwal.n@oss.qualcomm.com>
+Cc: linux-watchdog@vger.kernel.org
+References: <20261002163758.2919372-1-prajwal.n@oss.qualcomm.com>
+ <20261002163758.2919372-3-prajwal.n@oss.qualcomm.com>
+ <20261003013318.E74021F0089A@smtp.kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <20261003013318.E74021F0089A@smtp.kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1xLnFu-00000002dL4-0GiG
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:60960
+X-Source-Auth: guenter@roeck-us.net
+X-Email-Count: 10
+X-Org: HG=direseller_whb_net_legacy;ORG=directi;
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfLjR1gdspVsm3E5yPK8lFVp/Yzg8INmWIJRni56vQKrZp8HkFqot49DK3o/ZynbNci9OWXPbKyvoACdCIRMyvV6PCMz0lHHDAAqfKeiOLQUqB2BtP4Lv
+ ZktNCN9LXKI7E6BodpSyVYP13rdMgILnvdSIfXRSw1tLjJ7coKMlCuc4vtRQzR2kZ60c0sMZqhR7H99gVjMrqWo/XAWZdJ8AuewoQXme3EjPKcf2ruZeKDLi
 
-On Tue, Oct 27, 2026 at 12:01:33PM -0700, Matthew Brost wrote:
-> On Tue, Oct 27, 2026 at 06:47:57PM +0000, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> > - [High] drm/xe: bulk_move detach in xe_ttm_bo_release_notify() violates TTM invariants
-> > --
-> > 
-> > commit 5d85520c1e2e507cc032c4248bd48c50a734e710
-> > Author: Matthew Brost <matthew.brost@intel.com>
-> > 
-> > drm/xe: Leave the VM bulk move on BO release, not on GEM close
-> > 
-> > This commit removes xe_gem_object_close() and moves the detachment of a
-> > VM-private BO from its VM's LRU bulk move into xe_ttm_bo_release_notify()
-> > so that BOs outliving their GEM handles remain part of the VM bulk move
-> > until release.
-> > 
-> > > diff --git a/drivers/gpu/drm/xe/xe_bo.c b/drivers/gpu/drm/xe/xe_bo.c
-> > > index 42a6aa1a2e4a0..ba16b260dbcb7 100644
-> > > --- a/drivers/gpu/drm/xe/xe_bo.c
-> > > +++ b/drivers/gpu/drm/xe/xe_bo.c
-> > > @@ -1869,6 +1869,14 @@ static void xe_ttm_bo_release_notify(struct ttm_buffer_object *ttm_bo)
-> > >  	if (!xe_ttm_bo_lock_in_destructor(ttm_bo))
-> > >  		return;
-> > >  
-> > > +	/*
-> > > +	 * Leave the VM's bulk move, which is only kept alive by the VM, and
-> > > +	 * whose LRU position no longer says anything about a BO on its way
-> > > +	 * out.
-> > > +	 */
-> > > +	if (ttm_bo->bulk_move)
-> > > +		ttm_bo_set_bulk_move(ttm_bo, NULL);
-> > 
-> > [Severity: High]
-> 
-> Ugh, this is correct - this patch doesn't work but the code prior to
-> this patch is also incorrect.
-> 
-> I'm not immediately spoting an obvisous solution, so I will just drop
-> this patch for now.
+On 10/2/26 18:33, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 9 potential issue(s) to consider:
+> - [High] watchdog: riscv_sbi_wdt: Probe returns success on MSI virtual IRQ failure
+> - [High] watchdog: riscv_sbi_wdt: Silent u32 overflow in timeout conversion allows premature resets
+> - [High] watchdog: riscv_sbi_wdt: MSI interrupts leak and Use-After-Free on unbind
+> - [Medium] watchdog: riscv_sbi_wdt: Missing wdt->dev and parent initializations
+> - [Medium] watchdog: riscv_sbi_wdt: WDIOF_PRETIMEOUT exposed without hardware support
+> - [Medium] watchdog: riscv_sbi_wdt: set_timeout fails to adjust pretimeout
+> - [Low] watchdog: riscv_sbi_wdt: Build failure due to non-existent fwnode member
+> - [Low] watchdog: riscv_sbi_wdt: Missing module_exit() prevents unloading
+> - [Low] watchdog: riscv_sbi_wdt: Build failure on configs missing GENERIC_MSI_IRQ
+> --
 > 
 
-So it probably is;
+Please address the reported issues or explain why they do not apply.
 
- - If in xe_gem_object_close if bind count == 0, remove from bulk
- - If in a bind operation, bind count == 0 and gem handle closed, remove from bulk
+Thanks,
+Guenter
 
-I will do this part in an independent follow up.
-
-Matt
-
-> Matt
+> commit 5a455815a87582fc7be391ea2d8512e1bd8d0b90
+> Author: Prajwal N <prajwal.n@oss.qualcomm.com>
 > 
-> > Does detaching from bulk_move in xe_ttm_bo_release_notify() happen too late
-> > in the TTM teardown sequence?
-> > 
-> > When the final reference to a VM-private user BO on a non-fault-mode VM is
-> > dropped via xe_gem_object_free() -> ttm_bo_fini() -> ttm_bo_put() ->
-> > ttm_bo_release(), ttm_bo_release() checks bo->bulk_move and individualizes
-> > bo->base.resv before invoking bdev->funcs->release_notify():
-> > 
-> > drivers/gpu/drm/ttm/ttm_bo.c:ttm_bo_release() {
-> >     ...
-> > 	WARN_ON_ONCE(bo->pin_count);
-> > 	WARN_ON_ONCE(bo->bulk_move);
-> > 
-> > 	if (!bo->deleted) {
-> > 		ret = ttm_bo_individualize_resv(bo);
-> > 		if (ret) {
-> > 			/* Last resort, if we fail to allocate memory for the
-> > 			 * fences block for the BO to become idle
-> > 			 */
-> > 			dma_resv_wait_timeout(bo->base.resv,
-> > 					      DMA_RESV_USAGE_BOOKKEEP, false,
-> > 					      30 * HZ);
-> > 		}
-> > 
-> > 		if (bdev->funcs->release_notify)
-> > 			bdev->funcs->release_notify(bo);
-> >     ...
-> > }
-> > 
-> > Because bo->bulk_move is still set upon entering ttm_bo_release(), releasing
-> > such a BO will immediately trigger WARN_ON_ONCE(bo->bulk_move).
-> > 
-> > In addition, ttm_bo_individualize_resv() switches bo->base.resv away from
-> > xe_vm_resv(vm) to &bo->base._resv under bo->bdev->lru_lock and then drops
-> > lru_lock while the BO's resource is still linked in vm->lru_bulk_move:
-> > 
-> > drivers/gpu/drm/ttm/ttm_bo.c:ttm_bo_individualize_resv() {
-> >     ...
-> > 		spin_lock(&bo->bdev->lru_lock);
-> > 		bo->base.resv = &bo->base._resv;
-> > 		spin_unlock(&bo->bdev->lru_lock);
-> >     ...
-> > }
-> > 
-> > In the window between ttm_bo_individualize_resv() and
-> > ttm_bo_set_bulk_move(ttm_bo, NULL) in xe_ttm_bo_release_notify(), another
-> > thread holding xe_vm_resv(vm) can access vm->lru_bulk_move while the dying
-> > BO is still pos->first or pos->last:
-> > 
-> > - Calling xe_vm_bump_lru() -> ttm_lru_bulk_move_tail() will fail
-> >   dma_resv_assert_held(pos->first->bo->base.resv) or
-> >   dma_resv_assert_held(pos->last->bo->base.resv) in
-> >   drivers/gpu/drm/ttm/ttm_resource.c:
-> > 
-> > drivers/gpu/drm/ttm/ttm_resource.c:ttm_lru_bulk_move_tail() {
-> >     ...
-> > 			lockdep_assert_held(&pos->first->bo->bdev->lru_lock);
-> > 			dma_resv_assert_held(pos->first->bo->base.resv);
-> > 			dma_resv_assert_held(pos->last->bo->base.resv);
-> >     ...
-> > }
-> > 
-> > - Adding or moving another resource in the same bucket via
-> >   ttm_resource_add_bulk_move() -> ttm_lru_bulk_move_add() will trigger
-> >   WARN_ON(pos->first->bo->base.resv != res->bo->base.resv):
-> > 
-> > drivers/gpu/drm/ttm/ttm_resource.c:ttm_lru_bulk_move_add() {
-> >     ...
-> > 	} else {
-> > 		WARN_ON(pos->first->bo->base.resv != res->bo->base.resv);
-> > 		ttm_lru_bulk_move_pos_tail(pos, res);
-> > 	}
-> > }
-> > 
-> > Conversely, if ttm_bo_individualize_resv() fails (for example, if
-> > dma_resv_copy_fences() returns -ENOMEM), bo->base.resv remains
-> > xe_vm_resv(vm), while xe_ttm_bo_lock_in_destructor() only trylocks
-> > &ttm_bo->base._resv. Calling ttm_bo_set_bulk_move(ttm_bo, NULL) in
-> > xe_ttm_bo_release_notify() will then fail dma_resv_assert_held(bo->base.resv)
-> > in ttm_bo_set_bulk_move() and ttm_resource_is_swapped(), and mutate
-> > vm->lru_bulk_move without holding xe_vm_resv(vm).
-> > 
-> > Should bulk_move be cleared before ttm_bo_release() runs (or before
-> > ttm_bo_individualize_resv() detaches bo->base.resv from the VM reservation
-> > object) while holding the VM reservation lock?
-> > 
-> > -- 
-> > Sashiko AI review · https://sashiko.dev/#/patchset/20261027183638.1031299-1-matthew.brost@intel.com?part=3
+> drivers/watchdog: Add RISC-V SBI watchdog driver
+> 
+> This commit adds support for the RISC-V SBI watchdog extension, integrating
+> with the Linux watchdog framework. It configures and controls the watchdog
+> via standard SBI calls and optionally supports pretimeout MSIs.
+> 
+>> diff --git a/drivers/watchdog/Kconfig b/drivers/watchdog/Kconfig
+>> --- a/drivers/watchdog/Kconfig
+>> +++ b/drivers/watchdog/Kconfig
+> [ ... ]
+>> +config RISCV_SBI_WATCHDOG
+>> +	tristate "RISC-V SBI based Watchdog support"
+>> +	depends on RISCV_SBI
+> 
+> [Severity: Low]
+> Does this configuration need a dependency on CONFIG_GENERIC_MSI_IRQ?
+> 
+> Without it, the unconditional call to
+> platform_device_msi_init_and_alloc_irqs() in probe will cause a build
+> failure when that config is disabled.
+> 
+>> diff --git a/drivers/watchdog/riscv_sbi_wdt.c b/drivers/watchdog/riscv_sbi_wdt.c
+>> new file mode 100644
+>> --- /dev/null
+>> +++ b/drivers/watchdog/riscv_sbi_wdt.c
+> [ ... ]
+>> +/* Convert second to microsecond */
+>> +static inline u32 sec_to_usec(unsigned int sec)
+>> +{
+>> +	return (u32)(sec * 1000000ULL);
+>> +}
+> 
+> [Severity: High]
+> Can this silently overflow if a user with privileges configures a large
+> timeout?
+> 
+> For example, setting a timeout greater than 4294 seconds overflows the u32
+> calculation, causing the hardware to receive an extremely short timeout
+> instead, potentially triggering an unexpected system reset.
+> 
+> [ ... ]
+>> +/* Set the watchdog timeout value */
+>> +static int sbiwdt_set_timeout(struct watchdog_device *wdd, unsigned int timeout)
+>> +{
+>> +	struct sbiwdt *wdt = watchdog_get_drvdata(wdd);
+>> +	u32 period_usec;
+>> +	int ret;
+>> +
+>> +	period_usec = sec_to_usec(timeout);
+>> +
+>> +	ret = sbiwdt_write_attribute(SBI_WDT_PERIOD, period_usec);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	wdt->attrs.wdt_period = period_usec;
+>> +	wdt->wdd.timeout = timeout;
+>> +
+>> +	return 0;
+>> +}
+> 
+> [Severity: Medium]
+> Does this function need to adjust or validate against wdd->pretimeout?
+> 
+> If a user sets a new timeout that is smaller than the current pretimeout,
+> the hardware could be left in an invalid state where the notification time
+> is greater than the period time.
+> 
+> [ ... ]
+>> +/* Get the watchdog timeleft before expiry */
+>> +static unsigned int sbiwdt_get_timeleft(struct watchdog_device *wdd)
+>> +{
+>> +	struct sbiwdt *wdt = watchdog_get_drvdata(wdd);
+>> +	unsigned int time_left_usec;
+>> +	int ret;
+>> +
+>> +	ret = sbiwdt_read_attribute(SBI_WDT_TIME_LEFT, &time_left_usec);
+>> +	if (ret) {
+>> +		dev_err(wdt->dev, "Failed to read watchdog time left: %d\n", ret);
+> 
+> [Severity: Medium]
+> Will this dereference an uninitialized wdt->dev pointer?
+> 
+> It appears wdt->dev is never assigned during probe, which would lead to
+> obscured error logs displaying "(NULL device *)".
+> 
+>> +		return 0;
+>> +	}
+>> +
+>> +	return usec_to_sec(time_left_usec);
+>> +}
+>> +
+>> +static const struct watchdog_info sbiwdt_info = {
+>> +	.options	=	WDIOF_SETTIMEOUT	|
+>> +				WDIOF_KEEPALIVEPING	|
+>> +				WDIOF_PRETIMEOUT	|
+>> +				WDIOF_MAGICCLOSE,
+> 
+> [Severity: Medium]
+> Should WDIOF_PRETIMEOUT only be advertised if the firmware actually
+> supports MSI capabilities?
+> 
+> Statically advertising it means userspace could configure a pretimeout that
+> will silently never trigger on platforms without MSI support.
+> 
+> [ ... ]
+>> +/* Initialize the watchdog attributes */
+>> +static int sbiwdt_init_attributes(struct sbiwdt *wdt)
+>> +{
+> [ ... ]
+>> +	/* Initialize the watchdog timeout to default value */
+>> +	timeout_usec = sec_to_usec(SBI_WDT_DEFAULT_TIMEOUT);
+>> +	ret = sbiwdt_write_attribute(SBI_WDT_PERIOD, timeout_usec);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	wdt->attrs.wdt_period = timeout_usec;
+>> +	wdt->wdd.timeout = SBI_WDT_DEFAULT_TIMEOUT;
+> 
+> [Severity: High]
+> Should wdt->wdd.max_timeout be explicitly initialized here?
+> 
+> Without an upper bound set by the driver, the watchdog core defaults to no
+> hardware limit, allowing large timeouts to be passed to sec_to_usec()
+> which then truncates them via integer overflow.
+> 
+> [ ... ]
+>> +static int sbiwdt_probe(struct platform_device *pdev)
+>> +{
+>> +	struct sbiwdt *wdt;
+>> +	struct imsic_global_config *imsic_global;
+>> +	struct irq_domain *msi_domain;
+>> +	struct device *dev = &pdev->dev;
+>> +	int rc;
+>> +
+>> +	/* Allocate memory for the global watchdog structure */
+>> +	wdt = devm_kzalloc(dev, sizeof(*wdt), GFP_KERNEL);
+>> +	if (!wdt)
+>> +		return -ENOMEM;
+>> +
+>> +	platform_set_drvdata(pdev, wdt);
+>> +	watchdog_set_drvdata(&wdt->wdd, wdt);
+> 
+> [Severity: Medium]
+> Are we missing assignments for wdt->dev and wdt->wdd.parent here?
+> 
+> Failing to set wdt->wdd.parent = dev breaks the sysfs hierarchy for the
+> watchdog device, and missing wdt->dev = dev leads to the uninitialized
+> pointer use observed in sbiwdt_get_timeleft().
+> 
+> [ ... ]
+>> +	/* Setup MSI if the capability is available */
+>> +	if (wdt->attrs.wdt_capability & SBI_WDT_CAP_MSI_SUPPORT_MASK) {
+>> +		imsic_global = imsic_get_global_config();
+>> +		if (!imsic_global) {
+>> +			dev_err(dev, "IMSIC firmware node is unavailable\n");
+>> +			return -ENODEV;
+>> +		}
+>> +
+>> +		msi_domain = irq_find_matching_fwnode(imsic_global->fwnode,
+>> +							DOMAIN_BUS_PLATFORM_MSI);
+> 
+> [Severity: Low]
+> Does struct imsic_global_config actually have an fwnode member?
+> 
+> It appears this member does not exist in the upstream struct definition,
+> which will cause an immediate build failure.
+> 
+>> +		if (!msi_domain) {
+>> +			dev_err(dev, "IMSIC platform MSI domain is unavailable\n");
+>> +			return -ENODEV;
+>> +		}
+>> +
+>> +		dev_set_msi_domain(&pdev->dev, msi_domain);
+>> +
+>> +		/* MSI setup*/
+>> +		rc = platform_device_msi_init_and_alloc_irqs(dev, 1, sbiwdt_msi_write);
+> 
+> [Severity: High]
+> Are these MSI allocations ever cleaned up if subsequent probe steps fail?
+> 
+> Since this is not a device-managed function, error paths that return early
+> will leak these interrupts.
+> 
+>> +		if (rc) {
+>> +			dev_err(dev, "Failed to allocate MSIs\n");
+>> +			return rc;
+>> +		}
+>> +
+>> +		wdt->virq = msi_get_virq(dev, 0);
+>> +		if (!wdt->virq) {
+>> +			dev_err(dev, "Failed to get MSI virtual IRQ: %d\n", wdt->virq);
+>> +			return wdt->virq;
+>> +		}
+> 
+> [Severity: High]
+> Will this return 0 (success) when it intends to return a failure?
+> 
+> msi_get_virq() returns 0 on failure. Returning wdt->virq here falsely
+> signals a successful probe to the driver core, leaving the system silently
+> unprotected since the watchdog never fully registers.
+> 
+> [ ... ]
+>> +static struct platform_driver sbiwdt_driver = {
+>> +	.probe  = sbiwdt_probe,
+>> +	.driver = {
+>> +			.name = DRV_NAME,
+>> +	},
+>> +};
+> 
+> [Severity: High]
+> Does this driver need a .remove callback to properly free the MSIs?
+> 
+> Without one, unbinding the driver permanently leaks the interrupts. If a
+> leaked MSI triggers later, it could execute sbiwdt_msi_write() causing a
+> use-after-free on the released driver data.
+> 
+>> +
+>> +static int __init sbiwdt_init(void)
+>> +{
+>> +	int ret;
+>> +	struct platform_device *pdev;
+>> +
+>> +	/* Probe for SBI WDT extension */
+>> +	if (sbi_spec_version < sbi_mk_version(3, 0) ||
+>> +		sbi_probe_extension(SBI_EXT_WDT) <= 0) {
+>> +		return -ENODEV;
+>> +	}
+>> +
+>> +	ret = platform_driver_register(&sbiwdt_driver);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	pdev = platform_device_register_simple(DRV_NAME, -1, NULL, 0);
+>> +	if (IS_ERR(pdev)) {
+>> +		platform_driver_unregister(&sbiwdt_driver);
+>> +		return PTR_ERR(pdev);
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +late_initcall(sbiwdt_init);
+> 
+> [Severity: Low]
+> Should a symmetric module_exit() routine be provided here?
+> 
+> Since the driver is configured as tristate, omitting an exit function
+> prevents it from ever being unloaded via rmmod.
+> 
+
