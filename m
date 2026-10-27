@@ -1,24 +1,24 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1793108216;
-	b=H2+L7MXkp7PY3ZkdIU2PDz9tIqVIyW6fZDcJ07oAHo409VlJqwGZUS1hYhERhIO7xkW4
-	 41jYxsgG6qkBhB/Uh3eCGvfHzDYlGktUFEyXKYqwUWAIfgexCidCrODcoNze1MWqVsFYH
-	 0yCPr8Wf2iH4XZ1p0mGCXRbvvF0qT1Ct4XwlQMlX6iu33U5PTFmWbfB0qLn3O1cm3KUAP
-	 74zwC54wNh785OQniXZy1HWwkZRmdSPI3E1eXo6rM5xNXMatpUUPIEq6tskfGRoFwsl6o
-	 lfn5A65exGsjTP1Zc6vZEOyyI9C0sFXgu+xU/4ouSZyEkMBTCPUA2GyxGK/dveRToyA==
+	b=Dr6XaxeDd2P+j8dIVlwgpJuz/bhC8g+r1mHfqYNxYYP41RYaMm6v9PZIs5nyet8NzvnR
+	 n6ZAgdYz5/hgKtWkrkLPQxAQf98bQVBPClvobf+BIFr5cPabLqu/JhghxI2+l9lKkPTWC
+	 AMnkvgfPYF51lSM8+e+FS4rP4OLmxUD3PpkVAO8okTsqYC6kCp6H6GRWs9pwFCR7YEAwf
+	 w1D29UMjcW/vO/ojJ7E6F8kphOm6AcKPWLgrkqVrOORnELLgKxRLH3kUNAnQM0YxIsLau
+	 gKVY0+SVqirvPkMC0QpVswOXqXtz2Cdu9EHOExPN2d6TPRlA/LU2Tn6PY74ANAd3k3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1793108216;
 	h=DMARC-Filter:Received:Received:Received:From:To:Cc:Subject:Date:
-	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-Rspamd-Pre-Result:X-Rspamd-Server:
-	 X-Spamd-Result:X-Spam-Flag:X-Spam-Score:X-Spam-Level:
-	 X-Rspamd-Queue-Id:X-Rspamd-Pre-Result:X-Rspamd-Action;
-	bh=K8Ouo96wxtqMqCMmZZz2U+Pd3fMeMqq5lOHQtq3no7k=;
-	b=LbI/F/xz2QIO5P5FgOOUKlhACgv3jTtuqD0eUz97/50vUXmZaweccKFxeQyEqAUOHo4Q
-	 iczduGO5vacSUKFGrXOI1R5f+TTxu4pcaa+3CgDR7UMpnVx7h3aX0B64dHsTOmANhtfSP
-	 RjeaElwOUbOdc8941iphP24ZTTlwgvL6MjH0u/1o5SeGAooEUCstNprPYfOlW263aYS27
-	 Dj0DqDWSBlc82bGScWhqFr/2cEhIIAQVj+Agbef7w6oDgi04DaH5JoKOuA8AJBPE5Mzvt
-	 5E7qUHJYopQA4FQPh6VnJTXLDYCHi8hiFMzf4emJcKnQxz+1vZ3m0v4KayH88CJuNuw==
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-Rspamd-Pre-Result:X-Rspamd-Queue-Id:
+	 X-Rspamd-Pre-Result:X-Rspamd-Action:X-Rspamd-Server:X-Spam-Level:
+	 X-Spamd-Result:X-Spam-Flag:X-Spam-Score;
+	bh=WImkfxqEQGNeYfAHj0WE2CtADgBK8HXMO/5PqrE+/AA=;
+	b=uQ0w3KunSAZ8wzUA2TRgaMA+NDFLp5ICy+hX3iK+ha7lfNtZiqKWJbNk8YgyiUIC847+
+	 zYMWIL0GJvVEk0Cd5uIO/Ao4IBaCoFAYYbBMBxhVY1B8reYCGxZIWJQn0PiPszpW2DzI5
+	 cet8rzHrZfj8mkMq6JHKMpvXWgPNKf2kaHv3q1cOsMRohIsK017Qv2XVhcVdQZEJbnhbx
+	 ASFpSCeOY6wiBzSZweOe2YjNJzTo96xlkmwUlQy/n87qCNf79VOFE7faFwwJpmLjSudeK
+	 7c7MifLSxaHGgDVU4+17zvOAFRuNaFanIJ6MYGscwC7A0S7yicAUwYD/gVdbf9sGCXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=suse.de;
 	spf=pass smtp.mailfrom=suse.de;
@@ -27,16 +27,16 @@ Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7957606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBC9606A321
 	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 13:36:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B7957606A320
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7EBC9606A321
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 4663521F2D;
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 09D9821F1C;
 	Tue, 27 Oct 2026 13:36:54 +0000 (UTC)
 Authentication-Results: smtp-out1.suse.de;
 	none
@@ -44,11 +44,11 @@ Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EEAB213419;
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B6E6213319;
 	Tue, 27 Oct 2026 13:36:53 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id wbs7OfSo4GoWVAAAD6G6ig:T4
+	id wbs7OfSo4GoWVAAAD6G6ig:T3
 	(envelope-from <tzimmermann@suse.de>); Tue, 27 Oct 2026 13:36:53 +0000
 From: Thomas Zimmermann <tzimmermann@suse.de>
 To: deller@gmx.de,
@@ -57,9 +57,9 @@ Cc: dri-devel@lists.freedesktop.org,
 	linux-fbdev@vger.kernel.org,
 	sashiko-reviews@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 3/6] lib/fonts, fbcon: Use font_data_t for rotated fonts
-Date: Tue, 27 Oct 2026 14:27:18 +0100
-Message-ID: <20261027133646.297856-4-tzimmermann@suse.de>
+Subject: [PATCH 2/6] lib/fonts: Provide internal helpers for allocating font_data_t
+Date: Tue, 27 Oct 2026 14:27:17 +0100
+Message-ID: <20261027133646.297856-3-tzimmermann@suse.de>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261027133646.297856-1-tzimmermann@suse.de>
 References: <20261027133646.297856-1-tzimmermann@suse.de>
@@ -72,195 +72,154 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Pre-Result: action=no action;
 	module=replies;
 	Message is reply to one we originated
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.00 / 50.00];
-	REPLY(-4.00)[]
-X-Spam-Flag: NO
-X-Spam-Score: -4.00
-X-Spam-Level: 
-X-Rspamd-Queue-Id: 4663521F2D
+X-Rspamd-Queue-Id: 09D9821F1C
 X-Rspamd-Pre-Result: action=no action;
 	module=replies;
 	Message is reply to one we originated
 X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spam-Level: 
+X-Spamd-Result: default: False [-4.00 / 50.00];
+	REPLY(-4.00)[]
+X-Spam-Flag: NO
+X-Spam-Score: -4.00
 
-Return rotated font data as font_data_t instead of unsigned char*.
-Release the data with font_data_put() in fbcon.
+Factor out the allocation code for font_data_t from font import in
+font_data_import(). Retrieve a writable glyph buffer from the new
+helper __font_data_wrbuf().
 
-It is still possible to use preallocated font buffers for the rotated
-font data. The font data tracks the buffer size and reference count to
-do so; font_data_rotate() invokes __font_data_alloc() to allocate a
-new font-data buffer is necessary.
-
-Returning rotated font data as font_data_t further allows for using
-regular font-data helpers on it. Fbcon now manages buffer life time
-with the font data's reference counting. Removes the plain kfree().
+Having the allocation code in separate functions makes it available
+for font rotation and maybe other font utilities. The _wrbuf() helper
+returns a writable glyph buffer. Font data is only readable in general.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 ---
- drivers/video/fbdev/core/fbcon.c        |  3 ++-
- drivers/video/fbdev/core/fbcon.h        |  3 +--
- drivers/video/fbdev/core/fbcon_rotate.c | 19 ++++++++-------
- include/linux/font.h                    |  5 ++--
- lib/fonts/font_rotate.c                 | 32 ++++++++++---------------
- 5 files changed, 28 insertions(+), 34 deletions(-)
+ lib/fonts/font.h  | 12 +++++++++
+ lib/fonts/fonts.c | 63 ++++++++++++++++++++++++++++++-----------------
+ 2 files changed, 52 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index d97d94bb8e99..9a88a47fc84c 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -770,7 +770,8 @@ static void fbcon_release(struct fb_info *info)
- 		kfree(par->cursor_data);
- 		kfree(par->cursor_src);
- #ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
--		kfree(par->rotated.buf);
-+		if (par->rotated.buf)
-+			font_data_put(par->rotated.buf);
- #endif
- 		kfree(info->fbcon_par);
- 		info->fbcon_par = NULL;
-diff --git a/drivers/video/fbdev/core/fbcon.h b/drivers/video/fbdev/core/fbcon.h
-index ab78dad15925..8b662226004c 100644
---- a/drivers/video/fbdev/core/fbcon.h
-+++ b/drivers/video/fbdev/core/fbcon.h
-@@ -90,8 +90,7 @@ struct fbcon_par {
- #ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
- 	struct {
- 		font_data_t *fontdata;  /* source font */
--		unsigned char *buf;     /* rotated glyphs */
--		size_t bufsize;
-+		font_data_t *buf;       /* rotated font */
- 		int buf_rotate;         /* rotation of buf */
- 	} rotated;
- #endif
-diff --git a/drivers/video/fbdev/core/fbcon_rotate.c b/drivers/video/fbdev/core/fbcon_rotate.c
-index 6cdbc96eeca6..b7c48e7c4a6e 100644
---- a/drivers/video/fbdev/core/fbcon_rotate.c
-+++ b/drivers/video/fbdev/core/fbcon_rotate.c
-@@ -18,7 +18,7 @@
- int fbcon_rotate_font(struct fb_info *info, struct vc_data *vc)
- {
- 	struct fbcon_par *par = info->fbcon_par;
--	unsigned char *buf;
-+	font_data_t *buf;
- 	int ret;
+diff --git a/lib/fonts/font.h b/lib/fonts/font.h
+index 4f1adf0b6b54..eae8c563f148 100644
+--- a/lib/fonts/font.h
++++ b/lib/fonts/font.h
+@@ -4,6 +4,7 @@
+ #define _LIB_FONTS_FONT_H
  
- 	if (par->p->fontdata == par->rotated.fontdata && par->rotate == par->rotated.buf_rotate)
-@@ -32,21 +32,22 @@ int fbcon_rotate_font(struct fb_info *info, struct vc_data *vc)
- 
- 	buf = font_data_rotate(par->rotated.fontdata, vc->vc_font.width,
- 			       vc->vc_font.height, vc->vc_font.charcount,
--			       par->rotated.buf_rotate, par->rotated.buf,
--			       &par->rotated.bufsize);
-+			       par->rotated.buf_rotate, par->rotated.buf);
- 	if (IS_ERR(buf)) {
- 		ret = PTR_ERR(buf);
--		goto err_kfree;
-+		goto err_font_data_put;
- 	}
- 
-+	if (par->rotated.buf)
-+		font_data_put(par->rotated.buf);
- 	par->rotated.buf = buf;
- 
- 	return 0;
- 
--err_kfree:
--	kfree(par->rotated.buf);
--	par->rotated.buf = NULL; /* clear here to avoid output */
--	par->rotated.bufsize = 0;
--
-+err_font_data_put:
-+	if (par->rotated.buf) {
-+		font_data_put(par->rotated.buf);
-+		par->rotated.buf = NULL; /* clear here to avoid output */
-+	}
- 	return ret;
- }
-diff --git a/include/linux/font.h b/include/linux/font.h
-index be1a26ff8ae9..2d7e2ca3db0f 100644
---- a/include/linux/font.h
-+++ b/include/linux/font.h
-@@ -120,9 +120,8 @@ void font_glyph_rotate_180(const unsigned char *glyph, unsigned int width, unsig
- 			   unsigned char *out);
- void font_glyph_rotate_270(const unsigned char *glyph, unsigned int width, unsigned int height,
- 			   unsigned char *out);
--unsigned char *font_data_rotate(font_data_t *fd, unsigned int width, unsigned int height,
--				unsigned int charcount, unsigned int steps,
--				unsigned char *buf, size_t *bufsize);
-+font_data_t *font_data_rotate(font_data_t *fd, unsigned int width, unsigned int height,
-+			      unsigned int charcount, unsigned int steps, font_data_t *buf);
+ #include <linux/font.h>
++#include <linux/types.h>
  
  /*
-  * Font description
-diff --git a/lib/fonts/font_rotate.c b/lib/fonts/font_rotate.c
-index 275406008823..ea54bd618ffb 100644
---- a/lib/fonts/font_rotate.c
-+++ b/lib/fonts/font_rotate.c
-@@ -181,8 +181,7 @@ EXPORT_SYMBOL_GPL(font_glyph_rotate_270);
-  * @height: The number of scanlines in the glyph
-  * @charcount: The number of glyphs in the font
-  * @steps: Number of rotation steps of 90°
-- * @buf: Preallocated output buffer; can be NULL
-- * @bufsize: The size of @buf in bytes; can be NULL
-+ * @buf: Preallocated font data; can be NULL
-  *
-  * The parameters @width and @height refer to the visible number of pixels
-  * and scanlines in a single glyph. The number of glyphs is given in @charcount.
-@@ -194,16 +193,14 @@ EXPORT_SYMBOL_GPL(font_glyph_rotate_270);
-  * as returned by font_data_buf(). Callers are responsible to free the returned
-  * buffer with kfree(). Font rotation typically happens when displays get
-  * re-oriented. To avoid unnecessary re-allocation of the memory buffer, the
-- * caller can pass in an earlier result buffer in @buf for reuse. The old and
-- * new buffer sizes are given and retrieved by the caller in @bufsize. The
-- * allocation semantics are compatible with krealloc().
-+ * caller can pass in an earlier result in @buf for reuse. The returned font
-+ * data should be released with font_data_put().
-  *
-  * Returns:
-- * A buffer with rotated glyphs on success, or an error pointer otherwise
-+ * Font data with rotated glyphs on success, or an error pointer otherwise
-  */
--unsigned char *font_data_rotate(font_data_t *fd, unsigned int width, unsigned int height,
--				unsigned int charcount, unsigned int steps,
--				unsigned char *buf, size_t *bufsize)
-+font_data_t *font_data_rotate(font_data_t *fd, unsigned int width, unsigned int height,
-+			      unsigned int charcount, unsigned int steps, font_data_t *buf)
- {
- 	const unsigned char *src = font_data_buf(fd);
- 	unsigned int s_cellsize = font_glyph_size(width, height);
-@@ -227,19 +224,16 @@ unsigned char *font_data_rotate(font_data_t *fd, unsigned int width, unsigned in
- 	if (check_mul_overflow(charcount, d_cellsize, &size))
- 		return ERR_PTR(-EINVAL);
+  * Font data
+@@ -16,6 +17,17 @@ struct font_data {
+ 	unsigned char data[];
+ } __packed;
  
--	if (!buf || !bufsize || size > *bufsize) {
--		dst = kmalloc_array(charcount, d_cellsize, GFP_KERNEL);
--		if (!dst)
--			return ERR_PTR(-ENOMEM);
--
--		kfree(buf);
--		buf = dst;
--		if (bufsize)
--			*bufsize = size;
-+	if (!buf || size > font_data_size(buf)) {
-+		buf = __font_data_alloc(size, GFP_KERNEL);
-+		if (IS_ERR(buf))
-+			return buf;
- 	} else {
--		dst = buf;
-+		font_data_get(buf);
- 	}
- 
-+	dst = __font_data_wrbuf(buf);
++/*
++ * font_data_t and helpers
++ */
 +
- 	switch (steps) {
- 	case 0:
- 		memcpy(dst, src, size);
++static inline unsigned char *__font_data_wrbuf(font_data_t *fd)
++{
++	return (unsigned char *)fd;
++}
++
++font_data_t *__font_data_alloc(unsigned int size, gfp_t flags);
++
+ /*
+  * Built-in fonts
+  */
+diff --git a/lib/fonts/fonts.c b/lib/fonts/fonts.c
+index 4fc66722d00d..e66a5b6fc3bb 100644
+--- a/lib/fonts/fonts.c
++++ b/lib/fonts/fonts.c
+@@ -47,6 +47,39 @@ static bool font_data_is_internal(font_data_t *fd)
+ 	return !REFCOUNT(fd); /* internal fonts have no reference counting */
+ }
+ 
++font_data_t *__font_data_alloc(unsigned int size, gfp_t flags)
++{
++	unsigned int alloc_size;
++	struct font_data *font_data;
++	font_data_t *fd;
++
++	/* Check for overflow in allocation size calculation */
++	if (check_add_overflow(sizeof(*font_data), size, &alloc_size))
++		return ERR_PTR(-EINVAL);
++
++	font_data = kzalloc(alloc_size, flags);
++	if (!font_data)
++		return ERR_PTR(-ENOMEM);
++
++	fd = font_data->data;
++	REFCOUNT(fd) = 1; /* start with reference acquired */
++	FNTSIZE(fd) = size;
++
++	return fd;
++}
++
++static font_data_t *font_data_alloc(unsigned int pitch, unsigned int h, unsigned int charcount)
++{
++	unsigned int size;
++
++	/* Check for integer overflow in font-size calculation */
++	if (check_mul_overflow(h, pitch, &size) ||
++	    check_mul_overflow(size, charcount, &size))
++		return ERR_PTR(-EINVAL);
++
++	return __font_data_alloc(size, GFP_USER);
++}
++
+ static void font_data_free(font_data_t *fd)
+ {
+ 	kfree(to_font_data_struct(fd));
+@@ -75,36 +108,20 @@ font_data_t *font_data_import(const struct console_font *font, unsigned int vpit
+ 	unsigned int h = font->height;
+ 	unsigned int charcount = font->charcount;
+ 	const unsigned char *data = font->data;
+-	u32 csum = 0;
+-	struct font_data *font_data;
+-	int size, alloc_size;
++	unsigned char *font_data;
+ 	unsigned int i;
+ 	font_data_t *fd;
+ 
+-	/* Check for integer overflow in font-size calculation */
+-	if (check_mul_overflow(h, pitch, &size) ||
+-	    check_mul_overflow(size, charcount, &size))
+-		return ERR_PTR(-EINVAL);
+-
+-	/* Check for overflow in allocation size calculation */
+-	if (check_add_overflow(sizeof(*font_data), size, &alloc_size))
+-		return ERR_PTR(-EINVAL);
+-
+-	font_data = kmalloc(alloc_size, GFP_USER);
+-	if (!font_data)
+-		return ERR_PTR(-ENOMEM);
+-	memset(font_data->extra, 0, sizeof(font_data->extra));
++	fd = font_data_alloc(pitch, h, charcount);
++	if (IS_ERR(fd))
++		return fd;
++	font_data = __font_data_wrbuf(fd);
+ 
+ 	for (i = 0; i < charcount; ++i)
+-		memcpy(font_data->data + i * h * pitch, data + i * vpitch * pitch, h * pitch);
++		memcpy(font_data + i * h * pitch, data + i * vpitch * pitch, h * pitch);
+ 
+ 	if (calc_csum)
+-		csum = calc_csum(0, font_data->data, size);
+-
+-	fd = font_data->data;
+-	REFCOUNT(fd) = 1; /* start with reference acquired */
+-	FNTSIZE(fd) = size;
+-	FNTSUM(fd) = csum;
++		FNTSUM(fd) = calc_csum(0, font_data, FNTSIZE(fd));
+ 
+ 	return fd;
+ }
 -- 
 2.56.0
 
