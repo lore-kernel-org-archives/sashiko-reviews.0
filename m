@@ -1,20 +1,20 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.162.58
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793116994;
-	b=zFew/Jl+RbRI48OlkBvUG2RmRBqg407CP6ymh9BrK3lGmgfldx+ASCI8j/AnR5M70SDM
-	 SWhw+EgBa1qYa0ZqFgiR8iD9JKT4AIhT8XkyW+LhuJh8nuP9giFQqrcR0pcTDJm8pOhBh
-	 63xRyFi8EcJUcFg7W4rGlEgB8Z8DP3Mqz/pQ7DUTQ29c7lrWQCZIs4w/WzaM2lYcPsH1i
-	 /zls+cUSdNB1k00YHY+gnV3UgIsn1xnhWeHRrXSDUORW0j09UiNQY6K/csesAnyrbR0tV
-	 VEegyni0siFp7duGZsb3ZN3N8pKgBweTBVNpwA1YQ5Y6z545kI/4sbRh+5Bi3jjxdiA==
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=40.107.162.14
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1793117597;
+	b=V+6rqTDzQ40FzX9ytsxfB6B++nfT+/5Q1Ni+fna4cyNuP8RjqA8jhRic2PqVo8yeT7QS
+	 cf//fQd97Whg+cS5n/M4VgGvrQwfWVhvKETjDCnw2usitFpiGHBgI9m386z4oIDrMxuBS
+	 VCYlFDbQtyCN++Vj31CDCSFrqnJc6rpTYg8d4TkV2NkvSNtz0wXGl2odKWKgADe5+EFzG
+	 Y7QM27qKKqJg/qLRed9tsIiJQsAFHVTrQ30Zj98mS6jRLrb23jb77BPwGGGKj7H5e5W0e
+	 KsiyGYdirN+wLJ0Exr8wwnccaKjGqha0MfGkMR1PYxDiVGW7Bce6OPu2FMP2vu3+puw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793116994;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793117597;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
-	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
-	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
-	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
-	 X-Forefront-Antispam-Report:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
 	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
 	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
 	 X-MS-Exchange-CrossTenant-Network-Message-Id:
@@ -24,70 +24,69 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=3xaTeM4rGTLliSpBjYXXZSjrG49tAkIUj8lE+yoR/jo=;
-	b=4bdgmmPnIV+MY0auP8MA0IJDwTMAW9hshWL5i0IbVJ6Cbr+lwu4QBNwBIqJlGlfuGQIF
-	 YWaQX32WzscLeMFt+7LUv6zlTHwXIvmHytcLm5qdCgT/LvJ0IHUf/HHIa/wvQRgTSzyYZ
-	 +jq+T+O/G9VSxfL1U8az1dSlq/nPHztKWyVIr4ZRmepUeppqY2Mxtn3hNDt7SOzfS+Vxv
-	 FLqIcVj5hEbe4i3oG7QoaO8sZcYUFWIkHMuPRFKaMgyWfkEClzIVFgRVDso2I6kAy/Iuz
-	 5SicqW97WcQWi9wHBvOdqwX4WInzXXcRn22hTEPitj+uexwQrH/3nMRy9lJlDIV+mJg==
+	bh=1uW9xDH348jK7VwTY0TasEcE178OFVufuNih435u6Cw=;
+	b=PsUeuJaAXr01J+4MfiZiWH1G3fWX3260JGZKCuaz74Oq0IGv5xtC1ZCcDen7scM5P0L3
+	 JTJj8q0AWZSMC9p+r+IKgGlgx6yW4BurKfGYmKu8HhHMl4kM81o8yNAbLtPP66HOIy0bj
+	 S+2f5Sdn1vBExFNCfSs5apeJvCcyK8Oh5WhfKSt9akFTXr0tuUZv/s0au8OpmKk3nCU5L
+	 TAy+PfXI1X6RnOcxt2CzCCa+2rUGpstENC5FJViimKqGdxG13E6fBffoNZMajolUYxvzM
+	 KbXVKtysDR/5HfBSvLYiyv7WP9QdoZK9MgrDn5x2nZZTiBvuCk9XMImhzy7sq17OMNw==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=oss.nxp.com;
 	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=pass header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=EPSnunt7;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.162.58
-Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013058.outbound.protection.outlook.com [40.107.162.58])
+	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=dsSd2jys;
+	arc=fail smtp.remote-ip=40.107.162.14
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013014.outbound.protection.outlook.com [40.107.162.14])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77A3606A32F
-	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 16:03:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C77A3606A32F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9329606A31B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 16:13:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D9329606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=EPSnunt7
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=dsSd2jys
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xF5oOxtQDZ6zObbuhPH0Qc7mJzBRsL0wU2d2OPexMsRRr9n9u3/pFVEbPvLiaIpteAZmKVtFlTQLdZ05JZNNClDN951CdCPo0SF4KHy6upabmSCrhhyc93OG5LHRzKa9NLccLaSPN0XueN6fC7J3tRzlrsbuciimD5UoYcHZx3S0RSS9cX0LZNG5H32tDypH9r7QJCpYJ73ib0+w1Ev+dsVJ1kDyM3oK1y9aEl1AOLQ3a5OsBpZ/J09+Vpa6WNEWxVLsdw7dMZpq47x3MGjzg2AOWg4hb2VQhm+vYWF8jjSHMk5nyuIDGtSXhgUQiij3R9t0lOfRsjkoJ6dKkfr7Pg==
+ b=PwKRPpmNPEc9RENmDp8u/RXvK/JoKi9YXBpoFaVjbLc1H29dLFagkE4JXl7sG9hA0X/Shi9mUVP94pMZQ2J1rcUSgBpsT066X46zXUr5OIourcxO30gTag8aD35tKODG5yNQTJS/5uLtNuko9wFk59UMMPErq5tLTKiot0vDacwH+hSzzVOb1wxgSp+nYH6eFDio3uuB82p9lgAl+5vS1JufMf329G7wJ2jw4cGMjZccaaGqtkJiRBwCAG4MKP0/AXe1j3QfyfUwhWrylR9xgtPiROtiUWC41Bv0AIfhmcuz+stLaNsfEz3UPKTOmDK5RcrsZXWwt9xLMGDyqUBbug==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3xaTeM4rGTLliSpBjYXXZSjrG49tAkIUj8lE+yoR/jo=;
- b=Ddypa6wFwTeYJghVhoIBPpz7TfPRUEpzdwla6/YJ9sHZeLBlM0vU0EPdoFiRzqfLzZxREEANHKVgTDC4xTdTbAl2pdAOjvqiEPRIL1pQlyqcHetCyEEHFjuyLC2MSIzKsk5vGlR8MGGt0m6KgobZU4DFljqYHtpxyMN9F+K1r4agwGfMDZ+yUsdJzQZZgx+z8VW1N8YewMtDU1Z7KisORk5uoW3eUW3/M67dGoCtYr9GUSoeg4IHhONCqb61ZZnjID5hMmyDB2h8WnRcD7/P4ojFCGa9PiZ9zEeUXQUkqeygpJZtt2V42EHi2bzOo//7v+RALLKeHwbpQlCaL92nJg==
+ bh=WIjE1UDYBTGhOD7XNr70rEnV6hK7crsN0hvErjQwI0Q=;
+ b=fsAIyJ8T1e9BxBHKkmneE9C63BgJVNYWSZ9xtm94xPdANFEHMeEfo9wozDf1a3lBJC9TzBX87qnYCEY1rmUfDUpc7FmVxH3mrCbRFDcsIPZ3KVl4wDcppxaTD17/cJexDFWzpnR2E9oUNfb/uWINXjSbf2SV9OprQfimkxMV+/rG4lY5RZumq1NVkoKFo1sSRCIS5KBn2SvY2w7DoI9/qz6QCj829GXWRwsIf2eA5bII8i5VDLQzcV5F6VSzBS1JMlcBI+bZ4Fnzp5AbqPEdDRKqQDLaSCkXUrOGxD70+Bk7I9wmBKihZVpqGvPliHW7mNuhHf1jhyD0Ig0oE9GovQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
  dkim=pass header.d=oss.nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
  s=selector1-NXP1-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3xaTeM4rGTLliSpBjYXXZSjrG49tAkIUj8lE+yoR/jo=;
- b=EPSnunt7QPrTNOlwt25pEBOw8xDVq4rFcHho5rbUB1o11SZ5XkQq85d5TjXGld/aysVB8/9yy6k0EKFVjReqK1Vs+0w4v6XeUTSb2ELBkba0zFjVGgFnWCB8fvUcu9DxVUDnbHw4DXfBP7yk1UuPzeVGPiI2iLor9TvGnweSQz261QRVsotrw/1u5P/2wmUpatGnXvDZ4yWBpAW2WE4SvPFCqdQ9McMjYnnpDxn0Kk3ZFDWir06TW/PFIix8gjtuiRYuYOgnA3toBRosovARimg/kZe2ukBDNg+D7hx2TcdpNUF9FzdCCNzyjsk6x718Y3PlVcDyLnwxyglJas0VQw==
+ bh=WIjE1UDYBTGhOD7XNr70rEnV6hK7crsN0hvErjQwI0Q=;
+ b=dsSd2jysjK/rOsRSAgHIofiSs+dszXwiR0oXoCeRdRfR61NHezSeJ2L76B82sDNcvS7u5ysOJjrB4tMsS4LyoGKIEbRpYbwYsFwA1/AdEmG9wXGHkMTkC9XHTZtmKejCtnJCCmhnzwh6vTPeJltU+/D0vXDcZfmoRwrP/xRGNHm/jR7luYC/jBOiHtNoiMErzogN0c1kiJr5SXTNpakZvXQtQQxrDhRufF/yfCwZydp4qyewr63gDLAzCylrYxcsO+SpMyWXyAvn0TL7OiRaf6xhuUF4cVUYdD7/3Pr2i4pa9igPZ/U3CjNKAkt4QNUgeaD+7weEHk+f8sIhLT/00A==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=oss.nxp.com;
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com (2603:10a6:290:76::14)
- by AM9PR04MB8210.eurprd04.prod.outlook.com (2603:10a6:20b:3e7::17) with
+ by MMZPR04MB900905.eurprd04.prod.outlook.com (2603:10a6:190:50::20) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
- 2026 16:03:10 +0000
+ 2026 16:13:12 +0000
 Received: from MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b]) by MI3PR04MB12438.eurprd04.prod.outlook.com
  ([fe80::c715:c32:8bb1:b70b%6]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
- 16:03:10 +0000
-Date: Tue, 27 Oct 2026 12:03:04 -0400
+ 16:13:12 +0000
+Date: Tue, 27 Oct 2026 12:13:05 -0400
 From: Frank Li <Frank.li@oss.nxp.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: Daniel Byrne <daniel1.byrne@intel.com>, dmaengine@vger.kernel.org,
+Cc: James Hilliard <james.hilliard1@gmail.com>, dmaengine@vger.kernel.org,
 	vkoul@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH 09/17] dmaengine: idxd: quarantine terminate_all's
- descriptor slots until the device has drained
-Message-ID: <auDLOAyQefl_DdwS@lizhi-Precision-Tower-5810>
-References: <20261019150630.4026341-1-daniel1.byrne@intel.com>
- <20261019150630.4026341-10-daniel1.byrne@intel.com>
- <sashiko-outbox-178035@kernel.org>
-Content-Type: text/plain; charset=us-ascii
+Subject: Re: [PATCH] dmaengine: dw: synchronize completion callbacks
+Message-ID: <auDNkfOAqm0QJK6v@lizhi-Precision-Tower-5810>
+References: <20261021-submit-dw-dma-synchronize-v1-v1-1-6af85c2d6f69@gmail.com>
+ <sashiko-outbox-180707@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-178035@kernel.org>
-X-ClientProxiedBy: DS7PR05CA0012.namprd05.prod.outlook.com
- (2603:10b6:5:3b9::17) To MI3PR04MB12438.eurprd04.prod.outlook.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-180707@kernel.org>
+X-ClientProxiedBy: PH8PR02CA0023.namprd02.prod.outlook.com
+ (2603:10b6:510:2d0::15) To MI3PR04MB12438.eurprd04.prod.outlook.com
  (2603:10a6:290:76::14)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -99,66 +98,145 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|AM9PR04MB8210:EE_
-X-MS-Office365-Filtering-Correlation-Id: ee1d535e-ddf6-4ccb-7837-08df3443cc71
+X-MS-TrafficTypeDiagnostic: MI3PR04MB12438:EE_|MMZPR04MB900905:EE_
+X-MS-Office365-Filtering-Correlation-Id: b3bd61cc-6fd2-4b36-fea3-08df344532d0
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|19092799006|23010399003|1800799024|11063799006|4143699003|56012099006|261022105027099003|10067099003|18002099003|22082099003|261026140227099003;
+	BCL:0;ARA:13230040|376014|1800799024|366016|19092799006|23010399003|261026140227099003|10067099003|4143699003|11063799006|261009223027099003|56012099006|261022105027099003|261022075727099003|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	1cdfWFL+tlS1L//jozhpH8dNptWgcO5i+DzhYpnxcTOi0Vpwz5c9Fjpny2+p7m+tC4Up1g15c91mX4kKhLV4pbgTqC8BAV4wqOuXrMPZiw8/g6N7+mF2jzEi0Km6YHNsL7RAAEE9a5VFFeyI21vn/gja8o5IW0QFPbt6p0NmXQj2t3d0fe1vpV2LKiYBRor96Qy5iqLd34zVSMiCUvD5bF8pwpwVJnu7VwKbucKgpvvgu03I0hsF1P0CJw5ILAbQDOC+V8tEoB4uueuvSVqZGDgmmmxVBKCPMxGk27bXsuc12RLiu1xZw9Lgit8E4NcgC5eo2/4X4/mkuL6X/1LeOWTk40irWwrwLWPBq0thB5e6st9IpbozXNeTtdLw00Dres8AmbbKZ94TP/83k/b2qtM6UGkz6NnstDT3Tk+dR14bJhAYCag9MODzCX3Bb+7LhPTjK/PFUcmdSsxtpFVEeEdsXeLfURsMrn6uEFKCGUdVCbIBZCgtrR5EO2FI51v4Zq4uIY+TL8BbV2T4rhPCbcz5r6JDMEH+8hiSJiCdQyDU99R4Jh2nhUUe8wEqceDRnI8SflSYo4X5gifBPhWzi6+RqPv87vdeGByHVcO7XHk02tz/oykzWwpE3MowQAPVZZ/ZjTxrGokwABcAM5Fva1BZnNfsF3t+xsQu+PFD/OY=
+	5NiU3TMB7W6brHf2pn1fEEmRBBehdTutGqsOm8MGIIXMhCjNZ4B2iXnYeq7LFl9Vxs02ZyUNPVAojjSbYSiXkbaLLU7eJz5kqi8sRNc70HjaGxTDEzXHC6LmTcjIimOOIlqeyKLCTRKT0skcvx/1l6Y/SgJ9XyseS68vCIt7bEDpXlyJKfrYD3HYqZUbZKyaT9N0agKJMGJqfSxMWzLsn1qE+GXQnJK8wmhfvL1qB0wWhDxYtk4gGtNkqM+dmCcAiWx76dqJ6tgNVzamdG5OHCeAR9BJWKMrI9TIFSM2JkqZHKe+nIZn6p6bmnzrsJz1dsiBAeDOej/MYegkiof+qn11/1PzLy/UFBRmnV5wqLHvl0Z0YBWz1B6Ed+8KoXvsEMzqRZVFv4cxITGArs5pwtTFFvm676N7z366iYWbxSCkp/pmLc1EfCtEzWC3O9PHBAhGcb3qaOIkCwGEhTes8FOV8OmSKViZW6TMyv0SCHI5INO0IQQuzQSw3x/8ZMekWyIfaegSAtcXmVNzyxLsLjCgRZDxEojYgTRABru28fub2Dzb5NuZ4swfpSXIdFL9iMK6uASZmh2hNEKG2a01+AiGMMRoPakP93KJbxZboHw=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(19092799006)(23010399003)(1800799024)(11063799006)(4143699003)(56012099006)(261022105027099003)(10067099003)(18002099003)(22082099003)(261026140227099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MI3PR04MB12438.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(19092799006)(23010399003)(261026140227099003)(10067099003)(4143699003)(11063799006)(261009223027099003)(56012099006)(261022105027099003)(261022075727099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?ou4eBlkE58qOlZ9FbnqcKanZOaR3+/F/QgQpWRm2bNQIH3Oq1uq2Uy3/xYlt?=
- =?us-ascii?Q?nix48gZLeq8lft/03EguEDzNom8yEd31YrvMozIZGD987u0ge5TeO5vJNDnN?=
- =?us-ascii?Q?4KUhbLzJAeT5C6nR6vJIUblyjKHDgth/TExjFs1GlGv5+W/XqUiN2JsUN/Z+?=
- =?us-ascii?Q?nNzMSMtwNs3c+O4WinZwY4+5NubuLhffG4Lp8vxNPsfWjRW8Jh48cdU9Xd3B?=
- =?us-ascii?Q?3uPqh807FBGCOH9J2hKdahEzFwP5XIbht35Nj9/4A8qFVj9AgjHJpntMrvSR?=
- =?us-ascii?Q?nI0cIv4ifEhWvy2icYiE8Vraa0xGROAl0Iw/59Vzk8C/UhR1ZUGHR8Oxk9ae?=
- =?us-ascii?Q?aunYQgLz1n5IWYJXHF+TZM44K3h2pstR8pa7VJsXb3TAgNr9XFK7S78KyhCS?=
- =?us-ascii?Q?yyFdbPMqS9RdkixV8JsBwUfKH0MwHwFePhuWPMB8p13u8wcV09H5F/6G37In?=
- =?us-ascii?Q?o9YVX/dbJQ7D9X4EsOqz2hTGtbHdKqlWFzBWe8ocAi4Y06kzAenvLn9SDhoS?=
- =?us-ascii?Q?AYpNcL3LRoXaz/0D2NI9oniRx8Gs5NAeAeL1FwXJF9RdGa2MGTfUhw1JqWo/?=
- =?us-ascii?Q?XRceJhgPy3swvEjFuXokde/hzhN1UL6ihD3BaLOoXSYRDPH8jySFxi4B+MUw?=
- =?us-ascii?Q?y31Qrqm823IrgJt4eRzVtB6AkkKzF6ZDLl1D926Aa17pDbeN+PJWwibOYylp?=
- =?us-ascii?Q?UpOxzavZku7IZwoIV8pCsx2FwoHZ06w78610LA/Jjd5XAqhNwpAVfMkrriMv?=
- =?us-ascii?Q?LjjMwWqMvHfZUrpuPHyT6ry4hSVbWYwupIcMvVVo45RZK1bo+1ik1YLjsHas?=
- =?us-ascii?Q?WcvMvE1HXnAW8XwaP1++KuDD3Vh80/SHdZKDkYmaG1sWl99vrWulklTCND1Q?=
- =?us-ascii?Q?TP4alv1/AG5On4tA/BLy3XGAwo1CktIXEtSeB/cg8KHwVPvWmeTGXsUc7cGk?=
- =?us-ascii?Q?ZijtPjkkEXMJSJukT/U8R7wIkess/3XWAf28i1l1tSEqhhOzRMARkpH4oeCM?=
- =?us-ascii?Q?27ayVYX1kfOUxmmWRslb1yhq7nKmzIPnV3nU6e3XAwFaQyFKAudCBvha+x33?=
- =?us-ascii?Q?061+RHDb5Dgpq3IpCUPo2T9v5tOXai2/b76Dqib9TcAmFefCCgJhp6kFppLu?=
- =?us-ascii?Q?Ws0D47eZYCQJdRgKLF5tKlqp16MRbUCF3mlTvQM3vumGZswIbERtgFtPlPGT?=
- =?us-ascii?Q?mJVyr4gFQWB40+ds73NEeGHW2oBMfJrZf2owAaXJDxc/8PJ6i9+gonoDNUMo?=
- =?us-ascii?Q?9e9UhDPAgo0kdH/sIWLYSjRY55jZoqwyWW9zIBSWXhAW4A0O4F8Nm3mH2/E1?=
- =?us-ascii?Q?+yfpfRC4KE6AmwCzl2XoBeulspa5DYGq7zn6HrpXYBMr9CDCnqmSXNZABZi5?=
- =?us-ascii?Q?UnOs93G4CiqPUm9JAw0q/f+NlsrcELAlM+3ZQ+96AVLHS0QS0ezS3u6Bo42A?=
- =?us-ascii?Q?CHD0c71OH5moH0Hm8WfE3egOrEZqI4j47yQ8DJUSKaS6XUf+9Z/nMhxFM88b?=
- =?us-ascii?Q?rkbThMCV0SlDCXKgFcKwRqdfyKQzGewXz1K6eDgM7RzMXbIoQT4cavrG2v2z?=
- =?us-ascii?Q?koul6l7BZfSEz4JuGHj1cqaMBtVcg29B0hWaIURrVe2DZJv1IvkLi5x//Fo6?=
- =?us-ascii?Q?lq4lM9+NMsLcUD/TvHXEEoxMVRAkJ2O27/DaKyM6mcVaHfp37rqPA8KLA2Mx?=
- =?us-ascii?Q?ASEQxsmMCMId5zCt3RgMl78uguqUnJuwvmM4I5XmexfmZQQhFvdTu2yUBIOU?=
- =?us-ascii?Q?+V9I9sezejs5yWsayNiir9lhJZQuN4EIIRTOnl3FkXl9LauLWq3L?=
+	=?iso-8859-1?Q?X0O5KbV9x0TWBZCw7c/ym6k1gWlff0H0XXrbiE+D5NI09uYVhalYTM+b02?=
+ =?iso-8859-1?Q?UeNhjYnTxOIPViG31D2cmav03HMgd55EyeCXalSk8LtFfktc0IO9UOawr7?=
+ =?iso-8859-1?Q?lC4QbjZ/USH3T7ncr01woiu7getsmQ3bqSGU4ijs9l7YYiPJ2TOu9ocKG5?=
+ =?iso-8859-1?Q?nf2wB3KG+PYIuFuJjwDJklND91+j0MyKPpj/KyciRoqMnEGntvmE2vP4JG?=
+ =?iso-8859-1?Q?r2HJw1lAZFD+XnGjsL8IwDH8J7Dhn/pt/VKhT0gxPowQYm0JEjTD39bLsh?=
+ =?iso-8859-1?Q?J0/G4gmFuZUvEurrBgE7iQGnWPxxnN2a/pIGKKx081gSZ6D8E38O0JT4Fu?=
+ =?iso-8859-1?Q?sRDEVv9FKSJapxuccwoIigs/i3+eIBFDr7LzMgGo0IXfQTryKD2BLGvIgM?=
+ =?iso-8859-1?Q?i/qNCmI9atOCLEeLJ0C+MaBllm+q77K/eIxlWQ4/HrtenAg1/ieVp7SfHh?=
+ =?iso-8859-1?Q?T99MSs0lzNVlyhA314fcbTsb+MMW+eRd0U1Q1o+JCccizSXmWZzEeuZYks?=
+ =?iso-8859-1?Q?a9ww0ZU0qccREJFvh6BbaCPYLRv6xTvDDP5d/ffD1+D0U/kFCTM1s8LCmL?=
+ =?iso-8859-1?Q?UMQO++sL4x6SHx1S1gXA5phAEANwzP5yNjjilioVMNNbix+g2Oef7KFCOL?=
+ =?iso-8859-1?Q?odY/WmuueVo8MV5KI20dfNyzCuSSerEMKL6xMjjgEEDA3clTsEe7erjes3?=
+ =?iso-8859-1?Q?9qpLnxND7GagSwh5tUcX3gQgtYMX/ZO8J/KvhMlEtzWa1fTv6K2e8nRCD3?=
+ =?iso-8859-1?Q?upp+6krExwEBba1ECHsk9UP7K3wEbWVzTIR5JBd7+6Obk48wZGH2hJ3KjU?=
+ =?iso-8859-1?Q?2syazsDp06c9Akyz/1Ef90uT9MMiAsZQ4+zonQcemC0fT9oIOWQ3xvJKvF?=
+ =?iso-8859-1?Q?KKipUV7Es94CRPLLQxgmheEIjYvg3vxPV7490GSJ1d0ql1ySGYp/rWAqEb?=
+ =?iso-8859-1?Q?WAjv7G23VcIZoJ2Z6pyNmJGRREmso2A8HfE6dO6s9BOzZmXWeEjwaZJhpu?=
+ =?iso-8859-1?Q?rsRmyGZoNc0fc1x/I/2VK9xmaWCbERLZeT129PlxzOn1KiU1jU5zpT2ILW?=
+ =?iso-8859-1?Q?NuP4QIT9pFjGibDVXSGp/oiX0unGAKSGfyWC67KleKTvW6s5ey/E3rOKX1?=
+ =?iso-8859-1?Q?eyhF5zhM15N7EmDr/iuxjgwBwzr7A/BGE7J90IBP7ILHnKTSulu6BKhkis?=
+ =?iso-8859-1?Q?Voa7bi7CJGsgvRbUASgMCFNBDINuirmm8hJn7QF2l18NcpXjkG5x+rST7t?=
+ =?iso-8859-1?Q?On1Sondfr1t1xdKDe80Wb5zrOIAFZGJG/9xqqXOxRtoiyHJ654I6jumFBW?=
+ =?iso-8859-1?Q?EYWKcoljTzAbViJZpN/0z6fzwUpKXAONGrQN0PRdbl5cou2Q0XhsJjxpsP?=
+ =?iso-8859-1?Q?t+g36n0bv7/WaUMKR+9/6hinYwq6b5bs2AYIb1cWRv1TIMZEvrRKohRQr2?=
+ =?iso-8859-1?Q?P/L82cR9Y7OQ9C1SGs/rPccuxzU/fX14Ezoa6ogeP/3HHl+colv6Nq+txD?=
+ =?iso-8859-1?Q?+oGOMGmrPHJb2UMNNTqfvTVMuDCF6oUMNZ5P+ibkq2MSMheBjzdqJIHdHD?=
+ =?iso-8859-1?Q?+TBoRrpo+tTUjhNGL/LxsEATp5azPW8Gl5+T3ip9sC5hX2HDlsEpLo1r3U?=
+ =?iso-8859-1?Q?Sew9JpLp5o/8S7d95O8O0h4FSpwwL2Mw7syerVicuh2flzjfMVjp35C0wW?=
+ =?iso-8859-1?Q?6FMPg2f5ApmiZTcCMV3Hocrm4W8jsH56rES9fpsTV0CNk56IlDfiU3Xozs?=
+ =?iso-8859-1?Q?nk7uQTWT1QR1JaVmtyrXxax1MEdK9P9T29252A5lunihPGdCuXYl8MpMYk?=
+ =?iso-8859-1?Q?pePOHRLUBNem3X+y0wd15kDkFDq2/3UdUECbl4QpYiArjWsNon6R?=
 X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ee1d535e-ddf6-4ccb-7837-08df3443cc71
+X-MS-Exchange-CrossTenant-Network-Message-Id: b3bd61cc-6fd2-4b36-fea3-08df344532d0
 X-MS-Exchange-CrossTenant-AuthSource: MI3PR04MB12438.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 16:03:10.8208
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 16:13:12.0594
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yx5lpTQZXN2uw7C1NxYtuUbNdtqfRa+h4Nztr5AULLG6r6sRrjL9pvtNg/XyYuewf1cZiV7bDwarj+5Y2YCie5GfV9YLS2v/7Oa6T5/YgcVP6/N3ltdzihr3Y8C+pu/p
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8210
+X-MS-Exchange-CrossTenant-UserPrincipalName: SbNIWmFVmwmQM5XFjUYZ6u6D7uyXRJE59d0lD/oualthkemfwukAh8NJvjUyaXg1Vphs9J/96YN1RgjKlSUxr4gJ9awmwo2+FTXqe2Gs5wZjZzYwqEASTgPhZGQJZy6s
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MMZPR04MB900905
 
-On Mon, Oct 19, 2026 at 05:26:33PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [High] dmaengine: idxd: missing wq_lock in idxd_dma_synchronize() causes UAF
-> - [High] dmaengine: idxd: missing idxd_wq_thread() sync on channel termination
+On Wed, Oct 21, 2026 at 09:31:42PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] dmaengine: dw: tasklet_kill() in dwc_synchronize() drops shared tasklet runs
 > --
+>
+> commit 095fd30b59df2969f093996b0e32af6cace0812f
+> Author: James Hilliard <james.hilliard1@gmail.com>
+>
+> dmaengine: dw: synchronize completion callbacks
+>
+> This commit implements the device_synchronize callback for the DesignWare DMA
+> controller by calling tasklet_kill() on the shared controller tasklet to wait
+> for in-flight completion callbacks.
+>
+> > diff --git a/drivers/dma/dw/core.c b/drivers/dma/dw/core.c
+> > index dd75f97a33b3d..eb3f5ce471a22 100644
+> > --- a/drivers/dma/dw/core.c
+> > +++ b/drivers/dma/dw/core.c
+> > @@ -965,6 +965,14 @@ static int dwc_terminate_all(struct dma_chan *chan)
+> >  	return 0;
+> >  }
+> >
+> > +static void dwc_synchronize(struct dma_chan *chan)
+> > +{
+> > +	struct dw_dma *dw = to_dw_dma(chan->device);
+> > +
+> > +	/* Callbacks run outside the channel lock in the controller tasklet. */
+> > +	tasklet_kill(&dw->tasklet);
+> > +}
+>
+> [Severity: High]
+> Can calling tasklet_kill() on the shared dw->tasklet here drop a concurrent
+> tasklet_schedule() from another active channel and leave controller
+> interrupts permanently masked?
 
-Please fix all sashiko issues or provide explain.
+Is it true?
 
 Frank
+
+>
+> In kernel/softirq.c, tasklet_action_common() clears TASKLET_STATE_SCHED
+> before invoking dw_dma_tasklet(). When dwc_synchronize() calls
+> tasklet_kill(), it acquires TASKLET_STATE_SCHED via wait_on_bit_lock(),
+> waits for TASKLET_STATE_RUN to clear in tasklet_unlock_wait(), and then
+> clears TASKLET_STATE_SCHED:
+>
+> kernel/softirq.c:tasklet_kill() {
+>     ...
+>     wait_on_bit_lock(&t->state, TASKLET_STATE_SCHED, TASK_UNINTERRUPTIBLE);
+>
+>     tasklet_unlock_wait(t);
+>     tasklet_clear_sched(t);
+> }
+>
+> While tasklet_kill() holds TASKLET_STATE_SCHED, dw_dma_tasklet() can finish
+> and re-enable MASK.XFER and MASK.ERROR across all channels before clearing
+> TASKLET_STATE_RUN:
+>
+> drivers/dma/dw/core.c:dw_dma_tasklet() {
+>     ...
+>     /* Re-enable interrupts */
+>     channel_set_bit(dw, MASK.XFER, dw->all_chan_mask);
+>     channel_set_bit(dw, MASK.ERROR, dw->all_chan_mask);
+> }
+>
+> If dw_dma_interrupt() fires for another active channel while tasklet_kill()
+> still holds TASKLET_STATE_SCHED, the interrupt handler masks XFER, BLOCK,
+> and ERROR across all channels and calls tasklet_schedule(&dw->tasklet):
+>
+> drivers/dma/dw/core.c:dw_dma_interrupt() {
+>     ...
+>     channel_clear_bit(dw, MASK.XFER, dw->all_chan_mask);
+>     channel_clear_bit(dw, MASK.BLOCK, dw->all_chan_mask);
+>     channel_clear_bit(dw, MASK.ERROR, dw->all_chan_mask);
+>     ...
+>     tasklet_schedule(&dw->tasklet);
+> }
+>
+> Because TASKLET_STATE_SCHED is already set by tasklet_kill(),
+> tasklet_schedule() sees test_and_set_bit(TASKLET_STATE_SCHED, &t->state)
+> return true and skips __tasklet_schedule(). When tasklet_kill() then calls
+> tasklet_clear_sched(), the scheduled run is lost without dw->tasklet ever
+> being queued, leaving MASK.XFER and MASK.ERROR disabled for the entire
+> controller.
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261021-submit-dw-dma-synchronize-v1-v1-1-6af85c2d6f69@gmail.com?part=1
