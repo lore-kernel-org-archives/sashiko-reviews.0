@@ -1,100 +1,90 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.172
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793110505;
-	b=i3TK1Av59emtc3dXyjC1BfcYNI4PsrYjynRM4XuAaVpeewqT8YcWa78BMiVtWRXusJ81
-	 95PxjO2aj3dNcr3/ywtL2llC2/GgYh9VI3HKFcDRXw/UMyy/XoCHZWuCOuYk5ivvHK77f
-	 RR4BRnD1//Meeyjt8C2moP/uMaCEvBnREvyfZa7A9DDBd814YFa0jmRJZoA4J6GQjURmd
-	 tApMDTOEb1co3UyujtZ1FhYCgkExtRXy2QX4nlRzdzncegEhTAMJoaZBSHLVVinbwo5hj
-	 b95sWzaBAPKfxg7vQp/sWL9P/BX0rkODDOONg4PQx8v0RC+aW1CVh2OfFpb8ilC7K6Q==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793110505;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=AZGHU/6bpP0vuZyDpKTJ9Lt9KjTQ5UVsrPd845cBFGE=;
-	b=yHnGSJSJe2D/8C9BvqFiBBwUckQINzose1Yz5h5hmqP7okjuZg19YFZWWAXGQ0nWc3ZL
-	 qAAEF3ft3hIFdvwirKDe0OmTeM8goGjvdl6NkMnToWE4i0Bl5GPaL5WnB0w7uXQ5MJfVP
-	 iCrCB5zK8IWfXaouZey0wHbKjQS3R9ZVphaU6NaPqJdahzrsSpsJw5gZXGPBQzG7U2sYb
-	 Ng41nvYFWCu+FEQuHAHuJlnASeU6GMwj6b11ukQtYvtknK5myEQUw/S6gACzsHGsTw8Hu
-	 C+zhZOQjhDTwr69fJ3qAtx4Vvd36zZfs+Vd6AUbONAGmK055bO/kiTOB8p9z5SfEwvA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nebusec.ai;
-	spf=pass smtp.mailfrom=nebusec.ai;
-	dkim=pass header.d=nebusec.ai header.i=@nebusec.ai header.a=rsa-sha256 header.s=google header.b=Hl+jEP2r;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.172
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.158.5
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793113207;
+	b=PZgby4EwTYJx/ZHjDQUxd1YKLLaxjX6JHt90mwuKB95/TfvcomkB4B3UbURBXAMsgqP4
+	 X6bJEIoal0I+jEDDQlm95pYyQpPOE5kO9B5ZHU7rL+Ecn153CQLeAmq1pzUgEz6wNPpqX
+	 ihhbZAHhnEHdUe/xYDq42OGCu2b0AUQhuDSnidyyYDl7Y610Z05KS0cDfXfazBAnMh6eZ
+	 RH906/6hOL0VaJnwrX4VHg1+qu7oLhtMaf2pvRfkczRT5CblwzRxUDPfd7RMWTxPBAglv
+	 +cJEhYt+okNCBfIXeLlD80vJrCFBhhZ/KOtJXAAYDhnqszGXCvik4lXAsKE3pKYquHg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793113207;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:User-Agent:MIME-Version:Content-Type:
+	 X-TM-AS-GCONF:X-Proofpoint-Spam-Info:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Authority-Analysis:X-Proofpoint-GUID:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=XHQfiKtPdkI+qQN5A+OAu1s8V87Csk6xJeYTXj1qd6k=;
+	b=tMdTvpfyKechapb4VhlJzanq6+1gWOfVSrZPNqNjAzqIZD5GLjAdxPZjiil6ccODQUzG
+	 96WoQxh4vtKM8IHAFbOudekZp5Zi8hTscrNLRsV2MfXFrqN4IyhnJTdtgTnljVN4qOtTt
+	 EFirGGnB/I3+7tvGrrGcnuzjKp0+KlxYyGIe4TPMe7CBlK483Vv5k0euJUqTEytM1q7bk
+	 nVIAxX3k7vEXNa10hj9bR43a9ANdOue/spkKt66GtlAFoUf8SiXwXpAbVamZQkjwiEKZp
+	 3a1VUixARof97KfDugjHUEv4QLHcQZS9hynrccbEPZ9QS+Lu6Q+wE9I5dc0Xh2NgMAQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Xoe6shP2;
+	arc=none smtp.remote-ip=148.163.158.5
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1D9606A320
-	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 14:15:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8E1D9606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nebusec.ai
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nebusec.ai
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4445606BA82;
+	Tue, 27 Oct 2026 15:00:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A4445606BA82
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=nebusec.ai header.i=@nebusec.ai header.a=rsa-sha256 header.s=google header.b=Hl+jEP2r
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-3ab3b29a298so30549271fa.3
-        for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 07:15:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793110503; cv=none;
-        d=google.com; s=arc-20260327;
-        b=YBRXE0rZnTcm1B2KVwfEKqNM45woNYDet9EDFmVgF4iD6ZMJeNty/io20oOV7Z1HEP
-         TPbA7VKiAH5I0trixmyzNAbHcRdy3fUfhP6hnjoESb7KpQZNR73XEYn8HtN7Q1nrAwKF
-         w+A2lTT9Af1nrEzxFSJvPy0nObNRSx3EJR3UAayEHYizRL/UXRklw9gKiMumsyEpDoCb
-         tn7hzDQmGWblkjGsBEqUFYfvsqAt14pJU3wx92x6H6ubjeNGrrCFXtH5iR3OVH9ulobi
-         WeVtdjHoGtDRQtQ0ljvW8RJN2speqjRxqT+5r3wmWESiWKinKElDOV/X6jTaKzVFsDBK
-         zjcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=AZGHU/6bpP0vuZyDpKTJ9Lt9KjTQ5UVsrPd845cBFGE=;
-        fh=UDmiFjDUsl58/oI1pbxKLXmAuoEiB7qNSJQzd9c7Gr0=;
-        b=q/11D7gOjnVH/Voz6aOFcrJ+aOe+i9ncNdN9C6BXPwFiB19OYlIOzArFhN6T6aul0I
-         xrNGLNh4ltjVx0VwIlSzEiZmj7u27Z88Ywl3SEbhx2rZeQEZfKDQu+2UId8NcbcBsqkI
-         QHwlGCQ1mov+aTFYmxs99/GrjJ50RwUiUu+dwUXLbtouqG9wejRLUENgfQXhUqqAQmyg
-         clmlX/Ic60XB75v9KQwsz7dAGSz/XKpfnsBe9RsaxS8tVwxA/qLdJLL/t/IAx18EMoYt
-         KBIkqjemrAdVVXt/4VtEG4Gg/6gns4IwrnDvdxE5XJZgjNDRV+q3Aj5hZWqQqMjfQMbQ
-         vOdg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nebusec.ai; s=google; t=1793110503; x=1793715303; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=AZGHU/6bpP0vuZyDpKTJ9Lt9KjTQ5UVsrPd845cBFGE=;
-        b=Hl+jEP2riWrU6pOB3u5unOSZFvPja6oPMqaBCQNBIJgmwHrSHPy9yKaee3Bo/eFaRp
-         6txFbwGlC4tHTs3BPNODSrOPrW+mG7qCoYckyFWWJcFDNIOX4ONVKm8t++Is9Yb8xIM9
-         KQlHjiwbS+bIhNEBGbZF0+Le93WZRS8FZJ55iKafQ3Owb7VHoYfTM6IDbgUNV3coO6qn
-         /PHJkwVgYtDU7Z6UcoG6/xlaHzwVvKutN0mIZF5xJk+A17CqanUHNUSBXo8Gq6f2TKG2
-         +L7tFpFeqBM9Wnwq03kIk4GQDX69xHHt6A78plA93hEAChjoWdAvpWusgy/wKz7n+sw6
-         FM8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793110503; x=1793715303;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=AZGHU/6bpP0vuZyDpKTJ9Lt9KjTQ5UVsrPd845cBFGE=;
-        b=nDA0S1SaYPA6CEGgCm1Y1ywlPFnKdu7HZ6glyyIUAyZnaMVRUJV2r8R2rZKCowqYIK
-         n5A8qmTsS5a/2dXsDa4M/WaDLpDLGKXYLnfdxKAQWQKQ5UtmtjwUQObfCaNREQoXhKvd
-         ETQgDsD2S6R2CYvTQN7P5Rlcg0kjk354nhxRAR/n6HU9qRk/joCyGcVin4OoOFnbs53l
-         tH6p79jjHeD/BbIB+RUkBP5Au97Ae6+9XEw6+l8bdn824xLN7+6Bvf0w+tzxtjpI5hFX
-         ETnFJ6J5ZPp8F4cJ0KPquFQrBM6YY4wYVCViVWrvI6a79AYo+IglqQyfDEjjTrNT8MzT
-         Lxng==
-X-Gm-Message-State: AFq9FYIj4wFLoR9ymadaQ4UBF1o9DKv3AaIYK1G+mWqXIA65eNRcA3Hd
-	6ElNeyYAOR4eIx3Ms8AtW2nsKYk85H7hhMO12dZUz+1CvJafASTzQnea4DAnRHakM3drRXm7rIx
-	p/C6jDN6xurgcuTH+u+H22VK28vEBpFqkYNEeNhUebCZpgZSJnLFLsA+JBvbrSg==
-X-Gm-Gg: AYBFou16VznGgctlum8FBjE/R+cohgbnV0J5CLem3urgCoJdw9re9N9imsAWdg3zpjZ
-	ATGM0Cn8kqoOzEMTRrRbeWLHSBhYzgHOulAwGln20lxtiEWIXqY5UvU43uxH5soJHiabBJIsnEv
-	D8E6pQIYzaaOY6SozhonWqNNiPumJyKC807jUS1JVIzZW5bEl9CQgp69/mFUe2nmMvat5Al0Ovb
-	ZahC8clJCnMBVv0ACqN7d0QCivniQWIOqj6hlyLFPpS28M/LpWAFGcWubrOFsVQz3RwEQyBYXze
-	fI3sZUS/D9rbxc1dLzUKgzHHBpwvOSuL8VoiLFwq6AsVS4eg17VOjMrOuxY43fzy7BWim4nGKpN
-	2ITkK4fWvczOgMyjNojLIZNLREPn74xWLCA87CZrHOva+v50SpIlGor6C/KExCWZHEW95XnHR9w
-	E2j41R3wge3NBG
-X-Received: by 2002:a05:651c:b25:b0:3a9:c1de:852a with SMTP id
- 38308e7fff4ca-3ac6fafe0a7mr25748871fa.3.1793110502525; Tue, 27 Oct 2026
- 07:15:02 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Xoe6shP2
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69REEJWD2607568;
+	Tue, 27 Oct 2026 15:00:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=pp1; bh=XHQfiKtPdkI+qQN5A+OAu1s8V87Csk
+	6xJeYTXj1qd6k=; b=Xoe6shP2qa1RWggo4BXz4wPzW4j/lQIfdP2twBF0Akf3X6
+	1rhkAaGChuN+83gUDEaauUf+8lhojRutSGB+iNWJocr4A2PvA5tZ5/BjwYptHsFO
+	+t1I1lGlj9DT22VydmXeo1h8vj2ly5wrrLNmAgTz9I8cI6wQbpZ03OIq7kS5MmN4
+	TLt+6bnZBLqpL3o+mDNNTKzpSNV9G+ubRtFtX3FJStNTwpL7LvK6/XpYBZsYcvyF
+	f0YdQ11rwE2Z8mNkFXgfW0G0689DA9mbv/h9i7CrfBUnZrbIXnhgQIXkIVJz5Xun
+	qiigRwpfH83HtBbZzq+jORyRPH5CRwrU55sVTx8A==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgj3m87fn-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Tue, 27 Oct 2026 15:00:02 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69RDobwk4190222;
+	Tue, 27 Oct 2026 15:00:02 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hjtnn8w7f-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Oct 2026 15:00:02 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com [10.39.53.233])
+	by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69RF01Qh34472642
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 27 Oct 2026 15:00:02 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id CC3EC5803F;
+	Tue, 27 Oct 2026 15:00:01 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 8CA5A58062;
+	Tue, 27 Oct 2026 15:00:01 +0000 (GMT)
+Received: from e (unknown [9.61.53.188])
+	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+	Tue, 27 Oct 2026 15:00:01 +0000 (GMT)
+From: Dave Marquardt <davemarq@linux.ibm.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v16 11/12] scsi: ibmvfc: register and use asynchronous
+ sub CRQ for events
+In-Reply-To: <sashiko-outbox-185519@kernel.org> (sashiko-bot@kernel.org's
+	message of "Mon, 26 Oct 2026 16:31:51 +0000")
+References: <20261026-ibmvfc-fpin-support-v16-0-a900aa657ed5@linux.ibm.com>
+	<20261026-ibmvfc-fpin-support-v16-11-a900aa657ed5@linux.ibm.com>
+	<sashiko-outbox-185519@kernel.org>
+Date: Tue, 27 Oct 2026 10:00:00 -0500
+Message-ID: <8733trfatr.fsf@linux.ibm.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,268 +94,164 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <cover.1793012287.git.zihanx@nebusec.ai> <c07c904f7c5d36e2ddd2ecaa2e76c4b210b0647e.1793012287.git.zihanx@nebusec.ai>
- <sashiko-outbox-186622@kernel.org>
-In-Reply-To: <sashiko-outbox-186622@kernel.org>
-From: zihan xi <zihanx@nebusec.ai>
-Date: Tue, 27 Oct 2026 22:14:49 +0800
-X-Gm-Features: AclHuK8P_9OMXyNTOJ-KaZNHVXeDDVcjNmemnXcTLb8nRzI6OSqDc8HWCTIKBH4
-Message-ID: <CAANe3eRL=QL9tmzEjcOwhsct_kaoSCC=4-wcZsy8xbPxzTo6KQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] can: j1939: fix session reference leak on TX timer restart
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-can@vger.kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>, 
-	Oliver Hartkopp <socketcan@hartkopp.net>, Vincent Mailhol <mailhol@kernel.org>, 
-	Oleksij Rempel <o.rempel@pengutronix.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA1OCBTYWx0ZWRfXxKf2lhPOyxkK
+ cKlMpCDbNdze+eqt5za1ZGyp5JAL7twL4qgy/fCVEF8fWpZRf7r7mG3xzxGRdO+rBiwhPEX9KuY
+ ghY1ZYTBZBmZrdovgDCxllG6F3Aeysw=
+X-Proofpoint-ORIG-GUID: bEt2tR8JwAiv3Zz_SCQKz5V_NLI-kjrz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA1OCBTYWx0ZWRfX4x71BB+n+q4V
+ Or0jMwVQaum4Lf42VWK/vrVaXdCtdEPJ1kpRIzKngNcsRkha0YxIcrOq1xNBOD8hyfEaLMi8Vgq
+ yMikBsGYNPUmk4XLHdvwVdRFl1fbc8P8Cg1N8rdM0j3DC9h/43zXs1uKbLQhLNVME91CNbhITXl
+ S8Ijsclw9IEJeRwyxnAqbsVO/QauA6vHoQolPmi9HNbq63eIQSMJFh/FOWhPYJP9SzytDUcdq0W
+ ifhR5PDIl8fqkxuzIs7XkAC1SbS0YgLdXJ6DU2KybECC1KttrjaEk15gfT4BycoVUgWTlzxP4fG
+ 1aoJkEFSLvPh7SK7BABzdJzt4hWTeZd23KwR2U2b6hNLdoQD+1xkq3lyZTyAa/BoZkLbiqZL0xP
+ u8ITKxD1hxQDIAzojNjphVr4q7KW7Q1/5NkBZ2FkK1SdbpnyGH5vHw1mdfjhIZYEcG+sin+k/yf
+ opA1umYOLrivdt0LBRw==
+X-Authority-Analysis: v=2.4 cv=G7uJgNk5 c=1 sm=1 tr=0 ts=6ae0bc72 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=zVL8yDj8or86wofaLOcA:9
+X-Proofpoint-GUID: bEt2tR8JwAiv3Zz_SCQKz5V_NLI-kjrz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-27_03,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0 impostorscore=0 suspectscore=0 clxscore=1015
+ phishscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610270058
 
-On Tue, Oct 27, 2026 at 9:28=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
-> - [High] can: j1939: rxtimer race and leak in j1939_cancel_active_session=
-()
-> - [High] can: j1939: lock inversion calling hrtimer_cancel() under txtime=
-r_lock
-> - [Low] can: j1939: missing lock annotations in j1939_session_list_lock()
-> --
->
-> commit f04ccae0c143b4770bcd167c770232649c770e32
-> Author: Zihan Xi <zihanx@nebusec.ai>
->
-> can: j1939: fix session reference leak on TX timer restart
->
-> This commit fixes a session reference leak when rearming an active TX hrt=
-imer
-> by serializing TX timer starts and cancellations under a per-session spin=
-lock
-> and reusing the existing timer reference. It also defers scheduling a new=
-ly
-> activated session until after dropping sk_session_queue_lock.
->
-> Link: https://bugtracker.nebusec.ai/f/11143
-> Link: https://lore.kernel.org/all/cover.1792979091.git.zihanx@nebusec.ai/
->
-> > diff --git a/net/can/j1939/Makefile b/net/can/j1939/Makefile
-> > index 19181bdae1736..113595c257309 100644
-> > --- a/net/can/j1939/Makefile
-> > +++ b/net/can/j1939/Makefile
-> > @@ -1,5 +1,7 @@
-> >  # SPDX-License-Identifier: GPL-2.0
-> >
-> > +CONTEXT_ANALYSIS :=3D y
->
-> [Severity: Low]
-> Enabling CONTEXT_ANALYSIS :=3D y in net/can/j1939/Makefile opts all files=
- in
-> this directory into Clang's thread-safety analysis when
-> CONFIG_WARN_CONTEXT_ANALYSIS=3Dy is enabled.
->
-> In net/can/j1939/transport.c, j1939_session_list_lock() and
-> j1939_session_list_unlock() wrap spin_lock_bh() and spin_unlock_bh() with=
-out
-> context lock annotations:
->
-> static inline void j1939_session_list_lock(struct j1939_priv *priv)
-> {
->         spin_lock_bh(&priv->active_session_list_lock);
-> }
->
-> static inline void j1939_session_list_unlock(struct j1939_priv *priv)
-> {
->         spin_unlock_bh(&priv->active_session_list_lock);
-> }
->
-> Because spin_lock_bh() and spin_unlock_bh() carry __acquires() and
-> __releases() annotations, won't Clang emit -Wthread-safety-analysis warni=
-ngs
-> (failing the build under CONFIG_WERROR=3Dy) unless j1939_session_list_loc=
-k()
-> and j1939_session_list_unlock() are annotated with
-> __acquires(&priv->active_session_list_lock) and
-> __releases(&priv->active_session_list_lock)?
+sashiko-bot@kernel.org writes:
 
-Thanks for pointing this out. I=E2=80=99ll add the acquire/release annotati=
-ons
-to the session-list lock wrappers and validate the J1939 context-analysis
-build with clang-23.
->
+>> diff --git a/drivers/scsi/ibmvscsi/ibmvfc-core.c b/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> index af11726b76beb..4d4ebe5f6f123 100644
+>> --- a/drivers/scsi/ibmvscsi/ibmvfc-core.c
+>> +++ b/drivers/scsi/ibmvscsi/ibmvfc-core.c
 > [ ... ]
->
-> > diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
-> > index 8fcfd13e5e6f8..4a2e986023d89 100644
-> > --- a/net/can/j1939/transport.c
-> > +++ b/net/can/j1939/transport.c
-> > @@ -9,6 +9,7 @@
-> >  //                         Oleksij Rempel <kernel@pengutronix.de>
-> >
-> >  #include <linux/can/skb.h>
-> > +#include <linux/cleanup.h>
-> >  #include <net/can.h>
-> >
-> >  #include "j1939-priv.h"
-> > @@ -303,7 +304,13 @@ void j1939_session_put(struct j1939_session *sessi=
-on)
-> >
-> >  static void j1939_session_txtimer_cancel(struct j1939_session *session=
-)
-> >  {
-> > -     if (hrtimer_cancel(&session->txtimer))
-> > +     int ret;
-> > +
-> > +     spin_lock_bh(&session->txtimer_lock);
-> > +     ret =3D hrtimer_cancel(&session->txtimer);
-> > +     spin_unlock_bh(&session->txtimer_lock);
-> > +
-> > +     if (ret)
-> >               j1939_session_put(session);
-> >  }
+>> @@ -988,6 +989,7 @@ static int ibmvfc_reenable_crq_queue(struct ibmvfc_host *vhost)
+>>  	spin_unlock(vhost->crq.q_lock);
+>>  	spin_unlock_irqrestore(&vhost->host->host_lock, flags);
+>>  
+>> +	ibmvfc_reg_sub_crqs(vhost, &vhost->async_scrqs);
+>>  	ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs);
+>>  	ibmvfc_reg_sub_crqs(vhost, &vhost->nvme_scrqs);
+>>  
+> [ ... ]
+>> @@ -1044,6 +1047,7 @@ static int ibmvfc_reset_crq(struct ibmvfc_host *vhost)
+>>  	spin_unlock(vhost->crq.q_lock);
+>>  	spin_unlock_irqrestore(&vhost->host->host_lock, flags);
+>>  
+>> +	ibmvfc_reg_sub_crqs(vhost, &vhost->async_scrqs);
+>>  	ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs);
+>>  	ibmvfc_reg_sub_crqs(vhost, &vhost->nvme_scrqs);
+>>  
+> [ ... ]
+>> @@ -6976,25 +6994,45 @@ VISIBLE_IF_KUNIT void ibmvfc_deregister_channel(struct ibmvfc_host *vhost,
+>>  }
+>>  EXPORT_SYMBOL_IF_KUNIT(ibmvfc_deregister_channel);
+>>  
+>> -static void ibmvfc_reg_sub_crqs(struct ibmvfc_host *vhost,
+> [ ... ]
+>> +static int ibmvfc_reg_sub_crqs(struct ibmvfc_host *vhost,
+>>  				struct ibmvfc_channels *channels)
+>>  {
+>> +	unsigned long flags;
+>>  	int i, j;
+>>  
+>>  	ENTER;
+>>  	if (!vhost->mq_enabled || !channels->scrqs)
+>> -		return;
+>> +		return 0;
+>>  
+>>  	for (i = 0; i < channels->max_queues; i++) {
+>>  		if (ibmvfc_register_channel(vhost, channels, i)) {
+>>  			for (j = i; j > 0; j--)
+>>  				ibmvfc_deregister_channel(vhost, channels, j - 1);
+>> +			spin_lock_irqsave(&vhost->host->host_lock, flags);
+>>  			vhost->do_enquiry = 0;
+>> -			return;
+>> +			vhost->mq_enabled = 0;
+>> +			spin_unlock_irqrestore(&vhost->host->host_lock, flags);
+>> +			return -1;
+>>  		}
+>>  	}
+>>  
+>>  	LEAVE;
+>> +	return 0;
+>>  }
+> [ ... ]
+>> @@ -7083,9 +7102,74 @@ static void ibmvfc_release_channels(struct ibmvfc_host *vhost,
+>>  	}
+>>  }
+>>  
+> [ ... ]
+>> +static void ibmvfc_init_sub_crqs(struct ibmvfc_host *vhost)
+>> +{
+>> +	unsigned long flags;
+>> +
+>> +	ENTER;
+>> +	if (!vhost->mq_enabled)
+>> +		return;
+>> +
+>> +	/* register async_sub_crq channel */
+>> +	if (ibmvfc_alloc_channels(vhost, &vhost->async_scrqs))
+>> +		goto out;
+>> +
+>> +	if (ibmvfc_reg_sub_crqs(vhost, &vhost->async_scrqs))
+>> +		goto release_async_sub_crq;
+>> +
+>> +	if (ibmvfc_alloc_channels(vhost, &vhost->scsi_scrqs))
+>> +		goto deregister_async_sub_crq;
+>> +
+>> +	if (ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs))
+>> +		goto release_scsi_sub_crqs;
+>> +
+>> +	if (vhost->nvme_enabled) {
+>> +		if (ibmvfc_alloc_channels(vhost, &vhost->nvme_scrqs)) {
+>> +			spin_lock_irqsave(&vhost->host->host_lock, flags);
+>> +			vhost->nvme_enabled = 0;
+>> +			spin_unlock_irqrestore(&vhost->host->host_lock, flags);
+>> +		} else if (ibmvfc_reg_sub_crqs(vhost, &vhost->nvme_scrqs)) {
+>> +			ibmvfc_release_channels(vhost, &vhost->nvme_scrqs);
+>> +			spin_lock_irqsave(&vhost->host->host_lock, flags);
+>> +			vhost->nvme_enabled = 0;
+>> +			spin_unlock_irqrestore(&vhost->host->host_lock, flags);
+>> +		}
+>> +	}
 >
 > [Severity: High]
-> Can calling hrtimer_cancel() while holding session->txtimer_lock here (an=
-d in
-> j1939_tp_schedule_txtimer()) cause a lock ordering inversion with the hrt=
-imer
-> softirq expiry lock?
+> Does clearing vhost->do_enquiry and vhost->mq_enabled unconditionally inside
+> ibmvfc_reg_sub_crqs() cause inconsistent state and leaked sub-CRQ
+> registrations when a later channel set fails to register?
 >
-> Because session->txtimer and session->rxtimer use HRTIMER_MODE_REL_SOFT,
-> hrtimer_cancel() -> hrtimer_cancel_wait_running() acquires
-> cpu_base->softirq_expiry_lock when waiting for a running callback,
-> establishing the lock order:
+> In ibmvfc_init_sub_crqs(), vhost->async_scrqs and vhost->scsi_scrqs are
+> allocated and registered first. When vhost->nvme_enabled is set and
+> ibmvfc_reg_sub_crqs(vhost, &vhost->nvme_scrqs) fails, ibmvfc_init_sub_crqs()
+> appears to intend to only disable NVMe by releasing vhost->nvme_scrqs and
+> setting vhost->nvme_enabled = 0.
 >
->   session->txtimer_lock -> cpu_base->softirq_expiry_lock
+> However, because ibmvfc_reg_sub_crqs() has already set vhost->do_enquiry = 0
+> and vhost->mq_enabled = 0, multi-queue and channel enquiry are disabled for
+> the entire host while vhost->async_scrqs and vhost->scsi_scrqs remain
+> allocated and registered with the hypervisor with active IRQ handlers.
 >
-> In the reverse direction, when j1939_tp_txtimer() or j1939_tp_rxtimer() r=
-uns
-> in softirq context under hrtimer_run_softirq() (which holds
-> cpu_base->softirq_expiry_lock), it can call:
+> Similarly, in ibmvfc_reenable_crq_queue() and ibmvfc_reset_crq():
 >
->   j1939_sk_queue_activate_next()
->     -> j1939_tp_schedule_txtimer(next, txtimer_delay)
->       -> spin_lock_bh(&next->txtimer_lock)
+> 	ibmvfc_reg_sub_crqs(vhost, &vhost->async_scrqs);
+> 	ibmvfc_reg_sub_crqs(vhost, &vhost->scsi_scrqs);
+> 	ibmvfc_reg_sub_crqs(vhost, &vhost->nvme_scrqs);
 >
-> This establishes the reverse lock order:
+> If registering vhost->async_scrqs succeeds, and a subsequent call to
+> ibmvfc_reg_sub_crqs() for vhost->scsi_scrqs or vhost->nvme_scrqs fails,
+> vhost->mq_enabled and vhost->do_enquiry are cleared to 0, but the already
+> registered channel sets are not deregistered via ibmvfc_dereg_sub_crqs().
 >
->   cpu_base->softirq_expiry_lock -> session->txtimer_lock
->
-> Since all session->txtimer_lock instances share the same lockdep class, w=
-on't
-> this trigger a lockdep circular locking dependency splat and risk deadloc=
-king
-> on CONFIG_PREEMPT_RT when a softirq timer callback tries to acquire
-> next->txtimer_lock while another thread holds next->txtimer_lock waiting =
-in
-> hrtimer_cancel()?
+> Should the caller handle clearing vhost->mq_enabled and vhost->do_enquiry (or
+> unwinding previously registered channel sets) instead of clearing those flags
+> unconditionally in ibmvfc_reg_sub_crqs()?
 
-This is valid. I=E2=80=99ll redesign the timer synchronization and referenc=
-e
-handoff so that no path waits for a callback while holding txtimer_lock.
+The callers will handle deregistering sub CRQs and clearing
+vhost->mq_enabled and vhost->do_enquiry in the next revision.
 
->
-> [ ... ]
->
-> > @@ -2234,24 +2273,37 @@ void j1939_simple_recv(struct j1939_priv *priv,=
- struct sk_buff *skb)
-> >
-> >  int j1939_cancel_active_session(struct j1939_priv *priv, struct sock *=
-sk)
-> >  {
-> > -     struct j1939_session *session, *saved;
-> > +     struct j1939_session *session, *iter;
-> >
-> >       netdev_dbg(priv->ndev, "%s, sk: %p\n", __func__, sk);
-> > -     j1939_session_list_lock(priv);
-> > -     list_for_each_entry_safe(session, saved,
-> > -                              &priv->active_session_list,
-> > -                              active_session_list_entry) {
-> > -             if (!sk || sk =3D=3D session->sk) {
-> > -                     if (hrtimer_try_to_cancel(&session->txtimer) =3D=
-=3D 1)
-> > -                             j1939_session_put(session);
-> > +     for (;;) {
-> > +             session =3D NULL;
-> > +             j1939_session_list_lock(priv);
-> > +             list_for_each_entry(iter, &priv->active_session_list,
-> > +                                 active_session_list_entry) {
-> > +                     if (sk && sk !=3D iter->sk)
-> > +                             continue;
-> > +
-> > +                     /* Keep the session alive while cancellation wait=
-s for the
-> > +                      * TX timer callback outside active_session_list_=
-lock.
-> > +                      */
-> > +                     session =3D iter;
-> > +                     j1939_session_get(session);
-> > +                     WRITE_ONCE(session->txtimer_shutdown, true);
-> >                       if (hrtimer_try_to_cancel(&session->rxtimer) =3D=
-=3D 1)
-> >                               j1939_session_put(session);
-> > -
-> >                       session->err =3D ESHUTDOWN;
-> >                       j1939_session_deactivate_locked(session);
-> > +                     break;
-> >               }
-> > +             j1939_session_list_unlock(priv);
-> > +
-> > +             if (!session)
-> > +                     break;
-> > +
-> > +             j1939_session_txtimer_cancel(session);
-> > +             j1939_session_put(session);
-> >       }
-> > -     j1939_session_list_unlock(priv);
-> >       return NOTIFY_DONE;
-> >  }
->
-> [Severity: High]
-> In j1939_cancel_active_session(), can session->rxtimer remain armed after
-> j1939_session_txtimer_cancel() finishes, delaying or leaking the session,
-> socket, and net_device references and clobbering session->err?
->
-> While holding priv->active_session_list_lock, j1939_cancel_active_session=
-()
-> calls hrtimer_try_to_cancel(&session->rxtimer), sets session->err =3D ESH=
-UTDOWN,
-> and deactivates the session before dropping the lock and calling
-> j1939_session_txtimer_cancel(session).
->
-> If j1939_tp_txtimer() is concurrently running on another CPU (or starts b=
-efore
-> j1939_session_txtimer_cancel() cancels it, or rearms itself because the
-> txtimer_shutdown check in j1939_tp_txtimer() is not serialized by
-> session->txtimer_lock), it executes j1939_simple_txnext(),
-> j1939_xtp_txnext_transmiter(), or j1939_xtp_txnext_receiver(). Those path=
-s
-> call j1939_tp_set_rxtimeout(), which takes a new reference via
-> j1939_session_get(session) and starts session->rxtimer after
-> hrtimer_try_to_cancel(&session->rxtimer) has already run. For example,
-> j1939_simple_txnext() arms session->rxtimer for J1939_SIMPLE_ECHO_TIMEOUT=
-_MS
-> (10s) before calling j1939_send_one(), and on -ENETDOWN, j1939_tp_txtimer=
-()
-> leaves rxtimer armed expecting j1939_cancel_active_session() to clean it =
-up.
->
-> In addition, if j1939_tp_rxtimer() is currently running and has re-armed
-> session->rxtimer, hrtimer_try_to_cancel(&session->rxtimer) returns -1 and=
- does
-> not cancel the newly queued timer or drop its session reference.
->
-> Because j1939_session_deactivate_locked() has already removed the session=
- from
-> priv->active_session_list, subsequent iterations of the loop will not see=
- it
-> again. Should session->rxtimer be synchronously cancelled via
-> j1939_session_rxtimer_cancel(session) after j1939_session_txtimer_cancel(=
-),
-> similar to j1939_session_timers_cancel()?
-
-This is valid. The TX callback can rearm the RX timer after the current
-try-to-cancel, and an in-flight RX callback can overwrite the shutdown
-error. I=E2=80=99ll synchronize RX timer cancellation after draining the TX
-callback and ensure the shutdown error is preserved.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1793012287.=
-git.zihanx@nebusec.ai?part=3D1
+-Dave
