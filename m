@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.201.71
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.201.9
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793072974;
-	b=nLifWuyd2uLjfqSgjIp0QguG8bbJA1dNDVUy7ky3G4d9SBv6QUlFgU48Ew2ZppSfE2P2
-	 K8O9AxCs9ft5ICASSrUJjUMF++8RGGbJEfJ5HEZtpYiMvbTPunqo+vVEXP67ETAKNXLXj
-	 qDlqNI02CQ6q5PM3pdU/Cn7kUIBm3Sk+T3OwjUub9m0D2vShc3jKPfYyjRTDKNCOtMYcw
-	 Uwjl+0Pu/OLDNWwxjG2ieWLBMmKp3rIx+pY1iC7WPTYH6tZoGUmygRHC8YhZegH/KIdbj
-	 Rd6YqU+ddYB6Cbt36muXXir798LRq4gkE4yWnj1LEOIk6Y8fcn5t/CiKndOhl517H5Q==
+	t=1793076472;
+	b=UHt2KI/XdUQbfRTZtuIVyl+8tIejCUbLgLWvnqMwg2y/V3mTXLN5omWYiSFxt9qNVqN4
+	 zndfNuUdTlDuHpYiF1G/TfeX/M2vX9bJ3wD86MbpIZJJ83gyRDR4zxOazVmL/DmLa7BRG
+	 PV6RlNRI5Sosg0tg+jrNr8/arqx4WnpsKgHjn3Bu+CLFuH6h8GRFGu/GbFKsJiD5/nEm1
+	 rpmOtKtLGvsIvvnAYxqD1PSraVWOicGGtRE0Ks1/QlF+fIg0XdRLcbC7xg6RPk+X2g0vj
+	 JJTuq8WJ7WcANfzX9ZFEE2Z0pvk4N0h8h4ym590zuQ3owz3x46E220Ky5vM/Y31M9rg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793072974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793076472;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
 	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
@@ -24,77 +24,77 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=WQ7Ae3MY36o0o9qAXtor2dD3d0Ah+wXHX51EIYrYbVo=;
-	b=UGSk82aMiCqK7cRo0tJS346nHxQmqv5ZF5/bxRRZC2U7PSF8u9UADOz5w5dsOYlDUYZt
-	 zdeOk7tr1s7yRdiQshjP8DIYGOLNakTn4fti12EPzh6N0I1XD88p2f4pwBmgDRhIG/jcg
-	 tKioclehC+PKeUFGH+38Rhtv2mY/f6i6Y2Pqn357JQubICmn06j34QpG5qhDJpy6xyheA
-	 ZGttLTyS/lKksT3oE0ZN8zq2/aV3unmQWBu86tpM86Xeju0NrvzMU7VkAab6qbTz28bBt
-	 Z/nrIKMzCAv4d0eKH8ko4/UjfKJqgWsaa3O7+xiR2l8RQFBK18mteYjmcHb1tTmeEBg==
+	bh=yzuVcSfROtOwYbS0WYhoBxBO5fPLgfIjwbFSoMYBSug=;
+	b=T7b0zpUTdAsLvxMqSkBrHzite2EWF+2akCy2vc1XeW2LJGo3AJullmNo0p/J5yn6IczY
+	 LDzN6EucYEdyrxUIrqE6HDrHZLzRNhga7G4tAA6b77qLzGEJUET76qBdvk+ocL/nm1nED
+	 JUsjLh6vBXmo2F8CWRHgm4nF9QPBW58f4mBYUPjXzrWYFGacTbCsYo26hG4PaYhCpXrlB
+	 ARh1FqymsbXE2t6nMppl20VpkolqhcAefvTdq1yNomzWev+wUm9f0llesRl8enzoMKRZE
+	 AIm4uDD2uodTm5x5VIqtQiEoq1sqt2AVMkxyoHlO8lHZIfVG0JX8cAXcxo6K9Nab8tQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=amd.com;
 	spf=fail smtp.mailfrom=amd.com;
-	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=l4F+8khy;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.201.71
-Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010071.outbound.protection.outlook.com [52.101.201.71])
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=X98fPH9J;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.201.9
+Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013009.outbound.protection.outlook.com [40.107.201.9])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6539A606A324
-	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 03:49:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6539A606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E7F606A31B
+	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 04:47:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 77E7F606A31B
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=l4F+8khy
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=X98fPH9J
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Na1sf9E0aieAObvFx9PIk9R9bWlM1/FWocbXjb67VI361tkwMxLhIyvacFKWNMANh1i+PfJ3HqRHOS+Z0WPvvosjw8qSGIPVYos1/EF9Belcu3LgEmauNuxy6Ee6ntqgTp1jBWDlFESPU6W+0W0sxYNCc/qLjie9H0M49H60QR94CJYkFkps6VFyZGCgDPCQOQYzLN75gz7worDhc8v66TKTSAnEgU5jKK1nVPTLJeUnoPp7sIbGSXQcRW8N67Vg025cm311i+WuAWYV3/TyvTGTzIQe2F0RE7IqYXE/BqHO+fSZAxW8eGUuXIIGz5XVf6FBkJHTeOjjnLUyHjWLlg==
+ b=qHfWZ2qSm8LYyA9TwrYvIyQydm+fhON+aJeibl3CNXIQ7sUlcwvaXlUDoyWSlQeqQ908cagDd7f/MNa5lCI9oIeznoTtzt74UIAY4QMvysWwkIJeqfjijHQt40+kndnGSgBVIiXgefl/SD2kYkH+OAOS3dnexYTjZBVP4wnAoMDGwFgdeYijaSzAf7jugJd0n+iRpo4gNQu5Y93E3O8EYzk3zQPjS33E0paMeSlBrzLK+GCYszCfD0kLv39c6c+r/2+YuE2ahB1XV1IxnOx9+ZQF8cii/RpuSYxlRWGQQ4KllW4a/WAPa4Y0vmnwwJ65IpQ3jyswZ5KZHOIe1/fDYA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WQ7Ae3MY36o0o9qAXtor2dD3d0Ah+wXHX51EIYrYbVo=;
- b=CNFvT0ncTx+nql80gDt6dtIIE7yxmLnGdf/GNq2hn6Qltw4b+eN6BdckFC6HXvRqJE4rl7bd33cXLfC6CFWclG9bciuCqt+Exmlrsn/UlPuhc7jxgr9QhAMNWVpg9dscN40fYYmjCtUZKTRFAcsGQDchP5B3vUdiIS904XGA9pkmVndzy+SQr2eWoQjwgfi/FCfpHIC8GLAXhbOWHIem+a+WOTbN149P55qL7J4YlKx+UqKVJUV6kMqrSOVYHrG4rTvG+GxGbXCjiBQH4DmuYttuHl3PQ+p3u9jC8DHtG2+EQagAT5QCpbfC8FrLuGx6tqY7btRUQZYqFpEPUolgvA==
+ bh=yzuVcSfROtOwYbS0WYhoBxBO5fPLgfIjwbFSoMYBSug=;
+ b=OXqSYT6wrqJpUTLk3gEInZPSZxSS51xoouILn2IzSruHcWUAFtj/aSDrfj1pNb2CQeJKfhXiMGoD/XofStFrVuMn1tEBM9RJgzBT3lPqLayD3LbDiZAECyk1CopGJH6EYUuUYBnLfiAzx0ZqlS4AKP0d849KXNIKGiFV41H/SsUx7wocLiJPrksoS2gh7Cmj8OSyyzImwjFbzC7rdEuztIkL5f8vaakHJ2zcpUtq3acCeyXOuhdXH9lBff7HGBxwhAqrPmiEi53MktyGgQgIhcuGHv4Ye/QR/ib1I0c7xhc7/4/Pjsm6N+hWKH/CeQP1tUlO2LdMxrZFnBCseDnugA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WQ7Ae3MY36o0o9qAXtor2dD3d0Ah+wXHX51EIYrYbVo=;
- b=l4F+8khy/663MPx2G1jIThW456dbbWlabnmDMf/acO0he0DVKws4Q+HPfmRGjxYjqSVTX1ijStNn6+iR/nJHeWwMNvBOk7lxUisDbucHfPxwM9Zd4HkDPakQxX63iWzG4Sn5rx6tao93LXC57vL4H+/5mTI+6XczTlsy2GKyczY=
+ bh=yzuVcSfROtOwYbS0WYhoBxBO5fPLgfIjwbFSoMYBSug=;
+ b=X98fPH9JzDSjvJ1L22W4lIw+dZe4oWFzni4ADzMkilpj0XxtkCY1/SNkxXfj2Fb09opaO5Z//UWlqrEGdSRRkiwcbdyhZVV9L9xRmE2EnnFSOpCvFteAUP3d8BzlFsgMk06pLx98XfNpkczZpcN+YTSHZCu8HPA2oqnBFTFx5pc=
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from CY5PR12MB6252.namprd12.prod.outlook.com (2603:10b6:930:20::17)
- by DS0PR12MB7608.namprd12.prod.outlook.com (2603:10b6:8:13b::11) with
+ by CH8PR12MB9839.namprd12.prod.outlook.com (2603:10b6:610:274::20) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.20; Tue, 27 Oct
- 2026 03:49:30 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
+ 2026 04:47:45 +0000
 Received: from CY5PR12MB6252.namprd12.prod.outlook.com
  ([fe80::ab00:d77:6014:64a2]) by CY5PR12MB6252.namprd12.prod.outlook.com
  ([fe80::ab00:d77:6014:64a2%4]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
- 03:49:30 +0000
-Message-ID: <cda399f4-80c9-473b-81e8-f03e6268ed33@amd.com>
-Date: Tue, 27 Oct 2026 09:18:29 +0530
+ 04:47:45 +0000
+Message-ID: <0dd9ead5-5ed3-4b47-a343-c3a94eb9ad28@amd.com>
+Date: Tue, 27 Oct 2026 10:16:44 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/13] soundwire: amd: fix IRQ thread dropping
- STATUS_0TO7 on simultaneous wake
+Subject: Re: [PATCH v4 07/13] soundwire: amd: fix ctx leak when
+ sdw_amd_startup() fails
 To: sashiko-reviews@lists.linux.dev
 Cc: linux-sound@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+ Mario Limonciello <Mario.Limonciello@amd.com>,
  Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
  Bard Liao <yung-chuan.liao@linux.intel.com>,
  "Dommati, Sunil-kumar" <Sunil-kumar.Dommati@amd.com>,
- Mario Limonciello <Mario.Limonciello@amd.com>,
+ Syed Saba Kareem <syed.sabakareem@amd.com>,
  "Prasad, Prasad" <venkataprasad.potturu@amd.com>,
- Syed Saba Kareem <syed.sabakareem@amd.com>, "N, Poojitha"
- <Poojitha.N@amd.com>
+ "N, Poojitha" <Poojitha.N@amd.com>
 References: <20261026044507.2310694-1-Vijendar.Mukunda@amd.com>
- <20261026044507.2310694-13-Vijendar.Mukunda@amd.com>
- <sashiko-outbox-184996@kernel.org>
+ <20261026044507.2310694-8-Vijendar.Mukunda@amd.com>
+ <sashiko-outbox-184836@kernel.org>
 Content-Language: en-US
 From: "Mukunda,Vijendar" <vijendar.mukunda@amd.com>
-In-Reply-To: <sashiko-outbox-184996@kernel.org>
+In-Reply-To: <sashiko-outbox-184836@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: PN3PR01CA0078.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:9a::13) To CY5PR12MB6252.namprd12.prod.outlook.com
+X-ClientProxiedBy: PN3PR01CA0076.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:9a::11) To CY5PR12MB6252.namprd12.prod.outlook.com
  (2603:10b6:930:20::17)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
@@ -106,236 +106,249 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY5PR12MB6252:EE_|DS0PR12MB7608:EE_
-X-MS-Office365-Filtering-Correlation-Id: e62053c3-6394-4eac-7820-08df33dd4e17
+X-MS-TrafficTypeDiagnostic: CY5PR12MB6252:EE_|CH8PR12MB9839:EE_
+X-MS-Office365-Filtering-Correlation-Id: 451cf756-f602-4e1d-c810-08df33e5713d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|23010399003|376014|1800799024|6133799003|10067099003|18002099003|22082099003|261026121527099003|3023799007|11063799006|56012099006|4143699003|261009223027099003|261022105027099003|261022075727099003|261021123027099003|261021121427099003|261026140227099003;
+	BCL:0;ARA:13230040|23010399003|376014|1800799024|366016|6133799003|18002099003|261026121527099003|22082099003|261009223027099003|56012099006|4143699003|11063799006|261021123027099003|261022105027099003|10067099003|261021121427099003|261022075727099003|261026140227099003;
 X-Microsoft-Antispam-Message-Info:
-	dkbxpVKEyFiBNfbmOG4Pd0/hNa6UOthaf0XEKg/SJDimKMzPLQLB0j+AoQurNxm2pMm+nvBs4OlEp5DSn8PnPo41U9kNri0w8nQq1AgVFCxjefTlaiKoOAuhBOD++gIohixuDMMoL3F033iu5UX2P7KAjLiB/dPTBMVu4AWAoEoCQZuMxMSK4DugbGD3ONmjNwpYnE4VbyxdmqzA1jl6FZQ3sAfvqn4IBbva0o+Jnofl9Hz3OFj20AHNYsFbE5CNhJlqnTuITl9mXbG0tXOsBk9QDwoVIH+87GylQ7rFE+6bXL/cDqlr5WZIe+ut1cpwn7QF98H4lMLIkuSXM2P7q9/DYNtTmwZweVxvsQXZuQV4NF87inRtA9KelwG7VHH69qZQwpIIPQ3XYW3Wp17ls9m22bBCXA6nmpmsNeTXh21IEeT4MRM5kO8nqWLPO1122M8wowuPf5CYO4Lnu5AiluENsLeoT/RG0mraOmZ0qArGcxL+8JHl9iQEBD1os3dt1m+R1ccUsOmvgIAkfZAgYNrP+2S4Hq7qAmF56pQ7xDhHmmVCAyWjTxxX9eI0rGz+oIPnFGrWscLTyi5GPndAhnCG3Ikn6t0uvBsPjU8x4r2w/OiQIUFx3IzXw2maIvKl4R14P8luXqZ/nAaYF1TuTwic/ReFkkYrkh0fGjLqQRI=
+	8fYhL5tsNRlp6EUJnI3Zi4NfscL6asMmWT6Nk49BvhnSv3bagUcZ2pRsOtHEOUMIcHSBp12SfkZH1xB+e38zTh+pzGtu7fR1iHmoXq9Tme3tZMatDd21GGpKnDaw8QwIomwj/onD8s+fVfS/Evai/WqJs0I4vwOsLk2KoiS201Vnym0PSSs0Y1n5Iuq7zVkwoBmfbjdfLpUaUqTtMUzsU2MagGVwkNefydgnAKcvPTElSMm+nPV20epyBH0qFiUN9odOSqWGGH6qIlNSPKcsxAe1foku6Q09Wlbe2Rzff0ACbzYhonNDhl+Dylsn0XjSUNM+q7+2q1Z69nOg5pzvEK6mniKHTPccM26wVsussd7SQNZLTLlD0VXsFi1txqHgeVIdKm5YrDpZfRJiDLOM/tLwNhueN2UC74eSJdVgkOMLc2aRXRAe0AEdFlwrxmZ8YDjln2v721u+vQ5qjt6q4zxzF8yIZwetrrSlPXAmeZF1mp1aV2bhMNJtc15bWIMtlcB7vyK+znUN5Hxohk0aFY/2Rf16OT18BBNM+YLONt9aV9U/QnPcfyElSM4qEbu9JP348H0BTfamVb+kDwfLrvGh0C137Zjx2FqArjFxc6Y=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR12MB6252.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(6133799003)(10067099003)(18002099003)(22082099003)(261026121527099003)(3023799007)(11063799006)(56012099006)(4143699003)(261009223027099003)(261022105027099003)(261022075727099003)(261021123027099003)(261021121427099003)(261026140227099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR12MB6252.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(6133799003)(18002099003)(261026121527099003)(22082099003)(261009223027099003)(56012099006)(4143699003)(11063799006)(261021123027099003)(261022105027099003)(10067099003)(261021121427099003)(261022075727099003)(261026140227099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?dnc3TWExUWZtWDJadXQxaEFBQnRVczdMR0UraXZOQVdlWWI4dVRiVldqSm9k?=
- =?utf-8?B?cDZBcUU5ODlmbkZCOHFNeGdnVkNoVEdjbGk3QzZGTXBQNHV1dlBybDBVQ1NY?=
- =?utf-8?B?NHhsOEVxNmVYZm1HcXVrWHN2R2FGYVRsTyt6VFNnV0hSMGFnZHMrQmxoQkg0?=
- =?utf-8?B?VzdSWG95UVJaVmE0K2JhcWFNYXU5UzlaQ1NVWi9rTzNybXZzRm52M0c0WGtm?=
- =?utf-8?B?Y0tJU3Q4YVFTOVYzVFFsOUsxRzNCYlpGL1NrSjY2UEZObjB5UWszUnpqTkJr?=
- =?utf-8?B?aGlxZWM1ZmxvVnhtb29vMVE5UlVuUmJrREMwUjhYdkRTU0dIOWNsUWZhNlF4?=
- =?utf-8?B?aGQ4dzRBN0oxTmV3aWpwNGtmVXcrbmF6M0F6Q3V2bHJ2UEgzV0NkRDdkanIx?=
- =?utf-8?B?QlFyZGZPNk8zNjVzKzdvemlSOURIK0N2RWd2WnFWVXl6TzAwNUlKamNpNjVv?=
- =?utf-8?B?M0s4ZER2M1VZd1lNTnB0cDZyRWNXYnk4dGFKOFZBeXpMNlp5RjJlejF6SWU5?=
- =?utf-8?B?Tyt6M3dIOVB0S2VYTmVwNlBHbVo1SGtXRlRzSURrTEZ4am14TmVzTHFybDdr?=
- =?utf-8?B?UXlqbjFXb0ZIV3FwakVwVXI2Sk9FWWt1ZDd4U0lqeUNxT1h5bGQ5b0NRYTQy?=
- =?utf-8?B?VS9PVzNHb3ZPdWJpekhEV0dJb1VHZHBDTlkvakVxZnF1blc5bEtmVmkrL2NV?=
- =?utf-8?B?MkZaUEY4cTVieWhaVUVKdWpOTzJtRnNLSlNoN21Yejd3b2tTam5sTGhDeFpW?=
- =?utf-8?B?TjFJWFdiZ2UxNkxFWGd5d2hoaXN5dng0Sy9ia1BSUXh3VkE1cXAxWlcycW1s?=
- =?utf-8?B?TE1MbkN2aUp4My9jdGpuRFYrQ3RvQXJPZlhtbGEwTS9zcXdhRUFjN1BqbkFO?=
- =?utf-8?B?ZGtDYmtVMDBTS0VCNTVXSCtBNjRRUElGZFNlcGlQUG9VL00vd3ZEM29RY0N2?=
- =?utf-8?B?TXo4TE9NNXNXQ2ZVTEhPYkRCS2FoMHp6cEFLY3hPRjJ3eXFZWWhMazBHbGQ0?=
- =?utf-8?B?L0k5QmtWTlNERWFwa0xQanRwMXpRQ2xHcm5neHVqQ2UwUElqbG44eEFLNHZy?=
- =?utf-8?B?aklpTzYxSVZod0FFOXRZZzN6OWpzNUpzT2o0cXRFQjFKN1owaEFqa1RHNlFN?=
- =?utf-8?B?WHJtT2VoZ2oxaFlLd2l4UlZOb3ZhaHRWU2R1WkhmbkVGVzBSSUtkRExLRDdI?=
- =?utf-8?B?QVNtUnN4TENaYndHUnVQaHlWcHh0bk1EQjVCNkNIcDZMbXZUUTZxWVlMaVpa?=
- =?utf-8?B?ZGxYMzBVR3JndXdCVkRMeDJydGVDTVAvektvRDV1dmJVYU5YRWoyUGgrL2pj?=
- =?utf-8?B?Y3NjY2RmeUVGck9FbTAyRXNXQ3RiSElHZThySmg3VHYyUFRjWitBMnZ4QTM3?=
- =?utf-8?B?WXZITXZrd25Sdk1YSk9xL01WdzgyMlFlQU0rZ0Exc2o4VEpUVHlXRjJVMzA1?=
- =?utf-8?B?cjNiandXR2RFcE5xNHBPUzF1OHdKWmh6aVo1RFU4K0hDQlBydzR4Sy9odVhk?=
- =?utf-8?B?NWxKMTJlUXFxaFpMSHAvRXVNVGtEZXNVZ25JcEJKV1JBU1EwYkcwblRzM2hs?=
- =?utf-8?B?eER1MloyUnI1OXVidkt3VXJOQ1AyNmhiVTErR3o5OXZJb1hOcWlISm51MXpt?=
- =?utf-8?B?anl3R1ZqaU1yaHM5cUFBbStxYWI0eTZYaWw3V0ZmWnBXT0dES29MdVIxQmRH?=
- =?utf-8?B?ZnZYSSsrV1BScWIrMnlWUjRkTllhOVRPeHFBM0RrZk9ud0haWFIvTVQxeCtW?=
- =?utf-8?B?VlJBL284dWN0ZFVQcTFVeVVCZHdMSlRsTFVGMFVnbTI5MEpJZU1RUnIwMy9P?=
- =?utf-8?B?RE1ud25DOThWYkRPZkR1bHV0TnlxeW1kSlllTTBUL0RrU2xOQURTQVBMVWZa?=
- =?utf-8?B?THdMbU93SHlMRXRyYUpKZ2RVOGJWOVQrcDlWUTlUUTRBNzRjL082UlF6ZDNV?=
- =?utf-8?B?YkxNQnQ2aGZRdENSZk9HZXI4UzNHWGR2WGNiUGlFV2trT1VRTkpadk44K3dR?=
- =?utf-8?B?Y0taK3p6Vlp1c1RlMHYxK0VvaFUyWWxTQmVaTWlKUnFHR1dzbHlsa2dzYndR?=
- =?utf-8?B?SU4ybDZEQ1lxd0o2TC83ck5peFlIZlJvNGt0N0RtZzFPbUlaSjEyOXJiUWJD?=
- =?utf-8?B?aEFuQ3ZIQTlablA1bXduVTBKVkJZQ3ljZDhwcGU3VXpaRERBTnhHNW1TQzM0?=
- =?utf-8?B?MXN3OTROUE13K3NENWMzL0kvQjQ1QUpabTJyck1qa0c2RXFJbGtiRllpSnYz?=
- =?utf-8?B?dTBLdG1QZnE0bS8wTjlCVHE1c3FGTE91WmEva0M2TE9IY1REVnhQR1Vtam9v?=
- =?utf-8?B?c0dXME5vclBpMDd5V2VmNWZLSmcwdGcrVEFsYVdteW96UmlRQjQwUT09?=
+	=?utf-8?B?NmlNWDNSNENPV2k5bmthRjQ1QzF1T3Badmh1dm41MXQ5cS9ZaDFkT0wra3BN?=
+ =?utf-8?B?TlRLNVI5WitMQ2NPK0VNd0dURzcxQmE4M2FLcDlGSkVKdzlQb2NmbEtycExI?=
+ =?utf-8?B?UjNpSDJnL2xIZlRFYWlZbit6S2ZhWGNLU3dwVVplTUJvcUlDWnQzQW84YWdY?=
+ =?utf-8?B?WTJNUEUrbEJ3MEdDbTQyMUZDeVFFVTQrWjMzbE5BVHZlUXd4UUVMY2tpL2RH?=
+ =?utf-8?B?ZTZ1bVJrT3JFaDhGN0k2K2grcGs5Nlc3eXo2RHVGMS8vMkdqNk95SnVydTNw?=
+ =?utf-8?B?TGlVUWtyVWozalY3VVA5NmVRT3Y4Q2p6OE55R0w2WnJJeXp5VFg5c1pBSXpi?=
+ =?utf-8?B?dmorZ3lmWEtWUmpPV1h4VDBhdlFQSnd0QVRLMG95REZqSDRpa0cwcFBTcmxH?=
+ =?utf-8?B?QzExMjBpZ0phMUIyaWlwa1RTS0kxclpQQzVjZUdWYkZiZ3hORmxEWnVleVdi?=
+ =?utf-8?B?V1VWaGg2YnF5V3pKNjVEajVNZEFDYml3NlZyRGpoSy9VYWRSV0lxa2dzRnNV?=
+ =?utf-8?B?eEt4cDQrbndZV3hzRkJRL3VMckNvVm9aWnRvYWJoN1BwS25ucU9ReC9FS2FL?=
+ =?utf-8?B?VnVxN2ZCM3lXaXFIMEw0eDhZSlhMMFJGRXdUR1VKU1RBeTBMZVJSY3BtaUY5?=
+ =?utf-8?B?ejdYV2N1dDF1YU5GTUlQaTM3azlScUJkaHNkdURZZG03Mll5b1RCcUVoYTA4?=
+ =?utf-8?B?SVZHSVp6ZHlNL0g2MW1IbjVWMDVBZU5QR2lCZk1qVjNUS2Jkc2RlRlBDd2tO?=
+ =?utf-8?B?WDV2czh1V3Mzc1NUSk13amk4Z1RRRnVscEZadEJYWVlibk8xMjRmYkUrQjJl?=
+ =?utf-8?B?cVdnT0QrZm5DWlJGWDJ5UlZ3Nm9ITnhqdXBIbyttTXNTOE5kUmFvNUlWaVFC?=
+ =?utf-8?B?VHZjS2hmKzRXUXh5SVVRbzBnTVp1a0RTRERzMGd2blRFTytzQWxZbkZrTDFo?=
+ =?utf-8?B?SkJ3U0hmT0c0c3NqRHZKYUNHaTJXcEFzVGNGVVRuSHp6R3ludEhPdUJNT0dr?=
+ =?utf-8?B?NGN5SkdvM2s2UC9IT1Qya25IckFuU2YyQjQxdHVuUXJ3eGNsZXdlTEpBL3lz?=
+ =?utf-8?B?Q3RpeTRZSzczdWdhNXFmWVk2YjF2ZG5DclZ2QS9kN2hZQVBKRm5XL0FvOEor?=
+ =?utf-8?B?OU1NVWJuVGlUdVFqZDR1MS9XWWpjekRCTldsVVhPTVMrQmlKYTU1eHdOeUNq?=
+ =?utf-8?B?eW9USU05ZWFkR0syaXVOQ1h3ZW11YlZWdnhVNWJENDlVZjMvS3lQb3Njbm1h?=
+ =?utf-8?B?VEdVRmtNTlJmOXVlM1RWU20ycFJCUkJJQXpBaXp5OWMvbnYxMTMwSnVJd3Zv?=
+ =?utf-8?B?bWJsdFU1cU8rc29zSk4zSXEreFdTVXgrd3BEb003dUpQMUo2N3hhaW9sQ0pB?=
+ =?utf-8?B?YkZtRjZMSm5EWjRYOHlvVHBQREFBVE1RTFdzOHNmTWJpakJ1djkwUVdyTmd1?=
+ =?utf-8?B?b2Z4MDgweWUvclNNN0JlTDhKSFZiTEtUdkdLcm1uMzd1Q29MK0w4UWFYVzhp?=
+ =?utf-8?B?Qk8rK1FTZVpOVkd3UmgrZFJrZUVtaUZyUmdCVFlQQ3NldlA1RWhPUXZvNGJC?=
+ =?utf-8?B?SE1kUlFXTUM0SitIek9Ob0FhZnZWaGZVRXArRnhjaG4vZlBKTHVlUVdOdFZu?=
+ =?utf-8?B?Mloxek1mdXQ3Y1BXR2FtMnhqenZWZU5kR0NYakM2WmhOcG1tT3JWQ2hPVy83?=
+ =?utf-8?B?MnhhYVVoeGJuUXJzSUNWZXRMTU9PV2NMMzFkeHhoN2EyeExFQkFtNCtrZGR3?=
+ =?utf-8?B?VUxXMk9nL0JJVW9rSUxDUlFaV3ZQVFc0YUJBQ1dtV1czTk1IbjhSRUhOWTE2?=
+ =?utf-8?B?blc0bW9FdzdaVjBqdXJNYzZPRkpIbjV5UEN0MXljL2dQVlV2L3VWTWo0cXp4?=
+ =?utf-8?B?VFZuWVo2M3paSXhWcWxORWxwaVlrcWRraVkwREV6NGI0ZlJwdGIyRFhNamY5?=
+ =?utf-8?B?UkhTYytnek1LeHhzc1Uzb3cyOUFKMExQcDBFdXdBdjIvZmt2QjIxWGxERWhK?=
+ =?utf-8?B?NVhaZHIwREd2L1MwU01NTGc1dFUxQVlGTXV5anVjamlIRjlpZm9jTFdzVXJE?=
+ =?utf-8?B?N0VtV0hPR1F0RFZsSm42c2dxSGNYaHRlRzQ5SUYyWGZYWmV3dEhIS3lRcGlX?=
+ =?utf-8?B?OUZPa3JGc1A4bGYrQ255am95Y2dRT0wrVTBmWkk3WDJCZ1h0RDBJYzBnU1Ft?=
+ =?utf-8?B?UGRxZHl5NnpnbjVhdFlySGU3VzZjRit4N05SdzU1Z3NFcnR1cXlIanZhNlRr?=
+ =?utf-8?B?cTFjNEF1SXdocVVtMGUzNFpSYzFkeVBlY2NRd3dVT01icFlmZFdZOFdBMk1U?=
+ =?utf-8?B?VkJnaTd3bVRjYmpJNVhVTEFhSDl2b0p4V3ZBTUtJcDNKc0tYenF3dz09?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e62053c3-6394-4eac-7820-08df33dd4e17
+X-MS-Exchange-CrossTenant-Network-Message-Id: 451cf756-f602-4e1d-c810-08df33e5713d
 X-MS-Exchange-CrossTenant-AuthSource: CY5PR12MB6252.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 03:49:30.4216
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 04:47:45.3798
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: v4k1A/ilyXGjefVCKzhyKTB+rTOY5NZ+QP8QxzeIP5m6zFFQkaDcBIbW02vesn65NQyyBU6UmmzmHheUdviCiA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7608
+X-MS-Exchange-CrossTenant-UserPrincipalName: y9YuoCgaZImk4Z1ARDQsZv7asjf6olb1gv261rdDg4QgIFKp2M3X3Qq+B5smKO1HcuVUouNUKzU06rKuiwTGvA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH8PR12MB9839
 
 
 
-On 10/26/26 16:12, sashiko-bot@kernel.org wrote:
+On 10/26/26 15:18, sashiko-bot@kernel.org wrote:
+> [You don't often get email from sashiko-bot@kernel.org. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+>
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] soundwire: amd: race with runtime resume in amd_sdw_irq_thread() on wake
+> - [High] soundwire: amd: race and UAF in sdw_amd_probe() error cleanup with active IRQ
 > --
 >
-> commit 926ef4f8a65a29a6e1b8f7dfc94a0c8f49817776
+> commit 60bd17e72e211d96b5525ff2d9fb05330bb627b0
 > Author: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 >
-> soundwire: amd: fix IRQ thread dropping STATUS_0TO7 on simultaneous wake
+> soundwire: amd: fix ctx leak when sdw_amd_startup() fails
 >
-> This commit removes the early return in amd_sdw_irq_thread() when
-> handling a SoundWire wake interrupt and masks AMD_SDW_WAKE_STAT_MASK out
-> of status_change_8to11 so that simultaneous peripheral status changes are
-> processed instead of dropped.
+> This commit cleans up the SoundWire context and registered platform devices via
+> sdw_amd_exit() and clears *sdw_ctx if sdw_amd_startup() fails during
+> sdw_amd_probe().
 >
->> diff --git a/drivers/soundwire/amd_manager.c b/drivers/soundwire/amd_manager.c
->> index d7289b840513b..16dd17f7a343a 100644
->> --- a/drivers/soundwire/amd_manager.c
->> +++ b/drivers/soundwire/amd_manager.c
->> @@ -1019,8 +1019,11 @@ static void amd_sdw_irq_thread(struct work_struct *work)
->>   
->>   	dev_dbg(amd_manager->dev, "[SDW%d] SDW INT: 0to7=0x%x, 8to11=0x%x\n",
->>   		amd_manager->instance, status_change_0to7, status_change_8to11);
->> -	if (status_change_8to11 & AMD_SDW_WAKE_STAT_MASK)
->> -		return amd_sdw_process_wake_event(amd_manager);
+>> diff --git a/drivers/soundwire/amd_init.c b/drivers/soundwire/amd_init.c
+>> index 8e419ddfa5161..88004d59322ee 100644
+>> --- a/drivers/soundwire/amd_init.c
+>> +++ b/drivers/soundwire/amd_init.c
+>> @@ -166,11 +166,18 @@ static int sdw_amd_startup(struct sdw_amd_ctx *ctx)
+>>
+>>   int sdw_amd_probe(struct sdw_amd_res *res, struct sdw_amd_ctx **sdw_ctx)
+>>   {
+>> +     int ret;
 >> +
->> +	if (status_change_8to11 & AMD_SDW_WAKE_STAT_MASK) {
->> +		amd_sdw_process_wake_event(amd_manager);
->> +		status_change_8to11 &= ~AMD_SDW_WAKE_STAT_MASK;
->> +	}
->>   
->>   	if (status_change_8to11 & AMD_SDW_PREQ_INTR_STAT) {
->>   		amd_sdw_read_and_process_ping_status(amd_manager);
+>>        *sdw_ctx = sdw_amd_probe_controller(res);
+>>        if (!*sdw_ctx)
+>>                return -ENODEV;
+>>
+>> -     return sdw_amd_startup(*sdw_ctx);
+>> +     ret = sdw_amd_startup(*sdw_ctx);
+>> +     if (ret) {
+>> +             sdw_amd_exit(*sdw_ctx);
+>> +             *sdw_ctx = NULL;
+>> +     }
 > [Severity: High]
-> Can removing the early return here cause peripheral status processing to
-> race with runtime resume or execute while the bus clock is still stopped
-> when waking from runtime suspend?
+> Could calling sdw_amd_exit(*sdw_ctx) before clearing *sdw_ctx race with the
+> parent ACP interrupt handler and trigger a use-after-free?
 ++
 
-The fall-through is intentional and safe. This fix handles the case
-where a peripheral signals a status change while the bus is already
-active — wake and status bits can arrive in the same interrupt cycle,
-and the old early return silently dropped status_change_0to7.
+SoundWire IRQs are only enabled inside amd_sdw_manager_start()
+during sdw_amd_startup() via amd_enable_sdw_interrupts(). The
+platform device probe (amd_sdw_manager_probe()) does not enable
+any SoundWire interrupts — it only initializes data structures
+and work items. So the ACP_SDW0_STAT / ACP_SDW1_STAT bits in
+ACP_EXTERNAL_INTR_STAT cannot be set before sdw_amd_startup()
+runs, and the IRQ handler will not reach the adata->sdw
+dereference during sdw_amd_probe_controller().
 
-In AMD_SDW_CLK_STOP_MODE and AMD_SDW_POWER_OFF_MODE,
-amd_suspend_runtime() calls cancel_work_sync() on both
-amd_sdw_irq_thread and amd_sdw_work before amd_sdw_clock_stop()
-runs, so the irq_thread cannot be in flight while the clock is
-stopped. After clock stop, only the wake interrupt is re-enabled.
-ACP_SW_STATE_CHANGE_STATUS_0TO7 and AMD_SDW_PREQ_INTR_STAT are
-set only by SoundWire bus transactions, which require the bus clock.
-So when the wake interrupt fires from suspend, those bits are zero
-and the fall-through path to status processing is not taken.
-> In drivers/soundwire/amd_manager.c, amd_sdw_process_wake_event() only
-> queues an asynchronous resume via pm_request_resume():
+On the failure path, sdw_amd_exit() -> sdw_amd_cleanup() ->
+platform_device_unregister() triggers amd_sdw_manager_remove(),
+which calls amd_disable_sdw_interrupts() followed by
+cancel_work_sync() before freeing amd_manager. So any interrupt
+enabled for a partially-started manager is masked before the
+manager is freed.
+
+That said, as a defensive improvement, NULL guards on adata->sdw
+will be added to acp63_irq_handler() and acp_irq_handler()
+before dereferencing adata->sdw->pdev[i].
 >
-> static void amd_sdw_process_wake_event(struct amd_sdw_manager *amd_manager)
-> {
-> 	dev_dbg(amd_manager->dev, "SoundWire Wake event reported\n");
-> 	pm_request_resume(amd_manager->dev);
-> 	writel(0x00, amd_manager->acp_mmio + ACP_SW_WAKE_EN(amd_manager->instance));
-> 	writel(0x00, amd_manager->mmio + ACP_SW_STATE_CHANGE_STATUS_8TO11);
+> The callers of sdw_amd_probe() (snd_acp63_probe() ->
+> create_acp63_platform_devs() -> amd_sdw_probe() in sound/soc/amd/ps/pci-ps.c,
+> and amd_sof_acp_probe() / amd_sof_acp7x_probe() -> amd_sof_sdw_probe() in
+> sound/soc/sof/amd/acp.c) enable ACP external interrupts and register their
+> shared hard IRQ handlers (acp63_irq_handler(), acp_irq_handler(), and
+> acp7x_irq_handler()) before passing &adata->sdw as sdw_ctx to sdw_amd_probe().
+The ACP external IRQ handler (acp63_irq_handler) is registered
+before sdw_amd_probe() is called. However, SoundWire-specific
+status bits (ACP_SDW0_STAT, ACP_SDW1_STAT) in
+ACP_EXTERNAL_INTR_STAT are only set when the SoundWire manager
+is active on the bus. These bits cannot be asserted before
+amd_enable_sdw_interrupts() runs inside amd_sdw_manager_start()
+during sdw_amd_startup(). So the adata->sdw->pdev[i] dereference
+path in the IRQ handler is not reachable before that point,
+regardless of whether adata->sdw is NULL or non-NULL.
+>
+> In sdw_amd_probe(), *sdw_ctx (adata->sdw) is assigned immediately before
+> sdw_amd_startup() runs. Inside sdw_amd_startup() -> amd_sdw_manager_start() in
+> drivers/soundwire/amd_manager.c, interrupts are unmasked before the fallible
+> manager enable step and before subsequent manager instances in the loop are
+> started:
+>
+> drivers/soundwire/amd_manager.c:amd_sdw_manager_start() {
+>      ...
+>                  amd_enable_sdw_interrupts(amd_manager);
+>                  ret = amd_enable_sdw_manager(amd_manager);
+>                  if (ret)
+>                          return ret;
+>      ...
 > }
 >
-> When amd_sdw_irq_thread() runs with AMD_SDW_WAKE_STAT_MASK and peripheral
-> status bits set in status_change_0to7 or status_change_8to11 while
-> amd_manager->dev is runtime suspended or resuming, pm_request_resume()
-> returns immediately without waiting for amd_resume_runtime() to finish on
-> pm_wq.
-pm_request_resume() returning immediately is not a problem here.
-The irq_thread cannot re-enter until the next interrupt, and the
-next SoundWire interrupt only fires after amd_resume_runtime()
-re-enables interrupts and brings the bus back up. There is no
-window where status processing runs concurrently with an in-progress
-resume.
-> Execution then falls through in amd_sdw_irq_thread() to either call
-> amd_sdw_read_and_process_ping_status() or call
-> amd_sdw_update_slave_status() and schedule amd_manager->amd_sdw_work
-> (amd_sdw_update_slave_status_work()), and then clears
-> ACP_SW_STATE_CHANGE_STATUS_8TO11 and ACP_SW_STATE_CHANGE_STATUS_0TO7:
+> If amd_enable_sdw_manager() fails, or if manager 0 starts and manager 1 fails
+> in amd_sdw_manager_start(), sdw_amd_probe() calls sdw_amd_exit(*sdw_ctx) while
+> the parent PCI IRQ is active and *sdw_ctx (adata->sdw) is still non-NULL:
 >
-> 	if (status_change_8to11 & AMD_SDW_PREQ_INTR_STAT) {
-> 		amd_sdw_read_and_process_ping_status(amd_manager);
-> 	} else {
-> 		/* Check for the updated status on peripheral device */
-> 		amd_sdw_update_slave_status(status_change_0to7, status_change_8to11, amd_manager);
-> 	}
-> 	if (status_change_8to11 || status_change_0to7)
-> 		schedule_work(&amd_manager->amd_sdw_work);
-> 	writel(0x00, amd_manager->mmio + ACP_SW_STATE_CHANGE_STATUS_8TO11);
-> 	writel(0x00, amd_manager->mmio + ACP_SW_STATE_CHANGE_STATUS_0TO7);
-The fall-through is only reachable when the bus is active. In
-AMD_SDW_CLK_STOP_MODE, ACP_SW_STATE_CHANGE_STATUS_0TO7 and
-AMD_SDW_PREQ_INTR_STAT are only set by SoundWire bus transactions,
-which require the bus clock to be running. When the wake interrupt
-fires from clock-stop suspend those bits are zero, so neither
-amd_sdw_read_and_process_ping_status() nor amd_sdw_update_slave_
-status() is reached.
-> Neither amd_sdw_read_and_process_ping_status() nor
-> amd_sdw_update_slave_status_work() synchronizes with runtime PM on
-> amd_manager->dev before accessing the bus or interrupt masks:
+> drivers/soundwire/amd_init.c:sdw_amd_exit() {
+>          sdw_amd_cleanup(ctx);
+>          kfree(ctx->peripherals);
+>          kfree(ctx);
+> }
+Since SoundWire IRQs are not enabled until amd_sdw_manager_start()
+runs inside sdw_amd_startup(), the window between *sdw_ctx being
+set and startup beginning is safe — the IRQ handler cannot reach
+the SDW processing path before that point.
+
+If amd_enable_sdw_manager() fails after amd_enable_sdw_interrupts(),
+the failure path calls sdw_amd_exit() -> sdw_amd_cleanup() ->
+platform_device_unregister(), which triggers
+amd_sdw_manager_remove(). That function calls
+amd_disable_sdw_interrupts() before cancel_work_sync() and before
+freeing amd_manager. So the interrupt is masked and all work
+drained before teardown — no use-after-free can occur on this
+path.
+
+As a defensive improvement, a separate follow-up fix will update
+sdw_amd_probe() to hold ctx in a local variable and only publish
+*sdw_ctx after sdw_amd_startup() succeeds, making the lifetime
+contract explicit and removing any ambiguity about pointer
+visibility during the startup failure window.
 >
-> static void amd_sdw_update_slave_status_work(struct work_struct *work)
-> {
-> 	...
-> 	if (amd_manager->status[0] == SDW_SLAVE_ATTACHED) {
-> 		writel(0, amd_manager->mmio + ACP_SW_STATE_CHANGE_STATUS_MASK_0TO7);
-> 		writel(0, amd_manager->mmio + ACP_SW_STATE_CHANGE_STATUS_MASK_8TO11);
-> 	}
+> Because sdw_amd_cleanup() unregisters and frees ctx->pdev[i] (and its devres
+> amd_manager) and kfree(ctx) frees the context before *sdw_ctx is set to NULL, a
+> concurrent hard IRQ handler on another CPU can observe the non-NULL adata->sdw
+> pointer and dereference freed ctx or ctx->pdev[i]->dev, or schedule
+> amd_sdw_irq_thread after amd_sdw_manager_remove() has already canceled the work
+> and freed amd_manager:
 >
-> update_status:
-> 	sdw_handle_slave_status(&amd_manager->bus, amd_manager->status);
-Explicit runtime PM synchronization is not needed in these functions
-because the suspend path in amd_suspend_runtime() calls
-cancel_work_sync() on both amd_sdw_irq_thread and amd_sdw_work
-before amd_sdw_clock_stop() runs:
-
-     amd_disable_sdw_interrupts(amd_manager);
-     cancel_work_sync(&amd_manager->amd_sdw_irq_thread);
-     cancel_work_sync(&amd_manager->amd_sdw_work);
-     ...
-     amd_sdw_clock_stop(amd_manager);
-
-This guarantees neither work item is in flight when the clock stops.
-The bus is therefore always running when these functions execute.
+> sound/soc/sof/amd/acp.c:acp7x_irq_handler() {
+>      ...
+>          if (adata->sdw) {
+>                  for (instance = 0; instance < ACP7X_SDW_MAX_MANAGER_COUNT; instance++) {
+>                          if (ext_intr_stat & acp7x_sof_sdw_ext_stat[instance]) {
+>                                  sof_acp7x_handle_sdw_manager_irq(sdev, adata, desc, instance,
+>                                                                   acp7x_sof_sdw_ext_stat[instance]);
+>                                  irq_flag = 1;
+>                          }
+>                  }
+>          }
+>      ...
+> }
 >
-> In AMD_SDW_CLK_STOP_MODE, amd_suspend_runtime() stops the clock and keeps
-> interrupts enabled while clk_stopped is true, and amd_resume_runtime()
-> restarts the clock in amd_sdw_clock_stop_exit() before completing
-> sdw_bus_exit_clk_stop() and the D0 transition. In AMD_SDW_POWER_OFF_MODE,
-> amd_resume_runtime() resets slave status and reinitializes the manager
-> and interrupt masks.
-In AMD_SDW_CLK_STOP_MODE, after the clock is stopped only the wake
-interrupt is re-enabled via amd_sdw_wake_enable(). The
-AMD_SDW_WAKE_STAT_MASK bit is set by the hardware wake-detection
-circuit, independently of bus clock activity. Peripheral status bits
-in ACP_SW_STATE_CHANGE_STATUS_0TO7 and AMD_SDW_PREQ_INTR_STAT
-require the bus clock, so they will be zero when the wake fires.
-After AMD_SDW_WAKE_STAT_MASK is cleared by amd_sdw_process_wake_
-event(), status_change_8to11 becomes zero and amd_sdw_irq_thread()
-returns without touching the bus.
-
-In AMD_SDW_POWER_OFF_MODE, amd_resume_runtime() fully reinitializes
-the manager — restoring the clock, calling amd_init_sdw_manager(),
-and re-enabling interrupts — before returning. The irq_thread and
-amd_sdw_work are cancelled in amd_suspend_runtime() before power-
-off, so neither can run during resume. The next irq_thread execution
-can only be scheduled by a new interrupt, which requires the bus to
-be fully up — guaranteed by the time amd_resume_runtime() returns.
-
+> sound/soc/amd/ps/pci-ps.c:acp63_irq_handler() {
+>      ...
+>          if (ext_intr_stat & ACP_SDW0_STAT) {
+>                  writel(ACP_SDW0_STAT, adata->acp63_base + ACP_EXTERNAL_INTR_STAT);
+>                  amd_manager = dev_get_drvdata(&adata->sdw->pdev[0]->dev);
+>                  if (amd_manager)
+>                          schedule_work(&amd_manager->amd_sdw_irq_thread);
+>                  irq_flag = 1;
+>          }
+>      ...
+> }
+Will address this missing NULL guard check for adata->sdw  as a follow 
+up fix.
 >
-> Could amd_sdw_read_and_process_ping_status() or
-> amd_sdw_update_slave_status_work() issue immediate commands via
-> amd_sdw_send_cmd_get_resp() while the clock is still stopped (timing out
-> after the status registers have already been cleared) or race
-> concurrently with amd_resume_runtime()?
-No. As explained above, amd_suspend_runtime() drains both work items
-via cancel_work_sync() before stopping the clock, so
-amd_sdw_read_and_process_ping_status() and
-amd_sdw_update_slave_status_work() cannot execute while
-clk_stopped == true.
+> Unlike the normal remove paths (which call free_irq() before sdw_amd_exit()),
+> the IRQ remains active here. Should sdw_amd_probe() hold ctx in a local
+> variable and only publish *sdw_ctx after sdw_amd_startup() succeeds, while also
+> ensuring any interrupts enabled during a partial sdw_amd_startup() are masked
+> and synchronized before sdw_amd_exit() frees the devices and context?
+As mentioned above, Both points will be addressed:
 
-Likewise, there is no concurrent race with amd_resume_runtime()
-because the next interrupt (which would schedule the irq_thread)
-only fires after amd_resume_runtime() has re-enabled interrupts and
-restored the bus. The runtime PM framework serializes this: the
-device must be fully resumed before new interrupts are delivered.
+1. sdw_amd_probe() will be updated to delay *sdw_ctx publication
+    until after sdw_amd_startup() succeeds, as a defensive
+    improvement making the lifetime contract explicit.
+
+2. Interrupt masking before teardown is already handled by
+    amd_sdw_manager_remove() (called via platform_device_unregister
+    inside sdw_amd_cleanup()), which masks SoundWire interrupts
+    via amd_disable_sdw_interrupts() and drains work via
+    cancel_work_sync() before freeing amd_manager. No additional
+    masking step is needed in sdw_amd_probe()'s error path.
+
+3. NULL guards on adata->sdw will be added to
+    acp63_irq_handler() and acp_irq_handler() for both SDW0 and
+    SDW1 dereference sites as a defensive fix.
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261026044507.2310694-1-Vijendar.Mukunda@amd.com?part=7
 
