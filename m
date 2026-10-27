@@ -1,68 +1,131 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.21
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793141820;
-	b=5RbLZkhTIKbIhK6NX0VNgn9BSmC+n1aZ8ZxCDL2nf4PK1zkV5yCBhx3bb00ABmw2RM6Y
-	 WlEGb52zp7bVax06Esk2FK52zZb9yaRqp6WuXTxy2EzhCZ+znbweLLF2mpmuvoOKSDlXp
-	 v6wrAk8V7YmsxEGDqu8YB5AP/yZZ/920c9CuDKgJY26A/RInC/WqeKVW1rDUu9QWnjhe/
-	 ywoABxC3VuKiK4iv4f3W9Erl5FS/WpGjMNmqZ+HNDnj2jDIamHOhbudDudDiKEA180u7G
-	 7nlCrgRgTrQYVlpXNwNpH7YOG4oSNbpizR438XGSeu7LKaiWAPsp6W5bqg+dAGYeVaA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793141820;
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.10
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1793142980;
+	b=XBifBLruk1LRzJqJiHvzjvl42AugSKVk9qmRp9TRrXxmDDyLPCW7hIZwjzMOiKuuRS5j
+	 +/dwBn29MlGEEXuM9bFODxR2v+5qq0vjVI4DDvRRxCCOF0lD/cE7DgXr56lqscfd8Pw//
+	 nGgMCwGQWlcET0qQd/lo5Bi1oDC0wOsGxLJRMdD4aNe3StnTyRAe1P2h54i3Z6Dn9h5Mr
+	 QB69WCet7KrEp2DBY6neuCz08D3SdsW8D52iwl+zvelw0Kh2yZhYPanR2J8NYFGPb4AOv
+	 2ezB+vawNsPreBcuuvFUxsZDrChL1hmwV6SdzXGCGtc38EAufJWiX0W/KeDHR0MZ5Gw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793142980;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=gIVns6+2kR7Rl7cmy4htyby4FQjdtEx7csuUjrR4iLk=;
-	b=h+wukn1pxSoVZRPmGA12ZlVWz51VEEaVcbtmTYUdHTRZf0oMCfPQm/PRi2zih8g6ALPn
-	 IiGuDOJRHvOCvn+NFy7LkjDvhr9xRJfFQuyKbhQtl+itl+B1QkUFfK3trCaMbOATe0daV
-	 y6Sy9l7w4ie+/CS5bhLz0fSfjDK0WztPx0/PFeWeq21gTN1z8SbksDvLbzEPSAWrPunzi
-	 3OI5UmgBxtEBVk5wB4cqdn31G4PtpMaQnNHxGP3rPPQXF2bgzn0qZMRQGVhUmsOugp++y
-	 1aMAaYp0Mf9jVB+UtySD/BQ90M2hUc3fQglF5Et2YlFmZC6XRwAM/mUcTDj+WbP2HJw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
+	 Received:Received:Received:Message-ID:Date:User-Agent:Subject:
+	 Content-Language:To:CC:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
+	bh=IM4JYP/eLEWRPR7tEh3lLmFvIrJ1kOhSdkJ2pG2HVoE=;
+	b=Ntz7c18ucWyPlevHsRJV9E8eXIjUkOqVWcnTYrVrRM5q74MojcndoQyUjEIa+1rHsiuD
+	 worUSeQbETiC/cWiMyJfIjLFNzh9OHeGUmIMdRdInWPxY3LMJ/td/OkkpUpnbGqIBDpcC
+	 5G4bReu9leWFb4/JkVAzHMJbF8vom+3nkRWCUQZiqs9voxSKnhq39is9uoHDi0nJfJo11
+	 sXpUi5hL+TYXZ5SPHc3XaLF2EaUkcN9vIQhIgNN+YSS/6thr139wVsTFFFXOhGK2fWaag
+	 zFHFLnck1LCHCjbfYAVDQ0/G92rNYoSgVPHyHXQ/2heKQQ95h/PzfyUEgMS7qLig5pA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=intel.com;
 	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Ia0l5YsQ;
-	arc=none smtp.remote-ip=198.175.65.21
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=E7dOKdFM;
+	arc=fail smtp.remote-ip=192.198.163.10
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664A6606A31A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 22:56:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 664A6606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B3D60A2605
+	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 23:16:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 61B3D60A2605
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Ia0l5YsQ
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=E7dOKdFM
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793141818; x=1824677818;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=sOlyCuSZxE0bpLNopzU/8YOcrlV8+AwrSCT7isibU64=;
-  b=Ia0l5YsQfifRZH2wzIMpg6e5f1qQFOZvfYPs5UHUPDQvvzHmjcMJ5sHu
-   ON/uK4CEjP58Gpw3RfQfF43TZ9kH5vebJpr+LS3JHhM2yL7I6FG3pu+oP
-   ddbu/4RM4Q24wp3NQYpoTTwUqzhm+E2x8yHO0hJdntv1bx974wGIc1ShH
-   XCBqjFaE5diwy7D9yiTjmknChew4np62TVzi90JnXPsEHZQXnc38lZxQO
-   KLJ+6iY4Jb7YdWHpaK2zwV8MO+ceR+zfI8THKhpr2chUC64Qcvce9eF2G
-   xoc9mbTwLpozWUzPPn5Q+J3Q8+GH8Xt5e7XuJFxdq8qPEEfRorPwQrt+T
-   A==;
-X-CSE-ConnectionGUID: vzy4LrzPT6udd1OPSBlBOA==
-X-CSE-MsgGUID: Dq16Ky+BQKqrDJDrc4v85Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11948"; a="1946898"
+  t=1793142979; x=1824678979;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=/2HeNr/eST6af/vM3wHZgceEkqyTkpNxQP1jI6GenPQ=;
+  b=E7dOKdFMPU6IOOv/YKJC8upglx0APlaPPr/6TDdybQgO7OIQWtw3/Bx9
+   vL8vbu7ZD+ODY7Ms6YWuZ1ePnrP7RALVhJVg+3puszCifwWIn5tQgAyuy
+   jkhkhyeiPsWp+9dpmuTBR0lHMLS+mDCvsvd0Qzq1izxZEHzyoh3Aa1nxb
+   JSJ1aFdzqCKqB9Cbzl6LYs0ut1TOFA4XUdPqtpCW4aNisa7GkC1jBsJ99
+   1bsC+Gzhqw/xEqTNXzZwDQIG7FaZ70+NJCXWxouoJbwumsRFQgWI96mmZ
+   QaIpgk4/PjVcH7iGEl1cCm+wPajLvR9ulxl26Y8Si8Ex7XESU+Ml5/aUr
+   g==;
+X-CSE-ConnectionGUID: NZJIR1wwSzGuRsahlx9KNg==
+X-CSE-MsgGUID: 4sVaLkx1R+KEei30TsEU5Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11948"; a="1758524"
 X-IronPort-AV: E=Sophos;i="6.27,181,1787036400"; 
-   d="scan'208";a="1946898"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 15:56:58 -0700
-X-CSE-ConnectionGUID: 47NJByKORP2a9ouAGCSZiw==
-X-CSE-MsgGUID: Eowt1B9AQoS9P7g39cH8WQ==
+   d="scan'208";a="1758524"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 16:16:17 -0700
+X-CSE-ConnectionGUID: /PfIdsLRRgGQQPsG97u0dg==
+X-CSE-MsgGUID: 54XIKXA8Q/2op2DPtDccog==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,181,1787036400"; 
-   d="scan'208";a="4998129"
-Received: from soc-cp83kr3.clients.intel.com (HELO [10.122.184.228]) ([10.122.184.228])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 15:56:57 -0700
-Message-ID: <1e3230bc-800c-4862-9bb8-ff1074e76fc8@intel.com>
-Date: Tue, 27 Oct 2026 17:56:56 -0500
+   d="scan'208";a="4684397"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 16:16:18 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Tue, 27 Oct 2026 16:16:16 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49 via Frontend Transport; Tue, 27 Oct 2026 16:16:16 -0700
+Received: from BN8PR05CU002.outbound.protection.outlook.com (52.101.57.22) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.49; Tue, 27 Oct 2026 16:16:16 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=BjAbq49AkyAgkG+kdd+msjlOc+R1EnXVlWv0kXw399Nhv/m2Wr2fiW7o9XxlnjMbij4ltyZTmCQB2r3YiwJH4XbSoze7UQ18jnO4ENw3Sb5A1kE8LTwyS9XuFA9jXhp7a/rbASzEwMh88qH9rm8ZZR3Ow6rdT27kZHCml8fpMqbie/g0rKorpWPaTvhV48y4FPHwTgxakHridfnvACnpnL2L/D9E3MnZGDLYj2NOmx55LVCH5IR9KwKAohlrvoM/164Ax+NZkl4JmPiF6sulOjGZZ/PzCG86P2Xp4f5xqUBVHu8Ch/9OSvlQ1D6VgyYacZoIWheBS41DvJPLAEqK/A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=IM4JYP/eLEWRPR7tEh3lLmFvIrJ1kOhSdkJ2pG2HVoE=;
+ b=Nx2R40F80D8nDCfZxFaBfyrRjYZKh2wXMjwJeO24W6Seuz/ikckj9p3F7K4wZRtvWuCte50YQvD+R9xQCUzF9Ym+3hoDPD2u6TzMah3P0g2fKzD2wQ7OwfM9JfYTMIj24xz36Vp0uzjLHv/2JUlIvxf8x2l5tJsgDjsni6UkmLftP2BdfgxDjB883lF3M0G1NfihGBQ8fHxS9TSLJoEvMdsuMJvWg5yvakbavDEL8fmkzrpKCesbyTfRRWzS0HRUskZtLF7DKyM4iGMTQnyZLYVbo2fSgxi0a0pRGk4YF4g3Ersj1FgdL6rmICprT2mSZ5cHMz24TW55h2QjVWcKrw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CY8PR11MB7846.namprd11.prod.outlook.com (2603:10b6:930:79::14)
+ by CY5PR11MB6533.namprd11.prod.outlook.com (2603:10b6:930:43::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
+ 2026 23:16:14 +0000
+Received: from CY8PR11MB7846.namprd11.prod.outlook.com
+ ([fe80::cae0:d05c:b2fc:c395]) by CY8PR11MB7846.namprd11.prod.outlook.com
+ ([fe80::cae0:d05c:b2fc:c395%5]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
+ 23:16:14 +0000
+Message-ID: <0fdaaf2d-2113-48e9-81d7-4afa6bd522ba@intel.com>
+Date: Tue, 27 Oct 2026 16:16:12 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 05/28] x86/cea: Use array indexing to simplify
+ exception stack access
+Content-Language: en-US
+To: <sashiko-reviews@lists.linux.dev>
+CC: <kvm@vger.kernel.org>
+References: <20260911213659.2025974-1-sohil.mehta@intel.com>
+ <20260911213659.2025974-6-sohil.mehta@intel.com>
+ <20260911215759.6C04F1F000FF@smtp.kernel.org>
+From: Sohil Mehta <sohil.mehta@intel.com>
+In-Reply-To: <20260911215759.6C04F1F000FF@smtp.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ0PR05CA0012.namprd05.prod.outlook.com
+ (2603:10b6:a03:33b::17) To CY8PR11MB7846.namprd11.prod.outlook.com
+ (2603:10b6:930:79::14)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -72,165 +135,114 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 12/12] KVM: x86/pmu: Support RDPMC Metrics Clear Mode
-To: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>, sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org
-References: <20260918193937.569414-1-zide.chen@intel.com>
- <20260918193937.569414-13-zide.chen@intel.com>
- <20260918202200.F39971F000FF@smtp.kernel.org>
- <1de5af16-06a5-4b97-ba92-0a4ac02c32ff@linux.intel.com>
-Content-Language: en-US
-From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <1de5af16-06a5-4b97-ba92-0a4ac02c32ff@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY8PR11MB7846:EE_|CY5PR11MB6533:EE_
+X-MS-Office365-Filtering-Correlation-Id: c483894a-ccdd-4e3e-f3d8-08df34804bba
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|5023799004|4143699003|11063799006|56012099006|261009223027099003|261022075727099003|261021121427099003|261026121527099003|22082099003|6133799003|18002099003|10067099003|3023799007;
+X-Microsoft-Antispam-Message-Info: Ot+Zy7Pim7yXfbn6n1wzCciEacUDQMXrNHWaE/SZzgfqKXuBiSlWSt4e+s9P+ZQXK3JQUhks+hgYrKZBRSLnIH95omDgncC3JH/tVOnuMW/Ul0sxAp7JdrJ0tqB5sTLULXFd41AmhdtqGTSyVeARbiuX4T/nG0CWQILIOLW4IWh+yxS0/xWFnRAhPBgrto3mTyGDjWYH5YF0nQ/D3glAGWsPxmexLE4zyKeW83fTXy02udhmZRxI1obTRihURaReFcEBISYSls32YmawoNnNdK070zVtlH4tgnZ4K6yPNK3zkysgIRgKt3aCCVyR2Xevpz3pidKmfdhkr642xSr5lyU57Fm+dtvoR1MBztGd7bEzVzWt52rW1RGqstHDonZwJ/Q2j9BCXE7h68jWDLxWawiFD0wV+IFUWB1hSbp+LFX6s4uVK2bGodeyBNyRmKW5aPZBGIYsUtsOO5QDmzG8Uz+vzwqGIqJsIRb5/3+Ejc1wGnfLOadLExndT61YjuzimTitRW1sF9pHmGxZmqf/djToqdH0BXXz2mjhtZ2wntuF3zcx/RxYc7gIZFZ1I2VgA4ABifBUXA+U3rIp8Vd5ivjzhK3q7V+gf5AMMVMjaRM4cCaB/7+OzDr23b520XLi1+YF6Ufz7WTFOqn4K5psHacDrjeTJHWuUJk3wvLjzlU=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY8PR11MB7846.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(5023799004)(4143699003)(11063799006)(56012099006)(261009223027099003)(261022075727099003)(261021121427099003)(261026121527099003)(22082099003)(6133799003)(18002099003)(10067099003)(3023799007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WW1QejFYNmRiV2Vpa3VZMDc3V0h5TGsySitMMDNGVks2dStnMXpEb3pxYlA4?=
+ =?utf-8?B?RnZtRlB2Z3l6dzBhaEdFT2Z4TWtESk5yWDJmUTArM0MxTkxNRTQrYW53SWdX?=
+ =?utf-8?B?MXZZYWRlL0cyWndoYjVyK2lwOFVUbmF5MzI2SC84cU1vYU9Pa1UzTWlnaTlv?=
+ =?utf-8?B?dkpmZ3BhcExrcVZBUjQ1bHVtdENHNnNUQWl3TGQ4aWZIckRFeVdnYmYrT0NC?=
+ =?utf-8?B?QjhCSGwvNnMvTE9hVnIvOU4xdU5OVkVvU3d6YUJ5T25rcTA1OFZoOHRyaWxC?=
+ =?utf-8?B?RTNiVmsvU2JPYXNSZlNqQjNic1dRa0VmTTI4TWtoVytJMU5NS1VGUk9jUEpz?=
+ =?utf-8?B?V0ZFTjRkNTNuSTA5aGNNSzJtRE9VeVpYcXN5QmphZks0ZUZhNFFVcDhUbUJF?=
+ =?utf-8?B?Y2JDdHhqYW9tbGRQaGo2aFpMVldLaC9sNE5iMHA1dzh1Y3BmQ0dnL0tyRzlS?=
+ =?utf-8?B?OVd3b1g3NUx6WkxpdjdNMnpnK1BXRk1FZG15T1RqWFZqM2FIc3E2UHp1TWdo?=
+ =?utf-8?B?ZkJNMXFhalVGeW1Ld0Q5cFBkYmJlb2hLNWFVVEJIeXVlVzBidys2UmNRaDh1?=
+ =?utf-8?B?bWh3WVpiUXhLZThabml3RzRqTGVFd0pobjZQNEt5cklndXdyYm1JTHJqMGk4?=
+ =?utf-8?B?UjhWUnhpblJNTWpOdmJheEx6VUN0SmZvOWg1VWhIV2dyQXRRZzdTMUVKZWp0?=
+ =?utf-8?B?SjYwd3FXZEZYMStKTDdhaW1KVzZxTXpMaHE0TlZUUUU1YU9XclJMdThqT215?=
+ =?utf-8?B?Ty92Q1lWUmZza3J6YjYwREJpRXE1eVR4TURNYzBBVlVTeVNxZFRjRDYrOXg0?=
+ =?utf-8?B?Y0REQnV5NU56ZzNXREpVL3N5b1RhdmFCU0JLZGF1Ti9UYXpJWEE1S2tON0h2?=
+ =?utf-8?B?R09wZWtPWmFHSWJPWDNYTTRHWmsxR2ZKRzlZUU5tSllZdjI5ajF4SFcrbUda?=
+ =?utf-8?B?NVZyZ2ZpUU10OU1IN0h5SmM2MUg0Z2lqU3RNeTJOdmFxOTBTQTJYRldMcGlB?=
+ =?utf-8?B?VnhrMkFrdlJBa2xsQUtjYjA5encrR0xMYXRHemszWGlwSG1LY05US0U5RUJU?=
+ =?utf-8?B?NVlwMGZYbHA1QnNDQk1FVi9YMnNoaE92YVpKUkN0Z3VDTk5xV20zSGx2MHRs?=
+ =?utf-8?B?VmtuQTc4VlVTOUt6SUl5YjVMakYwQVQwZVhMRGQ0UWVFMXNJSGMybktpa3lm?=
+ =?utf-8?B?QU16OVgreDQxdjNJbXJsQVlSQS9pbjZQOWJiSjNlTnhDUXBqa29vU1I1aGl3?=
+ =?utf-8?B?T1NyeitRa2JKZWJ6TStQdEsrUzgvYVQyeEFpc0I3aHJCK0tvb3BaSFlIc2hJ?=
+ =?utf-8?B?cGxsbnlWWUI5YXRWWGxJVWNGUTdJbHFnZEJEbk1ZbER4RE5pTG8wMFA0M2lI?=
+ =?utf-8?B?Umg3MUNJalI0cGRBcGo0c0R5YkhkRjQ1bDJ5RVJ6ckZSK0dSRS9rWHBER1FG?=
+ =?utf-8?B?dXdHT0pmMjFMaHhDQTduUi80VDJHOEdtaDAxN2pNcVRNTXhEcXE3MnpJRTlC?=
+ =?utf-8?B?NmVvcURwSlVsSWJIdElqZzl3Q2NsNUxJWkR4SXFEUTAzVDhlL1hUaWFadm9x?=
+ =?utf-8?B?TGcraUVwbWd2NXRQeVJrWWZUTXJlK1BuNy96QXBQRlFMU1lqN0E4VndYaVBz?=
+ =?utf-8?B?VzNJNzMyN1pZNVdzNVR1RExNVWlqWTlxa1Q5OHg0clNaZVBUSmpKckNpekZl?=
+ =?utf-8?B?akl4ZUhSTGErTDRxdzl2b0NSRXJUa2hxK3FTSEJ1ZXFmVU1BZEFrRXYwbXk0?=
+ =?utf-8?B?eWFrSEcvTUFJMDVUaUFtWHg5TlFNYlRyNDI0QnZ1bmxYUndhYitlb3BCekJP?=
+ =?utf-8?B?ZGVtelpPTTAvSklKeFN5cUYyTHJISDkvQTQ4TFJwVjVFaG9HbkFiVldrVnNT?=
+ =?utf-8?B?UVRpalR1T2oyRU5BRUZkeEl0MTFWS0dGc1BTMDUrT21VMzZLU3IvdUVtWklw?=
+ =?utf-8?B?Z3o1WTlxd0VkWUdSbTROeXFWeWNLUi85TlFGUWJ1RUljbjhqR1hhN3NpZE1k?=
+ =?utf-8?B?UElPQWJLeUY5VlRKcnBtM2RMeGdFUXhORzlpM0J1YnhKU3JHTnFsNXI0cTZW?=
+ =?utf-8?B?ZitEbWhtTWllSEhhakR3d2tWMlhRaElqVktLNyt0dTQ5TjdCb3pIYmVhY1ZN?=
+ =?utf-8?B?MUpVWkFoSDlPQWN6MitOMGU3NXBBQUhWYlVKQXpNeDE0UjBCT1NSV1M5TlhU?=
+ =?utf-8?B?YlJmUlJHcmQvTWpxWkR5c1NJZ01kNnkvZlB1WTlHYVRtbXpRYS9lQ1dlanRn?=
+ =?utf-8?B?Rmd2WDlJNVhyYnlTUFJzQUxOdnFZeHdON2pESEROT3RiYk1HdlNWMnYyQWVR?=
+ =?utf-8?B?WXZDOCtGKzBIU0VKVFhyNUk4amFuTE1iRkwrOUV6VHgrZXAyNG1VUT09?=
+X-Exchange-RoutingPolicyChecked: fHSrXgs4cdWpP7FraZxHcJ46AMde7dwTQdPgL3r6tulkZ+8Bbcqjbq7WB703EeyooW01KFrA2CK69truuxYIE3dMxWBwAAbwaz29j7pwx89WIIpk5RECpyzzWQoU1KdN1dFFC+N+chD6GfYEg+P1m4m1FpflbfsJYVqmed7gkjjWOoU4accJPKs8Gx40WsQqT1kxwSy4bGfocaLffnXdM4s+D8nWSjG0PxaOD59JioUFGJ6pEEGOGPjItY/7lQ6bZm0e8icycNMeVYVCMTjQRPtklhCFGiVFuxpQmR9qVU9j1UFRMRrYAx8eNGSihrs/TSNuxZjWM7i7Fdpxd19q5g==
+X-MS-Exchange-CrossTenant-Network-Message-Id: c483894a-ccdd-4e3e-f3d8-08df34804bba
+X-MS-Exchange-CrossTenant-AuthSource: CY8PR11MB7846.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 23:16:14.2122
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: MAH1iiRdN8WPybPAp1Rlc+PqFTQFSQ7TYbuAxbFzOJ82SJi2zbm6n52oGO/TZglZyw5nsbL2IGsOBTLjAsRDow==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR11MB6533
+X-OriginatorOrg: intel.com
 
+On 9/11/2026 2:57 PM, sashiko-bot@kernel.org wrote:
 
-
-On 9/21/2026 4:39 AM, Mi, Dapeng wrote:
+>> +/*
+>> + * Typically invoked by entry code, so must be noinstr.
+>> + */
+>> +noinstr unsigned long __this_cpu_ist_bottom_va(enum exception_stack_ordering stack)
+>> +{
+>> +	struct cea_exception_stacks *s;
+>> +
+>> +	BUILD_BUG_ON(ESTACK_DF != 0);
+>> +	BUG_ON(stack >= N_EXCEPTION_STACKS);
 > 
-> On 9/19/2026 4:22 AM, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->> - [High] pmu: event filter mistakenly strips METRICS_CLEAR_EN from fixed_ctr_ctrl_hw
->> - [Medium] pmu: METRICS_CLEAR_EN unmasked without validating fixed counter bounds
->> - [Low] pmu: emulation incorrectly ties PERF_METRICS clearing to SLOTS PMC existence
->> --
->>
->> commit 8ba3725c32dbde4a1c3935cb433e898e06425b83
->> Author: Zide Chen <zide.chen@intel.com>
->>
->> KVM: x86/pmu: Support RDPMC Metrics Clear Mode
->>
->> This commit adds support for PERF_CAP_RDPMC_METRICS_CLEAR (bit 19 of
->> IA32_PERF_CAPABILITIES). It advertises this capability to guests when the
->> mediated PMU is enabled and the host reports it, unmasking the relevant
->> control bit. It also updates intel_emulate_rdpmc() to replicate the
->> clear-on-read behavior for consistency.
->>
->>> diff --git a/arch/x86/kvm/vmx/pmu_intel.c b/arch/x86/kvm/vmx/pmu_intel.c
->>> index 98e2fb80347a1..3e5e8bae67ab0 100644
->>> --- a/arch/x86/kvm/vmx/pmu_intel.c
->>> +++ b/arch/x86/kvm/vmx/pmu_intel.c
->> [ ... ]
->>> @@ -138,6 +149,18 @@ static int intel_emulate_rdpmc(struct kvm_vcpu *vcpu, unsigned int idx,
->>>  			return 1;
->>>  
->>>  		*data = pmu->perf_metrics;
->>> +
->>> +		/*
->>> +		 * Per the SDM, RDPMC of PERF_METRICS clears both PERF_METRICS
->>> +		 * and the SLOTS fixed counter when Metrics Clear Mode is
->>> +		 * enabled via INTEL_FIXED_3_METRICS_CLEAR in FIXED_CTR_CTRL.
->>> +		 */
->>> +		pmc = kvm_pmc_idx_to_pmc(pmu, INTEL_PMC_IDX_FIXED_SLOTS);
->>> +		if (pmc && intel_pmu_metrics_clear_enabled(pmu)) {
->>> +			pmu->perf_metrics = 0;
->>> +			pmc_write_counter(pmc, 0);
->>> +		}
->>> +
->> [Severity: Low]
->> Does tying the clearing of PERF_METRICS to the existence of the SLOTS PMC in
->> intel_emulate_rdpmc() violate the hardware specification?
->>
->> If the guest executes RDPMC natively and triggers an interception, and the
->> SLOTS counter is not exposed to the guest (making kvm_pmc_idx_to_pmc return
->> NULL), but METRICS_CLEAR_EN is enabled, this code silently skips clearing
->> PERF_METRICS.
->>
->> Should the clearing of pmu->perf_metrics be performed independently of whether
->> the software PMC object for the SLOTS counter exists?
->>
->>>  		return 0;
->>>  	default:
->>>  		return 1;
->> [ ... ]
->>> @@ -601,6 +624,11 @@ static void intel_pmu_refresh(struct kvm_vcpu *vcpu)
->>>  						 INTEL_FIXED_0_USER |
->>>  						 INTEL_FIXED_0_ENABLE_PMI);
->>>  
->>> +	if (perf_capabilities & PERF_CAP_RDPMC_METRICS_CLEAR)
->>> +		pmu->fixed_ctr_ctrl_rsvd &=
->>> +			~intel_fixed_bits_by_idx(INTEL_FIXED_SLOTS_IDX,
->>> +						 INTEL_FIXED_3_METRICS_CLEAR);
->>> +
->> [Severity: Medium]
->> Does intel_pmu_refresh() unconditionally unmask the METRICS_CLEAR_EN bit
->> without verifying if the guest topology actually exposes the SLOTS counter?
->>
->> If a VM is configured with 3 or fewer fixed counters, this unmasking would
->> allow the unprivileged guest OS to write to bit 14 in
->> MSR_CORE_PERF_FIXED_CTR_CTRL without triggering the expected #GP.
->>
->> Should this be gated by checking if pmu->nr_arch_fixed_counters >
->> INTEL_FIXED_SLOTS_IDX?
+> [Severity: Medium]
+> Does moving these helpers from macros in the header to out-of-line functions
+> introduce an unintended performance regression?
 > 
-> This sounds like a real risk. Should we mask out PERF_METRICS from guest
-> PERF_CAPABILITIES in intel_pmu_refresh() if guest doesn't advertise fixed
-> counter 3?
-
-Yes, will checks the availability of guest FC3 in
-kvm_vcpu_has_perf_metrics() as well.
-
->>
->> [Severity: High]
->> Does this patch inadvertently cause event filters to strip the METRICS_CLEAR_EN
->> bit in kvm_mediated_pmu_refresh_event_filter()?
->>
->> When a host-level event filter denies the SLOTS counter (counter 3) from
->> counting, KVM applies a 0xf hardware mask that zeroes all 4 configuration bits
->> for the counter:
->>
->> arch/x86/kvm/pmu.c:kvm_mediated_pmu_refresh_event_filter() {
->> ...
->> 	} else {
->> 		u64 mask = intel_fixed_bits_by_idx(pmc->idx - KVM_FIXED_PMC_BASE_IDX, 0xf);
->>
->> 		pmu->fixed_ctr_ctrl_hw &= ~mask;
->> 		if (allowed)
->> 			pmu->fixed_ctr_ctrl_hw |= pmu->fixed_ctr_ctrl & mask;
->> 	}
->> }
->>
->> Since this mask covers the entire 4-bit configuration block, it will also clear
->> bit 14 (METRICS_CLEAR_EN) from hardware. If the guest sets METRICS_CLEAR_EN and
->> then executes RDPMC natively, it will lead to un-cleared stale metrics.
->>
->> Should the mask be updated to avoid interfering with this newly introduced
->> feature bit?
+> Because the functions are defined out-of-line in a different translation unit,
+> the compiler cannot statically evaluate the BUG_ON(stack >= N_EXCEPTION_STACKS)
+> bounds checks nor inline the pointer math.
 > 
-> This is another tricky corner case. The best way should be disabling
-> PERF_METRICS along with fixed counter 3. But Intel HW doesn't provide a way
-> to disable PERF_METRICS except the EN_PERF_METRICS bit in PERF_GLOBAL_CTRL.
-> Since PERF_GLOBAL_CTRL could be in pass-through mode and guest could
-> directly overwrite PERF_GLOBAL_CTRL, it becomes meaningless for KVM
-> clearing EN_PERF_METRICS bit for guest PERF_GLOBAL_CTRL.
+> This incurs a penalty of multiple function calls and dynamic checks in
+> performance-sensitive #VC exception entry paths. For example, hot paths like
+> is_vc2_stack() in arch/x86/coco/sev/vc-handle.c repeatedly call these functions,
+> which are evaluated on every #VC exception:
 > 
-> For the filter mask, it may be good enough to only mask out
-> (INTEL_FIXED_0_KERNEL | INTEL_FIXED_0_USER).
-
-Yes, the 0xf mask erroneously strips bit 14 (METRICS_CLEAR_EN).
-Since event filtering is only intended to prevent counter
-increments, mask out only (INTEL_FIXED_0_KERNEL | INTEL_FIXED_0_USER) is
-sufficient, which also leaves the PMI enable bit intact.
-
-This also matches the GP counter handling, which only masks out the
-necessary enable bit and keep all other bits unchanged.
-
-@@ -557,7 +574,9 @@ static void
-kvm_mediated_pmu_refresh_event_filter(struct kvm_pmc *pmc)
-                        pmc->eventsel_hw |= pmc->eventsel &
-                                            ARCH_PERFMON_EVENTSEL_ENABLE;
-        } else {
--               u64 mask = intel_fixed_bits_by_idx(pmc->idx -
-KVM_FIXED_PMC_BASE_IDX, 0xf);
-+               u64 mask = intel_fixed_bits_by_idx(pmc->idx -
-KVM_FIXED_PMC_BASE_IDX,
-+                                                  INTEL_FIXED_0_KERNEL |
-+                                                  INTEL_FIXED_0_USER);
+> arch/x86/coco/sev/vc-handle.c:is_vc2_stack() {
+>     ...
+>     return (sp >= __this_cpu_ist_bottom_va(ESTACK_VC2) &&
+>             sp < __this_cpu_ist_top_va(ESTACK_VC2));
+> }
 > 
->>
->>>  	counter_rsvd = ~((BIT_ULL(pmu->nr_arch_gp_counters) - 1) |
->>>  			 ((BIT_ULL(pmu->nr_arch_fixed_counters) - 1) << KVM_FIXED_PMC_BASE_IDX));
->>>  	pmu->global_ctrl_rsvd = counter_rsvd;
+> Could this regression in a noinstr entry path be avoided by defining these
+> helpers as static __always_inline in the header instead?
+> 
+
+The performance regression concern seems overblown to me. The #VC
+handling has other heavy-handed things such as GHCB and VMGEXIT. The
+extra cycles for __this_cpu_ist_bottom_va() and __this_cpu_ist_top_va()
+shouldn't have any meaningful impact.
+
+I am thinking of avoiding the __always_inline directive unless someone
+has a strong reason/preference.
+
+>> +
+>> +	s = __this_cpu_read(cea_exception_stacks);
+>> +
+>> +	return (unsigned long)&s->event_stacks[stack].stack;
+>> +}
+> 
 
