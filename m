@@ -1,69 +1,47 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.218
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793090420;
-	b=JRHk+bHukZuMCap4kINe60Q/++U5l1wL8mpb6fjQiophn+naMTdjU6lZFkX4WvkrJelY
-	 xPDmwR4xSw9YjPVuyRICu47OvFQWLDw12iF8s/e8n+oHTKTiHNty7LiMpEauRzL4MmxwN
-	 +zH1JIM1AZkfL54ifoF6ZGoEtHPrMPxYlm8l8EPpYjm42QIrO8WtNCtr5il65Cm0JyseM
-	 stQ8CjwyGEOri9hvfTdaSVj6LGVPzwQbZZNFH7l9vg9hxp6tWNyL1VxBWk/jAjDynSRKK
-	 cmZEadgHLI4yseYMyre+N+90jGh4fVSalccS5Vy4yskThkz4j5GQxGcxokNOmq8F2Ow==
+	t=1793091166;
+	b=FmaJ9USZ4xrplwSTmcaM9Kia1hWr8jRmsgBJtip6Jyes8p7HJ14eKTsHd+buTk6ONL/8
+	 KrWBDNsGjMRQK0poxan7FgTPHBwcgw+kP6d2LfipNY6Qg2CZuSvH5elpYuymPwp3Ahuyb
+	 DRtc6w1yhr/+JejPC3bEF1RCJer98hnCUUfjzVZR8irln9NPEzTBVwYwdx6eJSYYV1/+4
+	 AeNMI48Zx9uBWSPidPlLkWtIyy+QYhoUbMQzJmw6rmo+pUcf2lWbaUZmQURIzlemCmS/Z
+	 4+mP9ORg+MxhaIlamHfc3Syl9fvtM94MWBSMuCxrsjlGp7AeHNy6Fa4VUIikCEfv77A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793090420;
-	h=DMARC-Filter:dkim-signature:Received:Received:Received:Subject:To:CC:
-	 References:From:Message-ID:Date:User-Agent:MIME-Version:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Originating-IP:
-	 X-ClientProxiedBy;
-	bh=dEUMA+v6R68CAwNDCvh/sXJcOeG92Dey9ccxulz6V5I=;
-	b=MEE2QPH1KYKKklzgPk/kU6EfTEAODqEZGUOPCkCWokYxL9rT++AxUXIjYI0sqLoYjf6D
-	 6jSmfNAV/mAlw0lI7v5DpXB50TaV7+HEUxcJZLJXZKMufPUMAq2IG6gJ69mohUgXsE/+9
-	 0PLVWBL/iaQaXezDKnT84xQO8MSg4ino26MFQQJY76XKKUch6Rv6AKJ4BMBIZ6E66Nl1T
-	 PRlX+K1h08pWQjZ10MMoLTtC5f0z8VJUVTi+RiiyZmh8KIhlr57duI0iUbcV/wTo4w1u7
-	 d07D69oaM1po0zBn3J6X2t90LcWEzG0RRxraYEDKsBpUbv/+YfNSRZ5UDmrpSq/BtvA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793091166;
+	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=H4uQku64KgXUJNfYEY0MKCka2gtiYaG22BFRUPfvLhU=;
+	b=lu3WUS/bnGf6xtaqF5eyOPlE+hk8pMn5I0TDCFG4zoj+hfse2dUG4ZYWn+Fb0pc2stJQ
+	 EDFjRyNnwnEODfWR0m6O/UV3kDcAeHWFVlptue2e7hw1uuFFkyNLoWD7rKA4ibRGvcWl6
+	 c/FznXuj/suzJxL/LLOJTj2w29A7ZHi/2rt+j8Fp1bwiM0AFzHuGSOKxp4mnmUwOIouYh
+	 5iyyx7vXF+8JNwmZHileeQ/HD3XKhuk/ryu/eRbubfzMrZTKMnd6gBG1xrI+jUfSUH47U
+	 3IlH5SIAHDBm/UjvY/Yaxwc1ML6VbYIefQlDdqN4zO4xgI91sOQ6ANit7wkR7sq8twA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=huawei.com;
-	spf=pass smtp.mailfrom=huawei.com;
-	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b="K/c8gj8J";
-	arc=none smtp.remote-ip=113.46.200.218
-Received: from canpmsgout03.his.huawei.com (canpmsgout03.his.huawei.com [113.46.200.218])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Reqkf6cL;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D681A606A31A
-	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 08:40:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D681A606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E39A606A31A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 08:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=K/c8gj8J
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=dEUMA+v6R68CAwNDCvh/sXJcOeG92Dey9ccxulz6V5I=;
-	b=K/c8gj8JYshqDOVmIoV5rTx2+KW/NYjSOUn2iSFcfljWnak4hqBLjLKKm+P9lvl7K9TZ8YrHR
-	2aWO3S2sCqf79Y3W70o285U9WkM/GaBf/2eOJdZm/tyXvkJ12h50CWx7MewMPJFTxEANn7ZkNPL
-	/nWTlD1tXyri+43AnC/xLbM=
-Received: from mail.maildlp.com (unknown [172.19.163.104])
-	by canpmsgout03.his.huawei.com (SkyGuard) with ESMTPS id 4jDP7m0j1QzpSt7;
-	Tue, 27 Oct 2026 16:40:04 +0800 (CST)
-Received: from whupemo200011.china.huawei.com (unknown [7.152.185.179])
-	by mail.maildlp.com (Postfix) with ESMTPS id C76234057F;
-	Tue, 27 Oct 2026 16:40:14 +0800 (CST)
-Received: from [10.174.178.46] (10.174.178.46) by
- whupemo200011.china.huawei.com (7.152.185.179) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Tue, 27 Oct 2026 16:40:13 +0800
-Subject: Re: [PATCH v5] ubifs: zero stale data beyond EOF before file size
- grows
-To: Nan Lin <lin.nan@h3c.com>
-CC: <linux-mtd@lists.infradead.org>, <richard@nod.at>,
-	<sashiko-reviews@lists.linux.dev>, <wangxiaoqing@h3c.com>,
-	<zhou.kete@h3c.com>
-References: <0f05834a-7483-3e4e-0612-1d70e045b893@huawei.com>
- <20261027080536.3569047-1-lin.nan@h3c.com>
-From: Zhihao Cheng <chengzhihao1@huawei.com>
-Message-ID: <5d2101bc-92a1-d633-fd8c-e491fcecb5c0@huawei.com>
-Date: Tue, 27 Oct 2026 16:40:12 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Reqkf6cL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A76E1F01829;
+	Tue, 27 Oct 2026 08:52:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793091165;
+	bh=H4uQku64KgXUJNfYEY0MKCka2gtiYaG22BFRUPfvLhU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=Reqkf6cLUo47ByHdJHPu47JBgsXyfv03O05ygNtH/1uEb5Zhddy/ZsnNO0UElblzo
+	 mgmZT9zzzD8my5fdzGV4tMVDTUvKGt7OsqtNzeSV80JmoMTNqsSYnekKt4n0YG6TzW
+	 JPT/KXAUpyZzRZELwgHqpNAYmqFRsPE733dOUeCnNY67dtyPY9oIdzHEoIclGTyyRh
+	 OVPdS4ZaRNv0cv3sDiwpb5LcsnjEl46WcqBh9BceHAXVS2/1+1iL9XiksmDHOo+7Ps
+	 Om5aPqe815FZIKNmO+ZY2efasAaPLbQegShObJdcYpdu5oiPW+qReDofiwjgjEAquc
+	 BuJqgG6zaydWw==
+Message-ID: <da2a2acf-f9da-489d-97c3-829b6f73fa52@kernel.org>
+Date: Tue, 27 Oct 2026 09:52:27 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -73,190 +51,140 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-In-Reply-To: <20261027080536.3569047-1-lin.nan@h3c.com>
-Content-Type: text/plain; charset="gbk"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
- whupemo200011.china.huawei.com (7.152.185.179)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/46] mm/mglru: don't use stack pointers when walking PUD
+ and PMD tables
+To: sashiko-reviews@lists.linux.dev, Andrew Morton
+ <akpm@linux-foundation.org>, Johannes Weiner <hannes@cmpxchg.org>,
+ Michal Hocko <mhocko@kernel.org>, Qi Zheng <qi.zheng@linux.dev>,
+ Shakeel Butt <shakeel.butt@linux.dev>, Lorenzo Stoakes <ljs@kernel.org>,
+ Kairui Song <kasong@tencent.com>, Barry Song <baohua@kernel.org>,
+ Axel Rasmussen <axelrasmussen@google.com>, Yuanchu Xie <yuanchu@google.com>,
+ Wei Xu <weixugc@google.com>, Baoquan He <baoquan.he@linux.dev>,
+ Baolin Wang <baolin.wang@linux.alibaba.com>,
+ "Liam R. Howlett" <liam@infradead.org>, Vlastimil Babka <vbabka@kernel.org>,
+ Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
+ Michal Hocko <mhocko@suse.com>, Kees Cook <kees@kernel.org>,
+ Peter Zijlstra <peterz@infradead.org>, Jann Horn <jannh@google.com>,
+ Pedro Falcato <pfalcato@suse.de>, Hugh Dickins <hughd@google.com>,
+ Pasha Tatashin <pasha.tatashin@soleen.com>,
+ Pratyush Yadav <pratyush@kernel.org>,
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>, Jan Kara <jack@suse.cz>,
+ Zi Yan <ziy@nvidia.com>, Lance Yang <lance.yang@linux.dev>,
+ Rik van Riel <riel@surriel.com>, Harry Yoo <harry@kernel.org>,
+ Alistair Popple <apopple@nvidia.com>, Nico Pache <nico.pache@linux.dev>,
+ Ryan Roberts <ryan.roberts@arm.com>, Dev Jain <dev.jain@arm.com>,
+ Usama Arif <usama.arif@linux.dev>, Kiryl Shutsemau <kas@kernel.org>,
+ Matthew Brost <matthew.brost@intel.com>, John Hubbard <jhubbard@nvidia.com>,
+ Peter Xu <peterx@redhat.com>, Will Deacon <will@kernel.org>,
+ "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>, Nick Piggin
+ <npiggin@gmail.com>, Oscar Salvador <osalvador@suse.de>,
+ Minchan Kim <minchan@kernel.org>, Muchun Song <muchun.song@linux.dev>,
+ Xu Xin <xu.xin@linux.dev>, Chengming Zhou <chengming.zhou@linux.dev>,
+ Chris Li <chrisl@kernel.org>, Kemeng Shi <shikemeng@huaweicloud.com>,
+ Nhat Pham <nphamcs@gmail.com>, Youngjun Park <youngjun.park@lge.com>,
+ Gregory Price <gourry@gourry.net>, Joshua Hahn <joshua.hahnjy@gmail.com>,
+ Rakie Kim <rakie.kim@sk.com>, Ying Huang <ying.huang@linux.alibaba.com>,
+ Jason Gunthorpe <jgg@ziepe.ca>, Roman Gushchin <roman.gushchin@linux.dev>
+Cc: kexec@lists.infradead.org, Josef Bacik <josef@toxicpanda.com>
+References: <20261027-fixes_core-v1-0-6f74bec9a5bb@kernel.org>
+ <20261027-fixes_core-v1-1-6f74bec9a5bb@kernel.org>
+ <sashiko-outbox-185883@kernel.org>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <sashiko-outbox-185883@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-ÔÚ 2026/10/27 16:05, Nan Lin Ð´µÀ:
-> mmap writes can dirty the page cache beyond EOF without changing
-> i_size. A later extending write or ftruncate turns that region into a
-> hole, but UBIFS never zeroes the partial page at the old EOF, so reads
-> expose the stale data.
+On 10/27/26 01:12, sashiko-bot@kernel.org wrote:
+>> From: Josef Bacik <josef@toxicpanda.com>
+>>
+>> MGLRU passes stack copies of page-table entries in walk_pud_range() and
+>> walk_pmd_range() when walking to the next level. These copies can become
+>> stale when khugepaged or MADV_DONTNEED (CONFIG_PT_RECLAIM) removes a PTE
+>> table concurrently.
+>>
+>> This pattern dates back to commit bd74fdaea146 ("mm: multi-gen LRU:
+>> support page table walks"). Likely, earlier locking masked the latent
+>> bug. Later changes exposed it: commit 1d65b771bc08 ("mm/khugepaged:
+>> retract_page_tables() without mmap or vma lock") allowed concurrent
+>> retraction, and commit cf4a65539c13 ("memcg-v1: no need for memcg locking
+>> for MGLRU") dropped the walker's outer RCU protection.
+>>
+>> The fix is simple, so just fix the original commit so we don't have to
+>> speculate. To fix it, pass the actual PMD/PUD pointers. This restores the
+>> RCU-protected lookup and validation against the live PMD. Note that the PUD
+>> handling is required as well to handle folded page tables correctly in all
+>> cases.
+>>
+>> Fix generated by an LLM and sent by Josef Bacik in private.
+>>
+>> Fixes: bd74fdaea146 ("mm: multi-gen LRU: support page table walks")
+>> Cc: stable@vger.kernel.org
+>> Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+>> [ david: handle walk_pud_range() as well, clarify+simplify description,
+>>          adjust Fixes: ]
+>> Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 > 
-> Zero the tail of the cached old-EOF folio in both size-extending
-> paths: ubifs_write_iter() for writes starting beyond EOF, and
-> do_setattr() before truncate_setsize() grows the size. This mirrors
-> what ext4 does on size extension;
-> 
-> Restructure ubifs_write_iter() to match ext4_buffered_write_iter():
-> acquire inode_lock, perform write checks, call file_remove_privs() for
-> setuid/setgid clearing (UBIFS sets S_NOCMTIME so file_modified() is a
-> no-op), update mtime/ctime via update_mctime(), zero the EOF hole,
-> then execute the write with generic_perform_write(). This ensures
-> proper serialization and security handling.
-> 
-> All zeroing takes the old-EOF folio lock without ui->ui_mutex, keeping
-> the folio_lock -> ui_mutex order of ->writepage(); the reverse order
-> deadlocks.
-> 
-> UBIFS does not enable large folios, so the EOF folio is always a
-> single page today; nevertheless, use folio-relative arithmetic
-> (offset_in_folio(), folio_contains(), folio_size()) throughout so the
-> code is correct if that ever changes.
-> 
-> Signed-off-by: Nan Lin <lin.nan@h3c.com>
-> 
-> Changes since v4:
->   - Use file_remove_privs() instead of kiocb_modified(), as UBIFS sets
->     S_NOCMTIME making file_modified() a no-op (suggested by
->     Zhihao Cheng).
-> 
-> Changes since v3:
->   - Add inode_lock and move zero-eof after generic_write_checks(),
->     matching ext4_buffered_write_iter structure
->     (suggested by Sashiko AI review & Zhihao Cheng).
->   - Add kiocb_modified() for setuid/setgid clearing.
->   - Keep explicit update_mctime() as UBIFS sets S_NOCMTIME.
-> 
-> Changes since v2:
->   - Move the extending-write check from ubifs_write_begin() to
->     ubifs_write_iter(), mirroring ext4_write_checks() ->
->     ext4_block_zero_eof(): the hole zeroing runs once per write()
->     syscall instead of once per ->write_begin() iteration (suggested
->     by Zhihao Cheng).
->   - Drop the ubifs_vm_page_mkwrite() zeroing: like ext4
->     (ext4_block_write_begin() with len = i_size - folio_pos),
->     ->page_mkwrite() does not zero the tail beyond EOF, and mmap
->     writes past EOF are the user's responsibility (suggested by
->     Zhihao Cheng).
-> 
-> Changes since v1:
->   - Both zeroing sites used PAGE_SIZE-relative arithmetic
->     (offset_in_page()-style) while folio_zero_range() expects
->     folio-relative offsets. UBIFS does not currently enable large
->     folios, so PAGE_SIZE == folio_size() and the two coincide in
->     practice, but switch to offset_in_folio()/folio_size() anyway so
->     the code is correct if UBIFS ever opts into large folios
->     (suggested by Sashiko AI review).
-> 
-> Note: The short-copy issue in ubifs_write_end() where i_size may
-> advance to pos + len on partial copies is pre-existing UBIFS behavior,
-> not introduced by this patch. It affects all buffered writes and
-> involves write_end() budget/ui_mutex handling; worth a dedicated
-> analysis/patch but outside the scope of this fix.
-> ---
->   fs/ubifs/file.c | 80 ++++++++++++++++++++++++++++++++++++++++++++++---
->   1 file changed, 76 insertions(+), 4 deletions(-)
-> 
-
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-> diff --git a/fs/ubifs/file.c b/fs/ubifs/file.c
-> index e73c28b12f97..534e93793744 100644
-> --- a/fs/ubifs/file.c
-> +++ b/fs/ubifs/file.c
-> @@ -202,6 +202,44 @@ static void release_existing_page_budget(struct ubifs_info *c)
->   	ubifs_release_budget(c, &req);
->   }
->   
-> +/**
-> + * ubifs_zero_eof_hole - zero the stale tail of the old-EOF folio.
-> + * @inode: inode whose size is about to grow
-> + * @new_end: new end of the file, only used to bound the tail
-> + *
-> + * Zero the cached folio containing the old EOF for [old EOF,
-> + * min(folio end, @new_end)) so a size extension does not expose stale
-> + * data left beyond EOF by mmap writes.
-> + *
-> + * Context: inode_lock held, ui_mutex not held.  The old-EOF folio_lock
-> + * must nest outside ui_mutex to match ->writepage()/->page_mkwrite().
-> + */
-> +static void ubifs_zero_eof_hole(struct inode *inode, loff_t new_end)
-> +{
-> +	loff_t old_size = i_size_read(inode);
-> +	size_t from, to;
-> +	struct folio *folio;
-> +
-> +	if (new_end <= old_size)
-> +		return;
-> +
-> +	folio = filemap_lock_folio(inode->i_mapping, old_size >> PAGE_SHIFT);
-> +	if (IS_ERR(folio))
-> +		return;
-> +
-> +	from = offset_in_folio(folio, old_size);
-> +	if (!from)
-> +		goto out;
-> +	to = folio_contains(folio, new_end >> PAGE_SHIFT) ?
-> +	     offset_in_folio(folio, new_end) : folio_size(folio);
-> +	if (to > from)
-> +		folio_zero_range(folio, from, to - from);
-> +
-> +out:
-> +	folio_unlock(folio);
-> +	folio_put(folio);
-> +}
-> +
->   static int write_begin_slow(struct address_space *mapping,
->   			    loff_t pos, unsigned len, struct folio **foliop)
->   {
-> @@ -1220,6 +1258,10 @@ static int do_setattr(struct ubifs_info *c, struct inode *inode,
->   
->   	if (attr->ia_valid & ATTR_SIZE) {
->   		dbg_gen("size %lld -> %lld", inode->i_size, new_size);
-> +
-> +		/* Zero before truncate_setsize() changes i_size. */
-> +		ubifs_zero_eof_hole(inode, new_size);
-> +
->   		truncate_setsize(inode, new_size);
->   	}
->   
-> @@ -1433,11 +1475,41 @@ static int update_mctime(struct inode *inode)
->   
->   static ssize_t ubifs_write_iter(struct kiocb *iocb, struct iov_iter *from)
->   {
-> -	int err = update_mctime(file_inode(iocb->ki_filp));
-> -	if (err)
-> -		return err;
-> +	struct inode *inode = file_inode(iocb->ki_filp);
-> +	ssize_t ret;
-> +
-> +	if (iocb->ki_flags & IOCB_NOWAIT)
-> +		return -EOPNOTSUPP;
->   
-> -	return generic_file_write_iter(iocb, from);
-> +	inode_lock(inode);
-> +
-> +	ret = generic_write_checks(iocb, from);
-> +	if (ret <= 0)
-> +		goto out;
-> +
-> +	/* Clear setuid/setgid; skip file_modified() due to S_NOCMTIME. */
-> +	ret = file_remove_privs(iocb->ki_filp);
-> +	if (ret)
-> +		goto out;
-> +
-> +	/* Update mtime/ctime explicitly (VFS skips it for S_NOCMTIME). */
-> +	ret = update_mctime(inode);
-> +	if (ret)
-> +		goto out;
-> +
-> +	/*
-> +	 * Zero stale data beyond old EOF if extending.  At this point
-> +	 * ki_pos is final (O_APPEND/RWF_APPEND already resolved).
-> +	 */
-> +	if (iocb->ki_pos > i_size_read(inode))
-> +		ubifs_zero_eof_hole(inode, iocb->ki_pos);
-> +
-> +	ret = generic_perform_write(iocb, from);
-> +out:
-> +	inode_unlock(inode);
-> +	if (ret > 0)
-> +		ret = generic_write_sync(iocb, ret);
-> +	return ret;
->   }
->   
->   static bool ubifs_dirty_folio(struct address_space *mapping,
+> Sashiko has reviewed this patch and found no issues.
 > 
 
+@Roman 46 useless emails from Sashiko.
+
+Why can another list overwrite something that is more restrictive?
+
+I guess I can teach my filters to throw all of these mails into the trash, where
+they belong. Unless we keep changing their content.
+
+But there is literally 0 value in these per-patch "no found issues" mails.
+
+There are just entirely stupid.
+
+-- 
+Cheers,
+
+David
