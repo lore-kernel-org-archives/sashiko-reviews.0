@@ -1,54 +1,41 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.173
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=114.242.206.163
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793095860;
-	b=DUdZoQ4rGs0OS63DAzbvelz9ET7HgOgCWlOGdG1X2NmVHhu0ubdDqV+bphx56K0JVdu/
-	 zV8PGAMC6u3m2uOjf8+ttBv/gJlq64vAZ+4Mni4PfJZTtlwquB1xkRQT4QyzvylFj4xkz
-	 mhWV0dBLUMcriGOk86lnoPqfVgrmXJsFv4InTejr5fL/Jzrowief0wmmEWYhOm6UitQn5
-	 7pyi0JCa3HeVD7/6QzLQSfV5r7bMqy9aS0gUHDrUWuH4UN8CmjMSDBeeEKVarEpklamR1
-	 +U0yVJERsnW4rgXgpeiUvTDdVP9h0o4ojTZBhMQSmCdJdDRVxJQIXgBuVIfO0JHluyQ==
+	t=1793099789;
+	b=LM/UDcScjhjDqNCc5DFrFy5lQ0uSHHjYwK5u/Vh4NsXeIXxmHc+MdrK9boAN/tdKE0qu
+	 adZ0yeJFeX0X93g6wfrbiGyyaFkoVxLVJnuzajLq+DTUFac0x+H9YkQGT5aBwwPDQipEL
+	 AwuyPR7pqobdL97XdZjJ0grYXn9mHANMTMfghCa9weC0dnqXECoSgse/F2NIti+AceOny
+	 VCrooA4DmSpZ24/S2cAOhj1sVoy9YBUD+h0y9v29ynJkad2E5Qw4hZ7avipSx6WuPI5p2
+	 qL6iIzLFKngB4Owkuwd6w0R22wNkJEUZnDUuji5OuQF4qs3kGGdj1+tMww8/UPeRDVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793095860;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
-	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
-	 To:X-Mailer;
-	bh=D1lqTZozMscar2SRArydDD07wjY6fFTz+QkMJLLtggA=;
-	b=ZFbR9TI92UeRclM7mO+5HCD/K+0WYmzwXJkzdaq67E00DnwN/UkyHbW0dOTfAsmaGhMF
-	 Bl2FB+zagD60/cwcu8SkbSnqi1ftMTnLeXzrBUVDc34Kq0k5+F1lCFxz7b8WZes4c1Bw3
-	 ZjZ3oslcfiJKZEqAVDN6DfrYLuIAFT3V69lMWRiRkdWmWTfHTVzBFJda3Y93fBhckqKki
-	 nNhtnj/XhuqwxfbM+CvwRKeTR6Ex4Rn454v9cLOZWpIy30kgFBEqxocpNM9AKdnKYSZ57
-	 EzDodGif6J4WvDoIx7c5UvAvEDQ8WnaKVDlvV4ABqgGZy4yA2p0/q35JboCBZfHK+og==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793099789;
+	h=DMARC-Filter:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-CM-TRANSID:X-CM-SenderInfo:
+	 X-Coremail-Antispam;
+	bh=vVtBkWkK7zs4jMXWSQ4xXM4N92+j1aNMfI0Zy/p0UKc=;
+	b=2JdL7tEoDKcQN/luKMUmxFv3OK/5ekO/62NCkVVmkPVyfBcXPckcHUNLdn7VnpZVqwbu
+	 ANQdkUQttRXnnB6YQ8+8gqvVWJB1Vu6xEx56gxE40bx4xCdj3MVpEVeUTvOUlGM4iFs+1
+	 GJyUbDUl+UycT1NJpE42JI/NNLVxIkIRs4YQyrlJvouJRV6Nxk/Ymyb9AI2jFQsGu3xSy
+	 6C5i0XbpGkJ8RK/G0xbOKONRWJh27CDghaT2/fB6vx/ELkyRwl9j8RwpTfGPhxGCXBU/1
+	 fGR0IB01Knqi5uh0nUgEHyDBGy53ZvoH5aAK9yidBAfDuxFeGDrevm+4K2G2oM85G3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=wfozcFUI;
-	arc=none smtp.remote-ip=95.215.58.173
-Received: from mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8D1606A31D
-	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 10:10:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CD8D1606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=wfozcFUI
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=7mCns8oF/JGvEa3tDBNQgrUGs+q1oTADhXwFuSXq1t8=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1793095856; v=1; x=1793700656;
- b=wfozcFUIxF6HeLyyzZq0DgS7M/8mJ9x8Y0mBYo7Vzk7I9fvdH6ns86LSVxXC0f4HYzh78HB6
- zPF2CTYUA2PxjJA5nFC3IEUZaDOsqF5igl0C8ENDLJj+Y9JTkgSfOMutwwgiHi3zcqd8n7UjXqN
- qBtJOhRrhkGJVxtS7DCxeUrE=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta12.migadu.com with ESMTPS id ffb86d557cbfa937;
-	Tue, 27 Oct 2026 10:10:56 +0000
-X-Mizu-Trace-ID: ffb86d557cbfa937
-X-Migadu-Flow: FLOW_OUT
-Content-Type: text/plain;
-	charset=us-ascii
+	dmarc=none header.from=loongson.cn;
+	spf=pass smtp.mailfrom=loongson.cn;
+	arc=none smtp.remote-ip=114.242.206.163
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDF65606A31A
+	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 11:16:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DDF65606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [223.64.69.17])
+	by gateway (Coremail) with SMTP id _____8DxTtMIiOBqbMoZAA--.8945S3;
+	Tue, 27 Oct 2026 19:16:25 +0800 (CST)
+Received: from [127.0.0.1] (unknown [223.64.69.17])
+	by front1 (Coremail) with SMTP id qMiowJAxmM0GiOBqWqYwAA--.35025S2;
+	Tue, 27 Oct 2026 19:16:23 +0800 (CST)
+Message-ID: <006f82c9-e689-4ca4-8a5e-cd4cc3e14225@loongson.cn>
+Date: Tue, 27 Oct 2026 19:16:20 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -57,174 +44,166 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.12\))
-Subject: Re: [PATCH 05/16] hugetlbfs: enforce F_SEAL_EXEC in setattr
-From: Muchun Song <muchun.song@linux.dev>
-In-Reply-To: <ed59aa45-0ce8-4e5b-8a19-b5323fbe7864@kernel.org>
-Date: Tue, 27 Oct 2026 18:10:34 +0800
-Cc: sashiko-reviews@lists.linux.dev,
- Andrew Morton <akpm@linux-foundation.org>,
- Gregory Price <gourry@gourry.net>,
- Zi Yan <ziy@nvidia.com>,
- Joshua Hahn <joshua.hahnjy@gmail.com>,
- Rakie Kim <rakie.kim@sk.com>,
- Ying Huang <ying.huang@linux.alibaba.com>,
- Johannes Weiner <hannes@cmpxchg.org>,
- Vladimir Davydov <vdavydov.dev@gmail.com>,
- Michal Hocko <mhocko@suse.com>,
- Hugh Dickins <hughd@google.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- Lukas Czerner <lczerner@redhat.com>,
- Carlos Maiolino <cmaiolino@redhat.com>,
- Christian Brauner <brauner@kernel.org>,
- Jan Kara <jack@suse.cz>,
- Daniel Verkamp <dverkamp@chromium.org>,
- Jeff Xu <jeffxu@google.com>,
- Oscar Salvador <osalvador@suse.de>,
- David Stevens <stevensd@chromium.org>,
- "Matthew Wilcox (Oracle)" <willy@infradead.org>,
- William Kucharski <william.kucharski@oracle.com>,
- Chris Li <chrisl@kernel.org>,
- Kairui Song <kasong@tencent.com>,
- Nhat Pham <nphamcs@gmail.com>,
- Miaohe Lin <linmiaohe@huawei.com>,
- Naoya Horiguchi <nao.horiguchi@gmail.com>,
- linux-mm@kvack.org,
- Eva Kurchatova <eva.kurchatova@virtuozzo.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <C1C8137C-D05D-440C-B143-4B5371624598@linux.dev>
-References: <20261026-fixes_shmem-v1-0-703206d5fa0c@kernel.org>
- <20261026-fixes_shmem-v1-5-703206d5fa0c@kernel.org>
- <sashiko-outbox-186003@kernel.org>
- <ed59aa45-0ce8-4e5b-8a19-b5323fbe7864@kernel.org>
-To: "David Hildenbrand (Arm)" <david@kernel.org>
-X-Mailer: Apple Mail (2.3901.100.1.1.12)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] dmaengine: loongson: loongson2-apb-cmc-dma: Fix
+ cyclic residue wrap NULL dereference
+To: sashiko-reviews@lists.linux.dev, dmaengine@vger.kernel.org
+Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+ vkoul@kernel.org, Frank.Li@kernel.org
+References: <cover.1792988985.git.zhoubinbin@loongson.cn>
+ <e094c8dc1d01af2f296457f6c18b5d85ae76905f.1792988985.git.zhoubinbin@loongson.cn>
+ <sashiko-outbox-184754@kernel.org>
+From: Binbin Zhou <zhoubinbin@loongson.cn>
+In-Reply-To: <sashiko-outbox-184754@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:qMiowJAxmM0GiOBqWqYwAA--.35025S2
+X-CM-SenderInfo: p2kr3uplqex0o6or00hjvr0hdfq/1tbiAQENCGrgBnkJzgADs0
+X-Coremail-Antispam: 1Uk129KBj93XoW3Jr4kCr47tFy5CF4DAF17CFX_yoW7tr4xpF
+	y3Jwn5Wry5Jw4rZFs8ur1rXF1UAFWrJFZ2qw43WrnxWr98Xrn29r1fta1rXayUAr98ur1j
+	qrs5u397C3WUGacCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+	xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+	1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
+	67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7CjxVAaw2AFwI
+	0_JF0_Jw1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+	67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+	IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+	14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+	W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07URKZXU
+	UUUU=
 
 
 
-> On Oct 27, 2026, at 17:51, David Hildenbrand (Arm) <david@kernel.org> =
-wrote:
->=20
-> On 10/27/26 03:22, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential =
-issue(s) to consider:
->> - [Medium] hugetlbfs: uninitialized info->seals read in =
-hugetlbfs_setattr() on root dir
->> --
->>=20
->> commit dfab7a0d71278312f805e82ce52518a8ea2f538d
->> Author: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
->>=20
->> hugetlbfs: enforce F_SEAL_EXEC in setattr
->>=20
->> This patch updates hugetlbfs_setattr() to call =
-memfd_check_seals_mode() when
->> ATTR_MODE is set so that fchmod() cannot modify execute bits on a =
-hugetlbfs
->> memfd sealed with F_SEAL_EXEC.
->>=20
->> Link: =
-https://patch.msgid.link/20260629180247.2343229-1-eva.kurchatova@virtuozzo=
-.com
->>=20
->>> diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
->>> index 6656807ce4377..7f5c3962b5d56 100644
->>> --- a/fs/hugetlbfs/inode.c
->>> +++ b/fs/hugetlbfs/inode.c
->>=20
->> [ ... ]
->>=20
->>> @@ -841,6 +842,13 @@ static int hugetlbfs_setattr(const struct =
-mnt_idmap *idmap,
->>> if (error)
->>> return error;
->>>=20
->>> + if (ia_valid & ATTR_MODE) {
->>> + error =3D memfd_check_seals_mode(info->seals, inode->i_mode,
->>> +       attr->ia_mode);
->>> + if (error)
->>> + return error;
->>> + }
->>=20
->> [Severity: Medium]
->> Can this read uninitialized or stale slab memory from info->seals =
-when
->> chmod() is called on a hugetlbfs root directory?
->>=20
->> hugetlbfs_dir_inode_operations wires .setattr to hugetlbfs_setattr(). =
-Unlike
->> hugetlbfs_get_inode(), which sets info->seals =3D F_SEAL_SEAL,
->> hugetlbfs_get_root() allocates the root directory inode via =
-new_inode() ->
->> hugetlbfs_alloc_inode() without initializing =
-HUGETLBFS_I(inode)->seals:
->>=20
->> fs/hugetlbfs/inode.c:hugetlbfs_get_root() {
->> 	inode =3D new_inode(sb);
->> 	if (inode) {
->> ...
->> 		inode->i_op =3D &hugetlbfs_dir_inode_operations;
->> 		inode->i_fop =3D &simple_dir_operations;
->> 		HUGETLBFS_I(inode)->resv_map =3D NULL;
->> 		/* directory inodes start off with i_nlink =3D=3D 2 (for =
-"." entry) */
->> 		inc_nlink(inode);
->> 		lockdep_annotate_inode_mutex_key(inode);
->> 	}
->> 	return inode;
->> }
->>=20
->> Because hugetlbfs_inode_cachep uses the init_once() slab constructor, =
-which
->> only calls inode_init_once(&ei->vfs_inode), newly allocated or =
-recycled
->> hugetlbfs_inode_info objects are not zeroed on allocation.
->>=20
->> Previously, hugetlbfs_setattr() only checked info->seals under =
-ATTR_SIZE,
->> which is not reachable on directories. With the new ATTR_MODE check, =
-changing
->> any execute/search bit on the mountpoint root directory reads =
-info->seals
->> and can fail with -EPERM if the F_SEAL_EXEC bit is set in =
-uninitialized
->> memory or left over from a previously freed sealed hugetlb memfd.
->>=20
->> Should hugetlbfs_get_root() also initialize HUGETLBFS_I(inode)->seals =
-=3D
->> F_SEAL_SEAL?
->=20
-> Shouldn't we just skip the check for directories?
->=20
->=20
-> diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
-> index 7f5c3962b5d56..293c7965f4894 100644
-> --- a/fs/hugetlbfs/inode.c
-> +++ b/fs/hugetlbfs/inode.c
-> @@ -842,7 +842,7 @@ static int hugetlbfs_setattr(const struct =
-mnt_idmap *idmap,
->        if (error)
->                return error;
->=20
-> -       if (ia_valid & ATTR_MODE) {
-> +       if (S_ISREG(inode->i_mode) && (ia_valid & ATTR_MODE)) {
->                error =3D memfd_check_seals_mode(info->seals, =
-inode->i_mode,
->                                               attr->ia_mode);
->                if (error)
->=20
-> Because sealing of directories does not apply.
->=20
-> Thoughts?
+On 2026/10/26 17:17, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] dmaengine: loongson: wrong next_sg check in loongson2_cmc_dma_desc_residue()
+> --
+> 
+> commit d1cdc3886ec73f6a09aef30478b0b2741d57690c
+> Author: Binbin Zhou <zhoubinbin@loongson.cn>
+> 
+> dmaengine: loongson: loongson2-apb-cmc-dma: Fix cyclic residue wrap NULL dereference
+> 
+> This commit updates loongson2_cmc_dma_desc_residue() to check desc->cyclic
+> instead of lchan->desc->cyclic when next_sg == 0, and adds a comment
+> explaining the cyclic wrap behavior.
+> 
+>> diff --git a/drivers/dma/loongson/loongson2-apb-cmc-dma.c b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+>> index 2037120b23caa..f090fbe0b8a1e 100644
+>> --- a/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+>> +++ b/drivers/dma/loongson/loongson2-apb-cmc-dma.c
+>> @@ -484,7 +484,19 @@ static size_t loongson2_cmc_dma_desc_residue(struct loongson2_cmc_dma_chan *lcha
+>>   	ndtr = loongson2_cmc_dma_read(lddev, LOONGSON2_CMCDMA_CNDTR, lchan->id);
+>>   	residue = ndtr << width;
+>>   
+>> -	if (lchan->desc->cyclic && next_sg == 0)
+>> +	/*
+>> +	 * For a cyclic descriptor that has wrapped (next_sg == 0), the
+>> +	 * current period only has the in-flight entry left; the entries
+>> +	 * from sg[0] onwards belong to the next period. Adding them would
+>> +	 * make residue exceed one period.
+>> +	 *
+>> +	 * Use desc->cyclic, not lchan->desc->cyclic: this helper is also
+>> +	 * reachable with a descriptor that is not lchan->desc, and only
+>> +	 * the active-descriptor branch passes lchan->desc today. Keying
+>> +	 * the wrap decision on the descriptor being queried keeps the
+>> +	 * result correct and avoids depending on lchan->desc being set.
+>> +	 */
+>> +	if (desc->cyclic && next_sg == 0)
+>>   		return residue;
+> 
+> [Severity: Medium]
+> Can an active cyclic descriptor ever reach loongson2_cmc_dma_desc_residue()
+> in drivers/dma/loongson/loongson2-apb-cmc-dma.c with next_sg == 0?
+> 
+> When starting a transfer in loongson2_cmc_dma_start_transfer(), lchan->next_sg
+> is set to 0 before configuring sg_req[0] and immediately incremented to 1
+> under lchan->vchan.lock:
+> 
+>      if (lchan->next_sg == lchan->desc->num_sgs)
+>          lchan->next_sg = 0;
+> 
+>      sg_req = &lchan->desc->sg_req[lchan->next_sg];
+>      ...
+>      lchan->next_sg++;
+> 
+> Similarly, on cyclic period completion in loongson2_cmc_dma_handle_chan_done(),
+> loongson2_cmc_dma_configure_next_sg() wraps lchan->next_sg from
+> lchan->desc->num_sgs to 0 to program sg_req[0], and
+> loongson2_cmc_dma_handle_chan_done() immediately increments lchan->next_sg to
+> 1 under lchan->vchan.lock:
+> 
+>      if (lchan->desc->cyclic) {
+>          vchan_cyclic_callback(&lchan->desc->vdesc);
+>          /* LOONGSON2_CMCDMA_CCR_CIRC mode don't need update register */
+>          if (lchan->desc->num_sgs == 1)
+>              return;
+>          loongson2_cmc_dma_configure_next_sg(lchan);
+>          lchan->next_sg++;
+>      }
+> 
+> While the final period sg_req[num_sgs - 1] is in flight, lchan->next_sg equals
+> desc->num_sgs, so the loop
+> 
+>      for (i = next_sg; i < desc->num_sgs; i++)
+>          residue += desc->sg_req[i].len;
+> 
+> naturally executes zero iterations. Thus for an active descriptor,
+> lchan->next_sg is always in [1, desc->num_sgs] when
+> loongson2_cmc_dma_tx_status() queries it under lchan->vchan.lock.
+> 
+> In this patch, the only caller that passes next_sg == 0 to
+> loongson2_cmc_dma_desc_residue() is the else if (vdesc) branch in
+> loongson2_cmc_dma_tx_status() for an unstarted queued descriptor on
+> vchan.desc_issued:
+> 
+>      if (lchan->desc && cookie == lchan->desc->vdesc.tx.cookie)
+>          state->residue = loongson2_cmc_dma_desc_residue(lchan, lchan->desc,
+>                                                          lchan->next_sg);
+>      else if (vdesc)
+>          state->residue = loongson2_cmc_dma_desc_residue(lchan,
+>                                                          to_lmdma_desc(vdesc), 0);
+> 
+> With desc->cyclic && next_sg == 0, querying a queued cyclic descriptor (while
+> another descriptor is active) returns early before summing desc->sg_req[i].len,
+> reporting only the active transfer's ndtr << width.
+> 
+> Even after the later commit in the series ("dmaengine: loongson:
+> loongson2-apb-cmc-dma: Fix residue for queued descriptors") switches the
+> else if (vdesc) branch to loongson2_cmc_dma_desc_total_len(),
+> loongson2_cmc_dma_desc_residue() is only called for the active descriptor
+> lchan->desc with lchan->next_sg in [1, desc->num_sgs]. Doesn't that leave the
+> next_sg == 0 check as dead code and the comment describing cyclic wrap and
+> non-active descriptors inaccurate?
 
-Make sense to me.
+Yes, an active cyclic descriptor next_sg is never 0.
+loongson2_cmc_dma_start_transfer() sets next_sg to 0 and immediately
+increments it to 1 before programming sg_req[0], and
+loongson2_cmc_dma_configure_next_sg() does the same after wrapping. So
+the next_sg == 0 branch is dead code for the active path, and the
+existing loop already handles the last period correctly (next_sg ==
+num_sgs means zero iterations).
 
-Thanks,
-Muchun
+I'm inclined to merge patch-1 and patch-2 because this section of code 
+needs to be removed in patch-2, so there's no point in fixing it first 
+and then deleting it.
+> 
+> Also, regarding the commit message description of the NULL dereference when
+> lchan->desc == NULL: since vchan_find_desc() searches vchan.desc_issued, and
+> both loongson2_cmc_dma_issue_pending() and loongson2_cmc_dma_handle_chan_done()
+> immediately start the first descriptor from vchan.desc_issued under
+> lchan->vchan.lock, can vchan.desc_issued ever be non-empty while lchan->desc
+> is NULL? Should this check and its comment be removed altogether once queued
+> descriptors use loongson2_cmc_dma_desc_total_len()?
+> 
 
->=20
-> --=20
-> Cheers,
->=20
-> David
+-- 
+Thanks.
+Binbin
 
