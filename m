@@ -1,47 +1,47 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793099971;
-	b=cSNpHl53sD1Oxq8MdVafWDDafE5GqHJboFbCJh+XK/fC+v+1CzOrMGLyaarDCc7il9C9
-	 ircAd0kAuZ+DP+HiCQGDOlqysDRG8a/j/gFTlqtmNG0VtP2ml0heWy5jP6obES+pBM2mx
-	 TmkYqwM914z//WJQQDIH7itRj3F3v3AaetK/5mhMiN0Pt+g+XW0aU4YjGO6y8j4tHuu/o
-	 W+HO9Z4nkYEeAK86VousNoP0I7nbHQY5qHVIGrOeSdL2j7G43IoMA4z43/onpfGQNmH6S
-	 7TKJt+wzy1DJ4NdIEgwCZWJTvlwweRPXop4g2UinUZzw53rRyP1lAhvAfrzq11hM1ng==
+	t=1793100432;
+	b=0hi746EAaDxaJZ0NXhWl16MRmnSRGD85Uu/MZlsUUbkbqB9uLJi+FclsNIrW0Y+jibH0
+	 ybYyufag3OD4iUSliEA9pfT4hU83U6ILhnMHMROI5NQKAh/TxqLtC4Y7zeZFe7dRgOcgo
+	 OWIaJjNK5Q2utpKAKFw37fSwyUB6SpzeTZYWsEIsfF/DNyV8IDutMAzKuogM/wqK+vAqU
+	 oiVZQlSfU5/JvbTvz6t3ez5NSBiGg56fdzIivipJgDfxrj7ZRx6fQcq+TjKXHQZ8GR5gI
+	 7+kbjF0aVfLjdEvPIwqmPrgstLK/qTxj05ZTQ9VEgbUvKJKsh9dTImzSxmeXWfXFScQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793099971;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793100432;
 	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
 	 Subject:To:Cc:References:Content-Language:From:Autocrypt:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=A7yFeNmixC1qpGLop/XKM8z6oKyDB+AHSkeaELStkWg=;
-	b=y4+bRKElGB5PXbCpOVghwTEZiaNUFxEGetpjr6mfjvZ9OPKDqVSAWG07cnwDlUmVc0na
-	 dHdrcpYIm1TyD+sggMUWEooK11tmSHqQWc7AB5JR6Pd95f9NYrZjm/6WDd5L6vkqiJ6Nr
-	 OqW62k+/GdLbbX+pTVAj+k05zINVyQ7AfTSdZZlTSUOc9Ttc3Yqv6LiOP/zeV4pRuG0G6
-	 ybmCuWeHcfaJrJpyc0hBdz6nrKHOCBignQxDt4jwRnONYGhUdoRR8JNllD1heGRF4NA+g
-	 G/IYMgNhifeVJr5gV7RKZ6/D5YdFG6TDegOAYnPmvHCS00ISDl/JxWhMv2e+NPtn35Q==
+	bh=GbQ0MT6Xqpot2fekosyGQ6/rCmYxlnIL0o9qnEGTdeY=;
+	b=Ek2Y8WuuHtBnwmYca/hsmhcX1AZ3CXQhauNGGs6/PXg9h9gPM+qxJ2V+MWJVnRddCFlu
+	 9VH7YacGblKqqbHtNn6LS6LtxutJKf0SAy5eI4/EguVzSQXXXQghcb+dhqZKaG6nTIgwJ
+	 GOct9kYDPvZNePYdhgcSnypP4TV9GBbZCx1AGt8L2TbWhP0rY+DwQ+qUxnb5XwvwBF8MP
+	 MdWBLl3ZRTPJRzvdL0GVvYduPrbMJWgp56Po3zWUUaej8UxYuovJ39XWApnu1UN+/zgEz
+	 nSSCAtQzNxf4zaXinIrOJzJOHzNCMLhqnVv7TZORYDCjxJF6+Fb7ouM5/8EgptoG3ZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=T7H5vjk6;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RrPot6Og;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A840606A31B;
-	Tue, 27 Oct 2026 11:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAFC606A336;
+	Tue, 27 Oct 2026 11:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=T7H5vjk6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B53A1F01825;
-	Tue, 27 Oct 2026 11:19:30 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RrPot6Og
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC97D1F01825;
+	Tue, 27 Oct 2026 11:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793099971;
-	bh=A7yFeNmixC1qpGLop/XKM8z6oKyDB+AHSkeaELStkWg=;
+	s=k20260515; t=1793100431;
+	bh=GbQ0MT6Xqpot2fekosyGQ6/rCmYxlnIL0o9qnEGTdeY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=T7H5vjk6gpsyNRrD/1XAIooRwghIE0RHIJz1VjipAohsRN1z6ZlOvOoFafSs4CNr4
-	 BVuIswLDUcrFYnqbuod7qyqyM2dQditzlV25/lv+oldQO/8cNOO0whC/sc4X12B4vB
-	 Bsp4L8MCbQv2DdQ6pISwEy0/b8NpUJ0WU/Jve4gl7HTh50PlZs5fU2ztFl+HIvIimA
-	 WFfyDiJLpOeWJ3dKUtOXLAtr+7gNvdmfNbsBxI5hwrGzLeVSNut8uloG9zqZmfx5io
-	 dkRdK57KqNt0DnbrDmjkc8hmYBfEv/6tfyapSWVP+u5L3INa+Y8M/kkUT+AEYlStJj
-	 CCg77t0vGxDTA==
-Message-ID: <69b980a0-8499-45aa-b112-76d3739a5e11@kernel.org>
-Date: Tue, 27 Oct 2026 12:19:28 +0100
+	b=RrPot6Og8C+qKJM4R9pkgT6wVuQmvbG4jKmBzTVk1CCz2mqWPsWPXvzOm2Yj17brv
+	 IoXQJf0vefmP/TPNz5OZqwOrfLEwpucaWatI+NpQFj3jTvzd7Og8owID/ajakn+3O0
+	 AQnS9zRU+Nj6zY0skMkm+5Iy5WbVKPjVDsJ103e/A0NW6GWcaQtEGkMjJ66cBVWaZj
+	 +LBlhRzDRw+sCDqGeAm0fd8YRjfJe4O+soo6T8TF6usyyorMyjRb2NGozs86heRLVA
+	 EZtrEWFkjdHvlHbPx7tksxLg+gQwSkAzHeYyiwLz4eN6CPCrs41t+3IYz95dy24DKn
+	 jWtww4NLJVvkw==
+Message-ID: <614ae12a-4ac2-4a3d-a49e-78b69d457915@kernel.org>
+Date: Tue, 27 Oct 2026 12:27:09 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -52,14 +52,14 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/24] serial: 8250: add bounds check for line array in
- setup_serial()
+Subject: Re: [PATCH 14/24] serial: 8250: ioc3: store registered line number in
+ driver data
 To: sashiko-reviews@lists.linux.dev,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: linux-serial@vger.kernel.org
 References: <20261027-tty-llm-v1-0-99b0202ae546@linuxfoundation.org>
- <20261027-tty-llm-v1-6-99b0202ae546@linuxfoundation.org>
- <sashiko-outbox-186417@kernel.org>
+ <20261027-tty-llm-v1-14-99b0202ae546@linuxfoundation.org>
+ <sashiko-outbox-186414@kernel.org>
 Content-Language: en-US
 From: Jiri Slaby <jirislaby@kernel.org>
 Autocrypt: addr=jirislaby@kernel.org; keydata=
@@ -104,58 +104,71 @@ Autocrypt: addr=jirislaby@kernel.org; keydata=
  f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
  DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
  S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <sashiko-outbox-186417@kernel.org>
+In-Reply-To: <sashiko-outbox-186414@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 27. 10. 26, 12:12, sashiko-bot@kernel.org wrote:
+On 27. 10. 26, 12:11, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Low] serial: 8250: build failure in setup_serial() due to non-existent info->line
+> - [Low] serial: 8250: ioc3: undeclared identifiers in serial8250_ioc3_probe()
 > --
 > 
-> commit a2e0e82dd3bc2dcce54251c9832007f4a9e30584
+> commit 42c7c91e0766573099398067e430ef38776baba0
 > Author: Joshua Rogers <linux@joshua.hu>
 > 
-> serial: 8250: add bounds check for line array in setup_serial()
+> serial: 8250: ioc3: store registered line number in driver data
 > 
-> This commit adds a bounds check in setup_serial() to prevent out-of-bounds
-> writes when registering serial ports for a PCMCIA card.
+> This commit attempts to save the registered line number into data->line in
+> serial8250_ioc3_probe() so the remove path unregisters the proper port.
 > 
->> diff --git a/drivers/tty/serial/8250/serial_cs.c b/drivers/tty/serial/8250/serial_cs.c
->> index 5dcd1544e478d..8bd88f3d6d865 100644
->> --- a/drivers/tty/serial/8250/serial_cs.c
->> +++ b/drivers/tty/serial/8250/serial_cs.c
->> @@ -349,6 +349,11 @@ static int setup_serial(struct pcmcia_device *handle, struct serial_info *info,
->>   {
->>   	struct uart_8250_port uart;
+>> diff --git a/drivers/tty/serial/8250/8250_ioc3.c b/drivers/tty/serial/8250/8250_ioc3.c
+>> index 088242de2eff9..3ab50e04be451 100644
+>> --- a/drivers/tty/serial/8250/8250_ioc3.c
+>> +++ b/drivers/tty/serial/8250/8250_ioc3.c
+>> @@ -63,6 +63,7 @@ static int serial8250_ioc3_probe(struct platform_device *pdev)
+>>   	if (IS_ERR(uport))
+>>   		return PTR_ERR(uport);
 >>   
->> +	if (info->ndev >= ARRAY_SIZE(info->line)) {
->> +		dev_err(&handle->dev, "no room for more serial ports\n");
->> +		return -EINVAL;
->> +	}
+>> +	data->line = line;
 > 
 > [Severity: Low]
-> Does this break the build when CONFIG_SERIAL_8250_CS is enabled?
+> Does this break compilation when CONFIG_SERIAL_8250_IOC3 is enabled because
+> neither data nor line is declared in serial8250_ioc3_probe()?
 > 
-> Commit d6a0791098be ("serial: 8250: make port operations work on struct
-> uart_8250_port") replaced line[4] with uport[4] in struct serial_info in
-> drivers/tty/serial/8250/serial_cs.c:
+> Prior commit d6a0791098bede ("serial: 8250: make port operations work on
+> struct uart_8250_port") refactored drivers/tty/serial/8250/8250_ioc3.c to
+> remove struct ioc3_8250_data, data, and line:
 > 
-> struct serial_info {
+> drivers/tty/serial/8250/8250_ioc3.c:serial8250_ioc3_probe() {
+> 	struct uart_8250_port *uport, up;
+> 	struct resource *r;
+> 	void __iomem *membase;
+> 	int irq;
 > 	...
-> 	struct uart_8250_port	*uport[4];
-> 	const struct serial_quirk *quirk;
-> };
+> 	uport = serial8250_register_8250_port(&up);
+> 	if (IS_ERR(uport))
+> 		return PTR_ERR(uport);
 > 
-> and updated setup_serial() to store the registered port in info->uport:
+> 	platform_set_drvdata(pdev, uport);
+> 	return 0;
+> }
 > 
-> 	info->uport[info->ndev] = serial8250_register_8250_port(&uart);
+> and updated serial8250_ioc3_remove() to pass uport directly to
+> serial8250_unregister_port():
 > 
-> Because struct serial_info no longer has a member named line, referencing
-> info->line in ARRAY_SIZE() fails to compile. Should this check
-> ARRAY_SIZE(info->uport) instead?
+> drivers/tty/serial/8250/8250_ioc3.c:serial8250_ioc3_remove() {
+> 	struct uart_8250_port *uport = platform_get_drvdata(pdev);
+> 
+> 	serial8250_unregister_port(uport);
+> }
+> 
+> Since the driver now stores and unregisters uport directly rather than
+> tracking a line number in data->line, is this change obsolete on top of
+> commit d6a0791098bede?
 
-ACK, it should
+It is. And I did not notice this bug prior to d6a0791098bede, so there 
+is no "preparatory" fix before that commit. Therefore, this might be a 
+fix for older (stable) kernels, actually.
 
 thanks,
 -- 
