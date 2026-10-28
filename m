@@ -1,99 +1,47 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.180
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793211130;
-	b=eaCRvIXUqjOx5Q/KJEidNMotXQT9RTgNUs9vFtuREPmc3YInqzLaMMDSwpPNfP377sWL
-	 epUaDajbeMs95zgtqH5OFHEIPqP5qEPNEXI5M44Xry0eoC6hdP+gfD9NduBH2gxs07L/5
-	 Sp+9YgUSuXxCsjmMeUBFLmkinZPG1PDys3klBUcFR8P4H97Yw1RpUqYVZslRjBqUm6JQU
-	 DdPmNSZasPY+vU72t2vuF4da+DWlW3z9dOQ5PHGI5j8DbN8QLSprOk0737KoConkABWsI
-	 SX0fLwserYw3kUFPscojnTIu2E/2gkCwB2USx/JycY1/PPxz36Pk1jr+5IMEyTdyeFA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793211130;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793221013;
+	b=eLi3RRVWDPCXBG2wfNZmPOV8AdwDkXSKTySSOG9tKW9hKSWksuCx02BH6VSfhLz+KGie
+	 PqvbSpjk0MW4LTs4Z9GJ9fUV8KhGsldc1mzDsskLiaw90Dw80r5jkfGc4Cu0SIsfROZaW
+	 4BrXsjssFwVsiYX9ctsu0wqt5pNMTMOdoa4PGQmIu03ULTriEGZj1fOy0uqJlaPzVa6Hm
+	 GK01W8RXuFOfCspcIAQET+DtJN40nHXAo227skv9CNdkd6h9/fDbBTdJZeAgjE/miR5c5
+	 AJIY9YqvDvo61HlO3l+cs9jQwi098T+i3c8hnfei7Mf8xWSLwvqjhM3R22lJ1YHT6tA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793221013;
+	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=LaRGx1dNEWPdR/HUW5QFXw5geXVqN0PcRJZxfDPcq4k=;
-	b=x9CkIuDLk5OS0qL0Z8TlBP8/BI2NnJC4duqe1hrWpkHkchbWdcI3nFs4i7pGVBhhTNst
-	 aSFPqrOF/rAf58AD5wqH83CBwLxVvS4r9AtEX9ZWKzh4kc+lZ3m6DiqRRT48Jrr5eH3XW
-	 pcUjx0t89iXhy9y+HJzWoJYncbrgxDuT/vgyV5GRX/eqSP6mlx2iyOkRIIxQj+ubG4wKy
-	 Q/2ahJV3FLPkzXdKUNwv/Het69WdTQWfmR3Ipk22ezx4fQPJCeASRqemXVRSbKrZ9BaGO
-	 mYXvO+F8JM8nYZD5saFgZGh8YPoOXb/7Jyen+yaZPg945QwyYtoeSwzqkv5BGtMKwEA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Zk+bLpMb;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.180
-Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	bh=LZu1Cfp3L16PzP3G/orLKum8qOHFItvUlrkqAzL+8QE=;
+	b=WvBYBhsN3dxieyMPdb+nNtjK91Fz8ZwLP2FYIHME2FxD7KPNeqwYuOWbMM2T/yQNtrtS
+	 JLzSFcdvFWEumr8X6koFXGYum+OJ0KLrGXe+yq0kaohkVaxwzixOIFTKfjuXqJE6L/lHT
+	 ftiX0B+6kSggwAMQ0GRBsSww5tvx6kvaOODPKXjckGDOi/NPZ28mOt7opUS8l+Jam8lBJ
+	 IdUTaPJE70r7qMip78G+lGy6jf/ooSBUZZPL7yRmA2l1rRDugspIkHA9CmmHUSGzXBoBZ
+	 4ulntJK7S7KKeAHtB+ZYB8t1ALJtx+Qo5UuszggeWN7FLF2D0Q2Aq6oX2138cLqHHVQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GS3doGme;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF91606B458
-	for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 18:12:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5FF91606B458
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28653606A31A
+	for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 20:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Zk+bLpMb
-Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-36a0f27c9f4so1968970eec.1
-        for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 11:12:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793211129; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Ds/z8zUUlOt+FUBr+T03QvEH3CA53FnvncRwXJ4wdhE6VBmJW29fzgSEa058K6mf8j
-         4rx1D/PmBhbhPazldUBN4pFtXGzlevYKl6jfa0oMtPQcDCR7hfJ2PomRP7L62RJoXLQL
-         SZnQW9hpgFt+eLX/c5Zz4P8zXJKdlaOGTh/1iprpyE6Rmw3PV511YJ226fAZ4mC/5q2W
-         ConPwgluHi871sg/Kst2wEWIz9No4WAPET0Igf+ZLRzjKNXWKh7UptU0ffRbaWgHR9WU
-         FThnM3oTpl2Ce/ZbU+NcKOdw2vgjP5wPwA/n1yHAUKBJSoNAtLco7w1/fQLpq9D+esPv
-         ag6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=LaRGx1dNEWPdR/HUW5QFXw5geXVqN0PcRJZxfDPcq4k=;
-        fh=VPgln0uFUbKdQ4TdIV4/cJOLXPC6kpgaFquVPTX6pe8=;
-        b=d9LMtCZc1ShH1kIU3J+tS+ghMVxWSATD9HBEhV4NQdeu7iKKrc8S0dv71eFrBQomsC
-         C/sbe2on2E0ae4mg6jjk11ug2RN0j/wkEuwH9AvDLsmNoviieEFkeuuSvKNcwiJ3hVlU
-         /NP3svnIg0Vh+sLZzUxhSyLvJQ/PjSRbM4XWMNlRLZcOFOiR4YB/PeXsa9MI8dxoEIH6
-         uP2/BFMl2nfLiO7dUjtiTj8PIfZl567ipQhgTFM8wqo0kQE47dgsuHDk2OqTC7P0Q5Te
-         hBABRI4ybfGxrgfduRAuACiGtJjtV6hMOgXZ6szN6tpgetPMjPMhgCU1v3RLf66x+naX
-         JUOQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793211129; x=1793815929; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=LaRGx1dNEWPdR/HUW5QFXw5geXVqN0PcRJZxfDPcq4k=;
-        b=Zk+bLpMbDFctHtjAj0U9rVjmAEzpcMpoaloGOSpRuN2hcDWs5DDxWLJkoOqq/2UBTU
-         QKDzqwjOc9tgpjGfzOfOwHuYSFQ7drcVi7aCrzIIxoiVXU/aUr2q/z/1exglMSf5VDkF
-         oX5V8559upcnpRiK/MV84k8jUubq+p9TmbiB0seJGRiIUIXLpq6crfqlmYbWJ0U3FbuY
-         1qF6kWsOiju0d5dTk92chJ19Xj3AG/CKv68y1vCVN4bxU0uw7wYeXiRYjyj2yWlHYsPv
-         Im5yklUjl9p+OjuAtWFlpqJljRZUlUA6UplLa36LQJEvOxx/YB/GONx19BHXa1NOb0L6
-         S/mQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793211129; x=1793815929;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=LaRGx1dNEWPdR/HUW5QFXw5geXVqN0PcRJZxfDPcq4k=;
-        b=k5GGYcxjxS2QnB/O3LWytjqcnLxLURRk5xNd57cHGAVG/qBLVLzM6CeljWFvfV9Thv
-         JgeWU1CqHz/wz97RcCEQiH5olrY4/9BepeilTcMkSYLZymHziEhRcipq8qZnlHK7+z5s
-         iVzzMcL9wF9qslrw+N0+KfTxyT+xBjLiCB07NbG4nUteu1gDnF4mnzNJ6y6rfoAfT/j7
-         aeabUa1IWJhwcLG0lLSBBbrUZNQECl3ehytGBpsAFTUtRsvh9baYvjpQmbp+O8NfH8NY
-         WhOAguyA9ZOlb4kVBMCdzDoSmBJwRET9OKZ6uKYkxW074q6RvlqlKnYChSwGh6+WrFab
-         Vp4A==
-X-Gm-Message-State: AFq9FYIv1fNaWvGrXc4FIsJ4sqLQCUIEpaJ3WcNZAiE+da6rUvdc6jLl
-	qxuC2rs5Etifkpm2dsh/QNPcGb3ZQzs2g8L+R3AWl+/E3oSZYEnuH3hjS38Z1UWlIeSUnVbokr5
-	zNtgEpK3h+E3rfwEAlWlgHuCbhof/TpofJlQe3jY=
-X-Gm-Gg: AYBFou3MbzB4k6M/yO3VP6kIPyYAHtxQPSaXgrNBfmES7u5e2MRTfBfFIAkzSEI6SDh
-	QuxN3buClTi9je3F+2Fl+EyZMeH10hFy63C90wE4eK9OqlkvsWNSdY9RflhlEf2QM+dITCLICW5
-	0KSOeFPKgmV9yBAMigmRDf2i63EU1YbQo3fR+97E5A/FyjWZI25cxwUkgr1aUYzImL58xiKi4aX
-	Zlf1fhtniaw91l/8SLvnh79MBWpYh3kGCdr0xjexjWT7J/QCeY1xRt3JNUzaPl2MJKQbgawFdzf
-	X4nJ8xn8WLB3OKzDdSD4bDPKdPkiNbPQDPJuR3sCcpYYCfHEPEppykezAjllNh5s8KpuumBx764
-	6MZXX51hRKGjiHrzAMYpXl3sb3LxH2CWDJJuxSbk=
-X-Received: by 2002:a05:7300:e9c8:10b0:36a:18a:e02f with SMTP id
- 5a478bee46e88-36a203d2f99mr5121130eec.28.1793211129415; Wed, 28 Oct 2026
- 11:12:09 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=GS3doGme
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C95E1F01829;
+	Wed, 28 Oct 2026 20:56:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793221012;
+	bh=LZu1Cfp3L16PzP3G/orLKum8qOHFItvUlrkqAzL+8QE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=GS3doGmePKLTxMBl+unC3ykHsq1mGw7+gmmDZJSzc9q/PgJo+2fP+qmWwk/1x7fMb
+	 1qi1BQnKHOgrUjCM85YSdApcrxNttwjdcG4dUCaE8JndWcNZUa+rdc0DAoEtZlSzKA
+	 LuTzM4AhAsy4W0hF0A0GYZyfgn+pRadVV+LKaPmfvCMs57lNI9stAAraG1ehlvPU3e
+	 8wuYdtq5E2meTCrjtCXLe1awZ5E06zqPQBobBkb0BpqpjBfiNiCA0iSVZRXJLyJwsi
+	 hH1pmZ3EI4ox0FfUZ8QyK4VM+BLXMc0G38JpNWqM3Lr5UZ9McDSU0R2sGR5qGWMb1F
+	 EIrUurhnkeP0Q==
+Message-ID: <bff8fa50-6b73-4bb1-b944-2d90dd4e41d3@kernel.org>
+Date: Wed, 28 Oct 2026 21:51:28 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,98 +51,243 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261028164539.3471833-1-henryzhang62@gmail.com>
- <20261028164539.3471833-6-henryzhang62@gmail.com> <sashiko-outbox-188230@kernel.org>
-In-Reply-To: <sashiko-outbox-188230@kernel.org>
-From: Henry Zhang <henryzhang62@gmail.com>
-Date: Wed, 28 Oct 2026 11:11:58 -0700
-X-Gm-Features: AclHuK8-5DUjhx-8H0W2_S57CeLeTF3woQXvHvgC4ykQsqxBjId8MHZi9iiIIWw
-Message-ID: <CANTW0yq2H=SjZY=zHZnUQWB5Mf6yfD+Wy=CMJ3saKRf7JhjYaQ@mail.gmail.com>
-Subject: Re: [PATCH v4 5/5] drm/vc4: dsi: Recover from a timed-out transfer
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, 
-	Dave Stevenson <dave.stevenson@raspberrypi.com>, Maxime Ripard <mripard@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 06/15] mm/shmem: hold off eviction in shmem_writeout()
+To: sashiko-reviews@lists.linux.dev, Andrew Morton
+ <akpm@linux-foundation.org>, Gregory Price <gourry@gourry.net>,
+ Zi Yan <ziy@nvidia.com>, Joshua Hahn <joshua.hahnjy@gmail.com>,
+ Rakie Kim <rakie.kim@sk.com>, Ying Huang <ying.huang@linux.alibaba.com>,
+ Johannes Weiner <hannes@cmpxchg.org>,
+ Vladimir Davydov <vdavydov.dev@gmail.com>, Michal Hocko <mhocko@suse.com>,
+ Hugh Dickins <hughd@google.com>, Baolin Wang
+ <baolin.wang@linux.alibaba.com>, Lukas Czerner <lczerner@redhat.com>,
+ Carlos Maiolino <cmaiolino@redhat.com>,
+ Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>,
+ Daniel Verkamp <dverkamp@chromium.org>, Jeff Xu <jeffxu@google.com>,
+ Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>,
+ David Stevens <stevensd@chromium.org>,
+ "Matthew Wilcox (Oracle)" <willy@infradead.org>,
+ William Kucharski <william.kucharski@oracle.com>,
+ Chris Li <chrisl@kernel.org>, Kairui Song <kasong@tencent.com>,
+ Nhat Pham <nphamcs@gmail.com>, Miaohe Lin <linmiaohe@huawei.com>,
+ Naoya Horiguchi <nao.horiguchi@gmail.com>
+Cc: linux-mm@kvack.org, Josef Bacik <josef@toxicpanda.com>,
+ Pedro Falcato <pfalcato@suse.de>, "Kiryl Shutsemau (Meta)" <kas@kernel.org>
+References: <20261028-fixes_shmem-v3-0-4ce3baf2db4b@kernel.org>
+ <20261028-fixes_shmem-v3-6-4ce3baf2db4b@kernel.org>
+ <sashiko-outbox-188427@kernel.org>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <sashiko-outbox-188427@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Oct 28, 2026 at 10:19=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
-....
+On 10/28/26 21:35, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] mm/shmem: use-after-free in shmem_evict_inode() on concurrent swapoff
+> --
+> 
+> commit bfe337ff80d886d314a9991abae8133932277cd0
+> Author: Josef Bacik <josef@toxicpanda.com>
+> 
+> mm/shmem: hold off eviction in shmem_writeout()
+> 
+> This commit prevents inode eviction during shmem_writeout() by incrementing
+> info->stop_eviction before removing the folio from the page cache and
+> decrementing it after swap_writeout() and any potential page cache
+> reinsertion complete. It also updates shmem_evict_inode() to always wait at
+> least once for info->stop_eviction to reach zero even if the inode was
+> already removed from the swaplist.
+> 
+>> diff --git a/mm/shmem.c b/mm/shmem.c
+>> index e3e4bbbe1d802..eddd5870be072 100644
+>> --- a/mm/shmem.c
+>> +++ b/mm/shmem.c
+>> @@ -1616,6 +1616,17 @@ static int shmem_setattr(const struct mnt_idmap *idmap,
+>>  	return error;
+>>  }
+>>  
+>> +static void shmem_disallow_eviction(struct shmem_inode_info *info)
+>> +{
+>> +	atomic_inc(&info->stop_eviction);
+>> +}
+>> +
+>> +static void shmem_allow_eviction(struct shmem_inode_info *info)
+>> +{
+>> +	if (atomic_dec_and_test(&info->stop_eviction))
+>> +		wake_up_var(&info->stop_eviction);
+>> +}
+>> +
+>>  static void shmem_evict_inode(struct inode *inode)
+>>  {
+>>  	struct shmem_inode_info *info = SHMEM_I(inode);
+>> @@ -1628,16 +1639,21 @@ static void shmem_evict_inode(struct inode *inode)
+>>  		mapping_set_exiting(inode->i_mapping);
+>>  		shmem_truncate_range(inode, 0, (loff_t)-1);
+>>  		shmem_unused_huge_del(inode);
+>> -		while (!list_empty(&info->swaplist)) {
+>> -			/* Wait while shmem_unuse() is scanning this inode... */
+>> +		/*
+>> +		 * Writeout may still use the inode after swapoff has removed it
+>> +		 * from the swaplist, so always wait at least once.
+>> +		 */
+>> +		do {
+>>  			wait_var_event(&info->stop_eviction,
+>>  				       !atomic_read(&info->stop_eviction));
+>> +			if (list_empty(&info->swaplist))
+>> +				break;
+>>  			spin_lock(&shmem_swaplist_lock);
+>>  			/* ...but beware of the race if we peeked too early */
+>>  			if (!atomic_read(&info->stop_eviction))
+>>  				list_del_init(&info->swaplist);
+>>  			spin_unlock(&shmem_swaplist_lock);
+>> -		}
+>> +		} while (!list_empty(&info->swaplist));
+> 
 > [Severity: High]
-> Can a late or error interrupt race on dsi->reg_dma_mem in vc4_dsi_transfe=
-r()
-> before disable_irq(dsi->irq) is reached in vc4_dsi_host_transfer(),
-> corrupting DSI1_CTRL before vc4_dsi_reset_and_restore() saves and restore=
-s
-> it?
->
-> When wait_for_completion_timeout() times out in vc4_dsi_transfer(),
-> dsi->irq and INT_EN are still enabled while vc4_dsi_transfer() performs
-> five register writes before returning -ETIMEDOUT:
->
-> drivers/gpu/drm/vc4/vc4_dsi.c:vc4_dsi_transfer() {
->         ...
->         DSI_PORT_WRITE(INT_EN, DSI_PORT_BIT(INTERRUPTS_ALWAYS_ENABLED));
->
->         if (ret)
->                 goto reset_fifo_and_return;
->         ...
-> reset_fifo_and_return:
->         drm_err(drm, "DSI transfer failed, resetting: %d\n", ret);
->
->         DSI_PORT_WRITE(TXPKT1C, DSI_PORT_READ(TXPKT1C) & ~DSI_TXPKT1C_CMD=
-_EN);
->         udelay(1);
->         DSI_PORT_WRITE(CTRL,
->                        DSI_PORT_READ(CTRL) |
->                        DSI_PORT_BIT(CTRL_RESET_FIFOS));
->
->         DSI_PORT_WRITE(TXPKT1C, 0);
->         DSI_PORT_WRITE(INT_EN, DSI_PORT_BIT(INTERRUPTS_ALWAYS_ENABLED));
->         return ret;
-> }
->
-> On BCM2835 DSI1 (where broken_axi_workaround is enabled), DSI_PORT_WRITE(=
-)
-> calls dsi_dma_workaround_write(), which writes the value into the single
-> shared buffer *dsi->reg_dma_mem and submits a DMA transfer from
-> dsi->reg_dma_paddr:
->
-> drivers/gpu/drm/vc4/vc4_dsi.c:dsi_dma_workaround_write() {
->         ...
->         *dsi->reg_dma_mem =3D val;
->
->         tx =3D chan->device->device_prep_dma_memcpy(chan,
->                                                   dsi->reg_paddr + offset=
-,
->                                                   dsi->reg_dma_paddr,
->                                                   4, 0);
->         ...
-> }
->
-> If the threaded handler vc4_dsi_irq_handler() runs concurrently (for
-> example on an LPRX/TA timeout error interrupt or a late completion
-> interrupt) and calls DSI_PORT_WRITE(INT_STAT, stat), it overwrites
-> *dsi->reg_dma_mem =3D stat without any lock.
->
-> If that happens during the read-modify-write of CTRL in
-> reset_fifo_and_return, the DMA transfer can write stat into DSI1_CTRL.
-> When vc4_dsi_reset_and_restore() then runs under disable_irq(dsi->irq), i=
-t
-> snapshots the corrupted register via u32 ctrl =3D DSI_PORT_READ(CTRL) and
-> writes it back at the end of the reset, leaving DSI1_CTRL corrupted (for
-> example with DSI1_CTRL_EN cleared so the block remains gated).
->
-> Should disable_irq(dsi->irq) be called in vc4_dsi_transfer() before the
-> post-timeout register writes (or before reset_fifo_and_return)?
+> Can this loop exit in shmem_evict_inode() while a concurrent shmem_unuse()
+> still holds info->stop_eviction > 0, leading to a use-after-free of info and
+> its embedded vfs_inode?
+> 
+> Specifically, two swapoff() syscalls on different swap types (typeA and
+> typeB) can run try_to_unuse() -> shmem_unuse() concurrently while
+> shmem_evict_inode() is evicting an inode:
+> 
+> 1. In shmem_evict_inode(), shmem_truncate_range() -> shmem_undo_range() ->
+>    shmem_recalc_inode() frees the swap entries and sets info->swapped = 0
+>    under info->lock (without shmem_swaplist_lock).
+> 
+> 2. Just before info->swapped becomes 0, shmem_unuse(typeA) on another CPU
+>    holds shmem_swaplist_lock, sees info->swapped != 0, and is about to call
+>    shmem_disallow_eviction(info):
+> 
+>    mm/shmem.c:shmem_unuse() {
+>        ...
+>        list_for_each_entry_safe(info, next, &shmem_swaplist, swaplist) {
+>            if (!info->swapped) {
+>                list_del_init(&info->swaplist);
+>                continue;
+>            }
+>            shmem_disallow_eviction(info);
+>            spin_unlock(&shmem_swaplist_lock);
+> 
+>            error = shmem_unuse_inode(&info->vfs_inode, type);
+>        ...
+>    }
+> 
+> 3. Before shmem_unuse(typeA) increments info->stop_eviction,
+>    shmem_evict_inode() enters the do-while loop and evaluates
+>    wait_var_event(&info->stop_eviction, !atomic_read(&info->stop_eviction)),
+>    which returns immediately because info->stop_eviction is still 0 (the
+>    "peeked too early" race noted in the comment).
+> 
+> 4. shmem_unuse(typeA) then calls shmem_disallow_eviction(info) (setting
+>    info->stop_eviction to 1), drops shmem_swaplist_lock, and begins scanning
+>    &info->vfs_inode in shmem_unuse_inode().
+> 
+> 5. A second concurrent swapoff running shmem_unuse(typeB) acquires
+>    shmem_swaplist_lock, sees !info->swapped is now true, and removes the
+>    inode from the list via list_del_init(&info->swaplist) without checking
+>    info->stop_eviction.
+> 
+> 6. Back in shmem_evict_inode(), list_empty(&info->swaplist) is now true while
+>    info->stop_eviction is 1. Either the new unlocked
+>    if (list_empty(&info->swaplist)) break; exits the loop immediately, or
+>    shmem_evict_inode() takes shmem_swaplist_lock, skips list_del_init()
+>    because atomic_read(&info->stop_eviction) is non-zero, and then exits the
+>    loop because the while (!list_empty(&info->swaplist)) condition is false.
+> 
+> Could shmem_evict_inode() then return and allow the inode to be freed while
+> shmem_unuse(typeA) is still accessing &info->vfs_inode in shmem_unuse_inode()
+> and later calling shmem_allow_eviction(info)?
+> 
 
-The race is real, but it is not introduced by this patch and not limited
-to the timeout path: on BCM2835/6/7 DSI1 every DSI_PORT_WRITE() goes
-through the single reg_dma_mem buffer without a lock, so the threaded
-handler can corrupt any register write made from process context
-(transfer setup, the bridge callbacks, the existing reset_fifo_and_return
-path). Moving disable_irq() would only cover this one path.
+Two concurrent swapoffs, what at time to be alive.
 
-I'm sending a separate fix that serializes dsi_dma_workaround_write()
-with a mutex, so this series stays as it is.
+IIUC, the problem is the check for list_empty(), and that can race.
 
-Henry
+So we must rely entirely on stop_eviction under lock.
+
+diff --git a/mm/shmem.c b/mm/shmem.c
+index c44d2dd71c89..e518fb8e3350 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1643,17 +1643,18 @@ static void shmem_evict_inode(struct inode *inode)
+                 * Writeout may still use the inode after swapoff has removed it
+                 * from the swaplist, so always wait at least once.
+                 */
+-               do {
++               while (true) {
+                        wait_var_event(&info->stop_eviction,
+                                       !atomic_read(&info->stop_eviction));
+-                       if (list_empty(&info->swaplist))
+-                               break;
++                       /* Verify under lock to sync with concurrent swapoff. */
+                        spin_lock(&shmem_swaplist_lock);
+-                       /* ...but beware of the race if we peeked too early */
+-                       if (!atomic_read(&info->stop_eviction))
++                       if (!atomic_read(&info->stop_eviction)) {
+                                list_del_init(&info->swaplist);
++                               spin_unlock(&shmem_swaplist_lock);
++                               break;
++                       }
+                        spin_unlock(&shmem_swaplist_lock);
+-               } while (!list_empty(&info->swaplist));
++               }
+        }
+
+        simple_xattrs_free(&sbinfo->xa_cache, &info->xattrs, sbinfo->max_inodes ? &freed : NULL);
+
+
+But now we always have to grab the lock at least once.
+
+Do we care? My intuition says "no". Thoughts? Alternatives?
+
+-- 
+Cheers,
+
+David
