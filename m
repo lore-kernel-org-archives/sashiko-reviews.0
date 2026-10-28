@@ -1,64 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.251
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.221
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793180605;
-	b=FVDSqbT/c06OcdnnY4MAxvYXsI6Q0NUCCdonEVd57UzLvnz5BrqzvyknWVi7agafioFk
-	 amrkgdIvODZPaQS9Dy/wZk9pY/N6xJg/T/5H+NZWmM9EaUD/zkbKgVarGiwPsCqq28oGA
-	 mQxXMH+vcHg9yzZM729j7O6gb+l/ripCa5Apwala+TMXiU/dpbCtA/Sd9fdUwkQjbtUxe
-	 Uzf+oyETbjscU6p5Zq3bg6LqrT4OjYs+c6fBGZ6/8UBh8wLH0sG/BXo7RJc8QUZrhiPQy
-	 o93CLMwK2aGfo2lvhHczEJWTA+4MzHnZHh8pZS0QziqmbF5ZEibJgyT43e/QP2ZIekg==
+	t=1793184707;
+	b=yqgAW5Rfy9YzKcE0vtv8k4Q12D++Y6EjQZhs89zQM/Az67DhKrjR3yueZNbxf5u417yh
+	 GpV/cLjCq8RSPQmLaOeG8mHbV6WCfTOWH/sHupHXuPbT27EVykZkrsXyxz1LXAVGqn4dP
+	 pm/yzGbR0RoaQ5NgltfA09zXCxgAdPCEylD4AY7i/TEMpJGEzeFVoch+Mc3BT+ba2PMgM
+	 qXuRuFAYR9FH+AD9RBdDkkdBS4lrv5pjjjgVtEUI8EPrt7WZKBNuUQbbbqIFJb92Vxfwx
+	 tc5N9OAMtIPmXPAtRrDg7t619W1ogSLvEg2/VufZM6Al9hqeXs7gcFN/oGIkaGo3V+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793180605;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=CQkoaGxFPCbjeZamXcejCMzan5vi/kzLThKUBhOYZIs=;
-	b=mgjFlYrOdMaBLncUINJjtZqKnqc+EW95KRdf8Ry4K7KbPs9bNzyomCWbozWOZ693nUTj
-	 qE3WSv3m6kOnfbhywX/2Eh6tr8jtRvM8rkWIEs/1fXaffR/k2MPDt0ppNvyIYk/6H4jTT
-	 XPb5AbVNY8VxliZvMjBywiDtc0XuKpTcP8O7dCca6VZUvIazx4ys3A9oYTZHATL1pR4YH
-	 xN4DsWDXzxtCsianK3E6r5E4fBrki99P9wd3oBQNkQPN550yqT4N/7aFM25J/u44skaVp
-	 gX6FQ7C/YdG4cf/W6N2aIrjHEkHfu5NU/gErN+1P1JmbIvBLa7qIZkSqSaQ7/UJfqIg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793184707;
+	h=DMARC-Filter:dkim-signature:Received:Received:Received:Message-ID:
+	 Date:MIME-Version:User-Agent:Subject:To:CC:References:
+	 Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy;
+	bh=QVuAkEilZ5oFK1qOIjgNohU8C9sqgDos/dquD82VOJ0=;
+	b=vKnyRQLSddwFYbWW5mvls7556MYeVZLPt50WTgQ9YRkyk7h64QOHN4KHXHSbNRDpTd9B
+	 KhmwqihiOzMHQTK+PMCm7tUSqSY9oxCujVpJWVFKFbtZHRFHu2No97VJH7cfoEhKd/PQs
+	 ogz5P71gySAwBwZSko8PGm4BZD182XscuBawC53+CowaLeebSep4rC4+5i3Aif0EMmhkN
+	 U+AWHL3fO0D2n65PwfoecfNqX4GemfNIthbdReNXNDdQlR8nETmlCl0rf8ydjdTQdmZie
+	 Hcxd/J1A6ZruJ3yEbzFooISwmJwaRizYZeLIPZCZAEfHV5RJXIQ81qBdR/4pC5EsJVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=grimler.se;
-	spf=pass smtp.mailfrom=grimler.se;
-	dkim=pass header.d=grimler.se header.i=@grimler.se header.a=rsa-sha256 header.s=key1 header.b=kKKqTKgO;
-	arc=none smtp.remote-ip=91.218.175.251
-Received: from mta0.migadu.com (out-251.mta0.migadu.com [91.218.175.251])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=huawei.com;
+	spf=pass smtp.mailfrom=huawei.com;
+	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=Tjhpe1XE;
+	arc=none smtp.remote-ip=113.46.200.221
+Received: from canpmsgout06.his.huawei.com (canpmsgout06.his.huawei.com [113.46.200.221])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675A3606A31A
-	for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 09:43:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 675A3606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=grimler.se
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=grimler.se
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B840606A31D
+	for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 10:51:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6B840606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=grimler.se header.i=@grimler.se header.a=rsa-sha256 header.s=key1 header.b=kKKqTKgO
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=d/2E/PezWjwLWhPkWiAxAK5JiE4wIcmLmPJexV1wMjc=;
- c=simple/simple; d=grimler.se;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1793180599; v=1; x=1793785399;
- b=kKKqTKgOI78N04Tkna0/CXKingPkS0b9TKvx2x4FofMRPGAcSCr87rzQRx2kxZ+d0ZbIZ5aS
- eoqffZp9qGbKrDGTnqDWv7iCWKqI+rgOGCVLo5kM3U6zreo/lkIP48a0BqWky3rW+VY4k2hDJR0
- PZ1z9sRw9nHp1Efp5CZgLHOk=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by mta12.migadu.com with ESMTPS id aa396f88f5ab5694;
-	Wed, 28 Oct 2026 09:43:19 +0000
-X-Mizu-Trace-ID: aa396f88f5ab5694
-X-Migadu-Flow: FLOW_OUT
-Date: Wed, 28 Oct 2026 10:43:15 +0100
-From: Henrik Grimler <henrik@grimler.se>
-To: Marek Szyprowski <m.szyprowski@samsung.com>
-Cc: dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v5] drm/bridge: sii9234: use extcon cable detection logic
- to detect MHL
-Message-ID: <20261028094315.GA27448@localhost>
-References: <20260723-exynos4-sii9234-driver-v5-1-44b31b5597bd@grimler.se>
- <20260723095127.B41251F00A3A@smtp.kernel.org>
- <CGME20261028092842eucas1p2dc55792e353ac1acf432f2059760c162@eucas1p2.samsung.com>
- <2a42bea6-00ab-4d5e-ad8d-facfb51d7a2f@samsung.com>
+	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=Tjhpe1XE
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=QVuAkEilZ5oFK1qOIjgNohU8C9sqgDos/dquD82VOJ0=;
+	b=Tjhpe1XEYDomJqQjMX/KSBw4At6Ih1wHlx9vV0r0NhfNLpLnl9LqJLfGM0Z2KbFMG2qQjBdq1
+	/2/qXe1L4oAUtgtr6ufh4G6Z7rsuS8fKO9BPURZ/BEcOQdgjCRtysqIw+3ZYOro+R2d/My5Fr7f
+	ldQynZZycNbuSEdLwcsbUmY=
+Received: from mail.maildlp.com (unknown [172.19.162.223])
+	by canpmsgout06.his.huawei.com (SkyGuard) with ESMTPS id 4jF4110czvzRhT1;
+	Wed, 28 Oct 2026 18:51:33 +0800 (CST)
+Received: from whupemk100010.china.huawei.com (unknown [7.152.184.41])
+	by mail.maildlp.com (Postfix) with ESMTPS id A0CA240561;
+	Wed, 28 Oct 2026 18:51:41 +0800 (CST)
+Received: from [10.67.110.140] (10.67.110.140) by
+ whupemk100010.china.huawei.com (7.152.184.41) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Wed, 28 Oct 2026 18:51:40 +0800
+Message-ID: <a7a1a3ed-74e2-41a5-abc4-28efbc761263@huawei.com>
+Date: Wed, 28 Oct 2026 18:51:38 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -68,163 +62,37 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2a42bea6-00ab-4d5e-ad8d-facfb51d7a2f@samsung.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 -next 06/18] LSM: pass struct path and struct file to
+ the inode xattr hooks
+To: Alexei Starovoitov <alexei.starovoitov@gmail.com>,
+	<sashiko-reviews@lists.linux.dev>
+CC: <bpf@vger.kernel.org>, <linux-security-module@vger.kernel.org>,
+	<linux-trace-kernel@vger.kernel.org>, <selinux@vger.kernel.org>,
+	<dsterba@suse.cz>, Chuck Lever <cel@kernel.org>, Jeff Layton
+	<jlayton@kernel.org>, Anna Schumaker <anna@kernel.org>
+References: <20261027121151.1887650-1-caixinchen1@huawei.com>
+ <20261027121151.1887650-7-caixinchen1@huawei.com>
+ <sashiko-outbox-186599@kernel.org> <DMFPMAYUPSDU.2AW3225P0W0ON@gmail.com>
+Content-Language: en-US
+From: Cai Xinchen <caixinchen1@huawei.com>
+In-Reply-To: <DMFPMAYUPSDU.2AW3225P0W0ON@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
+ whupemk100010.china.huawei.com (7.152.184.41)
 
-Hi Marek,
+Thanks for the pointer. I will change in the next version.
 
-On Wed, Oct 28, 2026 at 10:28:41AM +0100, Marek Szyprowski wrote:
-> Hi,
-> 
-> Handling this patch takes definitely too long, but maybe You will find a few minutes
-> for the v6 with those fixes:
+The other issue the bot reported on this patch is real as well:😭
+walking path->dentry in a BPF LSM program drops PTR_TRUSTED.
+I will add BTF_TYPE_SAFE_TRUSTED for path in next version
 
-Yeah the ball is definetly in my court. I have been meaning to fix
-Sashiko's comments and send a new version, but it has not been at the
-top of my todo list. Hopefully I can find some time to sit down with
-the hardware and test it again in the somewhat near future, and send a
-new version.
-
-> On 23.07.2026 11:51, sashiko-bot@kernel.org wrote:
-> > Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> > - [High] Use-After-Free due to race between `flush_work()` and devres teardown.
-> > - [High] Missing initial state check breaks display on coldplug.
-> > - [Medium] Missing `return` statement after `dev_err_probe()` ignores initialization errors.
-> > --
-> > 
-> > --- Patch [1]: [PATCH v5] drm/bridge: sii9234: use extcon cable detection logic to detect MHL ---
-> > commit 15547772b748ad5e9e79681b157e1cae684d850d
-> > Author: Henrik Grimler <henrik@grimler.se>
-> >
-> > drm/bridge: sii9234: use extcon cable detection logic to detect MHL
-> >
-> > To use MHL we currently need the MHL chip to be permanently on, which
-> > consumes unnecessary power. Let's use extcon attached to MUIC to enable
-> > the MHL chip only if it detects an MHL cable.
-> >
-> >> diff --git a/drivers/gpu/drm/bridge/sii9234.c b/drivers/gpu/drm/bridge/sii9234.c
-> >> index be67642ab7d31..bf211906fefc6 100644
-> >> --- a/drivers/gpu/drm/bridge/sii9234.c
-> >> +++ b/drivers/gpu/drm/bridge/sii9234.c
-> > [ ... ]
-> >> @@ -864,6 +870,63 @@ static int sii9234_init_resources(struct sii9234 *ctx,
-> >>  	return 0;
-> >>  }
-> >>  
-> >> +static void sii9234_extcon_work(struct work_struct *work)
-> >> +{
-> >> +	struct sii9234 *ctx = container_of(work, struct sii9234, extcon_wq);
-> >> +	int state = extcon_get_state(ctx->extcon, EXTCON_DISP_MHL);
-> >> +
-> >> +	if (state == ctx->cable_state)
-> >> +		return;
-> >> +
-> >> +	ctx->cable_state = state;
-> >> +
-> >> +	if (state > 0)
-> >> +		sii9234_cable_in(ctx);
-> >> +	else
-> >> +		sii9234_cable_out(ctx);
-> >> +}
-> > [ ... ]
-> >> +static int sii9234_extcon_init(struct sii9234 *ctx)
-> >> +{
-> > [ ... ]
-> >> +	ctx->extcon = edev;
-> >> +	ctx->extcon_nb.notifier_call = sii9234_extcon_notifier;
-> >> +	INIT_WORK(&ctx->extcon_wq, sii9234_extcon_work);
-> >> +	ret = devm_extcon_register_notifier(ctx->dev, edev, EXTCON_DISP_MHL, &ctx->extcon_nb);
-> >> +	if (ret)
-> >> +		dev_err_probe(ctx->dev, ret, "failed to register notifier for MHL\n");
-> >> +
-> >> +	return 0;
-> >> +}
-> > [Severity: Medium]
-> > Will this ignore initialization errors?
-> >
-> > If devm_extcon_register_notifier() fails (for example, returning -EPROBE_DEFER
-> > or -ENOMEM), the error is logged but ignored since there is no return statement
-> > after dev_err_probe(). The probe function completes successfully and assumes
-> > ctx->extcon is active.
-> This is the lack of return dev_err_probe(...) similar to the ones already reported
-> for the earlier versions.
-> 
-> 
-> > [ ... ]
-> >> @@ -919,12 +982,17 @@ static int sii9234_probe(struct i2c_client *client)
-> > [ ... ]
-> >>  	i2c_set_clientdata(client, ctx);
-> >>  
-> >>  	ctx->bridge.of_node = dev->of_node;
-> >>  	drm_bridge_add(&ctx->bridge);
-> >>  
-> >> -	sii9234_cable_in(ctx);
-> >> +	if (!ctx->extcon)
-> >> +		sii9234_cable_in(ctx);
-> >>  
-> >>  	return 0;
-> >>  }
-> > [Severity: High]
-> > Does this code skip setting the initial state if the cable is already plugged
-> > in during boot?
-> >
-> > Extcon notifiers trigger on state changes but do not automatically emit an
-> > event for the current state upon registration. In sii9234_probe(), if an
-> > extcon device is found, sii9234_cable_in() is skipped, but the driver never
-> > queries the initial state.
-> >
-> > If the cable is already connected when the driver probes, the hardware will
-> > never be powered on, and the display will remain non-functional until the user
-> > physically unplugs and replugs the cable.
-> 
-> This is indeed an important remark. Just call
-> 
-> schedule_work(&ctx->extcon_wq);
-> 
-> in the else branch for (!ctx->extcon) check at the end of probe function.
-> 
-> >> @@ -933,7 +1001,13 @@ static void sii9234_remove(struct i2c_client *client)
-> >>  {
-> >>  	struct sii9234 *ctx = i2c_get_clientdata(client);
-> >>  
-> >> -	sii9234_cable_out(ctx);
-> >> +	if (ctx->extcon) {
-> >> +		flush_work(&ctx->extcon_wq);
-> > [Severity: High]
-> > Does this code introduce a race condition with the devres teardown?
-> >
-> > Since the notifier is registered via devm_extcon_register_notifier(), it will
-> > only be unregistered after sii9234_remove() completes. If an extcon state
-> > change occurs right after flush_work(&ctx->extcon_wq),
-> > sii9234_extcon_notifier() will queue the work again.
-> >
-> > Once sii9234_remove() completes, devres will unregister the notifier and
-> > free ctx (allocated via devm_drm_bridge_alloc()). When the queued work executes
-> > in sii9234_extcon_work():
-> >
-> > 	struct sii9234 *ctx = container_of(work, struct sii9234, extcon_wq);
-> > 	int state = extcon_get_state(ctx->extcon, EXTCON_DISP_MHL);
-> >
-> > it will dereference the freed ctx, resulting in a use-after-free.
-> IMHO this is a generic issue with devm_extcon_* API and for now I would suggest
-> getting back to non-devm extcon API.
-
-Thanks for all the hints!
-
-Best regards,
-Henrik Grimler
-
-> >> +		if (ctx->cable_state > 0)
-> >> +			sii9234_cable_out(ctx);
-> >> +	} else {
-> >> +		sii9234_cable_out(ctx);
-> >> +	}
-> >>  	drm_bridge_remove(&ctx->bridge);
-> >>  }
-> 
-> Best regards
-> -- 
-> Marek Szyprowski, PhD
-> Samsung R&D Institute Poland
-> 
+On 10/27/2026 11:01 PM, Alexei Starovoitov wrote:
+> On Tue Oct 27, 2026 at 1:02 PM UTC, sashiko-bot wrote:
+>> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+>> - [Critical] bpf: missing __nullable on file arg in inode xattr LSM hooks allows NULL deref
+> bot is correct.
+> Please see commit 94e948b7e684 ("bpf: annotate file argument as __nullable in bpf_lsm_mmap_file")
+> and add to kernel/bpf/bpf_lsm_proto.c when args can be NULL.
+> That's how verifier knows.*2*2
