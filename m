@@ -1,58 +1,45 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=113.46.200.221
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793184707;
-	b=yqgAW5Rfy9YzKcE0vtv8k4Q12D++Y6EjQZhs89zQM/Az67DhKrjR3yueZNbxf5u417yh
-	 GpV/cLjCq8RSPQmLaOeG8mHbV6WCfTOWH/sHupHXuPbT27EVykZkrsXyxz1LXAVGqn4dP
-	 pm/yzGbR0RoaQ5NgltfA09zXCxgAdPCEylD4AY7i/TEMpJGEzeFVoch+Mc3BT+ba2PMgM
-	 qXuRuFAYR9FH+AD9RBdDkkdBS4lrv5pjjjgVtEUI8EPrt7WZKBNuUQbbbqIFJb92Vxfwx
-	 tc5N9OAMtIPmXPAtRrDg7t619W1ogSLvEg2/VufZM6Al9hqeXs7gcFN/oGIkaGo3V+A==
+	t=1793186358;
+	b=z/0wwvjM/SFLQEfO79EjOsvJ4oAkHeg5nce3tZc01l3dCBa3vujdm23f23AQGBKCSlbr
+	 lcoM8x9SnuZgBRYUw190Hqw09pZPEZizIVHvNj/WrjQtgXLWIzcdWDG+xetCOsu3o9gTQ
+	 GZFpiSLEai4GScEtDHxe38AqHgSMcsUaISsUpAHKkhuUF8xlAiVi/h9ZtibvhAHr+dG0J
+	 Vd7FdZynJjuROl0iHDfFn9iSvIj0ln5nOCR+/mhdpXUoVOpba0O0nhM4KjmpUGcArE+qI
+	 S1JPVdbqAmniiAWRAgIPEl4FpiAS71w0tbnFgsH4matdZrqv1WoRnIaT+B64RBfBtJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793184707;
-	h=DMARC-Filter:dkim-signature:Received:Received:Received:Message-ID:
-	 Date:MIME-Version:User-Agent:Subject:To:CC:References:
-	 Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Originating-IP:X-ClientProxiedBy;
-	bh=QVuAkEilZ5oFK1qOIjgNohU8C9sqgDos/dquD82VOJ0=;
-	b=vKnyRQLSddwFYbWW5mvls7556MYeVZLPt50WTgQ9YRkyk7h64QOHN4KHXHSbNRDpTd9B
-	 KhmwqihiOzMHQTK+PMCm7tUSqSY9oxCujVpJWVFKFbtZHRFHu2No97VJH7cfoEhKd/PQs
-	 ogz5P71gySAwBwZSko8PGm4BZD182XscuBawC53+CowaLeebSep4rC4+5i3Aif0EMmhkN
-	 U+AWHL3fO0D2n65PwfoecfNqX4GemfNIthbdReNXNDdQlR8nETmlCl0rf8ydjdTQdmZie
-	 Hcxd/J1A6ZruJ3yEbzFooISwmJwaRizYZeLIPZCZAEfHV5RJXIQ81qBdR/4pC5EsJVQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793186358;
+	h=Received:DKIM-Signature:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:References:
+	 Date:Message-Id:X-Mailer:X-Developer-Signature:X-Developer-Key;
+	bh=acx3ERfn6sywUlgPAMqQsMVKffZoJLkimvPtRFxAyY0=;
+	b=gGn/HJyT8HR1cVlCzek7p5A+exyqiuJtIJSGrAReGLToG5ctLKhtc8v++Sdd4yf+KhvD
+	 +GQ+cpJcTyxg8Tp5EcFo4/6nAfdmaQgRYFOXh/Err2fMFRs3cOWr1Whnt2WfDtnMiocuW
+	 fK9sfD5ChPXaii5SeAoRNG9VpF1H7lVdWcVuP/JA6bhGRzLDzUK6lU2FzH79y4uNGlnaA
+	 3splKvqLfM3ZDaSWm9a4UfhYv8NbxYtumAkom3a4yd81LtbBlikF45XJIiOPa3l2EA71a
+	 3v0bq6iOQPxAYmCrjuqS1kYOr+O96gX7r8keZPvwmLudGi+FmjFz9vR0ualkFwSa3eg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=huawei.com;
-	spf=pass smtp.mailfrom=huawei.com;
-	dkim=pass header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=Tjhpe1XE;
-	arc=none smtp.remote-ip=113.46.200.221
-Received: from canpmsgout06.his.huawei.com (canpmsgout06.his.huawei.com [113.46.200.221])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=S0uvPGjZ;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B840606A31D
-	for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 10:51:45 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6B840606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC8660A3811;
+	Wed, 28 Oct 2026 11:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=Tjhpe1XE
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=QVuAkEilZ5oFK1qOIjgNohU8C9sqgDos/dquD82VOJ0=;
-	b=Tjhpe1XEYDomJqQjMX/KSBw4At6Ih1wHlx9vV0r0NhfNLpLnl9LqJLfGM0Z2KbFMG2qQjBdq1
-	/2/qXe1L4oAUtgtr6ufh4G6Z7rsuS8fKO9BPURZ/BEcOQdgjCRtysqIw+3ZYOro+R2d/My5Fr7f
-	ldQynZZycNbuSEdLwcsbUmY=
-Received: from mail.maildlp.com (unknown [172.19.162.223])
-	by canpmsgout06.his.huawei.com (SkyGuard) with ESMTPS id 4jF4110czvzRhT1;
-	Wed, 28 Oct 2026 18:51:33 +0800 (CST)
-Received: from whupemk100010.china.huawei.com (unknown [7.152.184.41])
-	by mail.maildlp.com (Postfix) with ESMTPS id A0CA240561;
-	Wed, 28 Oct 2026 18:51:41 +0800 (CST)
-Received: from [10.67.110.140] (10.67.110.140) by
- whupemk100010.china.huawei.com (7.152.184.41) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Wed, 28 Oct 2026 18:51:40 +0800
-Message-ID: <a7a1a3ed-74e2-41a5-abc4-28efbc761263@huawei.com>
-Date: Wed, 28 Oct 2026 18:51:38 +0800
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=S0uvPGjZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0249C1F01345;
+	Wed, 28 Oct 2026 11:19:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793186358;
+	bh=acx3ERfn6sywUlgPAMqQsMVKffZoJLkimvPtRFxAyY0=;
+	h=Subject:From:To:Cc:In-Reply-To:References:Date;
+	b=S0uvPGjZBd1qbjEyLNDQhv2g9X69ElTHwmdO9lsDdUslyaE92X9tgNltg8Vg9K5HU
+	 LlQBZ3NmzDMkkQWlm33wn5+1tk27tCXJ+jvtXelWZ1kHC46mrqluBz+U4gtTdIHWUZ
+	 8JfQYCDJfVDoHtBk+/wroVq5WGSs40UcUyh5yqGiZ3wbT3V1sYYjekF8wB52wExyr9
+	 oGxpRph1mEe0Ge4Hc5ic3Hp2QAbW/VXO3MwO7E1qNHGh5YCNOZQwHiOXEbJrKMz8jA
+	 wHMWLSfEJjzbJwXRFyz6T+I+CYlLalbpLD8JIdL5XnDH3j8SuJpxS3me/sMg3C2i0C
+	 UKGIkEgve+y/g==
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -62,37 +49,39 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 -next 06/18] LSM: pass struct path and struct file to
- the inode xattr hooks
-To: Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	<sashiko-reviews@lists.linux.dev>
-CC: <bpf@vger.kernel.org>, <linux-security-module@vger.kernel.org>,
-	<linux-trace-kernel@vger.kernel.org>, <selinux@vger.kernel.org>,
-	<dsterba@suse.cz>, Chuck Lever <cel@kernel.org>, Jeff Layton
-	<jlayton@kernel.org>, Anna Schumaker <anna@kernel.org>
-References: <20261027121151.1887650-1-caixinchen1@huawei.com>
- <20261027121151.1887650-7-caixinchen1@huawei.com>
- <sashiko-outbox-186599@kernel.org> <DMFPMAYUPSDU.2AW3225P0W0ON@gmail.com>
-Content-Language: en-US
-From: Cai Xinchen <caixinchen1@huawei.com>
-In-Reply-To: <DMFPMAYUPSDU.2AW3225P0W0ON@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
- whupemk100010.china.huawei.com (7.152.184.41)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v6] phy: qualcomm: qmp-combo: Add USB4/TBT3
+ configuration data for Hamoa
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Konrad Dybcio <konradybcio@kernel.org>, linux-phy@lists.infradead.org, 
+ robh@kernel.org, vkoul@kernel.org, olteanv@gmail.com, 
+ neil.armstrong@linaro.org, devicetree@vger.kernel.org, conor+dt@kernel.org
+In-Reply-To: <20260928114013.B44CC1F00899@smtp.kernel.org>
+References: <20260928-topic-usb4phy-v6-1-815a73b063ef@oss.qualcomm.com>
+ <20260928114013.B44CC1F00899@smtp.kernel.org>
+Date: Wed, 28 Oct 2026 16:49:11 +0530
+Message-Id: <179318635124.5872.6065890957918101932.b4-reply@b4>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=361; i=mani@kernel.org;
+ h=from:subject:message-id; bh=acx3ERfn6sywUlgPAMqQsMVKffZoJLkimvPtRFxAyY0=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBq4doyBxSvvpreSwuZ4fkmgC5LGi+wMraug+92R
+ 1zlDSl8ppSJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCauHaMgAKCRBVnxHm/pHO
+ 9ZC+B/wMIfSERj3XbNehdfoYIqak3PSd5Dyc68G0UNfaltsJQvwPxLu7B5rUlsNpgN8f/kKZrtZ
+ qxM8448qNoojyMWkUcs0CZbQbUfmn/wqNNoYVPYI/Meu5JMWSITpP2aC3JvoO4RG7vuyCmNdgv7
+ 0kfbrFMVDfQcW9XIZFSvJAxC44qSx+zOPwksomzMvlMVzdezHwzl8X4qEL/9wKEtTMOylvwVlv+
+ ggQdJauBySgxAxjUrn0EGy9pCFIqoCobHWGB6IYBpeLYR+bQr4XWFunI3+Bnpz4ZVEG+sEuWTOu
+ kQFGRbpNSR+hZI4IIaAshNmeVC39Gfuuex9E2lrUCfjLReHR
+X-Developer-Key: i=mani@kernel.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
 
-Thanks for the pointer. I will change in the next version.
+On 2026-09-28 11:40 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Low] phy: qualcomm: incorrectly named TX macro for RX UCDR FASTLOCK registers
+> - [Low] phy: qualcomm: typo LPFS instead of LFPS in PCS USB4 macro
 
-The other issue the bot reported on this patch is real as well:😭
-walking path->dentry in a BPF LSM program drops PTR_TRUSTED.
-I will add BTF_TYPE_SAFE_TRUSTED for path in next version
+Can you please take a look at these nits?
 
-On 10/27/2026 11:01 PM, Alexei Starovoitov wrote:
-> On Tue Oct 27, 2026 at 1:02 PM UTC, sashiko-bot wrote:
->> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
->> - [Critical] bpf: missing __nullable on file arg in inode xattr LSM hooks allows NULL deref
-> bot is correct.
-> Please see commit 94e948b7e684 ("bpf: annotate file argument as __nullable in bpf_lsm_mmap_file")
-> and add to kernel/bpf/bpf_lsm_proto.c when args can be NULL.
-> That's how verifier knows.*2*2
+- Mani
+
