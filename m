@@ -1,95 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.44.128
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.11
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793186481;
-	b=Ykx8VSMKmFOAbcrimZSmh7WrioekNKY3fq3hOBMxXvn0ZLyA+4Rhg9EVlE16GkntudZ5
-	 YfS3e9GGio9JeitC2N6GPoMPjKD9fwmcBfamOjv4+qhmVohAMztaeVJJ6jbLjssEf+rDy
-	 hvXKUb/42tATYTxVRqALsNq0rBEXWQKXZ0Ooxc4P93Evn0IVlm47dzlDg3RS6s1/lkrts
-	 3N5G6tz5azDqwhythWuC040YA4Yv2H1pkaP4AT5ktVP2uy9ydX2owYUBK8w2P25IDeXC8
-	 UtPGa4y5SwNkbiX2lEzdzYetZX2uEqqtdm5vAPNgJ2RgJ2BGFrFQadRzX+t2ilr80hg==
+	t=1793189740;
+	b=j4vzI9oz78F+aBY2evsK9XXXNN4SvvVHMT1hRBQJ2b+o9pqqbH+ozUBBjDeX2x3w0ejG
+	 F3x328yomsmuLW8J6kpbosJyaYgXGym8wdOzMfY6RCd1TDVs/FQ8Esh6vcbJCCsgkQnXy
+	 LGvXVxEBzP/RFBSdsEd9ayBEsnL7eeIA0ugb3A/N5VyeA+i+soNkICOiCg3yAIkD0yuMP
+	 XyOC68WlisFmKbAQY/OYYQgJplx0X3yx0Gmi1F7hegwGljZtkxqwkjNm1fAnd6SOIgJ//
+	 eR3kbqzoSJjelycVh2C6O1hw4arfS+0VCgJlwrh+OdDFffK4lCoiQ9nG4okrML/u/rQ==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793186481;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
-	 User-Agent:Subject:Content-Language:To:Cc:References:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=TAtBkiV7doHLDYXf5QBbEavBmLn7KzMNxrHaIqE5c7s=;
-	b=dpbGSsWofg1yEioOxILvsIBQuNNlt79UDCduhfkpSDoGSBXPd+EqbLyqA/YgpWeTF2JQ
-	 6ma9JBcO9TKjYMoLpg/XCSQ7sA5UEX1V09KtN12StTXqxg/fF6wIvxDoeXO6qRQ5+9MHD
-	 zg727HbVs3mOJvNz6WUYDiQkNQ53adHGu1AJuJDzfoxmLeiTe+6otrjIPHyQWTM+fQvhs
-	 NEHUxESdqRHjLmHP3htoR7vztb4y8DIGpD5GAiQ6psO3fAcwdfEphH/AKJiG0uIpFtP2p
-	 k+zLmHozzofzVosdpp6GVn2oGy9SGCoHqWO7imZ8X2SNkwkAQC4hmACujrMmizJp/ug==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793189740;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ZohoMailClient;
+	bh=/2akYOy6YGKaOEXw/VkGTrsyV1hy65TQgDziu2YpSXU=;
+	b=foRjdprFa3r+T8n1hZtCSb3cKXs4bTawU9//ydX5Z60p702oBLLj6ieo9viooMhzbXsv
+	 wm+J6L4ZkoFGBxC7Uu6aB0pjvjNPgXYQL1bj052U06cdp7UpTXw2cXDSc09aCfsec4DVv
+	 bg6KVx8zMJn1wrn7trrsjrYbFRvwVTh1+NtczevtQFRzWWuRXbekFoV4rLlb7B5Za9yqa
+	 5izRBxx0GNlYh/lhjLmZlg+nfgj6zGNXMmNwyxlow3NKCLBnJRB4OqDN9mYbnLm6tg/am
+	 E+G2GlkVCUU9E4VNASryS6pGLemorgwWZhNYMKhoBnWX7FN0dLqrW4EETmJOX3YbIzA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=amlogic.com;
-	spf=pass smtp.mailfrom=amlogic.com;
-	dkim=pass header.d=amlogic.com header.i=@amlogic.com header.a=rsa-sha256 header.s=selector1 header.b=BtGAy79o;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.44.128
-Received: from SEYPR02CU001.outbound.protection.outlook.com (mail-koreacentralazon11023128.outbound.protection.outlook.com [40.107.44.128])
+	dmarc=pass header.from=collabora.com;
+	spf=pass smtp.mailfrom=collabora.com;
+	dkim=pass header.d=collabora.com header.i=dmitry.osipenko@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=CstQy5S5;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=165.173.182.11
+Received: from sender5-op-o11.zoho.com (sender5-op-o11.zoho.com [165.173.182.11])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2AFF606A31E
-	for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 11:21:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F2AFF606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amlogic.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amlogic.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19215606A31A;
+	Wed, 28 Oct 2026 12:15:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 19215606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=amlogic.com header.i=@amlogic.com header.a=rsa-sha256 header.s=selector1 header.b=BtGAy79o
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bMY7zFtYp+Y0mUaRrsogxZuAUdbc2DIffSW0yqu5Zs5t/MkTIg1x++SXMSaxeWBuf0kLo8D+U842kl2JMvBiW3Hz/2MbhIwqwSUQ1dNzgJnRS4zYM3idvBumFC5MSLFeH/MBnhc5JfsIl7VYmE/VItGMXd0nu20PYsn6fu1tt3A76hAyHvymY0h9CEVsnDMjPbyE2p8GYFv0fE/bilbD6KOKeddewQ20bTKyIMsoGXn3pocUvs1Nd3Q9crW3eQjTeXpkt+ZxqAFGWiRswu4unegPG/xf3ekV545ykW7Bieca1/7QtMEBYiJa6RM888oEof8C9QkHGSOZiP3J+6jC5Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TAtBkiV7doHLDYXf5QBbEavBmLn7KzMNxrHaIqE5c7s=;
- b=NM530mkpZxt67F38N8tkVIhr2TlB3CJ09nIpI+JpSR6VvnXHnwnMJYdoY3gLJJxtQ4A/owJ2ryLL+6XGdcxG5XE1H0oeQdxi2UYl2AYl5oxEnldzfn+BcyNb+1fYRU3d3MSHWrRSwxTk+67/lefgDae+WQFOB9vR5OvSxlz9R+pD9lgGn00CA3hGH693hv/zseUTv7jOwLuoFjgCBnNahjS4OVfft1FWko8K1qayjc67xueddodDIVq2Yg7eKZ6u2C4ISSHAjkRbCbJUEQpbWZ6IN6f8avSUe4X3oitZ7kAK8DGj08eFON76fTip+iHZCUTbRCnvIbUQh6WBRyWqzA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amlogic.com; dmarc=pass action=none header.from=amlogic.com;
- dkim=pass header.d=amlogic.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amlogic.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TAtBkiV7doHLDYXf5QBbEavBmLn7KzMNxrHaIqE5c7s=;
- b=BtGAy79oORRGoC9mqdOySg8HE2by5n39YjDfZx5PTis1W+qyHOJnppy3c6LdtjUsWRU2tC2DGyKJJZtZiG0ARlObb2j2QDW812pL3R5bB++xNmjY4yIYPcGtYz9jzILijCxGMQCxQhB63wYFYnYOZsa1U51TzSrPt0di8ZDxLb1oThe4a1bvK1JPbMvmvnrc9lrREJc7RVjZdlrCXJLUq0RVfJTTcmkF7QLHSidRVtp0OvLM05o/YpGDqYMNLA16+Vczo7wq1U+3xginV8Bil3xW11AMqsYSW/+KaSGU54G1Ly5XPqD44USty5152GiGhbeAHeenPEmrbUq2wxoS0w==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amlogic.com;
-Received: from TYZPR03MB6896.apcprd03.prod.outlook.com (2603:1096:400:289::14)
- by OSNPR03MB9654.apcprd03.prod.outlook.com (2603:1096:604:46e::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Wed, 28 Oct
- 2026 11:21:16 +0000
-Received: from TYZPR03MB6896.apcprd03.prod.outlook.com
- ([fe80::78d4:9dee:2e32:d1e4]) by TYZPR03MB6896.apcprd03.prod.outlook.com
- ([fe80::78d4:9dee:2e32:d1e4%7]) with mapi id 15.21.0546.021; Wed, 28 Oct 2026
- 11:21:16 +0000
-Message-ID: <7e413e61-9f47-4736-9f60-96616a3cb099@amlogic.com>
-Date: Wed, 28 Oct 2026 19:21:12 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] i2c: amlogic: Add Amlogic A9 I2C controller driver
-Content-Language: en-US
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-amlogic@lists.infradead.org, devicetree@vger.kernel.org,
- robh@kernel.org, conor+dt@kernel.org, neil.armstrong@linaro.org
-References: <20261022-a9-i2c-v2-0-45e3cef175bf@amlogic.com>
- <20261022-a9-i2c-v2-2-45e3cef175bf@amlogic.com>
- <sashiko-outbox-181284@kernel.org>
-From: Xianwei Zhao <xianwei.zhao@amlogic.com>
-In-Reply-To: <sashiko-outbox-181284@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TP0P295CA0008.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:910:2::20) To TYZPR03MB6896.apcprd03.prod.outlook.com
- (2603:1096:400:289::14)
+	dkim=pass (1024-bit key, unprotected) header.d=collabora.com header.i=dmitry.osipenko@collabora.com header.a=rsa-sha256 header.s=zohomail header.b=CstQy5S5
+ARC-Seal: i=1; a=rsa-sha256; t=1793189725; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=K9TxSEmnVHlVNBFEZUEqAaaoF57hHY576AksdpUvZHycTE/nB0qnd/cjN3FI0LH13ERpLv7jf4VzVc+y8JVYQC6SXLSLQ26UNe4QSCgIbr7A0fgLnwtymh+ddUXOJBJwbG26qnN8tcRG42aN6g5u0HwYL0xOsSZCrk2EFiWGAJk=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1793189725; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=/2akYOy6YGKaOEXw/VkGTrsyV1hy65TQgDziu2YpSXU=; 
+	b=DlzXHruOLBPUsROpYRNZ810mQdOt2ezz1cho8qyKgQGOj0cILjS2cgUdBA2tagLKwcjctRD66KAK3jd2UwTSIBjPXAowJMteIqml8sjlGj2NqH/IhWPjLXAKZjUXHoQ63MCRJMxXq2UjhIT4pIfrmqJ3JKSRPFRc6laS6XH63SY=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+	dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1793189725;
+	s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=/2akYOy6YGKaOEXw/VkGTrsyV1hy65TQgDziu2YpSXU=;
+	b=CstQy5S5LsWpJc29h1knK3jXQrccC4lZT1z5WvyCOpwHp/OaBReYJZ8oD5CLrsP6
+	V/A4k9C3MtXUy70f96hOTk5puWg0ZGnVzC/0KZyCAemePncvcn3lJ1koz7fwqRsHNHv
+	7FYy7JPq1q7I7C3hoa8cwKwLZd5u5I6pmL4uLGO4=
+Received: by smtp.zohomail.com with SMTPS id 1793189721376354.21165480845355;
+	Wed, 28 Oct 2026 05:15:21 -0700 (PDT)
+Message-ID: <104e0ffd-4c87-4727-b510-cd80ba8c9eb2@collabora.com>
+Date: Wed, 28 Oct 2026 15:15:14 +0300
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -99,379 +64,299 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYZPR03MB6896:EE_|OSNPR03MB9654:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1153bbe2-5dd0-48b3-5c3d-08df34e59503
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|23010399003|376014|261026140227099003|4143699003|11063799006|56012099006|261021123027099003|261026121527099003|261009223027099003|261022075727099003|261021121427099003|261009221227099003|10067099003|261022105027099003|22082099003|18002099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	X4WKqQpINH+hEJjdPDDNIh+jumnHL8LaHJyT4ODbPAR2gvg1keEZEI/acBLphT0Dvt4Sqfzq5uz0ofNSKmiStgP4DQeRi/x5LqJCaCAKkUJmncon3YCNfJc1Yj3gG8kwRQ4Db4540uamXzZJsknHxhfuHP9g89kMHUysLMRAgJnzd9lWIy7BOZH4xyXssQamKgbWXuE32RWS9HbyHaDP4TT/wZ5OL4R4JvTwOD/TjpRXl+HtvsAwbl9LftVp3bAlifl/3tC14KwCMadp66eQu/+/XkR/ZoA8rPMUnz0j7Zalt0qNwT8iAAwXpXSNE1rvaxi4XtUQv4aFi0xgvJG2Ie/IORMdLlo5gNGx7FzNlNXvkIvws7X+CoBNoMaBVujZoKxa9FE6xAQy106DP1x2moDnRkD3MyQrjQ5UxeYjJ6QoCBNkCbg/CyuKVts+fzwDevoKK06MdUPJjdpn3BPUDpzAoiz3Z8uCNWDLCqHWJN2LDpgpsNXC/PTdQ1aMT4J3QM9Z1ghdLQHPpx2ogMkq3yspyMp6eWM/3CclpHADMBZkrGsJguOJkOj3HL66S4KpUQuKlZWfnWVkmjqLodBpd/p/fSjQ+T8FhEbFkHq0G3Y=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR03MB6896.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(261026140227099003)(4143699003)(11063799006)(56012099006)(261021123027099003)(261026121527099003)(261009223027099003)(261022075727099003)(261021121427099003)(261009221227099003)(10067099003)(261022105027099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?TnNsUzRMY0NEbno4Si93dFA2aVhaa3kwdjhITUV6b1BOYXV4Z1lIME9tTURK?=
- =?utf-8?B?a0VvdlA4VU04T2JBRFpLYUZIbzNnaXE5NzlNL1pWSHEzTXczcFZxZnd1dEZv?=
- =?utf-8?B?cFBSZnVQWkVKY2tTY2RpL1dURjZlSWt3N3NaM1E3dEhsdWYyV2RpRGJJSnNB?=
- =?utf-8?B?OU5PZFBOUm5JNjBCakZ1Z2hyY0dkbHpxcjdBdkJPN2xZckprb0dWWUpuV3I4?=
- =?utf-8?B?b21pemVvejRsUTd1UjVyTW5oUjhyMjZCUWJ2NWRGRTNJRGxxN2MxQnFuRzh4?=
- =?utf-8?B?U00wTzFEbTBSSlhUOWtRMUEzMEdMUUZZZWl6eTMyWFhwSmlpNkRtVjVxVWlW?=
- =?utf-8?B?Z0FrT2tKTFNITFZuK3hiYndGRmdNcFNQY1NMTlFENVZ5NXNZb0xybUFJVG1S?=
- =?utf-8?B?NDlLR2NaNllXbXYvdlQ0clNza1JqNGdNNG1hbDlsZDhiNWdLRHFtQVhIZ1V5?=
- =?utf-8?B?VEtFa0RzZGQ4VE9BdzhUbXpUTm40RVM2NG9FLzNKUWJ5NFE5NktaRVRkQVlq?=
- =?utf-8?B?R3ZRTG5ReUcvcUhYeHhQUHpobk5mSVpvOFVqUGk5TmcvbjV6UmZYQlM1NElT?=
- =?utf-8?B?UEpBUUY5Lzd1ZTVONFJyZVNRV3dnclc2Y2krR09aZGRxSGt4ellqcW9abUdr?=
- =?utf-8?B?YnpHbHlTbHFrNE8vS0lhbjdjS2VtOUxiZ2g2dUQzSnRuSE1PTVFaREw5VGpZ?=
- =?utf-8?B?YWR6aXhlcDhETVB2dGlJWm16SGkrL0MrUVozQWhTRUhnM3k4TXZTc09rVVNT?=
- =?utf-8?B?aExCVkZtVjJSOHpudXNkdE1HMzN1SDFTb1hkZGJKQ09ONnBDamY3Uk9OaHR1?=
- =?utf-8?B?UlFCbHBZYnp4eWdZcjVPWnZJbzlSMXQySEpBeGxQMG01cmlHaDBpaER5N0JO?=
- =?utf-8?B?OTlzK21OTDFsdW9OMDMxMXluSnZBTEFURVNhU1hFNUNVTExKZlFEeGk1aE9R?=
- =?utf-8?B?OUYvenExRFpnWlNvbEpObkh6c25iaXFUMGdPblNPTHkzZUNXS2tIMGNoWXBQ?=
- =?utf-8?B?ZjJkTm5nVDNCQ2lETzlrZGt6VVF6SWgxQXJtbzZmU2djclFXaTZRTlV3cXo5?=
- =?utf-8?B?Z2NUbWxuRmY3WmZFWEJjZ1BzUDJiWFl0dnpocmI0SEtNVHpKOFA4MzVRRDVD?=
- =?utf-8?B?b0JLbEtSYm8vZ0tIL0p4cVZqcHNkYjNueFRIQnRBYUVGakVZUjhVaDJQMUJp?=
- =?utf-8?B?VVBIeEtadVJLWTl4dERnZ2pYMEQwQzVyZkdOaTZQa05peUJlQVpzNlk4WDdP?=
- =?utf-8?B?elMySCtCeEx2NHVqbjR1ZGhYQkI2QmtCYUNrUGwxSG1CcEV5WFNpalQ5SFdq?=
- =?utf-8?B?em1XdnlUOHNLZVBvUmJ2YjFhdWIrRWNiTkFRQmV0b0IxbW1rMGIzVjU5dy9B?=
- =?utf-8?B?MTBKSVluMm9DUnFYeFRpVVBqZjlOZ3FIL3pleUtxL2krOHROUnNNbENycWF4?=
- =?utf-8?B?SytMYTJxbUt0QjBRZ3pJMzF3Ty83R1hTZzVnV0VsNWdxS2xDaE4zZm5Wa2NR?=
- =?utf-8?B?cHBxNktOM0VzOVE2QmlGNDU4U3hJNFIrMGdpbXVSZ3FqcWZHaFZpSFg3OXJD?=
- =?utf-8?B?Unk2bjFtbHdjL2FuamVBT3FYL2tNQ21jUWd0ZXcrWGpGZWo3WnhMY0JmN1hS?=
- =?utf-8?B?Vjh1ZUMvUnNSWlQ3UU9WY21LUzczZmpEMzNCMTNNWldzSWwzZ2xZRmxDSUtx?=
- =?utf-8?B?SDFRRThaV3dkY3FzVDg5d1QzQ1ROUmZFMG1sNksyK05kZkFRMTFHRVIvdzAz?=
- =?utf-8?B?WStkd1hLcXVEOE43bG44ZGo4M1FQUHJyWDZkaTJxdHFXVGVwZ2JPb09vYTNP?=
- =?utf-8?B?ckExUEYxVFlDY3lyTXU0c3hLYk0wMG5HdDdXak15SHNPZGd5a0pvaDBaN1hw?=
- =?utf-8?B?S1RMZmlHd1FKdzFUU3U3MjZyZFlnclNXZG91ek1WMXBKR1lHVTBaU3R2RkpG?=
- =?utf-8?B?dzFjaEVjSHp2K1pkdm1zVFMwR21LeU4xeUVqd2hLbnFuWDdWREczZ0dPK2tq?=
- =?utf-8?B?N09hQTU0RGhIK1p3NWNsSUNTMS9CbnI5eTRZeGhTL3QwMmJ3aW1lbU1rRkds?=
- =?utf-8?B?WnhyT0ZMTkpDb2JoTWdjcC9rek80RHIzOTE1dFdMeUJuMnhKNW05MFZxUmFP?=
- =?utf-8?B?L0xycHdNaE5Hcmwwcnh0UVI3akFkL2h2SE12Ynl4cFpvS01DT1NPNEE5Uno2?=
- =?utf-8?B?QTBWRiszNEphZWtOd0pyL25tZlh6VDBjdFJTZy80UDlLS3k4anBPeUV0bkdl?=
- =?utf-8?B?RTZPTkZwNVh3a2ozRWVwOUNjVGdnc3lwSmZVRnoyZVA4R2ExdTZRV2FqbVFu?=
- =?utf-8?B?WnZrVVBDY1BSUnBRUGRZMGNCZytuVno0c2JSeTg5OXZmaWE2andBZz09?=
-X-OriginatorOrg: amlogic.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1153bbe2-5dd0-48b3-5c3d-08df34e59503
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR03MB6896.apcprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Oct 2026 11:21:16.3551
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0df2add9-25ca-4b3a-acb4-c99ddf0b1114
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: u9xb+OAIG2MPsgawa/AFF0Ts9xCBwEgfXEiF5ugKViN9PWwAYyved2R3uH2FIHkrFCrktipoKTvc2IyfMa7pcrrW0FqrEQlbuF9Wsw/YPqw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSNPR03MB9654
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] drm/vblank: Don't arm vblank timer with invalid frame
+ duration
+To: Thomas Zimmermann <tzimmermann@suse.de>, me@romanilin.is,
+ louis.chauvet@bootlin.com, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, airlied@gmail.com, simona@ffwll.ch, javierm@redhat.com,
+ ville.syrjala@linux.intel.com, regressions@leemhuis.info,
+ peter.m.arnesen@gmail.com
+Cc: dri-devel@lists.freedesktop.org, virtualization@lists.linux.dev,
+ sashiko-reviews@lists.linux.dev
+References: <20260914110004.211027-1-tzimmermann@suse.de>
+ <bd3c0c3a-1452-4667-b99d-96af0087af3f@suse.de>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <bd3c0c3a-1452-4667-b99d-96af0087af3f@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-
-
-On 2026/10/22 17:46, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 5 potential issue(s) to consider:
-> - [High] i2c: amlogic-a9: unlocked state init and late IRQ setup in aml_i2c_do_start()
-> - [High] i2c: amlogic-a9: threshold IRQs left enabled on timeout in aml_i2c_xfer_msg()
-> - [High] i2c: amlogic-a9: unhandled IRQ and spurious complete() in aml_i2c_irq()
-> - [High] i2c: amlogic: missing RX drain in aml_i2c_irq() when A9_PHY_DONE is set
-> - [Medium] i2c: amlogic-a9: unmasked msg->addr in aml_i2c_do_start() corrupts START_LEN
-> --
+On 10/28/26 10:29, Thomas Zimmermann wrote:
 > 
-> commit 10e276126f680fbcf2e402bbde459a690540ef33
-> Author: Junyi Zhao<junyi.zhao@amlogic.com>
+> Ping. Please review!
 > 
-> i2c: amlogic: Add Amlogic A9 I2C controller driver
-> 
-> This commit adds a driver for the I2C controller found on Amlogic A9 SoCs,
-> along with the corresponding Kconfig, Makefile, and MAINTAINERS entries.
-> 
->> diff --git a/drivers/i2c/busses/i2c-amlogic-a9.c b/drivers/i2c/busses/i2c-amlogic-a9.c
->> new file mode 100644
->> index 0000000000000..d4954a4fd88ef
->> --- /dev/null
->> +++ b/drivers/i2c/busses/i2c-amlogic-a9.c
->> @@ -0,0 +1,469 @@
-> [ ... ]
-> 
->> +static irqreturn_t aml_i2c_irq(int irqno, void *dev_id)
->> +{
->> +     struct aml_i2c *i2c = dev_id;
->> +     u8 *buf = NULL;
->> +     int ret;
->> +     u32 rd_len, i;
->> +     u32 rd_val;
+> Am 14.09.26 um 12:57 schrieb Thomas Zimmermann:
+>> From: Roman Ilin <me@romanilin.is>
+>>
+>> When a CRTC's display mode carries a too small pixel clock,
+>> drm_calc_timestamping_constants() computes a frame duration that
+>> exceeds INT_MAX. drm_vblank_crtc.framedur_ns becomes negative.
+>> drm_crtc_vblank_start_timer() then arms the vblank hrtimer with this
+>> interval, after which vblank events are no longer delivered. Pending
+>> page flips never complete and the display appears frozen.
+>>
+>> This could be triggered on virtio-gpu guests that have dynamic resolution
+>> enabled: when the SPICE agent or the X server resizes the output, it
+>> submits a mode whose pixel clock is off by a factor of 1000, e.g.:
+>>
+>>      clock = 406 kHz, htotal = 3152, vtotal = 2148
+>>
+>>      framedur_ns = 3152 * 2148 * 1000000 / 406 = 16675852216 ns (~16.7 s)
+>>
+>> 16675852216 does not fit into an int and wraps to roughly -504000000.
+>> ns_to_ktime() then yields a negative interval and the timer stops
+>> working.
+>>
+>> Found by bisection, which pointed at commit a036f5fceedb ("drm/virtgpu:
+>> Use vblank timer"). That commit merely made virtio-gpu use the vblank
+>> timer and thereby exposed the pre-existing problem in the timer setup
+>> added by commit 74afeb812850 ("drm/vblank: Add vblank timer").
+>>
+>> To fix this, modify drm_calc_timestamping_constants() to use u64 for
+>> calculations, check for INT_MAX overflows, and return an error code.
+>> drm_crtc_vblank_start_timer() will then propagate the error, enabling
+>> the driver to fall back to immediate vblank events. Valid modes are
+>> unaffected, and the timer self-heals on the next mode with a sane clock.
+>>
+>> v4:
+>> - avoid log spamming with drm_warn_once()
+>>
+>> Fixes: 74afeb812850 ("drm/vblank: Add vblank timer")
+>> Suggested-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> Signed-off-by: Roman Ilin <me@romanilin.is>
+>> ---
+>> I took Roman's patch from [1] and replaced the error messages with
+>> warn_once, as suggestde in my review.
+>>
+>> [1] https://lore.kernel.org/dri-devel/20260702181027.98526-1-
+>> me@romanilin.is/
+>> ---
+>>   drivers/gpu/drm/drm_vblank.c | 73 +++++++++++++++++++++++-------------
+>>   include/drm/drm_vblank.h     |  4 +-
+>>   2 files changed, 49 insertions(+), 28 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
+>> index f90fb2d13e42..72b543bca9e3 100644
+>> --- a/drivers/gpu/drm/drm_vblank.c
+>> +++ b/drivers/gpu/drm/drm_vblank.c
+>> @@ -631,45 +631,54 @@ EXPORT_SYMBOL(drm_crtc_vblank_waitqueue);
+>>    * drm_crtc_vblank_helper_get_vblank_timestamp(). They are derived from
+>>    * CRTC's true scanout timing, so they take things like panel
+>> scaling or
+>>    * other adjustments into account.
+>> + *
+>> + * Returns:
+>> + * 0 on success, or a negative errno code otherwise.
+>>    */
+>> -void drm_calc_timestamping_constants(struct drm_crtc *crtc,
+>> -                     const struct drm_display_mode *mode)
+>> +int drm_calc_timestamping_constants(struct drm_crtc *crtc,
+>> +                    const struct drm_display_mode *mode)
+>>   {
+>>       struct drm_device *dev = crtc->dev;
+>>       unsigned int pipe = drm_crtc_index(crtc);
+>>       struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
+>> -    int linedur_ns = 0, framedur_ns = 0;
+>> +    u64 linedur_ns, framedur_ns;
+>>       int dotclock = mode->crtc_clock;
+>> +    unsigned int frame_size;
+>>         if (!drm_dev_has_vblank(dev))
+>> -        return;
+>> +        return 0;
+>>         if (drm_WARN_ON(dev, pipe >= dev->num_crtcs))
+>> -        return;
+>> +        return -EINVAL;
+>>   -    /* Valid dotclock? */
+>> -    if (dotclock > 0) {
+>> -        int frame_size = mode->crtc_htotal * mode->crtc_vtotal;
+>> +    if (dotclock <= 0) {
+>> +        drm_err_once(dev, "crtc %u: Can't calculate constants,
+>> dotclock = %d!\n",
+>> +                 crtc->base.id, dotclock);
+>> +        goto error;
+>> +    }
+>>   -        /*
+>> -         * Convert scanline length in pixels and video
+>> -         * dot clock to line duration and frame duration
+>> -         * in nanoseconds:
+>> -         */
+>> -        linedur_ns  = div_u64((u64) mode->crtc_htotal * 1000000,
+>> dotclock);
+>> -        framedur_ns = div_u64((u64) frame_size * 1000000, dotclock);
+>> +    frame_size = (unsigned int)mode->crtc_htotal * (unsigned
+>> int)mode->crtc_vtotal;
+>>   -        /*
+>> -         * Fields of interlaced scanout modes are only half a frame
+>> duration.
+>> -         */
+>> -        if (mode->flags & DRM_MODE_FLAG_INTERLACE)
+>> -            framedur_ns /= 2;
+>> -    } else {
+>> -        drm_err(dev, "crtc %u: Can't calculate constants, dotclock =
+>> 0!\n",
+>> -            crtc->base.id);
+>> +    /*
+>> +     * Convert scanline length in pixels and video dot clock to line
+>> duration
+>> +     * and frame duration in nanoseconds.
+>> +     */
+>> +    linedur_ns  = div_u64((u64)mode->crtc_htotal * 1000000, dotclock);
+>> +    framedur_ns = div_u64((u64)frame_size * 1000000, dotclock);
 >> +
->> +     spin_lock(&i2c->lock);
->> +     ret = controller_is_error(i2c);
->> +     if (ret) {
->> +             i2c->error = ret;
->> +             goto complete_irq_out;
->> +     }
+>> +    /*
+>> +     * Fields of interlaced scanout modes are only half a frame
+>> duration.
+>> +     */
+>> +    if (mode->flags & DRM_MODE_FLAG_INTERLACE)
+>> +        framedur_ns /= 2;
 >> +
->> +     switch (i2c->state) {
->> +     case A9_STATE_READ:
->> +             buf = i2c->msg->buf;
->> +             rd_len = min(i2c->msg->len - i2c->pos, A9_I2C_FIFO_DEPTH);
->> +             for (i = 0; i < rd_len; i++) {
->> +                     rd_val = readl(i2c->regs + REG_CFG_RX);
->> +                     buf[i2c->pos++] = rd_val & TX_RX_DATA;
->> +             }
->> +             /* Rx must clear thresh after read fifo */
->> +             clear_irq_status(i2c, A9_RX_THRESH_READ);
->> +             break;
->> +     case A9_STATE_WRITE:
->> +             aml_i2c_prepare_xfer(i2c, A9_FIFO_FILL_HALF);
->> +             if ((i2c->pos + A9_I2C_HALF_FIFO) >= i2c->msg->len)
->> +                     aml_i2c_set_mask(i2c, REG_CFG_IRQ_ENABLE, A9_TX_THRESH_WRITE, 0);
->> +             i2c->pos += i2c->count;
->> +             /* Tx must clear thresh after write fifo */
->> +             clear_irq_status(i2c, A9_TX_THRESH_WRITE);
->> +             break;
->> +     case A9_STATE_IDLE:
->> +             dev_warn(i2c->dev, "i2c irq triggered abnormally, irq_state:0x%x,irq_en:0x%x\n",
->> +                      readl(i2c->regs + REG_CFG_IRQ_STATE),
->> +                      readl(i2c->regs + REG_CFG_IRQ_ENABLE));
->> +             break;
->> +     default:
->> +             break;
->> +     }
+>> +    if (linedur_ns > INT_MAX || framedur_ns > INT_MAX) {
+>> +        drm_err_once(dev, "crtc %u: Can't calculate constants, mode
+>> clock too small!\n",
+>> +                 crtc->base.id);
+>> +        goto error;
+>>       }
+>>   -    vblank->linedur_ns  = linedur_ns;
+>> +    vblank->linedur_ns = linedur_ns;
+>>       vblank->framedur_ns = framedur_ns;
+>>       drm_mode_copy(&vblank->hwmode, mode);
+>>   @@ -678,7 +687,16 @@ void drm_calc_timestamping_constants(struct
+>> drm_crtc *crtc,
+>>                crtc->base.id, mode->crtc_htotal,
+>>                mode->crtc_vtotal, mode->crtc_vdisplay);
+>>       drm_dbg_core(dev, "crtc %u: clock %d kHz framedur %d linedur %d\n",
+>> -             crtc->base.id, dotclock, framedur_ns, linedur_ns);
+>> +             crtc->base.id, dotclock,
+>> +             vblank->framedur_ns, vblank->linedur_ns);
 >> +
->> +     if (!controller_is_done(i2c)) {
->> +             goto irq_trans_out;
->> +     } else {
->> +             if (i2c->state == A9_STATE_READ && (i2c->msg->len - i2c->pos))
->> +                     goto irq_trans_out;
->> +     }
-> [Severity: High]
-> Can a multi-chunk read (msg->len > A9_I2C_FIFO_DEPTH) hang in
-> drivers/i2c/busses/i2c-amlogic-a9.c:aml_i2c_irq() if the remaining bytes
-> finish arriving before A9_RX_THRESH_READ is cleared?
-> 
-No. According to the code logic, if the data has not been read 
-completely, the condition for completing the operation is not met, so 
-the interrupt status bit will not be cleared. Once the data transfer is 
-complete, the interrupt will immediately be triggered again, allowing 
-the handler to continue reading the data. Finally, once the read 
-operation is complete and the condition is satisfied, the completion 
-interrupt will be cleared.
-
-> In aml_i2c_xfer() -> aml_i2c_xfer_msg() -> aml_i2c_do_start(), a read with
-> msg->len > 32 enables A9_RX_THRESH_READ alongside A9_PHY_DONE, with
-> I2C_RX_THR configured to 32. When the first 32 bytes arrive, A9_RX_THRESH_READ
-> asserts. If interrupt handling is slightly delayed or the remaining tail bytes
-> finish arriving while the A9_STATE_READ loop is reading the first 32 bytes
-> from REG_CFG_RX, A9_PHY_DONE will already be set in REG_CFG_IRQ_STATE before
-> clear_irq_status(i2c, A9_RX_THRESH_READ) runs.
-> 
-> Because A9_STATE_READ only drains up to A9_I2C_FIFO_DEPTH bytes per call,
-> i2c->msg->len - i2c->pos remains non-zero, and the controller_is_done(i2c)
-> branch takes goto irq_trans_out without draining the remaining tail bytes or
-> completing i2c->done. Since A9_PHY_DONE is already asserted and fewer than 32
-> bytes remain to re-trigger A9_RX_THRESH_READ, no new rising edge will occur on
-> the interrupt line, leaving wait_for_completion_timeout() in
-> aml_i2c_xfer_msg() to time out with -ETIMEDOUT.
-> 
-> Should aml_i2c_irq() drain the remaining bytes in the RX FIFO when
-> controller_is_done(i2c) is true during A9_STATE_READ before completing the
-> transfer?
-> 
-
+>> +    return 0;
 >> +
->> +complete_irq_out:
->> +     reset_fifo_pos(i2c);
->> +     complete(&i2c->done);
->> +     i2c->state = A9_STATE_IDLE;
->> +     aml_i2c_set_mask(i2c, REG_CFG_IRQ_ENABLE, A9_RX_THRESH_READ | A9_TX_THRESH_WRITE, 0);
->> +     clear_irq_status(i2c, IRQ_ALL_MASK);
->> +irq_trans_out:
->> +     spin_unlock(&i2c->lock);
->> +
->> +     return IRQ_HANDLED;
->> +}
-> [Severity: High]
-> What happens in drivers/i2c/busses/i2c-amlogic-a9.c:aml_i2c_irq() when an
-> interrupt arrives while i2c->state is A9_STATE_IDLE?
-> 
-> First, controller_is_error(i2c) is checked before inspecting i2c->state. If a
-> late A9_NCK_ERROR interrupt fires after a transfer has already timed out and
-> transitioned to A9_STATE_IDLE, aml_i2c_irq() sets i2c->error = -ENXIO, jumps
-> to complete_irq_out, and calls complete(&i2c->done).
-> 
-> Second, in the switch statement, the A9_STATE_IDLE case logs a warning and
-> breaks into the completion checks:
-> 
->          if (!controller_is_done(i2c)) {
->                  goto irq_trans_out;
->          }
-> 
-> If a threshold interrupt fires while in A9_STATE_IDLE and controller_is_done()
-> is false, aml_i2c_irq() jumps to irq_trans_out and returns IRQ_HANDLED without
-> clearing REG_CFG_IRQ_STATE or masking the threshold interrupt in
-> REG_CFG_IRQ_ENABLE, leaving the interrupt asserted. Conversely, if
-> controller_is_done() is true (such as a late A9_PHY_DONE), execution falls
-> through to complete_irq_out and spuriously signals i2c->done while idle.
-> 
-> Should aml_i2c_irq() check for A9_STATE_IDLE up front, disable threshold
-> interrupts, clear REG_CFG_IRQ_STATE, and return without calling
-> complete(&i2c->done)?
-> 
-
-Later, I will check the status at the very beginning. If an abnormal 
-interrupt occurs, I can skip the processing and clear irq state.
-
->> +
->> +static void aml_i2c_do_start(struct aml_i2c *i2c, struct i2c_msg *msg)
->> +{
->> +     unsigned int reg_val;
->> +     unsigned int trans_len;
->> +
->> +     trans_len = msg->len;
->> +     reg_val = (unsigned int)((msg->addr << START_SADDR_SHIFT) |
->> +                             ((msg->flags & I2C_M_RD) ? START_READ : 0) |
->> +                             ((trans_len & 0xfff) << START_LEN_SHIFT) | START_START);
->> +     aml_i2c_set_mask(i2c, REG_CFG_START,
->> +                      START_START | START_SLAVE_ADDR | START_READ | START_LEN, reg_val);
-> [Severity: Medium]
-> In drivers/i2c/busses/i2c-amlogic-a9.c:aml_i2c_do_start(), could upper bits in
-> msg->addr corrupt the START_LEN field of REG_CFG_START?
-> 
-> When userspace submits an I2C_RDWR ioctl on /dev/i2c-*, msg->addr is a u16
-> passed through i2cdev_ioctl_rdwr() -> i2c_transfer() -> aml_i2c_xfer() ->
-> aml_i2c_xfer_msg() -> aml_i2c_do_start() without masking. Because
-> msg->addr << START_SADDR_SHIFT is not masked to 7 bits (or START_SLAVE_ADDR)
-> before being ORed with (trans_len & 0xfff) << START_LEN_SHIFT and written via
-> aml_i2c_set_mask() under the combined mask START_START | START_SLAVE_ADDR |
-> START_READ | START_LEN, any bits set in msg->addr[15:11] shift into
-> START_LEN (GENMASK(23, 12)) and alter the hardware transfer length.
-> 
-> Should msg->addr be masked (for example with 0x7f, since 10-bit addressing is
-> not advertised in aml_i2c_func()) before shifting by START_SADDR_SHIFT?
+>> +error:
+>> +    vblank->linedur_ns = 0;
+>> +    vblank->framedur_ns = 0;
+>> +    drm_mode_copy(&vblank->hwmode, mode);
+>> +    return -EINVAL;
+>>   }
+>>   EXPORT_SYMBOL(drm_calc_timestamping_constants);
+>>   @@ -2221,6 +2239,7 @@ int drm_crtc_vblank_start_timer(struct
+>> drm_crtc *crtc)
+>>       struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
+>>       struct drm_vblank_crtc_timer *vtimer = &vblank->vblank_timer;
+>>       unsigned long flags;
+>> +    int ret;
+>>         if (!vtimer->crtc) {
+>>           /*
+>> @@ -2239,7 +2258,9 @@ int drm_crtc_vblank_start_timer(struct drm_crtc
+>> *crtc)
+>>               hrtimer_try_to_cancel(&vtimer->timer);
+>>       }
+>>   -    drm_calc_timestamping_constants(crtc, &crtc->mode);
+>> +    ret = drm_calc_timestamping_constants(crtc, &crtc->mode);
+>> +    if (ret)
+>> +        return ret;
+>>         spin_lock_irqsave(&vtimer->interval_lock, flags);
+>>       vtimer->interval = ns_to_ktime(vblank->framedur_ns);
+>> diff --git a/include/drm/drm_vblank.h b/include/drm/drm_vblank.h
+>> index 2fcef9c0f5b1..d99772dfa034 100644
+>> --- a/include/drm/drm_vblank.h
+>> +++ b/include/drm/drm_vblank.h
+>> @@ -311,8 +311,8 @@ void drm_crtc_vblank_on(struct drm_crtc *crtc);
+>>   u64 drm_crtc_accurate_vblank_count(struct drm_crtc *crtc);
+>>   void drm_crtc_vblank_restore(struct drm_crtc *crtc);
+>>   -void drm_calc_timestamping_constants(struct drm_crtc *crtc,
+>> -                     const struct drm_display_mode *mode);
+>> +int drm_calc_timestamping_constants(struct drm_crtc *crtc,
+>> +                    const struct drm_display_mode *mode);
+>>   wait_queue_head_t *drm_crtc_vblank_waitqueue(struct drm_crtc *crtc);
+>>   void drm_crtc_set_max_vblank_count(struct drm_crtc *crtc,
+>>                      u32 max_vblank_count);
+>>
+>> base-commit: 06576c2b43750d990297b8ff1989b94ac72e855f
+>> prerequisite-patch-id: 6729bb10d5e338678e78ccda2dd24f232a13cd22
+>> prerequisite-patch-id: 9d94d20bd45967493b4dc339b58082e1c8da0f4f
+>> prerequisite-patch-id: 6ac8d22df34db9e7d467b1ab95ad30f94841d5db
+>> prerequisite-patch-id: f548dbde3f944ca3415c808be628719acebe898a
+>> prerequisite-patch-id: 2ae91ee8e2bbcd33b8325be046e7214185aba6aa
+>> prerequisite-patch-id: f97bbde08a9996d7c62ca3e3ebfcd387e50bc5c3
+>> prerequisite-patch-id: ecc3c825277bc9978c6979455517249a074c0cb1
+>> prerequisite-patch-id: 0449925cca36664b566f614bfb7d573a11f0575f
+>> prerequisite-patch-id: 9fb2c2787244e9621847af09bea03e575e6276c7
+>> prerequisite-patch-id: eb4384d581805e1178d22e7df45f134223c38305
+>> prerequisite-patch-id: 1a7a529e4b2864abe8071aa44598d28ce72483f4
+>> prerequisite-patch-id: 844a85f4c2fe2f72209b82d46614004c3cfe4123
+>> prerequisite-patch-id: 13f7cb22114c648d35f8c9fa74e9165656ce31eb
+>> prerequisite-patch-id: 20ee46bd6fdd91e39f71d22f52ef6682a4e41512
+>> prerequisite-patch-id: 1d26c0ff91796ff1e62d3831d00bee18723788ef
+>> prerequisite-patch-id: 007f6ea0d09bef54b689bae0eb5abeb497bdfaad
+>> prerequisite-patch-id: 2d89c1507c909520adf9bfb1a137d458a819ae8f
+>> prerequisite-patch-id: d90dc4134468870ab8ccbd71547c9552dff74fbd
+>> prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
+>> prerequisite-patch-id: a5a973e527c88a5b47053d7a72aefe0b550197cb
+>> prerequisite-patch-id: b9adc9622920a3e70168e672c2c92795b3e3a106
+>> prerequisite-patch-id: 5030de433a01c2e99056cadb676a8e2ba35f055a
 > 
 
-Will add mask for address.
+The patch looks correct, though will be better to have a smaller diff 
+that doesn't require LLM for a review.
 
->> +     clear_irq_status(i2c, IRQ_ALL_MASK);
->> +     /* enable thresh mode */
->> +     if (trans_len > A9_I2C_FIFO_DEPTH) {
->> +             reg_val = (msg->flags & I2C_M_RD) ? A9_RX_THRESH_READ : A9_TX_THRESH_WRITE;
->> +             aml_i2c_set_mask(i2c, REG_CFG_IRQ_ENABLE,
->> +                              A9_RX_THRESH_READ | A9_TX_THRESH_WRITE, reg_val);
->> +     }
->> +}
->> +
->> +static int aml_i2c_xfer_msg(struct aml_i2c *i2c, struct i2c_msg *msg, bool last)
->> +{
->> +     unsigned long time_left, flags;
->> +     int ret = 0;
->> +
->> +     i2c->msg = msg;
->> +     i2c->pos = 0;
->> +     i2c->count = 0;
->> +     i2c->error = 0;
->> +
->> +     i2c->state = (msg->flags & I2C_M_RD) ? A9_STATE_READ : A9_STATE_WRITE;
->> +     spin_lock_irqsave(&i2c->lock, flags);
->> +     aml_i2c_prepare_xfer(i2c, A9_FIFO_FILL_FULL);
->> +     i2c->pos += i2c->count;
->> +     spin_unlock_irqrestore(&i2c->lock, flags);
->> +     reinit_completion(&i2c->done);
->> +
->> +     if (last)
->> +             aml_i2c_set_mask(i2c, REG_CFG_BUS, BUS_NO_STOP, 0);
->> +     else
->> +             aml_i2c_set_mask(i2c, REG_CFG_BUS, BUS_NO_STOP, BUS_NO_STOP);
->> +     /* Start the transfer */
->> +     aml_i2c_do_start(i2c, msg);
-> [Severity: High]
-> Can starting the hardware transfer before clearing IRQ status and enabling
-> threshold interrupts in drivers/i2c/busses/i2c-amlogic-a9.c:aml_i2c_do_start(),
-> without holding i2c->lock across transfer setup in aml_i2c_xfer_msg(), race
-> with aml_i2c_irq()?
-> 
-> In aml_i2c_do_start(), setting START_START in REG_CFG_START kicks off the
-> hardware transaction before clear_irq_status(i2c, IRQ_ALL_MASK) and before
-> enabling A9_RX_THRESH_READ or A9_TX_THRESH_WRITE in REG_CFG_IRQ_ENABLE:
-> 
->          aml_i2c_set_mask(i2c, REG_CFG_START,
->                           START_START | START_SLAVE_ADDR | START_READ | START_LEN, reg_val);
->          clear_irq_status(i2c, IRQ_ALL_MASK);
->          /* enable thresh mode */
->          if (trans_len > A9_I2C_FIFO_DEPTH) {
->                  reg_val = (msg->flags & I2C_M_RD) ? A9_RX_THRESH_READ : A9_TX_THRESH_WRITE;
->                  aml_i2c_set_mask(i2c, REG_CFG_IRQ_ENABLE,
->                                   A9_RX_THRESH_READ | A9_TX_THRESH_WRITE, reg_val);
->          }
-> 
-> If the task is preempted or interrupted after writing REG_CFG_START, or if the
-> controller quickly asserts A9_NCK_ERROR (such as on an address NACK) or
-> A9_PHY_DONE before clear_irq_status() runs, clear_irq_status(i2c, IRQ_ALL_MASK)
-> can wipe out the newly asserted IRQ status bits and cause
-> wait_for_completion_timeout() to time out. Similarly, if aml_i2c_irq() runs
-> and completes on an early NACK before aml_i2c_do_start() updates
-> REG_CFG_IRQ_ENABLE, the unlocked read-modify-write in aml_i2c_do_start() can
-> re-enable A9_RX_THRESH_READ or A9_TX_THRESH_WRITE after complete_irq_out
-> already cleared them.
-> 
-> In addition, in aml_i2c_xfer_msg(), i2c->msg, i2c->pos, i2c->count,
-> i2c->error, and i2c->state are initialized outside i2c->lock, and i2c->lock is
-> released before reinit_completion(&i2c->done), REG_CFG_BUS configuration, and
-> aml_i2c_do_start(). If a late interrupt from a previous timed-out transfer
-> arrives while i2c->state is already set to A9_STATE_READ or A9_STATE_WRITE,
-> aml_i2c_irq() can modify i2c->pos and access the new i2c->msg->buf before the
-> new transfer begins (and if i2c->pos exceeds the new msg->len in
-> A9_STATE_READ, the signed subtraction i2c->msg->len - i2c->pos in
-> min(i2c->msg->len - i2c->pos, A9_I2C_FIFO_DEPTH) will wrap to a large u32 in
-> rd_len and overflow buf[i2c->pos++]).
-> 
-> Could the state initialization, reinit_completion(), bus configuration, IRQ
-> status clearing, threshold IRQ setup, and START_START trigger all be performed
-> under a single spin_lock_irqsave(&i2c->lock, flags) critical section, with
-> clear_irq_status() and REG_CFG_IRQ_ENABLE configured before asserting
-> START_START?
-> 
-I will lock start. This way, there will be no conflict that causes 
-interruption.
 
->> +
->> +     time_left = msecs_to_jiffies(I2C_TIMEOUT_MS);
->> +     time_left = wait_for_completion_timeout(&i2c->done, time_left);
->> +
->> +     /*
->> +      * Protect access to i2c struct and registers from interrupt
->> +      * handlers triggered by a transfer terminated after the
->> +      * timeout period
->> +      */
->> +
->> +     spin_lock_irqsave(&i2c->lock, flags);
->> +     if (!time_left) {
->> +             i2c->state = A9_STATE_IDLE;
->> +             clear_irq_status(i2c, IRQ_ALL_MASK);
->> +             reset_fifo_pos(i2c);
->> +             ret = -ETIMEDOUT;
->> +     }
-> [Severity: High]
-> When a transfer with msg->len > A9_I2C_FIFO_DEPTH times out in
-> drivers/i2c/busses/i2c-amlogic-a9.c:aml_i2c_xfer_msg(), aren't the threshold
-> interrupts in REG_CFG_IRQ_ENABLE and the active transfer in REG_CFG_START left
-> enabled?
-> 
-> In aml_i2c_do_start(), transfers with trans_len > A9_I2C_FIFO_DEPTH enable
-> A9_RX_THRESH_READ or A9_TX_THRESH_WRITE in REG_CFG_IRQ_ENABLE, and only
-> update REG_CFG_IRQ_ENABLE when trans_len > A9_I2C_FIFO_DEPTH. On normal
-> completion in aml_i2c_irq(), complete_irq_out clears A9_RX_THRESH_READ |
-> A9_TX_THRESH_WRITE in REG_CFG_IRQ_ENABLE, but the !time_left timeout path in
-> aml_i2c_xfer_msg() does not disable those threshold IRQ bits or stop the
-> transfer in REG_CFG_START.
-> 
-> If a >32-byte write times out and the next transfer is a short read with
-> msg->len <= 32, wouldn't A9_TX_THRESH_WRITE remain enabled and fire during
-> A9_STATE_READ, causing aml_i2c_irq() to read from an empty REG_CFG_RX FIFO
-> into msg->buf?
-> 
+-void drm_calc_timestamping_constants(struct drm_crtc *crtc,
+-				     const struct drm_display_mode *mode)
++int drm_calc_timestamping_constants(struct drm_crtc *crtc,
++				    const struct drm_display_mode *mode)
+  {
+  	struct drm_device *dev = crtc->dev;
+  	unsigned int pipe = drm_crtc_index(crtc);
+  	struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
+-	int linedur_ns = 0, framedur_ns = 0;
++	u64 linedur_ns = 0, framedur_ns = 0;
+  	int dotclock = mode->crtc_clock;
 
-I will take corresponding measures to prevent this from happening.
+  	if (!drm_dev_has_vblank(dev))
+-		return;
++		return 0;
 
-> [ ... ]
-> 
->> +MODULE_DESCRIPTION("Amlogic I2C Bus driver");
->> +MODULE_AUTHOR("Junyi Zhao<junyi.zhao@amlogic.com>");
->> +MODULE_LICENSE("GPL");
-> --
-> Sashiko AI review ·https://sashiko.dev/#/patchset/20261022-a9-i2c-v2-0-45e3cef175bf@amlogic.com?part=2
+  	if (drm_WARN_ON(dev, pipe >= dev->num_crtcs))
+-		return;
++		return -EINVAL;
+
+  	/* Valid dotclock? */
+  	if (dotclock > 0) {
+-		int frame_size = mode->crtc_htotal * mode->crtc_vtotal;
++		u64 frame_size = (u64)mode->crtc_htotal * mode->crtc_vtotal;
+
+  		/*
+  		 * Convert scanline length in pixels and video
+  		 * dot clock to line duration and frame duration
+  		 * in nanoseconds:
+  		 */
+  		linedur_ns  = div_u64((u64) mode->crtc_htotal * 1000000, dotclock);
+-		framedur_ns = div_u64((u64) frame_size * 1000000, dotclock);
++		framedur_ns = div_u64(frame_size * 1000000, dotclock);
+
+  		/*
+  		 * Fields of interlaced scanout modes are only half a frame duration.
+  		 */
+  		if (mode->flags & DRM_MODE_FLAG_INTERLACE)
+  			framedur_ns /= 2;
++
++		if (linedur_ns > INT_MAX || framedur_ns > INT_MAX) {
++			drm_err_once(dev, "crtc %u: Can't calculate constants, mode clock 
+too small!\n",
++				     crtc->base.id);
++			linedur_ns = 0;
++			framedur_ns = 0;
++			dotclock = 0; /* reuse the existing error-logging branch below */
++		}
+  	} else {
+-		drm_err(dev, "crtc %u: Can't calculate constants, dotclock = 0!\n",
+-			crtc->base.id);
++		drm_err_once(dev, "crtc %u: Can't calculate constants, dotclock = %d!\n",
++			     crtc->base.id, dotclock);
+  	}
+
+-- 
+Best regards,
+Dmitry
