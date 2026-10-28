@@ -1,104 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=13.77.154.182
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793172556;
-	b=OCcpT8vrA2gBgtWvHQngIpkIMATFvXz63lm2Uh3SHmvG4KMOhGjovx5V03TwJacUqS0C
-	 TUfKbUzv2wHDqGCcqZzyqO+xgeA+UoZghnazg7E9D+ai2ChuRDZYoKdXZLHMgKPtu/rd1
-	 GQd2RCD+uw4hiqSIAf68Y8BsgmvCjVEYGB2g4S5RsrYHTPHssPfQtBgaKxljW1nyM8Y1l
-	 zIqVDRtqG2qQDol7/dTL8gfIR/NO/LSO4/Ue1E70UqIDHAEup//mJcOjC06wiUL6NBtjh
-	 h4lWj03KjQk3eMeOxkc2b98HZU5gWJAru9IKSmntVRWvGxrjjexTbpJSZ/4aEJRohuw==
+	t=1793175529;
+	b=XM5ECDF775R67NIde/YmMte36aHURy9mIq8Dp/LxQxQfMTu5Dj4/9Z1bKWqpY8NFnlnm
+	 bqgrMh4hLad/rvzmTtoq4bk6EiF2Uf8Q19df8x7s25Mg0s1lcl5MUnmMKCvyTHURS2LQA
+	 v8m7AR3SPn6HmOU1wLekvX1gBwRT6YHp4FhZfutyN1Fm7e9Q69uGEwMI/aALRoQ7SsvOB
+	 vKqLdGLP9QEO9CPAMwGvS0WGoFKQouVn3PQbh57dGwZoS0rxdtt10JMzY7W07/UPmPWTT
+	 QXzzH9CMnJxCWDmaT8QWd0K75iO6+ghg3GQ7F+pgQlcQ+CEfQGnDeAPtZBmCzuFLIoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793172556;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spamd-Result:
-	 X-Rspamd-Server:X-Rspamd-Action:X-Spam-Flag:X-Spam-Score:X-Spam-Level:
-	 X-Rspamd-Queue-Id;
-	bh=xEyUiDbs57VMvjOsVlOUL+HLpqecXjWm92Zq/661skY=;
-	b=m0fi91tymjrTwnXlYSmevoy2Ue3LSEL2z90QUuZoGEQmf36Cfs4irKaq1L9AYGj/kHsR
-	 pvDHsn9z7AreLYTDTqvXgAydNMaSNDSObil597o5nSDZ+nNqmizVJX9541q6l0a8VC0UQ
-	 YKMVROxBrf7dPaqp8/kIDtWZ5GAtjxWwy5NzKUHLhmkO/GKSGih2Cpt6i1Du3Suv5YHFR
-	 3xC7YSHIsQLDlhgyzAcY2muoyby1t7TdDhkP6aCrNCUiU+j6dj8KOhiMpHjsKNHQJ16wV
-	 HW5fa8abhBH9hy495gJqLpSME7nE1JHqpfAt/txegs0AhSkr8/CnRhW4HdU7jcwoxhw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793175529;
+	h=DMARC-Filter:Received:DKIM-Filter:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:References:Content-Language:From:
+	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spam-Status:
+	 X-Spam-Checker-Version;
+	bh=XlpO6EQu+C5X1emUUUam6jKnE32+edCfS5s9qfhUjic=;
+	b=yAp8s+H9A5BhRVmyyXKkgou8PyPq1unao4o3hEAgb9a/1MbBrnSIYH5MLuQX1jmKzWi5
+	 xK/SEBgfxzaI8IyLmc0A4/o6AoUizZf80hPJvYA47fxg0bouR32TTaACEYhiYNxfnSArP
+	 37lXdSBA3I7fYOCGktLMR1Pe3Z21zydMHxMV7FOfcd/qmQDO3pRQpBuGtt5aKzQ61V0iB
+	 JPJ9QDZvlIfCrZ1GHineZP3CGcbk054nyuhkXxCHBJFAVEby/vQUJWd03KcFGBQ/REUMa
+	 o+6QGznX+SsbMRkRlb+li0GfiJH5iKqkE58OYulCo7eM070pQKgCn2JfxHf6UWNDyGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Gahk2t55;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=rFQ8+4Vk;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=pU0U549X;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=GdTxAQ38;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6584F606A31A;
-	Wed, 28 Oct 2026 07:29:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6584F606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	dmarc=pass header.from=linux.microsoft.com;
+	spf=pass smtp.mailfrom=linux.microsoft.com;
+	dkim=pass header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=q2AJUIJA;
+	arc=none smtp.remote-ip=13.77.154.182
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA727606A326
+	for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 08:18:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CA727606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Gahk2t55;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=rFQ8+4Vk;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=pU0U549X;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=GdTxAQ38
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 4253422110;
-	Wed, 28 Oct 2026 07:29:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1793172553; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=xEyUiDbs57VMvjOsVlOUL+HLpqecXjWm92Zq/661skY=;
-	b=Gahk2t550nnHTa+Yb0Ab+Y+NiCiG20O7teZg7eg5Vu5o2uUtX7PTvHKJHuwqxZi2DpUUAN
-	tYYko3pGYGIutrEfeUHu3FZnB308nOtFHIpDo92/BxuXzWhCAibyaUGKpGxuzEAx6IyKFA
-	T/curIajhUb6M1JwRujKvFadGsLjxYo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1793172553;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=xEyUiDbs57VMvjOsVlOUL+HLpqecXjWm92Zq/661skY=;
-	b=rFQ8+4VkCUcXufLOxABvEAl4KWbg9fwFBCWKjPun2lfivrx7oC96jH6/7Rvh9hVp05wtSc
-	thmU3gIjnjNVihCQ==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=pU0U549X;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=GdTxAQ38
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1793172552; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=xEyUiDbs57VMvjOsVlOUL+HLpqecXjWm92Zq/661skY=;
-	b=pU0U549XMf2JVailgjj3Z/7wp7FSimRaPbpywFDbsfDqtYRmg3Nhc7cHw4Gi5GSWX9h6oz
-	sDFLkRRN/sVXATmVrf32wKHtrJKNAbdIQviJOAB2L4bkacepBNK/gDfjb+ROSLgtzfHMvE
-	hPSOltoBBPPCCBSqvYtWs11a5bI8jEQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1793172552;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=xEyUiDbs57VMvjOsVlOUL+HLpqecXjWm92Zq/661skY=;
-	b=GdTxAQ38H3MDo38QCYCgs+OCtHtFihKS17m1368yqvnCfsYKocjNPrD7DHuQvoKNXM5PEz
-	dve4Pr9ZO6+eE7Cg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C28B01321C;
-	Wed, 28 Oct 2026 07:29:11 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id bowwG0ek4Wo3QQAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Wed, 28 Oct 2026 07:29:11 +0000
-Message-ID: <bd3c0c3a-1452-4667-b99d-96af0087af3f@suse.de>
-Date: Wed, 28 Oct 2026 08:29:11 +0100
+	dkim=pass (1024-bit key, unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=q2AJUIJA
+Received: from [10.26.7.43] (unknown [4.213.232.22])
+	by linux.microsoft.com (Postfix) with ESMTPSA id C512E20B7166;
+	Wed, 28 Oct 2026 01:18:35 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C512E20B7166
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1793175516;
+	bh=XlpO6EQu+C5X1emUUUam6jKnE32+edCfS5s9qfhUjic=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=q2AJUIJAz1gMNBivOfb0SCvHPmW+yi8LWWWAewhCHfYRmOFNnLTI3ke7ve2YR0tkH
+	 xgS7pzrJVeNnQGsLOo8cNl9ehDUMlEJLCrULZeFJmlbV5/IuHDVzGksbkd3R9D/C6G
+	 kbM+qNUoT1IE+T9bpzSi2dGvD6U+1Jhe+rrseqSk=
+Message-ID: <10979583-c3db-4ebe-bdec-f1848b27c96b@linux.microsoft.com>
+Date: Wed, 28 Oct 2026 13:48:44 +0530
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -109,299 +54,263 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] drm/vblank: Don't arm vblank timer with invalid frame
- duration
-To: me@romanilin.is, louis.chauvet@bootlin.com,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
- simona@ffwll.ch, javierm@redhat.com, dmitry.osipenko@collabora.com,
- ville.syrjala@linux.intel.com, regressions@leemhuis.info,
- peter.m.arnesen@gmail.com
-Cc: dri-devel@lists.freedesktop.org, virtualization@lists.linux.dev,
- sashiko-reviews@lists.linux.dev
-References: <20260914110004.211027-1-tzimmermann@suse.de>
+Subject: Re: [PATCH net] net: mana: Avoid waiting on dead HWC after device
+ reset
+To: sashiko-reviews@lists.linux.dev, linux-hyperv@vger.kernel.org,
+ linux-rdma@vger.kernel.org
+References: <20261025072838.1991785-1-sahilchandna@linux.microsoft.com>
+ <sashiko-outbox-184659@kernel.org>
 Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260914110004.211027-1-tzimmermann@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-12.00 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	XM_UA_NO_VERSION(0.01)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	FREEMAIL_TO(0.00)[romanilin.is,bootlin.com,linux.intel.com,kernel.org,gmail.com,ffwll.ch,redhat.com,collabora.com,leemhuis.info];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	TO_DN_NONE(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,romanilin.is:email,suse.com:url,suse.de:email,suse.de:dkim]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spam-Score: -12.00
-X-Spam-Level: 
-X-Rspamd-Queue-Id: 4253422110
+From: Sahil Chandna <sahilchandna@linux.microsoft.com>
+In-Reply-To: <sashiko-outbox-184659@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-Ping. Please review!
-
-Am 14.09.26 um 12:57 schrieb Thomas Zimmermann:
-> From: Roman Ilin <me@romanilin.is>
->
-> When a CRTC's display mode carries a too small pixel clock,
-> drm_calc_timestamping_constants() computes a frame duration that
-> exceeds INT_MAX. drm_vblank_crtc.framedur_ns becomes negative.
-> drm_crtc_vblank_start_timer() then arms the vblank hrtimer with this
-> interval, after which vblank events are no longer delivered. Pending
-> page flips never complete and the display appears frozen.
->
-> This could be triggered on virtio-gpu guests that have dynamic resolution
-> enabled: when the SPICE agent or the X server resizes the output, it
-> submits a mode whose pixel clock is off by a factor of 1000, e.g.:
->
->      clock = 406 kHz, htotal = 3152, vtotal = 2148
->
->      framedur_ns = 3152 * 2148 * 1000000 / 406 = 16675852216 ns (~16.7 s)
->
-> 16675852216 does not fit into an int and wraps to roughly -504000000.
-> ns_to_ktime() then yields a negative interval and the timer stops working.
->
-> Found by bisection, which pointed at commit a036f5fceedb ("drm/virtgpu:
-> Use vblank timer"). That commit merely made virtio-gpu use the vblank
-> timer and thereby exposed the pre-existing problem in the timer setup
-> added by commit 74afeb812850 ("drm/vblank: Add vblank timer").
->
-> To fix this, modify drm_calc_timestamping_constants() to use u64 for
-> calculations, check for INT_MAX overflows, and return an error code.
-> drm_crtc_vblank_start_timer() will then propagate the error, enabling
-> the driver to fall back to immediate vblank events. Valid modes are
-> unaffected, and the timer self-heals on the next mode with a sane clock.
->
-> v4:
-> - avoid log spamming with drm_warn_once()
->
-> Fixes: 74afeb812850 ("drm/vblank: Add vblank timer")
-> Suggested-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Signed-off-by: Roman Ilin <me@romanilin.is>
-> ---
-> I took Roman's patch from [1] and replaced the error messages with
-> warn_once, as suggestde in my review.
->
-> [1] https://lore.kernel.org/dri-devel/20260702181027.98526-1-me@romanilin.is/
-> ---
->   drivers/gpu/drm/drm_vblank.c | 73 +++++++++++++++++++++++-------------
->   include/drm/drm_vblank.h     |  4 +-
->   2 files changed, 49 insertions(+), 28 deletions(-)
->
-> diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
-> index f90fb2d13e42..72b543bca9e3 100644
-> --- a/drivers/gpu/drm/drm_vblank.c
-> +++ b/drivers/gpu/drm/drm_vblank.c
-> @@ -631,45 +631,54 @@ EXPORT_SYMBOL(drm_crtc_vblank_waitqueue);
->    * drm_crtc_vblank_helper_get_vblank_timestamp(). They are derived from
->    * CRTC's true scanout timing, so they take things like panel scaling or
->    * other adjustments into account.
-> + *
-> + * Returns:
-> + * 0 on success, or a negative errno code otherwise.
->    */
-> -void drm_calc_timestamping_constants(struct drm_crtc *crtc,
-> -				     const struct drm_display_mode *mode)
-> +int drm_calc_timestamping_constants(struct drm_crtc *crtc,
-> +				    const struct drm_display_mode *mode)
->   {
->   	struct drm_device *dev = crtc->dev;
->   	unsigned int pipe = drm_crtc_index(crtc);
->   	struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
-> -	int linedur_ns = 0, framedur_ns = 0;
-> +	u64 linedur_ns, framedur_ns;
->   	int dotclock = mode->crtc_clock;
-> +	unsigned int frame_size;
->   
->   	if (!drm_dev_has_vblank(dev))
-> -		return;
-> +		return 0;
->   
->   	if (drm_WARN_ON(dev, pipe >= dev->num_crtcs))
-> -		return;
-> +		return -EINVAL;
->   
-> -	/* Valid dotclock? */
-> -	if (dotclock > 0) {
-> -		int frame_size = mode->crtc_htotal * mode->crtc_vtotal;
-> +	if (dotclock <= 0) {
-> +		drm_err_once(dev, "crtc %u: Can't calculate constants, dotclock = %d!\n",
-> +			     crtc->base.id, dotclock);
-> +		goto error;
-> +	}
->   
-> -		/*
-> -		 * Convert scanline length in pixels and video
-> -		 * dot clock to line duration and frame duration
-> -		 * in nanoseconds:
-> -		 */
-> -		linedur_ns  = div_u64((u64) mode->crtc_htotal * 1000000, dotclock);
-> -		framedur_ns = div_u64((u64) frame_size * 1000000, dotclock);
-> +	frame_size = (unsigned int)mode->crtc_htotal * (unsigned int)mode->crtc_vtotal;
->   
-> -		/*
-> -		 * Fields of interlaced scanout modes are only half a frame duration.
-> -		 */
-> -		if (mode->flags & DRM_MODE_FLAG_INTERLACE)
-> -			framedur_ns /= 2;
-> -	} else {
-> -		drm_err(dev, "crtc %u: Can't calculate constants, dotclock = 0!\n",
-> -			crtc->base.id);
-> +	/*
-> +	 * Convert scanline length in pixels and video dot clock to line duration
-> +	 * and frame duration in nanoseconds.
-> +	 */
-> +	linedur_ns  = div_u64((u64)mode->crtc_htotal * 1000000, dotclock);
-> +	framedur_ns = div_u64((u64)frame_size * 1000000, dotclock);
-> +
-> +	/*
-> +	 * Fields of interlaced scanout modes are only half a frame duration.
-> +	 */
-> +	if (mode->flags & DRM_MODE_FLAG_INTERLACE)
-> +		framedur_ns /= 2;
-> +
-> +	if (linedur_ns > INT_MAX || framedur_ns > INT_MAX) {
-> +		drm_err_once(dev, "crtc %u: Can't calculate constants, mode clock too small!\n",
-> +			     crtc->base.id);
-> +		goto error;
->   	}
->   
-> -	vblank->linedur_ns  = linedur_ns;
-> +	vblank->linedur_ns = linedur_ns;
->   	vblank->framedur_ns = framedur_ns;
->   	drm_mode_copy(&vblank->hwmode, mode);
->   
-> @@ -678,7 +687,16 @@ void drm_calc_timestamping_constants(struct drm_crtc *crtc,
->   		     crtc->base.id, mode->crtc_htotal,
->   		     mode->crtc_vtotal, mode->crtc_vdisplay);
->   	drm_dbg_core(dev, "crtc %u: clock %d kHz framedur %d linedur %d\n",
-> -		     crtc->base.id, dotclock, framedur_ns, linedur_ns);
-> +		     crtc->base.id, dotclock,
-> +		     vblank->framedur_ns, vblank->linedur_ns);
-> +
-> +	return 0;
-> +
-> +error:
-> +	vblank->linedur_ns = 0;
-> +	vblank->framedur_ns = 0;
-> +	drm_mode_copy(&vblank->hwmode, mode);
-> +	return -EINVAL;
->   }
->   EXPORT_SYMBOL(drm_calc_timestamping_constants);
->   
-> @@ -2221,6 +2239,7 @@ int drm_crtc_vblank_start_timer(struct drm_crtc *crtc)
->   	struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
->   	struct drm_vblank_crtc_timer *vtimer = &vblank->vblank_timer;
->   	unsigned long flags;
-> +	int ret;
->   
->   	if (!vtimer->crtc) {
->   		/*
-> @@ -2239,7 +2258,9 @@ int drm_crtc_vblank_start_timer(struct drm_crtc *crtc)
->   			hrtimer_try_to_cancel(&vtimer->timer);
->   	}
->   
-> -	drm_calc_timestamping_constants(crtc, &crtc->mode);
-> +	ret = drm_calc_timestamping_constants(crtc, &crtc->mode);
-> +	if (ret)
-> +		return ret;
->   
->   	spin_lock_irqsave(&vtimer->interval_lock, flags);
->   	vtimer->interval = ns_to_ktime(vblank->framedur_ns);
-> diff --git a/include/drm/drm_vblank.h b/include/drm/drm_vblank.h
-> index 2fcef9c0f5b1..d99772dfa034 100644
-> --- a/include/drm/drm_vblank.h
-> +++ b/include/drm/drm_vblank.h
-> @@ -311,8 +311,8 @@ void drm_crtc_vblank_on(struct drm_crtc *crtc);
->   u64 drm_crtc_accurate_vblank_count(struct drm_crtc *crtc);
->   void drm_crtc_vblank_restore(struct drm_crtc *crtc);
->   
-> -void drm_calc_timestamping_constants(struct drm_crtc *crtc,
-> -				     const struct drm_display_mode *mode);
-> +int drm_calc_timestamping_constants(struct drm_crtc *crtc,
-> +				    const struct drm_display_mode *mode);
->   wait_queue_head_t *drm_crtc_vblank_waitqueue(struct drm_crtc *crtc);
->   void drm_crtc_set_max_vblank_count(struct drm_crtc *crtc,
->   				   u32 max_vblank_count);
->
-> base-commit: 06576c2b43750d990297b8ff1989b94ac72e855f
-> prerequisite-patch-id: 6729bb10d5e338678e78ccda2dd24f232a13cd22
-> prerequisite-patch-id: 9d94d20bd45967493b4dc339b58082e1c8da0f4f
-> prerequisite-patch-id: 6ac8d22df34db9e7d467b1ab95ad30f94841d5db
-> prerequisite-patch-id: f548dbde3f944ca3415c808be628719acebe898a
-> prerequisite-patch-id: 2ae91ee8e2bbcd33b8325be046e7214185aba6aa
-> prerequisite-patch-id: f97bbde08a9996d7c62ca3e3ebfcd387e50bc5c3
-> prerequisite-patch-id: ecc3c825277bc9978c6979455517249a074c0cb1
-> prerequisite-patch-id: 0449925cca36664b566f614bfb7d573a11f0575f
-> prerequisite-patch-id: 9fb2c2787244e9621847af09bea03e575e6276c7
-> prerequisite-patch-id: eb4384d581805e1178d22e7df45f134223c38305
-> prerequisite-patch-id: 1a7a529e4b2864abe8071aa44598d28ce72483f4
-> prerequisite-patch-id: 844a85f4c2fe2f72209b82d46614004c3cfe4123
-> prerequisite-patch-id: 13f7cb22114c648d35f8c9fa74e9165656ce31eb
-> prerequisite-patch-id: 20ee46bd6fdd91e39f71d22f52ef6682a4e41512
-> prerequisite-patch-id: 1d26c0ff91796ff1e62d3831d00bee18723788ef
-> prerequisite-patch-id: 007f6ea0d09bef54b689bae0eb5abeb497bdfaad
-> prerequisite-patch-id: 2d89c1507c909520adf9bfb1a137d458a819ae8f
-> prerequisite-patch-id: d90dc4134468870ab8ccbd71547c9552dff74fbd
-> prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
-> prerequisite-patch-id: a5a973e527c88a5b47053d7a72aefe0b550197cb
-> prerequisite-patch-id: b9adc9622920a3e70168e672c2c92795b3e3a106
-> prerequisite-patch-id: 5030de433a01c2e99056cadb676a8e2ba35f055a
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
-
+On 26-10-2026 12:59, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] net: mana: non-waiting CQ poll in mana_dealloc_queues() triggers false FLR
+> - [Medium] net: mana: mana_hwc_send_request() blocks on hwc->sema before checking hwc_dead
+> --
+> 
+> commit 7823c203253d16c1fb640cce922ae30200b9f486
+> Author: Sahil Chandna <sahilchandna@linux.microsoft.com>
+> 
+> net: mana: Avoid waiting on dead HWC after device reset
+> 
+> This commit replaces the sleep-based TX queue drain in mana_dealloc_queues()
+> with synchronous CQE polling and marks the hardware channel dead via hwc_dead
+> after a device reset so subsequent HWC commands fail fast with -ETIMEDOUT.
+> 
+>> diff --git a/drivers/net/ethernet/microsoft/mana/hw_channel.c b/drivers/net/ethernet/microsoft/mana/hw_channel.c
+>> index 3bca4b683134b..c9337f49fbe15 100644
+>> --- a/drivers/net/ethernet/microsoft/mana/hw_channel.c
+>> +++ b/drivers/net/ethernet/microsoft/mana/hw_channel.c
+> 
+> [ ... ]
+> 
+>> @@ -862,6 +867,7 @@ int mana_hwc_send_request(struct hw_channel_context *hwc, u32 req_len,
+>>  	u32 dest_vrcq;
+>>  	u32 dest_vrq;
+>>  	u32 command;
+>> +	u32 timeout = 0;
+>>  	u16 msg_id;
+>>  	int err;
+>>  
+>> @@ -897,6 +903,17 @@ int mana_hwc_send_request(struct hw_channel_context *hwc, u32 req_len,
+>>  	dest_vrq = hwc->dest_vrq_id;
+>>  	dest_vrcq = hwc->dest_vrcq_id;
+>>  
+>> +	/* If the HWC is unavailable (e.g. hwc_timeout was set to 0 or
+>> +	 * hwc_dead set after device reset), do not post the WQE: the
+>> +	 * hardware cannot respond, so fail fast instead of waiting out
+>> +	 * the full timeout.
+>> +	 */
+>> +	timeout = READ_ONCE(hwc->hwc_timeout);
+>> +	if (timeout == 0 || READ_ONCE(hwc->hwc_dead)) {
+>> +		err = -ETIMEDOUT;
+>> +		goto out;
+>> +	}
+> 
+> [Severity: Medium]
+> Can mana_hwc_send_request() still block for the full hwc_timeout on
+> hwc->sema before reaching this hwc_dead check?
+> 
+> At the start of mana_hwc_send_request(), mana_hwc_get_msg_index() is called:
+> 
+>     mana_hwc_send_request()
+>       -> mana_hwc_get_msg_index()
+>            -> down(&hwc->sema);
+> 
+> Because hwc->sema is initialized to 1 (HW_CHANNEL_VF_BOOTSTRAP_QUEUE_DEPTH),
+> only one HWC command can be in flight at a time.
+> 
+> While the device is active, periodic work such as
+> mana_gf_stats_work_handler() (running every 2 seconds without holding
+> rtnl_lock) or auxiliary RDMA (mana_ib) callers can enter
+> mana_hwc_send_request(), acquire hwc->sema, and sleep in
+> wait_for_completion_timeout(&ctx->comp_event, ...) for the full 60s
+> hwc_timeout when the hardware stops responding.
+> 
+> When mana_dealloc_queues() resets the device and sets hwc->hwc_dead = true,
+> it does not complete any in-flight ctx->comp_event, so the subsequent
+> mana_disable_vport_rx() -> mana_hwc_send_request() call in
+> mana_dealloc_queues() will still block in down(&hwc->sema) while holding
+> rtnl_lock until the concurrent caller's timeout expires.
+> 
+> Should hwc_timeout == 0 || hwc_dead also be checked before acquiring
+> hwc->sema (or should in-flight waiters be completed when marking HWC dead)?
+> 
+Ack, this is valid, I will fix this in v2.>> diff --git
+a/drivers/net/ethernet/microsoft/mana/mana_en.c
+b/drivers/net/ethernet/microsoft/mana/mana_en.c
+>> index 6b7c027e497ed..00885d21a9af0 100644
+>> --- a/drivers/net/ethernet/microsoft/mana/mana_en.c
+>> +++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+>> @@ -3753,16 +3753,19 @@ int mana_attach(struct net_device *ndev)
+>>  static int mana_dealloc_queues(struct net_device *ndev)
+>>  {
+>>  	struct mana_port_context *apc = netdev_priv(ndev);
+>> -	unsigned long timeout = jiffies + 120 * HZ;
+>>  	struct gdma_dev *gd = apc->ac->gdma_dev;
+>> +	struct hw_channel_context *hwc;
+>> +	bool trigger_flr = false;
+>> +	int flr_pending, i, err;
+>>  	struct mana_txq *txq;
+>>  	struct sk_buff *skb;
+>> -	int i, err;
+>> -	u32 tsleep;
+>> +	u32 flr_txq_id = 0;
+>>  
+>>  	if (apc->port_is_up)
+>>  		return -EINVAL;
+>>  
+>> +	hwc = gd->gdma_context->hwc.driver_data;
+>> +
+>>  	if (apc->rxqs)
+>>  		mana_chn_setxdp(apc, NULL);
+>>  
+>> @@ -3774,42 +3777,92 @@ static int mana_dealloc_queues(struct net_device *ndev)
+>>  	 * a txq because it may not timely see apc->port_is_up being cleared
+>>  	 * to false, but it doesn't matter since mana_start_xmit() drops any
+>>  	 * new packets due to apc->port_is_up being false.
+>> -	 *
+>> -	 * Drain all the in-flight TX packets.
+>> -	 * A timeout of 120 seconds for all the queues is used.
+>> -	 * This will break the while loop when h/w is not responding.
+>> -	 * This value of 120 has been decided here considering max
+>> -	 * number of queues.
+>> +	 * Drain the in-flight TX completions for each queue. TX is already
+>> +	 * stopped, so pending_sends can no longer grow. For each queue,
+>> +	 * disable NAPI so it cannot run at the same time as this drain,
+>> +	 * then process all completions still in the CQ. If some are still
+>> +	 * missing after that, the hardware is not responding: reset device
+>> +	 * and stop waiting on the now-unavailable HWC.
+>>  	 */
+>>  
+>>  	if (apc->tx_qp) {
+>>  		for (i = 0; i < apc->num_queues; i++) {
+>> +			struct mana_cq *tx_cq;
+>> +			struct napi_struct *napi;
+>> +			int pending;
+>> +
+>> +			if (!apc->tx_qp[i])
+>> +				continue;
+>> +
+>> +			tx_cq = &apc->tx_qp[i]->tx_cq;
+>>  			txq = &apc->tx_qp[i]->txq;
+>> -			tsleep = 1000;
+>> -			while (atomic_read(&txq->pending_sends) > 0 &&
+>> -			       time_before(jiffies, timeout)) {
+>> -				usleep_range(tsleep, tsleep + 1000);
+>> -				tsleep <<= 1;
+>> +			napi = &tx_cq->napi;
+>> +
+>> +			if (txq->napi_initialized) {
+>> +				/* Stop the NAPI poll so it cannot run
+>> +				 * concurrently with the synchronous drain.
+>> +				 */
+>> +				napi_synchronize(napi);
+>> +				napi_disable_locked(napi);
+>> +				cancel_work_sync(&tx_cq->dim.work);
+>> +
+>> +				/* Reap all TX completions currently in the CQ.
+>> +				 * A zero budget frees skbs via the non-NAPI
+>> +				 * path, which is required outside softirq.
+>> +				 */
+>> +				tx_cq->budget = 0;
+>> +				do {
+>> +					tx_cq->work_done = 0;
+>> +					mana_poll_tx_cq(tx_cq);
+>> +				} while (tx_cq->work_done);
+>>  			}
+>> -			if (atomic_read(&txq->pending_sends)) {
+>> -				err = mana_gd_dev_reset(gd->gdma_context);
+>> -				if (err) {
+>> -					netdev_err(ndev, "device reset failed %d with %d pkts pending in txq %u\n",
+>> -						   err,
+>> -					    atomic_read(&txq->pending_sends),
+>> -					    txq->gdma_txq_id);
+>> -				}
+>> -				break;
+>> +
+>> +			pending = atomic_read(&txq->pending_sends);
+>> +			if (!trigger_flr && pending > 0) {
+>> +				trigger_flr = true;
+>> +				flr_txq_id = txq->gdma_txq_id;
+>> +				flr_pending = pending;
+>>  			}
+>>  		}
+>>  
+>> +		if (trigger_flr && !(hwc && hwc->hwc_dead)) {
+>> +			/* Completions never arrived: the device is
+>> +			 * unresponsive. Issue device reset and
+>> +			 * mark the HWC dead so subsequent HWC commands
+>> +			 * fail fast instead of each waiting the full
+>> +			 * hwc_timeout.
+>> +			 */
+>> +			err = mana_gd_dev_reset(gd->gdma_context);
+>> +			if (err)
+>> +				netdev_err(ndev, "device reset failed %d with %d pkts pending in txq %u\n",
+>> +					   err,
+>> +					   flr_pending,
+>> +					   flr_txq_id);
+>> +			else if (hwc)
+>> +				WRITE_ONCE(hwc->hwc_dead, true);
+>> +		}
+> 
+> [Severity: High]
+> Won't this non-waiting CQ poll trigger a premature Function Level Reset and
+> permanently mark the HWC dead whenever TX packets are still in flight in the
+> hardware during a normal detach or per-port queue reset?
+> 
+> In mana_detach(), setting apc->port_is_up = false and calling
+> netif_tx_disable(ndev) prevents new packets from being queued in software,
+> but packets posted to txq->gdma_sq right before netif_tx_disable() are still
+> asynchronously in flight in the NIC hardware (DMA read, shaping, wire
+> transmission, and CQE DMA write-back).
+> 
+> mana_poll_tx_cq() is non-blocking:
+> 
+>     mana_poll_tx_cq()
+>       comp_read = mana_gd_poll_cq(cq->gdma_cq, completions, ...);
+>       if (comp_read < 1)
+>               return;
+> 
+> As soon as mana_gd_poll_cq() reaches a CQE slot that the hardware has not
+> yet written back to host memory, it returns 0, mana_poll_tx_cq() returns
+> early with tx_cq->work_done == 0, and the do-while loop exits immediately
+> without waiting for the in-flight SQ entries to complete.
+> 
+> If any packet is still in flight on the NIC when the loop exits,
+> atomic_read(&txq->pending_sends) > 0 sets trigger_flr = true, which calls
+> mana_gd_dev_reset() and sets hwc->hwc_dead = true on healthy hardware.
+> 
+> Because hwc->hwc_dead is never cleared without destroying and recreating the
+> HWC channel, any operation that detaches and reattaches queues under traffic
+> (such as mana_close() followed by mana_open(), mana_change_mtu(),
+> mana_set_channels(), mana_set_ringparam(), mana_set_priv_flags(), or
+> mana_xdp_set()) will cause subsequent mana_attach() or mana_open() calls and
+> any other vPorts or RDMA instances on the function to fail permanently with
+> -ETIMEDOUT.
+> 
+> Similarly, single-port TX timeout recovery in
+> mana_per_port_queue_reset_work_handler() runs when a TX queue is stalled
+> (so pending_sends > 0 holds by definition):
+> 
+>     mana_per_port_queue_reset_work_handler()
+>       -> mana_detach(ndev, false)
+>            -> mana_dealloc_queues(ndev)
+>       -> mana_attach(ndev)
+> 
+> Because mana_dealloc_queues() now resets the entire PCIe function and sets
+> hwc->hwc_dead = true, the recovery call to mana_attach(ndev) immediately
+> fails with -ETIMEDOUT instead of recovering the port.
+> 
+> Furthermore, if mana_gd_dev_reset() fails or is skipped because hwc_dead was
+> already set, the cleanup loop immediately below unmaps and frees the
+> in-flight TX SKBs via mana_unmap_skb() and dev_kfree_skb_any() without
+> having waited for DMA completion or reset the device.
+> 
+Ack, this would need a bounded wait to verify queue is really stuck
+rather than depend only on pending_sends, I will fix this in v2.
 
