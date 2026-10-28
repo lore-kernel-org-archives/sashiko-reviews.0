@@ -1,74 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.197
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.72
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793194797;
-	b=rqySQ73MPUCZYsn0+7ViJ7VY/8uRTmcGyjWRfbD7jKwzDcB3uJm7HIr1kbrslHnvyxbr
-	 PnZ86xQBw+wz0meMXULJNXju8K5RzV1DyWFSnQCYJ6H5fMoQw6mXWEY+3RpLAGsWOl6Ok
-	 PgD7HW+tsXwkpPAabibGVvVWaILHHGicqopQxKw5RtJfxRyWRB/crErd8LYeLAWcoW627
-	 p1NyJw9hkNQxqq6pPWryJeJ91JwU4AHFECD5ZQGkj0k3QvOzODZh1GadZx8OD/5zmWLMO
-	 iRkNml0Td4PUXf9SggYpddR0HCOuLrE/KP06IfvFI9lhS+C7MEuWzVNLS3wjtCEY8uQ==
+	t=1793194880;
+	b=SpGD4HGBFS/jI7cfEqEGb3MsnuycitrJo7sPd8Vv1TwMFGCFu4bJ1ms6ieHwI+S6o4Wc
+	 MfLzQpvp50iJuMuG2R4Yd+q91nO0vQMQoBGuvSQHZ8oTbHYQdrO4PWN774Oo0HSFeGn3T
+	 z+h/MlXvu8inPizfslQyBZhBhRzmS9g3+ogo0cuGjfg1cdq0Oor4lArjmzyHudiArIzmd
+	 eGswV3LoMbqbAOziWL6UUOkvRPN+lLQXO0SuYPlNEjcjXHOM342EAqRcInzu86hwgZ++E
+	 GbKSFhAuS6EEdpDtZ0DSnlWCsjFumEFzsM2cUOSTi3J1/j7KfZlmaSSryHUobawqihQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793194797;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793194880;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
 	 References:Message-ID:Subject:From:To:Cc:Content-Type;
-	bh=xZLmLgFNAyARHxSBRStR7OWRqN4IR/DocC51szk/rqU=;
-	b=uXJ0QWoi3PmHfm4+e71hvWbKitrOynLKeFzIRLLxO2/G0xHwNjvYGbM6tFRpBLAKKejy
-	 SrN1wK5/vYcozg2ZrsckqJtpIQ5bFL4vPmc2UwXYhQWfeeaY9TqWGaNs1PQkIsRvBHuhn
-	 wKjmYBGZRVmWV03GCBapfARFrDAHcZBoLMLBIvI4abWwnqPNP3jyVSPN0WQ2mn3uZEjOX
-	 pzdPGAGFZN2HzDsRpdms6X3TdzTYzQ8JFPh0tibUjCaKrvAmnKZezMvJ6E4ABm1KCxWz/
-	 kcBqj2lolXxL8sXztrEEF0ZsX7JcbhDnTWvaXQfwoWs27E/D7u8sqfAXb1L61qLC+Qw==
+	bh=PF7hA8qtLtGMgmmqrzl6s1EtCDWETZWVgUxkDpAKR/s=;
+	b=JR79j3v56EV61zevWRiLunwaMD6qr0eR95u8xD4kvXzUhjFh/4rSLjxJcrFutWGoW4+b
+	 7nnjSGe4wW1MGXq5gaNw7txe6VFTOClRYGiW2hmH3NI+A1hu4FIVe/ajXyJNcp3QqY/UR
+	 vaHxgsEjsnmTlsAU4e4LgprfwYMPo9CLuomFnp6xiLa6poReNXJ1XKBbUaIpYFb1o93OZ
+	 CQ0rw6AOqNo45UAiusJZkPbHGtFbSMNopOrO63QzneoCRN9S3Pja6vcjfQ14QZO12SNXv
+	 764jDuGNbH/AzmE6Z1g4N2cTWsYfWLKOP1OaPGATm+1v7FuzydR3vG1pkJyYPHz4Dnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=google.com;
 	spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=oNncf38l;
-	arc=none smtp.remote-ip=209.85.210.197
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=VrJfqxNk;
+	arc=none smtp.remote-ip=209.85.216.72
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E716606A31C
-	for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 13:39:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7E716606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D73E606A31A
+	for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 13:41:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8D73E606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=oNncf38l
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-8a06750c74fso725388b3a.0
-        for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 06:39:57 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=VrJfqxNk
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3adf71ee6a5so1356484a91.2
+        for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 06:41:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1793194797; x=1793799597; darn=lists.linux.dev;
+        d=google.com; s=20260707; t=1793194879; x=1793799679; darn=lists.linux.dev;
         h=content-type:cc:to:from:subject:message-id:references:mime-version
          :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=xZLmLgFNAyARHxSBRStR7OWRqN4IR/DocC51szk/rqU=;
-        b=oNncf38lNwMgk1Rj9irLcHUmeRrkInblMRdg3WiTCfVfbUBzrwhBrdW1YpOlyK0n3U
-         qjrN3sMpB/87y700K0s6lVPK3h/Mh4C2GHyeKPBBNiyL+0GxhU9XtmmZ+RhCgttpBcpx
-         raEEUVfNxC2VFG5LRmARz6yTaIp9UKCd8uz9wQKZ6EU8nOctz1AbTQWEcAohfdSaEge9
-         yYozmzAvwbtdjEDFajFW9yGWT1UcpW4X+p+eyE3+3Sq1q/ifr8Kp3ixyC9h9z7kpZzjr
-         xc9X3oZ0gitU8vgb4WgcSEhsGYiwkSqkdP4OaagN4ZIL5s7iBV8FX4qCaW7kKZZUqZX1
-         NcjQ==
+        bh=PF7hA8qtLtGMgmmqrzl6s1EtCDWETZWVgUxkDpAKR/s=;
+        b=VrJfqxNkEQ8LVCOtbIwIfpIx6+Lpi/B9sYbxlXp5WuHtAgJAV/OcOoqSP0HzbA/kdv
+         wAsUOPPcID0z14Lp3o9JQqr0zsMomV0zERLJF5JMoi6TxEW3yXJtO1UFxtifej2oPqiG
+         krFewcvX16R3/UdH5Y4WGCDnNlJ+arWwVgLELjoLkYKEMjFF0iBJYHguCxW+QP9IWD+k
+         e79NnEUXb0obNZXAoNGpWAmrdGGG3dc0xqN/iBW5zmqAPBMid9BUOP+jTpqBvxYxylMj
+         X0OwNxRHXh0sHr777UOcIGwpumualdxcyxhUjWWgARJwPaT1M0YV9hnOvSyXgyPlUrZR
+         nz6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793194797; x=1793799597;
+        d=1e100.net; s=20260707; t=1793194879; x=1793799679;
         h=content-type:cc:to:from:subject:message-id:references:mime-version
          :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=xZLmLgFNAyARHxSBRStR7OWRqN4IR/DocC51szk/rqU=;
-        b=vFHx0FI06GcHgghFWgRQjjJC2pa1Gxnw2ToC6A3QJQM4E/e0IE+PUfUeczjBTFh6Fm
-         cT8Vr5jg4Li6P8/cSRd7e2lsXM7VBQeCLeipkN26pDBg3zzm6mW+pAXby57u4l5wtMcP
-         fECWU41GYuajYXr4IzCjdlBm1OZ7u6t0YKUgnI6Tozrn6lxp7MVesJdBtV2K6ULdTG9Q
-         4ZzP64CpwXsLBOjrfqIAlWnv1l+AtH4Z0J9ZQpfGm/GOXoK/IuiDMT+qbsX89znrJCrE
-         W3iV3iCiPI6Zp9lxjSKvHx5thJTAvNmdeJ8l3+MTNpxxUvEvHHRjQUb6tdyh2jcCs8mc
-         1qMg==
-X-Gm-Message-State: AFq9FYLibqUQGQBbqTaUpn7qb5oFohleS2Ywf6jB+i6sUREQ4rUiPh37
-	AKFs8tH8JVcDJIko9V62C3xHgdbTT8wXWuFFmHHDAZ0Cw5Ou8LJ3ufIYPBLf1RkZ92S3XjnNFg5
-	k2+ozC9WaKjNq9fTwoSGXQ++vJrIit8PNoHcln6nRUWzxFiVek3ty/P4i+gJfGD0rwSgVzR3yUy
-	qwtbKhK4xqlhwUkg/CDCTV3s7MHNlx+WSKd/muFHCUp9cQhrT9
-X-Received: from pfaa28.prod.google.com ([2002:a05:6a00:a61c:b0:89f:30c1:9a96])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:4fd4:b0:878:6ee:672b
- with SMTP id d2e1a72fcca58-8a6e6ff34e6mr1964985b3a.35.1793194796562; Wed, 28
- Oct 2026 06:39:56 -0700 (PDT)
-Date: Wed, 28 Oct 2026 06:39:55 -0700
-In-Reply-To: <sashiko-outbox-187201@kernel.org>
+        bh=PF7hA8qtLtGMgmmqrzl6s1EtCDWETZWVgUxkDpAKR/s=;
+        b=v6AYmD9iUwxDCyvpSxkqjySLnJAvt/SVETqoNSzBBH+s9flVzB0OwgDNKzuD9r8PeQ
+         Y7koft+nTiVLBwFj4nMDpOLqLXvSVmsJ6Dl5XcAHR1ftVC6hKhfj98274VdJiPb633o7
+         +W7KJA9lYhOpsufGSsW81GwTBuiTsktuPXFSNYXuZ8yaBUOs8KxTvTkXsYRAyZJxTfvn
+         JnQq0tG+11ZMcEQNTYSnsw01/7ffTrm2iFLqYMP8lh0Xl33GDjXJOnzhz6P70pH0fRJ6
+         scpTEzf720A6aIE0tkfrABm1LxPZOxUHxTCvAFnVkMYXEIAO2t+u5Iq+h8ltRia3BsQX
+         J9dg==
+X-Gm-Message-State: AFq9FYL8u8M1Sy94uWq32jcuzDaTdSPU+okeD3MxvLHg+gaZPT6UDlUF
+	sYPPgHYUblpTj1Jn3izcvYoic4tywNa5vq2tA9camSJUKN+K5Mf9i6Xs0dS+cHCFEEXt3EXEsDX
+	wqEe2SNKDGJjbNw8WtlLWo9efZcYqRFxXoiR4YpRtJdVnl74gBx+Z4pP957do+6IKaaJUJw5vk/
+	3Qxg1iIUXO+G+xtMJ7hA8FTGsJhwnAyUAKW55rJ4t+VCYTXeJj
+X-Received: from pjuj4.prod.google.com ([2002:a17:90a:d004:b0:3ae:913:ee08])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:90a:d00f:b0:3a4:f75d:d194
+ with SMTP id 98e67ed59e1d1-3ae58228c44mr1916090a91.36.1793194878690; Wed, 28
+ Oct 2026 06:41:18 -0700 (PDT)
+Date: Wed, 28 Oct 2026 06:41:17 -0700
+In-Reply-To: <sashiko-outbox-187178@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -78,27 +78,30 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 Mime-Version: 1.0
-References: <20261027224914.1574319-1-seanjc@google.com> <20261027224914.1574319-5-seanjc@google.com>
- <sashiko-outbox-187201@kernel.org>
-Message-ID: <auH7K0Sq0KcApJGq@google.com>
-Subject: Re: [PATCH v2 4/6] KVM: x86: Recompute EFER.LMA instead of inheriting
- the current value on EFER writes
+References: <20261027224914.1574319-1-seanjc@google.com> <20261027224914.1574319-7-seanjc@google.com>
+ <sashiko-outbox-187178@kernel.org>
+Message-ID: <auH7fUGZnfGvg6lQ@google.com>
+Subject: Re: [PATCH v2 6/6] KVM: selftests: Expect failure when trying to set
+ EFER that violates vCPU model
 From: Sean Christopherson <seanjc@google.com>
 To: sashiko-reviews@lists.linux.dev
 Cc: kvm@vger.kernel.org
 Content-Type: text/plain; charset="us-ascii"
 
 On Tue, Oct 27, 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] kvm: x86: guest- and userspace-reachable WARN_ON_ONCE() in set_efer()
-> - [High] KVM: nSVM: guest-reachable WARN_ON_ONCE in set_efer() due to stale EFER.LMA
+> > @@ -222,11 +219,6 @@ static void test_sregs_lmsle(void)
+> >  	vm = vm_create_with_one_vcpu(&vcpu, NULL);
+> >  	vcpu_set_cpuid_feature(vcpu, X86_FEATURE_EFER_LMSLE_MBZ);
+> >  
+> > -	/*
+> > -	 * Unlike KVM_SET_MSRS, KVM_SET_SREGS runs the full set of guest CPUID
+> > -	 * checks, i.e. rejects EFER.LMSLE even though it's host-initiated.
+> > -	 */
+> > -	vcpu_sregs_get(vcpu, &sregs);
+> >  	TEST_ASSERT(!(sregs.efer & EFER_LMSLE), "EFER.LMSLE unexpectedly set");
+> 
+> [Severity: Medium]
+> Was removing vcpu_sregs_get(vcpu, &sregs) in test_sregs_lmsle() unintentional?
 
-As explained in v1, I don't think any of these are actually reachable, and if they
-are, they are pre-existing bugs that need to be fixed.
-
-
-> - [High] kvm: x86: missing MMU context reset in set_efer() when EFER_LMA changes
-> --
-
-This is a legit flaw though, though also pre-existing.  I'll tack on yet another
-patch in v3.
+No, I intended to delete just the comment, and unfortunately the test managed to
+pass on multiple systems (I'm guessing my build zeroed the stack?).
