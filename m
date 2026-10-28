@@ -1,56 +1,93 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.225.73
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793150009;
-	b=RRHV132Ku9WMwXjS82nuROq/V+LDYTUYnjb902hMS3jomhpSEaHBJxbgNxfOdV2rPc1p
-	 tht7tqOSya/Agz/iot7qpMMhra9rLwe1Z18zfuS4Z0nHcb1SEQz2t5opoQZqrDd9BX8eK
-	 tdNpOCGIFJo3/oQ1QNKN0oMn8W0AzsdYfc1PLu78p5MYkDyXBsLq9w1AfAnZ3x6ELXPbv
-	 Gkx0is5pHrBx/B3RBHgMXPZFHAdKZ4AGkB78madwhxkbXg1ZS+GwRHdy6Uoqxa/jPtHp2
-	 Xk5BxxC1sqapngRkb+bAw+R8XNLtKb3R5KyX8lLcMG3OYYUiYb5S6udpK57BEpLAPqg==
+	t=1793153711;
+	b=G5FPSrrHwSKXDdDHCUC6ODiXBZQ+0D2swZHLU0w/KlCAJiH2dwjQO08VZtBcgcJD7a2b
+	 k5oU0mW+xJ6FfNHDSfKswFaoX7hPZj4lq085gPFwEIqvOh136Q0qmSqZbspnWYvqYTZ6+
+	 3bQuGDzGRQg/m8Y+rNU7JPu1u0r6iGFkHWiE3Avmr6IrmKW0to5bEB42rqLN8mLjdaBhL
+	 5Uo4dXMoO8wXee+21TSh/3AC8pDVBkGY439KoXKHjh8zecvwGjeC4cDxaVO3NarJv8sML
+	 qhdTtINlWWjSBNZA0hMFlkdbR1R0oAt0TcOYwfEv2hZ+CK+h3yRzH3iLK9mzPcvY8lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793150009;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=sFo8TCnrO7TJ2lKbVEd0YQroZ7AW4x/RtCUnc2uNLcA=;
-	b=JL0h2zByZcsBrZXtkRJgvzftXHg0RTfUbdCqxcUr9XHTLS/RaHmJLMgrjvLumgEFy+mS
-	 dQjOx3lPlFhvvSFvXpSU8VOqccz24g8t7wGhyDGrMNM83nNVmvnlfODM3FAtk2WT/hrS1
-	 CfDGLJf3eFMz8zdE4mpa6z2IDf+zAXprsYosmNUXpywS2/mEGpveqaxfFRekqnh7ox3xy
-	 cYmneq93U4NFNJqVb8txdNIpEhQ5+VDGAlKBAcurW0XZRNhi5cAXbqiDeOxrgewKirsNC
-	 2m1Fts2kMiVVSQ2Fy8INw4UDumpt47lqwxQuKqqeUIGkm29joiB5/1H7Sc6zqimTYUg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793153711;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=QGinyiMrrwZtrLAfiO31oHhjeyRs9IZr6anPmafpqog=;
+	b=oWaV1AFz3mPfjqnCki+mRWslmOxPdYsXNCJuBuy8zGQfi5/hTp0KwmHHwE/BgJyP83mK
+	 YepTlsB1caoRx6bHVpYEHIsnG18cpNxnVGjt43Zjl0+fgs6HwXcDKEaC/f2u33m9P8xJT
+	 AwIExv/Q6jtB4BtrPmf2SSiMWjxyrdMItx5tDYVBMhFvIJiM2Tg+g6vmplSZ9SDIEmwYa
+	 ofpXFY9JcZPL+bmOPhNBjoj8OJpF0CJkU9p3hBdLOsD4LYE+Aru4HA0Rd3I63zs59QuuT
+	 qSbw7qbmtk9zWjWtPYWgjoctnL9XfMQdDmpu99WB9g50M+kPBXMxcBCGRPmPtzjkLnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZylZybYp;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0aVOxv1c;
+	arc=none smtp.remote-ip=74.125.225.73
+Received: from mail-wr2-f9.google.com (mail-wr2-f9.google.com [74.125.225.73])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2691A606A31D;
-	Wed, 28 Oct 2026 01:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66675606A31A
+	for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 02:15:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 66675606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZylZybYp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9EC01F01825;
-	Wed, 28 Oct 2026 01:13:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793150009;
-	bh=sFo8TCnrO7TJ2lKbVEd0YQroZ7AW4x/RtCUnc2uNLcA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=ZylZybYppaKvUBpFJWOx+h9hZDGGvXJ9HVhSeXCSLP+IHvoMBN6mH3SXRdZLYkfz2
-	 26vNjAvJvyyHa+piM1NwTPBdg8ISXDXUlwfvazgpGPGg7xenIvP+runEoDL170tAe9
-	 1dPXPCCGmG3oY/0zPR/jRPn2tC7pDdfVj70aVGLRCcZa5fWGtf/wcmU68tFklqc/e/
-	 S+GYZGyOaZqZdR1+rzeWdzR4CumCFj4pzfPaWbtbsokQzWB3pJp+HW8tDc8z3h1l3M
-	 0EQDp0lSP7fxpNWTV7vvJJ1tgQHR5JxcQeu0R+Nrl92b5BHq93Itv0hdodxKd5Zgvf
-	 p2ZhYvCenDYZg==
-Date: Tue, 27 Oct 2026 18:13:27 -0700
-From: Eric Biggers <ebiggers@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0aVOxv1c
+Received: by mail-wr2-f9.google.com with SMTP id ffacd0b85a97d-48afbc2b18bso202002f8f.0
+        for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 19:15:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793153710; x=1793758510; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=QGinyiMrrwZtrLAfiO31oHhjeyRs9IZr6anPmafpqog=;
+        b=0aVOxv1cbMLiGfJvG+GBpdcWtqBgq/JulEqFPMgePZNcln3Jd90eybUvBVJBWpk+c0
+         l1FE0R9JxEw6oE6zCC2Icg2nzWhG82tnPykeLJFmoM65qNjL3kmGU+LODqrSpXf9vxad
+         z12MFCbrArbH6hJ5Hj3E8+i5MPQD+fgyhaB7LsBLbxs+HOmIkRp7JK2FdEKkUd2j883T
+         7RLUK3uLYT7VWS6h/hZhpyK8+aVJQeGDF3OUGnf+sVZwm7oH6xd1Fd8zNFAzjxT57Phg
+         2EuIW1Tyhmmq7+PPfkC14JQ8OZ6Sq1Pvo/9Np7q/aKnpfmAIK4pDt67g5avltHeSkLEe
+         k3lQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793153710; x=1793758510;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=QGinyiMrrwZtrLAfiO31oHhjeyRs9IZr6anPmafpqog=;
+        b=sj8MqOGoxwqN9jY+F2D/M98Owx2xK68EB4Y5AINBIA9ODSHvximULUYn4srV4vK27x
+         PzC61Zq9wEQStBIQvYWQ/8RySpSufIBe2DbFvqB3MHwp/w7Csb6eirLBz2aMEgaQu8zS
+         YgqMQwEiPMWUGXN3X/yXC8JzO/f920K2LBQMOduZOesymZI8YivR/0ocbAgcx1UoLGl5
+         ikjqAeTVbDUcXgEEm9ZgrNIp3Hn4UZ4ySwI4lPoKwyRW6zLacoEPWlWsUH5SuoECHPpY
+         uB1BO//wZ1D0LSB9nQVrJ5q+ZorMeGJ2gEwpb26HOzjP2Ayupi3JXsU3+b2P2DcT10rt
+         YvJA==
+X-Gm-Message-State: AFq9FYKrft5mBf0L1s2r7SraB/AzytLOZbHJ7nAQTzYZexrkF8qj6hxx
+	+OIYWGxHqL0ka3rGeLr9/MzJw+pvzCaYbT0ZsoZ0lcqrxMVkQJu9I7f0gXTpbQbX
+X-Gm-Gg: AYBFou08vCo2GU1B0kWVwxCs5lVa4YriS6V3IJ9nFNhpUJ6jeZEE6C4CBhUzvcECRN6
+	2fbnf6Zahs0Fs1sPUfLnZOnDYL991xrQc6F8Te9ixJSWXJW/qfOk5MIRTJ3uJU3PHO/Dri/HkVe
+	wYNvIShYBovhnOYXfuNFJrSR8a3BiwL6a8iFdkgMPl0N6E7qSaEOsR4mA+dyp19wgS/c6TcpbRS
+	6DqefGwkG9VhfT3Z1W5rfLN4qdvrU175s3sQxizLjdsmP1KJnqGdvKn6SsNvsZeLCPBGccOmsFu
+	Hgcett9panYoHminnff0RBZldxHW76tblA0vnIJTSvEeudMsZVHS5VYgtX+4pvck6hkQ92gUNns
+	KCWVGxDdPvOcxBT3cajvXJ8p9H+xOrLqJE+AqbHa4RxTkcIV7jrqUoECDsRFT7bGH5Ob2k5+u8R
+	nXU7qhlr21PaFLo9lGPbGKnTTy9lGGGHJl46qT6OQ+ICqSFIxWCUmgwcv57MB3ar3ddqYWp9UfX
+	gbd4ov1wR7DC43zMYlkTmVzloOTFyxM5TnTe16SOr/UAvRzpzbQO/z0mUw71NB5lF5y5kSf63lb
+	Gd0JYRdpqQWCil+LErBz2OCO2BhePqT3Tobn38GpRjdHWgur1494FMKnFELsCUQK/nzsiWZ0AfF
+	h6m/9O0QbEXfGXfzVfCegxXsuC42qlw1BKhA2gZaoVlGWhOT0HmZ4uTsq09TgiVPa1pTw
+X-Received: by 2002:a05:6000:104b:b0:48b:4a2:8175 with SMTP id ffacd0b85a97d-48e5d308277mr2011252f8f.43.1793153709469;
+        Tue, 27 Oct 2026 19:15:09 -0700 (PDT)
+Received: from localhost (nat-icclus-192-26-29-3.epfl.ch. [192.26.29.3])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e3ecd35c2sm25220146f8f.39.2026.10.27.19.15.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2026 19:15:09 -0700 (PDT)
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 To: sashiko-reviews@lists.linux.dev
-Cc: linux-ext4@vger.kernel.org, stable@vger.kernel.org,
-	Zhihao Cheng <chengzhihao1@huawei.com>, Jan Kara <jack@suse.cz>,
-	Yao Kai <yaokai34@huawei.com>, Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Ts'o <tytso@mit.edu>
-Subject: Re: [PATCH 6.12] ext4: validate readdir offset before accessing
- dirent
-Message-ID: <20261028011327.GA1893@quark>
-References: <20261028003746.31943-1-ebiggers@kernel.org>
- <sashiko-outbox-187298@kernel.org>
+Cc: bpf@vger.kernel.org
+Subject: Re: [RFC PATCH bpf-next v1 01/11] bpf: Give a helper a way to call its callback with a pad
+Date: Wed, 28 Oct 2026 03:15:08 +0100
+Message-ID: <20261028021508.1203900-1-memxor@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <sashiko-outbox-187312@kernel.org>
+References: <cover.1793147364.git.memxor@gmail.com> <03d6c53ccdf3eb0f5503eae9f9ffa5e6570549c3.1793147364.git.memxor@gmail.com> <sashiko-outbox-187312@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -60,25 +97,30 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-187298@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-[+Cc recipients that Sashiko dropped]
+On Wed Oct 28, 2026 at 2:20 AM CET, sashiko-bot wrote:
+> [...]
+> [Severity: High]
+> Can evaluating the macro arguments in ___bpf_call_cb() on arm64 and
+> __bpf_call_cb() on x86-64 clobber the caller-saved local register
+> variables before the asm_goto_output() statement is reached?
 
-Should the Sashiko configuration for linux-ext4 be updated to enable
-reply-all?  That would be my preference, and various other lists already
-use that setting.
+Right: the compiler keeps no local register variable across a call, and
+a call in the evaluation of a later argument clobbers the ones set
+before it. The next version evaluates every argument into a temporary
+first and sets the register variables from those.
 
-On Wed, Oct 28, 2026 at 01:02:25AM +0000, sashiko-bot@kernel.org wrote:
-> [Severity: Medium]
-> What happens in ext4_readdir() if a corrupted de->rec_len in the rescan loop
-> advances i past sb->s_blocksize?
-> 
-> In fs/ext4/dir.c:ext4_readdir(), when !inode_eq_iversion(inode, info->cookie)
-> triggers a rescan (for instance after ext4_dir_llseek()), the loop only checks
-> the lower bound of de->rec_len before adding it to i and updating ctx->pos:
+> [...]
+> [Severity: High]
+> Could the compiler eliminate the *slot = to store in bpf_unwind_leave()
+> (on both x86-64 and arm64) as a dead store to the current function's stack
+> frame right before returning?
 
-Sounds like this fix was incomplete but the backport is still safe.
+Right, and gcc 15 does drop it, on arm64 and x86-64 alike: that is why
+the gcc runs of BPF CI returned from every helper but the array iterator
+instead of unwinding. The next version stores with WRITE_ONCE(), on the
+shadow call stack too.
 
-- Eric
+> [...]
