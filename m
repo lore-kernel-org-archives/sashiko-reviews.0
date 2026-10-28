@@ -1,131 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.10
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793142980;
-	b=XBifBLruk1LRzJqJiHvzjvl42AugSKVk9qmRp9TRrXxmDDyLPCW7hIZwjzMOiKuuRS5j
-	 +/dwBn29MlGEEXuM9bFODxR2v+5qq0vjVI4DDvRRxCCOF0lD/cE7DgXr56lqscfd8Pw//
-	 nGgMCwGQWlcET0qQd/lo5Bi1oDC0wOsGxLJRMdD4aNe3StnTyRAe1P2h54i3Z6Dn9h5Mr
-	 QB69WCet7KrEp2DBY6neuCz08D3SdsW8D52iwl+zvelw0Kh2yZhYPanR2J8NYFGPb4AOv
-	 2ezB+vawNsPreBcuuvFUxsZDrChL1hmwV6SdzXGCGtc38EAufJWiX0W/KeDHR0MZ5Gw==
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.225.128
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793149510;
+	b=OQXi+2qaA6PNyVxu/ZVhyD0TsJ1u7LIgGwB+Ud02+qSFGMOzq0id1znNj13b4T6J/eqX
+	 WjHikpPt+TpI8o3dPJQyHlsrdOKBrkG0dnaNjs5+AlneHiWxe01U23L6ErzXmcaupw2TA
+	 wGMaxbTFnkgGtAfN9AqR9Zbg1aw34Nmfy/p0WlaYr9HBMyheL0P2FqQdDhZRQOQ/1gmtx
+	 iS1yvayKqhbEit7B84VdLPn2HnYW2lERaIIJ0uE4uGEEm/p2XT6Kt2A68Xamu06DRedTa
+	 +DPV8uyuCBvwLgntpMgCC9G69eAU0D8u1w0KkYuAb91zAesohpD899Hp6NTlS4BcCLA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793142980;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:Received:Received:Message-ID:Date:User-Agent:Subject:
-	 Content-Language:To:CC:References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=IM4JYP/eLEWRPR7tEh3lLmFvIrJ1kOhSdkJ2pG2HVoE=;
-	b=Ntz7c18ucWyPlevHsRJV9E8eXIjUkOqVWcnTYrVrRM5q74MojcndoQyUjEIa+1rHsiuD
-	 worUSeQbETiC/cWiMyJfIjLFNzh9OHeGUmIMdRdInWPxY3LMJ/td/OkkpUpnbGqIBDpcC
-	 5G4bReu9leWFb4/JkVAzHMJbF8vom+3nkRWCUQZiqs9voxSKnhq39is9uoHDi0nJfJo11
-	 sXpUi5hL+TYXZ5SPHc3XaLF2EaUkcN9vIQhIgNN+YSS/6thr139wVsTFFFXOhGK2fWaag
-	 zFHFLnck1LCHCjbfYAVDQ0/G92rNYoSgVPHyHXQ/2heKQQ95h/PzfyUEgMS7qLig5pA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793149510;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=f2rE3NDE9kGP6isczzJJL2zdizHNny9LG2ue9EGEuV0=;
+	b=vyA8flsHehbf7QeE+m9cUGpL0CY0jw247T3YGfzlETsZHflq9ioRjBpQiHciRjlI31NE
+	 hLMXEMMgOj9z1yU9VFKRvl6zqTYLWsUxtmmuN0pglqUmnCWZMwKN4B6uYhQl0y0dYY5KQ
+	 IM+QwCOOJNRiH17JHzxfcQ2n3R2QgCRGddjmDy7urEzozUe1aTMB3jsfzJgwOQUXjrBCG
+	 tC+frdicHNk0apcbE4Eh9JQtXpASJbFX+8UjkGmVBn2ydcLdvz6S4Diopx6vBwXEkOD1B
+	 MHhd2FeQ361xlgWAuVmJVzJhjnY0AKHEojF95xVOYy2tACGvZi1es758T1GEJjRO7rQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=E7dOKdFM;
-	arc=fail smtp.remote-ip=192.198.163.10
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=h8AIDZES;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.225.128
+Received: from mail-wm2-f0.google.com (mail-wm2-f0.google.com [74.125.225.128])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B3D60A2605
-	for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 23:16:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 61B3D60A2605
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7785B606A329
+	for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 01:05:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7785B606A329
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=E7dOKdFM
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793142979; x=1824678979;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=/2HeNr/eST6af/vM3wHZgceEkqyTkpNxQP1jI6GenPQ=;
-  b=E7dOKdFMPU6IOOv/YKJC8upglx0APlaPPr/6TDdybQgO7OIQWtw3/Bx9
-   vL8vbu7ZD+ODY7Ms6YWuZ1ePnrP7RALVhJVg+3puszCifwWIn5tQgAyuy
-   jkhkhyeiPsWp+9dpmuTBR0lHMLS+mDCvsvd0Qzq1izxZEHzyoh3Aa1nxb
-   JSJ1aFdzqCKqB9Cbzl6LYs0ut1TOFA4XUdPqtpCW4aNisa7GkC1jBsJ99
-   1bsC+Gzhqw/xEqTNXzZwDQIG7FaZ70+NJCXWxouoJbwumsRFQgWI96mmZ
-   QaIpgk4/PjVcH7iGEl1cCm+wPajLvR9ulxl26Y8Si8Ex7XESU+Ml5/aUr
-   g==;
-X-CSE-ConnectionGUID: NZJIR1wwSzGuRsahlx9KNg==
-X-CSE-MsgGUID: 4sVaLkx1R+KEei30TsEU5Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11948"; a="1758524"
-X-IronPort-AV: E=Sophos;i="6.27,181,1787036400"; 
-   d="scan'208";a="1758524"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 16:16:17 -0700
-X-CSE-ConnectionGUID: /PfIdsLRRgGQQPsG97u0dg==
-X-CSE-MsgGUID: 54XIKXA8Q/2op2DPtDccog==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,181,1787036400"; 
-   d="scan'208";a="4684397"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
-  by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Oct 2026 16:16:18 -0700
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Tue, 27 Oct 2026 16:16:16 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49 via Frontend Transport; Tue, 27 Oct 2026 16:16:16 -0700
-Received: from BN8PR05CU002.outbound.protection.outlook.com (52.101.57.22) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.49; Tue, 27 Oct 2026 16:16:16 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BjAbq49AkyAgkG+kdd+msjlOc+R1EnXVlWv0kXw399Nhv/m2Wr2fiW7o9XxlnjMbij4ltyZTmCQB2r3YiwJH4XbSoze7UQ18jnO4ENw3Sb5A1kE8LTwyS9XuFA9jXhp7a/rbASzEwMh88qH9rm8ZZR3Ow6rdT27kZHCml8fpMqbie/g0rKorpWPaTvhV48y4FPHwTgxakHridfnvACnpnL2L/D9E3MnZGDLYj2NOmx55LVCH5IR9KwKAohlrvoM/164Ax+NZkl4JmPiF6sulOjGZZ/PzCG86P2Xp4f5xqUBVHu8Ch/9OSvlQ1D6VgyYacZoIWheBS41DvJPLAEqK/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IM4JYP/eLEWRPR7tEh3lLmFvIrJ1kOhSdkJ2pG2HVoE=;
- b=Nx2R40F80D8nDCfZxFaBfyrRjYZKh2wXMjwJeO24W6Seuz/ikckj9p3F7K4wZRtvWuCte50YQvD+R9xQCUzF9Ym+3hoDPD2u6TzMah3P0g2fKzD2wQ7OwfM9JfYTMIj24xz36Vp0uzjLHv/2JUlIvxf8x2l5tJsgDjsni6UkmLftP2BdfgxDjB883lF3M0G1NfihGBQ8fHxS9TSLJoEvMdsuMJvWg5yvakbavDEL8fmkzrpKCesbyTfRRWzS0HRUskZtLF7DKyM4iGMTQnyZLYVbo2fSgxi0a0pRGk4YF4g3Ersj1FgdL6rmICprT2mSZ5cHMz24TW55h2QjVWcKrw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CY8PR11MB7846.namprd11.prod.outlook.com (2603:10b6:930:79::14)
- by CY5PR11MB6533.namprd11.prod.outlook.com (2603:10b6:930:43::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
- 2026 23:16:14 +0000
-Received: from CY8PR11MB7846.namprd11.prod.outlook.com
- ([fe80::cae0:d05c:b2fc:c395]) by CY8PR11MB7846.namprd11.prod.outlook.com
- ([fe80::cae0:d05c:b2fc:c395%5]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
- 23:16:14 +0000
-Message-ID: <0fdaaf2d-2113-48e9-81d7-4afa6bd522ba@intel.com>
-Date: Tue, 27 Oct 2026 16:16:12 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 05/28] x86/cea: Use array indexing to simplify
- exception stack access
-Content-Language: en-US
-To: <sashiko-reviews@lists.linux.dev>
-CC: <kvm@vger.kernel.org>
-References: <20260911213659.2025974-1-sohil.mehta@intel.com>
- <20260911213659.2025974-6-sohil.mehta@intel.com>
- <20260911215759.6C04F1F000FF@smtp.kernel.org>
-From: Sohil Mehta <sohil.mehta@intel.com>
-In-Reply-To: <20260911215759.6C04F1F000FF@smtp.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SJ0PR05CA0012.namprd05.prod.outlook.com
- (2603:10b6:a03:33b::17) To CY8PR11MB7846.namprd11.prod.outlook.com
- (2603:10b6:930:79::14)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=h8AIDZES
+Received: by mail-wm2-f0.google.com with SMTP id 5b1f17b1804b1-4a2d6bfe8d6so1437545e9.1
+        for <sashiko-reviews@lists.linux.dev>; Tue, 27 Oct 2026 18:05:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793149509; cv=none;
+        d=google.com; s=arc-20260327;
+        b=jeNJQm24VUVMCBGj/OJDwOMwzECJUA95zoeGKMeH5Ihz5PV2Sk95bffwD7IWUdlQN+
+         roxz3vln0qUZoJx/S3l6Hxf7TEgVY6yHBQRY8CI2har0MU2BalT70HziF9QpKzvfrxbK
+         WFSJSFFpu49Ut9ncijjAgXEDD61xCz8ITYP3sDREw87boxt2h0W7yosXS0m8CCHemtDU
+         fs8QnPH3i4+uYWb1/CqnIDlTBRubCcV8muRRVAzuCvKZt0HcPgAKZnaXMLm2NUlAX5zJ
+         iBSthcg6MCmwDH19mFL7++2JBO4rB3ZNwx4bwLdIoxtNGEQzeFIrODRZx2+IfdQm/aP5
+         7hCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=f2rE3NDE9kGP6isczzJJL2zdizHNny9LG2ue9EGEuV0=;
+        fh=uA360uvxR9S0K/Y4Lovo7aIaGlBwzVBnnb2BKWupr/4=;
+        b=e7o8FxqA9TfeULKWqrIzm/UJ+qXgucK/scG1ybky8Ol7gQ+3zfbrC1aZkdoCIqqrgt
+         mDuNQTdqfnkzIQD3wMXVb/CiIrWOBTZWxg/HPy0OAgdUlnaCUnO5N6PsVBUlClYa3q0d
+         CDfdkC7TvhKCumVsp9Oj5s97Uc4O/VG4KXgWEiT0FsZTT4iZEpOEA5p4DMRkhz2pYcpn
+         DonuEmnnJfcW1vyCBoX9rQUu/WdsKhz2MYOpxTAGH2ffbluuEk2W0aMsIX2CbxphsRaz
+         sgqddtF0OWEPghOxgoitiFs9LrdSHGsYZEryiFJlqLmWByB3N9fhWyg7ZqUvHjOa/N99
+         7nOg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793149509; x=1793754309; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=f2rE3NDE9kGP6isczzJJL2zdizHNny9LG2ue9EGEuV0=;
+        b=h8AIDZESUJtvF2WUWjmQ4f3l6PUJ3k0wz/mcR/rI9/fz9uCtGnH9+zcX/T0yZkD42k
+         f3DiJjny9b6LHXBnf7UcbDYS2Wal/ZYY3o0eUgacqvuWyFywLJedvvY2zgEx9y4dXry+
+         vDB1RiLMVMNgcqZuDu6qI3c7RlI20rgeCbG/H/Za0wMhC61wOjz5c9dejN3xcUseIEUl
+         T3aMGcIkniGuVFRxVB5JHLFfBNWcbg9YUoIuRjglJuHJAS7huub34XDmUSCLGhJ9y0IM
+         8pCDZ3fTOQvdfiIhtz1vcnpnYkBjBdzjzHUd2D7fiLRLO/APedX2JaxPledF4F2twvpz
+         F+rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793149509; x=1793754309;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=f2rE3NDE9kGP6isczzJJL2zdizHNny9LG2ue9EGEuV0=;
+        b=PE/ZNMKHIQcMZPuai+NORhJsQIVYVM4iwKGSQuejsZmAvX2zKJDkthHywN/Q5cRvJN
+         LvoVvDluo3Z2ujCiq+WJ4cMHdS+e9Hr5JEvS4CfXQ4nBPc1nifyFlJclmodKUfGIwndu
+         zDV2mwf3tfik3O5sqevEfZ2xRsvOjPVfB+3CY8MIdtVu9ypz7o4VaY5Hl0g7k5KG4nZx
+         cAextDxFLlAkxO30Ub9AuIHkBVE54NzYK+WCENmgQ+9uwOvkQhwxnzKyPXiPGxyqrLkv
+         uuwT7Q5ya7Mm+CjrfJweHcMwtOPXltrCAL/L7RB898d8EjEjUd/DyIt+v+veAU4TGkEK
+         FG4w==
+X-Gm-Message-State: AFq9FYJOLdmy4M4Tp+JjW8alxztM126QYlV/4MOREmO7lJuJ+BWPOLy0
+	GRqCaDA4ra7NxIB/ORKDzNl1gX5D+fCmV6FHWD5EzYmErfwEW/ABz5nT2d2FszXIQmBN3vV8IPn
+	7Nxow9nULJPQw3iPwgUfys8gLkCXuunB02VXd
+X-Gm-Gg: AYBFou28Tg0kVRGWGRgPq19g97lSNbWjy05VW/qnHfkybN2fvIFx2qEMeBhRWzyVIQ5
+	HoNCsm4ZEsinVgkD37HTBaCF5tnMRGwHPFw0cEv3a4Jlg9565jIJSva8kxSEPCAfIQTy/Wm1mLg
+	VuHyFug9MwoT1BpCQ4zlkNawbuCJv4kzJBNDIaDRADI+a3VYe+tQ9cZ7e/PU6kJUKSHnT3DGH06
+	NLKRIAzE9bFJRK9i5AjCQsk8XrZDkrFS4yaLGjFUpa+mWQv/ZAQiVRAuCxFsr9asLvj55qJjIwH
+	QlO5EqXQSOAs/vDhkfRXI7zD9mmUclcwI5zaIl9NYMi8YuMI6j5i1rsIFl4pFvEjI6z5qWc5nAC
+	0oYaEU62xBmtpPGnEOapKLl+vbqQSiP1eMpupvp+UTyr9HCDFzBfrhgKuelOv9k+j5EaIzd3x3A
+	lzdaHy1wLhloSm8qC7va169lesUtKJZd0Pf9zAJzEfe2Yko0G+BtpkiYTnaswvldIIgrS6UeD8u
+	0maVzLdcZqeos/s+A==
+X-Received: by 2002:a05:600c:3516:b0:4a8:cb23:f71b with SMTP id
+ 5b1f17b1804b1-4a966c4175cmr14124645e9.18.1793149508615; Tue, 27 Oct 2026
+ 18:05:08 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -135,114 +105,170 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY8PR11MB7846:EE_|CY5PR11MB6533:EE_
-X-MS-Office365-Filtering-Correlation-Id: c483894a-ccdd-4e3e-f3d8-08df34804bba
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|23010399003|366016|5023799004|4143699003|11063799006|56012099006|261009223027099003|261022075727099003|261021121427099003|261026121527099003|22082099003|6133799003|18002099003|10067099003|3023799007;
-X-Microsoft-Antispam-Message-Info: Ot+Zy7Pim7yXfbn6n1wzCciEacUDQMXrNHWaE/SZzgfqKXuBiSlWSt4e+s9P+ZQXK3JQUhks+hgYrKZBRSLnIH95omDgncC3JH/tVOnuMW/Ul0sxAp7JdrJ0tqB5sTLULXFd41AmhdtqGTSyVeARbiuX4T/nG0CWQILIOLW4IWh+yxS0/xWFnRAhPBgrto3mTyGDjWYH5YF0nQ/D3glAGWsPxmexLE4zyKeW83fTXy02udhmZRxI1obTRihURaReFcEBISYSls32YmawoNnNdK070zVtlH4tgnZ4K6yPNK3zkysgIRgKt3aCCVyR2Xevpz3pidKmfdhkr642xSr5lyU57Fm+dtvoR1MBztGd7bEzVzWt52rW1RGqstHDonZwJ/Q2j9BCXE7h68jWDLxWawiFD0wV+IFUWB1hSbp+LFX6s4uVK2bGodeyBNyRmKW5aPZBGIYsUtsOO5QDmzG8Uz+vzwqGIqJsIRb5/3+Ejc1wGnfLOadLExndT61YjuzimTitRW1sF9pHmGxZmqf/djToqdH0BXXz2mjhtZ2wntuF3zcx/RxYc7gIZFZ1I2VgA4ABifBUXA+U3rIp8Vd5ivjzhK3q7V+gf5AMMVMjaRM4cCaB/7+OzDr23b520XLi1+YF6Ufz7WTFOqn4K5psHacDrjeTJHWuUJk3wvLjzlU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY8PR11MB7846.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(23010399003)(366016)(5023799004)(4143699003)(11063799006)(56012099006)(261009223027099003)(261022075727099003)(261021121427099003)(261026121527099003)(22082099003)(6133799003)(18002099003)(10067099003)(3023799007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WW1QejFYNmRiV2Vpa3VZMDc3V0h5TGsySitMMDNGVks2dStnMXpEb3pxYlA4?=
- =?utf-8?B?RnZtRlB2Z3l6dzBhaEdFT2Z4TWtESk5yWDJmUTArM0MxTkxNRTQrYW53SWdX?=
- =?utf-8?B?MXZZYWRlL0cyWndoYjVyK2lwOFVUbmF5MzI2SC84cU1vYU9Pa1UzTWlnaTlv?=
- =?utf-8?B?dkpmZ3BhcExrcVZBUjQ1bHVtdENHNnNUQWl3TGQ4aWZIckRFeVdnYmYrT0NC?=
- =?utf-8?B?QjhCSGwvNnMvTE9hVnIvOU4xdU5OVkVvU3d6YUJ5T25rcTA1OFZoOHRyaWxC?=
- =?utf-8?B?RTNiVmsvU2JPYXNSZlNqQjNic1dRa0VmTTI4TWtoVytJMU5NS1VGUk9jUEpz?=
- =?utf-8?B?V0ZFTjRkNTNuSTA5aGNNSzJtRE9VeVpYcXN5QmphZks0ZUZhNFFVcDhUbUJF?=
- =?utf-8?B?Y2JDdHhqYW9tbGRQaGo2aFpMVldLaC9sNE5iMHA1dzh1Y3BmQ0dnL0tyRzlS?=
- =?utf-8?B?OVd3b1g3NUx6WkxpdjdNMnpnK1BXRk1FZG15T1RqWFZqM2FIc3E2UHp1TWdo?=
- =?utf-8?B?ZkJNMXFhalVGeW1Ld0Q5cFBkYmJlb2hLNWFVVEJIeXVlVzBidys2UmNRaDh1?=
- =?utf-8?B?bWh3WVpiUXhLZThabml3RzRqTGVFd0pobjZQNEt5cklndXdyYm1JTHJqMGk4?=
- =?utf-8?B?UjhWUnhpblJNTWpOdmJheEx6VUN0SmZvOWg1VWhIV2dyQXRRZzdTMUVKZWp0?=
- =?utf-8?B?SjYwd3FXZEZYMStKTDdhaW1KVzZxTXpMaHE0TlZUUUU1YU9XclJMdThqT215?=
- =?utf-8?B?Ty92Q1lWUmZza3J6YjYwREJpRXE1eVR4TURNYzBBVlVTeVNxZFRjRDYrOXg0?=
- =?utf-8?B?Y0REQnV5NU56ZzNXREpVL3N5b1RhdmFCU0JLZGF1Ti9UYXpJWEE1S2tON0h2?=
- =?utf-8?B?R09wZWtPWmFHSWJPWDNYTTRHWmsxR2ZKRzlZUU5tSllZdjI5ajF4SFcrbUda?=
- =?utf-8?B?NVZyZ2ZpUU10OU1IN0h5SmM2MUg0Z2lqU3RNeTJOdmFxOTBTQTJYRldMcGlB?=
- =?utf-8?B?VnhrMkFrdlJBa2xsQUtjYjA5encrR0xMYXRHemszWGlwSG1LY05US0U5RUJU?=
- =?utf-8?B?NVlwMGZYbHA1QnNDQk1FVi9YMnNoaE92YVpKUkN0Z3VDTk5xV20zSGx2MHRs?=
- =?utf-8?B?VmtuQTc4VlVTOUt6SUl5YjVMakYwQVQwZVhMRGQ0UWVFMXNJSGMybktpa3lm?=
- =?utf-8?B?QU16OVgreDQxdjNJbXJsQVlSQS9pbjZQOWJiSjNlTnhDUXBqa29vU1I1aGl3?=
- =?utf-8?B?T1NyeitRa2JKZWJ6TStQdEsrUzgvYVQyeEFpc0I3aHJCK0tvb3BaSFlIc2hJ?=
- =?utf-8?B?cGxsbnlWWUI5YXRWWGxJVWNGUTdJbHFnZEJEbk1ZbER4RE5pTG8wMFA0M2lI?=
- =?utf-8?B?Umg3MUNJalI0cGRBcGo0c0R5YkhkRjQ1bDJ5RVJ6ckZSK0dSRS9rWHBER1FG?=
- =?utf-8?B?dXdHT0pmMjFMaHhDQTduUi80VDJHOEdtaDAxN2pNcVRNTXhEcXE3MnpJRTlC?=
- =?utf-8?B?NmVvcURwSlVsSWJIdElqZzl3Q2NsNUxJWkR4SXFEUTAzVDhlL1hUaWFadm9x?=
- =?utf-8?B?TGcraUVwbWd2NXRQeVJrWWZUTXJlK1BuNy96QXBQRlFMU1lqN0E4VndYaVBz?=
- =?utf-8?B?VzNJNzMyN1pZNVdzNVR1RExNVWlqWTlxa1Q5OHg0clNaZVBUSmpKckNpekZl?=
- =?utf-8?B?akl4ZUhSTGErTDRxdzl2b0NSRXJUa2hxK3FTSEJ1ZXFmVU1BZEFrRXYwbXk0?=
- =?utf-8?B?eWFrSEcvTUFJMDVUaUFtWHg5TlFNYlRyNDI0QnZ1bmxYUndhYitlb3BCekJP?=
- =?utf-8?B?ZGVtelpPTTAvSklKeFN5cUYyTHJISDkvQTQ4TFJwVjVFaG9HbkFiVldrVnNT?=
- =?utf-8?B?UVRpalR1T2oyRU5BRUZkeEl0MTFWS0dGc1BTMDUrT21VMzZLU3IvdUVtWklw?=
- =?utf-8?B?Z3o1WTlxd0VkWUdSbTROeXFWeWNLUi85TlFGUWJ1RUljbjhqR1hhN3NpZE1k?=
- =?utf-8?B?UElPQWJLeUY5VlRKcnBtM2RMeGdFUXhORzlpM0J1YnhKU3JHTnFsNXI0cTZW?=
- =?utf-8?B?ZitEbWhtTWllSEhhakR3d2tWMlhRaElqVktLNyt0dTQ5TjdCb3pIYmVhY1ZN?=
- =?utf-8?B?MUpVWkFoSDlPQWN6MitOMGU3NXBBQUhWYlVKQXpNeDE0UjBCT1NSV1M5TlhU?=
- =?utf-8?B?YlJmUlJHcmQvTWpxWkR5c1NJZ01kNnkvZlB1WTlHYVRtbXpRYS9lQ1dlanRn?=
- =?utf-8?B?Rmd2WDlJNVhyYnlTUFJzQUxOdnFZeHdON2pESEROT3RiYk1HdlNWMnYyQWVR?=
- =?utf-8?B?WXZDOCtGKzBIU0VKVFhyNUk4amFuTE1iRkwrOUV6VHgrZXAyNG1VUT09?=
-X-Exchange-RoutingPolicyChecked: fHSrXgs4cdWpP7FraZxHcJ46AMde7dwTQdPgL3r6tulkZ+8Bbcqjbq7WB703EeyooW01KFrA2CK69truuxYIE3dMxWBwAAbwaz29j7pwx89WIIpk5RECpyzzWQoU1KdN1dFFC+N+chD6GfYEg+P1m4m1FpflbfsJYVqmed7gkjjWOoU4accJPKs8Gx40WsQqT1kxwSy4bGfocaLffnXdM4s+D8nWSjG0PxaOD59JioUFGJ6pEEGOGPjItY/7lQ6bZm0e8icycNMeVYVCMTjQRPtklhCFGiVFuxpQmR9qVU9j1UFRMRrYAx8eNGSihrs/TSNuxZjWM7i7Fdpxd19q5g==
-X-MS-Exchange-CrossTenant-Network-Message-Id: c483894a-ccdd-4e3e-f3d8-08df34804bba
-X-MS-Exchange-CrossTenant-AuthSource: CY8PR11MB7846.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 23:16:14.2122
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: MAH1iiRdN8WPybPAp1Rlc+PqFTQFSQ7TYbuAxbFzOJ82SJi2zbm6n52oGO/TZglZyw5nsbL2IGsOBTLjAsRDow==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR11MB6533
-X-OriginatorOrg: intel.com
+References: <cover.1793147364.git.memxor@gmail.com> <98e3a499d89e01ddfb83fcf91e34b2a0e36e1007.1793147364.git.memxor@gmail.com>
+ <sashiko-outbox-187297@kernel.org>
+In-Reply-To: <sashiko-outbox-187297@kernel.org>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Date: Wed, 28 Oct 2026 02:04:30 +0100
+X-Gm-Features: AclHuK95I9JL3fStnIQS-CsCNB98uLDQyIp3GOawxHVoMRxm7qYeaDFYr7zdMS8
+Message-ID: <CAP01T74tsmsPD=PKVKZkvWVfV=mnKw5SbcPJ9-Npu+NK3J2mzA@mail.gmail.com>
+Subject: Re: [RFC PATCH bpf-next v1 08/11] bpf: Let the callback of
+ bpf_user_ringbuf_drain unwind
+To: sashiko-reviews@lists.linux.dev
+Cc: bpf@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 9/11/2026 2:57 PM, sashiko-bot@kernel.org wrote:
-
->> +/*
->> + * Typically invoked by entry code, so must be noinstr.
->> + */
->> +noinstr unsigned long __this_cpu_ist_bottom_va(enum exception_stack_ordering stack)
->> +{
->> +	struct cea_exception_stacks *s;
->> +
->> +	BUILD_BUG_ON(ESTACK_DF != 0);
->> +	BUG_ON(stack >= N_EXCEPTION_STACKS);
-> 
-> [Severity: Medium]
-> Does moving these helpers from macros in the header to out-of-line functions
-> introduce an unintended performance regression?
-> 
-> Because the functions are defined out-of-line in a different translation unit,
-> the compiler cannot statically evaluate the BUG_ON(stack >= N_EXCEPTION_STACKS)
-> bounds checks nor inline the pointer math.
-> 
-> This incurs a penalty of multiple function calls and dynamic checks in
-> performance-sensitive #VC exception entry paths. For example, hot paths like
-> is_vc2_stack() in arch/x86/coco/sev/vc-handle.c repeatedly call these functions,
-> which are evaluated on every #VC exception:
-> 
-> arch/x86/coco/sev/vc-handle.c:is_vc2_stack() {
->     ...
->     return (sp >= __this_cpu_ist_bottom_va(ESTACK_VC2) &&
->             sp < __this_cpu_ist_top_va(ESTACK_VC2));
+On Wed, 28 Oct 2026 at 02:01, <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Critical] bpf: missing callback dynptr invalidation on bpf_user_ringbu=
+f_drain() unwind
+> --
+>
+> commit 5e41f31a219e475ec387e971ce587d69bc948017
+> Author: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+>
+> bpf: Let the callback of bpf_user_ringbuf_drain unwind
+>
+> This commit adds an unwind pad to bpf_user_ringbuf_drain() so that its
+> callback can exit via unwind_exit while releasing the sample, clearing th=
+e
+> busy bit, and queuing any pending wakeup. It also adds
+> BPF_FUNC_user_ringbuf_drain to helper_has_cb_pad() in the verifier.
+>
+> > diff --git a/kernel/bpf/ringbuf.c b/kernel/bpf/ringbuf.c
+> > index 447863ece26a3..fdd997f36f73d 100644
+> > --- a/kernel/bpf/ringbuf.c
+> > +++ b/kernel/bpf/ringbuf.c
+> [ ... ]
+> > @@ -852,8 +854,23 @@ BPF_CALL_4(bpf_user_ringbuf_drain, struct bpf_map =
+*, map,
+> >               }
+> >
+> >               bpf_dynptr_init(&dynptr, sample, BPF_DYNPTR_TYPE_LOCAL, 0=
+, size);
+> > -             ret =3D callback((uintptr_t)&dynptr, (uintptr_t)callback_=
+ctx, 0, 0, 0);
+> > +             bpf_call_cb(callback, &dynptr, callback_ctx, 0, 0, 0, ret=
+, unwound_at);
+> > +             if (0) {
+> > +unwound_at:
+> > +                     /*
+> > +                      * The callback left with unwind_exit. The sample=
+ is
+> > +                      * consumed and counted like after a return, so t=
+hat
+> > +                      * the wakeup below is sent for it, and the helpe=
+r
+> > +                      * leaves through the door below, as the error pa=
+ths
+> > +                      * do, with the r0 of the callback.
+> > +                      */
+> > +                     unwound =3D true;
+> > +             }
+> >               __bpf_user_ringbuf_sample_release(rb, size, flags);
+> > +             if (unwound) {
+> > +                     samples++;
+> > +                     goto schedule_work_return;
+> > +             }
+> >       }
+> >       ret =3D samples - discarded_samples;
+> >
+> > @@ -867,6 +884,8 @@ BPF_CALL_4(bpf_user_ringbuf_drain, struct bpf_map *=
+, map,
+> >               irq_work_queue(&rb->work);
+> >       else if (!(flags & BPF_RB_NO_WAKEUP) && samples > 0)
+> >               irq_work_queue(&rb->work);
+> > +     if (unwound)
+> > +             bpf_unwind_leave();
+> >       return ret;
+> >  }
+> >
+> > diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+> > index 3c39cc0f358a1..fd63ff36eb909 100644
+> > --- a/kernel/bpf/verifier.c
+> > +++ b/kernel/bpf/verifier.c
+> > @@ -11409,6 +11409,7 @@ static bool helper_has_cb_pad(enum bpf_func_id =
+func_id)
+> >       case BPF_FUNC_loop:
+> >       case BPF_FUNC_for_each_map_elem:
+> >       case BPF_FUNC_find_vma:
+> > +     case BPF_FUNC_user_ringbuf_drain:
+> >               return true;
+>
+> [Severity: Critical]
+> Can a callback for bpf_user_ringbuf_drain() smuggle its R1 dynptr (or a
+> slice derived from it via bpf_dynptr_data() or bpf_dynptr_slice()) out to
+> the caller's unwind pad in R0 when exiting via unwind_exit?
+>
+> In bpf_user_ringbuf_drain(), struct bpf_dynptr_kern dynptr lives on the
+> C stack frame of bpf_user_ringbuf_drain(). When the callback exits via
+> unwind_exit and jumps to unwound_at, bpf_user_ringbuf_drain() releases th=
+e
+> sample with __bpf_user_ringbuf_sample_release(), clears rb->busy, and
+> returns ret (the callback's R0) to the caller's unwind pad after its stac=
+k
+> frame is popped.
+>
+> In the verifier, set_user_ringbuf_callback_state() initializes the
+> callback's R1 using mark_dynptr_cb_reg(), which sets R1 to
+> CONST_PTR_TO_DYNPTR with a fresh id that is not backed by a STACK_DYNPTR
+> slot in the callee's BPF stack:
+>
+> kernel/bpf/verifier.c:set_user_ringbuf_callback_state() {
+>         ...
+>         bpf_mark_reg_not_init(env, &callee->regs[BPF_REG_0]);
+>         mark_dynptr_cb_reg(env, &callee->regs[BPF_REG_1], BPF_DYNPTR_TYPE=
+_LOCAL);
+>         callee->regs[BPF_REG_2] =3D caller->regs[BPF_REG_3];
+>         ...
 > }
-> 
-> Could this regression in a noinstr entry path be avoided by defining these
-> helpers as static __always_inline in the header instead?
-> 
+>
+> When the callback executes unwind_exit, prepare_func_exit() only rejects
+> PTR_TO_STACK in R0, copies callee->regs[BPF_REG_0] into
+> caller->regs[BPF_REG_0], and calls destroy_dynptrs_in_stack_slots(), whic=
+h
+> only invalidates STACK_DYNPTR slots in the callee's stack frame:
+>
+> kernel/bpf/verifier.c:prepare_func_exit() {
+>         ...
+>                         caller->regs[regno] =3D callee->regs[regno];
+>                         bpf_diag_mod_end(env);
+>                 }
+>         }
+>
+>         /* Invalidate callee-local dynptrs and their slices before the fr=
+ame goes away. */
+>         err =3D destroy_dynptrs_in_stack_slots(env, callee, 0,
+>                                              callee->allocated_stack / BP=
+F_REG_SIZE - 1);
+>         ...
+> }
+>
+> On the revisit of BPF_FUNC_user_ringbuf_drain in check_helper_call(),
+> unwound_r0 is preserved across caller-saved register scrubbing without
+> invalidating the callback's dynptr id:
+>
+> kernel/bpf/verifier.c:check_helper_call() {
+>         ...
+>         if (env->cur_state->unwound) {
+>                 regs[BPF_REG_0] =3D unwound_r0;
+>                 goto unwound;
+>         }
+>         ...
+> }
+>
+> Wouldn't this leave the caller's unwind pad with a live CONST_PTR_TO_DYNP=
+TR
+> pointing to the popped C stack frame of bpf_user_ringbuf_drain(), or a li=
+ve
+> PTR_TO_MEM slice pointing to the already-released user ringbuf sample?
 
-The performance regression concern seems overblown to me. The #VC
-handling has other heavy-handed things such as GHCB and VMGEXIT. The
-extra cycles for __this_cpu_ist_bottom_va() and __this_cpu_ist_top_va()
-shouldn't have any meaningful impact.
+Known bug which Ihor is already fixing.
 
-I am thinking of avoiding the __always_inline directive unless someone
-has a strong reason/preference.
-
->> +
->> +	s = __this_cpu_read(cea_exception_stacks);
->> +
->> +	return (unsigned long)&s->event_stacks[stack].stack;
->> +}
-> 
-
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1793147364.=
+git.memxor@gmail.com?part=3D8
