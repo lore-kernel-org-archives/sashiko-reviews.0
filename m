@@ -1,81 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.158.5
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793204139;
-	b=OV5KKnmfKeR2uwj6JcVPHq4LxUdVHr3AV1qNc8Nb1vJjb+e1LVobBRN9d6rN2FbEG66d
-	 bbEnCzV+dHaJ9On6dFeI7ojr1ldlvVHGUwv7xzVyUD1zNcvmevJt5lXZi79G0UYBP/WCH
-	 e2Bna3eurH26X76kABIOVg8dyxSr39Re8s6+tocgJy85udBs5bA9+UgvtwcamQid9n1d3
-	 aDYquJN3/JO6lwylKZqtLtexm8CcOPIjB2pFoBa/A1Iz6k1zAPuv7BzMIAbEMZf0IlZ4l
-	 zzkkaBa3IU5fsqkc7g/hfKCDnMuCsCtoYqYaNqtx59MD5NnU4I20O+0AV6/N4+Ak7rw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793204139;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
-	 Received:Received:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-TM-AS-GCONF:
-	 X-Proofpoint-Spam-Info:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-Spam-Details-Enc:X-Authority-Analysis:X-Proofpoint-GUID:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
-	bh=ewnhFfstuGy9qRdTR4g440cXF0QypObd3RSkD14B514=;
-	b=1kydI6O2Bpvg0edEr+v+CR6JRIckP5fPnLc84j6LNaKvevU5rCxr4XQ5WEczJZgaOgyd
-	 TCxMJYDvCvS+KUZMb6CxsFcY9XKqtFMhZxFLcy1Wi8G13UG4dMEouNkqQ9QyKaNzxbcpM
-	 2jvWiMnax6swDcqtum5FKlzQCDxcqQo5uRMXfUWxbsyNGXJ4eUOmoHZQFWMuoM8BPw3XN
-	 GvpQnynqwHQDyyiK19CPqP5G4QY4NgmBxXMmNOykDh4X+DOX1rB4NMd1EGfZorbhIUuTQ
-	 eqE/iCqyj/0vdcPhMKqJtfIsrYZN3YTska0slymS60YjTqUYtiMlyasAXBgXh/J2HaQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.ibm.com;
-	spf=pass smtp.mailfrom=linux.ibm.com;
-	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Rwb+OVLW;
-	arc=none smtp.remote-ip=148.163.158.5
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.180
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793211130;
+	b=eaCRvIXUqjOx5Q/KJEidNMotXQT9RTgNUs9vFtuREPmc3YInqzLaMMDSwpPNfP377sWL
+	 epUaDajbeMs95zgtqH5OFHEIPqP5qEPNEXI5M44Xry0eoC6hdP+gfD9NduBH2gxs07L/5
+	 Sp+9YgUSuXxCsjmMeUBFLmkinZPG1PDys3klBUcFR8P4H97Yw1RpUqYVZslRjBqUm6JQU
+	 DdPmNSZasPY+vU72t2vuF4da+DWlW3z9dOQ5PHGI5j8DbN8QLSprOk0737KoConkABWsI
+	 SX0fLwserYw3kUFPscojnTIu2E/2gkCwB2USx/JycY1/PPxz36Pk1jr+5IMEyTdyeFA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793211130;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=LaRGx1dNEWPdR/HUW5QFXw5geXVqN0PcRJZxfDPcq4k=;
+	b=x9CkIuDLk5OS0qL0Z8TlBP8/BI2NnJC4duqe1hrWpkHkchbWdcI3nFs4i7pGVBhhTNst
+	 aSFPqrOF/rAf58AD5wqH83CBwLxVvS4r9AtEX9ZWKzh4kc+lZ3m6DiqRRT48Jrr5eH3XW
+	 pcUjx0t89iXhy9y+HJzWoJYncbrgxDuT/vgyV5GRX/eqSP6mlx2iyOkRIIxQj+ubG4wKy
+	 Q/2ahJV3FLPkzXdKUNwv/Het69WdTQWfmR3Ipk22ezx4fQPJCeASRqemXVRSbKrZ9BaGO
+	 mYXvO+F8JM8nYZD5saFgZGh8YPoOXb/7Jyen+yaZPg945QwyYtoeSwzqkv5BGtMKwEA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Zk+bLpMb;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.82.180
+Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D389606A31E;
-	Wed, 28 Oct 2026 16:15:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1D389606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF91606B458
+	for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 18:12:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 5FF91606B458
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Rwb+OVLW
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69SFEcOT1521293;
-	Wed, 28 Oct 2026 16:15:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pp1; bh=ewnhFf
-	stuGy9qRdTR4g440cXF0QypObd3RSkD14B514=; b=Rwb+OVLWkzoH3IKQL4kAxm
-	ZCFbMg3YENDGe7bfjYcw81HkruIJx20ICoqIMcCVozagocygFk3jC5b1nx7+SJ8+
-	ZVTsy7dSPjKjTsCuJY06N6KW0lHrokH8G3tLidMMo9S98blnKiwxww51xGeOHmm5
-	hG0cnNI/tPe0p8z7KGRRBVD4TtUYpnBuMgUr5poumpj4Dm8bwmV+HkAVDF3qZSmQ
-	0I8S8NqzjRGbkmsjK2xgnLLGkU74PaPfxfrG4xCNk4upMe4GV3DOVu8SI0mGVn4W
-	8geHOHaex2f77LOPjJBd/httM/DHHUbuv8Y0dDg+cLMksEoy8opNYyB2OsOx1QSQ
-	==
-Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgj3mdunj-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Wed, 28 Oct 2026 16:15:37 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69SFYr121760108;
-	Wed, 28 Oct 2026 16:15:37 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
-	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hk55pb1r0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Oct 2026 16:15:36 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com [10.39.53.231])
-	by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69SGElhF28967542
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 28 Oct 2026 16:14:47 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id AA35E58050;
-	Wed, 28 Oct 2026 16:15:35 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 7214758045;
-	Wed, 28 Oct 2026 16:15:34 +0000 (GMT)
-Received: from [9.61.240.205] (unknown [9.61.240.205])
-	by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
-	Wed, 28 Oct 2026 16:15:34 +0000 (GMT)
-Message-ID: <72ddf1a4-d672-4d9f-a205-07aec3db1248@linux.ibm.com>
-Date: Wed, 28 Oct 2026 12:15:33 -0400
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Zk+bLpMb
+Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-36a0f27c9f4so1968970eec.1
+        for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 11:12:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793211129; cv=none;
+        d=google.com; s=arc-20260327;
+        b=Ds/z8zUUlOt+FUBr+T03QvEH3CA53FnvncRwXJ4wdhE6VBmJW29fzgSEa058K6mf8j
+         4rx1D/PmBhbhPazldUBN4pFtXGzlevYKl6jfa0oMtPQcDCR7hfJ2PomRP7L62RJoXLQL
+         SZnQW9hpgFt+eLX/c5Zz4P8zXJKdlaOGTh/1iprpyE6Rmw3PV511YJ226fAZ4mC/5q2W
+         ConPwgluHi871sg/Kst2wEWIz9No4WAPET0Igf+ZLRzjKNXWKh7UptU0ffRbaWgHR9WU
+         FThnM3oTpl2Ce/ZbU+NcKOdw2vgjP5wPwA/n1yHAUKBJSoNAtLco7w1/fQLpq9D+esPv
+         ag6A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=LaRGx1dNEWPdR/HUW5QFXw5geXVqN0PcRJZxfDPcq4k=;
+        fh=VPgln0uFUbKdQ4TdIV4/cJOLXPC6kpgaFquVPTX6pe8=;
+        b=d9LMtCZc1ShH1kIU3J+tS+ghMVxWSATD9HBEhV4NQdeu7iKKrc8S0dv71eFrBQomsC
+         C/sbe2on2E0ae4mg6jjk11ug2RN0j/wkEuwH9AvDLsmNoviieEFkeuuSvKNcwiJ3hVlU
+         /NP3svnIg0Vh+sLZzUxhSyLvJQ/PjSRbM4XWMNlRLZcOFOiR4YB/PeXsa9MI8dxoEIH6
+         uP2/BFMl2nfLiO7dUjtiTj8PIfZl567ipQhgTFM8wqo0kQE47dgsuHDk2OqTC7P0Q5Te
+         hBABRI4ybfGxrgfduRAuACiGtJjtV6hMOgXZ6szN6tpgetPMjPMhgCU1v3RLf66x+naX
+         JUOQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793211129; x=1793815929; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=LaRGx1dNEWPdR/HUW5QFXw5geXVqN0PcRJZxfDPcq4k=;
+        b=Zk+bLpMbDFctHtjAj0U9rVjmAEzpcMpoaloGOSpRuN2hcDWs5DDxWLJkoOqq/2UBTU
+         QKDzqwjOc9tgpjGfzOfOwHuYSFQ7drcVi7aCrzIIxoiVXU/aUr2q/z/1exglMSf5VDkF
+         oX5V8559upcnpRiK/MV84k8jUubq+p9TmbiB0seJGRiIUIXLpq6crfqlmYbWJ0U3FbuY
+         1qF6kWsOiju0d5dTk92chJ19Xj3AG/CKv68y1vCVN4bxU0uw7wYeXiRYjyj2yWlHYsPv
+         Im5yklUjl9p+OjuAtWFlpqJljRZUlUA6UplLa36LQJEvOxx/YB/GONx19BHXa1NOb0L6
+         S/mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793211129; x=1793815929;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=LaRGx1dNEWPdR/HUW5QFXw5geXVqN0PcRJZxfDPcq4k=;
+        b=k5GGYcxjxS2QnB/O3LWytjqcnLxLURRk5xNd57cHGAVG/qBLVLzM6CeljWFvfV9Thv
+         JgeWU1CqHz/wz97RcCEQiH5olrY4/9BepeilTcMkSYLZymHziEhRcipq8qZnlHK7+z5s
+         iVzzMcL9wF9qslrw+N0+KfTxyT+xBjLiCB07NbG4nUteu1gDnF4mnzNJ6y6rfoAfT/j7
+         aeabUa1IWJhwcLG0lLSBBbrUZNQECl3ehytGBpsAFTUtRsvh9baYvjpQmbp+O8NfH8NY
+         WhOAguyA9ZOlb4kVBMCdzDoSmBJwRET9OKZ6uKYkxW074q6RvlqlKnYChSwGh6+WrFab
+         Vp4A==
+X-Gm-Message-State: AFq9FYIv1fNaWvGrXc4FIsJ4sqLQCUIEpaJ3WcNZAiE+da6rUvdc6jLl
+	qxuC2rs5Etifkpm2dsh/QNPcGb3ZQzs2g8L+R3AWl+/E3oSZYEnuH3hjS38Z1UWlIeSUnVbokr5
+	zNtgEpK3h+E3rfwEAlWlgHuCbhof/TpofJlQe3jY=
+X-Gm-Gg: AYBFou3MbzB4k6M/yO3VP6kIPyYAHtxQPSaXgrNBfmES7u5e2MRTfBfFIAkzSEI6SDh
+	QuxN3buClTi9je3F+2Fl+EyZMeH10hFy63C90wE4eK9OqlkvsWNSdY9RflhlEf2QM+dITCLICW5
+	0KSOeFPKgmV9yBAMigmRDf2i63EU1YbQo3fR+97E5A/FyjWZI25cxwUkgr1aUYzImL58xiKi4aX
+	Zlf1fhtniaw91l/8SLvnh79MBWpYh3kGCdr0xjexjWT7J/QCeY1xRt3JNUzaPl2MJKQbgawFdzf
+	X4nJ8xn8WLB3OKzDdSD4bDPKdPkiNbPQDPJuR3sCcpYYCfHEPEppykezAjllNh5s8KpuumBx764
+	6MZXX51hRKGjiHrzAMYpXl3sb3LxH2CWDJJuxSbk=
+X-Received: by 2002:a05:7300:e9c8:10b0:36a:18a:e02f with SMTP id
+ 5a478bee46e88-36a203d2f99mr5121130eec.28.1793211129415; Wed, 28 Oct 2026
+ 11:12:09 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -85,123 +103,98 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 3/5] s390/pci: Reuse FMB buffer across enable and
- disable cycles
-To: sashiko-reviews@lists.linux.dev, linux-s390@vger.kernel.org,
-        kvm@vger.kernel.org
-Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Farhan Ali <alifm@linux.ibm.com>, Gerd Bayer <gbayer@linux.ibm.com>
-References: <20261028154352.15108-1-oelghoul@linux.ibm.com>
- <20261028154352.15108-4-oelghoul@linux.ibm.com>
- <sashiko-outbox-188110@kernel.org>
-Content-Language: en-US
-From: Omar Elghoul <oelghoul@linux.ibm.com>
-In-Reply-To: <sashiko-outbox-188110@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI4MDA2NCBTYWx0ZWRfXyWv3ZthLv4mS
- JizHyaLGu2J2pd/bHH+m4/qrBCIsCCdQYN9JDxLhoMxLeovC1bTE6H4p7eSp7W4vUayR/l1HdWl
- hvB9b0iaAxmeA76Y6wILzx3aaeYg7uk=
-X-Proofpoint-ORIG-GUID: EmEIeqbdczjXx51ljM4QNLv13nwDmivY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI4MDA2NCBTYWx0ZWRfX/ODrl+yZ3yZR
- Lb/RwPhdLxFH8ENNr+HbAZmszMJXCll10ybdQK6CvTijUMZ4alWflinRYx12EoPwJW5TtC3MfSq
- 89/dnHcxnUALNHJw1SIZwM/9b/lb862NWzIuNjI8GoMCcUM3m+eXVtziCwkw7MjblfPMIWK/K+Z
- EMU32SDuM9SGIYa+hHNZTdRP9U0ml+4yN0/e5NxN2Vv/9heQ5X7V3ENkjgOUEhopgpL2wOoCelh
- rEh3k9gms86U+e33E790DGLoWRVeDT6SpA+l+Zkwlm2FnJcxEBkfHx6Mjh5OsJfH48BxDbrhN8p
- Nl7uXZaAuwf44UGYMvUvpYoi9VdHXr9GighlMyLpMIxUkjV57nhl9AioT1ZM9811L+ZWwWdQI6s
- /PcEWC8EBXbPL9l753z99npHsthoN5eBfmPmmfgfYfCVYuDD4z7xY2BquE7/ebrMAmA7KjylxL1
- JUVBkYAmO97vnCKUkmA==
-X-Authority-Analysis: v=2.4 cv=G7uJgNk5 c=1 sm=1 tr=0 ts=6ae21fa9 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=-OvP2GiDACUX-iG78AQA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: EmEIeqbdczjXx51ljM4QNLv13nwDmivY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-28_05,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 impostorscore=0 suspectscore=0 clxscore=1015
- phishscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610280064
+References: <20261028164539.3471833-1-henryzhang62@gmail.com>
+ <20261028164539.3471833-6-henryzhang62@gmail.com> <sashiko-outbox-188230@kernel.org>
+In-Reply-To: <sashiko-outbox-188230@kernel.org>
+From: Henry Zhang <henryzhang62@gmail.com>
+Date: Wed, 28 Oct 2026 11:11:58 -0700
+X-Gm-Features: AclHuK8-5DUjhx-8H0W2_S57CeLeTF3woQXvHvgC4ykQsqxBjId8MHZi9iiIIWw
+Message-ID: <CANTW0yq2H=SjZY=zHZnUQWB5Mf6yfD+Wy=CMJ3saKRf7JhjYaQ@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] drm/vc4: dsi: Recover from a timed-out transfer
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, 
+	Dave Stevenson <dave.stevenson@raspberrypi.com>, Maxime Ripard <mripard@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 10/28/26 11:59 AM, sashiko-bot@kernel.org wrote:
-[...]
-> 
-> [Severity: Medium]
-> Can keeping zdev->fmb non-NULL when zpci_mod_fc() fails in zpci_fmb_enable()
-> leave the FMB enablement state inconsistent?
-
-Valid concern, but unfortunately I think this is a tradeoff we are going
-to have to accept. Based on this discussion [1] under a previous version
-of the series, we can accept these stale reads because as Niklas said,
-the firmware-written sample includes a timestamp of the last write. So
-we're already transparent about giving the user stale data, and in the
-unlikely event that this happens, the user will be able to recover by
-disabling and re-enabling statistics via debugfs or simply re-enabling
-it directly via vfio.
-
-Thanks
-
-[1] 
-https://lore.kernel.org/all/a24337bd66864dd70ae61e28d86590052ac0fc5d.camel@linux.ibm.com/
-
-> 
-> zdev->statistics_on is initialized to true in zpci_create_device(). When
-> pcibios_enable_device() or zpci_reenable_device() calls zpci_fmb_enable(),
-> the return value is ignored and zdev->statistics_on remains true:
-> 
-> arch/s390/pci/pci.c:pcibios_enable_device() {
-> 	...
-> 	mutex_lock(&zdev->fmb_lock);
-> 	if (zdev->statistics_on)
-> 		zpci_fmb_enable(zdev);
-> 	mutex_unlock(&zdev->fmb_lock);
-> 	...
+On Wed, Oct 28, 2026 at 10:19=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
+....
+> [Severity: High]
+> Can a late or error interrupt race on dsi->reg_dma_mem in vc4_dsi_transfe=
+r()
+> before disable_irq(dsi->irq) is reached in vc4_dsi_host_transfer(),
+> corrupting DSI1_CTRL before vc4_dsi_reset_and_restore() saves and restore=
+s
+> it?
+>
+> When wait_for_completion_timeout() times out in vc4_dsi_transfer(),
+> dsi->irq and INT_EN are still enabled while vc4_dsi_transfer() performs
+> five register writes before returning -ETIMEDOUT:
+>
+> drivers/gpu/drm/vc4/vc4_dsi.c:vc4_dsi_transfer() {
+>         ...
+>         DSI_PORT_WRITE(INT_EN, DSI_PORT_BIT(INTERRUPTS_ALWAYS_ENABLED));
+>
+>         if (ret)
+>                 goto reset_fifo_and_return;
+>         ...
+> reset_fifo_and_return:
+>         drm_err(drm, "DSI transfer failed, resetting: %d\n", ret);
+>
+>         DSI_PORT_WRITE(TXPKT1C, DSI_PORT_READ(TXPKT1C) & ~DSI_TXPKT1C_CMD=
+_EN);
+>         udelay(1);
+>         DSI_PORT_WRITE(CTRL,
+>                        DSI_PORT_READ(CTRL) |
+>                        DSI_PORT_BIT(CTRL_RESET_FIFOS));
+>
+>         DSI_PORT_WRITE(TXPKT1C, 0);
+>         DSI_PORT_WRITE(INT_EN, DSI_PORT_BIT(INTERRUPTS_ALWAYS_ENABLED));
+>         return ret;
 > }
-> 
-> arch/s390/pci/pci.c:zpci_reenable_device() {
-> 	...
-> 	guard(mutex)(&zdev->fmb_lock);
-> 	if (zdev->statistics_on)
-> 		zpci_fmb_enable(zdev);
-> 	...
+>
+> On BCM2835 DSI1 (where broken_axi_workaround is enabled), DSI_PORT_WRITE(=
+)
+> calls dsi_dma_workaround_write(), which writes the value into the single
+> shared buffer *dsi->reg_dma_mem and submits a DMA transfer from
+> dsi->reg_dma_paddr:
+>
+> drivers/gpu/drm/vc4/vc4_dsi.c:dsi_dma_workaround_write() {
+>         ...
+>         *dsi->reg_dma_mem =3D val;
+>
+>         tx =3D chan->device->device_prep_dma_memcpy(chan,
+>                                                   dsi->reg_paddr + offset=
+,
+>                                                   dsi->reg_dma_paddr,
+>                                                   4, 0);
+>         ...
 > }
-> 
-> Previously, zpci_fmb_enable() freed zdev->fmb and reset it to NULL on
-> zpci_mod_fc() failure, and zpci_fmb_disable() reset zdev->fmb to NULL on
-> disable. With zdev->fmb kept allocated both across disable/re-enable cycles
-> and when zpci_mod_fc() fails (or if zpci_reenable_device() returns early on an
-> error after a prior allocation), both zdev->statistics_on and zdev->fmb remain
-> non-zero even though hardware measurement is not active.
-> 
-> In arch/s390/pci/pci_debug.c, pci_perf_show() checks whether FMB is disabled
-> using both fields:
-> 
-> arch/s390/pci/pci_debug.c:pci_perf_show() {
-> 	...
-> 	mutex_lock(&zdev->fmb_lock);
-> 	if (!zdev->statistics_on || !zdev->fmb) {
-> 		mutex_unlock(&zdev->fmb_lock);
-> 		seq_puts(m, "FMB statistics disabled\n");
-> 		return 0;
-> 	}
-> 	...
-> }
-> 
-> Similarly, the later commit "vfio-pci/zdev: Add VFIO FMB device features"
-> relies on the same (!zdev->statistics_on || !zdev->fmb) check in
-> vfio_pci_zdev_feature_fmb_read(), and zpci_fmb_request_on() rejects subsequent
-> enable attempts with -EINVAL when zdev->statistics_on is still true.
-> 
-> Would this cause pci_perf_show() to report zeroed or stale FMB counters instead
-> of "FMB statistics disabled" when enabling FMB fails?
-> 
+>
+> If the threaded handler vc4_dsi_irq_handler() runs concurrently (for
+> example on an LPRX/TA timeout error interrupt or a late completion
+> interrupt) and calls DSI_PORT_WRITE(INT_STAT, stat), it overwrites
+> *dsi->reg_dma_mem =3D stat without any lock.
+>
+> If that happens during the read-modify-write of CTRL in
+> reset_fifo_and_return, the DMA transfer can write stat into DSI1_CTRL.
+> When vc4_dsi_reset_and_restore() then runs under disable_irq(dsi->irq), i=
+t
+> snapshots the corrupted register via u32 ctrl =3D DSI_PORT_READ(CTRL) and
+> writes it back at the end of the reset, leaving DSI1_CTRL corrupted (for
+> example with DSI1_CTRL_EN cleared so the block remains gated).
+>
+> Should disable_irq(dsi->irq) be called in vc4_dsi_transfer() before the
+> post-timeout register writes (or before reset_fifo_and_return)?
 
+The race is real, but it is not introduced by this patch and not limited
+to the timeout path: on BCM2835/6/7 DSI1 every DSI_PORT_WRITE() goes
+through the single reg_dma_mem buffer without a lock, so the threaded
+handler can corrupt any register write made from process context
+(transfer setup, the bridge callbacks, the existing reset_fifo_and_return
+path). Moving disable_irq() would only cover this one path.
+
+I'm sending a separate fix that serializes dsi_dma_workaround_write()
+with a mutex, so this series stays as it is.
+
+Henry
