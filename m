@@ -1,68 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=180.181.231.80
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793262178;
-	b=2/XHweQq7/E49WpzxoM68htXugT++8gfcEmjbfd+kvi7m1QTYalQM5yNYxUzHcmKDZNo
-	 3i1gLG8t6THO4eRVub8SvD0wV2s+fCIlO98avxqto459JP5cQEKNJBFM4nRWDN+UCLx8z
-	 5yVsowwr5D0OY9WfeyqLFVS3ilMa6YZSISzeqxKvgsjhNclGW5NAkp3lCO00gIwpDKWTZ
-	 pw8DOrwYBEhJ6nDtTZUtrIkkbz7jzWTybu+72Z7YhlO+gDZV8XD/l8MLRp7SC8xhfFaJA
-	 0BG8etGm/QbI4eFVMjuFyOMBxLJApjeNUtzdhQLNbuxtoCi6/a4zFnpIGYnm5AQNSpw==
+	t=1793265120;
+	b=0fbMRiqW8wG2LBFKZ1IbjFc098+wyX1IjGZjFLVyZ2VVrwcSMLWifeM96PYtourT2qh6
+	 WmGoQvlg1VYSyepjuhG9CI/vY9aTWdcfrLyKXCYcego5kPr8QRy6GVfnuO2hpwkT3d2sH
+	 iI1R6zFeRX5irzPDiZWqCi6PRJbDY570EVN49SCc9B2pRiLAChv9gGGiHKl/qn0+MMmz3
+	 TMlR+VcbgwSzTvdmAU5v20nuAEYcpIfYIoAnNLGX2kYgweNOoCYC5mHnXzWDVmdJrkBlo
+	 e7JpDHHnJN16Fn8ITs2ajLfIvoYY/pv7GZVrXXZWThZNcft1iM05t66qbTzeCvWN0KQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793262178;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=2apa8Mr/pCcSFyuTTcmI9mAPuP1EGz22opH+X2kB18Y=;
-	b=EiUc7dVk652t/kTZUfngxT1q6ueuEUZ0x+ZONB71FQeuFpxyl2aA4IhK0fjUDPCu+18h
-	 JFU4SWexqq1X0P59hc2chRBxxeuCrTjO4ljp3WKpNhqeYiwYtUB9UYYqoRiWTin+6JDKY
-	 THPrT69P486cFbJHeoHDTuAIvdA4Ye6QNN3T98PeiOjXWG97nrihNbItKtpPmF2c+n2KM
-	 oSy5MrWrz8d3f1qP+2qwiEPTkdOgf9VGTkAMDDHbhAfby8K6NLkSigbEmdhdiPJZkmT4g
-	 wAcPYSpZscHCY0f8+UlMex6zVWW2GLH2yG/HjAbOhIFn8Xkhv3ZIyJHTDQipa1yy2PQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793265120;
+	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=dJDRsJcOuCta1CXkVGQ3wEnO6kiOTAbomKcjf+nX7kA=;
+	b=v5AqODm5grZnOC9TCWB8ygmO6ULtX/ubAAmQmDJVeUx/JWLB7zPo24vODQMyjTjfU1Kt
+	 zmSnI8O5IiNGDHjb0niuWrIx/SUXAB6FBJhg8Sim9lsnbNyvWLW78Vbxi8gDIt625TgWy
+	 ouarRpqKkNMDXq6paQ5QJvDTMWeflT8XLJDlAL6N7Ta5HXBUrfcbw03JwZimofWy396q+
+	 v9HV46rnlZVEXmWV5kP4evgxVbNwGH5JkTB4ll0Cevz5Rdsax/iiwANGQ1pLhoYc/Ey5W
+	 Dz7nhn2279jiMSqSaM0+dmZlRObck+6vOMGgzg3V2HssTp6IACMWpeEU4x0JShaFLUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gondor.apana.org.au;
-	spf=pass smtp.mailfrom=gondor.apana.org.au;
-	dkim=pass header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.a=rsa-sha256 header.s=h01 header.b=UHmLTmmx;
-	arc=none smtp.remote-ip=180.181.231.80
-Received: from abb.hmeau.com (abb.hmeau.com [180.181.231.80])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=W9RwNzbI;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5B7606A31C;
-	Thu, 29 Oct 2026 08:22:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2F5B7606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011F2606A31D;
+	Thu, 29 Oct 2026 09:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.a=rsa-sha256 header.s=h01 header.b=UHmLTmmx
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=gondor.apana.org.au; s=h01; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:cc:to:subject:message-id:date:
-	from:content-type:reply-to; bh=2apa8Mr/pCcSFyuTTcmI9mAPuP1EGz22opH+X2kB18Y=; 
-	b=UHmLTmmxsQXWP79uUgFoAw2NJDK2NcG91qq8NUxO8PYoCNxAbqtAn5bxrjB3K3d6fhnDZf35Nh/
-	7ayNPUu4q6o/SOeRc31+HInmDlj0qLHaWuh4ikJZ2H/qa3CFz20nWDAlMc394xpqr3538+KzpiMoD
-	Uh56gWhTFg12MubXPjP0caNCb+dlFP0UKOTUwwAtXOVxhyKx/WfGHReQ5Aj2FVOGjHTlbsMMylb/t
-	bb4VRAaYPYGo86gFO15cfVyAbrsiz/YgUVwBCZ4caDV/SbMzozdIMaNFDh7O9ySIyQNjuG2ZLLGvG
-	NV7T0J/LrWlMLnvPgl42t9aRP6wloAC00xXg==;
-Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
-	by formenos.hmeau.com with smtp (Exim 4.98.2 #2 (Debian))
-	id 1xMLPL-00000008gDW-1lPL;
-	Thu, 29 Oct 2026 16:22:48 +0800
-Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Thu, 29 Oct 2026 16:22:47 +0800
-Date: Thu, 29 Oct 2026 16:22:47 +0800
-From: Herbert Xu <herbert@gondor.apana.org.au>
-To: "Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>
-Cc: sashiko-reviews@lists.linux.dev, hannes@cmpxchg.org, yosry@kernel.org,
-	nphamcs@gmail.com, chengming.zhou@linux.dev,
-	akpm@linux-foundation.org, linux-mm@kvack.org, davem@davemloft.net,
-	linux-crypto@vger.kernel.org, rientjes@google.com,
-	willy@infradead.org, senozhatsky@chromium.org
-Subject: Re: [PATCH v2 3/8] crypto: acomp - Add trivial segmentation wrapper.
-Message-ID: <auMCV1AFlEFuJnk7@gondor.apana.org.au>
-References: <20261028030503.17923-1-kanchanapsridhar2026@gmail.com>
- <20261028030503.17923-4-kanchanapsridhar2026@gmail.com>
- <sashiko-outbox-188655@kernel.org>
- <CACpmpodu3C=uYH6dmFM-xkvdJxiRDjamRKs1Q4jU6_KKjFWNqA@mail.gmail.com>
- <auLbyon-KaV5Sw5_@gondor.apana.org.au>
- <CACpmpofcd=ZPKhAoHJfvJU_JZshKs1GGJZf5JhjAW1PZzDq-Lw@mail.gmail.com>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=W9RwNzbI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 485021F01825;
+	Thu, 29 Oct 2026 09:11:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793265119;
+	bh=dJDRsJcOuCta1CXkVGQ3wEnO6kiOTAbomKcjf+nX7kA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=W9RwNzbI1Aj/dvWxgmNqnW+NQWRJGQmXWrPDMtduvpEAUqD0M3WNRVEB4RorZH0Zn
+	 uVbCirRlQwdU64HVPGxqL3IIYrnaK8hHEAboWOompp1vS1srvyTN383Cl5iscMBd+u
+	 VUQ3wZbgNEX3ZIPklFbgxyHa+YEq++yENrW2JbQn8B3Kj8qdSg72ZtZDUGTN8PSw/T
+	 +Istz3KTMLLmAzIX2cGyO9hfhItKLzb7+Xail8SG4IEEgkiy76XXrjdz2ZJS6iskcz
+	 pUj4KiSEg946GljtoRDEg62fZXUgI9EPkcfyK5xAWLC9iZ+v+Xpum7PyH42Y+203jF
+	 qEBOgXRP2YJuQ==
+X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: sashiko-reviews@lists.linux.dev, iommu@lists.linux.dev,
+	linux-coco@lists.linux.dev
+Subject: Re: [PATCH v7 16/16] PCI/TSM: wait for vdevice contexts before
+ removing a DSM
+In-Reply-To: <20261013115953.GP13920@nvidia.com>
+References: <20261008055955.4014342-1-aneesh.kumar@kernel.org>
+ <20261008055955.4014342-17-aneesh.kumar@kernel.org>
+ <sashiko-outbox-163687@kernel.org> <yq5atsmr44r6.fsf@kernel.org>
+ <20261012130739.GM13920@nvidia.com> <yq5aecduq6i1.fsf@kernel.org>
+ <20261013115953.GP13920@nvidia.com>
+Date: Thu, 29 Oct 2026 14:41:55 +0530
+Message-ID: <yq5a4ie4c1lw.fsf@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -72,21 +63,59 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACpmpofcd=ZPKhAoHJfvJU_JZshKs1GGJZf5JhjAW1PZzDq-Lw@mail.gmail.com>
+Content-Type: text/plain
 
-On Wed, Oct 28, 2026 at 11:03:55PM -0700, Kanchana P. Sridhar wrote:
-> 
-> I was under the impression that if acomp_req_on_stack and synchronous
-> tfm, it would go through acomp_do_req_chain(). Please correct me if I
-> am wrong, and I can modify the conditional accordingly.
+Jason Gunthorpe <jgg@nvidia.com> writes:
 
-It's perfectly fine for a stack request to go to a sync tfm.  What
-isn't legal is for a stack request to go through an async tfm.
+> On Tue, Oct 13, 2026 at 03:14:54PM +0530, Aneesh Kumar K.V wrote:
+>> Jason Gunthorpe <jgg@nvidia.com> writes:
+>> 
+>> > On Mon, Oct 12, 2026 at 03:31:17PM +0530, Aneesh Kumar K.V wrote:
+>> >
+>> >> With this series, vdevices hold a reference to their parent vIOMMU,
+>> >> which pins arm-cca-host. sysfs unbind is disabled, and the SMCCC
+>> >> provider device has no hot-unplug path.
+>> >
+>> > It probably needs some logic like vfio has to prevent unregister from
+>> > completing if there are active users. The module pin should prevent it
+>> > from ever triggering, but as a safety precaution.
+>> >
+>> 
+>> Are you suggesting that tsm_unregister() should return an error or wait,
+>> as device removal does? Returning an error would be much easier to
+>> implement by adding an unregistering flag to tsm_dev, set under
+>> pci_tsm_rwsem after checking all pf0->context_users counters.
+>
+> I didn't check it closely but the usual flow is for 'unregister' to
+> wait until everything is done using it, possibly with a shootdown
+> mechanism.
+>
+> I'm not sure we can implement a sane shootdown for iommufd's
+> consumption of the tsm, but we can at least do the wait.
+>
 
-Cheers,
--- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+This will require.
+
+@@ -116,6 +119,13 @@ struct tsm_dev {
+ 	struct device dev;
+ 	int id;
+ 	const struct pci_tsm_ops *pci_ops;
++	/* Serializes user acquisition against unregister */
++	struct mutex users_lock;
++	/* Written under users_lock, read with READ_ONCE() by bus code. */
++	bool unregistering;
++	/* Registration reference plus users that must finish before teardown. */
++	refcount_t users;
++	struct completion users_drained;
+ };
+ 
+
+When a vIOMMU pins the tsm_dev, it must also increment users. This
+requires a new users_lock, since all existing locking is in pci_tsm.
+
+I can add this as a separate patch, and then we can decide whether to
+keep it. I wonder whether we can avoid this complexity, since the vIOMMU
+already pins the TSM backend module and we expect unregister to be
+called only from module_exit().
+
+-aneesh
