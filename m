@@ -1,130 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.12
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793267352;
-	b=Nq4ftw1YySMcykTHl3ckEZUFXSUeVDRjEr7veLe+CasSg7ZkkfWDwbWGEDysVhiRx2ew
-	 THm0w4j4y7XTdvN3qLflBQAqc8O8nOWuPOW/bDqH4VHJWYDxA5hOdjIqndmj0dOL3frld
-	 1ouEX+NN74/5//tm3uj9J9Ah534neFkIbiyhyQb4Am84NDDpaCSxE7e5vTG0MzPx1K7ht
-	 I6Z8R8cqJ/B1QQPLDq4VverQJxyw9wRMBq+Qblh88M0kLcy9q7JoZ1MBs7u5V2ivRDskE
-	 KDOQjLf1QgtPTpYz6qeVIZTmz6t9swZnfqMFAtFHyOVnlc5t2zDow/M3UaQ7YzlSe0w==
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.173
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793268170;
+	b=akrbcIdbI0TEa7a5Jv12TkZFagd0AIltUyE53iavGCf5ZIxwnpJJbhxZGsiQESCcovzY
+	 fdL2Z5gOVpSpxmwJaJ4aXeSt+9CS0/6suvsWgCkNCicR1pygDuyUT3FQRQuzHJOFO9A0X
+	 IM18SwkqLJeqLo1MhVBoRkd9bMK+UmCNyxtDiUZ2lHBlIZJ7/251WKw+7NQs8rkXHc3l/
+	 W7hC0K2nHqM3HyfkToTg7AdS2xF3MtdwiJYgzEf9D1JNMDjCNwcjrvJwX8FYErAmdjVo3
+	 ggffdQdf4BMpkFRxsh8dctoHK08vw23Hx2gGVZIqwfFlOmbm4qzzTEJRQyyz5nkGOeg==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793267352;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
-	 Received:Received:Received:Message-ID:Date:User-Agent:Subject:To:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
-	bh=XQFGRrIQhwUwLTUJhWp3ZltLbLTYIWzjf54CpcXDdxA=;
-	b=VqqBlUfzljn3mXsWJC5c3EGVYQPl2Csq7BYjYB22chu1Xspzt+Z8XEFwGVaSPrNJvids
-	 5rQVgX8wMx8kbG+4xfjEZPyPDhcJhltZnjBQ5r4o57WKBfTbGTEqPFPGg0V645VSji3Ot
-	 L7cekmVkzIBapqBuUdhpZCZrpRrPkwZwZBkGMXSz3u678HDBzFX+xNegjARIGd4NFtA8k
-	 337Y/YK40o+KzHHd50NQEbP3vO2MtaY+zabhU2Yzaxmre2QgJPI264jUWer5XQd2YZ8a9
-	 mhgkXE2+UESGlGv7JpFEECKQw4Je4VleoSyhaT3EJUgUhKtQXL933tfJi8dltz/JgPg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793268170;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=6iQa+csK5IjT3mexfwqthY2wIT9oXO6qpsqrgSw5lko=;
+	b=lNVrFLm/t3ucxqoYh4NCiTwq/Q2zj9Bkq2KZTbAojAHCVGFwsae0oZa+62WErm9ChlbK
+	 JfuWbKlx7pAjHwYwZNP0FuzVxuizRcCk9P+TezbYdWkkRbHpXNcIWLozE+w0U1qBJ7Llz
+	 AcCqVYufDnYDUrGYhN3MJ8NUvzKvhGeJdEuHy0GeU90Mz0PqrdxlitpnTe/qwe5jTfeft
+	 TW9WV8uPYR3q7ZTRlH900FeasBW3Sl7o/nPd8j7ssxUZ1EdlLp6r5Hps92PXeqDQu2uXE
+	 iZnANwxKbMiSf7LQG2lFNNftrqNf5Fl2appkD1eqXZCjIs7pc+1vYtLCoY0Hu2x5j0g==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=KEMRhROD;
-	arc=fail smtp.remote-ip=192.198.163.12
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=nebusec.ai;
+	spf=pass smtp.mailfrom=nebusec.ai;
+	dkim=pass header.d=nebusec.ai header.i=@nebusec.ai header.a=rsa-sha256 header.s=google header.b=VNl4jdiC;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.173
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5986606A31A
-	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 09:49:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D5986606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C88606A31A
+	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 10:02:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 59C88606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nebusec.ai
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nebusec.ai
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=KEMRhROD
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793267351; x=1824803351;
-  h=message-id:date:subject:to:references:from:in-reply-to:
-   content-transfer-encoding:mime-version;
-  bh=o9V4Z4EBpIAunUzT63xSfRmlPuNUYtnUwMb5mlcMpIw=;
-  b=KEMRhRODpMFA/IDrxieeLxw8entDO8rIk+YD7/pXAO2K1SZzPqrIOpx3
-   chB1/mhdawZmSV1zzTjrK4Vgh8JadxLiy/wKcu6Yh5VCI3ZBnjQl3/DHS
-   yEPWWwmeKIfsfpgbn19vIeeJWnBSCRRQePbxDbkoxJktG0ILKzaeLwRdX
-   iD09uljekta9W9l4uQVrXt/m72uJaE2mdDuC65kdDwy1fuET8XRVJays7
-   8GgbpDXjSbAJOT+1vArvWdzPiktIAcSNMr+1RRygc8YR80DOtpq77cOlU
-   BwwAmOhWF8xB2/yNfSqdCUSLvUbgZWHaCsGIfH+Kh3b5wsd0ijGmZhpKW
-   g==;
-X-CSE-ConnectionGUID: Lr1wV1viTi62OlVQtwlf7g==
-X-CSE-MsgGUID: ZcY/5IDyRd+3qfmDzm0yUA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11949"; a="1900864"
-X-IronPort-AV: E=Sophos;i="6.27,184,1787036400"; 
-   d="scan'208";a="1900864"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2026 02:49:10 -0700
-X-CSE-ConnectionGUID: BrT8UuK5Sje5l6t+ZvaptA==
-X-CSE-MsgGUID: Pav9mkNnTtyI1jQfa3GGOw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,184,1787036400"; 
-   d="scan'208";a="5186802"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
-  by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2026 02:49:10 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Thu, 29 Oct 2026 02:49:09 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56 via Frontend Transport; Thu, 29 Oct 2026 02:49:09 -0700
-Received: from CO1PR03CU002.outbound.protection.outlook.com (52.101.46.17) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.56; Thu, 29 Oct 2026 02:49:06 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=x2GRRufGxTDRuctskoYnBV0ldxJMWmV1tWfodh2LUkJ3/qjwHSheNZ+HyS4hrNwwoX/T326ZF5xBYidI8gFUOrmZ/pYKqc/oB1W8pm3KvC2GIXRDYz9TBSUoKSi+svNKn5kuhPGbrvHtozMrHlG6t9a0T4igRUZ1KOR4PYknb45YNoz4HWUomBtXSzbbjNEzHTchCPmZz9UFn01Qnz0cxFdnNZLsxq6Onxo1t6nDUaL3DvatWkikMU+dWJhXAr25uEcLtOtm2uApVfXgUCnX4jvgoCh039BfyU3p1GCESwp55ApC0xESSc/m790qPFzcU0964jwMepyoNrtLDD0h7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XQFGRrIQhwUwLTUJhWp3ZltLbLTYIWzjf54CpcXDdxA=;
- b=B6NCu7HZDyBKhRDpp2gRosXDu0UMxxA8ZNDUUZescn5pgusqfhyZU/WsKXQ7oAcPW/41KAYu42K2ufS6p4r/pFec22c5o07D6B61gKJMBMhsxuESOYLAGzn6ykswhgmYJJ4SqTexz7nQnDJFOmTPDCS0zJEDhMl9WQ7R+Z67ubdWdv+VijKFQPwiU+2ukvdWHsd9aAOhW6DtYMzaZAjjrKgnrHXiL7HKGhbMWWNWqGdHjXrC+QQAvc1SA/fu6vLpiYv6vx2GwoWQ0rQkaY9NdIU3gWb18Frt+OimIOk5WCo5FWM9poLLAYyJyws+wzBrtxj5GSrYPImByXSoqgK/rw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from LV0PR11MB9792.namprd11.prod.outlook.com (2603:10b6:408:385::5)
- by DS4PR11MB456666.namprd11.prod.outlook.com (2603:10b6:8:508::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.8; Thu, 29 Oct
- 2026 09:49:00 +0000
-Received: from LV0PR11MB9792.namprd11.prod.outlook.com
- ([fe80::1b1f:d9a8:ce76:e9d8]) by LV0PR11MB9792.namprd11.prod.outlook.com
- ([fe80::1b1f:d9a8:ce76:e9d8%5]) with mapi id 15.21.0569.007; Thu, 29 Oct 2026
- 09:48:59 +0000
-Message-ID: <131144ed-82ae-4353-a55d-80db82dd3a6b@intel.com>
-Date: Thu, 29 Oct 2026 15:18:52 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 10/10] drm/xe/xe_ras: Report correctable errors using
- SIGID
-To: <sashiko-reviews@lists.linux.dev>, <intel-xe@lists.freedesktop.org>
-References: <20261029082752.1739281-12-badal.nilawar@intel.com>
- <20261029082752.1739281-22-badal.nilawar@intel.com>
- <sashiko-outbox-188984@kernel.org>
-Content-Language: en-US
-From: "Nilawar, Badal" <badal.nilawar@intel.com>
-In-Reply-To: <sashiko-outbox-188984@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MA0PR01CA0092.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:ae::16) To LV0PR11MB9792.namprd11.prod.outlook.com
- (2603:10b6:408:385::5)
+	dkim=pass (2048-bit key, unprotected) header.d=nebusec.ai header.i=@nebusec.ai header.a=rsa-sha256 header.s=google header.b=VNl4jdiC
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-3a75f960be3so18580881fa.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 03:02:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793268167; cv=none;
+        d=google.com; s=arc-20260327;
+        b=YkuinJde3g9Z/eUGnRCCn9me9AUfj7t3Gz1lM3/pf3pRhiXEex/D/hpmdiE53gLhGQ
+         amYlm/vEfYAHhMuXqjzRsxOtIC6SLZtTO5wuLcqnE7AkTb4O+QnPf8vt+L9mhVhw/ir5
+         p0HbyyMWe2lNIx5o40/ibgsZzP4vDWIEz+EA9Qpnc0qpGuxnX6w7uQg5jo+fQh/sekjg
+         S9YRexbzUwhj6DaRfm9LWJxeO3hFbEUXQtFQMaqV3wttGXEYRWaCKBk9uaBQCqI229ZR
+         vhBAkjU2kjNN5klaeZmfgyTVE2XcDWy7hCB8q0AZw8AEq2xjHJ8JO3gNw2sKwpK7Ui1d
+         QXZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=6iQa+csK5IjT3mexfwqthY2wIT9oXO6qpsqrgSw5lko=;
+        fh=UDmiFjDUsl58/oI1pbxKLXmAuoEiB7qNSJQzd9c7Gr0=;
+        b=cBoCWljTUq6N8F0ZQKTXwETiwo7JXAhsWGEBDQWakT/89OnNlQziaZWNf58x0kDroV
+         SqyrRoFPj0b1ZWqlOC/RRbfApG2B7ROwzh5by1EiQ/TR47gGHLVjh7o2O5aPOEt2XNII
+         LkSj3oWpH0g5+yxCOFbzhNBcoXW14DvoyojWEND8taYXcFjhYrKL6g1awkxMVPiTdoxi
+         BX5dG6pf/H9OB0c8sD0yXx9rCWFfe/CZROOmO2UtJBJDJbRhjEfDgdaEN4sq9SwN6j/H
+         5MIh8tBv5Z7vjIJimQ8n9Ps22dkvm/XTfdKUXy7qJI5QT8LNZkh560jUX6RbyKC16ufb
+         V7zA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nebusec.ai; s=google; t=1793268167; x=1793872967; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=6iQa+csK5IjT3mexfwqthY2wIT9oXO6qpsqrgSw5lko=;
+        b=VNl4jdiCsB71o5Y10hQuL3ImT7yRFd++sfglRyGkqP99kAPmvAgpXpjyWibHpIuAX+
+         CH3Ofk6OB6P3Ia9on3YQa3AcuPBvg6WUPMaZlDjhvMciUH35hPxCfKVMcUeQMgKpJ9QP
+         bCWQvrAJPNn36qwMu0llNqGAYnNXkdXnnUl1hnNo0sjbROGqHzm2Y1oGg5pliMcxeZwk
+         HU3zx57ccovf4a7DP+ytVDAYXdl2sT2umMh0rcQ2MMw5aHEzZqcRAa+P0lsiRA2djarf
+         z+66JrYyB3VRkO7zf4ThJK1Hr/iydTE93JOurDyzyfXTCbXGkrlgtf86Vm/8QeZ0CVSz
+         448w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793268167; x=1793872967;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=6iQa+csK5IjT3mexfwqthY2wIT9oXO6qpsqrgSw5lko=;
+        b=cD6ne5odWXaIn84Ce6g31IDUPGgawHdlCltSxk8q+0s+Ct5EBxm79VQEXHae8puF+n
+         sFN4fdtlZ5gUnVlMUo796RKQMqX3Jpz0opftf1BBwl0udLmWrb38jOoP491GvblxRa4+
+         gi1T30B6i+61eQGugqqIbNUBR7lPaaLAOSMeCXFjxZ6fLxL0RsnSjaEE6OWF1e3iIU2A
+         wSu+4xdF1/48dZBeZ4it3NQLsmvPhjaVfek/qRzFj3iuOgPZcmUQ1JJlG22aDvqepUQP
+         Ph8WnJvTJxS/YYbGR+85Gu2g66u7NYYz4+2XbGvw18WQCRFt+xYWfdKZCPI7aza6OU6U
+         EOXA==
+X-Gm-Message-State: AFq9FYKIUUwJPcM/txKR8GC6DAL2b0F9/o8P3irxCSbBBXzVCjzITfzl
+	qn2MgxFTZZkW+UFXIlaS22qufkG8zeVknPOcPvL/AtMjD+3G+9sxSfs+1FPkxFBgPpZHbUVYWzw
+	UQfWmanm1PvjM0k6k0svAxdx7DiIoAm7A56QCmaTSqBl18DvFB75wb84Mh9XZaw==
+X-Gm-Gg: AYBFou0u26QILSP9vZla5CbRl5MRx8B1zXXKCaG2oyXUw/Ij6eakGX9sgQ9/4K00OdU
+	2YqoSRPv6XDLeRcDJAvsv3qXMMLz+H0SFnStR0aLNFDXCzCVBY5YHygKzwyITbQDqAZnmQUW18d
+	VMjd6Dqwt7aWbfxbQxGk5DT5/U9rwroVeGlOS9u4UAV4BnF4ClLfs7P4gxkwJVn/CKE288XgIGA
+	lDyiOUQDfsTzbl9zUh1bk7VmfYNFOTg+430cyASa3/KKqCayl7WS7r53w6HhbUXUDj2OrzCI590
+	8OZedBb2yDqCaNCJ0T+BVQOxhv0l6NOgrYFhRCD4d5AwnxF4Bbq44JtI7fGfuaULel8wQUh05Y9
+	FQE63ppMQggA09Fr6+0ra41T4/MLtuVnurzIYSco/C1ntwBsOjOFX29HPnWieZMrBDawO
+X-Received: by 2002:a2e:b8ca:0:b0:3ab:48e6:6783 with SMTP id
+ 38308e7fff4ca-3ac9ce3b947mr11587791fa.2.1793268167152; Thu, 29 Oct 2026
+ 03:02:47 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -134,155 +103,395 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV0PR11MB9792:EE_|DS4PR11MB456666:EE_
-X-MS-Office365-Filtering-Correlation-Id: 93b93ec8-5361-4cfc-b90d-08df35a1db1b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|22082099003|18002099003|3023799007|56012099006|11063799006|4143699003|261026140227099003|261022105027099003|10067099003|261022113327099003|261021121427099003|261009223027099003|261026121527099003|261028144727099003;
-X-Microsoft-Antispam-Message-Info: Ru1wcQ1r0aKAbZmABqLk3WmSInq8pWZtLoT+Qpcp9zsy5Z3B5SmM00ZA/0ETYn/jCqhgz7fuza815lodixaAbvFeE07W/eWmxR3oEDIYVHRRVfCqVG5Ld0IjThT52Vs/EHTDMFM9PQth8jK2uvcxdC3wgux7+hnr0U2cFFtMPWo/QY3uD2lC/eLV0Uk+Jt4eyJb9Lsk4JXXws3HjaK51cfmivV6YO1GL7VSiLxasMTkyyJUu5LVU7oX4jMGrYvTDgrNFfh3Ko2yAC66JQ2c7MVDYrlk5zrQtXuNbPX5ML+SiDrhvUImq6Ic07oexa6ejYE4Otrdqz/3nLy+7u5N4nVsh2THyYHJaU7nIdRENa0AgO0AlTKklPql9wJatiCgZMSEgHg2fM81nJ+mZD8z6gRMQyAbsL6rSFV3tHopFHVgjpEdHNrxWuldKjeU5/RmEw/VGBmt3tOuWZAnPg78OllgmhHP8xyYbHo0oOtDkNiHipiqb5WB4USeP++8wg+sEUusacZhX1g9xOEs5tn1FjBkJHhVDHkg8L40NkI6o5xV7dr7JjnQM+57joDgqzvGPRmOCztkg6XymBjRYUiEGQ0VGXHsS1FdHA4CWyh341nnjjc+9b5O+9YloCK24c7WCzPSpvFj9AO54mO8ibZnDJ2vSkQjcR+Q9MDwTgCurIzE=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV0PR11MB9792.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(22082099003)(18002099003)(3023799007)(56012099006)(11063799006)(4143699003)(261026140227099003)(261022105027099003)(10067099003)(261022113327099003)(261021121427099003)(261009223027099003)(261026121527099003)(261028144727099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cGg0TDNIcFlZUVUxa3VoVGxFSnQ0UUZHaTZFcEE1QThtTWhUbXJaL1FMQWJZ?=
- =?utf-8?B?ZWRSbzhwelVsSWNWYWUvdGM4REtxdWJXcUdXRDVwYlFUZG9HelpOdUE3elRh?=
- =?utf-8?B?bUlFd1RSTUtZcWgyOEtwNU1VRDVEaGdYTHNqRzlUUlpvMDVTSGJQc1VIYzBn?=
- =?utf-8?B?SWdGSnJIZmdobGdTVFF1VUVkR3ZzRDFLMlprcDNYZmFwTHR4M0hmWStLMVZa?=
- =?utf-8?B?Y3JsbHZQY1VRL2NNbG1hci9IeWVhbVlLWHE5Q2V1bUJid2xkK05BMGRHb3Fy?=
- =?utf-8?B?UGZYTC9DVFNlQjN4Sm9MUmlPaUYvamY4eXliQjNvOUthWGl6SFdqVExINUtI?=
- =?utf-8?B?OFRvaVEvT3JzODBUNGhxQjVnMmc1ckZZc29Ed0JYSmtUL01Gdm0rZjFkaXlV?=
- =?utf-8?B?VWtaZVpTU2Z2Z3lXNmVWckxUNCtBaE9jdVo3NFRUUnQxT3prcmoycUo3dnBq?=
- =?utf-8?B?ZTF3b1VpTzhPWWRuOEt3SCt5b2d3R3hOWXR0Y0tEbGFRU1lBVS9ab3NGaWpT?=
- =?utf-8?B?QzgxcWRCT2R1bTlEYmlJUU1rMGtISXdwRXUwUDRFdVVqTEc4NFJ4WkYyUEQz?=
- =?utf-8?B?UkU1N0RmNE96ZEh0dFVjbk1oQ3ozaTFWd0ZvOVBvajlUWXB2dHJEd2g2Y0lj?=
- =?utf-8?B?ckliNkFNMFNjWFpVUlZRVjBRSDFVSDZscEJmQ2xreGp1bEpPUjdxaHp4VlJD?=
- =?utf-8?B?WFU4aCs2WlZZR3hBRFhJcy82c1Y1TW1iY0ZWNUNHN3lETkZjRVpXMXR6VldF?=
- =?utf-8?B?NWovMlVnMC9tclFxVmdBcEJUb2JUY2dyZUxSc2c4UWxCdFZ4eGxUdkd4VEFH?=
- =?utf-8?B?QUFpVDlBMGduOER3Zzl3UUFmU2d1M1lUTmxJc0d2T283dWhEdXBCVE15dTY1?=
- =?utf-8?B?ODgzRzhZbXBqeXZWODlZYkwvT3BlZ2VHdG9rRUtSNjlBbC9Qem4wNWVXa1hR?=
- =?utf-8?B?V3N5THdxc0puZmk1dlZveS96RTA3cEJkeGtnMXJDK3JTSUw0SzJCdDNFZ2Z1?=
- =?utf-8?B?RExXL0dLbzFkbllIZk5pSTlxU3BiWjZkSGhiYTBjRUhFZHZLTXNJUVVKc0VO?=
- =?utf-8?B?UXQ4NWxTejdiSGpaWFYyV2tBM1BtSGRkSUJPaTFDL2Exck1VRVNmRkZXUXF3?=
- =?utf-8?B?UytScGNkcmtsL3orQWVaTEJQOG4xa2F6c2t2REtkRGl5VnpTVWJtR21BUkd3?=
- =?utf-8?B?cWRFWUsvZmVzY2pZeFhBNTdJdWNYbmV4QjBzOFhZeTloZXovK3VhWGFjMk02?=
- =?utf-8?B?alVZak5WdDRvaXVvNVNqNzE2cks3NHJ4b2R5bHMzOGtaRnlEWHBVUTJDbFI0?=
- =?utf-8?B?d3YzWkQzN1hIRnF1WmlERDVQckdWQnNTQ3RFTHE1ZHNlUUlrV000Uk9SalpO?=
- =?utf-8?B?dGlmQXFtcm44eDh6Ukk5bmY5Wm4wTis4RFkwY0F0Nk9RVmpMSGFSclFGeG03?=
- =?utf-8?B?cER1NlFVejc5aHpMcllNZFBHSVZLMXE5VVBRUkovQkIydzVOSkhJSThSM1hX?=
- =?utf-8?B?R0xBQzlmQ3hLQzFFK3dTR21WaTBkQlRDRlcxbDd3OHphZHRCbzhsUFNYSlI2?=
- =?utf-8?B?NmxIcitJVFhxL0VWL2xnUlVyZE1laW1maVlrNHUzWW5mTzY5SDZWVUQ0MGV6?=
- =?utf-8?B?MjhxUzFWZW9jRXhlS3grOVR6b0VBcmZ4Rm01MU9pUm1pNjc5aFJWRHFZQmdx?=
- =?utf-8?B?V3dJeitwYlVpdFFyeiswanNCL3VPb3ZoMWRod2lRQ2pRNkVaa05BSUhIWGZW?=
- =?utf-8?B?dGtVQWtFdDkrWVhVQVJPR0t2L0ZnM2RWMHNIcHpidXQ4cXdpR0Q5VGZPdyt4?=
- =?utf-8?B?ekhYNXlUZEtSbzdrMzFob3ViSHVSNWNUdWRaMnNWalNyTVVNUU1SRDlVRm1H?=
- =?utf-8?B?VDBTOW5Hb1RvempjR1BFbkp1eEpzdUdYTXhTT3Q5bnp3b3FpYXk3TWRMWENT?=
- =?utf-8?B?N2EwRkpGdTU5VGRNOGc1cFVlU3NwcXBMeGZNYUF5Q1lEd0xGcy9CRWpiYnV6?=
- =?utf-8?B?dktPR1dhWXA2VGpzandUM09ubGFLam05SjBEODFXb24rbFBGc2JXVzNUKzEy?=
- =?utf-8?B?NmFnNWdQZ2xGcnFWVzRvd0FzN0drRkR4NXJSbU8vQXplZHN1V0ZqWE40a0Ir?=
- =?utf-8?B?Z1Iwb2gzRS9qOUFxNklUVTMvbHdydkZCZklXZzJ4WndpRU5XWHFUMGxmRGp5?=
- =?utf-8?B?aHFuWlI3L00vWml6MTE2ZUhHSkNFQXBPWEE2QlpPOUxia2oyYnhtekNaQkFZ?=
- =?utf-8?B?Ym9IeFh5dlYxQ2RYOXEzNGV1R2RkUUZXMEdjTU8rMVlSM3Bja1ZDZHFxN0ls?=
- =?utf-8?B?UVVZTytkNHNTUkxrbDVYSjg3L2tiVjVMblN1OE1vQkJZajNpNWN6UT09?=
-X-Exchange-RoutingPolicyChecked: wRRVsEYGsPTsPd3WOJLbIX1Zpuimu0D2k5YM00p39Otf2pTsfQQENjPqMHcDL2S8SGe0AyTTh79JwxPKnPYkqaQtq7E3piHxQWrSzjED6mmEVBka7SZkNgivcHwO1gUTE9uzFY4NCOoZwGOZEQk0TrkmxynAkdg4pL/weIj6Kwg1fa+8kgzvqWlKSqTZPcS232S6WKFd5zJHc8E3A7eaWRGd1srxywg4a2MazfAT5NDnFZ8+GT2o6z7lhjcJOSvvQeYAWANINLK6LU9GMdXxTDQ6Er2qM6MEPtXi0t90AgWUANNfHinQZc/Vxy0L47/hIctJeC21WGndfI/sv6LTfQ==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 93b93ec8-5361-4cfc-b90d-08df35a1db1b
-X-MS-Exchange-CrossTenant-AuthSource: LV0PR11MB9792.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Oct 2026 09:48:59.2821
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XzmLNJq1KPBpxXQPfPfa7jdyMUJihWdK1mIX8bi8z7B7aBFih9FmWhtONkvYBgsPUtmInUQHi0TFOR/FqlJzww==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR11MB456666
-X-OriginatorOrg: intel.com
+References: <cover.1793259424.git.zihanx@nebusec.ai> <a683b6afb2c21e0d05be0ebe18c4f60b98152d25.1793259424.git.zihanx@nebusec.ai>
+ <sashiko-outbox-189012@kernel.org>
+In-Reply-To: <sashiko-outbox-189012@kernel.org>
+From: zihan xi <zihanx@nebusec.ai>
+Date: Thu, 29 Oct 2026 18:02:33 +0800
+X-Gm-Features: AclHuK-EkVpjHr16G0lR9YcS6ivNboOau7EQX62qEElvvaaKkBsqoi7q1Ii34po
+Message-ID: <CAANe3eSNKGcFtetJurYR=YjUmuR-paWif4FXQpTMwnKMv_4aCg@mail.gmail.com>
+Subject: Re: [PATCH net v3 2/3] can: j1939: stop TX sends after session shutdown
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-can@vger.kernel.org, Marc Kleine-Budde <mkl@pengutronix.de>, 
+	Oliver Hartkopp <socketcan@hartkopp.net>, Vincent Mailhol <mailhol@kernel.org>, 
+	Oleksij Rempel <o.rempel@pengutronix.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On 29-10-2026 14:12, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] drm/xe/ras: unrecognized log component for XE_RAS_COMP_RESERVED in ras_comp_to_log_comp()
+On Thu, Oct 29, 2026 at 5:15=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 5 potential issu=
+e(s) to consider:
+> - [High] can: j1939: timer callbacks still cancel session after tx_send_s=
+hutdown
+> - [High] can: j1939: unconditional error notifications outside session st=
+ate guards
+> - [High] can: j1939: session leak on sk_session_queue when simple TX race=
+s rxtimer
+> - [Medium] can: j1939: TX sends not shut down before draining timers on c=
+ompletion
+> - [Medium] can: j1939: spurious netdev_alert() in j1939_session_tx_dat() =
+on -ESHUTDOWN
 > --
 >
-> commit 523a0553a8f4f634b0b558643739a2f201d23a02
-> Author: Badal Nilawar <badal.nilawar@intel.com>
+> commit 2c11cd00299ff52c942a6b68d469115b501da6d9
+> Author: Zihan Xi <zihanx@nebusec.ai>
 >
-> drm/xe/xe_ras: Report correctable errors using SIGID
+> can: j1939: stop TX sends after session shutdown
 >
-> This commit replaces xe_warn() in xe_ras_counter_threshold_crossed() with
-> xe_log_from() to report RAS counter threshold crossings using hardware
-> SIGIDs and log components.
+> This commit introduces a per-session tx_send_lock and tx_send_shutdown ga=
+te to
+> serialize session data and control frame transmissions against session
+> deactivation and incoming XTP ABORT handling. It also suppresses sending =
+an
+> outbound XTP ABORT frame when tx_send_shutdown has been set.
 >
->> diff --git a/drivers/gpu/drm/xe/xe_ras.c b/drivers/gpu/drm/xe/xe_ras.c
->> index 58d3834345bc1..09b3c96042d5b 100644
->> --- a/drivers/gpu/drm/xe/xe_ras.c
->> +++ b/drivers/gpu/drm/xe/xe_ras.c
+> Link: https://bugtracker.nebusec.ai/f/11143
+> Link: https://lore.kernel.org/all/cover.1793012287.git.zihanx@nebusec.ai/
+>
+> > diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
+> > index 0dd08d1b8f755..570e2b8d08263 100644
+> > --- a/net/can/j1939/transport.c
+> > +++ b/net/can/j1939/transport.c
+>
 > [ ... ]
->> @@ -226,6 +228,12 @@ static int ras_status_to_errno(u32 status)
->>   	}
->>   }
->>   
->> +static u16 ras_comp_to_log_comp(u8 component)
->> +{
->> +	return FIELD_PREP(XE_LOG_COMPONENT_CLASS_MASK, XE_LOG_COMPONENT_CLASS_HARDWARE) |
->> +	       FIELD_PREP(XE_LOG_COMPONENT_TYPE_MASK, component);
->> +}
->> +
->>   static inline const char *sev_to_str(u8 severity)
->>   {
->>   	if (severity >= XE_RAS_SEV_MAX)
->> @@ -714,8 +722,11 @@ void xe_ras_counter_threshold_crossed(struct xe_device *xe,
->>   		if (!ras_counter_is_valid(xe, &errors[id]))
->>   			continue;
->>   
->> -		xe_warn(xe, "[RAS]: %s %s detected\n",
->> -			comp_to_str(component), sev_to_str(severity));
->> +		xe_log_from(xe, ras_sev_to_cper_sev(severity),
->> +			    ras_comp_to_hw_sigid(component),
->> +			    ras_comp_to_log_comp(component),
->> +			    &errors[id], sizeof(errors[id]),
->> +			    "error detected\n");
+>
+> > @@ -1363,12 +1398,14 @@ static void __j1939_session_cancel(struct j1939=
+_session *session,
+> >       struct j1939_priv *priv =3D session->priv;
+> >
+> >       WARN_ON_ONCE(!err);
+> > +     lockdep_assert_held(&session->tx_send_lock);
+> >       lockdep_assert_held(&session->priv->active_session_list_lock);
+> >
+> >       session->err =3D j1939_xtp_abort_to_errno(priv, err);
+> >       session->state =3D J1939_SESSION_WAITING_ABORT;
+> >       /* do not send aborts on incoming broadcasts */
+> > -     if (!j1939_cb_is_broadcast(&session->skcb)) {
+> > +     if (!session->tx_send_shutdown &&
+> > +         !j1939_cb_is_broadcast(&session->skcb)) {
+> >               j1939_xtp_tx_abort(priv, &session->skcb,
+> >                                  !session->transmission,
+> >                                  err, session->skcb.addr.pgn);
+> > @@ -1381,6 +1418,7 @@ static void __j1939_session_cancel(struct j1939_s=
+ession *session,
+> >  static void j1939_session_cancel(struct j1939_session *session,
+> >                                enum j1939_xtp_abort err)
+> >  {
+> > +     spin_lock_bh(&session->tx_send_lock);
+> >       j1939_session_list_lock(session->priv);
+> >
+> >       if (session->state >=3D J1939_SESSION_ACTIVE &&
+> > @@ -1391,6 +1429,7 @@ static void j1939_session_cancel(struct j1939_ses=
+sion *session,
+> >       }
+> >
+> >       j1939_session_list_unlock(session->priv);
+> > +     spin_unlock_bh(&session->tx_send_lock);
+> >
+> >       if (!session->sk)
+> >               j1939_sk_errqueue(session, J1939_ERRQUEUE_RX_ABORT);
+>
+> [Severity: High]
+> When j1939_xtp_rx_abort_one() processes an incoming XTP ABORT frame, it c=
+alls
+> j1939_session_tx_send_shutdown(session) and then drains both timers via
+> j1939_session_timers_cancel(session) while session->state is still
+> J1939_SESSION_ACTIVE:
+>
+> net/can/j1939/transport.c:j1939_xtp_rx_abort_one() {
+>         ...
+>         j1939_session_tx_send_shutdown(session);
+>         j1939_session_timers_cancel(session);
+>         j1939_session_list_lock(priv);
+>         if (session->state >=3D J1939_SESSION_ACTIVE &&
+>             session->state < J1939_SESSION_ACTIVE_MAX)
+>                 session->err =3D j1939_xtp_abort_to_errno(priv, abort);
+>         j1939_session_list_unlock(priv);
+>         if (session->sk)
+>                 j1939_sk_send_loop_abort(session->sk, session->err);
+>         else
+>                 j1939_sk_errqueue(session, J1939_ERRQUEUE_RX_ABORT);
+>         j1939_session_deactivate_activate_next(session);
+> }
+>
+> While j1939_session_timers_cancel() is waiting for txtimer in
+> j1939_session_txtimer_cancel() (before j1939_session_rxtimer_cancel_sync(=
+)
+> increments session->rxtimer_cancelers), a concurrent j1939_tp_txtimer()
+> callback that fails prior to j1939_session_tx_send() (for instance with
+> -EOVERFLOW in j1939_session_tx_dat(), -ENOENT in j1939_session_tx_cts() o=
+r
+> j1939_session_tx_eoma(), or -ENOMEM in j1939_tp_tx_dat_new()) can call
+> j1939_session_cancel(), or a concurrent j1939_tp_rxtimer() callback can e=
+nter
+> its non-simple timeout branch.
+>
+> Because !session->tx_send_shutdown is only checked around j1939_xtp_tx_ab=
+ort()
+> inside __j1939_session_cancel() rather than gating the cancellation block=
+ in
+> j1939_session_cancel() and j1939_tp_rxtimer(), won't the timer callback s=
+till:
+>
+> 1. rearm session->rxtimer for J1939_XTP_ABORT_TIMEOUT_MS via
+>    j1939_tp_set_rxtimeout_locked() (or record session->rxtimer_pending =
+=3D true
+>    if rxtimer_cancelers is non-zero),
+> 2. overwrite session->err with the local timer error and transition
+>    session->state to J1939_SESSION_WAITING_ABORT, and
+> 3. immediately call j1939_sk_send_loop_abort(session->sk, session->err),
+>    waking session->sk with the wrong sk_err before j1939_xtp_rx_abort_one=
+()
+>    sets session->err from the received ABORT frame and notifies the socke=
+t a
+>    second time?
+>
+> Should j1939_session_cancel() and the timeout branch in j1939_tp_rxtimer(=
+)
+> check !session->tx_send_shutdown before rearming rxtimer and calling
+> __j1939_session_cancel()?
+>
+
+Agreed. The shutdown gate currently prevents sends, but does not prevent
+timer callbacks from changing session state, rearming the RX timer, or
+reporting errors. I will serialize these terminal side effects in the next
+revision.
+
+> [ ... ]
+>
+> > @@ -1460,6 +1498,9 @@ static enum hrtimer_restart j1939_tp_txtimer(stru=
+ct hrtimer *hrtimer)
+> >                * propagation of the error to user space.
+> >                */
+> >               break;
+> > +     case -ESHUTDOWN:
+> > +             /* A terminal path won before this packet could be sent. =
+*/
+> > +             break;
+> >       case -EOVERFLOW:
+> >               j1939_session_cancel(session, J1939_XTP_ABORT_ECTS_TOO_BI=
+G);
+> >               break;
+>
 > [Severity: Medium]
-> What happens if the system controller reports a counter with component set
-> to XE_RAS_COMP_RESERVED (3)?
+> Here j1939_tp_txtimer() treats -ESHUTDOWN as an expected race with sessio=
+n
+> shutdown, but in j1939_tp_txtimer() -> j1939_xtp_txnext_transmiter() ->
+> j1939_session_tx_dat(), a -ESHUTDOWN return from j1939_tp_tx_dat() still =
+hits
+> the error log check:
 >
-> In drivers/gpu/drm/xe/xe_ras.c, ras_counter_is_valid() only checks the outer
-> bounds of component:
+> net/can/j1939/transport.c:j1939_session_tx_dat() {
+>         ...
+>                 ret =3D j1939_tp_tx_dat(session, dat, len + 1);
+>                 if (ret < 0) {
+>                         /* ENOBUFS =3D=3D CAN interface TX queue is full =
+*/
+>                         if (ret !=3D -ENOBUFS)
+>                                 netdev_alert(priv->ndev,
+>                                              "%s: 0x%p: queue data error:=
+ %i\n",
+>                                              __func__, session, ret);
+>                         break;
+>                 }
+> }
 >
-> 	if (!in_range(component, XE_RAS_COMP_NOT_SUPPORTED + 1, XE_RAS_COMP_MAX - 1)) {
-> 		xe_err(xe, "sysctrl: unexpected component %u\n", component);
-> 		return false;
-> 	}
->
-> This allows XE_RAS_COMP_RESERVED (3) to pass validation. While
-> ras_comp_to_hw_sigid() uses a switch statement that falls back to
-> XE_SIGID_HW for unhandled values, ras_comp_to_log_comp() unconditionally
-> encodes component into XE_LOG_COMPONENT_TYPE_MASK under
-> XE_LOG_COMPONENT_CLASS_HARDWARE.
->
-> Because hardware component 3 is reserved and omitted from
-> DEFINE_XE_LOG_HARDWARE_COMPONENTS in drivers/gpu/drm/xe/abi/xe_log_abi.h:
->
-> #define DEFINE_XE_LOG_HARDWARE_COMPONENTS(define) \
-> 	define(HARDWARE, 1, DEVICE_MEMORY, DEVICE_MEMORY, "Device Memory")	\
-> 	define(HARDWARE, 2, CORE_COMPUTE, CORE_COMPUTE, "Core Compute")		\
-> 	/*     HARDWARE, 3, RESERVED */						\
-> 	define(HARDWARE, 4, PCIE, PCIE, "PCIe Interface")			\
-> 	define(HARDWARE, 5, FABRIC, FABRIC, "Fabric")				\
-> 	define(HARDWARE, 6, SOC_INTERNAL, SOC_INTERNAL, "SoC Internal")		\
->
-> passing that encoded value to xe_log_from() will miss all cases in
-> log_component_prefix() and hit log_unknown_component_prefix() in
-> drivers/gpu/drm/xe/xe_log.c:
->
-> 	WARN(IS_ENABLED(CONFIG_DRM_XE_DEBUG), "LOG: unrecognized component %u.%u\n", class, type);
->
-> Should ras_counter_is_valid() reject XE_RAS_COMP_RESERVED, or should
-> ras_comp_to_log_comp() handle unmapped components like
-> ras_comp_to_hw_sigid() does?
+> Will a session shutdown racing with j1939_session_tx_dat() emit a spuriou=
+s
+> netdev_alert() with -ESHUTDOWN (and still call j1939_tp_set_rxtimeout() i=
+f
+> pkt_done > 0 from earlier packets in the loop)?
 
-XE_RAS_COMP_RESERVED is a reserved value and is not reported by the 
-firmware. Therefore, rejecting it explicitly in ras_counter_is_valid() 
-is not required.
+Agreed. -ESHUTDOWN is an expected result when terminal shutdown wins. I
+will suppress that alert and avoid rearming the RX timeout after this
+shutdown result, including when earlier packets were sent in the loop.
+>
+> > @@ -1558,6 +1599,7 @@ static enum hrtimer_restart j1939_tp_rxtimer(stru=
+ct hrtimer *hrtimer)
+> >               /* The message is probably stuck in the CAN controller an=
+d can
+> >                * be send as soon as CAN bus is in working state again.
+> >                */
+> > +             spin_lock_bh(&session->tx_send_lock);
+> >               j1939_session_list_lock(priv);
+> >               if (session->state >=3D J1939_SESSION_ACTIVE &&
+> >                   session->state < J1939_SESSION_ACTIVE_MAX) {
+> >                       session->err =3D -ETIME;
+> >                       j1939_session_deactivate_locked(session);
+> >               }
+> >               j1939_session_list_unlock(priv);
+> > +             spin_unlock_bh(&session->tx_send_lock);
+> >               j1939_session_txtimer_cancel_async(session);
+> >               j1939_session_rxtimer_cancel(session);
+>
+> [Severity: High]
+> Can this J1939_SIMPLE timeout path in j1939_tp_rxtimer() leak the session=
+ on
+> jsk->sk_session_queue and hang socket close when it races with
+> j1939_simple_txnext()?
 
-Thanks,
-Badal
+Agreed. If the SIMPLE timeout deactivates the session before the send path
+advances the socket queue, the queued session can remain pending. I will
+ensure the winning terminal path advances or removes it exactly once.
 
 >
+> In j1939_tp_txtimer() -> j1939_simple_txnext(), rxtimer is armed before
+> j1939_session_tx_send() is called, and j1939_sk_queue_activate_next(sessi=
+on)
+> is only called if j1939_session_tx_send() succeeds:
+>
+> net/can/j1939/transport.c:j1939_simple_txnext() {
+>         ...
+>         j1939_tp_set_rxtimeout(session, J1939_SIMPLE_ECHO_TIMEOUT_MS);
+>
+>         ret =3D j1939_session_tx_send(session, skb);
+>         if (ret)
+>                 goto out_free;
+>
+>         j1939_sk_errqueue(session, J1939_ERRQUEUE_TX_SCHED);
+>         j1939_sk_queue_activate_next(session);
+> }
+>
+> If j1939_tp_rxtimer() fires before j1939_session_tx_send() succeeds (eith=
+er
+> between j1939_tp_set_rxtimeout() and j1939_session_tx_send(), or while tx=
+timer
+> is retrying after j1939_session_tx_send() returned -ENOBUFS),
+> j1939_tp_rxtimer() transitions session->state to J1939_SESSION_DONE via
+> j1939_session_deactivate_locked() and cancels both timers without calling
+> j1939_sk_queue_activate_next(session).
+>
+> When j1939_simple_txnext() then calls j1939_session_tx_send(), it sees
+> state !=3D J1939_SESSION_ACTIVE and returns -ESHUTDOWN, jumping to out_fr=
+ee
+> without calling j1939_sk_queue_activate_next(session), and j1939_tp_txtim=
+er()
+> breaks out of its switch on -ESHUTDOWN.
+>
+> Doesn't that leave session permanently queued on jsk->sk_session_queue wi=
+th
+> its queue kref and jsk->skb_pending count held, stalling subsequent queue=
+d
+> sessions and causing j1939_sk_release() to block indefinitely waiting on
+> !j1939_sock_pending_get(&jsk->sk)?
+>
+> >       } else {
+> > +             spin_lock_bh(&session->tx_send_lock);
+> >               j1939_session_list_lock(session->priv);
+> >               if (!session->rxtimer_cancelers &&
+> >                   session->state >=3D J1939_SESSION_ACTIVE &&
+> >                   session->state < J1939_SESSION_ACTIVE_MAX) {
+> >                       netdev_alert(priv->ndev, "%s: 0x%p: rx timeout, s=
+end abort\n",
+> >                                    __func__, session);
+> >                       j1939_tp_set_rxtimeout_locked(session,
+> >                                                     J1939_XTP_ABORT_TIM=
+EOUT_MS);
+> >                       __j1939_session_cancel(session, J1939_XTP_ABORT_T=
+IMEOUT);
+> >               }
+> >               j1939_session_list_unlock(session->priv);
+> > +             spin_unlock_bh(&session->tx_send_lock);
+> >
+> >               if (!session->sk)
+> >                       j1939_sk_errqueue(session, J1939_ERRQUEUE_RX_ABOR=
+T);
+>
+> [Severity: High]
+> In this branch of j1939_tp_rxtimer(), as well as in j1939_session_cancel(=
+) and
+> j1939_xtp_rx_abort_one(), the socket error notification outside the lock =
+runs
+> unconditionally even when the state check (or !session->rxtimer_cancelers=
+)
+> evaluates to false.
+>
+> For example, when an RX session (!session->sk) completes in
+> j1939_xtp_rx_dat_one() (when final is true) and calls
+> j1939_session_timers_cancel() -> j1939_session_rxtimer_cancel_sync(),
+> session->rxtimer_cancelers is incremented while waiting for a running
+> j1939_tp_rxtimer() callback to finish. In j1939_tp_rxtimer(), the conditi=
+on
+> !session->rxtimer_cancelers is false, so __j1939_session_cancel() is skip=
+ped
+> and session->err remains 0, but j1939_tp_rxtimer() still calls
+> j1939_sk_errqueue(session, J1939_ERRQUEUE_RX_ABORT) after dropping the lo=
+cks.
+>
+> Similarly, if j1939_session_cancel() or j1939_xtp_rx_abort_one() finds th=
+at
+> another path already transitioned session->state out of the active range,=
+ it
+> still invokes j1939_sk_errqueue() or j1939_sk_send_loop_abort().
+>
+> Should these error notifications be gated on whether the caller actually =
+won
+> the state transition?
+
+Agreed. I will make socket error reporting conditional on winning the
+relevant state transition, including the session-cancel, RX-timeout, and
+incoming-ABORT paths.
+>
+> > @@ -1671,6 +1716,8 @@ static void j1939_xtp_rx_abort_one(struct j1939_p=
+riv *priv, struct sk_buff *skb,
+> >                   session, j1939_xtp_ctl_to_pgn(skb->data), abort,
+> >                   j1939_xtp_abort_to_str(abort));
+> >
+> > +     /* Stop TX callbacks before waiting for the timer callbacks to dr=
+ain. */
+> > +     j1939_session_tx_send_shutdown(session);
+> >       j1939_session_timers_cancel(session);
+> >       j1939_session_list_lock(priv);
+> >       if (session->state >=3D J1939_SESSION_ACTIVE &&
+>
+> [Severity: Medium]
+> Here j1939_xtp_rx_abort_one() calls j1939_session_tx_send_shutdown(sessio=
+n)
+> before j1939_session_timers_cancel(session), because session->state is st=
+ill
+> J1939_SESSION_ACTIVE while the timers are being drained.
+>
+> However, the other paths that call j1939_session_timers_cancel(session) b=
+efore
+> deactivating or canceling the session do not call
+> j1939_session_tx_send_shutdown(session) first:
+>
+> - j1939_xtp_rx_eoma_one() sets session->pkt.tx_acked =3D session->pkt.tot=
+al,
+>   calls j1939_session_timers_cancel(session), and only then calls
+>   j1939_session_completed(session) -> j1939_session_deactivate().
+> - j1939_xtp_rx_dat_one() (both the final completion branch and
+>   out_session_cancel) calls j1939_session_timers_cancel(session) before
+>   j1939_session_completed(session) or j1939_session_cancel(session, abort=
+).
+> - j1939_simple_recv() calls j1939_session_timers_cancel(session) before
+>   j1939_session_deactivate(session).
+> - j1939_xtp_rx_cts_one() (at out_session_cancel) and
+>   j1939_xtp_rx_rts_session_active() call j1939_session_timers_cancel(sess=
+ion)
+>   before j1939_session_cancel().
+>
+> While j1939_session_timers_cancel() is waiting for an in-flight
+> j1939_tp_txtimer() callback in those paths, both session->tx_send_shutdow=
+n is
+> false and session->state is J1939_SESSION_ACTIVE, so j1939_session_tx_sen=
+d()
+> still allows packets through (and in j1939_xtp_rx_eoma_one(), a concurren=
+t
+> j1939_tp_rxtimer() firing before rxtimer_cancelers is incremented can sti=
+ll
+> send an XTP ABORT frame on a completed session).
+>
+> Should j1939_session_timers_cancel() itself call
+> j1939_session_tx_send_shutdown(session) (or should those callers shut dow=
+n TX
+> sends before draining the timers)?
+
+Agreed. Completion paths must close the session send gate before waiting
+for timer callbacks. I will distinguish terminal shutdown from timer drains
+that are temporary and allow the session to continue.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1793259424.=
+git.zihanx@nebusec.ai?part=3D2
