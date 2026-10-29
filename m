@@ -1,99 +1,53 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.44
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793297523;
-	b=FwKSRMdljtKCJRLATaWqfEbY1+bW7VSOCQFxzfodMeiHeSxY10yJDd/8pqUH2s/4twE3
-	 gc95clV3sr1/5RoNWpkUwgJ1sv0GjXljEJNvMO+THuOIFkeS95FFlBXi3Otm0TJXoy2gH
-	 YdM0VgRrjESCPGbupok5SreZOfZAVP0a4pihQiQNCLIevSt07GOFm54ItvFMQa4qeiUEA
-	 dgppH8mavHFYble4osILO6yMkgcFALyMs9bx7usXeO+CCi/FxHDmDWSX//ErOsPFrDgyv
-	 05t+MPvgCYUrbAuHMWupMIgXpoTT4MoEh1KQdZZ9DGmBNcnjtdn4gXZmCbJ/KUJ741Q==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793297523;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=PLUjYNTvLoS6IRSrAP5hbUmJYyA56qlS0xnG+YeH+uo=;
-	b=vRGHVfY0p6JgqOYXvOhwnI/6Fr5CiUquqGjbErSDzkSfDeF96mur6lambpRckZBl5pYF
-	 FrfZSBZRMPA6R8RsmRXA8EsSJR4uqJlf6UM4/4A2d06Pbv2gpeojKT4YxctSO4FbyaTeE
-	 JVwu+r5+1q2IMXyHyJ4eT34gm1qiypgUitcdupL+8g+2TWMD2KLybPZn8wPc0c4LlJznf
-	 e3XVVpnKGvVFT6ku/HC4DCq4G4ta/XW8lU72SjmmF3+ay1EbYKCZbN5sFk4Pk/YPn+hUL
-	 2MJa408e68ETS2AkzBa9EQ/t+0t8QFWWq6/7N9739EAxRhSBaWZnQTRp87gCAKbuxTQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="0YY+ST/+";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.44
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793300463;
+	b=dc64fBgAZjp5viZvSeRIgt4WSCkkzTrf1miDUEbEKm2ldFMhlVzEKHO+kb8UdIMzLgib
+	 JcnQxnHbuRghQaTKwR+uhFEe/rwu4LPjy2aNYaz8HExSE2nAO2OtB2cQIByDooStUSwum
+	 FwcdHHOANbfMCorg7DYhE6VXKodW3VvfC3vAWWG2hiD6IHmklRmAarSltJBknYs6+BM4D
+	 knfpXy8jEvPUOE+RE7sTGD42MyscFpQ+LxgNUa+DlIfG7RfUvbHyoOdOCNhoKaL2nW8LY
+	 7ke91UAaG4TpG6tbGFoh9cShpsSIMZC/cLIyuUk0oqh7phG6jMfS/cnib2DShh/LznQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793300463;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=X3R+/90f+Tf2330RKPvZV8HmufJCZILvebczyhDrUyE=;
+	b=a8Uwqvlk4kgAD4emv41sx3JxVsL2skXkWQZeKzAkkDc374cmtLlrngDzY7ujqKRDJEs7
+	 duoEj91VILdyAwPL9XGx5eBWMUJTxcmHrgAVmjLchwXS0C2JHm4m4RRZYlRpWUrfRNj9o
+	 OSFHljKlxFwuYLP8pf8mundukncJx38+5+zr1ko8sMZGpGafS9B20jZmGaovr6g7YjfQx
+	 7cRHvcfw7JOvy5phfmBGK34320adse/Qi2S4HM/nn1yLCbajINbOhqpPT0bCCZKofQiRU
+	 0NLLKbpNnsjmqMnm1QrIm2TKjP5Tka9IBdatJAwuX/EoRHCYXQLKaSfkaeSXOiawgPA==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Gfq90gPU;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D1A606A31A
-	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 18:12:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 53D1A606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC50606A31D
+	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 19:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0YY+ST/+
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5bfa7c09c9eso1970482e87.2
-        for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 11:12:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793297520; cv=none;
-        d=google.com; s=arc-20260327;
-        b=mlMJcLFs6gIfse2VXiGafyaW2TGcQ08/HHnILCIJrQsLVuiRMsbt8Dgd1b/OADBI15
-         WpNoeVpi+7r2SffVhgaTxxw4efdSKwGKSG49oylQ1TIGilj8pBUWoDxK1GQDxLueV1Jm
-         i4K4hCJ+NTagFQrSchdNJrg3OFYposKYFGid31M5rEKi27BXEMYZV6fmeydfhMkqk0rh
-         hiKBG3es6b4hKn/YW5vOOTZOsMODw8Xic01t6igXkCDqFZh3wIt7qTPj9StKLTUjLEEj
-         1grDFt/BHSl1JqvkQQNofNIisY54GRV5OihmWxzWdW1XSR42ZWQa1OtHPp3dkJMKrII6
-         Djgw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=PLUjYNTvLoS6IRSrAP5hbUmJYyA56qlS0xnG+YeH+uo=;
-        fh=INjNmmHA7ztbj5+a+SXdF/cS9e7eP5VrVRtcqQVr4pU=;
-        b=X6HlmVvCdMpSsAmYYFLyitJyc5uilSs5MIcmY3E2kovUhFXABdWeZPKtXzOF7ajk1+
-         GHmeKqIXR37ZTgd8pFKq5GdofoUpg28yY4WA2gVwlDWPY5VZC9XKf7UKbl5R4UEn2TEn
-         /Q/YjNrs9vBPTYGTcGyRofiICcyPz1IdEoqpM0/ppEauXa8i7nkH6fURuNtDVCGnG7Mj
-         OB71fu5QTLztOIgFgQ0cgvd1iIkhrLQQXGwOIgSlYl4ChwBrw/ABAT9YIgNbIepnsz7Z
-         lz+RxOX0lBSkdIjG+FmtaaTRiEOjAzmurO8d5/ajfHgchcamChoZiNFax5oUhZh1PJ69
-         2nxw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793297520; x=1793902320; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=PLUjYNTvLoS6IRSrAP5hbUmJYyA56qlS0xnG+YeH+uo=;
-        b=0YY+ST/+cpyakGhCBprTq30K8zvx7IwrxS8mDhfh+XEu9d6y2f6FjhTUP7bGc2SPgA
-         xfUSJxb2MujQGhNPIln0cDFguPs3cf6EjPkXBSZsKlxZCRpko5jtN2zgbO5GUV6dh5WJ
-         7AVCJe4WNxTzw99TTDvIGrRnqwxz1P8ODbSAJ31l/Ibd4siAoU/ciAJqQlV0DylmTi15
-         EWSlSHoNCsbj0gEasQ5WLLrSUQvoDM2tGKb3gjQ6a3yFQDz5zAkIaae9MRyjr9DKwtz0
-         mntbwEwvq0QjClBGwLAc7F+4JsM5Zk8f+93actNLFqsT5sAIg0hNhjOuZSslP92RSf8H
-         IuqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793297520; x=1793902320;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=PLUjYNTvLoS6IRSrAP5hbUmJYyA56qlS0xnG+YeH+uo=;
-        b=Ueu7fIqW7tSeGOCR2RWJpjO+2JxHQ7u3H/KetHiDY96+8gC1Uwn8qseRZDXMhUadto
-         A6x7iHUQg/r4+16M+PflqY+AlN4K7aOCsiYliG0dUfbZOhdRKQTaBvdBLpNMcjTfGrtf
-         IytQ5eEEOVkXoecnelLr16smkQTewft1WgvJIH0JbtYUPADbg9iJKjS9Jzztwrevi+ce
-         095mXYWhBNmzLINz/FYXuVxf6txnh6KJvhngWiUg8/FDrvibLsporb0YJ3yzzNKf1XEc
-         hsAEBaQOz4dHtbv7ZWfqEtyANzAjxArFvy5TuJKn9N/V0j5IXeetoQY6XKCFb4yhBHwX
-         cCGA==
-X-Gm-Message-State: AFq9FYL5G4oJQtbkSOlUGJcCWv1Yrt+pHxWyHYejbIzYKOdNWVW2n2om
-	8pqzq+4iLt9/q5gCHKqgHjB3a4l0cTf47qlgJ1UWJjj2qPNToAJBWEQBYcL80lbjDSYBvKwEAJF
-	ZfRxoHZDgkt4mncIVL5q9UKINYVrQijY=
-X-Gm-Gg: AYBFou0h3buEFnfBtUEb8MXC5u/l5gNobCX1dut+zNof7bJxrSkgRnhDCCmQuSEVZB9
-	+ah8zp+qD0W9iSK6biH/IuRW69IEZQ1HhJYTXWzcrHLTSA6JdAyFXR5S/axJMucBge6buE/58H4
-	lpayznC7ZqGvC/80USKvpwegJabjZusALDKhtbdFWWnfmU+Pv21pp8Vmy5AAhkpBxgYn3962BMT
-	zzd2kc0k0ILWPvYxs/kxgwMpCEU2IxNKgkNv11gbVwgFS6V9bS5SOdqmpjdyQjOnTvn6DyQlE+c
-	K9quXdZqFED4ZFdXewyqdR0KjgoeVFODxH/a5svkdoSOKklKqPyZovtBNa3jcQE3S5KVTZDZQo2
-	HicC7n5i4lez+WzoLDPrmRs7/d8Matxf1D1/q
-X-Received: by 2002:a05:6512:23a5:b0:5be:414b:9032 with SMTP id
- 2adb3069b0e04-5bfcad46342mr2523158e87.31.1793297520237; Thu, 29 Oct 2026
- 11:12:00 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Gfq90gPU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1491F1F01816;
+	Thu, 29 Oct 2026 19:01:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793300463;
+	bh=X3R+/90f+Tf2330RKPvZV8HmufJCZILvebczyhDrUyE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Gfq90gPUGfuSHVFt5gPBIV1Aheh0dr7OtLUnHCIwwiA9afSFAWcIN876IoXJayD4C
+	 xW8tHCYfhdXQ4IllmmhGYxI48TK4u8TQcYTIbXpsmq5D+R5HzSfL3r1cmjl2drzdh5
+	 4a6Tkikh7c9aMv4inAtnGcCX0G8AjRab1Tzg5CIBfjXZMoU7vGk6cjuil+MKP70jDn
+	 S3dS4Niprjvb88c9i2Z1hQOF8qtNPaHYdx2YKLst0trxjUO9X0c8KH5tORw4589Csp
+	 kEVhoD2PKblpJgRopJl1BjhfF6qxpIQxoi6tj7iDoPTLBdf6J4tkAsE49KGhrMSSPP
+	 ucjLT98fWiiqA==
+Date: Thu, 29 Oct 2026 14:01:00 -0500
+From: Rob Herring <robh@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH v4 09/31] accel: ethosu: Guard operations after unplug
+Message-ID: <20261029190100.GB1232511-robh@kernel.org>
+References: <20261029-ethosu-fixes-v4-0-4aa25e22578e@kernel.org>
+ <20261029-ethosu-fixes-v4-9-4aa25e22578e@kernel.org>
+ <sashiko-outbox-189512@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,43 +57,88 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261028030503.17923-1-kanchanapsridhar2026@gmail.com>
- <20261028030503.17923-4-kanchanapsridhar2026@gmail.com> <sashiko-outbox-188655@kernel.org>
- <CACpmpodu3C=uYH6dmFM-xkvdJxiRDjamRKs1Q4jU6_KKjFWNqA@mail.gmail.com>
- <auLbyon-KaV5Sw5_@gondor.apana.org.au> <CACpmpofcd=ZPKhAoHJfvJU_JZshKs1GGJZf5JhjAW1PZzDq-Lw@mail.gmail.com>
- <auMCV1AFlEFuJnk7@gondor.apana.org.au>
-In-Reply-To: <auMCV1AFlEFuJnk7@gondor.apana.org.au>
-From: "Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>
-Date: Thu, 29 Oct 2026 11:11:47 -0700
-X-Gm-Features: AclHuK8R6xznrwfhDJPyC02DpxmXLxT-47zHrOdZ1Ogvg0ySBRqlzEwjpCqqoJ0
-Message-ID: <CACpmpofnUbi7gf=eBdCH1k6ZpeiNQUdt_tRRZhvipmhwkhwRqg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/8] crypto: acomp - Add trivial segmentation wrapper.
-To: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: sashiko-reviews@lists.linux.dev, hannes@cmpxchg.org, yosry@kernel.org, 
-	nphamcs@gmail.com, chengming.zhou@linux.dev, akpm@linux-foundation.org, 
-	linux-mm@kvack.org, davem@davemloft.net, linux-crypto@vger.kernel.org, 
-	rientjes@google.com, willy@infradead.org, senozhatsky@chromium.org, 
-	"Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-189512@kernel.org>
 
-On Thu, Oct 29, 2026 at 1:23=E2=80=AFAM Herbert Xu <herbert@gondor.apana.or=
-g.au> wrote:
->
-> On Wed, Oct 28, 2026 at 11:03:55PM -0700, Kanchana P. Sridhar wrote:
-> >
-> > I was under the impression that if acomp_req_on_stack and synchronous
-> > tfm, it would go through acomp_do_req_chain(). Please correct me if I
-> > am wrong, and I can modify the conditional accordingly.
->
-> It's perfectly fine for a stack request to go to a sync tfm.  What
-> isn't legal is for a stack request to go through an async tfm.
-
-Ok, thanks for the explanation. I will change this as you suggested.
-
->
-> Cheers,
+On Thu, Oct 29, 2026 at 02:26:01PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] accel: ethosu: mixing __free() and scoped_guard() with goto cleanup labels
 > --
-> Email: Herbert Xu <herbert@gondor.apana.org.au>
-> Home Page: http://gondor.apana.org.au/~herbert/
-> PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+> 
+> commit cbd771f7e8b7995eaa7aedcd81a7cde35a4b6ada
+> Author: Rob Herring (Arm) <robh@kernel.org>
+> 
+> accel: ethosu: Guard operations after unplug
+> 
+> This commit guards ethosu device file open and private ioctl operations
+> with drm_dev_enter() and drm_dev_exit(), and switches device removal from
+> drm_dev_unregister() to drm_dev_unplug(). It also drops drm_dev_enter()
+> from the BO wait ioctl so fence waits do not delay scheduler teardown.
+> 
+> > diff --git a/drivers/accel/ethosu/ethosu_drv.c b/drivers/accel/ethosu/ethosu_drv.c
+> > index 6875ed17a004d..91b2c2ab0a03e 100644
+> > --- a/drivers/accel/ethosu/ethosu_drv.c
+> > +++ b/drivers/accel/ethosu/ethosu_drv.c
+> [ ... ]
+> > @@ -139,27 +132,34 @@ static int ethosu_ioctl_cmdstream_bo_create(struct drm_device *ddev, void *data,
+> >  
+> >  static int ethosu_open(struct drm_device *ddev, struct drm_file *file)
+> >  {
+> > -	int ret = 0;
+> > +	struct ethosu_file_priv __free(kfree) * priv = NULL;
+> > +	int cookie, ret;
+> >  
+> >  	if (!try_module_get(THIS_MODULE))
+> >  		return -EINVAL;
+> > +	if (!drm_dev_enter(ddev, &cookie)) {
+> > +		module_put(THIS_MODULE);
+> > +		return -ENODEV;
+> > +	}
+> >  
+> > -	struct ethosu_file_priv __free(kfree) *priv = kzalloc_obj(*priv);
+> > +	priv = kzalloc_obj(*priv);
+> >  	if (!priv) {
+> >  		ret = -ENOMEM;
+> > -		goto err_put_mod;
+> > +		goto err_dev_exit;
+> >  	}
+> >  	priv->edev = to_ethosu_device(ddev);
+> >  
+> >  	ret = ethosu_job_open(priv);
+> >  	if (ret)
+> > -		goto err_put_mod;
+> > +		goto err_dev_exit;
+> >  
+> >  	ethosu_perfmon_open_file(priv);
+> >  	file->driver_priv = no_free_ptr(priv);
+> > +	drm_dev_exit(cookie);
+> >  	return 0;
+> >  
+> > -err_put_mod:
+> > +err_dev_exit:
+> > +	drm_dev_exit(cookie);
+> >  	module_put(THIS_MODULE);
+> >  	return ret;
+> >  }
+> 
+> [Severity: Medium]
+> In drivers/accel/ethosu/ethosu_drv.c, ethosu_open() declares priv with
+> __free(kfree) = NULL at the top of the function before try_module_get() and
+> drm_dev_enter(), and then mixes __free(kfree) with goto err_dev_exit when
+> kzalloc_obj() or ethosu_job_open() fails.
+> 
+> Because scope-based cleanup runs when the function scope exits after the
+> err_dev_exit label executes, drm_dev_exit(cookie) and
+> module_put(THIS_MODULE) will run before kfree(priv), reversing the reverse
+> acquisition (lifo) teardown order and mixing goto error handling with
+> cleanup.h helpers.
+> 
+> Should ethosu_open() avoid mixing __free(kfree) and goto labels so that
+> priv is freed before exiting the drm device section and dropping the module
+> reference?
+
+No! There's no such requirement that everything uses scoped cleanups or 
+nothing does. And delaying a free is not an issue.
+
+Rob
