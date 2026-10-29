@@ -1,99 +1,44 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.178
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793238612;
-	b=Rr32hVi+4I61Gr43iWhT18bAXGmKpvz/gGgGiRVnDdWB4idVOkN5oR71HyuuB7Bq2sSb
-	 izWBMXPw2McikBupUvhetnlh1M6sGrjii4vPTUEpHudBTEttnbFUPL6W9pkjqoDEEzV2Y
-	 Xb6Rxktw5mhuCu8Nc1yc2qAcsjJvPt0fzx+5kvMWzvkJYC8T4TFs7NocW4FRO2AKgHRYr
-	 EM1rWeZ9+2i5PuvaxVejGhrjQoeR2HG/zmARWMvEExJpPIHSngtv6j6Vjl9QKcJjAr1mE
-	 fOFtusR8y3IeQZNblBgK6PBjAm+++tzMmMDhEcIn7rGC03DE21zULtC27qHFU8nlLxQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793238612;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=1IGTvqOaIXaosXRusH+LH79qQVRmzVc9OzbNy7vNHrs=;
-	b=jnDrHyGYAlYAF7B+k6K0DZaTz04vkbDfP/d3+huyaAmwWNVWqYt2TgNcSqTpVfGe3py1
-	 GPmTFudNYT3qVXIg4E5Nnoc89fEXrrHeZ7wvWAGjVWJONZjM9YRhDR9+ruRjjMdelUC32
-	 7YaEPdSh0GtAfybC5bUdVMFdreT32cNvzXnhspJ6ZVOQi6Ue44nMLn6sbZAWKzHJHQ4uq
-	 mNVlrLY/gEruYL9mwFdZstV+c5PPCNM1PGe4Q+zcHIr/ljX6vF2gh56v8f62zjsaeDNe+
-	 /kWyBYSzh6Qdu2ME8i0WE80OFHRVA54+Jyjmews5bZCxKmjJeh7jF6Ht4cypGnMn/0g==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="C/7joOSO";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.128.178
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=156.224.82.220
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793240271;
+	b=cHeE2iz+3Rg6ImwrqRQ9m4Pw7FRItw76rc0MfEprjYehM9XL+Y7IZolNbrrQDgd/dUV9
+	 AGsbVEQX8vws4iestfV4C5FYgZhq/wZoZZiQNTJngXeV8V5hWkTIS1xOO+QyzP/hb//k/
+	 mejhbr9AOSL8WKTH6iqj4Xm44/m8pY1ju8ECgjXrIdwllNhAXQlzkJrHsWnC5A9xupFis
+	 ZldYPfxyaRk/2S++KNZex5GDLIzuvSqViQPuCVcJeQrAggj/9kLO85rP9WyWNSp7qgM6D
+	 cqpr3RU/h57MuEOkxXQ+i3So3rEa3kPPsDK4rRsNqsA5XaVWhaSVa7yR6CC4HhWSALQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793240271;
+	h=DMARC-Filter:Received:Message-ID:Date:MIME-Version:User-Agent:Cc:
+	 Subject:To:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-HM-Tid:X-HM-MType:X-HM-Spam-Status:
+	 DKIM-Signature;
+	bh=94GbrZJV0CaGo6wck2S4ifIyUMVOHNG7UOLGW8Hmwbw=;
+	b=LWch1ykPJuCyySRm6MjH8g2rwQazLhcPUYRWDuaw8Dmde+Sqv9BDyH7TyfrICKhWB0jd
+	 C3qT9LxuAqsja+JsAIKW54zLZbYQ5csH9QZIY2mxLTdYEvC0bxkOMtDrHnEZjbzpb9UlX
+	 7ByTrFw3FIT0o1C5z11uMIquLCKK2pY51NvqsviJ4ZPyPlpmL5+6Lk7ix0vzIB6P0eHiQ
+	 dl5VLyY7dmGScJIZakyohVEo7AIZXxa8x7dl/7RJdK5er/dRMfNuLeyxjWpU4fbnu1/vP
+	 UGaDyjLcZ5ZKlzTISNO7mIk5NocssTEZrmlZ1o3iEtVkyNBbd9//xFFfkJP9e/b2Ifw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=rock-chips.com;
+	spf=pass smtp.mailfrom=rock-chips.com;
+	dkim=pass header.d=rock-chips.com header.i=@rock-chips.com header.a=rsa-sha256 header.s=default header.b=BPwxg1SI;
+	arc=none smtp.remote-ip=156.224.82.220
+Received: from mail-m82220.xmail.ntesmail.com (mail-m82220.xmail.ntesmail.com [156.224.82.220])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4120F606A330
-	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 01:50:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 4120F606A330
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F43E606A31C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 02:17:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8F43E606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=C/7joOSO
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-8ad98c3fb15so14883257b3.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 18:50:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793238611; cv=none;
-        d=google.com; s=arc-20260327;
-        b=pxSaZHmLzlP6vIYZhkM3bQsfnqnOFYcE+rQopLxQVgXnUqCi7TPTmM2nHFkZKG8vjC
-         HFSneQ44CKxNPo4zOMqidpc0I6b/VTyXxq9BO/PdxgFj5cyv0eUtL/+BWFttgQ13SlaG
-         mekXb5l2ZLI5BGt3TWLNsCWRumjstpF8CBFVyeq9OtZ/WkGR8sqE/O8LesDlKVCcOlcL
-         semclw78Q9csQ4g/bUBMqAPYlN00iXsoA/pPBZz2YrxVf8ETTmrqCcyOi/lpDmu98nS/
-         PODasngSMJCEOltuOINkvr/UiAJ3JiXOCoSvkMaKi04fmBXV3TieSP2mihijUxbBecSo
-         dXEw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=1IGTvqOaIXaosXRusH+LH79qQVRmzVc9OzbNy7vNHrs=;
-        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
-        b=f1ueWlDIIKy6fuk+0GTzmtq9bGbhMaUODvmtiWSNXK5HWqQffu9f0kmtrpmHIIIzgM
-         plgEH91M4RNHRhGiS4igi7YWezcBusxmUrVAZair4g8arqR55DhSsodamdllxiInwcwt
-         mjK5ujFCOd4/aGXuGwgigK/kUGht4AfWyT0xtFFAgQ4wzF08/Aw9FkYHC2dzYQlBWTn0
-         YWuzThKytu747nkEVbHHTmUNLK1pw+ikG4Vz7N3X3JxaaXMknliOVBUddqd9WENtWApe
-         vloNpX3zg+1Jo68X+r7t0Vq0dzN8UF+ETq4cyYQ2NtC6Q2gE9Yly1aTvP12TGH+xq5UW
-         QEZQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793238611; x=1793843411; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=1IGTvqOaIXaosXRusH+LH79qQVRmzVc9OzbNy7vNHrs=;
-        b=C/7joOSOwTLVoJ1BBV4BeEIGDb0Vzniqij08F7uuJm6P+0lqoDthPLAyoTErRA30mx
-         L1Xm3pY2P9gvpB6MHOn1cf/w3oQhYNEt2FwhpYoGqRXJ7Day5gxWAWJIsQdX7i4jIUOf
-         D9lBX2EjQlrpQrpAwKJqelBABV7C7ayyZ9pAq5yovoM0iSKBWs1o/8TJQa1AMesu1sU0
-         ktt851tL3tFOTcL4n4EeXEsv+tZ66LicSFE0BUTx5cJAVWhmRAtr4BS/mDn0R2YICdl+
-         /BjuZrUSJFkP+GC2yqa3NMlpdTv2hltTLMAP/v/FARgPAIu7ecDDZPWM7cqrOFXFormD
-         /OzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793238611; x=1793843411;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=1IGTvqOaIXaosXRusH+LH79qQVRmzVc9OzbNy7vNHrs=;
-        b=NPnsmUuNdUYTEhUSbGRu2elGXR3NKwqKGa9Yivha5l2lNOAcTeDnTI2FU9BAS+duOj
-         fJRud4hvGmRdEtolhRaKa7lIAVcQ5gDpSceLgvxJd22EnmvlbGNcAJJQ4JumiFu/FrX8
-         AUTf4sAd1L6CJ/zYgHYFqnRh7LxT1hGqHBMbMRIvjf2HkYqEq1USxE/s4XIx2mnMrxzN
-         MhuWfLYABVHtWg6XwWd+L6SHrP2Vbj83TFEB/xTUJWQ5B/r2At7Ihh0+jtt3I6J1Zc7G
-         SNo8F2ImnRyC6C1JRV+erkvOATwjFpgfvRw8t3Y6Wg6x3kcYk6014HZ5/3huOtz9JuIa
-         C/Sg==
-X-Gm-Message-State: AFq9FYKlrqCKClVf+2Bu/8p62R6xhOcPEWyjwVv0BxMfpPD+1OvlXXnI
-	61/GOw7M4iMnCVdQrWaNV1k1gxdBJYgXB58976FP8XTLjxpJNuck+7xt8+Fa5i0ZHfIRbzJr7Pa
-	nPlgSXeIIqr3FXX8ety1tiZDY8xxA2/i3urnl
-X-Gm-Gg: AYBFou1frbbnpXB2zp9AqW5BnFPBVqKsiAA10Yn8w7TSD0ucZIznsxWd+aSD5K09oY4
-	l/z0BQ58kJGHhFOKrPhcjNyXLL2RetUw8WUQetYOiwD9UEDUvWFVd/F+aJKfcBJfZvyQxItHg0z
-	OIqhP9HfqFeExlANueb7uUtwNd9GJE2sVbxcHhSLvnv0sJGMMqz8HjgBFK5MZooFXQ2l2e/IkGB
-	AhP4jd3mlKtyas1mhIbgJU11THMuoamc7GnUDI6G41GqPw4TYFQxbaDT38TILnMF1QdCjsewdsQ
-	enXpFnzJvT48hsGo14AWmsDF4P6c9UufTHffqwUbZZ0V6zTH+I1UK6ez8jM3M07+ELy3kvb6GSz
-	UrxB1l5Ax1vfNWc0+Je56SuaUXjg1GQHnrpE+
-X-Received: by 2002:a05:690c:38b:b0:8b0:c71d:2b2b with SMTP id
- 00721157ae682-8b1b5d115f8mr38039877b3.45.1793238611233; Wed, 28 Oct 2026
- 18:50:11 -0700 (PDT)
+	dkim=pass (1024-bit key, unprotected) header.d=rock-chips.com header.i=@rock-chips.com header.a=rsa-sha256 header.s=default header.b=BPwxg1SI
+Received: from [172.16.12.48] (unknown [61.154.14.86])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 52ba403f9;
+	Thu, 29 Oct 2026 10:17:38 +0800 (GMT+08:00)
+Message-ID: <3c4f9345-255b-4719-9d52-121b6ba301cb@rock-chips.com>
+Date: Thu, 29 Oct 2026 10:17:35 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,110 +48,161 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261027034911.99482-1-prasanth.padarthi10@gmail.com>
- <20261027034911.99482-3-prasanth.padarthi10@gmail.com> <sashiko-outbox-186061@kernel.org>
-In-Reply-To: <sashiko-outbox-186061@kernel.org>
-From: Prasanth <prasanth.padarthi10@gmail.com>
-Date: Thu, 29 Oct 2026 07:20:00 +0530
-X-Gm-Features: AclHuK_4V4-6JjYI5xwd4wQKypfFHekosxQ467fFd16gHBxLUQfaqfsdhwDLghU
-Message-ID: <CAMFFDGi-8hzS1xe3EyK2iiyz3VEbcdr-MMCbw5XODPna=OUj1w@mail.gmail.com>
-Subject: Re: [PATCH v9 2/2] ARM: dts: aspeed: Add ASRock Rack B650D4U BMC
+User-Agent: Mozilla Thunderbird
+Cc: shawn.lin@rock-chips.com, linux-scsi@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] scsi: ufs: core: Retry the full device init on
+ fatal link loss
 To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <20261029014839.3390579-1-shawn.lin@rock-chips.com>
+ <20261029014839.3390579-3-shawn.lin@rock-chips.com>
+ <sashiko-outbox-188630@kernel.org>
+From: Shawn Lin <shawn.lin@rock-chips.com>
+In-Reply-To: <sashiko-outbox-188630@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0aa18572d92603a4kunmc83cfa7310e75f
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkaSU5NVkxIGBhDGkpNTxgaGlYVFA
+	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlNSlVKTk9VSk9VQ01ZV1kWGg8SFR0UWUFZT0tIVUpLSU
+	9PT0hVSktLVUpCS0tZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=BPwxg1SIn7wW+woRw0RE3DRsvifSO+ijbL55OXYpNgW/Dzrqq8Q+3HKWvslJPptQHN5Cei0yDwYzDY/uISJ2kMvoHU+udKORmAaIjf/vC2KNRUHSxc3GBbALQXAGmKuQbmGTOoD3Yn7VVJea6cTPlCOcHDsCB4DROAv/+tNj4WY=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
+	bh=94GbrZJV0CaGo6wck2S4ifIyUMVOHNG7UOLGW8Hmwbw=;
+	h=date:mime-version:subject:message-id:from;
 
-Hello,
-
-Thank you for pointing this out.
-
-The serial0 override was intentional in the tested local image:
-UART5 is exposed as ttyS0, and the image's console/getty configuration
-uses ttyS0.
-
-However, the override leaves the inherited serial4 alias pointing
-to the same UART. I will review the alias configuration and verify
-the console setup before the next revision.
-
-Regards,
-Prasanth Kumar Padarthi
-
-On Tue, Oct 27, 2026 at 9:26=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] ARM: dts: aspeed: b650d4u: serial0 alias on uart5 conflicts wi=
-th aspeed-g6.dtsi
+在 2026/10/29 星期四 10:06, sashiko-bot@kernel.org 写道:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] scsi: ufs: core: broken MCQ reconfiguration order in ufshcd_init() retry
+> - [High] scsi: ufs: error state cleared before ufshcd_hba_stop() in ufshcd_init()
+> - [High] scsi: ufs: core: missing ufs_hwmon_remove() and EE mask reset on init retry
+> - [Low] scsi: ufs: core: pass host_lock pointer to spin_lock_irqsave()
 > --
->
-> commit c5dab769447b1fc4b06269064e28141f872a8a59
-> Author: Prasanth Kumar Padarthi <prasanth.padarthi10@gmail.com>
->
-> ARM: dts: aspeed: Add ASRock Rack B650D4U BMC
->
-> This patch adds the device tree for the ASRock Rack B650D4U BMC based on
-> the ASPEED AST2600 SoC, configuring memory, SPI flash, UART console, GPIO
-> line names, MAC0 with EEPROM NVMEM, and ADC channels via iio-hwmon.
->
-> > diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-asrock-b650d4u.dts b/a=
-rch/arm/boot/dts/aspeed/aspeed-bmc-asrock-b650d4u.dts
-> > new file mode 100644
-> > index 0000000000000..630588dcb9f3c
-> > --- /dev/null
-> > +++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-asrock-b650d4u.dts
-> > @@ -0,0 +1,173 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +/dts-v1/;
-> > +
-> > +#include "aspeed-g6.dtsi"
-> > +
-> > +/ {
-> > +     compatible =3D "asrock,b650d4u-bmc", "aspeed,ast2600";
-> > +     model =3D "ASRock Rack B650D4U BMC";
-> > +
-> > +     aliases {
-> > +             serial0 =3D &uart5;
-> > +     };
-> > +
-> > +     chosen {
-> > +             stdout-path =3D "serial0:115200n8";
-> > +     };
->
-> [Severity: Medium]
-> Should the aliases override be dropped here and stdout-path set to
-> "serial4:115200n8" (or &uart5) instead?
->
-> In arch/arm/boot/dts/aspeed/aspeed-g6.dtsi, the base aliases node already
-> maps serial0 to &uart1 and serial4 to &uart5:
->
->         aliases {
->                 ...
->                 serial0 =3D &uart1;
->                 serial1 =3D &uart2;
->                 serial2 =3D &uart3;
->                 serial3 =3D &uart4;
->                 serial4 =3D &uart5;
->         };
->
-> Overriding serial0 =3D &uart5 in the board DTS leaves both serial0 and
-> serial4 pointing to &uart5 while stripping &uart1 of its alias. During
-> serial port probe, uart_read_and_validate_port_properties() ->
-> __uart_read_properties() in drivers/tty/serial/serial_port.c resolves the
-> port index from the first matching alias:
->
->         /* Get index of serial line, if found in DT aliases */
->         ret =3D of_alias_get_id(dev_of_node(dev), "serial");
->         if (ret >=3D 0)
->                 port->line =3D ret;
->
-> Because of_alias_get_id() returns 0 from serial0 instead of 4 from serial=
-4,
-> uart5 is registered as ttyS0 rather than the standard ASPEED/OpenBMC ttyS=
-4,
-> which breaks serial console output when booted with standard console=3Dtt=
-yS4
-> kernel arguments or userspace getty configurations expecting ttyS4.
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261027034911.99=
-482-1-prasanth.padarthi10@gmail.com?part=3D2
+
+...
+
+> 
+> [Severity: High]
+> What happens if an error or link-loss interrupt fires while the host
+> controller is still active during ufshcd_device_reset(), before
+> ufshcd_hba_stop() disables the controller?
+> 
+> Because cancel_work_sync(&hba->eh_work) and the clearing of hba->saved_err,
+> hba->saved_uic_err, and hba->ufshcd_state happen before ufshcd_hba_stop(),
+> resetting the attached device while controller interrupts are enabled can
+> trigger ufshcd_intr() -> ufshcd_check_errors():
+> 
+> 	hba->saved_err |= hba->errors;
+> 	hba->saved_uic_err |= hba->uic_error;
+> 	...
+> 	ufshcd_schedule_eh_work(hba);
+> 
+> Since hba->ufs_device_wlun is not set yet and hba->host_sem is not held
+> during ufshcd_init(), ufshcd_err_handler() can then run concurrently on
+> hba->eh_wq:
+> 
+> 	down(&hba->host_sem);
+> 	spin_lock_irqsave(&hba->host->host_lock, flags);
+> 	if (ufshcd_err_handling_should_stop(hba)) {
+> 		if (hba->ufshcd_state != UFSHCD_STATE_ERROR)
+> 			hba->ufshcd_state = UFSHCD_STATE_OPERATIONAL;
+> 		spin_unlock_irqrestore(&hba->host->host_lock, flags);
+> 		up(&hba->host_sem);
+> 		return;
+> 	}
+> 
+> Could this overwrite hba->ufshcd_state and leave hba->saved_err and
+> hba->saved_uic_err latched during the retry? Should ufshcd_hba_stop(hba) be
+> called before cancelling hba->eh_work, clearing the error state, and
+> resetting the device?
+
+It's a valid concern, will fix it in v3.
+
+> 
+> [Severity: High]
+> Can this retry path also leak the hwmon device and struct ufs_hwmon_data if
+> ufshcd_full_device_init() fails in ufshcd_post_device_init() after
+> ufshcd_device_params_init() has already succeeded?
+> 
+> During ufshcd_full_device_init(), the call chain is:
+> 
+> 	ufshcd_device_params_init()
+> 	  ufs_get_device_desc()
+> 	    ufshcd_temp_notif_probe()
+> 	      ufshcd_enable_ee(hba, mask);
+> 	      ufs_hwmon_probe(hba, mask);
+> 	ufshcd_post_device_init()
+> 	  ufshcd_config_pwr_mode()
+> 
+> If ufshcd_post_device_init() fails, ufs_put_device_desc() only frees
+> dev_info->model and dev_info->device_id. On the next iteration,
+> ufs_hwmon_probe() in drivers/ufs/core/ufs-hwmon.c allocates a new
+> struct ufs_hwmon_data, registers a second hwmon device, and overwrites
+> hba->hwmon_device:
+> 
+> 	data = kzalloc_obj(*data);
+> 	if (!data)
+> 		return;
+> 	...
+> 	hwmon = hwmon_device_register_with_info(dev, "ufs", data, &ufs_hwmon_hba_info, NULL);
+> 	...
+> 	hba->hwmon_device = hwmon;
+> 
+> In addition, hba->ee_ctrl_mask and hba->ee_drv_mask retain the bits set by
+> ufshcd_enable_ee() before ufshcd_device_reset() reset the device, which
+> causes ufshcd_update_ee_control() on the next attempt to see an unchanged
+> mask and skip writing the exception event control attribute to the device.
+> Should the retry cleanup call ufs_hwmon_remove(hba) and clear the exception
+> event masks?
+
+Ack.
+
+> 
+>> +		if (ufshcd_hba_enable(hba)) {
+>> +			dev_err(hba->dev, "Host controller enable failed\n");
+>> +			ufshcd_print_evt_hist(hba);
+>> +			ufshcd_print_host_state(hba);
+>> +			goto out_release;
+>> +		}
+>> +
+>> +		/* Reconfigure MCQ upon controller re-enable */
+>> +		if (hba->mcq_enabled) {
+>> +			ufshcd_config_mcq(hba);
+>> +			ufshcd_mcq_enable(hba);
+>> +		}
+> 
+> [Severity: High]
+> Is the ordering of ufshcd_config_mcq(hba) and ufshcd_mcq_enable(hba) here
+> intended?
+> 
+> On the initial probe path, ufshcd_add_scsi_host() calls ufshcd_mcq_enable()
+> first, and ufshcd_full_device_init() calls ufshcd_config_mcq() only after
+> ufshcd_link_startup() completes:
+> 
+> 	err = ufshcd_link_startup(hba);
+> 	if (err)
+> 		return err;
+> 
+> 	if (hba->mcq_enabled)
+> 		ufshcd_config_mcq(hba);
+> 
+> In the retry path of ufshcd_init(), calling ufshcd_config_mcq(hba) before
+> ufshcd_mcq_enable(hba) configures the queues and enables them in
+> ufshcd_mcq_make_queues_operational() before ufshcd_mcq_enable() selects
+> multi-circular queue mode in REG_UFS_MEM_CFG and before the next attempt's
+> ufshcd_link_startup(hba). Then, when ufshcd_full_device_init() runs on the
+> next iteration, it calls ufshcd_config_mcq(hba) a second time while the
+> hardware queues are already enabled.
+> 
+> Furthermore, if ufshcd_link_startup() encounters an error on its own retry
+> and calls ufshcd_hba_enable(hba), the controller reset will clear
+> REG_UFS_MEM_CFG again without ufshcd_mcq_enable(hba) being re-applied before
+> ufshcd_config_mcq(hba). Should the retry path only call
+> ufshcd_mcq_enable(hba) (or should ufshcd_mcq_enable(hba) be called right
+> before ufshcd_config_mcq(hba) inside ufshcd_full_device_init())?
+
+My platform doesn't support MCQ, so actually I cannot test
+this path. Will look into it.
+
+> 
+
