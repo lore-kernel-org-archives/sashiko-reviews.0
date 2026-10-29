@@ -1,100 +1,81 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793280838;
-	b=oS5alBFsiwaf08uMYZ6TlFLcajKw/Wr1FlupaLrrOa0t0VhdhYLc5bMP/eBLkLCNpxRa
-	 c+hP9neQxNQ3Lt2e69/ZwcgQkLgSQv3m2fUw9zlA65ELb98rxFHYlCE6gjIJhuCucABRd
-	 l6GFGo9wANQ1QelRaAuZsI8RTbavsRuqzeu4ebH9lNMtRiyFYHRHdzRasqwix0Bv24elL
-	 2EITreV9eRTUfgtogO33sUTglzb38LvZ5/DYl6WUYvMF3pD3Wa+9ZlgiIhAJWiHABPQrP
-	 XEBKToHsXzaq/Kvk3WrZfsKVDa0HOBTpnYMljhXjPfhs15KoAB/LRNtHoJhnrjkMHww==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793280838;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=F+eNJSMVkwDxJUThG2ULRs96wZbJ07yl55m4EZseYWk=;
-	b=WGXW682h9YpPI+8shzuxCna23JCg6dK5FoTtxwLQKSH8+Hcv0DBWjnDFgGEHE0K+MPcq
-	 HMDUBP4k+WGg5c0vvSUC/xBxUCWwrFcDLafy2emLc87vFs0xy8G1LG+GE0lrFizAxDWsL
-	 PbKjAES1g/gilJ96t4AJy7+dgD5/LoPAnLnlPnP5D7LqRVZUecjtjwg0e4S4rkmULEaA+
-	 bUG36Ph07W/gJbM9ORs3CjfO4oN033s4hOmsrbPwfty8tUuuftfZdP4toqlJjmubWSE5h
-	 No2qOcbZxn4ELlaQ1ylVYALsfZ4nDQmExqqPgDfui8e4ufZFRVkKvh41ineYAqBxFEw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=flipper.net;
-	spf=pass smtp.mailfrom=flipper.net;
-	dkim=pass header.d=flipper.net header.i=@flipper.net header.a=rsa-sha256 header.s=google header.b=rrVAei1O;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.218.50
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.158.5
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793285804;
+	b=oaxM/P9lHl3DLJEYaIlYdHJMpPJL06sKWq3M3HBCy4+V+TNJZhk6t/pgkfDotBQVjYO5
+	 UK6enngAnjvaVJyDFZRMT6aVayU6T1zPMhEGmXdTIkfBLc81CZ6qOBepCp8aMWCTd6aM9
+	 d46C6ALDyNqUDDK7aeXuWh1r27AdaZodkZQhP6Ys5VwltA1shbaBjbc6idA/VcZqUwAtH
+	 a6o78knJ6vC/cQPLFZu/lDQFjIIlwY+npZqn8fkPJWTIocL+5a3h/cKPc2wCqjXhfWNKW
+	 lqTbLHcjj7Fo8PS1cjP2aLcanqICUIWmiSqFcuxIUGrx+Jx8yRQPBPwz+zUJtEyc3Ww==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793285804;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:From:Subject:To:Cc:References:Content-Language:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-TM-AS-GCONF:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-ORIG-GUID:
+	 X-Proofpoint-Spam-Details-Enc:X-Authority-Analysis:X-Proofpoint-GUID:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=GHgvV6rzEEa0plcFuAOk8oPHdGIYn1CeqwTmGhSiL/k=;
+	b=xZTaFuMg6PsdVLxysqHTV7pGObIX1F3INxr7kzrQ4ZQWZWIUYxbO4gx0irhO6h9g3K46
+	 hLPhgIF+4mVXdfzQVVvbATpYhxv8vLelp4Mvsv7fKevN7a5u0VmsWRDozuw9rXPZOw/vW
+	 kV0QlEEQzRYGPpaN43aPKOyof9IIcHOB3GTzR0c4TGFi99VdhFWrcPf/S4QDPv0iMMq28
+	 orQde8hCEwYheSfam3FNWRfNLZNvhr1xA3ytFt8aHMVh8wk4rDE1m90uo9E984dJfhso4
+	 QPZqrnSh8kpleNcTg37TFC10ECNxGMiXciqYHYDNkkN6NKcV5lILrWD+0D2yMhn0Ztw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ASfxCxQ7;
+	arc=none smtp.remote-ip=148.163.158.5
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5DB606A31A
-	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 13:33:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CA5DB606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=flipper.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flipper.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F67606A31C;
+	Thu, 29 Oct 2026 14:56:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 63F67606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=flipper.net header.i=@flipper.net header.a=rsa-sha256 header.s=google header.b=rrVAei1O
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c3fd91337baso359521366b.3
-        for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 06:33:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793280836; cv=none;
-        d=google.com; s=arc-20260327;
-        b=Dxv2fVWTfa+hMwpoS0hNErBMGHvtDo2a6OQYhUlz+zgngHYukuIHAv+/WomC4JpbFW
-         /DVxf/889ykqdVYlFRQmoIslbAzcKvOPl7G2bBsSb+hBxS5BWzVrrpMRcnp+xNJ4L3X/
-         z3fywkFdlOHjJzfcjKCiSJMo5Y46+3fDZMeTHaJmGQ0YK1u2pcIH2HJFVIQYouN72W8n
-         w9y7GHGEZEO3D5KINazv9dEH4gj3tQQ37wmzTECpbSl0heOG3v73w6tVpDksUVIgwmpn
-         L16NxudPUyp7IIXhrRPvJFiXVJr+Pp0DfGeBe6jQoGhRIhKGU+VDPwt8WPsoDKXuwlTl
-         l0xg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=F+eNJSMVkwDxJUThG2ULRs96wZbJ07yl55m4EZseYWk=;
-        fh=huDnxIwPSwizRg/jZYfjiXYSqMeoWhcTkCWqAd/e5qM=;
-        b=oOIWW3ns4VTSYg3iQpvWNYTTC+lKcwCTmZxxBZJYszViDxe+KUC3dzOfCKTp7n8dcG
-         VfelE8NoWDG3yEL6k1iCIWMYuEEEmJFgGkc2hs2D9cTNSW+/Is4cezPNeVn7Pit1zrJu
-         WmbvNmMIPyq7yw+AHCIfDdw3T2Btx+DNKBldqVIV3oWMpnHNt1mUPdDx8gM45JFpYFe0
-         ePaQqxvnl2bMOg8DPuFH7GmKfGzn4mfNKftjY8T+/mw391rImHNQBECOgCS3ZPlEekFz
-         1Wt7cJiu2vg65I1tEToDR7NknrEoAOHhSd1JvfZYhzAA/eZLTvlo4P3+4Zd6d8XvKb58
-         6+CQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=flipper.net; s=google; t=1793280836; x=1793885636; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=F+eNJSMVkwDxJUThG2ULRs96wZbJ07yl55m4EZseYWk=;
-        b=rrVAei1O2wimWk/F0YZk4yTtleAM7PAVW8KoQb4Ish6fSXuy+9/gnvCHf5SNs7npfz
-         73inZHIo5FfovBjKOlbgprpx+qJoS1zeAHJ1pqohtMD/kh4zeU+n87sKm9y9IH/1UYQa
-         kmPx/+ptQ8L/thiyMl/jsWd7aMUV1m3DqLttqzlv3Z/wvOMGtEu5XdQwRanemKyDY8vh
-         yu8Q2noFeZVnXl7s5h2MQnZNdEgcPBcym3RSkD3LkrhlwPfztTWfrQGB2j1DYrbCZlcm
-         7N+bjRdV7iMJE52Wyic4i0dNHD12XI6DdizDAVhrEvC2Y71tJT9aXO8sWSrHmVEMZal1
-         3+QA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793280836; x=1793885636;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=F+eNJSMVkwDxJUThG2ULRs96wZbJ07yl55m4EZseYWk=;
-        b=gGGS4G50Lng5Zyo99L1UxgYys4D/A4+PkMP3MnAkkr7vgzNbV54wzWvr6cTDAQWbVo
-         Nt5ARzQPbb/wSrSnwFCylobH8V+rqTciuWIkedJMgzVMzP4Sy56/VvXkP7cwYvL3HxTE
-         nb4nYVRoEzSQwrMBHA4/q/ZaMPRYm6KuOQG5wM1iIXgsfwJ0urss0M1X7ohswJJiHYIH
-         NEvyd+o8fqiUTTiN12T8ESL/vSH7wwY/Br8RcwP+WLxk00RpZPW+DbClbYbr9cYg+6nI
-         Gmk5dEPoZrrzliTQOGNKk9WEsQmE03+5CXwN/WsrpswIUUWMit+pC8Sokz+bPcqMv3fm
-         aXQg==
-X-Gm-Message-State: AFq9FYJ11N9iy0Mm2rks63ivvLbSw4jHVYdAu/8HN+N+eHypC6Hpvss0
-	uM1FqGMzM7nXjTqYTi99/wWpVv8VwOaeeTb6qUQCJKdRNQR1nZ7twXJRsF/HO6hzcyv25QuTn42
-	x6uLmZBOop0SFemq7ZkLYOPyFRowYCm/2m7ABs8G/Vfu2/0iGHPxp+72AfQ==
-X-Gm-Gg: AYBFou0pBvpc5I2APMk1bnH6BQwQVc9f2pkFIIswKFICWCE+1C3Gf/unA0690JnZBaw
-	6fbrVd7U4nFCZH4T/JAhwcqsPJ5YtN7c5J3awUWY7XwQh7Hj/NIYFM0z7TfWUiXqMVc8/wnlUaT
-	jaE4TfS/vNXDD9j9ZbyuFlgHbxsjAbbRmsI+8UOrRLCJ+1nykNKPRkWUaWDkPT3X1yX37hd5pMu
-	ySV0ovHHaBeL8dmog6c9HyQs0gXy03/i7uzKGKVVA+6OQ6J3rtvAlaxOczojUOnPNcDmUmYCSrr
-	2OgwxAgWXhiYFX6E70eKLHO04lxtTvsWYqZ5CHlfytR13LHSk1Q/AhgrJrmaxyWTXq5HgoDmstW
-	h7bA24hN2hGnnsBqQOd+B52SPmkxKR83Roo53z0cvmXmP3SsmpblBDExYZr80s4RyL7H1kMvFAS
-	izL6Tq2bm9y2cHbI8=
-X-Received: by 2002:a17:907:6d29:b0:c2e:3f49:df04 with SMTP id
- a640c23a62f3a-c49bdb68d6dmr477795466b.1.1793280836138; Thu, 29 Oct 2026
- 06:33:56 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ASfxCxQ7
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69TCi9Yn4142674;
+	Thu, 29 Oct 2026 14:56:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=GHgvV6
+	rzEEa0plcFuAOk8oPHdGIYn1CeqwTmGhSiL/k=; b=ASfxCxQ7RQPWCD5kKYOHZA
+	R5SBzGT/zeqrzDfqePWJ0Pv0cvPB1Uo32CYdNPcqepSZXlQ7UehjmCtDdLXvvm8O
+	CpH9K6LgReh8NbTWyYs7CPOgDtQBV5VoQaEi8jrexiPNLNQg6VK4hsStZ4hKSFV+
+	cyVXydB7ONA3/4/vjI3kXCnEgtxYmbRTsJdWSqGYZEfsq60GLK/oc8xEvJ226iQP
+	na/gTVtEl3MOC/Ih6WO/fMpbULcAu9NTDvptwy1Hq9UQdj6S7b8ZleNnF/yPV1ON
+	ZTORQTcTuJ5m70zEbPJF73b09uWJTw8ewVz+6P7hrTw31LbtMy10AyULfXOuXayw
+	==
+Received: from ppma13.dal12v.mail.ibm.com (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgj3mk1yq-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Thu, 29 Oct 2026 14:56:42 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69TCntAe1967902;
+	Thu, 29 Oct 2026 14:56:41 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+	by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hk010rp8f-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 29 Oct 2026 14:56:41 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com [10.241.53.101])
+	by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69TEudle32506480
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 29 Oct 2026 14:56:39 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 3CD8D58070;
+	Thu, 29 Oct 2026 14:56:39 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C015B58060;
+	Thu, 29 Oct 2026 14:56:38 +0000 (GMT)
+Received: from [9.61.101.238] (unknown [9.61.101.238])
+	by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 29 Oct 2026 14:56:38 +0000 (GMT)
+Message-ID: <f040a2b7-59eb-418d-b8c8-239acee73eb9@linux.ibm.com>
+Date: Thu, 29 Oct 2026 10:56:38 -0400
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,98 +85,200 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261029-biwin-tua-quirk-v2-1-4d71af956ac5@flipper.net> <sashiko-outbox-189185@kernel.org>
-In-Reply-To: <sashiko-outbox-189185@kernel.org>
-From: Alexey Charkov <alchark@flipper.net>
-Date: Thu, 29 Oct 2026 17:33:42 +0400
-X-Gm-Features: AclHuK-InaAZRWkyXXw7fbMZCCfKUR5Fcnop4TxQ9forW4KTFobV-VEqdzfk2_o
-Message-ID: <CAKTNdwHeHECQiM=MBew4YE6E0STwPBxyo_QnshASoE7u2z8P1w@mail.gmail.com>
-Subject: Re: [PATCH v2] scsi: core: Clear power-on UNIT ATTENTION on BIWIN UFS devices
-To: sashiko-reviews@lists.linux.dev, 
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
-	"Martin K. Petersen" <mkp@kernel.org>, Bart Van Assche <bvanassche@acm.org>
-Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+Subject: Re: [PATCH v10 07/15] s390/vfio-ap: File ops called to save the vfio
+ device migration state
+To: sashiko-reviews@lists.linux.dev, linux-s390@vger.kernel.org,
+        kvm@vger.kernel.org
+Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>
+References: <20261023174349.3545941-1-akrowiak@linux.ibm.com>
+ <20261023174349.3545941-8-akrowiak@linux.ibm.com>
+ <sashiko-outbox-183048@kernel.org>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-183048@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA1NyBTYWx0ZWRfX7mhOHVUYbVFi
+ 3nt7w/QOIqPzotF+6wz1VkqZdrgg0hyWG67VCcfkCJP12AdaECv2BYsfMH7UX4TB81S0Z0KS7TX
+ knrr9pZPDvMrkhSKMJLH5OjA2Mlg4fY=
+X-Proofpoint-ORIG-GUID: YFynBK0IxjQGS2R-naA5rVEPFav2hWw2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA1NyBTYWx0ZWRfXwTLmGnmYCEOY
+ 9B+isGQWWPDUrzzGbWypTK/lribJNaJbAnIujnALRvdUaayUFnld1Xlc/yWq9jYDP/KkTZVbAhI
+ V/+2GmdfoN37UQmgBaTiZSdo5tSTfoDIOAja7rd/XGpGoWr/2EmQEIyU3fiyRU27nuG+LXv4WxM
+ s0zysLyNwnq3HkzxETSpJfnKvP2Q8YBPIvDz8MTtsXlDB9zcADBOo5zxpp+N263vYlDiWx/1q7y
+ 5ojKszu1mwPawJJsHe6Wcyx3v7Z/nPlcIUR5k8KzmajsC6yxuhcN4CByjz4wxU1pl8Rmzd3Ep5D
+ 7YFsmEcUunc6tQ2iP5XswCwn1LFM808OFeo0iCBnbIVeTUaj7KA7YJydgdHERkzthInnpdvh/Et
+ bgnzOFI5GH0c73bDRLtCdYFg1UM14dyhTtvh0mmTjeFZsaTXPIGkN74ObwJlATjqt7SA65UDKfw
+ LU6hzwmw0CzO++YEjYA==
+X-Authority-Analysis: v=2.4 cv=G7uJgNk5 c=1 sm=1 tr=0 ts=6ae35eaa cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=s6wHbzJGuloGhX0a5BcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: YFynBK0IxjQGS2R-naA5rVEPFav2hWw2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-29_04,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0 impostorscore=0 suspectscore=0 clxscore=1015
+ phishscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610290057
 
-On Thu, Oct 29, 2026 at 3:12=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
-[...]
-> [Severity: High]
-> Can scsi_test_unit_ready() starve waiting for a request tag when retrying
-> writes saturate the queue?
->
-> scsi_test_unit_ready() calls scsi_execute_cmd() -> scsi_alloc_request() -=
->
-> blk_mq_alloc_request() with flags =3D=3D 0, which waits in blk_mq_get_tag=
-() for a
-> normal non-reserved tag from bitmap_tags.
->
-> When write commands receive a power-on/reset unit attention,
-> drivers/scsi/scsi_lib.c:scsi_io_completion_action() requeues them immedia=
-tely:
->
->         case ACTION_RETRY:
->                 /* Retry the same command immediately */
->                 __scsi_queue_insert(cmd, SCSI_MLQUEUE_EH_RETRY, false);
->                 break;
->
-> In __scsi_queue_insert() -> blk_mq_requeue_request() ->
-> __blk_mq_requeue_request() -> blk_mq_put_driver_tag():
->
->         if (rq->tag =3D=3D BLK_MQ_NO_TAG || rq->internal_tag =3D=3D BLK_M=
-Q_NO_TAG)
->                 return;
->
->         __blk_mq_put_driver_tag(rq->mq_hctx, rq);
->
-> When an I/O scheduler is attached (such as the default mq-deadline on UFS=
-,
-> where dd_init_sched() sets q->async_depth =3D q->nr_requests so writes ca=
-n
-> consume all tags in sched_tags->bitmap_tags), __blk_mq_requeue_request()
-> releases rq->tag but keeps the scheduler tag (rq->internal_tag) across al=
-l
-> retries. When no I/O scheduler is configured, blk_mq_limit_depth() impose=
-s no
-> limit on writes and blk_mq_put_driver_tag() does not release rq->tag on
-> requeue because rq->internal_tag =3D=3D BLK_MQ_NO_TAG.
->
-> If enough write requests are queued to fill all non-reserved tags across =
-a
-> reset or runtime resume, won't those writes endlessly fail and requeue wh=
-ile
-> pinning every tag, blocking scsi_test_unit_ready() in blk_mq_get_tag() un=
-til
-> a write exceeds the 180s retry window and fails with an I/O error?
 
-Hmm, I've simulated this scenario and it is indeed the case. When a
-lot of writes are in-flight at the moment of an injected UFS
-error-handler reset, they end up holding every scheduler tag upon
-resume, meaning the TUR queues behind them, and the recovery doesn't
-happen until after the writes time out with an I/O error (which is
-pretty much the original broken behavior this was meant to fix).
 
-Given that, I'm wondering if dealing with this via the UFS devman
-interface (as was done in v1) is a better option after all. Bart, what
-would you say?
+On 10/23/26 2:10 PM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Medium] s390/vfio-ap: f_pos corruption on -EFAULT in vfio_ap_stop_copy_read()
+> - [Medium] s390/vfio-ap: high-order kmalloc() in vfio_ap_stop_copy_read()
+> --
+>
+> commit 244125b3df6e4802b043acebf35691558c6264c3
+> Author: Anthony Krowiak<akrowiak@linux.ibm.com>
+>
+> s390/vfio-ap: File ops called to save the vfio device migration state
+>
+> This commit implements the vfio_ap_stop_copy_read() callback for the
+> migration file created when transitioning from stop to stop-copy state,
+> copying the guest's AP configuration and queue hardware information to
+> userspace.
+>
+>> diff --git a/drivers/s390/crypto/vfio_ap_migration.c b/drivers/s390/crypto/vfio_ap_migration.c
+>> index bc216c51a1a79..f9b00fb89410f 100644
+>> --- a/drivers/s390/crypto/vfio_ap_migration.c
+>> +++ b/drivers/s390/crypto/vfio_ap_migration.c
+> [ ... ]
+>
+>> @@ -162,6 +155,269 @@ static int vfio_ap_release_mig_file(struct inode *file_inode, struct file *filp)
+> [ ... ]
+>
+>> +static int vfio_ap_get_config(struct ap_matrix_mdev *matrix_mdev)
+>> +{
+>> +	struct vfio_ap_config *ap_configuration;
+>> +	unsigned long *apm, *aqm, apid, apqi;
+>> +	unsigned int num_queues;
+>> +	const char *mdev_name;
+>> +	size_t ap_config_size;
+>> +	int ret, qindex;
+>> +
+>> +	lockdep_assert_held(&matrix_dev->mdevs_lock);
+>> +
+>> +	ap_config_size = vfio_ap_config_size(matrix_mdev, &num_queues);
+>> +
+>> +	ap_configuration = kvzalloc(ap_config_size, GFP_KERNEL_ACCOUNT);
+>> +	if (!ap_configuration)
+>> +		return -ENOMEM;
+> [ ... ]
+>
+>> +static ssize_t vfio_ap_stop_copy_read(struct file *filp, char __user *buf,
+>> +				      size_t len, loff_t *pos)
+>> +{
+>> +	struct vfio_ap_migration_file *mig_file;
+>> +	struct ap_matrix_mdev *matrix_mdev;
+>> +	void *bounce;
+>> +	ssize_t ret;
+> [ ... ]
+>
+>> +	/*
+>> +	 * Don't read past the end of the AP configuration data. Limit len to
+>> +	 * the number of bytes remaining.
+>> +	 */
+>> +	len = min_t(size_t, mig_file->config_sz - *pos, len);
+>> +	if (len == 0) {
+>> +		mutex_unlock(&matrix_dev->mdevs_lock);
+>> +		return 0;
+>> +	}
+>> +
+>> +	/*
+>> +	 * Copy into a bounce buffer under mdevs_lock and advance *pos, then
+>> +	 * perform copy_to_user() outside the lock. This avoids stalling
+>> +	 * all host mdev operations if userspace passes a buffer that faults.
+>> +	 */
+>> +	bounce = kmalloc(len, GFP_KERNEL);
+>> +	if (!bounce) {
+>> +		mutex_unlock(&matrix_dev->mdevs_lock);
+>> +		return -ENOMEM;
+>> +	}
+> [Severity: Medium]
+> In drivers/s390/crypto/vfio_ap_migration.c, vfio_ap_get_config() allocates
+> ap_configuration using kvzalloc() with GFP_KERNEL_ACCOUNT because a guest's
+> configuration can hold up to 65,536 queues, making mig_file->config_sz up to
+> 1,048,624 bytes:
+>
+> 	ap_config_size = vfio_ap_config_size(matrix_mdev, &num_queues);
+>
+> 	ap_configuration = kvzalloc(ap_config_size, GFP_KERNEL_ACCOUNT);
+>
+> In vfio_ap_stop_copy_read(), len is clamped only to mig_file->config_sz - *pos
+> and passed directly to kmalloc(). When userspace reads the full migration
+> blob in a single read() call for a guest with a large queue configuration,
+> this requests up to an order-9 (2 MiB) physically contiguous allocation
+> without vmalloc fallback or memcg accounting, which can fail and trigger page
+> allocation warnings on fragmented hosts.
+>
+> Should vfio_ap_stop_copy_read() allocate bounce with kvmalloc() using
+> GFP_KERNEL_ACCOUNT and free it with kvfree() instead of kmalloc() and
+> kfree()?
 
-- sd.c looks like a wrong place, because sd never sees resets the UFS
-layer does on its own, such as UFS error recovery
-- The midlayer (like this version) doesn't seem to work either,
-because it only learns about the reset under the host lock, where it
-can't issue commands, and queuing them in a process context means they
-wait for a tag from the same pool as the offending writes are holding
-- The devman path in UFS, on the other hand, knows when UFS does all
-of its resets, and has its own reserved tag, so the TUR can go out
-inside the reset before LU queues restart (thus no deadlock of the
-sorts referenced in edc0596cc04b)
+The maximum migration blob size is bounded: 65,536 queues *
+16 bytes/queue + 48 bytes of header = 1,048,624 bytes (~1 MiB).
+KMALLOC_MAX_SIZE on a 4K-page kernel is 4 MiB (order-10), so
+a worst-case single read() of the full blob is well within what
+kmalloc() can satisfy without vmalloc fallback or a page
+allocation warning.
 
-I've run the same test on v1 (TUR through the devman slot): the TUR
-went out inside the reset, before ufshcd_err_handler finished, and all
-399599 WRITEs in the same window succeeded, with no UNIT ATTENTIONs,
-stalls or I/O errors. If we go that way, v3 would be v1 plus setting
-lrbp->lun from the request UPIU, as pointed out by Sashiko during the
-review of v1.
+The bounce buffer's lifetime is also strictly local to
+vfio_ap_stop_copy_read() — allocated, memcpy'd, copy_to_user'd,
+and freed within a single call. There is no accumulation.
+kvzalloc() in vfio_ap_get_config() is appropriate there because
+ap_configuration is a long-lived, variable-size allocation;
+that rationale does not apply to a transient bounce buffer.
 
-Best regards,
-Alexey
+No change needed.
+
+>> +
+>> +	memcpy(bounce, (char *)mig_file->ap_config + *pos, len);
+>> +	*pos += len;
+>> +	mutex_unlock(&matrix_dev->mdevs_lock);
+>> +
+>> +	if (copy_to_user(buf, bounce, len)) {
+>> +		kfree(bounce);
+>> +		return -EFAULT;
+>> +	}
+> [Severity: Medium]
+> What happens to filp->f_pos if copy_to_user() fails in
+> vfio_ap_stop_copy_read()?
+>
+> In drivers/s390/crypto/vfio_ap_migration.c, vfio_ap_stop_copy_read() sets
+> pos = &filp->f_pos, advances *pos += len, and drops matrix_dev->mdevs_lock
+> before calling copy_to_user(). If copy_to_user() faults and returns non-zero,
+> the function returns an error while leaving filp->f_pos permanently advanced
+> past the unread bytes.
+>
+> Because vfio_ap_open_file_stream() opens the migration file with
+> stream_open(), seeking and pread() are rejected, so userspace cannot rewind
+> the stream. Any subsequent read() will silently skip those len bytes or
+> observe end-of-file prematurely, corrupting or truncating the saved migration
+> state. In addition, because stream_open() clears atomic position locking on
+> filp->f_mode, dropping matrix_dev->mdevs_lock after advancing *pos but before
+> copy_to_user() allows concurrent readers to advance *pos further, preventing
+> a safe rollback and allowing out-of-order stream delivery.
+>
+> Can *pos be updated only after copy_to_user() succeeds (or only by the number
+> of bytes actually copied), while keeping concurrent reads serialized?
+
+This is a valid concern.
+The problem will be fixed by introducing mig_file->lock, a new
+mutex embedded in struct vfio_ap_migration_file. mig_file->lock
+is acquired before mdevs_lock and held for the full duration of
+the read — across the copy_to_user() call — so only one read
+proceeds at a time. *pos will be advanced only after
+copy_to_user() succeeds. If the copy fails, f_pos is left
+unchanged and the caller can retry.
+
+>
+
