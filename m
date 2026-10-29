@@ -1,54 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.3
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=180.181.231.80
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793255796;
-	b=EpUE2ACH3PryVjeH45W0C/cAGZDzwOPdETdS9PhATRPFm2etW54LSg8udsJCh1VZhZoK
-	 MpSNOEd/AFPCZhmzwC2/Tmxc4qEy48celXkeoyTlV84n9aRsVBSGuf2xIdschR65xJOq5
-	 v8bnEIosxIKm+ioyr5gKsZS7e0OWmE/kQOR5nlEGwxam7/vJg81GiqN1JA2FkNSR+4wAe
-	 3mz6o0q3AdrVP7vw59VsmcG3IkHjIFSCW2WQZrl8zSbHWuFIQWEGaB9lZG4jttUwGT191
-	 E1s/opmhk8luya8SReMSnKr+SCC//v/pXDow2JogCF2Kn71jh0IjciZ78vmB8lIgcaA==
+	t=1793262178;
+	b=2/XHweQq7/E49WpzxoM68htXugT++8gfcEmjbfd+kvi7m1QTYalQM5yNYxUzHcmKDZNo
+	 3i1gLG8t6THO4eRVub8SvD0wV2s+fCIlO98avxqto459JP5cQEKNJBFM4nRWDN+UCLx8z
+	 5yVsowwr5D0OY9WfeyqLFVS3ilMa6YZSISzeqxKvgsjhNclGW5NAkp3lCO00gIwpDKWTZ
+	 pw8DOrwYBEhJ6nDtTZUtrIkkbz7jzWTybu+72Z7YhlO+gDZV8XD/l8MLRp7SC8xhfFaJA
+	 0BG8etGm/QbI4eFVMjuFyOMBxLJApjeNUtzdhQLNbuxtoCi6/a4zFnpIGYnm5AQNSpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793255796;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=e9iJkXpRXYXbKJ8YCCtjeFCD9Hy6xZkuFkKL1cPOJqk=;
-	b=d1OmJ0eBdIriC8Byl9NsAuzub2GHfs4VlZhfZ6tvGZwf+G0MRhqfMlsyaPhEiVqtwEor
-	 XFS4+n0TFTsCPCEQVvgzlX/7szrSuhQNYhpT7tcJWPxuiGCfrXLAS2cPQB4MsYaJA2Xo1
-	 frLL+Pf5TEWM5AIBPskk1d3ssX6TRRBFWFd3je5MgbLj+BjyiuoZTtH48SsI4i+o+re0M
-	 YwVPDpfPm25yZ91LC5mmn2r1qj1KvsAFr/svkvfaJ+iJpTQs5bEhw9XO1RYsRcB0e4Ugq
-	 3XHUvIZ5Wwc9VDh3qHJ0TMtla8xq3G8Qk0PxwbR1OCASkGi/eaAc2YLQc96XpCgw0dA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793262178;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=2apa8Mr/pCcSFyuTTcmI9mAPuP1EGz22opH+X2kB18Y=;
+	b=EiUc7dVk652t/kTZUfngxT1q6ueuEUZ0x+ZONB71FQeuFpxyl2aA4IhK0fjUDPCu+18h
+	 JFU4SWexqq1X0P59hc2chRBxxeuCrTjO4ljp3WKpNhqeYiwYtUB9UYYqoRiWTin+6JDKY
+	 THPrT69P486cFbJHeoHDTuAIvdA4Ye6QNN3T98PeiOjXWG97nrihNbItKtpPmF2c+n2KM
+	 oSy5MrWrz8d3f1qP+2qwiEPTkdOgf9VGTkAMDDHbhAfby8K6NLkSigbEmdhdiPJZkmT4g
+	 wAcPYSpZscHCY0f8+UlMex6zVWW2GLH2yG/HjAbOhIFn8Xkhv3ZIyJHTDQipa1yy2PQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=mjhIZ7Jh;
-	arc=none smtp.remote-ip=95.215.58.3
-Received: from mta1.migadu.com (out-3.mta1.migadu.com [95.215.58.3])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=gondor.apana.org.au;
+	spf=pass smtp.mailfrom=gondor.apana.org.au;
+	dkim=pass header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.a=rsa-sha256 header.s=h01 header.b=UHmLTmmx;
+	arc=none smtp.remote-ip=180.181.231.80
+Received: from abb.hmeau.com (abb.hmeau.com [180.181.231.80])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E636B606A31F
-	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 06:36:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E636B606A31F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5B7606A31C;
+	Thu, 29 Oct 2026 08:22:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2F5B7606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=mjhIZ7Jh
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=vfvRt1Fm/vOTY1RQFLMCd0NgP0okjDh8EthFOA7WL3k=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1793255793; v=1; x=1793860593;
- b=mjhIZ7JhBxBVZdnCSTA8OZmIemi9AJUtkyTv96zkbnFwXK96rKFn4ZxP/w570Xh8B7npS1S2
- /ax9FAP1vLpT01EqPXxuDyDrgdQ3gLS1Py5clE0/sCmWusncdRasCw7k06Yv3tcUnnwDe3OflNr
- 4Zz+9g9tPN0A36Ogz/uRyXqQ=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 2e800ba7b5c5cc6c;
-	Thu, 29 Oct 2026 06:36:33 +0000
-X-Mizu-Trace-ID: 2e800ba7b5c5cc6c
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <99bbc23f-a3a0-4357-99d7-0f0167136432@linux.dev>
-Date: Thu, 29 Oct 2026 14:36:30 +0800
+	dkim=pass (2048-bit key, unprotected) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.a=rsa-sha256 header.s=h01 header.b=UHmLTmmx
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=gondor.apana.org.au; s=h01; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:cc:to:subject:message-id:date:
+	from:content-type:reply-to; bh=2apa8Mr/pCcSFyuTTcmI9mAPuP1EGz22opH+X2kB18Y=; 
+	b=UHmLTmmxsQXWP79uUgFoAw2NJDK2NcG91qq8NUxO8PYoCNxAbqtAn5bxrjB3K3d6fhnDZf35Nh/
+	7ayNPUu4q6o/SOeRc31+HInmDlj0qLHaWuh4ikJZ2H/qa3CFz20nWDAlMc394xpqr3538+KzpiMoD
+	Uh56gWhTFg12MubXPjP0caNCb+dlFP0UKOTUwwAtXOVxhyKx/WfGHReQ5Aj2FVOGjHTlbsMMylb/t
+	bb4VRAaYPYGo86gFO15cfVyAbrsiz/YgUVwBCZ4caDV/SbMzozdIMaNFDh7O9ySIyQNjuG2ZLLGvG
+	NV7T0J/LrWlMLnvPgl42t9aRP6wloAC00xXg==;
+Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
+	by formenos.hmeau.com with smtp (Exim 4.98.2 #2 (Debian))
+	id 1xMLPL-00000008gDW-1lPL;
+	Thu, 29 Oct 2026 16:22:48 +0800
+Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Thu, 29 Oct 2026 16:22:47 +0800
+Date: Thu, 29 Oct 2026 16:22:47 +0800
+From: Herbert Xu <herbert@gondor.apana.org.au>
+To: "Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>
+Cc: sashiko-reviews@lists.linux.dev, hannes@cmpxchg.org, yosry@kernel.org,
+	nphamcs@gmail.com, chengming.zhou@linux.dev,
+	akpm@linux-foundation.org, linux-mm@kvack.org, davem@davemloft.net,
+	linux-crypto@vger.kernel.org, rientjes@google.com,
+	willy@infradead.org, senozhatsky@chromium.org
+Subject: Re: [PATCH v2 3/8] crypto: acomp - Add trivial segmentation wrapper.
+Message-ID: <auMCV1AFlEFuJnk7@gondor.apana.org.au>
+References: <20261028030503.17923-1-kanchanapsridhar2026@gmail.com>
+ <20261028030503.17923-4-kanchanapsridhar2026@gmail.com>
+ <sashiko-outbox-188655@kernel.org>
+ <CACpmpodu3C=uYH6dmFM-xkvdJxiRDjamRKs1Q4jU6_KKjFWNqA@mail.gmail.com>
+ <auLbyon-KaV5Sw5_@gondor.apana.org.au>
+ <CACpmpofcd=ZPKhAoHJfvJU_JZshKs1GGJZf5JhjAW1PZzDq-Lw@mail.gmail.com>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,156 +72,21 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH bpf-next v5 5/6] libbpf: Add log_opts support for
- bpf_link_create
-To: sashiko-reviews@lists.linux.dev, bpf@vger.kernel.org
-Cc: linux-trace-kernel@vger.kernel.org
-References: <20261026154948.99408-1-leon.hwang@linux.dev>
- <20261026154948.99408-6-leon.hwang@linux.dev>
- <sashiko-outbox-185491@kernel.org>
-Content-Language: en-US
-From: Leon Hwang <leon.hwang@linux.dev>
-In-Reply-To: <sashiko-outbox-185491@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACpmpofcd=ZPKhAoHJfvJU_JZshKs1GGJZf5JhjAW1PZzDq-Lw@mail.gmail.com>
 
-On 27/10/26 00:05, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] libbpf: type confusion between iter_info and log_opts in bpf_link_create()
-> --
+On Wed, Oct 28, 2026 at 11:03:55PM -0700, Kanchana P. Sridhar wrote:
 > 
-> commit b4af2771f4c0edb6656b6ddcd881019158c55a55
-> Author: Leon Hwang <leon.hwang@linux.dev>
-> 
-> libbpf: Add log_opts support for bpf_link_create
-> 
-> This commit adds log_opts support to bpf_link_create() by placing log_opts in
-> an anonymous union with iter_info in struct bpf_link_create_opts and passing
-> it to __sys_bpf_fd().
-> 
->> diff --git a/tools/lib/bpf/bpf.c b/tools/lib/bpf/bpf.c
->> index aea534764dfe2..38dcb31e8c0ed 100644
->> --- a/tools/lib/bpf/bpf.c
->> +++ b/tools/lib/bpf/bpf.c
->> @@ -794,6 +794,8 @@ int bpf_link_create(int prog_fd, int target_fd,
->>  {
->>  	const size_t attr_sz = offsetofend(union bpf_attr, link_create);
->>  	__u32 target_btf_id, iter_info_len, relative_id;
->> +	union bpf_iter_link_info *iter_info = NULL;
->> +	struct bpf_log_opts *log_opts = NULL;
->>  	int fd, err, relative_fd;
->>  	union bpf_attr attr;
->>  
->> @@ -803,6 +805,14 @@ int bpf_link_create(int prog_fd, int target_fd,
->>  	iter_info_len = OPTS_GET(opts, iter_info_len, 0);
->>  	target_btf_id = OPTS_GET(opts, target_btf_id, 0);
->>  
->> +	if (iter_info_len && attach_type != BPF_TRACE_ITER)
->> +		return libbpf_err(-EINVAL);
->> +
->> +	if (iter_info_len)
->> +		iter_info = OPTS_GET(opts, iter_info, (void *)0);
->> +	else
->> +		log_opts = OPTS_GET(opts, log_opts, (void *)0);
-> 
-> [Severity: Medium]
-> Can overlaying iter_info and log_opts in struct bpf_link_create_opts and
-> selecting between them using only iter_info_len cause type confusion when a
-> caller passes a non-NULL iter_info with iter_info_len == 0?
+> I was under the impression that if acomp_req_on_stack and synchronous
+> tfm, it would go through acomp_do_req_chain(). Please correct me if I
+> am wrong, and I can modify the conditional accordingly.
 
-Users must not do like this. By convention, iter_info_len==0 means no
-iter_info.
+It's perfectly fine for a stack request to go to a sync tfm.  What
+isn't legal is for a stack request to go through an async tfm.
 
-> 
-> For example, a caller of bpf_link_create() or bpf_program__attach_iter() in
-> tools/lib/bpf/libbpf.c:
-> 
-> tools/lib/bpf/libbpf.c:bpf_program__attach_iter() {
-> 	...
-> 	link_create_opts.iter_info = OPTS_GET(opts, link_info, (void *)0);
-> 	link_create_opts.iter_info_len = OPTS_GET(opts, link_info_len, 0);
-> 	...
-> 	return bpf_link_create(prog_fd, target_fd, BPF_TRACE_ITER, &link_create_opts);
-> }
-> 
-> might pass a non-NULL union bpf_iter_link_info pointer while leaving
-> iter_info_len (or link_info_len) set to 0.
-> 
-> Previously, bpf_link_create() forwarded both the non-NULL iter_info pointer
-> and iter_info_len == 0 to the kernel, where bpf_iter_link_attach() rejected
-> the mismatched arguments with -EINVAL:
-> 
-> kernel/bpf/bpf_iter.c:bpf_iter_link_attach() {
-> 	...
-> 	if (bpfptr_is_null(ulinfo) ^ !linfo_len)
-> 		return -EINVAL;
-> 	...
-> }
-> 
-> With this change, when iter_info_len == 0, bpf_link_create() leaves iter_info
-> as NULL (so attr.link_create.iter_info is 0 and the kernel check is bypassed)
-> and instead assigns the union bpf_iter_link_info pointer to log_opts.
-> 
-> When bpf_link_create() then calls __sys_bpf_fd(), log_opts is dereferenced as
-> struct bpf_log_opts:
-> 
-> tools/lib/bpf/bpf.c:__sys_bpf_fd() {
-> 	...
-> 	if (!OPTS_VALID(log_opts, bpf_log_opts))
-> 		return libbpf_err(-EINVAL);
-> 
-> 	if (log_opts && feat_supported(NULL, FEAT_BPF_SYSCALL_COMMON_ATTRS)) {
-> 		memset(&attr_common, 0, attr_common_sz);
-> 		attr_common.log_buf = ptr_to_u64(OPTS_GET(log_opts, buf, NULL));
-> 		attr_common.log_size = OPTS_GET(log_opts, size, 0);
-> 		attr_common.log_level = OPTS_GET(log_opts, level, 0);
-> 		fd = sys_bpf_ext_fd(cmd, attr, attr_sz, &attr_common, attr_common_sz);
-> 		OPTS_SET(log_opts, true_size, attr_common.log_true_size);
-> 	} else {
-> 		fd = sys_bpf_fd(cmd, attr, attr_sz);
-> 		OPTS_SET(log_opts, true_size, 0);
-> 	}
-> 	...
-> }
-> 
-> Since union bpf_iter_link_info is 16 bytes while struct bpf_log_opts extends
-> to offsetofend(struct bpf_log_opts, true_size) (28 bytes on 64-bit, 20 bytes
-> on 32-bit), interpreting the first sizeof(size_t) bytes of iter_info (such as
-> map.map_fd, task.tid, task.pid, or cgroup.cgroup_fd) as log_opts->sz can
-> cause out-of-bounds reads in OPTS_VALID() and OPTS_GET(), as well as a 4-byte
-> out-of-bounds write past union bpf_iter_link_info via OPTS_SET(log_opts,
-> true_size, ...).
-> 
-> In addition, aliasing iter_info and log_opts prevents BPF_TRACE_ITER links
-> from using log_opts whenever iter_info is specified. Would it be safer to
-> place log_opts in its own field at the end of struct bpf_link_create_opts
-> instead of sharing a union with iter_info?
-> 
-
-Not at the end of struct bpf_link_create_opts.
-
-When adding log_opts support for iter link in the future, both iter_info
-and iter_info_len will be moved to the last union.
-
-diff --git a/tools/lib/bpf/bpf.h b/tools/lib/bpf/bpf.h
-index fe3b7fd8512b..8bfada1f3ea3 100644
---- a/tools/lib/bpf/bpf.h
-+++ b/tools/lib/bpf/bpf.h
-@@ -478,6 +478,10 @@ struct bpf_link_create_opts {
-                        const __u64 *cookies;
-                        __u32 cnt;
-                } tracing_multi;
-+               struct {
-+                       union bpf_iter_link_info *info;
-+                       __u32 len;
-+               } iter;
-        };
-        size_t :0;
- };
-
-Afterwards, log_opts will be valid at the iter_info position for iter link.
-
-Thanks,
-Leon
-
+Cheers,
+-- 
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
