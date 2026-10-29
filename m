@@ -1,81 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.9
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793248141;
-	b=VxRuxd3Iz5SDz+2MNpyoTexv4K0bHWoMdNNIt5oH7sK54Jr2z6MGFcmm9/XvGeFjwtXW
-	 /eeYQXJK/WQUjaVuOwM9YEEipwmUZexpTHIodguzUgxYfduFs2K5kVBNpgD+noGomxOC7
-	 WIM4aaP5dpzLJAnc5+lv4TvGIDOr8mAWGqw/RsmmcAgDhqtG60RkPCaE4g5OhbhsIpASS
-	 vUeC38tx+WR5vefJIgTdaRYBZWyrSzmVCOoLTfFdmZTXdxoJ15lEIuvjhDRQFE586YjJE
-	 TyCzNWdlxGX6YG6vagJShVAnFevpxvg9PYngqFAsjkweW9vpZn91a2clbdb6Ot1jkHg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793248141;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=rzYTe3CAmln9p4nHbX2TG5gIE9RDWcbeR5wsihoOolA=;
-	b=JWLnfZRzA4LJvWMFzkjgopLwIrsAAnQu0Qbz7thgqeYPiGZ+sNuN3t/nfw+U2YMIhdLI
-	 nI71+xbLCfibuw4zA1SDNAej3cRpSY4/CUgvZ4a9nim7C7KlNO3aoZrXEk07b4TWuKoyE
-	 5EOc0fzW1K3wdYyccuqMkpZPa7C0WhUpD66IyqH3k13Qx331gt2IjVK5wurRnCVTz2k+h
-	 pEYWNHOnkx3j5ZunNZWw78MTtZg0scb8+zgZDnmXTaG1MQnE8dEcU752ABN90kI9pmRcq
-	 CuchbrlcceCtRWPOz5b0DBBVd1FevGuNdlxlBUOpCbQY4NjQSRq5mmzjYrrj4vAlWIw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=linux.intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mVFqIl7i;
-	arc=none smtp.remote-ip=192.198.163.9
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.49
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793250590;
+	b=VKYKftd/UAtLv3OUxBQW7VVC+wLJW/+g01w0RaEh7VTShGWShRHPWRUNRJrdV8wG5Kpx
+	 bcbCA4SJxpUcN9Fa5DD90zSZfMHzV31XUatq9pu70szb6y2/GS/tNJsLwS+pW2LkOr/sR
+	 5N9NJI+fAZvx6F4lQAUKOTEX+PNRYYh6jLlWgAQTKdi7nYGeuyzAwiSox27BL0WPwZ7ga
+	 9RilMQ57e0Vh4/SU9EGFD8IvOaM4dTukrpOQq7b1j5GF6E+WdIQjMBOIsP/AL1WoHsV2l
+	 dth8vQaEe0b6yaYzCkW4ob69Jkb+oBCQISei+d2NOiW/5RTYZkAPELSLz56XidRriZA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793250590;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=kpw8TTYWKB5hnWuUygH4ZRFIeIPvKSlqcY3nCnns/2g=;
+	b=0bTWsKwYkvzVJ3X9LGWrv8Yx3voO3UrOIDs24mrYbHg1YAzfWwR1ZkUcJ2r+qqR8lxZh
+	 lEijJGrhXc3ldqj7FGwrKMvTT0qvB7IreeI076xACuOf25fPU/ViRROwcrMSUriTSnCD0
+	 nA9d0t5Lhy2Nn58grxp/1JA6IhaVcnbrdhHHqyaxfS1pRpluxfZegoFpmkn/w8TZWINfy
+	 E/VVFYiAvsDc4Mr9p71/A2REKrNQqHHYBVU7J7wHePMtHGJ0jWTmVxQ5NzvQZzum0VMB2
+	 VFYt0CDL2/c+0ZJpnXZSoLJNxtNgj6zL1vGcMfN0ErvRv1CxGgYPg0C0ZSooFK7TZmw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hMiPpfgO;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.49
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63068606A31D;
-	Thu, 29 Oct 2026 04:29:00 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 63068606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9618A606A31C
+	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 05:09:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9618A606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mVFqIl7i
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793248140; x=1824784140;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Jwzke+C5vjNMWt9GhijAMYGap9eff9wd25DcLISYkNM=;
-  b=mVFqIl7iGKaU6y5yzwOWRTSpigVTMq6021gq5g+lUkPLc33FkD1KrtPA
-   q6Ae0sJHopZaFv4n0E46U1YAInSyOHbKHqlim+01KVGaLLUH5H3J810lH
-   yfEgwlazIGpLZSQa/f2n2nKxPPSbdvLzjjIC18ejwnRq9u7Gf7cmfCPrg
-   0ZTV/SYoSwhwnHMJW5oBpkUOBohQUusSdZFfX2YGj02pGsG7ZqiwXczsE
-   59ugmbNGhGL4K5kWGtfKseZ+9bmfmpwfONgr6586EFfc00h/JmT6mJ/j0
-   tG1TWMfYTcbiCvWw9xc17utn6ciuxAyssqdVGsGEgC45Jm24WTAVgx68c
-   Q==;
-X-CSE-ConnectionGUID: q8+8PIImTSaVcwj1Sj8y1g==
-X-CSE-MsgGUID: A79Kc930Q4+dLCBJhK/WwQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11949"; a="1864189"
-X-IronPort-AV: E=Sophos;i="6.27,183,1787036400"; 
-   d="scan'208";a="1864189"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Oct 2026 21:29:00 -0700
-X-CSE-ConnectionGUID: osN9a3PLRlOOr9m7+NTyIg==
-X-CSE-MsgGUID: mvmHAIL2QW2K62VmmX1+6A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,183,1787036400"; 
-   d="scan'208";a="5143691"
-Received: from yilunxu-optiplex-7050.sh.intel.com (HELO localhost) ([10.239.47.46])
-  by fmviesa002.fm.intel.com with ESMTP; 28 Oct 2026 21:28:59 -0700
-Date: Thu, 29 Oct 2026 12:22:52 +0800
-From: Xu Yilun <yilun.xu@linux.intel.com>
-To: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
-Cc: Jason Gunthorpe <jgg@nvidia.com>, sashiko-reviews@lists.linux.dev,
-	linux-coco@lists.linux.dev, kvm@vger.kernel.org,
-	linux-pci@vger.kernel.org
-Subject: Re: [PATCH v7 09/16] tsm: Remove the device from lookup before PCI
- teardown
-Message-ID: <auLKHDLCg5XKDIWv@yilunxu-OptiPlex-7050>
-References: <20261008055955.4014342-1-aneesh.kumar@kernel.org>
- <20261008055955.4014342-10-aneesh.kumar@kernel.org>
- <sashiko-outbox-163673@kernel.org>
- <yq5a33ub5lgt.fsf@kernel.org>
- <20261012130109.GK13920@nvidia.com>
- <yq5ald82q934.fsf@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=hMiPpfgO
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5bccb867d6fso2138243e87.0
+        for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 22:09:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793250588; cv=none;
+        d=google.com; s=arc-20260327;
+        b=EiemG0zWruSv/1IL5y+1Czn3dry8jJoz4LLNtajSW8JI7wIgLUudIH+TpTR2bBGk0c
+         nPTO6TNQRkxguzA4VdrAZlpQodf9H0A72yd8ax8okrGdsQLlcsG23J6m3qU4MhrtD1lG
+         oEreninEe4kUa8ZpGiyaiFAMU0s0o9TxEJYIcPpuvSRKGtD1fG4EzOdQPmSZ0XhcU2oX
+         +l4WQ0zbvmq7m5C8RhUqVNlUAckUbUAVufLaRvw7AQXVdjnzKTPc5nPMbPONyaA+wFf3
+         t/eEp/1Y6iLFR437oov6ILRmG+bBEEAOYW+gSWz26vj9eUO9MLUXPVKhJ8NwFl5ystS1
+         b3ig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=kpw8TTYWKB5hnWuUygH4ZRFIeIPvKSlqcY3nCnns/2g=;
+        fh=/pNdPGSL7ubAyatZ82+wlnjupiDTvrpwsizegktnd3M=;
+        b=r27eXdsXO+2YLP8pReVh+vEUSMcXfD6Gy6nCIDS6GAOdntIXmJ45w8qUdb1sBT7pPj
+         FfSpKTW5LnEOSrAp4MwwvR5Y37H/CRU2B3aRe5ysKWoJpfeS5lzQAaS0oCJRFGeTvugR
+         fiu1O0iCMawFDUmAPS5U8ouxSKmDH/9dJnwol8ysI1RCxWPe07VCyGO719Li6evl2cum
+         FL/vuvr0mJIKlSKeNN9O+7UFGz8ZGCesEnus6AOeP01kpAjwitFr0HXFu11kwjHjkMP0
+         F2Q2EWy+dN1fhD/+CLPgApug+7Yq6+meqRlHWGUqueowuQ2TZxka6c/JVjETf1xI6CXT
+         t3fQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793250588; x=1793855388; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=kpw8TTYWKB5hnWuUygH4ZRFIeIPvKSlqcY3nCnns/2g=;
+        b=hMiPpfgOUYCcVUki9nMenELkeskdukbzs3nKA1G6MMwEuBg4iLvG+GvH3t4SerZBzJ
+         3NLD/wOvoi1Bm6jw/XAKp3A4yRH3puTfhzTT1lZci2Q1JUObvnrYVrTYiNvxpRtuGb5S
+         B2KA/pAOo1TDDFJkXwrw9utkzwiNuh4MT9kvUWh/ufoO7wfmWfqofolpJHidzrbFWus6
+         f7viQaUyTbhsj9iSLWl7sHJaO37CW+nLJTEqz1QVHGEHb65dA7Me+JsQP1T4147nF8wn
+         URhb2ziz/vsAsnrYRbPA3wif6ryH2RKSO54fCoPDGP5/9bVVhhG8McmK/7M7UVP5M747
+         iSpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793250588; x=1793855388;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=kpw8TTYWKB5hnWuUygH4ZRFIeIPvKSlqcY3nCnns/2g=;
+        b=fjOakbmq/F1v0h2jXkx5PtQm+VdB2hr03ibPee4UOBzjx0WyNmXGTNrIogkDfd8Ujt
+         9sLMAeNuGT53HTaUrV2vOvGcdad61f/h+zMF42s9wffvkI2WE7s3VPwJpQW45TVmD/sM
+         ifxcNUODZgpwOV7Br8atkoz8LvKYyr2Clx6esAw5RWr8dlpphg6s6tk8RIehxKTJDxku
+         68h7hRxAg0p43pDfblP7qV+LaDYHWy4HOvvc0xIEuviL3Esxrm3onuVwfuvcg6fnRu7L
+         8PNw80QY2OGOrZynYNufRSjjlaxat3UbTfuacIt5vP74NbcCv9zIzp8GOLB57fadjzze
+         /6Vg==
+X-Gm-Message-State: AFq9FYIJe73ZAS5Ip9DLTtWflfFWAihNndYc8e9QI0D3ZgWnooKYmd2x
+	DSJArSy30riGVh/Qt5+yFNdL7QUN720XnFb4KLWy31hgDhvsJJ7+0BIopr5i1UwOofNiHfCVvFD
+	hqWmMj6Qwg0ncGn21mPJrpkRr32zf78SReA==
+X-Gm-Gg: AYBFou20lSw2XzalLpLN/fzF8rUnZM/4SdfNwDShKYpU82ln9H8TQr5DwRBk+sfKVWS
+	JiecGkc2OMlHewGv6I+OumtoHQGVnKyz9CD7Lxqp5gsYsBr/77HW81K56orEmAhym7/imnEQAkx
+	wxa11Jw0G44ob3P9rJbnEgyJTh3qNsaJFqvcoFKoswQxNyYiumAymLhrqNVuKr59mycGTdkUeY8
+	SZcyd8kQuQa+G7Wsu4p06NsOeBLXLUjvehfbmNXWOFuVhiP1g5Nx7SS1S84RO8MOe+AletTwAG7
+	jY3PLfVl2SnCBvce7d6jU8k4c1gJxg048ll+vfeyaOurIIAyQtT3WFu3wS5Kk/yplb/oFjC2OSa
+	LUb06V+7smh8YunnwQnPhqHU4rfkIfdXEWOEG
+X-Received: by 2002:a05:6512:2254:b0:5bf:bbcb:5090 with SMTP id
+ 2adb3069b0e04-5bfcad1735cmr1673625e87.11.1793250587589; Wed, 28 Oct 2026
+ 22:09:47 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -85,179 +103,186 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <yq5ald82q934.fsf@kernel.org>
+References: <20261028030503.17923-1-kanchanapsridhar2026@gmail.com>
+ <20261028030503.17923-4-kanchanapsridhar2026@gmail.com> <sashiko-outbox-188655@kernel.org>
+In-Reply-To: <sashiko-outbox-188655@kernel.org>
+From: "Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>
+Date: Wed, 28 Oct 2026 22:09:35 -0700
+X-Gm-Features: AclHuK8nR-G5FLP-nKgfLbRVgykWEd41gXMbkberCRHNZZZBPGk3kNc3GrhEkxw
+Message-ID: <CACpmpodu3C=uYH6dmFM-xkvdJxiRDjamRKs1Q4jU6_KKjFWNqA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/8] crypto: acomp - Add trivial segmentation wrapper.
+To: sashiko-reviews@lists.linux.dev
+Cc: hannes@cmpxchg.org, yosry@kernel.org, nphamcs@gmail.com, 
+	chengming.zhou@linux.dev, akpm@linux-foundation.org, linux-mm@kvack.org, 
+	herbert@gondor.apana.org.au, davem@davemloft.net, 
+	linux-crypto@vger.kernel.org, rientjes@google.com, willy@infradead.org, 
+	senozhatsky@chromium.org, 
+	"Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 13, 2026 at 02:19:03PM +0530, Aneesh Kumar K.V wrote:
-> Jason Gunthorpe <jgg@nvidia.com> writes:
-> 
-> > On Mon, Oct 12, 2026 at 02:44:58PM +0530, Aneesh Kumar K.V wrote:
-> >> sashiko-bot@kernel.org writes:
-> >> 
-> >> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> >> > - [Medium] tsm: race in tsm_register() error path leads to UAF and NULL pointer deref
-> >> > --
-> >> >
-> >> > commit f9b77b7469552ae6078c3a47333908a88eec2474
-> >> > Author: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
-> >> >
-> >> > tsm: Remove the device from lookup before PCI teardown
-> >> >
-> >> > This commit modifies the teardown flow to remove the TSM device from
-> >> > lookup before tearing down the PCI state. It also adjusts the setup
-> >> > flow in tsm_register() to handle PCI registration failures differently.
-> >> >
-> >> >> diff --git a/drivers/virt/coco/tsm-core.c b/drivers/virt/coco/tsm-core.c
-> >> >> --- a/drivers/virt/coco/tsm-core.c
-> >> >> +++ b/drivers/virt/coco/tsm-core.c
-> >> >> @@ -56,26 +56,25 @@ static struct tsm_dev *alloc_tsm_dev(struct device *parent)
-> >> > [ ... ]
-> >> >> -static struct tsm_dev *tsm_register_pci_or_reset(struct tsm_dev *tsm_dev,
-> >> >> -						 struct pci_tsm_ops *pci_ops)
-> >> >> +static int tsm_register_pci(struct tsm_dev *tsm_dev, struct pci_tsm_ops *pci_ops)
-> >> >>  {
-> >> > [ ... ]
-> >> >>  	tsm_dev->pci_ops = pci_ops;
-> >> >>  	rc = pci_tsm_register(tsm_dev);
-> >> >>  	if (rc) {
-> >> >> +		tsm_dev->pci_ops = NULL;
-> >> >
-> >> > [Severity: Medium]
-> >> > Does this unprotected write to tsm_dev->pci_ops introduce a race condition?
-> >> >
-> >> > If pci_tsm_register() returns an error early (e.g. if a driver incorrectly 
-> >> > provides both link_ops and devsec_ops, returning -EINVAL before acquiring 
-> >> > pci_tsm_rwsem), a concurrent userspace write to the connect sysfs attribute 
-> >> > might trigger connect_store().
-> >> >
-> >> > If connect_store() evaluates is_link_tsm() concurrently, this lockless 
-> >> > assignment to NULL on the error path could cause the compiler to reload the 
-> >> > pointer after the NULL check. Could this lead to a NULL pointer dereference 
-> >> > when accessing ->link_ops.probe?
-> >> >
-> >> >>  		dev_err(tsm_dev->dev.parent,
-> >> >>  			"PCI/TSM registration failure: %d\n", rc);
-> >> >> -		device_unregister(&tsm_dev->dev);
-> >> >> -		return ERR_PTR(rc);
-> >> >> +		return rc;
-> >> >>  	}
-> >> > [ ... ]
-> >> >> @@ -96,15 +95,22 @@ struct tsm_dev *tsm_register(struct device *parent, struct pci_tsm_ops *pci_ops)
-> >> >>  	if (rc)
-> >> >>  		return ERR_PTR(rc);
-> >> >>  
-> >> >> -	return tsm_register_pci_or_reset(no_free_ptr(tsm_dev), pci_ops);
-> >> >> +	rc = tsm_register_pci(tsm_dev, pci_ops);
-> >> >> +	if (rc) {
-> >> >> +		device_del(dev);
-> >> >
-> >> > [Severity: Medium]
-> >> > Can this error path lead to a use-after-free if PCI registration fails?
-> >> >
-> >> > Since device_add() is called prior to tsm_register_pci() in tsm_register(), 
-> >> > the device is already exposed via class_find_device(). If a concurrent 
-> >> > connect_store() finds the device and proceeds to pci_tsm_connect() before 
-> >> > this error path cleans it up, it will attach the PCI context to tsm_dev.
-> >> >
-> >> > When this error path calls device_del() and returns, the __free(put_tsm_dev) 
-> >> > guard at the top of tsm_register() will drop the primary reference to 
-> >> > tsm_dev, freeing its memory.
-> >> >
-> >> > Because the attached PCI context stores the pointer without taking an 
-> >> > additional device reference, wouldn't this leave a dangling pointer in the 
-> >> > PCI context, resulting in a use-after-free on subsequent accesses?
-> >> >
-> >> >> +		return ERR_PTR(rc);
-> >> >> +	}
-> >> >> +	return no_free_ptr(tsm_dev);
-> >> >>  }
-> >> 
-> >> 
-> >> I think this problem already exists upstream. We should delay
-> >> device_add() until PCI/TSM registration succeeds. The kobject event
-> >> should also be emitted after device_add(). I will add the fix as a
-> >> separate patch.
+On Wed, Oct 28, 2026 at 8:06=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 2 potential issu=
+e(s) to consider:
+> - [Critical] crypto: acomp - missing async check in crypto_acomp_compress=
+() fast path
+> - [High] crypto: acomp: uninitialized state->src/dst restore in acomp_req=
+chain_virt()
+> --
+
+Thanks for the detailed code review!
+
+>
+> commit 7144b07b2cc5b6704699fb53fac44c4270d31f7b
+> Author: Kanchana P. Sridhar <kanchanapsridhar2026@gmail.com>
+>
+> crypto: acomp - Add trivial segmentation wrapper.
+>
+> This commit adds a single-segment compression wrapper in crypto/acompress=
+.c
+> that stores the compressed length or error code into req->dst->length whe=
+n
+> req->unit_size is set on transforms that do not support segmentation. It =
+also
+> adds an inline fast path in crypto_acomp_compress() for single-segment
+> scatterlist requests.
+>
+> > diff --git a/crypto/acompress.c b/crypto/acompress.c
+> > index c8b4b8589769e..c55b0e8eff3d8 100644
+> > --- a/crypto/acompress.c
+> > +++ b/crypto/acompress.c
+> > @@ -166,14 +166,20 @@ static void acomp_save_req(struct acomp_req *req,=
+ crypto_completion_t cplt)
 > >
-> > Sigh, trying to do all this stuff through sysfs makes such an
-> > mess.. Nothing gets to be atomic in sysfs land so..
+> >       state->compl =3D req->base.complete;
+> >       state->data =3D req->base.data;
+> > +     state->unit_size =3D req->unit_size;
+> > +     state->flags =3D req->base.flags & (CRYPTO_ACOMP_REQ_SRC_VIRT |
+> > +                                       CRYPTO_ACOMP_REQ_DST_VIRT);
+>
+> [Severity: High]
+> Can moving the state->flags assignment from acomp_virt_to_sg() into
+> acomp_save_req() corrupt req->svirt and req->dvirt when a request is
+> configured with acomp_request_set_src_nondma() or
+> acomp_request_set_dst_nondma()?
+>
+> When a caller sets up a non-dma virtual request via
+> acomp_request_set_src_nondma() or acomp_request_set_dst_nondma(), both th=
+e
+> non-dma and virtual request flags are set in req->base.flags. When
+> crypto_acomp_compress() or crypto_acomp_decompress() calls
+> acomp_do_req_chain(), the call chain is:
+>
+> crypto_acomp_compress()
+>   acomp_do_req_chain()
+>     acomp_save_req()
+>       state->flags =3D req->base.flags & (CRYPTO_ACOMP_REQ_SRC_VIRT |
+>                                         CRYPTO_ACOMP_REQ_DST_VIRT);
+>     acomp_do_one_req()
+>       if (acomp_request_isnondma(req))
+>           return acomp_do_nondma(req, comp);
+>
+> Because acomp_do_one_req() returns early through acomp_do_nondma() withou=
+t
+> calling acomp_virt_to_sg(), state->src and state->dst are never initializ=
+ed
+> from req->svirt and req->dvirt.
+>
+> When acomp_reqchain_finish() then calls acomp_reqchain_virt() in
+> crypto/acompress.c:
+>
+> static void acomp_reqchain_virt(struct acomp_req *req)
+> {
+>         struct acomp_req_chain *state =3D &req->chain;
+>         unsigned int slen =3D req->slen;
+>         unsigned int dlen =3D req->dlen;
+>
+>         if (state->flags & CRYPTO_ACOMP_REQ_SRC_VIRT)
+>                 acomp_request_set_src_dma(req, state->src, slen);
+>         if (state->flags & CRYPTO_ACOMP_REQ_DST_VIRT)
+>                 acomp_request_set_dst_dma(req, state->dst, dlen);
+> }
+>
+> won't acomp_reqchain_virt() see the virtual flags set in state->flags and
+> overwrite req->svirt and req->dvirt with the uninitialized state->src and
+> state->dst pointers (while also clearing the non-dma flags), causing a nu=
+ll
+> or wild pointer dereference if acomp_reqchain_finish() then writes to
+> req->dst->length when req->unit_size is non-zero?
+>
+
+Herbert, can you please take a look at this and suggest what changes
+need to be made here, since you are the original developer of this
+portion of the patch. Thanks.
+
+> [ ... ]
+>
+> > @@ -279,10 +289,27 @@ int crypto_acomp_compress(struct acomp_req *req)
+> >  {
+> >       struct crypto_acomp *tfm =3D crypto_acomp_reqtfm(req);
 > >
-> > It looks like this ordering is to ensure that when connect appears on
-> > the pci device it can immediately be used with the tsm that triggered
-> > it's creation. I'm not sure this is valuable but I haven't worked out
-> > how a userspace is even supposed to exist with all these troublesome
-> > races.
-> >
-> 
-> The issue is theoretical and does not arise with a single link TSM
-> driver. The PCI device's "connect" attribute is added only after
-> pci_tsm_register() succeeds.
-> 
-> The race can occur when registering a second TSM. The "connect"
-> attribute already exists, and userspace may try to connect using the new
-> link driver, for example "tsm1". connect_store() then looks up ID 1 and
-> can find the new tsm_dev in tsm_class because device_add() has already
-> completed.
-> 
-> The proposed fix is to reorder registration so that device_add() is
-> called last.
+> > +     if (likely((req->unit_size =3D=3D req->slen) && acomp_request_iss=
+g(req) &&
+> > +                 !crypto_acomp_req_seg(tfm) && !acomp_req_on_stack(req=
+))) {
+> > +             int err =3D tfm->compress(req);
+> > +
+> > +             req->dst->length =3D unlikely(err) ? err : req->dlen;
+> > +             return err;
+> > +     }
+>
+> [Severity: Critical]
+> Should this fast path in crypto_acomp_compress() in crypto/acompress.c ch=
+eck
+> !acomp_is_async(tfm) instead of !acomp_req_on_stack(req)?
 
-Yes, since the cleanup path is changed to:
+Thanks for the catch! Yes, I will add (!acomp_is_async(tfm) &&
+!acomp_req_on_stack(req)) here.
+Since zswap is the only current user who, with this patch series,
+submits the req as SG lists, I was assuming that async algorithms
+would set the segmentation bit, and avoid this short-circuit. But
+until that happens, the above check will take care of this.
 
- device_del()
- pci_tsm_unregister()
- put_device()
+>
+> Callers using asynchronous hardware compression transforms (where
+> acomp_is_async(tfm) is true, such as qat, hisi_zip, or iaa in async mode)
+> allocate requests on the heap with acomp_request_alloc(), so
+> !acomp_req_on_stack(req) is true for asynchronous requests.
+>
+> When zswap_compress() submits a single-segment scatterlist request with
+> req->unit_size =3D=3D req->slen to an asynchronous transform that does no=
+t
+> support segmentation, this fast path will be taken instead of
+> acomp_do_req_chain(req, true):
+>
+> crypto/acompress.c:crypto_acomp_compress() {
+>         if (likely((req->unit_size =3D=3D req->slen) && acomp_request_iss=
+g(req) &&
+>                     !crypto_acomp_req_seg(tfm) && !acomp_req_on_stack(req=
+))) {
+>                 int err =3D tfm->compress(req);
+>
+>                 req->dst->length =3D unlikely(err) ? err : req->dlen;
+>                 return err;
+>         }
+> }
+>
+> When tfm->compress(req) submits the descriptor to hardware and returns an
+> in-progress or busy status, won't this immediately overwrite req->dst->le=
+ngth
+> with the negative error value while hardware dma is still in flight on
+> req->dst, and skip registering acomp_reqchain_done() via acomp_save_req()=
+ so
+> that req->dst->length is never updated to req->dlen upon async completion=
+?
+>
 
-the initialization patch should be:
+The augmented check for async algs should take care of this.
 
- device_initialize()
- pci_tsm_register()
- device_add()
+Thanks,
+Kanchana
 
-> 
-> ie, changes the sequence from:
-> 
-> 	rc = dev_set_name(dev, "tsm%d", tsm_dev->id);
-> 	if (rc)
-> 		return ERR_PTR(rc);
-> 
-> 	rc = device_add(dev);
-> 	if (rc)
-> 		return ERR_PTR(rc);
-> 
-> 	return tsm_register_pci_or_reset(no_free_ptr(tsm_dev), pci_ops);
-> 
-> to this.
-> 
-> 	rc = dev_set_name(dev, "tsm%d", tsm_dev->id);
-> 	if (rc)
-> 		return ERR_PTR(rc);
-> 
-> 	/* Complete PCI registration before exposing the TSM to class lookup. */
-> 	rc = tsm_register_pci(tsm_dev, pci_ops);
-
-Maybe we don't need the helper any more, open code pci_tsm_register(),
-align with tsm_unregister(), seems clearer to me.
-
-> 	if (rc)
-> 		return ERR_PTR(rc);
-> 
-> 	rc = device_add(dev);
-> 	if (rc) {
-> 		if (pci_ops)
-> 			pci_tsm_unregister(tsm_dev);
-> 		return ERR_PTR(rc);
-> 	}
-> 
-> 	/* Notify TSM userspace that PCI/TSM operations are now possible. */
-> 	if (pci_ops)
-> 		kobject_uevent(&dev->kobj, KOBJ_CHANGE);
-> 
-
-I'm good to the analysis and good to the fix. I was confused why the
-original patch refactored tsm_register_pci_or_reset() with no functional
-change. But with this proposal, the change becomes reasonable.
-
-I haven't finished the series yet and am not sure why this fix is needed
-in this series, how it affects the following patches. But it is a good
-fix standalone.
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261028030503.17=
+923-1-kanchanapsridhar2026@gmail.com?part=3D3
