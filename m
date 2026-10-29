@@ -1,112 +1,99 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.135.74
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793296623;
-	b=2XQv4CsBYUvFEiWZeHj9YScBqD1fCR88Q6HGfqB3iW3GuUjgMD8nW6JVHrHbhh5Zb+/0
-	 zoSbFxbid+qPddj/evf/KotDeZWf/HeTXV1HnpHCnYNl7M85w4LWOE0PRvyoaI+vBQibF
-	 u2TyELB+bXjeUmL/ONgLyikXMcGyUprs4i3m1UhoaeL4Anj7fihGjUQKe4s90GQPIgJmj
-	 5v7zVQm9FS4evfACEAxw2aMyDMHw+CPhmMVh5jF34U3IoxXipepkscEElNeImeZpjYOVn
-	 zu5iQiENYcepDohCqZ6122K4jNw7Ww2PjqD/fXQJfDfRihSMHTR6niQ3ZY/698wECsQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793296623;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
-	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
-	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Authority-Analysis:
-	 X-Proofpoint-GUID:X-Proofpoint-Spam-Details-Enc:
-	 X-Proofpoint-Spam-Info:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
-	bh=P6u0rHBR+nKG0I7hTd+T8m2cWP7AXG8Lp35TLCAr+jM=;
-	b=Acc9Hw6q8z4WNuz6cf3ZR3lUYYywtzX3j0QBlqY35vMX0mNAdfzz+9raOuIklkJcxG1w
-	 KpwcjbE91nrWK9cb6PH9rM1sE76+eMn2AzW6s1ZLddHM5j4WPHlA6xpzSzTLO7qD1HIV4
-	 60PInqQ/OMOERGNnjezfzDhj5d50+2X7vMhlZEv6/RvKXnHYyH/bPAw8YC7d6MKdzZyqM
-	 Laodiy4A9EvMleZ2AboBv3OFbsprILUdBy9CHCKS1z7ZuAu1IdVRoiAavqGyzOMFumly4
-	 2mCU1JIO9qIg7uBNJ3Bi8F0NBWeSkylKyPoBI/GbxxFo8pe/3eLeec9j0i9VuSFI/mw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=columbia.edu;
-	spf=pass smtp.mailfrom=columbia.edu;
-	dkim=pass header.d=columbia.edu header.i=@columbia.edu header.a=rsa-sha256 header.s=pps01 header.b=R2WPL6ZU;
-	dkim=pass header.d=columbia.edu header.i=@columbia.edu header.a=rsa-sha256 header.s=lionmail header.b="yPgNyo/y";
-	arc=none smtp.remote-ip=148.163.135.74
-Received: from mx0a-00364e01.pphosted.com (mx0a-00364e01.pphosted.com [148.163.135.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.44
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793297523;
+	b=FwKSRMdljtKCJRLATaWqfEbY1+bW7VSOCQFxzfodMeiHeSxY10yJDd/8pqUH2s/4twE3
+	 gc95clV3sr1/5RoNWpkUwgJ1sv0GjXljEJNvMO+THuOIFkeS95FFlBXi3Otm0TJXoy2gH
+	 YdM0VgRrjESCPGbupok5SreZOfZAVP0a4pihQiQNCLIevSt07GOFm54ItvFMQa4qeiUEA
+	 dgppH8mavHFYble4osILO6yMkgcFALyMs9bx7usXeO+CCi/FxHDmDWSX//ErOsPFrDgyv
+	 05t+MPvgCYUrbAuHMWupMIgXpoTT4MoEh1KQdZZ9DGmBNcnjtdn4gXZmCbJ/KUJ741Q==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793297523;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=PLUjYNTvLoS6IRSrAP5hbUmJYyA56qlS0xnG+YeH+uo=;
+	b=vRGHVfY0p6JgqOYXvOhwnI/6Fr5CiUquqGjbErSDzkSfDeF96mur6lambpRckZBl5pYF
+	 FrfZSBZRMPA6R8RsmRXA8EsSJR4uqJlf6UM4/4A2d06Pbv2gpeojKT4YxctSO4FbyaTeE
+	 JVwu+r5+1q2IMXyHyJ4eT34gm1qiypgUitcdupL+8g+2TWMD2KLybPZn8wPc0c4LlJznf
+	 e3XVVpnKGvVFT6ku/HC4DCq4G4ta/XW8lU72SjmmF3+ay1EbYKCZbN5sFk4Pk/YPn+hUL
+	 2MJa408e68ETS2AkzBa9EQ/t+0t8QFWWq6/7N9739EAxRhSBaWZnQTRp87gCAKbuxTQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="0YY+ST/+";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.44
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91695606A31C
-	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 17:57:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 91695606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=columbia.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=columbia.edu
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D1A606A31A
+	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 18:12:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 53D1A606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=columbia.edu header.i=@columbia.edu header.a=rsa-sha256 header.s=pps01 header.b=R2WPL6ZU;
-	dkim=pass (2048-bit key, unprotected) header.d=columbia.edu header.i=@columbia.edu header.a=rsa-sha256 header.s=lionmail header.b=yPgNyo/y
-Received: from pps.filterd (m0167072.ppops.net [127.0.0.1])
-	by mx0a-00364e01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69TGYnso1782609
-	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 13:57:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=columbia.edu; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=pps01; bh=P6u0
-	rHBR+nKG0I7hTd+T8m2cWP7AXG8Lp35TLCAr+jM=; b=R2WPL6ZUjrui4fmhn+Sb
-	e5gUuP1PcNQgEhpFzYKIMjAXUlCBgrAZFfkmm3XlKqse9oF0ByxyWXob4U/8jsI7
-	UG3avqA23zTo9Rint/Ahb7tLRBn99QfnVE6johJgca7U88xHG3fazeMGoSKsKuxF
-	VyKAGdu8hGjLMmB3oOaRNVdENLuZhc6z+K/XqWg8D/c0ExoVjyP89NQAAOc/dB6H
-	WUbsiI3nCIEC1zGOpR8Xgmt4+wKX3PUEdrwKLUXqu/dlDKsJJMF4i5Bw/XfFFqYQ
-	QkJ/lAtndodswk3q9A5u9jLk2XPikQEu2Ocb+VszZ0YRLh7F1+9zSXhm5LEUjPMr
-	jA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-00364e01.pphosted.com (PPS) with ESMTPS id 4hm661k0gb-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 13:57:01 -0400 (EDT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-93e92aad34aso450444385a.0
-        for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 10:57:01 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0YY+ST/+
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5bfa7c09c9eso1970482e87.2
+        for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 11:12:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793297520; cv=none;
+        d=google.com; s=arc-20260327;
+        b=mlMJcLFs6gIfse2VXiGafyaW2TGcQ08/HHnILCIJrQsLVuiRMsbt8Dgd1b/OADBI15
+         WpNoeVpi+7r2SffVhgaTxxw4efdSKwGKSG49oylQ1TIGilj8pBUWoDxK1GQDxLueV1Jm
+         i4K4hCJ+NTagFQrSchdNJrg3OFYposKYFGid31M5rEKi27BXEMYZV6fmeydfhMkqk0rh
+         hiKBG3es6b4hKn/YW5vOOTZOsMODw8Xic01t6igXkCDqFZh3wIt7qTPj9StKLTUjLEEj
+         1grDFt/BHSl1JqvkQQNofNIisY54GRV5OihmWxzWdW1XSR42ZWQa1OtHPp3dkJMKrII6
+         Djgw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=PLUjYNTvLoS6IRSrAP5hbUmJYyA56qlS0xnG+YeH+uo=;
+        fh=INjNmmHA7ztbj5+a+SXdF/cS9e7eP5VrVRtcqQVr4pU=;
+        b=X6HlmVvCdMpSsAmYYFLyitJyc5uilSs5MIcmY3E2kovUhFXABdWeZPKtXzOF7ajk1+
+         GHmeKqIXR37ZTgd8pFKq5GdofoUpg28yY4WA2gVwlDWPY5VZC9XKf7UKbl5R4UEn2TEn
+         /Q/YjNrs9vBPTYGTcGyRofiICcyPz1IdEoqpM0/ppEauXa8i7nkH6fURuNtDVCGnG7Mj
+         OB71fu5QTLztOIgFgQ0cgvd1iIkhrLQQXGwOIgSlYl4ChwBrw/ABAT9YIgNbIepnsz7Z
+         lz+RxOX0lBSkdIjG+FmtaaTRiEOjAzmurO8d5/ajfHgchcamChoZiNFax5oUhZh1PJ69
+         2nxw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=columbia.edu; s=lionmail; t=1793296620; x=1793901420; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=P6u0rHBR+nKG0I7hTd+T8m2cWP7AXG8Lp35TLCAr+jM=;
-        b=yPgNyo/yy15TFFvN/PkPDGV09il5X2n+krqqfPmTQejcIOm9OkzNhZoqBQvr6QxQQc
-         EMOFSb7gCAyJ2vjAnYs538odpgwx1eztvUelEo9vwX1/Ybz8R5oxvFbaaWZVIgJNRjNi
-         ZxaB6LbKchmjujqRhF4R/2KG4m9xgJfEKi7mzTkup0rqB+KhKU+ivBxiWGyVksSOZ02R
-         y9GYn5Ikj78v3ZXaC/sWkFf09RopKj5ReuctROHtBDMLF3YsTjldSAFpJ9ojN0JUSDSk
-         uz+DyFVhTuIhmv5XY7TbFLRBxSRLeWz/hgP1IpLSORe05T+/E3cJ+EiENhQbmpHvvCnS
-         /xtA==
+        d=gmail.com; s=20260707; t=1793297520; x=1793902320; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=PLUjYNTvLoS6IRSrAP5hbUmJYyA56qlS0xnG+YeH+uo=;
+        b=0YY+ST/+cpyakGhCBprTq30K8zvx7IwrxS8mDhfh+XEu9d6y2f6FjhTUP7bGc2SPgA
+         xfUSJxb2MujQGhNPIln0cDFguPs3cf6EjPkXBSZsKlxZCRpko5jtN2zgbO5GUV6dh5WJ
+         7AVCJe4WNxTzw99TTDvIGrRnqwxz1P8ODbSAJ31l/Ibd4siAoU/ciAJqQlV0DylmTi15
+         EWSlSHoNCsbj0gEasQ5WLLrSUQvoDM2tGKb3gjQ6a3yFQDz5zAkIaae9MRyjr9DKwtz0
+         mntbwEwvq0QjClBGwLAc7F+4JsM5Zk8f+93actNLFqsT5sAIg0hNhjOuZSslP92RSf8H
+         IuqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793296620; x=1793901420;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=P6u0rHBR+nKG0I7hTd+T8m2cWP7AXG8Lp35TLCAr+jM=;
-        b=sLHXGjOYS8RzZRMBuOvrtpogTfhZzYCz5hyPHres8fxdVhCVrsQVvqW/BEHhflwK8b
-         rjmhH45/hTXOmMGpavj/pLBNsr41vWxeY1Sridjqkvg4+uaH1QNPlxX+XBahU775adjH
-         cRmYO54e9rkFGolDECkP15aFwE+RCTnwHgbBfAXl/plmhpnSKZH23UMSwO83U7q0OOlP
-         1yXKotN4vUzaXV8/gTxeR+SW/Sq9PI4MG3qHS3aRJlAnIBpmWdMqxnT1JhIX13wG1oE/
-         ziVqDCPFKIXWI2/gAAXdZ7VQZ0xKeVfIN0nd3ek7hOQDZVlKmDW1wLgJhzeWG7J8uN+I
-         uEqA==
-X-Gm-Message-State: AFq9FYJnioVrzT/Daf1ZqEQ5fT3JnRCmsVtUi0jbZGRd5igQApokAvmn
-	xQ8KJnhkpsq7AaeJgCHs3Gg96zh0UfncJJfzudvg6mlTkh2YwrUU7JldgUw2hhH9e7+2YSEVxwo
-	DyaQ6AycCHNDXGhDVY422MwAjmGxGuhPtfVcIjE7fA8Rzq+rRL+ivdO3gDjohFQf1eFplLa9RqY
-	Jq
-X-Gm-Gg: AYBFou3nQUpEwE7fptJrjfv5B5HqlTLYVZk5lIkvxIdP9Q8wfRf/YGAzMpF20lz+auy
-	bqKALBL2V53qBgpCBCPPvsoxQu3sBnwxschSgtUWvPQEInUt2EJutAQNq+ttlGbgClZ7JRZCEvE
-	/w9035HMOzlPYtawEcEWsWQkRHVDvtbkn2Uf/Gzz8zl87BeJf/Wyp48Qt+BBD1awgxuVTvjyADn
-	rmTzO2+PkQa8feAe0F25g8LcpAKO9vrgdOGUrM7gYptRixIAoR08WehnIyX7/38uO0LwDL8AsFx
-	Mo1Q9yr8sFP/1qymfab3t6FbifFEWFRvFUNo89Qq5MFBnAipqDoZly+f1wA//oMtlfHClJD4L4/
-	1r57MqojXFWykIHUaG1yi0/Rvrqo0dMyZYGR29ZwA5jGWOpTf8GyKRO7n/HSvMy0uAuijRFliah
-	VzbN97lNThIrAhLP84X04VsFbgP9oQZgCjDky7teh/4dbhh/BhA/Zb/bieAAj29liqPP3+p0S3O
-	UUvtDaRLnY8bHo1mMTqK+seFGjvorQeYLeiqBDh7C4OCmDAFfj5DmXDrcrX94JaWMY=
-X-Received: by 2002:a05:620a:40d5:b0:93e:c12c:43fd with SMTP id af79cd13be357-94408d5083cmr892193485a.74.1793296620602;
-        Thu, 29 Oct 2026 10:57:00 -0700 (PDT)
-X-Received: by 2002:a05:620a:40d5:b0:93e:c12c:43fd with SMTP id af79cd13be357-94408d5083cmr892190085a.74.1793296620185;
-        Thu, 29 Oct 2026 10:57:00 -0700 (PDT)
-Received: from [10.206.158.158] ([129.236.230.185])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-944212069b9sm3934585a.17.2026.10.29.10.56.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Oct 2026 10:56:59 -0700 (PDT)
-Message-ID: <0043912c-4225-4d2a-a8aa-d160c832e7eb@columbia.edu>
-Date: Thu, 29 Oct 2026 13:56:59 -0400
+        d=1e100.net; s=20260707; t=1793297520; x=1793902320;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=PLUjYNTvLoS6IRSrAP5hbUmJYyA56qlS0xnG+YeH+uo=;
+        b=Ueu7fIqW7tSeGOCR2RWJpjO+2JxHQ7u3H/KetHiDY96+8gC1Uwn8qseRZDXMhUadto
+         A6x7iHUQg/r4+16M+PflqY+AlN4K7aOCsiYliG0dUfbZOhdRKQTaBvdBLpNMcjTfGrtf
+         IytQ5eEEOVkXoecnelLr16smkQTewft1WgvJIH0JbtYUPADbg9iJKjS9Jzztwrevi+ce
+         095mXYWhBNmzLINz/FYXuVxf6txnh6KJvhngWiUg8/FDrvibLsporb0YJ3yzzNKf1XEc
+         hsAEBaQOz4dHtbv7ZWfqEtyANzAjxArFvy5TuJKn9N/V0j5IXeetoQY6XKCFb4yhBHwX
+         cCGA==
+X-Gm-Message-State: AFq9FYL5G4oJQtbkSOlUGJcCWv1Yrt+pHxWyHYejbIzYKOdNWVW2n2om
+	8pqzq+4iLt9/q5gCHKqgHjB3a4l0cTf47qlgJ1UWJjj2qPNToAJBWEQBYcL80lbjDSYBvKwEAJF
+	ZfRxoHZDgkt4mncIVL5q9UKINYVrQijY=
+X-Gm-Gg: AYBFou0h3buEFnfBtUEb8MXC5u/l5gNobCX1dut+zNof7bJxrSkgRnhDCCmQuSEVZB9
+	+ah8zp+qD0W9iSK6biH/IuRW69IEZQ1HhJYTXWzcrHLTSA6JdAyFXR5S/axJMucBge6buE/58H4
+	lpayznC7ZqGvC/80USKvpwegJabjZusALDKhtbdFWWnfmU+Pv21pp8Vmy5AAhkpBxgYn3962BMT
+	zzd2kc0k0ILWPvYxs/kxgwMpCEU2IxNKgkNv11gbVwgFS6V9bS5SOdqmpjdyQjOnTvn6DyQlE+c
+	K9quXdZqFED4ZFdXewyqdR0KjgoeVFODxH/a5svkdoSOKklKqPyZovtBNa3jcQE3S5KVTZDZQo2
+	HicC7n5i4lez+WzoLDPrmRs7/d8Matxf1D1/q
+X-Received: by 2002:a05:6512:23a5:b0:5be:414b:9032 with SMTP id
+ 2adb3069b0e04-5bfcad46342mr2523158e87.31.1793297520237; Thu, 29 Oct 2026
+ 11:12:00 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -116,94 +103,43 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/hugetlb: clear the hugetlb flag before leaking a
- hwpoisoned folio
-To: sashiko-reviews@lists.linux.dev, Muchun Song <muchun.song@linux.dev>,
-        Oscar Salvador <osalvador@suse.de>,
-        David Hildenbrand <david@kernel.org>,
-        Miaohe Lin <linmiaohe@huawei.com>,
-        Andrew Morton <akpm@linux-foundation.org>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>,
-        Matthew Wilcox <willy@infradead.org>, Jane Chu <jane.chu@oracle.com>,
-        linux-mm@kvack.org, tz2294@columbia.edu, Zi Yan <ziy@nvidia.com>,
-        kaitao.cheng@linux.dev
-References: <20261028-hugetlb-hwpoison-leak-v1-1-77ce56002523@columbia.edu>
- <sashiko-outbox-189633@kernel.org>
-Content-Language: en-US
-From: Mani Tofigh <mt4022@columbia.edu>
-In-Reply-To: <sashiko-outbox-189633@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=eamo7LEH c=1 sm=1 tr=0 ts=6ae388ed cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=s68UaERRFoarOrKl7kvqFw==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=x7bEGLp0ZPQA:10 a=A0y_DWxS2BwA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Da8U98TiO7q1upZEImrf:22 a=SsB-OO3BMngHh3ZO9fOt:22
- a=VwQbUJbxAAAA:8 a=N3hL5AxQErDOUL2KMnYA:9 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-GUID: bENF0EN4I14O3D6aqSzvWT_jJMdx1H_S
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA3MCBTYWx0ZWRfX2EOiKgvmDv37
- 4ly/HlFYxLLkJgGTkzZpkiUH/HPGd2ql+0Z3YUWkIPZ3nfs89HFYPeUSUYgYwk/v0SO7LgaO3AD
- k0stTq9quMsmX2TLkY99glrd9uViVoU6cMX6Xn4BI2r8+Kg0lplzJ2N6B6qLrphZho82DWot9fQ
- /r+JNumhJC8J/MpbUH3H1NEDkNt5CWTesuOqDObtX5NUASeZ1jOaAjMFy21WnnpL83YCro2r/ps
- HryIeiPSRmMF7iWWpOk8/2OaL7fu24pq6ONKVy8Uf3N4OyYL7qerP9UoQe80+1d6xPvcYRq8OcL
- QlLy0LUkqNyTRvNemxYjlxZCQjAe2S0jI+MIO0FazRrc27iCpf5uz/G7+joj6UG20hJfgdqQjHF
- OLz7JUEnhFDdFWnC6HUZepaA6iMmglhicxJzOzHyXRlC0HZL9KeUPB8JsQSx5Y0AeleeWTHcfXC
- n+C9w7z+70PXpa52klw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA3MCBTYWx0ZWRfX/wxQlQPrLUHe
- EXEIWuNisfPkXpMKFmu2udQwOFkaGdnhQlM6NmKQ/3Kw2s4qdOd7FfDfvETBaeFn4Lygl8+60KN
- iN8RwgsUc/v7A5IbV/iFnXvlEN+QG/p3nKwANtgQhlE4fqZIaq9y
-X-Proofpoint-ORIG-GUID: bENF0EN4I14O3D6aqSzvWT_jJMdx1H_S
-X-Proofpoint-Virus-Version: vendor=nai engine=6900 definitions=11950
- signatures=596817
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 spamscore=0 phishscore=0 suspectscore=0 impostorscore=10
- lowpriorityscore=10 bulkscore=10 priorityscore=1501 malwarescore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610290070
+References: <20261028030503.17923-1-kanchanapsridhar2026@gmail.com>
+ <20261028030503.17923-4-kanchanapsridhar2026@gmail.com> <sashiko-outbox-188655@kernel.org>
+ <CACpmpodu3C=uYH6dmFM-xkvdJxiRDjamRKs1Q4jU6_KKjFWNqA@mail.gmail.com>
+ <auLbyon-KaV5Sw5_@gondor.apana.org.au> <CACpmpofcd=ZPKhAoHJfvJU_JZshKs1GGJZf5JhjAW1PZzDq-Lw@mail.gmail.com>
+ <auMCV1AFlEFuJnk7@gondor.apana.org.au>
+In-Reply-To: <auMCV1AFlEFuJnk7@gondor.apana.org.au>
+From: "Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>
+Date: Thu, 29 Oct 2026 11:11:47 -0700
+X-Gm-Features: AclHuK8R6xznrwfhDJPyC02DpxmXLxT-47zHrOdZ1Ogvg0ySBRqlzEwjpCqqoJ0
+Message-ID: <CACpmpofnUbi7gf=eBdCH1k6ZpeiNQUdt_tRRZhvipmhwkhwRqg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/8] crypto: acomp - Add trivial segmentation wrapper.
+To: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: sashiko-reviews@lists.linux.dev, hannes@cmpxchg.org, yosry@kernel.org, 
+	nphamcs@gmail.com, chengming.zhou@linux.dev, akpm@linux-foundation.org, 
+	linux-mm@kvack.org, davem@davemloft.net, linux-crypto@vger.kernel.org, 
+	rientjes@google.com, willy@infradead.org, senozhatsky@chromium.org, 
+	"Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-+Cc Zi, Kaitao
+On Thu, Oct 29, 2026 at 1:23=E2=80=AFAM Herbert Xu <herbert@gondor.apana.or=
+g.au> wrote:
+>
+> On Wed, Oct 28, 2026 at 11:03:55PM -0700, Kanchana P. Sridhar wrote:
+> >
+> > I was under the impression that if acomp_req_on_stack and synchronous
+> > tfm, it would go through acomp_do_req_chain(). Please correct me if I
+> > am wrong, and I can modify the conditional accordingly.
+>
+> It's perfectly fine for a stack request to go to a sync tfm.  What
+> isn't legal is for a stack request to go through an async tfm.
 
-On 10/29/26 11:43 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Critical] mm/hugetlb: add_hugetlb_folio() clears HPG_raw_hwp_unreliable on error
+Ok, thanks for the explanation. I will change this as you suggested.
+
+>
+> Cheers,
 > --
-> 
-> commit cae6d1104a254ddb073fab05f2a9308005af88fa
-> Author: Mani Tofigh <mt4022@columbia.edu>
-> 
-> mm/hugetlb: clear the hugetlb flag before leaking a hwpoisoned folio
-> 
-> This commit moves the folio_test_hugetlb_raw_hwp_unreliable() check in
-> __update_and_free_hugetlb_folio() to after the hugetlb flag is cleared, so
-> that vmemmap-optimized folios with unreliable hwpoison tracking are leaked as
-> non-hugetlb folios instead of causing dissolve paths to loop indefinitely.
-> 
-> [Severity: Critical]
-> Can moving folio_test_hugetlb_raw_hwp_unreliable() below
-> hugetlb_vmemmap_restore_folio() cause hardware-poisoned subpages to be freed
-> back to the buddy allocator as healthy pages if vmemmap restoration fails?
-> 
-> When hugetlb_update_hwpoison() fails to allocate a raw_hwp_page struct, it
-> marks the folio with HPG_raw_hwp_unreliable and frees the raw_hwp_page list
-> without transferring PG_hwpoison to the subpages:
-> 
-> If the folio is later freed or dissolved and hugetlb_vmemmap_restore_folio()
-> succeeds, folio_test_hugetlb_raw_hwp_unreliable(folio) will now return false.
-> Wouldn't __update_and_free_hugetlb_folio() then call
-> folio_clear_hugetlb_hwpoison(), clearing PG_hwpoison on the head page against
-> an empty raw_hwp_page list, and release the poisoned subpages to
-> free_frozen_pages() as clean pages?
-> 
-
-This isn't something new with this patch. dissolve_free_hugetlb_folio()
-already drops raw_hwp_unreliable the same way when the vmemmap restore
-fails. Zi's change [1] to stop clearing folio->private in
-add_hugetlb_folio() would address this so I think this patch can rely
-on it too.
-
-[1] 
-https://lore.kernel.org/linux-mm/A1A14368-7A43-40ED-B2AB-C2EC2C5FFB1D@linux.dev/
-
-Mani
+> Email: Herbert Xu <herbert@gondor.apana.org.au>
+> Home Page: http://gondor.apana.org.au/~herbert/
+> PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
