@@ -1,47 +1,130 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793266269;
-	b=lOqM3FXto/OxADsOwOQfy9ZHsV9I4W3fSh+OX3L3Qd7HRNa2tOHTq3ZHzD/51TQT3PDf
-	 KRCPoEms+MT+oMtbVOH3rP2rxSeiS6/1Dfn86GuBOI7Mpon3fyFfu+9VWICfbl83LXLJ6
-	 vYGIRwEXZjRdukN3A4zZ2n5LqFli1q84JsZP7gp/goyAsauPjZ1JfDXe4dLLkoey2dKzR
-	 JBgYkAq+W1Jzd6Nc+c6HJmt4ZUycA4s2mbDvtNujs+4RapPKB3cg9wLcLUDm15TnVHTRi
-	 r+A5/gsWRviOqG50yYDOwLgiMVGQkdtjlfROdnleh+Cz3DavUYC+deHPif91DXJ322g==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793266269;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:From:To:Cc:References:Content-Language:Autocrypt:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=A4SbOCG1TxQMUGBeg+bBhriHHCico/HW3q40uHhJX8A=;
-	b=l4QDr8KnGh7uvX9u1tehPTpUZr/vVtdZdXPxESuri3InDSyAViOgBUAtDQSu6vn0GAki
-	 27BHCJsu0iJaeRf2j8/lbNyjJHlQSmbV49n19+MRW1hmXW6gV7SqelVZX8YtYYy6ET07J
-	 pTVeqq+nJQ1fFyraS2p9+LFNiPP/KQdIIN+4/JmTtlFnHAc+JhqJtU6b4WlFyo3kgMY1z
-	 kbQW4nLrl698O0PnT3TQ/Ql7c9G33tDjymkp98SVdp+BUv9jgA0jTx8OEGMK2OZM5wUUw
-	 CE+rVVUK+popG7NTtscu089RA9F0EA8j3MCeBG1v7ZRg0cJSg6ZgdvpTx/o5ld2kl/Q==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E8iBbIM1;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.12
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1793267352;
+	b=Nq4ftw1YySMcykTHl3ckEZUFXSUeVDRjEr7veLe+CasSg7ZkkfWDwbWGEDysVhiRx2ew
+	 THm0w4j4y7XTdvN3qLflBQAqc8O8nOWuPOW/bDqH4VHJWYDxA5hOdjIqndmj0dOL3frld
+	 1ouEX+NN74/5//tm3uj9J9Ah534neFkIbiyhyQb4Am84NDDpaCSxE7e5vTG0MzPx1K7ht
+	 I6Z8R8cqJ/B1QQPLDq4VverQJxyw9wRMBq+Qblh88M0kLcy9q7JoZ1MBs7u5V2ivRDskE
+	 KDOQjLf1QgtPTpYz6qeVIZTmz6t9swZnfqMFAtFHyOVnlc5t2zDow/M3UaQ7YzlSe0w==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793267352;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
+	 Received:Received:Received:Message-ID:Date:User-Agent:Subject:To:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
+	bh=XQFGRrIQhwUwLTUJhWp3ZltLbLTYIWzjf54CpcXDdxA=;
+	b=VqqBlUfzljn3mXsWJC5c3EGVYQPl2Csq7BYjYB22chu1Xspzt+Z8XEFwGVaSPrNJvids
+	 5rQVgX8wMx8kbG+4xfjEZPyPDhcJhltZnjBQ5r4o57WKBfTbGTEqPFPGg0V645VSji3Ot
+	 L7cekmVkzIBapqBuUdhpZCZrpRrPkwZwZBkGMXSz3u678HDBzFX+xNegjARIGd4NFtA8k
+	 337Y/YK40o+KzHHd50NQEbP3vO2MtaY+zabhU2Yzaxmre2QgJPI264jUWer5XQd2YZ8a9
+	 mhgkXE2+UESGlGv7JpFEECKQw4Je4VleoSyhaT3EJUgUhKtQXL933tfJi8dltz/JgPg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=KEMRhROD;
+	arc=fail smtp.remote-ip=192.198.163.12
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4E2606A31E
-	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 09:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5986606A31A
+	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 09:49:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D5986606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=E8iBbIM1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478611F01825;
-	Thu, 29 Oct 2026 09:31:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793266269;
-	bh=A4SbOCG1TxQMUGBeg+bBhriHHCico/HW3q40uHhJX8A=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To;
-	b=E8iBbIM1Q2HKCAnrrv74V3eRHtpXtmL+xNBAkJLicQXr5r6NaVd+bpo6X3fxlE9si
-	 CnKYasaxln/WMHaFu1wmptfrb7uO3kdAPd7rEIBdamKYoyX1uA1y3pYwCi57f2kY9B
-	 Vdsmw03hgdyi2qvX7Y6uzjkyk/zwxIlcXGDjcy3ueTdVwwmVOGvhucA1tXUCTjPXa1
-	 yQ+pnW9AVRS1iNq1z6iDlyA7rkBp/ysCzfaQzX2vPK56Uc7x9truuKAvUFLZPq7EqQ
-	 qecJC8Pdq6tP7BBRIMF4VgS8EFarEweSu+PRBhyufCwUsNYJAw//EpfYTp0QKxFqfM
-	 QMGrwc3ahbmSQ==
-Message-ID: <dd5c55d5-6922-4392-9161-ba4b6f99595a@kernel.org>
-Date: Thu, 29 Oct 2026 10:26:49 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=KEMRhROD
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793267351; x=1824803351;
+  h=message-id:date:subject:to:references:from:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=o9V4Z4EBpIAunUzT63xSfRmlPuNUYtnUwMb5mlcMpIw=;
+  b=KEMRhRODpMFA/IDrxieeLxw8entDO8rIk+YD7/pXAO2K1SZzPqrIOpx3
+   chB1/mhdawZmSV1zzTjrK4Vgh8JadxLiy/wKcu6Yh5VCI3ZBnjQl3/DHS
+   yEPWWwmeKIfsfpgbn19vIeeJWnBSCRRQePbxDbkoxJktG0ILKzaeLwRdX
+   iD09uljekta9W9l4uQVrXt/m72uJaE2mdDuC65kdDwy1fuET8XRVJays7
+   8GgbpDXjSbAJOT+1vArvWdzPiktIAcSNMr+1RRygc8YR80DOtpq77cOlU
+   BwwAmOhWF8xB2/yNfSqdCUSLvUbgZWHaCsGIfH+Kh3b5wsd0ijGmZhpKW
+   g==;
+X-CSE-ConnectionGUID: Lr1wV1viTi62OlVQtwlf7g==
+X-CSE-MsgGUID: ZcY/5IDyRd+3qfmDzm0yUA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11949"; a="1900864"
+X-IronPort-AV: E=Sophos;i="6.27,184,1787036400"; 
+   d="scan'208";a="1900864"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2026 02:49:10 -0700
+X-CSE-ConnectionGUID: BrT8UuK5Sje5l6t+ZvaptA==
+X-CSE-MsgGUID: Pav9mkNnTtyI1jQfa3GGOw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,184,1787036400"; 
+   d="scan'208";a="5186802"
+Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
+  by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2026 02:49:10 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Thu, 29 Oct 2026 02:49:09 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56 via Frontend Transport; Thu, 29 Oct 2026 02:49:09 -0700
+Received: from CO1PR03CU002.outbound.protection.outlook.com (52.101.46.17) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Thu, 29 Oct 2026 02:49:06 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=x2GRRufGxTDRuctskoYnBV0ldxJMWmV1tWfodh2LUkJ3/qjwHSheNZ+HyS4hrNwwoX/T326ZF5xBYidI8gFUOrmZ/pYKqc/oB1W8pm3KvC2GIXRDYz9TBSUoKSi+svNKn5kuhPGbrvHtozMrHlG6t9a0T4igRUZ1KOR4PYknb45YNoz4HWUomBtXSzbbjNEzHTchCPmZz9UFn01Qnz0cxFdnNZLsxq6Onxo1t6nDUaL3DvatWkikMU+dWJhXAr25uEcLtOtm2uApVfXgUCnX4jvgoCh039BfyU3p1GCESwp55ApC0xESSc/m790qPFzcU0964jwMepyoNrtLDD0h7g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=XQFGRrIQhwUwLTUJhWp3ZltLbLTYIWzjf54CpcXDdxA=;
+ b=B6NCu7HZDyBKhRDpp2gRosXDu0UMxxA8ZNDUUZescn5pgusqfhyZU/WsKXQ7oAcPW/41KAYu42K2ufS6p4r/pFec22c5o07D6B61gKJMBMhsxuESOYLAGzn6ykswhgmYJJ4SqTexz7nQnDJFOmTPDCS0zJEDhMl9WQ7R+Z67ubdWdv+VijKFQPwiU+2ukvdWHsd9aAOhW6DtYMzaZAjjrKgnrHXiL7HKGhbMWWNWqGdHjXrC+QQAvc1SA/fu6vLpiYv6vx2GwoWQ0rQkaY9NdIU3gWb18Frt+OimIOk5WCo5FWM9poLLAYyJyws+wzBrtxj5GSrYPImByXSoqgK/rw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from LV0PR11MB9792.namprd11.prod.outlook.com (2603:10b6:408:385::5)
+ by DS4PR11MB456666.namprd11.prod.outlook.com (2603:10b6:8:508::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.8; Thu, 29 Oct
+ 2026 09:49:00 +0000
+Received: from LV0PR11MB9792.namprd11.prod.outlook.com
+ ([fe80::1b1f:d9a8:ce76:e9d8]) by LV0PR11MB9792.namprd11.prod.outlook.com
+ ([fe80::1b1f:d9a8:ce76:e9d8%5]) with mapi id 15.21.0569.007; Thu, 29 Oct 2026
+ 09:48:59 +0000
+Message-ID: <131144ed-82ae-4353-a55d-80db82dd3a6b@intel.com>
+Date: Thu, 29 Oct 2026 15:18:52 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 10/10] drm/xe/xe_ras: Report correctable errors using
+ SIGID
+To: <sashiko-reviews@lists.linux.dev>, <intel-xe@lists.freedesktop.org>
+References: <20261029082752.1739281-12-badal.nilawar@intel.com>
+ <20261029082752.1739281-22-badal.nilawar@intel.com>
+ <sashiko-outbox-188984@kernel.org>
+Content-Language: en-US
+From: "Nilawar, Badal" <badal.nilawar@intel.com>
+In-Reply-To: <sashiko-outbox-188984@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MA0PR01CA0092.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:ae::16) To LV0PR11MB9792.namprd11.prod.outlook.com
+ (2603:10b6:408:385::5)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -51,211 +134,155 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/15] mm/shmem: hold off eviction in shmem_writeout()
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-To: sashiko-reviews@lists.linux.dev, Andrew Morton
- <akpm@linux-foundation.org>, Gregory Price <gourry@gourry.net>,
- Zi Yan <ziy@nvidia.com>, Joshua Hahn <joshua.hahnjy@gmail.com>,
- Rakie Kim <rakie.kim@sk.com>, Ying Huang <ying.huang@linux.alibaba.com>,
- Johannes Weiner <hannes@cmpxchg.org>,
- Vladimir Davydov <vdavydov.dev@gmail.com>, Michal Hocko <mhocko@suse.com>,
- Hugh Dickins <hughd@google.com>, Baolin Wang
- <baolin.wang@linux.alibaba.com>, Lukas Czerner <lczerner@redhat.com>,
- Carlos Maiolino <cmaiolino@redhat.com>,
- Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>,
- Daniel Verkamp <dverkamp@chromium.org>, Jeff Xu <jeffxu@google.com>,
- Muchun Song <muchun.song@linux.dev>, Oscar Salvador <osalvador@suse.de>,
- David Stevens <stevensd@chromium.org>,
- "Matthew Wilcox (Oracle)" <willy@infradead.org>,
- William Kucharski <william.kucharski@oracle.com>,
- Chris Li <chrisl@kernel.org>, Kairui Song <kasong@tencent.com>,
- Nhat Pham <nphamcs@gmail.com>, Miaohe Lin <linmiaohe@huawei.com>,
- Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: linux-mm@kvack.org, Josef Bacik <josef@toxicpanda.com>,
- Pedro Falcato <pfalcato@suse.de>, "Kiryl Shutsemau (Meta)" <kas@kernel.org>
-References: <20261028-fixes_shmem-v3-0-4ce3baf2db4b@kernel.org>
- <20261028-fixes_shmem-v3-6-4ce3baf2db4b@kernel.org>
- <sashiko-outbox-188427@kernel.org>
- <bff8fa50-6b73-4bb1-b944-2d90dd4e41d3@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
- dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
- QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
- XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
- Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
- PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
- WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
- UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
- jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
- B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzS5EYXZpZCBIaWxk
- ZW5icmFuZCAoQ3VycmVudCkgPGRhdmlkQGtlcm5lbC5vcmc+wsGQBBMBCAA6AhsDBQkmWAik
- AgsJBBUKCQgCFgICHgUCF4AWIQQb2cqtc1xMOkYN/MpN3hD3AP+DWgUCaYJt/AIZAQAKCRBN
- 3hD3AP+DWriiD/9BLGEKG+N8L2AXhikJg6YmXom9ytRwPqDgpHpVg2xdhopoWdMRXjzOrIKD
- g4LSnFaKneQD0hZhoArEeamG5tyo32xoRsPwkbpIzL0OKSZ8G6mVbFGpjmyDLQCAxteXCLXz
- ZI0VbsuJKelYnKcXWOIndOrNRvE5eoOfTt2XfBnAapxMYY2IsV+qaUXlO63GgfIOg8RBaj7x
- 3NxkI3rV0SHhI4GU9K6jCvGghxeS1QX6L/XI9mfAYaIwGy5B68kF26piAVYv/QZDEVIpo3t7
- /fjSpxKT8plJH6rhhR0epy8dWRHk3qT5tk2P85twasdloWtkMZ7FsCJRKWscm1BLpsDn6EQ4
- jeMHECiY9kGKKi8dQpv3FRyo2QApZ49NNDbwcR0ZndK0XFo15iH708H5Qja/8TuXCwnPWAcJ
- DQoNIDFyaxe26Rx3ZwUkRALa3iPcVjE0//TrQ4KnFf+lMBSrS33xDDBfevW9+Dk6IISmDH1R
- HFq2jpkN+FX/PE8eVhV68B2DsAPZ5rUwyCKUXPTJ/irrCCmAAb5Jpv11S7hUSpqtM/6oVESC
- 3z/7CzrVtRODzLtNgV4r5EI+wAv/3PgJLlMwgJM90Fb3CB2IgbxhjvmB1WNdvXACVydx55V7
- LPPKodSTF29rlnQAf9HLgCphuuSrrPn5VQDaYZl4N/7zc2wcWM7BTQRVy5+RARAA59fefSDR
- 9nMGCb9LbMX+TFAoIQo/wgP5XPyzLYakO+94GrgfZjfhdaxPXMsl2+o8jhp/hlIzG56taNdt
- VZtPp3ih1AgbR8rHgXw1xwOpuAd5lE1qNd54ndHuADO9a9A0vPimIes78Hi1/yy+ZEEvRkHk
- /kDa6F3AtTc1m4rbbOk2fiKzzsE9YXweFjQvl9p+AMw6qd/iC4lUk9g0+FQXNdRs+o4o6Qvy
- iOQJfGQ4UcBuOy1IrkJrd8qq5jet1fcM2j4QvsW8CLDWZS1L7kZ5gT5EycMKxUWb8LuRjxzZ
- 3QY1aQH2kkzn6acigU3HLtgFyV1gBNV44ehjgvJpRY2cC8VhanTx0dZ9mj1YKIky5N+C0f21
- zvntBqcxV0+3p8MrxRRcgEtDZNav+xAoT3G0W4SahAaUTWXpsZoOecwtxi74CyneQNPTDjNg
- azHmvpdBVEfj7k3p4dmJp5i0U66Onmf6mMFpArvBRSMOKU9DlAzMi4IvhiNWjKVaIE2Se9BY
- FdKVAJaZq85P2y20ZBd08ILnKcj7XKZkLU5FkoA0udEBvQ0f9QLNyyy3DZMCQWcwRuj1m73D
- sq8DEFBdZ5eEkj1dCyx+t/ga6x2rHyc8Sl86oK1tvAkwBNsfKou3v+jP/l14a7DGBvrmlYjO
- 59o3t6inu6H7pt7OL6u6BQj7DoMAEQEAAcLBfAQYAQgAJgIbDBYhBBvZyq1zXEw6Rg38yk3e
- EPcA/4NaBQJonNqrBQkmWAihAAoJEE3eEPcA/4NaKtMQALAJ8PzprBEXbXcEXwDKQu+P/vts
- IfUb1UNMfMV76BicGa5NCZnJNQASDP/+bFg6O3gx5NbhHHPeaWz/VxlOmYHokHodOvtL0WCC
- 8A5PEP8tOk6029Z+J+xUcMrJClNVFpzVvOpb1lCbhjwAV465Hy+NUSbbUiRxdzNQtLtgZzOV
- Zw7jxUCs4UUZLQTCuBpFgb15bBxYZ/BL9MbzxPxvfUQIPbnzQMcqtpUs21CMK2PdfCh5c4gS
- sDci6D5/ZIBw94UQWmGpM/O1ilGXde2ZzzGYl64glmccD8e87OnEgKnH3FbnJnT4iJchtSvx
- yJNi1+t0+qDti4m88+/9IuPqCKb6Stl+s2dnLtJNrjXBGJtsQG/sRpqsJz5x1/2nPJSRMsx9
- 5YfqbdrJSOFXDzZ8/r82HgQEtUvlSXNaXCa95ez0UkOG7+bDm2b3s0XahBQeLVCH0mw3RAQg
- r7xDAYKIrAwfHHmMTnBQDPJwVqxJjVNr7yBic4yfzVWGCGNE4DnOW0vcIeoyhy9vnIa3w1uZ
- 3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
- CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
- qIws/H2t
-In-Reply-To: <bff8fa50-6b73-4bb1-b944-2d90dd4e41d3@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV0PR11MB9792:EE_|DS4PR11MB456666:EE_
+X-MS-Office365-Filtering-Correlation-Id: 93b93ec8-5361-4cfc-b90d-08df35a1db1b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|23010399003|376014|22082099003|18002099003|3023799007|56012099006|11063799006|4143699003|261026140227099003|261022105027099003|10067099003|261022113327099003|261021121427099003|261009223027099003|261026121527099003|261028144727099003;
+X-Microsoft-Antispam-Message-Info: Ru1wcQ1r0aKAbZmABqLk3WmSInq8pWZtLoT+Qpcp9zsy5Z3B5SmM00ZA/0ETYn/jCqhgz7fuza815lodixaAbvFeE07W/eWmxR3oEDIYVHRRVfCqVG5Ld0IjThT52Vs/EHTDMFM9PQth8jK2uvcxdC3wgux7+hnr0U2cFFtMPWo/QY3uD2lC/eLV0Uk+Jt4eyJb9Lsk4JXXws3HjaK51cfmivV6YO1GL7VSiLxasMTkyyJUu5LVU7oX4jMGrYvTDgrNFfh3Ko2yAC66JQ2c7MVDYrlk5zrQtXuNbPX5ML+SiDrhvUImq6Ic07oexa6ejYE4Otrdqz/3nLy+7u5N4nVsh2THyYHJaU7nIdRENa0AgO0AlTKklPql9wJatiCgZMSEgHg2fM81nJ+mZD8z6gRMQyAbsL6rSFV3tHopFHVgjpEdHNrxWuldKjeU5/RmEw/VGBmt3tOuWZAnPg78OllgmhHP8xyYbHo0oOtDkNiHipiqb5WB4USeP++8wg+sEUusacZhX1g9xOEs5tn1FjBkJHhVDHkg8L40NkI6o5xV7dr7JjnQM+57joDgqzvGPRmOCztkg6XymBjRYUiEGQ0VGXHsS1FdHA4CWyh341nnjjc+9b5O+9YloCK24c7WCzPSpvFj9AO54mO8ibZnDJ2vSkQjcR+Q9MDwTgCurIzE=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV0PR11MB9792.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(22082099003)(18002099003)(3023799007)(56012099006)(11063799006)(4143699003)(261026140227099003)(261022105027099003)(10067099003)(261022113327099003)(261021121427099003)(261009223027099003)(261026121527099003)(261028144727099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cGg0TDNIcFlZUVUxa3VoVGxFSnQ0UUZHaTZFcEE1QThtTWhUbXJaL1FMQWJZ?=
+ =?utf-8?B?ZWRSbzhwelVsSWNWYWUvdGM4REtxdWJXcUdXRDVwYlFUZG9HelpOdUE3elRh?=
+ =?utf-8?B?bUlFd1RSTUtZcWgyOEtwNU1VRDVEaGdYTHNqRzlUUlpvMDVTSGJQc1VIYzBn?=
+ =?utf-8?B?SWdGSnJIZmdobGdTVFF1VUVkR3ZzRDFLMlprcDNYZmFwTHR4M0hmWStLMVZa?=
+ =?utf-8?B?Y3JsbHZQY1VRL2NNbG1hci9IeWVhbVlLWHE5Q2V1bUJid2xkK05BMGRHb3Fy?=
+ =?utf-8?B?UGZYTC9DVFNlQjN4Sm9MUmlPaUYvamY4eXliQjNvOUthWGl6SFdqVExINUtI?=
+ =?utf-8?B?OFRvaVEvT3JzODBUNGhxQjVnMmc1ckZZc29Ed0JYSmtUL01Gdm0rZjFkaXlV?=
+ =?utf-8?B?VWtaZVpTU2Z2Z3lXNmVWckxUNCtBaE9jdVo3NFRUUnQxT3prcmoycUo3dnBq?=
+ =?utf-8?B?ZTF3b1VpTzhPWWRuOEt3SCt5b2d3R3hOWXR0Y0tEbGFRU1lBVS9ab3NGaWpT?=
+ =?utf-8?B?QzgxcWRCT2R1bTlEYmlJUU1rMGtISXdwRXUwUDRFdVVqTEc4NFJ4WkYyUEQz?=
+ =?utf-8?B?UkU1N0RmNE96ZEh0dFVjbk1oQ3ozaTFWd0ZvOVBvajlUWXB2dHJEd2g2Y0lj?=
+ =?utf-8?B?ckliNkFNMFNjWFpVUlZRVjBRSDFVSDZscEJmQ2xreGp1bEpPUjdxaHp4VlJD?=
+ =?utf-8?B?WFU4aCs2WlZZR3hBRFhJcy82c1Y1TW1iY0ZWNUNHN3lETkZjRVpXMXR6VldF?=
+ =?utf-8?B?NWovMlVnMC9tclFxVmdBcEJUb2JUY2dyZUxSc2c4UWxCdFZ4eGxUdkd4VEFH?=
+ =?utf-8?B?QUFpVDlBMGduOER3Zzl3UUFmU2d1M1lUTmxJc0d2T283dWhEdXBCVE15dTY1?=
+ =?utf-8?B?ODgzRzhZbXBqeXZWODlZYkwvT3BlZ2VHdG9rRUtSNjlBbC9Qem4wNWVXa1hR?=
+ =?utf-8?B?V3N5THdxc0puZmk1dlZveS96RTA3cEJkeGtnMXJDK3JTSUw0SzJCdDNFZ2Z1?=
+ =?utf-8?B?RExXL0dLbzFkbllIZk5pSTlxU3BiWjZkSGhiYTBjRUhFZHZLTXNJUVVKc0VO?=
+ =?utf-8?B?UXQ4NWxTejdiSGpaWFYyV2tBM1BtSGRkSUJPaTFDL2Exck1VRVNmRkZXUXF3?=
+ =?utf-8?B?UytScGNkcmtsL3orQWVaTEJQOG4xa2F6c2t2REtkRGl5VnpTVWJtR21BUkd3?=
+ =?utf-8?B?cWRFWUsvZmVzY2pZeFhBNTdJdWNYbmV4QjBzOFhZeTloZXovK3VhWGFjMk02?=
+ =?utf-8?B?alVZak5WdDRvaXVvNVNqNzE2cks3NHJ4b2R5bHMzOGtaRnlEWHBVUTJDbFI0?=
+ =?utf-8?B?d3YzWkQzN1hIRnF1WmlERDVQckdWQnNTQ3RFTHE1ZHNlUUlrV000Uk9SalpO?=
+ =?utf-8?B?dGlmQXFtcm44eDh6Ukk5bmY5Wm4wTis4RFkwY0F0Nk9RVmpMSGFSclFGeG03?=
+ =?utf-8?B?cER1NlFVejc5aHpMcllNZFBHSVZLMXE5VVBRUkovQkIydzVOSkhJSThSM1hX?=
+ =?utf-8?B?R0xBQzlmQ3hLQzFFK3dTR21WaTBkQlRDRlcxbDd3OHphZHRCbzhsUFNYSlI2?=
+ =?utf-8?B?NmxIcitJVFhxL0VWL2xnUlVyZE1laW1maVlrNHUzWW5mTzY5SDZWVUQ0MGV6?=
+ =?utf-8?B?MjhxUzFWZW9jRXhlS3grOVR6b0VBcmZ4Rm01MU9pUm1pNjc5aFJWRHFZQmdx?=
+ =?utf-8?B?V3dJeitwYlVpdFFyeiswanNCL3VPb3ZoMWRod2lRQ2pRNkVaa05BSUhIWGZW?=
+ =?utf-8?B?dGtVQWtFdDkrWVhVQVJPR0t2L0ZnM2RWMHNIcHpidXQ4cXdpR0Q5VGZPdyt4?=
+ =?utf-8?B?ekhYNXlUZEtSbzdrMzFob3ViSHVSNWNUdWRaMnNWalNyTVVNUU1SRDlVRm1H?=
+ =?utf-8?B?VDBTOW5Hb1RvempjR1BFbkp1eEpzdUdYTXhTT3Q5bnp3b3FpYXk3TWRMWENT?=
+ =?utf-8?B?N2EwRkpGdTU5VGRNOGc1cFVlU3NwcXBMeGZNYUF5Q1lEd0xGcy9CRWpiYnV6?=
+ =?utf-8?B?dktPR1dhWXA2VGpzandUM09ubGFLam05SjBEODFXb24rbFBGc2JXVzNUKzEy?=
+ =?utf-8?B?NmFnNWdQZ2xGcnFWVzRvd0FzN0drRkR4NXJSbU8vQXplZHN1V0ZqWE40a0Ir?=
+ =?utf-8?B?Z1Iwb2gzRS9qOUFxNklUVTMvbHdydkZCZklXZzJ4WndpRU5XWHFUMGxmRGp5?=
+ =?utf-8?B?aHFuWlI3L00vWml6MTE2ZUhHSkNFQXBPWEE2QlpPOUxia2oyYnhtekNaQkFZ?=
+ =?utf-8?B?Ym9IeFh5dlYxQ2RYOXEzNGV1R2RkUUZXMEdjTU8rMVlSM3Bja1ZDZHFxN0ls?=
+ =?utf-8?B?UVVZTytkNHNTUkxrbDVYSjg3L2tiVjVMblN1OE1vQkJZajNpNWN6UT09?=
+X-Exchange-RoutingPolicyChecked: wRRVsEYGsPTsPd3WOJLbIX1Zpuimu0D2k5YM00p39Otf2pTsfQQENjPqMHcDL2S8SGe0AyTTh79JwxPKnPYkqaQtq7E3piHxQWrSzjED6mmEVBka7SZkNgivcHwO1gUTE9uzFY4NCOoZwGOZEQk0TrkmxynAkdg4pL/weIj6Kwg1fa+8kgzvqWlKSqTZPcS232S6WKFd5zJHc8E3A7eaWRGd1srxywg4a2MazfAT5NDnFZ8+GT2o6z7lhjcJOSvvQeYAWANINLK6LU9GMdXxTDQ6Er2qM6MEPtXi0t90AgWUANNfHinQZc/Vxy0L47/hIctJeC21WGndfI/sv6LTfQ==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 93b93ec8-5361-4cfc-b90d-08df35a1db1b
+X-MS-Exchange-CrossTenant-AuthSource: LV0PR11MB9792.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Oct 2026 09:48:59.2821
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: XzmLNJq1KPBpxXQPfPfa7jdyMUJihWdK1mIX8bi8z7B7aBFih9FmWhtONkvYBgsPUtmInUQHi0TFOR/FqlJzww==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR11MB456666
+X-OriginatorOrg: intel.com
 
-On 10/28/26 21:51, David Hildenbrand (Arm) wrote:
-> On 10/28/26 21:35, sashiko-bot@kernel.org wrote:
->> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
->> - [High] mm/shmem: use-after-free in shmem_evict_inode() on concurrent swapoff
->> --
->>
->> commit bfe337ff80d886d314a9991abae8133932277cd0
->> Author: Josef Bacik <josef@toxicpanda.com>
->>
->> mm/shmem: hold off eviction in shmem_writeout()
->>
->> This commit prevents inode eviction during shmem_writeout() by incrementing
->> info->stop_eviction before removing the folio from the page cache and
->> decrementing it after swap_writeout() and any potential page cache
->> reinsertion complete. It also updates shmem_evict_inode() to always wait at
->> least once for info->stop_eviction to reach zero even if the inode was
->> already removed from the swaplist.
->>
->>> diff --git a/mm/shmem.c b/mm/shmem.c
->>> index e3e4bbbe1d802..eddd5870be072 100644
->>> --- a/mm/shmem.c
->>> +++ b/mm/shmem.c
->>> @@ -1616,6 +1616,17 @@ static int shmem_setattr(const struct mnt_idmap *idmap,
->>>  	return error;
->>>  }
->>>  
->>> +static void shmem_disallow_eviction(struct shmem_inode_info *info)
->>> +{
->>> +	atomic_inc(&info->stop_eviction);
->>> +}
->>> +
->>> +static void shmem_allow_eviction(struct shmem_inode_info *info)
->>> +{
->>> +	if (atomic_dec_and_test(&info->stop_eviction))
->>> +		wake_up_var(&info->stop_eviction);
->>> +}
->>> +
->>>  static void shmem_evict_inode(struct inode *inode)
->>>  {
->>>  	struct shmem_inode_info *info = SHMEM_I(inode);
->>> @@ -1628,16 +1639,21 @@ static void shmem_evict_inode(struct inode *inode)
->>>  		mapping_set_exiting(inode->i_mapping);
->>>  		shmem_truncate_range(inode, 0, (loff_t)-1);
->>>  		shmem_unused_huge_del(inode);
->>> -		while (!list_empty(&info->swaplist)) {
->>> -			/* Wait while shmem_unuse() is scanning this inode... */
->>> +		/*
->>> +		 * Writeout may still use the inode after swapoff has removed it
->>> +		 * from the swaplist, so always wait at least once.
->>> +		 */
->>> +		do {
->>>  			wait_var_event(&info->stop_eviction,
->>>  				       !atomic_read(&info->stop_eviction));
->>> +			if (list_empty(&info->swaplist))
->>> +				break;
->>>  			spin_lock(&shmem_swaplist_lock);
->>>  			/* ...but beware of the race if we peeked too early */
->>>  			if (!atomic_read(&info->stop_eviction))
->>>  				list_del_init(&info->swaplist);
->>>  			spin_unlock(&shmem_swaplist_lock);
->>> -		}
->>> +		} while (!list_empty(&info->swaplist));
->>
->> [Severity: High]
->> Can this loop exit in shmem_evict_inode() while a concurrent shmem_unuse()
->> still holds info->stop_eviction > 0, leading to a use-after-free of info and
->> its embedded vfs_inode?
->>
->> Specifically, two swapoff() syscalls on different swap types (typeA and
->> typeB) can run try_to_unuse() -> shmem_unuse() concurrently while
->> shmem_evict_inode() is evicting an inode:
->>
->> 1. In shmem_evict_inode(), shmem_truncate_range() -> shmem_undo_range() ->
->>    shmem_recalc_inode() frees the swap entries and sets info->swapped = 0
->>    under info->lock (without shmem_swaplist_lock).
->>
->> 2. Just before info->swapped becomes 0, shmem_unuse(typeA) on another CPU
->>    holds shmem_swaplist_lock, sees info->swapped != 0, and is about to call
->>    shmem_disallow_eviction(info):
->>
->>    mm/shmem.c:shmem_unuse() {
->>        ...
->>        list_for_each_entry_safe(info, next, &shmem_swaplist, swaplist) {
->>            if (!info->swapped) {
->>                list_del_init(&info->swaplist);
->>                continue;
->>            }
->>            shmem_disallow_eviction(info);
->>            spin_unlock(&shmem_swaplist_lock);
->>
->>            error = shmem_unuse_inode(&info->vfs_inode, type);
->>        ...
->>    }
->>
->> 3. Before shmem_unuse(typeA) increments info->stop_eviction,
->>    shmem_evict_inode() enters the do-while loop and evaluates
->>    wait_var_event(&info->stop_eviction, !atomic_read(&info->stop_eviction)),
->>    which returns immediately because info->stop_eviction is still 0 (the
->>    "peeked too early" race noted in the comment).
->>
->> 4. shmem_unuse(typeA) then calls shmem_disallow_eviction(info) (setting
->>    info->stop_eviction to 1), drops shmem_swaplist_lock, and begins scanning
->>    &info->vfs_inode in shmem_unuse_inode().
->>
->> 5. A second concurrent swapoff running shmem_unuse(typeB) acquires
->>    shmem_swaplist_lock, sees !info->swapped is now true, and removes the
->>    inode from the list via list_del_init(&info->swaplist) without checking
->>    info->stop_eviction.
->>
->> 6. Back in shmem_evict_inode(), list_empty(&info->swaplist) is now true while
->>    info->stop_eviction is 1. Either the new unlocked
->>    if (list_empty(&info->swaplist)) break; exits the loop immediately, or
->>    shmem_evict_inode() takes shmem_swaplist_lock, skips list_del_init()
->>    because atomic_read(&info->stop_eviction) is non-zero, and then exits the
->>    loop because the while (!list_empty(&info->swaplist)) condition is false.
->>
->> Could shmem_evict_inode() then return and allow the inode to be freed while
->> shmem_unuse(typeA) is still accessing &info->vfs_inode in shmem_unuse_inode()
->> and later calling shmem_allow_eviction(info)?
->>
-> 
-> Two concurrent swapoffs, what at time to be alive.
 
-Okay, I just realize that this is a preexisting issue. So I will keep this patch
-as is.
+On 29-10-2026 14:12, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] drm/xe/ras: unrecognized log component for XE_RAS_COMP_RESERVED in ras_comp_to_log_comp()
+> --
+>
+> commit 523a0553a8f4f634b0b558643739a2f201d23a02
+> Author: Badal Nilawar <badal.nilawar@intel.com>
+>
+> drm/xe/xe_ras: Report correctable errors using SIGID
+>
+> This commit replaces xe_warn() in xe_ras_counter_threshold_crossed() with
+> xe_log_from() to report RAS counter threshold crossings using hardware
+> SIGIDs and log components.
+>
+>> diff --git a/drivers/gpu/drm/xe/xe_ras.c b/drivers/gpu/drm/xe/xe_ras.c
+>> index 58d3834345bc1..09b3c96042d5b 100644
+>> --- a/drivers/gpu/drm/xe/xe_ras.c
+>> +++ b/drivers/gpu/drm/xe/xe_ras.c
+> [ ... ]
+>> @@ -226,6 +228,12 @@ static int ras_status_to_errno(u32 status)
+>>   	}
+>>   }
+>>   
+>> +static u16 ras_comp_to_log_comp(u8 component)
+>> +{
+>> +	return FIELD_PREP(XE_LOG_COMPONENT_CLASS_MASK, XE_LOG_COMPONENT_CLASS_HARDWARE) |
+>> +	       FIELD_PREP(XE_LOG_COMPONENT_TYPE_MASK, component);
+>> +}
+>> +
+>>   static inline const char *sev_to_str(u8 severity)
+>>   {
+>>   	if (severity >= XE_RAS_SEV_MAX)
+>> @@ -714,8 +722,11 @@ void xe_ras_counter_threshold_crossed(struct xe_device *xe,
+>>   		if (!ras_counter_is_valid(xe, &errors[id]))
+>>   			continue;
+>>   
+>> -		xe_warn(xe, "[RAS]: %s %s detected\n",
+>> -			comp_to_str(component), sev_to_str(severity));
+>> +		xe_log_from(xe, ras_sev_to_cper_sev(severity),
+>> +			    ras_comp_to_hw_sigid(component),
+>> +			    ras_comp_to_log_comp(component),
+>> +			    &errors[id], sizeof(errors[id]),
+>> +			    "error detected\n");
+> [Severity: Medium]
+> What happens if the system controller reports a counter with component set
+> to XE_RAS_COMP_RESERVED (3)?
+>
+> In drivers/gpu/drm/xe/xe_ras.c, ras_counter_is_valid() only checks the outer
+> bounds of component:
+>
+> 	if (!in_range(component, XE_RAS_COMP_NOT_SUPPORTED + 1, XE_RAS_COMP_MAX - 1)) {
+> 		xe_err(xe, "sysctrl: unexpected component %u\n", component);
+> 		return false;
+> 	}
+>
+> This allows XE_RAS_COMP_RESERVED (3) to pass validation. While
+> ras_comp_to_hw_sigid() uses a switch statement that falls back to
+> XE_SIGID_HW for unhandled values, ras_comp_to_log_comp() unconditionally
+> encodes component into XE_LOG_COMPONENT_TYPE_MASK under
+> XE_LOG_COMPONENT_CLASS_HARDWARE.
+>
+> Because hardware component 3 is reserved and omitted from
+> DEFINE_XE_LOG_HARDWARE_COMPONENTS in drivers/gpu/drm/xe/abi/xe_log_abi.h:
+>
+> #define DEFINE_XE_LOG_HARDWARE_COMPONENTS(define) \
+> 	define(HARDWARE, 1, DEVICE_MEMORY, DEVICE_MEMORY, "Device Memory")	\
+> 	define(HARDWARE, 2, CORE_COMPUTE, CORE_COMPUTE, "Core Compute")		\
+> 	/*     HARDWARE, 3, RESERVED */						\
+> 	define(HARDWARE, 4, PCIE, PCIE, "PCIe Interface")			\
+> 	define(HARDWARE, 5, FABRIC, FABRIC, "Fabric")				\
+> 	define(HARDWARE, 6, SOC_INTERNAL, SOC_INTERNAL, "SoC Internal")		\
+>
+> passing that encoded value to xe_log_from() will miss all cases in
+> log_component_prefix() and hit log_unknown_component_prefix() in
+> drivers/gpu/drm/xe/xe_log.c:
+>
+> 	WARN(IS_ENABLED(CONFIG_DRM_XE_DEBUG), "LOG: unrecognized component %u.%u\n", class, type);
+>
+> Should ras_counter_is_valid() reject XE_RAS_COMP_RESERVED, or should
+> ras_comp_to_log_comp() handle unmapped components like
+> ras_comp_to_hw_sigid() does?
 
-We'll fix this separately later.
+XE_RAS_COMP_RESERVED is a reserved value and is not reported by the 
+firmware. Therefore, rejecting it explicitly in ras_counter_is_valid() 
+is not required.
 
--- 
-Cheers,
+Thanks,
+Badal
 
-David
+>
