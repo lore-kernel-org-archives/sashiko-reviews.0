@@ -1,112 +1,81 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=148.163.156.1
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793275052;
-	b=DbmbZ/yuuVnmv9Phf923FyIxPO8S1bs+PsDFosOBMMbrfz/FOu/F7N1KAA2aLsHLyLUR
-	 vGEpvkXMVEpJi/iWvcchjcpjiJOl1Rw3ZzRfFmvq3wfGGHhhxopo27WwVU6A//FJ0syEE
-	 GKzVFDX23tJRl6B2jywRubHRPAuW3FFz74Pv0ZRJPaWgTB+/IS+H0bW1lqs5xRCv6qs7x
-	 ktgSaFLQOmbR2MdyZf1Y/poSGxjnyUBwoYYCVI/PQldy3wiVUYXznwgog5x8fGz7/tz+k
-	 5av420hbF38o3AMudGhBuLoYm9L6vIhs71pJBi+xl3bUkwzYyhS/Au5Gh+dIfMQmp/A==
+	t=1793276882;
+	b=NsZwYH5XiVm8jARgF54S4Pyi894LE82xEyPtu5pCrkLxknkdzt8HC9OvBXcmzjZkTWuy
+	 KNTYaBm8oz9e7Qk8Yf3SHn3BYtr3ZE7GjV3+/KEnA5ACWaOG6i/HuJI5J6S27xuaUErXs
+	 tXP9rNR8WKb8ZqAYAS5hwHEufhKdVKd2STuJEn2OfjabQce5P3rIfM4SUs9TClNXzAwNu
+	 FlMhHryrMD+zt8V1DMQg3HEgpfuGYdWYM7GU+/AT5DCni7942AXQBzgmnDhkxjT+RBUNg
+	 l8TTz8l5g2bZkaYZJPagnjf+dvG2RrVDGc0KItVsC2NQIKC7FGTcQaxiMiwbh9KqqSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793275052;
-	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:
-	 DKIM-Signature:X-Google-DKIM-Signature:X-Gm-Message-State:X-Gm-Gg:
-	 X-Received:X-Received:Received:Message-ID:Date:MIME-Version:
+	a=rsa-sha256; c=relaxed/relaxed; t=1793276882;
+	h=DMARC-Filter:Received:DKIM-Signature:Received:Received:Received:
+	 Received:Received:Received:Received:Message-ID:Date:MIME-Version:
 	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-Spam-Details-Enc:X-Proofpoint-GUID:X-Authority-Analysis:
-	 X-Proofpoint-Spam-Info:X-Proofpoint-Virus-Version:
-	 X-Proofpoint-Spam-Details;
-	bh=0bnrTnt4lBgnv1x+jXbSvL9pJ3rMP3v/MI1jVoiwz0s=;
-	b=DPRuHbMTykbMIYi16eMnkVqdArGEA6hd8LD7+eNVSmtrVOThqSSSSy2oeGNbeXHawYQ9
-	 CqwWgWAopmz1HNiotPmffTxGCTf6uKuMpwRVKMhCJ/7juslikmNAknKTG5ZG/pg0PFtht
-	 ABuNtfvrjbCoCxjOg8Wo1SfabmKKqwXaBlHA+gkjubp1v2rbzpfOFbhAiCX/RWcK0ufzo
-	 TZw4R9DcZ40PA5le9BCWtPJy0UtJ7GBba7aIWvKL1J/U/VRv2ErEMjBzO3/s6hpnEFnh1
-	 12sayrDe5trmpq1/ST8Q5QJDPws2yekLPJUn6BP4vZTJFrA6hDkub4dq7YC6YhHMU2Q==
+	 Content-Type:Content-Transfer-Encoding:X-TM-AS-GCONF:
+	 X-Proofpoint-Spam-Info:X-Proofpoint-Spam-Details-Enc:
+	 X-Proofpoint-ORIG-GUID:X-Authority-Analysis:X-Proofpoint-GUID:
+	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details;
+	bh=afURIQgSjuNj8H/0h9C1lu4HfwqgVmdt+unp2XHI2sc=;
+	b=Gmm0QnGuOFrEtqJlQ/P52KVPXm9oI6oKsooDi+d+0R5ezkZhnygTbxdZf0XAhk3m9CfI
+	 JoPtHEjhKlOPx2c8Mg7HL8+1iT/hk3ilx5vX1LYdLFYum015d+XcXSCKWRRh6m7JPQsKk
+	 Qigt9N9hXgK7arSMR3+JW6aZizNDnH4O/zg3riAZESqfsg9bGEbRdbUFssJXSsFTC/Qea
+	 Uz232Pr02TrprW9agGeM9MflSh4jioGHX2xpPHit/YqwPnwfhmm+5sntkTHvxCbZdMIQT
+	 ewkGacRnxnBOjllk41Raf12bjtZYZ0yRXkFqszXjbY3OEtw0wkVzkfmmjQz9BITbNGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.qualcomm.com;
-	spf=pass smtp.mailfrom=oss.qualcomm.com;
-	dkim=pass header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=hxDCDgSp;
-	dkim=pass header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=AtyPeM3J;
-	arc=none smtp.remote-ip=205.220.168.131
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	dmarc=pass header.from=linux.ibm.com;
+	spf=pass smtp.mailfrom=linux.ibm.com;
+	dkim=pass header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=XwSz1H3S;
+	arc=none smtp.remote-ip=148.163.156.1
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225F7606A320
-	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 11:57:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 225F7606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D247E606A327;
+	Thu, 29 Oct 2026 12:28:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D247E606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=hxDCDgSp;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=AtyPeM3J
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69T8vuDn3279843
-	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 11:57:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0bnrTnt4lBgnv1x+jXbSvL9pJ3rMP3v/MI1jVoiwz0s=; b=hxDCDgSpdqTC37gI
-	bNJOqlq9LiLUaQSYCfEFwS0tIxx2QY7UNOEiWgxH+TxvS5mjCDfdI37sBgeBijPb
-	M6bgzcS6s72WolElyQ2vgNNcohJGbWcxjESXclKAWsTo2Lad/ie+W1w9RFAXf1am
-	CrGqN7muw0IhiBgZLLw3FG8EI3A9B5shRRGFVw8v32rmDFu0K+8Q307VvgdetElE
-	lSQI1r3IMLANdwIXrfPhvgINV5Wbu4SrM9W+iqfPBErUNSLtpFREgoOiD4sriuvZ
-	RyM72ySDXQh9u42hcStgzoOLxJwZSH6Y3T7oj9oIQfQuZD2/YtykMmvhkHJ/xB0p
-	AfR9cA==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com [74.125.82.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hks3naud2-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 11:57:30 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id 5a478bee46e88-36a1e2485fdso4402301eec.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 04:57:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1793275049; x=1793879849; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=0bnrTnt4lBgnv1x+jXbSvL9pJ3rMP3v/MI1jVoiwz0s=;
-        b=AtyPeM3J+f+3RTRLRDktU9J8oJXU5Z5N+0hbNiSabnNDeH9OeKhLKbEFoq/BtIQSAs
-         A5bm+du2y3wEoWpXt01no5zksHTyi2hSCT/hvTTTsi0RN1End8cmYXx4oRHlzYkWqJ2B
-         bpaJC08iW9E/lw+k3b8Q36wSSMPsHiKfg1ACgTbAYrk/u1U1uDDM30Z1j48pus6vHJoK
-         RA8VKdbp7S3Ue3f6Mi4nej0pa+PaQ0IXjWzjAN2X9gJbCTozq7T4pw56d2p30oRV7uX+
-         ogmUNG0zezNiURAwpIEtYaOAkzoG7JCSPo7amd6EVSCxmNX6VCtgy25uZb70DhUjVGA7
-         njGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793275049; x=1793879849;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=0bnrTnt4lBgnv1x+jXbSvL9pJ3rMP3v/MI1jVoiwz0s=;
-        b=Mm9EGTuimY8ZmrWJqg38O7XWHdXwloT2t2n7DiYHsTXeii9r3PVrrVPiXwU813Mvn2
-         P2+v2jGaW675OOvcaPu7HW0L/sZaRuLTRmlMVOQxH65QJKT+Gb5jELfKlUcmp2W578xH
-         Lx94Ux+ekawDF93uCqL1U0wRi+b22/VnoQ/bNvwnS9NwOhFQzngO/Fs7huxcAJfWPpJP
-         Mn6ZMeNqFU/oBPtFz68ew4OPNWaCZGyCFvWTl4l6J8vdS9ZJCtwSiu8U0gRKmMv6VmXj
-         l1Xyif98fZXwfivy8r2ZwM96phNTQx3JzzXLK4xV4QXcRc7Qf8vBuP6tOn5BkRMPnoZO
-         jB8w==
-X-Gm-Message-State: AFq9FYKoywvuXkH9QxDryULdC1+05pcizrY+8/HGv+8tvvxdw2l2iCsQ
-	5hPJCJ9UJpnpny45upeksbyTWAyMKLeFj7WZqKNt9gjGZfJ/jpoNE8aizcwHZqP637lpVkGezNA
-	l6HWTamT6bBmJxIioamt/vtB3c1linkzY4XVaMh4wNtvT79a5jy3H+ylDVmrbwrHmB960uasqeY
-	Tbgcc=
-X-Gm-Gg: AYBFou0CmgMLowfHSJQGEdKS/dzsAMGUUYjoG3HNa6GO2qJtPA/fmZf31giUitfz9VA
-	66E70SNdB944VUr4G7paUxOl00qTH5DvykVaUHoLJZABV4B545WsKQHIYZqhc9W0yYtF4yai+DV
-	i44eM3CRnkP0GAlAbtvB32+ptgQmsKAEO+h2rgVD1U3Dg8MyYhjOuE5Qqu1klYRwydHNaxHG/wX
-	DBFnGeQ1FEun2NnqebTEVZAcU0XE8/D15OVJow8FGn3v6YO3Ay/7lHhpExypC1kUkeHu/m4H6Wa
-	9DAze+VTGAK2nXzjjY4mozB3t1sV/6w4ljq0JC+S2cBnkQX9gzh3+pFFlRRd9M41ftfeVZzq2F2
-	jFE15lhkBsRZjv7TLuiVWnBCyOhokD9ywjufI+/d0IHHHtKcLtjKmkHieUusoMtwQmzmtKpFP36
-	UoTVbu+TKojSoSDIGvONVVDaIfNa5J7Um28IQAUz0KHBu7Gulabsjw3vtrg36S9WbV8i/4gLxnL
-	RA=
-X-Received: by 2002:a05:693c:2510:b0:34b:4b99:24ab with SMTP id 5a478bee46e88-36a203d426amr7045677eec.22.1793275049254;
-        Thu, 29 Oct 2026 04:57:29 -0700 (PDT)
-X-Received: by 2002:a05:693c:2510:b0:34b:4b99:24ab with SMTP id 5a478bee46e88-36a203d426amr7045650eec.22.1793275048596;
-        Thu, 29 Oct 2026 04:57:28 -0700 (PDT)
-Received: from [10.149.81.110] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a23951e00sm21157004eec.20.2026.10.29.04.57.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Oct 2026 04:57:28 -0700 (PDT)
-Message-ID: <8ed020cc-7d82-466c-8f99-e25f52ef34b2@oss.qualcomm.com>
-Date: Thu, 29 Oct 2026 17:27:25 +0530
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=XwSz1H3S
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 69T9E6Fi3962704;
+	Thu, 29 Oct 2026 12:28:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=afURIQ
+	gSjuNj8H/0h9C1lu4HfwqgVmdt+unp2XHI2sc=; b=XwSz1H3S+ehfJpOsyQJMNr
+	/y1+Z4O9umyNW8bmUU+0n0KMj4klj5qbDl1zekqtDcf+8lqbICw4pv42AtzvpDR9
+	bM3LmWlXku/PBjIgmKFa0b4lyWrcYd7xEElIcq1TFS/lzsVE+1GlemDmlO1EfEvP
+	zsufi5SpoJppUbIYhSmXrtoEN/kGQsEaF8Ln6n9JyBJhOrLvZgoMK6Zk3ssN3Uoo
+	RzltouhJpA1kg/qTyonSeXBzLIlZ9HfmjwG7Eaw1VQkaVXYzmr9vc4YROHbz8tz9
+	NAzmro/8mZZ4ZQs5dHt9mu/ZPt4WTS+hjL2Tz+VXqlISWYoDVYSS6j3L1A5ztTkA
+	==
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgm64a3q1-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Thu, 29 Oct 2026 12:28:00 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id 69T950Fc2829705;
+	Thu, 29 Oct 2026 12:27:59 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hjtnnhhkw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 29 Oct 2026 12:27:59 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
+	by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 69TCRwe260424512
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 29 Oct 2026 12:27:58 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5591B58052;
+	Thu, 29 Oct 2026 12:27:58 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6E62B5805E;
+	Thu, 29 Oct 2026 12:27:57 +0000 (GMT)
+Received: from [9.61.241.59] (unknown [9.61.241.59])
+	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+	Thu, 29 Oct 2026 12:27:57 +0000 (GMT)
+Message-ID: <fd754769-c15b-4d59-b259-d4d044598a52@linux.ibm.com>
+Date: Thu, 29 Oct 2026 08:27:56 -0400
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -117,153 +86,108 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: Add Microsoft Surface Laptop 8th
- Edition
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-References: <20261027-mahua-surface-laptop-v2-0-7dd903a12d22@oss.qualcomm.com>
- <20261027-mahua-surface-laptop-v2-3-7dd903a12d22@oss.qualcomm.com>
- <sashiko-outbox-186232@kernel.org>
+Subject: Re: [PATCH v11 3/5] s390/pci: Reuse FMB buffer across enable and
+ disable cycles
+To: Niklas Schnelle <schnelle@linux.ibm.com>, sashiko-reviews@lists.linux.dev,
+        linux-s390@vger.kernel.org, kvm@vger.kernel.org
+Cc: Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Farhan Ali <alifm@linux.ibm.com>, Gerd Bayer <gbayer@linux.ibm.com>
+References: <20261028154352.15108-1-oelghoul@linux.ibm.com>
+ <20261028154352.15108-4-oelghoul@linux.ibm.com>
+ <sashiko-outbox-188110@kernel.org>
+ <72ddf1a4-d672-4d9f-a205-07aec3db1248@linux.ibm.com>
+ <1cd8eed2c5268a02df5f8600ae469d023761754c.camel@linux.ibm.com>
 Content-Language: en-US
-From: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
-In-Reply-To: <sashiko-outbox-186232@kernel.org>
+From: Omar Elghoul <oelghoul@linux.ibm.com>
+In-Reply-To: <1cd8eed2c5268a02df5f8600ae469d023761754c.camel@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: vhCxbraWLKBU4-vRKoGTrm3NUsxbw2SI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA0NiBTYWx0ZWRfX5S5URN3spwxg
- EqAdxBruTLE/BtGZOpQQ1fEmFEoYQ2zm9LzZlEI3VLOusNx/3Rh6uQszAxiqcN/PYzI2NAc9Ugd
- NFITPFasTtBAPpFuxoxHWPxVTd6GHPOnsEq95XyiWLSsIpQTembzt8slxG3+bXypT24FahKsosx
- 1LAhtUEEFXkiBChdIeVBD+PDjGJH14PxtI0MPNsQoW69PuICRWDKrBh1cvMgXgtVZK6x5YG3ZT+
- FnFAYveBPJGtCO9wIcc4XAIqaT+1PYz9nrCEPn74XJtOp3IfWgxHX/Fr9CDE5Le706fnJrVHQZq
- 81zk1oR85voWeGONiv52bdTmNgHxEw9+mkoKR3dZ++RGqe4hyI9IOkbSxeAhHNy5axKJ1+W/lzk
- 6rLZDFEwQa8OQJGvcRhlsTgUfiPq0tD0TXDFee4wGPCA95ejwd1Gp5nxLXdsT8TEJM6olNMu9Yv
- YkHxdzHWWZUoawc2lmw==
-X-Proofpoint-GUID: vhCxbraWLKBU4-vRKoGTrm3NUsxbw2SI
-X-Authority-Analysis: v=2.4 cv=XZEcX455 c=1 sm=1 tr=0 ts=6ae334aa cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=eOIwicZ2piiRI3fgtboA:9 a=QEXdDO2ut3YA:10
- a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA0NiBTYWx0ZWRfX0Zx7iRx04ifq
- +jcmppjQ0v4CEKlxtsPA9pZSKz+kMdj64yJA1dIzNMVxnLdbUWLwObJjZXw4TzVRK+dGQQyEsER
- nUUoAFVd7lf0xT2l1w9RKS/NvT24dgs=
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA0NyBTYWx0ZWRfXznUojVge8K1B
+ TU+gip8I1KoPtvphJmv2K+9guUj0gRqZWOYUfq54225LbNrQgtnPW32f41+dr0QAjBgBQ37Jk+N
+ HzgwS2ySyLZ/a/OO6WmNvJ11mpQ0k90=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA0NyBTYWx0ZWRfXwn+XuJgWFKKB
+ qx0u0ePBkON5r63RpvY+yosw6zSdrgt9KcznxCRFnpyvQi1Uh0Eu3km4nFTtC7/8wnzN9iRWSDh
+ JqI5IMQWDS/syhM0ge8je16wUVxiiQdRzB6mmmIpLEdWNdl7e2jN4xxyE+auGs1XnRKa0gP1Raw
+ aRE59/S9pp1ymeMvkTH148ZUmarshBuJfU2zMH+1FYAU0/Forn6E7UOVG75U8eNLFYyXVKnv5qu
+ SH6LnvjI+jFKdlZliFIok4+QD2gtwmJxuo/Me22CZJDKpoExGT/1ztlkGv20+eBi04lKTdxICQ/
+ huT1X5kcMyxQY0KJOapX6DO8bX6vGPJatCnjj+KGIFbwfsy4ikHin222CukYeMxjTIGuDJtKhYH
+ /Jp4V3OUZBI7XGVl3LfgUh0/RZkpN9gxuQq4CFvvMuCVWQPfm4W1WE/MgwUWx1AVxleUlJUYe/d
+ Uj391iszzRSgfD3lf+g==
+X-Proofpoint-ORIG-GUID: 8P_4t0yUzvnV1XjYo-IcylLa9K6G3iG8
+X-Authority-Analysis: v=2.4 cv=Uu32pOwB c=1 sm=1 tr=0 ts=6ae33bd0 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=ULb8jbz8dg8js5G6V90A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 8P_4t0yUzvnV1XjYo-IcylLa9K6G3iG8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-29_03,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0
- suspectscore=0 bulkscore=0 phishscore=0 impostorscore=0 priorityscore=1501
+ bulkscore=0 impostorscore=0 priorityscore=1501 spamscore=0 adultscore=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 suspectscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610290046
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610290047
 
-
-
-On 10/27/2026 1:17 PM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] arm64: dts: qcom: SAM compatible mismatch breaks ssam_platform_hub_probe()
-> - [Medium] arm64: dts: qcom: stdout-path points to Surface SAM EC UART on uart22
-> - [Medium] arm64: dts: qcom: missing qcom,uefi-rtc-info property on pmk8850_rtc
-> --
-> 
-> commit dc92104026c28877c07bc41ec0441b8b4cc8661a
-> Author: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
-> 
-> arm64: dts: qcom: Add Microsoft Surface Laptop 8th Edition
-> 
-> This commit adds the device tree for the Microsoft Surface Laptop 13.8" 8th
-> Edition based on the Qualcomm Mahua SoC.
-> 
->> diff --git a/arch/arm64/boot/dts/qcom/mahua-microsoft-surface-laptop-8-13p8.dts b/arch/arm64/boot/dts/qcom/mahua-microsoft-surface-laptop-8-13p8.dts
->> new file mode 100644
->> index 0000000000000..9acba318ab52b
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/mahua-microsoft-surface-laptop-8-13p8.dts
->> @@ -0,0 +1,1176 @@
-> 
-> [ ... ]
-> 
->> +/ {
->> +	model = "Microsoft Surface Laptop 8th Edition (13.8 inch)";
->> +	compatible = "microsoft,surface-laptop-8-13p8", "qcom,mahua";
-> 
-> [Severity: High]
-> Will ssam_platform_hub_probe() fail to match this root compatible string?
-> 
-> When ssam_serial_hub_probe() probes the microsoft,surface-sam node on
-> uart22, it registers surface_aggregator_platform_hub. In
-> drivers/platform/surface/surface_aggregator_registry.c,
-> ssam_platform_hub_probe() looks up the board's software_node group against
-> ssam_platform_hub_of_match:
-> 
-> drivers/platform/surface/surface_aggregator_registry.c:
-> static const struct of_device_id ssam_platform_hub_of_match[] = {
-> 	...
-> 	/* Surface Laptop 8th Edition (13.8") */
-> 	{ .compatible = "microsoft,surface-laptop-8-13in", (void *)ssam_node_group_sl7 },
-> 	{ },
-> };
-> 
-> [...]
-> 
-> Because ssam_platform_hub_of_match checks for
-> microsoft,surface-laptop-8-13in while the root node here uses
-> microsoft,surface-laptop-8-13p8, of_machine_get_match_data() returns NULL
-> and ssam_platform_hub_probe() fails with -ENODEV, leaving the keyboard, fan,
-> and platform profile unregistered.
-> 
-
-Thanks for the review.
-
-The wrong SAM compatible in surface_aggregator_registry.c is fixed
-separately here:
-https://lore.kernel.org/all/20261027-surface-laptop-8-sam-compatible-v1-1-022cc782b0f4@oss.qualcomm.com/
-
->> +
+On 10/28/26 5:12 PM, Niklas Schnelle wrote:
+> On Wed, 2026-10-28 at 12:15 -0400, Omar Elghoul wrote:
+>> On 10/28/26 11:59 AM, sashiko-bot@kernel.org wrote:
 >> [...]
->> +
->> +	chosen {
->> +		stdout-path = "serial0:115200n8";
->> +	};
+>>>
+>>> [Severity: Medium]
+>>> Can keeping zdev->fmb non-NULL when zpci_mod_fc() fails in zpci_fmb_enable()
+>>> leave the FMB enablement state inconsistent?
+>>
+>> Valid concern, but unfortunately I think this is a tradeoff we are going
+>> to have to accept. Based on this discussion [1] under a previous version
+>> of the series, we can accept these stale reads because as Niklas said,
+>> the firmware-written sample includes a timestamp of the last write. So
+>> we're already transparent about giving the user stale data, and in the
+>> unlikely event that this happens, the user will be able to recover by
+>> disabling and re-enabling statistics via debugfs or simply re-enabling
+>> it directly via vfio.
+>>
+>> Thanks
+>>
+>> [1]
+>> https://lore.kernel.org/all/a24337bd66864dd70ae61e28d86590052ac0fc5d.camel@linux.ibm.com/
+>>>
 > 
-> [Severity: Medium]
-> Should stdout-path be omitted here since serial0 points to uart22?
-> 
-> In this device tree, uart21 (the debug UART) is disabled and uart22 is
-> dedicated to the Surface Aggregator Module embedded controller at 4000000
-> baud:
-> 
-> [...]
-> 
-> Setting stdout-path to serial0:115200n8 causes of_alias_scan() to resolve
-> of_stdout to uart22 and directs any earlycon, bootloader, or userspace
-> console consumer honoring /chosen/stdout-path to reconfigure uart22 to
-> 115200 8N1 and write console output to the binary SAM EC link. Other
-> Qualcomm-based Surface device trees omit stdout-path.
-> 
-> [ ... ]
-> 
+> I think the problem is a slightly different one. With patch 2
+> statistics_on tracks if the statistics should be on and zdev->fmb !=
+> NULL tracks if they are on. With this patch zdev->fmb loses that
+> meaning. So when the zpci_mod_fc() in zpci_fmb_enable() in
+> pcibios_enable_device() fails the removal of the "if (cc)" block now
+> means that we still do the zpci_fmb_disable() in
+> pcibios_disable_device() but that is a sequencing error.
 
-Right, uart22 is the SAM link, not a debug console. I'll drop 
-stdout-path in v3, same as the other Surface DTs.
+In the unlikely case zpci_fmb_enable() in pcibios_enable_device() fails,
+the FMB simply stays disabled from the firmware's perspective. Then the
+user will see zeroes or stale counters. AFAIK the architecture doesn't
+forbid double-disabling, so IMHO I think the extra disable step in
+pcibios_disable_device() in this case is redundant at worst.
 
->> +&pmk8850_rtc {
->> +	qcom,no-alarm;
->> +};
 > 
-> [Severity: Medium]
-> Is qcom,uefi-rtc-info missing from pmk8850_rtc?
-> 
-> [...]
-> 
-> Without qcom,uefi-rtc-info, rtc_dd->use_uefi remains false,
-> pm8xxx_rtc_read_time() returns the unadjusted PMIC counter value, and
-> pm8xxx_rtc_set_time() -> pm8xxx_rtc_update_offset() fails with -ENODEV.
-> 
+> So, as we want to keep the FMB associated to prevent the platform from
+> overwriting an already kmem_cache freed different FMB and thus can't
+> have zdev->fmb NULL at any point after having it enabled we need to
+> track the actual enablement state separately. I'd add another bool to
+> zdev for this maybe "fmb_enabled".
 
-Agreed, I'll add qcom,uefi-rtc-info to pmk8850_rtc in v3 so the RTC
-picks up the UEFI offset, like the other Glymur/Mahua laptops.
+I think this will introduce a lot more complexity than is needed for FMB
+handling, and even then it will still be really messy to get right and
+account for all the cases where firmware can disable measurement without
+the user requesting that. That's largely why I thought the tradeoffs of
+occasionally giving the user stale counters and allowing them to recover
+via debugfs or vfio if needed were acceptable.
 
+Thanks
 
-Thanks,
-Gopikrishna
+> 
+> Thanks,
+> Niklas
+
