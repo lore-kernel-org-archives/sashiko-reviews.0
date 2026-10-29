@@ -1,86 +1,81 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.9
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793242866;
-	b=JU0V6ClnKOoeKVL6jVpvYSoD0kTI9C1TcYqwrb+wl5xrgduV1m7cKLBRMtgPJA0IM/2N
-	 XisERHcGCAILFVNkMrznc73QbvXpkLRHX557zXXe5F3eKOOMdKXTXNAjsdqKZ89OAqLfZ
-	 w01zOZQ9drywIaAWTotqoHM2L78JpqzhrDQoYneDmXdNMXj4w6BuCjPSAI4nqKqnHXI+9
-	 uFV+zIXDnRzvF0xvV1KHtOAtPnzN9AcPgQdRlgPpw28NSOcaVPN5vnyRLquAFcQ6dqIO1
-	 UqhzHQ3hCIGZKzKhbEbrTK7+xw4mJsodiX6/yf4r0GXh3OGA5rmJMTy8Py32Ex6SCxQ==
+	t=1793248141;
+	b=VxRuxd3Iz5SDz+2MNpyoTexv4K0bHWoMdNNIt5oH7sK54Jr2z6MGFcmm9/XvGeFjwtXW
+	 /eeYQXJK/WQUjaVuOwM9YEEipwmUZexpTHIodguzUgxYfduFs2K5kVBNpgD+noGomxOC7
+	 WIM4aaP5dpzLJAnc5+lv4TvGIDOr8mAWGqw/RsmmcAgDhqtG60RkPCaE4g5OhbhsIpASS
+	 vUeC38tx+WR5vefJIgTdaRYBZWyrSzmVCOoLTfFdmZTXdxoJ15lEIuvjhDRQFE586YjJE
+	 TyCzNWdlxGX6YG6vagJShVAnFevpxvg9PYngqFAsjkweW9vpZn91a2clbdb6Ot1jkHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793242866;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=Bkm7zevt2pJ24dJThsCd2BuWJE9RCkG+R9d+KkvdTQI=;
-	b=ai2qtTT6/RDVEtr9PQWC7Oo/zQp+Jm+TDuxeGLKeSV+m2kusjh924302osm3k6QegaLb
-	 9JT/Mmn6G76xN4vfeHd0GoEXdng//Cflon2OUuA4Tdtdd4ozJ8rHuC8iEUDJlqSwSZ6IL
-	 ujcShn49TcWY6Dxie6c9swipUMJVYmYapRRl1ZP5hSbDTpGFnpKSY6caktt+6/hE+o54Y
-	 bovCWqB4Ev0dgtkbYtzU5qL+8AiQimXbQqJFvrJghQtZJidwTE4The3pLpJ3ChYXOBllm
-	 htbWvGeQOMEN+OXrf3QDdDyQpmVovwnd2CGHyeRw28zFCmfrciXKJx4oKpFbyn6NLUQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793248141;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To;
+	bh=rzYTe3CAmln9p4nHbX2TG5gIE9RDWcbeR5wsihoOolA=;
+	b=JWLnfZRzA4LJvWMFzkjgopLwIrsAAnQu0Qbz7thgqeYPiGZ+sNuN3t/nfw+U2YMIhdLI
+	 nI71+xbLCfibuw4zA1SDNAej3cRpSY4/CUgvZ4a9nim7C7KlNO3aoZrXEk07b4TWuKoyE
+	 5EOc0fzW1K3wdYyccuqMkpZPa7C0WhUpD66IyqH3k13Qx331gt2IjVK5wurRnCVTz2k+h
+	 pEYWNHOnkx3j5ZunNZWw78MTtZg0scb8+zgZDnmXTaG1MQnE8dEcU752ABN90kI9pmRcq
+	 CuchbrlcceCtRWPOz5b0DBBVd1FevGuNdlxlBUOpCbQY4NjQSRq5mmzjYrrj4vAlWIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AiByQUxj;
-	arc=none smtp.remote-ip=209.85.214.180
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=linux.intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mVFqIl7i;
+	arc=none smtp.remote-ip=192.198.163.9
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278BB606A323
-	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 03:01:05 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 278BB606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63068606A31D;
+	Thu, 29 Oct 2026 04:29:00 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 63068606A31D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=AiByQUxj
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2e985106c0cso14353605ad.2
-        for <sashiko-reviews@lists.linux.dev>; Wed, 28 Oct 2026 20:01:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793242865; x=1793847665; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=Bkm7zevt2pJ24dJThsCd2BuWJE9RCkG+R9d+KkvdTQI=;
-        b=AiByQUxjj5TxmHqMsPRfUmaLyscEwEjcJ+agrWiyh8+OD0/NjTf3p4InuZkhTFg/W8
-         woOG+pYrGOH3n6J4d82dtt+wi5eQIqE0hT8+VD9i9/EY983nDJi8g+oucl4Ep3UFrA01
-         esrd4CShV9E9892f22v1ooZ2NVVvW2mK6TeAG0I/VvZ01H0v4Cid1+CeT083dUsfPgR4
-         QmAaWy26yBwQQU5xVwa3AxC4h6qn0dkASOPhLJPLpVIKBFrcop0M+OfpwoF1Dn4BF91Q
-         5gJl/dYkX3aOb2c4Nnk9OtTJWZ7pGhyLRKFmzsL7585cNfWS35DBe1BZfBqxp/UGMyVt
-         QQAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793242865; x=1793847665;
-        h=content-transfer-encoding:content-type:in-reply-to:from:references
-         :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=Bkm7zevt2pJ24dJThsCd2BuWJE9RCkG+R9d+KkvdTQI=;
-        b=qb8NfjBryNc3W0AunQV8tNh987Q261df8ApWA0NL6WZ/se2KTeTziaHsc8cl76MBc+
-         0FsaCOfPt5EcCRFNz7ZSqtEw7a89bZOBNocAIelmmTAHe8S9pPKX5b12Jm+YTnH4d/4X
-         T0FVbOaISUAn7zejDZMxCsMwJt9fT+J/DBQkQU6UGY0DPsVj44VqMaZ2QyAIl6XmSXBx
-         WwGemQ6rUOu89Y9CDU7u7HghGjm2EQ2wIFxHx1i2/3o9DXFdociw9HoaOaBgR5bUX3wG
-         R5dvOLb70ckOZRlsrUnXbgpb1Pu/V0+KQ/7F+V230QEYECaA1CvaJTPm21wCA/D1Bb6I
-         IMJA==
-X-Gm-Message-State: AFq9FYKtjRih6Hpq2Tj7ek8Vg82XZb6jt8acYCOcpHgU/zsSuLNmaSfG
-	zROc/vbTA3Fmy3sbhP7pmtxCg5Tczbn5Wwf6KtOLceX6LGVzudel4LC9njVGrlljMfWsrw==
-X-Gm-Gg: AYBFou0aoP4dxXmaeNb/5kgJ+Zfid6VFn2aYxbOP/m+4JXU2qrpn6YocPsdwhg45Qd7
-	n39aI53wsxMbj2HK3ooYgZrub178XldS6yg+qIpZ31HUs5PEvAlPyED2w2QXz6ZCidV+CpTepWC
-	mk9S5M8iy+bz9q9ABxBz08Knr+kD4e/MlE7fnZ8bccJFH480rLmZEqs3SdjwKh/kNZSwYBnX/T6
-	rZXxqwtSrYmoSwfys361n3exflx72gV9kqVl6ULbqFh/5FBfjYcJuupl3+aR5vWg3cdPOeDSCJu
-	DK9zIFJbSZGcMLu/0C+b50wYPslONGEQySUD8Sx/wjxwlU0qGovc4ZBGsazyChUdEIDAgN82BJT
-	ryIbmG9EMh43VGCwNORUPR/lgnSKE0RLOCsIioN5ATBUNcND13PiuU8B/5QJbMmaDOAOirMFlk2
-	x2NSr1ZnkriOZjIlg1GB9U3XugK3jIeqS8Q+IbHjIpXQdhPmUSywRB3QazBRH56d5FcWL+JOhgy
-	uo041ix2oKo6Z+IGft2+XjmgyTccNGC03xWKKWPvIL69Xq17jIoAoNoMdFnLflFam8OLDK6+9Lt
-	X67yq88uBr+2tJDAwX6tLwQA1CCejuTF33PqDkiSJH0kmzty0bOEE8OEbVsh2kvRMrOaKu46bo/
-	scr/4q1FrYxYF5BvAoHV7jpIccfYeUg==
-X-Received: by 2002:a17:903:2cf:b0:2e8:1f8a:9113 with SMTP id d9443c01a7336-2eb00541fa3mr35157725ad.40.1793242865314;
-        Wed, 28 Oct 2026 20:01:05 -0700 (PDT)
-Received: from [192.168.52.49] (ec2-35-77-214-194.ap-northeast-1.compute.amazonaws.com. [35.77.214.194])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2eae6b7a216sm26722755ad.16.2026.10.28.20.01.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Oct 2026 20:01:04 -0700 (PDT)
-Message-ID: <8f353f85-b8b7-4808-9a18-86a8cfff307f@gmail.com>
-Date: Thu, 29 Oct 2026 11:00:58 +0800
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mVFqIl7i
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793248140; x=1824784140;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Jwzke+C5vjNMWt9GhijAMYGap9eff9wd25DcLISYkNM=;
+  b=mVFqIl7iGKaU6y5yzwOWRTSpigVTMq6021gq5g+lUkPLc33FkD1KrtPA
+   q6Ae0sJHopZaFv4n0E46U1YAInSyOHbKHqlim+01KVGaLLUH5H3J810lH
+   yfEgwlazIGpLZSQa/f2n2nKxPPSbdvLzjjIC18ejwnRq9u7Gf7cmfCPrg
+   0ZTV/SYoSwhwnHMJW5oBpkUOBohQUusSdZFfX2YGj02pGsG7ZqiwXczsE
+   59ugmbNGhGL4K5kWGtfKseZ+9bmfmpwfONgr6586EFfc00h/JmT6mJ/j0
+   tG1TWMfYTcbiCvWw9xc17utn6ciuxAyssqdVGsGEgC45Jm24WTAVgx68c
+   Q==;
+X-CSE-ConnectionGUID: q8+8PIImTSaVcwj1Sj8y1g==
+X-CSE-MsgGUID: A79Kc930Q4+dLCBJhK/WwQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11949"; a="1864189"
+X-IronPort-AV: E=Sophos;i="6.27,183,1787036400"; 
+   d="scan'208";a="1864189"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Oct 2026 21:29:00 -0700
+X-CSE-ConnectionGUID: osN9a3PLRlOOr9m7+NTyIg==
+X-CSE-MsgGUID: mvmHAIL2QW2K62VmmX1+6A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,183,1787036400"; 
+   d="scan'208";a="5143691"
+Received: from yilunxu-optiplex-7050.sh.intel.com (HELO localhost) ([10.239.47.46])
+  by fmviesa002.fm.intel.com with ESMTP; 28 Oct 2026 21:28:59 -0700
+Date: Thu, 29 Oct 2026 12:22:52 +0800
+From: Xu Yilun <yilun.xu@linux.intel.com>
+To: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
+Cc: Jason Gunthorpe <jgg@nvidia.com>, sashiko-reviews@lists.linux.dev,
+	linux-coco@lists.linux.dev, kvm@vger.kernel.org,
+	linux-pci@vger.kernel.org
+Subject: Re: [PATCH v7 09/16] tsm: Remove the device from lookup before PCI
+ teardown
+Message-ID: <auLKHDLCg5XKDIWv@yilunxu-OptiPlex-7050>
+References: <20261008055955.4014342-1-aneesh.kumar@kernel.org>
+ <20261008055955.4014342-10-aneesh.kumar@kernel.org>
+ <sashiko-outbox-163673@kernel.org>
+ <yq5a33ub5lgt.fsf@kernel.org>
+ <20261012130109.GK13920@nvidia.com>
+ <yq5ald82q934.fsf@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -90,81 +85,179 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/damon/tests/sysfs-kunit: fix leaked pid reference in
- add_targets test
-To: sashiko-reviews@lists.linux.dev, sj@kernel.org,
- akpm@linux-foundation.org, david@kernel.org, ljs@kernel.org,
- error27@gmail.com, wangkefeng.wang@huawei.com
-Cc: damon@lists.linux.dev, linux-mm@kvack.org,
- "Liam R. Howlett" <liam@infradead.org>, Michal Hocko <mhocko@suse.com>,
- Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>,
- Vlastimil Babka <vbabka@kernel.org>
-References: <20261029015725.17378-1-xiaoleiwangxiaolei@gmail.com>
- <sashiko-outbox-188628@kernel.org>
-From: Wang Xiaolei <xiaoleiwangxiaolei@gmail.com>
-In-Reply-To: <sashiko-outbox-188628@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <yq5ald82q934.fsf@kernel.org>
 
+On Tue, Oct 13, 2026 at 02:19:03PM +0530, Aneesh Kumar K.V wrote:
+> Jason Gunthorpe <jgg@nvidia.com> writes:
+> 
+> > On Mon, Oct 12, 2026 at 02:44:58PM +0530, Aneesh Kumar K.V wrote:
+> >> sashiko-bot@kernel.org writes:
+> >> 
+> >> > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> >> > - [Medium] tsm: race in tsm_register() error path leads to UAF and NULL pointer deref
+> >> > --
+> >> >
+> >> > commit f9b77b7469552ae6078c3a47333908a88eec2474
+> >> > Author: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+> >> >
+> >> > tsm: Remove the device from lookup before PCI teardown
+> >> >
+> >> > This commit modifies the teardown flow to remove the TSM device from
+> >> > lookup before tearing down the PCI state. It also adjusts the setup
+> >> > flow in tsm_register() to handle PCI registration failures differently.
+> >> >
+> >> >> diff --git a/drivers/virt/coco/tsm-core.c b/drivers/virt/coco/tsm-core.c
+> >> >> --- a/drivers/virt/coco/tsm-core.c
+> >> >> +++ b/drivers/virt/coco/tsm-core.c
+> >> >> @@ -56,26 +56,25 @@ static struct tsm_dev *alloc_tsm_dev(struct device *parent)
+> >> > [ ... ]
+> >> >> -static struct tsm_dev *tsm_register_pci_or_reset(struct tsm_dev *tsm_dev,
+> >> >> -						 struct pci_tsm_ops *pci_ops)
+> >> >> +static int tsm_register_pci(struct tsm_dev *tsm_dev, struct pci_tsm_ops *pci_ops)
+> >> >>  {
+> >> > [ ... ]
+> >> >>  	tsm_dev->pci_ops = pci_ops;
+> >> >>  	rc = pci_tsm_register(tsm_dev);
+> >> >>  	if (rc) {
+> >> >> +		tsm_dev->pci_ops = NULL;
+> >> >
+> >> > [Severity: Medium]
+> >> > Does this unprotected write to tsm_dev->pci_ops introduce a race condition?
+> >> >
+> >> > If pci_tsm_register() returns an error early (e.g. if a driver incorrectly 
+> >> > provides both link_ops and devsec_ops, returning -EINVAL before acquiring 
+> >> > pci_tsm_rwsem), a concurrent userspace write to the connect sysfs attribute 
+> >> > might trigger connect_store().
+> >> >
+> >> > If connect_store() evaluates is_link_tsm() concurrently, this lockless 
+> >> > assignment to NULL on the error path could cause the compiler to reload the 
+> >> > pointer after the NULL check. Could this lead to a NULL pointer dereference 
+> >> > when accessing ->link_ops.probe?
+> >> >
+> >> >>  		dev_err(tsm_dev->dev.parent,
+> >> >>  			"PCI/TSM registration failure: %d\n", rc);
+> >> >> -		device_unregister(&tsm_dev->dev);
+> >> >> -		return ERR_PTR(rc);
+> >> >> +		return rc;
+> >> >>  	}
+> >> > [ ... ]
+> >> >> @@ -96,15 +95,22 @@ struct tsm_dev *tsm_register(struct device *parent, struct pci_tsm_ops *pci_ops)
+> >> >>  	if (rc)
+> >> >>  		return ERR_PTR(rc);
+> >> >>  
+> >> >> -	return tsm_register_pci_or_reset(no_free_ptr(tsm_dev), pci_ops);
+> >> >> +	rc = tsm_register_pci(tsm_dev, pci_ops);
+> >> >> +	if (rc) {
+> >> >> +		device_del(dev);
+> >> >
+> >> > [Severity: Medium]
+> >> > Can this error path lead to a use-after-free if PCI registration fails?
+> >> >
+> >> > Since device_add() is called prior to tsm_register_pci() in tsm_register(), 
+> >> > the device is already exposed via class_find_device(). If a concurrent 
+> >> > connect_store() finds the device and proceeds to pci_tsm_connect() before 
+> >> > this error path cleans it up, it will attach the PCI context to tsm_dev.
+> >> >
+> >> > When this error path calls device_del() and returns, the __free(put_tsm_dev) 
+> >> > guard at the top of tsm_register() will drop the primary reference to 
+> >> > tsm_dev, freeing its memory.
+> >> >
+> >> > Because the attached PCI context stores the pointer without taking an 
+> >> > additional device reference, wouldn't this leave a dangling pointer in the 
+> >> > PCI context, resulting in a use-after-free on subsequent accesses?
+> >> >
+> >> >> +		return ERR_PTR(rc);
+> >> >> +	}
+> >> >> +	return no_free_ptr(tsm_dev);
+> >> >>  }
+> >> 
+> >> 
+> >> I think this problem already exists upstream. We should delay
+> >> device_add() until PCI/TSM registration succeeds. The kobject event
+> >> should also be emitted after device_add(). I will add the fix as a
+> >> separate patch.
+> >
+> > Sigh, trying to do all this stuff through sysfs makes such an
+> > mess.. Nothing gets to be atomic in sysfs land so..
+> >
+> > It looks like this ordering is to ensure that when connect appears on
+> > the pci device it can immediately be used with the tsm that triggered
+> > it's creation. I'm not sure this is valuable but I haven't worked out
+> > how a userspace is even supposed to exist with all these troublesome
+> > races.
+> >
+> 
+> The issue is theoretical and does not arise with a single link TSM
+> driver. The PCI device's "connect" attribute is added only after
+> pci_tsm_register() succeeds.
+> 
+> The race can occur when registering a second TSM. The "connect"
+> attribute already exists, and userspace may try to connect using the new
+> link driver, for example "tsm1". connect_store() then looks up ID 1 and
+> can find the new tsm_dev in tsm_class because device_add() has already
+> completed.
+> 
+> The proposed fix is to reorder registration so that device_add() is
+> called last.
 
-在 2026/10/29 10:02, sashiko-bot@kernel.org 写道:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] mm/damon: memory leak of ctx in damon_sysfs_test_add_targets() on skip
-> --
->
-> commit 15e9d751202cdf7c593524fe7b4266b6f6dd0dbf
-> Author: Wang Xiaolei <xiaoleiwangxiaolei@gmail.com>
->
-> mm/damon/tests/sysfs-kunit: fix leaked pid reference in add_targets test
->
-> This commit fixes a struct pid reference leak in
-> damon_sysfs_test_add_targets() by calling damon_select_ops() to select
-> DAMON_OPS_VADDR on the monitoring context before adding targets, ensuring
-> that damon_destroy_ctx() invokes damon_va_cleanup_target() to release the
-> pid references. If DAMON_OPS_VADDR is not registered, the test cleans up
-> its allocations and skips itself.
->
->> diff --git a/mm/damon/tests/sysfs-kunit.h b/mm/damon/tests/sysfs-kunit.h
->> index 138a4b8d14e73..634387c6178b9 100644
->> --- a/mm/damon/tests/sysfs-kunit.h
->> +++ b/mm/damon/tests/sysfs-kunit.h
->> @@ -79,6 +79,14 @@ static void damon_sysfs_test_add_targets(struct kunit *test)
->>   		kunit_skip(test, "ctx alloc fail");
->>   	}
->>   
->> +	if (damon_select_ops(ctx, DAMON_OPS_VADDR)) {
->> +		kfree(sysfs_targets->targets_arr);
->> +		kfree(sysfs_targets);
->> +		kfree(sysfs_target->regions);
->> +		kfree(sysfs_target);
->> +		kunit_skip(test, "vaddr ops not registered");
->> +	}
-> [Severity: Medium]
-> Does this error path leak ctx when damon_select_ops() fails (for example,
-> when CONFIG_DAMON_VADDR is disabled)?
->
-> Earlier in damon_sysfs_test_add_targets(), ctx is allocated via
-> damon_new_ctx():
->
-> 	ctx = damon_new_ctx();
-> 	if (!ctx) {
-> 		kfree(sysfs_targets->targets_arr);
-> 		kfree(sysfs_targets);
-> 		kfree(sysfs_target->regions);
-> 		kfree(sysfs_target);
-> 		kunit_skip(test, "ctx alloc fail");
+Yes, since the cleanup path is changed to:
+
+ device_del()
+ pci_tsm_unregister()
+ put_device()
+
+the initialization patch should be:
+
+ device_initialize()
+ pci_tsm_register()
+ device_add()
+
+> 
+> ie, changes the sequence from:
+> 
+> 	rc = dev_set_name(dev, "tsm%d", tsm_dev->id);
+> 	if (rc)
+> 		return ERR_PTR(rc);
+> 
+> 	rc = device_add(dev);
+> 	if (rc)
+> 		return ERR_PTR(rc);
+> 
+> 	return tsm_register_pci_or_reset(no_free_ptr(tsm_dev), pci_ops);
+> 
+> to this.
+> 
+> 	rc = dev_set_name(dev, "tsm%d", tsm_dev->id);
+> 	if (rc)
+> 		return ERR_PTR(rc);
+> 
+> 	/* Complete PCI registration before exposing the TSM to class lookup. */
+> 	rc = tsm_register_pci(tsm_dev, pci_ops);
+
+Maybe we don't need the helper any more, open code pci_tsm_register(),
+align with tsm_unregister(), seems clearer to me.
+
+> 	if (rc)
+> 		return ERR_PTR(rc);
+> 
+> 	rc = device_add(dev);
+> 	if (rc) {
+> 		if (pci_ops)
+> 			pci_tsm_unregister(tsm_dev);
+> 		return ERR_PTR(rc);
 > 	}
->
-> When damon_select_ops(ctx, DAMON_OPS_VADDR) returns a non-zero error,
-> kunit_skip() aborts the test immediately without calling
-> damon_destroy_ctx(ctx). Should damon_destroy_ctx(ctx) be called before
-> kunit_skip() here as well?
+> 
+> 	/* Notify TSM userspace that PCI/TSM operations are now possible. */
+> 	if (pci_ops)
+> 		kobject_uevent(&dev->kobj, KOBJ_CHANGE);
+> 
 
-Agree, fixed in v2
+I'm good to the analysis and good to the fix. I was confused why the
+original patch refactored tsm_register_pci_or_reset() with no functional
+change. But with this proposal, the change becomes reasonable.
 
-thanks
-
-xiaolei
-
->
+I haven't finished the series yet and am not sure why this fix is needed
+in this series, how it affects the following patches. But it is a good
+fix standalone.
