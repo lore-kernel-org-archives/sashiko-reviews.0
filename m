@@ -1,53 +1,62 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=31.44.14.20
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793300463;
-	b=dc64fBgAZjp5viZvSeRIgt4WSCkkzTrf1miDUEbEKm2ldFMhlVzEKHO+kb8UdIMzLgib
-	 JcnQxnHbuRghQaTKwR+uhFEe/rwu4LPjy2aNYaz8HExSE2nAO2OtB2cQIByDooStUSwum
-	 FwcdHHOANbfMCorg7DYhE6VXKodW3VvfC3vAWWG2hiD6IHmklRmAarSltJBknYs6+BM4D
-	 knfpXy8jEvPUOE+RE7sTGD42MyscFpQ+LxgNUa+DlIfG7RfUvbHyoOdOCNhoKaL2nW8LY
-	 7ke91UAaG4TpG6tbGFoh9cShpsSIMZC/cLIyuUk0oqh7phG6jMfS/cnib2DShh/LznQ==
+	t=1793301056;
+	b=zEPcqrFLN/Uh/Tw2YrTLfh85DzxcwxG99Q67UY8hqWYW5Aes2i+W4+tQr1IaThZpeMeI
+	 lGDHl5k4ucILgBPY8G2w9YeN/3O8SoFYMEYZEdGZeY0+0fSl/7u23Xsxir6a0ZOYzhVIN
+	 1/wGUGnv1Obx0sph8o/itUpSP2K9/FDutdXkezMBNtvsL9pe2gGkrvK0eP4k53GFZ+SQv
+	 bMEKdECpX3c0qOVD0SFhJktkwzgk3YigJy81qLl5++31tdG1UeuLncUeMfJi3+j7Eil8d
+	 wIzZmelYdd3BiLI+wTV0TvDtu3Y6UoC/nTFEzlqloQY6ATMvK2nbPo1UDrk/4w+jEzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793300463;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=X3R+/90f+Tf2330RKPvZV8HmufJCZILvebczyhDrUyE=;
-	b=a8Uwqvlk4kgAD4emv41sx3JxVsL2skXkWQZeKzAkkDc374cmtLlrngDzY7ujqKRDJEs7
-	 duoEj91VILdyAwPL9XGx5eBWMUJTxcmHrgAVmjLchwXS0C2JHm4m4RRZYlRpWUrfRNj9o
-	 OSFHljKlxFwuYLP8pf8mundukncJx38+5+zr1ko8sMZGpGafS9B20jZmGaovr6g7YjfQx
-	 7cRHvcfw7JOvy5phfmBGK34320adse/Qi2S4HM/nn1yLCbajINbOhqpPT0bCCZKofQiRU
-	 0NLLKbpNnsjmqMnm1QrIm2TKjP5Tka9IBdatJAwuX/EoRHCYXQLKaSfkaeSXOiawgPA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793301056;
+	h=DMARC-Filter:Received:Received:X-Yandex-Fwd:DKIM-Signature:From:To:
+	 Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=KK5qYiWjNM7e6CUGue9gPBlhWsuwXmp+cvGAVaU4r+4=;
+	b=1C7PS3QRCRjM8fuL4tvUmagEIBhuTpz4hkzEkAMC5JHWBR1gQUVEUUsiOhloRCsMxN3l
+	 1cA43Z+cSn70IgTurQjlorRBo93fPJzCylFz4FiLByuy9nxfocomq8/+Qrp7vW9g7jj0Z
+	 tJFJLAo3aY1dEdobdpzuyoaKiW7wxlcKFWUr5kkeMnqmQSqLUXF/4D7iXTePzDruSnLpW
+	 h5zzHu4lVGOywN9MwIBJdskPgHyOAUMXDGoD8THkQtGxkm9U4xXmYjWzjJPZnO3MA/akJ
+	 9+QM7MsxkXadvY90Ki/4HtTbeGrQcGTTrEDPPdYDzhJQ61zrNwSbgz4bl+rtp6idnOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Gfq90gPU;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=yandex.ru;
+	spf=pass smtp.mailfrom=yandex.ru;
+	dkim=pass header.d=yandex.ru header.i=@yandex.ru header.a=rsa-sha256 header.s=mail header.b=bhgoxkaP;
+	arc=none smtp.remote-ip=31.44.14.20
+Received: from forward504d.mail.yandex.net (forward504d.mail.yandex.net [31.44.14.20])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC50606A31D
-	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 19:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C5D606A31E
+	for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 19:10:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 16C5D606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yandex.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Gfq90gPU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1491F1F01816;
-	Thu, 29 Oct 2026 19:01:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793300463;
-	bh=X3R+/90f+Tf2330RKPvZV8HmufJCZILvebczyhDrUyE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Gfq90gPUGfuSHVFt5gPBIV1Aheh0dr7OtLUnHCIwwiA9afSFAWcIN876IoXJayD4C
-	 xW8tHCYfhdXQ4IllmmhGYxI48TK4u8TQcYTIbXpsmq5D+R5HzSfL3r1cmjl2drzdh5
-	 4a6Tkikh7c9aMv4inAtnGcCX0G8AjRab1Tzg5CIBfjXZMoU7vGk6cjuil+MKP70jDn
-	 S3dS4Niprjvb88c9i2Z1hQOF8qtNPaHYdx2YKLst0trxjUO9X0c8KH5tORw4589Csp
-	 kEVhoD2PKblpJgRopJl1BjhfF6qxpIQxoi6tj7iDoPTLBdf6J4tkAsE49KGhrMSSPP
-	 ucjLT98fWiiqA==
-Date: Thu, 29 Oct 2026 14:01:00 -0500
-From: Rob Herring <robh@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=yandex.ru header.i=@yandex.ru header.a=rsa-sha256 header.s=mail header.b=bhgoxkaP
+Received: from mail-nwsmtp-smtp-production-main-94 (mail-nwsmtp-smtp-production-main-94.klg.yp-c.yandex.net [IPv6:2a02:6b8:c43:9cd:0:640:e66:0])
+	by forward504d.mail.yandex.net (postfix) with ESMTPS id 808C81003A1;
+	Thu, 29 Oct 2026 22:10:43 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-94 with ESMTPSA id QApHFuTduCg0-YLwvWH0r;
+	Thu, 29 Oct 2026 22:10:42 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1793301043; bh=KK5qYiWjNM7e6CUGue9gPBlhWsuwXmp+cvGAVaU4r+4=;
+	h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+	b=bhgoxkaPaj5jZwQq9W0hPhgKFw2RJ620Yx9Adbjt0pdIC6xo2I31nqqOcnRMouzj9
+	 DKo7tGrTpXI4urstkYnmZMMRrJJWIsWpDgEm/0olQ+5xHqm++u8KAXwGmgRmiIrec7
+	 8mytnG0wLPOiYDEZCI2+Sem3cAWgG8MrNJFoxPqQ=
+Authentication-Results: mail-nwsmtp-smtp-production-main-94; dkim=pass header.i=@yandex.ru
+From: Kupreenko Danila <keckerz@yandex.ru>
 To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH v4 09/31] accel: ethosu: Guard operations after unplug
-Message-ID: <20261029190100.GB1232511-robh@kernel.org>
-References: <20261029-ethosu-fixes-v4-0-4aa25e22578e@kernel.org>
- <20261029-ethosu-fixes-v4-9-4aa25e22578e@kernel.org>
- <sashiko-outbox-189512@kernel.org>
+Cc: devicetree@vger.kernel.org,
+	robh@kernel.org,
+	conor+dt@kernel.org
+Subject: Re: [RFC PATCH 2/3] power: supply: add read-only CW2017 battery monitor
+Date: Thu, 29 Oct 2026 22:10:23 +0300
+Message-ID: <20261029191023.546957-1-keckerz@yandex.ru>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <sashiko-outbox-189760@kernel.org>
+References: <sashiko-outbox-189760@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -57,88 +66,35 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-189512@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Oct 29, 2026 at 02:26:01PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] accel: ethosu: mixing __free() and scoped_guard() with goto cleanup labels
-> --
-> 
-> commit cbd771f7e8b7995eaa7aedcd81a7cde35a4b6ada
-> Author: Rob Herring (Arm) <robh@kernel.org>
-> 
-> accel: ethosu: Guard operations after unplug
-> 
-> This commit guards ethosu device file open and private ioctl operations
-> with drm_dev_enter() and drm_dev_exit(), and switches device removal from
-> drm_dev_unregister() to drm_dev_unplug(). It also drops drm_dev_enter()
-> from the BO wait ioctl so fence waits do not delay scheduler teardown.
-> 
-> > diff --git a/drivers/accel/ethosu/ethosu_drv.c b/drivers/accel/ethosu/ethosu_drv.c
-> > index 6875ed17a004d..91b2c2ab0a03e 100644
-> > --- a/drivers/accel/ethosu/ethosu_drv.c
-> > +++ b/drivers/accel/ethosu/ethosu_drv.c
-> [ ... ]
-> > @@ -139,27 +132,34 @@ static int ethosu_ioctl_cmdstream_bo_create(struct drm_device *ddev, void *data,
-> >  
-> >  static int ethosu_open(struct drm_device *ddev, struct drm_file *file)
-> >  {
-> > -	int ret = 0;
-> > +	struct ethosu_file_priv __free(kfree) * priv = NULL;
-> > +	int cookie, ret;
-> >  
-> >  	if (!try_module_get(THIS_MODULE))
-> >  		return -EINVAL;
-> > +	if (!drm_dev_enter(ddev, &cookie)) {
-> > +		module_put(THIS_MODULE);
-> > +		return -ENODEV;
-> > +	}
-> >  
-> > -	struct ethosu_file_priv __free(kfree) *priv = kzalloc_obj(*priv);
-> > +	priv = kzalloc_obj(*priv);
-> >  	if (!priv) {
-> >  		ret = -ENOMEM;
-> > -		goto err_put_mod;
-> > +		goto err_dev_exit;
-> >  	}
-> >  	priv->edev = to_ethosu_device(ddev);
-> >  
-> >  	ret = ethosu_job_open(priv);
-> >  	if (ret)
-> > -		goto err_put_mod;
-> > +		goto err_dev_exit;
-> >  
-> >  	ethosu_perfmon_open_file(priv);
-> >  	file->driver_priv = no_free_ptr(priv);
-> > +	drm_dev_exit(cookie);
-> >  	return 0;
-> >  
-> > -err_put_mod:
-> > +err_dev_exit:
-> > +	drm_dev_exit(cookie);
-> >  	module_put(THIS_MODULE);
-> >  	return ret;
-> >  }
-> 
-> [Severity: Medium]
-> In drivers/accel/ethosu/ethosu_drv.c, ethosu_open() declares priv with
-> __free(kfree) = NULL at the top of the function before try_module_get() and
-> drm_dev_enter(), and then mixes __free(kfree) with goto err_dev_exit when
-> kzalloc_obj() or ethosu_job_open() fails.
-> 
-> Because scope-based cleanup runs when the function scope exits after the
-> err_dev_exit label executes, drm_dev_exit(cookie) and
-> module_put(THIS_MODULE) will run before kfree(priv), reversing the reverse
-> acquisition (lifo) teardown order and mixing goto error handling with
-> cleanup.h helpers.
-> 
-> Should ethosu_open() avoid mixing __free(kfree) and goto labels so that
-> priv is freed before exiting the drm device section and dropping the module
-> reference?
+Hi,
 
-No! There's no such requirement that everything uses scoped cleanups or 
-nothing does. And delaying a free is not an issue.
+Thanks for the review. I reproduced the three effects: a valid unchanged
+post-resume sample causes a spurious notification, a first post-resume I2C
+error loses the availability notification, and an early thermal TEMP read
+returns the synthetic -ENODATA before the poll can refresh the cache.
 
-Rob
+The proposed fix removes the sample.error assignment and its lock/unlock
+pair from cw2017_suspend(). It keeps cancel_delayed_work_sync(), preserves
+the last completed sample, and leaves the immediate resume poll unchanged.
+That poll can then compare the actual pre/post-suspend states. Real read
+errors still invalidate measurements and notify consumers.
+
+This also addresses the comment on PATCH 3/3; no board DTS change is needed.
+
+The regression cases pass with ASan/UBSan and ThreadSanitizer, including
+TEMP reads before and during a blocked first post-resume poll. Threaded
+workqueue/devres models exercise synchronous cancellation and teardown;
+they are not a replacement for kernel runtime stress. ARM64 builds with
+PM/thermal enabled, the no-PM object, and sparse also pass.
+
+The early temperature remains a cached reading and can be stale until the
+new poll completes. This removes the artificial error; it does not promise
+fresh measurements during thermal resume or hide genuine unavailability.
+No phone PM test was run, and the tested R4/R5 artifacts are unchanged.
+
+I'll include this fix in v2 of the series, along with any additional changes requested during review.
+
+Thanks,
+Danila
