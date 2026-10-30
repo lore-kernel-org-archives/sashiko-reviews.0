@@ -1,94 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.72.26
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793377318;
-	b=gQ0on+fN+qTTNM7EH7BtvNuUZxLwrFm2rcv08aLx4eKM9E7H4v8l2loMR9OdHvKQondP
-	 v7A94uUxwwm3l64ssx7QuzsE6aFJ2keBDR3XivJn9auihHmp2iXoFtW5Cl0X3P6E7pBJu
-	 F9satElHSqi/FZ7tKXuW9AZHWgc/rkgiheEzb9i6OPc999biIkAL0MIwFNEL5y/niWFQr
-	 ozlMd448kBKYr4oVdjuC328AjpQt471LgmDY25y6vpZX+OXH5DlcBMX5J+oqpTs1VUP5l
-	 aGBEiWcktJQU6jIcGwmdtcXWibbAUaMhfFRg9H3zfJhQfdMTMbfKuJWOeeXVkUdr0pA==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793377318;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=UTtjKxF2T0IX9ouY9tuZOJvPeey75dou+vmla+aoLT8=;
-	b=cpN1J2wSpO5p5MPkw/hDTBBnw1gWqaaURZFYxphtgERt8RNvyMJxxLOy1XbSdouQR2LF
-	 GoGRaKq4tXpz8ikeSeLUM84dztwmJ3sT/UTyDFnrny870wwrC6jNZOyIyZ39Ye1QSXhjt
-	 thC0qUNKBKcakdgrtva/ZKtoJYnsXoVqDvq7hDjBDtF1DoG10sFkvCf6rrY3SmljEZYeM
-	 x6klkWg6lz788oQwICQ7+KHgKw2GrAxNwE3WjuUHAGr7z88i0+MH9P3ivJJkmLxj/LAV2
-	 226x456vzYBwTiJ1wkII1qpjZagJXilWdwzZKMqMbsSGEotlD22fd8spJ8psGrswYHg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=oss.nxp.com;
-	spf=pass smtp.mailfrom=oss.nxp.com;
-	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=eAlDgFPm;
-	arc=fail smtp.remote-ip=52.101.72.26
-Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013026.outbound.protection.outlook.com [52.101.72.26])
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.137.202.133
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793379551;
+	b=nvkyL2LqJ1S/imswoNV1Q3rfjBlIA0/DcMSTzL+3PQETZ/7Py5tvr6O/P05z1fBPqH66
+	 j4ZoLnZpn4JdVUll6nT7Z0baJZinRU2WrXs6ocanB8rr/79M1cgQPbUUNiG9UHFa7b5b3
+	 zZcVTCugvV2nHrS7w4L8dJt1H3eijj39hkOK3yEf93eSpol0+Aj5Zwrna4hc0gg3Bg7WR
+	 FvnPKt34ZNuGZfMeAneXPzZbQA+zEFjft99I3tq2Bvw9aAk4yziS9uPc+kHFxPA2ShFrA
+	 KT3IvfEPTTkelA4oLDt5D8YEdBMbuI6THeYZvi0R3J0YEFlotLUylvHmVAkITJZykIg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793379551;
+	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=5n8eSjKsc7e8/r/fqdfKYxiUDvARY72uPXNUK2wE8wQ=;
+	b=3SsvMTWVqsdg1om9HLw4uRquGU5nIW2Y84Mj1FhzGQe/sToZ36VEkamN0wryaohdHpZF
+	 N+fGWu9C/0Gh4+s3FkUydhvDe8T1o7Jc2j94Ty0Ltc5sSwQrBYvrqQ0/ld2tIYSf5OEw2
+	 TFFr/oVVApHDxKpjfjLJZ+crTH3kzEJgZVm18XAdhO3I2AotxOe6qLdwvMbPohUoX/q6K
+	 RNbYwvybTXHTWtbKzW5AUY/0GCAEoKxbujolKy/Fh/Fjplvsz1SYK5xiztxceaRejJpFY
+	 98tblksUaH4nhjU+lpIoJcJo92TPuOmN9VoJK2kG5sccUmYR/p4hMvxZP5JnCjCRi9g==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=infradead.org;
+	spf=pass smtp.mailfrom=infradead.org;
+	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=yObKPwnT;
+	arc=none smtp.remote-ip=198.137.202.133
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87AAF606A31E
-	for <sashiko-reviews@lists.linux.dev>; Fri, 30 Oct 2026 16:21:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 87AAF606A31E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD339606A31C;
+	Fri, 30 Oct 2026 16:59:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DD339606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=eAlDgFPm
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=golF9hoeWP2g9MM+u0Bpxxre99USUnIxCAr8yXPwCxxSXrUJ52/JUSPy5ry+6v+CKe+aFo9cgxRjyv++GQsms+8a5Ip7N5PCuiKKJkTDjhVOhmMPAq7RDUkG94ZR3WEKPJSmsGOr4qZOqyobHGxPq+wKRYdevTMNvUmaISNZvYbi+JJk4UXxbw+5/qdqL3t+Vk6pgWXXk672MJVKBuC6kRF1VTBh/kRPHOwBa+kpOt2DfYbHPADlyYZI+7Oe/LCi5NDmcF2V4HDZ5z7ZRNyty6lhOzi4qrHzOAO7yTKEX5c+TFjzGO9K+7PDF+ei7hjWXPa57VPjJ1NtC4VTwD+yKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BXaztg16ndQQfh9VlyF1OOIr59N0HBot+AXXoJwW410=;
- b=evFc+SUva9TP8VhwZlhDfmQZGIa093uGyFJ8xucQGrkPenwaKrOv6MN/37c0cMNz6Tvyq31u+YbASJnpxo7rkzXYGMZURfI3EHjD5rZ+hU6G15ca55nWlA87drY0M76WCSQ2pj6++1K0ad9CJDuj8u/qxWSol3QVw2OBt9LbPWPdE/Wvjix/8UipvPOnJ9fbqn5KO+NjYsVqSnQwWXY1SCaTboHWRlru0d16/85cZtZMYxk7GJFeQrU/VYNCveCuY3aNfsoNsWOwdgjwrgtxl333bMimaDR3+j0IqQYsgwlUX7wiHaUoKZQdVDJy+KAZqYZKPNrtG/w3+gnPkSvWVQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BXaztg16ndQQfh9VlyF1OOIr59N0HBot+AXXoJwW410=;
- b=eAlDgFPmHzLRKCYtJdus4wOsdheyfbrYBq9Sx3swgJo+fz17/V55Gsnwv2ogr2W6kczbKVfb/LI+EoFWEbWnGJ2dUCTslrtN6191GODd3bPjE91zBk+em+NSNtAB3ZluqfobrVULsSUGO9XEyMMTEcxvldxYoCPCQNUsEkQycd0xqm6aNkcEn3z/XZ9ioPpZLe3j62Au76NQLsLbcjO3jnx/SYV2WH27p/veltIiy58nuJAI5VP2aopAQVACv/D5exqhqBieR4XEuQxWqt4E9y8bJFshkxvjqWHE14hbAiC7MYCah3L4OnkXFA4C/Kk1mXJfA/D7R3xymqQgtVyWiw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from AMBPR04MB12445.eurprd04.prod.outlook.com
- (2603:10a6:20b:75e::21) by GVSPR04MB634494.eurprd04.prod.outlook.com
- (2603:10a6:150:719::19) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.9; Fri, 30 Oct
- 2026 16:21:51 +0000
-Received: from AMBPR04MB12445.eurprd04.prod.outlook.com
- ([fe80::ba23:1fa4:ce58:ff06]) by AMBPR04MB12445.eurprd04.prod.outlook.com
- ([fe80::ba23:1fa4:ce58:ff06%3]) with mapi id 15.21.0569.008; Fri, 30 Oct 2026
- 16:21:51 +0000
-Date: Fri, 30 Oct 2026 12:21:45 -0400
-From: Frank Li <Frank.li@oss.nxp.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Koichiro Den <den@valinux.co.jp>, dmaengine@vger.kernel.org,
-	linux-pci@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
-Subject: Re: [PATCH v6 2/5] dmaengine: dw-edma: Reclaim LL entries from
- hardware progress
-Message-ID: <auTEGSSGk3M1mx4h@lizhi-Precision-Tower-5810>
-References: <20261030150742.2586776-1-den@valinux.co.jp>
- <20261030150742.2586776-3-den@valinux.co.jp>
- <sashiko-outbox-191180@kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-191180@kernel.org>
-X-ClientProxiedBy: DS7P220CA0014.NAMP220.PROD.OUTLOOK.COM (2603:10b6:8:223::6)
- To AMBPR04MB12445.eurprd04.prod.outlook.com (2603:10a6:20b:75e::21)
+	dkim=pass (2048-bit key, unprotected) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=yObKPwnT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
+	bh=5n8eSjKsc7e8/r/fqdfKYxiUDvARY72uPXNUK2wE8wQ=; b=yObKPwnThEmClW/F46QIAgvizo
+	dHQdP5RQkxO7nAfWhSOfG3GHAFtjezzphWjGqaWEQQSPVXCJyUhXeu8ZDVF6VkgBZRct75CljCX7W
+	iwbTYtq5BvR9TbxcAZohLPVDy5hE9DCFwVQy0OCjhzlX3Oad/hGkoza+4D46y6YqO1xxtw39ONLNY
+	WTNhmReAUMqKVnL7W/lFq8rBBZ+nbyNBUFpynTj38tdDLlDs7ojUlWJsh/Ytu5bN+NuwU2xeiuw2O
+	vcXfigF+TC6TmGGiT1s2P+mfATGeYL58R23ufJ/I+eA0vQDtzSvkM8hKhJKyM/HU9u35PGDmc60n9
+	xYswoI+Q==;
+Received: from [50.53.43.113] (helo=[192.168.254.34])
+	by bombadil.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
+	id 1xMpwc-0000000CB6b-1VHG;
+	Fri, 30 Oct 2026 16:59:10 +0000
+Message-ID: <6bec1cdf-26fb-4d3f-941e-16f5b52bea2c@infradead.org>
+Date: Fri, 30 Oct 2026 09:59:09 -0700
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -98,149 +58,81 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AMBPR04MB12445:EE_|GVSPR04MB634494:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1e70992e-1a80-4a4c-4735-08df36a1e7bc
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|19092799006|23010399003|376014|366016|1800799024|6133799003|18002099003|22082099003|56012099006|11063799006|4143699003|5023799004|261026140227099003|261026121527099003|261026135527099003|261028144727099003|10067099003|261021123027099003|261021121427099003|261022105027099003|261022075727099003|261009223027099003;
-X-Microsoft-Antispam-Message-Info:
-	QT3V69iYEN5H1du9qQpHcaVF9HnTTnXpNzUJu9SGiKZPeqxhKs6z9zWwAaykX9oOs4qNXxXqozjuHOPLtNh5pb2USqwKOz2CwSOqPlzkCnYFNnR9IUoG3MvR36TuCx4eLCAvgfVNsX8E2Nh9ufIvKwJAOFxl8tXrW0+sgJszmiNgW8qnX6u3WbkSgIZn7j1QzEJv26hszlujD/HgrL+x+RE30FcNoSEQEIHTXaW8slXs7uNNL4apGDWBr+/W8ut8cKJQtVh5aay7kwY33uL6PvwqZPHCnQhffEMPqGwZt7BOT0Ky+Bhbu64hIYsNEBjwRWcTTvi5vJEHROCreYqL0d6xA7KteCNhBQ9NjfC8xpKGBdhxIoZaSJWJgkI59OZfAxjEuNFsfTANF9b5Jv7LYXGUYwofY7Koj/G9P1yzwlEy0rURJucEN47x0DeWdiyUxGINBuWbVdcAiHaXcg+BmIAwNvhKhkxiv89QJ9ryVCmPq19p3DGVog+yPM33GnHzNIP7FAzQ3ClLmQ1+L2kaO25Mzqowpnee/uJzhlHkuTi9t2SnT5JQhpz0/LtzrhXTngjRApgkQWr0TB8KtAaXK7KdVTX8mm0mCaF0gIQ9L8w=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AMBPR04MB12445.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(376014)(366016)(1800799024)(6133799003)(18002099003)(22082099003)(56012099006)(11063799006)(4143699003)(5023799004)(261026140227099003)(261026121527099003)(261026135527099003)(261028144727099003)(10067099003)(261021123027099003)(261021121427099003)(261022105027099003)(261022075727099003)(261009223027099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?b7n0c4r+Cc5gnycVCD/QrT96ne7PL3kWcBDz/YyBwmBzL1a6pxLjbLlAE+?=
- =?iso-8859-1?Q?tas+A4IM9pdkEin7sYHFbfjBMmpTogLMEWaL/l2pGCV2ylBQZjdbj+dMzX?=
- =?iso-8859-1?Q?0GXMoYmISzgv++xv1t46/LUsLZgaIx3+AUFFmjfbTxgU1JUdarskcn5+Q4?=
- =?iso-8859-1?Q?fehANLGfna0pwTgI1slHmspNVOsRnZgPifSU0i/QmZAQ55dLQ0Clg26Hd0?=
- =?iso-8859-1?Q?CwB6im0PfilNhhWlNIwiXK1UNShlf79VUuW7CjsWhP22w9h/Nw/gM+FGE/?=
- =?iso-8859-1?Q?HG6ZUIbxE0Etdd3rC6e1/0K/Uc/ZoWH81tu5HruwnA3nYbY5eIzl1BsMS3?=
- =?iso-8859-1?Q?U6d53MlyAwJ8WYpHLftGnvsplPjh7cownZNtQDpvVg2llojWUj0dtigP1Y?=
- =?iso-8859-1?Q?NhC7x/ujnI2NuovdRllqm2st/wYf8J5TREDqr7UOP9Y+fdO16HHoXNrcfV?=
- =?iso-8859-1?Q?3xkjGoEthwWNBGHb9RVH3HKy5O8yK4smquaG7RtNRG/KvsALI0nnLheuRG?=
- =?iso-8859-1?Q?TTXzWsrQsGeLLdYjdLlrXaa2U1Zo2aJ5meXhW//Vr1mNbPl5nU5eprFxjX?=
- =?iso-8859-1?Q?Cx0TXVpCaTn9QElhrrQulkR2PP3GXv71uyxTIFeVUdk/s+ZK+qLzaU041S?=
- =?iso-8859-1?Q?Mh1NYuFqRG8lP063/jVjn7TLa+Cyn/L+NbQ3uPs3mYE/uqGnLC6MMKiuaz?=
- =?iso-8859-1?Q?LVJfP0otlBZTOmATQdbtd4u+2mU/M1Zi1kVPo31tYpF85X2rJX9hgGsU5o?=
- =?iso-8859-1?Q?9th0z6AuZ/txSldzrKvkIXHQhHZjQB8S0tDqSXCojV5EljHTxDkWdj8w4E?=
- =?iso-8859-1?Q?dHNy7G/fZX7KbLMpv7TBUYITm1+EzPrJbsQaXoN2DkagtRhcnpmkEYoax/?=
- =?iso-8859-1?Q?PjU22S1BhOKBoC15rCYZMyAKURY+8qYpMBTi1Ajj/LFTuQZ/c4v42YeZNb?=
- =?iso-8859-1?Q?mXhlAGwS//XCQGHXh0Ot3R7oyJDVjn7KMdYMd7JqcuI+M+8Kl/E/lB6RRw?=
- =?iso-8859-1?Q?a6mBfLq8pzPXWUcwTcssfPqA60q+aY6gArPWKjehRkCsJXUk/MQQlewsBD?=
- =?iso-8859-1?Q?BJWro/pCZmy5Kd/F6+7RVOGMHO1pFpXSZm6vFORqW0/0bjBgufa1xri869?=
- =?iso-8859-1?Q?6szPPfVGdnJKWco9RA3ZJRccWJaafll5hG0z2W07eSpPEjZVX+SqNjbBwF?=
- =?iso-8859-1?Q?h1UMQvoh9nukCEN6zdQSkbG1lPl1CJl4emGgdeH/TNlUZhXzF9P5cL1EmI?=
- =?iso-8859-1?Q?q8UnMrF4BmCzQ90rWYk0/8dD7KfC3HbRz+X5Fsg5zZwsYKqbhYEOKiP64e?=
- =?iso-8859-1?Q?Nmh196zqUCg4gbwtsJpDXAdSJDxTwdMw2suQO1waOhOyKocLGgpW62Qepr?=
- =?iso-8859-1?Q?pAxhRF+4mYaavs4IKRsDVMzeAaDRUXQ6yu7TIFpX2mS96rS7WS5EwrAL/g?=
- =?iso-8859-1?Q?LpEbBm9ZxcgSjGz1UsrZPeOcgE2GaF2qX4bSjY4sOuKHQfdfmmtfFWEfop?=
- =?iso-8859-1?Q?6dwCXsaY9O9B9UMsroNo65I/s2iSoWUlIH+OBD9jc5GnoboO2k/mTAIYEl?=
- =?iso-8859-1?Q?RKINhX9HPkm3C+iomNKzGViGbCyrA3QKGUpl0hkPPVtEaQuolDQlbgvvmk?=
- =?iso-8859-1?Q?I96D5rY0OMpo6Jokf5PH5wlWVgVJ5lUAR7PmM6QcxyFBQZUFMONu4JRqOV?=
- =?iso-8859-1?Q?XcBHZZPZ0qUl9NoUEVb2tIkbu6eicIUeTgmBBaiZKc5fBtkXWctdAk2DRZ?=
- =?iso-8859-1?Q?tGSh08sCnJ8GAWYMOyIHyL6ZXjz1gG+5tqqGmmvQPJnx5jD/mQk3fJ5JkL?=
- =?iso-8859-1?Q?+eNZfiMCLCERG9qDXkrxJWAkREyMT2Y=3D?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1e70992e-1a80-4a4c-4735-08df36a1e7bc
-X-MS-Exchange-CrossTenant-AuthSource: AMBPR04MB12445.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Oct 2026 16:21:51.5907
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: pblko3BnlM1fjRS5vkgc0ZALtLz1mj5M3hTsSnCeLmCCDuCD+Y7MIKonaEkCSJFDaX1bc//N/XzXc+fC+jp1BkFroILHIAoueKS4ylNI0xcWpWau2wS1LZyrkV7ixYcG
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVSPR04MB634494
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/8] MIPS: mm/c-octeon: fix missing function prototype
+ warnings
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-watchdog@vger.kernel.org
+References: <20261030164657.2808262-1-rdunlap@infradead.org>
+ <20261030164657.2808262-2-rdunlap@infradead.org>
+ <sashiko-outbox-191287@kernel.org>
+Content-Language: en-US
+From: Randy Dunlap <rdunlap@infradead.org>
+In-Reply-To: <sashiko-outbox-191287@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Oct 30, 2026 at 03:39:11PM +0000, sashiko-bot@kernel.org wrote:
+
+
+On 10/30/26 9:53 AM, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] dmaengine: dw-edma: callbacks scheduled on STOP in dw_edma_ll_advance()
+> - [Medium] MIPS: mm/c-octeon: missing prototypes for cache_parity_error_octeon_*()
 > --
+> 
+> commit 710759b5db134c7d9627997d6bd1fbab4fe6465b
+> Author: Randy Dunlap <rdunlap@infradead.org>
+> 
+> MIPS: mm/c-octeon: fix missing function prototype warnings
+> 
+> This commit adds missing cache error notifier prototypes to asm/r4kcache.h and
+> removes local extern declarations from drivers/edac/octeon_edac-pc.c to address
+> -Wmissing-prototypes warnings.
+> 
+>> diff --git a/arch/mips/include/asm/r4kcache.h b/arch/mips/include/asm/r4kcache.h
+>> index da1cd1bbdbc5d..8c36d228075f3 100644
+>> --- a/arch/mips/include/asm/r4kcache.h
+>> +++ b/arch/mips/include/asm/r4kcache.h
+>> @@ -31,6 +31,9 @@ extern int mips_sc_init(void);
+>>  extern void (*r4k_blast_dcache)(void);
+>>  extern void (*r4k_blast_icache)(void);
+>>  
+>> +extern int register_co_cache_error_notifier(struct notifier_block *nb);
+>> +extern int unregister_co_cache_error_notifier(struct notifier_block *nb);
+> 
+> [Severity: Medium]
+> The commit message lists four -Wmissing-prototypes warnings in
+> arch/mips/mm/c-octeon.c that this change aims to eliminate:
+> 
+>   register_co_cache_error_notifier()
+>   unregister_co_cache_error_notifier()
+>   cache_parity_error_octeon_recoverable()
+>   cache_parity_error_octeon_non_recoverable()
+> 
+> However, asm/r4kcache.h only adds prototypes for
+> register_co_cache_error_notifier() and unregister_co_cache_error_notifier().
+> 
+> In arch/mips/mm/c-octeon.c, cache_parity_error_octeon_recoverable() and
+> cache_parity_error_octeon_non_recoverable() are non-static functions called
+> from assembly in arch/mips/mm/cex-oct.S:
+> 
+>   asmlinkage void cache_parity_error_octeon_recoverable(void)
+>   {
+>           co_cache_error_call_notifiers(0);
+>   }
+> 
+>   asmlinkage void cache_parity_error_octeon_non_recoverable(void)
+>   {
+>           co_cache_error_call_notifiers(1);
+>           panic("Can't handle cache error: nested exception");
+>   }
+> 
+> Should prototypes for cache_parity_error_octeon_recoverable() and
+> cache_parity_error_octeon_non_recoverable() also be added here so those two
+> warnings are resolved as described in the changelog?
+> 
 
-Need fix all sashiko report problem or provide explain.
+Yes, I'll add those and send v2.
 
-Frank
+-- 
+~Randy
 
->
-> commit cb11666c731e633531785427e3b24bbfbd73eb2b
-> Author: Koichiro Den <den@valinux.co.jp>
->
-> dmaengine: dw-edma: Reclaim LL entries from hardware progress
->
-> This commit updates the linked-list completion handling to use DMA_LLP to
-> advance ll_done and reclaim completed ring entries in issue order. It also
-> defers STOP and PAUSE completion until the channel stops.
->
-> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > index b08bb31657c9e..74613c95ae112 100644
-> > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
->
-> [ ... ]
->
-> > @@ -283,6 +345,45 @@ static void dw_edma_core_ch_maybe_doorbell(struct dw_edma_chan *chan)
-> >  	dw_edma_core_ch_doorbell(chan);
-> >  }
-> >
-> > +/*
-> > + * Must be called with vc.lock held.
-> > + *
-> > + * HDMA does not update LLP continuously. Only use it to track running
-> > + * transfers when handling an interrupt.
-> > + */
-> > +static void dw_edma_ll_advance(struct dw_edma_chan *chan, bool event)
-> > +{
-> > +	bool stopped = dw_edma_ll_stopped(chan);
-> > +
-> > +	if (stopped || event)
-> > +		dw_edma_ll_consume(chan, dw_edma_core_ll_cur_idx(chan),
-> > +				   stopped);
-> > +
-> > +	if (chan->request != EDMA_REQ_NONE) {
-> > +		/* Wait for the channel to stop before completing STOP or PAUSE. */
-> > +		if (!stopped)
-> > +			return;
-> > +
-> > +		if (chan->request == EDMA_REQ_STOP) {
-> > +			dw_edma_finish_termination(chan);
->
-> [Severity: High]
-> Does calling dw_edma_ll_consume() in drivers/dma/dw-edma/dw-edma-core.c
-> before checking chan->request == EDMA_REQ_STOP cause completion callbacks to
-> be scheduled on a channel that is being terminated?
->
-> When dw_edma_device_terminate_all() is called while an LL channel is actively
-> transferring, it defers termination by setting chan->request = EDMA_REQ_STOP.
-> When the interrupt fires:
->
-> dw_edma_irq_work()
->   dw_edma_ll_interrupt()
->     dw_edma_ll_advance(chan, true)
->       dw_edma_ll_consume()
->         list_del(&vd->node);
->         vchan_cookie_complete(vd);
->
-> In dw_edma_ll_consume(), any descriptor in chan->vc.desc_issued whose bursts
-> finished before the channel stopped is removed from chan->vc.desc_issued,
-> placed on chan->vc.desc_completed, and has chan->vc.task scheduled via
-> vchan_cookie_complete() to run its completion callback.
->
-> When dw_edma_ll_advance() then checks chan->request == EDMA_REQ_STOP and
-> calls dw_edma_finish_termination(), dw_edma_terminate_all_descs() only cleans
-> up descriptors still on chan->vc.desc_issued and chan->vc.desc_submitted,
-> leaving the descriptors already moved to chan->vc.desc_completed to invoke
-> their callbacks.
->
-> By comparison, the non-LL handler dw_edma_done_interrupt_locked() checks
-> EDMA_REQ_STOP and calls dw_edma_finish_termination() without calling
-> vchan_cookie_complete(), matching commit 99109a51efd2 ("dmaengine: dw-edma:
-> Terminate all descriptors without callbacks").
->
-> Should dw_edma_ll_advance() check for EDMA_REQ_STOP before calling
-> dw_edma_ll_consume() so that terminated descriptors do not schedule
-> completion callbacks?
->
-> --
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261030150742.2586776-1-den@valinux.co.jp?part=2
