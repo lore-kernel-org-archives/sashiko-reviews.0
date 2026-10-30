@@ -1,91 +1,58 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793326289;
-	b=eoha6gH3t0/VtLffACY9cBb4r1BzxGt3Ar/4T3nMWSXaJpFOwPPx3zq/vXUsaAFRGqYu
-	 6+7as9j5jXQ64cIwNtJerTp9EBnORCAvapAfsHK3vIvn4p9XYMIwdyExIKJQieuWk7ZEr
-	 wIhAl6QuVGIGRkWjjhqwy7vG5nOFaiJRRPjOETRKTP2ZjlMwkuMansjnB8oJMap82yDLP
-	 HW0MJAyKv+0dS92SVU3xbbOtUtlSGRDOmp4LjnCbr/TK0fPBbs25nCFfRF9ceSPhCKNym
-	 LnccCv9ovWBcuUkvEWy005vu5ekGcQxaD6PKi8VSzSiztjOmBXriE+bqmLqPe6Ln4Mg==
+	t=1793330086;
+	b=bfoFcco5Yu4v2eNZk1zoyaQrdvTHgsIlGC4V/jnu+/FIFtDtw//pWhsPEgbiZAao9w/S
+	 42VroszuYRLQIFIR9TQ4A+PHVyavOjlbIaybv4TVrJu6T8ubBexYjFuupmRMUwPscMsKg
+	 H9a8yhSLuQ+9F/eq+sqTZOCAFrxf5WOarRw4HtyJam0JnahQAyVfbua1XNpIAljTznO+H
+	 ZY0wRvrbKZJ5C2wZXPWP/Jtoh+glI+JrhpnHgLuCPSBbAdXVOJEeF5slk3BW/d85f9qO0
+	 eejnnwlG6juUz0hJAygvEZ12fcJjieG9obZwddMe88Z0df7y5DxcaBbT278xTuLkavA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793326289;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To;
-	bh=qa5uqZOFY2I0haMmHVU09YCvN4fkPxIgUfz1U7YDp3s=;
-	b=nzX3ec5u1tY0aYyRelp16zIdZG3Pqtntbe/BMh4eED2C5CQEECtowB6ZfWrcirh49A9h
-	 nuKA2OgdmGxSJTBUqTNj/Q5++RkBf3BIaJOBGCylUVdAjlLg9iBrg9BIQyLbwNAVIVVF7
-	 gKSyMnWZHZJfdkpdwsrUWr+2fug8+jtMrod8NaEz9XnNCVujHLeEbgQ19b2hkPd7y588S
-	 ylFIYmoQHBC3/rM/b/hDFl/KMUNnHuPHJyDINWQXEhojIA/nef/WhziSiI1bPGfooCIzV
-	 NUKNJ5VJ27BFf1RFwn3tf8rW1L8JTMCBilN3ckABzo5rnNljoSLUoS+KSyF8clXMWiA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793330086;
+	h=Received:DKIM-Signature:Message-ID:Subject:From:To:Date:In-Reply-To:
+	 References:Content-Type:User-Agent:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=fT/31aHRW+tfFfII9nu9KVU5Tn1xO081+VxNWBoI/6g=;
+	b=Kg7sceKs0u/HstJmcdROqZWWaJJxGX+57VbF6AVWtBnvL+LQCWlinPifoWIDyVjg85uC
+	 +LZK2hz8yZlmCQaq0UzhMzuMiVXvm3AnFS5462psjmRJFT2mw+vTmtSsdUvZwiuYHvYaN
+	 7xFM6/jbilc96ajrQMFD1BXiSe5Abt5pY3924UZ2cq/AdX+fuUuey2fJzh47hmkY/2A/4
+	 EhSMllMKMUiEd5JVv2FHJ4hQqzSDf9yH5iJQwX+hR5SYLMSF/JiPocK5yPRGsEuMzerez
+	 7byMeyFudVciJcWK1hD7qPYTRBdgrE2Mchb4K3y6uji6kwo0HCielb/QeHqDKxUkGGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ly8XnSdV;
-	arc=none smtp.remote-ip=74.125.82.170
-Received: from mail-dy1-f170.google.com (mail-dy1-f170.google.com [74.125.82.170])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RuZpUJ+u;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C89606A31C
-	for <sashiko-reviews@lists.linux.dev>; Fri, 30 Oct 2026 02:11:28 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 25C89606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19083606A31A;
+	Fri, 30 Oct 2026 03:14:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ly8XnSdV
-Received: by mail-dy1-f170.google.com with SMTP id 5a478bee46e88-35cd4e8bdbdso371802eec.1
-        for <sashiko-reviews@lists.linux.dev>; Thu, 29 Oct 2026 19:11:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793326288; x=1793931088; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=qa5uqZOFY2I0haMmHVU09YCvN4fkPxIgUfz1U7YDp3s=;
-        b=Ly8XnSdV4oPHqVOhfO1tZZ1NgDnLkAnoM3exJnaDRAQlh7HSUi84TrzYPnlfQ5cqtL
-         xgJx8qZlPQ0sffknDg5KiDqjCX1dWFbA/wxnzCXFQwE67AtxUrU4nXKZrf7whUfnWKys
-         vJmolhD4StOzRrjzdj3zeG4+xdetVbzwcPBSh2bFuio2aUotajv1sLsg4aLrIuZPuDg8
-         NUouLC9UaIILBdHLKhajSUQODrcUn6Pn53R4TUEWT0UhPqu5A/uotjz3qY/6zTdHySjZ
-         SqZj1ytx8Q923wRd8Y1Wbn+d6dg+9fwxWzM8Db35byM3u605ewVhMT316p+I2SfayESu
-         GPhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793326288; x=1793931088;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=qa5uqZOFY2I0haMmHVU09YCvN4fkPxIgUfz1U7YDp3s=;
-        b=zs9wiZMH4kLW1y+gdxt2WLLRpd+vcThRiWR4j1YTO5HTCi8R1DHWGttZx6vP0GifLW
-         FVr/C/afNgTQM2ViJ2lfHDIRkVB6N2LjkfjIZf9KYyVu+w7nKnb1mos8wDcznoPQwqrd
-         bcQhvwf5rtGWJc0WQoaAay/rSEXCwmQjLYnpHkjWnqqT5slwX9EwxCkl75ExAccSqsvD
-         hUQ+gG7g/G1JOwDeHhg6EB12wqUCsGnkDTA4LNxO2R82YjgSZNfq3Yu3e93t6YKkgYyM
-         wkp2v4MKXzhf7mxWehcjIfInpgi2PZCowTomBYaP7VEuTjEhfUAo6vHRUgVxAL2N4Bck
-         gKPQ==
-X-Gm-Message-State: AFq9FYJYLJIgTEHmkZipNbRbmUAYLk4wX4Jdxr2Pr0ClpW7H5p33kv+u
-	DUtS62rczdHxMFidh2tm45Omvc64YR3G07x8lU144D6+M3yKGKeGlSxYbFwmpQ==
-X-Gm-Gg: AYBFou3UWo1ldvVWYrzE7iGmRKwYTlYaTjT7XfUDvc/miovpQdpUPCSTLWjUznkujwy
-	VZGye0fyj3TX41+jXg9h+N+KGWWajBcQcOMlNeEkTNrlburbEKFGzyu1pW6zefO9GGK8Nq2oE0p
-	TgVXmH+QmG5+vnTvlm8QNdzDcxE8zBpAWUcAnqpcld9cdRF0HXbhsa+5XFZ+wl9srQgxmYY7HzJ
-	YIj0F80HevwKyPWW7/XHQ2whMo8w7J0ER4wzc5wxme1ecpf09g8mFyv3U5hyArZRrTh+wqkq5kP
-	hoM2Han3m6npU1YUR4X6WjFZM4VPUlHHJIPMJx0d/ZuLY08yl8sgxlHzxVG7WTmUZ3Ei/uUnTHN
-	vx9B6yRKvsccpuvNYFonkuJFevAmRCCNlaFwGGcGjoo9QzNLk/NndVt5MgQpOUsaotR1JDCMRB+
-	zEjUgSUWunLzFFRl/LxJAJ7gAvvOWgT85rHxzefnKpko+JJ4XzY75lr693GRQMQM6O6iW/LLTWC
-	uL2BqBe9lpk5VrlE4BWKfUPx6ExhuM/lOV0fzDm/8homWOZ/34j8Ox4yPd7lAs+rM3FGu+61bx/
-	TB6qqwceakglx8NQ3yh4dA==
-X-Received: by 2002:a05:7022:f115:b0:183:7d42:cfb5 with SMTP id a92af1059eb24-1ac5d88c1famr1087217c88.19.1793326287926;
-        Thu, 29 Oct 2026 19:11:27 -0700 (PDT)
-Received: from debian ([169.211.140.146])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1ac19c6b969sm2448104c88.14.2026.10.29.19.11.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Oct 2026 19:11:27 -0700 (PDT)
-Date: Thu, 29 Oct 2026 22:11:24 -0400
-From: Kwanghoon Son <asdfkwang@gmail.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: ojeda@kernel.org, gary@garyguo.net, rust-for-linux@vger.kernel.org
-Subject: Re: [PATCH] rust: io: mem: Fix exclusive MMIO region requests
-Message-ID: <auP8zJwRmAdnpZO3@debian>
-References: <20261027-b4-rust-iomem-origin-master-fix-v1-1-16215ae197af@gmail.com>
- <sashiko-outbox-187333@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=RuZpUJ+u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA03A1F000C1;
+	Fri, 30 Oct 2026 03:14:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793330085;
+	bh=fT/31aHRW+tfFfII9nu9KVU5Tn1xO081+VxNWBoI/6g=;
+	h=Subject:From:To:Date:In-Reply-To:References;
+	b=RuZpUJ+u7rOjLuptwH7NOh9Xa2fY2M47kkeCoDMo9/nzyGV+naGWZta5XDBK7r3cs
+	 gepMsSEvCYxetFn0SQjzQh2/CL8rRdqcg9hG4y/O6ZZZbFvSYjxONjiO3FzR0EDEdk
+	 IKH9l/pN+KcjWtUns9us3f/kwnOVIz7imDceKk7lhGPZl2J4/br1qw7F49CVH4VTA0
+	 wm/Z/wcsTgU9flgkuvxPQEglsCK5ASpv7di8+BLCRzH6eoPAZKa6fVl+fVJ8h/Z+A0
+	 y/X7iliFFIHc3w0i1n7DLT2x/qzKNBFpfHKkYBlck7j/z19gUSgghxNvQofme5b1OI
+	 OjG8Dg/+KYIwA==
+Message-ID: <9ac7b40bab2bcec633cf3ed199022781f8f3f13e.camel@kernel.org>
+Subject: Re: [PATCH mptcp-next v3 2/3] mptcp: options: track invalid
+ suboptions
+From: Geliang Tang <geliang@kernel.org>
+To: sashiko-reviews@lists.linux.dev, "Matthieu Baerts (NGI0)"
+	 <matttbe@kernel.org>, MPTCP Linux <mptcp@lists.linux.dev>
+Date: Fri, 30 Oct 2026 11:14:40 +0800
+In-Reply-To: <sashiko-outbox-190022@kernel.org>
+References: <20261029-mptcp-mib-inval-opt-v3-0-428f42a35674@kernel.org>
+	 <20261029-mptcp-mib-inval-opt-v3-2-428f42a35674@kernel.org>
+	 <sashiko-outbox-190022@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.56.2-10build1 
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -95,75 +62,174 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-187333@kernel.org>
 
-On Wed, Oct 28, 2026 at 02:12:54AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
-> - [Low] rust: io: dead_code warning in Resource::iomem() when CONFIG_HAS_IOMEM=n
-> - [Low] rust: io: missing #[inline] annotation on Resource::iomem()
+On Thu, 2026-10-29 at 21:52 +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential
+> issue(s) to consider:
+> - [Medium] mptcp: missing invalid option checks in
+> mptcp_parse_option()
 > --
 > 
-> commit 87df13a505aabe5d12ec487bcf72bfc859780ac8
-> Author: Kwanghoon Son <asdfkwang@gmail.com>
+> commit e7e04837e80d59cf3334575f91dc516262bef4d7
+> Author: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 > 
-> rust: io: mem: Fix exclusive MMIO region requests
+> mptcp: options: track invalid suboptions
 > 
-> This commit updates ExclusiveIoMem::ioremap() to request the MMIO region
-> from the global iomem_resource root via a new Resource::iomem() helper
-> rather than from the device's own resource.
+> This commit adds the MPTCP_MIB_OPTINVALID MIB counter to track
+> incoming
+> MPTCP options that have invalid sizes or unexpected suboption
+> combinations.
 > 
-> > diff --git a/rust/kernel/io/resource.rs b/rust/kernel/io/resource.rs
-> > index 758ce62b3cce3..c99a2530186fc 100644
-> > --- a/rust/kernel/io/resource.rs
-> > +++ b/rust/kernel/io/resource.rs
-> > @@ -79,6 +79,12 @@ unsafe impl Sync for Region {}
-> >  pub struct Resource(Opaque<bindings::resource>);
-> >  
-> >  impl Resource {
-> > +    /// Returns the global I/O memory resource root.
-> > +    pub(crate) fn iomem() -> &'static Self {
-> > +        // SAFETY: iomem_resource is permanent; C serializes resource-tree updates.
-> > +        unsafe { Self::from_raw(&raw mut bindings::iomem_resource) }
-> > +    }
+> > diff --git a/net/mptcp/options.c b/net/mptcp/options.c
+> > index cbc105199073e..10a150e2ad69e 100644
+> > --- a/net/mptcp/options.c
+> > +++ b/net/mptcp/options.c
+> > @@ -20,7 +20,7 @@ static bool mptcp_cap_flag_sha256(u8 flags)
+> >  	return (flags & MPTCP_CAP_FLAG_MASK) ==
+> > MPTCP_CAP_HMAC_SHA256;
+> >  }
+> >  
+> > -static void mptcp_parse_option(const struct sk_buff *skb,
+> > +static void mptcp_parse_option(const struct sock *sk, const struct
+> > sk_buff *skb,
+> >  			       const unsigned char *ptr, int
+> > opsize,
+> >  			       struct mptcp_options_received
+> > *mp_opt)
+> >  {
 > 
-> [Severity: Low]
-> Will Resource::iomem() in rust/kernel/io/resource.rs trigger a dead_code
-> warning (or a build failure with CONFIG_WERROR=y) when CONFIG_RUST=y and
-> CONFIG_HAS_IOMEM=n (for example, on ARCH=um or s390 without CONFIG_PCI)?
+> [ ... ]
 > 
-> In rust/kernel/io.rs, the mem module is gated on CONFIG_HAS_IOMEM while the
-> resource module is compiled unconditionally:
+> > @@ -175,7 +177,7 @@ static void mptcp_parse_option(const struct
+> > sk_buff *skb,
+> >  					    OPTION_MPTCP_PRIO |
+> >  					    OPTION_MPTCP_FASTCLOSE
+> > |
+> >  					    OPTION_MPTCP_FAIL)) !=
+> > 0)
+> > -			break;
+> > +			goto invalid;
+> >  
+> >  		pr_debug("DSS\n");
+> >  		ptr++;
+> > @@ -218,7 +220,7 @@ static void mptcp_parse_option(const struct
+> > sk_buff *skb,
+> >  			mp_opt->ack64 = 0;
+> >  			mp_opt->use_ack = 0;
+> >  			mp_opt->data_fin = 0;
+> > -			break;
+> > +			goto invalid;
+> >  		}
+> >  
+> >  		mp_opt->suboptions |= OPTION_MPTCP_DSS;
 > 
->     #[cfg(CONFIG_HAS_IOMEM)]
->     pub mod mem;
->     pub mod poll;
->     pub mod register;
->     pub mod resource;
+> [ ... ]
 > 
-> Since the only caller of pub(crate) fn iomem() is ExclusiveIoMem::ioremap() in
-> rust/kernel/io/mem.rs, should Resource::iomem() also be annotated with
-> #[cfg(CONFIG_HAS_IOMEM)] (or made pub)?
+> > @@ -386,10 +388,10 @@ static void mptcp_parse_option(const struct
+> > sk_buff *skb,
+> >  		/* Can be used with a restricted number of other
+> > options */
+> >  		if ((mp_opt->suboptions & ~(OPTION_MPTCP_FAIL |
+> >  					   
+> > OPTION_MPTCP_FASTCLOSE)) != 0)
+> > -			break;
+> > +			goto invalid;
+> >  
+> >  		if (opsize != TCPOLEN_MPTCP_RST)
+> > -			break;
+> > +			goto invalid;
+> >  
+> >  		if (!(TCP_SKB_CB(skb)->tcp_flags & TCPHDR_RST))
+> >  			break;
+> 
+> [ ... ]
+> 
+> > @@ -418,11 +420,17 @@ static void mptcp_parse_option(const struct
+> > sk_buff *skb,
+> >  		break;
+> >  
+> >  	default:
+> > +		/* Not invalid: maybe used for experimentations */
+> >  		break;
+> >  	}
+> > +
+> > +	return;
+> > +
+> > +invalid:
+> > +	MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_OPTINVALID);
+> >  }
+> 
+> [Severity: Medium]
+> Can a couple of invalid option cases in
+> net/mptcp/options.c:mptcp_parse_option()
+> still read out of bounds or miss incrementing MPTCP_MIB_OPTINVALID?
+> 
+> First, mptcp_get_options() only rejects opsize < 2 before calling
+> mptcp_parse_option():
+> 
+> net/mptcp/options.c:mptcp_get_options()
+> 	opsize = *ptr++;
+> 	if (opsize < 2) /* "silly options" */
+> 		return;
+> 	if (opsize > length)
+> 		return;	/* don't parse partial options */
+> 	if (opcode == TCPOPT_MPTCP)
+> 		mptcp_parse_option(sk, skb, ptr, opsize,
+> 				   mp_opt);
+> 
+> When opsize == 2, ptr already points past the end of the 2-byte
+> option.
+> At the start of mptcp_parse_option(), *ptr is dereferenced before
+> checking
+> opsize:
+> 
+> net/mptcp/options.c:mptcp_parse_option()
+> 	u8 subtype = *ptr >> 4;
+> 
+> If the byte following the 2-byte option has an upper nibble in the
+> default
+> range (9..15), switch (subtype) hits default: break and returns
+> without
+> incrementing MPTCP_MIB_OPTINVALID. Similarly, if opsize is 2 or 3 and
+> subtype is MPTCPOPT_DSS, the MPTCPOPT_DSS case advances ptr and reads
+> a
+> 4th byte before validating opsize against expected_opsize (minimum
+> TCPOLEN_MPTCP_DSS_BASE == 4):
+> 
+> 	case MPTCPOPT_DSS:
+> 		...
+> 		ptr++;
+> 
+> 		flags = (*ptr++) & MPTCP_DSS_FLAG_MASK;
 
-I reproduced the dead_code warning.
-I'll add #[cfg(CONFIG_HAS_IOMEM)] in v2, matching the condition on its only caller.
+These could be addressed by adding an "opsize < 3" check at the
+beginning of mptcp_parse_option(). However, this issue wasn't
+introduced by this patch - I think they can be ignored for now and
+addressed in a separate patch if needed.
 
 > 
-> [Severity: Low]
-> This isn't a bug, but should Resource::iomem() in rust/kernel/io/resource.rs
-> also have an #[inline] attribute, matching the other small helper functions in
-> the kernel crate abstractions?
+> Second, in the MPTCPOPT_RST case:
+> 
+> 		if (!(TCP_SKB_CB(skb)->tcp_flags & TCPHDR_RST))
+> 			break;
 
-I'd prefer to follow those and leave it without the attribute, unless
-there is a specific reason to add it here.
+Indeed, this should use goto invalid; instead of break. WDYT?
 
-I'll wait more reviews on this and send send v2!
-
-Best regards,
-Kwang.
+Thanks,
+-Geliang
 
 > 
-> -- 
-> Sashiko AI review � https://sashiko.dev/#/patchset/20261027-b4-rust-iomem-origin-master-fix-v1-1-16215ae197af@gmail.com?part=1
+> If a peer sends an MP_RST suboption on a packet without TCPHDR_RST
+> set, it
+> breaks out instead of jumping to invalid. Aside from not incrementing
+> MPTCP_MIB_OPTINVALID, this leaves OPTION_MPTCP_RST unset in
+> mp_opt->suboptions, so a packet carrying MP_RST followed by DSS on a
+> non-RST segment will accept the DSS option without flagging the
+> invalid
+> MP_RST + DSS combination.
+> 
+> Should mptcp_parse_option() check for a minimum opsize (and minimum
+> DSS
+> size before reading flags) and jump to invalid when MPTCPOPT_RST is
+> received without TCPHDR_RST?
