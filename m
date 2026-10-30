@@ -1,61 +1,60 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=109.224.244.27
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793393078;
-	b=nQ3r/ELp5pCkjzMQeU0orEE8p3zwtrfm7NHQtXGJER+nT+Prxrt0A+CoRq08N71I4mMm
-	 bCfLiRVUyvbtibfmswlmJEfulVKIjiLWERp8RR8XI2jmysSbZ16Oie/OGVHwBv0DmjrPl
-	 Uym3a5Jk2C2U750CQACz6Sddr/bA+NTeGfusjw70L9F3JQiVDvolPIS/6Qd+ahe3G7qLk
-	 6ZsdpkDUaMIfSkYToiZWCol/XKW1stRVpFscmamC1Lw9a7AX2p5/In7U2prk2l0p1kBE/
-	 w8yLWi5GXKCfnnOoRt0d7+vYD9nFJOZovsKC92hInoiS0C5p6yZJXej1AHaAQ4V81vw==
+	t=1793394230;
+	b=die7+vswA+z11go6+wZvPBdjS7bk+j5rW5PgF0dONkUXqnFeqrRSC8H74+y2WvDoqOzJ
+	 OD+A4tZ7Ap1JOW4nKU7o2v+Yq4gyv+eY1eGAku8rUompa285t4i54hBUwfYzU5VI0UjNm
+	 BbmQyCZo/eH3K7PboSZyJRFynNcMxr9RPk0zYAq2YLcsv1cKvvCOvoxPEK0AIB4b5CQwl
+	 rr8X44I9lz4SX7KZALV4hTPwZaxOwPQcr3mop/6esSbeQxbOiiIh0K1h2xkZ3xwdMq9fj
+	 kkWR/KwXoeInlBAwDEyq0IcEqtoNqTrxVJLb19hx2j9KGXZJfXVQuwRQgc9fHnDrXVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793393078;
-	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=z9ZE8eS15MJ+ylRJDKgrZQLjWpeIoPGwSPhCJilrp9M=;
-	b=LXaBEMuObrqac86JBxBrjhaif2wYjd6vrjepQS5nDlMOuqpXfQtoYsjDjZ5gqgDMyfMJ
-	 nxsUOjIIZp3ZeMpvM+3Ym43HM4oGJ78t9HlQIwTUeQ5mhqES3c9HbGsqVjkONnKoqvrW/
-	 qE2q4S3Ytn2MA68gCRHRKMp+tBek60ejeCOlV6ViU8AyZuJtAVDbxj8/A/Dqk0+tD7b1u
-	 RNGAtTqJJwRLEMyzXG81izxryijc+U7UCm3kKqBTcFl3Arvz26VjJvtdbJs953GbiUHDS
-	 kqxReQBrUVifyz67Q/dS9n2k5J7f5dWj6oQHnjDs7I7XPsEefLA7mtJuF5ofhNwxRxQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793394230;
+	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
+	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=S1995ZLQFE4RdcXYiHKakHsk6W47b9S6zZE1CF9trLU=;
+	b=nDd0ImX3yaT8U7M6+FT/GjmZeUU5rTvrYxK9/pRttNpOFV8ajNqtEseS3PejTiGcv9e3
+	 YDHjYTAibJYsqVjI6ej3GtagvUehBadhhdcnuomqCaI0XerXmXjfVc7V5R9OM10KH66tF
+	 jk2ijqZuHaxOQUxxXum17jRqt6qaMu7rtGWJpbZBMop1ouK6JPDfGhfQ8cRxA1T06JA6j
+	 fhOP3FHFAYVz2zxGCyw3o30Xb1Tc57WMhtLGuRKPb8tnAbF2UNx6bax9lJDDrlN2hmMQ/
+	 6cXlKFS/szCjZ153Fd/qKxhlNOlxlWsRpmthtkrwRr4OQWZzr800+Vf79T2WBhWarVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="X9DK/OOS";
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=protonmail.com;
+	spf=pass smtp.mailfrom=protonmail.com;
+	dkim=pass header.d=protonmail.com header.i=@protonmail.com header.a=rsa-sha256 header.s=protonmail3 header.b=ZjxLCscv;
+	arc=none smtp.remote-ip=109.224.244.27
+Received: from mail-24427.protonmail.ch (mail-24427.protonmail.ch [109.224.244.27])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with UTF8SMTPS id 6F493606A31E;
-	Fri, 30 Oct 2026 20:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD2C606B6C6
+	for <sashiko-reviews@lists.linux.dev>; Fri, 30 Oct 2026 21:03:49 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7CD2C606B6C6
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=X9DK/OOS
-Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id 684A21F0093A;
-	Fri, 30 Oct 2026 20:44:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793393078;
-	bh=z9ZE8eS15MJ+ylRJDKgrZQLjWpeIoPGwSPhCJilrp9M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=X9DK/OOSKVii770knUw9QrBOG33ULQa9nh66lPfm5M/eQNb75wx0zGJtlr8W4Id9S
-	 E3XCZneqyO3/teP6xkd9hDDXsDCTZ0o4oVkaZmYyUIjvHYq09vg9vY/G6SN+s2ALSS
-	 2DKp7aM2xSkOMxgB6NmvKvBQRBNmZYj/qtDCHibmxQ2W7CxFNB5ABv552V/WjrX5RW
-	 yfmp0gqQ2rnIVq2ObnQKSgI/1iefmEBYpK4UCI42VpIhKHCqsor0PC02YnX545d+gJ
-	 n96DH/D1DFZ2OM/FdiIecBeW93DsdHRRjcUbgbJwtHfDRjAnUTMeQJ2dq0QSfBjzNH
-	 L01jks3G+In9g==
-Date: Fri, 30 Oct 2026 22:44:34 +0200
-From: Jarkko Sakkinen <jarkko@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=protonmail.com header.i=@protonmail.com header.a=rsa-sha256 header.s=protonmail3 header.b=ZjxLCscv
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1793394227; x=1793653427;
+	bh=S1995ZLQFE4RdcXYiHKakHsk6W47b9S6zZE1CF9trLU=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=ZjxLCscvZeZSW75knHS44BRlBxUv70KLKJt3w0MSyt7Z8XISZMZSyUZKx8Ou1UkaE
+	 ukc4Pr/ISDMRe98c5wXXhq3N0SrgaeayrAopiayRaVdfmAgP5bXWRGSXKXVjWaN500
+	 msexGbJtSjHsoDRPBLm9Fa99V1lP0DGPyHy4yN8b8IHB5BxYeoEJEcmGJ2C9wgmHiO
+	 H8Dqe/6dR2HuaVXsrqcajb3u5EyP6OaGG0Z3k79q+FiIYHU1+HQ7VimcWmRWHvU7yC
+	 qgT5x8tIOHhGhoEkBR49Xf45dKjufdc75T01bn6daVKQ8ZJE9FzNBdZLmx9HMfnyoY
+	 j2uCHK/EOgg7g==
+Date: Fri, 30 Oct 2026 21:03:41 +0000
 To: sashiko-reviews@lists.linux.dev
-Cc: David Howells <dhowells@redhat.com>, Eric Biggers <ebiggers@kernel.org>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	syzbot+c15de43f1e7fffbb7b9b@syzkaller.appspotmail.com,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>,
-	Eric Snowberg <eric.snowberg@oracle.com>,
-	Paul Moore <paul@paul-moore.com>, James Morris <jmorris@namei.org>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	"open list:SECURITY SUBSYSTEM" <linux-security-module@vger.kernel.org>,
-	"open list:KEYS/KEYRINGS" <keyrings@vger.kernel.org>
-Subject: Re: [PATCH v7] KEYS: key_garbage_collector(): process in chunks
-Message-ID: <auUBsk7Gmcl7QiYO@kernel.org>
-References: <20261030202457.3058665-1-jarkko@kernel.org>
- <sashiko-outbox-191485@kernel.org>
+From: Aiden Isik <aidenisik@protonmail.com>
+Cc: Aiden Isik <aidenisik@member.fsf.org>, devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
+Subject: Re: [PATCH v3 4/5] arm64: dts: exynos: Add initial support for Exynos5515 SoC
+Message-ID: <Mmgr4BBkTyH619iTPbmVEEjEAI18ry8Yzpd0c3CCp5ZgSRsHx92Ref70av8rjJGpnjiljM5HjvdsZNS_PJ-dn3_GMJK0JnB7QmSOoWeS0BU=@protonmail.com>
+In-Reply-To: <sashiko-outbox-191496@kernel.org>
+References: <20261030-for-next-lucky7-v3-0-81e02272ce69@member.fsf.org> <20261030-for-next-lucky7-v3-4-81e02272ce69@member.fsf.org> <sashiko-outbox-191496@kernel.org>
+Feedback-ID: 46524699:user:proton
+X-Pm-Message-ID: 38c7d60319e73c92ae8a77d9b4235398a84414df
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -65,14 +64,15 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <sashiko-outbox-191485@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 30, 2026 at 08:38:36PM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] KEYS: key_put() sets KEY_GC_KEY_EXPIRED via key_schedule_gc(0)
+> On Friday, 10/30/26 at 20:49 sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [Medium] clk: samsung: exynos5515: CMU_PERI user muxes bypass CMU_TOP d=
+out/gout clocks
 
-Will be addressed.
-
-Br, Jarkko
+This is how those clocks are wired. I'm also not sure why the bot is sugges=
+ting
+clock driver changes on a device tree patchset.
