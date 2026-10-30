@@ -1,47 +1,82 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.9
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793360045;
-	b=b8L/KT3J0EvannV4z/cirW8FpdfjnkstVmnw+ITnnTDU25PlA/UTOWvOk6F5enzfjWZ5
-	 q9zMvs/4Txx74bfIpTB3w+EwsKetRhDvrxvpZtuFZztUSt+lPh1zWV7fSkndQB93Fh0S2
-	 gKYOfeLlHStHSH8QHZdwfHPYuTPstnx2IvOfnjZwcSaiJYJ3dfR2X/t8RByj7bCrKNaY2
-	 6c3CyUqpundq5duXXoJEQCCYXrBT80/5JEy5BOlIuxzgaHcz2GTeF+gQdTRj82+Gf0ATm
-	 swQqHzOtTQwQETupdtuEqU4GA3wiuu8lKml40m67p7YveEA0QztQxOBJdfmwfoU+hHg==
+	t=1793362029;
+	b=2kQ4haYrqaT2j+nDiw4NXTh4lC5RM+Mg4REcpKLH1ah+SMN1G7+HVB4J+SiTCXOPVrdU
+	 3pOAwebgUKE7JCL5JXmnyBQN2DtIXRg00kUWdsjFqa67J80HJ9RCHLgTKLE/42KHeUIex
+	 4YGKsJ63GabVzL5RkmYy9F5Lr4T/1sOIfzOPHHFVmF8EUm7DFUJ3mx60+XpN11xFbOY+9
+	 1UEDU1yduJTJUQY9n2f2dTqF7J7xn3Uab8gc3gNl9N2RbYh9lOCXRWRlYAo3k4vVf9mdR
+	 ExlAeNWjbfIC4m6SLxmyqYovCUnUTKNapD4AB7rc4DRicQYkaSNVzMwiQTAM8960D2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793360045;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:Content-Language:To:References:From:Cc:Autocrypt:Organization:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=XtU8Z3kTHQuYQZcN4K68hoGFiUpQb6sEjBgIxhn68kA=;
-	b=GHxyL3aIihTa0Ne1d+b4uZ7Z/0bHZMtKwcXBDQop/sSKpS1Qitrk6OmS9zyLPpqfpSoR
-	 l5oQrCmsWqUPF3jOLjK462uaojQVulhQ+TTbAjtf1pT3KJB31T5rbiSAXVVpzsdFVxpV8
-	 SpbnRQ7MoAXLbANd80Hy26hB31CAMrT6zhY4Oe86fFn8gHcqDAxXydlPfVhvGnF8j6oao
-	 W8E60jMvwVixCEEvFHGdxXrjZMi9KcwoG5s6E/1nCZxqL54emGb6uZUhWDUTiLXnBfS40
-	 XRXiMAZsQqbo66EuouMCxONOqzRPs548Tc7jDex55W/goX7PNJSd2aAk9of97xOChzg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793362029;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
+	 X-Patchwork-Hint:Organization;
+	bh=CPjArYl8G+Am8obLm7Z4sPZiszqq47ElsfbPQXkLSFI=;
+	b=AotEV3QFML+CBwd4HEIMTOWTt21G9m+huqna4JY9fnWnqWh1O4Br9T3B7ZIQpM48wGO7
+	 E8Bd0TWhBmSoAP6ctlpFUmgLr6vxiyKqRWzT71y5v7Bw1PBGsKt4128g4kiVlrAWtoybo
+	 TUvyNHaT3G1cUBd4K8FvwGelZgxAdpn5hbNtrFM2JqhrpNDz0vgaDykvBhzFVrbnf5WHw
+	 vzXLOnF9QkUuxQYv3lHm30n7GrQP8qb4OVc8TmRPae0S9X//gbafRBDZDN0zkCPRmcWQS
+	 1mFGud2D2JYYEV1CH2EXMuq+d3DERvFSrj0pM365FlkGGD5CFkCt4mEUHyst19EKhFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KBPmofuu;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=lrw3qPpR;
+	arc=none smtp.remote-ip=198.175.65.9
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59F5606A31A;
-	Fri, 30 Oct 2026 11:34:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC926606A321;
+	Fri, 30 Oct 2026 12:07:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DC926606A321
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KBPmofuu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87181F000C1;
-	Fri, 30 Oct 2026 11:34:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793360044;
-	bh=XtU8Z3kTHQuYQZcN4K68hoGFiUpQb6sEjBgIxhn68kA=;
-	h=Date:Subject:To:References:From:Cc:In-Reply-To;
-	b=KBPmofuu+j3fz+v1akAKpsxGfhDXcSvxHepXr5bcupc2p3Uki88BVnz43RvY3IwTZ
-	 2E+9xPfYTxB57/IMuiHb8QjI8QMbAw6gs3LU7eLrz4jj9TLHma4X0vrXPIQehYgwwu
-	 1kEGOOey5+nMw8g8Ow/LrlrJUi5q8PpYjMkVXXlbgw92Q9zXYIhNZJ5qGl1ae+1zcD
-	 hlKfXogTGK/j87NzO05RhrPH+H2TZuFY6yxzlMXX5tv3NfozESLFu6KFcmwDWLB9Dk
-	 V1cpUrnfCLnyaIBu72znqQlfosvYkvmFd6d1mWBRPUhSlM8gCCDYV3zGc6r+78p13i
-	 7WRoFyrJrA8Iw==
-Message-ID: <ac96b364-f395-4bfa-9fad-8e01e41a81b8@kernel.org>
-Date: Fri, 30 Oct 2026 12:34:01 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=lrw3qPpR
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793362028; x=1824898028;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=Rlbhsc63UiMYZbt/HRcuVNEnIcavNe8xmS+iPQ01Y/4=;
+  b=lrw3qPpRacNOarQWqd9MHLlosJt3AI51DPVIuUffYRxnN2HUuSdilEnO
+   MrFJkedfDjQPO8NwSNfl+gxzLewSlmZHCuKXAzMCOtkdv9SjERgnqQB5L
+   LdNQszkQ9GYSsPWHNh34/6CfbcJAethEzmu8hu039YmK0UY1Y1hdt1kie
+   i8AZdQe0m+0TyIidoWpSLsaKDmgBGhV8/4dSBAyR1ThJbkJewWmlBH2yd
+   yMaM+9A310nzcVjMywuJY3OMTVtRfcPiij1CUXJxwvDowSOx5v0fNAiyV
+   LXc8L6wbeO/0pc1OpbyVrU/yG0zbGJ6eCjrPMLmCvfPnWEKiQtu0A2E9j
+   A==;
+X-CSE-ConnectionGUID: qPlrI986QcCS3/ur9XoAsA==
+X-CSE-MsgGUID: N2AMSLg0TI2jyDKsbBCWEQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11950"; a="2010400"
+X-IronPort-AV: E=Sophos;i="6.27,186,1787036400"; 
+   d="scan'208";a="2010400"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Oct 2026 05:07:07 -0700
+X-CSE-ConnectionGUID: SFofencFTlCRv2jth9NNtA==
+X-CSE-MsgGUID: buWd7vpfS8uqIjV9zBOT4Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,186,1787036400"; 
+   d="scan'208";a="5763461"
+Received: from abityuts-desk1.ger.corp.intel.com (HELO localhost) ([10.245.244.58])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Oct 2026 05:07:03 -0700
+Date: Fri, 30 Oct 2026 14:07:00 +0200
+From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: me@romanilin.is, louis.chauvet@bootlin.com,
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+	airlied@gmail.com, simona@ffwll.ch, javierm@redhat.com,
+	dmitry.osipenko@collabora.com, regressions@leemhuis.info,
+	peter.m.arnesen@gmail.com, dri-devel@lists.freedesktop.org,
+	virtualization@lists.linux.dev, sashiko-reviews@lists.linux.dev
+Subject: Re: [PATCH v4] drm/vblank: Don't arm vblank timer with invalid frame
+ duration
+Message-ID: <auSIZNhP4DTj8Nb2@intel.com>
+References: <20260914110004.211027-1-tzimmermann@suse.de>
+ <auIMt8XmmaVykZTC@intel.com>
+ <2c2f33cf-da6f-4e31-84bb-768778d7b063@suse.de>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -51,203 +86,256 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH mptcp-next v3 2/3] mptcp: options: track invalid
- suboptions
-Content-Language: fr
-To: sashiko-reviews@lists.linux.dev
-References: <20261029-mptcp-mib-inval-opt-v3-0-428f42a35674@kernel.org>
- <20261029-mptcp-mib-inval-opt-v3-2-428f42a35674@kernel.org>
- <sashiko-outbox-190022@kernel.org>
-From: Matthieu Baerts <matttbe@kernel.org>
-Cc: MPTCP Linux <mptcp@lists.linux.dev>
-Autocrypt: addr=matttbe@kernel.org; keydata=
- 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
- lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
-Organization: NGI0 Core
-In-Reply-To: <sashiko-outbox-190022@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2c2f33cf-da6f-4e31-84bb-768778d7b063@suse.de>
+X-Patchwork-Hint: comment
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
 
-On 29/10/2026 22:52, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] mptcp: missing invalid option checks in mptcp_parse_option()
+On Thu, Oct 29, 2026 at 12:35:52PM +0100, Thomas Zimmermann wrote:
+> Hi
+> 
+> Am 28.10.26 um 15:54 schrieb Ville Syrjälä:
+> > On Mon, Sep 14, 2026 at 12:57:26PM +0200, Thomas Zimmermann wrote:
+> >> From: Roman Ilin <me@romanilin.is>
+> >>
+> >> When a CRTC's display mode carries a too small pixel clock,
+> >> drm_calc_timestamping_constants() computes a frame duration that
+> >> exceeds INT_MAX. drm_vblank_crtc.framedur_ns becomes negative.
+> >> drm_crtc_vblank_start_timer() then arms the vblank hrtimer with this
+> >> interval, after which vblank events are no longer delivered. Pending
+> >> page flips never complete and the display appears frozen.
+> >>
+> >> This could be triggered on virtio-gpu guests that have dynamic resolution
+> >> enabled: when the SPICE agent or the X server resizes the output, it
+> >> submits a mode whose pixel clock is off by a factor of 1000, e.g.:
+> >>
+> >>      clock = 406 kHz, htotal = 3152, vtotal = 2148
+> > How about actually "fixing" the clock in the driver?
+> 
+> It's not a broken driver, but user space. There is a bug report open for 
+> spice to replace the incorrect units with correct ones. [1] The fix here 
+> is supposed to resolve the kernel problem this triggers.
+
+Life becomes much simpler if you don't let garbage userspace input
+past some initial sanity checks. So technically the driver should
+just reject these modes. But in this case since you need to keep
+the broken userspace working the driver should just fix it up,
+and do so early so you don't have to deal with it anywhere else.
+
+> 
+> [1] https://gitlab.freedesktop.org/spice/linux/vd_agent/-/work_items/52
+> 
+> Best regards
+> Thomas
+> 
+> 
+> >
+> >>      framedur_ns = 3152 * 2148 * 1000000 / 406 = 16675852216 ns (~16.7 s)
+> >>
+> >> 16675852216 does not fit into an int and wraps to roughly -504000000.
+> >> ns_to_ktime() then yields a negative interval and the timer stops working.
+> >>
+> >> Found by bisection, which pointed at commit a036f5fceedb ("drm/virtgpu:
+> >> Use vblank timer"). That commit merely made virtio-gpu use the vblank
+> >> timer and thereby exposed the pre-existing problem in the timer setup
+> >> added by commit 74afeb812850 ("drm/vblank: Add vblank timer").
+> >>
+> >> To fix this, modify drm_calc_timestamping_constants() to use u64 for
+> >> calculations, check for INT_MAX overflows, and return an error code.
+> >> drm_crtc_vblank_start_timer() will then propagate the error, enabling
+> >> the driver to fall back to immediate vblank events. Valid modes are
+> >> unaffected, and the timer self-heals on the next mode with a sane clock.
+> >>
+> >> v4:
+> >> - avoid log spamming with drm_warn_once()
+> >>
+> >> Fixes: 74afeb812850 ("drm/vblank: Add vblank timer")
+> >> Suggested-by: Thomas Zimmermann <tzimmermann@suse.de>
+> >> Signed-off-by: Roman Ilin <me@romanilin.is>
+> >> ---
+> >> I took Roman's patch from [1] and replaced the error messages with
+> >> warn_once, as suggestde in my review.
+> >>
+> >> [1] https://lore.kernel.org/dri-devel/20260702181027.98526-1-me@romanilin.is/
+> >> ---
+> >>   drivers/gpu/drm/drm_vblank.c | 73 +++++++++++++++++++++++-------------
+> >>   include/drm/drm_vblank.h     |  4 +-
+> >>   2 files changed, 49 insertions(+), 28 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
+> >> index f90fb2d13e42..72b543bca9e3 100644
+> >> --- a/drivers/gpu/drm/drm_vblank.c
+> >> +++ b/drivers/gpu/drm/drm_vblank.c
+> >> @@ -631,45 +631,54 @@ EXPORT_SYMBOL(drm_crtc_vblank_waitqueue);
+> >>    * drm_crtc_vblank_helper_get_vblank_timestamp(). They are derived from
+> >>    * CRTC's true scanout timing, so they take things like panel scaling or
+> >>    * other adjustments into account.
+> >> + *
+> >> + * Returns:
+> >> + * 0 on success, or a negative errno code otherwise.
+> >>    */
+> >> -void drm_calc_timestamping_constants(struct drm_crtc *crtc,
+> >> -				     const struct drm_display_mode *mode)
+> >> +int drm_calc_timestamping_constants(struct drm_crtc *crtc,
+> >> +				    const struct drm_display_mode *mode)
+> >>   {
+> >>   	struct drm_device *dev = crtc->dev;
+> >>   	unsigned int pipe = drm_crtc_index(crtc);
+> >>   	struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
+> >> -	int linedur_ns = 0, framedur_ns = 0;
+> >> +	u64 linedur_ns, framedur_ns;
+> >>   	int dotclock = mode->crtc_clock;
+> >> +	unsigned int frame_size;
+> >>   
+> >>   	if (!drm_dev_has_vblank(dev))
+> >> -		return;
+> >> +		return 0;
+> >>   
+> >>   	if (drm_WARN_ON(dev, pipe >= dev->num_crtcs))
+> >> -		return;
+> >> +		return -EINVAL;
+> >>   
+> >> -	/* Valid dotclock? */
+> >> -	if (dotclock > 0) {
+> >> -		int frame_size = mode->crtc_htotal * mode->crtc_vtotal;
+> >> +	if (dotclock <= 0) {
+> >> +		drm_err_once(dev, "crtc %u: Can't calculate constants, dotclock = %d!\n",
+> >> +			     crtc->base.id, dotclock);
+> >> +		goto error;
+> >> +	}
+> >>   
+> >> -		/*
+> >> -		 * Convert scanline length in pixels and video
+> >> -		 * dot clock to line duration and frame duration
+> >> -		 * in nanoseconds:
+> >> -		 */
+> >> -		linedur_ns  = div_u64((u64) mode->crtc_htotal * 1000000, dotclock);
+> >> -		framedur_ns = div_u64((u64) frame_size * 1000000, dotclock);
+> >> +	frame_size = (unsigned int)mode->crtc_htotal * (unsigned int)mode->crtc_vtotal;
+> >>   
+> >> -		/*
+> >> -		 * Fields of interlaced scanout modes are only half a frame duration.
+> >> -		 */
+> >> -		if (mode->flags & DRM_MODE_FLAG_INTERLACE)
+> >> -			framedur_ns /= 2;
+> >> -	} else {
+> >> -		drm_err(dev, "crtc %u: Can't calculate constants, dotclock = 0!\n",
+> >> -			crtc->base.id);
+> >> +	/*
+> >> +	 * Convert scanline length in pixels and video dot clock to line duration
+> >> +	 * and frame duration in nanoseconds.
+> >> +	 */
+> >> +	linedur_ns  = div_u64((u64)mode->crtc_htotal * 1000000, dotclock);
+> >> +	framedur_ns = div_u64((u64)frame_size * 1000000, dotclock);
+> >> +
+> >> +	/*
+> >> +	 * Fields of interlaced scanout modes are only half a frame duration.
+> >> +	 */
+> >> +	if (mode->flags & DRM_MODE_FLAG_INTERLACE)
+> >> +		framedur_ns /= 2;
+> >> +
+> >> +	if (linedur_ns > INT_MAX || framedur_ns > INT_MAX) {
+> >> +		drm_err_once(dev, "crtc %u: Can't calculate constants, mode clock too small!\n",
+> >> +			     crtc->base.id);
+> >> +		goto error;
+> >>   	}
+> >>   
+> >> -	vblank->linedur_ns  = linedur_ns;
+> >> +	vblank->linedur_ns = linedur_ns;
+> >>   	vblank->framedur_ns = framedur_ns;
+> >>   	drm_mode_copy(&vblank->hwmode, mode);
+> >>   
+> >> @@ -678,7 +687,16 @@ void drm_calc_timestamping_constants(struct drm_crtc *crtc,
+> >>   		     crtc->base.id, mode->crtc_htotal,
+> >>   		     mode->crtc_vtotal, mode->crtc_vdisplay);
+> >>   	drm_dbg_core(dev, "crtc %u: clock %d kHz framedur %d linedur %d\n",
+> >> -		     crtc->base.id, dotclock, framedur_ns, linedur_ns);
+> >> +		     crtc->base.id, dotclock,
+> >> +		     vblank->framedur_ns, vblank->linedur_ns);
+> >> +
+> >> +	return 0;
+> >> +
+> >> +error:
+> >> +	vblank->linedur_ns = 0;
+> >> +	vblank->framedur_ns = 0;
+> >> +	drm_mode_copy(&vblank->hwmode, mode);
+> >> +	return -EINVAL;
+> >>   }
+> >>   EXPORT_SYMBOL(drm_calc_timestamping_constants);
+> >>   
+> >> @@ -2221,6 +2239,7 @@ int drm_crtc_vblank_start_timer(struct drm_crtc *crtc)
+> >>   	struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
+> >>   	struct drm_vblank_crtc_timer *vtimer = &vblank->vblank_timer;
+> >>   	unsigned long flags;
+> >> +	int ret;
+> >>   
+> >>   	if (!vtimer->crtc) {
+> >>   		/*
+> >> @@ -2239,7 +2258,9 @@ int drm_crtc_vblank_start_timer(struct drm_crtc *crtc)
+> >>   			hrtimer_try_to_cancel(&vtimer->timer);
+> >>   	}
+> >>   
+> >> -	drm_calc_timestamping_constants(crtc, &crtc->mode);
+> >> +	ret = drm_calc_timestamping_constants(crtc, &crtc->mode);
+> >> +	if (ret)
+> >> +		return ret;
+> >>   
+> >>   	spin_lock_irqsave(&vtimer->interval_lock, flags);
+> >>   	vtimer->interval = ns_to_ktime(vblank->framedur_ns);
+> >> diff --git a/include/drm/drm_vblank.h b/include/drm/drm_vblank.h
+> >> index 2fcef9c0f5b1..d99772dfa034 100644
+> >> --- a/include/drm/drm_vblank.h
+> >> +++ b/include/drm/drm_vblank.h
+> >> @@ -311,8 +311,8 @@ void drm_crtc_vblank_on(struct drm_crtc *crtc);
+> >>   u64 drm_crtc_accurate_vblank_count(struct drm_crtc *crtc);
+> >>   void drm_crtc_vblank_restore(struct drm_crtc *crtc);
+> >>   
+> >> -void drm_calc_timestamping_constants(struct drm_crtc *crtc,
+> >> -				     const struct drm_display_mode *mode);
+> >> +int drm_calc_timestamping_constants(struct drm_crtc *crtc,
+> >> +				    const struct drm_display_mode *mode);
+> >>   wait_queue_head_t *drm_crtc_vblank_waitqueue(struct drm_crtc *crtc);
+> >>   void drm_crtc_set_max_vblank_count(struct drm_crtc *crtc,
+> >>   				   u32 max_vblank_count);
+> >>
+> >> base-commit: 06576c2b43750d990297b8ff1989b94ac72e855f
+> >> prerequisite-patch-id: 6729bb10d5e338678e78ccda2dd24f232a13cd22
+> >> prerequisite-patch-id: 9d94d20bd45967493b4dc339b58082e1c8da0f4f
+> >> prerequisite-patch-id: 6ac8d22df34db9e7d467b1ab95ad30f94841d5db
+> >> prerequisite-patch-id: f548dbde3f944ca3415c808be628719acebe898a
+> >> prerequisite-patch-id: 2ae91ee8e2bbcd33b8325be046e7214185aba6aa
+> >> prerequisite-patch-id: f97bbde08a9996d7c62ca3e3ebfcd387e50bc5c3
+> >> prerequisite-patch-id: ecc3c825277bc9978c6979455517249a074c0cb1
+> >> prerequisite-patch-id: 0449925cca36664b566f614bfb7d573a11f0575f
+> >> prerequisite-patch-id: 9fb2c2787244e9621847af09bea03e575e6276c7
+> >> prerequisite-patch-id: eb4384d581805e1178d22e7df45f134223c38305
+> >> prerequisite-patch-id: 1a7a529e4b2864abe8071aa44598d28ce72483f4
+> >> prerequisite-patch-id: 844a85f4c2fe2f72209b82d46614004c3cfe4123
+> >> prerequisite-patch-id: 13f7cb22114c648d35f8c9fa74e9165656ce31eb
+> >> prerequisite-patch-id: 20ee46bd6fdd91e39f71d22f52ef6682a4e41512
+> >> prerequisite-patch-id: 1d26c0ff91796ff1e62d3831d00bee18723788ef
+> >> prerequisite-patch-id: 007f6ea0d09bef54b689bae0eb5abeb497bdfaad
+> >> prerequisite-patch-id: 2d89c1507c909520adf9bfb1a137d458a819ae8f
+> >> prerequisite-patch-id: d90dc4134468870ab8ccbd71547c9552dff74fbd
+> >> prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
+> >> prerequisite-patch-id: a5a973e527c88a5b47053d7a72aefe0b550197cb
+> >> prerequisite-patch-id: b9adc9622920a3e70168e672c2c92795b3e3a106
+> >> prerequisite-patch-id: 5030de433a01c2e99056cadb676a8e2ba35f055a
+> >> -- 
+> >> 2.55.0
+> 
+> -- 
 > --
+> Thomas Zimmermann
+> Graphics Driver Developer
+> SUSE Software Solutions Germany GmbH
+> Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+> GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
 > 
-> commit e7e04837e80d59cf3334575f91dc516262bef4d7
-> Author: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-> 
-> mptcp: options: track invalid suboptions
-> 
-> This commit adds the MPTCP_MIB_OPTINVALID MIB counter to track incoming
-> MPTCP options that have invalid sizes or unexpected suboption combinations.
-> 
->> diff --git a/net/mptcp/options.c b/net/mptcp/options.c
->> index cbc105199073e..10a150e2ad69e 100644
->> --- a/net/mptcp/options.c
->> +++ b/net/mptcp/options.c
->> @@ -20,7 +20,7 @@ static bool mptcp_cap_flag_sha256(u8 flags)
->>  	return (flags & MPTCP_CAP_FLAG_MASK) == MPTCP_CAP_HMAC_SHA256;
->>  }
->>  
->> -static void mptcp_parse_option(const struct sk_buff *skb,
->> +static void mptcp_parse_option(const struct sock *sk, const struct sk_buff *skb,
->>  			       const unsigned char *ptr, int opsize,
->>  			       struct mptcp_options_received *mp_opt)
->>  {
-> 
-> [ ... ]
-> 
->> @@ -175,7 +177,7 @@ static void mptcp_parse_option(const struct sk_buff *skb,
->>  					    OPTION_MPTCP_PRIO |
->>  					    OPTION_MPTCP_FASTCLOSE |
->>  					    OPTION_MPTCP_FAIL)) != 0)
->> -			break;
->> +			goto invalid;
->>  
->>  		pr_debug("DSS\n");
->>  		ptr++;
->> @@ -218,7 +220,7 @@ static void mptcp_parse_option(const struct sk_buff *skb,
->>  			mp_opt->ack64 = 0;
->>  			mp_opt->use_ack = 0;
->>  			mp_opt->data_fin = 0;
->> -			break;
->> +			goto invalid;
->>  		}
->>  
->>  		mp_opt->suboptions |= OPTION_MPTCP_DSS;
-> 
-> [ ... ]
-> 
->> @@ -386,10 +388,10 @@ static void mptcp_parse_option(const struct sk_buff *skb,
->>  		/* Can be used with a restricted number of other options */
->>  		if ((mp_opt->suboptions & ~(OPTION_MPTCP_FAIL |
->>  					    OPTION_MPTCP_FASTCLOSE)) != 0)
->> -			break;
->> +			goto invalid;
->>  
->>  		if (opsize != TCPOLEN_MPTCP_RST)
->> -			break;
->> +			goto invalid;
->>  
->>  		if (!(TCP_SKB_CB(skb)->tcp_flags & TCPHDR_RST))
->>  			break;
-> 
-> [ ... ]
-> 
->> @@ -418,11 +420,17 @@ static void mptcp_parse_option(const struct sk_buff *skb,
->>  		break;
->>  
->>  	default:
->> +		/* Not invalid: maybe used for experimentations */
->>  		break;
->>  	}
->> +
->> +	return;
->> +
->> +invalid:
->> +	MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_OPTINVALID);
->>  }
-> 
-> [Severity: Medium]
-> Can a couple of invalid option cases in net/mptcp/options.c:mptcp_parse_option()
-> still read out of bounds or miss incrementing MPTCP_MIB_OPTINVALID?
-> 
-> First, mptcp_get_options() only rejects opsize < 2 before calling
-> mptcp_parse_option():
-> 
-> net/mptcp/options.c:mptcp_get_options()
-> 	opsize = *ptr++;
-> 	if (opsize < 2) /* "silly options" */
-> 		return;
-> 	if (opsize > length)
-> 		return;	/* don't parse partial options */
-> 	if (opcode == TCPOPT_MPTCP)
-> 		mptcp_parse_option(sk, skb, ptr, opsize,
-> 				   mp_opt);
-> 
-> When opsize == 2, ptr already points past the end of the 2-byte option.
-> At the start of mptcp_parse_option(), *ptr is dereferenced before checking
-> opsize:
-> 
-> net/mptcp/options.c:mptcp_parse_option()
-> 	u8 subtype = *ptr >> 4;
-> 
-> If the byte following the 2-byte option has an upper nibble in the default
-> range (9..15), switch (subtype) hits default: break and returns without
-> incrementing MPTCP_MIB_OPTINVALID. Similarly, if opsize is 2 or 3 and
-> subtype is MPTCPOPT_DSS, the MPTCPOPT_DSS case advances ptr and reads a
-> 4th byte before validating opsize against expected_opsize (minimum
-> TCPOLEN_MPTCP_DSS_BASE == 4):
-> 
-> 	case MPTCPOPT_DSS:
-> 		...
-> 		ptr++;
-> 
-> 		flags = (*ptr++) & MPTCP_DSS_FLAG_MASK;
 
-I guess we would need a new dedicated patch to fix that first, then
-increment the counter when it happens.
-
-> Second, in the MPTCPOPT_RST case:
-> 
-> 		if (!(TCP_SKB_CB(skb)->tcp_flags & TCPHDR_RST))
-> 			break;
-> 
-> If a peer sends an MP_RST suboption on a packet without TCPHDR_RST set, it
-> breaks out instead of jumping to invalid. Aside from not incrementing
-> MPTCP_MIB_OPTINVALID, this leaves OPTION_MPTCP_RST unset in
-> mp_opt->suboptions, so a packet carrying MP_RST followed by DSS on a
-> non-RST segment will accept the DSS option without flagging the invalid
-> MP_RST + DSS combination.
-> 
-> Should mptcp_parse_option() check for a minimum opsize (and minimum DSS
-> size before reading flags) and jump to invalid when MPTCPOPT_RST is
-> received without TCPHDR_RST?
-Same here I think.
-
-Cheers,
-Matt
 -- 
-Sponsored by the NGI0 Core fund.
-
+Ville Syrjälä
+Intel
