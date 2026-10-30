@@ -1,54 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.11.138.130
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793379551;
-	b=nvkyL2LqJ1S/imswoNV1Q3rfjBlIA0/DcMSTzL+3PQETZ/7Py5tvr6O/P05z1fBPqH66
-	 j4ZoLnZpn4JdVUll6nT7Z0baJZinRU2WrXs6ocanB8rr/79M1cgQPbUUNiG9UHFa7b5b3
-	 zZcVTCugvV2nHrS7w4L8dJt1H3eijj39hkOK3yEf93eSpol0+Aj5Zwrna4hc0gg3Bg7WR
-	 FvnPKt34ZNuGZfMeAneXPzZbQA+zEFjft99I3tq2Bvw9aAk4yziS9uPc+kHFxPA2ShFrA
-	 KT3IvfEPTTkelA4oLDt5D8YEdBMbuI6THeYZvi0R3J0YEFlotLUylvHmVAkITJZykIg==
+	t=1793380617;
+	b=OghO0hm6CVWPpL1M97cEj1pSmeKsAyZO5+hySiSGSMH8DIxQyPEDoo4vFkVXNkS28Tjs
+	 JHr1alsBSdMVf3rEufj6GG6Ir1G/3AAs0TmhCPiuOgtpnhtVR8k3Yq1t+m627dcdYJA7B
+	 E06mDj/8fJ9nT9aEggrTmx0x2uow8k30dcfxqnrRyBQGCK85/G0Ge/F4z1CZqtVBjnbkk
+	 vNBQ2luiJEmpbAvPVRtJi46c4XLMdwZ8BtWMaM4DJ3Eqdu2/deaWxRWtfGvQHplrEBKpl
+	 mnH/bkfUaISqE5nqB0CCtCOgGHnB0ltshwCxih7QmQhxXE27+2rFxG3xxYOAnkgoVNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793379551;
-	h=DMARC-Filter:DKIM-Signature:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=5n8eSjKsc7e8/r/fqdfKYxiUDvARY72uPXNUK2wE8wQ=;
-	b=3SsvMTWVqsdg1om9HLw4uRquGU5nIW2Y84Mj1FhzGQe/sToZ36VEkamN0wryaohdHpZF
-	 N+fGWu9C/0Gh4+s3FkUydhvDe8T1o7Jc2j94Ty0Ltc5sSwQrBYvrqQ0/ld2tIYSf5OEw2
-	 TFFr/oVVApHDxKpjfjLJZ+crTH3kzEJgZVm18XAdhO3I2AotxOe6qLdwvMbPohUoX/q6K
-	 RNbYwvybTXHTWtbKzW5AUY/0GCAEoKxbujolKy/Fh/Fjplvsz1SYK5xiztxceaRejJpFY
-	 98tblksUaH4nhjU+lpIoJcJo92TPuOmN9VoJK2kG5sccUmYR/p4hMvxZP5JnCjCRi9g==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793380617;
+	h=DMARC-Filter:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:
+	 Content-Type;
+	bh=1eWKOZJmHFTw8mc51zVsa6b6BFNw6zxGkRiFuN9WWuk=;
+	b=u1+tnqvPZGsub0BlGyQPn7l5xK+SvhFW3X0LKos4r/rK9a8jALhIihR2JUYzhHIcaKRX
+	 Sr8zfCUwnuj7PUhnQjTKdndudh7PkWzLB9jXHjga/UnnSZj7sBKgUGSoq/KYh/ReG3kWo
+	 cYPC4FrieLnnilx5QVY9zFaxHFNQLA5RtOGL3fkOSCn4k0G5iaKolcpT7/Lg9wvWe2s8N
+	 Gp9b77NSThnAZvMk1bnJFNgMH8Ne3UuvtYFNP3LpO2rNGcbaUqp/uS4z/dqoiYKKEZi7J
+	 7KPTVVliH7TjlMxlWaPf3NdHZK+1rxKwGJFp6EIy3q38pty1PQXmwO5Qv9rjFPUHqVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=infradead.org;
-	spf=pass smtp.mailfrom=infradead.org;
-	dkim=pass header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=yObKPwnT;
-	arc=none smtp.remote-ip=198.137.202.133
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	dmarc=pass header.from=sntech.de;
+	spf=pass smtp.mailfrom=sntech.de;
+	dkim=pass header.d=sntech.de header.i=@sntech.de header.a=rsa-sha256 header.s=gloria202408 header.b=XXYuRJ7R;
+	arc=none smtp.remote-ip=185.11.138.130
+Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD339606A31C;
-	Fri, 30 Oct 2026 16:59:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DD339606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1359C606A333;
+	Fri, 30 Oct 2026 17:16:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1359C606A333
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=sntech.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sntech.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=infradead.org header.i=@infradead.org header.a=rsa-sha256 header.s=bombadil.20210309 header.b=yObKPwnT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=5n8eSjKsc7e8/r/fqdfKYxiUDvARY72uPXNUK2wE8wQ=; b=yObKPwnThEmClW/F46QIAgvizo
-	dHQdP5RQkxO7nAfWhSOfG3GHAFtjezzphWjGqaWEQQSPVXCJyUhXeu8ZDVF6VkgBZRct75CljCX7W
-	iwbTYtq5BvR9TbxcAZohLPVDy5hE9DCFwVQy0OCjhzlX3Oad/hGkoza+4D46y6YqO1xxtw39ONLNY
-	WTNhmReAUMqKVnL7W/lFq8rBBZ+nbyNBUFpynTj38tdDLlDs7ojUlWJsh/Ytu5bN+NuwU2xeiuw2O
-	vcXfigF+TC6TmGGiT1s2P+mfATGeYL58R23ufJ/I+eA0vQDtzSvkM8hKhJKyM/HU9u35PGDmc60n9
-	xYswoI+Q==;
-Received: from [50.53.43.113] (helo=[192.168.254.34])
-	by bombadil.infradead.org with esmtpsa (Exim 4.100.1 #2 (Red Hat Linux))
-	id 1xMpwc-0000000CB6b-1VHG;
-	Fri, 30 Oct 2026 16:59:10 +0000
-Message-ID: <6bec1cdf-26fb-4d3f-941e-16f5b52bea2c@infradead.org>
-Date: Fri, 30 Oct 2026 09:59:09 -0700
+	dkim=pass (2048-bit key, unprotected) header.d=sntech.de header.i=@sntech.de header.a=rsa-sha256 header.s=gloria202408 header.b=XXYuRJ7R
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sntech.de;
+	s=gloria202408; h=Content-Type:Content-Transfer-Encoding:MIME-Version:
+	References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Reply-To;
+	bh=1eWKOZJmHFTw8mc51zVsa6b6BFNw6zxGkRiFuN9WWuk=; b=XXYuRJ7RSD2jFJ21WZqf+71hfT
+	9WAHaPum2eX90phj58hYyfAPeFY8Ol5WyaHlPALiUDr2GkE45rDvg8LMtnlVMzUYDDN5zQns26kIO
+	qg3xSEBKM+S7gr6x51Q8HWHcsWJwMPH+b91uHoCv/nQMHQcI4thcfCu+ruWOYdJdov0Of8FScP38b
+	/CG5pylUDoUC1lBJgXxlfR98D3Y3mpKDiALnTkCUTNMR6Wk/JnmO4JYzlvSX+qPYrxYzyWNF/tnoR
+	EqKc4k8OpJVCXUVyccO6JEcLMHbBiwnDZ5HyPHkDm1P8lvsoxcodikL/+pOzX5YSBQE2L0qdT1LIw
+	PcafdHfQ==;
+From: Heiko Stuebner <heiko@sntech.de>
+To: sashiko-reviews@lists.linux.dev
+Cc: linux-gpio@vger.kernel.org
+Subject:
+ Re: [PATCH] pinctrl: rk805: fix ordering of gpio and pinctrl registration
+Date: Fri, 30 Oct 2026 18:16:52 +0100
+Message-ID: <51242770.MN2xkq1pzW@phil>
+In-Reply-To: <sashiko-outbox-190969@kernel.org>
+References:
+ <20261030115540.3660242-1-heiko@sntech.de> <sashiko-outbox-190969@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,81 +61,89 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] MIPS: mm/c-octeon: fix missing function prototype
- warnings
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-watchdog@vger.kernel.org
-References: <20261030164657.2808262-1-rdunlap@infradead.org>
- <20261030164657.2808262-2-rdunlap@infradead.org>
- <sashiko-outbox-191287@kernel.org>
-Content-Language: en-US
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <sashiko-outbox-191287@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-
-
-On 10/30/26 9:53 AM, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] MIPS: mm/c-octeon: missing prototypes for cache_parity_error_octeon_*()
+Am Freitag, 30. Oktober 2026, 13:05:40 Mitteleurop=C3=A4ische Normalzeit sc=
+hrieb sashiko-bot@kernel.org:
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] pinctrl: rk805: NULL dereference in gpiochip_get_data() via pinc=
+onf
 > --
-> 
-> commit 710759b5db134c7d9627997d6bd1fbab4fe6465b
-> Author: Randy Dunlap <rdunlap@infradead.org>
-> 
-> MIPS: mm/c-octeon: fix missing function prototype warnings
-> 
-> This commit adds missing cache error notifier prototypes to asm/r4kcache.h and
-> removes local extern declarations from drivers/edac/octeon_edac-pc.c to address
-> -Wmissing-prototypes warnings.
-> 
->> diff --git a/arch/mips/include/asm/r4kcache.h b/arch/mips/include/asm/r4kcache.h
->> index da1cd1bbdbc5d..8c36d228075f3 100644
->> --- a/arch/mips/include/asm/r4kcache.h
->> +++ b/arch/mips/include/asm/r4kcache.h
->> @@ -31,6 +31,9 @@ extern int mips_sc_init(void);
->>  extern void (*r4k_blast_dcache)(void);
->>  extern void (*r4k_blast_icache)(void);
->>  
->> +extern int register_co_cache_error_notifier(struct notifier_block *nb);
->> +extern int unregister_co_cache_error_notifier(struct notifier_block *nb);
-> 
-> [Severity: Medium]
-> The commit message lists four -Wmissing-prototypes warnings in
-> arch/mips/mm/c-octeon.c that this change aims to eliminate:
-> 
->   register_co_cache_error_notifier()
->   unregister_co_cache_error_notifier()
->   cache_parity_error_octeon_recoverable()
->   cache_parity_error_octeon_non_recoverable()
-> 
-> However, asm/r4kcache.h only adds prototypes for
-> register_co_cache_error_notifier() and unregister_co_cache_error_notifier().
-> 
-> In arch/mips/mm/c-octeon.c, cache_parity_error_octeon_recoverable() and
-> cache_parity_error_octeon_non_recoverable() are non-static functions called
-> from assembly in arch/mips/mm/cex-oct.S:
-> 
->   asmlinkage void cache_parity_error_octeon_recoverable(void)
->   {
->           co_cache_error_call_notifiers(0);
->   }
-> 
->   asmlinkage void cache_parity_error_octeon_non_recoverable(void)
->   {
->           co_cache_error_call_notifiers(1);
->           panic("Can't handle cache error: nested exception");
->   }
-> 
-> Should prototypes for cache_parity_error_octeon_recoverable() and
-> cache_parity_error_octeon_non_recoverable() also be added here so those two
-> warnings are resolved as described in the changelog?
-> 
+>=20
+> commit a49ae4e9bf527300ce287085a0623b150f2db443
+> Author: Heiko Stuebner <heiko.stuebner@cherry.de>
+>=20
+> pinctrl: rk805: fix ordering of gpio and pinctrl registration
+>=20
+> This commit reorders rk805_pinctrl_probe() so that devm_pinctrl_register(=
+) is
+> called before devm_gpiochip_add_data(), ensuring the GPIO chip and its pin
+> ranges are torn down before the pinctrl device during devres release.
+>=20
+> > diff --git a/drivers/pinctrl/pinctrl-rk805.c b/drivers/pinctrl/pinctrl-=
+rk805.c
+> > index 22f576337faa9..8e04da3ef0f3a 100644
+> > --- a/drivers/pinctrl/pinctrl-rk805.c
+> > +++ b/drivers/pinctrl/pinctrl-rk805.c
+> > @@ -663,13 +663,6 @@ static int rk805_pinctrl_probe(struct platform_dev=
+ice *pdev)
+> >  		return -EINVAL;
+> >  	}
+> > =20
+> > -	/* Add gpio chip */
+> > -	ret =3D devm_gpiochip_add_data(&pdev->dev, &pci->gpio_chip, pci);
+> > -	if (ret < 0) {
+> > -		dev_err(&pdev->dev, "Couldn't add gpiochip\n");
+> > -		return ret;
+> > -	}
+> > -
+> >  	/* Add pinctrl */
+> >  	pci->pctl =3D devm_pinctrl_register(&pdev->dev, &pci->pinctrl_desc, p=
+ci);
+> >  	if (IS_ERR(pci->pctl)) {
+> > @@ -677,6 +670,13 @@ static int rk805_pinctrl_probe(struct platform_dev=
+ice *pdev)
+> >  		return PTR_ERR(pci->pctl);
+> >  	}
+> > =20
+> > +	/* Add gpio chip */
+> > +	ret =3D devm_gpiochip_add_data(&pdev->dev, &pci->gpio_chip, pci);
+> > +	if (ret < 0) {
+> > +		dev_err(&pdev->dev, "Couldn't add gpiochip\n");
+> > +		return ret;
+> > +	}
+>=20
+> [Severity: High]
+> Can registering pinctrl before the gpio_chip cause a NULL pointer derefer=
+ence
+> in gpiochip_get_data() when pinconf callbacks run?
+>=20
+> In rk805_pinctrl_probe(), device_set_node() attaches the parent PMIC fwno=
+de to
+> pdev->dev, and devm_pinctrl_register() immediately claims default pinctrl=
+ hogs
+> via:
+>=20
+>   devm_pinctrl_register()
+>     pinctrl_register()
+>       pinctrl_enable()
+>         pinctrl_claim_hogs()
+>           create_pinctrl()
+>           pinctrl_select_state()
+>             pinctrl_commit_state()
+>               pinconf_apply_setting()
+>                 rk805_pinconf_set()
 
-Yes, I'll add those and send v2.
+that is a correct finding.
 
--- 
-~Randy
+It seems the correct way to resolve this, is to switch from
+devm_pinctrl_register() to the newer devm_pinctrl_register_and_init()
+and calling pinctrl_enable() at the appropritate time in the driver
+as suggested by the documentation.
+
+
+Heiko
+
 
