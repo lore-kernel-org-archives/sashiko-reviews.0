@@ -1,87 +1,94 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.15
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793376394;
-	b=lPtbd0EeLUcw/ib1wBGJqSkLKWxwn8djmHcOvpV/vLHHlv+s/IkSZ1KpDGNkd1/8PvR4
-	 McqPuSiYJA6IHR07kqqFzBaQ85okUzyOzqYSr3OXFZSLFS+IJAM0VkelRrtvB44kIpQ5q
-	 x151W6ISHx9HsjPOq6qYlAn8ZBwsb7wW8NtZJuaT+uq8WN5vMseWI3Qu1O/DsDvsdNKH+
-	 9265IQJE8EchkybwORpYR+Yk+YCaLDjN7cBs48ua+LxM1EYAH4fCIkxjkBwDihjpk7Xty
-	 vdAo8Cpm2M04PGXQ467LAkmn2NDfox7i28lD2sKS3QB4PbzU75UxzEw8ipgVKzAs4uw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793376394;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
-	 X-Patchwork-Hint:Organization;
-	bh=Ww7llU1iSV9t2C/8mGT+85B2EKx+YvV63h8vPcL8J40=;
-	b=rKDHdI7w1pNT0SIqttxflj8/rZtvZrrLdNM2ThGtW/zxnebQWvrt11nLIJ4wpgHAyPw3
-	 opWHgoZJVyujb0E4OQuMbVeMzE3q+BcM0LIWvXEq5xpcTvzIyQMLlbZnn+Bmv+J/hIAS9
-	 RxClu4mrBIQMNqotqZzVPn5M71r8IqNE+0le4jgimkkTplKkSNPMi72QRNoddC450WOm+
-	 h7q+RrsqtrbQg6X5PQGe4As6Adsy0pu4pLdtqEcOd8l/FDJTDmQ13lmk4/RzlB44QlbHM
-	 i7pv/NrdosJj0NCDceApb2x/fPb/DuHbnkcOFlcD07GE4Y9HRFFr5sUK7ugBXt1w5FQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=P7XXl99N;
-	arc=none smtp.remote-ip=192.198.163.15
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.72.26
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1793377318;
+	b=gQ0on+fN+qTTNM7EH7BtvNuUZxLwrFm2rcv08aLx4eKM9E7H4v8l2loMR9OdHvKQondP
+	 v7A94uUxwwm3l64ssx7QuzsE6aFJ2keBDR3XivJn9auihHmp2iXoFtW5Cl0X3P6E7pBJu
+	 F9satElHSqi/FZ7tKXuW9AZHWgc/rkgiheEzb9i6OPc999biIkAL0MIwFNEL5y/niWFQr
+	 ozlMd448kBKYr4oVdjuC328AjpQt471LgmDY25y6vpZX+OXH5DlcBMX5J+oqpTs1VUP5l
+	 aGBEiWcktJQU6jIcGwmdtcXWibbAUaMhfFRg9H3zfJhQfdMTMbfKuJWOeeXVkUdr0pA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793377318;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:Content-Type:Content-Disposition:
+	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=UTtjKxF2T0IX9ouY9tuZOJvPeey75dou+vmla+aoLT8=;
+	b=cpN1J2wSpO5p5MPkw/hDTBBnw1gWqaaURZFYxphtgERt8RNvyMJxxLOy1XbSdouQR2LF
+	 GoGRaKq4tXpz8ikeSeLUM84dztwmJ3sT/UTyDFnrny870wwrC6jNZOyIyZ39Ye1QSXhjt
+	 thC0qUNKBKcakdgrtva/ZKtoJYnsXoVqDvq7hDjBDtF1DoG10sFkvCf6rrY3SmljEZYeM
+	 x6klkWg6lz788oQwICQ7+KHgKw2GrAxNwE3WjuUHAGr7z88i0+MH9P3ivJJkmLxj/LAV2
+	 226x456vzYBwTiJ1wkII1qpjZagJXilWdwzZKMqMbsSGEotlD22fd8spJ8psGrswYHg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=oss.nxp.com;
+	spf=pass smtp.mailfrom=oss.nxp.com;
+	dkim=fail reason="signature verification failed" header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=eAlDgFPm;
+	arc=fail smtp.remote-ip=52.101.72.26
+Received: from AM0PR02CU008.outbound.protection.outlook.com (mail-westeuropeazon11013026.outbound.protection.outlook.com [52.101.72.26])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16669606A31C;
-	Fri, 30 Oct 2026 16:06:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 16669606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87AAF606A31E
+	for <sashiko-reviews@lists.linux.dev>; Fri, 30 Oct 2026 16:21:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 87AAF606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=P7XXl99N
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793376393; x=1824912393;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=2crQ5KYneZHm8LkgEjHqKfNRkrHORc64BZmm5OkwcKw=;
-  b=P7XXl99NWBroIpCm4zC/8EP0aO/bPGqKy1ibtf9pgoAmXJR3z7G2g7Wu
-   SLhRte2P1VxPiMzFaaxrK8pYMAqisoHWzV3P6MGRjjd7qk2hhwfS854Tp
-   aLXTzkBhdppN/e+DP9R0IznE66gXTHZ4Q8KmuUCSkyDr4SPUTfpyrpmX2
-   9ERQG+S7OOJebpNYYvk5yhTL/mHYOSCmHZr5kfcexXJZjgUxWaBAMJWdt
-   tvBya3sDR71INryjtC7vnj5R5hZjhQCoOmCnYpZX9Ndti/EovickNWRiJ
-   JYRbGJu7gTbS4m29LJK22MiBsy1kXOc/wEreukfn0tCkopF4ihAw8ntc1
-   A==;
-X-CSE-ConnectionGUID: ldc1MofIT6mADX4l9u+ffQ==
-X-CSE-MsgGUID: 3FeZdmC0TYmjNEJCVdC+Dg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11951"; a="2148247"
-X-IronPort-AV: E=Sophos;i="6.27,186,1787036400"; 
-   d="scan'208";a="2148247"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Oct 2026 09:06:31 -0700
-X-CSE-ConnectionGUID: 6mN3PrxjTqCGU8Ws7YTM0Q==
-X-CSE-MsgGUID: y1KqBAtQT/SquMXICG1vzA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,186,1787036400"; 
-   d="scan'208";a="5482015"
-Received: from abityuts-desk1.ger.corp.intel.com (HELO localhost) ([10.245.244.58])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Oct 2026 09:06:27 -0700
-Date: Fri, 30 Oct 2026 18:06:23 +0200
-From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: me@romanilin.is, louis.chauvet@bootlin.com,
-	maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-	airlied@gmail.com, simona@ffwll.ch, javierm@redhat.com,
-	dmitry.osipenko@collabora.com, regressions@leemhuis.info,
-	peter.m.arnesen@gmail.com, dri-devel@lists.freedesktop.org,
-	virtualization@lists.linux.dev, sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH v4] drm/vblank: Don't arm vblank timer with invalid frame
- duration
-Message-ID: <auTAf4ul_xzhk44v@intel.com>
-References: <20260914110004.211027-1-tzimmermann@suse.de>
- <auIMt8XmmaVykZTC@intel.com>
- <2c2f33cf-da6f-4e31-84bb-768778d7b063@suse.de>
- <auSIZNhP4DTj8Nb2@intel.com>
- <be8e41da-5ef1-4c37-a044-171ab1f32c6d@suse.de>
- <auSgII_W-FJJz44W@intel.com>
- <f406b2f6-cad9-411f-941a-7e4f26af3947@suse.de>
- <c874d311-f7b1-4a24-ab75-b502ba1c5e58@suse.de>
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-NXP1-onmicrosoft-com header.b=eAlDgFPm
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=golF9hoeWP2g9MM+u0Bpxxre99USUnIxCAr8yXPwCxxSXrUJ52/JUSPy5ry+6v+CKe+aFo9cgxRjyv++GQsms+8a5Ip7N5PCuiKKJkTDjhVOhmMPAq7RDUkG94ZR3WEKPJSmsGOr4qZOqyobHGxPq+wKRYdevTMNvUmaISNZvYbi+JJk4UXxbw+5/qdqL3t+Vk6pgWXXk672MJVKBuC6kRF1VTBh/kRPHOwBa+kpOt2DfYbHPADlyYZI+7Oe/LCi5NDmcF2V4HDZ5z7ZRNyty6lhOzi4qrHzOAO7yTKEX5c+TFjzGO9K+7PDF+ei7hjWXPa57VPjJ1NtC4VTwD+yKA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BXaztg16ndQQfh9VlyF1OOIr59N0HBot+AXXoJwW410=;
+ b=evFc+SUva9TP8VhwZlhDfmQZGIa093uGyFJ8xucQGrkPenwaKrOv6MN/37c0cMNz6Tvyq31u+YbASJnpxo7rkzXYGMZURfI3EHjD5rZ+hU6G15ca55nWlA87drY0M76WCSQ2pj6++1K0ad9CJDuj8u/qxWSol3QVw2OBt9LbPWPdE/Wvjix/8UipvPOnJ9fbqn5KO+NjYsVqSnQwWXY1SCaTboHWRlru0d16/85cZtZMYxk7GJFeQrU/VYNCveCuY3aNfsoNsWOwdgjwrgtxl333bMimaDR3+j0IqQYsgwlUX7wiHaUoKZQdVDJy+KAZqYZKPNrtG/w3+gnPkSvWVQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
+ dkim=pass header.d=oss.nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
+ s=selector1-NXP1-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BXaztg16ndQQfh9VlyF1OOIr59N0HBot+AXXoJwW410=;
+ b=eAlDgFPmHzLRKCYtJdus4wOsdheyfbrYBq9Sx3swgJo+fz17/V55Gsnwv2ogr2W6kczbKVfb/LI+EoFWEbWnGJ2dUCTslrtN6191GODd3bPjE91zBk+em+NSNtAB3ZluqfobrVULsSUGO9XEyMMTEcxvldxYoCPCQNUsEkQycd0xqm6aNkcEn3z/XZ9ioPpZLe3j62Au76NQLsLbcjO3jnx/SYV2WH27p/veltIiy58nuJAI5VP2aopAQVACv/D5exqhqBieR4XEuQxWqt4E9y8bJFshkxvjqWHE14hbAiC7MYCah3L4OnkXFA4C/Kk1mXJfA/D7R3xymqQgtVyWiw==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=oss.nxp.com;
+Received: from AMBPR04MB12445.eurprd04.prod.outlook.com
+ (2603:10a6:20b:75e::21) by GVSPR04MB634494.eurprd04.prod.outlook.com
+ (2603:10a6:150:719::19) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.9; Fri, 30 Oct
+ 2026 16:21:51 +0000
+Received: from AMBPR04MB12445.eurprd04.prod.outlook.com
+ ([fe80::ba23:1fa4:ce58:ff06]) by AMBPR04MB12445.eurprd04.prod.outlook.com
+ ([fe80::ba23:1fa4:ce58:ff06%3]) with mapi id 15.21.0569.008; Fri, 30 Oct 2026
+ 16:21:51 +0000
+Date: Fri, 30 Oct 2026 12:21:45 -0400
+From: Frank Li <Frank.li@oss.nxp.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: Koichiro Den <den@valinux.co.jp>, dmaengine@vger.kernel.org,
+	linux-pci@vger.kernel.org, vkoul@kernel.org, Frank.Li@kernel.org
+Subject: Re: [PATCH v6 2/5] dmaengine: dw-edma: Reclaim LL entries from
+ hardware progress
+Message-ID: <auTEGSSGk3M1mx4h@lizhi-Precision-Tower-5810>
+References: <20261030150742.2586776-1-den@valinux.co.jp>
+ <20261030150742.2586776-3-den@valinux.co.jp>
+ <sashiko-outbox-191180@kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-191180@kernel.org>
+X-ClientProxiedBy: DS7P220CA0014.NAMP220.PROD.OUTLOOK.COM (2603:10b6:8:223::6)
+ To AMBPR04MB12445.eurprd04.prod.outlook.com (2603:10a6:20b:75e::21)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -91,221 +98,149 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c874d311-f7b1-4a24-ab75-b502ba1c5e58@suse.de>
-X-Patchwork-Hint: comment
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AMBPR04MB12445:EE_|GVSPR04MB634494:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1e70992e-1a80-4a4c-4735-08df36a1e7bc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|23010399003|376014|366016|1800799024|6133799003|18002099003|22082099003|56012099006|11063799006|4143699003|5023799004|261026140227099003|261026121527099003|261026135527099003|261028144727099003|10067099003|261021123027099003|261021121427099003|261022105027099003|261022075727099003|261009223027099003;
+X-Microsoft-Antispam-Message-Info:
+	QT3V69iYEN5H1du9qQpHcaVF9HnTTnXpNzUJu9SGiKZPeqxhKs6z9zWwAaykX9oOs4qNXxXqozjuHOPLtNh5pb2USqwKOz2CwSOqPlzkCnYFNnR9IUoG3MvR36TuCx4eLCAvgfVNsX8E2Nh9ufIvKwJAOFxl8tXrW0+sgJszmiNgW8qnX6u3WbkSgIZn7j1QzEJv26hszlujD/HgrL+x+RE30FcNoSEQEIHTXaW8slXs7uNNL4apGDWBr+/W8ut8cKJQtVh5aay7kwY33uL6PvwqZPHCnQhffEMPqGwZt7BOT0Ky+Bhbu64hIYsNEBjwRWcTTvi5vJEHROCreYqL0d6xA7KteCNhBQ9NjfC8xpKGBdhxIoZaSJWJgkI59OZfAxjEuNFsfTANF9b5Jv7LYXGUYwofY7Koj/G9P1yzwlEy0rURJucEN47x0DeWdiyUxGINBuWbVdcAiHaXcg+BmIAwNvhKhkxiv89QJ9ryVCmPq19p3DGVog+yPM33GnHzNIP7FAzQ3ClLmQ1+L2kaO25Mzqowpnee/uJzhlHkuTi9t2SnT5JQhpz0/LtzrhXTngjRApgkQWr0TB8KtAaXK7KdVTX8mm0mCaF0gIQ9L8w=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AMBPR04MB12445.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(23010399003)(376014)(366016)(1800799024)(6133799003)(18002099003)(22082099003)(56012099006)(11063799006)(4143699003)(5023799004)(261026140227099003)(261026121527099003)(261026135527099003)(261028144727099003)(10067099003)(261021123027099003)(261021121427099003)(261022105027099003)(261022075727099003)(261009223027099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?iso-8859-1?Q?b7n0c4r+Cc5gnycVCD/QrT96ne7PL3kWcBDz/YyBwmBzL1a6pxLjbLlAE+?=
+ =?iso-8859-1?Q?tas+A4IM9pdkEin7sYHFbfjBMmpTogLMEWaL/l2pGCV2ylBQZjdbj+dMzX?=
+ =?iso-8859-1?Q?0GXMoYmISzgv++xv1t46/LUsLZgaIx3+AUFFmjfbTxgU1JUdarskcn5+Q4?=
+ =?iso-8859-1?Q?fehANLGfna0pwTgI1slHmspNVOsRnZgPifSU0i/QmZAQ55dLQ0Clg26Hd0?=
+ =?iso-8859-1?Q?CwB6im0PfilNhhWlNIwiXK1UNShlf79VUuW7CjsWhP22w9h/Nw/gM+FGE/?=
+ =?iso-8859-1?Q?HG6ZUIbxE0Etdd3rC6e1/0K/Uc/ZoWH81tu5HruwnA3nYbY5eIzl1BsMS3?=
+ =?iso-8859-1?Q?U6d53MlyAwJ8WYpHLftGnvsplPjh7cownZNtQDpvVg2llojWUj0dtigP1Y?=
+ =?iso-8859-1?Q?NhC7x/ujnI2NuovdRllqm2st/wYf8J5TREDqr7UOP9Y+fdO16HHoXNrcfV?=
+ =?iso-8859-1?Q?3xkjGoEthwWNBGHb9RVH3HKy5O8yK4smquaG7RtNRG/KvsALI0nnLheuRG?=
+ =?iso-8859-1?Q?TTXzWsrQsGeLLdYjdLlrXaa2U1Zo2aJ5meXhW//Vr1mNbPl5nU5eprFxjX?=
+ =?iso-8859-1?Q?Cx0TXVpCaTn9QElhrrQulkR2PP3GXv71uyxTIFeVUdk/s+ZK+qLzaU041S?=
+ =?iso-8859-1?Q?Mh1NYuFqRG8lP063/jVjn7TLa+Cyn/L+NbQ3uPs3mYE/uqGnLC6MMKiuaz?=
+ =?iso-8859-1?Q?LVJfP0otlBZTOmATQdbtd4u+2mU/M1Zi1kVPo31tYpF85X2rJX9hgGsU5o?=
+ =?iso-8859-1?Q?9th0z6AuZ/txSldzrKvkIXHQhHZjQB8S0tDqSXCojV5EljHTxDkWdj8w4E?=
+ =?iso-8859-1?Q?dHNy7G/fZX7KbLMpv7TBUYITm1+EzPrJbsQaXoN2DkagtRhcnpmkEYoax/?=
+ =?iso-8859-1?Q?PjU22S1BhOKBoC15rCYZMyAKURY+8qYpMBTi1Ajj/LFTuQZ/c4v42YeZNb?=
+ =?iso-8859-1?Q?mXhlAGwS//XCQGHXh0Ot3R7oyJDVjn7KMdYMd7JqcuI+M+8Kl/E/lB6RRw?=
+ =?iso-8859-1?Q?a6mBfLq8pzPXWUcwTcssfPqA60q+aY6gArPWKjehRkCsJXUk/MQQlewsBD?=
+ =?iso-8859-1?Q?BJWro/pCZmy5Kd/F6+7RVOGMHO1pFpXSZm6vFORqW0/0bjBgufa1xri869?=
+ =?iso-8859-1?Q?6szPPfVGdnJKWco9RA3ZJRccWJaafll5hG0z2W07eSpPEjZVX+SqNjbBwF?=
+ =?iso-8859-1?Q?h1UMQvoh9nukCEN6zdQSkbG1lPl1CJl4emGgdeH/TNlUZhXzF9P5cL1EmI?=
+ =?iso-8859-1?Q?q8UnMrF4BmCzQ90rWYk0/8dD7KfC3HbRz+X5Fsg5zZwsYKqbhYEOKiP64e?=
+ =?iso-8859-1?Q?Nmh196zqUCg4gbwtsJpDXAdSJDxTwdMw2suQO1waOhOyKocLGgpW62Qepr?=
+ =?iso-8859-1?Q?pAxhRF+4mYaavs4IKRsDVMzeAaDRUXQ6yu7TIFpX2mS96rS7WS5EwrAL/g?=
+ =?iso-8859-1?Q?LpEbBm9ZxcgSjGz1UsrZPeOcgE2GaF2qX4bSjY4sOuKHQfdfmmtfFWEfop?=
+ =?iso-8859-1?Q?6dwCXsaY9O9B9UMsroNo65I/s2iSoWUlIH+OBD9jc5GnoboO2k/mTAIYEl?=
+ =?iso-8859-1?Q?RKINhX9HPkm3C+iomNKzGViGbCyrA3QKGUpl0hkPPVtEaQuolDQlbgvvmk?=
+ =?iso-8859-1?Q?I96D5rY0OMpo6Jokf5PH5wlWVgVJ5lUAR7PmM6QcxyFBQZUFMONu4JRqOV?=
+ =?iso-8859-1?Q?XcBHZZPZ0qUl9NoUEVb2tIkbu6eicIUeTgmBBaiZKc5fBtkXWctdAk2DRZ?=
+ =?iso-8859-1?Q?tGSh08sCnJ8GAWYMOyIHyL6ZXjz1gG+5tqqGmmvQPJnx5jD/mQk3fJ5JkL?=
+ =?iso-8859-1?Q?+eNZfiMCLCERG9qDXkrxJWAkREyMT2Y=3D?=
+X-OriginatorOrg: oss.nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1e70992e-1a80-4a4c-4735-08df36a1e7bc
+X-MS-Exchange-CrossTenant-AuthSource: AMBPR04MB12445.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Oct 2026 16:21:51.5907
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: pblko3BnlM1fjRS5vkgc0ZALtLz1mj5M3hTsSnCeLmCCDuCD+Y7MIKonaEkCSJFDaX1bc//N/XzXc+fC+jp1BkFroILHIAoueKS4ylNI0xcWpWau2wS1LZyrkV7ixYcG
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVSPR04MB634494
 
-On Fri, Oct 30, 2026 at 04:33:24PM +0100, Thomas Zimmermann wrote:
-> 
-> 
-> Am 30.10.26 um 15:25 schrieb Thomas Zimmermann:
-> [...]
-> > How about we add a dedicated mode_fixup helper for vblank validation? 
-> > It would run after new CRTC's mode_fixup callback. [1] There we could 
-> > try to adapt the CRTC's adjusted_mode.  Since we know the bug exactly, 
-> > we can try to detect it, fix it, and document it.
-> >
-> 
-> The attached patch implements this idea. It does work in the sense that 
-> it doesn't immediately break my testing setup.
-> 
-> Thorsten (or anyone else) could you please test if this patch also 
-> resolve the bug with SPICE?
-> 
-> 
-> 
-> >>
-> >
-> 
-> -- 
+On Fri, Oct 30, 2026 at 03:39:11PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] dmaengine: dw-edma: callbacks scheduled on STOP in dw_edma_ll_advance()
 > --
-> Thomas Zimmermann
-> Graphics Driver Developer
-> SUSE Software Solutions Germany GmbH
-> Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-> GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
-> 
 
-> From 2a76d04bfc3630c1d6bb79b3d64ecbcadf860090 Mon Sep 17 00:00:00 2001
-> From: Roman Ilin <me@romanilin.is>
-> Date: Thu, 2 Jul 2026 21:10:27 +0300
-> Subject: [PATCH] drm/vblank: Don't arm vblank timer with invalid frame
->  duration
-> 
-> When a CRTC's display mode carries a too small pixel clock,
-> drm_calc_timestamping_constants() computes a frame duration that
-> exceeds INT_MAX. drm_vblank_crtc.framedur_ns becomes negative.
-> drm_crtc_vblank_start_timer() then arms the vblank hrtimer with this
-> interval, after which vblank events are no longer delivered. Pending
-> page flips never complete and the display appears frozen.
-> 
-> This could be triggered on virtio-gpu guests that have dynamic resolution
-> enabled: when the SPICE agent or the X server resizes the output, it
-> submits a mode whose pixel clock is off by a factor of 1000, e.g.:
-> 
->     clock = 406 kHz, htotal = 3152, vtotal = 2148
-> 
->     framedur_ns = 3152 * 2148 * 1000000 / 406 = 16675852216 ns (~16.7 s)
-> 
-> 16675852216 does not fit into an int and wraps to roughly -504000000.
-> ns_to_ktime() then yields a negative interval and the timer stops working.
-> 
-> Found by bisection, which pointed at commit a036f5fceedb ("drm/virtgpu:
-> Use vblank timer"). That commit merely made virtio-gpu use the vblank
-> timer and thereby exposed the pre-existing problem in the timer setup
-> added by commit 74afeb812850 ("drm/vblank: Add vblank timer").
-> 
-> To fix this, introduce drm_crtc_vblank_mode_fixup() to detect and adjust
-> the bogus pixel clock. The helper runs unconditionally at the beginning
-> of the mode-fixup code. Drivers still have the opportunity to detect bogus
-> adjustments in later mode-fixup steps.
-> 
-> v5:
-> - fix up the broken pixel clock beforehand (Ville)
-> v4:
-> - avoid log spamming with drm_warn_once()
-> 
-> Fixes: 74afeb812850 ("drm/vblank: Add vblank timer")
-> Signed-off-by: Roman Ilin <me@romanilin.is>
-> 
-> mode_fixup
-> 
-> Revert "drm/vblank: Don't arm vblank timer with invalid frame duration"
-> 
-> This reverts commit f3ca78682a4f9607444a3dafbe12ab6acdb1fa2f.
-> ---
->  drivers/gpu/drm/drm_atomic_helper.c | 11 +++++
->  drivers/gpu/drm/drm_vblank.c        | 68 +++++++++++++++++++++++++++++
->  include/drm/drm_vblank.h            |  2 +
->  3 files changed, 81 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
-> index 9d006f98413a..6a0f04a72292 100644
-> --- a/drivers/gpu/drm/drm_atomic_helper.c
-> +++ b/drivers/gpu/drm/drm_atomic_helper.c
-> @@ -432,6 +432,17 @@ mode_fixup(struct drm_atomic_commit *state)
->  			continue;
->  
->  		drm_mode_copy(&new_crtc_state->adjusted_mode, &new_crtc_state->mode);
-> +
-> +		if (!new_crtc_state->enable)
-> +			continue;
-> +
-> +		ret = drm_crtc_vblank_mode_fixup(crtc, &new_crtc_state->mode,
-> +						 &new_crtc_state->adjusted_mode);
+Need fix all sashiko report problem or provide explain.
 
-We don't want this hack applied to all drivers. It's a problem
-for a single driver, so that one driver should handle it.
+Frank
 
-> +		if (!ret) {
-> +			drm_dbg_atomic(crtc->dev, "[CRTC:%d:%s] vblank fixup failed\n",
-> +				       crtc->base.id, crtc->name);
-> +			return -EINVAL;
-> +		}
->  	}
->  
->  	for_each_new_connector_in_state(state, connector, new_conn_state, i) {
-> diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
-> index f90fb2d13e42..6e826c3b6c42 100644
-> --- a/drivers/gpu/drm/drm_vblank.c
-> +++ b/drivers/gpu/drm/drm_vblank.c
-> @@ -620,6 +620,74 @@ wait_queue_head_t *drm_crtc_vblank_waitqueue(struct drm_crtc *crtc)
->  }
->  EXPORT_SYMBOL(drm_crtc_vblank_waitqueue);
->  
-> +static int drm_vblank_validate_dotclock(u16 crtc_htotal, u16 crtc_vtotal, u32 flags, int dotclock)
-> +{
-> +	unsigned int frame_size;
-> +	u64 linedur_ns, framedur_ns;
-> +
-> +	if (dotclock <= 0)
-> +		return -EINVAL;
-> +
-> +	frame_size = (unsigned int)crtc_htotal * (unsigned int)crtc_vtotal;
-> +
-> +	/*
-> +	 * Convert scanline length in pixels and video dot clock to line duration
-> +	 * and frame duration in nanoseconds.
-> +	 */
-> +	linedur_ns  = div_u64((u64)crtc_htotal * 1000000, dotclock);
-> +	framedur_ns = div_u64((u64)frame_size * 1000000, dotclock);
-> +
-> +	/*
-> +	 * Fields of interlaced scanout modes are only half a frame duration.
-> +	 */
-> +	if (flags & DRM_MODE_FLAG_INTERLACE)
-> +		framedur_ns /= 2;
-> +
-> +	if (linedur_ns > INT_MAX || framedur_ns > INT_MAX)
-> +		return -ERANGE; /* dot clock too low */
-> +
-> +	return 0;
-> +}
-> +
-> +bool drm_crtc_vblank_mode_fixup(struct drm_crtc *crtc, const struct drm_display_mode *mode,
-> +				struct drm_display_mode *adjusted_mode)
-> +{
-> +	struct drm_device *dev = crtc->dev;
-> +	unsigned int pipe = drm_crtc_index(crtc);
-> +	int dotclock = adjusted_mode->crtc_clock;
-> +	int ret;
-> +
-> +	if (!drm_dev_has_vblank(dev))
-> +		return true;
-> +
-> +	if (drm_WARN_ON(dev, pipe >= dev->num_crtcs))
-> +		return false;
-> +
-> +	ret = drm_vblank_validate_dotclock(adjusted_mode->crtc_htotal,
-> +					   adjusted_mode->crtc_vtotal,
-> +					   adjusted_mode->flags, dotclock);
-> +	if (ret == -ERANGE) {
-> +		int dotclock_1000;
-> +
-> +		/*
-> +		 * SPICE' vd_agent has a bug where it specifies the dot clock in kHz
-> +		 * instead of Hz. Setting up a vblank interrupt or timer for such a
-> +		 * mode overflows the calculation in drm_calc_timestamping_constants().
-> +		 * An errno code of ERANGE specifically points to this problem. Try
-> +		 * converting the dot clock to Hz and validate again.
-> +		 */
-> +		if (check_mul_overflow(dotclock, 1000, &dotclock_1000)) {
-> +			ret = drm_vblank_validate_dotclock(adjusted_mode->crtc_htotal,
-> +							   adjusted_mode->crtc_vtotal,
-> +							   adjusted_mode->flags, dotclock_1000);
-> +			if (!ret)
-> +				adjusted_mode->crtc_clock = dotclock_1000;
-> +		}
-> +	}
-> +
-> +	return !ret;
-> +}
-> +EXPORT_SYMBOL(drm_crtc_vblank_mode_fixup);
->  
->  /**
->   * drm_calc_timestamping_constants - calculate vblank timestamp constants
-> diff --git a/include/drm/drm_vblank.h b/include/drm/drm_vblank.h
-> index 2fcef9c0f5b1..a3628c477f59 100644
-> --- a/include/drm/drm_vblank.h
-> +++ b/include/drm/drm_vblank.h
-> @@ -311,6 +311,8 @@ void drm_crtc_vblank_on(struct drm_crtc *crtc);
->  u64 drm_crtc_accurate_vblank_count(struct drm_crtc *crtc);
->  void drm_crtc_vblank_restore(struct drm_crtc *crtc);
->  
-> +bool drm_crtc_vblank_mode_fixup(struct drm_crtc *crtc, const struct drm_display_mode *mode,
-> +				struct drm_display_mode *adjusted_mode);
->  void drm_calc_timestamping_constants(struct drm_crtc *crtc,
->  				     const struct drm_display_mode *mode);
->  wait_queue_head_t *drm_crtc_vblank_waitqueue(struct drm_crtc *crtc);
-> -- 
-> 2.56.0
-> 
-
-
--- 
-Ville Syrjälä
-Intel
+>
+> commit cb11666c731e633531785427e3b24bbfbd73eb2b
+> Author: Koichiro Den <den@valinux.co.jp>
+>
+> dmaengine: dw-edma: Reclaim LL entries from hardware progress
+>
+> This commit updates the linked-list completion handling to use DMA_LLP to
+> advance ll_done and reclaim completed ring entries in issue order. It also
+> defers STOP and PAUSE completion until the channel stops.
+>
+> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+> > index b08bb31657c9e..74613c95ae112 100644
+> > --- a/drivers/dma/dw-edma/dw-edma-core.c
+> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
+>
+> [ ... ]
+>
+> > @@ -283,6 +345,45 @@ static void dw_edma_core_ch_maybe_doorbell(struct dw_edma_chan *chan)
+> >  	dw_edma_core_ch_doorbell(chan);
+> >  }
+> >
+> > +/*
+> > + * Must be called with vc.lock held.
+> > + *
+> > + * HDMA does not update LLP continuously. Only use it to track running
+> > + * transfers when handling an interrupt.
+> > + */
+> > +static void dw_edma_ll_advance(struct dw_edma_chan *chan, bool event)
+> > +{
+> > +	bool stopped = dw_edma_ll_stopped(chan);
+> > +
+> > +	if (stopped || event)
+> > +		dw_edma_ll_consume(chan, dw_edma_core_ll_cur_idx(chan),
+> > +				   stopped);
+> > +
+> > +	if (chan->request != EDMA_REQ_NONE) {
+> > +		/* Wait for the channel to stop before completing STOP or PAUSE. */
+> > +		if (!stopped)
+> > +			return;
+> > +
+> > +		if (chan->request == EDMA_REQ_STOP) {
+> > +			dw_edma_finish_termination(chan);
+>
+> [Severity: High]
+> Does calling dw_edma_ll_consume() in drivers/dma/dw-edma/dw-edma-core.c
+> before checking chan->request == EDMA_REQ_STOP cause completion callbacks to
+> be scheduled on a channel that is being terminated?
+>
+> When dw_edma_device_terminate_all() is called while an LL channel is actively
+> transferring, it defers termination by setting chan->request = EDMA_REQ_STOP.
+> When the interrupt fires:
+>
+> dw_edma_irq_work()
+>   dw_edma_ll_interrupt()
+>     dw_edma_ll_advance(chan, true)
+>       dw_edma_ll_consume()
+>         list_del(&vd->node);
+>         vchan_cookie_complete(vd);
+>
+> In dw_edma_ll_consume(), any descriptor in chan->vc.desc_issued whose bursts
+> finished before the channel stopped is removed from chan->vc.desc_issued,
+> placed on chan->vc.desc_completed, and has chan->vc.task scheduled via
+> vchan_cookie_complete() to run its completion callback.
+>
+> When dw_edma_ll_advance() then checks chan->request == EDMA_REQ_STOP and
+> calls dw_edma_finish_termination(), dw_edma_terminate_all_descs() only cleans
+> up descriptors still on chan->vc.desc_issued and chan->vc.desc_submitted,
+> leaving the descriptors already moved to chan->vc.desc_completed to invoke
+> their callbacks.
+>
+> By comparison, the non-LL handler dw_edma_done_interrupt_locked() checks
+> EDMA_REQ_STOP and calls dw_edma_finish_termination() without calling
+> vchan_cookie_complete(), matching commit 99109a51efd2 ("dmaengine: dw-edma:
+> Terminate all descriptors without callbacks").
+>
+> Should dw_edma_ll_advance() check for EDMA_REQ_STOP before calling
+> dw_edma_ll_consume() so that terminated descriptors do not schedule
+> completion callbacks?
+>
+> --
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261030150742.2586776-1-den@valinux.co.jp?part=2
