@@ -1,96 +1,55 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.171
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793371758;
-	b=vL5oR7YEK26gh1kDf+64Bfkml3acwYyFwMZO+KQojyxw1NbKSCGfZbPvx1lJ/mF+zmlS
-	 5xjmr4KImOcchUOoW12OKbC1Q8wx+HY3APU8lsHCuhin/6qgpjgl6+snBIzxNkYUjEUxT
-	 SMuZ4VHVk0ZPPWMleTR8xfn91bs8NHPG/UFTNvMfDL+LJ4Dm6MLMdhauuMvD2h3HLh3nH
-	 CzGgYJRN5XBrLF9AewzoACoxtd6GJgGQcSWwnQruhU1hxvEGNJXe6varL3bPixLF7CcGj
-	 QIc21Wlg1EP5oNEEPrk7nQ2NWZh0kUif+cXmwgxDj3AmPYnlyls8ssam8IBzejwuV1Q==
+	t=1793371765;
+	b=bKf27ZtwbnCQKq6Z4iip2OFLxe/mRD3mRZYNh8iKuYI8l+QKSswrfXG3kFCo2v3G2C7z
+	 z5r+2UeyjTJqk8GHPFy57oPAsE3Hbd8+lvc7lv1w+xnhFEFror3L1RYx7dfsoOZdkt4Br
+	 Cphcnbis7JcNoMqSdG7TSA9Evd79ec0xonUITe8e20A34gniOjYH8FZnphdRjUTuRRKRz
+	 sKqIxhcSqYMvh+YVpd+w06m7Znh5cZYz0jRgT82vC5ZhH/Ruba0hnggGpxHFSnQipYx1e
+	 7U02BIzAaauGuXgi3pAjL/hTg0K2fsCTu6Lr8k34EuM5hO9/OE1lBcmsIwL1cBAYVJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793371758;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=XAhfjhspXsxJ6CWCwtPR3SrtCWMLYo0xmkxFNwdbO+Y=;
-	b=lZo6ZvYpZ2gUNwjIBPMVP2FcDyrkKsdUaA7MMwVmihUILekcY6Awd1sxPWYXR13Tvrp2
-	 ygIV8gDHDOlFFC+gFF/D1SXHlkmTO5qzFJTUo1H/Hg7JiJmFaZ2ZL3V7aKL5NzewQ+wQ0
-	 ydmPD9mg0AlchzvRuXn/o/06wbBpVPK3YoaykS0bXO0PQYFaa2T9OXulGIOf3x6Qx1WJk
-	 7SKeIzYElKaBMtcx8yv3uQLM58GhKsh4yBwoeLQUmIY/6+Nz0AFBqSUD/4nsq52pszldM
-	 10k95hWao0NWzkucA0bgNgMWdhzxzzI+TIaPML8nlTf+yxOkuvoJ+ZxXtDf5XHpnRwA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793371765;
+	h=Received:DKIM-Signature:Received:X-Forwarded-Encrypted:
+	 X-Gm-Message-State:X-Received:MIME-Version:References:In-Reply-To:
+	 From:Date:X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:
+	 Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=0TQjte6CqBgM+wFSxhT/bgRaDtwXwwSO4uSgCgPB3OY=;
+	b=sx9QUWw0Fn8wT1lg8H6bkNv47XrEIf1i1JUe81nx+bPdTPnMj1LLVD0a8Do8ywwi5OxL
+	 g3gyLsDfGCC8U/VlmqGNfaxbNjVQIAxodbRFm1r9/DBx4D/fCjU7LmmGUhBe+q84MFCAt
+	 wZvG3+GX+g5mJJ2s+MOsfDDANoEC72Y4HtT4wr0StVIRsKAfIcaVEB/pLJQTaPMgwNIXs
+	 nDoLJAOAVwISy0k/eXCPILd/Rtd8+ifI55w/eQRWzt7YynM1sHDCNASXGKyvGFbqQ9XlX
+	 VUti1fTd+1Pk4d4pGn23UpMZOPn1bIIU2PJ05YGdAJ1x+Y+F0LxtMuW49qxgwJiC3Dg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GcSbL2Pp;
-	arc=none smtp.remote-ip=74.125.82.171
-Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NA1m8gVY;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC63606A31A
-	for <sashiko-reviews@lists.linux.dev>; Fri, 30 Oct 2026 14:49:17 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9DC63606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D84606A31C
+	for <sashiko-reviews@lists.linux.dev>; Fri, 30 Oct 2026 14:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=GcSbL2Pp
-Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-3645f0f3fcdso1472651eec.0
-        for <sashiko-reviews@lists.linux.dev>; Fri, 30 Oct 2026 07:49:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793371756; x=1793976556; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=XAhfjhspXsxJ6CWCwtPR3SrtCWMLYo0xmkxFNwdbO+Y=;
-        b=GcSbL2Ppi+G+H7ywHh4AwfJzhBIahkVi+izhVMHmeJt32H7YB0fa6nIRT/Z8/R3z3u
-         tGIg7neXvui4a9u+XVgkc5jH7MdhvyNpLFS8b3TaZEaQ1inCkxQ3F5aObx3ZnQbxpqJf
-         YTXl+likPiilEHFZ6Vnl7zm1+dV/gwkOGC8PHUCkY6lbsuFcwehC6vb0MZTLUSAoGZkm
-         jbcBzhGHZ+gVd6+D/rY/yRh+9OeUjCOiaGoxMJh3Osaq5AF7g69VTnCLNAEy8o3PU35X
-         KFDQkfAnrMGTStpomIbvtmSx/JUyxaZsT5siOUd9MCxGc5SDY2BCVZLm1bfP6gFhmXJn
-         X2RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793371756; x=1793976556;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=XAhfjhspXsxJ6CWCwtPR3SrtCWMLYo0xmkxFNwdbO+Y=;
-        b=dgPRjlyr0Lo3KIOPQbpXbcvFlBaJW2Uju33GPABTvsoasUK4ZnxCRi+xYFBtlstjAF
-         fOA44sIQ961h7zMnxwnObR72CciDKYFJfzGIzzVYefa7m4HaSNZra2LBbeflsiNq/5Ax
-         /Rmcl+K/xWwCLksXYL3stRcupu57bIQnrtY5sWPsokjKnruH2FUfYUNEI2JBIiXIPz2X
-         GbLp+fsnlDaCv0dU3vjriNa0jCXn2j1sNxzZ6Ku8htL2u4jQn273SjG0gv9b5eF7xXfz
-         fl+lvvzfOaQIGBKwoaBbJ0WzlW0NlblFKsX9vCk9qvE3JoeOybJqwBteJbpJ5rore9Kf
-         ES3g==
-X-Forwarded-Encrypted: i=1; AKwUvBxzyX56sWslQzQKqvZyJhF1t072aTCzXDdoOLd214nR/2wVw+y11AXXVhhyu8eRYsGi5pcbRHfa/4BS/xcFiv4=@lists.linux.dev
-X-Gm-Message-State: AFq9FYJEFAF1TT14G6bYw8t9WJbssE+bg4vGU763pVl9mCOgq+KLdb8C
-	q5QvUEWQMQp5j0Yp7FBHRh7+8eir2zGomplRqKj6gXmpyKvuw8DY79Y/
-X-Gm-Gg: AYBFou3nzgVUYU5vObeAHCfNixnX5xU9igw+8jHhjO09V/k0nQpx1gGBzNjU3K2bOxy
-	+b/oZVO9tlmOMbNbzDPHGge4T8s/mbSbdo4X4VeKpwHFTpYGRgLvXCkO/iADYhCnv5KEjG1rVmC
-	yBcNHXx8T/dpY212cm0l2NQY3GdOSAYOjmK3Zhl6RtXf4TBQcAybHF+g+gSBHVpjew6pO5G/pOK
-	fToyQ5KIYnUwYrL/hEbPI1g5I3+Tr4QRudOGakX1gPfJ59z90pzz9GA2nM9OPbIsKY3ZBX3s52N
-	riuj9AdpLShSnkANMGOSXXkboBVg40YR9JVspQQo9AQn0Ma/MjyRIRwYWIwsrvPTu5OCrI1QHNv
-	sJ+FsjjvIsSMInDXulNl9ROvu4TBKXcNN0Z3g4lBABoWvsFLDCP3Y2OZ3za6WrcFwHpjtWIbEnd
-	Dcf+tCR/vSFBTjYA9+WU7aT7IfIkHBqUhXrYpteG//rpSKZaEKKL+gtxzV8kTw7BwZU6rHGOAT8
-	ez3vrTiNUZ9gnlFs/AXso/LU3HjbjhD5Y+QGj9B0tmpHBn3LFuZcOjO2AGNg47t9PzrQER8lnuh
-	SbeLulD3ltF/6nOsomcD3n/zWWuOmlVlvgwwQAta/7119J4uBhc+m0A9S6YAKbVS/wN6k+FHol2
-	CqT8/3qNdrbRaIGTiydvS4SrS2Ru8hbgeMIbwZQ==
-X-Received: by 2002:a05:7301:6183:20b0:36a:1089:9836 with SMTP id 5a478bee46e88-36a423c8988mr3537014eec.15.1793371756093;
-        Fri, 30 Oct 2026 07:49:16 -0700 (PDT)
-Received: from m.tailc35649.ts.net ([2401:4900:1c0f:329b:addb:f0d6:4274:b5ce])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a4239ca82sm7975547eec.0.2026.10.30.07.49.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Oct 2026 07:49:14 -0700 (PDT)
-From: Mrigendra Chaubey <mrigendra.chaubey@gmail.com>
-To: sashiko-bot@kernel.org
-Cc: conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	robh@kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: Re: [PATCH] arm64: dts: ti: k3-j722s-evm: Enable HDMI display
-Date: Fri, 30 Oct 2026 20:19:10 +0530
-Message-ID: <20261030144910.44353-1-mrigendra.chaubey@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <sashiko-outbox-186080@kernel.org>
-References: <sashiko-outbox-186080@kernel.org>
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NA1m8gVY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6601F00A15
+	for <sashiko-reviews@lists.linux.dev>; Fri, 30 Oct 2026 14:49:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793371764;
+	bh=0TQjte6CqBgM+wFSxhT/bgRaDtwXwwSO4uSgCgPB3OY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=NA1m8gVYHOCdqHGrZ4A/CsTsWNYOnrQL/kvNqYRh855w0eE48qkiEbOD/mUSAQJs8
+	 THi9A92uzFqXpL7REevNWMot+i0pxkE0Xz+q3vi9EvINUn3EcRXGZ67OxqbH52OCGj
+	 YEqxEc1/aQg9ETlfCD/kkezGO4FD1hN3Al4UcskSYIHPj9LFrLy7b99XqYU4NRSEHD
+	 lFunqd0Ki4rXYamLX95N8zKRGOHlg365oDaDLMoe35BHu3j9X+tvaNmY3o6zBj5ImX
+	 hTN8QnEdpiUj9nDiIhkAMojiIysBntHAy98ofps5LHCuIWmkrsK3dZP/jqUhOWqi32
+	 ofF2caZU1LBfg==
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-c4203bbb1e9so120881966b.3
+        for <sashiko-reviews@lists.linux.dev>; Fri, 30 Oct 2026 07:49:24 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AKwUvBxQmpGo/koVSLBDL+3+WpU+1wlNhvCoLxEWWytuOlfZ0kbeBNDDUkshxDW0hCJbUdpzgu8kKW2VRbLVT6rH3bM=@lists.linux.dev
+X-Gm-Message-State: AFq9FYLWKv1eypfs94SeZqBNxj0bKGuvmC4wfDxsYbVXLzJjI+N7LZrR
+	TEHEyZmd1kGzU1OUSsggpj4UFz9V0KmYdVGNKDpED39H3HqMzzADCrinB7gexb2KDR/yvvLA5dE
+	jAveAR+sL2nuaTsESWarnpRDTUInACic=
+X-Received: by 2002:a17:906:9f92:b0:c29:4915:83cb with SMTP id
+ a640c23a62f3a-c4ca7ab09dbmr235759666b.39.1793371763605; Fri, 30 Oct 2026
+ 07:49:23 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -100,27 +59,46 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20261028030503.17923-1-kanchanapsridhar2026@gmail.com>
+ <20261028030503.17923-7-kanchanapsridhar2026@gmail.com> <sashiko-outbox-188658@kernel.org>
+ <auQhULh1VTh6lWoe@gondor.apana.org.au> <CACpmpodWMtmE0yNVN656K-8fPZgTj_DSZ0J7qxou+5Asoht+4A@mail.gmail.com>
+ <auQwWgMbBuo0YEBI@gondor.apana.org.au> <CACpmpodxvQCkQgXUU6pF8d7onxHvHF7sEYCbTkv81WXyyrFiEg@mail.gmail.com>
+In-Reply-To: <CACpmpodxvQCkQgXUU6pF8d7onxHvHF7sEYCbTkv81WXyyrFiEg@mail.gmail.com>
+From: Yosry Ahmed <yosry@kernel.org>
+Date: Fri, 30 Oct 2026 07:49:11 -0700
+X-Gmail-Original-Message-ID: <CAO9r8zNvy7ftXsmLnj4qbQYJ5nyQo=hrio4UQvNrpMbwj9YbMg@mail.gmail.com>
+X-Gm-Features: AclHuK_VMB6EZ1UVhDMh9oCJ1ZyT4EAf7VOhmffq_u4OhZNJTl7iN40sgLIywfU
+Message-ID: <CAO9r8zNvy7ftXsmLnj4qbQYJ5nyQo=hrio4UQvNrpMbwj9YbMg@mail.gmail.com>
+Subject: Re: [PATCH v2 6/8] mm: zswap: Store large folios in batches.
+To: "Kanchana P. Sridhar" <kanchanapsridhar2026@gmail.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>, sashiko-reviews@lists.linux.dev, 
+	hannes@cmpxchg.org, nphamcs@gmail.com, chengming.zhou@linux.dev, 
+	akpm@linux-foundation.org, linux-mm@kvack.org, davem@davemloft.net, 
+	linux-crypto@vger.kernel.org, rientjes@google.com, willy@infradead.org, 
+	senozhatsky@chromium.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 27, 2026 at 04:29 UTC, sashiko-bot wrote:
-> none of the included .dtsi files (such as k3-am62p-j722s-common-main.dtsi or
-> k3-j722s-main.dtsi) define the dss1 node or label yet, because the
-> prerequisite AM62P/J722S DSS series noted in the patch commentary is not
-> applied in this tree. As a result, referencing &dss1 here causes dtc to fail
-> with an unresolved label error during a dtbs build.
+On Thu, Oct 29, 2026 at 11:19=E2=80=AFPM Kanchana P. Sridhar
+<kanchanapsridhar2026@gmail.com> wrote:
 >
-> Should the prerequisite patch defining the dss1 node be applied before this
-> change?
+> On Thu, Oct 29, 2026 at 10:51=E2=80=AFPM Herbert Xu <herbert@gondor.apana=
+.org.au> wrote:
+> >
+> > On Thu, Oct 29, 2026 at 10:15:15PM -0700, Kanchana P. Sridhar wrote:
+> > >
+> > > This is how it is in the current mainline, and has been for as long a=
+s
+> > > I can remember.. I assumed it was because we need a per-CPU acomp_req
+> > > to be allocated for the tfm. Can this be done with a single
+> > > crypto_acomp for a given algorithm?
+> >
+> > The request needs to be per-cpu, but the tfm does not.
+>
+> Great.. we can save a lot of memory this way.
+>
+> Yosry, should I go ahead and include this fix in this patch series? I
+> am Ok if you want to take this up.
 
-Yes, this is expected. The patch depends on the J722S DSS nodes
-(including the dss1 label) from the AM62P display series, as noted
-below the "---":
-
-https://lore.kernel.org/all/20260529-beagley-ai-display-v3-0-7fefdc5d1adf@ideasonboard.com/
-
-With patches 1-5 and 14 of that series applied, k3-j722s-evm.dtb builds
-and passes dtbs_check on next-20261026. I'll resend once that series
-is merged, unless the maintainers prefer otherwise.
-
-Thanks,
-Mrigendra
+Feel free to send a patch, but I think it doesn't have to be part of the se=
+ries.
