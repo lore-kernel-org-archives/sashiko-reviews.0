@@ -1,53 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.27
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793412087;
-	b=xDoR5UQ19Y7g9FF3Dk4TWePBllHe1uhkPOrt8gLKZC1zWLbOrQI0tLtLs2IIiw33iFjP
-	 WC37kIuNLIsTvmYIe3AKoqPXgYNClfPeEbEDTKEkUThL34ZyW61nJu/zITo6jDFpatJvG
-	 OC2dtam4yPGvKTsNf5EvtbTWIA0wLtiUjlfOcXtJpGQCcFS4YY4nFkLWoaXb2lJnGDySI
-	 evQNUUObaACr0ERtwn8NGJEAg9pFJu+Q1Y53e2CEyctiSEE22wGrjpjEy3qEK3v+xf9kQ
-	 YOWlp+hLbmDlRN5vM2gcoQjr4fesfDy+z7cZcgeLz9DY7jUbREQjl+pjwTMr2uOMXfQ==
+	t=1793414605;
+	b=xUUZPLTStFTnFkKqMoG1G328aCV1odBIO7SrmNlW/nZ27hqRA3fqTRtMOher3YveD87m
+	 GpI6vdy8ZEF6smNVRlfeaIP+JtHV2OZZ0AdyA97HO3bJMXHagkkR/irFafz/T/T8xhaGT
+	 cN4ngE6ChTeujtTXLIfDBbWecYjkrbJDh1HQ1/yzjW3fSj44XcojVMUG/om3yHsEd0MdE
+	 lMbQ6hqjtAAHYPbF2G7vGlCUPWI+zOQR6rfsLT2AqrCcn7zmiLS0sAI+bNNL/xRIybDFU
+	 2Nx2J1vLCp2t6wiy1JBS+Z1iB0QTq2tHNzaSxm32qLI6P4Bz4MnUI49eq+jMn4XtbDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793412087;
-	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
-	 In-Reply-To:References:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=em7DGCYkO12JE9R0yr0/s0ivPemk6VrLk7QpWMg0SAQ=;
-	b=0Wn3XGSdkpzjarHGgsKSIOGnzUG4/r9VEZ2RSOxfthmvWoavPfa+Ar5eHyI5F33BBHfT
-	 FV7bpFWa0b3oSe2fsmk6jvWCF1uAqVGRhaNULKJoR2ArfBwjactUpkCZuD7NsGsM0Ta0l
-	 t+OTkY3M7yey6ZudMalGPWyVf7nm/LGJqlZPAbpMAicRaceKTc+ixvpv+9Xcyl4cpiYOy
-	 UmWtR/ShrgerpJ0U8lTv507wfOLJRpVuO8HDPQvfTaxX2i0e5xWEKXpWII0cOGAyujDxl
-	 yHUWZLXeTiWk4W7XpEfb07v7TlqTwIvCel4LkWuRxm8w0biwzLoC0LpUYnVkCLvyTwQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793414605;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
+	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
+	 To:X-Mailer;
+	bh=2ekXJ0a8Q3aeP50m9J5zFbJe2TWONi3l/1vhiVAvAmk=;
+	b=gDFAvigYGriVhOENkPkbGi9mFbZ+NW9GayfDmr5nyj4swhc2zyiu8n2IXhSWF757cr62
+	 XlQ3jpcCCy2zAniTKWsyom8Z0iHgaylTUQGqmTORBNimbZkp898Z1Cc23i7JCkDTCS8MN
+	 oqf2xwKu7+M2aQKDqQNZYab4HabBtiJnmnexWZtMV2DM6YCe5kLlrAc50r1Rs9j7+Plv2
+	 9MufdMw2c2f5dFZLB9paF61VKYjOOsHuct2ndMz5JEC5pnAxvW6b6w73xmZ4LtdOUMz8n
+	 yjymEv+DJgtCyeXBFtEE1KWxPIZpRLFArQR10i1ee2Njd1BohEBf6/1Ee3PCPiJE6vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Yz7AH1UG;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=hZQrNE1k;
+	arc=none smtp.remote-ip=91.218.175.27
+Received: from mta0.migadu.com (out-27.mta0.migadu.com [91.218.175.27])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30FE606A31A;
-	Sat, 31 Oct 2026 02:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9946B606A31E
+	for <sashiko-reviews@lists.linux.dev>; Sat, 31 Oct 2026 02:43:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9946B606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Yz7AH1UG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F88B1F000C1;
-	Sat, 31 Oct 2026 02:01:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793412086;
-	bh=em7DGCYkO12JE9R0yr0/s0ivPemk6VrLk7QpWMg0SAQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=Yz7AH1UGktp4C9D1MALcIK0RMX3uBxMWxysbsD5n5h1FT4mG51tKj5mezJA/lG6ZU
-	 FIg4cmvcJvPUzk8R1DErfdPbZtasrbOBatYEpwtytI0hJPHCrMNyZ9KWWiR9aR1VpJ
-	 suBWyYGOkwage0LvfoAjHSmC6PD1ko0eO/l3hbWySm6auRqjdik+qdzCdSnXtSsIGK
-	 9LC6UfZKZcIIc34cxd1sR9qRDysPqGB2/HxZF+4MOqum5AB3kJfIrnnzuVG7cV/YZY
-	 nEMul68CqOu6xATn6e5IMWuU0JwD01KQbXSP3oU5iXcBPBNjmRhouW2hdC8miiEDIz
-	 b1wtFKBFhjGlw==
-Date: Fri, 30 Oct 2026 16:01:25 -1000
-Message-ID: <4b5da2afa4e6c55c4cd809c1b4cef4c1@kernel.org>
-From: Tejun Heo <tj@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: sashiko-bot@kernel.org, sched-ext@lists.linux.dev, Andrea Righi <arighi@nvidia.com>
-Subject: Re: [PATCH v2 sched_ext/for-7.4-fixes] sched_ext: Fix stale pick when a wakeup resets the donor during dispatch
-In-Reply-To: <sashiko-outbox-191676@kernel.org>
-References: <20261030235728.4098872-1-tj@kernel.org> <sashiko-outbox-191676@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=hZQrNE1k
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=WsjTDowD69vaAV5c8r7Aevhgcpf9hq/Quk1PYoegTg0=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1793414599; v=1; x=1794019399;
+ b=hZQrNE1kMnCXDnWKMK0l7HKTY9WENStc45EDYL0BMtzifLnzuRxHgoMxAos6dqWXTs2/EFo0
+ ejkPZinKkHz/qTSYDSYPXqSxeXM65lQvsrjhhli+CJCYpCjl1RNOkzLOvgpH0tCk+VtT8IzxRmo
+ L0hftFN+NTotyUFhiwaU6vFM=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by mta12.migadu.com with ESMTPS id dc0478d27c2ffce3;
+	Sat, 31 Oct 2026 02:43:19 +0000
+X-Mizu-Trace-ID: dc0478d27c2ffce3
+X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain;
+	charset=utf-8
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -56,30 +57,276 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.12\))
+Subject: Re: [PATCH 3/4] mm/sparse-vmemmap: drop vmemmap_can_optimize()
+From: Muchun Song <muchun.song@linux.dev>
+In-Reply-To: <sashiko-outbox-191687@kernel.org>
+Date: Sat, 31 Oct 2026 10:42:56 +0800
+Cc: Muchun Song <songmuchun@bytedance.com>,
+ David Hildenbrand <david@kernel.org>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Mike Rapoport <rppt@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Lance Yang <lance.yang@linux.dev>,
+ Michael Ellerman <mpe@ellerman.id.au>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Christophe Leroy <chleroy@kernel.org>,
+ Ritesh Harjani <ritesh.list@gmail.com>,
+ Shrikanth Hegde <sshegde@linux.ibm.com>,
+ Oscar Salvador <osalvador@suse.de>,
+ Qi Zheng <qi.zheng@linux.dev>,
+ linux-mm@kvack.org,
+ x86@kernel.org,
+ linux-s390@vger.kernel.org,
+ Heiko Carstens <hca@linux.ibm.com>,
+ Vasily Gorbik <gor@linux.ibm.com>,
+ Alexander Gordeev <agordeev@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <5841D61D-50CB-4AA9-AC72-BD6AE8033589@linux.dev>
+References: <20261030140720.1256062-1-songmuchun@bytedance.com>
+ <20261030140720.1256062-4-songmuchun@bytedance.com>
+ <sashiko-outbox-191687@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+X-Mailer: Apple Mail (2.3901.100.1.1.12)
 
-Hello,
 
-On Sat, Oct 31, 2026 at 12:29:44AM +0000, sashiko-bot@kernel.org wrote:
-> - [High] sched_ext: unguarded keep-prev check in scx_dispatch_sched()
 
-Fixed in v3, which also tests for a stale @prev there:
+> On Oct 31, 2026, at 08:54, sashiko-bot@kernel.org wrote:
+>=20
+> Thank you for your contribution! Sashiko AI review found 3 potential =
+issue(s) to consider:
+> - [High] mm/sparse-vmemmap: dropping vmemmap_can_optimize() bypasses =
+DAX arch config
+> - [Medium] mm/sparse-vmemmap: section_activate() stores =
+non-optimizable compound order
+> - [Low] mm/sparse-vmemmap: missing header include breaks powerpc =
+init_64.c build
+> --
+>=20
+> commit 4171e4b9fc2abb84bf0e245a60563f33f94a263d
+> Author: Muchun Song <muchun.song@linux.dev>
+>=20
+> mm/sparse-vmemmap: drop vmemmap_can_optimize()
+>=20
+> This commit removes the DAX-specific vmemmap_can_optimize() helper =
+from
+> include/linux/mm.h and relies on section_vmemmap_optimizable() to =
+determine
+> whether a section uses vmemmap optimization.
+>=20
+>> diff --git a/include/linux/mm.h b/include/linux/mm.h
+>> index e875f73b0c6ff..4fb48fbe712d2 100644
+>> --- a/include/linux/mm.h
+>> +++ b/include/linux/mm.h
+>> @@ -38,7 +38,6 @@
+>> #include <linux/bitops.h>
+>> #include <linux/iommu-debug-pagealloc.h>
+>> #include <linux/kcsan-checks.h>
+>> -#include <linux/vmemmap-optimization.h>
+>=20
+> [Severity: Low]
+> Does removing this include break the 64-bit PowerPC build when
+> CONFIG_SPARSEMEM_VMEMMAP=3Dy is enabled?
+>=20
+> In arch/powerpc/mm/init_64.c, vmemmap_populate() calls
+> section_set_compound_order():
+>=20
+>    section_set_compound_order(__pfn_to_section(page_to_pfn((struct =
+page *)start)), 0);
+>=20
+> Previously, arch/powerpc/mm/init_64.c got the declaration of
+> section_set_compound_order() transitively via include/linux/mm.h. =
+Without
+> including linux/vmemmap-optimization.h in arch/powerpc/mm/init_64.c,
+> compiling it will fail with an implicit function declaration error.
 
-  https://lore.kernel.org/r/20261031015414.219280-1-tj@kernel.org
+I should include this header in the patch 2 to fix this, because I don't =
+like
+this implicit way of header file inclusion.
 
-> - [Medium] sched_ext: premature cpu_acquire() before stale donor check in dispatch_one()
+>=20
+>> struct mempolicy;
+>> struct anon_vma;
+>> @@ -5395,42 +5394,6 @@ static inline void vmem_altmap_free(struct =
+vmem_altmap *altmap,
+>> }
+>> #endif
+>>=20
+>> -#ifdef CONFIG_ARCH_WANT_OPTIMIZE_DAX_VMEMMAP
+>> -static inline bool __vmemmap_can_optimize(struct vmem_altmap =
+*altmap,
+>> -					  struct dev_pagemap *pgmap)
+>> -{
+>> -	unsigned long nr_pages;
+>> -	unsigned long nr_vmemmap_pages;
+>> -
+>> -	if (!IS_ENABLED(CONFIG_VMEMMAP_OPTIMIZATION))
+>> -		return false;
+>> -
+>> -	if (!pgmap || !is_power_of_2(sizeof(struct page)))
+>> -		return false;
+>> -
+>> -	nr_pages =3D pgmap_vmemmap_nr(pgmap);
+>> -	nr_vmemmap_pages =3D ((nr_pages * sizeof(struct page)) >> =
+PAGE_SHIFT);
+>> -	/*
+>> -	 * For vmemmap optimization with DAX we need minimum 2 vmemmap
+>> -	 * pages. See layout diagram in =
+Documentation/mm/vmemmap_dedup.rst
+>> -	 */
+>> -	return !altmap && (nr_vmemmap_pages > =
+VMEMMAP_OPTIMIZATION_PAGES);
+>> -}
+>> -/*
+>> - * If we don't have an architecture override, use the generic rule
+>> - */
+>> -#ifndef vmemmap_can_optimize
+>> -#define vmemmap_can_optimize __vmemmap_can_optimize
+>> -#endif
+>> -
+>> -#else
+>> -static inline bool vmemmap_can_optimize(struct vmem_altmap *altmap,
+>> -					   struct dev_pagemap *pgmap)
+>> -{
+>> -	return false;
+>> -}
+>> -#endif
+>=20
+> [Severity: High]
+> With vmemmap_can_optimize() removed, nothing in C code checks
+> CONFIG_ARCH_WANT_OPTIMIZE_DAX_VMEMMAP anymore. Could this unintendedly
+> enable DAX vmemmap optimization on architectures that only select
+> ARCH_WANT_OPTIMIZE_HUGETLB_VMEMMAP, such as 64-bit LoongArch?
 
-ops.cpu_acquire() is deprecated, so this doesn't matter.
+You are right. This patch will enable vmemmap-optimization for device =
+DAX
+on LoongArch.
 
-> - [Medium] sched: stale rq->dl_server across RETRY_TASK in __pick_next_task()
+Because I plan to remove ARCH_WANT_OPTIMIZE_HUGETLB_VMEMMAP completely =
+in
+the future, so I'll add a new commit before this one to disable HVO for
+device DAX on LoongArch. It'll be easy to do this, just like patch 2 =
+does
+for PowerPC.
 
-That's a core sched bug independent of this patch. Reported separately:
+On LoongArch, HugeTLB HVO is supported without gigantic HugeTLB pages. =
+So
+there is no users of section-based vmemmap optimization. So just =
+disabling
+vmemmap optimization in architectural vmemmap_populate() is enough.
 
-  https://lore.kernel.org/r/6db076ee2562b5fb84d70ed59abe670e@kernel.org
+>=20
+> When CONFIG_HUGETLB_PAGE_OPTIMIZE_VMEMMAP=3Dy and CONFIG_ZONE_DEVICE=3Dy=
+ are
+> both enabled on 64-bit LoongArch, CONFIG_VMEMMAP_OPTIMIZATION is =
+selected.
+> In section_activate(), order is now set from pgmap->vmemmap_shift, and
+> section_vmemmap_optimizable() -> vmemmap_optimizable_order() only =
+checks
+> IS_ENABLED(CONFIG_VMEMMAP_OPTIMIZATION).
+>=20
+> As a result, activating a DAX section with pgmap->vmemmap_shift >=3D
+> VMEMMAP_OPTIMIZATION_MIN_ORDER on LoongArch will map read-only shared =
+tail
+> PTEs and grab references to vmemmap_shared_tail_page via =
+vmemmap_alloc_pte().
+> However, LoongArch's vmemmap_free() in arch/loongarch/mm/init.c is an =
+empty
+> no-op stub:
+>=20
+>    void vmemmap_free(unsigned long start, unsigned long end, struct =
+vmem_altmap *altmap)
+>    {
+>    }
+>=20
+> On section_deactivate(), those shared tail page references are leaked =
+and
+> the read-only PTEs remain mapped, causing subsequent section =
+activations to
+> either trigger WARN_ON_ONCE(vmemmap_optimizable_pfn(pfn)) and fail =
+with
+> -ENOMEM in vmemmap_pte_populate(), or fault in kernel mode when =
+writing to
+> struct pages through the stale read-only PTEs.
+>=20
+> [ ... ]
+>=20
+>> diff --git a/mm/sparse-vmemmap.c b/mm/sparse-vmemmap.c
+>> index 3e9d6617c4bb2..43559593107c9 100644
+>> --- a/mm/sparse-vmemmap.c
+>> +++ b/mm/sparse-vmemmap.c
+>=20
+> [ ... ]
+>=20
+>> @@ -699,10 +707,9 @@ static struct page * __meminit =
+section_activate(int nid, unsigned long pfn,
+>> 	struct mem_section *ms =3D __pfn_to_section(pfn);
+>> 	struct mem_section_usage *usage =3D NULL;
+>> 	struct page *memmap;
+>> -	unsigned int order;
+>> +	unsigned int order =3D pgmap ? pgmap->vmemmap_shift : 0;
+>> 	int rc;
+>>=20
+>> -	order =3D vmemmap_can_optimize(altmap, pgmap) ? =
+pgmap->vmemmap_shift : 0;
+>> 	if (nr_pages < PAGES_PER_SECTION && section_compound_order(ms))
+>> 		return ERR_PTR(-EOPNOTSUPP);
+>=20
+> [Severity: Medium]
+> What happens in section_activate() when pgmap->vmemmap_shift is =
+non-zero,
+> but is not actually optimizable (for example, when 0 < =
+pgmap->vmemmap_shift
+> < VMEMMAP_OPTIMIZATION_MIN_ORDER, or when !is_power_of_2(sizeof(struct =
+page)))?
+
+Even though this issue is unreachable, I'm still going to fix it since =
+it is easy.
+Something like:
+
+diff --git a/include/linux/vmemmap-optimization.h =
+b/include/linux/vmemmap-optimization.h
+index fa9e9abd6656..104f7275a49f 100644
+--- a/include/linux/vmemmap-optimization.h
++++ b/include/linux/vmemmap-optimization.h
+@@ -42,7 +42,9 @@ static inline void section_set_compound_order(struct =
+mem_section *section,
+ {
+        VM_WARN_ON(section_compound_order(section) && order &&
+                   section_compound_order(section) !=3D order);
+-       section->compound_page_order =3D order;
++
++       if (vmemmap_optimizable_order(order))
++               section->compound_page_order =3D order;
+ }
+
 
 Thanks.
 
---
-tejun
+>=20
+> Previously, order was forced to 0 when vmemmap_can_optimize() returned
+> false. Now, section_activate() passes the raw pgmap->vmemmap_shift to
+> section_set_compound_order_range(pfn, nr_pages, order).
+>=20
+> Because __populate_section_memmap() only resets the order when both =
+altmap
+> and section_vmemmap_optimizable(ms) are true:
+>=20
+>    if (altmap && section_vmemmap_optimizable(ms))
+>            section_set_compound_order(ms, 0);
+>=20
+> ms->compound_page_order remains non-zero for unoptimizable non-zero =
+orders.
+> Since section_activate() checks section_compound_order(ms) rather than
+> section_vmemmap_optimizable(ms), wouldn't a subsequent partial-section
+> activation (nr_pages < PAGES_PER_SECTION) in that section be =
+erroneously
+> rejected with -EOPNOTSUPP even though vmemmap optimization was never =
+used?
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/20261030140720.1256062-1-songmuchun@bytedan=
+ce.com?part=3D3
+
