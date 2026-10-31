@@ -1,60 +1,53 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=109.224.244.27
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793394230;
-	b=die7+vswA+z11go6+wZvPBdjS7bk+j5rW5PgF0dONkUXqnFeqrRSC8H74+y2WvDoqOzJ
-	 OD+A4tZ7Ap1JOW4nKU7o2v+Yq4gyv+eY1eGAku8rUompa285t4i54hBUwfYzU5VI0UjNm
-	 BbmQyCZo/eH3K7PboSZyJRFynNcMxr9RPk0zYAq2YLcsv1cKvvCOvoxPEK0AIB4b5CQwl
-	 rr8X44I9lz4SX7KZALV4hTPwZaxOwPQcr3mop/6esSbeQxbOiiIh0K1h2xkZ3xwdMq9fj
-	 kkWR/KwXoeInlBAwDEyq0IcEqtoNqTrxVJLb19hx2j9KGXZJfXVQuwRQgc9fHnDrXVA==
+	t=1793412087;
+	b=xDoR5UQ19Y7g9FF3Dk4TWePBllHe1uhkPOrt8gLKZC1zWLbOrQI0tLtLs2IIiw33iFjP
+	 WC37kIuNLIsTvmYIe3AKoqPXgYNClfPeEbEDTKEkUThL34ZyW61nJu/zITo6jDFpatJvG
+	 OC2dtam4yPGvKTsNf5EvtbTWIA0wLtiUjlfOcXtJpGQCcFS4YY4nFkLWoaXb2lJnGDySI
+	 evQNUUObaACr0ERtwn8NGJEAg9pFJu+Q1Y53e2CEyctiSEE22wGrjpjEy3qEK3v+xf9kQ
+	 YOWlp+hLbmDlRN5vM2gcoQjr4fesfDy+z7cZcgeLz9DY7jUbREQjl+pjwTMr2uOMXfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793394230;
-	h=DMARC-Filter:DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:
-	 In-Reply-To:References:Feedback-ID:X-Pm-Message-ID:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=S1995ZLQFE4RdcXYiHKakHsk6W47b9S6zZE1CF9trLU=;
-	b=nDd0ImX3yaT8U7M6+FT/GjmZeUU5rTvrYxK9/pRttNpOFV8ajNqtEseS3PejTiGcv9e3
-	 YDHjYTAibJYsqVjI6ej3GtagvUehBadhhdcnuomqCaI0XerXmXjfVc7V5R9OM10KH66tF
-	 jk2ijqZuHaxOQUxxXum17jRqt6qaMu7rtGWJpbZBMop1ouK6JPDfGhfQ8cRxA1T06JA6j
-	 fhOP3FHFAYVz2zxGCyw3o30Xb1Tc57WMhtLGuRKPb8tnAbF2UNx6bax9lJDDrlN2hmMQ/
-	 6cXlKFS/szCjZ153Fd/qKxhlNOlxlWsRpmthtkrwRr4OQWZzr800+Vf79T2WBhWarVQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793412087;
+	h=Received:DKIM-Signature:Date:Message-ID:From:To:Cc:Subject:
+	 In-Reply-To:References:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=em7DGCYkO12JE9R0yr0/s0ivPemk6VrLk7QpWMg0SAQ=;
+	b=0Wn3XGSdkpzjarHGgsKSIOGnzUG4/r9VEZ2RSOxfthmvWoavPfa+Ar5eHyI5F33BBHfT
+	 FV7bpFWa0b3oSe2fsmk6jvWCF1uAqVGRhaNULKJoR2ArfBwjactUpkCZuD7NsGsM0Ta0l
+	 t+OTkY3M7yey6ZudMalGPWyVf7nm/LGJqlZPAbpMAicRaceKTc+ixvpv+9Xcyl4cpiYOy
+	 UmWtR/ShrgerpJ0U8lTv507wfOLJRpVuO8HDPQvfTaxX2i0e5xWEKXpWII0cOGAyujDxl
+	 yHUWZLXeTiWk4W7XpEfb07v7TlqTwIvCel4LkWuRxm8w0biwzLoC0LpUYnVkCLvyTwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=protonmail.com;
-	spf=pass smtp.mailfrom=protonmail.com;
-	dkim=pass header.d=protonmail.com header.i=@protonmail.com header.a=rsa-sha256 header.s=protonmail3 header.b=ZjxLCscv;
-	arc=none smtp.remote-ip=109.224.244.27
-Received: from mail-24427.protonmail.ch (mail-24427.protonmail.ch [109.224.244.27])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Yz7AH1UG;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD2C606B6C6
-	for <sashiko-reviews@lists.linux.dev>; Fri, 30 Oct 2026 21:03:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7CD2C606B6C6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30FE606A31A;
+	Sat, 31 Oct 2026 02:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=protonmail.com header.i=@protonmail.com header.a=rsa-sha256 header.s=protonmail3 header.b=ZjxLCscv
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1793394227; x=1793653427;
-	bh=S1995ZLQFE4RdcXYiHKakHsk6W47b9S6zZE1CF9trLU=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=ZjxLCscvZeZSW75knHS44BRlBxUv70KLKJt3w0MSyt7Z8XISZMZSyUZKx8Ou1UkaE
-	 ukc4Pr/ISDMRe98c5wXXhq3N0SrgaeayrAopiayRaVdfmAgP5bXWRGSXKXVjWaN500
-	 msexGbJtSjHsoDRPBLm9Fa99V1lP0DGPyHy4yN8b8IHB5BxYeoEJEcmGJ2C9wgmHiO
-	 H8Dqe/6dR2HuaVXsrqcajb3u5EyP6OaGG0Z3k79q+FiIYHU1+HQ7VimcWmRWHvU7yC
-	 qgT5x8tIOHhGhoEkBR49Xf45dKjufdc75T01bn6daVKQ8ZJE9FzNBdZLmx9HMfnyoY
-	 j2uCHK/EOgg7g==
-Date: Fri, 30 Oct 2026 21:03:41 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Yz7AH1UG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F88B1F000C1;
+	Sat, 31 Oct 2026 02:01:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793412086;
+	bh=em7DGCYkO12JE9R0yr0/s0ivPemk6VrLk7QpWMg0SAQ=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=Yz7AH1UGktp4C9D1MALcIK0RMX3uBxMWxysbsD5n5h1FT4mG51tKj5mezJA/lG6ZU
+	 FIg4cmvcJvPUzk8R1DErfdPbZtasrbOBatYEpwtytI0hJPHCrMNyZ9KWWiR9aR1VpJ
+	 suBWyYGOkwage0LvfoAjHSmC6PD1ko0eO/l3hbWySm6auRqjdik+qdzCdSnXtSsIGK
+	 9LC6UfZKZcIIc34cxd1sR9qRDysPqGB2/HxZF+4MOqum5AB3kJfIrnnzuVG7cV/YZY
+	 nEMul68CqOu6xATn6e5IMWuU0JwD01KQbXSP3oU5iXcBPBNjmRhouW2hdC8miiEDIz
+	 b1wtFKBFhjGlw==
+Date: Fri, 30 Oct 2026 16:01:25 -1000
+Message-ID: <4b5da2afa4e6c55c4cd809c1b4cef4c1@kernel.org>
+From: Tejun Heo <tj@kernel.org>
 To: sashiko-reviews@lists.linux.dev
-From: Aiden Isik <aidenisik@protonmail.com>
-Cc: Aiden Isik <aidenisik@member.fsf.org>, devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Subject: Re: [PATCH v3 4/5] arm64: dts: exynos: Add initial support for Exynos5515 SoC
-Message-ID: <Mmgr4BBkTyH619iTPbmVEEjEAI18ry8Yzpd0c3CCp5ZgSRsHx92Ref70av8rjJGpnjiljM5HjvdsZNS_PJ-dn3_GMJK0JnB7QmSOoWeS0BU=@protonmail.com>
-In-Reply-To: <sashiko-outbox-191496@kernel.org>
-References: <20261030-for-next-lucky7-v3-0-81e02272ce69@member.fsf.org> <20261030-for-next-lucky7-v3-4-81e02272ce69@member.fsf.org> <sashiko-outbox-191496@kernel.org>
-Feedback-ID: 46524699:user:proton
-X-Pm-Message-ID: 38c7d60319e73c92ae8a77d9b4235398a84414df
+Cc: sashiko-bot@kernel.org, sched-ext@lists.linux.dev, Andrea Righi <arighi@nvidia.com>
+Subject: Re: [PATCH v2 sched_ext/for-7.4-fixes] sched_ext: Fix stale pick when a wakeup resets the donor during dispatch
+In-Reply-To: <sashiko-outbox-191676@kernel.org>
+References: <20261030235728.4098872-1-tj@kernel.org> <sashiko-outbox-191676@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -64,15 +57,29 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 
-> On Friday, 10/30/26 at 20:49 sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] clk: samsung: exynos5515: CMU_PERI user muxes bypass CMU_TOP d=
-out/gout clocks
+Hello,
 
-This is how those clocks are wired. I'm also not sure why the bot is sugges=
-ting
-clock driver changes on a device tree patchset.
+On Sat, Oct 31, 2026 at 12:29:44AM +0000, sashiko-bot@kernel.org wrote:
+> - [High] sched_ext: unguarded keep-prev check in scx_dispatch_sched()
+
+Fixed in v3, which also tests for a stale @prev there:
+
+  https://lore.kernel.org/r/20261031015414.219280-1-tj@kernel.org
+
+> - [Medium] sched_ext: premature cpu_acquire() before stale donor check in dispatch_one()
+
+ops.cpu_acquire() is deprecated, so this doesn't matter.
+
+> - [Medium] sched: stale rq->dl_server across RETRY_TASK in __pick_next_task()
+
+That's a core sched bug independent of this patch. Reported separately:
+
+  https://lore.kernel.org/r/6db076ee2562b5fb84d70ed59abe670e@kernel.org
+
+Thanks.
+
+--
+tejun
