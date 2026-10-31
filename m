@@ -1,54 +1,68 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=95.215.58.237
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=80.241.56.151
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793470112;
-	b=XPzuu7it4DZfc4lnRGQKImim7rFHXr6drqtcthueqxLG8pmJHayy8qHaSafdT4dazsPT
-	 lPrL0vwierESfGpWV10t7oL+nqlhPWIxWiBst0BRl/sCjZMfFvhT7MjDTjkKOLOmH6aI7
-	 Q+FOTYpCpBEfHOTZhxaEgwNwCpdkH4yjnnnLVWHl5v3fq4Wpt1cIE+b+JXwAKJRJWrjPW
-	 yrxuw0x98aU9OLLpeuoA3id+78I19MZmfztvPr9Ksa+AWIyJqC8l8F6H0TywQSbkxmLXg
-	 c5KqHBx07BZ36zLopkN0KkAG35Iio/0TkmhfL/7ZyWU7Bu6aLR7eE1p4OdNy1uWEatw==
+	t=1793471699;
+	b=oJM61xaV2war0V4KkJ38Bbrn3MqkkCLSF5iCcYJ4HJMgr3LDJFJR2GjE9rt35BqNv+Wn
+	 ExnZ5Qkf2xCc+aYggocDPbarKW5HhO9a3rK/rF6XROHG+FSmvXXkUcs169Rn9TPjBAZN6
+	 Tkp/Vy4JsyffEqUhoBg+msfE14o9Bdf2fsZXMtdwiW7j+PtA14QRYcNXjVNYgk1aidIoH
+	 wJ1q9gTNJEpeyeIpLMskhaHFc/PtiBBoBWBw+NFUP2SL1SdbqBoZ+5c2dA2/0jy7y6lo4
+	 NLF793EQBrWFkylIYQEox3ggjRyox+AdPYkiiG7Nm/Cm1AmwnRc80PaU4f7CE1yqrMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793470112;
-	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
-	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:Content-Language:From:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=XgZCG9R/Akmn0OUJuILA/AypALbRAk1//GmFGR97Xco=;
-	b=4XCez4jKsqdQ2YwYppq++d57vX2CvEpEY68eYufZDTg4WXWhTb0XKVnCkjURRsh+kgKr
-	 hZAG/JNZKaKlrOtQPkaBTw6QoHJFSFEgX42DPSNcXi7VN8yo91yC1F+vJ89/NaghdVBuq
-	 bQoyM7CRZwuc5Ftu8y5oMKTaGnOiWWp1ypHxrhIjpM1GdVJ9rJrqTB8MEPTKAMrl4gAGc
-	 p2eLz3ZnhBgVTPCq2lIOcy8DIJbqYNgguG92TTQ8zrozAUPW7kUKyw1O6t4gUXfxXS2L5
-	 LMlwtvIGyUxbMjHvCM2RJC9V7LD3/CMyy0RJl2TJ4s9eHuZX+h3kyvIiU6Hwew/W5eg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793471699;
+	h=DMARC-Filter:Received:DKIM-Signature:From:To:Cc:Subject:Date:
+	 Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
+	 Content-Transfer-Encoding:X-Rspamd-Queue-Id;
+	bh=Mr9ICfX9GZSmJoYtnOLDM1PJyuX2i4qLwBDyTMhSy+I=;
+	b=S80RdruR1dWe5rxT/eTYVJGxgnzxLFImlgeFQAhZvgPcXn9TmQwX1eqppPojlIULzw+j
+	 RX2kYc3HwafwNBjIGP481YL6MUKV1ZJ36HoTbsp+LfmduGX5Eg/oPpiALSnSUIJ2EjDvC
+	 pbJJcUGzs5Jj/g4rmCT7qYCgLUeM0RUPy92lULHrURxP+PsSHDLqR/Da9mWs4ba9qf56H
+	 uEqe4T9w4UBd3tL93E7plwICmIlawpf1v6+jgWJni2T+JLxMPkQQwqkLytfeMOlGDhN4D
+	 P+OUhwM7DrUH8qY2UMVJtDAryEGRgH6RXiAvvfVcFXVtBXt+3giiZwULgkTN4xX5aRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.dev;
-	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=jlMU2n2c;
-	arc=none smtp.remote-ip=95.215.58.237
-Received: from mta1.migadu.com (out-237.mta1.migadu.com [95.215.58.237])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	dmarc=pass header.from=hsal.es;
+	spf=pass smtp.mailfrom=hsal.es;
+	dkim=pass header.d=hsal.es header.i=@hsal.es header.a=rsa-sha256 header.s=MBO0001 header.b=WTvjPV5J;
+	arc=none smtp.remote-ip=80.241.56.151
+Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E88606A31A
-	for <sashiko-reviews@lists.linux.dev>; Sat, 31 Oct 2026 18:08:30 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 90E88606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A80606A31A
+	for <sashiko-reviews@lists.linux.dev>; Sat, 31 Oct 2026 18:34:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C9A80606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hsal.es
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hsal.es
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=jlMU2n2c
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=cfafcgkRWi6LPhiG/hGliy6F6QzjtvjOdMcdctWhOqs=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1793470108; v=1; x=1794074908;
- b=jlMU2n2c71FRjQfuqcooS4ZJMeDQxH7Zsi5jVV712SOSTgp+vAI7miupyJ00uq/ZjFsML2Jj
- oZ8PsZxOxsVOsNUqEj4wyX0wjaO4Z8k8xe59rjgdPZKNYA1XLzaY0pCJEuHSCY4w3Jbbvl4gJJj
- f0o4+Vfk/Hc5vj/15rJxcVns=
-X-Envelope-To: sashiko-reviews@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 9bd23348b99aefe4;
-	Sat, 31 Oct 2026 18:08:28 +0000
-X-Mizu-Trace-ID: 9bd23348b99aefe4
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <ce55d8f6-ff34-4ef6-9ee5-59c411fad3fc@linux.dev>
-Date: Sat, 31 Oct 2026 19:08:28 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=hsal.es header.i=@hsal.es header.a=rsa-sha256 header.s=MBO0001 header.b=WTvjPV5J
+Received: from smtp202.mailbox.org (smtp202.mailbox.org [IPv6:2001:67c:2050:b231:465::202])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519MLKEM768 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4jH68B0Cmcz8v2f;
+	Sat, 31 Oct 2026 19:34:50 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hsal.es; s=MBO0001;
+	t=1793471690;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Mr9ICfX9GZSmJoYtnOLDM1PJyuX2i4qLwBDyTMhSy+I=;
+	b=WTvjPV5JDGDKXsIs6PsfNRdz2Lw7LYuQVwwN+AAX5W7Tqs3dldtz2krSiwHeQNqAk9VY7t
+	sAQr3f/+b9ULnexgX3nMl6cRauJMWgUmwUHiWGwgusyZviagNin8vFlL5tNQyMcAR3L2/L
+	2VeP3KNh+7tCpmutB8idLss2bkOkgzB/o/CdteGYPgex8G5thUV9TqHNeml1haAwbD2xWe
+	qw4PDiBmKnb751+qyfSk7xEoeYu9LVd+s4IQOJRkI1n9EXkG6CJqP5bfwD9x4EeiuGLuQ4
+	4ZRn0wNk62hrAYsoHnim6eR1VJIlSD5knZNXDyr18eoRYXijIQob3Tu7Eg3d/Q==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=none;
+	spf=pass (outgoing_mbo_mout: domain of hugo@hsal.es designates 2001:67c:2050:b231:465::202 as permitted sender) smtp.mailfrom=hugo@hsal.es
+From: Hugo Sales <hugo@hsal.es>
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] drm/amd/display: Hold the VRR vblank reference only on active CRTCs
+Date: Sat, 31 Oct 2026 18:34:48 +0000
+Message-ID: <20261031183448.2400535-1-hugo@hsal.es>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <sashiko-outbox-192001@kernel.org>
+References: <sashiko-outbox-192001@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,104 +72,19 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 01/17] HID: asus: size feature reports from the HID
- report descriptor
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
-References: <20261031174130.208240-1-denis.benato@linux.dev>
- <20261031174130.208240-2-denis.benato@linux.dev>
- <sashiko-outbox-192088@kernel.org>
-Content-Language: en-US
-From: Denis Benato <denis.benato@linux.dev>
-In-Reply-To: <sashiko-outbox-192088@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 4jH68B0Cmcz8v2f
 
+> Should the dc_lock block and dc_exit_ips_for_hw_access() in that branch
+> be skipped when new_state->stream is NULL?
 
-On 10/31/26 19:04, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] HID: asus: wrong report ID in mcu_request_version() breaks MCU check
-> --
->
-> commit 95aa403a07769e0a4dbd2dee41abe2766cd2fe36
-> Author: Denis Benato <denis.benato@linux.dev>
->
-> HID: asus: size feature reports from the HID report descriptor
->
-> This commit derives feature report transfer lengths from the HID report
-> descriptor via asus_report_len() instead of using hardcoded sizes across
-> asus_kbd_set_report(), asus_kbd_get_report(), mcu_request_version(), and
-> asus_xgm_led_set().
->
->> diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
->> index f6aa1be09ad53..327bb4ab1a0d6 100644
->> --- a/drivers/hid/hid-asus.c
->> +++ b/drivers/hid/hid-asus.c
-> [ ... ]
->> @@ -900,10 +992,15 @@ static int mcu_parse_version_string(const u8 *response, size_t response_size)
->>  
->>  static int mcu_request_version(struct hid_device *hdev)
->>  {
->> -	u8 *response __free(kfree) = kzalloc(ROG_ALLY_REPORT_SIZE, GFP_KERNEL);
->> -	const u8 request[] = { 0x5a, 0x05, 0x03, 0x31, 0x00, 0x20 };
->> +	size_t hw_len = asus_report_len(hdev, FEATURE_REPORT_ID);
->> +	const u8 request[] = { FEATURE_KBD_REPORT_ID, 0x05, 0x03, 0x31, 0x00, 0x20 };
->>  	int ret;
->>  
->> +	if (!hw_len)
->> +		return -EINVAL;
->> +
->> +	u8 *response __free(kfree) = kzalloc(hw_len, GFP_KERNEL);
->> +
->>  	if (!response)
->>  		return -ENOMEM;
->>  
->> @@ -911,17 +1008,16 @@ static int mcu_request_version(struct hid_device *hdev)
->>  	if (ret < 0)
->>  		return ret;
->>  
->> -	ret = hid_hw_raw_request(hdev, FEATURE_REPORT_ID, response,
->> -				ROG_ALLY_REPORT_SIZE, HID_FEATURE_REPORT,
->> -				HID_REQ_GET_REPORT);
->> +	ret = hid_hw_raw_request(hdev, FEATURE_REPORT_ID, response, hw_len,
->> +				 HID_FEATURE_REPORT, HID_REQ_GET_REPORT);
->>  	if (ret < 0)
->>  		return ret;
-> [Severity: High]
-> Does asus_report_len(hdev, FEATURE_REPORT_ID) return 0 here on ROG Ally and
-> ROG Ally X devices?
->
-> In drivers/hid/hid-asus.c, FEATURE_REPORT_ID (0x0d) is the I2C touchpad
-> multitouch report ID used by asus_start_multitouch(), whereas the ROG Ally
-> N-Key vendor HID interface declares feature report 0x5a
-> (FEATURE_KBD_REPORT_ID) in its HID report descriptor (and as documented above
-> mcu_parse_version_string(), the MCU response payload starts with "5a 05 03 31
-> 00 1a 13").
->
-> Previously, mcu_request_version() passed a hardcoded ROG_ALLY_REPORT_SIZE (64)
-> to hid_hw_raw_request(), which succeeded because usbhid_get_raw_report() does
-> not look up the report ID in hdev->report_enum[HID_FEATURE_REPORT].
->
-> With this change, when probing USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY or
-> USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X via:
->
->   asus_probe()
->     -> asus_kbd_register_leds()
->       -> validate_mcu_fw_version()
->         -> mcu_request_version()
->
-> looking up FEATURE_REPORT_ID (0x0d) in hdev->report_enum[HID_FEATURE_REPORT]
-> via asus_report_len() will not find a report and will return 0, causing
-> mcu_request_version() to return -EINVAL. validate_mcu_fw_version() then
-> silently aborts without checking the MCU version or configuring MCU powersave:
->
->   version = mcu_request_version(hdev);
->   if (version < 0)
->           return;
->
-> Should mcu_request_version() look up FEATURE_KBD_REPORT_ID instead of
-> FEATURE_REPORT_ID when sizing the buffer with asus_report_len()?
-No, this was reported by my sashiko-bot too and attempting to follow the suggestion
-has lead to driver failing and I had to use what's in there now.
+Thanks. I can't test this, since my laptop is DCN 2.1 and has no IPS.
+Reading the code, though, I agree: with this patch, disabling a CRTC that
+has VRR on goes through the VRR-off branch, and that branch calls
+dc_exit_ips_for_hw_access(). When it was the last display, that undoes
+the IPS allow that amdgpu_dm_commit_streams() made just before.
 
+v2 will skip the PSR, Replay and IPS step when the CRTC has no stream,
+with a KUnit test that counts the IPS calls. I'll wait a few days for
+other comments before sending it. A Tested-by from anyone with DCN 3.5
+hardware would be welcome.
