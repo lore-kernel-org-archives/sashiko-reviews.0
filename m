@@ -1,95 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=52.101.229.140
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
-	t=1793456907;
-	b=DH5L53JmDK9FQUcvexxuGq4MdAWYiKFlfHk0ubqPSKWzfTo4cavuomXAxFmyhnk133Rz
-	 U2h8FcGKue+AXFIwrg0BvyFX4n2vn0PNubAjqGfSKdsenmeTYDDr5IqPqzFio1juZ6hyC
-	 aR1+4HC4pe1V6vf3i6sLWPEp6Osw+9HlSmswvu12iTUzi74N21M6Lq8t8Wpp/1qy8pRlt
-	 bqe+nYlcGRq8TSGYEhCwq/j+6scU2ixmHxlKKYF3K4xfnWXq5H3TvKzeXefS6URyKEAtJ
-	 qxNtNyR9RrTr4GmJm7AawkP6soeoEUALKar6aW1hWfdMgeACf11ib3mBy+/5HWC+3Dw==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793456907;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:Content-Type:Content-Disposition:
-	 Content-Transfer-Encoding:In-Reply-To:X-ClientProxiedBy:MIME-Version:
-	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
-	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
-	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
-	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
-	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
-	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
-	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
-	 X-MS-Exchange-CrossTenant-FromEntityHeader:
-	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
-	 X-MS-Exchange-CrossTenant-UserPrincipalName:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=eDd/+BFYmGJA9KWgSKx33YIrjSeRfij+nblu6Wv7ERU=;
-	b=X5Fwv+XyZidCcpa/9gF9gbG5vJZh3jJ8JmNO0WEYACZSfRdPqCl/uVzGlBhUmlUYvlBK
-	 abq/bnj4KFM9AJezi/f9VdWZ8jH/yPIRRIittTbpHF9da5DUwGkg87AZy7hMvWpP3Ky6T
-	 3xJwTZPOrK3KkpaL7y1NNQLTtOkqFbGysZiMsaUuKKAQ6hXlQMktOk3R7JQAFfW16D5Jx
-	 1YxWX8oGUBPctTV7Z6IfP+q4jbd5W9Qu+qLgSKhROP20wbwdFY3IKGoaSfaN0YOibmLgP
-	 fNx4MxzZ23MEEMO/4vXJwShIboiL21oOabDuKYQzowYortu6FI8aI18U25iqBLHW4kQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=valinux.co.jp;
-	spf=pass smtp.mailfrom=valinux.co.jp;
-	dkim=fail reason="signature verification failed" header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=TYt25UDj;
-	arc=fail smtp.remote-ip=52.101.229.140
-Received: from TY3P286CU002.outbound.protection.outlook.com (mail-japaneastazon11020140.outbound.protection.outlook.com [52.101.229.140])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=35.89.44.37
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793458834;
+	b=qaI4nYiiBSls64T0f3lVCnWjMx9sayC+2YYWYoM2NZaGyr41yItphdqAb7xK8cawqvCn
+	 PmAq9qACIaMOBUkd0qtzdgwECwrrOM8VLKGJwfwpXP6uyV+/EV+uFoeFED1ZDb6KUTuaT
+	 DrlrC426xqWi9TtGcFinLdopZyKhPnRgUQniGP/77VXNlzYBOfN1HaW66OKXd/+YB3u6m
+	 u5xDLuccr4wo9Rh/VcW+5GMZV0DqHOW2gHB1q/zE1li8qo1f60MYxPIZTAFwRo5xvSt4T
+	 TREQ1PC9vvzhHu3xbqTQQdQnQJLqznUX+mMvKAwpS5IAHoBA577uNKmWSOglfXxHtJg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793458834;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:Autocrypt:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=DZ2qKisAfd6kBS7Hb4eXyimER2yim80WvZ1kMTNmmOw=;
+	b=ovjFD8Qfw4BLRijNmzQ9d1RShphI/gfkoPrW7Anj79oiN2pCFt7UmYX/arg1T1AiHJfe
+	 vlnSWW2HUWlgyEXhRB4JbkmwhQnVzh1HJXDRqn0YE+L9CSJtpykc7ZerfQj8xKmnuXlys
+	 Ojlk1C/MehQsismQMv0PEPRRo5xnyUtwEebm4FYSXVkMnr7sL3pXFEUTZ1M70BRUvrkUE
+	 lQ9HLYisjCbBuVMeQfu4KRV2bG7F2e9vn/BpJGmFuvT1zamlDELmfXyDDt8ou8wDx87M3
+	 VJydGiqhE4Eaxg3jA0Sxx3CwO3X+ylM+yMikkp50Ev3qflPrkoW8j9MWOduRdsY+ZNQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=roeck-us.net;
+	spf=fail smtp.mailfrom=roeck-us.net;
+	dkim=pass header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=QOQUSlmD;
+	arc=none smtp.remote-ip=35.89.44.37
+Received: from omta38.uswest2.a.cloudfilter.net (omta38.uswest2.a.cloudfilter.net [35.89.44.37])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88197606A31C
-	for <sashiko-reviews@lists.linux.dev>; Sat, 31 Oct 2026 14:28:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 88197606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=valinux.co.jp
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=valinux.co.jp
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29BB7606A324
+	for <sashiko-reviews@lists.linux.dev>; Sat, 31 Oct 2026 15:00:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 29BB7606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key, unprotected) header.d=valinux.co.jp header.i=@valinux.co.jp header.a=rsa-sha256 header.s=selector1 header.b=TYt25UDj
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JN87c3CbPQWXTQNzhYTfVYvzoSSf7po9Lfur5N6nd0aC1J+58eq1aYrngsaXDumZ+ys7GJd1S0aplhPa6AmnV9jugq9gp5AUDnzqSKxSSlyKg2taYbdV+tOLQYEhar29a7UaIVxnmHfZMl1J9OYJMjGPf8n0QPBkOr07Y7GeROMOdJCDwAdCnHhN0uQyKjR+pAJ1xnPEADl1FUMWeLfgOnBIg5VyrBHxIcHKMCPDUgMBXPUWHWdLcORkr31UpEpUmBTm4pUmp46+RN9qStIGclfnxbe5ER7Nz8jvWuzgSlqWAEDWZhpuWFztLEQXzx+2zakNFBJM+OVXJ3COdcre1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VzAydaUdDBB5MAeWr11Ir2r6qucY7Ou6Riv0ZyMpwBA=;
- b=rpwJ8yLXFYqtyrEBx9i4TbiFE/+t0pInsw/dnYyVFJ8pOApnR4okLrE6JHlRC0G/bp1HuBD94EovfFtvcwzH6aNy6lvNKibt1TK3wpp2/j9FWK5rcG5JWlU3UNbuuo4ZYQd+IkoMcTOT5DroFxL2L2NnhnqV9newF5qfUP0myyCyWYJHLNXNWF4I6UrE3WSAoimx41bhcAHIlZLjHaLKoR2gB4l8sBqDOQGJHGxikLnfI4rKnKrrdulvIDfMfak25vDDgQ2uuMU6afgU7/QyDfCT3vN221gj8Lioi8AHhi9WGRdP4GZSNtLaPi1QOaeL/CreYAWQ0ZWoZJ8XZ7oDxA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=valinux.co.jp; dmarc=pass action=none
- header.from=valinux.co.jp; dkim=pass header.d=valinux.co.jp; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=valinux.co.jp;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VzAydaUdDBB5MAeWr11Ir2r6qucY7Ou6Riv0ZyMpwBA=;
- b=TYt25UDjygpbuygYvshbS1F1SOJ7rSmq/+UW/ZHFtQE/JTnW0lmqgS9hhYCVfTB0YxMtqwFqcBYLm+TXuZY4EGn0aZU5KAYnuQTtU7hu+pHD3zoyZOPIp9mCbvVyiYQMW8TKqapcTfXEpU0xqK9AKbmxwwgfKx5pRcL8rmHrLLw=
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=valinux.co.jp;
-Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM (2603:1096:405:325::11)
- by OSOP286MB7865.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:47a::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.11; Sat, 31 Oct
- 2026 14:28:22 +0000
-Received: from TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- ([fe80::cce5:2aa8:53f9:dba9]) by TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- ([fe80::cce5:2aa8:53f9:dba9%5]) with mapi id 15.21.0569.010; Sat, 31 Oct 2026
- 14:28:22 +0000
-Date: Sat, 31 Oct 2026 23:28:20 +0900
-From: Koichiro Den <den@valinux.co.jp>
-To: sashiko-reviews@lists.linux.dev
-Cc: dmaengine@vger.kernel.org, linux-pci@vger.kernel.org, vkoul@kernel.org, 
-	Frank.Li@kernel.org
-Subject: Re: [PATCH v6 2/5] dmaengine: dw-edma: Reclaim LL entries from
- hardware progress
-Message-ID: <rbkljnmrf4ctc7rj6qlwhvhemvzvxx6pdxjxsdc2bmicez56ms@bgshyuvsjuqh>
-References: <20261030150742.2586776-1-den@valinux.co.jp>
- <20261030150742.2586776-3-den@valinux.co.jp>
- <sashiko-outbox-191180@kernel.org>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <sashiko-outbox-191180@kernel.org>
-X-ClientProxiedBy: TYCP301CA0017.JPNP301.PROD.OUTLOOK.COM
- (2603:1096:400:381::8) To TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:405:325::11)
+	dkim=pass (2048-bit key, unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=QOQUSlmD
+Received: from eig-obgw-5006b.ext.cloudfilter.net ([10.0.29.217])
+	by cmsmtp with ESMTPS
+	id N1CFxF5QSv0ndNAZNxwTew; Sat, 31 Oct 2026 15:00:33 +0000
+Received: from 162-215-252-36.unifiedlayer.com ([208.91.199.152])
+	by cmsmtp with ESMTPS
+	id NAZLxOiEzNSXiNAZLxsj6o; Sat, 31 Oct 2026 15:00:31 +0000
+X-Authority-Analysis: v=2.4 cv=JvXxrN4C c=1 sm=1 tr=0 ts=6ae60290
+ a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M0FbrtG7MMAA:10 a=VwQbUJbxAAAA:8
+ a=pGLkceISAAAA:8 a=ubgQwD8-HD7IqQ9JEJoA:9 a=QEXdDO2ut3YA:10
+ a=KPbNTLLc3YvdawN95zVk:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
+	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:
+	List-Archive; bh=DZ2qKisAfd6kBS7Hb4eXyimER2yim80WvZ1kMTNmmOw=; b=QOQUSlmDaHGq
+	aDl8l6Ng5kL3zJtnaH4xfCpkg0LoVep7eYZo7YC9vvSyEg5QbdjEJ3xj4yRUm9R7JsHgEdDBv+kNs
+	fGwGmlwOBrPCK1K3tTYVx+E8NeyzKTgBRoiyyyWpXOHmrbCBcMyWUKxd7jIwduVI0kvC1yQaDfkiz
+	/YIVgFA59q2FYIM2R6wYJOE85SwR9ZWNo2/yoK63cCCrtGRxtM2HhBs9MOXZ96iDG5ceiPZ5KJnGL
+	7t4DCbBr41DhLVKHZRLKKtSDj+u9G2+g0ifi35Vuo/hLLzwdNVysJBDo+vXv3yQGRM3NDWBYOC6Oz
+	I/zrcn36/z3b1qVlVbJ1ng==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net ([108.223.40.66]:52366)
+	by bh-25.webhostbox.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.100.1)
+	(envelope-from <linux@roeck-us.net>)
+	id 1xNAZL-00000001Rtl-0sj1;
+	Sat, 31 Oct 2026 20:30:31 +0530
+Message-ID: <388aa474-3606-4c7f-b073-224d5e0880fd@roeck-us.net>
+Date: Sat, 31 Oct 2026 08:00:29 -0700
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -99,157 +76,159 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TY7P286MB6866:EE_|OSOP286MB7865:EE_
-X-MS-Office365-Filtering-Correlation-Id: 522dccea-bc1b-45bd-6d2b-08df375b3760
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|376014|10070799003|366016|1800799024|6133799003|10067099003|22082099003|18002099003|56012099006|5023799004|4143699003|261021121427099003|261021123027099003|261026121527099003|261026135527099003|261021135927099003|261026140227099003|261022105027099003|261022075727099003|261009223027099003|261028144727099003|27256017;
-X-Microsoft-Antispam-Message-Info:
-	/ZwWOX/vzkG0b1ot3eTWldIrD/+Sew7MU6LFFzuHVeVFvuYukLmtAm/bsR7/2dwBQ6W69kWo5vGvZA5UJ0O9ITYjzyftLjLrhczntHTfuV5lRZ9ExD/EVp8GqoZ7hRU3Oz1I00Q8ssld/YfFDGU2U5gtXPTbpNPu2GJ7BtvunxkviRf18ASxEBpiDHo/RInQ9DBrYS/r7IqWOWsQNlfTEMLryCV67u+idhjGKdVQyDV4jEsO0sUxSgRcjORKfZsyVXDQQrD1nmOzzKMjscqDvrHbBYTH0BM4wMdh9UfDBvzdfGh/h6c3Ix089yvVglTqbk+F6CzP7iuhvUT2Zgrt1pLLfTp9LwC2bGuMtF3bCtXxnG96EfNoKQgZ+UDEShiUGRkyqDleR4ynDZBOG3vWnri3x1HzkVIO3AtWM7BdW73NC7ajs/ENVZwbmperPC/Yb5/ixSiiPjqdfk/cNNRTCmWBlRlW96A5Peg3/ZrWQNFp1HS2TE84rgB/qZE5qy1bw4k/keCyIrLkUQosrNrOOSGkAlIWRkO3/AnJdaPOrueosCxQ0XDNVVNVhHg3/Fg/k5mzjIyuxuUJIo2G+HnmX0DA/mtAZe4Huo+Oov2D7EIXKlankXxhvoj/mA+qxjazTMKo4p73i0wRi1wPa3ZQKG+7zkCchdu8BZifWZYrX6Q=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(376014)(10070799003)(366016)(1800799024)(6133799003)(10067099003)(22082099003)(18002099003)(56012099006)(5023799004)(4143699003)(261021121427099003)(261021123027099003)(261026121527099003)(261026135527099003)(261021135927099003)(261026140227099003)(261022105027099003)(261022075727099003)(261009223027099003)(261028144727099003)(27256017);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?VjXE38AAswxV01Y95ZP6o5wnmVQoiCARucPj2G2DMQ5yDoamDVthirHNS2?=
- =?iso-8859-1?Q?y15VjPm2wcyA+9wz2RGlYMxtYO31Ru0mLlCR6amFlfMf5eWhaBbWEtcyIa?=
- =?iso-8859-1?Q?kiKtopCTpNePLEydRWE7gGK211JtYYqegeJ1y2mlxxpWqzygKxyezTw1mC?=
- =?iso-8859-1?Q?dP0nrOjfLAcn5ckFsyyEJEXk5cPxJ4ob3WtBri7PBSGE6NsYP/mo970+A+?=
- =?iso-8859-1?Q?tFsxvrCcITIzQpEjuh3Vxi1rPVtIbSW20e11eHWFVgEBacrn12kd4Ej3qM?=
- =?iso-8859-1?Q?c7RF59e0PJ61BC4b658ohI5m3F0/LLq7xcEmg4vtRVmerp+i6CCrYl4sp7?=
- =?iso-8859-1?Q?8N9z+1Nd5rOXjLpIpc+F3eKv9Z+GNsbtpKodGpN+cUEClkZIhDrQbDdTph?=
- =?iso-8859-1?Q?DpdGskxoIxtO/5eRs/RdMcUofYGUXP9si5u2pnd9x11XmVA1hDLiJxJCKD?=
- =?iso-8859-1?Q?7Sa05ovQ6VQGMwTjgfTB4tksLrHavaqNr9I/5yD98HPZSTO9rFG/0ZO+E/?=
- =?iso-8859-1?Q?Z33ptd0dxNFie/FzcjjUmHi9HrszlZBU5Y9DmAXk/FwZeGaRi+0uuw/ASV?=
- =?iso-8859-1?Q?1GgCQMDF8o3BZI9B7Lazz8HhP7LVJM7p1uq/VuEBspHBzcbPKtFwRTVgaN?=
- =?iso-8859-1?Q?yXMXpdy5ymK8XLilFeh91MmGkyrYzZNwcuhguej3zoWiaGitQ1H5j2lDpN?=
- =?iso-8859-1?Q?n6fPDP5DolUIOTdJV+aVCpMBIj0a/WhjlNaNUpjpAZ2K+3k8OXdLdVH07c?=
- =?iso-8859-1?Q?YBrMuQIp5DGQrpeFsGnQfhZE4GRhMNFuftGCpFTf6YyJXL3z3X2H3BCW0j?=
- =?iso-8859-1?Q?qUfFDyar/PEHCA9SFCRXriw6aAGvRVEQeMp2ZcN8XTW7WaEXCp83SHKm4X?=
- =?iso-8859-1?Q?3nDccJc30+GYJAFTtq8ebcMYh6S5jhaHk/r7MC3kimC7Bq41Y/tItSVmma?=
- =?iso-8859-1?Q?bTEwCXOaV4Z1vhsliE2v1I8iVmjOcr8La5AfiDUJIwNAjAAdt5nwz6Shdn?=
- =?iso-8859-1?Q?3POl5wEd4W8rFe/Kow6SiprcwstErCxxltbFmqs6wrYZckcSA9WIQ9C2mw?=
- =?iso-8859-1?Q?m4sIDMNrDKmT2ZYMrYks3pWVEJESZZpn1OSDz8Ht6N1yRfshDaZYzMIlf2?=
- =?iso-8859-1?Q?F1UlA4z1ZIPcxktb3v3dWrkHgvLA0gMQSr2rJa0a9xclC7KCokOacMhvWQ?=
- =?iso-8859-1?Q?9LQQ7uOglHxJyZtvhu09GATQ92D9QmQ/Q9H8t9+F2q4ECU7zpobrEVqL/2?=
- =?iso-8859-1?Q?SlaWnxny31uKQ/cjyEOspNb4jT0w9MZjrqqSszK/TNoTxbrxAFNwIXxOju?=
- =?iso-8859-1?Q?Ij43JRNgyO0g0P/3XjiDvjdxhkJvsTRlZGBOFs07/+WUEUuWqYZwPCMfHf?=
- =?iso-8859-1?Q?Eq/gy/Csv4MG8/gSFBfJrZcz0kOpSn1ZVWDOvmZBOSr+Nxp8MCMCJEQ99E?=
- =?iso-8859-1?Q?VOdWMJOhTSruEfAoQgtcx+Q52cNVIun3ao5Ca24w2vEZxqRW3j0vd0C/1j?=
- =?iso-8859-1?Q?YOKogyDMI0ammhnFgX+7RTYTMqY1kKvoFjqCObjWb6NWppufqUH/Pba43m?=
- =?iso-8859-1?Q?GcbpO16XpR2NNOLjnJwBUy5F9INltx0E1BRPi/rh0FN+5uG4RUNdRHJEvj?=
- =?iso-8859-1?Q?ZRAWOu2bAzpWSf0LTBUEmZo1vDgJZmsmBjHwdk3kUBnjqQgDY8ueq49pjg?=
- =?iso-8859-1?Q?eoF+icNOcSfwk/e4X/N4JniKFU8hUUU7svQEVCI0PNPLRZ3JQKexY7NIaJ?=
- =?iso-8859-1?Q?tpJ0z5t95GMOxNThMFw83n04f8mCSoGsgOL6O4RBe2nIVBWt4o/RhOh3Q6?=
- =?iso-8859-1?Q?pNUlU70qGAfJRC1jRXlzUaHZq7NVTw19eNyJKSlk1g9xqygc2XBY?=
-X-OriginatorOrg: valinux.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: 522dccea-bc1b-45bd-6d2b-08df375b3760
-X-MS-Exchange-CrossTenant-AuthSource: TY7P286MB6866.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Oct 2026 14:28:22.2454
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7a57bee8-f73d-4c5f-a4f7-d72c91c8c111
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: W9IcVc16L+7OBeiitm3EIr6mpHN+blPD6hpnsNxO3lY4jku+MnzLMAjnSInRXzKOOJRe8Cg6M3aH2SA5/oKN8g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSOP286MB7865
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hwmon: (acer-aspire14-ec) Add driver for Acer Aspire
+ 14 52MT and 52M fan
+To: sashiko-reviews@lists.linux.dev, Ethan Jimmy <duhxu0@gmail.com>,
+ linux-hwmon@vger.kernel.org
+Cc: linux-input@vger.kernel.org, dmitry.torokhov@gmail.com
+References: <0dee51d4-c153-457a-a3aa-ebf1177df045@roeck-us.net>
+ <20261030210037.921646-1-duhxu0@gmail.com> <sashiko-outbox-191513@kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <sashiko-outbox-191513@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1xNAZL-00000001Rtl-0sj1
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net [108.223.40.66]:52366
+X-Source-Auth: guenter@roeck-us.net
+X-Email-Count: 5
+X-Org: HG=direseller_whb_net_legacy;ORG=directi;
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfMv2jZ/eCePy8mJGtczHzp50bCsecWoq8Z+mmTOGw9w75gOyZwe63FvniEOIApCDVT3WUbSp6vkwWepxeMxAX1YN7J+4Dx5x0nD96l3PehEzTPKcjmAG
+ tRZ0cBFdU5/13VGzVeEB4g54oPYobN5qJp4FYQpgWIM3xE8Grb58Vt0Soiy70IGbuYi2oA+cNQNWxXndqe+ULQ3kSUi1xi4kMSLYAO3apBwz+DUWMWJWBXPi
 
-On Fri, Oct 30, 2026 at 03:39:11PM +0000, sashiko-bot@kernel.org wrote:
+Ethan,
+
+On 10/30/26 14:09, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [High] dmaengine: dw-edma: callbacks scheduled on STOP in dw_edma_ll_advance()
+> - [High] hwmon: (acer-aspire14-ec) module_init() fails when driver is built-in
 > --
 > 
-> commit cb11666c731e633531785427e3b24bbfbd73eb2b
-> Author: Koichiro Den <den@valinux.co.jp>
+> commit 7f4ea74f303f12662cc63822a17eaf3d1e0e84bf
+> Author: Ethan Jimmy <duhxu0@gmail.com>
 > 
-> dmaengine: dw-edma: Reclaim LL entries from hardware progress
+> hwmon: (acer-aspire14-ec) Add driver for Acer Aspire 14 52MT and 52M fan
 > 
-> This commit updates the linked-list completion handling to use DMA_LLP to
-> advance ll_done and reclaim completed ring entries in issue order. It also
-> defers STOP and PAUSE completion until the channel stops.
+> This commit adds a hwmon driver for the Acer Aspire 14 AI (A14-52M and
+> A14-52MT) fan sensor, which is exposed via an I2C HID embedded controller.
 > 
-> > diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-> > index b08bb31657c9e..74613c95ae112 100644
-> > --- a/drivers/dma/dw-edma/dw-edma-core.c
-> > +++ b/drivers/dma/dw-edma/dw-edma-core.c
+>> diff --git a/drivers/hwmon/acer-aspire14-ec.c b/drivers/hwmon/acer-aspire14-ec.c
+>> new file mode 100644
+>> index 0000000000000..939b048165c5a
+>> --- /dev/null
+>> +++ b/drivers/hwmon/acer-aspire14-ec.c
 > 
 > [ ... ]
 > 
-> > @@ -283,6 +345,45 @@ static void dw_edma_core_ch_maybe_doorbell(struct dw_edma_chan *chan)
-> >  	dw_edma_core_ch_doorbell(chan);
-> >  }
-> >  
-> > +/*
-> > + * Must be called with vc.lock held.
-> > + *
-> > + * HDMA does not update LLP continuously. Only use it to track running
-> > + * transfers when handling an interrupt.
-> > + */
-> > +static void dw_edma_ll_advance(struct dw_edma_chan *chan, bool event)
-> > +{
-> > +	bool stopped = dw_edma_ll_stopped(chan);
-> > +
-> > +	if (stopped || event)
-> > +		dw_edma_ll_consume(chan, dw_edma_core_ll_cur_idx(chan),
-> > +				   stopped);
-> > +
-> > +	if (chan->request != EDMA_REQ_NONE) {
-> > +		/* Wait for the channel to stop before completing STOP or PAUSE. */
-> > +		if (!stopped)
-> > +			return;
-> > +
-> > +		if (chan->request == EDMA_REQ_STOP) {
-> > +			dw_edma_finish_termination(chan);
+>> +static int __init acer_aspire14_init(void)
+>> +{
+>> +	if (!dmi_check_system(acer_aspire14_dmi_table))
+>> +		return -ENODEV;
+>> +
+>> +	return hid_register_driver(&acer_aspire14_driver);
+>> +}
+>> +
+>> +static void __exit acer_aspire14_exit(void)
+>> +{
+>> +	hid_unregister_driver(&acer_aspire14_driver);
+>> +}
+>> +
+>> +module_init(acer_aspire14_init);
+>> +module_exit(acer_aspire14_exit);
 > 
 > [Severity: High]
-> Does calling dw_edma_ll_consume() in drivers/dma/dw-edma/dw-edma-core.c
-> before checking chan->request == EDMA_REQ_STOP cause completion callbacks to
-> be scheduled on a channel that is being terminated?
+> Does acer_aspire14_init() fail when CONFIG_SENSORS_ACER_ASPIRE14_EC=y and
+> CONFIG_HID=y are built into the kernel?
 > 
-> When dw_edma_device_terminate_all() is called while an LL channel is actively
-> transferring, it defers termination by setting chan->request = EDMA_REQ_STOP.
-> When the interrupt fires:
+> In drivers/Makefile, drivers/hwmon/ is linked before drivers/hid/:
 > 
-> dw_edma_irq_work()
->   dw_edma_ll_interrupt()
->     dw_edma_ll_advance(chan, true)
->       dw_edma_ll_consume()
->         list_del(&vd->node);
->         vchan_cookie_complete(vd);
+>    obj-$(CONFIG_HWMON)		+= hwmon/
+>    ...
+>    obj-$(CONFIG_HID_SUPPORT)	+= hid/
 > 
-> In dw_edma_ll_consume(), any descriptor in chan->vc.desc_issued whose bursts
-> finished before the channel stopped is removed from chan->vc.desc_issued,
-> placed on chan->vc.desc_completed, and has chan->vc.task scheduled via
-> vchan_cookie_complete() to run its completion callback.
+> Because both acer_aspire14_init() and hid_init() in drivers/hid/hid-core.c
+> use module_init() (which expands to device_initcall() when built-in),
+> acer_aspire14_init() runs before hid_init() registers hid_bus_type.
 > 
-> When dw_edma_ll_advance() then checks chan->request == EDMA_REQ_STOP and
-> calls dw_edma_finish_termination(), dw_edma_terminate_all_descs() only cleans
-> up descriptors still on chan->vc.desc_issued and chan->vc.desc_submitted,
-> leaving the descriptors already moved to chan->vc.desc_completed to invoke
-> their callbacks.
+> On matching DMI systems, the registration call chain:
 > 
-> By comparison, the non-LL handler dw_edma_done_interrupt_locked() checks
-> EDMA_REQ_STOP and calls dw_edma_finish_termination() without calling
-> vchan_cookie_complete(), matching commit 99109a51efd2 ("dmaengine: dw-edma:
-> Terminate all descriptors without callbacks").
+>    acer_aspire14_init()
+>      hid_register_driver(&acer_aspire14_driver)
+>        __hid_register_driver()
+>          driver_register()
 > 
-> Should dw_edma_ll_advance() check for EDMA_REQ_STOP before calling
-> dw_edma_ll_consume() so that terminated descriptors do not schedule
-> completion callbacks?
+> reaches driver_register() in drivers/base/driver.c before the HID bus is
+> initialized:
+> 
+> 	if (!bus_is_registered(drv->bus)) {
+> 		pr_err("Driver '%s' was unable to register with bus_type '%s' because the bus was not initialized.\n",
+> 			   drv->name, drv->bus->name);
+> 		return -EINVAL;
+> 	}
+> 
+> Should this use late_initcall(acer_aspire14_init) like the other HID drivers
+> in drivers/hwmon/ (such as corsair-psu.c, corsair-cpro.c, and nzxt-kraken2.c)
+> so that driver registration happens after hid_init()?
+> 
 
-Good catch, thanks. Moving request==EDMA_REQ_STOP check and
-dw_edma_finish_termination() ahead of dw_edma_ll_consume() should solve the
-issue cleanly, and as a nice side benefit, the code look more readable and
-intuitive too.
+That seems to be a real problem. Please fix, or explain why it is a false positive.
 
-I'll fix it in the next revision. Also, I'll consider adding a test case to
-cover the terminate path under active dma load.
+Thanks,
+Guenter
 
-Best regards,
-Koichiro Den
-
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261030150742.2586776-1-den@valinux.co.jp?part=2
-> 
