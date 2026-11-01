@@ -1,45 +1,109 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.54
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793530353;
-	b=Nbk55Z4LyT9pNBc9d/yXtC+QwLR8xNi3kqABCx37Dh0WWFl6DMwYzZpQQdDlb79WGZLh
-	 xT3+1snebId6G+O+t+j00+6VfbilhyDgIAIEw7g056wGDg6+ZMHhzvwGRIlBYGiP4Nf9U
-	 TrDx7/+88I9o2nYacvpjblBXXquKsHypkYjXWs9FMvCzmnUlROb2YN8+IQBtOw5o/cUFz
-	 F1egCtwKy+GXjLkz4Lkal1CiCVJXxIdzj78Gr70SBSbyZb7qzYCARUdl4QBDg1Tq4/kk5
-	 a0ZeHbaIyeOsW7yfSEzZq0AgzoqyX0MeXcvKch+PJB9sRud/GNyLhF8+CV2tOQauIGw==
+	t=1793543436;
+	b=qeyvyvFnIe1X3NIme6QkIwD8WfZd6NWFSk/ZHM9GGmbAfgc4RpU+AhA1ZoZ6jPqsozuz
+	 hKAFbq8NdkWrHN53AlMDn99WqaP3TWMj+OJ9vzsqxoLcOF5tELinyontH4CHrP23joNZf
+	 fhZHLnWPjeSt/5EJbGLdkyfEFy/WmOQk/j/OMgsgwz5HBh8g9Jzca3pyCPZyhys27ocwo
+	 OEcA5s4L4o2HW0BxS1hE3FQevMBfD451nfWVie2qkp0E8RsElUYWgf5/NGdt0uTiquz7D
+	 kG+2ttL/UTYr2BSpQChnIsi7skvjLiEqD2okEM90AC7Os4tlDnomxL1Jq1VuRXxxWAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793530353;
-	h=Received:DKIM-Signature:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:Subject:From:To:Cc:In-Reply-To:References:
-	 Date:Message-Id:X-Mailer:X-Developer-Signature:X-Developer-Key;
-	bh=xlm70zJicMZ77PdEMVbRYRPtF07ul0gsfdGP8rkkP/0=;
-	b=jw97zG9yd8usNEHuCJ1iC4xT7b0Dp7Yj7ceVSxBhJU54lJhDFzzqCrm8C+zf9u7+7Q4b
-	 ipqQYMrldslWsLyonm8vdGn6LyZ3zjvcm+rXw1iheBTBQlnBTviuFCk6gpaXeveHMmqn9
-	 iUmyx2SOsMJEvVi/Efhl+Aavs+rkQKTq9kGHuKZog354SUnV15ceByBPEhGppduvW0U7o
-	 aAmuihF5IdhWxAE2mPZBwfHPqmS2g9hfAONOV8j2VlMJ4EBa0YmdHycZiGPSdObK6Tlzb
-	 VgTPDGyamMIjve2uX5J4MOPQdm4HiWGboCL5mfrdnglcWITfvISvHI5cIkvQP3x6L7Q==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793543436;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=VsDtHDQeo9yaAAGX90Le6/Q23q/oZg9HWR3FqkNaI5Q=;
+	b=S1ltwgyVVa+gjzQ2IDkiIVXEO9gORfhA9+nh8DtGr0Ulj0+ZDyPsLIcQbGzGPlMB95AS
+	 Xw0AfnIAglVpXfg/4aBKKxKRKH+EEfIXdT38UnjdG5Yes+jAVtg6VLVYJNKZTQijyFBri
+	 BX6f05YowUMQCki2muM+vG029gu+0qUuIQw2Z+UFx2GHtD6b+yDjbnOu2iy+CBpBCkamB
+	 Wca6m2FDUo+lHXhOXJmfJvpEBP8q4Q7BqzzbSlnkAMlMlfSAzoHZLpgz7nHTaTSK/t/jf
+	 4VdJZEH1kAKGo1u6MAXmo47oEdzxR7rky+fEBzdUBKvZRNYLeCJAL7DSU2V3L5wqY0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=P8dU9Alg;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OjjB2nQC;
+	arc=none smtp.remote-ip=209.85.128.54
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136D4606A324;
-	Sun,  1 Nov 2026 10:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D53606A324
+	for <sashiko-reviews@lists.linux.dev>; Sun,  1 Nov 2026 14:30:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 24D53606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=P8dU9Alg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80BE91F00919;
-	Sun,  1 Nov 2026 10:52:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793530352;
-	bh=xlm70zJicMZ77PdEMVbRYRPtF07ul0gsfdGP8rkkP/0=;
-	h=Subject:From:To:Cc:In-Reply-To:References:Date;
-	b=P8dU9Alg7dNejqGOtDAiPGLdjb7OVRTdUPw5/10mKpEjIjVVCFalD/HOhK3FbunKC
-	 A/KZ5UoaT42jLXx60Yn+s8tc+5fCiA6F0IFwpS6pfSqrKyY/SeqaJk+7EZ68nzwXxX
-	 WYAvAy6sqizSA9Y5txW1DQWq0rmEDc30vpDJIrN4aHnm/iCEHtjSTvemZ+RPwfdYbZ
-	 i915xKFfgVJRluUmnNIOWDeZQOtBD849cI5q3eQHQTZQQqL++Xr3+Xm+ZXkHPeiOsS
-	 O8tEizdg30ngq0w7KN3lpRoTY+2zUdbNYr4ewJoIwH1l8ZRb5tc/UD2jrkSuGDBPgM
-	 N8z42dgQ0TKXw==
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=OjjB2nQC
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4ac95761c85so12752445e9.2
+        for <sashiko-reviews@lists.linux.dev>; Sun, 01 Nov 2026 06:30:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793543433; x=1794148233; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=VsDtHDQeo9yaAAGX90Le6/Q23q/oZg9HWR3FqkNaI5Q=;
+        b=OjjB2nQCwBu42HTZRerzAuIfHCarPODc02DCQzXYgYUm1tjBdit8Z3TOreLleysACj
+         ULbdUNaiH8agcb+s/o/xrmaK9KgIB36/F1RMCPqW8mj9JEJ4twAeHptz3isHXzVRoR8W
+         Ll3rO78m4vfcUAh7ln8iLgt246dx7mbcnx7pwxY5Sp9+2Cdsru8NK/RqU7Ay21jsnI5F
+         kR+AQ/ef8NWTRq9viBK1RCrG64Gy7hAVScbqoDLEB0ff+mGcvuzsJoAAS/7+wuKi2UYP
+         IS5rzvASqDppq8n1ZmMpnj1DpuYd0XcK9fumHMQPO/2xRUkHK2SHDHp/dKnNmFRUpAGe
+         CPpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793543433; x=1794148233;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=VsDtHDQeo9yaAAGX90Le6/Q23q/oZg9HWR3FqkNaI5Q=;
+        b=mEHpOipU8FY2UBoyn0YPZhrqwmNkf1UtbeL1Y7C96CWPmX8vyR39TI9KHk+x7oF28q
+         7TpZaecOCXV/9CdmTLxUfR5FQicRtwSbheJVEcOlcGg8gGw95vEXdNvR0A7i53YOKBXG
+         sGWyXoLYPRv8JvFlfW1c5GUTJNou+YLBQvrO/w20N+NCOW6AguV+iNQFZXrzj3zlzVkb
+         aFPQC3nvBg5+PJUjUaUz0wkENQx1slzg+JwQfau7IUHBtk5P2pfz5v+QkzngXKXhHro9
+         nu72TrxwJX++8QOKnXrj1BTJsmHDBFdf6uvAXYfZif3Q37gJbVxP3U3mBidAeoiqaYya
+         PJQA==
+X-Forwarded-Encrypted: i=1; AKwUvBzf/2ZXozCcQ6kieHX7/ISSNnu8uVqo5xHiuxoNCulrHdk23b7O8+FAecXII4YV8L6GaKCfbfGeC+CskZJNAj4=@lists.linux.dev
+X-Gm-Message-State: AFq9FYJAeH/JIyNyYYvMFrek7bppLBImrwLlFwLmoHfwZKio7ZqUTGAX
+	2p0GVb1rnS/JXsIL4XuSzpvKm9t4aQKL+BRG2rrqdZz1bDXMyZA2CbVL
+X-Gm-Gg: AYBFou2DYfGr7I/4+FGmcbXjNhzK11vS3Ro0P/tIGAC3kacTUSmYzZ8vHAq7acCNr6N
+	BKLa6Nh3ucNmXuxcNAafgQiQkHaJIWObinlwrjgmNCdVu+pTQegh9HnAzggJEIaibCVtFZG8QUb
+	xXfUvQMnydzP+MpqOjn4ELime207UMXMLODKnVQn/rI4Wy/k6VfhoIV6AieaZN0YW3VJ3Eq08tJ
+	xMSCa2uUaHyrkd1DBmvW8NPnwykxzFSdCFKsonAR6s1GwDto+n1QRVc56m6Pc1UjnBXWtZUBPvE
+	F0kUdH1B1sF4de+vI2sZFlilA22c56fOwDvEEgdnWwPgTBfF814QyOiGtOyk8ds6PVUYrGiqWvz
+	f1Ed2u9QrdtV9AZNGAKeqc7dwvohv3mkQ8ZGQI1UlFMn7BMflqcYoOEtrM4meSzJVQ64kkcOtuH
+	wRwHqssLtzIIrReQHr2/Fi8vI9MMwn7ZeOCkgqHbc7UdhZ0LQnV6TkUZs5pURzssyTcxKz71f4r
+	H1cVYGtRULe2qq1PPxYecwMi2bCO61QD3lRruvfF35R9BH9783394E+IHk12aHNr3+tgOlbDJzA
+	gh/hQY9JnIHImzybtigXM0kPzSschY3DctqBiX7iuDi+SOcar/WzqPrDhOhgEbmO5PmOVvxERh3
+	bvwlt3ANRDS86xmUJdgZOtDDB3rrhTSEAGcpkhY/c1p4UFQ==
+X-Received: by 2002:a05:600c:a30a:b0:4ac:b0b2:fa12 with SMTP id 5b1f17b1804b1-4acb0b2fac0mr117941165e9.1.1793543433238;
+        Sun, 01 Nov 2026 06:30:33 -0800 (PST)
+Received: from romain-ThinkPad-P14s-Gen-5-AMD.tail433d9c.ts.net ([2001:861:39c2:e340:849f:a468:4121:a85])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-48e71b8011csm16223169f8f.31.2026.11.01.06.30.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 Nov 2026 06:30:32 -0800 (PST)
+From: Romain TISSERAND <romain.tisserand@gmail.com>
+To: Andrzej Hajda <andrzej.hajda@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>
+Cc: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Sandy Huang <hjc@rock-chips.com>,
+	=?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Liu Ying <victor.liu@nxp.com>,
+	Chaoyi Chen <chaoyi.chen@rock-chips.com>,
+	dri-devel@lists.freedesktop.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev
+Subject: [PATCH v2] drm/bridge: dw-mipi-dsi: let the glue compute the hcomponent lbcc
+Date: Sun,  1 Nov 2026 15:30:31 +0100
+Message-ID: <20261101143031.880389-1-romain.tisserand@gmail.com>
+X-Mailer: git-send-email 2.43.0
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -49,130 +113,195 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 22/27] phy: rockchip-naneng-combphy: Add RK3572 support
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: sashiko-reviews@lists.linux.dev
-Cc: Cunhao Lu <1579567540@qq.com>, linux-clk@vger.kernel.org, 
- devicetree@vger.kernel.org, mfd@lists.linux.dev, linux-gpio@vger.kernel.org, 
- linux-serial@vger.kernel.org, linux-phy@lists.infradead.org, 
- linux-usb@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org, 
- vkoul@kernel.org, neil.armstrong@linaro.org, olteanv@gmail.com, 
- lee@kernel.org
-In-Reply-To: <sashiko-outbox-181786@kernel.org>
-References: <20261022-add-board-ok3572-c-v1-0-0b0fd85a31ee@qq.com>
- <20261022-add-board-ok3572-c-v1-22-0b0fd85a31ee@qq.com>
- <sashiko-outbox-181786@kernel.org>
-Date: Sun, 01 Nov 2026 16:22:26 +0530
-Message-Id: <179353034684.2955.5901398331920172946.b4-reply@b4>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3978; i=mani@kernel.org;
- h=from:subject:message-id; bh=PV6+TwlxSS26CdoN0gMespT5APA2NOMOowYoRN7732Y=;
- b=owGbwMvMwMUYOl/w2b+J574ynlZLYsh6LvkmXFHPqu+jnbqWznXpxmt51zbNSDJYO7f7Yu3Ee
- c8ZK1pjOxmNWRgYuRhkxRRZ0pc6azV6nL6xJEJ9OswgViaQKQxcnAIwkRI99v/5otU24k0fq9rP
- Cq8IsLVU265bnSZW/mzx7AKdw8ncx/P/LZ3zt3PPoiUJPDO3lPH0RhxkOS1swBxbu+pT6f3t6xp
- EhJTqZNo3COTI6oeXHG3Q9nZqvGPYEtH7JzRW42lp/RJG3awZwr+bnlqXCfFckekOVLSQaftTWa
- zs//mUZ9c3791Hdi/o23/Do6Y2NPhL017RUwEMndv3P/gisESyI8W5Y6ZV9L4nlUr7X/m5fW4Sn
- Or7K3DiuWWGUik9PbbPBJbeWVEx68LmCa8adE0mXCwS4xVcq60s7M5p4W+/zerOk/z6l9MUynOZ
- eJfIVVzwZHBfYxZ74820Rx2RvzV/XUpy83vwYtI1mwlHAQ==
-X-Developer-Key: i=mani@kernel.org; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
+Content-Transfer-Encoding: 8bit
 
-On 2026-10-22 16:13 +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] phy: rockchip-naneng-combphy: writel() clobbers SSC bit in rk3572_combphy_cfg()
-> --
-> 
-> commit 9ca36a68e2ebd41ee7e126faeae68aae4fa05eae
-> Author: Cunhao Lu <1579567540@qq.com>
-> 
-> phy: rockchip-naneng-combphy: Add RK3572 support
-> 
-> This commit adds configuration tables, register programming, and device tree
-> matching support for the RK3572 combo PHY operating in PCIe, USB3, and SATA
-> modes.
-> 
-> > diff --git a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
-> > index 7843356a4dd47..e13a78ab57779 100644
-> > --- a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
-> > +++ b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
-> > @@ -1000,6 +1000,204 @@ static const struct rockchip_combphy_cfg rk3568_combphy_cfgs = {
-> >  	.combphy_cfg	= rk3568_combphy_cfg,
-> >  };
-> >  
-> > +static int rk3572_combphy_cfg(struct rockchip_combphy_priv *priv)
-> > +{
-> 
-> [ ... ]
-> 
-> > +	switch (rate) {
-> > +	case 24000000:
-> > +		rockchip_combphy_param_write(priv->phy_grf, &cfg->pipe_clk_24m, true);
-> > +		if (priv->type == PHY_TYPE_USB3 || priv->type == PHY_TYPE_SATA) {
-> > +			/* Set ssc_cnt[9:0]=0101111101 & 31.5KHz */
-> > +			rockchip_combphy_updatel(priv, GENMASK(7, 6), BIT(6), 0xe << 2);
-> > +
-> > +			rockchip_combphy_updatel(priv, GENMASK(7, 0), 0x5f, 0xf << 2);
-> > +		} else if (priv->type == PHY_TYPE_PCIE) {
-> > +			/* PLL KVCO tuning fine */
-> > +			rockchip_combphy_updatel(priv, GENMASK(4, 2), 0x4 << 2, 0x20 << 2);
-> 
-> [ ... ]
-> 
-> > +	if (priv->ext_refclk) {
-> > +		rockchip_combphy_param_write(priv->phy_grf, &cfg->pipe_clk_ext, true);
-> > +		if (priv->type == PHY_TYPE_PCIE && rate == 100000000) {
-> > +			writel(0x10, priv->mmio + (0x20 << 2));
-> > +
-> > +			writel(0x0c, priv->mmio + (0x1b << 2));
-> > +
-> > +			/*
-> > +			 * Set up su_trim: T3_P1 650mv
-> > +			 * CKRCV termination resistor adjust 11: Hi-Z
-> > +			 */
-> > +			writel(0x90, priv->mmio + (0xa << 2));
-> > +			writel(0x43, priv->mmio + (0xb << 2));
-> > +			writel(0xb8, priv->mmio + (0xc << 2));
-> > +			writel(0x56, priv->mmio + (0xd << 2));
-> > +		}
-> > +	}
-> > +
-> > +	if (priv->enable_ssc) {
-> > +		rockchip_combphy_updatel(priv, GENMASK(4, 4), BIT(4), 0x7 << 2);
-> > +		/* PLL control SSC module period should be set */
-> > +		rockchip_combphy_updatel(priv, GENMASK(5, 5), BIT(5), 0x20 << 2);
-> > +
-> > +		if (priv->type == PHY_TYPE_PCIE && rate == 24000000) {
-> > +			/* xin24m T0_1 650mV */
-> > +			writel(0x00, priv->mmio + (0x10 << 2));
-> > +			writel(0x32, priv->mmio + (0x11 << 2));
-> > +			writel(0x00, priv->mmio + (0x1b << 2));
-> > +			writel(0x90, priv->mmio + (0x0a << 2));
-> > +			writel(0x02, priv->mmio + (0x0b << 2));
-> > +			writel(0x08, priv->mmio + (0x0c << 2));
-> > +			writel(0x57, priv->mmio + (0x0d << 2));
-> > +			writel(0x40, priv->mmio + (0x0e << 2));
-> > +			writel(0x5f, priv->mmio + (0x0f << 2));
-> > +			writel(0x10, priv->mmio + (0x20 << 2));
-> 
-> [Severity: Medium]
-> Does this writel(0x10, priv->mmio + (0x20 << 2)) in rk3572_combphy_cfg()
-> clobber the SSC period control bit that was just set above?
-> 
-> When priv->enable_ssc is true, rk3572_combphy_cfg() sets BIT(5) in register
-> offset 0x20 << 2 via rockchip_combphy_updatel(). Immediately afterwards, when
-> priv->type == PHY_TYPE_PCIE and rate == 24000000, this writel() overwrites the
-> entire register at 0x20 << 2 with 0x10, clearing BIT(5) back to 0.
-> 
-> Should both this write and the writel(0x10, priv->mmio + (0x20 << 2)) in the
-> priv->ext_refclk block above use rockchip_combphy_updatel() with GENMASK(4, 2)
-> instead, matching how the 24 MHz and 100 MHz PHY_TYPE_PCIE cases update the
-> PLL KVCO tuning field earlier in rk3572_combphy_cfg()?
-> 
+Commit ac87d23694f4 ("drm/bridge: synopsys: dw-mipi-dsi: Use pixel clock
+rate to calculate lbcc") counts HSA, HBP and HLINE from the pixel clock,
+which is only right when the lanes run at the pixel bandwidth (pixel
+clock * bpp / lanes). Commit 93e82bb4de01 ("drm/bridge: synopsys:
+dw-mipi-dsi: Fix hcomponent lbcc for burst mode") went back to the lane
+rate for burst mode, where the lanes are faster on purpose.
 
-Looks valid.
+The Rockchip glue runs the lanes faster in every mode: at 1.25 times
+(bpp / lanes, rounded down) times the pixel clock, or 1000 Mbps, above
+the pixel bandwidth. In non-burst video mode the line programmed in lane
+byte clocks is then shorter than the DPI line. On the GPD XD (RK3288,
+ILI9881C panel, 4 lanes at 448 Mbps, 59.5 MHz pixel clock, htotal 747)
+HLINE was 561 lane byte clocks (10.0 us) for a 12.55 us line, and the
+panel shows garbage as soon as a client page-flips.
 
-- Mani
+The glue picks the lane rate, so let it compute the lane byte clock
+cycles too: add an optional get_hcomponent_lbcc() callback to
+dw_mipi_dsi_plat_data, and implement it in the Rockchip glue from the
+lane rate. Glues without it (i.MX93, Meson, STM) keep the current
+computation, and so does Rockchip dual-DSI, which this hasn't been
+tested on. On the GPD XD this gives HLINE 704, HSA 13 and HBP 4, and
+the picture is stable.
 
+Fixes: ac87d23694f4 ("drm/bridge: synopsys: dw-mipi-dsi: Use pixel clock rate to calculate lbcc")
+Signed-off-by: Romain TISSERAND <romain.tisserand@gmail.com>
+---
+Changes in v2:
+- Drop the 1/8 threshold: the glue now computes the lane byte clock
+  cycles through a new optional get_hcomponent_lbcc() callback in
+  dw_mipi_dsi_plat_data, and the Rockchip glue implements it from its
+  lane rate (Chaoyi Chen). This also covers RGB666 packed on 4 lanes,
+  which the 1/8 slack missed (Sashiko).
+- Rockchip dual-DSI keeps the core computation: the lane rate would
+  change the timing of the dual-DSI Gru Scarlet panels (innolux,p097pfg,
+  non-burst, 4+4 lanes), which I can't test.
+- Commit message: the Rockchip glue doesn't follow a panel rate in
+  mainline, and the GPD XD numbers are now those of the rate it picks
+  (448 Mbps).
+- v1: https://lore.kernel.org/all/20261025142639.3454322-1-romain.tisserand@gmail.com/
+
+Notes for reviewers (not for the changelog):
+- The callback returns 0 to let the core compute the value, so a glue
+  can implement it for some configurations only (Rockchip: single DSI).
+- Testing: built with W=1 for arm (multi_v7) and arm64 (defconfig),
+  DRM_DW_MIPI_DSI=y and =m, together with the Meson and i.MX93 glues, no
+  warnings. Tested live on the GPD XD (RK3288, ILI9881C, non-burst with
+  sync pulses, 4 lanes at 448 Mbps) on 6.18.54 with this exact change:
+  without it HLINE 561, HSA 10, HBP 3 and garbage on screen as soon as
+  the UI page-flips; with it HLINE 704, HSA 13, HBP 4 and a clean, stable
+  picture in the UI and in games. Not tested on i.MX93, Meson, STM or
+  Rockchip dual-DSI hardware; their computation is unchanged.
+- Tool disclosure: this patch was prepared with Claude Opus 5.5
+  (Anthropic) as a coding assistant, in an interactive session where I
+  asked it to bring up the GPD XD display and then to prepare the fix
+  for upstream. It located the cause from the DSI host registers, went
+  through the history of the lbcc computation (ac87d23694f4,
+  93e82bb4de01) and the lane rates of the other dw-mipi-dsi glues, and
+  drafted the code change and the changelog; v2 follows the reviews of
+  Chaoyi Chen and Sashiko. I reviewed and understand both, and tested
+  the patch on the GPD XD as described above.
+
+ drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c | 39 ++++++++++++-------
+ .../gpu/drm/rockchip/dw-mipi-dsi-rockchip.c   | 23 +++++++++++
+ include/drm/bridge/dw_mipi_dsi.h              | 10 +++++
+ 3 files changed, 57 insertions(+), 15 deletions(-)
+
+diff --git a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
+index 22d1b8cbe1..b7578265ca 100644
+--- a/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
++++ b/drivers/gpu/drm/bridge/synopsys/dw-mipi-dsi.c
+@@ -780,28 +780,37 @@ static u32 dw_mipi_dsi_get_hcomponent_lbcc(struct dw_mipi_dsi *dsi,
+ 					   const struct drm_display_mode *mode,
+ 					   u32 hcomponent)
+ {
++	const struct dw_mipi_dsi_plat_data *pdata = dsi->plat_data;
+ 	u32 frac, lbcc, minimum_lbcc;
+ 	int bpp;
+ 
+-	if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_BURST) {
+-		/* lbcc based on lane_mbps */
+-		lbcc = hcomponent * dsi->lane_mbps * MSEC_PER_SEC / 8;
+-	} else {
+-		/* lbcc based on pixel clock rate */
+-		bpp = mipi_dsi_pixel_format_to_bpp(dsi->format);
+-		if (bpp < 0) {
+-			dev_err(dsi->dev, "failed to get bpp\n");
+-			return 0;
++	lbcc = 0;
++	if (pdata->get_hcomponent_lbcc)
++		lbcc = pdata->get_hcomponent_lbcc(pdata->priv_data, mode,
++						  hcomponent);
++
++	if (!lbcc) {
++		if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_BURST) {
++			/* lbcc based on lane_mbps */
++			lbcc = hcomponent * dsi->lane_mbps * MSEC_PER_SEC / 8;
++		} else {
++			/* lbcc based on pixel clock rate */
++			bpp = mipi_dsi_pixel_format_to_bpp(dsi->format);
++			if (bpp < 0) {
++				dev_err(dsi->dev, "failed to get bpp\n");
++				return 0;
++			}
++
++			lbcc = div_u64((u64)hcomponent * mode->clock * bpp,
++				       dsi->lanes * 8);
+ 		}
+ 
+-		lbcc = div_u64((u64)hcomponent * mode->clock * bpp, dsi->lanes * 8);
++		frac = lbcc % mode->clock;
++		lbcc = lbcc / mode->clock;
++		if (frac)
++			lbcc++;
+ 	}
+ 
+-	frac = lbcc % mode->clock;
+-	lbcc = lbcc / mode->clock;
+-	if (frac)
+-		lbcc++;
+-
+ 	minimum_lbcc = dw_mipi_dsi_get_minimum_lbcc(dsi);
+ 
+ 	if (lbcc < minimum_lbcc)
+diff --git a/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c b/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c
+index aab3353945..57ebb3a59f 100644
+--- a/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c
++++ b/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c
+@@ -771,6 +771,28 @@ dw_mipi_dsi_phy_get_timing(void *priv_data, unsigned int lane_mbps,
+ 	return dw_mipi_dsi_phy_px30_get_timing(dsi, lane_mbps, timing);
+ }
+ 
++/*
++ * dw_mipi_dsi_get_lane_mbps() runs the lanes faster than the pixel bandwidth
++ * in every video mode, not only in burst mode: count the horizontal timings
++ * from the lane rate, or the line is shorter than the DPI line.
++ *
++ * Dual-DSI keeps the core computation (return 0): the lane rate would change
++ * the timing of the dual-DSI panels in use, and that hasn't been tested.
++ */
++static u32
++dw_mipi_dsi_rockchip_get_hcomponent_lbcc(void *priv_data,
++					 const struct drm_display_mode *mode,
++					 u32 hcomponent)
++{
++	struct dw_mipi_dsi_rockchip *dsi = priv_data;
++
++	if (dsi->slave || dsi->is_slave)
++		return 0;
++
++	return DIV_ROUND_UP_ULL((u64)hcomponent * dsi->lane_mbps *
++				MSEC_PER_SEC / 8, mode->clock);
++}
++
+ static const struct dw_mipi_dsi_phy_ops dw_mipi_dsi_rockchip_phy_ops = {
+ 	.init = dw_mipi_dsi_phy_init,
+ 	.power_on = dw_mipi_dsi_phy_power_on,
+@@ -1494,6 +1516,7 @@ static int dw_mipi_dsi_rockchip_probe(struct platform_device *pdev)
+ 	dsi->dev = dev;
+ 	dsi->pdata.base = dsi->base;
+ 	dsi->pdata.max_data_lanes = dsi->cdata->max_data_lanes;
++	dsi->pdata.get_hcomponent_lbcc = dw_mipi_dsi_rockchip_get_hcomponent_lbcc;
+ 	dsi->pdata.phy_ops = &dw_mipi_dsi_rockchip_phy_ops;
+ 	dsi->pdata.host_ops = &dw_mipi_dsi_rockchip_host_ops;
+ 	dsi->pdata.priv_data = dsi;
+diff --git a/include/drm/bridge/dw_mipi_dsi.h b/include/drm/bridge/dw_mipi_dsi.h
+index 65d5e68065..6580c16d80 100644
+--- a/include/drm/bridge/dw_mipi_dsi.h
++++ b/include/drm/bridge/dw_mipi_dsi.h
+@@ -62,6 +62,16 @@ struct dw_mipi_dsi_plat_data {
+ 	bool (*mode_fixup)(void *priv_data, const struct drm_display_mode *mode,
+ 			   struct drm_display_mode *adjusted_mode);
+ 
++	/*
++	 * Optional: number of lane byte clock cycles for @hcomponent pixels
++	 * of @mode, for glues whose lanes don't run at the pixel bandwidth.
++	 * Without it, or when it returns 0, the core uses the lane rate in
++	 * burst mode and the pixel clock otherwise.
++	 */
++	u32 (*get_hcomponent_lbcc)(void *priv_data,
++				   const struct drm_display_mode *mode,
++				   u32 hcomponent);
++
+ 	u32 *(*get_input_bus_fmts)(void *priv_data,
+ 				   struct drm_bridge *bridge,
+ 				   struct drm_bridge_state *bridge_state,
+
+base-commit: cf61bef3801c3c9d0d8c39026b7b2fb242898a3a
+-- 
+2.43.0
 
