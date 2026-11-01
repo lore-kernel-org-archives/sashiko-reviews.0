@@ -1,94 +1,84 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.229.8
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793485917;
-	b=rAiNVLDHGHHnLBX8xZ/juF8H1J3Y0bT0xb5OsrNR2UfULf90ZRkR1AlqL5OFkCDhsf4A
-	 MD8Ee93HJlvTd4mqxSFFZg71olikDQK3Z3T81zSmfzCI6R8B4ouKJvTnoLS/AFRj26X7a
-	 oWuX2dNZWAII+Jp7U8YYjTYO+epi1vYWa0WM48oEs7qEYMLG6Iz7Sx0RsFbsf+8MQHv22
-	 8BHGyUZ+eioV1OTPAHmCeI9QN6srKB93o9WVDPte+qTwjX/i+NSFC8KuA/B4MQF5HoK3y
-	 DDOXcX/6BGPtRJqg45YRXdeuepL27OYNl+P6uaSM5onf+0PFmfDMu2fkNwGtC/P4TFA==
+	t=1793523593;
+	b=b4FnYK+FmgwVQZMZ8w2FgzDST+w0Rz230t2h4WpEb+58RtGuhPn25JMvXiFQAg5x2U6d
+	 zHpGpiW8YQpDDpVfIToEmPa+7dLMSrsbyinmlx291JoMKiOy71uFsvGh1FzLLEOMn1DnO
+	 K+ecS1jJ/V/Zl6H0FwfUk1b01pITqCBMAtZDwtxRVZURCdXzOpVJUD1CqKygiPgbZ330X
+	 wyrXUg3g4lwAgEKZcdt6iupCkarRxqBoksbceIv8xe/AIcbRFOyFd6FysFMIfzpXrLLPr
+	 1Vu6w4gbYld1QSvzh2mxriAyo+FBtALsinz/q9do+ZC1kytZGZspqxmRbzBajoOQd6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793485917;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793523593;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:Date:
-	 Message-Id:Subject:From:To:In-Reply-To:References:
-	 Content-Transfer-Encoding:MIME-Version;
-	bh=OEBcjr+1g1r2SdHsW38Cfk4i1ywgvDS8NwTKQTmk5Qo=;
-	b=zr9Wm+sTjP1fW2l8qiGkzyEeJGfJMPej9U2OkdyIROm3fBhLHQZiQPQWriTnbXlXRRNr
-	 ymU0uew67TFq+k+/46ZY6tb/vl7w0dRatm4mBYmM7t+Zr0GSU+cHEL3e2zWjkhRpOPeOD
-	 E2b6JmqoVDbJSGYdSfc+bT+chmHPabXZgOhK7juvQoXk5waEsjr8t7pAC2I67pQltqKz4
-	 9biDUE7vJKsjC7w6Pis0r3uaN0B1alzUk2YXevtZ7KlT83rad9XDj02uYqP6phIEggJXM
-	 qAnabkpmb4lv7Jsp/eeBvAKRjnG0ueo/Dn2BbeUCdXDgGC0y2bYAk79Vo85ozEeqM4g==
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:Subject:From:Date:Message-Id:
+	 To:Cc:In-Reply-To:References:X-Mailer;
+	bh=Qot3DPVKnGE0VVwUhDNO4+shB6YIfE7k5yrGO2m+J5M=;
+	b=H2pCPI9z6QrNDopBViqLo1YnLnd7C5PulvY99TVTbEv05LutJ9ESFrSPvaVpsZe0HhDR
+	 oCgZBXpw2GVJNZthawOprZ26K+QEyxml8ZDvdwNkSLE2wZrkdTzxQ4OC3+F3Wib2K9oAG
+	 fmXT/dEGvRPtMgM+TZvp+40eFUuvWQJPiLgpFTkxZpwTX8DK06lY1XskzRI+BAXkA36IP
+	 tSBTTfLT2qvdnxOq9S8d/3MTZBBGkQQn13sqe4NsnHh6y65WjwQ1vfkR9ihhk02OIVk9I
+	 MFRpoehNBASiPEGaLepqgvuPgPZaeIvyTPCtcm7SxhtgqHuuZ7K+ccLSdJINJAx3hpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=y0i2npeE;
-	arc=none smtp.remote-ip=209.85.216.49
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LgLIqsz7;
+	arc=none smtp.remote-ip=74.125.229.8
+Received: from mail-dy2-f8.google.com (mail-dy2-f8.google.com [74.125.229.8])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D78606A31C
-	for <sashiko-reviews@lists.linux.dev>; Sat, 31 Oct 2026 22:31:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1D78606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4A2606A325
+	for <sashiko-reviews@lists.linux.dev>; Sun,  1 Nov 2026 08:59:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org EC4A2606A325
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=y0i2npeE
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-3ada8bc2380so818031a91.3
-        for <sashiko-reviews@lists.linux.dev>; Sat, 31 Oct 2026 15:31:56 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=LgLIqsz7
+Received: by mail-dy2-f8.google.com with SMTP id 5a478bee46e88-36a24f47293so1295150eec.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 01 Nov 2026 01:59:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793485916; x=1794090716; darn=lists.linux.dev;
-        h=mime-version:content-transfer-encoding:references:in-reply-to:to
-         :from:subject:message-id:date:content-type:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=OEBcjr+1g1r2SdHsW38Cfk4i1ywgvDS8NwTKQTmk5Qo=;
-        b=y0i2npeEo4mo9WZZ7k5lskcms1Eoa9J21JMP/L1jpVQC667iBup0WbXy6ylMkgN7FR
-         XtMTs9KkskcOLuvi1OBwzWPeRvAskSjyN3S7aeVClvSaPC5EK68pTOsNyn1GZk5ckpBj
-         47Pve0Y+e3JUEvz/yfupP+OHAv2tSLZs5mL6diD1B9yB0FOnF1JHFAFj5zFisP8op5iG
-         J61uIkz6/BNEcew2p8Np8rDrwSt/0iq7QNGUxX/gRBotoWH020Wlk8SmZg0SKwJebOgW
-         vZUOlIWtB+b2bq/H6o99IK/ALbzsJNuIBU2wleYOMXUGSSW8e5y78IueMtUWGiJeDfUn
-         IP4Q==
+        d=gmail.com; s=20260707; t=1793523592; x=1794128392; darn=lists.linux.dev;
+        h=references:in-reply-to:cc:to:message-id:date:from:subject
+         :content-transfer-encoding:content-type:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=Qot3DPVKnGE0VVwUhDNO4+shB6YIfE7k5yrGO2m+J5M=;
+        b=LgLIqsz70wZ8OOjI5Q7a+K52V6GACFIkP9LdvDJIWTqaZFmdSPFvwKebPrUMxsHRLV
+         ZHWZYeZ+PRgixHLnDDhdDH7RWkuANajEbGThCb3TZKkMeLf/RMY7ibCB9G+DMjyePbvP
+         oRnl5vap290ufa8Dc/NtCVnHpvZyZUYpPcsDbsq8rLMrkDM7pW/HYCXAS/EBao+Q7zpZ
+         sRbeud7eb/1snCMTvFf89jON/SjFynmF8Qnszw2my3PG/E6bkyYdSRXPrxcPyTufU34O
+         eduNEzMYky90j9rAlw6cTBq71MMPei0ZAtoPqrKQiN0zpGZd/Ov6fZcgi7lMd//+3i/A
+         +MzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793485916; x=1794090716;
-        h=mime-version:content-transfer-encoding:references:in-reply-to:to
-         :from:subject:message-id:date:content-type:x-gm-gg
+        d=1e100.net; s=20260707; t=1793523592; x=1794128392;
+        h=references:in-reply-to:cc:to:message-id:date:from:subject
+         :content-transfer-encoding:content-type:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=OEBcjr+1g1r2SdHsW38Cfk4i1ywgvDS8NwTKQTmk5Qo=;
-        b=Ei6LMkS+12xw07/SgD9J9+mjDiYi+cd/vosIFjFfjitkTGgvD4SWkysnKSw0WIKx7k
-         CGHO+DIkLWbI0rMXcJGbWprmxBeDQto9lkEfB+PRvJKhHcrfgoiMCJq7fnEDI6Uvh/H2
-         RkbkJCUWyqUjwz+GA7Tx6qA4OQmoEY6R+4PshbGbq/cAg7BB076lzC99FWMnQQNQh+4P
-         SwPaj2tjfyvfVoqFkQGXFvFH2bDuRgMqB+s6KVSuZony4qK0nAMg9ji0zBLYfNPStSRW
-         onUHudL8LFArgdFU312igIAnuG9GhOVyxmOjnTigEA8ejjSwLmx1/M1umrC8VLsQI8Ui
-         gO8w==
-X-Gm-Message-State: AFq9FYKaKcUeUJs07pfcPfCkUx47uGFfIj2Ppd/BVdZNYJzBkQa6xSZa
-	p8Okm2ioGObTiEmHPG3zVG3LX6Mb4bOlTPGNigZwcXBB60ze74JZEr5Nl1DtWA==
-X-Gm-Gg: AYBFou3RTE4iteZHApwtJ0sZGPlSyml9AFGm2648ukyMY3HivppKlzGuQp5a0En5F5i
-	PkFOkroe4aVEEYOlYzmvWotE3ZKJ1KsjmSbbUdPpe2pH4zVWKit6jFhaFZkNojvdargARSOIKXP
-	/jNIeN+lw0Tpi8PJD5fCzxmrKLZb2VpPCe2BKpyPR3DrcP7bTVDQS/eoWD+EkGRY/DMwPsMcnKh
-	ENWzKndmNwEDgKcajKb1iHTOXSn62Z9IDU1uJdVtGeaWJkQzBgxFTf8FsM2441kvAoCZzan9gTm
-	HhuTnPpxMftCrsARIz33V+iyKn4JvDT7wbwyNDncLvWiNsE2Whc8xm/MuJP7AqMocoixJEpULNy
-	xyH5qH09vMhdGL4NEq2aPByYxatXHmOuBiG5yC2umTY5kPerjyZGb3TQsuCe/Dz04OdrWPUU+Om
-	Z1qXcHakXyHUbxm2ibqaLMKzV0U4eh69Ya4NsVY3H+kMDT//Z9+ajF3hjyXvEvHOpmIReV2VheP
-	A2SPfUbG12AnJuKfQGYgG290HQWC/rQQcv/RRnlKjCINEOmUzjeCQJsXc07GxuG9iMLhiQzTInI
-	7Z2U9v9gMkvzTL5M3b0lvNm8WCLayQ6kwkjR26WXQaxN5VXuqUmDDLLlQttYLiTuQJalh7MLiyj
-	v9G1pWOM4DAaG9S6EauEBk0cJVm8Ssj5PHGwpxFqHJ1ODNzvj3ioJXtc=
-X-Received: by 2002:a17:90b:3e83:b0:3ab:c370:3684 with SMTP id 98e67ed59e1d1-3ae89767179mr4926537a91.30.1793485916194;
-        Sat, 31 Oct 2026 15:31:56 -0700 (PDT)
-Received: from localhost ([153.61.198.240])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ae84542a13sm8540783a91.5.2026.10.31.15.31.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 31 Oct 2026 15:31:55 -0700 (PDT)
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 31 Oct 2026 22:31:55 +0000
-Message-Id: <DMJDP38EHFFX.320GKNPIMNH9D@gmail.com>
-Subject: Re: [PATCH bpf v2 9/9] selftests/bpf: Test one may_goto time slice
- per prog invocation
-From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
-To: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>
-In-Reply-To: <sashiko-outbox-192196@kernel.org>
-References: <20261031215543.682284-1-alexei.starovoitov@gmail.com> <20261031215543.682284-10-alexei.starovoitov@gmail.com> <sashiko-outbox-192196@kernel.org>
-Content-Transfer-Encoding: 8bit
+        bh=Qot3DPVKnGE0VVwUhDNO4+shB6YIfE7k5yrGO2m+J5M=;
+        b=FX2PP93W6W9IhckmxJgY3L7g7BdlmW8BSMyfe8UU/RNiIaD9w4gbrmJNrMPi67jWep
+         7OBrFbi1ire7FqVfu3DECb0Ilud5V5qQ9m4nk8QaBfzIbsbykHI7+zEqN+lkDD9ZsxNZ
+         TbBHJiAEFQuR5sO6qypQG/rnsu02of00+BejOONfbxBUeMYQLRDKf17ZZFSPDG1Hlt4j
+         RJJrw2JJrWteL4bnnhVB81IzXlvsUEJ2W1qAsxKykXsVfGw2LvZZOwoKSPVDu751VEL7
+         Y+Q8L6lPldgcuM9MD2Ax3wMN1bmy4Mi/siXyl/KddPOjurt1fbKBmHbMTLgWbMkowhjB
+         CvRw==
+X-Gm-Message-State: APuU4Z/PHtfNycMAWMybIAPJvlbuu3kr4pMBtZBVQyAEUHx+BFIyVImd
+	MQ+fcHpVCTPYaA9m5aGsatBVY7rBMlUrfLnPK5FaGo3eslbxowtkKlrbCnBozQMJmP12ytbw
+X-Gm-Gg: AYBFou16LStoyeNeAJYn4jOqFXXTwF26soFkgdhdGlaBlaBccg067GF8+kZ/3UM/ktQ
+	3Nhx6AYJAppQPGfr/Fa5/86vAhfZe1hOMAmtt2SNmw0xvJQQPclwVgr3bQC25mmFaIMqsdc1XeC
+	wOw4Iu1nQHOpxLFuu0/+tEZmazNem4B+3kePq61ry4N4BRcbtO42ubAjEHj5tsJP3QVnzS9Nq8L
+	xovB+3eNG6qre4PDNdx0asq271+iFmzLdes7i6r7WFO87EMsAJN6Vz35p/sTuPkAMRo47EgMcL4
+	Dxcaht99teQR0BOf30lUvw2jacrYU8BHvH6Ylwu+NW7saCRDrtsbgHdRKvAmRgmZQTh02E9n/ip
+	ep0vUdho3xqNnLJIpmnSWTqgCTTMirbdaYu8r1GdBe44guF+g9Dk15DdPLn+jD95b3+ChX2Mu2M
+	MWVtTy06kbFzoH5lbhE07un8VM+Pb8ff9VWMHq0SBg6rcVZX+PkgQr8J32FqkSarJku71fSDTVt
+	1j/YrlPvItJOKugR6MBipZLYXI9dXMOWPwz3H8ocOV7y+t6LrCj8zOT94N4wASo0Vd1P7l4XUa0
+	raYbnCTjPxwMFdWlTSboUuppxRZpoVVZzVZBY7EuiqdB5XAmGUx7Aw88HucGmLCqgsFSSdRTuI9
+	UVrpUpg6cTR43vsJ1nRfPjk1hLa0=
+X-Received: by 2002:a05:7300:ce08:b0:343:ff9f:26f3 with SMTP id 5a478bee46e88-36a42401de6mr10143619eec.9.1793523591850;
+        Sun, 01 Nov 2026 01:59:51 -0700 (PDT)
+Received: from localhost (n106-71-19-159.sun21.vic.optusnet.com.au. [106.71.19.159])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a5eee0f20sm6176212eec.17.2026.11.01.01.59.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 Nov 2026 01:59:51 -0700 (PDT)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -98,9 +88,34 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH] mm/hmm: honor write requests for owned device-private
+ pages
+From: Aveline Noir <jm5905938@gmail.com>
+Date: Sun, 01 Nov 2026 19:58:21 +1100
+Message-Id: <179352350180.2.12918668886938034091.b4-reply@b4>
+To: sashiko-reviews@lists.linux.dev
+Cc: Andrew Morton <akpm@linux-foundation.org>, 
+ Francois Dugast <francois.dugast@intel.com>, Christoph Hellwig <hch@lst.de>, 
+ Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>, 
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, sashiko-bot@kernel.org
+In-Reply-To: <sashiko-outbox-192310@kernel.org>
+References: <179343062238.2.2773026701442863377@gmail.com>
+ <sashiko-outbox-192310@kernel.org>
+X-Mailer: b4 0.16.0
 
-On Sat, Oct 31, 2026 at 03:12 PM sashiko-bot@kernel.org <sashiko-bot@kernel.org> wrote:
-> - [Low] selftests/bpf: missing __skip() annotation on dummy_test() in timed_may_goto.c
+Hi Sashiko,
 
-Not worth a respin.
-It's OK vs SKIP in the report on archs where the tests don't run.
+On Sun, 01 Nov 2026 07:29:15 +0000 sashiko-bot@kernel.org wrote:
+
+> Since no MMU notifier fired, mmu_interval_check_retry() returns false and
+> walk_page_range() restarts at the same hmm_vma_walk.last address. Won't this
+> spin forever on the unchanged SOFTLEAF_DEVICE_PRIVATE_READ entry while
+> holding mmap_read_lock(mm) (or mmap_write_lock(mm)), svms.lock, and
+> prange->migrate_mutex?
+
+Oh, I missed that. I'll try to fix it.
+
+Thanks,
+Aveline Noir
