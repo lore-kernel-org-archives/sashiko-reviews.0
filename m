@@ -1,101 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.41
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793565250;
-	b=gxpNI3KvQLjUWT/qGVhb9eyGjaxkcKO5gTNkUxnLw3rIudAoqDN6OjZeRApcftuQYrsx
-	 u1FOoLoflPXxkqxY2zrYqqK1GJJTnvbDZ/hfWL7ISKvAN5eBm/fPzNqt2lixxy+g31BsD
-	 eezhM3Cq556/d/9QYTfU2zDmMSI6cvy2veRqFlxYjfzvBW1O7YhRVHn8li4tx7rh3R5Jy
-	 8U3MMvld1W6B7btbYF4F4Wu2m/P1WHVigKKgganrbMBlZ2R40A16jasFBaI7Q3lH/E5Wr
-	 Rtes+klRfzA+cAnQ0lhD9uYDiTVHF/rM1ab+MTjgeGG1ETDqfMmOBiKYakPuoeIF4Mw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793565250;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.50
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793575158;
+	b=qr3fmA4CVg/bwEcC2nuvYp0Oi8RMOqaq5DQJPv4GG5sBCCi6PAmj2xGFlNUfaItz2q6L
+	 CSW5hqZyd/rcc4ng6xtF7WdAw37Zg29nIKVwSdd3ehwTYi81cFwGNlCY2w6Z6agrHRIZI
+	 F5Sy4mvly2Y3beOyRJBP6o3zqIWzjjBe0Ja4ud6ZanR0FwSiSTBo0JqpcrP1qyPdWWExm
+	 OKaJVlG0LojYU/2wIJyOv9EM6R2J6XO6ZeeD5wN3J3kA2PLSsAjIcDlxVXAIKKYNGwDoF
+	 lJViaFseLsO2QKsxfghRa5Vzx+OmpUXuIPzhycqzHX2JVMEEx9MNBCibAzZfuC+Nlyw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793575158;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=F89725KkjE+kUI5LXBxmdgLNt89Tfm7tC84mMjTHCkI=;
-	b=TGlG3eymhA+6wFnsANzUWgIlAHBRtsZS+EI6pO104/HEiODiBtLdxJ9pIl+24VT5PVXH
-	 qtY37EVoHOquPUgEswchF6PQFuHNrXFY/2wWHhYXknteqJYyRDOBxexgNETyDpyK5+75k
-	 BhvhiYOn0AE3rRtIJMH84hrAqv0cDsK2wbVTeYro4ncaa186wbHa1rOvsWQbWiRP1bAsx
-	 xHM8hBeQlaZ5Et3ahjzpU01nYwsZ0RjfWXD/iKZAhMg7efN06F2evJzIFjA0yVfvw8RAd
-	 Uriyu3WAzoGr9zoxNn7VKmRnavD+2E7R435yus/dXYevGWdJUM9r+ZRid8kTXKITyrA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=OgokyJgZPmoFvmekackCrMWks/pVfhNUcYrltTftkwI=;
+	b=enLS2b/d1CEchxluwF92Fa0x284/BEldYprsG5j3eLn47ERQ/pxnGeR2koN/PvwF0/q3
+	 u2pXZE3leoTiiq3o0zUxIe+TuANxIqf6C6THkyyg2jZdfv6ORFUZ0ojd+vZ1tviQsmRNv
+	 FfgR4dmPAuZiGormOxIROfPrknE8A1cnDIeuacYdwdbhjyq6RRa0StKsBg8LlZA2fs1Rq
+	 OMb5Z6P3K/Ty7j/Zr98ywrFGefuM6RpujwvXq5XOHrb0Li3olhaomlvepfkPACcr55dqJ
+	 47PySRnCSGU+AwFlYM75aGVuyy7hbL4SPW11/8MC6VkuY4OCxXRSznuxkgKN/AYFIgA==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FSR6XuCr;
-	arc=none smtp.remote-ip=209.85.128.41
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=elNo1oRn;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.216.50
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C308606A325
-	for <sashiko-reviews@lists.linux.dev>; Sun,  1 Nov 2026 20:34:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9C308606A325
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FB4606A326
+	for <sashiko-reviews@lists.linux.dev>; Sun,  1 Nov 2026 23:19:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D8FB4606A326
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FSR6XuCr
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4a35db1f202so24482685e9.3
-        for <sashiko-reviews@lists.linux.dev>; Sun, 01 Nov 2026 12:34:09 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=elNo1oRn
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-3ab2cb8d577so1711597a91.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 01 Nov 2026 15:19:17 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793575157; cv=none;
+        d=google.com; s=arc-20260327;
+        b=SUcf6mIchktEWrSV1nkbsE6zSmjiRXbmkqvBTj9YUKk3mmlVtcrwwAWTSzLHaKPs+t
+         otmvyejG3K4NlBR5m5YCv80Rt6DCBZiz7c2ZFRTCBmAEwiQPtAWSLf0zQGdyr2RHt4FH
+         3o33i2+ewDY38wym/UnnUEvG0f8LF/X+OA/KNI64jC/UaSjJc0fqcn9boCekM01cTVA9
+         gOkFKwhWMIMo7pRK+C+eS7xMBgXI4mWst3u05ojqV/vyUuZF7Hj29aSz+TE7oTTD9jE/
+         31/3CDERgYGN6uuVchtI7Jy5zc3i0s0jFpQDGbazo3O2nzjJXlKwOQkwrtumMaFdSG2l
+         KOdQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=OgokyJgZPmoFvmekackCrMWks/pVfhNUcYrltTftkwI=;
+        fh=Bufre/RZAh0Oz7dfVyDi9Tz9Ab5kMUqAolUMvxdNMlo=;
+        b=dmp9D5IJtg8Xj+VBcgVGHLwFL8kfeC8euYPVO4TPDZ904wUVGa10rnZg4llR8lfKBx
+         t+iHCuNAnV90OayAeiGSNW0nDoKT7TZmE8xZXm/vZVi5CeDILjuj4VgJpA6u91D77XsL
+         IireVBVA2GyLCrHO7mr0L7RQ11W3etWb4P6qy7byjmT9Eao+o0JzWGH2YhCAvaM9Ri7o
+         MOhHOgq7LBx+51YyT4lM7bShviHal8N5qwveOtJIoQAAdeyHYose1e7JhfdNtJHPiujj
+         kAFbK5D2fjJlQPQJO0VHRvemWCgATEkbuMalullDdcWDUKoab5q8O8fb0PKHqJOECcC8
+         u9pA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793565248; x=1794170048; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=F89725KkjE+kUI5LXBxmdgLNt89Tfm7tC84mMjTHCkI=;
-        b=FSR6XuCrgDAmTHoBkoFAyYnqM78RNwGIRz0nHlzqWBqSsnlbvADPFrXEY0yN6j/MgX
-         Xh2ksvEvIS0nHsaZx0ZWPDhhdgJr2ElGkELY1M+w1uHvWEz8pD1SFCW7ShjTQwvj+ga7
-         M+shJ2o+PvT1meEzBK0nSluNRchp8FDedte76TbYZ4JXD+5132pwWOPw4kDnX5AK7eHF
-         AtsvZr+0dSIx3Li6WyGDL9ttPdRH23iTmsWAZjuFYiqDsKWFhBtoZd4Nrq4RBbpTpWPE
-         Z8iP3o9UAHWv33AMO7QsSLjfkT62jRzaPeFgbHRcng+276P5sHu334x4xDV2NG9MPKgz
-         /iQA==
+        d=gmail.com; s=20260707; t=1793575157; x=1794179957; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=OgokyJgZPmoFvmekackCrMWks/pVfhNUcYrltTftkwI=;
+        b=elNo1oRnLjSoHGRiKXPuPgMBw2f9X9GUvCvaqi8H/ULT4VcdIdU09VJr5Hh13Bavd9
+         Kg58/+9iLkwhdDvPdbJ+z56mLUP1RXzCE8VPEUm5AJIAPxs1xd1ACaATXBzFKUYO+lTu
+         wHwJn2MBrRUD1NEhwm78cbyas+RQlTwkujNflirCcH8B/g6zK+hBArs1G9W82BzbhQKN
+         v/JGEN7rwNZ5zW4ZOHCC012ea3bdJPDyjVgVXPbRovzY4CAmllpGIgaf4he3w/Rvuwqi
+         jG+keQl+yFjkIece4OqhRp3MLPrw51BrXxX4t4VyQ4I0m4FMJMvVFUG87tMZ9aOzmH6x
+         60CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793565248; x=1794170048;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=F89725KkjE+kUI5LXBxmdgLNt89Tfm7tC84mMjTHCkI=;
-        b=MPZttkR2ERlqp1w4+giH+cascQ6P9j+OmfP/a864AYHjGvV8E875cE//ql/jnLlbaj
-         DBwxbqj6gzS6SQK3/RFnCqms40vQUmDawaeBzMjW+8rgLReSu3qJLaJrVZ6A9XLoM/9u
-         Oap/MH7f33Hte1+i6/yW+qweBeXvSM+u/z0p7xlI0FoyR6mFp56fcLjW++XDoSiy41VJ
-         LjNC3jWyfA/X4T7r99BkSDw3zpDmJZ5NuShi7uGcAtrixpZZHGfu7LREi7iQwLJNpm+A
-         4L4qstdNYElwx/JERjMwRczWcbEwiqQFM9cPI83zhN2klJv+5/e25gFTcA1Ar4aeGQ41
-         5xVw==
-X-Forwarded-Encrypted: i=1; AKwUvBxdu/PsGYt4EhwNe0Xh54I//brrbI4ECq5Z2di5afQDZnmKB/aKHhDjRcxQNvDczRo9V/oHslm/kjuXBPs7Qgc=@lists.linux.dev
-X-Gm-Message-State: AFq9FYKPzqqtvR+ulgxoz+0k3SJt0cpE0aGbgJZncwGg9RnHwc+do21R
-	M4qtlZ7j67tLxhHek/dl0ucBxpyNQuXskz16JTFpuzNdo2/5Me5XVYNJ
-X-Gm-Gg: AYBFou01y92COA61cjgJwYrgdT9CCMiEMecmNKzCdeOaYblhjr+8uYX/XWPgyGDFx9S
-	CBd5JL6m3KOC02ig2bPqMGJ549EjxWOP7dBqDGQ22ZjnA27MbiY+FF0YcObUdVRsCNrCVBwF+jZ
-	4q0zM+u7BG3dh6ag1UiAffXrn4a7cCDD0O/8LeWGMAbXWUm4NWvS+2G3Y6xDvfJT5rp6A9AA0no
-	iU7yLL0apBJcSapyPmL1KGbX648LEUXq9J3PlDyMQfFF3bI9BHDXAIDdegvtAEVujtjOgLHaQEe
-	K++S6Vgd65Wsxngn3EnpKIH7le674uowpbczQ5oVTJ5XBohSn689mqcZlusfWWD8sBB7XIS7Nyx
-	TXcPKHcO1QJYqzflmv7zUjraCHl+ANlkuxATCHQRpQ7rIZGgSOT/XCvC9AuLFcGXmP8UD/bcHEx
-	ZCS6AeVsX36xrO2E5Are8xOjbcs4ez5ruKhzsMcPECc2A/lAGDo+GolW8dwsHArUuDPJU9sDPFY
-	8QSG06LlnuAhsOKLdIDGOg+onVTKQTY6TXgyUBfy/rBdYLMx5VmLgR/meiwMs1lcSFA4dQxy7OX
-	dIUFWjlrL2hM6iiyvyBsviOT4V19+KfqB5EzIZ3WkjOuVCMr9M8DIziLLruK5f1n9Jkfob0p+jm
-	AfCn2+NIHlyaGZnLBKFQNyxMCom42F9TcbyjrX+e4fKGSXg==
-X-Received: by 2002:a05:600c:1d07:b0:4a2:18d4:f9e0 with SMTP id 5b1f17b1804b1-4ac18c735b3mr192334605e9.25.1793565247854;
-        Sun, 01 Nov 2026 12:34:07 -0800 (PST)
-Received: from romain-ThinkPad-P14s-Gen-5-AMD.tail433d9c.ts.net ([2001:861:39c2:e340:849f:a468:4121:a85])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4ab61d8b9f4sm263946675e9.12.2026.11.01.12.34.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2026 12:34:07 -0800 (PST)
-From: Romain TISSERAND <romain.tisserand@gmail.com>
-To: Chen-Yu Tsai <wens@kernel.org>,
-	Maxime Ripard <mripard@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	dri-devel@lists.freedesktop.org,
-	linux-sunxi@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	sashiko-reviews@lists.linux.dev
-Subject: [PATCH] drm/sun4i: dsi: set the connector orientation from the panel node
-Date: Sun,  1 Nov 2026 21:34:06 +0100
-Message-ID: <20261101203406.1360656-1-romain.tisserand@gmail.com>
-X-Mailer: git-send-email 2.43.0
+        d=1e100.net; s=20260707; t=1793575157; x=1794179957;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=OgokyJgZPmoFvmekackCrMWks/pVfhNUcYrltTftkwI=;
+        b=NJEiDrTL7qAXrcfteZdgVJrt5xZv1pfm8GeVg7Rj68ElJkI4W0a5mR7Zt44KOJEW7o
+         YvAsLXYcNnXtZwgwDsoG9kEM7JT5Oz4bG9LUpbLXTsSNaBDMwirU7ggUv3nKmTe+doOI
+         05wm+ChbeNfaXyeBPdCvvv3iGm8L8rSA8Kmjr6UC3K9V+nqG/vCcTUJcjJa19/X9WYea
+         HHIRBEVKAD3foHs3blI/EOH3nsTmQDoz4Hq3i4TofxlHt15Cg5Mnh/d9NwPD/KV12AoI
+         ZXQBBEEyw6Hjz5TpTmaEhQ702xDO6C949welOXx1wf2qLdzhIA+wKeblF4E+8FMzB7v/
+         zPEw==
+X-Forwarded-Encrypted: i=1; AKwUvByBhDqhyCQcqIsx8+8IlzJ8y53Y1xXxVN+6lDs1mue7M4xzStIR6xflIWAs7pNdCUlPBfnLuUxBuAW3Qt6017s=@lists.linux.dev
+X-Gm-Message-State: APuU4Z//bSUIxmgvG3EZ3o2bm+PY4Wu8paORwatBLSOsT7YPvGO1NQRO
+	SJYkhGJKRLg4GgoXjEVUnFuCgvpAlNxITvP3O8Vv0PSWdXss1DVqGPPvJLMUDusQR+AhxEpYedr
+	rZeERdbXfChPRjep1eICoX3AwqK62zDY=
+X-Gm-Gg: AYBFou1GWwZaOpWxFxq9ZV33owkvVHAk2TYIYRJUZB6ZT5weWUbyBZ1lVWoEw2kDcBS
+	Bpfs8kPCbkytdWaS8mSuRV7ETJBDWT/Qz903LpbUoRvz1FU0CG5f1AVMfHccHp0FsOTf8bBLtlj
+	nxD4BZbfpZZqOOwqrE4qzwUD/Sql88RMpE2a74OC+9eRP4TWuX8lkXkX7gNSbjMv0EU5vKZUeQ1
+	RJpWsX4SC/hTUnlhW8ApYewwDkEZNtQZ8mwWXHTGpg/VhykUkgdXZuBFLSigW8Ajq6c3L7mYy/A
+	Yj9TUT/4POjMYg9XButPohqST/X5s0xk2KLt4xF/F80satQpwLMk2aMeLzJYiuH3kFTRlSAzEEt
+	ZL7eR+5UEVqZP5rJeEEqntMXEWaI+3XSD1vXBSx/UKT3CAFJtYC6V
+X-Received: by 2002:a17:90b:180d:b0:3ac:a204:aa27 with SMTP id
+ 98e67ed59e1d1-3ae8985edbfmr7252728a91.66.1793575157168; Sun, 01 Nov 2026
+ 15:19:17 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -105,98 +104,151 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20261101223125.302001-1-pmazzini@gmail.com> <20261101223125.302001-6-pmazzini@gmail.com>
+ <sashiko-outbox-192738@kernel.org>
+In-Reply-To: <sashiko-outbox-192738@kernel.org>
+From: Pablo Mazzini <pmazzini@gmail.com>
+Date: Sun, 1 Nov 2026 23:19:02 +0000
+X-Gm-Features: AclHuK9xi2Gx2yZNeMpyMDXsD4VBMsSeY1I24W_gI-TNXeinEzyyjVyZpY76rRE
+Message-ID: <CAAxh=jt4UV3iUkXYq9bnB7k8uayD1t4+BPdO4q+dAQM8tdeh_w@mail.gmail.com>
+Subject: Re: [PATCH v2 5/7] hwmon: sy7636a: read the temperature only while
+ the rails are on
+To: andreas@kemnade.info
+Cc: linux-hwmon@vger.kernel.org, linux@roeck-us.net, alistair@alistair23.me, 
+	sashiko-reviews@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-sun6i_dsi_attach() only accepts the panel once the DRM device is
-registered, and returns -EPROBE_DEFER until then. By that time the
-connector can no longer get a "panel orientation" property: it has to be
-attached before registration. The fbdev emulation is also set up from the
-hotplug event of the attach, so it gets no rotation hint either.
+Right. On the reMarkable 2 nothing in mainline turns the rails on.
+Keeping the rails on is out, so I would drop the epd-thermal zone from
+imx7d-remarkable2.dts in v3.
 
-As a result the rotation property of a DSI panel on these SoCs is ignored:
-on the PocketGo S30 (A33, 320x480 panel mounted for landscape use,
-rotation = <270>) the console and the boot splash stay in portrait.
+Andreas, is that OK with you, or would you prefer something else?
 
-The panel is a child node of the DSI host, so read its orientation from
-the device tree when binding, before the device is registered, and set it
-on the connector then.
-
-Signed-off-by: Romain TISSERAND <romain.tisserand@gmail.com>
----
-Notes:
-- Testing: built with W=1 for arm (multi_v7_defconfig, DRM_SUN6I_DSI=y
-  and =m) and arm64 (defconfig, =m), no warnings. Tested on a PocketGo
-  S30 (A33, ILI9488 DSI panel, rotation = <270>): on 6.18.54 with the same
-  change (6.18 still calls the helper of_drm_get_panel_orientation()) the
-  console and plymouth come up in landscape, where they were in portrait;
-  on 7.3.1 with this patch the DSI connector reports "panel orientation"
-  = "Left Side Up".
-  Not tested on other boards; boards without a rotation property keep the
-  current behaviour (no property is attached).
-- Tool disclosure: this patch was prepared with Claude Opus 5.5
-  (Anthropic) as a coding assistant, in an interactive session where I
-  asked it to fix the console orientation on the PocketGo S30. It traced
-  why the connector never got the orientation, wrote the change and the
-  message. I reviewed and understand it, and tested it as described.
-
- drivers/gpu/drm/sun4i/sun6i_mipi_dsi.c | 28 ++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
-
-diff --git a/drivers/gpu/drm/sun4i/sun6i_mipi_dsi.c b/drivers/gpu/drm/sun4i/sun6i_mipi_dsi.c
-index d504ae5832..1eb8a4cde0 100644
---- a/drivers/gpu/drm/sun4i/sun6i_mipi_dsi.c
-+++ b/drivers/gpu/drm/sun4i/sun6i_mipi_dsi.c
-@@ -22,6 +22,7 @@
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_encoder.h>
- #include <drm/drm_mipi_dsi.h>
-+#include <drm/drm_of.h>
- #include <drm/drm_panel.h>
- #include <drm/drm_print.h>
- #include <drm/drm_probe_helper.h>
-@@ -1055,6 +1056,31 @@ static const struct regmap_config sun6i_dsi_regmap_config = {
- 	.name		= "mipi-dsi",
- };
- 
-+/*
-+ * The panel only attaches once the DRM device is registered, too late to
-+ * give the connector its orientation (the property cannot be added after
-+ * registration), so fbcon and the boot splash would not rotate. Read the
-+ * orientation from the panel node, a child of the DSI node, at bind time.
-+ */
-+static void sun6i_dsi_set_panel_orientation(struct sun6i_dsi *dsi)
-+{
-+	enum drm_panel_orientation orientation;
-+	struct device_node *np;
-+
-+	for_each_available_child_of_node(dsi->dev->of_node, np) {
-+		if (of_node_name_eq(np, "port") || of_node_name_eq(np, "ports"))
-+			continue;
-+
-+		if (!drm_of_get_panel_orientation(np, &orientation) &&
-+		    orientation != DRM_MODE_PANEL_ORIENTATION_UNKNOWN) {
-+			drm_connector_set_panel_orientation(&dsi->connector,
-+							    orientation);
-+			of_node_put(np);
-+			return;
-+		}
-+	}
-+}
-+
- static int sun6i_dsi_bind(struct device *dev, struct device *master,
- 			 void *data)
- {
-@@ -1085,6 +1111,8 @@ static int sun6i_dsi_bind(struct device *dev, struct device *master,
- 
- 	drm_connector_attach_encoder(&dsi->connector, &dsi->encoder);
- 
-+	sun6i_dsi_set_panel_orientation(dsi);
-+
- 	dsi->drm = drm;
- 
- 	return 0;
-
-base-commit: a1e63ab695ad76850ab9787b9eb6aab695dc2965
--- 
-2.43.0
-
+On Sun, Nov 1, 2026 at 10:51=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+>
+> Thank you for your contribution! Sashiko AI review found 1 potential issu=
+e(s) to consider:
+> - [High] hwmon: sy7636a: returning -ENODATA when rails are off disables t=
+hermal zone
+> --
+>
+> commit 72fc8d76dc4f0fe2ee1ec4e02805a6f20803ef65
+> Author: Pablo Mazzini <pmazzini@gmail.com>
+>
+> hwmon: sy7636a: read the temperature only while the rails are on
+>
+> This commit stops enabling the VCOM regulator at probe, registers the hwm=
+on
+> device under the chip name "sy7636a", and reads the fault flag alongside =
+the
+> thermistor in a single bulk transfer, returning -ENODATA when power good =
+is
+> not set.
+>
+> > diff --git a/drivers/hwmon/sy7636a-hwmon.c b/drivers/hwmon/sy7636a-hwmo=
+n.c
+> > index f01f368d68e5f..475aff997c2d2 100644
+> > --- a/drivers/hwmon/sy7636a-hwmon.c
+> > +++ b/drivers/hwmon/sy7636a-hwmon.c
+> > @@ -14,7 +14,6 @@
+> >  #include <linux/module.h>
+> >  #include <linux/platform_device.h>
+> >  #include <linux/regmap.h>
+> > -#include <linux/regulator/machine.h>
+> >
+> >  #include <linux/mfd/sy7636a.h>
+> >
+> > @@ -22,14 +21,22 @@ static int sy7636a_read(struct device *dev, enum hw=
+mon_sensor_types type,
+> >                       u32 attr, int channel, long *temp)
+> >  {
+> >       struct regmap *regmap =3D dev_get_drvdata(dev);
+> > -     int ret, reg_val;
+> > -
+> > -     ret =3D regmap_read(regmap,
+> > -                       SY7636A_REG_TERMISTOR_READOUT, &reg_val);
+> > +     u8 buf[2];
+> > +     int ret;
+> > +
+> > +     /*
+> > +      * Read power good and the thermistor in one transfer: the thermi=
+stor is
+> > +      * only sampled while the rails are on, and power good comes afte=
+r the
+> > +      * first sample
+> > +      */
+> > +     ret =3D regmap_bulk_read(regmap, SY7636A_REG_FAULT_FLAG, buf, siz=
+eof(buf));
+> >       if (ret)
+> >               return ret;
+> >
+> > -     *temp =3D (s8)reg_val * 1000;
+> > +     if (!(buf[0] & SY7636A_FAULT_FLAG_PG))
+> > +             return -ENODATA;
+>
+> [Severity: High]
+> Will returning -ENODATA in sy7636a_read() when SY7636A_FAULT_FLAG_PG is
+> cleared cause the thermal core to permanently disable the attached therma=
+l
+> zone when the rails remain off?
+>
+> In drivers/hwmon/sy7636a-hwmon.c, sy7636a_info sets HWMON_C_REGISTER_TZ:
+>
+> static const struct hwmon_channel_info * const sy7636a_info[] =3D {
+>         HWMON_CHANNEL_INFO(chip, HWMON_C_REGISTER_TZ),
+>         HWMON_CHANNEL_INFO(temp, HWMON_T_INPUT),
+>         NULL
+> };
+>
+> In arch/arm/boot/dts/nxp/imx/imx7d-remarkable2.dts, the epd-thermal zone
+> binds to &sy7636a with a 30-second polling delay while the vcom regulator=
+ only
+> specifies regulator-boot-on:
+>
+>         thermal-zones {
+>                 epd-thermal {
+>                         thermal-sensors =3D <&sy7636a>;
+>                         polling-delay-passive =3D <30000>;
+>                         polling-delay =3D <30000>;
+>
+> When the thermal zone is polled while the EPD rails are off, the call cha=
+in
+> __thermal_zone_device_update() -> __thermal_zone_get_temp() ->
+> hwmon_thermal_get_temp() -> sy7636a_read() passes -ENODATA to
+> thermal_zone_recheck() in drivers/thermal/thermal_core.c:
+>
+> static void thermal_zone_recheck(struct thermal_zone_device *tz, int erro=
+r)
+> {
+>         if (error =3D=3D -EAGAIN) {
+>                 thermal_zone_device_set_polling(tz, THERMAL_RECHECK_DELAY=
+);
+>                 return;
+>         }
+>
+>         if (tz->recheck_delay_jiffies =3D=3D THERMAL_RECHECK_DELAY)
+>                 dev_info(&tz->device, "Temperature check failed (%d)\n", =
+error);
+>
+>         thermal_zone_device_set_polling(tz, tz->recheck_delay_jiffies);
+>
+>         tz->recheck_delay_jiffies +=3D max(tz->recheck_delay_jiffies >> 1=
+, 1ULL);
+>         if (tz->recheck_delay_jiffies > THERMAL_MAX_RECHECK_DELAY) {
+>                 thermal_zone_broken_disable(tz);
+>
+> Because thermal_zone_recheck() only treats -EAGAIN as a non-fatal retry a=
+nd
+> treats -ENODATA as a sensor failure, it logs an error, switches to
+> exponential backoff polling starting at 250 ms, and after roughly 5.5 min=
+utes
+> with the rails off calls thermal_zone_broken_disable(), which sets the th=
+ermal
+> zone mode to THERMAL_DEVICE_DISABLED so thermal monitoring remains disabl=
+ed
+> even after the rails are turned back on.
+>
+> --
+> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261101223125.30=
+2001-1-pmazzini@gmail.com?part=3D5
