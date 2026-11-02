@@ -1,99 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.228.136
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793641362;
-	b=UMXTJ84RrafxxAwSkx08eAYC39ArM3/t7hzCNQCF9mTV2bKOnhmeKnARZSCFrDx8dl1p
-	 Ep9e+Q9gt1m8Py1xe6zAdexi7cO71oz5dsXAfRfD6zpXCrpMk9xSgS8vAOCCTIhh8TbSS
-	 rX+0K+K7wsKaUfqL07qsEUwDlKdIkzriOU2vkv4mdp0oOGgRnPdOe7J+Y5PGf4ieF53Bt
-	 EGL4QmU07eEN0vU+boSPrBv5u4T+RLTp71yYSsBdC519y5wPaOjFQaP5mj++1RvpMoi5Z
-	 m+G7JKHEs6qyYwRwhDlpZqi+gbzov3OErsowl74o5t6uI/QcY09s/xuPfDXhk2llj2w==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793641362;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=dfZtYrSlMFhP5ZZKCiH+D2bx/dcrqaWgLYnNi4RKbPY=;
-	b=t1nlizjYU1ooztlQR9nPBZv3zR7ZLchXwnoJV6TWHC/Nk7xJgOpGMjK4l6fdi+cJJ4pV
-	 p0eGvGeHx5Er4DoKPfywXg/Piy2GhLbPhQVH+rmYqwUuTsr45lGv1zyN9hfEayeDtA5t6
-	 bzB0hX7afTHAHjTCRqre5zURd3lFqMT95G9mr2BCs1RzRAvao9WmvHfQlqwJU3El+si1e
-	 J1uLwASIDUq91+ugTp82kfUTmTSCFS304pBTel12sxX8n7YhH9qivbZ1vv9w7BGU1UUtt
-	 ZLJ8cPSqva48LJZzcjlKFw3J6c4HqchlJRi0RkFxO+NoFBlTM6DFzUwaYOlY9wBlyFg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DDTfbwcl;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=74.125.228.136
-Received: from mail-ej2-f8.google.com (mail-ej2-f8.google.com [74.125.228.136])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D097606CEC2
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 17:42:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7D097606CEC2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793642229;
+	b=HbWFIHzr1d1sLOP9RWmesRWK2iCF9fE/jegyqIkbQZMzqb7lqua3kBPt724BNe51hXsN
+	 sQrE/23UnRJzpPYQ7dKijzt8kUcWuRr2wvWAO7fxFufG2wVJHcso0GTKZsa0XMUldwuGX
+	 12c0O6wRX/oUwzkcwa9UI1/wlhxu0TqjCpRQhRHTriBujN4/QCHjlTSLEIa7Rda9DLtOf
+	 XbVwGfsuhznpOveAZ/TP8lYxLxPlJslMxf2iZNtnA/Ww8U6BmgPyrvs6C3+ievH2ZUTID
+	 YMVZkVGu88gfrL8Y2KDXNm3TgR6JWq8VB/QS+ZwssI0gVJ7xusaBRwI/9JI7GPPPLzw==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793642229;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=xjyTXjB2wAHAAsP40xGjOOv4kKPxaKWcHukk2jT9TJs=;
+	b=bL63ri9Z/xOUaV6Xq5z/qg+dy7JtlwyITVLLPEOtvNV/lEJAHBPlmhUAewuZSSEEZ7oN
+	 qKp8AZjQ+DwXijG1liXkFYcgbw9tRC6KWuMtK5x4xbCM/7IuG882X8xNdro5742WTin9m
+	 LTbOYW3j07l9DOseNcaKgrUhLFTNFgnZu/snS8m/qek1cTMD2P1RSqr30ZgP4qSser7XJ
+	 9TChv/+7+rNBP6qsfkxTiT565cAak4TbYK7wIFCjDKZxMgidxQe274qXWkM/s1jJE0Fhv
+	 LvIuCYsJB1tF9JnPLQ8Jq9JHYWj/Bja8NjwEgJyWYDa5kZVGrlCadq1AAuPzf21Q9Kw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=BKE84h0E;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 407FB606D82C;
+	Mon,  2 Nov 2026 17:57:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 407FB606D82C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=DDTfbwcl
-Received: by mail-ej2-f8.google.com with SMTP id a640c23a62f3a-c2e790c38caso185728666b.1
-        for <sashiko-reviews@lists.linux.dev>; Mon, 02 Nov 2026 09:42:42 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793641361; cv=none;
-        d=google.com; s=arc-20260327;
-        b=pSlDOrLxGWQCtSKOo7UKX4lqne5ZoReIyXH4h61wSl+crxfX5DFVhG4iXJTEJMItrn
-         Mm/ELdaF3I3kNYmqGQ3hdtAKjegCiyQppN6Q/EOIuyQEmhcNyTxFJjLZboB3tDuo5HXG
-         IEU27A5utcRFMym7A7COuTygv88Z0e0yhtzs7xjS3XbdPpMVwC+Gr1D68F0G9Hdtddlz
-         HN9zvUiZFFSAPr0UfIjn1N2Gi4qFM252fiLmrSNV5gjFC35DICHYjoLVRmdPY5c9fU2f
-         eaUDm65TEaLloZ/c3oJWvosJ46Gp2mo2votnnoxrcPkzJT7pWKzqD3ribaBe2DiomQOK
-         4d+w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=dfZtYrSlMFhP5ZZKCiH+D2bx/dcrqaWgLYnNi4RKbPY=;
-        fh=+Kn94FVzl6rE7mDhn4pFvEHlRshbQ57dQ5o19v04Oyg=;
-        b=StOAYt3XOMpdpYlLr1GaDE2K9dxsbBF3qj7oDupiVi5vETM1ltpG6+EMJl5keqi6Fu
-         itEwVLnEsvStv8tNxPwsHxO2SoKJjoX834ZiQFYLY7P5fRGO3HaqV33ZjMVyDaKKflUp
-         7H9+YR4Lwy4ZgEFx4kojgN8gfcF4OSXB2RtSSvKmUdYjOCXw0rSBu/gcEj69+KLSXbTF
-         dggILLS3rVSxyZf7B5MXMtoyj0rK4JPrJ8bGm7zubP0RKEzP4afVfd/BiPeB3DPn21yh
-         6KjCTRf6kG0apUp1J/T9DLJG1C8vhvc2y298tAjQkX/yno4KPu7tpfmQqFso2IdG4lKC
-         u0vw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793641361; x=1794246161; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=dfZtYrSlMFhP5ZZKCiH+D2bx/dcrqaWgLYnNi4RKbPY=;
-        b=DDTfbwcli+7XI66MwHYkLqMZoJhqx79wY5b9voHMNZ0RFnArBvO7K0j3MEaMzrN/By
-         rAiuv2svv9jfLhFN/Ext5EYvj3XBaCRBrwTbckbtAX3iCFbIZS3s/d6pE4DseGOYJ78u
-         E/tAv6C1+tWzp7lvtFCvUMNID6BYwMi5BrmfuZpqVS1zZmbr50O/D73KRy+mgx5ZL2/+
-         YaP2zoFyhW48/iT2sMhOZA2em3Ac+eTaV2dpw0hn8hht+Hz0aRgLyhLs8BS99B4CprAR
-         KzcQZSFurGtEvIo0JfRrzkO8+Px7k3GQ9qgWVGS2I2H0yyc1/ReriPY5ac7Xi5UuuOQc
-         UhnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793641361; x=1794246161;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=dfZtYrSlMFhP5ZZKCiH+D2bx/dcrqaWgLYnNi4RKbPY=;
-        b=1fXH6bRT5xoyx5Vnyo2ZdTxOvjiz2Bb3d6bTqZgSgV4c0StVjphMzuM/wdpGLwnE/A
-         giawmfcs7gzL31Yb8KcLCHpnWSdeKvEZLZ7h3Mvj4ergJe8AfvJ+mh2mZpMOlMfaxqBy
-         /Y5tzRjLkbixbftrA0Dsjy9DcK4qQC8/3Ch2Q/4ugTyB/At8Joiz2j8sZQ7KDICSVJk+
-         NCO86shtWVlD5X4BirVBJ44cIefmRTAYRUfaNl8UhAbwV+OVIJiLN1xaqV6nbomWQtoe
-         h8a8Q8XmITIV9T6q/W8q1gFDAd9kA3MV0p/7xfN+Ciuih92o3k685VQriWGGBe1YdM6Q
-         fSGg==
-X-Gm-Message-State: AFq9FYIlD/SXs8MS/3MfVqDromXsA1fojf52q1OE9WH0gNlvn2g1nBI7
-	KOWkYKW92081b3qh8ekoOCOIavTL4m/LZoUj0P3xKCWOCnWt/dLhgh7BfUCbyZzH8z7+Oe+yyMx
-	QcIw35IDsya54DBvEC6eGCK0V097vCJ5auOACisg=
-X-Gm-Gg: AYBFou0oGu98uctkHs/Vpcr0TrU2yNkKLLgJPFyVpsGqj/ZvMYS9e+Gq9aQAgpYUQvd
-	m8/+b9NjEmSNqH6LqvLrPsEzDHx57FbPg++HogjW15eGH2r11AW7KOeXthBT0YF+m1+XwdgJj0c
-	0NgUFBQ/6fmkMYksmMO6CpIM3Rz0t7VZEk+Nt4xrViE2uJmOnHzzRca2rSY2lstn5XMJ/7M1MO2
-	8lxQaFqk44VNo34Ouna0oAz+ldsFvSPzJO+oWi6zYJBC5k8nKfMPY2szUG2xfhukRPq/w/xOuyo
-	QMlO6I2OwOW+EkUsw982Prq+Y68UNco2zV59dOU4ZphgC0yG8+TMlm93chvY7iJ8dXzDg2UGmr2
-	y0R9BQimY/++OXjijkYpAf0ZMNwzZH5mGEBupXNs=
-X-Received: by 2002:a17:907:2d25:b0:c2d:c739:30e1 with SMTP id
- a640c23a62f3a-c4ca7a9fa75mr847426766b.32.1793641360498; Mon, 02 Nov 2026
- 09:42:40 -0800 (PST)
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=BKE84h0E
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 57C2F1C14;
+	Mon,  2 Nov 2026 09:57:04 -0800 (PST)
+Received: from [10.0.136.93] (M0PRX50XMG.cambridge.arm.com [10.0.136.93])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D567A3F59E;
+	Mon,  2 Nov 2026 09:57:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1793642227; bh=Bt0frdHKGBbUPamp1w+4GcmozA3dEEooJHfwDzZsC4k=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=BKE84h0EpGmT3Zx5XyqXfCDcKZzHDVUGBKr9tKzGVdesA2PfPUkbRDcVw7q+Eeurl
+	 9u9pyG3I24g5JsUrwnzDi9av3uOXHBTtGyVhhvp6SvHJ/QeeTCQmTlqHwB1uCHWic2
+	 I/P6IARqEpV08Zc5nFlTrTeHYYZiA3h0fR9hNZig=
+Message-ID: <1e3c0416-283d-4768-a0e6-01e036e099b9@arm.com>
+Date: Mon, 2 Nov 2026 17:57:05 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,207 +53,127 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261102171838.2958552-1-coiaprant@gmail.com> <20261102171838.2958552-7-coiaprant@gmail.com>
- <sashiko-outbox-193831@kernel.org>
-In-Reply-To: <sashiko-outbox-193831@kernel.org>
-From: Coia Prant <coiaprant@gmail.com>
-Date: Tue, 3 Nov 2026 01:42:27 +0800
-X-Gm-Features: AclHuK-zSZVE4xA4OiTqJXnTLiSXMquw5uZzwgfkktwguiYBDSKOj8Fr7BfWLyE
-Message-ID: <CALj3r0hEMqWA6bcrzhXF-2+6KO5ytzpOfdiVgQ+_SUXy=gYUvw@mail.gmail.com>
-Subject: Re: [PATCH v2 6/6] arm64: dts: rockchip: fix modem power supply on Photonicat
-To: sashiko-reviews@lists.linux.dev
-Cc: devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/16] irqchip/gic-v5: Enable direct injection in ITS
+To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev,
+ kvm@vger.kernel.org
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+References: <20261016155741.979985-1-sascha.bischoff@arm.com>
+ <20261016155741.979985-12-sascha.bischoff@arm.com>
+ <sashiko-outbox-174629@kernel.org>
+Content-Language: en-GB
+From: Sascha Bischoff <sascha.bischoff@arm.com>
+In-Reply-To: <sashiko-outbox-174629@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-<sashiko-bot@kernel.org> =E4=BA=8E2026=E5=B9=B411=E6=9C=883=E6=97=A5=E5=91=
-=A8=E4=BA=8C 01:26=E5=86=99=E9=81=93=EF=BC=9A
->
-> Thank you for your contribution! Sashiko AI review found 3 potential issu=
-e(s) to consider:
-> - [High] arm64: dts: rockchip: vbat min/max microvolt mismatch fails prob=
-e
-> - [Medium] arm64: dts: rockchip: vcc3v4_rf vin-supply change has no runti=
-me effect
-> - [Medium] arm64: dts: rockchip: vcc5v0_usb30_otg0 leaves regulator_5v_ou=
-t unused
+On 16/10/2026 17:22, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] irqchip/gic-v5: Racy ITS MMIO invalidation sequence
+> - [High] irqchip/gic-v5: missing event drain in set_vcpu_affinity causes cross-VM interrupt
 > --
->
-> commit e4c4248e8e73884f2860befcec1dafef98cd711c
-> Author: Coia Prant <coiaprant@gmail.com>
->
-> arm64: dts: rockchip: fix modem power supply on Photonicat
->
-> This commit changes the vin-supply of the vcc3v4_rf regulator from vccin_=
-5v
-> to vcc_syson in the Ariaboard Photonicat RK3568 device tree to match the
-> hardware schematic and keep the M.2 5G modem powered on battery.
->
-> Link: https://github.com/photonicat/photonicat-hardware/blob/main/Photoni=
-cat_rk3568_sch_20221116.pdf (Page 18)
->
-> > diff --git a/arch/arm64/boot/dts/rockchip/rk3568-photonicat.dts b/arch/=
-arm64/boot/dts/rockchip/rk3568-photonicat.dts
-> > index 4d362f665031c..6a51f97395741 100644
-> > --- a/arch/arm64/boot/dts/rockchip/rk3568-photonicat.dts
-> > +++ b/arch/arm64/boot/dts/rockchip/rk3568-photonicat.dts
-> > @@ -169,7 +169,7 @@ vcc3v4_rf: regulator-vcc3v4-rf {
-> >               regulator-name =3D "vcc3v4_rf";
-> >               regulator-min-microvolt =3D <3400000>;
-> >               regulator-max-microvolt =3D <3400000>;
-> > -             vin-supply =3D <&vccin_5v>;
-> > +             vin-supply =3D <&vcc_syson>;
-> >       };
->
-> [Severity: Medium]
-> Does reparenting vcc3v4_rf from vccin_5v to vcc_syson actually change the
-> hardware power state when running on battery, as described in the commit
-> message?
->
-> In arch/arm64/boot/dts/rockchip/rk3568-photonicat.dts, vccin_5v, vcc_sysi=
-n,
-> and vcc_syson are all regulator-fixed nodes marked regulator-always-on an=
-d
-> regulator-boot-on with no GPIO, clock, or power-domain control, and vcc_s=
-yson
-> chains directly back to vccin_5v:
->
->         vccin_5v: regulator-vccin-5v {
->                 compatible =3D "regulator-fixed";
->                 regulator-name =3D "vccin_5v";
->                 regulator-always-on;
->                 regulator-boot-on;
->                 regulator-min-microvolt =3D <5000000>;
->                 regulator-max-microvolt =3D <5000000>;
->         };
->
->         vcc_sysin: regulator-vcc-sysin {
->                 compatible =3D "regulator-fixed";
->                 regulator-name =3D "vcc_sysin";
->                 regulator-always-on;
->                 regulator-boot-on;
->                 regulator-min-microvolt =3D <5000000>;
->                 regulator-max-microvolt =3D <5000000>;
->                 vin-supply =3D <&vccin_5v>;
->         };
->
->         vcc_syson: regulator-vcc-syson {
->                 compatible =3D "regulator-fixed";
->                 regulator-name =3D "vcc_syson";
->                 regulator-always-on;
->                 regulator-boot-on;
->                 regulator-min-microvolt =3D <5000000>;
->                 regulator-max-microvolt =3D <5000000>;
->                 vin-supply =3D <&vcc_sysin>;
->         };
->
-> In reg_fixed_voltage_probe() in drivers/regulator/fixed.c, a fixed regula=
-tor
-> without a GPIO, clock, or PM domain uses empty fixed_voltage_ops and perf=
-orms
-> no hardware switching.
->
-> Should the commit message clarify that this only updates the DT supply
-> hierarchy to match the schematic, or is there a controllable switch or bo=
-ost
-> regulator needed to power the modem on battery?
->
-> >
-> >       vcc5v0_usb30_otg0: regulator-vcc5v0-usb30-otg0 {
->
+> 
+> commit 4f462ff132c79e74a3a82cf356a72402e7a44799
+> Author: Sascha Bischoff <sascha.bischoff@arm.com>
+> 
+> irqchip/gic-v5: Enable direct injection in ITS
+> 
+> This commit introduces an irq_chip callback to allow KVM to install and remove
+> virtual translations for direct interrupt injection. It replaces a host ITTE
+> with a virtual translation and disables lazy masking while the interrupt is
+> forwarded.
+> 
+>> diff --git a/drivers/irqchip/irq-gic-v5-its.c b/drivers/irqchip/irq-gic-v5-its.c
+>> index 28e39b065de0e..7de40a7cff403 100644
+>> --- a/drivers/irqchip/irq-gic-v5-its.c
+>> +++ b/drivers/irqchip/irq-gic-v5-its.c
+> [ ... ]
+>> @@ -723,6 +765,95 @@ static void gicv5_its_compose_msi_msg(struct irq_data *d, struct msi_msg *msg)
+>>   	msi_msg_set_addr(irq_data_get_msi_desc(d), msg, addr);
+>>   }
+>>   
+>> +#ifdef CONFIG_KVM
+>> +static int gicv5_its_set_vcpu_affinity(struct irq_data *d, void *int_data)
+>> +{
+> [ ... ]
+>> +invalidate:
+>> +	/* Make the change ITS-visible */
+>> +	dsb(st);
+>> +	ret = gicv5_its_itt_cache_inv(its, dev_id, event_id);
+> 
 > [Severity: High]
-> In commit cf017fdefcec ("arm64: dts: rockchip: fix USB OTG power on Photo=
-nicat
-> in battery mode") earlier in this series, vcc5v0_usb30_otg0 was updated t=
-o
-> depend on regulator_5v_boost, which in turn depends on the newly added vb=
-at
-> fixed regulator:
->
->         regulator_5v_boost: regulator-5v-boost {
->                 ...
->                 vin-supply =3D <&vbat>;
->         };
->         ...
->         vbat: regulator-vbat {
->                 compatible =3D "regulator-fixed";
->                 regulator-name =3D "vbat";
->                 regulator-min-microvolt =3D <3400000>;
->                 regulator-max-microvolt =3D <4200000>;
->                 regulator-always-on;
->                 regulator-boot-on;
->         };
->
-> However, reg_fixed_voltage_probe() -> of_get_fixed_voltage_config() in
-> drivers/regulator/fixed.c requires regulator-min-microvolt and
-> regulator-max-microvolt to be equal for a regulator-fixed node:
->
->         if (init_data->constraints.min_uV =3D=3D init_data->constraints.m=
-ax_uV) {
->                 config->microvolts =3D init_data->constraints.min_uV;
->         } else {
->                 dev_err(dev,
->                          "Fixed regulator specified with variable voltage=
-s\n");
->                 return ERR_PTR(-EINVAL);
->         }
->
-> Won't vbat fail to probe with -EINVAL, causing regulator_5v_boost,
-> regulator_5v_out, vcc5v0_usb30_otg0, and the consumer USB2 OTG PHY nodes
-> (usb2phy0_otg and usb2phy1_otg) to permanently defer with -EPROBE_DEFER?
->
-> [Severity: Medium]
-> Also in arch/arm64/boot/dts/rockchip/rk3568-photonicat.dts, the comment a=
-bove
-> regulator_5v_out states that 5V_OUT supplies VCC5V0_USB30_OTG0:
->
->         /*
->          * ...
->          * 5V_OUT supplies:
->          * - VCC5V0_USB30_OTG0 (USB VBUS via U12 load switch)
->          * - VCC5V_HDMI (HDMI 5V via D5000)
->          * - J53 expansion header (Pin 1)
->          */
->         regulator_5v_out: regulator-5v-out {
->                 compatible =3D "regulator-fixed";
->                 regulator-name =3D "5v_out";
->                 regulator-min-microvolt =3D <5000000>;
->                 regulator-max-microvolt =3D <5000000>;
->                 vin-supply =3D <&regulator_5v_boost>;
->         };
->
-> However, vcc5v0_usb30_otg0 sets vin-supply to regulator_5v_boost directly=
-,
-> leaving regulator_5v_out completely unreferenced in the device tree:
->
->         vcc5v0_usb30_otg0: regulator-vcc5v0-usb30-otg0 {
->                 ...
->                 vin-supply =3D <&regulator_5v_boost>;
->         };
->
-> Should vcc5v0_usb30_otg0 use vin-supply =3D <&regulator_5v_out> instead?
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261102171838.29=
-58552-1-coiaprant@gmail.com?part=3D6
+> Does this new KVM callback expose the gicv5_its_itt_cache_inv() sequence
+> to concurrent execution?
+> 
+> This callback appears to only be serialized by the per-IRQ lock, but
+> gicv5_its_itt_cache_inv() writes to the global shared ITS MMIO registers:
+> 
+> drivers/irqchip/irq-gic-v5-its.c:gicv5_its_itt_cache_inv() {
+>      ...
+>      its_writeq_relaxed(its, didr, GICV5_ITS_DIDR);
+>      its_writel_relaxed(its, eidr, GICV5_ITS_EIDR);
+>      its_writel_relaxed(its, eventr, GICV5_ITS_INV_EVENTR);
+> 
+>      return gicv5_its_cache_sync(its);
+> }
+> 
+> Without an ITS-wide spinlock, concurrent configuration of different IRQs/vCPUs
+> from the same or different guests could freely interleave their MMIO writes on
+> the shared physical ITS.
+> 
+> Could this result in the ITS hardware receiving corrupted invalidation commands
+> (e.g. invalidating the wrong device/event while leaving another stale), leading
+> to dropped or misrouted interrupts?
 
-Hi,
+This is definitely an issue. I've posted a fix for the host driver to 
+address this:
 
-Thanks for the review. All points are valid and I will address them in v3.
+https://lore.kernel.org/all/20261102-host_gicv5_fixes-v1-4-743b61626fc5@arm.com/
 
-For the High and Medium issues in patch 5:
-1. vbat min/max is now fixed to 3700000 to satisfy the fixed-regulator
-constraint (min =3D=3D max) and avoid the EPROBE_DEFER cascade.
-2. vcc5v0_usb30_otg0 now references <&regulator_5v_out> as its
-vin-supply, making the 5v_out node functional. The commit message node
-names are also aligned with the DTS labels.
+> 
+> 
+> [Severity: High]
+> Are in-flight events drained here when direct injection is disabled?
+> 
+> When disabling direct injection (where data is NULL), the ITTE is updated to
+> the host LPI and the ITS cache is invalidated. However, there is no call to
+> gicv5_its_syncr() or gicv5_irs_syncr() to drain accepted events before
+> returning.
+> 
+> If KVM subsequently tears down the VM and reuses the VM ID for a new guest,
+> could an in-flight event reach the IRS and be injected into the new VM's IST
+> using the old translation?
+> 
+> Disabling forwarding would likely need to drain events before returning to
+> safely reuse the resources.
 
-For patch 6:
-You are right that reparenting vcc3v4_rf has no runtime hardware
-effect since both rails are always-on fixed regulators. This patch is
-purely a DT topology fix to match the schematic (VCC3V4_RF is derived
-from VCC_SYSON via a ferrite bead). I have updated the commit message
-to clarify that it corrects the hardware description rather than
-fixing a runtime power-cutoff issue.
+We were missing a called to the IRS_SYNCR, which has now been added. The 
+ITS_INV_EVENTR that is already present should be sufficient on the ITS side:
 
-Coia
+R_ZXXJF: When ITS_STATUSR.IDLE transitions from 0 to 1, any ITS event 
+that used information from ITS translation structure entries prior to 
+the invalidate have been Accepted by the IRS.
+
+Successful VM teardown removes the translations, so incoming events 
+should not be injected into a new guest's IST.
+
+> 
+>> +	if (ret) {
+>> +		/* Keep a failed restoration distinguishable from a clean host ITTE. */
+>> +		if (!data)
+>> +			irqd_set_forwarded_to_vcpu(d);
+>> +		return ret;
+>> +	}
+>> +
+>> +	if (data)
+>> +		irqd_set_forwarded_to_vcpu(d);
+>> +	else
+>> +		irqd_clr_forwarded_to_vcpu(d);
+>> +
+>> +	return 0;
+>> +}
+>> +#endif /* CONFIG_KVM */
+> 
+
+Thanks,
+Sascha
