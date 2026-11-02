@@ -1,100 +1,53 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=142.132.183.134
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793578968;
-	b=Px7rmsF5dceNq4f4iWdeK1hJZemTk9CZcl0xhTLkKlevMFeDqJ+wxPx6emx/YNSOccnz
-	 21MH3gZ5lSv9xfdyC+2WBumoXFzU05yYT9Il7zjtMHTkU/OOH7+frm/AUE7ADrpPFfreD
-	 sYs/7S1IpAQCOkbAErkRmfCqkOw1iY68fd1RtvVaISbQPzptpEEBw7fAkx2j9ipmBlFld
-	 KQkfNe8atVF3FiM9JM1kmC3wMZpwr0a1ZPPyeVIsiqAwDcAKSQos5wIVxAwyAUnM7SpmP
-	 TUK5Mxq3MAm9piAT23qMsdCfBhbpvEZJ95k3pLEDaH0guP/VxvyE84bF8adqVr03AyA==
+	t=1793579740;
+	b=DfFI5Vo9h2YANyTM5aORq9ghR7HbPk0LHQganEL74lLmljSOuR7R3aM8DUgEBJJsCcAo
+	 7+lal38oVmZxj8dLRV00KkCuO/zSlizbB3brlzI7Z5PiVXBn4jWvyTGH9BDWXEJnQNe7Z
+	 hjsUA3Mm7BkNqkmT8ltnTtcyf+yWUtc0dd2ZWGeCU7OpKZ0sch2FQYVn7VsrtbWS5GPY9
+	 rDCcUgx2lUViQ0EHnbekX9M3Wma8+hIUo+v3q4McthbIERBpWnz9pPNn2F6SFq+8zxSqE
+	 6vepW2qzno8ij4yH50+4WoboAWEVB4Kjqenxv6Py9ARSBu+A+uV7vPFB4AO6H6tj3eA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793578968;
-	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
-	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:Received:Date:From:
-	 To:Cc:Subject:Message-ID:References:MIME-Version:In-Reply-To:
-	 X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
-	 Content-Type:Content-Disposition:Content-Transfer-Encoding;
-	bh=JOVQ4ASZFEh46dK4HlVqM/YOvdjeg+7exp1HRpI2jDQ=;
-	b=MbH8ywkPZ2+lVrpXXzy87G0Qe3oINihmvIacfutir9mEFCjxi2Ka0h6RRYPbdftTc3aL
-	 hIaCtENHkuOL+d5aX5V+9eNC1HGQatvg8OFHC5qJrpBpxQRjNzeEEejvpXv1J4iMFTPsK
-	 bZaM9yWpYOZ+JUIJ6/YLYZR75aN69arGmgqQq86jobYFjgm499qeSJ/Y7Tr736nP3grlA
-	 gNQtBX6obJHAwsKuNml7KHSHLocV37YfAiAMeWqCZD03hjR2ZM9OOcVfDCjpiQJxHQ0PW
-	 8YH/bhLB4teB3/jXjfUkjHHZFUtKhXKtBmJah6Zm8I5dkv6tCVqcVCF3qA72oIYcXxw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793579740;
+	h=DMARC-Filter:DKIM-Signature:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
+	 From:Autocrypt:In-Reply-To:Content-Type;
+	bh=ZG8EMWhctAf4hBlhV4nBt03pkj0jTyEdzET8AMrZ19I=;
+	b=IACDkHPLmsvkogcbjNRMjTsPN8jIKw6odNVLEPg0pr29odbLCpqqeu0vHbqmw9rFbtBR
+	 4cmN7JtxKU+q8RPVxFBiJVhzmLiFbDTtHR8uz6SNhz7RuGSs3cN/rg7TOiNb4awv5wL/c
+	 7d6Bv4puTYX88LSkjqjg+2tDjbaEYXhUGFrg/Ze3j3vwUp3GEikdoDMVlVS2bKMiVdiK8
+	 20dDEFzuorUBpfq53O9DoRz1L4XUINYrjKZOjssl1UA7ZEKQqHJpyqz/78L4hJXyR8A0O
+	 2TjD2CPgZS7fogZrCOZqkK36ZjBm8CqdVi/92UHLvXdmI2ZqydR1g2DnsRcjLZNzcaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=redhat.com;
-	spf=pass smtp.mailfrom=redhat.com;
-	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NAmYoCUe;
-	arc=none smtp.remote-ip=170.10.129.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	dmarc=pass header.from=erebion.eu;
+	spf=pass smtp.mailfrom=erebion.eu;
+	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=ed25519-sha256 header.s=202508e header.b="49306/x1";
+	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=rsa-sha256 header.s=202508r header.b=DvOzqtUy;
+	arc=none smtp.remote-ip=142.132.183.134
+Received: from erebion.eu (erebion.eu [142.132.183.134])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21ECD606A324
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 00:22:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 21ECD606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90D7606A324
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 00:35:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C90D7606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=erebion.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=erebion.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NAmYoCUe
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1793578967;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=JOVQ4ASZFEh46dK4HlVqM/YOvdjeg+7exp1HRpI2jDQ=;
-	b=NAmYoCUeHojKJL4HlPl4u3dwQ1W+d+ZevazbKbCMN1SoUHcUOZBR5RrtpTBE38zXw8UtA/
-	sT9+XZRcbax1pZRV3y4eSZGfkNR04YNtDMRlnw2HfahEtUxS+bTPXKKNN90Z3uK/zEo/I+
-	hOcWDR4k0ARe6/bR1B/1jlQXEKQlwlE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-619-onqbskMqOyyI1GDWFsdwyQ-1; Sun, 01 Nov 2026 19:22:46 -0500
-X-MC-Unique: onqbskMqOyyI1GDWFsdwyQ-1
-X-Mimecast-MFC-AGG-ID: onqbskMqOyyI1GDWFsdwyQ_1793578965
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-4a35e1d2dddso23390575e9.0
-        for <sashiko-reviews@lists.linux.dev>; Sun, 01 Nov 2026 16:22:45 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793578965; x=1794183765;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:cc:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=JOVQ4ASZFEh46dK4HlVqM/YOvdjeg+7exp1HRpI2jDQ=;
-        b=R52vaqJB3XiZYwiZCjBiee3kdWDXMZBbN4H3KyrYos6kdf+U7njT2KtDzMx4XChFKJ
-         JlvzM4bYXQE2vLyS0emrPdu3lKy2OF6vK3wswv77BUinKxND0gEYhAmFHtRR5b4k772r
-         SzLQ62Evo+yCkDGro2buZlKCrM3lARlzQEaOSPtey9uLsOouTR2BjFpS8pou8GkTr+sP
-         1No3zhZ6mxu1FJxC152lI79EhE2Vf2vjHkFJkv9tq+K1SN88JA6MfRiLcshwh2JAR4vo
-         oektdR8WRAO9bk35rqFKKou1IRDqUPQvdpZOgM8tPGPTAjx8XJj1vMMcElo2wETgfZUF
-         qMLw==
-X-Gm-Message-State: AFq9FYJ2e3iTWwiFsgCoBKWwArDUDkB/j/maE8KVejEL87MN+gnudFM1
-	zRy4MD2LW40TyeM4dNbR4rf3wme3YlQujH019VfEmEWFwW5xRISlPsKwditBOQEOQBDl+4hjA5R
-	RBrQdN9lHqrqIkB/u+iwbs1F48kMFSgjJk058hfAFX97B76uVGaA952/NkOwHB5ZS825byJ9aVp
-	vhNojcPDpb5jgH1SPMORnsrrJUM4vuktto9CvbI+b7BbABkuA=
-X-Gm-Gg: AYBFou0DxcKKHNWss4lEXX8xfh+C2htNKPN5olejTd1VatMiyBZLeAAk5zk95PYOTTw
-	iNyDS3fYQZHaEgTQBO8cxyi9g6lPC/eB7PZK+WBABdCa4XtLuJYkaz4OcBionawBQll4m7DwLm1
-	rglB1z7zH9iehFADzaNvPEmR6407qUhlGOkZQBF7iC+8WnIupOZkVCknjk9LW/Xd/5U2wiMk5vQ
-	EewMKCiK20Tmc9p8PjRapY9eiEeQyYxZtziqJVfYwvk9kz8hTaT89Mx4CCkdb7iPWg7AUsfuZbc
-	/7S49HpZNBVoObPcu0hhPK/kZlKvLc/vnqgOUzigc9EgtnOQDi7Xfyc/zdvbMiQZ3bzw8NScX22
-	Bp7g3cJD4vSKn+mRkOqGp+AXTSgdeTcAVUoIChhXSag==
-X-Received: by 2002:a05:600c:1f87:b0:4a1:f68a:9736 with SMTP id 5b1f17b1804b1-4ac17b2be08mr197874465e9.26.1793578964657;
-        Sun, 01 Nov 2026 16:22:44 -0800 (PST)
-X-Received: by 2002:a05:600c:1f87:b0:4a1:f68a:9736 with SMTP id 5b1f17b1804b1-4ac17b2be08mr197874195e9.26.1793578964162;
-        Sun, 01 Nov 2026 16:22:44 -0800 (PST)
-Received: from redhat.com ([2a0d:6fc0:1501:b100:9ea2:fd21:b361:8dab])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4abf67aa704sm220328625e9.8.2026.11.01.16.22.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2026 16:22:43 -0800 (PST)
-Date: Sun, 1 Nov 2026 19:22:40 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: Linfeng Sun <linfeng.sun.dev@gmail.com>,
-	Eugenio Perez <eperezma@redhat.com>, kvm@vger.kernel.org,
-	virtualization@lists.linux.dev
-Subject: Re: [PATCH v2] vhost-vdpa: initialize state before publishing cdev
-Message-ID: <20261101192214-mutt-send-email-mst@kernel.org>
-References: <20261011-fix-null-pointer-in-vhost_vdpa_release-v2-1-66ba929971ce@gmail.com>
- <sashiko-outbox-167170@kernel.org>
+	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=ed25519-sha256 header.s=202508e header.b=49306/x1;
+	dkim=pass (2048-bit key, unprotected) header.d=erebion.eu header.i=@erebion.eu header.a=rsa-sha256 header.s=202508r header.b=DvOzqtUy
+DKIM-Signature: v=1; a=ed25519-sha256; s=202508e; d=erebion.eu; c=relaxed/relaxed; r=y;
+	h=From:To:Subject:Date:Message-ID; t=1793579729; bh=ZG8EMWhctAf4hBlhV4nBt03
+	pkj0jTyEdzET8AMrZ19I=; b=49306/x10UCRUR6jExCEMbRyFc0aZorRTnSx/7F2SHJFTnYFe2
+	eff4owSHoiTbbDs8RWJcIi8fLRv3kxeCrnBA==;
+DKIM-Signature: v=1; a=rsa-sha256; s=202508r; d=erebion.eu; c=relaxed/relaxed; r=y;
+	h=From:To:Subject:Date:Message-ID; t=1793579729; bh=ZG8EMWhctAf4hBlhV4nBt03
+	pkj0jTyEdzET8AMrZ19I=; b=DvOzqtUyJ0Y/RW7BF/va6FjWFjZ9fn2RxA02B6zMaRVxk5I97K
+	Y8X9To2AnHFM4hAzxK+iaFTwgf3D/5mtrPric68Tp0rs6KClDQGnD+F0ZguMs1dUVj3XU5KgENJ
+	3EZ4jGTT8/H9ALxUOLs+SCM27lyXX36bk17vdAEFU2CN7E1HLWYcYN/Rux4jo3LmXkxBHQxvSHp
+	/xiKuQHJa3uZrY0Y1kWID2eIOoZhcBjqg+eOsJnVnV9sippNuqjUV6vbrPGhBv7T19XBTnBOpum
+	etxh5kAXH/wbweBOfiReW2Ti14G+MlfQHI95bMwnuHNq6eJcNZWbw86AP4hTOjam+jQ==;
+Message-ID: <dc96c6bb-0ac2-4f67-84b5-2284d37afa44@erebion.eu>
+Date: Mon, 2 Nov 2026 01:35:29 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -104,86 +57,112 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-In-Reply-To: <sashiko-outbox-167170@kernel.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 9zI1D7jujcWe9rLiRrsCw-phdfv0wBstHFp90JFZ6a0_1793578965
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 11/12] arm64: dts: qcom: sm6350-lena: Add PM6150L
+ thermals
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ robh@kernel.org, conor+dt@kernel.org
+References: <20261102-pdx213-upstream-3-v3-0-cdc3be96d257@erebion.eu>
+ <20261102-pdx213-upstream-3-v3-11-cdc3be96d257@erebion.eu>
+ <sashiko-outbox-192768@kernel.org>
+From: erebion <erebion@erebion.eu>
+Autocrypt: addr=erebion@erebion.eu; keydata=
+ xjMEY7S2FRYJKwYBBAHaRw8BAQdAUf0YlT6sBQSunZeO44bgAPe+ndqTifGaNjw7vzJ2KPHN
+ HGVyZWJpb24gPGVyZWJpb25AZXJlYmlvbi5ldT7CjwQTFggANxYhBJyMprURw7/YpjH7646v
+ QDJuAq59BQJpWnovBQkHhhzbAhsDBAsJCAcFFQgJCgsFFgIDAQAACgkQjq9AMm4Crn057AEA
+ j3didUIhbtAoppk2eNu6CbtMvkDisHWHVLaWF8YC1VsA/1P0ngBoVghELMachirfTinwBplJ
+ qP7GGlSGRqSfnlAKzjgEY7S2FRIKKwYBBAGXVQEFAQEHQN6NPWcyqKdecGU1vN8FVXBwYEUd
+ OAhF5jpmd7M0Ybx8AwEIB8J+BBgWCAAmFiEEnIymtRHDv9imMfvrjq9AMm4Crn0FAmlaei8F
+ CQeGHNsCGwwACgkQjq9AMm4Crn075QEAoDqfm4OeAEQWMgfQ496u2S3rWJw1EMgTOP51FQbX
+ rY4BAKn6AhEBh605uas3OTVtcwNIAJn1sHTA7HqqWniUe9sP
+In-Reply-To: <sashiko-outbox-192768@kernel.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------cC6AXiopkwI7HiSSjolv8bnl"
 
-On Sun, Oct 11, 2026 at 10:39:26AM +0000, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] vhost_vdpa: spurious -EBUSY on open() due to uevent race during probe
-> --
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------cC6AXiopkwI7HiSSjolv8bnl
+Content-Type: multipart/mixed; boundary="------------07k0mmuG0N6riQ0TbvE0P278";
+ protected-headers="v1"; hp="clear"
+Message-ID: <dc96c6bb-0ac2-4f67-84b5-2284d37afa44@erebion.eu>
+Date: Mon, 2 Nov 2026 01:35:29 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 11/12] arm64: dts: qcom: sm6350-lena: Add PM6150L
+ thermals
+Content-Language: en-GB
+To: sashiko-reviews@lists.linux.dev
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ robh@kernel.org, conor+dt@kernel.org
+References: <20261102-pdx213-upstream-3-v3-0-cdc3be96d257@erebion.eu>
+ <20261102-pdx213-upstream-3-v3-11-cdc3be96d257@erebion.eu>
+ <sashiko-outbox-192768@kernel.org>
+From: erebion <erebion@erebion.eu>
+Autocrypt: addr=erebion@erebion.eu; keydata=
+ xjMEY7S2FRYJKwYBBAHaRw8BAQdAUf0YlT6sBQSunZeO44bgAPe+ndqTifGaNjw7vzJ2KPHN
+ HGVyZWJpb24gPGVyZWJpb25AZXJlYmlvbi5ldT7CjwQTFggANxYhBJyMprURw7/YpjH7646v
+ QDJuAq59BQJpWnovBQkHhhzbAhsDBAsJCAcFFQgJCgsFFgIDAQAACgkQjq9AMm4Crn057AEA
+ j3didUIhbtAoppk2eNu6CbtMvkDisHWHVLaWF8YC1VsA/1P0ngBoVghELMachirfTinwBplJ
+ qP7GGlSGRqSfnlAKzjgEY7S2FRIKKwYBBAGXVQEFAQEHQN6NPWcyqKdecGU1vN8FVXBwYEUd
+ OAhF5jpmd7M0Ybx8AwEIB8J+BBgWCAAmFiEEnIymtRHDv9imMfvrjq9AMm4Crn0FAmlaei8F
+ CQeGHNsCGwwACgkQjq9AMm4Crn075QEAoDqfm4OeAEQWMgfQ496u2S3rWJw1EMgTOP51FQbX
+ rY4BAKn6AhEBh605uas3OTVtcwNIAJn1sHTA7HqqWniUe9sP
+In-Reply-To: <sashiko-outbox-192768@kernel.org>
 
+--------------07k0mmuG0N6riQ0TbvE0P278
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Linfeng do you want to address the bot review on list pls?
+T24gMTEvMi8yNiAwMDo0NCwgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToNCj4gW1Nl
+dmVyaXR5OiBNZWRpdW1dDQo+IFNob3VsZCByZWFyX2NhbV9zZW5zb3IgcmVmZXJlbmNlIEFE
+QzVfR1BJTzJfMTAwS19QVSBpbnN0ZWFkIG9mDQo+IEFEQzVfR1BJTzZfMTAwS19QVSBoZXJl
+Pw0KPiANCj4gT24gUE02MTUwTCwgcGh5c2ljYWwgcGluIGdwaW82IGlzIHJvdXRlZCB0byBB
+REM1X0dQSU8yXzEwMEtfUFUgKDB4NTMpLCBhbmQNCj4gdW5kZXIgJnBtNjE1MGxfYWRjIGJl
+bG93IHRoZSByZWFyIGNhbWVyYSB0aGVybWlzdG9yIGNoYW5uZWwgaXMgZGVmaW5lZCBhczoN
+Cg0KQWggeWVzLCBsb29rcyBsaWtlIEkgY29uZnVzZWQgZ3BpbzYgZnJvbSBkb3duc3RyZWFt
+IERUIGFuZCBncGlvMiBmcm9tIA0KaW5jbHVkZS9kdC1iaW5kaW5ncy9paW8vcWNvbSxzcG1p
+LXZhZGMuaA0KDQpXaWxsIGZpeCB3aXRoIHY0Li4uDQoNCj4gW1NldmVyaXR5OiBMb3ddDQo+
+IFRoaXMgaXNuJ3QgYSBydW50aW1lIGJ1ZywgYnV0IHRoZXJlIGFyZSBhIGZldyBwYXRjaCBz
+cGxpdCBhbmQgc3R5bGUgaXNzdWVzDQo+IGFjcm9zcyB0aGlzIGNoYW5nZToNCj4gDQo+IDEu
+IEVhcmxpZXIgaW4gdGhlIHNlcmllcywgY29tbWl0IGZmMjQxMjBhMDhkNiAoImFybTY0OiBk
+dHM6IHFjb206IHNtNjM1MC1sZW5hOg0KPiBBZGQgUE1LODM1MCB0aGVybWFscyIpIGFkZGVk
+IHhvLXRoZXJtYWwsIGFuZCB0aGUgbmV4dCBjb21taXQgZjE3YmM0OWY2OTNkDQo+ICgiYXJt
+NjQ6IGR0czogcWNvbTogc202MzUwLWxlbmE6IEFkZCBQTTcyNTBCIHRoZXJtYWxzIikgYWNj
+aWRlbnRhbGx5IHJlbW92ZWQNCj4gaXQuIFJlLWFkZGluZyB4by10aGVybWFsIGhlcmUgcHV0
+cyBhIFBNSzgzNTAgdGhlcm1hbCB6b25lIGludG8gdGhlIFBNNjE1MEwNCj4gdGhlcm1hbCBw
+YXRjaC4gQ291bGQgeG8tdGhlcm1hbCBiZSBrZXB0IGluIHRoZSBQTUs4MzUwIHBhdGNoIGlu
+c3RlYWQ/DQoNClRoZSBib3QgYWxyZWFkeSBjb21tZW50ZWQgdGhpcyBvbiB0aGUgb3RoZXIg
+cGF0Y2guLi4gSSBrbm93LCByZWJhc2UgDQptaXNoYXAsIGZpeGVkLi4uDQoNCj4gMi4gVGhl
+IG5ld2x5IGFkZGVkIGR0LWJpbmRpbmdzL2dwaW8vZ3Bpby5oIGFuZCBkdC1iaW5kaW5ncy9p
+bnB1dC9pbnB1dC5oDQo+IGluY2x1ZGVzIGF0IHRoZSB0b3Agb2YgdGhlIGZpbGUgZG8gbm90
+IGFwcGVhciB0byBiZSB1c2VkIGJ5IHRoaXMgcGF0Y2guDQoNCk9oIHllcywgd2lsbCByZW1v
+dmUuDQoNCj4gMy4gTGFiZWwgcmVmZXJlbmNlcyBhdCB0aGUgYm90dG9tIG9mIHRoZSBmaWxl
+IGFyZSBzb3J0ZWQgYWxwaGFiZXRpY2FsbHksIHNvDQo+IHNob3VsZCAmcG02MTUwbF9ncGlv
+cyBiZSBwbGFjZWQgYWZ0ZXIgJnBtNjE1MGxfZmxhc2ggcmF0aGVyIHRoYW4gYmVmb3JlDQo+
+ICZwbTYxNTBsX2FkYz8NCg0KT2ggeWVzLCB3aWxsIHJlLXRyYWluIHRoZSBhbHBoYWJldCBh
+bmQgZml4IHRoYXQgYXMgd2VsbC4uLiA6KQ0KDQo+IDQuIFRoZSBjbG9zaW5nIGJyYWNlIG9m
+IHJlYXItY2FtLWZsYXNoLXRoZXJtQDIgaGFzIGFuIGV4dHJhIHRhYiBvZg0KPiBpbmRlbnRh
+dGlvbi4NCj4gDQoNCmFsc28gZml4ZWQgaW4gdjQuLi4NCg0KLS0gDQplcmViaW9uDQoNClhN
+UFA6IGVyZWJpb25AZXJlYmlvbi5ldQ0KDQpNeSBsYW5ndWFnZXM6IEdlcm1hbiwgRW5nbGlz
+aCwgU3dlZGlzaCwgTm9yd2VnaWFuLCBEYW5pc2gNClllcywgSSdtIGEgbGFuZ3VhZ2UgbmVy
+ZC4gRmVlbCBmcmVlIHRvIHdyaXRlIHRvIG1lIGluIGFueSBvZiB0aGUgDQphZm9yZW1lbnRp
+b25lZCBsYW5ndWFnZXMuDQoNCg==
 
-> commit cef3a58744e8aa0a22f86fbbe577797fa0a78e31
-> Author: Linfeng Sun <linfeng.sun.dev@gmail.com>
-> 
-> vhost-vdpa: initialize state before publishing cdev
-> 
-> Initialize the completion and as hash buckets before cdev_device_add()
-> makes the device accessible.
-> 
-> > diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-> > index ff7d907191712..6cff1ed2004ee 100644
-> > --- a/drivers/vhost/vdpa.c
-> > +++ b/drivers/vhost/vdpa.c
-> > @@ -1655,7 +1655,7 @@ static int vhost_vdpa_probe(struct vdpa_device *vdpa)
-> >  		return minor;
-> >  	}
-> >  
-> > -	atomic_set(&v->opened, 0);
-> > +	atomic_set(&v->opened, 1);
-> >  	spin_lock_init(&v->config_lock);
-> >  	v->minor = minor;
-> >  	v->vdpa = vdpa;
-> > @@ -1678,16 +1678,17 @@ static int vhost_vdpa_probe(struct vdpa_device *vdpa)
-> >  
-> >  	cdev_init(&v->cdev, &vhost_vdpa_fops);
-> >  	v->cdev.owner = THIS_MODULE;
-> > +	init_completion(&v->completion);
-> > +	for (i = 0; i < VHOST_VDPA_IOTLB_BUCKETS; i++)
-> > +		INIT_HLIST_HEAD(&v->as[i]);
-> >  
-> >  	r = cdev_device_add(&v->cdev, &v->dev);
-> >  	if (r)
-> >  		goto err;
-> >  
-> > -	init_completion(&v->completion);
-> >  	vdpa_set_drvdata(vdpa, v);
-> >  
-> > -	for (i = 0; i < VHOST_VDPA_IOTLB_BUCKETS; i++)
-> > -		INIT_HLIST_HEAD(&v->as[i]);
-> > +	atomic_set_release(&v->opened, 0);
-> 
-> [Severity: Medium]
-> Will this cause a spurious -EBUSY for userspace orchestration tools like udev?
-> 
-> When cdev_device_add() registers the character device, it fires a KOBJ_ADD
-> uevent. If userspace reacts immediately by calling open(), it will hit
-> vhost_vdpa_open():
-> 
-> drivers/vhost/vdpa.c:vhost_vdpa_open() {
-> 	...
-> 	opened = atomic_cmpxchg(&v->opened, 0, 1);
-> 	if (opened)
-> 		return -EBUSY;
-> 	...
-> }
-> 
-> Since v->opened was artificially set to 1 earlier in probe, open() will be
-> rejected with -EBUSY until atomic_set_release() clears it, which might
-> break normal userspace orchestration that attempts to open the device right
-> after the uevent.
-> 
-> >  
-> >  	return 0;
-> >
-> 
-> -- 
-> Sashiko AI review · https://sashiko.dev/#/patchset/20261011-fix-null-pointer-in-vhost_vdpa_release-v2-1-66ba929971ce@gmail.com?part=1
+--------------07k0mmuG0N6riQ0TbvE0P278--
 
+--------------cC6AXiopkwI7HiSSjolv8bnl
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnoEABYIACMWIQScjKa1EcO/2KYx++uOr0AybgKufQUCaufa0QUDAAAAAAAKCRCOr0AybgKufWVq
+AQDj0uqQ9RHnWCiwFufyZ23NXdaH1uKck1ATaJo4EB+6/QD3dgNEXf3W3KPQ/RF7KjnWzKkF+twU
+rYm1kRAJY8dZCw==
+=kb7m
+-----END PGP SIGNATURE-----
+
+--------------cC6AXiopkwI7HiSSjolv8bnl--
