@@ -1,49 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793640036;
-	b=0HfmIR++Drnm7A1TtcH4sUNRMD5BcsYurF+Vy0EIRkrZ8Xex/55rNkT2GajiexiSdzaL
-	 LNTg54C4i5EtH00/J9JUzsXDCmCPfhbhOV6hhkc+c5X2/4m63v4NM0/ORKpdO5VgLNC75
-	 209JF+XAsXDIrGYxQrKZiA8NCJ/XSLZl3VKF6gnFCPQ2PgHVovooxuNjCmvqNzsvhSYbv
-	 8x4SBEWa7a+Mn5w/uM2qLkcWYjhD+uavZe06/+1WNyb5oWLXPM6wcPPKWzrVfUBc8KUA9
-	 NfpRXVLumWO3mHLxHomGcQBV7v21FQTlgkFEZJBJTmTv1p7hLjM3G/nbNU2KBKuik1A==
+	t=1793640552;
+	b=OCdQuaDS022XnA1Pad/jMijt1e/XCPDTO66rcFuEyZpA4sr6FEbZCzNVy4vk2O+HNtZg
+	 DG+m0VyPUZhgD+UbWnaC5EBqKEy2Tp9y4k1qdzL0OTIcctD5nDjzxVBHH2m4Z4EyyoQBR
+	 KQJ7W3nEgHWBkYG/GCmW0ow52s82ASD7Yaj0tj0ttb/uJRjwNg4TLQConB2cBSl8DUNFo
+	 OBQza0autksWvczY0CUbcz9+PUPoXEPyN7ZUoNZIPnbH3g0PGwL2RIW7rgdOVE1GKgtG7
+	 ZwMbFwF8z2+DY4gOSAtkPeDNPiHCNcZDi4ADcZdxbiyL5q38EunpjuKf7YcXjMFnOEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793640036;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793640552;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
 	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
 	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=dzzxSQBG0AvDDv9COAPOwA5LVMAcbbFKl5UqiJsAWms=;
-	b=mjnjZ5ZZMtHmwboYEVlZuq+M23QlXzZeHKpdBIQcYchzaKJGxI+7wNQvMW6/YpOBOA2O
-	 mB3K4TS9GC46iG0V9AxRTJuvUdfTEiYDvboEQKQykqqrPAcJWFZk/PzQF4DwdQ12wfOM2
-	 6GG43KweBPzZfz563ayl1HPnT58/fCPYszSsVqbRq9qE8VH+QQoL/9C6qcW1CvmsRBMZU
-	 owOBVSPGzXXaOQxWd+ZB44QycsCgnTU80VSqlwuVDoamfc8/WE3v/WOP68+jUPvK0681e
-	 FlqU/LLFliKysQt79smyByN4nHT9ETrP39+ImwLXVYYhN5v4eeXLujz7kipolITcd6Q==
+	bh=bLJCblaC6p74X0djr/s7k+NpLQHxJXC32OYuLH+pEfk=;
+	b=CUPhWuXJsnBLU0bE7hruFXZyw1XU/Qc4hUCWAvmUPAj887iT+YbeBcN9PuaWAkFWdgkq
+	 XjDLkub0+XkuSJihkgJPE5+NUf04EyRLWMokC8WzKsrQBukBEUhMub0SlfqgnYYqOp5bJ
+	 FJb2fmmRioKflpZQZ1aJEy8xiAm0Osk8tPw82KcDgPm5X3Ef6ZsYBJdvYfpbLStd1FTwl
+	 NFMIh+fpv8+x/wUfaXv32qEBV9I6TaUejfJvVdQd/hSimMD9lDwNSkfMZ8wEV+tMF8t5m
+	 A6ZQ2agqcR9qrtvf1kRv9QK3/e7Veo2iQNwzhbfJsXdlKpndLM9nYJmJqh299Om0VfQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=arm.com;
 	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b="Qz/urx1t";
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=vdnNkLzw;
 	arc=none smtp.remote-ip=217.140.110.172
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F68F60A2638;
-	Mon,  2 Nov 2026 17:20:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2F68F60A2638
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D720606E031;
+	Mon,  2 Nov 2026 17:29:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6D720606E031
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=Qz/urx1t
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=vdnNkLzw
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3910516F3;
-	Mon,  2 Nov 2026 09:20:31 -0800 (PST)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A72A716F3;
+	Mon,  2 Nov 2026 09:29:07 -0800 (PST)
 Received: from [10.0.136.93] (M0PRX50XMG.cambridge.arm.com [10.0.136.93])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id ABE883FB9E;
-	Mon,  2 Nov 2026 09:20:33 -0800 (PST)
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0A18F3F59E;
+	Mon,  2 Nov 2026 09:29:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1793640034; bh=BxBrr70udayxaWonC/JoGNatfdqjF5UKhrB8xkcjNxc=;
+	t=1793640550; bh=ZlHYnqiU00gksrwMlhvvPkWAHmYQOGltgW8sZDyoCXo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Qz/urx1tqji9NmQKNsRp8JpqImZLfp0JlQOKFBWH9nsJvq55GlGCKIeGwk7CN676z
-	 HW2ZmvwWKMvrbZIRFJtu1ZWwa+of/ylr3undEPIpvulsCRDG+oaKptqwHiW6BxQeUU
-	 bdzKiPZ7rdGDRlk+/DpUWMSScl7PmqQPea6e/5yo=
-Message-ID: <8bc11d0b-f7c6-49e1-b007-c0824deb7636@arm.com>
-Date: Mon, 2 Nov 2026 17:20:32 +0000
+	b=vdnNkLzwOmkpdJGKhWTBsOK9HdfAJx8FDNmhV+Nio/h04lbIvSgm9v5ndCwQd8Z6+
+	 4Fvxg6Rm4tWYOBDjT3xSyEG6D6J7NIjij++stxkXIZrydT81vhZLy8WeO/KzTnNcOv
+	 NexeDzHHWZ47qbqocYmkYKMNEIdMOqIEnlshIrqM=
+Message-ID: <909ce27c-524d-4206-93bb-113711c8ca11@arm.com>
+Date: Mon, 2 Nov 2026 17:29:08 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -54,178 +54,210 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/16] KVM: arm64: gic-v5: Add ITS translation cache
- maintenance
+Subject: Re: [PATCH 09/16] KVM: arm64: gic-v5: Add ITS MSI injection
 To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev,
  kvm@vger.kernel.org
 Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
 References: <20261016155741.979985-1-sascha.bischoff@arm.com>
- <20261016155741.979985-9-sascha.bischoff@arm.com>
- <sashiko-outbox-174606@kernel.org>
+ <20261016155741.979985-10-sascha.bischoff@arm.com>
+ <sashiko-outbox-174632@kernel.org>
 Content-Language: en-GB
 From: Sascha Bischoff <sascha.bischoff@arm.com>
-In-Reply-To: <sashiko-outbox-174606@kernel.org>
+In-Reply-To: <sashiko-outbox-174632@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 16/10/2026 17:10, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
-> - [High] kvm: missing memcg accounting for ITS translation cache allocations
-> - [High] kvm: undersized ITS translation hash table causes raw spinlock DoS
-> - [Medium] kvm: arm64: gic-v5: cache insertion failure drops valid LPI
+On 16/10/2026 17:23, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+> - [High] kvm/vgic: raw_spinlock deadlock due to missing IRQ disable in its_cache_add_translation
+> - [High] kvm/vgic: userspace-triggerable WARN_ON_ONCE causes host DoS in vgic_v5_its_inject_msi
+> - [High] arm64: vgic-v5: User-triggerable WARN_ON_ONCE in MSI injection
+> - [High] kvm: arm64: ABI violation on guest-driven MSI mapping errors
+> - [Medium] kvm: arm64: gic-v5: MSI injection aborted on translation cache allocation failure
+> - [Medium] arm64: vgic-v5: MSI injection fails if ITS cache insertion fails
 > --
 > 
-> commit b6b2c7ac3d0d6dc377bf1fd1bb7de1527b73194f
+> commit 65afd53542f7c52bea1da09f7e70c85b22c50b33
 > Author: Sascha Bischoff <sascha.bischoff@arm.com>
 > 
-> KVM: arm64: gic-v5: Add ITS translation cache maintenance
-> 
-> This commit introduces a disposable acceleration structure to cache
-> resolved ITS translations, avoiding iterating over guest memory on every
-> MSI or ITS event.
+>      KVM: arm64: gic-v5: Add ITS MSI injection
+>      
+>      Now that KVM can resolve GICv5 ITS translations from guest memory,
+>      allow userspace and irqfd MSI injection to target a virtual GICv5 ITS.
 > 
 >> diff --git a/arch/arm64/kvm/vgic/vgic-its-v5.c b/arch/arm64/kvm/vgic/vgic-its-v5.c
->> index f6d2acca4ae4c..e4c0415137605 100644
+>> index e4c0415137605..5920fa1bcb2cf 100644
 >> --- a/arch/arm64/kvm/vgic/vgic-its-v5.c
 >> +++ b/arch/arm64/kvm/vgic/vgic-its-v5.c
 > 
 > [ ... ]
 > 
->> @@ -19,6 +19,272 @@
->>   #define VITS_V5_DEVICE_ID_BITS		16
->>   #define VITS_V5_EVENT_ID_BITS		16
-> 
-> [ ... ]
-> 
->> +static int its_cache_add_translation(struct kvm *kvm, struct vgic_v5_its *its,
->> +				     u32 device_id, u16 event_id,
->> +				     struct vgic_irq *irq)
->> +{
->> +	u64 key = ((u64)device_id << 16) | (u64)event_id;
->> +	struct its_cache_translation_entry *entry;
->> +	struct its_cache_translation_entry *old;
->> +	struct hlist_node *tmp;
->> +	HLIST_HEAD(removed);
->> +
->> +	entry = kzalloc_obj(*entry, GFP_KERNEL);
->> +	if (!entry)
->> +		return -ENOMEM;
-> 
-> [Severity: High]
-> Does this allocation need memcg accounting?
-> 
-> The GFP_KERNEL flag is missing __GFP_ACCOUNT, which means these guest-driven
-> allocations are not charged to the VM memory cgroup. Since the cache has no
-> upper size bound, could a guest inject arbitrary device_id and event_id
-> combinations via GICV5_ITS_GEN_EVENTR to exhaust host kernel memory and
-> cause an out-of-memory denial of service?
-
-That's a good point. The cache allocation is unaccounted in the posted 
-patch. Due to the review comments, I've reworked the translation cache 
-from a hash table to an XArray. As part of this, I've changed both the 
-entry allocation and XArray insertion to use GFP_KERNEL_ACCOUNT.
-
-> 
-> [ ... ]
-> 
->> +static int its_cache_look_up_translation(struct vgic_v5_its *its,
->> +					 u32 device_id, u16 event_id,
->> +					 struct vgic_irq **irq)
->> +{
->> +	u64 key = ((u64)device_id << 16) | (u64)event_id;
->> +	struct its_cache_translation_entry *entry;
->> +
->> +	guard(raw_spinlock)(&its->translation_cache_lock);
->> +
->> +	hash_for_each_possible(its->translation_cache, entry, node, key) {
+>>   static int its_cache_add_translation(struct kvm *kvm, struct vgic_v5_its *its,
+>>   				     u32 device_id, u16 event_id,
+>>   				     struct vgic_irq *irq)
+>>   {
+>>   	u64 key = ((u64)device_id << 16) | (u64)event_id;
+>>   	struct its_cache_translation_entry *entry;
+>>   	struct its_cache_translation_entry *old;
+>>   	struct hlist_node *tmp;
+>>   	HLIST_HEAD(removed);
+>>   
+>>   	entry = kzalloc_obj(*entry, GFP_KERNEL);
+>>   	if (!entry)
+>>   		return -ENOMEM;
+>>   
+>>   	entry->key = key;
+>>   	entry->irq = irq;
+>>   
+>>   	scoped_guard(raw_spinlock, &its->translation_cache_lock) {
 > 
 > [Severity: High]
-> Can this traversal cause a host lockup under a raw spinlock?
+> Could this lock acquisition deadlock?
 > 
-> Since the translation cache is unbounded, a guest could trigger the insertion
-> of millions of LPI translations. These entries are distributed across a small
-> fixed-size hash table, which will result in massive hash collisions and
-> extremely long bucket chains.
+> The translation_cache_lock is a raw_spinlock_t that is also acquired in
+> hardirq context by its_cache_look_up_translation(). Since
+> scoped_guard(raw_spinlock) does not disable local interrupts, a hardirq could
+> preempt this process-context section and attempt to acquire the same lock,
+> spinning forever.
 > 
-> Traversing tens or hundreds of thousands of entries under a raw spinlock
-> disables preemption and interrupts for an extended period, which could
-> lead to soft or hard CPU lockups.
+> Should this use the raw_spinlock_irqsave variant?
 
-I've replaced the fixed hash table with an XArray. I don't think that 
-this same issue exists in the new implementation.
+I think it should have, if I'd not reworked the code to use XArrays 
+instead. The original cache lock could be interrupted by a hardirq 
+trying to take the same lock.
+
+I've removed translation_cache_lock as part of the XArray conversion, so 
+I think that this is now addressed.
 
 > 
 > [ ... ]
 > 
->> @@ -260,7 +530,15 @@ static int __vgic_v5_its_resolve_lpi(struct kvm *kvm, struct vgic_v5_its *its,
->>   	if (IS_ERR(*irq))
+>>   static int its_cache_look_up_translation(struct vgic_v5_its *its,
+>>   					 u32 device_id, u16 event_id,
+>>   					 struct vgic_irq **irq)
+>>   {
+>>   	u64 key = ((u64)device_id << 16) | (u64)event_id;
+>>   	struct its_cache_translation_entry *entry;
+>>   
+>>   	guard(raw_spinlock)(&its->translation_cache_lock);
+> 
+> [Severity: High]
+> Does this also need to disable interrupts?
+> 
+> Since this is called from the fast path (kvm_arch_set_irq_inatomic) which can
+> run in hardirq context, and the same lock is taken in process context, should
+> both sides use the irqsave/irqrestore variants to prevent deadlocks?
+
+As above, the translation_cache_lock has now been dropped. We now do RCU 
+lookups in the XArray instead.
+
+> 
+> [ ... ]
+> 
+>> @@ -531,7 +572,8 @@ static int __vgic_v5_its_resolve_lpi(struct kvm *kvm, struct vgic_v5_its *its,
 >>   		return PTR_ERR(*irq);
 >>   
->> -	return 0;
->> +	vgic_get_irq_ref(*irq);
->> +	ret = its_cache_add_translation(kvm, its, device_id, event_id, *irq);
->> +	if (ret) {
->> +		vgic_put_irq(kvm, *irq);
->> +		vgic_put_irq(kvm, *irq);
->> +		*irq = NULL;
->> +	}
->> +
->> +	return ret;
+>>   	vgic_get_irq_ref(*irq);
+>> -	ret = its_cache_add_translation(kvm, its, device_id, event_id, *irq);
+>> +	ret = its_cache_add_translation(kvm, its, device_id, (u16)event_id,
+>> +					 *irq);
+>>   	if (ret) {
+>>   		vgic_put_irq(kvm, *irq);
+>>   		vgic_put_irq(kvm, *irq);
+>>   		*irq = NULL;
+>>   	}
+>>   
+>>   	return ret;
+>>   }
 > 
 > [Severity: Medium]
-> Should a cache insertion failure cause the valid LPI to be dropped?
+> Is it correct to abort the injection if the translation cache insertion fails?
 > 
-> If its_cache_add_translation() fails due to memory pressure, this error
-> handling path drops both the cache reference and the caller's successfully
-> resolved reference, propagating the error and discarding the interrupt.
+> The translation cache is intended to be a best-effort optimization. If
+> its_cache_add_translation() fails (e.g., due to -ENOMEM), propagating the
+> error and dropping the successfully resolved LPI will silently lose the
+> interrupt, which could hang guest drivers under host memory pressure.
 > 
-> Since the translation cache is a best-effort acceleration structure, is it
-> better to swallow the caching error and allow the caller to proceed with the
-> validly resolved LPI rather than completely failing the resolution?
+> Should the error be swallowed here instead so that injection proceeds?
 
-If we're dropping translation insertions due to memory pressure, then 
-we're going to have big issues real soon! That said, a cache allocation 
-failure should not discard an LPI already resolved for software MSI 
-delivery or an ITS event, so I've made cache insertion best effort in 
-those cases.
+I've made cache insertion best effort for software MSI injection, so the 
+interrupt is still injected on that failure. That said, we realistically 
+shouldn't be hitting this case unless we're under very high memory 
+pressure, at which point all sorts of things will be going wrong!
 
-Direct injection still needs a cache entry to track its owner, as we 
-need to be able to resolve which guest translation was used for the 
-forwarding to correctly tear down translations when the guest 
-invalidates them.
-
-> 
->> diff --git a/include/kvm/arm_vgic.h b/include/kvm/arm_vgic.h
->> index c9eaa7897b57e..bf970275868c9 100644
->> --- a/include/kvm/arm_vgic.h
->> +++ b/include/kvm/arm_vgic.h
 > 
 > [ ... ]
 > 
->> @@ -590,6 +591,12 @@ struct vgic_v5_its {
->>   		u32 device_id;
->>   	} gen_event_didr;
->>   
->> +	/* A hash table with 2^3 buckets */
->> +	DECLARE_HASHTABLE(translation_cache, 3);
+>> +int vgic_v5_its_inject_msi(struct kvm *kvm, struct kvm_msi *msi)
+>> +{
+>> +	struct vgic_v5_its *its;
+>> +	struct vgic_irq *irq;
+>> +	bool borrowed_mm = false;
+>> +	int ret;
 >> +
->> +	/* Protects the translation_cache */
->> +	raw_spinlock_t translation_cache_lock;
+>> +	ret = vgic_v5_check_msi(kvm, msi);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	its = vgic_v5_msi_to_its(kvm, msi);
+>> +	if (IS_ERR(its))
+>> +		return PTR_ERR(its);
+>> +
+>> +	/* An irqfd cache miss is resolved by a worker outside the VM's mm. */
+>> +	if (current->mm != kvm->mm) {
+>> +		if (WARN_ON_ONCE(current->mm || !(current->flags & PF_KTHREAD)))
+>> +			return -EWOULDBLOCK;
 > 
 > [Severity: High]
-> Is a 3-bit hash table (8 buckets) sufficient for an unbounded number of
-> guest-driven translations?
+> Could this WARN_ON_ONCE be triggered by unprivileged userspace?
 > 
-> As noted earlier, storing a potentially unbounded number of LPI translations
-> in 8 buckets causes significant hash collisions. When paired with the
-> translation_cache_lock raw spinlock, this creates the denial of service
-> risk mentioned above.
+> If a normal user process (other than the VM creator) calls the KVM_SIGNAL_MSI
+> ioctl, current->mm will not equal kvm->mm, and since it is a user thread,
+> current->mm is non-NULL and it lacks PF_KTHREAD. Triggering a kernel warning
+> can crash the host if panic_on_warn is enabled, leading to a Denial of Service.
+
+Can we realistically reach that case?
+
+kvm_vm_ioctl() rejects a userspace caller whose mm differs from the VM's 
+mm before KVM_SIGNAL_MSI reaches this code.
+
+The irqfd worker is a kernel thread using the VM's mm struct.
+
+How can we reach this code? I've not changed anything to address this!
+
+> 
+>> +
+>> +		if (!mmget_not_zero(kvm->mm))
+>> +			return -EFAULT;
+>> +
+>> +		kthread_use_mm(kvm->mm);
+>> +		borrowed_mm = true;
+>> +	}
+>> +
+>> +	ret = vgic_v5_its_resolve_lpi(kvm, its, msi->devid, msi->data, &irq);
+>> +	if (borrowed_mm) {
+>> +		kthread_unuse_mm(kvm->mm);
+>> +		mmput(kvm->mm);
+>> +	}
+>> +
+>> +	if (ret)
+>> +		return ret;
+> 
+> [Severity: High]
+> Does this violate the KVM_SIGNAL_MSI ABI by returning negative error codes?
+> 
+> When the guest provides an invalid mapping (like an out-of-bounds Event ID),
+> vgic_v5_its_resolve_lpi() returns errors like -E2BIG or -EINVAL. Propagating
+> these directly to the ioctl caller instead of returning 0 (to indicate the
+> guest blocked or unmapped the MSI) can cause the VMM to abort, creating a
+> guest-to-host Denial of Service.
 > 
 
-As I mentioned above, I've moved from a hashtable to an XArray for 
-storing the translations. I'd not considered the case where a guest 
-(maliciously?) causes many collisions. The irqfd lookup now uses RCU and 
-does not take that lock, so I hope we're good there!
+Ah, yes. This was a mistake, and those shouldn't be returned. I've 
+changed these to return 0 to the caller instead. We still return 
+negative error codes for malformed MSIs, allocation failures, and when 
+the ITS itself is disabled.
+
 
 Thanks,
 Sascha
