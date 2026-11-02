@@ -1,159 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.43.71
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793595805;
-	b=fZtPbJT0LXcxEvy3lmJ8SJP1oABH6gwOWEU8fPyFtSpmyYuLDOKfuFuhaFX9JBxR9w17
-	 +u6bi4spEl2myVKizv6HI4dYE0u96xxrJ6vlfPF082iKEd2lXJq0V4Fa4Uf8aJmJD/u7a
-	 Sjbe+YC4+vlGSFBdbsnM0GEKx9wdXndczQ0RgnPL5FToVrGIECkHlEPQa4Lw3/RM6yBFY
-	 3Y17YyE7Mxli++qgXHKTIpil2vPHVhqrlNpgdFOm0dAjkgBWUoagZHEqPhlr9k6h/sFOF
-	 nxH3w3iEGiM3uHJ/hH6JIXmzDxRav6jyruMWeafdoR7TEG1fK/a6PZUc900Qlj9rc3g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793595805;
-	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Subject:
-	 Thread-Topic:Thread-Index:Date:Message-ID:References:In-Reply-To:
-	 Accept-Language:Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
-	 x-ms-publictraffictype:x-ms-traffictypediagnostic:
-	 x-ms-office365-filtering-correlation-id:x-ms-exchange-senderadcheck:
-	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
-	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
-	 x-ms-exchange-antispam-messagedata-chunkcount:
-	 x-ms-exchange-antispam-messagedata-0:Content-Type:Content-ID:
-	 Content-Transfer-Encoding:MIME-Version:X-OriginatorOrg:
-	 X-MS-Exchange-CrossTenant-AuthAs:X-MS-Exchange-CrossTenant-AuthSource:
-	 X-MS-Exchange-CrossTenant-Network-Message-Id:
-	 X-MS-Exchange-CrossTenant-originalarrivaltime:
-	 X-MS-Exchange-CrossTenant-fromentityheader:
-	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
-	 X-MS-Exchange-CrossTenant-userprincipalname:
-	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=ZYBKdNqyDAZZF47WXVb8lmAeXlZrbvPomd6LuzErdEM=;
-	b=GU80ch2UmKKBKiI+ggZnX2vKqqldmZjJjkWbgSoo+IrT6Kl21UQngjMkRJ7Cs8xcXA/L
-	 SSPvprMD3F5i6thbFRGJwGXl30CnwloOLDp4KgoLojJRNB4Jo445ZUeLWNhyoveeNb2LA
-	 lLBE0XOtwgyMY34gkkIYRyeqOB6J0XTBENL9Icx63wF+w0MP+IkQM1IrRPFQi8giHijR4
-	 gjG0vMt93MszL1mBsq9ZRLK/FVR0W56kIzrTTvOnxs9Y/rv745tckFCXrDh8Ft4JUdBsZ
-	 cl+rRLnZoSZ5VOskwZxHCqfaEoF7puYiTmk2OOOj7Q+GAP+U3cmfBvoLd7p8eVWBLXQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=microchip.com;
-	spf=pass smtp.mailfrom=microchip.com;
-	dkim=pass header.d=microchip.com header.i=@microchip.com header.a=rsa-sha256 header.s=selector1 header.b="gQY31u/p";
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.43.71
-Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012071.outbound.protection.outlook.com [52.101.43.71])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.180
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793599942;
+	b=FiLoMW1IEwAkSx33Q8+USBgTEoom52bhT2bTXXR4TAIV5UxCwm+Zv/rJJZNrhPklva4C
+	 d5R74eY/bpXjun3aseUTLcfjNf3Ruvf7Qxk22crTPLxfNSIsSU9tanpxovzpM7wStojfM
+	 aiudwyjf5Y4SzKtdWE8yYRUQePbtENPcr2RpiJx1mKH7MCIUpCsbxJS6TSFfBWFfmjLYp
+	 3ywS58eyoQH0anef10QxziayxHkEla8iLl9pa41EPBQKU7yOWfJWSJuQdTuVs+wkChhPz
+	 HXwmyawIDNBxoATfgZ0RMDQP8fPp4tImxPP+hShaUlzQnV6TPfo+WiUc3H093aurOHg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793599942;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Content-Type:Mime-Version:Subject:From:
+	 In-Reply-To:Date:Cc:Content-Transfer-Encoding:Message-Id:References:
+	 To:X-Mailer;
+	bh=kBdUvAVYcdKk5QVxJUldi/DhSvfwVlDkctl8DfLD0/A=;
+	b=vaSF8TTKIQPqfFOrKDHRG+anF9/px4NLb23cZX3Elo0TH95cBHQouyp/IJ2GQsNZ+8zf
+	 B0vd3QuE6HcN6rKroWklVixw6LdLh7SYHMRWmex+ejGFxFbeSIY72Tpu5joYd/ZGHsbAI
+	 BqD2ldDxCfe83PHWVYg7FQprd8N0TBBcW+vsPMY82kMGei1Fqk1EmCB7DcA2Ft/U+d472
+	 3eU3vcKzBMS12eFgQhayeKmqv0AoAt5Efdu/ljU+JuIe/tYXSDReh3CAgZq3MG5gKOYSB
+	 s5v8VHydsLqPc228uPgZ+ZODMdG903XPJ0wHaT+E55KghYQ03jLYziqNX2+2df0grJQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=hxlz7XXs;
+	arc=none smtp.remote-ip=91.218.175.180
+Received: from mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1D9606A324
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 05:03:24 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2C1D9606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microchip.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microchip.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4277606A32D
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 06:12:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D4277606A32D
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=microchip.com header.i=@microchip.com header.a=rsa-sha256 header.s=selector1 header.b=gQY31u/p
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GvhqJ7Uoj5MtEJEUMmwbfTdtRUZy3AWFWix7t2fTfXehifPzL/xws3weDgKur+FpZKD1S/AlWjqvlRXsVOFCOBMzwIvdRr4kKSPr+JS+POGjcQRSYpap93CkrLfZGi6tRp0luus8QDGV4uAK+xWEVhtWY75O7Zg+SUk8kz4T+TM/TJw80yKk21huZ0VaIW76stkNQYsq41Cm1QRluQagQ/T4YRalFf7MIrluoMt0x/RRjbdwrUb+kEJwKJkF9PSiUv2jZqyqxreV5tlkTO1jfhbQnWGLbKdj86gEz02l1UcpxErRo3qmO6HiAahwNdzv9ByDMFAz+1y71Hw5PD609Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZYBKdNqyDAZZF47WXVb8lmAeXlZrbvPomd6LuzErdEM=;
- b=dS0N4y5fROexh0w+ODZZnqrZJBf1KwmXFKDhtbKk5DrGjpowNq7QV2zTB+uijisKZZ5en7UsSMx3a3ormTWCxsh8gpHZMbVkyffqGwclX5LX9T+mL/g2fHEw7pEdJlc31Y08IigYNO4tR8nmTs0U4ctL0jD6HepYbq/mZuy3jfoUz4B67yg3NpaRlqxeSPfnLB6Bm4F8NzJHoIWuzoJX9OwMCwDW2h1eS8ISeISynj7cFbgWR7iLF5WqIRKqvWszYH/j144OQ//otO5b3yz92n9/RaAXYWGab8u3gWsE2xl0rtVzGP2mJ1Pd02mSi/IZU8OTXYE2tvCFxL9K+bsx+w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microchip.com; dmarc=pass action=none
- header.from=microchip.com; dkim=pass header.d=microchip.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microchip.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZYBKdNqyDAZZF47WXVb8lmAeXlZrbvPomd6LuzErdEM=;
- b=gQY31u/pVagkamEqtS0y/WIJVIzqF30mNffSsdXcj4GWApZjbzb3bkdbpiwycVU8d4rxIUgbzl4RAcfZhlY4Qs8FYJsR9NhUoPRkM5+9hbZT8IEsYuO1ntHudqqIdiT5wuws1DT/f+mK0PFSrPVqpzSm8QWiIPGt1oOcSKlSSUan7pMJO5XqL88hrqpMBlsri7ja8Hrk5ojvEv+nDocyoBYhRMz/88hOHlh45Ajwk/s9v+tnT5+OahsfvQiPEh6qWfl9Eex3cyqlqVM9K75EwrjZNjiJUKsUdWbG91ibMuxsWxA1weQxIXMXkwDfiJIqJ7JyIJqiDoDX7lmjg9MQeg==
-Received: from DS6PR11MB523643.namprd11.prod.outlook.com (2603:10b6:8:468::12)
- by EAYPR11MB115281.namprd11.prod.outlook.com (2603:10b6:303:2fa::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Mon, 2 Nov
- 2026 05:03:22 +0000
-Received: from DS6PR11MB523643.namprd11.prod.outlook.com
- ([fe80::1cc0:e019:a70b:f954]) by DS6PR11MB523643.namprd11.prod.outlook.com
- ([fe80::1cc0:e019:a70b:f954%4]) with mapi id 15.21.0569.011; Mon, 2 Nov 2026
- 05:03:22 +0000
-From: <Manikandan.M@microchip.com>
-To: <sashiko-reviews@lists.linux.dev>, <pratyush@kernel.org>,
-	<mwalle@kernel.org>, <takahiro.kuwano@infineon.com>,
-	<miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
-	<robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-	<srini@kernel.org>, <Nicolas.Ferre@microchip.com>,
-	<alexandre.belloni@bootlin.com>, <claudiu.beznea@tuxon.dev>,
-	<linux@armlinux.org.uk>, <richardcochran@gmail.com>, <linusw@kernel.org>,
-	<arnd@arndb.de>, <pengpeng@iscas.ac.cn>, <gregkh@linuxfoundation.org>,
-	<mathieu.dubois-briand@bootlin.com>, <michael@walle.cc>,
-	<linux-mtd@lists.infradead.org>, <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v9 4/8] mtd: spi-nor: sfdp: expose the SFDP as a read-only
- NVMEM device
-Thread-Topic: [PATCH v9 4/8] mtd: spi-nor: sfdp: expose the SFDP as a
- read-only NVMEM device
-Thread-Index: AQHdXVql4Kqh32JHyEicX8VyYnR6M7cBjRuAgBjHJYA=
-Date: Mon, 2 Nov 2026 05:03:21 +0000
-Message-ID: <ba131ca0-c659-419e-9ff7-26c7c6de1028@microchip.com>
-References: <cover.1792145382.git.manikandan.m@microchip.com>
- <889d6d5b7c608fd6553f38e4a34b050dcf70317f.1792145382.git.manikandan.m@microchip.com>
- <sashiko-outbox-175470@kernel.org>
-In-Reply-To: <sashiko-outbox-175470@kernel.org>
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microchip.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DS6PR11MB523643:EE_|EAYPR11MB115281:EE_
-x-ms-office365-filtering-correlation-id: 99af80ff-1052-484f-b177-08df389e9e3a
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|7416014|376014|23010399003|1800799024|366016|921020|38070700021|260925022911599003|260925021311599003|260925021911599003|4143699003|11063799006|56012099006|261009223027099003|261028144727099003|261021121427099003|261026121527099003|261026140227099003|261022075727099003|261022105027099003|10067099003|22082099003|18002099003|6133799003;
-x-microsoft-antispam-message-info:
- vuD+IGdZzCqW5sRukdQo6xKtwAx+cDu20PuMBziPcHGyMO0OWrSTz458dpi0CaSIhkqSTtIbFOcXg3EZLF52ThwOsRVv2l5lngI921rD7yP4ZqKScVRu/uJy+un+arHA4Z0eFAl7Zjbmd5c+nU/0vLV2SSzRZudXMsuAPYz72dNZmhyDLKDu68w3psjJ9T/8ev6bl556w+xWFO6TJmRsQr8zWerd91wshX5eiK8B8NZEXogHxUQKjbidZy/f+wbHXWp+JBhK5oH79Iw5qDe0Xmqrz7XCwRV9X9URe4S1cONzjFY8M1RUC0BU6IB7fLLv/ygxXf68ZMhPiK/xkLhQ6C0Aqk5nmgKx90VtiO4dGGLGtXfHwpsfTMuPyy/P8RKboKfVORGXkJTFvw5UsyukTBSyepVMZQUT8kggNsHrmBOUgZv0THUOG+E/XYnwFQbhMFv8R7Fd27FZkL1MRg1GMJ0VnluzCQe5stQfeDzKxu7tJ406gOfSjsed+HhRAMQNTJlv9Kwm/nclTY4Rv2Uc0amE84KAotQaU9dH/pwlkzLJOAchygwkrCmlExp/P3p2JOtuNS4MyDYYk6BXH2Ike5PrbXf/NBW0oukBq4Jn43a9ujwgxeXnuSVj3vgFZs6rXbuOyehf3uqkUpIry0e7wBnGdCrClbSloaRwfMN771TyI8ad6Bn2cAPUkahtK+Uv
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS6PR11MB523643.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(23010399003)(1800799024)(366016)(921020)(38070700021)(260925022911599003)(260925021311599003)(260925021911599003)(4143699003)(11063799006)(56012099006)(261009223027099003)(261028144727099003)(261021121427099003)(261026121527099003)(261026140227099003)(261022075727099003)(261022105027099003)(10067099003)(22082099003)(18002099003)(6133799003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?SExiN285RWYwZ21LR1NxS0Q3cmdZUDNoZVBEekx6bURzOG1ZMmphS1h4TVYy?=
- =?utf-8?B?ZUd5dHV6bC9EeWxFdjBnbHNnZW1MODFWeDU2OVNueng0TVl3NkE1RTFOK2ha?=
- =?utf-8?B?enR0eDI5RDBpUG1OYzFHZ3pBVkhOWXdsYm01SVM0dXVEazF0MHNxZDNpR2dn?=
- =?utf-8?B?QmdvS0M2WUhBQjhKWmNrTTdkOFZva3g1S3VKa0E2NlYrTVZJb29LRnhYNjla?=
- =?utf-8?B?eCs3NXZ1Y0lwNXRTZzcrVS9MczV1OS8wS09rUXgxTFNRbkZaUXVPQnk2dTN4?=
- =?utf-8?B?ZHExREV4RkdTRGl1UDdYYS9aeXNJM1VkSnk5N2VYM2tHbnJoa0RUMXNXMGJl?=
- =?utf-8?B?Y1VhZG11QVNMcldjclhtbU9Xekt4YWwrOGhqU0dEODBySXdtRndDUkx4SEt3?=
- =?utf-8?B?TEF5WlFFRGN4TU1qRGtHNG1JQVVpS09OekJBNjBwcXErTkNucFJUZzNQYzlE?=
- =?utf-8?B?b2x3VVJjaTZ5OVdiWkI3UmpWbVpBZExHaVhMdlVuRTUyZ0NpamdHd1RuQS9V?=
- =?utf-8?B?T0t2VjBUcnFmUWRYUHNFM0YrQytlU3NuZWhyR2R5L2hvTk9JK0NmalFhVStE?=
- =?utf-8?B?UXdrOEVWdGpsSVVEcDRTOUNMKzliNExFZUNic1luV0tmay9rT2lLR1VkREg3?=
- =?utf-8?B?OGFBSlNsL0NlamJRU0tFZ2l3dGkyeFpMc3NxR2c4MnV6MzFSK2Vta3RRSnAx?=
- =?utf-8?B?K1prd2FJdmFoZWdZUWR4UStmbUhzZ3NhNk1seGtUWUVkNW9CUFVJR2hLZGp1?=
- =?utf-8?B?VVRmaS9oTWRnMjNPMm42em53WEl3NkhiTVRpNzZ3UlNXZVpjWmZuZ1VqSGZa?=
- =?utf-8?B?Wk1HUzVremRtQ2FQb1FoU3Rtb0JhTVU5Yk1scndhUEFhL3djNXM3OURMVWwx?=
- =?utf-8?B?SGk4cVNLQVJVQUtOV1lDaG9UWTdHTWI3WjZlRlhKK2d6cnV6Sm43T0NZTVVK?=
- =?utf-8?B?bmRpYjE2RGkveWdLeUFuYk5qUHcwQklmY3JtenRidGtpdEd1Tnhqc1drOG9Z?=
- =?utf-8?B?b20zTTR4em5xNGRxK3Zlam0reGJPdUNEZi95ZlRGSmZsMXIrOVk2SUM0TlJT?=
- =?utf-8?B?VjlkL3ZKdXFuR3VMbjFyYjczSjhoYnZFa0d5QVd5Y2ZBM1RsR1d1L1QrcFU3?=
- =?utf-8?B?V3E1cGVXMmNOblN5bmkzNEtTazg1SC9OaktTUnZJVmpRZCsreko5ODZkSjhO?=
- =?utf-8?B?R3h6VVF1OXNnc1hJc2FiUEpwQzZrRTVWeGtXaHh2L1FzN1Q4TS9rYzgySWox?=
- =?utf-8?B?Vmt2eGFMV3RiNm1EVisrZHdhLzFCcjVUN21HRndibHQ4ZmI3Zm1wNzFQK1A4?=
- =?utf-8?B?ejVTdGxZTk8wVzE1S2lReGlGbTc4N1RzVURPRGxxczB3Z2pGanVaVExxVmpa?=
- =?utf-8?B?bENnVzh3YVRac1Q1V3A2WWU3M3BlK3AyeWJ6M2lHdGlMeWZJUnZLS0pyU2Mr?=
- =?utf-8?B?UW15c2poeGlta2lQUVIxL0tETGwzSHhTTjdwWXdNNmZaWS9BYTlDblp3RnJk?=
- =?utf-8?B?TDYrWGQ0T3UvU0RrZHZJRzdzeDRxT1N4NTgvaUpqcURqOG84ajBMLzVKb01H?=
- =?utf-8?B?ZUdGSGxnWHBnSUE0NG9ReFZIcnk2dFgzK2ZNYUp1b1NZWEE1a2ljekw0YjVy?=
- =?utf-8?B?L3RlN3VUdUp5RUxOZlFIb0FQNk1wVU1KRTcvU1dqYndnTFVhQmFhSHdMajhv?=
- =?utf-8?B?ZU96SDVYSWovTGxDVGlGbkFsekVTRVg0MWVKbzVOWHgrVmN6VThOZFlLWGR2?=
- =?utf-8?B?dmxQaU5tY0pUd290MzJQdnNYWDN3WkdsSCsrTEVnQlpWVmFzMG00QlBzVjlx?=
- =?utf-8?B?bmpQcUZ4VXV4Y0JqTWdQb2tSTy95a2g4NDYwaTlOUmhtNld6czU1VHpwMUh2?=
- =?utf-8?B?MnhxdmFUb3ltM3FYeEJWSWwzUTlZN0RsVkNqYk1mOWw3SExvdkZIR2NBc3dQ?=
- =?utf-8?B?a1dVb1BVa3pxS25qM21JdUFrd29XR24rZG11SjgzTEFXc2dBTHdyQVkvMytJ?=
- =?utf-8?B?SkhLWlo2b1dveWpzRm5lU3QyazJnZG5rYm5vZERiamtmamkzYnN1UU5TQldO?=
- =?utf-8?B?bVF1ckc1eFFCM2QxNjROQjNmU1FPRWVhZmFyazQyQ2ROY2x5MUtYN084MHZ4?=
- =?utf-8?B?R1plaWNjMkJjdVZubnZ5dnp3OUVzbTB2N25MeEt0RUtLRVcyRTVQcElOcFlo?=
- =?utf-8?B?OXcrVWt4RFJERDBuQWNVNEh2b2dDOWgyN0hNTW1raFo0LzNYanNjTzBMdWVK?=
- =?utf-8?B?ZFAyVXA4UExqOVZHc3JuMS9NNFZoNmJoT2tuZXg2bjg4cy8xMlhXVGp1eUY5?=
- =?utf-8?B?VmhYVEQ5OWNKMTk3OUlhSCt2bVlySGRlbkh1WmtCUWRhaEpRcmJMZz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <905D9321EAB0234BBF5268ECBD32F61A@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: base64
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=hxlz7XXs
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=oN0aDS5mKLXYjcaeH2SoZP3k/lf0JjHKzCpOCJOldLE=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1793599939; v=1; x=1794204739;
+ b=hxlz7XXsV0ogw2O4VuVzvxGgRDF+00OBVAG+l7S/K7JVMWKHwSrbkMIDP1fxT+jTiMViMjvl
+ qmuDNF5MOEf1B2PD5KgWxipcAWZb3bWhyItcH6+BOSvr6GymVjsalr9Ji1aryVowcZReFtmoLOu
+ Uv4zmKKrruuXVMr3KPmCbBoQ=
+X-Envelope-To: sashiko-reviews@lists.linux.dev
+Received: by mta10.migadu.com with ESMTPS id 7c2610fa89c3b119;
+	Mon, 02 Nov 2026 06:12:19 +0000
+X-Mizu-Trace-ID: 7c2610fa89c3b119
+X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain;
+	charset=utf-8
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -162,79 +57,264 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-X-OriginatorOrg: microchip.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DS6PR11MB523643.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 99af80ff-1052-484f-b177-08df389e9e3a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Nov 2026 05:03:21.9931
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3f4057f3-b418-4d4e-ba84-d55b4e897d88
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: HzzVBXV7elwDHVoVbRyhrGnmevSi+gP2i6mqr4WfcyH0aiECNEsX1MTWtTdwdXjxwwgjuN1sOeIoSz+QCJL1YcMVFdxDybWGcyHC223J1Rc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: EAYPR11MB115281
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
+Subject: Re: [PATCH v2 07/12] mm: hugetlb_vmemmap: simplify shared tail page
+ handling
+From: Muchun Song <muchun.song@linux.dev>
+In-Reply-To: <sashiko-outbox-192874@kernel.org>
+Date: Mon, 2 Nov 2026 14:12:00 +0800
+Cc: Muchun Song <songmuchun@bytedance.com>,
+ Oscar Salvador <osalvador@suse.de>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Mike Rapoport <rppt@kernel.org>,
+ Qi Zheng <qi.zheng@linux.dev>,
+ Lance Yang <lance.yang@linux.dev>,
+ James Houghton <jthoughton@google.com>,
+ David Hildenbrand <david@kernel.org>,
+ linux-mm@kvack.org,
+ Huacai Chen <chenhuacai@kernel.org>,
+ WANG Xuerui <kernel@xen0n.name>,
+ loongarch@lists.linux.dev
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <2D6DE4F4-8DB1-45D4-B076-36FE6714C575@linux.dev>
+References: <20261102032525.3597743-1-songmuchun@bytedance.com>
+ <20261102032525.3597743-8-songmuchun@bytedance.com>
+ <sashiko-outbox-192874@kernel.org>
+To: sashiko-reviews@lists.linux.dev
+X-Mailer: Apple Mail (2.3901.200.71.1.16)
 
-T24gMTAvMTcvMjYgNDoxMCBQTSwgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToNCj4gRVhU
-RVJOQUwgRU1BSUw6IERvIG5vdCBjbGljayBsaW5rcyBvciBvcGVuIGF0dGFjaG1lbnRzIHVubGVz
-cyB5b3Uga25vdyB0aGUgY29udGVudCBpcyBzYWZlDQo+IA0KPiBUaGFuayB5b3UgZm9yIHlvdXIg
-Y29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBmb3VuZCAxIHBvdGVudGlhbCBpc3N1ZShz
-KSB0byBjb25zaWRlcjoNCj4gLSBbSGlnaF0gbXRkOiBzcGktbm9yOiBzZmRwOiBzdGVhbHMgcGFy
-ZW50J3MgbnZtZW0tbGF5b3V0IHdoZW4gJ2plZGVjLHNmZHAnIG5vZGUgaXMgbWlzc2luZw0KPiAt
-LQ0KPiANCj4gY29tbWl0IGU0MTExZmVhN2EzYzcwYjBiYjFmNWNkMTUzYTI1OWU0ZmRiNjJjOTMN
-Cj4gQXV0aG9yOiBNYW5pa2FuZGFuIE11cmFsaWRoYXJhbiA8bWFuaWthbmRhbi5tQG1pY3JvY2hp
-cC5jb20+DQo+IA0KPiBtdGQ6IHNwaS1ub3I6IHNmZHA6IGV4cG9zZSB0aGUgU0ZEUCBhcyBhIHJl
-YWQtb25seSBOVk1FTSBkZXZpY2UNCj4gDQo+IFRoaXMgY29tbWl0IGV4cG9zZXMgdGhlIGNhY2hl
-ZCBTRkRQIHRhYmxlIGFzIGEgcmVhZC1vbmx5IE5WTUVNIGRldmljZSwNCj4gcm9vdGVkIGF0IHRo
-ZSBmbGFzaCdzIFNGRFAgY2hpbGQgbm9kZSBpZiBhdmFpbGFibGUuIFRoaXMgYWxsb3dzIGdlbmVy
-aWMNCj4gYW5kIHZlbmRvciBOVk1FTSBjZWxscyB0byByZWZlcmVuY2UgU0ZEUCBkYXRhLg0KPiAN
-Cj4+IGRpZmYgLS1naXQgYS9kcml2ZXJzL210ZC9zcGktbm9yL2NvcmUuYyBiL2RyaXZlcnMvbXRk
-L3NwaS1ub3IvY29yZS5jDQo+PiBpbmRleCA4YmMxMTdiNDZlMDI4Li5lZDQ3OGU0OGNhMTE2IDEw
-MDY0NA0KPj4gLS0tIGEvZHJpdmVycy9tdGQvc3BpLW5vci9jb3JlLmMNCj4+ICsrKyBiL2RyaXZl
-cnMvbXRkL3NwaS1ub3IvY29yZS5jDQo+IA0KPiBbIC4uLiBdDQo+IA0KPj4gQEAgLTMwMDEsNiAr
-MzAwMiw3MiBAQCBzdGF0aWMgdm9pZCBzcGlfbm9yX2luaXRfZml4dXBfZmxhZ3Moc3RydWN0IHNw
-aV9ub3IgKm5vcikNCj4gDQo+IFsgLi4uIF0NCj4gDQo+PiArc3RhdGljIGludCBzcGlfbm9yX3Jl
-Z2lzdGVyX3NmZHBfbnZtZW0oc3RydWN0IHNwaV9ub3IgKm5vcikNCj4+ICt7DQo+PiArICAgICBz
-dHJ1Y3QgZGV2aWNlICpkZXYgPSBub3ItPmRldjsNCj4+ICsgICAgIHN0cnVjdCBudm1lbV9jb25m
-aWcgY29uZmlnID0geyB9Ow0KPj4gKyAgICAgc3RydWN0IG52bWVtX2RldmljZSAqbnZtZW07DQo+
-PiArICAgICBzdHJ1Y3QgZGV2aWNlX25vZGUgKm5wOw0KPj4gKw0KPj4gKyAgICAgaWYgKCFub3It
-PnNmZHApDQo+PiArICAgICAgICAgICAgIHJldHVybiAwOw0KPj4gKw0KPj4gKyAgICAgbnAgPSBv
-Zl9nZXRfY29tcGF0aWJsZV9jaGlsZChkZXZfb2Zfbm9kZShkZXYpLCAiamVkZWMsc2ZkcCIpOw0K
-Pj4gKw0KPj4gKyAgICAgY29uZmlnLmRldiA9IGRldjsNCj4+ICsgICAgIGNvbmZpZy5vZl9ub2Rl
-ID0gbnA7DQo+IA0KPiBbU2V2ZXJpdHk6IEhpZ2hdDQo+IElmIHRoZSBqZWRlYyxzZmRwIGNoaWxk
-IG5vZGUgaXMgbWlzc2luZyBmcm9tIHRoZSBkZXZpY2UgdHJlZSwgbnAgd2lsbA0KPiBiZSBOVUxM
-IGFuZCBhc3NpZ25lZCB0byBjb25maWcub2Zfbm9kZS4gRG9lcyB0aGlzIGluYWR2ZXJ0ZW50bHkg
-dHJpZ2dlciB0aGUNCj4gTlZNRU0gY29yZSdzIGZhbGxiYWNrIGJlaGF2aW9yPw0KPiANCj4gTG9v
-a2luZyBhdCBudm1lbV9yZWdpc3RlcigpIGluIGRyaXZlcnMvbnZtZW0vY29yZS5jLCB0aGVyZSBp
-cyBhIGZhbGxiYWNrDQo+IG1lY2hhbmlzbSBmb3IgbWlzc2luZyBub2RlczoNCj4gDQo+ICAgICAg
-aWYgKGNvbmZpZy0+b2Zfbm9kZSkNCj4gICAgICAgICAgICAgIG52bWVtLT5kZXYub2Zfbm9kZSA9
-IG9mX25vZGVfZ2V0KGNvbmZpZy0+b2Zfbm9kZSk7DQo+ICAgICAgZWxzZQ0KPiAgICAgICAgICAg
-ICAgbnZtZW0tPmRldi5vZl9ub2RlID0gb2Zfbm9kZV9nZXQoY29uZmlnLT5kZXYtPm9mX25vZGUp
-Ow0KPiANCj4gSWYgY29uZmlnLm9mX25vZGUgaXMgTlVMTCwgdGhlIFNGRFAgTlZNRU0gZGV2aWNl
-IHdpbGwgaW5jb3JyZWN0bHkgaW5oZXJpdA0KPiB0aGUgU1BJIE5PUiBmbGFzaCdzIG1haW4gZGV2
-aWNlIG5vZGUuDQo+IA0KPiBUaGUgTlZNRU0gY29yZSB0aGVuIHNlYXJjaGVzIGZvciBhbiBudm1l
-bS1sYXlvdXQgY2hpbGQgbm9kZSBhbmQgd2lsbA0KPiBmaW5kIHRoZSBsYXlvdXQgaW50ZW5kZWQg
-Zm9yIHRoZSBtYWluIGZsYXNoIG1lbW9yeSwgYXR0YWNoaW5nIGFsbCBOVk1FTQ0KPiBjZWxscyB0
-byB0aGUgc21hbGwgU0ZEUCBOVk1FTSBkZXZpY2UgYW5kIG1hcmtpbmcgdGhlIGxheW91dCBub2Rl
-IHBvcHVsYXRlZC4NCj4gDQo+IExhdGVyLCB3aGVuIHRoZSBNVEQgc3Vic3lzdGVtIHJlZ2lzdGVy
-cyB0aGUgcHJpbWFyeSBOVk1FTSBkZXZpY2UgZm9yIHRoZQ0KPiBhY3R1YWwgZmxhc2ggY29udGVu
-dHMsIGl0IHdpbGwgc2tpcCB0aGUgbGF5b3V0IG5vZGUgYmVjYXVzZSBpdCBpcyBhbHJlYWR5DQo+
-IG1hcmtlZCBwb3B1bGF0ZWQuDQo+IA0KPiBDb3VsZCBhbnkgY29uc3VtZXIgYXR0ZW1wdGluZyB0
-byByZWFkIGFuIE5WTUVNIGNlbGwgdGhlbiBiZSBtaXNkaXJlY3RlZA0KPiB0byB0aGUgc21hbGwg
-U0ZEUCBOVk1FTSBkZXZpY2UncyByZWFkIGNhbGxiYWNrIGluc3RlYWQgb2YgdGhlIG1haW4gZmxh
-c2gsDQo+IHJlc3VsdGluZyBpbiAtRUlOVkFMIGJvdW5kcyBjaGVjayBlcnJvcnMgb3IgY29ycnVw
-dGVkIGRhdGE/DQoNClllcywgdGhpcyBpcyBhIHZhbGlkIGlzc3VlLiBXaXRoIG5vICJqZWRlYyxz
-ZmRwIiBub2RlLCBudm1lbV9yZWdpc3RlcigpIA0KZmFsbHMgYmFjayB0byB0aGUgZmxhc2gncyBv
-d24gbm9kZSwgc28gdGhlIFNGRFAgTlZNRU0gZGV2aWNlIHdvdWxkIGNsYWltIA0KYW4gIm52bWVt
-LWxheW91dCIgbWVhbnQgZm9yIHRoZSB3aG9sZSBmbGFzaC4NCg0KTWljaGFlbCwNCnRoaXMgY29t
-ZXMgZnJvbSBkcm9wcGluZyB0aGUgImlmICghbnApIHJldHVybiAwOyIgY2hlY2sgaW4gdjkuIEkn
-bGwgDQpicmluZyBpdCBiYWNrIGluIHYxMDogd2l0aG91dCBhICJqZWRlYyxzZmRwIiBub2RlIHRo
-ZXJlIGlzIG5vd2hlcmUgdG8gDQpkZXNjcmliZSBTRkRQIGNlbGxzLCBzbyB0aGUgU0ZEUCBOVk1F
-TSBkZXZpY2Ugd291bGQgaGF2ZSBubyBjb25zdW1lcnMsIA0Kd2hpbGUgcmVnaXN0ZXJpbmcgaXQg
-Y2FuIHRha2Ugb3ZlciB0aGUgZmxhc2gncyBsYXlvdXQuDQpEbyB5b3UgaGF2ZSBhbnkgb3RoZXIg
-c3VnZ2VzdGlvbnM/DQoNCj4gDQo+PiArICAgICBjb25maWcubmFtZSA9ICJzZmRwIjsNCj4+ICsg
-ICAgIGNvbmZpZy5pZCA9IE5WTUVNX0RFVklEX0FVVE87DQo+PiArICAgICBjb25maWcub3duZXIg
-PSBUSElTX01PRFVMRTsNCj4gDQo+IFsgLi4uIF0NCj4gDQo+IC0tDQo+IFNhc2hpa28gQUkgcmV2
-aWV3IMK3IGh0dHBzOi8vc2FzaGlrby5kZXYvIy9wYXRjaHNldC9jb3Zlci4xNzkyMTQ1MzgyLmdp
-dC5tYW5pa2FuZGFuLm1AbWljcm9jaGlwLmNvbT9wYXJ0PTQNCg0KDQotLSANClRoYW5rcyBhbmQg
-UmVnYXJkcywNCk1hbmlrYW5kYW4gTS4NCg==
+
+
+> On Nov 2, 2026, at 11:52, sashiko-bot@kernel.org wrote:
+>=20
+> Thank you for your contribution! Sashiko AI review found 1 potential =
+issue(s) to consider:
+> - [High] mm: hugetlb_vmemmap: uninitialized tail page read in =
+vmemmap_optimize_pte()
+> --
+>=20
+> commit 32511c4a4d8ec3d45e0f629f89666a78dc9372ee
+> Author: Muchun Song <muchun.song@linux.dev>
+>=20
+> mm: hugetlb_vmemmap: simplify shared tail page handling
+>=20
+> This commit removes the vmemmap_tail field from struct =
+vmemmap_remap_walk and
+> updates vmemmap_optimize_pte() and vmemmap_restore_pte() to derive the =
+shared
+> tail page directly from the folio being processed.
+>=20
+>> diff --git a/mm/hugetlb_vmemmap.c b/mm/hugetlb_vmemmap.c
+>> index 5e84004db4b87..d0af251aa533c 100644
+>> --- a/mm/hugetlb_vmemmap.c
+>> +++ b/mm/hugetlb_vmemmap.c
+>=20
+> [ ... ]
+>=20
+>> @@ -213,53 +211,53 @@ static struct page =
+*vmemmap_dup_page_from_list(const struct page *src,
+>> 	return dst;
+>> }
+>>=20
+>> -static void vmemmap_optimize_pte(pte_t *pte, unsigned long addr,
+>> -				 struct vmemmap_remap_walk *walk)
+>> +static inline struct page *folio_vmemmap_shared_tail_page(const =
+struct folio *folio)
+>> {
+>> -	struct page *page =3D pte_page(ptep_get(pte));
+>> -	pte_t entry;
+>> -
+>> -	/* Remapping the head page requires r/w */
+>> -	if (unlikely(walk->nr_walked =3D=3D 0)) {
+>> -		struct page *head;
+>> +	return vmemmap_shared_tail_page(folio_order(folio), =
+folio_zone(folio));
+>> +}
+>>=20
+>> -		VM_WARN_ON_ONCE(!PageHead((const struct page *)addr));
+>> +static int vmemmap_optimize_pte(pte_t *pte, unsigned long addr,
+>> +				struct vmemmap_remap_walk *walk)
+>> +{
+>> +	const struct page *page =3D (const struct page *)addr;
+>> +	const struct folio *folio =3D page_folio(page);
+>> +	struct page *src =3D pte_page(ptep_get(pte)), *dst;
+>>=20
+>> -		head =3D vmemmap_dup_page_from_list(page, =
+walk->vmemmap_pages);
+>> -		entry =3D mk_pte(head, PAGE_KERNEL);
+>> +	if (likely(vmemmap_optimizable_pfn(page_to_pfn(page), =
+folio_order(folio)))) {
+>> +		dst =3D folio_vmemmap_shared_tail_page(folio);
+>> +		if (!dst)
+>> +			return -ENOMEM;
+>> 	} else {
+>> -		VM_WARN_ON_ONCE(!PageTail((const struct page *)addr));
+>> -
+>> -		/*
+>> -		 * Map the shared tail page writable. A lockless get =
+that read
+>> -		 * a non-zero refcount before the remap can still do its
+>> -		 * cmpxchg after it. The refcount is zero, so the =
+cmpxchg
+>> -		 * fails and leaves the page unchanged.
+>> -		 */
+>> -		entry =3D mk_pte(walk->vmemmap_tail, PAGE_KERNEL);
+>> +		dst =3D vmemmap_dup_page_from_list(src, =
+walk->vmemmap_pages);
+>> 	}
+>=20
+> [Severity: High]
+> Can calling page_folio(page), folio_order(folio), and
+> folio_vmemmap_shared_tail_page(folio) on every PTE in =
+vmemmap_optimize_pte()
+> read uninitialized tail struct pages for bootmem gigantic hugepages?
+>=20
+> During early boot in alloc_bootmem_huge_page(), gigantic hugepages =
+mark all
+> tail pages [pfn + 1, pfn + nr_pages) with =
+memblock_reserved_mark_noinit(), so
+> memmap_init_reserved_pages() skips initializing their struct pages:
+>=20
+> mm/hugetlb.c:alloc_bootmem_huge_page() {
+>    ...
+> 	if (hugetlb_vmemmap_optimizable(h))
+> 		hugetlb_vmemmap_optimize_bootmem_page(pfn, =
+huge_page_order(h));
+>    ...
+> 	memblock_reserved_mark_noinit(PFN_PHYS(pfn + 1),
+> 				      (nr_pages - 1) * PAGE_SIZE);
+> }
+>=20
+> When a bootmem gigantic hugepage is not aligned to PAGES_PER_SECTION =
+(for
+> example, when nr_pages < PAGES_PER_SECTION, such as on 64-bit =
+LoongArch with
+> 16KB base pages where SECTION_SIZE_BITS is 29 and PMD_SHIFT is 25 with
+> CONFIG_ARCH_FORCE_MAX_ORDER=3D10), section_set_compound_order_range() =
+returns
+
+This issue does not occur with the default LoongArch configuration. For
+16KB base pages, LoongArch defaults ARCH_FORCE_MAX_ORDER to 11, which
+matches HUGETLB_PAGE_ORDER.
+
+The reported case requires manually overriding =
+CONFIG_ARCH_FORCE_MAX_ORDER
+to 10 while keeping HugeTLB enabled. This creates an **invalid =
+configuration**
+that Kconfig currently permits:
+
+HUGETLB_PAGE_ORDER	=3D 11
+MAX_FOLIO_ORDER		=3D 10
+
+LoongArch does not select ARCH_HAS_GIGANTIC_PAGE, so the generic MM code
+assumes that folios cannot exceed MAX_PAGE_ORDER. The forced =
+configuration
+violates that assumption and is already diagnosed by:
+
+	WARN_ON(order > MAX_FOLIO_ORDER);
+
+in hugetlb_add_hstate().
+
+Therefore, this is not a regression in a supported LoongArch =
+configuration,
+and I don't think this series needs to handle it. The proper fix is a =
+separate
+LoongArch Kconfig change preventing ARCH_FORCE_MAX_ORDER from being set =
+below
+the HugeTLB order when HugeTLB is enabled.
+
+Cc LoongArch maintainers.
+
+Thanks,
+Muchun
+
+> early without setting section->compound_page_order:
+>=20
+> =
+include/linux/vmemmap-optimization.h:section_set_compound_order_range() =
+{
+> 	unsigned long section_nr =3D pfn_to_section_nr(pfn);
+>=20
+> 	if (!IS_ALIGNED(pfn | nr_pages, PAGES_PER_SECTION))
+> 		return;
+>    ...
+> }
+>=20
+> In that case, sparse_init() allocates regular vmemmap pages via
+> memmap_alloc(), leaving them uninitialized (or filled with 0xff under
+> CONFIG_DEBUG_VM).
+>=20
+> Later, gather_bootmem_prealloc_node() initializes only the first
+> VMEMMAP_OPTIMIZATION_NR_STRUCT_PAGES struct pages (covering only the =
+first
+> vmemmap PTE), and prep_and_add_bootmem_folios() defers initializing =
+the
+> remaining tail struct pages until after =
+hugetlb_vmemmap_optimize_folios()
+> runs and fails:
+>=20
+> mm/hugetlb.c:gather_bootmem_prealloc_node() {
+>    ...
+> 		hugetlb_folio_init_vmemmap(folio, h,
+> 					   =
+VMEMMAP_OPTIMIZATION_NR_STRUCT_PAGES);
+> 		init_new_hugetlb_folio(folio);
+>=20
+> 		if =
+(vmemmap_optimizable_order(pfn_to_section_compound_order(pfn)))
+> 			folio_set_hugetlb_vmemmap_optimized(folio);
+>    ...
+> }
+>=20
+> mm/hugetlb.c:prep_and_add_bootmem_folios() {
+> 	/* Send list for bulk vmemmap optimization processing */
+> 	hugetlb_vmemmap_optimize_folios(h, folio_list);
+>=20
+> 	list_for_each_entry_safe(folio, tmp_f, folio_list, lru) {
+> 		if (!folio_test_hugetlb_vmemmap_optimized(folio)) {
+> 			hugetlb_folio_init_tail_vmemmap(folio, h,
+> 					=
+VMEMMAP_OPTIMIZATION_NR_STRUCT_PAGES,
+> 					pages_per_huge_page(h));
+> 		}
+>    ...
+> }
+>=20
+> Previously, __hugetlb_vmemmap_optimize_folio() derived vmemmap_tail =
+upfront
+> from the initialized head folio, and vmemmap_optimize_pte() checked
+> walk->nr_walked =3D=3D 0 without inspecting tail struct pages.
+>=20
+> With this change, on the second and subsequent PTEs (where addr >=3D
+> vmemmap_start + VMEMMAP_OPTIMIZATION_SIZE), page->compound_info in the =
+tail
+> struct page at addr has not been initialized by prep_compound_tail() =
+yet:
+>=20
+> 1. If the raw vmemmap backing pages are zeroed, page_folio(page) =
+returns page
+> itself rather than the head folio, folio_order(folio) returns 0, and
+> vmemmap_optimizable_pfn() returns false. vmemmap_optimize_pte() then =
+falls
+> back to vmemmap_dup_page_from_list(src, walk->vmemmap_pages) for every =
+tail
+> PTE, rotating the displaced vmemmap pages across the tail PTEs instead =
+of
+> mapping the shared tail page, while leaving HPG_vmemmap_optimized set =
+so
+> prep_and_add_bootmem_folios() skips hugetlb_folio_init_tail_vmemmap().
+>=20
+> 2. If CONFIG_DEBUG_VM is enabled, page_init_poison() fills the =
+uninitialized
+> tail struct pages with 0xff. _compound_head(page) then evaluates to =
+the
+> poisoned tail page itself, and folio_order(folio) reads 0xff, leading =
+to an
+> out-of-bounds shift in vmemmap_optimizable_pfn() and an out-of-bounds
+> node_zones access in folio_zone(folio).
+>=20
+> --=20
+> Sashiko AI review =C2=B7 =
+https://sashiko.dev/#/patchset/20261102032525.3597743-1-songmuchun@bytedan=
+ce.com?part=3D7
+
