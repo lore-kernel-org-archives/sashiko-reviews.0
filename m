@@ -1,99 +1,129 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.182
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793661452;
-	b=cf3+FERLFvUJ4p552xLSfiSm+06uhanqTPyXpwWrYeBrKEi8ETwo9w+cuqV1YCK+1Kbq
-	 tjYqMlpS2yZbKvjDx2aBR5a0pw0+lLq9YUrPzqG0N2mo0log2yq0oTAwdJm7Dd4mz2Gqx
-	 hVXKQhNVKg45uD0gHX+uK/CGDf8OUFcpmSw4oWAFd4b5c/jpE6OTMtB6ZLQUzLAjn02KS
-	 AH05xAbYi2uWo1vb5Zd0LST673pZi4cusnLbT1bURUalN8GjFNfV0SS5DLOLYsZfayRMW
-	 NNOem6BjlP2/gBwhOvRxcOt5M3yaDaQOz9Gb/RO2X6G2oI9PsAv73JDrijpNuL+VH1g==
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=192.198.163.17
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1793661559;
+	b=LoKuCDY8Z2TjV2camuH6eDbg1SITm5KpI0MauJZMwFxrgBYW3fGeBzdYGVwk0obhM+5D
+	 8X780R0genqEUBriTAhp+koLARsIrhGuuIYeI/QXgqBAzCd2KzsYlgrd8xXSZpqQDB1Ve
+	 wJn1jjV5T5Heblq+uMl9WksDAhNzreEzxXvTjArDyrDwgyE5zc4zshyNqcGPZ1AJ++m1+
+	 8hoa1DM7H/NMjytQ4OcOrq5IMqUpmuXP1yEigJ83DOPuO40qvDL7d7wm4bQipfnn+psUI
+	 EGDRPzAM+4W7GM/00CjYKsNMlboYuS3ai/tgpaQr3MZgJe/rn8jqREC9XQXyry4V3Pw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793661452;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=xKD9YvpeuRe/dGg9UOpRwAfoOUMyefhjGpw4KelDrg4=;
-	b=RFNnnywT2U3TRuwBDGFOpdPBETGYqbKp/BWJvwU/1hLWgfLd+IHhBuuV03f6y71Ql3ux
-	 E+XDHaglzQPAKDvbsU2gzelJRYbjma9TRTmOhxIfMA2h8aO2U5gGmeEP4jDz/JX9QU3rE
-	 /KFTUPSug8oOvsIP8HFGM+iSoJH5zrdj16+K8PoUA1r+//4Vsa0MqiNmCAYs14WowEMcG
-	 pdjw1COgHz0haUBp6Jd8NrkIWI6b6hCdCpM1ATWMP1FmXrAFqlnIskqpIk1WbPoPsW15X
-	 LDEBhObqm21cE/WS9yNvHExRmzSxAHKUPFjbki8f4edzCe4U+q7tSzkHmNAqxdGMpFw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793661559;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
+	 Received:Received:Received:Date:From:To:CC:Subject:Message-ID:
+	 References:Content-Type:Content-Disposition:Content-Transfer-Encoding:
+	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
+	 X-MS-TrafficTypeDiagnostic:X-MS-Office365-Filtering-Correlation-Id:
+	 X-MS-Exchange-SenderADCheck:X-MS-Exchange-AntiSpam-Relay:
+	 X-Microsoft-Antispam:X-Microsoft-Antispam-Message-Info:
+	 X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
+	bh=smkV+0Vl5D6ra8aSkNnh3PmZWk2TvCOwgCTYezGFZVE=;
+	b=yGqRnOjMqvuA15tCFlYBsWa4Yu79sxpqUdvzj3l+9iH/jD0+nhDBXf7TWUsuYf+KzBJC
+	 p122dufOc9e6E67h7bDFR3Av/Mk1TA6jxz7Gnp9tO91/SupCVJK0st9yH5Fi6U9DE9vDj
+	 HY3IXV07b3mTq/fGTEOgez96c1/HEEjgEK1hodRWPufkRyTFnDI9x7TS76dhQGkcfHaKl
+	 X3J/ekQUYilYGGE4W3JhI5X6m9H5DbXFHJbWTfZUGWECR5dmUAdC7UDyg+5G0fIgltOVy
+	 L91RWoZeBrfh4pkRG6VMat2b8vyeoB0Zm50RGa8raiFhYaxqAxdn7MI4GfBogWHq5PQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=KNnaJRcZ;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.214.182
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kE0wqQNr;
+	arc=fail smtp.remote-ip=192.198.163.17
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B43606A326
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 23:17:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 20B43606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A109606A326
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 23:19:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7A109606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=KNnaJRcZ
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2eb0a52d605so17885ad.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 02 Nov 2026 15:17:31 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793661450; cv=none;
-        d=google.com; s=arc-20260327;
-        b=XRMSEGm3klpxUku3iP3m/2rQD7xG+6wIWyp8VY6zVnCitxxaN4T+WuX1XaF7NKiOHo
-         dAhJ6+dVvXeX3taqOnlbF5AMnBO62rGlMnCHM5wgeMJ0nb3vkVjwH+ExX/2S2FM1qTqN
-         nTyXL0UHebbiIbenq/2cTD2y+gd0GOn5snWj9XLhCe/yOqBlslOj41GhmgmsutbvNtz0
-         E5z6bdRPGNJ7/Vlv98JVT0MTzJnrDdxg6SS3e7iKcr5zZUvzWIqomNLOWNQd5BdTKbyJ
-         R4SUzSsjLuQQWirBcfPBsxpSEyuSEMbDNPQ4DOnfea8qdQk22ynuf5JOuvJHZMY3At/c
-         fINw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=xKD9YvpeuRe/dGg9UOpRwAfoOUMyefhjGpw4KelDrg4=;
-        fh=KdiYuOgHr1xuk8V+WFeOGLuiGf6u0cn12cqjPppO3PQ=;
-        b=L6O7DZ2WMZ5f8RihEQTWYGnio/kC/vNb7r4dVKvFQG/a/QDN1eCKkPntOyRKRfO1Hx
-         rAXcpQmPJemZepCbnF2MoxDFF2af+mmW0gzJIcPLfRoKHH4AqIa1iadg53KChxo4+643
-         F0zWrEvyf5nhLzibgG+kxtMW7MGFsKRAKj8er08zS8FM9Oj8E2Bc8eQPBttJtu/+bEMe
-         uW3eK2q7Qz84ktsBpH88BSTM4LF58kNq14pL13csAmVp01lwZ4ZB76FZ9YfnWHFzhzjC
-         6ciUa2ri8XEefOberoxlf9JHA2DE509N+rjB+8bEwMkZaSReeFhTnNfVE5elTX8P85SO
-         3o5g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1793661450; x=1794266250; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=xKD9YvpeuRe/dGg9UOpRwAfoOUMyefhjGpw4KelDrg4=;
-        b=KNnaJRcZE75w7VANJIFIMoZ2Eb/vUi40oMpe5VMWT2OaYxaXln0DZQZ+mRreXTWuxv
-         NdTg4wqwfBt598xoydaMLyvFCbuslwR85vMAXDS1ZvB2/S+KvZH9wQtc3dNjeVzRGxKb
-         ytR74FVqBBhQLoyOIV2pVUm0/SnVQosfEAuqqmzRP/XeUqSCl2kYZoCcp+RXxXhp9Vsf
-         lBAHGNEa/EG/RJRuurFPLdhqyXbX7cCvzKj4OcXlgSgj9z9hG9nWeZdDtBWlLeuJqrv4
-         xZ39sF3VMcs6eWfdCM3ZswS0dQ+Z6jhDG7ELssV0omAs45xO/gPrGdrEpLbZeczIWpVH
-         2nrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793661450; x=1794266250;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=xKD9YvpeuRe/dGg9UOpRwAfoOUMyefhjGpw4KelDrg4=;
-        b=MKHyB7aDnwqHOLTCoKcCKtPjQWpYFx5sPC2lX2+YneXRHYBs+xKibnN+etNhLIs5U5
-         9CYnxCF3t2RWnqI1EdyJBpVBJOREGtDwFxUM1u8Teq/YkRZXXLh/Th6SlnD9dSTHCAUa
-         VOQbYu60x81fBds6+aO38EVx6Yz3gj1WHi0GPeui0kZtxmbq7zV0OLUvB4vKdcvOtaOq
-         toX7CzmQt84MK0V/DDjcuWzAPF5hOsXAlQrJ+loOycw6py2ZuvGxWSIi5wYRnhOURi4x
-         lbq3rdXqTMdTgH/XwZIaIBWYbyZnBkdDLRqzTjtUT/PISeA9QLLe8A3eCmSdEWyj0Pg3
-         daGQ==
-X-Gm-Message-State: APuU4Z99pK7nOreSlI1w9yl9V6+faiWZvRa2pIHfzrn+jiqazQRj2/+F
-	7110W2SR6As2oJjgsE43xpCdRAG8Sa4/xetmD3N0GFg+h9xQHj5VvKYpOcH49M1hJ969T3S/nm+
-	eEBv5n+YfICjGuxYWFvgapXALmQ8oI/96MxaO9A8lOfw6Hti87sM933m3
-X-Gm-Gg: AYBFou2jmMXDZ3JmQI5SnmbCBq/YGOb7xQqSlnOvCKLGHHiEfFk7cppKFuOLilyBVgW
-	bH186CBF7UXPa4iO80CHILzXfB0Gnq+6VV/wo73Wo9CEljUedRtdHzC4nBsyzqpGNLr4BCFvSan
-	umHqv3Z+6/MyS6RIBWpJFBF1HwU+4ssLYE/YpfsKaLpANqwmsLKoVbzhTN86wC8vGViQa7t6x/D
-	DO5ATAjzngbNzb39KbeUMotkX/Zoo+s72TykdI4ny8V/bYzuDyhdXp0ZPbIXyw8poHtnrACqyvb
-	3lRefroTfyHXcGLXTwaaOhP9YHjQwz4afawlEgjEfF/m+F5SGlP++RDhQiR59u1bOCf6iKBVVVs
-	fGi3dsUniPj9F+pAzF7paO2X8ito0LWFjWI3eRpw+NHbgCbLHzS1a8f982hTfnt6KWsQ=
-X-Received: by 2002:a17:902:cf0d:b0:2c7:f0cc:dafa with SMTP id
- d9443c01a7336-2ecee02a602mr1319195ad.5.1793661449821; Mon, 02 Nov 2026
- 15:17:29 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kE0wqQNr
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793661558; x=1825197558;
+  h=date:from:to:cc:subject:message-id:references:
+   content-transfer-encoding:in-reply-to:mime-version;
+  bh=fyOYnTjqln4Hf0MclQsDTnHibhI981LU63dQOf+8+5I=;
+  b=kE0wqQNrppvELOeKx3qkjtaokhqZeNYJu5mDJcMItBaZ0m/yVXK/iLXl
+   sTMJ9jC9uOx6JYClGx6uD8qCILxALVV/7eTo6fO7mk/S8IbOYj7TfL4mX
+   u7H7bIILp4Stg0Xl/P94DrfEeHl5ZNbiFZtqZcFA12AKMwYqXC60UNdZn
+   LYTXXrt8NvR/zcjRnZf0PhBpdlZvY8uxsNSvXwe0BVA4U4L/Qz/JCJnPo
+   tLM1eKom+FsZ7BK6znYQX8KSSogWtcIrqvX+E/vg30hR8kFB4pmvfLA+g
+   z6OtUcsH1J6YD1cTRBnu4E9XkJe1/hVuNOx5eZXW38uAtwgUbrV6c/R9e
+   Q==;
+X-CSE-ConnectionGUID: DAiNuhQZThWAdpfwgazQ6A==
+X-CSE-MsgGUID: EFYWnlMeRqijsfob/tmnXA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11954"; a="2384363"
+X-IronPort-AV: E=Sophos;i="6.27,192,1787036400"; 
+   d="scan'208";a="2384363"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 15:19:17 -0800
+X-CSE-ConnectionGUID: xY1IZdC0R3u/oaIPf1UxhQ==
+X-CSE-MsgGUID: aGYSYXp3SKymEbD2uF7Z3A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,192,1787036400"; 
+   d="scan'208";a="6108772"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+  by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 15:19:16 -0800
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Mon, 2 Nov 2026 15:19:13 -0800
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56 via Frontend Transport; Mon, 2 Nov 2026 15:19:13 -0800
+Received: from CH5PR02CU005.outbound.protection.outlook.com (40.107.200.7) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Mon, 2 Nov 2026 15:19:13 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SCIBlyURRi4m/dMS4BvUU62mDta1DslDPi6ja/yQYo6GfQ8DIUd2+6RAoigqNRkOMua2Xsop7ThtMPWnMzAVwu2Agl8qdowGtuDT1YfRu2iGuqxbVE3TNuQP+rfdwXRJgLuk+0Xezn5nU1faD1/TB7qrbs6qFfrAJ9sTI355VW2VeHjER94p4+tGJ/ox5RF5zgoQkgXOBWIq/eCYxSgDY9PyRFfz9QWwPVqCUrJigeEUpdmGzIIlj4nCDH2KSl/vZ2cwtp3VGUQ9sfYA2+X4UNDqwbwdV842dgB8ZazH97HPMvhgWWO4dYNAMSkNPaSOYR8xzE82gViP3ZItYZF1lw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mR+XroSUQ1iszhLdXY70HU05C0v4uScLaGSDMzB2mXA=;
+ b=lbYdlEASylaBttoID/WzbZYsTFbP/MNV3nCgmoqd1x74GEl767zSeMOR2FK6tmHuKm5Lmoj/J780tVDNpVCKhEIfAMxuJPJLLWlD8lNJFWAsPgbeVwgoDs5mo7HwMlDCoKcjn6hB/KN/mtu2Ao2MDaThGnpWNKO+WuKUaTGozU/4kCS/C++a7RBCM2/kYgaxuXUXd1ahs8xDWDIP+ALIehHkKGzwXX90WjVRTnfGkE6UHMam5xzSv6iSOR6CEyLKH6inwvzRnWP6qGo1w+1Eo7uCy4PJDk1zR9EsNokCWDT+TtRqvRX2FNlPD70nQokeF4YS4AXBpp6yivz/IbVisg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com (2603:10b6:f:fc02::9)
+ by SA1PR11MB6805.namprd11.prod.outlook.com (2603:10b6:806:24c::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Mon, 2 Nov
+ 2026 23:18:08 +0000
+Received: from DS4PPF0BAC23327.namprd11.prod.outlook.com
+ ([fe80::6fbf:c112:d0a8:f1a8]) by DS4PPF0BAC23327.namprd11.prod.outlook.com
+ ([fe80::6fbf:c112:d0a8:f1a8%5]) with mapi id 15.21.0569.011; Mon, 2 Nov 2026
+ 23:18:08 +0000
+Date: Mon, 2 Nov 2026 15:18:04 -0800
+From: Alison Schofield <alison.schofield@intel.com>
+To: <sashiko-reviews@lists.linux.dev>
+CC: <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH v3 1/2] cxl/region: Reject a repeat write of an endpoint
+ decoder to targetN
+Message-ID: <aukaLAMiCHn0xX4S@aschofie-mobl2.lan>
+References: <3e5af9d6d59f8df52b9d21bcf1c7e78f06918f80.1793653629.git.alison.schofield@intel.com>
+ <sashiko-outbox-194200@kernel.org>
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-194200@kernel.org>
+X-ClientProxiedBy: MW4PR04CA0366.namprd04.prod.outlook.com
+ (2603:10b6:303:81::11) To DS4PPF0BAC23327.namprd11.prod.outlook.com
+ (2603:10b6:f:fc02::9)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,136 +133,156 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <cover.1792690544.git.abhishekbapat@google.com>
- <f577c773058265f0eb7fe2c10fb6aa4003445a00.1792690544.git.abhishekbapat@google.com>
- <sashiko-outbox-183008@kernel.org>
-In-Reply-To: <sashiko-outbox-183008@kernel.org>
-From: Abhishek Bapat <abhishekbapat@google.com>
-Date: Mon, 2 Nov 2026 15:17:18 -0800
-X-Gm-Features: AclHuK-hHejKvvLFEoGswR0AFCGtiaitOOypnWQKOfKmeT59R1ag4cCR_-OpHjQ
-Message-ID: <CAL41Mv64927fy+w4FVzROTS2iNjRqZc8Ss=dZxuk-WqmJpoh8A@mail.gmail.com>
-Subject: Re: [PATCH v4 3/4] alloc_tag: Extend allocinfo_filter to support
- tracing queries
-To: sashiko-reviews@lists.linux.dev
-Cc: Suren Baghdasaryan <surenb@google.com>, Hao Ge <hao.ge@linux.dev>, 
-	Andrew Morton <akpm@linux-foundation.org>, linux-mm@kvack.org, 
-	linux-trace-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS4PPF0BAC23327:EE_|SA1PR11MB6805:EE_
+X-MS-Office365-Filtering-Correlation-Id: 18ef70a5-af52-4c59-c382-08df39378dba
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|23010399003|1800799024|376014|10067099003|18002099003|22082099003|56012099006|4143699003|11063799006|261022105027099003|261026121527099003|261022075727099003|261026140227099003|261009223027099003|261028144727099003|260925021311599003|260925022911599003|260925021911599003;
+X-Microsoft-Antispam-Message-Info: oiiKJsPg1VCvMK8J6TvEHi6Qcl87lp+bUQ6Q/jlIqNOX4IuxP59boZnadr1jfTQ2d2z+hj05y6aUzhqSSJBrOWHfB9o2TsRLb89LQMZxYFiMmcmmkWiF8OaMvQAG67SBPhmrxXbeuFuaSAnmPY8AbCENL6hikbU4eXmjFEzhbLh+dYHJt+QOxHX6BTUmNcaNIj0uS8hsH5QfLiLPptBqNQ2pAv0qMKHCXFnoUIrw5hZqIa9EWwkWUgGl9dzl53+DpjNQnRcXqPC8pea0bSd6vb/7MlW3yGb1FNIL3b/WL669J7UA/xSpZ+k3moiAGBO4K6HD+vyUBo3lQ+DXSw8Eu+QK0wejV9yGa6sCLZ4bGunGtT1nchHSBbnzom3vaVrrLBIcfmjkebC0bqsTD4CigOhW/Mf/IAy0i8Rp34O4WA4MnqXqgZX04Gr/2U9CEzukUgp5KZr5cv7brlMvYXKSF50a8g6FoA7/mwrYEtS8Yjs4cwb2pOjY/QL6EHTLyIho3oaTvckWtLHtBHUM0bPQQ2uubeCVuK3fMVEPZjP+Y3VGm51mzc11V5bz1IS6vOt8EDWNCoeVEG47cvnPu1oBppSvMu7AV4bnUp8Xeg3aYlw=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS4PPF0BAC23327.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(10067099003)(18002099003)(22082099003)(56012099006)(4143699003)(11063799006)(261022105027099003)(261026121527099003)(261022075727099003)(261026140227099003)(261009223027099003)(261028144727099003)(260925021311599003)(260925022911599003)(260925021911599003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?zr0lxgxNQ9ivYt5dy7GYzlonxDiR7c41RtZbgXbNQmMttyHFz+ImuO3e6K?=
+ =?iso-8859-1?Q?BnLDC3Sh3N1dmnEAUik1/B7VKLCrEwV695Y+hBn+OT+OLnMZyTj6KNbFrY?=
+ =?iso-8859-1?Q?WxooFquv6ulhxn6v4ktXLy58PgZY7MifHTz7SNojyOCdr4If10MSy12KJh?=
+ =?iso-8859-1?Q?p7bdHJRW8Y0p5en1frWg7uzprqzKW3/pPT3vBFr83CKR+TGgFbs8usZlOB?=
+ =?iso-8859-1?Q?zN27rb8xk9nNsj4GLQIfDBYjyoweljUG1VCF/w8GFIhdfYhZ29nrZuTaMz?=
+ =?iso-8859-1?Q?nX/zbU3yj00g1QFZjlqsszi76mVbPb4bsq9Avx/NY/votNDveHlSMHYu2P?=
+ =?iso-8859-1?Q?pPdQikvPA8t5AMNM9fXIDc3A6Uk+8THjggHFFq0m36X6YPQLbtBHlJ9S/G?=
+ =?iso-8859-1?Q?0brjBrHFJlONjD1WnW2DBzZ+y1oxX6RDee/smUrLiC3RedgDfQ8sLDyEAQ?=
+ =?iso-8859-1?Q?06qzebRRu8Gd84/kJFOr0Dft9mIqrRWurrAngxBBnVRo92A7CsmT/ssIPA?=
+ =?iso-8859-1?Q?LCl+A0fnl7F9sTZ6dI07CXuv69CgSUTsytELx2yxh5sJ22JCxb8XC1AXQG?=
+ =?iso-8859-1?Q?gMlzAv+m2J5ItfRdU2A+/Ss93JYciUWoWI8lru4GUFTP14N2lcY1v29fxy?=
+ =?iso-8859-1?Q?d44b5NNJdvtdf63O2GQc7BWkDICXNiqVta43/PhAuBhyyCr3d8H0MA8G1Y?=
+ =?iso-8859-1?Q?GAJ30Eeeo1kdWGPRY7HQrLGkLl7fh5pjDrsJYbX/oYP5U1MsxibxvFpxlv?=
+ =?iso-8859-1?Q?BMjueFSOvIIuVuGjTDLEJYMQeQ16+gkH9lO3TJ3vVzwnO+YUtN1Y+EJLYk?=
+ =?iso-8859-1?Q?PhJ7VT60HOsdMyMIScAYalBZ5dJWzwoqUm7tVDQnzdMSRud5dztvsoX5AK?=
+ =?iso-8859-1?Q?QwpbUP0Lqj0L5PTg0cDtGXm04HkEgcyvzUUWGYvRMwQMIwVmUla7gZ1xFm?=
+ =?iso-8859-1?Q?oNAGgwHmbaeI+VEYq8SfQJOP8tOstcV1rmbEWW+p37oCvjUDRdPQkIpBaH?=
+ =?iso-8859-1?Q?wUt4cSbFLzJWKcZUTMX+/Kzem+hlDrd6Yml2b1pSSeZldv6FioMnwzl8IR?=
+ =?iso-8859-1?Q?lRb1selZsZ2TxHjP6mJ/nJi6KpkytS7NTnAaufATGkuiyRLiO9Jt9+CxOq?=
+ =?iso-8859-1?Q?pZBlNkTyRMgBENxEPbH7KkB5n57iuUaBlzRDO7QLBA4a2mVUHdM9YSVrM0?=
+ =?iso-8859-1?Q?ffVoIVjv/ph6l3pRyzGOtX/9lpHpRFU1GpI0o8/QhoK3mN/8bATBhwACaB?=
+ =?iso-8859-1?Q?wks7dTJyTSfuN5hqTj/f2Racd6Rgtpd9J6pd4riU8yZ0zw/UGQjVT/4E3K?=
+ =?iso-8859-1?Q?SRioCWNtUNWhmAXATBwTAvW+3GygVMZSDjFKyzALMyqmxQDApYALIhOIii?=
+ =?iso-8859-1?Q?3eS3lTQjrWgQV8LEUS2fE8cBlZz2fJSUcvDTEl/RnawAkjPc+CBOUXnLY4?=
+ =?iso-8859-1?Q?ZGITBaUgQOKyqL43Jmp2GgHU3gbu0py4hL4B0mFGuiU7BvpzS7JcRB/jJb?=
+ =?iso-8859-1?Q?Q8LfHgLhIe9Q9cUBwr6DRpJWWz8K+36eXMYq4rF8zh0QJIWtihN8XIrBi0?=
+ =?iso-8859-1?Q?EYsODtxyOfrwNP5elGdI1eEMvCPuucDEjo/X3owjodyz2+6p2F9LLbNxG6?=
+ =?iso-8859-1?Q?iegQbeDLC7Eg0R6FtshsdVNa0e+e0UyGzHatQfGqQH6fy+scgZMG+oh8ab?=
+ =?iso-8859-1?Q?PG4ipC+j1cdbm/qKo/HMVlJh4ei2BxzWWmz9fQsNXXiRhvMPnJZqIJu3rf?=
+ =?iso-8859-1?Q?qwb+pkJfA64Bm6igEHJO0r8o/DSS4UszdH+CSYw/ZpFKlciUucQljpk5VZ?=
+ =?iso-8859-1?Q?dpW31pjgAcRH2lKVMU4v01+IzZBiUx4=3D?=
+X-Exchange-RoutingPolicyChecked: s/81JjEYTPdNKxqmqRPk1cAWR2an6JwpKaKlMXugy27mGpwVM7HATccR9IVlfM0S3MPmZt7oM0JiNz3ZAJJr1EiLLzF29ohexGY10X808Ghpl5BieLxLVuB/If0ewIOq/S9pL5ZF/BF6GoAaQIqbOh5XnH6sWqtvwfC7XCbYiHwXSU0b8broxVPPWOttZbNXuXrA9iqYUVwQDPRWZ+kA99ixnZwEnKSAPfZGBrAvtem1/46IbqmSBWgbQYt4UDAWczFESAEvpvugIuAY1Xlq/kBsYSuDY0mi2IOc1sVpKRmXeTC2bJlB0tdsLyOhzRDkOzkouBiKuaxx6KvbriKEqw==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 18ef70a5-af52-4c59-c382-08df39378dba
+X-MS-Exchange-CrossTenant-AuthSource: DS4PPF0BAC23327.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Nov 2026 23:18:07.9105
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: q/AKPBfUKxbim6h+w67sKgiaSbl/TKXECbGVSwXCS0l20AyG+ULmBd0DeyR/eFfy+8SzG2/f4qPDe7RsYCA/Z7x2I98k5RaWpB6eReYu9EE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB6805
+X-OriginatorOrg: intel.com
 
-On Fri, Oct 23, 2026 at 10:38=E2=80=AFAM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] alloc_tag: UAPI breakage in ALLOCINFO_IOC_GET_AT from growing al=
-locinfo_filter
+On Mon, Nov 02, 2026 at 09:30:31PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] cxl/region: duplicate occupied-position check in cxl_region_attach()
 > --
->
-> commit b1243e6bc8216f5fe9d8786ec8ca3a597c41681f
-> Author: Abhishek Bapat <abhishekbapat@google.com>
->
-> alloc_tag: Extend allocinfo_filter to support tracing queries
->
-> This commit extends struct allocinfo_counter and struct allocinfo_filter =
-in
-> the alloc_tag uapi header to report whether tracing is enabled on a tag a=
-nd
-> allow filtering tags by their trace state.
->
-> > diff --git a/include/uapi/linux/alloc_tag.h b/include/uapi/linux/alloc_=
-tag.h
-> > index dafcba2f7e2c1..a96054ac22376 100644
-> > --- a/include/uapi/linux/alloc_tag.h
-> > +++ b/include/uapi/linux/alloc_tag.h
-> > @@ -38,7 +38,8 @@ struct allocinfo_counter {
-> >       __u64 bytes;
-> >       __u64 calls;
-> >       __u8 accurate;
-> > -     __u8 pad[7];
-> > +     __u8 trace_on;
-> > +     __u8 pad[6];
-> >  } __attribute__((aligned(8)));
-> >
-> >  struct allocinfo_tag_data {
-> > @@ -54,7 +55,8 @@ enum {
-> >       ALLOCINFO_FILTER_INACCURATE,
-> >       ALLOCINFO_FILTER_MIN_SIZE,
-> >       ALLOCINFO_FILTER_MAX_SIZE,
-> > -     __ALLOCINFO_FILTER_LAST =3D ALLOCINFO_FILTER_MAX_SIZE
-> > +     ALLOCINFO_FILTER_TRACE_ON,
-> > +     __ALLOCINFO_FILTER_LAST =3D ALLOCINFO_FILTER_TRACE_ON
-> >  };
-> >
-> >  #define ALLOCINFO_FILTER_MASK_MODNAME                (1 << ALLOCINFO_F=
-ILTER_MODNAME)
-> > @@ -64,6 +66,7 @@ enum {
-> >  #define ALLOCINFO_FILTER_MASK_INACCURATE     (1 << ALLOCINFO_FILTER_IN=
-ACCURATE)
-> >  #define ALLOCINFO_FILTER_MASK_MIN_SIZE               (1 << ALLOCINFO_F=
-ILTER_MIN_SIZE)
-> >  #define ALLOCINFO_FILTER_MASK_MAX_SIZE               (1 << ALLOCINFO_F=
-ILTER_MAX_SIZE)
-> > +#define ALLOCINFO_FILTER_MASK_TRACE_ON               (1 << ALLOCINFO_F=
-ILTER_TRACE_ON)
-> >
-> >  #define ALLOCINFO_FILTER_MASKS \
-> >       ((1 << (__ALLOCINFO_FILTER_LAST + 1)) - 1)
-> > @@ -75,6 +78,7 @@ struct allocinfo_filter {
-> >       __u64 max_size;
-> >       /* filter criteria only; see allocinfo_counter.accurate for actua=
-l accuracy */
-> >       __u64 inaccurate;
-> > +     __u64 tracing;
-> >  };
->
-> [Severity: High]
-> Does appending the tracing field to struct allocinfo_filter in
-> include/uapi/linux/alloc_tag.h break existing userspace binaries calling
-> ALLOCINFO_IOC_GET_AT?
->
-> While struct allocinfo_counter consumes a byte from pad[] to keep its siz=
-e
-> unchanged, growing struct allocinfo_filter by 8 bytes shifts the data fie=
-ld
-> in struct allocinfo_get_at and changes sizeof(struct allocinfo_get_at):
->
-> include/uapi/linux/alloc_tag.h:
-> struct allocinfo_get_at {
->         /* inputs */
->         __u64 pos;
->         struct allocinfo_filter filter;
->         /* output */
->         struct allocinfo_tag_data data;
-> };
-> ...
-> #define ALLOCINFO_IOC_GET_AT            _IOWR(ALLOCINFO_IOC_BASE, _ALLOCI=
-NFO_IOC_GET_AT,        \
->                                               struct allocinfo_get_at)
->
-> Because ALLOCINFO_IOC_GET_AT encodes sizeof(struct allocinfo_get_at) via
-> _IOWR(), and allocinfo_ioctl() -> allocinfo_ioctl_get_at() in mm/alloc_ta=
-g.c
-> matches only the new command value and copies sizeof(struct allocinfo_get=
-_at),
-> won't userspace binaries built against the previous uapi header fail with
-> -ENOIOCTLCMD (-ENOTTY) when invoking ioctl(fd, ALLOCINFO_IOC_GET_AT, &par=
-ams)?
->
-> [ ... ]
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/cover.1792690544.=
-git.abhishekbapat@google.com?part=3D3
+> 
+> commit 8e6a6e0273b1dca525bf14e3930192ed09907f10
+> Author: Alison Schofield <alison.schofield@intel.com>
+> 
+> cxl/region: Reject a repeat write of an endpoint decoder to targetN
+> 
+> This commit rejects repeat writes of an already-assigned endpoint decoder to
+> a CXL region targetN sysfs attribute with -EBUSY before modifying region
+> state.
+> 
+> > diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+> > index a048bd5c06cb6..90226327e03c8 100644
+> > --- a/drivers/cxl/core/region.c
+> > +++ b/drivers/cxl/core/region.c
+> > @@ -1764,9 +1764,6 @@ static int cxl_region_validate_position(struct cxl_region *cxlr,
+> >  		return -ENXIO;
+> >  	}
+> >  
+> > -	if (p->targets[pos] == cxled)
+> > -		return 0;
+> > -
+> >  	if (p->targets[pos]) {
+> >  		struct cxl_endpoint_decoder *cxled_target = p->targets[pos];
+> >  		struct cxl_memdev *cxlmd_target = cxled_to_memdev(cxled_target);
+> > @@ -2130,6 +2127,14 @@ static int cxl_region_attach(struct cxl_region *cxlr,
+> >  		return -EINVAL;
+> >  	}
+> >  
+> > +	/* Already at @pos: fail before changing any region state */
+> > +	if (pos >= 0 && pos < p->interleave_ways && p->targets[pos] == cxled) {
+> > +		dev_dbg(&cxlr->dev, "position %d already assigned to %s:%s\n",
+> > +			pos, dev_name(&cxlmd->dev),
+> > +			dev_name(&cxled->cxld.dev));
+> > +		return -EBUSY;
+> > +	}
+> 
+> [Severity: Low]
+> This isn't a bug, but once the early return for p->targets[pos] == cxled is
+> removed from cxl_region_validate_position() in drivers/cxl/core/region.c,
+> doesn't the immediately following block in cxl_region_validate_position()
+> already handle this case with the same dev_dbg() message and -EBUSY return?
 
-Hi all,
+v4 will drop the needless check in cxl_region_attach().
 
-I recently discussed this with Suren and we realized that the IOCTL is
-in v7.3 so this UAPI breakage is a legit concern. However, we have a
-workaround for this. We are going to convert the inaccurate uint64_t
-to "flags" where the bit 0 would be a check for accurace and bit 1
-would be a check for tracing. This allows us to extend this UAPI
-without breaking the previous versions. I will send out a v5 patchset
-with this change soon.
 
-Thanks,
-Abhishek.
+> 
+> drivers/cxl/core/region.c:cxl_region_validate_position() {
+> 	if (pos < 0 || pos >= p->interleave_ways) {
+> 		dev_dbg(&cxlr->dev, "position %d out of range %d\n", pos,
+> 			p->interleave_ways);
+> 		return -ENXIO;
+> 	}
+> 
+> 	if (p->targets[pos]) {
+> 		struct cxl_endpoint_decoder *cxled_target = p->targets[pos];
+> 		struct cxl_memdev *cxlmd_target = cxled_to_memdev(cxled_target);
+> 
+> 		dev_dbg(&cxlr->dev, "position %d already assigned to %s:%s\n",
+> 			pos, dev_name(&cxlmd_target->dev),
+> 			dev_name(&cxled_target->cxld.dev));
+> 		return -EBUSY;
+> 	}
+> }
+> 
+> In cxl_region_attach(), cxl_region_validate_position() is called before
+> cxl_region_attach_position(), so attachment only proceeded previously
+> because cxl_region_validate_position() returned 0 instead of falling through
+> to the p->targets[pos] check.
+> 
+> Also, placing this check in cxl_region_attach() ahead of the
+> CXL_REGION_F_AUTO branch means that if an auto-discovered region is partially
+> assembled (with cxled staged in p->targets[pos] by cxl_region_attach_auto())
+> and userspace writes cxled to targetN via store_targetN() -> attach_target()
+> -> __attach_target() -> cxl_region_attach(), it will now return -EBUSY
+> instead of reaching cxl_region_attach_auto() and returning -EINVAL for
+> pos >= 0.
+> 
+> Could cxl_region_validate_position() simply be called before
+> cxl_region_perf_data_calculate() (or inside the manual attachment branch)
+> instead of duplicating the bounds and p->targets[pos] check in
+> cxl_region_attach()?
+
+I don't want to move cxl_region_validate_position() call in this
+patchset. That is a separate issue that I mention below the scissors
+line and it will be fixed up in a separate patch. The reason we don't
+just toss it in here is that it is a partial fix for a problem different
+than what we are doing in this set.
+
+-- Alison
+
+
+
+
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/3e5af9d6d59f8df52b9d21bcf1c7e78f06918f80.1793653629.git.alison.schofield@intel.com?part=1
