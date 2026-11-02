@@ -1,49 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793644359;
-	b=qGU3txi7fVxzvuv1/DBrLiCbnWOoAhBt3SHNV3CcjxpvfBNgIC6aqJeg/sn39iTMpEaA
-	 h3WT+VBpY4FBRdclbLTZBM/TvgdWLWTO3i8KYsbIjQUGVNJInJ8NFZ5Ww0K4jJZREXdaN
-	 2bc+lLaDaP32h97YsyQ+4+DIuT/xXgZoXGsSvvSa9IXkZhWjznkSJCME994xIPcdg0Y2Y
-	 Sbm8UoM12jW2r75SVloJVY7RMwMoW4IWXlTeKecHDQ8qJTvo/6w4A6M8ow1oBBaLQP/hB
-	 cieyPg5lxrXzQ6Oz6hOSQWKBjQcFwePkD6KM0c9nNDTb7n0CnzoHzmppL0zBGef02Rg==
+	t=1793645008;
+	b=xWC3pOkw92EpxSwLpzBi02jx/89zJAISKVsGygY85rOiPghq7aWHBbqdRe4Hn7uOZJSK
+	 WnXAetBGcB4y6uLPG9NxsKqvtdj8D8Q2x8j30+dnOwq/IsRQPoTnBSz03sTETNxXz0g1l
+	 MaM4pOPABT+qY0rvJmbw5o0QEpgAH3xn70FRaIsODHzIBy9bI5Z9OTdxl/5EFsJfiyywc
+	 AYVC1fBu0QGhGeftVKG/tQ6np2FpPZ+p8bhipRxx+AGec3JU0gnH3Zs2Nz+NJOjGLMZho
+	 J09a04f6bLb3eZ6L4i6gaQjMYGW/MbQPBGRl+rUKDMtBwLrpbjwVvWrD2soOeVeVfeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793644359;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793645008;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
 	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
 	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=d6Zs7hYlOcAb9GpTpzgd4RT7Z8RUJLNrzQEbBotUN6E=;
-	b=VgcK6GAvxJIr5hgDnfYU3laMRg6BP9REmr5ZZHKEPPjK/S2o5ZsyEm3yglYCmGCr9q9W
-	 f5suyXtgOpQYnkrv33YIwhEao7HzyttxyAOL0HcciAaB01B/+WG3YhkuDl/rWHnjIVslj
-	 JDT3cEkjCf9zRLSyCBYuuLx3siTr5giApA3q3JXiuBdBgHsE653rqLYowcscFJQWjqHGf
-	 RrY9B27ucMnBCC3TlN4Exvb70otrrfoEwuw6o+L43kmI9ntRVPPVZBFAz2LsO5vEZ8dTk
-	 6j/OU4cZiLCrKx9IyxLCwgWNhOKLck/sV1f/9VQf3naYIFCzuYu1jrbvfQPL9flxLUA==
+	bh=d8M95H69R0GVpRra/FsjqWhUbWLcwcGJtzbc38SKSco=;
+	b=v172cfbPoXMbuRSlSXZCdJF0CVBkthHgYxPBtItrSbO5xEGvEgRK6svb008OaoMhiJzq
+	 MnZ9OjKjA2cxvtaOZ3jIxbm3M9oerdJRniFdgJRqShw9+pt1y526HYibwifDIcDBKadF3
+	 UoOnvqvzyXBJMp9EZv+5g9GJ0LPWGsbbkMwY+N7z/H0y8YmGJDzqHdKseivZTSRC8O4Cq
+	 FHyYllOzDLQxlXGz/UF0dgKURn9vrEJxnpJB1PvDLIEWatmQg0fgK04aqe9rmVEcsN+9E
+	 Dmu7FrOk07rqe2MPn+cIeC38496WkOIWgYkWou2Z3Yp+zE205VtebXAI6y0FHhkc5YQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=arm.com;
 	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=dtYbcMk9;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=Rt49Ezrz;
 	arc=none smtp.remote-ip=217.140.110.172
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BE54606A33B;
-	Mon,  2 Nov 2026 18:32:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1BE54606A33B
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 707F6606A324;
+	Mon,  2 Nov 2026 18:43:27 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 707F6606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=dtYbcMk9
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=Rt49Ezrz
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 447D41C14;
-	Mon,  2 Nov 2026 10:32:34 -0800 (PST)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B3A9A1C14;
+	Mon,  2 Nov 2026 10:43:23 -0800 (PST)
 Received: from [10.57.89.36] (unknown [10.57.89.36])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9CA6C3F673;
-	Mon,  2 Nov 2026 10:32:36 -0800 (PST)
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1E39C3F673;
+	Mon,  2 Nov 2026 10:43:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1793644357; bh=nI0YXxpb9UJqKj3m7hjIKI17k4V7uhAOorjJL+Fywkg=;
+	t=1793645006; bh=e/apkQ+PUTPkWx2JCcH7zwo0mzEjRVDTMtVntiX6q2I=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=dtYbcMk9SJkWCbo6y4hdjHWxZOwL9CpwtcA2b4elAGjGLsZeaCJN663iacuO5uYbO
-	 XLI0yB1qxIUfPQOvxrnkTtNZ2VAro4Kl3tyrcL3mo936a2wRfsoA2DtOWK2+2IiEU9
-	 mEbbnIYtqLnx8pJ63j9bC3J5QzCb8Ceqa7joSIw4=
-Message-ID: <1a069f22-64ac-44f3-9eb0-bd4b9416d2bf@arm.com>
-Date: Mon, 2 Nov 2026 18:32:34 +0000
+	b=Rt49Ezrzyu8ojaEZum7Pvn5HC/hulevEkgupKNQAcGqvZKdKkGcS8ZOFd8Ro3Dw2M
+	 Gt2x/7FiaFLK8oro7pIl6oq7iB+X+WNpZAlxZRv0xe9ETdkaUkKuL4Fqsnx04Gbi0z
+	 +66d8Jz42ioQW/tYZrNYwG2ofQFVj92braPUmKIs=
+Message-ID: <05133376-f88a-49d4-bcc8-4b406c18aa7d@arm.com>
+Date: Mon, 2 Nov 2026 18:43:24 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -54,344 +54,123 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/16] KVM: arm64: gic-v5: Implement irq forwarding
+Subject: Re: [PATCH 14/16] KVM: selftests: Add VGICv5 ITS attribute tests
 To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev,
  kvm@vger.kernel.org
 Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
 References: <20261016155741.979985-1-sascha.bischoff@arm.com>
- <20261016155741.979985-14-sascha.bischoff@arm.com>
- <sashiko-outbox-174635@kernel.org>
+ <20261016155741.979985-15-sascha.bischoff@arm.com>
+ <sashiko-outbox-174624@kernel.org>
 Content-Language: en-GB
 From: Sascha Bischoff <sascha.bischoff@arm.com>
-In-Reply-To: <sashiko-outbox-174635@kernel.org>
+In-Reply-To: <sashiko-outbox-174624@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 16/10/2026 17:25, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
-> - [High] kvm: passing full typed INTID to hardware VDPEND instruction
-> - [High] kvm: use of undefined macro kzalloc_obj
-> - [High] kvm: ABBA deadlock due to translation_cache_lock acquired without disabling IRQs
-> - [High] kvm/vgic: TOCTOU race in its_cache_drop_translation disables wrong host IRQ
-> - [Medium] kvm: data race from lockless read of irq->hw bitfield
-> - [Low] cleanup: mixing goto-based cleanup with guard() declarations
+On 16/10/2026 17:18, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [Low] kvm: selftests: tautological test for ITS DT_CFGR/DT_BASER updates
+> - [Low] kvm: selftests: missing idle status register checks for ITS
 > --
 > 
-> commit 3a376f5ffceb9df2e3023c6def306e4b00a9eba1
+> commit c7601fac392a61f968d6064e81cd764b666cb504
 > Author: Sascha Bischoff <sascha.bischoff@arm.com>
 > 
->      KVM: arm64: gic-v5: Implement irq forwarding
+> KVM: selftests: Add VGICv5 ITS attribute tests
 > 
->      GICv5, like GICv4, supports direct injection of interrupts via the
->      ITS. Move the existing GICv4 interface behind a common shim that selects
->      the appropriate implementation. For GICv5 forwarding, the ITS driver
->      replaces a host ITTE with one targeting a guest. The host no longer
->      receives that interrupt until forwarding is removed and the host ITTE is
->      restored.
+> This commit adds coverage for the VGICv5 ITS device address and ITS_REGS
+> attribute groups. Userspace needs to be able to discover and save the virtual
+> ITS register state, while KVM must reject invalid address placement and
+> malformed register accesses.
 > 
->> diff --git a/arch/arm64/kvm/vgic/vgic-its-v5.c b/arch/arm64/kvm/vgic/vgic-its-v5.c
->> index 62c1ca8004007..e71cd67652bae 100644
->> --- a/arch/arm64/kvm/vgic/vgic-its-v5.c
->> +++ b/arch/arm64/kvm/vgic/vgic-its-v5.c
+>> diff --git a/tools/testing/selftests/kvm/arm64/vgic_v5.c b/tools/testing/selftests/kvm/arm64/vgic_v5.c
+>> index d5df742b23001..b7fb002a64f6c 100644
+>> --- a/tools/testing/selftests/kvm/arm64/vgic_v5.c
+>> +++ b/tools/testing/selftests/kvm/arm64/vgic_v5.c
 > [ ... ]
->> @@ -31,7 +32,41 @@ static void its_cache_drop_translation(struct kvm *kvm,
->>   				       struct its_cache_translation_entry *entry)
->>   {
->>   	struct vgic_irq *irq = entry->irq;
->> +	unsigned long flags;
->> +	int virq = 0;
->> +	bool hw = false;
->> +	bool drop_forwarding_ref = false;
->>   
->> +	/*
->> +	 * Multiple translations can share an LPI as we have no way of stopping
->> +	 * the guest from doing so. Only the entry associated with direct injection
->> +	 * may tear down the IRQ's forwarding state, as otherwise we can end up
->> +	 * accidentally tearing something down. Realistically, this only would
->> +	 * result in a performance degradation, but we might as well avoid that
->> +	 * in the first place if we can.
->> +	 */
->> +	raw_spin_lock_irqsave(&irq->irq_lock, flags);
->> +	if (irq->forwarding_owner == entry) {
->> +		/* The entry is about to be freed, even if unforwarding fails. */
->> +		irq->forwarding_owner = NULL;
->> +		virq = irq->host_irq;
->> +		hw = irq->hw;
->> +	}
->> +	raw_spin_unlock_irqrestore(&irq->irq_lock, flags);
->> +
->> +	if (hw && !WARN_ON_ONCE(gicv5_its_disable_direct_injection(virq))) {
-> 
-> [Severity: High]
-> Is there a TOCTOU race here when the lock is dropped before calling
-> gicv5_its_disable_direct_injection?
-> 
-> While the lock is released, a concurrent host unbind operation could invoke
-> irq_bypass_del_producer, unset the forwarding, and free the host IRQ. The Linux
-> IRQ number could then be immediately reallocated to a different device. When
-> this thread resumes, it would unconditionally disable hardware direct injection
-> for the newly assigned device/VM using the stale virq identifier, potentially
-> causing lost interrupts.
-
-I agree that this is an issue with the commit as posted here. I've 
-re-worked this to keep the lock held while disabling direct injection. 
-This prevents a concurrent unbind from freeing or reusing the host IRQ 
-until we're done with the disable operation. At the point where the lock 
-is release, we no longer use the host IRQ.
-
-> 
->> +		raw_spin_lock_irqsave(&irq->irq_lock, flags);
->> +		if (irq->hw && irq->host_irq == virq &&
->> +		    !irq->forwarding_owner) {
->> +			irq->hw = false;
->> +			irq->host_irq = 0;
->> +			drop_forwarding_ref = true;
->> +		}
->> +		raw_spin_unlock_irqrestore(&irq->irq_lock, flags);
->> +	}
-> [ ... ]
->> @@ -50,7 +85,8 @@ static void its_cache_drop_removed_translations(struct kvm *kvm,
->>   
->>   static int its_cache_add_translation(struct kvm *kvm, struct vgic_v5_its *its,
->>   				     u32 device_id, u16 event_id,
->> -				     struct vgic_irq *irq)
->> +				     struct vgic_irq *irq,
->> +				     void **owner)
->>   {
->>   	u64 key = ((u64)device_id << 16) | (u64)event_id;
->>   	struct its_cache_translation_entry *entry;
->> @@ -78,6 +114,8 @@ static int its_cache_add_translation(struct kvm *kvm, struct vgic_v5_its *its,
->> +	struct its_cache_translation_entry *old;
->> +	struct hlist_node *tmp;
->> +	HLIST_HEAD(removed);
->>
->> -	entry = kzalloc(sizeof(*entry), GFP_KERNEL);
->> +	entry = kzalloc_obj(*entry, GFP_KERNEL);
-> 
-> [Severity: High]
-> Is kzalloc_obj defined anywhere in the tree? It looks like this might be a
-> typo for kzalloc(sizeof(*entry), GFP_KERNEL) which will cause compilation
-> failures.
-
-Uh, yes. I certainly hope so! kzalloc_obj is defined in 
-include/linux/slab.h, which this file includes, and this allocation 
-predates this commit. I'm not fixing this non-issue.
-
-> 
->>   	if (!entry)
->>   		return -ENOMEM;
->>   
->>   	entry->key = key;
->>   	entry->irq = irq;
->>   
->> -	raw_spin_lock(&its->translation_cache_lock);
->> +	scoped_guard(raw_spinlock, &its->translation_cache_lock) {
-> 
-> [Severity: High]
-> Should this use the irqsave variant of scoped_guard? Acquiring
-> translation_cache_lock in process context without disabling local hardware
-> interrupts could lead to an ABBA deadlock. If irqfd_wakeup runs in HardIRQ
-> context on a CPU that already holds this lock, the interrupt handler might
-> spin forever trying to acquire it.
-
-With the series as posted, this is an issue. Now that I've reworked it 
-to use an XArray to track the translations it is no longer an issue. The 
-lookup is now using RCU for the XArray.
-
-> 
->>   		hash_for_each_possible_safe(its->translation_cache, old, tmp,
->>   					    node, key) {
->>   			if (old->key == key) {
-> [ ... ]
->> @@ -129,7 +167,8 @@ static void its_cache_clear_translations(struct vgic_v5_its *its)
->>   
->>   static int its_cache_look_up_translation(struct vgic_v5_its *its,
->>   					 u32 device_id, u16 event_id,
->> -					 struct vgic_irq **irq)
->> +					 struct vgic_irq **irq,
->> +					 void **owner)
->>   {
->>   	u64 key = ((u64)device_id << 16) | (u64)event_id;
->>   	struct its_cache_translation_entry *entry;
->>
->> -	raw_spin_lock(&its->translation_cache_lock);
->> +	guard(raw_spinlock)(&its->translation_cache_lock);
-> 
-> [Severity: High]
-> Similarly here, acquiring translation_cache_lock without disabling interrupts
-> leaves the system vulnerable to the same ABBA deadlock if the lock is
-> contended by HardIRQ context.
-
-This is the same issue as reported above. The translation_cache_lock has 
-now been removed, and we're not taking any lock on the XArray itself. 
-Therefore, this is no longer an issue with the upcoming repost.
-
-> 
->>   	hash_for_each_possible(its->translation_cache, entry, node, key) {
->>   		if (entry->key == key) {
-> [ ... ]
->> @@ -657,8 +735,8 @@ int vgic_v5_its_inject_cached_translation(struct kvm *kvm, struct kvm_msi *msi)
->>   static void vgic_v5_its_inject_lpi(struct kvm *kvm, struct vgic_irq *irq)
->>   {
->>   	kvm_call_hyp(__vgic_v5_vdpend, irq->intid, true,
->>   		     kvm->arch.vgic.gicv5_vm.vm_id);
+>> @@ -1287,6 +1339,177 @@ static void test_vgic_v5_irs_regs_attrs(void)
+>>   	vm_gic_destroy(&v);
 >>   }
-> 
-> [Severity: High]
-> Does this pass the full typed INTID directly to the hardware GIC VDPEND
-> instruction?
-> 
-> GICv5 INTIDs encode the type in bits [31:29]. The architecture limits hardware
-> instructions to expecting a raw hardware ID. Should this be masked using
-> vgic_v5_get_hwirq_id(irq->intid) to avoid feeding the type bits into the
-> hardware operand?
-
-Yes, of course this is passing the typed INTID directly to GIC VDPEND! 
-We need to tell the GIC which type of interrupt we are injecting, so 
-that's absolutely by design. We could arguably split this into type and 
-ID, but what's the point? All we'd do is reconstrut that again on the 
-other side.
-
-Leaving this as is.
-
-> 
-> [ ... ]
->> diff --git a/arch/arm64/kvm/vgic/vgic-v5.c b/arch/arm64/kvm/vgic/vgic-v5.c
->> index c90e00f56b298..970df3f41cf24 100644
->> --- a/arch/arm64/kvm/vgic/vgic-v5.c
->> +++ b/arch/arm64/kvm/vgic/vgic-v5.c
-> [ ... ]
->> +int kvm_vgic_v5_set_forwarding(struct kvm *kvm, int virq,
->> +			       struct kvm_kernel_irq_routing_entry *irq_entry)
+>>   
+>> +static void test_vgic_v5_its_attrs(void)
 >> +{
->> +	struct vgic_v5_its *its_data;
->> +	struct vgic_irq *irq;
->> +	void *owner;
->> +	bool hw;
->> +	int ret;
->> +
->> +	if (!vgic_has_its(kvm))
->> +		return 0;
->> +
->> +	/* Look up the ITS; bail out if we can't look it up */
->> +	its_data = vgic_v5_get_its(kvm, irq_entry);
->> +	if (IS_ERR(its_data))
->> +		return 0;
->> +
->> +	/*
->> +	 * Look up and cache the translation. Bail out if we failed to look up
->> +	 * the translation at this stage. If the translation becomes valid at a
->> +	 * later stage, we should fall back to software-based injection.
->> +	 */
->> +	guard(mutex)(&its_data->its_lock);
->> +
->> +	ret = vgic_v5_its_resolve_lpi_locked(kvm, its_data,
->> +					     irq_entry->msi.devid,
->> +					     irq_entry->msi.data, &irq, &owner);
->> +	if (ret)
->> +		return 0;
->> +
->> +	scoped_guard(raw_spinlock_irqsave, &irq->irq_lock) {
->> +		hw = irq->hw;
->> +	}
->> +
->> +	if (hw)
->> +		goto out_put_irq;
+> [ ... ]
+>> +	/* Check MMIO by checking if present, reading, then writing back */
+>> +	for (i = 0; i < ARRAY_SIZE(gic_v5_its_regs); i++) {
+>> +		attr = gic_v5_its_regs[i].attr;
+>> +		ret = __kvm_has_device_attr(v.its_fd,
+>> +					    KVM_DEV_ARM_VGIC_GRP_ITS_REGS,
+>> +					    attr);
 > 
 > [Severity: Low]
-> Does this mix goto-based error handling with scope-based cleanup helpers like
-> guard() and scoped_guard()? The kernel cleanup guidelines strongly discourage
-> mixing these in the same function to avoid confusing ownership semantics.
-> Should this function be standardized to use only one of the approaches?
+> The commit message mentions exercising "idle status register values", but this
+> loop only reads and writes back the registers without checking their values.
+> Should there be an explicit assertion that the status registers (like STATUSR,
+> SYNC_STATUSR, GEN_EVENT_STATUSR) actually read as idle? The corresponding
+> test_vgic_v5_irs_regs_attrs() test includes these checks for the IRS.
 
-Yeah, agreed that the posted code is confusing and does mix those two 
-styles. I've dropped the gotos and have replaced them with explcit 
-reference drops and returns, instead. The scoped_guard()s remain.
+The virtual ITS always reports these registers as idle and has no 
+in-progress state for this test to observe. Some of the idle bits also 
+have architecturally UNKNOWN reset values. An assertion here would only 
+check KVM's chosen constant, so I've left the test unchanged.
+
+All of that said, the commit message definitely claimed things that it 
+was not doing. I've dropped that from the commit message. We don't check 
+the idle values, and never should bother to check those as they tell us 
+nothing meaningful.
 
 > 
 > [ ... ]
->> +static struct vgic_irq *vgic_v5_host_irq_get_lpi(struct kvm *kvm, int host_irq)
->> +{
->> +	struct vgic_irq *irq;
->> +	unsigned long idx;
+>> +	/* Make sure we can restore the vITS's enable state */
+>> +	val = GICV5_ITS_CR0_ITSEN;
+>> +	ret = __kvm_device_attr_set(v.its_fd, KVM_DEV_ARM_VGIC_GRP_ITS_REGS,
+>> +				    GICV5_ITS_CR0, &val);
+>> +	TEST_ASSERT(!ret, "GICv5 ITS_REGS failed to enable ITS");
 >> +
->> +	guard(rcu)();
->> +	xa_for_each(&kvm->arch.vgic.lpi_xa, idx, irq) {
->> +		if (!irq->hw || irq->host_irq != host_irq)
->> +			continue;
-> 
-> [Severity: Medium]
-> Is it safe to locklessly read the irq->hw bitfield here?
-> 
-> This bitfield is modified concurrently by kvm_vgic_v5_set_forwarding and
-> kvm_vgic_v5_unset_forwarding under irq_lock. Concurrent read and write access
-> to a C bitfield is undefined behavior and can result in torn reads or
-> corrupted data.
-
-These now happen under irq_lock, and therefore concurrent updates are no 
-longer possible. We hold the lock when setting up and tearing down the 
-forwarding, so these should not be able to unexpectedly change 
-underneath us.
-
-> 
->> +
->> +		if (!vgic_try_get_irq_ref(irq))
->> +			return NULL;
->> +
->> +		return irq;
->> +	}
->> +
->> +	return NULL;
->> +}
->> +
->> +void kvm_vgic_v5_unset_forwarding(struct kvm *kvm, int virq)
->> +{
->> +	struct vgic_irq *irq;
->> +	bool drop_forwarding_ref = false;
->> +
->> +	if (!vgic_has_its(kvm))
->> +		return;
->> +
->> +	/*
->> +	 * Note: We don't remove the entry from our translation cache here. It
->> +	 * is up to the guest to invalidate the old translations, and hence the
->> +	 * removal path is tied into ITS_INV_DEVICER and ITS_INV_EVENTR, rather
->> +	 * than being explicitly called here.
->> +	 */
->> +	irq = vgic_v5_host_irq_get_lpi(kvm, virq);
->> +	if (!irq)
->> +		return;
->> +
->> +	if (WARN_ON_ONCE(gicv5_its_disable_direct_injection(virq)))
->> +		goto out_put_irq;
->> +
->> +	scoped_guard(raw_spinlock_irqsave, &irq->irq_lock) {
+>> +	/* And DT CFGR/BASER */
+>> +	val = 0;
+>> +	ret = __kvm_device_attr_set(v.its_fd, KVM_DEV_ARM_VGIC_GRP_ITS_REGS,
+>> +				    GICV5_ITS_DT_CFGR, &val);
+>> +	TEST_ASSERT(!ret, "GICv5 ITS_REGS rejected enabled DT_CFGR update");
+>> +	ret = __kvm_device_attr_get(v.its_fd, KVM_DEV_ARM_VGIC_GRP_ITS_REGS,
+>> +				    GICV5_ITS_DT_CFGR, &val);
+>> +	TEST_ASSERT(!ret && !val, "GICv5 ITS_REGS DT_CFGR restore mismatch");
 > 
 > [Severity: Low]
-> This is another instance of mixing goto-based error handling alongside
-> scoped_guard(). Should we convert this completely to scope-based cleanup or
-> stick entirely to traditional goto labels?
+> Is this test effectively verifying that the updates to GICV5_ITS_DT_CFGR work
+> while the ITS is enabled?
+> 
+> Because val is set to 0 (the default/reset value of the register) before the
+> write, if the kernel incorrectly discards the write while ITSEN=1, the
+> register will remain 0 and the read-back will return 0, allowing the test to
+> pass spuriously. Writing a non-zero valid value would avoid this tautology.
+> 
+> Also, the test writes GICV5_ITS_CR0_ITSEN to CR0 but never reads it back.
+> Could the test be trying to update the configuration registers on a disabled
+> ITS if the enable bit didn't actually stick?
 
-I've done the same as I said above - the gotos are now gone and have 
-been replaced with explicit returns instead. scoped_guard() is still 
-used to handle the locking.
+Ah, yes. Writing zero to DT_CFGR could pass even if the write was 
+ignored so that wasn't the most helpful. Also, the test did not confirm 
+that the ITSEN value stuck. I've added CR0.ITSEN read-back to check that 
+the set value persists, and a nonzero, valid DT_CFGR DeviceID limit with 
+read-back. Hopefully, that addresses the issues raised here.
 
 > 
->> +		if (irq->hw && irq->host_irq == virq) {
->> +			irq->hw = false;
->> +			irq->host_irq = 0;
->> +			irq->forwarding_owner = NULL;
->> +			drop_forwarding_ref = true;
->> +		}
->> +	}
->> +
->> +	if (drop_forwarding_ref)
->> +		vgic_put_irq(kvm, irq);
->> +
->> +out_put_irq:
->> +	vgic_put_irq(kvm, irq);
->> +}
+>> diff --git a/tools/testing/selftests/kvm/include/arm64/gic_v5.h b/tools/testing/selftests/kvm/include/arm64/gic_v5.h
+>> index 2d455515563e0..22ab78626af5a 100644
+>> --- a/tools/testing/selftests/kvm/include/arm64/gic_v5.h
+>> +++ b/tools/testing/selftests/kvm/include/arm64/gic_v5.h
+> [ ... ]
+>> +#define GICV5_ITS_CR0_IDLE		BIT(1)
 > 
+> [Severity: Low]
+> Is this macro correct for the ITS? It defines an IDLE bit for CR0, but it
+> appears to be unused in the test. Looking at the GICv5 architecture, it seems
+> only the IRS has an IDLE bit in CR0, not the ITS.
+> 
+
+ITS_CR0 definitely has an IDLE field at BIT(1) so that definition is 
+correct. That said, I've dropped it given that we don't use it.
 
 Thanks,
 Sascha
