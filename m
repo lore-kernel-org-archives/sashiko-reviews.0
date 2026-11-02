@@ -1,70 +1,120 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.171.202.116
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793627408;
-	b=GTE5nyHuaqtK6o4bI0BBNit4i8dQ4DUIXpWwzeeDfNdX/NEoJ2Cme18w17iDge0f2j05
-	 ee9s5bpNT9ocrCJPWQXw+89StCpO9ufa4zQUPUEIQLcgbhqhYV80lDboj6zOrAbX7YjhF
-	 v42TG3VWizJX2OlL138/4mlSgcRch1IrM1+yuKRpDsGQriN3ETi+nPqYb/wL5SXDw2qSO
-	 1CIGWaZk8Sm54Spo80xB0aTB+vyELqx5KxO2YY1xruARTvNUDPbV07wj7H4a3HmpkhDI3
-	 SDOGkxjN3AKpFpolxiH5m0i1418QkDIz7/6NCr6zRFRG0yXkKVX0Ku9vzyIMNFZYlrg==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793627408;
-	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:Date:From:To:
-	 Cc:Subject:Message-ID:In-Reply-To:References:Organization:X-Mailer:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-Last-TLS-Session-Version;
-	bh=wNStSjwISQyGeb1rd2HXoOipT3Bs+NI6BZQo3NWUbxo=;
-	b=UnzVS3W0uiHEQ2SLReHUHiihohLkNX4SnPXEQkNNi0Eyg/WikYrFiMYXSXAccNvek5VV
-	 KucXofZ0wYvp6NPRz2yIYShrsCV/eXgL0UqsE2twLec9l4yWwurkA9HcVSzn7vZxH2hax
-	 4PVH+pZWLyDeQPOixRie07L6v3A3ct2ziivluafxS2k8+605VHkcJt1yptA1Su13OUQE4
-	 +W1FjplwwjCfjfFsTPqMBa8D1pmO8xj9Zhjju1xGVMfcDNJ9l1ypLccl/0Kqa4s/yfltT
-	 lSE1wDFMmam5SEOabGdnBdZbSLBebV977Uk5BB3KSteQ3NrL58H1KwVQQlfQCCGT7fQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=bootlin.com;
-	spf=pass smtp.mailfrom=bootlin.com;
-	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b="03/TbKoA";
-	arc=none smtp.remote-ip=185.171.202.116
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.208.35
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793627538;
+	b=mTsf/Xb96raER4LU/dayxK/TnZ5Xkry8e/xgQwpVZJA11L06lMWWLh7UssqaNk3qs3cK
+	 tn1tbsm9rH2CmVzW72IEGV3GSZ6Elj7nskMWzymsAuPxvwpMaE2zYFHtwUG7wpEAr9uuD
+	 cSf3KNLluYvC7azIIAo7+VlfCTZqZPjkigMuplbkj/s+vA82w7ixjhMzh07qBozXJc8Aj
+	 rMJtHfYgmq/qBf3Etvr8YBpLx+qysPDF78tbUUbInEULmCmTWzdjQmnXe1RYXSDy6Z6mE
+	 9NFjecJkDIwALtjmmdKsOHYkLd6vHqbXFqgZFsPK/qtLsbmLTt6yKKGFnKoxHtV3Oxg==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793627538;
+	h=DMARC-Filter:DKIM-Signature:Received:Received:Message-ID:Date:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-OriginatorOrg:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
+	bh=8q3u5pS+Y65E8Bopb11C+ZzErL0aPrjpl0habtp1hMo=;
+	b=tqsZVBdkPW6lBZcrjMii3BwoOgdF0U7Lo6JcwrsfNacjtQtPCGPwlWmp6m5Jii4NEC2/
+	 3tLp5yYgks1M+owEm+ZKphKS7c/EsuxEcUQ2meq9WlgwpUA3ufrm0lix8AcNI7OkUuZ8A
+	 G/sO7jGb2tNxRYa/5BFWZMMKtvKWEuPk9mb1vCexzbwRrh/o9T1VluHk9u9t7GMImvTsU
+	 pBviueqcr7C70PvTdAMo5FMIA4s9fYaN8vTg8OT2kz1GmehR+PJygjjVuf+h3UQ4jcWyZ
+	 9wTC77wcaol4+ck1cvrVxSrvB2NsB9QvAT2ZzSpVkFuAYTQ8ZhxqoZjDUHn/CNK3ckg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=amd.com;
+	spf=fail smtp.mailfrom=amd.com;
+	dkim=pass header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=PhkJ+RTg;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.208.35
+Received: from PH0PR06CU001.outbound.protection.outlook.com (mail-westus3azon11011035.outbound.protection.outlook.com [40.107.208.35])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A807606A326
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 13:50:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1A807606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC090606A330
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 13:52:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AC090606A330
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=03/TbKoA
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 6F9F8C4FECD;
-	Mon,  2 Nov 2026 13:51:09 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 4319760750;
-	Mon,  2 Nov 2026 13:50:05 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 3D9A0103290ED;
-	Mon,  2 Nov 2026 14:49:58 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1793627400; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=wNStSjwISQyGeb1rd2HXoOipT3Bs+NI6BZQo3NWUbxo=;
-	b=03/TbKoAdRJAMXmDAbJgqxpKq26zsvDoSauRdA/MM0boV8Lnu+vLOlVk+nxkQNzOzpFYgg
-	UH7auEhvJ4laorPtdSdRLHMbavT5t3DtO0zwDWFdPJdWQfFu7lRpfOJAB4hXz0cbhmV8+8
-	QvZYewdNe7L/tL/4lTxUJDZXtt0u0WE3ioft4SC9XtE2dFyrNJviGgPY57ntkB5c0mqoYG
-	QBCiq4Q1D+mwjK+usYsFnqYKaZw7FlZKM4W7j0Jr3FkOQJ7pGtMGhTOVTiDLna/yd+uhIF
-	qJBQmzaOFq2bPHTziQamNA6vfghBhAn5KTI9fbSaXIFI+TW0EzQiHa5PE774yA==
-Date: Mon, 2 Nov 2026 14:49:56 +0100
-From: Herve Codina <herve.codina@bootlin.com>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, linux-rtc@vger.kernel.org,
- devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
- "Alexandre Belloni" <alexandre.belloni@bootlin.com>
-Subject: Re: [PATCH 2/3] rtc: pcf2127: Add support for the clkout clock
-Message-ID: <20261102144956.57f9bbf3@bootlin.com>
-In-Reply-To: <sashiko-outbox-193475@kernel.org>
-References: <20261102130712.25104-1-herve.codina@bootlin.com>
-	<20261102130712.25104-3-herve.codina@bootlin.com>
-	<sashiko-outbox-193475@kernel.org>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=PhkJ+RTg
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WZOv5qvXOl+xnn/Wergl/Kz8fk9NjPLwGbxZE27w283tpqJLlDuujA6Ln4SLOdsIUtlr8JpMJ46/usGYDgZY2QI8VxwMWfAVj85Rs/QooIDkM3gctmFyPbaHpJ5Vc32XBh1e7yMu+yzhufMJk1oFOJK+fynW9KGrDwsVCqA9tILU57r2eE6w3EUXgGP18vWwrvme/6M5EnX+zZGHg4MBAQhOfqjGK4fxg1Aeqx9q7wxgN/E2sm7R3JESxKSkHUOwJ6vsKEsTIO5waBjqa8oow+BMFQP5UNyGbFOvF/bwI4nayiKMAdWrK10ICjBOt153g/W21Ob+vtAoY8INHZavvQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8q3u5pS+Y65E8Bopb11C+ZzErL0aPrjpl0habtp1hMo=;
+ b=cINUl31lVZNVCx9Gbew15/VoWUDxpJjwT/uy18SOZxNf+0MHLEbwnlCAFWGilb2/ZN27x08To0sTlgAopHR+V/mhYQpFODeJPtqVZR9DWAyCCVbIIpOIz9t2FhGoz5+dtCnIPiu8NTvWhFDkpG6IY2FUNk4wRxX61P+GTLKObNlM6a95YkH2PV44IUcUI3PDOdwbf+yY13aiV1Hq7Ds4KeJ3MeBteCC9YMSeo82CpcToYCqxlo6orXEwkttWq9CK8xuzl1h8w3wIvDFxxBMPwKKKj2/UDVECreRM4uSQqobMMgO+1P9Sg/tfo6fQ75YDiXnx2BCXg32WMuBZbcQlGg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8q3u5pS+Y65E8Bopb11C+ZzErL0aPrjpl0habtp1hMo=;
+ b=PhkJ+RTg7zo5+f3XBcvevcFTuKlj3ne3tcVdShLAZNIyEfWd4b5vYiMc2V0OOeAmWLnriVk/4ZhU0q49vnUoA9SZ6SXabaiwvTG3Xzj3EAIWk4UC88dUe4zpSRrx0eCyOw0m9Wq8N5ilKZ858vkapGlmqwe9q1N50+lWYE8eckg=
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from PH7PR12MB5685.namprd12.prod.outlook.com (2603:10b6:510:13c::22)
+ by DS7PR12MB8348.namprd12.prod.outlook.com (2603:10b6:8:e5::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Mon, 2 Nov
+ 2026 13:52:11 +0000
+Received: from PH7PR12MB5685.namprd12.prod.outlook.com
+ ([fe80::ce69:cfae:774d:a65c]) by PH7PR12MB5685.namprd12.prod.outlook.com
+ ([fe80::ce69:cfae:774d:a65c%3]) with mapi id 15.21.0569.011; Mon, 2 Nov 2026
+ 13:52:11 +0000
+Message-ID: <e925fde8-5d07-419f-a25e-4dd0bb90ad46@amd.com>
+Date: Mon, 2 Nov 2026 14:51:58 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mm/hmm: honor write requests for owned device-private
+ pages
+To: Aveline Noir <jm5905938@gmail.com>, Jason Gunthorpe <jgg@ziepe.ca>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Felix Kuehling <Felix.Kuehling@amd.com>,
+ Alex Deucher <alexander.deucher@amd.com>
+Cc: David Airlie <airlied@gmail.com>, amd-gfx@lists.freedesktop.org,
+ Barry Song <baohua@kernel.org>, Baolin Wang <baolin.wang@linux.alibaba.com>,
+ Jonathan Corbet <corbet@lwn.net>, Danilo Krummrich <dakr@kernel.org>,
+ David Hildenbrand <david@kernel.org>, Dev Jain <dev.jain@arm.com>,
+ dri-devel@lists.freedesktop.org, Francois Dugast
+ <francois.dugast@intel.com>, Christoph Hellwig <hch@lst.de>,
+ Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+ Honglei Huang <honghuan@amd.com>, Jann Horn <jannh@google.com>,
+ Kiryl Shutsemau <kas@kernel.org>, Lance Yang <lance.yang@linux.dev>,
+ Leon Romanovsky <leon@kernel.org>, "Liam R. Howlett" <liam@infradead.org>,
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org,
+ Lorenzo Stoakes <ljs@kernel.org>, Lyude Paul <lyude@redhat.com>,
+ Matthew Brost <matthew.brost@intel.com>, Michal Hocko <mhocko@suse.com>,
+ Nico Pache <nico.pache@linux.dev>, nouveau@lists.freedesktop.org,
+ Pedro Falcato <pfalcato@suse.de>, Philip Yang <Philip.Yang@amd.com>,
+ Randy Dunlap <rdunlap@infradead.org>, Mike Rapoport <rppt@kernel.org>,
+ Ryan Roberts <ryan.roberts@arm.com>, sashiko-bot@kernel.org,
+ sashiko-reviews@lists.linux.dev, Simona Vetter <simona@ffwll.ch>,
+ Shuah Khan <skhan@linuxfoundation.org>, Sunil Khatri <sunil.khatri@amd.com>,
+ Suren Baghdasaryan <surenb@google.com>,
+ =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+ Usama Arif <usama.arif@linux.dev>, Vlastimil Babka <vbabka@kernel.org>,
+ Vitaly Prosyak <vitaly.prosyak@amd.com>, Zi Yan <ziy@nvidia.com>
+References: <179343062238.2.2773026701442863377@gmail.com>
+ <sashiko-outbox-192310@kernel.org>
+ <179352350180.2.12918668886938034091.b4-reply@b4>
+ <179362220860.2958105.9509793190720553695.b4-reply@b4>
+Content-Language: en-US
+From: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+In-Reply-To: <179362220860.2958105.9509793190720553695.b4-reply@b4>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR0P281CA0189.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:ab::20) To PH7PR12MB5685.namprd12.prod.outlook.com
+ (2603:10b6:510:13c::22)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -74,151 +124,132 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5685:EE_|DS7PR12MB8348:EE_
+X-MS-Office365-Filtering-Correlation-Id: cf739b49-f493-4e31-a969-08df38e87e1e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|23010399003|376014|7416014|1800799024|10067099003|18002099003|22082099003|56012099006|11063799006|4143699003|261021121427099003|261022105027099003|261026121527099003|261026140227099003|261022075727099003|261009223027099003|261028144727099003;
+X-Microsoft-Antispam-Message-Info:
+	7PhJomOzB1ZVcNR4zVVcPV71oPfOUSyJB9kloBNlOxNSIAKpsROMTJk8aGEP7vGFYyGKj55VR4zH8jBXOX8kmS8DvSrbkuIQDSqpjCZOjYc5Aa/KLZWEHTgT8DXb4xihvSxGw0kBW0hl/ddrA2LkmHAvN+M3F+2R7+XTMdq/7hR9Sa7eGPWab7z+d39quY1BOvzSHRUfqqMKlJcisOSWpMW3qtmUQVmTAW4V4TFoQYRfimvdT34vA4GKM1HlE6RE8jlBKB9fQgYBFagu3MZaWbZELOhtmCPyVLq/nZdEEuKrSGfPTJYTD/krIe9kUNXYULyGRYtbDYolKaVA7lSMBRrUBcUFIb0q5Fs4AnZuKxxi16u7STCktZk1KLvQFAbbnY0B+dp83L96vlp9pSOh65wroNDtFQ7bmdJpTa9Fl0nk3p/nIbGz/YLRkHVQkF5f87XSH7fxOzl2Bg92+pXrJ9Mf5j5N9JOmwWhpWlpUG5ZtbdkaX/z/B/lyX9EvtyfXYyCV0XYPeCGtdac8q32DXML7vLrN3BbYZ79KV8JhwzMdn8bzO3jIQEGFX1lFAFLBAv1vFF7ELCyi99q04HemWn4yTyG6vViBlZX6bifl88s=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5685.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(376014)(7416014)(1800799024)(10067099003)(18002099003)(22082099003)(56012099006)(11063799006)(4143699003)(261021121427099003)(261022105027099003)(261026121527099003)(261026140227099003)(261022075727099003)(261009223027099003)(261028144727099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?cW5VMml3bXNCMVNyYmU5V1o5TXEyN29oaXRoSDBBc1hSVjZhT0V6MkNQQjlC?=
+ =?utf-8?B?MmNkeVV4WkhiTGxpUVlad2dYd2N3bStWNnIrWCtobERpWVRuWXpsZksraktN?=
+ =?utf-8?B?WXRwOXdPZHAzalNjYWF5ZzVSSW1nbkc1TDd4SGJnbVNHMHlvSGpvMC9VZnBp?=
+ =?utf-8?B?QXhpMXhTc1lwQUM5b1JlYkF0cmNjWXV1bGYvZjhTWCtZcStxL1hVMVFUc3ds?=
+ =?utf-8?B?b2dCQmpsSlc5Qjl3cDJWZk9hSFJiQ1kvaE5CbG5uWEZCNGtIT1RUc2xMQmty?=
+ =?utf-8?B?NmpUZ1NWazdaUHlqNXRoZG5PM1o3TzJ5SVFCM01OY0NaNHUvWlpib1N3T1FW?=
+ =?utf-8?B?aVQyRGpINzRvYU10aWpVSEY0VnJDeU9aMWcxN2Z2M2pQcTkwWGxtYnNZb0hX?=
+ =?utf-8?B?aERCV29YQXo0eGl5Zm92aTlzenVjaGhxaDRrbEJSSTRGcS9YOCtmcklnY3N1?=
+ =?utf-8?B?UEZvaGxoWGNvcSs0dHBRd1FFZDVQQyttU3NERzBnd2tENkllOTVuQ20yN3l5?=
+ =?utf-8?B?NFBTemwzWVJBeUdJb2NXdzhROUZFaGZxNEdQMHlLT1FCMHNzVm56VDRyZXRi?=
+ =?utf-8?B?NFIwYnpJK0hQT1lPQWNIVjBpb24wNEJHK3E2RTJLMWN6TXBXZkQ2enhwVDhj?=
+ =?utf-8?B?NFQ3dHJOSnNMWkRTV0JRZTFLaDVvUmtBaVhRbHVrZTcxTHNXbUh5TmZsdzRW?=
+ =?utf-8?B?NUpOMnpLNzRVR1VvOWJ4ejdnaHpCVmk2aTZwTlRxQlRpVlczNExvK0l5dUYr?=
+ =?utf-8?B?MUtueTl3T0FPY3VXVndoS2hZd1ZRdnBIcTJiWm9tQXhtTVN4b1llckxGZlpZ?=
+ =?utf-8?B?ZUthejFaRlhLOVRjWStKelNhUEtkYTJKWUNrdkhLblMyOWUyRGdNR1EybHo5?=
+ =?utf-8?B?NG1rOUgvTXBobk5zdEZoS0l3dkc3VElkc05YcTlFSDU0bGJQQ0UzcnZ6ckcw?=
+ =?utf-8?B?eURWZmt3V1M4cXlJSkhtS2FsclJobERDcG5YL3FUY0VqYktNZmJjUlh2Wjhs?=
+ =?utf-8?B?UEhqZUtWS3hQV2R6RmpGNmxiS3F4c1Z1dytrZjFadmZDbWxuVStoc1R1dXRO?=
+ =?utf-8?B?WXhpSTkxVUk3NWZCd3lPdEZBRHMwOStBckxKMUdRdzRKM3IzMmVTOWxZZDAz?=
+ =?utf-8?B?Umtnd00zTHppaWY3TW5PQ2U0TGdDZ2tsYmk2VlgxWXhsZ0JFVFUzQTY2VU9z?=
+ =?utf-8?B?ZkhUM2thYmNTNEU0U0VZTll3VG1YdHhOWjgzTUNEa2xKWFNMamdFWGVabzU2?=
+ =?utf-8?B?N3ZzQnlLRnRtQVA4bEZGK0pnekp3bU5LSTA3cUNLRTlOMDZNVWlTMFpZN05y?=
+ =?utf-8?B?cGJ5NXZob0cvaVcxUUY2aGFWYUpMaFZTNHFmSUMyejJwZjFReXNNREdqWUxy?=
+ =?utf-8?B?azN3SFE5MzBmZ09QYml4QmMrcnpzWnR4SDdxbGx6UkU4MVREdmN3bU1QUHI2?=
+ =?utf-8?B?UzFZVnlDY3VNOW5qd3lNZVdLL1NVZENpRmU3a2IrOWhVWXFITHN4ZTBSdytN?=
+ =?utf-8?B?Vjk4NGVWYi92TmQzR2lWaHRpK3pGbVVFZXdkajJFVXhtSlYvVjFibGRKSHhy?=
+ =?utf-8?B?TE9aSnhtRTY5eVdPSDJhYXgrdjZOT1RzaVRRSEx4YnlqYUgzdUpZZGdubFpF?=
+ =?utf-8?B?Z2l4Z1N4MlhBeEczTm5pM3JPeXhZYmpDcmtmQjVBZjdocTJKR3hjbmR1Qmtp?=
+ =?utf-8?B?YWg5YVdvQlVIbkxleTF4aGRZaTduN083bmNEUnJvcUJqWDNCdHplRWJ0YXBi?=
+ =?utf-8?B?T25TeHdsdmJVbG9KRmIxaS9xR2pvQmcrclBnYWl3WFJLUlEyNnBXRnRZVExh?=
+ =?utf-8?B?NVRqKzZTdmJ0MVpkUTVrVGdIazRQelNxb2pjTlBjSEk5VWVRU0NTN01RMVZU?=
+ =?utf-8?B?MndjODJYbHJtWXBoYVlkUEM1cHV4RHo0RHp6QitqSnczdDFPQ0hjQW9OVjA1?=
+ =?utf-8?B?dnF2VlIvRHJtbmNhVDAzekF0dDdCdEFyQ1JVRG5FWDBQRHphUFVvd3BTQnBw?=
+ =?utf-8?B?OEhSWDJyeW5VdnRPcGl1dlNJWTFSMTgrclZnbC9IQTJZYy9TQ0RHMkdidHUy?=
+ =?utf-8?B?TVNCZjlIeURjVEV5aDJmVmw3WDJLRWJ1SjUxMEdNQitZN05VQ0pPMkNoRXEr?=
+ =?utf-8?B?eTB0Rjk5YTZDemljekFvVklONXlCM1lCaDhRMEdlL2tBZ2FYNG5pekMyVWtq?=
+ =?utf-8?B?eE8wUCs1TDNoK1RMNDVPMWt6ak1rNXp1QTlDNGpDUGFFYTZZSDVKRHZxazZW?=
+ =?utf-8?B?UWI1UnVhbTVaN3ZqdjZLM0JGL1V1KzhVOEo3WHh2c3B5eDlUckZ2YjFsUDJo?=
+ =?utf-8?Q?eREMN8QRzG3ZKebURz?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cf739b49-f493-4e31-a969-08df38e87e1e
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5685.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Nov 2026 13:52:11.0837
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Yad+RD9Svb4hOML9IswF3mL7R72ighP3dBewQbiIgWaRJdSDPOEjJaL7Ao3+wbpt
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8348
 
-On Mon, 02 Nov 2026 13:13:46 +0000
-sashiko-bot@kernel.org wrote:
+Hi Aveline,
 
-> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] rtc: pcf2127: rate 0 in pcf2127_clkout_rate2cof() sets COF to HiZ
-> --
+On 11/2/26 13:23, Aveline Noir wrote:
+> Hi all,
 > 
-> commit fd3d38a37715a1ab67448b3adb80c6b0ee46a7e2
-> Author: Herve Codina <herve.codina@bootlin.com>
+> On Sun, 01 Nov 2026 19:58:21 +1100 Aveline Noir wrote:
 > 
-> rtc: pcf2127: Add support for the clkout clock
+>> Oh, I missed that. I'll try to fix it.
 > 
-> This commit adds common clock framework support for the CLKOUT output clock
-> on PCF2127, PCF2129, PCA2129, and PCF2131 RTC devices, allowing configuration
-> of frequencies from 1 Hz to 32768 Hz and disabling the output into HiZ.
+> While working on this, I found that the fix reaches well beyond
+> mm/hmm.c and would likely need rework in several subsystems, so I'd
+> like to hear your views before going further. v1 shouldn't be applied
+> as is.
 > 
-> > diff --git a/drivers/rtc/rtc-pcf2127.c b/drivers/rtc/rtc-pcf2127.c
-> > index ff2023908f5a3..2c442770ebc52 100644
-> > --- a/drivers/rtc/rtc-pcf2127.c
-> > +++ b/drivers/rtc/rtc-pcf2127.c  
-> 
-> [ ... ]
-> 
-> > @@ -626,6 +634,180 @@ static int pcf2127_watchdog_init(struct device *dev, struct pcf2127 *pcf2127)
-> >  	return devm_watchdog_register_device(dev, &pcf2127->wdd);
-> >  }
-> >  
-> > +#ifdef CONFIG_COMMON_CLK
-> > +#define clkout_hw_to_pcf2127(_hw) container_of(_hw, struct pcf2127, clkout_hw)
-> > +
-> > +/* Rates indexed by COF values */
-> > +static int pcf2127_clkout_rates[] = {
-> > +	32768,
-> > +	16384,
-> > +	8192,
-> > +	4096,
-> > +	2048,
-> > +	1024,
-> > +	1,
-> > +	0, /* 0Hz (COF 0b111) will put the clockout signal to HiZ */
-> > +};
-> > +
-> > +static u32 pcf2127_clkout_rate2cof(unsigned long rate)
-> > +{
-> > +	unsigned int i;
-> > +
-> > +	for (i = 0; i < ARRAY_SIZE(pcf2127_clkout_rates); i++) {
-> > +		if (pcf2127_clkout_rates[i] <= rate)
-> > +			return i;
-> > +	}
-> > +
-> > +	return 0; /* Maximum output clock rate */
-> > +}
-> > +
-> > +static int pcf2127_clkout_cof2rate(u32 cof)
-> > +{
-> > +	return pcf2127_clkout_rates[cof];
-> > +}
-> > +
-> > +static unsigned long pcf2127_clkout_recalc_rate(struct clk_hw *hw,
-> > +						unsigned long parent_rate)
-> > +{
-> > +	struct pcf2127 *pcf2127 = clkout_hw_to_pcf2127(hw);
-> > +
-> > +	return pcf2127_clkout_cof2rate(pcf2127->clkout_cof);
-> > +}
-> > +
-> > +static int pcf2127_clkout_determine_rate(struct clk_hw *hw,
-> > +					 struct clk_rate_request *req)
-> > +{
-> > +	u32 cof;
-> > +
-> > +	cof = pcf2127_clkout_rate2cof(req->rate);
-> > +	req->rate = pcf2127_clkout_cof2rate(cof);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int pcf2127_clkout_set_rate(struct clk_hw *hw, unsigned long rate,
-> > +				   unsigned long parent_rate)
-> > +{
-> > +	struct pcf2127 *pcf2127 = clkout_hw_to_pcf2127(hw);
-> > +	u32 cof;
-> > +	int ret;
-> > +
-> > +	cof = pcf2127_clkout_rate2cof(rate);
-> > +
-> > +	/*
-> > +	 * Setting COF will enable the clock (i.e. output not in HiZ anymore)
-> > +	 * Perform the operation only if already enabled.
-> > +	 * Otherwise, do nothing. The expected COF will be set on prepare()
-> > +	 */
-> > +	if (pcf2127->clkout_enabled) {
-> > +		ret = regmap_update_bits(pcf2127->regmap, pcf2127->cfg->reg_clkout,
-> > +					 PCF2127_CLKOUT_COF,
-> > +					 FIELD_PREP(PCF2127_CLKOUT_COF, cof));
-> > +		if (ret)
-> > +			return ret;
-> > +	}
-> > +
-> > +	pcf2127->clkout_cof = cof;
-> > +	return 0;
-> > +}  
-> 
-> [Severity: Medium]
-> Since rate is an unsigned long and pcf2127_clkout_rates[7] is 0, the condition
-> pcf2127_clkout_rates[i] <= rate in pcf2127_clkout_rate2cof() will always match
-> at index 7 (PCF2127_CLKOUT_COF_HIZ) when rate is 0, making the fallback
-> return 0 unreachable.
-> 
-> If a consumer passes rate == 0 to pcf2127_clkout_determine_rate() or
-> pcf2127_clkout_set_rate(), pcf2127_clkout_rate2cof(0) returns 7
-> (PCF2127_CLKOUT_COF_HIZ). In pcf2127_clkout_set_rate(), this writes
-> PCF2127_CLKOUT_COF_HIZ to reg_clkout if pcf2127->clkout_enabled is true
-> (putting the CLKOUT pin into HiZ while pcf2127->clkout_enabled remains true),
-> and caches PCF2127_CLKOUT_COF_HIZ in pcf2127->clkout_cof so subsequent calls
-> to pcf2127_clkout_prepare() -> pcf2127_clkout_control(hw, true) will also
-> leave the pin in HiZ.
+> amdkfd holds svms->lock and prange->migrate_mutex across
+> hmm_range_fault(), and svm_migrate_to_ram() needs both, so it can't
+> migrate the page for the validating task. Migrating under those locks
+> can deadlock, since do_swap_page() waits for the device page lock, which
+> a concurrent CPU fault can hold while waiting for svms->lock.
 
-This is exactly what it is expected.
+Yeah those issues are already known.
 
-return 0 is unreachable but pcf2127_clkout_rate2cof() returns a u32.
+Because of that AMDs KFD team is in the process of replacing the self made KFD based SVN handling with the drm_gpusvm module which is also used by Intels XE driver.
 
-Without the last return 0 (even if unreachable) or any other u32 returned value,
-GCC obviously complied
-   error: control reaches end of non-void function
+> From
+> reading the code, amdkfd also maps such read-only pages writable today,
+> as it takes GPU write permission from the VMA rather than from
+> HMM_PFN_WRITE, so GPU writes after fork() would be visible to the child.
+> I haven't been able to confirm this on hardware.
+
+That is a new issue as far as I know.
+
+> One option I tried is an opt-in HMM flag that returns -EDEADLK and the
+> page address instead of faulting, so amdkfd can drop its locks, fault
+> the page and validate again. It works with test_hmm, but the amdkfd
+> side grew to about 550 lines across the GPU fault handler, the restore
+> worker and svm_range_set_attr(), and is only compile-tested. Read-only
+> entries also come from NUMA hinting scans and mprotect(), so pages that
+> aren't shared would be moved out of VRAM too, and Xe and nouveau would
+> see their pages migrated in the same cases.
+
+I don't think we should try to fix the KFD SVM code, as said we are already in the process of ditching it because of those problems.
+
+> Would you prefer an opt-in interface like this, a change to the amdkfd
+> locking so that migrate_to_ram() can run during validation, or
+> something else? I can post the amdkfd part as an RFC if that helps.
+> 
+> I also found a few smaller related issues, and I'll send fixes for them
+> separately.
+
+There is also https://gitlab.freedesktop.org/drm/amd/-/work_items/6003 which I'm not sure how to properly handle.
+
+Current AMD GPUs don't have dirty tracking in their GPUVM, so it doesn't really make sense to set the PTE or struct page dirty from the MMU notifier (both data pointers are not around there any more).
+
+We also can't set the page dirty directly after calling hmm_range_fault() because we don't own a page reference and so it could change at any time.
+
+At least for the GFX CS path it would make most sense to set the pages dirty in hmm_range_fault(), not sure about the SVM use case.
+
+Regards,
+Christian.
 
 > 
-> Should the 0 entry be removed from pcf2127_clkout_rates[] (or skipped in
-> pcf2127_clkout_rate2cof()) so that pcf2127->clkout_cof only ever holds active
-> clock divider values (0..6)?
-> 
+> Thanks,
+> Aveline Noir
 
-No.
-
-All rates should be present in pcf2127_clkout_rates[]. The 0Hz rate value is
-a valid rate even if the pin will be set in HiZ in that case.
-
-pcf2127->clkout_cof should hold the value related to OHz rate.
-
-A user can ask a 0Hz rate and call clk_prepare(). This is a valid use case.
-
-Best regards,
-Hervé
