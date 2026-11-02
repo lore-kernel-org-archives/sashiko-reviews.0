@@ -1,53 +1,47 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=142.132.183.134
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=124.71.93.112
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793580098;
-	b=4sFgyJlFWY440FALuCOYRjsg9Jc7Xk5Sp3PU1iAM0hSp7Sw/wyqItfvlEuZBtjgQVl7e
-	 oZUHC45YmA3WBRhWuEOmvn4LZ4dHDOU3WqSX7PgYJCeQKmM/K4TiRt+BJKnZNNjFCFAU/
-	 qwhF4JHd4LqLYdQcgoZmjjx7RP/0XR9EpvkOIqLd20QLRPK/QlPWz5eTNljWGuQhOIZlx
-	 k+PywrqTlr68szZO7XErUd6dBxTz0mSYtBWK33I3hiXr0H9bOSf5hVI5Db+ZWKfXnh3TJ
-	 fTvLaENyETXbMHkLdGoDPphhycouSmyTaXNbCVIiM6QYiesZcOqEuZnUOF79LEdzlyg==
+	t=1793580790;
+	b=X7ZdFb2uNDeWWkacLAYi1shctXAHXeSPpbvG5mccOSQF6A6isWP2ZRg5CDnh6HuNEbdF
+	 qmUw3NZXiLhDV9YB31TosYt4X43NDcwfsPTQAl8flSLzgwobNNUcmQq0+Xe0kvNTqzx1X
+	 9R7o2FvwI0CASPyiN0A8OjQdBLyv8dXEYylsxN1FBhCbJoJgjjfViSnUBDmx38HokIWc+
+	 rJZED8nbVHscwo0Bg24MdXTNcRzDKNjk9KGtJTALp+cJWEE26MJZUtDJsCUiPx6UTA8aa
+	 O8UGTscJqWG/IQSRWkykBF9Oio37ojJzzZAJYDUnSkoZ6RSvvW8RU3t0s+Rkd6f6GDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793580098;
-	h=DMARC-Filter:DKIM-Signature:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
-	 From:Autocrypt:In-Reply-To:Content-Type;
-	bh=ha553o7VVEnJLN7WZLxD2YS/lsVO9uX8I7dIyIXm6uI=;
-	b=rsLXoMXiTrwWhkbAJafzBSJIr/n7AaMCgDRV+feRd3Rzg59INZyB/Jy06aQGHaOaunM9
-	 U8Lc/Qsvwo9wvKkLC4dkFGXs2vAaEyygnh27btTgBLIu+GtNYPNnFW9LXQtQLNK6OXVtB
-	 0Qc+OMtY47Iub886iWX/LS/Sh5OCsbAGvN6WrMT5BYgctJxgToXYzfHS06+2qV3wXztAz
-	 /19cLOm2m+q+rU8R8JwmtezkKnjR3beogo3DQmhqdxrMYbrcXl+s6+f82C/nmg4/0Ja0w
-	 Gwm59sWXG4yuMzmzPPoELYmN/hGdmHoUA+4H4ec1lMteVp+gKKp9NuWstt6zHzjCK8A==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793580790;
+	h=DMARC-Filter:Received:Received:Received:Message-ID:Date:MIME-Version:
+	 User-Agent:Subject:To:Cc:References:Content-Language:From:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding:X-CM-TRANSID:
+	 X-Coremail-Antispam:X-CM-SenderInfo;
+	bh=efENr5abTBnv9LorGAvHvCoxrm853APMJedhZonGDAI=;
+	b=S4kyAwG/qqIA1tlg1rIIsaEgad4+zNRZcgC51vCqOna86NNn2dH3vxPQmZIKn7fp+dW1
+	 v7EeCDIGMyRiYjfbHoqBUYlGGSukXfZuICHwnyRfQdbuLkypIU0pdfkM9E7qXefD1WHkX
+	 JYoakGDt5olxSF9F0H3A5YN6U4oPUXvv6vV5WfzLMbG3g2/QSkHxZlGPfaDVP6f+OuKZJ
+	 w1pRfRHhK7Zv5szpquufRD9WivQJ0GVc7GLKp8VLc/iZ8nxfoTCztHbs24/vgoVB2f6gg
+	 gDW6kugcnnQtXVfixGZJj6yekptVQn8eNTyDfDreIgg7S9sQHv3yt0jDQApfvmHb80g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=erebion.eu;
-	spf=pass smtp.mailfrom=erebion.eu;
-	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=ed25519-sha256 header.s=202508e header.b=WrwxBB5C;
-	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=rsa-sha256 header.s=202508r header.b="eBJL4P/I";
-	arc=none smtp.remote-ip=142.132.183.134
-Received: from erebion.eu (erebion.eu [142.132.183.134])
+	dmarc=none header.from=huaweicloud.com;
+	spf=none smtp.mailfrom=huaweicloud.com;
+	arc=none smtp.remote-ip=124.71.93.112
+Received: from dggmsgout12.his.huawei.com (dggmsgout12.his.huawei.com [124.71.93.112])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FBB606A324
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 00:41:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 13FBB606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=erebion.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=erebion.eu
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=ed25519-sha256 header.s=202508e header.b=WrwxBB5C;
-	dkim=pass (2048-bit key, unprotected) header.d=erebion.eu header.i=@erebion.eu header.a=rsa-sha256 header.s=202508r header.b=eBJL4P/I
-DKIM-Signature: v=1; a=ed25519-sha256; s=202508e; d=erebion.eu; c=relaxed/relaxed; r=y;
-	h=From:To:Subject:Date:Message-ID; t=1793580076; bh=ha553o7VVEnJLN7WZLxD2YS
-	/lsVO9uX8I7dIyIXm6uI=; b=WrwxBB5Cgz087rd41Hd1MF3enU+yrMYIqZRBfGS68+OEI4f16j
-	w4m+uROxszOmEV6PJtzySX0O4iZCII9hwhCQ==;
-DKIM-Signature: v=1; a=rsa-sha256; s=202508r; d=erebion.eu; c=relaxed/relaxed; r=y;
-	h=From:To:Subject:Date:Message-ID; t=1793580076; bh=ha553o7VVEnJLN7WZLxD2YS
-	/lsVO9uX8I7dIyIXm6uI=; b=eBJL4P/IGvSkXECT3EVArc/gppxNf91dhq6SUUclwZ+LuZhrc+
-	CEl8nOXvZRydX8CVZGqAJBT5hetDzPRILqLf+s0vLyUv+CnFww5EDDuzJy04TZjRZU+aVBGK20X
-	6w3bulXcKwpfwqA1gE9LyT11D5SVmUihq/0+r9QZu9a8DFf3vMUnrvywPdHS0wIPXmW/xEjhTxW
-	Fogq4+FkYNvX3qQcaBTCB0kxs2nxaj+RLMBg1mtcRSxEWCqZ3pgPmW/AYwS8nrHYIq7YuvaXNzY
-	ID5yx6AVgZDd0evXP8EjEpEk+KbSCCw2F69U8O9JfCogfFD/XFGRn1C/sD6s4NmoS8A==;
-Message-ID: <0a1333ab-9deb-425b-aaeb-737eedefb093@erebion.eu>
-Date: Mon, 2 Nov 2026 01:41:15 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08974606A326
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 00:53:07 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 08974606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=huaweicloud.com
+Received: from mail.maildlp.com (unknown [172.19.163.177])
+	by dggmsgout12.his.huawei.com (SkyGuard) with ESMTP id 4jHtTd3QZtz1yGw
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 08:52:37 +0800 (CST)
+Received: from mail02.huawei.com (unknown [10.116.40.75])
+	by mail.maildlp.com (Postfix) with ESMTP id 24D73405A1
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 08:52:59 +0800 (CST)
+Received: from [10.67.110.36] (unknown [10.67.110.36])
+	by APP2 (Coremail) with UTF8SMTPA id Syh0CgBXJuzp3udqS4HYCg--.53925S2;
+	Mon, 02 Nov 2026 08:52:59 +0800 (CST)
+Message-ID: <f145e32a-d181-4af7-afa7-4d26e6f8caa3@huaweicloud.com>
+Date: Mon, 2 Nov 2026 08:52:57 +0800
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,88 +52,90 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/12] arm64: dts: qcom: sm6350-lena: Enable Bluetooth
-Content-Language: en-GB
+Subject: Re: [PATCH] perf/core: Prevent duplicate sigtrap task work enqueue
 To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- robh@kernel.org, conor+dt@kernel.org,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20261102-pdx213-upstream-3-v3-0-cdc3be96d257@erebion.eu>
- <20261102-pdx213-upstream-3-v3-5-cdc3be96d257@erebion.eu>
- <sashiko-outbox-192770@kernel.org>
-From: erebion <erebion@erebion.eu>
-Autocrypt: addr=erebion@erebion.eu; keydata=
- xjMEY7S2FRYJKwYBBAHaRw8BAQdAUf0YlT6sBQSunZeO44bgAPe+ndqTifGaNjw7vzJ2KPHN
- HGVyZWJpb24gPGVyZWJpb25AZXJlYmlvbi5ldT7CjwQTFggANxYhBJyMprURw7/YpjH7646v
- QDJuAq59BQJpWnovBQkHhhzbAhsDBAsJCAcFFQgJCgsFFgIDAQAACgkQjq9AMm4Crn057AEA
- j3didUIhbtAoppk2eNu6CbtMvkDisHWHVLaWF8YC1VsA/1P0ngBoVghELMachirfTinwBplJ
- qP7GGlSGRqSfnlAKzjgEY7S2FRIKKwYBBAGXVQEFAQEHQN6NPWcyqKdecGU1vN8FVXBwYEUd
- OAhF5jpmd7M0Ybx8AwEIB8J+BBgWCAAmFiEEnIymtRHDv9imMfvrjq9AMm4Crn0FAmlaei8F
- CQeGHNsCGwwACgkQjq9AMm4Crn075QEAoDqfm4OeAEQWMgfQ496u2S3rWJw1EMgTOP51FQbX
- rY4BAKn6AhEBh605uas3OTVtcwNIAJn1sHTA7HqqWniUe9sP
-In-Reply-To: <sashiko-outbox-192770@kernel.org>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------1q3Fave0c6Xa17tUQLJxEmYd"
+Cc: linux-perf-users@vger.kernel.org
+References: <20261031114520.642476-1-wutengda@huaweicloud.com>
+ <sashiko-outbox-191929@kernel.org>
+Content-Language: en-US
+From: Tengda Wu <wutengda@huaweicloud.com>
+In-Reply-To: <sashiko-outbox-191929@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID:Syh0CgBXJuzp3udqS4HYCg--.53925S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7KFWrAFy3Cw13Zw4kWFy8Xwb_yoW5Jrykp3
+	9xtrn0ka1UXr1qq345tr97Ar18Ww10qan8A3yqka4SqF1YvryDta47Wa1YqFs8ArnrAa4f
+	Aw4j9rZru347JFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUglb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k2
+	6cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4
+	vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7Cj
+	xVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x
+	0267AKxVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02
+	F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4I
+	kC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Y
+	z7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zV
+	AF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4l
+	IxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCw
+	CI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVF
+	xhVjvjDU0xZFpf9x07UE-erUUUUU=
+X-CM-SenderInfo: pzxwv0hjgdqx5xdzvxpfor3voofrz/
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------1q3Fave0c6Xa17tUQLJxEmYd
-Content-Type: multipart/mixed; boundary="------------51ZeVxMtWai6uINlADMwO0VA";
- protected-headers="v1"; hp="clear"
-Message-ID: <0a1333ab-9deb-425b-aaeb-737eedefb093@erebion.eu>
-Date: Mon, 2 Nov 2026 01:41:15 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/12] arm64: dts: qcom: sm6350-lena: Enable Bluetooth
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- robh@kernel.org, conor+dt@kernel.org,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20261102-pdx213-upstream-3-v3-0-cdc3be96d257@erebion.eu>
- <20261102-pdx213-upstream-3-v3-5-cdc3be96d257@erebion.eu>
- <sashiko-outbox-192770@kernel.org>
-From: erebion <erebion@erebion.eu>
-Autocrypt: addr=erebion@erebion.eu; keydata=
- xjMEY7S2FRYJKwYBBAHaRw8BAQdAUf0YlT6sBQSunZeO44bgAPe+ndqTifGaNjw7vzJ2KPHN
- HGVyZWJpb24gPGVyZWJpb25AZXJlYmlvbi5ldT7CjwQTFggANxYhBJyMprURw7/YpjH7646v
- QDJuAq59BQJpWnovBQkHhhzbAhsDBAsJCAcFFQgJCgsFFgIDAQAACgkQjq9AMm4Crn057AEA
- j3didUIhbtAoppk2eNu6CbtMvkDisHWHVLaWF8YC1VsA/1P0ngBoVghELMachirfTinwBplJ
- qP7GGlSGRqSfnlAKzjgEY7S2FRIKKwYBBAGXVQEFAQEHQN6NPWcyqKdecGU1vN8FVXBwYEUd
- OAhF5jpmd7M0Ybx8AwEIB8J+BBgWCAAmFiEEnIymtRHDv9imMfvrjq9AMm4Crn0FAmlaei8F
- CQeGHNsCGwwACgkQjq9AMm4Crn075QEAoDqfm4OeAEQWMgfQ496u2S3rWJw1EMgTOP51FQbX
- rY4BAKn6AhEBh605uas3OTVtcwNIAJn1sHTA7HqqWniUe9sP
-In-Reply-To: <sashiko-outbox-192770@kernel.org>
 
---------------51ZeVxMtWai6uINlADMwO0VA
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
 
-QCBLb25yYWQgRHliY2lvOiBJIHJlbW92ZWQgaXQgbGlrZSB5b3Ugc3VnZ2VzdGVkLCBub3cg
-dGhlIGJvdCBpbnNpc3RzIEkgDQphZGQgaXQgYmFjay4NCg0KSG9waW5nIHlvdSBjYW4gY29t
-bWVudCBvbiB0aGUgYm90J3MgZGlzYWdyZWVtZW50IHdpdGggeW91LiA6KQ0KDQpPbiAxMS8y
-LzI2IDAwOjQ1LCBzYXNoaWtvLWJvdEBrZXJuZWwub3JnIHdyb3RlOg0KPiBUaGFuayB5b3Ug
-Zm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBmb3VuZCAxIHBvdGVu
-dGlhbCBpc3N1ZShzKSB0byBjb25zaWRlcjoNCj4gLSBbTWVkaXVtXSBhcm02NDogZHRzOiBx
-Y29tOiBtaXNzaW5nIGJpYXMtYnVzLWhvbGQgb24gcXVwX3VhcnQxX2N0cyBpbiBkZWZhdWx0
-IHN0YXRlDQotLSANCmVyZWJpb24NCg0KWE1QUDogZXJlYmlvbkBlcmViaW9uLmV1DQoNCk15
-IGxhbmd1YWdlczogR2VybWFuLCBFbmdsaXNoLCBTd2VkaXNoLCBOb3J3ZWdpYW4sIERhbmlz
-aA0KWWVzLCBJJ20gYSBsYW5ndWFnZSBuZXJkLiBGZWVsIGZyZWUgdG8gd3JpdGUgdG8gbWUg
-aW4gYW55IG9mIHRoZSANCmFmb3JlbWVudGlvbmVkIGxhbmd1YWdlcy4NCg0K
+On 2026/10/31 19:58, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Low] perf/core: redundant store to event->pending_work in __perf_event_overflow()
+> --
+> 
+> commit badcfdb790f5048e93691fc4bd20053f8cc9e2d2
+> Author: Tengda Wu <wutengda@huaweicloud.com>
+> 
+> perf/core: Prevent duplicate sigtrap task work enqueue
+> 
+> This commit uses cmpxchg() to atomically claim event->pending_work before
+> calling task_work_add() in __perf_event_overflow() so that a nested NMI
+> cannot enqueue the same sigtrap pending_task twice.
+> 
+>> diff --git a/kernel/events/core.c b/kernel/events/core.c
+>> index 457d75ea71420..f1e4e153c49a4 100644
+>> --- a/kernel/events/core.c
+>> +++ b/kernel/events/core.c
+>> @@ -10925,16 +10925,18 @@ static int __perf_event_overflow(struct perf_event *event,
+>>  
+>>  		notify_mode = in_nmi() ? TWA_NMI_CURRENT : TWA_RESUME;
+>>  
+>> -		if (!event->pending_work &&
+>> -		    !task_work_add(current, &event->pending_task, notify_mode)) {
+>> -			event->pending_work = pending_id;
+>> -			local_inc(&event->ctx->nr_no_switch_fast);
+>> -			WARN_ON_ONCE(!atomic_long_inc_not_zero(&event->refcount));
+>> -
+>> -			event->pending_addr = 0;
+>> -			if (valid_sample && (data->sample_flags & PERF_SAMPLE_ADDR))
+>> -				event->pending_addr = data->addr;
+>> -
+>> +		if (cmpxchg(&event->pending_work, 0, pending_id) == 0) {
+>> +			if (!task_work_add(current, &event->pending_task, notify_mode)) {
+>> +				event->pending_work = pending_id;
+> 
+> [Severity: Low]
+> Is this store to event->pending_work in __perf_event_overflow() in
+> kernel/events/core.c still needed when task_work_add() succeeds?
+> 
+> The outer cmpxchg(&event->pending_work, 0, pending_id) == 0 check already
+> sets event->pending_work to pending_id before calling task_work_add(), and
+> nothing can clear or modify event->pending_work while inside this branch
+> (interrupts are disabled, perf_pending_task() cannot run until return to
+> user space or task exit, and any nested NMI sees a non-zero value in
+> cmpxchg()).
+> 
+> Leaving this assignment also performs an unmarked plain write to
+> event->pending_work, whereas the rest of this change accesses it via
+> cmpxchg() and READ_ONCE(). Can this redundant assignment be dropped?
+> 
 
---------------51ZeVxMtWai6uINlADMwO0VA--
+Yes, it can be dropped, the assignment is redundant. I'll send v2 to fix it.
 
---------------1q3Fave0c6Xa17tUQLJxEmYd
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Thanks,
+Tengda
 
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQScjKa1EcO/2KYx++uOr0AybgKufQUCaufcKwUDAAAAAAAKCRCOr0AybgKufUMi
-APwNZEwTyKJYMOmzZqs5GguzMzZSAKiedoI/2s6f84B5cAD/XadEAiOe9TnWX7ZfFnCOoS7qSS6W
-wH/u33x4bAGpxw0=
-=fRZ1
------END PGP SIGNATURE-----
-
---------------1q3Fave0c6Xa17tUQLJxEmYd--
