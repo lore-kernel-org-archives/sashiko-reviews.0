@@ -1,54 +1,70 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.171.202.116
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793627346;
-	b=L3ivzoDBBngG8HP4WJi6VgU0Bt8vFvcDi8gATcO/HeJukU+Tt3g1+yInLFnNb+zUUEhw
-	 +8COoK/LUQdfVDTQHFEvadp7fi1+PTxRUtuplIhw/bksZnVgvXBnfn/qZGoQV+eC7PjNy
-	 qsFjWUmiWyu+FQ4YGlnl5HFGu7wsBjuCTkSaCG54QUo2vBTcAZ6JSWqhOWn0HGPqGAXx6
-	 HTQ5FXFyTfXrvI5KLKK0oHU9kaGU86YRde0e8lwqoq7n+b2P/FrvUuo0ouy/CFkwcD9/O
-	 gzaICbrIgIKUIyZ/lwqTy1CV7m+fF/A5NLnjcz3muT/7Z7lbLnYQd3MV8MiLxUEEA9w==
+	t=1793627408;
+	b=GTE5nyHuaqtK6o4bI0BBNit4i8dQ4DUIXpWwzeeDfNdX/NEoJ2Cme18w17iDge0f2j05
+	 ee9s5bpNT9ocrCJPWQXw+89StCpO9ufa4zQUPUEIQLcgbhqhYV80lDboj6zOrAbX7YjhF
+	 v42TG3VWizJX2OlL138/4mlSgcRch1IrM1+yuKRpDsGQriN3ETi+nPqYb/wL5SXDw2qSO
+	 1CIGWaZk8Sm54Spo80xB0aTB+vyELqx5KxO2YY1xruARTvNUDPbV07wj7H4a3HmpkhDI3
+	 SDOGkxjN3AKpFpolxiH5m0i1418QkDIz7/6NCr6zRFRG0yXkKVX0Ku9vzyIMNFZYlrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793627346;
-	h=Received:DKIM-Signature:Received:X-Gm-Message-State:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:
-	 X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=t19/VpHeuZfEnwqIz1VMgr6RSjKRD0I7ktZ5p1JSZr4=;
-	b=hF+kzJApmlBfVvxrAdsGxhjvR2YUAkrvcuiUxYpO9jKqYiOodugwvZqB5mvarMTXZSn2
-	 bGwCJTUx7abc4bnMOvMnJWlPl1QWU5ldj191T2CS4TGCwZa84lEkhmE+MD84L4NqJ+i3O
-	 JI1XqHhuhUtbIJmP/mzZx84SX4RXm//o4gYdayAi9XY3AfBXrMfEDUp941x3uj3VIIYz+
-	 p4Xe0O+JCiyMsqfrOtlohj7hNixiCprf62J6n/SpH3dN5rF6GTDOgoC2EO53ZuIYyvCBz
-	 dYLx5tXHCVFWmptXiWJXqtEKg0Uuwa3sl+JjprB9gs8/bOt7oVteF9fPVaTe13HPzAg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793627408;
+	h=DMARC-Filter:Received:Received:Received:DKIM-Signature:Date:From:To:
+	 Cc:Subject:Message-ID:In-Reply-To:References:Organization:X-Mailer:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-Last-TLS-Session-Version;
+	bh=wNStSjwISQyGeb1rd2HXoOipT3Bs+NI6BZQo3NWUbxo=;
+	b=UnzVS3W0uiHEQ2SLReHUHiihohLkNX4SnPXEQkNNi0Eyg/WikYrFiMYXSXAccNvek5VV
+	 KucXofZ0wYvp6NPRz2yIYShrsCV/eXgL0UqsE2twLec9l4yWwurkA9HcVSzn7vZxH2hax
+	 4PVH+pZWLyDeQPOixRie07L6v3A3ct2ziivluafxS2k8+605VHkcJt1yptA1Su13OUQE4
+	 +W1FjplwwjCfjfFsTPqMBa8D1pmO8xj9Zhjju1xGVMfcDNJ9l1ypLccl/0Kqa4s/yfltT
+	 lSE1wDFMmam5SEOabGdnBdZbSLBebV977Uk5BB3KSteQ3NrL58H1KwVQQlfQCCGT7fQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DAowWd3B;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	dmarc=pass header.from=bootlin.com;
+	spf=pass smtp.mailfrom=bootlin.com;
+	dkim=pass header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b="03/TbKoA";
+	arc=none smtp.remote-ip=185.171.202.116
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2EC606A324
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 13:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A807606A326
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 13:50:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1A807606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DAowWd3B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8BC1F00A17
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 13:49:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793627345;
-	bh=t19/VpHeuZfEnwqIz1VMgr6RSjKRD0I7ktZ5p1JSZr4=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=DAowWd3BMUfOYCsfzNlODEe95CKBes8NC8j1cPffVVZVFZQDgdjT3WLYp2VnOJKLt
-	 IcB5y6w4kUbZv1cPdCLmYUMPvVqna4N8ai3wCyeqKoNhUv6hPHZbuo2QK42VD4MfyX
-	 cZ3anIB5v1r1ErFiJja5fVMTccdAfNPZov4fMU0jCf3MTvzuVElfzRLIYoICiQhYvv
-	 4QXnxTUll0IjMX98rYsajwypqPrJbDI9NAqt3fjuZ2b7ZpdxK7BDLcSmsgYV0E91dN
-	 UGrsiqKH7M3QRPihurxs3rvC8y32qzJF1yUiasKVU7E0oj8Z6GPxntDn3NiKSXU8UD
-	 UcfkHjax1xpmg==
-Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-745497ac8fcso1247749137.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 02 Nov 2026 05:49:05 -0800 (PST)
-X-Gm-Message-State: APuU4Z9PwcYHJwQ5e29FNtyOsbJo53XD9OzMpNlqCVNugtHGcnLYprW0
-	yARbAv2CU+P5I7XVo6kU+PpCEwElh4uioOm8tTNfyL1W8R+2ffncq2OvGWTRRKcTkMsetF6notg
-	AluYcqX9hEV3Fagm1W7UdR7AZ2i2lz6A=
-X-Received: by 2002:a05:6102:6047:b0:7c3:ac59:158b with SMTP id
- ada2fe7eead31-7d072c91ddemr2933364137.23.1793627344929; Mon, 02 Nov 2026
- 05:49:04 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=dkim header.b=03/TbKoA
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 6F9F8C4FECD;
+	Mon,  2 Nov 2026 13:51:09 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 4319760750;
+	Mon,  2 Nov 2026 13:50:05 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 3D9A0103290ED;
+	Mon,  2 Nov 2026 14:49:58 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1793627400; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=wNStSjwISQyGeb1rd2HXoOipT3Bs+NI6BZQo3NWUbxo=;
+	b=03/TbKoAdRJAMXmDAbJgqxpKq26zsvDoSauRdA/MM0boV8Lnu+vLOlVk+nxkQNzOzpFYgg
+	UH7auEhvJ4laorPtdSdRLHMbavT5t3DtO0zwDWFdPJdWQfFu7lRpfOJAB4hXz0cbhmV8+8
+	QvZYewdNe7L/tL/4lTxUJDZXtt0u0WE3ioft4SC9XtE2dFyrNJviGgPY57ntkB5c0mqoYG
+	QBCiq4Q1D+mwjK+usYsFnqYKaZw7FlZKM4W7j0Jr3FkOQJ7pGtMGhTOVTiDLna/yd+uhIF
+	qJBQmzaOFq2bPHTziQamNA6vfghBhAn5KTI9fbSaXIFI+TW0EzQiHa5PE774yA==
+Date: Mon, 2 Nov 2026 14:49:56 +0100
+From: Herve Codina <herve.codina@bootlin.com>
+To: sashiko-bot@kernel.org
+Cc: sashiko-reviews@lists.linux.dev, linux-rtc@vger.kernel.org,
+ devicetree@vger.kernel.org, robh@kernel.org, conor+dt@kernel.org,
+ "Alexandre Belloni" <alexandre.belloni@bootlin.com>
+Subject: Re: [PATCH 2/3] rtc: pcf2127: Add support for the clkout clock
+Message-ID: <20261102144956.57f9bbf3@bootlin.com>
+In-Reply-To: <sashiko-outbox-193475@kernel.org>
+References: <20261102130712.25104-1-herve.codina@bootlin.com>
+	<20261102130712.25104-3-herve.codina@bootlin.com>
+	<sashiko-outbox-193475@kernel.org>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,264 +74,151 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261102032525.3597743-1-songmuchun@bytedance.com>
- <20261102032525.3597743-8-songmuchun@bytedance.com> <sashiko-outbox-192874@kernel.org>
- <2D6DE4F4-8DB1-45D4-B076-36FE6714C575@linux.dev>
-In-Reply-To: <2D6DE4F4-8DB1-45D4-B076-36FE6714C575@linux.dev>
-From: Huacai Chen <chenhuacai@kernel.org>
-Date: Mon, 2 Nov 2026 21:48:52 +0800
-X-Gmail-Original-Message-ID: <CAAhV-H4BPOJJy367p0MZcEWk3WziV3rPiCtoKPSGOqrQt5W1Pw@mail.gmail.com>
-X-Gm-Features: AclHuK8vnwbfTipAOd6WMVXtrU5YJ6-7EJCkQE6p8MgAvtOeminm8SJMrGrSJ0M
-Message-ID: <CAAhV-H4BPOJJy367p0MZcEWk3WziV3rPiCtoKPSGOqrQt5W1Pw@mail.gmail.com>
-Subject: Re: [PATCH v2 07/12] mm: hugetlb_vmemmap: simplify shared tail page handling
-To: Muchun Song <muchun.song@linux.dev>
-Cc: sashiko-reviews@lists.linux.dev, Muchun Song <songmuchun@bytedance.com>, 
-	Oscar Salvador <osalvador@suse.de>, Andrew Morton <akpm@linux-foundation.org>, 
-	Mike Rapoport <rppt@kernel.org>, Qi Zheng <qi.zheng@linux.dev>, Lance Yang <lance.yang@linux.dev>, 
-	James Houghton <jthoughton@google.com>, David Hildenbrand <david@kernel.org>, linux-mm@kvack.org, 
-	WANG Xuerui <kernel@xen0n.name>, loongarch@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Mon, Nov 2, 2026 at 2:12=E2=80=AFPM Muchun Song <muchun.song@linux.dev> =
-wrote:
->
->
->
-> > On Nov 2, 2026, at 11:52, sashiko-bot@kernel.org wrote:
-> >
-> > Thank you for your contribution! Sashiko AI review found 1 potential is=
-sue(s) to consider:
-> > - [High] mm: hugetlb_vmemmap: uninitialized tail page read in vmemmap_o=
-ptimize_pte()
-> > --
-> >
-> > commit 32511c4a4d8ec3d45e0f629f89666a78dc9372ee
-> > Author: Muchun Song <muchun.song@linux.dev>
-> >
-> > mm: hugetlb_vmemmap: simplify shared tail page handling
-> >
-> > This commit removes the vmemmap_tail field from struct vmemmap_remap_wa=
-lk and
-> > updates vmemmap_optimize_pte() and vmemmap_restore_pte() to derive the =
-shared
-> > tail page directly from the folio being processed.
-> >
-> >> diff --git a/mm/hugetlb_vmemmap.c b/mm/hugetlb_vmemmap.c
-> >> index 5e84004db4b87..d0af251aa533c 100644
-> >> --- a/mm/hugetlb_vmemmap.c
-> >> +++ b/mm/hugetlb_vmemmap.c
-> >
-> > [ ... ]
-> >
-> >> @@ -213,53 +211,53 @@ static struct page *vmemmap_dup_page_from_list(c=
-onst struct page *src,
-> >>      return dst;
-> >> }
-> >>
-> >> -static void vmemmap_optimize_pte(pte_t *pte, unsigned long addr,
-> >> -                             struct vmemmap_remap_walk *walk)
-> >> +static inline struct page *folio_vmemmap_shared_tail_page(const struc=
-t folio *folio)
-> >> {
-> >> -    struct page *page =3D pte_page(ptep_get(pte));
-> >> -    pte_t entry;
-> >> -
-> >> -    /* Remapping the head page requires r/w */
-> >> -    if (unlikely(walk->nr_walked =3D=3D 0)) {
-> >> -            struct page *head;
-> >> +    return vmemmap_shared_tail_page(folio_order(folio), folio_zone(fo=
-lio));
-> >> +}
-> >>
-> >> -            VM_WARN_ON_ONCE(!PageHead((const struct page *)addr));
-> >> +static int vmemmap_optimize_pte(pte_t *pte, unsigned long addr,
-> >> +                            struct vmemmap_remap_walk *walk)
-> >> +{
-> >> +    const struct page *page =3D (const struct page *)addr;
-> >> +    const struct folio *folio =3D page_folio(page);
-> >> +    struct page *src =3D pte_page(ptep_get(pte)), *dst;
-> >>
-> >> -            head =3D vmemmap_dup_page_from_list(page, walk->vmemmap_p=
-ages);
-> >> -            entry =3D mk_pte(head, PAGE_KERNEL);
-> >> +    if (likely(vmemmap_optimizable_pfn(page_to_pfn(page), folio_order=
-(folio)))) {
-> >> +            dst =3D folio_vmemmap_shared_tail_page(folio);
-> >> +            if (!dst)
-> >> +                    return -ENOMEM;
-> >>      } else {
-> >> -            VM_WARN_ON_ONCE(!PageTail((const struct page *)addr));
-> >> -
-> >> -            /*
-> >> -             * Map the shared tail page writable. A lockless get that=
- read
-> >> -             * a non-zero refcount before the remap can still do its
-> >> -             * cmpxchg after it. The refcount is zero, so the cmpxchg
-> >> -             * fails and leaves the page unchanged.
-> >> -             */
-> >> -            entry =3D mk_pte(walk->vmemmap_tail, PAGE_KERNEL);
-> >> +            dst =3D vmemmap_dup_page_from_list(src, walk->vmemmap_pag=
-es);
-> >>      }
-> >
-> > [Severity: High]
-> > Can calling page_folio(page), folio_order(folio), and
-> > folio_vmemmap_shared_tail_page(folio) on every PTE in vmemmap_optimize_=
-pte()
-> > read uninitialized tail struct pages for bootmem gigantic hugepages?
-> >
-> > During early boot in alloc_bootmem_huge_page(), gigantic hugepages mark=
- all
-> > tail pages [pfn + 1, pfn + nr_pages) with memblock_reserved_mark_noinit=
-(), so
-> > memmap_init_reserved_pages() skips initializing their struct pages:
-> >
-> > mm/hugetlb.c:alloc_bootmem_huge_page() {
-> >    ...
-> >       if (hugetlb_vmemmap_optimizable(h))
-> >               hugetlb_vmemmap_optimize_bootmem_page(pfn, huge_page_orde=
-r(h));
-> >    ...
-> >       memblock_reserved_mark_noinit(PFN_PHYS(pfn + 1),
-> >                                     (nr_pages - 1) * PAGE_SIZE);
-> > }
-> >
-> > When a bootmem gigantic hugepage is not aligned to PAGES_PER_SECTION (f=
-or
-> > example, when nr_pages < PAGES_PER_SECTION, such as on 64-bit LoongArch=
- with
-> > 16KB base pages where SECTION_SIZE_BITS is 29 and PMD_SHIFT is 25 with
-> > CONFIG_ARCH_FORCE_MAX_ORDER=3D10), section_set_compound_order_range() r=
-eturns
->
-> This issue does not occur with the default LoongArch configuration. For
-> 16KB base pages, LoongArch defaults ARCH_FORCE_MAX_ORDER to 11, which
-> matches HUGETLB_PAGE_ORDER.
->
-> The reported case requires manually overriding CONFIG_ARCH_FORCE_MAX_ORDE=
-R
-> to 10 while keeping HugeTLB enabled. This creates an **invalid configurat=
-ion**
-> that Kconfig currently permits:
->
-> HUGETLB_PAGE_ORDER      =3D 11
-> MAX_FOLIO_ORDER         =3D 10
->
-> LoongArch does not select ARCH_HAS_GIGANTIC_PAGE, so the generic MM code
-> assumes that folios cannot exceed MAX_PAGE_ORDER. The forced configuratio=
-n
-> violates that assumption and is already diagnosed by:
->
->         WARN_ON(order > MAX_FOLIO_ORDER);
->
-> in hugetlb_add_hstate().
->
-> Therefore, this is not a regression in a supported LoongArch configuratio=
-n,
-> and I don't think this series needs to handle it. The proper fix is a sep=
-arate
-> LoongArch Kconfig change preventing ARCH_FORCE_MAX_ORDER from being set b=
-elow
-> the HugeTLB order when HugeTLB is enabled.
-Yes, this isn't a regression, the problem existed before this series.
+On Mon, 02 Nov 2026 13:13:46 +0000
+sashiko-bot@kernel.org wrote:
 
-I suggest change BUILD_BUG_ON_INVALID(HUGETLB_PAGE_ORDER >
-MAX_FOLIO_ORDER) to MAYBE_BUILD_BUG_ON(HUGETLB_PAGE_ORDER >
-MAX_FOLIO_ORDER) in mm/hugetlb.c, which cause a build error
-immediately for invalid ARCH_FORCE_MAX_ORDER configurations.
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] rtc: pcf2127: rate 0 in pcf2127_clkout_rate2cof() sets COF to HiZ
+> --
+> 
+> commit fd3d38a37715a1ab67448b3adb80c6b0ee46a7e2
+> Author: Herve Codina <herve.codina@bootlin.com>
+> 
+> rtc: pcf2127: Add support for the clkout clock
+> 
+> This commit adds common clock framework support for the CLKOUT output clock
+> on PCF2127, PCF2129, PCA2129, and PCF2131 RTC devices, allowing configuration
+> of frequencies from 1 Hz to 32768 Hz and disabling the output into HiZ.
+> 
+> > diff --git a/drivers/rtc/rtc-pcf2127.c b/drivers/rtc/rtc-pcf2127.c
+> > index ff2023908f5a3..2c442770ebc52 100644
+> > --- a/drivers/rtc/rtc-pcf2127.c
+> > +++ b/drivers/rtc/rtc-pcf2127.c  
+> 
+> [ ... ]
+> 
+> > @@ -626,6 +634,180 @@ static int pcf2127_watchdog_init(struct device *dev, struct pcf2127 *pcf2127)
+> >  	return devm_watchdog_register_device(dev, &pcf2127->wdd);
+> >  }
+> >  
+> > +#ifdef CONFIG_COMMON_CLK
+> > +#define clkout_hw_to_pcf2127(_hw) container_of(_hw, struct pcf2127, clkout_hw)
+> > +
+> > +/* Rates indexed by COF values */
+> > +static int pcf2127_clkout_rates[] = {
+> > +	32768,
+> > +	16384,
+> > +	8192,
+> > +	4096,
+> > +	2048,
+> > +	1024,
+> > +	1,
+> > +	0, /* 0Hz (COF 0b111) will put the clockout signal to HiZ */
+> > +};
+> > +
+> > +static u32 pcf2127_clkout_rate2cof(unsigned long rate)
+> > +{
+> > +	unsigned int i;
+> > +
+> > +	for (i = 0; i < ARRAY_SIZE(pcf2127_clkout_rates); i++) {
+> > +		if (pcf2127_clkout_rates[i] <= rate)
+> > +			return i;
+> > +	}
+> > +
+> > +	return 0; /* Maximum output clock rate */
+> > +}
+> > +
+> > +static int pcf2127_clkout_cof2rate(u32 cof)
+> > +{
+> > +	return pcf2127_clkout_rates[cof];
+> > +}
+> > +
+> > +static unsigned long pcf2127_clkout_recalc_rate(struct clk_hw *hw,
+> > +						unsigned long parent_rate)
+> > +{
+> > +	struct pcf2127 *pcf2127 = clkout_hw_to_pcf2127(hw);
+> > +
+> > +	return pcf2127_clkout_cof2rate(pcf2127->clkout_cof);
+> > +}
+> > +
+> > +static int pcf2127_clkout_determine_rate(struct clk_hw *hw,
+> > +					 struct clk_rate_request *req)
+> > +{
+> > +	u32 cof;
+> > +
+> > +	cof = pcf2127_clkout_rate2cof(req->rate);
+> > +	req->rate = pcf2127_clkout_cof2rate(cof);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static int pcf2127_clkout_set_rate(struct clk_hw *hw, unsigned long rate,
+> > +				   unsigned long parent_rate)
+> > +{
+> > +	struct pcf2127 *pcf2127 = clkout_hw_to_pcf2127(hw);
+> > +	u32 cof;
+> > +	int ret;
+> > +
+> > +	cof = pcf2127_clkout_rate2cof(rate);
+> > +
+> > +	/*
+> > +	 * Setting COF will enable the clock (i.e. output not in HiZ anymore)
+> > +	 * Perform the operation only if already enabled.
+> > +	 * Otherwise, do nothing. The expected COF will be set on prepare()
+> > +	 */
+> > +	if (pcf2127->clkout_enabled) {
+> > +		ret = regmap_update_bits(pcf2127->regmap, pcf2127->cfg->reg_clkout,
+> > +					 PCF2127_CLKOUT_COF,
+> > +					 FIELD_PREP(PCF2127_CLKOUT_COF, cof));
+> > +		if (ret)
+> > +			return ret;
+> > +	}
+> > +
+> > +	pcf2127->clkout_cof = cof;
+> > +	return 0;
+> > +}  
+> 
+> [Severity: Medium]
+> Since rate is an unsigned long and pcf2127_clkout_rates[7] is 0, the condition
+> pcf2127_clkout_rates[i] <= rate in pcf2127_clkout_rate2cof() will always match
+> at index 7 (PCF2127_CLKOUT_COF_HIZ) when rate is 0, making the fallback
+> return 0 unreachable.
+> 
+> If a consumer passes rate == 0 to pcf2127_clkout_determine_rate() or
+> pcf2127_clkout_set_rate(), pcf2127_clkout_rate2cof(0) returns 7
+> (PCF2127_CLKOUT_COF_HIZ). In pcf2127_clkout_set_rate(), this writes
+> PCF2127_CLKOUT_COF_HIZ to reg_clkout if pcf2127->clkout_enabled is true
+> (putting the CLKOUT pin into HiZ while pcf2127->clkout_enabled remains true),
+> and caches PCF2127_CLKOUT_COF_HIZ in pcf2127->clkout_cof so subsequent calls
+> to pcf2127_clkout_prepare() -> pcf2127_clkout_control(hw, true) will also
+> leave the pin in HiZ.
 
-Huacai
+This is exactly what it is expected.
 
->
-> Cc LoongArch maintainers.
->
-> Thanks,
-> Muchun
->
-> > early without setting section->compound_page_order:
-> >
-> > include/linux/vmemmap-optimization.h:section_set_compound_order_range()=
- {
-> >       unsigned long section_nr =3D pfn_to_section_nr(pfn);
-> >
-> >       if (!IS_ALIGNED(pfn | nr_pages, PAGES_PER_SECTION))
-> >               return;
-> >    ...
-> > }
-> >
-> > In that case, sparse_init() allocates regular vmemmap pages via
-> > memmap_alloc(), leaving them uninitialized (or filled with 0xff under
-> > CONFIG_DEBUG_VM).
-> >
-> > Later, gather_bootmem_prealloc_node() initializes only the first
-> > VMEMMAP_OPTIMIZATION_NR_STRUCT_PAGES struct pages (covering only the fi=
-rst
-> > vmemmap PTE), and prep_and_add_bootmem_folios() defers initializing the
-> > remaining tail struct pages until after hugetlb_vmemmap_optimize_folios=
-()
-> > runs and fails:
-> >
-> > mm/hugetlb.c:gather_bootmem_prealloc_node() {
-> >    ...
-> >               hugetlb_folio_init_vmemmap(folio, h,
-> >                                          VMEMMAP_OPTIMIZATION_NR_STRUCT=
-_PAGES);
-> >               init_new_hugetlb_folio(folio);
-> >
-> >               if (vmemmap_optimizable_order(pfn_to_section_compound_ord=
-er(pfn)))
-> >                       folio_set_hugetlb_vmemmap_optimized(folio);
-> >    ...
-> > }
-> >
-> > mm/hugetlb.c:prep_and_add_bootmem_folios() {
-> >       /* Send list for bulk vmemmap optimization processing */
-> >       hugetlb_vmemmap_optimize_folios(h, folio_list);
-> >
-> >       list_for_each_entry_safe(folio, tmp_f, folio_list, lru) {
-> >               if (!folio_test_hugetlb_vmemmap_optimized(folio)) {
-> >                       hugetlb_folio_init_tail_vmemmap(folio, h,
-> >                                       VMEMMAP_OPTIMIZATION_NR_STRUCT_PA=
-GES,
-> >                                       pages_per_huge_page(h));
-> >               }
-> >    ...
-> > }
-> >
-> > Previously, __hugetlb_vmemmap_optimize_folio() derived vmemmap_tail upf=
-ront
-> > from the initialized head folio, and vmemmap_optimize_pte() checked
-> > walk->nr_walked =3D=3D 0 without inspecting tail struct pages.
-> >
-> > With this change, on the second and subsequent PTEs (where addr >=3D
-> > vmemmap_start + VMEMMAP_OPTIMIZATION_SIZE), page->compound_info in the =
-tail
-> > struct page at addr has not been initialized by prep_compound_tail() ye=
-t:
-> >
-> > 1. If the raw vmemmap backing pages are zeroed, page_folio(page) return=
-s page
-> > itself rather than the head folio, folio_order(folio) returns 0, and
-> > vmemmap_optimizable_pfn() returns false. vmemmap_optimize_pte() then fa=
-lls
-> > back to vmemmap_dup_page_from_list(src, walk->vmemmap_pages) for every =
-tail
-> > PTE, rotating the displaced vmemmap pages across the tail PTEs instead =
-of
-> > mapping the shared tail page, while leaving HPG_vmemmap_optimized set s=
-o
-> > prep_and_add_bootmem_folios() skips hugetlb_folio_init_tail_vmemmap().
-> >
-> > 2. If CONFIG_DEBUG_VM is enabled, page_init_poison() fills the uninitia=
-lized
-> > tail struct pages with 0xff. _compound_head(page) then evaluates to the
-> > poisoned tail page itself, and folio_order(folio) reads 0xff, leading t=
-o an
-> > out-of-bounds shift in vmemmap_optimizable_pfn() and an out-of-bounds
-> > node_zones access in folio_zone(folio).
-> >
-> > --
-> > Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261102032525.=
-3597743-1-songmuchun@bytedance.com?part=3D7
->
+return 0 is unreachable but pcf2127_clkout_rate2cof() returns a u32.
+
+Without the last return 0 (even if unreachable) or any other u32 returned value,
+GCC obviously complied
+   error: control reaches end of non-void function
+
+> 
+> Should the 0 entry be removed from pcf2127_clkout_rates[] (or skipped in
+> pcf2127_clkout_rate2cof()) so that pcf2127->clkout_cof only ever holds active
+> clock divider values (0..6)?
+> 
+
+No.
+
+All rates should be present in pcf2127_clkout_rates[]. The 0Hz rate value is
+a valid rate even if the pin will be set in HiZ in that case.
+
+pcf2127->clkout_cof should hold the value related to OHz rate.
+
+A user can ask a 0Hz rate and call clk_prepare(). This is a valid use case.
+
+Best regards,
+Hervé
