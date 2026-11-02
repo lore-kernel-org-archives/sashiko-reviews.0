@@ -1,84 +1,107 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.169
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793656062;
-	b=KLgKRwi1JM8QNO3phMKVHmUXaJudPJQe6rXpefhDv/q9BCXr9EM1ZAw0PQBaS5wzh2ku
-	 LdsAsTPrub3tEAECvkMkJZfwPdwGjCXTU84Nmmx+A3Gb+xoZSRvJA4ueYbVjU4J01F4uB
-	 09nzQmUAEuvUgjswGRRvriOvkSM8zh++mrTgvLI8H34uCehQ4c2CVySBDhfzqWjtBKbSI
-	 2pL3EGfX39mi3A8txaAhYkq3ESdZnPqY6yPnK56MsU023gkjx0cbFEI6BpxG+lHdmuBFa
-	 Ri5k5C2y6DoR5w0PXjBopkILocXJxIR6FItj4nYxfBINYEtvuCsTmo7lSN6JirgBm8w==
+	t=1793657122;
+	b=Gp0ZAOvchX/Lk5K9GylZzbnFS7HdjY88f8jJXM3iKcCiVuk4l6crM0OfQCYoCt8Hq7Ou
+	 JPiWODylOtHeTSK5WYLj1dgxinO5MBy99L4wGq7Cnc/nRBgUIWoJb13R8lQHQq6eUzXHq
+	 gduGbwdVeDKpqO37GJf3Gjtgqw3IzhPY1DnOgP5RUXaSSvRBDUw76ekltSM4cOljux4BF
+	 3RPCb1SNK26I44rTestJFFi0oqqBOdEwqnwk7cXxvlcjAdCkAl4mx33R+2nUBPaUU80Je
+	 bLBlGzjzJ9NpahcEi0JgDA1liagbPrW0wlEKYjUZKcKESK7K9m3vdkLvVBofofv6Hog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793656062;
-	h=DMARC-Filter:DKIM-Signature:Received:X-MC-Unique:
-	 X-Mimecast-MFC-AGG-ID:Received:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:X-Received:MIME-Version:
-	 References:In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:
-	 Cc:X-Mimecast-Spam-Score:X-Mimecast-MFC-PROC-ID:X-Mimecast-Originator:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=zVy3cyl0CvXI2khtfqIyMnjKNtXJR5EIeczb7Nf6ZU4=;
-	b=J+uprySTLppMcLr35viaqXwkdOiVL7/LZMLAc+G90OJjvs6qfDYZKS1mWx5q6Ab7Z2Hy
-	 X1VyMn2OrzaYPyeT6pc9Tc9glNk5xeejHxImAW0Lqyu+Q8JukI9/nfAX1wM0V7+egXF64
-	 1h403ax16Z/6t9NmwhyRpqwrnHblDTn5SY/mD+viHJeGquWrMazin3Lbnb+VTzSLX4ERq
-	 jmfvA+GS6mo6EAXuBMY6Scdlwva1HDgrW5w9s9yqJIiuGn+PhVUwutRHN5DdSI1Ib8N4n
-	 0jH1UhDod+WZXV5Rztsr2HoV1r+mMSzU7klcU33ckXmL7v7Y6OJe6i9/34vyzuX8pTw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793657122;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=1X5bXRL8qqmcC6O9ai7+IAT4c81ATWUWkhjo+536Us8=;
+	b=zB6OKUR3kEL6BqWRSI+05sF999QVyXNK2kp97QOPEGe021PxNEmGieOMImIvPsIxl+3v
+	 RkTzdVAHVdACpWA2Vl7G0pi9t2E6Vjn7v099iyYdI01FmNPED/7oMhdKRnVeBrTgpSNPg
+	 jLzonDNxeHnB9Ud573Zp3to53vE9vwulYttdVpFtsGWlWzpqsntWnSXdtyBzK1b3c+mj0
+	 UH+GqlgynHOgo3EkUSsRddmpzC3uFU2rhDLhsrJ8KWaLZoJH6iQf19+c7XKe41ijysCCU
+	 18lIuWDq6i8KBBWvPIewERc+Cp/U6qTBU8ijmg4QE4wSLOYmIpmVoSGsUMsBuZQCijQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=redhat.com;
-	spf=pass smtp.mailfrom=redhat.com;
-	dkim=pass header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=BeWnDXQM;
-	arc=none smtp.remote-ip=170.10.133.124
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b="pyc/6yv9";
+	arc=none smtp.remote-ip=74.125.82.169
+Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F053E606A333
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 21:47:41 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org F053E606A333
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0848B606D83B
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 22:05:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0848B606D83B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=BeWnDXQM
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1793656060;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zVy3cyl0CvXI2khtfqIyMnjKNtXJR5EIeczb7Nf6ZU4=;
-	b=BeWnDXQMcjCcSrc+GKPv1TFkislztmiwd6gX2sLlIGr6G8FnoMuZRWfj1Jj2v5tn2/fJ/g
-	5T7h9/H/XuppvzwO9mMA/9fNF3+OQuXWpV7S/NPs5kRGidJlXF4dA45Ow3wJfrvUdFJaB9
-	q7doOXVmY7m2LgZ9/ep1Y4QTzwG049Y=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-464-6NhZircbOwG2wvpNDFnSHA-1; Mon, 02 Nov 2026 16:47:39 -0500
-X-MC-Unique: 6NhZircbOwG2wvpNDFnSHA-1
-X-Mimecast-MFC-AGG-ID: 6NhZircbOwG2wvpNDFnSHA_1793656058
-Received: by mail-lj1-f200.google.com with SMTP id 38308e7fff4ca-3ac4d85f3beso2882651fa.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 02 Nov 2026 13:47:39 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pyc/6yv9
+Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-35cd4e8bdbdso4496171eec.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 02 Nov 2026 14:05:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793657121; x=1794261921; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=1X5bXRL8qqmcC6O9ai7+IAT4c81ATWUWkhjo+536Us8=;
+        b=pyc/6yv9kGUS9D3PB2BpB7jC5XdxwLZS/L9Qx8/5zCysfoVBjKgBeOAvHeAiWLTXOO
+         3J8QiQOdS2NcBQ5IbTN1qhzf5Z6ZyUvXI9YZBcDhSM4iaU/VI+WaXARoUCSJqzpKKMc+
+         ST1vrTU94qsTxisdhJwpD6M5V5mUoMTYA6Ltvr9dq2gjOk5LdK/7c5Qqdp90vt47jSuB
+         CCCtVal+9K1RiOZHroxZKqZu1ijMHXBzBmGd7g8j9EM0r7jqekT0DD9gczVrrcquukLZ
+         kvD7zx3Gu1iFyEY2dV48L1LSjSG3sj5WXIzEmaM6Ao/bndEmycMnuzR6dumhWUvqR6p3
+         AycA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793656058; x=1794260858;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
+        d=1e100.net; s=20260707; t=1793657121; x=1794261921;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=zVy3cyl0CvXI2khtfqIyMnjKNtXJR5EIeczb7Nf6ZU4=;
-        b=IWQ1hAqpy3K8KeFuQq8ctPbKLnhtpMx6p/P8O3IZR4fbfI9XAZ2D/U02P3IygHC77k
-         G7kJoflcEqhlFU7dLvN0Vj8pMHUOUv/cBMDqAeffINOAlWTDzCCoF2yo3+wy3Pm6xwec
-         vXOrcnWGyAsZ64H2kIpaiSvVEVydNFpGh/WzRCjnyb2fa2IJTJkTsdp0eBj7N/3YefTN
-         I8A1jGLA7EdOm+dDHdfMRKVoDij/Dyx+ZTJMe7aCr/94Pww85PBpaG3t1O+0pLhW/IKR
-         LG03G30DfTBCn9zPdQwlzWXs6ieOG0H9DEtZ+mr6OdQFCpu3H1XfnVWkLw3084BYasg3
-         YY2w==
-X-Gm-Message-State: APuU4Z+AaVkXRbigHjq/ahZj2dcjgXlF59FhTWipZF0Hg3z9V3O5DEe8
-	bYXLMWOV6WP0j5uSp9rpS66Pf3V2RB7ow+3aIk6yF/I4TDl/eRoTUsGJyl2vH74T7BMZxG48EFw
-	Hx4lbbZqynbv8fVoETvlQiAsq/a8xbqX56QjUktCKrCofJBgDO7WEbF1un3AkMV0uMHT68shTni
-	pjT2/ywokXT68YWSFRR0U1yh8MdVvIx8Pk77DwesbO3o3wMVuLPxwTcx0=
-X-Gm-Gg: AYBFou0/t2j7AIL7omgYIULIqJ+TZNW0xCqXG5IJ0Kyu1pd1y9/+bv4NdWaBM9d3/WX
-	ehgwu1Oo+XiDg3uMrdKqvweBqLJ0/4gVk8KYtb/zi4952sSC6mkISxrdgqpVJBbi8iD3ssA7W+X
-	KdTi18QiCsiYZSF86B6ayWo/xb2U6mnUoFmvBc/o3+Tl9z4UwhyV5wlEps
-X-Received: by 2002:a05:651c:435a:10b0:3ac:b2df:c518 with SMTP id 38308e7fff4ca-3acb788bd42mr19471391fa.0.1793656058043;
-        Mon, 02 Nov 2026 13:47:38 -0800 (PST)
-X-Received: by 2002:a05:651c:435a:10b0:3ac:b2df:c518 with SMTP id
- 38308e7fff4ca-3acb788bd42mr19471361fa.0.1793656057467; Mon, 02 Nov 2026
- 13:47:37 -0800 (PST)
+        bh=1X5bXRL8qqmcC6O9ai7+IAT4c81ATWUWkhjo+536Us8=;
+        b=YtNSV4QPQkSVAHMR28j/x/BdoBzMnshCh2nBY+CUKz8KjJPXbKjvcLmX8bGZ93Z6kL
+         yB/KKLCQIUPxklxt891icGQ3V1ldJit2XmCWdYSy+lNL2ZJ9XHOvsPf3sZqatMru6kk5
+         35XAMS2XhstSRQyNBvR+S5K+HEqr9kQE8R+rhakN1W0YZA9XRT6FcfOeUMTnTGlqOeNw
+         /3NUhZkl1i9sH/kWTGf4MOKfzQQQZfuxv1oaPHIgWX7FdCgIUeimBgGbZwAe7CdaAKA2
+         851tX/PgWMzUa1IRNFJyNmwcjpLW6/PeV2ctJHFiGq0h5UaziEVoWZ6SAEsx8vKi0N9M
+         2YPw==
+X-Forwarded-Encrypted: i=1; AKwUvByRvI8vrhAFuWgV7DB/9Ez6HwFgppRlbmEbFxGHlSLSCeFU6FE3miSNjxAvj0QTOFRfCnY4OWoV8O3kFfcOEFI=@lists.linux.dev
+X-Gm-Message-State: APuU4Z8TpB0Jy4mzueLrdRHTC3hMxu5AoDgfAVbZhNylymWufMXOr9iO
+	WDU9VoCkDu1BmXZlarVnut6cbiNILM0GvsJAWl94uH8CGGvoSFflSozd
+X-Gm-Gg: AYBFou22ZR79KKSeLBrtQnzYOYXzMRMYh0QdKTxW3geWKnRdxU+INZtW7agbMP2j19x
+	YjyhtTHF6xfZO1xHNDOM11NvW8Z2U+d2eWKScYOGQvI9IdkT0NGFN2qM9ZwyXQREFBOITLFqik1
+	an8opeIi2BO93E4UmqVysRu4KNrCycUo5HwIlA3sTVa3DDC/VFYB0LgtIAynXvh3TPa+FMStgtv
+	OlV5PdIWDucvwyolTNle+3AjktnyAwd2ciP8HW7yGUrlPaIO/2Fv+GvPQE6wnF2J9kYdWlT0Y3Y
+	e3Bht/GWl779tTHyf1w+QGNXHgsrIkjD7pEbj4JrW2ViOYFXTBMwtqbK/JP/ZM0RVJeoCxxHXEu
+	IjJl0ZwSvmhDByuOAAYauFvXHknPaQplhbF1swIm/62wdcrR2Hf3RWCVY12WnQI80V/9u5l3hiB
+	esw4Rw3Q/hZzv+kQvO+n4VnQyBj/5NdjUCzMFLpB6H8oljnH5qnm7r6vpdzzld3vMO40AxXHUmF
+	d+wNp32+pN7tDR0r0UXod4Jal/TUKqjtYJGo+Sx8jLlyj1IupNJvRLGxkZrCxhJIEI7ESbyE+TI
+	/CzomFE1nDM3yKwiORkGl9nRKVnJerRXi5Hhuo0XqKDip5soSPLlMmrWJJAwplk+nA==
+X-Received: by 2002:a05:7300:3b0c:b0:36a:238:1485 with SMTP id 5a478bee46e88-36a4244276cmr24803721eec.37.1793657120646;
+        Mon, 02 Nov 2026 14:05:20 -0800 (PST)
+Received: from DESKTOP-NM9EKIA ([125.134.240.130])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-36a428af1dfsm42657742eec.7.2026.11.02.14.05.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2026 14:05:20 -0800 (PST)
+From: Joonhoe Kim <26rote@gmail.com>
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	sashiko-reviews@lists.linux.dev,
+	media-ci@linuxtv.org,
+	devicetree@vger.kernel.org,
+	Conor Dooley <conor+dt@kernel.org>,
+	Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v4 3/6] media: iris: add iris4 specific H265 line buffer calculation
+Date: Tue,  3 Nov 2026 07:05:19 +0900
+Message-ID: <20261102220519.1738-1-26rote@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.5
+In-Reply-To: <20261001153221.4FAC61F000FF@smtp.kernel.org>
+References: <20261001-kaanapali-iris-v4-0-642f9ac5e699@oss.qualcomm.com> <20261001-kaanapali-iris-v4-3-642f9ac5e699@oss.qualcomm.com> <20261001153221.4FAC61F000FF@smtp.kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -88,149 +111,41 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261102-nxp-stm-fixes-v2-0-8ca2706f30ef@redhat.com>
- <20261102-nxp-stm-fixes-v2-3-8ca2706f30ef@redhat.com> <sashiko-outbox-194195@kernel.org>
-In-Reply-To: <sashiko-outbox-194195@kernel.org>
-From: Enric Balletbo i Serra <eballetb@redhat.com>
-Date: Mon, 2 Nov 2026 22:47:26 +0100
-X-Gm-Features: AclHuK_0a2IjcCcwCHH8GxxfGTwals0LlMjXS0TnljknwHPEB3JJYJs346FUJyM
-Message-ID: <CALE0LRstkO4x4R9ohB-L+zGUH3xzTNj2Yswg69wtwmvRXo44HQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] clocksource/drivers/nxp-stm: Increase min_delta to
- 20us for PREEMPT_RT
-To: sashiko-reviews@lists.linux.dev
-Cc: linux-rt-devel@lists.linux.dev, linux-kernel@vger.kernel.org
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: atSbkiKzvNjWAybLyquVZtJ4ybc2kK528_0S9iryL6M_1793656058
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi,
+On Thu, 01 Oct 2026 15:32:20 +0000, sashiko-bot@kernel.org wrote:
+> > +		dpb_obp = size_dpb_opb(frame_height, lcu_size) * num_vpp_pipes;
+[...]
+> > +	return ((ALIGN(dpb_obp, DMA_ALIGNMENT) + ALIGN(se_left_lb, DMA_ALIGNMENT) +
+> > +		ALIGN(vsp_left_lb, DMA_ALIGNMENT)) * num_vpp_pipes) +
+[...]
+> Does this code multiply dpb_obp by num_vpp_pipes twice?
+[...]
+> Is this double multiplication intentional, or should one of the
+> multipliers be removed to prevent over-allocating the line buffer?
 
-On Mon, Nov 2, 2026 at 10:25=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] clocksource/drivers/nxp-stm: overshoot check precedes channel =
-enable
-> --
->
-> commit 1283cc4078852e277605e923b00287b73e75d175
-> Author: Enric Balletbo i Serra <eballetb@redhat.com>
->
-> clocksource/drivers/nxp-stm: Increase min_delta to 20us for PREEMPT_RT
->
-> This commit increases the clockevent min_delta from 2us to 20us in
-> nxp_stm_clockevent_starting_cpu() to prevent 32-second timer wraparound
-> lockups under heavy bus contention on PREEMPT_RT kernels.
->
-> > diff --git a/drivers/clocksource/timer-nxp-stm.c b/drivers/clocksource/=
-timer-nxp-stm.c
-> > index ed7662a4e2bc4..a1a0e23d33426 100644
-> > --- a/drivers/clocksource/timer-nxp-stm.c
-> > +++ b/drivers/clocksource/timer-nxp-stm.c
-> > @@ -335,14 +335,18 @@ static int nxp_stm_clockevent_starting_cpu(unsign=
-ed int cpu)
-> >       /*
-> >        * The timings measurement show reading the counter register
-> >        * and writing to the comparator register takes as a maximum
-> > -      * value 1100 ns at 133MHz rate frequency. The timer must be
-> > -      * set above this value and to be secure we set the minimum
-> > -      * value equal to 2000ns, so 2us.
-> > +      * value 1100 ns at 133MHz rate frequency. However, under heavy
-> > +      * bus contention on PREEMPT_RT, 2us is too tight and can allow
-> > +      * the counter to pass the match value before the channel-enable
-> > +      * write takes effect, leading to 32s wraparounds.
-> >        *
-> > -      * minimum ticks =3D (rate / MICRO) * 2
-> > +      * Increase to 20us to guarantee the comparator channel is fully
-> > +      * enabled before the match value is reached.
-> > +      *
-> > +      * minimum ticks =3D (rate / MICRO) * 20
-> >        */
-> >       clockevents_config_and_register(&stm_timer->ced, stm_timer->rate,
-> > -                                     (stm_timer->rate / MICRO) * 2, 0x=
-7FFFFFFFU);
-> > +                                     (stm_timer->rate / MICRO) * 20, 0=
-x7FFFFFFFU);
->
-> [Severity: Medium]
-> As reported by Sashiko on v1 [1], does increasing min_delta to 20us in
-> nxp_stm_clockevent_starting_cpu() actually guarantee that the comparator
-> channel is enabled before the match value is reached?
->
-> Looking at drivers/clocksource/timer-nxp-stm.c:
->
-> static int nxp_stm_clockevent_set_next_event(unsigned long delta, struct =
-clock_event_device *ced)
-> {
->         struct stm_timer *stm_timer =3D ced_to_stm(ced);
->         u32 val, now;
->
->         nxp_stm_clockevent_disable(stm_timer);
->
->         stm_timer->delta =3D delta;
->
->         val =3D nxp_stm_clockevent_read_counter(stm_timer) + delta;
->
->         writel(val, STM_CMP0(stm_timer->base));
->         ...
->         now =3D nxp_stm_clockevent_read_counter(stm_timer);
->         if ((int)(val - now) <=3D 0)
->                 return -ETIME;
->
->         nxp_stm_clockevent_enable(stm_timer);
->
->         return 0;
-> }
->
-> nxp_stm_clockevent_disable() clears STM_CCR_CEN in STM_CCR0, and the
-> hardware only generates a match event when STM_CNT equals STM_CMP0 while
-> STM_CCR0[CEN] is enabled. Because nxp_stm_clockevent_enable() is called
-> after reading now and checking (int)(val - now) <=3D 0, the latency of wr=
-iting
-> STM_CCR_CEN to STM_CCR0 is not covered by the -ETIME overshoot check.
->
-> For any programmed delta (20us or larger), if bus contention, an NMI, or
-> hypervisor/firmware delay between the two counter reads leaves val - now =
-as
-> a small positive number of ticks, the overshoot check passes while the
-> channel is still disabled, and STM_CNT can pass val before the subsequent
-> nxp_stm_clockevent_enable() write takes effect in hardware.
->
-> Should nxp_stm_clockevent_set_next_event() enable the comparator channel
-> before reading now for the overshoot check (and call
-> nxp_stm_clockevent_disable() if (int)(val - now) <=3D 0 before returning
-> -ETIME) so the counter read is ordered after the STM_CCR0 write on the bu=
-s?
->
+Some data on this from a Lenovo Y700 Gen 5 (TB323FU, Kaanapali), with
+this patch on v7.3 and out-of-tree Kaanapali support. Hardware decodes
+were compared bit for bit with software decoding:
 
-I answered this in the first version of the PATCH 2/3, this describes
-the same race you pointed in the PATCH 2/3 and I think the race is
-possible but I believe it cannot occur in practice with the current
-min_delta:
+                             HEVC Main10      HEVC Main
+                             1080p   2160p    1080p
+  v4 3/6 as is               pass    pass     pass
+  dpb_obp multiplied once    fail    fail     pass
+  once, OPB lines doubled
+  for 10-bit output          pass    pass     pass
 
-set_next_event is called with local interrupts disabled, so
-nothing can preempt or extend that window. The gap between reading
-now and the writel in nxp_stm_clockevent_enable() is a
-comparison, a branch, and a single MMIO write. With min_delta =3D 2us, the
-check is still close to the write.
+The failures are "session error received 0x4000005: insufficient
+resources" with no frames decoded.
 
-Reordering to enable-before-check introduces a different problem: if
-the comparator match fires between nxp_stm_clockevent_enable() and
-reading now, the interrupt handler delivers the event via
-ced->event_handler(ced) and then we also return -ETIME, causing, if
-I'm not mistaken
-the clockevents layer to program another event, causing a double delivery.
+With num_vpp_pipes = 2, the second multiplication doubles dpb_obp.
+That is what 10-bit output needs. With one multiplication, Main10
+passes once the size_dpb_opb() part is doubled for a 10-bit capture
+format. 8-bit streams pass without that.
+
+Is the second multiplication meant to cover 10-bit output? If not, I
+can send the 10-bit sizing as a patch on top of this series.
 
 Thanks,
-   Enric
-
-> [1] https://lore.kernel.org/r/20261026-nxp-stm-fixes-v1-3-20a64a4ea454@re=
-dhat.com
->
-> --
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261102-nxp-stm-=
-fixes-v2-0-8ca2706f30ef@redhat.com?part=3D3
->
-
+Joonhoe Kim
