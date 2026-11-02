@@ -1,78 +1,74 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.197
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793632312;
-	b=UVdAY7RydMjCg72gOW/mffPxy0Z2SfLijUF/iocLr7oBwTEL3fKQ1nETe8TD4NAkSA/N
-	 OgLhhpgtbAW1i3aEG8TT0s6682RPvexCquxfeKXbe88eV/nxhBJ5IUWUfgHc0V8gvlVV7
-	 4UcjFNJ99JIa8xyJB3jDG3XsN2ZXb2+pWCP+KMj0WXKloYuoDZAYYYojc4e28dRcFTnhu
-	 l+STjT2iWZIvICiESFLEC3Xs0NpoapTeLxdkEF95zqpqs7HolBckq7Plt6epjRsgcdKut
-	 265EU3PMgEm8+7lCHWS86BldhMyS03P/kxIeQ/pKHdUYXWzLbLQFCxlyRtl1lk3kslQ==
+	t=1793633223;
+	b=HgZHwKs423ssgFIhBfZmOnJ9cR3grrxHAo2XnczMvXR4o7aD1X2cCkSU01xVUb6a9WyZ
+	 jfVS7y1xqOXW5c0xug4NwVp9XqbhrGxDBE/SMogNTm6yAk0qG1hlX5HNkwYvWkznWoXE/
+	 jSinF2TVWSV80V0quYMxwpwY1Wzn9iv4gD4sORvT1RYj6WvTOb0u2g1t8MYzvFyFMx6Fu
+	 QX6DKLWoN7tKJKsLjvsRsgcsjlB/UtAdT8pMa0U/mT6b80uBe/BxE97/Yq7DM6ldIaXYF
+	 2Wci6ydapLN5/7fCkhWSJFmFzW33tFDMYKqcwSNLNqitrKNG85Op7HCLS45j2JuH6UQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793632312;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
-	 X-Patchwork-Hint:Organization;
-	bh=2/uq2w5qsdU3XkiAfIjdGg0EWb0SbhEqc6DCVolqH0U=;
-	b=xFSr85ZY9Za/H4wMdIaCMS/5XInVISTXUBMpYXNiHnPxIQDT++cHgrnhqLDI23d1QPVF
-	 QYqbjgqRjYTALTjnqeIl0Qb21qRrX1QvCXFFk4rY139FaNoG+7OUVv452ZC50ZCrWncOZ
-	 MRwFd/WQ1RhRsK1jFTFh+dGASCL/XGHCRCZni4vU2ZV+ZjSapUdnqs36VEkWLlChtoiLP
-	 RG2l6aYl5VU7wPRA175ihhNUKDZ2Z5h3rqyAYUKt7qQS3iW1FLS0yktxhm5OYQNtyf1BM
-	 LfYtjJ0q1vtnWvPZzxT4CN1vqtSjtcCuLvfDE/nPpjLVVHFqrctkdXTylFHvG0RbfXQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793633223;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
+	 References:Message-ID:Subject:From:To:Cc:Content-Type;
+	bh=hBo6eoZILf9FXsA6KADnqw6aBIyY/61Jx7TtUC5p3AU=;
+	b=iwc9798Qc5kQ0DQLT6jgNYcFoLk2mswSNYJWkBDo6bKIrgn9K9ZcN5jQFt8vwq2z+Iwp
+	 wkLw85tPAmex2DEsLCtd5RC3VK9wEkQcWHfgcl4qM8xGdAhkShCKPZA4SdI3sL0f0zCyK
+	 pkI0jMU39HTymvOm1krz2p6fWPsuPXo+tDEBuQ45Ds3py8DUfHnzzV47JvFe1ggY1gr8C
+	 IcpXvXcgHibm3Dw7DjtmkY19taoFJEt0PD9opmmd7UHGkXgqQ+/oKPDoETdEPOxDFyq1k
+	 FmnXzBNZl2XgESq0jFVe29AhAMMrqCS11KM/iuOVfFmfc15lD758DkpXPPuVCHQahIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=f2oaTzZa;
-	arc=none smtp.remote-ip=198.175.65.18
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	dmarc=pass header.from=google.com;
+	spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com;
+	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=CN64yhyD;
+	arc=none smtp.remote-ip=209.85.210.197
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0210760AB1B4
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 15:11:50 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0210760AB1B4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5976083EAE
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 15:27:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0B5976083EAE
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=f2oaTzZa
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793632311; x=1825168311;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=A1Z8YVADStasxeVGsvKlCx9NW4+VyRaCaoIqgq9WuaI=;
-  b=f2oaTzZaWQqmk9rkZSoItVo7cUqrW8SFgTljfYBp18JZY3qyi790Ifg9
-   BeuGr99V9EVbDP0KBixdtm7MRg/Fuc+VXPzOXRa7HH3CmIVDTJpCx7TSi
-   Pug2jM5ZVgayce20DLYtBTRrDZEDzzg1s/VUuQnzuUFW5XL5hrM81x/bv
-   lps6F8WJEJHj5vWrCXp+9aBNwbGerpaRXWnKgO1GxmIa+Egc+rKyBAl3A
-   HTub9YwLFPu8jGa9I9Tab6VMWWXJsomyhePaeI1RLYi7cMH8s5gsPPvgg
-   osBNTd4a5L9CvH/F+CEztIGNVhFMtIL+ItVsuvNG9MINHjhOoJlydycdD
-   w==;
-X-CSE-ConnectionGUID: CdYs51PzSN+jqEqNOrFegw==
-X-CSE-MsgGUID: 0bp7dc3UQLK9B74qa8EKNw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11954"; a="2338023"
-X-IronPort-AV: E=Sophos;i="6.27,191,1787036400"; 
-   d="scan'208";a="2338023"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 07:11:50 -0800
-X-CSE-ConnectionGUID: 14KMMsgeT4qr9BW02qAynQ==
-X-CSE-MsgGUID: 0sF9zJAHQhaktVbw3e4vzQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,191,1787036400"; 
-   d="scan'208";a="6315995"
-Received: from hrotuna-mobl2.ger.corp.intel.com (HELO localhost) ([10.245.245.10])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 07:11:48 -0800
-Date: Mon, 2 Nov 2026 17:11:43 +0200
-From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-	airlied@gmail.com, simona@ffwll.ch, javierm@redhat.com,
-	louis.chauvet@bootlin.com, dri-devel@lists.freedesktop.org,
-	sashiko-reviews@lists.linux.dev, stable@vger.kernel.org
-Subject: Re: [PATCH] drm/vblank: Restart enabling vblank timer on possible
- deadlock
-Message-ID: <auioL8zR9O5u4TCF@intel.com>
-References: <20261102143919.1672293-1-tzimmermann@suse.de>
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=CN64yhyD
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-89e96c03cd0so2647776b3a.1
+        for <sashiko-reviews@lists.linux.dev>; Mon, 02 Nov 2026 07:27:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20260707; t=1793633222; x=1794238022; darn=lists.linux.dev;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=hBo6eoZILf9FXsA6KADnqw6aBIyY/61Jx7TtUC5p3AU=;
+        b=CN64yhyD1LvmfWARV0nSVxRPsmL3aknKHj8BKNkNXkD9Hh4OdZjqjKZFA1oPxoyw8q
+         d5cc4DhxBW5gICUa4saKB4XneZPN5+FOpq44FePdHftAvCwEVrWpRn5CLGeLKPlG8sSj
+         kJ7lmrUimAgnduTn+3eXo0nLX2Wx/I2Hs9ocTXzKmD64SKws0dk8Dz8oY7KcY6f3jAkH
+         EFZ1GSFWFxWIbEE0618PkTTwtQ04zrGa1WxAKqCNRUIIasto4yA/63PTc+/ihb8XKdvB
+         DhnXj/Z7Wgeog22FSLPoU75tjnC1PD6RSgCfmPfsx1So0hCF6282C+d5rKqfM/cziLXm
+         BmWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793633222; x=1794238022;
+        h=content-type:cc:to:from:subject:message-id:references:mime-version
+         :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=hBo6eoZILf9FXsA6KADnqw6aBIyY/61Jx7TtUC5p3AU=;
+        b=HLFroZZI/zgMLRvR1jqNggDyoU7TVwnvsXboe0eaAx9oh7aoKs+7ETXJ7VcDB8DFQD
+         VLBbK8X/hkJeFyEUf7u5wKpvIT2NqEGK92cVhVSz1kTYF+eKVv8sB+1fqZyrlc27UwZM
+         RM6FElJQtOX6eGNb4dy0l64xsc9dmBtf+NtmhrsKNuG3J0+VBO7ECcCJIE8IF/il+rmg
+         /QKnrWSu71RVS6lRtsbk4VlPvFCVIwEA0uvTahYdu4Sp+Wl8heGLmw3e4xLPTEaIEKuX
+         qSY7NC+nnB0mZxFYsLF+74fxw+0KfR8fViBuKgJJ71jNqWruVJdeMZRKYF8dJzf5dImt
+         CO+Q==
+X-Gm-Message-State: APuU4Z8hekcCRnhBZnnuKzGyN/RyNjrwfvmlyMz+K/MaCcYzeaeNBojo
+	/kPOaex7BKm8caqGBDHfYQriYFvIE69eeLW4GZ4TAgnSWnwq7Cm9N7//GQgpwUusJKDaxS30EOr
+	2qRpVK7uaI81mnL/mKzSHPRrgE8gKVcxGgpEioGkrAK9zZcrSAUUBuUjqs28bRx+5d2e1oszHWV
+	c7vOKq5bd06xwgS3TzsIKCy3ur0w0Fp22AwEG8qs2FtlY64UzS
+X-Received: from pffl19-n2.prod.google.com ([2002:a05:6a00:c353:20b0:88c:e369:e5a4])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a05:6a00:2d1b:b0:89e:43ee:6538
+ with SMTP id d2e1a72fcca58-8a9bf23cf6dmr8004990b3a.36.1793633221862; Mon, 02
+ Nov 2026 07:27:01 -0800 (PST)
+Date: Mon, 2 Nov 2026 07:27:01 -0800
+In-Reply-To: <sashiko-outbox-191575@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -81,124 +77,19 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261102143919.1672293-1-tzimmermann@suse.de>
-X-Patchwork-Hint: comment
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
+Mime-Version: 1.0
+References: <20261030212721.2606393-1-seanjc@google.com> <20261030212721.2606393-6-seanjc@google.com>
+ <sashiko-outbox-191575@kernel.org>
+Message-ID: <auirxeLJR8hirgtV@google.com>
+Subject: Re: [PATCH v3 5/7] KVM: x86: Recompute EFER.LMA instead of inheriting
+ the current value on EFER writes
+From: Sean Christopherson <seanjc@google.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
 
-On Mon, Nov 02, 2026 at 03:38:52PM +0100, Thomas Zimmermann wrote:
-> Return -EDEADLK when trying to cancel a running hrtimer as part of
-> enable_vblank(). Reacquire vblank_time_lock and try again.
-> 
-> The vblank helper drm_vblank_disable_and_save() and the vblank IRQ
-> handler hold the spin lock vblank_time_lock at some point. This
-> can result in a deadlock if vblank timer's disable code in
-> drm_crtc_vblank_cancel_timer() calls hrtimer_cancel() directly: the
-> helper wais for the timer function to complete and the timer function
-> waits for the helper to release vblank.time_lock.
-> 
-> drm_crtc_vblank_cancel_timer() works around this problem by calling
-> hrtimer_try_to_cancel() instead. For re-enabling the vblank timer,
-> drm_crtc_vblank_start_timer() must wait for the vblank timer to stop.
-> It runs into the same deadlock problem while waiting for the timer
-> function to complete.
-> 
-> The solution to this problem is to release and reacquire the spin
-> lock vblank_time_lock if hrtimer_try_to_cancel() signals a running
-> timer function. Releasing the lock allows for the timer function to
-> make progress.
-> 
-> Signal the possible deadlock with -EDEADLK and perform the necessary
-> steps. No other driver uses -EDEADLK in their enable_vblank, so the
-> change should not interfere.
-> 
-> Tested with bochs on qemu.
-> 
-> Closes: https://lore.kernel.org/dri-devel/20260914111129.300691F00898@smtp.kernel.org/
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Fixes: 74afeb812850 ("drm/vblank: Add vblank timer")
-> Cc: Thomas Zimmermann <tzimmermann@suse.de>
-> Cc: Louis Chauvet <louis.chauvet@bootlin.com>
-> Cc: Javier Martinez Canillas <javierm@redhat.com>
-> Cc: David Airlie <airlied@gmail.com>
-> Cc: Simona Vetter <simona@ffwll.ch>
-> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-> Cc: Maxime Ripard <mripard@kernel.org>
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: <stable@vger.kernel.org> # v6.19+
-> ---
-> I also tried to move hrtimer_cancel() out of the critical section. The
-> result was fairly fragile. So returning an error and re-acquiring the
-> lock was the easier solution.
-> ---
->  drivers/gpu/drm/drm_vblank.c | 21 +++++++++++++++------
->  1 file changed, 15 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
-> index 5162250e8813..135efde86298 100644
-> --- a/drivers/gpu/drm/drm_vblank.c
-> +++ b/drivers/gpu/drm/drm_vblank.c
-> @@ -1182,10 +1182,12 @@ static int __enable_vblank(struct drm_device *dev, unsigned int pipe)
->  static int drm_vblank_enable(struct drm_device *dev, unsigned int pipe)
->  {
->  	struct drm_vblank_crtc *vblank = drm_vblank_crtc(dev, pipe);
-> -	int ret = 0;
-> +	int ret;
->  
->  	assert_spin_locked(&dev->vbl_lock);
->  
-> +retry:
-> +	ret = 0;
->  	spin_lock(&dev->vblank_time_lock);
->  
->  	if (!vblank->enabled) {
-> @@ -1199,7 +1201,11 @@ static int drm_vblank_enable(struct drm_device *dev, unsigned int pipe)
->  		ret = __enable_vblank(dev, pipe);
->  		drm_dbg_core(dev, "enabling vblank on crtc %u, ret: %d\n",
->  			     pipe, ret);
-> -		if (ret) {
-> +		if (ret == -EDEADLK) {
-> +			spin_unlock(&dev->vblank_time_lock);
-> +			cpu_relax();
-> +			goto retry;
-> +		} else if (ret) {
->  			atomic_dec(&vblank->refcount);
->  		} else {
->  			drm_update_vblank_count(dev, pipe, 0);
-> @@ -2232,11 +2238,14 @@ int drm_crtc_vblank_start_timer(struct drm_crtc *crtc)
->  			      CLOCK_MONOTONIC, HRTIMER_MODE_REL);
->  	} else {
->  		/*
-> -		 * Timer should not be active. If it is, wait for the
-> -		 * previous cancel operations to finish.
-> +		 * Timer should not be running. If it is, signal cancellation
-> +		 * again and restart to release locks.
->  		 */
-> -		while (hrtimer_active(&vtimer->timer))
-> -			hrtimer_try_to_cancel(&vtimer->timer);
+On Fri, Oct 30, 2026, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] kvm: x86: guest-triggerable WARN_ON_ONCE in set_efer() via SVM state sync
 
-Why do you even have to cancel the timer here? Just let it run?
-
-> +		if (hrtimer_try_to_cancel(&vtimer->timer) == -1) {
-> +			scoped_guard(spinlock_irqsave, &vtimer->interval_lock)
-> +				vtimer->interval = 0;
-
-Does this interval_lock serve some actual purpose? Looks like it's just
-protecting a single variable, and there are no read-modify-writes
-happening to it that I can see.
-
-> +			return -EDEADLK;
-> +		}
->  	}
->  
->  	drm_calc_timestamping_constants(crtc, &crtc->mode);
-> -- 
-> 2.56.0
-
--- 
-Ville Syrjälä
-Intel
+See https://lore.kernel.org/all/at-TP7Il6rWcd5Xh@google.com.
