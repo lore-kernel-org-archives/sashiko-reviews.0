@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=142.132.183.134
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793582632;
-	b=biNBoGzRKyTN6yZnWfiu4dphWYcf9y49Wwqm3FgsmhR0Qe9w3estWfiaSJmhCikgkLXm
-	 eL7wzlJbc80ppVn597Ho/M9qcxkzYdtuoD3cjRv5pTCcvOnImMQuV1/Wj0hRArgcjepEu
-	 YUGQW5OclCL9VQqKlCSDPefoeHh8T1EfuD8Q3sbMvFujE8o5AsIqk4ONQLvjMuGADUBmw
-	 dumDlbYeIcUbNe0dUBTTfgBt8yuB3y8AQPaCo2B87aCwDZH7R8wtKsiGByzSld6OWtF7N
-	 N8nnset3YX3UBwksrgL0tgObqwXmmAVtIP4G2/dbdvS+aaufJ2Vu1NEYEulkgIHPruA==
+	t=1793583200;
+	b=Te1uVvgkta6lLqH0wcnmBuEU6/JjUifU7aBvbz6NcBJ53m6th8JjJoqTZQFw146ASZ1q
+	 mZHJhjF/ctlxX9z9GuPo00Ojag8n7Hxm02xtr1zSfzwrH/huDUh2QawuZDuxKTDSjT7cw
+	 bJ9ZjhYQRDDSFwa3jX0fdm8Q9vBkeTyX9Xy32y+WajeKVunJKDYR3XAtdubK178EDwHVK
+	 uuTpp0vElM5+PWk4xRfYUxol38ZwWapXH+CvwWOPHsqM/q28bieMfRBugkQcOHfH8AZKV
+	 tE27BpzD5GagGKPhuN+wt9slEO6xPmIbB62LRdEMk5UabNIRGM9XiaUtVgE3y/CEkvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793582632;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793583200;
 	h=DMARC-Filter:DKIM-Signature:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
-	 From:Autocrypt:In-Reply-To:Content-Type;
-	bh=oYF6WKJQr7/UET0LEBtfGRVTZHFc4OlWWVDMWmtpkLY=;
-	b=v0xja+HRzaftEVoyEDCoitQMHmlaeetqMhOklFvdJVSXkzIntxryyNRYQkvWYDm8EJg3
-	 95SBOFCf4rffhk3NL0julV1AJ5Q/rsuBzLvKV2So+fa7dfclj09DJ1Qa2rIF+yYg+4zNP
-	 OXMowd6IQyaEc6rGh+MjzkLB6ZnN8tguXAQESzDkmxWd1AIQ5qLUXlk+o3UHthffR0x+3
-	 QaidRkHBL9V9eXPdMGLt+K88z3DpvHisT64VpascrZgT3lB91npPNpGlEAQVZl8hMbmKT
-	 KwCcInrN4h1wdi2v59xrul6txjtpeIC8a/nT3xz2fZPwNZPjeBtU8fPxaojcAg3/aWA==
+	 MIME-Version:User-Agent:Subject:Content-Language:From:To:Cc:
+	 References:Autocrypt:In-Reply-To:Content-Type;
+	bh=CpinM/IpytUfD9vGKaPrjPRQBHB3wnZR9UZpr2lYAok=;
+	b=5ICunSKVjifFoMJPVmcWEHjnaC7H78jPhIWaj9oYGqV1oVx7ezNr9wrScQyz2wqEj9z6
+	 qWmpDNIyh7LWeFtIEA+PWO37CyO2I3yjw6ST/Q+vtj/kiTPAPY9/0jXXpclTvKQhCJE/t
+	 L+XJ4DrSvQfQSQgdtOLt0g0a2FzfotvvojzVJChkAM6mq/0JRbWrY971KYmRxzPuUywNG
+	 wYza1AsrApY71Af1szB6tmCS8RnT4FJKbk19OUVaY50jmJqepsiV41BrNrUFpR9eGHxBM
+	 5e416T6eori9twh7PLAXrGen5QW+Cg8PtISObvYtp4FbHEMPKfMMhbeCoDD3uuEABYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=erebion.eu;
 	spf=pass smtp.mailfrom=erebion.eu;
-	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=ed25519-sha256 header.s=202508e header.b="/xmGjCTB";
-	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=rsa-sha256 header.s=202508r header.b=oguozKng;
+	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=ed25519-sha256 header.s=202508e header.b=sidspAq7;
+	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=rsa-sha256 header.s=202508r header.b=ahT0ov6n;
 	arc=none smtp.remote-ip=142.132.183.134
 Received: from erebion.eu (erebion.eu [142.132.183.134])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6DA606A324
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 01:23:51 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0F6DA606A324
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D6C606A324
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 01:33:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D1D6C606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=erebion.eu
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=erebion.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=ed25519-sha256 header.s=202508e header.b=/xmGjCTB;
-	dkim=pass (2048-bit key, unprotected) header.d=erebion.eu header.i=@erebion.eu header.a=rsa-sha256 header.s=202508r header.b=oguozKng
+	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=ed25519-sha256 header.s=202508e header.b=sidspAq7;
+	dkim=pass (2048-bit key, unprotected) header.d=erebion.eu header.i=@erebion.eu header.a=rsa-sha256 header.s=202508r header.b=ahT0ov6n
 DKIM-Signature: v=1; a=ed25519-sha256; s=202508e; d=erebion.eu; c=relaxed/relaxed; r=y;
-	h=From:To:Subject:Date:Message-ID; t=1793582621; bh=oYF6WKJQr7/UET0LEBtfGRV
-	TZHFc4OlWWVDMWmtpkLY=; b=/xmGjCTBorFOiRLcreS3l+Z6CWgyiuUHDIYlwzDBRoNPc3ZbB0
-	OuGoiEFZjaXNOST6VypfEjalesLA3LSHnqCg==;
+	h=To:From:Subject:Date:Message-ID; t=1793583195; bh=CpinM/IpytUfD9vGKaPrjPR
+	QBHB3wnZR9UZpr2lYAok=; b=sidspAq7Ua9LmBj8CwRrD1M4QFrIWGJ53YFr+29KmQzfeYKdkV
+	hbC0Vf/icpSpgk4xax26C3CjToVIB080dCCQ==;
 DKIM-Signature: v=1; a=rsa-sha256; s=202508r; d=erebion.eu; c=relaxed/relaxed; r=y;
-	h=From:To:Subject:Date:Message-ID; t=1793582621; bh=oYF6WKJQr7/UET0LEBtfGRV
-	TZHFc4OlWWVDMWmtpkLY=; b=oguozKngTRlwngDFs2w+bp2m4E1qe/tevr0v2oW7hFiDLh7p2V
-	UPwK287tqrPKZkz/LF0b5h83Lb93NmkHBsvA8qdzv4qA35Gr1I/tV4AsufSp+LjAcvKPTtsj4tz
-	q8l+JCi6Rz90KmVEskYUyOnk+ipKHPHGKcER8eUfrXBNrw4n7Ekh8MvbI+8ldtSk+naR6SRZrtr
-	FeXnhWiLuoL1ITrz3FYQ/YFROo2tN3uI7gVCqwa3ulVUZv8GFaiKUj2PXClmkrAv6Vu82AgFhd4
-	QXS5GbUbMTSR+bntIR7OHLPPWjJMHk75DfIIOnBA2jvYQ2khByjsdX8BMy2K5WDIfAQ==;
-Message-ID: <bc642f13-d532-46ca-afcf-678c49e8f1cd@erebion.eu>
-Date: Mon, 2 Nov 2026 02:23:41 +0100
+	h=To:From:Subject:Date:Message-ID; t=1793583195; bh=CpinM/IpytUfD9vGKaPrjPR
+	QBHB3wnZR9UZpr2lYAok=; b=ahT0ov6nqjyLUKHAef1k8x0sRIU/i+lGhXll4QNocx8+NrNfiV
+	GTMEaQHFHpHpau6iFy4ulg3/xe87k1T4074qLY2hIg32ftWwcOyd04rKQHbI/LaWVHKeDD0IDAG
+	2fQVu+53HEwhtNoHBKcq5fBVLjPlpPmcic1xTrxuhwq9KrNkZ2aAzXIXs9dmMHsn7V8/propmbC
+	vMdbhCbVVbU9gWTdo2RuGwiXpRkfCXSZ2d4mQtxoZAlF8d/alam8T0uUhuEvFRPiM3Q55g9XwUz
+	J30n2xgNQjaa1PR6T2eb4Gh9z1VGVwawn31elkndpC2fcmR8EoodCo2uwfvlC7t+kxA==;
+Message-ID: <c539ae6d-8018-49ba-b4fe-8e52306c93bd@erebion.eu>
+Date: Mon, 2 Nov 2026 02:33:14 +0100
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -58,16 +58,17 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/12] arm64: dts: qcom: sm6350-lena: Enable ADSP,
- CDSP, IPA & MPSS
+Subject: Re: [PATCH v3 11/12] arm64: dts: qcom: sm6350-lena: Add PM6150L
+ thermals
 Content-Language: en-GB
+From: erebion <erebion@erebion.eu>
 To: sashiko-reviews@lists.linux.dev
 Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
  robh@kernel.org, conor+dt@kernel.org
 References: <20261102-pdx213-upstream-3-v3-0-cdc3be96d257@erebion.eu>
- <20261102-pdx213-upstream-3-v3-4-cdc3be96d257@erebion.eu>
- <sashiko-outbox-192764@kernel.org>
-From: erebion <erebion@erebion.eu>
+ <20261102-pdx213-upstream-3-v3-11-cdc3be96d257@erebion.eu>
+ <sashiko-outbox-192768@kernel.org>
+ <dc96c6bb-0ac2-4f67-84b5-2284d37afa44@erebion.eu>
 Autocrypt: addr=erebion@erebion.eu; keydata=
  xjMEY7S2FRYJKwYBBAHaRw8BAQdAUf0YlT6sBQSunZeO44bgAPe+ndqTifGaNjw7vzJ2KPHN
  HGVyZWJpb24gPGVyZWJpb25AZXJlYmlvbi5ldT7CjwQTFggANxYhBJyMprURw7/YpjH7646v
@@ -77,29 +78,30 @@ Autocrypt: addr=erebion@erebion.eu; keydata=
  OAhF5jpmd7M0Ybx8AwEIB8J+BBgWCAAmFiEEnIymtRHDv9imMfvrjq9AMm4Crn0FAmlaei8F
  CQeGHNsCGwwACgkQjq9AMm4Crn075QEAoDqfm4OeAEQWMgfQ496u2S3rWJw1EMgTOP51FQbX
  rY4BAKn6AhEBh605uas3OTVtcwNIAJn1sHTA7HqqWniUe9sP
-In-Reply-To: <sashiko-outbox-192764@kernel.org>
+In-Reply-To: <dc96c6bb-0ac2-4f67-84b5-2284d37afa44@erebion.eu>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="------------fTwScMSe0Hkot07lqpw0EolE"
+ boundary="------------WErBOJk7ZUz3nYwJ3r0a4wP7"
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------fTwScMSe0Hkot07lqpw0EolE
-Content-Type: multipart/mixed; boundary="------------LgG41laI7Wv0Z1E1Z1jI5cAQ";
+--------------WErBOJk7ZUz3nYwJ3r0a4wP7
+Content-Type: multipart/mixed; boundary="------------Ys9oJY5YtjJo4H0mWezlvqzT";
  protected-headers="v1"; hp="clear"
-Message-ID: <bc642f13-d532-46ca-afcf-678c49e8f1cd@erebion.eu>
-Date: Mon, 2 Nov 2026 02:23:41 +0100
+Message-ID: <c539ae6d-8018-49ba-b4fe-8e52306c93bd@erebion.eu>
+Date: Mon, 2 Nov 2026 02:33:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/12] arm64: dts: qcom: sm6350-lena: Enable ADSP,
- CDSP, IPA & MPSS
+Subject: Re: [PATCH v3 11/12] arm64: dts: qcom: sm6350-lena: Add PM6150L
+ thermals
 Content-Language: en-GB
+From: erebion <erebion@erebion.eu>
 To: sashiko-reviews@lists.linux.dev
 Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
  robh@kernel.org, conor+dt@kernel.org
 References: <20261102-pdx213-upstream-3-v3-0-cdc3be96d257@erebion.eu>
- <20261102-pdx213-upstream-3-v3-4-cdc3be96d257@erebion.eu>
- <sashiko-outbox-192764@kernel.org>
-From: erebion <erebion@erebion.eu>
+ <20261102-pdx213-upstream-3-v3-11-cdc3be96d257@erebion.eu>
+ <sashiko-outbox-192768@kernel.org>
+ <dc96c6bb-0ac2-4f67-84b5-2284d37afa44@erebion.eu>
 Autocrypt: addr=erebion@erebion.eu; keydata=
  xjMEY7S2FRYJKwYBBAHaRw8BAQdAUf0YlT6sBQSunZeO44bgAPe+ndqTifGaNjw7vzJ2KPHN
  HGVyZWJpb24gPGVyZWJpb25AZXJlYmlvbi5ldT7CjwQTFggANxYhBJyMprURw7/YpjH7646v
@@ -109,35 +111,49 @@ Autocrypt: addr=erebion@erebion.eu; keydata=
  OAhF5jpmd7M0Ybx8AwEIB8J+BBgWCAAmFiEEnIymtRHDv9imMfvrjq9AMm4Crn0FAmlaei8F
  CQeGHNsCGwwACgkQjq9AMm4Crn075QEAoDqfm4OeAEQWMgfQ496u2S3rWJw1EMgTOP51FQbX
  rY4BAKn6AhEBh605uas3OTVtcwNIAJn1sHTA7HqqWniUe9sP
-In-Reply-To: <sashiko-outbox-192764@kernel.org>
+In-Reply-To: <dc96c6bb-0ac2-4f67-84b5-2284d37afa44@erebion.eu>
 
---------------LgG41laI7Wv0Z1E1Z1jI5cAQ
+--------------Ys9oJY5YtjJo4H0mWezlvqzT
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: base64
 
-T24gMTEvMi8yNiAwMDo0MSwgc2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToNCj4gVGhh
-bmsgeW91IGZvciB5b3VyIGNvbnRyaWJ1dGlvbiEgU2FzaGlrbyBBSSByZXZpZXcgZm91bmQg
-MSBwb3RlbnRpYWwgaXNzdWUocykgdG8gY29uc2lkZXI6DQo+IC0gW0xvd10gYXJtNjQ6IGR0
-czogcWNvbTogcmVkdW5kYW50IElQQSBwcm9wZXJ0aWVzIGluIHNtNjM1MC1sZW5hIGJvYXJk
-IERUUw0KDQpRdWl0ZSByaWdodCwgZGlkbid0IG5vdGljZSB0aGF0LCBmaXhlZCBpbiB2NC4u
-Lg0KDQotLSANCmVyZWJpb24NCg0KWE1QUDogZXJlYmlvbkBlcmViaW9uLmV1DQoNCk15IGxh
-bmd1YWdlczogR2VybWFuLCBFbmdsaXNoLCBTd2VkaXNoLCBOb3J3ZWdpYW4sIERhbmlzaA0K
-WWVzLCBJJ20gYSBsYW5ndWFnZSBuZXJkLiBGZWVsIGZyZWUgdG8gd3JpdGUgdG8gbWUgaW4g
-YW55IG9mIHRoZSANCmFmb3JlbWVudGlvbmVkIGxhbmd1YWdlcy4NCg0K
+T24gMTEvMi8yNiAwMTozNSwgZXJlYmlvbiB3cm90ZToNCj4gT24gMTEvMi8yNiAwMDo0NCwg
+c2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToNCj4+IFtTZXZlcml0eTogTWVkaXVtXQ0K
+Pj4gU2hvdWxkIHJlYXJfY2FtX3NlbnNvciByZWZlcmVuY2UgQURDNV9HUElPMl8xMDBLX1BV
+IGluc3RlYWQgb2YNCj4+IEFEQzVfR1BJTzZfMTAwS19QVSBoZXJlPw0KPj4NCj4+IE9uIFBN
+NjE1MEwsIHBoeXNpY2FsIHBpbiBncGlvNiBpcyByb3V0ZWQgdG8gQURDNV9HUElPMl8xMDBL
+X1BVICgweDUzKSwgDQo+PiBhbmQNCj4+IHVuZGVyICZwbTYxNTBsX2FkYyBiZWxvdyB0aGUg
+cmVhciBjYW1lcmEgdGhlcm1pc3RvciBjaGFubmVsIGlzIGRlZmluZWQgDQo+PiBhczoNCj4g
+DQo+IEFoIHllcywgbG9va3MgbGlrZSBJIGNvbmZ1c2VkIGdwaW82IGZyb20gZG93bnN0cmVh
+bSBEVCBhbmQgZ3BpbzIgZnJvbSANCj4gaW5jbHVkZS9kdC1iaW5kaW5ncy9paW8vcWNvbSxz
+cG1pLXZhZGMuaA0KPiANCj4gV2lsbCBmaXggd2l0aCB2NC4uLg0Kcm9vdEBtb2JpYW46fiMg
+Y2F0IC9zeXMvY2xhc3MvdGhlcm1hbC90aGVybWFsX3pvbmUzOC90ZW1wDQotNDAwMDANCnJv
+b3RAbW9iaWFuOn4jIGNhdCAvc3lzL2NsYXNzL3RoZXJtYWwvdGhlcm1hbF96b25lMzgvdHlw
+ZQ0KcmVhci1jYW0tdGhlcm1hbA0KDQpXZWxsLCB0aGlzIGRvZXMgbm90IGxvb2sgcmlnaHQg
+ZWl0aGVyLiBJIHN3ZWFyIEkgZG9uJ3QgbGl2ZSBpbiBBbnRhcmN0aWNhLg0KDQoNCiA+PiBT
+aG91bGQgcmVhcl9jYW1fc2Vuc29yIHJlZmVyZW5jZSBBREM1X0dQSU8yXzEwMEtfUFUgaW5z
+dGVhZCBvZg0KID4+IEFEQzVfR1BJTzZfMTAwS19QVSBoZXJlPw0KDQpHUElPNjogVmFsdWUg
+bG9va3Mgc2Vuc2libGUgYXQganVzdCBvdmVyIDMwIMKwQw0KR1BJTzI6IC00MCDCsEMNCg0K
+UGVyaGFwcyBHUElPNiB3YXMgcmlnaHQgYWZ0ZXIgYWxsIG9yIGl0IGlzIHdyb25nIHdoaWxl
+IEdQSU8yIGlzIHdyb25nIGFzIA0Kd2VsbC4NCg0KLS0gDQplcmViaW9uDQoNClhNUFA6IGVy
+ZWJpb25AZXJlYmlvbi5ldQ0KDQpNeSBsYW5ndWFnZXM6IEdlcm1hbiwgRW5nbGlzaCwgU3dl
+ZGlzaCwgTm9yd2VnaWFuLCBEYW5pc2gNClllcywgSSdtIGEgbGFuZ3VhZ2UgbmVyZC4gRmVl
+bCBmcmVlIHRvIHdyaXRlIHRvIG1lIGluIGFueSBvZiB0aGUgDQphZm9yZW1lbnRpb25lZCBs
+YW5ndWFnZXMuDQoNCg==
 
---------------LgG41laI7Wv0Z1E1Z1jI5cAQ--
+--------------Ys9oJY5YtjJo4H0mWezlvqzT--
 
---------------fTwScMSe0Hkot07lqpw0EolE
+--------------WErBOJk7ZUz3nYwJ3r0a4wP7
 Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-wnsEABYIACMWIQScjKa1EcO/2KYx++uOr0AybgKufQUCaufmHQUDAAAAAAAKCRCOr0AybgKufWtX
-AP4jK3dW/YOnu3EA0gqJMHxm/kZhJNPVapyjUZ7azijPHAEA1HQcddR5TgtF7N553oiD98cI0j4l
-1Jz1+6Yz3oXRDgY=
-=S2ah
+wnsEABYIACMWIQScjKa1EcO/2KYx++uOr0AybgKufQUCaufoWgUDAAAAAAAKCRCOr0AybgKufVGu
+AQCz0f0jMK0GnWAFp/H6WK+5cNCyhV2Lyb4MlysN7OAt9gD/erL2RUUqAkh027+zxA/9XyZhsYk6
+U2Yy8LfTYaOONwk=
+=QVpB
 -----END PGP SIGNATURE-----
 
---------------fTwScMSe0Hkot07lqpw0EolE--
+--------------WErBOJk7ZUz3nYwJ3r0a4wP7--
