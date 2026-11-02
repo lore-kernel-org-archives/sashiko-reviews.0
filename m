@@ -1,49 +1,67 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=82.195.75.108
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793645534;
-	b=KebsbGMtwam6hW2Xyzo3fMOgRJLY4vt8i2Ae21Z7LxnULpCsb6bUYR6BMOMNe2u+2BuB
-	 O0US7+xcfrh73FmdZds5R9GLpfoHW4u+YXDfaEeo6N5WRaPPXot0Gzb4VRDo5eYykAaLO
-	 ie3EU0pEZCxL3B9PxNMmKPwJzOKkVJCE50J9C0VllUmigeeU7FxA7NleSHxzi5zXtOln/
-	 nI38MGwAZszSny5y8IIPcKZ0amujbL6xjgp2aThbp/YRy7sQ3M7WxEgWmglmgE7/9zDVo
-	 imYLh6rLmzUZOPq6t2KhRLjlzWiE/pt2THEknXugARh0qFfsAcseW/TVXLQaE6msoWw==
+	t=1793645687;
+	b=qbPuluL/AZfxy1cnKGrjZKe3TdALvZiHPqkNNi53oz3KkukvKq9tJP5I4zfxSa9iwW+x
+	 DeIXITFg3QZrteHk87ORz09v7KB0XbjjWboi4xJeMajNtvSyoskJX2aSlT1KKo2cr90wX
+	 Lvg64V0W4vMmFLXYP8nRGSOffOANTT4FVH3sx1YH8Enc/Y4Ri4IoE5dXIZ2Joxti7M8Iu
+	 GmG9/ZTs0Q+xhXTNb/428k73GXUiE7DBAtGOmc3cIkj8Qsj2SP145JpUlXM98TOu8MZs/
+	 413pbup3Q3+Ix1BTZIrvLRXonx99m3qkXpOK2DVQPU/QnYrsR3xq+OscZhSrwerM8AA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793645534;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=IK5p9/oAjFQaLEk4iOn+2jSpIJGhuFIILB+nKJjM5W4=;
-	b=r096VYwEBOcO6tcSwb41VDqoPXiRW+deWkRXc+YeYmoqS6AhBBpB5VfUGBuT4U8i8dii
-	 v/94SqFy6URE5rd96zAOPZxvutc57aKJoFKXCu6lBwETO7BKns4XMYtFFzl1lY9b3xyYI
-	 7hO6Bsde7I48o2pHc0MiFOEE1Td5LuZuyXBKrlvGPs4gl0ePIyEdYAhtSx+5YUBSKzMFc
-	 VYodJU22aLM6LmJx4R7yugl14TPSjXu3EJgiwb4Bi1mN6dbSYDJKe2Qk0ZHRM8jTKcY5K
-	 FZFsY0UHPmSsBYujZ9JeBoTLmfgT0gsls/kLtAZu425azJcweD7cat4fpWVzqU+pDfg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793645687;
+	h=DMARC-Filter:DKIM-Signature:Received:Date:From:To:Cc:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
+	 In-Reply-To:X-Debian-User;
+	bh=xgjdHufMSmd+Nfae0ssKqTRKSvgsZzVtNtqZY27gNlo=;
+	b=pfyxUz4PIdqq1H67XisT5+ffYGUFR7UE6hNZb4z0JdylndYJORcBOKQPtc6KMsoKzKso
+	 HeZD/KXWHYo0fPowi7F/+xOTYNhOkO4zqJGSmKOgetoHBaYm8o1OdUFUk7bJanrv5Wg3Z
+	 PDHQ8eJwIAmt9H/wr8zqvU0hHdm5XSovNbk4bpj94RimbWqXDkYdFlFvNcEO2JScYKZ/j
+	 s0gKg93J6VbgzamVCQQDdYOzUpRjbSoPHVRvYd0N0tLC0UxSEwEyG0IUPSBUvjT7T8AFo
+	 nvLg7TB5XhRcsEm3Ep7kwEvHAfPgUresWZvrtyYogEYkslOQAqF3GnQgbpjQv4FoO3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=rpf7QTW0;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 402FF606A327;
-	Mon,  2 Nov 2026 18:52:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 402FF606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dmarc=pass header.from=debian.org;
+	spf=pass smtp.mailfrom=debian.org;
+	dkim=pass header.d=debian.org header.i=@debian.org header.a=rsa-sha256 header.s=smtpauto.stravinsky header.b=fwzhzVMn;
+	arc=none smtp.remote-ip=82.195.75.108
+Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABFE7606A324;
+	Mon,  2 Nov 2026 18:54:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ABFE7606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=debian.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=rpf7QTW0
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 721EF1FC4;
-	Mon,  2 Nov 2026 10:52:09 -0800 (PST)
-Received: from [10.57.89.36] (unknown [10.57.89.36])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D17523F673;
-	Mon,  2 Nov 2026 10:52:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1793645532; bh=eRT8EPlGmj8VVlfVMAD9ve9ebI+67LjsP9Gf4hzofTg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rpf7QTW00lwV9uTdlfHmVNFktsConMIdlqcqODPOVAoWzTp/3ZRQLmYqIG/rB3/O2
-	 B43c7J+phQXwSkzgHrVn+KcB5LCXoLOCtrWx8k8KB+MD49amIYjt2Wg0OljbJdEkDw
-	 nQjecks+ITNlOMcG9zeZ9omftVPNSf4vFKcf0l94=
-Message-ID: <ab0d81a4-da63-4f36-8412-0649153ebd49@arm.com>
-Date: Mon, 2 Nov 2026 18:52:10 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=debian.org header.i=@debian.org header.a=rsa-sha256 header.s=smtpauto.stravinsky header.b=fwzhzVMn
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=xgjdHufMSmd+Nfae0ssKqTRKSvgsZzVtNtqZY27gNlo=; b=fwzhzVMnJy2T4ucvquHUNyGjqy
+	/B6qj9t0/AyvaC4Km768FBHhYZ6GnybnBmhOHBAjY96eJobVIowwDPMtg0gloqRYcWCUWZv6Iodez
+	heU2ahJY5G3VYWkwEtTi8rq5otJ2EQWgLQlN79j1ApdA+pi81jygVm5OFFqV2Mxoic5cOSyYbFOdW
+	9SwsQzmLBc+kN11+Xjw26vvwnCGAbmZQ0dEO52/bWY+IAPs8DKzZOAINNaalufJ8I/eqxxzBgNfpG
+	vGAC2B1LP8PFa5dASgypmu0JidMs+dodf+ZOgi/8TgweSzP3srKnZNopE56n+NbrLaMyhgvEnr8yF
+	IW2FnNvQ==;
+Received: from authenticated-user
+	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.96)
+	(envelope-from <leitao@debian.org>)
+	id 1xNxB5-006MQW-1c;
+	Mon, 02 Nov 2026 18:54:43 +0000
+Date: Mon, 2 Nov 2026 10:54:38 -0800
+From: Breno Leitao <leitao@debian.org>
+To: sashiko-reviews@lists.linux.dev
+Cc: Petr Mladek <pmladek@suse.com>, 
+	John Ogness <john.ogness@linutronix.de>, Kiryl Shutsemau <kas@kernel.org>, printk@lists.linux.dev, 
+	gustavold@gmail.com, samuelcrossley@gmail.com, ryan.roberts@arm.com, 
+	brads@mainlining.org, x86@kernel.org, kernel-team@meta.com
+Subject: Re: [PATCH 1/2] printk: nbcon: Flush unsafe consoles from printk()
+ in panic
+Message-ID: <aujcS5yK66xvOt9q@gmail.com>
+References: <20261102-panic_unsafe_flush-v1-0-12d1e22fd6d8@debian.org>
+ <20261102-panic_unsafe_flush-v1-1-12d1e22fd6d8@debian.org>
+ <sashiko-outbox-193942@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -53,81 +71,52 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/16] KVM: arm64: gic-v5: Document ITS userspace ABI
-To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev,
- kvm@vger.kernel.org
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
-References: <20261016155741.979985-1-sascha.bischoff@arm.com>
- <20261016155741.979985-17-sascha.bischoff@arm.com>
- <sashiko-outbox-174640@kernel.org>
-Content-Language: en-GB
-From: Sascha Bischoff <sascha.bischoff@arm.com>
-In-Reply-To: <sashiko-outbox-174640@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <sashiko-outbox-193942@kernel.org>
+X-Debian-User: leitao
 
-On 16/10/2026 17:27, sashiko-bot@kernel.org wrote:
+On Mon, Nov 02, 2026 at 06:29:46PM +0000, sashiko-bot@kernel.org wrote:
 > Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
-> - [Medium] kvm: arm64: gic-v5: userspace writes to READ_EVENT_DATAR are silently ignored causing state loss
+> - [Medium] printk: nbcon: nested printk() in nbcon_atomic_flush_pending() corrupts state
 > --
 > 
-> commit 3a4606444ec9f90ae2360e066a229c789d9eca15
-> Author: Sascha Bischoff <sascha.bischoff@arm.com>
+> commit 8683fa106aa2304e041764eca5971a98495ef1b9
+> Author: Breno Leitao <leitao@debian.org>
 > 
-> KVM: arm64: gic-v5: Document ITS userspace ABI
+> printk: nbcon: Flush unsafe consoles from printk() in panic
 > 
-> Document the GICv5 ITS device and its userspace ABI, including the
-> MMIO address, reset control, register attributes, and MSI requirements.
+> This commit flushes CON_NBCON_ATOMIC_UNSAFE consoles from
+> nbcon_atomic_flush_pending() when running on the panic CPU with
+> oops_in_progress set, so that panic messages reach netconsole before a
+> panic reboot or crash kexec.
 > 
->> diff --git a/Documentation/virt/kvm/devices/arm-vgic-v5-its.rst b/Documentation/virt/kvm/devices/arm-vgic-v5-its.rst
->> new file mode 100644
->> index 0000000000000..250057e4445d7
->> --- /dev/null
->> +++ b/Documentation/virt/kvm/devices/arm-vgic-v5-its.rst
+> > diff --git a/kernel/printk/nbcon.c b/kernel/printk/nbcon.c
+> > index 5f8afaca88665..19fa9f79cac3c 100644
+> > --- a/kernel/printk/nbcon.c
+> > +++ b/kernel/printk/nbcon.c
 > 
 > [ ... ]
 > 
->> +KVM_DEV_ARM_VGIC_GRP_ITS_REGS
->> +-----------------------------
->> +
->> +  Attributes:
->> +    The attr field of kvm_device_attr contains the ITS register offset from
->> +    the control frame base address. kvm_device_attr.addr points to a __u64,
->> +    regardless of whether the register is 32 or 64 bits wide. A 64-bit
->> +    register must be addressed at its base offset; userspace cannot access
->> +    its upper or lower half separately. Guest MMIO may use aligned 32-bit
->> +    accesses to DT_BASER, DIDR, READ_EVENT_DATAR, and GEN_EVENT_DIDR.
->> +
->> +    The ITS base address must be configured before this group can be used.
->> +    Writes to read-only registers are ignored. Writes to DT_CFGR and DT_BASER
+> > @@ -1688,7 +1692,15 @@ static void __nbcon_atomic_flush_pending(u64 stop_seq)
+> >   */
+> >  void nbcon_atomic_flush_pending(void)
+> >  {
+> > -	__nbcon_atomic_flush_pending(prb_next_reserve_seq(prb));
+> > +	u64 stop_seq = prb_next_reserve_seq(prb);
+> > +
+> > +	__nbcon_atomic_flush_pending(stop_seq, false);
+> > +
+> > +	if (panic_on_this_cpu() && oops_in_progress) {
+> > +		panic_nbcon_allow_unsafe_takeover = true;
+> > +		__nbcon_atomic_flush_pending(stop_seq, true);
+> > +		panic_nbcon_allow_unsafe_takeover = false;
+> > +	}
+> >  }
 > 
 > [Severity: Medium]
-> Does this design violate the rule that read-only attributes must return an
-> error on set?
-> 
-> A device attribute documented as read-only whose set path does not return an
-> error can lead to silent migration state loss. For example, READ_EVENT_DATAR
-> is a stateful register that holds the result of the READ_EVENTR command. If
-> userspace restores this state during migration, but the write path returns 0
-> while ignoring the value, the restored state is silently dropped, corrupting
-> the guest's view of the command result upon resume.
-> 
-> Looking at the implementation, READ_EVENT_DATAR is defined without a uaccess
-> write override in vgic_v5_its_registers() and uses vgic_v5_mmio_write_its_wi.
-> The userspace attribute set path in vgic_v5_its_attr_regs_access() defaults
-> to calling the guest its_write handler, which invokes the Write Ignore stub
-> and successfully returns 0 instead of returning -EINVAL or -EPERM.
-> 
+> Can a nested printk() or WARN() inside an unsafe console's write_atomic()
+> callback re-enter nbcon_atomic_flush_pending() and corrupt the outer flush?
 
-The posted userspace access patch in this series (patch 10) silently 
-discarded READ_EVENT_DATAR, which was a mistake on my part.
-
-I've added its restore handler in patch 10, and a read-back test in 
-patch 14, and ABI text in this patch documenting that userspace can 
-(read: must) restore it. Guest MMIO writes remain ignored, as this is a 
-RO register from the guest's point of view, but it must persist across 
-save/restore.
-
-Thanks,
-Sascha
+Maybe we want to make panic_nbcon_allow_unsafe_takeover a counter
+instead o boolean, and increment and decrement it instead of true/false?
