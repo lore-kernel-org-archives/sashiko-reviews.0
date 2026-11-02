@@ -1,53 +1,76 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=142.132.183.134
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.216.42
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793583200;
-	b=Te1uVvgkta6lLqH0wcnmBuEU6/JjUifU7aBvbz6NcBJ53m6th8JjJoqTZQFw146ASZ1q
-	 mZHJhjF/ctlxX9z9GuPo00Ojag8n7Hxm02xtr1zSfzwrH/huDUh2QawuZDuxKTDSjT7cw
-	 bJ9ZjhYQRDDSFwa3jX0fdm8Q9vBkeTyX9Xy32y+WajeKVunJKDYR3XAtdubK178EDwHVK
-	 uuTpp0vElM5+PWk4xRfYUxol38ZwWapXH+CvwWOPHsqM/q28bieMfRBugkQcOHfH8AZKV
-	 tE27BpzD5GagGKPhuN+wt9slEO6xPmIbB62LRdEMk5UabNIRGM9XiaUtVgE3y/CEkvw==
+	t=1793587136;
+	b=41OEJG4bziROwbZj4BxdETMAurpgDHh618TRGZ/4wbQIfagMRsrER0gfYm26FPiA6oAm
+	 KcCp/ieJ0O1m6MqkBAJruSILjqOtSgSJlqVvXx9OqBKAuEqkR4m8DP/DIZtpXcZE1kWHq
+	 a+vkM4gEBCDWn883Nze6Ds88Fi8jMTgxt0tskOzs7fhDyXd2aFpm+ZW9l10CgGVgkIr8U
+	 +O3V3KIfTETy8R+cMTJCORM+Jdgkq/OnZmgyZBVkpSihpGKKdElvlbFSgvDAHHzzbN4Al
+	 aV0ikQoN3pNCHrg2fxZ9OCNE/Ikmz6yXUCnGITRSw7SN2Zt2e3Tpmj1rq9eF+jLYIqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793583200;
-	h=DMARC-Filter:DKIM-Signature:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:Content-Language:From:To:Cc:
-	 References:Autocrypt:In-Reply-To:Content-Type;
-	bh=CpinM/IpytUfD9vGKaPrjPRQBHB3wnZR9UZpr2lYAok=;
-	b=5ICunSKVjifFoMJPVmcWEHjnaC7H78jPhIWaj9oYGqV1oVx7ezNr9wrScQyz2wqEj9z6
-	 qWmpDNIyh7LWeFtIEA+PWO37CyO2I3yjw6ST/Q+vtj/kiTPAPY9/0jXXpclTvKQhCJE/t
-	 L+XJ4DrSvQfQSQgdtOLt0g0a2FzfotvvojzVJChkAM6mq/0JRbWrY971KYmRxzPuUywNG
-	 wYza1AsrApY71Af1szB6tmCS8RnT4FJKbk19OUVaY50jmJqepsiV41BrNrUFpR9eGHxBM
-	 5e416T6eori9twh7PLAXrGen5QW+Cg8PtISObvYtp4FbHEMPKfMMhbeCoDD3uuEABYw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793587136;
+	h=DMARC-Filter:Received:X-Google-DKIM-Signature:X-Gm-Message-State:
+	 X-Gm-Gg:X-Received:Received:Received:X-Received:MIME-Version:
+	 References:In-Reply-To:From:Date:X-Gmail-Original-Message-ID:
+	 X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=Jci9qiUbYMeQLnsVE23Fk/bmS6/YaF98wtPe2dPL9Rg=;
+	b=DaMoM6auChaeMtbSq1yzZYPxgQyPNC6TeUzqYrtf+DvDldGp8yLqPEwkJY+DE2jKzn5f
+	 uXT7UzsXPfqiaXF6+0MkLpyz3nyicrlXTuAosa3QC/XlB1bzhnb3lyKiK3+PVFHQqfDn+
+	 Nmo379za73qyPT8UVb2ScNlf9rWt8BGonSrfQD5u0RuOQ7UWkZIhTKL0tHRQyQ9GkSHLC
+	 dqPYUdjeAaj9GTdR/hl+3t1rkjadauK9Rntf5vvlki9bdADmqD7uszmc7/B1wgleXCapD
+	 e02eBH8nShOhJsAWqh5s/IO+JXv1k9Kjgj6nmxn9+TdBIrUhHtO5Za3+qPZTwyjQqUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=erebion.eu;
-	spf=pass smtp.mailfrom=erebion.eu;
-	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=ed25519-sha256 header.s=202508e header.b=sidspAq7;
-	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=rsa-sha256 header.s=202508r header.b=ahT0ov6n;
-	arc=none smtp.remote-ip=142.132.183.134
-Received: from erebion.eu (erebion.eu [142.132.183.134])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=none header.from=telaak.dev;
+	spf=pass smtp.mailfrom=gmail.com;
+	arc=none smtp.remote-ip=209.85.216.42
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D6C606A324
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 01:33:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org D1D6C606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=erebion.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=erebion.eu
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=ed25519-sha256 header.s=202508e header.b=sidspAq7;
-	dkim=pass (2048-bit key, unprotected) header.d=erebion.eu header.i=@erebion.eu header.a=rsa-sha256 header.s=202508r header.b=ahT0ov6n
-DKIM-Signature: v=1; a=ed25519-sha256; s=202508e; d=erebion.eu; c=relaxed/relaxed; r=y;
-	h=To:From:Subject:Date:Message-ID; t=1793583195; bh=CpinM/IpytUfD9vGKaPrjPR
-	QBHB3wnZR9UZpr2lYAok=; b=sidspAq7Ua9LmBj8CwRrD1M4QFrIWGJ53YFr+29KmQzfeYKdkV
-	hbC0Vf/icpSpgk4xax26C3CjToVIB080dCCQ==;
-DKIM-Signature: v=1; a=rsa-sha256; s=202508r; d=erebion.eu; c=relaxed/relaxed; r=y;
-	h=To:From:Subject:Date:Message-ID; t=1793583195; bh=CpinM/IpytUfD9vGKaPrjPR
-	QBHB3wnZR9UZpr2lYAok=; b=ahT0ov6nqjyLUKHAef1k8x0sRIU/i+lGhXll4QNocx8+NrNfiV
-	GTMEaQHFHpHpau6iFy4ulg3/xe87k1T4074qLY2hIg32ftWwcOyd04rKQHbI/LaWVHKeDD0IDAG
-	2fQVu+53HEwhtNoHBKcq5fBVLjPlpPmcic1xTrxuhwq9KrNkZ2aAzXIXs9dmMHsn7V8/propmbC
-	vMdbhCbVVbU9gWTdo2RuGwiXpRkfCXSZ2d4mQtxoZAlF8d/alam8T0uUhuEvFRPiM3Q55g9XwUz
-	J30n2xgNQjaa1PR6T2eb4Gh9z1VGVwawn31elkndpC2fcmR8EoodCo2uwfvlC7t+kxA==;
-Message-ID: <c539ae6d-8018-49ba-b4fe-8e52306c93bd@erebion.eu>
-Date: Mon, 2 Nov 2026 02:33:14 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA47606A327
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 02:38:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CDA47606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=telaak.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-3ac451e128cso1483465a91.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 01 Nov 2026 18:38:55 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793587135; x=1794191935;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=Jci9qiUbYMeQLnsVE23Fk/bmS6/YaF98wtPe2dPL9Rg=;
+        b=MWQE6atSXHnZcjidXxzCt4MZVwrmG6w8PVEjkRrFBTV5grbImusSrDav/GKuXYVWFB
+         oiYC419iFPrzOpoJmBGVIOqKkTLjunr1hV2DG7vvf0Xqtu9srOUB87LL2G82nIphgYnP
+         wV4Ga6lQtSwX+6XbHkc5EMMapvOSBTGTrfgT6VY095N/0EITTb7xfQz3d8ZQJuwx1/hJ
+         BjUsRiCjl7Jx9TOSKjQ4axUb+cC0z2kZPdWHPVAf8b0XhixAsyBEK3vFyi3oYDFqLPta
+         KaB7D37Jm0r7gUpBxpItgSR1ZxyvDhxn/uToKARMA4iuZs4vQLsD3IMZjPrizqFk15dd
+         +D2w==
+X-Gm-Message-State: APuU4Z8yAjhsJ8QKQ33i/osqkoI9FoKcnpETYcMRBg02/64hNW5T/dZE
+	mnFZm4lPpr/jwAeSwaWydQ8cU6IIZ6tJdP2Ib4ffCgHgzhCHC/cjKqTmY26axgc5
+X-Gm-Gg: AYBFou0dY2Nf7Vk9twOSU/zdjUyjDI2Rc2F2ESg655zOCMmUa/g5NVxIIPXlOxCjQPM
+	5yRdZAg1tX/ERCwktcHPtcR4lZrQEpRwtjR02d8pwxQ/X47peV0iYQEpU3kw3x0jpf20VZqqelt
+	2EvnpgZ/DZlz3H7hPNWZC2KG6C+4B1qIyjyDAHIqcmkA4HMqcv7/7LQdSbzuHC/xOY9w0M01zGV
+	JUL2Ywp19RH761/7D5N1nmU3ggAX+KpodGckRWWRRnYwPcrvmMe5AY+HL2cjDJXUVWh+ysyb/ZJ
+	Fw0xk86n95PihVSk8XGtzJo3oEiJ6OCNRttSRJLvkz1qM5cJ8m/kcvlY/sidYU2/p+U8dQW2fXK
+	E7zuMFTtx75kDaW84IbIWTh/69BQt6H9OIhJu9RkNePgVnYmrovx9qWDsnd3+tva1jBNEcH3snp
+	NJimIMb2DhfiWUxjSVugZDJuWH2ueJS+BepbfeIYwjTbzKpo865D1hJWLqsyh+VgVz+R3djYnct
+	LXeW5enQEtNJyNdr7SrJZ2K/gypqxIK9OhfkZVrCkQlNhbucHkrtgTtxLkB+dXCt+z+u7rJdOn0
+	G95N0WE8Nd0v2JjeyH9e9G7CwgYRpBs8ebJqxLVJCkaOLVs5qGQs6AZurGlTBs8wOcPO9cQUaHS
+	H9NHVIDorYXk7hf4rQ+RIZdZX6jTfsb1jmwK2W7BoLVHIvwmWmSYWLTChWP4qWIEh
+X-Received: by 2002:a17:90b:5807:b0:3ab:be66:ddbf with SMTP id 98e67ed59e1d1-3ae8981dd4dmr6918014a91.54.1793587135123;
+        Sun, 01 Nov 2026 18:38:55 -0800 (PST)
+Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com. [74.125.82.178])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ae845df666sm11863641a91.14.2026.11.01.18.38.54
+        for <sashiko-reviews@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 01 Nov 2026 18:38:54 -0800 (PST)
+Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-353804b591eso4512982eec.0
+        for <sashiko-reviews@lists.linux.dev>; Sun, 01 Nov 2026 18:38:54 -0800 (PST)
+X-Received: by 2002:a05:7301:db8a:b0:36a:279:c93f with SMTP id
+ 5a478bee46e88-36a423fda77mr13492128eec.33.1793587134291; Sun, 01 Nov 2026
+ 18:38:54 -0800 (PST)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -57,103 +80,39 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 11/12] arm64: dts: qcom: sm6350-lena: Add PM6150L
- thermals
-Content-Language: en-GB
-From: erebion <erebion@erebion.eu>
+References: <20261101-ktd202x-et6326-v1-0-eb51eddad08c@telaak.dev>
+ <20261101-ktd202x-et6326-v1-9-eb51eddad08c@telaak.dev> <sashiko-outbox-192833@kernel.org>
+In-Reply-To: <sashiko-outbox-192833@kernel.org>
+From: Joseph Telaak <joseph@telaak.dev>
+Date: Sun, 1 Nov 2026 21:38:42 -0500
+X-Gmail-Original-Message-ID: <CAPY4CJ6GHfhAp9Ck6WakVy0yh5YjG-TApW4zaOp6vAFDGivTaA@mail.gmail.com>
+X-Gm-Features: AclHuK8Yeg2RaovImaieDc_RzvYkCKj9n4PkC3wjqPhvqeEv6To4mOIylRyTbUQ
+Message-ID: <CAPY4CJ6GHfhAp9Ck6WakVy0yh5YjG-TApW4zaOp6vAFDGivTaA@mail.gmail.com>
+Subject: Re: [PATCH 09/10] leds: rgb: ktd202x: Fail the probe when the chip
+ does not answer
 To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- robh@kernel.org, conor+dt@kernel.org
-References: <20261102-pdx213-upstream-3-v3-0-cdc3be96d257@erebion.eu>
- <20261102-pdx213-upstream-3-v3-11-cdc3be96d257@erebion.eu>
- <sashiko-outbox-192768@kernel.org>
- <dc96c6bb-0ac2-4f67-84b5-2284d37afa44@erebion.eu>
-Autocrypt: addr=erebion@erebion.eu; keydata=
- xjMEY7S2FRYJKwYBBAHaRw8BAQdAUf0YlT6sBQSunZeO44bgAPe+ndqTifGaNjw7vzJ2KPHN
- HGVyZWJpb24gPGVyZWJpb25AZXJlYmlvbi5ldT7CjwQTFggANxYhBJyMprURw7/YpjH7646v
- QDJuAq59BQJpWnovBQkHhhzbAhsDBAsJCAcFFQgJCgsFFgIDAQAACgkQjq9AMm4Crn057AEA
- j3didUIhbtAoppk2eNu6CbtMvkDisHWHVLaWF8YC1VsA/1P0ngBoVghELMachirfTinwBplJ
- qP7GGlSGRqSfnlAKzjgEY7S2FRIKKwYBBAGXVQEFAQEHQN6NPWcyqKdecGU1vN8FVXBwYEUd
- OAhF5jpmd7M0Ybx8AwEIB8J+BBgWCAAmFiEEnIymtRHDv9imMfvrjq9AMm4Crn0FAmlaei8F
- CQeGHNsCGwwACgkQjq9AMm4Crn075QEAoDqfm4OeAEQWMgfQ496u2S3rWJw1EMgTOP51FQbX
- rY4BAKn6AhEBh605uas3OTVtcwNIAJn1sHTA7HqqWniUe9sP
-In-Reply-To: <dc96c6bb-0ac2-4f67-84b5-2284d37afa44@erebion.eu>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------WErBOJk7ZUz3nYwJ3r0a4wP7"
+Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org, robh@kernel.org, 
+	conor+dt@kernel.org, lee@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------WErBOJk7ZUz3nYwJ3r0a4wP7
-Content-Type: multipart/mixed; boundary="------------Ys9oJY5YtjJo4H0mWezlvqzT";
- protected-headers="v1"; hp="clear"
-Message-ID: <c539ae6d-8018-49ba-b4fe-8e52306c93bd@erebion.eu>
-Date: Mon, 2 Nov 2026 02:33:14 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 11/12] arm64: dts: qcom: sm6350-lena: Add PM6150L
- thermals
-Content-Language: en-GB
-From: erebion <erebion@erebion.eu>
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- robh@kernel.org, conor+dt@kernel.org
-References: <20261102-pdx213-upstream-3-v3-0-cdc3be96d257@erebion.eu>
- <20261102-pdx213-upstream-3-v3-11-cdc3be96d257@erebion.eu>
- <sashiko-outbox-192768@kernel.org>
- <dc96c6bb-0ac2-4f67-84b5-2284d37afa44@erebion.eu>
-Autocrypt: addr=erebion@erebion.eu; keydata=
- xjMEY7S2FRYJKwYBBAHaRw8BAQdAUf0YlT6sBQSunZeO44bgAPe+ndqTifGaNjw7vzJ2KPHN
- HGVyZWJpb24gPGVyZWJpb25AZXJlYmlvbi5ldT7CjwQTFggANxYhBJyMprURw7/YpjH7646v
- QDJuAq59BQJpWnovBQkHhhzbAhsDBAsJCAcFFQgJCgsFFgIDAQAACgkQjq9AMm4Crn057AEA
- j3didUIhbtAoppk2eNu6CbtMvkDisHWHVLaWF8YC1VsA/1P0ngBoVghELMachirfTinwBplJ
- qP7GGlSGRqSfnlAKzjgEY7S2FRIKKwYBBAGXVQEFAQEHQN6NPWcyqKdecGU1vN8FVXBwYEUd
- OAhF5jpmd7M0Ybx8AwEIB8J+BBgWCAAmFiEEnIymtRHDv9imMfvrjq9AMm4Crn0FAmlaei8F
- CQeGHNsCGwwACgkQjq9AMm4Crn075QEAoDqfm4OeAEQWMgfQ496u2S3rWJw1EMgTOP51FQbX
- rY4BAKn6AhEBh605uas3OTVtcwNIAJn1sHTA7HqqWniUe9sP
-In-Reply-To: <dc96c6bb-0ac2-4f67-84b5-2284d37afa44@erebion.eu>
+On Sun, Nov 1, 2026 at 9:22=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
+> - regmap_write(chip->regmap, KTD202X_REG_RESET_CONTROL, KTD202X_RSTR_RESE=
+T);
+> + /* Nothing is read back, so a failed reset is the only sign of a missin=
+g chip */
+> + ret =3D regmap_write(chip->regmap, KTD202X_REG_RESET_CONTROL, KTD202X_R=
+STR_RESET);
+> + if (ret)
+> + return dev_err_probe(dev, ret, "Failed to reset the chip\n");
 
---------------Ys9oJY5YtjJo4H0mWezlvqzT
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Please don't apply this one as is. As Sashiko pointed out, the KTD2026/7
+does not ACK the reset command: its data sheet says the byte that resets
+the chip is followed by a "not acknowledge", which is to be ignored. The
+ET6326 I tested on does ACK it, so I missed that this breaks the probe on
+every KTD202x.
 
-T24gMTEvMi8yNiAwMTozNSwgZXJlYmlvbiB3cm90ZToNCj4gT24gMTEvMi8yNiAwMDo0NCwg
-c2FzaGlrby1ib3RAa2VybmVsLm9yZyB3cm90ZToNCj4+IFtTZXZlcml0eTogTWVkaXVtXQ0K
-Pj4gU2hvdWxkIHJlYXJfY2FtX3NlbnNvciByZWZlcmVuY2UgQURDNV9HUElPMl8xMDBLX1BV
-IGluc3RlYWQgb2YNCj4+IEFEQzVfR1BJTzZfMTAwS19QVSBoZXJlPw0KPj4NCj4+IE9uIFBN
-NjE1MEwsIHBoeXNpY2FsIHBpbiBncGlvNiBpcyByb3V0ZWQgdG8gQURDNV9HUElPMl8xMDBL
-X1BVICgweDUzKSwgDQo+PiBhbmQNCj4+IHVuZGVyICZwbTYxNTBsX2FkYyBiZWxvdyB0aGUg
-cmVhciBjYW1lcmEgdGhlcm1pc3RvciBjaGFubmVsIGlzIGRlZmluZWQgDQo+PiBhczoNCj4g
-DQo+IEFoIHllcywgbG9va3MgbGlrZSBJIGNvbmZ1c2VkIGdwaW82IGZyb20gZG93bnN0cmVh
-bSBEVCBhbmQgZ3BpbzIgZnJvbSANCj4gaW5jbHVkZS9kdC1iaW5kaW5ncy9paW8vcWNvbSxz
-cG1pLXZhZGMuaA0KPiANCj4gV2lsbCBmaXggd2l0aCB2NC4uLg0Kcm9vdEBtb2JpYW46fiMg
-Y2F0IC9zeXMvY2xhc3MvdGhlcm1hbC90aGVybWFsX3pvbmUzOC90ZW1wDQotNDAwMDANCnJv
-b3RAbW9iaWFuOn4jIGNhdCAvc3lzL2NsYXNzL3RoZXJtYWwvdGhlcm1hbF96b25lMzgvdHlw
-ZQ0KcmVhci1jYW0tdGhlcm1hbA0KDQpXZWxsLCB0aGlzIGRvZXMgbm90IGxvb2sgcmlnaHQg
-ZWl0aGVyLiBJIHN3ZWFyIEkgZG9uJ3QgbGl2ZSBpbiBBbnRhcmN0aWNhLg0KDQoNCiA+PiBT
-aG91bGQgcmVhcl9jYW1fc2Vuc29yIHJlZmVyZW5jZSBBREM1X0dQSU8yXzEwMEtfUFUgaW5z
-dGVhZCBvZg0KID4+IEFEQzVfR1BJTzZfMTAwS19QVSBoZXJlPw0KDQpHUElPNjogVmFsdWUg
-bG9va3Mgc2Vuc2libGUgYXQganVzdCBvdmVyIDMwIMKwQw0KR1BJTzI6IC00MCDCsEMNCg0K
-UGVyaGFwcyBHUElPNiB3YXMgcmlnaHQgYWZ0ZXIgYWxsIG9yIGl0IGlzIHdyb25nIHdoaWxl
-IEdQSU8yIGlzIHdyb25nIGFzIA0Kd2VsbC4NCg0KLS0gDQplcmViaW9uDQoNClhNUFA6IGVy
-ZWJpb25AZXJlYmlvbi5ldQ0KDQpNeSBsYW5ndWFnZXM6IEdlcm1hbiwgRW5nbGlzaCwgU3dl
-ZGlzaCwgTm9yd2VnaWFuLCBEYW5pc2gNClllcywgSSdtIGEgbGFuZ3VhZ2UgbmVyZC4gRmVl
-bCBmcmVlIHRvIHdyaXRlIHRvIG1lIGluIGFueSBvZiB0aGUgDQphZm9yZW1lbnRpb25lZCBs
-YW5ndWFnZXMuDQoNCg==
+v2 will ignore the reset write again, and fail the probe only when the
+write that puts the chip to sleep after the reset delay fails.
 
---------------Ys9oJY5YtjJo4H0mWezlvqzT--
-
---------------WErBOJk7ZUz3nYwJ3r0a4wP7
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQScjKa1EcO/2KYx++uOr0AybgKufQUCaufoWgUDAAAAAAAKCRCOr0AybgKufVGu
-AQCz0f0jMK0GnWAFp/H6WK+5cNCyhV2Lyb4MlysN7OAt9gD/erL2RUUqAkh027+zxA/9XyZhsYk6
-U2Yy8LfTYaOONwk=
-=QVpB
------END PGP SIGNATURE-----
-
---------------WErBOJk7ZUz3nYwJ3r0a4wP7--
+Joseph
