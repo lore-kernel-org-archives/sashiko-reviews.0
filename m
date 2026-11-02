@@ -1,80 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793639763;
-	b=HDmJSZS2A2Nd2FqHLWPVN5G/Fo/zPLyg4/w/XFE+1bKouj/JiU1ncT2921Ufu5BzeH8X
-	 SBxAz0sdF4VkzXlOoPSV6uJwIDCaeYyw55MHkqFL/0vWOpgbZdxq1oXhbQWe88ql7iSZv
-	 O/UUURSPnHaezLKy0a+J4Xk0yFLIlCChA5MZFnbBKg5ISZ5PgOD/fo272uNEguGzfwSs4
-	 lxIX5SZlQlVva1ggAZ5+eeju7mtau5wxYS/67X6hC3bIOi97UcHyg5ebDow0JjDqJnhDs
-	 tBn6bWBVFxMEMWCp15A/qphsTsEOAi5sPK3VYaMWCZOFSuKqVBy+j766pDhtKn1kXBQ==
+	t=1793640036;
+	b=0HfmIR++Drnm7A1TtcH4sUNRMD5BcsYurF+Vy0EIRkrZ8Xex/55rNkT2GajiexiSdzaL
+	 LNTg54C4i5EtH00/J9JUzsXDCmCPfhbhOV6hhkc+c5X2/4m63v4NM0/ORKpdO5VgLNC75
+	 209JF+XAsXDIrGYxQrKZiA8NCJ/XSLZl3VKF6gnFCPQ2PgHVovooxuNjCmvqNzsvhSYbv
+	 8x4SBEWa7a+Mn5w/uM2qLkcWYjhD+uavZe06/+1WNyb5oWLXPM6wcPPKWzrVfUBc8KUA9
+	 NfpRXVLumWO3mHLxHomGcQBV7v21FQTlgkFEZJBJTmTv1p7hLjM3G/nbNU2KBKuik1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793639763;
-	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
-	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
-	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
-	 X-Patchwork-Hint:Organization;
-	bh=VvFiRX+UDiCb7EXBJoqD5jplvWH2r5HJgDKRSxF05uY=;
-	b=p6BnKfh6aGoJjN+3YfrIagJF1VRnPf1bWoxAVfE11TKq120pOpK/IVD9WX6EMkBi+a12
-	 JcIOZqqkavfBoZb1YVr1CoDArdUDcN8vACCHBfptEQcUEuPDSA8PKzZIcCEuft96WqrvG
-	 9Bj0r8wAkdNbWgAbHn5guAkB/13/CM1bnFBI1586BqZQGwV8vXJ4GmCbvt9tNS8C4QD5/
-	 YUbm2YvDC87PsRxs7TKnbwdwcBji26SZXGQZgCYSDgm7dVM0WmD1soiEYueiGAzgbzcJx
-	 GyGc9BAIKlO4fPs43hNoc/yHNXi3tRWl45wcluqeAmtmU2C6XgwJNDVi53L7ajMIBog==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793640036;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=dzzxSQBG0AvDDv9COAPOwA5LVMAcbbFKl5UqiJsAWms=;
+	b=mjnjZ5ZZMtHmwboYEVlZuq+M23QlXzZeHKpdBIQcYchzaKJGxI+7wNQvMW6/YpOBOA2O
+	 mB3K4TS9GC46iG0V9AxRTJuvUdfTEiYDvboEQKQykqqrPAcJWFZk/PzQF4DwdQ12wfOM2
+	 6GG43KweBPzZfz563ayl1HPnT58/fCPYszSsVqbRq9qE8VH+QQoL/9C6qcW1CvmsRBMZU
+	 owOBVSPGzXXaOQxWd+ZB44QycsCgnTU80VSqlwuVDoamfc8/WE3v/WOP68+jUPvK0681e
+	 FlqU/LLFliKysQt79smyByN4nHT9ETrP39+ImwLXVYYhN5v4eeXLujz7kipolITcd6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=linux.intel.com;
-	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=nWP8U6ir;
-	arc=none smtp.remote-ip=198.175.65.10
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
-	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EDA606A933
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 17:16:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 25EDA606A933
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b="Qz/urx1t";
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F68F60A2638;
+	Mon,  2 Nov 2026 17:20:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2F68F60A2638
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=nWP8U6ir
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793639763; x=1825175763;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=PindnjL+kM3irIKVMGKsxYjY2neN6CeuZV4NVO8juo4=;
-  b=nWP8U6irobtJO3PXQMjxZuzh9lDHG8aB+Y18WoCS96qmwQm6UtLIbW8S
-   8nHccg+1IgtwJvrfeCF/7uK04PcVBUIBcNHNKz6syx76tTBphf4buHw0B
-   SOE44zc65TNfZOPK7eqC7+uL/VX6S4ZfVGBARVxhRKKGWptsBOI6oVKMF
-   NU0l59bUUyzeZ3uobF/SPySnAEz+7FT3KUxdpLzcMVdoA13XhEa7p3WmH
-   VimDI76tq9sTKxIJ02nVGVdLp7Be5qX2msBmMYicENl8TKx6LzrazhnpI
-   tMI8sbprq3J4aUXruF0+Mf7i7vx8QbUQEhz4OaacWJNzzyUZCP+IftBsw
-   A==;
-X-CSE-ConnectionGUID: K4aT+fyCQUe4xmPLlkmicA==
-X-CSE-MsgGUID: kIq9jhpiRW2VXNxC/bkx8w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11954"; a="2241215"
-X-IronPort-AV: E=Sophos;i="6.27,191,1787036400"; 
-   d="scan'208";a="2241215"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 09:16:02 -0800
-X-CSE-ConnectionGUID: eQhzoVBTRD6rD70CohQ4zg==
-X-CSE-MsgGUID: WnKe0SRiT7yZHenZKyWDTg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,191,1787036400"; 
-   d="scan'208";a="6038636"
-Received: from hrotuna-mobl2.ger.corp.intel.com (HELO localhost) ([10.245.245.10])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 09:15:59 -0800
-Date: Mon, 2 Nov 2026 19:15:55 +0200
-From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-	airlied@gmail.com, simona@ffwll.ch, javierm@redhat.com,
-	louis.chauvet@bootlin.com, dri-devel@lists.freedesktop.org,
-	sashiko-reviews@lists.linux.dev, stable@vger.kernel.org
-Subject: Re: [PATCH] drm/vblank: Restart enabling vblank timer on possible
- deadlock
-Message-ID: <aujFSzHEv5pAfHPf@intel.com>
-References: <20261102143919.1672293-1-tzimmermann@suse.de>
- <auioL8zR9O5u4TCF@intel.com>
- <4212140f-fa07-4f0c-bd3a-0ae3d88b250c@suse.de>
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=Qz/urx1t
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3910516F3;
+	Mon,  2 Nov 2026 09:20:31 -0800 (PST)
+Received: from [10.0.136.93] (M0PRX50XMG.cambridge.arm.com [10.0.136.93])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id ABE883FB9E;
+	Mon,  2 Nov 2026 09:20:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1793640034; bh=BxBrr70udayxaWonC/JoGNatfdqjF5UKhrB8xkcjNxc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Qz/urx1tqji9NmQKNsRp8JpqImZLfp0JlQOKFBWH9nsJvq55GlGCKIeGwk7CN676z
+	 HW2ZmvwWKMvrbZIRFJtu1ZWwa+of/ylr3undEPIpvulsCRDG+oaKptqwHiW6BxQeUU
+	 bdzKiPZ7rdGDRlk+/DpUWMSScl7PmqQPea6e/5yo=
+Message-ID: <8bc11d0b-f7c6-49e1-b007-c0824deb7636@arm.com>
+Date: Mon, 2 Nov 2026 17:20:32 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -84,133 +53,179 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4212140f-fa07-4f0c-bd3a-0ae3d88b250c@suse.de>
-X-Patchwork-Hint: comment
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/16] KVM: arm64: gic-v5: Add ITS translation cache
+ maintenance
+To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev,
+ kvm@vger.kernel.org
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+References: <20261016155741.979985-1-sascha.bischoff@arm.com>
+ <20261016155741.979985-9-sascha.bischoff@arm.com>
+ <sashiko-outbox-174606@kernel.org>
+Content-Language: en-GB
+From: Sascha Bischoff <sascha.bischoff@arm.com>
+In-Reply-To: <sashiko-outbox-174606@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Nov 02, 2026 at 05:48:23PM +0100, Thomas Zimmermann wrote:
-> Hi
+On 16/10/2026 17:10, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 3 potential issue(s) to consider:
+> - [High] kvm: missing memcg accounting for ITS translation cache allocations
+> - [High] kvm: undersized ITS translation hash table causes raw spinlock DoS
+> - [Medium] kvm: arm64: gic-v5: cache insertion failure drops valid LPI
+> --
 > 
-> Am 02.11.26 um 16:11 schrieb Ville Syrjälä:
-> > On Mon, Nov 02, 2026 at 03:38:52PM +0100, Thomas Zimmermann wrote:
-> >> Return -EDEADLK when trying to cancel a running hrtimer as part of
-> >> enable_vblank(). Reacquire vblank_time_lock and try again.
-> >>
-> >> The vblank helper drm_vblank_disable_and_save() and the vblank IRQ
-> >> handler hold the spin lock vblank_time_lock at some point. This
-> >> can result in a deadlock if vblank timer's disable code in
-> >> drm_crtc_vblank_cancel_timer() calls hrtimer_cancel() directly: the
-> >> helper wais for the timer function to complete and the timer function
-> >> waits for the helper to release vblank.time_lock.
-> >>
-> >> drm_crtc_vblank_cancel_timer() works around this problem by calling
-> >> hrtimer_try_to_cancel() instead. For re-enabling the vblank timer,
-> >> drm_crtc_vblank_start_timer() must wait for the vblank timer to stop.
-> >> It runs into the same deadlock problem while waiting for the timer
-> >> function to complete.
-> >>
-> >> The solution to this problem is to release and reacquire the spin
-> >> lock vblank_time_lock if hrtimer_try_to_cancel() signals a running
-> >> timer function. Releasing the lock allows for the timer function to
-> >> make progress.
-> >>
-> >> Signal the possible deadlock with -EDEADLK and perform the necessary
-> >> steps. No other driver uses -EDEADLK in their enable_vblank, so the
-> >> change should not interfere.
-> >>
-> >> Tested with bochs on qemu.
-> >>
-> >> Closes: https://lore.kernel.org/dri-devel/20260914111129.300691F00898@smtp.kernel.org/
-> >> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> >> Fixes: 74afeb812850 ("drm/vblank: Add vblank timer")
-> >> Cc: Thomas Zimmermann <tzimmermann@suse.de>
-> >> Cc: Louis Chauvet <louis.chauvet@bootlin.com>
-> >> Cc: Javier Martinez Canillas <javierm@redhat.com>
-> >> Cc: David Airlie <airlied@gmail.com>
-> >> Cc: Simona Vetter <simona@ffwll.ch>
-> >> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-> >> Cc: Maxime Ripard <mripard@kernel.org>
-> >> Cc: dri-devel@lists.freedesktop.org
-> >> Cc: <stable@vger.kernel.org> # v6.19+
-> >> ---
-> >> I also tried to move hrtimer_cancel() out of the critical section. The
-> >> result was fairly fragile. So returning an error and re-acquiring the
-> >> lock was the easier solution.
-> >> ---
-> >>   drivers/gpu/drm/drm_vblank.c | 21 +++++++++++++++------
-> >>   1 file changed, 15 insertions(+), 6 deletions(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
-> >> index 5162250e8813..135efde86298 100644
-> >> --- a/drivers/gpu/drm/drm_vblank.c
-> >> +++ b/drivers/gpu/drm/drm_vblank.c
-> >> @@ -1182,10 +1182,12 @@ static int __enable_vblank(struct drm_device *dev, unsigned int pipe)
-> >>   static int drm_vblank_enable(struct drm_device *dev, unsigned int pipe)
-> >>   {
-> >>   	struct drm_vblank_crtc *vblank = drm_vblank_crtc(dev, pipe);
-> >> -	int ret = 0;
-> >> +	int ret;
-> >>   
-> >>   	assert_spin_locked(&dev->vbl_lock);
-> >>   
-> >> +retry:
-> >> +	ret = 0;
-> >>   	spin_lock(&dev->vblank_time_lock);
-> >>   
-> >>   	if (!vblank->enabled) {
-> >> @@ -1199,7 +1201,11 @@ static int drm_vblank_enable(struct drm_device *dev, unsigned int pipe)
-> >>   		ret = __enable_vblank(dev, pipe);
-> >>   		drm_dbg_core(dev, "enabling vblank on crtc %u, ret: %d\n",
-> >>   			     pipe, ret);
-> >> -		if (ret) {
-> >> +		if (ret == -EDEADLK) {
-> >> +			spin_unlock(&dev->vblank_time_lock);
-> >> +			cpu_relax();
-> >> +			goto retry;
-> >> +		} else if (ret) {
-> >>   			atomic_dec(&vblank->refcount);
-> >>   		} else {
-> >>   			drm_update_vblank_count(dev, pipe, 0);
-> >> @@ -2232,11 +2238,14 @@ int drm_crtc_vblank_start_timer(struct drm_crtc *crtc)
-> >>   			      CLOCK_MONOTONIC, HRTIMER_MODE_REL);
-> >>   	} else {
-> >>   		/*
-> >> -		 * Timer should not be active. If it is, wait for the
-> >> -		 * previous cancel operations to finish.
-> >> +		 * Timer should not be running. If it is, signal cancellation
-> >> +		 * again and restart to release locks.
-> >>   		 */
-> >> -		while (hrtimer_active(&vtimer->timer))
-> >> -			hrtimer_try_to_cancel(&vtimer->timer);
-> > Why do you even have to cancel the timer here? Just let it run?
+> commit b6b2c7ac3d0d6dc377bf1fd1bb7de1527b73194f
+> Author: Sascha Bischoff <sascha.bischoff@arm.com>
 > 
-> We ran hrtimer_try_to_cancel() in drm_crtc_vblank_cancel_timer() to 
-> remove the vblank timer. When we later come here, we need to know if the 
-> timer has meanwhile been fully canceled. Hence we need at least one call 
-> to hrtimer_try_to_cancel() even if the timer is in some bogus state 
-> where it should not be active. The loop here was nonsense and could 
-> deadlock. In the new code, we still need that call to 
-> hrtimer_try_to_cancel() to detect the possible deadlock.
+> KVM: arm64: gic-v5: Add ITS translation cache maintenance
 > 
-> I'm not confident that we can set up the hrtimer with new values while 
-> it is in this half-canceled state, can we?
+> This commit introduces a disposable acceleration structure to cache
+> resolved ITS translations, avoiding iterating over guest memory on every
+> MSI or ITS event.
+> 
+>> diff --git a/arch/arm64/kvm/vgic/vgic-its-v5.c b/arch/arm64/kvm/vgic/vgic-its-v5.c
+>> index f6d2acca4ae4c..e4c0415137605 100644
+>> --- a/arch/arm64/kvm/vgic/vgic-its-v5.c
+>> +++ b/arch/arm64/kvm/vgic/vgic-its-v5.c
+> 
+> [ ... ]
+> 
+>> @@ -19,6 +19,272 @@
+>>   #define VITS_V5_DEVICE_ID_BITS		16
+>>   #define VITS_V5_EVENT_ID_BITS		16
+> 
+> [ ... ]
+> 
+>> +static int its_cache_add_translation(struct kvm *kvm, struct vgic_v5_its *its,
+>> +				     u32 device_id, u16 event_id,
+>> +				     struct vgic_irq *irq)
+>> +{
+>> +	u64 key = ((u64)device_id << 16) | (u64)event_id;
+>> +	struct its_cache_translation_entry *entry;
+>> +	struct its_cache_translation_entry *old;
+>> +	struct hlist_node *tmp;
+>> +	HLIST_HEAD(removed);
+>> +
+>> +	entry = kzalloc_obj(*entry, GFP_KERNEL);
+>> +	if (!entry)
+>> +		return -ENOMEM;
+> 
+> [Severity: High]
+> Does this allocation need memcg accounting?
+> 
+> The GFP_KERNEL flag is missing __GFP_ACCOUNT, which means these guest-driven
+> allocations are not charged to the VM memory cgroup. Since the cache has no
+> upper size bound, could a guest inject arbitrary device_id and event_id
+> combinations via GICV5_ITS_GEN_EVENTR to exhaust host kernel memory and
+> cause an out-of-memory denial of service?
 
-Shrug.
+That's a good point. The cache allocation is unaccounted in the posted 
+patch. Due to the review comments, I've reworked the translation cache 
+from a hash table to an XArray. As part of this, I've changed both the 
+entry allocation and XArray insertion to use GFP_KERNEL_ACCOUNT.
 
-But what I'm thinking is:
-- stop with the explicit cancel entirely and just rely on the
-  timer cancelling itself
-- try to start the timer in vblank_enable(), and if that can somehow
-  fail because the timer is still running it should be fine because
-  the self cancellation should anyway have been aborted
-- explicitly wait for the timer to have stoppped in drm_vblank_off()
-  to make sure the wrong interval can't leak from one mode to
-  another
+> 
+> [ ... ]
+> 
+>> +static int its_cache_look_up_translation(struct vgic_v5_its *its,
+>> +					 u32 device_id, u16 event_id,
+>> +					 struct vgic_irq **irq)
+>> +{
+>> +	u64 key = ((u64)device_id << 16) | (u64)event_id;
+>> +	struct its_cache_translation_entry *entry;
+>> +
+>> +	guard(raw_spinlock)(&its->translation_cache_lock);
+>> +
+>> +	hash_for_each_possible(its->translation_cache, entry, node, key) {
+> 
+> [Severity: High]
+> Can this traversal cause a host lockup under a raw spinlock?
+> 
+> Since the translation cache is unbounded, a guest could trigger the insertion
+> of millions of LPI translations. These entries are distributed across a small
+> fixed-size hash table, which will result in massive hash collisions and
+> extremely long bucket chains.
+> 
+> Traversing tens or hundreds of thousands of entries under a raw spinlock
+> disables preemption and interrupts for an extended period, which could
+> lead to soft or hard CPU lockups.
 
--- 
-Ville Syrjälä
-Intel
+I've replaced the fixed hash table with an XArray. I don't think that 
+this same issue exists in the new implementation.
+
+> 
+> [ ... ]
+> 
+>> @@ -260,7 +530,15 @@ static int __vgic_v5_its_resolve_lpi(struct kvm *kvm, struct vgic_v5_its *its,
+>>   	if (IS_ERR(*irq))
+>>   		return PTR_ERR(*irq);
+>>   
+>> -	return 0;
+>> +	vgic_get_irq_ref(*irq);
+>> +	ret = its_cache_add_translation(kvm, its, device_id, event_id, *irq);
+>> +	if (ret) {
+>> +		vgic_put_irq(kvm, *irq);
+>> +		vgic_put_irq(kvm, *irq);
+>> +		*irq = NULL;
+>> +	}
+>> +
+>> +	return ret;
+> 
+> [Severity: Medium]
+> Should a cache insertion failure cause the valid LPI to be dropped?
+> 
+> If its_cache_add_translation() fails due to memory pressure, this error
+> handling path drops both the cache reference and the caller's successfully
+> resolved reference, propagating the error and discarding the interrupt.
+> 
+> Since the translation cache is a best-effort acceleration structure, is it
+> better to swallow the caching error and allow the caller to proceed with the
+> validly resolved LPI rather than completely failing the resolution?
+
+If we're dropping translation insertions due to memory pressure, then 
+we're going to have big issues real soon! That said, a cache allocation 
+failure should not discard an LPI already resolved for software MSI 
+delivery or an ITS event, so I've made cache insertion best effort in 
+those cases.
+
+Direct injection still needs a cache entry to track its owner, as we 
+need to be able to resolve which guest translation was used for the 
+forwarding to correctly tear down translations when the guest 
+invalidates them.
+
+> 
+>> diff --git a/include/kvm/arm_vgic.h b/include/kvm/arm_vgic.h
+>> index c9eaa7897b57e..bf970275868c9 100644
+>> --- a/include/kvm/arm_vgic.h
+>> +++ b/include/kvm/arm_vgic.h
+> 
+> [ ... ]
+> 
+>> @@ -590,6 +591,12 @@ struct vgic_v5_its {
+>>   		u32 device_id;
+>>   	} gen_event_didr;
+>>   
+>> +	/* A hash table with 2^3 buckets */
+>> +	DECLARE_HASHTABLE(translation_cache, 3);
+>> +
+>> +	/* Protects the translation_cache */
+>> +	raw_spinlock_t translation_cache_lock;
+> 
+> [Severity: High]
+> Is a 3-bit hash table (8 buckets) sufficient for an unbounded number of
+> guest-driven translations?
+> 
+> As noted earlier, storing a potentially unbounded number of LPI translations
+> in 8 buckets causes significant hash collisions. When paired with the
+> translation_cache_lock raw spinlock, this creates the denial of service
+> risk mentioned above.
+> 
+
+As I mentioned above, I've moved from a hashtable to an XArray for 
+storing the translations. I'd not considered the case where a guest 
+(maliciously?) causes many collisions. The irqfd lookup now uses RCU and 
+does not take that lock, so I hope we're good there!
+
+Thanks,
+Sascha
