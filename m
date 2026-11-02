@@ -1,53 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=142.132.183.134
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793577933;
-	b=Z4LmA4saEN+nEvwlaaRqOCgG96D3N9hxVR2nP3R9RkHle3QvFtvnmuvWRExP8KRsdBvr
-	 tHJfQkpufADgnSOcAxb1I8iiUC/ua03RbaeZ6icxuMhc4QV4+gP/A23FP2+CFeWWXAqAH
-	 VyPMFgKMRPjDvU49tmVasbJ3ZoAZuOgL9EoMWFwrQ73Kiv+a0pXK9m5yYsnJZyb9V6EuL
-	 5Tm6IvLelHliw3/0zSJ/up5R2JLXX5V1hAFIaOn8pb589QdH7JqlG0iDPdzhdZpUA/zz4
-	 lcbm+MzLLRPD6M9S66JtwLIQYI9HLwMR2CHd+zothdeMRYJIzWQ6N2oLi+ArfJVfJpg==
+	t=1793578609;
+	b=iEDYGu64N8axEikS8RovTmNwMNm22uaqJxfYiTB4ZnnhhpB/STZVsw0RuUZ9Ww0cVaXo
+	 YAxmkkq1eSDTKI52EsPQ9vwFEF20U3HStCejJo2CXIp1A5Ng370Ca5QJIG58ItU0wLh1T
+	 mwlQ79al+6MJXp/B0idiqAvB4hIYmkDO2AJH3nabonTVHUBvpeTa5SAwY//bL03DpnUQZ
+	 +B2IIreSpLxDihwvthByFC2w8ozNpMR1t9LrshOo3Eby8IJFSVIkVaFm9JF5begd/86Pc
+	 jPjohnHvZSupQQ/VRYayl6ulxZW24Q3+jRgvUfD1eSGhGZvdTjiRZf/2tJ8f22/iKaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793577933;
-	h=DMARC-Filter:DKIM-Signature:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:Content-Language:To:Cc:References:
-	 From:Autocrypt:In-Reply-To:Content-Type;
-	bh=Zyp6Ql5N1rWlYxuROJ0el25M0bYgmu9qE6tE4Km9PMs=;
-	b=CdKIeMDL92rZHCxI26iaaEoftW93byySfocW0ks5Xlzi/k8hHusEN/6KBfI16gY1v+L9
-	 YZrJuexN4OXxT+kHJ7wnRlNTz2FVV/8JxZBttjaF5vJOkI7yc7BJAay2LTdVfC7T86wpl
-	 r/IFfnGTm6tNRnelcZGmPOijJc9fMvNn0yxHAsawiyIEMtcRmchm9ai+2X8349zhsgmVO
-	 ofhxw4uOmcr28mdNrTCGQ/cWbYQfNEntSv1Tk4ntgmjVoNUKqgegjIGv+FogR2oTZ84Fx
-	 7siviygmwGstrkA676lFOaWKkdY5zqeK4pMHtJwONB3F26fR3P2Q8ulAkwyucZ8xWMg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793578609;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Content-Type:Date:
+	 Message-Id:To:Cc:Subject:From:In-Reply-To:References:
+	 Content-Transfer-Encoding:MIME-Version;
+	bh=mozC9xUwsBeOwQ4lriF7JYk3bRm59v0HIYqRgo2OnDk=;
+	b=FQ4mXZvXhdUYKA2Iw0LCDLdIiCkoFWBpJzmEfWLlLv2b3DmhW4w2awPqGmDPxetGOCyy
+	 JeWx2Yk+mUf8fDFU6E8J2/rer+iwqO1tLIP0i7B67yASKnoTXAiSlQyXvpSTax1E5JbK/
+	 FTPa1GEh8WDLRA0ovifeK/RmISiFdpCHepbfloz1O/34yTzIJruRyGkCtHCnZKl8iRnWo
+	 taRBJewBtz/1dLNkgZZfq9Jj6MJKby3aIz+YTZKlRjnFXkq7cZbiVm1uXyGuJdN+m4dpy
+	 GYQTRcDzloLW6Euf1UzaHZ466gUaHi5el5KMmb2n0ChaTwHv5ucLZ35/2BXgK3BTj/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=erebion.eu;
-	spf=pass smtp.mailfrom=erebion.eu;
-	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=ed25519-sha256 header.s=202508e header.b=dWyAcbiJ;
-	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=rsa-sha256 header.s=202508r header.b=AFBbnnBT;
-	arc=none smtp.remote-ip=142.132.183.134
-Received: from erebion.eu (erebion.eu [142.132.183.134])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bivwVBUs;
+	arc=none smtp.remote-ip=209.85.215.172
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D536606A324
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 00:05:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0D536606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=erebion.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=erebion.eu
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105AA606A327
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 00:16:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 105AA606A327
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass header.d=erebion.eu header.i=@erebion.eu header.a=ed25519-sha256 header.s=202508e header.b=dWyAcbiJ;
-	dkim=pass (2048-bit key, unprotected) header.d=erebion.eu header.i=@erebion.eu header.a=rsa-sha256 header.s=202508r header.b=AFBbnnBT
-DKIM-Signature: v=1; a=ed25519-sha256; s=202508e; d=erebion.eu; c=relaxed/relaxed; r=y;
-	h=From:To:Subject:Date:Message-ID; t=1793577927; bh=Zyp6Ql5N1rWlYxuROJ0el25
-	M0bYgmu9qE6tE4Km9PMs=; b=dWyAcbiJlhekDlG3AtkMUe7XDMEMVyWToIijbESJKdL3bHD3jb
-	g3WqcUhc+XMiM6Ox9WibNiqzOjVtdpmt/ZAw==;
-DKIM-Signature: v=1; a=rsa-sha256; s=202508r; d=erebion.eu; c=relaxed/relaxed; r=y;
-	h=From:To:Subject:Date:Message-ID; t=1793577927; bh=Zyp6Ql5N1rWlYxuROJ0el25
-	M0bYgmu9qE6tE4Km9PMs=; b=AFBbnnBTrQNndV3stO+6iA2dZjtlSO9RS+TVPb6YTIXWPPuHfA
-	TZZTc+d16gK7NtKVw+dFB75xqDN0zahBw7zu4syOpPou7NzUBGfgZ7ON0rL9czXl4sG4Tq96elX
-	xqa7GyjnMG8cQO3eqfbfZLyTg4q172shJZbVRgj7/z7aX0LjS4ZfhWEL+jPCg0AM7agHrwMKRRh
-	YGZrgGKLgzZAi/EuEVer2OqQOSTumUtZ+XcG15cbfvBHUpPk5mo7R38wFjbua9FTb/4bHLsrJF4
-	VxfifC/zBt4975F0Ed1PMSC1jOqnzkLQWsalvdFK1fgf5uv9nuFPclFmPp1FgdhQvpQ==;
-Message-ID: <218cfd0d-30db-42e9-923c-5e6514f0836e@erebion.eu>
-Date: Mon, 2 Nov 2026 01:05:26 +0100
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=bivwVBUs
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-cdb2e0062bbso24535a12.1
+        for <sashiko-reviews@lists.linux.dev>; Sun, 01 Nov 2026 16:16:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1793578608; x=1794183408; darn=lists.linux.dev;
+        h=mime-version:content-transfer-encoding:references:in-reply-to:from
+         :subject:cc:to:message-id:date:content-type:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=mozC9xUwsBeOwQ4lriF7JYk3bRm59v0HIYqRgo2OnDk=;
+        b=bivwVBUsr/FAtKBQ8Oltopc7iZ4JTYu/Mx/6mlP/+JrDW2g9YFcXVzKbiyxdS+Aclz
+         u2RbFjs+cjnwq02XUSgIzCEET5O6eRUm4LLMvjBAQkWuNasIDLY2XipkfbSMhY3B2AwJ
+         Guq+BQyALIJjEhP2R44+REEikmpvjlyJOXmUtUhRg/Ugnytp3sagacxi+0H5jtdbU+9F
+         /ik1S5vzr6faaCJNUDV4xmYHJO/NqhmACfgE5bjczZoSECirURCWDTvHXkxbxxRrvpIE
+         3WrlsDspjXgk83eUW7ai+E01jm7srCVzWtejmhruNoLcVoIYXKKHU19/0mkenpScMkBS
+         pusA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793578608; x=1794183408;
+        h=mime-version:content-transfer-encoding:references:in-reply-to:from
+         :subject:cc:to:message-id:date:content-type:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=mozC9xUwsBeOwQ4lriF7JYk3bRm59v0HIYqRgo2OnDk=;
+        b=myRvRX7UPmM0q4eGKwRbEg7TyfD0YqS+h1qVmri6dxRiuggF0xgC8YFPs2yeiA0ZoY
+         GmIjDfk1k7cpXFyu7N6iUbNaqSo9uPMcyNCmeMRIK6KXpJsH/STYneCeQZZaHEmPMMKH
+         UHqXVHLBvC3QKg1PTFDCndIhbts2eBYZwW6ME+R79CySJxgqKNFVCWc6M5IwBZZqGFem
+         N6sG9Vsr8MV9JWR9hBhf4YoGwajxNf+qx1F2gxOfVYLF3SjTIprXhASkxF7aUQaVumU/
+         MgKKVOnVVbMM3UeWB6ZSSY+fazOC0cE4BXjW73iCuMeAW1+z2xSMYuGyJ1UNve+Yu4gq
+         5Q7w==
+X-Gm-Message-State: APuU4Z+zwAbl5z4N8+PBlN1rOmfehGsaubYnBIRAq3a7P4NDgSU7P58P
+	ibPf/CTSAWpTzsv/Elf8v0+ZsBzuEHgXb+w8TnRcZhrrwCMxtvmju9CQBfmiCA==
+X-Gm-Gg: AYBFou1UwDm3aYK7VO3okzyI+lRv1VnjjwsXUp9aMi/Jd01+OyX/gGfA2/0SteBD5fe
+	hqTq60mKPOyxGi4N99ng6gnix7UW1DDIXonNPhloal+YnQTsjTN8T2CVd2zzeSVpKUymj+gkMwp
+	R9ZxghUa8HNBjEAYYYo+TYvnqSLc8Uwqd+S3nj5ZEmqc2AIy4767ffhlivISyBVzoXvlyTpM/7Z
+	yUqEUr8pa4ueEo75h+mTVitNgbM3FsRPRBqhJ2gV1jwXfrILfgLoaUX09zIXL/MIDPRDetDpG6Z
+	TVnm5leTzDxDZ/cjuzkZwqKTcDX2iIMWw09V/MMWPU7hElJ9Ikj+iFGfZKoiLsO/sfK/0xugk2G
+	NOs5s+HfPJ9n5lbfSq/JHiQeR9yzFEIK08Lp6+VMpmauCQRWn7Jp4vh0uTBveEtih6Eyr75xhTr
+	8zgn+k5LvYqsIY07flXLfQq1ZkNikh7PL/bl6HuEvs4QsAc7TVgB4hoVDusH97nnIRJ2oJiMUJs
+	TJNI2rAdLWIDJ5AEHNnmQwM6s1ZT2qD9x8U6W9OPbFZvxtpw+MGiJtvKRvZ1zL0wxykjQ/y1i/8
+	UpCjkPuCoDF7wqu11tMyKgSXTkY9mqzkhtJt+qFRXhgl963CEjFACoPL2JCoP8zblZeIXZSJQ13
+	Z0+NcDSv2Ar0mAkVD7520Vqw8ArZC9ztQxoU=
+X-Received: by 2002:a17:90a:e70c:b0:3ad:a232:4044 with SMTP id 98e67ed59e1d1-3ae8979969fmr6431543a91.38.1793578608316;
+        Sun, 01 Nov 2026 16:16:48 -0800 (PST)
+Received: from localhost ([153.61.198.240])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3ae85f3e087sm6950889a91.1.2026.11.01.16.16.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 01 Nov 2026 16:16:47 -0800 (PST)
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 02 Nov 2026 00:16:47 +0000
+Message-Id: <DMKAJXEISH7G.1I34WXM92FRMI@gmail.com>
+To: <sashiko-reviews@lists.linux.dev>, <bpf@vger.kernel.org>
+Cc: <mptcp@lists.linux.dev>
+Subject: Re: [PATCH bpf 03/15] bpf, sockmap: Don't let an SK_PASS verdict
+ cover the next message
+From: "Alexei Starovoitov" <alexei.starovoitov@gmail.com>
+In-Reply-To: <sashiko-outbox-192629@kernel.org>
+References: <20261101192057.2296489-1-alexei.starovoitov@gmail.com> <20261101192057.2296489-4-alexei.starovoitov@gmail.com> <sashiko-outbox-192629@kernel.org>
+Content-Transfer-Encoding: 8bit
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -57,88 +99,19 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/12] arm64: dts: qcom: sm6350-lena: Add PM7250B
- thermals
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- robh@kernel.org, conor+dt@kernel.org
-References: <20261102-pdx213-upstream-3-v3-0-cdc3be96d257@erebion.eu>
- <20261102-pdx213-upstream-3-v3-10-cdc3be96d257@erebion.eu>
- <sashiko-outbox-192767@kernel.org>
-From: erebion <erebion@erebion.eu>
-Autocrypt: addr=erebion@erebion.eu; keydata=
- xjMEY7S2FRYJKwYBBAHaRw8BAQdAUf0YlT6sBQSunZeO44bgAPe+ndqTifGaNjw7vzJ2KPHN
- HGVyZWJpb24gPGVyZWJpb25AZXJlYmlvbi5ldT7CjwQTFggANxYhBJyMprURw7/YpjH7646v
- QDJuAq59BQJpWnovBQkHhhzbAhsDBAsJCAcFFQgJCgsFFgIDAQAACgkQjq9AMm4Crn057AEA
- j3didUIhbtAoppk2eNu6CbtMvkDisHWHVLaWF8YC1VsA/1P0ngBoVghELMachirfTinwBplJ
- qP7GGlSGRqSfnlAKzjgEY7S2FRIKKwYBBAGXVQEFAQEHQN6NPWcyqKdecGU1vN8FVXBwYEUd
- OAhF5jpmd7M0Ybx8AwEIB8J+BBgWCAAmFiEEnIymtRHDv9imMfvrjq9AMm4Crn0FAmlaei8F
- CQeGHNsCGwwACgkQjq9AMm4Crn075QEAoDqfm4OeAEQWMgfQ496u2S3rWJw1EMgTOP51FQbX
- rY4BAKn6AhEBh605uas3OTVtcwNIAJn1sHTA7HqqWniUe9sP
-In-Reply-To: <sashiko-outbox-192767@kernel.org>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------N0qJnxep6JA5K18oUsDVI0Mn"
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------N0qJnxep6JA5K18oUsDVI0Mn
-Content-Type: multipart/mixed; boundary="------------5YIA4P0FAXJCX9zdLr0qUAmO";
- protected-headers="v1"; hp="clear"
-Message-ID: <218cfd0d-30db-42e9-923c-5e6514f0836e@erebion.eu>
-Date: Mon, 2 Nov 2026 01:05:26 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/12] arm64: dts: qcom: sm6350-lena: Add PM7250B
- thermals
-Content-Language: en-GB
-To: sashiko-reviews@lists.linux.dev
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- robh@kernel.org, conor+dt@kernel.org
-References: <20261102-pdx213-upstream-3-v3-0-cdc3be96d257@erebion.eu>
- <20261102-pdx213-upstream-3-v3-10-cdc3be96d257@erebion.eu>
- <sashiko-outbox-192767@kernel.org>
-From: erebion <erebion@erebion.eu>
-Autocrypt: addr=erebion@erebion.eu; keydata=
- xjMEY7S2FRYJKwYBBAHaRw8BAQdAUf0YlT6sBQSunZeO44bgAPe+ndqTifGaNjw7vzJ2KPHN
- HGVyZWJpb24gPGVyZWJpb25AZXJlYmlvbi5ldT7CjwQTFggANxYhBJyMprURw7/YpjH7646v
- QDJuAq59BQJpWnovBQkHhhzbAhsDBAsJCAcFFQgJCgsFFgIDAQAACgkQjq9AMm4Crn057AEA
- j3didUIhbtAoppk2eNu6CbtMvkDisHWHVLaWF8YC1VsA/1P0ngBoVghELMachirfTinwBplJ
- qP7GGlSGRqSfnlAKzjgEY7S2FRIKKwYBBAGXVQEFAQEHQN6NPWcyqKdecGU1vN8FVXBwYEUd
- OAhF5jpmd7M0Ybx8AwEIB8J+BBgWCAAmFiEEnIymtRHDv9imMfvrjq9AMm4Crn0FAmlaei8F
- CQeGHNsCGwwACgkQjq9AMm4Crn075QEAoDqfm4OeAEQWMgfQ496u2S3rWJw1EMgTOP51FQbX
- rY4BAKn6AhEBh605uas3OTVtcwNIAJn1sHTA7HqqWniUe9sP
-In-Reply-To: <sashiko-outbox-192767@kernel.org>
+On Sun, Nov 01, 2026 at 11:42 AM sashiko-bot@kernel.org <sashiko-bot@kernel.org> wrote:
+>>  		if (unlikely(ret)) {
+>> +			/* A part of it may have gone out */
+>> +			sk_msg_apply_bytes(psock, origsize - msg->sg.size);
+>>  			*copied -= sk_msg_free(sk, msg);
+>>  			break;
+>>  		}
+>
+> Wouldn't Thread A subtract its own sent bytes from Thread B's
+> psock->apply_bytes, and if psock->apply_bytes is 0 when ret == 0, reset
+> Thread B's psock->eval to __SK_NONE and drop Thread B's psock->sk_redir?
 
---------------5YIA4P0FAXJCX9zdLr0qUAmO
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-
-T3kgeWVzLCB0aGUgYm90IGlzIHJpZ2h0LCByZWJhc2UgbWlzaGFwLCB3aWxsIGZpeC4uLg0K
-DQpPbiAxMS8yLzI2IDAwOjQ0LCBzYXNoaWtvLWJvdEBrZXJuZWwub3JnIHdyb3RlOg0KPiBU
-aGFuayB5b3UgZm9yIHlvdXIgY29udHJpYnV0aW9uISBTYXNoaWtvIEFJIHJldmlldyBmb3Vu
-ZCAxIHBvdGVudGlhbCBpc3N1ZShzKSB0byBjb25zaWRlcjoNCj4gLSBbTWVkaXVtXSBhcm02
-NDogZHRzOiBxY29tOiBzbTYzNTAtbGVuYTogeG8tdGhlcm1hbCBvdmVyd3JpdHRlbiBieSBj
-aGctc2tpbi10aGVybWFsDQotLSANCmVyZWJpb24NCg0KWE1QUDogZXJlYmlvbkBlcmViaW9u
-LmV1DQoNCk15IGxhbmd1YWdlczogR2VybWFuLCBFbmdsaXNoLCBTd2VkaXNoLCBOb3J3ZWdp
-YW4sIERhbmlzaA0KWWVzLCBJJ20gYSBsYW5ndWFnZSBuZXJkLiBGZWVsIGZyZWUgdG8gd3Jp
-dGUgdG8gbWUgaW4gYW55IG9mIHRoZSANCmFmb3JlbWVudGlvbmVkIGxhbmd1YWdlcy4NCg0K
-
-
---------------5YIA4P0FAXJCX9zdLr0qUAmO--
-
---------------N0qJnxep6JA5K18oUsDVI0Mn
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQScjKa1EcO/2KYx++uOr0AybgKufQUCaufTxgUDAAAAAAAKCRCOr0AybgKufdPd
-AQDCUGISN4DDlHW33Y4I4F8RyaQhK11Yq5IXhEeBfGkaeQEAymafLGzzalQ5u5nJvem3t3H3xz6p
-3zeAnym8G2rEJgA=
-=xtkD
------END PGP SIGNATURE-----
-
---------------N0qJnxep6JA5K18oUsDVI0Mn--
+Not a bug. eval, apply_bytes and sk_redir belong to the socket, not to
+a thread. B's verdict ends early and the prog runs again for the rest.
+B sends with its own reference to sk_redir.
