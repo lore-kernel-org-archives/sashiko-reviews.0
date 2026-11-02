@@ -1,110 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.230.195
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793644297;
-	b=tQdTohHd0sahlGoukR2EqY8brb4aiaws1NB0vK6zx1bOKw5kEY4MnQSb2s3LRut9avD5
-	 pev8Y5QkOiXenT9KlOXsJzyAMGNKHs5yld9bTvpoaC1RNWE59u0RSNS2G3itNtzfkpnXF
-	 BvfseMurvkz3i/Dy9haymYsJmCqNVBKRmUkUB+KKAz75NWS3KfTrmOJCNaYuSKZuJuiYL
-	 6hnXnQBP8eTyIXrx2LZwCXQ09FdVb6RgWABOfXcTJYPn5VF6v3gFhps8cM3GGn8HYBjdj
-	 Yfk56bwx5C2igX79bYD1lMNJJq+OEIdxyd9cAtWxP0QpBHVzS5DWZR+GvivE8y8LPBw==
+	t=1793644359;
+	b=qGU3txi7fVxzvuv1/DBrLiCbnWOoAhBt3SHNV3CcjxpvfBNgIC6aqJeg/sn39iTMpEaA
+	 h3WT+VBpY4FBRdclbLTZBM/TvgdWLWTO3i8KYsbIjQUGVNJInJ8NFZ5Ww0K4jJZREXdaN
+	 2bc+lLaDaP32h97YsyQ+4+DIuT/xXgZoXGsSvvSa9IXkZhWjznkSJCME994xIPcdg0Y2Y
+	 Sbm8UoM12jW2r75SVloJVY7RMwMoW4IWXlTeKecHDQ8qJTvo/6w4A6M8ow1oBBaLQP/hB
+	 cieyPg5lxrXzQ6Oz6hOSQWKBjQcFwePkD6KM0c9nNDTb7n0CnzoHzmppL0zBGef02Rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793644297;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:Autocrypt:
-	 Content-Type:User-Agent:MIME-Version;
-	bh=anyoS9QmIPpZgoKNSKJhW834ul+casWny8wsvVbeD+E=;
-	b=ypSsW3KG6+QMl+s4QRjNwVA7lM7kAM/N+qJ2Xmr2hm7bzxkgWT3I2+uqKW8A7qIF6/Ku
-	 KsUv94jr1dEvCzgtF5Q1KrhBbrnJp2Bk6HYkvSVPhEvbqimx9JXCAHfETio2FhvALtTVR
-	 DhXVjuN2BLUzZYh/WpkdGLkBLfeFLKdc31qBmhXThMZCAkEv6FPXEFOr1TXil/+B7NSRr
-	 GeQee5MelHVWVHd69FRXet/c4TVAO2a8Gukx5Y+EV2taYv7NQhp4XJYIBf4CW4Nt9k8KF
-	 49zE4w19ft5SxjHw1q9Z83hrHr/WEFkm1ayuWcHu6h9YzL3S1Ax448ViOQj1MhNb8eg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793644359;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=d6Zs7hYlOcAb9GpTpzgd4RT7Z8RUJLNrzQEbBotUN6E=;
+	b=VgcK6GAvxJIr5hgDnfYU3laMRg6BP9REmr5ZZHKEPPjK/S2o5ZsyEm3yglYCmGCr9q9W
+	 f5suyXtgOpQYnkrv33YIwhEao7HzyttxyAOL0HcciAaB01B/+WG3YhkuDl/rWHnjIVslj
+	 JDT3cEkjCf9zRLSyCBYuuLx3siTr5giApA3q3JXiuBdBgHsE653rqLYowcscFJQWjqHGf
+	 RrY9B27ucMnBCC3TlN4Exvb70otrrfoEwuw6o+L43kmI9ntRVPPVZBFAz2LsO5vEZ8dTk
+	 6j/OU4cZiLCrKx9IyxLCwgWNhOKLck/sV1f/9VQf3naYIFCzuYu1jrbvfQPL9flxLUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=ndufresne.ca;
-	spf=pass smtp.mailfrom=ndufresne.ca;
-	dkim=pass header.d=ndufresne-ca.20260707.gappssmtp.com header.i=@ndufresne-ca.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=SKVOYB5W;
-	arc=none smtp.remote-ip=74.125.230.195
-Received: from mail-qk2-f3.google.com (mail-qk2-f3.google.com [74.125.230.195])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5A1606A324
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 18:31:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DE5A1606A324
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ndufresne.ca
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=dtYbcMk9;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BE54606A33B;
+	Mon,  2 Nov 2026 18:32:37 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1BE54606A33B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ndufresne-ca.20260707.gappssmtp.com header.i=@ndufresne-ca.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=SKVOYB5W
-Received: by mail-qk2-f3.google.com with SMTP id af79cd13be357-93f25d896bbso16217685a.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 02 Nov 2026 10:31:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20260707.gappssmtp.com; s=20260707; t=1793644295; x=1794249095; darn=lists.linux.dev;
-        h=mime-version:user-agent:content-type:autocrypt:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=anyoS9QmIPpZgoKNSKJhW834ul+casWny8wsvVbeD+E=;
-        b=SKVOYB5WWiKRd50JFXHir/tI7Wu/U3HYx9ArQlwOG7Eng/61yaCzUg4S8BFry/uW7K
-         V7GALU47ybGpK6Sxa1yeOaq4fud7/uvuhXe6ZPosjE4d0q7RmbuJIFYilNgggYeHtyOp
-         cbgNah4E7cAboA58H3GaM3zDETpWwuNeIH4VA8ASsyDtFUEBLal9ehjOvLei84RPuqhx
-         eMt4JlWfA9KbYCyb7dRpDkmIqyI9DgmCZubXVgoTYmCMcekznyWYi0ioQ7kxnZbFclyu
-         1A9ZdTXQy2UsD+4QzP4qhBGw7V4yu59xu2x10ep12Y63SOfLB64gA5T7vUZvSnMqb83y
-         g3cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793644295; x=1794249095;
-        h=mime-version:user-agent:content-type:autocrypt:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=anyoS9QmIPpZgoKNSKJhW834ul+casWny8wsvVbeD+E=;
-        b=m3dMVJWU3bINwJfbCMi/p1kmG1fs2pr+/uv4+WrSo0S565yxp4mrfDw2IDb/pyjAGa
-         qe3dHRHoIqiBHpzxnZA1dYRlGKDbGJcGvgFntOkaSx7eA7RxXLqOJvoKC8ETcs5d4lcR
-         Y5qzFac266GRyb1tf/Gmcyt4Ik5oGXhmAGv/opjg4P9vIWD1G1PzkvgbnugwwAro8qZK
-         IS8AyIhNyKuFrHGzPlOi1Bc+6dsjirLoBlIce54Is195JpfrparF/umJ8lFNH+0+UjYe
-         hcM3YvzA5oXl4JleC0aLhNuchKDE93jdICbMloitgaUGMOu5lWS/LOWqms/tm18sFL3N
-         bMfQ==
-X-Forwarded-Encrypted: i=1; AKwUvBz0PKsHKAWAOnxX6T/yvWNFGtGzuJ05HRgW38CJxrgESBiEn51dQsVgCKyl79zQiDhD/+tFAviuSXLwd6Ezc+U=@lists.linux.dev
-X-Gm-Message-State: AFq9FYKJc1B1dSxHU+n4IQOHjRQEStb2tTUOwupBJnLlWYd5hf2VGnQ4
-	ZTxa0O+8DthCXDpWDTp+HjHITk/s44HOtScyiTyKGTJk6eTb/QFpJ1OL5uwL4BH6wiI=
-X-Gm-Gg: AYBFou3p3zU0krztnwibZ1qZeFluOwd2UdrugOgC5g9l07pJ+9cVUjNLf0uQ+5lL+IP
-	yS/OH3TgjBrWqtE6DnClCDumPwwQ9EHcUjng0jSDPzSZQK1Y2k2YqjFIqTE+a4avoQ5ey5suYrn
-	PoATs/DquRXCh/N84IJA0u7xDaeLh4djpfIeCq3BTY81p88GcLCXkU53bsAMhmBB8+DlmzLZydT
-	S1BVcw9TkJubkejex+pRmipAPTDZZnm3PxSPlMs2gk/u+4FXTrLXXBQ4yHi4yr020fvP8eRaq4K
-	zMSVw2Yi8eZ6upaffFL9v7yGC6W61HsVbzWX5OJavpWR+81mIsKVDVBz8kXDLFxtZJheLhIpdR0
-	efymRI9HKmLjXWU4PDscqbr8uEyn8aNSDiph11BdldOeA3jNDx9jEUQpDhGcOEDwbSnrkMQm+/i
-	Ot1cYZQDiB/aDu90LXhfCxkdslke9sWDAQdvrUB6fK+AboaB6SJ+4xAUm+G3mZWKdnxSLrBF4Bb
-	8fbC0TOp3z9jOJF12azQXSlGzJpJolZ1TDv7a3A/EH4+65JmQLzzI4oMf3n7vbRJzT2fCeHrlVO
-	XFSVAMCxfjxeyhlSsR771+81YixwgdP2wqAbWodQU9uODwlVHSEqc/E=
-X-Received: by 2002:a05:620a:1d06:b0:93f:16d4:3c0a with SMTP id af79cd13be357-944214cfe6emr1648027785a.4.1793644295303;
-        Mon, 02 Nov 2026 10:31:35 -0800 (PST)
-Received: from ?IPv6:2606:6d00:11:34bd::c41? ([2606:6d00:11:34bd::c41])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-94425aa8fc9sm886726285a.33.2026.11.02.10.31.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2026 10:31:34 -0800 (PST)
-Message-ID: <ece80650634cec3c63f05651ab326de1d60d23c7.camel@ndufresne.ca>
-Subject: Re: [media-ci] Re: [PATCH v2] media: rkvdec: Handle interrupts
- without a current context
-From: Nicolas Dufresne <nicolas@ndufresne.ca>
-To: linux-media@vger.kernel.org, sashiko-reviews@lists.linux.dev
-Cc: media-ci@linuxtv.org
-Date: Mon, 02 Nov 2026 13:31:32 -0500
-In-Reply-To: <sashiko-outbox-185268@kernel.org>
-References: <20261026124808.642373-1-a.kazinsky@ideco.ru>
-	 <sashiko-outbox-185268@kernel.org>
-Autocrypt: addr=nicolas@ndufresne.ca; prefer-encrypt=mutual;
- keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
- /e0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPoicBBMWCgBEAhsDBQsJCA
- cCAiICBhUKCQgLAgQWAgMBAh4HAheABQkJZfd1FiEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrjo
- CGQEACgkQ2UGUUSlgcvQlQwD/RjpU1SZYcKG6pnfnQ8ivgtTkGDRUJ8gP3fK7+XUjRNIA/iXfhXMN
- abIWxO2oCXKf3TdD7aQ4070KO6zSxIcxgNQFtDFOaWNvbGFzIER1ZnJlc25lIDxuaWNvbGFzLmR1Z
- nJlc25lQGNvbGxhYm9yYS5jb20+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4
- AWIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyyxgUJCWX3dQAKCRDZQZRRKWBy9ARJAP96pFmLffZ
- smBUpkyVBfFAf+zq6BJt769R0al3kHvUKdgD9G7KAHuioxD2v6SX7idpIazjzx8b8rfzwTWyOQWHC
- AAS0LU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAZ21haWwuY29tPoiZBBMWCgBBF
- iEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrGYCGwMFCQll93UFCwkIBwICIgIGFQoJCAsCBBYCAw
- ECHgcCF4AACgkQ2UGUUSlgcvRObgD/YnQjfi4+L8f4fI7p1pPMTwRTcaRdy6aqkKEmKsCArzQBAK8
- bRLv9QjuqsE6oQZra/RB4widZPvphs78H0P6NmpIJ
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-7/8y/MxC0rZQblNeEr6G"
-User-Agent: Evolution 3.60.2 (3.60.2-2.fc44) 
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=dtYbcMk9
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 447D41C14;
+	Mon,  2 Nov 2026 10:32:34 -0800 (PST)
+Received: from [10.57.89.36] (unknown [10.57.89.36])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9CA6C3F673;
+	Mon,  2 Nov 2026 10:32:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1793644357; bh=nI0YXxpb9UJqKj3m7hjIKI17k4V7uhAOorjJL+Fywkg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=dtYbcMk9SJkWCbo6y4hdjHWxZOwL9CpwtcA2b4elAGjGLsZeaCJN663iacuO5uYbO
+	 XLI0yB1qxIUfPQOvxrnkTtNZ2VAro4Kl3tyrcL3mo936a2wRfsoA2DtOWK2+2IiEU9
+	 mEbbnIYtqLnx8pJ63j9bC3J5QzCb8Ceqa7joSIw4=
+Message-ID: <1a069f22-64ac-44f3-9eb0-bd4b9416d2bf@arm.com>
+Date: Mon, 2 Nov 2026 18:32:34 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -114,201 +53,345 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 13/16] KVM: arm64: gic-v5: Implement irq forwarding
+To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev,
+ kvm@vger.kernel.org
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+References: <20261016155741.979985-1-sascha.bischoff@arm.com>
+ <20261016155741.979985-14-sascha.bischoff@arm.com>
+ <sashiko-outbox-174635@kernel.org>
+Content-Language: en-GB
+From: Sascha Bischoff <sascha.bischoff@arm.com>
+In-Reply-To: <sashiko-outbox-174635@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
---=-7/8y/MxC0rZQblNeEr6G
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-
-Le lundi 26 octobre 2026 =C3=A0 13:07 +0000, sashiko-bot@kernel.org a =C3=
-=A9crit=C2=A0:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] media: rkvdec: early !ctx return in IRQ handlers skips rkvdec_io=
-mmu_restore()
+On 16/10/2026 17:25, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
+> - [High] kvm: passing full typed INTID to hardware VDPEND instruction
+> - [High] kvm: use of undefined macro kzalloc_obj
+> - [High] kvm: ABBA deadlock due to translation_cache_lock acquired without disabling IRQs
+> - [High] kvm/vgic: TOCTOU race in its_cache_drop_translation disables wrong host IRQ
+> - [Medium] kvm: data race from lockless read of irq->hw bitfield
+> - [Low] cleanup: mixing goto-based cleanup with guard() declarations
 > --
->=20
-> commit 76a8e6d477d878ff7b196f0bd2f1dea7df5256ee
-> Author: Alex Kazinsky <a.kazinsky@ideco.ru>
->=20
-> media: rkvdec: Handle interrupts without a current context
->=20
-> This commit passes the rkvdec_dev pointer directly to the variant interru=
-pt
-> handlers and returns early after clearing the interrupt status if the cur=
-rent
-> v4l2_m2m context is NULL. This prevents a NULL pointer dereference if the
-> watchdog finishes the current job before the threaded interrupt handler r=
-uns.
->=20
-> > diff --git a/drivers/media/platform/rockchip/rkvdec/rkvdec.c b/drivers/=
-media/platform/rockchip/rkvdec/rkvdec.c
-> > index fbcd0f175ad3f..fac7b49a41864 100644
-> > --- a/drivers/media/platform/rockchip/rkvdec/rkvdec.c
-> > +++ b/drivers/media/platform/rockchip/rkvdec/rkvdec.c
-> > @@ -1434,15 +1434,18 @@ static void rkvdec_iommu_restore(struct rkvdec_=
-dev *rkvdec)
-> >  	}
-> >  }
-> > =20
-> > -static irqreturn_t rk3399_irq_handler(struct rkvdec_ctx *ctx)
-> > +static irqreturn_t rk3399_irq_handler(struct rkvdec_dev *rkvdec,
-> > +				      struct rkvdec_ctx *ctx)
-> >  {
-> > -	struct rkvdec_dev *rkvdec =3D ctx->dev;
-> >  	enum vb2_buffer_state state;
-> >  	u32 status;
-> > =20
-> >  	status =3D readl(rkvdec->regs + RKVDEC_REG_INTERRUPT);
-> >  	writel(0, rkvdec->regs + RKVDEC_REG_INTERRUPT);
-> > =20
-> > +	if (!ctx)
-> > +		return IRQ_HANDLED;
-> > +
-> >  	if (status & RKVDEC_RDY_STA) {
-> >  		state =3D VB2_BUF_STATE_DONE;
-> >  	} else {
-> > @@ -1457,9 +1460,9 @@ static irqreturn_t rk3399_irq_handler(struct rkvd=
-ec_ctx *ctx)
-> >  	return IRQ_HANDLED;
-> >  }
-> > =20
-> > -static irqreturn_t vdpu381_irq_handler(struct rkvdec_ctx *ctx)
-> > +static irqreturn_t vdpu381_irq_handler(struct rkvdec_dev *rkvdec,
-> > +				       struct rkvdec_ctx *ctx)
-> >  {
-> > -	struct rkvdec_dev *rkvdec =3D ctx->dev;
-> >  	enum vb2_buffer_state state;
-> >  	bool need_reset =3D 0;
-> >  	u32 status;
-> > @@ -1467,6 +1470,9 @@ static irqreturn_t vdpu381_irq_handler(struct rkv=
-dec_ctx *ctx)
-> >  	status =3D readl(rkvdec->regs + VDPU381_REG_STA_INT);
-> >  	writel(0, rkvdec->regs + VDPU381_REG_STA_INT);
-> > =20
-> > +	if (!ctx)
-> > +		return IRQ_HANDLED;
-> > +
-> >  	if (status & VDPU381_STA_INT_DEC_RDY_STA) {
-> >  		state =3D VB2_BUF_STATE_DONE;
-> >  	} else {
-> > @@ -1486,9 +1492,9 @@ static irqreturn_t vdpu381_irq_handler(struct rkv=
-dec_ctx *ctx)
-> >  	return IRQ_HANDLED;
-> >  }
-> > =20
-> > -static irqreturn_t vdpu383_irq_handler(struct rkvdec_ctx *ctx)
-> > +static irqreturn_t vdpu383_irq_handler(struct rkvdec_dev *rkvdec,
-> > +				       struct rkvdec_ctx *ctx)
-> >  {
-> > -	struct rkvdec_dev *rkvdec =3D ctx->dev;
-> >  	enum vb2_buffer_state state;
-> >  	bool need_reset =3D 0;
-> >  	u32 status;
-> > @@ -1499,6 +1505,9 @@ static irqreturn_t vdpu383_irq_handler(struct rkv=
-dec_ctx *ctx)
-> >  	writel(FIELD_PREP_WM16(VDPU383_INT_EN_IRQ | VDPU383_INT_EN_LINE_IRQ, =
-0),
-> >  	       rkvdec->link + VDPU383_LINK_INT_EN);
-> > =20
-> > +	if (!ctx)
-> > +		return IRQ_HANDLED;
->=20
+> 
+> commit 3a376f5ffceb9df2e3023c6def306e4b00a9eba1
+> Author: Sascha Bischoff <sascha.bischoff@arm.com>
+> 
+>      KVM: arm64: gic-v5: Implement irq forwarding
+> 
+>      GICv5, like GICv4, supports direct injection of interrupts via the
+>      ITS. Move the existing GICv4 interface behind a common shim that selects
+>      the appropriate implementation. For GICv5 forwarding, the ITS driver
+>      replaces a host ITTE with one targeting a guest. The host no longer
+>      receives that interrupt until forwarding is removed and the host ITTE is
+>      restored.
+> 
+>> diff --git a/arch/arm64/kvm/vgic/vgic-its-v5.c b/arch/arm64/kvm/vgic/vgic-its-v5.c
+>> index 62c1ca8004007..e71cd67652bae 100644
+>> --- a/arch/arm64/kvm/vgic/vgic-its-v5.c
+>> +++ b/arch/arm64/kvm/vgic/vgic-its-v5.c
+> [ ... ]
+>> @@ -31,7 +32,41 @@ static void its_cache_drop_translation(struct kvm *kvm,
+>>   				       struct its_cache_translation_entry *entry)
+>>   {
+>>   	struct vgic_irq *irq = entry->irq;
+>> +	unsigned long flags;
+>> +	int virq = 0;
+>> +	bool hw = false;
+>> +	bool drop_forwarding_ref = false;
+>>   
+>> +	/*
+>> +	 * Multiple translations can share an LPI as we have no way of stopping
+>> +	 * the guest from doing so. Only the entry associated with direct injection
+>> +	 * may tear down the IRQ's forwarding state, as otherwise we can end up
+>> +	 * accidentally tearing something down. Realistically, this only would
+>> +	 * result in a performance degradation, but we might as well avoid that
+>> +	 * in the first place if we can.
+>> +	 */
+>> +	raw_spin_lock_irqsave(&irq->irq_lock, flags);
+>> +	if (irq->forwarding_owner == entry) {
+>> +		/* The entry is about to be freed, even if unforwarding fails. */
+>> +		irq->forwarding_owner = NULL;
+>> +		virq = irq->host_irq;
+>> +		hw = irq->hw;
+>> +	}
+>> +	raw_spin_unlock_irqrestore(&irq->irq_lock, flags);
+>> +
+>> +	if (hw && !WARN_ON_ONCE(gicv5_its_disable_direct_injection(virq))) {
+> 
 > [Severity: High]
-> Does returning early on !ctx in rk3399_irq_handler(), vdpu381_irq_handler=
-(),
-> and vdpu383_irq_handler() in drivers/media/platform/rockchip/rkvdec/rkvde=
-c.c
-> skip a required rkvdec_iommu_restore(rkvdec) call when a hardware error o=
-r
-> timeout races with rkvdec_watchdog_func()?
->=20
-> When a decoding error or hardware timeout triggers a self-reset (setting
-> RKVDEC_SOFTRESET_RDY in RKVDEC_REG_INTERRUPT on RK3399,
-> VDPU381_STA_INT_SOFTRESET_RDY | VDPU381_STA_INT_TIMEOUT |
-> VDPU381_STA_INT_ERROR in VDPU381_REG_STA_INT on VDPU381, or leaving
-> VDPU383_STA_INT_DEC_RDY_STA clear in VDPU383_LINK_STA_INT on VDPU383) and
-> rkvdec_watchdog_func() finishes the job before rkvdec_irq_handler() calls
-> v4l2_m2m_get_curr_priv(), ctx is NULL:
->=20
-> drivers/media/platform/rockchip/rkvdec/rkvdec.c:rk3399_irq_handler() {
-> 	status =3D readl(rkvdec->regs + RKVDEC_REG_INTERRUPT);
-> 	writel(0, rkvdec->regs + RKVDEC_REG_INTERRUPT);
->=20
-> 	if (!ctx)
-> 		return IRQ_HANDLED;
->=20
-> 	if (status & RKVDEC_RDY_STA) {
-> 		state =3D VB2_BUF_STATE_DONE;
-> 	} else {
-> 		state =3D VB2_BUF_STATE_ERROR;
-> 		if (status & RKVDEC_SOFTRESET_RDY)
-> 			rkvdec_iommu_restore(rkvdec);
-> 	}
->=20
-> 	if (cancel_delayed_work(&rkvdec->watchdog_work))
-> 		rkvdec_job_finish(ctx, state);
->=20
-> 	return IRQ_HANDLED;
-> }
->=20
-> Because rkvdec_watchdog_func() does not restore the IOMMU and the interru=
-pt
-> handlers clear the status register before returning on !ctx, the IOMMU do=
-main
-> mappings are never restored, breaking subsequent decoding jobs.
->=20
-> Since rkvdec_iommu_restore() only needs rkvdec, and ctx is only used by
-> rkvdec_job_finish() when cancel_delayed_work(&rkvdec->watchdog_work) retu=
-rns
-> true, should the status check and rkvdec_iommu_restore(rkvdec) still run =
-even
-> when ctx is NULL?
+> Is there a TOCTOU race here when the lock is dropped before calling
+> gicv5_its_disable_direct_injection?
+> 
+> While the lock is released, a concurrent host unbind operation could invoke
+> irq_bypass_del_producer, unset the forwarding, and free the host IRQ. The Linux
+> IRQ number could then be immediately reallocated to a different device. When
+> this thread resumes, it would unconditionally disable hardware direct injection
+> for the newly assigned device/VM using the stale virq identifier, potentially
+> causing lost interrupts.
 
-This is plausible, but I don't think the following action in place in the
-software watchdog is enough to cancel a stalled decoding:
+I agree that this is an issue with the commit as posted here. I've 
+re-worked this to keep the lock held while disabling direct injection. 
+This prevents a concurrent unbind from freeing or reusing the host IRQ 
+until we're done with the disable operation. At the point where the lock 
+is release, we no longer use the host IRQ.
 
-	writel(RKVDEC_IRQ_DIS, rkvdec->regs + RKVDEC_REG_INTERRUPT);
+> 
+>> +		raw_spin_lock_irqsave(&irq->irq_lock, flags);
+>> +		if (irq->hw && irq->host_irq == virq &&
+>> +		    !irq->forwarding_owner) {
+>> +			irq->hw = false;
+>> +			irq->host_irq = 0;
+>> +			drop_forwarding_ref = true;
+>> +		}
+>> +		raw_spin_unlock_irqrestore(&irq->irq_lock, flags);
+>> +	}
+> [ ... ]
+>> @@ -50,7 +85,8 @@ static void its_cache_drop_removed_translations(struct kvm *kvm,
+>>   
+>>   static int its_cache_add_translation(struct kvm *kvm, struct vgic_v5_its *its,
+>>   				     u32 device_id, u16 event_id,
+>> -				     struct vgic_irq *irq)
+>> +				     struct vgic_irq *irq,
+>> +				     void **owner)
+>>   {
+>>   	u64 key = ((u64)device_id << 16) | (u64)event_id;
+>>   	struct its_cache_translation_entry *entry;
+>> @@ -78,6 +114,8 @@ static int its_cache_add_translation(struct kvm *kvm, struct vgic_v5_its *its,
+>> +	struct its_cache_translation_entry *old;
+>> +	struct hlist_node *tmp;
+>> +	HLIST_HEAD(removed);
+>>
+>> -	entry = kzalloc(sizeof(*entry), GFP_KERNEL);
+>> +	entry = kzalloc_obj(*entry, GFP_KERNEL);
+> 
+> [Severity: High]
+> Is kzalloc_obj defined anywhere in the tree? It looks like this might be a
+> typo for kzalloc(sizeof(*entry), GFP_KERNEL) which will cause compilation
+> failures.
 
-It only prevents some late IRQ (but not all) from triggering. But next time=
- you
-try and program the IP, it sill running in the background, and the request =
-will
-likely fail and timeout again. It will only recover once the IP have gone
-through a power cycle. Its even a bit more worrying, since with
-sw_dec_clkgate_e, some mmio may hit some gated portion of the IP, causing a=
- CPU
-hang. Intuitively, sw_softrst_en_p should be used somehow, otherwise a hard
-reset.
+Uh, yes. I certainly hope so! kzalloc_obj is defined in 
+include/linux/slab.h, which this file includes, and this allocation 
+predates this commit. I'm not fixing this non-issue.
 
-Bottom line, I think fixing what sashiko reports here should be handled
-separately. The provided patch cleanly fix the ciritical aspect of the issu=
-es,
-which is a kernel oops. The fact that software watchdog recovery is weakly
-implement seems like a separate issue.
+> 
+>>   	if (!entry)
+>>   		return -ENOMEM;
+>>   
+>>   	entry->key = key;
+>>   	entry->irq = irq;
+>>   
+>> -	raw_spin_lock(&its->translation_cache_lock);
+>> +	scoped_guard(raw_spinlock, &its->translation_cache_lock) {
+> 
+> [Severity: High]
+> Should this use the irqsave variant of scoped_guard? Acquiring
+> translation_cache_lock in process context without disabling local hardware
+> interrupts could lead to an ABBA deadlock. If irqfd_wakeup runs in HardIRQ
+> context on a CPU that already holds this lock, the interrupt handler might
+> spin forever trying to acquire it.
 
-Nicolas
+With the series as posted, this is an issue. Now that I've reworked it 
+to use an XArray to track the translations it is no longer an issue. The 
+lookup is now using RCU for the XArray.
 
->=20
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261026124808.64=
-2373-1-a.kazinsky@ideco.ru?part=3D1
-> _______________________________________________
-> media-ci mailing list -- media-ci@linuxtv.org
-> To unsubscribe send an email to media-ci-leave@linuxtv.org
+> 
+>>   		hash_for_each_possible_safe(its->translation_cache, old, tmp,
+>>   					    node, key) {
+>>   			if (old->key == key) {
+> [ ... ]
+>> @@ -129,7 +167,8 @@ static void its_cache_clear_translations(struct vgic_v5_its *its)
+>>   
+>>   static int its_cache_look_up_translation(struct vgic_v5_its *its,
+>>   					 u32 device_id, u16 event_id,
+>> -					 struct vgic_irq **irq)
+>> +					 struct vgic_irq **irq,
+>> +					 void **owner)
+>>   {
+>>   	u64 key = ((u64)device_id << 16) | (u64)event_id;
+>>   	struct its_cache_translation_entry *entry;
+>>
+>> -	raw_spin_lock(&its->translation_cache_lock);
+>> +	guard(raw_spinlock)(&its->translation_cache_lock);
+> 
+> [Severity: High]
+> Similarly here, acquiring translation_cache_lock without disabling interrupts
+> leaves the system vulnerable to the same ABBA deadlock if the lock is
+> contended by HardIRQ context.
 
---=-7/8y/MxC0rZQblNeEr6G
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+This is the same issue as reported above. The translation_cache_lock has 
+now been removed, and we're not taking any lock on the XArray itself. 
+Therefore, this is no longer an issue with the upcoming repost.
 
------BEGIN PGP SIGNATURE-----
+> 
+>>   	hash_for_each_possible(its->translation_cache, entry, node, key) {
+>>   		if (entry->key == key) {
+> [ ... ]
+>> @@ -657,8 +735,8 @@ int vgic_v5_its_inject_cached_translation(struct kvm *kvm, struct kvm_msi *msi)
+>>   static void vgic_v5_its_inject_lpi(struct kvm *kvm, struct vgic_irq *irq)
+>>   {
+>>   	kvm_call_hyp(__vgic_v5_vdpend, irq->intid, true,
+>>   		     kvm->arch.vgic.gicv5_vm.vm_id);
+>>   }
+> 
+> [Severity: High]
+> Does this pass the full typed INTID directly to the hardware GIC VDPEND
+> instruction?
+> 
+> GICv5 INTIDs encode the type in bits [31:29]. The architecture limits hardware
+> instructions to expecting a raw hardware ID. Should this be masked using
+> vgic_v5_get_hwirq_id(irq->intid) to avoid feeding the type bits into the
+> hardware operand?
 
-iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaujXBAAKCRDZQZRRKWBy
-9MskAQD3b7gS95y43eTYkWaXgC41xSrlUpJg5C8FGUwOKgM3JQD8Dp3EDO4MM3Ur
-30iTd40oHKcGEJFmSsnCcYdEqWZwsAI=
-=R8vE
------END PGP SIGNATURE-----
+Yes, of course this is passing the typed INTID directly to GIC VDPEND! 
+We need to tell the GIC which type of interrupt we are injecting, so 
+that's absolutely by design. We could arguably split this into type and 
+ID, but what's the point? All we'd do is reconstrut that again on the 
+other side.
 
---=-7/8y/MxC0rZQblNeEr6G--
+Leaving this as is.
+
+> 
+> [ ... ]
+>> diff --git a/arch/arm64/kvm/vgic/vgic-v5.c b/arch/arm64/kvm/vgic/vgic-v5.c
+>> index c90e00f56b298..970df3f41cf24 100644
+>> --- a/arch/arm64/kvm/vgic/vgic-v5.c
+>> +++ b/arch/arm64/kvm/vgic/vgic-v5.c
+> [ ... ]
+>> +int kvm_vgic_v5_set_forwarding(struct kvm *kvm, int virq,
+>> +			       struct kvm_kernel_irq_routing_entry *irq_entry)
+>> +{
+>> +	struct vgic_v5_its *its_data;
+>> +	struct vgic_irq *irq;
+>> +	void *owner;
+>> +	bool hw;
+>> +	int ret;
+>> +
+>> +	if (!vgic_has_its(kvm))
+>> +		return 0;
+>> +
+>> +	/* Look up the ITS; bail out if we can't look it up */
+>> +	its_data = vgic_v5_get_its(kvm, irq_entry);
+>> +	if (IS_ERR(its_data))
+>> +		return 0;
+>> +
+>> +	/*
+>> +	 * Look up and cache the translation. Bail out if we failed to look up
+>> +	 * the translation at this stage. If the translation becomes valid at a
+>> +	 * later stage, we should fall back to software-based injection.
+>> +	 */
+>> +	guard(mutex)(&its_data->its_lock);
+>> +
+>> +	ret = vgic_v5_its_resolve_lpi_locked(kvm, its_data,
+>> +					     irq_entry->msi.devid,
+>> +					     irq_entry->msi.data, &irq, &owner);
+>> +	if (ret)
+>> +		return 0;
+>> +
+>> +	scoped_guard(raw_spinlock_irqsave, &irq->irq_lock) {
+>> +		hw = irq->hw;
+>> +	}
+>> +
+>> +	if (hw)
+>> +		goto out_put_irq;
+> 
+> [Severity: Low]
+> Does this mix goto-based error handling with scope-based cleanup helpers like
+> guard() and scoped_guard()? The kernel cleanup guidelines strongly discourage
+> mixing these in the same function to avoid confusing ownership semantics.
+> Should this function be standardized to use only one of the approaches?
+
+Yeah, agreed that the posted code is confusing and does mix those two 
+styles. I've dropped the gotos and have replaced them with explcit 
+reference drops and returns, instead. The scoped_guard()s remain.
+
+> 
+> [ ... ]
+>> +static struct vgic_irq *vgic_v5_host_irq_get_lpi(struct kvm *kvm, int host_irq)
+>> +{
+>> +	struct vgic_irq *irq;
+>> +	unsigned long idx;
+>> +
+>> +	guard(rcu)();
+>> +	xa_for_each(&kvm->arch.vgic.lpi_xa, idx, irq) {
+>> +		if (!irq->hw || irq->host_irq != host_irq)
+>> +			continue;
+> 
+> [Severity: Medium]
+> Is it safe to locklessly read the irq->hw bitfield here?
+> 
+> This bitfield is modified concurrently by kvm_vgic_v5_set_forwarding and
+> kvm_vgic_v5_unset_forwarding under irq_lock. Concurrent read and write access
+> to a C bitfield is undefined behavior and can result in torn reads or
+> corrupted data.
+
+These now happen under irq_lock, and therefore concurrent updates are no 
+longer possible. We hold the lock when setting up and tearing down the 
+forwarding, so these should not be able to unexpectedly change 
+underneath us.
+
+> 
+>> +
+>> +		if (!vgic_try_get_irq_ref(irq))
+>> +			return NULL;
+>> +
+>> +		return irq;
+>> +	}
+>> +
+>> +	return NULL;
+>> +}
+>> +
+>> +void kvm_vgic_v5_unset_forwarding(struct kvm *kvm, int virq)
+>> +{
+>> +	struct vgic_irq *irq;
+>> +	bool drop_forwarding_ref = false;
+>> +
+>> +	if (!vgic_has_its(kvm))
+>> +		return;
+>> +
+>> +	/*
+>> +	 * Note: We don't remove the entry from our translation cache here. It
+>> +	 * is up to the guest to invalidate the old translations, and hence the
+>> +	 * removal path is tied into ITS_INV_DEVICER and ITS_INV_EVENTR, rather
+>> +	 * than being explicitly called here.
+>> +	 */
+>> +	irq = vgic_v5_host_irq_get_lpi(kvm, virq);
+>> +	if (!irq)
+>> +		return;
+>> +
+>> +	if (WARN_ON_ONCE(gicv5_its_disable_direct_injection(virq)))
+>> +		goto out_put_irq;
+>> +
+>> +	scoped_guard(raw_spinlock_irqsave, &irq->irq_lock) {
+> 
+> [Severity: Low]
+> This is another instance of mixing goto-based error handling alongside
+> scoped_guard(). Should we convert this completely to scope-based cleanup or
+> stick entirely to traditional goto labels?
+
+I've done the same as I said above - the gotos are now gone and have 
+been replaced with explicit returns instead. scoped_guard() is still 
+used to handle the locking.
+
+> 
+>> +		if (irq->hw && irq->host_irq == virq) {
+>> +			irq->hw = false;
+>> +			irq->host_irq = 0;
+>> +			irq->forwarding_owner = NULL;
+>> +			drop_forwarding_ref = true;
+>> +		}
+>> +	}
+>> +
+>> +	if (drop_forwarding_ref)
+>> +		vgic_put_irq(kvm, irq);
+>> +
+>> +out_put_irq:
+>> +	vgic_put_irq(kvm, irq);
+>> +}
+> 
+
+Thanks,
+Sascha
