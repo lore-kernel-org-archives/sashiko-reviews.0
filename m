@@ -1,57 +1,130 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=216.40.44.11
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793653464;
-	b=vGtF2fXfSBwbUmrgxmN6jOWuwXa4H0A+IEswD0mu6aN67PTXlJydf7LQSgHECA1Fn8LY
-	 ltVOVlImPDnvKbb/6cxUaFIIVeg+H7S43ot2QWmY9VUn5QM4b5bzX9gQfxJv5GcKBc6hd
-	 TnaeJ6eiEI28J9ud441FPm7TdkmmV7ijWsG2auWrKF88KSej3O8dsKpoDRXvOUHrh05Om
-	 WOcJ5UHiI22Xb4wGuat9NmibgdkS+SDrerso8w/cNOCpZgCkrHkS4ChCbHT1HObU+oleS
-	 6VIXephU7G+Zj4dHrcByeGp7SrchZ1EhX9f+dQfkrO0ymFC3kkEnHAizJq/Kw37l5wQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793653464;
-	h=DMARC-Filter:Received:Received:Date:From:To:Cc:Subject:Message-ID:
-	 In-Reply-To:References:X-Mailer:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding:X-Rspamd-Queue-Id:X-Stat-Signature:
-	 X-Spam-Status:X-Rspamd-Server:X-Session-Marker:X-Session-ID:
-	 DKIM-Signature:X-HE-Tag:X-HE-Meta;
-	bh=Lu/Edk/hEeIWELnkpeK8o79z0XChxvhzC8tYyyWT3uY=;
-	b=Vj0gBb8p0a7ukIu6M2vPiBVgsfEls9katc85gEBIjCOHnR9IFN6s1fBPy75wLCI4ExGw
-	 H7Zl6hgf8iEeQIK2P5br+HYlMeH63rr9ynOtDPEBvAVebyfx6r+W2dJFTthproHWSQEnD
-	 DheHb31QklrlUN6PizLCQz5+rpXryMYE+EGsPD/SzViSddjdLiarV+CH2rQhyyJn30x9S
-	 UJFp9iIHzcNSNmGKoc0Eo1T2lturlYvYndAwhn/Ccb794as48P8ChuNeAUPkNPupTejiD
-	 7JvYOeBZ1UGC/6+dy7GpsuTfduMyN/IY0ZKEgSNEdIHouL3/ipvwTsSFn6TQjt1hm9Q==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=goodmis.org;
-	spf=pass smtp.mailfrom=goodmis.org;
-	dkim=pass header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=YkeOZMtC;
-	arc=none smtp.remote-ip=216.40.44.11
-Received: from relay.hostedemail.com (smtprelay0011.hostedemail.com [216.40.44.11])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.remote-ip=198.175.65.14
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=fail;
+	t=1793653763;
+	b=0yc2e4ahwR2cqtEI430MJ/rWSswubF6Rj7c9GPKrUDPuu2D9YhWDMux0NJET4vmmRaB/
+	 eUzLzXOUjZYTEnUeL+SC7EZp5uUWgB7572Jme30VJxmruRisXxkMTtMo9h7osQejc3e+n
+	 Fx56czDPsWi05QiFmhP2JrIIuFBEPD/gb2NcJpRfOTVUn6sC8vFQkaBmZJ05m7PVwRVkG
+	 fO111sj9RQhJAZa8yJpK/SmmLgR1MganhiZpaXEmKcWAl7tMcz2NYIpxHSP6EM5F6Lh6P
+	 ZSL1PKkDJ9YWcqR1gbbx/+gevZJwBPqIL+3KPTDOiD3cdfn2dphRdwLTOeI20FPD1tA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793653763;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
+	 Received:Received:Received:Message-ID:Date:User-Agent:Subject:To:
+	 References:From:Content-Language:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-ClientProxiedBy:MIME-Version:
+	 X-MS-PublicTrafficType:X-MS-TrafficTypeDiagnostic:
+	 X-MS-Office365-Filtering-Correlation-Id:X-MS-Exchange-SenderADCheck:
+	 X-MS-Exchange-AntiSpam-Relay:X-Microsoft-Antispam:
+	 X-Microsoft-Antispam-Message-Info:X-Forefront-Antispam-Report:
+	 X-MS-Exchange-AntiSpam-MessageData-ChunkCount:
+	 X-MS-Exchange-AntiSpam-MessageData-0:X-Exchange-RoutingPolicyChecked:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-AuthSource:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-OriginalArrivalTime:
+	 X-MS-Exchange-CrossTenant-FromEntityHeader:
+	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
+	 X-MS-Exchange-CrossTenant-UserPrincipalName:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
+	bh=vVvutdzLQGKR2l8sNDzXvfu4MmGKFNrGce38m+IuvFk=;
+	b=xJHbNOLWFjBDiPTdXVWF/lX3KXEB73H1sl+tYqxmP7DTASLEOTsMxlsUG/2fzf1dqAGj
+	 3Q9/FzuRgdzL2isI/ThtGVZoIN/prGm05su6YcwHUXn+Bv6VrB7y0KPP9uLZfFjOUnVbt
+	 4SYWOkGqO7z662T1TAjM3zVhnj02yO7DbO4YObwH3rkyCI9exyIbJzVYuSmLbVnpuUe7M
+	 +aFnoktFsZbH/QjX6zJUPOp2IHqM3ZozwLHOprlXp9Nm+rZjyeLCoy9Ap1f+X7YT4j2mK
+	 R0tnwA7B7eHwUfMibsZHdr+N2af8hd0I8JElzmAfzpd1ofm/YIt9y73mnfaw1Oe9ZjQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=EqAMG5A0;
+	arc=fail smtp.remote-ip=198.175.65.14
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E445E606A326
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 21:04:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E445E606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02961606A324
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 21:09:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 02961606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=goodmis.org header.i=@goodmis.org header.a=rsa-sha256 header.s=dkim1 header.b=YkeOZMtC
-Received: from omf13.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay07.hostedemail.com (Postfix) with ESMTP id B014B1601E6;
-	Mon,  2 Nov 2026 21:04:21 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf13.hostedemail.com (Postfix) with ESMTPA id 24E7420011;
-	Mon,  2 Nov 2026 21:04:20 +0000 (UTC)
-Date: Mon, 2 Nov 2026 16:04:18 -0500
-From: Steven Rostedt <rostedt@goodmis.org>
-To: sashiko-bot@kernel.org
-Cc: sashiko-reviews@lists.linux.dev, "Linux Trace Kernel"
- <linux-trace-kernel@vger.kernel.org>
-Subject: Re: [PATCH v4] tracefs: Add read-only eventfs filesystem at
- /sys/kernel/events
-Message-ID: <20261102160418.37659944@gandalf.local.home>
-In-Reply-To: <sashiko-outbox-194145@kernel.org>
-References: <20261102152748.614ddc8f@gandalf.local.home>
-	<sashiko-outbox-194145@kernel.org>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=EqAMG5A0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793653762; x=1825189762;
+  h=message-id:date:subject:to:references:from:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=jBzxkqhQs2g+DT62/IHr4fr8qEF9NjQ93u3cZLJ2U6Q=;
+  b=EqAMG5A0H7oA42E7TcHYLWKkr5wmarBtLty4t79ab/SSIdGCludmTSxG
+   f1gMBjdeVXbIAgB0AlcvpC+gcYuxmpR43q0pwPcp6qdnICua4fdK3gJPH
+   krWrZKuv7MtAgisZhc6qL2SCUQ+GMRIrjKjY6pW4QuEqPK3c7EhjNyKLK
+   1AaH7zrkA1HjKZ3mSQZYKEX75yJaGcWGsgu98DNNqcVFPwSgKpy5ftkyz
+   PfkIX5CO9O62wKKYvjhmqWKRT36XyGIPCt8Sy1eFaVc9Q6Djj4T+guU+o
+   A6UQV2tgwzpyucJHWyK4v7DTZVVF6F1yv1uC4uILkPf5JM1ORqsIva4Qy
+   A==;
+X-CSE-ConnectionGUID: KRD/hdhIQYmVubCBylTpfg==
+X-CSE-MsgGUID: utUcQRw8T4qGnapnw1lCvg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11954"; a="2245332"
+X-IronPort-AV: E=Sophos;i="6.27,191,1787036400"; 
+   d="scan'208";a="2245332"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 13:09:22 -0800
+X-CSE-ConnectionGUID: Hmgpy651Qr+r3tfd3pYYaA==
+X-CSE-MsgGUID: GF5DKS1LS+CpIA6c/fKR4A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,191,1787036400"; 
+   d="scan'208";a="6229826"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 13:09:22 -0800
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Mon, 2 Nov 2026 13:09:21 -0800
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56 via Frontend Transport; Mon, 2 Nov 2026 13:09:21 -0800
+Received: from BL0PR03CU003.outbound.protection.outlook.com (52.101.53.39) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Mon, 2 Nov 2026 13:09:19 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JBDCjZ8RYdHtDnRa5PJc9ynBdkLqb2AEmJqu/fKzaDY/+w4HUQ7Qh9NdD65v/khA0ue1KOUwXONouCeKeE3Du5MQOZxNi2o/q+CNHYuNxyWiJcOL6N5E7lJl+2pP6/5JcNIeie9Hry7sUYjCqcu1i38g07YYrEc9YxqUmPev9/x7AIMmmTncoX0LlnnYHIHDCeuw0BXV9hPXf/dp7R8ZMuo3jSvl6kF7C+8ZGq6KIOP9nFNPWgP4W+tVEtiPBMYbzsZEUQft7Eo/HswpWtDTYyxpomKfWIyFnXh+0aNYgf5LpELu9CaKLwHqIs5ELtzT8ula93lx2wCZNTl1M4Du+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vVvutdzLQGKR2l8sNDzXvfu4MmGKFNrGce38m+IuvFk=;
+ b=fSKnnTA23AM117QvpY1zZRhA5H5kYkzYt8+QxXOfh7/DckEEjNgbrWKBY6TbGHuqzLq4mEq88MZ+e0E/PPZ8y78RSQy9sWqFRXI1VZQgEGXdEUn5vGSvM5LC3/3SCl4MQPt3UXC1qid1S6+040lTjLevi4zonpHi6e54xIBEi81Tdw9dif/H06HVDNOHdER8G5cqSwUcyrba4d5wsI+FZntuc+65frO2H65S0KUODC4bAFvEFmiSe1vo3eBspDwsV7oJ+lt54ntHIwTNeeKBfQnqWXUWuSxVZOHObEq3Qd+k+9HaaSogPWd1qJwqoxqUm/vznOzm+Zj3cMMFQnAB+A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS0PR11MB7381.namprd11.prod.outlook.com (2603:10b6:8:134::14)
+ by LV3PR11MB8578.namprd11.prod.outlook.com (2603:10b6:408:1b3::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Mon, 2 Nov
+ 2026 21:09:12 +0000
+Received: from DS0PR11MB7381.namprd11.prod.outlook.com
+ ([fe80::4c39:dfe6:d6dc:6f58]) by DS0PR11MB7381.namprd11.prod.outlook.com
+ ([fe80::4c39:dfe6:d6dc:6f58%6]) with mapi id 15.21.0569.011; Mon, 2 Nov 2026
+ 21:09:12 +0000
+Message-ID: <c858f6d0-2adb-4bd6-9889-19e14b0e30eb@intel.com>
+Date: Mon, 2 Nov 2026 13:09:10 -0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH iwl-net v2] ice: validate VF FDIR queue and queue region
+ actions
+To: <sashiko-reviews@lists.linux.dev>, Aleksandr Loktionov
+	<aleksandr.loktionov@intel.com>, <intel-wired-lan@lists.osuosl.org>
+References: <20261013144435.1406126-1-aleksandr.loktionov@intel.com>
+ <sashiko-outbox-169952@kernel.org>
+From: Jacob Keller <jacob.e.keller@intel.com>
+Content-Language: en-US
+In-Reply-To: <sashiko-outbox-169952@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4P220CA0027.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:303:115::32) To DS0PR11MB7381.namprd11.prod.outlook.com
+ (2603:10b6:8:134::14)
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -61,326 +134,141 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 24E7420011
-X-Stat-Signature: hn9gimzddbrj1m643rrfpzsk4edkjueg
-X-Rspamd-Server: rspamout08
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX1/an2PhxoYZBHR9JK7yBowawPipqRDY9v4=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=goodmis.org; h=date:from:to:cc:subject:message-id:in-reply-to:references:mime-version:content-type:content-transfer-encoding; s=dkim1; bh=Lu/Edk/hEeIWELnkpeK8o79z0XChxvhzC8tYyyWT3uY=; b=YkeOZMtC6oo6y1BSMJOsZSmkZGhdONHKlqhO6C8EmLDnq8J+RDuRhsd2OLX29G5DeR09wkQM7BWvsTpYCaQE6iK+KbqmjigqDQ9bcwFkrr+qp95093CfbsreBSKfcPqI5vCiXz5Y2a/sdaP0IQAUXDBitp3ROp+Uls22yTm2XpU=
-X-HE-Tag: 1793653460-416114
-X-HE-Meta: U2FsdGVkX18RCXJdbsan6eNFPeL+DYNiYyX6+mCLpldx/pgwtPiLYKb0lzzvKIfF5RSXeqIHlgZeCBVE9kdE6dexXJxE8+zy359J10LsFa2+wVAARPpF2nITKYTS80iZBFnVcRsi/qqEzvbdyiuYvn/bkFDcy6cepOf0d/lcOKhyYovHNHoamlO6WiOhw15KKTUkGdoVbE/0wXGRW2L8PW7KQdZ/4zz6Ebo4umVJiU0T0gx6AqBq6Bjn2YYdpn6Zw5Go8+uXj1vCmZPEE0T7s6enGfpfyfHGCDnv3wEhW42KUC0StEpMXu0tPtddWU3dkqqeqoDLz7Qzv1PLUj7QVWCB5urNL6hX
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS0PR11MB7381:EE_|LV3PR11MB8578:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3b62897e-3e4f-4d97-af02-08df39258b2c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|23010399003|366016|6133799003|10067099003|261102123227099003|22082099003|18002099003|3023799007|56012099006|4143699003|261026121527099003|11063799006|261022105027099003|261022075727099003|261021121427099003|261009223027099003|261028144727099003|261026140227099003;
+X-Microsoft-Antispam-Message-Info: oWihULSKyn6KIwqaV6jojvI2HKgSC5WWaf5HYP6w7UjtpRQ0TwdFr3Njh/aoZjKTRDATAeHta6aTz+qN/oPD5pUS9jwEHd9VvNUoaAWlh7plmKk3Vp0IM7mlvJu2D7RkxbasR0JdJC2Ip/yGVOzm67M15I9WvJceF3nsNSud4/h/VhtqZRVSerEeTake0BgI6+SNN6bhH/NpalxNHT8FdeJSwT8kPw0z+R9BnzfBFGzFIaFdw53SVbj9QVLT3u33L30h4xyicUrt8kuJ7en5ZFWJu9hH9VrULQoew+y/SQTRS6X7lDwF4WMGqKAwdm7UZt04SSmp5TyysQE6kD+qYHli4+UIPsZ9rtr8YEZ5ZH2Wg9ZwzP9iaJYwp6EsGTVr/vOuPmpEh5mbS3jfcJqoMBh7yot6R9V1XyvHjEDlO1b+x+RhYm3lNn+D08DLrZpdveQcEKGrlEJ36LKNoSx4DkwEqG0/5GFH2Kb6lLZXPVdpYCF9EQNOXVC+dtsv7EjL1ePg2N8j8Rt7aZR2A7wkss3Aa8J1QeAGuYsYCmlXYmCSx7QVn0Oq6OYcaTabNIknlARGM/KV7C4Dw/sIgY2R29L7V+uircN2PjRTzcl0vRJaNBjhUMoMEB5zpEB2On4Sm8dhruf6KDxfSuTmnc/betGDqzjCAYDVWQLb8blCZmE=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR11MB7381.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(6133799003)(10067099003)(261102123227099003)(22082099003)(18002099003)(3023799007)(56012099006)(4143699003)(261026121527099003)(11063799006)(261022105027099003)(261022075727099003)(261021121427099003)(261009223027099003)(261028144727099003)(261026140227099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Z3kxbUtwVlZLaHl3ZXo1VGlsUFRJMmUvSWxLYURRUjg2RzlxSFhPcnJpcXlp?=
+ =?utf-8?B?ZU82WEdmaWl6ZWNJVEJxbHhtdTR0a2NRWnhEeVhKb0FWZ0p2VHhMN2kxVVNR?=
+ =?utf-8?B?aC80ZnNDTUdVdFlRcUVxeGZhaXdxUVg2eFVOWVpjeTlFdExUeGlITDBSVnFK?=
+ =?utf-8?B?YjhPcTA0UWd0ZDAzekRGZWJ3YkwwaUpmNUs3TFhHTFNHdkhXeXZ0d216Yi9W?=
+ =?utf-8?B?R0taa05tOEtRQXFwTUVBTldzY0xhVzQ3ZWVHTm9vWSsyTjNlODdPQXN1UmVw?=
+ =?utf-8?B?UU1yOE4zRXZ1cDIzNkNqUFZrNnVBN2I5UkU4OUpwNmkveHRYc3lXNHI4bjJm?=
+ =?utf-8?B?ZFc0Y204VVl2dDNtMUJFaFVEOW0ydk9KZHFuZmVwdGo5YzNBQUV6eXRSVHhZ?=
+ =?utf-8?B?WmM5ZktKUXYvbkcwaDlwU3QxeTcvdGlaYWpid3VuMGZHMWpza0xOY29PWHR2?=
+ =?utf-8?B?M1ZuRTExNlUrODdsNWJ5VW9rVy81NjI2b3Y1Sk84KzBvY0xORitOWDFrUGRh?=
+ =?utf-8?B?T1lnWVZYVW5lbGFaSXYyQUo1aXhEZldJK3ZIRVpVZDkrSk54dnR3TWg2ZGpG?=
+ =?utf-8?B?V1M4YTFhRXdROGxlOXlqQjJBQkxCV0o5UzdURyszaStRWWRaSVpWaUVoNzRo?=
+ =?utf-8?B?ZkdaZ1FrWjBDZkRzWVRPN1h2dGdCZVlyWFZTS294ZlRtQ0xvSWd0aHlyZi9D?=
+ =?utf-8?B?MEE2c25lVGRWczE2Q2lsUkU2MUo4WFl6ZDY3WVRZUjBlVnJvY0dnTVJGS1Uz?=
+ =?utf-8?B?MlFla3dlQjVXN3ZRSjM2S0lTVHpycWN3TnBrQlpOamluUFZDSHdjMGlBb2pT?=
+ =?utf-8?B?OENJbDlwNlVSR1Z4bFUwVjFYUmJGVm5rVmJaT1hQZC9yQW83MUNqa2JjYTVa?=
+ =?utf-8?B?ZjhYY1BzKy9SRWhhaTA3S1l0U3BxMWdVVFJUYkxVTlB1cVp5N1lXVC8ybDcw?=
+ =?utf-8?B?c3ZDUFRoL3ByTnFXOFR0bHNTUWFPSkZyd0NIS1o5WHNlbnYvNlA2N3dBRkdG?=
+ =?utf-8?B?MHRiTTBpbnI0VFhxNTRXZUF3U3E3OHBkSzE4aSsyNmNRTG45U05oYnlCVm9p?=
+ =?utf-8?B?dm43QkF2aXJwMTU2UGNtMzNGL2NEN0R4eWdmd2dES216Z09QRytUUEVHNFoy?=
+ =?utf-8?B?bkZjN2JwSmdIY2VWS2xuNXU3dUkrTlVNTSt5Z29SQVllWHBIRUNEa3gwbkJY?=
+ =?utf-8?B?QlZpTlNzNVR4ZGUrdWJGOElwRmp1bFNzVTIzRWFYWVZrRkQ5ckxwWVAvaTFR?=
+ =?utf-8?B?dVp0eFV2UnRDNVFJVFpEc05DWDhwNVVHYUlueUJ3ZFFqSTZYK0ZIcEppTmE5?=
+ =?utf-8?B?eHhCMkhxdnBXSEUwNE5rNGpNbVExNy9uRTR4RXZlOCsxYVJlalpPQlV3UEtL?=
+ =?utf-8?B?WjF1SE9WOWkvSUVBUXRtQStmc0libmI0djF2cnA4VXF1VlBPSXlvY29Pb2Ra?=
+ =?utf-8?B?dkljR2xGd0QreUZocGFVdHREWndBYW5wUDAvK05RL0ZGSUZoNE0zU05Zb3FI?=
+ =?utf-8?B?N08yc045WW5IcGUrRitaR09BQWVrcjRENnMxZUtpUnpoY25QbmZBQW9sOFlD?=
+ =?utf-8?B?VHNDbVU2cUZsWkI4YVhsRDJMUm1LaThWYThkU0Vsc3hxcGdlYTU1SjdoK094?=
+ =?utf-8?B?ekZBTk84Z1p6RldTR0ZSR1NHU2lPYUZONDZlWEdINWNPMHBObWF0UTVxUCsz?=
+ =?utf-8?B?Q0dJUHduOTNlQ01YdkpaRk1ZWE1hVTdiTjQ3anFMTHJMaThnSHRJMzRZY2xt?=
+ =?utf-8?B?RUlpY2JMNWVEK0dYYU4zUVUrYWR3MSs2dUJWWTJQTElGV0FpOFlTakxuSXc5?=
+ =?utf-8?B?NkVLYWhSdUJPcmVUN1FSOGY2bVZpcUZ4K3k5N2JuRC9pQ01DdndndnM3TklY?=
+ =?utf-8?B?ZWJONWltbndjclE1MFVpZE9BR2VXbURHTHRMbC9EaFR4VDl0eXE5K1RxVmNv?=
+ =?utf-8?B?WHh1UytpMlZqZXdVcm5FaHM0VUl3dms0UmF5YlNpTG1DS3lWcG9aSWgxNkRU?=
+ =?utf-8?B?TzROQWo1bjI0bWhQTXpvbVJzMjZ0cHNWUjdrTXkyV0MyTXcxcTZZMkc4Znd0?=
+ =?utf-8?B?Sm15RWVwNEhUUFJJcmoyRDN0bUR3emRuaDhTeUxETWx6dFZGQ1paWWl2UjJL?=
+ =?utf-8?B?azkyaUs1SWRMQzllOXlIZEN1WG5FMllwajdZSEEyUUp5bnU5OWkyd1lDcU1B?=
+ =?utf-8?B?MytZbS9YeFI0TDdNSXovRDBOaVJHZHlLKzZaVW5jOVlYbjZxalNhaVZ5OWow?=
+ =?utf-8?B?SE44ZXBleS9OWkIrcXA3Y1dnRzRReFhLTXN2YWZjekpuMzRKK3cxYUpoemJn?=
+ =?utf-8?B?blhFQXl3bXA1Y1Z4ZjFNc3NzRW1vcjhadWlDVjF4cHhMMFQ4NjZXUT09?=
+X-Exchange-RoutingPolicyChecked: VoYvFgPf+yb+CYJXM9tvBkJVoKpnSL7bL82eS5Q2qrikjxEsaKE0jxePCr0oB6OLJyZxHC9PkMOsBFYsSqokPVt1jNdLXuit/RoVWlRs0tM1CnxLsBmntTGb+puQWhVOa/aAXL77WfD/vnpdDf/A7KIj1z65dzROzL0IQVZzg/pNhsHcbtJ0sZpEd0Jn/a9DQU82WYkk3jC1CP5Xjue3tXXzY6U3DHw+1taKSq/uFl+1CQ3hB2pgXwj34ntWimXqT9LIAP5pcXc+Tb+y+5wXKS9wLYfA6JkvFKYIE8Gs/Ev++ueDZ/jDpvjc5yS3XUV7ZD4AmuPgrz8ykLkbaScRlg==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3b62897e-3e4f-4d97-af02-08df39258b2c
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB7381.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Nov 2026 21:09:12.2798
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 19g23TzwR1YL7Zm7hdaIDmI1wcr8VlVI0SUEv36rFyfvi62QFZfxoeWkcuhXA7FQfLdkVgjf9caGTdcQm/+mGr23JrUNBulAXtjqA/Mv4+I=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR11MB8578
+X-OriginatorOrg: intel.com
 
-On Mon, 02 Nov 2026 20:44:51 +0000
-sashiko-bot@kernel.org wrote:
-
-
+On 10/13/2026 7:58 AM, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [High] ice: memory leak of pkt_buf and prof in ice_vc_add_fdir_fltr error path
+> --
 > 
-> > +static int eventfs_ro_get_tree(struct fs_context *fc)
-> > +{
-> > +	return get_tree_single(fc, eventfs_ro_fill_super);
-> > +}
-> > +
-> > +static const struct fs_context_operations eventfs_ro_context_ops = {
-> > +	.get_tree	= eventfs_ro_get_tree,
-> > +};  
+> commit 6477a5eb13b0a0dff01249d4a775aff5939e63e5
+> Author: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 > 
-> [Severity: Medium]
-> Can a remount clear SB_RDONLY on the eventfs superblock?
+> ice: validate VF FDIR queue and queue region actions
 > 
-> eventfs_ro_fill_super() sets sb->s_flags |= SB_RDONLY, but
-> eventfs_ro_context_ops does not define a .reconfigure callback. In
-> reconfigure_super(), when fc->ops->reconfigure is NULL, VFS updates
-> sb->s_flags directly from fc->sb_flags and fc->sb_flags_mask, so running
-> mount -o remount,rw /sys/kernel/events will clear SB_RDONLY.
+> This commit validates the VF-supplied queue index and queue region in
+> ice_vc_fdir_parse_action(), rejecting invalid values to prevent a VF from
+> steering matched packets to queues beyond its own range.
 > 
-> Because lookup_file() assigns eventfs_file_inode_operations (with
-> .setattr = eventfs_set_attr) to regular files in eventfs, clearing
-> SB_RDONLY allows chmod/chown on /sys/kernel/events files to mutate the
-> shared ei->entry_attrs used by tracefs. Should eventfs_ro_context_ops
-> provide a .reconfigure callback that rejects clearing SB_RDONLY (or should
-> read-only file inodes omit .setattr)?
-
-Ha! I wanted to handle this but wasn't sure how. Thank you Sashiko for
-telling me about the .reconfigure() method that lets me prevent the
-SB_RDONLY from being changed.
-
-
-> 
+>> diff --git a/drivers/net/ethernet/intel/ice/virt/fdir.c b/drivers/net/ethernet/intel/ice/virt/fdir.c
+>> --- a/drivers/net/ethernet/intel/ice/virt/fdir.c
+>> +++ b/drivers/net/ethernet/intel/ice/virt/fdir.c
 > [ ... ]
-> 
-> > @@ -412,7 +499,7 @@ static struct dentry *lookup_file(struct eventfs_inode *parent_ei,
-> >   * a eventfs_inode.
-> >   */
-> >  static struct dentry *lookup_dir_entry(struct dentry *dentry,
-> > -	struct eventfs_inode *pei, struct eventfs_inode *ei)
-> > +	struct eventfs_inode *pei, struct eventfs_inode *ei, bool ro)
-> >  {
-> >  	struct inode *inode;
-> >  	umode_t mode = S_IFDIR | S_IRWXU | S_IRUGO | S_IXUGO;
-> > @@ -421,8 +508,13 @@ static struct dentry *lookup_dir_entry(struct dentry *dentry,
-> >  	if (unlikely(!inode))
-> >  		return ERR_PTR(-ENOMEM);
-> >  
-> > -	inode->i_op = &eventfs_dir_inode_operations;
-> > -	inode->i_fop = &eventfs_file_operations;
-> > +	if (ro) {
-> > +		inode->i_op = &eventfs_ro_dir_inode_operations;
-> > +		inode->i_fop = &eventfs_ro_file_operations;
-> > +	} else {
-> > +		inode->i_op = &eventfs_dir_inode_operations;
-> > +		inode->i_fop = &eventfs_file_operations;
-> > +	}  
-> 
-> [Severity: Low]
-> This isn't a bug, but lookup_dir_entry() gained the @ro argument without a
-> matching entry in its kernel-doc comment above.
-
-Oops, I'll fix that in v5.
-
-> 
-> [ ... ]
-> 
-> > @@ -563,20 +656,44 @@ static struct dentry *eventfs_root_lookup(struct inode *dir,
-> >  		if (strcmp(name, entry->name) != 0)
-> >  			continue;
-> >  
-> > +		if (ro && !entry->read_only)
-> > +			return NULL;
-> > +
-> >  		data = ei->data;
-> >  		if (entry->callback(name, &mode, &data, &fops) <= 0)
-> >  			return NULL;
-> >  
-> > +		/*
-> > +		 * Read-only files gets all users read access,
-> > +		 * but also should make sure this is not writable.
-> > +		 */
-> > +		if (ro)
-> > +			mode |= (mode & ~0222) | 0444;  
-> 
-> [Severity: Medium]
-> Should this use = instead of |= when updating mode?
-
-Oops! Duh. Yeah that was a cut-and-paste bug.
-
-> 
-> Because |= ORs the right-hand side with the original value of mode,
-> mode | (mode & ~0222) | 0444 simplifies to mode | 0444, leaving any write
-> permission bits returned by entry->callback() intact.
-> 
-> > +
-> >  		return lookup_file_dentry(dentry, ei, i, mode, data, fops);  
-> 
-> [Severity: Medium]
-> Will permission or ownership changes in tracefs leak into the read-only
-> eventfs mount through shared eventfs_attr and tracefs_inodes state?
-> 
-> In __eventfs_root_lookup(), both lookup_dir_entry() and lookup_file_dentry()
-> pass the shared &ei->attr and &ei->entry_attrs[idx] into eventfs_get_inode()
-> -> update_inode_attr() even when ro is true:  
-> 
-> fs/tracefs/event_inode.c:update_inode_attr() {
-> 	...
-> 	if (attr && attr->mode & EVENTFS_SAVE_MODE)
-> 		inode->i_mode = attr->mode & EVENTFS_MODE_MASK;
-> 	else
-> 		inode->i_mode = mode;
-> 
-> 	if (attr && attr->mode & EVENTFS_SAVE_UID)
-> 		inode->i_uid = attr->uid;
-> 	else
-> 		inode->i_uid = rei->ei.attr.uid;
-> 	...
-> }
-> 
-> If an administrator runs chmod or chown on files or directories under
-> /sys/kernel/tracing/events, or mounts tracefs with uid=/gid= options,
-> update_inode_attr() will override the 0444 file mode (and directory
-> permissions/ownership) in /sys/kernel/events with the saved tracefs
-> attributes, potentially revoking unprivileged read access or re-enabling
-> write bits. In addition, lookup_dir_entry() passes S_IFDIR | S_IRWXU |
-> S_IRUGO | S_IXUGO (0755) instead of 0555 when ro is true.
-> 
-> Similarly, because eventfs_ro_super_operations uses tracefs_alloc_inode,
-> eventfs inodes are added to the global tracefs_inodes list. When tracefs is
-> remounted with uid= or gid=, tracefs_apply_options() walks tracefs_inodes
-> without checking ti->vfs_inode.i_sb == sb and overwrites i_uid and i_gid on
-> live eventfs inodes as well:
-> 
-> fs/tracefs/inode.c:tracefs_apply_options() {
-> 	...
-> 	list_for_each_entry_rcu(ti, &tracefs_inodes, list) {
-> 		if (update_uid) {
-> 			ti->flags &= ~TRACEFS_UID_PERM_SET;
-> 			ti->vfs_inode.i_uid = fsi->uid;
-> 		}
-> 	...
-> }
-> 
-> Should ro lookups ignore ei->attr / ei->entry_attrs (or should
-> eventfs_get_inode() bypass saved tracefs attributes when on the read-only
-> superblock), and should tracefs_apply_options() filter by superblock?
-
-I probably should do that to be more robust. Currently all the files that
-are marked as read only do not even have a write method, so they can never
-be written to. The important thing is only these read-only files are
-exposed in eventfs. But for correctness, modifications to permissions
-should be prevented.
-
-> 
-> [ ... ]
-> 
-> > @@ -837,6 +967,52 @@ struct eventfs_inode *eventfs_create_events_dir(const char *name, struct dentry
-> >  	return ERR_PTR(-ENOMEM);
-> >  }
-> >  
-> > +/**
-> > + * eventfs_create_events_ro_copy - create a read-only events directory
-> > + * @name: The name of the top level directory to create.
-> > + * @entries: A list of entries that represent the files under this directory
-> > + * @size: The number of @entries
-> > + * @data: The default data to pass to the files (an entry may override it).
-> > + *
-> > + * This function configures the eventfs filesystem root as a read-only
-> > + * trace event directory using the existing eventfs_inode lazy-lookup
-> > + * infrastructure.
-> > + *
-> > + * See eventfs_create_dir() for use of @entries.
-> > + */
-> > +int eventfs_create_events_ro_copy(const char *name, struct eventfs_inode *ei)  
-> 
-> [Severity: Low]
-> This isn't a bug, but the kernel-doc comment for
-> eventfs_create_events_ro_copy() still lists @entries, @size, and @data from
-> eventfs_create_events_dir() instead of @ei, and the @name parameter is
-> unused in the function body.
-
-Will fix.
-
-> 
-> > +{
-> > +	static struct dentry *dentry;
-> > +	struct tracefs_inode *ti;
-> > +	struct inode *inode;
-> > +
-> > +	/* Can only be called once. */
-> > +	if (dentry)
-> > +		return -EBUSY;
-> > +
-> > +	/* Reference acquired but never freed */
-> > +	dentry = eventfs_ro_get_root();
-> > +	if (IS_ERR(dentry))
-> > +		return PTR_ERR(dentry);
-> > +
-> > +	inode = d_inode(dentry);
-> > +
-> > +	INIT_LIST_HEAD(&ei->children);
-> > +	INIT_LIST_HEAD(&ei->list);
-> > +
-> > +	ti = get_tracefs(inode);
-> > +	ti->flags |= TRACEFS_EVENT_INODE;
-> > +	ti->private = ei;
-> > +
-> > +	inode->i_op = &eventfs_ro_dir_inode_operations;
-> > +	inode->i_fop = &eventfs_ro_file_operations;
-> > +
-> > +	/* This is never freed */
-> > +	dentry->d_fsdata = get_ei(ei);
-> > +
-> > +	return 0;
-> > +}  
-> 
-> [Severity: Medium]
-> Is it safe to re-initialize ei->children and ei->list here?
-> 
-> In create_event_toplevel_files(), e_events has already been allocated and
-> initialized by eventfs_create_events_dir() -> alloc_root_ei() -> init_ei(),
-> and published via tracefs_end_creating(). Calling
-> INIT_LIST_HEAD(&ei->children) and INIT_LIST_HEAD(&ei->list) again without
-> holding eventfs_mutex risks resetting an already-live list.
-
-Hmm, I thought I fixed that. It's one of the things that Masami mentioned.
-Hmm, did I not commit the changes?
-
-> 
-> Also, should dentry->d_fsdata and ti->private be set before setting
-> ti->flags |= TRACEFS_EVENT_INODE and switching inode->i_op to
-> eventfs_ro_dir_inode_operations, and should dentry be reset to NULL (or only
-> assigned after checking IS_ERR) if eventfs_ro_get_root() fails so static
-> dentry does not hold an ERR_PTR?
-> 
-> [ ... ]
-> 
-> > diff --git a/include/linux/tracefs.h b/include/linux/tracefs.h
-> > index bc354d3400464..41e97a6bd69a3 100644
-> > --- a/include/linux/tracefs.h
-> > +++ b/include/linux/tracefs.h
-> > @@ -75,6 +75,7 @@ struct eventfs_entry {
-> >  	const char			*name;
-> >  	eventfs_callback		callback;
-> >  	eventfs_release			release;
-> > +	bool				read_only;
-> >  };  
-> 
-> [Severity: Low]
-> This isn't a bug, but struct eventfs_entry has a kernel-doc comment just
-> above this definition where @read_only (and @release) are not documented.
-
-Will fix.
-
-> 
-> [ ... ]
-> 
-> > diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-> > index 6afed2091e19c..968fdbca8054f 100644
-> > --- a/kernel/trace/trace_events.c
-> > +++ b/kernel/trace/trace_events.c  
-> 
-> [ ... ]
-> 
-> > @@ -4775,6 +4781,13 @@ create_event_toplevel_files(struct dentry *parent, struct trace_array *tr)
-> >  
-> >  	tr->event_dir = e_events;
-> >  
-> > +	if (!event_dir_ro_created && (tr->flags & TRACE_ARRAY_FL_GLOBAL)) {
-> > +		int ret;
-> > +
-> > +		ret = eventfs_create_events_ro_copy("events", e_events);
-> > +		if (!ret)
-> > +			event_dir_ro_created = true;
-> > +	}
-> >  	return 0;
-> >  }  
+>> @@ -1176,11 +1181,25 @@ ice_vc_fdir_parse_action(struct ice_vf *vf, struct virtchnl_fdir_add *fltr,
+>>  			break;
+>>  		case VIRTCHNL_ACTION_QUEUE:
+>>  			dest_num++;
+>> +			if (action->act_conf.queue.index >= vsi->num_rxq) {
+>> +				dev_dbg(dev, "Invalid queue index %u for VF %d\n",
+>> +					action->act_conf.queue.index, vf->vf_id);
+>> +				return -EINVAL;
+>> +			}
 > 
 > [Severity: High]
-> What happens here when the kernel is booted with lockdown=confidentiality
-> (LOCKDOWN_TRACEFS)?
+> This problem wasn't introduced by this patch, but does returning here leak
+> memory if conf->pkt_buf and conf->prof were previously allocated?
 > 
-> In eventfs_create_events_dir():
+> In ice_vc_add_fdir_fltr(), if ice_vc_fdir_parse_action() fails, it jumps to
+> err_free_conf which frees the outer structure but not the inner ones:
 > 
-> fs/tracefs/event_inode.c:eventfs_create_events_dir() {
-> 	...
-> 	if (security_locked_down(LOCKDOWN_TRACEFS))
-> 		return NULL;
-> 	...
+> ice_vc_add_fdir_fltr() {
+>     ...
+>     ret = ice_vc_fdir_parse_action(vf, fltr, conf);
+>     if (ret) {
+>         ...
+>         goto err_free_conf;
+>     }
+>     ...
+> err_free_conf:
+>     devm_kfree(dev, conf);
+>     ...
 > }
 > 
-> When LOCKDOWN_TRACEFS is active, eventfs_create_events_dir() returns NULL
-> rather than an ERR_PTR. In create_event_toplevel_files(), IS_ERR(e_events)
-> evaluates to false for NULL, so e_events = NULL is passed to
-> eventfs_create_events_ro_copy("events", e_events), which dereferences ei
-> without a NULL check and crashes the kernel during boot.
+> Earlier in the request handling, if this was a raw flow,
+> ice_vc_fdir_parse_raw() allocates pkt_buf and prof and assigns them to the
+> conf structure:
 > 
-> Should create_event_toplevel_files() or eventfs_create_events_ro_copy()
-> check for !e_events (and security_locked_down(LOCKDOWN_TRACEFS)) before
-> dereferencing ei?
+> ice_vc_fdir_parse_raw() {
+>     ...
+>     pkt_buf = kzalloc(pkt_len, GFP_KERNEL);
+>     ...
+>     conf->pkt_buf = pkt_buf;
+>     ...
+> }
+> 
+> Could an untrusted VF exhaust host memory by repeatedly sending requests
+> with invalid queue parameters that trigger this return path?
 > 
 
-Oops, will fix.
+At the very least, this new error should perform cleanup, even if you
+don't take the time to fix every existing error path way that is broken.
+Can you please investigate?
 
 Thanks,
+Jake
 
--- Steve
+>>  			input->dest_ctl = ICE_FLTR_PRGM_DESC_DEST_DIRECT_PKT_QINDEX;
+>>  			input->q_index = action->act_conf.queue.index;
+>>  			break;
+> [ ... ]
+> 
 
