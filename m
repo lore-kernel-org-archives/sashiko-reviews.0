@@ -1,49 +1,185 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793640552;
-	b=OCdQuaDS022XnA1Pad/jMijt1e/XCPDTO66rcFuEyZpA4sr6FEbZCzNVy4vk2O+HNtZg
-	 DG+m0VyPUZhgD+UbWnaC5EBqKEy2Tp9y4k1qdzL0OTIcctD5nDjzxVBHH2m4Z4EyyoQBR
-	 KQJ7W3nEgHWBkYG/GCmW0ow52s82ASD7Yaj0tj0ttb/uJRjwNg4TLQConB2cBSl8DUNFo
-	 OBQza0autksWvczY0CUbcz9+PUPoXEPyN7ZUoNZIPnbH3g0PGwL2RIW7rgdOVE1GKgtG7
-	 ZwMbFwF8z2+DY4gOSAtkPeDNPiHCNcZDi4ADcZdxbiyL5q38EunpjuKf7YcXjMFnOEw==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793640552;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=bLJCblaC6p74X0djr/s7k+NpLQHxJXC32OYuLH+pEfk=;
-	b=CUPhWuXJsnBLU0bE7hruFXZyw1XU/Qc4hUCWAvmUPAj887iT+YbeBcN9PuaWAkFWdgkq
-	 XjDLkub0+XkuSJihkgJPE5+NUf04EyRLWMokC8WzKsrQBukBEUhMub0SlfqgnYYqOp5bJ
-	 FJb2fmmRioKflpZQZ1aJEy8xiAm0Osk8tPw82KcDgPm5X3Ef6ZsYBJdvYfpbLStd1FTwl
-	 NFMIh+fpv8+x/wUfaXv32qEBV9I6TaUejfJvVdQd/hSimMD9lDwNSkfMZ8wEV+tMF8t5m
-	 A6ZQ2agqcR9qrtvf1kRv9QK3/e7Veo2iQNwzhbfJsXdlKpndLM9nYJmJqh299Om0VfQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=vdnNkLzw;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D720606E031;
-	Mon,  2 Nov 2026 17:29:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6D720606E031
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=192.198.163.13
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793641214;
+	b=vUnnrkHqvDu6LBl0/X/GgsFKW86hlFPndG40RKUZNS0umd6Yoc1W52zOD+8qovcPju/z
+	 pSNyqFW+mhYpeyvB3F1CE1imtikB1UDl8I370ncn5HPU+4S5QcyL8wYFn9lt1A5F+y+Uj
+	 TxoNoXCKuq2GvzMPKDs/FzUjnqJ+PFN23EN+kjXez6zwV3wayvX06ZEtdHA7DFsFB0nWK
+	 k3zkioURl1cQFr0y2HPXk6rqUJ4MGyrS0tmGGhs12ettuuA4leRFTza22LJcYPsi7Cup9
+	 wY8em8k3K9yMGksjr8/1F0K7Y4C1OYTw5C4FLzv3NSvtejlGxUpr9bYJJZ8k/jKr3hw==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793641214;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Received:Received:
+	 Received:Received:Received:From:To:CC:Subject:Thread-Topic:
+	 Thread-Index:Date:Message-ID:References:In-Reply-To:Accept-Language:
+	 Content-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:user-agent:
+	 x-ms-publictraffictype:x-ms-traffictypediagnostic:
+	 x-ms-office365-filtering-correlation-id:x-ms-exchange-senderadcheck:
+	 x-ms-exchange-antispam-relay:x-microsoft-antispam:
+	 x-microsoft-antispam-message-info:x-forefront-antispam-report:
+	 x-ms-exchange-antispam-messagedata-chunkcount:
+	 x-ms-exchange-antispam-messagedata-0:Content-Type:Content-ID:
+	 Content-Transfer-Encoding:MIME-Version:
+	 X-Exchange-RoutingPolicyChecked:X-MS-Exchange-CrossTenant-AuthAs:
+	 X-MS-Exchange-CrossTenant-AuthSource:
+	 X-MS-Exchange-CrossTenant-Network-Message-Id:
+	 X-MS-Exchange-CrossTenant-originalarrivaltime:
+	 X-MS-Exchange-CrossTenant-fromentityheader:
+	 X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
+	 X-MS-Exchange-CrossTenant-userprincipalname:
+	 X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg;
+	bh=F8ThJR0T2h6yDNNshMj3qs5fhsycnAZNHNI7WHcZMgE=;
+	b=U8LwcwoPGWcJtA2qJreNGHtUqx0pwnYMJ7e4+AH5++RXIYOzPO/ITjjb79ebFXUAkjbR
+	 85dGOuGhB9UP1xTXwW6/nJEiXjiVM59xRmn641NvVBgLbz0tOS8LdfJo3UwU11WNBTIjJ
+	 dfPh2p1qqOxgLTWC/nA103j3pxHYHcg3GYwxmO3iMjN0SZpC+lSmYJI9aaEapBCHmcBgp
+	 xJFljUhKKae/eVLo+8MwcP4iASz+xI29QLmXKzPt2I1qYi+OOrdNyQ39MUpz7ZR6O5bu9
+	 kjthKG6JMQ6y4Kv+Q/PhrtpGh3mT7SBY+NdYkCHrUBX8jPH4Hj1LreurijSRJjiUzpg==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=QcZlWXZr;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=192.198.163.13
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D602606A91F
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 17:40:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7D602606A91F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=vdnNkLzw
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A72A716F3;
-	Mon,  2 Nov 2026 09:29:07 -0800 (PST)
-Received: from [10.0.136.93] (M0PRX50XMG.cambridge.arm.com [10.0.136.93])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0A18F3F59E;
-	Mon,  2 Nov 2026 09:29:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1793640550; bh=ZlHYnqiU00gksrwMlhvvPkWAHmYQOGltgW8sZDyoCXo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=vdnNkLzwOmkpdJGKhWTBsOK9HdfAJx8FDNmhV+Nio/h04lbIvSgm9v5ndCwQd8Z6+
-	 4Fvxg6Rm4tWYOBDjT3xSyEG6D6J7NIjij++stxkXIZrydT81vhZLy8WeO/KzTnNcOv
-	 NexeDzHHWZ47qbqocYmkYKMNEIdMOqIEnlshIrqM=
-Message-ID: <909ce27c-524d-4206-93bb-113711c8ca11@arm.com>
-Date: Mon, 2 Nov 2026 17:29:08 +0000
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=QcZlWXZr
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793641213; x=1825177213;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-id:content-transfer-encoding:
+   mime-version;
+  bh=F8ThJR0T2h6yDNNshMj3qs5fhsycnAZNHNI7WHcZMgE=;
+  b=QcZlWXZrokXbwAS2bRXEakiLMAtBPAVm7hEsmfhHaTR42H+sPAU34lcd
+   JcSpREEVf+tNcwACz2foOj6wx5XHIYj5/61JCEIXBp1yRvEbSeuGfN4R0
+   hvlVpMN2xoLUn1s46Dbe2urRp/Tr+bndTTV6wzP7AxQ9w+x7fT//6oCUx
+   NIb+2K7VJHkL49cvFcejOUtJTiXq9oeQa41NwEvxsfnihyg2WaAJWc/rV
+   hF6jEiJ6xRS0ilxjkAXfYImGac2/GpR2govJKXEl4PA/rHwaiLwim0u7p
+   KWmvH04yzZdltj9jIBfSr6Jyt7mVutY9P1oWfkl/jE7ZAwEBZ7n24XhZO
+   A==;
+X-CSE-ConnectionGUID: X7FE6QjESFiT088dvt7YBA==
+X-CSE-MsgGUID: gYgt4pywQ5Go3pEphlt2MA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11954"; a="2341332"
+X-IronPort-AV: E=Sophos;i="6.27,191,1787036400"; 
+   d="scan'208";a="2341332"
+Received: from fmviesa012.fm.intel.com ([10.60.135.152])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 09:40:12 -0800
+X-CSE-ConnectionGUID: 6QW+ijGHQBezfN7NCnPq3Q==
+X-CSE-MsgGUID: cyWsaIfqSQ+25KeqsAdbuw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,191,1787036400"; 
+   d="scan'208";a="7947334"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+  by fmviesa012.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 09:40:12 -0800
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Mon, 2 Nov 2026 09:40:11 -0800
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56 via Frontend Transport; Mon, 2 Nov 2026 09:40:11 -0800
+Received: from CY7PR03CU001.outbound.protection.outlook.com (40.93.198.47) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.56; Mon, 2 Nov 2026 09:40:11 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=mKch5ifgq0cLrgzv9UbFz+BTGeThI+AE2b6jyo1IxoXTA1p39R7PuXJibyCF8yQatjTIdhzL3JsFV7amAVsomx2wL/ErTA2zmBRJWOSrH3gO1GsdyFQpYTlAv/BSe/BGS23JsvENLJJnA6GsLmMkKZfi5NRcT2fXhgur4CDlxpyLXjwSoGYA1JdsIyn41eJnjuyG0r9c5qZ1SkOTl7UCnN7MrbdesZEriuC0l3LDayQdWFuBvb2EIjDpA+gDEPCprcAkxVKQiEEkr7b2ZjSPAcnd/4/elgBeoWfY8NKbOIe3Ojb6++vSW+3yF3/2QjCm2AS5KWDG5MubGlocRHQFSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=F8ThJR0T2h6yDNNshMj3qs5fhsycnAZNHNI7WHcZMgE=;
+ b=A2uDtLYCMe+iHHQ6c6MmzdFpbUhKhF6NPb855o2IOSW4sVtiH71ApXbekCrAoqDPLpVbBy21gA3tnnjGb5y5ko63P9BY/ScIEpav+SyyP8td4vmhr5rrtyF37jY2gR538nTaeYsi5Z5qsRtvFYa4BI/KlDNNfh1Gnhu8i1frXCniZDXxqh6D88BnP12CLJxC0Uy7HTdZ/xW3LWfwVdjJ+rNwwtRBqqnicShnHSpjtnte3VpPhha0qLAQ95IOHvC5fzqZVlB6Mn0+q1Bc6MfI+LcAs5UhoYFdJoGMEPM0oBZLUZFdYJnSrvnhUPRMo2tXyGhcFU7aRj/TgEZuAWvhqw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from LVWPR11MB9883.namprd11.prod.outlook.com (2603:10b6:408:3c0::11)
+ by PH0PR11MB5206.namprd11.prod.outlook.com (2603:10b6:510:3f::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.12; Mon, 2 Nov
+ 2026 17:40:08 +0000
+Received: from LVWPR11MB9883.namprd11.prod.outlook.com
+ ([fe80::310:e83f:69b8:e11e]) by LVWPR11MB9883.namprd11.prod.outlook.com
+ ([fe80::310:e83f:69b8:e11e%4]) with mapi id 15.21.0569.011; Mon, 2 Nov 2026
+ 17:40:07 +0000
+From: "Teres Alexis, Alan Previn" <alan.previn.teres.alexis@intel.com>
+To: "intel-xe@lists.freedesktop.org" <intel-xe@lists.freedesktop.org>,
+	"sashiko-reviews@lists.linux.dev" <sashiko-reviews@lists.linux.dev>
+CC: "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>
+Subject: Re: [PATCH 1/1] drm/xe/pcode: Fix pcode_try_request polling delays
+Thread-Topic: [PATCH 1/1] drm/xe/pcode: Fix pcode_try_request polling delays
+Thread-Index: AQHdaJRsN0ncUCqoAEi2hbx+cZNi8bcWWd4AgAS3XYA=
+Date: Mon, 2 Nov 2026 17:40:07 +0000
+Message-ID: <7c97d394683aa1c91bdeb010e56126c5ebbdf61b.camel@intel.com>
+References: <20261030173038.681250-2-alan.previn.teres.alexis@intel.com>
+	 <sashiko-outbox-191350@kernel.org>
+In-Reply-To: <sashiko-outbox-191350@kernel.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+user-agent: Evolution 3.52.3-0ubuntu1.1 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: LVWPR11MB9883:EE_|PH0PR11MB5206:EE_
+x-ms-office365-filtering-correlation-id: f4c28352-f47a-464e-44ad-08df39085605
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|366016|376014|23010399003|1800799024|10067099003|22082099003|18002099003|56012099006|11063799006|4143699003|261022105027099003|261026140227099003|261009223027099003|261028144727099003|38070700021;
+x-microsoft-antispam-message-info: snQeGfVPAX6ovUPo4iJ1jsRQXuS75si7CGjfEOQYnQJVvHJfAeQUcJ6E9WXr+ufgUYDX774bRtXJPO143EyYyBhDXslDPMBB2QRYJVsA3stMro/4uqKtAnERep1n6hS9so9HxXmN44YtiFrRVSDfF6aWRB8UwfYNhyy5QEhoDOHGxB4LoVoH1eQ4y4/xsmJHbBT4U/hLb4F/o0EmuHHuqUnyA32Egxa6eF+/d4r2BoLE396yAVskTTwl1gVA/m0tJ/+4hhMnnedsj0boVkK5hIj+L4nUJq0TazfrTQXiYzZJTvuKHtxzqeSmXNbnbFkeyY3YrVyV7hwnU2ibITLXgh2q3kCNvIn308IzpWfvrCwhPq/tj7tMhKhnFyRKSufd8VeOllR67sKmxv+lNWQxUZ408o0vDpeF0mYGBbYm+FzCSQowEVPP+a6BaR2yWJJ15lD/OaCr4K7Kkoc4g95f9VPEilJ5wzu3TQbwiauEYf3HXgJM4pYYM+Xyo6bTWDMEGgKiqIq6d/CYGj2m8GfLz6iUlSaExRmIT0r6avHlgFUiIS/kh8vHj+DEcZyXVTYnY/Le11To92AobAjXYKE/6ICKwetiAs0DuKqUEdrbejDSCPd4O7oOQfoYfQClMIE2maabvtHiHmjtVqf3haXCoNIo7/moKxXLwuwN6L13oGNXckCwrc4abMhwszh4FjYlH/aAe6KSB3O21tfALij9EQ==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LVWPR11MB9883.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(10067099003)(22082099003)(18002099003)(56012099006)(11063799006)(4143699003)(261022105027099003)(261026140227099003)(261009223027099003)(261028144727099003)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?bkZuUHZGMGFYc3Q5WndZdVIyRksrWWU5Qi9DQmZDTHo3ZG16ZTRvbDVSVEdh?=
+ =?utf-8?B?c0g4ZkRsbkJKcDNBWVpKbFg3L0ZveCtlTnZzLytqN3VBcDNsd3JydkFML3Bm?=
+ =?utf-8?B?dm0xQlU3VDNickMzSTdpd0ptaVhRb1ZET253WmZCNjF2Q3M3c2Q3K3BFeUlS?=
+ =?utf-8?B?ZkRBQ0dzOGtOcFU3a0FHaVNIKzVXR3Z3d1dnYnN3SFhMRHlDWkJ0dUxRc0Qv?=
+ =?utf-8?B?VEwvUnR4bXRUV0NWZzRhMGtpUVd5c3VuSEYySmFsN2FPR1I2aFZ6ZlpUcTBr?=
+ =?utf-8?B?VE84Tms3YTZhTDFyM3gvTEtPTU9PTGQrRHRBczVudEpQRTQzQ3E5T3p5UkRQ?=
+ =?utf-8?B?SzJYZTVnL3VUakhiaVp4eDZrdEE3RDluS2lLL1QyalRmdkJJYXBiWVFRbVVO?=
+ =?utf-8?B?dXFaVHJkQnRoT0pCMzdBbjdqUVNXa1VzeE50SERFQUk0emIxM2hXZ0Z5MVps?=
+ =?utf-8?B?a005RkZxZDl5MDN6dnRkUmJhMXd5b25lWTI5by9XZlhBdUxuSEJJL1JaL3Jk?=
+ =?utf-8?B?UWZ5UzdJN1FRRjdMc2Ewc2hLT0pOVkF2R2JSTGJnOTcrT0tzTTNoa3o3dFY3?=
+ =?utf-8?B?R3IvV3dkSHRDelZBZXM4NTcweDY1RzFJSjVGSkMvc3dPdXZDSjNackVHR1ll?=
+ =?utf-8?B?T3V4WldNcVMzOVVWVDNYME02Ykd6QkpuUlhuQy8zbnFoK21WOU91TUFqbGMz?=
+ =?utf-8?B?ZjFHMXpORFFOVjlOKy9ZZ3o2RzJrUERBRHhZeXpya3VxMFBpbnBZcXBhWTN5?=
+ =?utf-8?B?WVZBcXAreE9WVlYyTWZIYkFNbU56SXlNNXhKLzYza0Frd0FhVUNGNHJqNE85?=
+ =?utf-8?B?WDc5YS9yelh6S2w2UUV1VUcrMi9HVCtnZUR0SkdUQ3FreUFMUk9LVmZISUVI?=
+ =?utf-8?B?TGFQaDlsblJWTGt5eHR2c1FxRS9oS1VLWlFMRHVXSDNDbU5kMVozZnl5a2VW?=
+ =?utf-8?B?YUZBQ2lKbGxUY0MwYVkwUWs2UW9YT0VaSjlsUFpKRFpBWW5GcjNIVnVwTGN1?=
+ =?utf-8?B?WHpVWUtNZ3ZzaExiMXZURW92aFhaZXRDcktjZmZmOFg5RXhmaURTbTlzRGFI?=
+ =?utf-8?B?SERUcFNoMCs4SzE3QmNyQktESGJ3c3hQbEdheWZtVFlYVVVzNVhFZ1pSTElX?=
+ =?utf-8?B?b0VaVVZBWFVuVE9SQ1dVVzVOYjhuemNUNEFLdXozVVJnOEk2eHJCWGZjUmpW?=
+ =?utf-8?B?bHUxUHdIa3JlQmg3cmtjaXA1S2VUT0pGRTM2c1JYUTE5QWhPdnk3dzgxOUxN?=
+ =?utf-8?B?SE8yMnFqVHEyYldZdkZPK01TQTN3WnIvbC9WWFk3WjdYSk1PWEwrUUYrQ3d4?=
+ =?utf-8?B?emhKNFFpUDJwRHFkOE1vN0tsMHowMzlPNlZPWEZEOWxQZU9uOE43bzhJSitW?=
+ =?utf-8?B?NHU0YTRPS21EM2ZxNkVsdkpQQ3hjMitJV3U3Sk1pMy9XT0Z3bjhQNGNqWkxo?=
+ =?utf-8?B?R1RQNFR3WVFvd0pyQzMrQWd4bjRmSUhzaS9wSnNja0hCNjZ0SUJxNVdUbW9D?=
+ =?utf-8?B?TFdsUzVaYjRtOGhSa0ZBcHpVN2FLVHhuTXhVU2JpSXFzUFBrTWtFTDFDZW1H?=
+ =?utf-8?B?UDdRK09lbXJjZGZMcjM0UGhyMVRrTVJPL0V5MGozNE1zYWFOajVnZjdDamJX?=
+ =?utf-8?B?dTZmRHNRRnZjT3ZEWldIcWluSjNYTWsza05vSy9ydktETnQwSE0rWXFBb2tJ?=
+ =?utf-8?B?SERiTkV4UHd5eEwwbFVScFZRNklsMFZmcjdJdEpjcThBWkhLMmkzeG4zY2ov?=
+ =?utf-8?B?eWVON2xoQU5JeU1QS1F6dEZVQWF6UzdjamRRakR5YkpMaS9BYzhNZDltQVRW?=
+ =?utf-8?B?MVRQN0NETGh4V2dVQVAwNlY0clNGMitQOTdyRGd1U1E0VGd6T2RKTkxLRllT?=
+ =?utf-8?B?Y1M5elQxbXdlVmdpeWwzaEdCK0xrVllRVVhrVU9mTmJSMTdGRWdlaU83MGRB?=
+ =?utf-8?B?aGVDNFdLeDVJL0VDYldvQWVVeVZqTnVkU0t2YW5pY2pLYXF2VEFOdHU1WDA0?=
+ =?utf-8?B?SjQ3dHBiaGlHdzNPbWw2U3BuTGxzVTJtL0RBMUQvZGx2ZE5zUnFheldLZXJJ?=
+ =?utf-8?B?MFBSKzQ5M1ViYmNwbzdFTXNXemJWL0VpY1FycGRNYzdhbzZpemlLSjdoMDIv?=
+ =?utf-8?B?VDRvVnhGcjRDSFdtUjl1QWFRRzFSWmN0N3ZSMEx2SmRkVUl6TmlzQm5sd091?=
+ =?utf-8?B?azVCVUlLa0tCUk1sTmtLZ21KSTJFdU5IekJnZUxuelBjdEwvUFcxQTdSeHlK?=
+ =?utf-8?B?K21hK2xqN3JFRXNjS2tvbE1HdytaZ0YvUFArVXorVFhUYUZyY0MwdlFUbjBO?=
+ =?utf-8?B?M1I1UzZiSGZOTkZqRXBxTGJrZmFhcm96QzdaeVFrb3pIeWtnY1I3WlZueHpH?=
+ =?utf-8?Q?bbcACuN6XVy8Zz22NVsJ98Eg+3auskD0dQXtr?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <5EBC8F6E39EB67429C4AD4C4877AF47D@namprd11.prod.outlook.com>
+Content-Transfer-Encoding: base64
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -53,211 +189,20 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/16] KVM: arm64: gic-v5: Add ITS MSI injection
-To: sashiko-reviews@lists.linux.dev, kvmarm@lists.linux.dev,
- kvm@vger.kernel.org
-Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
-References: <20261016155741.979985-1-sascha.bischoff@arm.com>
- <20261016155741.979985-10-sascha.bischoff@arm.com>
- <sashiko-outbox-174632@kernel.org>
-Content-Language: en-GB
-From: Sascha Bischoff <sascha.bischoff@arm.com>
-In-Reply-To: <sashiko-outbox-174632@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-Exchange-RoutingPolicyChecked: GlHZ3SINlU5VZs6VNroZcwFnIPOgpLr3y/eBuAtW4gK29efCB4HJ3OEoAoPXeKYNhBx5fr1Gg1LyccESphmptKCeGJ6KP0k+DBuhCmWz/uAcIHZysR4QyW8NjRtJAtLYKMrMY0efNevC0E8gm6n6ahNP4WNPBJdfBkfctR05ke7AmNpeMVkra0zgEZf544l+jKIXTUzaPQszJVZr9Tz4UQnwbPIT5EHzBMqOhoCb4FQG/fEKT4SM0U1VaZqdSRQ7xyQ1d+AZdNulqUEobTUvmIzeYFLF+egf66Uoi+XP+H3xL4NYBvtol0DUtsklw/RSPt8rgMzbxcKgj5HseqMQAg==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: LVWPR11MB9883.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f4c28352-f47a-464e-44ad-08df39085605
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Nov 2026 17:40:07.5049
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: H8FOX6hJmnGhiLUZBRDwL7j5pXPQtSvwo/U16iIM68iqZvrIODorDS3JMRr9I2NoLHoM41PNIwgBK0lb8ecPB2BOeMmpNfmbi0cLkjUvrHYBZIj7a5FGDEnRF1PZFBAO
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB5206
+X-OriginatorOrg: intel.com
 
-On 16/10/2026 17:23, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 6 potential issue(s) to consider:
-> - [High] kvm/vgic: raw_spinlock deadlock due to missing IRQ disable in its_cache_add_translation
-> - [High] kvm/vgic: userspace-triggerable WARN_ON_ONCE causes host DoS in vgic_v5_its_inject_msi
-> - [High] arm64: vgic-v5: User-triggerable WARN_ON_ONCE in MSI injection
-> - [High] kvm: arm64: ABI violation on guest-driven MSI mapping errors
-> - [Medium] kvm: arm64: gic-v5: MSI injection aborted on translation cache allocation failure
-> - [Medium] arm64: vgic-v5: MSI injection fails if ITS cache insertion fails
-> --
-> 
-> commit 65afd53542f7c52bea1da09f7e70c85b22c50b33
-> Author: Sascha Bischoff <sascha.bischoff@arm.com>
-> 
->      KVM: arm64: gic-v5: Add ITS MSI injection
->      
->      Now that KVM can resolve GICv5 ITS translations from guest memory,
->      allow userspace and irqfd MSI injection to target a virtual GICv5 ITS.
-> 
->> diff --git a/arch/arm64/kvm/vgic/vgic-its-v5.c b/arch/arm64/kvm/vgic/vgic-its-v5.c
->> index e4c0415137605..5920fa1bcb2cf 100644
->> --- a/arch/arm64/kvm/vgic/vgic-its-v5.c
->> +++ b/arch/arm64/kvm/vgic/vgic-its-v5.c
-> 
-> [ ... ]
-> 
->>   static int its_cache_add_translation(struct kvm *kvm, struct vgic_v5_its *its,
->>   				     u32 device_id, u16 event_id,
->>   				     struct vgic_irq *irq)
->>   {
->>   	u64 key = ((u64)device_id << 16) | (u64)event_id;
->>   	struct its_cache_translation_entry *entry;
->>   	struct its_cache_translation_entry *old;
->>   	struct hlist_node *tmp;
->>   	HLIST_HEAD(removed);
->>   
->>   	entry = kzalloc_obj(*entry, GFP_KERNEL);
->>   	if (!entry)
->>   		return -ENOMEM;
->>   
->>   	entry->key = key;
->>   	entry->irq = irq;
->>   
->>   	scoped_guard(raw_spinlock, &its->translation_cache_lock) {
-> 
-> [Severity: High]
-> Could this lock acquisition deadlock?
-> 
-> The translation_cache_lock is a raw_spinlock_t that is also acquired in
-> hardirq context by its_cache_look_up_translation(). Since
-> scoped_guard(raw_spinlock) does not disable local interrupts, a hardirq could
-> preempt this process-context section and attempt to acquire the same lock,
-> spinning forever.
-> 
-> Should this use the raw_spinlock_irqsave variant?
-
-I think it should have, if I'd not reworked the code to use XArrays 
-instead. The original cache lock could be interrupted by a hardirq 
-trying to take the same lock.
-
-I've removed translation_cache_lock as part of the XArray conversion, so 
-I think that this is now addressed.
-
-> 
-> [ ... ]
-> 
->>   static int its_cache_look_up_translation(struct vgic_v5_its *its,
->>   					 u32 device_id, u16 event_id,
->>   					 struct vgic_irq **irq)
->>   {
->>   	u64 key = ((u64)device_id << 16) | (u64)event_id;
->>   	struct its_cache_translation_entry *entry;
->>   
->>   	guard(raw_spinlock)(&its->translation_cache_lock);
-> 
-> [Severity: High]
-> Does this also need to disable interrupts?
-> 
-> Since this is called from the fast path (kvm_arch_set_irq_inatomic) which can
-> run in hardirq context, and the same lock is taken in process context, should
-> both sides use the irqsave/irqrestore variants to prevent deadlocks?
-
-As above, the translation_cache_lock has now been dropped. We now do RCU 
-lookups in the XArray instead.
-
-> 
-> [ ... ]
-> 
->> @@ -531,7 +572,8 @@ static int __vgic_v5_its_resolve_lpi(struct kvm *kvm, struct vgic_v5_its *its,
->>   		return PTR_ERR(*irq);
->>   
->>   	vgic_get_irq_ref(*irq);
->> -	ret = its_cache_add_translation(kvm, its, device_id, event_id, *irq);
->> +	ret = its_cache_add_translation(kvm, its, device_id, (u16)event_id,
->> +					 *irq);
->>   	if (ret) {
->>   		vgic_put_irq(kvm, *irq);
->>   		vgic_put_irq(kvm, *irq);
->>   		*irq = NULL;
->>   	}
->>   
->>   	return ret;
->>   }
-> 
-> [Severity: Medium]
-> Is it correct to abort the injection if the translation cache insertion fails?
-> 
-> The translation cache is intended to be a best-effort optimization. If
-> its_cache_add_translation() fails (e.g., due to -ENOMEM), propagating the
-> error and dropping the successfully resolved LPI will silently lose the
-> interrupt, which could hang guest drivers under host memory pressure.
-> 
-> Should the error be swallowed here instead so that injection proceeds?
-
-I've made cache insertion best effort for software MSI injection, so the 
-interrupt is still injected on that failure. That said, we realistically 
-shouldn't be hitting this case unless we're under very high memory 
-pressure, at which point all sorts of things will be going wrong!
-
-> 
-> [ ... ]
-> 
->> +int vgic_v5_its_inject_msi(struct kvm *kvm, struct kvm_msi *msi)
->> +{
->> +	struct vgic_v5_its *its;
->> +	struct vgic_irq *irq;
->> +	bool borrowed_mm = false;
->> +	int ret;
->> +
->> +	ret = vgic_v5_check_msi(kvm, msi);
->> +	if (ret)
->> +		return ret;
->> +
->> +	its = vgic_v5_msi_to_its(kvm, msi);
->> +	if (IS_ERR(its))
->> +		return PTR_ERR(its);
->> +
->> +	/* An irqfd cache miss is resolved by a worker outside the VM's mm. */
->> +	if (current->mm != kvm->mm) {
->> +		if (WARN_ON_ONCE(current->mm || !(current->flags & PF_KTHREAD)))
->> +			return -EWOULDBLOCK;
-> 
-> [Severity: High]
-> Could this WARN_ON_ONCE be triggered by unprivileged userspace?
-> 
-> If a normal user process (other than the VM creator) calls the KVM_SIGNAL_MSI
-> ioctl, current->mm will not equal kvm->mm, and since it is a user thread,
-> current->mm is non-NULL and it lacks PF_KTHREAD. Triggering a kernel warning
-> can crash the host if panic_on_warn is enabled, leading to a Denial of Service.
-
-Can we realistically reach that case?
-
-kvm_vm_ioctl() rejects a userspace caller whose mm differs from the VM's 
-mm before KVM_SIGNAL_MSI reaches this code.
-
-The irqfd worker is a kernel thread using the VM's mm struct.
-
-How can we reach this code? I've not changed anything to address this!
-
-> 
->> +
->> +		if (!mmget_not_zero(kvm->mm))
->> +			return -EFAULT;
->> +
->> +		kthread_use_mm(kvm->mm);
->> +		borrowed_mm = true;
->> +	}
->> +
->> +	ret = vgic_v5_its_resolve_lpi(kvm, its, msi->devid, msi->data, &irq);
->> +	if (borrowed_mm) {
->> +		kthread_unuse_mm(kvm->mm);
->> +		mmput(kvm->mm);
->> +	}
->> +
->> +	if (ret)
->> +		return ret;
-> 
-> [Severity: High]
-> Does this violate the KVM_SIGNAL_MSI ABI by returning negative error codes?
-> 
-> When the guest provides an invalid mapping (like an out-of-bounds Event ID),
-> vgic_v5_its_resolve_lpi() returns errors like -E2BIG or -EINVAL. Propagating
-> these directly to the ioctl caller instead of returning 0 (to indicate the
-> guest blocked or unmapped the MSI) can cause the VMM to abort, creating a
-> guest-to-host Denial of Service.
-> 
-
-Ah, yes. This was a mistake, and those shouldn't be returned. I've 
-changed these to return 0 to the caller instead. We still return 
-negative error codes for malformed MSIs, allocation failures, and when 
-the ITS itself is disabled.
-
-
-Thanks,
-Sascha
+Qm90aCBvZiBzaGFzaGlrbydzIGNvbW1lbnRzIGFyZSB2YWxpZCAtIHdpbGwgZml4IGl0IG5vdy4N
+CldpbGwgYWxzbyByZW5hbWUgdGhlIGJhY2tvZmYgZGVmaW5pdGlvbiBmcm9tIF9fWEVfTU1JT19X
+QUlUX01BWF9CQUNLT0ZGXzEwME1TwqANCnRvIF9fWEVfUENPREVfV0FJVF9NQVhfQkFDS09GRl8x
+MDBNUyAoY29weSBhbmQgcGFzdGUgbWlzdGFrZSkNCg0KLi4uYWxhbg0K
