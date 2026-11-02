@@ -1,99 +1,76 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.51
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793625135;
-	b=QqyifzionV25M71wD5HYA2tyPzti4BAxx060kQpV9H4Z/00t0S+9t2VzLK0VKZIHLphW
-	 IrvEvB1WCZwrzuzGwGJW6+FP3DlAmoQDc5a2cT3NkWiW8hMWtwh7Y2GmKA57XNUQdMNc4
-	 VbITyAWUk1TsqCrPbqxbwtIn97g52R2F0wk0z3aTJWvLxLIDKB/+K1IafuAacsakueFda
-	 RSBR9yrttPK6nY7BpNDkP2nIHjPlt4X4r7LFN71b0/YdvQ7f96IdA/Tm3naVzZMpDJyP6
-	 PhcCInlw0XooYgIUNHsAIGCeLOD16s2XAF0+PgyR1brzl0DboYrgFt5h28vWUfP9f9w==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793625135;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
-	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=8uTFR1xxFFaOIPhvz5LXO6GWBsqM7yzNUjcEoLyeYHk=;
-	b=ib1QMUCUeR/KwFBucipOWzLakJWzD0INXPQZTjA8DW5DHHeF/uytgrfwYH4KJ7K3+uVb
-	 dN+KLkVpqxxX1E6w6lCv8fA3hsr3IrPCzMRaxuAa6vlAhJSrLRmWD5jiVt4ppp75dJ6de
-	 e84GwqUnJj/OHTuKQ2fEZPu1pSKqRD/PNRFp0Qc/E8fe6s7iK2znEytVDRSUI4G/pSLGA
-	 KlBX/cspARne7bCNDmoCeVSNTVUercVNuXqrlnuAL2YgmkaTnAEsg/fQIAKmgqb8VClW6
-	 gv2mshCycyyPhepgh1kdweUdZv98YchxHenEdHQnY5vLuqqRb8SX8P8xmeXG0bFHaYw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=flipper.net;
-	spf=pass smtp.mailfrom=flipper.net;
-	dkim=pass header.d=flipper.net header.i=@flipper.net header.a=rsa-sha256 header.s=google header.b=1SLMFRfr;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.51
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.17
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793625167;
+	b=CadteijMXU5/DmURxGaF6vAoeME9tYdXe/iinyahbDVwN3S1S5vOhQT7pw07GB5dJ6Ya
+	 DmvW9SteT/LeWP2kXh66TzKjN+kjgdq8ASSchNuyYtaRWJR1Di5Lbzcc1SwT1a5PwF1TW
+	 fVoz0VojMomrEkfvzIc3b/yjlaDrxwR13BtU2aeYJ+YSpnC7YJgGjSNvkVgahfBO0I68h
+	 WszcO7Q0CuiuMKYznD5jKRaE0YV6LHglJQr/5zkq8aVhbrZ8yAhy5c5urXihO8/+nGiaT
+	 Nl25woDoyV3JqvCA9uChO8t/tyhBWuX+TIyZhUIivNw4nhiAHBv00IS5uBwpD3TFoeA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793625167;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
+	 Subject:Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To:
+	 X-Patchwork-Hint:Organization;
+	bh=Pzx3M/+EIUWoks+DeoayPMYqGzKsjod7KKi2niTLQsg=;
+	b=rO7dBIuEW8aHqe46YfnfWelkn3ujLwpy/2EG5RmyBlkd0IEppHaC0WRUMmTvzbbGu1HF
+	 znBXxcSOAbeL/pwNnImJpqApgiL6UbPd4HdPk6juPJ6FMic9kDukqd6FZF9C/aHXod22W
+	 DFodgh2jmu89vXpwH/O4DPe4FtDo3I+1LgQdgP+oRMryX05RyHf0X/PYX2IapvyiIKK0T
+	 ELmS+JQz9716u//jj6qCeB9kKjKfJEvEE6LTnkL91NtBjlTtzWdb//0u8xVHxjlR0wAi4
+	 1k9/F5VR+8KntnmUkMHaCYn3BT+CVnfcxTXxIy0DwaQ8b7mCaduvmdCIFoCH2p87BZw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mQA27X0U;
+	arc=none smtp.remote-ip=198.175.65.17
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7577D606A327
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 13:12:15 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7577D606A327
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=flipper.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flipper.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6C4606A326
+	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 13:12:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DD6C4606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=flipper.net header.i=@flipper.net header.a=rsa-sha256 header.s=google header.b=1SLMFRfr
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6b4b7dee316so2870085a12.0
-        for <sashiko-reviews@lists.linux.dev>; Mon, 02 Nov 2026 05:12:15 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793625134; cv=none;
-        d=google.com; s=arc-20260327;
-        b=D/OMNVfPwwPIySn+Y3rxdTMKNGfBy0HFKMJhzFZ5l/c54/6lQF0NyD8szyLEQq1mJS
-         k0S/eUyLUH2yFUroakd5EEXkQJ3Z1qIC4XK4DlHegaxtw0r6e1EGiTCU5DmEMZ+l8G5v
-         IOQbb/fiKEN3wNFngzkrEPQHqVBLFyqxT5jesrBCV6jsMtYRaiKuNZV/vceqFSmVJ8SD
-         VM6doKxGPp+uH/FzgvnFZqhF1bP/5SqJNyqdZstNje9yKuuavVhnKa8brtZ4UCEl8cSg
-         bSKAuQtBPVy/7qCSUI3OJWvjSGavQ+EZ7e0nBaXjkgOsqaIyfp6Bokw9wym7HKb9aThS
-         FxOg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=8uTFR1xxFFaOIPhvz5LXO6GWBsqM7yzNUjcEoLyeYHk=;
-        fh=VuLhXw3JncJXxR3qDc950o0y1R82tCexOoAH58o69Vg=;
-        b=X6mWubZLVOjir0vXsptY/AoNOGOi4Jc8mPhMKSMPfCeTGQFXjN8HxLn+NVytDohvh9
-         5Q/jhKKYLScF3Q+2nFI6tVFItck4nBsFRzZadx1sbEIc4A7IUD9LFWRfJvxw9XrVyfxV
-         8iTl2V+uW4jV+1gSXMnOuDg8G/hXRqUNgXXGgc7iWjOLJb+7HFRAByDlcEzjE5eIOUIj
-         hN4Qu9xbFe2UNdQY85XRA6eBQk3dh8iz5OBlmuFYWR2mkWVar7F+P6yLgJHK0G93Y1Kg
-         9b6KmQLd52iV6S9CahCQjKfhZBKLCTwYpfCt7v6PYKNNvaxNTdrOh14CQoPEvzZWrmdD
-         9Q6w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=flipper.net; s=google; t=1793625134; x=1794229934; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=8uTFR1xxFFaOIPhvz5LXO6GWBsqM7yzNUjcEoLyeYHk=;
-        b=1SLMFRfrPIHG3k/p7PnaPn4Knx5grEtF6YWizsZBv7RQYBG1rsLzYoaDOCUzpqjTe7
-         zcRtFkhzm2l7iTiX4TBtwNDh7O/XaFGShR+SEUB+EAmTkATX95Jc00hZgYicJ2N/y0Ob
-         CJ6ZkNWfyit60BDcwh24PXWCNvoRR06cOB9IPDdHH2yyHqnYOJpps6TvlWY4oWOCqlGh
-         dnujdHQEdKn8YOzfAn99+v3SrT/eX4v1ch56M5h/17NGFmQuRuKLVo4tfTxo2xTPo7fg
-         XYpcTB0fKCtGs8hlU8GumHjY8IBvmWFN4ydoKt3KEQVdC/th7eX7vMzgzBV1WEeVleh4
-         Hn5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793625134; x=1794229934;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=8uTFR1xxFFaOIPhvz5LXO6GWBsqM7yzNUjcEoLyeYHk=;
-        b=LGTxPVrlFSuo2X5/aMJAbDTin+SafJ0o3v1nw25V0vMKTyJtYedVqBgvNk+D8rka9b
-         PcNgcU5GVDPEL+IQ4mpVcx1NPPalFpVQfr9cL1trAjJIyvn0A+5FypelvvUw5okhmWDg
-         NNkdLO/0G1oCRMyiUwV1eO3Ji20iR71C1x/JdeOBocetGZuFR0N8D01VhFxbgNeyT1pq
-         TPxRTLX87B7zMfywdGr9fnO4RuhvG4nu0lBDaVAFJSJzS26zeY5qjspXJx6o7obzXlBw
-         kYIZka5CLg/8rUK/yYDT/PDXLz71+THDDE2/bsJlCV4B1yl2labxctQfY2o4jQL9H0tJ
-         gwZw==
-X-Gm-Message-State: APuU4Z/m5Eq2k1Z/VMFepfOyb9w9CElD25skTn0iSuZnE+RoJfVmq5Ow
-	mMApUme3cgg4pEn3/6yL31/7+vsTcx6+FWk+uicJr5ajaK/klXV8Kyetus/5b7RcI5rjwMBPIYN
-	1N8xLa//+RCBuRAiA4AvAx2EioAnijHonAuO6ILHf+CTHj3YPCiXSeeJcXPmj
-X-Gm-Gg: AYBFou0AJwSe4y6zOOJll7Q2NwNvZ3WZ9hVi1Nem6dk12h7w8HZnraehXj+/4h5Tadl
-	bkDF/x31RnPnHao9qF5pXNa74KfdD+T8V1XF7TniRknBVWX0m1w5PcZCeBvNI7w/LuNEFpNniXd
-	RhL1JjI4GWa8nsYraujN7dEty42Cp1oln45ZwBjtsWMQLVL5QHCeFuuGI4M/o35GCsKBXTZ1moB
-	WUAXSm80lxiZ/8qbb0b+5Qio4NObpmktKpj461+9cLc0mxQmdbKWkzpJyPqCsxnXU9Z64kXDbPu
-	baZLlKOhaRgJaw6oZWNRXbEz7nX7LCo6pDvqAoz+dMU1iFtTvFiCTWZdS+9+zy2RSYuId+hE2kr
-	YdK/7s/bNMaeytS90c4x3lbVAqxv2F/n3SSd0AAwZxcqc/6N4n1rvBWQ9EkXegYuL1d4HVg==
-X-Received: by 2002:a17:907:7f90:b0:c29:f5d5:5a9c with SMTP id
- a640c23a62f3a-c4ca7b5f596mr875339166b.38.1793625133753; Mon, 02 Nov 2026
- 05:12:13 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mQA27X0U
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1793625166; x=1825161166;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=QG4eN9IXzBScnQnZOC1ouVSGeruX5PMf+/CiBmKHJo4=;
+  b=mQA27X0UHan3VBzm2ucF7SYLMMjzt9+2i6kU0z93G4ryLXLkd/gTQBEp
+   0NaohYoTnNmfTtjfDE686fYn4sUMLN6S/uvzotEy3fjIJyK3p3tAJKz90
+   BrbepnO/3lvx6ptxzQFL4lDSGMCyVXEqxUOk+1JhMvfPEW8uDUmqn1Qvg
+   p4MJY3/NcsBK1kuZc41XFTge4vP2f9NOvg/If8MvWXiFV+2r0KxTfQfdH
+   c4Lc2tyR//Jz//2h2830fqda8Tn2hDwDKVoh5CJDajF1vA1IjRJ7fRdgU
+   TE14YgBFcYW2cXoQCppBJXlK62BzNNrtzYGAXPHWc1bUUFvANgbwAQhK4
+   Q==;
+X-CSE-ConnectionGUID: qZqpS+BgSYWmlHwFp8FegA==
+X-CSE-MsgGUID: GYtpm19nTXi1CZsNRBV/eg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11953"; a="2330644"
+X-IronPort-AV: E=Sophos;i="6.27,191,1787036400"; 
+   d="scan'208";a="2330644"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 05:12:46 -0800
+X-CSE-ConnectionGUID: UATh0qTZSQGFAfYoRnKinA==
+X-CSE-MsgGUID: g1ZYvPJORyi25r9lIDtlEw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,191,1787036400"; 
+   d="scan'208";a="5970099"
+Received: from hrotuna-mobl2.ger.corp.intel.com (HELO localhost) ([10.245.245.10])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Nov 2026 05:12:44 -0800
+Date: Mon, 2 Nov 2026 15:12:41 +0200
+From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
+To: sashiko-reviews@lists.linux.dev
+Cc: intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org
+Subject: Re: [PATCH 09/10] drm/i915: Fix FEC wait with port sync on pre-LNL
+Message-ID: <auiMSZWL3hqPDMdp@intel.com>
+References: <20261030171327.29829-1-ville.syrjala@linux.intel.com>
+ <20261030171327.29829-10-ville.syrjala@linux.intel.com>
+ <sashiko-outbox-191346@kernel.org>
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -103,173 +80,100 @@ List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261102-fusb302-drain-rxfifo-v1-1-bd9b232ab345@flipper.net> <sashiko-outbox-193448@kernel.org>
-In-Reply-To: <sashiko-outbox-193448@kernel.org>
-From: Alexey Charkov <alchark@flipper.net>
-Date: Mon, 2 Nov 2026 17:11:57 +0400
-X-Gm-Features: AclHuK-n43QHaHcrbhfL_HnD3KJAXwokmTYqhfKuY4KazsGHX7cmxbgGZawV8B4
-Message-ID: <CAKTNdwGSxPyuadpQPY5oDRHwC_HTX7BujSCM-bRiKgjnyicDvQ@mail.gmail.com>
-Subject: Re: [PATCH] usb: typec: fusb302: Drain the RX FIFO on each PD interrupt
-To: sashiko-reviews@lists.linux.dev, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-usb@vger.kernel.org, 
-	Sebastian Reichel <sebastian.reichel@collabora.com>, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <sashiko-outbox-191346@kernel.org>
+X-Patchwork-Hint: comment
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs Bertel Jungin Aukio 5, 02600 Espoo, Finland
 
-On Mon, Nov 2, 2026 at 4:54=E2=80=AFPM <sashiko-bot@kernel.org> wrote:
->
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [High] usb: typec: fusb302: unacknowledged messages passed to tcpm_pd_r=
-eceive()
+On Fri, Oct 30, 2026 at 05:29:24PM +0000, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 1 potential issue(s) to consider:
+> - [Medium] drm/i915/ddi: LNL vs PTL version mismatch in FEC status wait comment and check
 > --
->
-> commit c6b027a56fce877cc0a50df66b78e46a0dbd88cb
-> Author: Alexey Charkov <alchark@flipper.net>
->
-> usb: typec: fusb302: Drain the RX FIFO on each PD interrupt
->
-> This commit adds fusb302_pd_read_messages() to drain all messages from th=
-e
-> 80-byte RX FIFO on each TX_SUCCESS or GCRCSENT interrupt until
-> FUSB_REG_STATUS1_RX_EMPTY is set. This prevents the driver from falling o=
-ne
-> message behind when the hardware queues unacknowledged messages without
-> raising an interrupt or when multiple messages arrive in quick succession=
-.
->
-> > diff --git a/drivers/usb/typec/tcpm/fusb302.c b/drivers/usb/typec/tcpm/=
-fusb302.c
-> > index 3319f6a2b0c9b..6841db172e117 100644
-> > --- a/drivers/usb/typec/tcpm/fusb302.c
-> > +++ b/drivers/usb/typec/tcpm/fusb302.c
-> > @@ -1481,6 +1481,36 @@ static int fusb302_pd_read_message(struct fusb30=
-2_chip *chip,
-> >       return ret;
-> >  }
-> >
-> > +/* The 80-byte RX FIFO holds at most 11 messages without data objects =
-*/
-> > +#define FUSB302_RX_FIFO_MAX_MSGS     11
-> > +
-> > +static int fusb302_pd_read_messages(struct fusb302_chip *chip)
-> > +{
-> > +     struct pd_message pd_msg;
-> > +     u8 status1;
-> > +     int ret;
-> > +     int i;
-> > +
-> > +     /*
-> > +      * Drain the whole RX FIFO rather than one message per interrupt:
-> > +      * messages the chip does not acknowledge raise no interrupt, and
-> > +      * reading one message per event would then leave every later rea=
-d
-> > +      * returning the message queued before the one that raised it.
-> > +      */
-> > +     for (i =3D 0; i < FUSB302_RX_FIFO_MAX_MSGS; i++) {
-> > +             ret =3D fusb302_i2c_read(chip, FUSB_REG_STATUS1, &status1=
-);
-> > +             if (ret < 0)
-> > +                     return ret;
-> > +             if (status1 & FUSB_REG_STATUS1_RX_EMPTY)
-> > +                     return 0;
-> > +             ret =3D fusb302_pd_read_message(chip, &pd_msg);
-> > +             if (ret < 0)
-> > +                     return ret;
-> > +     }
-> > +
-> > +     return 0;
-> > +}
->
-> [Severity: High]
-> When a PD 3.0 partner sends PD_CTRL_GET_SOURCE_CAP_EXT (type 17, 0x11, wi=
-th
-> len =3D=3D 0), the FUSB302 hardware decodes only the low four bits of the=
- message
-> type (0x11 & 0xf =3D=3D PD_CTRL_GOOD_CRC) and places the message and its =
-retries
-> into the RX FIFO without sending a GoodCRC on the CC line or raising an
-> interrupt.
->
-> After those retries time out, the partner sends PD_CTRL_SOFT_RESET, which=
- the
-> FUSB302 acknowledges with GoodCRC, raising FUSB_REG_INTERRUPTB_GCRCSENT. =
-When
-> fusb302_irq_work() -> fusb302_pd_read_messages() drains the RX FIFO, it c=
-alls
-> fusb302_pd_read_message() for the unacknowledged PD_CTRL_GET_SOURCE_CAP_E=
-XT
-> queued ahead of PD_CTRL_SOFT_RESET:
->
-> drivers/usb/typec/tcpm/fusb302.c:fusb302_pd_read_message() {
->     ...
->         if ((!len) && (pd_header_type_le(msg->header) =3D=3D PD_CTRL_GOOD=
-_CRC))
->                 tcpm_pd_transmit_complete(chip->tcpm_port, TCPC_TX_SUCCES=
-S);
->         else
->                 tcpm_pd_receive(chip->tcpm_port, msg, TCPC_TX_SOP);
->     ...
-> }
->
-> Because pd_header_type_le(msg->header) checks all five bits,
-> fusb302_pd_read_message() forwards the unacknowledged
-> PD_CTRL_GET_SOURCE_CAP_EXT to tcpm_pd_receive().
->
-> In tcpm_pd_rx_handler() -> tcpm_pd_ctrl_request() -> tcpm_pd_handle_msg()=
- ->
-> tcpm_queue_message(), TCPM updates port->rx_msgid and sets
-> port->queued_message =3D PD_MSG_CTRL_NOT_SUPP:
->
-> drivers/usb/typec/tcpm/tcpm.c:tcpm_pd_ctrl_request() {
->     ...
->         case PD_CTRL_GET_SOURCE_CAP_EXT:
->         case PD_CTRL_GET_STATUS:
->         case PD_CTRL_FR_SWAP:
->         case PD_CTRL_GET_PPS_STATUS:
->         case PD_CTRL_GET_COUNTRY_CODES:
->                 /* Currently not supported */
->                 tcpm_pd_handle_msg(port,
->                                    port->negotiated_rev < PD_REV30 ?
->                                    PD_MSG_CTRL_REJECT :
->                                    PD_MSG_CTRL_NOT_SUPP,
->                                    NONE_AMS);
->                 break;
->     ...
-> }
->
-> When the subsequent PD_CTRL_SOFT_RESET is processed, tcpm_pd_ctrl_request=
-()
-> calls tcpm_set_state(port, SOFT_RESET, 0) without clearing
-> port->queued_message. Then, in tcpm_state_machine_work(), TCPM sends the
-> queued PD_MSG_CTRL_NOT_SUPP before run_state_machine() runs the SOFT_RESE=
-T
-> state to send PD_CTRL_ACCEPT:
->
-> drivers/usb/typec/tcpm/tcpm.c:tcpm_state_machine_work() {
->     ...
->         if (port->queued_message && tcpm_send_queued_message(port))
->                 goto done;
->     ...
-> }
->
-> Doesn't forwarding unacknowledged control messages (where !len and the lo=
-w
-> four bits of the type equal PD_CTRL_GOOD_CRC, but the full type is not
-> PD_CTRL_GOOD_CRC) to tcpm_pd_receive() cause TCPM to transmit a spurious
-> PD_CTRL_NOT_SUPP on the wire while the partner is waiting for PD_CTRL_ACC=
-EPT
-> in response to its Soft_Reset?
+> 
+> commit c0a68d9ab06674ed868f492b35dc93f1dc05b1bf
+> Author: Ville Syrjälä <ville.syrjala@linux.intel.com>
+> 
+> drm/i915: Fix FEC wait with port sync on pre-LNL
+> 
+> This commit defers waiting for FEC status in intel_ddi_enable() until after
+> the timing generators have started, and adds a helper to wait for FEC status
+> across all synced transcoders when port sync is enabled.
+> 
+> > diff --git a/drivers/gpu/drm/i915/display/intel_ddi.c b/drivers/gpu/drm/i915/display/intel_ddi.c
+> > index 9939fa43e8f73..2e7f278a1b6c6 100644
+> > --- a/drivers/gpu/drm/i915/display/intel_ddi.c
+> > +++ b/drivers/gpu/drm/i915/display/intel_ddi.c
+> 
+> [ ... ]
+> 
+> > @@ -3623,6 +3654,16 @@ static void intel_ddi_enable(struct intel_atomic_state *state,
+> >  	else
+> >  		intel_crtc_vblank_on(state, crtc_state);
+> >  
+> > +	/*
+> > +	 * On pre-LNL FEC_DECODE_EN will only be sent when the timing
+> > +	 * generator starts. Also note that FEC_DECODE_EN cannot be
+> > +	 * re-sent without restarting the timing generator.
+> > +	 */
+> > +	if (is_trans_port_sync_mode(crtc_state))
+> > +		trans_port_sync_wait_for_fec_status(state, encoder, crtc_state, true);
+> > +	else
+> > +		intel_ddi_wait_for_fec_status(encoder, crtc_state, true);
+> 
+> [Severity: Medium]
+> Should the comment here (and the commit message) refer to pre-PTL and PTL+
+> rather than pre-LNL and LNL+, or should the version check in
+> intel_ddi_enable_fec() be updated?
 
-That is exactly the case, and I have just sent a patch [1] dropping
-Get_Source_Cap_Extended from the queue separately, as they are only
-tangentially related and can be applied in any order, and the current
-broken behavior remains broken until both patches are applied.
+PTL+ is actually where this changed. I misread the check in
+intel_ddi_enable_fec(). And that also explains why I was still seeing
+the timing generator dependency on LNL. After further testing, on PTL
+the dependency is truly gone.
 
-[1] https://lore.kernel.org/all/20261102-fusb302-getsourcecap-v1-1-26b5bfea=
-4b2b@flipper.net/
+> 
+> The commit message and the comment in intel_ddi_enable() state that on LNL+
+> FEC_DECODE_EN is sent immediately when enabling FEC in DP_TP_CTL, and that
+> LNL+ therefore checks FEC status immediately in intel_ddi_enable_fec() and
+> then a second time here in intel_ddi_enable().
+> 
+> However, intel_ddi_enable_fec() skips the immediate check and retry loop on
+> DISPLAY_VER < 30:
+> 
+> drivers/gpu/drm/i915/display/intel_ddi.c:intel_ddi_enable_fec() {
+> 	...
+> 	intel_de_rmw(display, dp_tp_ctl_reg(encoder, crtc_state),
+> 		     0, DP_TP_CTL_FEC_ENABLE);
+> 
+> 	if (DISPLAY_VER(display) < 30)
+> 		return;
+> 
+> 	ret = intel_ddi_wait_for_fec_status(encoder, crtc_state, true);
+> 	...
+> }
+> 
+> Since LNL is DISPLAY_VER 20 and PTL is DISPLAY_VER 30, LNL returns early in
+> intel_ddi_enable_fec() without waiting for FEC status, and port sync is also
+> enabled up through DISPLAY_VER 20 in intel_ddi_port_sync_transcoders():
+> 
+> drivers/gpu/drm/i915/display/intel_ddi.c:intel_ddi_port_sync_transcoders() {
+> 	/*
+> 	 * We don't enable port sync on BDW due to missing w/as and
+> 	 * due to not having adjusted the modeset sequence appropriately.
+> 	 */
+> 	if (!IS_DISPLAY_VER(display, 9, 20))
+> 		return 0;
+> 	...
+> }
+> 
+> Is intel_ddi_enable_fec() supposed to check DISPLAY_VER(display) < 20 for
+> LNL+, or was the description intended to say pre-PTL / PTL+?
+> 
+> -- 
+> Sashiko AI review · https://sashiko.dev/#/patchset/20261030171327.29829-1-ville.syrjala@linux.intel.com?part=9
 
-Best regards,
-Alexey
+-- 
+Ville Syrjälä
+Intel
