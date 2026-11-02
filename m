@@ -1,76 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.200
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793633628;
-	b=hHH+mf+itHm0MES5Jdk3pkQ3xOyx0KP9L1js+bKqFu5ubF4N1xurckjsJbZwHulHXq35
-	 VmerqQCFr5Y5W/AiYU7HU4dFdI7YT/lC7VmfeTy/xAXVFcNQIqprU8eYMXwaCnf9BclSY
-	 v7Y+WinUG/4/bDQ25cMFYBkN1Grns4xNtBlgzFeFB329FVE9WYLpzJ3ifWGWsjYxJHoH/
-	 do3zFH4v8W8LU1FqTEGeAa3e4B6OoMPz9ZTQ8tH7DHHp5HaXarK4PSJa3JXb2mp1nWbGw
-	 x39eKl7sQhWg99YOlri5W+3Ah3Baw2ThoFzXbRdLwpRyjx6d7FeVYt+nT03K9vBkQmw==
+	t=1793634359;
+	b=X7wIDpfPZZydEe2Zu69RHm4afhNYeoeXigs4q4Qg8CeIj//NEYtKJhRgR383jwOsilAu
+	 m/N5QaRegrYBt6rSF0WI3vIiaYjgvAQxB4J9ws2ge6zr2ZguxcQMzTAHk6xEia03xdMJ1
+	 vEibQ0o8O6nbtgAYWoWSkQgK/NxVbqDzy+xkAkqxzb5+mjUz/0zZevL2qrFHnLnMEhT8s
+	 ZpIuTDy0SZmV3/cd0/0j70a/jI9jnJWmlPzqwnLw6YD3e5BD48gLTgJ5rf8dPf2hC2n1C
+	 qitIWop2hsVfuiuQvmxXHBGOq1qknLjDLAntq9rE8Vv5sDcV5qo8cRxgX8Qyj42Lj5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793633628;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Received:Date:In-Reply-To:Mime-Version:
-	 References:Message-ID:Subject:From:To:Cc:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=TUC01fxFkyGA6yFwHL7rirhUUtJ+C7CbbSnK6VkA0MA=;
-	b=QsUSt8+oy39Kac0SlghKxMf8yCbWWQH2j5SQ7D6OEJ/PMFrSs2wDukpK4m61p7qFanEL
-	 WzKfUwqLlhhsk7Zn9Mciq5vWwvuvni5nmOqd8VOhS/oIUmNlrCnjc0EW+WnoWGed1f3tH
-	 bayjlTC5GxFqnrVyp0FqvJE0bA6NqLT0/y0BN6Ds9wb8RTw/8xd87MdscE/3fHMjq/Eyc
-	 tlo7WNrNtkZbGQhV1CFjnkJLf9pF7AzU83JXL0Vzl3Pc9gq487ByZFBuC8SNATUFu6nZI
-	 Vqm12jfkvLx+TwLav/Uw7+PN8G/ALtjpE0nwWCXW0qAYKibYWKCQD60lWag+iBbP6lA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793634359;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=OxZ1FKz93yFmSf3rlu7UFTVP3JEk6naoYRS2+rfDo78=;
+	b=Q7V32JF8hwBodjxNrsoRpKjydGO+TmJsFJt1IDmPCWMgmn0lYFfvrMUKjkacQwB+F/Gl
+	 B+rr5qX2enXZn7AcD5F71C+vPg+k8jYIZMKGPzUQ2CPBTRA77dq8SH51fReoz2uQ5uZjX
+	 RpaoNp5KoKmNf8GIlmxvXx64aUyQm5vnt9G0+yTPhrNmmD7odg44bWR5/JbXDYpeEwnyE
+	 M9B33TT3ULtMJZmV/PwS1gxdGdAaU3LtPmUYZtL65cdU3P+rOaHLYg91QyCLHCUjE7m+l
+	 sv5iUeO0mQq5v9HXQjK5+UT2s3pN6fV/2wZUnTltW6fn4kG3T57OeomgI9a8eCM1e9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=google.com;
-	spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com;
-	dkim=pass header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=qFIXkK6W;
-	arc=none smtp.remote-ip=209.85.214.200
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2165609FD9A
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 15:33:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E2165609FD9A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b="cOCS/GGj";
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 655146074659;
+	Mon,  2 Nov 2026 15:45:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 655146074659
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20260707 header.b=qFIXkK6W
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2e601800e58so51251705ad.2
-        for <sashiko-reviews@lists.linux.dev>; Mon, 02 Nov 2026 07:33:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20260707; t=1793633627; x=1794238427; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=TUC01fxFkyGA6yFwHL7rirhUUtJ+C7CbbSnK6VkA0MA=;
-        b=qFIXkK6WWNyJpn9mU6LRqRK2qTAkvz+t7OHdQ6c7r8+kqc8RIxX0JLtJGodbw77Akm
-         ML4N80VN0kcTNEUO3nYYjgYTKtky9bg3HUaedJsrnfERSSaNjkYw+qrDcF6AlxnnucxE
-         aagVvqTkXjAFcoRDsK6nSruMjLh8UfNk27bvHjD/xtViuxW3sr6nyrp4TJ8192Cy5qv1
-         BijV0zbTrqI+PXyViPMc6qNRfcDy+wiGaPPcJv9MGdtV0XMGukUkN6sf4Yn9SzXWHE3Y
-         DkGZ6FmllVXi3Ci3Z/C2zxRnBzqXTfsOqOX1hZDfJXq4od/yKbluqRAoT/MSswCESSX2
-         ek/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793633627; x=1794238427;
-        h=content-transfer-encoding:content-type:cc:to:from:subject
-         :message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=TUC01fxFkyGA6yFwHL7rirhUUtJ+C7CbbSnK6VkA0MA=;
-        b=AnKCrM2NwJ1JaxHx18hdHs0/vcdPjmD8X3EKg5XwjUsOSfPnNE1i1kI1ZYWZqnl+fl
-         TIxylqFDI8b13yB47YFEjU6hm+OgEx4oxlC7OyDqRwy9aR08tEX0oFJP5Jfn0qIq8nIi
-         HcoRlmMUROMug4GOiPhVSzs1AuFKFiVcM49D/yvc9u7IDdu/7HyjRjM2h8D3u0FtQw7P
-         TkmbeRkJLzkuqr5cyEXmlgRH58EkfXz9pxH6I3NPh2Aal9+otqZzU5x9WISZ0bVH41Aq
-         BXtgVlzTCkFcB7Fam1BZajtjn8SYtlXd4/8fD7XgDV/vcVSf7o5KGVXbAlp0qDXgurBU
-         e8Ew==
-X-Gm-Message-State: APuU4Z+BisZegQLQZbqCRHo/dYc68m4thD61GE3O06Rr4AgFuK/R9XMB
-	VN0dzJo5aFjhrbo+c1CLTZLMQJMj881u+m8HMwbVKAU+XRY6lrHUaKXLFHJwsrftnQux5wRPc0H
-	uYujxNzples3fBuiVoXcnNLjijFKKIhYSlV1CjuDfkgSGx4gYhYX87ybcAe9MmtcT5rhRXuG9SV
-	gwVX5Nd3etSCwnXinzKrl6ehk1rO20qXSgrlYxHP0cxMaefWCj
-X-Received: from plgv20.prod.google.com ([2002:a17:902:e8d4:b0:2ea:3bc:770d])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by 2002:a17:903:24b:b0:2e9:776f:66b4
- with SMTP id d9443c01a7336-2eb364f6eafmr93325065ad.44.1793633625745; Mon, 02
- Nov 2026 07:33:45 -0800 (PST)
-Date: Mon, 2 Nov 2026 07:33:45 -0800
-In-Reply-To: <sashiko-outbox-191627@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=cOCS/GGj
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id ABA581691;
+	Mon,  2 Nov 2026 07:45:54 -0800 (PST)
+Received: from [10.57.58.9] (unknown [10.57.58.9])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 85CB43F673;
+	Mon,  2 Nov 2026 07:45:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1793634357; bh=20817R1mA1QbVjTwjDkW4AThGUuc7p8N/sVrM+ih4AM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=cOCS/GGjHAgkaZa/DZHphD0w3MxNA7tE7wxbCjH8zp+5E7JfZTNU8KDbBKcYTkzOx
+	 P6yo5GiKL8de1WXQF+qhbIqjXEZz6rB1M9ziyY9EMMl4CCUM+JI7JSq+3rS6d0FCAP
+	 MgQUxyTQuOyY5SBKB0xtNrB55E8y/cf5P+PdJUYE=
+Message-ID: <b0755ab6-d7a9-4952-8f18-09b72fbd662d@arm.com>
+Date: Mon, 2 Nov 2026 15:45:54 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -79,153 +52,155 @@ List-Subscribe: <mailto:sashiko-reviews+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sashiko-reviews+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
-Mime-Version: 1.0
-References: <20261030212112.2598640-1-seanjc@google.com> <20261030212112.2598640-13-seanjc@google.com>
- <sashiko-outbox-191627@kernel.org>
-Message-ID: <auitWWkOopYYbBH3@google.com>
-Subject: Re: [PATCH v4 12/23] KVM: Destroy memslots immediately after
- mmu_notifiers are unregistered
-From: Sean Christopherson <seanjc@google.com>
-To: sashiko-reviews@lists.linux.dev
-Cc: kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>, 
-	Madhavan Srinivasan <maddy@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>, linuxppc-dev@lists.ozlabs.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/11] KVM: arm64: CCA: Introduce Realms
+To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org,
+ kvmarm@lists.linux.dev
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+References: <20261102141304.126883-1-steven.price@arm.com>
+ <20261102141304.126883-3-steven.price@arm.com>
+ <sashiko-outbox-193575@kernel.org>
+From: Steven Price <steven.price@arm.com>
+Content-Language: en-GB
+In-Reply-To: <sashiko-outbox-193575@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-+Gautam and PPC lists/maintainers
-
-On Fri, Oct 30, 2026, sashiko-bot@kernel.org wrote:
-> Thank you for your contribution! Sashiko AI review found 1 potential issu=
-e(s) to consider:
-> - [Medium] KVM: PPC: Book3S HV: rmap_nested memory leak in kvmhv_release_=
-all_nested()
+On 02/11/2026 14:30, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 2 potential issue(s) to consider:
+> - [High] KVM: arm64: premature kvm_arch_has_private_mem() breaks gmem checks and caps
+> - [Low] KVM: arm64: duplicate kvm_arm_vcpu_finalize() declarations in kvm_host.h
 > --
->=20
-> commit 9c25a1b4a76e8526eb8a2b11e1b9e63893b0de80
-> Author: Sean Christopherson <seanjc@google.com>
->=20
-> KVM: Destroy memslots immediately after mmu_notifiers are unregistered
->=20
-> This commit replaces active memslots with an empty memslot set and frees =
-all
-> memslots immediately after unregistering the MMU notifier in kvm_destroy_=
-vm(),
-> prior to calling kvm_arch_destroy_vm().
->=20
-> > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-> > index fa548b12228ff..2eda12a52bf4b 100644
-> > --- a/virt/kvm/kvm_main.c
-> > +++ b/virt/kvm/kvm_main.c
->=20
+> 
+> commit d7e08ee0dbb02a4cf114f13c026edc843145fe6e
+> Author: Suzuki K Poulose <suzuki.poulose@arm.com>
+> 
+> KVM: arm64: CCA: Introduce Realms
+> 
+> This commit adds foundational infrastructure for Arm CCA Realm VMs,
+> including the VM_REALM flavor, a static key for RMI availability,
+> per-VM Realm state tracking in struct kvm_arch, and initial feature and
+> memslot checks.
+> 
+>> diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
+>> index ccd2dc8f73c3a..7d0222047ca1e 100644
+>> --- a/arch/arm64/include/asm/kvm_host.h
+>> +++ b/arch/arm64/include/asm/kvm_host.h
 > [ ... ]
->=20
-> > @@ -1310,12 +1329,10 @@ static void kvm_destroy_vm(struct kvm *kvm)
-> >  		kvm->mn_active_invalidate_count =3D 0;
-> >  	else
-> >  		WARN_ON(kvm->mmu_invalidate_in_progress);
-> > +	kvm_destroy_memslots(kvm);
-> > +
-> >  	kvm_arch_destroy_vm(kvm);
-> >  	kvm_destroy_devices(kvm);
-> > -	for (i =3D 0; i < kvm_arch_nr_memslot_as_ids(kvm); i++) {
-> > -		kvm_free_memslots(kvm, &kvm->__memslots[i][0]);
-> > -		kvm_free_memslots(kvm, &kvm->__memslots[i][1]);
-> > -	}
->=20
-> [Severity: Medium]
-> Does hoisting kvm_destroy_memslots() above kvm_arch_destroy_vm() leak
-> struct rmap_nested allocations in slot->arch.rmap on PowerPC Book3S HV wh=
-en
-> destroying a VM with nested virtualization enabled?
+>> @@ -1572,30 +1584,43 @@ struct kvm *kvm_arch_alloc_vm(void);
+> [ ... ]
+>> +#define kvm_vm_is_realm(kvm)		((kvm)->arch.vm_flavor == VM_REALM)
+>> +#define vcpu_is_rec(vcpu)		kvm_vm_is_realm((vcpu)->kvm)
+>>  
+>>  #define kvm_vm_hyp_is_distrusting(kvm)	((kvm)->arch.vm_flavor >= __VM_DISTRUSTING_HYP)
+>>  
+>> -#endif	/* __KVM_NVHE_HYPERVISOR__ */
+>> +#define kvm_arch_has_private_mem(kvm) kvm_vm_is_realm(kvm)
+> 
+> [Severity: High]
+> Does defining kvm_arch_has_private_mem(kvm) here cause a regression in
+> guest_memfd memslot validation and capability reporting across arm64?
+> 
+> Because CONFIG_KVM_PRIVATE_MEMATTR_VM is not selected on arm64, defining
+> kvm_arch_has_private_mem activates the preprocessor branch in
+> include/linux/kvm_host.h that sets gmem_in_place_conversion to true at
+> compile time:
+> 
+> include/linux/kvm_host.h:
+>     #elif defined kvm_arch_has_private_mem
+>     #define gmem_in_place_conversion true
+>     #define kvm_is_private_gfn kvm_gmem_is_private_gfn
+> 
+> With gmem_in_place_conversion unconditionally true,
+> kvm_gmem_prepare_memory_region() in virt/kvm/guest_memfd.c sets
+> KVM_MEMSLOT_GMEM_ONLY on every guest_memfd memslot even when
+> GUEST_MEMFD_FLAG_MMAP is not set:
+> 
+> virt/kvm/guest_memfd.c:kvm_gmem_prepare_memory_region() {
+>     ...
+>     if (gmem_in_place_conversion || kvm_gmem_supports_mmap(inode))
+>         slot->flags |= KVM_MEMSLOT_GMEM_ONLY;
+> }
+> 
+> As a result, the check in kvm_arch_prepare_memory_region() in
+> arch/arm64/kvm/mmu.c that rejects non-mappable guest_memfd memslots:
+> 
+> arch/arm64/kvm/mmu.c:kvm_arch_prepare_memory_region() {
+>     ...
+>     if (kvm_slot_has_gmem(new) && !kvm_memslot_is_gmem_only(new))
+>         return -EINVAL;
+> }
+> 
+> is bypassed for non-Realm VMs, allowing userspace to bind a private
+> guest_memfd created with flags == 0 via KVM_SET_USER_MEMORY_REGION2 and
+> fault those pages into non-Realm stage-2 page tables through gmem_abort().
+> 
+> In addition, when userspace queries
+> KVM_CHECK_EXTENSION(KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES) on the /dev/kvm
+> fd (where kvm is NULL), kvm_vm_ioctl_check_extension_generic() in
+> virt/kvm/kvm_main.c calls kvm_supports_private_mem(NULL):
+> 
+> virt/kvm/kvm_main.c:kvm_supports_private_mem() {
+>     return !kvm || kvm_arch_has_private_mem(kvm);
+> }
+> 
+> virt/kvm/kvm_main.c:kvm_vm_ioctl_check_extension_generic() {
+>     ...
+>     case KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES:
+>         if (!gmem_in_place_conversion || !kvm_supports_private_mem(kvm))
+>             return 0;
+> 
+>         return KVM_MEMORY_ATTRIBUTE_PRIVATE;
+> }
+> 
+> This advertises KVM_MEMORY_ATTRIBUTE_PRIVATE on all arm64 hosts even when
+> KVM_MODE_RMM is not active and while kvm_gmem_set_attributes() in
+> virt/kvm/guest_memfd.c rejects KVM_SET_MEMORY_ATTRIBUTES2 with -EINVAL on
+> every creatable VM.
 
-I don't think so?  Patch 3[*], "KVM: PPC: Flush/zap all memslots on kvm_arc=
-h_flush_shadow_all()",
-should free the rmaps in response to kvm_arch_flush_shadow_all().   From wh=
-at I
-can tell, the page tables have to be in radix mode, and so the rmaps are fr=
-eed via:
+Dang, yes that's broken. The later commit "KVM: arm64: CCA: Support
+runtime faulting of memory" changes the condition in
+kvm_arch_prepare_memory_region() to check "!kvm_vm_is_realm()" but
+clearly I've broken the bisect here. That check also isn't quite right.
+I think rather than using kvm_memslot_is_gmem_only() we should check the
+gmem file with kvm_gmem_supports_mmap(). So we end up with the check:
 
-  kvmppc_radix_flush_memslot()
-  |
-  -> kvmppc_unmap_pte()
-     |
-     -> kvmhv_remove_nest_rmap_range()
-        |
-        -> kvmhv_remove_nest_rmap_list()
+       if (kvm_slot_has_gmem(new) && !kvm_vm_is_realm(kvm) &&
+           !kvm_gmem_slot_supports_mmap(new))
 
-And if that doesn't work, it means memslot deletion on an active VM is comp=
-letely
-broken.
+and a new function:
 
-However, it means the memslot code in kvmhv_release_all_nested() is dead co=
-de, so
-this as follow-up to patch 3?  Or maybe folded in?
-
-diff --git a/arch/powerpc/kvm/book3s_hv_nested.c b/arch/powerpc/kvm/book3s_=
-hv_nested.c
-index a6ff42d7666c..27985210f972 100644
---- a/arch/powerpc/kvm/book3s_hv_nested.c
-+++ b/arch/powerpc/kvm/book3s_hv_nested.c
-@@ -802,8 +802,6 @@ void kvmhv_release_all_nested(struct kvm *kvm)
- 	int lpid;
- 	struct kvm_nested_guest *gp;
- 	struct kvm_nested_guest *freelist =3D NULL;
--	struct kvm_memory_slot *memslot;
--	int srcu_idx, bkt;
-=20
- 	spin_lock(&kvm->mmu_lock);
- 	idr_for_each_entry(&kvm->arch.kvm_nested_guest_idr, gp, lpid) {
-@@ -820,11 +818,6 @@ void kvmhv_release_all_nested(struct kvm *kvm)
- 		freelist =3D gp->next;
- 		kvmhv_release_nested(gp);
- 	}
--
--	srcu_idx =3D srcu_read_lock(&kvm->srcu);
--	kvm_for_each_memslot(memslot, bkt, kvm_memslots(kvm))
--		kvmhv_free_memslot_nest_rmap(memslot);
--	srcu_read_unlock(&kvm->srcu, srcu_idx);
+ bool kvm_gmem_slot_supports_mmap(const struct kvm_memory_slot *slot)
+ {
+        /* The guest_memfd file is pinned while preparing a new memslot. */
+        return kvm_gmem_supports_mmap(file_inode(slot->gmem.file));
  }
-=20
- /* caller must hold gp->tlb_lock */
-		=09
 
-[*] https://lore.kernel.org/all/20261030212112.2598640-4-seanjc@google.com
 
-> In virt/kvm/kvm_main.c, kvm_destroy_memslots() replaces kvm->memslots[i]
-> with kvm_empty_memslots and frees each memslot via
-> kvm_free_memslot() -> kvm_arch_free_memslot() -> kvmppc_core_free_memslot=
-_hv()
-> in arch/powerpc/kvm/book3s_hv.c:
->=20
->     static void kvmppc_core_free_memslot_hv(struct kvm_memory_slot *slot)
->     {
->             vfree(slot->arch.rmap);
->             slot->arch.rmap =3D NULL;
->     }
->=20
-> which frees the slot->arch.rmap array without freeing the linked
-> struct rmap_nested entries.
->=20
-> Previously, those entries were freed before memslot destruction via
-> kvm_arch_destroy_vm() -> kvmppc_core_destroy_vm_hv() ->
-> kvmhv_release_all_nested() in arch/powerpc/kvm/book3s_hv_nested.c:
->=20
->     srcu_idx =3D srcu_read_lock(&kvm->srcu);
->     kvm_for_each_memslot(memslot, bkt, kvm_memslots(kvm))
->             kvmhv_free_memslot_nest_rmap(memslot);
->     srcu_read_unlock(&kvm->srcu, srcu_idx);
->=20
-> With kvm_destroy_memslots() running before kvm_arch_destroy_vm(),
-> kvm_memslots(kvm) now returns kvm_empty_memslots and the memslots have
-> already been freed when kvmhv_release_all_nested() runs, so
-> kvmhv_free_memslot_nest_rmap() is never called. Any struct rmap_nested
-> entries remaining in slot->arch.rmap at teardown (for example, when
-> KVMPPC_SECURE_INIT_DONE causes kvmppc_radix_flush_memslot() to return ear=
-ly,
-> or when 4KB PTEs were replaced by a huge page in kvmppc_unmap_free_pte())
-> will be leaked.
->=20
-> --=20
-> Sashiko AI review =C2=B7 https://sashiko.dev/#/patchset/20261030212112.25=
-98640-1-seanjc@google.com?part=3D12
->=20
+I'm not sure what we can do about the KVM extension when !kvm. x86
+presumably already has the situation where !kvm can expose
+KVM_MEMORY_ATTRIBUTE_PRIVATE even if the host doesn't support it. Is
+this a problem?
+
+>> +
+>> +int kvm_arm_vcpu_finalize(struct kvm_vcpu *vcpu, int feature);
+>> +bool kvm_arm_vcpu_is_finalized(struct kvm_vcpu *vcpu);
+> 
+> [Severity: Low]
+> This isn't a bug, but commit df6a70516adec8 already moved the declarations
+> of kvm_arm_vcpu_finalize() and kvm_arm_vcpu_is_finalized() earlier in
+> arch/arm64/include/asm/kvm_host.h right below VCPU_PKVM_FINALIZED:
+> 
+> arch/arm64/include/asm/kvm_host.h:
+>     #define VCPU_PKVM_FINALIZED	__vcpu_single_flag(cflags, BIT(2))
+> 
+>     int kvm_arm_vcpu_finalize(struct kvm_vcpu *vcpu, int feature);
+>     bool kvm_arm_vcpu_is_finalized(struct kvm_vcpu *vcpu);
+> 
+> Can these duplicate declarations be dropped?
+
+Indeed they can.
+
+Steve
+
