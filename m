@@ -1,102 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793638108;
-	b=3eNNvcPi2f/Hc0OL1PXxaNm4sjdhGJ88uXdvfLNn2lUyCKwUqxLytREkijQkPI7e9enD
-	 59+K+QE0t0i0D4bOixqQuk1m7NuJae6z0a/vChOsi3lX3i3d/rDTU3ImsodJ1VwLVyTSn
-	 3QfTnYTP3BpwaEkJChTnCsKyCA40BVeqlz2fEtaFf1wAFo1eEBcGqtc2LQcojJMUdS3Mu
-	 46JAuXppnC6zySOf1WXtMbbykMTGS6UNtldlRHwtu4uYP8duQ4nxQK7BaACTZCfT2AWhN
-	 17uNlU9pwkMVsdp+8KraUqOBWUZL8T8gCDWDU7vGNUYlQd2lyrCyzPvs1QCoBZhsKCA==
+	t=1793638924;
+	b=uAWU/u7BrsG1fUVUcuDCEdKuChcBMlG0QKs3rgHMvnD41nl9ZDgr67fRuB4KVuZoS403
+	 NwhBW6apZcG89PnMqKWD8bOducZrfpXh/38TRiCjliDMRcrImKksZtJgtsbGaXJS6Hl7t
+	 ivHtPEIDsDm/m1e4gHO4VEjio+FjVdeDA4e+pfkNitRB7zxfFhJC9ymdSFpTcS+8Szq2p
+	 kax4jiU9vHfM2+raV/S+xkx+XOpqdxO/lLxwA+uIk3PZawdbE3qFUQAVrouWeglZsIGIl
+	 RtN1v/QigD5ESOqM0P/N8bSCMrVoagha57/Z6Tk8goZkfkyDFpA7tA6wW3yp6+I7yIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793638108;
-	h=DMARC-Filter:Received:DKIM-Signature:DKIM-Signature:DKIM-Signature:
-	 DKIM-Signature:Received:Received:Message-ID:Date:MIME-Version:
-	 User-Agent:Subject:To:Cc:References:Content-Language:From:Autocrypt:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Spam-Flag:
-	 X-Spam-Level:X-Spamd-Result:X-Spam-Score;
-	bh=s2SsEbFBgJaO9Jkmo+11Kl5ydWU1vOHQ5eCoJdpnSFM=;
-	b=3uJfmG4aiauH+YNexuzO7Cf4bsg0kyAVMhPTvvp+0SXmVORznulY8AcKFH9uuRJA+/1S
-	 jIB/0KZtCVdL/xtoU22lIxdRqzpw1GB3zwoy+iPSXsnhDIqyZvx7x3vHz6qYUSuizGDZM
-	 imZo76qqDOjuDBBCr4Tug2sRWJbOhbnpC0jI9afNb2dT8xeY1jLKuRwdTSTcTzBwuo2WF
-	 fG2ZGIuZUq+OCkMdj9YKojQVulD/Uf7oILcs5KI5itG/+5Th/sasYHHKU/aTmF5RExa5i
-	 G/dwlG/VChAq1EdZsm2qJ4270DNX9wqIfaHrJHA75SWyi/jIJCewMJ8SAGE2iEQ4HAw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793638924;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:From:
+	 Content-Language:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=bpH9MkRAZiC53uZXlhyRKBkxR5xRQR1vmni4kZzNvpA=;
+	b=LZo3q71Hf/5bkhq0TeAyOhZBoAvey/1bnh8fGbor3/ONXrPDVwQabMSpqSucs5CQWoSu
+	 GpdtRzcdil80SbFKOiCUsEQTxMXy3bjb1ILl+L2ODMJ5WDQF/7UPrjKYgYUpyS6M95IKr
+	 d/YlYu6Isrdz4QU548wehgs5zAHGs+OGQnz//Dokb/cohGO6337YsLTVzIGPRSltcJUa7
+	 pSciPivNZZrb7dRGb3IuE/Xykr5I8ccllPp4E3tY3ATsjYrTwndNpQJHGjpKfKQZRLyGQ
+	 6anB/iqeD9ArmTkg7mOzhYurFTLMUH145t3oyOtag7ErZ7Jf6UDfXLebmmS74EgsOqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=suse.de;
-	spf=pass smtp.mailfrom=suse.de;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=02nQqflh;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=GwcSGu1H;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=MNBhQREX;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=aUbDg4gK;
-	arc=none smtp.remote-ip=195.135.223.130
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53DD606B90D
-	for <sashiko-reviews@lists.linux.dev>; Mon,  2 Nov 2026 16:48:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B53DD606B90D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=nYDGH9IB;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E97AB606F3DE;
+	Mon,  2 Nov 2026 17:02:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E97AB606F3DE
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=02nQqflh;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=GwcSGu1H;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=MNBhQREX;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=aUbDg4gK
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 8F4292202B;
-	Mon,  2 Nov 2026 16:48:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1793638105; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=s2SsEbFBgJaO9Jkmo+11Kl5ydWU1vOHQ5eCoJdpnSFM=;
-	b=02nQqflhIL2tyzXPE/ieje49qERwo8sAiJEG7oWVVufg+aPKvRN7n3OEnWvbv/B4IUIWiC
-	geLX8hSyJ+4kek5OGMYddofr6Tao5xtPwQHkb34Mx5EAjtFosqg15y8J+VSCG7utl7zfxw
-	z28GC8aMNd0nXINQbWC8rw1Ezn2XgpY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1793638105;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=s2SsEbFBgJaO9Jkmo+11Kl5ydWU1vOHQ5eCoJdpnSFM=;
-	b=GwcSGu1HEwIpPPFDsRXsrj8mvXbodhyh+sq92ZFFGcgBdBS0FB3R0JNk1GPffir7OziXta
-	HOq+1FXczPwgJzBw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1793638104; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=s2SsEbFBgJaO9Jkmo+11Kl5ydWU1vOHQ5eCoJdpnSFM=;
-	b=MNBhQREXmZ9dH0LOn4imoP2vAQDtZhcnQsL0hbHwZYyeyU9wr6PFT82Jemb/Mn6C/RVQLK
-	Cazah5smMSv29m8TOFXxzJBNKoxrW/wfnARz8RmIj4qPlvWxJcvqN4I2ddnqiRZdeJl3mA
-	2tYA6GY4DRMeWrePyOBkfXTro52T9No=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1793638104;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=s2SsEbFBgJaO9Jkmo+11Kl5ydWU1vOHQ5eCoJdpnSFM=;
-	b=aUbDg4gKIKZz/M1a3wNTXwMuN9r418R+iAPP1r8WycjozWF12slYyTh4F287xbO19aqLnz
-	/4HT3KlurFDdnnCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2EF75134B8;
-	Mon,  2 Nov 2026 16:48:24 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id R+UfN9e+6GquTgAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Mon, 02 Nov 2026 16:48:24 +0000
-Message-ID: <4212140f-fa07-4f0c-bd3a-0ae3d88b250c@suse.de>
-Date: Mon, 2 Nov 2026 17:48:23 +0100
+	dkim=pass (1024-bit key, unprotected) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=nYDGH9IB
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BE33A16F3;
+	Mon,  2 Nov 2026 09:01:58 -0800 (PST)
+Received: from [10.57.58.9] (unknown [10.57.58.9])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id F10C83F59E;
+	Mon,  2 Nov 2026 09:02:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1793638921; bh=E9jNczzchk5nHtI0CgVSTbFnwcvfP7xLsfmDy95J5TI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=nYDGH9IBV5B8LPpqW6tP4xAjJO9W19nd1DYv9I4nTTI5W+6UCqTuKXWi/Qst8LFSi
+	 hP7+J/AsSNIRBGUquck3lr3ycA04Ut4VYaal8plplh1VkM9n+ASRvMm3zumxl6gEdP
+	 7nqaO74SBk+j5J9Xi984sCJl9sU2t6KRNdSScrCI=
+Message-ID: <be11184a-909c-4fed-83b7-90ff6d3aac28@arm.com>
+Date: Mon, 2 Nov 2026 17:01:58 +0000
 X-Mailing-List: sashiko-reviews@lists.linux.dev
 List-Id: <sashiko-reviews.lists.linux.dev>
 List-Post: <mailto:sashiko-reviews@lists.linux.dev>
@@ -107,214 +54,233 @@ List-Owner: <mailto:sashiko-reviews+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/vblank: Restart enabling vblank timer on possible
- deadlock
-To: =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Cc: maarten.lankhorst@linux.intel.com, mripard@kernel.org, airlied@gmail.com,
- simona@ffwll.ch, javierm@redhat.com, louis.chauvet@bootlin.com,
- dri-devel@lists.freedesktop.org, sashiko-reviews@lists.linux.dev,
- stable@vger.kernel.org
-References: <20261102143919.1672293-1-tzimmermann@suse.de>
- <auioL8zR9O5u4TCF@intel.com>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <auioL8zR9O5u4TCF@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Spamd-Result: default: False [-13.29 / 50.00];
-	SUSE_INTERNAL_BYPASS(-9.00)[];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	XM_UA_NO_VERSION(0.01)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	ARC_NA(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	MIME_TRACE(0.00)[0:+];
-	URIBL_BLOCKED(0.00)[suse.com:url,intel.com:email,suse.de:email,ffwll.ch:email,bootlin.com:email,bootlin.com:url,imap1.dmz-prg2.suse.org:helo];
-	FREEMAIL_CC(0.00)[linux.intel.com,kernel.org,gmail.com,ffwll.ch,redhat.com,bootlin.com,lists.freedesktop.org,lists.linux.dev,vger.kernel.org];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,lists.freedesktop.org:email,intel.com:email,ffwll.ch:email,imap1.dmz-prg2.suse.org:helo,suse.de:email,bootlin.com:email,bootlin.com:url]
-X-Spam-Score: -13.29
+Subject: Re: [PATCH 07/11] KVM: arm64: CCA: Tear down RTTs
+To: sashiko-reviews@lists.linux.dev, kvm@vger.kernel.org,
+ kvmarm@lists.linux.dev
+Cc: Oliver Upton <oupton@kernel.org>, Marc Zyngier <maz@kernel.org>
+References: <20261102141304.126883-1-steven.price@arm.com>
+ <20261102141304.126883-8-steven.price@arm.com>
+ <sashiko-outbox-193650@kernel.org>
+From: Steven Price <steven.price@arm.com>
+Content-Language: en-GB
+In-Reply-To: <sashiko-outbox-193650@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi
+On 02/11/2026 15:18, sashiko-bot@kernel.org wrote:
+> Thank you for your contribution! Sashiko AI review found 4 potential issue(s) to consider:
+> - [High] KVM: arm64: stage-2 PGD leak for uncreated Realms in kvm_destroy_realm()
+> - [High] KVM: arm64: unclamped stage-2 levels in get_start_level() breaks 64K RTT teardown
+> - [High] KVM: arm64: free_rtt() accounts page table pages after freeing the page
+> - [Medium] KVM: arm64: kvm_realm_uninit_stage2() ignores REALM_STATE_NEW
+> --
+> 
+> commit 5954ac2ccf8825a659e2f39dc0db05d96c40be84
+> Author: Steven Price <steven.price@arm.com>
+> 
+> KVM: arm64: CCA: Tear down RTTs
+> 
+> This commit adds stage-2 page table and Realm Translation Table (RTT)
+> teardown for arm64 CCA realms. It unmaps the Realm IPA space during stage-2
+> teardown and walks non-root RTTs during final Realm destruction to destroy
+> and undelegate them before destroying the Realm Descriptor.
+> 
+>> diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+>> index b049ea67d9af3..51fda7b2ff7f3 100644
+>> --- a/arch/arm64/kvm/mmu.c
+>> +++ b/arch/arm64/kvm/mmu.c
+>> @@ -1145,9 +1145,24 @@ int kvm_init_stage2_mmu(struct kvm *kvm, struct kvm_s2_mmu *mmu, unsigned long t
+>>  	return err;
+>>  }
+>>  
+>> +static void kvm_realm_uninit_stage2(struct kvm_s2_mmu *mmu)
+>> +{
+>> +	struct kvm *kvm = kvm_s2_mmu_to_kvm(mmu);
+>> +
+>> +	mutex_lock(&kvm->arch.config_lock);
+>> +	if (kvm_realm_state(kvm) == REALM_STATE_ACTIVE) {
+>> +		kvm_set_realm_state(kvm, REALM_STATE_DYING);
+>> +		WARN_ON(kvm_realm_teardown_stage2(kvm));
+>> +	}
+>> +	mutex_unlock(&kvm->arch.config_lock);
+>> +}
+> 
+> [Severity: Medium]
+> What happens if kvm_uninit_stage2_mmu() is called via
+> kvm_mmu_notifier_release() -> kvm_flush_shadow_all() ->
+> kvm_arch_flush_shadow_all() while the Realm is in REALM_STATE_NEW?
+> 
+> According to enum realm_state in arch/arm64/include/asm/kvm_rmi.h, the Realm
+> Descriptor has already been created and stage-2 memory may already be
+> populated in REALM_STATE_NEW. Unlike kvm_destroy_realm(), which checks
+> kvm_realm_is_created(kvm), sets REALM_STATE_DYING, and unmaps stage-2 for
+> both REALM_STATE_NEW and REALM_STATE_ACTIVE, kvm_realm_uninit_stage2() only
+> checks for REALM_STATE_ACTIVE.
+> 
+> Should kvm_realm_uninit_stage2() also handle REALM_STATE_NEW (for example by
+> checking kvm_realm_is_created(kvm)) so that stage-2 mappings are unmapped
+> before exit_mmap() finishes and the Realm transitions to REALM_STATE_DYING?
 
-Am 02.11.26 um 16:11 schrieb Ville Syrjälä:
-> On Mon, Nov 02, 2026 at 03:38:52PM +0100, Thomas Zimmermann wrote:
->> Return -EDEADLK when trying to cancel a running hrtimer as part of
->> enable_vblank(). Reacquire vblank_time_lock and try again.
->>
->> The vblank helper drm_vblank_disable_and_save() and the vblank IRQ
->> handler hold the spin lock vblank_time_lock at some point. This
->> can result in a deadlock if vblank timer's disable code in
->> drm_crtc_vblank_cancel_timer() calls hrtimer_cancel() directly: the
->> helper wais for the timer function to complete and the timer function
->> waits for the helper to release vblank.time_lock.
->>
->> drm_crtc_vblank_cancel_timer() works around this problem by calling
->> hrtimer_try_to_cancel() instead. For re-enabling the vblank timer,
->> drm_crtc_vblank_start_timer() must wait for the vblank timer to stop.
->> It runs into the same deadlock problem while waiting for the timer
->> function to complete.
->>
->> The solution to this problem is to release and reacquire the spin
->> lock vblank_time_lock if hrtimer_try_to_cancel() signals a running
->> timer function. Releasing the lock allows for the timer function to
->> make progress.
->>
->> Signal the possible deadlock with -EDEADLK and perform the necessary
->> steps. No other driver uses -EDEADLK in their enable_vblank, so the
->> change should not interfere.
->>
->> Tested with bochs on qemu.
->>
->> Closes: https://lore.kernel.org/dri-devel/20260914111129.300691F00898@smtp.kernel.org/
->> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->> Fixes: 74afeb812850 ("drm/vblank: Add vblank timer")
->> Cc: Thomas Zimmermann <tzimmermann@suse.de>
->> Cc: Louis Chauvet <louis.chauvet@bootlin.com>
->> Cc: Javier Martinez Canillas <javierm@redhat.com>
->> Cc: David Airlie <airlied@gmail.com>
->> Cc: Simona Vetter <simona@ffwll.ch>
->> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
->> Cc: Maxime Ripard <mripard@kernel.org>
->> Cc: dri-devel@lists.freedesktop.org
->> Cc: <stable@vger.kernel.org> # v6.19+
->> ---
->> I also tried to move hrtimer_cancel() out of the critical section. The
->> result was fairly fragile. So returning an error and re-acquiring the
->> lock was the easier solution.
->> ---
->>   drivers/gpu/drm/drm_vblank.c | 21 +++++++++++++++------
->>   1 file changed, 15 insertions(+), 6 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/drm_vblank.c b/drivers/gpu/drm/drm_vblank.c
->> index 5162250e8813..135efde86298 100644
->> --- a/drivers/gpu/drm/drm_vblank.c
->> +++ b/drivers/gpu/drm/drm_vblank.c
->> @@ -1182,10 +1182,12 @@ static int __enable_vblank(struct drm_device *dev, unsigned int pipe)
->>   static int drm_vblank_enable(struct drm_device *dev, unsigned int pipe)
->>   {
->>   	struct drm_vblank_crtc *vblank = drm_vblank_crtc(dev, pipe);
->> -	int ret = 0;
->> +	int ret;
->>   
->>   	assert_spin_locked(&dev->vbl_lock);
->>   
->> +retry:
->> +	ret = 0;
->>   	spin_lock(&dev->vblank_time_lock);
->>   
->>   	if (!vblank->enabled) {
->> @@ -1199,7 +1201,11 @@ static int drm_vblank_enable(struct drm_device *dev, unsigned int pipe)
->>   		ret = __enable_vblank(dev, pipe);
->>   		drm_dbg_core(dev, "enabling vblank on crtc %u, ret: %d\n",
->>   			     pipe, ret);
->> -		if (ret) {
->> +		if (ret == -EDEADLK) {
->> +			spin_unlock(&dev->vblank_time_lock);
->> +			cpu_relax();
->> +			goto retry;
->> +		} else if (ret) {
->>   			atomic_dec(&vblank->refcount);
->>   		} else {
->>   			drm_update_vblank_count(dev, pipe, 0);
->> @@ -2232,11 +2238,14 @@ int drm_crtc_vblank_start_timer(struct drm_crtc *crtc)
->>   			      CLOCK_MONOTONIC, HRTIMER_MODE_REL);
->>   	} else {
->>   		/*
->> -		 * Timer should not be active. If it is, wait for the
->> -		 * previous cancel operations to finish.
->> +		 * Timer should not be running. If it is, signal cancellation
->> +		 * again and restart to release locks.
->>   		 */
->> -		while (hrtimer_active(&vtimer->timer))
->> -			hrtimer_try_to_cancel(&vtimer->timer);
-> Why do you even have to cancel the timer here? Just let it run?
+Yes we should handle REALM_STATE_NEW. I'm not convinced about using
+kvm_realm_is_created(). That would include REALM_STATE_DYING.
 
-We ran hrtimer_try_to_cancel() in drm_crtc_vblank_cancel_timer() to 
-remove the vblank timer. When we later come here, we need to know if the 
-timer has meanwhile been fully canceled. Hence we need at least one call 
-to hrtimer_try_to_cancel() even if the timer is in some bogus state 
-where it should not be active. The loop here was nonsense and could 
-deadlock. In the new code, we still need that call to 
-hrtimer_try_to_cancel() to detect the possible deadlock.
+>>  void kvm_uninit_stage2_mmu(struct kvm *kvm)
+>>  {
+>> -	kvm_free_stage2_pgd(&kvm->arch.mmu);
+>> +	if (kvm_vm_is_realm(kvm))
+>> +		kvm_realm_uninit_stage2(&kvm->arch.mmu);
+>> +	else
+>> +		kvm_free_stage2_pgd(&kvm->arch.mmu);
+>>  	kvm_mmu_free_memory_cache(&kvm->arch.mmu.split_page_cache);
+>>  }
+> 
+> [Severity: High]
+> Does skipping kvm_free_stage2_pgd() here leak mmu->pgt, the root stage-2 PGD
+> pages (mmu->pgt->pgd), and the per-CPU mmu->last_vcpu_ran allocation when a
+> Realm VM is destroyed before the Realm is created in the RMM?
+> 
+> During VM creation, kvm_arch_init_vm() calls kvm_init_stage2_mmu() while the
+> Realm state is still REALM_STATE_NONE. If userspace closes the VM file
+> descriptor without creating the Realm in the RMM, kvm_destroy_realm() takes
+> its early return before reaching kvm_free_stage2_pgd(&kvm->arch.mmu):
+> 
+> arch/arm64/kvm/rmi.c:kvm_destroy_realm() {
+> 	...
+> 	if (!kvm_realm_is_created(kvm)) {
+> 		kfree(realm->sro);
+> 		realm->sro = NULL;
+> 		return;
+> 	}
+> 	...
+> 	kvm_free_stage2_pgd(&kvm->arch.mmu);
+> }
+> 
+> Similarly, if kvm_init_nested() or kvm_init_realm() fails in
+> kvm_arch_init_vm() after kvm_init_stage2_mmu() succeeds:
+> 
+> arch/arm64/kvm/arm.c:kvm_arch_init_vm() {
+> 	...
+> 	ret = kvm_init_nested(kvm);
+> 	if (ret)
+> 		goto err_uninit_mmu;
+> 
+> 	if (kvm_vm_is_realm(kvm)) {
+> 		ret = kvm_init_realm(kvm);
+> 		if (ret)
+> 			goto err_uninit_mmu;
+> 	}
+> 
+> 	return 0;
+> 
+> err_uninit_mmu:
+> 	kvm_uninit_stage2_mmu(kvm);
+> 	return ret;
+> }
+> 
+> the error path only calls kvm_uninit_stage2_mmu(kvm) and never calls
+> kvm_destroy_realm(), leaking the stage-2 PGD allocations there as well.
 
-I'm not confident that we can set up the hrtimer with new values while 
-it is in this half-canceled state, can we?
+Here I think using kvm_realm_is_created() make sense. Once the realm is
+up we want to "skip" kvm_free_stage2_pgd() because we need the RMM to
+tear things down first.
 
+>> diff --git a/arch/arm64/kvm/rmi.c b/arch/arm64/kvm/rmi.c
+>> index 45ecbaa467d1d..f190143b33ba5 100644
+>> --- a/arch/arm64/kvm/rmi.c
+>> +++ b/arch/arm64/kvm/rmi.c
+> 
+> [ ... ]
+> 
+>> @@ -21,11 +29,180 @@ u32 kvm_rmm_ipa_limit(void)
+>>  	return u64_get_bits(rmi_feat_reg(0), RMI_FEATURE_REGISTER_0_S2SZ);
+>>  }
+>>  
+>> +static int get_start_level(struct realm *realm)
+>> +{
+>> +	return 4 - stage2_pgtable_levels(realm->ia_bits);
+>> +}
+> 
+> [Severity: High]
+> Can get_start_level() return a level that mismatches the stage-2 page table
+> configuration on 64KB page kernels and cause realm_destroy_rtts() to fail?
+> 
+> When kvm_init_ipa_range() configures mmu->vtcr via kvm_get_vtcr(), the
+> number of stage-2 levels is clamped to at least 2:
+> 
+> arch/arm64/kvm/hyp/pgtable.c:kvm_get_vtcr() {
+> 	...
+> 	lvls = stage2_pgtable_levels(phys_shift);
+> 	if (lvls < 2)
+> 		lvls = 2;
+> 	...
+> }
+> 
+> Under CONFIG_ARM64_64K_PAGES with a 32-bit or 33-bit IPA,
+> stage2_pgtable_levels(realm->ia_bits) evaluates to 1, so get_start_level()
+> returns 3 (KVM_PGTABLE_LAST_LEVEL) instead of 2.
+> 
+> When kvm_destroy_realm() -> realm_destroy_rtts() ->
+> realm_tear_down_rtt_range() then calls:
+> 
+> 	realm_tear_down_rtt_level(realm, get_start_level(realm) + 1,
+> 				  start, end);
+> 
+> it passes level 4 into realm_tear_down_rtt_level(), hitting
+> WARN_ON(level > KVM_PGTABLE_LAST_LEVEL) and returning -EINVAL. That in turn
+> causes kvm_destroy_realm() to warn and return early, leaking the delegated
+> RD, RTT granules, root stage-2 PGD pages, and realm->sro.
 
->
->> +		if (hrtimer_try_to_cancel(&vtimer->timer) == -1) {
->> +			scoped_guard(spinlock_irqsave, &vtimer->interval_lock)
->> +				vtimer->interval = 0;
-> Does this interval_lock serve some actual purpose? Looks like it's just
-> protecting a single variable, and there are no read-modify-writes
-> happening to it that I can see.
+Good spot - yes get_start_level() should do the same clamping to a min of 2.
 
-Setting vtimer->interval to zero will signal any non-canceled timer to 
-cancel itself immediately. [1]  Either hrtimer_try_to_cancel() is 
-successful or the next run of the timer function will cacnel itself.  We 
-do this because we cannot cancel the timer directl with hrtimer_cancel() 
-due to the possible deadlock.
+>> +
+>> +static void free_rtt(phys_addr_t phys)
+>> +{
+>> +	if (rmi_free_delegated_page(phys))
+>> +		return;
+>> +
+>> +	kvm_account_pgtable_pages(phys_to_virt(phys), -1);
+>> +}
+> 
+> [Severity: High]
+> Does calling kvm_account_pgtable_pages() after rmi_free_delegated_page()
+> access the page after it has already been freed and uncharged from its
+> memcg?
+> 
+> In drivers/firmware/arm_rmm/rmi.c, rmi_free_delegated_page() undelegates the
+> granule and immediately frees the page back to the page allocator:
+> 
+> drivers/firmware/arm_rmm/rmi.c:rmi_free_delegated_page() {
+> 	if (WARN_ON_ONCE(rmi_undelegate_page(phys))) {
+> 		/* Undelegate failed: leak the page */
+> 		return -EBUSY;
+> 	}
+> 
+> 	free_page((unsigned long)phys_to_virt(phys));
+> 
+> 	return 0;
+> }
+> 
+> Because free_page() clears page->memcg_data in __free_pages_prepare() and
+> releases the page for reallocation, the subsequent call to
+> kvm_account_pgtable_pages(phys_to_virt(phys), -1) ->
+> mod_lruvec_page_state() operates on a freed struct page and sees a NULL
+> folio_memcg(), failing to decrement the memory cgroup's
+> NR_SECONDARY_PAGETABLE counter (or racing with a concurrent reallocation of
+> that page).
+> 
+> Should kvm_account_pgtable_pages(phys_to_virt(phys), -1) be called before
+> freeing the page, matching kvm_s2_free_pages_exact() and kvm_s2_put_page()
+> in arch/arm64/kvm/mmu.c?
+> 
 
-[1] 
-https://elixir.bootlin.com/linux/v7.3/source/drivers/gpu/drm/drm_vblank.c#L2191
+Yes. The issue here is that rmi_free_delegated_page() could fail and
+then the accounting is wrong. I guess we can decrement the account,
+attempt the free and increment the account again if it fails.
 
-Best regards
-Thomas
+        kvm_account_pgtable_pages(phys_to_virt(phys), -1);
+        if (rmi_free_delegated_page(phys))
+                kvm_account_pgtable_pages(phys_to_virt(phys), 1);
 
-
->
->> +			return -EDEADLK;
->> +		}
->>   	}
->>   
->>   	drm_calc_timestamping_constants(crtc, &crtc->mode);
->> -- 
->> 2.56.0
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Stefan Gaiser, Jochen Jaser, Abhinav Puri, (HRB 36809, AG Nürnberg)
-
+Thanks,
+Steve
 
